@@ -1959,7 +1959,11 @@ function lodgingFor(d, city) {
   const L = trip.lodging[k] || { idx: 0 };
   if (L.idx === "custom") return L.ll ? { name: L.name, lat: L.ll.lat, lng: L.ll.lng } : null;
   const list = pointList(city, "hotel");
-  return list[L.idx] || list[0] || null;
+  const hit = list[L.idx] || list[0];
+  if (hit) return hit;
+  // A guide with no hotel areas listed: start from the city center rather than stopping the day plan.
+  const c = pointList(city, "point")[0] || (city && city.sites && city.sites[0]);
+  return c ? { name: "Hotel near " + c.name, lat: c.lat, lng: c.lng } : null;
 }
 function dayPoint(d, city) {
   const listKey = d.type === "port" || d.type === "embark" ? "cruise" : MODES[d.mode].list;
@@ -2419,7 +2423,7 @@ async function cityInParts(prompt, show) {
   const list = xs => xs.map(n => '"' + n + '"').join(", ");
   const parts = [
     { ask: 'For this request return ONLY {"city","country","starts","restaurants","gettingAround","basics"}, with 10 restaurants and 8 phrases. Leave out "sites" and "farther".', size: 5000,
-      ok: j => j && j.city && j.starts && (j.restaurants || []).filter(okLL).length >= 5 && j.basics && (j.gettingAround || []).length >= 2 },
+      ok: j => j && j.city && j.starts && (j.starts.hotel || []).filter(okLL).length >= 1 && (j.restaurants || []).filter(okLL).length >= 5 && j.basics && (j.gettingAround || []).length >= 2 },
     ...groups.filter(g => g.length).map(g => ({ names: g.map(x => x.name), ask: `For this request return ONLY {"sites":[...]} with full details for exactly these ${g.length} main sights and no others, using these exact names: ${list(g.map(x => x.name))}.`, size: 3000 * g.length,
       ok: j => j && (j.sites || []).filter(x => okLL(x) && x.guide).length >= g.length - 1 })),
     ...(quick.length ? [{ names: quick, ask: `For this request return ONLY {"sites":[...]} with exactly these ${quick.length} quick sights ("quick": true, minutes 10) and no others, using these exact names: ${list(quick)}.`, size: 1000 * quick.length,
@@ -4064,4 +4068,4 @@ render();
 
 </script>
 <script>if ("serviceWorker" in navigator) addEventListener("load", () => navigator.serviceWorker.register("sw.js").catch(() => {}));</script>
-<script>(function(){var B="7bff872-1794378445";function chk(){if(location.protocol!=="https:")return;fetch("version.txt",{cache:"no-store"}).then(function(r){return r.ok?r.text():""}).then(function(t){t=t.trim();if(t&&t!==B)location.reload()}).catch(function(){})}addEventListener("load",chk);document.addEventListener("visibilitychange",function(){if(document.visibilityState==="visible")chk()})})();</script>
+<script>(function(){var B="a3a4e2f-1794378583";function chk(){if(location.protocol!=="https:")return;fetch("version.txt",{cache:"no-store"}).then(function(r){return r.ok?r.text():""}).then(function(t){t=t.trim();if(t&&t!==B)location.reload()}).catch(function(){})}addEventListener("load",chk);document.addEventListener("visibilitychange",function(){if(document.visibilityState==="visible")chk()})})();</script>
