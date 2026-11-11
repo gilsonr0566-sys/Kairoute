@@ -5,6 +5,9 @@ on:
       cities:
         description: Cities separated by |
         default: "Lisbon|Kotor, Montenegro|Savannah, Georgia"
+      speak_only:
+        description: Only test the natural voice
+        default: ""
       store_only:
         description: Only test the guide store
         default: ""
@@ -22,4 +25,5 @@ jobs:
           CITIES: ${{ inputs.cities }}
           VERBOSE: "1"
           STORE_ONLY: ${{ inputs.store_only }}
+          SPEAK_ONLY: ${{ inputs.speak_only }}
         run: echo '{"url":"https://kairoute-ai.rickgilson.workers.dev"}' > ai.json && node tools/ai-test.mjs

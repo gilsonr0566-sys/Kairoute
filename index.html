@@ -2604,6 +2604,7 @@ function stopAudio() {
   if (tts) { try { tts.stop(); } catch (e) {} }
   if (window.speechSynthesis && (speechSynthesis.speaking || speechSynthesis.pending)) try { speechSynthesis.cancel(); } catch (e) {}
   if (nativeTTS) { nativeRun++; try { nativeTTS.stop(); } catch (e) {} }
+  if (natAudio) { try { natAudio.onended = null; natAudio.onerror = null; natAudio.pause(); } catch (e) {} }
   speakingId = null; ttsState = "idle"; updateAudioUI();
 }
 function speakSite(site) {
@@ -2626,7 +2627,42 @@ function speakText(id, text) {
   const city = cityFor(day()), lc = city && city.lang && city.lang === P().lang && P().lang !== "English" ? langCode(P().lang) : null;
   speakLines(id, lines, lc);
 }
+// Natural voice: Kairoute's AI helper turns the story into a lifelike recording (made once per stop and
+// kept, so replays are free). Falls back to the device voice if it's off, used up for the day, or offline.
+const natAudio = typeof Audio !== "undefined" ? new Audio() : null;
+const SILENT = (() => { // a tiny silent WAV, played on the tap itself so the browser lets the recording play later
+  const n = 800, b = new Uint8Array(44 + n), v = new DataView(b.buffer), w = (o, t) => [...t].forEach((c, i) => b[o + i] = c.charCodeAt(0));
+  w(0, "RIFF"); v.setUint32(4, 36 + n, true); w(8, "WAVEfmt "); v.setUint32(16, 16, true); v.setUint16(20, 1, true); v.setUint16(22, 1, true);
+  v.setUint32(24, 8000, true); v.setUint32(28, 8000, true); v.setUint16(32, 1, true); v.setUint16(34, 8, true); w(36, "data"); v.setUint32(40, n, true); b.fill(128, 44);
+  let bin = ""; b.forEach(x => bin += String.fromCharCode(x)); return "data:audio/wav;base64," + btoa(bin);
+})();
+let natVoiceNote = "";
+const natVoiceOn = lc => !!(freeAI && natAudio && !tts && !lc && (P().lang || "English") === "English" && appSet.natvoice !== "off");
+async function speakNatural(id, lines) {
+  let text = "", rest = [];
+  lines.forEach(l => { if (!rest.length && (text + "\n\n" + l).length <= 1900) text += (text ? "\n\n" : "") + l; else rest.push(l); });
+  if (!text) return false;
+  try { natAudio.src = SILENT; natAudio.play().catch(() => {}); } catch (e) {} // claim the tap so the recording can play when it arrives
+  ttsState = "starting"; updateAudioUI();
+  let r;
+  try { r = await fetch(freeAI.url + "/speak", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ text, voice: P().voice }) }); }
+  catch (e) { return false; }
+  if (speakingId !== id) return true;
+  if (!r.ok) { if (r.status === 429) natVoiceNote = "The natural voice is resting until 6 pm Central, so your device voice is reading for now."; return false; }
+  const url = URL.createObjectURL(await r.blob());
+  if (speakingId !== id) { URL.revokeObjectURL(url); return true; }
+  natAudio.onended = () => { URL.revokeObjectURL(url); if (speakingId !== id) return; if (rest.length) speakDevice(id, rest, null); else { speakingId = null; ttsState = "idle"; updateAudioUI(); } };
+  natAudio.onerror = () => { if (speakingId === id) speakDevice(id, lines, null); };
+  natAudio.src = url;
+  try { await natAudio.play(); ttsState = "speaking"; natVoiceNote = ""; updateAudioUI(); } catch (e) { return false; }
+  return true;
+}
 function speakLines(id, lines, lc) {
+  speakingId = id; audioMsg = "";
+  if (natVoiceOn(lc)) { speakNatural(id, lines).then(ok => { if (!ok && speakingId === id) speakDevice(id, lines, lc); }); return; }
+  speakDevice(id, lines, lc);
+}
+function speakDevice(id, lines, lc) {
   const site = { id };
   speakingId = site.id; audioMsg = "";
   if (tts) {
@@ -2660,6 +2696,14 @@ let audioMsg = "";
 const IN_CLAUDE = /claude\.ai|claudeusercontent|anthropic/.test(location.hostname);
 const NO_AUDIO = IN_CLAUDE ? "Sound can't play inside the Claude app on phones and tablets. Open Kairoute's website in Chrome instead. The story is written out below meanwhile."
   : "This browser didn't start the voice. Check that the volume is up and the phone isn't on silent, then tap play again. The story is written out below meanwhile.";
+// The most natural-sounding device voice for a language: Google's online voices and anything marked
+// Natural, Neural, Enhanced or Premium sound far less robotic than the basic offline ones.
+function bestVoice(synth, want) {
+  const norm = l => (l || "").replace("_", "-").toLowerCase(), pre = want.slice(0, 2).toLowerCase();
+  const score = v => (/natural|neural|enhanced|premium|wavenet|studio/i.test(v.name) ? 4 : 0) + (/google/i.test(v.name) ? 3 : 0) + (v.localService ? 0 : 1) + (norm(v.lang) === norm(want) ? 2 : 0) - (/compact|espeak/i.test(v.name) ? 5 : 0);
+  return synth.getVoices().filter(v => norm(v.lang).startsWith(pre)).sort((x, y) => score(y) - score(x))[0] || null;
+}
+try { if (window.speechSynthesis) { speechSynthesis.getVoices(); speechSynthesis.addEventListener && speechSynthesis.addEventListener("voiceschanged", () => {}); } } catch (e) {}
 function speakBrowser(id, lines, lc) {
   const synth = window.speechSynthesis;
   if (!synth || !window.SpeechSynthesisUtterance) { speakingId = null; audioMsg = NO_AUDIO; updateAudioUI(); return; }
@@ -2674,7 +2718,7 @@ function speakBrowser(id, lines, lc) {
   // to another language) never reads an English story with foreign pronunciation.
   const want = lc || (P().lang === "English" || !P().lang ? "en-US" : langCode(P().lang)), pre = want.slice(0, 2).toLowerCase();
   let voice = null;
-  try { const vs = synth.getVoices().filter(v => (v.lang || "").replace("_", "-").toLowerCase().startsWith(pre)); voice = vs.find(v => v.lang.replace("_", "-").toLowerCase() === want.toLowerCase() && v.localService) || vs.find(v => v.lang.replace("_", "-").toLowerCase() === want.toLowerCase()) || vs[0] || null; } catch (e) {}
+  try { voice = bestVoice(synth, want); } catch (e) {}
   let started = false;
   try {
     chunks.forEach((t, i) => {
@@ -2711,7 +2755,7 @@ function updateAudioUI() {
     b.innerHTML = on ? "■ Stop audio" : (b.dataset.label || "▶ Play audio guide");
     b.setAttribute("aria-pressed", on ? "true" : "false");
     const st = b.parentElement.querySelector(".state");
-    if (st) st.textContent = on ? (ttsState === "starting" ? "Starting…" : "Playing") : (audioMsg || "");
+    if (st) st.textContent = on ? (ttsState === "starting" ? "Starting…" : natVoiceNote ? "Playing with your device voice. The natural voice is back at 6 pm Central." : "Playing") : (audioMsg || "");
   });
 }
 
@@ -2794,7 +2838,7 @@ function needsCity(d) {
 // ---------- Lobby, settings, legal, brand film ----------
 const TAGLINE = "Be your own guide.";
 const APP_VERSION = "Preview 0.9";
-let appSet = { theme: "system", text: "standard" };
+let appSet = { theme: "system", text: "standard", natvoice: "on" };
 try { Object.assign(appSet, JSON.parse(localStorage.getItem("kairoute.app") || "{}")); } catch (e) {}
 function applyAppSet() {
   const r = document.documentElement;
@@ -2907,6 +2951,9 @@ function renderSettings() {
   <div class="card"><h3>Display</h3>
     <div class="field"><span class="lbl">Appearance</span>${seg("theme", [["system", "Match my device"], ["light", "Light"], ["dark", "Dark"]])}</div>
     <div class="field"><span class="lbl">Text size</span>${seg("text", [["standard", "Standard"], ["large", "Large"]])}</div>
+  </div>
+  <div class="card"><h3>Natural voice</h3><p class="lede">${freeAI ? "The natural voice is a lifelike AI recording of each story, made once per stop and kept, so replays are free. A few new stops a day fit in the free allowance; after that your device's best voice reads until 6 pm Central." : "Your device's most natural voice reads the stories."}${natVoiceNote ? " " + esc(natVoiceNote) : ""}</p>
+    ${freeAI ? `<div class="field"><span class="lbl">Natural AI voice (English)</span>${seg("natvoice", [["on", "On"], ["off", "Device voice only"]])}</div>` : ""}
   </div>
   ${settingsCard().replace('<details class="card more">', '<details class="card more" open>')}
   <div class="card"><h3>AI guide</h3><p class="lede">${sample === freeSample ? `On, using Kairoute's free test AI. It builds guides for any city, finds your hotel, reads itinerary photos and answers questions.${freeAI && freeAI.budget ? ` About ${Math.round(100 * (freeAI.left || 0) / freeAI.budget)}% of today's free allowance is left; it resets every evening at 6 pm Central (7 pm in summer).` : ""}` : aiReady() ? "On. Kairoute uses Claude to build city guides, find your hotel, read itinerary photos and answer your questions." : "Off right now. The built-in cities still work fully."}</p>
@@ -4068,4 +4115,4 @@ render();
 
 </script>
 <script>if ("serviceWorker" in navigator) addEventListener("load", () => navigator.serviceWorker.register("sw.js").catch(() => {}));</script>
-<script>(function(){var B="a3a4e2f-1794378583";function chk(){if(location.protocol!=="https:")return;fetch("version.txt",{cache:"no-store"}).then(function(r){return r.ok?r.text():""}).then(function(t){t=t.trim();if(t&&t!==B)location.reload()}).catch(function(){})}addEventListener("load",chk);document.addEventListener("visibilitychange",function(){if(document.visibilityState==="visible")chk()})})();</script>
+<script>(function(){var B="3edbe9a-1794379610";function chk(){if(location.protocol!=="https:")return;fetch("version.txt",{cache:"no-store"}).then(function(r){return r.ok?r.text():""}).then(function(t){t=t.trim();if(t&&t!==B)location.reload()}).catch(function(){})}addEventListener("load",chk);document.addEventListener("visibilitychange",function(){if(document.visibilityState==="visible")chk()})})();</script>

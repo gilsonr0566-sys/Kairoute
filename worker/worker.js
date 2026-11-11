@@ -7,6 +7,11 @@ const MODEL = "@cf/google/gemma-4-26b-a4b-it";
 const DAILY_NEURONS = 9700;
 const IN_RATE = 9091 / 1e6, OUT_RATE = 27273 / 1e6;
 const ALLOWED = [/^https:\/\/gilsonr0566-sys\.github\.io$/, /^https?:\/\/localhost(:\d+)?$/, /^capacitor:\/\/localhost$/, /^https?:\/\/127\.0\.0\.1(:\d+)?$/, /\.claudeusercontent\.com$/, /^https:\/\/claude\.ai$/];
+// Natural guide voice (Deepgram Aura 1): about 1,364 neurons per 1,000 characters. Each stop's audio
+// is made once and kept, so replaying it, or any traveler hearing the same stop, costs nothing.
+const VOICE_MODEL = "@cf/deepgram/aura-1", VOICE_RATE = 1363.64 / 1000, VOICE_DAILY = 4000;
+const SPEAKERS = { buttery: "hera", airy: "luna", glassy: "asteria", rounded: "orion" };
+async function sha(t) { const b = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(t)); return [...new Uint8Array(b)].map(x => x.toString(16).padStart(2, "0")).join(""); }
 const MAX_OUT = { quick: 1200, part: 8000, default: 14000, complex: 16000 };
 
 function cors(origin) {
@@ -22,7 +27,7 @@ export default {
     const origin = req.headers.get("Origin") || "", h = cors(origin);
     if (req.method === "OPTIONS") return new Response(null, { headers: h });
     const url = new URL(req.url);
-    if (url.pathname === "/status") { const u = await used(env); return Response.json({ ok: true, model: MODEL, usedToday: Math.round(u), budget: DAILY_NEURONS, left: Math.max(0, Math.floor(DAILY_NEURONS - u)) }, { headers: h }); }
+    if (url.pathname === "/status") { const u = await used(env); const vu = +(await env.USAGE.get("v:" + today())) || 0; return Response.json({ ok: true, model: MODEL, usedToday: Math.round(u), budget: DAILY_NEURONS, left: Math.max(0, Math.floor(DAILY_NEURONS - u)), voiceLeft: Math.max(0, Math.floor(Math.min(VOICE_DAILY - vu, DAILY_NEURONS - u))) }, { headers: h }); }
     // Shared guide store: a finished city guide is kept so the same city is never written twice.
     if (url.pathname === "/guide") {
       if (req.method === "GET") {
@@ -40,6 +45,24 @@ export default {
         await env.USAGE.put("g:" + k, JSON.stringify(g), { expirationTtl: 180 * 86400 });
         return Response.json({ ok: true }, { headers: h });
       }
+    }
+    if (url.pathname === "/speak" && req.method === "POST") {
+      if (origin && !ALLOWED.some(r => r.test(origin))) return Response.json({ error: "Not allowed" }, { status: 403, headers: h });
+      let b; try { b = await req.json(); } catch (e) { return Response.json({ error: "Bad request" }, { status: 400, headers: h }); }
+      const text = String(b.text || "").slice(0, 2000).trim(), speaker = SPEAKERS[b.voice] || "hera";
+      if (!text) return Response.json({ error: "Empty" }, { status: 400, headers: h });
+      const key = "a:" + speaker + ":" + (await sha(text));
+      const hit = await env.USAGE.get(key, "arrayBuffer");
+      if (hit) return new Response(hit, { headers: { ...h, "content-type": "audio/mpeg", "x-cached": "1", "cache-control": "public, max-age=31536000" } });
+      const cost = text.length * VOICE_RATE, vk = "v:" + today();
+      const vUsed = +(await env.USAGE.get(vk)) || 0, u = await used(env);
+      if (vUsed + cost > VOICE_DAILY || u + cost > DAILY_NEURONS) return Response.json({ error: "voice allowance used up" }, { status: 429, headers: h });
+      let audio;
+      try { const r = await env.AI.run(VOICE_MODEL, { text, speaker, encoding: "mp3" }, { returnRawResponse: true }); if (!r.ok) throw new Error("tts " + r.status); audio = await r.arrayBuffer(); }
+      catch (e) { return Response.json({ error: "The voice service is busy." }, { status: 502, headers: h }); }
+      if (!audio || audio.byteLength < 1000) return Response.json({ error: "No audio" }, { status: 502, headers: h });
+      ctx.waitUntil(Promise.all([addUse(env, cost), env.USAGE.put(vk, String(+(vUsed + cost).toFixed(1)), { expirationTtl: 3 * 86400 }), env.USAGE.put(key, audio, { expirationTtl: 365 * 86400 })]));
+      return new Response(audio, { headers: { ...h, "content-type": "audio/mpeg", "cache-control": "public, max-age=31536000" } });
     }
     if (url.pathname !== "/sample" || req.method !== "POST") return new Response("Kairoute AI helper", { headers: h });
     if (origin && !ALLOWED.some(r => r.test(origin))) return Response.json({ error: "Not allowed" }, { status: 403, headers: h });
