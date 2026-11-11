@@ -10,6 +10,7 @@ permissions:
 jobs:
   test:
     runs-on: ubuntu-latest
+    timeout-minutes: 12
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -17,4 +18,4 @@ jobs:
           node-version: 22
       - env:
           CITY: ${{ inputs.city }}
-        run: npm i playwright@1 && npx playwright install --with-deps chromium && node tools/live-city.cjs
+        run: npm i playwright@1 && npx playwright install chromium && node tools/live-city.cjs
