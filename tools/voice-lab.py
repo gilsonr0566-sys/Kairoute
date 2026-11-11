@@ -1,7 +1,7 @@
 # Voice lab: records the same guide script in several voices and styles, then measures what makes speech
 # sound stiff: how much the pitch moves (expressiveness), how fast it talks, and how it pauses.
 import json, os, re, sys, urllib.request, numpy as np, librosa
-URL = json.load(open("ai.json"))["url"]; H = {"content-type": "application/json", "Origin": "https://gilsonr0566-sys.github.io"}
+URL = json.load(open("ai.json"))["url"]; H = {"content-type": "application/json", "Origin": "https://gilsonr0566-sys.github.io", "User-Agent": "Mozilla/5.0 (KairouteVoiceLab)"}
 def post(path, body, raw=False):
     req = urllib.request.Request(URL + path, data=json.dumps(body).encode(), headers=H, method="POST")
     with urllib.request.urlopen(req, timeout=120) as r: return r.read() if raw else json.loads(r.read())
@@ -15,11 +15,12 @@ for p in parts:
     if p.startswith("~") and cur: paras.append(" ".join(cur)); cur = []
     cur.append(re.sub(r"^~\s*", "", p))
 paras.append(" ".join(cur))
-variants = [("a1-hera-lines", "aura-1", "hera", clean), ("a1-hera-whole", "aura-1", "hera", [whole]), ("a1-asteria-whole", "aura-1", "asteria", [whole]),
-            ("a1-athena-whole", "aura-1", "athena", [whole]), ("a1-luna-whole", "aura-1", "luna", [whole]), ("a1-stella-whole", "aura-1", "stella", [whole]),
-            ("a2-thalia-whole", "aura-2", "thalia", [whole]), ("a2-andromeda-whole", "aura-2", "andromeda", [whole]), ("a2-helena-whole", "aura-2", "helena", [whole]),
-            ("a2-cora-whole", "aura-2", "cora", [whole]), ("a2-iris-whole", "aura-2", "iris", [whole]), ("a2-aurora-whole", "aura-2", "aurora", [whole]),
-            ("a2-thalia-paras", "aura-2", "thalia", paras), ("a2-hera-whole", "aura-2", "hera", [whole])]
+V = lambda n, m, sp, ch: (n, m, sp, ch)
+variants = [V("a1-hera-lines", "aura-1", "hera", clean), V("a1-hera-whole", "aura-1", "hera", [whole]),
+            V("a1-athena-UKf", "aura-1", "athena", [whole]), V("a1-angus-IEm", "aura-1", "angus", [whole]), V("a1-helios-UKm", "aura-1", "helios", [whole]), V("a1-orion-USm", "aura-1", "orion", [whole]),
+            V("a2-thalia", "aura-2", "thalia", [whole]), V("a2-andromeda", "aura-2", "andromeda", [whole]), V("a2-helena", "aura-2", "helena", [whole]), V("a2-aurora", "aura-2", "aurora", [whole]),
+            V("a2-theia", "aura-2", "theia", [whole]), V("a2-pandora", "aura-2", "pandora", [whole]), V("a2-draco", "aura-2", "draco", [whole]), V("a2-hyperion", "aura-2", "hyperion", [whole]),
+            V("a2-apollo", "aura-2", "apollo", [whole]), V("a2-arcas", "aura-2", "arcas", [whole]), V("a2-thalia-paras", "aura-2", "thalia", paras)]
 os.makedirs("voice-lab", exist_ok=True); rows = []
 for name, model, sp, chunks in variants:
     ys = []
