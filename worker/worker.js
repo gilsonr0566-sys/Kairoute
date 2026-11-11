@@ -3,8 +3,8 @@
 // testing never costs money: once the budget is used up, requests stop until midnight UTC.
 const MODEL = "@cf/google/gemma-4-26b-a4b-it";
 // Gemma 4 26B costs about 9,091 neurons per million input tokens and 27,273 per million output tokens.
-// The free allowance is 10,000 neurons a day; we stop at 8,500 to leave a margin.
-const DAILY_NEURONS = 8500;
+// The free allowance is 10,000 neurons a day; we stop at 9,700 (usage is counted from the real token counts, so this stays inside it).
+const DAILY_NEURONS = 9700;
 const IN_RATE = 9091 / 1e6, OUT_RATE = 27273 / 1e6;
 const ALLOWED = [/^https:\/\/gilsonr0566-sys\.github\.io$/, /^https?:\/\/localhost(:\d+)?$/, /^capacitor:\/\/localhost$/, /^https?:\/\/127\.0\.0\.1(:\d+)?$/, /\.claudeusercontent\.com$/, /^https:\/\/claude\.ai$/];
 const MAX_OUT = { quick: 1200, part: 8000, default: 14000, complex: 16000 };
