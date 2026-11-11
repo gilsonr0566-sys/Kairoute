@@ -98,18 +98,26 @@ export default {
       let b; try { b = await req.json(); } catch (e) { return Response.json({ error: "Bad request" }, { status: 400, headers: h }); }
       const city = String(b.city || "").slice(0, 120), names = (Array.isArray(b.names) ? b.names : []).map(n => String(n || "").slice(0, 160)).slice(0, 40);
       const UA = { "user-agent": "Kairoute/1.0 (travel guide; https://gilsonr0566-sys.github.io/Kairoute/)" };
+      const get = async u => { for (let t = 0; t < 2; t++) { try { const r = await fetch(u, { headers: UA }); if (r.ok) return await r.json(); } catch (e) {} if (!t) await new Promise(ok => setTimeout(ok, 600)); } return null; };
+      // The city's own location, so map searches favour places in this city over same-named places
+      // elsewhere in the world, and the app measures "in this city" from the real centre.
+      let center = null; const ck = "gc1:" + (await sha(city.toLowerCase()));
+      if (city) { center = await env.USAGE.get(ck, "json");
+        if (!center) { const j = await get("https://photon.komoot.io/api/?limit=3&lang=en&osm_tag=place&q=" + encodeURIComponent(city));
+          const f = j && (j.features || []).find(f => /city|town|village|municipality|suburb|borough|island/.test((f.properties || {}).osm_value || "")) || (j && (j.features || [])[0]);
+          if (f) { center = { lat: f.geometry.coordinates[1], lng: f.geometry.coordinates[0] }; ctx.waitUntil(env.USAGE.put(ck, JSON.stringify(center), { expirationTtl: 365 * 86400 })); } } }
+      const bias = center ? "&lat=" + center.lat + "&lon=" + center.lng + "&location_bias_scale=0.2&zoom=12" : "";
       const one = async name => {
         if (!name) return null;
-        const k = "gr2:" + (await sha(name + "|" + city)), hit = await env.USAGE.get(k, "json"); if (hit) return hit;
+        const k = "gr3:" + (await sha(name + "|" + city)), hit = await env.USAGE.get(k, "json"); if (hit) return hit;
         const plain = name.replace(/\s*\(.*?\)\s*/g, " ").trim(), q = plain + " " + city;
         let wiki = null, map = null;
-        const get = async u => { for (let t = 0; t < 2; t++) { try { const r = await fetch(u, { headers: UA }); if (r.ok) return await r.json(); } catch (e) {} if (!t) await new Promise(ok => setTimeout(ok, 600)); } return null; };
         {
-          const j = await get("https://en.wikipedia.org/w/api.php?action=query&format=json&generator=search&gsrlimit=3&prop=extracts|coordinates&exintro=1&explaintext=1&exchars=1400&redirects=1&gsrsearch=" + encodeURIComponent(q));
+          const j = await get("https://en.wikipedia.org/w/api.php?action=query&format=json&generator=search&gsrlimit=5&prop=extracts|coordinates&exintro=1&explaintext=1&exchars=1400&redirects=1&gsrsearch=" + encodeURIComponent(q));
           if (j) { wiki = Object.values((j.query && j.query.pages) || {}).sort((a, b) => (a.index || 0) - (b.index || 0)).map(p => ({ title: p.title, extract: p.extract || "", lat: p.coordinates && p.coordinates[0] && p.coordinates[0].lat, lng: p.coordinates && p.coordinates[0] && p.coordinates[0].lon })); }
         }
         {
-          const j = await get("https://photon.komoot.io/api/?limit=4&lang=en&q=" + encodeURIComponent(q));
+          const j = await get("https://photon.komoot.io/api/?limit=6&lang=en" + bias + "&q=" + encodeURIComponent(center ? plain : q));
           if (j) { map = (j.features || []).map(f => ({ name: (f.properties || {}).name || "", lat: f.geometry.coordinates[1], lng: f.geometry.coordinates[0], kind: (f.properties || {}).osm_value || "", city: (f.properties || {}).city || "", osm: ((f.properties || {}).osm_type || "") + ((f.properties || {}).osm_id || "") })); }
         }
         const res = { wiki: wiki || [], map: map || [], answered: !!(wiki && map) };
@@ -118,7 +126,7 @@ export default {
       };
       const out = new Array(names.length); let next = 0;
       await Promise.all(Array.from({ length: 4 }, async () => { while (next < names.length) { const i = next++; out[i] = await one(names[i]); } }));
-      return Response.json({ results: out }, { headers: h });
+      return Response.json({ results: out, center }, { headers: h });
     }
     // /voyage?city=: the city's Wikivoyage page (written by travelers): its listings (see, do, eat, drink)
     // with descriptions, hours, prices and locations, and the practical sections.

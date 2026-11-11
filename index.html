@@ -2592,7 +2592,7 @@ function cleanCity(c, dest) {
   const starts = {};
   for (const k of ["cruise", "airport", "station", "hotel", "point"]) starts[k] = ((c.starts && c.starts[k]) || []).filter(okLL).map(p => ({ name: String(p.name), lat: num(p.lat), lng: num(p.lng), note: p.note ? String(p.note) : "" }));
   return {
-    city: String(c.city || dest), country: String(c.country || ""), ai: true, verified: c.verified || 0, grounded: !!c.grounded, startsOk: !!c.startsOk, starts,
+    city: String(c.city || dest), country: String(c.country || ""), ai: true, verified: c.verified || 0, grounded: !!c.grounded, gv: String(c.gv || ""), startsOk: !!c.startsOk, starts,
     sites: (c.sites || []).filter(okLL).map((s, i) => site(s, i)),
     farther: (c.farther || []).filter(okLL).map((s, i) => Object.assign(site(s, i, "-far"), { far: true })),
     basics: c.basics ? {
@@ -2701,6 +2701,7 @@ ${P().access !== "none" ? "- The travelers need: " + ACCESS.find(a => a[0] === P
       raw = await realPlaces(raw, label);
       // Safeguard: never show a city whose places couldn't be confirmed.
       if (!raw.grounded) throw new Error("check unavailable");
+      if (fresh || !raw.gv) raw.gv = GUIDE_V;
       if (JSON.stringify([raw.verified, raw.grounded, (raw.restaurants || []).length, raw.startsOk]) !== before) fresh = true;
     }
     const c = cleanCity(raw, label);
@@ -2727,11 +2728,14 @@ const SMALL_WORDS = new Set("the of and a an de la el le du del di da des los la
 function nameMatch(want, got) {
   const w = keyOf(String(want).replace(/\(.*?\)/g, " ")).split(" ").filter(t => t && !SMALL_WORDS.has(t)), g = new Set(keyOf(got).split(" "));
   if (!w.length) return false;
-  return w.filter(t => g.has(t) || [...g].some(x => x.length > 4 && t.length > 4 && (x.startsWith(t.slice(0, 5)) || t.startsWith(x.slice(0, 5))))).length / w.length >= 0.75;
+  // Same word, the same stem (Venetian/Venice), or one letter apart in the local spelling (Luka/Luke).
+  const oneOff = (a, b) => a.length === b.length && a.length >= 4 && a.slice(0, 2) === b.slice(0, 2) && [...a].filter((c, i) => c !== b[i]).length === 1;
+  return w.filter(t => g.has(t) || [...g].some(x => (x.length > 4 && t.length > 4 && (x.startsWith(t.slice(0, 5)) || t.startsWith(x.slice(0, 5)))) || oneOff(t, x))).length / w.length >= 0.75;
 }
 async function groundNames(names, label, farSet) {
   if (!freeAI || !names.length) return null;
-  const look = async list => { try { const r = await fetch(freeAI.url + "/ground", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ city: label, names: list }) }); if (r.ok) { const j = await r.json(); if (Array.isArray(j.results)) return j.results; } } catch (e) {} return null; };
+  const look = async list => { try { const r = await fetch(freeAI.url + "/ground", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ city: label, names: list }) }); if (r.ok) { const j = await r.json(); if (Array.isArray(j.results)) { if (j.center && isFinite(j.center.lat) && isFinite(j.center.lng)) cityMid = j.center; return j.results; } } } catch (e) {} return null; };
+  let cityMid = null;
   let res = await look(names);
   if (!res) { await new Promise(ok => setTimeout(ok, 2500)); res = await look(names); }
   if (!res) return null;
@@ -2748,7 +2752,9 @@ async function groundNames(names, label, farSet) {
   // The city's middle: the median of the best matches.
   const firsts = res.map((x, i) => x && ((x.map || []).find(m => nameMatch(names[i], m.name)) || (x.wiki || []).find(w => w.lat && nameMatch(names[i], w.title)))).filter(Boolean);
   const la = firsts.map(p => p.lat).sort((a, b) => a - b), ln = firsts.map(p => p.lng).sort((a, b) => a - b);
-  const center = la.length ? { lat: la[la.length >> 1], lng: ln[ln.length >> 1] } : null;
+  const median = la.length ? { lat: la[la.length >> 1], lng: ln[ln.length >> 1] } : null;
+  // Measure "in this city" from the city's real centre when the map gave one.
+  const center = cityMid || median;
   const out = new Map();
   names.forEach((n, i) => {
     const x = res[i] || {}, lim = farSet && farSet.has(n) ? 250 : 40, inArea = p => p && isFinite(p.lat) && (!center || hav(p, center) <= lim);
@@ -2929,15 +2935,17 @@ async function realPlaces(raw, label) {
 async function checkSavedCities() {
   for (const k of Object.keys(cities)) {
     const c = cities[k]; if (!c || !c.ai) continue;
-    if (c.grounded && (c.sites || []).some(x => x.sources && x.sources.length)) { if (!(c.restaurants || []).length || !c.startsOk) { try { await realPlaces(c, c.city); if ((c.restaurants || []).length) { save(); if (typeof render === "function" && view !== "tour") render(); } } catch (e) {} } continue; }
+    if (c.grounded && c.gv === GUIDE_V && (c.sites || []).some(x => x.sources && x.sources.length)) { if (!(c.restaurants || []).length || !c.startsOk) { try { await realPlaces(c, c.city); if ((c.restaurants || []).length) { save(); if (typeof render === "function" && view !== "tour") render(); } } catch (e) {} } continue; }
     // Written before places and facts were checked: set it aside so it's rebuilt (one tap) with real places and facts.
     delete cities[k]; trip.days.forEach(x => { if (x.cityKey === k) { x.cityKey = null; x.selected = null; } });
     save(); if (typeof render === "function" && view !== "tour") render();
   }
 }
 // Finished guides are kept on Kairoute's AI helper, so each city is written only once and opens in seconds after that.
+// Bump when the way guides are checked improves: older AI guides are then rebuilt with the better check.
+const GUIDE_V = "v5";
 function guideCacheKey(d) {
-  return ["v4", keyOf(d.destination), d.event ? keyOf(d.event) : "", d.type === "port" ? "port" : "", ((trip.prefs && trip.prefs.interests) || []).slice().sort().join(","), P().lang, P().access].join("|");
+  return [GUIDE_V, keyOf(d.destination), d.event ? keyOf(d.event) : "", d.type === "port" ? "port" : "", ((trip.prefs && trip.prefs.interests) || []).slice().sort().join(","), P().lang, P().access].join("|");
 }
 async function cachedGuide(d) {
   if (!freeAI) return null;
@@ -4736,4 +4744,4 @@ render();
 
 </script>
 <script>if ("serviceWorker" in navigator) addEventListener("load", () => navigator.serviceWorker.register("sw.js").catch(() => {}));</script>
-<script>(function(){var B="ef26137-1794412641";function chk(){if(location.protocol!=="https:")return;fetch("version.txt",{cache:"no-store"}).then(function(r){return r.ok?r.text():""}).then(function(t){t=t.trim();if(t&&t!==B)location.reload()}).catch(function(){})}addEventListener("load",chk);document.addEventListener("visibilitychange",function(){if(document.visibilityState==="visible")chk()})})();</script>
+<script>(function(){var B="ee6330e-1794413031";function chk(){if(location.protocol!=="https:")return;fetch("version.txt",{cache:"no-store"}).then(function(r){return r.ok?r.text():""}).then(function(t){t=t.trim();if(t&&t!==B)location.reload()}).catch(function(){})}addEventListener("load",chk);document.addEventListener("visibilitychange",function(){if(document.visibilityState==="visible")chk()})})();</script>
