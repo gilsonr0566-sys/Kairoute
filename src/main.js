@@ -1087,7 +1087,7 @@ async function speakNatural(id, lines) {
     const done = new Promise(res => { natAudio.onended = () => res(true); natAudio.onerror = () => res(false); });
     natAudio.src = url; natAudio.preservesPitch = true; natAudio.defaultPlaybackRate = natAudio.playbackRate = GUIDE_PACE;
     try { await natAudio.play(); } catch (e) { URL.revokeObjectURL(url); if (i === 0) return false; speakDevice(id, parts.slice(i).map(clean).concat(rest), null); return true; }
-    if (i === 0) { ttsState = "speaking"; natVoiceNote = ""; updateAudioUI(); }
+    if (i === 0) { const g = GUIDES.find(x => x[0] === guideVoice().speaker); voiceNow = `${g[1]}, natural voice`; ttsState = "speaking"; natVoiceNote = ""; updateAudioUI(); }
     await done; URL.revokeObjectURL(url);
     if (speakingId !== id) return true;
     const gap = i + 1 < parts.length ? (/^~/.test(parts[i + 1]) ? 900 : /\?\s*$/.test(parts[i]) ? 700 : 380) : 0;
@@ -1123,7 +1123,7 @@ function speakDevice(id, lines, lc) {
 let nativeRun = 0;
 async function speakNative(id, lines, lc) {
   const run = ++nativeRun;
-  ttsState = "speaking"; updateAudioUI();
+  voiceNow = "your tablet's voice"; ttsState = "speaking"; updateAudioUI();
   try {
     for (const text of lines) {
       if (run !== nativeRun || speakingId !== id) return;
@@ -1159,6 +1159,7 @@ function speakBrowser(id, lines, lc) {
   const want = lc || (P().lang === "English" || !P().lang ? "en-US" : langCode(P().lang)), pre = want.slice(0, 2).toLowerCase();
   let voice = null;
   try { voice = bestVoice(synth, want); } catch (e) {}
+  voiceNow = voice ? `device voice "${voice.name.replace(/\s*\(.*\)$/, "")}"` : "your device voice";
   let started = false;
   try {
     chunks.forEach((t, i) => {
@@ -1191,13 +1192,14 @@ async function translateSite(site) {
     translations[k].loading = false; renderGuideOnly();
   } catch (e) { translations[k] = { text: "", loading: false, error: "The translation didn't come through. Try again." }; renderGuideOnly(); }
 }
+let voiceNow = ""; // what the traveler is hearing, shown beside the play button
 function updateAudioUI() {
   document.querySelectorAll("[data-play]").forEach(b => {
     const on = b.dataset.play === speakingId;
     b.innerHTML = on ? "■ Stop audio" : (b.dataset.label || "▶ Play audio guide");
     b.setAttribute("aria-pressed", on ? "true" : "false");
     const st = b.parentElement.querySelector(".state");
-    if (st) st.textContent = on ? (ttsState === "starting" ? "Starting…" : natVoiceNote ? "Playing with your device voice. The natural voice is back at 6 pm Central." : "Playing") : (audioMsg || "");
+    if (st) st.textContent = on ? (ttsState === "starting" ? "Starting…" : natVoiceNote ? `Playing with ${voiceNow || "your device voice"}. The natural voice is back at 6 pm Central.` : `Playing${voiceNow ? " · " + voiceNow : ""}`) : (audioMsg || "");
   });
 }
 
