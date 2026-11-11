@@ -2,7 +2,7 @@
 
 **Be your own guide.** A self-guided tour app: plan each day of a trip, walk the best route between the sights, and hear the story at every stop.
 
-Live site: https://gilsonr0566-sys.github.io/kairoute/
+Live site: https://gilsonr0566-sys.github.io/Kairoute/
 
 ## How it's built
 
