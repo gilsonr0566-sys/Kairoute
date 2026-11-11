@@ -2847,7 +2847,7 @@ function settingsCard() {
 function renderWizard() {
   const w = wiz, ready = aiReady();
   const steps = ["Your trip", "How you explore", "Last details"];
-  const head = `<div><div class="eyebrow">New trip · step ${w.step + 1} of 3: ${steps[w.step]}</div></div>`;
+  const head = `<div><div class="eyebrow">${w.step === 0 ? "New trip" : "Personalize · " + w.step + " of 2: " + steps[w.step]}</div></div>`;
   let body = "";
   if (w.step === 0) body = `
     <div class="field"><label for="w-text">Where are you going, and how?</label>
@@ -2857,10 +2857,14 @@ function renderWizard() {
       <div class="photos">${(w.images || []).map((im, i) => `<div class="ph"><img src="${im.url}" alt="Itinerary photo ${i + 1}"><button type="button" data-wimgdel="${i}" aria-label="Remove photo">×</button></div>`).join("")}
       ${(w.images || []).length < 4 ? `<label class="addph">+ Photo of itinerary<input type="file" accept="image/*" capture="environment" id="w-img" hidden></label>` : ""}</div>
       <span class="hint">Take a photo of your cruise confirmation, flight emails or a printed plan. Your guide reads the dates, ports and times from it.</span></div>
-    <div class="row2"><div class="field"><label for="w-line">Cruise line (optional)</label><input type="text" id="w-line" value="${esc(w.cruiseLine)}" placeholder="e.g. Celebrity"></div>
+    <details class="more"><summary>Add more details (optional)</summary>
+    <div class="row2"><div class="field"><label for="w-line">Cruise line</label><input type="text" id="w-line" value="${esc(w.cruiseLine)}" placeholder="e.g. Celebrity"></div>
       <div class="field"><label for="w-ship">Ship and sail date (optional)</label><input type="text" id="w-ship" value="${esc(w.ship)}" placeholder="e.g. Celebrity Beyond, May 7 2027"></div></div>
     <span class="hint">With the ship and date, your guide fills in the ports and times. Always check them against your cruise documents.</span>
-    <div class="field"><label for="w-name">Name this trip (optional)</label><input type="text" id="w-name" value="${esc(w.name)}" placeholder="e.g. Mediterranean 2027"></div>`;
+    <div class="field"><label for="w-hotels">Where you're staying</label><textarea id="w-hotels" style="min-height:70px" placeholder="Athens: Hotel Grande Bretagne. Madrid: near Puerta del Sol.">${esc(w.hotels)}</textarea></div>
+    <div class="field"><label for="w-name">Name this trip</label><input type="text" id="w-name" value="${esc(w.name)}" placeholder="e.g. Mediterranean 2027"></div></details>
+    <p class="lede">That's all Kairoute needs. It picks good defaults for pace, walking and voice, and you can change any of them later.</p>
+    ${ready ? "" : `<div class="banner warn">Building a new trip uses the AI guide, which is off while we test for free. Try the Sun Princess trip meanwhile.</div>`}`;
   if (w.step === 1) body = `
     <div class="field"><span class="lbl">What kind of places?</span><div class="seg" role="group" aria-label="Style">${[["touristy", "Famous sights"], ["mix", "A bit of both"], ["local", "Local favorites"]].map(([k, l]) => `<button type="button" data-wz="style" data-v="${k}" aria-pressed="${w.style === k}">${l}</button>`).join("")}</div></div>
     <div class="field"><span class="lbl">What do you enjoy?</span><div class="seg" role="group" aria-label="Interests">${INTERESTS.map(([k, l]) => `<button type="button" data-wz="interest" data-v="${k}" aria-pressed="${w.interests.includes(k)}">${l}</button>`).join("")}</div></div>
@@ -2870,18 +2874,18 @@ function renderWizard() {
     <div class="field"><span class="lbl">Any accessibility needs?</span><div class="seg" role="group" aria-label="Accessibility">${ACCESS.map(([k, l]) => `<button type="button" data-wz="access" data-v="${k}" aria-pressed="${w.access === k}">${l}</button>`).join("")}</div>
       <span class="hint">Your guide flags steps and steep climbs and favors easier routes.</span></div>`;
   if (w.step === 2) body = `
-    <div class="field"><label for="w-hotels">Where are you staying? (optional)</label><textarea id="w-hotels" style="min-height:90px" placeholder="Athens: Hotel Grande Bretagne. Barcelona: an apartment in Eixample. Madrid: near Puerta del Sol.">${esc(w.hotels)}</textarea>
-      <span class="hint">Land days start and end at your hotel. You can add or change hotels later.</span></div>
     <div class="row2"><div class="field"><label for="w-party">How many people?</label><input type="number" id="w-party" min="1" max="20" value="${w.party}"></div>
       <div class="field"><label for="w-lang">Guide language</label><select id="w-lang">${LANGS.map(([n]) => `<option ${w.lang === n ? "selected" : ""}>${n}</option>`).join("")}</select></div></div>
     <div class="field"><span class="lbl">Guide voice</span><div class="seg" role="group" aria-label="Voice">${VOICES.map(([k, l]) => `<button type="button" data-wz="voice" data-v="${k}" aria-pressed="${w.voice === k}">${l}</button>`).join("")}</div></div>
     <div class="field"><label for="w-trav">Anything else about the travelers? (optional)</label><input type="text" id="w-trav" value="${esc(w.travelers)}" placeholder="e.g. one uses a cane; kids aged 8 and 11"></div>
     ${ready ? "" : `<div class="banner warn">Building the trip uses the AI guide. Turn on the AI guide in Settings to turn it on.</div>`}`;
-  return `${head}<div><h2>${["Tell me about your trip", "How do you like to explore?", "A few last details"][w.step]}</h2></div>
+  return `${head}<div><h2>${["Where are you going?", "How do you like to explore?", "A few last details"][w.step]}</h2></div>
     ${busyBlock()}${errBlock()}
     <form class="card" id="wizForm" autocomplete="off">${body}
       <div class="actions">${w.step > 0 ? `<button type="button" class="btn ghost" data-act="wizback">Back</button>` : `<button type="button" class="btn ghost" data-act="wizcancel">Cancel</button>`}
-      ${w.step < 2 ? `<button type="submit" class="btn" ${w.step === 0 && !w.text.trim() ? "" : ""}>Next</button>` : `<button type="submit" class="btn" ${ready && !busy ? "" : "disabled"}>Build my trip</button>`}</div>
+      ${w.step === 0 ? `<button type="button" class="btn ghost" data-act="wizmore">Personalize first</button>` : ""}
+      ${w.step === 1 ? `<button type="submit" class="btn ghost" data-next="1">Next</button>` : ""}
+      <button type="submit" class="btn" ${ready && !busy ? "" : "disabled"}>Build my trip</button></div>
     </form>`;
 }
 function readWiz() {
@@ -3683,6 +3687,7 @@ document.addEventListener("click", e => {
   if (act === "filmclose") { closeFilm(); return; }
   if (act === "mytrips") { if (view === "trip") readForm(); save(); view = "trips"; aiError = ""; render(); window.scrollTo(0, 0); return; }
   if (act === "newtrip") { wiz = { step: 0, text: "", name: "", style: trip.style || "mix", interests: [], pace: "moderate", walk: "medium", hotels: "", travelers: "", access: "none", party: 2, lang: "English", voice: "buttery", cruiseLine: "", ship: "" }; view = "wizard"; aiError = ""; render(); return; }
+  if (act === "wizmore") { readWiz(); if (!wiz.text.trim() && !(wiz.images || []).length) { aiError = "Describe your trip first, even roughly."; render(); return; } aiError = ""; wiz.step = 1; render(); window.scrollTo(0, 0); return; }
   if (act === "wizback") { readWiz(); wiz.step--; render(); return; }
   if (act === "wizcancel") { wiz = null; view = "lobby"; render(); window.scrollTo(0, 0); return; }
   if (act === "opentrip") { save(); const x = library.find(y => y.id === t.dataset.id); if (x) { trip = x.trip; if (!trip.prefs) trip.prefs = defaultPrefs(); view = "trip"; save(); render(); } return; }
@@ -3818,7 +3823,7 @@ document.addEventListener("submit", e => {
     readWiz();
     if (wiz.step === 0 && !wiz.text.trim() && !(wiz.images || []).length) { aiError = "Describe your trip first, even roughly."; render(); return; }
     aiError = "";
-    if (wiz.step < 2) { wiz.step++; render(); window.scrollTo(0, 0); return; }
+    if (e.submitter && e.submitter.dataset.next) { wiz.step++; render(); window.scrollTo(0, 0); return; }
     buildTripFromText((wiz.text || "(see the attached photos)") + (wiz.travelers ? "\nTravelers: " + wiz.travelers : ""));
     return;
   }
