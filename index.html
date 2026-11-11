@@ -815,6 +815,38 @@ if (cl && cl.use) {
   cl.use("sample").then(s => { sample = s; render(); }).catch(() => {});
   cl.use("tts").then(t => { tts = t; if (t) t.onState(({ state }) => { ttsState = state; updateAudioUI(); }); }).catch(() => {});
 }
+// On the website (no Claude app around it), the AI guide runs on the traveler's own Anthropic key.
+const KEY_STORE = "kairoute.key";
+const WEB_MODELS = { quick: "claude-haiku-5-5", default: "claude-sonnet-5-5", complex: "claude-sonnet-5-5" };
+const getKey = () => { try { return localStorage.getItem(KEY_STORE) || ""; } catch (e) { return ""; } };
+const blobB64 = b => new Promise((res, rej) => { const r = new FileReader(); r.onload = () => res(String(r.result).split(",")[1]); r.onerror = rej; r.readAsDataURL(b); });
+async function webSample(prompt, opts = {}) {
+  const key = getKey(); if (!key) throw new Error("No AI key");
+  const content = [];
+  for (const b of opts.images || []) content.push({ type: "image", source: { type: "base64", media_type: b.type || "image/jpeg", data: await blobB64(b) } });
+  content.push({ type: "text", text: prompt });
+  const resp = await fetch("https://api.anthropic.com/v1/messages", {
+    method: "POST",
+    headers: { "content-type": "application/json", "x-api-key": key, "anthropic-version": "2023-06-01", "anthropic-dangerous-direct-browser-access": "true" },
+    body: JSON.stringify({ model: WEB_MODELS[opts.modelTier] || WEB_MODELS.default, max_tokens: 16000, stream: true, messages: [{ role: "user", content }] })
+  });
+  if (!resp.ok) { let m = resp.status + ""; try { m = (await resp.json()).error.message; } catch (e) {} throw new Error(resp.status === 401 ? "The AI key was not accepted. Check it in Settings." : m); }
+  const rd = resp.body.getReader(), dec = new TextDecoder(); let buf = "", text = "", stop = null;
+  for (;;) {
+    const { done, value } = await rd.read(); if (done) break;
+    buf += dec.decode(value, { stream: true });
+    let i; while ((i = buf.indexOf("\n")) >= 0) {
+      const line = buf.slice(0, i).trim(); buf = buf.slice(i + 1);
+      if (!line.startsWith("data:")) continue;
+      let ev; try { ev = JSON.parse(line.slice(5)); } catch (e) { continue; }
+      if (ev.type === "content_block_delta" && ev.delta && ev.delta.type === "text_delta") { text += ev.delta.text; if (opts.onText) opts.onText({ text }); }
+      else if (ev.type === "message_delta" && ev.delta) stop = ev.delta.stop_reason;
+      else if (ev.type === "error") throw new Error((ev.error && ev.error.message) || "AI error");
+    }
+  }
+  return { text, truncated: stop === "max_tokens" };
+}
+if (!(cl && cl.use) && getKey()) sample = webSample;
 let ttsState = "idle", speakingId = null, audioUnavailable = false;
 
 // ---------- Constants ----------
@@ -1226,7 +1258,7 @@ const aiReady = () => !!sample;
 // "Change my trip": say what changed or show the new booking, and the AI rewrites the days.
 let changeImgs = [], changeText = "";
 function changeCard() {
-  if (!aiReady()) return `<div class="card change"><div><h3>Change my trip</h3><p class="lede">Tap any day below to change its city, date or times, or use + Add a day and Remove this day. Open Kairoute in the Claude app to just tell it what changed.</p></div></div>`;
+  if (!aiReady()) return `<div class="card change"><div><h3>Change my trip</h3><p class="lede">Tap any day below to change its city, date or times, or use + Add a day and Remove this day. Turn on the AI guide in Settings to just tell it what changed.</p></div></div>`;
   return `<div class="card change"><div><h3>Change my trip</h3><p class="lede">Say what changed, or add a photo of the new booking. I'll update the days and keep everything else.</p></div>
     <div class="chips">${(() => { const c = trip.days.filter(x => x.type !== "sea" && x.type !== "port").map(x => x.destination); const first = c[0] || "the first city", last = c[c.length - 1] || "the last city";
       return [`Add a day in ${first}`, "We fly home a day later", `We're staying at a different hotel in ${first}`, `Remove a day in ${last}`]; })().map(x => `<button class="chip" data-chg="${esc(x)}">${esc(x)}</button>`).join("")}</div>
@@ -1364,7 +1396,7 @@ Return ONLY JSON: {"places":[{"id","name","lat","lng","minutes","kind":"touristy
   } catch (e) { addBusy = null; aiError = ask ? `I couldn't find "${ask}". Try the full name, like "Ancient Corinth".` : "No more day trips came back. Try again in a moment."; render(); }
 }
 function addPlaceCard(d) {
-  if (!aiReady()) return `<div class="card addplace"><h3>Don't see a place you want?</h3><p class="lede">Adding any place, or more day trips, uses Claude. Open Kairoute in the Claude app to turn it on.</p></div>`;
+  if (!aiReady()) return `<div class="card addplace"><h3>Don't see a place you want?</h3><p class="lede">Adding any place, or more day trips, uses Claude. Turn on the AI guide in Settings to turn it on.</p></div>`;
   return `<div class="card addplace"><div><h3>Don't see a place you want?</h3><p class="lede">Name it and your guide adds it to today, with the travel time and its story.</p></div>
     <div class="addrow"><input id="addPlace" type="text" placeholder="e.g. Ancient Corinth" enterkeyhint="go" ${addBusy ? "disabled" : ""}><button class="btn" data-act="addplace" ${addBusy ? "disabled" : ""}>Add it</button></div>
     <div class="actions"><button class="btn ghost" data-act="moretrips" ${addBusy ? "disabled" : ""}>Show more day trips farther out</button>${addBusy ? `<span class="lede"><span class="spinner"></span> ${esc(addBusy)}</span>` : ""}</div></div>`;
@@ -1695,7 +1727,7 @@ function needsCity(d) {
   const ready = aiReady();
   return `<div class="card empty">
     <h3>No guide for ${esc(d.destination || "this day")} yet</h3>
-    <p>${ready ? "Your guide will research sights, places to eat, the cruise port, stations and day trips for " + esc(d.destination) + "." : "Building a guide for a new city uses Claude. Open this page in the Claude app to turn it on. The Barcelona days work without it."}</p>
+    <p>${ready ? "Your guide will research sights, places to eat, the cruise port, stations and day trips for " + esc(d.destination) + "." : "Building a guide for a new city uses Claude. Turn on the AI guide in Settings to turn it on. The Barcelona days work without it."}</p>
     ${ready ? `<button class="btn" data-act="gen" ${busy ? "disabled" : ""}>Build the ${esc(d.destination)} guide</button>` : ""}
   </div>`;
 }
@@ -1816,7 +1848,8 @@ function renderSettings() {
     <div class="field"><span class="lbl">Text size</span>${seg("text", [["standard", "Standard"], ["large", "Large"]])}</div>
   </div>
   ${settingsCard().replace('<details class="card more">', '<details class="card more" open>')}
-  <div class="card"><h3>AI guide</h3><p class="lede">${aiReady() ? "On. Kairoute uses Claude to build city guides, read itinerary photos and answer your questions." : "Off in this window. Open Kairoute in the Claude app to build guides for new cities. Barcelona works without it."}</p></div>
+  <div class="card"><h3>AI guide</h3><p class="lede">${aiReady() ? "On. Kairoute uses Claude to build city guides, find your hotel, read itinerary photos and answer your questions." : "Off. Add your AI key below to build guides for every city and find your hotel. Barcelona works without it."}</p>
+    ${cl && cl.use ? "" : `<div class="field"><label for="aikey">Anthropic API key</label><div class="ask"><input type="password" id="aikey" autocomplete="off" placeholder="${getKey() ? "Saved on this device" : "sk-ant-…"}"><button type="button" class="btn small" data-act="savekey">Save</button>${getKey() ? `<button type="button" class="btn ghost small" data-act="clearkey">Remove</button>` : ""}</div><span class="hint">Stored only on this device and sent only to Anthropic. Get one at console.anthropic.com under API keys.</span></div>`}</div>
   <div class="card"><div><h3>Your data</h3><p class="lede">Trips, guides and journal entries are saved only on this device. Starting over clears all of it and loads the example trip again.</p></div>
     <div class="actions">${resetAsk ? `<button class="btn" data-act="resetyes" style="background:var(--warn)">Yes, clear everything</button><button class="btn ghost" data-act="resetno">Keep my trips</button>` : `<button class="btn ghost" data-act="reset">Start over</button>`}</div></div>
   <details class="card more"><summary>Coming in the full app</summary>
@@ -2001,7 +2034,7 @@ function renderWizard() {
       <div class="field"><label for="w-lang">Guide language</label><select id="w-lang">${LANGS.map(([n]) => `<option ${w.lang === n ? "selected" : ""}>${n}</option>`).join("")}</select></div></div>
     <div class="field"><span class="lbl">Guide voice</span><div class="seg" role="group" aria-label="Voice">${VOICES.map(([k, l]) => `<button type="button" data-wz="voice" data-v="${k}" aria-pressed="${w.voice === k}">${l}</button>`).join("")}</div></div>
     <div class="field"><label for="w-trav">Anything else about the travelers? (optional)</label><input type="text" id="w-trav" value="${esc(w.travelers)}" placeholder="e.g. one uses a cane; kids aged 8 and 11"></div>
-    ${ready ? "" : `<div class="banner warn">Building the trip uses Claude. Open this page in the Claude app to turn it on.</div>`}`;
+    ${ready ? "" : `<div class="banner warn">Building the trip uses the AI guide. Turn on the AI guide in Settings to turn it on.</div>`}`;
   return `${head}<div><h2>${["Tell me about your trip", "How do you like to explore?", "A few last details"][w.step]}</h2></div>
     ${busyBlock()}${errBlock()}
     <form class="card" id="wizForm" autocomplete="off">${body}
@@ -2257,7 +2290,7 @@ function renderTrip(d) {
       <details class="card more" ${trip.sample ? "" : ""}>
         <summary>Describe a whole trip in your own words</summary>
         ${aiReady() ? `<div class="field"><label for="f-triptext">Your trip</label><textarea id="f-triptext" placeholder="Flying into Athens on May 3 and staying 4 days at the Hotel Grande Bretagne. Then a cruise from Piraeus to Mykonos, Santorini… ending in Barcelona. 3 days in Barcelona, train to Madrid for 2 days, flying home at 4 pm.">${esc(tripText)}</textarea><span class="hint">Your guide lays out every day, with port times, flights and trains. This replaces the trip above.</span></div>
-        <div class="actions"><button class="btn" data-act="parsetrip" ${busy ? "disabled" : ""}>Build my itinerary</button></div>` : `<p class="ai-note">This uses Claude. Open the page in the Claude app to turn it on.</p>`}
+        <div class="actions"><button class="btn" data-act="parsetrip" ${busy ? "disabled" : ""}>Build my itinerary</button></div>` : `<p class="ai-note">This uses the AI guide. Turn on the AI guide in Settings to turn it on.</p>`}
       </details>
     </div>
     <div>
@@ -2288,7 +2321,7 @@ function renderTrip(d) {
         ${needsLodging ? `<div class="field"><label for="f-lodging">Where you're staying in ${esc(d.destination || "this city")}</label>
           <select id="f-lodging">${opts(hotels, L.idx)}<option value="custom" ${L.idx === "custom" ? "selected" : ""}>My hotel or rental…</option></select>
           ${L.idx === "custom" ? `<div class="ask"><input type="text" id="f-lname" value="${esc(L.name || "")}" placeholder="Hotel name or address"><button type="button" class="btn small" data-act="geo" ${aiReady() ? "" : "disabled"}>Find it</button></div>
-          <span class="hint">${L.ll ? "Found on the map: " + esc(L.name) : aiReady() ? "Type the name and tap Find it." : "Finding your own hotel uses Claude. Pick an area for now."}</span>` : `<span class="hint">Used for every day you're in ${esc(d.destination || "this city")}.</span>`}
+          <span class="hint">${L.ll ? "Found on the map: " + esc(L.name) : aiReady() ? "Type the name and tap Find it." : "Pick an area for now, or turn on the AI guide in Settings to find your exact hotel."}</span>` : `<span class="hint">Used for every day you're in ${esc(d.destination || "this city")}.</span>`}
         </div>` : ""}
         ${t === "land" ? `<label class="check"><input type="checkbox" id="f-return" ${d.returnToStart ? "checked" : ""}><span>Finish back at the hotel</span></label>` : ""}
         <div class="field"><label for="f-event">Event (optional)</label><input type="text" id="f-event" value="${esc(d.event)}" placeholder="e.g. a ball game, a festival, a concert"></div>
@@ -2539,7 +2572,7 @@ function stopCard(s, num, city) {
       ${dp ? `<div class="guidetext" id="deep-${esc(s.id)}">${dp.text ? paras(dp.text) : `<p class="ai-note"><span class="spinner"></span> Your guide is thinking…</p>`}</div>${dp.error ? `<p class="ai-note">${esc(dp.error)}</p>` : ""}` : ""}
       ${ready ? `<div class="actions">${!dp || dp.error ? `<button class="btn ghost small" data-deeper="${esc(s.id)}">Tell me more</button>` : ""}</div>
       <form class="ask" data-ask="${esc(s.id)}"><input type="text" id="ask-${esc(s.id)}" placeholder="Ask the guide about this place" aria-label="Ask the guide about ${esc(s.name)}"><button class="btn small" type="submit">Ask</button></form>
-      ${an ? `<div class="answer"><b>${esc(an.q)}</b>\n<span id="ans-${esc(s.id)}">${esc(an.text || (an.loading ? "Thinking…" : an.error || ""))}</span></div>` : ""}` : `<p class="ai-note">Open in the Claude app to ask the guide questions and hear more.</p>`}
+      ${an ? `<div class="answer"><b>${esc(an.q)}</b>\n<span id="ans-${esc(s.id)}">${esc(an.text || (an.loading ? "Thinking…" : an.error || ""))}</span></div>` : ""}` : `<p class="ai-note">Turn on the AI guide in Settings to ask the guide questions and hear more.</p>`}
       ${journalBlock(s)}
     </div>
   </article>`;
@@ -2766,6 +2799,8 @@ document.addEventListener("click", e => {
   if (t.dataset.view) { if (view === "trip") readForm(); view = t.dataset.view; aiError = ""; save(); render(); window.scrollTo(0, 0); return; }
   if (t.dataset.day != null && !t.dataset.act) { if (view === "trip") readForm(); trip.active = +t.dataset.day; aiError = ""; cdPreview = null; cdWhere = null; cdSpoken = false; stopAudio(); save(); render(); return; }
   if (t.dataset.goto) { view = t.dataset.goto; render(); window.scrollTo(0, 0); return; }
+  if (t.dataset.act === "savekey") { const k = ((document.getElementById("aikey") || {}).value || "").trim(); if (k) { try { localStorage.setItem(KEY_STORE, k); } catch (e) {} sample = webSample; } render(); return; }
+  if (t.dataset.act === "clearkey") { try { localStorage.removeItem(KEY_STORE); } catch (e) {} if (!(cl && cl.use)) sample = null; render(); return; }
   if (t.dataset.hrs) { readForm(); day().hours = +t.dataset.hrs; day().selected = null; edited(); save(); render(); return; }
   if (t.dataset.mode) { readForm(); day().mode = t.dataset.mode; day().pointIdx = 0; edited(); save(); render(); return; }
   if (t.dataset.style) { readForm(); trip.style = t.dataset.style; save(); render(); return; }
