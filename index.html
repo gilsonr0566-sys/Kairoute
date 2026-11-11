@@ -2282,6 +2282,7 @@ function simDay(seq, t0, O, Z, style) {
       if (clock < m.from) { cost += (m.from - clock) * 0.6; clock = m.from; }
       if (clock > m.to) cost += (clock - m.to) * 6;
       if (style !== "mix" && p.kind && p.kind !== style) cost += 8;
+      if (p.recommended) cost -= 6; // recommended by travelers on Wikivoyage
       clock += m.len;
     } else clock += p.minutes || 0;
     prev = p;
@@ -2568,7 +2569,8 @@ function normSite(s, i, extra) {
     lookFor: Array.isArray(s.lookFor) ? s.lookFor.map(String).slice(0, 4) : [], photoTip: String(s.photoTip || ""), picks: normPicks(s.picks),
     travel: s.travel ? String(s.travel) : "",
     hours: String(s.hours || ""), closed: String(s.closed || ""), tickets: String(s.tickets || ""), crowds: String(s.crowds || ""),
-    cost: Math.max(0, num(s.cost) || 0), indoor: !!s.indoor, access: String(s.access || "")
+    cost: Math.max(0, num(s.cost) || 0), indoor: !!s.indoor, access: String(s.access || ""),
+    travelerTip: String(s.travelerTip || ""), priceNote: String(s.priceNote || ""), web: /^https?:\/\//.test(s.web || "") ? String(s.web) : "", sources: Array.isArray(s.sources) ? s.sources.map(String).slice(0, 5) : []
   };
 }
 function cleanCity(c, dest) {
@@ -2588,7 +2590,7 @@ function cleanCity(c, dest) {
     } : null,
     lang: P().lang,
     gettingAround: (c.gettingAround || []).filter(x => x && x.tip).slice(0, 5).map(x => ({ mode: String(x.mode || ""), tip: String(x.tip) })),
-    restaurants: (c.restaurants || []).filter(okLL).map(r => ({ name: String(r.name), lat: num(r.lat), lng: num(r.lng), kind: r.kind === "local" ? "local" : "touristy", cuisine: String(r.cuisine || ""), price: String(r.price || ""), why: String(r.why || "") }))
+    restaurants: (c.restaurants || []).filter(okLL).map(r => ({ onMap: !!r.onMap, generic: !!r.generic, recommended: !!r.recommended, name: String(r.name), lat: num(r.lat), lng: num(r.lng), kind: r.kind === "local" ? "local" : "touristy", cuisine: String(r.cuisine || ""), price: String(r.price || ""), why: String(r.why || "") }))
   };
 }
 function faithNote() {
@@ -2677,6 +2679,8 @@ ${P().access !== "none" ? "- The travelers need: " + ACCESS.find(a => a[0] === P
       const before = JSON.stringify([raw.verified, raw.grounded, (raw.restaurants || []).length, raw.startsOk]);
       if (busy) { busy.text = (quiet ? busy.prefix || "" : "") + "Checking every place on the map…"; updateBusy(); }
       raw = await realPlaces(raw, label);
+      // Safeguard: never show a city whose places couldn't be confirmed.
+      if (!raw.grounded) throw new Error("check unavailable");
       if (JSON.stringify([raw.verified, raw.grounded, (raw.restaurants || []).length, raw.startsOk]) !== before) fresh = true;
     }
     const c = cleanCity(raw, label);
@@ -2691,7 +2695,7 @@ ${P().access !== "none" ? "- The travelers need: " + ACCESS.find(a => a[0] === P
     return true;
   } catch (e) {
     try { console.warn("Guide build failed for " + label + ":", e && (e.stack || e.message || e)); } catch (x) {}
-    if (!quiet) { busy = null; aiError = /allowance/i.test((e && e.message) || "") ? e.message : aiErrorText(e, "The guide for " + label); render(); }
+    if (!quiet) { busy = null; aiError = /allowance/i.test((e && e.message) || "") ? e.message : /check unavailable/.test((e && e.message) || "") ? "The map service that checks every place didn't answer, so I didn't build the guide (I never show places I can't confirm). Try again in a minute." : aiErrorText(e, "The guide for " + label); render(); }
     return false;
   }
 }
@@ -2720,9 +2724,33 @@ async function groundNames(names, label, farSet) {
     const wiki = (x.wiki || []).find(w => nameMatch(n, w.title) && (w.lat == null || inArea(w)));
     const map = (x.map || []).find(m => nameMatch(n, m.name) && inArea(m));
     const pos = map || (wiki && wiki.lat != null ? wiki : null);
-    out.set(n, { real: !!(wiki || map), facts: wiki ? wiki.extract.replace(/\s+/g, " ").trim() : "", title: wiki ? wiki.title : "", lat: pos ? +(+pos.lat).toFixed(5) : null, lng: pos ? +(+pos.lng).toFixed(5) : null });
+    out.set(n, { osm: map && map.osm ? String(map.osm).replace(/^node/i, "N").replace(/^way/i, "W").replace(/^relation/i, "R").replace(/^([nwr])/, c => c.toUpperCase()) : "", real: !!(wiki || map), facts: wiki ? wiki.extract.replace(/\s+/g, " ").trim() : "", title: wiki ? wiki.title : "", lat: pos ? +(+pos.lat).toFixed(5) : null, lng: pos ? +(+pos.lng).toFixed(5) : null });
   });
   return out;
+}
+// Wikivoyage, the travel guide written by travelers: listings with tips, hours and prices.
+const voyageCache = {};
+async function voyageFor(label) {
+  if (!freeAI || !label) return null;
+  if (voyageCache[label]) return voyageCache[label];
+  try { const r = await fetch(freeAI.url + "/voyage?city=" + encodeURIComponent(label)); if (r.ok) { const j = await r.json(); if (j && Array.isArray(j.listings)) return (voyageCache[label] = j); } } catch (e) {}
+  return null;
+}
+const voyageListing = (vg, name, types) => vg && vg.listings.find(l => (!types || types.includes(l.type)) && (nameMatch(name, l.name) || nameMatch(l.name, name)));
+// Opening hours, fees, wheelchair access and websites from OpenStreetMap, by map id.
+async function osmDetails(ids) {
+  ids = [...new Set(ids.filter(Boolean))].slice(0, 50); if (!freeAI || !ids.length) return {};
+  try { const r = await fetch(freeAI.url + "/osm", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ ids }) }); if (r.ok) return (await r.json()).places || {}; } catch (e) {}
+  return {};
+}
+function addRealDetails(x, g, vg, osm) {
+  const l = voyageListing(vg, x.name, ["see", "do", "listing", "buy"]), o = g && g.osm ? osm[g.osm] : null;
+  if (l && l.content) x.travelerTip = l.content;
+  if (o && o.hours) x.hours = o.hours.replace(/;\s*/g, "; "); else if (l && l.hours) x.hours = l.hours;
+  if (l && l.price) x.priceNote = l.price;
+  if (o && o.wheelchair) x.access = o.wheelchair === "yes" ? "Wheelchair accessible (map data)." : o.wheelchair === "limited" ? "Limited wheelchair access (map data)." : o.wheelchair === "no" ? "Not wheelchair accessible (map data)." : x.access;
+  const web = (o && o.web) || (l && l.url); if (web && /^https?:\/\//.test(web)) x.web = web;
+  x.sources = ["map"].concat(g && g.facts ? ["Wikipedia"] : [], l ? ["Wikivoyage"] : [], o && (o.hours || o.wheelchair) ? ["OpenStreetMap"] : []);
 }
 // The free AI writes more slowly, so a city guide is built in two steps: first a short list of which
 // places to cover, then small pieces written at the same time, each for a fixed set of named places.
@@ -2755,11 +2783,13 @@ async function cityInParts(prompt, show, label) {
   // Keep only places that really exist, and give the writer each place's real facts to work from.
   const grounded = label && typeof groundNames === "function" ? await groundNames([...main.map(x => x.name), ...quick, ...far], label, new Set(far)) : null;
   if (grounded) { main = main.filter(x => grounded.get(x.name).real); quick = quick.filter(n => grounded.get(n).real); far = far.filter(n => grounded.get(n).real); }
-  const facts = names => grounded ? names.map(n => grounded.get(n)).some(g => g && g.facts) ? "\n\nFacts to build on, from each place's Wikipedia article. Use them, never contradict them, and do not invent names, dates or numbers beyond them and well-established history:\n" + names.map(n => { const g = grounded.get(n); return g && g.facts ? `- ${n}: ${g.facts.slice(0, 1200)}` : `- ${n}: (no article; describe only what is certain and keep it short)`; }).join("\n") : "" : "";
+  const vg = grounded ? await voyageFor(label) : null;
+  const tipFor = n => { const l = voyageListing(vg, n, ["see", "do", "listing", "buy"]); return l && (l.content || l.hours || l.price) ? ` Traveler notes (Wikivoyage): ${l.content}${l.hours ? " Hours: " + l.hours + "." : ""}${l.price ? " Price: " + l.price + "." : ""}` : ""; };
+  const facts = names => grounded ? names.map(n => grounded.get(n)).some(g => g && g.facts) ? "\n\nFacts to build on, from each place's Wikipedia article. Use them, never contradict them, and do not invent names, dates or numbers beyond them and well-established history:\n" + names.map(n => { const g = grounded.get(n); return g && g.facts ? `- ${n}: ${g.facts.slice(0, 1200)}${tipFor(n)}` : `- ${n}: (no article; describe only what is certain and keep it short)${tipFor(n)}`; }).join("\n") + "\nUse the traveler notes for practical tips (when to go, what to look for, what to skip), in your own words." : "" : "";
   const groups = [[], [], [], []]; main.forEach((x, i) => groups[i % 4].push(x));
   const list = xs => xs.map(n => '"' + n + '"').join(", ");
   const parts = [
-    { ask: 'For this request return ONLY {"city","country","starts","gettingAround","basics"}, with 8 phrases. Leave out "sites", "farther" and "restaurants" (places to eat come from the map).', size: 4000,
+    { ask: 'For this request return ONLY {"city","country","starts","gettingAround","basics"}, with 8 phrases. Leave out "sites", "farther" and "restaurants" (places to eat come from the map).' + (vg && (vg.getAround || vg.staySafe) ? "\n\nTraveler notes from Wikivoyage to base gettingAround and safety on:\nGet around: " + vg.getAround.slice(0, 1200) + "\nStay safe: " + vg.staySafe.slice(0, 800) : ""), size: 4000,
       ok: j => j && j.city && j.starts && (j.starts.hotel || []).filter(okLL).length >= 1 && j.basics && (j.gettingAround || []).length >= 2 },
     ...groups.filter(g => g.length).map(g => ({ names: g.map(x => x.name), ask: `For this request return ONLY {"sites":[...]} with full details for exactly these ${g.length} main sights and no others, using these exact names: ${list(g.map(x => x.name))}.${facts(g.map(x => x.name))}`, size: 3000 * g.length,
       ok: j => j && (j.sites || []).filter(x => okLL(x) && x.guide).length >= g.length - 1 })),
@@ -2792,7 +2822,14 @@ async function cityInParts(prompt, show, label) {
   const order = k => { const i = main.findIndex(x => keyOf(x.name) === k); return i < 0 ? 99 : i; };
   sites.sort((x, y) => (x.quick ? 1 : 0) - (y.quick ? 1 : 0) || order(x.id.replace(/-/g, " ")) - order(y.id.replace(/-/g, " ")));
   farther.forEach(x => { const gx = grounded && [...grounded.keys()].find(n => nameMatch(n, x.name)); if (gx) { const g = grounded.get(gx); if (g.lat != null) { x.lat = g.lat; x.lng = g.lng; } x.onMap = true; } });
-  return Object.assign({}, info, { sites, farther, grounded: !!grounded });
+  if (grounded) {
+    const all = sites.concat(farther), gOf = x => { const gx = [...grounded.keys()].find(n => keyOf(n) === keyOf(x.name) || nameMatch(n, x.name)); return gx ? grounded.get(gx) : null; };
+    const osm = await osmDetails(all.map(x => (gOf(x) || {}).osm));
+    all.forEach(x => addRealDetails(x, gOf(x), vg, osm));
+  }
+  // Anything the writer returned that wasn't one of the confirmed places is left out.
+  const keep = xs => grounded ? xs.filter(x => x.onMap === true) : xs;
+  return Object.assign({}, info, { sites: keep(sites), farther: keep(farther), grounded: !!grounded });
 }
 // Real-world check for an AI-written city, against OpenStreetMap (the open world map):
 // every sight is looked up by name; found ones get the map's exact location, ones the map can't find
@@ -2840,11 +2877,14 @@ async function realPlaces(raw, label) {
     const good = pl.places.filter(p => p.amenity !== "bar" && !(p.amenity === "fast_food" && !p.cuisine) && !seen.has(keyOf(p.name)) && seen.add(keyOf(p.name))).sort((a, b) => score(b) - score(a));
     const pick = []; // the best few near each stop, so every part of the city has somewhere to eat
     for (const sct of main) good.filter(p => hav(p, pos(sct)) <= 0.5 && !pick.includes(p)).slice(0, 3).forEach(p => pick.push(p));
+    const vg = await voyageFor(label);
+    (vg ? vg.listings : []).filter(l => (l.type === "eat" || l.type === "drink") && isFinite(l.lat) && isFinite(l.lng) && main.some(sct => hav(pos(sct), l) <= 0.6) && !pick.some(p => nameMatch(p.name, l.name)))
+      .slice(0, 25).forEach(l => pick.unshift({ name: l.name, lat: l.lat, lng: l.lng, amenity: l.type === "drink" ? "pub" : "restaurant", cuisine: "", hours: l.hours, web: l.url, voyage: l.content, price: l.price }));
     const nice = t => String(t || "").split(/[;,]/)[0].replace(/_/g, " ").replace(/^\w/, c => c.toUpperCase());
     raw.restaurants = pick.slice(0, 45).map(p => {
       const by = main.slice().sort((a, b) => hav(pos(a), p) - hav(pos(b), p))[0];
-      return { name: p.name, lat: +(+p.lat).toFixed(5), lng: +(+p.lng).toFixed(5), kind: must.some(m => hav(pos(m), p) <= 0.2) ? "touristy" : "local", cuisine: nice(p.cuisine) || (p.amenity === "cafe" ? "Café" : p.amenity === "pub" ? "Pub" : "Restaurant"), price: "",
-        why: `A real ${p.amenity === "cafe" ? "café" : p.amenity === "pub" ? "pub" : "place to eat"} a short walk from ${by ? by.name : "your stops"}${p.hours ? ". Hours listed: " + p.hours : ""}. Check it's open before you go.`, onMap: true };
+      return { name: p.name, lat: +(+p.lat).toFixed(5), lng: +(+p.lng).toFixed(5), kind: must.some(m => hav(pos(m), p) <= 0.2) ? "touristy" : "local", cuisine: nice(p.cuisine) || (p.amenity === "cafe" ? "Café" : p.amenity === "pub" ? "Pub" : "Restaurant"), price: p.price ? String(p.price).slice(0, 60) : "",
+        why: p.voyage ? p.voyage.slice(0, 260) + " (Wikivoyage)" : `A real ${p.amenity === "cafe" ? "café" : p.amenity === "pub" ? "pub" : "place to eat"} a short walk from ${by ? by.name : "your stops"}${p.hours ? ". Hours listed: " + p.hours : ""}. Check it's open before you go.`, onMap: true, recommended: !!p.voyage };
     });
     raw.verified = 2;
   } else raw.restaurants = (raw.restaurants || []).filter(r => r.onMap); // no map answer now: eat near a stop, and look again next time
@@ -4044,7 +4084,7 @@ function renderSites(d) {
   return `
   ${dayHeading(d)}
   <p class="lede">Tick what you'd like to see${avail ? ` in the ${avail} you have` : ""}. Your route is worked out for you, and anything that won't fit is flagged on the plan.</p>
-  ${city.ai ? `<p class="ai-note">Written by your AI guide. Check opening hours before you go.</p>` : city.builtin ? `<p class="ai-note">Kairoute guide. Hours and prices are typical: check before you go.</p>` : ""}
+  ${city.ai ? `<p class="ai-note">Written by your AI guide from checked sources: every place is confirmed on the map, stories draw on Wikipedia and Wikivoyage (CC BY-SA), hours and access on OpenStreetMap contributors (ODbL). Check opening hours before you go.</p>` : city.builtin ? `<p class="ai-note">Kairoute guide. Hours and prices are typical: check before you go.</p>` : ""}
   <div class="filters seg" role="group" aria-label="Filter">
     ${[["all", "All"], ["must", "Must-sees"], ["touristy", "Famous"], ["local", "Local favorites"]].map(([k, l]) => `<button type="button" data-filter="${k}" aria-pressed="${f === k}">${l}</button>`).join("")}
   </div>
@@ -4209,13 +4249,17 @@ function stopCard(s, num, city) {
       ${s.lookFor && s.lookFor.length ? `<div class="field"><span class="eyebrow">What to look for</span><ol class="lookfor">${s.lookFor.map(x => `<li><span>${esc(x)}</span></li>`).join("")}</ol></div>` : ""}
       ${picksBlock(s)}
       ${s.photoTip ? `<p class="phototip"><b>Photo spot:</b> ${esc(s.photoTip)} <a href="${photos}" target="_blank" rel="noopener">See photos of it</a></p>` : ""}
-      ${s.hours || s.tickets || s.crowds ? `<div class="before"><span class="eyebrow">Before you go</span>
+      ${s.travelerTip ? `<p class="phototip"><b>From travelers:</b> ${esc(s.travelerTip)}</p>` : ""}
+      ${s.hours || s.tickets || s.crowds || s.priceNote || s.web ? `<div class="before"><span class="eyebrow">Before you go</span>
         ${s.hours ? `<div><b>Hours</b><span>${esc(s.hours)}${s.closed ? " · " + esc(s.closed) : ""}</span></div>` : ""}
+        ${s.priceNote ? `<div><b>Price</b><span>${esc(s.priceNote)}</span></div>` : ""}
+        ${s.web ? `<div><b>Website</b><span><a href="${esc(s.web)}" target="_blank" rel="noopener">Official site</a></span></div>` : ""}
         ${s.tickets ? `<div><b>Tickets</b><span>${esc(s.tickets)}</span></div>` : ""}
         ${s.crowds ? `<div><b>Crowds</b><span>${esc(s.crowds)}</span></div>` : ""}
         ${s.access && P().access !== "none" ? `<div><b>Access</b><span>${esc(s.access)}</span></div>` : ""}
       </div>` : ""}
       <div class="guidetext">${paras(s.guide)}</div>
+      ${s.sources && s.sources.length ? `<p class="ai-note">Checked against: ${s.sources.filter(x => x !== "map").map(esc).join(", ") || "the map"}${s.sources.includes("map") && s.sources.length > 1 ? " and the map" : ""}.</p>` : ""}
       ${(() => { const tr = translations[s.id + "|" + P().lang]; const need = P().lang !== "English" && city.lang !== P().lang;
         return need ? (tr ? `<div class="guidetext" id="tr-${esc(s.id)}">${tr.text ? paras(tr.text) : `<p class="ai-note"><span class="spinner"></span> Translating…</p>`}</div>${tr.error ? `<p class="ai-note">${esc(tr.error)}</p>` : ""}` : (ready ? `<div><button class="btn ghost small" data-translate="${esc(s.id)}">Read it in ${esc(P().lang)}</button></div>` : "")) : ""; })()}
       ${dp ? `<div class="guidetext" id="deep-${esc(s.id)}">${dp.text ? paras(dp.text) : `<p class="ai-note"><span class="spinner"></span> Your guide is thinking…</p>`}</div>${dp.error ? `<p class="ai-note">${esc(dp.error)}</p>` : ""}` : ""}
@@ -4655,4 +4699,4 @@ render();
 
 </script>
 <script>if ("serviceWorker" in navigator) addEventListener("load", () => navigator.serviceWorker.register("sw.js").catch(() => {}));</script>
-<script>(function(){var B="21cd610-1794409973";function chk(){if(location.protocol!=="https:")return;fetch("version.txt",{cache:"no-store"}).then(function(r){return r.ok?r.text():""}).then(function(t){t=t.trim();if(t&&t!==B)location.reload()}).catch(function(){})}addEventListener("load",chk);document.addEventListener("visibilitychange",function(){if(document.visibilityState==="visible")chk()})})();</script>
+<script>(function(){var B="efd4bb7-1794411533";function chk(){if(location.protocol!=="https:")return;fetch("version.txt",{cache:"no-store"}).then(function(r){return r.ok?r.text():""}).then(function(t){t=t.trim();if(t&&t!==B)location.reload()}).catch(function(){})}addEventListener("load",chk);document.addEventListener("visibilitychange",function(){if(document.visibilityState==="visible")chk()})})();</script>

@@ -100,7 +100,7 @@ export default {
       const UA = { "user-agent": "Kairoute/1.0 (travel guide; https://gilsonr0566-sys.github.io/Kairoute/)" };
       const one = async name => {
         if (!name) return null;
-        const k = "gr1:" + (await sha(name + "|" + city)), hit = await env.USAGE.get(k, "json"); if (hit) return hit;
+        const k = "gr2:" + (await sha(name + "|" + city)), hit = await env.USAGE.get(k, "json"); if (hit) return hit;
         const plain = name.replace(/\s*\(.*?\)\s*/g, " ").trim(), q = plain + " " + city;
         let wiki = null, map = null;
         try {
@@ -109,7 +109,7 @@ export default {
         } catch (e) {}
         try {
           const pr = await fetch("https://photon.komoot.io/api/?limit=4&lang=en&q=" + encodeURIComponent(q), { headers: UA });
-          if (pr.ok) { const j = await pr.json(); map = (j.features || []).map(f => ({ name: (f.properties || {}).name || "", lat: f.geometry.coordinates[1], lng: f.geometry.coordinates[0], kind: (f.properties || {}).osm_value || "", city: (f.properties || {}).city || "" })); }
+          if (pr.ok) { const j = await pr.json(); map = (j.features || []).map(f => ({ name: (f.properties || {}).name || "", lat: f.geometry.coordinates[1], lng: f.geometry.coordinates[0], kind: (f.properties || {}).osm_value || "", city: (f.properties || {}).city || "", osm: ((f.properties || {}).osm_type || "") + ((f.properties || {}).osm_id || "") })); }
         } catch (e) {}
         const res = { wiki: wiki || [], map: map || [], answered: !!(wiki && map) };
         if (res.answered) ctx.waitUntil(env.USAGE.put(k, JSON.stringify(res), { expirationTtl: 90 * 86400 }));
@@ -118,6 +118,47 @@ export default {
       const out = new Array(names.length); let next = 0;
       await Promise.all(Array.from({ length: 5 }, async () => { while (next < names.length) { const i = next++; out[i] = await one(names[i]); } }));
       return Response.json({ results: out }, { headers: h });
+    }
+    // /voyage?city=: the city's Wikivoyage page (written by travelers): its listings (see, do, eat, drink)
+    // with descriptions, hours, prices and locations, and the practical sections.
+    if (url.pathname === "/voyage") {
+      const city = String(url.searchParams.get("city") || "").slice(0, 120); if (!city) return Response.json({ error: "Empty" }, { status: 400, headers: h });
+      const key = "wv1:" + (await sha(city.toLowerCase()));
+      const hit = await env.USAGE.get(key); if (hit) return new Response(hit, { headers: { ...h, "content-type": "application/json" } });
+      const UA = { "user-agent": "Kairoute/1.0 (travel guide; https://gilsonr0566-sys.github.io/Kairoute/)" };
+      let wt = "", title = "";
+      for (const t of [city, city.split(",")[0].trim()]) {
+        try { const r = await fetch("https://en.wikivoyage.org/w/api.php?action=parse&prop=wikitext&format=json&formatversion=2&redirects=1&page=" + encodeURIComponent(t), { headers: UA }); if (r.ok) { const j = await r.json(); if (j.parse && j.parse.wikitext) { wt = j.parse.wikitext; title = j.parse.title; break; } } } catch (e) {}
+      }
+      const clean = t => String(t || "").replace(/\{\{[^{}]*\}\}/g, "").replace(/\[\[(?:[^|\]]*\|)?([^\]]*)\]\]/g, "$1").replace(/\[https?:\/\/\S+\s([^\]]*)\]/g, "$1").replace(/'{2,}/g, "").replace(/<[^>]+>/g, "").replace(/\s+/g, " ").trim();
+      const listings = [];
+      const re = /\{\{\s*(see|do|eat|drink|buy|listing|sleep)\s*\|/gi; let m;
+      while ((m = re.exec(wt))) {
+        let i = m.index + 2, depth = 1, j = i; while (j < wt.length && depth) { if (wt.startsWith("{{", j)) { depth++; j += 2; } else if (wt.startsWith("}}", j)) { depth--; j += 2; } else j++; }
+        const body = wt.slice(i, j - 2); const f = {}; let d2 = 0, cur = "", parts = [];
+        for (let k = 0; k < body.length; k++) { const c = body[k]; if (body.startsWith("{{", k) || body.startsWith("[[", k)) d2++; if (body.startsWith("}}", k) || body.startsWith("]]", k)) d2--; if (c === "|" && d2 <= 0) { parts.push(cur); cur = ""; } else cur += c; }
+        parts.push(cur); parts.slice(1).forEach(x => { const e = x.indexOf("="); if (e > 0) f[x.slice(0, e).trim().toLowerCase()] = x.slice(e + 1).trim(); });
+        const type = m[1].toLowerCase() === "listing" ? (f.type || "listing") : m[1].toLowerCase();
+        if (f.name) listings.push({ type, name: clean(f.name), content: clean(f.content || f.description || "").slice(0, 700), hours: clean(f.hours), price: clean(f.price), url: f.url || "", lat: parseFloat(f.lat), lng: parseFloat(f.long || f.lng), wikipedia: clean(f.wikipedia), wikidata: f.wikidata || "" });
+        re.lastIndex = j;
+      }
+      const section = name => { const mm = wt.match(new RegExp("==\\s*" + name + "\\s*==([\\s\\S]*?)(\\n==[^=]|$)", "i")); return mm ? clean(mm[1].replace(/\{\{\s*(see|do|eat|drink|buy|listing|sleep)[\s\S]*?\}\}/gi, "")).slice(0, 1500) : ""; };
+      const out = JSON.stringify({ title, listings: listings.slice(0, 300), getAround: section("Get around"), staySafe: section("Stay safe"), understand: section("Understand").slice(0, 1200) });
+      ctx.waitUntil(env.USAGE.put(key, out, { expirationTtl: 30 * 86400 }));
+      return new Response(out, { headers: { ...h, "content-type": "application/json" } });
+    }
+    // /osm: opening hours, fees, wheelchair access and websites for map places, by their map ids.
+    if (url.pathname === "/osm" && req.method === "POST") {
+      let b; try { b = await req.json(); } catch (e) { return Response.json({ error: "Bad request" }, { status: 400, headers: h }); }
+      const ids = (Array.isArray(b.ids) ? b.ids : []).map(String).filter(x => /^[NWR]\d+$/.test(x)).slice(0, 50);
+      if (!ids.length) return Response.json({ places: {} }, { headers: h });
+      try {
+        const r = await fetch("https://nominatim.openstreetmap.org/lookup?format=jsonv2&extratags=1&osm_ids=" + ids.join(","), { headers: { "user-agent": "Kairoute/1.0 (travel guide; https://gilsonr0566-sys.github.io/Kairoute/)" } });
+        if (!r.ok) return Response.json({ error: "map busy" }, { status: 502, headers: h });
+        const j = await r.json(), places = {};
+        for (const p of j) { const t = p.extratags || {}; places[p.osm_type[0].toUpperCase() + p.osm_id] = { hours: t.opening_hours || "", fee: t.fee || t.charge || "", wheelchair: t.wheelchair || "", web: t.website || t["contact:website"] || t.url || "", wikidata: t.wikidata || "" }; }
+        return Response.json({ places }, { headers: h });
+      } catch (e) { return Response.json({ error: "map busy" }, { status: 502, headers: h }); }
     }
     if (url.pathname === "/verify" && req.method === "POST") {
       if (origin && !ALLOWED.some(r => r.test(origin))) return Response.json({ error: "Not allowed" }, { status: 403, headers: h });
