@@ -28,9 +28,10 @@ jobs:
           distribution: temurin
           java-version: 21
       - name: Deploy the AI helper to Cloudflare (free Workers AI)
-        if: env.CLOUDFLARE_API_TOKEN != ''
         continue-on-error: true
         run: |
+          if [ -z "$CLOUDFLARE_API_TOKEN" ]; then echo "No CLOUDFLARE_API_TOKEN repository secret found; skipping the AI helper."; exit 0; fi
+          echo "Cloudflare token found (${#CLOUDFLARE_API_TOKEN} characters)."
           cd worker && npx -y wrangler@4 deploy 2>&1 | tee deploy.log
           url=$(grep -oE 'https://[a-z0-9.-]+\.workers\.dev' deploy.log | head -1)
           if [ -n "$url" ]; then printf '{"url":"%s"}\n' "$url" > ../ai.json; cat ../ai.json; fi
