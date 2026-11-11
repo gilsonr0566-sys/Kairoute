@@ -51,7 +51,7 @@ export default {
 
     const inTok = Math.ceil(prompt.length / 4) + images.length * 1200;
     const u = await used(env);
-    if (u + inTok * IN_RATE + 500 > DAILY_NEURONS) return Response.json({ error: "The free AI allowance for today is used up. It resets at midnight UTC (7 pm Central)." }, { status: 429, headers: h });
+    if (u + inTok * IN_RATE + 500 > DAILY_NEURONS) return Response.json({ error: "The free AI allowance for today is used up. It resets at 6 pm Central time (7 pm in summer)." }, { status: 429, headers: h });
 
     const content = images.length ? [...images.map(d => ({ type: "image_url", image_url: { url: d } })), { type: "text", text: prompt }] : prompt;
     // No streaming: the free plan allows only a few milliseconds of Worker CPU per request, and
