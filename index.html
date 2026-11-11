@@ -2295,6 +2295,7 @@ function simDay(seq, t0, O, Z, style) {
       if (clock > m.to) cost += (clock - m.to) * 6;
       if (style !== "mix" && p.kind && p.kind !== style) cost += 8;
       if (p.recommended) cost -= 6; // recommended by travelers on Wikivoyage
+      if (p.top) cost -= 8; // among the best-rated places near the route
       clock += m.len;
     } else clock += p.minutes || 0;
     prev = p;
@@ -2333,11 +2334,28 @@ function polishDay(seq, t0, O, Z, style, city) {
 }
 // Places to eat that are a short walk (about 8 minutes) from today's stops. If the guide knows none
 // that close, the plan says "Lunch near <stop>" and lets the traveler pick, rather than send them far.
+// Places to eat already planned on earlier days of the trip, so a meal spot is never repeated.
+let mealMemo = new Map(), avoidMeals = new Set();
 function mealSpots(seq, O, Z, city) {
   const anchors = seq.filter(x => !x.mealOf).concat(O ? [O] : [], Z ? [Z] : []);
   const near = (city.restaurants || []).filter(r => anchors.some(a => hav(a, r) <= 0.6));
+  const fresh = near.filter(r => !avoidMeals.has(keyOf(r.name)));
+  if (fresh.length) return fresh;
   if (near.length) return near;
   return seq.filter(x => !x.mealOf).map(x => ({ name: "Lunch near " + x.name, lat: x.lat, lng: x.lng, generic: true, kind: "local", cuisine: "Your pick", price: "", why: "Choose any café or restaurant around here. A good sign is a place full of locals." }));
+}
+// Two alternatives for each meal, a short walk away, chosen to be different from the main pick and from
+// each other (another cuisine or style), favouring places travelers recommend. Never one used on another day.
+function mealAlternatives(s, seq, city) {
+  if (s.generic) return [];
+  const cu = r => keyOf(r.cuisine || "restaurant");
+  const pool = (city.restaurants || []).filter(r => !r.generic && keyOf(r.name) !== keyOf(s.name) && hav(r, s) <= 0.6 && !avoidMeals.has(keyOf(r.name)) && !seq.some(x => x.mealOf && keyOf(x.name) === keyOf(r.name)));
+  const out = [];
+  while (out.length < 2 && pool.length) {
+    const score = r => (r.recommended ? 2 : 0) + (r.top ? 2 : 0) + ([s].concat(out).every(o => cu(o) !== cu(r)) ? 2 : 0) + ([s].concat(out).every(o => o.kind !== r.kind) ? 1 : 0) - hav(r, s) * 3;
+    pool.sort((a, b) => score(b) - score(a)); out.push(pool.shift());
+  }
+  return out;
 }
 function placeMeals(order, meals, t0, O, Z, style, city) {
   let seq = order.slice();
@@ -2426,6 +2444,9 @@ function buildPlan(d) {
   // A meal is planned only on a day with stops, and only if it fits before the day has to end.
   const needMeals = q => q.some(x => !x.mealOf) ? MEALS.filter(m => t0 < m.to - 30 && m.from + m.len + 15 <= w.endBy - tailCost()) : [];
   const withMeals = q => { const bare = q.filter(x => !x.mealOf); return placeMeals(bare, needMeals(bare), t0, O, ZZ, style, city); };
+  const savedAvoid = avoidMeals, av = new Set(), myIdx = trip.days.indexOf(d);
+  trip.days.slice(0, Math.max(0, myIdx)).forEach(o => { if (cityFor(o) !== city) return; if (!mealMemo.has(o)) { try { buildPlan(o); } catch (e) {} } (mealMemo.get(o) || []).forEach(n => av.add(n)); });
+  avoidMeals = av;
   let seq = withMeals(order);
   // Spare time: add the best nearby sights that still fit, with a 15-minute cushion (they show as bonus stops)
   const bonus = [];
@@ -2468,12 +2489,14 @@ function buildPlan(d) {
   seq.forEach(s => {
     if (!s.mealOf) { go(s, "stop"); return; }
     const leg = travel(prev, s); items.push({ type: "travel", leg, time: clock }); clock += leg.min;
-    const at = Math.max(clock, s.mealOf.from), alts = (city.restaurants || []).filter(r => r.name !== s.name && hav(r, s) <= 0.5 && !seq.some(x => x.mealOf && x.name === r.name)).sort((a, b) => hav(a, s) - hav(b, s)).slice(0, 2);
+    const at = Math.max(clock, s.mealOf.from), alts = mealAlternatives(s, seq, city);
     const r = Object.assign({}, s, { alts }); delete r.mealOf;
     items.push({ type: "meal", meal: s.mealOf, place: r, time: at }); clock = at + s.mealOf.len; meals.push(r); prev = s;
   });
   w.tail.forEach((p, i) => go(Object.assign({}, p, { minutes: p.fixed ? p.minutes : 0 }), i === w.tail.length - 1 ? "end" : "fixed", i === w.tail.length - 1 ? { label: w.endLabel } : {}));
   if (!w.tail.length) items.push({ type: "end", place: null, time: clock, label: "Day done" });
+  mealMemo.set(d, meals.flatMap(m => [m].concat(m.alts || [])).filter(m => !m.generic).map(m => keyOf(m.name)));
+  avoidMeals = savedAvoid;
   const walkKm = items.filter(i => i.type === "travel" && i.leg.mode === "walk").reduce((a, i) => a + i.leg.km, 0);
   const stops = items.filter(i => i.type === "stop");
   return { city, w, items, stops, dropped, along, bonus, meals, swaps, closedToday, start: w.start, endBy: w.endBy, end: clock, walkKm, over: clock > w.endBy + 5, tight: budget < fixed + 45 };
@@ -2602,7 +2625,7 @@ function cleanCity(c, dest) {
     } : null,
     lang: P().lang,
     gettingAround: (c.gettingAround || []).filter(x => x && x.tip).slice(0, 5).map(x => ({ mode: String(x.mode || ""), tip: String(x.tip) })),
-    restaurants: (c.restaurants || []).filter(okLL).map(r => ({ onMap: !!r.onMap, generic: !!r.generic, recommended: !!r.recommended, name: String(r.name), lat: num(r.lat), lng: num(r.lng), kind: r.kind === "local" ? "local" : "touristy", cuisine: String(r.cuisine || ""), price: String(r.price || ""), why: String(r.why || "") }))
+    restaurants: (c.restaurants || []).filter(okLL).map(r => ({ onMap: !!r.onMap, generic: !!r.generic, recommended: !!r.recommended, top: !!r.top, style: String(r.style || ""), name: String(r.name), lat: num(r.lat), lng: num(r.lng), kind: r.kind === "local" ? "local" : "touristy", cuisine: String(r.cuisine || ""), price: String(r.price || ""), why: String(r.why || "") }))
   };
 }
 function faithNote() {
@@ -2822,7 +2845,7 @@ async function cityInParts(prompt, show, label) {
   const seeList = vg ? [...new Set(vg.listings.filter(l => l.type === "see" && l.name && l.name.length < 60).map(l => l.name))].slice(0, 45) : [];
   const hint = seeList.length ? ` Travelers on Wikivoyage list these real places in ${label}. Prefer them where they fit, and use these exact names for them: ${seeList.join("; ")}.` : "";
   // Ask for more than the guide needs: any name the check can't confirm is dropped, and the rest still fill the guide.
-  const plan = await ask('For this first step return ONLY {"main":[{"name","mustSee","kind"}],"quick":["name"],"farther":["name"]}: exactly 18 main sights in order of importance (3-5 mustSee true, about a third "kind":"local"), 7 small quick sights people walk past, and 5 day trips or sights farther out. Real, distinct places, each under its usual name as it appears on maps. Places only, not activities, walks, hikes or tours, and one entry per place (never separate entries for parts of the same place). Names and those fields only.' + hint, "quick",
+  const plan = await ask('For this first step return ONLY {"main":[{"name","mustSee","kind"}],"quick":["name"],"farther":["name"]}: exactly 18 main sights in order of importance (3-5 mustSee true, about a third "kind":"local"), 7 small quick sights people walk past, and 5 day trips or sights farther out. Real, distinct places, each under its usual name as it appears on maps. Places only, not activities, walks, hikes or tours, and one entry per place (never separate entries for parts of the same place). Always include the city\'s best-known landmarks, monuments, memorials and statues (as main or quick sights), even if they are not in any list below. Names and those fields only.' + hint, "quick",
     j => j && (j.main || []).filter(x => x && x.name).length >= 8);
   let main = plan.main.filter(x => x && x.name).slice(0, 20), quick = (plan.quick || []).map(String).filter(Boolean).slice(0, 8), far = (plan.farther || []).map(String).filter(Boolean).slice(0, 5);
   // Keep only places that really exist, and give the writer each place's real facts to work from.
@@ -2897,7 +2920,26 @@ async function cityInParts(prompt, show, label) {
 // every sight is looked up by name; found ones get the map's exact location, ones the map can't find
 // are left out. Restaurants always come from the map itself (real places near the stops), never from
 // the AI. The checked guide is what gets saved and shared.
-const EATS_V = 2;
+const EATS_V = 3;
+// The guide's local knowledge, applied only to real places: it sorts the restaurants found on the map and
+// Wikivoyage by reputation, and says what each serves and why go. It can't add a place: any name it
+// returns that isn't on the list is ignored.
+async function rankEats(raw, label) {
+  const list = (raw.restaurants || []).filter(r => r.onMap);
+  if (!sample || list.length < 3) return;
+  const lines = list.map((r, i) => `${i + 1}. ${r.name}${r.cuisine && r.cuisine !== "Restaurant" ? " (" + r.cuisine + ")" : ""}${r.recommended ? " [recommended on Wikivoyage]" : ""}`).join("\n");
+  const prompt = `You are a well-travelled local food guide for ${label}. Below are real places to eat near the sights, numbered. Using what you know about each place's reputation, return ONLY JSON {"eats":[{"n":number,"cuisine":"Seafood, Tex-Mex, Thai, Café, BBQ...","style":"local favorite" | "classic" | "casual" | "upscale" | "quick bite","price":"$" | "$$" | "$$$","top":true|false,"why":"one specific sentence: what to order and what it's like (view, vibe)"}]} for every place you can describe. "top": true only for about the 10 places locals and visitors rate best. If you don't know a place, give only its likely cuisine from the name, top false and why "". Never add places that aren't on the list.\n\n${lines}`;
+  try {
+    const r = await sample(prompt, { modelTier: "part" }); const j = parseJSON(r.text || "");
+    (j && Array.isArray(j.eats) ? j.eats : []).forEach(e => { const x = list[(+e.n || 0) - 1]; if (!x) return;
+      if (e.cuisine && (!x.cuisine || x.cuisine === "Restaurant")) x.cuisine = String(e.cuisine).slice(0, 40);
+      if (e.style) x.style = String(e.style).slice(0, 20); if (e.price && !x.price) x.price = String(e.price).slice(0, 4);
+      x.top = !!e.top; if (e.why && !x.recommended && String(e.why).length > 20) x.why = String(e.why).slice(0, 220);
+      x.kind = /local|casual|quick/.test(x.style || "") ? "local" : x.kind; });
+    list.sort((a, b) => (b.top ? 2 : 0) + (b.recommended ? 1 : 0) - ((a.top ? 2 : 0) + (a.recommended ? 1 : 0)));
+    raw.restaurants = list.concat((raw.restaurants || []).filter(r => !r.onMap));
+  } catch (e) { /* ranking is a bonus: the real list stands without it */ }
+}
 async function realPlaces(raw, label) {
   if (!freeAI || !raw) return raw;
   const realEats = (raw.restaurants || []).length && raw.restaurants.every(r => r.onMap);
@@ -2940,7 +2982,7 @@ async function realPlaces(raw, label) {
     const seen = new Set(), score = p => (p.cuisine ? 2 : 0) + (p.hours ? 1 : 0) + (p.web ? 1 : 0) + Math.min(6, p.tags) / 3 + (p.amenity === "restaurant" ? 1 : 0);
     const good = pl.places.filter(p => p.amenity !== "bar" && !(p.amenity === "fast_food" && !p.cuisine) && !seen.has(keyOf(p.name)) && seen.add(keyOf(p.name))).sort((a, b) => score(b) - score(a));
     const pick = []; // the best few near each stop, so every part of the city has somewhere to eat
-    for (const sct of main) good.filter(p => hav(p, pos(sct)) <= 0.5 && !pick.includes(p)).slice(0, 3).forEach(p => pick.push(p));
+    for (const sct of main) good.filter(p => hav(p, pos(sct)) <= 0.5 && !pick.includes(p)).slice(0, 5).forEach(p => pick.push(p));
     const vg = await voyageFor(label);
     // Places travelers recommend on Wikivoyage come first. When the map knows the same place, use the map's
     // location and details and add the travelers' notes; otherwise use the listing's own location.
@@ -2954,11 +2996,12 @@ async function realPlaces(raw, label) {
       else if (isFinite(l.lat) && isFinite(l.lng) && nearStops(l) && !pick.some(p => nameMatch(p.name, l.name))) { pick.unshift({ name: l.name, lat: l.lat, lng: l.lng, amenity: l.type === "drink" ? "pub" : "restaurant", cuisine: "", hours: l.hours, web: l.url, voyage: note, price: l.price }); recs++; }
     }
     const nice = t => String(t || "").split(/[;,]/)[0].replace(/_/g, " ").replace(/^\w/, c => c.toUpperCase());
-    raw.restaurants = pick.slice(0, 45).map(p => {
+    raw.restaurants = pick.slice(0, 60).map(p => {
       const by = main.slice().sort((a, b) => hav(pos(a), p) - hav(pos(b), p))[0];
       return { name: p.name, lat: +(+p.lat).toFixed(5), lng: +(+p.lng).toFixed(5), kind: must.some(m => hav(pos(m), p) <= 0.2) ? "touristy" : "local", cuisine: nice(p.cuisine) || (p.amenity === "cafe" ? "Café" : p.amenity === "pub" ? "Pub" : "Restaurant"), price: p.price ? String(p.price).slice(0, 60) : "",
         why: p.voyage ? p.voyage.slice(0, 260) + " (Wikivoyage)" : `A real ${p.amenity === "cafe" ? "café" : p.amenity === "pub" ? "pub" : "place to eat"} a short walk from ${by ? by.name : "your stops"}${p.hours ? ". Hours listed: " + p.hours : ""}. Check it's open before you go.`, onMap: true, recommended: !!p.voyage };
     });
+    await rankEats(raw, label);
     raw.verified = 2; raw.eatsV = EATS_V;
   } else raw.restaurants = (raw.restaurants || []).filter(r => r.onMap); // no map answer now: eat near a stop, and look again next time
   return raw;
@@ -2975,7 +3018,7 @@ async function checkSavedCities() {
 }
 // Finished guides are kept on Kairoute's AI helper, so each city is written only once and opens in seconds after that.
 // Bump when the way guides are checked improves: older AI guides are then rebuilt with the better check.
-const GUIDE_V = "v8";
+const GUIDE_V = "v9";
 function guideCacheKey(d) {
   return [GUIDE_V, keyOf(d.destination), d.event ? keyOf(d.event) : "", d.type === "port" ? "port" : "", ((trip.prefs && trip.prefs.interests) || []).slice().sort().join(","), P().lang, P().access].join("|");
 }
@@ -3293,7 +3336,7 @@ async function saveStops(sites, onStep, reserve) {
   }
   return { done, made, total: sites.length, stopped: false };
 }
-if (typeof window !== "undefined") window.__kairoutePlans = (ov) => { if (ov) trip.days.forEach((d, i) => { if (ov.sel && ov.sel[i]) d.selected = ov.sel[i]; if ("fill" in ov) d.fillTime = ov.fill; }); bonusMemo = new Map(); return trip.days.map((d, i) => { const pl = buildPlan(d); if (!pl || !pl.items) return { i, date: d.date, dest: d.destination, none: true }; const pts = pl.items.filter(x => x.place && x.type !== "travel").map(x => ({ lat: x.place.lat, lng: x.place.lng, t: x.type, n: x.place.name })); return { i, date: d.date, dest: d.destination, pts, km: +pl.walkKm.toFixed(2), end: pl.end, endBy: pl.endBy, stops: pl.stops.length, bonus: (pl.bonus || []).map(x => x.name), meals: pl.items.filter(x => x.type === "meal").map(x => x.meal.label + "@" + x.time) }; }); };
+if (typeof window !== "undefined") window.__kairoutePlans = (ov) => { if (ov) trip.days.forEach((d, i) => { if (ov.sel && ov.sel[i]) d.selected = ov.sel[i]; if ("fill" in ov) d.fillTime = ov.fill; }); bonusMemo = new Map(); mealMemo = new Map(); avoidMeals = new Set(); return trip.days.map((d, i) => { const pl = buildPlan(d); if (!pl || !pl.items) return { i, date: d.date, dest: d.destination, none: true }; const pts = pl.items.filter(x => x.place && x.type !== "travel").map(x => ({ lat: x.place.lat, lng: x.place.lng, t: x.type, n: x.place.name })); return { i, date: d.date, dest: d.destination, pts, km: +pl.walkKm.toFixed(2), end: pl.end, endBy: pl.endBy, stops: pl.stops.length, bonus: (pl.bonus || []).map(x => x.name), meals: pl.items.filter(x => x.type === "meal").map(x => x.meal.label + "@" + x.time + " " + x.place.name + " | alts: " + (x.place.alts || []).map(r => r.name + " (" + r.cuisine + ")").join("; ")) }; }); };
 // Test hook: pick each day's stops the way a fresh build does.
 if (typeof window !== "undefined") window.__kairouteFreshPicks = () => { trip.days.forEach(x => { x.selected = null; }); trip.days.forEach(x => { const c = cities[cityKeyFor(x)]; if (c) x.selected = defaultSelection(c, trip.style, x); }); return trip.days.map(x => x.selected); };
 if (typeof window !== "undefined") window.kairoutePrewarm = (reserve, log) => saveStops(BUILTIN_CITIES.flatMap(([c]) => allSites(c)), log || ((d, n, s) => console.log(`saved ${d}/${n} ${s.name}`)), reserve ?? 15000);
@@ -3423,7 +3466,7 @@ document.addEventListener("toggle", e => {
   const k = view + "|" + sm.textContent.trim(); if (el.open) openFolds.add(k); else openFolds.delete(k);
 }, true);
 function render() {
-  bonusMemo = new Map();
+  bonusMemo = new Map(); mealMemo = new Map(); avoidMeals = new Set();
   renderView();
   if (openFolds.size) document.querySelectorAll("#view details").forEach(el => { const sm = el.querySelector("summary"); if (sm && openFolds.has(view + "|" + sm.textContent.trim())) el.open = true; });
 }
@@ -4268,7 +4311,7 @@ function renderPlan(d) {
       const r = it.place;
       return `<div class="${cls}"><div class="time">${fmt(it.time)}</div><div class="rail"><div class="dot meal">${it.meal.label[0]}</div></div><div class="what">
         <div class="nm">${it.meal.label}: ${esc(r.name)}</div><div class="sub">${[r.cuisine, r.price, r.generic ? "" : r.kind === "local" ? "Local spot" : "Popular with visitors", dur(it.meal.len)].filter(Boolean).map(esc).join(" · ")}</div>
-        <div class="mealbox"><span>${esc(r.why)}</span>${r.alts && r.alts.length ? `<span class="alt">Also nearby: ${r.alts.map(a => esc(a.name)).join(", ")}</span>` : ""}</div></div></div>`;
+        <div class="mealbox"><span>${esc(r.why)}</span>${r.alts && r.alts.length ? `<span class="alt"><b>Or try:</b> ${r.alts.map(a => esc(a.name) + (a.cuisine && a.cuisine !== "Restaurant" ? ` <small>(${esc(a.cuisine)})</small>` : "")).join(" · ")}</span>` : ""}</div></div></div>`;
     }
     if (it.type === "stop") {
       const s = it.place;
@@ -4450,7 +4493,7 @@ function renderTour(d) {
     const r = st.place;
     body = `<div class="tourcard"><div class="eyebrow">${esc(st.meal.label)} · ${dur(st.meal.len)}</div><h2 class="tourtitle">${esc(r.name)}</h2>
       <p class="lede">${[r.cuisine, r.price, r.generic ? "" : r.kind === "local" ? "a local spot" : "popular with visitors"].filter(Boolean).map(esc).join(" · ")}</p><p>${esc(r.why)}</p>
-      ${r.alts && r.alts.length ? `<p class="lede">Full or closed? Try ${r.alts.map(a => esc(a.name)).join(" or ")}.</p>` : ""}
+      ${r.alts && r.alts.length ? `<p class="lede">Want something different, or it's full? Try ${r.alts.map(a => esc(a.name) + (a.cuisine && a.cuisine !== "Restaurant" ? " (" + esc(a.cuisine) + ")" : "")).join(" or ")}.</p>` : ""}
       <p class="timeleft" id="tourLeft"></p>
       <div class="actions tourmain"><button class="btn bigbtn" data-act="tournext">${nxt ? "Next: " + esc(stepName(nxt)) : "Finish"}</button></div></div>`;
   } else if (st.type === "fixed") {
@@ -4794,4 +4837,4 @@ render();
 
 </script>
 <script>if ("serviceWorker" in navigator) addEventListener("load", () => navigator.serviceWorker.register("sw.js").catch(() => {}));</script>
-<script>(function(){var B="d0c7197-1794438245";function chk(){if(location.protocol!=="https:")return;fetch("version.txt",{cache:"no-store"}).then(function(r){return r.ok?r.text():""}).then(function(t){t=t.trim();if(t&&t!==B)location.reload()}).catch(function(){})}addEventListener("load",chk);document.addEventListener("visibilitychange",function(){if(document.visibilityState==="visible")chk()})})();</script>
+<script>(function(){var B="b7e0792-1794439064";function chk(){if(location.protocol!=="https:")return;fetch("version.txt",{cache:"no-store"}).then(function(r){return r.ok?r.text():""}).then(function(t){t=t.trim();if(t&&t!==B)location.reload()}).catch(function(){})}addEventListener("load",chk);document.addEventListener("visibilitychange",function(){if(document.visibilityState==="visible")chk()})})();</script>
