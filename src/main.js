@@ -283,7 +283,7 @@ function travel(a, b) {
   const lim = WALK_LIMIT[(trip.prefs && trip.prefs.walk) || "medium"];
   const speed = trip.prefs && trip.prefs.walk === "low" ? 3.6 : 4.5;
   if (d <= lim) return { mode: "walk", how: "Walk", km: d * 1.3, min: Math.max(2, Math.round(d * 1.3 / speed * 60)) };
-  if (d <= 6) return { mode: "ride", how: "Metro, bus or taxi", km: d * 1.3, min: Math.round(10 + d * 1.3 / 22 * 60) };
+  if (d <= 6) return { mode: "ride", how: "Taxi, bus or metro", km: d * 1.3, min: Math.round(10 + d * 1.3 / 22 * 60) };
   if (d <= 15) return { mode: "ride", how: "Taxi or rideshare", km: d * 1.3, min: Math.round(10 + d * 1.3 / 25 * 60) };
   return { mode: "ride", how: "Train or car", km: d * 1.25, min: Math.round(20 + d * 1.25 / 60 * 60) };
 }
@@ -2510,14 +2510,14 @@ function renderPlan(d) {
       const r = it.place;
       return `<div class="${cls}"><div class="time">${fmt(it.time)}</div><div class="rail"><div class="dot meal">${it.meal.label[0]}</div></div><div class="what">
         <div class="nm">${it.meal.label}: ${esc(r.name)}</div><div class="sub">${[r.cuisine, r.price, r.generic ? "" : r.kind === "local" ? "Local spot" : "Popular with visitors", dur(it.meal.len)].filter(Boolean).map(esc).join(" · ")}</div>
-        <div class="mealbox"><span>${esc(r.why)}</span>${r.alts && r.alts.length ? `<span class="alt"><b>Or try:</b> ${r.alts.map(a => esc(a.name) + (a.cuisine && a.cuisine !== "Restaurant" ? ` <small>(${esc(a.cuisine)})</small>` : "")).join(" · ")}</span>` : ""}</div></div></div>`;
+        <div class="mealbox">${r.top || r.recommended ? `<span class="badges">${r.top ? `<i class="badge">Local favorite</i>` : ""}${r.recommended ? `<i class="badge">Travelers recommend</i>` : ""}</span>` : ""}<span>${esc(String(r.why || "").replace(/\s*\(Wikivoyage\)\s*$/, ""))}</span>${r.alts && r.alts.length ? `<span class="alt"><b>Or try</b> ${r.alts.map(a => esc(a.name) + (a.cuisine && a.cuisine !== "Restaurant" ? ` <small>(${esc(a.cuisine)})</small>` : "")).join(" · ")}</span>` : ""}</div></div></div>`;
     }
     if (it.type === "stop") {
       const s = it.place;
       if (s.along) return `<div class="${cls}"><div class="time">${fmt(it.time)}</div><div class="rail"><div class="dot quick"></div></div><div class="what"><div class="nm">On the way: ${esc(s.name)}</div><div class="sub">${esc(s.lookFor[0] || s.summary)}</div><button class="link" data-open="${esc(s.id)}">Hear about it</button></div></div>`;
       n++;
       return `<div class="${cls}"><div class="time">${fmt(it.time)}</div><div class="rail"><div class="dot">${n}</div></div><div class="what">
-        <div class="nm">${esc(s.name)}</div><div class="sub">${dur(s.minutes)} · ${esc(s.category)}${s.mustSee ? " · Must-see" : ""}${s.far && s.travel ? " · " + esc(unitText(s.travel)) : ""}</div>
+        <div class="nm">${esc(s.name)}</div><div class="sub">${dur(s.minutes)} · ${esc(String(s.category || "").replace(/^\w/, c => c.toUpperCase()))}${s.mustSee ? " · Must-see" : ""}${s.far && s.travel ? " · " + esc(unitText(s.travel)) : ""}</div>
         ${s.bonus ? `<div class="sub bonus">Bonus stop: it fits your spare time, right by your route</div>` : ""}<button class="link" data-open="${esc(s.id)}">Open the guide</button></div></div>`;
     }
     if (it.type === "end") {
@@ -2532,23 +2532,23 @@ function renderPlan(d) {
   const stopsN = plan.stops.filter(s => !s.place.along).length;
   return `
   ${dayHeading(d)}
-  <div class="windowbar"><span>Free from <b>${fmt(plan.start)}</b></span><span>${d.type === "port" ? "Back at ship by" : d.type === "departure" || d.type === "embark" ? "At the terminal by" : "Done by"} <b>${fmt(plan.endBy)}</b></span><span>${dur(plan.endBy - plan.start)} in all</span></div>
-  ${plan.w.notes.map(t => `<p class="lede">${esc(t)}</p>`).join("")}
+  <div class="daysum" role="group" aria-label="Today at a glance">
+    <div><b>${fmt(plan.start)}–${fmt(plan.endBy)}</b><span>${d.type === "port" ? "ashore" : "free time"} · ${dur(plan.endBy - plan.start)}</span></div>
+    <div><b>${stopsN}${plan.along.length ? " + " + plan.along.length : ""}</b><span>stops${plan.along.length ? " + on the way" : ""}</span></div>
+    <div><b>${distTxt(plan.walkKm)}</b><span>walking</span></div>
+    <div><b>${fmt(plan.end)}</b><span>${d.type === "port" ? "back on board" : "finish"}</span></div>
+  </div>
+  ${plan.w.notes.map(t => `<p class="lede small">${esc(t)}</p>`).join("")}
   ${d.estimated ? `<div class="banner warn">These port times are estimated. Check them against your cruise documents.</div>` : ""}
-  <div class="actions planacts"><button class="btn bigbtn" data-act="tourstart" style="background:var(--meal)">▶ Start the tour</button><button class="btn ghost" data-goto="sites">Change stops</button><button class="btn ghost" data-act="suggesttour">Suggest my tour</button><a class="btn ghost" href="${gmapsLink(plan)}" target="_blank" rel="noopener">Directions in Google Maps</a></div>
-  <label class="check"><input type="checkbox" id="f-rain" ${d.rain ? "checked" : ""}><span><b>Rain expected</b> · swap outdoor stops for indoor ones</span></label>
+  <div class="planacts"><button class="btn bigbtn" data-act="tourstart">▶ Start the tour</button>
+    <div class="toolrow"><button class="btn ghost small" data-goto="sites">Change stops</button><button class="btn ghost small" data-act="suggesttour">Suggest my tour</button><a class="btn ghost small" href="${gmapsLink(plan)}" target="_blank" rel="noopener">Open in Google Maps</a>
+    <label class="btn ghost small toggle"><input type="checkbox" id="f-rain" ${d.rain ? "checked" : ""}><span>Rainy day</span></label></div></div>
   ${plan.swaps.length ? `<div class="banner">Because of rain: ${plan.swaps.map(([a, b]) => esc(a.name) + " → " + esc(b.name)).join(", ")}.</div>` : ""}
   ${plan.closedToday.length ? `<div class="banner warn" role="alert">${plan.closedToday.map(s => `${esc(s.name)}: ${esc(s.closed.toLowerCase())}`).join(". ")}, and you're there on a ${esc(fmtDow(d.date))}. Swap it with Change stops.</div>` : ""}
   ${countdownCard(d, plan)}
   ${plan.over ? `<div class="banner warn" role="alert">This plan runs ${dur(plan.end - plan.endBy)} past ${fmt(plan.endBy)}. Remove a stop with Change stops, or change the times.</div>` : ""}
   ${plan.endBy - plan.start < 90 ? `<div class="banner warn">There isn't much time today, so keep it close: a coffee and one nearby sight at most.</div>` : ""}
   <div class="plangrid"><div class="left">
-  <div class="summary">
-    <div class="stat"><b>${stopsN}</b><span>stops</span></div>
-    <div class="stat"><b>${plan.along.length}</b><span>on the way</span></div>
-    <div class="stat"><b>${distTxt(plan.walkKm)}</b><span>walking</span></div>
-    <div class="stat"><b>${fmt(plan.end)}</b><span>${d.type === "port" ? "back on board" : "finish"}</span></div>
-  </div>
   <div class="mapbox">${mapSVG(plan)}
     <div class="maplegend"><span><i></i>Walk</span><span><i class="dash"></i>Taxi or transit</span><span style="color:var(--meal)">● Meal</span><span style="color:var(--must)">■ Hotel</span><span>● On the way</span></div>
   </div>

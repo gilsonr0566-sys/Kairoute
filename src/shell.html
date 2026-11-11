@@ -357,8 +357,26 @@ main:has(#view.full) { padding: 0; }
 .moremenu > summary::after { content: "▾"; margin-left: 6px; color: var(--muted); }
 .moremenu[open] > summary::after { content: "▴"; }
 .moremenu .mm { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 8px; }
-.planacts { margin: 4px 0 2px; }
-.planacts .bigbtn { flex: 1 1 260px; }
+/* Day plan: one glance strip, one main action, small tools */
+.daysum { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); background: var(--card); border: 1px solid var(--line); border-radius: 14px; overflow: hidden; }
+.daysum > div { padding: 10px 12px; border-left: 1px solid var(--line); min-width: 0; }
+.daysum > div:first-child { border-left: 0; }
+.daysum b { display: block; font-family: var(--font-display); font-size: 1.15rem; font-variant-numeric: tabular-nums; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.daysum span { display: block; color: var(--muted); font-size: 0.78rem; line-height: 1.25; }
+@media (max-width: 520px) { .daysum { grid-template-columns: repeat(2, minmax(0, 1fr)); } .daysum > div:nth-child(3) { border-left: 0; } .daysum > div:nth-child(n+3) { border-top: 1px solid var(--line); } }
+.lede.small { font-size: 0.88rem; margin: 0; }
+.planacts { display: grid; gap: 10px; margin: 2px 0; }
+.planacts .bigbtn { width: 100%; background: var(--meal); }
+.toolrow { display: flex; flex-wrap: wrap; gap: 8px; }
+.toolrow .btn { flex: 1 1 auto; }
+.btn.toggle { gap: 8px; cursor: pointer; }
+.btn.toggle input { width: 18px; height: 18px; margin: 0; accent-color: var(--route); }
+.btn.toggle:has(input:checked) { background: var(--route-soft); border-color: var(--route); color: var(--route); }
+@media (min-width: 900px) { .planacts { grid-template-columns: minmax(260px, 1fr) auto; align-items: center; } .toolrow .btn { flex: 0 0 auto; } }
+.badges { display: flex; flex-wrap: wrap; gap: 6px; }
+.badge { font-style: normal; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.02em; text-transform: uppercase; color: var(--meal); background: var(--card); border-radius: 999px; padding: 2px 8px; }
+/* On phones the timeline is the main content: show it before the map */
+@media (max-width: 799px) { .plangrid .right { order: -1; } }
 details.goodtoknow { display: grid; gap: 14px; }
 details.goodtoknow[open] > summary { margin-bottom: 12px; }
 details.goodtoknow > .card { margin-top: 12px; }
