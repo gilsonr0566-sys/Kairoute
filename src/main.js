@@ -872,7 +872,12 @@ ${P().access !== "none" ? "- The travelers need: " + ACCESS.find(a => a[0] === P
     let raw = await cachedGuide(d), fresh = !raw;
     if (raw && !guideInLang(raw, P().lang)) { raw = null; fresh = true; }
     if (!raw) raw = sample === freeSample ? await cityInParts(prompt, show, label) : parseJSON((await sample(prompt, { modelTier: "default", onText: ({ text }) => show(text.length / 260) })).text);
-    if (raw && !(raw.verified >= 2)) { if (busy) { busy.text = (quiet ? busy.prefix || "" : "") + "Checking every place on the map…"; updateBusy(); } raw = await realPlaces(raw, label); fresh = true; }
+    if (raw) {
+      const before = JSON.stringify([raw.verified, raw.grounded, (raw.restaurants || []).length]);
+      if (busy) { busy.text = (quiet ? busy.prefix || "" : "") + "Checking every place on the map…"; updateBusy(); }
+      raw = await realPlaces(raw, label);
+      if (JSON.stringify([raw.verified, raw.grounded, (raw.restaurants || []).length]) !== before) fresh = true;
+    }
     const c = cleanCity(raw, label);
     if (!c.sites.length) throw new Error("empty");
     if (!guideInLang(c, P().lang)) throw new Error("The guide came back in the wrong language. Try again.");
@@ -993,7 +998,9 @@ async function cityInParts(prompt, show, label) {
 // are left out. Restaurants always come from the map itself (real places near the stops), never from
 // the AI. The checked guide is what gets saved and shared.
 async function realPlaces(raw, label) {
-  if (!freeAI || !raw || raw.verified >= 2) return raw;
+  if (!freeAI || !raw) return raw;
+  const realEats = (raw.restaurants || []).length && raw.restaurants.every(r => r.onMap);
+  if (raw.verified >= 2 && raw.grounded && realEats) return raw;
   const okLL = x => x && x.name && isFinite(numV(x.lat)) && isFinite(numV(x.lng));
   const pos = x => ({ lat: numV(x.lat), lng: numV(x.lng) });
   const post = (path, body) => fetch(freeAI.url + path, { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify(body) }).then(r => r.ok ? r.json() : null).catch(() => null);
@@ -1021,14 +1028,15 @@ async function realPlaces(raw, label) {
       return { name: p.name, lat: +(+p.lat).toFixed(5), lng: +(+p.lng).toFixed(5), kind: must.some(m => hav(pos(m), p) <= 0.2) ? "touristy" : "local", cuisine: nice(p.cuisine) || (p.amenity === "cafe" ? "Café" : p.amenity === "pub" ? "Pub" : "Restaurant"), price: "",
         why: `A real ${p.amenity === "cafe" ? "café" : p.amenity === "pub" ? "pub" : "place to eat"} a short walk from ${by ? by.name : "your stops"}${p.hours ? ". Hours listed: " + p.hours : ""}. Check it's open before you go.`, onMap: true };
     });
-  } else raw.restaurants = []; // no map answer: the plan suggests eating near a stop instead of guessing
-  raw.verified = 2;
+    raw.verified = 2;
+  } else raw.restaurants = (raw.restaurants || []).filter(r => r.onMap); // no map answer now: eat near a stop, and look again next time
   return raw;
 }
 // Cities written before the map check get checked once, in the background.
 async function checkSavedCities() {
   for (const k of Object.keys(cities)) {
-    const c = cities[k]; if (!c || !c.ai || (c.verified >= 2 && c.grounded)) continue;
+    const c = cities[k]; if (!c || !c.ai) continue;
+    if (c.grounded) { if (!(c.restaurants || []).length) { try { await realPlaces(c, c.city); if ((c.restaurants || []).length) { save(); if (typeof render === "function" && view !== "tour") render(); } } catch (e) {} } continue; }
     // Written before places and facts were checked: set it aside so it's rebuilt (one tap) with real places and facts.
     delete cities[k]; trip.days.forEach(x => { if (x.cityKey === k) { x.cityKey = null; x.selected = null; } });
     save(); if (typeof render === "function" && view !== "tour") render();

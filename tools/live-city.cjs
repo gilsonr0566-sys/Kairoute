@@ -19,7 +19,7 @@ const { chromium, devices } = require('playwright');
     console.log('After', Math.round((Date.now() - t0) / 1000) + 's:', (await p.innerText('#view')).slice(0, 500).replace(/\n+/g, ' | '));
     const info = await p.evaluate(() => { const c = JSON.parse(localStorage.getItem('wayside.cities') || '{}'); return Object.values(c).map(x => ({ city: x.city, verified: x.verified, sites: (x.sites || []).map(s => s.name), farther: (x.farther || []).map(s => s.name), restaurants: (x.restaurants || []).length, someRestaurants: (x.restaurants || []).slice(0, 8).map(r => r.name + ' (' + r.cuisine + ')') })); });
     console.log(JSON.stringify(info, null, 1));
-    require('fs').writeFileSync('live-city.json', await p.evaluate(() => JSON.stringify({ cities: JSON.parse(localStorage.getItem('wayside.cities') || '{}'), trip: JSON.parse(localStorage.getItem('wayside.trip2') || '{}') })));
+    console.log('CITYJSON ' + await p.evaluate(() => JSON.stringify({ cities: JSON.parse(localStorage.getItem('wayside.cities') || '{}'), trip: JSON.parse(localStorage.getItem('wayside.trip2') || '{}') })));
     console.log('Meals:', (await p.innerText('#view')).split('\n').filter(l => /^(Lunch|Dinner)/.test(l)).join(' / ')); }
   console.log(logs.join('\n') || 'no errors'); await b.close();
 })();
