@@ -162,7 +162,7 @@ function save() {
     storeInLibrary();
     localStorage.setItem("wayside.trip2", JSON.stringify(trip));
     localStorage.setItem("wayside.library", JSON.stringify(library));
-    const gen = {}; for (const k in cities) if (k !== "barcelona") gen[k] = cities[k];
+    const gen = {}; for (const k in cities) if (k !== "barcelona" && !cities[k].builtin) gen[k] = cities[k];
     localStorage.setItem("wayside.cities", JSON.stringify(gen));
   } catch (e) {}
 }
@@ -879,7 +879,17 @@ function updateAudioUI() {
 // ---------- Rendering ----------
 const $view = document.getElementById("view");
 const FULL_VIEWS = { lobby: () => renderLobby(), settings: () => renderSettings(), privacy: () => renderPrivacy(), terms: () => renderTerms() };
+// Built-in guides (cities1-4.js) fill in any city on the trip that has no guide yet.
+let builtinsReady = false;
+function ensureBuiltins() {
+  if (builtinsReady || typeof BUILTIN_CITIES === "undefined") return; builtinsReady = true;
+  for (const [raw, keys] of BUILTIN_CITIES) {
+    const c = Object.assign(cleanCity(raw, raw.city), { ai: false, builtin: true });
+    for (const k of keys) if (!cities[k]) cities[k] = c;
+  }
+}
 function render() {
+  ensureBuiltins();
   if (view === "trips") view = "lobby";
   const full = !!FULL_VIEWS[view];
   document.querySelector("header.top").hidden = full;
@@ -1591,7 +1601,7 @@ function renderSites(d) {
   return `
   ${dayHeading(d)}
   <p class="lede">Tick what you'd like to see${avail ? ` in the ${avail} you have` : ""}. Your route is worked out for you, and anything that won't fit is flagged on the plan.</p>
-  ${city.ai ? `<p class="ai-note">Written by your AI guide. Check opening hours before you go.</p>` : ""}
+  ${city.ai ? `<p class="ai-note">Written by your AI guide. Check opening hours before you go.</p>` : city.builtin ? `<p class="ai-note">Kairoute guide. Hours and prices are typical: check before you go.</p>` : ""}
   <div class="filters seg" role="group" aria-label="Filter">
     ${[["all", "All"], ["must", "Must-sees"], ["touristy", "Famous"], ["local", "Local favorites"]].map(([k, l]) => `<button type="button" data-filter="${k}" aria-pressed="${f === k}">${l}</button>`).join("")}
   </div>
