@@ -102,6 +102,168 @@ const CITY_MADRID = {
 };
 
 // Register the built-in guides, under the names travelers are likely to type.
+// More Athens and Corinth stops, from Richard's own Athens & Corinth itinerary (Nov 11).
+CITY_ATHENS.sites.push(
+  {
+    id: "theatre-dionysus", name: "Theatre of Dionysus", lat: 37.9703, lng: 23.7278, minutes: 30, kind: "touristy", mustSee: false, category: "Ancient theater",
+    summary: "The birthplace of Western theater, on the south slope of the Acropolis.",
+    guide: "You are sitting where drama was born. Every spring Athens honored Dionysus, god of wine and theater, with a festival of plays, and the great tragedies of Aeschylus, Sophocles and Euripides, and the comedies of Aristophanes, were first performed on this slope, at first on wooden seats. The stone theater around you was built in the 330s BC and held perhaps fifteen thousand people. Look at the front row: carved marble thrones were reserved for priests and officials, and the grandest one, in the very center, belonged to the priest of Dionysus himself. Then look at the stage front, carved in Roman times with scenes from the god's life. Sit for a moment, look up at the Acropolis rock above you, and picture a whole city laughing and weeping together.",
+    lookFor: ["The carved throne of the priest of Dionysus in the center of the front row.", "Names carved on the front-row seats, reserving them for officials.", "The Roman relief carvings on the front of the stage."],
+    photoTip: "Shoot from the upper seats down toward the stage, with the city behind it.",
+    hours: "Same as the Acropolis, 8:00–20:00 in summer", closed: "", tickets: "Included in the Acropolis ticket; enter at the south-slope gate near the Acropolis Museum.",
+    crowds: "Quiet even when the Acropolis is busy; most groups walk straight past.", cost: 0, indoor: false, access: "Uneven stone and steps; the lower rows are easiest.",
+    picks: [
+      { k: "spot", t: "Start your Acropolis visit here at the south-slope gate. You avoid the main-gate line and walk up past the theater." },
+      { k: "story", t: "Playwrights competed here for a prize, and the audience was famously loud: they hissed, drummed their heels and threw food at plays they disliked." },
+      { k: "timing", t: "Come first thing in the morning, while the slope is still in shade." }
+    ]
+  },
+  {
+    id: "promenade", name: "Acropolis promenade (Dionysiou Areopagitou and Apostolou Pavlou)", lat: 37.9700, lng: 23.7235, minutes: 30, kind: "local", mustSee: false, category: "Walk",
+    summary: "The car-free walk that circles below the Acropolis, past cafés, olive trees and views.",
+    guide: "This wide, car-free walkway is how Athenians stroll around their ancient heart. It was pedestrianized for the 2004 Olympics and joins the main archaeological sites, so you can walk from the Acropolis Museum, past the Theatre of Dionysus and the Odeon of Herodes Atticus, all the way to the Ancient Agora without crossing traffic. Notice the street names. The first part is Dionysiou Areopagitou, named for Dionysius the Areopagite, the Athenian judge who believed when Paul preached on the hill above. The second part is Apostolou Pavlou, Apostle Paul Street. In the evening locals walk, street musicians play, and the Acropolis lights up above you. It's the best free show in Athens.",
+    lookFor: ["The street sign for Apostolou Pavlou, Apostle Paul Street.", "The arches of the Odeon of Herodes Atticus, still used for summer concerts.", "Glass panels in the pavement near the museum showing ancient ruins below."],
+    photoTip: "At dusk, photograph the floodlit Parthenon from the café terraces along Apostolou Pavlou.",
+    hours: "Open all the time", closed: "", tickets: "Free.",
+    crowds: "Busiest at sunset; lovely early in the morning.", cost: 0, indoor: false, access: "Wide, smooth paving; one of the easiest walks in central Athens. Some marble sections are slippery when wet.",
+    picks: [
+      { k: "timing", t: "Walk it at sunset, from the Acropolis Museum toward Thissio, so the Acropolis glows on your right." },
+      { k: "taste", t: "Stop for a freddo espresso, Greek iced coffee, at one of the terraces on Apostolou Pavlou facing the rock." },
+      { k: "story", t: "Acts 17:34 names Dionysius the Areopagite as one of the first Athenians to believe after Paul spoke on Mars Hill. This street carries his name." }
+    ]
+  },
+  {
+    id: "agia-ekaterini", name: "Agia Ekaterini (St Catherine's Church)", lat: 37.9706, lng: 23.7304, minutes: 20, kind: "local", mustSee: false, category: "Byzantine church",
+    summary: "A small 11th-century Byzantine church in Plaka, sunk below street level among Roman columns.",
+    guide: "Step down into this little courtyard and you're standing below the level of the modern street, at the height of Byzantine Athens. Agia Ekaterini was built in the 11th century, and its domed shape and brick patterns are classic Middle Byzantine work. In front of it stand two Roman columns, remains of an older building that once stood here, so this one spot holds Roman, Byzantine and modern Athens together. The church is named for Saint Catherine because in 1767 it was given to the famous Monastery of Saint Catherine on Mount Sinai. It's still a working parish church, so step inside quietly, light a candle if you wish, and notice how dim and warm it feels compared with the bright marble of the Acropolis.",
+    lookFor: ["The two Roman columns in the sunken courtyard.", "The brick-and-stone patterns on the outer walls, typical of Byzantine builders.", "The icon of Saint Catherine with her wheel inside."],
+    photoTip: "From the street above, shoot down into the courtyard to show the columns and the dome together.",
+    hours: "Usually open in the morning and early evening for services", closed: "", tickets: "Free. Dress modestly: shoulders and knees covered.",
+    crowds: "Rarely busy.", cost: 0, indoor: true, access: "Steps down to the courtyard.",
+    picks: [
+      { k: "spot", t: "It's a two-minute walk from the Lysicrates Monument, the 4th-century BC monument at the end of Tripodon Street. See both together." },
+      { k: "timing", t: "Go in the morning, when it's most likely to be open and you may hear the chanting of a service." },
+      { k: "story", t: "Churches like this were built small on purpose. Byzantine Athens was a modest town, and its people built their churches into and over the ruins of the ancient city." }
+    ]
+  },
+  {
+    id: "kapnikarea", name: "Panagia Kapnikarea", lat: 37.9762, lng: 23.7285, minutes: 15, kind: "local", mustSee: false, category: "Byzantine church",
+    summary: "An 11th-century Byzantine church standing in the middle of Ermou, Athens' busiest shopping street.",
+    guide: "Shoppers stream around this little church every day, but it was here long before any of them. Panagia Kapnikarea was built in the 11th century and is dedicated to the Presentation of the Virgin Mary in the Temple. When Athens was replanned as Greece's new capital in the 1830s, the church stood in the way of the new Ermou Street and was going to be demolished. It was saved, the story goes, by King Ludwig of Bavaria, father of Greece's first king, Otto. So the street was built around it, and that's why it sits in the middle of the road. Inside, the paintings are modern, by Fotis Kontoglou, who revived the true Byzantine icon style in the 20th century. Step in, let your eyes adjust, and find the Virgin in the apse.",
+    lookFor: ["The way Ermou Street splits to pass on both sides of the church.", "The Byzantine cross-in-square shape: a central dome over four arms.", "Kontoglou's paintings of the Virgin and Christ inside."],
+    photoTip: "Shoot from a few meters up Ermou to frame the dome against the modern shop fronts.",
+    hours: "Usually open in the morning and early evening", closed: "", tickets: "Free. Dress modestly.",
+    crowds: "The street is crowded, but the church itself is calm.", cost: 0, indoor: true, access: "Level street; a small step at the door.",
+    picks: [
+      { k: "spot", t: "It's on the way between Syntagma and Monastiraki. Pause here as you walk down Ermou, then continue to the Roman Agora." },
+      { k: "story", t: "The church belongs to the University of Athens, which still looks after it." },
+      { k: "taste", t: "Grab a koulouri, the sesame bread ring sold from street carts all along Ermou." }
+    ]
+  },
+  {
+    id: "roman-agora", name: "Roman Agora and Tower of the Winds", lat: 37.9744, lng: 23.7263, minutes: 40, kind: "touristy", mustSee: false, category: "Ancient site",
+    summary: "The Roman-era marketplace, with an ancient weather station and water clock.",
+    guide: "When Rome ruled Athens, the city's market moved here. Julius Caesar and then Augustus paid for this square, finished around the time of Christ's birth, and you can still walk through its grand west gate, the Gate of Athena Archegetis. But the star is the octagonal marble tower at the east end, the Tower of the Winds, built in the 1st century BC by the astronomer Andronikos of Kyrrhos. Each of its eight sides faces a compass direction and is carved with the god of that wind. Bearded, heavy-cloaked Boreas blows cold from the north, and gentle young Zephyros scatters flowers from the west. Below them are sundial lines, and inside was a water clock fed from the Acropolis, so this was a clock, a compass and a weather vane in one.",
+    lookFor: ["The eight wind gods carved around the top of the tower. Find cold Boreas and gentle Zephyros.", "Sundial lines cut below each wind god.", "The Gate of Athena Archegetis and the old Fethiye Mosque in the square."],
+    photoTip: "Shoot the tower from the northeast corner in the morning, when the sun lights the carved winds.",
+    hours: "8:00–20:00 in summer (shorter in winter)", closed: "", tickets: "Included in the combined Acropolis-area ticket, or buy a single ticket at the gate.",
+    crowds: "Usually calm; you can see much of it through the railings from the street.", cost: 8, indoor: false, access: "Mostly level gravel and paving.",
+    picks: [
+      { k: "spot", t: "Walk all the way around the tower. Each wind god is different, and the north side is the best preserved." },
+      { k: "story", t: "Later the Ottomans used the tower as a hall where whirling dervishes performed their dances." },
+      { k: "taste", t: "Around the corner on Kyrrestou, small cafés serve loukoumades, Greek honey doughnuts." }
+    ]
+  },
+  {
+    id: "nam", name: "National Archaeological Museum", lat: 37.9890, lng: 23.7327, minutes: 120, kind: "touristy", mustSee: false, category: "Museum",
+    summary: "Greece's greatest museum of ancient art, from gold masks to the world's oldest computer.",
+    guide: "If you want to see the treasures of ancient Greece in one building, this is the place. Start with the Mycenaean room and the gold death mask that Heinrich Schliemann called the Mask of Agamemnon, more than 3,000 years old. Then find the bronze god from Artemision, probably Zeus, about to hurl a thunderbolt, his arms stretched wide in perfect balance, pulled from the sea in the 20th century. Nearby is the little bronze Jockey of Artemision, a boy on a galloping horse. And don't miss the Antikythera Mechanism, corroded gears found in a shipwreck, now known to be an ancient device for predicting eclipses and the movements of the heavens. It's often called the world's first computer.",
+    lookFor: ["The gold Mask of Agamemnon in the Mycenaean hall.", "The bronze Zeus (or Poseidon) of Artemision with his arms spread.", "The gear wheels of the Antikythera Mechanism."],
+    photoTip: "Photograph the Artemision bronze from the side to show his full arm span. No flash.",
+    hours: "8:00–20:00 in summer (shorter in winter; check opening times on Tuesdays)", closed: "", tickets: "Buy online or at the door; lines are rarely long.",
+    crowds: "Calmer than the Acropolis Museum; quietest in the late afternoon.", cost: 12, indoor: true, access: "Fully accessible, with lifts.",
+    picks: [
+      { k: "timing", t: "Perfect for a hot afternoon or a rainy day. It's indoors, cool, and the garden café is a nice break." },
+      { k: "spot", t: "The Antikythera Mechanism room has a reconstruction that shows how the gears worked. Look at that before the original." },
+      { k: "story", t: "The Artemision bronze lay on the seabed for over 2,000 years, so no one knows for sure whether he's Zeus or Poseidon. The missing thunderbolt or trident would settle it." }
+    ]
+  },
+  {
+    id: "byzantine-museum", name: "Byzantine and Christian Museum", lat: 37.9755, lng: 23.7445, minutes: 75, kind: "local", mustSee: false, category: "Museum",
+    summary: "Icons, mosaics and frescoes telling the story of Christianity in Greece.",
+    guide: "This museum tells the story of how the Greek world became Christian, and it does it beautifully. You start with early Christian carvings and the first symbols believers used, the fish, the dove and the Good Shepherd, then move into the Byzantine centuries, with gold-leaf icons, whole painted church walls, mosaics, embroidered vestments and illuminated manuscripts. Some icons were carried out of Constantinople and Asia Minor by refugees, so each has a journey behind it. The building is a story too: the villa was built in the 1840s for the Duchess of Plaisance, a French aristocrat who loved Athens. Take your time in front of one icon, look at the eyes, and remember that for Orthodox Christians an icon is a window, not just a painting.",
+    lookFor: ["Early Christian symbols: the fish, the dove and the Good Shepherd.", "Gold-leaf icons of the Virgin and Christ from the Byzantine centuries.", "Frescoes removed from churches and rebuilt on the museum walls."],
+    photoTip: "The villa's courtyard with its fountain makes a calm photo; inside, shoot icons without flash.",
+    hours: "Usually 8:00–20:00 in summer (shorter in winter); check the days before you go", closed: "", tickets: "Buy at the door; rarely a line.",
+    crowds: "Quiet. One of the calmest museums in Athens.", cost: 8, indoor: true, access: "Mostly accessible; galleries are underground with ramps and lifts.",
+    picks: [
+      { k: "spot", t: "Ask for the early Christian gallery first. It shows how the faith grew in the same cities Paul visited." },
+      { k: "timing", t: "Pair it with the National Garden, a 15-minute walk away, for a quiet afternoon." },
+      { k: "story", t: "Orthodox believers kiss icons and light candles before them, a tradition fiercely defended in the 8th and 9th centuries when emperors tried to ban images." }
+    ]
+  },
+  {
+    id: "national-garden", name: "National Garden", lat: 37.9729, lng: 23.7371, minutes: 30, kind: "local", mustSee: false, category: "Park",
+    summary: "A shady royal garden behind Parliament, with ponds, ruins and quiet paths.",
+    guide: "Step off busy Syntagma Square and in a few steps the noise drops away. This garden was created in the late 1830s for Queen Amalia, Greece's first queen, who had plants brought from all over the world. Today it's a public park, and Athenians come here to escape the heat. Wander the shaded paths and you'll find duck ponds, turtles, old palms, a small café, and pieces of the ancient city, including Roman mosaic floors uncovered right in the garden. At its southern edge stands the grand Zappeion hall, built in the 1880s, and beyond it the Temple of Olympian Zeus. It's the perfect gentle start to Athens on your first afternoon.",
+    lookFor: ["The Roman mosaic floors uncovered in the garden.", "The turtles and ducks in the central pond.", "The Zappeion hall at the southern edge."],
+    photoTip: "The tall palm avenue near the Amalias Avenue entrance makes a lovely shaded photo.",
+    hours: "Sunrise to sunset", closed: "", tickets: "Free.",
+    crowds: "Peaceful, even in summer.", cost: 0, indoor: false, access: "Flat gravel paths, easy for wheelchairs and strollers.",
+    picks: [
+      { k: "spot", t: "Enter from Syntagma right after watching the changing of the guard. The gate is just beside the Parliament." },
+      { k: "timing", t: "On a hot afternoon, this is the coolest place in central Athens." },
+      { k: "taste", t: "The little café near the Zappeion serves cold drinks and Greek coffee under the trees." }
+    ]
+  },
+  {
+    id: "philopappos", name: "Philopappos Hill", lat: 37.9677, lng: 23.7196, minutes: 45, kind: "local", mustSee: false, category: "Viewpoint",
+    summary: "The pine-covered hill facing the Acropolis, with the city's best sunset view.",
+    guide: "This is the hill Athenians climb to look at the Acropolis, not from it. The paths through the pines were laid out in the 1950s by the architect Dimitris Pikionis, and they're works of art in themselves. As you climb you pass the little church of Agios Dimitrios Loumbardiaris, and at the top stands the marble monument of Philopappos, a prince of Commagene who loved Athens and was honored here around AD 115. Then turn around. The Parthenon is right across from you at eye level, with the city spreading to the mountains and the sea beyond. At sunset the marble turns honey-gold and the lights of Athens come on below. It's the farewell view of Athens.",
+    lookFor: ["The Parthenon at eye level across the valley.", "The Philopappos Monument at the summit.", "The Pikionis stone paths and the little church of Agios Dimitrios."],
+    photoTip: "Shoot the Parthenon from the summit about 20 minutes before sunset, when the light is warm on the marble.",
+    hours: "Open all the time; paths are best by daylight", closed: "", tickets: "Free.",
+    crowds: "Busy at sunset with locals, but there's room for everyone.", cost: 0, indoor: false, access: "Steep in places, on uneven stone paths. Wear good shoes.",
+    picks: [
+      { k: "timing", t: "Arrive 45 minutes before sunset to walk up slowly and find a rock to sit on." },
+      { k: "spot", t: "Just below the summit, the rocks on the Acropolis side give a clear view without the crowd at the monument." },
+      { k: "story", t: "A cave on the hillside is traditionally called the Prison of Socrates, though historians doubt he was ever held there." }
+    ]
+  }
+);
+CITY_ATHENS.farther.push(
+  {
+    id: "corinth-canal", name: "Corinth Canal", lat: 37.9353, lng: 22.9878, minutes: 30, kind: "touristy", category: "Landmark", far: true,
+    travel: "About 1 hour west of Athens by car or tour coach on the highway; trains run to Corinth, then a short taxi.",
+    summary: "A narrow, dizzying cut through solid rock linking the Aegean and Ionian seas.",
+    guide: "Walk to the middle of the bridge and look down. The walls of the canal drop almost straight to the water far below, and the channel is only about 25 meters wide, so big ships must be towed through. The idea is ancient. In Paul's time, ships were dragged across this narrow neck of land on a stone track called the Diolkos, and in AD 67 the emperor Nero himself struck the first blow with a golden shovel to start a canal, but the work was abandoned. It was finally finished in 1893. Paul knew this place well. Corinth had two ports, one on each sea, and Acts 18:18 tells us Paul sailed from Cenchreae, the eastern port, at the end of his long stay in Corinth.",
+    lookFor: ["The sheer rock walls dropping to the water.", "Ships being towed through by tugboats, if you're lucky.", "The bridges that sink into the water to let ships pass, at each end of the canal."],
+    photoTip: "Shoot straight down the length of the canal from the middle of the pedestrian bridge.",
+    hours: "Open all the time", closed: "", tickets: "Free to view from the bridge.", crowds: "Tour coaches stop here mid-morning; the visit is short anyway.",
+    cost: 0, indoor: false, access: "Level pavement on the viewing bridge.",
+    picks: [
+      { k: "timing", t: "Stop here on the way to Ancient Corinth; it's right on the route." },
+      { k: "story", t: "Romans 16:1 commends Phoebe, a leader of the church at Cenchreae, the same port Paul sailed from." },
+      { k: "spot", t: "At the eastern end, near Isthmia, the sinking bridge drops below the water when a ship passes. It's well worth seeing if you have time." }
+    ]
+  },
+  {
+    id: "acrocorinth", name: "Acrocorinth", lat: 37.8899, lng: 22.8696, minutes: 75, kind: "local", category: "Fortress", far: true,
+    travel: "A 10-minute drive up from Ancient Corinth (about 1 hour 20 minutes from Athens); taxis wait at Ancient Corinth.",
+    summary: "The mighty fortress on the mountain above Ancient Corinth.",
+    guide: "High above the ruins of Ancient Corinth rises this great rock, nearly 575 meters tall, crowned with walls built by Byzantines, Franks, Venetians and Ottomans, each in turn. You enter through three gates, one inside another. At the very top once stood a temple of Aphrodite, and the ancient writer Strabo described the wealth and the loose morals of the city below, which helps explain why Paul's letters to the Corinthians speak so plainly about faithfulness and love. Find a spot on the walls and look down. The whole of Paul's Corinth is spread out beneath you, the forum, the Temple of Apollo and the plain, all the way to the sea and the gulf where his ships came and went.",
+    lookFor: ["The three gates, built one inside another.", "The view down to Ancient Corinth and the Temple of Apollo.", "The Upper Peirene spring, an ancient underground fountain."],
+    photoTip: "From the upper walls, photograph the gulf of Corinth with the ancient site below in late-afternoon light.",
+    hours: "Daytime only, often closing in mid-afternoon; check before you go", closed: "", tickets: "Usually free.",
+    crowds: "Few visitors. You may have the walls to yourself.", cost: 0, indoor: false, access: "Steep, rough, slippery paths. Not suitable for limited mobility. Wear good shoes and bring water.",
+    picks: [
+      { k: "timing", t: "Go after Ancient Corinth, in the later afternoon, but check the closing time first." },
+      { k: "story", t: "1 Corinthians 13, the famous chapter on love, was written to the church in the city you see below." },
+      { k: "spot", t: "You don't need to reach the summit. The first gate's walls already give a superb view." }
+    ]
+  }
+);
+
 const BUILTIN_CITIES = [
   [CITY_ATHENS, ["athens", "athens piraeus", "piraeus", "athina"]],
   [CITY_HERAKLION, ["heraklion", "heraklion crete", "iraklion", "iraklio"]],
