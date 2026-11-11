@@ -16,8 +16,11 @@ async function sample(prompt, opts = {}) {
   return { text: j.text || "", truncated: j.finish === "length" };
 }
 const keyOf = s => (s || "").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-z0-9]+/g, " ").trim();
+const P = () => ({ lang: "English" });
 const numV = v => (typeof v === "number" && isFinite(v) ? v : parseFloat(v));
 const { parseJSON } = eval(grab("function parseJSON", "const numV") + "; ({ parseJSON })");
+const fn = name => { const i = src.indexOf("\nfunction " + name + "(") + 1; return src.slice(i, src.indexOf("\n}\n", i) + 2); };
+eval(fn("textLang") + fn("guideInLang") + "globalThis.textLang = textLang; globalThis.guideInLang = guideInLang;");
 const cityInParts = eval("(" + grab("async function cityInParts", "// Finished guides are kept") + ")");
 const base = JSON.parse(fs.readFileSync("tools/ai-test-lisbon.json", "utf8")).prompt;
 const status = async () => (await (await fetch(URL_ + "/status")).json());
