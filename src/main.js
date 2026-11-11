@@ -1028,8 +1028,10 @@ async function realPlaces(raw, label) {
 // Cities written before the map check get checked once, in the background.
 async function checkSavedCities() {
   for (const k of Object.keys(cities)) {
-    const c = cities[k]; if (!c || !c.ai || c.verified >= 2) continue;
-    try { await realPlaces(c, c.city + (c.country ? ", " + c.country : "")); save(); if (typeof render === "function" && view !== "tour") render(); } catch (e) {}
+    const c = cities[k]; if (!c || !c.ai || (c.verified >= 2 && c.grounded)) continue;
+    // Written before places and facts were checked: set it aside so it's rebuilt (one tap) with real places and facts.
+    delete cities[k]; trip.days.forEach(x => { if (x.cityKey === k) { x.cityKey = null; x.selected = null; } });
+    save(); if (typeof render === "function" && view !== "tour") render();
   }
 }
 // Finished guides are kept on Kairoute's AI helper, so each city is written only once and opens in seconds after that.
