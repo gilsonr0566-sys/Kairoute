@@ -15,7 +15,7 @@ const { chromium, devices } = require('playwright');
   await p.click('#tab-plan').catch(() => {}); await p.waitForTimeout(500);
   const btn = await p.$('text=/Build the .* guide/'); if (!btn) { console.log('No build button. Screen:', (await p.innerText('#view')).slice(0, 300)); }
   else { await btn.click(); const t0 = Date.now();
-    while (Date.now() - t0 < 240000) { await p.waitForTimeout(3000); const txt = await p.innerText('#view'); if (!/Writing the|Asking your guide/.test(txt)) break; }
+    while (Date.now() - t0 < 240000) { await p.waitForTimeout(3000); const txt = await p.innerText('#view'); if (!/Writing the|Asking your guide|Checking every place/.test(txt)) break; }
     console.log('After', Math.round((Date.now() - t0) / 1000) + 's:', (await p.innerText('#view')).slice(0, 500).replace(/\n+/g, ' | '));
     const info = await p.evaluate(() => { const c = JSON.parse(localStorage.getItem('wayside.cities') || '{}'); return Object.values(c).map(x => ({ city: x.city, verified: x.verified, sites: (x.sites || []).map(s => s.name), farther: (x.farther || []).map(s => s.name), restaurants: (x.restaurants || []).length, someRestaurants: (x.restaurants || []).slice(0, 8).map(r => r.name + ' (' + r.cuisine + ')') })); });
     console.log(JSON.stringify(info, null, 1));
