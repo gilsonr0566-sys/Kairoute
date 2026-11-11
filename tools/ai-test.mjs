@@ -22,7 +22,17 @@ const cityInParts = eval("(" + grab("async function cityInParts", "// Finished g
 const base = JSON.parse(fs.readFileSync("tools/ai-test-lisbon.json", "utf8")).prompt;
 const status = async () => (await (await fetch(URL_ + "/status")).json());
 console.log("status:", JSON.stringify(await status()));
-const cities = (process.env.CITIES || "Lisbon|Kotor, Montenegro|Savannah, Georgia").split("|");
+const cities = (process.env.CITIES || "Lisbon|Kotor, Montenegro|Savannah, Georgia").split("|").filter(Boolean);
+async function storeTest(g) {
+  const k = "test|" + Date.now();
+  const put = await fetch(URL_ + "/guide", { method: "POST", headers: H, body: JSON.stringify({ k, guide: g }) });
+  let back, bj = null; const t0 = Date.now();
+  for (let i = 0; i < 12; i++) { back = await fetch(URL_ + "/guide?k=" + encodeURIComponent(k)); if (back.ok) { bj = await back.json(); break; } await new Promise(r => setTimeout(r, 10000)); }
+  const ok = put.ok && bj && bj.sites && bj.sites.length === g.sites.length;
+  console.log(`   guide store: ${ok ? "PASS" : "FAIL"} (save ${put.status}, read back ${back.status} after ${((Date.now() - t0) / 1000).toFixed(0)}s)`);
+  return ok;
+}
+if (process.env.STORE_ONLY) { const ok = await storeTest({ city: "Test", sites: Array.from({ length: 9 }, (_, i) => ({ name: "S" + i })) }); console.log(ok ? "ALL PASS" : "SOME FAILED"); process.exit(0); }
 let allOk = true;
 for (const city of cities) {
   const prompt = base.replace("Destination: Lisbon", "Destination: " + city);
@@ -37,15 +47,7 @@ for (const city of cities) {
     console.log(`   main ${main.length} (mustSee ${main.filter(s => s.mustSee).length}, local ${main.filter(s => s.kind === "local").length}), quick ${q.length}, farther ${g.farther.length}, restaurants ${(g.restaurants || []).length}, phrases ${((g.basics || {}).phrases || []).length}, guide words ${Math.min(...words)}-${Math.max(...words)}`);
     console.log("   " + main.map(s => s.name).join("; "));
     console.log("   farther: " + g.farther.map(s => s.name).join("; "));
-    if (city === cities[0]) {
-      const k = "test|" + Date.now();
-      const put = await fetch(URL_ + "/guide", { method: "POST", headers: H, body: JSON.stringify({ k, guide: g }) });
-      const back = await fetch(URL_ + "/guide?k=" + encodeURIComponent(k));
-      const bj = back.ok ? await back.json() : null;
-      const cached = put.ok && bj && bj.sites && bj.sites.length === g.sites.length;
-      allOk = allOk && cached;
-      console.log(`   guide store: ${cached ? "PASS" : "FAIL"} (save ${put.status}, read back ${back.status})`);
-    }
+    if (city === cities[0]) allOk = (await storeTest(g)) && allOk;
   } catch (e) { allOk = false; console.log(`\n== ${city}: FAIL ${e.message} after ${((Date.now() - t0) / 1000).toFixed(0)}s`); }
 }
 console.log("\nstatus after:", JSON.stringify(await status()));

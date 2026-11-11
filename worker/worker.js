@@ -37,7 +37,7 @@ export default {
         let b; try { b = JSON.parse(raw); } catch (e) { return Response.json({ error: "Bad request" }, { status: 400, headers: h }); }
         const k = String(b.k || "").slice(0, 400), g = b.guide;
         if (!k || !g || !Array.isArray(g.sites) || g.sites.length < 8) return Response.json({ error: "Incomplete guide" }, { status: 400, headers: h });
-        ctx.waitUntil(env.USAGE.put("g:" + k, JSON.stringify(g), { expirationTtl: 180 * 86400 }));
+        await env.USAGE.put("g:" + k, JSON.stringify(g), { expirationTtl: 180 * 86400 });
         return Response.json({ ok: true }, { headers: h });
       }
     }
