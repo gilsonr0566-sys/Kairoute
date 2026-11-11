@@ -71,6 +71,15 @@ export default {
       const key = "p1:" + r + ":" + (await sha(JSON.stringify(pts)));
       const hit = await env.USAGE.get(key); if (hit) return new Response(hit, { headers: { ...h, "content-type": "application/json" } });
       const q = `[out:json][timeout:25];(${pts.map(([la, ln]) => `nwr["amenity"~"^(restaurant|cafe|fast_food|pub|bar|food_court)$"]["name"](around:${r},${la},${ln});`).join("")});out center tags 600;`;
+      // First choice: Photon (map search near each point), which answers quickly. Then Overpass as a backup.
+      const UA = { "user-agent": "Kairoute/1.0 (travel guide; https://gilsonr0566-sys.github.io/Kairoute/)" };
+      const ph = [];
+      await Promise.all(pts.slice(0, 10).map(async ([la, ln]) => {
+        for (const tag of ["amenity:restaurant", "amenity:cafe"]) {
+          try { const rr = await fetch(`https://photon.komoot.io/api/?q=${tag === "amenity:cafe" ? "cafe" : "restaurant"}&lat=${la}&lon=${ln}&limit=25&lang=en&osm_tag=${tag}`, { headers: UA }); if (rr.ok) { const j = await rr.json(); (j.features || []).forEach(f => { const p = f.properties || {}; ph.push({ name: p.name, lat: f.geometry.coordinates[1], lng: f.geometry.coordinates[0], amenity: tag.split(":")[1], cuisine: "", hours: "", web: "", tourism: false, tags: Object.keys(p).length }); }); } } catch (e) {}
+        }
+      }));
+      if (ph.length >= 5) { const out = JSON.stringify({ places: ph.filter(p => p.name), src: "photon" }); ctx.waitUntil(env.USAGE.put(key, out, { expirationTtl: 30 * 86400 })); return new Response(out, { headers: { ...h, "content-type": "application/json" } }); }
       let data = null; const tried = [];
       for (const ep of ["https://overpass-api.de/api/interpreter", "https://overpass.private.coffee/api/interpreter", "https://maps.mail.ru/osm/tools/overpass/api/interpreter"]) {
         try { const rr = await fetch(ep, { method: "POST", body: "data=" + encodeURIComponent(q), headers: { "content-type": "application/x-www-form-urlencoded", accept: "application/json", "user-agent": "Kairoute/1.0 (travel guide; https://gilsonr0566-sys.github.io/Kairoute/)" } }); tried.push(ep.split("/")[2] + " " + rr.status); if (rr.ok) { data = await rr.json(); break; } } catch (e) { tried.push(ep.split("/")[2] + " " + e.message); }

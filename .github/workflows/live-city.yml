@@ -19,3 +19,9 @@ jobs:
       - env:
           CITY: ${{ inputs.city }}
         run: npm i playwright@1 && npx playwright install chromium && node tools/live-city.cjs
+      - if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: live-city
+          path: live-city.json
+          if-no-files-found: ignore

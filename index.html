@@ -2696,7 +2696,7 @@ const SMALL_WORDS = new Set("the of and a an de la el le du del di da des los la
 function nameMatch(want, got) {
   const w = keyOf(String(want).replace(/\(.*?\)/g, " ")).split(" ").filter(t => t && !SMALL_WORDS.has(t)), g = new Set(keyOf(got).split(" "));
   if (!w.length) return false;
-  return w.filter(t => g.has(t) || [...g].some(x => x.length > 4 && t.length > 4 && (x.startsWith(t.slice(0, 5)) || t.startsWith(x.slice(0, 5))))).length / w.length >= 0.6;
+  return w.filter(t => g.has(t) || [...g].some(x => x.length > 4 && t.length > 4 && (x.startsWith(t.slice(0, 5)) || t.startsWith(x.slice(0, 5))))).length / w.length >= 0.75;
 }
 async function groundNames(names, label, farSet) {
   if (!freeAI || !names.length) return null;
@@ -4630,4 +4630,4 @@ render();
 
 </script>
 <script>if ("serviceWorker" in navigator) addEventListener("load", () => navigator.serviceWorker.register("sw.js").catch(() => {}));</script>
-<script>(function(){var B="1b02d9e-1794409151";function chk(){if(location.protocol!=="https:")return;fetch("version.txt",{cache:"no-store"}).then(function(r){return r.ok?r.text():""}).then(function(t){t=t.trim();if(t&&t!==B)location.reload()}).catch(function(){})}addEventListener("load",chk);document.addEventListener("visibilitychange",function(){if(document.visibilityState==="visible")chk()})})();</script>
+<script>(function(){var B="fc23bc8-1794409577";function chk(){if(location.protocol!=="https:")return;fetch("version.txt",{cache:"no-store"}).then(function(r){return r.ok?r.text():""}).then(function(t){t=t.trim();if(t&&t!==B)location.reload()}).catch(function(){})}addEventListener("load",chk);document.addEventListener("visibilitychange",function(){if(document.visibilityState==="visible")chk()})})();</script>

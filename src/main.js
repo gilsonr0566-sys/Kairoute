@@ -895,7 +895,7 @@ const SMALL_WORDS = new Set("the of and a an de la el le du del di da des los la
 function nameMatch(want, got) {
   const w = keyOf(String(want).replace(/\(.*?\)/g, " ")).split(" ").filter(t => t && !SMALL_WORDS.has(t)), g = new Set(keyOf(got).split(" "));
   if (!w.length) return false;
-  return w.filter(t => g.has(t) || [...g].some(x => x.length > 4 && t.length > 4 && (x.startsWith(t.slice(0, 5)) || t.startsWith(x.slice(0, 5))))).length / w.length >= 0.6;
+  return w.filter(t => g.has(t) || [...g].some(x => x.length > 4 && t.length > 4 && (x.startsWith(t.slice(0, 5)) || t.startsWith(x.slice(0, 5))))).length / w.length >= 0.75;
 }
 async function groundNames(names, label, farSet) {
   if (!freeAI || !names.length) return null;
