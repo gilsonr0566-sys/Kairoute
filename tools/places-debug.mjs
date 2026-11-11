@@ -1,9 +1,10 @@
-// Checks the real-places endpoints on the live helper. Run by the "Debug places" workflow.
+// Shows what the place check sees for a few names on the live helper. Run by the "Debug places" workflow.
+// Uses cached answers where they exist, so it costs nothing.
 const U = "https://kairoute-ai.rickgilson.workers.dev", H = { "content-type": "application/json", Origin: "https://gilsonr0566-sys.github.io" };
-const names = ["Texas State Aquarium", "USS Lexington", "Corpus Christi Bayfront", "Selena Memorial Statue", "Art Museum of South Texas", "North Beach", "Heritage Park", "T-Head Pier", "Corpus Christi Museum of Science and History", "Harbor Bridge", "Bayfront Park", "Mirador de la Flor", "Texas Surf Museum", "Water Street Market", "Padre Island National Seashore", "King Ranch", "Aransas National Wildlife Refuge", "Mustang Island State Park", "Port Aransas", "South Texas Botanical Gardens"];
-let t0 = Date.now(), r = await fetch(U + "/ground", { method: "POST", headers: H, body: JSON.stringify({ city: "Corpus Christi", names }) });
-const j = await r.json().catch(() => null); console.log("ground", r.status, Date.now() - t0, "ms");
-(j && j.results || []).forEach((x, i) => console.log(" ", names[i], "| answered", x && x.answered, "| wiki", x && x.wiki && x.wiki.length, x && x.wiki && x.wiki[0] && x.wiki[0].title, "| map", x && x.map && x.map.length, x && x.map && x.map[0] && x.map[0].name, x && x.map && x.map[0] && x.map[0].osm));
-r = await fetch(U + "/voyage?city=Corpus%20Christi"); const v = await r.json().catch(() => ({})); console.log("voyage", r.status, v.title, (v.listings || []).length, JSON.stringify((v.listings || []).slice(0, 3)).slice(0, 600));
-r = await fetch(U + "/osm", { method: "POST", headers: H, body: JSON.stringify({ ids: ["W29277345"] }) }); console.log("osm", r.status, (await r.text()).slice(0, 300));
-for (const u of ["https://photon.komoot.io/api/?q=USS+Lexington+Corpus+Christi", "https://en.wikipedia.org/w/api.php?action=query&format=json&list=search&srsearch=USS+Lexington"]) { const rr = await fetch(u, { headers: { "user-agent": "Kairoute/1.0" } }); console.log("direct", u.split("/")[2], rr.status); }
+const city = process.env.CITY || "Kotor";
+const names = (process.env.NAMES || "Cathedral of Saint Nicholas|The Venetian Arsenal|San Giovanni Fortress|Kotor City Walls|St. Tryphon Cathedral").split("|");
+const t0 = Date.now(), r = await fetch(U + "/ground", { method: "POST", headers: H, body: JSON.stringify({ city, names }) });
+const j = await r.json().catch(() => null); console.log("ground", r.status, Date.now() - t0, "ms center", JSON.stringify(j && j.center));
+(j && j.results || []).forEach((x, i) => { console.log("==", names[i], "| answered", x && x.answered);
+  (x.wiki || []).forEach(w => console.log("   wiki", w.title, w.lat, w.lng));
+  (x.map || []).forEach(m => console.log("   map ", m.name, m.lat, m.lng, m.kind, m.city, m.osm)); });
