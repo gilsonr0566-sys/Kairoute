@@ -50,6 +50,9 @@ async function limits(env) {
   // share is based on what was left when today began (today's own use and lab use added back), but never past the monthly ceiling
   const share = Math.min(left + todayExtra, (left + todayExtra + labToday) / daysLeft * DAY_SHARE_X);
   const daily = FREE_DAILY + share;
+  // Paid voice is paused (Richard, Nov 11: no paid audio until the guide content is locked down). New voice
+  // recordings then stay inside the free daily allowance; set VOICE_PAID = "1" to turn paid voice back on.
+  if (env.VOICE_PAID !== "1") return { DAILY_NEURONS: daily, VOICE_DAILY: Math.min(daily, FREE_VOICE), VOICE_TOTAL: FREE_DAILY, LAB_LEFT: 0 };
   return { DAILY_NEURONS: daily, VOICE_DAILY: daily, LAB_LEFT: Math.max(0, Math.min(LAB_DAILY - labToday, left)) };
 }
 
@@ -58,8 +61,8 @@ export default {
     const origin = req.headers.get("Origin") || "", h = cors(origin);
     if (req.method === "OPTIONS") return new Response(null, { headers: h });
     const url = new URL(req.url);
-    const { DAILY_NEURONS, VOICE_DAILY, LAB_LEFT } = await limits(env), lab = req.headers.get("x-kairoute-lab") === "1";
-    if (url.pathname === "/status") { const u = await used(env); const vu = +(await env.USAGE.get("v:" + today())) || 0; return Response.json({ ok: true, model: MODEL, usedToday: Math.round(u), budget: DAILY_NEURONS, left: Math.max(0, Math.floor(DAILY_NEURONS - u)), voiceLeft: Math.max(0, Math.floor(Math.min(VOICE_DAILY - vu, DAILY_NEURONS - u))), labLeft: Math.floor(LAB_LEFT), monthExtraUsed: Math.round(+(await env.USAGE.get("x:" + month())) || 0), monthExtraCap: MONTH_EXTRA, labToday: Math.round(+(await env.USAGE.get("t:" + today())) || 0) }, { headers: h }); }
+    const { DAILY_NEURONS, VOICE_DAILY, LAB_LEFT, VOICE_TOTAL = DAILY_NEURONS } = await limits(env), lab = req.headers.get("x-kairoute-lab") === "1";
+    if (url.pathname === "/status") { const u = await used(env); const vu = +(await env.USAGE.get("v:" + today())) || 0; return Response.json({ ok: true, model: MODEL, usedToday: Math.round(u), budget: DAILY_NEURONS, left: Math.max(0, Math.floor(DAILY_NEURONS - u)), voiceLeft: Math.max(0, Math.floor(Math.min(VOICE_DAILY - vu, VOICE_TOTAL - u))), labLeft: Math.floor(LAB_LEFT), monthExtraUsed: Math.round(+(await env.USAGE.get("x:" + month())) || 0), monthExtraCap: MONTH_EXTRA, labToday: Math.round(+(await env.USAGE.get("t:" + today())) || 0) }, { headers: h }); }
     // Real places from OpenStreetMap, so the app never sends anyone to a place the AI made up.
     // /places: restaurants and cafés around given points. /verify: finds each named sight on the map.
     if (url.pathname === "/places" && req.method === "POST") {
@@ -268,7 +271,7 @@ Written text:
       let cost = 0;
       for (const t of texts) { const k = "a:" + (m === "aura-1" ? "" : m + ":") + speaker + ":" + (await sha(t)); const l = await env.USAGE.list({ prefix: k, limit: 1 }); if (!l.keys.length) cost += t.length * vm.rate; }
       const vUsed = +(await env.USAGE.get("v:" + today())) || 0, u = await used(env);
-      return Response.json({ ok: vUsed + cost <= VOICE_DAILY && u + cost <= DAILY_NEURONS, cost: Math.round(cost) }, { headers: h });
+      return Response.json({ ok: vUsed + cost <= VOICE_DAILY && u + cost <= VOICE_TOTAL, cost: Math.round(cost) }, { headers: h });
     }
     if (url.pathname === "/speak" && req.method === "POST") {
       if (origin && !ALLOWED.some(r => r.test(origin))) return Response.json({ error: "Not allowed" }, { status: 403, headers: h });
@@ -280,7 +283,7 @@ Written text:
       if (hit) return new Response(hit, { headers: { ...h, "content-type": "audio/mpeg", "x-cached": "1", "cache-control": "public, max-age=31536000" } });
       const cost = text.length * vm.rate, vk = "v:" + today();
       const vUsed = +(await env.USAGE.get(vk)) || 0, u = await used(env);
-      if (lab ? cost > LAB_LEFT : (vUsed + cost > VOICE_DAILY || u + cost > DAILY_NEURONS)) return Response.json({ error: "voice allowance used up" }, { status: 429, headers: h });
+      if (lab ? cost > LAB_LEFT : (vUsed + cost > VOICE_DAILY || u + cost > VOICE_TOTAL)) return Response.json({ error: "voice allowance used up" }, { status: 429, headers: h });
       let audio;
       try { const r = await env.AI.run(vm.id, { text, speaker, encoding: "mp3" }, { returnRawResponse: true }); if (!r.ok) throw new Error("tts " + r.status); audio = await r.arrayBuffer(); }
       catch (e) { return Response.json({ error: "The voice service is busy." }, { status: 502, headers: h }); }

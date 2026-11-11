@@ -1,8 +1,9 @@
 name: Pre-record city stops
 on:
   workflow_dispatch:
-  schedule:
-    - cron: "40 0 * * *" # 6:40 pm Central (winter), just after the daily allowance resets
+  # Paused Nov 11 at Richard's request (no paid audio until the guide content is locked down).
+  # schedule:
+  #   - cron: "40 0 * * *" # 6:40 pm Central (winter), just after the daily allowance resets
 permissions:
   contents: read
 jobs:
