@@ -7,12 +7,7 @@ async function run(body) {
   const t0 = Date.now(); const r = await fetch(URL_ + "/sample", { method: "POST", headers: H, body: JSON.stringify(body) });
   if (!r.ok) { console.log("HTTP", r.status, await r.text()); return ""; }
   const raw = await r.text(); let text = "", finish = null, sample = raw.slice(0, 400);
-  for (const line of raw.split("\n")) {
-    const d = line.replace(/^data:\s*/, "").trim(); if (!line.startsWith("data:") || !d || d === "[DONE]") continue;
-    try { const ev = JSON.parse(d); const ch = ev.choices && ev.choices[0];
-      text += typeof ev.response === "string" ? ev.response : (ch && ch.delta && ch.delta.content) || "";
-      if (ch && ch.finish_reason) finish = ch.finish_reason; } catch (e) {}
-  }
+  try { const j = JSON.parse(raw); text = j.text || ""; finish = j.finish; } catch (e) {}
   console.log(`time ${((Date.now() - t0) / 1000).toFixed(1)}s, ${text.length} chars, finish=${finish}`);
   if (!text) console.log("RAW START:", sample);
   return text;
@@ -28,7 +23,7 @@ const parts = [
   'For this request return ONLY {"sites":[...],"farther":[...]}: "sites" holds just the 5 quick sights ("quick": true) and "farther" holds 3-4 day trips.'
 ];
 const t0 = Date.now();
-const outs = await Promise.all(parts.map(x => run({ ...body, prompt: body.prompt + "\n\n" + x })));
+const outs = await Promise.all(parts.map(x => run({ ...body, tier: "part", prompt: body.prompt + "\n\n" + x + " Ignore any other counts above and write exactly that many items, keeping each one as concise as the format allows." })));
 console.log("all parts done in", ((Date.now() - t0) / 1000).toFixed(1) + "s");
 const js = outs.map((o, i) => { try { return JSON.parse(o.slice(o.indexOf("{"), o.lastIndexOf("}") + 1)); } catch (e) { console.log("part", i, "JSON FAILED", e.message, o.slice(-300)); return null; } });
 const sites = js.slice(1).flatMap(j => (j && j.sites) || []);

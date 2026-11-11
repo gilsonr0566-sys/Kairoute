@@ -7,7 +7,7 @@ const MODEL = "@cf/google/gemma-4-26b-a4b-it";
 const DAILY_NEURONS = 8500;
 const IN_RATE = 9091 / 1e6, OUT_RATE = 27273 / 1e6;
 const ALLOWED = [/^https:\/\/gilsonr0566-sys\.github\.io$/, /^https?:\/\/localhost(:\d+)?$/, /^capacitor:\/\/localhost$/, /^https?:\/\/127\.0\.0\.1(:\d+)?$/, /\.claudeusercontent\.com$/, /^https:\/\/claude\.ai$/];
-const MAX_OUT = { quick: 1200, default: 14000, complex: 16000 };
+const MAX_OUT = { quick: 1200, part: 6000, default: 14000, complex: 16000 };
 
 function cors(origin) {
   const ok = origin && ALLOWED.some(r => r.test(origin));
@@ -36,22 +36,20 @@ export default {
     if (u + inTok * IN_RATE + 500 > DAILY_NEURONS) return Response.json({ error: "The free AI allowance for today is used up. It resets at midnight UTC (7 pm Central)." }, { status: 429, headers: h });
 
     const content = images.length ? [...images.map(d => ({ type: "image_url", image_url: { url: d } })), { type: "text", text: prompt }] : prompt;
-    let stream;
+    // No streaming: the free plan allows only a few milliseconds of Worker CPU per request, and
+    // passing a long stream through used that up and cut answers short. Waiting costs no CPU.
+    let out;
     try {
-      stream = await env.AI.run(MODEL, { messages: [{ role: "user", content }], max_tokens: MAX_OUT[tier], stream: true, temperature: 0.4, chat_template_kwargs: { enable_thinking: false } });
+      out = await env.AI.run(MODEL, { messages: [{ role: "user", content }], max_tokens: MAX_OUT[tier], temperature: 0.4, chat_template_kwargs: { enable_thinking: false } });
     } catch (e) {
       return Response.json({ error: "The AI service is busy. Try again in a minute." }, { status: 502, headers: h });
     }
-    // Pass the stream through while counting what came back, then record the day's usage.
-    let outChars = 0, bytes = 0; const dec = new TextDecoder();
-    const counter = new TransformStream({
-      transform(chunk, ctl) {
-        bytes += chunk.byteLength; const s = dec.decode(chunk, { stream: true });
-        for (const m of s.matchAll(/"(?:response|content|reasoning_content|reasoning)":"((?:[^"\\]|\\.)*)"/g)) outChars += m[1].length;
-        ctl.enqueue(chunk);
-      },
-      flush() { ctx.waitUntil(addUse(env, inTok * IN_RATE + Math.ceil(Math.max(outChars / 4, bytes / 12)) * OUT_RATE)); }
-    });
-    return new Response(stream.pipeThrough(counter), { headers: { ...h, "content-type": "text/event-stream", "cache-control": "no-store" } });
+    const ch = out && out.choices && out.choices[0];
+    const text = typeof (out && out.response) === "string" ? out.response : (ch && ch.message && ch.message.content) || "";
+    const finish = (ch && ch.finish_reason) || null;
+    const u2 = (out && out.usage) || {};
+    const pin = +u2.prompt_tokens || inTok, pout = +u2.completion_tokens || Math.ceil(text.length / 3);
+    ctx.waitUntil(addUse(env, pin * IN_RATE + pout * OUT_RATE));
+    return Response.json({ text, finish, usage: { in: pin, out: pout } }, { headers: { ...h, "cache-control": "no-store" } });
   }
 };

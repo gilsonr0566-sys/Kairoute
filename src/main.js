@@ -24,42 +24,27 @@ async function webSample(prompt, opts = {}) {
     body: JSON.stringify({ model: WEB_MODELS[opts.modelTier] || WEB_MODELS.default, max_tokens: 16000, stream: true, messages: [{ role: "user", content }] })
   });
   if (!resp.ok) { let m = resp.status + ""; try { m = (await resp.json()).error.message; } catch (e) {} throw new Error(resp.status === 401 ? "The AI key was not accepted. Check it in Settings." : m); }
-  const rd = resp.body.getReader(), dec = new TextDecoder(); let buf = "", text = "", stop = null;
-  for (;;) {
-    const { done, value } = await rd.read(); if (done) break;
-    buf += dec.decode(value, { stream: true });
-    let i; while ((i = buf.indexOf("\n")) >= 0) {
-      const line = buf.slice(0, i).trim(); buf = buf.slice(i + 1);
-      if (!line.startsWith("data:")) continue;
-      let ev; try { ev = JSON.parse(line.slice(5)); } catch (e) { continue; }
-      if (ev.type === "content_block_delta" && ev.delta && ev.delta.type === "text_delta") { text += ev.delta.text; if (opts.onText) opts.onText({ text }); }
-      else if (ev.type === "message_delta" && ev.delta) stop = ev.delta.stop_reason;
-      else if (ev.type === "error") throw new Error((ev.error && ev.error.message) || "AI error");
-    }
-  }
-  return { text, truncated: stop === "max_tokens" };
-}
-if (!(cl && cl.use) && getKey()) sample = webSample;
-// Free test AI: Kairoute's own Cloudflare Worker in front of Workers AI. The site finds it through ai.json.
-let freeAI = null; // { url, left, budget }
-const blobURL = b => new Promise((res, rej) => { const r = new FileReader(); r.onload = () => res(String(r.result)); r.onerror = rej; r.readAsDataURL(b); });
-async function freeSample(prompt, opts = {}) {
-  const images = []; for (const b of opts.images || []) images.push(await blobURL(b));
-  const resp = await fetch(freeAI.url + "/sample", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ prompt, images, tier: opts.modelTier || "default" }) });
-  if (!resp.ok) { let m = "The AI guide is busy. Try again in a minute."; try { m = (await resp.json()).error || m; } catch (e) {} throw new Error(m); }
-  const rd = resp.body.getReader(), dec = new TextDecoder(); let buf = "", text = "", stop = null;
-  for (;;) {
-    const { done, value } = await rd.read(); if (done) break;
-    buf += dec.decode(value, { stream: true });
-    let i; while ((i = buf.indexOf("\n")) >= 0) {
-      const line = buf.slice(0, i).trim(); buf = buf.slice(i + 1);
-      if (!line.startsWith("data:")) continue;
-      const data = line.slice(5).trim(); if (!data || data === "[DONE]") continue;
-      let ev; try { ev = JSON.parse(data); } catch (e) { continue; }
-      const ch = ev.choices && ev.choices[0];
-      const piece = typeof ev.response === "string" ? ev.response : ch && ch.delta && typeof ch.delta.content === "string" ? ch.delta.content : "";
-      if (ch && ch.finish_reason) stop = ch.finish_reason;
-      if (piece) { text += piece; if (opts.onText) opts.onText({ text }); }
+  let text = "", stop = null;
+  if (/json/.test(resp.headers.get("content-type") || "")) {
+    // The Worker answers in one piece (streaming used too much of the free plan's CPU), so show steady progress while we wait.
+    const t0 = Date.now(), tick = opts.onText ? setInterval(() => opts.onText({ text: "x".repeat(Math.round((Date.now() - t0) / 1000 * 130)) }), 700) : null;
+    try { const j = await resp.json(); text = String(j.text || ""); stop = j.finish || null; } finally { if (tick) clearInterval(tick); }
+    if (opts.onText && text) opts.onText({ text });
+  } else {
+    const rd = resp.body.getReader(), dec = new TextDecoder(); let buf = "";
+    for (;;) {
+      const { done, value } = await rd.read(); if (done) break;
+      buf += dec.decode(value, { stream: true });
+      let i; while ((i = buf.indexOf("\n")) >= 0) {
+        const line = buf.slice(0, i).trim(); buf = buf.slice(i + 1);
+        if (!line.startsWith("data:")) continue;
+        const data = line.slice(5).trim(); if (!data || data === "[DONE]") continue;
+        let ev; try { ev = JSON.parse(data); } catch (e) { continue; }
+        const ch = ev.choices && ev.choices[0];
+        const piece = typeof ev.response === "string" ? ev.response : ch && ch.delta && typeof ch.delta.content === "string" ? ch.delta.content : "";
+        if (ch && ch.finish_reason) stop = ch.finish_reason;
+        if (piece) { text += piece; if (opts.onText) opts.onText({ text }); }
+      }
     }
   }
   if (!text.trim()) throw new Error("The AI guide sent an empty answer. Try again.");
@@ -573,7 +558,20 @@ function parseDayLines(out) {
 function parseJSON(text) {
   const a = text.indexOf("{"), b = text.lastIndexOf("}");
   if (a < 0 || b < a) throw new Error("no json");
-  return JSON.parse(text.slice(a, b + 1));
+  try { return JSON.parse(text.slice(a, b + 1)); } catch (e) { const r = salvageJSON(text.slice(a)); if (r) return r; throw e; }
+}
+// If an answer was cut off mid-way, keep everything up to the last complete item and close the brackets.
+function salvageJSON(t) {
+  const stack = []; let inStr = false, esc = false, lastOk = -1, lastStack = null;
+  for (let i = 0; i < t.length; i++) {
+    const c = t[i];
+    if (inStr) { if (esc) esc = false; else if (c === "\\") esc = true; else if (c === '"') inStr = false; continue; }
+    if (c === '"') inStr = true;
+    else if (c === "{" || c === "[") stack.push(c === "{" ? "}" : "]");
+    else if (c === "}" || c === "]") { stack.pop(); if (!stack.length) return JSON.parse(t.slice(0, i + 1)); lastOk = i; lastStack = stack.slice(); }
+  }
+  if (lastOk < 0) return null;
+  try { return JSON.parse(t.slice(0, lastOk + 1) + lastStack.reverse().join("")); } catch (e) { return null; }
 }
 const numV = v => (typeof v === "number" && isFinite(v) ? v : parseFloat(v));
 function normSite(s, i, extra) {
@@ -711,7 +709,7 @@ async function cityInParts(prompt, show) {
     'For this request return ONLY {"sites":[...],"farther":[...]}: "sites" holds just the 5 quick sights ("quick": true) and "farther" holds 3-4 day trips.'
   ];
   const got = parts.map(() => 0), total = [5200, 9000, 9000, 7000];
-  const res = await Promise.all(parts.map((extra, i) => sample(prompt + "\n\n" + extra, { modelTier: "default", onText: ({ text }) => { got[i] = Math.min(1, text.length / total[i]); show(got.reduce((a, b) => a + b, 0) / parts.length * 100); } })
+  const res = await Promise.all(parts.map((extra, i) => sample(prompt + "\n\n" + extra + " Ignore any other counts above and write exactly that many items, keeping each one as concise as the format allows.", { modelTier: "part", onText: ({ text }) => { got[i] = Math.min(1, text.length / total[i]); show(got.reduce((a, b) => a + b, 0) / parts.length * 100); } })
     .then(r => parseJSON(r.text)).catch(() => null)));
   const [a, b, c2, d] = res;
   if (!b || !(b.sites || []).length) throw new Error("The guide came back incomplete. Try again.");
