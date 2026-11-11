@@ -2322,8 +2322,8 @@ Rules:
 - Write all human-readable text (summary, guide, lookFor, tips, basics, phrase meanings) in ${P().lang}. Keep place names and local phrases in their own language.
 ${P().access !== "none" ? "- The travelers need: " + ACCESS.find(a => a[0] === P().access)[1] + ". Prefer accessible sights and mention access issues honestly." : ""}`;
   try {
-    const { text } = await sample(prompt, { modelTier: "default", onText: ({ text }) => { if (busy) { busy.text = (quiet ? busy.prefix || "" : "") + "Writing the " + label + " guide… " + Math.min(99, Math.round(text.length / 260)) + "%"; updateBusy(); } } });
-    const c = cleanCity(parseJSON(text), label);
+    const show = n => { if (busy) { busy.text = (quiet ? busy.prefix || "" : "") + "Writing the " + label + " guide… " + Math.min(99, Math.round(n)) + "%"; updateBusy(); } };
+    const c = cleanCity(sample === freeSample ? await cityInParts(prompt, show) : parseJSON((await sample(prompt, { modelTier: "default", onText: ({ text }) => show(text.length / 260) })).text), label);
     if (!c.sites.length) throw new Error("empty");
     const key = keyOf(label) + (d.event ? "|" + keyOf(d.event) : "");
     cities[key] = c;
@@ -2335,6 +2335,25 @@ ${P().access !== "none" ? "- The travelers need: " + ACCESS.find(a => a[0] === P
     if (!quiet) { busy = null; aiError = aiErrorText(e, "The guide for " + label); render(); }
     return false;
   }
+}
+// The free AI writes more slowly, so it builds a city guide as four smaller pieces at the same time.
+async function cityInParts(prompt, show) {
+  const parts = [
+    'For this request return ONLY {"city","country","starts","restaurants","gettingAround","basics"}. Leave out "sites" and "farther".',
+    'For this request return ONLY {"sites":[...]} holding the 7 most famous main sights of this destination (3-5 of them mustSee true). No quick sights.',
+    'For this request return ONLY {"sites":[...]} holding 7 more main sights that are NOT among the 7 most famous: lesser-known gems and places locals love (most with "kind":"local"). No quick sights.',
+    'For this request return ONLY {"sites":[...],"farther":[...]}: "sites" holds just the 5 quick sights ("quick": true) and "farther" holds 3-4 day trips.'
+  ];
+  const got = parts.map(() => 0), total = [5200, 9000, 9000, 7000];
+  const res = await Promise.all(parts.map((extra, i) => sample(prompt + "\n\n" + extra, { modelTier: "default", onText: ({ text }) => { got[i] = Math.min(1, text.length / total[i]); show(got.reduce((a, b) => a + b, 0) / parts.length * 100); } })
+    .then(r => parseJSON(r.text)).catch(() => null)));
+  const [a, b, c2, d] = res;
+  if (!b || !(b.sites || []).length) throw new Error("The guide came back incomplete. Try again.");
+  const seen = new Set(), sites = [];
+  for (const x of [...(b.sites || []), ...((c2 && c2.sites) || []), ...((d && d.sites) || [])]) {
+    const k = keyOf(x && x.name); if (!k || seen.has(k)) continue; seen.add(k); x.id = k.replace(/ /g, "-"); sites.push(x);
+  }
+  return Object.assign({}, a || {}, { sites, farther: ((d && d.farther) || []).map(x => Object.assign(x, { id: keyOf(x.name).replace(/ /g, "-") })) });
 }
 async function buildAllGuides() {
   if (!aiReady()) return;
@@ -3931,4 +3950,4 @@ render();
 
 </script>
 <script>if ("serviceWorker" in navigator) addEventListener("load", () => navigator.serviceWorker.register("sw.js").catch(() => {}));</script>
-<script>(function(){var B="f75f74f-1794371662";function chk(){if(location.protocol!=="https:")return;fetch("version.txt",{cache:"no-store"}).then(function(r){return r.ok?r.text():""}).then(function(t){t=t.trim();if(t&&t!==B)location.reload()}).catch(function(){})}addEventListener("load",chk);document.addEventListener("visibilitychange",function(){if(document.visibilityState==="visible")chk()})})();</script>
+<script>(function(){var B="caa09ca-1794371977";function chk(){if(location.protocol!=="https:")return;fetch("version.txt",{cache:"no-store"}).then(function(r){return r.ok?r.text():""}).then(function(t){t=t.trim();if(t&&t!==B)location.reload()}).catch(function(){})}addEventListener("load",chk);document.addEventListener("visibilitychange",function(){if(document.visibilityState==="visible")chk()})})();</script>

@@ -38,7 +38,7 @@ export default {
     const content = images.length ? [...images.map(d => ({ type: "image_url", image_url: { url: d } })), { type: "text", text: prompt }] : prompt;
     let stream;
     try {
-      stream = await env.AI.run(MODEL, { messages: [{ role: "user", content }], max_tokens: MAX_OUT[tier], stream: true, temperature: 0.4 });
+      stream = await env.AI.run(MODEL, { messages: [{ role: "user", content }], max_tokens: MAX_OUT[tier], stream: true, temperature: 0.4, chat_template_kwargs: { enable_thinking: false } });
     } catch (e) {
       return Response.json({ error: "The AI service is busy. Try again in a minute." }, { status: 502, headers: h });
     }
@@ -47,7 +47,7 @@ export default {
     const counter = new TransformStream({
       transform(chunk, ctl) {
         bytes += chunk.byteLength; const s = dec.decode(chunk, { stream: true });
-        for (const m of s.matchAll(/"(?:response|content)":"((?:[^"\\]|\\.)*)"/g)) outChars += m[1].length;
+        for (const m of s.matchAll(/"(?:response|content|reasoning_content|reasoning)":"((?:[^"\\]|\\.)*)"/g)) outChars += m[1].length;
         ctl.enqueue(chunk);
       },
       flush() { ctx.waitUntil(addUse(env, inTok * IN_RATE + Math.ceil(Math.max(outChars / 4, bytes / 12)) * OUT_RATE)); }
