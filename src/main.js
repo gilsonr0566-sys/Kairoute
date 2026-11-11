@@ -2297,7 +2297,7 @@ function renderTrip(d) {
   ${changeCard()}
   <div class="tripgrid">
     <div class="leftcol">
-      <div>${renameId === trip.id ? renameBox(trip.id, trip.name || tripName(trip)) : `<div class="setrow"><h2>${esc(trip.name || "Your trip")}</h2><button class="btn ghost small" data-act="rename" data-id="${esc(trip.id)}">Rename</button></div>`}<p class="lede">${trip.days.length} days, ${trip.days.filter(x => x.type === "port").length} cruise stops. Tap a day to edit it.</p></div>
+      <div>${renameId === trip.id ? renameBox(trip.id, trip.name || tripName(trip)) : `<div class="setrow"><h2>${esc(trip.name || "Your trip")}</h2><button class="btn ghost small" data-act="rename" data-id="${esc(trip.id)}">Rename</button></div>`}<p class="lede">${trip.days.length} day${trip.days.length === 1 ? "" : "s"}${(() => { const n = trip.days.filter(x => x.type === "port").length; return n ? `, ${n} cruise stop${n === 1 ? "" : "s"}` : ""; })()}. Tap a day to edit it.</p></div>
       ${aiReady() && missing ? `<button class="btn ghost small" data-act="genall" ${busy ? "disabled" : ""}>Build guides for all ${missing} places</button>` : ""}
       <div class="itin">${itinerary()}</div>
       <div class="actions"><button class="btn ghost small" data-act="addday">+ Add a day</button><button class="btn ghost small" data-act="addport">+ Add a port day</button></div>
@@ -2579,23 +2579,22 @@ function stopCard(s, num, city) {
   const ready = aiReady(), dp = deeper[s.id], an = answers[s.id];
   const photos = `https://commons.wikimedia.org/w/index.php?search=${encodeURIComponent(s.name + " " + city.city)}&title=Special:MediaSearch&type=image`;
   return `<article class="stopcard" id="stop-${esc(s.id)}">
-    <div class="postcard">${postcardSVG(s)}<div class="num">${s.along ? "•" : num}</div><div class="cat">${esc(s.category || (s.along ? "On the way" : "Stop"))}</div></div>
     <div class="stopbody">
-      <div class="head"><h3>${esc(s.name)}</h3><p class="lede">${esc(unitText(s.summary))}</p></div>
+      <div class="head stophead"><span class="stopnum">${s.along ? "•" : num}</span><div><h3>${esc(s.name)}</h3><p class="stopmeta">${[s.category ? String(s.category).replace(/^\w/, c => c.toUpperCase()) : (s.along ? "On the way" : ""), s.minutes ? dur(s.minutes) : "", s.mustSee ? "Must-see" : ""].filter(Boolean).map(esc).join(" · ")}</p></div></div>
+      <p class="lede">${esc(unitText(s.summary))}</p>
       <div class="audio"><button class="btn" data-play="${esc(s.id)}">▶ Play audio guide</button><span class="state" aria-live="polite"></span></div>
+      <details class="story" open><summary>The story</summary><div class="guidetext">${paras(unitText(s.guide))}</div></details>
       ${s.lookFor && s.lookFor.length ? `<div class="field"><span class="eyebrow">What to look for</span><ol class="lookfor">${s.lookFor.map(x => `<li><span>${esc(x)}</span></li>`).join("")}</ol></div>` : ""}
       ${picksBlock(s)}
-      ${s.photoTip ? `<p class="phototip"><b>Photo spot:</b> ${esc(s.photoTip)} <a href="${photos}" target="_blank" rel="noopener">See photos of it</a></p>` : ""}
-      ${s.travelerTip ? `<p class="phototip"><b>From travelers:</b> ${esc(unitText(s.travelerTip))}</p>` : ""}
+      ${s.photoTip || s.travelerTip ? `<div class="tipsgrid">${s.photoTip ? `<p class="phototip"><b>Photo spot</b> ${esc(s.photoTip)} <a href="${photos}" target="_blank" rel="noopener">See photos</a></p>` : ""}${s.travelerTip ? `<p class="phototip"><b>From travelers</b> ${esc(unitText(s.travelerTip))}</p>` : ""}</div>` : ""}
       ${s.hours || s.tickets || s.crowds || s.priceNote || s.web ? `<div class="before"><span class="eyebrow">Before you go</span>
         ${s.hours ? `<div><b>Hours</b><span>${esc(s.hours)}${s.closed ? " · " + esc(s.closed) : ""}</span></div>` : ""}
         ${s.priceNote ? `<div><b>Price</b><span>${esc(s.priceNote)}</span></div>` : ""}
-        ${s.web ? `<div><b>Website</b><span><a href="${esc(s.web)}" target="_blank" rel="noopener">Official site</a></span></div>` : ""}
         ${s.tickets ? `<div><b>Tickets</b><span>${esc(s.tickets)}</span></div>` : ""}
         ${s.crowds ? `<div><b>Crowds</b><span>${esc(s.crowds)}</span></div>` : ""}
         ${s.access && P().access !== "none" ? `<div><b>Access</b><span>${esc(s.access)}</span></div>` : ""}
+        ${s.web ? `<div><b>Website</b><span><a href="${esc(s.web)}" target="_blank" rel="noopener">Official site ↗</a></span></div>` : ""}
       </div>` : ""}
-      <div class="guidetext">${paras(unitText(s.guide))}</div>
       ${s.sources && s.sources.length ? `<p class="ai-note">Checked against: ${s.sources.filter(x => x !== "map").map(esc).join(", ") || "the map"}${s.sources.includes("map") && s.sources.length > 1 ? " and the map" : ""}.</p>` : ""}
       ${(() => { const tr = translations[s.id + "|" + P().lang]; const need = P().lang !== "English" && city.lang !== P().lang;
         return need ? (tr ? `<div class="guidetext" id="tr-${esc(s.id)}">${tr.text ? paras(tr.text) : `<p class="ai-note"><span class="spinner"></span> Translating…</p>`}</div>${tr.error ? `<p class="ai-note">${esc(tr.error)}</p>` : ""}` : (ready ? `<div><button class="btn ghost small" data-translate="${esc(s.id)}">Read it in ${esc(P().lang)}</button></div>` : "")) : ""; })()}
@@ -2615,8 +2614,10 @@ function renderGuide(d) {
   if (!plan || plan.error) return `${dayHeading(d)}<div class="card empty"><p>${esc(plan ? plan.error : "Set up your day first.")}</p><button class="btn" data-goto="trip">Edit this day</button></div>`;
   let n = 0;
   const cards = plan.items.filter(i => i.type === "stop").map(i => { if (!i.place.along) n++; return stopCard(i.place, n, city); }).join("");
+  const jumps = plan.items.filter(i => i.type === "stop" && !i.place.along).map((i, k) => `<button type="button" class="chip" data-jump="${esc(i.place.id)}"><b>${k + 1}</b> ${esc(i.place.name)}</button>`).join("");
   return `${dayHeading(d)}<p class="lede">Every stop's story, in route order. For a guided walk through the day, use Tour mode.</p>
-    <div class="actions"><button class="btn" data-act="tourstart" style="background:var(--meal)">▶ Start the tour</button></div>
+    <div class="planacts"><button class="btn bigbtn" data-act="tourstart">▶ Start the tour</button></div>
+    ${jumps ? `<nav class="jumps" aria-label="Jump to a stop">${jumps}</nav>` : ""}
     ${cards ? `<div class="stoplist">${cards}</div>` : `<div class="card empty"><p>No stops planned for today.</p><button class="btn" data-goto="sites">Choose stops</button></div>`}`;
 }
 // ---------- Tour mode ----------
@@ -2702,8 +2703,7 @@ function renderTour(d) {
     const s = st.place;
     const found = T.found || [];
     body = `<div class="tourcard">
-      <div class="postcard" style="border-radius:12px;overflow:hidden">${postcardSVG(s)}<div class="num">${s.along ? "•" : stopNo}</div><div class="cat">${esc(s.category || "")}</div></div>
-      <h2 class="tourtitle">${esc(s.name)}</h2>
+      <div class="stophead"><span class="stopnum big">${s.along ? "•" : stopNo}</span><div><h2 class="tourtitle">${esc(s.name)}</h2><p class="stopmeta">${esc(String(s.category || "").replace(/^\w/, c => c.toUpperCase()))}</p></div></div>
       <p class="timeleft" id="tourLeft"></p>
       <div class="audio"><button class="btn bigplay" data-play="${esc(s.id)}" data-label="▶ Play the story">▶ Play the story</button><span class="state" aria-live="polite"></span></div>
       ${s.lookFor && s.lookFor.length ? `<div class="field"><span class="eyebrow">Can you find these?</span>
@@ -2834,6 +2834,7 @@ document.addEventListener("click", e => {
   if (t.dataset.day != null && !t.dataset.act) { if (view === "trip") readForm(); trip.active = +t.dataset.day; aiError = ""; cdPreview = null; cdWhere = null; cdSpoken = false; stopAudio(); save(); render();
     if (t.classList.contains("itrow") && innerWidth < 800) { const f = document.getElementById("dayForm"); if (f) f.scrollIntoView({ block: "start" }); }
     return; }
+  if (t.dataset.jump) { const el = document.getElementById("stop-" + t.dataset.jump); if (el) el.scrollIntoView({ behavior: "smooth", block: "start" }); return; }
   if (t.dataset.goto) { view = t.dataset.goto; render(); window.scrollTo(0, 0); return; }
   if (t.dataset.act === "savekey") { const k = ((document.getElementById("aikey") || {}).value || "").trim(); if (k) { try { localStorage.setItem(KEY_STORE, k); } catch (e) {} sample = webSample; } render(); return; }
   if (t.dataset.act === "clearkey") { try { localStorage.removeItem(KEY_STORE); } catch (e) {} if (!(cl && cl.use)) sample = freeAI ? freeSample : null; render(); return; }
