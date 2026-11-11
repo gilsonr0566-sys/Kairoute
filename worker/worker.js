@@ -60,6 +60,51 @@ export default {
     const url = new URL(req.url);
     const { DAILY_NEURONS, VOICE_DAILY, LAB_LEFT } = await limits(env), lab = req.headers.get("x-kairoute-lab") === "1";
     if (url.pathname === "/status") { const u = await used(env); const vu = +(await env.USAGE.get("v:" + today())) || 0; return Response.json({ ok: true, model: MODEL, usedToday: Math.round(u), budget: DAILY_NEURONS, left: Math.max(0, Math.floor(DAILY_NEURONS - u)), voiceLeft: Math.max(0, Math.floor(Math.min(VOICE_DAILY - vu, DAILY_NEURONS - u))), labLeft: Math.floor(LAB_LEFT) }, { headers: h }); }
+    // Real places from OpenStreetMap, so the app never sends anyone to a place the AI made up.
+    // /places: restaurants and cafés around given points. /verify: finds each named sight on the map.
+    if (url.pathname === "/places" && req.method === "POST") {
+      if (origin && !ALLOWED.some(r => r.test(origin))) return Response.json({ error: "Not allowed" }, { status: 403, headers: h });
+      let b; try { b = await req.json(); } catch (e) { return Response.json({ error: "Bad request" }, { status: 400, headers: h }); }
+      const pts = (Array.isArray(b.pts) ? b.pts : []).map(p => [+(+p.lat).toFixed(3), +(+p.lng).toFixed(3)]).filter(p => isFinite(p[0]) && isFinite(p[1])).slice(0, 16);
+      const r = Math.min(1500, Math.max(200, +b.r || 700));
+      if (!pts.length) return Response.json({ places: [] }, { headers: h });
+      const key = "p1:" + r + ":" + (await sha(JSON.stringify(pts)));
+      const hit = await env.USAGE.get(key); if (hit) return new Response(hit, { headers: { ...h, "content-type": "application/json" } });
+      const q = `[out:json][timeout:25];(${pts.map(([la, ln]) => `nwr["amenity"~"^(restaurant|cafe|fast_food|pub|bar|food_court)$"]["name"](around:${r},${la},${ln});`).join("")});out center tags 600;`;
+      let data = null;
+      for (const ep of ["https://overpass-api.de/api/interpreter", "https://overpass.kumi.systems/api/interpreter"]) {
+        try { const rr = await fetch(ep, { method: "POST", body: "data=" + encodeURIComponent(q), headers: { "content-type": "application/x-www-form-urlencoded", "user-agent": "Kairoute/1.0 (travel guide; https://gilsonr0566-sys.github.io/Kairoute/)" } }); if (rr.ok) { data = await rr.json(); break; } } catch (e) {}
+      }
+      if (!data) return Response.json({ error: "map busy" }, { status: 502, headers: h });
+      const places = (data.elements || []).map(e => { const t = e.tags || {}; return { name: t.name, lat: e.lat ?? (e.center && e.center.lat), lng: e.lon ?? (e.center && e.center.lon), amenity: t.amenity, cuisine: t.cuisine || "", hours: t.opening_hours || "", web: t.website || t["contact:website"] || "", tourism: !!(t.tourism || t["name:en"] && t.name !== t["name:en"]), tags: Object.keys(t).length }; }).filter(p => p.name && isFinite(p.lat) && isFinite(p.lng));
+      const out = JSON.stringify({ places });
+      ctx.waitUntil(env.USAGE.put(key, out, { expirationTtl: 30 * 86400 }));
+      return new Response(out, { headers: { ...h, "content-type": "application/json" } });
+    }
+    if (url.pathname === "/verify" && req.method === "POST") {
+      if (origin && !ALLOWED.some(r => r.test(origin))) return Response.json({ error: "Not allowed" }, { status: 403, headers: h });
+      let b; try { b = await req.json(); } catch (e) { return Response.json({ error: "Bad request" }, { status: 400, headers: h }); }
+      const city = String(b.city || "").slice(0, 120), items = (Array.isArray(b.items) ? b.items : []).slice(0, 40);
+      const out = [];
+      for (const it of items) {
+        const name = String(it.name || "").slice(0, 160); if (!name) { out.push(null); continue; }
+        const k = "nv1:" + (await sha(name + "|" + city));
+        let res = await env.USAGE.get(k, "json");
+        if (!res) {
+          const tries = [name + ", " + city, name.replace(/\s*\(.*?\)\s*/g, " ").trim() + ", " + city];
+          for (const t of tries) {
+            try {
+              const rr = await fetch("https://nominatim.openstreetmap.org/search?format=jsonv2&limit=3&q=" + encodeURIComponent(t), { headers: { "user-agent": "Kairoute/1.0 (travel guide; https://gilsonr0566-sys.github.io/Kairoute/)", "accept-language": "en" } });
+              if (rr.ok) { const j = await rr.json(); res = { found: j.map(x => ({ lat: +x.lat, lng: +x.lon, name: x.name || x.display_name, type: x.type, cls: x.category || x.class })) }; if (j.length) break; }
+            } catch (e) {}
+            await new Promise(r => setTimeout(r, 1100)); // the map service asks for at most one search a second
+          }
+          if (res) ctx.waitUntil(env.USAGE.put(k, JSON.stringify(res), { expirationTtl: 90 * 86400 }));
+        }
+        out.push(res);
+      }
+      return Response.json({ results: out }, { headers: h });
+    }
     // Shared guide store: a finished city guide is kept so the same city is never written twice.
     if (url.pathname === "/guide") {
       if (req.method === "GET") {
