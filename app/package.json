@@ -1,0 +1,18 @@
+{
+  "name": "kairoute-app",
+  "version": "0.9.0",
+  "private": true,
+  "description": "Kairoute Android app (wraps the website build in Capacitor)",
+  "scripts": {
+    "sync": "mkdir -p www/icons && cp ../index.html ../manifest.webmanifest www/ && cp ../icons/* www/icons/ && npx cap sync android"
+  },
+  "dependencies": {
+    "@capacitor/android": "^8.0.2",
+    "@capacitor/core": "^8.6.0",
+    "@capacitor-community/keep-awake": "^8.0.1",
+    "@capacitor-community/text-to-speech": "^8.0.2"
+  },
+  "devDependencies": {
+    "@capacitor/cli": "^8.6.0"
+  }
+}

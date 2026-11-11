@@ -1661,6 +1661,9 @@ async function webSample(prompt, opts = {}) {
   return { text, truncated: stop === "max_tokens" };
 }
 if (!(cl && cl.use) && getKey()) sample = webSample;
+// Inside the Android app, native plugins give us device voices and keep the screen awake on tour.
+const NATIVE = (window.Capacitor && window.Capacitor.Plugins) || {};
+const nativeTTS = NATIVE.TextToSpeech || null, keepAwake = NATIVE.KeepAwake || null;
 let ttsState = "idle", speakingId = null, audioUnavailable = false;
 
 // ---------- Constants ----------
@@ -2407,6 +2410,7 @@ async function askGuide(site, city, q) {
 function stopAudio() {
   if (tts) { try { tts.stop(); } catch (e) {} }
   if (window.speechSynthesis && (speechSynthesis.speaking || speechSynthesis.pending)) try { speechSynthesis.cancel(); } catch (e) {}
+  if (nativeTTS) { nativeRun++; try { nativeTTS.stop(); } catch (e) {} }
   speakingId = null; ttsState = "idle"; updateAudioUI();
 }
 function speakSite(site) {
@@ -2444,7 +2448,20 @@ function speakLines(id, lines, lc) {
         if (code === "busy") { speakingId = null; audioMsg = "Audio can't play while dictation is on."; updateAudioUI(); return; }
         speakBrowser(site.id, lines, lc);
       });
-  } else speakBrowser(site.id, lines, lc);
+  } else if (nativeTTS) speakNative(site.id, lines, lc);
+  else speakBrowser(site.id, lines, lc);
+}
+let nativeRun = 0;
+async function speakNative(id, lines, lc) {
+  const run = ++nativeRun;
+  ttsState = "speaking"; updateAudioUI();
+  try {
+    for (const text of lines) {
+      if (run !== nativeRun || speakingId !== id) return;
+      await nativeTTS.speak({ text, lang: lc || "en-US", rate: 0.95, pitch: 1.0, volume: 1.0, category: "playback" });
+    }
+    if (run === nativeRun && speakingId === id) { speakingId = null; ttsState = "idle"; updateAudioUI(); }
+  } catch (e) { if (run === nativeRun && speakingId === id) { speakingId = null; audioMsg = "The device voice couldn't start. Check that a text-to-speech voice is installed in Android settings."; updateAudioUI(); } }
 }
 let audioMsg = "";
 const NO_AUDIO = "Sound can't play inside the Claude app on phones and tablets. Open this page in the Chrome browser instead (sign in at claude.ai), or on a computer. The story is written out below meanwhile. The full Kairoute app will speak on every device.";
@@ -2475,6 +2492,7 @@ function speakBrowser(id, lines, lc) {
 function speakPhrase(p) {
   stopAudio();
   if (tts) { tts.speak(p.local, Object.assign({ voice: P().voice, rate: 0.85 }, p.lang ? { language: p.lang } : {})).catch(() => {}); return; }
+  if (nativeTTS) { nativeTTS.speak({ text: p.local, lang: p.lang || "en-US", rate: 0.85 }).catch(() => {}); return; }
   if (window.speechSynthesis && window.SpeechSynthesisUtterance) { try { const u = new SpeechSynthesisUtterance(p.local); if (p.lang) u.lang = p.lang; u.rate = 0.85; speechSynthesis.speak(u); } catch (e) {} }
 }
 async function translateSite(site) {
@@ -3551,9 +3569,10 @@ function arriveHere(auto) {
   if (st && st.type === "stop") speakSite(st.place);
 }
 function toggleFollow() {
-  if (geoWatch != null) { try { navigator.geolocation.clearWatch(geoWatch); } catch (e) {} geoWatch = null; clearInterval(geoPoll); geoPoll = null; geoState = "off"; geoMsg = ""; renderGuideOnly(); return; }
+  if (geoWatch != null) { if (keepAwake) keepAwake.allowSleep().catch(() => {}); try { navigator.geolocation.clearWatch(geoWatch); } catch (e) {} geoWatch = null; clearInterval(geoPoll); geoPoll = null; geoState = "off"; geoMsg = ""; renderGuideOnly(); return; }
   if (!navigator.geolocation) { geoState = "unavailable"; geoMsg = "This device or window can't share your location. Tap I'm here when you arrive."; renderGuideOnly(); return; }
   geoState = "asking"; geoMsg = "Asking for your location…"; renderGuideOnly();
+  if (keepAwake) keepAwake.keepAwake().catch(() => {});
   try {
     geoWatch = navigator.geolocation.watchPosition(onGeo, err => {
       if (err && err.code !== 1 && geoWatch != null) { if (geoState !== "on") { geoMsg = "Looking for a GPS signal… You can tap I'm here meanwhile."; renderGuideOnly(); } return; }
