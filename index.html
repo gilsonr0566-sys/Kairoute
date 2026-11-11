@@ -2901,6 +2901,9 @@ async function voicePlanOk(parts) {
 }
 async function speakNatural(id, lines) {
   if (!lines.length) return false;
+  // Must run on the tap itself, first thing, on the tap: phones only allow audio that starts from a tap.
+  kairouteSound(); // set up on the tap itself, which browsers require for audio
+  try { natAudio.src = SILENT; natAudio.play().catch(() => {}); } catch (e) {} // claim the tap so the recording can play when it arrives
   const parts = await scriptParts(lines);
   if (speakingId !== id) return true;
   // One voice for the whole stop: if the allowance can't cover every line, the device voice reads it all.
@@ -4410,4 +4413,4 @@ render();
 
 </script>
 <script>if ("serviceWorker" in navigator) addEventListener("load", () => navigator.serviceWorker.register("sw.js").catch(() => {}));</script>
-<script>(function(){var B="b45e4d2-1794403005";function chk(){if(location.protocol!=="https:")return;fetch("version.txt",{cache:"no-store"}).then(function(r){return r.ok?r.text():""}).then(function(t){t=t.trim();if(t&&t!==B)location.reload()}).catch(function(){})}addEventListener("load",chk);document.addEventListener("visibilitychange",function(){if(document.visibilityState==="visible")chk()})})();</script>
+<script>(function(){var B="baccf53-1794403332";function chk(){if(location.protocol!=="https:")return;fetch("version.txt",{cache:"no-store"}).then(function(r){return r.ok?r.text():""}).then(function(t){t=t.trim();if(t&&t!==B)location.reload()}).catch(function(){})}addEventListener("load",chk);document.addEventListener("visibilitychange",function(){if(document.visibilityState==="visible")chk()})})();</script>

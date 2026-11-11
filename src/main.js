@@ -1104,6 +1104,9 @@ async function voicePlanOk(parts) {
 }
 async function speakNatural(id, lines) {
   if (!lines.length) return false;
+  // Must run on the tap itself, first thing, on the tap: phones only allow audio that starts from a tap.
+  kairouteSound(); // set up on the tap itself, which browsers require for audio
+  try { natAudio.src = SILENT; natAudio.play().catch(() => {}); } catch (e) {} // claim the tap so the recording can play when it arrives
   const parts = await scriptParts(lines);
   if (speakingId !== id) return true;
   // One voice for the whole stop: if the allowance can't cover every line, the device voice reads it all.
