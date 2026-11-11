@@ -703,7 +703,7 @@ ${P().access !== "none" ? "- The travelers need: " + ACCESS.find(a => a[0] === P
 // The free AI writes more slowly, so it builds a city guide as four smaller pieces at the same time.
 async function cityInParts(prompt, show) {
   const parts = [
-    'For this request return ONLY {"city","country","starts","restaurants","gettingAround","basics"}. Leave out "sites" and "farther".',
+    'For this request return ONLY {"city","country","starts","restaurants","gettingAround","basics"}, with all 10 restaurants and all 8 phrases. Leave out "sites" and "farther".',
     'For this request return ONLY {"sites":[...]} holding the 7 most famous main sights of this destination (3-5 of them mustSee true). No quick sights.',
     'For this request return ONLY {"sites":[...]} holding 7 more main sights that are NOT among the 7 most famous: lesser-known gems and places locals love (most with "kind":"local"). No quick sights.',
     'For this request return ONLY {"sites":[...],"farther":[...]}: "sites" holds just the 5 quick sights ("quick": true) and "farther" holds 3-4 day trips.'

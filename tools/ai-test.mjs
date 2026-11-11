@@ -17,7 +17,7 @@ console.log(await run({ prompt: "In two sentences, what should a visitor look fo
 console.log("--- Lisbon city guide in 4 parallel parts");
 const body = JSON.parse(fs.readFileSync("tools/ai-test-lisbon.json", "utf8"));
 const parts = [
-  'For this request return ONLY {"city","country","starts","restaurants","gettingAround","basics"}. Leave out "sites" and "farther".',
+  'For this request return ONLY {"city","country","starts","restaurants","gettingAround","basics"}, with all 10 restaurants and all 8 phrases. Leave out "sites" and "farther".',
   'For this request return ONLY {"sites":[...]} holding the 7 most famous main sights of this destination (3-5 of them mustSee true). No quick sights.',
   'For this request return ONLY {"sites":[...]} holding 7 more main sights that are NOT among the 7 most famous: lesser-known gems and places locals love (most with "kind":"local"). No quick sights.',
   'For this request return ONLY {"sites":[...],"farther":[...]}: "sites" holds just the 5 quick sights ("quick": true) and "farther" holds 3-4 day trips.'
@@ -28,6 +28,7 @@ console.log("all parts done in", ((Date.now() - t0) / 1000).toFixed(1) + "s");
 const js = outs.map((o, i) => { try { return JSON.parse(o.slice(o.indexOf("{"), o.lastIndexOf("}") + 1)); } catch (e) { console.log("part", i, "JSON FAILED", e.message, o.slice(-300)); return null; } });
 const sites = js.slice(1).flatMap(j => (j && j.sites) || []);
 const a = js[0] || {};
+console.log("part A keys:", Object.keys(js[0]||{}).join(","));
 console.log("sites:", sites.length, "quick:", sites.filter(s => s.quick).length, "farther:", ((js[3] || {}).farther || []).length, "restaurants:", (a.restaurants || []).length, "phrases:", ((a.basics || {}).phrases || []).length, "hotels:", ((a.starts || {}).hotel || []).length);
 for (const s of sites) console.log(" -", s.name, s.lat, s.lng, s.minutes + "min", s.kind, (s.guide || "").split(/\s+/).length + "w");
 console.log("sample guide:", (sites[0] || {}).guide);

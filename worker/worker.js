@@ -7,7 +7,7 @@ const MODEL = "@cf/google/gemma-4-26b-a4b-it";
 const DAILY_NEURONS = 8500;
 const IN_RATE = 9091 / 1e6, OUT_RATE = 27273 / 1e6;
 const ALLOWED = [/^https:\/\/gilsonr0566-sys\.github\.io$/, /^https?:\/\/localhost(:\d+)?$/, /^capacitor:\/\/localhost$/, /^https?:\/\/127\.0\.0\.1(:\d+)?$/, /\.claudeusercontent\.com$/, /^https:\/\/claude\.ai$/];
-const MAX_OUT = { quick: 1200, part: 6000, default: 14000, complex: 16000 };
+const MAX_OUT = { quick: 1200, part: 8000, default: 14000, complex: 16000 };
 
 function cors(origin) {
   const ok = origin && ALLOWED.some(r => r.test(origin));
