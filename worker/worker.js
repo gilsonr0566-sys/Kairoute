@@ -97,8 +97,10 @@ export default {
       if (origin && !ALLOWED.some(r => r.test(origin))) return Response.json({ error: "Not allowed" }, { status: 403, headers: h });
       let b; try { b = await req.json(); } catch (e) { return Response.json({ error: "Bad request" }, { status: 400, headers: h }); }
       const city = String(b.city || "").slice(0, 120), names = (Array.isArray(b.names) ? b.names : []).map(n => String(n || "").slice(0, 160)).slice(0, 40);
+      const farNames = new Set((Array.isArray(b.far) ? b.far : []).map(n => String(n || "").slice(0, 160)));
       const UA = { "user-agent": "Kairoute/1.0 (travel guide; https://gilsonr0566-sys.github.io/Kairoute/)" };
-      const get = async u => { for (let t = 0; t < 2; t++) { try { const r = await fetch(u, { headers: UA }); if (r.ok) return await r.json(); } catch (e) {} if (!t) await new Promise(ok => setTimeout(ok, 600)); } return null; };
+      // Each fetch is tried up to 3 times; a "slow down" answer (429) waits longer before the next try.
+      const get = async u => { for (let t = 0; t < 3; t++) { let wait = 700 * (t + 1); try { const r = await fetch(u, { headers: UA }); if (r.ok) return await r.json(); if (r.status === 429 || r.status >= 500) wait = 1500 * (t + 1); else return null; } catch (e) {} if (t < 2) await new Promise(ok => setTimeout(ok, wait)); } return null; };
       // The city's own location, so map searches favour places in this city over same-named places
       // elsewhere in the world, and the app measures "in this city" from the real centre.
       let center = null; const ck = "gc2:" + (await sha(city.toLowerCase()));
@@ -115,7 +117,7 @@ export default {
       const bias = center ? "&lat=" + center.lat + "&lon=" + center.lng + "&location_bias_scale=0.2&zoom=12" : "";
       const one = async name => {
         if (!name) return null;
-        const k = "gr4:" + (await sha(name + "|" + city)), hit = await env.USAGE.get(k, "json"); if (hit) return hit;
+        const k = "gr5:" + (await sha(name + "|" + city + (farNames.has(name) ? "|far" : ""))), hit = await env.USAGE.get(k, "json"); if (hit) return hit;
         const plain = name.replace(/\s*\(.*?\)\s*/g, " ").trim(), q = plain + " " + city;
         let wiki = null, map = null;
         {
@@ -124,8 +126,9 @@ export default {
         }
         {
           // Inside the city's area first (a hard box about 60 km across), then anywhere as a fallback.
-          const box = center ? await get("https://photon.komoot.io/api/?limit=5&lang=en&bbox=" + [center.lng - 0.35, center.lat - 0.3, center.lng + 0.35, center.lat + 0.3].map(v => v.toFixed(4)).join(",") + "&q=" + encodeURIComponent(plain)) : null;
-          const wide = await get("https://photon.komoot.io/api/?limit=4&lang=en" + bias + "&q=" + encodeURIComponent(q));
+          const box = center && !farNames.has(name) ? await get("https://photon.komoot.io/api/?limit=5&lang=en&bbox=" + [center.lng - 0.35, center.lat - 0.3, center.lng + 0.35, center.lat + 0.3].map(v => v.toFixed(4)).join(",") + "&q=" + encodeURIComponent(plain)) : null;
+          // Only search worldwide when nothing came back inside the city's area (keeps the free map server happy).
+          const wide = box && (box.features || []).length ? null : await get("https://photon.komoot.io/api/?limit=4&lang=en" + bias + "&q=" + encodeURIComponent(q));
           const j = (box || wide) ? { features: [...((box && box.features) || []), ...((wide && wide.features) || [])] } : null;
           if (j) { map = (j.features || []).map(f => ({ name: (f.properties || {}).name || "", lat: f.geometry.coordinates[1], lng: f.geometry.coordinates[0], kind: (f.properties || {}).osm_value || "", city: (f.properties || {}).city || "", osm: ((f.properties || {}).osm_type || "") + ((f.properties || {}).osm_id || "") })); }
         }
@@ -134,7 +137,7 @@ export default {
         return res;
       };
       const out = new Array(names.length); let next = 0;
-      await Promise.all(Array.from({ length: 4 }, async () => { while (next < names.length) { const i = next++; out[i] = await one(names[i]); } }));
+      await Promise.all(Array.from({ length: 3 }, async () => { while (next < names.length) { const i = next++; out[i] = await one(names[i]); } }));
       return Response.json({ results: out, center }, { headers: h });
     }
     // /voyage?city=: the city's Wikivoyage page (written by travelers): its listings (see, do, eat, drink)

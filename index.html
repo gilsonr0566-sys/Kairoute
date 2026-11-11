@@ -2734,7 +2734,7 @@ function nameMatch(want, got) {
 }
 async function groundNames(names, label, farSet) {
   if (!freeAI || !names.length) return null;
-  const look = async list => { try { const r = await fetch(freeAI.url + "/ground", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ city: label, names: list }) }); if (r.ok) { const j = await r.json(); if (Array.isArray(j.results)) { if (j.center && isFinite(j.center.lat) && isFinite(j.center.lng)) cityMid = j.center; return j.results; } } } catch (e) {} return null; };
+  const look = async list => { try { const r = await fetch(freeAI.url + "/ground", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ city: label, names: list, far: list.filter(n => farSet && farSet.has(n)) }) }); if (r.ok) { const j = await r.json(); if (Array.isArray(j.results)) { if (j.center && isFinite(j.center.lat) && isFinite(j.center.lng)) cityMid = j.center; return j.results; } } } catch (e) {} return null; };
   let cityMid = null;
   let res = await look(names);
   if (!res) { await new Promise(ok => setTimeout(ok, 2500)); res = await look(names); }
@@ -2827,6 +2827,8 @@ async function cityInParts(prompt, show, label) {
   // Keep only places that really exist, and give the writer each place's real facts to work from.
   show(9, "Checking each place is real", 17);
   const farSet = new Set(far), grounded = label && typeof groundNames === "function" ? await groundNames([...main.map(x => x.name), ...quick, ...far], label, farSet) : null;
+  // Safeguard: never write a guide whose places couldn't be checked (and don't spend the AI allowance on it).
+  if (label && !grounded) throw new Error("check unavailable");
   if (grounded) {
     // A place the map knows under a local-language name can still be confirmed by its Wikivoyage listing,
     // which travelers wrote with the exact location.
@@ -4762,4 +4764,4 @@ render();
 
 </script>
 <script>if ("serviceWorker" in navigator) addEventListener("load", () => navigator.serviceWorker.register("sw.js").catch(() => {}));</script>
-<script>(function(){var B="eb3cdbd-1794413930";function chk(){if(location.protocol!=="https:")return;fetch("version.txt",{cache:"no-store"}).then(function(r){return r.ok?r.text():""}).then(function(t){t=t.trim();if(t&&t!==B)location.reload()}).catch(function(){})}addEventListener("load",chk);document.addEventListener("visibilitychange",function(){if(document.visibilityState==="visible")chk()})})();</script>
+<script>(function(){var B="a058260-1794414561";function chk(){if(location.protocol!=="https:")return;fetch("version.txt",{cache:"no-store"}).then(function(r){return r.ok?r.text():""}).then(function(t){t=t.trim();if(t&&t!==B)location.reload()}).catch(function(){})}addEventListener("load",chk);document.addEventListener("visibilitychange",function(){if(document.visibilityState==="visible")chk()})})();</script>
