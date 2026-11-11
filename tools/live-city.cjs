@@ -21,5 +21,18 @@ const { chromium, devices } = require('playwright');
     console.log(JSON.stringify(info, null, 1));
     console.log('CITYJSON ' + await p.evaluate(() => JSON.stringify({ cities: JSON.parse(localStorage.getItem('wayside.cities') || '{}'), trip: JSON.parse(localStorage.getItem('wayside.trip2') || '{}') })));
     console.log('Meals:', (await p.innerText('#view')).split('\n').filter(l => /^(Lunch|Dinner)/.test(l)).join(' / ')); }
-  console.log(logs.join('\n') || 'no errors'); await b.close();
+  console.log(logs.join('\n') || 'no errors');
+  // Safeguard check: the city must be built, confirmed on the map, and use only real restaurants.
+  const c = await p.evaluate(() => Object.values(JSON.parse(localStorage.getItem('wayside.cities') || '{}'))[0] || null);
+  const problems = [];
+  if (!c) problems.push('city was not built');
+  else {
+    if (!c.grounded) problems.push('places were not checked');
+    if (!c.startsOk) problems.push('start points were not checked');
+    if ((c.restaurants || []).some(r => !r.onMap)) problems.push('a restaurant did not come from the map');
+    if ((c.sites || []).length < 6) problems.push('only ' + (c.sites || []).length + ' sights confirmed');
+  }
+  console.log(problems.length ? 'PROBLEMS: ' + problems.join('; ') : 'SAFEGUARDS OK: ' + c.city + ', ' + c.sites.length + ' sights, ' + (c.restaurants || []).length + ' real restaurants');
+  if (process.env.GITHUB_STEP_SUMMARY) require('fs').appendFileSync(process.env.GITHUB_STEP_SUMMARY, (problems.length ? '**' + city + ': ' + problems.join('; ') + '**' : city + ': all places confirmed') + '\n');
+  await b.close(); if (problems.length) process.exit(1);
 })();

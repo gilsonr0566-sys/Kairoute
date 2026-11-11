@@ -787,7 +787,7 @@ function cleanCity(c, dest) {
     } : null,
     lang: P().lang,
     gettingAround: (c.gettingAround || []).filter(x => x && x.tip).slice(0, 5).map(x => ({ mode: String(x.mode || ""), tip: String(x.tip) })),
-    restaurants: (c.restaurants || []).filter(okLL).map(r => ({ name: String(r.name), lat: num(r.lat), lng: num(r.lng), kind: r.kind === "local" ? "local" : "touristy", cuisine: String(r.cuisine || ""), price: String(r.price || ""), why: String(r.why || "") }))
+    restaurants: (c.restaurants || []).filter(okLL).map(r => ({ onMap: !!r.onMap, generic: !!r.generic, name: String(r.name), lat: num(r.lat), lng: num(r.lng), kind: r.kind === "local" ? "local" : "touristy", cuisine: String(r.cuisine || ""), price: String(r.price || ""), why: String(r.why || "") }))
   };
 }
 function faithNote() {
@@ -876,6 +876,8 @@ ${P().access !== "none" ? "- The travelers need: " + ACCESS.find(a => a[0] === P
       const before = JSON.stringify([raw.verified, raw.grounded, (raw.restaurants || []).length, raw.startsOk]);
       if (busy) { busy.text = (quiet ? busy.prefix || "" : "") + "Checking every place on the map…"; updateBusy(); }
       raw = await realPlaces(raw, label);
+      // Safeguard: never show a city whose places couldn't be confirmed.
+      if (!raw.grounded) throw new Error("check unavailable");
       if (JSON.stringify([raw.verified, raw.grounded, (raw.restaurants || []).length, raw.startsOk]) !== before) fresh = true;
     }
     const c = cleanCity(raw, label);
@@ -890,7 +892,7 @@ ${P().access !== "none" ? "- The travelers need: " + ACCESS.find(a => a[0] === P
     return true;
   } catch (e) {
     try { console.warn("Guide build failed for " + label + ":", e && (e.stack || e.message || e)); } catch (x) {}
-    if (!quiet) { busy = null; aiError = /allowance/i.test((e && e.message) || "") ? e.message : aiErrorText(e, "The guide for " + label); render(); }
+    if (!quiet) { busy = null; aiError = /allowance/i.test((e && e.message) || "") ? e.message : /check unavailable/.test((e && e.message) || "") ? "The map service that checks every place didn't answer, so I didn't build the guide (I never show places I can't confirm). Try again in a minute." : aiErrorText(e, "The guide for " + label); render(); }
     return false;
   }
 }
@@ -991,7 +993,9 @@ async function cityInParts(prompt, show, label) {
   const order = k => { const i = main.findIndex(x => keyOf(x.name) === k); return i < 0 ? 99 : i; };
   sites.sort((x, y) => (x.quick ? 1 : 0) - (y.quick ? 1 : 0) || order(x.id.replace(/-/g, " ")) - order(y.id.replace(/-/g, " ")));
   farther.forEach(x => { const gx = grounded && [...grounded.keys()].find(n => nameMatch(n, x.name)); if (gx) { const g = grounded.get(gx); if (g.lat != null) { x.lat = g.lat; x.lng = g.lng; } x.onMap = true; } });
-  return Object.assign({}, info, { sites, farther, grounded: !!grounded });
+  // Anything the writer returned that wasn't one of the confirmed places is left out.
+  const keep = xs => grounded ? xs.filter(x => x.onMap === true) : xs;
+  return Object.assign({}, info, { sites: keep(sites), farther: keep(farther), grounded: !!grounded });
 }
 // Real-world check for an AI-written city, against OpenStreetMap (the open world map):
 // every sight is looked up by name; found ones get the map's exact location, ones the map can't find

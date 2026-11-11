@@ -1,0 +1,27 @@
+name: Weekly real-places check
+# Builds two new cities a week on the live site and fails (which emails you) only if a city shows
+# a place that wasn't confirmed on the map, or a restaurant that didn't come from the map.
+on:
+  schedule:
+    - cron: "15 1 * * 1"
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm i playwright@1 && npx playwright install chromium
+      - name: Pick this week's cities
+        run: |
+          W=$(( $(date +%s) / 604800 ))
+          CITIES=("Savannah" "Kotor" "Galveston" "Bruges" "Juneau" "Valletta" "Charleston" "Dubrovnik" "Key West" "Split" "Ketchikan" "Tallinn" "San Juan" "Cozumel" "Lisbon" "Quebec City")
+          echo "C1=${CITIES[$(( (W*2) % 16 ))]}" >> $GITHUB_ENV
+          echo "C2=${CITIES[$(( (W*2+1) % 16 ))]}" >> $GITHUB_ENV
+      - run: CITY="$C1" node tools/live-city.cjs
+      - run: CITY="$C2" node tools/live-city.cjs
