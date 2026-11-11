@@ -2356,7 +2356,7 @@ function buildPlan(d) {
   const dropped = [];
   while (order.length && total(order) > budget) {
     const cands = order.filter(s => !s.mustSee);
-    const pool = cands.length ? cands : (budget < fixed + 60 ? order : []);
+    const pool = cands.length ? cands : order; // must-sees go last, but the day must still fit
     if (!pool.length) break;
     let best = null, bestVal = -1;
     for (const c of pool) {
@@ -4537,4 +4537,4 @@ render();
 
 </script>
 <script>if ("serviceWorker" in navigator) addEventListener("load", () => navigator.serviceWorker.register("sw.js").catch(() => {}));</script>
-<script>(function(){var B="fcbf578-1794406358";function chk(){if(location.protocol!=="https:")return;fetch("version.txt",{cache:"no-store"}).then(function(r){return r.ok?r.text():""}).then(function(t){t=t.trim();if(t&&t!==B)location.reload()}).catch(function(){})}addEventListener("load",chk);document.addEventListener("visibilitychange",function(){if(document.visibilityState==="visible")chk()})})();</script>
+<script>(function(){var B="2a34d1e-1794407280";function chk(){if(location.protocol!=="https:")return;fetch("version.txt",{cache:"no-store"}).then(function(r){return r.ok?r.text():""}).then(function(t){t=t.trim();if(t&&t!==B)location.reload()}).catch(function(){})}addEventListener("load",chk);document.addEventListener("visibilitychange",function(){if(document.visibilityState==="visible")chk()})})();</script>

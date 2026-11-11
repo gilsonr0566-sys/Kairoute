@@ -555,7 +555,7 @@ function buildPlan(d) {
   const dropped = [];
   while (order.length && total(order) > budget) {
     const cands = order.filter(s => !s.mustSee);
-    const pool = cands.length ? cands : (budget < fixed + 60 ? order : []);
+    const pool = cands.length ? cands : order; // must-sees go last, but the day must still fit
     if (!pool.length) break;
     let best = null, bestVal = -1;
     for (const c of pool) {
