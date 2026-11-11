@@ -695,7 +695,7 @@ ${P().access !== "none" ? "- The travelers need: " + ACCESS.find(a => a[0] === P
     cities[key] = c;
     trip.days.forEach(x => { if (keyOf(x.destination) === keyOf(label) && !x.event === !d.event) { x.cityKey = key; x.pointIdx = 0; if (!x.selected) x.selected = defaultSelection(c, trip.style, x); } });
     save();
-    if (!quiet) { busy = null; view = "sites"; render(); }
+    if (!quiet) { busy = null; view = "plan"; render(); window.scrollTo(0, 0); }
     return true;
   } catch (e) {
     if (!quiet) { busy = null; aiError = aiErrorText(e, "The guide for " + label); render(); }
