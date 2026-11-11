@@ -5,6 +5,11 @@ const { chromium, devices } = require('playwright');
   const city = process.env.CITY || 'Corpus Christi';
   const b = await chromium.launch(); const ctx = await b.newContext({ ...devices['Galaxy S9+'] }); const p = await ctx.newPage();
   const logs = []; p.on('pageerror', e => logs.push('PAGE ERROR ' + e.message)); p.on('console', m => { if (m.type() !== 'log') logs.push(m.type() + ' ' + m.text()); });
+  const net = new Map(); p.on('request', r => { if (/workers\.dev/.test(r.url())) net.set(r, Date.now()); });
+  p.on('requestfinished', async r => { if (!net.has(r)) return; const res = await r.response(); let extra = ''; const u = new URL(r.url());
+    if (u.pathname === '/ground') { try { const j = await res.json(); const rs = j.results || []; extra = ' names ' + rs.length + ' answered ' + rs.filter(x => x && x.answered).length + ' missed: ' + rs.map((x, i) => x && x.answered ? '' : JSON.parse(r.postData()).names[i]).filter(Boolean).join('; '); } catch (e) { extra = ' (unreadable)'; } }
+    console.log('NET', r.method(), u.pathname, res && res.status(), (Date.now() - net.get(r)) + 'ms' + extra); });
+  p.on('requestfailed', r => { if (net.has(r)) console.log('NET FAILED', r.method(), new URL(r.url()).pathname, r.failure() && r.failure().errorText, (Date.now() - net.get(r)) + 'ms'); });
   await p.goto('https://gilsonr0566-sys.github.io/Kairoute/?t=' + Date.now()); await p.waitForTimeout(3000);
   await p.evaluate(c => {
     const day = (i, type) => ({ id: 'd' + (900 + i), date: '2026-11-1' + (1 + i), destination: c, type, mode: 'car', time: '09:00', pointIdx: 0, portArrive: '08:00', allAboard: '17:00', tender: false, startTime: '09:00', hours: 8, alongWay: true, returnToStart: true, event: '', selected: null, cityKey: null });
