@@ -2578,7 +2578,7 @@ function cleanCity(c, dest) {
   const starts = {};
   for (const k of ["cruise", "airport", "station", "hotel", "point"]) starts[k] = ((c.starts && c.starts[k]) || []).filter(okLL).map(p => ({ name: String(p.name), lat: num(p.lat), lng: num(p.lng), note: p.note ? String(p.note) : "" }));
   return {
-    city: String(c.city || dest), country: String(c.country || ""), ai: true, verified: c.verified || 0, starts,
+    city: String(c.city || dest), country: String(c.country || ""), ai: true, verified: c.verified || 0, grounded: !!c.grounded, starts,
     sites: (c.sites || []).filter(okLL).map((s, i) => site(s, i)),
     farther: (c.farther || []).filter(okLL).map((s, i) => Object.assign(site(s, i, "-far"), { far: true })),
     basics: c.basics ? {
@@ -2672,7 +2672,7 @@ ${P().access !== "none" ? "- The travelers need: " + ACCESS.find(a => a[0] === P
     const show = n => { if (busy) { busy.text = (quiet ? busy.prefix || "" : "") + "Writing the " + label + " guide… " + Math.min(99, Math.round(n)) + "%"; updateBusy(); } };
     let raw = await cachedGuide(d), fresh = !raw;
     if (raw && !guideInLang(raw, P().lang)) { raw = null; fresh = true; }
-    if (!raw) raw = sample === freeSample ? await cityInParts(prompt, show) : parseJSON((await sample(prompt, { modelTier: "default", onText: ({ text }) => show(text.length / 260) })).text);
+    if (!raw) raw = sample === freeSample ? await cityInParts(prompt, show, label) : parseJSON((await sample(prompt, { modelTier: "default", onText: ({ text }) => show(text.length / 260) })).text);
     if (raw && !(raw.verified >= 2)) { if (busy) { busy.text = (quiet ? busy.prefix || "" : "") + "Checking every place on the map…"; updateBusy(); } raw = await realPlaces(raw, label); fresh = true; }
     const c = cleanCity(raw, label);
     if (!c.sites.length) throw new Error("empty");
@@ -2690,11 +2690,40 @@ ${P().access !== "none" ? "- The travelers need: " + ACCESS.find(a => a[0] === P
     return false;
   }
 }
+// Grounding: looks up each named place on Wikipedia and the map. A place counts as real when its name
+// matches a Wikipedia article or a map entry near the city. Returns null if the lookup service didn't answer.
+const SMALL_WORDS = new Set("the of and a an de la el le du del di da des los las st saint san santa".split(" "));
+function nameMatch(want, got) {
+  const w = keyOf(String(want).replace(/\(.*?\)/g, " ")).split(" ").filter(t => t && !SMALL_WORDS.has(t)), g = new Set(keyOf(got).split(" "));
+  if (!w.length) return false;
+  return w.filter(t => g.has(t) || [...g].some(x => x.length > 4 && t.length > 4 && (x.startsWith(t.slice(0, 5)) || t.startsWith(x.slice(0, 5))))).length / w.length >= 0.6;
+}
+async function groundNames(names, label, farSet) {
+  if (!freeAI || !names.length) return null;
+  let res = null;
+  try { const r = await fetch(freeAI.url + "/ground", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ city: label, names }) }); if (r.ok) res = (await r.json()).results; } catch (e) {}
+  if (!Array.isArray(res)) return null;
+  const answered = res.filter(x => x && x.answered).length;
+  if (answered < names.length * 0.8) return null; // the lookup was patchy: don't judge places on it
+  // The city's middle: the median of the best matches.
+  const firsts = res.map((x, i) => x && ((x.map || []).find(m => nameMatch(names[i], m.name)) || (x.wiki || []).find(w => w.lat && nameMatch(names[i], w.title)))).filter(Boolean);
+  const la = firsts.map(p => p.lat).sort((a, b) => a - b), ln = firsts.map(p => p.lng).sort((a, b) => a - b);
+  const center = la.length ? { lat: la[la.length >> 1], lng: ln[ln.length >> 1] } : null;
+  const out = new Map();
+  names.forEach((n, i) => {
+    const x = res[i] || {}, lim = farSet && farSet.has(n) ? 250 : 40, inArea = p => p && isFinite(p.lat) && (!center || hav(p, center) <= lim);
+    const wiki = (x.wiki || []).find(w => nameMatch(n, w.title) && (w.lat == null || inArea(w)));
+    const map = (x.map || []).find(m => nameMatch(n, m.name) && inArea(m));
+    const pos = map || (wiki && wiki.lat != null ? wiki : null);
+    out.set(n, { real: !!(wiki || map), facts: wiki ? wiki.extract.replace(/\s+/g, " ").trim() : "", title: wiki ? wiki.title : "", lat: pos ? +(+pos.lat).toFixed(5) : null, lng: pos ? +(+pos.lng).toFixed(5) : null });
+  });
+  return out;
+}
 // The free AI writes more slowly, so a city guide is built in two steps: first a short list of which
 // places to cover, then small pieces written at the same time, each for a fixed set of named places.
 // That keeps every piece short (no duplicates, no runaway lists), and any piece that comes back short
 // or broken is asked for again, up to 3 tries.
-async function cityInParts(prompt, show) {
+async function cityInParts(prompt, show, label) {
   const okLL = x => x && x.name && isFinite(numV(x.lat)) && isFinite(numV(x.lng));
   const lang = P().lang || "English";
   const tail = ` Ignore any other counts above and keep each item as concise as the format allows. Write every summary, guide, lookFor, photoTip, pick, tip and note in ${lang}, even though the place is abroad; only place names and the local phrases stay in the local language.`;
@@ -2717,17 +2746,21 @@ async function cityInParts(prompt, show) {
   show(2);
   const plan = await ask('For this first step return ONLY {"main":[{"name","mustSee","kind"}],"quick":["name"],"farther":["name"]}: exactly 14 main sights (3-5 mustSee true, about a third "kind":"local"), 5 small quick sights people walk past, and 4 day trips or sights farther out. Real, distinct places. Names and those fields only.', "quick",
     j => j && (j.main || []).filter(x => x && x.name).length >= 8);
-  const main = plan.main.filter(x => x && x.name).slice(0, 16), quick = (plan.quick || []).map(String).filter(Boolean).slice(0, 6), far = (plan.farther || []).map(String).filter(Boolean).slice(0, 4);
+  let main = plan.main.filter(x => x && x.name).slice(0, 16), quick = (plan.quick || []).map(String).filter(Boolean).slice(0, 6), far = (plan.farther || []).map(String).filter(Boolean).slice(0, 4);
+  // Keep only places that really exist, and give the writer each place's real facts to work from.
+  const grounded = label && typeof groundNames === "function" ? await groundNames([...main.map(x => x.name), ...quick, ...far], label, new Set(far)) : null;
+  if (grounded) { main = main.filter(x => grounded.get(x.name).real); quick = quick.filter(n => grounded.get(n).real); far = far.filter(n => grounded.get(n).real); }
+  const facts = names => grounded ? names.map(n => grounded.get(n)).some(g => g && g.facts) ? "\n\nFacts to build on, from each place's Wikipedia article. Use them, never contradict them, and do not invent names, dates or numbers beyond them and well-established history:\n" + names.map(n => { const g = grounded.get(n); return g && g.facts ? `- ${n}: ${g.facts.slice(0, 1200)}` : `- ${n}: (no article; describe only what is certain and keep it short)`; }).join("\n") : "" : "";
   const groups = [[], [], [], []]; main.forEach((x, i) => groups[i % 4].push(x));
   const list = xs => xs.map(n => '"' + n + '"').join(", ");
   const parts = [
-    { ask: 'For this request return ONLY {"city","country","starts","restaurants","gettingAround","basics"}, with 10 restaurants and 8 phrases. Leave out "sites" and "farther".', size: 5000,
-      ok: j => j && j.city && j.starts && (j.starts.hotel || []).filter(okLL).length >= 1 && (j.restaurants || []).filter(okLL).length >= 5 && j.basics && (j.gettingAround || []).length >= 2 },
-    ...groups.filter(g => g.length).map(g => ({ names: g.map(x => x.name), ask: `For this request return ONLY {"sites":[...]} with full details for exactly these ${g.length} main sights and no others, using these exact names: ${list(g.map(x => x.name))}.`, size: 3000 * g.length,
+    { ask: 'For this request return ONLY {"city","country","starts","gettingAround","basics"}, with 8 phrases. Leave out "sites", "farther" and "restaurants" (places to eat come from the map).', size: 4000,
+      ok: j => j && j.city && j.starts && (j.starts.hotel || []).filter(okLL).length >= 1 && j.basics && (j.gettingAround || []).length >= 2 },
+    ...groups.filter(g => g.length).map(g => ({ names: g.map(x => x.name), ask: `For this request return ONLY {"sites":[...]} with full details for exactly these ${g.length} main sights and no others, using these exact names: ${list(g.map(x => x.name))}.${facts(g.map(x => x.name))}`, size: 3000 * g.length,
       ok: j => j && (j.sites || []).filter(x => okLL(x) && x.guide).length >= g.length - 1 })),
-    ...(quick.length ? [{ names: quick, ask: `For this request return ONLY {"sites":[...]} with exactly these ${quick.length} quick sights ("quick": true, minutes 10) and no others, using these exact names: ${list(quick)}.`, size: 1000 * quick.length,
+    ...(quick.length ? [{ names: quick, ask: `For this request return ONLY {"sites":[...]} with exactly these ${quick.length} quick sights ("quick": true, minutes 10) and no others, using these exact names: ${list(quick)}.${facts(quick)}`, size: 1000 * quick.length,
       ok: j => j && (j.sites || []).filter(okLL).length >= Math.max(1, quick.length - 2) }] : []),
-    ...(far.length ? [{ names: far, ask: `For this request return ONLY {"farther":[...]} with exactly these ${far.length} day trips and no others, using these exact names: ${list(far)}.`, size: 3000 * far.length,
+    ...(far.length ? [{ names: far, ask: `For this request return ONLY {"farther":[...]} with exactly these ${far.length} day trips and no others, using these exact names: ${list(far)}.${facts(far)}`, size: 3000 * far.length,
       ok: j => j && (j.farther || []).filter(okLL).length >= Math.max(1, far.length - 1) }] : [])
   ];
   const got = parts.map(() => 0), tell = () => show(5 + got.reduce((a, b) => a + b, 0) / parts.length * 95);
@@ -2746,13 +2779,15 @@ async function cityInParts(prompt, show) {
       const k = keyOf(String((x && x.name) || "").replace(/&/g, " and ")); if (!k || seen.has(k)) continue; seen.add(k); x.id = k.replace(/ /g, "-");
       const pl = byName.get(k); if (pl) { x.mustSee = !!pl.mustSee; x.kind = pl.kind === "local" ? "local" : "touristy"; x.quick = false; }
       if (quickSet.has(k)) x.quick = true;
+      const gx = grounded && [...grounded.keys()].find(n => keyOf(n) === k || nameMatch(n, x.name)); if (gx) { const g = grounded.get(gx); if (g.lat != null) { x.lat = g.lat; x.lng = g.lng; } x.onMap = true; }
       sites.push(x);
     }
     for (const x of j.farther || []) { const k = keyOf(String((x && x.name) || "").replace(/&/g, " and ")); if (!k || seen.has(k)) continue; seen.add(k); x.id = k.replace(/ /g, "-"); farther.push(x); }
   }
   const order = k => { const i = main.findIndex(x => keyOf(x.name) === k); return i < 0 ? 99 : i; };
   sites.sort((x, y) => (x.quick ? 1 : 0) - (y.quick ? 1 : 0) || order(x.id.replace(/-/g, " ")) - order(y.id.replace(/-/g, " ")));
-  return Object.assign({}, info, { sites, farther });
+  farther.forEach(x => { const gx = grounded && [...grounded.keys()].find(n => nameMatch(n, x.name)); if (gx) { const g = grounded.get(gx); if (g.lat != null) { x.lat = g.lat; x.lng = g.lng; } x.onMap = true; } });
+  return Object.assign({}, info, { sites, farther, grounded: !!grounded });
 }
 // Real-world check for an AI-written city, against OpenStreetMap (the open world map):
 // every sight is looked up by name; found ones get the map's exact location, ones the map can't find
@@ -2766,15 +2801,12 @@ async function realPlaces(raw, label) {
   const sites = (raw.sites || []).filter(okLL), far = (raw.farther || []).filter(okLL);
   const lats = sites.map(x => numV(x.lat)).sort((a, b) => a - b), lngs = sites.map(x => numV(x.lng)).sort((a, b) => a - b);
   const center = { lat: lats[lats.length >> 1], lng: lngs[lngs.length >> 1] };
-  const items = sites.concat(far), v = await post("/verify", { city: label, items: items.map(x => ({ name: x.name })) });
-  if (v && Array.isArray(v.results)) {
-    let ok = 0;
-    items.forEach((x, i) => {
-      const found = ((v.results[i] || {}).found || []).map(p => ({ p, d: hav(p, center) })).filter(q => q.d <= (far.includes(x) ? 250 : 40)).sort((a, b) => hav(a.p, pos(x)) - hav(b.p, pos(x)))[0];
-      if (found) { x.lat = +found.p.lat.toFixed(5); x.lng = +found.p.lng.toFixed(5); x.onMap = true; ok++; } else x.onMap = false;
-    });
-    // Only trust the check if the map recognised most places (a city with unusual names shouldn't be emptied).
-    if (ok >= items.length * 0.5) { raw.sites = (raw.sites || []).filter(x => x.onMap !== false); raw.farther = (raw.farther || []).filter(x => x.onMap !== false); }
+  if (!raw.grounded) {
+    const items = sites.concat(far), g = await groundNames(items.map(x => x.name), label, new Set(far.map(x => x.name)));
+    if (!g) return raw; // lookup unavailable right now: try again next time rather than guess
+    items.forEach(x => { const r = g.get(x.name); x.onMap = !!(r && r.real); if (r && r.lat != null) { x.lat = r.lat; x.lng = r.lng; } });
+    raw.sites = (raw.sites || []).filter(x => x.onMap !== false); raw.farther = (raw.farther || []).filter(x => x.onMap !== false);
+    raw.grounded = true;
   }
   const main = (raw.sites || []).filter(x => okLL(x) && !x.quick), must = main.filter(x => x.mustSee);
   const pts = main.slice(0, 14).map(pos);
@@ -2803,7 +2835,7 @@ async function checkSavedCities() {
 }
 // Finished guides are kept on Kairoute's AI helper, so each city is written only once and opens in seconds after that.
 function guideCacheKey(d) {
-  return ["v2", keyOf(d.destination), d.event ? keyOf(d.event) : "", d.type === "port" ? "port" : "", ((trip.prefs && trip.prefs.interests) || []).slice().sort().join(","), P().lang, P().access].join("|");
+  return ["v3", keyOf(d.destination), d.event ? keyOf(d.event) : "", d.type === "port" ? "port" : "", ((trip.prefs && trip.prefs.interests) || []).slice().sort().join(","), P().lang, P().access].join("|");
 }
 async function cachedGuide(d) {
   if (!freeAI) return null;
@@ -4596,4 +4628,4 @@ render();
 
 </script>
 <script>if ("serviceWorker" in navigator) addEventListener("load", () => navigator.serviceWorker.register("sw.js").catch(() => {}));</script>
-<script>(function(){var B="ce061c0-1794408106";function chk(){if(location.protocol!=="https:")return;fetch("version.txt",{cache:"no-store"}).then(function(r){return r.ok?r.text():""}).then(function(t){t=t.trim();if(t&&t!==B)location.reload()}).catch(function(){})}addEventListener("load",chk);document.addEventListener("visibilitychange",function(){if(document.visibilityState==="visible")chk()})})();</script>
+<script>(function(){var B="67df9e3-1794409008";function chk(){if(location.protocol!=="https:")return;fetch("version.txt",{cache:"no-store"}).then(function(r){return r.ok?r.text():""}).then(function(t){t=t.trim();if(t&&t!==B)location.reload()}).catch(function(){})}addEventListener("load",chk);document.addEventListener("visibilitychange",function(){if(document.visibilityState==="visible")chk()})})();</script>

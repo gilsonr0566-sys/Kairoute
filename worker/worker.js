@@ -81,6 +81,35 @@ export default {
       ctx.waitUntil(env.USAGE.put(key, out, { expirationTtl: 30 * 86400 }));
       return new Response(out, { headers: { ...h, "content-type": "application/json" } });
     }
+    // /ground: for each named place, its Wikipedia article (summary and location) and matches on the map
+    // (Photon, built on OpenStreetMap). The app keeps only places that really exist and writes their stories
+    // from the article's facts.
+    if (url.pathname === "/ground" && req.method === "POST") {
+      if (origin && !ALLOWED.some(r => r.test(origin))) return Response.json({ error: "Not allowed" }, { status: 403, headers: h });
+      let b; try { b = await req.json(); } catch (e) { return Response.json({ error: "Bad request" }, { status: 400, headers: h }); }
+      const city = String(b.city || "").slice(0, 120), names = (Array.isArray(b.names) ? b.names : []).map(n => String(n || "").slice(0, 160)).slice(0, 40);
+      const UA = { "user-agent": "Kairoute/1.0 (travel guide; https://gilsonr0566-sys.github.io/Kairoute/)" };
+      const one = async name => {
+        if (!name) return null;
+        const k = "gr1:" + (await sha(name + "|" + city)), hit = await env.USAGE.get(k, "json"); if (hit) return hit;
+        const plain = name.replace(/\s*\(.*?\)\s*/g, " ").trim(), q = plain + " " + city;
+        let wiki = null, map = null;
+        try {
+          const wr = await fetch("https://en.wikipedia.org/w/api.php?action=query&format=json&generator=search&gsrlimit=3&prop=extracts|coordinates&exintro=1&explaintext=1&exchars=1400&redirects=1&gsrsearch=" + encodeURIComponent(q), { headers: UA });
+          if (wr.ok) { const j = await wr.json(); wiki = Object.values((j.query && j.query.pages) || {}).sort((a, b) => (a.index || 0) - (b.index || 0)).map(p => ({ title: p.title, extract: p.extract || "", lat: p.coordinates && p.coordinates[0] && p.coordinates[0].lat, lng: p.coordinates && p.coordinates[0] && p.coordinates[0].lon })); }
+        } catch (e) {}
+        try {
+          const pr = await fetch("https://photon.komoot.io/api/?limit=4&lang=en&q=" + encodeURIComponent(q), { headers: UA });
+          if (pr.ok) { const j = await pr.json(); map = (j.features || []).map(f => ({ name: (f.properties || {}).name || "", lat: f.geometry.coordinates[1], lng: f.geometry.coordinates[0], kind: (f.properties || {}).osm_value || "", city: (f.properties || {}).city || "" })); }
+        } catch (e) {}
+        const res = { wiki: wiki || [], map: map || [], answered: !!(wiki && map) };
+        if (res.answered) ctx.waitUntil(env.USAGE.put(k, JSON.stringify(res), { expirationTtl: 90 * 86400 }));
+        return res;
+      };
+      const out = new Array(names.length); let next = 0;
+      await Promise.all(Array.from({ length: 5 }, async () => { while (next < names.length) { const i = next++; out[i] = await one(names[i]); } }));
+      return Response.json({ results: out }, { headers: h });
+    }
     if (url.pathname === "/verify" && req.method === "POST") {
       if (origin && !ALLOWED.some(r => r.test(origin))) return Response.json({ error: "Not allowed" }, { status: 403, headers: h });
       let b; try { b = await req.json(); } catch (e) { return Response.json({ error: "Bad request" }, { status: 400, headers: h }); }
