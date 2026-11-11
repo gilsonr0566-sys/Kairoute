@@ -2634,6 +2634,7 @@ function aiErrorText(e, what) {
     e && e.code === "rate_limited" ? "Too many requests right now. Try again in a minute." :
     what + " didn't come through. Try again.";
 }
+let progressTicker = 0; const stopTicker = () => clearInterval(progressTicker);
 async function generateCity(d, quiet) {
   if (!aiReady()) return false;
   const label = d.destination;
@@ -2671,13 +2672,20 @@ Rules:
 - Write all human-readable text (summary, guide, lookFor, tips, basics, phrase meanings) in ${P().lang}. Keep place names and local phrases in their own language.
 ${P().access !== "none" ? "- The travelers need: " + ACCESS.find(a => a[0] === P().access)[1] + ". Prefer accessible sights and mention access issues honestly." : ""}`;
   try {
-    const show = n => { if (busy) { busy.text = (quiet ? busy.prefix || "" : "") + "Writing the " + label + " guide… " + Math.min(99, Math.round(n)) + "%"; updateBusy(); } };
+    // Progress that always moves: each step has a ceiling, and between real updates the bar creeps
+    // toward it, so the traveler sees the build working even while a slow step waits on a server.
+    const started = Date.now(); let pct = 0, cap = 8, step = "Choosing the best places";
+    const paint = () => { if (!busy) return; const s = Math.round((Date.now() - started) / 1000); busy.text = (quiet ? busy.prefix || "" : "") + "Building the " + label + " guide · " + step + "… " + Math.min(99, Math.round(pct)) + "% · " + Math.floor(s / 60) + ":" + String(s % 60).padStart(2, "0"); updateBusy(); };
+    const show = (n, what, top) => { if (what) step = what; if (top) cap = top; pct = Math.max(pct, Math.min(99, n)); paint(); };
+    clearInterval(progressTicker);
+    progressTicker = setInterval(() => { if (!busy) return clearInterval(progressTicker); if (pct < cap) pct += Math.max(0.05, (cap - pct) * 0.03); paint(); }, 1000);
+    show(1);
     let raw = await cachedGuide(d), fresh = !raw;
     if (raw && !guideInLang(raw, P().lang)) { raw = null; fresh = true; }
-    if (!raw) raw = sample === freeSample ? await cityInParts(prompt, show, label) : parseJSON((await sample(prompt, { modelTier: "default", onText: ({ text }) => show(text.length / 260) })).text);
+    if (!raw) raw = sample === freeSample ? await cityInParts(prompt, show, label) : parseJSON((await sample(prompt, { modelTier: "default", onText: ({ text }) => show(text.length / 260, "Writing the stories", 90) })).text);
     if (raw) {
       const before = JSON.stringify([raw.verified, raw.grounded, (raw.restaurants || []).length, raw.startsOk]);
-      if (busy) { busy.text = (quiet ? busy.prefix || "" : "") + "Checking every place on the map…"; updateBusy(); }
+      show(90, "Finding real restaurants on the map", 99);
       raw = await realPlaces(raw, label);
       // Safeguard: never show a city whose places couldn't be confirmed.
       if (!raw.grounded) throw new Error("check unavailable");
@@ -2691,9 +2699,11 @@ ${P().access !== "none" ? "- The travelers need: " + ACCESS.find(a => a[0] === P
     cities[key] = c;
     trip.days.forEach(x => { if (keyOf(x.destination) === keyOf(label) && !x.event === !d.event) { x.cityKey = key; x.pointIdx = 0; if (!x.selected) x.selected = defaultSelection(c, trip.style, x); } });
     save();
+    stopTicker();
     if (!quiet) { busy = null; view = "plan"; render(); window.scrollTo(0, 0); }
     return true;
   } catch (e) {
+    stopTicker();
     try { console.warn("Guide build failed for " + label + ":", e && (e.stack || e.message || e)); } catch (x) {}
     if (!quiet) { busy = null; aiError = /allowance/i.test((e && e.message) || "") ? e.message : /check unavailable/.test((e && e.message) || "") ? "The map service that checks every place didn't answer, so I didn't build the guide (I never show places I can't confirm). Try again in a minute." : aiErrorText(e, "The guide for " + label); render(); }
     return false;
@@ -2709,9 +2719,18 @@ function nameMatch(want, got) {
 }
 async function groundNames(names, label, farSet) {
   if (!freeAI || !names.length) return null;
-  let res = null;
-  try { const r = await fetch(freeAI.url + "/ground", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ city: label, names }) }); if (r.ok) res = (await r.json()).results; } catch (e) {}
-  if (!Array.isArray(res)) return null;
+  const look = async list => { try { const r = await fetch(freeAI.url + "/ground", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ city: label, names: list }) }); if (r.ok) { const j = await r.json(); if (Array.isArray(j.results)) return j.results; } } catch (e) {} return null; };
+  let res = await look(names);
+  if (!res) { await new Promise(ok => setTimeout(ok, 2500)); res = await look(names); }
+  if (!res) return null;
+  // A busy map or encyclopedia server can miss a few names: ask again for just those (answers are cached).
+  for (let round = 0; round < 2; round++) {
+    const miss = names.map((n, i) => (res[i] && res[i].answered ? -1 : i)).filter(i => i >= 0);
+    if (!miss.length) break;
+    await new Promise(ok => setTimeout(ok, 2000 + round * 2000));
+    const again = await look(miss.map(i => names[i]));
+    if (again) miss.forEach((i, k) => { if (again[k] && again[k].answered) res[i] = again[k]; });
+  }
   const answered = res.filter(x => x && x.answered).length;
   if (answered < names.length * 0.8) return null; // the lookup was patchy: don't judge places on it
   // The city's middle: the median of the best matches.
@@ -2776,11 +2795,12 @@ async function cityInParts(prompt, show, label) {
     }
     throw last || new Error("The guide came back incomplete. Try again.");
   };
-  show(2);
+  show(2, "Choosing the best places", 9);
   const plan = await ask('For this first step return ONLY {"main":[{"name","mustSee","kind"}],"quick":["name"],"farther":["name"]}: exactly 14 main sights (3-5 mustSee true, about a third "kind":"local"), 5 small quick sights people walk past, and 4 day trips or sights farther out. Real, distinct places. Names and those fields only.', "quick",
     j => j && (j.main || []).filter(x => x && x.name).length >= 8);
   let main = plan.main.filter(x => x && x.name).slice(0, 16), quick = (plan.quick || []).map(String).filter(Boolean).slice(0, 6), far = (plan.farther || []).map(String).filter(Boolean).slice(0, 4);
   // Keep only places that really exist, and give the writer each place's real facts to work from.
+  show(9, "Checking each place is real", 17);
   const grounded = label && typeof groundNames === "function" ? await groundNames([...main.map(x => x.name), ...quick, ...far], label, new Set(far)) : null;
   if (grounded) { main = main.filter(x => grounded.get(x.name).real); quick = quick.filter(n => grounded.get(n).real); far = far.filter(n => grounded.get(n).real); }
   const vg = grounded ? await voyageFor(label) : null;
@@ -2798,7 +2818,8 @@ async function cityInParts(prompt, show, label) {
     ...(far.length ? [{ names: far, ask: `For this request return ONLY {"farther":[...]} with exactly these ${far.length} day trips and no others, using these exact names: ${list(far)}.${facts(far)}`, size: 3000 * far.length,
       ok: j => j && (j.farther || []).filter(okLL).length >= Math.max(1, far.length - 1) }] : [])
   ];
-  const got = parts.map(() => 0), tell = () => show(5 + got.reduce((a, b) => a + b, 0) / parts.length * 95);
+  const got = parts.map(() => 0), tell = () => show(17 + got.reduce((a, b) => a + b, 0) / parts.length * 72, "Writing the stories", 89);
+  tell();
   const res = await Promise.all(parts.map((p, i) => ask(p.ask, "part", p.ok, ({ text }) => { got[i] = Math.min(0.97, text.length / p.size); tell(); }, i > 0).then(j => { got[i] = 1; tell(); return j; })));
   const quickSet = new Set(quick.map(keyOf));
   const info = res[0], byName = new Map(main.map(x => [keyOf(x.name), x]));
@@ -4699,4 +4720,4 @@ render();
 
 </script>
 <script>if ("serviceWorker" in navigator) addEventListener("load", () => navigator.serviceWorker.register("sw.js").catch(() => {}));</script>
-<script>(function(){var B="3a934e3-1794411560";function chk(){if(location.protocol!=="https:")return;fetch("version.txt",{cache:"no-store"}).then(function(r){return r.ok?r.text():""}).then(function(t){t=t.trim();if(t&&t!==B)location.reload()}).catch(function(){})}addEventListener("load",chk);document.addEventListener("visibilitychange",function(){if(document.visibilityState==="visible")chk()})})();</script>
+<script>(function(){var B="70ec1fe-1794412025";function chk(){if(location.protocol!=="https:")return;fetch("version.txt",{cache:"no-store"}).then(function(r){return r.ok?r.text():""}).then(function(t){t=t.trim();if(t&&t!==B)location.reload()}).catch(function(){})}addEventListener("load",chk);document.addEventListener("visibilitychange",function(){if(document.visibilityState==="visible")chk()})})();</script>

@@ -103,20 +103,21 @@ export default {
         const k = "gr2:" + (await sha(name + "|" + city)), hit = await env.USAGE.get(k, "json"); if (hit) return hit;
         const plain = name.replace(/\s*\(.*?\)\s*/g, " ").trim(), q = plain + " " + city;
         let wiki = null, map = null;
-        try {
-          const wr = await fetch("https://en.wikipedia.org/w/api.php?action=query&format=json&generator=search&gsrlimit=3&prop=extracts|coordinates&exintro=1&explaintext=1&exchars=1400&redirects=1&gsrsearch=" + encodeURIComponent(q), { headers: UA });
-          if (wr.ok) { const j = await wr.json(); wiki = Object.values((j.query && j.query.pages) || {}).sort((a, b) => (a.index || 0) - (b.index || 0)).map(p => ({ title: p.title, extract: p.extract || "", lat: p.coordinates && p.coordinates[0] && p.coordinates[0].lat, lng: p.coordinates && p.coordinates[0] && p.coordinates[0].lon })); }
-        } catch (e) {}
-        try {
-          const pr = await fetch("https://photon.komoot.io/api/?limit=4&lang=en&q=" + encodeURIComponent(q), { headers: UA });
-          if (pr.ok) { const j = await pr.json(); map = (j.features || []).map(f => ({ name: (f.properties || {}).name || "", lat: f.geometry.coordinates[1], lng: f.geometry.coordinates[0], kind: (f.properties || {}).osm_value || "", city: (f.properties || {}).city || "", osm: ((f.properties || {}).osm_type || "") + ((f.properties || {}).osm_id || "") })); }
-        } catch (e) {}
+        const get = async u => { for (let t = 0; t < 2; t++) { try { const r = await fetch(u, { headers: UA }); if (r.ok) return await r.json(); } catch (e) {} if (!t) await new Promise(ok => setTimeout(ok, 600)); } return null; };
+        {
+          const j = await get("https://en.wikipedia.org/w/api.php?action=query&format=json&generator=search&gsrlimit=3&prop=extracts|coordinates&exintro=1&explaintext=1&exchars=1400&redirects=1&gsrsearch=" + encodeURIComponent(q));
+          if (j) { wiki = Object.values((j.query && j.query.pages) || {}).sort((a, b) => (a.index || 0) - (b.index || 0)).map(p => ({ title: p.title, extract: p.extract || "", lat: p.coordinates && p.coordinates[0] && p.coordinates[0].lat, lng: p.coordinates && p.coordinates[0] && p.coordinates[0].lon })); }
+        }
+        {
+          const j = await get("https://photon.komoot.io/api/?limit=4&lang=en&q=" + encodeURIComponent(q));
+          if (j) { map = (j.features || []).map(f => ({ name: (f.properties || {}).name || "", lat: f.geometry.coordinates[1], lng: f.geometry.coordinates[0], kind: (f.properties || {}).osm_value || "", city: (f.properties || {}).city || "", osm: ((f.properties || {}).osm_type || "") + ((f.properties || {}).osm_id || "") })); }
+        }
         const res = { wiki: wiki || [], map: map || [], answered: !!(wiki && map) };
         if (res.answered) ctx.waitUntil(env.USAGE.put(k, JSON.stringify(res), { expirationTtl: 90 * 86400 }));
         return res;
       };
       const out = new Array(names.length); let next = 0;
-      await Promise.all(Array.from({ length: 5 }, async () => { while (next < names.length) { const i = next++; out[i] = await one(names[i]); } }));
+      await Promise.all(Array.from({ length: 4 }, async () => { while (next < names.length) { const i = next++; out[i] = await one(names[i]); } }));
       return Response.json({ results: out }, { headers: h });
     }
     // /voyage?city=: the city's Wikivoyage page (written by travelers): its listings (see, do, eat, drink)
