@@ -68,7 +68,7 @@ export default {
       const pts = (Array.isArray(b.pts) ? b.pts : []).map(p => [+(+p.lat).toFixed(3), +(+p.lng).toFixed(3)]).filter(p => isFinite(p[0]) && isFinite(p[1])).slice(0, 16);
       const r = Math.min(1500, Math.max(200, +b.r || 700));
       if (!pts.length) return Response.json({ places: [] }, { headers: h });
-      const key = "p1:" + r + ":" + (await sha(JSON.stringify(pts)));
+      const key = "p2:" + r + ":" + (await sha(JSON.stringify(pts)));
       const hit = await env.USAGE.get(key); if (hit) return new Response(hit, { headers: { ...h, "content-type": "application/json" } });
       const q = `[out:json][timeout:25];(${pts.map(([la, ln]) => `nwr["amenity"~"^(restaurant|cafe|fast_food|pub|bar|food_court)$"]["name"](around:${r},${la},${ln});`).join("")});out center tags 600;`;
       // First choice: Photon (map search near each point), which answers quickly. Then Overpass as a backup.
@@ -76,7 +76,7 @@ export default {
       const ph = [];
       await Promise.all(pts.slice(0, 10).map(async ([la, ln]) => {
         for (const tag of ["amenity:restaurant", "amenity:cafe"]) {
-          try { const rr = await fetch(`https://photon.komoot.io/api/?q=${tag === "amenity:cafe" ? "cafe" : "restaurant"}&lat=${la}&lon=${ln}&limit=25&lang=en&osm_tag=${tag}`, { headers: UA }); if (rr.ok) { const j = await rr.json(); (j.features || []).forEach(f => { const p = f.properties || {}; ph.push({ name: p.name, lat: f.geometry.coordinates[1], lng: f.geometry.coordinates[0], amenity: tag.split(":")[1], cuisine: "", hours: "", web: "", tourism: false, tags: Object.keys(p).length }); }); } } catch (e) {}
+          try { const rr = await fetch(`https://photon.komoot.io/reverse?lat=${la}&lon=${ln}&radius=${(r / 1000).toFixed(2)}&limit=30&lang=en&osm_tag=${tag}`, { headers: UA }); if (rr.ok) { const j = await rr.json(); (j.features || []).forEach(f => { const p = f.properties || {}; ph.push({ name: p.name, lat: f.geometry.coordinates[1], lng: f.geometry.coordinates[0], amenity: tag.split(":")[1], cuisine: "", hours: "", web: "", tourism: false, tags: Object.keys(p).length }); }); } } catch (e) {}
         }
       }));
       if (ph.length >= 5) { const out = JSON.stringify({ places: ph.filter(p => p.name), src: "photon" }); ctx.waitUntil(env.USAGE.put(key, out, { expirationTtl: 30 * 86400 })); return new Response(out, { headers: { ...h, "content-type": "application/json" } }); }

@@ -777,7 +777,7 @@ function cleanCity(c, dest) {
   const starts = {};
   for (const k of ["cruise", "airport", "station", "hotel", "point"]) starts[k] = ((c.starts && c.starts[k]) || []).filter(okLL).map(p => ({ name: String(p.name), lat: num(p.lat), lng: num(p.lng), note: p.note ? String(p.note) : "" }));
   return {
-    city: String(c.city || dest), country: String(c.country || ""), ai: true, verified: c.verified || 0, grounded: !!c.grounded, starts,
+    city: String(c.city || dest), country: String(c.country || ""), ai: true, verified: c.verified || 0, grounded: !!c.grounded, startsOk: !!c.startsOk, starts,
     sites: (c.sites || []).filter(okLL).map((s, i) => site(s, i)),
     farther: (c.farther || []).filter(okLL).map((s, i) => Object.assign(site(s, i, "-far"), { far: true })),
     basics: c.basics ? {
@@ -873,10 +873,10 @@ ${P().access !== "none" ? "- The travelers need: " + ACCESS.find(a => a[0] === P
     if (raw && !guideInLang(raw, P().lang)) { raw = null; fresh = true; }
     if (!raw) raw = sample === freeSample ? await cityInParts(prompt, show, label) : parseJSON((await sample(prompt, { modelTier: "default", onText: ({ text }) => show(text.length / 260) })).text);
     if (raw) {
-      const before = JSON.stringify([raw.verified, raw.grounded, (raw.restaurants || []).length]);
+      const before = JSON.stringify([raw.verified, raw.grounded, (raw.restaurants || []).length, raw.startsOk]);
       if (busy) { busy.text = (quiet ? busy.prefix || "" : "") + "Checking every place on the map…"; updateBusy(); }
       raw = await realPlaces(raw, label);
-      if (JSON.stringify([raw.verified, raw.grounded, (raw.restaurants || []).length]) !== before) fresh = true;
+      if (JSON.stringify([raw.verified, raw.grounded, (raw.restaurants || []).length, raw.startsOk]) !== before) fresh = true;
     }
     const c = cleanCity(raw, label);
     if (!c.sites.length) throw new Error("empty");
@@ -1000,7 +1000,7 @@ async function cityInParts(prompt, show, label) {
 async function realPlaces(raw, label) {
   if (!freeAI || !raw) return raw;
   const realEats = (raw.restaurants || []).length && raw.restaurants.every(r => r.onMap);
-  if (raw.verified >= 2 && raw.grounded && realEats) return raw;
+  if (raw.verified >= 2 && raw.grounded && realEats && raw.startsOk) return raw;
   const okLL = x => x && x.name && isFinite(numV(x.lat)) && isFinite(numV(x.lng));
   const pos = x => ({ lat: numV(x.lat), lng: numV(x.lng) });
   const post = (path, body) => fetch(freeAI.url + path, { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify(body) }).then(r => r.ok ? r.json() : null).catch(() => null);
@@ -1014,6 +1014,23 @@ async function realPlaces(raw, label) {
     raw.sites = (raw.sites || []).filter(x => x.onMap !== false); raw.farther = (raw.farther || []).filter(x => x.onMap !== false);
     raw.grounded = true;
   }
+  // Start points (hotels, ports, airports, stations) get checked too: a hotel area named after a sight
+  // goes to that sight; others are looked up by name; anything still far off moves to the city centre.
+  { const ss = (raw.sites || []).filter(okLL), la2 = ss.map(x => numV(x.lat)).sort((a, b) => a - b), ln2 = ss.map(x => numV(x.lng)).sort((a, b) => a - b);
+    const mid = ss.length ? { lat: la2[la2.length >> 1], lng: ln2[ln2.length >> 1] } : null;
+    if (mid && raw.starts) {
+      const all = []; for (const k of Object.keys(raw.starts)) (raw.starts[k] || []).filter(okLL).forEach(p => all.push([k, p]));
+      const lookup = all.filter(([k, p]) => !ss.some(x => nameMatch(x.name, p.name) || keyOf(p.name).includes(keyOf(x.name))));
+      const g = lookup.length ? await groundNames(lookup.map(([, p]) => p.name), label, new Set(lookup.filter(([k]) => k === "airport" || k === "cruise").map(([, p]) => p.name))) : null;
+      for (const [k, p] of all) {
+        const site = ss.find(x => nameMatch(x.name, p.name) || keyOf(p.name).includes(keyOf(x.name)));
+        const r = g && g.get(p.name), lim = k === "airport" || k === "cruise" ? 60 : 15;
+        if (site) { p.lat = numV(site.lat); p.lng = numV(site.lng); }
+        else if (r && r.real && r.lat != null && hav(r, mid) <= lim) { p.lat = r.lat; p.lng = r.lng; }
+        else if (hav(pos(p), mid) > lim) { p.lat = mid.lat; p.lng = mid.lng; p.note = ((p.note || "") + " Location approximate: city centre.").trim(); }
+      }
+    } }
+  raw.startsOk = true;
   const main = (raw.sites || []).filter(x => okLL(x) && !x.quick), must = main.filter(x => x.mustSee);
   const pts = main.slice(0, 14).map(pos);
   const pl = pts.length ? await post("/places", { pts, r: 700 }) : null;
@@ -1036,7 +1053,7 @@ async function realPlaces(raw, label) {
 async function checkSavedCities() {
   for (const k of Object.keys(cities)) {
     const c = cities[k]; if (!c || !c.ai) continue;
-    if (c.grounded) { if (!(c.restaurants || []).length) { try { await realPlaces(c, c.city); if ((c.restaurants || []).length) { save(); if (typeof render === "function" && view !== "tour") render(); } } catch (e) {} } continue; }
+    if (c.grounded) { if (!(c.restaurants || []).length || !c.startsOk) { try { await realPlaces(c, c.city); if ((c.restaurants || []).length) { save(); if (typeof render === "function" && view !== "tour") render(); } } catch (e) {} } continue; }
     // Written before places and facts were checked: set it aside so it's rebuilt (one tap) with real places and facts.
     delete cities[k]; trip.days.forEach(x => { if (x.cityKey === k) { x.cityKey = null; x.selected = null; } });
     save(); if (typeof render === "function" && view !== "tour") render();
