@@ -1,0 +1,12 @@
+# Kairoute's AI helper: a small Cloudflare Worker in front of Workers AI (free daily allowance).
+name = "kairoute-ai"
+main = "worker.js"
+compatibility_date = "2026-10-01"
+workers_dev = true
+
+[ai]
+binding = "AI"
+
+[[kv_namespaces]]
+binding = "USAGE"
+id = "5062677df32b4a3b9e877e2b355057de"

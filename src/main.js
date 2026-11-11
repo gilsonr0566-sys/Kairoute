@@ -40,6 +40,50 @@ async function webSample(prompt, opts = {}) {
   return { text, truncated: stop === "max_tokens" };
 }
 if (!(cl && cl.use) && getKey()) sample = webSample;
+// Free test AI: Kairoute's own Cloudflare Worker in front of Workers AI. The site finds it through ai.json.
+let freeAI = null; // { url, left, budget }
+const blobURL = b => new Promise((res, rej) => { const r = new FileReader(); r.onload = () => res(String(r.result)); r.onerror = rej; r.readAsDataURL(b); });
+async function freeSample(prompt, opts = {}) {
+  const images = []; for (const b of opts.images || []) images.push(await blobURL(b));
+  const resp = await fetch(freeAI.url + "/sample", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ prompt, images, tier: opts.modelTier || "default" }) });
+  if (!resp.ok) { let m = "The AI guide is busy. Try again in a minute."; try { m = (await resp.json()).error || m; } catch (e) {} throw new Error(m); }
+  const rd = resp.body.getReader(), dec = new TextDecoder(); let buf = "", text = "", stop = null;
+  for (;;) {
+    const { done, value } = await rd.read(); if (done) break;
+    buf += dec.decode(value, { stream: true });
+    let i; while ((i = buf.indexOf("\n")) >= 0) {
+      const line = buf.slice(0, i).trim(); buf = buf.slice(i + 1);
+      if (!line.startsWith("data:")) continue;
+      const data = line.slice(5).trim(); if (!data || data === "[DONE]") continue;
+      let ev; try { ev = JSON.parse(data); } catch (e) { continue; }
+      const ch = ev.choices && ev.choices[0];
+      const piece = typeof ev.response === "string" ? ev.response : ch && ch.delta && typeof ch.delta.content === "string" ? ch.delta.content : "";
+      if (ch && ch.finish_reason) stop = ch.finish_reason;
+      if (piece) { text += piece; if (opts.onText) opts.onText({ text }); }
+    }
+  }
+  if (!text.trim()) throw new Error("The AI guide sent an empty answer. Try again.");
+  refreshFreeAI();
+  return { text, truncated: stop === "length" };
+}
+async function refreshFreeAI() {
+  if (!freeAI) return;
+  try { const st = await (await fetch(freeAI.url + "/status", { cache: "no-store" })).json(); freeAI.left = st.left; freeAI.budget = st.budget; } catch (e) {}
+}
+async function findFreeAI() {
+  if (cl && cl.use) return;
+  for (const src of ["ai.json", "https://gilsonr0566-sys.github.io/Kairoute/ai.json"]) {
+    try {
+      const r = await fetch(src, { cache: "no-store" }); if (!r.ok) continue;
+      const j = await r.json(); if (!j || !/^(https:\/\/|http:\/\/localhost)/.test(j.url || "")) continue;
+      freeAI = { url: j.url.replace(/\/$/, "") }; await refreshFreeAI();
+      if (!getKey()) sample = freeSample;
+      if (typeof render === "function") render();
+      return;
+    } catch (e) {}
+  }
+}
+setTimeout(findFreeAI, 0);
 // Inside the Android app, native plugins give us device voices and keep the screen awake on tour.
 const NATIVE = (window.Capacitor && window.Capacitor.Plugins) || {};
 const nativeTTS = NATIVE.TextToSpeech || null, keepAwake = NATIVE.KeepAwake || null;
@@ -1094,8 +1138,8 @@ function renderSettings() {
     <div class="field"><span class="lbl">Text size</span>${seg("text", [["standard", "Standard"], ["large", "Large"]])}</div>
   </div>
   ${settingsCard().replace('<details class="card more">', '<details class="card more" open>')}
-  <div class="card"><h3>AI guide</h3><p class="lede">${aiReady() ? "On. Kairoute uses Claude to build city guides, find your hotel, read itinerary photos and answer your questions." : "Off. Add your AI key below to build guides for every city and find your hotel. Barcelona works without it."}</p>
-    ${cl && cl.use ? "" : `<div class="field"><label for="aikey">Anthropic API key</label><div class="ask"><input type="password" id="aikey" autocomplete="off" placeholder="${getKey() ? "Saved on this device" : "sk-ant-…"}"><button type="button" class="btn small" data-act="savekey">Save</button>${getKey() ? `<button type="button" class="btn ghost small" data-act="clearkey">Remove</button>` : ""}</div><span class="hint">Stored only on this device and sent only to Anthropic. Get one at console.anthropic.com under API keys.</span></div>`}</div>
+  <div class="card"><h3>AI guide</h3><p class="lede">${sample === freeSample ? `On, using Kairoute's free test AI. It builds guides for any city, finds your hotel, reads itinerary photos and answers questions.${freeAI && freeAI.budget ? ` About ${Math.round(100 * (freeAI.left || 0) / freeAI.budget)}% of today's free allowance is left; it resets every evening at 7 pm Central.` : ""}` : aiReady() ? "On. Kairoute uses Claude to build city guides, find your hotel, read itinerary photos and answer your questions." : "Off right now. The built-in cities still work fully."}</p>
+    ${cl && cl.use ? "" : `<details class="more" ${getKey() ? "open" : ""}><summary>Advanced: use your own Anthropic key</summary><div class="field" style="margin-top:10px"><label for="aikey">Anthropic API key</label><div class="ask"><input type="password" id="aikey" autocomplete="off" placeholder="${getKey() ? "Saved on this device" : "sk-ant-…"}"><button type="button" class="btn small" data-act="savekey">Save</button>${getKey() ? `<button type="button" class="btn ghost small" data-act="clearkey">Remove</button>` : ""}</div><span class="hint">Stored only on this device and sent only to Anthropic. Get one at console.anthropic.com under API keys. Usage on your key is billed to you by Anthropic.</span></div></details>`}</div>
   <div class="card"><div><h3>Your data</h3><p class="lede">Trips, guides and journal entries are saved only on this device. Starting over clears all of it and loads the example trip again.</p></div>
     <div class="actions">${resetAsk ? `<button class="btn" data-act="resetyes" style="background:var(--warn)">Yes, clear everything</button><button class="btn ghost" data-act="resetno">Keep my trips</button>` : `<button class="btn ghost" data-act="reset">Start over</button>`}</div></div>
   <details class="card more"><summary>Coming in the full app</summary>
@@ -2060,7 +2104,7 @@ document.addEventListener("click", e => {
     return; }
   if (t.dataset.goto) { view = t.dataset.goto; render(); window.scrollTo(0, 0); return; }
   if (t.dataset.act === "savekey") { const k = ((document.getElementById("aikey") || {}).value || "").trim(); if (k) { try { localStorage.setItem(KEY_STORE, k); } catch (e) {} sample = webSample; } render(); return; }
-  if (t.dataset.act === "clearkey") { try { localStorage.removeItem(KEY_STORE); } catch (e) {} if (!(cl && cl.use)) sample = null; render(); return; }
+  if (t.dataset.act === "clearkey") { try { localStorage.removeItem(KEY_STORE); } catch (e) {} if (!(cl && cl.use)) sample = freeAI ? freeSample : null; render(); return; }
   if (t.dataset.hrs) { readForm(); day().hours = +t.dataset.hrs; day().selected = null; edited(); save(); render(); return; }
   if (t.dataset.mode) { readForm(); day().mode = t.dataset.mode; day().pointIdx = 0; edited(); save(); render(); return; }
   if (t.dataset.style) { readForm(); trip.style = t.dataset.style; save(); render(); return; }

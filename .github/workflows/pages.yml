@@ -16,6 +16,8 @@ jobs:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
+    env:
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -25,6 +27,13 @@ jobs:
         with:
           distribution: temurin
           java-version: 21
+      - name: Deploy the AI helper to Cloudflare (free Workers AI)
+        if: env.CLOUDFLARE_API_TOKEN != ''
+        continue-on-error: true
+        run: |
+          cd worker && npx -y wrangler@4 deploy 2>&1 | tee deploy.log
+          url=$(grep -oE 'https://[a-z0-9.-]+\.workers\.dev' deploy.log | head -1)
+          if [ -n "$url" ]; then printf '{"url":"%s"}\n' "$url" > ../ai.json; cat ../ai.json; fi
       - name: Build the Android app
         run: |
           sh build.sh
@@ -34,6 +43,7 @@ jobs:
         run: |
           mkdir _site && cp -r index.html version.txt .nojekyll manifest.webmanifest sw.js icons _site/
           cp app/android/app/build/outputs/apk/debug/app-debug.apk _site/Kairoute.apk
+          if [ -f ai.json ]; then cp ai.json _site/; fi
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
