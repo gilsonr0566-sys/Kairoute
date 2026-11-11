@@ -14,6 +14,10 @@ const ALLOWED = [/^https:\/\/gilsonr0566-sys\.github\.io$/, /^https?:\/\/localho
 // is made once and kept, so replaying it, or any traveler hearing the same stop, costs nothing.
 const VOICE_MODEL = "@cf/deepgram/aura-1", VOICE_RATE = 1363.64 / 1000, FREE_VOICE = 3500;
 const SPEAKERS = { buttery: "hera", airy: "luna", glassy: "asteria", rounded: "orion" };
+const AURA1 = "angus asteria arcas orion orpheus athena luna zeus perseus helios hera stella".split(" ");
+const AURA2 = "amalthea andromeda apollo arcas aries asteria athena atlas aurora callista cora cordelia delia draco electra harmonia helena hera hermes hyperion iris janus juno jupiter luna mars minerva neptune odysseus ophelia orion orpheus pandora phoebe pluto saturn thalia theia vesta zeus".split(" ");
+const VOICE_MODELS = { "aura-1": { id: "@cf/deepgram/aura-1", rate: 1363.64 / 1000, speakers: AURA1 }, "aura-2": { id: "@cf/deepgram/aura-2-en", rate: 2727.27 / 1000, speakers: AURA2 } };
+function voiceChoice(b) { const m = VOICE_MODELS[b.model] ? b.model : "aura-1", vm = VOICE_MODELS[m]; const sp = vm.speakers.includes(b.speaker) ? b.speaker : (SPEAKERS[b.voice] || "hera"); return { m, vm, sp: vm.speakers.includes(sp) ? sp : vm.speakers[0] }; }
 async function sha(t) { const b = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(t)); return [...new Uint8Array(b)].map(x => x.toString(16).padStart(2, "0")).join(""); }
 const MAX_OUT = { quick: 1200, part: 8000, default: 14000, complex: 16000 };
 
@@ -97,25 +101,25 @@ Written text:
     // one voice for the whole stop instead of switching halfway when the day's allowance runs out.
     if (url.pathname === "/voiceplan" && req.method === "POST") {
       let b; try { b = await req.json(); } catch (e) { return Response.json({ error: "Bad request" }, { status: 400, headers: h }); }
-      const speaker = SPEAKERS[b.voice] || "hera", texts = (Array.isArray(b.texts) ? b.texts : []).map(t => String(t || "").slice(0, 2000).trim()).filter(Boolean).slice(0, 40);
+      const { m, vm, sp: speaker } = voiceChoice(b), texts = (Array.isArray(b.texts) ? b.texts : []).map(t => String(t || "").slice(0, 2000).trim()).filter(Boolean).slice(0, 40);
       let cost = 0;
-      for (const t of texts) { const k = "a:" + speaker + ":" + (await sha(t)); const l = await env.USAGE.list({ prefix: k, limit: 1 }); if (!l.keys.length) cost += t.length * VOICE_RATE; }
+      for (const t of texts) { const k = "a:" + (m === "aura-1" ? "" : m + ":") + speaker + ":" + (await sha(t)); const l = await env.USAGE.list({ prefix: k, limit: 1 }); if (!l.keys.length) cost += t.length * vm.rate; }
       const vUsed = +(await env.USAGE.get("v:" + today())) || 0, u = await used(env);
       return Response.json({ ok: vUsed + cost <= VOICE_DAILY && u + cost <= DAILY_NEURONS, cost: Math.round(cost) }, { headers: h });
     }
     if (url.pathname === "/speak" && req.method === "POST") {
       if (origin && !ALLOWED.some(r => r.test(origin))) return Response.json({ error: "Not allowed" }, { status: 403, headers: h });
       let b; try { b = await req.json(); } catch (e) { return Response.json({ error: "Bad request" }, { status: 400, headers: h }); }
-      const text = String(b.text || "").slice(0, 2000).trim(), speaker = SPEAKERS[b.voice] || "hera";
+      const text = String(b.text || "").slice(0, 2000).trim(), { m, vm, sp: speaker } = voiceChoice(b);
       if (!text) return Response.json({ error: "Empty" }, { status: 400, headers: h });
-      const key = "a:" + speaker + ":" + (await sha(text));
+      const key = "a:" + (m === "aura-1" ? "" : m + ":") + speaker + ":" + (await sha(text));
       const hit = await env.USAGE.get(key, "arrayBuffer");
       if (hit) return new Response(hit, { headers: { ...h, "content-type": "audio/mpeg", "x-cached": "1", "cache-control": "public, max-age=31536000" } });
-      const cost = text.length * VOICE_RATE, vk = "v:" + today();
+      const cost = text.length * vm.rate, vk = "v:" + today();
       const vUsed = +(await env.USAGE.get(vk)) || 0, u = await used(env);
       if (vUsed + cost > VOICE_DAILY || u + cost > DAILY_NEURONS) return Response.json({ error: "voice allowance used up" }, { status: 429, headers: h });
       let audio;
-      try { const r = await env.AI.run(VOICE_MODEL, { text, speaker, encoding: "mp3" }, { returnRawResponse: true }); if (!r.ok) throw new Error("tts " + r.status); audio = await r.arrayBuffer(); }
+      try { const r = await env.AI.run(vm.id, { text, speaker, encoding: "mp3" }, { returnRawResponse: true }); if (!r.ok) throw new Error("tts " + r.status); audio = await r.arrayBuffer(); }
       catch (e) { return Response.json({ error: "The voice service is busy." }, { status: 502, headers: h }); }
       if (!audio || audio.byteLength < 1000) return Response.json({ error: "No audio" }, { status: 502, headers: h });
       ctx.waitUntil(Promise.all([addUse(env, cost), env.USAGE.put(vk, String(+(vUsed + cost).toFixed(1)), { expirationTtl: 3 * 86400 }), env.USAGE.put(key, audio, { expirationTtl: 365 * 86400 })]));

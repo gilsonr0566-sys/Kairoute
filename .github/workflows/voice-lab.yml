@@ -1,0 +1,17 @@
+name: Voice lab
+on: workflow_dispatch
+permissions:
+  contents: read
+jobs:
+  lab:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install librosa soundfile numpy && echo '{"url":"https://kairoute-ai.rickgilson.workers.dev"}' > ai.json && python tools/voice-lab.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: voice-lab
+          path: voice-lab/*.wav
