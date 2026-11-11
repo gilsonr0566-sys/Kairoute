@@ -840,6 +840,7 @@ ${P().access !== "none" ? "- The travelers need: " + ACCESS.find(a => a[0] === P
     if (!quiet) { busy = null; view = "plan"; render(); window.scrollTo(0, 0); }
     return true;
   } catch (e) {
+    try { console.warn("Guide build failed for " + label + ":", e && (e.stack || e.message || e)); } catch (x) {}
     if (!quiet) { busy = null; aiError = /allowance/i.test((e && e.message) || "") ? e.message : aiErrorText(e, "The guide for " + label); render(); }
     return false;
   }
