@@ -1659,6 +1659,29 @@ async function webSample(prompt, opts = {}) {
     body: JSON.stringify({ model: WEB_MODELS[opts.modelTier] || WEB_MODELS.default, max_tokens: 16000, stream: true, messages: [{ role: "user", content }] })
   });
   if (!resp.ok) { let m = resp.status + ""; try { m = (await resp.json()).error.message; } catch (e) {} throw new Error(resp.status === 401 ? "The AI key was not accepted. Check it in Settings." : m); }
+  const rd = resp.body.getReader(), dec = new TextDecoder(); let buf = "", text = "", stop = null;
+  for (;;) {
+    const { done, value } = await rd.read(); if (done) break;
+    buf += dec.decode(value, { stream: true });
+    let i; while ((i = buf.indexOf("\n")) >= 0) {
+      const line = buf.slice(0, i).trim(); buf = buf.slice(i + 1);
+      if (!line.startsWith("data:")) continue;
+      let ev; try { ev = JSON.parse(line.slice(5)); } catch (e) { continue; }
+      if (ev.type === "content_block_delta" && ev.delta && ev.delta.type === "text_delta") { text += ev.delta.text; if (opts.onText) opts.onText({ text }); }
+      else if (ev.type === "message_delta" && ev.delta) stop = ev.delta.stop_reason;
+      else if (ev.type === "error") throw new Error((ev.error && ev.error.message) || "AI error");
+    }
+  }
+  return { text, truncated: stop === "max_tokens" };
+}
+if (!(cl && cl.use) && getKey()) sample = webSample;
+// Free test AI: Kairoute's own Cloudflare Worker in front of Workers AI. The site finds it through ai.json.
+let freeAI = null; // { url, left, budget }
+const blobURL = b => new Promise((res, rej) => { const r = new FileReader(); r.onload = () => res(String(r.result)); r.onerror = rej; r.readAsDataURL(b); });
+async function freeSample(prompt, opts = {}) {
+  const images = []; for (const b of opts.images || []) images.push(await blobURL(b));
+  const resp = await fetch(freeAI.url + "/sample", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ prompt, images, tier: opts.modelTier || "default" }) });
+  if (!resp.ok) { let m = "The AI guide is busy. Try again in a minute."; try { m = (await resp.json()).error || m; } catch (e) {} throw new Error(m); }
   let text = "", stop = null;
   if (/json/.test(resp.headers.get("content-type") || "")) {
     // The Worker answers in one piece (streaming used too much of the free plan's CPU), so show steady progress while we wait.
@@ -1738,6 +1761,27 @@ function newDay(o) {
 function defaultPrefs() { return { pace: "moderate", walk: "medium", interests: [], travelers: "", access: "none", party: 2, lang: "English", voice: "buttery" }; }
 const P = () => Object.assign(defaultPrefs(), trip.prefs || {});
 const LANGS = [["English", "en"], ["Spanish", "es"], ["French", "fr"], ["German", "de"], ["Italian", "it"], ["Portuguese", "pt"]];
+// Which of the app's languages a piece of text is written in, from its most common small words.
+const LANG_WORDS = {
+  English: "the and of to in is you that it was for on with as this are from at by his an which its were built here your can".split(" "),
+  Spanish: "el la de que y en los las del se por un una con para es su al lo como más pero sus fue este esta".split(" "),
+  French: "le la les de des et en un une du est que qui dans pour sur au aux par il ce cette vous était son".split(" "),
+  German: "der die das und ist in den von zu mit sich des auf für im dem nicht ein eine als auch es an wurde".split(" "),
+  Italian: "il la di che e in un una per del della è con non le dei si al da sono come gli nel alla questo".split(" "),
+  Portuguese: "o a de que e do da em um uma para com não os as dos das se por mais foi no na ao você".split(" ")
+};
+function textLang(text) {
+  const words = String(text || "").toLowerCase().match(/[a-zà-öø-ÿ]+/g) || [];
+  if (words.length < 30) return null;
+  let best = null, top = 0;
+  for (const L in LANG_WORDS) { const set = new Set(LANG_WORDS[L]); const n = words.filter(w => set.has(w)).length / words.length; if (n > top) { top = n; best = L; } }
+  return best;
+}
+// True when a guide's narration is in the traveler's language (or too short to tell).
+function guideInLang(c, lang) {
+  const txt = [...((c && c.sites) || []), ...((c && c.farther) || [])].slice(0, 8).map(x => (x && (x.guide || x.summary)) || "").join(" ");
+  const got = textLang(txt); return !got || got === (lang || "English");
+}
 const langCode = n => (LANGS.find(x => x[0] === n) || LANGS[0])[1];
 const VOICES = [["buttery", "Warm"], ["airy", "Light"], ["glassy", "Clear"], ["rounded", "Deep"]];
 const ACCESS = [["none", "No special needs"], ["limited", "Limited walking"], ["wheelchair", "Wheelchair or scooter"], ["kids", "Young kids or a stroller"]];
@@ -1782,7 +1826,10 @@ const deeper = {}, answers = {};
 try {
   const saved = JSON.parse(localStorage.getItem("wayside.trip2") || "null");
   const savedCities = JSON.parse(localStorage.getItem("wayside.cities") || "null");
-  if (savedCities) Object.assign(cities, savedCities, { barcelona: SAMPLE_CITY });
+  if (savedCities) {
+    for (const k in savedCities) { const c = savedCities[k]; if (c && c.ai && !guideInLang(c, c.lang)) delete savedCities[k]; } // an older build could come back in the wrong language
+    Object.assign(cities, savedCities, { barcelona: SAMPLE_CITY });
+  }
   if (saved && saved.days && saved.days.length) { trip = saved; idSeq = 1000; }
   library = JSON.parse(localStorage.getItem("wayside.library") || "[]") || [];
 } catch (e) {}
@@ -2323,9 +2370,11 @@ ${P().access !== "none" ? "- The travelers need: " + ACCESS.find(a => a[0] === P
   try {
     const show = n => { if (busy) { busy.text = (quiet ? busy.prefix || "" : "") + "Writing the " + label + " guide… " + Math.min(99, Math.round(n)) + "%"; updateBusy(); } };
     let raw = await cachedGuide(d), fresh = !raw;
+    if (raw && !guideInLang(raw, P().lang)) { raw = null; fresh = true; }
     if (!raw) raw = sample === freeSample ? await cityInParts(prompt, show) : parseJSON((await sample(prompt, { modelTier: "default", onText: ({ text }) => show(text.length / 260) })).text);
     const c = cleanCity(raw, label);
     if (!c.sites.length) throw new Error("empty");
+    if (!guideInLang(c, P().lang)) throw new Error("The guide came back in the wrong language. Try again.");
     if (fresh) keepGuide(d, raw);
     const key = keyOf(label) + (d.event ? "|" + keyOf(d.event) : "");
     cities[key] = c;
@@ -2344,7 +2393,8 @@ ${P().access !== "none" ? "- The travelers need: " + ACCESS.find(a => a[0] === P
 // or broken is asked for again, up to 3 tries.
 async function cityInParts(prompt, show) {
   const okLL = x => x && x.name && isFinite(numV(x.lat)) && isFinite(numV(x.lng));
-  const tail = " Ignore any other counts above and keep each item as concise as the format allows.";
+  const lang = P().lang || "English";
+  const tail = ` Ignore any other counts above and keep each item as concise as the format allows. Write every summary, guide, lookFor, photoTip, pick, tip and note in ${lang}, even though the place is abroad; only place names and the local phrases stay in the local language.`;
   // Pieces that write named places get the guide's style rules but not the "how many places" rules,
   // so the AI writes only the places it is given.
   const detailPrompt = prompt.replace(/Return ONLY a JSON object[\s\S]*?Rules:\n/, "Each place is a JSON object {\"id\",\"name\",\"lat\",\"lng\",\"minutes\",\"kind\",\"mustSee\",\"category\",\"summary\",\"guide\",\"lookFor\",\"photoTip\",\"picks\"}. Day trips also have \"travel\" (how to get there and the one-way time) and their \"minutes\" is time on site.\nRules:\n").split("\n")
@@ -2356,7 +2406,8 @@ async function cityInParts(prompt, show) {
       try { r = await sample((detail ? detailPrompt : prompt) + "\n\n" + extra + tail, { modelTier: tier, onText }); }
       catch (e) { if (/allowance|used up/i.test(e.message || "")) throw e; last = e; continue; }
       let j = null; try { j = parseJSON(r.text || ""); } catch (e) { last = e; }
-      if (ok(j)) return j;
+      if (ok(j) && guideInLang(j, lang)) return j;
+      if (ok(j)) last = new Error("The guide came back in the wrong language. Try again.");
     }
     throw last || new Error("The guide came back incomplete. Try again.");
   };
@@ -2402,7 +2453,7 @@ async function cityInParts(prompt, show) {
 }
 // Finished guides are kept on Kairoute's AI helper, so each city is written only once and opens in seconds after that.
 function guideCacheKey(d) {
-  return ["v1", keyOf(d.destination), d.event ? keyOf(d.event) : "", d.type === "port" ? "port" : "", ((trip.prefs && trip.prefs.interests) || []).slice().sort().join(","), P().lang, P().access].join("|");
+  return ["v2", keyOf(d.destination), d.event ? keyOf(d.event) : "", d.type === "port" ? "port" : "", ((trip.prefs && trip.prefs.interests) || []).slice().sort().join(","), P().lang, P().access].join("|");
 }
 async function cachedGuide(d) {
   if (!freeAI) return null;
@@ -2596,7 +2647,7 @@ async function speakNative(id, lines, lc) {
   try {
     for (const text of lines) {
       if (run !== nativeRun || speakingId !== id) return;
-      await nativeTTS.speak({ text, lang: lc || "en-US", rate: 0.95, pitch: 1.0, volume: 1.0, category: "playback" });
+      await nativeTTS.speak({ text, lang: lc || (P().lang === "English" || !P().lang ? "en-US" : langCode(P().lang)), rate: 0.95, pitch: 1.0, volume: 1.0, category: "playback" });
     }
     if (run === nativeRun && speakingId === id) { speakingId = null; ttsState = "idle"; updateAudioUI(); }
   } catch (e) { if (run === nativeRun && speakingId === id) { speakingId = null; audioMsg = "The device voice couldn't start. Check that a text-to-speech voice is installed in Android settings."; updateAudioUI(); } }
@@ -2615,10 +2666,15 @@ function speakBrowser(id, lines, lc) {
     const last = chunks[chunks.length - 1];
     if (last && (last + " " + sn).length < 220) chunks[chunks.length - 1] = last + " " + sn; else chunks.push(sn);
   }));
+  // Always name the language and pick a matching voice, so the phone's default voice (which may be set
+  // to another language) never reads an English story with foreign pronunciation.
+  const want = lc || (P().lang === "English" || !P().lang ? "en-US" : langCode(P().lang)), pre = want.slice(0, 2).toLowerCase();
+  let voice = null;
+  try { const vs = synth.getVoices().filter(v => (v.lang || "").replace("_", "-").toLowerCase().startsWith(pre)); voice = vs.find(v => v.lang.replace("_", "-").toLowerCase() === want.toLowerCase() && v.localService) || vs.find(v => v.lang.replace("_", "-").toLowerCase() === want.toLowerCase()) || vs[0] || null; } catch (e) {}
   let started = false;
   try {
     chunks.forEach((t, i) => {
-      const u = new SpeechSynthesisUtterance(t); u.rate = 0.98; if (lc) u.lang = lc;
+      const u = new SpeechSynthesisUtterance(t); u.rate = 0.98; u.lang = want; if (voice) u.voice = voice;
       u.onstart = () => { started = true; if (speakingId === id) { ttsState = "speaking"; updateAudioUI(); } };
       u.onerror = ev => { if (ev && (ev.error === "interrupted" || ev.error === "canceled")) return; if (speakingId === id && !started) { speakingId = null; audioMsg = NO_AUDIO; updateAudioUI(); } };
       if (i === chunks.length - 1) u.onend = () => { if (speakingId === id) { speakingId = null; ttsState = "idle"; updateAudioUI(); } };
@@ -4008,4 +4064,4 @@ render();
 
 </script>
 <script>if ("serviceWorker" in navigator) addEventListener("load", () => navigator.serviceWorker.register("sw.js").catch(() => {}));</script>
-<script>(function(){var B="89040a9-1794376079";function chk(){if(location.protocol!=="https:")return;fetch("version.txt",{cache:"no-store"}).then(function(r){return r.ok?r.text():""}).then(function(t){t=t.trim();if(t&&t!==B)location.reload()}).catch(function(){})}addEventListener("load",chk);document.addEventListener("visibilitychange",function(){if(document.visibilityState==="visible")chk()})})();</script>
+<script>(function(){var B="7bff872-1794378445";function chk(){if(location.protocol!=="https:")return;fetch("version.txt",{cache:"no-store"}).then(function(r){return r.ok?r.text():""}).then(function(t){t=t.trim();if(t&&t!==B)location.reload()}).catch(function(){})}addEventListener("load",chk);document.addEventListener("visibilitychange",function(){if(document.visibilityState==="visible")chk()})})();</script>

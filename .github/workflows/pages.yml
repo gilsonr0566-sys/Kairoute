@@ -27,6 +27,8 @@ jobs:
         with:
           distribution: temurin
           java-version: 21
+      - name: Check the code (stops a broken build from going live)
+        run: sh tools/check.sh
       - name: Deploy the AI helper to Cloudflare (free Workers AI)
         continue-on-error: true
         run: |
