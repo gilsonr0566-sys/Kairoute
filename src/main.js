@@ -1357,10 +1357,10 @@ const natVoiceOn = lc => !!(freeAI && natAudio && !tts && !lc && (P().lang || "E
 // ---- The Kairoute voice: our own delivery and sound on top of the voice engines ----
 // Delivery: rewrite the written guide the way a guide would say it (no abbreviations, natural pauses).
 function shapeForSpeech(t) {
-  return String(t || "")
+  return String(unitText(t) || "")
     .replace(/\bSt\.? (?=[A-Z])/g, "Saint ").replace(/\bSts\.? (?=[A-Z])/g, "Saints ")
     .replace(/\bc\. ?(?=\d)/g, "around ").replace(/\bca\. ?(?=\d)/g, "around ")
-    .replace(/(\d) ?km\b/g, "$1 kilometers").replace(/(\d) ?mi\b/g, "$1 miles").replace(/(\d) ?min\b/g, "$1 minutes")
+    .replace(/(\d) ?km\b/g, "$1 kilometers").replace(/(\d) ?mi\b/g, "$1 miles").replace(/(\d) ?ft\b/g, "$1 feet").replace(/(\d) ?m\b/g, "$1 meters").replace(/(\d) ?min\b/g, "$1 minutes")
     .replace(/(\d)(st|nd|rd|th)-century/g, "$1$2 century").replace(/\be\.g\.,?/g, "for example,").replace(/\bi\.e\.,?/g, "that is,")
     .replace(/\b(\d{1,2}):(\d{2})\b/g, (m, a, b) => +a > 23 ? m : String(+a % 12 || 12) + (b === "00" ? "" : " " + b) + (+a < 12 ? " AM" : " PM"))
     .replace(/\s*[—–]\s*/g, ", ").replace(/\s+-\s+/g, ", ").replace(/\s*;\s*/g, ". ")
@@ -1689,6 +1689,23 @@ function applyAppSet() {
   if (appSet.theme === "system") r.removeAttribute("data-theme"); else r.setAttribute("data-theme", appSet.theme);
   if (appSet.text === "large") r.setAttribute("data-text", "large"); else r.removeAttribute("data-text");
 }
+// Distances: miles or kilometers (Settings > Distances). Default follows the device: miles in the US.
+function useMiles() { const u = appSet.units || (/^en-(US|LR|MM)$|-US$/i.test((typeof navigator !== "undefined" && navigator.language) || "") ? "mi" : "km"); return u === "mi"; }
+const KM_MI = 0.621371;
+// short: a few hundred meters or feet for the last stretch of a walk.
+function distTxt(km, short) {
+  if (useMiles()) { const mi = km * KM_MI; if (short && mi < 0.2) return Math.max(10, Math.round(mi * 5280 / 50) * 50) + " ft"; return (mi < 10 ? mi.toFixed(1) : Math.round(mi)) + " mi"; }
+  if (short && km < 1) return Math.max(10, Math.round(km * 1000 / 10) * 10) + " m";
+  return (km < 10 ? km.toFixed(1) : Math.round(km)) + " km";
+}
+// Distances the guide wrote in kilometers, shown and spoken in miles when miles are chosen.
+function unitText(t) {
+  if (!useMiles()) return t;
+  return String(t || "").replace(/(\d+(?:[.,]\d+)?)(?:\s?(?:-|–|to)\s?(\d+(?:[.,]\d+)?))?\s?(?:km|kilometers|kilometres)\b/gi, (m, a, b) => {
+    const c = x => { const v = parseFloat(String(x).replace(",", ".")) * KM_MI; return v < 10 ? +v.toFixed(1) : Math.round(v); };
+    return (b ? c(a) + "-" + c(b) : c(a)) + " mi";
+  });
+}
 function saveAppSet() { try { localStorage.setItem("kairoute.app", JSON.stringify(appSet)); } catch (e) {} applyAppSet(); }
 applyAppSet();
 function markSVG(anim) {
@@ -1795,6 +1812,7 @@ function renderSettings() {
   <div class="card"><h3>Display</h3>
     <div class="field"><span class="lbl">Appearance</span>${seg("theme", [["system", "Match my device"], ["light", "Light"], ["dark", "Dark"]])}</div>
     <div class="field"><span class="lbl">Text size</span>${seg("text", [["standard", "Standard"], ["large", "Large"]])}</div>
+    <div class="field"><span class="lbl">Distances</span>${seg("units", [["mi", "Miles"], ["km", "Kilometers"]]).replace(/aria-pressed="(true|false)"/g, "").replace(/data-v="(mi|km)"/g, (m, k) => m + ' aria-pressed="' + ((k === "mi") === useMiles()) + '"')}</div>
   </div>
   <div class="card"><h3>Natural voice</h3><p class="lede">${freeAI ? "The natural voice is a lifelike AI recording of each story, made once per stop and kept, so replays are free. A few new stops a day fit in the free allowance; after that your device's best voice reads until 6 pm Central." : "Your device's most natural voice reads the stories."}${natVoiceNote ? " " + esc(natVoiceNote) : ""}</p>
     ${freeAI ? `<div class="field"><span class="lbl">Natural AI voice (English)</span>${seg("natvoice", [["on", "On"], ["off", "Device voice only"]])}</div>
@@ -2324,8 +2342,8 @@ function siteCard(s, d, plan) {
         ${s.indoor ? `<span class="tag">Indoors</span>` : ""}
         ${closedOn(s, d.date) ? `<span class="tag nofit">${esc(s.closed)}</span>` : ""}
       </div>
-      <p class="sum">${esc(s.summary)}</p>
-      ${s.far && s.travel ? `<p class="travelnote">Getting there: ${esc(s.travel)}</p>` : ""}
+      <p class="sum">${esc(unitText(s.summary))}</p>
+      ${s.far && s.travel ? `<p class="travelnote">Getting there: ${esc(unitText(s.travel))}</p>` : ""}
       ${s.hours ? `<p class="travelnote">${esc(s.hours)}${s.closed ? " · " + esc(s.closed) : ""}</p>` : ""}
       ${P().access !== "none" && s.access ? `<p class="travelnote"><b>Access:</b> ${esc(s.access)}</p>` : ""}
     </div>
@@ -2412,14 +2430,14 @@ function mapSVG(plan) {
     else if (it.type === "stop" && p.along) marks += `<circle cx="${x}" cy="${y}" r="6" fill="var(--route)" stroke="var(--card)" stroke-width="2"/>`;
     else if (it.type === "stop") { n++; marks += `<circle cx="${x}" cy="${y}" r="13" fill="var(--card)" stroke="var(--route)" stroke-width="4"/><text x="${x}" y="${y + 4.5}" text-anchor="middle" font-size="12.5" font-weight="800" fill="var(--ink)">${n}</text>`; }
   });
-  const kmPx = sc / 111.32; const km = [0.25, 0.5, 1, 2, 5, 10, 20, 50, 100].find(v => v * kmPx > 70) || 100;
-  const bar = km * kmPx;
+  const kmPx = sc / 111.32, uKm = useMiles() ? 1 / KM_MI : 1; const km = [0.25, 0.5, 1, 2, 5, 10, 20, 50, 100].find(v => v * uKm * kmPx > 70) || 100;
+  const bar = km * uKm * kmPx;
   let grid = "";
   for (let gx = 0; gx <= W; gx += 40) grid += `<line x1="${gx}" y1="0" x2="${gx}" y2="${H}" stroke="var(--line)" stroke-width="1" opacity=".5"/>`;
   for (let gy = 0; gy <= H; gy += 40) grid += `<line x1="0" y1="${gy}" x2="${W}" y2="${gy}" stroke="var(--line)" stroke-width="1" opacity=".5"/>`;
   return `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Route diagram for the day" font-family="Atkinson Hyperlegible, system-ui, sans-serif">
     <rect width="${W}" height="${H}" fill="var(--card)"/>${grid}${legs}${marks}
-    <g transform="translate(${(W - 24 - bar).toFixed(1)} ${H - 22})"><line x1="0" y1="0" x2="${bar.toFixed(1)}" y2="0" stroke="var(--ink)" stroke-width="3"/><text x="${(bar / 2).toFixed(1)}" y="-7" text-anchor="middle" font-size="11" fill="var(--muted)">${km} km</text></g>
+    <g transform="translate(${(W - 24 - bar).toFixed(1)} ${H - 22})"><line x1="0" y1="0" x2="${bar.toFixed(1)}" y2="0" stroke="var(--ink)" stroke-width="3"/><text x="${(bar / 2).toFixed(1)}" y="-7" text-anchor="middle" font-size="11" fill="var(--muted)">${km} ${useMiles() ? "mi" : "km"}</text></g>
     <g transform="translate(22 ${H - 40})"><text x="0" y="0" font-size="12" font-weight="800" fill="var(--muted)" text-anchor="middle">N</text><path d="M0 4 L5 18 L0 14 L-5 18 Z" fill="var(--muted)"/></g>
   </svg>`;
 }
@@ -2442,7 +2460,7 @@ function renderPlan(d) {
     if (it.type === "start") return `<div class="${cls}"><div class="time">${fmt(it.time)}</div><div class="rail"><div class="dot start">S</div></div><div class="what"><div class="nm">${esc(it.label)}</div>${it.place.note ? `<div class="sub">${esc(it.place.note)}</div>` : ""}</div></div>`;
     if (it.type === "travel") {
       const m = it.leg.mode;
-      return `<div class="tl leg ${m}"><div class="time"></div><div class="rail"></div><div class="what">${it.leg.km < 0.1 ? "Next door" : it.leg.how + " · " + dur(it.leg.min) + " · " + it.leg.km.toFixed(1) + " km"}</div></div>`;
+      return `<div class="tl leg ${m}"><div class="time"></div><div class="rail"></div><div class="what">${it.leg.km < 0.1 ? "Next door" : it.leg.how + " · " + dur(it.leg.min) + " · " + distTxt(it.leg.km) + ""}</div></div>`;
     }
     if (it.type === "fixed") return `<div class="${cls}"><div class="time">${fmt(it.time)}</div><div class="rail"><div class="dot fixed">H</div></div><div class="what"><div class="nm">${esc(it.place.name)}</div><div class="sub">${dur(it.place.minutes)}</div></div></div>`;
     if (it.type === "meal") {
@@ -2456,7 +2474,7 @@ function renderPlan(d) {
       if (s.along) return `<div class="${cls}"><div class="time">${fmt(it.time)}</div><div class="rail"><div class="dot quick"></div></div><div class="what"><div class="nm">On the way: ${esc(s.name)}</div><div class="sub">${esc(s.lookFor[0] || s.summary)}</div><button class="link" data-open="${esc(s.id)}">Hear about it</button></div></div>`;
       n++;
       return `<div class="${cls}"><div class="time">${fmt(it.time)}</div><div class="rail"><div class="dot">${n}</div></div><div class="what">
-        <div class="nm">${esc(s.name)}</div><div class="sub">${dur(s.minutes)} · ${esc(s.category)}${s.mustSee ? " · Must-see" : ""}${s.far && s.travel ? " · " + esc(s.travel) : ""}</div>
+        <div class="nm">${esc(s.name)}</div><div class="sub">${dur(s.minutes)} · ${esc(s.category)}${s.mustSee ? " · Must-see" : ""}${s.far && s.travel ? " · " + esc(unitText(s.travel)) : ""}</div>
         ${s.bonus ? `<div class="sub bonus">Bonus stop: it fits your spare time, right by your route</div>` : ""}<button class="link" data-open="${esc(s.id)}">Open the guide</button></div></div>`;
     }
     if (it.type === "end") {
@@ -2485,7 +2503,7 @@ function renderPlan(d) {
   <div class="summary">
     <div class="stat"><b>${stopsN}</b><span>stops</span></div>
     <div class="stat"><b>${plan.along.length}</b><span>on the way</span></div>
-    <div class="stat"><b>${plan.walkKm.toFixed(1)} km</b><span>walking</span></div>
+    <div class="stat"><b>${distTxt(plan.walkKm)}</b><span>walking</span></div>
     <div class="stat"><b>${fmt(plan.end)}</b><span>${d.type === "port" ? "back on board" : "finish"}</span></div>
   </div>
   <div class="mapbox">${mapSVG(plan)}
@@ -2520,12 +2538,12 @@ function stopCard(s, num, city) {
   return `<article class="stopcard" id="stop-${esc(s.id)}">
     <div class="postcard">${postcardSVG(s)}<div class="num">${s.along ? "•" : num}</div><div class="cat">${esc(s.category || (s.along ? "On the way" : "Stop"))}</div></div>
     <div class="stopbody">
-      <div class="head"><h3>${esc(s.name)}</h3><p class="lede">${esc(s.summary)}</p></div>
+      <div class="head"><h3>${esc(s.name)}</h3><p class="lede">${esc(unitText(s.summary))}</p></div>
       <div class="audio"><button class="btn" data-play="${esc(s.id)}">▶ Play audio guide</button><span class="state" aria-live="polite"></span></div>
       ${s.lookFor && s.lookFor.length ? `<div class="field"><span class="eyebrow">What to look for</span><ol class="lookfor">${s.lookFor.map(x => `<li><span>${esc(x)}</span></li>`).join("")}</ol></div>` : ""}
       ${picksBlock(s)}
       ${s.photoTip ? `<p class="phototip"><b>Photo spot:</b> ${esc(s.photoTip)} <a href="${photos}" target="_blank" rel="noopener">See photos of it</a></p>` : ""}
-      ${s.travelerTip ? `<p class="phototip"><b>From travelers:</b> ${esc(s.travelerTip)}</p>` : ""}
+      ${s.travelerTip ? `<p class="phototip"><b>From travelers:</b> ${esc(unitText(s.travelerTip))}</p>` : ""}
       ${s.hours || s.tickets || s.crowds || s.priceNote || s.web ? `<div class="before"><span class="eyebrow">Before you go</span>
         ${s.hours ? `<div><b>Hours</b><span>${esc(s.hours)}${s.closed ? " · " + esc(s.closed) : ""}</span></div>` : ""}
         ${s.priceNote ? `<div><b>Price</b><span>${esc(s.priceNote)}</span></div>` : ""}
@@ -2534,7 +2552,7 @@ function stopCard(s, num, city) {
         ${s.crowds ? `<div><b>Crowds</b><span>${esc(s.crowds)}</span></div>` : ""}
         ${s.access && P().access !== "none" ? `<div><b>Access</b><span>${esc(s.access)}</span></div>` : ""}
       </div>` : ""}
-      <div class="guidetext">${paras(s.guide)}</div>
+      <div class="guidetext">${paras(unitText(s.guide))}</div>
       ${s.sources && s.sources.length ? `<p class="ai-note">Checked against: ${s.sources.filter(x => x !== "map").map(esc).join(", ") || "the map"}${s.sources.includes("map") && s.sources.length > 1 ? " and the map" : ""}.</p>` : ""}
       ${(() => { const tr = translations[s.id + "|" + P().lang]; const need = P().lang !== "English" && city.lang !== P().lang;
         return need ? (tr ? `<div class="guidetext" id="tr-${esc(s.id)}">${tr.text ? paras(tr.text) : `<p class="ai-note"><span class="spinner"></span> Translating…</p>`}</div>${tr.error ? `<p class="ai-note">${esc(tr.error)}</p>` : ""}` : (ready ? `<div><button class="btn ghost small" data-translate="${esc(s.id)}">Read it in ${esc(P().lang)}</button></div>` : "")) : ""; })()}
@@ -2608,7 +2626,7 @@ function renderTour(d) {
     body = `<div class="tourcard">
       <div class="eyebrow">${st.leg && st.leg.mode === "walk" ? "Walk to" : "Head to"}</div>
       <h2 class="tourtitle">${esc(nm)}</h2>
-      ${st.leg ? `<p class="tourleg">${esc(st.leg.how)} · ${dur(st.leg.min)} · ${st.leg.km.toFixed(1)} km</p>` : ""}
+      ${st.leg ? `<p class="tourleg">${esc(st.leg.how)} · ${dur(st.leg.min)} · ${distTxt(st.leg.km)}</p>` : ""}
       <p class="lede">Arrive around ${fmt(st.time)}.</p>
       ${nxt && nxt.type === "stop" && nxt.place.along ? `<div class="banner">On the way: <b>${esc(nxt.place.name)}</b>. ${esc(nxt.place.lookFor[0] || "")}</div>` : ""}
       <div class="audio"><button class="btn ghost" data-play="walk:${T.i}" data-label="▶ Hear what's next">▶ Hear what's next</button><span class="state" aria-live="polite"></span></div>
@@ -2618,7 +2636,7 @@ function renderTour(d) {
       </div></div>`;
   } else if (st.type === "start") {
     body = `<div class="tourcard"><div class="eyebrow">Good morning</div><h2 class="tourtitle">${esc(st.label)}</h2>
-      <p class="lede">Today: ${stopsOnly.length} stops${plan.meals.length ? ", " + plan.meals.map(m => esc(m.name)).join(" and ") + " to eat" : ""}, about ${plan.walkKm.toFixed(1)} km on foot. ${d.type === "port" ? "I'll keep an eye on the time so you're back aboard early." : "I'll keep you on time."}</p>
+      <p class="lede">Today: ${stopsOnly.length} stops${plan.meals.length ? ", " + plan.meals.map(m => esc(m.name)).join(" and ") + " to eat" : ""}, about ${distTxt(plan.walkKm)} on foot. ${d.type === "port" ? "I'll keep an eye on the time so you're back aboard early." : "I'll keep you on time."}</p>
       <ol class="tourlist">${stopsOnly.map(x => `<li>${fmt(x.time)} · ${esc(x.place.name)}</li>`).join("")}</ol>
       <div class="audio"><button class="btn ghost" data-play="intro:${d.id}" data-label="▶ Hear today's plan">▶ Hear today's plan</button><span class="state" aria-live="polite"></span></div>
       <div class="actions tourmain"><button class="btn bigbtn" data-act="tournext">Let's go</button></div></div>`;
@@ -2649,7 +2667,7 @@ function renderTour(d) {
         <div class="finds">${s.lookFor.map((x, k) => `<button class="find ${found.includes(k) ? "on" : ""}" data-find="${k}"><span class="fk">${found.includes(k) ? "✓" : k + 1}</span><span>${esc(x)}</span></button>`).join("")}</div></div>` : ""}
       ${picksBlock(s)}
       ${s.photoTip ? `<p class="phototip"><b>Photo spot:</b> ${esc(s.photoTip)}</p>` : ""}
-      <details class="more"><summary>Read the story</summary><div class="guidetext" style="margin-top:8px">${paras(s.guide)}</div></details>
+      <details class="more"><summary>Read the story</summary><div class="guidetext" style="margin-top:8px">${paras(unitText(s.guide))}</div></details>
       ${aiReady() ? `<form class="ask" data-ask="${esc(s.id)}"><input type="text" id="ask-${esc(s.id)}" placeholder="Ask your guide anything about this place" aria-label="Ask the guide"><button class="btn small" type="submit">Ask</button></form>
         ${answers[s.id] ? `<div class="answer"><b>${esc(answers[s.id].q)}</b>\n<span id="ans-${esc(s.id)}">${esc(answers[s.id].text || (answers[s.id].loading ? "Thinking…" : answers[s.id].error || ""))}</span></div>` : ""}` : ""}
       ${journalBlock(s)}
@@ -2722,7 +2740,7 @@ function onGeo(pos) {
   if (T.phase === "walk" && km != null && km <= Math.max(ARRIVE_KM, Math.min(0.12, (geoPos.acc || 0) / 1000))) { arriveHere(true); return; }
   if (first) renderGuideOnly();
   const el = document.getElementById("geoDist");
-  if (el && km != null) el.textContent = km < 1 ? Math.round(km * 1000 / 10) * 10 + " m to go" : km.toFixed(1) + " km to go";
+  if (el && km != null) el.textContent = distTxt(km, true) + " to go";
 }
 function followBar() {
   const on = geoState === "on" || geoState === "asking";
