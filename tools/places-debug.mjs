@@ -1,4 +1,5 @@
 // Shows what the place check sees for a few names on the live helper. Run by the "Debug places" workflow.
+{ const st = await (await fetch("https://kairoute-ai.rickgilson.workers.dev/status")).json(); console.log("STATUS", JSON.stringify(st)); }
 // Uses cached answers where they exist, so it costs nothing.
 const U = "https://kairoute-ai.rickgilson.workers.dev", H = { "content-type": "application/json", Origin: "https://gilsonr0566-sys.github.io" };
 const city = process.env.CITY || "Kotor";
