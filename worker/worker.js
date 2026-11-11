@@ -71,11 +71,11 @@ export default {
       const key = "p1:" + r + ":" + (await sha(JSON.stringify(pts)));
       const hit = await env.USAGE.get(key); if (hit) return new Response(hit, { headers: { ...h, "content-type": "application/json" } });
       const q = `[out:json][timeout:25];(${pts.map(([la, ln]) => `nwr["amenity"~"^(restaurant|cafe|fast_food|pub|bar|food_court)$"]["name"](around:${r},${la},${ln});`).join("")});out center tags 600;`;
-      let data = null;
-      for (const ep of ["https://overpass-api.de/api/interpreter", "https://overpass.kumi.systems/api/interpreter"]) {
-        try { const rr = await fetch(ep, { method: "POST", body: "data=" + encodeURIComponent(q), headers: { "content-type": "application/x-www-form-urlencoded", "user-agent": "Kairoute/1.0 (travel guide; https://gilsonr0566-sys.github.io/Kairoute/)" } }); if (rr.ok) { data = await rr.json(); break; } } catch (e) {}
+      let data = null; const tried = [];
+      for (const ep of ["https://overpass-api.de/api/interpreter", "https://overpass.private.coffee/api/interpreter", "https://maps.mail.ru/osm/tools/overpass/api/interpreter"]) {
+        try { const rr = await fetch(ep, { method: "POST", body: "data=" + encodeURIComponent(q), headers: { "content-type": "application/x-www-form-urlencoded", accept: "application/json", "user-agent": "Kairoute/1.0 (travel guide; https://gilsonr0566-sys.github.io/Kairoute/)" } }); tried.push(ep.split("/")[2] + " " + rr.status); if (rr.ok) { data = await rr.json(); break; } } catch (e) { tried.push(ep.split("/")[2] + " " + e.message); }
       }
-      if (!data) return Response.json({ error: "map busy" }, { status: 502, headers: h });
+      if (!data) return Response.json({ error: "map busy", tried }, { status: 502, headers: h });
       const places = (data.elements || []).map(e => { const t = e.tags || {}; return { name: t.name, lat: e.lat ?? (e.center && e.center.lat), lng: e.lon ?? (e.center && e.center.lon), amenity: t.amenity, cuisine: t.cuisine || "", hours: t.opening_hours || "", web: t.website || t["contact:website"] || "", tourism: !!(t.tourism || t["name:en"] && t.name !== t["name:en"]), tags: Object.keys(t).length }; }).filter(p => p.name && isFinite(p.lat) && isFinite(p.lng));
       const out = JSON.stringify({ places });
       ctx.waitUntil(env.USAGE.put(key, out, { expirationTtl: 30 * 86400 }));
