@@ -1475,7 +1475,7 @@ function renderTrip(d) {
           ${t === "port" ? `<div class="field"><label for="f-parr">Ship docks</label><input type="time" id="f-parr" value="${esc(d.portArrive)}"></div>` : ""}
           ${t === "port" || t === "embark" ? `<div class="field"><label for="f-aboard">All-aboard time</label><input type="time" id="f-aboard" value="${esc(d.allAboard)}"></div>` : ""}
           ${t === "land" || t === "departure" || t === "embark" ? `<div class="field"><label for="f-start">${t === "land" ? "Start time" : "Check out at"}</label><input type="time" id="f-start" value="${esc(d.startTime)}"></div>` : ""}
-          ${t === "land" || t === "arrival" ? `<div class="field"><label for="f-hours">Hours to sightsee</label><input type="number" id="f-hours" min="1" max="14" step="0.5" value="${d.hours}"></div>` : ""}
+          ${t === "land" || t === "arrival" ? `<div class="field"><label for="f-hours">Hours to sightsee</label><input type="number" id="f-hours" min="1" max="14" step="0.5" value="${d.hours}"><div class="seg pace" role="group" aria-label="Pace">${[[2.5,"Light day"],[4,"Half day"],[8,"Full day"]].map(([h,l]) => `<button type="button" data-hrs="${h}" aria-pressed="${+d.hours === h}">${l}</button>`).join("")}</div></div>` : ""}
         </div>
         ${t === "port" ? `<label class="check"><input type="checkbox" id="f-tender" ${d.tender ? "checked" : ""}><span>Tender port (small boats take you ashore)</span></label>` : ""}
         ${needsLodging ? `<div class="field"><label for="f-lodging">Where you're staying in ${esc(d.destination || "this city")}</label>
@@ -1959,6 +1959,7 @@ document.addEventListener("click", e => {
   if (t.dataset.view) { if (view === "trip") readForm(); view = t.dataset.view; aiError = ""; save(); render(); window.scrollTo(0, 0); return; }
   if (t.dataset.day != null && !t.dataset.act) { if (view === "trip") readForm(); trip.active = +t.dataset.day; aiError = ""; cdPreview = null; cdWhere = null; cdSpoken = false; stopAudio(); save(); render(); return; }
   if (t.dataset.goto) { view = t.dataset.goto; render(); window.scrollTo(0, 0); return; }
+  if (t.dataset.hrs) { readForm(); day().hours = +t.dataset.hrs; day().selected = null; edited(); save(); render(); return; }
   if (t.dataset.mode) { readForm(); day().mode = t.dataset.mode; day().pointIdx = 0; edited(); save(); render(); return; }
   if (t.dataset.style) { readForm(); trip.style = t.dataset.style; save(); render(); return; }
   if (t.dataset.chg) { const el = document.getElementById("chgText"); if (el) { el.value = t.dataset.chg; changeText = t.dataset.chg; el.focus(); } return; }
