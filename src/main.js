@@ -149,6 +149,13 @@ function guideInLang(c, lang) {
 }
 const langCode = n => (LANGS.find(x => x[0] === n) || LANGS[0])[1];
 const VOICES = [["buttery", "Warm"], ["airy", "Light"], ["glassy", "Clear"], ["rounded", "Deep"]];
+// Natural guide voices (Deepgram Aura 2). Picked from a 17-voice listening test (Nov 2026): these moved
+// the most in pitch and paced most like a real guide. Chosen once in Settings and used for every stop.
+const GUIDES = [
+  ["aurora", "Aurora", "Woman, American"], ["andromeda", "Andromeda", "Woman, American, softer"], ["pandora", "Pandora", "Woman, British"], ["theia", "Theia", "Woman, Australian"],
+  ["apollo", "Apollo", "Man, American"], ["arcas", "Arcas", "Man, American, deeper"], ["draco", "Draco", "Man, British"], ["hyperion", "Hyperion", "Man, Australian"]];
+const guideVoice = () => ({ model: "aura-2", speaker: GUIDES.some(g => g[0] === appSet.guide) ? appSet.guide : "aurora" });
+const GUIDE_PACE = 0.9; // the voices speak at ~210-225 words a minute; a real guide is nearer 170-190
 const ACCESS = [["none", "No special needs"], ["limited", "Limited walking"], ["wheelchair", "Wheelchair or scooter"], ["kids", "Young kids or a stroller"]];
 const DOWS = ["Sundays", "Mondays", "Tuesdays", "Wednesdays", "Thursdays", "Fridays", "Saturdays"];
 function closedOn(s, iso) { if (!s.closed || !iso) return false; const dow = DOWS[new Date(iso + "T12:00:00Z").getUTCDay()]; return s.closed.toLowerCase().includes(dow.toLowerCase()); }
@@ -1062,11 +1069,11 @@ async function speakNatural(id, lines) {
   if (speakingId !== id) return true;
   // One voice for the whole stop: if today's allowance can't cover every line, use the device voice throughout.
   try {
-    const pr = await fetch(freeAI.url + "/voiceplan", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ texts: parts.map(t => t.replace(/^~\s*/, "")), voice: P().voice }) });
+    const pr = await fetch(freeAI.url + "/voiceplan", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify(Object.assign({ texts: parts.map(t => t.replace(/^~\s*/, "")) }, guideVoice())) });
     if (pr.ok && !(await pr.json()).ok) { natVoiceNote = "The natural voice is resting until 6 pm Central, so your device voice is reading for now."; return false; }
   } catch (e) {}
   if (speakingId !== id) return true;
-  const audioOnce = t => fetch(freeAI.url + "/speak", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ text: t, voice: P().voice }) })
+  const audioOnce = t => fetch(freeAI.url + "/speak", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify(Object.assign({ text: t }, guideVoice())) })
     .then(r => { if (r.status === 429) natVoiceNote = "The natural voice is resting until 6 pm Central, so your device voice is reading for now."; return r.ok ? r.blob() : null; }).catch(() => null);
   const audioFor = t => audioOnce(t).then(b => b || audioOnce(t)); // one retry before giving up on a line
   const clean = t => t.replace(/^~\s*/, "");
@@ -1078,7 +1085,7 @@ async function speakNatural(id, lines) {
     if (i + 1 < parts.length) next = audioFor(clean(parts[i + 1])); // fetch the next line while this one plays
     const url = URL.createObjectURL(blob);
     const done = new Promise(res => { natAudio.onended = () => res(true); natAudio.onerror = () => res(false); });
-    natAudio.src = url;
+    natAudio.src = url; natAudio.preservesPitch = true; natAudio.defaultPlaybackRate = natAudio.playbackRate = GUIDE_PACE;
     try { await natAudio.play(); } catch (e) { URL.revokeObjectURL(url); if (i === 0) return false; speakDevice(id, parts.slice(i).map(clean).concat(rest), null); return true; }
     if (i === 0) { ttsState = "speaking"; natVoiceNote = ""; updateAudioUI(); }
     await done; URL.revokeObjectURL(url);
@@ -1273,7 +1280,7 @@ function needsCity(d) {
 // ---------- Lobby, settings, legal, brand film ----------
 const TAGLINE = "Be your own guide.";
 const APP_VERSION = "Preview 0.9";
-let appSet = { theme: "system", text: "standard", natvoice: "on", voicefx: "on" };
+let appSet = { theme: "system", text: "standard", natvoice: "on", voicefx: "on", guide: "aurora" };
 try { Object.assign(appSet, JSON.parse(localStorage.getItem("kairoute.app") || "{}")); } catch (e) {}
 function applyAppSet() {
   const r = document.documentElement;
@@ -1389,6 +1396,8 @@ function renderSettings() {
   </div>
   <div class="card"><h3>Natural voice</h3><p class="lede">${freeAI ? "The natural voice is a lifelike AI recording of each story, made once per stop and kept, so replays are free. A few new stops a day fit in the free allowance; after that your device's best voice reads until 6 pm Central." : "Your device's most natural voice reads the stories."}${natVoiceNote ? " " + esc(natVoiceNote) : ""}</p>
     ${freeAI ? `<div class="field"><span class="lbl">Natural AI voice (English)</span>${seg("natvoice", [["on", "On"], ["off", "Device voice only"]])}</div>
+    <div class="field"><span class="lbl">Guide voice</span>${seg("guide", GUIDES.map(([k, n, d]) => [k, `${n} <small>${d}</small>`]))}
+      <button type="button" class="btn" data-act="voicetry">Hear this voice</button></div>
     <div class="field"><span class="lbl">Kairoute sound (warmer, clearer outdoors, even volume)</span>${seg("voicefx", [["on", "On"], ["off", "Off"]])}</div>` : ""}
   </div>
   ${settingsCard().replace('<details class="card more">', '<details class="card more" open>')}
@@ -1578,7 +1587,6 @@ function renderWizard() {
   if (w.step === 2) body = `
     <div class="row2"><div class="field"><label for="w-party">How many people?</label><input type="number" id="w-party" min="1" max="20" value="${w.party}"></div>
       <div class="field"><label for="w-lang">Guide language</label><select id="w-lang">${LANGS.map(([n]) => `<option ${w.lang === n ? "selected" : ""}>${n}</option>`).join("")}</select></div></div>
-    <div class="field"><span class="lbl">Guide voice</span><div class="seg" role="group" aria-label="Voice">${VOICES.map(([k, l]) => `<button type="button" data-wz="voice" data-v="${k}" aria-pressed="${w.voice === k}">${l}</button>`).join("")}</div></div>
     <div class="field"><label for="w-trav">Anything else about the travelers? (optional)</label><input type="text" id="w-trav" value="${esc(w.travelers)}" placeholder="e.g. one uses a cane; kids aged 8 and 11"></div>
     ${ready ? "" : `<div class="banner warn">Building the trip uses the AI guide. Turn on the AI guide in Settings to turn it on.</div>`}`;
   return `${head}<div><h2>${["Where are you going?", "How do you like to explore?", "A few last details"][w.step]}</h2></div>
@@ -2373,7 +2381,7 @@ document.addEventListener("click", e => {
     const s = allSites(cityFor(day())).find(x => x.id === id); if (s) speakSite(s); return;
   }
   if (t.dataset.deeper) { const city = cityFor(day()); const s = allSites(city).find(x => x.id === t.dataset.deeper); if (s) goDeeper(s, city); return; }
-  if (t.dataset.app) { appSet[t.dataset.app] = t.dataset.v; saveAppSet(); render(); return; }
+  if (t.dataset.app) { if (t.dataset.app === "guide" && speakingId === "voice-sample") stopAudio(); appSet[t.dataset.app] = t.dataset.v; saveAppSet(); render(); return; }
   if (t.dataset.pref) {
     const k = t.dataset.pref, v = t.dataset.v; trip.prefs = P();
     if (k === "interest") trip.prefs.interests = trip.prefs.interests.includes(v) ? trip.prefs.interests.filter(x => x !== v) : [...trip.prefs.interests, v];
@@ -2398,6 +2406,12 @@ document.addEventListener("click", e => {
   if (act === "film" || act === "filmreplay") { stopAudio(); playFilm(false); return; }
   if (act === "filmclose") { closeFilm(); return; }
   if (act === "mytrips") { if (view === "trip") readForm(); save(); view = "trips"; aiError = ""; render(); window.scrollTo(0, 0); return; }
+  if (act === "voicetry") {
+    if (speakingId === "voice-sample") { stopAudio(); render(); return; }
+    stopAudio(); const g = GUIDES.find(x => x[0] === guideVoice().speaker);
+    speakLines("voice-sample", [`Hi, I'm ${g[1]}. Let's walk over to the old harbor together. Look up, just there, see that worn stone lion above the gate? It has been watching ships come and go for almost six hundred years.`], null);
+    setTimeout(render, 300); return;
+  }
   if (act === "newtrip") { wiz = { step: 0, text: "", name: "", style: trip.style || "mix", interests: [], pace: "moderate", walk: "medium", hotels: "", travelers: "", access: "none", party: 2, lang: "English", voice: "buttery", cruiseLine: "", ship: "" }; view = "wizard"; aiError = ""; render(); return; }
   if (act === "wizmore") { readWiz(); if (!wiz.text.trim() && !(wiz.images || []).length) { aiError = "Describe your trip first, even roughly."; render(); return; } aiError = ""; wiz.step = 1; render(); window.scrollTo(0, 0); return; }
   if (act === "wizback") { readWiz(); wiz.step--; render(); return; }
