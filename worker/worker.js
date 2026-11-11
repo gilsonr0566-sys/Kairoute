@@ -1,13 +1,16 @@
 // Kairoute AI helper. The website sends a prompt (and optional photos); this Worker asks Workers AI
-// and streams the answer back. A daily budget keeps usage inside Cloudflare's free allowance, so
-// testing never costs money: once the budget is used up, requests stop until midnight UTC.
+// and streams the answer back. Usage is counted from real token counts. On the free plan it stays inside
+// Cloudflare's free allowance; on Workers Paid a monthly ceiling (about $5 extra) is the hard stop.
 const MODEL = "@cf/google/gemma-4-26b-a4b-it";
 // Gemma 4 26B costs about 9,091 neurons per million input tokens and 27,273 per million output tokens.
 // The free allowance is 10,000 neurons a day; we stop at 9,700 (usage is counted from the real token counts, so this stays inside it).
 const FREE_DAILY = 8500; // leaves 1,500 of the account-wide 10,000 for Richard's other app (light use)
 // On Cloudflare's Workers Paid plan (set PAID = "1" in wrangler.toml), Kairoute may go past the free share,
 // up to a monthly ceiling: 450,000 extra neurons is about $5, so the plan plus extras stays near $10 a month.
-const MONTH_EXTRA = 450000, PAID_DAY_EXTRA = 30000;
+// The monthly ceiling is the real guard. Each day may use up to 3x its fair share of what is left this month,
+// so a busy travel day has plenty, and the share shrinks by itself if earlier days ran heavy.
+// Test tools (header x-kairoute-lab: 1) have their own small daily pool and never use travelers' allowance.
+const MONTH_EXTRA = 450000, DAY_SHARE_X = 3, LAB_DAILY = 30000;
 const IN_RATE = 9091 / 1e6, OUT_RATE = 27273 / 1e6;
 const ALLOWED = [/^https:\/\/gilsonr0566-sys\.github\.io$/, /^https?:\/\/localhost(:\d+)?$/, /^capacitor:\/\/localhost$/, /^https?:\/\/127\.0\.0\.1(:\d+)?$/, /\.claudeusercontent\.com$/, /^https:\/\/claude\.ai$/];
 // Natural guide voice (Deepgram Aura 1): about 1,364 neurons per 1,000 characters. Each stop's audio
@@ -28,16 +31,26 @@ function cors(origin) {
 const today = () => new Date().toISOString().slice(0, 10);
 async function used(env) { return +(await env.USAGE.get("n:" + today())) || 0; }
 const month = () => new Date().toISOString().slice(0, 7);
-async function addUse(env, n) {
+async function addUse(env, n, lab) {
+  if (lab) {
+    const tk = "t:" + today(), mk = "x:" + month(); const t = +(await env.USAGE.get(tk)) || 0, m = +(await env.USAGE.get(mk)) || 0;
+    await env.USAGE.put(tk, String(+(t + n).toFixed(1)), { expirationTtl: 3 * 86400 });
+    await env.USAGE.put(mk, String(+(m + n).toFixed(1)), { expirationTtl: 40 * 86400 }); return;
+  }
   const k = "n:" + today(); const cur = +(await env.USAGE.get(k)) || 0, nxt = cur + n;
   await env.USAGE.put(k, String(+nxt.toFixed(3)), { expirationTtl: 3 * 86400 });
   const extra = Math.max(0, nxt - FREE_DAILY) - Math.max(0, cur - FREE_DAILY);
   if (extra > 0) { const mk = "x:" + month(); const m = +(await env.USAGE.get(mk)) || 0; await env.USAGE.put(mk, String(+(m + extra).toFixed(1)), { expirationTtl: 40 * 86400 }); }
 }
 async function limits(env) {
-  if (env.PAID !== "1") return { DAILY_NEURONS: FREE_DAILY, VOICE_DAILY: FREE_VOICE };
-  const left = Math.max(0, MONTH_EXTRA - (+(await env.USAGE.get("x:" + month())) || 0)), add = Math.min(PAID_DAY_EXTRA, left);
-  return { DAILY_NEURONS: FREE_DAILY + add, VOICE_DAILY: FREE_VOICE + add };
+  if (env.PAID !== "1") return { DAILY_NEURONS: FREE_DAILY, VOICE_DAILY: FREE_VOICE, LAB_LEFT: 0 };
+  const monthUsed = +(await env.USAGE.get("x:" + month())) || 0, left = Math.max(0, MONTH_EXTRA - monthUsed);
+  const u = await used(env), todayExtra = Math.max(0, u - FREE_DAILY), labToday = +(await env.USAGE.get("t:" + today())) || 0;
+  const d = new Date(), dim = new Date(Date.UTC(d.getUTCFullYear(), d.getUTCMonth() + 1, 0)).getUTCDate(), daysLeft = dim - d.getUTCDate() + 1;
+  // share is based on what was left when today began (today's own use and lab use added back), but never past the monthly ceiling
+  const share = Math.min(left + todayExtra, (left + todayExtra + labToday) / daysLeft * DAY_SHARE_X);
+  const daily = FREE_DAILY + share;
+  return { DAILY_NEURONS: daily, VOICE_DAILY: daily, LAB_LEFT: Math.max(0, Math.min(LAB_DAILY - labToday, left)) };
 }
 
 export default {
@@ -45,8 +58,8 @@ export default {
     const origin = req.headers.get("Origin") || "", h = cors(origin);
     if (req.method === "OPTIONS") return new Response(null, { headers: h });
     const url = new URL(req.url);
-    const { DAILY_NEURONS, VOICE_DAILY } = await limits(env);
-    if (url.pathname === "/status") { const u = await used(env); const vu = +(await env.USAGE.get("v:" + today())) || 0; return Response.json({ ok: true, model: MODEL, usedToday: Math.round(u), budget: DAILY_NEURONS, left: Math.max(0, Math.floor(DAILY_NEURONS - u)), voiceLeft: Math.max(0, Math.floor(Math.min(VOICE_DAILY - vu, DAILY_NEURONS - u))) }, { headers: h }); }
+    const { DAILY_NEURONS, VOICE_DAILY, LAB_LEFT } = await limits(env), lab = req.headers.get("x-kairoute-lab") === "1";
+    if (url.pathname === "/status") { const u = await used(env); const vu = +(await env.USAGE.get("v:" + today())) || 0; return Response.json({ ok: true, model: MODEL, usedToday: Math.round(u), budget: DAILY_NEURONS, left: Math.max(0, Math.floor(DAILY_NEURONS - u)), voiceLeft: Math.max(0, Math.floor(Math.min(VOICE_DAILY - vu, DAILY_NEURONS - u))), labLeft: Math.floor(LAB_LEFT) }, { headers: h }); }
     // Shared guide store: a finished city guide is kept so the same city is never written twice.
     if (url.pathname === "/guide") {
       if (req.method === "GET") {
@@ -117,12 +130,12 @@ Written text:
       if (hit) return new Response(hit, { headers: { ...h, "content-type": "audio/mpeg", "x-cached": "1", "cache-control": "public, max-age=31536000" } });
       const cost = text.length * vm.rate, vk = "v:" + today();
       const vUsed = +(await env.USAGE.get(vk)) || 0, u = await used(env);
-      if (vUsed + cost > VOICE_DAILY || u + cost > DAILY_NEURONS) return Response.json({ error: "voice allowance used up" }, { status: 429, headers: h });
+      if (lab ? cost > LAB_LEFT : (vUsed + cost > VOICE_DAILY || u + cost > DAILY_NEURONS)) return Response.json({ error: "voice allowance used up" }, { status: 429, headers: h });
       let audio;
       try { const r = await env.AI.run(vm.id, { text, speaker, encoding: "mp3" }, { returnRawResponse: true }); if (!r.ok) throw new Error("tts " + r.status); audio = await r.arrayBuffer(); }
       catch (e) { return Response.json({ error: "The voice service is busy." }, { status: 502, headers: h }); }
       if (!audio || audio.byteLength < 1000) return Response.json({ error: "No audio" }, { status: 502, headers: h });
-      ctx.waitUntil(Promise.all([addUse(env, cost), env.USAGE.put(vk, String(+(vUsed + cost).toFixed(1)), { expirationTtl: 3 * 86400 }), env.USAGE.put(key, audio, { expirationTtl: 365 * 86400 })]));
+      ctx.waitUntil(Promise.all([addUse(env, cost, lab), lab ? null : env.USAGE.put(vk, String(+(vUsed + cost).toFixed(1)), { expirationTtl: 3 * 86400 }), env.USAGE.put(key, audio, { expirationTtl: 365 * 86400 })]));
       return new Response(audio, { headers: { ...h, "content-type": "audio/mpeg", "cache-control": "public, max-age=31536000" } });
     }
     if (url.pathname !== "/sample" || req.method !== "POST") return new Response("Kairoute AI helper", { headers: h });

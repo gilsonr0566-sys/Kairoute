@@ -6,19 +6,18 @@ SUMMARY = os.environ.get("GITHUB_STEP_SUMMARY")
 def note(msg):
     print(msg)
     if SUMMARY: open(SUMMARY, "a").write(msg + "\n")
-URL = json.load(open("ai.json"))["url"]; H = {"content-type": "application/json", "Origin": "https://gilsonr0566-sys.github.io", "User-Agent": "Mozilla/5.0 (KairouteVoiceLab)"}
+URL = json.load(open("ai.json"))["url"]; H = {"content-type": "application/json", "Origin": "https://gilsonr0566-sys.github.io", "User-Agent": "Mozilla/5.0 (KairouteVoiceLab)", "x-kairoute-lab": "1"}
 def post(path, body, raw=False):
     req = urllib.request.Request(URL + path, data=json.dumps(body).encode(), headers=H, method="POST")
     with urllib.request.urlopen(req, timeout=120) as r: return r.read() if raw else json.loads(r.read())
 def get(path):
     req = urllib.request.Request(URL + path, headers=H)
     with urllib.request.urlopen(req, timeout=60) as r: return json.loads(r.read())
-RESERVE = 10000  # always leave this much of today's voice allowance for real app users
 story = "As you stand before the Sé de Lisboa, you are looking at the spiritual heart of the city since the 12th century. Built on the site of a former mosque after the Christian reconquest in 1147, the cathedral has survived several earthquakes, including the devastating one of 1755. Its architecture is a blend of Romanesque, Gothic and Baroque styles because of the many rebuilds. Step inside and notice the rose window above the entrance, then walk to the Gothic cloister at the back, where excavations have uncovered Roman, Moorish and medieval remains."
 st0 = get("/status"); print("STATUS:", st0)
 need = len(story) * (6 * 1.364 + 11 * 2.728) * 1.15
-if st0.get("voiceLeft", 0) < need + RESERVE:
-    note(f"Voice lab skipped: it needs about {need:.0f} of today's voice allowance plus {RESERVE} kept for real users, and only {st0.get('voiceLeft')} is left. Nothing was spent. Run it again after the daily reset (6 pm Central).")
+if st0.get("labLeft", 0) < need:  # the lab has its own daily pool and never touches travelers' allowance
+    note(f"Voice lab skipped: it needs about {need:.0f} and its own test pool has {st0.get('labLeft')} left today. Nothing was spent.")
     sys.exit(0)
 parts = post("/script", {"text": story})["parts"]
 clean = [re.sub(r"^~\s*", "", p) for p in parts]

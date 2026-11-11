@@ -2,7 +2,7 @@
 // for several different cities, and checks the guide store. Run by the "Test AI helper" workflow.
 import fs from "fs";
 const URL_ = JSON.parse(fs.readFileSync("ai.json", "utf8")).url;
-const H = { "content-type": "application/json", Origin: "https://gilsonr0566-sys.github.io" };
+const H = { "content-type": "application/json", Origin: "https://gilsonr0566-sys.github.io", "x-kairoute-lab": "1" };
 const src = fs.readFileSync("src/main.js", "utf8");
 const grab = (from, to) => src.slice(src.indexOf(from), src.indexOf(to));
 let calls = 0, fails = 0;
