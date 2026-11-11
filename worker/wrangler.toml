@@ -12,4 +12,4 @@ binding = "USAGE"
 id = "5062677df32b4a3b9e877e2b355057de"
 
 [vars]
-PAID = "0" # set to "1" after upgrading to Workers Paid
+PAID = "1" # Richard's account is on Workers Paid (confirmed Nov 11); extras capped by MONTH_EXTRA
