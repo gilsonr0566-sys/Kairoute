@@ -70,7 +70,7 @@ header.top { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; b
 .daychip { flex: none; border: 1px solid var(--line); background: var(--card); border-radius: 999px; padding: 5px 12px; font-size: 0.85rem; cursor: pointer; }
 .daychip b { font-family: var(--font-display); }
 .daychip[aria-pressed="true"] { background: var(--ink); color: var(--paper); border-color: var(--ink); }
-.tabs { display: grid; grid-template-columns: repeat(5, 1fr); }
+.tabs { display: grid; grid-template-columns: repeat(4, 1fr); }
 .tab { background: none; border: 0; border-bottom: 3px solid transparent; padding: 10px 4px 9px; font-weight: 700; font-size: 0.92rem; color: var(--muted); cursor: pointer; }
 .tab[aria-selected="true"] { color: var(--ink); border-bottom-color: var(--route); }
 
@@ -360,6 +360,20 @@ main:has(#view.full) { padding: 0; }
 .tripcard h3 { font-size: 1.05rem; }
 .tripcard .meta { color: var(--muted); font-size: .85rem; }
 .tripcard .acts { display: flex; gap: 8px; flex-wrap: wrap; }
+.moremenu { position: relative; }
+.moremenu > summary { list-style: none; cursor: pointer; font-weight: 700; font-size: .9rem; padding: 8px 14px; border: 1px solid var(--line); border-radius: 10px; color: var(--ink); background: var(--card); min-height: 40px; display: inline-flex; align-items: center; }
+.moremenu > summary::-webkit-details-marker { display: none; }
+.moremenu > summary::after { content: "▾"; margin-left: 6px; color: var(--muted); }
+.moremenu[open] > summary::after { content: "▴"; }
+.moremenu .mm { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 8px; }
+.planacts { margin: 4px 0 2px; }
+.planacts .bigbtn { flex: 1 1 260px; }
+details.goodtoknow { display: grid; gap: 14px; }
+details.goodtoknow[open] > summary { margin-bottom: 12px; }
+details.goodtoknow > .card { margin-top: 12px; }
+details.dayopts { border-top: 1px solid var(--line); padding-top: 12px; }
+details.dayopts[open] > summary { margin-bottom: 10px; }
+details.dayopts .field, details.dayopts .check { margin-top: 10px; }
 .newcard { border: 2px dashed var(--line); border-radius: 16px; background: transparent; display: grid; place-items: center; gap: 6px; padding: 24px; cursor: pointer; color: var(--route); font-weight: 700; min-height: 180px; }
 .newcard:hover { border-color: var(--route); background: var(--route-soft); }
 .newcard .plus { width: 44px; height: 44px; border-radius: 50%; background: var(--route); color: var(--card); display: grid; place-items: center; font-size: 1.6rem; line-height: 1; }
@@ -443,7 +457,6 @@ main:has(#view.full) { padding: 0; }
     <div class="dayrow" id="dayRow"><button class="dayarrow" data-act="prevday" aria-label="Previous day">‹</button><div class="days" id="dayChips" role="group" aria-label="Trip days"></div><button class="dayarrow" data-act="nextday" aria-label="Next day">›</button><span class="daycount" id="dayCount"></span></div>
     <nav class="tabs" role="tablist" aria-label="Steps">
       <button class="tab" role="tab" data-view="trip" id="tab-trip">Trip</button>
-      <button class="tab" role="tab" data-view="sites" id="tab-sites">Sites</button>
       <button class="tab" role="tab" data-view="plan" id="tab-plan">Day plan</button>
       <button class="tab" role="tab" data-view="guide" id="tab-guide">Guide</button>
       <button class="tab" role="tab" data-view="journal" id="tab-journal">Journal</button>
@@ -1791,7 +1804,12 @@ function save() {
   } catch (e) {}
 }
 const day = () => trip.days[trip.active];
-const cityKeyFor = d => d.cityKey && cities[d.cityKey] ? d.cityKey : (cities[keyOf(d.destination)] ? keyOf(d.destination) : null);
+// Match the day's city to a guide, forgiving extra words like "Barcelona, Spain" or "Kusadasi (Ephesus) Turkey".
+function looseKey(dest) {
+  const dk = " " + keyOf(dest) + " "; if (dk.trim().length < 3) return null;
+  return Object.keys(cities).filter(k => !k.includes("|") && k.length > 2).sort((a, b) => b.length - a.length).find(k => dk.includes(" " + k + " ")) || null;
+}
+const cityKeyFor = d => d.cityKey && cities[d.cityKey] ? d.cityKey : (cities[keyOf(d.destination)] ? keyOf(d.destination) : looseKey(d.destination));
 const cityFor = d => { const k = cityKeyFor(d); return k ? cities[k] : null; };
 const typeInfo = t => DAY_TYPES.find(x => x.key === t) || DAY_TYPES[0];
 
@@ -2075,14 +2093,14 @@ const aiReady = () => !!sample;
 // "Change my trip": say what changed or show the new booking, and the AI rewrites the days.
 let changeImgs = [], changeText = "";
 function changeCard() {
-  if (!aiReady()) return `<div class="card change"><div><h3>Change my trip</h3><p class="lede">Tap any day below to change its city, date or times, or use + Add a day and Remove this day. Turn on the AI guide in Settings to just tell it what changed.</p></div></div>`;
-  return `<div class="card change"><div><h3>Change my trip</h3><p class="lede">Say what changed, or add a photo of the new booking. I'll update the days and keep everything else.</p></div>
+  if (!aiReady()) return "";
+  return `<details class="card change more" ${changeText || changeImgs.length || busy ? "open" : ""}><summary>Change my trip by telling your guide</summary><p class="lede">Say what changed, or add a photo of the new booking. I'll update the days and keep everything else.</p>
     <div class="chips">${(() => { const c = trip.days.filter(x => x.type !== "sea" && x.type !== "port").map(x => x.destination); const first = c[0] || "the first city", last = c[c.length - 1] || "the last city";
       return [`Add a day in ${first}`, "We fly home a day later", `We're staying at a different hotel in ${first}`, `Remove a day in ${last}`]; })().map(x => `<button class="chip" data-chg="${esc(x)}">${esc(x)}</button>`).join("")}</div>
     <textarea id="chgText" rows="2" placeholder="e.g. Our flight now lands at 2 pm on June 30, and we're staying at the Hotel Grande Bretagne">${esc(changeText)}</textarea>
     <div class="actions">${changeImgs.length ? changeImgs.map((x, i) => `<img class="thumb" src="${x.url}" alt="New booking photo ${i + 1}">`).join("") : ""}
       ${changeImgs.length < 4 ? `<label class="btn ghost small">+ Photo of new booking<input type="file" accept="image/*" capture="environment" id="chg-img" hidden></label>` : ""}
-      <button class="btn" data-act="changetrip" ${busy ? "disabled" : ""}>Update my trip</button></div></div>`;
+      <button class="btn" data-act="changetrip" ${busy ? "disabled" : ""}>Update my trip</button></div></details>`;
 }
 async function changeTrip() {
   const tx = ((document.getElementById("chgText") || {}).value || "").trim(); changeText = tx;
@@ -2464,7 +2482,9 @@ async function speakNative(id, lines, lc) {
   } catch (e) { if (run === nativeRun && speakingId === id) { speakingId = null; audioMsg = "The device voice couldn't start. Check that a text-to-speech voice is installed in Android settings."; updateAudioUI(); } }
 }
 let audioMsg = "";
-const NO_AUDIO = "Sound can't play inside the Claude app on phones and tablets. Open this page in the Chrome browser instead (sign in at claude.ai), or on a computer. The story is written out below meanwhile. The full Kairoute app will speak on every device.";
+const IN_CLAUDE = /claude\.ai|claudeusercontent|anthropic/.test(location.hostname);
+const NO_AUDIO = IN_CLAUDE ? "Sound can't play inside the Claude app on phones and tablets. Open Kairoute's website in Chrome instead. The story is written out below meanwhile."
+  : "This browser didn't start the voice. Check that the volume is up and the phone isn't on silent, then tap play again. The story is written out below meanwhile.";
 function speakBrowser(id, lines, lc) {
   const synth = window.speechSynthesis;
   if (!synth || !window.SpeechSynthesisUtterance) { speakingId = null; audioMsg = NO_AUDIO; updateAudioUI(); return; }
@@ -2527,7 +2547,18 @@ function ensureBuiltins() {
     for (const k of keys) if (!cities[k]) cities[k] = c;
   }
 }
+// Fold-out sections stay open across re-renders, so a tap inside one never snaps it shut.
+const openFolds = new Set();
+document.addEventListener("toggle", e => {
+  const el = e.target; if (!el.matches || !el.matches("details") || el.classList.contains("moremenu")) return;
+  const sm = el.querySelector("summary"); if (!sm) return;
+  const k = view + "|" + sm.textContent.trim(); if (el.open) openFolds.add(k); else openFolds.delete(k);
+}, true);
 function render() {
+  renderView();
+  if (openFolds.size) document.querySelectorAll("#view details").forEach(el => { const sm = el.querySelector("summary"); if (sm && openFolds.has(view + "|" + sm.textContent.trim())) el.open = true; });
+}
+function renderView() {
   ensureBuiltins();
   if (view === "trips") view = "lobby";
   const full = !!FULL_VIEWS[view];
@@ -2539,7 +2570,7 @@ function render() {
     `<button class="daychip" data-day="${i}" aria-pressed="${i === trip.active}"><b>${esc(fmtDate(x.date) || "Day " + (i + 1))}</b> · ${esc(x.type === "sea" ? "At sea" : x.destination || "New day")}</button>`).join("");
   const chip = document.querySelector('.daychip[aria-pressed="true"]');
   if (chip && chip.scrollIntoView) { const box = chip.parentElement; const cr = chip.getBoundingClientRect(), br = box.getBoundingClientRect(); box.scrollTo({ left: box.scrollLeft + (cr.left + cr.width / 2) - (br.left + br.width / 2), behavior: "instant" }); }
-  document.querySelectorAll(".tab").forEach(t => t.setAttribute("aria-selected", t.dataset.view === view ? "true" : "false"));
+  document.querySelectorAll(".tab").forEach(t => t.setAttribute("aria-selected", t.dataset.view === (view === "sites" ? "plan" : view) ? "true" : "false"));
   const d = day();
   document.getElementById("tripName").textContent = trip.name || tripName(trip);
   const tripScreens = view === "trips" || view === "wizard";
@@ -2567,10 +2598,16 @@ function dayHeading(d) {
 }
 function needsCity(d) {
   const ready = aiReady();
-  return `<div class="card empty">
+  if (ready) return `<div class="card empty">
     <h3>No guide for ${esc(d.destination || "this day")} yet</h3>
-    <p>${ready ? "Your guide will research sights, places to eat, the cruise port, stations and day trips for " + esc(d.destination) + "." : "Building a guide for a new city uses Claude. Turn on the AI guide in Settings to turn it on. The Barcelona days work without it."}</p>
-    ${ready ? `<button class="btn" data-act="gen" ${busy ? "disabled" : ""}>Build the ${esc(d.destination)} guide</button>` : ""}
+    <p>Your guide will research sights, places to eat, the cruise port, stations and day trips for ${esc(d.destination)}.</p>
+    <button class="btn" data-act="gen" ${busy ? "disabled" : ""}>Build the ${esc(d.destination)} guide</button>
+  </div>`;
+  const have = ["Barcelona"].concat(typeof BUILTIN_CITIES === "undefined" ? [] : BUILTIN_CITIES.map(([c]) => String(c.city).replace(/\s*\(.*\)/, "")));
+  return `<div class="card empty">
+    <h3>${esc(d.destination || "This day")} isn't in the guidebook yet</h3>
+    <p>Kairoute has full guides for ${esc(have.slice(0, -1).join(", "))} and ${esc(have[have.length - 1])}. More cities are being added. If this day is one of those places with a different spelling, fix the city name and the guide appears.</p>
+    <button class="btn" data-goto="trip">Edit this day</button>
   </div>`;
 }
 // ---------- Lobby, settings, legal, brand film ----------
@@ -2630,6 +2667,7 @@ function renderLobby() {
   const hasSample = list.some(x => x.id === SAMPLE_ID);
   const others = list.filter(x => (!cur || x.id !== cur.id) && !x.trip.archived);
   const archived = list.filter(x => x.trip.archived);
+  const moreMenu = (id, inner) => `<details class="moremenu" ${delAsk === id || renameId === id ? "open" : ""}><summary>More</summary><div class="mm">${inner}</div></details>`;
   const delBtn = id => delAsk === id ? `<button class="btn small" style="background:var(--warn)" data-act="deltrip" data-id="${esc(id)}">Yes, delete</button><button class="btn ghost small" data-act="delno">Keep</button>` : `<button class="btn ghost small" data-act="delask" data-id="${esc(id)}">Delete</button>`;
   return `<div class="lobby">
   <section class="hero">
@@ -2647,15 +2685,15 @@ function renderLobby() {
     ${cur ? `<div class="resume">
       <div class="stamp"><span>Day<b>${cur.active + 1}</b></span></div>
       <div><div class="eyebrow">Pick up where you left off</div>${renameId === cur.id ? renameBox(cur.id, cur.name || tripName(cur)) : `<h3>${esc(cur.name || tripName(cur))}</h3>`}
-        <div class="meta">${esc(tripSpan(cur))} · ${cur.days.length} days · Next: ${esc(d.type === "sea" ? "At sea" : d.destination || "New day")}</div></div>
+        <div class="meta">${esc(tripSpan(cur))} · ${cur.days.length} days · ${(() => { const td = cur.days.find(x => x.date === todayISO()); const dd = td || d; return (td ? "Today: " : "Next: ") + esc(dd.type === "sea" ? "At sea" : dd.destination || "New day"); })()}</div></div>
       <div class="go"><button class="btn" data-act="continue">Continue trip</button></div>
-      <div class="resacts"><span class="lede">Saved automatically</span><button class="btn ghost small" data-goto="trip" data-act2="edit">Edit itinerary</button><button class="btn ghost small" data-act="rename" data-id="${esc(cur.id)}">Rename</button><button class="btn ghost small" data-act="archive" data-id="${esc(cur.id)}">Archive</button>${delBtn(cur.id)}</div>
+      <div class="resacts"><span class="lede">Saved automatically</span><button class="btn ghost small" data-goto="trip" data-act2="edit">Edit itinerary</button>${moreMenu(cur.id, `<button class="btn ghost small" data-act="rename" data-id="${esc(cur.id)}">Rename</button><button class="btn ghost small" data-act="archive" data-id="${esc(cur.id)}">Archive</button>${delBtn(cur.id)}`)}</div>
     </div>` : ""}
     <div class="sechead"><h2>Planned trips</h2><span class="lede">${list.length - archived.length} saved on this device</span></div>
     <div class="tripcards">
       ${others.map(x => `<div class="tripcard"><div class="band">${bandArt(x.id)}</div><div class="in">
         <div><div class="eyebrow">${esc(tripSpan(x.trip))}${tripSpan(x.trip) ? " · " : ""}${x.trip.days.length} days</div>${renameId === x.id ? renameBox(x.id, x.name) : `<h3>${esc(x.name)}</h3>`}</div>
-        <div class="acts"><button class="btn small" data-act="opentrip" data-id="${esc(x.id)}">Open</button><button class="btn ghost small" data-act="rename" data-id="${esc(x.id)}">Rename</button><button class="btn ghost small" data-act="archive" data-id="${esc(x.id)}">Archive</button>${delBtn(x.id)}</div>
+        <div class="acts"><button class="btn small" data-act="opentrip" data-id="${esc(x.id)}">Open</button>${moreMenu(x.id, `<button class="btn ghost small" data-act="rename" data-id="${esc(x.id)}">Rename</button><button class="btn ghost small" data-act="archive" data-id="${esc(x.id)}">Archive</button>${delBtn(x.id)}`)}</div>
       </div></div>`).join("")}
       <button class="newcard" data-act="newtrip"><span class="plus">+</span>Plan a new trip<span class="lede" style="font-weight:400">Answer a few questions, or snap a photo of your itinerary</span></button>
       ${hasSample ? "" : `<button class="newcard" data-act="loadsample"><span class="plus" style="background:var(--meal)">★</span>Open your Sun Princess trip<span class="lede" style="font-weight:400">Athens, the July 4, 2027 cruise, Barcelona and Madrid</span></button>`}
@@ -2922,7 +2960,7 @@ function budgetCard(plan) {
       <div class="stat"><b>${money(b.sym, b.food)}</b><span>food</span></div>
       <div class="stat"><b>${money(b.sym, b.move)}</b><span>getting around</span></div>
       <div class="stat"><b>${money(b.sym, b.total)}</b><span>total</span></div>
-    </div><p class="footnote">Rough figures from typical prices. Change the number of people under My trips.</p></div>`;
+    </div><p class="footnote">Rough figures from typical prices. Change the number of people in Settings.</p></div>`;
 }
 function tripBudget() {
   const by = {}; let days = 0, missing = 0;
@@ -3119,7 +3157,7 @@ function renderTrip(d) {
   const points = pointList(city, listKey);
   const pointWord = t === "port" || t === "embark" ? "Cruise terminal" : t === "arrival" ? "Arriving at" : "Leaving from";
   return `
-  ${trip.sample ? `<div class="banner"><span>This is your Sun Princess trip: Athens, the 11-night cruise from Piraeus on July 4, 2027, then Barcelona and Madrid. Ports and times come from your booking; all-aboard is set 30 minutes before sailing. Flight, hotel and train times are my guesses, so tap a day to change them.</span></div>` : ""}
+  ${trip.sample && !trip.bannerSeen ? `<div class="banner"><span>This is your Sun Princess trip: Athens, the 11-night cruise from Piraeus on July 4, 2027, then Barcelona and Madrid. Ports and times come from your booking; all-aboard is set 30 minutes before sailing. Flight, hotel and train times are my guesses, so tap a day to change them.</span><button class="btn ghost small" data-act="gotit" style="white-space:nowrap">Got it</button></div>` : ""}
   ${stopsBanner()}
   ${changeCard()}
   <div class="tripgrid">
@@ -3131,10 +3169,10 @@ function renderTrip(d) {
       ${(() => { const tb = tripBudget(); const parts = Object.entries(tb.by).map(([k, v]) => money(k, v)).join(" + ");
         return `<div class="card"><div><span class="eyebrow">Trip budget estimate · ${P().party} people</span><p><b style="font-family:var(--font-display);font-size:1.4rem">${parts || "-"}</b></p>
           <p class="footnote">Tickets, food and getting around for the ${tb.days} planned day${tb.days === 1 ? "" : "s"}${tb.missing ? `. ${tb.missing} day${tb.missing === 1 ? "" : "s"} still need a guide` : ""}. Flights, the cruise and hotels aren't included.</p></div></div>`; })()}
-      <div class="actions"><button class="btn ghost small" data-act="pdf">Save as PDF</button><button class="btn ghost small" data-act="copytrip">Copy itinerary</button></div>
-      <div id="copyBox"></div>
-      <details class="card more" ${trip.sample ? "" : ""}>
-        <summary>Describe a whole trip in your own words</summary>
+      <details class="card more">
+        <summary>Share, print or rebuild the trip</summary>
+        <div class="actions"><button class="btn ghost small" data-act="pdf">Save as PDF</button><button class="btn ghost small" data-act="copytrip">Copy itinerary</button></div>
+        <div id="copyBox"></div>
         ${aiReady() ? `<div class="field"><label for="f-triptext">Your trip</label><textarea id="f-triptext" placeholder="Flying into Athens on May 3 and staying 4 days at the Hotel Grande Bretagne. Then a cruise from Piraeus to Mykonos, Santorini… ending in Barcelona. 3 days in Barcelona, train to Madrid for 2 days, flying home at 4 pm.">${esc(tripText)}</textarea><span class="hint">Your guide lays out every day, with port times, flights and trains. This replaces the trip above.</span></div>
         <div class="actions"><button class="btn" data-act="parsetrip" ${busy ? "disabled" : ""}>Build my itinerary</button></div>` : `<p class="ai-note">This uses the AI guide. Turn on the AI guide in Settings to turn it on.</p>`}
       </details>
@@ -3163,22 +3201,25 @@ function renderTrip(d) {
           ${t === "land" || t === "departure" || t === "embark" ? `<div class="field"><label for="f-start">${t === "land" ? "Start time" : "Check out at"}</label><input type="time" id="f-start" value="${esc(d.startTime)}"></div>` : ""}
           ${t === "land" || t === "arrival" ? `<div class="field"><label for="f-hours">Hours to sightsee</label><input type="number" id="f-hours" min="1" max="14" step="0.5" value="${d.hours}"><div class="seg pace" role="group" aria-label="Pace">${[[2.5,"Light day"],[4,"Half day"],[8,"Full day"]].map(([h,l]) => `<button type="button" data-hrs="${h}" aria-pressed="${+d.hours === h}">${l}</button>`).join("")}</div></div>` : ""}
         </div>
-        ${t === "port" ? `<label class="check"><input type="checkbox" id="f-tender" ${d.tender ? "checked" : ""}><span>Tender port (small boats take you ashore)</span></label>` : ""}
         ${needsLodging ? `<div class="field"><label for="f-lodging">Where you're staying in ${esc(d.destination || "this city")}</label>
           <select id="f-lodging">${opts(hotels, L.idx)}<option value="custom" ${L.idx === "custom" ? "selected" : ""}>My hotel or rental…</option></select>
           ${L.idx === "custom" ? `<div class="ask"><input type="text" id="f-lname" value="${esc(L.name || "")}" placeholder="Hotel name or address"><button type="button" class="btn small" data-act="geo" ${aiReady() ? "" : "disabled"}>Find it</button></div>
           <span class="hint">${L.ll ? "Found on the map: " + esc(L.name) : aiReady() ? "Type the name and tap Find it." : "Pick an area for now, or turn on the AI guide in Settings to find your exact hotel."}</span>` : `<span class="hint">Used for every day you're in ${esc(d.destination || "this city")}.</span>`}
         </div>` : ""}
+        <details class="more dayopts" ${d.event ? "open" : ""}><summary>More options for this day</summary>
+        ${t === "port" ? `<label class="check"><input type="checkbox" id="f-tender" ${d.tender ? "checked" : ""}><span>Tender port (small boats take you ashore)</span></label>` : ""}
         ${t === "land" ? `<label class="check"><input type="checkbox" id="f-return" ${d.returnToStart ? "checked" : ""}><span>Finish back at the hotel</span></label>` : ""}
         <div class="field"><label for="f-event">Event (optional)</label><input type="text" id="f-event" value="${esc(d.event)}" placeholder="e.g. a ball game, a festival, a concert"></div>
         <div class="field"><span class="lbl">Your style (all days)</span>
           <div class="seg" role="group" aria-label="Style">${[["touristy", "Famous sights"], ["mix", "A bit of both"], ["local", "Local favorites"]].map(([k, l]) => `<button type="button" data-style="${k}" aria-pressed="${trip.style === k}">${l}</button>`).join("")}</div>
           <span class="hint">Also picks where you eat: popular spots or places locals go.</span>
         </div>
-        <label class="check"><input type="checkbox" id="f-along" ${d.alongWay ? "checked" : ""}><span>Add quick must-sees along the way</span></label>`}
+        <label class="check"><input type="checkbox" id="f-along" ${d.alongWay ? "checked" : ""}><span>Add quick must-sees along the way</span></label>
+        <div class="actions"><button class="btn ghost small" type="button" data-act="delday">Remove this day</button></div>
+        </details>`}
         <div class="actions">
-          ${t === "sea" ? "" : `<button class="btn" type="submit" ${busy ? "disabled" : ""}>${city ? "Pick sites" : aiReady() ? "Build the guide" : "Save"}</button>`}
-          <button class="btn ghost" type="button" data-act="delday">Remove this day</button>
+          ${t === "sea" ? `<button class="btn ghost" type="button" data-act="delday">Remove this day</button>` : `<button class="btn" type="submit" ${busy ? "disabled" : ""}>${city ? "See the day plan" : aiReady() ? "Build the guide" : "Save"}</button>`}
+          <span class="hint">Changes save as you go.</span>
         </div>
       </form>
     </div>
@@ -3259,7 +3300,7 @@ function renderSites(d) {
   <div class="sitelist">${already.map(s => siteCard(s, d, plan)).join("")}</div></details>` : ""}
   ${quick.length ? `<details class="more"><summary>Quick stops (${quick.length})</summary><p class="lede" style="margin:8px 0">Added automatically when your route passes them. Tick one to make it a planned stop.</p>
   <div class="sitelist">${quick.map(s => siteCard(s, d, plan)).join("")}</div></details>` : ""}
-  <div class="stickybar"><span class="count">${n} site${n === 1 ? "" : "s"} picked</span><button class="btn" data-act="toplan">Build my day</button></div>`;
+  <div class="stickybar"><span class="count">${n} site${n === 1 ? "" : "s"} picked</span><button class="btn" data-act="toplan">See my day plan</button></div>`;
 }
 
 function mapSVG(plan) {
@@ -3357,11 +3398,12 @@ function renderPlan(d) {
   <div class="windowbar"><span>Free from <b>${fmt(plan.start)}</b></span><span>${d.type === "port" ? "Back at ship by" : d.type === "departure" || d.type === "embark" ? "At the terminal by" : "Done by"} <b>${fmt(plan.endBy)}</b></span><span>${dur(plan.endBy - plan.start)} in all</span></div>
   ${plan.w.notes.map(t => `<p class="lede">${esc(t)}</p>`).join("")}
   ${d.estimated ? `<div class="banner warn">These port times are estimated. Check them against your cruise documents.</div>` : ""}
+  <div class="actions planacts"><button class="btn bigbtn" data-act="tourstart" style="background:var(--meal)">▶ Start the tour</button><button class="btn ghost" data-goto="sites">Change stops</button><a class="btn ghost" href="${gmapsLink(plan)}" target="_blank" rel="noopener">Directions in Google Maps</a></div>
   <label class="check"><input type="checkbox" id="f-rain" ${d.rain ? "checked" : ""}><span><b>Rain expected</b> · swap outdoor stops for indoor ones</span></label>
   ${plan.swaps.length ? `<div class="banner">Because of rain: ${plan.swaps.map(([a, b]) => esc(a.name) + " → " + esc(b.name)).join(", ")}.</div>` : ""}
-  ${plan.closedToday.length ? `<div class="banner warn" role="alert">${plan.closedToday.map(s => `${esc(s.name)}: ${esc(s.closed.toLowerCase())}`).join(". ")}, and you're there on a ${esc(fmtDow(d.date))}. Swap it on Sites.</div>` : ""}
+  ${plan.closedToday.length ? `<div class="banner warn" role="alert">${plan.closedToday.map(s => `${esc(s.name)}: ${esc(s.closed.toLowerCase())}`).join(". ")}, and you're there on a ${esc(fmtDow(d.date))}. Swap it with Change stops.</div>` : ""}
   ${countdownCard(d, plan)}
-  ${plan.over ? `<div class="banner warn" role="alert">This plan runs ${dur(plan.end - plan.endBy)} past ${fmt(plan.endBy)}. Remove a stop on Sites, or change the times.</div>` : ""}
+  ${plan.over ? `<div class="banner warn" role="alert">This plan runs ${dur(plan.end - plan.endBy)} past ${fmt(plan.endBy)}. Remove a stop with Change stops, or change the times.</div>` : ""}
   ${plan.endBy - plan.start < 90 ? `<div class="banner warn">There isn't much time today, so keep it close: a coffee and one nearby sight at most.</div>` : ""}
   <div class="plangrid"><div class="left">
   <div class="summary">
@@ -3373,11 +3415,12 @@ function renderPlan(d) {
   <div class="mapbox">${mapSVG(plan)}
     <div class="maplegend"><span><i></i>Walk</span><span><i class="dash"></i>Taxi or transit</span><span style="color:var(--meal)">● Meal</span><span style="color:var(--must)">■ Hotel</span><span>● On the way</span></div>
   </div>
-  <div class="actions"><a class="btn" href="${gmapsLink(plan)}" target="_blank" rel="noopener">Open directions in Google Maps</a><button class="btn" data-act="tourstart" style="background:var(--meal)">▶ Start the tour</button><button class="btn ghost" data-goto="guide">Read the guide</button></div>
-  ${plan.dropped.length ? `<div class="banner warn dropped"><span>Didn't fit today: <b>${plan.dropped.map(s => esc(s.name)).join(", ")}</b>. Change the times on Trip, or swap them in on Sites.</span></div>` : ""}
+  ${plan.dropped.length ? `<div class="banner warn dropped"><span>Didn't fit today: <b>${plan.dropped.map(s => esc(s.name)).join(", ")}</b>. Change the times on Trip, or swap them in with Change stops.</span></div>` : ""}
+  <details class="more goodtoknow"><summary>Good to know today: getting around, costs, local words</summary>
   ${gettingAround(city, plan)}
   ${budgetCard(plan)}
   ${basicsCard(city)}
+  </details>
   <p class="footnote">Times are estimates using a relaxed walking pace and typical taxi times. Check opening hours and book timed tickets for the big sights.</p>
   </div><div class="right"><div class="card"><div class="timeline">${rows}</div></div></div></div>`;
 }
@@ -3433,7 +3476,7 @@ function renderGuide(d) {
   const cards = plan.items.filter(i => i.type === "stop").map(i => { if (!i.place.along) n++; return stopCard(i.place, n, city); }).join("");
   return `${dayHeading(d)}<p class="lede">Every stop's story, in route order. For a guided walk through the day, use Tour mode.</p>
     <div class="actions"><button class="btn" data-act="tourstart" style="background:var(--meal)">▶ Start the tour</button></div>
-    ${cards ? `<div class="stoplist">${cards}</div>` : `<div class="card empty"><p>No stops planned for today.</p><button class="btn" data-goto="sites">Pick sites</button></div>`}`;
+    ${cards ? `<div class="stoplist">${cards}</div>` : `<div class="card empty"><p>No stops planned for today.</p><button class="btn" data-goto="sites">Choose stops</button></div>`}`;
 }
 // ---------- Tour mode ----------
 function tourSteps(plan) {
@@ -3641,10 +3684,14 @@ function readForm() {
   }
 }
 function edited() { trip.sample = false; }
+// Open a trip on today's day when the trip is under way.
+function jumpToToday(t) { const i = t.days.findIndex(x => x.date === todayISO()); if (i >= 0) t.active = i; }
 document.addEventListener("click", e => {
   const t = e.target.closest("button, a"); if (!t) return;
   if (t.dataset.view) { if (view === "trip") readForm(); view = t.dataset.view; aiError = ""; save(); render(); window.scrollTo(0, 0); return; }
-  if (t.dataset.day != null && !t.dataset.act) { if (view === "trip") readForm(); trip.active = +t.dataset.day; aiError = ""; cdPreview = null; cdWhere = null; cdSpoken = false; stopAudio(); save(); render(); return; }
+  if (t.dataset.day != null && !t.dataset.act) { if (view === "trip") readForm(); trip.active = +t.dataset.day; aiError = ""; cdPreview = null; cdWhere = null; cdSpoken = false; stopAudio(); save(); render();
+    if (t.classList.contains("itrow") && innerWidth < 800) { const f = document.getElementById("dayForm"); if (f) f.scrollIntoView({ block: "start" }); }
+    return; }
   if (t.dataset.goto) { view = t.dataset.goto; render(); window.scrollTo(0, 0); return; }
   if (t.dataset.act === "savekey") { const k = ((document.getElementById("aikey") || {}).value || "").trim(); if (k) { try { localStorage.setItem(KEY_STORE, k); } catch (e) {} sample = webSample; } render(); return; }
   if (t.dataset.act === "clearkey") { try { localStorage.removeItem(KEY_STORE); } catch (e) {} if (!(cl && cl.use)) sample = null; render(); return; }
@@ -3681,8 +3728,9 @@ document.addEventListener("click", e => {
     render(); return;
   }
   const act = t.dataset.act;
+  if (act === "gotit") { trip.bannerSeen = true; save(); render(); return; }
   if (act === "lobby" || act === "settings" || act === "privacy" || act === "terms") { if (view === "trip") readForm(); stopAudio(); save(); view = act; resetAsk = false; aiError = ""; render(); window.scrollTo(0, 0); return; }
-  if (act === "continue") { view = trip.tour && trip.tour.dayId === day().id ? "tour" : "plan"; render(); window.scrollTo(0, 0); return; }
+  if (act === "continue") { jumpToToday(trip); view = trip.tour && trip.tour.dayId === day().id ? "tour" : "plan"; render(); window.scrollTo(0, 0); return; }
   if (act === "film" || act === "filmreplay") { stopAudio(); playFilm(false); return; }
   if (act === "filmclose") { closeFilm(); return; }
   if (act === "mytrips") { if (view === "trip") readForm(); save(); view = "trips"; aiError = ""; render(); window.scrollTo(0, 0); return; }
@@ -3690,7 +3738,7 @@ document.addEventListener("click", e => {
   if (act === "wizmore") { readWiz(); if (!wiz.text.trim() && !(wiz.images || []).length) { aiError = "Describe your trip first, even roughly."; render(); return; } aiError = ""; wiz.step = 1; render(); window.scrollTo(0, 0); return; }
   if (act === "wizback") { readWiz(); wiz.step--; render(); return; }
   if (act === "wizcancel") { wiz = null; view = "lobby"; render(); window.scrollTo(0, 0); return; }
-  if (act === "opentrip") { save(); const x = library.find(y => y.id === t.dataset.id); if (x) { trip = x.trip; if (!trip.prefs) trip.prefs = defaultPrefs(); view = "trip"; save(); render(); } return; }
+  if (act === "opentrip") { save(); const x = library.find(y => y.id === t.dataset.id); if (x) { trip = x.trip; if (!trip.prefs) trip.prefs = defaultPrefs(); jumpToToday(trip); view = trip.tour && trip.tour.dayId === day().id ? "tour" : "plan"; save(); render(); window.scrollTo(0, 0); } return; }
   if (act === "loadsample") { save(); trip = sampleTrip(); view = "plan"; save(); render(); return; }
   if (act === "rename") { renameId = t.dataset.id; render(); const el = document.getElementById("renameInput"); if (el) { el.focus(); el.select(); } return; }
   if (act === "renamesave") { doRename(t.dataset.id); return; }
@@ -3805,7 +3853,8 @@ document.addEventListener("change", e => {
     return;
   }
   if (t.id === "f-type") { readForm(); const d = day(); d.type = t.value; d.pointIdx = 0; if (d.type === "departure" && d.mode === "ship") d.mode = "flight"; d.selected = null; edited(); save(); render(); return; }
-  if (["f-point", "f-return", "f-along", "f-lodging", "f-tender", "f-date"].includes(t.id)) { readForm(); edited(); save(); render(); }
+  if (["f-point", "f-return", "f-along", "f-lodging", "f-tender", "f-date"].includes(t.id)) { readForm(); edited(); save(); render(); return; }
+  if (t.closest && t.closest("#dayForm")) { readForm(); edited(); save(); }
 });
 document.addEventListener("submit", e => {
   e.preventDefault();
@@ -3814,7 +3863,7 @@ document.addEventListener("submit", e => {
     readForm(); edited(); save();
     const d = day();
     if (!d.destination) { aiError = "Type a city first."; render(); return; }
-    if (cityFor(d)) { view = "sites"; aiError = ""; render(); window.scrollTo(0, 0); }
+    if (cityFor(d)) { view = "plan"; aiError = ""; render(); window.scrollTo(0, 0); }
     else if (aiReady()) generateCity(d);
     else { render(); }
     return;
@@ -3838,3 +3887,4 @@ render();
 
 </script>
 <script>if ("serviceWorker" in navigator) addEventListener("load", () => navigator.serviceWorker.register("sw.js").catch(() => {}));</script>
+<script>(function(){var B="d708335-1794368800";function chk(){if(location.protocol!=="https:")return;fetch("version.txt",{cache:"no-store"}).then(function(r){return r.ok?r.text():""}).then(function(t){t=t.trim();if(t&&t!==B)location.reload()}).catch(function(){})}addEventListener("load",chk);document.addEventListener("visibilitychange",function(){if(document.visibilityState==="visible")chk()})})();</script>

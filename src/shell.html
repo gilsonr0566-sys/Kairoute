@@ -57,7 +57,7 @@ header.top { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; b
 .daychip { flex: none; border: 1px solid var(--line); background: var(--card); border-radius: 999px; padding: 5px 12px; font-size: 0.85rem; cursor: pointer; }
 .daychip b { font-family: var(--font-display); }
 .daychip[aria-pressed="true"] { background: var(--ink); color: var(--paper); border-color: var(--ink); }
-.tabs { display: grid; grid-template-columns: repeat(5, 1fr); }
+.tabs { display: grid; grid-template-columns: repeat(4, 1fr); }
 .tab { background: none; border: 0; border-bottom: 3px solid transparent; padding: 10px 4px 9px; font-weight: 700; font-size: 0.92rem; color: var(--muted); cursor: pointer; }
 .tab[aria-selected="true"] { color: var(--ink); border-bottom-color: var(--route); }
 
@@ -347,6 +347,20 @@ main:has(#view.full) { padding: 0; }
 .tripcard h3 { font-size: 1.05rem; }
 .tripcard .meta { color: var(--muted); font-size: .85rem; }
 .tripcard .acts { display: flex; gap: 8px; flex-wrap: wrap; }
+.moremenu { position: relative; }
+.moremenu > summary { list-style: none; cursor: pointer; font-weight: 700; font-size: .9rem; padding: 8px 14px; border: 1px solid var(--line); border-radius: 10px; color: var(--ink); background: var(--card); min-height: 40px; display: inline-flex; align-items: center; }
+.moremenu > summary::-webkit-details-marker { display: none; }
+.moremenu > summary::after { content: "▾"; margin-left: 6px; color: var(--muted); }
+.moremenu[open] > summary::after { content: "▴"; }
+.moremenu .mm { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 8px; }
+.planacts { margin: 4px 0 2px; }
+.planacts .bigbtn { flex: 1 1 260px; }
+details.goodtoknow { display: grid; gap: 14px; }
+details.goodtoknow[open] > summary { margin-bottom: 12px; }
+details.goodtoknow > .card { margin-top: 12px; }
+details.dayopts { border-top: 1px solid var(--line); padding-top: 12px; }
+details.dayopts[open] > summary { margin-bottom: 10px; }
+details.dayopts .field, details.dayopts .check { margin-top: 10px; }
 .newcard { border: 2px dashed var(--line); border-radius: 16px; background: transparent; display: grid; place-items: center; gap: 6px; padding: 24px; cursor: pointer; color: var(--route); font-weight: 700; min-height: 180px; }
 .newcard:hover { border-color: var(--route); background: var(--route-soft); }
 .newcard .plus { width: 44px; height: 44px; border-radius: 50%; background: var(--route); color: var(--card); display: grid; place-items: center; font-size: 1.6rem; line-height: 1; }
@@ -430,7 +444,6 @@ main:has(#view.full) { padding: 0; }
     <div class="dayrow" id="dayRow"><button class="dayarrow" data-act="prevday" aria-label="Previous day">‹</button><div class="days" id="dayChips" role="group" aria-label="Trip days"></div><button class="dayarrow" data-act="nextday" aria-label="Next day">›</button><span class="daycount" id="dayCount"></span></div>
     <nav class="tabs" role="tablist" aria-label="Steps">
       <button class="tab" role="tab" data-view="trip" id="tab-trip">Trip</button>
-      <button class="tab" role="tab" data-view="sites" id="tab-sites">Sites</button>
       <button class="tab" role="tab" data-view="plan" id="tab-plan">Day plan</button>
       <button class="tab" role="tab" data-view="guide" id="tab-guide">Guide</button>
       <button class="tab" role="tab" data-view="journal" id="tab-journal">Journal</button>
