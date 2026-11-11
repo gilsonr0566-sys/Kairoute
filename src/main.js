@@ -407,7 +407,7 @@ function dayWindow(d, city) {
     w.tail = [L]; w.endBy = w.start + d.hours * 60;
     w.startLabel = (d.mode === "ship" ? "Off the ship at " : "Out of ") + P.name;
     w.endLabel = "Back at " + L.name;
-    w.notes.push(`${m.label} arrives ${d.time}. We allow ${dur(m.clear)} to get ${d.mode === "flight" ? "through passport control and baggage" : d.mode === "ship" ? "off the ship with your luggage" : "off the train"}.`);
+    w.notes.push(`${m.label} arrives ${d.time}. We allow ${dur(m.clear)} to get ${d.mode === "flight" ? "through passport control and baggage" : d.mode === "ship" ? "off the ship with your luggage" : d.mode === "train" ? "off the train" : "parked and on your way"}.`);
   } else if (d.type === "departure") {
     if (!L) return { error: "Choose where you're staying in " + d.destination + "." };
     if (!P) return { error: "Choose your departure " + MODES[d.mode].word + "." };
@@ -849,7 +849,8 @@ let progressTicker = 0; const stopTicker = () => clearInterval(progressTicker);
 async function generateCity(d, quiet) {
   if (!aiReady()) return false;
   const label = d.destination;
-  if (!quiet) { busy = { text: "Asking your guide about " + label + "…" }; aiError = ""; render(); }
+  // Show the build on the day plan, which has the progress bar (the tour screen is for walking a finished guide).
+  if (!quiet) { if (view === "tour") view = "plan"; busy = { text: "Asking your guide about " + label + "…" }; aiError = ""; render(); window.scrollTo(0, 0); }
   const isPort = d.type === "port";
   const prompt = `You are an expert local tour guide writing data for a self-guided tour app that replaces paid guided tours.
 Destination: ${label}
@@ -2587,7 +2588,7 @@ function dirLink(from, to, leg) {
 }
 function renderTour(d) {
   const city = cityFor(d);
-  if (!city) return `${dayHeading(d)}${needsCity(d)}`;
+  if (!city) return `${dayHeading(d)}${busyBlock()}${errBlock()}${needsCity(d)}`;
   refillIfNeeded(d, city); if (!d.selected) d.selected = defaultSelection(city, trip.style, d);
   const plan = buildPlan(d);
   if (!plan || plan.error) return `${dayHeading(d)}<div class="card empty"><p>${esc(plan ? plan.error : "Set up your day first.")}</p><button class="btn" data-goto="trip">Edit this day</button></div>`;
@@ -2810,7 +2811,7 @@ document.addEventListener("click", e => {
   const act = t.dataset.act;
   if (act === "gotit") { trip.bannerSeen = true; save(); render(); return; }
   if (act === "lobby" || act === "settings" || act === "privacy" || act === "terms") { if (view === "trip") readForm(); stopAudio(); save(); view = act; resetAsk = false; aiError = ""; render(); window.scrollTo(0, 0); return; }
-  if (act === "continue") { jumpToToday(trip); view = trip.tour && trip.tour.dayId === day().id ? "tour" : "plan"; render(); window.scrollTo(0, 0); return; }
+  if (act === "continue") { jumpToToday(trip); view = trip.tour && trip.tour.dayId === day().id && cityFor(day()) ? "tour" : "plan"; render(); window.scrollTo(0, 0); return; }
   if (act === "film" || act === "filmreplay") { stopAudio(); playFilm(false); return; }
   if (act === "filmclose") { closeFilm(); return; }
   if (act === "mytrips") { if (view === "trip") readForm(); save(); view = "trips"; aiError = ""; render(); window.scrollTo(0, 0); return; }
@@ -2824,7 +2825,7 @@ document.addEventListener("click", e => {
   if (act === "wizmore") { readWiz(); if (!wiz.text.trim() && !(wiz.images || []).length) { aiError = "Describe your trip first, even roughly."; render(); return; } aiError = ""; wiz.step = 1; render(); window.scrollTo(0, 0); return; }
   if (act === "wizback") { readWiz(); wiz.step--; render(); return; }
   if (act === "wizcancel") { wiz = null; view = "lobby"; render(); window.scrollTo(0, 0); return; }
-  if (act === "opentrip") { save(); const x = library.find(y => y.id === t.dataset.id); if (x) { trip = x.trip; if (!trip.prefs) trip.prefs = defaultPrefs(); jumpToToday(trip); view = trip.tour && trip.tour.dayId === day().id ? "tour" : "plan"; save(); render(); window.scrollTo(0, 0); } return; }
+  if (act === "opentrip") { save(); const x = library.find(y => y.id === t.dataset.id); if (x) { trip = x.trip; if (!trip.prefs) trip.prefs = defaultPrefs(); jumpToToday(trip); view = trip.tour && trip.tour.dayId === day().id && cityFor(day()) ? "tour" : "plan"; save(); render(); window.scrollTo(0, 0); } return; }
   if (act === "loadsample") { save(); trip = sampleTrip(); view = "plan"; save(); render(); return; }
   if (act === "rename") { renameId = t.dataset.id; render(); const el = document.getElementById("renameInput"); if (el) { el.focus(); el.select(); } return; }
   if (act === "renamesave") { doRename(t.dataset.id); return; }
