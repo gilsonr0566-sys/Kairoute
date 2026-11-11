@@ -1,5 +1,10 @@
 name: Test AI helper
-on: workflow_dispatch
+on:
+  workflow_dispatch:
+    inputs:
+      cities:
+        description: Cities separated by |
+        default: "Lisbon|Kotor, Montenegro|Savannah, Georgia"
 permissions:
   contents: read
 jobs:
@@ -10,4 +15,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-      - run: echo '{"url":"https://kairoute-ai.rickgilson.workers.dev"}' > ai.json && node tools/ai-test.mjs
+      - env:
+          CITIES: ${{ inputs.cities }}
+          VERBOSE: "1"
+        run: echo '{"url":"https://kairoute-ai.rickgilson.workers.dev"}' > ai.json && node tools/ai-test.mjs

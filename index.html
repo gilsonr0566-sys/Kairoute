@@ -2344,11 +2344,15 @@ ${P().access !== "none" ? "- The travelers need: " + ACCESS.find(a => a[0] === P
 async function cityInParts(prompt, show) {
   const okLL = x => x && x.name && isFinite(numV(x.lat)) && isFinite(numV(x.lng));
   const tail = " Ignore any other counts above and keep each item as concise as the format allows.";
-  const ask = async (extra, tier, ok, onText) => {
+  // Pieces that write named places get the guide's style rules but not the "how many places" rules,
+  // so the AI writes only the places it is given.
+  const detailPrompt = prompt.replace(/Return ONLY a JSON object[\s\S]*?Rules:\n/, "Each place is a JSON object {\"id\",\"name\",\"lat\",\"lng\",\"minutes\",\"kind\",\"mustSee\",\"category\",\"summary\",\"guide\",\"lookFor\",\"photoTip\",\"picks\"}. Day trips also have \"travel\" (how to get there and the one-way time) and their \"minutes\" is time on site.\nRules:\n").split("\n")
+    .filter(l => !/^- "(sites|farther|restaurants|gettingAround|starts)":/.test(l) && !/^- Add "basics"/.test(l)).join("\n");
+  const ask = async (extra, tier, ok, onText, detail) => {
     let last = null;
     for (let tries = 0; tries < 3; tries++) {
       let r;
-      try { r = await sample(prompt + "\n\n" + extra + tail, { modelTier: tier, onText }); }
+      try { r = await sample((detail ? detailPrompt : prompt) + "\n\n" + extra + tail, { modelTier: tier, onText }); }
       catch (e) { if (/allowance|used up/i.test(e.message || "")) throw e; last = e; continue; }
       let j = null; try { j = parseJSON(r.text || ""); } catch (e) { last = e; }
       if (ok(j)) return j;
@@ -2364,26 +2368,32 @@ async function cityInParts(prompt, show) {
   const parts = [
     { ask: 'For this request return ONLY {"city","country","starts","restaurants","gettingAround","basics"}, with 10 restaurants and 8 phrases. Leave out "sites" and "farther".', size: 5000,
       ok: j => j && j.city && j.starts && (j.restaurants || []).filter(okLL).length >= 5 && j.basics && (j.gettingAround || []).length >= 2 },
-    ...groups.filter(g => g.length).map(g => ({ ask: `For this request return ONLY {"sites":[...]} with full details for exactly these ${g.length} main sights and no others, using these exact names: ${list(g.map(x => x.name))}.`, size: 3000 * g.length,
+    ...groups.filter(g => g.length).map(g => ({ names: g.map(x => x.name), ask: `For this request return ONLY {"sites":[...]} with full details for exactly these ${g.length} main sights and no others, using these exact names: ${list(g.map(x => x.name))}.`, size: 3000 * g.length,
       ok: j => j && (j.sites || []).filter(x => okLL(x) && x.guide).length >= g.length - 1 })),
-    ...(quick.length ? [{ ask: `For this request return ONLY {"sites":[...]} with exactly these ${quick.length} quick sights ("quick": true, minutes 10) and no others, using these exact names: ${list(quick)}.`, size: 1000 * quick.length,
+    ...(quick.length ? [{ names: quick, ask: `For this request return ONLY {"sites":[...]} with exactly these ${quick.length} quick sights ("quick": true, minutes 10) and no others, using these exact names: ${list(quick)}.`, size: 1000 * quick.length,
       ok: j => j && (j.sites || []).filter(okLL).length >= Math.max(1, quick.length - 2) }] : []),
-    ...(far.length ? [{ ask: `For this request return ONLY {"farther":[...]} with exactly these ${far.length} day trips and no others, using these exact names: ${list(far)}.`, size: 3000 * far.length,
+    ...(far.length ? [{ names: far, ask: `For this request return ONLY {"farther":[...]} with exactly these ${far.length} day trips and no others, using these exact names: ${list(far)}.`, size: 3000 * far.length,
       ok: j => j && (j.farther || []).filter(okLL).length >= Math.max(1, far.length - 1) }] : [])
   ];
   const got = parts.map(() => 0), tell = () => show(5 + got.reduce((a, b) => a + b, 0) / parts.length * 95);
-  const res = await Promise.all(parts.map((p, i) => ask(p.ask, "part", p.ok, ({ text }) => { got[i] = Math.min(0.97, text.length / p.size); tell(); }).then(j => { got[i] = 1; tell(); return j; })));
+  const res = await Promise.all(parts.map((p, i) => ask(p.ask, "part", p.ok, ({ text }) => { got[i] = Math.min(0.97, text.length / p.size); tell(); }, i > 0).then(j => { got[i] = 1; tell(); return j; })));
   const quickSet = new Set(quick.map(keyOf));
   const info = res[0], byName = new Map(main.map(x => [keyOf(x.name), x]));
   const seen = new Set(), sites = [], farther = [];
+  const near = (a, b) => a === b || (a.length > 4 && b.length > 4 && (a.includes(b) || b.includes(a)));
+  const only = (xs, names) => { // the places that were asked for, in case the AI added extras
+    const ks = names.map(keyOf), good = (xs || []).filter(x => x && ks.some(k => near(keyOf(x.name), k)));
+    return good.length >= names.length - 1 ? good.slice(0, names.length) : (xs || []).slice(0, names.length);
+  };
+  res.slice(1).forEach((j, n) => { const nm = parts[n + 1].names; if (j.sites) j.sites = only(j.sites, nm); if (j.farther) j.farther = only(j.farther, nm); });
   for (const j of res.slice(1)) {
     for (const x of j.sites || []) {
-      const k = keyOf(x && x.name); if (!k || seen.has(k)) continue; seen.add(k); x.id = k.replace(/ /g, "-");
+      const k = keyOf(String((x && x.name) || "").replace(/&/g, " and ")); if (!k || seen.has(k)) continue; seen.add(k); x.id = k.replace(/ /g, "-");
       const pl = byName.get(k); if (pl) { x.mustSee = !!pl.mustSee; x.kind = pl.kind === "local" ? "local" : "touristy"; x.quick = false; }
       if (quickSet.has(k)) x.quick = true;
       sites.push(x);
     }
-    for (const x of j.farther || []) { const k = keyOf(x && x.name); if (!k || seen.has(k)) continue; seen.add(k); x.id = k.replace(/ /g, "-"); farther.push(x); }
+    for (const x of j.farther || []) { const k = keyOf(String((x && x.name) || "").replace(/&/g, " and ")); if (!k || seen.has(k)) continue; seen.add(k); x.id = k.replace(/ /g, "-"); farther.push(x); }
   }
   const order = k => { const i = main.findIndex(x => keyOf(x.name) === k); return i < 0 ? 99 : i; };
   sites.sort((x, y) => (x.quick ? 1 : 0) - (y.quick ? 1 : 0) || order(x.id.replace(/-/g, " ")) - order(y.id.replace(/-/g, " ")));
@@ -3996,4 +4006,4 @@ render();
 
 </script>
 <script>if ("serviceWorker" in navigator) addEventListener("load", () => navigator.serviceWorker.register("sw.js").catch(() => {}));</script>
-<script>(function(){var B="5a9f2b4-1794373432";function chk(){if(location.protocol!=="https:")return;fetch("version.txt",{cache:"no-store"}).then(function(r){return r.ok?r.text():""}).then(function(t){t=t.trim();if(t&&t!==B)location.reload()}).catch(function(){})}addEventListener("load",chk);document.addEventListener("visibilitychange",function(){if(document.visibilityState==="visible")chk()})})();</script>
+<script>(function(){var B="f1577df-1794374355";function chk(){if(location.protocol!=="https:")return;fetch("version.txt",{cache:"no-store"}).then(function(r){return r.ok?r.text():""}).then(function(t){t=t.trim();if(t&&t!==B)location.reload()}).catch(function(){})}addEventListener("load",chk);document.addEventListener("visibilitychange",function(){if(document.visibilityState==="visible")chk()})})();</script>

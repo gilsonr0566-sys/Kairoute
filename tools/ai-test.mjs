@@ -10,7 +10,10 @@ async function sample(prompt, opts = {}) {
   calls++;
   const r = await fetch(URL_ + "/sample", { method: "POST", headers: H, body: JSON.stringify({ prompt, tier: opts.modelTier || "default" }) });
   if (!r.ok) { fails++; let m = "HTTP " + r.status; try { m = (await r.json()).error || m; } catch (e) {} throw new Error(m); }
-  const j = await r.json(); return { text: j.text || "", truncated: j.finish === "length" };
+  const j = await r.json();
+  const tag = (prompt.match(/For this (?:first step|request) return ONLY \{[^}]{0,40}/) || [""])[0].slice(-30);
+  if (process.env.VERBOSE) console.log(`   call ${opts.modelTier} ${(j.text || "").length} chars finish=${j.finish} out=${j.usage && j.usage.out} [${tag}]`);
+  return { text: j.text || "", truncated: j.finish === "length" };
 }
 const keyOf = s => (s || "").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-z0-9]+/g, " ").trim();
 const numV = v => (typeof v === "number" && isFinite(v) ? v : parseFloat(v));
