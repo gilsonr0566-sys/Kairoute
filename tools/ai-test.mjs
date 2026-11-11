@@ -35,6 +35,9 @@ async function storeTest(g) {
 if (process.env.SPEAK_ONLY) {
   const body = JSON.stringify({ text: "Welcome to Kairoute. This is your natural guide voice, ready for the tour.", voice: "buttery" });
   for (let i = 0; i < 2; i++) { const t0 = Date.now(); const r = await fetch(URL_ + "/speak", { method: "POST", headers: H, body }); const buf = r.ok ? await r.arrayBuffer() : null; console.log(`speak ${i + 1}: HTTP ${r.status} ${r.headers.get("content-type")} ${buf ? buf.byteLength : (await r.text())} bytes cached=${r.headers.get("x-cached")} ${Date.now() - t0}ms`); }
+  const story = JSON.parse(fs.readFileSync("tools/ai-test-lisbon.json", "utf8")).story || "As you stand before the Sé de Lisboa, you are looking at the spiritual heart of the city since the 12th century. Built on the site of a former mosque after the Christian reconquest in 1147, the cathedral has survived several earthquakes, including the devastating one of 1755. Its architecture is a blend of Romanesque, Gothic and Baroque styles because of the many rebuilds. Step inside and notice the rose window above the entrance, then walk to the Gothic cloister at the back, where excavations have uncovered Roman, Moorish and medieval remains.";
+  const t0 = Date.now(); const r = await fetch(URL_ + "/script", { method: "POST", headers: H, body: JSON.stringify({ text: story }) });
+  console.log(`script: HTTP ${r.status} ${Date.now() - t0}ms`); console.log(await r.text());
   console.log("status:", JSON.stringify(await status())); process.exit(0);
 }
 if (process.env.STORE_ONLY) { const ok = await storeTest({ city: "Test", sites: Array.from({ length: 9 }, (_, i) => ({ name: "S" + i })) }); console.log(ok ? "ALL PASS" : "SOME FAILED"); process.exit(0); }

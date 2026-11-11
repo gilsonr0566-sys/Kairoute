@@ -46,6 +46,37 @@ export default {
         return Response.json({ ok: true }, { headers: h });
       }
     }
+    // Turns a written stop story into a spoken guide's script: short lines, natural pauses, the odd
+    // question or "look up", same facts. Made once per story and kept. Costs only a few neurons.
+    if (url.pathname === "/script" && req.method === "POST") {
+      if (origin && !ALLOWED.some(r => r.test(origin))) return Response.json({ error: "Not allowed" }, { status: 403, headers: h });
+      let b; try { b = await req.json(); } catch (e) { return Response.json({ error: "Bad request" }, { status: 400, headers: h }); }
+      const text = String(b.text || "").slice(0, 2400).trim(); if (!text) return Response.json({ error: "Empty" }, { status: 400, headers: h });
+      const key = "s2:" + (await sha(text)), hit = await env.USAGE.get(key);
+      if (hit) return new Response(hit, { headers: { ...h, "content-type": "application/json" } });
+      if ((await used(env)) + 60 > DAILY_NEURONS) return Response.json({ error: "allowance used up" }, { status: 429, headers: h });
+      const prompt = `You are a warm, lively professional tour guide speaking to your small group as you stand at the place. Rewrite the written text below into what you would actually SAY out loud.
+Rules:
+- Keep every fact, name, date and number exactly; add no new facts.
+- Spoken style: short sentences, contractions, a few natural openers like "Now," "So," "Look up," "Here's the thing," the odd question to the group, and real emphasis words. No lists, no parentheses, no abbreviations.
+- About the same length as the original, not longer.
+- Split it into "parts": each part is one breath of speech, one to three sentences. Mark where a guide would pause longer by starting that part with "~".
+Reply with JSON only: {"parts":["...","~..."]}
+
+Written text:
+"""${text}"""`;
+      let out; try { out = await env.AI.run(MODEL, { messages: [{ role: "user", content: prompt }], max_tokens: 1500, temperature: 0.5, chat_template_kwargs: { enable_thinking: false } }); }
+      catch (e) { return Response.json({ error: "busy" }, { status: 502, headers: h }); }
+      const ch = out && out.choices && out.choices[0];
+      const raw = typeof (out && out.response) === "string" ? out.response : (ch && ch.message && ch.message.content) || "";
+      let parts = []; try { const j = JSON.parse(raw.slice(raw.indexOf("{"), raw.lastIndexOf("}") + 1)); parts = (j.parts || []).map(String).map(x => x.trim()).filter(Boolean).slice(0, 40); } catch (e) {}
+      const u2 = (out && out.usage) || {}; ctx.waitUntil(addUse(env, (+u2.prompt_tokens || prompt.length / 4) * IN_RATE + (+u2.completion_tokens || raw.length / 3) * OUT_RATE));
+      const total = parts.join(" ").length;
+      if (parts.length < 2 || total < text.length * 0.5 || total > text.length * 1.6) return Response.json({ error: "No script" }, { status: 502, headers: h });
+      const body = JSON.stringify({ parts });
+      ctx.waitUntil(env.USAGE.put(key, body, { expirationTtl: 365 * 86400 }));
+      return new Response(body, { headers: { ...h, "content-type": "application/json" } });
+    }
     if (url.pathname === "/speak" && req.method === "POST") {
       if (origin && !ALLOWED.some(r => r.test(origin))) return Response.json({ error: "Not allowed" }, { status: 403, headers: h });
       let b; try { b = await req.json(); } catch (e) { return Response.json({ error: "Bad request" }, { status: 400, headers: h }); }

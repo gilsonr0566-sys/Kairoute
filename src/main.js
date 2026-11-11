@@ -1039,24 +1039,48 @@ function kairouteSound() {
     if (soundCtx.state === "suspended") soundCtx.resume().catch(() => {});
   } catch (e) { soundReady = false; }
 }
+// The natural voice speaks a guide's script one breath at a time, with real pauses between, instead
+// of reading the whole page in one go. The script and each line's audio are made once and kept.
+function localParts(text) {
+  const out = [];
+  text.split(/\n\s*\n/).forEach((para, pi) => {
+    const sent = para.replace(/…/g, "").match(/[^.!?]+[.!?]+["')\]]*\s*|[^.!?]+$/g) || [para];
+    for (let i = 0; i < sent.length; i += 2) { const t = sent.slice(i, i + 2).join(" ").trim(); if (t) out.push((pi && !i ? "~" : "") + t); }
+  });
+  return out;
+}
 async function speakNatural(id, lines) {
   let text = "", rest = [];
-  lines.map(shapeForSpeech).forEach(l => { if (!rest.length && (text + "\n\n" + l).length <= 1900) text += (text ? "\n\n" : "") + l; else rest.push(l); });
+  lines.map(shapeForSpeech).map(l => l.replace(/\n\n…\n\n/g, "\n\n")).forEach(l => { if (!rest.length && (text + "\n\n" + l).length <= 2200) text += (text ? "\n\n" : "") + l; else rest.push(l); });
   if (!text) return false;
   kairouteSound(); // set up on the tap itself, which browsers require for audio
   try { natAudio.src = SILENT; natAudio.play().catch(() => {}); } catch (e) {} // claim the tap so the recording can play when it arrives
   ttsState = "starting"; updateAudioUI();
-  let r;
-  try { r = await fetch(freeAI.url + "/speak", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ text, voice: P().voice }) }); }
-  catch (e) { return false; }
+  let parts = null;
+  try { const r = await fetch(freeAI.url + "/script", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ text }) }); if (r.ok) parts = (await r.json()).parts; } catch (e) {}
+  if (!Array.isArray(parts) || parts.length < 2) parts = localParts(text);
   if (speakingId !== id) return true;
-  if (!r.ok) { if (r.status === 429) natVoiceNote = "The natural voice is resting until 6 pm Central, so your device voice is reading for now."; return false; }
-  const url = URL.createObjectURL(await r.blob());
-  if (speakingId !== id) { URL.revokeObjectURL(url); return true; }
-  natAudio.onended = () => { URL.revokeObjectURL(url); if (speakingId !== id) return; if (rest.length) speakDevice(id, rest, null); else { speakingId = null; ttsState = "idle"; updateAudioUI(); } };
-  natAudio.onerror = () => { if (speakingId === id) speakDevice(id, lines, null); };
-  natAudio.src = url;
-  try { await natAudio.play(); ttsState = "speaking"; natVoiceNote = ""; updateAudioUI(); } catch (e) { return false; }
+  const audioFor = t => fetch(freeAI.url + "/speak", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ text: t, voice: P().voice }) })
+    .then(r => { if (r.status === 429) natVoiceNote = "The natural voice is resting until 6 pm Central, so your device voice is reading for now."; return r.ok ? r.blob() : null; }).catch(() => null);
+  const clean = t => t.replace(/^~\s*/, "");
+  let next = audioFor(clean(parts[0]));
+  for (let i = 0; i < parts.length; i++) {
+    const blob = await next;
+    if (speakingId !== id) return true;
+    if (!blob) { if (i === 0) return false; speakDevice(id, parts.slice(i).map(clean).concat(rest), null); return true; }
+    if (i + 1 < parts.length) next = audioFor(clean(parts[i + 1])); // fetch the next line while this one plays
+    const url = URL.createObjectURL(blob);
+    const done = new Promise(res => { natAudio.onended = () => res(true); natAudio.onerror = () => res(false); });
+    natAudio.src = url;
+    try { await natAudio.play(); } catch (e) { URL.revokeObjectURL(url); if (i === 0) return false; speakDevice(id, parts.slice(i).map(clean).concat(rest), null); return true; }
+    if (i === 0) { ttsState = "speaking"; natVoiceNote = ""; updateAudioUI(); }
+    await done; URL.revokeObjectURL(url);
+    if (speakingId !== id) return true;
+    const gap = i + 1 < parts.length ? (/^~/.test(parts[i + 1]) ? 900 : /\?\s*$/.test(parts[i]) ? 700 : 380) : 0;
+    if (gap) await new Promise(r => setTimeout(r, gap));
+  }
+  if (speakingId !== id) return true;
+  if (rest.length) speakDevice(id, rest, null); else { speakingId = null; ttsState = "idle"; updateAudioUI(); }
   return true;
 }
 function speakLines(id, lines, lc) {
