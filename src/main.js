@@ -275,7 +275,7 @@ function hav(a, b) {
   const h = Math.sin(dLa / 2) ** 2 + Math.cos(toR(a.lat)) * Math.cos(toR(b.lat)) * Math.sin(dLo / 2) ** 2;
   return 2 * R * Math.asin(Math.sqrt(h));
 }
-const WALK_LIMIT = { low: 0.8, medium: 2.0, high: 3.2 };
+const WALK_LIMIT = { low: 0.8, medium: 1.7, high: 3.2 }; // straight-line km; medium keeps each walk to about 30 minutes, as promised in setup
 const PACE = { relaxed: 1.2, moderate: 1, packed: 0.85 };
 function travel(a, b) {
   const d = hav(a, b);
@@ -435,6 +435,68 @@ function pickRestaurant(city, a, b, style, used) {
   return Object.assign({}, pick.r, { extra: pick.extra, alts: alts.map(x => x.r) });
 }
 
+// ---- Day route: stops, meals and spare time solved together ----
+// simDay walks a candidate sequence through the clock: travel, time at each stop, meals that must land
+// inside their window (waiting a little is cheap, eating late is expensive). Lower cost = better day.
+function simDay(seq, t0, O, Z, style) {
+  let clock = t0, prev = O, cost = 0, seenDinner = false;
+  for (const p of seq) {
+    clock += tmin(prev, p); cost += hav(prev, p) * 0.4; // straight-line distance breaks ties, so equal-time orders never cross
+    if (p.mealOf) {
+      const m = p.mealOf;
+      if (m === MEALS[0] && seenDinner) cost += 500; if (m !== MEALS[0]) seenDinner = true;
+      if (clock < m.from) { cost += (m.from - clock) * 0.6; clock = m.from; }
+      if (clock > m.to) cost += (clock - m.to) * 6;
+      if (style !== "mix" && p.kind && p.kind !== style) cost += 8;
+      clock += m.len;
+    } else clock += p.minutes || 0;
+    prev = p;
+  }
+  if (Z) { clock += tmin(prev, Z); cost += hav(prev, Z) * 0.4; }
+  return { cost: clock - t0 + cost, end: clock };
+}
+// Polish a whole sequence (meals included): move any one item to any other place, reverse any stretch,
+// or swap a meal's restaurant, keeping every change that makes the day shorter. Removes zigzags,
+// crossings and out-and-back trips to lunch.
+function polishDay(seq, t0, O, Z, style, city) {
+  const C = q => simDay(q, t0, O, Z, style).cost;
+  let best = seq.slice(), bc = C(best), improved = true, guard = 0;
+  while (improved && guard++ < 60) {
+    improved = false;
+    for (let i = 0; i < best.length; i++) for (let j = 0; j < best.length; j++) {
+      if (i === j) continue;
+      const q = best.slice(); const [x] = q.splice(i, 1); q.splice(j, 0, x);
+      const c = C(q); if (c + 0.01 < bc) { best = q; bc = c; improved = true; }
+    }
+    for (let i = 0; i < best.length - 1; i++) for (let k = i + 1; k < best.length; k++) {
+      const q = best.slice(0, i).concat(best.slice(i, k + 1).reverse(), best.slice(k + 1));
+      const c = C(q); if (c + 0.01 < bc) { best = q; bc = c; improved = true; }
+    }
+    best.forEach((x, i) => {
+      if (!x.mealOf) return;
+      for (const r of city.restaurants || []) {
+        if (best.some(y => y.mealOf && y.name === r.name)) continue;
+        const q = best.slice(); q[i] = Object.assign({}, r, { mealOf: x.mealOf }); const c = C(q);
+        if (c + 0.01 < bc) { best = q; bc = c; improved = true; }
+      }
+    });
+  }
+  return best;
+}
+function placeMeals(order, meals, t0, O, Z, style, city) {
+  let seq = order.slice();
+  for (const m of meals) {
+    let best = null;
+    for (const r of city.restaurants || []) {
+      if (seq.some(x => x.mealOf && x.name === r.name)) continue;
+      const node = Object.assign({}, r, { mealOf: m });
+      for (let i = 0; i <= seq.length; i++) { const q = seq.slice(0, i).concat([node], seq.slice(i)); const c = simDay(q, t0, O, Z, style).cost; if (!best || c < best.c) best = { c, q }; }
+    }
+    if (best) seq = best.q;
+  }
+  return polishDay(seq, t0, O, Z, style, city);
+}
+let bonusMemo = new Map(); // per render: each day's bonus stops, so two days in a city never get the same one
 function buildPlan(d) {
   const city = cityFor(d); if (!city) return null;
   const w = dayWindow(d, city); if (w.error) return w;
@@ -500,6 +562,42 @@ function buildPlan(d) {
     }
     order = seq;
   }
+  // Meals placed on the path, then the whole day polished together
+  let t0 = w.start; { let pv = w.head[0]; w.head.slice(1).forEach(p => { t0 += tmin(pv, p) + (p.minutes || 0); pv = p; }); }
+  const ZZ = w.tail[0] || null;
+  const tailCost = () => { let c = 0, pv = ZZ; w.tail.slice(1).forEach(p => { c += tmin(pv, p) + (p.fixed ? p.minutes || 0 : 0); pv = p; }); return c; };
+  // A meal is planned only on a day with stops, and only if it fits before the day has to end.
+  const needMeals = q => (city.restaurants || []).length && q.some(x => !x.mealOf) ? MEALS.filter(m => t0 < m.to - 30 && m.from + m.len + 15 <= w.endBy - tailCost()) : [];
+  const withMeals = q => { const bare = q.filter(x => !x.mealOf); return placeMeals(bare, needMeals(bare), t0, O, ZZ, style, city); };
+  let seq = withMeals(order);
+  // Spare time: add the best nearby sights that still fit, with a 15-minute cushion (they show as bonus stops)
+  const bonus = [];
+  if (d.fillTime !== false && !d.rain) {
+    const taken = new Set(Object.keys(plannedElsewhere(d)));
+    trip.days.slice(0, trip.days.indexOf(d)).forEach(o => { if (cityFor(o) !== city) return; if (!bonusMemo.has(o)) { try { buildPlan(o); } catch (e) {} } (bonusMemo.get(o) || []).forEach(id => taken.add(id)); });
+    const inSeq = new Set(seq.filter(x => !x.mealOf).map(x => x.id)), skip = new Set((d.selected || []).concat(dropped.map(x => x.id)));
+    const pool = (city.sites || []).filter(x => !x.quick && !x.far && !inSeq.has(x.id) && !skip.has(x.id) && !taken.has(x.id) && !closedOn(x, d.date) && (!d.rain || x.indoor))
+      .map(x => Object.assign({}, x, { minutes: Math.round(x.minutes * mult / 5) * 5 || x.minutes, bonus: true }));
+    const limit = w.endBy - 15 - tailCost();
+    for (let n = 0; n < 8 && pool.length; n++) {
+      const base = simDay(seq, t0, O, ZZ, style); let pick = null;
+      for (const c of pool) {
+        const stopsNow = seq.filter(x => !x.mealOf);
+        if (stopsNow.length && hav(c, O) > 4 && !stopsNow.some(x => hav(c, x) < 1.5)) continue; // once the day has stops, only add sights near its route
+        for (let i = 0; i <= seq.length; i++) {
+          let q = seq.slice(0, i).concat([c], seq.slice(i));
+          if (needMeals(q).length !== seq.filter(x => x.mealOf).length) q = withMeals(q); // first stop of an empty day brings its meal
+          const r = simDay(q, t0, O, ZZ, style);
+          if (r.end > limit) continue;
+          const val = (c.mustSee ? 2 : 1) * (c.kind === style ? 1.3 : 1) / Math.max(10, r.cost - base.cost);
+          if (!pick || val > pick.val) pick = { val, q, c };
+        }
+      }
+      if (!pick) break;
+      const pol = polishDay(pick.q, t0, O, ZZ, style, city); seq = simDay(pol, t0, O, ZZ, style).end <= limit ? pol : pick.q; bonus.push(pick.c); pool.splice(pool.indexOf(pick.c), 1);
+    }
+  }
+  bonusMemo.set(d, bonus.map(x => x.id));
   // Timeline
   const items = [{ type: "start", place: w.head[0], time: w.start, label: w.startLabel }];
   let clock = w.start, prev = w.head[0];
@@ -509,36 +607,19 @@ function buildPlan(d) {
     items.push(Object.assign({ type, place: p, time: clock }, extra || {})); clock += p.minutes || 0; prev = p;
   };
   w.head.slice(1).forEach(p => go(p, "fixed"));
-  const usedR = new Set(), meals = [];
-  let mi = 0;
-  const tryMeal = next => {
-    while (mi < MEALS.length) {
-      const m = MEALS[mi];
-      if (clock > m.to) { mi++; continue; }
-      if (w.endBy < m.from + 45) return;
-      const arriveNext = next ? clock + tmin(prev, next) + (next.minutes || 0) : clock;
-      if (clock >= m.from || (next && arriveNext > m.to) || !next) {
-        if (clock < m.from - 60 && next) return;
-        const r = pickRestaurant(city, prev, next, style, usedR);
-        if (!r) { mi++; return; }
-        usedR.add(r.name);
-        const leg = travel(prev, r);
-        items.push({ type: "travel", leg, time: clock }); clock += leg.min;
-        const at = Math.max(clock, m.from);
-        items.push({ type: "meal", meal: m, place: r, time: at }); clock = at + m.len;
-        meals.push(r); prev = r; mi++;
-        return;
-      }
-      return;
-    }
-  };
-  order.forEach(s => { tryMeal(s); go(s, "stop"); });
-  tryMeal(w.tail[0] || null);
+  const meals = [];
+  seq.forEach(s => {
+    if (!s.mealOf) { go(s, "stop"); return; }
+    const leg = travel(prev, s); items.push({ type: "travel", leg, time: clock }); clock += leg.min;
+    const at = Math.max(clock, s.mealOf.from), alts = (city.restaurants || []).filter(r => r.name !== s.name && !seq.some(x => x.mealOf && x.name === r.name)).sort((a, b) => hav(a, s) - hav(b, s)).slice(0, 2);
+    const r = Object.assign({}, s, { alts }); delete r.mealOf;
+    items.push({ type: "meal", meal: s.mealOf, place: r, time: at }); clock = at + s.mealOf.len; meals.push(r); prev = s;
+  });
   w.tail.forEach((p, i) => go(Object.assign({}, p, { minutes: p.fixed ? p.minutes : 0 }), i === w.tail.length - 1 ? "end" : "fixed", i === w.tail.length - 1 ? { label: w.endLabel } : {}));
   if (!w.tail.length) items.push({ type: "end", place: null, time: clock, label: "Day done" });
   const walkKm = items.filter(i => i.type === "travel" && i.leg.mode === "walk").reduce((a, i) => a + i.leg.km, 0);
   const stops = items.filter(i => i.type === "stop");
-  return { city, w, items, stops, dropped, along, meals, swaps, closedToday, start: w.start, endBy: w.endBy, end: clock, walkKm, over: clock > w.endBy + 5, tight: budget < fixed + 45 };
+  return { city, w, items, stops, dropped, along, bonus, meals, swaps, closedToday, start: w.start, endBy: w.endBy, end: clock, walkKm, over: clock > w.endBy + 5, tight: budget < fixed + 45 };
 }
 
 // ---------- AI ----------
@@ -1145,6 +1226,7 @@ async function saveStops(sites, onStep, reserve) {
   }
   return { done, made, total: sites.length, stopped: false };
 }
+if (typeof window !== "undefined") window.__kairoutePlans = (ov) => { if (ov) trip.days.forEach((d, i) => { if (ov.sel && ov.sel[i]) d.selected = ov.sel[i]; if ("fill" in ov) d.fillTime = ov.fill; }); bonusMemo = new Map(); return trip.days.map((d, i) => { const pl = buildPlan(d); if (!pl || !pl.items) return { i, date: d.date, dest: d.destination, none: true }; const pts = pl.items.filter(x => x.place && x.type !== "travel").map(x => ({ lat: x.place.lat, lng: x.place.lng, t: x.type, n: x.place.name })); return { i, date: d.date, dest: d.destination, pts, km: +pl.walkKm.toFixed(2), end: pl.end, endBy: pl.endBy, stops: pl.stops.length, bonus: (pl.bonus || []).map(x => x.name), meals: pl.items.filter(x => x.type === "meal").map(x => x.meal.label + "@" + x.time) }; }); };
 if (typeof window !== "undefined") window.kairoutePrewarm = (reserve, log) => saveStops(BUILTIN_CITIES.flatMap(([c]) => allSites(c)), log || ((d, n, s) => console.log(`saved ${d}/${n} ${s.name}`)), reserve ?? 15000);
 function speakLines(id, lines, lc) {
   speakingId = id; audioMsg = "";
@@ -1272,6 +1354,7 @@ document.addEventListener("toggle", e => {
   const k = view + "|" + sm.textContent.trim(); if (el.open) openFolds.add(k); else openFolds.delete(k);
 }, true);
 function render() {
+  bonusMemo = new Map();
   renderView();
   if (openFolds.size) document.querySelectorAll("#view details").forEach(el => { const sm = el.querySelector("summary"); if (sm && openFolds.has(view + "|" + sm.textContent.trim())) el.open = true; });
 }
@@ -1938,6 +2021,7 @@ function renderTrip(d) {
           <span class="hint">Also picks where you eat: popular spots or places locals go.</span>
         </div>
         <label class="check"><input type="checkbox" id="f-along" ${d.alongWay ? "checked" : ""}><span>Add quick must-sees along the way</span></label>
+        <label class="check"><input type="checkbox" id="f-fill" ${d.fillTime !== false ? "checked" : ""}><span>Fill spare time with bonus stops nearby</span></label>
         <div class="actions"><button class="btn ghost small" type="button" data-act="delday">Remove this day</button></div>
         </details>`}
         <div class="actions">
@@ -2042,7 +2126,7 @@ function mapSVG(plan) {
     if (!it.place) return;
     if (lastPlace && pendingLeg) {
       const ride = pendingLeg.leg.mode === "ride";
-      legs += `<line x1="${X(lastPlace).toFixed(1)}" y1="${Y(lastPlace).toFixed(1)}" x2="${X(it.place).toFixed(1)}" y2="${Y(it.place).toFixed(1)}" stroke="var(--route)" stroke-width="${ride ? 3 : 5}" stroke-linecap="round"${ride ? ' stroke-dasharray="7 6"' : ""}/>`;
+      legs += `<line x1="${X(lastPlace).toFixed(1)}" y1="${Y(lastPlace).toFixed(1)}" x2="${X(it.place).toFixed(1)}" y2="${Y(it.place).toFixed(1)}" stroke="${ride ? "var(--ride)" : "var(--route)"}" stroke-width="${ride ? 4 : 5}" stroke-linecap="round"${ride ? ' stroke-dasharray="7 6"' : ""}/>`;
     }
     lastPlace = it.place; pendingLeg = null;
   });
@@ -2104,7 +2188,7 @@ function renderPlan(d) {
       n++;
       return `<div class="${cls}"><div class="time">${fmt(it.time)}</div><div class="rail"><div class="dot">${n}</div></div><div class="what">
         <div class="nm">${esc(s.name)}</div><div class="sub">${dur(s.minutes)} · ${esc(s.category)}${s.mustSee ? " · Must-see" : ""}${s.far && s.travel ? " · " + esc(s.travel) : ""}</div>
-        <button class="link" data-open="${esc(s.id)}">Open the guide</button></div></div>`;
+        ${s.bonus ? `<div class="sub bonus">Bonus stop: it fits your spare time, right by your route</div>` : ""}<button class="link" data-open="${esc(s.id)}">Open the guide</button></div></div>`;
     }
     if (it.type === "end") {
       const spare = plan.endBy - plan.end;
@@ -2397,6 +2481,7 @@ function readForm() {
   if (g("f-tender")) d.tender = g("f-tender").checked;
   if (g("f-return")) d.returnToStart = g("f-return").checked;
   if (g("f-along")) d.alongWay = g("f-along").checked;
+  if (g("f-fill")) d.fillTime = g("f-fill").checked;
   if (g("f-lodging")) {
     const lk = cityKeyFor(d) || keyOf(d.destination);
     const sel = v("f-lodging"), cur = trip.lodging[lk] || {};
@@ -2582,7 +2667,7 @@ document.addEventListener("change", e => {
     return;
   }
   if (t.id === "f-type") { readForm(); const d = day(); d.type = t.value; d.pointIdx = 0; if (d.type === "departure" && d.mode === "ship") d.mode = "flight"; d.selected = null; edited(); save(); render(); return; }
-  if (["f-point", "f-return", "f-along", "f-lodging", "f-tender", "f-date"].includes(t.id)) { readForm(); edited(); save(); render(); return; }
+  if (["f-point", "f-return", "f-along", "f-fill", "f-lodging", "f-tender", "f-date"].includes(t.id)) { readForm(); edited(); save(); render(); return; }
   if (t.closest && t.closest("#dayForm")) { readForm(); edited(); save(); }
 });
 document.addEventListener("submit", e => {

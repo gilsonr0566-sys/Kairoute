@@ -12,6 +12,7 @@
   --line: #D8DED8;
   --route: #146B61;
   --route-soft: #DCEEEA;
+  --ride: #4C5FD5;
   --meal: #D9532A;
   --meal-soft: #FCE8DF;
   --must: #A8325C;
@@ -24,13 +25,13 @@
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
     --paper: #0E1418; --card: #161F25; --ink: #E6ECE9; --muted: #9AA8AF; --line: #2A363D;
-    --route: #4CC2B0; --route-soft: #143A36; --meal: #F58A62; --meal-soft: #3D2219;
+    --route: #4CC2B0; --route-soft: #143A36; --ride: #9AA8FF; --meal: #F58A62; --meal-soft: #3D2219;
     --must: #EB7EA4; --must-soft: #3E1C29; --warn: #F08A5D; color-scheme: dark;
   }
 }
 :root[data-theme="dark"] {
   --paper: #0E1418; --card: #161F25; --ink: #E6ECE9; --muted: #9AA8AF; --line: #2A363D;
-  --route: #4CC2B0; --route-soft: #143A36; --meal: #F58A62; --meal-soft: #3D2219;
+  --route: #4CC2B0; --route-soft: #143A36; --ride: #9AA8FF; --meal: #F58A62; --meal-soft: #3D2219;
   --must: #EB7EA4; --must-soft: #3E1C29; --warn: #F08A5D; color-scheme: dark;
 }
 * { box-sizing: border-box; }
@@ -124,7 +125,7 @@ input[type=text], input[type=date], input[type=time], input[type=number], select
 .mapbox svg { display: block; width: 100%; height: auto; }
 .maplegend { display: flex; gap: 14px; flex-wrap: wrap; padding: 10px 14px; border-top: 1px solid var(--line); font-size: 0.82rem; color: var(--muted); }
 .maplegend i { display: inline-block; width: 18px; height: 0; border-top: 3px solid var(--route); vertical-align: middle; margin-right: 6px; }
-.maplegend i.dash { border-top-style: dashed; }
+.maplegend i.dash { border-top-style: dashed; border-top-color: var(--ride); }
 .timeline { display: grid; }
 .tl { display: grid; grid-template-columns: 58px 30px 1fr; column-gap: 8px; }
 .tl .time { font-variant-numeric: tabular-nums; font-weight: 700; font-size: 0.9rem; padding-top: 12px; text-align: right; }
@@ -141,6 +142,7 @@ input[type=text], input[type=date], input[type=time], input[type=number], select
 .tl .what { padding: 9px 0 12px; min-width: 0; }
 .tl .what .nm { font-weight: 700; }
 .tl .what .sub { color: var(--muted); font-size: 0.88rem; }
+.tl .what .sub.bonus { color: var(--route); font-weight: 600; }
 .tl.leg .what { padding: 2px 0 4px; color: var(--muted); font-size: 0.85rem; }
 .tl .what button.link { background: none; border: 0; padding: 0; color: var(--route); font-weight: 700; cursor: pointer; text-align: left; }
 .mealbox { background: var(--meal-soft); border-radius: 10px; padding: 10px 12px; margin-top: 6px; display: grid; gap: 4px; }
