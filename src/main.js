@@ -925,7 +925,7 @@ ${P().access !== "none" ? "- The travelers need: " + ACCESS.find(a => a[0] === P
 // matches a Wikipedia article or a map entry near the city. Returns null if the lookup service didn't answer.
 const SMALL_WORDS = new Set("the of and a an de la el le du del di da des los las st saint san santa".split(" "));
 function nameMatch(want, got) {
-  const w = keyOf(String(want).replace(/\(.*?\)/g, " ")).split(" ").filter(t => t && !SMALL_WORDS.has(t)), g = new Set(keyOf(got).split(" "));
+  const w = keyOf(String(want).replace(/\(.*?\)/g, " ")).split(" ").filter(t => t.length > 1 && !SMALL_WORDS.has(t)), g = new Set(keyOf(got).split(" "));
   if (!w.length) return false;
   // Same word, the same stem (Venetian/Venice), or one letter apart in the local spelling (Luka/Luke).
   const oneOff = (a, b) => a.length === b.length && a.length >= 4 && a.slice(0, 2) === b.slice(0, 2) && [...a].filter((c, i) => c !== b[i]).length === 1;
@@ -1142,7 +1142,7 @@ async function checkSavedCities() {
 }
 // Finished guides are kept on Kairoute's AI helper, so each city is written only once and opens in seconds after that.
 // Bump when the way guides are checked improves: older AI guides are then rebuilt with the better check.
-const GUIDE_V = "v5";
+const GUIDE_V = "v6";
 function guideCacheKey(d) {
   return [GUIDE_V, keyOf(d.destination), d.event ? keyOf(d.event) : "", d.type === "port" ? "port" : "", ((trip.prefs && trip.prefs.interests) || []).slice().sort().join(","), P().lang, P().access].join("|");
 }

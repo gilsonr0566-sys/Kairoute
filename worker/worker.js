@@ -101,15 +101,21 @@ export default {
       const get = async u => { for (let t = 0; t < 2; t++) { try { const r = await fetch(u, { headers: UA }); if (r.ok) return await r.json(); } catch (e) {} if (!t) await new Promise(ok => setTimeout(ok, 600)); } return null; };
       // The city's own location, so map searches favour places in this city over same-named places
       // elsewhere in the world, and the app measures "in this city" from the real centre.
-      let center = null; const ck = "gc1:" + (await sha(city.toLowerCase()));
+      let center = null; const ck = "gc2:" + (await sha(city.toLowerCase()));
       if (city) { center = await env.USAGE.get(ck, "json");
+        // The travel guide's own page for the city (Wikivoyage) knows which Corpus Christi or Kotor is meant.
+        if (!center) for (const t of [city, city.split(",")[0].trim()]) {
+          const j = await get("https://en.wikivoyage.org/w/api.php?action=query&format=json&prop=coordinates&redirects=1&titles=" + encodeURIComponent(t));
+          const pg = j && Object.values((j.query && j.query.pages) || {})[0], co = pg && pg.coordinates && pg.coordinates[0];
+          if (co) { center = { lat: co.lat, lng: co.lon, from: "wikivoyage" }; ctx.waitUntil(env.USAGE.put(ck, JSON.stringify(center), { expirationTtl: 365 * 86400 })); break; }
+        }
         if (!center) { const j = await get("https://photon.komoot.io/api/?limit=3&lang=en&osm_tag=place&q=" + encodeURIComponent(city));
           const f = j && (j.features || []).find(f => /city|town|village|municipality|suburb|borough|island/.test((f.properties || {}).osm_value || "")) || (j && (j.features || [])[0]);
           if (f) { center = { lat: f.geometry.coordinates[1], lng: f.geometry.coordinates[0] }; ctx.waitUntil(env.USAGE.put(ck, JSON.stringify(center), { expirationTtl: 365 * 86400 })); } } }
       const bias = center ? "&lat=" + center.lat + "&lon=" + center.lng + "&location_bias_scale=0.2&zoom=12" : "";
       const one = async name => {
         if (!name) return null;
-        const k = "gr3:" + (await sha(name + "|" + city)), hit = await env.USAGE.get(k, "json"); if (hit) return hit;
+        const k = "gr4:" + (await sha(name + "|" + city)), hit = await env.USAGE.get(k, "json"); if (hit) return hit;
         const plain = name.replace(/\s*\(.*?\)\s*/g, " ").trim(), q = plain + " " + city;
         let wiki = null, map = null;
         {
@@ -117,7 +123,10 @@ export default {
           if (j) { wiki = Object.values((j.query && j.query.pages) || {}).sort((a, b) => (a.index || 0) - (b.index || 0)).map(p => ({ title: p.title, extract: p.extract || "", lat: p.coordinates && p.coordinates[0] && p.coordinates[0].lat, lng: p.coordinates && p.coordinates[0] && p.coordinates[0].lon })); }
         }
         {
-          const j = await get("https://photon.komoot.io/api/?limit=6&lang=en" + bias + "&q=" + encodeURIComponent(center ? plain : q));
+          // Inside the city's area first (a hard box about 60 km across), then anywhere as a fallback.
+          const box = center ? await get("https://photon.komoot.io/api/?limit=5&lang=en&bbox=" + [center.lng - 0.35, center.lat - 0.3, center.lng + 0.35, center.lat + 0.3].map(v => v.toFixed(4)).join(",") + "&q=" + encodeURIComponent(plain)) : null;
+          const wide = await get("https://photon.komoot.io/api/?limit=4&lang=en" + bias + "&q=" + encodeURIComponent(q));
+          const j = (box || wide) ? { features: [...((box && box.features) || []), ...((wide && wide.features) || [])] } : null;
           if (j) { map = (j.features || []).map(f => ({ name: (f.properties || {}).name || "", lat: f.geometry.coordinates[1], lng: f.geometry.coordinates[0], kind: (f.properties || {}).osm_value || "", city: (f.properties || {}).city || "", osm: ((f.properties || {}).osm_type || "") + ((f.properties || {}).osm_id || "") })); }
         }
         const res = { wiki: wiki || [], map: map || [], answered: !!(wiki && map) };
