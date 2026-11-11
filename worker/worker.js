@@ -74,15 +74,17 @@ export default {
       // First choice: Photon (map search near each point), which answers quickly. Then Overpass as a backup.
       const UA = { "user-agent": "Kairoute/1.0 (travel guide; https://gilsonr0566-sys.github.io/Kairoute/)" };
       const ph = [];
-      await Promise.all(pts.slice(0, 10).map(async ([la, ln]) => {
-        for (const tag of ["amenity:restaurant", "amenity:cafe"]) {
-          try { const rr = await fetch(`https://photon.komoot.io/reverse?lat=${la}&lon=${ln}&radius=${(r / 1000).toFixed(2)}&limit=30&lang=en&osm_tag=${tag}`, { headers: UA }); if (rr.ok) { const j = await rr.json(); (j.features || []).forEach(f => { const p = f.properties || {}; ph.push({ name: p.name, lat: f.geometry.coordinates[1], lng: f.geometry.coordinates[0], amenity: tag.split(":")[1], cuisine: "", hours: "", web: "", tourism: false, tags: Object.keys(p).length }); }); } } catch (e) {}
+      // Three at a time, each with a time limit, so a slow map server can't hold up the guide for minutes.
+      const jobs = pts.slice(0, 10).flatMap(([la, ln]) => ["amenity:restaurant", "amenity:cafe"].map(tag => [la, ln, tag])); let nx = 0;
+      await Promise.all(Array.from({ length: 3 }, async () => {
+        while (nx < jobs.length) { const [la, ln, tag] = jobs[nx++];
+          try { const rr = await fetch(`https://photon.komoot.io/reverse?lat=${la}&lon=${ln}&radius=${(r / 1000).toFixed(2)}&limit=30&lang=en&osm_tag=${tag}`, { headers: UA, signal: AbortSignal.timeout(8000) }); if (rr.ok) { const j = await rr.json(); (j.features || []).forEach(f => { const p = f.properties || {}; ph.push({ name: p.name, lat: f.geometry.coordinates[1], lng: f.geometry.coordinates[0], amenity: tag.split(":")[1], cuisine: "", hours: "", web: "", tourism: false, tags: Object.keys(p).length }); }); } } catch (e) {}
         }
       }));
       if (ph.length >= 5) { const out = JSON.stringify({ places: ph.filter(p => p.name), src: "photon" }); ctx.waitUntil(env.USAGE.put(key, out, { expirationTtl: 30 * 86400 })); return new Response(out, { headers: { ...h, "content-type": "application/json" } }); }
       let data = null; const tried = [];
       for (const ep of ["https://overpass-api.de/api/interpreter", "https://overpass.private.coffee/api/interpreter", "https://maps.mail.ru/osm/tools/overpass/api/interpreter"]) {
-        try { const rr = await fetch(ep, { method: "POST", body: "data=" + encodeURIComponent(q), headers: { "content-type": "application/x-www-form-urlencoded", accept: "application/json", "user-agent": "Kairoute/1.0 (travel guide; https://gilsonr0566-sys.github.io/Kairoute/)" } }); tried.push(ep.split("/")[2] + " " + rr.status); if (rr.ok) { data = await rr.json(); break; } } catch (e) { tried.push(ep.split("/")[2] + " " + e.message); }
+        try { const rr = await fetch(ep, { method: "POST", signal: AbortSignal.timeout(20000), body: "data=" + encodeURIComponent(q), headers: { "content-type": "application/x-www-form-urlencoded", accept: "application/json", "user-agent": "Kairoute/1.0 (travel guide; https://gilsonr0566-sys.github.io/Kairoute/)" } }); tried.push(ep.split("/")[2] + " " + rr.status); if (rr.ok) { data = await rr.json(); break; } } catch (e) { tried.push(ep.split("/")[2] + " " + e.message); }
       }
       if (!data) return Response.json({ error: "map busy", tried }, { status: 502, headers: h });
       const places = (data.elements || []).map(e => { const t = e.tags || {}; return { name: t.name, lat: e.lat ?? (e.center && e.center.lat), lng: e.lon ?? (e.center && e.center.lon), amenity: t.amenity, cuisine: t.cuisine || "", hours: t.opening_hours || "", web: t.website || t["contact:website"] || "", tourism: !!(t.tourism || t["name:en"] && t.name !== t["name:en"]), tags: Object.keys(t).length }; }).filter(p => p.name && isFinite(p.lat) && isFinite(p.lng));
@@ -100,7 +102,7 @@ export default {
       const farNames = new Set((Array.isArray(b.far) ? b.far : []).map(n => String(n || "").slice(0, 160)));
       const UA = { "user-agent": "Kairoute/1.0 (travel guide; https://gilsonr0566-sys.github.io/Kairoute/)" };
       // Each fetch is tried up to 3 times; a "slow down" answer (429) waits longer before the next try.
-      const get = async u => { for (let t = 0; t < 3; t++) { let wait = 700 * (t + 1); try { const r = await fetch(u, { headers: UA }); if (r.ok) return await r.json(); if (r.status === 429 || r.status >= 500) wait = 1500 * (t + 1); else return null; } catch (e) {} if (t < 2) await new Promise(ok => setTimeout(ok, wait)); } return null; };
+      const get = async u => { for (let t = 0; t < 3; t++) { let wait = 700 * (t + 1); try { const r = await fetch(u, { headers: UA, signal: AbortSignal.timeout(8000) }); if (r.ok) return await r.json(); if (r.status === 429 || r.status >= 500) wait = 1500 * (t + 1); else return null; } catch (e) {} if (t < 2) await new Promise(ok => setTimeout(ok, wait)); } return null; };
       // The city's own location, so map searches favour places in this city over same-named places
       // elsewhere in the world, and the app measures "in this city" from the real centre.
       let center = null; const ck = "gc2:" + (await sha(city.toLowerCase()));
