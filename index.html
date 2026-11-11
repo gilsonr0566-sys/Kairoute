@@ -443,6 +443,7 @@ details.dayopts .field, details.dayopts .check { margin-top: 10px; }
 @media (prefers-reduced-motion: reduce) {
   .k-anim .k-stem, .k-anim .k-leg, .k-anim .k-dot, .k-anim .k-ring, .wordmark, .tagline, .herosub, .heroacts { animation-duration: .01s; animation-delay: 0s; }
 }
+header.top.touring .tripname, header.top.touring .dayrow, header.top.touring .tabs, header.top.touring #aiStatus { display: none; }
 .homebtn { all: unset; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; font: inherit; }
 .homebtn:focus-visible { outline: 3px solid var(--route); outline-offset: 2px; border-radius: 6px; }
 </style>
@@ -2682,6 +2683,7 @@ function renderView() {
   if (view === "trips") view = "lobby";
   const full = !!FULL_VIEWS[view];
   document.querySelector("header.top").hidden = full;
+  document.querySelector("header.top").classList.toggle("touring", view === "tour"); // more room for the tour; Exit tour brings the day list back
   $view.className = full ? "full" : "wrap";
   if (full) { if (tourTimer) { clearInterval(tourTimer); tourTimer = null; } stopCountdownIfAny(); $view.innerHTML = FULL_VIEWS[view](); return; }
   document.getElementById("aiStatus").textContent = aiReady() ? "AI guide on" : "Your own guide, any city";
@@ -4006,4 +4008,4 @@ render();
 
 </script>
 <script>if ("serviceWorker" in navigator) addEventListener("load", () => navigator.serviceWorker.register("sw.js").catch(() => {}));</script>
-<script>(function(){var B="f373d74-1794374741";function chk(){if(location.protocol!=="https:")return;fetch("version.txt",{cache:"no-store"}).then(function(r){return r.ok?r.text():""}).then(function(t){t=t.trim();if(t&&t!==B)location.reload()}).catch(function(){})}addEventListener("load",chk);document.addEventListener("visibilitychange",function(){if(document.visibilityState==="visible")chk()})})();</script>
+<script>(function(){var B="89040a9-1794376079";function chk(){if(location.protocol!=="https:")return;fetch("version.txt",{cache:"no-store"}).then(function(r){return r.ok?r.text():""}).then(function(t){t=t.trim();if(t&&t!==B)location.reload()}).catch(function(){})}addEventListener("load",chk);document.addEventListener("visibilitychange",function(){if(document.visibilityState==="visible")chk()})})();</script>

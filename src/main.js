@@ -1048,6 +1048,7 @@ function renderView() {
   if (view === "trips") view = "lobby";
   const full = !!FULL_VIEWS[view];
   document.querySelector("header.top").hidden = full;
+  document.querySelector("header.top").classList.toggle("touring", view === "tour"); // more room for the tour; Exit tour brings the day list back
   $view.className = full ? "full" : "wrap";
   if (full) { if (tourTimer) { clearInterval(tourTimer); tourTimer = null; } stopCountdownIfAny(); $view.innerHTML = FULL_VIEWS[view](); return; }
   document.getElementById("aiStatus").textContent = aiReady() ? "AI guide on" : "Your own guide, any city";
