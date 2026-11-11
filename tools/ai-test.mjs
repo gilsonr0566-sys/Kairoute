@@ -1,35 +1,49 @@
-// Calls the live AI helper the way the website does, and reports speed and quality.
+// Runs the app's own city-guide builder (copied from src/main.js) against the live AI helper,
+// for several different cities, and checks the guide store. Run by the "Test AI helper" workflow.
 import fs from "fs";
 const URL_ = JSON.parse(fs.readFileSync("ai.json", "utf8")).url;
 const H = { "content-type": "application/json", Origin: "https://gilsonr0566-sys.github.io" };
-console.log("status:", await (await fetch(URL_ + "/status")).text());
-async function run(body) {
-  const t0 = Date.now(); const r = await fetch(URL_ + "/sample", { method: "POST", headers: H, body: JSON.stringify(body) });
-  if (!r.ok) { console.log("HTTP", r.status, await r.text()); return ""; }
-  const raw = await r.text(); let text = "", finish = null, sample = raw.slice(0, 400);
-  try { const j = JSON.parse(raw); text = j.text || ""; finish = j.finish; } catch (e) {}
-  console.log(`time ${((Date.now() - t0) / 1000).toFixed(1)}s, ${text.length} chars, finish=${finish}`);
-  if (!text) console.log("RAW START:", sample);
-  return text;
+const src = fs.readFileSync("src/main.js", "utf8");
+const grab = (from, to) => src.slice(src.indexOf(from), src.indexOf(to));
+let calls = 0, fails = 0;
+async function sample(prompt, opts = {}) {
+  calls++;
+  const r = await fetch(URL_ + "/sample", { method: "POST", headers: H, body: JSON.stringify({ prompt, tier: opts.modelTier || "default" }) });
+  if (!r.ok) { fails++; let m = "HTTP " + r.status; try { m = (await r.json()).error || m; } catch (e) {} throw new Error(m); }
+  const j = await r.json(); return { text: j.text || "", truncated: j.finish === "length" };
 }
-console.log("--- quick question");
-console.log(await run({ prompt: "In two sentences, what should a visitor look for at the Parthenon?", tier: "quick" }));
-console.log("--- Lisbon city guide in 4 parallel parts");
-const body = JSON.parse(fs.readFileSync("tools/ai-test-lisbon.json", "utf8"));
-const parts = [
-  'For this request return ONLY {"city","country","starts","restaurants","gettingAround","basics"}, with all 10 restaurants and all 8 phrases. Leave out "sites" and "farther".',
-  'For this request return ONLY {"sites":[...]} holding the 7 most famous main sights of this destination (3-5 of them mustSee true). No quick sights.',
-  'For this request return ONLY {"sites":[...]} holding 7 more main sights that are NOT among the 7 most famous: lesser-known gems and places locals love (most with "kind":"local"). No quick sights.',
-  'For this request return ONLY {"sites":[...],"farther":[...]}: "sites" holds just the 5 quick sights ("quick": true) and "farther" holds 3-4 day trips.'
-];
-const t0 = Date.now();
-const outs = await Promise.all(parts.map(x => run({ ...body, tier: "part", prompt: body.prompt + "\n\n" + x + " Ignore any other counts above and write exactly that many items, keeping each one as concise as the format allows." })));
-console.log("all parts done in", ((Date.now() - t0) / 1000).toFixed(1) + "s");
-const js = outs.map((o, i) => { try { return JSON.parse(o.slice(o.indexOf("{"), o.lastIndexOf("}") + 1)); } catch (e) { console.log("part", i, "JSON FAILED", e.message, o.slice(-300)); return null; } });
-const sites = js.slice(1).flatMap(j => (j && j.sites) || []);
-const a = js[0] || {};
-console.log("part A keys:", Object.keys(js[0]||{}).join(","));
-console.log("sites:", sites.length, "quick:", sites.filter(s => s.quick).length, "farther:", ((js[3] || {}).farther || []).length, "restaurants:", (a.restaurants || []).length, "phrases:", ((a.basics || {}).phrases || []).length, "hotels:", ((a.starts || {}).hotel || []).length);
-for (const s of sites) console.log(" -", s.name, s.lat, s.lng, s.minutes + "min", s.kind, (s.guide || "").split(/\s+/).length + "w");
-console.log("sample guide:", (sites[0] || {}).guide);
-console.log("status after:", await (await fetch(URL_ + "/status")).text());
+const keyOf = s => (s || "").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-z0-9]+/g, " ").trim();
+const numV = v => (typeof v === "number" && isFinite(v) ? v : parseFloat(v));
+const { parseJSON } = eval(grab("function parseJSON", "const numV") + "; ({ parseJSON })");
+const cityInParts = eval("(" + grab("async function cityInParts", "// Finished guides are kept") + ")");
+const base = JSON.parse(fs.readFileSync("tools/ai-test-lisbon.json", "utf8")).prompt;
+const status = async () => (await (await fetch(URL_ + "/status")).json());
+console.log("status:", JSON.stringify(await status()));
+const cities = (process.env.CITIES || "Lisbon|Kotor, Montenegro|Savannah, Georgia").split("|");
+let allOk = true;
+for (const city of cities) {
+  const prompt = base.replace("Destination: Lisbon", "Destination: " + city);
+  calls = 0; fails = 0; const t0 = Date.now(), before = (await status()).usedToday;
+  try {
+    const g = await cityInParts(prompt, () => {});
+    const main = g.sites.filter(s => !s.quick), q = g.sites.filter(s => s.quick);
+    const words = main.map(s => (s.guide || "").split(/\s+/).length);
+    const ok = main.length >= 12 && q.length >= 3 && g.farther.length >= 3 && (g.restaurants || []).length >= 5 && g.basics;
+    allOk = allOk && ok;
+    console.log(`\n== ${city}: ${ok ? "PASS" : "FAIL"} in ${((Date.now() - t0) / 1000).toFixed(0)}s, ${calls} requests (${fails} retried), ~${(await status()).usedToday - before} neurons`);
+    console.log(`   main ${main.length} (mustSee ${main.filter(s => s.mustSee).length}, local ${main.filter(s => s.kind === "local").length}), quick ${q.length}, farther ${g.farther.length}, restaurants ${(g.restaurants || []).length}, phrases ${((g.basics || {}).phrases || []).length}, guide words ${Math.min(...words)}-${Math.max(...words)}`);
+    console.log("   " + main.map(s => s.name).join("; "));
+    console.log("   farther: " + g.farther.map(s => s.name).join("; "));
+    if (city === cities[0]) {
+      const k = "test|" + Date.now();
+      const put = await fetch(URL_ + "/guide", { method: "POST", headers: H, body: JSON.stringify({ k, guide: g }) });
+      const back = await fetch(URL_ + "/guide?k=" + encodeURIComponent(k));
+      const bj = back.ok ? await back.json() : null;
+      const cached = put.ok && bj && bj.sites && bj.sites.length === g.sites.length;
+      allOk = allOk && cached;
+      console.log(`   guide store: ${cached ? "PASS" : "FAIL"} (save ${put.status}, read back ${back.status})`);
+    }
+  } catch (e) { allOk = false; console.log(`\n== ${city}: FAIL ${e.message} after ${((Date.now() - t0) / 1000).toFixed(0)}s`); }
+}
+console.log("\nstatus after:", JSON.stringify(await status()));
+console.log(allOk ? "ALL PASS" : "SOME FAILED");

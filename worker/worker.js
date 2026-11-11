@@ -23,6 +23,24 @@ export default {
     if (req.method === "OPTIONS") return new Response(null, { headers: h });
     const url = new URL(req.url);
     if (url.pathname === "/status") { const u = await used(env); return Response.json({ ok: true, model: MODEL, usedToday: Math.round(u), budget: DAILY_NEURONS, left: Math.max(0, Math.floor(DAILY_NEURONS - u)) }, { headers: h }); }
+    // Shared guide store: a finished city guide is kept so the same city is never written twice.
+    if (url.pathname === "/guide") {
+      if (req.method === "GET") {
+        const k = String(url.searchParams.get("k") || "").slice(0, 400);
+        const g = k ? await env.USAGE.get("g:" + k) : null;
+        return g ? new Response(g, { headers: { ...h, "content-type": "application/json", "cache-control": "no-store" } }) : Response.json({ none: true }, { status: 404, headers: h });
+      }
+      if (req.method === "POST") {
+        if (origin && !ALLOWED.some(r => r.test(origin))) return Response.json({ error: "Not allowed" }, { status: 403, headers: h });
+        const raw = await req.text();
+        if (raw.length > 1500000) return Response.json({ error: "Too big" }, { status: 413, headers: h });
+        let b; try { b = JSON.parse(raw); } catch (e) { return Response.json({ error: "Bad request" }, { status: 400, headers: h }); }
+        const k = String(b.k || "").slice(0, 400), g = b.guide;
+        if (!k || !g || !Array.isArray(g.sites) || g.sites.length < 8) return Response.json({ error: "Incomplete guide" }, { status: 400, headers: h });
+        ctx.waitUntil(env.USAGE.put("g:" + k, JSON.stringify(g), { expirationTtl: 180 * 86400 }));
+        return Response.json({ ok: true }, { headers: h });
+      }
+    }
     if (url.pathname !== "/sample" || req.method !== "POST") return new Response("Kairoute AI helper", { headers: h });
     if (origin && !ALLOWED.some(r => r.test(origin))) return Response.json({ error: "Not allowed" }, { status: 403, headers: h });
 
