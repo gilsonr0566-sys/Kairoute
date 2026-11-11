@@ -4,12 +4,12 @@
 const MODEL = "@cf/google/gemma-4-26b-a4b-it";
 // Gemma 4 26B costs about 9,091 neurons per million input tokens and 27,273 per million output tokens.
 // The free allowance is 10,000 neurons a day; we stop at 9,700 (usage is counted from the real token counts, so this stays inside it).
-const DAILY_NEURONS = 9700;
+const DAILY_NEURONS = 6000; // leaves 4,000 of the account-wide 10,000 for Richard's other app that uses Workers AI
 const IN_RATE = 9091 / 1e6, OUT_RATE = 27273 / 1e6;
 const ALLOWED = [/^https:\/\/gilsonr0566-sys\.github\.io$/, /^https?:\/\/localhost(:\d+)?$/, /^capacitor:\/\/localhost$/, /^https?:\/\/127\.0\.0\.1(:\d+)?$/, /\.claudeusercontent\.com$/, /^https:\/\/claude\.ai$/];
 // Natural guide voice (Deepgram Aura 1): about 1,364 neurons per 1,000 characters. Each stop's audio
 // is made once and kept, so replaying it, or any traveler hearing the same stop, costs nothing.
-const VOICE_MODEL = "@cf/deepgram/aura-1", VOICE_RATE = 1363.64 / 1000, VOICE_DAILY = 4000;
+const VOICE_MODEL = "@cf/deepgram/aura-1", VOICE_RATE = 1363.64 / 1000, VOICE_DAILY = 2500;
 const SPEAKERS = { buttery: "hera", airy: "luna", glassy: "asteria", rounded: "orion" };
 async function sha(t) { const b = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(t)); return [...new Uint8Array(b)].map(x => x.toString(16).padStart(2, "0")).join(""); }
 const MAX_OUT = { quick: 1200, part: 8000, default: 14000, complex: 16000 };
