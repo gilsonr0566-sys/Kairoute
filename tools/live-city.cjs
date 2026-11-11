@@ -11,10 +11,10 @@ const { chromium, devices } = require('playwright');
     console.log('NET', r.method(), u.pathname, res && res.status(), (Date.now() - net.get(r)) + 'ms' + extra); });
   p.on('requestfailed', r => { if (net.has(r)) console.log('NET FAILED', r.method(), new URL(r.url()).pathname, r.failure() && r.failure().errorText, (Date.now() - net.get(r)) + 'ms'); });
   await p.goto('https://gilsonr0566-sys.github.io/Kairoute/?t=' + Date.now()); await p.waitForTimeout(3000);
-  await p.evaluate(c => {
+  await p.evaluate(([c, ints]) => {
     const day = (i, type) => ({ id: 'd' + (900 + i), date: '2026-11-1' + (1 + i), destination: c, type, mode: 'car', time: '09:00', pointIdx: 0, portArrive: '08:00', allAboard: '17:00', tender: false, startTime: '09:00', hours: 8, alongWay: true, returnToStart: true, event: '', selected: null, cityKey: null });
-    localStorage.setItem('wayside.trip2', JSON.stringify({ id: 't-live-city', name: c + ' test', style: 'mix', active: 0, days: [day(0, 'land'), day(1, 'land')], lodging: {}, journal: {}, prefs: { pace: 'moderate', walk: 'medium', interests: [], travelers: '', access: 'none', party: 2, lang: 'English', voice: 'buttery' } }));
-  }, city);
+    localStorage.setItem('wayside.trip2', JSON.stringify({ id: 't-live-city', name: c + ' test', style: 'mix', active: 0, days: [day(0, 'land'), day(1, 'land')], lodging: {}, journal: {}, prefs: { pace: 'moderate', walk: 'medium', interests: ints, travelers: '', access: 'none', party: 2, lang: 'English', voice: 'buttery' } }));
+  }, [city, (process.env.INTERESTS || '').split(',').filter(Boolean)]);
   await p.reload(); await p.waitForTimeout(3000);
   await p.click('text=Continue trip').catch(() => {}); await p.waitForTimeout(500);
   await p.click('#tab-plan').catch(() => {}); await p.waitForTimeout(500);
