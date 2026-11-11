@@ -352,6 +352,18 @@ function defaultSelection(city, style, d) {
   const extra = s.filter(x => !x.mustSee).sort((a, b) => score(b) - score(a)).slice(0, 2).map(x => x.id);
   const carried = d ? carryOver(d).filter(id => !taken[id]) : [];
   let sel = [...new Set([...carried, ...picks, ...extra])];
+  // When another day later in the trip is in the same city, give this day only what fits its hours
+  // (allowing for lunch and getting between stops) and leave the rest for that day, rather than
+  // overfilling this one and showing "Didn't fit".
+  if (d && (d.type === "land" || d.type === "port")) {
+    const i = trip.days.indexOf(d), k = cityKeyFor(d) || keyOf(d.destination);
+    const later = trip.days.some((o, j) => j > i && (cityKeyFor(o) || keyOf(o.destination)) === k);
+    let w = null; try { w = dayWindow(d, city); } catch (e) {}
+    if (later && w && !w.error && w.endBy > w.start) {
+      let left = w.endBy - w.start - 60 - (w.buffer || 0); const byId = new Map(city.sites.map(x => [x.id, x]));
+      sel = sel.filter((id, n) => { const x = byId.get(id), need = (x ? x.minutes || 45 : 45) + 15; if (n > 0 && need > left) return false; left -= need; return true; });
+    }
+  }
   // On a short day, keep it light: start with the must-sees only.
   if (d && d.type !== "land" && d.type !== "port") sel = [...new Set([...carried, ...picks])].slice(0, 2);
   return sel;
@@ -942,8 +954,10 @@ async function groundNames(names, label, farSet) {
     const wiki = (x.wiki || []).find(w => nameMatch(n, w.title) && (w.lat == null || inArea(w)));
     const map = (x.map || []).find(m => nameMatch(n, m.name) && inArea(m));
     const pos = map || (wiki && wiki.lat != null ? wiki : null);
+    if (!(wiki || map)) out.miss = (out.miss || []).concat(n + " [wiki: " + ((x.wiki || [])[0] || {}).title + " | map: " + ((x.map || [])[0] || {}).name + "]");
     out.set(n, { osm: map && map.osm ? String(map.osm).replace(/^node/i, "N").replace(/^way/i, "W").replace(/^relation/i, "R").replace(/^([nwr])/, c => c.toUpperCase()) : "", real: !!(wiki || map), facts: wiki ? wiki.extract.replace(/\s+/g, " ").trim() : "", title: wiki ? wiki.title : "", lat: pos ? +(+pos.lat).toFixed(5) : null, lng: pos ? +(+pos.lng).toFixed(5) : null });
   });
+  if (out.miss) console.info("Kairoute left out places it couldn't confirm in " + label + ": " + out.miss.join("; "));
   return out;
 }
 // Wikivoyage, the travel guide written by travelers: listings with tips, hours and prices.
@@ -1048,7 +1062,7 @@ async function cityInParts(prompt, show, label) {
     all.forEach(x => addRealDetails(x, gOf(x), vg, osm));
   }
   // Anything the writer returned that wasn't one of the confirmed places is left out.
-  const keep = xs => grounded ? xs.filter(x => x.onMap === true) : xs;
+  const keep = xs => { if (!grounded) return xs; const lost = xs.filter(x => x.onMap !== true); if (lost.length) console.info("Kairoute left out written places that didn't match a checked place: " + lost.map(x => x.name).join("; ")); return xs.filter(x => x.onMap === true); };
   return Object.assign({}, info, { sites: keep(sites), farther: keep(farther), grounded: !!grounded });
 }
 // Real-world check for an AI-written city, against OpenStreetMap (the open world map):
@@ -1439,6 +1453,8 @@ async function saveStops(sites, onStep, reserve) {
   return { done, made, total: sites.length, stopped: false };
 }
 if (typeof window !== "undefined") window.__kairoutePlans = (ov) => { if (ov) trip.days.forEach((d, i) => { if (ov.sel && ov.sel[i]) d.selected = ov.sel[i]; if ("fill" in ov) d.fillTime = ov.fill; }); bonusMemo = new Map(); return trip.days.map((d, i) => { const pl = buildPlan(d); if (!pl || !pl.items) return { i, date: d.date, dest: d.destination, none: true }; const pts = pl.items.filter(x => x.place && x.type !== "travel").map(x => ({ lat: x.place.lat, lng: x.place.lng, t: x.type, n: x.place.name })); return { i, date: d.date, dest: d.destination, pts, km: +pl.walkKm.toFixed(2), end: pl.end, endBy: pl.endBy, stops: pl.stops.length, bonus: (pl.bonus || []).map(x => x.name), meals: pl.items.filter(x => x.type === "meal").map(x => x.meal.label + "@" + x.time) }; }); };
+// Test hook: pick each day's stops the way a fresh build does.
+if (typeof window !== "undefined") window.__kairouteFreshPicks = () => { trip.days.forEach(x => { x.selected = null; }); trip.days.forEach(x => { const c = cities[cityKeyFor(x)]; if (c) x.selected = defaultSelection(c, trip.style, x); }); return trip.days.map(x => x.selected); };
 if (typeof window !== "undefined") window.kairoutePrewarm = (reserve, log) => saveStops(BUILTIN_CITIES.flatMap(([c]) => allSites(c)), log || ((d, n, s) => console.log(`saved ${d}/${n} ${s.name}`)), reserve ?? 15000);
 function speakLines(id, lines, lc) {
   speakingId = id; audioMsg = "";
