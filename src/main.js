@@ -791,7 +791,7 @@ function cleanCity(c, dest) {
   const starts = {};
   for (const k of ["cruise", "airport", "station", "hotel", "point"]) starts[k] = ((c.starts && c.starts[k]) || []).filter(okLL).map(p => ({ name: String(p.name), lat: num(p.lat), lng: num(p.lng), note: p.note ? String(p.note) : "" }));
   return {
-    city: String(c.city || dest), country: String(c.country || ""), ai: true, verified: c.verified || 0, grounded: !!c.grounded, gv: String(c.gv || ""), startsOk: !!c.startsOk, starts,
+    city: String(c.city || dest), country: String(c.country || ""), ai: true, verified: c.verified || 0, grounded: !!c.grounded, gv: String(c.gv || ""), eatsV: +c.eatsV || 0, startsOk: !!c.startsOk, starts,
     sites: (c.sites || []).filter(okLL).map((s, i) => site(s, i)),
     farther: (c.farther || []).filter(okLL).map((s, i) => Object.assign(site(s, i, "-far"), { far: true })),
     basics: c.basics ? {
@@ -895,13 +895,13 @@ ${P().access !== "none" ? "- The travelers need: " + ACCESS.find(a => a[0] === P
     if (raw && !guideInLang(raw, P().lang)) { raw = null; fresh = true; }
     if (!raw) raw = sample === freeSample ? await cityInParts(prompt, show, label) : parseJSON((await sample(prompt, { modelTier: "default", onText: ({ text }) => show(text.length / 260, "Writing the stories", 90) })).text);
     if (raw) {
-      const before = JSON.stringify([raw.verified, raw.grounded, (raw.restaurants || []).length, raw.startsOk]);
+      const before = JSON.stringify([raw.verified, raw.grounded, (raw.restaurants || []).length, raw.startsOk, raw.eatsV]);
       show(90, "Finding real restaurants on the map", 99);
       raw = await realPlaces(raw, label);
       // Safeguard: never show a city whose places couldn't be confirmed.
       if (!raw.grounded) throw new Error("check unavailable");
       if (fresh || !raw.gv) raw.gv = GUIDE_V;
-      if (JSON.stringify([raw.verified, raw.grounded, (raw.restaurants || []).length, raw.startsOk]) !== before) fresh = true;
+      if (JSON.stringify([raw.verified, raw.grounded, (raw.restaurants || []).length, raw.startsOk, raw.eatsV]) !== before) fresh = true;
     }
     const c = cleanCity(raw, label);
     if (!c.sites.length) throw new Error("empty");
@@ -1095,10 +1095,12 @@ async function cityInParts(prompt, show, label) {
 // every sight is looked up by name; found ones get the map's exact location, ones the map can't find
 // are left out. Restaurants always come from the map itself (real places near the stops), never from
 // the AI. The checked guide is what gets saved and shared.
+const EATS_V = 2;
 async function realPlaces(raw, label) {
   if (!freeAI || !raw) return raw;
   const realEats = (raw.restaurants || []).length && raw.restaurants.every(r => r.onMap);
-  if (raw.verified >= 2 && raw.grounded && realEats && raw.startsOk) return raw;
+  // eatsV: bump when the way places to eat are chosen improves; older guides get new restaurants (no AI needed).
+  if (raw.verified >= 2 && raw.grounded && realEats && raw.startsOk && raw.eatsV === EATS_V) return raw;
   const okLL = x => x && x.name && isFinite(numV(x.lat)) && isFinite(numV(x.lng));
   const pos = x => ({ lat: numV(x.lat), lng: numV(x.lng) });
   const post = (path, body) => fetch(freeAI.url + path, { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify(body) }).then(r => r.ok ? r.json() : null).catch(() => null);
@@ -1138,15 +1140,24 @@ async function realPlaces(raw, label) {
     const pick = []; // the best few near each stop, so every part of the city has somewhere to eat
     for (const sct of main) good.filter(p => hav(p, pos(sct)) <= 0.5 && !pick.includes(p)).slice(0, 3).forEach(p => pick.push(p));
     const vg = await voyageFor(label);
-    (vg ? vg.listings : []).filter(l => (l.type === "eat" || l.type === "drink") && isFinite(l.lat) && isFinite(l.lng) && main.some(sct => hav(pos(sct), l) <= 0.6) && !pick.some(p => nameMatch(p.name, l.name)))
-      .slice(0, 25).forEach(l => pick.unshift({ name: l.name, lat: l.lat, lng: l.lng, amenity: l.type === "drink" ? "pub" : "restaurant", cuisine: "", hours: l.hours, web: l.url, voyage: l.content, price: l.price }));
+    // Places travelers recommend on Wikivoyage come first. When the map knows the same place, use the map's
+    // location and details and add the travelers' notes; otherwise use the listing's own location.
+    const nearStops = p => main.some(sct => hav(pos(sct), p) <= 0.6);
+    let recs = 0;
+    for (const l of (vg ? vg.listings : []).filter(l => l.type === "eat" || l.type === "drink")) {
+      if (recs >= 25) break;
+      const mp = good.find(p => nearStops(p) && (nameMatch(l.name, p.name) || nameMatch(p.name, l.name)));
+      const note = l.content || "Recommended by travelers on Wikivoyage.";
+      if (mp) { Object.assign(mp, { voyage: note, price: l.price || mp.price, web: mp.web || l.url, hours: mp.hours || l.hours }); const i = pick.indexOf(mp); if (i >= 0) pick.splice(i, 1); pick.unshift(mp); recs++; }
+      else if (isFinite(l.lat) && isFinite(l.lng) && nearStops(l) && !pick.some(p => nameMatch(p.name, l.name))) { pick.unshift({ name: l.name, lat: l.lat, lng: l.lng, amenity: l.type === "drink" ? "pub" : "restaurant", cuisine: "", hours: l.hours, web: l.url, voyage: note, price: l.price }); recs++; }
+    }
     const nice = t => String(t || "").split(/[;,]/)[0].replace(/_/g, " ").replace(/^\w/, c => c.toUpperCase());
     raw.restaurants = pick.slice(0, 45).map(p => {
       const by = main.slice().sort((a, b) => hav(pos(a), p) - hav(pos(b), p))[0];
       return { name: p.name, lat: +(+p.lat).toFixed(5), lng: +(+p.lng).toFixed(5), kind: must.some(m => hav(pos(m), p) <= 0.2) ? "touristy" : "local", cuisine: nice(p.cuisine) || (p.amenity === "cafe" ? "Café" : p.amenity === "pub" ? "Pub" : "Restaurant"), price: p.price ? String(p.price).slice(0, 60) : "",
         why: p.voyage ? p.voyage.slice(0, 260) + " (Wikivoyage)" : `A real ${p.amenity === "cafe" ? "café" : p.amenity === "pub" ? "pub" : "place to eat"} a short walk from ${by ? by.name : "your stops"}${p.hours ? ". Hours listed: " + p.hours : ""}. Check it's open before you go.`, onMap: true, recommended: !!p.voyage };
     });
-    raw.verified = 2;
+    raw.verified = 2; raw.eatsV = EATS_V;
   } else raw.restaurants = (raw.restaurants || []).filter(r => r.onMap); // no map answer now: eat near a stop, and look again next time
   return raw;
 }
@@ -1154,7 +1165,7 @@ async function realPlaces(raw, label) {
 async function checkSavedCities() {
   for (const k of Object.keys(cities)) {
     const c = cities[k]; if (!c || !c.ai) continue;
-    if (c.grounded && c.gv === GUIDE_V && (c.sites || []).some(x => x.sources && x.sources.length)) { if (!(c.restaurants || []).length || !c.startsOk) { try { await realPlaces(c, c.city); if ((c.restaurants || []).length) { save(); if (typeof render === "function" && view !== "tour") render(); } } catch (e) {} } continue; }
+    if (c.grounded && c.gv === GUIDE_V && (c.sites || []).some(x => x.sources && x.sources.length)) { if (!(c.restaurants || []).length || !c.startsOk || c.eatsV !== EATS_V) { try { await realPlaces(c, c.city); if ((c.restaurants || []).length) { save(); if (typeof render === "function" && view !== "tour") render(); } } catch (e) {} } continue; }
     // Written before places and facts were checked: set it aside so it's rebuilt (one tap) with real places and facts.
     delete cities[k]; trip.days.forEach(x => { if (x.cityKey === k) { x.cityKey = null; x.selected = null; } });
     save(); if (typeof render === "function" && view !== "tour") render();
