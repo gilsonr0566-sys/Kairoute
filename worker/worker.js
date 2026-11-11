@@ -145,6 +145,26 @@ export default {
       await Promise.all(Array.from({ length: 3 }, async () => { while (next < names.length) { const i = next++; out[i] = await one(names[i]); } }));
       return Response.json({ results: out, center }, { headers: h });
     }
+    // /events?lat=&lng=&from=YYYY-MM-DD&to=YYYY-MM-DD: real, dated events near a place (games, concerts,
+    // theatre, festivals) from Ticketmaster's Discovery API. Nothing is written by AI. Cached for 6 hours.
+    if (url.pathname === "/events") {
+      const lat = +url.searchParams.get("lat"), lng = +url.searchParams.get("lng"), from = String(url.searchParams.get("from") || ""), to = String(url.searchParams.get("to") || from);
+      if (!isFinite(lat) || !isFinite(lng) || !/^\d{4}-\d{2}-\d{2}$/.test(from) || !/^\d{4}-\d{2}-\d{2}$/.test(to)) return Response.json({ error: "Bad request" }, { status: 400, headers: h });
+      if (!env.TM_KEY) return Response.json({ events: [], source: "none" }, { headers: h });
+      const key = "ev1:" + lat.toFixed(2) + "," + lng.toFixed(2) + ":" + from + ":" + to;
+      const hit = await env.USAGE.get(key); if (hit) return new Response(hit, { headers: { ...h, "content-type": "application/json" } });
+      let events = [];
+      try {
+        const q = "https://app.ticketmaster.com/discovery/v2/events.json?apikey=" + encodeURIComponent(env.TM_KEY) + "&latlong=" + lat.toFixed(4) + "," + lng.toFixed(4) + "&radius=25&unit=miles&size=60&sort=date,asc&startDateTime=" + from + "T00:00:00Z&endDateTime=" + to + "T23:59:59Z";
+        const r = await fetch(q, { signal: AbortSignal.timeout(10000) });
+        if (r.ok) { const j = await r.json(); events = ((j._embedded && j._embedded.events) || []).map(e => { const v = (e._embedded && e._embedded.venues && e._embedded.venues[0]) || {}, c = (e.classifications && e.classifications[0]) || {};
+          return { name: e.name, date: e.dates && e.dates.start && e.dates.start.localDate, time: e.dates && e.dates.start && e.dates.start.localTime || "", venue: v.name || "", lat: v.location ? +v.location.latitude : null, lng: v.location ? +v.location.longitude : null, url: e.url || "", kind: (c.segment && c.segment.name) || "", genre: (c.genre && c.genre.name) || "", src: "Ticketmaster" }; })
+          .filter(e => e.name && e.date && e.date >= from && e.date <= to); }
+      } catch (e) {}
+      const out = JSON.stringify({ events, source: "ticketmaster" });
+      ctx.waitUntil(env.USAGE.put(key, out, { expirationTtl: 6 * 3600 }));
+      return new Response(out, { headers: { ...h, "content-type": "application/json" } });
+    }
     // /voyage?city=: the city's Wikivoyage page (written by travelers): its listings (see, do, eat, drink)
     // with descriptions, hours, prices and locations, and the practical sections.
     if (url.pathname === "/voyage") {

@@ -2491,6 +2491,44 @@ function gmapsLink(plan) {
   const wps = pts.slice(0, -1).slice(0, 9);
   return `https://www.google.com/maps/dir/?api=1&origin=${ll(plan.items[0].place)}&destination=${ll(dest)}${wps.length ? "&waypoints=" + encodeURIComponent(wps.map(ll).join("|")) : ""}&travelmode=walking`;
 }
+// ---------- Local events on the day ----------
+// Real, dated events only: Ticketmaster listings for that date near the city (games, concerts, theatre,
+// festivals), plus recurring events that travelers list on Wikivoyage for that month or weekday.
+const eventsCache = {};
+const MONTH_WORDS = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+function eventsFor(d, city) {
+  if (!freeAI || !d.date || !city) return null;
+  const mid = (city.sites || [])[0]; if (!mid) return null;
+  const k = keyOf(city.city) + "|" + d.date;
+  if (eventsCache[k]) return eventsCache[k].done ? eventsCache[k] : null;
+  eventsCache[k] = { done: false };
+  const la = (city.sites || []).map(x => x.lat).sort((a, b) => a - b), ln = (city.sites || []).map(x => x.lng).sort((a, b) => a - b), c = { lat: la[la.length >> 1], lng: ln[ln.length >> 1] };
+  Promise.all([
+    fetch(`${freeAI.url}/events?lat=${c.lat}&lng=${c.lng}&from=${d.date}&to=${d.date}`).then(r => r.ok ? r.json() : { events: [] }).catch(() => ({ events: [] })),
+    voyageFor(city.city).catch(() => null)
+  ]).then(([tm, vg]) => {
+    const dt = new Date(d.date + "T12:00:00"), month = MONTH_WORDS[dt.getMonth()], dow = dt.toLocaleDateString("en-US", { weekday: "long" });
+    const nth = ["first", "second", "third", "fourth", "last"][Math.min(4, Math.floor((dt.getDate() - 1) / 7))];
+    const recurring = (vg ? vg.listings : []).filter(l => /festival|fair\b|parade|art ?walk|farmers'? market|night market|rodeo|carnival|fiesta|concert series|regatta|season/i.test(l.name + " " + l.content))
+      .filter(l => new RegExp("\\b(" + month + "|every " + dow + "|" + dow + "s\\b|" + nth + " " + dow + ")", "i").test(l.content + " " + l.hours))
+      .slice(0, 4).map(l => ({ name: l.name, date: d.date, time: "", venue: "", lat: isFinite(l.lat) ? l.lat : null, lng: isFinite(l.lng) ? l.lng : null, url: l.url || "", kind: "Local tradition", genre: "", note: l.content.slice(0, 200), src: "Wikivoyage" }));
+    eventsCache[k] = { done: true, events: (tm.events || []).concat(recurring) };
+    if (view === "plan") { const y = window.scrollY; render(); window.scrollTo(0, y); }
+  });
+  return null;
+}
+function eventsCard(d, city, plan) {
+  const ev = eventsFor(d, city);
+  if (!ev || !ev.events.length) return "";
+  const stops = plan.items.filter(i => i.place && (i.type === "stop" || i.type === "meal")).map(i => i.place);
+  const near = e => e.lat != null && stops.length ? Math.min(...stops.map(p => hav(p, e))) : null;
+  const rows = ev.events.slice().sort((a, b) => (a.time || "99").localeCompare(b.time || "99")).slice(0, 8).map(e => { const km = near(e);
+    return `<li><div class="evtime">${e.time ? fmt(toMin(e.time.slice(0, 5))) : e.src === "Wikivoyage" ? "All day" : "TBA"}</div><div><b>${e.url ? `<a href="${esc(e.url)}" target="_blank" rel="noopener">${esc(e.name)}</a>` : esc(e.name)}</b>
+      <span class="evmeta">${[e.kind && e.kind !== "Undefined" ? e.kind : "", e.genre && e.genre !== "Undefined" ? e.genre : "", e.venue, km != null ? (km < 1.6 ? "near your route" : distTxt(km) + " from your stops") : ""].filter(Boolean).map(esc).join(" · ")}</span>
+      ${e.note ? `<span class="evmeta">${esc(e.note)}</span>` : ""}</div></li>`; }).join("");
+  return `<div class="card events"><div><span class="eyebrow">Happening while you're here</span><h3>Off the beaten path on ${esc(fmtDow(d.date))} ${esc(fmtDate(d.date))}</h3></div><ul class="evlist">${rows}</ul>
+    <p class="footnote">Real listings for this date from ${[...new Set(ev.events.map(e => e.src))].join(" and ")}. Check times and tickets on the official page.</p></div>`;
+}
 function renderPlan(d) {
   const city = cityFor(d);
   if (!city) return `${dayHeading(d)}${busyBlock()}${errBlock()}${needsCity(d)}`;
@@ -2553,6 +2591,7 @@ function renderPlan(d) {
     <div class="maplegend"><span><i></i>Walk</span><span><i class="dash"></i>Taxi or transit</span><span style="color:var(--meal)">● Meal</span><span style="color:var(--must)">■ Hotel</span><span>● On the way</span></div>
   </div>
   ${plan.dropped.length ? `<div class="banner warn dropped"><span>Didn't fit today: <b>${plan.dropped.map(s => esc(s.name)).join(", ")}</b>. Change the times on Trip, or swap them in with Change stops.</span></div>` : ""}
+  ${eventsCard(d, city, plan)}
   <details class="more goodtoknow"><summary>Good to know today: getting around, costs, local words</summary>
   ${gettingAround(city, plan)}
   ${budgetCard(plan)}

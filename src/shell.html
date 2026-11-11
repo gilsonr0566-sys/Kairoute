@@ -477,6 +477,12 @@ details.story:not([open]) > summary::before { content: "▸ "; }
 .stopcard { scroll-margin-top: calc(env(safe-area-inset-top, 0px) + 150px); }
 /* Trip on phones: the day you tapped is edited right under the list */
 @media (max-width: 799px) { .tripgrid .leftcol { display: contents; } .tripgrid > div:last-child { order: 5; } .tripgrid .leftcol > .card, .tripgrid .leftcol > details { order: 10; } }
+.events h3 { margin: 2px 0 0; }
+.evlist { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.evlist li { display: grid; grid-template-columns: 64px 1fr; gap: 10px; align-items: start; }
+.evtime { font-weight: 800; font-variant-numeric: tabular-nums; color: var(--route); }
+.evmeta { display: block; color: var(--muted); font-size: 0.85rem; }
+.evlist a { color: var(--ink); text-decoration: none; } .evlist a:hover { text-decoration: underline; }
 </style>
 
 <header class="top">
