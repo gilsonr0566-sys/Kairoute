@@ -857,7 +857,7 @@ function render() {
   document.getElementById("dayChips").innerHTML = trip.days.map((x, i) =>
     `<button class="daychip" data-day="${i}" aria-pressed="${i === trip.active}"><b>${esc(fmtDate(x.date) || "Day " + (i + 1))}</b> · ${esc(x.type === "sea" ? "At sea" : x.destination || "New day")}</button>`).join("");
   const chip = document.querySelector('.daychip[aria-pressed="true"]');
-  if (chip && chip.scrollIntoView) { const box = chip.parentElement; box.scrollLeft = chip.offsetLeft - box.clientWidth / 2 + chip.clientWidth / 2; }
+  if (chip && chip.scrollIntoView) { const box = chip.parentElement; const cr = chip.getBoundingClientRect(), br = box.getBoundingClientRect(); box.scrollTo({ left: box.scrollLeft + (cr.left + cr.width / 2) - (br.left + br.width / 2), behavior: "instant" }); }
   document.querySelectorAll(".tab").forEach(t => t.setAttribute("aria-selected", t.dataset.view === view ? "true" : "false"));
   const d = day();
   document.getElementById("tripName").textContent = trip.name || tripName(trip);
