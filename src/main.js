@@ -1017,10 +1017,10 @@ async function cityInParts(prompt, show, label) {
   show(2, "Choosing the best places", 9);
   // Wikivoyage, written by travelers, lists the real sights: offer them to the planner by name.
   const vg = label ? await voyageFor(label) : null;
-  const seeList = vg ? [...new Set(vg.listings.filter(l => (l.type === "see" || l.type === "do") && l.name && l.name.length < 70).map(l => l.name))].slice(0, 45) : [];
+  const seeList = vg ? [...new Set(vg.listings.filter(l => l.type === "see" && l.name && l.name.length < 60).map(l => l.name))].slice(0, 45) : [];
   const hint = seeList.length ? ` Travelers on Wikivoyage list these real places in ${label}. Prefer them where they fit, and use these exact names for them: ${seeList.join("; ")}.` : "";
   // Ask for more than the guide needs: any name the check can't confirm is dropped, and the rest still fill the guide.
-  const plan = await ask('For this first step return ONLY {"main":[{"name","mustSee","kind"}],"quick":["name"],"farther":["name"]}: exactly 18 main sights in order of importance (3-5 mustSee true, about a third "kind":"local"), 7 small quick sights people walk past, and 5 day trips or sights farther out. Real, distinct places, each under its usual name as it appears on maps. Names and those fields only.' + hint, "quick",
+  const plan = await ask('For this first step return ONLY {"main":[{"name","mustSee","kind"}],"quick":["name"],"farther":["name"]}: exactly 18 main sights in order of importance (3-5 mustSee true, about a third "kind":"local"), 7 small quick sights people walk past, and 5 day trips or sights farther out. Real, distinct places, each under its usual name as it appears on maps. Places only, not activities, walks, hikes or tours, and one entry per place (never separate entries for parts of the same place). Names and those fields only.' + hint, "quick",
     j => j && (j.main || []).filter(x => x && x.name).length >= 8);
   let main = plan.main.filter(x => x && x.name).slice(0, 20), quick = (plan.quick || []).map(String).filter(Boolean).slice(0, 8), far = (plan.farther || []).map(String).filter(Boolean).slice(0, 5);
   // Keep only places that really exist, and give the writer each place's real facts to work from.
@@ -1162,7 +1162,7 @@ async function checkSavedCities() {
 }
 // Finished guides are kept on Kairoute's AI helper, so each city is written only once and opens in seconds after that.
 // Bump when the way guides are checked improves: older AI guides are then rebuilt with the better check.
-const GUIDE_V = "v7";
+const GUIDE_V = "v8";
 function guideCacheKey(d) {
   return [GUIDE_V, keyOf(d.destination), d.event ? keyOf(d.event) : "", d.type === "port" ? "port" : "", ((trip.prefs && trip.prefs.interests) || []).slice().sort().join(","), P().lang, P().access].join("|");
 }
