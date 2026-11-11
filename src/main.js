@@ -983,12 +983,9 @@ function speakSite(site) {
   if (speakingId === site.id) { stopAudio(); return; }
   stopAudio();
   const tr = translations[site.id + "|" + P().lang];
-  const parts = tr && tr.text && !tr.loading ? [`${site.name}.`, tr.text] : [`${site.name}.`, site.guide];
-  if (!(tr && tr.text) && site.lookFor && site.lookFor.length) parts.push("While you're here, look for these. " + site.lookFor.map((x, i) => (i + 1) + ". " + x).join(" "));
-  if (!(tr && tr.text) && site.picks && site.picks.length) parts.push("And here are your guide's insider picks. " + site.picks.map(x => x.t).join(" "));
+  const parts = tr && tr.text && !tr.loading ? [`${site.name}.`, tr.text] : siteLines(site);
   if (deeper[site.id] && deeper[site.id].text && !deeper[site.id].loading) parts.push(deeper[site.id].text);
-  const lines = [];
-  parts.join("\n\n").split(/\n\s*\n/).forEach(p => { p = p.trim(); while (p.length > 1800) { const cut = p.lastIndexOf(". ", 1800) + 1 || 1800; lines.push(p.slice(0, cut)); p = p.slice(cut).trim(); } if (p) lines.push(p); });
+  const lines = toLines(parts);
   const city = cityFor(day()), lc = (tr && tr.text) || (city && city.lang && city.lang === P().lang && P().lang !== "English") ? langCode(P().lang) : null;
   speakLines(site.id, lines, lc);
 }
@@ -1056,47 +1053,96 @@ function localParts(text) {
   });
   return out;
 }
-async function speakNatural(id, lines) {
-  let text = "", rest = [];
-  lines.map(shapeForSpeech).map(l => l.replace(/\n\n…\n\n/g, "\n\n")).forEach(l => { if (!rest.length && (text + "\n\n" + l).length <= 2200) text += (text ? "\n\n" : "") + l; else rest.push(l); });
-  if (!text) return false;
-  kairouteSound(); // set up on the tap itself, which browsers require for audio
-  try { natAudio.src = SILENT; natAudio.play().catch(() => {}); } catch (e) {} // claim the tap so the recording can play when it arrives
-  ttsState = "starting"; updateAudioUI();
-  let parts = null;
-  try { const r = await fetch(freeAI.url + "/script", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ text }) }); if (r.ok) parts = (await r.json()).parts; } catch (e) {}
-  if (!Array.isArray(parts) || parts.length < 2) parts = localParts(text);
-  if (speakingId !== id) return true;
-  // One voice for the whole stop: if today's allowance can't cover every line, use the device voice throughout.
+// Offline store: each stop's guide script and recorded lines are kept on the device after the first play
+// (or after "Save for offline"), so they replay instantly with no signal and cost nothing.
+const kv = (() => {
+  let dbp = null;
+  const db = () => dbp || (dbp = new Promise((res, rej) => { try { const r = indexedDB.open("kairoute-audio", 1); r.onupgradeneeded = () => r.result.createObjectStore("kv"); r.onsuccess = () => res(r.result); r.onerror = () => rej(r.error); } catch (e) { rej(e); } }));
+  const tx = (mode, fn) => db().then(d => new Promise((res, rej) => { const t = d.transaction("kv", mode), q = fn(t.objectStore("kv")); t.oncomplete = () => res(q && q.result); t.onerror = () => rej(t.error); }));
+  return { get: k => tx("readonly", st => st.get(k)).catch(() => undefined), set: (k, v) => tx("readwrite", st => st.put(v, k)).catch(() => {}) };
+})();
+// The words for a stop, the same whether it is played now or saved ahead.
+function siteLines(site) {
+  const parts = [`${site.name}.`, site.guide];
+  if (site.lookFor && site.lookFor.length) parts.push("While you're here, look for these. " + site.lookFor.map((x, i) => (i + 1) + ". " + x).join(" "));
+  if (site.picks && site.picks.length) parts.push("And here are your guide's insider picks. " + site.picks.map(x => x.t).join(" "));
+  return parts;
+}
+function toLines(parts) {
+  const lines = [];
+  parts.join("\n\n").split(/\n\s*\n/).forEach(p => { p = p.trim(); while (p.length > 1800) { const cut = p.lastIndexOf(". ", 1800) + 1 || 1800; lines.push(p.slice(0, cut)); p = p.slice(cut).trim(); } if (p) lines.push(p); });
+  return lines;
+}
+// The whole stop becomes one guide script, in pieces of up to ~2,200 characters, so one voice reads it all.
+async function scriptParts(lines) {
+  const chunks = []; let cur = "";
+  lines.map(shapeForSpeech).map(l => l.replace(/\n\n…\n\n/g, "\n\n")).forEach(l => { if (cur && (cur + "\n\n" + l).length > 2200) { chunks.push(cur); cur = l; } else cur += (cur ? "\n\n" : "") + l; });
+  if (cur) chunks.push(cur);
+  const each = await Promise.all(chunks.map(async text => {
+    const saved = await kv.get("s:" + text); if (Array.isArray(saved) && saved.length) return saved;
+    try { const r = await fetch(freeAI.url + "/script", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ text }) }); if (r.ok) { const parts = (await r.json()).parts; if (Array.isArray(parts) && parts.length >= 2) { kv.set("s:" + text, parts); return parts; } } } catch (e) {}
+    return localParts(text);
+  }));
+  return each.flatMap((ps, i) => i && ps.length && !/^~/.test(ps[0]) ? ["~" + ps[0], ...ps.slice(1)] : ps);
+}
+const RESTING = "The natural voice is resting until 6 pm Central, so your device voice is reading for now.";
+async function lineAudio(t) {
+  const v = guideVoice(), k = "a:" + v.model + ":" + v.speaker + ":" + t;
+  const saved = await kv.get(k); if (saved instanceof Blob && saved.size > 500) return saved;
+  const once = () => fetch(freeAI.url + "/speak", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify(Object.assign({ text: t }, v)) })
+    .then(r => { if (r.status === 429) { natVoiceNote = RESTING; throw new Error("resting"); } return r.ok ? r.blob() : null; });
+  let b = null; try { b = await once(); if (!b) b = await once(); } catch (e) { if (e.message === "resting") return null; }
+  if (b && b.size > 500) kv.set(k, b);
+  return b;
+}
+async function voicePlanOk(parts) {
   try {
     const pr = await fetch(freeAI.url + "/voiceplan", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify(Object.assign({ texts: parts.map(t => t.replace(/^~\s*/, "")) }, guideVoice())) });
-    if (pr.ok && !(await pr.json()).ok) { natVoiceNote = "The natural voice is resting until 6 pm Central, so your device voice is reading for now."; return false; }
+    if (pr.ok) return !!(await pr.json()).ok;
   } catch (e) {}
+  return true; // offline or unsure: try anyway, saved lines still play
+}
+async function speakNatural(id, lines) {
+  if (!lines.length) return false;
+  const parts = await scriptParts(lines);
   if (speakingId !== id) return true;
-  const audioOnce = t => fetch(freeAI.url + "/speak", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify(Object.assign({ text: t }, guideVoice())) })
-    .then(r => { if (r.status === 429) natVoiceNote = "The natural voice is resting until 6 pm Central, so your device voice is reading for now."; return r.ok ? r.blob() : null; }).catch(() => null);
-  const audioFor = t => audioOnce(t).then(b => b || audioOnce(t)); // one retry before giving up on a line
+  // One voice for the whole stop: if the allowance can't cover every line, the device voice reads it all.
+  if (!(await voicePlanOk(parts))) { natVoiceNote = RESTING; return false; }
+  if (speakingId !== id) return true;
   const clean = t => t.replace(/^~\s*/, "");
-  let next = audioFor(clean(parts[0]));
+  let next = lineAudio(clean(parts[0]));
   for (let i = 0; i < parts.length; i++) {
     const blob = await next;
     if (speakingId !== id) return true;
-    if (!blob) { if (i === 0) return false; speakDevice(id, parts.slice(i).map(clean).concat(rest), null); return true; }
-    if (i + 1 < parts.length) next = audioFor(clean(parts[i + 1])); // fetch the next line while this one plays
+    if (!blob) { if (i === 0) return false; speakDevice(id, parts.slice(i).map(clean), null); return true; }
+    if (i + 1 < parts.length) next = lineAudio(clean(parts[i + 1])); // fetch the next line while this one plays
     const url = URL.createObjectURL(blob);
     const done = new Promise(res => { natAudio.onended = () => res(true); natAudio.onerror = () => res(false); });
     natAudio.src = url; natAudio.preservesPitch = true; natAudio.defaultPlaybackRate = natAudio.playbackRate = GUIDE_PACE;
-    try { await natAudio.play(); } catch (e) { URL.revokeObjectURL(url); if (i === 0) return false; speakDevice(id, parts.slice(i).map(clean).concat(rest), null); return true; }
+    try { await natAudio.play(); } catch (e) { URL.revokeObjectURL(url); if (i === 0) return false; speakDevice(id, parts.slice(i).map(clean), null); return true; }
     if (i === 0) { const g = GUIDES.find(x => x[0] === guideVoice().speaker); voiceNow = `${g[1]}, natural voice`; ttsState = "speaking"; natVoiceNote = ""; updateAudioUI(); }
     await done; URL.revokeObjectURL(url);
     if (speakingId !== id) return true;
     const gap = i + 1 < parts.length ? (/^~/.test(parts[i + 1]) ? 900 : /\?\s*$/.test(parts[i]) ? 700 : 380) : 0;
     if (gap) await new Promise(r => setTimeout(r, gap));
   }
-  if (speakingId !== id) return true;
-  if (rest.length) speakDevice(id, rest, null); else { speakingId = null; ttsState = "idle"; updateAudioUI(); }
+  if (speakingId === id) { speakingId = null; ttsState = "idle"; updateAudioUI(); }
   return true;
 }
+// Save every stop of the given cities ahead of time (on the device, and recorded once on the server for everyone).
+// Stops early if today's allowance runs low, keeping `reserve` for live use; run again later to finish.
+async function saveStops(sites, onStep, reserve) {
+  let done = 0, made = 0;
+  for (const site of sites) {
+    const lines = toLines(siteLines(site)).map(shapeForSpeech);
+    const parts = await scriptParts(toLines(siteLines(site)));
+    if (reserve) { try { const st = await (await fetch(freeAI.url + "/status")).json(); const need = parts.join(" ").length * 2.75; if ((st.voiceLeft || 0) - need < reserve) return { done, made, total: sites.length, stopped: true }; } catch (e) {} }
+    for (const p of parts) { const b = await lineAudio(p.replace(/^~\s*/, "")); if (!b) return { done, made, total: sites.length, stopped: true }; }
+    done++; made += lines.length; if (onStep) onStep(done, sites.length, site);
+  }
+  return { done, made, total: sites.length, stopped: false };
+}
+if (typeof window !== "undefined") window.kairoutePrewarm = (reserve, log) => saveStops(BUILTIN_CITIES.flatMap(([c]) => allSites(c)), log || ((d, n, s) => console.log(`saved ${d}/${n} ${s.name}`)), reserve ?? 15000);
 function speakLines(id, lines, lc) {
   speakingId = id; audioMsg = "";
   if (natVoiceOn(lc)) { speakNatural(id, lines).then(ok => { if (!ok && speakingId === id) speakDevice(id, lines, lc); }); return; }

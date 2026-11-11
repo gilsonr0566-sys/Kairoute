@@ -1,0 +1,17 @@
+name: Pre-record city stops
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "40 0 * * *" # 6:40 pm Central (winter), just after the daily allowance resets
+permissions:
+  contents: read
+jobs:
+  prewarm:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm i playwright@1 && npx playwright install --with-deps chromium && node tools/prewarm.cjs
