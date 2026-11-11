@@ -290,8 +290,8 @@ const tmin = (a, b) => (a && b ? travel(a, b).min : 0);
 function allSites(city) { return [...(city.sites || []), ...(city.farther || [])]; }
 // Sights already planned on another day in the same city, by site id -> that day.
 function plannedElsewhere(d) {
-  const k = cityKeyFor(d), out = {}; if (!k) return out;
-  trip.days.forEach(o => { if (o !== d && cityKeyFor(o) === k && o.selected) o.selected.forEach(id => { if (!out[id]) out[id] = o; }); });
+  const c = cityFor(d), out = {}; if (!c) return out;
+  trip.days.forEach(o => { if (o !== d && cityFor(o) === c && o.selected) o.selected.forEach(id => { if (!out[id]) out[id] = o; }); });
   return out;
 }
 // Sights that didn't fit on an earlier day in the same city carry over to the next one.
@@ -309,6 +309,38 @@ function refillIfNeeded(d, city) {
   delete d.respread;
   const fresh = defaultSelection(city, trip.style, d);
   d.selected = [...new Set([...(d.selected || []), ...fresh])];
+}
+// "Suggest my tour": fills every day in this city with the best stops that truly fit each day's time.
+// Each day starts from the best sight still unseen and grows around it (nearby, high-value sights first),
+// checking the real planned day (route, meals, opening days) after every addition, so nothing is dropped
+// and no sight repeats across days.
+let suggestMsg = "";
+function suggestTour(d0) {
+  const city = cityFor(d0); if (!city) return 0;
+  const days = trip.days.filter(o => cityFor(o) === city);
+  const ints = ((trip.prefs && trip.prefs.interests) || []).map(x => INTEREST_WORDS[x] || []).flat(), style = trip.style || "mix";
+  const score = x => (x.mustSee ? 3 : 1) + ints.reduce((a, w) => a + ((x.category + " " + x.summary).toLowerCase().includes(w) ? 1 : 0), 0) * 0.8 + (style === "mix" || x.kind === style ? 0.5 : 0);
+  const used = new Set(); let total = 0;
+  const fills = days.map(o => o.fillTime);
+  days.forEach(o => { o.selected = []; o.fillTime = false; });
+  for (const d of days) {
+    const fits = () => { const p = buildPlan(d); return p && !p.error && !p.over && !(p.dropped || []).length; };
+    for (let guard = 0; guard < 14; guard++) {
+      const chosen = allSites(city).filter(x => d.selected.includes(x.id));
+      let cands = city.sites.filter(x => !x.quick && !used.has(x.id) && !d.selected.includes(x.id) && !closedOn(x, d.date));
+      // When the city's sights are all planned, a day with room gets a day trip farther out instead.
+      if (!cands.length && d.selected.length < 2) cands = (city.farther || []).filter(x => !used.has(x.id) && !d.selected.includes(x.id) && !closedOn(x, d.date));
+      if (!cands.length) break;
+      const near = x => chosen.length ? Math.min(...chosen.map(c => hav(c, x))) : 0;
+      cands.sort((a, b) => score(b) / (1 + near(b)) - score(a) / (1 + near(a)));
+      let added = false;
+      for (const c of cands.slice(0, 6)) { d.selected.push(c.id); if (fits()) { added = true; break; } d.selected.pop(); }
+      if (!added) break;
+    }
+    d.selected.forEach(id => used.add(id)); total += d.selected.length;
+  }
+  days.forEach((o, i) => { o.fillTime = fills[i]; });
+  return total;
 }
 function defaultSelection(city, style, d) {
   const taken = d ? plannedElsewhere(d) : {};
@@ -2098,7 +2130,8 @@ function renderSites(d) {
     ${[["all", "All"], ["must", "Must-sees"], ["touristy", "Famous"], ["local", "Local favorites"]].map(([k, l]) => `<button type="button" data-filter="${k}" aria-pressed="${f === k}">${l}</button>`).join("")}
   </div>
   ${timeMeter(plan)}
-  <div class="actions" style="justify-content:flex-end"><button class="btn ghost small" data-act="freshpicks">Suggest fresh picks for this day</button></div>
+  <div class="card suggest"><div><h3>Let your guide plan it</h3><p class="lede">Picks the best stops for ${(() => { const n = trip.days.filter(o => cityFor(o) === city).length; return n > 1 ? `all ${n} days` : "today"; })()} in ${esc(city.city)}, from your start point, hours, pace, walking and interests. Each day gets its own area, nothing repeats, and every stop fits.</p></div>
+    ${suggestMsg ? `<p class="banner">${esc(suggestMsg)}</p>` : ""}<div class="actions"><button class="btn" data-act="suggesttour">Suggest my tour</button><button class="btn ghost small" data-act="freshpicks">Fresh picks for this day only</button></div></div>
   <div class="sitelist">${main.map(s => siteCard(s, d, plan)).join("")}</div>
   ${far.length ? `<div><h3>Worth the trip</h3><p class="lede">Day trips and sights farther out, checked against your time today.</p></div>
   <div class="sitelist">${far.map(s => siteCard(s, d, plan)).join("")}</div>` : ""}
@@ -2206,7 +2239,7 @@ function renderPlan(d) {
   <div class="windowbar"><span>Free from <b>${fmt(plan.start)}</b></span><span>${d.type === "port" ? "Back at ship by" : d.type === "departure" || d.type === "embark" ? "At the terminal by" : "Done by"} <b>${fmt(plan.endBy)}</b></span><span>${dur(plan.endBy - plan.start)} in all</span></div>
   ${plan.w.notes.map(t => `<p class="lede">${esc(t)}</p>`).join("")}
   ${d.estimated ? `<div class="banner warn">These port times are estimated. Check them against your cruise documents.</div>` : ""}
-  <div class="actions planacts"><button class="btn bigbtn" data-act="tourstart" style="background:var(--meal)">▶ Start the tour</button><button class="btn ghost" data-goto="sites">Change stops</button><a class="btn ghost" href="${gmapsLink(plan)}" target="_blank" rel="noopener">Directions in Google Maps</a></div>
+  <div class="actions planacts"><button class="btn bigbtn" data-act="tourstart" style="background:var(--meal)">▶ Start the tour</button><button class="btn ghost" data-goto="sites">Change stops</button><button class="btn ghost" data-act="suggesttour">Suggest my tour</button><a class="btn ghost" href="${gmapsLink(plan)}" target="_blank" rel="noopener">Directions in Google Maps</a></div>
   <label class="check"><input type="checkbox" id="f-rain" ${d.rain ? "checked" : ""}><span><b>Rain expected</b> · swap outdoor stops for indoor ones</span></label>
   ${plan.swaps.length ? `<div class="banner">Because of rain: ${plan.swaps.map(([a, b]) => esc(a.name) + " → " + esc(b.name)).join(", ")}.</div>` : ""}
   ${plan.closedToday.length ? `<div class="banner warn" role="alert">${plan.closedToday.map(s => `${esc(s.name)}: ${esc(s.closed.toLowerCase())}`).join(". ")}, and you're there on a ${esc(fmtDow(d.date))}. Swap it with Change stops.</div>` : ""}
@@ -2574,6 +2607,7 @@ document.addEventListener("click", e => {
   }
   if (act === "fixstops") { fixStops(); return; }
   if (act === "changetrip") { changeTrip(); return; }
+  if (act === "suggesttour") { const n = suggestTour(day()); suggestMsg = n ? `Done: ${n} stops planned. Look through each day and tick or untick anything.` : "Nothing fit in the time you have. Try adding hours."; save(); render(); return; }
   if (act === "freshpicks") { const d = day(), city = cityFor(d); if (city) { d.selected = []; d.selected = defaultSelection(city, trip.style, d); save(); render(); } return; }
   if (act === "addplace") { const v = (document.getElementById("addPlace") || {}).value || ""; if (v.trim()) addPlaces(day(), v.trim()); return; }
   if (act === "moretrips") { addPlaces(day(), ""); return; }
