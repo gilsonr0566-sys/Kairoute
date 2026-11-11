@@ -2789,7 +2789,7 @@ function addRealDetails(x, g, vg, osm) {
   if (l && l.price) x.priceNote = l.price;
   if (o && o.wheelchair) x.access = o.wheelchair === "yes" ? "Wheelchair accessible (map data)." : o.wheelchair === "limited" ? "Limited wheelchair access (map data)." : o.wheelchair === "no" ? "Not wheelchair accessible (map data)." : x.access;
   const web = (o && o.web) || (l && l.url); if (web && /^https?:\/\//.test(web)) x.web = web;
-  x.sources = ["map"].concat(g && g.facts ? ["Wikipedia"] : [], l ? ["Wikivoyage"] : [], o && (o.hours || o.wheelchair) ? ["OpenStreetMap"] : []);
+  x.sources = (g && g.voyage ? [] : ["map"]).concat(g && g.facts ? ["Wikipedia"] : [], l ? ["Wikivoyage"] : [], o && (o.hours || o.wheelchair) ? ["OpenStreetMap"] : []);
 }
 // The free AI writes more slowly, so a city guide is built in two steps: first a short list of which
 // places to cover, then small pieces written at the same time, each for a fixed set of named places.
@@ -2816,14 +2816,32 @@ async function cityInParts(prompt, show, label) {
     throw last || new Error("The guide came back incomplete. Try again.");
   };
   show(2, "Choosing the best places", 9);
-  const plan = await ask('For this first step return ONLY {"main":[{"name","mustSee","kind"}],"quick":["name"],"farther":["name"]}: exactly 14 main sights (3-5 mustSee true, about a third "kind":"local"), 5 small quick sights people walk past, and 4 day trips or sights farther out. Real, distinct places. Names and those fields only.', "quick",
+  // Wikivoyage, written by travelers, lists the real sights: offer them to the planner by name.
+  const vg = label ? await voyageFor(label) : null;
+  const seeList = vg ? [...new Set(vg.listings.filter(l => (l.type === "see" || l.type === "do") && l.name && l.name.length < 70).map(l => l.name))].slice(0, 45) : [];
+  const hint = seeList.length ? ` Travelers on Wikivoyage list these real places in ${label}. Prefer them where they fit, and use these exact names for them: ${seeList.join("; ")}.` : "";
+  // Ask for more than the guide needs: any name the check can't confirm is dropped, and the rest still fill the guide.
+  const plan = await ask('For this first step return ONLY {"main":[{"name","mustSee","kind"}],"quick":["name"],"farther":["name"]}: exactly 18 main sights in order of importance (3-5 mustSee true, about a third "kind":"local"), 7 small quick sights people walk past, and 5 day trips or sights farther out. Real, distinct places, each under its usual name as it appears on maps. Names and those fields only.' + hint, "quick",
     j => j && (j.main || []).filter(x => x && x.name).length >= 8);
-  let main = plan.main.filter(x => x && x.name).slice(0, 16), quick = (plan.quick || []).map(String).filter(Boolean).slice(0, 6), far = (plan.farther || []).map(String).filter(Boolean).slice(0, 4);
+  let main = plan.main.filter(x => x && x.name).slice(0, 20), quick = (plan.quick || []).map(String).filter(Boolean).slice(0, 8), far = (plan.farther || []).map(String).filter(Boolean).slice(0, 5);
   // Keep only places that really exist, and give the writer each place's real facts to work from.
   show(9, "Checking each place is real", 17);
-  const grounded = label && typeof groundNames === "function" ? await groundNames([...main.map(x => x.name), ...quick, ...far], label, new Set(far)) : null;
-  if (grounded) { main = main.filter(x => grounded.get(x.name).real); quick = quick.filter(n => grounded.get(n).real); far = far.filter(n => grounded.get(n).real); }
-  const vg = grounded ? await voyageFor(label) : null;
+  const farSet = new Set(far), grounded = label && typeof groundNames === "function" ? await groundNames([...main.map(x => x.name), ...quick, ...far], label, farSet) : null;
+  if (grounded) {
+    // A place the map knows under a local-language name can still be confirmed by its Wikivoyage listing,
+    // which travelers wrote with the exact location.
+    const ok = [...grounded.values()].filter(g => g.real && g.lat != null), la = ok.map(g => g.lat).sort((a, b) => a - b), ln = ok.map(g => g.lng).sort((a, b) => a - b);
+    const mid = ok.length ? { lat: la[ok.length >> 1], lng: ln[ok.length >> 1] } : null;
+    for (const [n, g] of grounded) {
+      if (g.real || !mid) continue;
+      const l = voyageListing(vg, n, ["see", "do", "listing", "buy"]);
+      if (l && isFinite(l.lat) && isFinite(l.lng) && hav(l, mid) <= (farSet.has(n) ? 250 : 40)) grounded.set(n, Object.assign({}, g, { real: true, lat: +l.lat.toFixed(5), lng: +l.lng.toFixed(5), voyage: true }));
+    }
+    const real = n => grounded.get(n).real;
+    const keepMain = main.filter(x => real(x.name)), must = keepMain.filter(x => x.mustSee);
+    main = must.concat(keepMain.filter(x => !x.mustSee)).slice(0, Math.max(14, must.length));
+    quick = quick.filter(real).slice(0, 5); far = far.filter(real).slice(0, 4);
+  }
   const tipFor = n => { const l = voyageListing(vg, n, ["see", "do", "listing", "buy"]); return l && (l.content || l.hours || l.price) ? ` Traveler notes (Wikivoyage): ${l.content}${l.hours ? " Hours: " + l.hours + "." : ""}${l.price ? " Price: " + l.price + "." : ""}` : ""; };
   const facts = names => grounded ? names.map(n => grounded.get(n)).some(g => g && g.facts) ? "\n\nFacts to build on, from each place's Wikipedia article. Use them, never contradict them, and do not invent names, dates or numbers beyond them and well-established history:\n" + names.map(n => { const g = grounded.get(n); return g && g.facts ? `- ${n}: ${g.facts.slice(0, 1200)}${tipFor(n)}` : `- ${n}: (no article; describe only what is certain and keep it short)${tipFor(n)}`; }).join("\n") + "\nUse the traveler notes for practical tips (when to go, what to look for, what to skip), in your own words." : "" : "";
   const groups = [[], [], [], []]; main.forEach((x, i) => groups[i % 4].push(x));
@@ -2855,14 +2873,14 @@ async function cityInParts(prompt, show, label) {
       const k = keyOf(String((x && x.name) || "").replace(/&/g, " and ")); if (!k || seen.has(k)) continue; seen.add(k); x.id = k.replace(/ /g, "-");
       const pl = byName.get(k); if (pl) { x.mustSee = !!pl.mustSee; x.kind = pl.kind === "local" ? "local" : "touristy"; x.quick = false; }
       if (quickSet.has(k)) x.quick = true;
-      const gx = grounded && [...grounded.keys()].find(n => keyOf(n) === k || nameMatch(n, x.name)); if (gx) { const g = grounded.get(gx); if (g.lat != null) { x.lat = g.lat; x.lng = g.lng; } x.onMap = true; }
+      const gx = grounded && [...grounded.keys()].find(n => grounded.get(n).real && (keyOf(n) === k || nameMatch(n, x.name))); if (gx) { const g = grounded.get(gx); if (g.lat != null) { x.lat = g.lat; x.lng = g.lng; } x.onMap = true; }
       sites.push(x);
     }
     for (const x of j.farther || []) { const k = keyOf(String((x && x.name) || "").replace(/&/g, " and ")); if (!k || seen.has(k)) continue; seen.add(k); x.id = k.replace(/ /g, "-"); farther.push(x); }
   }
   const order = k => { const i = main.findIndex(x => keyOf(x.name) === k); return i < 0 ? 99 : i; };
   sites.sort((x, y) => (x.quick ? 1 : 0) - (y.quick ? 1 : 0) || order(x.id.replace(/-/g, " ")) - order(y.id.replace(/-/g, " ")));
-  farther.forEach(x => { const gx = grounded && [...grounded.keys()].find(n => nameMatch(n, x.name)); if (gx) { const g = grounded.get(gx); if (g.lat != null) { x.lat = g.lat; x.lng = g.lng; } x.onMap = true; } });
+  farther.forEach(x => { const gx = grounded && [...grounded.keys()].find(n => grounded.get(n).real && nameMatch(n, x.name)); if (gx) { const g = grounded.get(gx); if (g.lat != null) { x.lat = g.lat; x.lng = g.lng; } x.onMap = true; } });
   if (grounded) {
     const all = sites.concat(farther), gOf = x => { const gx = [...grounded.keys()].find(n => keyOf(n) === keyOf(x.name) || nameMatch(n, x.name)); return gx ? grounded.get(gx) : null; };
     const osm = await osmDetails(all.map(x => (gOf(x) || {}).osm));
@@ -2943,7 +2961,7 @@ async function checkSavedCities() {
 }
 // Finished guides are kept on Kairoute's AI helper, so each city is written only once and opens in seconds after that.
 // Bump when the way guides are checked improves: older AI guides are then rebuilt with the better check.
-const GUIDE_V = "v6";
+const GUIDE_V = "v7";
 function guideCacheKey(d) {
   return [GUIDE_V, keyOf(d.destination), d.event ? keyOf(d.event) : "", d.type === "port" ? "port" : "", ((trip.prefs && trip.prefs.interests) || []).slice().sort().join(","), P().lang, P().access].join("|");
 }
@@ -4744,4 +4762,4 @@ render();
 
 </script>
 <script>if ("serviceWorker" in navigator) addEventListener("load", () => navigator.serviceWorker.register("sw.js").catch(() => {}));</script>
-<script>(function(){var B="18581da-1794413371";function chk(){if(location.protocol!=="https:")return;fetch("version.txt",{cache:"no-store"}).then(function(r){return r.ok?r.text():""}).then(function(t){t=t.trim();if(t&&t!==B)location.reload()}).catch(function(){})}addEventListener("load",chk);document.addEventListener("visibilitychange",function(){if(document.visibilityState==="visible")chk()})})();</script>
+<script>(function(){var B="eb3cdbd-1794413930";function chk(){if(location.protocol!=="https:")return;fetch("version.txt",{cache:"no-store"}).then(function(r){return r.ok?r.text():""}).then(function(t){t=t.trim();if(t&&t!==B)location.reload()}).catch(function(){})}addEventListener("load",chk);document.addEventListener("visibilitychange",function(){if(document.visibilityState==="visible")chk()})})();</script>
