@@ -52,13 +52,14 @@ export default {
       if (origin && !ALLOWED.some(r => r.test(origin))) return Response.json({ error: "Not allowed" }, { status: 403, headers: h });
       let b; try { b = await req.json(); } catch (e) { return Response.json({ error: "Bad request" }, { status: 400, headers: h }); }
       const text = String(b.text || "").slice(0, 2400).trim(); if (!text) return Response.json({ error: "Empty" }, { status: 400, headers: h });
-      const key = "s2:" + (await sha(text)), hit = await env.USAGE.get(key);
+      const key = "s3:" + (await sha(text)), hit = await env.USAGE.get(key);
       if (hit) return new Response(hit, { headers: { ...h, "content-type": "application/json" } });
       if ((await used(env)) + 60 > DAILY_NEURONS) return Response.json({ error: "allowance used up" }, { status: 429, headers: h });
       const prompt = `You are a warm, lively professional tour guide speaking to your small group as you stand at the place. Rewrite the written text below into what you would actually SAY out loud.
 Rules:
 - Keep every fact, name, date and number exactly; add no new facts.
-- Spoken style: short sentences, contractions, a few natural openers like "Now," "So," "Look up," "Here's the thing," the odd question to the group, and real emphasis words. No lists, no parentheses, no abbreviations.
+- Sound like a person THINKING while speaking, not reading: vary sentence length, start some lines with "Now," "So," "Okay," "Look up," "Here's the thing," ask the group the odd question and answer it, react to what you're telling them ("which is incredible, really"), add a brief aside, and once or twice let a thought form mid-sentence with "..." or rephrase yourself ("it's a church, well, really a fortress"). Never change or blur a fact, date or number. Speak in the present, pointing at what's in front of them. Keep it tasteful: at most two "..." hesitations per part, no "um".
+- Contractions, no lists, no parentheses, no abbreviations.
 - About the same length as the original, not longer.
 - Split it into "parts": each part is one breath of speech, one to three sentences. Mark where a guide would pause longer by starting that part with "~".
 Reply with JSON only: {"parts":["...","~..."]}
@@ -76,6 +77,16 @@ Written text:
       const body = JSON.stringify({ parts });
       ctx.waitUntil(env.USAGE.put(key, body, { expirationTtl: 365 * 86400 }));
       return new Response(body, { headers: { ...h, "content-type": "application/json" } });
+    }
+    // Before a stop starts: can the natural voice say all of it? (Lines already made are free.) This keeps
+    // one voice for the whole stop instead of switching halfway when the day's allowance runs out.
+    if (url.pathname === "/voiceplan" && req.method === "POST") {
+      let b; try { b = await req.json(); } catch (e) { return Response.json({ error: "Bad request" }, { status: 400, headers: h }); }
+      const speaker = SPEAKERS[b.voice] || "hera", texts = (Array.isArray(b.texts) ? b.texts : []).map(t => String(t || "").slice(0, 2000).trim()).filter(Boolean).slice(0, 40);
+      let cost = 0;
+      for (const t of texts) { const k = "a:" + speaker + ":" + (await sha(t)); const l = await env.USAGE.list({ prefix: k, limit: 1 }); if (!l.keys.length) cost += t.length * VOICE_RATE; }
+      const vUsed = +(await env.USAGE.get("v:" + today())) || 0, u = await used(env);
+      return Response.json({ ok: vUsed + cost <= VOICE_DAILY && u + cost <= DAILY_NEURONS, cost: Math.round(cost) }, { headers: h });
     }
     if (url.pathname === "/speak" && req.method === "POST") {
       if (origin && !ALLOWED.some(r => r.test(origin))) return Response.json({ error: "Not allowed" }, { status: 403, headers: h });

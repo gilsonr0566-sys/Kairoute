@@ -1060,8 +1060,15 @@ async function speakNatural(id, lines) {
   try { const r = await fetch(freeAI.url + "/script", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ text }) }); if (r.ok) parts = (await r.json()).parts; } catch (e) {}
   if (!Array.isArray(parts) || parts.length < 2) parts = localParts(text);
   if (speakingId !== id) return true;
-  const audioFor = t => fetch(freeAI.url + "/speak", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ text: t, voice: P().voice }) })
+  // One voice for the whole stop: if today's allowance can't cover every line, use the device voice throughout.
+  try {
+    const pr = await fetch(freeAI.url + "/voiceplan", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ texts: parts.map(t => t.replace(/^~\s*/, "")), voice: P().voice }) });
+    if (pr.ok && !(await pr.json()).ok) { natVoiceNote = "The natural voice is resting until 6 pm Central, so your device voice is reading for now."; return false; }
+  } catch (e) {}
+  if (speakingId !== id) return true;
+  const audioOnce = t => fetch(freeAI.url + "/speak", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ text: t, voice: P().voice }) })
     .then(r => { if (r.status === 429) natVoiceNote = "The natural voice is resting until 6 pm Central, so your device voice is reading for now."; return r.ok ? r.blob() : null; }).catch(() => null);
+  const audioFor = t => audioOnce(t).then(b => b || audioOnce(t)); // one retry before giving up on a line
   const clean = t => t.replace(/^~\s*/, "");
   let next = audioFor(clean(parts[0]));
   for (let i = 0; i < parts.length; i++) {
