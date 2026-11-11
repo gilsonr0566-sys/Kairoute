@@ -2638,10 +2638,47 @@ const SILENT = (() => { // a tiny silent WAV, played on the tap itself so the br
 })();
 let natVoiceNote = "";
 const natVoiceOn = lc => !!(freeAI && natAudio && !tts && !lc && (P().lang || "English") === "English" && appSet.natvoice !== "off");
+// ---- The Kairoute voice: our own delivery and sound on top of the voice engines ----
+// Delivery: rewrite the written guide the way a guide would say it (no abbreviations, natural pauses).
+function shapeForSpeech(t) {
+  return String(t || "")
+    .replace(/\bSt\.? (?=[A-Z])/g, "Saint ").replace(/\bSts\.? (?=[A-Z])/g, "Saints ")
+    .replace(/\bc\. ?(?=\d)/g, "around ").replace(/\bca\. ?(?=\d)/g, "around ")
+    .replace(/(\d) ?km\b/g, "$1 kilometers").replace(/(\d) ?mi\b/g, "$1 miles").replace(/(\d) ?min\b/g, "$1 minutes")
+    .replace(/(\d)(st|nd|rd|th)-century/g, "$1$2 century").replace(/\be\.g\.,?/g, "for example,").replace(/\bi\.e\.,?/g, "that is,")
+    .replace(/\b(\d{1,2}):(\d{2})\b/g, (m, a, b) => +a > 23 ? m : String(+a % 12 || 12) + (b === "00" ? "" : " " + b) + (+a < 12 ? " AM" : " PM"))
+    .replace(/\s*[—–]\s*/g, ", ").replace(/\s+-\s+/g, ", ").replace(/\s*;\s*/g, ". ")
+    .replace(/\s*\(([^)]{1,80})\)/g, ", $1,").replace(/,\s*,/g, ",").replace(/,\s*\./g, ".")
+    .replace(/\n\s*\n/g, "\n\n…\n\n");
+}
+// Sound: a gentle broadcast chain (warmth, clarity for noisy streets, even loudness, a touch of room).
+let soundCtx = null, soundReady = false;
+function kairouteSound() {
+  if (!natAudio || appSet.voicefx === "off") return;
+  try {
+    const AC = window.AudioContext || window.webkitAudioContext; if (!AC) return;
+    if (!soundCtx) {
+      soundCtx = new AC(); const c = soundCtx, src = c.createMediaElementSource(natAudio);
+      const warm = c.createBiquadFilter(); warm.type = "lowshelf"; warm.frequency.value = 180; warm.gain.value = 3;
+      const mud = c.createBiquadFilter(); mud.type = "peaking"; mud.frequency.value = 420; mud.Q.value = 1.1; mud.gain.value = -2;
+      const clear = c.createBiquadFilter(); clear.type = "peaking"; clear.frequency.value = 2600; clear.Q.value = 0.9; clear.gain.value = 2.5;
+      const air = c.createBiquadFilter(); air.type = "highshelf"; air.frequency.value = 9000; air.gain.value = -1.5;
+      const comp = c.createDynamicsCompressor(); comp.threshold.value = -22; comp.ratio.value = 3; comp.attack.value = 0.008; comp.release.value = 0.25; comp.knee.value = 12;
+      const room = c.createConvolver(), len = Math.floor(c.sampleRate * 0.45), ir = c.createBuffer(2, len, c.sampleRate);
+      for (let ch = 0; ch < 2; ch++) { const d = ir.getChannelData(ch); for (let i = 0; i < len; i++) d[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / len, 3); }
+      room.buffer = ir; const wet = c.createGain(); wet.gain.value = 0.07; const out = c.createGain(); out.gain.value = 1.15;
+      src.connect(warm); warm.connect(mud); mud.connect(clear); clear.connect(air); air.connect(comp);
+      comp.connect(out); comp.connect(room); room.connect(wet); wet.connect(out); out.connect(c.destination);
+      soundReady = true;
+    }
+    if (soundCtx.state === "suspended") soundCtx.resume().catch(() => {});
+  } catch (e) { soundReady = false; }
+}
 async function speakNatural(id, lines) {
   let text = "", rest = [];
-  lines.forEach(l => { if (!rest.length && (text + "\n\n" + l).length <= 1900) text += (text ? "\n\n" : "") + l; else rest.push(l); });
+  lines.map(shapeForSpeech).forEach(l => { if (!rest.length && (text + "\n\n" + l).length <= 1900) text += (text ? "\n\n" : "") + l; else rest.push(l); });
   if (!text) return false;
+  kairouteSound(); // set up on the tap itself, which browsers require for audio
   try { natAudio.src = SILENT; natAudio.play().catch(() => {}); } catch (e) {} // claim the tap so the recording can play when it arrives
   ttsState = "starting"; updateAudioUI();
   let r;
@@ -2709,7 +2746,7 @@ function speakBrowser(id, lines, lc) {
   if (!synth || !window.SpeechSynthesisUtterance) { speakingId = null; audioMsg = NO_AUDIO; updateAudioUI(); return; }
   // Short chunks: some browsers stop long utterances after about 15 seconds.
   const chunks = [];
-  lines.forEach(l => (l.match(/[^.!?]+[.!?]+["')\]]*\s*|[^.!?]+$/g) || [l]).forEach(sn => {
+  lines.map(shapeForSpeech).map(l => l.replace(/…/g, "")).forEach(l => (l.match(/[^.!?]+[.!?]+["')\]]*\s*|[^.!?]+$/g) || [l]).forEach(sn => {
     sn = sn.trim(); if (!sn) return;
     const last = chunks[chunks.length - 1];
     if (last && (last + " " + sn).length < 220) chunks[chunks.length - 1] = last + " " + sn; else chunks.push(sn);
@@ -2722,7 +2759,9 @@ function speakBrowser(id, lines, lc) {
   let started = false;
   try {
     chunks.forEach((t, i) => {
-      const u = new SpeechSynthesisUtterance(t); u.rate = 0.98; u.lang = want; if (voice) u.voice = voice;
+      const u = new SpeechSynthesisUtterance(t); u.lang = want; if (voice) u.voice = voice;
+      // A guide's rhythm instead of a flat read: a touch slower, questions lift, the pitch moves a little between sentences.
+      u.rate = 0.94; u.pitch = /\?\s*$/.test(t) ? 1.06 : [1, 1.03, 0.98][i % 3];
       u.onstart = () => { started = true; if (speakingId === id) { ttsState = "speaking"; updateAudioUI(); } };
       u.onerror = ev => { if (ev && (ev.error === "interrupted" || ev.error === "canceled")) return; if (speakingId === id && !started) { speakingId = null; audioMsg = NO_AUDIO; updateAudioUI(); } };
       if (i === chunks.length - 1) u.onend = () => { if (speakingId === id) { speakingId = null; ttsState = "idle"; updateAudioUI(); } };
@@ -2838,7 +2877,7 @@ function needsCity(d) {
 // ---------- Lobby, settings, legal, brand film ----------
 const TAGLINE = "Be your own guide.";
 const APP_VERSION = "Preview 0.9";
-let appSet = { theme: "system", text: "standard", natvoice: "on" };
+let appSet = { theme: "system", text: "standard", natvoice: "on", voicefx: "on" };
 try { Object.assign(appSet, JSON.parse(localStorage.getItem("kairoute.app") || "{}")); } catch (e) {}
 function applyAppSet() {
   const r = document.documentElement;
@@ -2953,7 +2992,8 @@ function renderSettings() {
     <div class="field"><span class="lbl">Text size</span>${seg("text", [["standard", "Standard"], ["large", "Large"]])}</div>
   </div>
   <div class="card"><h3>Natural voice</h3><p class="lede">${freeAI ? "The natural voice is a lifelike AI recording of each story, made once per stop and kept, so replays are free. A few new stops a day fit in the free allowance; after that your device's best voice reads until 6 pm Central." : "Your device's most natural voice reads the stories."}${natVoiceNote ? " " + esc(natVoiceNote) : ""}</p>
-    ${freeAI ? `<div class="field"><span class="lbl">Natural AI voice (English)</span>${seg("natvoice", [["on", "On"], ["off", "Device voice only"]])}</div>` : ""}
+    ${freeAI ? `<div class="field"><span class="lbl">Natural AI voice (English)</span>${seg("natvoice", [["on", "On"], ["off", "Device voice only"]])}</div>
+    <div class="field"><span class="lbl">Kairoute sound (warmer, clearer outdoors, even volume)</span>${seg("voicefx", [["on", "On"], ["off", "Off"]])}</div>` : ""}
   </div>
   ${settingsCard().replace('<details class="card more">', '<details class="card more" open>')}
   <div class="card"><h3>AI guide</h3><p class="lede">${sample === freeSample ? `On, using Kairoute's free test AI. It builds guides for any city, finds your hotel, reads itinerary photos and answers questions.${freeAI && freeAI.budget ? ` About ${Math.round(100 * (freeAI.left || 0) / freeAI.budget)}% of today's free allowance is left; it resets every evening at 6 pm Central (7 pm in summer).` : ""}` : aiReady() ? "On. Kairoute uses Claude to build city guides, find your hotel, read itinerary photos and answer your questions." : "Off right now. The built-in cities still work fully."}</p>
@@ -4115,4 +4155,4 @@ render();
 
 </script>
 <script>if ("serviceWorker" in navigator) addEventListener("load", () => navigator.serviceWorker.register("sw.js").catch(() => {}));</script>
-<script>(function(){var B="3edbe9a-1794379610";function chk(){if(location.protocol!=="https:")return;fetch("version.txt",{cache:"no-store"}).then(function(r){return r.ok?r.text():""}).then(function(t){t=t.trim();if(t&&t!==B)location.reload()}).catch(function(){})}addEventListener("load",chk);document.addEventListener("visibilitychange",function(){if(document.visibilityState==="visible")chk()})})();</script>
+<script>(function(){var B="506b4e0-1794397217";function chk(){if(location.protocol!=="https:")return;fetch("version.txt",{cache:"no-store"}).then(function(r){return r.ok?r.text():""}).then(function(t){t=t.trim();if(t&&t!==B)location.reload()}).catch(function(){})}addEventListener("load",chk);document.addEventListener("visibilitychange",function(){if(document.visibilityState==="visible")chk()})})();</script>
