@@ -2636,7 +2636,7 @@ function renderSites(d) {
   </div>
   ${timeMeter(plan)}
   <div class="card suggest"><div><h3>Let your guide plan it</h3><p class="lede">Picks the best stops for ${(() => { const n = trip.days.filter(o => cityFor(o) === city).length; return n > 1 ? `all ${n} days` : "today"; })()} in ${esc(city.city)}, from your start point, hours, pace, walking and interests. Each day gets its own area, nothing repeats, and every stop fits.</p></div>
-    ${suggestMsg ? `<p class="banner">${esc(suggestMsg)}</p>` : ""}<div class="actions"><button class="btn" data-act="suggesttour">Suggest my tour</button><button class="btn ghost small" data-act="freshpicks">Fresh picks for this day only</button></div></div>
+    ${suggestMsg ? `<p class="banner" id="suggestNote" role="status">${esc(suggestMsg)}</p>` : ""}<div class="actions"><button class="btn" data-act="suggesttour">Suggest my tour</button><button class="btn ghost small" data-act="freshpicks">Fresh picks for this day only</button></div></div>
   <div class="sitelist">${main.map(s => siteCard(s, d, plan)).join("")}</div>
   ${far.length ? `<div><h3>Worth the trip</h3><p class="lede">Day trips and sights farther out, checked against your time today.</p></div>
   <div class="sitelist">${far.map(s => siteCard(s, d, plan)).join("")}</div>` : ""}
@@ -2738,6 +2738,11 @@ function eventsCard(d, city, plan) {
   return `<div class="card events"><div><span class="eyebrow">Happening while you're here</span><h3>Off the beaten path on ${esc(fmtDow(d.date))} ${esc(fmtDate(d.date))}</h3></div><ul class="evlist">${rows}</ul>
     <p class="footnote">Real listings for this date from ${[...new Set(ev.events.map(e => e.src))].join(" and ")}. Check times and tickets on the official page.</p></div>`;
 }
+// Walking and riding look different everywhere: solid teal with a walker for walking, dashed violet with a
+// car for taxi, bus, metro or train, on the map, the day timeline and in Tour mode.
+const legIcon = m => m === "ride"
+  ? `<svg class="legico" viewBox="0 0 24 24" aria-label="By car or transit" role="img"><path fill="currentColor" d="M5 11l1.6-4.6A2 2 0 0 1 8.5 5h7a2 2 0 0 1 1.9 1.4L19 11a2 2 0 0 1 2 2v4a1 1 0 0 1-1 1h-1a2 2 0 0 1-4 0H9a2 2 0 0 1-4 0H4a1 1 0 0 1-1-1v-4a2 2 0 0 1 2-2zm2.1 0h9.8l-1.2-3.4a.9.9 0 0 0-.8-.6H9.1a.9.9 0 0 0-.8.6zM7 15.5a1.2 1.2 0 1 0 0-2.4 1.2 1.2 0 0 0 0 2.4zm10 0a1.2 1.2 0 1 0 0-2.4 1.2 1.2 0 0 0 0 2.4z"/></svg>`
+  : `<svg class="legico" viewBox="0 0 24 24" aria-label="On foot" role="img"><path fill="currentColor" d="M13.5 5.5a2 2 0 1 0 0-4 2 2 0 0 0 0 4zM9.8 8.9L7 23h2.1l1.8-8 2.1 2v6h2v-7.5l-2.1-2 .6-3A7.3 7.3 0 0 0 19 13v-2a5.1 5.1 0 0 1-4.4-2.4l-1-1.6a2 2 0 0 0-1.7-1c-.3 0-.5.1-.8.1L6 8.3V13h2V9.6z"/></svg>`;
 function renderPlan(d) {
   const city = cityFor(d);
   if (!city) return `${dayHeading(d)}${busyBlock()}${errBlock()}${needsCity(d)}`;
@@ -2746,11 +2751,12 @@ function renderPlan(d) {
   if (plan.error) return `${dayHeading(d)}<div class="card empty"><p>${esc(plan.error)}</p><button class="btn" data-goto="trip">Edit this day</button></div>`;
   let n = 0;
   const rows = plan.items.map((it, idx) => {
-    const cls = `tl ${idx === 0 ? "first" : ""} ${idx === plan.items.length - 1 ? "last" : ""}`;
+    const pv = plan.items[idx - 1], nx = plan.items[idx + 1], rideIn = pv && pv.type === "travel" && pv.leg.mode === "ride", rideOut = nx && nx.type === "travel" && nx.leg.mode === "ride";
+    const cls = `tl ${idx === 0 ? "first" : ""} ${idx === plan.items.length - 1 ? "last" : ""} ${rideIn ? "rin" : ""} ${rideOut ? "rout" : ""}`;
     if (it.type === "start") return `<div class="${cls}"><div class="time">${fmt(it.time)}</div><div class="rail"><div class="dot start">S</div></div><div class="what"><div class="nm">${esc(it.label)}</div>${it.place.note ? `<div class="sub">${esc(it.place.note)}</div>` : ""}</div></div>`;
     if (it.type === "travel") {
       const m = it.leg.mode;
-      return `<div class="tl leg ${m}"><div class="time"></div><div class="rail"></div><div class="what">${it.leg.km < 0.1 ? "Next door" : it.leg.how + " · " + dur(it.leg.min) + " · " + distTxt(it.leg.km) + ""}</div></div>`;
+      return `<div class="tl leg ${m}"><div class="time"></div><div class="rail"></div><div class="what">${legIcon(m)}<span>${it.leg.km < 0.1 ? "Next door" : `<b>${esc(it.leg.how)}</b> · ${dur(it.leg.min)} · ${distTxt(it.leg.km)}`}</span></div></div>`;
     }
     if (it.type === "fixed") return `<div class="${cls}"><div class="time">${fmt(it.time)}</div><div class="rail"><div class="dot fixed">H</div></div><div class="what"><div class="nm">${esc(it.place.name)}</div><div class="sub">${dur(it.place.minutes)}</div></div></div>`;
     if (it.type === "meal") {
@@ -2788,6 +2794,7 @@ function renderPlan(d) {
   ${plan.w.notes.map(t => `<p class="lede small">${esc(t)}</p>`).join("")}
   ${d.estimated ? `<div class="banner warn">These port times are estimated. Check them against your cruise documents.</div>` : ""}
   <div class="planacts"><button class="btn bigbtn" data-act="tourstart">▶ Start the tour</button>
+    ${suggestMsg ? `<p class="banner ok" id="suggestNote" role="status">${esc(suggestMsg)} <button class="linkbtn" data-act="suggestok">OK</button></p>` : ""}
     <div class="toolrow"><button class="btn ghost small" data-goto="sites">Change stops</button><button class="btn ghost small" data-act="suggesttour">Suggest my tour</button><a class="btn ghost small" href="${gmapsLink(plan)}" target="_blank" rel="noopener">Open in Google Maps</a>
     <label class="btn ghost small toggle"><input type="checkbox" id="f-rain" ${d.rain ? "checked" : ""}><span>Rainy day</span></label></div></div>
   ${plan.swaps.length ? `<div class="banner">Because of rain: ${plan.swaps.map(([a, b]) => esc(a.name) + " → " + esc(b.name)).join(", ")}.</div>` : ""}
@@ -2918,7 +2925,7 @@ function renderTour(d) {
     body = `<div class="tourcard">
       <div class="eyebrow">${st.leg && st.leg.mode === "walk" ? "Walk to" : "Head to"}</div>
       <h2 class="tourtitle">${esc(nm)}</h2>
-      ${st.leg ? `<p class="tourleg">${esc(st.leg.how)} · ${dur(st.leg.min)} · ${distTxt(st.leg.km)}</p>` : ""}
+      ${st.leg ? `<p class="tourleg ${st.leg.mode}">${legIcon(st.leg.mode)}<span>${esc(st.leg.how)} · ${dur(st.leg.min)} · ${distTxt(st.leg.km)}</span></p>` : ""}
       <p class="lede">Arrive around ${fmt(st.time)}.</p>
       ${nxt && nxt.type === "stop" && nxt.place.along ? `<div class="banner">On the way: <b>${esc(nxt.place.name)}</b>. ${esc(nxt.place.lookFor[0] || "")}</div>` : ""}
       <div class="audio"><button class="btn ghost" data-play="walk:${T.i}" data-label="▶ Hear what's next">▶ Hear what's next</button><span class="state" aria-live="polite"></span></div>
@@ -3109,6 +3116,7 @@ document.addEventListener("click", e => {
     save(); render(); return;
   }
   if (t.dataset.wimgdel != null) { readWiz(); wiz.images.splice(+t.dataset.wimgdel, 1); render(); return; }
+  if (t.dataset.act === "suggestok") { suggestMsg = ""; render(); return; }
   if (t.dataset.act === "memmake") { makeMemoryVideo(); return; }
   if (t.dataset.act === "memsave") { memSave(); return; }
   if (t.dataset.act === "memshare") { memShare(); return; }
@@ -3161,7 +3169,20 @@ document.addEventListener("click", e => {
   }
   if (act === "fixstops") { fixStops(); return; }
   if (act === "changetrip") { changeTrip(); return; }
-  if (act === "suggesttour") { const n = suggestTour(day()); suggestMsg = n ? `Done: ${n} stops planned. Look through each day and tick or untick anything.` : "Nothing fit in the time you have. Try adding hours."; save(); render(); return; }
+  if (act === "suggesttour") {
+    // Visible right away: the button says it's working, then the plan shows what changed on each day.
+    t.disabled = true; t.textContent = "Planning your days…";
+    setTimeout(() => {
+      const city = cityFor(day()), days = trip.days.filter(o => city && cityFor(o) === city), before = days.map(o => (o.selected || []).slice());
+      const n = suggestTour(day()), names = id => (allSites(city).find(x => x.id === id) || {}).name;
+      const lines = days.map((o, i) => { const add = o.selected.filter(id => !before[i].includes(id)).map(names).filter(Boolean), rem = before[i].filter(id => !o.selected.includes(id)).map(names).filter(Boolean);
+        return `${fmtDow(o.date)} ${fmtDate(o.date)}: ${o.selected.length} stops` + (add.length ? `, added ${add.join(", ")}` : "") + (rem.length ? `, moved or dropped ${rem.join(", ")}` : "") + (add.length || rem.length ? "" : ", already the best fit"); });
+      suggestMsg = n ? `Done: ${n} stops planned across ${days.length} day${days.length > 1 ? "s" : ""}. ` + lines.join(". ") + "." : "Nothing fit in the time you have. Try adding hours on the Trip tab.";
+      save(); render();
+      const b = document.getElementById("suggestNote"); if (b) b.scrollIntoView({ block: "center", behavior: "smooth" });
+    }, 40);
+    return;
+  }
   if (act === "freshpicks") { const d = day(), city = cityFor(d); if (city) { d.selected = []; d.selected = defaultSelection(city, trip.style, d); save(); render(); } return; }
   if (act === "addplace") { const v = (document.getElementById("addPlace") || {}).value || ""; if (v.trim()) addPlaces(day(), v.trim()); return; }
   if (act === "moretrips") { addPlaces(day(), ""); return; }
