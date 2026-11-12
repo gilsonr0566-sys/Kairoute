@@ -110,6 +110,18 @@ const DAY_TYPES = [
 const MODES = { flight: { label: "Flight", list: "airport", clear: 75, need: 180, word: "airport" }, train: { label: "Train", list: "station", clear: 15, need: 30, word: "station" }, ship: { label: "Ship", list: "cruise", clear: 60, need: 60, word: "port" }, car: { label: "Car or bus", list: "hotel", clear: 10, need: 20, word: "starting point" } };
 const INTERESTS = [["history", "History"], ["art", "Art & museums"], ["architecture", "Architecture"], ["food", "Food & markets"], ["views", "Views & nature"], ["churches", "Churches & faith"], ["bible", "Bible sites: St Paul & St John"], ["shopping", "Shopping"], ["beaches", "Beaches"], ["kids", "Kid-friendly"]];
 const INTEREST_WORDS = { history: ["history", "roman", "medieval", "ancient", "war", "castle", "ruins"], art: ["museum", "art", "picasso", "painting", "gallery"], architecture: ["architecture", "gaudí", "gaudi", "house", "façade", "building", "palace"], food: ["market", "food", "tapas"], views: ["view", "park", "hill", "garden", "nature"], churches: ["church", "basilica", "cathedral", "monastery", "chapel", "shrine", "madonna", "synagogue", "mosque", "temple"], bible: ["paul", "apostle", "bible", "biblical", "christian", "saint", "basilica", "church", "cathedral", "monastery"], shopping: ["shop", "market", "street"], beaches: ["beach", "sea"], kids: ["park", "beach", "amusement", "zoo"] };
+// Religious sites: places of worship (churches, monasteries, mosques, synagogues...). Ancient ruins of temples
+// count as history, not worship. With "Religious sites: Skip them" on a trip, these leave suggestions, except a
+// must-see landmark that happens to be religious (e.g. the Sagrada Família) stays as a normal sight.
+const RELIGIOUS_RE = /\b(church|cathedral|basilica|monaster|chapel|shrine|mosque|synagogue|abbey|convent|sanctuary|pilgrim|religious|holy|parish|agios|agia|panagia|san |santa |saint|st\.? )/i;
+const isReligious = x => !!x && RELIGIOUS_RE.test((x.category || "") + " " + (x.name || "")) && !/ancient|ruin|archaeolog/i.test((x.category || "") + " " + (x.name || ""));
+const skipReligious = () => P().religious === "off";
+const religiousOk = x => !skipReligious() || !isReligious(x) || x.mustSee;
+// Quiet places (churches, monasteries, museums...): text first, and audio only once the traveler confirms
+// earbuds (a web page can't reliably tell if earbuds are connected). Settings > Quiet places: Automatic, Always, Off.
+const isQuietPlace = x => !!x && (isReligious(x) || /museum|gallery|library|crypt|catacomb|tomb|memorial|cemetery/i.test((x.category || "") + " " + (x.name || "")));
+const quietOn = x => appSet.quiet === "always" || (appSet.quiet !== "off" && isQuietPlace(x));
+let earbudsOkUntil = 0;
 const MEALS = [
   { label: "Lunch", from: 11 * 60 + 45, to: 14 * 60 + 30, len: 60 },
   { label: "Dinner", from: 18 * 60 + 30, to: 21 * 60, len: 75 }
@@ -328,9 +340,9 @@ function suggestTour(d0) {
     const fits = () => { const p = buildPlan(d); return p && !p.error && !p.over && !(p.dropped || []).length; };
     for (let guard = 0; guard < 14; guard++) {
       const chosen = allSites(city).filter(x => d.selected.includes(x.id));
-      let cands = city.sites.filter(x => !x.quick && !used.has(x.id) && !d.selected.includes(x.id) && !closedOn(x, d.date));
+      let cands = city.sites.filter(x => !x.quick && !used.has(x.id) && !d.selected.includes(x.id) && !closedOn(x, d.date) && religiousOk(x));
       // When the city's sights are all planned, a day with room gets a day trip farther out instead.
-      if (!cands.length && d.selected.length < 2) cands = (city.farther || []).filter(x => !used.has(x.id) && !d.selected.includes(x.id) && !closedOn(x, d.date));
+      if (!cands.length && d.selected.length < 2) cands = (city.farther || []).filter(x => !used.has(x.id) && !d.selected.includes(x.id) && !closedOn(x, d.date) && religiousOk(x));
       if (!cands.length) break;
       const near = x => chosen.length ? Math.min(...chosen.map(c => hav(c, x))) : 0;
       cands.sort((a, b) => score(b) / (1 + near(b)) - score(a) / (1 + near(a)));
@@ -345,7 +357,7 @@ function suggestTour(d0) {
 }
 function defaultSelection(city, style, d) {
   const taken = d ? plannedElsewhere(d) : {};
-  const s = city.sites.filter(x => !x.quick && !taken[x.id]);
+  const s = city.sites.filter(x => !x.quick && !taken[x.id] && religiousOk(x));
   const picks = s.filter(x => x.mustSee).map(x => x.id);
   const ints = ((trip.prefs && trip.prefs.interests) || []).map(x => INTEREST_WORDS[x] || []).flat();
   const score = x => ints.reduce((a, w) => a + ((x.category + " " + x.summary).toLowerCase().includes(w) ? 1 : 0), 0) + (style === "mix" || x.kind === style ? 0.5 : 0);
@@ -677,7 +689,7 @@ function buildPlan(d) {
   const along = [];
   if (d.alongWay) {
     const used = new Set(order.map(s => s.id));
-    const quick = (city.sites || []).filter(s => s.quick && !used.has(s.id));
+    const quick = (city.sites || []).filter(s => s.quick && !used.has(s.id) && religiousOk(s));
     let slack = budget - total(order);
     const pts = [O, ...order, ...(Z ? [Z] : [])];
     const inserts = [];
@@ -733,7 +745,7 @@ function buildPlan(d) {
     const taken = new Set(Object.keys(plannedElsewhere(d)));
     trip.days.slice(0, trip.days.indexOf(d)).forEach(o => { if (cityFor(o) !== city) return; if (!bonusMemo.has(o)) { try { buildPlan(o); } catch (e) {} } (bonusMemo.get(o) || []).forEach(id => taken.add(id)); });
     const inSeq = new Set(seq.filter(x => !x.mealOf).map(x => x.id)), skip = new Set((d.selected || []).concat(dropped.map(x => x.id)));
-    const pool = (city.sites || []).concat(city.farther || []).filter(x => !x.quick && !inSeq.has(x.id) && !skip.has(x.id) && !taken.has(x.id) && !closedOn(x, d.date) && (!d.rain || x.indoor))
+    const pool = (city.sites || []).concat(city.farther || []).filter(x => !x.quick && religiousOk(x) && !inSeq.has(x.id) && !skip.has(x.id) && !taken.has(x.id) && !closedOn(x, d.date) && (!d.rain || x.indoor))
       .map(x => Object.assign({}, x, { minutes: Math.round(x.minutes * mult / 5) * 5 || x.minutes, bonus: true }));
     const limit = w.endBy - 15 - tailCost();
     for (let n = 0; n < 8 && pool.length; n++) {
@@ -1434,15 +1446,105 @@ async function goDeeper(site, city) {
     deeper[k].loading = false; renderGuideOnly();
   } catch (e) { deeper[k] = { text: deeper[k].text || "", loading: false, error: "The guide couldn't continue right now. Try again in a moment." }; renderGuideOnly(); }
 }
-async function askGuide(site, city, q) {
-  if (!aiReady() || !q.trim()) return;
-  const k = site.id; answers[k] = { q, text: "", loading: true }; renderGuideOnly();
+// ---- Ask your guide ----
+// Questions like you'd ask a real guide, about a stop or about the day. Answers are built only from what the
+// app knows for sure (the stop's guide and facts, today's plan, real nearby places) plus well-established
+// knowledge, in plain words with no filler. When there's no reliable answer, the guide says so kindly.
+// Offline, the question is saved and answered automatically when the connection is back.
+const ASK_STORE = "kairoute.asks", ASK_DAILY = 40;
+let askState = (() => { try { return JSON.parse(localStorage.getItem(ASK_STORE) || "{}"); } catch (e) { return {}; } })();
+askState.pending = askState.pending || []; askState.log = askState.log || {};
+Object.assign(answers, askState.log);
+let askNotice = "";
+const askSave = () => { try { askState.log = {}; for (const k in answers) if (answers[k] && !answers[k].loading) askState.log[k] = answers[k]; localStorage.setItem(ASK_STORE, JSON.stringify(askState)); } catch (e) {} };
+function askContext(site, city, d) {
+  const lines = [`City: ${city.city}${city.country ? ", " + city.country : ""}. Date: ${d.date || "unknown"}. Local time now: ${new Date().toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit" })}.`];
+  let plan = null; try { plan = buildPlan(d); } catch (e) {}
+  if (plan && plan.items) lines.push("Today's plan: " + plan.items.filter(i => i.type !== "travel").map(i => fmt(i.time) + " " + (i.type === "meal" ? i.meal.label + " at " + i.place.name : i.place ? i.place.name : i.label)).join("; ") + ".");
+  if (site) {
+    lines.push(`The traveler is at: ${site.name} (${site.category || "sight"}). ${site.summary || ""}`);
+    if (site.guide) lines.push("Guide text: " + site.guide);
+    if (site.lookFor && site.lookFor.length) lines.push("Things to look for: " + site.lookFor.join(" "));
+    ["hours", "closed", "tickets", "crowds", "access", "priceNote", "photoTip"].forEach(k => { if (site[k]) lines.push(k + ": " + site[k]); });
+  }
+  const here = site || (plan && plan.items && (plan.items.find(i => i.type === "stop") || {}).place);
+  if (here && isFinite(here.lat)) {
+    const eats = (city.restaurants || []).filter(r => !r.generic && hav(r, here) <= 1).sort((a, b) => hav(a, here) - hav(b, here)).slice(0, 10);
+    if (eats.length) lines.push("Real places to eat nearby (only recommend from this list): " + eats.map(r => `${r.name} (${r.cuisine || "restaurant"}, ${distTxt(hav(r, here))} away${r.recommended ? ", recommended by travelers" : ""}${r.crowdTop ? ", Kairoute Top Pick" : ""})`).join("; ") + ".");
+    const near = allSites(city).filter(x => x !== site && isFinite(x.lat) && hav(x, here) <= 1.5).slice(0, 10);
+    if (near.length) lines.push("Other real sights nearby: " + near.map(x => `${x.name} (${distTxt(hav(x, here))})`).join("; ") + ".");
+  }
+  return lines.join("\n");
+}
+async function askGuide(site, city, q, opts) {
+  q = String(q || "").trim(); if (!q || !city) return;
+  const k = site ? site.id : "day:" + (day().date || trip.active), d = day(), voice = opts && opts.voice;
+  const offline = typeof navigator !== "undefined" && navigator.onLine === false;
+  if (offline || !aiReady()) {
+    if (!offline) { answers[k] = { q, text: "", error: "Turn on the AI guide in Settings to ask questions." }; renderGuideOnly(); return; }
+    askState.pending.push({ k, siteId: site ? site.id : null, dayIdx: trip.active, q, at: Date.now() });
+    answers[k] = { q, text: "", saved: true, note: "There's no internet connection right now, so I can't look that up. I've saved your question and I'll answer it as soon as you're back online." };
+    askSave(); renderGuideOnly(); return;
+  }
+  const today = new Date().toISOString().slice(0, 10);
+  if (askState.day !== today) { askState.day = today; askState.n = 0; }
+  if (askState.n >= ASK_DAILY) { answers[k] = { q, text: "", error: "That's all the questions for today. Ask again tomorrow." }; renderGuideOnly(); return; }
+  askState.n++;
+  const prev = answers[k] && answers[k].text ? `Earlier, the traveler asked "${answers[k].q}" and you answered: "${answers[k].text}"\n\n` : "";
+  answers[k] = { q, text: "", loading: true }; renderGuideOnly();
+  const prompt = `You are a knowledgeable local guide answering a traveler's question.
+Facts you can rely on:
+${askContext(site, city, d)}
+
+${prev}Question: "${q}"
+
+How to answer:
+- Start with the answer itself. Plain, friendly words, at most 90 words. No greeting, no "great question", no filler, no summary at the end.
+- Use the facts above and well-established knowledge only. Never make up names, places, dates, prices, opening hours or numbers.
+- Recommend only places named in the facts above. If none fit, say so.
+- For hours, prices or tickets not given above, say you don't have current details and suggest the official site or the ticket desk.
+- If you don't know or aren't sure, say kindly that you don't have a reliable answer, and if possible say where they could find out.${faithNote()}
+- No markdown.`;
   try {
-    await sample(`You are an expert local tour guide in ${city.city}. A traveler at ${site.name} asks: "${q}". Answer in under 120 words, friendly and specific. If it's about opening hours, prices or tickets, give typical information and remind them to check the official site.${faithNote()} No markdown.`, {
-      modelTier: "quick", cache: false, onText: ({ text }) => { answers[k].text = text; const el = document.getElementById("ans-" + k); if (el) el.textContent = text; }
-    });
-    answers[k].loading = false; renderGuideOnly();
-  } catch (e) { answers[k] = { q, text: "", loading: false, error: "No answer came back. Try asking again." }; renderGuideOnly(); }
+    await sample(prompt, { modelTier: "quick", cache: false, onText: ({ text }) => { answers[k].text = text; const el = document.getElementById("ans-" + k.replace(/[^\w-]/g, "_")); if (el) el.textContent = text; } });
+    answers[k].loading = false; answers[k].at = Date.now(); askSave(); renderGuideOnly();
+    if (voice && answers[k].text && !(site && quietOn(site))) speakText("ans:" + k, answers[k].text);
+  } catch (e) {
+    if (typeof navigator !== "undefined" && navigator.onLine === false) { askState.n--; answers[k] = null; return askGuide(site, city, q, opts); }
+    answers[k] = { q, text: "", loading: false, error: "No answer came back. Try asking again." }; renderGuideOnly();
+  }
+}
+// Back online: answer every saved question, then let the traveler know quietly.
+async function askPending() {
+  if (!askState.pending.length || navigator.onLine === false || !aiReady()) return;
+  const list = askState.pending.splice(0); askSave(); let done = 0;
+  for (const p of list) {
+    const d = trip.days[p.dayIdx] || day(), city = cityFor(d); if (!city) continue;
+    const site = p.siteId ? allSites(city).find(x => x.id === p.siteId) : null;
+    await askGuide(site, city, p.q); if (answers[p.k] && answers[p.k].text) done++;
+  }
+  if (done) { askNotice = done === 1 ? `You're back online. Your guide answered the question you saved: "${list[0].q}"` : `You're back online. Your guide answered the ${done} questions you saved.`; render(); }
+}
+if (typeof window !== "undefined") { window.addEventListener("online", () => setTimeout(askPending, 1500)); setTimeout(askPending, 4000); }
+// Voice questions: tap the microphone, speak, and the answer is read aloud too.
+const SpeechRec = typeof window !== "undefined" ? window.SpeechRecognition || window.webkitSpeechRecognition : null;
+function listenAsk(siteId) {
+  if (!SpeechRec) return;
+  const rec = new SpeechRec(); rec.lang = langCode ? (langCode(P().lang) || "en-US") : "en-US"; rec.interimResults = true; rec.maxAlternatives = 1;
+  const inp = document.getElementById("ask-" + siteId), btn = document.querySelector(`[data-mic="${siteId}"]`);
+  if (btn) { btn.classList.add("on"); btn.setAttribute("aria-label", "Listening"); }
+  let said = "";
+  rec.onresult = e => { said = Array.from(e.results).map(r => r[0].transcript).join(" "); if (inp) inp.value = said; };
+  rec.onend = () => { if (btn) btn.classList.remove("on");
+    if (said.trim()) { const city = cityFor(day()), site = siteId === "day" ? null : allSites(city).find(x => x.id === siteId); stopAudio(); askGuide(site, city, said, { voice: true }); } };
+  rec.onerror = () => { if (btn) btn.classList.remove("on"); };
+  try { stopAudio(); rec.start(); } catch (e) {}
+}
+function askBlock(site, placeholder) {
+  const id = site ? site.id : "day", k = site ? site.id : "day:" + (day().date || trip.active), an = answers[k], domId = "ans-" + k.replace(/[^\w-]/g, "_");
+  return `<div class="askbox"><span class="eyebrow">Ask your guide</span>
+    <form class="ask" data-ask="${esc(id)}"><input type="text" id="ask-${esc(id)}" placeholder="${esc(placeholder || "Ask anything about this place")}" aria-label="Ask your guide" enterkeyhint="send">${SpeechRec && !(site && quietOn(site)) ? `<button class="btn ghost small mic" type="button" data-mic="${esc(id)}" aria-label="Ask by voice">🎤</button>` : ""}<button class="btn small" type="submit">Ask</button></form>
+    ${an ? `<div class="answer"><b>${esc(an.q)}</b><span id="${domId}">${esc(an.text || an.note || (an.loading ? "Thinking…" : an.error || ""))}</span>${an.text && !an.loading ? `<button class="linkbtn" data-play-ans="${esc(k)}">${speakingId === "ans:" + k ? "■ Stop" : "▶ Listen"}</button>` : ""}</div>` : ""}</div>`;
 }
 
 // ---------- Audio guide ----------
@@ -1773,6 +1875,7 @@ document.addEventListener("toggle", e => {
 function render() {
   bonusMemo = new Map(); mealMemo = new Map(); avoidMeals = new Set();
   renderView();
+  if (askNotice && !FULL_VIEWS[view]) { const v = document.getElementById("view"); if (v) v.insertAdjacentHTML("afterbegin", `<p class="banner ok" role="status">${esc(askNotice)} <button class="linkbtn" data-act="asknoticeok">OK</button></p>`); }
   if (openFolds.size) document.querySelectorAll("#view details").forEach(el => { const sm = el.querySelector("summary"); if (sm && openFolds.has(view + "|" + sm.textContent.trim())) el.open = true; });
 }
 function renderView() {
@@ -1961,6 +2064,7 @@ function renderSettings() {
   <div class="card"><h3>Display</h3>
     <div class="field"><span class="lbl">Appearance</span>${seg("theme", [["system", "Match my device"], ["light", "Light"], ["dark", "Dark"]])}</div>
     <div class="field"><span class="lbl">Text size</span>${seg("text", [["standard", "Standard"], ["large", "Large"]])}</div>
+    <div class="field"><span class="lbl">Quiet places</span>${seg("quiet", [["auto", "Automatic"], ["always", "Always quiet"], ["off", "Off"]]).replace('data-v="auto" aria-pressed="false"', appSet.quiet && appSet.quiet !== "auto" ? 'data-v="auto" aria-pressed="false"' : 'data-v="auto" aria-pressed="true"')}<span class="hint">In churches, monasteries and museums the guide shows text first and only plays audio once you confirm your earbuds are in.</span></div>
     <div class="field"><span class="lbl">Distances</span>${seg("units", [["mi", "Miles"], ["km", "Kilometers"]]).replace(/aria-pressed="(true|false)"/g, "").replace(/data-v="(mi|km)"/g, (m, k) => m + ' aria-pressed="' + ((k === "mi") === useMiles()) + '"')}</div>
   </div>
   <div class="card"><h3>Natural voice</h3><p class="lede">${freeAI ? "The natural voice is a lifelike AI recording of each story, made once per stop and kept, so replays are free. A few new stops a day fit in the free allowance; after that your device's best voice reads until 6 pm Central." : "Your device's most natural voice reads the stories."}${natVoiceNote ? " " + esc(natVoiceNote) : ""}</p>
@@ -2119,6 +2223,7 @@ function settingsCard() {
     <div class="field"><span class="lbl">Walking</span>${seg("walk", [["low", "Short walks only"], ["medium", "Up to 30 minutes"], ["high", "Happy to walk a lot"]])}</div>
     <div class="field"><span class="lbl">Accessibility</span>${seg("access", ACCESS)}</div>
     <div class="field"><span class="lbl">Interests</span><div class="seg" role="group">${INTERESTS.map(([k, l]) => `<button type="button" data-pref="interest" data-v="${k}" aria-pressed="${p.interests.includes(k)}">${l}</button>`).join("")}</div></div>
+    <div class="field"><span class="lbl">Religious sites</span>${seg("religious", [["on", "Include them"], ["off", "Skip them"]]).replace('data-v="on" aria-pressed="false"', p.religious === "off" ? 'data-v="on" aria-pressed="false"' : 'data-v="on" aria-pressed="true"')}<span class="hint">Churches, monasteries and other places of worship. Famous landmarks stay either way.</span></div>
     <div class="field"><span class="lbl">Guide voice</span>${seg("voice", VOICES)}</div>
     <div class="row2"><div class="field"><label for="p-lang">Guide language</label><select id="p-lang">${LANGS.map(([n]) => `<option ${p.lang === n ? "selected" : ""}>${n}</option>`).join("")}</select></div>
       <div class="field"><label for="p-party">People traveling</label><input type="number" id="p-party" min="1" max="20" value="${p.party}"></div></div>
@@ -2853,6 +2958,25 @@ function travelCheck(plan) {
   const see = plan.items.filter(i => i.type === "stop").reduce((a, i) => a + (i.place.minutes || 0), 0);
   return ride > 150 && ride > see ? { ride, see } : null;
 }
+// An earlier start: when a day can't fit everything (or a long drive pushes it late), try leaving earlier with
+// the same finish time, in half-hour steps down to 06:30, and offer the latest start that fits it all. A start
+// is only offered if nobody would reach a sight before it opens (from the sight's listed hours).
+function opensAt(s) { const m = String(s.hours || "").match(/(\d{1,2})[:.](\d{2})/); return m ? +m[1] * 60 + +m[2] : null; }
+function earlierStart(d, plan) {
+  if (d.type !== "land" || !d.startTime || !(plan.dropped.length || plan.over)) return null;
+  const s0 = toMin(d.startTime), end0 = s0 + d.hours * 60, keep = { startTime: d.startTime, hours: d.hours, selected: d.selected };
+  let best = null;
+  try {
+    for (let st = s0 - 30; st >= 6 * 60 + 30; st -= 30) {
+      d.startTime = fmt(st); d.hours = (end0 - st) / 60; bonusMemo.delete(d); mealMemo.delete(d);
+      const p = buildPlan(d); if (!p || p.error) continue;
+      const early = p.items.some(i => i.type === "stop" && opensAt(i.place) != null && i.time < opensAt(i.place) - 5);
+      if (early) continue;
+      if (p.dropped.length < plan.dropped.length || (!p.dropped.length && !p.over)) { best = { start: fmt(st), hours: (end0 - st) / 60, fits: plan.dropped.filter(x => !p.dropped.some(y => y.id === x.id)).map(x => x.name), all: !p.dropped.length && !p.over, end: fmt(p.end) }; if (best.all) break; }
+    }
+  } finally { Object.assign(d, keep); bonusMemo.delete(d); mealMemo.delete(d); }
+  return best;
+}
 function renderPlan(d) {
   const city = cityFor(d);
   if (!city) return `${dayHeading(d)}${busyBlock()}${errBlock()}${needsCity(d)}`;
@@ -2917,8 +3041,10 @@ function renderPlan(d) {
   <div class="mapbox">${mapSVG(plan)}
     <div class="maplegend"><span><i></i>Walk</span><span><i class="dash"></i>Taxi or transit</span><span style="color:var(--meal)">● Meal</span><span style="color:var(--must)">■ Hotel</span><span>● On the way</span></div>
   </div>
+  ${(e => e ? `<div class="banner ok"><span>Leave at <b>${e.start}</b> instead of ${esc(d.startTime)} and ${e.fits.length ? `you also fit <b>${e.fits.map(esc).join(", ")}</b>` : "the day fits"}, back by ${e.end}. Earlier also means cooler weather, less traffic and fewer crowds.</span><button class="btn small" data-act="earlystart" data-v="${e.start}" data-h="${e.hours}">Leave at ${e.start}</button></div>` : "")(earlierStart(d, plan))}
   ${plan.dropped.length ? `<div class="banner warn dropped"><span>Didn't fit today: <b>${plan.dropped.map(s => esc(s.name)).join(", ")}</b>. Change the times on Trip, or swap them in with Change stops.</span></div>` : ""}
   ${eventsCard(d, city, plan)}
+  ${aiReady() || askState.pending.length ? `<div class="card">${askBlock(null, "Ask about today: what to wear, where to get water, how to get tickets…")}</div>` : ""}
   <details class="more goodtoknow"><summary>Good to know today: getting around, costs, local words</summary>
   ${gettingAround(city, plan)}
   ${budgetCard(plan)}
@@ -2948,8 +3074,8 @@ function stopCard(s, num, city) {
     <div class="stopbody">
       <div class="head stophead"><span class="stopnum">${s.along ? "•" : num}</span><div><h3>${esc(s.name)}</h3><p class="stopmeta">${[s.category ? String(s.category).replace(/^\w/, c => c.toUpperCase()) : (s.along ? "On the way" : ""), s.minutes ? dur(s.minutes) : "", s.mustSee ? "Must-see" : ""].filter(Boolean).map(esc).join(" · ")}</p></div></div>
       <p class="lede">${esc(unitText(s.summary))}</p>
-      <div class="audio"><button class="btn" data-play="${esc(s.id)}">▶ Play audio guide</button><span class="state" aria-live="polite"></span></div>
-      <details class="story" open><summary>The story</summary><div class="guidetext">${paras(unitText(s.guide))}</div></details>
+${quietOn(s) ? `<p class="banner quiet" role="note">🤫 <span><b>Quiet place.</b> Read the story below. Audio plays only after you confirm your earbuds are in.</span></p>` : ""}<div class="audio"><button class="btn" data-play="${esc(s.id)}" data-label="${quietOn(s) ? "🎧 Play with earbuds" : "▶ Play audio guide"}">${quietOn(s) ? "🎧 Play with earbuds" : "▶ Play audio guide"}</button><span class="state" aria-live="polite"></span></div>
+      <details class="story" id="story-${esc(s.id)}" open><summary>The story</summary><div class="guidetext">${paras(unitText(s.guide))}</div></details>
       ${s.lookFor && s.lookFor.length ? `<div class="field"><span class="eyebrow">What to look for</span><ol class="lookfor">${s.lookFor.map(x => `<li><span>${esc(x)}</span></li>`).join("")}</ol></div>` : ""}
       ${picksBlock(s)}
       ${s.photoTip || s.travelerTip ? `<div class="tipsgrid">${s.photoTip ? `<p class="phototip"><b>Photo spot</b> ${esc(s.photoTip)} <a href="${photos}" target="_blank" rel="noopener">See photos</a></p>` : ""}${s.travelerTip ? `<p class="phototip"><b>From travelers</b> ${esc(unitText(s.travelerTip))}</p>` : ""}</div>` : ""}
@@ -2966,8 +3092,7 @@ function stopCard(s, num, city) {
         return need ? (tr ? `<div class="guidetext" id="tr-${esc(s.id)}">${tr.text ? paras(tr.text) : `<p class="ai-note"><span class="spinner"></span> Translating…</p>`}</div>${tr.error ? `<p class="ai-note">${esc(tr.error)}</p>` : ""}` : (ready ? `<div><button class="btn ghost small" data-translate="${esc(s.id)}">Read it in ${esc(P().lang)}</button></div>` : "")) : ""; })()}
       ${dp ? `<div class="guidetext" id="deep-${esc(s.id)}">${dp.text ? paras(dp.text) : `<p class="ai-note"><span class="spinner"></span> Your guide is thinking…</p>`}</div>${dp.error ? `<p class="ai-note">${esc(dp.error)}</p>` : ""}` : ""}
       ${ready ? `<div class="actions">${!dp || dp.error ? `<button class="btn ghost small" data-deeper="${esc(s.id)}">Tell me more</button>` : ""}</div>
-      <form class="ask" data-ask="${esc(s.id)}"><input type="text" id="ask-${esc(s.id)}" placeholder="Ask the guide about this place" aria-label="Ask the guide about ${esc(s.name)}"><button class="btn small" type="submit">Ask</button></form>
-      ${an ? `<div class="answer"><b>${esc(an.q)}</b>\n<span id="ans-${esc(s.id)}">${esc(an.text || (an.loading ? "Thinking…" : an.error || ""))}</span></div>` : ""}` : `<p class="ai-note">Turn on the AI guide in Settings to ask the guide questions and hear more.</p>`}
+      ${askBlock(s)}` : `<p class="ai-note">Turn on the AI guide in Settings to ask the guide questions and hear more.</p>`}
       ${journalBlock(s)}
     </div>
   </article>`;
@@ -3072,14 +3197,14 @@ function renderTour(d) {
     body = `<div class="tourcard">
       <div class="stophead"><span class="stopnum big">${s.along ? "•" : stopNo}</span><div><h2 class="tourtitle">${esc(s.name)}</h2><p class="stopmeta">${esc(String(s.category || "").replace(/^\w/, c => c.toUpperCase()))}</p></div></div>
       <p class="timeleft" id="tourLeft"></p>
-      <div class="audio"><button class="btn bigplay" data-play="${esc(s.id)}" data-label="▶ Play the story">▶ Play the story</button><span class="state" aria-live="polite"></span></div>
+${quietOn(s) ? `<p class="banner quiet" role="note">🤫 <span><b>Quiet place.</b> The story is below to read. Audio plays only after you confirm your earbuds are in.</span></p>` : ""}
+      <div class="audio"><button class="btn bigplay" data-play="${esc(s.id)}" data-label="${quietOn(s) ? "🎧 Play with earbuds" : "▶ Play the story"}">${quietOn(s) ? "🎧 Play with earbuds" : "▶ Play the story"}</button><span class="state" aria-live="polite"></span></div>
       ${s.lookFor && s.lookFor.length ? `<div class="field"><span class="eyebrow">Can you find these?</span>
         <div class="finds">${s.lookFor.map((x, k) => `<button class="find ${found.includes(k) ? "on" : ""}" data-find="${k}"><span class="fk">${found.includes(k) ? "✓" : k + 1}</span><span>${esc(x)}</span></button>`).join("")}</div></div>` : ""}
       ${picksBlock(s)}
       ${s.photoTip ? `<p class="phototip"><b>Photo spot:</b> ${esc(s.photoTip)}</p>` : ""}
-      <details class="more"><summary>Read the story</summary><div class="guidetext" style="margin-top:8px">${paras(unitText(s.guide))}</div></details>
-      ${aiReady() ? `<form class="ask" data-ask="${esc(s.id)}"><input type="text" id="ask-${esc(s.id)}" placeholder="Ask your guide anything about this place" aria-label="Ask the guide"><button class="btn small" type="submit">Ask</button></form>
-        ${answers[s.id] ? `<div class="answer"><b>${esc(answers[s.id].q)}</b>\n<span id="ans-${esc(s.id)}">${esc(answers[s.id].text || (answers[s.id].loading ? "Thinking…" : answers[s.id].error || ""))}</span></div>` : ""}` : ""}
+      <details class="more" id="story-${esc(s.id)}" ${quietOn(s) ? "open" : ""}><summary>Read the story</summary><div class="guidetext" style="margin-top:8px">${paras(unitText(s.guide))}</div></details>
+      ${aiReady() || askState.pending.length ? askBlock(s) : ""}
       ${journalBlock(s)}
       <div class="actions tourmain"><button class="btn bigbtn" data-act="tournext">${nxt ? "Next: " + esc(stepName(nxt)) : "Finish"}</button></div>
     </div>`;
@@ -3214,6 +3339,11 @@ document.addEventListener("click", e => {
   if (t.dataset.find != null) { const T = trip.tour; const k = +t.dataset.find; T.found = T.found || []; T.found = T.found.includes(k) ? T.found.filter(x => x !== k) : [...T.found, k]; save(); renderGuideOnly(); return; }
   if (t.dataset.play) {
     const id = t.dataset.play, plan = buildPlan(day());
+    const qs = allSites(cityFor(day())).find(x => x.id === id);
+    if (qs && quietOn(qs) && speakingId !== id && Date.now() > earbudsOkUntil) {
+      if (!window.confirm("Quiet place: earbuds in?\n\nTap OK to play through your earbuds, or Cancel to read the story instead.")) { const st = document.getElementById("story-" + id); if (st) { st.open = true; st.scrollIntoView({ block: "start", behavior: "smooth" }); } return; }
+      earbudsOkUntil = Date.now() + 45 * 60000; // asked once, then trusted for the next 45 minutes
+    }
     if (id.startsWith("walk:")) { const steps = tourSteps(plan), i = +id.slice(5); speakText(id, walkText(steps[i], steps[i + 1])); return; }
     if (id.startsWith("intro:")) { speakText(id, introText(day(), plan)); return; }
     const s = allSites(cityFor(day())).find(x => x.id === id); if (s) speakSite(s); return;
@@ -3227,6 +3357,11 @@ document.addEventListener("click", e => {
     save(); render(); return;
   }
   if (t.dataset.wimgdel != null) { readWiz(); wiz.images.splice(+t.dataset.wimgdel, 1); render(); return; }
+  if (t.dataset.mic) { listenAsk(t.dataset.mic); return; }
+  if (t.dataset.playAns) { const pa = allSites(cityFor(day())).find(x => x.id === t.dataset.playAns); if (pa && quietOn(pa) && speakingId !== "ans:" + t.dataset.playAns && Date.now() > earbudsOkUntil) { if (!window.confirm("Quiet place: earbuds in?")) return; earbudsOkUntil = Date.now() + 45 * 60000; }
+    const a = answers[t.dataset.playAns]; if (a && a.text) speakText("ans:" + t.dataset.playAns, a.text); renderGuideOnly(); return; }
+  if (t.dataset.act === "asknoticeok") { askNotice = ""; render(); return; }
+  if (t.dataset.act === "earlystart") { const d = day(); d.startTime = t.dataset.v; d.hours = +t.dataset.h; save(); render(); return; }
   if (t.dataset.act === "suggestok") { suggestMsg = ""; render(); return; }
   if (t.dataset.act === "memmake") { makeMemoryVideo(); return; }
   if (t.dataset.act === "memsave") { memSave(); return; }
@@ -3412,8 +3547,8 @@ document.addEventListener("submit", e => {
     return;
   }
   if (f.dataset.ask) {
-    const city = cityFor(day()); const s = allSites(city).find(x => x.id === f.dataset.ask);
-    if (s) askGuide(s, city, f.querySelector("input").value);
+    const city = cityFor(day()); const s = f.dataset.ask === "day" ? null : allSites(city).find(x => x.id === f.dataset.ask);
+    if (s || f.dataset.ask === "day") askGuide(s, city, f.querySelector("input").value);
   }
 });
 

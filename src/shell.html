@@ -176,7 +176,12 @@ input[type=text], input[type=date], input[type=time], input[type=number], select
 .audio .state { color: var(--muted); font-size: 0.85rem; }
 .ask { display: flex; gap: 8px; }
 .ask input { flex: 1; min-width: 0; }
-.answer { background: var(--paper); border-radius: 10px; padding: 12px; white-space: pre-wrap; font-size: 0.95rem; }
+.answer { background: var(--paper); border-radius: 10px; padding: 12px; white-space: pre-wrap; font-size: 0.95rem; display: flex; flex-direction: column; gap: 4px; align-items: flex-start; }
+.askbox { display: flex; flex-direction: column; gap: 8px; margin-top: 8px; }
+.ask input { flex: 1; min-width: 0; }
+.mic.on { background: var(--meal); color: #fff; animation: pulse 1s infinite; }
+@keyframes pulse { 50% { opacity: .6; } }
+.banner.quiet { background: var(--route-soft); }
 .phototip { font-size: 0.9rem; color: var(--muted); }
 details.more summary { cursor: pointer; font-weight: 700; color: var(--route); }
 .empty { text-align: center; padding: 36px 16px; color: var(--muted); display: grid; gap: 12px; justify-items: center; }
