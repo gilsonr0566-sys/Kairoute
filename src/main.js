@@ -1573,13 +1573,20 @@ async function cityInParts(prompt, show, label) {
   const seeList = vg ? [...new Set(vg.listings.filter(l => l.type === "see" && l.name && l.name.length < 60).map(l => l.name))].slice(0, 45) : [];
   const hint = seeList.length ? ` Travelers on Wikivoyage list these real places in ${label}. Prefer them where they fit, and use these exact names for them: ${seeList.join("; ")}.` : "";
   // Ask for more than the guide needs: any name the check can't confirm is dropped, and the rest still fill the guide.
-  const plan = await ask('For this first step return ONLY {"main":[{"name","mustSee","kind"}],"quick":["name"],"farther":["name"],"skipped":["name"]}: exactly 18 main sights in order of importance (3-5 mustSee true, about a third "kind":"local"), 7 small quick sights people walk past, and 5 day trips or sights farther out. Real, distinct places, each under its usual name as it appears on maps; if visitors know it by another name, add that in parentheses, for example "Mirador de la Flor (Selena Memorial)". Places only, not activities, walks, hikes or tours, and one entry per place (never separate entries for parts of the same place). Always include the city\'s best-known landmarks, monuments, memorials and statues (as main or quick sights), even if they are not in any list below. Names and those fields only.' + hint + famHint + srcHint, "quick",
+  // A city's size follows its sources: where many independent sources agree on many places (Rome, Madrid,
+  // Naples), the guide covers more of them, so its churches and smaller museums aren't squeezed out by the
+  // headline sights. Writing a few more places costs very little.
+  const big = src ? src.stops.filter(x => x.src.length >= 3).length : 0, T = Math.min(26, Math.max(18, big)), KEEP = T - 4;
+  const plan = await ask('For this first step return ONLY {"main":[{"name","mustSee","kind"}],"quick":["name"],"farther":["name"],"skipped":["name"]}: exactly ' + T + ' main sights in order of importance (3-5 mustSee true, about a third "kind":"local"), 7 small quick sights people walk past, and 5 day trips or sights farther out. Real, distinct places, each under its usual name as it appears on maps; if visitors know it by another name, add that in parentheses, for example "Mirador de la Flor (Selena Memorial)". Places only, not activities, walks, hikes or tours, and one entry per place (never separate entries for parts of the same place). Always include the city\'s best-known landmarks, monuments, memorials and statues (as main or quick sights), even if they are not in any list below. Names and those fields only.' + hint + famHint + srcHint, "quick",
     j => j && (j.main || []).filter(x => x && x.name).length >= 8);
-  let main = plan.main.filter(x => x && x.name).slice(0, 20), quick = (plan.quick || []).map(String).filter(Boolean).slice(0, 8), far = (plan.farther || []).map(String).filter(Boolean).slice(0, 5);
+  let main = plan.main.filter(x => x && x.name).slice(0, T + 2), quick = (plan.quick || []).map(String).filter(Boolean).slice(0, 8), far = (plan.farther || []).map(String).filter(Boolean).slice(0, 5);
   // Check, not trust: a top-15 famous place the writer neither used nor called unvisitable is added anyway.
   if (famMain.length) {
     const have = [...main.map(x => x.name), ...quick, ...far, ...((plan.skipped || []).map(String))], has = n => have.some(h => nameMatch(n, h) || nameMatch(h, n));
-    const lost = famMain.slice(0, 15).filter(x => !has(x.name));
+    // Fame says a place matters; a travel guide, heritage register or UNESCO says it is a place to visit. Both are
+    // needed, so a famous university, political party or tennis tournament is never added as a sight.
+    const visitable = x => { if (!src) return true; const y = srcStop(src, x.name, x); return !!(y && y.src.some(t => /Wikivoyage|heritage|UNESCO/.test(t))); };
+    const lost = famMain.slice(0, 15).filter(x => !has(x.name) && visitable(x));
     if (lost.length) console.info("Kairoute added famous places the writer left out in " + label + ": " + lost.map(x => x.name).join("; "));
     lost.forEach(x => main.push({ name: x.name, mustSee: x.sl >= (famMain[2] || famMain[0]).sl, kind: "touristy", fame: x.sl }));
     const lostFar = famFar.filter(x => x.sl >= 30 && x.km <= 70).slice(0, 4).filter(x => !has(x.name));
@@ -1611,7 +1618,7 @@ async function cityInParts(prompt, show, label) {
     }
     const real = n => grounded.get(n).real;
     const keepMain = main.filter(x => real(x.name)), must = keepMain.filter(x => x.mustSee);
-    main = must.concat(keepMain.filter(x => !x.mustSee)).slice(0, Math.max(14, must.length));
+    main = must.concat(keepMain.filter(x => !x.mustSee)).slice(0, Math.max(KEEP, must.length));
     quick = quick.filter(real).slice(0, 5); far = far.filter(real).slice(0, 4);
   }
   const tipFor = n => { const l = voyageListing(vg, n, ["see", "do", "listing", "buy"]), x = srcStop(src, n);
@@ -1619,7 +1626,7 @@ async function cityInParts(prompt, show, label) {
       + (x && x.lc ? ` Local guidebook (Wikivoyage in ${src.langName}): ${x.lc}` : "") + (x && x.local && x.local !== n ? ` Local name: ${x.local}.` : "")
       + (x && x.unesco ? " It is a UNESCO World Heritage site." : x && x.heritage ? " It is on the national heritage register." : ""); };
   const facts = names => grounded ? names.map(n => grounded.get(n)).some(g => g && g.facts) ? "\n\nFacts to build on, from each place's Wikipedia article. Use them, never contradict them, and do not invent names, dates or numbers beyond them and well-established history:\n" + names.map(n => { const g = grounded.get(n); return g && g.facts ? `- ${n}: ${g.facts.slice(0, 1200)}${tipFor(n)}` : `- ${n}: (no article; describe only what is certain and keep it short)${tipFor(n)}`; }).join("\n") + "\nUse the traveler notes for practical tips (when to go, what to look for, what to skip), in your own words." : "" : "";
-  const groups = [[], [], [], []]; main.forEach((x, i) => groups[i % 4].push(x));
+  const nG = Math.max(4, Math.ceil(main.length / 4)), groups = Array.from({ length: nG }, () => []); main.forEach((x, i) => groups[i % nG].push(x));
   const list = xs => xs.map(n => '"' + n + '"').join(", ");
   const parts = [
     { ask: 'For this request return ONLY {"city","country","starts","gettingAround","basics"}, with 8 phrases. Leave out "sites", "farther" and "restaurants" (places to eat come from the map).' + (vg && (vg.getAround || vg.staySafe) ? "\n\nTraveler notes from Wikivoyage to base gettingAround and safety on:\nGet around: " + vg.getAround.slice(0, 1200) + "\nStay safe: " + vg.staySafe.slice(0, 800) : ""), size: 4000,
