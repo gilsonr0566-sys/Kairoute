@@ -119,6 +119,9 @@ export default {
         if (!center) { const j = await get("https://photon.komoot.io/api/?limit=3&lang=en&osm_tag=place&q=" + encodeURIComponent(city));
           const f = j && (j.features || []).find(f => /city|town|village|municipality|suburb|borough|island/.test((f.properties || {}).osm_value || "")) || (j && (j.features || [])[0]);
           if (f) { center = { lat: f.geometry.coordinates[1], lng: f.geometry.coordinates[0] }; ctx.waitUntil(env.USAGE.put(ck, JSON.stringify(center), { expirationTtl: 365 * 86400 })); } } }
+      // OpenStreetMap's own search allows about one request a second: calls in this request wait their turn.
+      let photonFails = 0, nomiNext = 0;
+      const nomi = async u => { const wait = Math.max(0, nomiNext - Date.now()); nomiNext = Math.max(Date.now(), nomiNext) + 1100; if (wait) await new Promise(ok => setTimeout(ok, wait)); return get(u); };
       const bias = center ? "&lat=" + center.lat + "&lon=" + center.lng + "&location_bias_scale=0.2&zoom=12" : "";
       const one = async name => {
         if (!name) return null;
@@ -131,11 +134,24 @@ export default {
         }
         {
           // Inside the city's area first (a hard box about 60 km across), then anywhere as a fallback.
-          const box = center && !farNames.has(name) ? await get("https://photon.komoot.io/api/?limit=5&lang=en&bbox=" + [center.lng - 0.35, center.lat - 0.3, center.lng + 0.35, center.lat + 0.3].map(v => v.toFixed(4)).join(",") + "&q=" + encodeURIComponent(plain)) : null;
-          // Only search worldwide when nothing came back inside the city's area (keeps the free map server happy).
-          const wide = box && (box.features || []).length ? null : await get("https://photon.komoot.io/api/?limit=4&lang=en" + bias + "&q=" + encodeURIComponent(q));
-          const j = (box || wide) ? { features: [...((box && box.features) || []), ...((wide && wide.features) || [])] } : null;
-          if (j) { map = (j.features || []).map(f => ({ name: (f.properties || {}).name || "", lat: f.geometry.coordinates[1], lng: f.geometry.coordinates[0], kind: (f.properties || {}).osm_value || "", city: (f.properties || {}).city || "", osm: ((f.properties || {}).osm_type || "") + ((f.properties || {}).osm_id || "") })); }
+          // Photon (the free OpenStreetMap search) is tried first; once it has failed twice in this request
+          // it is skipped, and OpenStreetMap's own search (Nominatim) answers instead, so a busy map
+          // server no longer stops a whole city guide from being checked.
+          if (photonFails < 2) {
+            const box = center && !farNames.has(name) ? await get("https://photon.komoot.io/api/?limit=5&lang=en&bbox=" + [center.lng - 0.35, center.lat - 0.3, center.lng + 0.35, center.lat + 0.3].map(v => v.toFixed(4)).join(",") + "&q=" + encodeURIComponent(plain)) : null;
+            // Only search worldwide when nothing came back inside the city's area (keeps the free map server happy).
+            const wide = box && (box.features || []).length ? null : await get("https://photon.komoot.io/api/?limit=4&lang=en" + bias + "&q=" + encodeURIComponent(q));
+            const j = (box || wide) ? { features: [...((box && box.features) || []), ...((wide && wide.features) || [])] } : null;
+            if (j) { map = (j.features || []).map(f => ({ name: (f.properties || {}).name || "", lat: f.geometry.coordinates[1], lng: f.geometry.coordinates[0], kind: (f.properties || {}).osm_value || "", city: (f.properties || {}).city || "", osm: ((f.properties || {}).osm_type || "") + ((f.properties || {}).osm_id || "") })); }
+            else photonFails++;
+          }
+          if (!map) {
+            const nm = list => (list || []).map(f => ({ name: f.name || String(f.display_name || "").split(",")[0], lat: +f.lat, lng: +f.lon, kind: f.type || "", city: "", osm: (f.osm_type || "") + (f.osm_id || "") }));
+            const vb = center && !farNames.has(name) ? "&bounded=1&viewbox=" + [center.lng - 0.35, center.lat + 0.3, center.lng + 0.35, center.lat - 0.3].map(v => v.toFixed(4)).join(",") : "";
+            const inBox = vb ? await nomi("https://nominatim.openstreetmap.org/search?format=jsonv2&limit=5&accept-language=en" + vb + "&q=" + encodeURIComponent(plain)) : null;
+            const wide = inBox && inBox.length ? null : await nomi("https://nominatim.openstreetmap.org/search?format=jsonv2&limit=4&accept-language=en&q=" + encodeURIComponent(q));
+            if (inBox || wide) map = [...nm(inBox), ...nm(wide)];
+          }
         }
         const res = { wiki: wiki || [], map: map || [], answered: !!(wiki && map) };
         if (res.answered) ctx.waitUntil(env.USAGE.put(k, JSON.stringify(res), { expirationTtl: 90 * 86400 }));
