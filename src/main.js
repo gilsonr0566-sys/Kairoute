@@ -1203,7 +1203,7 @@ async function cityInParts(prompt, show, label) {
 // every sight is looked up by name; found ones get the map's exact location, ones the map can't find
 // are left out. Restaurants always come from the map itself (real places near the stops), never from
 // the AI. The checked guide is what gets saved and shared.
-const EATS_V = 3;
+const EATS_V = 4;
 // The guide's local knowledge, applied only to real places: it sorts the restaurants found on the map and
 // Wikivoyage by reputation, and says what each serves and why go. It can't add a place: any name it
 // returns that isn't on the list is ignored.
@@ -1211,13 +1211,13 @@ async function rankEats(raw, label) {
   const list = (raw.restaurants || []).filter(r => r.onMap);
   if (!sample || list.length < 3) return;
   const lines = list.map((r, i) => `${i + 1}. ${r.name}${r.cuisine && r.cuisine !== "Restaurant" ? " (" + r.cuisine + ")" : ""}${r.recommended ? " [recommended on Wikivoyage]" : ""}`).join("\n");
-  const prompt = `You are a well-travelled local food guide for ${label}. Below are real places to eat near the sights, numbered. Using what you know about each place's reputation, return ONLY JSON {"eats":[{"n":number,"cuisine":"Seafood, Tex-Mex, Thai, Café, BBQ...","style":"local favorite" | "classic" | "casual" | "upscale" | "quick bite","price":"$" | "$$" | "$$$","top":true|false,"why":"one specific sentence: what to order and what it's like (view, vibe)"}]} for every place you can describe. "top": true only for about the 10 places locals and visitors rate best. If you don't know a place, give only its likely cuisine from the name, top false and why "". Never add places that aren't on the list.\n\n${lines}`;
+  const prompt = `You are a well-travelled local food guide for ${label}. Below are real places to eat near the sights, numbered. Using what you know about each place's reputation, return ONLY JSON {"eats":[{"n":number,"cuisine":"Seafood, Tex-Mex, Thai, Café, BBQ...","style":"local favorite" | "classic" | "casual" | "upscale" | "quick bite","price":"$" | "$$" | "$$$","top":true|false}]} for every place you can describe. "top": true only for about the 10 places locals and visitors rate best, and only when you actually know the place. If you don't know a place, give only its likely cuisine from the name and top false. Never add places that aren't on the list.\n\n${lines}`;
   try {
     const r = await sample(prompt, { modelTier: "part" }); const j = parseJSON(r.text || "");
     (j && Array.isArray(j.eats) ? j.eats : []).forEach(e => { const x = list[(+e.n || 0) - 1]; if (!x) return;
       if (e.cuisine && (!x.cuisine || x.cuisine === "Restaurant")) x.cuisine = String(e.cuisine).slice(0, 40);
       if (e.style) x.style = String(e.style).slice(0, 20); if (e.price && !x.price) x.price = String(e.price).slice(0, 4);
-      x.top = !!e.top; if (e.why && !x.recommended && String(e.why).length > 20) x.why = String(e.why).slice(0, 220);
+      x.top = !!e.top; // Only the ranking and cuisine come from AI. Its descriptions could state things that aren't true (a view that isn't there), so the shown text stays factual: map data or traveler notes.
       x.kind = /local|casual|quick/.test(x.style || "") ? "local" : x.kind; });
     list.sort((a, b) => (b.top ? 2 : 0) + (b.recommended ? 1 : 0) - ((a.top ? 2 : 0) + (a.recommended ? 1 : 0)));
     raw.restaurants = list.concat((raw.restaurants || []).filter(r => !r.onMap));
@@ -1265,7 +1265,7 @@ async function realPlaces(raw, label) {
     const seen = new Set(), score = p => (p.cuisine ? 2 : 0) + (p.hours ? 1 : 0) + (p.web ? 1 : 0) + Math.min(6, p.tags) / 3 + (p.amenity === "restaurant" ? 1 : 0);
     const good = pl.places.filter(p => p.amenity !== "bar" && !(p.amenity === "fast_food" && !p.cuisine) && !seen.has(keyOf(p.name)) && seen.add(keyOf(p.name))).sort((a, b) => score(b) - score(a));
     const pick = []; // the best few near each stop, so every part of the city has somewhere to eat
-    for (const sct of main) good.filter(p => hav(p, pos(sct)) <= 0.5 && !pick.includes(p)).slice(0, 5).forEach(p => pick.push(p));
+    for (const sct of main) good.filter(p => hav(p, pos(sct)) <= 0.5 && !pick.includes(p) && !pick.some(q => hav(q, p) < 0.03)).slice(0, 5).forEach(p => pick.push(p));
     const vg = await voyageFor(label);
     // Places travelers recommend on Wikivoyage come first. When the map knows the same place, use the map's
     // location and details and add the travelers' notes; otherwise use the listing's own location.
@@ -2835,7 +2835,7 @@ function farEatsFor(city, d) {
       const good = pl.places.filter(p => p.name && p.amenity !== "bar" && !(p.amenity === "fast_food" && !p.cuisine) && !seen.has(keyOf(p.name)) && seen.add(keyOf(p.name))).sort((a, b) => score(b) - score(a));
       const nice = t => String(t || "").split(/[;,]/)[0].replace(/_/g, " ").replace(/^\w/, c => c.toUpperCase());
       const pick = [];
-      for (const x of bare) good.filter(p => hav(p, x) <= 1.5 && !pick.includes(p)).slice(0, 8).forEach(p => pick.push(p));
+      for (const x of bare) good.filter(p => hav(p, x) <= 1.5 && !pick.includes(p) && !pick.some(q => hav(q, p) < 0.03)).slice(0, 8).forEach(p => pick.push(p)); // one entry per building: the map sometimes lists a place twice
       const list = pick.map(p => { const by = bare.slice().sort((a, b) => hav(a, p) - hav(b, p))[0];
         return { name: p.name, lat: +(+p.lat).toFixed(5), lng: +(+p.lng).toFixed(5), kind: "local", cuisine: nice(p.cuisine) || (p.amenity === "cafe" ? "Café" : p.amenity === "pub" ? "Pub" : "Restaurant"), price: "",
           why: `A real ${p.amenity === "cafe" ? "café" : "place to eat"} near ${by.name}${p.hours ? ". Hours listed: " + p.hours : ""}. Check it's open before you go.`, onMap: true, recommended: false, near: by.id }; });
