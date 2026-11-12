@@ -187,6 +187,52 @@ export default {
     // { place: { avg, n } } for one city. POST /rate { city, place, stars, dev } records one traveler's 1-5 stars.
     // Guards: one rating per device and place (a second rating replaces the first), at most 30 ratings per
     // network address a day, and keys must look like Kairoute's own (lower-case words, short).
+    // /famous?city=: the best-known places in and around a city, ranked by how many Wikipedia languages write
+    // about them (Wikidata "sitelinks"), an outside measure of fame that no AI can make up. "main" are within the
+    // city, "far" are day trips within about 80 km. For a cruise port named like "Civitavecchia (Rome)", when the
+    // place in brackets is far better known than the port town, the guide is about that place ("area").
+    if (url.pathname === "/famous") {
+      const label = String(url.searchParams.get("city") || "").slice(0, 120).trim(); if (!label) return Response.json({ error: "Empty" }, { status: 400, headers: h });
+      const key = "fm2:" + (await sha(label.toLowerCase())), hit = await env.USAGE.get(key); if (hit) return new Response(hit, { headers: { ...h, "content-type": "application/json" } });
+      const UA = { "user-agent": "Kairoute/1.0 (travel guide; https://gilsonr0566-sys.github.io/Kairoute/)" };
+      const getJ = async (u, ms) => { for (let t = 0; t < 2; t++) { try { const r = await fetch(u, { headers: { ...UA, accept: "application/sparql-results+json" }, signal: AbortSignal.timeout(ms || 25000) }); if (r.ok) return await r.json(); } catch (e) {} } return null; };
+      const centerOf = async name => {
+        for (const t of [name, name.split(",")[0].trim()]) { const j = await getJ("https://en.wikivoyage.org/w/api.php?action=query&format=json&prop=coordinates&redirects=1&titles=" + encodeURIComponent(t), 9000);
+          const pg = j && Object.values((j.query && j.query.pages) || {})[0], co = pg && pg.coordinates && pg.coordinates[0]; if (co) return { lat: co.lat, lng: co.lon }; }
+        const j = await getJ("https://photon.komoot.io/api/?limit=1&lang=en&osm_tag=place&q=" + encodeURIComponent(name), 9000); const f = j && (j.features || [])[0];
+        return f ? { lat: f.geometry.coordinates[1], lng: f.geometry.coordinates[0] } : null;
+      };
+      // Not sights: cities and municipalities, stations, airports, schools, hospitals, regions, seas, government bodies.
+      const NOT_SIGHT = "wd:Q515 wd:Q1549591 wd:Q5119 wd:Q1637706 wd:Q200250 wd:Q2074737 wd:Q747074 wd:Q1093829 wd:Q15284 wd:Q3957 wd:Q928830 wd:Q55488 wd:Q1248784 wd:Q644371 wd:Q3918 wd:Q3914 wd:Q16917 wd:Q4022 wd:Q165 wd:Q39594 wd:Q10864048 wd:Q13220204 wd:Q13221722 wd:Q1620908 wd:Q327333 wd:Q4830453 wd:Q43229 wd:Q2385804 wd:Q31855 wd:Q1194951 wd:Q476028";
+      const NOT_TOWN = "wd:Q928830 wd:Q55488 wd:Q1248784 wd:Q644371 wd:Q3918 wd:Q3914 wd:Q16917 wd:Q4022 wd:Q165 wd:Q39594 wd:Q10864048 wd:Q13220204 wd:Q13221722 wd:Q1620908 wd:Q327333 wd:Q4830453 wd:Q43229 wd:Q2385804 wd:Q31855";
+      const famous = async (c, r, min, bad, lim) => {
+        const q = `SELECT ?item ?itemLabel ?sl ?loc ?dist WHERE { SERVICE wikibase:around { ?item wdt:P625 ?loc . bd:serviceParam wikibase:center "Point(${c.lng} ${c.lat})"^^geo:wktLiteral . bd:serviceParam wikibase:radius "${r}" . bd:serviceParam wikibase:distance ?dist . }
+          ?item wikibase:sitelinks ?sl . FILTER(?sl >= ${min}) FILTER NOT EXISTS { ?item wdt:P31 ?bad . VALUES ?bad { ${bad} } } FILTER NOT EXISTS { ?item wdt:P576 ?gone }
+          SERVICE wikibase:label { bd:serviceParam wikibase:language "en,mul,el,it,es,tr,fr,de" . } } ORDER BY DESC(?sl) LIMIT ${lim}`;
+        const j = await getJ("https://query.wikidata.org/sparql?format=json&query=" + encodeURIComponent(q), 40000);
+        if (!j) return null; const seen = new Set(), out = [];
+        for (const b of (j.results && j.results.bindings) || []) { const id = b.item.value.split("/").pop(); if (seen.has(id)) continue; seen.add(id);
+          const m = /Point\(([-\d.]+) ([-\d.]+)\)/.exec(b.loc.value); const name = b.itemLabel && b.itemLabel.value; if (!m || !name || /^Q\d+$/.test(name)) continue;
+          out.push({ name, wd: id, sl: +b.sl.value, lat: +(+m[2]).toFixed(5), lng: +(+m[1]).toFixed(5), km: +(+b.dist.value).toFixed(1) }); }
+        return out;
+      };
+      const port = label.replace(/\s*\(.*?\)\s*/g, " ").trim(), inBr = ((/\(([^)]*)\)/.exec(label) || [])[1] || "").split(",").map(x => x.trim()).filter(Boolean);
+      let area = port, center = await centerOf(port);
+      if (!center) return Response.json({ error: "Unknown place" }, { status: 404, headers: h });
+      let main = await famous(center, 6, 8, NOT_SIGHT, 60);
+      if (!main) return Response.json({ error: "Busy" }, { status: 503, headers: h });
+      const fame = list => (list || []).slice(0, 5).reduce((a, x) => a + x.sl, 0);
+      // The place in brackets, when it is a bigger draw than the port town itself, is where the day is spent.
+      if (inBr.length) { const c2 = await centerOf(inBr[0]); if (c2) { const d = Math.hypot((c2.lat - center.lat) * 111, (c2.lng - center.lng) * 111 * Math.cos(center.lat * Math.PI / 180));
+        if (d > 15) { const m2 = await famous(c2, 6, 8, NOT_SIGHT, 60); if (m2 && fame(m2) > fame(main) * 2.5) { area = inBr[0]; center = c2; main = m2; } } } }
+      const farRaw = (await famous(center, 80, 25, NOT_TOWN, 120)) || [];
+      const mainIds = new Set(main.map(x => x.wd)), lc = s => s.toLowerCase();
+      const far = farRaw.filter(x => x.km > 6 && !mainIds.has(x.wd) && lc(x.name) !== lc(area) && lc(x.name) !== lc(port)).slice(0, 25);
+      main = main.filter(x => lc(x.name) !== lc(area) && lc(x.name) !== lc(port)).slice(0, 45);
+      const body = JSON.stringify({ area, port, center, main, far });
+      ctx.waitUntil(env.USAGE.put(key, body, { expirationTtl: 30 * 86400 }));
+      return new Response(body, { headers: { ...h, "content-type": "application/json" } });
+    }
     // /findplace?city=&q=: a restaurant (or any place) the traveler booked, looked up on OpenStreetMap by name in
     // that city, with every name the map knows it by (local script, English, Latin letters) and its street address.
     if (url.pathname === "/findplace") {
