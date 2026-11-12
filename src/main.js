@@ -1028,8 +1028,10 @@ ${P().access !== "none" ? "- The travelers need: " + ACCESS.find(a => a[0] === P
     if (!guideInLang(c, P().lang)) throw new Error("The guide came back in the wrong language. Try again.");
     if (fresh) keepGuide(d, raw);
     const key = keyOf(label) + (d.event ? "|" + keyOf(d.event) : "");
+    const wasBuiltin = !!(cities[key] && cities[key].builtin) || !!(cityFor(d) && cityFor(d).builtin);
     cities[key] = c;
-    trip.days.forEach(x => { if (keyOf(x.destination) === keyOf(label) && !x.event === !d.event) { x.cityKey = key; x.pointIdx = 0; if (!x.selected) x.selected = defaultSelection(c, trip.style, x); } });
+    // A fuller guide replacing a built-in one has new stop ids, so those days get fresh picks.
+    trip.days.forEach(x => { if (keyOf(x.destination) === keyOf(label) && !x.event === !d.event) { x.cityKey = key; x.pointIdx = 0; if (wasBuiltin) x.selected = null; if (!x.selected) x.selected = defaultSelection(c, trip.style, x); } });
     save();
     stopTicker();
     if (!quiet) { busy = null; view = "plan"; render(); window.scrollTo(0, 0); }
@@ -2977,10 +2979,23 @@ function earlierStart(d, plan) {
   } finally { Object.assign(d, keep); bonusMemo.delete(d); mealMemo.delete(d); }
   return best;
 }
+// Built-in example guides with fewer than 10 main sights are too thin to fill a day. When a day uses one, the
+// full guide is fetched from the shared cache (free) or built once in the background (it's then shared with
+// every traveler), and replaces the thin one.
+const THIN_SIGHTS = 10, upgradeTried = new Set();
+const isThin = c => !!(c && c.builtin && (c.sites || []).filter(x => !x.quick).length < THIN_SIGHTS);
+let upgrading = null;
+function upgradeThin(d, city) {
+  if (!isThin(city) || !aiReady() || busy || upgrading) return;
+  const k = keyOf(d.destination); if (upgradeTried.has(k)) return; upgradeTried.add(k);
+  upgrading = d.destination;
+  generateCity(d, true).then(ok => { upgrading = null; if (ok && (view === "plan" || view === "guide")) render(); }).catch(() => { upgrading = null; });
+}
+if (typeof window !== "undefined") window.__kairouteThin = () => { ensureBuiltins(); return trip.days.map((d, i) => { const c = cityFor(d); return c ? i + " " + d.destination + ": " + (c.sites || []).filter(x => !x.quick).length + (c.builtin ? " builtin" : "") : null; }).filter(Boolean).join("\n"); };
 function renderPlan(d) {
   const city = cityFor(d);
   if (!city) return `${dayHeading(d)}${busyBlock()}${errBlock()}${needsCity(d)}`;
-  refillIfNeeded(d, city); if (!d.selected) d.selected = defaultSelection(city, trip.style, d); crowdFor(city); farEatsFor(city, d);
+  refillIfNeeded(d, city); if (!d.selected) d.selected = defaultSelection(city, trip.style, d); crowdFor(city); farEatsFor(city, d); upgradeThin(d, city);
   const plan = buildPlan(d);
   if (plan.error) return `${dayHeading(d)}<div class="card empty"><p>${esc(plan.error)}</p><button class="btn" data-goto="trip">Edit this day</button></div>`;
   let n = 0;
@@ -3032,6 +3047,7 @@ function renderPlan(d) {
     <div class="toolrow"><button class="btn ghost small" data-goto="sites">Change stops</button><button class="btn ghost small" data-act="suggesttour">Suggest my tour</button><a class="btn ghost small" href="${gmapsLink(plan)}" target="_blank" rel="noopener">Open in Google Maps</a>
     <label class="btn ghost small toggle"><input type="checkbox" id="f-rain" ${d.rain ? "checked" : ""}><span>Rainy day</span></label></div></div>
   ${plan.swaps.length ? `<div class="banner">Because of rain: ${plan.swaps.map(([a, b]) => esc(a.name) + " → " + esc(b.name)).join(", ")}.</div>` : ""}
+  ${upgrading && keyOf(upgrading) === keyOf(d.destination) ? `<p class="banner" role="status"><span class="spinner"></span> Building a fuller guide for ${esc(d.destination)} in the background. This plan updates by itself in about two minutes.</p>` : ""}
   ${(tc => tc ? `<div class="banner warn" role="alert">This day has ${dur(tc.ride)} of travel for ${dur(tc.see)} at the sights. Consider fewer far-apart stops, more hours, or splitting it over two days.</div>` : "")(travelCheck(plan))}
   ${plan.closedToday.length ? `<div class="banner warn" role="alert">${plan.closedToday.map(s => `${esc(s.name)}: ${esc(s.closed.toLowerCase())}`).join(". ")}, and you're there on a ${esc(fmtDow(d.date))}. Swap it with Change stops.</div>` : ""}
   ${countdownCard(d, plan)}
