@@ -375,6 +375,14 @@ main:has(#view.full) { padding: 0; }
 @media (min-width: 900px) { .planacts { grid-template-columns: minmax(260px, 1fr) auto; align-items: center; } .toolrow .btn { flex: 0 0 auto; } }
 .badges { display: flex; flex-wrap: wrap; gap: 6px; }
 .badge { font-style: normal; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.02em; text-transform: uppercase; color: var(--meal); background: var(--card); border-radius: 999px; padding: 2px 8px; }
+.badge.kpick { background: linear-gradient(135deg, #f2b33d, var(--meal)); color: #fff; box-shadow: 0 1px 4px rgba(0,0,0,.18); }
+.crowd { font-size: .85rem; font-weight: 700; color: var(--ink); }
+.raterow { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 10px; margin-top: 6px; font-size: .88rem; font-weight: 600; }
+.stars.small .star { font-size: 1.35rem; min-width: 36px; min-height: 36px; padding: 0 2px; }
+.memcard .actions { margin-top: 10px; }
+.memprog { height: 8px; border-radius: 99px; background: var(--line); overflow: hidden; margin-top: 10px; }
+.memprog i { display: block; height: 100%; background: var(--meal); width: 0; transition: width .3s; }
+.memvideo { width: 100%; max-height: 70vh; border-radius: 14px; background: #000; margin-top: 10px; }
 /* On phones the timeline is the main content: show it before the map */
 @media (max-width: 799px) { .plangrid .right { order: -1; } }
 details.goodtoknow { display: grid; gap: 14px; }

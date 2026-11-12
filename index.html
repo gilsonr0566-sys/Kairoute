@@ -388,6 +388,14 @@ main:has(#view.full) { padding: 0; }
 @media (min-width: 900px) { .planacts { grid-template-columns: minmax(260px, 1fr) auto; align-items: center; } .toolrow .btn { flex: 0 0 auto; } }
 .badges { display: flex; flex-wrap: wrap; gap: 6px; }
 .badge { font-style: normal; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.02em; text-transform: uppercase; color: var(--meal); background: var(--card); border-radius: 999px; padding: 2px 8px; }
+.badge.kpick { background: linear-gradient(135deg, #f2b33d, var(--meal)); color: #fff; box-shadow: 0 1px 4px rgba(0,0,0,.18); }
+.crowd { font-size: .85rem; font-weight: 700; color: var(--ink); }
+.raterow { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 10px; margin-top: 6px; font-size: .88rem; font-weight: 600; }
+.stars.small .star { font-size: 1.35rem; min-width: 36px; min-height: 36px; padding: 0 2px; }
+.memcard .actions { margin-top: 10px; }
+.memprog { height: 8px; border-radius: 99px; background: var(--line); overflow: hidden; margin-top: 10px; }
+.memprog i { display: block; height: 100%; background: var(--meal); width: 0; transition: width .3s; }
+.memvideo { width: 100%; max-height: 70vh; border-radius: 14px; background: #000; margin-top: 10px; }
 /* On phones the timeline is the main content: show it before the map */
 @media (max-width: 799px) { .plangrid .right { order: -1; } }
 details.goodtoknow { display: grid; gap: 14px; }
@@ -2315,7 +2323,7 @@ function segDist(p, a, b) {
   return { d: Math.hypot(px - (ax + t * dx), py - (ay + t * dy)), t };
 }
 function pickRestaurant(city, a, b, style, used) {
-  const rs = (city.restaurants || []).filter(r => !used.has(r.name));
+  const rs = (city.restaurants || []).filter(r => !used.has(r.name) && !r.crowdDrop);
   if (!rs.length) return null;
   const score = r => (b ? tmin(a, r) + tmin(r, b) - tmin(a, b) : tmin(a, r));
   const pref = style === "mix" ? rs : rs.filter(r => r.kind === style);
@@ -2342,6 +2350,7 @@ function simDay(seq, t0, O, Z, style) {
       if (style !== "mix" && p.kind && p.kind !== style) cost += 8;
       if (p.recommended) cost -= 6; // recommended by travelers on Wikivoyage
       if (p.top) cost -= 8; // among the best-rated places near the route
+      if (p.crowdTop) cost -= 10; // Kairoute travelers rate it highly
       clock += m.len;
     } else clock += p.minutes || 0;
     prev = p;
@@ -2384,7 +2393,7 @@ function polishDay(seq, t0, O, Z, style, city) {
 let mealMemo = new Map(), avoidMeals = new Set();
 function mealSpots(seq, O, Z, city) {
   const anchors = seq.filter(x => !x.mealOf).concat(O ? [O] : [], Z ? [Z] : []);
-  const near = (city.restaurants || []).filter(r => anchors.some(a => hav(a, r) <= 0.6));
+  const near = (city.restaurants || []).filter(r => !r.crowdDrop && anchors.some(a => hav(a, r) <= 0.6));
   const fresh = near.filter(r => !avoidMeals.has(keyOf(r.name)));
   if (fresh.length) return fresh;
   if (near.length) return near;
@@ -2395,14 +2404,61 @@ function mealSpots(seq, O, Z, city) {
 function mealAlternatives(s, seq, city) {
   if (s.generic) return [];
   const cu = r => keyOf(r.cuisine || "restaurant");
-  const pool = (city.restaurants || []).filter(r => !r.generic && keyOf(r.name) !== keyOf(s.name) && hav(r, s) <= 0.6 && !avoidMeals.has(keyOf(r.name)) && !seq.some(x => x.mealOf && keyOf(x.name) === keyOf(r.name)));
+  const pool = (city.restaurants || []).filter(r => !r.generic && !r.crowdDrop && keyOf(r.name) !== keyOf(s.name) && hav(r, s) <= 0.6 && !avoidMeals.has(keyOf(r.name)) && !seq.some(x => x.mealOf && keyOf(x.name) === keyOf(r.name)));
   const out = [];
   while (out.length < 2 && pool.length) {
-    const score = r => (r.recommended ? 2 : 0) + (r.top ? 2 : 0) + ([s].concat(out).every(o => cu(o) !== cu(r)) ? 2 : 0) + ([s].concat(out).every(o => o.kind !== r.kind) ? 1 : 0) - hav(r, s) * 3;
+    const score = r => (r.crowdTop ? 3 : 0) + (r.recommended ? 2 : 0) + (r.top ? 2 : 0) + ([s].concat(out).every(o => cu(o) !== cu(r)) ? 2 : 0) + ([s].concat(out).every(o => o.kind !== r.kind) ? 1 : 0) - hav(r, s) * 3;
     pool.sort((a, b) => score(b) - score(a)); out.push(pool.shift());
   }
   return out;
 }
+// ---- Traveler ratings of restaurants, shared by every Kairoute traveler ----
+// After a meal, travelers rate it 1 to 5 stars. Once at least CROWD_MIN travelers have rated a place, an
+// average of CROWD_TOP or more earns the "Kairoute Top Pick" badge and a strong preference in plans, and an
+// average under CROWD_DROP takes it out of suggestions. A place you rated 2 stars or less yourself is never
+// suggested to you again.
+const CROWD_MIN = 3, CROWD_TOP = 4.5, CROWD_DROP = 2.5, crowdCache = {};
+function devId() {
+  let id = ""; try { id = localStorage.getItem("kairoute.dev") || ""; } catch (e) {}
+  if (!/^[a-f0-9]{24}$/.test(id)) { id = Array.from(crypto.getRandomValues(new Uint8Array(12)), b => b.toString(16).padStart(2, "0")).join(""); try { localStorage.setItem("kairoute.dev", id); } catch (e) {} }
+  return id;
+}
+const eatKey = (city, name) => keyOf(city.city) + "/eat " + keyOf(name);
+const myEatRating = (city, name) => ((trip.journal || {})[eatKey(city, name)] || {}).rating || 0;
+function crowdMark(city) {
+  const m = (crowdCache[keyOf(city.city)] || {}).map || {};
+  (city.restaurants || []).forEach(r => { const c = m[keyOf(r.name)], je = (trip.journal || {})[eatKey(city, r.name)] || {}, mine = je.date && je.date !== day().date ? je.rating || 0 : 0; // today's rating takes effect from tomorrow, so today's plan never shifts under you
+    r.crowd = c && c.n >= CROWD_MIN ? c : null;
+    r.crowdTop = !!(r.crowd && c.avg >= CROWD_TOP);
+    r.crowdDrop = !!((r.crowd && c.avg < CROWD_DROP) || (mine && mine <= 2)); });
+}
+function crowdFor(city) {
+  if (!city) return;
+  const k = keyOf(city.city);
+  if (!crowdCache[k] && freeAI) {
+    crowdCache[k] = { map: null };
+    fetch(`${freeAI.url}/ratings?city=${encodeURIComponent(k)}`).then(r => r.ok ? r.json() : null).then(j => {
+      if (!j || !j.ratings || !Object.keys(j.ratings).length) return;
+      crowdCache[k].map = j.ratings;
+      if (view === "plan" || view === "guide") { const y = window.scrollY; render(); window.scrollTo(0, y); }
+    }).catch(() => {});
+  }
+  crowdMark(city);
+}
+function rateEat(name, stars) {
+  const d = day(), city = cityFor(d); if (!city || !name) return;
+  trip.journal = trip.journal || {};
+  const k = eatKey(city, name), j = trip.journal[k] || { date: d.date, name, city: city.city, meal: true };
+  j.rating = stars; trip.journal[k] = j; save();
+  if (freeAI) fetch(`${freeAI.url}/rate`, { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ city: keyOf(city.city), place: keyOf(name), stars, dev: devId() }) })
+    .then(r => r.ok ? r.json() : null).then(j2 => { if (j2 && j2.ok) { const c = crowdCache[keyOf(city.city)] || (crowdCache[keyOf(city.city)] = {}); c.map = Object.assign({}, c.map, { [keyOf(name)]: { avg: j2.avg, n: j2.n } }); } }).catch(() => {});
+}
+function eatStars(name, city, label) {
+  const mine = myEatRating(city, name);
+  return `<div class="raterow"><span>${mine ? "Your rating" : label || "Ate here? Rate it"}</span><div class="stars small" role="group" aria-label="Rate ${esc(name)}">${[1, 2, 3, 4, 5].map(n => `<button class="star ${mine >= n ? "on" : ""}" data-eatrate="${n}" data-eatname="${esc(name)}" aria-label="${n} star${n > 1 ? "s" : ""}">★</button>`).join("")}</div>${mine && mine <= 2 ? `<span class="lede">We won't suggest it to you again.</span>` : mine ? `<span class="lede">Thanks! It helps other travelers.</span>` : ""}</div>`;
+}
+const crowdBadge = r => r.crowdTop ? `<i class="badge kpick">★ Kairoute Top Pick</i>` : "";
+const crowdLine = r => r.crowd ? `★ ${r.crowd.avg.toFixed(1)} from ${r.crowd.n} Kairoute travelers` : "";
 function placeMeals(order, meals, t0, O, Z, style, city) {
   let seq = order.slice();
   for (const m of meals) {
@@ -4040,11 +4096,172 @@ function shrinkImage(file, max) {
 function renderJournal() {
   const entries = Object.values(trip.journal || {}).filter(j => j.rating || j.note || (j.photos && j.photos.length)).sort((a, b) => (a.date || "").localeCompare(b.date || ""));
   return `<div><h2>Trip journal</h2><p class="lede">Rate stops, jot notes and add photos from the Guide tab. Everything collects here.</p></div>
+    ${memCard()}
     ${entries.length ? `<div class="sitelist">${entries.map(j => `<div class="card"><div><div class="eyebrow">${esc(fmtDate(j.date))} · ${esc(j.city || "")}</div><h3>${esc(j.name || "")}</h3></div>
-      ${j.rating ? `<div class="stars static">${"★".repeat(j.rating)}<span style="opacity:.25">${"★".repeat(5 - j.rating)}</span></div>` : ""}
+      ${j.meal ? `<span class="eyebrow">Meal</span>` : ""}${j.rating ? `<div class="stars static">${"★".repeat(j.rating)}<span style="opacity:.25">${"★".repeat(5 - j.rating)}</span></div>` : ""}
       ${j.note ? `<p>${esc(j.note)}</p>` : ""}
       ${j.photos && j.photos.length ? `<div class="photos">${j.photos.map(p => `<div class="ph"><img src="${p}" alt="Photo of ${esc(j.name || "")}"></div>`).join("")}</div>` : ""}
     </div>`).join("")}</div>` : `<div class="card empty"><p>Nothing yet. Open the Guide tab on any day, rate a stop or add a photo.</p><button class="btn" data-goto="guide">Open the guide</button></div>`}`;
+}
+// ---- Memory video: the trip as a short, shareable video ----
+// Made on the device from the traveler's own photos, journal notes and star ratings, plus real photos of the
+// places they visited (each place's own Wikipedia photo, found by its location). Nothing is uploaded. A small
+// Kairoute logo sits in the corner of every frame and the video ends on a Kairoute card.
+const MEM_W = 720, MEM_H = 1280, MEM_FADE = 0.6;
+let mem = { busy: false, pct: 0, url: "", blob: null, ext: "", err: "", msg: "" };
+function memCard() {
+  const has = Object.values(trip.journal || {}).some(j => j.rating || j.note || (j.photos && j.photos.length)) || trip.days.some(d => cityFor(d));
+  if (!has) return "";
+  return `<div class="card memcard"><div><span class="eyebrow">Keep the memories</span><h3>Your trip as a short video</h3>
+    <p class="lede">Kairoute turns your photos, journal notes and ratings, plus photos of the places you visited, into a video about a minute long. Save it or share it to Facebook, Instagram or anywhere else. It's made right on this device.</p></div>
+    ${mem.busy ? `<p><b>${esc(mem.msg || "Making your video…")}</b></p><div class="memprog" role="progressbar" aria-valuenow="${Math.round(mem.pct)}" aria-valuemin="0" aria-valuemax="100"><i style="width:${mem.pct.toFixed(0)}%"></i></div>`
+    : mem.url ? `<video class="memvideo" src="${mem.url}" controls playsinline></video><div class="actions"><button class="btn" data-act="memsave">Save video</button>${navigator.canShare && navigator.canShare({ files: [new File([mem.blob], "kairoute-trip." + mem.ext, { type: mem.blob.type })] }) ? `<button class="btn" data-act="memshare">Share</button>` : ""}<button class="btn ghost" data-act="memmake">Make it again</button></div>`
+    : `<div class="actions"><button class="btn bigbtn" data-act="memmake">Make my memory video</button></div>`}
+    ${mem.err ? `<p class="banner warn" role="alert">${esc(mem.err)}</p>` : ""}</div>`;
+}
+function memRefresh() { if (view === "journal") { const y = window.scrollY; render(); window.scrollTo(0, y); } else if (view === "tour") render(); }
+const memImgCache = new Map();
+function loadImg(src) {
+  return new Promise(res => { if (!src) return res(null); const im = new Image(); if (!/^data:/.test(src)) im.crossOrigin = "anonymous";
+    const to = setTimeout(() => res(null), 12000); im.onload = () => { clearTimeout(to); res(im); }; im.onerror = () => { clearTimeout(to); res(null); }; im.src = src; });
+}
+// The place's own photo from Wikipedia: articles within 400 m of the place, matched by name.
+async function spotPhoto(p) {
+  if (!p || !isFinite(p.lat) || !isFinite(p.lng)) return null;
+  const k = keyOf(p.name); if (memImgCache.has(k)) return memImgCache.get(k);
+  let img = null;
+  try {
+    const r = await fetch(`https://en.wikipedia.org/w/api.php?action=query&format=json&origin=*&generator=geosearch&ggscoord=${p.lat}|${p.lng}&ggsradius=400&ggslimit=15&prop=pageimages&piprop=thumbnail&pithumbsize=1000`, { signal: AbortSignal.timeout(10000) });
+    const pages = Object.values(((await r.json()).query || {}).pages || {});
+    const hit = pages.find(x => x.thumbnail && (nameMatch(p.name, x.title) || nameMatch(x.title, p.name)));
+    if (hit) img = await loadImg(hit.thumbnail.source);
+  } catch (e) {}
+  memImgCache.set(k, img); return img;
+}
+async function memSlides() {
+  const slides = [], J = trip.journal || {}, used = new Set();
+  const days = trip.days.filter(d => d.type !== "sea" && cityFor(d));
+  const first = days[0], last = days[days.length - 1] || first;
+  slides.push({ kind: "title", title: trip.name || tripName(trip), sub: first ? fmtDate(first.date) + (last && last.date !== first.date ? " – " + fmtDate(last.date) : "") : "", line: [...new Set(days.map(d => d.destination))].slice(0, 4).join(" · ") });
+  for (const [i, d] of days.entries()) {
+    if (slides.length > 34) break;
+    const city = cityFor(d), ck = cityKeyFor(d); refillIfNeeded(d, city); if (!d.selected) d.selected = defaultSelection(city, trip.style, d);
+    const plan = buildPlan(d), items = plan && !plan.error ? plan.items.filter(it => it.type === "stop" || it.type === "meal") : [];
+    const daySlides = []; let spotOnly = 0;
+    for (const it of items) {
+      const p = it.place, j = it.type === "meal" ? J[eatKey(city, p.name)] : J[ck + "/" + p.id];
+      if (j) used.add(j);
+      const cap = { title: p.name, eyebrow: it.type === "meal" ? it.meal.label : (p.category || ""), stars: j && j.rating || 0, quote: j && j.note ? j.note.trim() : "" };
+      const ph = (j && j.photos) || [];
+      if (ph.length) { for (const [n, src] of ph.slice(0, 3).entries()) daySlides.push(Object.assign({ kind: "photo", src }, n ? { title: p.name, eyebrow: "", stars: 0, quote: "" } : cap)); }
+      else if (it.type === "stop" && (cap.quote || cap.stars || spotOnly < 3)) { spotOnly++; daySlides.push(Object.assign({ kind: "photo", spot: p }, cap)); }
+      else if (cap.quote || cap.stars) daySlides.push(Object.assign({ kind: "text" }, cap));
+    }
+    Object.entries(J).filter(([k, j]) => !used.has(j) && j.date === d.date && (j.note || j.rating || (j.photos && j.photos.length))).forEach(([k, j]) => { used.add(j);
+      const cap = { title: j.name || "", eyebrow: j.meal ? "Meal" : "", stars: j.rating || 0, quote: (j.note || "").trim() };
+      if (j.photos && j.photos.length) j.photos.slice(0, 3).forEach((src, n) => daySlides.push(Object.assign({ kind: "photo", src }, n ? { title: cap.title } : cap)));
+      else daySlides.push(Object.assign({ kind: "text" }, cap)); });
+    if (!daySlides.length) continue;
+    slides.push({ kind: "day", title: d.destination, eyebrow: "Day " + (i + 1), sub: fmtDow(d.date) + " " + fmtDate(d.date), spot: items.find(it => it.type === "stop") ? items.find(it => it.type === "stop").place : null });
+    slides.push(...daySlides);
+  }
+  slides.push({ kind: "end" });
+  // Load every picture first, so the recording runs smoothly. Places without a real photo become text slides.
+  let n = 0; const todo = slides.filter(s => s.src || s.spot);
+  for (const s of todo) {
+    mem.msg = "Gathering photos (" + (++n) + " of " + todo.length + ")…"; mem.pct = n / todo.length * 30; memRefresh();
+    s.img = s.src ? await loadImg(s.src) : await spotPhoto(s.spot);
+  }
+  const kept = slides.filter(s => s.img || s.kind !== "photo" || s.quote || s.stars).map(s => (s.kind === "photo" && !s.img ? Object.assign(s, { kind: "text" }) : s));
+  return kept.filter((s, i) => s.kind !== "day" || (kept[i + 1] && kept[i + 1].kind !== "day" && kept[i + 1].kind !== "end"));
+}
+if (typeof window !== "undefined") window.__kairouteSpot = async p => { const im = await spotPhoto(p); if (!im) return null; const c = document.createElement("canvas"); c.width = 40; c.height = 40; c.getContext("2d").drawImage(im, 0, 0, 40, 40); let safe = true; try { c.toDataURL(); } catch (e) { safe = false; } return { w: im.naturalWidth, h: im.naturalHeight, src: im.src, canvasSafe: safe }; };
+const memLogoSvg = (ink, dot) => `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 92 104" width="184" height="208"><rect x="14" y="8" width="16" height="84" rx="8" fill="${ink}"/><path d="M36,50 L74,16" fill="none" stroke="${dot}" stroke-width="7" stroke-linecap="round" stroke-dasharray="0.1 13"/><circle cx="78" cy="14" r="10" fill="none" stroke="${dot}" stroke-width="5"/><path d="M36,50 L78,88" fill="none" stroke="${ink}" stroke-width="16" stroke-linecap="round"/></svg>`;
+function memWrap(c, text, x, y, maxW, lh, maxLines) {
+  const words = String(text).split(/\s+/); let line = "", lines = [];
+  for (const w of words) { const t = line ? line + " " + w : w; if (c.measureText(t).width > maxW && line) { lines.push(line); line = w; } else line = t; }
+  if (line) lines.push(line);
+  if (lines.length > maxLines) { lines = lines.slice(0, maxLines); lines[maxLines - 1] = lines[maxLines - 1].replace(/\s*\S*$/, "") + "…"; }
+  lines.forEach((l, i) => c.fillText(l, x, y + i * lh)); return lines.length * lh;
+}
+function memDraw(c, s, t, dur, idx, logos, font) {
+  const W = MEM_W, H = MEM_H, ink = "#123C3A", meal = "#D9532A";
+  c.save(); c.textBaseline = "alphabetic"; c.textAlign = "left";
+  if (s.img) {
+    const z = 1 + 0.09 * (t / dur), iw = s.img.naturalWidth || s.img.width, ih = s.img.naturalHeight || s.img.height, sc = Math.max(W / iw, H / ih) * z;
+    const dx = (idx % 2 ? -1 : 1) * 24 * (t / dur - 0.5);
+    c.fillStyle = "#000"; c.fillRect(0, 0, W, H);
+    c.drawImage(s.img, (W - iw * sc) / 2 + dx, (H - ih * sc) / 2, iw * sc, ih * sc);
+  } else {
+    const g = c.createLinearGradient(0, 0, W, H); g.addColorStop(0, ink); g.addColorStop(1, s.kind === "text" ? "#2b5f58" : "#1b4f4b"); c.fillStyle = g; c.fillRect(0, 0, W, H);
+  }
+  const fadeIn = Math.min(1, t / 0.8);
+  if (s.kind === "title" || s.kind === "day") {
+    c.fillStyle = s.img ? "rgba(10,25,24,.55)" : "rgba(0,0,0,0)"; c.fillRect(0, 0, W, H);
+    c.globalAlpha = fadeIn; c.fillStyle = "#fff"; c.textAlign = "center";
+    if (s.kind === "title") { c.drawImage(logos.light, W / 2 - 46, 330, 92, 104); c.font = `800 30px ${font}`; c.fillStyle = "#F7C59F"; c.fillText("MY TRIP", W / 2, 520); c.fillStyle = "#fff"; c.font = `800 64px ${font}`; const h = memWrap(c, s.title, W / 2, 600, W - 100, 72, 3); c.font = `600 34px ${font}`; c.fillText(s.sub, W / 2, 620 + h); c.font = `500 28px ${font}`; memWrap(c, s.line, W / 2, 672 + h, W - 120, 36, 2); }
+    else { c.font = `800 30px ${font}`; c.fillStyle = "#F7C59F"; c.fillText(s.eyebrow.toUpperCase(), W / 2, 560); c.fillStyle = "#fff"; c.font = `800 72px ${font}`; const h = memWrap(c, s.title, W / 2, 650, W - 90, 80, 2); c.font = `600 34px ${font}`; c.fillText(s.sub, W / 2, 660 + h); }
+  } else if (s.kind === "end") {
+    c.globalAlpha = fadeIn; c.textAlign = "center"; c.drawImage(logos.light, W / 2 - 70, 400, 140, 158);
+    c.fillStyle = "#fff"; c.font = `800 76px ${font}`; c.fillText("kairoute", W / 2, 680); c.font = `600 32px ${font}`; c.fillStyle = "#F7C59F"; c.fillText("Planned and guided with Kairoute", W / 2, 740);
+    c.fillStyle = "rgba(255,255,255,.8)"; c.font = `500 26px ${font}`; c.fillText("Your own guide, everywhere you go", W / 2, 790);
+  } else {
+    const g = c.createLinearGradient(0, H * 0.48, 0, H); g.addColorStop(0, "rgba(0,0,0,0)"); g.addColorStop(1, "rgba(0,0,0,.82)"); c.fillStyle = g; c.fillRect(0, H * 0.48, W, H * 0.52);
+    c.globalAlpha = fadeIn; let y = H - 120; const L = 48, MW = W - 96;
+    const blocks = [];
+    c.font = `italic 500 34px ${font}`; const qLines = s.quote ? Math.min(4, Math.ceil(c.measureText("“" + s.quote + "”").width / MW) + 0) : 0;
+    y -= (s.quote ? qLines * 44 + 18 : 0) + (s.stars ? 56 : 0);
+    if (s.eyebrow) { c.font = `800 24px ${font}`; c.fillStyle = "#F7C59F"; c.fillText(String(s.eyebrow).toUpperCase(), L, y - 70); }
+    c.fillStyle = "#fff"; c.font = `800 50px ${font}`; memWrap(c, s.title, L, y - 18, MW, 56, 2);
+    let yy = y + 36;
+    if (s.stars) { c.font = `700 42px ${font}`; c.fillStyle = "#F7B53D"; c.fillText("★".repeat(s.stars), L, yy + 12); c.fillStyle = "rgba(255,255,255,.3)"; c.fillText("★".repeat(5 - s.stars), L + c.measureText("★".repeat(s.stars)).width, yy + 12); yy += 56; }
+    if (s.quote) { c.fillStyle = "#fff"; c.font = `italic 500 34px ${font}`; memWrap(c, "“" + s.quote + "”", L, yy + 16, MW, 44, 4); }
+  }
+  c.globalAlpha = 1;
+  // the small Kairoute mark in the corner of every frame
+  if (s.kind !== "end") { c.globalAlpha = 0.85; c.drawImage(logos.light, W - 132, 44, 23, 26); c.fillStyle = "#fff"; c.font = `800 24px ${font}`; c.textAlign = "left"; c.shadowColor = "rgba(0,0,0,.5)"; c.shadowBlur = 6; c.fillText("kairoute", W - 104, 66); c.shadowBlur = 0; c.globalAlpha = 1; }
+  c.restore();
+}
+async function makeMemoryVideo() {
+  if (mem.busy) return;
+  if (typeof MediaRecorder === "undefined" || !HTMLCanvasElement.prototype.captureStream) { mem.err = "This browser can't make videos. Try Chrome on your tablet or phone."; memRefresh(); return; }
+  if (mem.url) URL.revokeObjectURL(mem.url);
+  mem = { busy: true, pct: 0, url: "", blob: null, ext: "", err: "", msg: "Gathering your photos…" }; memRefresh();
+  try {
+    const slides = await memSlides();
+    const logos = { light: await loadImg("data:image/svg+xml;charset=utf-8," + encodeURIComponent(memLogoSvg("#ffffff", "#F58A62"))) };
+    const font = getComputedStyle(document.body).fontFamily || "sans-serif";
+    const durOf = s => s.kind === "title" || s.kind === "end" ? 3.6 : s.kind === "day" ? 2.6 : s.kind === "text" ? (s.quote ? 4.2 : 2.8) : (s.quote ? 4.4 : 3.2);
+    const starts = []; let total = 0; slides.forEach(s => { starts.push(total); total += durOf(s); });
+    const cv = document.createElement("canvas"); cv.width = MEM_W; cv.height = MEM_H; const c = cv.getContext("2d");
+    const types = ["video/mp4;codecs=avc1.42E01E", "video/mp4", "video/webm;codecs=vp9", "video/webm"], type = types.find(t => MediaRecorder.isTypeSupported(t)) || "";
+    const stream = cv.captureStream(30), rec = new MediaRecorder(stream, type ? { mimeType: type, videoBitsPerSecond: 5000000 } : undefined), chunks = [];
+    rec.ondataavailable = e => { if (e.data && e.data.size) chunks.push(e.data); };
+    const done = new Promise(res => { rec.onstop = res; });
+    const frame = t => { let i = starts.findIndex((s0, k) => t >= s0 && t < s0 + durOf(slides[k])); if (i < 0) i = slides.length - 1;
+      const lt = t - starts[i]; memDraw(c, slides[i], lt, durOf(slides[i]), i, logos, font);
+      const left = durOf(slides[i]) - lt; if (left < MEM_FADE && slides[i + 1]) { c.globalAlpha = 1 - left / MEM_FADE; memDraw(c, slides[i + 1], 0, durOf(slides[i + 1]), i + 1, logos, font); c.globalAlpha = 1; } };
+    frame(0); rec.start(1000); mem.msg = "Recording your video…";
+    const t0 = performance.now(); let lastPct = -1;
+    await new Promise(res => { const tick = () => { const t = (performance.now() - t0) / 1000; frame(Math.min(t, total - 0.01));
+      const pct = 30 + Math.min(70, t / total * 70); if (Math.floor(pct) !== lastPct) { lastPct = Math.floor(pct); mem.pct = pct; const bar = document.querySelector(".memprog i"); if (bar) bar.style.width = pct.toFixed(0) + "%"; }
+      if (t >= total) res(); else requestAnimationFrame(tick); }; requestAnimationFrame(tick); });
+    rec.stop(); await done; stream.getTracks().forEach(tr => tr.stop());
+    const blob = new Blob(chunks, { type: (type || "video/webm").split(";")[0] });
+    mem = { busy: false, pct: 100, url: URL.createObjectURL(blob), blob, ext: /mp4/.test(blob.type) ? "mp4" : "webm", err: "", msg: "" };
+  } catch (e) { mem = { busy: false, pct: 0, url: "", blob: null, ext: "", err: "The video couldn't be made (" + (e && e.message || e) + "). Try again.", msg: "" }; }
+  memRefresh();
+}
+const memFileName = () => (trip.name || "kairoute-trip").replace(/[^\w\- ]+/g, "").trim().replace(/\s+/g, "-") + "." + mem.ext;
+async function memSave() {
+  if (!mem.blob) return;
+  const dl = cl && cl.use ? await cl.use("downloads").catch(() => null) : null;
+  if (dl) { try { await dl.save({ filename: memFileName(), data: mem.blob }); } catch (e) {} return; }
+  const a = document.createElement("a"); a.href = mem.url; a.download = memFileName(); document.body.appendChild(a); a.click(); a.remove();
+}
+async function memShare() {
+  if (!mem.blob) return;
+  try { await navigator.share({ files: [new File([mem.blob], memFileName(), { type: mem.blob.type })], title: trip.name || "My trip", text: "My trip, planned and guided with Kairoute" }); } catch (e) {}
 }
 function itineraryText() {
   const out = [(trip.name || tripName(trip)), ""];
@@ -4379,7 +4596,7 @@ function eventsCard(d, city, plan) {
 function renderPlan(d) {
   const city = cityFor(d);
   if (!city) return `${dayHeading(d)}${busyBlock()}${errBlock()}${needsCity(d)}`;
-  refillIfNeeded(d, city); if (!d.selected) d.selected = defaultSelection(city, trip.style, d);
+  refillIfNeeded(d, city); if (!d.selected) d.selected = defaultSelection(city, trip.style, d); crowdFor(city);
   const plan = buildPlan(d);
   if (plan.error) return `${dayHeading(d)}<div class="card empty"><p>${esc(plan.error)}</p><button class="btn" data-goto="trip">Edit this day</button></div>`;
   let n = 0;
@@ -4395,7 +4612,7 @@ function renderPlan(d) {
       const r = it.place;
       return `<div class="${cls}"><div class="time">${fmt(it.time)}</div><div class="rail"><div class="dot meal">${it.meal.label[0]}</div></div><div class="what">
         <div class="nm">${it.meal.label}: ${esc(r.name)}</div><div class="sub">${[r.cuisine, r.price, r.generic ? "" : r.kind === "local" ? "Local spot" : "Popular with visitors", dur(it.meal.len)].filter(Boolean).map(esc).join(" · ")}</div>
-        <div class="mealbox">${r.top || r.recommended ? `<span class="badges">${r.top ? `<i class="badge">Local favorite</i>` : ""}${r.recommended ? `<i class="badge">Travelers recommend</i>` : ""}</span>` : ""}<span>${esc(String(r.why || "").replace(/\s*\(Wikivoyage\)\s*$/, ""))}</span>${r.alts && r.alts.length ? `<span class="alt"><b>Or try</b> ${r.alts.map(a => esc(a.name) + (a.cuisine && a.cuisine !== "Restaurant" ? ` <small>(${esc(a.cuisine)})</small>` : "")).join(" · ")}</span>` : ""}</div></div></div>`;
+        <div class="mealbox">${r.crowdTop || r.top || r.recommended ? `<span class="badges">${crowdBadge(r)}${r.top ? `<i class="badge">Local favorite</i>` : ""}${r.recommended ? `<i class="badge">Travelers recommend</i>` : ""}</span>` : ""}<span>${esc(String(r.why || "").replace(/\s*\(Wikivoyage\)\s*$/, ""))}</span>${r.crowd ? `<span class="crowd">${esc(crowdLine(r))}</span>` : ""}${r.alts && r.alts.length ? `<span class="alt"><b>Or try</b> ${r.alts.map(a => esc(a.name) + (a.crowdTop ? " ★" : "") + (a.cuisine && a.cuisine !== "Restaurant" ? ` <small>(${esc(a.cuisine)})</small>` : "")).join(" · ")}</span>` : ""}${r.generic ? "" : eatStars(r.name, city)}</div></div></div>`;
     }
     if (it.type === "stop") {
       const s = it.place;
@@ -4574,11 +4791,12 @@ function renderTour(d) {
     const rated = steps.filter(x => x.type === "stop" && ((trip.journal || {})[jKey(x.place)] || {}).rating).length;
     body = `<div class="tourcard"><div class="eyebrow">That's the day</div><h2 class="tourtitle">${esc(st.label)}</h2>
       <p class="lede">You saw ${stopsOnly.length} stops. ${rated ? "You rated " + rated + " of them." : "Rate them in your journal while it's fresh."}</p>
-      <div class="actions tourmain"><button class="btn" data-goto="journal">Open the journal</button>${trip.days[trip.active + 1] ? `<button class="btn ghost" data-act="tourtomorrow">Next day: ${esc(trip.days[trip.active + 1].destination)}</button>` : ""}</div></div>`;
+      <div class="actions tourmain"><button class="btn" data-goto="journal">${trip.days[trip.active + 1] ? "Open the journal" : "Make my memory video"}</button>${trip.days[trip.active + 1] ? `<button class="btn ghost" data-act="tourtomorrow">Next day: ${esc(trip.days[trip.active + 1].destination)}</button>` : ""}</div></div>`;
   } else if (st.type === "meal") {
     const r = st.place;
     body = `<div class="tourcard"><div class="eyebrow">${esc(st.meal.label)} · ${dur(st.meal.len)}</div><h2 class="tourtitle">${esc(r.name)}</h2>
-      <p class="lede">${[r.cuisine, r.price, r.generic ? "" : r.kind === "local" ? "a local spot" : "popular with visitors"].filter(Boolean).map(esc).join(" · ")}</p><p>${esc(r.why)}</p>
+      <p class="lede">${[r.cuisine, r.price, r.generic ? "" : r.kind === "local" ? "a local spot" : "popular with visitors"].filter(Boolean).map(esc).join(" · ")}</p>${r.crowdTop || r.crowd ? `<p class="badges">${crowdBadge(r)}<span class="crowd">${esc(crowdLine(r))}</span></p>` : ""}<p>${esc(r.why)}</p>
+      ${r.generic ? "" : eatStars(r.name, cityFor(day()), "How was it? Rate it")}
       ${r.alts && r.alts.length ? `<p class="lede">Want something different, or it's full? Try ${r.alts.map(a => esc(a.name) + (a.cuisine && a.cuisine !== "Restaurant" ? " (" + esc(a.cuisine) + ")" : "")).join(" or ")}.</p>` : ""}
       <p class="timeleft" id="tourLeft"></p>
       <div class="actions tourmain"><button class="btn bigbtn" data-act="tournext">${nxt ? "Next: " + esc(stepName(nxt)) : "Finish"}</button></div></div>`;
@@ -4746,6 +4964,10 @@ document.addEventListener("click", e => {
     save(); render(); return;
   }
   if (t.dataset.wimgdel != null) { readWiz(); wiz.images.splice(+t.dataset.wimgdel, 1); render(); return; }
+  if (t.dataset.act === "memmake") { makeMemoryVideo(); return; }
+  if (t.dataset.act === "memsave") { memSave(); return; }
+  if (t.dataset.act === "memshare") { memShare(); return; }
+  if (t.dataset.eatrate) { const y = window.scrollY; rateEat(t.dataset.eatname, +t.dataset.eatrate); render(); window.scrollTo(0, y); return; }
   if (t.dataset.rate) { const n = +t.dataset.rate; jUpdate(t.dataset.sid, j => { j.rating = j.rating === n ? 0 : n; }); renderGuideOnly(); return; }
   if (t.dataset.delphoto != null) { const i = +t.dataset.delphoto; jUpdate(t.dataset.sid, j => { j.photos.splice(i, 1); }); renderGuideOnly(); return; }
   if (t.dataset.translate) { const s = allSites(cityFor(day())).find(x => x.id === t.dataset.translate); if (s) translateSite(s); return; }
@@ -4923,4 +5145,4 @@ render();
 
 </script>
 <script>if ("serviceWorker" in navigator) addEventListener("load", () => navigator.serviceWorker.register("sw.js").catch(() => {}));</script>
-<script>(function(){var B="9145615-1794440155";function chk(){if(location.protocol!=="https:")return;fetch("version.txt",{cache:"no-store"}).then(function(r){return r.ok?r.text():""}).then(function(t){t=t.trim();if(t&&t!==B)location.reload()}).catch(function(){})}addEventListener("load",chk);document.addEventListener("visibilitychange",function(){if(document.visibilityState==="visible")chk()})})();</script>
+<script>(function(){var B="e467dfe-1794442750";function chk(){if(location.protocol!=="https:")return;fetch("version.txt",{cache:"no-store"}).then(function(r){return r.ok?r.text():""}).then(function(t){t=t.trim();if(t&&t!==B)location.reload()}).catch(function(){})}addEventListener("load",chk);document.addEventListener("visibilitychange",function(){if(document.visibilityState==="visible")chk()})})();</script>

@@ -165,6 +165,30 @@ export default {
       ctx.waitUntil(env.USAGE.put(key, out, { expirationTtl: 6 * 3600 }));
       return new Response(out, { headers: { ...h, "content-type": "application/json" } });
     }
+    // Traveler ratings of restaurants, shared by everyone. /ratings?city=<key> returns
+    // { place: { avg, n } } for one city. POST /rate { city, place, stars, dev } records one traveler's 1-5 stars.
+    // Guards: one rating per device and place (a second rating replaces the first), at most 30 ratings per
+    // network address a day, and keys must look like Kairoute's own (lower-case words, short).
+    if (url.pathname === "/ratings") {
+      const city = String(url.searchParams.get("city") || "");
+      if (!/^[a-z0-9 ,'-]{1,80}$/.test(city)) return Response.json({ error: "Bad request" }, { status: 400, headers: h });
+      const raw = JSON.parse((await env.USAGE.get("rt1:" + city)) || "{}"), out = {};
+      for (const [k, v] of Object.entries(raw)) if (v.n) out[k] = { avg: +(v.s / v.n).toFixed(2), n: v.n };
+      return Response.json({ ratings: out }, { headers: { ...h, "cache-control": "public, max-age=120" } });
+    }
+    if (url.pathname === "/rate" && req.method === "POST") {
+      let b; try { b = await req.json(); } catch (e) { b = {}; }
+      const city = String(b.city || ""), place = String(b.place || ""), stars = Math.round(+b.stars), dev = String(b.dev || "");
+      if (!/^[a-z0-9 ,'-]{1,80}$/.test(city) || !/^[a-z0-9 ,'&.-]{1,80}$/.test(place) || !(stars >= 1 && stars <= 5) || !/^[a-f0-9]{16,40}$/.test(dev)) return Response.json({ error: "Bad request" }, { status: 400, headers: h });
+      const ip = req.headers.get("cf-connecting-ip") || "x", ik = "ri:" + ip + ":" + today(), used = +(await env.USAGE.get(ik)) || 0;
+      if (used >= 30) return Response.json({ error: "Thanks! That's the limit for today." }, { status: 429, headers: h });
+      const dk = "rd:" + dev + ":" + city + ":" + place, before = +(await env.USAGE.get(dk)) || 0;
+      const ck = "rt1:" + city, all = JSON.parse((await env.USAGE.get(ck)) || "{}"), v = all[place] || { s: 0, n: 0 };
+      if (before) v.s += stars - before; else { v.s += stars; v.n += 1; }
+      all[place] = v;
+      await Promise.all([env.USAGE.put(ck, JSON.stringify(all)), env.USAGE.put(dk, String(stars), { expirationTtl: 400 * 86400 }), env.USAGE.put(ik, String(used + 1), { expirationTtl: 2 * 86400 })]);
+      return Response.json({ ok: true, avg: +(v.s / v.n).toFixed(2), n: v.n }, { headers: h });
+    }
     // /voyage?city=: the city's Wikivoyage page (written by travelers): its listings (see, do, eat, drink)
     // with descriptions, hours, prices and locations, and the practical sections.
     if (url.pathname === "/voyage") {
