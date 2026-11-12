@@ -103,7 +103,18 @@ export default {
       for (const ep of ["https://overpass-api.de/api/interpreter", "https://overpass.private.coffee/api/interpreter", "https://maps.mail.ru/osm/tools/overpass/api/interpreter"]) {
         try { const rr = await fetch(ep, { method: "POST", signal: AbortSignal.timeout(20000), body: "data=" + encodeURIComponent(q), headers: { "content-type": "application/x-www-form-urlencoded", accept: "application/json", "user-agent": "Kairoute/1.0 (travel guide; https://gilsonr0566-sys.github.io/Kairoute/)" } }); tried.push(ep.split("/")[2] + " " + rr.status); if (rr.ok) { data = await rr.json(); break; } } catch (e) { tried.push(ep.split("/")[2] + " " + e.message); }
       }
-      if (!data) return Response.json({ error: "map busy", tried }, { status: 502, headers: h });
+      // Last resort: Nominatim (OpenStreetMap's own search), one point a second as its rules ask.
+      if (!data) {
+        const nm = [];
+        for (const [la, ln] of pts.slice(0, 6)) {
+          const d = r / 111000, e = d / Math.cos(la * Math.PI / 180);
+          try { const rr = await fetch(`https://nominatim.openstreetmap.org/search?format=jsonv2&amenity=restaurant&bounded=1&limit=40&extratags=1&viewbox=${ln - e},${la + d},${ln + e},${la - d}`, { headers: { ...UA, "accept-language": "en" }, signal: AbortSignal.timeout(9000) }); tried.push("nominatim " + rr.status);
+            if (rr.ok) (await rr.json()).forEach(f => { const t = f.extratags || {}; if (f.name) nm.push({ name: f.name, lat: +f.lat, lng: +f.lon, amenity: f.type || "restaurant", cuisine: t.cuisine || "", hours: t.opening_hours || "", web: t.website || "", tourism: false, tags: Object.keys(t).length + 2 }); }); } catch (e2) { tried.push("nominatim " + e2.message); }
+          await new Promise(res => setTimeout(res, 1100));
+        }
+        if (nm.length >= 3) { const out = JSON.stringify({ places: nm, src: "nominatim" }); ctx.waitUntil(env.USAGE.put(key, out, { expirationTtl: 30 * 86400 })); return new Response(out, { headers: { ...h, "content-type": "application/json" } }); }
+        return Response.json({ error: "map busy", tried }, { status: 502, headers: h });
+      }
       const places = (data.elements || []).map(e => { const t = e.tags || {}; return { name: t.name, lat: e.lat ?? (e.center && e.center.lat), lng: e.lon ?? (e.center && e.center.lon), amenity: t.amenity, cuisine: t.cuisine || "", hours: t.opening_hours || "", web: t.website || t["contact:website"] || "", tourism: !!(t.tourism || t["name:en"] && t.name !== t["name:en"]), tags: Object.keys(t).length }; }).filter(p => p.name && isFinite(p.lat) && isFinite(p.lng));
       const out = JSON.stringify({ places });
       ctx.waitUntil(env.USAGE.put(key, out, { expirationTtl: 30 * 86400 }));
