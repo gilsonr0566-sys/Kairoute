@@ -112,6 +112,14 @@ input[type=text], input[type=date], input[type=time], input[type=number], select
 .grate { display: inline-block; font-size: .85em; color: var(--ink-2, #555); text-decoration: none; margin-top: 2px; }
 .grate:hover { text-decoration: underline; }
 .grate.none { font-style: italic; }
+.checks summary small { color: var(--ink-2, #666); font-weight: normal; margin-left: 6px; }
+.checks ul { list-style: none; padding: 0; margin: 8px 0 0; }
+.checks .ck { display: flex; gap: 8px; padding: 4px 0; font-size: .92em; }
+.checks .ck span { width: 1.2em; flex: none; font-weight: 700; text-align: center; }
+.checks .ck.ok span { color: #2e7d4f; }
+.checks .ck.warn span { color: #b26a00; }
+.checks .ck.unk span { color: #777; }
+.srcnote { font-size: .8em; color: var(--ink-2, #666); margin: 4px 0 0; }
 .tag.local { background: var(--route-soft); color: var(--route); border-color: transparent; }
 .tag.fit { background: var(--route-soft); color: var(--route); border-color: transparent; }
 .tag.nofit { background: var(--meal-soft); color: var(--warn); border-color: transparent; }
