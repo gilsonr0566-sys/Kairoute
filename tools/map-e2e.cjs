@@ -37,7 +37,7 @@ const srv = http.createServer((q, r) => { let f = path.join(ROOT, decodeURICompo
     await p.evaluate(() => { const t = document.querySelector('.tab[data-view="plan"]'); if (t) t.click(); }); await p.waitForTimeout(300);
     if (!(await p.evaluate(() => !!document.querySelector('#view [data-map="plan"]')))) continue; // sea day or a day with no plan
     tested++;
-    const m = await waitMap(x => x.live && x.tiles && x.slot === 'plan' && (!STREETS || x.streetLegs === x.legs));
+    const m = await waitMap(x => x.live && x.tiles && x.slot === 'plan' && (!STREETS || x.streetLegs === x.legs), STREETS ? 50000 : 25000);
     if (!m.live) { bad(i, 'the street map did not appear (diagram only)' + (m.noGo ? ': map library failed to load' : '')); continue; }
     if (!m.tiles) bad(i, 'map tiles did not load');
     if (m.drawn !== m.legs) bad(i, `route has ${m.legs} legs but the map draws ${m.drawn}`);
