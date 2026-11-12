@@ -68,7 +68,8 @@ async function load() {
     { t: "AI today", v: u.ai.today, cap: u.ai.limitToday, note: `Today's hard stop is ${fmt(u.ai.limitToday)} neurons. The first ${fmt(u.ai.freeShare)} are free (${u.ai.today > u.ai.freeShare ? "passed, so the rest counts toward this month's extra" : Math.round(u.ai.today / u.ai.freeShare * 100) + "% of it used"}).` },
     { t: "AI beyond the free share, this month", v: u.ai.extraMonth, cap: u.ai.extraCap, note: `Hard stop at ${fmt(u.ai.extraCap)} neurons, about ${money(u.ai.extraCap / 1000 * u.ai.usdPer1000)}. Includes test runs.` },
     { t: "Guide voice today", v: u.voice.today, cap: u.voice.freeDaily, note: u.voice.paidOn ? "Paid voice is on." : "Paid voice is paused, so voice stays inside the free daily amount." },
-    { t: "Google ratings this month", v: u.google.month, cap: u.google.cap, note: `${fmt(u.google.today)} today. Kairoute stops at ${fmt(u.google.cap)}; Google's free amount is ${fmt(u.google.free)} a month.${u.google.keyOn ? "" : " The Google key isn't set up."}` }
+    { t: "Google ratings this month", v: u.google.month, cap: u.google.cap, note: `${fmt(u.google.today)} today. Kairoute stops at ${fmt(u.google.cap)}; Google's free amount is ${fmt(u.google.free)} a month.${u.google.keyOn ? "" : " The Google key isn't set up."}` },
+    ...(u.flights ? [{ t: "Flight lookups this month", v: u.flights.month, cap: u.flights.cap, note: `${fmt(u.flights.today)} today. Free up to ${fmt(u.flights.free)} a month; Kairoute stops at ${fmt(u.flights.cap)}, so it never costs anything. Each flight is looked up once and shared.${u.flights.keyOn ? "" : " The flight key isn't set up."}` }] : [])
   ];
   const alerts = [];
   document.getElementById("meters").innerHTML = meters.map(m => { const p = m.cap ? m.v / m.cap : 0, cls = p >= 1 ? "bad" : p >= 0.8 ? "warn" : "";

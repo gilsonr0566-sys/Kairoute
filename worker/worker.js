@@ -69,11 +69,12 @@ export default {
     if (url.pathname === "/usage") {
       const g = k => env.USAGE.get(k).then(v => +v || 0), d0 = new Date(), days = [];
       for (let i = 13; i >= 0; i--) { const x = new Date(d0.getTime() - i * 86400000).toISOString().slice(0, 10); days.push(x); }
-      const [aiToday, aiMonth, extraMonth, labToday, voiceToday, gDay, gMonth, ...hist] = await Promise.all([used(env), g("nm:" + month()), g("x:" + month()), g("t:" + today()), g("v:" + today()), g("gqd:" + today()), g("gqm:" + month()), ...days.map(x => g("nd:" + x))]);
+      const [aiToday, aiMonth, extraMonth, labToday, voiceToday, gDay, gMonth, fDay, fMonth, ...hist] = await Promise.all([used(env), g("nm:" + month()), g("x:" + month()), g("t:" + today()), g("v:" + today()), g("gqd:" + today()), g("gqm:" + month()), g("fld:" + today()), g("flm:" + month()), ...days.map(x => g("nd:" + x))]);
       return Response.json({ at: new Date().toISOString(), month: month(), paid: env.PAID === "1",
         ai: { today: Math.round(aiToday), freeShare: FREE_DAILY, limitToday: Math.round(DAILY_NEURONS), month: Math.round(aiMonth), extraMonth: Math.round(extraMonth), extraCap: MONTH_EXTRA, usdPer1000: 0.011 },
         voice: { today: Math.round(voiceToday), freeDaily: FREE_VOICE, paidOn: env.VOICE_PAID === "1" }, lab: { today: Math.round(labToday), daily: LAB_DAILY },
         google: { today: gDay, month: gMonth, cap: 900, free: 1000, usdEach: 0.035, keyOn: !!env.GPLACES_KEY },
+        flights: { today: fDay, month: fMonth, cap: 180, free: 200, keyOn: !!env.ADB_KEY },
         history: days.map((x, i) => ({ date: x, neurons: Math.round(hist[i]) })) }, { headers: { ...h, "cache-control": "no-store" } });
     }
     if (url.pathname === "/status") { const u = await used(env); const vu = +(await env.USAGE.get("v:" + today())) || 0; return Response.json({ ok: true, model: MODEL, usedToday: Math.round(u), budget: DAILY_NEURONS, left: Math.max(0, Math.floor(DAILY_NEURONS - u)), voiceLeft: Math.max(0, Math.floor(Math.min(VOICE_DAILY - vu, VOICE_TOTAL - u))), labLeft: Math.floor(LAB_LEFT), monthExtraUsed: Math.round(+(await env.USAGE.get("x:" + month())) || 0), monthExtraCap: MONTH_EXTRA, labToday: Math.round(+(await env.USAGE.get("t:" + today())) || 0) }, { headers: h }); }
@@ -207,6 +208,47 @@ export default {
       const out = JSON.stringify({ events, source: "ticketmaster" });
       ctx.waitUntil(env.USAGE.put(key, out, { expirationTtl: 6 * 3600 }));
       return new Response(out, { headers: { ...h, "content-type": "application/json" } });
+    }
+    // /flight?no=A3601&date=2027-06-30&role=arrival|departure: a flight's published schedule (airports, local
+    // times, airline) from AeroDataBox, so the day's timing comes from the airline, not a guess. role says which
+    // local date the traveler gave: the day they land (arrival) or the day they leave (departure); the other one is
+    // tried next. Free plan: 400 units a month, 2 per lookup, schedules up to a year ahead. Kairoute stays at 180
+    // lookups a month (40 a day), and every answer is shared by all travelers: kept 7 days (6 hours when the
+    // flight is within 3 days, so late schedule changes show). Without a key it says "nokey" and the app keeps
+    // the time the traveler typed.
+    if (url.pathname === "/flight") {
+      const no = String(url.searchParams.get("no") || "").toUpperCase().replace(/[^A-Z0-9]/g, ""), date = String(url.searchParams.get("date") || ""), role = url.searchParams.get("role") === "departure" ? "Departure" : "Arrival";
+      if (!/^([A-Z][A-Z0-9]|[0-9][A-Z])[A-Z]?\d{1,4}[A-Z]?$/.test(no) || !/^\d{4}-\d{2}-\d{2}$/.test(date)) return Response.json({ state: "bad" }, { status: 400, headers: h });
+      const key = "fl1:" + no + "|" + date + "|" + role, hit = await env.USAGE.get(key);
+      if (hit) return new Response(hit, { headers: { ...h, "content-type": "application/json" } });
+      if (!env.ADB_KEY) return Response.json({ state: "nokey" }, { headers: h });
+      const dk = "fld:" + today(), mk = "flm:" + month(); let usedToday = +(await env.USAGE.get(dk)) || 0, usedMonth = +(await env.USAGE.get(mk)) || 0;
+      const ap = a => { const x = (a && a.airport) || {}, t = (a && a.scheduledTime) || {}, loc = x.location || {};
+        const local = String(t.local || (a && a.scheduledTimeLocal) || ""), utc = String(t.utc || (a && a.scheduledTimeUtc) || "");
+        return { iata: x.iata || "", icao: x.icao || "", name: x.name || x.shortName || "", city: x.municipalityName || "", country: x.countryCode || "", lat: isFinite(loc.lat) ? +loc.lat : null, lng: isFinite(loc.lon) ? +loc.lon : null,
+          date: local.slice(0, 10), time: local.slice(11, 16), utc, terminal: (a && a.terminal) || "" }; };
+      const ask = async r => {
+        if (usedToday >= 40 || usedMonth >= 180) return { state: "later" };
+        usedToday++; usedMonth++;
+        try {
+          const res = await fetch("https://aerodatabox.p.rapidapi.com/flights/number/" + no + "/" + date + "?withAircraftImage=false&withLocation=false&dateLocalRole=" + r,
+            { headers: { "X-RapidAPI-Key": env.ADB_KEY, "X-RapidAPI-Host": "aerodatabox.p.rapidapi.com" }, signal: AbortSignal.timeout(10000) });
+          if (res.status === 204 || res.status === 404) return { state: "notfound" };
+          if (res.status === 400) return { state: "notyet" }; // date outside what the airline has published (or the plan's reach)
+          if (!res.ok) return { state: "later" };
+          const j = await res.json(), list = (Array.isArray(j) ? j : [j]).filter(f => f && f.departure && f.arrival && !f.isCargo);
+          if (!list.length) return { state: "notfound" };
+          return { state: "ok", source: "AeroDataBox", legs: list.map(f => ({ number: f.number || no, airline: (f.airline && f.airline.name) || "", status: f.status || "", dep: ap(f.departure), arr: ap(f.arrival) })).filter(l => l.dep.time && l.arr.time) };
+        } catch (e) { return { state: "later" }; }
+      };
+      let out = await ask(role);
+      if (out.state === "notfound" || out.state === "notyet") { const o2 = await ask(role === "Arrival" ? "Departure" : "Arrival"); if (o2.state === "ok" || out.state === "notfound" && o2.state === "notyet") out = o2; }
+      if (out.state === "ok" && !out.legs.length) out = { state: "notfound" };
+      const body = JSON.stringify(out), soon = (Date.parse(date) - Date.now()) / 86400000 < 3;
+      if (out.state === "ok") ctx.waitUntil(env.USAGE.put(key, body, { expirationTtl: soon ? 6 * 3600 : 7 * 86400 }));
+      else if (out.state === "notfound" || out.state === "notyet") ctx.waitUntil(env.USAGE.put(key, body, { expirationTtl: 2 * 86400 }));
+      ctx.waitUntil(env.USAGE.put(dk, String(usedToday), { expirationTtl: 3 * 86400 })); ctx.waitUntil(env.USAGE.put(mk, String(usedMonth), { expirationTtl: 40 * 86400 }));
+      return new Response(body, { headers: { ...h, "content-type": "application/json" } });
     }
     // Traveler ratings of restaurants, shared by everyone. /ratings?city=<key> returns
     // { place: { avg, n } } for one city. POST /rate { city, place, stars, dev } records one traveler's 1-5 stars.
