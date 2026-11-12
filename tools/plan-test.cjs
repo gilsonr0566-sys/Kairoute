@@ -8,7 +8,7 @@
 const { chromium } = require('playwright'); const fs = require('fs'); const path = require('path');
 const FILE = path.resolve(process.argv[2] || path.join(__dirname, '..', 'index.html'));
 (async () => {
-  const b = await chromium.launch(); let fails = 0, warns = 0, days = 0;
+  const b = await chromium.launch(); let fails = 0, warns = 0, days = 0, meters = 0;
   const run = async (label, setup) => {
     const p = await b.newPage(); p.on('pageerror', e => console.log('PAGE ERROR', e.message));
     await p.route('**/*', r => /^file:/.test(r.request().url()) ? r.continue() : r.abort());
@@ -26,6 +26,20 @@ const FILE = path.resolve(process.argv[2] || path.join(__dirname, '..', 'index.h
       const softRe = /^(travel |free |\d+ crossing)/, hard = issues.filter(x => !softRe.test(x)), soft = issues.filter(x => softRe.test(x));
       fails += hard.length ? 1 : 0; warns += soft.length ? 1 : 0;
       console.log(`${hard.length ? 'FAIL' : soft.length ? 'WARN' : 'ok  '} ${d.date} ${d.dest}: ${d.stops} stops, ends ${d.end} (by ${d.endBy})${d.meals.length ? ' | ' + d.meals.join('; ') : ''}${d.dropped.length ? ' | did not fit: ' + d.dropped.join(', ') : ''}${issues.length ? ' | ' + issues.join('; ') : ''}`);
+    }
+    // Time meter: it adds up (visits + meals + getting around + arrival + picks that don't fit), never counts
+    // bonus stops, and a day with nothing ticked shows the whole day free apart from getting to the hotel.
+    for (const clear of [false, true]) {
+      const ms = await p.evaluate(c => window.__kairouteMeter ? window.__kairouteMeter(c) : null, clear);
+      if (!ms) { console.log('meter hook missing'); fails++; break; }
+      for (const m of ms) {
+        if (m.skip) continue; if (m.err) { console.log(`FAIL meter ${m.i}: ${m.err}`); fails++; continue; }
+        const bad = [];
+        if (Math.abs(m.settle + m.leave + m.visits + m.eat + m.moving + m.extra - m.used) > 1) bad.push(`parts don't add up (${m.settle}+${m.leave}+${m.visits}+${m.eat}+${m.moving}+${m.extra} vs ${m.used})`);
+        if (clear && (m.visits || m.extra || m.bonus || m.stops || (!m.booked && (m.eat || m.moving > 2)))) bad.push(`cleared day still counts ${m.used} min (visits ${m.visits}, meals ${m.eat}, bonus ${m.bonus}, stops ${m.stops})`);
+        if (bad.length) { fails++; console.log(`FAIL meter${clear ? ' (cleared)' : ''} ${m.date} ${m.dest}: ${bad.join('; ')}`); }
+      }
+      meters += ms.filter(m => !m.skip).length;
     }
     await p.close();
   };
@@ -48,6 +62,7 @@ const FILE = path.resolve(process.argv[2] || path.join(__dirname, '..', 'index.h
       console.log(`\n== Arrival day, 4 central Athens picks, ${h} h to sightsee\n${ok ? 'ok  ' : 'FAIL'} keeps ${stops.length} of 4 (needs ${need}+, the must-see Plaka first)${o.dropped.length ? ' | did not fit: ' + o.dropped.join(', ') : ''}`);
     }
     await p.close(); }
+  console.log(`\nTime meter checked ${meters} times (every day as planned, and again with every stop unticked).`);
   console.log(`\n${days} days planned: ${fails} with problems, ${warns} travel-heavy warnings.`);
   await b.close(); process.exit(fails ? 1 : 0);
 })();
