@@ -37,6 +37,7 @@ jobs:
           npm i --no-save playwright@1 && npx playwright install --with-deps chromium
           node tools/plan-test.cjs
           node tools/safety-net.cjs
+          node tools/nav-check.cjs
       - name: Street map check (no network needed)
         run: MOCK=1 node tools/map-e2e.cjs
       - name: Keep the safety-net report even when it fails

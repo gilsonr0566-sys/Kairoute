@@ -600,10 +600,10 @@ details.story:not([open]) > summary::before { content: "▸ "; }
   html.appview .tab { padding-block: 8px 7px; font-size: .95rem; }
   html.appview #aiStatus { display: none; }
   /* Trip screen: no day strip (the day list on the left is the picker), so the tabs move up beside the logo */
-  html.appview .top .wrap:has(#dayRow[hidden]) { grid-template-areas: "logo mid acts"; padding-bottom: 0; }
-  html.appview .top .wrap:has(#dayRow[hidden]) .tripname { grid-area: mid; }
-  html.appview .top .wrap:has(#dayRow[hidden]) .tabs { grid-area: mid; display: flex; gap: 2px; justify-self: center; }
-  html.appview .top .wrap:has(#dayRow[hidden]) .tab { padding: 10px 16px 9px; }
+  html.appview:not(.railnav) .top .wrap:has(#dayRow[hidden]) { grid-template-areas: "logo mid acts"; padding-bottom: 0; }
+  html.appview:not(.railnav) .top .wrap:has(#dayRow[hidden]) .tripname { grid-area: mid; }
+  html.appview:not(.railnav) .top .wrap:has(#dayRow[hidden]) .tabs { grid-area: mid; display: flex; gap: 2px; justify-self: center; }
+  html.appview:not(.railnav) .top .wrap:has(#dayRow[hidden]) .tab { padding: 10px 16px 9px; }
 
   /* Tighter type and spacing so more fits */
   html.appview #view h2:not(.tourtitle) { font-size: 1.3rem; }
