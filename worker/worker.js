@@ -198,8 +198,8 @@ export default {
       for (const x of list) { const k = "gq1:" + (await sha(String(x.name).toLowerCase() + "|" + (+x.lat).toFixed(3) + "|" + (+x.lng).toFixed(3))); const hit = await env.USAGE.get(k, "json"); if (hit) out[x.name] = hit; else todo.push([x, k]); }
       if (!env.GPLACES_KEY) { todo.forEach(([x]) => out[x.name] = { state: "nokey" }); return Response.json({ ratings: out }, { headers: h }); }
       // Rating lookups use Google's "Enterprise" Text Search, which is free for 1,000 calls a month: stay under
-      // that with 900 a month and 30 a day. Every answer is kept 30 days, so each restaurant is looked up about once a month.
-      const dk = "gqd:" + today(), mk = "gqm:" + month(); let usedToday = +(await env.USAGE.get(dk)) || 0, usedMonth = +(await env.USAGE.get(mk)) || 0; const CAP = 30, MCAP = 900;
+      // that with 900 a month (up to 150 in one day, so a whole new trip can be rated at once). Every answer is kept 30 days, so each restaurant is looked up about once a month.
+      const dk = "gqd:" + today(), mk = "gqm:" + month(); let usedToday = +(await env.USAGE.get(dk)) || 0, usedMonth = +(await env.USAGE.get(mk)) || 0; const CAP = 150, MCAP = 900;
       const norm = t => String(t || "").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/[^a-z0-9Ͱ-ϿЀ-ӿ]+/g, " ").trim();
       const near = (a, c) => Math.hypot((a.lat - c.latitude) * 111000, (a.lng - c.longitude) * 111000 * Math.cos(a.lat * Math.PI / 180));
       for (const [x, k] of todo) {
