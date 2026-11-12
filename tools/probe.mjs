@@ -1,0 +1,15 @@
+// One-off probe of outside sources from GitHub's network (the build container can't reach them).
+const UA = { "user-agent": "Kairoute/1.0 (travel guide; https://gilsonr0566-sys.github.io/Kairoute/)" };
+const wt = async (host, page) => { const r = await fetch(`https://${host}/w/api.php?action=parse&prop=wikitext&format=json&formatversion=2&redirects=1&page=` + encodeURIComponent(page), { headers: UA }); const j = await r.json(); return j.parse ? j.parse : { title: "?", wikitext: "" }; };
+for (const [h, p] of [["it.wikivoyage.org", "Roma"], ["it.wikivoyage.org", "Roma/Centro storico"], ["es.wikivoyage.org", "Madrid"], ["el.wikivoyage.org", "Αθήνα"]]) {
+  const x = await wt(h, p), w = x.wikitext || "";
+  const tm = {}; for (const m of w.matchAll(/\{\{\s*([^|}\n]+)/g)) { const k = m[1].trim(); tm[k] = (tm[k] || 0) + 1; }
+  console.log(`\n## ${h} ${p} -> ${x.title} len ${w.length}\nTEMPLATES ${JSON.stringify(Object.entries(tm).sort((a, b) => b[1] - a[1]).slice(0, 25))}\nLINKS ${[...w.matchAll(/\[\[([^|\]]*\/[^|\]]*)/g)].slice(0, 15).map(m => m[1]).join(" ; ")}\nHEADS ${[...w.matchAll(/^==\s*([^=].*?)\s*==\s*$/gm)].map(m => m[1]).join(" | ")}`);
+  const i = w.search(/\{\{\s*(see|vedi|listing|ver|monumento)/i); console.log("SAMPLE " + w.slice(Math.max(0, i), i + 700).replace(/\n/g, " ⏎ "));
+}
+const sp = async q => { const t = Date.now(); const r = await fetch("https://query.wikidata.org/sparql?format=json&query=" + encodeURIComponent(q), { headers: { ...UA, accept: "application/sparql-results+json" } }); const s = await r.text(); console.log(`SPARQL ${r.status} ${Date.now() - t}ms ${s.slice(0, 600).replace(/\s+/g, " ")}`); };
+const ids = "wd:Q10285 wd:Q12512 wd:Q99309";
+await sp(`SELECT ?item ?h ?w ?loc ?lab WHERE { VALUES ?item { ${ids} } OPTIONAL { ?item wdt:P1435 ?h } OPTIONAL { ?item wdt:P856 ?w } OPTIONAL { ?item wdt:P625 ?loc } OPTIONAL { ?item rdfs:label ?lab FILTER(LANG(?lab) = "en") } }`);
+await sp(`SELECT ?item ?ln WHERE { VALUES ?item { ${ids} } ?a schema:about ?item ; schema:isPartOf <https://it.wikipedia.org/> ; schema:name ?ln }`);
+const wb = await (await fetch("https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&props=sitelinks&sites=enwikivoyage&normalize=1&titles=Kusadasi", { headers: UA })).text(); console.log("WB " + wb.slice(0, 300));
+for (const ep of ["https://overpass-api.de/api/interpreter", "https://overpass.private.coffee/api/interpreter", "https://maps.mail.ru/osm/tools/overpass/api/interpreter", "https://overpass.kumi.systems/api/interpreter"]) { const t = Date.now(); try { const r = await fetch(ep, { method: "POST", body: "data=" + encodeURIComponent('[out:json][timeout:20];nwr["tourism"="museum"]["wikidata"](around:2000,41.89,12.49);out center tags 50;'), headers: { ...UA, "content-type": "application/x-www-form-urlencoded" }, signal: AbortSignal.timeout(25000) }); const s = await r.text(); console.log(`OVERPASS ${ep} ${r.status} ${Date.now() - t}ms ${s.length}`); } catch (e) { console.log(`OVERPASS ${ep} ERR ${e.message}`); } }
