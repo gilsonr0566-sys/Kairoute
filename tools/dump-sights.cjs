@@ -2,7 +2,7 @@
 // (full guides load from the shared cache). Run by the "List guide sights" workflow.
 const { chromium } = require('playwright');
 (async () => {
-  const b = await chromium.launch(); const p = await b.newPage({ viewport: { width: 1200, height: 900 } });
+  const b = await chromium.launch(); const p = await b.newPage({ viewport: { width: 1200, height: 900 } }); p.on('response', r => { if (r.status() >= 500) console.log('HTTP ' + r.status() + ' ' + r.url().slice(0, 160)); });
   await p.goto('https://gilsonr0566-sys.github.io/Kairoute/?t=' + Date.now()); await p.evaluate(() => localStorage.setItem('kairoute.intro1', '1')); await p.reload(); await p.waitForTimeout(3000);
   await p.click('[data-act="continue"]').catch(() => {}); await p.waitForTimeout(800);
   const n = await p.evaluate(() => document.querySelectorAll('.daychip').length);

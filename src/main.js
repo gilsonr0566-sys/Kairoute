@@ -1534,6 +1534,8 @@ function fameFor(d, city) {
 const fameW = s => 1 + (s && s.unesco ? 0.8 : s && s.heritage ? 0.3 : 0) + Math.min(1.2, ((s && s.fame) || 0) / 80) + Math.min(0.6, Math.max(0, ((s && s.src && s.src.length) || 0) - 1) * 0.15);
 const srcNote = s => s && s.src && s.src.length ? `<p class="srcnote">Named by ${s.src.length} source${s.src.length > 1 ? "s" : ""}: ${esc(s.src.join(", "))}${s.local && s.local !== s.name ? ` · Local name: ${esc(s.local)}` : ""}</p>` : "";
 const unescoTag = s => s && s.unesco ? `<span class="tag unesco">UNESCO World Heritage</span>` : "";
+// The AI sometimes returns {"name": …} where a plain name was asked for.
+const nameStr = x => typeof x === "string" ? x.trim() : x && typeof x.name === "string" ? x.name.trim() : "";
 async function cityInParts(prompt, show, label) {
   cityArea = null;
   const okLL = x => x && x.name && isFinite(numV(x.lat)) && isFinite(numV(x.lng));
@@ -1579,10 +1581,10 @@ async function cityInParts(prompt, show, label) {
   const big = src ? src.stops.filter(x => x.src.length >= 3).length : 0, T = Math.min(26, Math.max(18, big)), KEEP = T - 4;
   const plan = await ask('For this first step return ONLY {"main":[{"name","mustSee","kind"}],"quick":["name"],"farther":["name"],"skipped":["name"]}: exactly ' + T + ' main sights in order of importance (3-5 mustSee true, about a third "kind":"local"), 7 small quick sights people walk past, and 5 day trips or sights farther out. Real, distinct places, each under its usual name as it appears on maps; if visitors know it by another name, add that in parentheses, for example "Mirador de la Flor (Selena Memorial)". Places only, not activities, walks, hikes or tours, and one entry per place (never separate entries for parts of the same place). Always include the city\'s best-known landmarks, monuments, memorials and statues (as main or quick sights), even if they are not in any list below. Names and those fields only.' + hint + famHint + srcHint, "quick",
     j => j && (j.main || []).filter(x => x && x.name).length >= 8);
-  let main = plan.main.filter(x => x && x.name).slice(0, T + 2), quick = (plan.quick || []).map(String).filter(Boolean).slice(0, 8), far = (plan.farther || []).map(String).filter(Boolean).slice(0, 5);
+  let main = plan.main.filter(x => x && x.name).slice(0, T + 2), quick = (plan.quick || []).map(nameStr).filter(Boolean).slice(0, 8), far = (plan.farther || []).map(nameStr).filter(Boolean).slice(0, 5);
   // Check, not trust: a top-15 famous place the writer neither used nor called unvisitable is added anyway.
   if (famMain.length) {
-    const have = [...main.map(x => x.name), ...quick, ...far, ...((plan.skipped || []).map(String))], has = n => have.some(h => nameMatch(n, h) || nameMatch(h, n));
+    const have = [...main.map(x => x.name), ...quick, ...far, ...((plan.skipped || []).map(nameStr))], has = n => have.some(h => nameMatch(n, h) || nameMatch(h, n));
     // Fame says a place matters; a travel guide, heritage register or UNESCO says it is a place to visit. Both are
     // needed, so a famous university, political party or tennis tournament is never added as a sight.
     const visitable = x => { if (!src) return true; const y = srcStop(src, x.name, x); return !!(y && y.src.some(t => /Wikivoyage|heritage|UNESCO/.test(t))); };
@@ -1595,7 +1597,7 @@ async function cityInParts(prompt, show, label) {
   // The same check for places 4 or more independent sources agree on (local guidebooks, heritage registers,
   // the map), so a sight known mostly to locals isn't lost either.
   if (srcTop.length) {
-    const have = [...main.map(x => x.name), ...quick, ...far, ...((plan.skipped || []).map(String))], has = n => have.some(h => nameMatch(n, h) || nameMatch(h, n));
+    const have = [...main.map(x => x.name), ...quick, ...far, ...((plan.skipped || []).map(nameStr))], has = n => have.some(h => nameMatch(n, h) || nameMatch(h, n));
     const lost = srcTop.filter(x => x.src.length >= 4 && !has(x.name) && !(x.local && has(x.local))).slice(0, 6);
     if (lost.length) console.info("Kairoute added places several sources agree on in " + label + ": " + lost.map(x => x.name + " (" + x.src.join(", ") + ")").join("; "));
     lost.forEach(x => main.push({ name: x.name, mustSee: !!x.unesco, kind: x.src.some(t => /Wikivoyage \(|Wikipedia in/.test(t) && !/English/.test(t)) && x.sl < 30 ? "local" : "touristy", fame: x.sl }));
