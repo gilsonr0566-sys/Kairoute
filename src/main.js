@@ -770,10 +770,14 @@ async function bookSearch() {
   f.busy = true; f.msg = ""; f.results = found.slice(0, 4); render();
   if (typeof navigator !== "undefined" && navigator.onLine === false) { f.busy = false; if (!found.length) f.msg = "There's no internet right now, and I need it to find the place on the map. Try again when you're online."; render(); return; }
   try {
-    const r = freeAI ? await fetch(freeAI.url + "/ground", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ city: d.destination, names: [f.q] }) }) : null;
-    const j = r && r.ok ? await r.json() : null, x = j && (j.results || [])[0], mid = (j && j.center) || from;
-    ((x && x.map) || []).filter(m => m.name && isFinite(m.lat) && (nameMatch(f.q, m.name) || nameMatch(m.name, f.q)) && (!mid || hav(m, mid) <= 40))
-      .forEach(m => { if (!f.results.some(y => hav(y, m) < 0.05)) f.results.push({ name: m.name, lat: +(+m.lat).toFixed(5), lng: +(+m.lng).toFixed(5), kind: String(m.kind || "").replace(/_/g, " ") }); });
+    // OpenStreetMap, inside the city, under any name the map knows (a taverna listed in Greek still matches).
+    const r = freeAI ? await fetch(freeAI.url + "/findplace?city=" + encodeURIComponent(d.destination) + "&q=" + encodeURIComponent(f.q)) : null;
+    const j = r && r.ok ? await r.json() : null;
+    const core = f.q.replace(/\b(taverna|tavern|restaurant|ristorante|trattoria|osteria|cafe|café|bistro|bar|the|mezedopolio|ouzeri|estiatorio)\b/gi, " ").replace(/\s+/g, " ").trim() || f.q;
+    const eats = /restaurant|cafe|pub|bar|fast_food|food_court|biergarten|ice_cream/;
+    ((j && j.places) || []).filter(m => isFinite(m.lat) && (m.names || [m.name]).some(n => nameMatch(f.q, n) || nameMatch(core, n) || nameMatch(n, core)))
+      .sort((a, b) => (eats.test(b.kind) ? 1 : 0) - (eats.test(a.kind) ? 1 : 0))
+      .forEach(m => { if (!f.results.some(y => hav(y, m) < 0.05)) f.results.push({ name: m.name, lat: +(+m.lat).toFixed(5), lng: +(+m.lng).toFixed(5), kind: String(m.kind || "").replace(/_/g, " "), addr: m.addr || "" }); });
   } catch (e) {}
   f.results = f.results.slice(0, 4).map(y => Object.assign(y, { km: from ? hav(from, y) : null }));
   f.busy = false;
@@ -786,7 +790,7 @@ function bookFormHTML(d) {
     <div class="row2"><label>Restaurant<input id="bk-name" type="text" autocomplete="off" value="${esc(f.q || "")}" placeholder="e.g. Taverna Platanos"></label><label>Time<input id="bk-time" type="time" value="${esc(f.time)}"></label></div>
     <div class="actions"><button class="btn" data-act="booksearch" ${f.busy ? "disabled" : ""}>${f.busy ? "Looking it up…" : "Find it"}</button><button class="btn ghost" data-act="bookcancel">Cancel</button></div>
     ${f.msg ? `<p class="banner warn" role="status">${esc(f.msg)}</p>` : ""}
-    ${f.results && f.results.length ? `<p class="lede small">Which one is it?</p><div class="bookres">${f.results.map((y, i) => `<button class="btn ghost" data-bookpick="${i}"><b>${esc(y.name)}</b><small>${[y.kind, y.km != null ? distTxt(y.km) + " from your hotel" : ""].filter(Boolean).map(esc).join(" · ")}</small></button>`).join("")}</div>` : ""}</div>`;
+    ${f.results && f.results.length ? `<p class="lede small">Which one is it?</p><div class="bookres">${f.results.map((y, i) => `<button class="btn ghost" data-bookpick="${i}"><b>${esc(y.name)}</b><small>${[y.addr, y.kind, y.km != null ? distTxt(y.km) + " from your hotel" : ""].filter(Boolean).map(esc).join(" · ")}</small></button>`).join("")}</div>` : ""}</div>`;
 }
 function placeMeals(order, meals, t0, O, Z, style, city) {
   let seq = order.slice();
@@ -3658,7 +3662,7 @@ document.addEventListener("click", e => {
   if (t.dataset.act === "booksearch") { bookSearch(); return; }
   if (t.dataset.act === "bookcancel") { bookForm = null; render(); return; }
   if (t.dataset.bookpick != null && bookForm) { const y = bookForm.results[+t.dataset.bookpick], d = day(), tm = ((document.getElementById("bk-time") || {}).value || bookForm.time);
-    if (y) { d.booked = Object.assign({}, d.booked, { [bookForm.label]: { name: y.name, lat: y.lat, lng: y.lng, kind: y.kind || "", time: /^\d\d:\d\d$/.test(tm) ? tm : bookForm.time } }); bookForm = null; trip.tour = null; save(); render(); } return; }
+    if (y) { d.booked = Object.assign({}, d.booked, { [bookForm.label]: { name: y.name, lat: y.lat, lng: y.lng, kind: y.kind || "", addr: y.addr || "", time: /^\d\d:\d\d$/.test(tm) ? tm : bookForm.time } }); bookForm = null; trip.tour = null; save(); render(); } return; }
   if (t.dataset.act === "bookremove") { const d = day(); if (d.booked) { delete d.booked[t.dataset.meal]; if (!Object.keys(d.booked).length) delete d.booked; } trip.tour = null; save(); render(); return; }
   if (t.dataset.act === "memmake") { makeMemoryVideo(); return; }
   if (t.dataset.act === "memsave") { memSave(); return; }

@@ -11,3 +11,7 @@ const g = await call({ op: "get", code }); console.log("get", g.s, g.j && g.j.da
 const bad = await call({ op: "get", code: "ZZZZZZZZ" }); console.log("unknown code", bad.s, "(404 expected)");
 const gr = await (await fetch(U + "/ground", { method: "POST", headers: H, body: JSON.stringify({ city: "Athens", names: ["Taverna Platanos"] }) })).json();
 console.log("reservation lookup:", ((gr.results || [])[0] || {}).map?.slice(0, 3).map(m => m.name + " " + m.lat + "," + m.lng).join(" | "));
+for (const [city, q] of [["Athens", "Taverna Platanos"], ["Athens", "Psaras"], ["Corinth", "Tavernaki Gamprou"], ["Corpus Christi", "Doc's Seafood & Steaks"]]) {
+  const t0 = Date.now(), j = await (await fetch(U + "/findplace?city=" + encodeURIComponent(city) + "&q=" + encodeURIComponent(q), { headers: H })).json();
+  console.log("findplace", city, "|", q, "|", Date.now() - t0, "ms |", (j.places || []).slice(0, 3).map(p => p.name + " [" + p.kind + "] " + p.addr + " " + p.lat.toFixed(4) + "," + p.lng.toFixed(4) + " names:" + p.names.join("/")).join(" || "));
+}
