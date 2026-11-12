@@ -3154,10 +3154,8 @@ Destination: ${label}
 Date of visit: ${d.date || "not given"}
 Kind of day: ${typeInfo(d.type).label}${isPort ? ". The traveler arrives on a cruise ship and must be back aboard the same day; if the port is a gateway to a bigger city (for example Civitavecchia for Rome), put that city's highlights in \"farther\" with honest travel times" : ""}.
 ${d.event ? "Special event: " + d.event + ". Include its venue as a mustSee site." : ""}
-${trip.prefs && trip.prefs.interests.length ? "Traveler interests: " + trip.prefs.interests.join(", ") + ". Favor sights that match." : ""}
-${trip.prefs && trip.prefs.interests.includes("churches") ? "Always include the city's most important churches, cathedrals, monasteries and other places of worship, with their history and what makes them sacred." : ""}
-${trip.prefs && trip.prefs.interests.includes("bible") ? "The travelers want Bible and early Christian sites: include any place linked to the Bible, the apostles (for example Paul's journeys through Athens, Corinth, Ephesus, Crete, Malta and Rome, and John in Ephesus and Patmos), early churches, catacombs and pilgrimage sites, as main sights or in farther, and in each guide tell the Bible connection with the chapter and verse." : ""}
-${trip.prefs && trip.prefs.travelers ? "About the travelers: " + trip.prefs.travelers + "." : ""}
+This guide is shared by every Kairoute traveler, so it covers the whole place, balanced: the famous sights first, then museums, history, neighborhoods, views, markets and the most important places of worship (with what makes them sacred). Each traveler's own interests are applied later, when their days are planned, so never let one interest crowd out the famous sights.
+Where a place has a real Bible or early Christian connection (for example Paul's journeys through Athens, Corinth, Ephesus, Crete, Malta and Rome, John in Ephesus and Patmos, early churches and catacombs), include the place and tell that connection in its guide with chapter and verse.
 
 Return ONLY a JSON object, no commentary, with this shape:
 {
@@ -3320,7 +3318,15 @@ function addRealDetails(x, g, vg, osm) {
 // places to cover, then small pieces written at the same time, each for a fixed set of named places.
 // That keeps every piece short (no duplicates, no runaway lists), and any piece that comes back short
 // or broken is asked for again, up to 3 tries.
+let cityArea = null;
+const famousCache = {};
+async function famousFor(label) {
+  if (!freeAI || !label) return null; if (famousCache[label]) return famousCache[label];
+  try { const r = await fetch(freeAI.url + "/famous?city=" + encodeURIComponent(label)); if (r.ok) { const j = await r.json(); if (j && Array.isArray(j.main)) return (famousCache[label] = j); } } catch (e) {}
+  return null;
+}
 async function cityInParts(prompt, show, label) {
+  cityArea = null;
   const okLL = x => x && x.name && isFinite(numV(x.lat)) && isFinite(numV(x.lng));
   const lang = P().lang || "English";
   const tail = ` Ignore any other counts above and keep each item as concise as the format allows. Write every summary, guide, lookFor, photoTip, pick, tip and note in ${lang}, even though the place is abroad; only place names and the local phrases stay in the local language.`;
@@ -3343,13 +3349,29 @@ async function cityInParts(prompt, show, label) {
   };
   show(2, "Choosing the best places", 9);
   // Wikivoyage, written by travelers, lists the real sights: offer them to the planner by name.
+  // Outside measure of fame (Wikidata: how many Wikipedia languages write about each place), so the guide can't
+  // leave out the places every visitor comes for. A port named like "Civitavecchia (Rome)" is about Rome when
+  // Rome is the far bigger draw.
+  const fam = label ? await famousFor(label) : null;
+  if (fam && fam.area && keyOf(fam.area) !== keyOf(fam.port || "")) { label = fam.area; cityArea = fam.area; }
+  const famMain = fam ? fam.main.slice(0, 30) : [], famFar = fam ? fam.far.slice(0, 15) : [];
+  const famHint = famMain.length || famFar.length ? `\n\nHow famous each place is, from Wikidata (the number is how many Wikipedia languages write about it). Some entries are not visitable sights (organizations, events, transport systems, regions); ignore those.\nIN ${label.toUpperCase()}: ${famMain.map(x => x.name + " (" + x.sl + ")").join("; ")}\nDAY TRIPS NEARBY: ${famFar.map(x => x.name + " (" + x.sl + ", " + x.km + " km)").join("; ")}\nRules for these lists: every place in the top 15 of IN ${label.toUpperCase()} that a visitor can go and see MUST be one of your main or quick sights, under that name; the best-known visitable day trips from DAY TRIPS NEARBY (archaeological sites, famous villages, islands, monasteries, natural wonders) MUST be in "farther" unless they are farther than a day allows; the mustSee sights are the most famous ones. Also return "skipped": the names from the top 15 of IN ${label.toUpperCase()} that you left out, because they aren't places to visit.` : "";
   const vg = label ? await voyageFor(label) : null;
   const seeList = vg ? [...new Set(vg.listings.filter(l => l.type === "see" && l.name && l.name.length < 60).map(l => l.name))].slice(0, 45) : [];
   const hint = seeList.length ? ` Travelers on Wikivoyage list these real places in ${label}. Prefer them where they fit, and use these exact names for them: ${seeList.join("; ")}.` : "";
   // Ask for more than the guide needs: any name the check can't confirm is dropped, and the rest still fill the guide.
-  const plan = await ask('For this first step return ONLY {"main":[{"name","mustSee","kind"}],"quick":["name"],"farther":["name"]}: exactly 18 main sights in order of importance (3-5 mustSee true, about a third "kind":"local"), 7 small quick sights people walk past, and 5 day trips or sights farther out. Real, distinct places, each under its usual name as it appears on maps; if visitors know it by another name, add that in parentheses, for example "Mirador de la Flor (Selena Memorial)". Places only, not activities, walks, hikes or tours, and one entry per place (never separate entries for parts of the same place). Always include the city\'s best-known landmarks, monuments, memorials and statues (as main or quick sights), even if they are not in any list below. Names and those fields only.' + hint, "quick",
+  const plan = await ask('For this first step return ONLY {"main":[{"name","mustSee","kind"}],"quick":["name"],"farther":["name"],"skipped":["name"]}: exactly 18 main sights in order of importance (3-5 mustSee true, about a third "kind":"local"), 7 small quick sights people walk past, and 5 day trips or sights farther out. Real, distinct places, each under its usual name as it appears on maps; if visitors know it by another name, add that in parentheses, for example "Mirador de la Flor (Selena Memorial)". Places only, not activities, walks, hikes or tours, and one entry per place (never separate entries for parts of the same place). Always include the city\'s best-known landmarks, monuments, memorials and statues (as main or quick sights), even if they are not in any list below. Names and those fields only.' + hint + famHint, "quick",
     j => j && (j.main || []).filter(x => x && x.name).length >= 8);
   let main = plan.main.filter(x => x && x.name).slice(0, 20), quick = (plan.quick || []).map(String).filter(Boolean).slice(0, 8), far = (plan.farther || []).map(String).filter(Boolean).slice(0, 5);
+  // Check, not trust: a top-15 famous place the writer neither used nor called unvisitable is added anyway.
+  if (famMain.length) {
+    const have = [...main.map(x => x.name), ...quick, ...far, ...((plan.skipped || []).map(String))], has = n => have.some(h => nameMatch(n, h) || nameMatch(h, n));
+    const lost = famMain.slice(0, 15).filter(x => !has(x.name));
+    if (lost.length) console.info("Kairoute added famous places the writer left out in " + label + ": " + lost.map(x => x.name).join("; "));
+    lost.forEach(x => main.push({ name: x.name, mustSee: x.sl >= (famMain[2] || famMain[0]).sl, kind: "touristy", fame: x.sl }));
+    const lostFar = famFar.filter(x => x.sl >= 30 && x.km <= 70).slice(0, 4).filter(x => !has(x.name));
+    lostFar.forEach(x => { if (far.length < 7) far.push(x.name); });
+  }
   // Keep only places that really exist, and give the writer each place's real facts to work from.
   show(9, "Checking each place is real", 17);
   const farSet = new Set(far), grounded = label && typeof groundNames === "function" ? await groundNames([...main.map(x => x.name), ...quick, ...far], label, farSet) : null;
@@ -5856,4 +5878,4 @@ render();
 
 </script>
 <script>if ("serviceWorker" in navigator) addEventListener("load", () => navigator.serviceWorker.register("sw.js").catch(() => {}));</script>
-<script>(function(){var B="6c6d5ce-1794497527";function chk(){if(location.protocol!=="https:")return;fetch("version.txt",{cache:"no-store"}).then(function(r){return r.ok?r.text():""}).then(function(t){t=t.trim();if(t&&t!==B)location.reload()}).catch(function(){})}addEventListener("load",chk);document.addEventListener("visibilitychange",function(){if(document.visibilityState==="visible")chk()})})();</script>
+<script>(function(){var B="3bafe3c-1794498209";function chk(){if(location.protocol!=="https:")return;fetch("version.txt",{cache:"no-store"}).then(function(r){return r.ok?r.text():""}).then(function(t){t=t.trim();if(t&&t!==B)location.reload()}).catch(function(){})}addEventListener("load",chk);document.addEventListener("visibilitychange",function(){if(document.visibilityState==="visible")chk()})})();</script>
