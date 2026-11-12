@@ -102,21 +102,23 @@ export default {
       if (origin && !ALLOWED.some(r => r.test(origin))) return Response.json({ error: "Not allowed" }, { status: 403, headers: h });
       let b; try { b = await req.json(); } catch (e) { return Response.json({ error: "Bad request" }, { status: 400, headers: h }); }
       const city = String(b.city || "").slice(0, 120), names = (Array.isArray(b.names) ? b.names : []).map(n => String(n || "").slice(0, 160)).slice(0, 40);
+      // "Naples (Capri, Sorrento)" or "Kusadasi (Ephesus)": searches use the city itself; the places in brackets are day trips.
+      const cityQ = city.replace(/\s*\(.*?\)\s*/g, " ").replace(/\s+/g, " ").trim() || city;
       const farNames = new Set((Array.isArray(b.far) ? b.far : []).map(n => String(n || "").slice(0, 160)));
       const UA = { "user-agent": "Kairoute/1.0 (travel guide; https://gilsonr0566-sys.github.io/Kairoute/)" };
       // Each fetch is tried up to 3 times; a "slow down" answer (429) waits longer before the next try.
       const get = async u => { for (let t = 0; t < 3; t++) { let wait = 700 * (t + 1); try { const r = await fetch(u, { headers: UA, signal: AbortSignal.timeout(8000) }); if (r.ok) return await r.json(); if (r.status === 429 || r.status >= 500) wait = 1500 * (t + 1); else return null; } catch (e) {} if (t < 2) await new Promise(ok => setTimeout(ok, wait)); } return null; };
       // The city's own location, so map searches favour places in this city over same-named places
       // elsewhere in the world, and the app measures "in this city" from the real centre.
-      let center = null; const ck = "gc2:" + (await sha(city.toLowerCase()));
+      let center = null; const ck = "gc2:" + (await sha(cityQ.toLowerCase()));
       if (city) { center = await env.USAGE.get(ck, "json");
         // The travel guide's own page for the city (Wikivoyage) knows which Corpus Christi or Kotor is meant.
-        if (!center) for (const t of [city, city.split(",")[0].trim()]) {
+        if (!center) for (const t of [cityQ, cityQ.split(",")[0].trim()]) {
           const j = await get("https://en.wikivoyage.org/w/api.php?action=query&format=json&prop=coordinates&redirects=1&titles=" + encodeURIComponent(t));
           const pg = j && Object.values((j.query && j.query.pages) || {})[0], co = pg && pg.coordinates && pg.coordinates[0];
           if (co) { center = { lat: co.lat, lng: co.lon, from: "wikivoyage" }; ctx.waitUntil(env.USAGE.put(ck, JSON.stringify(center), { expirationTtl: 365 * 86400 })); break; }
         }
-        if (!center) { const j = await get("https://photon.komoot.io/api/?limit=3&lang=en&osm_tag=place&q=" + encodeURIComponent(city));
+        if (!center) { const j = await get("https://photon.komoot.io/api/?limit=3&lang=en&osm_tag=place&q=" + encodeURIComponent(cityQ));
           const f = j && (j.features || []).find(f => /city|town|village|municipality|suburb|borough|island/.test((f.properties || {}).osm_value || "")) || (j && (j.features || [])[0]);
           if (f) { center = { lat: f.geometry.coordinates[1], lng: f.geometry.coordinates[0] }; ctx.waitUntil(env.USAGE.put(ck, JSON.stringify(center), { expirationTtl: 365 * 86400 })); } } }
       // OpenStreetMap's own search allows about one request a second: calls in this request wait their turn.
@@ -125,8 +127,8 @@ export default {
       const bias = center ? "&lat=" + center.lat + "&lon=" + center.lng + "&location_bias_scale=0.2&zoom=12" : "";
       const one = async name => {
         if (!name) return null;
-        const k = "gr5:" + (await sha(name + "|" + city + (farNames.has(name) ? "|far" : ""))), hit = await env.USAGE.get(k, "json"); if (hit) return hit;
-        const plain = name.replace(/\s*\(.*?\)\s*/g, " ").trim(), q = plain + " " + city;
+        const k = "gr5:" + (await sha(name + "|" + cityQ + (farNames.has(name) ? "|far" : ""))), hit = await env.USAGE.get(k, "json"); if (hit) return hit;
+        const plain = name.replace(/\s*\(.*?\)\s*/g, " ").trim(), q = plain + " " + cityQ;
         let wiki = null, map = null;
         {
           const j = await get("https://en.wikipedia.org/w/api.php?action=query&format=json&generator=search&gsrlimit=5&prop=extracts|coordinates&exintro=1&explaintext=1&exchars=1400&redirects=1&gsrsearch=" + encodeURIComponent(q));
@@ -209,11 +211,12 @@ export default {
     // with descriptions, hours, prices and locations, and the practical sections.
     if (url.pathname === "/voyage") {
       const city = String(url.searchParams.get("city") || "").slice(0, 120); if (!city) return Response.json({ error: "Empty" }, { status: 400, headers: h });
+      const cityQ = city.replace(/\s*\(.*?\)\s*/g, " ").replace(/\s+/g, " ").trim() || city;
       const key = "wv1:" + (await sha(city.toLowerCase()));
       const hit = await env.USAGE.get(key); if (hit) return new Response(hit, { headers: { ...h, "content-type": "application/json" } });
       const UA = { "user-agent": "Kairoute/1.0 (travel guide; https://gilsonr0566-sys.github.io/Kairoute/)" };
       let wt = "", title = "";
-      for (const t of [city, city.split(",")[0].trim()]) {
+      for (const t of [cityQ, cityQ.split(",")[0].trim()]) {
         try { const r = await fetch("https://en.wikivoyage.org/w/api.php?action=parse&prop=wikitext&format=json&formatversion=2&redirects=1&page=" + encodeURIComponent(t), { headers: UA }); if (r.ok) { const j = await r.json(); if (j.parse && j.parse.wikitext) { wt = j.parse.wikitext; title = j.parse.title; break; } } } catch (e) {}
       }
       const clean = t => String(t || "").replace(/\{\{[^{}]*\}\}/g, "").replace(/\[\[(?:[^|\]]*\|)?([^\]]*)\]\]/g, "$1").replace(/\[https?:\/\/\S+\s([^\]]*)\]/g, "$1").replace(/'{2,}/g, "").replace(/<[^>]+>/g, "").replace(/\s+/g, " ").trim();

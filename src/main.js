@@ -1013,6 +1013,9 @@ ${P().access !== "none" ? "- The travelers need: " + ACCESS.find(a => a[0] === P
     show(1);
     let raw = await cachedGuide(d), fresh = !raw;
     if (raw && !guideInLang(raw, P().lang)) { raw = null; fresh = true; }
+    // A saved guide no fuller than the built-in one is no upgrade: build a new one instead.
+    const builtinNow = cityFor(d) && cityFor(d).builtin ? cityFor(d) : null;
+    if (raw && builtinNow && (raw.sites || []).length <= (builtinNow.sites || []).length) { raw = null; fresh = true; }
     if (!raw) raw = sample === freeSample ? await cityInParts(prompt, show, label) : parseJSON((await sample(prompt, { modelTier: "default", onText: ({ text }) => show(text.length / 260, "Writing the stories", 90) })).text);
     if (raw) {
       const before = JSON.stringify([raw.verified, raw.grounded, (raw.restaurants || []).length, raw.startsOk, raw.eatsV]);
@@ -1026,6 +1029,8 @@ ${P().access !== "none" ? "- The travelers need: " + ACCESS.find(a => a[0] === P
     const c = cleanCity(raw, label);
     if (!c.sites.length) throw new Error("empty");
     if (!guideInLang(c, P().lang)) throw new Error("The guide came back in the wrong language. Try again.");
+    // Never swap a built-in guide for a thinner one (and don't save it for others): keep what the traveler has.
+    if (builtinNow && c.sites.length <= (builtinNow.sites || []).length) throw new Error("not fuller");
     if (fresh) keepGuide(d, raw);
     const key = keyOf(label) + (d.event ? "|" + keyOf(d.event) : "");
     const wasBuiltin = !!(cities[key] && cities[key].builtin) || !!(cityFor(d) && cityFor(d).builtin);
