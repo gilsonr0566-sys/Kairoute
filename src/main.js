@@ -3022,6 +3022,7 @@ function upgradeThin(d, city) {
   upgrading = d.destination;
   generateCity(d, true).then(ok => { upgrading = null; if (ok && (view === "plan" || view === "guide")) render(); }).catch(() => { upgrading = null; });
 }
+if (typeof window !== "undefined") window.__kairouteUpgrading = () => upgrading;
 if (typeof window !== "undefined") window.__kairouteThin = () => { ensureBuiltins(); return trip.days.map((d, i) => { const c = cityFor(d); return c ? i + " " + d.destination + ": " + (c.sites || []).filter(x => !x.quick).length + (c.builtin ? " builtin" : "") : null; }).filter(Boolean).join("\n"); };
 function renderPlan(d) {
   const city = cityFor(d);

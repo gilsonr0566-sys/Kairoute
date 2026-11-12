@@ -14,7 +14,8 @@ const { chromium } = require('playwright');
     const i = +l.split(' ')[0], dest = l.slice(l.indexOf(' ') + 1, l.indexOf(':')); if (seen.has(dest)) continue; seen.add(dest);
     await p.click(`.daychip[data-day="${i}"]`).catch(() => {}); await p.waitForTimeout(300); await p.click('#tab-trip').catch(() => {}); await p.waitForTimeout(200); await p.click('#tab-plan').catch(() => {});
     const t0 = Date.now(); let now = '';
-    while (Date.now() - t0 < 360000) { await p.waitForTimeout(5000); now = (await thin()).find(x => x.startsWith(i + ' ')) || ''; if (!/ builtin$/.test(now)) break; }
+    // Wait for this build to finish (it may take several minutes on a big city), up to 15 minutes.
+    while (Date.now() - t0 < 900000) { await p.waitForTimeout(5000); now = (await thin()).find(x => x.startsWith(i + ' ')) || ''; const up = await p.evaluate(() => window.__kairouteUpgrading()); if (!/ builtin$/.test(now) || (!up && Date.now() - t0 > 15000)) break; }
     console.log(`UPGRADE ${dest}: ${l.split(': ')[1]} -> ${now.split(': ')[1]} (${Math.round((Date.now() - t0) / 1000)}s)`);
   }
   await b.close();
