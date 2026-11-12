@@ -505,6 +505,51 @@ details.story:not([open]) > summary::before { content: "▸ "; }
 .evtime { font-weight: 800; font-variant-numeric: tabular-nums; color: var(--route); }
 .evmeta { display: block; color: var(--muted); font-size: 0.85rem; }
 .evlist a { color: var(--ink); text-decoration: none; } .evlist a:hover { text-decoration: underline; }
+
+/* ---- Phones: compact header, bottom tab bar, swipeable days, tighter type ---- */
+.tab svg { display: none; }
+.mcta { display: none; }
+html, body { overflow-x: hidden; }
+@media (max-width: 640px) {
+  .top .wrap { padding-block: 8px 0; gap: 6px; }
+  .brand { align-items: center; flex-wrap: nowrap; min-width: 0; }
+  .brand h1 { font-size: 1.15rem; min-width: 0; }
+  .brand h1 svg { width: 24px; height: 27px; }
+  .brand .actions { flex: none; }
+  .brand .btn.small { padding: 6px 12px; min-height: 36px; font-size: .9rem; }
+  .tripname { display: none; }
+  .dayarrow, .daycount { display: none; }
+  .days { scroll-snap-type: x mandatory; padding-bottom: 8px; gap: 6px; scrollbar-width: none; }
+  .days::-webkit-scrollbar { display: none; }
+  .daychip { scroll-snap-align: center; padding: 6px 12px; font-size: .82rem; max-width: 70vw; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .tabs { position: fixed; left: 0; right: 0; bottom: 0; z-index: 20; background: var(--card); border-top: 1px solid var(--line); padding-bottom: env(safe-area-inset-bottom, 0px); box-shadow: 0 -4px 16px rgba(0,0,0,.12); }
+  .tab { display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 8px 2px 8px; font-size: .72rem; border-bottom: 0; border-top: 3px solid transparent; min-height: 58px; }
+  .tab svg { display: block; width: 22px; height: 22px; }
+  .tab[aria-selected="true"] { color: var(--route); border-top-color: var(--route); }
+  main .wrap { padding-block: 14px calc(150px + env(safe-area-inset-bottom, 0px)); gap: 14px; }
+  h2 { font-size: 1.3rem; }
+  h3 { font-size: 1.02rem; }
+  .card { padding: 14px; gap: 12px; }
+  .banner { font-size: .88rem; padding: 10px 12px; flex-wrap: wrap; }
+  .daysum { grid-template-columns: repeat(4, minmax(0, 1fr)) !important; }
+  .daysum > div { border-top: 0 !important; padding: 8px 6px !important; }
+  .daysum > div:nth-child(n+2) { border-left: 1px solid var(--line) !important; }
+  .daysum b { font-size: .92rem !important; white-space: normal !important; overflow-wrap: anywhere; line-height: 1.2; }
+  .daysum span { font-size: .7rem !important; }
+  .planacts .bigbtn { display: none; }
+  .toolrow { display: flex !important; flex-wrap: nowrap !important; overflow-x: auto; gap: 8px; scrollbar-width: none; padding-bottom: 2px; }
+  .toolrow > * { flex: none; white-space: nowrap; }
+  .mcta { display: block; position: fixed; left: 12px; right: 12px; bottom: calc(66px + env(safe-area-inset-bottom, 0px)); z-index: 19; }
+  .mcta .btn { width: 100%; min-height: 50px; font-size: 1.05rem; box-shadow: 0 6px 18px rgba(0,0,0,.25); background: var(--meal); border-color: var(--meal); color: #fff; }
+  .tl .time { font-size: .85rem; }
+  body.touring-on .mcta, header.top.touring ~ main .mcta { display: none; }
+}
+/* First-run walkthrough */
+.coach { position: fixed; inset: 0; z-index: 50; background: rgba(8,14,16,.72); display: grid; place-items: center; padding: 16px; }
+.coach .sheet { background: var(--card); color: var(--ink); border-radius: 20px; max-width: 420px; width: 100%; padding: 22px 20px 18px; display: grid; gap: 12px; box-shadow: 0 20px 50px rgba(0,0,0,.4); }
+.coach .art { width: 64px; height: 64px; border-radius: 18px; background: var(--route-soft); display: grid; place-items: center; font-size: 2rem; }
+.coach .dots { display: flex; gap: 6px; } .coach .dots i { width: 8px; height: 8px; border-radius: 50%; background: var(--line); } .coach .dots i.on { background: var(--route); width: 20px; border-radius: 4px; }
+.coach .row { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
 </style>
 
 <header class="top">
@@ -516,10 +561,10 @@ details.story:not([open]) > summary::before { content: "▸ "; }
     <div class="tripname" id="tripName"></div>
     <div class="dayrow" id="dayRow"><button class="dayarrow" data-act="prevday" aria-label="Previous day">‹</button><div class="days" id="dayChips" role="group" aria-label="Trip days"></div><button class="dayarrow" data-act="nextday" aria-label="Next day">›</button><span class="daycount" id="dayCount"></span></div>
     <nav class="tabs" role="tablist" aria-label="Steps">
-      <button class="tab" role="tab" data-view="trip" id="tab-trip">Trip</button>
-      <button class="tab" role="tab" data-view="plan" id="tab-plan">Day plan</button>
-      <button class="tab" role="tab" data-view="guide" id="tab-guide">Guide</button>
-      <button class="tab" role="tab" data-view="journal" id="tab-journal">Journal</button>
+      <button class="tab" role="tab" data-view="trip" id="tab-trip"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M4 6h16M4 12h16M4 18h10"/></svg><span>Trip</span></button>
+      <button class="tab" role="tab" data-view="plan" id="tab-plan"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" d="M9 4 3 6v14l6-2 6 2 6-2V4l-6 2-6-2zM9 4v14M15 6v14"/></svg><span>Day plan</span></button>
+      <button class="tab" role="tab" data-view="guide" id="tab-guide"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M4 15v-3a8 8 0 0 1 16 0v3"/><rect x="3" y="14" width="5" height="7" rx="2" fill="currentColor"/><rect x="16" y="14" width="5" height="7" rx="2" fill="currentColor"/></svg><span>Guide</span></button>
+      <button class="tab" role="tab" data-view="journal" id="tab-journal"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" d="M6 3h11a2 2 0 0 1 2 2v16H7a2 2 0 0 1-2-2V4a1 1 0 0 1 1-1zM5 17a2 2 0 0 1 2-2h12"/></svg><span>Journal</span></button>
     </nav>
   </div>
 </header>

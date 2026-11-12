@@ -1874,9 +1874,27 @@ document.addEventListener("toggle", e => {
   const sm = el.querySelector("summary"); if (!sm) return;
   const k = view + "|" + sm.textContent.trim(); if (el.open) openFolds.add(k); else openFolds.delete(k);
 }, true);
+// ---- First-run walkthrough: four short, skippable screens; replay from Settings > How Kairoute works ----
+const COACH = [
+  ["🧭", "Plan a trip in a minute", "Tap <b>Plan a new trip</b>. Type where you're going, or snap a photo of your itinerary or cruise schedule. Kairoute builds every day for you."],
+  ["🗺️", "Your day plan", "The <b>Day plan</b> tab shows your route on a map with times, real places to eat on the way, and what's happening locally. Tap <b>Change stops</b> to add or remove anything."],
+  ["🎧", "Start the tour", "On the day, tap <b>Start the tour</b>. Kairoute walks you stop to stop and tells each place's story, like a private guide. In churches and museums it switches to text unless your earbuds are in."],
+  ["💬", "Ask your guide", "Curious about something? Use <b>Ask your guide</b> on any stop. Type, or tap 🎤 and ask out loud. No signal? Your question is saved and answered when you're back online."]
+];
+let coachStep = (() => { try { return localStorage.getItem("kairoute.intro1") ? -1 : 0; } catch (e) { return -1; } })();
+function coachHTML() {
+  if (coachStep < 0 || coachStep >= COACH.length) return "";
+  const [art, title, body] = COACH[coachStep], last = coachStep === COACH.length - 1;
+  return `<div class="coach" role="dialog" aria-modal="true" aria-label="How Kairoute works"><div class="sheet">
+    <div class="art" aria-hidden="true">${art}</div><span class="eyebrow">How Kairoute works · ${coachStep + 1} of ${COACH.length}</span><h2>${title}</h2><p>${body}</p>
+    <div class="row"><div class="dots">${COACH.map((x, i) => `<i class="${i === coachStep ? "on" : ""}"></i>`).join("")}</div>
+      <div class="actions">${last ? "" : `<button class="btn ghost small" data-act="coachskip">Skip</button>`}<button class="btn" data-act="coachnext">${last ? "Let's go" : "Next"}</button></div></div></div></div>`;
+}
+function coachDone() { coachStep = -1; try { localStorage.setItem("kairoute.intro1", "1"); } catch (e) {} }
 function render() {
   bonusMemo = new Map(); mealMemo = new Map(); avoidMeals = new Set();
   renderView();
+  { const old = document.querySelector(".coach"); if (old) old.remove(); const ch = coachHTML(); if (ch) document.body.insertAdjacentHTML("beforeend", ch); }
   if (askNotice && !FULL_VIEWS[view]) { const v = document.getElementById("view"); if (v) v.insertAdjacentHTML("afterbegin", `<p class="banner ok" role="status">${esc(askNotice)} <button class="linkbtn" data-act="asknoticeok">OK</button></p>`); }
   if (openFolds.size) document.querySelectorAll("#view details").forEach(el => { const sm = el.querySelector("summary"); if (sm && openFolds.has(view + "|" + sm.textContent.trim())) el.open = true; });
 }
@@ -2066,6 +2084,7 @@ function renderSettings() {
   <div class="card"><h3>Display</h3>
     <div class="field"><span class="lbl">Appearance</span>${seg("theme", [["system", "Match my device"], ["light", "Light"], ["dark", "Dark"]])}</div>
     <div class="field"><span class="lbl">Text size</span>${seg("text", [["standard", "Standard"], ["large", "Large"]])}</div>
+    <div class="field"><span class="lbl">New to Kairoute?</span><div><button class="btn ghost small" data-act="coachreplay">How Kairoute works</button></div></div>
     <div class="field"><span class="lbl">Quiet places</span>${seg("quiet", [["auto", "Automatic"], ["always", "Always quiet"], ["off", "Off"]]).replace('data-v="auto" aria-pressed="false"', appSet.quiet && appSet.quiet !== "auto" ? 'data-v="auto" aria-pressed="false"' : 'data-v="auto" aria-pressed="true"')}<span class="hint">In churches, monasteries and museums the guide shows text first and only plays audio once you confirm your earbuds are in.</span></div>
     <div class="field"><span class="lbl">Distances</span>${seg("units", [["mi", "Miles"], ["km", "Kilometers"]]).replace(/aria-pressed="(true|false)"/g, "").replace(/data-v="(mi|km)"/g, (m, k) => m + ' aria-pressed="' + ((k === "mi") === useMiles()) + '"')}</div>
   </div>
@@ -3042,7 +3061,7 @@ function renderPlan(d) {
   </div>
   ${plan.w.notes.map(t => `<p class="lede small">${esc(t)}</p>`).join("")}
   ${d.estimated ? `<div class="banner warn">These port times are estimated. Check them against your cruise documents.</div>` : ""}
-  <div class="planacts"><button class="btn bigbtn" data-act="tourstart">▶ Start the tour</button>
+  <div class="mcta"><button class="btn bigbtn" data-act="tourstart">▶ Start the tour</button></div><div class="planacts"><button class="btn bigbtn" data-act="tourstart">▶ Start the tour</button>
     ${suggestMsg ? `<p class="banner ok" id="suggestNote" role="status">${esc(suggestMsg)} <button class="linkbtn" data-act="suggestok">OK</button></p>` : ""}
     <div class="toolrow"><button class="btn ghost small" data-goto="sites">Change stops</button><button class="btn ghost small" data-act="suggesttour">Suggest my tour</button><a class="btn ghost small" href="${gmapsLink(plan)}" target="_blank" rel="noopener">Open in Google Maps</a>
     <label class="btn ghost small toggle"><input type="checkbox" id="f-rain" ${d.rain ? "checked" : ""}><span>Rainy day</span></label></div></div>
@@ -3123,7 +3142,7 @@ function renderGuide(d) {
   const cards = plan.items.filter(i => i.type === "stop").map(i => { if (!i.place.along) n++; return stopCard(i.place, n, city); }).join("");
   const jumps = plan.items.filter(i => i.type === "stop" && !i.place.along).map((i, k) => `<button type="button" class="chip" data-jump="${esc(i.place.id)}"><b>${k + 1}</b> ${esc(i.place.name)}</button>`).join("");
   return `${dayHeading(d)}<p class="lede">Every stop's story, in route order. For a guided walk through the day, use Tour mode.</p>
-    <div class="planacts"><button class="btn bigbtn" data-act="tourstart">▶ Start the tour</button></div>
+    <div class="mcta"><button class="btn bigbtn" data-act="tourstart">▶ Start the tour</button></div><div class="planacts"><button class="btn bigbtn" data-act="tourstart">▶ Start the tour</button></div>
     ${jumps ? `<nav class="jumps" aria-label="Jump to a stop">${jumps}</nav>` : ""}
     ${cards ? `<div class="stoplist">${cards}</div>` : `<div class="card empty"><p>No stops planned for today.</p><button class="btn" data-goto="sites">Choose stops</button></div>`}`;
 }
@@ -3377,6 +3396,9 @@ document.addEventListener("click", e => {
   if (t.dataset.playAns) { const pa = allSites(cityFor(day())).find(x => x.id === t.dataset.playAns); if (pa && quietOn(pa) && speakingId !== "ans:" + t.dataset.playAns && Date.now() > earbudsOkUntil) { if (!window.confirm("Quiet place: earbuds in?")) return; earbudsOkUntil = Date.now() + 45 * 60000; }
     const a = answers[t.dataset.playAns]; if (a && a.text) speakText("ans:" + t.dataset.playAns, a.text); renderGuideOnly(); return; }
   if (t.dataset.act === "asknoticeok") { askNotice = ""; render(); return; }
+  if (t.dataset.act === "coachnext") { coachStep++; if (coachStep >= COACH.length) coachDone(); render(); return; }
+  if (t.dataset.act === "coachskip") { coachDone(); render(); return; }
+  if (t.dataset.act === "coachreplay") { coachStep = 0; view = "lobby"; render(); return; }
   if (t.dataset.act === "earlystart") { const d = day(); d.startTime = t.dataset.v; d.hours = +t.dataset.h; save(); render(); return; }
   if (t.dataset.act === "suggestok") { suggestMsg = ""; render(); return; }
   if (t.dataset.act === "memmake") { makeMemoryVideo(); return; }
