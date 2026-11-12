@@ -108,6 +108,10 @@ input[type=text], input[type=date], input[type=time], input[type=number], select
 .tags { display: flex; gap: 6px; flex-wrap: wrap; }
 .tag { font-size: 0.74rem; font-weight: 700; padding: 2px 8px; border-radius: 999px; background: var(--paper); border: 1px solid var(--line); color: var(--muted); letter-spacing: 0.02em; }
 .tag.must { background: var(--must-soft); color: var(--must); border-color: transparent; }
+.tag.unesco { background: #e8f0fb; color: #1f4f8f; border-color: transparent; }
+.grate { display: inline-block; font-size: .85em; color: var(--ink-2, #555); text-decoration: none; margin-top: 2px; }
+.grate:hover { text-decoration: underline; }
+.grate.none { font-style: italic; }
 .tag.local { background: var(--route-soft); color: var(--route); border-color: transparent; }
 .tag.fit { background: var(--route-soft); color: var(--route); border-color: transparent; }
 .tag.nofit { background: var(--meal-soft); color: var(--warn); border-color: transparent; }

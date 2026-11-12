@@ -187,13 +187,43 @@ export default {
     // { place: { avg, n } } for one city. POST /rate { city, place, stars, dev } records one traveler's 1-5 stars.
     // Guards: one rating per device and place (a second rating replaces the first), at most 30 ratings per
     // network address a day, and keys must look like Kairoute's own (lower-case words, short).
+    // /grating (POST {places:[{name,lat,lng}]}): each restaurant's Google Maps rating, matched by name within 150 m.
+    // Answers are kept 30 days and shared by every traveler; a daily cap keeps the cost inside Google's free allowance.
+    // Without a key it says so ("nokey"), and the app shows places as not yet rated rather than vetted.
+    if (url.pathname === "/grating" && req.method === "POST") {
+      if (origin && !ALLOWED.some(r => r.test(origin))) return Response.json({ error: "Not allowed" }, { status: 403, headers: h });
+      let b; try { b = await req.json(); } catch (e) { return Response.json({ error: "Bad request" }, { status: 400, headers: h }); }
+      const list = (Array.isArray(b.places) ? b.places : []).slice(0, 40).filter(x => x && x.name && isFinite(x.lat) && isFinite(x.lng));
+      const out = {}, todo = [];
+      for (const x of list) { const k = "gq1:" + (await sha(String(x.name).toLowerCase() + "|" + (+x.lat).toFixed(3) + "|" + (+x.lng).toFixed(3))); const hit = await env.USAGE.get(k, "json"); if (hit) out[x.name] = hit; else todo.push([x, k]); }
+      if (!env.GPLACES_KEY) { todo.forEach(([x]) => out[x.name] = { state: "nokey" }); return Response.json({ ratings: out }, { headers: h }); }
+      const dk = "gqd:" + today(); let usedToday = +(await env.USAGE.get(dk)) || 0; const CAP = 70;
+      const norm = t => String(t || "").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/[^a-z0-9Ͱ-ϿЀ-ӿ]+/g, " ").trim();
+      const near = (a, c) => Math.hypot((a.lat - c.latitude) * 111000, (a.lng - c.longitude) * 111000 * Math.cos(a.lat * Math.PI / 180));
+      for (const [x, k] of todo) {
+        if (usedToday >= CAP) { out[x.name] = { state: "later" }; continue; }
+        usedToday++;
+        let res = null;
+        try {
+          const r = await fetch("https://places.googleapis.com/v1/places:searchText", { method: "POST", signal: AbortSignal.timeout(9000),
+            headers: { "content-type": "application/json", "X-Goog-Api-Key": env.GPLACES_KEY, "X-Goog-FieldMask": "places.id,places.displayName,places.location,places.rating,places.userRatingCount,places.googleMapsUri,places.businessStatus" },
+            body: JSON.stringify({ textQuery: String(x.name), maxResultCount: 5, locationBias: { circle: { center: { latitude: +x.lat, longitude: +x.lng }, radius: 200 } } }) });
+          if (r.ok) { const j = await r.json(); const n = norm(x.name);
+            const m = (j.places || []).filter(p => p.location && near(x, p.location) <= 150).find(p => { const g = norm(p.displayName && p.displayName.text); return g && (g === n || g.includes(n) || n.includes(g) || g.split(" ").filter(w => w.length > 3 && n.split(" ").includes(w)).length); });
+            res = m ? { state: "ok", rating: m.rating || null, count: m.userRatingCount || 0, url: m.googleMapsUri || "", closed: m.businessStatus === "CLOSED_PERMANENTLY" } : { state: "notfound" }; }
+        } catch (e) {}
+        if (res) { out[x.name] = res; ctx.waitUntil(env.USAGE.put(k, JSON.stringify(res), { expirationTtl: 30 * 86400 })); } else out[x.name] = { state: "later" };
+      }
+      ctx.waitUntil(env.USAGE.put(dk, String(usedToday), { expirationTtl: 3 * 86400 }));
+      return Response.json({ ratings: out }, { headers: h });
+    }
     // /famous?city=: the best-known places in and around a city, ranked by how many Wikipedia languages write
     // about them (Wikidata "sitelinks"), an outside measure of fame that no AI can make up. "main" are within the
     // city, "far" are day trips within about 80 km. For a cruise port named like "Civitavecchia (Rome)", when the
     // place in brackets is far better known than the port town, the guide is about that place ("area").
     if (url.pathname === "/famous") {
       const label = String(url.searchParams.get("city") || "").slice(0, 120).trim(); if (!label) return Response.json({ error: "Empty" }, { status: 400, headers: h });
-      const key = "fm3:" + (await sha(label.toLowerCase())), hit = await env.USAGE.get(key); if (hit) return new Response(hit, { headers: { ...h, "content-type": "application/json" } });
+      const key = "fm4:" + (await sha(label.toLowerCase())), hit = await env.USAGE.get(key); if (hit) return new Response(hit, { headers: { ...h, "content-type": "application/json" } });
       const UA = { "user-agent": "Kairoute/1.0 (travel guide; https://gilsonr0566-sys.github.io/Kairoute/)" };
       const getJ = async (u, ms) => { for (let t = 0; t < 2; t++) { try { const r = await fetch(u, { headers: { ...UA, accept: "application/sparql-results+json" }, signal: AbortSignal.timeout(ms || 25000) }); if (r.ok) return await r.json(); } catch (e) {} } return null; };
       const centerOf = async name => {
@@ -206,15 +236,16 @@ export default {
       const NOT_SIGHT = "wd:Q515 wd:Q1549591 wd:Q5119 wd:Q1637706 wd:Q200250 wd:Q2074737 wd:Q747074 wd:Q1093829 wd:Q15284 wd:Q3957 wd:Q928830 wd:Q55488 wd:Q1248784 wd:Q644371 wd:Q3918 wd:Q3914 wd:Q16917 wd:Q4022 wd:Q165 wd:Q39594 wd:Q10864048 wd:Q13220204 wd:Q13221722 wd:Q1620908 wd:Q1194951 wd:Q476028 wd:Q34770 wd:Q33742 wd:Q1288568 wd:Q5503 wd:Q15079663";
       const NOT_TOWN = "wd:Q928830 wd:Q55488 wd:Q1248784 wd:Q644371 wd:Q3918 wd:Q3914 wd:Q16917 wd:Q4022 wd:Q165 wd:Q39594 wd:Q10864048 wd:Q13220204 wd:Q13221722 wd:Q1620908 wd:Q34770 wd:Q33742 wd:Q1288568 wd:Q5503";
       const famous = async (c, r, min, bad, lim, maxPop) => {
-        const q = `SELECT ?item ?itemLabel ?sl ?loc ?dist WHERE { SERVICE wikibase:around { ?item wdt:P625 ?loc . bd:serviceParam wikibase:center "Point(${c.lng} ${c.lat})"^^geo:wktLiteral . bd:serviceParam wikibase:radius "${r}" . bd:serviceParam wikibase:distance ?dist . }
+        const q = `SELECT ?item ?itemLabel ?sl ?loc ?dist (SAMPLE(?h) AS ?heri) (MAX(IF(?h = wd:Q9259, 1, 0)) AS ?un) WHERE { SERVICE wikibase:around { ?item wdt:P625 ?loc . bd:serviceParam wikibase:center "Point(${c.lng} ${c.lat})"^^geo:wktLiteral . bd:serviceParam wikibase:radius "${r}" . bd:serviceParam wikibase:distance ?dist . }
           ?item wikibase:sitelinks ?sl . FILTER(?sl >= ${min}) FILTER NOT EXISTS { ?item wdt:P31 ?bad . VALUES ?bad { ${bad} } } FILTER NOT EXISTS { ?item wdt:P576 ?gone } FILTER NOT EXISTS { ?item wdt:P585 ?when } FILTER NOT EXISTS { ?item wdt:P580 ?from }
           FILTER NOT EXISTS { ?item wdt:P1082 ?pop FILTER(?pop > ${maxPop}) }
-          SERVICE wikibase:label { bd:serviceParam wikibase:language "en,mul,el,it,es,tr,fr,de" . } } ORDER BY DESC(?sl) LIMIT ${lim}`;
+          OPTIONAL { ?item wdt:P1435 ?h }
+          SERVICE wikibase:label { bd:serviceParam wikibase:language "en,mul,el,it,es,tr,fr,de" . } } GROUP BY ?item ?itemLabel ?sl ?loc ?dist ORDER BY DESC(?sl) LIMIT ${lim}`;
         const j = await getJ("https://query.wikidata.org/sparql?format=json&query=" + encodeURIComponent(q), 40000);
         if (!j) return null; const seen = new Set(), out = [];
         for (const b of (j.results && j.results.bindings) || []) { const id = b.item.value.split("/").pop(); if (seen.has(id)) continue; seen.add(id);
           const m = /Point\(([-\d.]+) ([-\d.]+)\)/.exec(b.loc.value); const name = b.itemLabel && b.itemLabel.value; if (!m || !name || /^Q\d+$/.test(name)) continue;
-          out.push({ name, wd: id, sl: +b.sl.value, lat: +(+m[2]).toFixed(5), lng: +(+m[1]).toFixed(5), km: +(+b.dist.value).toFixed(1) }); }
+          out.push({ name, wd: id, sl: +b.sl.value, lat: +(+m[2]).toFixed(5), lng: +(+m[1]).toFixed(5), km: +(+b.dist.value).toFixed(1), unesco: !!(b.un && +b.un.value), heritage: !!b.heri }); }
         return out;
       };
       const port = label.replace(/\s*\(.*?\)\s*/g, " ").trim(), inBr = ((/\(([^)]*)\)/.exec(label) || [])[1] || "").split(",").map(x => x.trim()).filter(Boolean);

@@ -19,6 +19,7 @@ jobs:
     env:
       CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
       TICKETMASTER_KEY: ${{ secrets.TICKETMASTER_KEY }}
+      GOOGLE_PLACES_KEY: ${{ secrets.GOOGLE_PLACES_KEY }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -38,6 +39,8 @@ jobs:
           cd worker && npx -y wrangler@4 deploy 2>&1 | tee deploy.log
           # Local events: the Ticketmaster key lives only in GitHub secrets and the Worker's secret store.
           if [ -n "$TICKETMASTER_KEY" ]; then printf '%s' "$TICKETMASTER_KEY" | npx -y wrangler@4 secret put TM_KEY >/dev/null && echo "Events key set."; else echo "No TICKETMASTER_KEY secret yet; events use Wikivoyage only."; fi
+          # Restaurant ratings: the Google Places key lives only in GitHub secrets and the Worker's secret store.
+          if [ -n "$GOOGLE_PLACES_KEY" ]; then printf '%s' "$GOOGLE_PLACES_KEY" | npx -y wrangler@4 secret put GPLACES_KEY >/dev/null && echo "Ratings key set."; else echo "No GOOGLE_PLACES_KEY secret yet; restaurants show as not yet rated."; fi
           url=$(grep -oE 'https://[a-z0-9.-]+\.workers\.dev' deploy.log | head -1)
           if [ -n "$url" ]; then printf '{"url":"%s"}\n' "$url" > ../ai.json; cat ../ai.json; fi
       - name: Build the Android app
