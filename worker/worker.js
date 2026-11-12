@@ -497,7 +497,7 @@ Written text:
 
 // The best-known places in and around a city (see /famous).
 async function famousData(label, env, ctx) {
-  const key = "fm5:" + (await sha(label.toLowerCase())), hit = await env.USAGE.get(key); if (hit) return JSON.parse(hit);
+  const key = "fm6:" + (await sha(label.toLowerCase())), hit = await env.USAGE.get(key); if (hit) return JSON.parse(hit);
   const UA = { "user-agent": "Kairoute/1.0 (travel guide; https://gilsonr0566-sys.github.io/Kairoute/)" };
   const getJ = async (u, ms) => { for (let t = 0; t < 2; t++) { try { const r = await fetch(u, { headers: { ...UA, accept: "application/sparql-results+json" }, signal: AbortSignal.timeout(ms || 25000) }); if (r.ok) return await r.json(); } catch (e) {} } return null; };
   const centerOf = async name => {
@@ -529,7 +529,7 @@ async function famousData(label, env, ctx) {
   const fame = list => (list || []).slice(0, 5).reduce((a, x) => a + x.sl, 0);
   // The place in brackets, when it is a bigger draw than the port town itself, is where the day is spent.
   if (inBr.length) { const c2 = await centerOf(inBr[0]); if (c2) { const d = Math.hypot((c2.lat - center.lat) * 111, (c2.lng - center.lng) * 111 * Math.cos(center.lat * Math.PI / 180));
-    if (d > 15) { const m2 = await famous(c2, 6, 8, NOT_SIGHT, 60, 20000); if (m2 && fame(m2) > fame(main) * 2.5) { area = inBr[0]; center = c2; main = m2; } } } }
+    if (d > 5) { const m2 = await famous(c2, 6, 8, NOT_SIGHT, 60, 20000); if (m2 && fame(m2) > fame(main) * 2.5) { area = inBr[0]; center = c2; main = m2; } } } }
   const farRaw = (await famous(center, 80, 25, NOT_TOWN, 120, 200000)) || [];
   const mainIds = new Set(main.map(x => x.wd)), lc = s => s.toLowerCase();
   const far = farRaw.filter(x => x.km > 6 && !mainIds.has(x.wd) && lc(x.name) !== lc(area) && lc(x.name) !== lc(port)).slice(0, 25);
@@ -577,7 +577,7 @@ function parseListings(wt) {
     if (name && name.length < 90 && (f.wikidata || f.lat || f.content || f.descrizione || f.descripcion || f.description || f["περιγραφη"] || f.beschreibung || f.alt)) {
       const typ = fold(f.type || f.tipo || f.typ || ""), sec = secAt(i);
       const kind = /^(see|vedere|ver|voir|sehen|do)$/.test(tname) && tname !== "do" ? "see" : /^(eat|mangiare|comer|manger|essen)$/.test(tname) ? "eat" : /^(drink|bere|beber|boire|trinken)$/.test(tname) ? "drink"
-        : /^(see|sight|monument|museum|church)/.test(typ) ? "see" : /^(eat|restaurant)/.test(typ) ? "eat" : /^(drink|bar)/.test(typ) ? "drink"
+        : /^(see|sight|monument|museum|church|vedere|ver|voir)/.test(typ) ? "see" : /^(eat|restaurant|mangiare|comer|manger)/.test(typ) ? "eat" : /^(drink|bar)/.test(typ) ? "drink"
         : SEC_SEE.test(sec) ? "see" : SEC_EAT.test(sec) ? "eat" : SEC_DRINK.test(sec) ? "drink" : "";
       const lat = parseFloat(f.lat), lng = parseFloat(f.long || f.lng || f.lon);
       if (kind) out.push({ kind, name, wd: /^Q\d+$/.test(f.wikidata || "") ? f.wikidata : "", lat: isFinite(lat) ? lat : null, lng: isFinite(lng) ? lng : null,
@@ -597,7 +597,7 @@ async function voyagePages(host, title, UA) {
   return { pages: 1 + more.length, title: top.title, listings };
 }
 async function sourcesData(label, env, ctx) {
-  const key = "sr2:" + (await sha(label.toLowerCase())), hit = await env.USAGE.get(key); if (hit) return JSON.parse(hit);
+  const key = "sr3:" + (await sha(label.toLowerCase())), hit = await env.USAGE.get(key); if (hit) return JSON.parse(hit);
   const UA = { "user-agent": "Kairoute/1.0 (travel guide; https://gilsonr0566-sys.github.io/Kairoute/)" };
   const getJ = async (u, ms, opt) => { for (let t = 0; t < 2; t++) { try { const r = await fetch(u, Object.assign({ headers: { ...UA, accept: "application/json" }, signal: AbortSignal.timeout(ms || 20000) }, opt || {})); if (r.ok) return await r.json(); } catch (e) {} } return null; };
   const T = {}, t0 = Date.now(), lap = k => { T[k] = Date.now() - t0; };
@@ -605,11 +605,10 @@ async function sourcesData(label, env, ctx) {
   if (fam.error) return fam;
   const area = fam.area, center = fam.center, kmOf = (a, b) => Math.hypot((a.lat - b.lat) * 111, (a.lng - b.lng) * 111 * Math.cos(b.lat * Math.PI / 180));
   // The city's Wikidata item tells which language is local here and which local Wikivoyage page covers it.
-  const osmQ = `[out:json][timeout:20];(nwr["tourism"~"^(attraction|museum|viewpoint|gallery)$"]["wikidata"](around:6000,${center.lat},${center.lng});nwr["historic"]["wikidata"](around:6000,${center.lat},${center.lng}););out center tags 400;`;
-  const osmP = (async () => { for (const ep of ["https://overpass-api.de/api/interpreter", "https://overpass.private.coffee/api/interpreter"]) { try { const r = await fetch(ep, { method: "POST", body: "data=" + encodeURIComponent(osmQ), headers: { ...UA, "content-type": "application/x-www-form-urlencoded", accept: "application/json" }, signal: AbortSignal.timeout(22000) }); if (r.ok) { const j = await r.json(); lap("osm"); return j; } } catch (e) {} } lap("osm"); return null; })();
   const enGuess = area.split(",")[0].trim(), enP = voyagePages("en.wikivoyage.org", enGuess, UA).then(v => { lap("enVoy"); return v; });
   let lang = "", localVoy = "", localWiki = "";
-  const ent = await getJ("https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&props=sitelinks|claims&sites=enwikivoyage|enwiki&titles=" + encodeURIComponent(area.split(",")[0].trim()), 15000);
+  const enTitle0 = (await enP).title || area.split(",")[0].trim();
+  const ent = await getJ("https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&normalize=1&props=sitelinks|claims&sites=enwikivoyage&titles=" + encodeURIComponent(enTitle0), 15000);
   const city = ent && Object.values(ent.entities || {}).find(e => e && e.sitelinks);
   if (city) {
     const ids = c => ((city.claims && city.claims[c]) || []).map(x => x.mainsnak && x.mainsnak.datavalue && x.mainsnak.datavalue.value && x.mainsnak.datavalue.value.id).filter(Boolean);
@@ -622,9 +621,9 @@ async function sourcesData(label, env, ctx) {
       if (lang && city.sitelinks[lang + "wiki"]) localWiki = city.sitelinks[lang + "wiki"].title; }
   }
   lap("lang");
-  const [enV, lcV, osm] = await Promise.all([enP, localVoy ? voyagePages(lang + ".wikivoyage.org", localVoy, UA).then(v => { lap("localVoy"); return v; }) : Promise.resolve({ pages: 0, listings: [] }), osmP]);
+  const [enV, lcV] = await Promise.all([enP, localVoy ? voyagePages(lang + ".wikivoyage.org", localVoy, UA).then(v => { lap("localVoy"); return v; }) : Promise.resolve({ pages: 0, listings: [] })]);
   const LN = LANG_NAME[lang] || lang;
-  const S = { fame: "Wikidata (Wikipedia in many languages)", localWiki: `Wikipedia in ${LN}`, enVoy: "Wikivoyage (English)", lcVoy: `Wikivoyage (${LN})`, osm: "OpenStreetMap", heritage: "national heritage register", unesco: "UNESCO World Heritage" };
+  const S = { fame: "Wikidata (Wikipedia in many languages)", localWiki: `Wikipedia in ${LN}`, enVoy: "Wikivoyage (English)", lcVoy: `Wikivoyage (${LN})`, heritage: "national heritage register", unesco: "UNESCO World Heritage" };
   // Gather every sight by Wikidata id where the source gives one.
   const byId = new Map(), noId = [];
   const add = (wd, name, lat, lng, src, extra) => {
@@ -634,26 +633,23 @@ async function sourcesData(label, env, ctx) {
     x.src.add(src); if (x.lat == null && lat != null) { x.lat = lat; x.lng = lng; } Object.assign(x, extra || {});
     return x;
   };
-  for (const m of fam.main) add(m.wd, m.name, m.lat, m.lng, S.fame, { sl: m.sl, unesco: m.unesco, heritage: m.heritage });
+  for (const m of fam.main) { const x = add(m.wd, m.name, m.lat, m.lng, S.fame, { sl: m.sl, unesco: m.unesco, heritage: m.heritage }); if (m.unesco) x.src.add(S.unesco); else if (m.heritage) x.src.add(S.heritage); }
   for (const l of enV.listings.filter(l => l.kind === "see")) add(l.wd, l.name, l.lat, l.lng, S.enVoy, { en: l.content, web: l.url || undefined });
   for (const l of lcV.listings.filter(l => l.kind === "see")) { const x = add(l.wd, l.name, l.lat, l.lng, S.lcVoy); x.local = x.local || l.name; x.lc = l.content; }
-  for (const e of (osm && osm.elements) || []) { const t = e.tags || {}; if (!/^Q\d+$/.test(t.wikidata || "")) continue; const lat = e.lat ?? (e.center && e.center.lat), lng = e.lon ?? (e.center && e.center.lon);
-    const x = byId.get(t.wikidata); if (x) x.src.add(S.osm); else if (t.tourism) add(t.wikidata, t["name:en"] || t.name || "", lat, lng, S.osm, { local: t.name }); }
   // Facts for every id from Wikidata: local-language article, official website, heritage status, place, fame.
   const ids = [...byId.keys()].slice(0, 200), chunks = []; for (let k = 0; k < ids.length; k += 50) chunks.push(ids.slice(k, k + 50));
   const answers = await Promise.all(chunks.map(part => {
-    const q = `SELECT ?item (SAMPLE(?lab) AS ?label) (SAMPLE(?loc) AS ?pt) (SAMPLE(?w) AS ?web) (SAMPLE(?sl0) AS ?sl) (MAX(IF(?h = wd:Q9259, 1, 0)) AS ?un) (COUNT(?h) AS ?nh) (SAMPLE(?ln) AS ?local) WHERE {
-      VALUES ?item { ${part.map(x => "wd:" + x).join(" ")} } OPTIONAL { ?item rdfs:label ?lab FILTER(LANG(?lab) = "en") } OPTIONAL { ?item wdt:P625 ?loc } OPTIONAL { ?item wdt:P856 ?w } OPTIONAL { ?item wdt:P1435 ?h } OPTIONAL { ?item wikibase:sitelinks ?sl0 }
-      ${lang ? `OPTIONAL { ?a schema:about ?item ; schema:isPartOf <https://${lang}.wikipedia.org/> ; schema:name ?ln }` : ""} } GROUP BY ?item`;
-    return getJ("https://query.wikidata.org/sparql?format=json&query=" + encodeURIComponent(q), 30000, { headers: { ...UA, accept: "application/sparql-results+json" } }); }));
+    const V = `VALUES ?item { ${part.map(x => "wd:" + x).join(" ")} }`, H2 = { headers: { ...UA, accept: "application/sparql-results+json" } }, url = q => "https://query.wikidata.org/sparql?format=json&query=" + encodeURIComponent(q);
+    return Promise.all([getJ(url(`SELECT ?item ?h ?w ?loc ?lab ?sl WHERE { ${V} OPTIONAL { ?item wdt:P1435 ?h } OPTIONAL { ?item wdt:P856 ?w } OPTIONAL { ?item wdt:P625 ?loc } OPTIONAL { ?item rdfs:label ?lab FILTER(LANG(?lab) = "en") } OPTIONAL { ?item wikibase:sitelinks ?sl } }`), 25000, H2),
+      lang ? getJ(url(`SELECT ?item ?local WHERE { ${V} ?a schema:about ?item ; schema:isPartOf <https://${lang}.wikipedia.org/> ; schema:name ?local }`), 25000, H2) : null]).then(([a, b]) => ({ results: { bindings: [...((a && a.results.bindings) || []), ...((b && b.results.bindings) || [])] } })); }));
   lap("details");
   for (const j of answers) {
     for (const b of (j && j.results && j.results.bindings) || []) {
       const x = byId.get(b.item.value.split("/").pop()); if (!x) continue;
-      if (b.label && b.label.value) x.name = b.label.value;
-      const m = b.pt && /Point\(([-\d.]+) ([-\d.]+)\)/.exec(b.pt.value); if (m && x.lat == null) { x.lat = +m[2]; x.lng = +m[1]; }
+      if (b.lab && b.lab.value) x.name = b.lab.value;
+      const m = b.loc && /Point\(([-\d.]+) ([-\d.]+)\)/.exec(b.loc.value); if (m && x.lat == null) { x.lat = +m[2]; x.lng = +m[1]; }
       if (b.web && !x.web) x.web = b.web.value; if (b.sl) x.sl = Math.max(x.sl, +b.sl.value);
-      if (b.un && +b.un.value) { x.unesco = true; x.src.add(S.unesco); } else if (b.nh && +b.nh.value) { x.heritage = true; x.src.add(S.heritage); }
+      if (b.h) { if (b.h.value.endsWith("/Q9259")) { x.unesco = true; x.src.add(S.unesco); x.src.delete(S.heritage); } else if (!x.unesco) { x.heritage = true; x.src.add(S.heritage); } }
       if (b.local && b.local.value) { x.src.add(S.localWiki); x.local = x.local || b.local.value; }
     }
   }
@@ -671,9 +667,9 @@ async function sourcesData(label, env, ctx) {
   const sources = [
     { name: S.fame, n: fam.main.length }, { name: S.enVoy, n: enV.listings.length, pages: enV.pages },
     { name: S.lcVoy, n: lcV.listings.length, pages: lcV.pages, none: !localVoy }, { name: S.localWiki, n: stops.filter(x => x.src.includes(S.localWiki)).length, none: !lang },
-    { name: S.osm, n: ((osm && osm.elements) || []).length, failed: !osm }, { name: "Heritage registers and UNESCO", n: stops.filter(x => x.unesco || x.heritage).length }];
+{ name: "Heritage registers and UNESCO", n: stops.filter(x => x.unesco || x.heritage).length }];
   const res = { area, lang, langName: LN, center, sources, stops, eats: eats.slice(0, 150), far: fam.far, ms: T };
   // Keep a full answer for 30 days; an answer missing a source that failed is kept only a day.
-  ctx.waitUntil(env.USAGE.put(key, JSON.stringify(res), { expirationTtl: (osm && enV.pages ? 30 : 1) * 86400 }));
+  ctx.waitUntil(env.USAGE.put(key, JSON.stringify(res), { expirationTtl: (enV.pages && fam.main.length ? 30 : 1) * 86400 }));
   return res;
 }
