@@ -721,6 +721,16 @@ details.scmore .journal { border-top: 0; padding-top: 0; }
   html.railnav .pagebar .pagetitle { text-align: left; }
 }
 @media (min-width: 800px) and (max-width: 999px) and (min-height: 560px) { html.railnav .tripname { display: none; } html.railnav .top .wrap { grid-template-columns: minmax(0, 1fr); grid-template-areas: "days"; } }
+/* Tablet held upright: the navigation bar moves to the bottom edge, within thumb reach */
+@media (min-width: 800px) and (min-height: 560px) and (orientation: portrait) {
+  html.railnav body { padding-left: 0; padding-bottom: calc(68px + env(safe-area-inset-bottom, 0px)); }
+  html.railnav .tabs { top: auto; right: 0; width: auto; height: calc(68px + env(safe-area-inset-bottom, 0px)); flex-direction: row; justify-content: center; align-items: center; gap: 6px;
+    padding: 4px max(12px, env(safe-area-inset-right, 0px)) env(safe-area-inset-bottom, 0px) max(12px, env(safe-area-inset-left, 0px)); border-right: 0; border-top: 1px solid var(--line); box-shadow: 0 -4px 16px rgba(0,0,0,.08); }
+  html.railnav .tabs .railgap { display: none !important; }
+  html.railnav .tab { flex: 1 1 0; max-width: 120px; margin: 0; min-height: 56px; }
+  html.railnav .tab.railhome { margin-bottom: 0; }
+  html.railnav .tab.railhome svg { width: 22px; height: 25px; }
+}
 /* Settings pages: the page bar is the header; only the navigation (rail or bottom tabs) stays */
 html.setview header.top { border: 0; background: none; position: static; }
 html.setview .top .wrap { display: block; padding: 0; }
@@ -6292,4 +6302,4 @@ render();
 
 </script>
 <script>if ("serviceWorker" in navigator) addEventListener("load", () => navigator.serviceWorker.register("sw.js").catch(() => {}));</script>
-<script>(function(){var B="7d473fb-1794514904";function chk(){if(location.protocol!=="https:")return;fetch("version.txt",{cache:"no-store"}).then(function(r){return r.ok?r.text():""}).then(function(t){t=t.trim();if(t&&t!==B)location.reload()}).catch(function(){})}addEventListener("load",chk);document.addEventListener("visibilitychange",function(){if(document.visibilityState==="visible")chk()})})();</script>
+<script>(function(){var B="08af4d5-1794515807";function chk(){if(location.protocol!=="https:")return;fetch("version.txt",{cache:"no-store"}).then(function(r){return r.ok?r.text():""}).then(function(t){t=t.trim();if(t&&t!==B)location.reload()}).catch(function(){})}addEventListener("load",chk);document.addEventListener("visibilitychange",function(){if(document.visibilityState==="visible")chk()})})();</script>
