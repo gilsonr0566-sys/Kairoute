@@ -2709,10 +2709,95 @@ function lodgingFor(d, city) {
   return c ? { name: "Hotel near " + c.name, lat: c.lat, lng: c.lng } : null;
 }
 function dayPoint(d, city) {
+  const fp = flightPort(d); if (fp) return fp;
   const listKey = d.type === "port" || d.type === "embark" ? "cruise" : MODES[d.mode].list;
   const list = pointList(city, listKey);
   return list[d.pointIdx] || list[0] || null;
 }
+// ---------- Flights: timing from the airline's published schedule ----------
+// On an arrival or departure day by plane the traveler can type the flight number. The Worker's /flight looks
+// it up (AeroDataBox, shared cache) and the day takes the real airport, the local arrival or departure time and
+// whether passport control applies. A time the traveler types afterwards always wins, and the day says so.
+const SCHENGEN = new Set("AT BE CH CZ DE DK EE ES FI FR GR HR HU IS IT LI LT LU LV MT NL NO PL PT SE SI SK BG RO".split(" "));
+const normFlight = t => String(t || "").toUpperCase().replace(/[^A-Z0-9]/g, "");
+const flightOk = t => /^([A-Z][A-Z0-9]|[0-9][A-Z])[A-Z]?\d{1,4}[A-Z]?$/.test(normFlight(t));
+const flightShow = t => { const n = normFlight(t), m = n.match(/^([A-Z][A-Z0-9]|[0-9][A-Z])([A-Z]?)(\d.*)$/); return m ? (m[1] + m[2] + " " + m[3]) : n; };
+const isFlightDay = d => !!d && d.mode === "flight" && (d.type === "arrival" || d.type === "departure");
+// The leg that touches this day's city: for an arrival the leg that lands nearest it, for a departure the one leaving nearest it.
+function flightLeg(d, res) {
+  const legs = (res && res.legs) || []; if (!legs.length) return null;
+  const end = l => d.type === "arrival" ? l.arr : l.dep, c = cityCenter(cityFor(d));
+  if (c) { const near = legs.filter(l => isFinite(end(l).lat)); if (near.length) return near.sort((a, b) => hav(c, end(a)) - hav(c, end(b)))[0]; }
+  const k = keyOf(String(d.destination || "").replace(/\(.*\)/, ""));
+  return legs.find(l => k && (keyOf(end(l).city).includes(k) || k.includes(keyOf(end(l).city)))) || (d.type === "arrival" ? legs[legs.length - 1] : legs[0]);
+}
+function cityCenter(city) { const p = city && ((city.starts && city.starts.point && city.starts.point[0]) || (city.sites && city.sites[0])); return p && isFinite(p.lat) ? { lat: p.lat, lng: p.lng } : null; }
+// Passport control: none inside one country or between two Schengen countries.
+const noPassport = l => !!l && !!l.dep.country && !!l.arr.country && (l.dep.country === l.arr.country || SCHENGEN.has(l.dep.country) && SCHENGEN.has(l.arr.country));
+function flightInfo(d) { const f = isFlightDay(d) && d.flight; return f && f.state === "ok" && f.leg && normFlight(d.flightNo) === f.no ? f : null; }
+// The airport from the schedule becomes the day's start or end, when it is a sensible distance from the city.
+function flightPort(d) {
+  const f = flightInfo(d); if (!f) return null; const a = d.type === "arrival" ? f.leg.arr : f.leg.dep;
+  if (!isFinite(a.lat) || !isFinite(a.lng)) return null; const c = cityCenter(cityFor(d)); if (c && hav(c, a) > 150) return null;
+  return { name: (a.name ? a.name + (/airport/i.test(a.name) ? "" : " Airport") : "Airport") + (a.iata ? " (" + a.iata + ")" : ""), lat: a.lat, lng: a.lng, note: a.terminal ? "Terminal " + a.terminal : "", fromFlight: true };
+}
+// Time to get out of the airport, and how early to be there, from what the flight actually is.
+function flightBuffers(d) {
+  const m = MODES[d.mode], f = flightInfo(d);
+  if (d.mode !== "flight") return { clear: m.clear, need: m.need, how: "" };
+  if (!f) return { clear: m.clear, need: m.need, how: "intl?" };
+  return noPassport(f.leg) ? { clear: 40, need: 120, how: "dom" } : { clear: 75, need: 180, how: "intl" };
+}
+let flightAsking = new Set();
+async function lookupFlight(d, quiet) {
+  if (!freeAI || !isFlightDay(d) || !flightOk(d.flightNo) || !/^\d{4}-\d{2}-\d{2}$/.test(d.date || "")) return;
+  const rr = () => render(), prev = d.flight && d.flight.state === "ok" && d.flight.no === normFlight(d.flightNo) && d.flight.date === d.date ? d.flight : null;
+  const no = normFlight(d.flightNo), k = d.id + "|" + no + "|" + d.date; if (flightAsking.has(k)) return; flightAsking.add(k);
+  if (!quiet) { d.flight = { state: "asking", no, date: d.date }; rr(); }
+  let j = null;
+  try { const r = await fetch(freeAI.url + "/flight?no=" + no + "&date=" + d.date + "&role=" + d.type); j = r.ok || r.status === 400 ? await r.json() : null; } catch (e) {}
+  flightAsking.delete(k);
+  if (normFlight(d.flightNo) !== no) return; // the traveler changed the number meanwhile
+  if (!j || j.state === "later" || j.state === "nokey") { d.flight = prev || { state: j && j.state === "nokey" ? "nokey" : "later", no, date: d.date, at: Date.now() }; save(); rr(); return; }
+  if (j.state !== "ok") { d.flight = { state: j.state, no, date: d.date, at: Date.now() }; save(); rr(); return; }
+  const leg = flightLeg(d, j); if (!leg) { d.flight = { state: "notfound", no, date: d.date, at: Date.now() }; save(); rr(); return; }
+  const t = d.type === "arrival" ? leg.arr.time : leg.dep.time, prevT = prev && (d.type === "arrival" ? prev.leg.arr.time : prev.leg.dep.time);
+  // The schedule sets the time unless the traveler has typed their own since the last lookup.
+  const mine = d.timeBy === "you" && d.time && d.time !== prevT;
+  d.flight = { state: "ok", no, date: d.date, at: Date.now(), leg, source: j.source || "", changed: prev && prevT && prevT !== t ? prevT : "" };
+  if (!mine) { d.time = t; d.timeBy = "flight"; }
+  edited(); save(); rr();
+}
+// Look again when a saved answer is old: flights not yet published, flights soon (times move), and failed tries.
+function refreshFlights() {
+  if (!freeAI || !trip || !trip.days) return;
+  const now = Date.now();
+  trip.days.forEach(d => { if (!isFlightDay(d) || !flightOk(d.flightNo)) return; const f = d.flight;
+    const soon = d.date && (Date.parse(d.date) - now) / 86400000 < 3;
+    if (!f || normFlight(d.flightNo) !== f.no || f.date !== d.date) return lookupFlight(d, true);
+    const age = now - (f.at || 0);
+    if ((f.state === "ok" && soon && age > 6 * 3600e3) || (f.state !== "ok" && age > 86400e3)) lookupFlight(d, true); });
+}
+function flightHint(d) {
+  const f = d.flight, no = flightShow(d.flightNo);
+  if (!flightOk(d.flightNo)) return d.flightNo ? "That doesn't look like a flight number. It's the airline code and number, like A3 601 or UA 88." : "Type it and Kairoute fills in the airport and time from the airline's schedule.";
+  if (!freeAI) return "Flight lookup needs a connection. Type the time below for now.";
+  if (!f || f.no !== normFlight(d.flightNo) || f.date !== d.date) return "Tap Look up to fill in the airport and time.";
+  if (f.state === "asking") return "Looking up " + esc(no) + "…";
+  if (f.state === "notyet") return `The airline hasn't published ${esc(no)} for ${esc(fmtDate(d.date))} yet. Kairoute checks again each day; until then the time below is used.`;
+  if (f.state === "notfound") return `No flight ${esc(no)} found on ${esc(fmtDate(d.date))}. Check the number and the date of this day.`;
+  if (f.state === "nokey" || f.state === "later") return "Flight lookup isn't available right now. Kairoute tries again later; until then the time below is used.";
+  const l = f.leg, dep = l.dep, arr = l.arr, A = x => esc((x.city || x.name) + (x.iata ? " (" + x.iata + ")" : ""));
+  const nextDay = d.type === "arrival" ? arr.date && arr.date !== d.date : dep.date && dep.date !== d.date;
+  const fp = flightPort(d), far = !fp && (d.type === "arrival" ? arr : dep), c = cityCenter(cityFor(d));
+  const t = d.type === "arrival" ? arr.time : dep.time;
+  return `<b>${esc(l.airline ? l.airline + " " : "")}${esc(flightShow(l.number || no))}</b>: ${A(dep)} ${esc(dep.time)} to ${A(arr)} ${esc(arr.time)}${arr.date && dep.date && arr.date !== dep.date ? " (next day)" : ""}. From the airline's schedule${f.source ? " via " + esc(f.source) : ""}.`
+    + (f.changed ? ` <b>The time changed from ${esc(f.changed)} to ${esc(t)}.</b>` : "")
+    + (d.time && d.time !== t ? ` You set ${esc(d.time)} yourself, so that's used.` : "")
+    + (nextDay ? ` <b>This flight ${d.type === "arrival" ? "lands" : "leaves"} on ${esc(fmtDate(d.type === "arrival" ? arr.date : dep.date))}, not ${esc(fmtDate(d.date))}.</b> Check the date of this day.` : "")
+    + (far && c && isFinite(far.lat) ? ` <b>${A(far)} is ${esc(distTxt(hav(c, far)))} from ${esc(d.destination)}.</b> Check the city for this day.` : "");
+}
+
 function fixedStop(p, label, minutes) { return Object.assign({}, p, { id: "fx-" + label.replace(/\W+/g, "-").toLowerCase(), name: label, minutes, fixed: true }); }
 
 // The time window and the fixed points at each end of a day.
@@ -2729,22 +2814,24 @@ function dayWindow(d, city) {
   } else if (d.type === "arrival") {
     if (!L) return { error: "Choose where you're staying in " + d.destination + "." };
     if (!P) return { error: "Choose your arrival " + MODES[d.mode].word + "." };
-    const m = MODES[d.mode];
-    w.start = toMin(d.time) + m.clear;
+    const m = MODES[d.mode], b = flightBuffers(d);
+    w.start = toMin(d.time) + b.clear;
     w.head = [P, fixedStop(L, "Check in or drop bags at " + L.name, 20)];
     // "Hours to sightsee" start once you've dropped your bags: the ride in and check-in don't eat into them.
     w.tail = [L]; w.endBy = Math.min(23 * 60, lunchIn(w.start + chainCost(w.head), d.hours));
     w.startLabel = (d.mode === "ship" ? "Off the ship at " : "Out of ") + P.name;
     w.endLabel = "Back at " + L.name;
-    w.notes.push(`${m.label} arrives ${d.time}. We allow ${dur(m.clear)} to get ${d.mode === "flight" ? "through passport control and baggage" : d.mode === "ship" ? "off the ship with your luggage" : d.mode === "train" ? "off the train" : "parked and on your way"}.`);
+    const fi = flightInfo(d);
+    const sched = fi && fi.leg.arr.time;
+    w.notes.push(`${fi ? flightShow(fi.no) + " lands" : m.label + " arrives"} ${d.time}${sched && sched !== d.time ? ` (your time; the airline's schedule says ${sched})` : ""}. We allow ${dur(b.clear)} to get ${d.mode === "flight" ? (b.how === "dom" ? "off the plane and collect your bags" : "through passport control and baggage") : d.mode === "ship" ? "off the ship with your luggage" : d.mode === "train" ? "off the train" : "parked and on your way"}.`);
   } else if (d.type === "departure") {
     if (!L) return { error: "Choose where you're staying in " + d.destination + "." };
     if (!P) return { error: "Choose your departure " + MODES[d.mode].word + "." };
-    const m = MODES[d.mode];
-    w.start = toMin(d.startTime); w.endBy = toMin(d.time) - m.need;
+    const m = MODES[d.mode], b = flightBuffers(d), fi = flightInfo(d), sched = fi && fi.leg.dep.time;
+    w.start = toMin(d.startTime); w.endBy = toMin(d.time) - b.need;
     w.head = [L]; w.tail = [fixedStop(L, "Collect bags at " + L.name, 15), P];
     w.startLabel = "Check out of " + L.name; w.endLabel = "At " + P.name;
-    w.notes.push(`${m.label} leaves ${d.time}. You'll be at the ${m.word} ${dur(m.need)} early${d.mode === "flight" ? " for an international flight" : ""}.`);
+    w.notes.push(`${fi ? flightShow(fi.no) : m.label} leaves ${d.time}${sched && sched !== d.time ? ` (your time; the airline's schedule says ${sched})` : ""}. You'll be at the ${m.word} ${dur(b.need)} early${b.how === "intl" ? " for an international flight" : b.how === "dom" ? " (no passport control on this flight)" : d.mode === "flight" ? ", as for an international flight. Add your flight number to check" : ""}.`);
   } else if (d.type === "embark") {
     if (!L) return { error: "Choose where you're staying in " + d.destination + "." };
     if (!P) return { error: "Choose the cruise port." };
@@ -3330,15 +3417,15 @@ async function changeTrip() {
   const tx = ((document.getElementById("chgText") || {}).value || "").trim(); changeText = tx;
   if (!aiReady() || (!tx && !changeImgs.length)) return;
   busy = { text: "Updating your trip…" }; aiError = ""; render();
-  const lines = trip.days.map(d => ["DAY", d.date, d.destination, d.type, d.mode, d.time, d.portArrive, d.allAboard, d.tender ? "yes" : "no", "", d.estimated ? "yes" : "no"].join("|")).join("\n");
+  const lines = trip.days.map(d => ["DAY", d.date, d.destination, d.type, d.mode, d.time, d.portArrive, d.allAboard, d.tender ? "yes" : "no", "", d.estimated ? "yes" : "no", isFlightDay(d) ? flightShow(d.flightNo || "") : ""].join("|")).join("\n");
   try {
     const imgs = changeImgs.map(x => x.blob);
-    const r = await sample(`Here is a traveler's trip, one day per line (DAY|date YYYY-MM-DD|destination|type|mode|time HH:MM|portArrive|allAboard|tender yes/no|lodging|estimated yes/no):\n${lines}\n\n${tx ? `What changed, in their words: "${tx}"\n` : ""}${imgs.length ? "Photos of their new or updated booking are attached; copy their dates, places and times exactly.\n" : ""}Apply the change and write the complete updated trip in the same DAY line format. Keep every day that isn't affected exactly as it is. Types: arrival, land, embark, port, sea, departure. Modes: flight, train, ship, car. On a travel day between two cities make a departure and an arrival with the same date. Only DAY lines.`, { modelTier: "complex", ...(imgs.length ? { images: imgs } : {}) });
+    const r = await sample(`Here is a traveler's trip, one day per line (DAY|date YYYY-MM-DD|destination|type|mode|time HH:MM|portArrive|allAboard|tender yes/no|lodging|estimated yes/no|flight number):\n${lines}\n\n${tx ? `What changed, in their words: "${tx}"\n` : ""}${imgs.length ? "Photos of their new or updated booking are attached; copy their dates, places and times exactly.\n" : ""}Apply the change and write the complete updated trip in the same DAY line format. Keep every day that isn't affected exactly as it is. Types: arrival, land, embark, port, sea, departure. Modes: flight, train, ship, car. On a travel day between two cities make a departure and an arrival with the same date. Only DAY lines.`, { modelTier: "complex", ...(imgs.length ? { images: imgs } : {}) });
     const days = parseDayLines(r.text || "");
     if (!days.length || r.truncated) throw new Error("short");
     const old = {}; trip.days.forEach(d => { old[d.date + "|" + keyOf(d.destination) + "|" + d.type] = d; });
     const before = trip.days.length, activeDay = trip.days[trip.active];
-    trip.days = days.map(d => { const o = old[d.date + "|" + keyOf(d.destination) + "|" + d.type]; return o ? Object.assign(o, { time: d.time, portArrive: d.portArrive, allAboard: d.allAboard, mode: d.mode }) : d; });
+    trip.days = days.map(d => { const o = old[d.date + "|" + keyOf(d.destination) + "|" + d.type]; return o ? Object.assign(o, { time: d.time, portArrive: d.portArrive, allAboard: d.allAboard, mode: d.mode }, normFlight(d.flightNo) !== normFlight(o.flightNo) ? { flightNo: d.flightNo, flight: null, timeBy: "flight" } : {}) : d; });
     if (days.some(d => d._lodging)) { trip.lodging = trip.lodging || {}; days.forEach(dd => { if (dd._lodging) trip.lodging[keyOf(dd.destination)] = { idx: "custom", name: dd._lodging, ll: null }; }); }
     trip.days.forEach(dd => delete dd._lodging);
     const ai = trip.days.indexOf(activeDay); trip.active = ai >= 0 ? ai : Math.min(trip.active, trip.days.length - 1); trip.tour = null;
@@ -3361,9 +3448,9 @@ function stopsBanner() {
 async function fixStops() {
   const m = missingStops(); if (!m || !aiReady()) return;
   busy = { text: "Adding the missing stops…" }; aiError = ""; render();
-  const lines = trip.days.map(d => ["DAY", d.date, d.destination, d.type, d.mode, d.time, d.portArrive, d.allAboard, d.tender ? "yes" : "no", "", d.estimated ? "yes" : "no"].join("|")).join("\n");
+  const lines = trip.days.map(d => ["DAY", d.date, d.destination, d.type, d.mode, d.time, d.portArrive, d.allAboard, d.tender ? "yes" : "no", "", d.estimated ? "yes" : "no", isFlightDay(d) ? flightShow(d.flightNo || "") : ""].join("|")).join("\n");
   try {
-    const r = await sample(`A traveler's trip itinerary is missing stops. ${m.miss.length ? "Missing places: " + m.miss.join(", ") + ". " : ""}${m.short ? `They said the cruise has ${m.expected} ports but the list has ${m.ports}. ` : ""}${trip.sourceText ? `Their own description:\n"""${trip.sourceText}"""\n` : ""}Current itinerary, one day per line (DAY|date|destination|type|mode|time|portArrive|allAboard|tender|lodging|estimated):\n${lines}\n\nWrite the complete corrected itinerary in the same DAY line format, keeping every existing day and its details, inserting the missing stops in the right order and shifting later dates only if needed. Types: arrival, land, embark, port, sea, departure. Modes: flight, train, ship, car. Only DAY lines.`, { modelTier: "complex" });
+    const r = await sample(`A traveler's trip itinerary is missing stops. ${m.miss.length ? "Missing places: " + m.miss.join(", ") + ". " : ""}${m.short ? `They said the cruise has ${m.expected} ports but the list has ${m.ports}. ` : ""}${trip.sourceText ? `Their own description:\n"""${trip.sourceText}"""\n` : ""}Current itinerary, one day per line (DAY|date|destination|type|mode|time|portArrive|allAboard|tender|lodging|estimated|flight):\n${lines}\n\nWrite the complete corrected itinerary in the same DAY line format, keeping every existing day and its details, inserting the missing stops in the right order and shifting later dates only if needed. Types: arrival, land, embark, port, sea, departure. Modes: flight, train, ship, car. Only DAY lines.`, { modelTier: "complex" });
     const days = parseDayLines(r.text || "");
     if (days.length < trip.days.length || r.truncated) throw new Error("short");
     const old = {}; trip.days.forEach(d => { old[d.date + "|" + keyOf(d.destination)] = d; });
@@ -3375,12 +3462,13 @@ async function fixStops() {
 function parseDayLines(out) {
   const types = DAY_TYPES.map(t => t.key), hm = v => /^\d\d:\d\d$/.test((v || "").trim()) ? v.trim() : "";
   return String(out).split("\n").filter(l => /^\s*DAY\|/.test(l)).map(l => l.trim().split("|").map(x => x.trim())).filter(f => f[2]).map(f => {
-    const [, date, destination, type0, mode0, time, pa, aa, tender, lodging, est] = f;
+    const [, date, destination, type0, mode0, time, pa, aa, tender, lodging, est, fl] = f;
     const type = types.includes(type0) ? type0 : "land", mode = MODES[mode0] ? mode0 : "flight";
     return newDay({
       date: /^\d{4}-\d{2}-\d{2}$/.test(date) ? date : "", destination, type, mode,
       time: hm(time) || (type === "departure" ? "15:00" : "10:30"), portArrive: hm(pa) || "08:00", allAboard: hm(aa) || "16:30",
-      tender: /^y/i.test(tender || ""), hours: type === "arrival" ? 6 : 8, _lodging: lodging || "", estimated: /^y/i.test(est || "")
+      tender: /^y/i.test(tender || ""), hours: type === "arrival" ? 6 : 8, _lodging: lodging || "", estimated: /^y/i.test(est || ""),
+      flightNo: mode === "flight" && (type === "arrival" || type === "departure") && flightOk(fl) ? flightShow(fl) : ""
     });
   });
 }
@@ -4001,7 +4089,7 @@ ${wiz && wiz.hotels ? "Where they are staying: " + wiz.hotels : ""}
 ${wiz && (wiz.cruiseLine || wiz.ship) ? "Cruise: " + [wiz.cruiseLine, wiz.ship, wiz.sail ? "sailing " + wiz.sail : ""].filter(Boolean).join(", ") + ". If you know this ship's published itinerary for that sailing, use its ports and times; otherwise use the cruise line's typical itinerary for that route." : ""}
 
 First write one line that starts with STOPS: and lists, in order, every city, port, island or event place the traveler mentions or that appears in the photos, separated by " > ", followed by the count, for example "STOPS: Athens > Mykonos > Santorini > Rome (3 ports)". Then write one line per day, nothing else, in exactly this format with | between fields:
-DAY|date YYYY-MM-DD|destination|type|mode|time HH:MM|portArrive HH:MM|allAboard HH:MM|tender yes/no|lodging|estimated yes/no
+DAY|date YYYY-MM-DD|destination|type|mode|time HH:MM|portArrive HH:MM|allAboard HH:MM|tender yes/no|lodging|estimated yes/no|flight number
 type is one of arrival, land, embark, port, sea, departure. mode is flight, train, ship or car. Leave a field empty when it doesn't apply, but keep the | separators. No JSON, no commentary.
 Rules:
 - One entry per day per city. On a day you travel between two cities, make two entries with the same date: a "departure" in the first city and an "arrival" in the second, with the mode used (flight, train, or car for a drive or bus).
@@ -4011,6 +4099,7 @@ Rules:
 - A port the ship visits twice on different days (for example two stops in Crete) gets two "port" days.
 - If the traveler doesn't name the ports, choose a realistic route and use real port names; mark them estimated.
 - If dates are missing, start on the first Monday at least 60 days from ${new Date().toISOString().slice(0, 10)}. If times are missing, use typical ones (flights arrive 10:30, leave 15:00; ports 08:00 to 17:00).
+- "flight number": on an arrival or departure day by plane, the flight number exactly as written (for example "A3 601" or "UA 88"), else empty. Never make one up; the app looks up its real times.
 - "lodging": the hotel name if given, else empty. "estimated": yes for anything you chose or are not sure of.
 - Use the common English city name, and for gateway ports add the big city in brackets, e.g. "Civitavecchia (Rome)".`;
   try {
@@ -4401,6 +4490,8 @@ if (typeof window !== "undefined") window.__kairouteDay = (i, sel, extra) => { c
 if (typeof window !== "undefined") window.__kairoutePlans = (ov) => { if (ov) trip.days.forEach((d, i) => { if (ov.sel && ov.sel[i]) d.selected = ov.sel[i]; if ("fill" in ov) d.fillTime = ov.fill; }); bonusMemo = new Map(); mealMemo = new Map(); keptMemo = new Map(); eveMemo = new Map(); avoidMeals = new Set(); return trip.days.map((d, i) => { const pl = buildPlan(d); if (!pl || !pl.items) return { i, date: d.date, dest: d.destination, none: true }; const pts = pl.items.filter(x => x.place && x.type !== "travel").map(x => ({ lat: x.place.lat, lng: x.place.lng, t: x.type, n: x.place.name })); return { i, date: d.date, dest: d.destination, pts, km: +pl.walkKm.toFixed(2), end: pl.end, endBy: pl.endBy, stops: pl.stops.length, bonus: (pl.bonus || []).map(x => x.name), meals: pl.items.filter(x => x.type === "meal").map(x => x.meal.label + "@" + x.time + " " + x.place.name + " | alts: " + (x.place.alts || []).map(r => r.name + " (" + r.cuisine + ")").join("; ")) }; }); };
 // Test hook: pick each day's stops the way a fresh build does.
 if (typeof window !== "undefined") window.__kairouteFreshPicks = () => { trip.days.forEach(x => { x.selected = null; }); trip.days.forEach(x => { const c = cities[cityKeyFor(x)]; if (c) x.selected = defaultSelection(c, trip.style, x); }); return trip.days.map(x => x.selected); };
+// Test hook for tools/flight-test.cjs: the trip, and a day's window (time, airport and notes).
+if (typeof window !== "undefined") window.__kairouteFlight = { days: () => trip.days, go: (i, v) => { trip.active = i; view = v; render(); }, render: () => render(), win: i => { const d = trip.days[i], c = cityFor(d), w = dayWindow(d, c), pt = dayPoint(d, c); return { time: d.time, by: d.timeBy || "", start: fmt(w.start), endBy: fmt(w.endBy), notes: w.notes, point: pt && pt.name }; } };
 if (typeof window !== "undefined") window.__kairouteGo = (v, i) => { if (typeof i === "number") trip.active = i; view = v; render(); toTop(); };
 if (typeof window !== "undefined") window.kairoutePrewarm = (reserve, log) => saveStops(BUILTIN_CITIES.flatMap(([c]) => allSites(c)), log || ((d, n, s) => console.log(`saved ${d}/${n} ${s.name}`)), reserve ?? 15000);
 function speakLines(id, lines, lc) {
@@ -4551,6 +4642,7 @@ let paneMemo = { key: "", pos: {} };
 function panes() { return [document.getElementById("view"), ...document.querySelectorAll("#view .pane[data-pane]")].filter(Boolean); }
 function toTop() { window.scrollTo(0, 0); panes().forEach(el => { el.scrollTop = 0; }); }
 function render() {
+  if (!(Date.now() - (refreshFlights.t || 0) < 3000)) { refreshFlights.t = Date.now(); setTimeout(refreshFlights, 0); }
   bonusMemo = new Map(); mealMemo = new Map(); keptMemo = new Map(); eveMemo = new Map(); avoidMeals = new Set();
   const pkey = view + "|" + trip.active, pos = {};
   panes().forEach(el => { pos[el.dataset.pane || "view"] = el.scrollTop; });
@@ -5361,8 +5453,9 @@ function renderSea(d) {
 }
 function dayMeta(x) {
   if (x.type === "port") return `Ashore ${x.portArrive}, all aboard ${x.allAboard}${x.tender ? " · tender" : ""}`;
-  if (x.type === "arrival") return `${MODES[x.mode].label} arrives ${x.time || "?"}`;
-  if (x.type === "departure") return `${MODES[x.mode].label} leaves ${x.time || "?"}`;
+  const fl = isFlightDay(x) && flightOk(x.flightNo) ? "Flight " + flightShow(x.flightNo) : MODES[x.mode].label;
+  if (x.type === "arrival") return `${fl} ${isFlightDay(x) ? "lands" : "arrives"} ${x.time || "?"}`;
+  if (x.type === "departure") return `${fl} leaves ${x.time || "?"}`;
   if (x.type === "embark") return `All aboard ${x.allAboard}`;
   if (x.type === "sea") return "No stops";
   return `From ${x.startTime}, ${x.hours} h`;
@@ -5428,7 +5521,11 @@ function renderTrip(d) {
         ${t === "sea" ? `<p class="lede">Nothing to plan on a sea day.</p>` : `
         ${t === "arrival" || t === "departure" ? `<div class="field"><span class="lbl">${t === "arrival" ? "Arriving by" : "Leaving by"}</span>
           <div class="seg" role="group" aria-label="Travel mode">${Object.keys(MODES).filter(k => t === "arrival" || k !== "ship").map(k => `<button type="button" data-mode="${k}" aria-pressed="${d.mode === k}">${MODES[k].label}</button>`).join("")}</div></div>` : ""}
-        ${t !== "land" ? `<div class="field"><label for="f-point">${pointWord}</label>
+        ${isFlightDay(d) ? `<div class="field"><label for="f-flight">Flight number</label>
+          <div class="ask"><input type="text" id="f-flight" value="${esc(d.flightNo || "")}" placeholder="e.g. A3 601" autocapitalize="characters" spellcheck="false" inputmode="text" maxlength="9"><button type="button" class="btn small" data-act="flightlookup" ${freeAI && !(d.flight && d.flight.state === "asking") ? "" : "disabled"}>Look up</button></div>
+          <span class="hint" id="flightHint">${flightHint(d)}</span></div>` : ""}
+        ${t !== "land" && flightPort(d) ? `<div class="field"><span class="lbl">${pointWord}</span><span class="hint"><b>${esc(flightPort(d).name)}</b>${flightPort(d).note ? ", " + esc(flightPort(d).note) : ""}, from your flight.</span></div>` : ""}
+        ${t !== "land" && !flightPort(d) ? `<div class="field"><label for="f-point">${pointWord}</label>
           ${city ? (points.length ? `<select id="f-point">${opts(points, d.pointIdx)}</select>${points[d.pointIdx] && points[d.pointIdx].note ? `<span class="hint">${esc(points[d.pointIdx].note)}</span>` : ""}` : `<span class="hint">No ${esc(listKey)} listed for this city.</span>`) : `<span class="hint">Appears once the guide for ${esc(d.destination || "this city")} is built.</span>`}
         </div>` : ""}
         <div class="row2">
@@ -6136,7 +6233,8 @@ function readForm() {
     d.selected = null; d.pointIdx = 0;
   }
   d.date = v("f-date") || d.date;
-  if (g("f-time")) d.time = v("f-time");
+  if (g("f-flight")) { const raw = v("f-flight").trim(), nf = flightOk(raw) ? flightShow(raw) : raw; if (normFlight(nf) !== normFlight(d.flightNo) && d.flight && d.flight.no !== normFlight(nf)) d.flight = null; d.flightNo = nf; }
+  if (g("f-time")) { const nt = v("f-time"); if (nt !== d.time) d.timeBy = "you"; d.time = nt; }
   if (g("f-parr")) d.portArrive = v("f-parr");
   if (g("f-aboard")) d.allAboard = v("f-aboard");
   if (g("f-start")) d.startTime = v("f-start") || "09:00";
@@ -6311,6 +6409,7 @@ document.addEventListener("click", e => {
   }
   if (act === "genall") { readForm(); buildAllGuides(); return; }
   if (act === "geo") { readForm(); geocodeLodging(day()); return; }
+  if (act === "flightlookup") { readForm(); const d = day(); if (d.flight && d.flight.state !== "ok") d.flight = null; d.timeBy = "flight"; save(); if (!flightOk(d.flightNo)) { render(); return; } lookupFlight(d); return; }
   if (act === "parsetrip") { readForm(); buildTripFromText(tripText); return; }
   if (act === "toplan") { view = "plan"; save(); render(); toTop(); return; }
   if (act === "addday") {
@@ -6385,6 +6484,7 @@ document.addEventListener("change", e => {
     return;
   }
   if (t.id === "f-type") { readForm(); const d = day(); d.type = t.value; d.pointIdx = 0; if (d.type === "departure" && d.mode === "ship") d.mode = "flight"; d.selected = null; edited(); save(); render(); return; }
+  if (t.id === "f-flight") { readForm(); const d = day(); d.timeBy = "flight"; save(); if (flightOk(d.flightNo)) lookupFlight(d); else render(); return; }
   if (["f-point", "f-return", "f-along", "f-fill", "f-lodging", "f-tender", "f-date"].includes(t.id)) { readForm(); edited(); save(); render(); return; }
   if (t.closest && t.closest("#dayForm")) { readForm(); edited(); save(); }
 });
@@ -6419,4 +6519,4 @@ render();
 
 </script>
 <script>if ("serviceWorker" in navigator) addEventListener("load", () => navigator.serviceWorker.register("sw.js").catch(() => {}));</script>
-<script>(function(){var B="7772475-1794518301";function chk(){if(location.protocol!=="https:")return;fetch("version.txt",{cache:"no-store"}).then(function(r){return r.ok?r.text():""}).then(function(t){t=t.trim();if(t&&t!==B)location.reload()}).catch(function(){})}addEventListener("load",chk);document.addEventListener("visibilitychange",function(){if(document.visibilityState==="visible")chk()})})();</script>
+<script>(function(){var B="3561a91-1794518608";function chk(){if(location.protocol!=="https:")return;fetch("version.txt",{cache:"no-store"}).then(function(r){return r.ok?r.text():""}).then(function(t){t=t.trim();if(t&&t!==B)location.reload()}).catch(function(){})}addEventListener("load",chk);document.addEventListener("visibilitychange",function(){if(document.visibilityState==="visible")chk()})})();</script>

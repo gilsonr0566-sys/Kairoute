@@ -1,7 +1,7 @@
 name: Planner quality test
 on:
   push:
-    paths: ["src/**", "tools/plan-test.cjs", "tools/fixtures/**"]
+    paths: ["src/**", "tools/plan-test.cjs", "tools/flight-test.cjs", "tools/fixtures/**"]
   workflow_dispatch:
 permissions:
   contents: read
@@ -14,4 +14,4 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-      - run: npm i playwright@1 && npx playwright install chromium && node tools/plan-test.cjs && node tools/picks-e2e.cjs
+      - run: npm i playwright@1 && npx playwright install chromium && node tools/plan-test.cjs && node tools/picks-e2e.cjs && node tools/flight-test.cjs
