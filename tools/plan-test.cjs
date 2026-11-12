@@ -39,6 +39,15 @@ const FILE = path.resolve(process.argv[2] || path.join(__dirname, '..', 'index.h
   await run('Corpus Christi, 3 days', { fn: ([city, key]) => { localStorage.setItem('wayside.cities', JSON.stringify({ [key]: city }));
     const day = i => ({ id: 'd' + (900 + i), date: '2026-11-1' + (1 + i), destination: 'Corpus Christi', type: 'land', mode: 'car', time: '09:00', pointIdx: 0, startTime: '09:00', hours: 8, alongWay: true, returnToStart: true, event: '', selected: null, cityKey: key });
     localStorage.setItem('wayside.trip2', JSON.stringify({ id: 't', name: 'Corpus', style: 'mix', active: 0, days: [day(0), day(1), day(2)], lodging: {}, journal: {}, prefs: { pace: 'moderate', walk: 'medium', interests: [], travelers: '', access: 'none', party: 2, lang: 'English' } })); }, arg: [cc.cities[key], key] });
+  // All or something: a short day with more picks than time keeps as many as fit, must-sees first, never none.
+  { const p = await b.newPage(); await p.route('**/*', r => /^file:/.test(r.request().url()) ? r.continue() : r.abort()); await p.goto('file://' + FILE); await p.waitForTimeout(600);
+    for (const h of [1, 2.5]) {
+      const o = await p.evaluate(h => window.__kairouteDay(0, 'plaka and|syntagma|athens cathedral|national garden', { hours: h }), h);
+      const stops = o.items.filter(x => / stop: /.test(x)), plaka = stops.some(x => /Plaka and/.test(x)), need = h >= 2.5 ? 3 : 1;
+      const ok = stops.length >= need && plaka; if (!ok) fails++; days++;
+      console.log(`\n== Arrival day, 4 central Athens picks, ${h} h to sightsee\n${ok ? 'ok  ' : 'FAIL'} keeps ${stops.length} of 4 (needs ${need}+, the must-see Plaka first)${o.dropped.length ? ' | did not fit: ' + o.dropped.join(', ') : ''}`);
+    }
+    await p.close(); }
   console.log(`\n${days} days planned: ${fails} with problems, ${warns} travel-heavy warnings.`);
   await b.close(); process.exit(fails ? 1 : 0);
 })();
