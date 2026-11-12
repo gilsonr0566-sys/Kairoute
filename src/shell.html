@@ -82,6 +82,9 @@ input[type=text], input[type=date], input[type=time], input[type=number], select
 .seg button[aria-pressed="true"] { background: var(--route); color: var(--card); border-color: var(--route); font-weight: 700; }
 .seg.pace { margin-top: 8px; }
 .seg.pace button { padding: 6px 10px; min-height: 38px; font-size: 14px; }
+.seg.daylen { align-items: center; margin: 10px 0 4px; }
+.seg.daylen .hint { font-size: 14px; margin-right: 2px; }
+.seg.daylen small { opacity: .75; font-weight: 500; }
 .check { display: flex; gap: 10px; align-items: flex-start; cursor: pointer; }
 .check input { width: 20px; height: 20px; margin-top: 2px; accent-color: var(--route); flex: none; }
 
@@ -374,6 +377,7 @@ main:has(#view.full) { padding: 0; }
 .meter .mrow { display: flex; justify-content: space-between; gap: 10px; font-size: .95rem; }
 .meter .mrow span { color: var(--muted); font-size: .85rem; }
 .meter .mbar { height: 10px; border-radius: 999px; background: var(--route-soft); overflow: hidden; }
+.meter .mparts { color: var(--muted); font-size: .85rem; margin: 0; }
 .meter .mbar i { display: block; height: 100%; background: var(--route); border-radius: 999px; transition: width .3s; }
 .meter p { font-size: .88rem; color: var(--muted); }
 .meter.near .mbar i { background: #D99A2B; }
