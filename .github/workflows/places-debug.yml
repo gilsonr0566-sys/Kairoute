@@ -1,5 +1,11 @@
 name: Debug places
-on: workflow_dispatch
+on:
+  workflow_dispatch:
+    inputs:
+      city:
+        default: "Kotor"
+      names:
+        default: ""
 permissions:
   contents: read
 jobs:
@@ -11,4 +17,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-      - run: node tools/places-debug.mjs
+      - env:
+          CITY: ${{ inputs.city }}
+          NAMES: ${{ inputs.names }}
+        run: node tools/places-debug.mjs
