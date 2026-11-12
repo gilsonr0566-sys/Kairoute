@@ -32,6 +32,9 @@ const today = () => new Date().toISOString().slice(0, 10);
 async function used(env) { return +(await env.USAGE.get("n:" + today())) || 0; }
 const month = () => new Date().toISOString().slice(0, 7);
 async function addUse(env, n, lab) {
+  // Running totals for the owner's Usage & cost page: everything this month, and each day (kept 40 days).
+  const tm = "nm:" + month(), td = "nd:" + today(); const [a, b2] = await Promise.all([env.USAGE.get(tm), env.USAGE.get(td)]);
+  await Promise.all([env.USAGE.put(tm, String(+((+a || 0) + n).toFixed(1)), { expirationTtl: 40 * 86400 }), env.USAGE.put(td, String(+((+b2 || 0) + n).toFixed(1)), { expirationTtl: 40 * 86400 })]);
   if (lab) {
     const tk = "t:" + today(), mk = "x:" + month(); const t = +(await env.USAGE.get(tk)) || 0, m = +(await env.USAGE.get(mk)) || 0;
     await env.USAGE.put(tk, String(+(t + n).toFixed(1)), { expirationTtl: 3 * 86400 });
@@ -62,6 +65,17 @@ export default {
     if (req.method === "OPTIONS") return new Response(null, { headers: h });
     const url = new URL(req.url);
     const { DAILY_NEURONS, VOICE_DAILY, LAB_LEFT, VOICE_TOTAL = DAILY_NEURONS } = await limits(env), lab = req.headers.get("x-kairoute-lab") === "1";
+    // /usage: the numbers behind the owner's "Usage & cost" page. Counts only, nothing about travelers.
+    if (url.pathname === "/usage") {
+      const g = k => env.USAGE.get(k).then(v => +v || 0), d0 = new Date(), days = [];
+      for (let i = 13; i >= 0; i--) { const x = new Date(d0.getTime() - i * 86400000).toISOString().slice(0, 10); days.push(x); }
+      const [aiToday, aiMonth, extraMonth, labToday, voiceToday, gDay, gMonth, ...hist] = await Promise.all([used(env), g("nm:" + month()), g("x:" + month()), g("t:" + today()), g("v:" + today()), g("gqd:" + today()), g("gqm:" + month()), ...days.map(x => g("nd:" + x))]);
+      return Response.json({ at: new Date().toISOString(), month: month(), paid: env.PAID === "1",
+        ai: { today: Math.round(aiToday), freeShare: FREE_DAILY, limitToday: Math.round(DAILY_NEURONS), month: Math.round(aiMonth), extraMonth: Math.round(extraMonth), extraCap: MONTH_EXTRA, usdPer1000: 0.011 },
+        voice: { today: Math.round(voiceToday), freeDaily: FREE_VOICE, paidOn: env.VOICE_PAID === "1" }, lab: { today: Math.round(labToday), daily: LAB_DAILY },
+        google: { today: gDay, month: gMonth, cap: 900, free: 1000, usdEach: 0.035, keyOn: !!env.GPLACES_KEY },
+        history: days.map((x, i) => ({ date: x, neurons: Math.round(hist[i]) })) }, { headers: { ...h, "cache-control": "no-store" } });
+    }
     if (url.pathname === "/status") { const u = await used(env); const vu = +(await env.USAGE.get("v:" + today())) || 0; return Response.json({ ok: true, model: MODEL, usedToday: Math.round(u), budget: DAILY_NEURONS, left: Math.max(0, Math.floor(DAILY_NEURONS - u)), voiceLeft: Math.max(0, Math.floor(Math.min(VOICE_DAILY - vu, VOICE_TOTAL - u))), labLeft: Math.floor(LAB_LEFT), monthExtraUsed: Math.round(+(await env.USAGE.get("x:" + month())) || 0), monthExtraCap: MONTH_EXTRA, labToday: Math.round(+(await env.USAGE.get("t:" + today())) || 0) }, { headers: h }); }
     // Real places from OpenStreetMap, so the app never sends anyone to a place the AI made up.
     // /places: restaurants and cafés around given points. /verify: finds each named sight on the map.
