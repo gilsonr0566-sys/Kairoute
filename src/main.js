@@ -1150,6 +1150,7 @@ async function cityInParts(prompt, show, label) {
       let j = null; try { j = parseJSON(r.text || ""); } catch (e) { last = e; }
       if (ok(j) && guideInLang(j, lang)) return j;
       if (ok(j)) last = new Error("The guide came back in the wrong language. Try again.");
+      else try { console.info("Guide piece retry (" + extra.slice(0, 50) + "…): " + (j ? "keys " + Object.keys(j).join(",") + " " + JSON.stringify(j).slice(0, 300) : "unreadable " + String(r.text || "").length + " chars: " + String(r.text || "").slice(-200))); } catch (x) {}
     }
     throw last || new Error("The guide came back incomplete. Try again.");
   };
