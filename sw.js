@@ -1,8 +1,9 @@
 // Kairoute offline support: keep the app and its fonts on the device so it opens with no signal.
-const CACHE = "kairoute-v1";
-const CORE = ["./", "./index.html", "./manifest.webmanifest", "./icons/web-192.png", "./icons/web-512.png", "./icons/apple-touch-icon-180.png"];
+const CACHE = "kairoute-v2";
+const KEEP = /^kairoute-maps-/; // the map store (tiles and label fonts) is managed by the app and survives app updates
+const CORE = ["./", "./index.html", "./manifest.webmanifest", "./icons/web-192.png", "./icons/web-512.png", "./icons/apple-touch-icon-180.png", "./lib/maplibre-gl.js", "./lib/maplibre-gl.css"];
 self.addEventListener("install", e => { e.waitUntil(caches.open(CACHE).then(c => c.addAll(CORE)).then(() => self.skipWaiting())); });
-self.addEventListener("activate", e => { e.waitUntil(caches.keys().then(ks => Promise.all(ks.filter(k => k !== CACHE).map(k => caches.delete(k)))).then(() => self.clients.claim())); });
+self.addEventListener("activate", e => { e.waitUntil(caches.keys().then(ks => Promise.all(ks.filter(k => k !== CACHE && !KEEP.test(k)).map(k => caches.delete(k)))).then(() => self.clients.claim())); });
 self.addEventListener("fetch", e => {
   const req = e.request; if (req.method !== "GET") return;
   const url = new URL(req.url);

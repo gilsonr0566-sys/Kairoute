@@ -138,6 +138,26 @@ input[type=text], input[type=date], input[type=time], input[type=number], select
 .stat span { color: var(--muted); font-size: 0.8rem; }
 .mapbox { background: var(--card); border: 1px solid var(--line); border-radius: var(--r); overflow: hidden; }
 .mapbox svg { display: block; width: 100%; height: auto; }
+/* Real street map (MapLibre). The route diagram underneath shows until the map has loaded. */
+.mapslot { position: relative; }
+.mapslot .kmap { position: absolute; inset: 0; opacity: 0; pointer-events: none; transition: opacity .25s; }
+.mapslot.live { aspect-ratio: 8 / 5; min-height: 260px; }
+.mapslot.live > svg { visibility: hidden; position: absolute; inset: 0; height: 100%; }
+.mapslot.live .kmap { opacity: 1; pointer-events: auto; }
+.tourmap .mapslot.live { aspect-ratio: 16 / 9; min-height: 220px; }
+.kmap .maplibregl-ctrl-attrib { font-size: 10px; }
+.kmap .maplibregl-ctrl-scale { border-color: var(--ink); color: var(--ink); background: color-mix(in srgb, var(--card) 80%, transparent); }
+.mk { width: 26px; height: 26px; border-radius: 50%; display: grid; place-items: center; font: 800 12.5px/1 "Atkinson Hyperlegible", system-ui, sans-serif; background: var(--card); color: var(--ink); border: 4px solid var(--route); box-shadow: 0 1px 4px rgba(0,0,0,.35); padding: 0; cursor: default; }
+button.mk { cursor: pointer; }
+.mk-stop.on { transform: scale(1.25); background: var(--route); color: #fff; }
+.mk-meal { border-color: var(--meal); color: var(--meal); width: 24px; height: 24px; font-size: 11px; }
+.mk-meal.on { background: var(--meal); color: #fff; transform: scale(1.2); }
+.mk-hotel, .mk-start, .mk-end { border-radius: 6px; width: 24px; height: 24px; border: 2px solid var(--card); background: var(--ink); color: var(--paper); font-size: 12px; }
+.mk-hotel { background: var(--must); }
+.mk-along { width: 14px; height: 14px; border: 2px solid var(--card); background: var(--route); }
+.mk-bonus { border-style: dashed; color: var(--route); width: 24px; height: 24px; font-size: 15px; }
+.mk-you { width: 18px; height: 18px; border-radius: 50%; background: #1A73E8; border: 3px solid #fff; box-shadow: 0 0 0 6px rgba(26,115,232,.25), 0 1px 4px rgba(0,0,0,.4); }
+.maplegend .you { color: #1A73E8; }
 .maplegend { display: flex; gap: 14px; flex-wrap: wrap; padding: 10px 14px; border-top: 1px solid var(--line); font-size: 0.82rem; color: var(--muted); }
 .maplegend i { display: inline-block; width: 18px; height: 0; border-top: 3px solid var(--route); vertical-align: middle; margin-right: 6px; }
 .maplegend i.dash { border-top-style: dashed; border-top-color: var(--ride); }

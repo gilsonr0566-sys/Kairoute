@@ -50,7 +50,7 @@ jobs:
           cd android && chmod +x gradlew && ./gradlew assembleDebug --no-daemon
       - name: Collect site files
         run: |
-          mkdir _site && cp -r index.html usage.html version.txt .nojekyll manifest.webmanifest sw.js icons _site/
+          mkdir _site && cp -r index.html usage.html version.txt .nojekyll manifest.webmanifest sw.js icons lib _site/
           cp app/android/app/build/outputs/apk/debug/app-debug.apk _site/Kairoute.apk
           if [ -f ai.json ]; then cp ai.json _site/; fi
       - uses: actions/configure-pages@v5
