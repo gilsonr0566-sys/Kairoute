@@ -2969,7 +2969,19 @@ function nameMatch(want, got) {
 }
 async function groundNames(names, label, farSet) {
   if (!freeAI || !names.length) return null;
-  const look = async list => { try { const r = await fetch(freeAI.url + "/ground", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ city: label, names: list, far: list.filter(n => farSet && farSet.has(n)) }) }); if (r.ok) { const j = await r.json(); if (Array.isArray(j.results)) { if (j.center && isFinite(j.center.lat) && isFinite(j.center.lng)) cityMid = j.center; return j.results; } } } catch (e) {} return null; };
+  const lookOne = async list => { try { const r = await fetch(freeAI.url + "/ground", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ city: label, names: list, far: list.filter(n => farSet && farSet.has(n)) }) }); if (r.ok) { const j = await r.json(); if (Array.isArray(j.results)) { if (j.center && isFinite(j.center.lat) && isFinite(j.center.lng)) cityMid = j.center; return j.results; } } } catch (e) {} return null; };
+  // In batches of 8 names: one long request can pass the 100-second limit of the network in front of the helper
+  // (it then answers 502 and the whole check fails). A batch that fails is tried once more; names still
+  // unanswered count as unanswered rather than failing the whole check.
+  const look = async list => {
+    const out = []; let any = false;
+    for (let i = 0; i < list.length; i += 8) {
+      const part = list.slice(i, i + 8);
+      let r = await lookOne(part); if (!r) { await new Promise(ok => setTimeout(ok, 2500)); r = await lookOne(part); }
+      if (r) any = true; part.forEach((n, k) => out.push(r ? r[k] : null));
+    }
+    return any ? out : null;
+  };
   let cityMid = null;
   let res = await look(names);
   if (!res) { await new Promise(ok => setTimeout(ok, 2500)); res = await look(names); }
@@ -5509,4 +5521,4 @@ render();
 
 </script>
 <script>if ("serviceWorker" in navigator) addEventListener("load", () => navigator.serviceWorker.register("sw.js").catch(() => {}));</script>
-<script>(function(){var B="c23822c-1794446199";function chk(){if(location.protocol!=="https:")return;fetch("version.txt",{cache:"no-store"}).then(function(r){return r.ok?r.text():""}).then(function(t){t=t.trim();if(t&&t!==B)location.reload()}).catch(function(){})}addEventListener("load",chk);document.addEventListener("visibilitychange",function(){if(document.visibilityState==="visible")chk()})})();</script>
+<script>(function(){var B="236c5db-1794448610";function chk(){if(location.protocol!=="https:")return;fetch("version.txt",{cache:"no-store"}).then(function(r){return r.ok?r.text():""}).then(function(t){t=t.trim();if(t&&t!==B)location.reload()}).catch(function(){})}addEventListener("load",chk);document.addEventListener("visibilitychange",function(){if(document.visibilityState==="visible")chk()})})();</script>
