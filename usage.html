@@ -65,7 +65,7 @@ async function load() {
   document.getElementById("usdNote").textContent = `Cloudflare Workers Paid plan $5.00 (shared with your other apps) + Kairoute AI beyond the free share ${money(aiUSD)} + Google ratings ${money(gOver)} (free up to ${fmt(u.google.free)} a month).`;
   document.getElementById("when").textContent = "As of " + new Date(u.at).toLocaleString([], { dateStyle: "medium", timeStyle: "short" }) + " · month " + u.month;
   const meters = [
-    { t: "AI today", v: u.ai.today, cap: u.ai.freeShare, note: `Free share is ${fmt(u.ai.freeShare)} neurons a day. Today's hard stop is ${fmt(u.ai.limitToday)}.` },
+    { t: "AI today", v: u.ai.today, cap: u.ai.limitToday, note: `Today's hard stop is ${fmt(u.ai.limitToday)} neurons. The first ${fmt(u.ai.freeShare)} are free (${u.ai.today > u.ai.freeShare ? "passed, so the rest counts toward this month's extra" : Math.round(u.ai.today / u.ai.freeShare * 100) + "% of it used"}).` },
     { t: "AI beyond the free share, this month", v: u.ai.extraMonth, cap: u.ai.extraCap, note: `Hard stop at ${fmt(u.ai.extraCap)} neurons, about ${money(u.ai.extraCap / 1000 * u.ai.usdPer1000)}. Includes test runs.` },
     { t: "Guide voice today", v: u.voice.today, cap: u.voice.freeDaily, note: u.voice.paidOn ? "Paid voice is on." : "Paid voice is paused, so voice stays inside the free daily amount." },
     { t: "Google ratings this month", v: u.google.month, cap: u.google.cap, note: `${fmt(u.google.today)} today. Kairoute stops at ${fmt(u.google.cap)}; Google's free amount is ${fmt(u.google.free)} a month.${u.google.keyOn ? "" : " The Google key isn't set up."}` }
