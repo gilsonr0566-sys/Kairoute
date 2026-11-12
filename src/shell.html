@@ -427,7 +427,7 @@ main:has(#view.full) { padding: 0; }
 .memprog i { display: block; height: 100%; background: var(--meal); width: 0; transition: width .3s; }
 .memvideo { width: 100%; max-height: 70vh; border-radius: 14px; background: #000; margin-top: 10px; }
 /* On phones the timeline is the main content: show it before the map */
-@media (max-width: 799px) { .plangrid .right { order: -1; } }
+@media (max-width: 799px) { .plangrid .plantop { order: -2; } .plangrid .right { order: -1; } }
 details.goodtoknow { display: grid; gap: 14px; }
 details.goodtoknow[open] > summary { margin-bottom: 12px; }
 details.goodtoknow > .card { margin-top: 12px; }
@@ -535,6 +535,117 @@ details.story:not([open]) > summary::before { content: "▸ "; }
 .evmeta { display: block; color: var(--muted); font-size: 0.85rem; }
 .evlist a { color: var(--ink); text-decoration: none; } .evlist a:hover { text-decoration: underline; }
 
+
+/* Panel wrappers: plain stacks everywhere except the tablet app layout below */
+.plantop, .guideside, .sitesside, .sitesmain, .guidemain { display: grid; gap: 16px; align-content: start; min-width: 0; }
+.guidegrid, .sitesgrid { display: grid; gap: 18px; min-width: 0; }
+.stopbody > .scmain, .stopbody > .scside { display: grid; gap: 14px; align-content: start; min-width: 0; }
+@media (min-width: 800px) { .plangrid .plantop { grid-column: 1 / -1; } }
+
+/* ---- Tablet app layout (tablets and computers): the header stays put, the screen fits the window,
+   and each screen splits into side-by-side panels that scroll on their own. ---- */
+@media (min-width: 800px) and (min-height: 560px) {
+  html.appview, html.appview body { height: 100%; overflow: hidden; }
+  html.appview body { display: flex; flex-direction: column; height: 100dvh; }
+  html.appview header.top { flex: none; position: relative; top: 0; }
+  html.appview main { flex: 1; min-height: 0; display: flex; flex-direction: column; }
+  html.appview #view { flex: 1; min-height: 0; width: 100%; max-width: 1400px; overflow-y: auto; overscroll-behavior: contain; padding-block: 12px 16px; gap: 12px; align-content: start; }
+  html.appview #view.panes { overflow: hidden; display: flex; flex-direction: column; }
+  html.appview #view.panes > * { flex: none; }
+  html.appview #view.panes > .plangrid, html.appview #view.panes > .guidegrid, html.appview #view.panes > .sitesgrid, html.appview #view.panes > .tripgrid { flex: 1 1 auto; min-height: 0; }
+  html.appview .pane { overflow-y: auto; overscroll-behavior: contain; min-height: 0; scrollbar-width: thin; padding-bottom: 8px; }
+  html.appview .pane, html.appview .plantop, html.appview .sitesside { grid-auto-rows: max-content; }
+  html.appview .pane::-webkit-scrollbar { width: 6px; } html.appview .pane::-webkit-scrollbar-thumb { background: var(--line); border-radius: 6px; }
+
+  /* Compact header: logo, trip and Home on one line; days and the four tabs below */
+  html.appview .top .wrap { max-width: 1400px; padding-block: 8px 0; grid-template-columns: auto minmax(0, 1fr) auto; grid-template-areas: "logo name acts" "days days days" "tabs tabs tabs"; gap: 6px 16px; align-items: center; }
+  html.appview .brand { display: contents; }
+  html.appview .brand h1 { grid-area: logo; font-size: 1.25rem !important; }
+  html.appview .brand h1 svg { width: 22px; height: 25px; }
+  html.appview .brand .actions { grid-area: acts; justify-self: end; }
+  html.appview .brand .btn.small { min-height: 34px; padding: 5px 14px; }
+  html.appview .tripname { grid-area: name; margin: 0; font-size: .92rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  html.appview .dayrow { grid-area: days; }
+  html.appview .days { padding-bottom: 2px; }
+  html.appview .dayarrow { width: 32px; height: 32px; }
+  html.appview .tabs { grid-area: tabs; }
+  html.appview .tab { padding-block: 8px 7px; font-size: .95rem; }
+  html.appview #aiStatus { display: none; }
+  /* Trip screen: no day strip (the day list on the left is the picker), so the tabs move up beside the logo */
+  html.appview .top .wrap:has(#dayRow[hidden]) { grid-template-areas: "logo tabs acts"; padding-bottom: 0; }
+  html.appview .top .wrap:has(#dayRow[hidden]) .tabs { display: flex; gap: 2px; justify-self: center; }
+  html.appview .top .wrap:has(#dayRow[hidden]) .tab { padding: 10px 16px 9px; }
+
+  /* Tighter type and spacing so more fits */
+  html.appview #view h2 { font-size: 1.3rem; }
+  html.appview #view .card { padding: 14px; gap: 12px; }
+  html.appview #view .lede { font-size: .95rem; }
+  html.appview .daysum > div { padding: 7px 12px; }
+  html.appview .daysum b { font-size: 1.05rem; }
+  html.appview .bigbtn { min-height: 46px; padding: 10px 20px; font-size: 1.05rem; }
+  html.appview .planacts { gap: 8px; margin: 0; }
+  html.appview .toolrow { gap: 6px; }
+  html.appview .toolrow > * { flex: none; white-space: nowrap; }
+
+  /* Day plan: day summary and actions on top left, map below it, schedule down the right */
+  html.appview .plangrid { gap: 12px 16px; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); grid-template-rows: auto minmax(0, 1fr); grid-template-areas: "top top" "left right"; }
+  html.appview .plangrid .plantop { grid-area: top; gap: 10px; max-height: 46vh; overflow-y: auto; }
+  html.appview .plangrid .left { grid-area: left; position: static; gap: 12px; }
+  html.appview .plangrid .right { grid-area: right; }
+  html.appview .plangrid .right > .card { gap: 10px; }
+
+  /* Guide: stops along the top, stories below */
+  html.appview .guidegrid { grid-template-rows: auto minmax(0, 1fr); gap: 10px; }
+  html.appview .guideside { gap: 8px; }
+  html.appview .guideside > .lede { display: none; }
+  html.appview .guidemain { container-type: inline-size; }
+  html.appview .guidemain .stoplist { grid-template-columns: minmax(0, 1fr); gap: 12px; }
+  html.appview .stopcard { scroll-margin-top: 0; }
+  html.appview .jumps .chip.on { background: var(--route); border-color: var(--route); color: var(--card); }
+  html.appview .jumps .chip.on b { color: inherit; }
+
+  /* Pick sites: filters, time meter and suggestions on top, the site cards below */
+  html.appview .sitesgrid { grid-template-rows: auto minmax(0, 1fr); gap: 10px; }
+  html.appview .sitesside { gap: 10px; max-height: 42vh; overflow-y: auto; }
+  html.appview .sitesside .meter { position: static; box-shadow: none; }
+  html.appview .sitesmain { gap: 12px; padding-bottom: 0; }
+  html.appview .stickybar { margin-top: -4px; }
+
+  /* Trip: day list and day form side by side, each scrolling */
+  html.appview .tripgrid { gap: 16px; }
+  html.appview .tripgrid > .pane { align-content: start; }
+}
+/* A wide story panel puts the story beside what to look for, tips and hours */
+@container (min-width: 720px) {
+  .stopbody { grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); align-items: start; column-gap: 22px; }
+}
+/* Landscape tablets and computers: the day plan's summary moves beside the map, guide and sites get a left rail */
+@media (min-width: 1000px) and (min-height: 560px) {
+  html.appview .top .wrap { grid-template-areas: "logo name acts" "days days tabs"; }
+  html.appview .tabs { display: flex; gap: 2px; }
+  html.appview .tab { padding: 8px 16px 7px; }
+  html.appview .plangrid { grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); grid-template-areas: "top right" "left right"; }
+  html.appview .plangrid .plantop { max-height: 52vh; }
+  html.appview .guidegrid { grid-template-columns: 270px minmax(0, 1fr); grid-template-rows: minmax(0, 1fr); gap: 18px; }
+  html.appview .guideside > .lede { display: block; }
+  html.appview .guideside .jumps { flex-direction: column; overflow: visible; }
+  html.appview .guideside .jumps .chip { white-space: normal; text-align: left; border-radius: 12px; display: flex; gap: 8px; align-items: baseline; }
+  html.appview .sitesgrid { grid-template-columns: 300px minmax(0, 1fr); grid-template-rows: minmax(0, 1fr); gap: 18px; }
+  html.appview .sitesside { max-height: none; }
+  html.appview .sitesside .filters { flex-wrap: wrap; }
+}
+
+/* Short landscape screens (tablets held sideways): a shorter welcome banner so your trip shows without scrolling */
+@media (min-width: 800px) and (max-height: 860px) {
+  .hero { padding-top: max(16px, env(safe-area-inset-top, 0px)); padding-bottom: 48px; }
+  .herocore { padding-top: 4px; gap: 8px; }
+  .herocore .k-mark { width: 72px; }
+  .wordmark { font-size: 3.1rem; }
+  .tagline { font-size: 1.4rem; }
+  .heroacts { margin-top: 4px; }
+  .lobbybody { gap: 16px; padding-bottom: 20px; }
+  .pillar { padding: 12px 14px; }
+}
 /* ---- Phones: compact header, bottom tab bar, swipeable days, tighter type ---- */
 .tab svg { display: none; }
 .mcta { display: none; }

@@ -1313,7 +1313,7 @@ async function generateCity(d, quiet) {
   if (!aiReady()) return false;
   const label = d.destination;
   // Show the build on the day plan, which has the progress bar (the tour screen is for walking a finished guide).
-  if (!quiet) { if (view === "tour") view = "plan"; busy = { text: "Asking your guide about " + label + "…" }; aiError = ""; render(); window.scrollTo(0, 0); }
+  if (!quiet) { if (view === "tour") view = "plan"; busy = { text: "Asking your guide about " + label + "…" }; aiError = ""; render(); toTop(); }
   const isPort = d.type === "port";
   const prompt = `You are an expert local tour guide writing data for a self-guided tour app that replaces paid guided tours.
 Destination: ${label}
@@ -1382,7 +1382,7 @@ ${P().access !== "none" ? "- The travelers need: " + ACCESS.find(a => a[0] === P
     trip.days.forEach(x => { if (keyOf(x.destination) === keyOf(label) && !x.event === !d.event) { x.cityKey = key; x.pointIdx = 0; if (wasBuiltin) x.selected = null; if (!x.selected) x.selected = defaultSelection(c, trip.style, x); } });
     save();
     stopTicker();
-    if (!quiet) { busy = null; view = "plan"; render(); window.scrollTo(0, 0); }
+    if (!quiet) { busy = null; view = "plan"; render(); toTop(); }
     return true;
   } catch (e) {
     stopTicker();
@@ -1879,7 +1879,7 @@ Rules:
     if (prefs.pace === "packed") days.forEach(x => { if (x.type === "land") x.hours = 10; });
     trip = { id: "t" + Date.now(), name: (wiz && wiz.name) || "", active: 0, sourceText: String(text).slice(0, 4000), portCheck: (want && ports + 1 < want) || miss.length ? { expected: want || ports, got: ports, missing: miss } : null, style: wiz ? wiz.style : (trip.style || "mix"), prefs, lodging, days, sample: false };
     if (!trip.name) trip.name = tripName(trip);
-    wiz = null; busy = null; tripText = ""; save(); view = "trip"; render(); window.scrollTo(0, 0);
+    wiz = null; busy = null; tripText = ""; save(); view = "trip"; render(); toTop();
   } catch (e) { busy = null; aiError = aiErrorText(e, "Your itinerary"); render(); }
 }
 function normPicks(a) { return Array.isArray(a) ? a.filter(x => x && x.t).slice(0, 4).map(x => ({ k: PICK_KINDS[x.k] ? x.k : "spot", t: String(x.t) })) : []; }
@@ -2217,6 +2217,7 @@ if (typeof window !== "undefined") window.__kairouteDay = (i, sel, extra) => { c
 if (typeof window !== "undefined") window.__kairoutePlans = (ov) => { if (ov) trip.days.forEach((d, i) => { if (ov.sel && ov.sel[i]) d.selected = ov.sel[i]; if ("fill" in ov) d.fillTime = ov.fill; }); bonusMemo = new Map(); mealMemo = new Map(); eveMemo = new Map(); avoidMeals = new Set(); return trip.days.map((d, i) => { const pl = buildPlan(d); if (!pl || !pl.items) return { i, date: d.date, dest: d.destination, none: true }; const pts = pl.items.filter(x => x.place && x.type !== "travel").map(x => ({ lat: x.place.lat, lng: x.place.lng, t: x.type, n: x.place.name })); return { i, date: d.date, dest: d.destination, pts, km: +pl.walkKm.toFixed(2), end: pl.end, endBy: pl.endBy, stops: pl.stops.length, bonus: (pl.bonus || []).map(x => x.name), meals: pl.items.filter(x => x.type === "meal").map(x => x.meal.label + "@" + x.time + " " + x.place.name + " | alts: " + (x.place.alts || []).map(r => r.name + " (" + r.cuisine + ")").join("; ")) }; }); };
 // Test hook: pick each day's stops the way a fresh build does.
 if (typeof window !== "undefined") window.__kairouteFreshPicks = () => { trip.days.forEach(x => { x.selected = null; }); trip.days.forEach(x => { const c = cities[cityKeyFor(x)]; if (c) x.selected = defaultSelection(c, trip.style, x); }); return trip.days.map(x => x.selected); };
+if (typeof window !== "undefined") window.__kairouteGo = (v, i) => { if (typeof i === "number") trip.active = i; view = v; render(); toTop(); };
 if (typeof window !== "undefined") window.kairoutePrewarm = (reserve, log) => saveStops(BUILTIN_CITIES.flatMap(([c]) => allSites(c)), log || ((d, n, s) => console.log(`saved ${d}/${n} ${s.name}`)), reserve ?? 15000);
 function speakLines(id, lines, lc) {
   speakingId = id; audioMsg = "";
@@ -2360,9 +2361,23 @@ function coachHTML() {
       <div class="actions">${last ? "" : `<button class="btn ghost small" data-act="coachskip">Skip</button>`}<button class="btn" data-act="coachnext">${last ? "Let's go" : "Next"}</button></div></div></div></div>`;
 }
 function coachDone() { coachStep = -1; try { localStorage.setItem("kairoute.intro1", "1"); } catch (e) {} }
+// On tablets the header stays put and each screen scrolls inside its own panels (see "Tablet app layout" in shell.html).
+// Re-renders of the same screen keep each panel where it was; toTop() sends them all back to the top.
+let paneMemo = { key: "", pos: {} };
+function panes() { return [document.getElementById("view"), ...document.querySelectorAll("#view .pane[data-pane]")].filter(Boolean); }
+function toTop() { window.scrollTo(0, 0); panes().forEach(el => { el.scrollTop = 0; }); }
 function render() {
   bonusMemo = new Map(); mealMemo = new Map(); eveMemo = new Map(); avoidMeals = new Set();
+  const pkey = view + "|" + trip.active, pos = {};
+  panes().forEach(el => { pos[el.dataset.pane || "view"] = el.scrollTop; });
   renderView();
+  { const v = document.getElementById("view"), app = !FULL_VIEWS[view] && view !== "tour";
+    document.documentElement.classList.toggle("appview", app);
+    if (v) { v.dataset.v = view; v.classList.toggle("panes", app && !!v.querySelector(":scope > .plangrid, :scope > .guidegrid, :scope > .sitesgrid, :scope > .tripgrid")); }
+    if (paneMemo.key === pkey) panes().forEach(el => { const y = pos[el.dataset.pane || "view"]; if (y) el.scrollTop = y; });
+    paneMemo.key = pkey;
+    const gm = document.querySelector("#view .guidemain");
+    if (gm) gm.addEventListener("scroll", guideSpy, { passive: true }); guideSpy(); }
   { const old = document.querySelector(".coach"); if (old) old.remove(); const ch = coachHTML(); if (ch) document.body.insertAdjacentHTML("beforeend", ch); }
   if (askNotice && !FULL_VIEWS[view]) { const v = document.getElementById("view"); if (v) v.insertAdjacentHTML("afterbegin", `<p class="banner ok" role="status">${esc(askNotice)} <button class="linkbtn" data-act="asknoticeok">OK</button></p>`); }
   if (openFolds.size) document.querySelectorAll("#view details").forEach(el => { const sm = el.querySelector("summary"); if (sm && openFolds.has(view + "|" + sm.textContent.trim())) el.open = true; });
@@ -2384,7 +2399,9 @@ function renderView() {
   const d = day();
   document.getElementById("tripName").textContent = trip.name || tripName(trip);
   const tripScreens = view === "trips" || view === "wizard";
-  document.getElementById("dayRow").hidden = tripScreens;
+  // No duplication: on the Trip screen the day list on the left is the day picker and shows the trip name, so the top day strip and trip name step aside.
+  document.getElementById("dayRow").hidden = tripScreens || view === "trip";
+  document.getElementById("tripName").hidden = view === "trip";
   document.getElementById("dayCount").textContent = (trip.active + 1) + " of " + trip.days.length;
   document.querySelector(".tabs").hidden = tripScreens;
   if (view === "trips") { $view.innerHTML = renderTrips(); return; }
@@ -2527,17 +2544,16 @@ function renderLobby() {
       <div><div class="eyebrow">Pick up where you left off</div>${renameId === cur.id ? renameBox(cur.id, cur.name || tripName(cur)) : `<h3>${esc(cur.name || tripName(cur))}</h3>`}
         <div class="meta">${esc(tripSpan(cur))} · ${cur.days.length} days · ${(() => { const td = cur.days.find(x => x.date === todayISO()); const dd = td || d; return (td ? "Today: " : "Next: ") + esc(dd.type === "sea" ? "At sea" : dd.destination || "New day"); })()}</div></div>
       <div class="go"><button class="btn" data-act="continue">Continue trip</button></div>
-      <div class="resacts"><span class="lede">Saved automatically</span><button class="btn ghost small" data-goto="trip" data-act2="edit">Edit itinerary</button>${moreMenu(cur.id, `<button class="btn ghost small" data-act="rename" data-id="${esc(cur.id)}">Rename</button><button class="btn ghost small" data-act="archive" data-id="${esc(cur.id)}">Archive</button>${delBtn(cur.id)}`)}</div>
+      <div class="resacts"><span class="lede">${syncSt() ? "Synced across your devices" + (syncSt().at ? " · last synced " + esc(new Date(syncSt().at).toLocaleTimeString([], { hour: "numeric", minute: "2-digit" })) : "") : `Saved on this device · <button class="linkbtn" data-act="syncfromlobby">Sync with another device</button>`}</span><button class="btn ghost small" data-goto="trip" data-act2="edit">Edit itinerary</button>${moreMenu(cur.id, `<button class="btn ghost small" data-act="rename" data-id="${esc(cur.id)}">Rename</button><button class="btn ghost small" data-act="archive" data-id="${esc(cur.id)}">Archive</button>${delBtn(cur.id)}`)}</div>
     </div>` : ""}
-    <div class="sechead"><h2>Planned trips</h2><span class="lede">${list.length - archived.length} ${syncSt() ? "synced across your devices" + (syncSt().at ? " · last synced " + esc(new Date(syncSt().at).toLocaleTimeString([], { hour: "numeric", minute: "2-digit" })) : "") : `saved on this device · <button class="linkbtn" data-act="syncfromlobby">Sync with another device</button>`}</span></div>
+    ${others.length || !hasSample ? `    <div class="sechead"><h2>Planned trips</h2><span class="lede">${list.length - archived.length} ${syncSt() ? "synced across your devices" + (syncSt().at ? " · last synced " + esc(new Date(syncSt().at).toLocaleTimeString([], { hour: "numeric", minute: "2-digit" })) : "") : `saved on this device · <button class="linkbtn" data-act="syncfromlobby">Sync with another device</button>`}</span></div>
     <div class="tripcards">
       ${others.map(x => `<div class="tripcard"><div class="band">${bandArt(x.id)}</div><div class="in">
         <div><div class="eyebrow">${esc(tripSpan(x.trip))}${tripSpan(x.trip) ? " · " : ""}${x.trip.days.length} days</div>${renameId === x.id ? renameBox(x.id, x.name) : `<h3>${esc(x.name)}</h3>`}</div>
         <div class="acts"><button class="btn small" data-act="opentrip" data-id="${esc(x.id)}">Open</button>${moreMenu(x.id, `<button class="btn ghost small" data-act="rename" data-id="${esc(x.id)}">Rename</button><button class="btn ghost small" data-act="archive" data-id="${esc(x.id)}">Archive</button>${delBtn(x.id)}`)}</div>
       </div></div>`).join("")}
-      <button class="newcard" data-act="newtrip"><span class="plus">+</span>Plan a new trip<span class="lede" style="font-weight:400">Answer a few questions, or snap a photo of your itinerary</span></button>
       ${hasSample ? "" : `<button class="newcard" data-act="loadsample"><span class="plus" style="background:var(--meal)">★</span>Open your Sun Princess trip<span class="lede" style="font-weight:400">Athens, the July 4, 2027 cruise, Barcelona and Madrid</span></button>`}
-    </div>
+    </div>` : ""}
     ${archived.length ? `<details class="card more archive"><summary>Archived trips (${archived.length})</summary>
       <div class="sitelist">${archived.map(x => `<div class="daycard"><div><b>${esc(x.name)}</b><div class="meta">${esc(tripSpan(x.trip))}${tripSpan(x.trip) ? " · " : ""}${x.trip.days.length} days</div></div>
         <div class="actions"><button class="btn small" data-act="restore" data-id="${esc(x.id)}">Restore</button>${delBtn(x.id)}</div></div>`).join("")}</div>
@@ -2548,12 +2564,12 @@ function renderLobby() {
       <div class="pillar"><span class="ic">${ICON.ear}</span><h3>Hear the story</h3><p>An audio guide at every stop, with the details a professional guide would point out.</p></div>
     </div>
   </div>
-  ${footer()}
+  ${footer(true)}
 </div>`;
 }
-function footer() {
+function footer(lobby) {
   return `<footer class="lobbyfoot"><div class="in">
-    <nav aria-label="About Kairoute"><button class="linkbtn" data-act="settings">Settings</button><button class="linkbtn" data-act="privacy">Privacy</button><button class="linkbtn" data-act="terms">Terms</button><button class="linkbtn" data-act="film">Intro video</button></nav>
+    <nav aria-label="About Kairoute">${lobby ? "" : `<button class="linkbtn" data-act="settings">Settings</button>`}<button class="linkbtn" data-act="privacy">Privacy</button><button class="linkbtn" data-act="terms">Terms</button>${lobby ? "" : `<button class="linkbtn" data-act="film">Intro video</button>`}</nav>
     <small>© 2026 Kairoute · ${esc(APP_VERSION)}</small></div></footer>`;
 }
 function pageBar(title) {
@@ -3177,7 +3193,7 @@ function renderTrip(d) {
   ${stopsBanner()}
   ${changeCard()}
   <div class="tripgrid">
-    <div class="leftcol">
+    <div class="leftcol pane" data-pane="days">
       <div>${renameId === trip.id ? renameBox(trip.id, trip.name || tripName(trip)) : `<div class="setrow"><h2>${esc(trip.name || "Your trip")}</h2><button class="btn ghost small" data-act="rename" data-id="${esc(trip.id)}">Rename</button></div>`}<p class="lede">${trip.days.length} day${trip.days.length === 1 ? "" : "s"}${(() => { const n = trip.days.filter(x => x.type === "port").length; return n ? `, ${n} cruise stop${n === 1 ? "" : "s"}` : ""; })()}. Tap a day to edit it.</p></div>
       ${aiReady() && missing ? `<button class="btn ghost small" data-act="genall" ${busy ? "disabled" : ""}>Build guides for all ${missing} places</button>` : ""}
       <div class="itin">${itinerary()}</div>
@@ -3193,7 +3209,7 @@ function renderTrip(d) {
         <div class="actions"><button class="btn" data-act="parsetrip" ${busy ? "disabled" : ""}>Build my itinerary</button></div>` : `<p class="ai-note">This uses the AI guide. Turn on the AI guide in Settings to turn it on.</p>`}
       </details>
     </div>
-    <div>
+    <div class="tripright pane" data-pane="form">
       ${busyBlock()}${errBlock()}
       <form class="card" id="dayForm" autocomplete="off">
         <div class="eyebrow">${esc(fmtDow(d.date))} ${esc(fmtDate(d.date))}</div>
@@ -3300,7 +3316,7 @@ function renderSites(d) {
   const already = [...city.sites.filter(x => !x.quick), ...(city.farther || [])].filter(away);
   const n = d.selected.length;
   const avail = plan && !plan.error ? dur(plan.endBy - plan.start) : "";
-  return `
+  return `<div class="sitesgrid"><div class="sitesside pane" data-pane="side">
   ${dayHeading(d)}
   <p class="lede">Tick what you'd like to see${avail ? ` in the ${avail} you have` : ""}. Your route is worked out for you, and anything that won't fit is flagged on the plan.</p>
   ${city.ai ? `<p class="ai-note">Written by your AI guide from checked sources: every place is confirmed on the map, stories draw on Wikipedia and Wikivoyage (CC BY-SA), hours and access on OpenStreetMap contributors (ODbL). Check opening hours before you go.</p>` : city.builtin ? `<p class="ai-note">Kairoute guide. Hours and prices are typical: check before you go.</p>` : ""}
@@ -3310,6 +3326,7 @@ function renderSites(d) {
   ${timeMeter(plan)}
   <div class="card suggest"><div><h3>Let your guide plan it</h3><p class="lede">Picks the best stops for ${(() => { const n = trip.days.filter(o => cityFor(o) === city).length; return n > 1 ? `all ${n} days` : "today"; })()} in ${esc(city.city)}, from your start point, hours, pace, walking and interests. Each day gets its own area, nothing repeats, and every stop fits.</p></div>
     ${suggestMsg ? `<p class="banner" id="suggestNote" role="status">${esc(suggestMsg)}</p>` : ""}<div class="actions"><button class="btn" data-act="suggesttour">Suggest my tour</button><button class="btn ghost small" data-act="freshpicks">Fresh picks for this day only</button></div></div>
+  </div><div class="sitesmain pane" data-pane="sites">
   <div class="sitelist">${main.map(s => siteCard(s, d, plan)).join("")}</div>
   ${far.length ? `<div><h3>Worth the trip</h3><p class="lede">Day trips and sights farther out, checked against your time today.</p></div>
   <div class="sitelist">${far.map(s => siteCard(s, d, plan)).join("")}</div>` : ""}
@@ -3319,7 +3336,7 @@ function renderSites(d) {
   <div class="sitelist">${already.map(s => siteCard(s, d, plan)).join("")}</div></details>` : ""}
   ${quick.length ? `<details class="more"><summary>Quick stops (${quick.length})</summary><p class="lede" style="margin:8px 0">Added automatically when your route passes them. Tick one to make it a planned stop.</p>
   <div class="sitelist">${quick.map(s => siteCard(s, d, plan)).join("")}</div></details>` : ""}
-  <div class="stickybar"><span class="count">${n} site${n === 1 ? "" : "s"} picked</span><button class="btn" data-act="toplan">See my day plan</button></div>`;
+  <div class="stickybar"><span class="count">${n} site${n === 1 ? "" : "s"} picked</span><button class="btn" data-act="toplan">See my day plan</button></div></div></div>`;
 }
 
 function mapSVG(plan) {
@@ -3554,6 +3571,8 @@ function renderPlan(d) {
   }).join("");
   const stopsN = plan.stops.filter(s => !s.place.along).length;
   return `
+  <div class="mcta"><button class="btn bigbtn" data-act="tourstart">▶ Start the tour</button></div>
+  <div class="plangrid"><div class="plantop">
   ${dayHeading(d)}
   <div class="daysum" role="group" aria-label="Today at a glance">
     <div><b>${fmt(plan.start)}–${fmt(plan.endBy)}</b><span>${d.type === "port" ? "ashore" : "free time"} · ${dur(plan.endBy - plan.start)}</span></div>
@@ -3563,7 +3582,7 @@ function renderPlan(d) {
   </div>
   ${plan.w.notes.map(t => `<p class="lede small">${esc(t)}</p>`).join("")}
   ${d.estimated ? `<div class="banner warn">These port times are estimated. Check them against your cruise documents.</div>` : ""}
-  <div class="mcta"><button class="btn bigbtn" data-act="tourstart">▶ Start the tour</button></div><div class="planacts"><button class="btn bigbtn" data-act="tourstart">▶ Start the tour</button>
+  <div class="planacts"><button class="btn bigbtn" data-act="tourstart">▶ Start the tour</button>
     ${suggestMsg ? `<p class="banner ok" id="suggestNote" role="status">${esc(suggestMsg)} <button class="linkbtn" data-act="suggestok">OK</button></p>` : ""}
     <div class="toolrow"><button class="btn ghost small" data-goto="sites">Change stops</button><button class="btn ghost small" data-act="suggesttour">Suggest my tour</button><a class="btn ghost small" href="${gmapsLink(plan)}" target="_blank" rel="noopener">Open in Google Maps</a>
     <label class="btn ghost small toggle"><input type="checkbox" id="f-rain" ${d.rain ? "checked" : ""}><span>Rainy day</span></label></div></div>
@@ -3574,7 +3593,7 @@ function renderPlan(d) {
   ${countdownCard(d, plan)}
   ${plan.over ? `<div class="banner warn" role="alert">This plan runs ${dur(plan.end - plan.endBy)} past ${fmt(plan.endBy)}. Remove a stop with Change stops, or change the times.</div>` : ""}
   ${plan.endBy - plan.start < 90 ? `<div class="banner warn">There isn't much time today, so keep it close: a coffee and one nearby sight at most.</div>` : ""}
-  <div class="plangrid"><div class="left">
+  </div><div class="left pane" data-pane="map">
   <div class="mapbox">${mapSVG(plan)}
     <div class="maplegend"><span><i></i>Walk</span><span><i class="dash"></i>Taxi or transit</span><span style="color:var(--meal)">● Meal</span><span style="color:var(--must)">■ Hotel</span><span>● On the way</span></div>
   </div>
@@ -3589,7 +3608,7 @@ function renderPlan(d) {
   ${basicsCard(city)}
   </details>
   <p class="footnote">Times are estimates using a relaxed walking pace and typical taxi times. Check opening hours and book timed tickets for the big sights.</p>
-  </div><div class="right"><div class="card"><div class="timeline">${rows}</div>
+  </div><div class="right pane" data-pane="sched"><div class="card"><div class="timeline">${rows}</div>
     <p class="bookrow">Already have a reservation? <button class="btn ghost small" data-act="bookopen" data-meal="Lunch">${(d.booked || {}).Lunch ? "Change lunch" : "Add lunch"}</button><button class="btn ghost small" data-act="bookopen" data-meal="Dinner">${(d.booked || {}).Dinner ? "Change dinner" : "Add dinner"}</button></p></div>${bookFormHTML(d)}</div></div>`;
 }
 
@@ -3610,11 +3629,12 @@ function stopCard(s, num, city) {
   const ready = aiReady(), dp = deeper[s.id], an = answers[s.id];
   const photos = `https://commons.wikimedia.org/w/index.php?search=${encodeURIComponent(s.name + " " + city.city)}&title=Special:MediaSearch&type=image`;
   return `<article class="stopcard" id="stop-${esc(s.id)}">
-    <div class="stopbody">
+    <div class="stopbody"><div class="scmain">
       <div class="head stophead"><span class="stopnum">${s.along ? "•" : num}</span><div><h3>${esc(s.name)}</h3><p class="stopmeta">${[s.category ? String(s.category).replace(/^\w/, c => c.toUpperCase()) : (s.along ? "On the way" : ""), s.minutes ? dur(s.minutes) : "", s.mustSee ? "Must-see" : "", s.unesco ? "UNESCO World Heritage" : ""].filter(Boolean).map(esc).join(" · ")}</p></div></div>
       <p class="lede">${esc(unitText(s.summary))}</p>
 ${quietOn(s) ? `<p class="banner quiet" role="note">🤫 <span><b>Quiet place.</b> Read the story below. Audio plays only after you confirm your earbuds are in.</span></p>` : ""}<div class="audio"><button class="btn" data-play="${esc(s.id)}" data-label="${quietOn(s) ? "🎧 Play with earbuds" : "▶ Play audio guide"}">${quietOn(s) ? "🎧 Play with earbuds" : "▶ Play audio guide"}</button><span class="state" aria-live="polite"></span></div>
       <details class="story" id="story-${esc(s.id)}" open><summary>The story</summary><div class="guidetext">${paras(unitText(s.guide))}</div></details>
+      </div><div class="scside">
       ${s.lookFor && s.lookFor.length ? `<div class="field"><span class="eyebrow">What to look for</span><ol class="lookfor">${s.lookFor.map(x => `<li><span>${esc(x)}</span></li>`).join("")}</ol></div>` : ""}
       ${picksBlock(s)}
       ${srcNote(s)}
@@ -3634,7 +3654,7 @@ ${quietOn(s) ? `<p class="banner quiet" role="note">🤫 <span><b>Quiet place.</
       ${ready ? `<div class="actions">${!dp || dp.error ? `<button class="btn ghost small" data-deeper="${esc(s.id)}">Tell me more</button>` : ""}</div>
       ${askBlock(s)}` : `<p class="ai-note">Turn on the AI guide in Settings to ask the guide questions and hear more.</p>`}
       ${journalBlock(s)}
-    </div>
+    </div></div>
   </article>`;
 }
 function renderGuide(d) {
@@ -3646,10 +3666,11 @@ function renderGuide(d) {
   let n = 0;
   const cards = plan.items.filter(i => i.type === "stop").map(i => { if (!i.place.along) n++; return stopCard(i.place, n, city); }).join("");
   const jumps = plan.items.filter(i => i.type === "stop" && !i.place.along).map((i, k) => `<button type="button" class="chip" data-jump="${esc(i.place.id)}"><b>${k + 1}</b> ${esc(i.place.name)}</button>`).join("");
-  return `${dayHeading(d)}<p class="lede">Every stop's story, in route order. For a guided walk through the day, use Tour mode.</p>
-    <div class="mcta"><button class="btn bigbtn" data-act="tourstart">▶ Start the tour</button></div><div class="planacts"><button class="btn bigbtn" data-act="tourstart">▶ Start the tour</button></div>
-    ${jumps ? `<nav class="jumps" aria-label="Jump to a stop">${jumps}</nav>` : ""}
-    ${cards ? `<div class="stoplist">${cards}</div>` : `<div class="card empty"><p>No stops planned for today.</p><button class="btn" data-goto="sites">Choose stops</button></div>`}`;
+  return `<div class="mcta"><button class="btn bigbtn" data-act="tourstart">▶ Start the tour</button></div>
+    <div class="guidegrid"><div class="guideside pane" data-pane="side">${dayHeading(d)}<p class="lede">Every stop's story, in route order. For a guided walk through the day, use Tour mode.</p>
+    <div class="planacts"><button class="btn bigbtn" data-act="tourstart">▶ Start the tour</button></div>
+    ${jumps ? `<nav class="jumps" aria-label="Jump to a stop">${jumps}</nav>` : ""}</div>
+    <div class="guidemain pane" data-pane="stories">${cards ? `<div class="stoplist">${cards}</div>` : `<div class="card empty"><p>No stops planned for today.</p><button class="btn" data-goto="sites">Choose stops</button></div>`}</div></div>`;
 }
 // ---------- Tour mode ----------
 function tourSteps(plan) {
@@ -3785,7 +3806,7 @@ let geoWatch = null, geoPoll = null, geoState = "off", geoPos = null, geoMsg = "
 const ARRIVE_KM = 0.06;
 function arriveHere(auto) {
   stopAudio(); const T = trip.tour; if (!T) return;
-  T.phase = "at"; T.arrivedAt = Date.now(); T.nudged = 0; T.auto = !!auto; save(); render(); window.scrollTo(0, 0);
+  T.phase = "at"; T.arrivedAt = Date.now(); T.nudged = 0; T.auto = !!auto; save(); render(); toTop();
   const st = tourSteps(buildPlan(day()))[T.i];
   if (st && st.type === "stop") speakSite(st.place);
 }
@@ -3824,6 +3845,13 @@ function followBar() {
     <span class="lede">${geoState === "on" ? `The story starts by itself when you arrive. <b id="geoDist"></b>` : esc(geoMsg || "Turn on to start each story automatically when you arrive.")}</span></div>`;
 }
 function startTourTimer() { if (tourTimer) clearInterval(tourTimer); tickTour(); tourTimer = setInterval(tickTour, 15000); }
+function guideSpy() {
+  const gm = document.querySelector("#view .guidemain"); if (!gm) return;
+  const top = gm.getBoundingClientRect().top + 90; let cur = null;
+  gm.querySelectorAll(".stopcard").forEach(c => { if (c.getBoundingClientRect().top <= top) cur = c.id.replace(/^stop-/, ""); });
+  if (!cur) { const f = gm.querySelector(".stopcard"); cur = f ? f.id.replace(/^stop-/, "") : null; }
+  document.querySelectorAll("#view .jumps .chip").forEach(b => b.classList.toggle("on", b.dataset.jump === cur));
+}
 function renderGuideOnly() { if (view === "guide" || view === "tour") { const y = window.scrollY; render(); window.scrollTo(0, y); } }
 
 // ---------- Events ----------
@@ -3863,12 +3891,12 @@ function edited() { trip.sample = false; }
 function jumpToToday(t) { const i = t.days.findIndex(x => x.date === todayISO()); if (i >= 0) t.active = i; }
 document.addEventListener("click", e => {
   const t = e.target.closest("button, a"); if (!t) return;
-  if (t.dataset.view) { if (view === "trip") readForm(); view = t.dataset.view; aiError = ""; save(); render(); window.scrollTo(0, 0); return; }
+  if (t.dataset.view) { if (view === "trip") readForm(); view = t.dataset.view; aiError = ""; save(); render(); toTop(); return; }
   if (t.dataset.day != null && !t.dataset.act) { if (view === "trip") readForm(); trip.active = +t.dataset.day; aiError = ""; cdPreview = null; cdWhere = null; cdSpoken = false; stopAudio(); save(); render();
     if (t.classList.contains("itrow") && innerWidth < 800) { const f = document.getElementById("dayForm"); if (f) f.scrollIntoView({ block: "start" }); }
     return; }
   if (t.dataset.jump) { const el = document.getElementById("stop-" + t.dataset.jump); if (el) el.scrollIntoView({ behavior: "smooth", block: "start" }); return; }
-  if (t.dataset.goto) { view = t.dataset.goto; render(); window.scrollTo(0, 0); return; }
+  if (t.dataset.goto) { view = t.dataset.goto; render(); toTop(); return; }
   if (t.dataset.act === "savekey") { const k = ((document.getElementById("aikey") || {}).value || "").trim(); if (k) { try { localStorage.setItem(KEY_STORE, k); } catch (e) {} sample = webSample; } render(); return; }
   if (t.dataset.act === "clearkey") { try { localStorage.removeItem(KEY_STORE); } catch (e) {} if (!(cl && cl.use)) sample = freeAI ? freeSample : null; render(); return; }
   if (t.dataset.hrs) { readForm(); day().hours = +t.dataset.hrs; day().selected = null; edited(); save(); render(); return; }
@@ -3912,7 +3940,7 @@ document.addEventListener("click", e => {
   if (t.dataset.act === "daytitleauto") { delete day().title; dayRenaming = null; save(); render(); return; }
   if (t.dataset.act === "daytitlecancel") { dayRenaming = null; render(); return; }
   if (t.dataset.act === "syncstart") { syncStart(); return; }
-  if (t.dataset.act === "syncfromlobby") { view = "settings"; render(); window.scrollTo(0, 0); return; }
+  if (t.dataset.act === "syncfromlobby") { view = "settings"; render(); toTop(); return; }
   if (t.dataset.act === "syncjoin") { syncJoin = true; syncNote = ""; render(); const el = document.getElementById("sync-code"); if (el) el.focus(); return; }
   if (t.dataset.act === "synclink") { syncLink(); return; }
   if (t.dataset.act === "syncnow") { syncNote = ""; (async () => { await syncPull(); await syncPush(); render(); })(); return; }
@@ -3939,11 +3967,11 @@ document.addEventListener("click", e => {
   }
   const act = t.dataset.act;
   if (act === "gotit") { trip.bannerSeen = true; save(); render(); return; }
-  if (act === "lobby" || act === "settings" || act === "privacy" || act === "terms") { if (view === "trip") readForm(); stopAudio(); save(); view = act; resetAsk = false; aiError = ""; render(); window.scrollTo(0, 0); return; }
-  if (act === "continue") { jumpToToday(trip); view = trip.tour && trip.tour.dayId === day().id && cityFor(day()) ? "tour" : "plan"; render(); window.scrollTo(0, 0); return; }
+  if (act === "lobby" || act === "settings" || act === "privacy" || act === "terms") { if (view === "trip") readForm(); stopAudio(); save(); view = act; resetAsk = false; aiError = ""; render(); toTop(); return; }
+  if (act === "continue") { jumpToToday(trip); view = trip.tour && trip.tour.dayId === day().id && cityFor(day()) ? "tour" : "plan"; render(); toTop(); return; }
   if (act === "film" || act === "filmreplay") { stopAudio(); playFilm(false); return; }
   if (act === "filmclose") { closeFilm(); return; }
-  if (act === "mytrips") { if (view === "trip") readForm(); save(); view = "trips"; aiError = ""; render(); window.scrollTo(0, 0); return; }
+  if (act === "mytrips") { if (view === "trip") readForm(); save(); view = "trips"; aiError = ""; render(); toTop(); return; }
   if (act === "voicetry") {
     if (speakingId === "voice-sample") { stopAudio(); render(); return; }
     stopAudio(); const g = GUIDES.find(x => x[0] === guideVoice().speaker);
@@ -3951,10 +3979,10 @@ document.addEventListener("click", e => {
     setTimeout(render, 300); return;
   }
   if (act === "newtrip") { wiz = { step: 0, text: "", name: "", style: trip.style || "mix", interests: [], pace: "moderate", walk: "medium", hotels: "", travelers: "", access: "none", party: 2, lang: "English", voice: "buttery", cruiseLine: "", ship: "" }; view = "wizard"; aiError = ""; render(); return; }
-  if (act === "wizmore") { readWiz(); if (!wiz.text.trim() && !(wiz.images || []).length) { aiError = "Describe your trip first, even roughly."; render(); return; } aiError = ""; wiz.step = 1; render(); window.scrollTo(0, 0); return; }
+  if (act === "wizmore") { readWiz(); if (!wiz.text.trim() && !(wiz.images || []).length) { aiError = "Describe your trip first, even roughly."; render(); return; } aiError = ""; wiz.step = 1; render(); toTop(); return; }
   if (act === "wizback") { readWiz(); wiz.step--; render(); return; }
-  if (act === "wizcancel") { wiz = null; view = "lobby"; render(); window.scrollTo(0, 0); return; }
-  if (act === "opentrip") { save(); const x = library.find(y => y.id === t.dataset.id); if (x) { trip = x.trip; if (!trip.prefs) trip.prefs = defaultPrefs(); jumpToToday(trip); view = trip.tour && trip.tour.dayId === day().id && cityFor(day()) ? "tour" : "plan"; save(); render(); window.scrollTo(0, 0); } return; }
+  if (act === "wizcancel") { wiz = null; view = "lobby"; render(); toTop(); return; }
+  if (act === "opentrip") { save(); const x = library.find(y => y.id === t.dataset.id); if (x) { trip = x.trip; if (!trip.prefs) trip.prefs = defaultPrefs(); jumpToToday(trip); view = trip.tour && trip.tour.dayId === day().id && cityFor(day()) ? "tour" : "plan"; save(); render(); toTop(); } return; }
   if (act === "loadsample") { save(); trip = sampleTrip(); view = "plan"; save(); render(); return; }
   if (act === "rename") { renameId = t.dataset.id; render(); const el = document.getElementById("renameInput"); if (el) { el.focus(); el.select(); } return; }
   if (act === "renamesave") { doRename(t.dataset.id); return; }
@@ -4011,7 +4039,7 @@ document.addEventListener("click", e => {
   if (act === "genall") { readForm(); buildAllGuides(); return; }
   if (act === "geo") { readForm(); geocodeLodging(day()); return; }
   if (act === "parsetrip") { readForm(); buildTripFromText(tripText); return; }
-  if (act === "toplan") { view = "plan"; save(); render(); window.scrollTo(0, 0); return; }
+  if (act === "toplan") { view = "plan"; save(); render(); toTop(); return; }
   if (act === "addday") {
     readForm();
     const cur = day();
@@ -4019,10 +4047,10 @@ document.addEventListener("click", e => {
     trip.days.splice(trip.active + 1, 0, nd); trip.active++; edited(); save(); render();
     return;
   }
-  if (act === "tourstart") { const d = day(); if (!trip.tour || trip.tour.dayId !== d.id) trip.tour = null; curTour(d); view = "tour"; save(); render(); window.scrollTo(0, 0); return; }
-  if (act === "tourexit") { stopAudio(); view = "plan"; render(); window.scrollTo(0, 0); return; }
+  if (act === "tourstart") { const d = day(); if (!trip.tour || trip.tour.dayId !== d.id) trip.tour = null; curTour(d); view = "tour"; save(); render(); toTop(); return; }
+  if (act === "tourexit") { stopAudio(); view = "plan"; render(); toTop(); return; }
   if (act === "tournext") {
-    stopAudio(); const T = trip.tour; T.i++; T.phase = "walk"; T.found = []; T.nudged = 0; save(); render(); window.scrollTo(0, 0);
+    stopAudio(); const T = trip.tour; T.i++; T.phase = "walk"; T.found = []; T.nudged = 0; save(); render(); toTop();
     const plan = buildPlan(day()); const steps = tourSteps(plan); const st = steps[T.i];
     if (st && st.type !== "end") speakText("walk:" + T.i, walkText(st, steps[T.i + 1]));
     else if (st) { T.phase = "at"; save(); render(); }
@@ -4030,13 +4058,13 @@ document.addEventListener("click", e => {
   }
   if (act === "tourhere") { arriveHere(); return; }
   if (act === "follow") { toggleFollow(); return; }
-  if (act === "tourtomorrow") { stopAudio(); trip.active++; trip.tour = null; view = "plan"; save(); render(); window.scrollTo(0, 0); return; }
+  if (act === "tourtomorrow") { stopAudio(); trip.active++; trip.tour = null; view = "plan"; save(); render(); toTop(); return; }
   if (act === "reset") { resetAsk = true; render(); return; }
   if (act === "resetno") { resetAsk = false; render(); return; }
   if (act === "resetyes") {
     try { ["wayside.trip2", "wayside.cities", "wayside.library", "wayside.trip", "wayside.touched"].forEach(k => localStorage.removeItem(k)); } catch (e) {}
     for (const k in cities) if (k !== "barcelona") delete cities[k];
-    library = []; trip = sampleTrip(); resetAsk = false; view = "settings"; save(); render(); window.scrollTo(0, 0); return;
+    library = []; trip = sampleTrip(); resetAsk = false; view = "settings"; save(); render(); toTop(); return;
   }
   if (act === "prevday" || act === "nextday") {
     if (view === "trip") readForm();
@@ -4094,7 +4122,7 @@ document.addEventListener("submit", e => {
     readForm(); edited(); save();
     const d = day();
     if (!d.destination) { aiError = "Type a city first."; render(); return; }
-    if (cityFor(d)) { view = "plan"; aiError = ""; render(); window.scrollTo(0, 0); }
+    if (cityFor(d)) { view = "plan"; aiError = ""; render(); toTop(); }
     else if (aiReady()) generateCity(d);
     else { render(); }
     return;
@@ -4103,7 +4131,7 @@ document.addEventListener("submit", e => {
     readWiz();
     if (wiz.step === 0 && !wiz.text.trim() && !(wiz.images || []).length) { aiError = "Describe your trip first, even roughly."; render(); return; }
     aiError = "";
-    if (e.submitter && e.submitter.dataset.next) { wiz.step++; render(); window.scrollTo(0, 0); return; }
+    if (e.submitter && e.submitter.dataset.next) { wiz.step++; render(); toTop(); return; }
     buildTripFromText((wiz.text || "(see the attached photos)") + (wiz.travelers ? "\nTravelers: " + wiz.travelers : ""));
     return;
   }
