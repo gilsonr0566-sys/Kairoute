@@ -381,7 +381,9 @@ export default {
       let b; try { b = await req.json(); } catch (e) { return Response.json({ error: "Bad request" }, { status: 400, headers: h }); }
       const ok = v => Array.isArray(v) && v.length === 2 && v.every(n => typeof n === "number" && isFinite(n)) && Math.abs(v[0]) <= 180 && Math.abs(v[1]) <= 90;
       const legs = (Array.isArray(b.legs) ? b.legs : []).slice(0, 40).map(l => l && ok(l.a) && ok(l.b) ? { m: l.m === "car" ? "car" : "foot", a: l.a, b: l.b } : null);
-      const out = await Promise.all(legs.map(l => l ? routeLeg(l, env, ctx).catch(() => null) : null));
+      // The free routers turn away bursts, so ask for at most 3 legs at a time (saved legs come straight from storage).
+      const out = new Array(legs.length).fill(null); let next = 0;
+      await Promise.all([0, 1, 2].map(async () => { while (next < legs.length) { const i = next++; if (legs[i]) out[i] = await routeLeg(legs[i], env, ctx).catch(() => null); } }));
       return Response.json({ routes: out }, { headers: h });
     }
     if (url.pathname === "/osm" && req.method === "POST") {
@@ -749,7 +751,13 @@ async function routeLeg(l, env, ctx) {
   const key = `rt1:${l.m}:${r5(l.a[0])},${r5(l.a[1])};${r5(l.b[0])},${r5(l.b[1])}`;
   const hit = await env.USAGE.get(key, "json"); if (hit) return hit;
   let res = null;
-  try { res = await osrmLeg(l); } catch (e) { try { res = await valhallaLeg(l); } catch (e2) { return null; } }
+  const wait = ms => new Promise(r => setTimeout(r, ms));
+  // OSRM first, then Valhalla, then both again after a pause (each turns away bursts with "429 busy").
+  for (const pause of [0, 1200]) {
+    if (pause) await wait(pause);
+    try { res = await osrmLeg(l); break; } catch (e) { try { res = await valhallaLeg(l); break; } catch (e2) {} }
+  }
+  if (!res) return null;
   ctx.waitUntil(env.USAGE.put(key, JSON.stringify(res), { expirationTtl: 90 * 86400 }));
   return res;
 }

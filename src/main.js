@@ -3615,7 +3615,7 @@ const legKey = l => l.mode + ":" + l.a.map(n => n.toFixed(5)) + ";" + l.b.map(n 
 async function fetchRoutes(legs, then) {
   const need = [];
   for (const l of legs) {
-    const k = legKey(l); if (routeMem.has(k) || routeAsk.has(k) || routeFail.get(k) > Date.now() - 120000) continue;
+    const k = legKey(l); if (routeMem.has(k) || routeAsk.has(k) || routeFail.get(k) > Date.now() - 20000) continue;
     const saved = await kv.get("r:" + k);
     if (saved) { routeMem.set(k, saved); continue; }
     need.push(l);
@@ -3684,7 +3684,8 @@ function drawMapData() {
   const ml = window.maplibregl, D = kmapData; if (!kmap || !kmapReady || !D || !ml) return;
   const src = kmap.getSource("route"); if (!src) return;
   src.setData(kmapGeo = routeGeo(D, D.active));
-  fetchRoutes(D.legs, () => { if (kmapData === D && kmap.getSource("route")) kmap.getSource("route").setData(kmapGeo = routeGeo(D, D.active)); });
+  const redraw = () => { if (kmapData === D && kmap.getSource("route")) kmap.getSource("route").setData(kmapGeo = routeGeo(D, D.active)); };
+  fetchRoutes(D.legs, redraw).then(() => { if (D.legs.some(l => !routeMem.has(legKey(l)))) setTimeout(() => { if (kmapData === D) fetchRoutes(D.legs, redraw); }, 21000); });
   const key = D.slot + "|" + D.key + "|" + (D.active == null ? "" : D.active);
   if (key === kmapKey) { placeYou(); return; }
   kmapKey = key;
