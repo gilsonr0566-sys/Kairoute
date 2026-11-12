@@ -4142,7 +4142,11 @@ async function spotPhoto(p) {
   try {
     const r = await fetch(`https://en.wikipedia.org/w/api.php?action=query&format=json&origin=*&generator=geosearch&ggscoord=${p.lat}|${p.lng}&ggsradius=400&ggslimit=15&prop=pageimages&piprop=thumbnail&pithumbsize=1000`, { signal: AbortSignal.timeout(10000) });
     const pages = Object.values(((await r.json()).query || {}).pages || {});
-    const hit = pages.find(x => x.thumbnail && (nameMatch(p.name, x.title) || nameMatch(x.title, p.name)));
+    // Only the place's own article: same name, or a shorter form of it (e.g. "Texas State Aquarium"), never a
+    // longer different thing that merely shares words (e.g. "Flour Bluff High School"), and no logos.
+    const core = t => keyOf(String(t).replace(/\s*\(.*?\)\s*/g, " ").replace(/,.*$/, "")), want = keyOf(p.name);
+    const own = x => { const t = core(x.title); return t && (t === want || (t.split(" ").length >= 2 && (" " + want + " ").includes(" " + t + " "))); };
+    const hit = pages.find(x => x.thumbnail && own(x) && !/\.(png|svg|gif)(\?|$)/i.test(x.thumbnail.source) && !/logo|seal|flag|map/i.test(x.thumbnail.source));
     if (hit) img = await loadImg(hit.thumbnail.source);
   } catch (e) {}
   memImgCache.set(k, img); return img;
@@ -5175,4 +5179,4 @@ render();
 
 </script>
 <script>if ("serviceWorker" in navigator) addEventListener("load", () => navigator.serviceWorker.register("sw.js").catch(() => {}));</script>
-<script>(function(){var B="e846459-1794442879";function chk(){if(location.protocol!=="https:")return;fetch("version.txt",{cache:"no-store"}).then(function(r){return r.ok?r.text():""}).then(function(t){t=t.trim();if(t&&t!==B)location.reload()}).catch(function(){})}addEventListener("load",chk);document.addEventListener("visibilitychange",function(){if(document.visibilityState==="visible")chk()})})();</script>
+<script>(function(){var B="4da3b38-1794443164";function chk(){if(location.protocol!=="https:")return;fetch("version.txt",{cache:"no-store"}).then(function(r){return r.ok?r.text():""}).then(function(t){t=t.trim();if(t&&t!==B)location.reload()}).catch(function(){})}addEventListener("load",chk);document.addEventListener("visibilitychange",function(){if(document.visibilityState==="visible")chk()})})();</script>
