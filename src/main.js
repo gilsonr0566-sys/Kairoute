@@ -2188,7 +2188,7 @@ function renderView() {
   if (full) { if (tourTimer) { clearInterval(tourTimer); tourTimer = null; } stopCountdownIfAny(); $view.innerHTML = FULL_VIEWS[view](); return; }
   document.getElementById("aiStatus").textContent = aiReady() ? "AI guide on" : "Your own guide, any city";
   document.getElementById("dayChips").innerHTML = trip.days.map((x, i) =>
-    `<button class="daychip" data-day="${i}" aria-pressed="${i === trip.active}"><b>${esc(fmtDate(x.date) || "Day " + (i + 1))}</b> · ${esc(x.type === "sea" ? "At sea" : x.destination || "New day")}</button>`).join("");
+    `<button class="daychip" data-day="${i}" aria-pressed="${i === trip.active}"><b>${esc(fmtDate(x.date) || "Day " + (i + 1))}</b> · ${esc(x.title && x.title.trim() ? x.title.trim() : x.type === "sea" ? "At sea" : x.destination || "New day")}</button>`).join("");
   const chip = document.querySelector('.daychip[aria-pressed="true"]');
   if (chip && chip.scrollIntoView) { const box = chip.parentElement; const cr = chip.getBoundingClientRect(), br = box.getBoundingClientRect(); box.scrollTo({ left: box.scrollLeft + (cr.left + cr.width / 2) - (br.left + br.width / 2), behavior: "instant" }); }
   document.querySelectorAll(".tab").forEach(t => t.setAttribute("aria-selected", t.dataset.view === (view === "sites" ? "plan" : view) ? "true" : "false"));
@@ -2214,8 +2214,21 @@ function renderView() {
 function updateBusy() { const el = document.getElementById("busyText"); if (el && busy) el.textContent = busy.text; }
 const busyBlock = () => busy ? `<div class="banner" role="status"><span class="spinner"></span><span id="busyText">${esc(busy.text)}</span></div>` : "";
 const errBlock = () => aiError ? `<div class="banner warn" role="alert">${esc(aiError)}</div>` : "";
+// Each day has a name: the traveler's own, or one suggested from the day's main sight ("Ancient Corinth day").
+function dayAuto(d) {
+  if (d.type === "sea") return "At sea";
+  const city = cityFor(d), sel = city ? allSites(city).filter(x => (d.selected || []).includes(x.id)) : [];
+  const main = sel.find(x => x.mustSee && !x.quick) || sel.find(x => !x.quick);
+  const short = n => String(n || "").replace(/\s*\(.*?\)\s*/g, " ").replace(/^the /i, "").trim();
+  return main ? short(main.name) + " day" : d.destination || "New day";
+}
+const dayName = d => (d.title && d.title.trim()) || dayAuto(d);
+let dayRenaming = null;
 function dayHeading(d) {
-  return `<div><div class="eyebrow">${esc(fmtDow(d.date))} ${esc(fmtDate(d.date))} · ${esc(typeInfo(d.type).short)}</div><h2>${esc(d.type === "sea" ? "At sea" : d.destination)}</h2></div>`;
+  const sub = [fmtDow(d.date) + " " + fmtDate(d.date), d.type === "sea" ? "" : d.destination, typeInfo(d.type).short].filter(Boolean).map(esc).join(" · ");
+  if (dayRenaming === d.id) return `<div><div class="eyebrow">${sub}</div><div class="renamebox dayrename"><input id="dayTitleInput" type="text" maxlength="60" value="${esc(dayName(d))}" aria-label="Name this day" enterkeyhint="done">
+    <button class="btn small" data-act="daytitlesave">Save</button>${d.title ? `<button class="btn ghost small" data-act="daytitleauto">Use "${esc(dayAuto(d))}"</button>` : ""}<button class="btn ghost small" data-act="daytitlecancel">Cancel</button></div></div>`;
+  return `<div><div class="eyebrow">${sub}</div><h2 class="dayname">${esc(dayName(d))} <button class="linkbtn rename" data-act="daytitle" aria-label="Rename this day">✎ Rename</button></h2></div>`;
 }
 function needsCity(d) {
   const ready = aiReady();
@@ -2487,6 +2500,7 @@ function playFilm(rec) {
 function closeFilm() { filmTimers.forEach(clearTimeout); filmTimers = []; const f = document.getElementById("film"); if (f) f.remove(); }
 document.addEventListener("keydown", e => {
   if (e.key === "Escape" && document.getElementById("film")) closeFilm();
+  if (e.target && e.target.id === "dayTitleInput") { if (e.key === "Enter") { e.preventDefault(); const b = document.querySelector('[data-act="daytitlesave"]'); if (b) b.click(); } else if (e.key === "Escape") { dayRenaming = null; render(); } return; }
   if (e.target && e.target.id === "renameInput") { if (e.key === "Enter") { e.preventDefault(); doRename(renameId); } else if (e.key === "Escape") { renameId = null; render(); } return; }
   if (e.key === "Enter" && e.target && e.target.id === "addPlace" && e.target.value.trim()) { e.preventDefault(); addPlaces(day(), e.target.value.trim()); }
 });
@@ -2776,7 +2790,7 @@ async function memSlides() {
       if (j.photos && j.photos.length) j.photos.slice(0, 3).forEach((src, n) => daySlides.push(Object.assign({ kind: "photo", src }, n ? { title: cap.title } : cap)));
       else daySlides.push(Object.assign({ kind: "text" }, cap)); });
     if (!daySlides.length) continue;
-    slides.push({ kind: "day", title: d.destination, eyebrow: "Day " + (i + 1), sub: fmtDow(d.date) + " " + fmtDate(d.date), spot: items.find(it => it.type === "stop") ? items.find(it => it.type === "stop").place : null });
+    slides.push({ kind: "day", title: dayName(d), eyebrow: "Day " + (i + 1), sub: fmtDow(d.date) + " " + fmtDate(d.date) + (dayName(d) !== d.destination ? " · " + d.destination : ""), spot: items.find(it => it.type === "stop") ? items.find(it => it.type === "stop").place : null });
     slides.push(...daySlides);
   }
   slides.push({ kind: "end" });
@@ -3485,7 +3499,7 @@ function renderTour(d) {
   const stopNo = st.type === "stop" && !st.place.along ? stopsOnly.indexOf(steps.find((x, k) => k === T.i)) + 1 : 0;
   const pct = Math.round(T.i / Math.max(1, steps.length - 1) * 100);
   const portBar = d.type === "port" ? `<div class="banner warn tourship"><span>All aboard <b>${esc(d.allAboard)}</b>. Be back at the ship by <b>${fmt(plan.endBy)}</b>.</span><span id="tourShip"></span></div>` : "";
-  const head = `<div class="tourhead"><div><div class="eyebrow">Tour · ${esc(city.city)} · ${esc(fmtDate(d.date))}</div>
+  const head = `<div class="tourhead"><div><div class="eyebrow">Tour · ${esc(dayName(d))} · ${esc(fmtDate(d.date))}</div>
       <div class="tourbar"><i style="width:${pct}%"></i></div><div class="lede" style="font-size:.85rem">Step ${T.i + 1} of ${steps.length} · planned for ${fmt(st.time)}</div></div>
     <button class="btn ghost small" data-act="tourexit">Exit tour</button></div>${portBar}${followBar()}`;
   let body = "";
@@ -3699,6 +3713,10 @@ document.addEventListener("click", e => {
   if (t.dataset.act === "coachreplay") { coachStep = 0; view = "lobby"; render(); return; }
   if (t.dataset.act === "earlystart") { const d = day(); d.startTime = t.dataset.v; d.hours = +t.dataset.h; save(); render(); return; }
   if (t.dataset.act === "suggestok") { suggestMsg = ""; render(); return; }
+  if (t.dataset.act === "daytitle") { dayRenaming = day().id; render(); const el = document.getElementById("dayTitleInput"); if (el) { el.focus(); el.select(); } return; }
+  if (t.dataset.act === "daytitlesave") { const v = ((document.getElementById("dayTitleInput") || {}).value || "").trim().slice(0, 60), d = day(); if (v && v !== dayAuto(d)) d.title = v; else delete d.title; dayRenaming = null; save(); render(); return; }
+  if (t.dataset.act === "daytitleauto") { delete day().title; dayRenaming = null; save(); render(); return; }
+  if (t.dataset.act === "daytitlecancel") { dayRenaming = null; render(); return; }
   if (t.dataset.act === "syncstart") { syncStart(); return; }
   if (t.dataset.act === "syncfromlobby") { view = "settings"; render(); window.scrollTo(0, 0); return; }
   if (t.dataset.act === "syncjoin") { syncJoin = true; syncNote = ""; render(); const el = document.getElementById("sync-code"); if (el) el.focus(); return; }

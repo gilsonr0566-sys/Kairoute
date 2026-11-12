@@ -160,6 +160,10 @@ input[type=text], input[type=date], input[type=time], input[type=number], select
 .tl.evening .rail::before, .tl.evening .rail::after { display: none; }
 .bookrow { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 12px 0 0; font-size: 0.9rem; color: var(--muted); }
 .bookform { margin-top: 14px; }
+.dayname .rename { font-size: 0.85rem; font-weight: 600; vertical-align: middle; margin-left: 6px; }
+.dayrename { margin-top: 6px; display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.dayrename input { flex: 1 1 240px; font: inherit; font-size: 1.2rem; font-weight: 700; padding: 8px 12px; border: 1px solid var(--line); border-radius: 10px; background: var(--card); color: var(--ink); }
+.daychip { max-width: 260px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .synccode { font: 800 2rem/1.1 ui-monospace, "SF Mono", Menlo, monospace; letter-spacing: 0.12em; color: var(--ink); background: var(--meal-soft); border-radius: 12px; padding: 12px 16px; display: inline-block; margin: 6px 0 10px; user-select: all; }
 #sync-code { text-transform: uppercase; letter-spacing: 0.1em; font-weight: 700; }
 .bookform .row2 { display: grid; grid-template-columns: 1fr 140px; gap: 10px; }
