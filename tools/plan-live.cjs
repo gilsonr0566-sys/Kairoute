@@ -5,7 +5,7 @@ const { chromium } = require('playwright');
   const b = await chromium.launch(); const p = await b.newPage({ viewport: { width: 1200, height: 900 } });
   p.on('requestfinished', async r => { if (/workers\.dev\/places/.test(r.url())) { const res = await r.response(); console.log('PLACES', res.status(), r.postData(), (await res.text()).slice(0, 600)); } });
   p.on('pageerror', e => console.log('PAGE ERROR ' + e.message));
-  await p.goto('https://gilsonr0566-sys.github.io/Kairoute/?t=' + Date.now()); await p.waitForTimeout(3000);
+  await p.goto('https://gilsonr0566-sys.github.io/Kairoute/?t=' + Date.now()); await p.evaluate(() => localStorage.setItem('kairoute.intro1', '1')); await p.reload(); await p.waitForTimeout(3000);
   console.log('BEFORE', JSON.stringify(await p.evaluate(() => window.__kairouteDay(3, 'corinth|acrocorinth', { hours: 10 })), null, 1));
   await p.click('text=Continue trip').catch(() => {}); await p.waitForTimeout(500);
   await p.click('.daychip[data-day="3"]').catch(e => console.log('no day chip', e.message)); await p.waitForTimeout(300);

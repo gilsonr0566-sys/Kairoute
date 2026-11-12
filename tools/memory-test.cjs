@@ -6,7 +6,7 @@ const { chromium } = require('playwright'); const fs = require('fs');
   fs.mkdirSync('memory-test', { recursive: true });
   const b = await chromium.launch(); const ctx = await b.newContext({ viewport: { width: 1200, height: 900 } }); const p = await ctx.newPage();
   p.on('pageerror', e => console.log('PAGE ERROR ' + e.message));
-  await p.goto('https://gilsonr0566-sys.github.io/Kairoute/?t=' + Date.now()); await p.waitForTimeout(3000);
+  await p.goto('https://gilsonr0566-sys.github.io/Kairoute/?t=' + Date.now()); await p.evaluate(() => localStorage.setItem('kairoute.intro1', '1')); await p.reload(); await p.waitForTimeout(3000);
   await p.evaluate(() => {
     const day = (i) => ({ id: 'd' + (900 + i), date: '2026-11-1' + (1 + i), destination: 'Corpus Christi', type: 'land', mode: 'car', time: '09:00', pointIdx: 0, portArrive: '08:00', allAboard: '17:00', tender: false, startTime: '09:00', hours: 8, alongWay: true, returnToStart: true, event: '', selected: null, cityKey: null });
     localStorage.setItem('wayside.trip2', JSON.stringify({ id: 't-mem', name: 'Corpus Christi weekend', style: 'mix', active: 0, days: [day(0), day(1)], lodging: {}, journal: {}, prefs: { pace: 'moderate', walk: 'medium', interests: [], travelers: '', access: 'none', party: 2, lang: 'English' } }));

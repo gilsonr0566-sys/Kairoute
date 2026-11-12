@@ -5,7 +5,7 @@ const { chromium } = require('playwright');
 const fs = require('fs');
 (async () => {
   const b = await chromium.launch(); const p = await b.newPage();
-  await p.goto('https://gilsonr0566-sys.github.io/Kairoute/?v=' + Date.now()); await p.waitForTimeout(4000);
+  await p.goto('https://gilsonr0566-sys.github.io/Kairoute/?v=' + Date.now()); await p.evaluate(() => localStorage.setItem('kairoute.intro1', '1')); await p.reload(); await p.waitForTimeout(4000);
   p.on('console', m => console.log(m.text()));
   const r = await p.evaluate(() => window.kairoutePrewarm ? window.kairoutePrewarm(15000) : { error: 'old page' });
   const msg = r.error ? 'Prewarm: ' + r.error : r.stopped ? `Prewarm: ${r.done} of ${r.total} stops ready. Paused to keep today's allowance for live use; the next nightly run continues.` : `Prewarm: all ${r.total} stops are recorded.`;

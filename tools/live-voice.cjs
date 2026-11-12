@@ -7,7 +7,7 @@ const { chromium } = require("playwright");
   p.on("pageerror", e => log.push("ERROR " + e.message)); p.on("console", m => log.push("console " + m.type() + " " + m.text()));
   p.on("request", r => { if (/workers\.dev/.test(r.url())) log.push("-> " + r.method() + " " + r.url().replace(/.*workers\.dev/, "")); });
   p.on("response", r => { if (/workers\.dev/.test(r.url())) log.push("<- " + r.status() + " " + r.url().replace(/.*workers\.dev/, "") + " " + (r.headers()["content-type"] || "")); });
-  await p.goto("https://gilsonr0566-sys.github.io/Kairoute/"); await p.waitForTimeout(4000);
+  await p.goto("https://gilsonr0566-sys.github.io/Kairoute/"); await p.evaluate(() => localStorage.setItem("kairoute.intro1", "1")); await p.reload(); await p.waitForTimeout(4000);
   await p.click("text=Continue trip"); await p.waitForTimeout(800);
   await p.click("#tab-guide"); await p.waitForTimeout(800);
   await p.click("[data-play]");
