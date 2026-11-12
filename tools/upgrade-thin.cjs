@@ -3,11 +3,12 @@
 const { chromium } = require('playwright');
 (async () => {
   const b = await chromium.launch(); const p = await b.newPage({ viewport: { width: 1200, height: 900 } });
-  p.on('pageerror', e => console.log('PAGE ERROR ' + e.message)); p.on('console', m => { if (m.type() === 'warning' || m.type() === 'error' || /Guide piece retry|left out/.test(m.text())) console.log('console ' + m.text()); });
-  await p.goto('https://gilsonr0566-sys.github.io/Kairoute/?t=' + Date.now()); await p.evaluate(() => localStorage.setItem('kairoute.intro1', '1')); await p.reload(); await p.waitForTimeout(3000);
+  p.on('pageerror', e => console.log('PAGE ERROR ' + e.message)); p.on('console', m => { if (m.type() === 'warning' || m.type() === 'error' || /Guide piece retry|left out|built without/.test(m.text())) console.log('console ' + m.text()); });
+  await p.goto('https://gilsonr0566-sys.github.io/Kairoute/?t=' + Date.now()); await p.evaluate(rb => { localStorage.setItem('kairoute.intro1', '1'); localStorage.setItem('kairoute.rebuild', JSON.stringify(rb)); }, (process.env.REBUILD || '').split('|').map(x => x.toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim()).filter(Boolean)); await p.reload(); await p.waitForTimeout(3000);
   await p.click('text=Continue trip').catch(() => {}); await p.waitForTimeout(800);
   const thin = () => p.evaluate(() => window.__kairouteThin().split('\n'));
-  const list = (await thin()).filter(l => / builtin$/.test(l) && +l.split(': ')[1].split(' ')[0] < 10);
+  const rebuild = (process.env.REBUILD || '').split('|').map(x => x.trim()).filter(Boolean);
+  const list = (await thin()).filter(l => (/ builtin$/.test(l) && +l.split(': ')[1].split(' ')[0] < 10) || rebuild.some(c => l.includes(' ' + c + ':')));
   console.log('Thin:', list.join(' / '));
   const seen = new Set();
   for (const l of list) {

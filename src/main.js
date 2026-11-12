@@ -1050,7 +1050,7 @@ ${P().access !== "none" ? "- The travelers need: " + ACCESS.find(a => a[0] === P
 }
 // Grounding: looks up each named place on Wikipedia and the map. A place counts as real when its name
 // matches a Wikipedia article or a map entry near the city. Returns null if the lookup service didn't answer.
-const SMALL_WORDS = new Set("the of and a an de la el le du del di da des los las st saint san santa".split(" "));
+const SMALL_WORDS = new Set("the of and a an de la el le du del di da des los las st saint san santa archaeological site".split(" "));
 function nameMatch(want, got) {
   const w = keyOf(String(want).replace(/\(.*?\)/g, " ")).split(" ").filter(t => t.length > 1 && !SMALL_WORDS.has(t)), g = new Set(keyOf(got).split(" "));
   if (!w.length) return false;
@@ -1098,7 +1098,16 @@ async function groundNames(names, label, farSet) {
     const x = res[i] || {}, lim = farSet && farSet.has(n) ? 250 : 40, inArea = p => p && isFinite(p.lat) && (!center || hav(p, center) <= lim);
     const wiki = (x.wiki || []).find(w => nameMatch(n, w.title) && (w.lat == null || inArea(w)));
     const map = (x.map || []).find(m => nameMatch(n, m.name) && inArea(m));
-    const pos = map || (wiki && wiki.lat != null ? wiki : null);
+    let pos = map || (wiki && wiki.lat != null ? wiki : null);
+    // A local-language name ("Iglesia de San Jerónimo el Real") often comes back from both sources under its
+    // English name ("Church of Saint Jerome the Royal"). When the encyclopedia's top answer and a map entry
+    // agree on that name and sit within 1 km of each other inside the city, both sources found the same real place.
+    let agreed = null;
+    if (!(wiki || map)) {
+      const w0 = (x.wiki || [])[0], m0 = w0 && w0.lat != null && (x.map || []).find(m => inArea(m) && nameMatch(w0.title, m.name) && hav(m, w0) <= 1);
+      if (m0) { agreed = { wiki: w0, map: m0 }; pos = m0; }
+    }
+    if (agreed) { out.set(n, { osm: agreed.map.osm ? String(agreed.map.osm).replace(/^node/i, "N").replace(/^way/i, "W").replace(/^relation/i, "R").replace(/^([nwr])/, c => c.toUpperCase()) : "", real: true, facts: agreed.wiki.extract.replace(/\s+/g, " ").trim(), title: agreed.wiki.title, lat: +(+pos.lat).toFixed(5), lng: +(+pos.lng).toFixed(5) }); return; }
     if (!(wiki || map)) out.miss = (out.miss || []).concat(n + " [wiki: " + ((x.wiki || [])[0] || {}).title + " | map: " + ((x.map || [])[0] || {}).name + "]");
     out.set(n, { osm: map && map.osm ? String(map.osm).replace(/^node/i, "N").replace(/^way/i, "W").replace(/^relation/i, "R").replace(/^([nwr])/, c => c.toUpperCase()) : "", real: !!(wiki || map), facts: wiki ? wiki.extract.replace(/\s+/g, " ").trim() : "", title: wiki ? wiki.title : "", lat: pos ? +(+pos.lat).toFixed(5) : null, lng: pos ? +(+pos.lng).toFixed(5) : null });
   });
@@ -1192,14 +1201,16 @@ async function cityInParts(prompt, show, label) {
       ok: j => j && j.city && j.starts && (j.starts.hotel || []).filter(okLL).length >= 1 && j.basics && (j.gettingAround || []).length >= 2 },
     ...groups.filter(g => g.length).map(g => ({ names: g.map(x => x.name), ask: `For this request return ONLY {"sites":[...]} with full details for exactly these ${g.length} main sights and no others, using these exact names: ${list(g.map(x => x.name))}.${facts(g.map(x => x.name))}`, size: 3000 * g.length,
       ok: j => j && (j.sites || []).filter(x => okLL(x) && x.guide).length >= g.length - 1 })),
-    ...(quick.length ? [{ names: quick, ask: `For this request return ONLY {"sites":[...]} with exactly these ${quick.length} quick sights ("quick": true, minutes 10) and no others, using these exact names: ${list(quick)}.${facts(quick)}`, size: 1000 * quick.length,
+    ...(quick.length ? [{ optional: true, names: quick, ask: `For this request return ONLY {"sites":[...]} with exactly these ${quick.length} quick sights ("quick": true, minutes 10) and no others, using these exact names: ${list(quick)}.${facts(quick)}`, size: 1000 * quick.length,
       ok: j => j && (j.sites || []).filter(okLL).length >= Math.max(1, quick.length - 2) }] : []),
-    ...(far.length ? [{ names: far, ask: `For this request return ONLY {"farther":[...]} with exactly these ${far.length} day trips and no others, using these exact names: ${list(far)}.${facts(far)}`, size: 3000 * far.length,
+    ...(far.length ? [{ optional: true, names: far, ask: `For this request return ONLY {"farther":[...]} with exactly these ${far.length} day trips and no others, using these exact names: ${list(far)}.${facts(far)}`, size: 3000 * far.length,
       ok: j => j && (j.farther || []).filter(okLL).length >= Math.max(1, far.length - 1) }] : [])
   ];
   const got = parts.map(() => 0), tell = () => show(17 + got.reduce((a, b) => a + b, 0) / parts.length * 72, "Writing the stories", 89);
   tell();
-  const res = await Promise.all(parts.map((p, i) => ask(p.ask, "part", p.ok, ({ text }) => { got[i] = Math.min(0.97, text.length / p.size); tell(); }, i > 0).then(j => { got[i] = 1; tell(); return j; })));
+  const res = await Promise.all(parts.map((p, i) => ask(p.ask, "part", p.ok, ({ text }) => { got[i] = Math.min(0.97, text.length / p.size); tell(); }, i > 0).then(j => { got[i] = 1; tell(); return j; },
+    // Quick sights and day trips add to a guide but aren't needed for it: if they won't come back, the guide goes ahead without them.
+    e => { if (!p.optional || /allowance|used up/i.test((e && e.message) || "")) throw e; got[i] = 1; tell(); console.info("Guide built without its " + (p.ask.includes('"farther"') ? "day trips" : "quick sights") + " for " + label); return {}; })));
   const quickSet = new Set(quick.map(keyOf));
   const info = res[0], byName = new Map(main.map(x => [keyOf(x.name), x]));
   const seen = new Set(), sites = [], farther = [];
@@ -1339,6 +1350,8 @@ function guideCacheKey(d) {
 }
 async function cachedGuide(d) {
   if (!freeAI) return null;
+  // Maintenance: a city named in kairoute.rebuild is written fresh once (its new guide then replaces the saved one).
+  try { const rb = JSON.parse(localStorage.getItem("kairoute.rebuild") || "[]"), k = keyOf(d.destination); if (rb.includes(k)) { localStorage.setItem("kairoute.rebuild", JSON.stringify(rb.filter(x => x !== k))); return null; } } catch (e) {}
   try { const r = await fetch(freeAI.url + "/guide?k=" + encodeURIComponent(guideCacheKey(d)), { cache: "no-store" }); if (!r.ok) return null; const j = await r.json(); return j && Array.isArray(j.sites) && j.sites.length ? j : null; } catch (e) { return null; }
 }
 function keepGuide(d, raw) {

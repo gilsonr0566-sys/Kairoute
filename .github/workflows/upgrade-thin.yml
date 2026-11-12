@@ -1,5 +1,10 @@
 name: Build full guides for thin example cities
-on: workflow_dispatch
+on:
+  workflow_dispatch:
+    inputs:
+      rebuild:
+        description: Cities to write fresh, separated by |
+        default: ""
 permissions:
   contents: read
 jobs:
@@ -11,4 +16,6 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-      - run: npm i playwright@1 && npx playwright install chromium && node tools/upgrade-thin.cjs
+      - env:
+          REBUILD: ${{ inputs.rebuild }}
+        run: npm i playwright@1 && npx playwright install chromium && node tools/upgrade-thin.cjs
