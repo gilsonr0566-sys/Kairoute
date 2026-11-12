@@ -374,6 +374,16 @@ export default {
       return new Response(out, { headers: { ...h, "content-type": "application/json" } });
     }
     // /osm: opening hours, fees, wheelchair access and websites for map places, by their map ids.
+    // /route: real street routes for the day map (walking on foot paths, rides on roads). Each leg is computed
+    // once and kept for 90 days, so every traveler on the same streets shares it. Sources: the OpenStreetMap
+    // routers run by FOSSGIS (OSRM first, Valhalla if OSRM is busy). Both are free and need no key.
+    if (url.pathname === "/route" && req.method === "POST") {
+      let b; try { b = await req.json(); } catch (e) { return Response.json({ error: "Bad request" }, { status: 400, headers: h }); }
+      const ok = v => Array.isArray(v) && v.length === 2 && v.every(n => typeof n === "number" && isFinite(n)) && Math.abs(v[0]) <= 180 && Math.abs(v[1]) <= 90;
+      const legs = (Array.isArray(b.legs) ? b.legs : []).slice(0, 40).map(l => l && ok(l.a) && ok(l.b) ? { m: l.m === "car" ? "car" : "foot", a: l.a, b: l.b } : null);
+      const out = await Promise.all(legs.map(l => l ? routeLeg(l, env, ctx).catch(() => null) : null));
+      return Response.json({ routes: out }, { headers: h });
+    }
     if (url.pathname === "/osm" && req.method === "POST") {
       let b; try { b = await req.json(); } catch (e) { return Response.json({ error: "Bad request" }, { status: 400, headers: h }); }
       const ids = (Array.isArray(b.ids) ? b.ids : []).map(String).filter(x => /^[NWR]\d+$/.test(x)).slice(0, 50);
@@ -698,5 +708,48 @@ async function sourcesData(label, env, ctx) {
   const res = { area, lang, langName: LN, center, sources, stops, eats: eats.slice(0, 150), far: fam.far, ms: T };
   // Keep a full answer for 30 days; an answer missing a source that failed is kept only a day.
   ctx.waitUntil(env.USAGE.put(key, JSON.stringify(res), { expirationTtl: (enV.pages && fam.main.length ? 30 : 1) * 86400 }));
+  return res;
+}
+
+// ---------- Street routes for the day map ----------
+const ROUTE_UA = { "user-agent": "Kairoute/1.0 (travel guide; https://gilsonr0566-sys.github.io/Kairoute/)" };
+const r5 = n => Math.round(n * 1e5) / 1e5;
+// Google/Valhalla encoded polyline (precision 6 for Valhalla) to [lng, lat] pairs
+function decodePoly(str, prec) {
+  const f = Math.pow(10, prec), out = []; let i = 0, lat = 0, lng = 0;
+  while (i < str.length) {
+    for (const k of [0, 1]) {
+      let sh = 0, res = 0, c;
+      do { c = str.charCodeAt(i++) - 63; res |= (c & 31) << sh; sh += 5; } while (c >= 32);
+      const d = res & 1 ? ~(res >> 1) : res >> 1;
+      if (k === 0) lat += d; else lng += d;
+    }
+    out.push([r5(lng / f), r5(lat / f)]);
+  }
+  return out;
+}
+async function osrmLeg(l) {
+  const host = l.m === "car" ? "routed-car/route/v1/driving" : "routed-foot/route/v1/foot";
+  const r = await fetch(`https://routing.openstreetmap.de/${host}/${l.a[0]},${l.a[1]};${l.b[0]},${l.b[1]}?overview=full&geometries=geojson&steps=false`, { headers: ROUTE_UA });
+  if (!r.ok) throw new Error("osrm " + r.status);
+  const j = await r.json(), rt = j.routes && j.routes[0];
+  if (!rt || !rt.geometry || rt.geometry.coordinates.length < 2) throw new Error("no route");
+  return { c: rt.geometry.coordinates.map(p => [r5(p[0]), r5(p[1])]), km: Math.round(rt.distance) / 1000, min: Math.round(rt.duration / 60), src: "osrm" };
+}
+async function valhallaLeg(l) {
+  const q = { locations: [{ lon: l.a[0], lat: l.a[1] }, { lon: l.b[0], lat: l.b[1] }], costing: l.m === "car" ? "auto" : "pedestrian", directions_type: "none" };
+  const r = await fetch("https://valhalla1.openstreetmap.de/route?json=" + encodeURIComponent(JSON.stringify(q)), { headers: ROUTE_UA });
+  if (!r.ok) throw new Error("valhalla " + r.status);
+  const j = await r.json(), t = j.trip;
+  if (!t || !t.legs || !t.legs[0]) throw new Error("no route");
+  const c = decodePoly(t.legs[0].shape, 6); if (c.length < 2) throw new Error("no route");
+  return { c, km: Math.round(t.summary.length * 1000) / 1000, min: Math.round(t.summary.time / 60), src: "valhalla" };
+}
+async function routeLeg(l, env, ctx) {
+  const key = `rt1:${l.m}:${r5(l.a[0])},${r5(l.a[1])};${r5(l.b[0])},${r5(l.b[1])}`;
+  const hit = await env.USAGE.get(key, "json"); if (hit) return hit;
+  let res = null;
+  try { res = await osrmLeg(l); } catch (e) { try { res = await valhallaLeg(l); } catch (e2) { return null; } }
+  ctx.waitUntil(env.USAGE.put(key, JSON.stringify(res), { expirationTtl: 90 * 86400 }));
   return res;
 }

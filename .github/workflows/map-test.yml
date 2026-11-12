@@ -1,0 +1,32 @@
+name: Street map test
+on:
+  push:
+    paths: ["src/**", "lib/**", "worker/**", "tools/map-e2e.cjs", ".github/workflows/map-test.yml"]
+  workflow_dispatch:
+    inputs:
+      streets:
+        description: Also require street-following routes from the live helper (1 = yes)
+        default: ""
+permissions:
+  contents: read
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm i playwright@1 && npx playwright install chromium
+      - name: Map with stand-in tiles and routes (no network)
+        run: sh build.sh && MOCK=1 node tools/map-e2e.cjs
+      - name: Map with the real OpenFreeMap tiles and live routes
+        env:
+          STREETS: ${{ inputs.streets }}
+        run: node tools/map-e2e.cjs
+      - if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: map-screens
+          path: checks/
