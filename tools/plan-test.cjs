@@ -32,6 +32,9 @@ const FILE = path.resolve(process.argv[2] || path.join(__dirname, '..', 'index.h
   await run('Example trip: Athens, cruise ports, Barcelona, Madrid');
   await run('Corinth day trip from Athens (Corinth Canal, Ancient Corinth, Acrocorinth), 10 hours', { fn: () => {}, after: { fn: () => window.__kairouteDay(3, 'corinth|acrocorinth', { hours: 10 }), arg: null } });
   await run('Overfilled Athens day: Corinth sights plus Delphi and Sounion in other directions, 8 hours', { fn: () => {}, after: { fn: () => window.__kairouteDay(3, 'corinth|acrocorinth|delphi|sounion', { hours: 8 }), arg: null } });
+  // Tables the traveler booked: pinned at their time, and the route reshapes around them.
+  await run('Corinth day trip with lunch booked in Ancient Corinth at 13:30', { fn: () => {}, after: { fn: () => window.__kairouteDay(3, 'corinth|acrocorinth', { hours: 10, booked: { Lunch: { name: 'Booked taverna in Ancient Corinth', lat: 37.9069, lng: 22.8786, time: '13:30' } } }), arg: null } });
+  await run('Athens day with lunch booked in Plaka at 12:15 and dinner at 20:30', { fn: () => {}, after: { fn: () => window.__kairouteDay(1, null, { booked: { Lunch: { name: 'Booked lunch in Plaka', lat: 37.9725, lng: 23.7300, time: '12:15' }, Dinner: { name: 'Booked dinner in Psyrri', lat: 37.9780, lng: 23.7240, time: '20:30' } } }), arg: null } });
   const cc = JSON.parse(fs.readFileSync(path.join(__dirname, 'fixtures', 'corpus.json'))); const key = Object.keys(cc.cities)[0];
   await run('Corpus Christi, 3 days', { fn: ([city, key]) => { localStorage.setItem('wayside.cities', JSON.stringify({ [key]: city }));
     const day = i => ({ id: 'd' + (900 + i), date: '2026-11-1' + (1 + i), destination: 'Corpus Christi', type: 'land', mode: 'car', time: '09:00', pointIdx: 0, startTime: '09:00', hours: 8, alongWay: true, returnToStart: true, event: '', selected: null, cityKey: key });

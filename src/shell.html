@@ -156,6 +156,17 @@ input[type=text], input[type=date], input[type=time], input[type=number], select
 .tl .what button.link { background: none; border: 0; padding: 0; color: var(--route); font-weight: 700; cursor: pointer; text-align: left; }
 .mealbox { background: var(--meal-soft); border-radius: 10px; padding: 10px 12px; margin-top: 6px; display: grid; gap: 4px; }
 .mealbox .alt { font-size: 0.85rem; color: var(--muted); }
+.tl.evening { border-top: 1px dashed var(--line); margin-top: 6px; padding-top: 10px; }
+.tl.evening .rail::before, .tl.evening .rail::after { display: none; }
+.bookrow { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 12px 0 0; font-size: 0.9rem; color: var(--muted); }
+.bookform { margin-top: 14px; }
+.bookform .row2 { display: grid; grid-template-columns: 1fr 140px; gap: 10px; }
+.bookform label { display: grid; gap: 4px; font-weight: 600; font-size: 0.9rem; }
+.bookform input { font: inherit; padding: 10px 12px; border: 1px solid var(--line); border-radius: 10px; background: var(--card); color: var(--ink); }
+.bookres { display: grid; gap: 8px; }
+.bookres .btn { display: grid; justify-items: start; text-align: left; gap: 2px; }
+.bookres small { color: var(--muted); font-weight: 400; }
+@media (max-width: 640px) { .bookform .row2 { grid-template-columns: 1fr; } }
 .dropped { font-size: 0.9rem; }
 
 /* Guide */
