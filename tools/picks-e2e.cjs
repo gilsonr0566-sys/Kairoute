@@ -5,15 +5,18 @@
 // change the day length -> the picks stay. Usage: node tools/picks-e2e.cjs [path/to/index.html]
 const { chromium } = require('playwright'); const path = require('path');
 const FILE = path.resolve(process.argv[2] || path.join(__dirname, '..', 'index.html'));
+const W = +(process.argv[3] || 1280), H = +(process.argv[4] || 800), SHOTS = process.argv[5] || ''; let shotN = 0;
+if (SHOTS) require('fs').mkdirSync(SHOTS, { recursive: true });
 const mins = t => { let m = 0; const h = /(\d+)\s*h/.exec(t), n = /(\d+)\s*min/.exec(t); if (h) m += +h[1] * 60; if (n) m += +n[1]; return m; };
 (async () => {
-  const b = await chromium.launch(); const ctx = await b.newContext({ viewport: { width: 1280, height: 800 } }); const p = await ctx.newPage();
+  const b = await chromium.launch(); const ctx = await b.newContext({ viewport: { width: W, height: H } }); const p = await ctx.newPage();
   const errs = []; p.on('pageerror', e => errs.push(e.message));
   await p.route('**/*', r => /^file:/.test(r.request().url()) ? r.continue() : r.abort());
   await p.goto('file://' + FILE); await p.evaluate(() => localStorage.setItem('kairoute.intro1', '1')); await p.reload(); await p.waitForTimeout(500);
   await p.getByText('Continue trip').click(); await p.waitForTimeout(400);
   const n = await p.evaluate(() => document.querySelectorAll('.daychip').length);
   let fails = 0, tested = 0;
+  const shot = async (i, what) => { if (SHOTS && i < 3) await p.screenshot({ path: path.join(SHOTS, String(++shotN).padStart(2, '0') + '-day-' + (i + 1) + '-' + what + '.jpg'), type: 'jpeg', quality: 55 }); };
   const bad = (i, msg) => { fails++; console.log(`FAIL day ${i + 1}: ${msg}`); };
   const go = async sel => { await p.evaluate(s => { const el = [...document.querySelectorAll(s)].find(e => e.offsetParent); if (el) el.click(); return !!el; }, sel); await p.waitForTimeout(250); };
   const toDay = async i => { await p.evaluate(i => document.querySelector(`.daychip[data-day="${i}"]`).click(), i); await p.waitForTimeout(250); };
@@ -35,7 +38,7 @@ const mins = t => { let m = 0; const h = /(\d+)\s*h/.exec(t), n = /(\d+)\s*min/.
     if (!m0 || !/Nothing picked yet/.test(m0.text)) bad(i, 'meter with nothing picked: ' + (m0 && m0.text.replace(/\s+/g, ' ')));
     else if (/Visits|Lunch|Dinner|Walking/.test(m0.parts)) bad(i, 'meter counts things on a cleared day: ' + m0.parts);
     await go('[data-act="toplan"]');
-    const pv0 = await planView();
+    await shot(i, 'all-unticked'); const pv0 = await planView();
     if (pv0.stops.length) bad(i, 'plan still shows stops after unticking everything: ' + pv0.stops.map(x => x.name).join(', '));
     // 2. Reload: still nothing picked
     await p.reload(); await p.waitForTimeout(500);
@@ -50,7 +53,7 @@ const mins = t => { let m = 0; const h = /(\d+)\s*h/.exec(t), n = /(\d+)\s*min/.
     const m1 = await meter();
     if (m1) { const sum = m1.parts.split('·').reduce((a, x) => a + mins(x), 0), head = mins(m1.head.split(' of ')[0]); if (Math.abs(sum - head) > 2) bad(i, `meter parts ${sum} min vs total ${head} min (${m1.parts})`); }
     await go('[data-act="toplan"]');
-    const pv1 = await planView();
+    await shot(i, 'two-ticked'); const pv1 = await planView();
     for (const [, nm] of names) if (!pv1.stops.some(x => x.name === nm) && !pv1.banners.includes(nm)) bad(i, `${nm} is ticked but neither on the plan nor explained`);
     for (const s of pv1.stops) if (!s.bonus && !names.some(([, nm]) => nm === s.name)) bad(i, `${s.name} is on the plan but wasn't ticked`);
     // 4. Day length keeps the picks

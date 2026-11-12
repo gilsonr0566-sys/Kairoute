@@ -31,6 +31,20 @@ jobs:
           java-version: 21
       - name: Check the code (stops a broken build from going live)
         run: sh tools/check.sh
+      - name: Safety net (every screen agrees on every day of 6 sample trips; a failure stops the update going live)
+        run: |
+          sh build.sh
+          npm i --no-save playwright@1 && npx playwright install --with-deps chromium
+          node tools/plan-test.cjs
+          node tools/safety-net.cjs
+      - name: Street map check (no network needed)
+        run: MOCK=1 node tools/map-e2e.cjs
+      - name: Keep the safety-net report even when it fails
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: safety-net-report
+          path: checks
       - name: Deploy the AI helper to Cloudflare (free Workers AI)
         continue-on-error: true
         run: |
@@ -50,7 +64,7 @@ jobs:
           cd android && chmod +x gradlew && ./gradlew assembleDebug --no-daemon
       - name: Collect site files
         run: |
-          mkdir _site && cp -r index.html usage.html version.txt .nojekyll manifest.webmanifest sw.js icons lib _site/
+          mkdir _site && cp -r index.html usage.html version.txt .nojekyll manifest.webmanifest sw.js icons lib checks _site/
           cp app/android/app/build/outputs/apk/debug/app-debug.apk _site/Kairoute.apk
           if [ -f ai.json ]; then cp ai.json _site/; fi
       - uses: actions/configure-pages@v5
