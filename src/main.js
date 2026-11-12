@@ -250,6 +250,7 @@ function storeInLibrary() {
   if (trip.placeholder) return;
   const i = library.findIndex(x => x.id === trip.id);
   const entry = { id: trip.id, name: trip.name || tripName(trip), updated: Date.now(), trip };
+  if (i >= 0 && library[i].changed) entry.changed = library[i].changed;
   if (i >= 0) library[i] = entry; else library.unshift(entry);
 }
 function tripName(t) {
@@ -264,6 +265,126 @@ function save() {
     const gen = {}; for (const k in cities) if (k !== "barcelona" && !cities[k].builtin) gen[k] = cities[k];
     localStorage.setItem("wayside.cities", JSON.stringify(gen));
   } catch (e) {}
+  try { syncSoon(); } catch (e) {} // (not ready yet while the app is still starting up)
+}
+// ---- Sync between devices ----
+// Turning sync on gives a short code; typing that code on another device links it. Every trip (with its journal)
+// and the city guides built for them then stay the same on all linked devices. Each trip carries the time it last
+// really changed, so when two devices edit, the newer copy of each trip wins, and a deleted trip stays deleted.
+const SYNC_KEY = "kairoute.sync", TOMB_KEY = "kairoute.deleted";
+let syncTimer = null, syncBusy = false, syncNote = "", syncJoin = null, applyingSync = false;
+const syncLast = new Map(); // trip id -> its contents when last compared, to tell a real change from a re-save
+const syncSt = () => { try { return JSON.parse(localStorage.getItem(SYNC_KEY) || "null"); } catch (e) { return null; } };
+const syncSet = v => { try { if (v) localStorage.setItem(SYNC_KEY, JSON.stringify(v)); else localStorage.removeItem(SYNC_KEY); } catch (e) {} };
+const tombs = () => { try { return JSON.parse(localStorage.getItem(TOMB_KEY) || "{}") || {}; } catch (e) { return {}; } };
+function markChanges() {
+  const now = Date.now();
+  library.forEach(x => { const ser = (x.name || "") + "\u0000" + JSON.stringify(x.trip); if (syncLast.get(x.id) !== ser) { if (syncLast.has(x.id)) x.changed = now; else if (!x.changed) x.changed = 1; syncLast.set(x.id, ser); } });
+}
+function syncPayload() {
+  if (trip && trip.days && trip.days.length) storeInLibrary();
+  markChanges();
+  const gen = {}; for (const k in cities) if (k !== "barcelona" && !cities[k].builtin) gen[k] = cities[k];
+  return { v: 1, library: library.map(x => ({ id: x.id, name: x.name, updated: x.updated, changed: x.changed || 0, trip: x.trip })), deleted: tombs(), cities: gen };
+}
+// Newer copy of each trip wins; trips deleted after their last change stay deleted; guides are added, never removed.
+function syncMerge(data, preferRemote) {
+  if (!data || !Array.isArray(data.library)) return false;
+  const dead = Object.assign({}, data.deleted || {}), mine = tombs(); for (const k in mine) dead[k] = Math.max(dead[k] || 0, mine[k]);
+  try { localStorage.setItem(TOMB_KEY, JSON.stringify(dead)); } catch (e) {}
+  markChanges();
+  let changed = false;
+  for (const r of data.library) {
+    if (!r || !r.id || !r.trip || !Array.isArray(r.trip.days)) continue;
+    const i = library.findIndex(x => x.id === r.id);
+    if (i < 0) { library.push(r); changed = true; }
+    else if ((r.changed || 0) > (library[i].changed || 0) || (preferRemote && (r.changed || 0) === (library[i].changed || 0) && JSON.stringify(r.trip) !== JSON.stringify(library[i].trip))) { library[i] = r; changed = true; }
+  }
+  const before = library.length; library = library.filter(x => !(dead[x.id] && dead[x.id] >= (x.changed || 0))); if (library.length !== before) changed = true;
+  for (const k in data.cities || {}) if (!cities[k] && data.cities[k] && Array.isArray(data.cities[k].sites)) { cities[k] = data.cities[k]; changed = true; }
+  library.forEach(x => syncLast.set(x.id, (x.name || "") + "\u0000" + JSON.stringify(x.trip)));
+  if (changed) {
+    const cur = library.find(x => x.id === trip.id);
+    if (cur) trip = cur.trip;
+    else if (!trip.placeholder) { const nx = library.filter(y => !y.trip.archived).sort((a, b) => b.updated - a.updated)[0]; trip = nx ? nx.trip : Object.assign(sampleTrip(), { placeholder: true }); }
+    if (!trip.prefs) trip.prefs = defaultPrefs();
+    applyingSync = true; save(); applyingSync = false;
+    if (!wiz && view !== "tour") { const y = window.scrollY; render(); window.scrollTo(0, y); }
+  }
+  return changed;
+}
+async function syncCall(body) {
+  if (!freeAI) throw new Error("offline");
+  const r = await fetch(freeAI.url + "/sync", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify(body) });
+  const j = await r.json().catch(() => null);
+  return { status: r.status, j };
+}
+function syncSoon() {
+  if (applyingSync || !syncSt() || typeof window === "undefined") return;
+  clearTimeout(syncTimer); syncTimer = setTimeout(syncPush, 4000);
+}
+async function syncPush() {
+  const st = syncSt(); if (!st || syncBusy) return; if (navigator.onLine === false) return;
+  syncBusy = true;
+  try {
+    for (let t = 0; t < 3; t++) {
+      const { status, j } = await syncCall({ op: "put", code: st.code, base: st.rev, data: syncPayload() });
+      if (status === 200 && j) { st.rev = j.rev; st.at = Date.now(); syncSet(st); break; }
+      if (status === 409 && j) { syncMerge(j.data); st.rev = j.rev; syncSet(st); continue; }
+      if (status === 404) { syncNote = "This sync code no longer exists, so sync is off on this device."; syncSet(null); render(); }
+      break;
+    }
+  } catch (e) {} finally { syncBusy = false; }
+}
+async function syncPull() {
+  const st = syncSt(); if (!st || syncBusy || navigator.onLine === false) return;
+  syncBusy = true; let push = false;
+  try {
+    const m = await syncCall({ op: "rev", code: st.code });
+    if (m.status === 404) { syncNote = "This sync code no longer exists, so sync is off on this device."; syncSet(null); render(); return; }
+    if (m.status === 200 && m.j && m.j.rev !== st.rev) {
+      const g = await syncCall({ op: "get", code: st.code });
+      if (g.status === 200 && g.j) { syncMerge(g.j.data); st.rev = g.j.rev; st.at = Date.now(); syncSet(st);
+        // This device had newer changes of its own: send them on.
+        const pay = syncPayload(); push = pay.library.some(x => { const r = (g.j.data.library || []).find(y => y.id === x.id); return !r || (x.changed || 0) > (r.changed || 0); }); }
+    } else if (m.status === 200) { st.at = Date.now(); syncSet(st); }
+  } catch (e) {} finally { syncBusy = false; }
+  if (push) syncPush();
+}
+async function syncStart() {
+  syncNote = ""; syncBusy = true; render();
+  try { const { status, j } = await syncCall({ op: "new", data: syncPayload() }); if (status === 200 && j && j.code) syncSet({ code: j.code, rev: j.rev, at: Date.now() }); else syncNote = "Sync couldn't start just now. Try again in a minute."; }
+  catch (e) { syncNote = "Sync needs the internet. Try again when you're online."; }
+  syncBusy = false; render();
+}
+async function syncLink() {
+  const code = String(((document.getElementById("sync-code") || {}).value) || "").toUpperCase().replace(/[^A-Z0-9]/g, "");
+  if (code.length !== 8) { syncNote = "A sync code has 8 letters and numbers, like K7MQ-4RX2."; render(); return; }
+  syncNote = ""; syncBusy = true; render();
+  try {
+    const g = await syncCall({ op: "get", code });
+    if (g.status === 200 && g.j) { syncBusy = false; syncSet({ code, rev: g.j.rev, at: Date.now() }); syncMerge(g.j.data, true); syncJoin = null; syncNote = "Linked. Your trips now match your other device."; syncPush(); }
+    else syncNote = g.status === 404 ? "That code wasn't found. Check it on your other device (Settings > Sync)." : g.status === 429 ? "Too many tries today. Try again tomorrow." : "Sync couldn't connect just now. Try again in a minute.";
+  } catch (e) { syncNote = "Linking needs the internet. Try again when you're online."; }
+  syncBusy = false; render();
+}
+const fmtCode = c => c ? c.slice(0, 4) + "-" + c.slice(4) : "";
+function syncCard() {
+  const st = syncSt();
+  return `<div class="card" id="synccard"><h3>Sync between devices</h3>
+    ${st ? `<p class="lede">On. Your trips and journal stay the same on every device linked with this code:</p><p class="synccode" aria-label="Sync code">${esc(fmtCode(st.code))}</p>
+      <p class="lede small">On your other phone, tablet or computer: open Kairoute, go to Settings > Sync between devices, tap "I have a code" and type it in.${st.at ? " Last synced " + esc(new Date(st.at).toLocaleTimeString([], { hour: "numeric", minute: "2-digit" })) + "." : ""}</p>
+      <div class="actions"><button class="btn ghost small" data-act="syncnow" ${syncBusy ? "disabled" : ""}>Sync now</button><button class="btn ghost small" data-act="syncoff">Stop syncing on this device</button></div>`
+    : `<p class="lede">Plan on your phone, see it on your tablet or computer. Turn sync on here to get a short code, then type that code on your other device. No account or password.</p>
+      ${syncJoin ? `<div class="ask"><input id="sync-code" type="text" inputmode="text" autocapitalize="characters" autocomplete="off" maxlength="9" placeholder="e.g. K7MQ-4RX2" aria-label="Sync code"><button class="btn" data-act="synclink" ${syncBusy ? "disabled" : ""}>${syncBusy ? "Linking…" : "Link"}</button></div><p class="lede small">Your synced trips come to this device. Any other trips already here are kept and shared too.</p>`
+        : `<div class="actions"><button class="btn" data-act="syncstart" ${syncBusy ? "disabled" : ""}>${syncBusy ? "Turning on…" : "Turn on sync"}</button><button class="btn ghost" data-act="syncjoin">I have a code</button></div>`}`}
+    ${syncNote ? `<p class="banner" role="status">${esc(syncNote)}</p>` : ""}</div>`;
+}
+if (typeof window !== "undefined") {
+  setTimeout(syncPull, 2500);
+  document.addEventListener("visibilitychange", () => { if (document.visibilityState === "visible") syncPull(); else if (syncTimer) { clearTimeout(syncTimer); syncPush(); } });
+  window.addEventListener("online", () => setTimeout(() => { syncPull(); syncPush(); }, 2000));
+  setInterval(() => { if (document.visibilityState === "visible") syncPull(); }, 45000);
 }
 const day = () => trip.days[trip.active];
 // Match the day's city to a guide, forgiving extra words like "Barcelona, Spain" or "Kusadasi (Ephesus) Turkey".
@@ -2155,7 +2276,7 @@ function renderLobby() {
       <div class="go"><button class="btn" data-act="continue">Continue trip</button></div>
       <div class="resacts"><span class="lede">Saved automatically</span><button class="btn ghost small" data-goto="trip" data-act2="edit">Edit itinerary</button>${moreMenu(cur.id, `<button class="btn ghost small" data-act="rename" data-id="${esc(cur.id)}">Rename</button><button class="btn ghost small" data-act="archive" data-id="${esc(cur.id)}">Archive</button>${delBtn(cur.id)}`)}</div>
     </div>` : ""}
-    <div class="sechead"><h2>Planned trips</h2><span class="lede">${list.length - archived.length} saved on this device</span></div>
+    <div class="sechead"><h2>Planned trips</h2><span class="lede">${list.length - archived.length} ${syncSt() ? "synced across your devices" : `saved on this device · <button class="linkbtn" data-act="syncfromlobby">Sync with another device</button>`}</span></div>
     <div class="tripcards">
       ${others.map(x => `<div class="tripcard"><div class="band">${bandArt(x.id)}</div><div class="in">
         <div><div class="eyebrow">${esc(tripSpan(x.trip))}${tripSpan(x.trip) ? " · " : ""}${x.trip.days.length} days</div>${renameId === x.id ? renameBox(x.id, x.name) : `<h3>${esc(x.name)}</h3>`}</div>
@@ -2189,6 +2310,7 @@ function pageBar(title) {
 function renderSettings() {
   const seg = (key, list) => `<div class="seg" role="group">${list.map(([k, l]) => `<button type="button" data-app="${key}" data-v="${k}" aria-pressed="${appSet[key] === k}">${l}</button>`).join("")}</div>`;
   return `<div class="page">${pageBar("Settings")}
+  ${syncCard()}
   <div class="card"><h3>Display</h3>
     <div class="field"><span class="lbl">Appearance</span>${seg("theme", [["system", "Match my device"], ["light", "Light"], ["dark", "Dark"]])}</div>
     <div class="field"><span class="lbl">Text size</span>${seg("text", [["standard", "Standard"], ["large", "Large"]])}</div>
@@ -2205,7 +2327,7 @@ function renderSettings() {
   ${settingsCard().replace('<details class="card more">', '<details class="card more" open>')}
   <div class="card"><h3>AI guide</h3><p class="lede">${sample === freeSample ? `On, using Kairoute's free test AI. It builds guides for any city, finds your hotel, reads itinerary photos and answers questions.${freeAI && freeAI.budget ? ` About ${Math.round(100 * (freeAI.left || 0) / freeAI.budget)}% of today's free allowance is left; it resets every evening at 6 pm Central (7 pm in summer).` : ""}` : aiReady() ? "On. Kairoute uses Claude to build city guides, find your hotel, read itinerary photos and answer your questions." : "Off right now. The built-in cities still work fully."}</p>
     ${cl && cl.use ? "" : `<details class="more" ${getKey() ? "open" : ""}><summary>Advanced: use your own Anthropic key</summary><div class="field" style="margin-top:10px"><label for="aikey">Anthropic API key</label><div class="ask"><input type="password" id="aikey" autocomplete="off" placeholder="${getKey() ? "Saved on this device" : "sk-ant-…"}"><button type="button" class="btn small" data-act="savekey">Save</button>${getKey() ? `<button type="button" class="btn ghost small" data-act="clearkey">Remove</button>` : ""}</div><span class="hint">Stored only on this device and sent only to Anthropic. Get one at console.anthropic.com under API keys. Usage on your key is billed to you by Anthropic.</span></div></details>`}</div>
-  <div class="card"><div><h3>Your data</h3><p class="lede">Trips, guides and journal entries are saved only on this device. Starting over clears all of it and loads the example trip again.</p></div>
+  <div class="card"><div><h3>Your data</h3><p class="lede">Trips, guides and journal entries are saved on this device${syncSt() ? ", and copied to your other devices through sync" : ""}. Starting over clears all of it and loads the example trip again.</p></div>
     <div class="actions">${resetAsk ? `<button class="btn" data-act="resetyes" style="background:var(--warn)">Yes, clear everything</button><button class="btn ghost" data-act="resetno">Keep my trips</button>` : `<button class="btn ghost" data-act="reset">Start over</button>`}</div></div>
   <details class="card more"><summary>Coming in the full app</summary>
     <ul class="tips">${[
@@ -3526,6 +3648,12 @@ document.addEventListener("click", e => {
   if (t.dataset.act === "coachreplay") { coachStep = 0; view = "lobby"; render(); return; }
   if (t.dataset.act === "earlystart") { const d = day(); d.startTime = t.dataset.v; d.hours = +t.dataset.h; save(); render(); return; }
   if (t.dataset.act === "suggestok") { suggestMsg = ""; render(); return; }
+  if (t.dataset.act === "syncstart") { syncStart(); return; }
+  if (t.dataset.act === "syncfromlobby") { view = "settings"; render(); window.scrollTo(0, 0); return; }
+  if (t.dataset.act === "syncjoin") { syncJoin = true; syncNote = ""; render(); const el = document.getElementById("sync-code"); if (el) el.focus(); return; }
+  if (t.dataset.act === "synclink") { syncLink(); return; }
+  if (t.dataset.act === "syncnow") { syncNote = ""; (async () => { await syncPull(); await syncPush(); render(); })(); return; }
+  if (t.dataset.act === "syncoff") { syncSet(null); syncNote = "Sync is off on this device. Your trips stay here."; render(); return; }
   if (t.dataset.act === "bookopen") { const b = (day().booked || {})[t.dataset.meal]; bookForm = { label: t.dataset.meal, q: b ? b.name : "", time: b ? b.time : t.dataset.meal === "Lunch" ? "12:30" : "19:30", results: [] }; render(); const el = document.getElementById("bookform"); if (el) { el.scrollIntoView({ block: "center" }); const i = document.getElementById("bk-name"); if (i) i.focus(); } return; }
   if (t.dataset.act === "booksearch") { bookSearch(); return; }
   if (t.dataset.act === "bookcancel") { bookForm = null; render(); return; }
@@ -3572,6 +3700,7 @@ document.addEventListener("click", e => {
   if (act === "delno") { delAsk = null; render(); return; }
   if (act === "deltrip") {
     delAsk = null; library = library.filter(y => y.id !== t.dataset.id);
+    try { const tb = tombs(); tb[t.dataset.id] = Date.now(); localStorage.setItem(TOMB_KEY, JSON.stringify(tb)); } catch (e) {}
     if (t.dataset.id === trip.id) { const nx = library.filter(y => !y.trip.archived).sort((a, b) => b.updated - a.updated)[0]; trip = nx ? nx.trip : Object.assign(sampleTrip(), { placeholder: true }); }
     save(); render(); return;
   }

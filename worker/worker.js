@@ -187,6 +187,42 @@ export default {
     // { place: { avg, n } } for one city. POST /rate { city, place, stars, dev } records one traveler's 1-5 stars.
     // Guards: one rating per device and place (a second rating replaces the first), at most 30 ratings per
     // network address a day, and keys must look like Kairoute's own (lower-case words, short).
+    // /sync (POST): the same trips on every device. A short sync code is the only key: "new" makes one from the
+    // device's trips, "rev" says whether anything changed (cheap), "get" fetches, "put" saves when nothing newer
+    // came in since (otherwise it answers 409 with the newer copy, so the device can merge and try again).
+    if (url.pathname === "/sync" && req.method === "POST") {
+      if (origin && !ALLOWED.some(r => r.test(origin))) return Response.json({ error: "Not allowed" }, { status: 403, headers: h });
+      const len = +(req.headers.get("content-length") || 0); if (len > 15e6) return Response.json({ error: "Too big" }, { status: 413, headers: h });
+      let b; try { b = await req.json(); } catch (e) { return Response.json({ error: "Bad request" }, { status: 400, headers: h }); }
+      const ip = req.headers.get("cf-connecting-ip") || "x", ALPHA = "ABCDEFGHJKMNPQRSTUVWXYZ23456789";
+      const code = String(b.code || "").toUpperCase().replace(/[^A-Z0-9]/g, "");
+      const ttl = { expirationTtl: 400 * 86400 };
+      const limit = async (k, max) => { const n = +(await env.USAGE.get(k)) || 0; if (n >= max) return false; ctx.waitUntil(env.USAGE.put(k, String(n + 1), { expirationTtl: 2 * 86400 })); return true; };
+      if (b.op === "new") {
+        if (!b.data || typeof b.data !== "object") return Response.json({ error: "Bad request" }, { status: 400, headers: h });
+        if (!(await limit("syn:" + ip + ":" + today(), 20))) return Response.json({ error: "Too many" }, { status: 429, headers: h });
+        let c = ""; for (let t = 0; t < 5; t++) { c = Array.from(crypto.getRandomValues(new Uint8Array(8)), x => ALPHA[x % ALPHA.length]).join(""); if (!(await env.USAGE.get("sm:" + c))) break; }
+        const meta = { rev: 1, at: Date.now() };
+        await env.USAGE.put("sd:" + c, JSON.stringify(b.data), ttl); await env.USAGE.put("sm:" + c, JSON.stringify(meta), ttl);
+        return Response.json({ code: c, rev: 1, at: meta.at }, { headers: h });
+      }
+      if (!/^[A-Z0-9]{8}$/.test(code)) return Response.json({ error: "Bad code" }, { status: 400, headers: h });
+      // Guessing codes: after 40 wrong codes in a day, a device is refused until tomorrow.
+      if ((+(await env.USAGE.get("sym:" + ip + ":" + today())) || 0) >= 40) return Response.json({ error: "Too many" }, { status: 429, headers: h });
+      const meta = await env.USAGE.get("sm:" + code, "json");
+      if (!meta) { await limit("sym:" + ip + ":" + today(), 40); return Response.json({ error: "Unknown code" }, { status: 404, headers: h }); }
+      if (b.op === "rev") return Response.json(meta, { headers: h });
+      if (b.op === "get") { const data = await env.USAGE.get("sd:" + code, "json"); return Response.json({ rev: meta.rev, at: meta.at, data }, { headers: h }); }
+      if (b.op === "put") {
+        if (!b.data || typeof b.data !== "object") return Response.json({ error: "Bad request" }, { status: 400, headers: h });
+        if (+b.base !== meta.rev) { const data = await env.USAGE.get("sd:" + code, "json"); return Response.json({ rev: meta.rev, at: meta.at, data }, { status: 409, headers: h }); }
+        if (!(await limit("syw:" + code + ":" + today(), 800))) return Response.json({ error: "Too many" }, { status: 429, headers: h });
+        const nm = { rev: meta.rev + 1, at: Date.now() };
+        await env.USAGE.put("sd:" + code, JSON.stringify(b.data), ttl); await env.USAGE.put("sm:" + code, JSON.stringify(nm), ttl);
+        return Response.json(nm, { headers: h });
+      }
+      return Response.json({ error: "Bad request" }, { status: 400, headers: h });
+    }
     if (url.pathname === "/ratings") {
       const city = String(url.searchParams.get("city") || "");
       if (!/^[a-z0-9 ,'-]{1,80}$/.test(city)) return Response.json({ error: "Bad request" }, { status: 400, headers: h });
