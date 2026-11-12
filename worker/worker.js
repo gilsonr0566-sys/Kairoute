@@ -197,12 +197,14 @@ export default {
       const out = {}, todo = [];
       for (const x of list) { const k = "gq1:" + (await sha(String(x.name).toLowerCase() + "|" + (+x.lat).toFixed(3) + "|" + (+x.lng).toFixed(3))); const hit = await env.USAGE.get(k, "json"); if (hit) out[x.name] = hit; else todo.push([x, k]); }
       if (!env.GPLACES_KEY) { todo.forEach(([x]) => out[x.name] = { state: "nokey" }); return Response.json({ ratings: out }, { headers: h }); }
-      const dk = "gqd:" + today(); let usedToday = +(await env.USAGE.get(dk)) || 0; const CAP = 70;
+      // Rating lookups use Google's "Enterprise" Text Search, which is free for 1,000 calls a month: stay under
+      // that with 900 a month and 30 a day. Every answer is kept 30 days, so each restaurant is looked up about once a month.
+      const dk = "gqd:" + today(), mk = "gqm:" + month(); let usedToday = +(await env.USAGE.get(dk)) || 0, usedMonth = +(await env.USAGE.get(mk)) || 0; const CAP = 30, MCAP = 900;
       const norm = t => String(t || "").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/[^a-z0-9Ͱ-ϿЀ-ӿ]+/g, " ").trim();
       const near = (a, c) => Math.hypot((a.lat - c.latitude) * 111000, (a.lng - c.longitude) * 111000 * Math.cos(a.lat * Math.PI / 180));
       for (const [x, k] of todo) {
-        if (usedToday >= CAP) { out[x.name] = { state: "later" }; continue; }
-        usedToday++;
+        if (usedToday >= CAP || usedMonth >= MCAP) { out[x.name] = { state: "later" }; continue; }
+        usedToday++; usedMonth++;
         let res = null;
         try {
           const r = await fetch("https://places.googleapis.com/v1/places:searchText", { method: "POST", signal: AbortSignal.timeout(9000),
@@ -214,7 +216,7 @@ export default {
         } catch (e) {}
         if (res) { out[x.name] = res; ctx.waitUntil(env.USAGE.put(k, JSON.stringify(res), { expirationTtl: 30 * 86400 })); } else out[x.name] = { state: "later" };
       }
-      ctx.waitUntil(env.USAGE.put(dk, String(usedToday), { expirationTtl: 3 * 86400 }));
+      ctx.waitUntil(env.USAGE.put(dk, String(usedToday), { expirationTtl: 3 * 86400 })); ctx.waitUntil(env.USAGE.put(mk, String(usedMonth), { expirationTtl: 40 * 86400 }));
       return Response.json({ ratings: out }, { headers: h });
     }
     // /famous?city=: the best-known places in and around a city, ranked by how many Wikipedia languages write
