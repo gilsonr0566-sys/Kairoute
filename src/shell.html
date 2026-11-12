@@ -102,10 +102,10 @@ input[type=text], input[type=date], input[type=time], input[type=number], select
 .site { display: grid; grid-template-columns: auto 1fr; gap: 12px; padding: 14px; border: 1px solid var(--line); border-radius: 12px; background: var(--card); cursor: pointer; }
 .site.on { border-color: var(--route); background: color-mix(in srgb, var(--route-soft) 55%, var(--card)); }
 .site input { width: 22px; height: 22px; accent-color: var(--route); margin-top: 2px; }
-.site .body { display: grid; gap: 4px; min-width: 0; }
+.site .body { display: grid; gap: 4px; min-width: 0; align-content: start; }
 .site .name { font-weight: 700; font-family: var(--font-display); font-size: 1.05rem; }
 .site .sum { color: var(--muted); font-size: 0.92rem; }
-.tags { display: flex; gap: 6px; flex-wrap: wrap; }
+.tags { display: flex; gap: 6px; flex-wrap: wrap; align-items: flex-start; }
 .tag { font-size: 0.74rem; font-weight: 700; padding: 2px 8px; border-radius: 999px; background: var(--paper); border: 1px solid var(--line); color: var(--muted); letter-spacing: 0.02em; }
 .tag.must { background: var(--must-soft); color: var(--must); border-color: transparent; }
 .tag.unesco { background: #e8f0fb; color: #1f4f8f; border-color: transparent; }
@@ -572,12 +572,13 @@ details.story:not([open]) > summary::before { content: "▸ "; }
   html.appview .tab { padding-block: 8px 7px; font-size: .95rem; }
   html.appview #aiStatus { display: none; }
   /* Trip screen: no day strip (the day list on the left is the picker), so the tabs move up beside the logo */
-  html.appview .top .wrap:has(#dayRow[hidden]) { grid-template-areas: "logo tabs acts"; padding-bottom: 0; }
-  html.appview .top .wrap:has(#dayRow[hidden]) .tabs { display: flex; gap: 2px; justify-self: center; }
+  html.appview .top .wrap:has(#dayRow[hidden]) { grid-template-areas: "logo mid acts"; padding-bottom: 0; }
+  html.appview .top .wrap:has(#dayRow[hidden]) .tripname { grid-area: mid; }
+  html.appview .top .wrap:has(#dayRow[hidden]) .tabs { grid-area: mid; display: flex; gap: 2px; justify-self: center; }
   html.appview .top .wrap:has(#dayRow[hidden]) .tab { padding: 10px 16px 9px; }
 
   /* Tighter type and spacing so more fits */
-  html.appview #view h2 { font-size: 1.3rem; }
+  html.appview #view h2:not(.tourtitle) { font-size: 1.3rem; }
   html.appview #view .card { padding: 14px; gap: 12px; }
   html.appview #view .lede { font-size: .95rem; }
   html.appview .daysum > div { padding: 7px 12px; }
@@ -601,14 +602,13 @@ details.story:not([open]) > summary::before { content: "▸ "; }
   html.appview .guidemain { container-type: inline-size; }
   html.appview .guidemain .stoplist { grid-template-columns: minmax(0, 1fr); gap: 12px; }
   html.appview .stopcard { scroll-margin-top: 0; }
-  html.appview .jumps .chip.on { background: var(--route); border-color: var(--route); color: var(--card); }
-  html.appview .jumps .chip.on b { color: inherit; }
 
   /* Pick sites: filters, time meter and suggestions on top, the site cards below */
   html.appview .sitesgrid { grid-template-rows: auto minmax(0, 1fr); gap: 10px; }
   html.appview .sitesside { gap: 10px; max-height: 42vh; overflow-y: auto; }
   html.appview .sitesside .meter { position: static; box-shadow: none; }
-  html.appview .sitesmain { gap: 12px; padding-bottom: 0; }
+  html.appview .sitesmain { gap: 12px; padding-bottom: 0; container-type: inline-size; }
+  html.appview .sitesmain .sitelist { grid-template-columns: repeat(auto-fill, minmax(min(100%, 270px), 1fr)); }
   html.appview .stickybar { margin-top: -4px; }
 
   /* Trip: day list and day form side by side, each scrolling */
@@ -633,6 +633,7 @@ details.story:not([open]) > summary::before { content: "▸ "; }
   html.appview .sitesgrid { grid-template-columns: 300px minmax(0, 1fr); grid-template-rows: minmax(0, 1fr); gap: 18px; }
   html.appview .sitesside { max-height: none; }
   html.appview .sitesside .filters { flex-wrap: wrap; }
+  html.appview .sitesside .filters button { padding: 6px 11px; font-size: .9rem; }
 }
 
 /* Short landscape screens (tablets held sideways): a shorter welcome banner so your trip shows without scrolling */
@@ -646,6 +647,73 @@ details.story:not([open]) > summary::before { content: "▸ "; }
   .lobbybody { gap: 16px; padding-bottom: 20px; }
   .pillar { padding: 12px 14px; }
 }
+
+/* Guide: one stop at a time */
+.jumps .chip.on { background: var(--route); border-color: var(--route); color: var(--card); }
+.jumps .chip.on b { color: inherit; }
+.stopnav { display: flex; justify-content: space-between; gap: 10px; margin-top: 12px; }
+.stopnav .btn { max-width: 48%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: block; }
+details.scmore { border-top: 1px solid var(--line); padding-top: 10px; }
+details.scmore > .scmorein, details.scmore > .journal { margin-top: 10px; display: grid; gap: 12px; }
+details.scmore .journal { border-top: 0; padding-top: 0; }
+/* Settings, privacy and terms: one page, a section at a time */
+.page.setpage { max-width: 1100px; gap: 12px; }
+.pagebar .pagetitle { font-size: 1.15rem; margin: 0; flex: 1; text-align: center; }
+.setgrid { display: grid; gap: 14px; min-width: 0; }
+.setnav { display: flex; gap: 6px; overflow-x: auto; scrollbar-width: none; padding-bottom: 2px; }
+.setnav::-webkit-scrollbar { display: none; }
+.setlink { flex: none; border: 1px solid var(--line); background: var(--card); color: var(--ink); border-radius: 999px; padding: 7px 14px; font: inherit; font-size: .9rem; font-weight: 700; cursor: pointer; white-space: nowrap; }
+.setlink[aria-current="page"] { background: var(--route); border-color: var(--route); color: var(--card); }
+.setmain { display: grid; gap: 14px; align-content: start; min-width: 0; }
+.setmain > .settitle { font-size: 1.25rem; }
+.setmain details.card.more > summary { display: none; }
+/* the section title already names it: hide the card's own heading */
+.setmain > .settitle + .card > h3:first-child, .setmain > .settitle + .card > div:first-child > h3:first-child, .setmain > .settitle + .card > .setrow:first-child h3 { display: none; }
+@media (min-width: 800px) {
+  .setgrid { grid-template-columns: 210px minmax(0, 1fr); gap: 22px; }
+  .setnav { flex-direction: column; overflow: visible; }
+  .setlink { border-radius: 12px; text-align: left; padding: 10px 14px; }
+}
+@media (min-width: 800px) and (min-height: 560px) {
+  html.appview #view.panes > .setpage { flex: 1 1 auto; min-height: 0; width: 100%; padding: 8px 16px 12px; grid-template-rows: auto minmax(0, 1fr); align-content: stretch; }
+  html.appview .setgrid { min-height: 0; }
+  html.appview .setmain { padding-right: 4px; }
+}
+
+/* ---- Navigation rail (tablets and computers): Home, Trip, Day plan, Guide, Journal and Settings in a slim bar
+   on the left edge, out of the work space. Phones keep the bottom tab bar. ---- */
+.railonly { display: none !important; }
+@media (min-width: 800px) and (min-height: 560px) {
+  html.railnav body { padding-left: calc(84px + env(safe-area-inset-left, 0px)); }
+  html.railnav .tabs { position: fixed; z-index: 21; left: 0; top: 0; bottom: 0; width: calc(84px + env(safe-area-inset-left, 0px)); padding: max(10px, env(safe-area-inset-top, 0px)) 0 max(10px, env(safe-area-inset-bottom, 0px)) env(safe-area-inset-left, 0px);
+    display: flex !important; flex-direction: column; align-items: stretch; gap: 4px; background: var(--card); border-right: 1px solid var(--line); }
+  html.railnav .tabs .railonly { display: flex !important; }
+  html.railnav .tabs .railgap { flex: 1; }
+  html.railnav .tab { display: flex; flex-direction: column; align-items: center; gap: 3px; padding: 9px 4px 8px !important; margin: 0 8px; border: 0; border-radius: 14px; font-size: .74rem !important; font-weight: 700; color: var(--muted); min-height: 58px; }
+  html.railnav .tab svg { display: block; width: 24px; height: 24px; }
+  html.railnav .tab:hover { background: var(--paper); color: var(--ink); }
+  html.railnav .tab[aria-selected="true"] { background: var(--route-soft); color: var(--route); border: 0; }
+  html.railnav .tab.railhome { color: var(--ink); margin-bottom: 8px; }
+  html.railnav .tab.railhome svg { width: 26px; height: 30px; }
+  /* the header keeps only the trip name and the day strip, on one line */
+  html.railnav .brand h1, html.railnav .brand .actions { display: none; }
+  html.railnav .top .wrap, html.railnav .top .wrap:has(#dayRow[hidden]) { grid-template-columns: minmax(0, max-content) minmax(0, 1fr); grid-template-areas: "name days"; padding-block: 8px; max-width: 1400px; }
+  html.railnav .tripname { grid-area: name; max-width: 260px; }
+  html.railnav.nohead header.top { border: 0; background: none; }
+  html.railnav.nohead .top .wrap { display: block; padding: 0; }
+  html.railnav.nohead .top .wrap > :not(.tabs) { display: none; }
+  html.railnav #view { max-width: 1400px; }
+  html.railnav .pagebar .home, html.railnav .pagebar .btn { display: none; }
+  html.railnav .pagebar { padding-top: 4px; }
+  html.railnav .pagebar .pagetitle { text-align: left; }
+}
+@media (min-width: 800px) and (max-width: 999px) and (min-height: 560px) { html.railnav .tripname { display: none; } html.railnav .top .wrap { grid-template-columns: minmax(0, 1fr); grid-template-areas: "days"; } }
+/* Settings pages: the page bar is the header; only the navigation (rail or bottom tabs) stays */
+html.setview header.top { border: 0; background: none; position: static; }
+html.setview .top .wrap { display: block; padding: 0; }
+html.setview .top .wrap > :not(.tabs) { display: none; }
+@media (max-width: 640px) { html.setview .page { padding-bottom: calc(90px + env(safe-area-inset-bottom, 0px)); } }
+@media (min-width: 641px) { html.setview:not(.railnav) .tabs { display: none; } }
 /* ---- Phones: compact header, bottom tab bar, swipeable days, tighter type ---- */
 .tab svg { display: none; }
 .mcta { display: none; }
@@ -701,10 +769,12 @@ html, body { overflow-x: hidden; }
     <div class="tripname" id="tripName"></div>
     <div class="dayrow" id="dayRow"><button class="dayarrow" data-act="prevday" aria-label="Previous day">‹</button><div class="days" id="dayChips" role="group" aria-label="Trip days"></div><button class="dayarrow" data-act="nextday" aria-label="Next day">›</button><span class="daycount" id="dayCount"></span></div>
     <nav class="tabs" role="tablist" aria-label="Steps">
+      <button class="tab railonly railhome" data-act="lobby" aria-label="Kairoute home"><svg viewBox="0 0 92 104" aria-hidden="true"><rect x="14" y="8" width="16" height="84" rx="8" fill="currentColor"/><path d="M36,50 L74,16" fill="none" stroke="var(--meal)" stroke-width="7" stroke-linecap="round" stroke-dasharray="0.1 13"/><circle cx="78" cy="14" r="10" fill="none" stroke="var(--meal)" stroke-width="5"/><path d="M36,50 L78,88" fill="none" stroke="currentColor" stroke-width="16" stroke-linecap="round"/></svg><span>Home</span></button>
       <button class="tab" role="tab" data-view="trip" id="tab-trip"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M4 6h16M4 12h16M4 18h10"/></svg><span>Trip</span></button>
       <button class="tab" role="tab" data-view="plan" id="tab-plan"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" d="M9 4 3 6v14l6-2 6 2 6-2V4l-6 2-6-2zM9 4v14M15 6v14"/></svg><span>Day plan</span></button>
       <button class="tab" role="tab" data-view="guide" id="tab-guide"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M4 15v-3a8 8 0 0 1 16 0v3"/><rect x="3" y="14" width="5" height="7" rx="2" fill="currentColor"/><rect x="16" y="14" width="5" height="7" rx="2" fill="currentColor"/></svg><span>Guide</span></button>
       <button class="tab" role="tab" data-view="journal" id="tab-journal"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" d="M6 3h11a2 2 0 0 1 2 2v16H7a2 2 0 0 1-2-2V4a1 1 0 0 1 1-1zM5 17a2 2 0 0 1 2-2h12"/></svg><span>Journal</span></button>
+      <span class="railgap railonly" aria-hidden="true"></span><button class="tab railonly" data-act="settings"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg><span>Settings</span></button>
     </nav>
   </div>
 </header>

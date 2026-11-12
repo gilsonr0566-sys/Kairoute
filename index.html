@@ -115,10 +115,10 @@ input[type=text], input[type=date], input[type=time], input[type=number], select
 .site { display: grid; grid-template-columns: auto 1fr; gap: 12px; padding: 14px; border: 1px solid var(--line); border-radius: 12px; background: var(--card); cursor: pointer; }
 .site.on { border-color: var(--route); background: color-mix(in srgb, var(--route-soft) 55%, var(--card)); }
 .site input { width: 22px; height: 22px; accent-color: var(--route); margin-top: 2px; }
-.site .body { display: grid; gap: 4px; min-width: 0; }
+.site .body { display: grid; gap: 4px; min-width: 0; align-content: start; }
 .site .name { font-weight: 700; font-family: var(--font-display); font-size: 1.05rem; }
 .site .sum { color: var(--muted); font-size: 0.92rem; }
-.tags { display: flex; gap: 6px; flex-wrap: wrap; }
+.tags { display: flex; gap: 6px; flex-wrap: wrap; align-items: flex-start; }
 .tag { font-size: 0.74rem; font-weight: 700; padding: 2px 8px; border-radius: 999px; background: var(--paper); border: 1px solid var(--line); color: var(--muted); letter-spacing: 0.02em; }
 .tag.must { background: var(--must-soft); color: var(--must); border-color: transparent; }
 .tag.unesco { background: #e8f0fb; color: #1f4f8f; border-color: transparent; }
@@ -585,12 +585,13 @@ details.story:not([open]) > summary::before { content: "▸ "; }
   html.appview .tab { padding-block: 8px 7px; font-size: .95rem; }
   html.appview #aiStatus { display: none; }
   /* Trip screen: no day strip (the day list on the left is the picker), so the tabs move up beside the logo */
-  html.appview .top .wrap:has(#dayRow[hidden]) { grid-template-areas: "logo tabs acts"; padding-bottom: 0; }
-  html.appview .top .wrap:has(#dayRow[hidden]) .tabs { display: flex; gap: 2px; justify-self: center; }
+  html.appview .top .wrap:has(#dayRow[hidden]) { grid-template-areas: "logo mid acts"; padding-bottom: 0; }
+  html.appview .top .wrap:has(#dayRow[hidden]) .tripname { grid-area: mid; }
+  html.appview .top .wrap:has(#dayRow[hidden]) .tabs { grid-area: mid; display: flex; gap: 2px; justify-self: center; }
   html.appview .top .wrap:has(#dayRow[hidden]) .tab { padding: 10px 16px 9px; }
 
   /* Tighter type and spacing so more fits */
-  html.appview #view h2 { font-size: 1.3rem; }
+  html.appview #view h2:not(.tourtitle) { font-size: 1.3rem; }
   html.appview #view .card { padding: 14px; gap: 12px; }
   html.appview #view .lede { font-size: .95rem; }
   html.appview .daysum > div { padding: 7px 12px; }
@@ -614,14 +615,13 @@ details.story:not([open]) > summary::before { content: "▸ "; }
   html.appview .guidemain { container-type: inline-size; }
   html.appview .guidemain .stoplist { grid-template-columns: minmax(0, 1fr); gap: 12px; }
   html.appview .stopcard { scroll-margin-top: 0; }
-  html.appview .jumps .chip.on { background: var(--route); border-color: var(--route); color: var(--card); }
-  html.appview .jumps .chip.on b { color: inherit; }
 
   /* Pick sites: filters, time meter and suggestions on top, the site cards below */
   html.appview .sitesgrid { grid-template-rows: auto minmax(0, 1fr); gap: 10px; }
   html.appview .sitesside { gap: 10px; max-height: 42vh; overflow-y: auto; }
   html.appview .sitesside .meter { position: static; box-shadow: none; }
-  html.appview .sitesmain { gap: 12px; padding-bottom: 0; }
+  html.appview .sitesmain { gap: 12px; padding-bottom: 0; container-type: inline-size; }
+  html.appview .sitesmain .sitelist { grid-template-columns: repeat(auto-fill, minmax(min(100%, 270px), 1fr)); }
   html.appview .stickybar { margin-top: -4px; }
 
   /* Trip: day list and day form side by side, each scrolling */
@@ -646,6 +646,7 @@ details.story:not([open]) > summary::before { content: "▸ "; }
   html.appview .sitesgrid { grid-template-columns: 300px minmax(0, 1fr); grid-template-rows: minmax(0, 1fr); gap: 18px; }
   html.appview .sitesside { max-height: none; }
   html.appview .sitesside .filters { flex-wrap: wrap; }
+  html.appview .sitesside .filters button { padding: 6px 11px; font-size: .9rem; }
 }
 
 /* Short landscape screens (tablets held sideways): a shorter welcome banner so your trip shows without scrolling */
@@ -659,6 +660,73 @@ details.story:not([open]) > summary::before { content: "▸ "; }
   .lobbybody { gap: 16px; padding-bottom: 20px; }
   .pillar { padding: 12px 14px; }
 }
+
+/* Guide: one stop at a time */
+.jumps .chip.on { background: var(--route); border-color: var(--route); color: var(--card); }
+.jumps .chip.on b { color: inherit; }
+.stopnav { display: flex; justify-content: space-between; gap: 10px; margin-top: 12px; }
+.stopnav .btn { max-width: 48%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: block; }
+details.scmore { border-top: 1px solid var(--line); padding-top: 10px; }
+details.scmore > .scmorein, details.scmore > .journal { margin-top: 10px; display: grid; gap: 12px; }
+details.scmore .journal { border-top: 0; padding-top: 0; }
+/* Settings, privacy and terms: one page, a section at a time */
+.page.setpage { max-width: 1100px; gap: 12px; }
+.pagebar .pagetitle { font-size: 1.15rem; margin: 0; flex: 1; text-align: center; }
+.setgrid { display: grid; gap: 14px; min-width: 0; }
+.setnav { display: flex; gap: 6px; overflow-x: auto; scrollbar-width: none; padding-bottom: 2px; }
+.setnav::-webkit-scrollbar { display: none; }
+.setlink { flex: none; border: 1px solid var(--line); background: var(--card); color: var(--ink); border-radius: 999px; padding: 7px 14px; font: inherit; font-size: .9rem; font-weight: 700; cursor: pointer; white-space: nowrap; }
+.setlink[aria-current="page"] { background: var(--route); border-color: var(--route); color: var(--card); }
+.setmain { display: grid; gap: 14px; align-content: start; min-width: 0; }
+.setmain > .settitle { font-size: 1.25rem; }
+.setmain details.card.more > summary { display: none; }
+/* the section title already names it: hide the card's own heading */
+.setmain > .settitle + .card > h3:first-child, .setmain > .settitle + .card > div:first-child > h3:first-child, .setmain > .settitle + .card > .setrow:first-child h3 { display: none; }
+@media (min-width: 800px) {
+  .setgrid { grid-template-columns: 210px minmax(0, 1fr); gap: 22px; }
+  .setnav { flex-direction: column; overflow: visible; }
+  .setlink { border-radius: 12px; text-align: left; padding: 10px 14px; }
+}
+@media (min-width: 800px) and (min-height: 560px) {
+  html.appview #view.panes > .setpage { flex: 1 1 auto; min-height: 0; width: 100%; padding: 8px 16px 12px; grid-template-rows: auto minmax(0, 1fr); align-content: stretch; }
+  html.appview .setgrid { min-height: 0; }
+  html.appview .setmain { padding-right: 4px; }
+}
+
+/* ---- Navigation rail (tablets and computers): Home, Trip, Day plan, Guide, Journal and Settings in a slim bar
+   on the left edge, out of the work space. Phones keep the bottom tab bar. ---- */
+.railonly { display: none !important; }
+@media (min-width: 800px) and (min-height: 560px) {
+  html.railnav body { padding-left: calc(84px + env(safe-area-inset-left, 0px)); }
+  html.railnav .tabs { position: fixed; z-index: 21; left: 0; top: 0; bottom: 0; width: calc(84px + env(safe-area-inset-left, 0px)); padding: max(10px, env(safe-area-inset-top, 0px)) 0 max(10px, env(safe-area-inset-bottom, 0px)) env(safe-area-inset-left, 0px);
+    display: flex !important; flex-direction: column; align-items: stretch; gap: 4px; background: var(--card); border-right: 1px solid var(--line); }
+  html.railnav .tabs .railonly { display: flex !important; }
+  html.railnav .tabs .railgap { flex: 1; }
+  html.railnav .tab { display: flex; flex-direction: column; align-items: center; gap: 3px; padding: 9px 4px 8px !important; margin: 0 8px; border: 0; border-radius: 14px; font-size: .74rem !important; font-weight: 700; color: var(--muted); min-height: 58px; }
+  html.railnav .tab svg { display: block; width: 24px; height: 24px; }
+  html.railnav .tab:hover { background: var(--paper); color: var(--ink); }
+  html.railnav .tab[aria-selected="true"] { background: var(--route-soft); color: var(--route); border: 0; }
+  html.railnav .tab.railhome { color: var(--ink); margin-bottom: 8px; }
+  html.railnav .tab.railhome svg { width: 26px; height: 30px; }
+  /* the header keeps only the trip name and the day strip, on one line */
+  html.railnav .brand h1, html.railnav .brand .actions { display: none; }
+  html.railnav .top .wrap, html.railnav .top .wrap:has(#dayRow[hidden]) { grid-template-columns: minmax(0, max-content) minmax(0, 1fr); grid-template-areas: "name days"; padding-block: 8px; max-width: 1400px; }
+  html.railnav .tripname { grid-area: name; max-width: 260px; }
+  html.railnav.nohead header.top { border: 0; background: none; }
+  html.railnav.nohead .top .wrap { display: block; padding: 0; }
+  html.railnav.nohead .top .wrap > :not(.tabs) { display: none; }
+  html.railnav #view { max-width: 1400px; }
+  html.railnav .pagebar .home, html.railnav .pagebar .btn { display: none; }
+  html.railnav .pagebar { padding-top: 4px; }
+  html.railnav .pagebar .pagetitle { text-align: left; }
+}
+@media (min-width: 800px) and (max-width: 999px) and (min-height: 560px) { html.railnav .tripname { display: none; } html.railnav .top .wrap { grid-template-columns: minmax(0, 1fr); grid-template-areas: "days"; } }
+/* Settings pages: the page bar is the header; only the navigation (rail or bottom tabs) stays */
+html.setview header.top { border: 0; background: none; position: static; }
+html.setview .top .wrap { display: block; padding: 0; }
+html.setview .top .wrap > :not(.tabs) { display: none; }
+@media (max-width: 640px) { html.setview .page { padding-bottom: calc(90px + env(safe-area-inset-bottom, 0px)); } }
+@media (min-width: 641px) { html.setview:not(.railnav) .tabs { display: none; } }
 /* ---- Phones: compact header, bottom tab bar, swipeable days, tighter type ---- */
 .tab svg { display: none; }
 .mcta { display: none; }
@@ -714,10 +782,12 @@ html, body { overflow-x: hidden; }
     <div class="tripname" id="tripName"></div>
     <div class="dayrow" id="dayRow"><button class="dayarrow" data-act="prevday" aria-label="Previous day">‹</button><div class="days" id="dayChips" role="group" aria-label="Trip days"></div><button class="dayarrow" data-act="nextday" aria-label="Next day">›</button><span class="daycount" id="dayCount"></span></div>
     <nav class="tabs" role="tablist" aria-label="Steps">
+      <button class="tab railonly railhome" data-act="lobby" aria-label="Kairoute home"><svg viewBox="0 0 92 104" aria-hidden="true"><rect x="14" y="8" width="16" height="84" rx="8" fill="currentColor"/><path d="M36,50 L74,16" fill="none" stroke="var(--meal)" stroke-width="7" stroke-linecap="round" stroke-dasharray="0.1 13"/><circle cx="78" cy="14" r="10" fill="none" stroke="var(--meal)" stroke-width="5"/><path d="M36,50 L78,88" fill="none" stroke="currentColor" stroke-width="16" stroke-linecap="round"/></svg><span>Home</span></button>
       <button class="tab" role="tab" data-view="trip" id="tab-trip"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M4 6h16M4 12h16M4 18h10"/></svg><span>Trip</span></button>
       <button class="tab" role="tab" data-view="plan" id="tab-plan"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" d="M9 4 3 6v14l6-2 6 2 6-2V4l-6 2-6-2zM9 4v14M15 6v14"/></svg><span>Day plan</span></button>
       <button class="tab" role="tab" data-view="guide" id="tab-guide"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M4 15v-3a8 8 0 0 1 16 0v3"/><rect x="3" y="14" width="5" height="7" rx="2" fill="currentColor"/><rect x="16" y="14" width="5" height="7" rx="2" fill="currentColor"/></svg><span>Guide</span></button>
       <button class="tab" role="tab" data-view="journal" id="tab-journal"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" d="M6 3h11a2 2 0 0 1 2 2v16H7a2 2 0 0 1-2-2V4a1 1 0 0 1 1-1zM5 17a2 2 0 0 1 2-2h12"/></svg><span>Journal</span></button>
+      <span class="railgap railonly" aria-hidden="true"></span><button class="tab railonly" data-act="settings"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg><span>Settings</span></button>
     </nav>
   </div>
 </header>
@@ -4425,13 +4495,17 @@ function render() {
   const pkey = view + "|" + trip.active, pos = {};
   panes().forEach(el => { pos[el.dataset.pane || "view"] = el.scrollTop; });
   renderView();
-  { const v = document.getElementById("view"), app = !FULL_VIEWS[view] && view !== "tour";
+  { const v = document.getElementById("view"), app = !FULL_VIEWS[view] || /^(settings|privacy|terms)$/.test(view);
     document.documentElement.classList.toggle("appview", app);
-    if (v) { v.dataset.v = view; v.classList.toggle("panes", app && !!v.querySelector(":scope > .plangrid, :scope > .guidegrid, :scope > .sitesgrid, :scope > .tripgrid")); }
+    // Tablets and computers: the screens live in a slim rail on the left (see "Navigation rail" in shell.html)
+    const tabsEl = document.querySelector("header.top .tabs");
+    const setv = /^(settings|privacy|terms)$/.test(view);
+    document.documentElement.classList.toggle("railnav", app && view !== "tour" && (setv || !FULL_VIEWS[view]) && tabsEl && !tabsEl.hidden);
+    document.documentElement.classList.toggle("nohead", view === "trip" || setv);
+    document.documentElement.classList.toggle("setview", setv);
+    if (v) { v.dataset.v = view; v.classList.toggle("panes", app && !!v.querySelector(":scope > .plangrid, :scope > .guidegrid, :scope > .sitesgrid, :scope > .tripgrid, :scope > .setpage")); }
     if (paneMemo.key === pkey) panes().forEach(el => { const y = pos[el.dataset.pane || "view"]; if (y) el.scrollTop = y; });
-    paneMemo.key = pkey;
-    const gm = document.querySelector("#view .guidemain");
-    if (gm) gm.addEventListener("scroll", guideSpy, { passive: true }); guideSpy(); }
+    paneMemo.key = pkey; }
   { const old = document.querySelector(".coach"); if (old) old.remove(); const ch = coachHTML(); if (ch) document.body.insertAdjacentHTML("beforeend", ch); }
   if (askNotice && !FULL_VIEWS[view]) { const v = document.getElementById("view"); if (v) v.insertAdjacentHTML("afterbegin", `<p class="banner ok" role="status">${esc(askNotice)} <button class="linkbtn" data-act="asknoticeok">OK</button></p>`); }
   if (openFolds.size) document.querySelectorAll("#view details").forEach(el => { const sm = el.querySelector("summary"); if (sm && openFolds.has(view + "|" + sm.textContent.trim())) el.open = true; });
@@ -4440,7 +4514,9 @@ function renderView() {
   ensureBuiltins();
   if (view === "trips") view = "lobby";
   const full = !!FULL_VIEWS[view];
-  document.querySelector("header.top").hidden = full;
+  const setv = /^(settings|privacy|terms)$/.test(view);
+  document.querySelector("header.top").hidden = full && !setv; // settings keep the navigation rail on tablets (only the rail shows)
+  document.querySelectorAll(".tab").forEach(t => t.setAttribute("aria-selected", setv ? String(t.dataset.act === "settings") : t.dataset.view === (view === "sites" ? "plan" : view) ? "true" : "false"));
   document.querySelector("header.top").classList.toggle("touring", view === "tour"); // more room for the tour; Exit tour brings the day list back
   $view.className = full ? "full" : "wrap";
   if (full) { if (tourTimer) { clearInterval(tourTimer); tourTimer = null; } stopCountdownIfAny(); $view.innerHTML = FULL_VIEWS[view](); return; }
@@ -4455,7 +4531,7 @@ function renderView() {
   const tripScreens = view === "trips" || view === "wizard";
   // No duplication: on the Trip screen the day list on the left is the day picker and shows the trip name, so the top day strip and trip name step aside.
   document.getElementById("dayRow").hidden = tripScreens || view === "trip";
-  document.getElementById("tripName").hidden = view === "trip";
+  document.getElementById("tripName").hidden = view === "trip" || tripScreens;
   document.getElementById("dayCount").textContent = (trip.active + 1) + " of " + trip.days.length;
   document.querySelector(".tabs").hidden = tripScreens;
   if (view === "trips") { $view.innerHTML = renderTrips(); return; }
@@ -4627,13 +4703,17 @@ function footer(lobby) {
     <small>© 2026 Kairoute · ${esc(APP_VERSION)}</small></div></footer>`;
 }
 function pageBar(title) {
-  return `<div class="pagebar"><button class="home" data-act="lobby">${markSVG(false)}kairoute</button><button class="btn ghost small" data-act="lobby">Back to home</button></div>
-  <div><div class="eyebrow">Kairoute</div><h2>${esc(title)}</h2></div>`;
+  return `<div class="pagebar"><button class="home" data-act="lobby">${markSVG(false)}kairoute</button><h2 class="pagetitle">${esc(title)}</h2><button class="btn ghost small" data-act="lobby">Home</button></div>`;
 }
-function renderSettings() {
+// Settings, privacy and terms share one page: a section list on the left (chips on phones) and one section at a time,
+// so every section fits on a screen and nothing is listed twice.
+let setSec = "display", guideStop = null;
+const SET_SECS = [["display", "Display"], ["voice", "Guide voice"], ["prefs", "Trip preferences"], ["sync", "Sync devices"], ["ai", "AI guide"], ["data", "Your data"], ["about", "About"], ["privacy", "Privacy"], ["terms", "Terms"]];
+function renderSettings(sec) {
+  if (sec) setSec = sec;
   const seg = (key, list) => `<div class="seg" role="group">${list.map(([k, l]) => `<button type="button" data-app="${key}" data-v="${k}" aria-pressed="${appSet[key] === k}">${l}</button>`).join("")}</div>`;
-  return `<div class="page">${pageBar("Settings")}
-  ${syncCard()}
+  const body = {
+    display: () => `
   <div class="card"><h3>Display</h3>
     <div class="field"><span class="lbl">Appearance</span>${seg("theme", [["system", "Match my device"], ["light", "Light"], ["dark", "Dark"]])}</div>
     <div class="field"><span class="lbl">Text size</span>${seg("text", [["standard", "Standard"], ["large", "Large"]])}</div>
@@ -4641,18 +4721,26 @@ function renderSettings() {
     <div class="field"><span class="lbl">Quiet places</span>${seg("quiet", [["auto", "Automatic"], ["always", "Always quiet"], ["off", "Off"]]).replace('data-v="auto" aria-pressed="false"', appSet.quiet && appSet.quiet !== "auto" ? 'data-v="auto" aria-pressed="false"' : 'data-v="auto" aria-pressed="true"')}<span class="hint">In churches, monasteries and museums the guide shows text first and only plays audio once you confirm your earbuds are in.</span></div>
     <div class="field"><span class="lbl">Distances</span>${seg("units", [["mi", "Miles"], ["km", "Kilometers"]]).replace(/aria-pressed="(true|false)"/g, "").replace(/data-v="(mi|km)"/g, (m, k) => m + ' aria-pressed="' + ((k === "mi") === useMiles()) + '"')}</div>
   </div>
+`,
+    voice: () => `
   <div class="card"><h3>Natural voice</h3><p class="lede">${freeAI ? "The natural voice is a lifelike AI recording of each story, made once per stop and kept, so replays are free. A few new stops a day fit in the free allowance; after that your device's best voice reads until 6 pm Central." : "Your device's most natural voice reads the stories."}${natVoiceNote ? " " + esc(natVoiceNote) : ""}</p>
     ${freeAI ? `<div class="field"><span class="lbl">Natural AI voice (English)</span>${seg("natvoice", [["on", "On"], ["off", "Device voice only"]])}</div>
     <div class="field"><span class="lbl">Guide voice</span>${seg("guide", GUIDES.map(([k, n, d]) => [k, `${n} <small>${d}</small>`]))}
       <button type="button" class="btn" data-act="voicetry">Hear this voice</button></div>
     <div class="field"><span class="lbl">Kairoute sound (warmer, clearer outdoors, even volume)</span>${seg("voicefx", [["on", "On"], ["off", "Off"]])}</div>` : ""}
   </div>
-  ${settingsCard().replace('<details class="card more">', '<details class="card more" open>')}
+`,
+    prefs: () => settingsCard().replace('<details class="card more">', '<details class="card more" open>'),
+    sync: () => syncCard(),
+    ai: () => `
   <div class="card"><h3>AI guide</h3><p class="lede">${sample === freeSample ? `On, using Kairoute's free test AI. It builds guides for any city, finds your hotel, reads itinerary photos and answers questions.${freeAI && freeAI.budget ? ` About ${Math.round(100 * (freeAI.left || 0) / freeAI.budget)}% of today's free allowance is left; it resets every evening at 6 pm Central (7 pm in summer).` : ""}` : aiReady() ? "On. Kairoute uses Claude to build city guides, find your hotel, read itinerary photos and answer your questions." : "Off right now. The built-in cities still work fully."}</p>
-    ${cl && cl.use ? "" : `<details class="more" ${getKey() ? "open" : ""}><summary>Advanced: use your own Anthropic key</summary><div class="field" style="margin-top:10px"><label for="aikey">Anthropic API key</label><div class="ask"><input type="password" id="aikey" autocomplete="off" placeholder="${getKey() ? "Saved on this device" : "sk-ant-…"}"><button type="button" class="btn small" data-act="savekey">Save</button>${getKey() ? `<button type="button" class="btn ghost small" data-act="clearkey">Remove</button>` : ""}</div><span class="hint">Stored only on this device and sent only to Anthropic. Get one at console.anthropic.com under API keys. Usage on your key is billed to you by Anthropic.</span></div></details>`}</div>
+    ${cl && cl.use ? "" : `<details class="more" ${getKey() ? "open" : ""}><summary>Advanced: use your own Anthropic key</summary><div class="field" style="margin-top:10px"><label for="aikey">Anthropic API key</label><div class="ask"><input type="password" id="aikey" autocomplete="off" placeholder="${getKey() ? "Saved on this device" : "sk-ant-…"}"><button type="button" class="btn small" data-act="savekey">Save</button>${getKey() ? `<button type="button" class="btn ghost small" data-act="clearkey">Remove</button>` : ""}</div><span class="hint">Stored only on this device and sent only to Anthropic. Get one at console.anthropic.com under API keys. Usage on your key is billed to you by Anthropic.</span></div></details>`}</div>`,
+    data: () => `
   <div class="card"><div><h3>Your data</h3><p class="lede">Trips, guides and journal entries are saved on this device${syncSt() ? ", and copied to your other devices through sync" : ""}. Starting over clears all of it and loads the example trip again.</p></div>
-    <div class="actions">${resetAsk ? `<button class="btn" data-act="resetyes" style="background:var(--warn)">Yes, clear everything</button><button class="btn ghost" data-act="resetno">Keep my trips</button>` : `<button class="btn ghost" data-act="reset">Start over</button>`}</div></div>
-  <details class="card more"><summary>Coming in the full app</summary>
+    <div class="actions">${resetAsk ? `<button class="btn" data-act="resetyes" style="background:var(--warn)">Yes, clear everything</button><button class="btn ghost" data-act="resetno">Keep my trips</button>` : `<button class="btn ghost" data-act="reset">Start over</button>`}</div></div>`,
+    about: () => `
+  <div class="card"><div class="setrow"><div><h3>About</h3><p class="lede">Kairoute ${esc(APP_VERSION)}. ${esc(TAGLINE)}</p></div><button class="btn ghost small" data-act="film">Watch the intro</button></div></div>
+  <div class="card"><h3>Coming in the full app</h3>
     <ul class="tips">${[
       ["Book it", "Reserve tickets, timed entries and restaurant tables right from a stop."],
       ["Live maps", "Mapbox maps with turn-by-turn walking directions and your blue dot."],
@@ -4663,14 +4751,18 @@ function renderSettings() {
       ["Running-late alerts", "Phone alerts for the ship countdown, even with the app closed."],
       ["Follow me, phone in pocket", "GPS keeps guiding and starts each story even with the screen off."]
     ].map(([a, b]) => `<li><span><b>${a}:</b> ${b}</span></li>`).join("")}</ul>
-  </details>
-  <div class="card"><div class="setrow"><div><h3>About</h3><p class="lede">Kairoute ${esc(APP_VERSION)}. ${esc(TAGLINE)}</p></div><button class="btn ghost small" data-act="film">Watch the intro</button></div>
-    <div class="actions"><button class="btn ghost small" data-act="privacy">Privacy policy</button><button class="btn ghost small" data-act="terms">Terms of use</button></div></div>
-  </div>${footer()}`;
+  </div>
+`,
+    privacy: () => privacyBody(),
+    terms: () => termsBody()
+  }[setSec] || (() => "");
+  const title = (SET_SECS.find(x => x[0] === setSec) || ["", "Settings"])[1];
+  return `<div class="page setpage">${pageBar("Settings")}
+  <div class="setgrid"><nav class="setnav pane" data-pane="nav" aria-label="Settings sections">${SET_SECS.map(([k, l]) => `<button type="button" class="setlink" data-setsec="${k}" ${k === setSec ? 'aria-current="page"' : ""}>${l}</button>`).join("")}</nav>
+  <div class="setmain pane" data-pane="set-${setSec}"><h3 class="settitle">${esc(title)}</h3>${body()}</div></div></div>`;
 }
 const DRAFT = `<p class="draftnote"><b>Draft for the preview.</b> Have a lawyer review this before Kairoute is sold or published in an app store.</p>`;
-function renderPrivacy() {
-  return `<div class="page">${pageBar("Privacy policy")}${DRAFT}<div class="card legal">
+function privacyBody() { return `${DRAFT}<div class="card legal">
   <p class="lede">Effective November 10, 2026</p>
   <p>Kairoute is built to keep your trip yours. This policy explains what the app stores, what it sends, and the choices you have.</p>
   <h3>What stays on your device</h3>
@@ -4690,10 +4782,9 @@ function renderPrivacy() {
   <p>Kairoute is not directed to children under 13, and we do not knowingly collect their information.</p>
   <h3>Changes and contact</h3>
   <p>If this policy changes, we will update the date above and tell you in the app. Questions: privacy@[your domain].</p>
-  </div></div>${footer()}`;
-}
-function renderTerms() {
-  return `<div class="page">${pageBar("Terms of use")}${DRAFT}<div class="card legal">
+  </div>`; }
+function renderPrivacy() { return renderSettings("privacy"); }
+function termsBody() { return `${DRAFT}<div class="card legal">
   <p class="lede">Effective November 10, 2026</p>
   <p>By using Kairoute you agree to these terms. If you do not agree, please do not use the app.</p>
   <h3>A planning guide, not a guarantee</h3>
@@ -4714,8 +4805,8 @@ function renderTerms() {
   <p>To the extent the law allows, Kairoute is provided "as is" without warranties, and our total liability is limited to the amount you paid for the app in the past 12 months.</p>
   <h3>Changes and contact</h3>
   <p>We may update these terms and will note the new date above. Questions: support@[your domain].</p>
-  </div></div>${footer()}`;
-}
+  </div>`; }
+function renderTerms() { return renderSettings("terms"); }
 // Brand film: a 16-second animated intro, built from the logo.
 let filmTimers = [];
 function filmHTML() {
@@ -4810,7 +4901,7 @@ function renderWizard() {
   const head = `<div><div class="eyebrow">${w.step === 0 ? "New trip" : "Personalize · " + w.step + " of 2: " + steps[w.step]}</div></div>`;
   let body = "";
   if (w.step === 0) body = `
-    <div class="field"><label for="w-text">Where are you going, and how?</label>
+    <div class="field"><label for="w-text">Tell us in your own words</label>
       <textarea id="w-text" placeholder="Flying into Athens on May 3 and staying 4 days. Then a cruise from Athens to 9 ports, ending in Barcelona, where we stay 3 days. Train to Madrid for 2 days and fly home from Madrid at 4 pm.">${esc(w.text)}</textarea>
       <span class="hint">Include dates, flights and trains, the cruise and its ports if you know them, and how long you stay in each place. Your guide fills in what's missing and you can change anything after.</span></div>
     <div class="field"><span class="lbl">Or snap your itinerary</span>
@@ -4978,7 +5069,7 @@ function shrinkImage(file, max) {
 }
 function renderJournal() {
   const entries = Object.values(trip.journal || {}).filter(j => j.rating || j.note || (j.photos && j.photos.length)).sort((a, b) => (a.date || "").localeCompare(b.date || ""));
-  return `<div><h2>Trip journal</h2><p class="lede">Rate stops, jot notes and add photos from the Guide tab. Everything collects here.</p></div>
+  return `<div><h2>Trip journal</h2>${entries.length ? `<p class="lede">Your ratings, notes and photos from the Guide tab.</p>` : ""}</div>
     ${memCard()}
     ${entries.length ? `<div class="sitelist">${entries.map(j => `<div class="card"><div><div class="eyebrow">${esc(fmtDate(j.date))} · ${esc(j.city || "")}</div><h3>${esc(j.name || "")}</h3></div>
       ${j.meal ? `<span class="eyebrow">Meal</span>` : ""}${j.rating ? `<div class="stars static">${"★".repeat(j.rating)}<span style="opacity:.25">${"★".repeat(5 - j.rating)}</span></div>` : ""}
@@ -5206,7 +5297,7 @@ function gettingAround(city, plan) {
 }
 function renderSea(d) {
   return `${dayHeading(d)}<div class="card seacard"><div class="big" aria-hidden="true">〰</div><h3>A day at sea</h3><p class="lede">Nothing to plan today. A good time to read ahead in the guide for your next port.</p>
-    ${trip.days[trip.active + 1] ? `<button class="btn ghost" data-day="${trip.active + 1}">Next: ${esc(trip.days[trip.active + 1].destination)}</button>` : ""}</div>`;
+    ${(k => k >= 0 ? `<button class="btn" data-readahead="${k}">Read ahead: the ${esc(trip.days[k].destination)} guide</button>` : "")(trip.days.findIndex((x, i) => i > trip.active && x.type !== "sea"))}</div>`;
 }
 function dayMeta(x) {
   if (x.type === "port") return `Ashore ${x.portArrive}, all aboard ${x.allAboard}${x.tender ? " · tender" : ""}`;
@@ -5253,8 +5344,8 @@ function renderTrip(d) {
       <div class="itin">${itinerary()}</div>
       <div class="actions"><button class="btn ghost small" data-act="addday">+ Add a day</button><button class="btn ghost small" data-act="addport">+ Add a port day</button></div>
       ${(() => { const tb = tripBudget(); const parts = Object.entries(tb.by).map(([k, v]) => money(k, v)).join(" + ");
-        return `<div class="card"><div><span class="eyebrow">Trip budget estimate · ${P().party} people</span><p><b style="font-family:var(--font-display);font-size:1.4rem">${parts || "-"}</b></p>
-          <p class="footnote">Tickets, food and getting around for the ${tb.days} planned day${tb.days === 1 ? "" : "s"}${tb.missing ? `. ${tb.missing} day${tb.missing === 1 ? "" : "s"} still need a guide` : ""}. Flights, the cruise and hotels aren't included.</p></div></div>`; })()}
+        return `<details class="card more tripbudget"><summary>Trip budget: ${parts || "-"} <span class="lede" style="font-weight:400">for ${P().party} people</span></summary>
+          <p class="footnote">Tickets, food and getting around for the ${tb.days} planned day${tb.days === 1 ? "" : "s"}${tb.missing ? `. ${tb.missing} day${tb.missing === 1 ? "" : "s"} still need a guide` : ""}. Flights, the cruise and hotels aren't included.</p></details>`; })()}
       <details class="card more">
         <summary>Share, print or rebuild the trip</summary>
         <div class="actions"><button class="btn ghost small" data-act="pdf">Save as PDF</button><button class="btn ghost small" data-act="copytrip">Copy itinerary</button></div>
@@ -5594,7 +5685,7 @@ function renderPlan(d) {
       const r = it.place;
       return `<div class="${cls}"><div class="time">${fmt(it.time)}</div><div class="rail"><div class="dot meal">${it.meal.label[0]}</div></div><div class="what">
         <div class="nm">${it.meal.label}: ${esc(r.name)}</div><div class="sub">${[r.booked ? "Your reservation" : "", r.cuisine, r.price, r.generic || r.booked ? "" : r.kind === "local" ? "Local spot" : "Popular with visitors", dur(it.meal.len)].filter(Boolean).map(esc).join(" · ")}</div>
-        ${r.booked ? `<div class="sub"><button class="link" data-act="bookopen" data-meal="${it.meal.label}">Change</button> · <button class="link" data-act="bookremove" data-meal="${it.meal.label}">Remove my reservation</button></div>` : `<button class="link" data-act="bookopen" data-meal="${it.meal.label}">Already booked ${it.meal.label.toLowerCase()} somewhere? Add it</button>`}
+        ${r.booked ? `<div class="sub"><button class="link" data-act="bookopen" data-meal="${it.meal.label}">Change</button> · <button class="link" data-act="bookremove" data-meal="${it.meal.label}">Remove my reservation</button></div>` : ""}
         <div class="mealbox">${r.crowdTop || r.top || r.recommended ? `<span class="badges">${crowdBadge(r)}${r.top ? `<i class="badge">Local favorite</i>` : ""}${r.recommended ? `<i class="badge">Travelers recommend</i>` : ""}</span>` : ""}<span>${esc(String(r.why || "").replace(/\s*\(Wikivoyage\)\s*$/, ""))}</span>${r.crowd ? `<span class="crowd">${esc(crowdLine(r))}</span>` : ""}${r.generic ? "" : gLine(r)}${r.alts && r.alts.length ? `<span class="alt"><b>Or try</b> ${r.alts.map(a => altRole(a) + esc(a.name) + (a.crowdTop ? " ★" : "") + gMini(a) + (a.cuisine && a.cuisine !== "Restaurant" ? ` <small>(${esc(a.cuisine)})</small>` : "")).join(" · ")}</span>` : ""}${r.generic ? "" : eatStars(r.name, city)}</div></div></div>`;
     }
     if (it.type === "stop") {
@@ -5612,7 +5703,7 @@ function renderPlan(d) {
         <div class="sub">${[it.booked ? "Your reservation" : "", r.cuisine, r.price, it.leg ? (it.leg.km < 0.1 ? "next door" : dur(it.leg.min) + " " + (it.leg.mode === "walk" ? "walk" : "ride") + " from " + (it.near || "where you finish")) : ""].filter(Boolean).map(esc).join(" · ")}</div>
         ${it.late ? `<div class="banner warn">You'll reach it about ${dur(it.time - it.meal.from)} after your reservation. Remove a stop, or ask the restaurant for a later table.</div>` : ""}
         ${it.booked ? "" : `<div class="mealbox">${r.crowdTop || r.top || r.recommended ? `<span class="badges">${crowdBadge(r)}${r.top ? `<i class="badge">Local favorite</i>` : ""}${r.recommended ? `<i class="badge">Travelers recommend</i>` : ""}</span>` : ""}<span>${esc(String(r.why || "").replace(/\s*\(Wikivoyage\)\s*$/, ""))}</span>${gLine(r)}${r.alts && r.alts.length ? `<span class="alt"><b>Or try</b> ${r.alts.map(a => altRole(a) + esc(a.name) + (a.crowdTop ? " ★" : "") + gMini(a) + (a.cuisine && a.cuisine !== "Restaurant" ? ` <small>(${esc(a.cuisine)})</small>` : "")).join(" · ")}</span>` : ""}${eatStars(r.name, city)}</div>`}
-        ${it.booked ? `<div class="sub"><button class="link" data-act="bookopen" data-meal="${lbl}">Change</button> · <button class="link" data-act="bookremove" data-meal="${lbl}">Remove my reservation</button></div>` : `<button class="link" data-act="bookopen" data-meal="Dinner">Already booked dinner somewhere? Add it</button>`}</div></div>`;
+        ${it.booked ? `<div class="sub"><button class="link" data-act="bookopen" data-meal="${lbl}">Change</button> · <button class="link" data-act="bookremove" data-meal="${lbl}">Remove my reservation</button></div>` : ""}</div></div>`;
     }
     if (it.type === "end") {
       const spare = plan.endBy - plan.end;
@@ -5692,6 +5783,7 @@ ${quietOn(s) ? `<p class="banner quiet" role="note">🤫 <span><b>Quiet place.</
       ${s.lookFor && s.lookFor.length ? `<div class="field"><span class="eyebrow">What to look for</span><ol class="lookfor">${s.lookFor.map(x => `<li><span>${esc(x)}</span></li>`).join("")}</ol></div>` : ""}
       ${picksBlock(s)}
       ${srcNote(s)}
+      ${s.photoTip || s.travelerTip || s.hours || s.tickets || s.crowds || s.priceNote || s.web || (s.sources && s.sources.length) ? `<details class="more scmore"><summary>Hours, tickets and photo tips</summary><div class="scmorein">
       ${s.photoTip || s.travelerTip ? `<div class="tipsgrid">${s.photoTip ? `<p class="phototip"><b>Photo spot</b> ${esc(s.photoTip)} <a href="${photos}" target="_blank" rel="noopener">See photos</a></p>` : ""}${s.travelerTip ? `<p class="phototip"><b>From travelers</b> ${esc(unitText(s.travelerTip))}</p>` : ""}</div>` : ""}
       ${s.hours || s.tickets || s.crowds || s.priceNote || s.web ? `<div class="before"><span class="eyebrow">Before you go</span>
         ${s.hours ? `<div><b>Hours</b><span>${esc(s.hours)}${s.closed ? " · " + esc(s.closed) : ""}</span></div>` : ""}
@@ -5702,12 +5794,13 @@ ${quietOn(s) ? `<p class="banner quiet" role="note">🤫 <span><b>Quiet place.</
         ${s.web ? `<div><b>Website</b><span><a href="${esc(s.web)}" target="_blank" rel="noopener">Official site ↗</a></span></div>` : ""}
       </div>` : ""}
       ${s.sources && s.sources.length ? `<p class="ai-note">Checked against: ${s.sources.filter(x => x !== "map").map(esc).join(", ") || "the map"}${s.sources.includes("map") && s.sources.length > 1 ? " and the map" : ""}.</p>` : ""}
+      </div></details>` : ""}
       ${(() => { const tr = translations[s.id + "|" + P().lang]; const need = P().lang !== "English" && city.lang !== P().lang;
         return need ? (tr ? `<div class="guidetext" id="tr-${esc(s.id)}">${tr.text ? paras(tr.text) : `<p class="ai-note"><span class="spinner"></span> Translating…</p>`}</div>${tr.error ? `<p class="ai-note">${esc(tr.error)}</p>` : ""}` : (ready ? `<div><button class="btn ghost small" data-translate="${esc(s.id)}">Read it in ${esc(P().lang)}</button></div>` : "")) : ""; })()}
       ${dp ? `<div class="guidetext" id="deep-${esc(s.id)}">${dp.text ? paras(dp.text) : `<p class="ai-note"><span class="spinner"></span> Your guide is thinking…</p>`}</div>${dp.error ? `<p class="ai-note">${esc(dp.error)}</p>` : ""}` : ""}
       ${ready ? `<div class="actions">${!dp || dp.error ? `<button class="btn ghost small" data-deeper="${esc(s.id)}">Tell me more</button>` : ""}</div>
       ${askBlock(s)}` : `<p class="ai-note">Turn on the AI guide in Settings to ask the guide questions and hear more.</p>`}
-      ${journalBlock(s)}
+      ${(j => `<details class="more scmore" ${j.rating || j.note || (j.photos || []).length ? "open" : ""}><summary>Your journal${j.rating ? " · " + "★".repeat(j.rating) : ""}</summary>${journalBlock(s)}</details>`)((trip.journal || {})[jKey(s)] || {})}
     </div></div>
   </article>`;
 }
@@ -5717,11 +5810,15 @@ function renderGuide(d) {
   refillIfNeeded(d, city); if (!d.selected) d.selected = defaultSelection(city, trip.style, d);
   const plan = buildPlan(d);
   if (!plan || plan.error) return `${dayHeading(d)}<div class="card empty"><p>${esc(plan ? plan.error : "Set up your day first.")}</p><button class="btn" data-goto="trip">Edit this day</button></div>`;
+  // One stop at a time: pick it from the stop list; Previous / Next walk the route.
   let n = 0;
-  const cards = plan.items.filter(i => i.type === "stop").map(i => { if (!i.place.along) n++; return stopCard(i.place, n, city); }).join("");
-  const jumps = plan.items.filter(i => i.type === "stop" && !i.place.along).map((i, k) => `<button type="button" class="chip" data-jump="${esc(i.place.id)}"><b>${k + 1}</b> ${esc(i.place.name)}</button>`).join("");
+  const stops = plan.items.filter(i => i.type === "stop").map(i => ({ s: i.place, num: i.place.along ? 0 : ++n }));
+  const at = Math.max(0, stops.findIndex(x => x.s.id === guideStop)), cur = stops[at], prv = stops[at - 1], nxt = stops[at + 1];
+  const navBtn = (x, dir) => x ? `<button type="button" class="btn ${dir === "next" ? "" : "ghost"} small" data-jump="${esc(x.s.id)}">${dir === "next" ? "Next: " + esc(x.s.name) + " ›" : "‹ " + esc(x.s.name)}</button>` : "<span></span>";
+  const cards = cur ? stopCard(cur.s, cur.num, city) + `<div class="stopnav">${navBtn(prv, "prev")}${navBtn(nxt, "next")}</div>` : "";
+  const jumps = stops.map(x => `<button type="button" class="chip ${x === cur ? "on" : ""}" data-jump="${esc(x.s.id)}" aria-pressed="${x === cur}"><b>${x.num || "•"}</b> ${esc(x.s.name)}</button>`).join("");
   return `<div class="mcta"><button class="btn bigbtn" data-act="tourstart">▶ Start the tour</button></div>
-    <div class="guidegrid"><div class="guideside pane" data-pane="side">${dayHeading(d)}<p class="lede">Every stop's story, in route order. For a guided walk through the day, use Tour mode.</p>
+    <div class="guidegrid"><div class="guideside pane" data-pane="side">${dayHeading(d)}<p class="lede">Pick a stop to read or hear its story. For a guided walk through the day, use Tour mode.</p>
     <div class="planacts"><button class="btn bigbtn" data-act="tourstart">▶ Start the tour</button></div>
     ${jumps ? `<nav class="jumps" aria-label="Jump to a stop">${jumps}</nav>` : ""}</div>
     <div class="guidemain pane" data-pane="stories">${cards ? `<div class="stoplist">${cards}</div>` : `<div class="card empty"><p>No stops planned for today.</p><button class="btn" data-goto="sites">Choose stops</button></div>`}</div></div>`;
@@ -5899,13 +5996,6 @@ function followBar() {
     <span class="lede">${geoState === "on" ? `The story starts by itself when you arrive. <b id="geoDist"></b>` : esc(geoMsg || "Turn on to start each story automatically when you arrive.")}</span></div>`;
 }
 function startTourTimer() { if (tourTimer) clearInterval(tourTimer); tickTour(); tourTimer = setInterval(tickTour, 15000); }
-function guideSpy() {
-  const gm = document.querySelector("#view .guidemain"); if (!gm) return;
-  const top = gm.getBoundingClientRect().top + 90; let cur = null;
-  gm.querySelectorAll(".stopcard").forEach(c => { if (c.getBoundingClientRect().top <= top) cur = c.id.replace(/^stop-/, ""); });
-  if (!cur) { const f = gm.querySelector(".stopcard"); cur = f ? f.id.replace(/^stop-/, "") : null; }
-  document.querySelectorAll("#view .jumps .chip").forEach(b => b.classList.toggle("on", b.dataset.jump === cur));
-}
 function renderGuideOnly() { if (view === "guide" || view === "tour") { const y = window.scrollY; render(); window.scrollTo(0, y); } }
 
 // ---------- Events ----------
@@ -5949,7 +6039,9 @@ document.addEventListener("click", e => {
   if (t.dataset.day != null && !t.dataset.act) { if (view === "trip") readForm(); trip.active = +t.dataset.day; aiError = ""; cdPreview = null; cdWhere = null; cdSpoken = false; stopAudio(); save(); render();
     if (t.classList.contains("itrow") && innerWidth < 800) { const f = document.getElementById("dayForm"); if (f) f.scrollIntoView({ block: "start" }); }
     return; }
-  if (t.dataset.jump) { const el = document.getElementById("stop-" + t.dataset.jump); if (el) el.scrollIntoView({ behavior: "smooth", block: "start" }); return; }
+  if (t.dataset.readahead) { trip.active = +t.dataset.readahead; view = "guide"; guideStop = null; save(); render(); toTop(); return; }
+  if (t.dataset.setsec) { view = "settings"; setSec = t.dataset.setsec; resetAsk = false; render(); toTop(); return; }
+  if (t.dataset.jump) { guideStop = t.dataset.jump; render(); const gm = document.querySelector("#view .guidemain"); if (gm) { gm.scrollTop = 0; if (gm.getBoundingClientRect().top < 0) gm.scrollIntoView({ block: "start" }); } return; }
   if (t.dataset.goto) { view = t.dataset.goto; render(); toTop(); return; }
   if (t.dataset.act === "savekey") { const k = ((document.getElementById("aikey") || {}).value || "").trim(); if (k) { try { localStorage.setItem(KEY_STORE, k); } catch (e) {} sample = webSample; } render(); return; }
   if (t.dataset.act === "clearkey") { try { localStorage.removeItem(KEY_STORE); } catch (e) {} if (!(cl && cl.use)) sample = freeAI ? freeSample : null; render(); return; }
@@ -5958,7 +6050,7 @@ document.addEventListener("click", e => {
   if (t.dataset.style) { readForm(); trip.style = t.dataset.style; save(); render(); return; }
   if (t.dataset.chg) { const el = document.getElementById("chgText"); if (el) { el.value = t.dataset.chg; changeText = t.dataset.chg; el.focus(); } return; }
   if (t.dataset.filter) { siteFilter = t.dataset.filter; render(); return; }
-  if (t.dataset.open) { view = "guide"; render(); const el = document.getElementById("stop-" + t.dataset.open); if (el) el.scrollIntoView({ block: "start" }); return; }
+  if (t.dataset.open) { view = "guide"; guideStop = t.dataset.open; render(); toTop(); return; }
   if (t.dataset.find != null) { const T = trip.tour; const k = +t.dataset.find; T.found = T.found || []; T.found = T.found.includes(k) ? T.found.filter(x => x !== k) : [...T.found, k]; save(); renderGuideOnly(); return; }
   if (t.dataset.play) {
     const id = t.dataset.play, plan = buildPlan(day());
@@ -5994,7 +6086,7 @@ document.addEventListener("click", e => {
   if (t.dataset.act === "daytitleauto") { delete day().title; dayRenaming = null; save(); render(); return; }
   if (t.dataset.act === "daytitlecancel") { dayRenaming = null; render(); return; }
   if (t.dataset.act === "syncstart") { syncStart(); return; }
-  if (t.dataset.act === "syncfromlobby") { view = "settings"; render(); toTop(); return; }
+  if (t.dataset.act === "syncfromlobby") { view = "settings"; setSec = "sync"; render(); toTop(); return; }
   if (t.dataset.act === "syncjoin") { syncJoin = true; syncNote = ""; render(); const el = document.getElementById("sync-code"); if (el) el.focus(); return; }
   if (t.dataset.act === "synclink") { syncLink(); return; }
   if (t.dataset.act === "syncnow") { syncNote = ""; (async () => { await syncPull(); await syncPush(); render(); })(); return; }
@@ -6021,7 +6113,7 @@ document.addEventListener("click", e => {
   }
   const act = t.dataset.act;
   if (act === "gotit") { trip.bannerSeen = true; save(); render(); return; }
-  if (act === "lobby" || act === "settings" || act === "privacy" || act === "terms") { if (view === "trip") readForm(); stopAudio(); save(); view = act; resetAsk = false; aiError = ""; render(); toTop(); return; }
+  if (act === "lobby" || act === "settings" || act === "privacy" || act === "terms") { if (view === "trip") readForm(); stopAudio(); save(); view = act; if (act === "privacy" || act === "terms") setSec = act; resetAsk = false; aiError = ""; render(); toTop(); return; }
   if (act === "continue") { jumpToToday(trip); view = trip.tour && trip.tour.dayId === day().id && cityFor(day()) ? "tour" : "plan"; render(); toTop(); return; }
   if (act === "film" || act === "filmreplay") { stopAudio(); playFilm(false); return; }
   if (act === "filmclose") { closeFilm(); return; }
@@ -6200,4 +6292,4 @@ render();
 
 </script>
 <script>if ("serviceWorker" in navigator) addEventListener("load", () => navigator.serviceWorker.register("sw.js").catch(() => {}));</script>
-<script>(function(){var B="6dc6d04-1794513645";function chk(){if(location.protocol!=="https:")return;fetch("version.txt",{cache:"no-store"}).then(function(r){return r.ok?r.text():""}).then(function(t){t=t.trim();if(t&&t!==B)location.reload()}).catch(function(){})}addEventListener("load",chk);document.addEventListener("visibilitychange",function(){if(document.visibilityState==="visible")chk()})})();</script>
+<script>(function(){var B="7d473fb-1794514904";function chk(){if(location.protocol!=="https:")return;fetch("version.txt",{cache:"no-store"}).then(function(r){return r.ok?r.text():""}).then(function(t){t=t.trim();if(t&&t!==B)location.reload()}).catch(function(){})}addEventListener("load",chk);document.addEventListener("visibilitychange",function(){if(document.visibilityState==="visible")chk()})})();</script>
