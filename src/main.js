@@ -247,6 +247,9 @@ function spreadPicks(t) {
   });
 }
 try { if (!localStorage.getItem("kairoute.spread1")) { localStorage.setItem("kairoute.spread1", "1"); spreadPicks(trip); library.forEach(x => { if (x.trip && x.trip !== trip) spreadPicks(x.trip); }); } } catch (e) {}
+// One time per trip: put dates in order on trips planned before dates were checked (for example a new trip
+// where every day came back as the same date).
+try { [trip, ...library.map(x => x.trip)].forEach(t => { if (t && Array.isArray(t.days) && !t.datesChecked) { sequenceDates(t.days); t.datesChecked = 1; } }); } catch (e) {}
 if (!trip.id) trip.id = "t" + Date.now();
 function storeInLibrary() {
   if (trip.placeholder) return;
@@ -1241,7 +1244,21 @@ async function fixStops() {
     busy = null; save(); render();
   } catch (e) { busy = null; aiError = "I couldn't add the missing stops just now. Try again, or add them with + Add a port day."; render(); }
 }
-function parseDayLines(out) {
+// Dates always run forward: each day is the day after the one before, except the one case where two entries
+// share a date: leaving one city and arriving in the next on the same day. A list that gives every day the same
+// date (or none) is put in order this way, and gaps the traveler gave (free days at home) are kept.
+function sequenceDates(days) {
+  let changed = false;
+  days.forEach((d, i) => {
+    if (!i) return; const p = days[i - 1]; if (!p.date) return;
+    const sameDayMove = d.type === "arrival" && (p.type === "departure" || p.type === "embark") && keyOf(d.destination) !== keyOf(p.destination);
+    const want = sameDayMove ? p.date : addDays(p.date, 1);
+    if (!d.date || d.date < want || (sameDayMove && d.date !== want && d.date < addDays(p.date, 1))) { if (d.date !== want) { d.date = want; changed = true; } }
+  });
+  return changed;
+}
+function parseDayLines(out) { const days = parseDayLines0(out); sequenceDates(days); return days; }
+function parseDayLines0(out) {
   const types = DAY_TYPES.map(t => t.key), hm = v => /^\d\d:\d\d$/.test((v || "").trim()) ? v.trim() : "";
   return String(out).split("\n").filter(l => /^\s*DAY\|/.test(l)).map(l => l.trim().split("|").map(x => x.trim())).filter(f => f[2]).map(f => {
     const [, date, destination, type0, mode0, time, pa, aa, tender, lodging, est] = f;
@@ -2297,6 +2314,9 @@ if (typeof window !== "undefined") {
       closedPicks: stops.filter(x => closedOn(x.place, d.date)).map(x => x.place.name) };
   };
 }
+// Safety-net hook: plan a new trip from a description with a stand-in AI answer, the same way the New trip
+// screen does, so date handling and the Trip screen can be checked without the network.
+if (typeof window !== "undefined") window.__kairouteNewTrip = async (desc, answer) => { const keep = sample; sample = async () => ({ text: answer, truncated: false }); try { await buildTripFromText(desc); } finally { sample = keep; } return trip.days.map(d => ({ date: d.date, type: d.type, dest: d.destination })); };
 if (typeof window !== "undefined") window.__kairouteMeter = (clearAll) => { bonusMemo = new Map(); mealMemo = new Map(); keptMemo = new Map(); eveMemo = new Map(); avoidMeals = new Set(); const saved = trip.days.map(d => d.selected); if (clearAll) trip.days.forEach(d => { d.selected = []; }); try { return trip.days.map((d, i) => { let pl = null; try { pl = buildPlan(d); } catch (e) { return { i, err: e.message }; } const m = meterCalc(pl, d); return m ? { i, date: d.date, dest: d.destination, type: d.type, avail: m.avail, used: m.used, visits: m.visits, eat: m.eat, moving: m.moving, settle: m.settle, leave: m.leave, extra: m.extra, bonus: m.bonus, stops: pl.stops.length, booked: !!(d.booked && Object.keys(d.booked).length) } : { i, skip: true }; }); } finally { trip.days.forEach((d, k) => { d.selected = saved[k]; }); bonusMemo = new Map(); mealMemo = new Map(); keptMemo = new Map(); eveMemo = new Map(); } };
 if (typeof window !== "undefined") window.__kairouteDay = (i, sel, extra) => { const d = trip.days[i]; if (typeof sel === "string") { const all = allSites(cityFor(d)); sel = all.filter(x => new RegExp(sel, "i").test(x.name)).map(x => x.id); if (!sel.length) return all.map(x => x.id + " " + x.name); } if (sel) d.selected = sel; if (extra) Object.assign(d, extra); bonusMemo = new Map(); mealMemo = new Map(); keptMemo = new Map(); eveMemo = new Map(); avoidMeals = new Set(); const pl = buildPlan(d); if (!pl || pl.error) return pl; return { dropped: (pl.dropped || []).map(x => x.name), end: fmt(pl.end), endBy: fmt(pl.endBy), rideMin: pl.items.filter(x => x.type === "travel" && x.leg.mode === "ride").reduce((a, x) => a + x.leg.min, 0), items: pl.items.map(it => it.type === "travel" ? "   ~ " + it.leg.how + " " + it.leg.min + " min " + it.leg.km.toFixed(1) + " km" : fmt(it.time) + " " + it.type + ": " + (it.place ? it.place.name : it.label)) }; };
 if (typeof window !== "undefined") window.__kairoutePlans = (ov) => { if (ov) trip.days.forEach((d, i) => { if (ov.sel && ov.sel[i]) d.selected = ov.sel[i]; if ("fill" in ov) d.fillTime = ov.fill; }); bonusMemo = new Map(); mealMemo = new Map(); keptMemo = new Map(); eveMemo = new Map(); avoidMeals = new Set(); return trip.days.map((d, i) => { const pl = buildPlan(d); if (!pl || !pl.items) return { i, date: d.date, dest: d.destination, none: true }; const pts = pl.items.filter(x => x.place && x.type !== "travel").map(x => ({ lat: x.place.lat, lng: x.place.lng, t: x.type, n: x.place.name })); return { i, date: d.date, dest: d.destination, pts, km: +pl.walkKm.toFixed(2), end: pl.end, endBy: pl.endBy, stops: pl.stops.length, bonus: (pl.bonus || []).map(x => x.name), meals: pl.items.filter(x => x.type === "meal").map(x => x.meal.label + "@" + x.time + " " + x.place.name + " | alts: " + (x.place.alts || []).map(r => r.name + " (" + r.cuisine + ")").join("; ")) }; }); };
@@ -3286,7 +3306,7 @@ function itinerary() {
 function opts(list, cur) { return list.map((s, i) => `<option value="${i}" ${String(cur) === String(i) ? "selected" : ""}>${esc(s.name)}</option>`).join(""); }
 function renderTrip(d) {
   const city = cityFor(d);
-  const missing = trip.days.filter(x => x.type !== "sea" && !cityFor(x)).map(x => keyOf(x.destination)).filter((v, i, a) => v && a.indexOf(v) === i).length;
+  const missingNames = trip.days.filter(x => x.type !== "sea" && !cityFor(x) && x.destination).map(x => x.destination).filter((v, i, a) => a.findIndex(y => keyOf(y) === keyOf(v)) === i), missing = missingNames.length;
   const t = d.type;
   const lk = cityKeyFor(d) || keyOf(d.destination);
   const L = trip.lodging[lk] || { idx: 0 };
@@ -3301,8 +3321,8 @@ function renderTrip(d) {
   ${changeCard()}
   <div class="tripgrid">
     <div class="leftcol pane" data-pane="days">
-      <div>${renameId === trip.id ? renameBox(trip.id, trip.name || tripName(trip)) : `<div class="setrow"><h2>${esc(trip.name || "Your trip")}</h2><button class="btn ghost small" data-act="rename" data-id="${esc(trip.id)}">Rename</button></div>`}<p class="lede">${trip.days.length} day${trip.days.length === 1 ? "" : "s"}${(() => { const n = trip.days.filter(x => x.type === "port").length; return n ? `, ${n} cruise stop${n === 1 ? "" : "s"}` : ""; })()}. Tap a day to edit it.</p></div>
-      ${aiReady() && missing ? `<button class="btn ghost small" data-act="genall" ${busy ? "disabled" : ""}>Build guides for all ${missing} places</button>` : ""}
+      <div>${renameId === trip.id ? renameBox(trip.id, trip.name || tripName(trip)) : `<div class="setrow"><h2>${esc(trip.name || "Your trip")}</h2><button class="btn ghost small" data-act="rename" data-id="${esc(trip.id)}">Rename</button></div>`}<p class="lede">${(() => { const dates = new Set(trip.days.map(x => x.date).filter(Boolean)).size || trip.days.length, cities = new Set(trip.days.filter(x => x.type !== "sea" && x.type !== "port" && x.destination).map(x => keyOf(x.destination))).size; return `${dates} day${dates === 1 ? "" : "s"}${cities > 1 ? `, ${cities} cities` : ""}`; })()}${(() => { const n = trip.days.filter(x => x.type === "port").length; return n ? `, ${n} cruise stop${n === 1 ? "" : "s"}` : ""; })()}. Tap a day to edit it.</p></div>
+      ${aiReady() && missing ? `<button class="btn ghost small" data-act="genall" ${busy ? "disabled" : ""}>${missing === 1 ? `Build the guide for ${esc(missingNames[0])}` : missing <= 3 ? `Build the guides for ${esc(missingNames.join(" and "))}` : `Build the guides for all ${missing} places`}</button>` : ""}
       <div class="itin">${itinerary()}</div>
       <div class="actions"><button class="btn ghost small" data-act="addday">+ Add a day</button><button class="btn ghost small" data-act="addport">+ Add a port day</button></div>
       ${(() => { const tb = tripBudget(); const parts = Object.entries(tb.by).map(([k, v]) => money(k, v)).join(" + ");

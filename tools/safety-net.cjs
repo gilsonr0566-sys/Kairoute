@@ -105,6 +105,35 @@ const log = (suite, trip, ok, what) => { results.push({ suite, trip, ok, what })
     await ctx.close();
   }
   await b.close();
+  // New trips: several cities, several days each, planned from a description. The stand-in AI answers give
+  // every day the same date (what happened on Richard's Prague and Hamburg trip) or leave dates out; the app
+  // must put them in order and the Trip screen must count days and missing guides right.
+  const NEW = [
+    { label: 'Prague 4 days then Hamburg 2 days, every day given the same date', desc: 'Prague for 4 days from June 11 2027, then the train to Hamburg for 2 days',
+      lines: ['arrival|Prague|train|10:30', 'land|Prague||', 'land|Prague||', 'departure|Prague|train|15:00', 'arrival|Hamburg|train|19:00', 'land|Hamburg||', 'departure|Hamburg|flight|16:00'].map(l => { const [t, c, m, tm] = l.split('|'); return `DAY|2027-06-11|${c}|${t}|${m}|${tm}|||no||yes`; }),
+      want: ['2027-06-11', '2027-06-12', '2027-06-13', '2027-06-14', '2027-06-14', '2027-06-15', '2027-06-16'] },
+    { label: 'Lisbon, Porto and Madrid, no dates given after the first', desc: 'Lisbon 3 days, Porto 2 days, Madrid 2 days',
+      lines: ['DAY|2027-09-06|Lisbon|arrival|flight|10:30|||no||yes', 'DAY||Lisbon|land||||||no||yes', 'DAY||Lisbon|departure|train|09:00|||no||yes', 'DAY||Porto|arrival|train|12:30|||no||yes', 'DAY||Porto|departure|flight|15:00|||no||yes', 'DAY||Madrid|arrival|flight|17:00|||no||yes', 'DAY||Madrid|departure|flight|15:00|||no||yes'],
+      want: ['2027-09-06', '2027-09-07', '2027-09-08', '2027-09-08', '2027-09-09', '2027-09-09', '2027-09-10'] }
+  ];
+  { const b2 = await chromium.launch(); const ctx = await b2.newContext({ viewport: { width: 800, height: 1280 } }); const p = await ctx.newPage(); const errs = []; p.on('pageerror', e => errs.push(e.message));
+    await p.route('**/*', r => /^file:/.test(r.request().url()) ? r.continue() : r.abort());
+    await p.goto('file://' + FILE); await p.evaluate(() => localStorage.setItem('kairoute.intro1', '1')); await p.reload(); await p.waitForTimeout(400);
+    for (const N of NEW) {
+      const got = await p.evaluate(([d, a]) => window.__kairouteNewTrip(d, a), [N.desc, 'STOPS: x\n' + N.lines.join('\n')]); await p.waitForTimeout(300);
+      const bad = [];
+      if (got.map(x => x.date).join() !== N.want.join()) bad.push(`dates ${got.map(x => x.date.slice(5)).join(', ')} instead of ${N.want.map(x => x.slice(5)).join(', ')}`);
+      for (let k = 1; k < got.length; k++) if (got[k].date < got[k - 1].date) { bad.push('dates go backwards'); break; }
+      const tv = await p.evaluate(() => ({ rows: [...document.querySelectorAll('.itrow .dt')].map(x => x.innerText), head: (document.querySelector('.leftcol p') || {}).innerText || '', btn: ([...document.querySelectorAll('[data-act="genall"]')][0] || {}).innerText || '' }));
+      if (tv.rows.length !== got.length) bad.push(`Trip screen lists ${tv.rows.length} days, the trip has ${got.length}`);
+      { const nd = new Set(got.map(x => x.date)).size; if (!new RegExp('\\b' + nd + ' days').test(tv.head)) bad.push(`Trip screen says "${tv.head}" for ${nd} calendar days`); }
+      if (/all 1 places|all [012] places/.test(tv.btn)) bad.push(`guide button reads "${tv.btn}"`);
+      if (new Set(tv.rows).size < new Set(got.map(x => x.date)).size) bad.push('Trip screen shows fewer distinct dates than the trip has');
+      log('New trip', 'new-trips', !bad.length, `${N.label}: ${bad.length ? bad.join('; ') : 'dates in order, Trip screen counts right'}`);
+      const f = 'new-trip-' + NEW.indexOf(N) + '.jpg'; await p.screenshot({ path: path.join(OUT, f), type: 'jpeg', quality: 60 }); shots.push({ f, cap: 'New trip: ' + N.label });
+    }
+    log('New trip', 'new-trips', !errs.length, errs.length ? 'page errors: ' + [...new Set(errs)].join(' | ') : 'no page errors');
+    await b2.close(); }
   // Real-screen walkthroughs at three sizes
   for (const [nm, w, h] of [['tablet landscape', 1280, 800], ['tablet upright', 800, 1280], ['phone', 412, 900]]) {
     const r = spawnSync('node', [path.join(__dirname, 'picks-e2e.cjs'), FILE, String(w), String(h), path.join(OUT, 'walk-' + w)], { encoding: 'utf8', timeout: 15 * 60 * 1000 });
@@ -125,7 +154,7 @@ details{background:var(--card);border:1px solid var(--line);border-radius:12px;m
 <body><main><h1>Kairoute checks</h1><p class="sub">Run ${esc(when)}. These run automatically before every update; if anything fails, the update is held back.</p>
 <div class="big">${fails ? `${fails} problem${fails > 1 ? 's' : ''} found: this update was held back` : `All ${passed} checks passed`}</div>
 <p>What's checked: on every day of ${TRIPS.length} sample trips, the Day plan, map, Change stops, time bar and Guide must agree with the planner (same stops, same counts, times that add up, no sight on two days, no optional stop shown as a pick, labels that follow the sources). Every stop must be a real guide sight, every restaurant must come from the map data, and meals must be near the route. Then a script taps through the real screens on tablet and phone: untick everything, reload, tick, change the day length, Suggest my tour, and sync between two devices.</p>
-${groups.map(g => { const [suite, trip] = g.split('|'), rs = results.filter(r => r.suite === suite && r.trip === trip), nb = rs.filter(r => !r.ok).length, T = TRIPS.find(x => x.key === trip);
+${groups.map(g => { const [suite, trip] = g.split('|'), rs = results.filter(r => r.suite === suite && r.trip === trip), nb = rs.filter(r => !r.ok).length, T = TRIPS.find(x => x.key === trip) || (trip === 'new-trips' ? { label: 'Planning a new trip from a description (several cities)' } : null);
   return `<details ${nb ? 'open' : ''}><summary>${esc(suite)}: ${esc(T ? T.label : trip)} <span class="${nb ? 'bad' : 'ok'}">${nb ? nb + ' failed' : 'all passed'}</span></summary><ul>${rs.map(r => `<li class="${r.ok ? 'ok' : 'bad'}">${r.ok ? '✓' : '✗'} ${esc(r.what)}</li>`).join('')}</ul></details>`; }).join('')}
 <h2>Screenshots from this run</h2><div class="shots">${shots.map(s => `<figure><a href="${esc(s.f)}"><img loading="lazy" src="${esc(s.f)}" alt=""></a><figcaption>${esc(s.cap)}</figcaption></figure>`).join('')}</div></main></body></html>`;
   fs.writeFileSync(path.join(OUT, 'index.html'), html);
