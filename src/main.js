@@ -250,7 +250,8 @@ function storeInLibrary() {
   if (trip.placeholder) return;
   const i = library.findIndex(x => x.id === trip.id);
   const entry = { id: trip.id, name: trip.name || tripName(trip), updated: Date.now(), trip };
-  if (i >= 0 && library[i].changed) entry.changed = library[i].changed;
+  if (i >= 0 && library[i].stamps) entry.stamps = library[i].stamps;
+  if (i >= 0 && library[i].sums) entry.sums = library[i].sums;
   if (i >= 0) library[i] = entry; else library.unshift(entry);
 }
 function tripName(t) {
@@ -273,43 +274,89 @@ function save() {
 // really changed, so when two devices edit, the newer copy of each trip wins, and a deleted trip stays deleted.
 const SYNC_KEY = "kairoute.sync", TOMB_KEY = "kairoute.deleted";
 let syncTimer = null, syncBusy = false, syncNote = "", syncJoin = null, applyingSync = false;
-const syncLast = new Map(); // trip id -> its contents when last compared, to tell a real change from a re-save
 const syncSt = () => { try { return JSON.parse(localStorage.getItem(SYNC_KEY) || "null"); } catch (e) { return null; } };
 const syncSet = v => { try { if (v) localStorage.setItem(SYNC_KEY, JSON.stringify(v)); else localStorage.removeItem(SYNC_KEY); } catch (e) {} };
 const tombs = () => { try { return JSON.parse(localStorage.getItem(TOMB_KEY) || "{}") || {}; } catch (e) { return {}; } };
+// A trip syncs in parts (its settings, the order of its days, each day, each journal entry), each stamped with the
+// time it last really changed. When the phone edits one day and the computer another, both edits survive; when
+// both edit the same part, the newer edit wins. Which day is open and a tour in progress stay on each device.
+const LOCAL_ONLY = ["days", "journal", "active", "tour"];
+function tripParts(x) {
+  const t = x.trip, out = {}, meta = {};
+  for (const k in t) if (!LOCAL_ONLY.includes(k)) meta[k] = t[k];
+  out.m = JSON.stringify([x.name || "", meta]);
+  (t.days || []).forEach(d => { if (!d.id) d.id = "d" + Date.now().toString(36) + Math.random().toString(36).slice(2, 6); out["d:" + d.id] = JSON.stringify(d); });
+  out.o = JSON.stringify((t.days || []).map(d => d.id));
+  for (const k in t.journal || {}) out["j:" + k] = JSON.stringify(t.journal[k]);
+  return out;
+}
+// Each part's fingerprint is saved with the trip, so a change is noticed even if the app was closed and
+// reopened in between (an edit made right after opening the app still counts as the newest).
+const fp = t => { let h = 2166136261; for (let i = 0; i < t.length; i++) { h ^= t.charCodeAt(i); h = Math.imul(h, 16777619); } return (h >>> 0).toString(36) + t.length.toString(36); };
 function markChanges() {
   const now = Date.now();
-  library.forEach(x => { const ser = (x.name || "") + "\u0000" + JSON.stringify(x.trip); if (syncLast.get(x.id) !== ser) { if (syncLast.has(x.id)) x.changed = now; else if (!x.changed) x.changed = 1; syncLast.set(x.id, ser); } });
+  library.forEach(x => {
+    const parts = tripParts(x), first = !x.sums; x.stamps = x.stamps || {}; x.sums = x.sums || {};
+    for (const k in parts) { const f = fp(parts[k]); if (x.sums[k] !== f) { x.stamps[k] = first ? x.stamps[k] || 1 : now; x.sums[k] = f; } }
+  });
 }
 function syncPayload() {
   if (trip && trip.days && trip.days.length) storeInLibrary();
   markChanges();
   const gen = {}; for (const k in cities) if (k !== "barcelona" && !cities[k].builtin) gen[k] = cities[k];
-  return { v: 1, library: library.map(x => ({ id: x.id, name: x.name, updated: x.updated, changed: x.changed || 0, trip: x.trip })), deleted: tombs(), cities: gen };
+  return { v: 2, library: library.map(x => ({ id: x.id, name: x.name, updated: x.updated, stamps: x.stamps || {}, trip: x.trip })), deleted: tombs(), cities: gen };
 }
-// Newer copy of each trip wins; trips deleted after their last change stay deleted; guides are added, never removed.
+const lastChange = x => Math.max(1, ...Object.values(x.stamps || {}));
+// Part by part, the newer edit wins (on a tie, the linked copy when this device has just been linked).
+function mergeTrip(L, R, preferRemote) {
+  const pl = tripParts(L), pr = tripParts(R), sl = L.stamps || {}, sr = R.stamps || {}, S = {};
+  const win = k => { const a = sl[k] || 0, b = sr[k] || 0; if (!(k in pr)) return "L"; if (!(k in pl)) return "R"; return b > a || (b === a && preferRemote) ? "R" : "L"; };
+  const pick = (k, lv, rv) => { const w = win(k); S[k] = Math.max(sl[k] || 0, sr[k] || 0); return w === "R" ? rv : lv; };
+  const t = {}, mw = pick("m", L.trip, R.trip);
+  for (const k in mw) if (!LOCAL_ONLY.includes(k)) t[k] = JSON.parse(JSON.stringify(mw[k]));
+  const name = win("m") === "R" ? R.name : L.name;
+  const byId = (tr, id) => (tr.days || []).find(d => d.id === id);
+  const order = JSON.parse(pick("o", pl.o, pr.o));
+  t.days = order.map(id => { const k = "d:" + id, a = byId(L.trip, id), b = byId(R.trip, id); return JSON.parse(JSON.stringify(a && b ? pick(k, a, b) : (S[k] = Math.max(sl[k] || 0, sr[k] || 0), a || b))); }).filter(Boolean);
+  t.journal = {};
+  new Set([...Object.keys(L.trip.journal || {}), ...Object.keys(R.trip.journal || {})]).forEach(k => { const a = (L.trip.journal || {})[k], b = (R.trip.journal || {})[k]; t.journal[k] = a && b ? pick("j:" + k, a, b) : (S["j:" + k] = Math.max(sl["j:" + k] || 0, sr["j:" + k] || 0), a || b); });
+  t.active = Math.min(L.trip.active || 0, Math.max(0, t.days.length - 1)); if (L.trip.tour) t.tour = L.trip.tour;
+  return { id: L.id, name, updated: Math.max(L.updated || 0, R.updated || 0), stamps: S, trip: t };
+}
+// Trips deleted after their last change stay deleted; city guides are added, never removed.
 function syncMerge(data, preferRemote) {
   if (!data || !Array.isArray(data.library)) return false;
   const dead = Object.assign({}, data.deleted || {}), mine = tombs(); for (const k in mine) dead[k] = Math.max(dead[k] || 0, mine[k]);
   try { localStorage.setItem(TOMB_KEY, JSON.stringify(dead)); } catch (e) {}
+  if (trip && trip.days && trip.days.length) storeInLibrary();
   markChanges();
   let changed = false;
-  for (const r of data.library) {
-    if (!r || !r.id || !r.trip || !Array.isArray(r.trip.days)) continue;
+  for (const r0 of data.library) {
+    if (!r0 || !r0.id || !r0.trip || !Array.isArray(r0.trip.days)) continue;
+    const r = r0.stamps ? r0 : Object.assign({}, r0, { stamps: {} }); // copies saved before part stamps: every part counts as old
     const i = library.findIndex(x => x.id === r.id);
-    if (i < 0) { library.push(r); changed = true; }
-    else if ((r.changed || 0) > (library[i].changed || 0) || (preferRemote && (r.changed || 0) === (library[i].changed || 0) && JSON.stringify(r.trip) !== JSON.stringify(library[i].trip))) { library[i] = r; changed = true; }
+    if (i < 0) { library.push(r); changed = true; continue; }
+    const L = library[i], before = JSON.stringify([L.name, L.trip]);
+    // Linking a device that planned the same trip differently on its own: keep this device's version as a copy,
+    // so nothing anyone planned is ever lost.
+    if (preferRemote && lastChange(L) <= 1 && lastChange(r) <= 1) {
+      const strip = tr => JSON.stringify([tr.days, tr.journal]);
+      if (strip(L.trip) !== strip(r.trip) && !L.trip.placeholder) { const copy = JSON.parse(JSON.stringify(L)); copy.id = "t" + Date.now().toString(36); copy.trip.id = copy.id; copy.name = (L.name || tripName(L.trip)) + " (from this device)"; copy.trip.name = copy.name; copy.stamps = { m: Date.now() }; library.push(copy); }
+    }
+    const M = mergeTrip(L, r, preferRemote);
+    library[i] = M; if (JSON.stringify([M.name, M.trip]) !== before) changed = true;
   }
-  const before = library.length; library = library.filter(x => !(dead[x.id] && dead[x.id] >= (x.changed || 0))); if (library.length !== before) changed = true;
+  const n0 = library.length; library = library.filter(x => !(dead[x.id] && dead[x.id] >= lastChange(x))); if (library.length !== n0) changed = true;
   for (const k in data.cities || {}) if (!cities[k] && data.cities[k] && Array.isArray(data.cities[k].sites)) { cities[k] = data.cities[k]; changed = true; }
-  library.forEach(x => syncLast.set(x.id, (x.name || "") + "\u0000" + JSON.stringify(x.trip)));
+  library.forEach(x => { const parts = tripParts(x); x.sums = {}; for (const k in parts) x.sums[k] = fp(parts[k]); x.stamps = x.stamps || {}; });
   if (changed) {
     const cur = library.find(x => x.id === trip.id);
     if (cur) trip = cur.trip;
     else if (!trip.placeholder) { const nx = library.filter(y => !y.trip.archived).sort((a, b) => b.updated - a.updated)[0]; trip = nx ? nx.trip : Object.assign(sampleTrip(), { placeholder: true }); }
     if (!trip.prefs) trip.prefs = defaultPrefs();
     applyingSync = true; save(); applyingSync = false;
-    if (!wiz && view !== "tour") { const y = window.scrollY; render(); window.scrollTo(0, y); }
+    bonusMemo = new Map(); mealMemo = new Map(); eveMemo = new Map();
+    if (!wiz && view !== "tour" && !(document.activeElement && /INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName))) { const y = window.scrollY; render(); window.scrollTo(0, y); }
   }
   return changed;
 }
@@ -321,7 +368,7 @@ async function syncCall(body) {
 }
 function syncSoon() {
   if (applyingSync || !syncSt() || typeof window === "undefined") return;
-  clearTimeout(syncTimer); syncTimer = setTimeout(syncPush, 4000);
+  clearTimeout(syncTimer); syncTimer = setTimeout(syncPush, 2500);
 }
 async function syncPush() {
   const st = syncSt(); if (!st || syncBusy) return; if (navigator.onLine === false) return;
@@ -346,7 +393,7 @@ async function syncPull() {
       const g = await syncCall({ op: "get", code: st.code });
       if (g.status === 200 && g.j) { syncMerge(g.j.data); st.rev = g.j.rev; st.at = Date.now(); syncSet(st);
         // This device had newer changes of its own: send them on.
-        const pay = syncPayload(); push = pay.library.some(x => { const r = (g.j.data.library || []).find(y => y.id === x.id); return !r || (x.changed || 0) > (r.changed || 0); }); }
+        const pay = syncPayload(); push = pay.library.some(x => { const r = (g.j.data.library || []).find(y => y.id === x.id); if (!r) return true; const rs = r.stamps || {}; return Object.keys(x.stamps || {}).some(k => (x.stamps[k] || 0) > (rs[k] || 0)); }); }
     } else if (m.status === 200) { st.at = Date.now(); syncSet(st); }
   } catch (e) {} finally { syncBusy = false; }
   if (push) syncPush();
@@ -384,7 +431,7 @@ if (typeof window !== "undefined") {
   setTimeout(syncPull, 2500);
   document.addEventListener("visibilitychange", () => { if (document.visibilityState === "visible") syncPull(); else if (syncTimer) { clearTimeout(syncTimer); syncPush(); } });
   window.addEventListener("online", () => setTimeout(() => { syncPull(); syncPush(); }, 2000));
-  setInterval(() => { if (document.visibilityState === "visible") syncPull(); }, 45000);
+  setInterval(() => { if (document.visibilityState === "visible") syncPull(); }, 20000);
 }
 const day = () => trip.days[trip.active];
 // Match the day's city to a guide, forgiving extra words like "Barcelona, Spain" or "Kusadasi (Ephesus) Turkey".
@@ -2280,7 +2327,7 @@ function renderLobby() {
       <div class="go"><button class="btn" data-act="continue">Continue trip</button></div>
       <div class="resacts"><span class="lede">Saved automatically</span><button class="btn ghost small" data-goto="trip" data-act2="edit">Edit itinerary</button>${moreMenu(cur.id, `<button class="btn ghost small" data-act="rename" data-id="${esc(cur.id)}">Rename</button><button class="btn ghost small" data-act="archive" data-id="${esc(cur.id)}">Archive</button>${delBtn(cur.id)}`)}</div>
     </div>` : ""}
-    <div class="sechead"><h2>Planned trips</h2><span class="lede">${list.length - archived.length} ${syncSt() ? "synced across your devices" : `saved on this device · <button class="linkbtn" data-act="syncfromlobby">Sync with another device</button>`}</span></div>
+    <div class="sechead"><h2>Planned trips</h2><span class="lede">${list.length - archived.length} ${syncSt() ? "synced across your devices" + (syncSt().at ? " · last synced " + esc(new Date(syncSt().at).toLocaleTimeString([], { hour: "numeric", minute: "2-digit" })) : "") : `saved on this device · <button class="linkbtn" data-act="syncfromlobby">Sync with another device</button>`}</span></div>
     <div class="tripcards">
       ${others.map(x => `<div class="tripcard"><div class="band">${bandArt(x.id)}</div><div class="in">
         <div><div class="eyebrow">${esc(tripSpan(x.trip))}${tripSpan(x.trip) ? " · " : ""}${x.trip.days.length} days</div>${renameId === x.id ? renameBox(x.id, x.name) : `<h3>${esc(x.name)}</h3>`}</div>

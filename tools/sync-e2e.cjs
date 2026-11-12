@@ -18,5 +18,11 @@ const { chromium } = require('playwright');
   await desk.click('[data-act="settings"]'); await desk.waitForTimeout(500); await desk.click('[data-act="syncjoin"]'); await desk.fill('#sync-code', code); await desk.click('[data-act="synclink"]'); await desk.waitForTimeout(5000);
   console.log('DESK note:', await desk.innerText('#synccard').then(t => t.slice(0, 300)).catch(() => ''));
   console.log('DESK has phone booking:', await desk.evaluate(() => JSON.stringify((JSON.parse(localStorage.getItem('wayside.trip2')).days[1] || {}).booked || null)));
+  // The case that failed before: the desktop is closed and reopened, then edits a day; the phone must get it.
+  await desk.reload(); await desk.waitForTimeout(3000); await desk.click('[data-act="continue"]'); await desk.waitForTimeout(800);
+  await desk.evaluate(() => window.__kairouteDay(3, null, { hours: 7 })); await desk.click('#tab-trip'); await desk.waitForTimeout(300); await desk.click('#tab-plan'); await desk.waitForTimeout(6000);
+  await phone.evaluate(() => document.dispatchEvent(new Event('visibilitychange'))); await phone.waitForTimeout(5000);
+  console.log('PHONE got desk edit after reopen (hours 7):', await phone.evaluate(() => JSON.parse(localStorage.getItem('wayside.trip2')).days[3].hours));
+  console.log('PHONE still has its own booking:', await phone.evaluate(() => JSON.stringify((JSON.parse(localStorage.getItem('wayside.trip2')).days[1] || {}).booked || null)));
   await b.close();
 })();
