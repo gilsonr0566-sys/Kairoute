@@ -5444,14 +5444,28 @@ function renderTrip(d) {
   </div>`;
 }
 
+// What a stop really costs today: the detour from the day's route as it stands (from the stop before it to
+// the stop after it), plus the time there. Already in Corinth? The Canal costs the short hop from there, not a
+// round trip from the hotel in Athens. A day with no stops yet measures from the start point and back.
+function stopCost(plan, s) {
+  const pts = plan.items.filter(x => x.place && x.type !== "travel" && x.type !== "evening").map(x => x.place);
+  const i = pts.findIndex(p => p.id === s.id && !p.fixed), mins = p => p.minutes || 0;
+  const bonusMin = (plan.bonus || []).reduce((a, x) => a + mins(x) + 10, 0), spare = plan.endBy - plan.end + bonusMin;
+  if (i > 0 && i < pts.length - 1) return { onRoute: true, min: Math.round(tmin(pts[i - 1], s) + tmin(s, pts[i + 1]) - tmin(pts[i - 1], pts[i + 1]) + mins(s)), spare };
+  let best = Infinity;
+  for (let k = 0; k < pts.length - 1; k++) best = Math.min(best, tmin(pts[k], s) + tmin(s, pts[k + 1]) - tmin(pts[k], pts[k + 1]));
+  if (!isFinite(best)) best = tmin(pts[0] || plan.w.head[0], s) * 2;
+  return { min: Math.round(best + mins(s)), spare, alone: !plan.stops.length };
+}
 function siteCard(s, d, plan) {
   const on = (d.selected || []).includes(s.id);
   const other = plannedElsewhere(d)[s.id];
   let fit = "";
   if (s.far && plan && !plan.error) {
-    const O = plan.w.head[plan.w.head.length - 1];
-    const rt = tmin(O, s) * 2 + s.minutes, avail = plan.endBy - plan.start;
-    fit = rt <= avail ? `<span class="tag fit">Fits today · ${dur(rt)} round trip</span>` : `<span class="tag nofit">Needs ${dur(rt)}, you have ${dur(avail)}</span>`;
+    const c = stopCost(plan, s);
+    fit = c.onRoute ? `<span class="tag fit">On your route · ${dur(c.min)} of your day</span>`
+      : c.min <= c.spare ? `<span class="tag fit">Fits today · adds ${dur(c.min)}${c.alone ? " round trip" : " from your route"}</span>`
+      : `<span class="tag nofit">Adds ${dur(c.min)}${c.alone ? " round trip" : " from your route"}, you have ${dur(Math.max(0, c.spare))} spare</span>`;
   }
   return `<label class="site ${on ? "on" : ""}" for="s-${esc(s.id)}">
     <input type="checkbox" id="s-${esc(s.id)}" data-site="${esc(s.id)}" ${on ? "checked" : ""}>
@@ -6367,4 +6381,4 @@ render();
 
 </script>
 <script>if ("serviceWorker" in navigator) addEventListener("load", () => navigator.serviceWorker.register("sw.js").catch(() => {}));</script>
-<script>(function(){var B="d9e0d7c-1794515854";function chk(){if(location.protocol!=="https:")return;fetch("version.txt",{cache:"no-store"}).then(function(r){return r.ok?r.text():""}).then(function(t){t=t.trim();if(t&&t!==B)location.reload()}).catch(function(){})}addEventListener("load",chk);document.addEventListener("visibilitychange",function(){if(document.visibilityState==="visible")chk()})})();</script>
+<script>(function(){var B="9edd42c-1794517379";function chk(){if(location.protocol!=="https:")return;fetch("version.txt",{cache:"no-store"}).then(function(r){return r.ok?r.text():""}).then(function(t){t=t.trim();if(t&&t!==B)location.reload()}).catch(function(){})}addEventListener("load",chk);document.addEventListener("visibilitychange",function(){if(document.visibilityState==="visible")chk()})})();</script>
