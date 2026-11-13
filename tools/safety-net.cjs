@@ -166,7 +166,7 @@ const log = (suite, trip, ok, what) => { results.push({ suite, trip, ok, what })
       await p.evaluate(i => window.__kairouteAt(i, 'tour'), D.i); await p.waitForTimeout(150);
       const btn = async act => { await p.evaluate(a => { const el = [...document.querySelectorAll(`[data-act="${a}"]`)].find(e => e.offsetParent); if (el) el.click(); }, act); await p.waitForTimeout(200); };
       let reached = false;
-      for (let k = 0; k < 8 && !reached; k++) {
+      for (let k = 0; k < 20 && !reached; k++) {
         const st = await p.evaluate(() => ({ title: (document.querySelector('.tourtitle') || {}).innerText || '', here: !!document.querySelector('[data-act="tourhere"]') }));
         if (st.here) { await btn('tourhere'); reached = st.title === sp.name; } else await btn('tournext');
       }
