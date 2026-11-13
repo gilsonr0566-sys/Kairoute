@@ -1,4 +1,3 @@
-/* global dayZone, ensureDayZone */ // from the Day plan thread's time zones (features/timezone.js); checked with typeof, so offline works before and after it lands
 // ===================== Offline trips =====================
 // Planning needs the internet. The trip itself runs with none: cruise ships, foreign SIM cards and old towns
 // often have no signal. "Download for offline" saves on this device, for every day the traveler can use:
@@ -122,12 +121,15 @@ async function offCheckDay(d, base, mem) {
   out.ready = Object.values(out.parts).every(p => p.ok);
   return out;
 }
+// The app's own files, kept by the service worker: the page, the map library and the photo reader for the
+// ship's-clock check (loaded only when someone snaps the clock, so it is fetched here ahead of time).
+const OFF_APP_FILES = ["index.html", "lib/maplibre-gl.js", "lib/maplibre-gl.css", "lib/ocr/tesseract.min.js", "lib/ocr/worker.min.js", "lib/ocr/tesseract-core-lstm.wasm.js", "lib/ocr/eng.traineddata.gz"];
 // The app's own files: kept by the service worker on the website, part of the app in the Android app.
 async function offAppCheck() {
   if (window.Capacitor && window.Capacitor.isNativePlatform && window.Capacitor.isNativePlatform()) return { ok: true };
   if (location.protocol === "file:") return { ok: true };
   if (typeof caches === "undefined" || !("serviceWorker" in navigator)) return { ok: false, miss: "This browser can't keep Kairoute for use offline. Use Chrome, or the Kairoute app." };
-  const need = ["index.html", "lib/maplibre-gl.js", "lib/maplibre-gl.css"].map(u => new URL(u, location.href).href);
+  const need = OFF_APP_FILES.map(u => new URL(u, location.href).href);
   const hits = await Promise.all(need.map(u => caches.match(u).catch(() => null)));
   let styles = true; try { const c = await caches.open(MAP_CACHE); for (const t of ["light", "dark"]) if (!(await c.match(MAP_TILES[t]))) styles = false; } catch (e) { styles = false; }
   const ok = hits.every(Boolean) && styles;
@@ -230,7 +232,7 @@ async function offDownload() {
     }
     // 6. Time zones the Day plan thread looks up, and anything else the app keeps, then check the device itself.
     step(99, "Checking everything is on this device");
-    try { await fetch(new URL("index.html", location.href).href, { cache: "no-cache" }); ["lib/maplibre-gl.js", "lib/maplibre-gl.css", "ai.json"].forEach(u => fetch(new URL(u, location.href).href).catch(() => {})); } catch (e) {}
+    try { await fetch(new URL("index.html", location.href).href, { cache: "no-cache" }); await Promise.all(OFF_APP_FILES.slice(1).concat("ai.json").map(u => fetch(new URL(u, location.href).href).then(r => r.ok && r.arrayBuffer()).catch(() => {}))); } catch (e) {}
   } catch (e) { failed.push(String(e && e.message || e)); }
   const stopped = offRun.stop; offFailed = failed;
   while (offChecking) await offSleep(100); // a check started before the download ended would be out of date
