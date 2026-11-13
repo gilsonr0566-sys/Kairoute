@@ -328,19 +328,47 @@ export default {
       }
       return Response.json({ error: "Bad request" }, { status: 400, headers: h });
     }
+    // /weather?lat=&lng=: the Open-Meteo forecast (free, no key) for 16 days, read into what the planner needs:
+    // per day the high and low, the chance of rain, rain total and weather code, and per hour (7:00 to 21:00)
+    // temperature, chance of rain and rain amount. Kept 3 hours per 0.1 degree, so a city is fetched once for everyone.
+    if (url.pathname === "/weather") {
+      const la = +(+url.searchParams.get("lat")).toFixed(1), ln = +(+url.searchParams.get("lng")).toFixed(1);
+      if (!isFinite(la) || !isFinite(ln) || Math.abs(la) > 90 || Math.abs(ln) > 180) return Response.json({ error: "Bad request" }, { status: 400, headers: h });
+      const key = "wx1:" + la + "," + ln, hit = await env.USAGE.get(key); if (hit) return new Response(hit, { headers: { ...h, "content-type": "application/json" } });
+      try {
+        const q = `https://api.open-meteo.com/v1/forecast?latitude=${la}&longitude=${ln}&daily=temperature_2m_max,temperature_2m_min,precipitation_probability_max,precipitation_sum,weather_code&hourly=temperature_2m,precipitation_probability,precipitation&timezone=auto&forecast_days=16`;
+        const r = await fetch(q, { signal: AbortSignal.timeout(15000) }); if (!r.ok) return Response.json({ error: "forecast busy" }, { status: 502, headers: h });
+        const j = await r.json(), D = j.daily || {}, H = j.hourly || {}, days = {};
+        (D.time || []).forEach((t, i) => { days[t] = { tmax: D.temperature_2m_max[i], tmin: D.temperature_2m_min[i], prob: D.precipitation_probability_max ? D.precipitation_probability_max[i] : null, mm: D.precipitation_sum[i], code: D.weather_code[i], hours: [] }; });
+        (H.time || []).forEach((t, i) => { const dd = days[t.slice(0, 10)], hr = +t.slice(11, 13); if (dd && hr >= 7 && hr <= 21) dd.hours.push([hr, H.temperature_2m[i], H.precipitation_probability ? H.precipitation_probability[i] : null, H.precipitation[i]]); });
+        const out = JSON.stringify({ tz: j.timezone || "", days, src: "Open-Meteo" });
+        ctx.waitUntil(env.USAGE.put(key, out, { expirationTtl: 3 * 3600 }));
+        return new Response(out, { headers: { ...h, "content-type": "application/json" } });
+      } catch (e) { return Response.json({ error: "forecast busy" }, { status: 502, headers: h }); }
+    }
     if (url.pathname === "/ratings") {
       const city = String(url.searchParams.get("city") || "");
       if (!/^[a-z0-9 ,'-]{1,80}$/.test(city)) return Response.json({ error: "Bad request" }, { status: 400, headers: h });
-      const raw = JSON.parse((await env.USAGE.get("rt1:" + city)) || "{}"), out = {};
-      for (const [k, v] of Object.entries(raw)) if (v.n) out[k] = { avg: +(v.s / v.n).toFixed(2), n: v.n };
-      return Response.json({ ratings: out }, { headers: { ...h, "cache-control": "public, max-age=120" } });
+      const [raw, bz] = await Promise.all([env.USAGE.get("rt1:" + city), env.USAGE.get("bz1:" + city)]), out = {};
+      for (const [k, v] of Object.entries(JSON.parse(raw || "{}"))) if (v.n) out[k] = { avg: +(v.s / v.n).toFixed(2), n: v.n };
+      // busy: { place: { hour: [sum of 1 quiet / 2 busy / 3 packed, reports] } }, from travelers who were there.
+      return Response.json({ ratings: out, busy: JSON.parse(bz || "{}") }, { headers: { ...h, "cache-control": "public, max-age=120" } });
     }
     if (url.pathname === "/rate" && req.method === "POST") {
       let b; try { b = await req.json(); } catch (e) { b = {}; }
-      const city = String(b.city || ""), place = String(b.place || ""), stars = Math.round(+b.stars), dev = String(b.dev || "");
-      if (!/^[a-z0-9 ,'-]{1,80}$/.test(city) || !/^[a-z0-9 ,'&.-]{1,80}$/.test(place) || !(stars >= 1 && stars <= 5) || !/^[a-f0-9]{16,40}$/.test(dev)) return Response.json({ error: "Bad request" }, { status: 400, headers: h });
+      const city = String(b.city || ""), place = String(b.place || ""), stars = Math.round(+b.stars), dev = String(b.dev || ""), busy = Math.round(+b.busy), hour = Math.round(+b.hour);
+      const hasBusy = busy >= 1 && busy <= 3 && hour >= 0 && hour <= 23;
+      if (!/^[a-z0-9 ,'-]{1,80}$/.test(city) || !/^[a-z0-9 ,'&.-]{1,80}$/.test(place) || !((stars >= 1 && stars <= 5) || hasBusy) || !/^[a-f0-9]{16,40}$/.test(dev)) return Response.json({ error: "Bad request" }, { status: 400, headers: h });
       const ip = req.headers.get("cf-connecting-ip") || "x", ik = "ri:" + ip + ":" + today(), used = +(await env.USAGE.get(ik)) || 0;
-      if (used >= 30) return Response.json({ error: "Thanks! That's the limit for today." }, { status: 429, headers: h });
+      if (used >= 60) return Response.json({ error: "Thanks! That's the limit for today." }, { status: 429, headers: h });
+      // "How busy was it?": one report per traveler, place and day, counted for the hour they were there.
+      if (hasBusy && !(stars >= 1 && stars <= 5)) {
+        const bk = "bd:" + dev + ":" + city + ":" + place + ":" + today(); if (await env.USAGE.get(bk)) return Response.json({ ok: true, dup: true }, { headers: h });
+        const ck = "bz1:" + city, all = JSON.parse((await env.USAGE.get(ck)) || "{}"), v = all[place] || (all[place] = {}), c = v[hour] || [0, 0];
+        v[hour] = [c[0] + busy, c[1] + 1];
+        await Promise.all([env.USAGE.put(ck, JSON.stringify(all)), env.USAGE.put(bk, "1", { expirationTtl: 2 * 86400 }), env.USAGE.put(ik, String(used + 1), { expirationTtl: 2 * 86400 })]);
+        return Response.json({ ok: true, busy: v }, { headers: h });
+      }
       const dk = "rd:" + dev + ":" + city + ":" + place, before = +(await env.USAGE.get(dk)) || 0;
       const ck = "rt1:" + city, all = JSON.parse((await env.USAGE.get(ck)) || "{}"), v = all[place] || { s: 0, n: 0 };
       if (before) v.s += stars - before; else { v.s += stars; v.n += 1; }
@@ -554,6 +582,30 @@ Written text:
       if (!audio || audio.byteLength < 1000) return Response.json({ error: "No audio" }, { status: 502, headers: h });
       ctx.waitUntil(Promise.all([addUse(env, cost, lab), lab ? null : env.USAGE.put(vk, String(+(vUsed + cost).toFixed(1)), { expirationTtl: 3 * 86400 }), env.USAGE.put(key, audio, { expirationTtl: 365 * 86400 })]));
       return new Response(audio, { headers: { ...h, "content-type": "audio/mpeg", "cache-control": "public, max-age=31536000" } });
+    }
+    // /identify: "What am I looking at?" A photo plus the real places around the traveler (the guide's stops and
+    // OpenStreetMap's named sights near their GPS position, numbered by the app). The AI only picks one of those
+    // numbers, or 0 when none matches; it never names a place of its own. About 1,500 input tokens per photo
+    // (roughly 15 neurons), capped at 40 a day per traveler.
+    if (url.pathname === "/identify" && req.method === "POST") {
+      if (origin && !ALLOWED.some(r => r.test(origin))) return Response.json({ error: "Not allowed" }, { status: 403, headers: h });
+      let b; try { b = await req.json(); } catch (e) { return Response.json({ error: "Bad request" }, { status: 400, headers: h }); }
+      const img = typeof b.image === "string" && /^data:image\/(jpeg|png|webp);base64,/.test(b.image) && b.image.length < 400000 ? b.image : null;
+      const cands = (Array.isArray(b.cands) ? b.cands : []).slice(0, 25).map((c, i) => ({ n: i + 1, name: String((c && c.name) || "").slice(0, 90), kind: String((c && c.kind) || "").slice(0, 40), m: Math.round(+(c && c.m) || 0) })).filter(c => c.name);
+      const dev = String(b.dev || ""); if (!img || !cands.length || !/^[a-f0-9]{16,40}$/.test(dev)) return Response.json({ error: "Bad request" }, { status: 400, headers: h });
+      const ik = "id:" + dev + ":" + today(), n = +(await env.USAGE.get(ik)) || 0;
+      if (n >= 40 && !lab) return Response.json({ error: "That's the limit for photo look-ups today." }, { status: 429, headers: h });
+      const u = await used(env); if (u + 60 > DAILY_NEURONS) return Response.json({ error: "The AI allowance for today is used up." }, { status: 429, headers: h });
+      const prompt = `A traveler took this photo standing where they are now. These are the only real places near them, with how far away each is:\n${cands.map(c => `${c.n}. ${c.name}${c.kind ? " (" + c.kind + ")" : ""}, ${c.m} m away`).join("\n")}\n\nWhich numbered place is the main subject of the photo? Use what you see (architecture, shape, signs, statues, columns, domes) and prefer nearer places when it's unclear. If none of them is clearly what the photo shows, answer 0. Reply only with JSON: {"n": number, "sure": "high"|"medium"|"low", "seen": "a few words on what is in the photo"}`;
+      let out;
+      try { out = await env.AI.run(MODEL, { messages: [{ role: "user", content: [{ type: "image_url", image_url: { url: img } }, { type: "text", text: prompt }] }], max_tokens: 120, temperature: 0.1, chat_template_kwargs: { enable_thinking: false } }); }
+      catch (e) { return Response.json({ error: "The AI service is busy. Try again in a minute." }, { status: 502, headers: h }); }
+      const ch = out && out.choices && out.choices[0], text = typeof (out && out.response) === "string" ? out.response : (ch && ch.message && ch.message.content) || "";
+      const u2 = (out && out.usage) || {}, pin = +u2.prompt_tokens || 1500, pout = +u2.completion_tokens || 40;
+      ctx.waitUntil(Promise.all([addUse(env, pin * IN_RATE + pout * OUT_RATE, lab), env.USAGE.put(ik, String(n + 1), { expirationTtl: 2 * 86400 })]));
+      let j = null; try { j = JSON.parse((/\{[\s\S]*\}/.exec(text) || ["{}"])[0]); } catch (e) {}
+      const pick = j && Number.isInteger(+j.n) && +j.n >= 1 && +j.n <= cands.length ? +j.n : 0;
+      return Response.json({ n: pick, sure: j && /^(high|medium|low)$/.test(j.sure) ? j.sure : "low", seen: j && typeof j.seen === "string" ? j.seen.slice(0, 160) : "" }, { headers: { ...h, "cache-control": "no-store" } });
     }
     if (url.pathname !== "/sample" || req.method !== "POST") return new Response("Kairoute AI helper", { headers: h });
     if (origin && !ALLOWED.some(r => r.test(origin))) return Response.json({ error: "Not allowed" }, { status: 403, headers: h });

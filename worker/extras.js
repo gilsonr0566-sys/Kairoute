@@ -3,13 +3,13 @@
 // prices, scams), Wikidata (film locations). The AI only rewrites or condenses text it is handed and is told
 // to add nothing; each answer is made once and kept, so every traveler shares it and the cost stays tiny.
 const UA = { "user-agent": "Kairoute/1.0 (travel guide; https://gilsonr0566-sys.github.io/Kairoute/)" };
-const OVERPASS = ["https://overpass-api.de/api/interpreter", "https://overpass.private.coffee/api/interpreter", "https://maps.mail.ru/osm/tools/overpass/api/interpreter"];
+const OVERPASS = ["https://overpass-api.de/api/interpreter", "https://overpass.private.coffee/api/interpreter", "https://overpass.kumi.systems/api/interpreter", "https://maps.mail.ru/osm/tools/overpass/api/interpreter"];
 const GROUP_TTL = 2 * 86400;
 
 async function overpass(q) {
   for (const ep of OVERPASS) {
     try {
-      const r = await fetch(ep, { method: "POST", signal: AbortSignal.timeout(20000), body: "data=" + encodeURIComponent(q), headers: { "content-type": "application/x-www-form-urlencoded", accept: "application/json", ...UA } });
+      const r = await fetch(ep, { method: "POST", signal: AbortSignal.timeout(14000), body: "data=" + encodeURIComponent(q), headers: { "content-type": "application/x-www-form-urlencoded", accept: "application/json", ...UA } });
       if (r.ok) { const d = await r.json(); if ((d.elements || []).length || !d.remark) return d; }
     } catch (e) {}
   }
@@ -93,8 +93,8 @@ export async function extras(req, env, ctx, url, h, H) {
     const key = "xn1:" + what + ":" + la + "," + ln, hit = await env.USAGE.get(key); if (hit) return sendRaw(hit);
     const A = what === "view" ? `(around:2000,${la},${ln})` : `(around:700,${la},${ln})`;
     const qq = what === "view"
-      ? `[out:json][timeout:25];(nwr["tourism"="viewpoint"]["name"]${A};nwr["tourism"="viewpoint"]["wikidata"]${A};);out center tags 80;`
-      : `[out:json][timeout:25];(nwr["amenity"~"^(toilets|drinking_water|pharmacy|atm)$"]${A};nwr["amenity"="bank"]["atm"="yes"]${A};);out center tags 200;`;
+      ? `[out:json][timeout:12];(node["tourism"="viewpoint"]["name"]${A};way["tourism"="viewpoint"]["name"]${A};);out center tags 80;`
+      : `[out:json][timeout:12];(node["amenity"~"^(toilets|drinking_water|pharmacy|atm)$"]${A};way["amenity"~"^(toilets|pharmacy)$"]${A};node["amenity"="bank"]["atm"="yes"]${A};);out center tags 200;`;
     const d = await overpass(qq); if (!d) return json({ error: "map busy" }, 502);
     const list = [];
     for (const e of d.elements || []) {
@@ -113,7 +113,7 @@ export async function extras(req, env, ctx, url, h, H) {
   if (p === "/x/knowhow") {
     const city = String(q.get("city") || "").replace(/\s*\(.*?\)\s*/g, " ").split(",")[0].trim().slice(0, 80), country = String(q.get("country") || "").trim().slice(0, 60);
     if (!city) return json({ error: "Empty" }, 400);
-    const key = "kh2:" + (await H.sha((city + "|" + country).toLowerCase())), hit = await env.USAGE.get(key); if (hit) return sendRaw(hit);
+    const key = "kh3:" + (await H.sha((city + "|" + country).toLowerCase())), hit = await env.USAGE.get(key); if (hit) return sendRaw(hit);
     const [cp, kp] = await Promise.all([voyage(city), country ? voyage(country) : null]);
     const SECT = /^(respect|stay safe|stay healthy|buy|money|costs?|tipping|bargaining|haggling|shopping|cope|scams?|crime|eat|etiquette|dress code|talk)$/i;
     const parts = [];
@@ -128,7 +128,7 @@ export async function extras(req, env, ctx, url, h, H) {
 - "tipping": how much to tip in restaurants, cafés, taxis, for guides
 - "prices": fair prices and costs that are stated (meals, taxis, entry, bargaining advice)
 - "scams": scams, pickpockets, tourist traps and how to avoid them
-Rules: use ONLY what the sections say; never add advice, prices or numbers that are not in them. Each item is one short, plain sentence (at most 25 words), written to the traveler ("Cover your shoulders in churches."). Up to 5 items per group; leave a group empty if the sections say nothing about it. Say which source each item came from by its exact title.
+Rules: use ONLY what the sections say; never add advice, prices or numbers that are not in them. Each item is one short, plain sentence (at most 25 words), written to the traveler ("Cover your shoulders in churches."). Leave out grocery shopping, and anything about ethnic groups, dialects or slang. Up to 5 items per group; leave a group empty if the sections say nothing about it. Say which source each item came from by its exact title.
 Reply with JSON only: {"etiquette":[{"t":"...","src":"..."}],"tipping":[],"prices":[],"scams":[]}
 
 ${material}`;
