@@ -42,7 +42,9 @@ const SIZES = [['tablet sideways', 1280, 800], ['tablet upright', 800, 1280], ['
     if (before.win != null && Math.abs(after.win - before.win) > 2) fail(`${name}: page jumped from ${before.win} to ${after.win} on a re-render`);
     if (!after.chip) fail(`${name}: countdown went off screen after scrolling`);
     // Colours by time left.
-    const at = m => new Date(`${D.date}T${String(Math.floor(m / 60)).padStart(2, '0')}:${String(((m % 60) + 60) % 60).padStart(2, '0')}:00`);
+    // Plan times are in the port's own time zone, whatever zone this device is on.
+    const off = await p.evaluate(i => { const T = window.__kairouteTime; return T.zoneOffset(T.dayZone(i).tz, window.__kairouteDays()[i].date); }, D.i);
+    const at = m => new Date(Date.parse(`${D.date}T00:00:00Z`) + (m - off) * 60000);
     for (const [want, mins] of [['', 60], ['amber', 25], ['soon', 10], ['go', -2]]) {
       let t = 15 * 60;
       for (let k = 0; k < 4; k++) { await p.clock.setFixedTime(at(t)); await p.evaluate(i => window.__kairouteGo('plan', i), D.i); await p.waitForTimeout(80);

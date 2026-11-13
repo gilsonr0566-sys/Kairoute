@@ -248,8 +248,8 @@ function reportBusy(s, level) {
 const busyMine = (d, s) => { const k = d.id + "|" + s.id; if (busySent[k] == null) { try { busySent[k] = +localStorage.getItem("kairoute.busy." + k) || 0; } catch (e) { busySent[k] = 0; } } return busySent[k]; };
 // On the Day plan, once a stop's visit time has passed (today, or a past day): rate it, and on the day say how busy it was.
 function rateRow(it, d) {
-  const s = it.place; if (!d.date || d.date > todayISO()) return "";
-  const today = d.date === todayISO(); if (today && nowMin() < it.time + Math.min(20, s.minutes || 0)) return "";
+  const s = it.place; if (!d.date || d.date > todayISO(d)) return "";
+  const today = isToday(d); if (today && nowMin(d) < it.time + Math.min(20, s.minutes || 0)) return "";
   const mine = ((trip.journal || {})[(cityKeyFor(d) || "x") + "/" + s.id] || {}).rating || 0, b = today ? busyMine(d, s) : 0;
   return `<div class="livecard"><div class="rate"><span class="sub">${mine ? "Your rating" : "Been here? Rate it"}</span>${[1, 2, 3, 4, 5].map(n => `<button class="star ${mine >= n ? "on" : ""}" data-act="raterow" data-sid="${esc(s.id)}" data-n="${n}" aria-label="${n} star${n > 1 ? "s" : ""}">★</button>`).join("")}
     ${today ? `<span class="sub">How busy?</span>${[[1, "Quiet"], [2, "Busy"], [3, "Packed"]].map(([n, l]) => `<button class="busy" data-act="busyrow" data-sid="${esc(s.id)}" data-n="${n}" aria-pressed="${b === n}">${l}</button>`).join("")}` : ""}</div></div>`;
@@ -327,9 +327,10 @@ html.alarmon.railnav header.top .tabs { top: 40px; }
 // d.live = { at, lat, lng, name, gps, finish, done: [sight ids], ate: [meal labels], stamp, preview }.
 // The planner starts the day "now" at that spot, leaves out what's done, keeps the return time (ship, train,
 // flight, hotel) and, when the rest no longer fits, gives up the lower-priority stops first (must-sees last).
-const nowMin = () => { const n = new Date(); return n.getHours() * 60 + n.getMinutes() + n.getSeconds() / 60; };
-function liveNow(d) { return d && d.date === todayISO() ? nowMin() : cdPreview; }
-function liveOn(d) { return !!(d && d.live && (d.live.preview ? cdPreview != null : d.live.stamp === todayISO() && d.date === todayISO())); }
+// "Now" on the day's own clock (the device may still be on home time).
+const nowMin = d => { if (d) return zoneNow(dayZone(d).tz).min; const n = new Date(); return n.getHours() * 60 + n.getMinutes() + n.getSeconds() / 60; };
+function liveNow(d) { return d && isToday(d) ? nowMin(d) : cdPreview; }
+function liveOn(d) { return !!(d && d.live && (d.live.preview ? cdPreview != null : d.live.stamp === todayISO(d) && isToday(d))); }
 const liveDone = (d, id) => liveOn(d) && (d.live.done || []).includes(id);
 const liveAte = (d, label) => liveOn(d) && (d.live.ate || []).includes(label);
 function liveWindow(d, w) {
@@ -358,7 +359,7 @@ function replanNow(d, o) {
   const prevDone = liveOn(d) ? d.live.done || [] : [], prevAte = liveOn(d) ? d.live.ate || [] : [];
   d.live = { at: Math.round(now), lat: from.lat, lng: from.lng, name: from.name, gps: !atStop || geoFresh(), atStop: !!cur, finish: Math.max(0, Math.round(o.finish || 0)),
     done: [...new Set(prevDone.concat(doneItems.filter(i => i.type === "stop").map(i => i.place.id)))], ate: [...new Set(prevAte.concat(doneItems.filter(i => i.type === "meal").map(i => i.meal.label)))],
-    stamp: todayISO(), preview: d.date !== todayISO() };
+    stamp: todayISO(d), preview: !isToday(d) };
   const after = buildPlan(d); if (!after || after.error) { d.live = liveUndo; return false; }
   const kept = new Set(after.stops.map(i => i.place.id)), lost = before.filter(s => !kept.has(s.id));
   const back = d.type === "port" ? "the ship" : d.type === "departure" ? "your " + MODES[d.mode].label.toLowerCase() : d.type === "embark" ? "boarding" : "the end of your day";
@@ -399,7 +400,7 @@ let alarmFired = {}, liveArrived = {};
 function alarmState(d, plan) {
   const now = liveNow(d), items = plan.items.filter(i => i.type === "stop" || i.type === "meal");
   let from = null, src = "";
-  if (geoFresh() && now != null && d.date === todayISO()) { from = { name: "where you are", lat: geoPos.lat, lng: geoPos.lng }; src = "GPS"; }
+  if (geoFresh() && now != null && isToday(d)) { from = { name: "where you are", lat: geoPos.lat, lng: geoPos.lng }; src = "GPS"; }
   else if (cdWhere != null && cdWhere !== "auto" && items[+cdWhere]) { from = items[+cdWhere].place; src = "chosen"; }
   else { const at = now != null ? items.filter(i => i.time <= now).pop() : items[items.length - 1]; from = at ? at.place : plan.w.head[0]; src = "plan"; }
   const point = plan.w.tail[plan.w.tail.length - 1], leg = point ? legTo(from, point) : null;
@@ -413,7 +414,7 @@ function alarmCard(d, plan) {
   if (noShore(d)) return "";
   const fixed = !!fixedTitle(d) && plan.w.tail.length, live = liveNow(d) != null, items = plan.items.filter(i => i.type === "stop" || i.type === "meal");
   if (!fixed && !live) return "";
-  const today = d.date === todayISO(), gpsOn = geoFresh();
+  const today = isToday(d), gpsOn = geoFresh();
   // On the day, the countdown follows the device's GPS by itself: no button to press, no place to pick.
   if (today && (fixed || live)) setTimeout(liveGeoAuto, 0);
   // A compact countdown in the Day plan's top row, always on screen; tap it for the details.
@@ -431,7 +432,9 @@ function alarmCard(d, plan) {
       ${live ? `<button class="btn small" data-act="livereplan">Running late? Re-plan from now</button>` : ""}
       ${today && typeof Notification !== "undefined" && Notification.permission === "default" ? `<button class="btn ghost small" data-act="livealerts">Turn on alerts</button>` : ""}
       ${!today && cdPreview != null ? `<button class="btn ghost small" data-act="cdpreview">Stop preview</button>` : ""}
+      ${today && (d.type === "port" || d.type === "embark") ? `<button class="btn ghost small" data-act="shipcheck">${d.shipChecked ? "Check the ship's clock again" : "Check the ship's clock"}</button>` : ""}
     </div>
+    ${zoneNote(d)}
     ${today ? `<p class="lede small">${fixed ? "Alerts 30, 15 and 5 minutes before you need to leave, by sound, vibration and notification. " : ""}${gpsOn ? "Using your GPS. If you fall behind at a stop, the day re-plans itself." : geoPerm === "denied" || !navigator.geolocation ? "Location is off for Kairoute, so this counts from where the plan has you. Turn location on in your browser or phone settings for a live count from where you really are." : "Finding your location…"}</p>` : ""}
   </div></details>`;
 }
@@ -439,11 +442,11 @@ function alarmTick() {
   const d = day(), bar = alarmBarEl();
   const city = d && cityFor(d), plan = city && !noShore(d) ? buildPlan(d) : null;
   if (!plan || plan.error) { if (bar) bar.hidden = true; document.documentElement.classList.remove("alarmon"); return; }
-  const fixed = !!fixedTitle(d) && plan.w.tail.length, st = fixed ? alarmState(d, plan) : null, live = d.date === todayISO() || cdPreview != null;
+  const fixed = !!fixedTitle(d) && plan.w.tail.length, st = fixed ? alarmState(d, plan) : null, live = isToday(d) || cdPreview != null;
   // Running late, noticed by GPS: still at a stop well past the time the plan leaves it, or nowhere near the
   // stop the plan expected 20 minutes ago. At most once every 10 minutes, and never right after an Undo.
-  if (d.date === todayISO() && geoFresh() && Date.now() - liveLastAuto > 10 * 60e3 && Date.now() > liveHold) {
-    const now = nowMin(), items = plan.items.filter(i => (i.type === "stop" && !i.place.along) || i.type === "meal");
+  if (isToday(d) && geoFresh() && Date.now() - liveLastAuto > 10 * 60e3 && Date.now() > liveHold) {
+    const now = nowMin(d), items = plan.items.filter(i => (i.type === "stop" && !i.place.along) || i.type === "meal");
     const near = items.find(i => hav(geoPos, i.place) <= 0.12);
     if (near) { const k = d.id + "|" + near.place.name; if (!liveArrived[k]) liveArrived[k] = now;
       // You'll leave here when your visit is done (or now, if you've stayed past it): compare that with the plan.
@@ -455,7 +458,7 @@ function alarmTick() {
   if (fixed) {
     const el = document.getElementById("cdBig"), sub = document.getElementById("cdSub"), msg = document.getElementById("cdMsg"), srcEl = document.getElementById("cdSrc");
     const fromTxt = st.src === "GPS" ? "where you are" : st.from.name, legTxt = `${st.leg.transit ? st.leg.how : st.leg.how.toLowerCase()} ${dur(st.leg.min)}`;
-    const word = d.type === "port" ? (st.now == null ? `Back at the ship at ${fmt(st.backBy)}, ${dur(toMin(d.allAboard) - st.backBy)} before all aboard (${d.allAboard}).` : `Be back at the ship by ${fmt(st.backBy)} at the latest, ${dur(toMin(d.allAboard) - st.backBy)} before all aboard (${d.allAboard}).`) : d.type === "embark" ? `All aboard ${d.allAboard}. Be at the terminal by ${fmt(st.backBy)}.` : `${MODES[d.mode].label} at ${d.time}. Be at ${st.point.name} by ${fmt(st.backBy)}.`;
+    const word = d.type === "port" ? (st.now == null ? `Back at the ship at ${fmt(st.backBy)}, ${dur(shipToPort(d, d.allAboard) - st.backBy)} before all aboard (${d.allAboard}).` : `Be back at the ship by ${fmt(st.backBy)} at the latest, ${dur(shipToPort(d, d.allAboard) - st.backBy)} before all aboard (${d.allAboard}).`) : d.type === "embark" ? `All aboard ${d.allAboard}. Be at the terminal by ${fmt(st.backBy)}.` : `${MODES[d.mode].label} at ${d.time}. Be at ${st.point.name} by ${fmt(st.backBy)}.`;
     if (sub) sub.textContent = `${word} From ${fromTxt}: ${legTxt}, so leave by ${fmt(st.leaveBy)}.`;
     if (srcEl) srcEl.textContent = `Travel time: ${st.leg.src}${st.src === "GPS" ? ", from your GPS position" : st.src === "plan" ? ", from where the plan has you now" : ""}.`;
     if (srcEl && (d.type === "port" || d.type === "embark")) srcEl.textContent += " Being on board on time is your responsibility: confirm the all-aboard time with your cruise line on the day. Ships don't wait.";
@@ -471,7 +474,7 @@ function alarmTick() {
       const text = left <= 0 ? `Head back now: you're ${dur(Math.ceil(-left))} past your leave-by time.` : left <= 30 ? `Start heading back in ${Math.ceil(left)} minutes.` : `You have time. Leave ${fromTxt} by ${fmt(st.leaveBy)}.`;
       if (msg) { msg.hidden = false; msg.className = "banner" + (level ? " warn" : ""); msg.textContent = text; }
       // Alerts at 30, 15 and 5 minutes before leaving, and at leave-by, each once (real days only).
-      if (d.date === todayISO()) for (const th of [30, 15, 5, 0]) { const k = d.id + "|" + th; if (left <= th && left > th - 10 && !alarmFired[k]) { alarmFired[k] = 1;
+      if (isToday(d)) for (const th of [30, 15, 5, 0]) { const k = d.id + "|" + th; if (left <= th && left > th - 10 && !alarmFired[k]) { alarmFired[k] = 1;
         liveAlert(fixedTitle(d), th ? `Leave in ${th} minutes to be at ${d.type === "departure" ? st.point.name : "the ship"} by ${fmt(st.backBy)} (${legTxt} from ${fromTxt}).` : `Time to go. Leave now to be at ${d.type === "departure" ? st.point.name : "the ship"} by ${fmt(st.backBy)}.`, th <= 15); } }
       if (bar) { bar.className = level; bar.innerHTML = `<span class="ab-time">${esc(big)}</span><span class="ab-txt">${esc(fixedTitle(d))}: leave by ${fmt(st.leaveBy)} · ${esc(legTxt)}</span><button data-act="alarmopen">Open</button>`; }
     }
@@ -576,7 +579,7 @@ function camSheet() {
     <p class="ai-note">Matched only against real places near you (the guide and OpenStreetMap). Nothing is made up.</p></div>`;
 }
 if (typeof document !== "undefined") document.addEventListener("change", e => { if (e.target && e.target.id === "camFile" && e.target.files && e.target.files[0]) camLookup(e.target.files[0]); });
-function liveAfterRender() { try { camButton(); alarmTick(); } catch (e) { console.warn("live", e); } }
+function liveAfterRender() { try { camButton(); alarmTick(); shipMount(); } catch (e) { console.warn("live", e); } }
 // Test hooks for the safety net (tools/live-check.cjs): point the app at a stand-in server, load a forecast,
 // read what each day's plan did with hours, weather and crowds, and count the alerts raised.
 if (typeof window !== "undefined") window.__kairouteLiveTest = {
