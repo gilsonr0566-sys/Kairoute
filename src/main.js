@@ -508,10 +508,13 @@ const TRANSIT_KEY = "kairoute.transit1";
 const transitMem = (() => { try { return JSON.parse(localStorage.getItem(TRANSIT_KEY) || "{}"); } catch (e) { return {}; } })();
 const transitFail = new Map(), transitQ = new Map(); let transitTimer = 0, transitBusy = false;
 const pairKey = (a, b) => [a.lat, a.lng, b.lat, b.lng].map(n => (+n).toFixed(3)).join(",");
+// Timetables differ on weekdays, Saturdays and Sundays: the plan's own day picks which.
+const planDow = () => { const t = typeof planDate !== "undefined" && planDate ? Date.parse(planDate + "T12:00:00Z") : NaN; return isFinite(t) ? new Date(t).getUTCDay() : 3; };
+const dayKind = dow => dow === 0 ? "su" : dow === 6 ? "sa" : "wk";
 function transitFor(a, b) {
   if (!a || !b || !isFinite(a.lat) || !isFinite(b.lat) || hav(a, b) < 4) return null;
-  const k = pairKey(a, b), hit = transitMem[k]; if (hit) return hit.opts;
-  if (typeof freeAI !== "undefined" && freeAI && !transitQ.has(k) && !(transitFail.get(k) > Date.now() - 600000)) { transitQ.set(k, { a: [+a.lat, +a.lng], b: [+b.lat, +b.lng] }); clearTimeout(transitTimer); transitTimer = setTimeout(askTransit, 300); }
+  const dow = planDow(), k = pairKey(a, b) + "|" + dayKind(dow), hit = transitMem[k] || transitMem[pairKey(a, b)]; if (hit) return hit.opts;
+  if (typeof freeAI !== "undefined" && freeAI && !transitQ.has(k) && !(transitFail.get(k) > Date.now() - 600000)) { transitQ.set(k, { a: [+a.lat, +a.lng], b: [+b.lat, +b.lng], dow }); clearTimeout(transitTimer); transitTimer = setTimeout(askTransit, 300); }
   return null;
 }
 async function askTransit() {
@@ -530,13 +533,38 @@ async function askTransit() {
   if (typeof view !== "undefined" && ["plan", "trip", "sites"].includes(view)) { const y = window.scrollY; render(); window.scrollTo(0, y); }
 }
 const rideId = o => o ? o.mode + "|" + o.label : "taxi";
+let rideNotice = null, ridePref = "public";
+// Switching a ride re-plans the whole day. A switch that would make the day run past the ship's safe time is not
+// made; one that costs a sight is made but says so, with Undo.
+function switchRide(key, val) {
+  const d = day(), names = pl => pl && !pl.error ? pl.items.filter(i => i.type === "stop").map(i => i.place.name) : [];
+  trip.legModes = trip.legModes || {}; const was = trip.legModes[key];
+  const before = buildPlan(d); trip.legModes[key] = val; const after = buildPlan(d);
+  const label = c => { const leg = after.items.concat(before.items).find(i => i.type === "travel" && i.leg.key === key); const ch = leg && leg.leg.choices.find(x => x.id === c); return ch ? ch.label : "that ride"; };
+  if (after.error || after.over) { if (was == null) delete trip.legModes[key]; else trip.legModes[key] = was; rideNotice = { key, text: `${esc(label(val))} would get you back after ${fmt(after.endBy || 0)}, too late for the ship, so the plan keeps the ride it had.` }; }
+  else { const lost = names(before).filter(n => !names(after).includes(n)); rideNotice = lost.length ? { key, undo: was === undefined ? "" : was, text: `With ${esc(label(val))}, ${esc(lost.join(" and "))} no longer ${lost.length > 1 ? "fit" : "fits"} the day.` } : null; }
+  save();
+}
 // What the traveler needs to make a ride: where to catch it, how often it runs, how long, and the choice of ride.
-function rideDetail(leg) {
+// Departures from the timetable: the next one after you reach the station, and on the way back to the ship the last
+// one that still gets you there in time.
+function depLine(o, start, endBy, back) {
+  if (!o) return "";
+  const when = o.checked ? ` (timetable checked ${fmtDate(o.checked)}; check again before you go)` : "";
+  if (!o.deps || !o.deps.length) return o.noTimetable ? ` No published timetable found for this ${o.kind.toLowerCase()}: planned with a full gap between departures. Check the ${o.kind.toLowerCase()} timetable before you go.` : "";
+  const at = start + o.access.min, nx = isFinite(start) ? o.deps.find(d => d.t >= at) : null;
+  let t = nx ? ` Next departure about ${fmt(nx.t)}${when}.` : ` Departures about every ${dur(o.every)}${when}.`;
+  if (back && isFinite(endBy)) { const ok = o.deps.filter(d => d.t + d.dur - d.lead <= endBy); if (ok.length) t += ` <b>Last safe departure back: ${fmt(ok[ok.length - 1].t)}.</b>`; }
+  return t;
+}
+function rideDetail(leg, start, endBy) {
   if (!leg.choices) return "";
-  const o = leg.transit, ev = o ? `runs about every ${dur(o.every)}${o.everySrc === "map" ? "" : " (usual for this kind of line; check the timetable)"}` : "";
-  const how = o ? `${o.access.how === "walk" ? "Walk" : "Taxi"} ${dur(o.access.min)} to ${esc(o.from || "the " + (o.mode === "ferry" ? "pier" : "station"))}, ${ev}; ${dur(o.ride)} ride${o.stops ? ` (${o.stops} stops)` : ""}, then ${o.egress.how === "walk" ? "walk" : "taxi"} ${dur(o.egress.min)}${o.to ? " from " + esc(o.to) : ""}.${o.operator ? " " + esc(o.operator) + "." : ""}${o.hours ? " Hours: " + esc(o.hours) + "." : ""}${o.fare ? " Fare: " + esc(o.fare) + "." : ""} Times include waiting and boarding.` : "By road, with time for traffic.";
-  const fall = (leg.slack ? ` Includes ${dur(leg.slack)} spare before the ship.` : "") + (leg.lastMile && o ? ` <b>If you miss it:</b> a taxi takes about ${dur(leg.road)}.` : "");
-  return `<span class="sub ridesub">${how}${fall}</span><label class="ridepick"><span>Ride</span><select data-ride="${esc(leg.key)}">${leg.choices.map(c => `<option value="${esc(c.id)}" ${c.id === leg.choice ? "selected" : ""}>${esc(c.label)} · ${dur(c.min)}</option>`).join("")}</select></label>`;
+  const o = leg.transit, ev = o ? `runs about every ${dur(o.every)}${o.everySrc === "timetable" ? " (from the timetable)" : o.everySrc === "map" ? "" : " (usual for this kind of line; check the timetable)"}` : "";
+  const ride = o && o.steps && o.steps.length ? o.steps.map(esc).join("; then ") : o ? `${dur(o.ride)} ride${o.stops ? ` (${o.stops} stops)` : ""}` : "";
+  const how = o ? `${o.access.how === "walk" ? "Walk" : "Taxi"} ${dur(o.access.min)} to ${esc(o.from || "the " + (o.mode === "ferry" ? "pier" : "station"))}, ${ev}. ${ride}, then ${o.egress.how === "walk" ? "walk" : "taxi"} ${dur(o.egress.min)}${o.to && !(o.steps && o.steps.length) ? " from " + esc(o.to) : ""}.${o.operator ? " " + esc(o.operator) + "." : ""}${o.hours ? " Hours: " + esc(o.hours) + "." : ""}${o.fare ? " Fare: " + esc(o.fare) + "." : ""} Times include waiting and boarding.` : "By road, with time for traffic.";
+  const fall = depLine(o, start, endBy, leg.lastMile) + (leg.slack ? ` Includes ${dur(leg.slack)} spare before the ship.` : "") + (leg.lastMile && o ? ` <b>If you miss it:</b> a taxi takes about ${dur(leg.road)}.` : "");
+  const note = rideNotice && rideNotice.key === leg.key ? `<span class="ridenote">${rideNotice.text}${rideNotice.undo != null ? ` <button class="linkbtn" data-act="rideundo">Undo</button>` : ""}</span>` : "";
+  return `<span class="sub ridesub">${how}${fall}</span>${note}<label class="ridepick"><span>Ride</span><select data-ride="${esc(leg.key)}">${leg.choices.map(c => `<option value="${esc(c.id)}" ${c.id === leg.choice ? "selected" : ""}>${esc(c.label)} · ${dur(c.min)}</option>`).join("")}</select></label>`;
 }
 // The ride between a and b: the chosen (or best) real line, or the road estimate as a taxi.
 function rideLeg(a, b, road, lastMile) {
@@ -544,7 +572,8 @@ function rideLeg(a, b, road, lastMile) {
   const taxi = Object.assign({}, road, { how: "Taxi or car", choice: "taxi" });
   const want = trip.legModes && trip.legModes[pairKey(a, b)], picked = want === "taxi" ? null : opts.find(o => rideId(o) === want);
   // Public lines win unless a taxi saves a lot (over 25 min and a third of the time): they're cheaper and run on time.
-  const best = opts[0], auto = best && !(taxi.min < best.min - 25 && taxi.min < best.min * 0.67) ? best : null;
+  // Public lines win unless a taxi saves a lot; when the day can't keep every sight that way, the quickest way wins (see buildPlan).
+  const best = opts[0], auto = ridePref === "fast" ? (best.min <= taxi.min ? best : null) : best && !(taxi.min < best.min - 25 && taxi.min < best.min * 0.67) ? best : null;
   const o = want === "taxi" ? null : picked || auto;
   const base = { choices: [...opts.map(x => ({ id: rideId(x), label: x.label, min: x.min })), { id: "taxi", label: "Taxi or car", min: road.min }], key: pairKey(a, b), road: road.min };
   if (!o) return Object.assign(taxi, base, { lastMile });
@@ -1082,7 +1111,13 @@ function placeMeals(order, meals, t0, O, Z, style, city) {
 }
 let keptMemo = new Map(); // per render: the picked sights each day actually keeps, so no sight is planned twice
 let bonusMemo = new Map(); // per render: each day's bonus stops, so two days in a city never get the same one
-function buildPlan(d) { const prev = planDate, pw = planWx; planDate = d && d.date; planWx = d && cityFor(d) ? wxFor(d, cityFor(d)) : null; try { return buildPlanFor(d); } finally { planDate = prev; planWx = pw; } }
+function buildPlan(d) { const prev = planDate, pw = planWx; planDate = d && d.date; planWx = d && cityFor(d) ? wxFor(d, cityFor(d)) : null; try { let pl = buildPlanFor(d);
+    // The rides chosen by default are the ones that keep the most sights, with the ship safe: if public lines cost a
+    // sight that the quickest rides would keep, the quickest rides are used.
+    if (pl && !pl.error && (pl.dropped || []).length && Object.keys(transitMem).length) {
+      ridePref = "fast"; let p2; try { p2 = buildPlanFor(d); } finally { ridePref = "public"; }
+      if (p2 && !p2.error && !p2.over && (p2.dropped || []).length < pl.dropped.length) { p2.fastRides = true; pl = p2; } }
+    return pl; } finally { planDate = prev; planWx = pw; } }
 function buildPlanFor(d) {
   const city = cityFor(d); if (!city) return null;
   const w = dayWindow(d, city); if (w.error) return w;
@@ -4681,7 +4716,7 @@ function renderPlan(d) {
     if (it.type === "start") return `<div class="${cls}">${tcell(it)}<div class="rail"><div class="dot start">S</div></div><div class="what"><div class="nm">${esc(it.label)}</div>${it.place.note ? `<div class="sub">${esc(it.place.note)}</div>` : ""}${plan.w.notes.map(t => `<div class="sub">${esc(t)}</div>`).join("")}</div></div>`;
     if (it.type === "travel") {
       const m = it.leg.mode;
-      return `<div class="tl leg ${m}${it.leg.choices ? " ridecho" : ""}"><div class="time"></div><div class="rail"></div><div class="what">${legIcon(m)}<span>${it.leg.km < 0.1 ? "Next door" : `<b>${esc(it.leg.how)}</b> · ${dur(it.leg.min)} · ${distTxt(it.leg.km)}`}${rideDetail(it.leg)}</span></div></div>`;
+      return `<div class="tl leg ${m}${it.leg.choices ? " ridecho" : ""}"><div class="time"></div><div class="rail"></div><div class="what">${legIcon(m)}<span>${it.leg.km < 0.1 ? "Next door" : `<b>${esc(it.leg.how)}</b> · ${dur(it.leg.min)} · ${distTxt(it.leg.km)}`}${rideDetail(it.leg, it.time, plan.w && plan.w.endBy)}</span></div></div>`;
     }
     if (it.type === "fixed") return `<div class="${cls}">${tcell(it)}<div class="rail"><div class="dot fixed">H</div></div><div class="what"><div class="nm">${esc(it.place.name)}</div><div class="sub">${dur(it.place.minutes)}</div></div></div>`;
     if (it.type === "meal") {
@@ -5157,6 +5192,7 @@ document.addEventListener("click", e => {
   if (t.dataset.playAns) { const pa = allSites(cityFor(day())).find(x => x.id === t.dataset.playAns); if (pa && quietOn(pa) && speakingId !== "ans:" + t.dataset.playAns && Date.now() > earbudsOkUntil) { if (!window.confirm("Quiet place: earbuds in?")) return; earbudsOkUntil = Date.now() + 45 * 60000; }
     const a = answers[t.dataset.playAns]; if (a && a.text) speakText("ans:" + t.dataset.playAns, a.text); renderGuideOnly(); return; }
   if (t.dataset.act === "asknoticeok") { askNotice = ""; render(); return; }
+  if (t.dataset.act === "rideundo" && rideNotice) { if (rideNotice.undo === "") delete trip.legModes[rideNotice.key]; else trip.legModes[rideNotice.key] = rideNotice.undo; rideNotice = null; save(); const y = window.scrollY; render(); window.scrollTo(0, y); return; }
   if (t.dataset.act === "coachnext") { coachStep++; if (coachStep >= COACH.length) coachDone(); render(); return; }
   if (t.dataset.act === "coachskip") { coachDone(); render(); return; }
   if (t.dataset.act === "coachreplay") { coachStep = 0; view = "lobby"; render(); return; }
@@ -5318,7 +5354,7 @@ document.addEventListener("click", e => {
 });
 document.addEventListener("change", e => {
   const t = e.target;
-  if (t.dataset && t.dataset.ride) { trip.legModes = trip.legModes || {}; trip.legModes[t.dataset.ride] = t.value; save(); const y = window.scrollY; render(); window.scrollTo(0, y); return; }
+  if (t.dataset && t.dataset.ride) { switchRide(t.dataset.ride, t.value); const y = window.scrollY; render(); window.scrollTo(0, y); return; }
   if (t.dataset && t.dataset.site) {
     const d = day(), id = t.dataset.site;
     d.selected = d.selected || [];

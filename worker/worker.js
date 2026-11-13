@@ -1,5 +1,5 @@
 import { extras, Group } from "./extras.js";
-import { transitOptions } from "./transit.js";
+import { allOptions } from "./transit.js";
 export { Group };
 // Kairoute AI helper. The website sends a prompt (and optional photos); this Worker asks Workers AI
 // and streams the answer back. Usage is counted from real token counts. On the free plan it stays inside
@@ -428,10 +428,12 @@ export default {
       const pairs = (Array.isArray(b.pairs) ? b.pairs : []).slice(0, 12), out = [];
       for (const pr of pairs) {
         if (!pr || !ok(pr.a) || !ok(pr.b)) { out.push({ error: "bad" }); continue; }
-        const key = "tr1:" + [...pr.a, ...pr.b].map(n => n.toFixed(3)).join(",");
+        const dow = Number.isInteger(pr.dow) && pr.dow >= 0 && pr.dow <= 6 ? pr.dow : 3, kind = dow === 0 ? "su" : dow === 6 ? "sa" : "wk";
+        const key = "tr2:" + kind + ":" + [...pr.a, ...pr.b].map(n => n.toFixed(3)).join(",");
         const hit = await env.USAGE.get(key, "json"); if (hit) { out.push(hit); continue; }
-        try { const opts = await transitOptions({ lat: pr.a[0], lng: pr.a[1] }, { lat: pr.b[0], lng: pr.b[1] }), res = { opts };
-          ctx.waitUntil(env.USAGE.put(key, JSON.stringify(res), { expirationTtl: (opts.length ? 30 : 7) * 86400 })); out.push(res);
+        try { const r = await allOptions({ lat: pr.a[0], lng: pr.a[1] }, { lat: pr.b[0], lng: pr.b[1] }, dow), res = { opts: r.opts };
+          // A full answer is kept 14 days (timetables change); one where a source was busy only 1 day, so it is asked again soon.
+          ctx.waitUntil(env.USAGE.put(key, JSON.stringify(res), { expirationTtl: (r.partial ? 1 : r.opts.length ? 14 : 7) * 86400 })); out.push(res);
         } catch (e) { out.push({ error: "map busy" }); }
       }
       return Response.json({ results: out }, { headers: h });
