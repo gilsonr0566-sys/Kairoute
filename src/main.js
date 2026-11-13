@@ -1310,11 +1310,14 @@ function buildPlanFor(d) {
       const base = simDay(seq, t0, O, ZZ, style); let pick = null;
       // Make the most of the day: with a little time left, only sights right on the route; with hours to
       // spare, sights a short ride away too; with most of a day free, a day trip farther out.
+      // When nothing near the route is left but time still is, a sight farther out that fits the time left (round
+      // trip included, before the day's hard end) is better than an empty afternoon: the second pass allows it.
       const spare = limit - base.end, reach = spare > 240 ? 60 : spare > 120 ? 5 : 1.5;
+      for (const loose of [false, true]) { if (pick) break;
       for (const c of pool) {
         const stopsNow = seq.filter(x => !x.mealOf);
-        if (c.far && spare <= 240) continue;
-        if (stopsNow.length && hav(c, O) > 4 && !stopsNow.some(x => hav(c, x) < reach)) continue; // once the day has stops, only add sights near its route
+        if (!loose && c.far && spare <= 240) continue;
+        if (!loose && stopsNow.length && hav(c, O) > 4 && !stopsNow.some(x => hav(c, x) < reach)) continue; // once the day has stops, only add sights near its route
         for (let i = 0; i <= seq.length; i++) {
           let q = seq.slice(0, i).concat([c], seq.slice(i));
           if (needMeals(q).length !== seq.filter(x => x.mealOf).length) q = withMeals(q); // first stop of an empty day brings its meal
@@ -1323,6 +1326,7 @@ function buildPlanFor(d) {
           const val = (c.kind === style ? 1.3 : 1) * (1 + 0.4 * likes(c)) * fameW(c) / Math.max(10, r.cost - base.cost);
           if (!pick || (c.mustSee && !pick.c.mustSee) || (!!c.mustSee === !!pick.c.mustSee && val > pick.val)) pick = { val, q, c };
         }
+      }
       }
       if (!pick) break;
       const pol = polishDay(pick.q, t0, O, ZZ, style, city); seq = simDay(pol, t0, O, ZZ, style).end <= limit ? pol : pick.q; bonus.push(pick.c); pool.splice(pool.indexOf(pick.c), 1);
