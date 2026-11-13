@@ -3376,7 +3376,27 @@ function render() {
   // A re-render of the same screen (live updates, sync, data arriving) never moves what you're looking at:
   // put every panel, and the page itself, back exactly where it was, after folds have reopened.
   if (paneMemo.same) { panes().forEach(el => { const y = pos[el.dataset.pane || "view"]; if (y) el.scrollTop = y; }); if (winY && Math.abs(window.scrollY - winY) > 1) window.scrollTo(0, winY); }
-  centerChip(); pinChip();
+  centerChip(); pinChip(); seedSoon();
+}
+// Speed: a new trip's days get their starting picks in the background, one day at a time while the app is idle,
+// instead of all at once on the tap that first opens a day (that tap used to take a second or more). The picks
+// are the same either way: earlier days in a city always choose first (see seedPicks).
+let seedTimer = 0;
+const seedNext = () => trip.days.find(o => !o.selected && !noShore(o) && cityFor(o));
+function seedSoon() {
+  if (seedTimer || !seedNext()) return;
+  const idle = window.requestIdleCallback ? f => requestIdleCallback(f, { timeout: 2000 }) : f => setTimeout(f, 300);
+  seedTimer = setTimeout(() => idle(seedStep), 250);
+}
+function seedStep() {
+  seedTimer = 0;
+  if (view === "wizard" || view === "tour" || fitState || closedState || document.querySelector(".fitbox, .coach")) return void (seedNext() && (seedTimer = setTimeout(() => { seedTimer = 0; seedSoon(); }, 2000)));
+  const d = seedNext(); if (!d) return;
+  try { seedPicks(d, cityFor(d)); } catch (e) { console.warn("seed", e); d.selected = d.selected || []; }
+  save();
+  if (seedNext()) seedSoon();
+  // Every day has its picks: draw them once (never under the traveler's fingers while they type in a form).
+  else if (!FULL_VIEWS[view] && view !== "trip" && !(document.activeElement && /^(INPUT|TEXTAREA|SELECT)$/.test(document.activeElement.tagName))) { const y = window.scrollY; render(); window.scrollTo(0, y); }
 }
 let chipCenter = false;
 function centerChip() {

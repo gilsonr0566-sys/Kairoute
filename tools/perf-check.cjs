@@ -65,7 +65,7 @@ const SIZES = [['phone', { ...devices['Galaxy S9+'], viewport: { width: 412, hei
     const add = (k, v) => { if (v == null) return; (res[k] = res[k] || []).push(v); };
     // Day switching across the whole trip (Day plan).
     const chips = await p.locator('.daychip').count();
-    for (let i = 1; i < chips; i++) add('Switch day (Day plan)', await tap('.daychip', 'day', i));
+    for (let i = 1; i < chips; i++) { const ms = await tap('.daychip', 'day', i); add('Switch day (Day plan)', ms); if (process.env.PERF_DEBUG) console.log(name, 'day', i + 1, days[i] && days[i].dest, ms); }
     // The busiest port day: Naples if the trip has it, otherwise the port day with the most stops.
     const port = days.find(d => /naples/i.test(d.dest)) || days.find(d => d.type === 'port') || days[0];
     await p.evaluate(i => window.__kairouteGo('plan', i), port.i); await p.waitForTimeout(400);
