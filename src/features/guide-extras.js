@@ -428,7 +428,7 @@ if (typeof document !== "undefined") {
   });
   document.addEventListener("change", e => {
     const t = e.target; if (!t || !t.matches) return;
-    if (t.matches("[data-gx-theme]")) { trip.prefs = Object.assign(defaultPrefs(), trip.prefs || {}, { theme: t.value }); save(); render(); }
+    if (t.matches("[data-gx-theme]")) { trip.prefs = Object.assign(defaultPrefs(), trip.prefs || {}, { theme: t.value }); faithPrefsTidy(true); save(); render(); }
   });
   document.addEventListener("submit", e => {
     const f = e.target; if (!f || !f.dataset || !f.dataset.gxPrice) return;

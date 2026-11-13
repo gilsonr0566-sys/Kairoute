@@ -1474,6 +1474,16 @@ function faithStrip(text, evidence, bibleSite) {
   return ok ? t : t.split(/(?<=[.!?])\s+/).filter(x => !BIBLE_TALK.test(x)).join(" ").trim();
 }
 const bibleSite = s => !!s && (/bible|biblical/i.test(s.category || "") || BIBLE_TALK.test((s.guide || "") + " " + (s.summary || "")));
+// One switch for Bible content: the "Footsteps of Paul" theme belongs to the Bible sites interest (and "Faith and
+// pilgrimage" to the faith interests). Turning the interest off ends the theme; choosing the theme turns it on.
+function faithPrefsTidy(themeChosen) {
+  if (typeof trip === "undefined" || !trip || !trip.prefs) return false;
+  const p = trip.prefs, i = p.interests = p.interests || []; let changed = false;
+  if (themeChosen) { const need = p.theme === "paul" ? "bible" : p.theme === "faith" ? "churches" : ""; if (need && !i.includes(need)) { i.push(need); changed = true; } return changed; }
+  if (p.theme === "paul" && !i.includes("bible")) { p.theme = ""; changed = true; }
+  if (p.theme === "faith" && !i.includes("bible") && !i.includes("churches")) { p.theme = ""; changed = true; }
+  return changed;
+}
 let faithSwept = null;
 function faithSweep(only) {
   const fk = faithKey(); if (!only && (faithSwept === fk || typeof trip === "undefined" || !trip || !trip.days)) return 0; if (!only) faithSwept = fk;
@@ -2849,6 +2859,7 @@ if (typeof window !== "undefined") window.__kairouteFameCheck = async fix => {
       S.parts = keepP; S.intro = keepI; S.wrap = keepW; S.extrasFaith = faithKey(); S.extrasV = EXTRAS_V; S.minutes = keepM; if (keepB != null) S.baseMin = keepB;
       const n2 = faithSweep([gone]);
       ok("Faith: when the traveler changes the faith interests, walks written for the other setting are cleared and written again", n1 >= 1 && cleared && n2 === 0, `cleared ${n1}, then ${n2} once it matches`); void keepF; }
+    ok("Faith: one switch for Bible content: turning Bible sites off ends the Footsteps of Paul theme, and choosing the theme turns Bible sites on", (() => { const keep = JSON.stringify(trip.prefs); trip.prefs.interests = ["bible"]; trip.prefs.theme = "paul"; trip.prefs.interests = []; faithPrefsTidy(); const off = trip.prefs.theme === ""; trip.prefs.theme = "paul"; faithPrefsTidy(true); const on = trip.prefs.interests.includes("bible"); trip.prefs = JSON.parse(keep); return off && on; })(), "checked both ways");
     ok("Faith: with the faith interests off, Bible talk stays only at Bible sites", (() => { const keepI = trip.prefs.interests; trip.prefs.interests = []; const a = faithStrip("Paul landed here. Acts 28:13 tells it.", "Acts 28:13 Paul", false), b = faithStrip("Paul landed here. Acts 28:13 tells it.", "", true); trip.prefs.interests = keepI; return a === "Paul landed here." && /Acts 28:13/.test(b); })(), "checked both ways");
     const sp1 = partSpeech(S, 0, true), spL = partSpeech(S, 2, false);
     const cuesOk = P0.slice(1).every(p => /^(About \d+ m|A few steps on)/.test(p.cue)) && !P0[0].cue && !/40 m/.test(P0.map(p => p.cue).join(" "));
@@ -3130,6 +3141,7 @@ let paneMemo = { key: "", pos: {} };
 function panes() { return [document.getElementById("view"), ...document.querySelectorAll("#view .pane[data-pane]")].filter(Boolean); }
 function toTop() { window.scrollTo(0, 0); panes().forEach(el => { el.scrollTop = 0; }); }
 function render() {
+  if (faithPrefsTidy()) save();
   faithSweep();
   bonusMemo = new Map(); mealMemo = new Map(); keptMemo = new Map(); eveMemo = new Map(); avoidMeals = new Set();
   const pkey = view + "|" + trip.active, pos = {};
