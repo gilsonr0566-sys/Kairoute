@@ -502,6 +502,7 @@ function refillIfNeeded(d, city) {
 // checking the real planned day (route, meals, opening days) after every addition, so nothing is dropped
 // and no sight repeats across days.
 let suggestMsg = "";
+function forget0(o) { bonusMemo.delete(o); mealMemo.delete(o); keptMemo.delete(o); eveMemo.delete(o); }
 function suggestTour(d0) {
   const city = cityFor(d0); if (!city) return 0;
   const days = trip.days.filter(o => cityFor(o) === city);
@@ -509,8 +510,14 @@ function suggestTour(d0) {
   const score = x => (x.mustSee ? 3 : 1) + ints.reduce((a, w) => a + ((x.category + " " + x.summary).toLowerCase().includes(w) ? 1 : 0), 0) * 0.8 + (style === "mix" || x.kind === style ? 0.5 : 0) + (fameW(x) - 1) * 1.5;
   const used = new Set(); let total = 0;
   const fills = days.map(o => o.fillTime);
+  // A sight the traveler picked to sort by stays theirs: that day is built around it, closest sights first,
+  // and no other day takes it.
+  const seeds = new Map(days.map(o => [o, siteAnchor(o, city)]).filter(([o, a]) => a && !closedOn(a, o.date)));
+  seeds.forEach(a => used.add(a.id));
   days.forEach(o => { o.selected = []; o.fillTime = false; });
   for (const d of days) {
+    const seed = seeds.get(d);
+    if (seed) { used.delete(seed.id); d.selected.push(seed.id); forget0(d); const p = buildPlan(d); if (!p || p.error || p.over || (p.dropped || []).length) { d.selected = []; d.anchor = null; } }
     const forget = o => { bonusMemo.delete(o); mealMemo.delete(o); keptMemo.delete(o); eveMemo.delete(o); };
     const fits = () => { forget(d); const p = buildPlan(d); return p && !p.error && !p.over && !(p.dropped || []).length && !(p.elsewhere || []).length; };
     for (let guard = 0; guard < 14; guard++) {
@@ -3773,8 +3780,32 @@ function stopCost(plan, s) {
   if (!isFinite(best)) best = tmin(pts[0] || plan.w.head[0], s) * 2;
   return { min: Math.round(best + mins(s)), spare, alone: !plan.stops.length };
 }
-function siteCard(s, d, plan) {
+// The sight the traveler picked last on this day, while it is still picked (with a spot on the map).
+function siteAnchor(d, city) {
+  if (!d.anchor || !(d.selected || []).includes(d.anchor)) return null;
+  const s = allSites(city).find(x => x.id === d.anchor);
+  return s && isFinite(s.lat) && isFinite(s.lng) ? s : null;
+}
+// After a pick, bring the top of the sights list into view (its own scroll pane on tablets, the page on phones)
+// and give the picked card a brief highlight so it's clear what moved.
+let anchorJump = false;
+function jumpToAnchor() {
+  anchorJump = false;
+  const pane = document.querySelector("#view .sitesmain"); if (!pane) return;
+  const smooth = !(window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches) ? "smooth" : "auto";
+  if (pane.scrollHeight > pane.clientHeight + 4 && getComputedStyle(pane).overflowY !== "visible") pane.scrollTo({ top: 0, behavior: smooth });
+  else { const head = document.querySelector("header.top"), off = head && getComputedStyle(head).position === "sticky" ? head.offsetHeight : 0;
+    window.scrollTo({ top: Math.max(0, pane.getBoundingClientRect().top + window.scrollY - off - 8), behavior: smooth }); }
+  const card = pane.querySelector(".site.anchor"); if (card) { card.classList.add("flash"); setTimeout(() => card.classList.remove("flash"), 1200); }
+}
+// Closest to the anchor first; anything without a spot on the map keeps its order at the end.
+function nearSort(xs, anc) {
+  const km = x => isFinite(x.lat) && isFinite(x.lng) ? hav(anc, x) : Infinity;
+  return xs.map((x, i) => [x, km(x), i]).sort((a, b) => a[1] - b[1] || a[2] - b[2]).map(a => a[0]);
+}
+function siteCard(s, d, plan, anc) {
   const on = (d.selected || []).includes(s.id);
+  const isAnc = anc && s === anc, near = anc && !isAnc && isFinite(s.lat) && isFinite(s.lng) ? hav(anc, s) : null;
   const other = plannedElsewhere(d)[s.id];
   let fit = "";
   if (s.far && plan && !plan.error) {
@@ -3783,11 +3814,12 @@ function siteCard(s, d, plan) {
       : c.min <= c.spare ? `<span class="tag fit">Fits today · adds ${dur(c.min)}${c.alone ? " round trip" : " from your route"}</span>`
       : `<span class="tag nofit">Adds ${dur(c.min)}${c.alone ? " round trip" : " from your route"}, you have ${dur(Math.max(0, c.spare))} spare</span>`;
   }
-  return `<label class="site ${on ? "on" : ""}" for="s-${esc(s.id)}">
+  return `<label class="site ${on ? "on" : ""}${isAnc ? " anchor" : ""}" for="s-${esc(s.id)}">
     <input type="checkbox" id="s-${esc(s.id)}" data-site="${esc(s.id)}" ${on ? "checked" : ""}>
     <div class="body">
       <div class="name">${esc(s.name)}</div>
       <div class="tags">
+        ${isAnc ? `<span class="tag here">Sorting from here</span>` : near != null ? `<span class="tag near">${near < 0.05 ? "Right here" : esc(distTxt(near, true)) + " away"}</span>` : ""}
         ${!on && plan && (plan.bonus || []).some(x => x.id === s.id) ? `<span class="tag bonus">On your plan as an optional stop</span>` : ""}
         ${other ? (ex => `<span class="tag seen">${!on ? "Planned for " + esc(fmtDow(other.date)) + " " + esc(fmtDate(other.date)) : ex && ex.earlier ? "Seen " + esc(fmtDow(ex.on.date)) + " " + esc(fmtDate(ex.on.date)) + " · not repeated" : ex && ex.later ? "No room today · seen " + esc(fmtDow(ex.on.date)) + " " + esc(fmtDate(ex.on.date)) : "Today · not repeated " + esc(fmtDow(other.date)) + " " + esc(fmtDate(other.date))}</span>`)(((plan && plan.elsewhere) || []).find(x => x.s.id === s.id)) : ""}
         ${s.mustSee ? `<span class="tag must">Must-see</span>` : ""}${unescoTag(s)}
@@ -3862,6 +3894,9 @@ function renderSites(d) {
   const quick = city.sites.filter(s => s.quick);
   const far = (city.farther || []).filter(x => !away(x));
   const already = [...city.sites.filter(x => !x.quick), ...(city.farther || [])].filter(away);
+  // Picking a sight makes it the anchor: it moves to the top and every other list re-sorts closest first.
+  const anc = siteAnchor(d, city), byNear = xs => anc ? nearSort(xs.filter(x => x !== anc), anc) : xs;
+  const mainL = byNear(main), farL = byNear(far), alreadyL = byNear(already), quickL = byNear(quick);
   const n = d.selected.length;
   const avail = plan && !plan.error ? dur(plan.endBy - plan.start) : "";
   return `<div class="sitesgrid"><div class="sitesside pane" data-pane="side">
@@ -3875,15 +3910,17 @@ function renderSites(d) {
   <div class="card suggest"><div><h3>Let your guide plan it</h3><p class="lede">Picks the best stops for ${(() => { const n = trip.days.filter(o => cityFor(o) === city).length; return n > 1 ? `all ${n} days` : "today"; })()} in ${esc(city.city)}, from your start point, hours, pace, walking and interests. Each day gets its own area, nothing repeats, and every stop fits.</p></div>
     ${suggestMsg ? `<p class="banner" id="suggestNote" role="status">${esc(suggestMsg)}</p>` : ""}<div class="actions"><button class="btn" data-act="suggesttour">Suggest my tour</button><button class="btn ghost small" data-act="freshpicks">Fresh picks for this day only</button></div></div>
   </div><div class="sitesmain pane" data-pane="sites">
-  <div class="sitelist">${main.map(s => siteCard(s, d, plan)).join("")}</div>
-  ${far.length ? `<div><h3>Worth the trip</h3><p class="lede">Day trips and sights farther out, checked against your time today.</p></div>
-  <div class="sitelist">${far.map(s => siteCard(s, d, plan)).join("")}</div>` : ""}
+  ${anc ? `<div class="anchorbar" role="status"><span>Closest to <b>${esc(anc.name)}</b> first</span><button type="button" class="linkbtn" data-act="clearanchor">Usual order</button></div>
+  <div class="sitelist anchorlist">${siteCard(anc, d, plan, anc)}</div>` : ""}
+  <div class="sitelist">${mainL.map(s => siteCard(s, d, plan, anc)).join("")}</div>
+  ${farL.length ? `<div><h3>Worth the trip</h3><p class="lede">Day trips and sights farther out, checked against your time today.</p></div>
+  <div class="sitelist">${farL.map(s => siteCard(s, d, plan, anc)).join("")}</div>` : ""}
   ${errBlock()}
   ${addPlaceCard(d)}
-  ${already.length ? `<details class="more already"><summary>Already planned on other days (${already.length})</summary><p class="lede" style="margin:8px 0">Want to go back? Tick one to see it again today.</p>
-  <div class="sitelist">${already.map(s => siteCard(s, d, plan)).join("")}</div></details>` : ""}
-  ${quick.length ? `<details class="more"><summary>Quick stops (${quick.length})</summary><p class="lede" style="margin:8px 0">Added automatically when your route passes them. Tick one to make it a planned stop.</p>
-  <div class="sitelist">${quick.map(s => siteCard(s, d, plan)).join("")}</div></details>` : ""}
+  ${alreadyL.length ? `<details class="more already"><summary>Already planned on other days (${alreadyL.length})</summary><p class="lede" style="margin:8px 0">Want to go back? Tick one to see it again today.</p>
+  <div class="sitelist">${alreadyL.map(s => siteCard(s, d, plan, anc)).join("")}</div></details>` : ""}
+  ${quickL.length ? `<details class="more"><summary>Quick stops (${quickL.length})</summary><p class="lede" style="margin:8px 0">Added automatically when your route passes them. Tick one to make it a planned stop.</p>
+  <div class="sitelist">${quickL.map(s => siteCard(s, d, plan, anc)).join("")}</div></details>` : ""}
   <div class="stickybar"><span class="count">${n} site${n === 1 ? "" : "s"} picked${plan && !plan.error && (plan.bonus || []).length ? ` · ${plan.bonus.length} optional on your plan` : ""}</span><button class="btn" data-act="toplan">See my day plan</button></div></div></div>`;
 }
 
@@ -4875,7 +4912,8 @@ document.addEventListener("click", e => {
     }, 40);
     return;
   }
-  if (act === "freshpicks") { const d = day(), city = cityFor(d); if (city) { d.selected = []; d.selected = defaultSelection(city, trip.style, d); save(); render(); } return; }
+  if (act === "freshpicks") { const d = day(), city = cityFor(d); if (city) { const a = siteAnchor(d, city); d.selected = []; d.selected = defaultSelection(city, trip.style, d); if (a && !d.selected.includes(a.id)) d.selected.unshift(a.id); save(); render(); } return; }
+  if (act === "clearanchor") { day().anchor = null; save(); render(); jumpToAnchor(); return; }
   if (act === "addplace") { const v = (document.getElementById("addPlace") || {}).value || ""; if (v.trim()) addPlaces(day(), v.trim()); return; }
   if (act === "moretrips") { addPlaces(day(), ""); return; }
   if (act === "picks") { const city = cityFor(day()); const s = city && allSites(city).find(x => x.id === t.dataset.id); if (s) getPicks(s, city); return; }
@@ -4946,8 +4984,10 @@ document.addEventListener("change", e => {
   if (t.dataset && t.dataset.site) {
     const d = day(), id = t.dataset.site;
     d.selected = d.selected || [];
-    if (t.checked) { if (!d.selected.includes(id)) d.selected.push(id); } else d.selected = d.selected.filter(x => x !== id);
-    save(); render(); return;
+    if (t.checked && !d.selected.includes(id) && !fitAsk(d, id)) { t.checked = false; return; } // won't fit: the box explains
+    if (t.checked) { if (!d.selected.includes(id)) d.selected.push(id); d.anchor = id; anchorJump = true; }
+    else { d.selected = d.selected.filter(x => x !== id); if (d.anchor === id) d.anchor = null; }
+    save(); render(); if (anchorJump) jumpToAnchor(); return;
   }
   if (t.dataset && t.dataset.part) {
     const [sid, k] = t.dataset.part.split(":"), s = allSites(cityFor(day())).find(x => x.id === sid); if (!s || !s.parts) return;
