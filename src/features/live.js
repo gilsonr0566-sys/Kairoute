@@ -166,18 +166,20 @@ function moveClosed(id, to) {
   save(); render();
 }
 
-// One short line per fact under each stop on the Day plan: today's hours, tickets, rush hours, traveler ratings.
+// Under each stop on the Day plan: one compact line with today's hours, a Book ahead tag, the rush hours and the
+// traveler rating. A stop you'd reach too late gets its own warning line. Ticket details live in the Guide.
 function stopLiveNotes(it, d) {
-  const s = it.place, out = [];
+  const s = it.place, out = [], bits = [];
   if (it.ohLate) out.push(`<div class="sub livewarn">⚠ Closes at ${fmt(it.closes)}${s.oh && s.oh.last != null ? ` (last entry ${fmt(s.oh.last)})` : ""}: you'd get there too late to see it properly. Move it earlier with Change stops, or start the day earlier.</div>`);
-  else if (s.oh && s.oh.spans.length) out.push(`<div class="sub liveinfo">Open ${esc(spanTxt(s.oh.spans))} today${s.oh.last != null ? `, last entry ${fmt(s.oh.last)}` : ""}${it.wait ? `. It opens at ${fmt(it.opens)}, so you start here then` : ""} <small>(${esc(s.oh.src === "OpenStreetMap" ? "OpenStreetMap" : "guide")})</small></div>`);
-  if (bookAhead(s)) out.push(`<div class="sub liveinfo"><i class="badge book">Book ahead</i> ${esc(String(s.tickets || s.priceNote).slice(0, 160))}</div>`);
+  else if (s.oh && s.oh.spans.length) bits.push(`Open ${esc(spanTxt(s.oh.spans))}${s.oh.last != null ? `, last entry ${fmt(s.oh.last)}` : ""}${it.wait ? ` (you start at opening)` : ""} <small>${esc(s.oh.src === "OpenStreetMap" ? "OpenStreetMap" : "guide")}</small>`);
   if (s.cw && s.cw.busy.length) {
     const end = it.time + (s.minutes || 0), hit = s.cw.busy.filter(([a, b]) => overlap(it.time, end, a, b) > 10);
-    out.push(`<div class="sub liveinfo">${hit.length ? `Usually busy ${esc(spanTxt(hit))}: expect a line.` : `Busiest ${esc(spanTxt(s.cw.busy))}; you're there ${it.time < s.cw.busy[0][0] ? "before" : "outside"} the rush.`} <small>(${esc(s.cw.src)})</small></div>`);
+    bits.push(hit.length ? `<span class="livebusy">Usually busy ${esc(spanTxt(hit))}, expect a line</span>` : `Busiest ${esc(spanTxt(s.cw.busy))}, you miss the rush`);
   }
+  const r = siteRating(s); if (r) bits.push(`★ ${r.avg.toFixed(1)} from ${r.n} Kairoute travelers`);
+  const book = bookAhead(s) ? `<i class="badge book" title="${esc(String(s.tickets || s.priceNote || "").slice(0, 200))}">Book ahead</i>` : "";
+  if (book || bits.length) out.push(`<div class="sub liveinfo">${book}${bits.join(" · ")}</div>`);
   out.push(rateRow(it, d));
-  const r = siteRating(s); if (r) out.push(`<div class="sub liveinfo">★ ${r.avg.toFixed(1)} from ${r.n} Kairoute travelers</div>`);
   return out.join("");
 }
 function liveChecks(d, plan, add) {
@@ -384,16 +386,16 @@ function alarmCard(d, plan) {
   const today = d.date === todayISO(), gpsOn = geoFresh() || liveGeo != null;
   return `<div class="card countdown livecard" id="cdCard">
     <div><span class="eyebrow">${fixed ? esc(fixedTitle(d)) : "Your day, live"}${!today && live ? " · preview" : ""}</span></div>
-    ${fixed ? `<div class="cdrow"><div><div class="cdbig" id="cdBig">--:--</div><div class="cdsub" id="cdSub"></div><div class="cdsrc" id="cdSrc"></div></div>
-      ${gpsOn ? "" : `<div class="field" style="flex:1;min-width:200px"><label for="cdWhere">Where are you now?</label>
-      <select id="cdWhere"><option value="auto">Wherever the plan says</option>${items.map((i, k) => `<option value="${k}" ${String(cdWhere) === String(k) ? "selected" : ""}>${esc(i.place.name)}</option>`).join("")}</select></div>`}</div>
-    <div class="banner" id="cdMsg"></div>` : ""}
+    ${fixed ? `<div class="cdrow"><div class="cdbig" id="cdBig">--:--</div><div class="cdtext"><div class="cdsub" id="cdSub"></div><div class="cdsrc" id="cdSrc"></div></div></div>
+    <div class="banner" id="cdMsg" hidden></div>
+      ${gpsOn ? "" : `<details class="cdwhere" ${cdWhere && cdWhere !== "auto" ? "open" : ""}><summary>Somewhere else? Count from there</summary><div class="field"><label for="cdWhere">Where are you now?</label>
+      <select id="cdWhere"><option value="auto">Wherever the plan says</option>${items.map((i, k) => `<option value="${k}" ${String(cdWhere) === String(k) ? "selected" : ""}>${esc(i.place.name)}</option>`).join("")}</select></div></details>`}` : ""}
     ${liveBanner(d, plan)}
     <div class="actions">
       ${today ? `<button class="btn ghost small" data-act="livegps">${gpsOn ? "📍 Using your location" : "Use my location"}</button>` : ""}
       ${live ? `<button class="btn small" data-act="livereplan">Running late? Re-plan from now</button>` : ""}
       ${today && typeof Notification !== "undefined" && Notification.permission === "default" ? `<button class="btn ghost small" data-act="livealerts">Turn on alerts</button>` : ""}
-      ${!today ? `<button class="btn ghost small" data-act="cdpreview">${cdPreview == null ? "Preview the day live" : "Stop preview"}</button>` : ""}
+      ${!today && cdPreview != null ? `<button class="btn ghost small" data-act="cdpreview">Stop preview</button>` : ""}
     </div>
     ${today ? `<p class="lede small">${fixed ? "Alerts 30, 15 and 5 minutes before you need to leave, by sound, vibration and notification. " : ""}${gpsOn ? "If you fall behind at a stop, the day re-plans itself." : "Turn on your location so the countdown uses where you really are."}</p>` : ""}
   </div>`;
@@ -421,14 +423,14 @@ function alarmTick() {
     const word = d.type === "port" ? `All aboard ${d.allAboard}. Be at the ship by ${fmt(st.backBy)}.` : d.type === "embark" ? `All aboard ${d.allAboard}. Be at the terminal by ${fmt(st.backBy)}.` : `${MODES[d.mode].label} at ${d.time}. Be at ${st.point.name} by ${fmt(st.backBy)}.`;
     if (sub) sub.textContent = `${word} From ${fromTxt}: ${legTxt}, so leave by ${fmt(st.leaveBy)}.`;
     if (srcEl) srcEl.textContent = `Travel time: ${st.leg.src}${st.src === "GPS" ? ", from your GPS position" : st.src === "plan" ? ", from where the plan has you now" : ""}.`;
-    if (st.now == null) { if (el) el.textContent = fmt(st.leaveBy); if (msg) { msg.className = "banner"; msg.textContent = `Leave-by time from ${st.from.name}. On ${fmtDate(d.date)} this becomes a live countdown with alerts.`; } }
+    if (st.now == null) { if (el) el.textContent = fmt(st.leaveBy); if (msg) msg.hidden = true; if (srcEl) srcEl.textContent += ` On ${fmtDate(d.date)} this becomes a live countdown with alerts.`; }
     else {
       const left = st.leaveBy - st.now;
       const big = left > 0 ? (left >= 60 ? Math.floor(left / 60) + "h " + String(Math.floor(left % 60)).padStart(2, "0") + "m" : Math.ceil(left) + " min") : "Go now";
       if (el) el.textContent = big;
       const level = left <= 0 ? "go" : left <= 15 ? "soon" : "";
       const text = left <= 0 ? `Head back now: you're ${dur(Math.ceil(-left))} past your leave-by time.` : left <= 30 ? `Start heading back in ${Math.ceil(left)} minutes.` : `You have time. Leave ${fromTxt} by ${fmt(st.leaveBy)}.`;
-      if (msg) { msg.className = "banner" + (level ? " warn" : ""); msg.textContent = text; }
+      if (msg) { msg.hidden = false; msg.className = "banner" + (level ? " warn" : ""); msg.textContent = text; }
       // Alerts at 30, 15 and 5 minutes before leaving, and at leave-by, each once (real days only).
       if (d.date === todayISO()) for (const th of [30, 15, 5, 0]) { const k = d.id + "|" + th; if (left <= th && left > th - 10 && !alarmFired[k]) { alarmFired[k] = 1;
         liveAlert(fixedTitle(d), th ? `Leave in ${th} minutes to be at ${d.type === "departure" ? st.point.name : "the ship"} by ${fmt(st.backBy)} (${legTxt} from ${fromTxt}).` : `Time to go. Leave now to be at ${d.type === "departure" ? st.point.name : "the ship"} by ${fmt(st.backBy)}.`, th <= 15); } }
