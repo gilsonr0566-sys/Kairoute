@@ -1414,7 +1414,7 @@ function faithNote() {
 // and written again. faithStrip() removes Bible talk that nothing backs: with the faith interests off it is kept
 // only at Bible sites; with them on it is kept only where the stop's own guide or the point's facts carry it.
 const faithKey = () => { const i = P().interests || []; return i.includes("bible") ? "bible" : i.includes("churches") ? "churches" : ""; };
-const BIBLE_TALK = /\b(?:gospels?|bible|biblical|scriptures?|apostles?|new testament|old testament|evangelists?|jesus|christ|st\.? paul|saint paul|paul's|(?:acts|matthew|mark|luke|john|romans|corinthians|galatians|ephesians|revelation|genesis|exodus|isaiah|psalms?)\s+\d+:\d+)/i;
+const BIBLE_TALK = /\b(?:gospels?|bible|biblical|scriptures?|apostles?|new testament|old testament|evangelists?|st\.? paul|saint paul|paul's|(?:acts|matthew|mark|luke|john|romans|corinthians|galatians|ephesians|revelation|genesis|exodus|isaiah|psalms?)\s+\d+:\d+)\b/i; // art named for Christ (the Veiled Christ) is not Bible talk
 function faithStrip(text, evidence, bibleSite) {
   const t = String(text || ""); if (!BIBLE_TALK.test(t)) return t;
   const ok = faithKey() ? BIBLE_TALK.test(String(evidence || "")) || bibleSite : bibleSite;
@@ -2832,6 +2832,16 @@ if (typeof window !== "undefined") window.__kairouteDay = (i, sel, extra) => { c
 if (typeof window !== "undefined") window.__kairoutePlans = (ov) => { if (ov) trip.days.forEach((d, i) => { if (ov.sel && ov.sel[i]) d.selected = ov.sel[i]; if ("fill" in ov) d.fillTime = ov.fill; }); bonusMemo = new Map(); mealMemo = new Map(); keptMemo = new Map(); eveMemo = new Map(); avoidMeals = new Set(); return trip.days.map((d, i) => { const pl = buildPlan(d); if (!pl || !pl.items) return { i, date: d.date, dest: d.destination, none: true }; const pts = pl.items.filter(x => x.place && x.type !== "travel").map(x => ({ lat: x.place.lat, lng: x.place.lng, t: x.type, n: x.place.name })); return { i, date: d.date, dest: d.destination, pts, km: +pl.walkKm.toFixed(2), end: pl.end, endBy: pl.endBy, stops: pl.stops.length, bonus: (pl.bonus || []).map(x => x.name), meals: pl.items.filter(x => x.type === "meal").map(x => x.meal.label + "@" + x.time + " " + x.place.name + " | alts: " + (x.place.alts || []).map(r => r.name + " (" + r.cuisine + ")").join("; ")) }; }); };
 // Test hook: pick each day's stops the way a fresh build does.
 if (typeof window !== "undefined") window.__kairouteFreshPicks = () => { trip.days.forEach(x => { x.selected = null; }); trip.days.forEach(x => { const c = cities[cityKeyFor(x)]; if (c) x.selected = defaultSelection(c, trip.style, x); }); return trip.days.map(x => x.selected); };
+// Faith check (the "Faith talk live check" workflow): set the interests, then list every stored text on a day
+// that talks about the Bible, by stop and field, so it can be traced to where the traveler sees it.
+if (typeof window !== "undefined") window.__kairoutePrefs = patch => { trip.prefs = Object.assign(P(), patch); save(); render(); return { interests: P().interests, theme: P().theme || "" }; };
+if (typeof window !== "undefined") window.__kairouteFaithScan = i => { const d = trip.days[i], city = cityFor(d); if (!city) return { error: "no city" };
+  const plan = buildPlan(d), out = [];
+  for (const it of plan.items) { const s = it.place; if (!s || it.type !== "stop") continue;
+    const fields = { summary: s.summary, guide: s.guide, lookFor: (s.lookFor || []).join(" "), picks: (s.picks || []).map(x => x.t).join(" "), intro: s.intro, wrap: s.wrap, parts: (s.parts || []).map(p => p.name + ": " + p.guide + " " + (p.lookFor || "")).join(" | "), deeper: (deeper[s.id] || {}).text, theme: typeof gxThemeLink === "function" ? gxThemeLink(s, city) : "" };
+    for (const [f, t] of Object.entries(fields)) if (t && BIBLE_TALK.test(t)) out.push({ stop: s.name, field: f, bibleSite: bibleSite(s), text: String(t).split(/(?<=[.!?])\s+/).filter(x => BIBLE_TALK.test(x)).join(" ").slice(0, 400) });
+    out.push({ stop: s.name, field: "_status", text: `walk ${s.parts ? s.parts.length + " points" : "not written"}, written for "${s.extrasFaith == null ? "?" : s.extrasFaith}"` }); }
+  return { day: d.destination, date: d.date, faith: faithKey(), theme: P().theme || "", hits: out }; };
 if (typeof window !== "undefined") window.__kairouteGo = (v, i) => { if (typeof i === "number") trip.active = i; view = v; render(); toTop(); };
 if (typeof window !== "undefined") window.kairoutePrewarm = (reserve, log) => saveStops(BUILTIN_CITIES.flatMap(([c]) => allSites(c)), log || ((d, n, s) => console.log(`saved ${d}/${n} ${s.name}`)), reserve ?? 15000);
 function speakLines(id, lines, lc) {

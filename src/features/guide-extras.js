@@ -214,6 +214,8 @@ const gxFits = s => { const w = themeOf()[2]; const t = ((s.category || "") + " 
 function gxThemeLink(s, city) {
   const t = themeOf(); if (!t[0] || !freeAI || !s.guide || t[0] === "film") return null;
   const v = gxGet("th:" + t[0] + ":" + keyOf(city.city) + ":" + s.id, "/x/write", { body: { kind: "theme", text: [s.summary, s.guide].filter(Boolean).join("\n").slice(0, 3000), name: s.name, theme: t[1] } });
+  // A Bible link the stop's own guide doesn't carry is never shown (the never-invent rule).
+  if (v && v.text && BIBLE_TALK.test(v.text) && !bibleSite(s)) return null;
   return v && v.text ? v.text : v === undefined && gxFits(s) ? "" : null;
 }
 // Film and TV: real filming locations from Wikidata, near each stop.
