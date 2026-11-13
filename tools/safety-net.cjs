@@ -136,6 +136,8 @@ const log = (suite, trip, ok, what) => { results.push({ suite, trip, ok, what })
         if (f.aboard || f.card || !f.restored || f.elsewhere) abBad.push(`${w} going ashore after all didn't put the day back`);
       }
       log('Staying on board', T.key, !abBad.length, abBad.length ? abBad.join(' | ') : `${ab} port days: on board and back again with one tap`); }
+    if (T.key === TRIPS[0].key) { const sz = await p.evaluate(() => ({ jul: window.__kairouteRunsThen('2027-07-12', [4, 5, 6, 7, 8, 9, 10]), jan: window.__kairouteRunsThen('2027-01-12', [4, 5, 6, 7, 8, 9, 10]), all: window.__kairouteRunsThen('2027-01-12', null) }));
+      log('Seasonal ferries', T.key, sz.jul && !sz.jan && sz.all, sz.jul && !sz.jan && sz.all ? 'a ferry that runs April to October is offered in July, not in January; year-round lines always' : 'seasonal check wrong: ' + JSON.stringify(sz)); }
     log('Day titles', T.key, true, `${titled} automatic day titles name only the destination`);
     log('Closed sights', T.key, true, `${closedTried} days tried adding a sight closed that day: never added, an open day or sight offered`);
     log('One truth', T.key, !errs.length, errs.length ? 'page errors: ' + [...new Set(errs)].join(' | ') : `${checked} days checked, no page errors`);

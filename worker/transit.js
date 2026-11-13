@@ -132,11 +132,14 @@ export async function transitOptions(a, b) {
   // first which lines stop near both ends, then the path of the few that do.
   const stops = (P, set) => `(node(around:${R_STOP},${P})[railway~"^(station|halt|stop)$"];node(around:${R_STOP},${P})[public_transport=stop_position][~"^(train|light_rail|subway|monorail|ferry)$"~"^yes$"];node(around:${R_STOP},${P})[amenity=ferry_terminal];)->.${set};`;
   const RT = `[type=route][route~"^(train|light_rail|subway|monorail|ferry)$"]`;
+  // Ferry routes are often mapped as ways only (no pier stops in the route), so a ferry route is also found by its
+  // course passing both piers.
   const q1 = `[out:json][timeout:20];${stops(A, "sa")}${stops(B, "sb")}rel(bn.sa)${RT}->.ra;rel(bn.sb)${RT}->.rb;rel.ra.rb;out ids;
 way(around:${R_FERRY},${A})[route=ferry]->.fa;way(around:${R_FERRY},${B})[route=ferry]->.fb;way.fa.fb;out geom;
+rel(bw.fa)[route=ferry]->.rfa;rel(bw.fb)[route=ferry]->.rfb;rel.rfa.rfb;out ids;
 .sa out tags;.sb out tags;`;
   const d1 = await overpass(q1);
-  const ids = (d1.elements || []).filter(e => e.type === "relation").map(e => e.id).slice(0, 6);
+  const ids = [...new Set((d1.elements || []).filter(e => e.type === "relation").map(e => e.id))].slice(0, 8);
   const d2 = ids.length ? await overpass(`[out:json][timeout:25];rel(id:${ids.join(",")});out geom;`) : { elements: [] };
   const el = (d1.elements || []).filter(e => e.type !== "relation").concat(d2.elements || []), stopTag = new Map();
   for (const e of el) if ((e.type === "node" || e.type === "way") && e.tags && !(e.tags.route)) stopTag.set(e.type[0] + e.id, { name: e.tags["name:en"] || e.tags.name || "", lat: e.lat ?? (e.center && e.center.lat), lng: e.lon ?? (e.center && e.center.lon) });
@@ -149,6 +152,7 @@ way(around:${R_FERRY},${A})[route=ferry]->.fa;way(around:${R_FERRY},${B})[route=
     const ways = mem.filter(m => m.type === "way" && !/platform/.test(m.role || "") && m.geometry);
     // Prefer stop positions over platforms; fall back to platforms when a line maps only those.
     const pool = stopsM.some(s => !s.plat) ? stopsM.filter(s => !s.plat) : stopsM;
+    if (pool.length < 2 && mode === "ferry") { const f = ferryByCourse(t, chain(ways), a, b, stopTag, "r" + r.id); if (f) opts.push(f); continue; }
     if (pool.length < 2) continue;
     const near = p => { let best = null; pool.forEach((s, k) => { const km = hav(s, p); if (km * 1000 <= R_STOP && (!best || km < best.km)) best = { s, k, km }; }); return best; };
     const sa = near(a), sb = near(b); if (!sa || !sb || sa.k === sb.k) continue;
@@ -162,7 +166,7 @@ way(around:${R_FERRY},${A})[route=ferry]->.fa;way(around:${R_FERRY},${B})[route=
     let ride = dur && total > 0 ? dur * Math.min(1, km / total) : km / v * 60 + between * perStop;
     ride = Math.max(ride, km / (v * 1.6) * 60); // never quicker than the line could run
     const every = mins(t.interval), nmA = (stopTag.get(sa.s.id) || {}).name, nmB = (stopTag.get(sb.s.id) || {}).name;
-    opts.push(mk({ mode, ref: t.ref || "", name: t.name || "", operator: t.operator || t.network || "", from: nmA || t.from || "", to: nmB || t.to || "", fromPt: sa.s, toPt: sb.s, km, ride, every, hours: t.opening_hours || "", fare: t.charge || t.fee || "", stops: between, path, a, b, osm: "r" + r.id }));
+    opts.push(mk({ mode, ref: t.ref || "", name: t.name || "", operator: t.operator || t.network || "", from: nmA || t.from || "", to: nmB || t.to || "", fromPt: sa.s, toPt: sb.s, km, ride, every, hours: t.opening_hours || "", seasonal: t.seasonal || "", fare: t.charge || t.fee || "", stops: between, path, a, b, osm: "r" + r.id }));
   }
   // Ferries are often mapped as one way from pier to pier rather than as a route relation.
   for (const w of el.filter(e => e.type === "way" && e.tags && e.tags.route === "ferry")) {
@@ -171,12 +175,69 @@ way(around:${R_FERRY},${A})[route=ferry]->.fa;way(around:${R_FERRY},${B})[route=
     const nmFrom = (fwd ? w.tags.from : w.tags.to) || "", nmTo = (fwd ? w.tags.to : w.tags.from) || "";
     if (hav(from, a) * 1000 > R_FERRY * 1.5 || hav(to, b) * 1000 > R_FERRY * 1.5) continue;
     const km = lineLen(path), dur = mins(w.tags.duration);
-    opts.push(mk({ mode: "ferry", ref: w.tags.ref || "", name: w.tags.name || "", operator: w.tags.operator || "", from: nmFrom, to: nmTo, fromPt: from, toPt: to, km, ride: dur || km / SPEED.ferry[0] * 60, every: mins(w.tags.interval), hours: w.tags.opening_hours || "", fare: w.tags.charge || w.tags.fee || "", stops: 0, path, a, b, osm: "w" + w.id }));
+    opts.push(mk({ mode: "ferry", ref: w.tags.ref || "", name: w.tags.name || "", operator: w.tags.operator || "", from: nmFrom, to: nmTo, fromPt: from, toPt: to, km, ride: dur || km / SPEED.ferry[0] * 60, every: mins(w.tags.interval), hours: w.tags.opening_hours || "", seasonal: w.tags.seasonal || "", fare: w.tags.charge || w.tags.fee || "", stops: 0, path, a, b, osm: "w" + w.id }));
   }
+  // No ferry straight there: a ferry with one change (Naples to Capri, then Capri to Amalfi), from the map's courses.
+  if (!opts.some(o => o.mode === "ferry")) { try { opts.push(...await ferryChain(a, b)); } catch (e) {} }
   // One option per line (the quickest way to ride it), quickest first.
   const best = new Map();
   for (const o of opts) { const k = o.mode + "|" + (o.ref || o.name || o.operator).toLowerCase(); if (!best.has(k) || best.get(k).min > o.min) best.set(k, o); }
   return [...best.values()].sort((x, y) => x.min - y.min).slice(0, 5);
+}
+// A ferry route mapped only by its course: the piers are where the course comes nearest each end (each within
+// reach), named after the nearest mapped ferry terminal; the ride is the course between them, with 15% more for
+// calls on the way that the map does not list.
+export function ferryByCourse(t, line, a, b, stopTag, osm) {
+  if (line.length < 2) return null;
+  const [ia, da] = nearestIdx(line, a), [ib, db] = nearestIdx(line, b);
+  if (ia === ib || da * 1000 > R_FERRY * 1.5 || db * 1000 > R_FERRY * 1.5) return null;
+  const path = ia < ib ? line.slice(ia, ib + 1) : line.slice(ib, ia + 1).reverse(), km = lineLen(path); if (km < 2) return null;
+  const named = p => { let best = null; for (const s of stopTag.values()) if (s.name && isFinite(s.lat)) { const d = hav(s, p); if (d <= 1 && (!best || d < best.d)) best = { d, name: s.name }; } return best ? best.name : ""; };
+  const total = lineLen(line), dur = mins(t.duration);
+  return mk({ mode: "ferry", ref: t.ref || "", name: t.name || "", operator: t.operator || t.network || "", from: named(path[0]) || (ia < ib ? t.from : t.to) || "", to: named(path[path.length - 1]) || (ia < ib ? t.to : t.from) || "",
+    fromPt: path[0], toPt: path[path.length - 1], km, ride: dur && total > 0 ? Math.max(dur * Math.min(1, km / total), km / SPEED.ferry[0] * 60 * 0.8) : km / SPEED.ferry[0] * 60 * 1.15, every: mins(t.interval),
+    hours: t.opening_hours || "", seasonal: t.seasonal || "", fare: t.charge || t.fee || "", stops: 0, path, a, b, osm });
+}
+// Ferries with one change: a ferry from the pier by the start whose far end is a pier another ferry sails from to the
+// pier by the destination. Both are mapped ferry courses; the change gets a full gap between sailings plus boarding
+// (no timetable), and the pair runs only in the months both run. Kept only when it doesn't wander far off the way.
+export async function ferryChain(a, b, ways) {
+  if (!ways) { const d = await overpass(`[out:json][timeout:25];(way(around:${R_FERRY},${a.lat},${a.lng})[route=ferry];way(around:${R_FERRY},${b.lat},${b.lng})[route=ferry];);out geom 40;`); ways = (d.elements || []).filter(e => e.type === "way"); }
+  const L = ways.map(w => ({ w, g: (w.geometry || []).map(p => ({ lat: p.lat, lng: p.lon ?? p.lng })) })).filter(x => x.g.length >= 2);
+  const near = (x, p) => nearestIdx(x.g, p)[1] * 1000 <= R_FERRY * 1.5, fromA = L.filter(x => near(x, a)), toB = L.filter(x => near(x, b)), direct = hav(a, b), out = [];
+  const nm = s => String(s || "").split(/\s*-\s*/).map(t => t.trim()).filter(Boolean);
+  for (const x of fromA) for (const y of toB) {
+    if (x.w.id === y.w.id || near(x, b) || near(y, a)) continue;
+    for (const end of [x.g[0], x.g[x.g.length - 1]]) {
+      if (hav(end, a) < 2) continue;
+      const [iy, dy] = nearestIdx(y.g, end); if (dy > 1) continue;
+      const at = y.g[iy], t1 = Object.assign({}, x.w.tags), t2 = Object.assign({}, y.w.tags);
+      const via = nm(t1.name).find(t => nm(t2.name).some(u => u.toLowerCase() === t.toLowerCase())) || "";
+      const l1 = ferryByCourse(t1, x.g, a, at, new Map(), "w" + x.w.id), l2 = ferryByCourse(t2, y.g, at, b, new Map(), "w" + y.w.id); if (!l1 || !l2) continue;
+      if (l1.km + l2.km > direct * 3) continue;
+      const months = l1.months && l2.months ? l1.months.filter(m => l2.months.includes(m)) : l1.months || l2.months;
+      if (months && !months.length) continue;
+      const lab = o => o.label.replace(/^Ferry\s*/, "") || "ferry";
+      out.push(Object.assign({}, l1, { label: `Ferry ${lab(l1)} + ${lab(l2)} (1 change${via ? " at " + via : ""})`.slice(0, 90), operator: [l1.operator, l2.operator].filter(Boolean).join(", ").slice(0, 60), to: l2.to, toPt: l2.toPt, egress: l2.egress,
+        ride: l1.ride + l2.wait + l2.ride, min: l1.min + l2.min, km: +(l1.km + l2.km).toFixed(1), stops: 1, months, hours: [l1.hours, l2.hours].filter(Boolean).join(" / ").slice(0, 80),
+        steps: [`Ferry ${lab(l1)}: ${l1.ride} min`, `Change${via ? " at " + via : ""}: wait up to ${l2.wait} min`, `Ferry ${lab(l2)}: ${l2.ride} min`], path: l1.path.concat(l2.path), src: l1.src + " + " + l2.src }));
+    }
+  }
+  return out.sort((p, q) => p.min - q.min).slice(0, 2);
+}
+// The months a line runs, when its tags say (opening_hours month ranges such as "Apr-Oct" or "May 15-Sep 30", or
+// seasonal=summer/winter); null when they don't (then it runs all year as far as the map knows). Summer is kept to
+// June-September and winter to December-February, the cautious reading.
+const MON = { jan: 1, feb: 2, mar: 3, apr: 4, may: 5, jun: 6, jul: 7, aug: 8, sep: 9, oct: 10, nov: 11, dec: 12 };
+export function runMonths(hours, seasonal) {
+  const set = new Set(), h = String(hours || "").toLowerCase(), re = /\b(jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)\w*(?:\s+\d{1,2})?\s*-\s*(jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)\w*/g;
+  let m; while ((m = re.exec(h))) { let x = MON[m[1]]; const y = MON[m[2]]; for (let k = 0; k < 12; k++) { set.add(x); if (x === y) break; x = x % 12 + 1; } }
+  if (!set.size) { const one = h.match(/\b(jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)\b(?![\s\d]*-)/g); if (one && /^\s*(jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)/.test(h)) one.forEach(x => set.add(MON[x])); }
+  const s = String(seasonal || "").toLowerCase();
+  if (!set.size && /summer/.test(s)) [6, 7, 8, 9].forEach(x => set.add(x));
+  if (!set.size && /winter/.test(s)) [12, 1, 2].forEach(x => set.add(x));
+  if (!set.size && /spring/.test(s)) [4, 5].forEach(x => set.add(x));
+  return set.size ? [...set].sort((p, q) => p - q) : null;
 }
 function mk(o) {
   const acc = access(hav(o.a, o.fromPt)), egr = access(hav(o.toPt, o.b));
@@ -187,7 +248,7 @@ function mk(o) {
   const ride = Math.round(o.ride);
   const label = [NAME[o.mode], o.ref && !(o.name || "").includes(o.ref) ? o.ref : "", o.name].filter(Boolean).join(" ").replace(/\s+/g, " ").slice(0, 80);
   return { mode: o.mode, kind: NAME[o.mode], label, operator: o.operator.slice(0, 60), from: o.from.slice(0, 60), to: o.to.slice(0, 60), ride, wait, every: ev, everySrc: every ? "map" : "usual", access: acc, egress: egr,
-    min: acc.min + wait + ride + egr.min, km: +o.km.toFixed(1), stops: o.stops, hours: String(o.hours).slice(0, 80), fare: String(o.fare).slice(0, 40),
+    min: acc.min + wait + ride + egr.min, km: +o.km.toFixed(1), stops: o.stops, hours: String(o.hours).slice(0, 80), months: runMonths(o.hours, o.seasonal), fare: String(o.fare).slice(0, 40),
     path: thin(o.path.length >= 2 ? o.path : [o.fromPt, o.toPt], 120).map(p => [+p.lng.toFixed(5), +p.lat.toFixed(5)]),
     fromPt: [+o.fromPt.lng.toFixed(5), +o.fromPt.lat.toFixed(5)], toPt: [+o.toPt.lng.toFixed(5), +o.toPt.lat.toFixed(5)], src: "OpenStreetMap " + o.osm, noTimetable: true };
 }
