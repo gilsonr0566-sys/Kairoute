@@ -5,6 +5,9 @@ on:
       pairs:
         description: "lat,lng>lat,lng;... (empty = the built-in examples)"
         default: ""
+      ferry:
+        description: "lat,lng>lat,lng for the ferry probe (empty = Naples terminal > Amalfi)"
+        default: ""
 permissions:
   contents: read
 jobs:
@@ -19,3 +22,6 @@ jobs:
       - env:
           PAIRS: ${{ inputs.pairs }}
         run: node tools/transit-probe.mjs || true
+      - env:
+          FERRY: ${{ inputs.ferry }}
+        run: node tools/ferry-probe.mjs || true
