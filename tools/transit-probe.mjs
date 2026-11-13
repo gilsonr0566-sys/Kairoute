@@ -16,8 +16,8 @@ const pt = s => { const [lat, lng] = s.split(",").map(Number); return { lat, lng
 for (const [name, p] of pairs) {
   const [a, b] = p.split(">").map(pt);
   try {
-    const t0 = Date.now(), r = await allOptions(a, b, 1), o = r.opts;
-    console.log(`\n== ${name} (${o.length} options, ${Date.now() - t0} ms)`);
+    const t0 = Date.now(), r0 = await allOptions(a, b, 1, 90000), r = r0.late ? (await r0.late) || r0 : r0, o = r.opts;
+    console.log(`\n== ${name} (${o.length} options, ${Date.now() - t0} ms${r.partial ? ", PARTIAL (a source was busy)" : ""})`);
     for (const x of o) console.log(`  ${x.min} min total: ${x.label}${x.operator ? " (" + x.operator + ")" : ""} | ${x.access.how} ${x.access.min} min to ${x.from || "?"} | wait ${x.wait} (every ${x.every} min, ${x.everySrc}) | ride ${x.ride} min, ${x.km} km, ${x.stops} stops | ${x.egress.how} ${x.egress.min} min from ${x.to || "?"} | path ${x.path.length} pts${x.hours ? " | hours " + x.hours : ""}${x.fare ? " | fare " + x.fare : ""} | ${x.src}${x.steps ? "\n      " + x.steps.join("\n      ") : ""}`);
   } catch (e) { console.log(`\n== ${name}: ${e.message} ${(e.why || []).join("; ")}`); }
   await new Promise(r => setTimeout(r, 3000));

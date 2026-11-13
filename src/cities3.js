@@ -198,7 +198,7 @@ const CITY_ROME = {
   farther: [
     { id: "stpaulwalls", name: "Basilica of Saint Paul Outside the Walls", lat: 41.8587, lng: 12.4768, minutes: 50, kind: "local", far: true, category: "Bible site",
       travel: "About 20 minutes by metro line B from the Colosseum.",
-      summary: "The great basilica over the tomb of the Apostle Paul.",
+      summary: "The great basilica over the tomb of the Apostle Paul: a different church from St Peter's, about 6 km south (\"Outside the Walls\" means beyond Rome's ancient city walls).",
       guide: "Tradition holds that Paul was beheaded near Rome around AD 67 and buried here, on the road to Ostia. The emperor Constantine built the first church over his grave. Below the main altar you can see the marble slab inscribed 'Paulo Apostolo Mart', 'to Paul, apostle, martyr', and the chain that tradition says bound him. Around the nave runs a row of mosaic portraits of every pope, from Peter to today.",
       lookFor: ["The tomb of Saint Paul under the altar.", "The chain of Paul displayed by the tomb.", "The mosaic portraits of every pope."], photoTip: "From the courtyard with Paul's statue holding his sword.",
       hours: "7:00–18:30", tickets: "Free.", cost: 0, indoor: true, access: "Step-free.",

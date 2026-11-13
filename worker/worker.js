@@ -432,11 +432,19 @@ export default {
         if (!pr || !ok(pr.a) || !ok(pr.b)) return { error: "bad" };
         const dow = Number.isInteger(pr.dow) && pr.dow >= 0 && pr.dow <= 6 ? pr.dow : 3, kind = dow === 0 ? "su" : dow === 6 ? "sa" : "wk";
         const key = "tr3:" + kind + ":" + [...pr.a, ...pr.b].map(n => n.toFixed(3)).join(",");
-        const hit = await env.USAGE.get(key, "json"); if (hit) return hit;
-        try { const r = await allOptions({ lat: pr.a[0], lng: pr.a[1] }, { lat: pr.b[0], lng: pr.b[1] }, dow), res = { opts: r.opts, partial: !!r.partial };
-          // A full answer is kept 14 days (timetables change); one where a source was busy only 1 day, so it is asked again soon.
-          // When the map answered after the reply went out, its full answer replaces the partial one.
-          const keep = x => env.USAGE.put(key, JSON.stringify({ opts: x.opts, partial: !!x.partial }), { expirationTtl: (x.partial ? 1 : x.opts.length ? 14 : 7) * 86400 });
+        // A full answer is kept 14 days (timetables change); one where a source was busy only 1 day. When the map answered
+        // after the reply went out, its full answer replaces the partial one. A partial answer met again after 10 minutes
+        // is looked up afresh in the background (once per 10 minutes), so a busy map server never hides a ferry for a day.
+        const keep = x => env.USAGE.put(key, JSON.stringify({ opts: x.opts, partial: !!x.partial, t: Date.now() }), { expirationTtl: (x.partial ? 1 : x.opts.length ? 14 : 7) * 86400 });
+        const look = () => allOptions({ lat: pr.a[0], lng: pr.a[1] }, { lat: pr.b[0], lng: pr.b[1] }, dow);
+        const hit = await env.USAGE.get(key, "json");
+        if (hit) {
+          if (hit.partial && Date.now() - (hit.t || 0) > 600000 && !(await env.USAGE.get("lk:" + key))) {
+            ctx.waitUntil(env.USAGE.put("lk:" + key, "1", { expirationTtl: 600 }).then(look).then(r => (!r.partial || r.opts.length > (hit.opts || []).length) ? keep(r).then(() => r.late ? r.late.then(f => f && keep(f)) : null) : (r.late ? r.late.then(f => f && keep(f)) : null)).catch(() => {}));
+          }
+          return { opts: hit.opts, partial: !!hit.partial };
+        }
+        try { const r = await look(), res = { opts: r.opts, partial: !!r.partial };
           ctx.waitUntil(keep(r).then(() => r.late ? r.late.then(f => f && keep(f)) : null).catch(() => {}));
           return res;
         } catch (e) { return { error: "map busy" }; }
