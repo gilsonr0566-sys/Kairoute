@@ -107,7 +107,7 @@ const DAY_TYPES = [
   { key: "port", label: "Cruise port day", short: "In port", icon: "⚓" },
   { key: "sea", label: "Day at sea", short: "At sea", icon: "〰" }
 ];
-const MODES = { flight: { label: "Flight", list: "airport", clear: 75, need: 180, word: "airport" }, train: { label: "Train", list: "station", clear: 15, need: 30, word: "station" }, ship: { label: "Ship", list: "cruise", clear: 60, need: 60, word: "port" }, car: { label: "Car or bus", list: "hotel", clear: 10, need: 20, word: "starting point" } };
+const MODES = { flight: { label: "Flight", list: "airport", clear: 75, need: 180, word: "airport" }, train: { label: "Train", list: "station", clear: 15, need: 30, word: "station" }, ship: { label: "Ship", list: "cruise", clear: 60, need: 60, word: "port" }, ferry: { label: "Ferry", list: "cruise", clear: 20, need: 40, word: "ferry terminal" }, car: { label: "Car or bus", list: "hotel", clear: 10, need: 20, word: "starting point" } };
 const INTERESTS = [["history", "History"], ["art", "Art & museums"], ["architecture", "Architecture"], ["food", "Food & markets"], ["views", "Views & nature"], ["churches", "Churches & faith"], ["bible", "Bible sites"], ["shopping", "Shopping"], ["beaches", "Beaches"], ["kids", "Kid-friendly"]];
 const INTEREST_WORDS = { history: ["history", "roman", "medieval", "ancient", "war", "castle", "ruins"], art: ["museum", "art", "picasso", "painting", "gallery"], architecture: ["architecture", "gaudí", "gaudi", "house", "façade", "building", "palace"], food: ["market", "food", "tapas"], views: ["view", "park", "hill", "garden", "nature"], churches: ["church", "basilica", "cathedral", "monastery", "chapel", "shrine", "madonna", "synagogue", "mosque", "temple"], bible: ["paul", "apostle", "bible", "biblical", "christian", "saint", "basilica", "church", "cathedral", "monastery"], shopping: ["shop", "market", "street"], beaches: ["beach", "sea"], kids: ["park", "beach", "amusement", "zoo"] };
 // Religious sites: places of worship (churches, monasteries, mosques, synagogues...). Ancient ruins of temples
@@ -514,12 +514,9 @@ function travel(a, b) {
   const speed = trip.prefs && trip.prefs.walk === "low" ? 3.6 : 4.5;
   if (d < 0.02) return { mode: "walk", how: "Walk", km: 0, min: 0 }; // the same place: no time
   if (d <= lim) return { mode: "walk", how: "Walk", km: d * 1.3, min: Math.max(2, Math.round(d * 1.3 / speed * 60)) };
-  if (d <= 6) return rideLeg(a, b, { mode: "ride", how: "Taxi, bus or metro", km: d * 1.3, min: Math.round(10 + d * 1.3 / 22 * 60) });
-  if (d <= 15) return rideLeg(a, b, { mode: "ride", how: "Taxi or rideshare", km: d * 1.3, min: Math.round(10 + d * 1.3 / 25 * 60) }, b.backToShip);
-  // 15-40 km: regional roads and local trains, around bays and through towns (Naples to Sorrento is 26 km as the
-  // crow flies but about 50 km of coast road); farther: highway or intercity train (Athens to Corinth: about 1 h 20).
-  let leg = d <= 40 ? { mode: "ride", how: "Train or car", km: d * 1.35, min: Math.round(15 + d * 1.35 / 45 * 60) }
-    : { mode: "ride", how: "Train or car", km: d * 1.25, min: Math.round(15 + d * 1.25 / 85 * 60) };
+  if (d <= 6) return rideLeg(a, b, roadGuess(d));
+  if (d <= 15) return rideLeg(a, b, roadGuess(d), b.backToShip);
+  let leg = roadGuess(d);
   // A day trip's own note says how long the trip really takes ("1 hour on the Circumvesuviana train", "60-75 min"):
   // the slowest time it names, plus getting to the station or pier, wins over the estimate.
   const said = Math.max(saidMin(a), saidMin(b));
@@ -528,6 +525,15 @@ function travel(a, b) {
   // A long ride back to the ship gets time for a late train or traffic: missing the ship is not an option.
   if (b.backToShip && leg.min >= 30) { const sl = Math.max(15, Math.round(leg.min * 0.3 / 5) * 5); leg = Object.assign(leg, { min: leg.min + sl, slack: sl }); }
   return leg;
+}
+// By road (taxi, car or bus), as the crow flies d km. 15-40 km: regional roads around bays and through towns
+// (Naples to Sorrento is 26 km as the crow flies but about 50 km of coast road); farther: highway (Athens to
+// Corinth: about 1 h 20).
+function roadGuess(d) {
+  if (d <= 6) return { mode: "ride", how: "Taxi, bus or metro", km: d * 1.3, min: Math.round(10 + d * 1.3 / 22 * 60) };
+  if (d <= 15) return { mode: "ride", how: "Taxi or rideshare", km: d * 1.3, min: Math.round(10 + d * 1.3 / 25 * 60) };
+  return d <= 40 ? { mode: "ride", how: "Train or car", km: d * 1.35, min: Math.round(15 + d * 1.35 / 45 * 60) }
+    : { mode: "ride", how: "Train or car", km: d * 1.25, min: Math.round(15 + d * 1.25 / 85 * 60) };
 }
 const saidMemo = new Map();
 function saidMin(p) {
@@ -555,9 +561,17 @@ const planDow = () => { const t = typeof planDate !== "undefined" && planDate ? 
 const dayKind = dow => dow === 0 ? "su" : dow === 6 ? "sa" : "wk";
 // Seasonal lines (a summer ferry) are offered only in the months they run, against the plan's own date.
 const runsThen = o => { if (!o || !Array.isArray(o.months) || !o.months.length) return true; const t = typeof planDate !== "undefined" && planDate ? Date.parse(planDate + "T12:00:00Z") : NaN; return !isFinite(t) || o.months.includes(new Date(t).getUTCMonth() + 1); };
+// A saved timetable for nearly the same trip (both ends within about 600 m), so a day re-planned from where the
+// traveler stands (GPS) still knows the trains, with no signal.
+function transitNear(a, b, kind) {
+  let best = null, bd = 0.6;
+  for (const k in transitMem) { const [ks, kd] = k.split("|"); if (kd && kd !== kind) continue; const n = ks.split(",").map(Number); if (n.length !== 4) continue;
+    const e = Math.max(hav(a, { lat: n[0], lng: n[1] }), hav(b, { lat: n[2], lng: n[3] })); if (e < bd) { bd = e; best = transitMem[k]; } }
+  return best;
+}
 function transitFor(a, b) {
   if (!a || !b || !isFinite(a.lat) || !isFinite(b.lat) || hav(a, b) < 4) return null;
-  const dow = planDow(), k = pairKey(a, b) + "|" + dayKind(dow), hit = transitMem[k] || transitMem[pairKey(a, b)];
+  const dow = planDow(), k = pairKey(a, b) + "|" + dayKind(dow), hit = transitMem[k] || transitMem[pairKey(a, b)] || transitNear(a, b, dayKind(dow));
   // An answer given while a source was busy (or an empty one) is used meanwhile and asked again after 10 minutes.
   if (hit && !(hit.partial && Date.now() - hit.t > 600000)) return hit.opts.filter(runsThen);
   if (typeof freeAI !== "undefined" && freeAI && !transitQ.has(k) && !(transitFail.get(k) > Date.now() - 120000)) { transitQ.set(k, { a: [+a.lat, +a.lng], b: [+b.lat, +b.lng], dow, pri: typeof trip !== "undefined" && trip.days && trip.days[trip.active] && typeof planDate !== "undefined" && trip.days[trip.active].date === planDate }); clearTimeout(transitTimer); transitTimer = setTimeout(askTransit, 300); }
@@ -609,13 +623,16 @@ function switchRide(key, val) {
 // What the traveler needs to make a ride: where to catch it, how often it runs, how long, and the choice of ride.
 // Departures from the timetable: the next one after you reach the station, and on the way back to the ship the last
 // one that still gets you there in time.
-function depLine(o, start, endBy, back) {
+// Departures that still get the traveler there by endBy, with the ride's own cushion for delays (the same rule on
+// the timeline and in the live countdown, so both always name the same last safe departure).
+const safeDeps = (o, endBy, slack) => (o && o.deps || []).filter(d => d.t - d.lead + d.dur + (slack || 0) <= endBy);
+function depLine(o, start, endBy, back, slack) {
   if (!o) return "";
   const when = o.checked ? ` (timetable checked ${fmtDate(o.checked)}; check again before you go)` : "";
   if (!o.deps || !o.deps.length) return o.noTimetable ? ` No published timetable found for this ${o.kind.toLowerCase()}: planned with a full gap between departures. Check the ${o.kind.toLowerCase()} timetable before you go.` : "";
   const at = start + o.access.min, nx = isFinite(start) ? o.deps.find(d => d.t >= at) : null;
   let t = nx ? ` Next departure about ${fmt(nx.t)}${when}.` : ` Departures about every ${dur(o.every)}${when}.`;
-  if (back && isFinite(endBy)) { const ok = o.deps.filter(d => d.t + d.dur - d.lead <= endBy); if (ok.length) t += ` <b>Last safe departure back: ${fmt(ok[ok.length - 1].t)}.</b>`; }
+  if (back && isFinite(endBy)) { const ok = safeDeps(o, endBy, slack); if (ok.length) t += ` <b>Last safe departure back: ${fmt(ok[ok.length - 1].t)}.</b>`; }
   return t;
 }
 function rideDetail(leg, start, endBy) {
@@ -623,7 +640,7 @@ function rideDetail(leg, start, endBy) {
   const o = leg.transit, ev = o ? `runs about every ${dur(o.every)}${o.everySrc === "timetable" ? " (from the timetable)" : o.everySrc === "map" ? "" : " (usual for this kind of line; check the timetable)"}` : "";
   const ride = o && o.steps && o.steps.length ? o.steps.map(esc).join("; then ") : o ? `${dur(o.ride)} ride${o.stops ? ` (${o.stops} stops)` : ""}` : "";
   const how = o ? `${o.access.how === "walk" ? "Walk" : "Taxi"} ${dur(o.access.min)} to ${esc(o.from || "the " + (o.mode === "ferry" ? "pier" : "station"))}, ${ev}. ${ride}, then ${o.egress.how === "walk" ? "walk" : "taxi"} ${dur(o.egress.min)}${o.to && !(o.steps && o.steps.length) ? " from " + esc(o.to) : ""}.${o.operator ? " " + esc(o.operator) + "." : ""}${o.hours ? " Hours: " + esc(o.hours) + "." : ""}${o.fare ? " Fare: " + esc(o.fare) + "." : ""} Times include waiting and boarding.` : "By road, with time for traffic.";
-  const fall = depLine(o, start, endBy, leg.lastMile) + (leg.slack ? ` Includes ${dur(leg.slack)} spare before the ship.` : "") + (leg.lastMile && o ? ` <b>If you miss it:</b> a taxi takes about ${dur(leg.road)}.` : "");
+  const fall = depLine(o, start, endBy, leg.lastMile, leg.slack) + (leg.slack ? ` Includes ${dur(leg.slack)} spare before the ship.` : "") + (leg.lastMile && o ? ` <b>If you miss it:</b> a taxi takes about ${dur(leg.road)}.` : "");
   const note = rideNotice && rideNotice.key === leg.key ? `<span class="ridenote">${rideNotice.text}${rideNotice.undo != null ? ` <button class="linkbtn" data-act="rideundo">Undo</button>` : ""}</span>` : "";
   return `<span class="sub ridesub">${how}${fall}</span>${note}<label class="ridepick"><span>Ride</span><select data-ride="${esc(leg.key)}">${leg.choices.map(c => `<option value="${esc(c.id)}" ${c.id === leg.choice ? "selected" : ""}>${esc(c.label)} · ${dur(c.min)}</option>`).join("")}</select></label>`;
 }
@@ -801,13 +818,13 @@ function dayWindow(d, city) {
   } else if (d.type === "embark") {
     if (!L) return { error: "Choose where you're staying in " + d.destination + "." };
     if (!P) return { error: "Choose the cruise port." };
-    w.start = toMin(d.startTime); w.endBy = toMin(d.allAboard) - 60;
+    w.start = toMin(d.startTime); w.endBy = shipToPort(d, d.allAboard) - 60;
     w.head = [L]; w.tail = [fixedStop(L, "Collect bags at " + L.name, 15), P];
     w.startLabel = "Check out of " + L.name; w.endLabel = "Boarding at " + P.name;
     w.notesEnd.push(`All aboard ${d.allAboard}. We get you to the terminal an hour early for check-in.`);
   } else if (d.type === "port") {
     if (!P) return { error: "Choose where the ship docks." };
-    w.start = toMin(d.portArrive) + (d.tender ? 60 : 30); w.endBy = toMin(d.allAboard) - 45; w.buffer = 45;
+    w.start = shipToPort(d, d.portArrive) + (d.tender ? 60 : 30); w.endBy = shipToPort(d, d.allAboard) - 45; w.buffer = 45;
     w.head = [Object.assign({}, P, { leaveWhenReady: true })]; w.tail = [Object.assign({}, P, { backToShip: true })];
     w.startLabel = (d.tender ? "Tender ashore to " : "Off the ship at ") + P.name; w.endLabel = "Back at the ship";
     w.notes.push(`Ship docks ${d.portArrive}${d.tender ? " (tender port, so we allow an hour to get ashore)" : ""}.`);
@@ -1019,7 +1036,7 @@ function checksCard(d, city, plan) {
     const lab = x => (x.meal && x.meal.label) || "Dinner", known = meals.filter(x => hoursOf(x.place)), open = known.filter(x => MEAL_CHECK[lab(x)].some(m => ohState(hoursOf(x.place), d.date, m) === "open"));
     add(known.length === meals.length && open.length === meals.length ? "ok" : "warn", known.length ? `${open.length} of ${meals.length} meal stops list hours that say they're open on this day.${known.length < meals.length ? " The others list no hours: check before you go." : ""}` : "No restaurant here lists its hours on the map. Check they're open on the day.");
   }
-  if (d.type === "port" && d.allAboard) add(plan.over ? "warn" : "ok", `Back at the ship by ${fmt(Math.min(plan.end, plan.endBy))}, ${dur(toMin(d.allAboard) - Math.min(plan.end, plan.endBy))} before all aboard (${esc(d.allAboard)}). Being on board on time is your responsibility: confirm the all-aboard time with your cruise line on the day, as it can change.`);
+  if (d.type === "port" && d.allAboard) add(plan.over ? "warn" : "ok", `Back at the ship by ${fmt(Math.min(plan.end, plan.endBy))}, ${dur(shipToPort(d, d.allAboard) - Math.min(plan.end, plan.endBy))} before all aboard (${esc(d.allAboard)}). Being on board on time is your responsibility: confirm the all-aboard time with your cruise line on the day, as it can change.`);
   if (plan.over) add("warn", `The day runs past ${fmt(plan.endBy)}. Take out a stop.`); else add("ok", `The day fits: done by ${fmt(plan.end)}, with travel, meals and lines allowed for.`);
   if ((plan.dropped || []).length) add("warn", `Didn't fit today: ${esc(plan.dropped.map(s => s.name).join(", "))}.`);
   const short = (plan.stops || []).filter(s => s.shortFrom && s.shortFrom > s.minutes);
@@ -2500,7 +2517,7 @@ ${wiz && (wiz.cruiseLine || wiz.ship) ? "Cruise: " + [wiz.cruiseLine, wiz.ship, 
 
 First write one line that starts with STOPS: and lists, in order, every city, port, island or event place the traveler mentions or that appears in the photos, separated by " > ", followed by the count, for example "STOPS: Athens > Mykonos > Santorini > Rome (3 ports)". Then write one line per day, nothing else, in exactly this format with | between fields:
 DAY|date YYYY-MM-DD|destination|type|mode|time HH:MM|portArrive HH:MM|allAboard HH:MM|tender yes/no|lodging|estimated yes/no
-type is one of arrival, land, embark, port, sea, departure. mode is flight, train, ship or car. Leave a field empty when it doesn't apply, but keep the | separators. No JSON, no commentary.
+type is one of arrival, land, embark, port, sea, departure. mode is flight, train, ferry, ship or car. Leave a field empty when it doesn't apply, but keep the | separators. No JSON, no commentary.
 Rules:
 - One entry per day per city. On a day you travel between two cities, make two entries with the same date: a "departure" in the first city and an "arrival" in the second, with the mode used (flight, train, or car for a drive or bus).
 - First day in a city reached by plane, train, car or by getting off a cruise: "arrival" with mode and time = arrival time. Last day when leaving: "departure" with mode and time = departure time. Days in between: "land". A trip that is just one city or one event day is fine: use "land" days.
@@ -2880,7 +2897,7 @@ if (typeof window !== "undefined") window.__kairouteQuality = () => { bonusMemo 
   const kept = pts.filter(x => x.type === "stop").map(x => x.place);
   // The ship never leaves without you: back with the full cushion, and still at least 25 minutes before all aboard
   // if the ride back takes half as long again as normal (a slow train, a traffic jam).
-  if (d.type === "port" && d.allAboard) { const aa = toMin(d.allAboard), legs = pl.items.filter(x => x.type === "travel"), last = legs[legs.length - 1], base = last ? last.leg.min - (last.leg.slack || 0) : 0, slow = pl.end - (last && last.leg.slack || 0) + base * 0.5;
+  if (d.type === "port" && d.allAboard) { const aa = shipToPort(d, d.allAboard), legs = pl.items.filter(x => x.type === "travel"), last = legs[legs.length - 1], base = last ? last.leg.min - (last.leg.slack || 0) : 0, slow = pl.end - (last && last.leg.slack || 0) + base * 0.5;
     if (pl.end > aa - (pl.w.buffer || 45)) issues.push(`back at the ship ${fmt(pl.end)}, less than ${pl.w.buffer || 45} min before all aboard ${d.allAboard}`);
     else if (slow > aa - 25) issues.push(`ship margin too thin if the ride back is slow: ${fmt(slow)} against all aboard ${d.allAboard}`);
     // Missing the train or ferry back: the next one, or a taxi, whichever is sooner, still gets there 15 minutes before all aboard.
@@ -3253,7 +3270,7 @@ function placeMenu(m) {
     // Too tall for either side: scroll the page up just enough for the whole menu to fit under its button.
     let sc = m.parentElement; while (sc && sc !== document.body && !(sc.scrollHeight > sc.clientHeight + 1 && /auto|scroll/.test(getComputedStyle(sc).overflowY))) sc = sc.parentElement;
     const need = Math.min(h - below + 4, b.top - pad - 60);
-    if (need > 0) { m._scrolled = true; if (!sc || sc === document.body) window.scrollBy(0, need); else sc.scrollTop += need; m._scrolled = false; return placeMenu(m); }
+    if (need > 0) { m._scrolled = true; if (!sc || sc === document.body) window.scrollBy(0, need); else sc.scrollTop += need; try { placeMenu(m); } finally { m._scrolled = false; } return; }
   }
   if (h <= below || below >= above) { p.style.top = (b.bottom + 4) + "px"; p.style.bottom = "auto"; p.style.maxHeight = Math.max(120, below) + "px"; }
   else { p.style.top = Math.max(pad, b.top - 4 - Math.min(h, above)) + "px"; p.style.bottom = "auto"; p.style.maxHeight = above + "px"; }
@@ -3507,7 +3524,7 @@ function renderLobby() {
     ${cur ? `<div class="resume">
       <div class="stamp"><span>Day<b>${cur.active + 1}</b></span></div>
       <div><div class="eyebrow">Pick up where you left off</div>${renameId === cur.id ? renameBox(cur.id, cur.name || tripName(cur)) : `<h3>${esc(cur.name || tripName(cur))}</h3>`}
-        <div class="meta">${esc(tripSpan(cur))} · ${cur.days.length} days · ${(() => { const td = cur.days.find(x => x.date === todayISO()); const dd = td || d; return (td ? "Today: " : "Next: ") + esc(placeLabel(dd) || "New day"); })()}</div></div>
+        <div class="meta">${esc(tripSpan(cur))} · ${cur.days.length} days · ${(() => { const td = cur.days.find(x => isToday(x)); const dd = td || d; return (td ? "Today: " : "Next: ") + esc(placeLabel(dd) || "New day"); })()}</div></div>
       <div class="go"><button class="btn" data-act="continue">Continue trip</button></div>
       <div class="resacts"><span class="lede">${syncSt() ? "Synced across your devices" + (syncSt().at ? " · last synced " + esc(new Date(syncSt().at).toLocaleTimeString([], { hour: "numeric", minute: "2-digit" })) : "") : `Saved on this device · <button class="linkbtn" data-act="syncfromlobby">Sync with another device</button>`}</span><button class="btn ghost small" data-goto="trip" data-act2="edit">Edit itinerary</button>${moreMenu(cur.id, `<button class="btn ghost small" data-act="rename" data-id="${esc(cur.id)}">Rename</button><button class="btn ghost small" data-act="archive" data-id="${esc(cur.id)}">Archive</button>${delBtn(cur.id)}`)}</div>
     </div>` : ""}
@@ -3838,7 +3855,7 @@ function basicsCard(city) {
     <div class="phrases">${b.phrases.map((p, i) => `<button class="phrase" data-phrase="${i}"><span class="pl">${esc(p.local)}</span><span class="ps">${esc(p.say)}</span><span class="pm">${esc(p.meaning)}</span><span class="pp" aria-hidden="true">▶</span></button>`).join("")}</div>` : ""}
   </div>`;
 }
-const todayISO = () => { const n = new Date(); return n.getFullYear() + "-" + String(n.getMonth() + 1).padStart(2, "0") + "-" + String(n.getDate()).padStart(2, "0"); };
+const todayISO = d => { if (d) return zoneNow(dayZone(d).tz).date; const n = new Date(); return n.getFullYear() + "-" + String(n.getMonth() + 1).padStart(2, "0") + "-" + String(n.getDate()).padStart(2, "0"); };
 function countdownCard(d, plan) { return alarmCard(d, plan); }
 function tickCountdown() { alarmTick(); }
 function stopCountdownIfAny() { if (cdTimer) { clearInterval(cdTimer); cdTimer = null; } }
@@ -4926,22 +4943,26 @@ ${partsList(s, it.time)}${stopLiveNotes(it, d)}</div></div>`;
     upgrading && keyOf(upgrading) === keyOf(d.destination) ? `<p class="banner" role="status"><span class="spinner"></span> Building a fuller guide for ${esc(d.destination)} in the background. This plan updates by itself in about two minutes.</p>` : "",
     suggestMsg ? `<p class="banner ok" id="suggestNote" role="status">${esc(suggestMsg)} <button class="linkbtn" data-act="suggestok">OK</button></p>` : ""
   ].filter(Boolean).join("");
-  const preview = d.date !== todayISO() && cdPreview == null;
+  const preview = !isToday(d) && cdPreview == null;
   const wxt = weatherTool(d, plan), wxChip = /wxchip/.test(wxt) ? wxt : "";
-  // One deadline clock only: when the countdown shows, the "back on board" tile is left out (Richard, Nov 13).
-  const cdHTML = countdownCard(d, plan);
+  // The map key lists only what today's map really shows (no "Hotel" on a cruise day).
+function legendHTML(plan) {
+  const tr = plan.items.filter(i => i.type === "travel" && i.leg.min > 0);
+  return [tr.some(i => i.leg.mode === "walk") ? `<span><i></i>Walk</span>` : "", tr.some(i => i.leg.mode !== "walk") ? `<span><i class="dash"></i>Taxi or transit</span>` : "",
+    plan.items.some(i => i.type === "meal") ? `<span style="color:var(--meal)">● Meal</span>` : "", plan.items.some(i => i.type === "fixed") ? `<span style="color:var(--must)">■ Hotel</span>` : "",
+    (plan.along || []).length ? `<span>● On the way</span>` : ""].join("");
+}
+// One deadline clock only: when the countdown shows, the "back on board" tile is left out (Richard, Nov 13).
+  const cdHTML = countdownCard(d, plan), walkTile = plan.walkKm >= 0.15; // under about 0.1 mi of walking says nothing
   return `
   <div class="plangrid"><div class="plantop">
   <div class="dayhead">${dayHeading(d)}${cdHTML}<button class="btn bigbtn tourbtn" data-act="tourstart"><span class="tb-long">▶ Start the tour</span><span class="tb-short">▶ Start tour</span></button></div>
-  <div class="daysum${cdHTML ? " n3" : ""}" role="group" aria-label="Today at a glance">
+  <div class="daysum n${2 + (walkTile ? 1 : 0) + (cdHTML ? 0 : 1)}" role="group" aria-label="Today at a glance">
     <div><b>${fmt(plan.start)}–${fmt(plan.endBy)}</b><span>${d.type === "port" ? "ashore " + dur(plan.endBy - plan.start) : L ? dur(d.hours * 60) + " sightseeing" : "free " + dur(plan.endBy - plan.start)}</span></div>
     <div><b>${stopsN}${optN ? " + " + optN : ""}</b><span>${stopsN === 1 ? "pick" : "picks"}${optN ? " + optional" : ""}${plan.along.length ? ` · ${plan.along.length} on the way` : ""}</span></div>
-    <div><b>${distTxt(plan.walkKm)}</b><span>walking</span></div>
+    ${walkTile ? `<div><b>${distTxt(plan.walkKm)}</b><span>walking</span></div>` : ""}
     ${cdHTML ? "" : `<div><b>${fmt(plan.end)}</b><span>${d.type === "port" ? "back on board" : "finish"}</span></div>`}
-  </div>
-  <div class="planbar">
-    ${canLen ? `<div class="seg pace daylen" role="group" aria-label="How long to sightsee today">${DAY_LEN.map(([h, l, sub]) => `<button type="button" data-act="daylen" data-h="${h}" aria-pressed="${+d.hours === h}" title="${esc(l)}: ${esc(sub)} of sightseeing">${esc(l.replace(/ day$/, ""))} <small>${sub}</small></button>`).join("")}</div>` : ""}
-    <div class="toolrow"><button class="btn ghost small" data-goto="sites">Change stops</button>
+    <div class="daytools"><div class="toolrow"><button class="btn ghost small" data-goto="sites">Change stops</button>
     <details class="moremenu planmore"><summary aria-label="More options for today">More</summary><div class="menupanel" role="menu">
       <div class="menugroup">Plan this day</div>
       <button class="menuitem" role="menuitem" data-act="suggesttour">✨ Suggest my tour</button>
@@ -4953,11 +4974,14 @@ ${partsList(s, it.time)}${stopLiveNotes(it, d)}</div></div>`;
       <div class="menugroup">Meals</div>
       <button class="menuitem" role="menuitem" data-act="bookopen" data-meal="Lunch">🍽 ${(d.booked || {}).Lunch ? "Change my lunch reservation" : "I have a lunch reservation"}</button>
       <button class="menuitem" role="menuitem" data-act="bookopen" data-meal="Dinner">🍽 ${(d.booked || {}).Dinner ? "Change my dinner reservation" : "I have a dinner reservation"}</button>
-    </div></details>${wxChip}</div>
+    </div></details>${wxChip}</div></div>
   </div>
+  ${canLen ? `<div class="planbar">
+    ${canLen ? `<div class="seg pace daylen" role="group" aria-label="How long to sightsee today">${DAY_LEN.map(([h, l, sub]) => `<button type="button" data-act="daylen" data-h="${h}" aria-pressed="${+d.hours === h}" title="${esc(l)}: ${esc(sub)} of sightseeing">${esc(l.replace(/ day$/, ""))} <small>${sub}</small></button>`).join("")}</div>` : ""}
+  </div>` : ""}
   </div><div class="left pane" data-pane="map">
   <div class="mapbox">${mapSlot(plan, d, "plan")}
-    <div class="maplegend"><span><i></i>Walk</span><span><i class="dash"></i>Taxi or transit</span><span style="color:var(--meal)">● Meal</span><span style="color:var(--must)">■ Hotel</span><span>● On the way</span></div>
+    <div class="maplegend">${legendHTML(plan)}</div>
   </div>
   <details class="card foldlist morefold"><summary>More about today</summary>
   ${checksCard(d, city, plan)}
@@ -4971,7 +4995,7 @@ ${partsList(s, it.time)}${stopLiveNotes(it, d)}</div></div>`;
   <p class="footnote">Times are estimates using a relaxed walking pace and typical taxi times. Check opening hours and book timed tickets for the big sights.</p>
   </details>
   </details>
-  </div><div class="right pane" data-pane="sched">${heads ? `<div class="heads" role="region" aria-label="Heads-up for today">${heads}</div>` : ""}${bookFormHTML(d)}<div class="card"><div class="timeline">${rows}</div></div></div></div>`;
+  </div><div class="right pane" data-pane="sched">${heads ? `<div class="heads" role="region" aria-label="Heads-up for today">${heads}</div>` : ""}${bookFormHTML(d)}<div class="card">${zoneNote(d)}<div class="timeline">${rows}</div></div></div></div>`;
 }
 // A restaurant's at-a-glance facts on the Day plan: badges and the Google rating. Why it was chosen, the two
 // alternatives and the traveler rating sit in a fold below.
@@ -5299,7 +5323,7 @@ function readForm() {
 }
 function edited() { trip.sample = false; }
 // Open a trip on today's day when the trip is under way.
-function jumpToToday(t) { const i = t.days.findIndex(x => x.date === todayISO()); if (i >= 0) t.active = i; }
+function jumpToToday(t) { const i = t.days.findIndex(x => isToday(x)); if (i >= 0) t.active = i; }
 document.addEventListener("click", e => {
   const t = e.target.closest("button, a"); if (!t) return;
   if (t.dataset.view) { if (view === "trip") readForm(); view = t.dataset.view; aiError = ""; save(); render(); toTop(); return; }
@@ -5448,6 +5472,7 @@ document.addEventListener("click", e => {
   if (act === "closedmove") { moveClosed(t.dataset.id, +t.dataset.to); return; }
   if (act === "closedswap") { swapClosed(t.dataset.id, t.dataset.alt); return; }
   if (liveAct(act, t)) return;
+  if (shipClick(t)) return;
   if (act === "cdpreview") {
     if (cdPreview != null) { cdPreview = null; if (day().live && day().live.preview) day().live = null; render(); return; }
     const plan = buildPlan(day()); if (!plan || plan.error) return;
@@ -5537,6 +5562,7 @@ document.addEventListener("change", e => {
   }
   if (t.id === "f-rain") { day().rain = t.checked; save(); render(); return; }
   if (t.id === "cdWhere") { cdWhere = t.value; tickCountdown(); return; }
+  if (t.id === "cdAgentIn") { const d = day(); if (d) { d.portAgent = t.value.trim().slice(0, 40); save(); render(); } return; }
   if (t.id === "p-lang") { trip.prefs = P(); trip.prefs.lang = t.value; save(); render(); return; }
   if (t.id === "p-party") { trip.prefs = P(); trip.prefs.party = Math.max(1, Math.min(20, +t.value || 2)); save(); render(); return; }
   if (t.dataset && t.dataset.note) { jUpdate(t.dataset.note, j => { j.note = t.value; }); return; }
