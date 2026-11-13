@@ -1302,7 +1302,7 @@ function buildPlanFor(d) {
       const save = total(order) - total(order.filter(x => x !== c));
       const area = order.filter(x => hav(x, c) < 15).length;
       const val = save / (Math.max(20, c.minutes) * (c.kind === style ? 1.4 : 1) * area * area * fameW(c) * fameW(c)); // per minute of sightseeing kept: big sights stay, out-of-the-way short ones go
-      if (val > bestVal) { bestVal = val; best = c; }
+      if (best === null || val > bestVal) { bestVal = val; best = c; } // a value that can't be worked out (NaN) still lets one go, so this loop always ends
     }
     dropped0.push(best);
     order = optimize(order.filter(x => x !== best), O, Z);
