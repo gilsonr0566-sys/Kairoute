@@ -416,13 +416,16 @@ function alarmCard(d, plan) {
   const today = d.date === todayISO(), gpsOn = geoFresh();
   // On the day, the countdown follows the device's GPS by itself: no button to press, no place to pick.
   if (today && (fixed || live)) setTimeout(liveGeoAuto, 0);
-  return `<div class="card countdown livecard" id="cdCard">
-    <div><span class="eyebrow">${fixed ? esc(fixedTitle(d)) : "Your day, live"}${!today && live ? " · preview" : ""}</span></div>
-    ${fixed ? `<div class="cdrow"><div class="cdbig" id="cdBig">--:--</div><div class="cdtext"><div class="cdsub" id="cdSub"></div><div class="cdsrc" id="cdSrc"></div></div></div>
+  // A compact countdown in the Day plan's top row, always on screen; tap it for the details.
+  const title = fixed ? fixedTitle(d) : "Your day, live";
+  return `<details class="moremenu planmore cdchip livecard" id="cdCard"><summary aria-label="${esc(title)}: details">
+      <span class="cdico" aria-hidden="true">${fixed ? (d.type === "departure" ? ({ flight: "✈️", train: "🚆", ship: "🚢", car: "🚌" }[d.mode] || "🧭") : "🚢"): "📍"}</span><span class="cdwords"><span class="cdlbl" id="cdLbl">${fixed ? (today ? "Leave in" : "Leave by") : "Live"}</span><span class="cdto">${fixed ? esc(d.type === "port" ? "back to ship" : d.type === "embark" ? "to the ship" : "to your " + MODES[d.mode].label.toLowerCase()) : "re-plan"}</span></span><b class="cdbig" id="cdBig">${fixed ? "--:--" : (today ? "On" : "Preview")}</b>
+    </summary><div class="menupanel cdpanel" role="dialog" aria-label="${esc(title)}">
+    <div><span class="eyebrow">${esc(title)}${!today && live ? " · preview" : ""}</span></div>
+    ${fixed ? `<div class="cdsub" id="cdSub"></div><div class="cdsrc" id="cdSrc"></div>
     <div class="banner" id="cdMsg" hidden></div>
       ${gpsOn ? "" : `<details class="cdwhere" ${cdWhere && cdWhere !== "auto" ? "open" : ""}><summary>${today ? "GPS off? Pick your spot" : "Count from another spot"}</summary><div class="field"><label for="cdWhere">Where are you?</label>
       <select id="cdWhere"><option value="auto">Wherever the plan says</option>${items.map((i, k) => `<option value="${k}" ${String(cdWhere) === String(k) ? "selected" : ""}>${esc(i.place.name)}</option>`).join("")}</select></div></details>`}` : ""}
-    ${liveBanner(d, plan)}
     <div class="actions">
       ${today && !gpsOn && geoPerm === "denied" ? `<button class="btn ghost small" data-act="livegps">Try my location again</button>` : ""}
       ${live ? `<button class="btn small" data-act="livereplan">Running late? Re-plan from now</button>` : ""}
@@ -430,7 +433,7 @@ function alarmCard(d, plan) {
       ${!today && cdPreview != null ? `<button class="btn ghost small" data-act="cdpreview">Stop preview</button>` : ""}
     </div>
     ${today ? `<p class="lede small">${fixed ? "Alerts 30, 15 and 5 minutes before you need to leave, by sound, vibration and notification. " : ""}${gpsOn ? "Using your GPS. If you fall behind at a stop, the day re-plans itself." : geoPerm === "denied" || !navigator.geolocation ? "Location is off for Kairoute, so this counts from where the plan has you. Turn location on in your browser or phone settings for a live count from where you really are." : "Finding your location…"}</p>` : ""}
-  </div>`;
+  </div></details>`;
 }
 function alarmTick() {
   const d = day(), bar = alarmBarEl();
@@ -456,12 +459,15 @@ function alarmTick() {
     if (sub) sub.textContent = `${word} From ${fromTxt}: ${legTxt}, so leave by ${fmt(st.leaveBy)}.`;
     if (srcEl) srcEl.textContent = `Travel time: ${st.leg.src}${st.src === "GPS" ? ", from your GPS position" : st.src === "plan" ? ", from where the plan has you now" : ""}.`;
     if (srcEl && (d.type === "port" || d.type === "embark")) srcEl.textContent += " Being on board on time is your responsibility: confirm the all-aboard time with your cruise line on the day. Ships don't wait.";
-    if (st.now == null) { if (el) el.textContent = fmt(st.leaveBy); if (msg) msg.hidden = true; if (srcEl) srcEl.textContent += ` On ${fmtDate(d.date)} it counts down live from your GPS position, with alerts.`; }
+    const chip = document.getElementById("cdCard"), lbl = document.getElementById("cdLbl");
+    if (st.now == null) { if (lbl) lbl.textContent = "Leave by"; if (chip) chip.classList.remove("amber", "soon", "go"); if (el) el.textContent = fmt(st.leaveBy); if (msg) msg.hidden = true; if (srcEl) srcEl.textContent += ` On ${fmtDate(d.date)} it counts down live from your GPS position, with alerts.`; }
     else {
       const left = st.leaveBy - st.now;
       const big = left > 0 ? (left >= 60 ? Math.floor(left / 60) + "h " + String(Math.floor(left % 60)).padStart(2, "0") + "m" : Math.ceil(left) + " min") : "Go now";
       if (el) el.textContent = big;
       const level = left <= 0 ? "go" : left <= 15 ? "soon" : "";
+      if (lbl) lbl.textContent = left > 0 ? "Leave in" : "Leave";
+      if (chip) { chip.classList.toggle("amber", left > 15 && left <= 30); chip.classList.toggle("soon", level === "soon"); chip.classList.toggle("go", level === "go"); }
       const text = left <= 0 ? `Head back now: you're ${dur(Math.ceil(-left))} past your leave-by time.` : left <= 30 ? `Start heading back in ${Math.ceil(left)} minutes.` : `You have time. Leave ${fromTxt} by ${fmt(st.leaveBy)}.`;
       if (msg) { msg.hidden = false; msg.className = "banner" + (level ? " warn" : ""); msg.textContent = text; }
       // Alerts at 30, 15 and 5 minutes before leaving, and at leave-by, each once (real days only).
@@ -583,6 +589,7 @@ if (typeof window !== "undefined") window.__kairouteLiveTest = {
     return { endBy: p.endBy, end: p.end, over: p.over, live: !!liveOn(d), closed: (p.closedToday || []).map(s => ({ id: s.id, openOn: s.openOn ? trip.days.indexOf(s.openOn) : -1 })), swaps: p.swaps.map(([a, b]) => [a.id, b.id, !!b.indoor]),
       stops: p.items.filter(x => x.type === "stop" && !x.place.along).map(x => ({ id: x.place.id, name: x.place.name, t: x.time, len: x.place.minutes || 0, indoor: !!x.place.indoor, must: !!x.place.mustSee, oh: x.place.oh ? { spans: x.place.oh.spans, last: x.place.oh.last } : null, late: x.ohLate || 0, busy: x.place.cw ? x.place.cw.busy : [], bonus: !!x.place.bonus })), wx: planWx || wxFor(d, p.city) }; },
   replan: (i, o) => { trip.active = i; return replanNow(trip.days[i], o || {}); },
+  render: () => render(),
   wxFor: i => { const d = trip.days[i]; return wxFor(d, cityFor(d)); },
   alarm: i => { const d = trip.days[i], p = buildPlan(d), st = alarmState(d, p); return { now: st.now, leaveBy: st.leaveBy, backBy: st.backBy, live: liveOn(d), src: st.src, from: st.from.name, alerts: liveAlertLog.length }; },
   siteIdByName: (i, re) => { const s = allSites(cityFor(trip.days[i])).find(x => new RegExp(re).test(x.name)); return s ? s.id : null; },

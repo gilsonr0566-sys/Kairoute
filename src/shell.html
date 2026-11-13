@@ -951,6 +951,42 @@ html.appview .sitesmain { padding-bottom: 90px; }
 /* Day plan's More menu: grouped */
 .menugroup { padding: 8px 12px 2px; font-size: .72rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
 .menugroup:not(:first-child) { border-top: 1px solid var(--line); margin-top: 4px; padding-top: 10px; }
+
+/* Back to the ship / train / plane: a compact countdown in the Day plan's top row, always on screen (Nov 13).
+   Tap it for the details; the timeline gets the whole right side. */
+.dayhead { align-items: center; }
+.dayhead > div:first-child { flex: 1 1 auto; }
+.cdchip { flex: none; position: relative; }
+.cdchip > summary { list-style: none; display: flex; gap: 8px; padding: 4px 14px; min-height: 48px; box-sizing: border-box; align-items: center;
+  border: 0; border-radius: 8px; background: #1F7A4D; color: #fff; cursor: pointer; white-space: nowrap; font-weight: 700; box-shadow: 0 2px 10px rgba(0,0,0,.18); }
+.cdchip > summary::-webkit-details-marker { display: none; }
+.cdchip > summary::after { content: none !important; }
+.cdchip .cdico { font-size: 1.5rem; line-height: 1; }
+.cdchip .cdwords { display: flex; flex-direction: column; line-height: 1.1; }
+.cdchip .cdlbl { font-size: .72rem; text-transform: uppercase; letter-spacing: .04em; opacity: .9; }
+.cdchip .cdto { font-size: .82rem; }
+/* Scrolled past on a phone: the countdown pins to the top of the screen. */
+.cdchip.pinned > summary { position: fixed; z-index: 40; top: calc(8px + env(safe-area-inset-top, 0px)); left: 12px; right: 12px; justify-content: center; }
+.cdchip .cdbig { font-size: 1.75rem; line-height: 1; font-weight: 800; font-variant-numeric: tabular-nums; color: #fff; }
+.cdchip.amber > summary { background: #C77700; }
+.cdchip.soon > summary { background: #B3261E; }
+.cdchip.go > summary { background: #B3261E; animation: cdpulse 1s ease-in-out infinite; }
+@keyframes cdpulse { 50% { background: #7A1712; } }
+.cdchip .cdpanel { padding: 12px 14px; gap: 8px; }
+.cdchip .cdpanel .cdsub { font-size: .95rem; }
+.cdchip .cdpanel .cdsrc { font-size: .8rem; color: var(--muted); }
+.cdchip .cdpanel .actions { display: flex; flex-wrap: wrap; gap: 6px; }
+.cdchip .cdpanel .actions:empty { display: none; }
+.cdchip .cdwhere > summary { font-size: .88rem; font-weight: 600; color: var(--route); cursor: pointer; }
+details.morefold > summary { font-weight: 700; color: var(--ink); cursor: pointer; padding: 10px 0; }
+details.morefold:not([open]) { padding-bottom: 0 !important; }
+@media (max-width: 640px) {
+  .dayhead { flex-wrap: wrap; gap: 8px; }
+  .dayhead > div:first-child { flex-basis: 100%; }
+  .dayhead .cdchip { flex: 1 1 auto; min-width: 0; }
+  .dayhead .cdchip > summary { justify-content: center; min-height: 46px; }
+  .cdchip .cdbig { font-size: 1.5rem; }
+}
 </style>
 
 <header class="top">
