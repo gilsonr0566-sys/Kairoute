@@ -76,7 +76,7 @@ function fitOpen(d, id) {
   const one = rows.filter(r => r.alone && !r.x.mustSee).sort((a, b) => value(a.x) - value(b.x) || a.frees - b.frees)[0];
   let sugg = one ? [one.x.id] : [];
   const canRoom = picks.length > 0 && fitsWithout(picks.map(x => x.id));
-  trip.days.forEach(o => { if (o !== d && !o.selected && o.type !== "sea" && cityFor(o) === city) seedPicks(o, city); });
+  trip.days.forEach(o => { if (o !== d && !o.selected && !noShore(o) && cityFor(o) === city) seedPicks(o, city); });
   const roomOn = (x, o) => o !== d && cityFor(o) === city && !(o.selected || []).includes(x.id) && !shutOn(o, x) && fitsAll(fitTrial(o, [...(o.selected || []), x.id]));
   // A new sight: other days where it fits. An over day: other days where each pick that doesn't fit would.
   const others = s ? trip.days.filter(o => roomOn(s, o)).slice(0, 2) : [];
@@ -107,8 +107,8 @@ function fitOpen(d, id) {
 // when it's open and fits, or the best sight that is open today and fits instead.
 function closedOpen(d, s) {
   const city = cityFor(d); if (!city) return;
-  trip.days.forEach(o => { if (o !== d && !o.selected && o.type !== "sea" && cityFor(o) === city) seedPicks(o, city); });
-  const others = trip.days.filter(o => o !== d && cityFor(o) === city && o.type !== "sea" && !(o.selected || []).includes(s.id) && !shutOn(o, s) && fitsAll(fitTrial(o, [...(o.selected || []), s.id]))).slice(0, 2);
+  trip.days.forEach(o => { if (o !== d && !o.selected && !noShore(o) && cityFor(o) === city) seedPicks(o, city); });
+  const others = trip.days.filter(o => o !== d && cityFor(o) === city && !noShore(o) && !(o.selected || []).includes(s.id) && !shutOn(o, s) && fitsAll(fitTrial(o, [...(o.selected || []), s.id]))).slice(0, 2);
   const taken = new Set(trip.days.filter(o => cityFor(o) === city).flatMap(o => o.selected || []));
   const alt = allSites(city).filter(x => !x.quick && x.id !== s.id && !taken.has(x.id) && religiousOk(x) && !shutOn(d, x) && (s.kind ? x.kind === s.kind : true))
     .sort((a, b) => (fameW(b) || 1) - (fameW(a) || 1) || hav(a, s) - hav(b, s)).find(x => fitsWith(d, [x.id]));

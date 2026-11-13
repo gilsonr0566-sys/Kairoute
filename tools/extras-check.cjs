@@ -70,7 +70,7 @@ const shot = async (p, n) => { if (SHOTS) { fs.mkdirSync(SHOTS, { recursive: tru
 
   console.log('Day plan extras');
   await p.evaluate(() => window.__kairouteGo('plan', 1)); await p.waitForTimeout(1500);
-  await p.evaluate(() => document.querySelectorAll('details[data-gx-fold]').forEach(d => d.open = true)); await p.waitForTimeout(200);
+  await p.evaluate(() => document.querySelectorAll('details[data-gx-fold], details.morefold').forEach(d => d.open = true)); await p.waitForTimeout(200);
   const plan = await p.evaluate(() => { const t = s => (document.querySelector(`[data-gx-fold="${s}"]`) || {}).innerText || ''; return { light: t('light'), know: t('know'), primer: t('primer'), save: t('save') }; });
   /Sunset\s*20:5\d/i.test(plan.light) ? ok('golden hour card shows Athens sunset') : bad('golden hour card: ' + plan.light.slice(0, 200));
   /Filopappou/.test(plan.light) ? ok('real viewpoints listed near the route') : bad('viewpoints missing: ' + plan.light.slice(0, 300));
@@ -78,7 +78,7 @@ const shot = async (p, n) => { if (SHOTS) { fs.mkdirSync(SHOTS, { recursive: tru
   await p.evaluate(() => { const el = document.querySelector('[data-gx-fold="light"]'); if (el) el.scrollIntoView(); }); await p.waitForTimeout(200);
   await shot(p, 'extras-day-plan');
   await p.evaluate(() => window.__kairouteGo('plan', 0)); await p.waitForTimeout(1200);
-  await p.evaluate(() => document.querySelectorAll('details[data-gx-fold]').forEach(d => d.open = true)); await p.waitForTimeout(200);
+  await p.evaluate(() => document.querySelectorAll('details[data-gx-fold], details.morefold').forEach(d => d.open = true)); await p.waitForTimeout(200);
   const pr = await p.evaluate(() => (document.querySelector('[data-gx-fold="primer"]') || {}).innerText || '');
   /PRIMER STORY of Athens/.test(pr) ? ok('before-you-arrive story on the first Athens day') : bad('primer: ' + pr.slice(0, 200));
   await p.evaluate(() => window.__kairouteGo('plan', 1)); await p.waitForTimeout(600);
@@ -88,7 +88,7 @@ const shot = async (p, n) => { if (SHOTS) { fs.mkdirSync(SHOTS, { recursive: tru
   const port = await p.evaluate(() => window.__kairouteDays().findIndex(d => d.type === 'port' && d.city));
   if (port < 0) bad('no built port day in the sample trip'); else {
     await p.evaluate(i => window.__kairouteGo('plan', i), port); await p.waitForTimeout(800);
-    await p.evaluate(() => { document.querySelector('[data-gx-fold="save"]').open = true; }); 
+    await p.evaluate(() => { document.querySelectorAll('details.morefold').forEach(d => d.open = true); document.querySelector('[data-gx-fold="save"]').open = true; }); 
     await p.fill('[data-gx-price] input[type=number]', '189'); await p.click('[data-gx-price] button[type=submit]'); await p.waitForTimeout(500);
     const sv = await p.evaluate(i => { const X = window.__kairouteExtras; return { txt: (document.querySelector('[data-gx-fold="save"]') || {}).innerText || '', calc: window.__kairouteSavings(i) }; }, port);
     sv.calc && sv.calc.ship === 189 * sv.calc.party && sv.calc.save === sv.calc.ship - sv.calc.own && sv.txt.includes(String(sv.calc.ship)) ? ok(`savings: ship ${sv.calc.ship} vs Kairoute ${sv.calc.own} for ${sv.calc.party}`) : bad('savings: ' + JSON.stringify(sv).slice(0, 300));
