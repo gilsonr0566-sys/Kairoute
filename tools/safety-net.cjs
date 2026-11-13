@@ -204,6 +204,25 @@ const log = (suite, trip, ok, what) => { results.push({ suite, trip, ok, what })
     }
     log('New trip', 'new-trips', !errs.length, errs.length ? 'page errors: ' + [...new Set(errs)].join(' | ') : 'no page errors');
     await b2.close(); }
+  // Duplicate sights (Richard, Santorini: "I think there are several duplicate stops"): the same place under two
+  // names (Oia / Oia village, Fira (Thira) / Fira caldera path, a Greek and an English name) is one sight, a small
+  // part of a village (Megalochori Bell Tower) folds into it, and look-alike names that are different places stay
+  // apart (Acropolis / Acropolis Museum, San Lorenzo / San Paolo Maggiore, two museums of Thera). Every guide the
+  // app holds is scanned too.
+  { const b4 = await chromium.launch(); const p = await b4.newPage(); const errs = []; p.on('pageerror', e => errs.push(e.message));
+    await p.route('**/*', r => /^file:/.test(r.request().url()) ? r.continue() : r.abort());
+    await p.goto('file://' + FILE); await p.evaluate(() => localStorage.setItem('kairoute.intro1', '1')); await p.reload(); await p.waitForTimeout(400);
+    const FX = require('./dedupe-fixture.cjs'), want = { Santorini: [['Oia', 'Oia village'], ['Akrotiri', 'Akrotiri prehistoric town'], ['Fira (Thira)', 'Fira caldera path'], ['Pyrgos Kallistis', 'Pyrgos village'], ['Museum of Prehistoric Thera', 'Museum of Prehistoric Thera'], ['Megalochori Bell Tower', 'Megalochori'], ['Kamari Beach Boardwalk', 'Kamari']], Chania: [['Church of Saint Nicholas, Splantzia', 'Agios Nikolaos in Chania (Splantzia)'], ['Nautical Museum of Crete', 'Maritime Museum of Crete']] };
+    const apart = { Santorini: ['Archaeological Museum of Thera', 'Museum of Prehistoric Thera', 'Nea Kameni', 'Palea Kameni'], Athens: ['Acropolis and Parthenon', 'Acropolis Museum', 'Ancient Agora', 'Roman Agora and Tower of the Winds'], Naples: ['San Lorenzo Maggiore', 'San Paolo Maggiore', 'Castel Nuovo', 'Royal Palace of Naples', 'Fontana di Palazzo Reale'] };
+    const bad = []; let folded = 0;
+    for (const [city, L] of Object.entries(FX)) { const sites = L.map(([name, lat, lng, category], i) => ({ id: 's' + i, name, lat, lng, category, guide: name === 'Fira caldera path' ? 'x'.repeat(400) : '' }));
+      const r = await p.evaluate(s => window.__kairouteDedupe(s, []), sites), names = r.kept.map(x => x.name), cnt = n => names.filter(x => x === n).length;
+      for (const [gone, into] of want[city] || []) { const k = r.kept.find(x => x.name === into); if (!k || (gone !== into && names.includes(gone)) || cnt(into) !== 1) bad.push(`${city}: "${gone}" and "${into}" still listed separately`); else folded++; }
+      for (const n of apart[city] || []) if (!names.includes(n)) bad.push(`${city}: "${n}" was folded into another sight but is a different place`); }
+    const scan = await p.evaluate(() => window.__kairouteDupScan()); scan.forEach(x => bad.push('guide still lists one place twice: ' + x));
+    if (errs.length) bad.push('page errors: ' + [...new Set(errs)].join(' | '));
+    log('Duplicate sights', 'guides', !bad.length, bad.length ? bad.join(' | ') : `${folded} repeats folded (same place under two names, or a part of a village); look-alike names of different places kept apart; no guide lists a place twice`);
+    await b4.close(); }
   // Famous sights and big stops: with a snapshot of Prague's sources and stand-in AI answers, the top famous
   // sights must survive every way a guide writer can lose them (left out, filed as a quick stop, called
   // unvisitable, cut from a long list), saved guides must be repaired, and big stops must split into real parts.

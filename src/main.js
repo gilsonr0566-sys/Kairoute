@@ -494,11 +494,16 @@ function placeLabel(d) { return d.type === "sea" ? "At sea" : d.type === "port" 
 // say which guide to build) and every screen shows the plain name (mainPlace).
 function tidyDests(t) {
   let n = 0; const norm = x => String(x || "").toLowerCase().replace(/[^a-z0-9\u00c0-\u024f]+/g, " ").trim();
-  try { if (typeof ensureBuiltins === "function") ensureBuiltins(); (t && t.days || []).forEach(d => {
+  try { if (typeof ensureBuiltins === "function") ensureBuiltins(); try { for (const k in cities) { const c = cities[k]; if (c && c.ddV !== DEDUPE_V) { if (dedupeSites(c)) n++; c.ddV = DEDUPE_V; } } } catch (e) {} /* not yet set up while the app first loads: render does it */ (t && t.days || []).forEach(d => {
     if (!d || d.type === "sea") return;
     // A day name that is just the place as the itinerary wrote it ("Naples, Amalfi, Pompeii") was never typed by
     // the traveler: it goes, so the day shows the plain destination. Names the traveler typed are kept.
     if (d.title && !d.titleTyped && (norm(d.title) === norm(d.destination) || norm(d.title) === norm(d.destOrig))) { delete d.title; n++; }
+    // A pick of a sight that was folded into another (two names for one place, or a part of a bigger place) now
+    // points at the sight that stayed.
+    if (Array.isArray(d.selected) && d.selected.length && typeof cityFor === "function") { const c = cityFor(d); if (c) { const all = allSites(c), ids = new Set(all.map(x => x.id));
+      if (d.selected.some(id => !ids.has(id))) { const to = id => { if (ids.has(id)) return id; const h = all.find(x => (x.alias || []).includes(id)); return h ? h.id : id; };
+        const nx = [...new Set(d.selected.map(to))]; if (nx.join() !== d.selected.join()) { d.selected = nx; if (Array.isArray(d.mine)) d.mine = [...new Set(d.mine.map(to))]; if (d.anchor) d.anchor = to(d.anchor); n++; } } } }
     // Lists of places ("Naples, Amalfi, Pompeii", "Naples (Capri, Sorrento)", "Rome & Vatican") become the guide's
     // plain name once the day is tied to its guide; the words as written are kept in destOrig.
     if (!/[(),&\/+]| and /i.test(d.destination || "")) return; const k = cityKeyFor(d); if (!k) return;
@@ -3270,13 +3275,86 @@ function updateAudioUI() {
 
 // Strictly the same place (used to keep a guide whole and avoid copies): same Wikidata id, same name, or names
 // that match both ways. A one-way match is too loose here (Areopagus would swallow "Dionysiou Areopagitou" promenade).
-function samePlace(a, b) { return !!(a && b && ((a.wd && b.wd && a.wd === b.wd) || keyOf(a.name) === keyOf(b.name) || (nameMatch(a.name, b.name) && nameMatch(b.name, a.name)))); }
+// One place, one sight. Guides written from different sources name the same place differently ("Oia" and "Oia
+// village", "Fira (Thira)" and "Fira caldera path", "Akrotiri" and "Akrotiri prehistoric town", a Greek and an
+// English name), and sometimes list a small part of a place as its own sight ("Megalochori Bell Tower" beside
+// "Megalochori"). samePlace() is the test; dedupeSites() applies it to a whole guide.
+const PLACE_SMALL = new Set("the of and a an de la el le du del di da des los las in at on st saint san santa sv sveti agios agia agioi hagia".split(" "));
+// Words that only describe the place itself (a village, its old town, its ruins): "Oia" and "Oia village" are one.
+const PLACE_DESC = new Set("village town city old historic historical centre center prehistoric ancient archaeological site ruins remains settlement area district quarter neighborhood neighbourhood caldera path walk trail island isle".split(" "));
+// Small features that belong to a bigger place rather than being sights of their own.
+const PLACE_PART = new Set("bell tower belfry campanile clock beach boardwalk promenade square piazza plaza fountain statue viewpoint view lookout gate bridge steps stairs staircase lanes lane street streets alley harbour harbor marina pier".split(" "));
+// Words naming a different kind of place: "Acropolis" and "Acropolis Museum" are two sights.
+const PLACE_KIND = [["fountain", /\b(fountain|fontana|fuente|font)\b/i], ["worship", RELIGIOUS_RE], ["museum", /\b(museum|museo|musee|gallery|galleria)\b/i], ["castle", /\b(castle|castel|castello|fort|fortress|fortifications?|citadel|kastro|koules)\b/i], ["palace", /\b(palace|palazzo|palacio|palau)\b/i], ["market", /\b(market|mercato|mercat|mercado)\b/i], ["theatre", /\b(theatre|theater|teatro)\b/i], ["park", /\b(park|parc|parque|garden|gardens|jardin)\b/i], ["beach", /\b(beach|plage|playa|spiaggia)\b/i], ["lighthouse", /\b(lighthouse|faro)\b/i]];
+// Words too common to tell two places apart ("San Lorenzo Maggiore" and "San Paolo Maggiore" are two churches).
+const PLACE_GENERIC = new Set("maggiore major great grand new nuovo nuova old little small upper lower royal reale national nazionale real".split(" "));
+const placeWords = n => keyOf(String(n || "").replace(/&/g, " and ")).split(" ").filter(t => t.length > 1 && !PLACE_SMALL.has(t)).map(t => t.replace(/s$/, ""));
+const placeNames = x => { const n = String((x && x.name) || ""), m = /\(([^)]+)\)/.exec(n); return [n.replace(/\([^)]*\)/g, " ")].concat(m ? [m[1]] : []); };
+const placeKind = x => (PLACE_KIND.find(([, re]) => re.test(((x && x.name) || "") + " " + ((x && x.category) || ""))) || [""])[0];
+const isFeat = t => PLACE_PART.has(t) || PLACE_KIND.some(([, re]) => re.test(t));
+// How b relates to a: "same" (one place), "part" (b is a small part of a), or "".
+function placeRel(a, b) {
+  if (!a || !b) return "";
+  if ((a.wd && b.wd && a.wd === b.wd) || keyOf(a.name) === keyOf(b.name) || (nameMatch(a.name, b.name) && nameMatch(b.name, a.name))) return "same";
+  const km = isFinite(a.lat) && isFinite(b.lat) ? hav(a, b) : null;
+  // Two names for the same building (another language, another source): the same kind of place (a church, a
+  // museum...) at the same spot, or a few steps apart and sharing a telling word of their names.
+  const ka = placeKind(a), kb = placeKind(b);
+  if (km != null && ka && ka === kb) {
+    if (km < 0.045) return "same";
+    const tell = n => placeWords(n).filter(t => !isFeat(t) && !PLACE_GENERIC.has(t) && !PLACE_DESC.has(t));
+    if (km < 0.12) { const ta = new Set(placeNames(a).flatMap(tell)); if (placeNames(b).flatMap(tell).some(t => ta.has(t))) return "same"; }
+  }
+  if (km == null || km > 2.5) return "";
+  for (const na of placeNames(a)) for (const nb of placeNames(b)) {
+    const wa = placeWords(na), wb = placeWords(nb); if (!wa.length || !wb.length) continue;
+    // Describing words ("village", "prehistoric") are set aside only for a village or site, never for a building:
+    // "Museum of Prehistoric Thera" and "Archaeological Museum of Thera" are two museums.
+    const strip = !(ka && ka !== "beach") && !(kb && kb !== "beach");
+    for (const [ca, cb] of strip ? [[wa, wb], [wa.filter(t => !PLACE_DESC.has(t)), wb.filter(t => !PLACE_DESC.has(t))]] : [[wa, wb]]) {
+      if (!ca.length || !cb.length) continue;
+      const [sh, lg, shortIsA] = ca.length <= cb.length ? [ca, cb, true] : [cb, ca, false];
+      if (!sh.every(t => lg.includes(t))) continue;
+      const extra = lg.filter(t => !sh.includes(t));
+      if (!extra.length) return "same";
+      if (!extra.some(isFeat) && km < 1.2) return "same"; // "Akrotiri" and "Akrotiri prehistoric town"
+      // A small feature of a village or area named for it: "Megalochori Bell Tower" is part of "Megalochori".
+      const bigKind = shortIsA ? ka : kb;
+      if (shortIsA && sh.length === 1 && (!bigKind || bigKind === "beach") && extra.every(t => PLACE_PART.has(t) || PLACE_DESC.has(t)) && extra.some(t => PLACE_PART.has(t))) return "part";
+    }
+  }
+  return "";
+}
+function samePlace(a, b) { return placeRel(a, b) === "same"; }
+if (typeof window !== "undefined") window.__kairouteDedupe = (sites, farther) => { const c = { sites: JSON.parse(JSON.stringify(sites || [])), farther: JSON.parse(JSON.stringify(farther || [])) }; const n = dedupeSites(c); return { n, kept: allSites(c).map(x => ({ name: x.name, alias: x.alias || [], lookFor: x.lookFor || [] })) }; };
+// Every guide the app holds, checked for two sights that are one place (for the safety net).
+if (typeof window !== "undefined") window.__kairouteDupScan = () => { ensureBuiltins(); const out = []; const seen = new Set(); for (const k in cities) { const c = cities[k]; if (!c || seen.has(c)) continue; seen.add(c); const all = allSites(c); for (let i = 0; i < all.length; i++) for (let j = i + 1; j < all.length; j++) { const r = placeRel(all[i], all[j]) || placeRel(all[j], all[i]); if (r) out.push(c.city + ": " + all[i].name + " / " + all[j].name + " (" + r + ")"); } } return out; };
+// Removes repeats and parts from a guide: of two names for one place the better known (a must-see, then the one
+// with more written about it) stays; a part goes into the bigger place's "look for" list.
+const DEDUPE_V = 1;
+function dedupeSites(c) {
+  if (!c) return 0; let n = 0;
+  const lists = [c.sites || [], c.farther || []], all = lists.flat(), gone = new Set();
+  const rank = x => (x.mustSee ? 1000 : 0) + (x.unesco ? 100 : 0) + (x.quick ? -500 : 0) + String(x.guide || "").length / 100 + (x.builtin ? 0 : 1);
+  for (let i = 0; i < all.length; i++) for (let j = i + 1; j < all.length; j++) {
+    const a = all[i], b = all[j]; if (gone.has(a) || gone.has(b)) continue;
+    let r = placeRel(a, b), big = a, small = b;
+    if (!r) { r = placeRel(b, a); if (r) { big = b; small = a; } }
+    if (!r) continue;
+    if (r === "same") { if (rank(b) > rank(a)) { big = b; small = a; } big.mustSee = big.mustSee || small.mustSee; big.alias = [...new Set([...(big.alias || []), small.name, small.id])]; }
+    else { big.lookFor = [...new Set([...(big.lookFor || []), small.name])].slice(0, 6); big.alias = [...new Set([...(big.alias || []), small.id])]; }
+    gone.add(small); n++;
+  }
+  if (n) { c.sites = (c.sites || []).filter(x => !gone.has(x)); c.farther = (c.farther || []).filter(x => !gone.has(x)); }
+  return n;
+}
 function carryGuide(prev, c) {
   const have = allSites(c);
   const ids = new Set(have.map(x => x.id));
   const keep = (list, into) => (list || []).forEach(x => { if (!x || have.some(y => samePlace(x, y))) return; const k = Object.assign({}, x); if (ids.has(k.id)) k.id = k.id + "-k"; ids.add(k.id); into.push(k); have.push(k); });
   c.farther = c.farther || [];
   keep(prev.sites, c.sites); keep(prev.farther, c.farther);
+  dedupeSites(c);
 }
 if (typeof window !== "undefined") {
   // Test hooks: a fresh guide that lost sights gets them back; naming a sight the guide has never makes a copy.
@@ -3297,7 +3375,7 @@ let builtinsReady = false;
 function ensureBuiltins() {
   if (builtinsReady || typeof BUILTIN_CITIES === "undefined") return; builtinsReady = true;
   for (const [raw, keys] of BUILTIN_CITIES) {
-    const c = Object.assign(cleanCity(raw, raw.city), { ai: false, builtin: true });
+    const c = Object.assign(cleanCity(raw, raw.city), { ai: false, builtin: true }); dedupeSites(c);
     // A written guide (saved, synced or shared) never hides a sight the built-in guide has: those are
     // added back (Naples' written guide had Amalfi but not Sorrento; the built-in one the other way round).
     for (const k of keys) { if (!cities[k]) cities[k] = c; else if (cities[k] !== c && !cities[k].builtin) carryGuide(c, cities[k]); }
