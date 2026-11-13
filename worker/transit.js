@@ -7,7 +7,7 @@
 
 const OVERPASS = ["https://overpass-api.de/api/interpreter", "https://overpass.private.coffee/api/interpreter", "https://overpass.kumi.systems/api/interpreter", "https://maps.mail.ru/osm/tools/overpass/api/interpreter"];
 const UA = { "user-agent": "Kairoute/1.0 (travel guide; https://gilsonr0566-sys.github.io/Kairoute/)" };
-const R_STOP = 1500, R_FERRY = 1500; // how far from each end a stop or pier may be (walk or a short taxi)
+const R_STOP = 2500, R_FERRY = 1500; // how far from each end a station or pier may be (a walk or a short taxi)
 // Cautious running speeds (km/h) and the time lost at each stop between, by kind of line.
 const SPEED = { train: [55, 0.8], light_rail: [45, 0.7], subway: [33, 0.5], monorail: [30, 0.5], tram: [17, 0.4], bus: [24, 0.5], trolleybus: [20, 0.4], ferry: [28, 0] };
 // How often a line usually runs (minutes) when mappers didn't record it: kept on the cautious side.
@@ -55,15 +55,18 @@ const access = km => { const walk = km * 1.3; return walk <= 1.2 ? { how: "walk"
 
 export async function transitOptions(a, b) {
   const A = `${a.lat},${a.lng}`, B = `${b.lat},${b.lng}`;
-  const stops = (P, set) => `(node(around:${R_STOP},${P})[railway~"^(station|halt|stop|tram_stop)$"];node(around:${R_STOP},${P})[public_transport~"^(stop_position|platform|station)$"];node(around:${R_STOP},${P})[amenity=ferry_terminal];way(around:${R_STOP},${P})[amenity=ferry_terminal];)->.${set};`;
-  const q = `[out:json][timeout:25];${stops(A, "sa")}${stops(B, "sb")}
-(rel(bn.sa)[type=route][route~"^(train|light_rail|subway|monorail|tram|bus|trolleybus|ferry)$"];rel(bw.sa)[type=route][route=ferry];)->.ra;
-(rel(bn.sb)[type=route][route~"^(train|light_rail|subway|monorail|tram|bus|trolleybus|ferry)$"];rel(bw.sb)[type=route][route=ferry];)->.rb;
-rel.ra.rb->.both;.both out geom;
+  // Rides of 4 km and more: rail and ferry lines (a bus or tram that far is slower than the taxi the plan offers
+  // anyway). Two light questions instead of one heavy one, because the free map servers time out on heavy ones:
+  // first which lines stop near both ends, then the path of the few that do.
+  const stops = (P, set) => `(node(around:${R_STOP},${P})[railway~"^(station|halt|stop)$"];node(around:${R_STOP},${P})[public_transport=stop_position][~"^(train|light_rail|subway|monorail|ferry)$"~"^yes$"];node(around:${R_STOP},${P})[amenity=ferry_terminal];)->.${set};`;
+  const RT = `[type=route][route~"^(train|light_rail|subway|monorail|ferry)$"]`;
+  const q1 = `[out:json][timeout:20];${stops(A, "sa")}${stops(B, "sb")}rel(bn.sa)${RT}->.ra;rel(bn.sb)${RT}->.rb;rel.ra.rb;out ids;
 way(around:${R_FERRY},${A})[route=ferry]->.fa;way(around:${R_FERRY},${B})[route=ferry]->.fb;way.fa.fb;out geom;
-.sa out tags center;.sb out tags center;`;
-  const d = await overpass(q);
-  const el = d.elements || [], stopTag = new Map();
+.sa out tags;.sb out tags;`;
+  const d1 = await overpass(q1);
+  const ids = (d1.elements || []).filter(e => e.type === "relation").map(e => e.id).slice(0, 6);
+  const d2 = ids.length ? await overpass(`[out:json][timeout:25];rel(id:${ids.join(",")});out geom;`) : { elements: [] };
+  const el = (d1.elements || []).filter(e => e.type !== "relation").concat(d2.elements || []), stopTag = new Map();
   for (const e of el) if ((e.type === "node" || e.type === "way") && e.tags && !(e.tags.route)) stopTag.set(e.type[0] + e.id, { name: e.tags["name:en"] || e.tags.name || "", lat: e.lat ?? (e.center && e.center.lat), lng: e.lon ?? (e.center && e.center.lon) });
   const opts = [];
   for (const r of el.filter(e => e.type === "relation" && e.tags)) {
@@ -93,9 +96,10 @@ way(around:${R_FERRY},${A})[route=ferry]->.fa;way(around:${R_FERRY},${B})[route=
   for (const w of el.filter(e => e.type === "way" && e.tags && e.tags.route === "ferry")) {
     const g = (w.geometry || []).map(p => ({ lat: p.lat, lng: p.lon })); if (g.length < 2) continue;
     const s = g[0], e = g[g.length - 1], fwd = hav(s, a) + hav(e, b) <= hav(e, a) + hav(s, b), from = fwd ? s : e, to = fwd ? e : s, path = fwd ? g : g.slice().reverse();
+    const nmFrom = (fwd ? w.tags.from : w.tags.to) || "", nmTo = (fwd ? w.tags.to : w.tags.from) || "";
     if (hav(from, a) * 1000 > R_FERRY * 1.5 || hav(to, b) * 1000 > R_FERRY * 1.5) continue;
     const km = lineLen(path), dur = mins(w.tags.duration);
-    opts.push(mk({ mode: "ferry", ref: w.tags.ref || "", name: w.tags.name || "", operator: w.tags.operator || "", from: w.tags.from || "", to: w.tags.to || "", fromPt: from, toPt: to, km, ride: dur || km / SPEED.ferry[0] * 60, every: mins(w.tags.interval), hours: w.tags.opening_hours || "", fare: w.tags.charge || w.tags.fee || "", stops: 0, path, a, b, osm: "w" + w.id }));
+    opts.push(mk({ mode: "ferry", ref: w.tags.ref || "", name: w.tags.name || "", operator: w.tags.operator || "", from: nmFrom, to: nmTo, fromPt: from, toPt: to, km, ride: dur || km / SPEED.ferry[0] * 60, every: mins(w.tags.interval), hours: w.tags.opening_hours || "", fare: w.tags.charge || w.tags.fee || "", stops: 0, path, a, b, osm: "w" + w.id }));
   }
   // One option per line (the quickest way to ride it), quickest first.
   const best = new Map();
@@ -105,7 +109,8 @@ way(around:${R_FERRY},${A})[route=ferry]->.fa;way(around:${R_FERRY},${B})[route=
 function mk(o) {
   const acc = access(hav(o.a, o.fromPt)), egr = access(hav(o.toPt, o.b));
   const every = o.every && o.every >= 3 && o.every <= 240 ? Math.round(o.every) : null, ev = every || EVERY[o.mode];
-  const wait = Math.round(Math.min(ev, 60) * 0.5 + (o.mode === "ferry" ? 15 : 5)); // half the gap on average, plus boarding (ferries board early)
+  // Half the gap between services (at most 15 min: the traveler times the walk to the timetable), plus boarding.
+  const wait = Math.round(Math.min(ev * 0.5, 15) + (o.mode === "ferry" ? 10 : 3));
   const ride = Math.round(o.ride);
   const label = [NAME[o.mode], o.ref && !(o.name || "").includes(o.ref) ? o.ref : "", o.name].filter(Boolean).join(" ").replace(/\s+/g, " ").slice(0, 80);
   return { mode: o.mode, kind: NAME[o.mode], label, operator: o.operator.slice(0, 60), from: o.from.slice(0, 60), to: o.to.slice(0, 60), ride, wait, every: ev, everySrc: every ? "map" : "usual", access: acc, egress: egr,
