@@ -386,6 +386,30 @@ export default {
       await Promise.all([0, 1, 2].map(async () => { while (next < legs.length) { const i = next++; if (legs[i]) out[i] = await routeLeg(legs[i], env, ctx).catch(() => null); } }));
       return Response.json({ routes: out }, { headers: h });
     }
+    // /nearsights?lat=&lng=&r=: the named sights OpenStreetMap knows within r metres of a point (monuments, churches,
+    // artworks, viewpoints, museums, historic buildings, fountains). These are the real points a guide stops at
+    // when walking someone through a square, an old town or a castle; nothing here is invented.
+    if (url.pathname === "/nearsights") {
+      const la = +(+url.searchParams.get("lat")).toFixed(4), ln = +(+url.searchParams.get("lng")).toFixed(4), r = Math.min(600, Math.max(60, +url.searchParams.get("r") || 250));
+      if (!isFinite(la) || !isFinite(ln)) return Response.json({ error: "Bad request" }, { status: 400, headers: h });
+      const key = "ns1:" + r + ":" + la + "," + ln, hit = await env.USAGE.get(key); if (hit) return new Response(hit, { headers: { ...h, "content-type": "application/json" } });
+      const A = `(around:${r},${la},${ln})`;
+      const q = `[out:json][timeout:25];(nwr["tourism"~"^(attraction|artwork|viewpoint|museum|gallery)$"]["name"]${A};nwr["historic"]["name"]${A};nwr["amenity"~"^(place_of_worship|fountain|clock|theatre)$"]["name"]${A};nwr["man_made"~"^(tower|obelisk)$"]["name"]${A};);out center tags 200;`;
+      const UA = { "user-agent": "Kairoute/1.0 (travel guide; https://gilsonr0566-sys.github.io/Kairoute/)" };
+      let data = null;
+      for (const ep of ["https://overpass-api.de/api/interpreter", "https://overpass.private.coffee/api/interpreter", "https://maps.mail.ru/osm/tools/overpass/api/interpreter"]) {
+        try { const rr = await fetch(ep, { method: "POST", signal: AbortSignal.timeout(20000), body: "data=" + encodeURIComponent(q), headers: { "content-type": "application/x-www-form-urlencoded", accept: "application/json", ...UA } }); if (rr.ok) { data = await rr.json(); break; } } catch (e) {}
+      }
+      if (!data) return Response.json({ error: "map busy" }, { status: 502, headers: h });
+      const seen = new Set(), sights = [];
+      for (const e of data.elements || []) { const t = e.tags || {}, lat = e.lat ?? (e.center && e.center.lat), lng = e.lon ?? (e.center && e.center.lon); const name = t["name:en"] || t.name;
+        if (!name || !isFinite(lat) || seen.has(name.toLowerCase())) continue; seen.add(name.toLowerCase());
+        if (/^(memorial|boundary_stone|milestone|wayside_cross|wayside_shrine|tomb|grave)$/.test(t.historic || "") && !t.wikidata && !t.wikipedia) continue;
+        sights.push({ name, local: t.name && t.name !== name ? t.name : undefined, lat: +(+lat).toFixed(5), lng: +(+lng).toFixed(5), kind: t.tourism || t.historic || t.amenity || t.man_made || "", wd: t.wikidata || undefined, wiki: !!(t.wikipedia || t.wikidata), desc: (t.description || t.inscription || "").slice(0, 200) || undefined }); }
+      const out = JSON.stringify({ sights: sights.slice(0, 60) });
+      ctx.waitUntil(env.USAGE.put(key, out, { expirationTtl: 60 * 86400 }));
+      return new Response(out, { headers: { ...h, "content-type": "application/json" } });
+    }
     if (url.pathname === "/osm" && req.method === "POST") {
       let b; try { b = await req.json(); } catch (e) { return Response.json({ error: "Bad request" }, { status: 400, headers: h }); }
       const ids = (Array.isArray(b.ids) ? b.ids : []).map(String).filter(x => /^[NWR]\d+$/.test(x)).slice(0, 50);
