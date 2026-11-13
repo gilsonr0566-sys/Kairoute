@@ -37,8 +37,8 @@ self.addEventListener("fetch", e => {
     })).catch(() => caches.match("./index.html")));
     return;
   }
-  // Fonts, icons and other files: use the saved copy, refresh it in the background.
-  if (url.origin === location.origin || /fonts\.(googleapis|gstatic)\.com$/.test(url.hostname)) {
+  // Fonts, icons, the PDF maker and other files: use the saved copy, refresh it in the background.
+  if (url.origin === location.origin || /fonts\.(googleapis|gstatic)\.com$/.test(url.hostname) || (url.hostname === "cdnjs.cloudflare.com" && /\/jspdf\//.test(url.pathname))) { // the PDF maker too, so Save as PDF works offline
     e.respondWith(caches.match(req).then(hit => {
       const net = fetch(req).then(r => { if (r.ok || r.type === "opaque") { const copy = r.clone(); caches.open(CACHE).then(c => c.put(req, copy)); } return r; }).catch(() => hit);
       return hit || net;
