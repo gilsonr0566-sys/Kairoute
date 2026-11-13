@@ -71,6 +71,20 @@ function siteClosed(s, iso) {
   const w = siteWindow(s, iso); if (w && w.src === "OpenStreetMap") return !w.spans.length;
   return closedOn(s, iso) || closedByText(s.closed, iso) || closedByText(s.hours, iso);
 }
+// Closed for a day's visit: closed that date, or open only at hours outside the day's time here (a port day's time
+// ashore, a hotel day's sightseeing hours), with less than half an hour of overlap. Every way a sight gets onto a
+// day checks this, so the app never plans or picks a sight for a day it can't be visited.
+function closedForDay(s, d, w) {
+  if (!s || !d || !d.date) return false;
+  if (siteClosed(s, d.date)) return true;
+  const sw = siteWindow(s, d.date); if (!sw || !sw.spans || !sw.spans.length || !w || w.error || !(w.endBy > w.start)) return false;
+  const need = Math.min(30, s.minutes || 30);
+  return !sw.spans.some(([a, b]) => Math.min(b, w.endBy) - Math.max(a, w.start) >= need);
+}
+function closedForDayWhy(s, d, w) {
+  if (siteClosed(s, d.date)) return closedWhy(s, d.date);
+  const sw = siteWindow(s, d.date); return sw && sw.spans.length ? `open only ${sw.spans.map(([a, b]) => fmt(a) + "–" + fmt(b)).join(", ")}, outside your time here` : "";
+}
 const closedWhy = (s, iso) => { const c = String(s.closed || "").trim(); return c && closedByText(c, iso) || closedOn(s, iso) ? c : `Closed on ${fmtDow(iso)}s (${siteWindow(s, iso) ? "OpenStreetMap hours" : "listed hours"})`; };
 // How a visit fits the hours: minutes to wait for opening, and minutes past the latest sensible arrival
 // (the listed last entry, or 45 minutes before closing, less for a short visit).
@@ -156,8 +170,18 @@ function visitPenalty(p, t, len) {
 // Closed today: say why, and move it to a day here when it's open, in one tap.
 function closedBanner(d, plan) {
   const l = plan.closedToday || []; if (!l.length) return "";
-  return l.map(s => `<div class="banner warn" role="alert"><span><b>${esc(s.name)}</b> is closed on ${esc(fmtDow(d.date))}${s.why ? " (" + esc(s.why.replace(/\.$/, "")) + ")" : ""}, so it's not in today's plan.${s.openOn ? ` It's open on ${esc(fmtDate(s.openOn.date))}, when you're here too.` : " It isn't open on any other day you're here."}</span>${s.openOn ? `<button class="btn small" data-act="closedmove" data-id="${esc(s.id)}" data-to="${trip.days.indexOf(s.openOn)}">Move it to ${esc(fmtDate(s.openOn.date))}</button>` : ""}</div>`).join("");
+  return l.map(s => `<div class="banner warn" role="alert"><span><b>${esc(s.name)}</b> is closed on ${esc(fmtDow(d.date))}${s.why ? " (" + esc(s.why.replace(/\.$/, "")) + ")" : ""}, so it's not in today's plan.${s.openOn ? ` It's open on ${esc(fmtDate(s.openOn.date))}, when you're here too.` : " It isn't open on any other day you're here."}</span>${s.openOn ? `<button class="btn small" data-act="closedmove" data-id="${esc(s.id)}" data-to="${trip.days.indexOf(s.openOn)}">Move it to ${esc(fmtDate(s.openOn.date))}</button>` : ""}${(() => { const a = closedAlt(d, s); return a ? `<button class="btn small ghost" data-act="closedswap" data-id="${esc(s.id)}" data-alt="${esc(a.id)}">Swap for ${esc(a.name)} (open today)</button>` : ""; })()}</div>`).join("");
 }
+// The best sight open today that fits in place of a closed pick: same kind when there is one, famous first, close by.
+function closedAlt(d, s) {
+  const city = cityFor(d); if (!city || typeof fitsAll !== "function") return null;
+  const taken = new Set(trip.days.filter(o => cityFor(o) === city).flatMap(o => o.selected || [])), sel = (d.selected || []).filter(i => i !== s.id);
+  let w = null; try { w = dayWindow(d, city); } catch (e) {}
+  const c = allSites(city).filter(x => !x.quick && x.id !== s.id && !taken.has(x.id) && religiousOk(x) && !closedForDay(x, d, w));
+  const rank = x => (x.kind && x.kind === s.kind ? 2 : 0) + (fameW(x) || 1) - hav(x, s) / 5;
+  return c.sort((a, b) => rank(b) - rank(a)).slice(0, 8).find(x => fitsAll(fitTrial(d, [...sel, x.id]))) || null;
+}
+function swapClosed(id, alt) { const d = day(); d.selected = (d.selected || []).filter(x => x !== id); if (!d.selected.includes(alt)) d.selected = d.selected.concat(alt); d.anchor = alt; save(); render(); }
 function moveClosed(id, to) {
   const d = day(), o = trip.days[to]; if (!o) return;
   d.selected = (d.selected || []).filter(x => x !== id);
