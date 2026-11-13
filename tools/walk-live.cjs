@@ -10,7 +10,7 @@ const STOPS = [
   let bad = 0;
   for (const [city, stop, others] of STOPS) {
     const r = await p.evaluate(([c, s, o]) => window.__kairouteWalkProbe(c, s, o), [city, stop, others]);
-    console.log(`\n===== ${stop.name}, ${city} =====\nsources loaded: ${r.sources}; map sights nearby: ${r.mapSights}; other stops in the guide: ${r.others}; real points: ${r.cands.join(', ')}`);
+    console.log(`\n===== ${stop.name}, ${city} =====\nsources loaded: ${r.sources}; map sights nearby: ${r.mapSights}${r.mapWhy ? " (" + r.mapWhy + ")" : ""}; other stops in the guide: ${r.others}; real points (* = with facts): ${r.cands.join(', ')}`);
     console.log(`parts: ${r.parts.length}, stop time ${r.minutes} min${r.show ? ', show: ' + JSON.stringify(r.show) : ''}`);
     r.parts.forEach((x, i) => console.log(` ${i + 1}. ${x.name}${x.spot ? ' (spot)' : ''} · ${x.words} words · ${x.minutes} min · ${x.m} m from the last point\n    stand: ${x.stand}\n    walk: ${x.walk}\n    look: ${x.look}`));
     console.log('\n--- SCRIPT ---\n' + r.script + '\n--- END ---');
