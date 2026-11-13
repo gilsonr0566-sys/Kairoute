@@ -40,12 +40,16 @@ function fitAsk(d, id) {
     if (!sugg.length || !fitsWithout(sugg)) { const one = rows.filter(r => r.alone).sort(byValue)[0]; sugg = one ? [one.x.id] : []; }
   }
   // Another day in the same city where it fits as things stand.
+  trip.days.forEach(o => { if (o !== d && !o.selected && o.type !== "sea" && cityFor(o) === city) seedPicks(o, city); });
   const others = trip.days.filter(o => o !== d && cityFor(o) === city && !(o.selected || []).includes(id) && !closedOn(s, o.date)).filter(o => {
     const b = fitTrial(o, (o.selected || []).slice()); if (!b.m) return false; return fitOk(fitTrial(o, [...(o.selected || []), id]), b.m); }).slice(0, 2);
   const never = !fitOk(fitTrial(d, [id]), base.m);
   // Famous sights aren't dropped for a lesser plan: when the only way to make room is a must-see and
   // another day has room, that day is the suggestion.
-  const dayFirst = others.length > 0 && (!sugg.length || sugg.every(i => (picks.find(x => x.id === i) || {}).mustSee));
+  // Unticking leads only when one pick (not a must-see) makes room. Anything bigger, and another day with room
+  // is the better answer.
+  const canRoom = picks.length > 0 && fitsWithout(picks.map(x => x.id));
+  const dayFirst = others.length > 0 && (!sugg.length || sugg.length > 1 || sugg.some(i => (picks.find(x => x.id === i) || {}).mustSee));
   if (dayFirst) sugg = [];
   rows.sort((a, b) => (sugg.includes(b.x.id) - sugg.includes(a.x.id)) || b.frees - a.frees);
   // More time: only where the day's length is the traveler's choice (hotel days and arrival days).
@@ -54,7 +58,7 @@ function fitAsk(d, id) {
     for (let h = d.hours + 0.5; h <= d.hours + 8; h += 0.5) { const r = fitTrial(d, [...d.selected, id], h); if (!r.m) break; if (r.m.endBy <= base.m.endBy) break; if (fitOk(r, base.m)) { more = { h, endBy: r.m.endBy }; break; } }
   }
   const why = d.type === "port" ? `the ship's all-aboard time (${esc(d.allAboard || "")}) sets the end of the day` : d.type === "embark" ? "boarding time sets the end of the day" : d.type === "departure" ? "your departure time sets the end of the day" : "the day can't run any later";
-  fitState = { d, id, s, need, never, others, dayFirst, base: base.m, rows, sugg, drop: new Set(), more, why };
+  fitState = { d, id, s, need, never, others, dayFirst, canRoom, base: base.m, rows, sugg, drop: new Set(), more, why };
   fitShow(); return false;
 }
 function fitShow() {
@@ -68,20 +72,28 @@ function fitHTML() {
   const r = fitTrial(d, sel), m = r.m, ok = fitOk(r, F.base);
   const freed = F.rows.filter(x => F.drop.has(x.x.id)).reduce((a, x) => a + x.frees, 0);
   // Until it fits, the meter shows the day as it would be with the sight in it (its visit and detour).
-  const avail = m ? m.avail : F.base.avail, used = ok ? m.used : Math.max(m ? m.used : 0, F.base.used - freed + F.need), over = Math.max(0, used - avail), pct = Math.min(100, Math.round(used / avail * 100));
+  // the day as planned without it, plus its visit and detour from that route.
+  let used = m ? m.used : 0;
+  if (!ok) { const wo = fitTrial(d, sel.filter(i => i !== F.id)); let nd = F.need; try { if (wo.p && !wo.p.error) nd = stopCost(wo.p, F.s).min; } catch (e) {} if (wo.m) used = wo.m.used + nd; }
+  const avail = m ? m.avail : F.base.avail, over = Math.max(0, used - avail), pct = Math.min(100, Math.round(used / avail * 100));
   return `<h3 id="fitTitle">${esc(F.s.name)} doesn't fit ${F.d.type === "port" ? "your time ashore" : "today"} yet</h3>
     <div class="meter ${ok ? "" : "full"}" role="status" aria-live="polite">
       <div class="mrow"><b>${dur(Math.min(used, 24 * 60))} of ${dur(avail)}</b><span>${fmt(m ? m.start : F.base.start)} to ${fmt(m ? m.endBy : F.base.endBy)}</span></div>
       <div class="mbar"><i style="width:${pct}%"></i></div>
       <p class="mparts">${esc(F.s.name)} needs about ${dur(F.need)} with getting there and back on your route.${freed ? ` Unticked so far frees about ${dur(freed)}.` : ""}</p>
-      <p>${ok ? `<b>It fits now</b>${avail - used >= 5 ? `, with ${dur(avail - used)} to spare` : ""}.` : over ? `<b>${dur(over)} over.</b> ${F.rows.length ? `Untick ${F.drop.size ? "more" : "something"} below${F.more ? " or give the day more time" : ""}.` : F.more ? "Give the day more time below." : ""}` : `<b>Still doesn't fit</b> the route and opening hours. Untick ${F.drop.size ? "more" : "something"} below.`}</p>
+      <p>${ok ? `<b>It fits now</b>${avail - used >= 5 ? `, with ${dur(avail - used)} to spare` : ""}.` : `<b>${over ? dur(over) + " over" : "Doesn't fit the route and opening hours"}.</b> ${fitNext(F)}`}</p>
     </div>
-    ${F.dayFirst ? otherDays("Best: see it on another day, and keep today's must-sees") : ""}
-    ${F.rows.length ? `<div class="fitlist"><p class="lbl">Make room: untick a pick</p>${F.rows.map(x => `<label class="fitrow"><input type="checkbox" data-fitdrop="${esc(x.x.id)}" ${F.drop.has(x.x.id) ? "" : "checked"}><span class="nm">${esc(x.x.name)}</span><span class="tags">${F.sugg.includes(x.x.id) ? `<span class="tag here">Suggested</span>` : ""}${x.x.mustSee ? `<span class="tag must">Must-see</span>` : ""}<span class="tag">Frees ${x.frees >= 5 ? "about " + dur(x.frees) : "little time"}</span></span></label>`).join("")}</div>` : ""}
+    ${F.dayFirst ? otherDays("Best: see it on another day and keep today as planned") : ""}
+    ${F.rows.length ? `<div class="fitlist"><p class="lbl">${F.canRoom ? "Make room: untick a pick" : "Unticking won't make enough room today"}</p>${F.rows.map(x => `<label class="fitrow"><input type="checkbox" data-fitdrop="${esc(x.x.id)}" ${F.drop.has(x.x.id) ? "" : "checked"}><span class="nm">${esc(x.x.name)}</span><span class="tags">${F.sugg.includes(x.x.id) ? `<span class="tag here">Suggested</span>` : ""}${x.x.mustSee ? `<span class="tag must">Must-see</span>` : ""}<span class="tag">Frees ${x.frees >= 5 ? "about " + dur(x.frees) : "little time"}</span></span></label>`).join("")}</div>` : ""}
     ${F.more ? `<div class="fitmore"><p class="lbl">Or give the day more time</p><button type="button" class="btn ghost small" data-act="fitmore">Add ${dur((F.more.h - F.d.hours) * 60)} to the day (until ${fmt(F.more.endBy)}) and add it</button></div>` : `<p class="mparts">More time isn't an option here: ${F.why}.</p>`}
     ${F.never && !F.more ? `<p class="mparts"><b>Even on its own it doesn't fit this day</b>${F.d.type === "port" ? " in your time ashore" : ""}.</p>` : ""}
     ${!F.dayFirst ? otherDays("Or see it on another day") : ""}
     <div class="row"><button type="button" class="btn ghost" data-act="fitcancel">Keep my day as is</button><button type="button" class="btn" data-act="fitadd" ${ok ? "" : "disabled"}>Add ${esc(F.s.name)}</button></div>`;
+}
+function fitNext(F) {
+  const ways = [F.canRoom ? `untick ${F.drop.size ? "more" : F.sugg.length === 1 ? "the suggested pick" : "picks"} below` : "", F.more ? "give the day more time" : "", F.others.length ? "see it on another day" : ""].filter(Boolean);
+  if (!ways.length) return "Even with nothing else picked, it can't fit this day.";
+  return (F.canRoom ? "" : "Unticking can't make enough room today. ") + ways.join(", or ").replace(/^./, c => c.toUpperCase()) + ".";
 }
 function otherDays(label) {
   const F = fitState; if (!F.others.length) return "";
@@ -90,7 +102,7 @@ function otherDays(label) {
 function fitApply(hours) {
   const F = fitState; if (!F) return;
   const d = F.d; d.selected = [...d.selected.filter(i => !F.drop.has(i)), F.id]; if (hours != null) d.hours = hours;
-  d.anchor = F.id; fitState = null; fitShow(); save(); render(); jumpToAnchor();
+  d.anchor = F.id; rememberPick(d, F.s); fitState = null; fitShow(); save(); render(); jumpToAnchor();
 }
 document.addEventListener("change", e => {
   const t = e.target; if (!t.dataset || !t.dataset.fitdrop || !fitState) return;
@@ -104,6 +116,7 @@ document.addEventListener("click", e => {
   else if (t.dataset.act === "fitadd" && !t.disabled) fitApply();
   else if (t.dataset.act === "fitmore" && fitState.more) fitApply(fitState.more.h);
   else if (t.dataset.act === "fitday") { const o = trip.days[+t.dataset.fitday], id = fitState.id; fitState = null; fitShow(); if (!o) return;
-    o.selected = [...(o.selected || []), id]; o.anchor = id; trip.active = trip.days.indexOf(o); save(); render(); jumpToAnchor(); }
+    const c = cityFor(o); if (!o.selected && c) seedPicks(o, c);
+    o.selected = [...(o.selected || []), id]; o.anchor = id; rememberPick(o, c && allSites(c).find(x => x.id === id)); trip.active = trip.days.indexOf(o); save(); render(); jumpToAnchor(); }
 });
 document.addEventListener("keydown", e => { if (e.key === "Escape" && fitState) { fitState = null; fitShow(); } });
