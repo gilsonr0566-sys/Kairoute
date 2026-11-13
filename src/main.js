@@ -1644,15 +1644,18 @@ function partCands(s, city) {
   // How far its parts can be: a castle, palace, ancient site or park covers ground; a square or old street less.
   const t = s.category + " " + s.name, r = /castle|palace|citadel|fortress|kremlin|acropolis|archaeolog|ancient|forum|monaster|abbey|park|garden|campus|cemetery|island|hill|complex/i.test(t) ? 0.45 : /square|plaza|piazza|platz|market/i.test(t) ? 0.2 : /old town|historic|quarter|district|village/i.test(t) ? 0.35 : AREA_CAT.test(t) ? 0.2 : 0.12;
   const mains = (city.sites || []).filter(x => !x.quick && x !== s), self = x => sameSight(x, s);
-  const out = [];
+  const out = [], theirs = x => otherStop(x, s, mains);
   for (const x of src.stops || []) {
-    if (x.lat == null || !(x.src || []).some(t => /Wikivoyage|heritage|UNESCO/.test(t)) || self(x) || mains.some(m => sameSight(x, m)) || hav(x, s) > r) continue;
+    if (x.lat == null || !(x.src || []).some(t => /Wikivoyage|heritage|UNESCO/.test(t)) || self(x) || mains.some(m => sameSight(x, m)) || hav(x, s) > r || theirs(x)) continue;
     if (out.some(o => sameSight(x, o))) continue;
     out.push({ name: x.name, local: x.local, lat: x.lat, lng: x.lng, sl: x.sl || 0, m: Math.round(hav(x, s) * 1000) });
   }
   for (const q of (city.sites || []).filter(x => x.quick && isFinite(x.lat) && hav(x, s) <= r)) if (!out.some(o => sameSight(o, q))) out.push({ name: q.name, lat: q.lat, lng: q.lng, sl: q.fame || 0, m: Math.round(hav(q, s) * 1000), quickId: q.id });
   return out.sort((a, b) => b.sl - a.sl).slice(0, 10);
 }
+// A point nearer another stop of the guide than this one belongs to that stop's walk (the Parthenon is on the
+// Acropolis walk, not Plaka's).
+const otherStop = (x, s, mains) => mains.some(m => isFinite(m.lat) && !m.far && hav(x, m) < Math.min(0.3, hav(x, s)));
 const bigStop = (s, city) => !!(s && ((s.parts && s.parts.length >= 2) || partCands(s, city).length >= 2));
 const partsOn = s => (s.parts || []).filter((p, k) => !(s.partsOff || []).includes(k));
 // The stop's time follows the parts that are ticked.
@@ -1698,7 +1701,7 @@ let extrasBusy = false;
 // with its own full story where the place deserves one, a walking cue between points, and a closing line that
 // hands over to the next stop. Points are real places from the sources or the map, or a spot at the stop itself
 // (its west front, the view from the steps); never an invented place.
-const EXTRAS_V = 2;
+const EXTRAS_V = 3;
 async function nearSights(s) {
   if (nearCache[s.id]) return nearCache[s.id];
   if (!freeAI || !isFinite(s.lat)) return [];
@@ -1711,12 +1714,26 @@ async function walkCands(s, city) {
   const out = partCands(s, city).slice(), mains = (city.sites || []).filter(x => !x.quick && x !== s);
   for (const x of await nearSights(s)) {
     if (out.length >= 14) break;
-    if (sameSight(x, s) || mains.some(m => sameSight(x, m) || (isFinite(m.lat) && hav(x, m) < 0.03 && nameMatch(m.name.split(" ")[0], x.name))) || out.some(o => sameSight(x, o) || hav(x, o) < 0.015)) continue;
+    if (sameSight(x, s) || mains.some(m => sameSight(x, m) || (isFinite(m.lat) && hav(x, m) < 0.03 && nameMatch(m.name.split(" ")[0], x.name))) || otherStop(x, s, mains) || out.some(o => sameSight(x, o) || hav(x, o) < 0.015)) continue;
     out.push(x);
   }
   return out;
 }
 const words = t => String(t || "").split(/\s+/).filter(Boolean).length;
+// The walk between points: kept in an order that doesn't double back (if the writer's order walks much farther
+// than going to the nearest next point each time, the nearer order is used), and each walking line says the real
+// distance from the map, not the writer's guess.
+function walkOrder(parts, s) {
+  const len = ps => ps.reduce((a, p, i) => a + (i ? hav(ps[i - 1], p) : 0), 0);
+  const nn = [parts[0]], left = parts.slice(1);
+  while (left.length) { const last = nn[nn.length - 1]; left.sort((a, b) => hav(last, a) - hav(last, b)); nn.push(left.shift()); }
+  const ps = len(parts) > len(nn) * 1.4 + 0.05 ? nn : parts;
+  ps.forEach((p, i) => { const prev = ps[i - 1]; if (!prev) { p.cue = ""; return; }
+    const m = Math.round(hav(prev, p) * 1000), how = m < 15 ? "A few steps on" : "About " + (m < 100 ? Math.round(m / 5) * 5 : Math.round(m / 10) * 10) + " m";
+    const line = String(prev.next || "").replace(/\b(?:walk\s+)?(?:about\s+|around\s+)?\d+\s*(?:m|meters|metres|yards|yds|ft|feet)\b\s*/gi, "").replace(/^\W+/, "").trim();
+    p.cue = line ? `${how}: ${line.replace(/^\w/, c => c.toUpperCase())}` : `${how} to ${p.name}.`; });
+  return ps;
+}
 async function stopExtras(s, city) {
   const key = keyOf(city.city) + "|" + s.id; if (extrasAsked[key] || s.extrasV >= EXTRAS_V) return; extrasAsked[key] = true;
   const cands = await walkCands(s, city), area = AREA_CAT.test(s.category + " " + s.name) || cands.length >= 2;
@@ -1724,16 +1741,17 @@ async function stopExtras(s, city) {
 ${cands.length ? `Real places right here (distance from the middle of ${s.name}):
 ${cands.map((c, i) => `${i + 1}. ${c.name}${c.local ? " [" + c.local + "]" : ""} (${c.m} m)${c.desc ? " — " + c.desc : ""}`).join("\n")}
 ` : ""}Plan ${area ? "4 to 8 points" : "2 to 4 points"} in a walking order that never doubles back, starting where a visitor arrives. A point is either one of the places above (give its number as "n") or a spot at ${s.name} itself (give "spot", e.g. "the west front", "inside, at the altar", "the view from the top step"). Never name a place that is not on the list or part of ${s.name}.
-Return ONLY JSON {"intro":"...","parts":[{"n":number or 0,"spot":"","stand":"...","guide":"...","look":"...","walk":"...","minutes":number}],"wrap":"...","show":{"what":"","every":0,"first":"","last":"","n":0}}.
+Return ONLY JSON {"intro":"...","parts":[{"n":number or 0,"spot":"","stand":"...","guide":"...","look":"...","next":"...","minutes":number}],"wrap":"...","show":{"what":"","every":0,"first":"","last":"","n":0}}.
 - "intro": 50 to 90 words said where the group gathers: where they are, why it matters, and the route you'll take ("we'll start at…, then…").
 - "stand": one sentence putting them in place: where to stand and which way to face ("Stand by the fountain and face the clock tower").
 - "guide": the full spoken story of that point, 110 to 220 words where the place has a lot to tell (a church, a monument, a famous building), 60 to 110 for a small detail. Real history, people, dates you are sure of, and what they are looking at right now ("look up at…", "see the crack in the third step?"). Conversational, like a person thinking aloud, not a script.
 - "look": one specific detail to spot from that point.
-- "walk": for every point after the first, one line to get there from the previous point, with distance and a landmark ("Walk 40 m along the north side to the church with the twin towers").
+- "next": for every point except the last, one line taking the group from this point to the next one, with the direction and a landmark to aim for ("Now cross the square toward the church with the twin black towers").
 - "minutes": time at that point, 3 to 20.
 - "wrap": 25 to 50 words closing the stop and handing over to the next one.
 - "show": only for a famous show that runs on a fixed timetable here (like a clock's hourly show or the changing of the guard): "what" names it, "every" is minutes between shows, "first"/"last" the first and last as HH:MM, "n" the point it happens at. Otherwise leave "what" empty.
-Write in ${P().lang}.${faithNote()}`;
+Like the best guides, mix the history with stories about people, a light touch of humour and a practical tip where it helps (where to stand for the photo, which door is the way in).
+Write in ${P().lang}.${faithNote() ? " Where a point really has a Bible or faith connection, tell it with chapter and verse; don't force one onto a place that has none." : ""}`;
   try {
     let parts = [], j = {};
     for (let tries = 0; tries < 2 && parts.length < 2; tries++) {
@@ -1743,10 +1761,10 @@ Write in ${P().lang}.${faithNote()}`;
         if ((+x.n && !c) || (!c && !spot) || words(x.guide) < 40) continue; // an unknown place, or a story too thin to be worth a stop
         const nm = c ? c.name : spot.replace(/^\w/, ch => ch.toUpperCase());
         if (parts.some(p => p.name === nm)) continue;
-        parts.push({ name: nm, spot: !c, local: c && c.local, lat: c ? c.lat : s.lat, lng: c ? c.lng : s.lng, minutes: Math.max(3, Math.min(20, Math.round(numV(x.minutes) || 8))), stand: String(x.stand || "").slice(0, 240), cue: String(x.walk || "").slice(0, 240), guide: String(x.guide).slice(0, 1800), lookFor: String(x.look || "").slice(0, 240), quickId: c && c.quickId, n: +x.n || 0, i: (j.parts || []).indexOf(x) });
+        parts.push({ name: nm, spot: !c, local: c && c.local, lat: c ? c.lat : s.lat, lng: c ? c.lng : s.lng, minutes: Math.max(3, Math.min(20, Math.round(numV(x.minutes) || 8))), stand: String(x.stand || "").slice(0, 240), next: String(x.next || x.walk || "").slice(0, 240), guide: String(x.guide).slice(0, 1800), lookFor: String(x.look || "").slice(0, 240), quickId: c && c.quickId, n: +x.n || 0, i: (j.parts || []).indexOf(x) });
       }
     }
-    if (parts.length >= 2) { s.parts = parts.slice(0, 8); s.partsOff = []; delete s.baseMin; partMinutes(s); s.intro = String(j.intro || "").slice(0, 900); s.wrap = String(j.wrap || "").slice(0, 500); }
+    if (parts.length >= 2) { parts = walkOrder(parts.slice(0, 8), s); s.parts = parts; s.partsOff = []; delete s.baseMin; partMinutes(s); s.intro = String(j.intro || "").slice(0, 900); s.wrap = String(j.wrap || "").slice(0, 500); }
     const sh = j.show || {};
     if (sh.what && String(sh.what).length < 120) { const every = Math.round(numV(sh.every) || 0), pi = (s.parts || []).findIndex(p => p.i === (+sh.n || 0) - 1);
       s.show = { what: String(sh.what), every: every >= 10 && every <= 720 ? every : 0, first: hhmm(sh.first) != null ? String(sh.first) : "", last: hhmm(sh.last) != null ? String(sh.last) : "", part: pi >= 0 ? pi : null, note: "Times from your guide; check on the day" }; }
@@ -2581,16 +2599,20 @@ if (typeof window !== "undefined") window.__kairouteFameCheck = async fix => {
     const story = n => Array.from({ length: n }, (_, i) => "word" + i).join(" ");
     let asked = "";
     sample = async q => { asked = q; return { text: JSON.stringify({ intro: "We're standing at the old heart of the city. We'll start by the church, then the town hall, then the west front.", parts: [
-      { n: 1, stand: "Stand by the monument and face the church with the twin towers.", guide: story(150), look: "the golden Madonna", walk: "", minutes: 8 },
-      { n: 2, stand: "Stand under the tower.", guide: story(120), look: "the plaque", walk: "Walk 40 m to your left, past the fountain.", minutes: 6 },
+      { n: 1, stand: "Stand by the monument and face the church with the twin towers.", guide: story(150), look: "the golden Madonna", next: "Now walk 40 m to the tower on your left.", minutes: 8 },
+      { n: 2, stand: "Stand under the tower.", guide: story(120), look: "the plaque", next: "Walk to the middle of the square.", minutes: 6 },
       { n: 99, stand: "Stand here.", guide: story(120), look: "", walk: "Walk on.", minutes: 5 },
-      { n: 0, spot: "the west front", stand: "Stand back by the café tables and look at the whole square.", guide: story(80), look: "the pastel houses", walk: "Walk to the middle of the square.", minutes: 5 },
+      { n: 0, spot: "the west front", stand: "Stand back by the café tables and look at the whole square.", guide: story(80), look: "the pastel houses", next: "", minutes: 5 },
       { n: 3, stand: "Stand here.", guide: story(12), look: "", walk: "", minutes: 5 }], wrap: "That's the square. Next we head to the clock.", show: { what: "", every: 0 } }) }; };
     delete extrasAsked["prague test|" + S.id]; S.extrasV = 0; await stopExtras(S, gone);
     const P0 = S.parts || [], realPt = P0.filter(p => !p.spot).every(p => cands.some(c => c.name === p.name && c.lat === p.lat && c.lng === p.lng)), spot = P0.find(p => p.spot);
     ok("Live guide: points are real nearby places or spots at the stop (an invented place and a thin story are refused)", P0.length === 3 && realPt && spot && spot.lat === S.lat, P0.map(p => p.name).join(", ") || "no parts");
     const sp1 = partSpeech(S, 0, true), spL = partSpeech(S, 2, false);
-    ok("Live guide: the walk opens where you stand, puts you in place at each point, and hands over at the end", /old heart/.test(sp1) && /Stand by the monument/.test(sp1) && /Walk to the middle/.test(spL) && /Next we head to the clock/.test(spL) && !/Next we head/.test(sp1), "opening, stand-here line, walk cue and closing in order");
+    const cuesOk = P0.slice(1).every(p => /^(About \d+ m|A few steps on)/.test(p.cue)) && !P0[0].cue && !/40 m/.test(P0.map(p => p.cue).join(" "));
+    ok("Live guide: the walk opens where you stand, puts you in place at each point, walks you on with the real distance, and hands over at the end", /old heart/.test(sp1) && /Stand by the monument/.test(sp1) && cuesOk && /Next we head to the clock/.test(spL) && !/Next we head/.test(sp1), P0.map(p => p.cue || "(start)").join(" | "));
+    // A point nearer another stop belongs to that stop's walk.
+    const other = { name: "Another stop", lat: S.lat + 0.0009, lng: S.lng + 0.0009 };
+    ok("Live guide: a point nearer another stop isn't pulled into this one", otherStop({ lat: S.lat + 0.0008, lng: S.lng + 0.0008 }, S, [other]) && !otherStop({ lat: S.lat + 0.0001, lng: S.lng }, S, [other]), "points go to the nearest stop");
     ok("Live guide: the guide is asked for full stories, stand-here lines and walk cues", /110 to 220 words/.test(asked) && /"stand"/.test(asked) && /never doubles back/.test(asked), "asked for the live-guide standard");
     ok("Live guide: every area, castle, old town or must-see stop gets a walk-through, even without sources", walkWorthy({ name: "Plaka and Anafiotika", category: "Old town", minutes: 30 }, { city: "x", sites: [] }) && walkWorthy({ name: "A cathedral", category: "Church", mustSee: true, minutes: 30 }, { city: "x", sites: [] }) && !walkWorthy({ name: "A fountain", category: "Fountain", minutes: 10, quick: true }, { city: "x", sites: [] }), "Plaka qualifies; a quick fountain does not");
     const C = gone.sites.find(x => sameSight(clock, x));
@@ -2605,13 +2627,16 @@ if (typeof window !== "undefined") window.__kairouteFameCheck = async fix => {
 };
 // Live check (run by the "Walk-through live check" workflow against the published site): write one stop's
 // walk-through with the real sources, map and AI, and return it so the script can be read.
-if (typeof window !== "undefined") window.__kairouteWalkProbe = async (cityName, stop) => {
-  const city = { city: cityName, sites: [Object.assign({ id: keyOf(stop.name).replace(/ /g, "-"), minutes: 45, kind: "touristy", mustSee: true, quick: false, summary: "", guide: "", lookFor: [], picks: [] }, stop)], farther: [], restaurants: [] };
-  const src = await sourcesFor(cityName); if (src) fameAsked[keyOf(cityName)] = src;
-  const s = city.sites[0], cands = await walkCands(s, city);
+if (typeof window !== "undefined") window.__kairouteWalkProbe = async (cityName, stop, others) => {
+  const mk = (x, i) => Object.assign({ id: keyOf(x.name).replace(/ /g, "-") || "s" + i, minutes: 45, kind: "touristy", mustSee: true, quick: false, summary: "", guide: "", lookFor: [], picks: [] }, x);
+  const real = cities[keyOf(cityName)], base = real ? JSON.parse(JSON.stringify(real)) : null;
+  const city = base || { city: cityName, sites: [mk(stop, 0)].concat((others || []).map(mk)), farther: [], restaurants: [] };
+  const s = city.sites.find(x => x.name === stop.name) || (city.sites.unshift(mk(stop, 0)), city.sites[0]); s.extrasV = 0; delete s.parts;
+  const src = await sourcesFor(cityName); if (src) fameAsked[keyOf(city.city)] = src;
+  const near = await nearSights(s), cands = await walkCands(s, city);
   await stopExtras(s, city);
-  return { sources: !!src, cands: cands.map(c => c.name + " (" + c.m + " m)"), intro: s.intro, wrap: s.wrap, show: s.show, minutes: s.minutes,
-    parts: (s.parts || []).map(p => ({ name: p.name, spot: p.spot, words: words(p.guide), stand: p.stand, walk: p.cue, look: p.lookFor, minutes: p.minutes })),
+  return { sources: !!src, mapSights: near.length, others: city.sites.filter(x => x !== s && !x.quick).length, cands: cands.map(c => c.name + " (" + c.m + " m)"), intro: s.intro, wrap: s.wrap, show: s.show, minutes: s.minutes,
+    parts: (s.parts || []).map((p, k) => ({ name: p.name, spot: p.spot, words: words(p.guide), stand: p.stand, walk: p.cue, look: p.lookFor, minutes: p.minutes, m: k ? Math.round(hav(s.parts[k - 1], p) * 1000) : 0 })),
     script: (s.parts || []).map((p, k) => partSpeech(s, k, k === 0)).join("\n\n— next point —\n\n") };
 };
 // Safety-net hook: give a planned stop parts (as a big stop gets them), to walk the screens and the tour through.
