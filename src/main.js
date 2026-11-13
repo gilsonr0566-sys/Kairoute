@@ -738,7 +738,12 @@ function simDay(seq, t0, O, Z, style) {
       if (gGood(p.g)) cost -= 6; // rated 4.5 or more by at least 100 people on Google Maps
       if (p.generic) cost += 25; // a real, named place to eat beats "somewhere around here" unless it means a long detour
       clock += m.len;
-    } else clock += p.minutes || 0;
+    } else {
+      // Opening hours: wait for it to open, and never arrive after the last entry. Then weather and rush hours.
+      if (p.oh) { const f = ohFit(p.oh, clock, p.minutes); if (f.wait) { cost += f.wait * 0.6; clock += f.wait; } if (f.late) cost += 300 + f.late * 10; }
+      cost += visitPenalty(p, clock, p.minutes || 0);
+      clock += p.minutes || 0;
+    }
     prev = p;
   }
   if (Z) { clock += tmin(prev, Z); cost += hav(prev, Z) * 0.4; }
@@ -804,7 +809,8 @@ function checksCard(d, city, plan) {
   const openAir = s => /square|park|garden|hill|neighbo|street|promenade|old town|quarter|district|beach|viewpoint|harbou?r|waterfront|bridge/i.test((s.category || "") + " " + s.name);
   const noHours = stops.filter(s => !s.hours && !s.far && !openAir(s));
   if (stops.length) add(noHours.length ? "warn" : "ok", noHours.length ? `Opening hours not confirmed for ${esc(noHours.map(s => s.name).join(", "))}. Check the official website before you go.` : "Opening hours listed for every stop.");
-  const closed = plan.closedToday || []; if (closed.length) add("warn", `Closed on this day: ${esc(closed.map(s => s.name).join(", "))}.`);
+  const closed = plan.closedToday || []; if (closed.length) add("warn", `Closed on this day, so left out: ${esc(closed.map(s => s.name).join(", "))}.`);
+  liveChecks(d, plan, add);
   const meals = plan.items.filter(x => (x.type === "meal" || x.type === "evening") && x.place && !x.place.generic && !x.place.booked);
   if (meals.length) {
     const all = meals.flatMap(x => [x.place].concat(x.place.alts || [])), rated = all.filter(r => { const g = gOf(r); return g && g.state === "ok" && g.rating; });
@@ -888,7 +894,8 @@ function crowdFor(city) {
   if (!crowdCache[k] && freeAI) {
     crowdCache[k] = { map: null };
     fetch(`${freeAI.url}/ratings?city=${encodeURIComponent(k)}`).then(r => r.ok ? r.json() : null).then(j => {
-      if (!j || !j.ratings || !Object.keys(j.ratings).length) return;
+      if (!j || !j.ratings) return; markSites(city, j);
+      if (!Object.keys(j.ratings).length && !Object.keys(j.busy || {}).length) return;
       crowdCache[k].map = j.ratings;
       if (view === "plan" || view === "guide") { const y = window.scrollY; render(); window.scrollTo(0, y); }
     }).catch(() => {});
@@ -969,35 +976,43 @@ function placeMeals(order, meals, t0, O, Z, style, city) {
 }
 let keptMemo = new Map(); // per render: the picked sights each day actually keeps, so no sight is planned twice
 let bonusMemo = new Map(); // per render: each day's bonus stops, so two days in a city never get the same one
-function buildPlan(d) { const prev = planDate; planDate = d && d.date; try { return buildPlanFor(d); } finally { planDate = prev; } }
+function buildPlan(d) { const prev = planDate, pw = planWx; planDate = d && d.date; planWx = d && cityFor(d) ? wxFor(d, cityFor(d)) : null; try { return buildPlanFor(d); } finally { planDate = prev; planWx = pw; } }
 function buildPlanFor(d) {
   const city = cityFor(d); if (!city) return null;
   const w = dayWindow(d, city); if (w.error) return w;
+  liveWindow(d, w); // running late: the day re-planned from where you are now
   const style = trip.style || "mix";
   const O = w.head[w.head.length - 1], Z = w.tail[0] || null;
   const budget = w.endBy - w.start;
   const fixed = chainCost(w.head) + chainCost(w.tail) + (Z && w.tail.length ? 0 : 0);
   const mult = PACE[(trip.prefs && trip.prefs.pace) || "moderate"];
-  let chosen = allSites(city).filter(s => (d.selected || []).includes(s.id));
+  let chosen = allSites(city).filter(s => (d.selected || []).includes(s.id) && !liveDone(d, s.id));
   // One sight, one day. A sight ticked on more than one day in this city belongs to the earliest day whose
   // plan keeps it; later days leave it out. If the earlier day can't fit it, it falls to the later day.
   const myDay = trip.days.indexOf(d), seenOn = {}, elsewhere = [];
   trip.days.slice(0, Math.max(0, myDay)).forEach(o => { if (cityFor(o) !== city || !(o.selected || []).length) return; if (!keptMemo.has(o)) { try { buildPlan(o); } catch (e) {} } (keptMemo.get(o) || []).forEach(id => { if (!seenOn[id]) seenOn[id] = o; }); });
   chosen = chosen.filter(s => { if (!seenOn[s.id]) return true; elsewhere.push({ s, on: seenOn[s.id], earlier: true }); return false; });
+  // Closed today (by its listed hours or closed days): not planned today. Ticked on a later day here, it's seen
+  // then; otherwise the Day plan offers to move it to a day of the trip here when it's open.
+  const closedToday = [];
+  chosen = chosen.filter(s => { if (!siteClosed(s, d.date)) return true;
+    const o = trip.days.slice(myDay + 1).find(o => cityFor(o) === city && (o.selected || []).includes(s.id) && !siteClosed(s, o.date));
+    if (o) elsewhere.push({ s, on: o, later: true }); else closedToday.push(Object.assign({}, s, { why: closedWhy(s, d.date), openOn: trip.days.find(o => o !== d && cityFor(o) === city && o.type !== "sea" && !siteClosed(s, o.date)) || null }));
+    return false; });
   const swaps = [];
   if (d.rain) {
     // Indoor swaps never take a sight another day of the trip already has (or swapped in earlier).
     const busy = new Set([...Object.keys(plannedElsewhere(d)), ...Object.keys(seenOn), ...(d.selected || [])]);
     trip.days.slice(0, Math.max(0, myDay)).forEach(o => { if (cityFor(o) === city) (keptMemo.get(o) || []).forEach(id => busy.add(id)); });
-    const pool = city.sites.filter(s => !s.quick && s.indoor && !chosen.includes(s) && !busy.has(s.id));
+    const pool = city.sites.filter(s => !s.quick && s.indoor && !chosen.includes(s) && !busy.has(s.id) && !siteClosed(s, d.date));
     chosen = chosen.map(s => {
       if (s.indoor || s.mustSee || !pool.length) return s;
       pool.sort((a, b) => hav(a, s) - hav(b, s));
       const alt = pool.shift(); swaps.push([s, alt]); return alt;
     });
   }
-  const closedToday = chosen.filter(s => closedOn(s, d.date));
-  chosen = chosen.map(s => Object.assign({}, s, { minutes: Math.round(s.minutes * mult / 5) * 5 || s.minutes }));
+  const ck = keyOf(city.city), live = s => ({ _ck: ck, oh: siteWindow(s, d.date), cw: crowdWindows(Object.assign({ _city: ck }, s), d.date) });
+  chosen = chosen.map(s => Object.assign({}, s, { minutes: Math.round(s.minutes * mult / 5) * 5 || s.minutes }, live(s)));
   const mealsExpected = MEALS.filter(m => w.start < m.to - 30 && w.endBy > m.from + 45).reduce((a, m) => a + m.len, 0);
   let order = optimize(chosen, O, Z);
   const total = o => fixed + routeCost(o, O, Z) + o.reduce((a, s) => a + s.minutes, 0) + mealsExpected;
@@ -1054,12 +1069,12 @@ function buildPlanFor(d) {
   // A meal is planned only on a day with stops, and only if it fits before the day has to end.
   // A table the traveler already booked replaces that meal's suggestion and is pinned at its time: the route
   // reshapes around it. One booked after the day's sightseeing ends is added after the day instead.
-  const books = bookedMeals(d, city), dayEnd = w.endBy - tailCost();
+  const books = bookedMeals(d, city).filter(m => !liveAte(d, m.label)), dayEnd = w.endBy - tailCost();
   const inDay = books.filter(m => m.from >= t0 && m.from + m.len <= dayEnd), lateBooks = books.filter(m => !inDay.includes(m));
   // On a short day a quick meal (35-45 min) can make room for the sights the traveler picked.
   let quickMeals = false;
   const mealSet = () => quickMeals ? MEALS.map(m => Object.assign({}, m, { len: QUICK_MEAL[m.label] || m.len, quick: true })) : MEALS;
-  const needMeals = q => q.some(x => !x.mealOf) || inDay.length ? mealSet().filter(m => !books.some(b => b.label === m.label) && t0 < m.to - 30 && m.from + m.len + 15 <= dayEnd).concat(inDay).sort((a, b) => a.from - b.from) : [];
+  const needMeals = q => q.some(x => !x.mealOf) || inDay.length ? mealSet().filter(m => !liveAte(d, m.label) && !books.some(b => b.label === m.label) && t0 < m.to - 30 && m.from + m.len + 15 <= dayEnd).concat(inDay).sort((a, b) => a.from - b.from) : [];
   const withMeals = q => { const bare = q.filter(x => !x.mealOf); return placeMeals(bare, needMeals(bare), t0, O, ZZ, style, city); };
   const savedAvoid = avoidMeals, av = new Set(), myIdx = trip.days.indexOf(d);
   trip.days.slice(0, Math.max(0, myIdx)).forEach(o => { if (cityFor(o) !== city) return; if (!mealMemo.has(o)) { try { buildPlan(o); } catch (e) {} } (mealMemo.get(o) || []).forEach(n => av.add(n)); });
@@ -1108,8 +1123,8 @@ function buildPlanFor(d) {
     const taken = new Set(Object.keys(plannedElsewhere(d)));
     trip.days.slice(0, trip.days.indexOf(d)).forEach(o => { if (cityFor(o) !== city) return; if (!bonusMemo.has(o)) { try { buildPlan(o); } catch (e) {} } (bonusMemo.get(o) || []).forEach(id => taken.add(id)); });
     const inSeq = new Set(seq.filter(x => !x.mealOf).map(x => x.id)), skip = new Set((d.selected || []).concat(dropped.map(x => x.id)));
-    const pool = (city.sites || []).concat(city.farther || []).filter(x => !x.quick && religiousOk(x) && !inSeq.has(x.id) && !skip.has(x.id) && !taken.has(x.id) && !(d.skipBonus || []).includes(x.id) && !closedOn(x, d.date) && (!d.rain || x.indoor))
-      .map(x => Object.assign({}, x, { minutes: Math.round(x.minutes * mult / 5) * 5 || x.minutes, bonus: true }));
+    const pool = (city.sites || []).concat(city.farther || []).filter(x => !x.quick && religiousOk(x) && !inSeq.has(x.id) && !skip.has(x.id) && !taken.has(x.id) && !(d.skipBonus || []).includes(x.id) && !siteClosed(x, d.date) && (!d.rain || x.indoor))
+      .map(x => Object.assign({}, x, { minutes: Math.round(x.minutes * mult / 5) * 5 || x.minutes, bonus: true }, live(x)));
     const limit = w.endBy - 15 - tailCost();
     for (let n = 0; n < 8 && pool.length; n++) {
       const base = simDay(seq, t0, O, ZZ, style); let pick = null;
@@ -1143,7 +1158,8 @@ function buildPlanFor(d) {
   const go = (p, type, extra) => {
     const leg = travel(prev, p);
     items.push({ type: "travel", leg, time: clock }); clock += leg.min;
-    items.push(Object.assign({ type, place: p, time: clock }, extra || {})); clock += p.minutes || 0; prev = p;
+    const f = type === "stop" && p.oh ? ohFit(p.oh, clock, p.minutes) : null; if (f && f.wait) clock += f.wait;
+    items.push(Object.assign({ type, place: p, time: clock }, f && (f.wait || f.late) ? { wait: f.wait, ohLate: f.late, opens: f.open, closes: f.close } : {}, extra || {})); clock += p.minutes || 0; prev = p;
   };
   w.head.slice(1).forEach(p => go(p, "fixed"));
   const meals = [];
@@ -1847,7 +1863,7 @@ function fameFor(d, city) {
 }
 // How much a sight's fame protects it: 1 for an ordinary sight, up to 3 for a World Heritage site that
 // half the world's Wikipedias write about.
-const fameW = s => 1 + (s && s.unesco ? 0.8 : s && s.heritage ? 0.3 : 0) + Math.min(1.2, ((s && s.fame) || 0) / 80) + Math.min(0.6, Math.max(0, ((s && s.src && s.src.length) || 0) - 1) * 0.15);
+const fameW = s => travW(s) * (1 + (s && s.unesco ? 0.8 : s && s.heritage ? 0.3 : 0) + Math.min(1.2, ((s && s.fame) || 0) / 80) + Math.min(0.6, Math.max(0, ((s && s.src && s.src.length) || 0) - 1) * 0.15));
 const srcNote = s => s && s.src && s.src.length ? `<p class="srcnote">Named by ${s.src.length} source${s.src.length > 1 ? "s" : ""}: ${esc(s.src.join(", "))}${s.local && s.local !== s.name ? ` · Local name: ${esc(s.local)}` : ""}</p>` : "";
 const unescoTag = s => s && s.unesco ? `<span class="tag unesco">UNESCO World Heritage</span>` : "";
 // The AI sometimes returns {"name": …} where a plain name was asked for.
@@ -2579,7 +2595,7 @@ if (typeof window !== "undefined") {
       invented: meals.filter(x => !x.place.booked && !x.place.generic && !eats.has(keyOf(x.place.name))).map(x => x.place.name),
       farMeals: meals.filter(x => x.type === "meal" && !x.place.booked).map(x => { const k = pts.indexOf(x), a = pts[k - 1], b = pts[k + 1]; return a && b ? { name: x.place.name, extra: Math.round(tmin(a.place, x.place) + tmin(x.place, b.place) - tmin(a.place, b.place)) } : null; }).filter(x => x && x.extra > 25),
       mustLocal: [...sites.values()].filter(x => x.mustSee && sightKind(x, city) === "local").map(x => x.name),
-      closedPicks: stops.filter(x => closedOn(x.place, d.date)).map(x => x.place.name) };
+      closedPicks: stops.filter(x => siteClosed(x.place, d.date)).map(x => x.place.name), closed: (pl.closedToday || []).map(x => x.id) };
   };
 }
 // Safety-net hooks: famous sights and big stops, with a sources snapshot and stand-in AI answers, so they run
@@ -2854,7 +2870,7 @@ function render() {
     paneMemo.key = pkey; }
   { const old = document.querySelector(".coach"); if (old) old.remove(); const ch = coachHTML(); if (ch) document.body.insertAdjacentHTML("beforeend", ch); }
   if (askNotice && !FULL_VIEWS[view]) { const v = document.getElementById("view"); if (v) v.insertAdjacentHTML("afterbegin", `<p class="banner ok" role="status">${esc(askNotice)} <button class="linkbtn" data-act="asknoticeok">OK</button></p>`); }
-  mountMaps();
+  mountMaps(); liveAfterRender();
   if (openFolds.size) document.querySelectorAll("#view details").forEach(el => { const sm = el.querySelector("summary"); if (sm && openFolds.has(view + "|" + sm.textContent.trim())) el.open = true; });
 }
 function renderView() {
@@ -3350,40 +3366,8 @@ function basicsCard(city) {
   </div>`;
 }
 const todayISO = () => { const n = new Date(); return n.getFullYear() + "-" + String(n.getMonth() + 1).padStart(2, "0") + "-" + String(n.getDate()).padStart(2, "0"); };
-function countdownCard(d, plan) {
-  if (d.type !== "port") return "";
-  const stops = plan.items.filter(i => i.type === "stop" || i.type === "meal");
-  return `<div class="card countdown" id="cdCard">
-    <div><span class="eyebrow">Back to the ship</span></div>
-    <div class="cdrow"><div><div class="cdbig" id="cdBig">--:--</div><div class="cdsub" id="cdSub"></div></div>
-      <div class="field" style="flex:1;min-width:200px"><label for="cdWhere">Where are you now?</label>
-      <select id="cdWhere"><option value="auto">Wherever the plan says</option>${stops.map((i, k) => `<option value="${k}" ${String(cdWhere) === String(k) ? "selected" : ""}>${esc(i.place.name)}</option>`).join("")}</select></div></div>
-    <div class="banner" id="cdMsg"></div>
-    ${d.date !== todayISO() ? `<div class="actions"><button class="btn ghost small" data-act="cdpreview">${cdPreview == null ? "Preview the countdown" : "Stop preview"}</button></div>` : ""}
-  </div>`;
-}
-function tickCountdown() {
-  const d = day(); const el = document.getElementById("cdBig"); if (!el || d.type !== "port") return;
-  const plan = buildPlan(d); if (!plan || plan.error) return;
-  const backBy = plan.endBy, port = plan.w.tail[plan.w.tail.length - 1];
-  const live = d.date === todayISO();
-  let now = live ? (new Date().getHours() * 60 + new Date().getMinutes() + new Date().getSeconds() / 60) : cdPreview;
-  const stops = plan.items.filter(i => i.type === "stop" || i.type === "meal");
-  let here = null;
-  if (cdWhere != null && cdWhere !== "auto") here = stops[+cdWhere];
-  else if (now != null) here = stops.filter(i => i.time <= now).pop() || null;
-  else here = stops[stops.length - 1] || null;
-  const from = here ? here.place : plan.w.head[0];
-  const back = travel(from, port).min, leaveBy = backBy - back;
-  const sub = document.getElementById("cdSub"), msg = document.getElementById("cdMsg");
-  sub.textContent = `All aboard ${d.allAboard}. Be at the ship by ${fmt(backBy)}. From ${from.name}: ${travel(from, port).how.toLowerCase()} ${dur(back)}, so leave by ${fmt(leaveBy)}.`;
-  if (now == null) { el.textContent = fmt(leaveBy); msg.className = "banner"; msg.textContent = `Leave-by time from ${from.name}. On ${fmtDate(d.date)} this turns into a live countdown.`; return; }
-  const left = leaveBy - now;
-  el.textContent = left > 0 ? (left >= 60 ? Math.floor(left / 60) + "h " + String(Math.floor(left % 60)).padStart(2, "0") + "m" : Math.floor(left) + " min") : "Go now";
-  if (left <= 0) { msg.className = "banner warn"; msg.textContent = `Head back to the ship now. You're ${dur(-left)} past your leave-by time.`; }
-  else if (left <= 20) { msg.className = "banner warn"; msg.textContent = `Start heading back in ${Math.ceil(left)} minutes.`; if (!cdSpoken && tts) { cdSpoken = true; tts.speak("Time to start heading back to the ship.", { voice: P().voice }).catch(() => {}); } }
-  else { msg.className = "banner"; msg.textContent = `You have time. Leave ${from.name} by ${fmt(leaveBy)}.`; }
-}
+function countdownCard(d, plan) { return alarmCard(d, plan); }
+function tickCountdown() { alarmTick(); }
 function stopCountdownIfAny() { if (cdTimer) { clearInterval(cdTimer); cdTimer = null; } }
 function startCountdown() {
   if (cdTimer) { clearInterval(cdTimer); cdTimer = null; }
@@ -4350,7 +4334,7 @@ function renderPlan(d) {
       n++;
       return `<div class="${cls}"><div class="time">${fmt(it.time)}</div><div class="rail"><div class="dot">${n}</div></div><div class="what">
         <div class="nm">${esc(s.name)}</div><div class="sub">${dur(s.minutes)} · ${esc(String(s.category || "").replace(/^\w/, c => c.toUpperCase()))}${s.mustSee ? " · Must-see" : ""}${s.unesco ? " · UNESCO" : ""}${s.far && s.travel ? " · " + esc(unitText(s.travel)) : ""}</div>
-${partsList(s, it.time)}<button class="link" data-open="${esc(s.id)}">Open the guide</button></div></div>`;
+${partsList(s, it.time)}${stopLiveNotes(it, d)}<button class="link" data-open="${esc(s.id)}">Open the guide</button></div></div>`;
     }
     if (it.type === "evening") {
       const r = it.place, lbl = it.meal.label;
@@ -4386,13 +4370,12 @@ ${partsList(s, it.time)}<button class="link" data-open="${esc(s.id)}">Open the g
   ${d.estimated ? `<div class="banner warn">These port times are estimated. Check them against your cruise documents.</div>` : ""}
   <div class="planacts"><button class="btn bigbtn" data-act="tourstart">▶ Start the tour</button>
     ${suggestMsg ? `<p class="banner ok" id="suggestNote" role="status">${esc(suggestMsg)} <button class="linkbtn" data-act="suggestok">OK</button></p>` : ""}
-    <div class="toolrow"><button class="btn ghost small" data-goto="sites">Change stops</button><button class="btn ghost small" data-act="suggesttour">Suggest my tour</button><a class="btn ghost small" href="${gmapsLink(plan)}" target="_blank" rel="noopener">Open in Google Maps</a>
-    <label class="btn ghost small toggle"><input type="checkbox" id="f-rain" ${d.rain ? "checked" : ""}><span>Rainy day</span></label></div></div>
-  ${plan.swaps.length ? `<div class="banner">Because of rain: ${plan.swaps.map(([a, b]) => esc(a.name) + " → " + esc(b.name)).join(", ")}.</div>` : ""}
+    <div class="toolrow"><button class="btn ghost small" data-goto="sites">Change stops</button><button class="btn ghost small" data-act="suggesttour">Suggest my tour</button><a class="btn ghost small" href="${gmapsLink(plan)}" target="_blank" rel="noopener">Open in Google Maps</a>${camBtnHTML()}
+    ${weatherTool(d, plan)}${!fixedTitle(d) && d.date !== todayISO() && cdPreview == null ? `<button class="btn ghost small" data-act="cdpreview">Preview the day live</button>` : ""}</div></div>
+  ${weatherBanner(d, plan)}
   ${upgrading && keyOf(upgrading) === keyOf(d.destination) ? `<p class="banner" role="status"><span class="spinner"></span> Building a fuller guide for ${esc(d.destination)} in the background. This plan updates by itself in about two minutes.</p>` : ""}
   ${(tc => tc ? `<div class="banner warn" role="alert">This day has ${dur(tc.ride)} of travel for ${dur(tc.see)} at the sights. Consider fewer far-apart stops, more hours, or splitting it over two days.</div>` : "")(travelCheck(plan))}
-  ${plan.closedToday.length ? `<div class="banner warn" role="alert">${plan.closedToday.map(s => `${esc(s.name)}: ${esc(s.closed.toLowerCase())}`).join(". ")}, and you're there on a ${esc(fmtDow(d.date))}. Swap it with Change stops.</div>` : ""}
-  ${countdownCard(d, plan)}
+  ${closedBanner(d, plan)}
   ${plan.over ? `<div class="banner warn" role="alert">This plan runs ${dur(plan.end - plan.endBy)} past ${fmt(plan.endBy)}. Remove a stop with Change stops, or change the times.</div>` : ""}
   ${plan.endBy - plan.start < 90 ? `<div class="banner warn">There isn't much time today, so keep it close: a coffee and one nearby sight at most.</div>` : ""}
   </div><div class="left pane" data-pane="map">
@@ -4401,7 +4384,7 @@ ${partsList(s, it.time)}<button class="link" data-open="${esc(s.id)}">Open the g
   </div>
   ${(e => e ? `<div class="banner ok"><span>Leave at <b>${e.start}</b> instead of ${esc(d.startTime)} and ${e.fits.length ? `you also fit <b>${e.fits.map(esc).join(", ")}</b>` : "the day fits"}, back by ${e.end}. Earlier also means cooler weather, less traffic and fewer crowds.</span><button class="btn small" data-act="earlystart" data-v="${e.start}" data-h="${e.hours}">Leave at ${e.start}</button></div>` : "")(earlierStart(d, plan))}
   ${laterEndBanner(d, plan)}${elsewhereNote(plan)}
-  ${plan.dropped.length ? `<div class="banner warn dropped"><span>Didn't fit today: <b>${plan.dropped.map(s => esc(s.name)).join(", ")}</b>. Change the times on Trip, or swap them in with Change stops.</span></div>` : ""}
+  ${plan.dropped.length && !liveOn(d) ? `<div class="banner warn dropped"><span>Didn't fit today: <b>${plan.dropped.map(s => esc(s.name)).join(", ")}</b>. Change the times on Trip, or swap them in with Change stops.</span></div>` : ""}
   ${checksCard(d, city, plan)}
   ${eventsCard(d, city, plan)}
   ${gxPlanCards(d, city, plan)}
@@ -4412,7 +4395,7 @@ ${partsList(s, it.time)}<button class="link" data-open="${esc(s.id)}">Open the g
   ${basicsCard(city)}
   </details>
   <p class="footnote">Times are estimates using a relaxed walking pace and typical taxi times. Check opening hours and book timed tickets for the big sights.</p>
-  </div><div class="right pane" data-pane="sched"><div class="card"><div class="timeline">${rows}</div>
+  </div><div class="right pane" data-pane="sched">${countdownCard(d, plan)}<div class="card"><div class="timeline">${rows}</div>
     <p class="bookrow">Already have a reservation? <button class="btn ghost small" data-act="bookopen" data-meal="Lunch">${(d.booked || {}).Lunch ? "Change lunch" : "Add lunch"}</button><button class="btn ghost small" data-act="bookopen" data-meal="Dinner">${(d.booked || {}).Dinner ? "Change dinner" : "Add dinner"}</button></p></div>${bookFormHTML(d)}</div></div>`;
 }
 
@@ -4480,7 +4463,7 @@ function renderGuide(d) {
   const jumps = stops.map(x => `<button type="button" class="chip ${x === cur ? "on" : ""}" data-jump="${esc(x.s.id)}" aria-pressed="${x === cur}"><b>${x.num || (x.s.bonus ? "+" : "•")}</b> ${x.s.bonus ? "Optional: " : ""}${esc(x.s.name)}</button>`).join("");
   return `<div class="mcta"><button class="btn bigbtn" data-act="tourstart">▶ Start the tour</button></div>
     <div class="guidegrid"><div class="guideside pane" data-pane="side">${dayHeading(d)}<p class="lede">Pick a stop to read or hear its story. For a guided walk through the day, use Tour mode.</p>
-    <div class="planacts"><button class="btn bigbtn" data-act="tourstart">▶ Start the tour</button></div>
+    <div class="planacts"><button class="btn bigbtn" data-act="tourstart">▶ Start the tour</button></div><div class="camrow">${camBtnHTML()}</div>
     ${jumps ? `<nav class="jumps" aria-label="Jump to a stop">${jumps}</nav>` : ""}</div>
     <div class="guidemain pane" data-pane="stories">${cards ? `<div class="stoplist">${cards}</div>` : `<div class="card empty"><p>No stops planned for today.</p><button class="btn" data-goto="sites">Choose stops</button></div>`}</div></div>`;
 }
@@ -4535,7 +4518,7 @@ function renderTour(d) {
   const portBar = d.type === "port" ? `<div class="banner warn tourship"><span>All aboard <b>${esc(d.allAboard)}</b>. Be back at the ship by <b>${fmt(plan.endBy)}</b>.</span><span id="tourShip"></span></div>` : "";
   const head = `<div class="tourhead"><div><div class="eyebrow">Tour · ${esc(dayName(d))} · ${esc(fmtDate(d.date))}</div>
       <div class="tourbar"><i style="width:${pct}%"></i></div><div class="lede" style="font-size:.85rem">Step ${T.i + 1} of ${steps.length} · planned for ${fmt(st.time)}</div></div>
-    <button class="btn ghost small" data-act="tourexit">Exit tour</button></div>${portBar}${followBar()}${groupBar()}`;
+    <div class="actions">${camBtnHTML()}<button class="btn ghost small" data-act="tourexit">Exit tour</button></div></div>${portBar}${followBar()}${groupBar()}`;
   let body = "";
   if (T.phase === "walk" && st.type !== "start") {
     const nm = stepName(st);
@@ -4670,7 +4653,7 @@ function toggleFollow() {
   } catch (e) { geoState = "unavailable"; geoMsg = "Location isn't available here. Tap I'm here when you arrive."; renderGuideOnly(); }
 }
 function onGeo(pos) {
-  geoPos = { lat: pos.coords.latitude, lng: pos.coords.longitude, acc: pos.coords.accuracy };
+  geoPos = { lat: pos.coords.latitude, lng: pos.coords.longitude, acc: pos.coords.accuracy, at: Date.now() };
   placeYou();
   const first = geoState !== "on"; geoState = "on"; geoMsg = "";
   const T = trip.tour; if (view !== "tour" || !T) { if (first) renderGuideOnly(); return; }
@@ -4807,7 +4790,7 @@ document.addEventListener("click", e => {
   if (t.dataset.act === "memsave") { memSave(); return; }
   if (t.dataset.act === "memshare") { memShare(); return; }
   if (t.dataset.eatrate) { const y = window.scrollY; rateEat(t.dataset.eatname, +t.dataset.eatrate); render(); window.scrollTo(0, y); return; }
-  if (t.dataset.rate) { const n = +t.dataset.rate; jUpdate(t.dataset.sid, j => { j.rating = j.rating === n ? 0 : n; }); renderGuideOnly(); return; }
+  if (t.dataset.rate) { const n = +t.dataset.rate, city = cityFor(day()), s = city && allSites(city).find(x => x.id === t.dataset.sid); jUpdate(t.dataset.sid, j => { j.rating = j.rating === n ? 0 : n; }); if (s && ((trip.journal || {})[jKey(s)] || {}).rating) postSiteRating(s, n); renderGuideOnly(); return; }
   if (t.dataset.delphoto != null) { const i = +t.dataset.delphoto; jUpdate(t.dataset.sid, j => { j.photos.splice(i, 1); }); renderGuideOnly(); return; }
   if (t.dataset.translate) { const s = allSites(cityFor(day())).find(x => x.id === t.dataset.translate); if (s) translateSite(s); return; }
   if (t.dataset.phrase != null) { const c = cityFor(day()); const p = c && c.basics && c.basics.phrases[+t.dataset.phrase]; if (p) speakPhrase(p); return; }
@@ -4875,10 +4858,12 @@ document.addEventListener("click", e => {
   if (act === "moretrips") { addPlaces(day(), ""); return; }
   if (act === "picks") { const city = cityFor(day()); const s = city && allSites(city).find(x => x.id === t.dataset.id); if (s) getPicks(s, city); return; }
   if (act === "gen") { generateCity(day()); return; }
+  if (act === "closedmove") { moveClosed(t.dataset.id, +t.dataset.to); return; }
+  if (liveAct(act, t)) return;
   if (act === "cdpreview") {
-    if (cdPreview != null) { cdPreview = null; render(); return; }
+    if (cdPreview != null) { cdPreview = null; if (day().live && day().live.preview) day().live = null; render(); return; }
     const plan = buildPlan(day()); if (!plan || plan.error) return;
-    cdPreview = plan.start + Math.round((plan.endBy - plan.start) * 0.85); cdSpoken = false; render(); return;
+    cdPreview = plan.start + Math.round((plan.endBy - plan.start) * 0.5); cdSpoken = false; render(); return;
   }
   if (act === "pdf") { readForm(); exportPDF(); return; }
   if (act === "copytrip") {
