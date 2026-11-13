@@ -240,14 +240,18 @@ function fitRefine() {
   const ctx = sitesCtx; if (!ctx || view !== "sites" || fitState) return;
   const d = ctx.d; if (d !== day() || fitMemo.key !== fitKey(d)) return;
   const city = cityFor(d); if (!city) return;
-  const batch = fitQueue.splice(0, 3);
-  for (const id of batch) {
+  // Speed: these checks run between taps, never in their way. Each round does at most about 10 ms of checks (always
+  // at least one), stops early when the traveler is touching the screen, then lets the browser respond first.
+  const t0 = performance.now(), pend = () => { try { return !!(navigator.scheduling && navigator.scheduling.isInputPending && navigator.scheduling.isInputPending()); } catch (e) { return false; } };
+  while (fitQueue.length) {
+    if (performance.now() - t0 > 10 || (performance.now() > t0 && pend())) break;
+    const id = fitQueue.shift();
     if (fitMemo.res.has(id)) continue;
     const ok = fitsAll(fitTrial(d, [...d.selected, id])); fitMemo.res.set(id, ok);
     const el = document.querySelector(`#view [data-card="${CSS.escape(id)}"]`), s = allSites(city).find(x => x.id === id);
     if (el && s && !d.selected.includes(id)) el.outerHTML = siteCard(s, d, ctx.plan, ctx.near);
   }
-  if (fitQueue.length) fitTimer = setTimeout(fitRefine, 0);
+  if (fitQueue.length) fitTimer = setTimeout(fitRefine, 16);
 }
 if (typeof window !== "undefined") window.__kairouteFitPending = () => fitQueue.length;
 if (typeof window !== "undefined") window.__kairouteFitExact = id => { const d = day(); return fitsAll(fitTrial(d, [...d.selected, id])); };
