@@ -1,7 +1,7 @@
 // Navigation bar check: the nav bar (left rail on sideways tablets and computers, bottom bar on upright tablets,
 // bottom tab bar on phones) must sit in exactly the same place, at the same size, on every page, in every orientation.
 // Fails the publish if any page draws it differently. Usage: node tools/nav-check.cjs [path/to/index.html]
-const { chromium } = require('playwright'); const path = require('path');
+const { chromium } = require('playwright'); const path = require('path'); const wideFont = require('./wide-font.cjs');
 const FILE = path.resolve(process.argv[2] || path.join(__dirname, '..', 'index.html'));
 const SIZES = [['tablet upright', 800, 1280], ['tablet upright, browser bars', 800, 1180], ['tablet sideways', 1280, 800], ['tablet sideways, browser bars', 1280, 720], ['computer', 1440, 900], ['phone', 412, 860], ['phone small', 360, 740], ['phone sideways', 860, 412]];
 const PAGES = ['trip', 'plan', 'sites', 'guide', 'journal', 'settings', 'privacy', 'terms'];
@@ -9,7 +9,7 @@ const PAGES = ['trip', 'plan', 'sites', 'guide', 'journal', 'settings', 'privacy
   const b = await chromium.launch(); let fails = 0;
   for (const [name, w, h] of SIZES) {
     const ctx = await b.newContext({ viewport: { width: w, height: h }, hasTouch: true });
-    await ctx.addInitScript(() => { try { localStorage.setItem('kairoute.intro1', '1'); } catch (e) {} });
+    await ctx.addInitScript(() => { try { localStorage.setItem('kairoute.intro1', '1'); } catch (e) {} }); await ctx.addInitScript(wideFont);
     const p = await ctx.newPage(); p.on('pageerror', e => { console.log(`FAIL ${name}: page error ${e.message}`); fails++; });
     await p.route('**/*', r => /^file:/.test(r.request().url()) ? r.continue() : r.abort());
     await p.goto('file://' + FILE); await p.waitForTimeout(500);

@@ -16,7 +16,7 @@ const SIZES = [['tablet upright', 800, 1280], ['tablet sideways', 1280, 800], ['
     const bad = [];
     for (let i = 0; i < n; i++) {
       await p.evaluate(i => window.__kairouteGo('plan', i), i); await p.waitForTimeout(120);
-      const sm = p.locator('details.planmore > summary').filter({ visible: true }).first();
+      const sm = p.locator('details.planmore:not(.cdchip) > summary').filter({ visible: true }).first();
       if (!(await sm.count())) { if (!(await p.evaluate(i => window.__kairouteDays()[i].type === 'sea', i))) bad.push(`day ${i + 1}: no More button`); continue; }
       await sm.scrollIntoViewIfNeeded(); await sm.click(); await p.waitForTimeout(120);
       const r = await p.evaluate(() => {

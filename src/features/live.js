@@ -242,7 +242,7 @@ let busySent = {};
 function reportBusy(s, level) {
   const d = day(), city = cityFor(d); if (!city || !s) return; const k = d.id + "|" + s.id; busySent[k] = level;
   try { localStorage.setItem("kairoute.busy." + k, String(level)); } catch (e) {}
-  if (freeAI) fetch(`${freeAI.url}/rate`, { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ city: keyOf(city.city), place: keyOf(s.name), busy: level, hour: new Date().getHours(), dev: devId() }) }).catch(() => {});
+  if (freeAI) fetch(`${freeAI.url}/rate`, { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ city: keyOf(city.city), place: keyOf(s.name), busy: level, hour: Math.floor((nowMin(d) % 1440) / 60), /* the place's own hour */ dev: devId() }) }).catch(() => {});
   render();
 }
 const busyMine = (d, s) => { const k = d.id + "|" + s.id; if (busySent[k] == null) { try { busySent[k] = +localStorage.getItem("kairoute.busy." + k) || 0; } catch (e) { busySent[k] = 0; } } return busySent[k]; };
@@ -340,7 +340,7 @@ function liveWindow(d, w) {
   w.startLabel = L.finish > 0 ? "Now" : L.gps && !L.atStop ? "Now: where you are" : "Now: leaving " + L.name; w.notes = [];
 }
 const geoFresh = () => !!(geoPos && geoPos.at && Date.now() - geoPos.at < 3 * 60e3 && (geoPos.acc || 0) < 150);
-let liveMsg = null, liveUndo = null, liveLastAuto = 0, liveHold = 0;
+let liveMsg = null, liveUndo = null, liveLastAuto = {}, liveHold = 0; // last automatic re-plan, per day
 const durOf = i => i.type === "meal" ? i.meal.len : i.place.minutes || 0;
 function replanNow(d, o) {
   o = o || {}; const now = liveNow(d); if (now == null) return false;
@@ -468,7 +468,7 @@ function alarmCard(d, plan) {
     ${fixed ? `<div class="cdsub" id="cdSub"></div><div class="cdsrc" id="cdSrc"></div>
     <div class="banner" id="cdMsg" hidden></div>
     ${d.type === "port" ? `<p class="cdagent" id="cdAgent" ${d.portAgent ? "" : "hidden"}>${d.portAgent ? `Can't make all aboard? Call the port agent: <a href="tel:${esc(String(d.portAgent).replace(/[^\d+]/g, ""))}">${esc(d.portAgent)}</a>` : ""}</p>
-    <details class="cdwhere"><summary>${d.portAgent ? "Port agent's phone" : "Add the port agent's phone"}</summary><div class="field"><label for="cdAgentIn">Port agent's phone (it's in your cruise documents for each port)</label><input id="cdAgentIn" type="tel" inputmode="tel" value="${esc(d.portAgent || "")}" placeholder="+39 081 ..."></div></details>` : ""}
+    <details class="cdwhere cdagentfold"><summary>${d.portAgent ? "Port agent's phone" : "Add the port agent's phone"}</summary><div class="field"><label for="cdAgentIn">Port agent's phone (it's in your cruise documents for each port)</label><input id="cdAgentIn" type="tel" inputmode="tel" value="${esc(d.portAgent || "")}" placeholder="+39 081 ..."></div></details>` : ""}
       ${gpsOn ? "" : `<details class="cdwhere" ${cdWhere && cdWhere !== "auto" ? "open" : ""}><summary>${today ? "GPS off? Pick your spot" : "Count from another spot"}</summary><div class="field"><label for="cdWhere">Where are you?</label>
       <select id="cdWhere"><option value="auto">Wherever the plan says</option>${items.map((i, k) => `<option value="${k}" ${String(cdWhere) === String(k) ? "selected" : ""}>${esc(i.place.name)}</option>`).join("")}</select></div></details>`}` : ""}
     <div class="actions">
@@ -489,15 +489,15 @@ function alarmTick() {
   const fixed = !!fixedTitle(d) && plan.w.tail.length, st = fixed ? alarmState(d, plan) : null, live = isToday(d) || cdPreview != null;
   // Running late, noticed by GPS: still at a stop well past the time the plan leaves it, or nowhere near the
   // stop the plan expected 20 minutes ago. At most once every 10 minutes, and never right after an Undo.
-  if (isToday(d) && geoFresh() && Date.now() - liveLastAuto > 10 * 60e3 && Date.now() > liveHold) {
+  if (isToday(d) && geoFresh() && Math.abs(Date.now() - (liveLastAuto[d.id] || 0)) > 10 * 60e3 && Date.now() > liveHold) {
     const now = nowMin(d), items = plan.items.filter(i => (i.type === "stop" && !i.place.along) || i.type === "meal");
     const near = items.find(i => hav(geoPos, i.place) <= 0.12);
     if (near) { const k = d.id + "|" + near.place.name; if (!liveArrived[k]) liveArrived[k] = now;
       // You'll leave here when your visit is done (or now, if you've stayed past it): compare that with the plan.
       const leave = Math.max(now, liveArrived[k] + durOf(near)), behind = leave - (near.time + durOf(near));
-      if (behind > 15 && !(liveOn(d) && d.live.atStop && d.live.name === near.place.name)) { liveLastAuto = Date.now(); replanNow(d, { auto: true, at: near, behind, finish: Math.max(5, leave - now) }); return; } }
+      if (behind > 15 && !(liveOn(d) && d.live.atStop && d.live.name === near.place.name)) { liveLastAuto[d.id] = Date.now(); replanNow(d, { auto: true, at: near, behind, finish: Math.max(5, leave - now) }); return; } }
     else { const due = items.filter(i => i.time + 20 < now && !(d.live && (d.live.done || []).includes(i.place.id))).pop();
-      if (due && !(liveOn(d) && d.live.at > due.time)) { liveLastAuto = Date.now(); replanNow(d, { auto: true, behind: now - due.time }); return; } }
+      if (due && !(liveOn(d) && d.live.at > due.time)) { liveLastAuto[d.id] = Date.now(); replanNow(d, { auto: true, behind: now - due.time }); return; } }
   }
   if (fixed) {
     const el = document.getElementById("cdBig"), sub = document.getElementById("cdSub"), msg = document.getElementById("cdMsg"), srcEl = document.getElementById("cdSrc");
@@ -573,7 +573,7 @@ function liveGeoStart() {
   try { liveGeo = navigator.geolocation.watchPosition(pos => { const first = !geoFresh(); if (geoWatch == null) geoPos = { lat: pos.coords.latitude, lng: pos.coords.longitude, acc: pos.coords.accuracy, at: Date.now() }; geoPerm = "granted"; if (first && view === "plan") render(); else alarmTick(); },
     err => { if (err && err.code === 1) { geoPerm = "denied"; try { navigator.geolocation.clearWatch(liveGeo); } catch (e) {} liveGeo = null; clearInterval(liveGeoPoll); render(); } }, { enableHighAccuracy: true, maximumAge: 15000, timeout: 30000 });
     // Standing still, some phones stop reporting: ask once a minute so the countdown always uses a fresh position.
-    liveGeoPoll = setInterval(() => { if (liveGeo != null && geoWatch == null) navigator.geolocation.getCurrentPosition(pos => { geoPos = { lat: pos.coords.latitude, lng: pos.coords.longitude, acc: pos.coords.accuracy, at: Date.now() }; }, () => {}, { enableHighAccuracy: true, maximumAge: 30000, timeout: 20000 }); }, 60000);
+    liveGeoPoll = setInterval(() => { if (liveGeo != null && geoWatch == null) navigator.geolocation.getCurrentPosition(pos => { geoPos = { lat: pos.coords.latitude, lng: pos.coords.longitude, acc: pos.coords.accuracy, at: Date.now() }; alarmTick(); /* standing still at a stop: the fresh position re-checks running late at once */ }, () => {}, { enableHighAccuracy: true, maximumAge: 30000, timeout: 20000 }); }, 60000);
   } catch (e) { liveGeo = null; }
 }
 if (typeof window !== "undefined") setInterval(() => { try { alarmTick(); } catch (e) { console.warn("live", e); } }, 20000);
