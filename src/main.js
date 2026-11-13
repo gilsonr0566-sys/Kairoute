@@ -590,7 +590,8 @@ const tmin = (a, b) => {
 // stop, a cautious wait, the ride and getting from the stop. The quickest public line is chosen unless a taxi is
 // much quicker; the traveler can switch any ride on the Day plan, and the plan, the return time and the ship
 // checks all follow the choice. While the lines are being looked up (or none are mapped) the estimate is used.
-const TRANSIT_KEY = "kairoute.transit2"; // transit2: answers kept from before ferries were found by their course are dropped
+const TRANSIT_KEY = "kairoute.transit3"; // transit3: answers kept from before ferries had their own long-kept lookup are dropped
+try { ["kairoute.transit", "kairoute.transit2"].forEach(k => localStorage.removeItem(k)); } catch (e) {}
 const transitMem = (() => { try { return JSON.parse(localStorage.getItem(TRANSIT_KEY) || "{}"); } catch (e) { return {}; } })();
 let transitSeen = null;
 const transitFail = new Map(), transitQ = new Map(), transitPins = new Set(); let transitTimer = 0, transitBusy = false; // pins: rides of the trip being kept for offline

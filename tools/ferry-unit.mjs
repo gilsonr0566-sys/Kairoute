@@ -1,7 +1,7 @@
 // Offline check of the ferry logic in worker/transit.js (no network): a ferry route mapped only by its course (no
 // pier stops, like many seasonal coastal ferries) is offered between the two piers it passes, named after the
 // nearest terminals, with its months from opening_hours or seasonal=*. Exits 1 on a problem.
-import { ferryByCourse, runMonths, ferryChain } from "../worker/transit.js";
+import { ferryByCourse, runMonths, ferryChain, transitOptions, slimFerries, ferryKey } from "../worker/transit.js";
 let bad = 0; const ok = (c, m) => { console.log((c ? "ok   " : "FAIL ") + m); if (!c) bad++; };
 // Naples Molo Beverello to Amalfi along the coast (a course of a few points), as OpenStreetMap often maps it.
 const line = [[40.8366, 14.2563], [40.79, 14.27], [40.70, 14.30], [40.62, 14.36], [40.58, 14.45], [40.60, 14.55], [40.6327, 14.6029]].map(([lat, lng]) => ({ lat, lng }));
@@ -27,4 +27,20 @@ ok(ch.length && /1 change at Capri/.test(ch[0].label), `ferry with one change of
 ok(ch[0] && ch[0].min >= 50 + 60 + 60, `the change is planned with a full gap between sailings (${ch[0] && ch[0].min} min door to door)`);
 ok(ch[0] && JSON.stringify(ch[0].months) === "[6,7,8,9]", `runs only when both ferries run (${ch[0] && JSON.stringify(ch[0].months)})`);
 ok(!(await ferryChain(ship, { lat: 38.12, lng: 13.36 }, ways)).length, "no change offered where a ferry goes straight there");
+// Busy map servers: a ferry once found at both ends is still offered from the kept answers (Richard saw no ferry
+// from the ship to Sorrento while every map server was busy), and ends the servers couldn't answer are listed for
+// the patient fill job.
+{ const realFetch = globalThis.fetch; globalThis.fetch = async () => { throw new Error("busy"); };
+  const sorrento = { lat: 40.6263, lng: 14.3757 }, mem = new Map(), store = { get: async k => mem.get(k) || null, put: async (k, v) => { mem.set(k, v); } };
+  const sw = W(9, "Napoli - Sorrento", [[40.8366, 14.2563], [40.75, 14.30], [40.6290, 14.3760]], { operator: "NLG", duration: "0:40" });
+  const kept = slimFerries({ elements: [sw, { type: "node", id: 1, lat: 40.8366, lon: 14.2563, tags: { amenity: "ferry_terminal", name: "Molo Beverello" } }, { type: "node", id: 2, lat: 40.6290, lon: 14.3760, tags: { amenity: "ferry_terminal", name: "Marina Piccola" } }] });
+  mem.set("fp1:" + ferryKey(ship), kept); mem.set("fp1:" + ferryKey(sorrento), kept);
+  const r = await transitOptions(ship, sorrento, store).catch(e => e);
+  const fer = Array.isArray(r) && r.find(o => o.mode === "ferry");
+  ok(!!fer, `ferry offered from kept answers while the map servers are busy (${fer ? fer.label + ", " + fer.from + " > " + fer.to + ", " + fer.min + " min" : r && r.message})`);
+  ok(Array.isArray(r) && r.partial === true, "the answer is marked partial so the rail lines are asked again soon");
+  const mem2 = new Map(), store2 = { get: async k => mem2.get(k) || null, put: async (k, v) => { mem2.set(k, v); } };
+  const r2 = await transitOptions(ship, sorrento, store2).catch(e => e);
+  ok(r2 instanceof Error && mem2.has("fq:" + ferryKey(ship)) && mem2.has("fq:" + ferryKey(sorrento)), "nothing kept and servers busy: both ends listed for the fill job");
+  globalThis.fetch = realFetch; }
 console.log(bad ? `${bad} ferry check(s) failed` : "ferry checks passed"); process.exit(bad ? 1 : 0);

@@ -1,5 +1,5 @@
 import { extras, Group } from "./extras.js";
-import { allOptions } from "./transit.js";
+import { allOptions, ferriesNear } from "./transit.js";
 export { Group };
 // Kairoute AI helper. The website sends a prompt (and optional photos); this Worker asks Workers AI
 // and streams the answer back. Usage is counted from real token counts. On the free plan it stays inside
@@ -62,7 +62,18 @@ async function limits(env) {
   return { DAILY_NEURONS: daily, VOICE_DAILY: daily, LAB_LEFT: Math.max(0, Math.min(LAB_DAILY - labToday, left)) };
 }
 
+// Places whose ferries couldn't be looked up while every free map server was busy (fq: keys, see ferriesNear in
+// transit.js) are asked again on the helper's schedule, a few at a time with long waits, so a ferry is never hidden
+// for long. A place still unanswered stays listed (for 14 days) and is tried again next time.
+async function fillFerries(env) {
+  const store = { get: k => env.USAGE.get(k, "json"), put: (k, v, ttl) => env.USAGE.put(k, JSON.stringify(v), { expirationTtl: ttl }) };
+  const l = await env.USAGE.list({ prefix: "fq:", limit: 12 });
+  for (const { name } of l.keys) { const [lat, lng] = name.slice(3).split(",").map(Number); if (!isFinite(lat) || !isFinite(lng)) { await env.USAGE.delete(name); continue; }
+    try { await ferriesNear({ lat, lng }, store, 45000); await env.USAGE.delete(name); } catch (e) {} }
+}
+
 export default {
+  async scheduled(ev, env, ctx) { ctx.waitUntil(fillFerries(env)); },
   async fetch(req, env, ctx) {
     const origin = req.headers.get("Origin") || "", h = cors(origin);
     if (req.method === "OPTIONS") return new Response(null, { headers: h });
@@ -421,8 +432,8 @@ export default {
     }
     // /transit (POST {pairs:[{a:[lat,lng], b:[lat,lng]}]}): the mapped train, metro, tram, bus and ferry lines
     // between each pair of points, with stops, the real path and a cautious time (see transit.js). Each pair is
-    // looked up once and kept (see keep below), so every traveler on the same trip shares it. Keys are tr3: since ferries
-    // mapped only by their course are found (answers from before that are not reused).
+    // looked up once and kept (see keep below), so every traveler on the same trip shares it. Keys are tr4: since ferries come from their own
+    // long-kept lookup at each end (answers from before that are not reused).
     if (url.pathname === "/transit" && req.method === "POST") {
       let b; try { b = await req.json(); } catch (e) { return Response.json({ error: "Bad request" }, { status: 400, headers: h }); }
       const ok = v => Array.isArray(v) && v.length === 2 && v.every(n => typeof n === "number" && isFinite(n)) && Math.abs(v[0]) <= 90 && Math.abs(v[1]) <= 180;
@@ -431,12 +442,13 @@ export default {
       const out = await Promise.all(pairs.map(async pr => {
         if (!pr || !ok(pr.a) || !ok(pr.b)) return { error: "bad" };
         const dow = Number.isInteger(pr.dow) && pr.dow >= 0 && pr.dow <= 6 ? pr.dow : 3, kind = dow === 0 ? "su" : dow === 6 ? "sa" : "wk";
-        const key = "tr3:" + kind + ":" + [...pr.a, ...pr.b].map(n => n.toFixed(3)).join(",");
+        const key = "tr4:" + kind + ":" + [...pr.a, ...pr.b].map(n => n.toFixed(3)).join(",");
         // A full answer is kept 14 days (timetables change); one where a source was busy only 1 day. When the map answered
         // after the reply went out, its full answer replaces the partial one. A partial answer met again after 10 minutes
         // is looked up afresh in the background (once per 10 minutes), so a busy map server never hides a ferry for a day.
         const keep = x => env.USAGE.put(key, JSON.stringify({ opts: x.opts, partial: !!x.partial, t: Date.now() }), { expirationTtl: (x.partial ? 1 : x.opts.length ? 14 : 7) * 86400 });
-        const look = () => allOptions({ lat: pr.a[0], lng: pr.a[1] }, { lat: pr.b[0], lng: pr.b[1] }, dow);
+        const store = { get: k => env.USAGE.get(k, "json"), put: (k, v, ttl) => env.USAGE.put(k, JSON.stringify(v), { expirationTtl: ttl }) };
+        const look = () => allOptions({ lat: pr.a[0], lng: pr.a[1] }, { lat: pr.b[0], lng: pr.b[1] }, dow, 12000, store);
         const hit = await env.USAGE.get(key, "json");
         if (hit) {
           if (hit.partial && Date.now() - (hit.t || 0) > 600000 && !(await env.USAGE.get("lk:" + key))) {
