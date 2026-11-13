@@ -514,24 +514,39 @@ const dayKind = dow => dow === 0 ? "su" : dow === 6 ? "sa" : "wk";
 function transitFor(a, b) {
   if (!a || !b || !isFinite(a.lat) || !isFinite(b.lat) || hav(a, b) < 4) return null;
   const dow = planDow(), k = pairKey(a, b) + "|" + dayKind(dow), hit = transitMem[k] || transitMem[pairKey(a, b)]; if (hit) return hit.opts;
-  if (typeof freeAI !== "undefined" && freeAI && !transitQ.has(k) && !(transitFail.get(k) > Date.now() - 120000)) { transitQ.set(k, { a: [+a.lat, +a.lng], b: [+b.lat, +b.lng], dow }); clearTimeout(transitTimer); transitTimer = setTimeout(askTransit, 300); }
+  if (typeof freeAI !== "undefined" && freeAI && !transitQ.has(k) && !(transitFail.get(k) > Date.now() - 120000)) { transitQ.set(k, { a: [+a.lat, +a.lng], b: [+b.lat, +b.lng], dow, pri: typeof trip !== "undefined" && trip.days && trip.days[trip.active] && typeof planDate !== "undefined" && trip.days[trip.active].date === planDate }); clearTimeout(transitTimer); transitTimer = setTimeout(askTransit, 300); }
   return null;
 }
+// Up to 12 pairs a request and 3 requests at once (the helper looks the pairs of a request up side by side), the day
+// on screen first; the plan is redrawn as each answer arrives, not after the whole trip is done.
 async function askTransit() {
-  if (transitBusy || !transitQ.size || !freeAI) return; transitBusy = true; let got = 0;
+  if (transitBusy || !transitQ.size || !freeAI) return; transitBusy = true;
+  const one = async part => {
+    let got = 0;
+    try { const r = await fetch(freeAI.url + "/transit", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ pairs: part.map(x => ({ a: x[1].a, b: x[1].b, dow: x[1].dow })) }) }); if (!r.ok) throw new Error("transit " + r.status);
+      const j = await r.json(); part.forEach(([k], i) => { const res = (j.results || [])[i]; if (res && Array.isArray(res.opts)) { transitMem[k] = { opts: res.opts, t: Date.now() }; got++; } else transitFail.set(k, Date.now()); });
+    } catch (e) { part.forEach(([k]) => transitFail.set(k, Date.now())); }
+    if (got) transitShow();
+  };
   try {
     while (transitQ.size) {
-      const part = [...transitQ.entries()].slice(0, 6);
-      try { const r = await fetch(freeAI.url + "/transit", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ pairs: part.map(x => x[1]) }) }); if (!r.ok) throw new Error("transit " + r.status);
-        const j = await r.json(); part.forEach(([k], i) => { const res = (j.results || [])[i]; if (res && Array.isArray(res.opts)) { transitMem[k] = { opts: res.opts, t: Date.now() }; got++; } else transitFail.set(k, Date.now()); });
-      } catch (e) { part.forEach(([k]) => transitFail.set(k, Date.now())); }
-      part.forEach(([k]) => transitQ.delete(k));
+      const all = [...transitQ.entries()].sort((x, y) => (y[1].pri ? 1 : 0) - (x[1].pri ? 1 : 0)), parts = [];
+      for (let i = 0; i < all.length && parts.length < 3; i += 12) parts.push(all.slice(i, i + 12));
+      parts.flat().forEach(([k]) => transitQ.delete(k));
+      await Promise.all(parts.map(one));
     }
   } finally { transitBusy = false; }
-  if (!got) return;
-  try { const ks = Object.keys(transitMem).sort((x, y) => transitMem[y].t - transitMem[x].t); ks.slice(300).forEach(k => delete transitMem[k]); localStorage.setItem(TRANSIT_KEY, JSON.stringify(transitMem)); } catch (e) {}
-  if (typeof view !== "undefined" && ["plan", "trip", "sites"].includes(view)) { const y = window.scrollY; render(); window.scrollTo(0, y); }
+  transitKeep();
 }
+function transitShow() { if (typeof view !== "undefined" && ["plan", "trip", "sites"].includes(view)) { const y = window.scrollY; render(); window.scrollTo(0, y); } }
+// Kept on the phone so the next visit needs no lookups: the newest 150 answers, each line's path thinned for storage.
+// A full storage drops older answers rather than failing.
+function transitKeep() {
+  const ks = Object.keys(transitMem).sort((x, y) => transitMem[y].t - transitMem[x].t); ks.slice(150).forEach(k => delete transitMem[k]);
+  const slim = keep => { const o = {}; ks.slice(0, keep).forEach(k => { const m = transitMem[k]; if (m) o[k] = { t: m.t, opts: (m.opts || []).map(x => Object.assign({}, x, { path: thinPts(x.path || [], 60) })) }; }); return JSON.stringify(o); };
+  for (const n of [150, 60, 20]) { try { localStorage.setItem(TRANSIT_KEY, slim(n)); return; } catch (e) {} }
+}
+const thinPts = (pts, n) => { if (pts.length <= n) return pts; const step = (pts.length - 1) / (n - 1); return Array.from({ length: n }, (_, i) => pts[Math.round(i * step)]); };
 const rideId = o => o ? o.mode + "|" + o.label : "taxi";
 let rideNotice = null, ridePref = "public";
 // Switching a ride re-plans the whole day. A switch that would make the day run past the ship's safe time is not

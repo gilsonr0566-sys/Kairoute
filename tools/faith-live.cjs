@@ -6,6 +6,12 @@ const URL = process.env.URL || "https://gilsonr0566-sys.github.io/Kairoute/", DA
 (async () => {
   const b = await chromium.launch(), p = await b.newPage({ viewport: { width: 1280, height: 800 } });
   p.on("pageerror", e => console.log("PAGE ERROR " + e.message));
+  // Every request the page makes for rides: when it went, what came back and how long it took.
+  const sent = new Map(), pairsOf = r => { try { return (JSON.parse(r.postData() || "{}").pairs || []).map(x => x.a.join(",") + ">" + x.b.join(",") + " d" + x.dow); } catch (e) { return []; } };
+  p.on("request", r => { if (/\/transit\b/.test(r.url())) sent.set(r, Date.now()); });
+  p.on("requestfinished", async r => { if (!sent.has(r)) return; const res = await r.response(); let ans = []; try { ans = (JSON.parse(await res.text()).results || []).map(x => x.error || (x.opts || []).map(o => o.label + " " + o.min + "m").join(" / ") || "none"); } catch (e) {}
+    console.log(`ride lookup: ${res && res.status()} in ${((Date.now() - sent.get(r)) / 1000).toFixed(1)} s`); pairsOf(r).forEach((q, i) => console.log(`   ${q}: ${ans[i] || "?"}`)); });
+  p.on("requestfailed", r => { if (sent.has(r)) console.log(`<- FAILED after ${((Date.now() - sent.get(r)) / 1000).toFixed(1)} s: ${r.failure() && r.failure().errorText}`); });
   try {
     await p.goto(URL); await p.waitForFunction(() => window.__kairouteDays && window.__kairoutePrefs, null, { timeout: 120000 }); // waits out the short "updating" page
     console.log("Version", await p.evaluate(() => fetch("version.txt", { cache: "no-store" }).then(r => r.text()).catch(() => "?")));
@@ -13,6 +19,7 @@ const URL = process.env.URL || "https://gilsonr0566-sys.github.io/Kairoute/", DA
     console.log("Prefs now", JSON.stringify(await p.evaluate(() => { const i = window.__kairoutePrefs({}).interests.filter(x => x !== "bible" && x !== "churches"); return window.__kairoutePrefs({ interests: i, theme: "" }); })));
     const days = await p.evaluate(() => window.__kairouteDays()), d = days.find(x => DAY.test(x.dest + " " + x.city)) || days[0];
     console.log("Day", JSON.stringify(d));
+    console.log("Helper", JSON.stringify(await p.evaluate(() => fetch("ai.json", { cache: "no-store" }).then(r => r.json()).catch(e => String(e)))));
     for (const v of ["plan", "guide", "tour"]) {
       await p.evaluate(([v, i]) => window.__kairouteGo(v, i), [v, d.i]);
       await p.waitForTimeout(v === "plan" ? 150000 : 8000); // the plan writes the walk-throughs
@@ -24,6 +31,7 @@ const URL = process.env.URL || "https://gilsonr0566-sys.github.io/Kairoute/", DA
     await p.evaluate(([v, i]) => window.__kairouteGo(v, i), ["plan", d.i]); await p.waitForTimeout(1500);
     const rides = await p.$$eval(".tl.leg", els => els.map(e => e.innerText.replace(/\n+/g, " / ")));
     console.log("\n== Rides on the Day plan (Pompeii and Sorrento picked)"); rides.forEach(r => console.log("   " + r.slice(0, 600)));
+    console.log("\n== Ride answers kept on the phone: " + JSON.stringify(await p.evaluate(() => { try { const m = JSON.parse(localStorage.getItem("kairoute.transit1") || "{}"); return Object.keys(m).map(k => k + " = " + (m[k].opts || []).length); } catch (e) { return String(e); } })));
     const scan = await p.evaluate(i => window.__kairouteFaithScan(i), d.i);
     console.log("\n== Stored text on " + scan.day + " " + scan.date + " (faith '" + scan.faith + "', theme '" + scan.theme + "')");
     (scan.hits || []).forEach(h => console.log(`   ${h.stop} / ${h.field}${h.bibleSite ? " (Bible site)" : ""}: ${h.text}`));
