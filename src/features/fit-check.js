@@ -14,7 +14,7 @@ function fitTrial(d, sel, t) {
   try { const p = buildPlan(d), m = meterCalc(p, d); return { p, m }; }
   finally { Object.assign(d, keep); forget0(d); }
 }
-const fitsAll = r => !!(r && r.m && !r.m.over && !r.m.dropped.length);
+const fitsAll = r => !!(r && r.m && !r.m.over && !r.m.dropped.length && !((r.p && r.p.closedToday) || []).length); // a pick the day can't visit (closed) never "fits"
 // Only a hotel day's times are the traveler's to change; arrival, departure, boarding and port days are set
 // by the flight, train or ship.
 const timesFixed = d => d.type !== "land";
@@ -42,9 +42,12 @@ function timeOptions(d, sel) {
 // still fits. With ask, a stop that doesn't fit opens the box; without, it is simply not added.
 function fitAsk(d, id) { return fitOpen(d, id); }
 function fitsWith(d, ids) { return fitsAll(fitTrial(d, [...new Set([...(d.selected || []), ...ids])])); }
+const shutOn = (d, x) => { const c = cityFor(d); let w = null; try { w = c ? dayWindow(d, c) : null; } catch (e) {} return closedForDay(x, d, w); };
 function addPick(d, id, ask) {
   const city = cityFor(d); if (!city) return false;
   d.selected = d.selected || []; if (d.selected.includes(id)) return true;
+  // Closed that day (or open only outside the day's time here): never added; the box offers a day it's open.
+  const sx = allSites(city).find(x => x.id === id); if (sx && shutOn(d, sx)) { if (ask) closedOpen(d, sx); return false; }
   if (!fitsWith(d, [id])) { if (ask) fitOpen(d, id); return false; }
   d.selected = [...d.selected, id]; rememberPick(d, allSites(city).find(x => x.id === id)); return true;
 }
@@ -52,6 +55,7 @@ function addPick(d, id, ask) {
 function fitTrim(d, keep) {
   const city = cityFor(d); if (!city || !Array.isArray(d.selected) || !d.selected.length) return;
   const value = x => (x.mustSee ? 100 : 0) + (x.unesco ? 20 : 0) + (fameW(x) || 1) * 5;
+  d.selected = d.selected.filter(id => { const x = allSites(city).find(y => y.id === id); return !x || (keep || []).includes(id) || !shutOn(d, x); }); // closed that day: never one of the app's picks
   for (let g = 0; g < 12 && d.selected.length && !fitsAll(fitTrial(d, d.selected)); g++) {
     const cand = allSites(city).filter(x => d.selected.includes(x.id) && !(keep || []).includes(x.id)).sort((a, b) => value(a) - value(b))[0];
     if (!cand) break; d.selected = d.selected.filter(i => i !== cand.id);
@@ -73,7 +77,7 @@ function fitOpen(d, id) {
   let sugg = one ? [one.x.id] : [];
   const canRoom = picks.length > 0 && fitsWithout(picks.map(x => x.id));
   trip.days.forEach(o => { if (o !== d && !o.selected && o.type !== "sea" && cityFor(o) === city) seedPicks(o, city); });
-  const roomOn = (x, o) => o !== d && cityFor(o) === city && !(o.selected || []).includes(x.id) && !closedOn(x, o.date) && fitsAll(fitTrial(o, [...(o.selected || []), x.id]));
+  const roomOn = (x, o) => o !== d && cityFor(o) === city && !(o.selected || []).includes(x.id) && !shutOn(o, x) && fitsAll(fitTrial(o, [...(o.selected || []), x.id]));
   // A new sight: other days where it fits. An over day: other days where each pick that doesn't fit would.
   const others = s ? trip.days.filter(o => roomOn(s, o)).slice(0, 2) : [];
   const moves = s ? [] : (full.m.dropped || []).slice(0, 3).flatMap(x => { const px = picks.find(p => p.id === x.id); return px ? trip.days.filter(o => roomOn(px, o)).slice(0, 2).map(o => ({ x: px, o })) : []; });
@@ -98,6 +102,32 @@ function fitOpen(d, id) {
   fixes.sort((a, b) => rank(a) - rank(b));
   fitState = { fixes, d, id, s, need, never, others, moves, dayFirst, canRoom, base: base.m, rows, sugg, drop: new Set(), times };
   fitShow(); return false;
+}
+// A sight closed on the day the traveler tried to add it to: say why, and offer, in one tap, a day of the trip here
+// when it's open and fits, or the best sight that is open today and fits instead.
+function closedOpen(d, s) {
+  const city = cityFor(d); if (!city) return;
+  trip.days.forEach(o => { if (o !== d && !o.selected && o.type !== "sea" && cityFor(o) === city) seedPicks(o, city); });
+  const others = trip.days.filter(o => o !== d && cityFor(o) === city && o.type !== "sea" && !(o.selected || []).includes(s.id) && !shutOn(o, s) && fitsAll(fitTrial(o, [...(o.selected || []), s.id]))).slice(0, 2);
+  const taken = new Set(trip.days.filter(o => cityFor(o) === city).flatMap(o => o.selected || []));
+  const alt = allSites(city).filter(x => !x.quick && x.id !== s.id && !taken.has(x.id) && religiousOk(x) && !shutOn(d, x) && (s.kind ? x.kind === s.kind : true))
+    .sort((a, b) => (fameW(b) || 1) - (fameW(a) || 1) || hav(a, s) - hav(b, s)).find(x => fitsWith(d, [x.id]));
+  let w = null; try { w = dayWindow(d, city); } catch (e) {}
+  closedState = { d, s, others, alt, why: closedForDayWhy(s, d, w) };
+  const old = document.querySelector(".fitbox"); if (old) old.remove();
+  document.body.insertAdjacentHTML("beforeend", `<div class="fitbox" role="dialog" aria-modal="true" aria-labelledby="fitTitle"><div class="sheet" id="fitSheet">
+    <h3 id="fitTitle">${esc(s.name)} is closed on ${esc(fmtDow(d.date))}</h3>
+    <p>${closedState.why ? esc(closedState.why.replace(/\.$/, "")) + ". " : ""}Kairoute never plans a sight for a day it can't be visited.</p>
+    ${others.length || alt ? `<div class="fitfixes"><p class="lbl">One tap</p>${others.map((o, k) => `<button type="button" class="btn ${k ? "ghost " : ""}fixbtn" data-act="closedday" data-to="${trip.days.indexOf(o)}">Add it to ${esc(fmtDow(o.date))} ${esc(fmtDate(o.date))}, when it's open</button>`).join("")}${alt ? `<button type="button" class="btn ${others.length ? "ghost " : ""}fixbtn" data-act="closedalt">Add ${esc(alt.name)} today instead (open today)</button>` : ""}</div>` : `<p class="mparts"><b>It isn't open on any day you're here.</b></p>`}
+    <div class="row"><button type="button" class="btn ghost" data-act="fitcancel">Keep my day as is</button></div></div></div>`);
+  const b = document.querySelector('.fitbox [data-act="closedday"], .fitbox [data-act="closedalt"], .fitbox [data-act="fitcancel"]'); if (b) b.focus({ preventScroll: true });
+}
+let closedState = null;
+function closedGo(kind, to) {
+  const C = closedState; closedState = null; const old = document.querySelector(".fitbox"); if (old) old.remove(); if (!C) return;
+  if (kind === "day") { const o = trip.days[to]; if (o && addPick(o, C.s.id, false)) { o.anchor = C.s.id; trip.active = to; } }
+  else if (kind === "alt" && C.alt && addPick(C.d, C.alt.id, false)) C.d.anchor = C.alt.id;
+  save(); render(); if (typeof jumpToAnchor === "function") jumpToAnchor();
 }
 function fitShow() {
   const old = document.querySelector(".fitbox"); if (old) old.remove();
@@ -172,6 +202,8 @@ document.addEventListener("change", e => {
 document.addEventListener("click", e => {
   const t0 = e.target.closest && e.target.closest("button");
   if (t0 && t0.dataset.act === "fitfix") { const d = day(); if (fitOpen(d, null)) render(); return; }
+  if (closedState) { if (t0 && t0.dataset.act === "closedday") { closedGo("day", +t0.dataset.to); return; } if (t0 && t0.dataset.act === "closedalt") { closedGo("alt"); return; }
+    if ((t0 && t0.dataset.act === "fitcancel") || (e.target.classList && e.target.classList.contains("fitbox"))) { closedState = null; const old = document.querySelector(".fitbox"); if (old) old.remove(); return; } }
   if (fitState && e.target.classList && e.target.classList.contains("fitbox")) { fitState = null; fitShow(); return; }
   const t = t0; if (!t || !fitState) return;
   if (t.dataset.act === "fitcancel") { fitState = null; fitShow(); }

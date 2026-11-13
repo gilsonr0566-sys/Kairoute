@@ -39,7 +39,7 @@ const log = (suite, trip, ok, what) => { results.push({ suite, trip, ok, what })
     const days = await p.evaluate(() => window.__kairouteDays());
     // Open every day once first, as a traveler would, so each day has its picks before days are compared.
     for (const D of days) if (D.type !== 'sea' && D.city) await p.evaluate(i => window.__kairouteTruth(i), D.i);
-    let checked = 0; const seenBy = new Map();
+    let checked = 0, closedTried = 0; const seenBy = new Map(), fillBy = new Map();
     for (const D of days) {
       if (D.type === 'sea' || !D.city) continue;
       const t = await p.evaluate(i => window.__kairouteTruth(i), D.i);
@@ -60,6 +60,15 @@ const log = (suite, trip, ok, what) => { results.push({ suite, trip, ok, what })
       }
       t.bonus.forEach(id => { if (t.selected.includes(id)) bad.push(`${id} is ticked but shown as optional`); });
       [...t.picks, ...t.bonus].forEach(id => { const k = D.city + '/' + id; if (seenBy.has(k)) bad.push(`${id} is also planned on ${seenBy.get(k)}`); seenBy.set(k, D.date); });
+      // Filling the day: spare time is filled (the fill never stops early), must-sees first (checked per city below).
+      if (T.key !== 'rainy' && (t.closedSel || []).length) bad.push(`picked on a day it is closed: ${t.closedSel.join(', ')}`);
+      { const ct = await p.evaluate(i => window.__kairouteClosedTry(i), D.i); if (ct) { closedTried++;
+        if (ct.added) bad.push(`${ct.sight} was added on a day it is closed`);
+        else if (!/is closed on/.test(ct.title) || !(ct.offers.length || ct.none)) bad.push(`adding ${ct.sight} (closed that day) didn't explain it or offer an open day or an open sight (box: "${ct.title}")`); } }
+      if (t.fill && t.fill.capped) bad.push(`the day still had room but filling stopped early (${t.fill.spare} min spare)`);
+      { const F = fillBy.get(D.city) || { placed: new Set(), must: new Map(), roomy: [] }; fillBy.set(D.city, F);
+        [...t.picks, ...t.bonus, ...(t.along || []), ...t.selected].forEach(id => F.placed.add(id)); (t.mustSees || []).forEach(m => F.must.set(m.id, m.minutes));
+        if (t.fill && t.fillOn && !t.rain && (t.type === 'land' || t.type === 'port')) F.roomy.push({ date: D.date, spare: t.fill.spare, left: t.fill.mustLeft || [] }); }
       // Day plan screen
       await p.evaluate(i => window.__kairouteAt(i, 'plan'), D.i); await p.waitForTimeout(120);
       const pv = await p.evaluate(() => {
@@ -99,9 +108,16 @@ const log = (suite, trip, ok, what) => { results.push({ suite, trip, ok, what })
       if (gv.filter(x => /^\d+$/.test(x)).length !== t.picks.length || gv.filter(x => x === '+').length !== t.bonus.length) bad.push(`Guide lists ${gv.join(' ')}, plan has ${t.picks.length} picks + ${t.bonus.length} optional`);
       log('One truth', T.key, !bad.length, bad.length ? `${tag}: ${bad.join('; ')}` : `${tag}: all screens agree`);
     }
+    // Must-sees first: a must-see left off every day in its city while one of those days had plenty of spare time
+    // (its visit plus 90 minutes for getting there) means the fill chose lesser sights over it.
+    for (const [city, F] of fillBy) {
+      const missed = [...F.must].filter(([id, min]) => !F.placed.has(id) && F.roomy.some(r => r.spare >= min + 90 && r.left.includes(id))).map(([id]) => id);
+      log('Fill the day', T.key, !missed.length, missed.length ? `${city}: must-sees left out while a day had room: ${missed.join(', ')} (spare: ${F.roomy.map(r => r.date + ' ' + r.spare + ' min').join(', ')})` : `${city}: must-sees first, ${F.roomy.length} days filled (spare left: ${F.roomy.map(r => r.spare + ' min').join(', ') || 'none'})`);
+    }
     // Screenshots: the first planned day of each trip
     const first = days.find(D => D.type !== 'sea' && D.city);
     if (first) for (const [v, nm] of [['plan', 'day plan'], ['sites', 'change stops']]) { await p.evaluate(([i, v]) => window.__kairouteAt(i, v), [first.i, v]); await p.waitForTimeout(200); const f = `${T.key}-${v}.jpg`; await p.screenshot({ path: path.join(OUT, f), type: 'jpeg', quality: 60 }); shots.push({ f, cap: `${T.label}: ${nm}, ${first.date}` }); }
+    log('Closed sights', T.key, true, `${closedTried} days tried adding a sight closed that day: never added, an open day or sight offered`);
     log('One truth', T.key, !errs.length, errs.length ? 'page errors: ' + [...new Set(errs)].join(' | ') : `${checked} days checked, no page errors`);
     await ctx.close();
   }
