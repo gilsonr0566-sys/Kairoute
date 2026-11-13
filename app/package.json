@@ -4,7 +4,7 @@
   "private": true,
   "description": "Kairoute Android app (wraps the website build in Capacitor)",
   "scripts": {
-    "sync": "mkdir -p www/icons www/lib && cp ../index.html ../manifest.webmanifest www/ && cp ../icons/* www/icons/ && cp ../lib/* www/lib/ && npx cap sync android"
+    "sync": "mkdir -p www/icons www/lib && cp ../index.html ../manifest.webmanifest www/ && cp ../icons/* www/icons/ && cp -r ../lib/* www/lib/ && npx cap sync android"
   },
   "dependencies": {
     "@capacitor/android": "^8.0.2",
