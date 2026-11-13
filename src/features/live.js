@@ -363,7 +363,9 @@ const realLegs = {}, legAsked = {};
 function legTo(from, to) {
   const est = travel(from, to), foot = hav(from, to) < 2.5, k = [from.lat, from.lng, to.lat, to.lng].map(x => (+x).toFixed(3)).join(",") + (foot ? "f" : "c");
   const r = realLegs[k];
-  if (r) return foot ? { min: r.min, how: "Walk", src: "street route" } : { min: r.min + 10, how: "Taxi", src: "street route + 10 min to find a taxi" };
+  // The more cautious of the street route and the day plan's own time (which uses the train or ferry time the guide
+  // gives, plus time for delays on the way back to the ship), so the countdown never promises more time than the plan.
+  if (r) { const m = foot ? r.min : r.min + 10; return m >= est.min ? (foot ? { min: m, how: "Walk", src: "street route" } : { min: m, how: "Taxi", src: "street route + 10 min to find a taxi" }) : { min: est.min, how: est.how, src: "the day plan's time (more cautious than the street route)" }; }
   if (freeAI && !legAsked[k]) { legAsked[k] = 1;
     fetch(freeAI.url + "/route", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ legs: [{ m: foot ? "foot" : "car", a: [+from.lng, +from.lat], b: [+to.lng, +to.lat] }] }) })
       .then(x => x.ok ? x.json() : null).then(j => { const rt = j && j.routes && j.routes[0]; if (rt && isFinite(rt.min)) { realLegs[k] = rt; alarmTick(); } }).catch(() => {}); }
@@ -377,7 +379,11 @@ function alarmState(d, plan) {
   else if (cdWhere != null && cdWhere !== "auto" && items[+cdWhere]) { from = items[+cdWhere].place; src = "chosen"; }
   else { const at = now != null ? items.filter(i => i.time <= now).pop() : items[items.length - 1]; from = at ? at.place : plan.w.head[0]; src = "plan"; }
   const point = plan.w.tail[plan.w.tail.length - 1], leg = point ? legTo(from, point) : null;
-  return { now, from, src, point, leg, backBy: plan.endBy, leaveBy: leg ? plan.endBy - leg.min : null };
+  // One return time on each screen. Before the day: the time the day plan has you back, so the plan, this card and
+  // the leave time all agree. On the day: the latest safe time (the plan's cushion before all aboard), counted down
+  // from wherever you really are.
+  const backBy = now == null && isFinite(plan.end) && plan.end > plan.w.start ? Math.min(plan.endBy, plan.end) : plan.endBy;
+  return { now, from, src, point, leg, backBy, latest: plan.endBy, leaveBy: leg ? backBy - leg.min : null };
 }
 function alarmCard(d, plan) {
   if (d.type === "sea") return "";
@@ -420,9 +426,10 @@ function alarmTick() {
   if (fixed) {
     const el = document.getElementById("cdBig"), sub = document.getElementById("cdSub"), msg = document.getElementById("cdMsg"), srcEl = document.getElementById("cdSrc");
     const fromTxt = st.src === "GPS" ? "where you are" : st.from.name, legTxt = `${st.leg.how.toLowerCase()} ${dur(st.leg.min)}`;
-    const word = d.type === "port" ? `All aboard ${d.allAboard}. Be at the ship by ${fmt(st.backBy)}.` : d.type === "embark" ? `All aboard ${d.allAboard}. Be at the terminal by ${fmt(st.backBy)}.` : `${MODES[d.mode].label} at ${d.time}. Be at ${st.point.name} by ${fmt(st.backBy)}.`;
+    const word = d.type === "port" ? (st.now == null ? `Back at the ship at ${fmt(st.backBy)}, ${dur(toMin(d.allAboard) - st.backBy)} before all aboard (${d.allAboard}).` : `Be back at the ship by ${fmt(st.backBy)} at the latest, ${dur(toMin(d.allAboard) - st.backBy)} before all aboard (${d.allAboard}).`) : d.type === "embark" ? `All aboard ${d.allAboard}. Be at the terminal by ${fmt(st.backBy)}.` : `${MODES[d.mode].label} at ${d.time}. Be at ${st.point.name} by ${fmt(st.backBy)}.`;
     if (sub) sub.textContent = `${word} From ${fromTxt}: ${legTxt}, so leave by ${fmt(st.leaveBy)}.`;
     if (srcEl) srcEl.textContent = `Travel time: ${st.leg.src}${st.src === "GPS" ? ", from your GPS position" : st.src === "plan" ? ", from where the plan has you now" : ""}.`;
+    if (srcEl && (d.type === "port" || d.type === "embark")) srcEl.textContent += " Being on board on time is your responsibility: confirm the all-aboard time with your cruise line on the day. Ships don't wait.";
     if (st.now == null) { if (el) el.textContent = fmt(st.leaveBy); if (msg) msg.hidden = true; if (srcEl) srcEl.textContent += ` On ${fmtDate(d.date)} this becomes a live countdown with alerts.`; }
     else {
       const left = st.leaveBy - st.now;

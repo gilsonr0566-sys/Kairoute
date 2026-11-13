@@ -474,7 +474,27 @@ function travel(a, b) {
   if (d <= lim) return { mode: "walk", how: "Walk", km: d * 1.3, min: Math.max(2, Math.round(d * 1.3 / speed * 60)) };
   if (d <= 6) return { mode: "ride", how: "Taxi, bus or metro", km: d * 1.3, min: Math.round(10 + d * 1.3 / 22 * 60) };
   if (d <= 15) return { mode: "ride", how: "Taxi or rideshare", km: d * 1.3, min: Math.round(10 + d * 1.3 / 25 * 60) };
-  return { mode: "ride", how: "Train or car", km: d * 1.25, min: Math.round(15 + d * 1.25 / 85 * 60) }; // highway or intercity train, plus getting going (Athens to the Corinth Canal: about 1 h 10)
+  // 15-40 km: regional roads and local trains, around bays and through towns (Naples to Sorrento is 26 km as the
+  // crow flies but about 50 km of coast road); farther: highway or intercity train (Athens to Corinth: about 1 h 20).
+  let leg = d <= 40 ? { mode: "ride", how: "Train or car", km: d * 1.35, min: Math.round(15 + d * 1.35 / 45 * 60) }
+    : { mode: "ride", how: "Train or car", km: d * 1.25, min: Math.round(15 + d * 1.25 / 85 * 60) };
+  // A day trip's own note says how long the trip really takes ("1 hour on the Circumvesuviana train", "60-75 min"):
+  // the slowest time it names, plus getting to the station or pier, wins over the estimate.
+  const said = Math.max(saidMin(a), saidMin(b));
+  if (said && !(saidMin(a) && saidMin(b))) leg = Object.assign(leg, { min: Math.max(leg.min, said + 15), said: true });
+  // A long ride back to the ship gets time for a late train or traffic: missing the ship is not an option.
+  if (b.backToShip && leg.min >= 30) { const sl = Math.max(15, Math.round(leg.min * 0.3 / 5) * 5); leg = Object.assign(leg, { min: leg.min + sl, slack: sl }); }
+  return leg;
+}
+const saidMemo = new Map();
+function saidMin(p) {
+  const t = p && p.travel; if (!t || typeof t !== "string") return 0;
+  if (saidMemo.has(t)) return saidMemo.get(t);
+  let m = 0; const low = t.toLowerCase();
+  for (const x of low.matchAll(/(\d+(?:\.\d+)?)\s*(?:-|–|to)\s*(\d+(?:\.\d+)?)\s*(hours?|hrs?|h\b|minutes?|mins?\b|min\b)/g)) m = Math.max(m, +x[2] * (/^h/.test(x[3]) ? 60 : 1));
+  for (const x of low.matchAll(/(\d+(?:\.\d+)?|an|one|half an)\s*(hours?|hrs?|h\b|minutes?|mins?\b|min\b)/g)) { const n = x[1] === "an" || x[1] === "one" ? 1 : x[1] === "half an" ? 0.5 : +x[1]; m = Math.max(m, n * (/^h/.test(x[2]) ? 60 : 1)); }
+  for (const x of low.matchAll(/(\d+)\s*h(?:ours?|rs?)?\s*(\d+)\s*m/g)) m = Math.max(m, +x[1] * 60 + +x[2]);
+  m = m >= 10 && m <= 300 ? Math.round(m) : 0; saidMemo.set(t, m); return m;
 }
 const tmin = (a, b) => (a && b ? travel(a, b).min : 0);
 function allSites(city) { return [...(city.sites || []), ...(city.farther || [])]; }
@@ -637,7 +657,7 @@ function dayWindow(d, city) {
   } else if (d.type === "port") {
     if (!P) return { error: "Choose where the ship docks." };
     w.start = toMin(d.portArrive) + (d.tender ? 60 : 30); w.endBy = toMin(d.allAboard) - 45; w.buffer = 45;
-    w.head = [P]; w.tail = [P];
+    w.head = [P]; w.tail = [Object.assign({}, P, { backToShip: true })];
     w.startLabel = (d.tender ? "Tender ashore to " : "Off the ship at ") + P.name; w.endLabel = "Back at the ship";
     w.notes.push(`Ship docks ${d.portArrive}${d.tender ? " (tender port, so we allow an hour to get ashore)" : ""}.`);
   }
@@ -723,6 +743,15 @@ function ohState(hours, iso, minute) {
   return state || "closed"; // days no rule names are closed days
 }
 let planDate = null;
+// With no forecast yet (trips months away), the usual summer climate decides: an open-air ruin or park in the
+// Mediterranean summer is best seen before the midday heat and the tour-bus crowds (Pompeii first, the shady town
+// after), when the route costs the same either way.
+const EXPOSED = /archaeolog|ancient|ruin|acropolis|forum|agora|pompeii|herculaneum|ostia|delphi|olympia|ephesus|amphithea|colosseum|sanctuary|temple of|excavat|necropolis|citadel|castle walls|beach|hike|trail/i;
+function climateHeat(p, t, len) {
+  if (planWx || !planDate || p.indoor || p.mealOf || !EXPOSED.test((p.category || "") + " " + p.name)) return 0;
+  const mo = +planDate.slice(5, 7), lat = +p.lat; if (!(isFinite(lat) && lat > 20 && lat < 46 && mo >= 6 && mo <= 9)) return 0;
+  return overlap(t, t + len, 12 * 60, 16 * 60) * 0.5;
+}
 const MEAL_CHECK = { Lunch: [750, 810], Dinner: [1170, 1230] }; // 12:30 and 13:30; 19:30 and 20:30
 const hoursOf = r => (r && (r.hours || ((/Hours listed: (.*?)\. Check/.exec(r.why || "") || [])[1]))) || "";
 // "closed" only when the listed hours say it's shut at both usual times for that meal on the plan's date.
@@ -758,7 +787,10 @@ function simDay(seq, t0, O, Z, style) {
     } else {
       // Opening hours: wait for it to open, and never arrive after the last entry. Then weather and rush hours.
       if (p.oh) { const f = ohFit(p.oh, clock, p.minutes); if (f.wait) { cost += f.wait * 0.6; clock += f.wait; } if (f.late) cost += 300 + f.late * 10; }
-      cost += visitPenalty(p, clock, p.minutes || 0);
+      cost += visitPenalty(p, clock, p.minutes || 0) + climateHeat(p, clock, p.minutes || 0);
+      // Port days: a stop a long ride from the ship is seen early, so a late train or traffic jam on the way back
+      // can never cost the ship. The farther it is and the later it would be, the more it costs.
+      if (Z && Z.backToShip) { const back = tmin(p, Z); if (back >= 30) cost += back * (clock - t0) / 60; }
       clock += p.minutes || 0;
     }
     prev = p;
@@ -836,9 +868,13 @@ function checksCard(d, city, plan) {
     const lab = x => (x.meal && x.meal.label) || "Dinner", known = meals.filter(x => hoursOf(x.place)), open = known.filter(x => MEAL_CHECK[lab(x)].some(m => ohState(hoursOf(x.place), d.date, m) === "open"));
     add(known.length === meals.length && open.length === meals.length ? "ok" : "warn", known.length ? `${open.length} of ${meals.length} meal stops list hours that say they're open on this day.${known.length < meals.length ? " The others list no hours: check before you go." : ""}` : "No restaurant here lists its hours on the map. Check they're open on the day.");
   }
-  if (d.type === "port" && d.allAboard) add("ok", `Back at the ship well before all aboard (${esc(d.allAboard)}). Confirm the all-aboard time with your ship: it can change.`);
+  if (d.type === "port" && d.allAboard) add(plan.over ? "warn" : "ok", `Back at the ship by ${fmt(Math.min(plan.end, plan.endBy))}, ${dur(toMin(d.allAboard) - Math.min(plan.end, plan.endBy))} before all aboard (${esc(d.allAboard)}). Being on board on time is your responsibility: confirm the all-aboard time with your cruise line on the day, as it can change.`);
   if (plan.over) add("warn", `The day runs past ${fmt(plan.endBy)}. Take out a stop.`); else add("ok", `The day fits: done by ${fmt(plan.end)}, with travel, meals and lines allowed for.`);
   if ((plan.dropped || []).length) add("warn", `Didn't fit today: ${esc(plan.dropped.map(s => s.name).join(", "))}.`);
+  const short = (plan.stops || []).filter(s => s.shortFrom && s.shortFrom > s.minutes);
+  if (short.length) add("warn", `To fit all your picks, ${esc(short.map(s => `${s.name} gets ${dur(s.minutes)} (the guide suggests ${dur(s.shortFrom)})`).join("; "))}.`);
+  const rides = plan.items.filter(x => x.type === "travel" && x.leg.said);
+  if (rides.length) add("ok", `Long rides use the times the guide gives for the train or ferry, plus time to reach the station or pier${plan.items.some(x => x.type === "travel" && x.leg.slack) ? ", and the ride back to the ship has 15 extra minutes for a late train or traffic" : ""}.`);
   // The summary counts what needs the traveler's attention, not checks: "1 of 5 confirmed" read as if 4 stops were doubtful.
   const toCheck = rows.filter(r => r.includes('ck warn')).length, pending = rows.filter(r => r.includes('ck unk')).length;
   return `<details class="card checks"><summary>What we checked for this day <small>${toCheck ? `${toCheck} thing${toCheck > 1 ? "s" : ""} to double-check` : pending ? "Still checking" : "All checked"}</small></summary><ul>${rows.join("")}</ul></details>`;
@@ -1034,6 +1070,12 @@ function buildPlanFor(d) {
   let order = optimize(chosen, O, Z);
   const total = o => fixed + routeCost(o, O, Z) + o.reduce((a, s) => a + s.minutes, 0) + mealsExpected;
   const dropped0 = [];
+  // Long visits give a little before a pick is given up: a 3-hour town or ruin can be seen well in 2 h 15, and
+  // seeing both of the day's big sights beats seeing one at full length (Pompeii and Sorrento from Naples).
+  { const over = total(order) - budget, long = order.filter(s => s.minutes >= 120);
+    const room = s => s.minutes - Math.max(90, Math.round(s.minutes * 0.7 / 5) * 5), can = long.reduce((a, s) => a + room(s), 0);
+    if (over > 0 && can > 0) { const f = Math.min(1, (over + 10) / can);
+      order = order.map(s => long.includes(s) ? Object.assign({}, s, { minutes: s.minutes - Math.round(room(s) * f / 5) * 5, shortFrom: s.minutes }) : s); } }
   while (order.length && total(order) > budget) {
     const cands = order.filter(s => !s.mustSee);
     const pool = cands.length ? cands : order; // must-sees go last, but the day must still fit
@@ -1103,8 +1145,14 @@ function buildPlanFor(d) {
   // The step after this one then puts back every dropped stop that fits somewhere else in the day.
   { const lim = w.endBy - tailCost();
     for (let guard = 0; guard < 12; guard++) {
-      if (simDay(seq, t0, O, ZZ, style).end <= lim + 5) break;
+      if (simDay(seq, t0, O, ZZ, style).end <= lim + (d.type === "port" ? 0 : 5)) break; // a port day has no leeway: the ship won't wait
       const bare = seq.filter(x => !x.mealOf); if (bare.length < 2) break;
+      // First, long visits give 15 minutes each (down to 70% of the guide's time, never under 1 h 30).
+      const floor = x => Math.max(90, Math.round((x.shortFrom || x.minutes) * 0.7 / 5) * 5);
+      if (bare.some(x => x.minutes >= 120 && x.minutes - 15 >= floor(x))) {
+        seq = seq.map(x => !x.mealOf && x.minutes >= 120 && x.minutes - 15 >= floor(x) ? Object.assign({}, x, { minutes: x.minutes - 15, shortFrom: x.shortFrom || x.minutes }) : x);
+        seq = polishDay(seq, t0, O, ZZ, style, city); guard--; continue;
+      }
       const cands = bare.filter(x => !x.mustSee).length ? bare.filter(x => !x.mustSee) : bare;
       let best = null;
       for (const c of cands) { const q = polishDay(withMeals(bare.filter(x => x !== c)), t0, O, ZZ, style, city), e = simDay(q, t0, O, ZZ, style).end, val = (simDay(seq, t0, O, ZZ, style).end - e) / Math.max(20, c.minutes || 0); if (!best || val > best.val) best = { val, q, c }; }
@@ -1214,7 +1262,7 @@ function buildPlanFor(d) {
   avoidMeals = savedAvoid;
   const walkKm = items.filter(i => i.type === "travel" && i.leg.mode === "walk").reduce((a, i) => a + i.leg.km, 0);
   const stops = items.filter(i => i.type === "stop");
-  return { city, w, items, stops, dropped, elsewhere, quickMeals, along, bonus, meals, evening, swaps, closedToday, start: w.start, endBy: w.endBy, end: clock, walkKm, over: clock > w.endBy + 5, tight: budget < fixed + 45 };
+  return { city, w, items, stops, dropped, elsewhere, quickMeals, along, bonus, meals, evening, swaps, closedToday, start: w.start, endBy: w.endBy, end: clock, walkKm, over: clock > w.endBy + (d.type === "port" ? 0 : 5), tight: budget < fixed + 45 };
 }
 
 // ---------- AI ----------
@@ -2603,6 +2651,11 @@ if (typeof window !== "undefined") window.__kairouteQuality = () => { bonusMemo 
   // The day's main sight must never be the one left out: a dropped stop that is a must-see, or longer than
   // every kept stop in its own area, means the wrong stop was cut.
   const kept = pts.filter(x => x.type === "stop").map(x => x.place);
+  // The ship never leaves without you: back with the full cushion, and still at least 25 minutes before all aboard
+  // if the ride back takes half as long again as normal (a slow train, a traffic jam).
+  if (d.type === "port" && d.allAboard) { const aa = toMin(d.allAboard), legs = pl.items.filter(x => x.type === "travel"), last = legs[legs.length - 1], base = last ? last.leg.min - (last.leg.slack || 0) : 0, slow = pl.end - (last && last.leg.slack || 0) + base * 0.5;
+    if (pl.end > aa - (pl.w.buffer || 45)) issues.push(`back at the ship ${fmt(pl.end)}, less than ${pl.w.buffer || 45} min before all aboard ${d.allAboard}`);
+    else if (slow > aa - 25) issues.push(`ship margin too thin if the ride back is slow: ${fmt(slow)} against all aboard ${d.allAboard}`); }
   (pl.dropped || []).forEach(x => { const same = kept.filter(k => hav(k, x) < 15); if (same.length && (x.mustSee && !same.every(k => k.mustSee) || same.every(k => (k.minutes || 0) < (x.minutes || 0) * 0.8))) issues.push("left out main sight " + x.name); });
   if (pl.end > pl.endBy + 5) issues.push("ends " + fmt(pl.end) + " after " + fmt(pl.endBy));
   if (pl.endBy - pl.end > 120 && d.type !== "embark" && d.type !== "depart") issues.push("free " + dur(pl.endBy - pl.end));
@@ -2889,6 +2942,41 @@ document.addEventListener("toggle", e => {
 document.addEventListener("click", e => {
   document.querySelectorAll("details.planmore[open]").forEach(m => { if (!m.contains(e.target) || e.target.closest(".menuitem:not(.toggle)")) m.open = false; });
 }, true);
+// The More menu is placed on screen from where its button actually is: lined up with the button, kept
+// clear of the side rail / bottom tab bar and the screen edges, and flipped above the button when there
+// is no room below. Nothing on the page can clip it or cover it, on any day or screen size.
+function placeMenu(m) {
+  const p = m.querySelector(".menupanel"), sm = m.querySelector("summary"); if (!p || !sm) return;
+  const vw = document.documentElement.clientWidth, vh = window.innerHeight, pad = 8;
+  let minL = pad, maxB = vh - pad;
+  const tabs = document.querySelector(".tabs");
+  if (tabs) { const t = tabs.getBoundingClientRect(), cs = getComputedStyle(tabs);
+    if (cs.position === "fixed" && t.width && t.height) {
+      if (t.left <= 0 && t.height > vh * .6) minL = Math.max(minL, t.right + pad);          // side rail
+      else if (t.bottom >= vh - 1 && t.width > vw * .6) maxB = Math.min(maxB, t.top - pad); // bottom bar
+    } }
+  const w = Math.min(320, vw - minL - pad);
+  p.style.position = "fixed"; p.style.width = w + "px"; p.style.minWidth = "0"; p.style.right = "auto";
+  p.style.maxHeight = ""; p.style.overflowY = "auto";
+  const b = sm.getBoundingClientRect();
+  if (b.bottom < 0 || b.top > vh) { m.open = false; return; }   // button scrolled away: close the menu
+  let left = b.right - w;                       // right edges line up when that fits
+  if (left < minL) left = b.left;               // otherwise left edges line up
+  left = Math.max(minL, Math.min(left, vw - pad - w));
+  p.style.left = left + "px";
+  let h = p.scrollHeight, below = maxB - b.bottom - 4, above = b.top - 4 - pad;
+  if (h > below && h > above && !m._scrolled) {
+    // Too tall for either side: scroll the page up just enough for the whole menu to fit under its button.
+    let sc = m.parentElement; while (sc && sc !== document.body && !(sc.scrollHeight > sc.clientHeight + 1 && /auto|scroll/.test(getComputedStyle(sc).overflowY))) sc = sc.parentElement;
+    const need = Math.min(h - below + 4, b.top - pad - 60);
+    if (need > 0) { m._scrolled = true; if (!sc || sc === document.body) window.scrollBy(0, need); else sc.scrollTop += need; m._scrolled = false; return placeMenu(m); }
+  }
+  if (h <= below || below >= above) { p.style.top = (b.bottom + 4) + "px"; p.style.bottom = "auto"; p.style.maxHeight = Math.max(120, below) + "px"; }
+  else { p.style.top = Math.max(pad, b.top - 4 - Math.min(h, above)) + "px"; p.style.bottom = "auto"; p.style.maxHeight = above + "px"; }
+}
+document.addEventListener("toggle", e => { const m = e.target; if (m.matches && m.matches("details.planmore") && m.open) placeMenu(m); }, true);
+const replaceMenus = () => document.querySelectorAll("details.planmore[open]").forEach(placeMenu);
+window.addEventListener("resize", replaceMenus); document.addEventListener("scroll", replaceMenus, true);
 // ---- First-run walkthrough: four short, skippable screens; replay from Settings > How Kairoute works ----
 const COACH = [
   ["🧭", "Plan a trip in a minute", "Tap <b>Plan a new trip</b>. Type where you're going, or snap a photo of your itinerary or cruise schedule. Kairoute builds every day for you."],
