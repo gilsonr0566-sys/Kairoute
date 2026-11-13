@@ -44,6 +44,7 @@ jobs:
           node tools/ship-check.cjs
           node tools/anchor-e2e.cjs
           node tools/extras-check.cjs index.html checks/extras
+          node tools/offline-e2e.cjs
       - name: Street map check (no network needed)
         run: MOCK=1 node tools/map-e2e.cjs
       - name: Keep the safety-net report even when it fails
