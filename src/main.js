@@ -4896,20 +4896,24 @@ ${partsList(s, it.time)}${stopLiveNotes(it, d)}</div></div>`;
   ].filter(Boolean).join("");
   const preview = !isToday(d) && cdPreview == null;
   const wxt = weatherTool(d, plan), wxChip = /wxchip/.test(wxt) ? wxt : "";
-  // One deadline clock only: when the countdown shows, the "back on board" tile is left out (Richard, Nov 13).
-  const cdHTML = countdownCard(d, plan);
+  // The map key lists only what today's map really shows (no "Hotel" on a cruise day).
+function legendHTML(plan) {
+  const tr = plan.items.filter(i => i.type === "travel" && i.leg.min > 0);
+  return [tr.some(i => i.leg.mode === "walk") ? `<span><i></i>Walk</span>` : "", tr.some(i => i.leg.mode !== "walk") ? `<span><i class="dash"></i>Taxi or transit</span>` : "",
+    plan.items.some(i => i.type === "meal") ? `<span style="color:var(--meal)">● Meal</span>` : "", plan.items.some(i => i.type === "fixed") ? `<span style="color:var(--must)">■ Hotel</span>` : "",
+    (plan.along || []).length ? `<span>● On the way</span>` : ""].join("");
+}
+// One deadline clock only: when the countdown shows, the "back on board" tile is left out (Richard, Nov 13).
+  const cdHTML = countdownCard(d, plan), walkTile = plan.walkKm >= 0.15; // under about 0.1 mi of walking says nothing
   return `
   <div class="plangrid"><div class="plantop">
   <div class="dayhead">${dayHeading(d)}${cdHTML}<button class="btn bigbtn tourbtn" data-act="tourstart"><span class="tb-long">▶ Start the tour</span><span class="tb-short">▶ Start tour</span></button></div>
-  <div class="daysum${cdHTML ? " n3" : ""}" role="group" aria-label="Today at a glance">
+  <div class="daysum n${2 + (walkTile ? 1 : 0) + (cdHTML ? 0 : 1)}" role="group" aria-label="Today at a glance">
     <div><b>${fmt(plan.start)}–${fmt(plan.endBy)}</b><span>${d.type === "port" ? "ashore " + dur(plan.endBy - plan.start) : L ? dur(d.hours * 60) + " sightseeing" : "free " + dur(plan.endBy - plan.start)}</span></div>
     <div><b>${stopsN}${optN ? " + " + optN : ""}</b><span>${stopsN === 1 ? "pick" : "picks"}${optN ? " + optional" : ""}${plan.along.length ? ` · ${plan.along.length} on the way` : ""}</span></div>
-    <div><b>${distTxt(plan.walkKm)}</b><span>walking</span></div>
+    ${walkTile ? `<div><b>${distTxt(plan.walkKm)}</b><span>walking</span></div>` : ""}
     ${cdHTML ? "" : `<div><b>${fmt(plan.end)}</b><span>${d.type === "port" ? "back on board" : "finish"}</span></div>`}
-  </div>
-  <div class="planbar">
-    ${canLen ? `<div class="seg pace daylen" role="group" aria-label="How long to sightsee today">${DAY_LEN.map(([h, l, sub]) => `<button type="button" data-act="daylen" data-h="${h}" aria-pressed="${+d.hours === h}" title="${esc(l)}: ${esc(sub)} of sightseeing">${esc(l.replace(/ day$/, ""))} <small>${sub}</small></button>`).join("")}</div>` : ""}
-    <div class="toolrow"><button class="btn ghost small" data-goto="sites">Change stops</button>
+    <div class="daytools"><div class="toolrow"><button class="btn ghost small" data-goto="sites">Change stops</button>
     <details class="moremenu planmore"><summary aria-label="More options for today">More</summary><div class="menupanel" role="menu">
       <div class="menugroup">Plan this day</div>
       <button class="menuitem" role="menuitem" data-act="suggesttour">✨ Suggest my tour</button>
@@ -4921,11 +4925,14 @@ ${partsList(s, it.time)}${stopLiveNotes(it, d)}</div></div>`;
       <div class="menugroup">Meals</div>
       <button class="menuitem" role="menuitem" data-act="bookopen" data-meal="Lunch">🍽 ${(d.booked || {}).Lunch ? "Change my lunch reservation" : "I have a lunch reservation"}</button>
       <button class="menuitem" role="menuitem" data-act="bookopen" data-meal="Dinner">🍽 ${(d.booked || {}).Dinner ? "Change my dinner reservation" : "I have a dinner reservation"}</button>
-    </div></details>${wxChip}</div>
+    </div></details>${wxChip}</div></div>
   </div>
+  ${canLen ? `<div class="planbar">
+    ${canLen ? `<div class="seg pace daylen" role="group" aria-label="How long to sightsee today">${DAY_LEN.map(([h, l, sub]) => `<button type="button" data-act="daylen" data-h="${h}" aria-pressed="${+d.hours === h}" title="${esc(l)}: ${esc(sub)} of sightseeing">${esc(l.replace(/ day$/, ""))} <small>${sub}</small></button>`).join("")}</div>` : ""}
+  </div>` : ""}
   </div><div class="left pane" data-pane="map">
   <div class="mapbox">${mapSlot(plan, d, "plan")}
-    <div class="maplegend"><span><i></i>Walk</span><span><i class="dash"></i>Taxi or transit</span><span style="color:var(--meal)">● Meal</span><span style="color:var(--must)">■ Hotel</span><span>● On the way</span></div>
+    <div class="maplegend">${legendHTML(plan)}</div>
   </div>
   <details class="card foldlist morefold"><summary>More about today</summary>
   ${checksCard(d, city, plan)}

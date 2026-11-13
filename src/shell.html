@@ -471,7 +471,14 @@ main:has(#view.full) { padding: 0; }
 .daysum { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); background: var(--card); border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
 .daysum > div { padding: 10px 12px; border-left: 1px solid var(--line); min-width: 0; }
 .daysum > div:first-child { border-left: 0; }
-.daysum.n3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.daysum.n4 { grid-template-columns: repeat(4, minmax(0, 1fr)) auto; }
+.daysum.n3 { grid-template-columns: repeat(3, minmax(0, 1fr)) auto; }
+.daysum.n2 { grid-template-columns: repeat(2, minmax(0, 1fr)) auto; }
+/* Change stops and More sit at the end of the summary row, so they need no row of their own (Richard, Nov 13). */
+.daysum > .daytools { display: flex; align-items: center; padding: 6px 10px; }
+.daysum > .daytools .toolrow { flex-wrap: nowrap; gap: 6px; }
+.daysum > .daytools .toolrow > * { flex: none; white-space: nowrap; }
+@media (max-width: 520px) { .daysum > .daytools { grid-column: 1 / -1; border-left: 0; border-top: 1px solid var(--line); } }
 .daysum b { display: block; font-family: var(--font-display); font-size: 1.15rem; font-variant-numeric: tabular-nums; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .daysum span { display: block; color: var(--muted); font-size: 0.78rem; line-height: 1.25; }
 @media (max-width: 520px) { .daysum { grid-template-columns: repeat(2, minmax(0, 1fr)); } .daysum > div:nth-child(3) { border-left: 0; } .daysum > div:nth-child(n+3) { border-top: 1px solid var(--line); } }
@@ -694,6 +701,10 @@ details.story:not([open]) > summary::before { content: "▸ "; }
   html.appview .tab { padding: 8px 16px 7px; }
   html.appview .plangrid { grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); grid-template-areas: "top right" "left right"; }
   html.appview .plangrid .plantop { max-height: 52vh; }
+  /* Landscape: the day's name gets the full width of its column, the countdown and Start the tour share the line below. */
+  html.appview .dayhead { flex-wrap: wrap; gap: 8px 10px; }
+  html.appview .dayhead > div:first-child { flex: 1 1 100%; }
+  html.appview .dayhead .cdchip { flex: 1 1 auto; min-width: 0; }
   html.appview .guidegrid { grid-template-columns: 270px minmax(0, 1fr); grid-template-rows: minmax(0, 1fr); gap: 18px; }
   html.appview .guideside > .lede { display: block; }
   html.appview .guideside .jumps { flex-direction: column; overflow: visible; }
@@ -818,7 +829,9 @@ html, body { overflow-x: hidden; }
   .card { padding: 14px; gap: 12px; }
   .banner { font-size: .88rem; padding: 10px 12px; flex-wrap: wrap; }
   .daysum { grid-template-columns: repeat(4, minmax(0, 1fr)) !important; }
-  .daysum.n3 { grid-template-columns: repeat(3, minmax(0, 1fr)) !important; }
+  .daysum.n4 { grid-template-columns: repeat(4, minmax(0, 1fr)) auto !important; }
+  .daysum.n3 { grid-template-columns: repeat(3, minmax(0, 1fr)) auto !important; }
+  .daysum.n2 { grid-template-columns: repeat(2, minmax(0, 1fr)) auto !important; }
   .daysum > div { border-top: 0 !important; padding: 8px 6px !important; }
   .daysum > div:nth-child(n+2) { border-left: 1px solid var(--line) !important; }
   .daysum b { font-size: .92rem !important; white-space: normal !important; overflow-wrap: anywhere; line-height: 1.2; }

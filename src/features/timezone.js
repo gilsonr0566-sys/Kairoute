@@ -37,14 +37,22 @@ function dayZone(d) {
 }
 // One lookup per place while online (Open-Meteo answers the zone for any coordinates); saved on the day.
 function zoneLookup(d, c) {
-  if (typeof fetch === "undefined" || (typeof navigator !== "undefined" && navigator.onLine === false)) return;
-  const k = c.lat.toFixed(2) + "," + c.lng.toFixed(2); if (zoneAsked[k]) return; zoneAsked[k] = 1;
-  fetch(`https://api.open-meteo.com/v1/forecast?latitude=${c.lat.toFixed(3)}&longitude=${c.lng.toFixed(3)}&timezone=auto&forecast_days=1&daily=sunrise`)
+  if (typeof fetch === "undefined" || (typeof navigator !== "undefined" && navigator.onLine === false)) return Promise.resolve(false);
+  const k = c.lat.toFixed(2) + "," + c.lng.toFixed(2); if (zoneAsked[k]) return zoneAsked[k];
+  return zoneAsked[k] = fetch(`https://api.open-meteo.com/v1/forecast?latitude=${c.lat.toFixed(3)}&longitude=${c.lng.toFixed(3)}&timezone=auto&forecast_days=1&daily=sunrise`)
     .then(r => r.ok ? r.json() : null).then(j => {
-      if (!j || !j.timezone || !zoneOk(j.timezone)) { zoneAsked[k] = 0; return; }
+      if (!j || !j.timezone || !zoneOk(j.timezone)) { zoneAsked[k] = 0; return false; }
       let changed = false; for (const x of trip.days) { const cx = dayCoords(x); if (cx && isFinite(cx.lat) && !x.tz && cx.lat.toFixed(2) + "," + cx.lng.toFixed(2) === k) { x.tz = j.timezone; changed = true; } }
       if (changed) { save(); render(); }
-    }).catch(() => { zoneAsked[k] = 0; });
+      return true;
+    }).catch(() => { zoneAsked[k] = 0; return false; });
+}
+// For "Download for offline": resolves once the day's zone is known for good (looked up now while online, and
+// saved on the day, so it's there with no signal). Resolves to dayZone(d) either way.
+function ensureDayZone(d) {
+  const z = dayZone(d); if (z.known || !d) return Promise.resolve(z);
+  const c = dayCoords(d); if (!c || !isFinite(c.lat)) return Promise.resolve(z);
+  return Promise.resolve(zoneLookup(d, c)).then(() => dayZone(d));
 }
 function deviceZone() { try { return Intl.DateTimeFormat().resolvedOptions().timeZone || "UTC"; } catch (e) { return "UTC"; } }
 // The wall clock in a zone right now: { date: "YYYY-MM-DD", min: minutes since midnight (with seconds) }.
