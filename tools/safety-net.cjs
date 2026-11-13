@@ -98,7 +98,7 @@ const log = (suite, trip, ok, what) => { results.push({ suite, trip, ok, what })
           optional: cards.filter(c => c.querySelector('.tag.bonus')).map(c => c.querySelector('input').dataset.site),
           both: cards.filter(c => c.querySelector('.tag.must') && c.querySelector('.tag.local')).map(c => c.querySelector('.name').innerText),
           count: ((document.querySelector('.stickybar .count') || {}).innerText || ''),
-          head: m ? m.querySelector('.mrow b').innerText : '', parts: m ? ((m.querySelector('.mparts') || {}).innerText || '') : '' };
+          head: m ? m.querySelector('.mrow b').innerText : '', parts: m ? ((m.querySelector('.mparts:not(.mextra)') || {}).innerText || '') : '' };
       });
       const sel = new Set(t.selected);
       sv.checked.forEach(id => { if (!sel.has(id)) bad.push(`${id} shows ticked but isn't picked`); });
@@ -278,6 +278,53 @@ const log = (suite, trip, ok, what) => { results.push({ suite, trip, ok, what })
     log('Famous sights', 'famous', !bad.length, bad.length ? 'Big stop on the screens: ' + bad.join('; ') : 'Big stop on the screens: Day plan lists the parts, each part tickable, the tour plays one part at a time');
     log('Famous sights', 'famous', !errs.length, errs.length ? 'page errors: ' + [...new Set(errs)].join(' | ') : 'no page errors');
     await b3.close(); }
+  // Sights coverage: with real snapshots of each city's sources (tools/fixtures/src-*.json, no network, no AI), every
+  // big city offers at least 30 worthwhile sights (smaller ones most of what their sources know), nothing twice, every added
+  // sight carries its sources, a gateway port is planned for the city it serves, look-alike names are told apart, and
+  // a benchmark list (what a free chatbot names for the city) is mostly covered. On a port day, far sights stay
+  // visible but can't be picked when they don't fit the ship time.
+  { const b5 = await chromium.launch(); const p = await (await b5.newContext({ viewport: { width: 1280, height: 800 } })).newPage(); const errs = [];
+    p.on('pageerror', e => errs.push(e.message)); await p.route('**/*', r => /^file:/.test(r.request().url()) ? r.continue() : r.abort());
+    await p.goto('file://' + FILE); await p.evaluate(() => localStorage.setItem('kairoute.intro1', '1')); await p.reload(); await p.waitForTimeout(500);
+    const bench = JSON.parse(fs.readFileSync(path.join(__dirname, 'fixtures', 'coverage-bench.json'), 'utf8'));
+    const files = fs.readdirSync(path.join(__dirname, 'fixtures')).filter(f => /^src-.*\.json$/.test(f)).sort();
+    if (!files.length) log('Sights coverage', 'coverage', false, 'no source snapshots in tools/fixtures');
+    for (const f of files) {
+      const fix = JSON.parse(fs.readFileSync(path.join(__dirname, 'fixtures', f), 'utf8')), key = f.replace(/^src-|\.json$/g, ''), bl = (bench[key] || {});
+      const r = await p.evaluate(x => window.__kairouteSrcCheck(x), Object.assign({ bench: bl.names || [], cityKey: bl.cityKey }, fix));
+      const tot = r.after.main + r.after.quick, hits = r.bench.filter(x => x.hit).length;
+      log('Sights coverage', key, r.after.main >= r.min, `${fix.destination}: ${r.before.main} written sights before, ${r.after.main} sights + ${r.after.quick} quick stops + ${r.after.far} day trips now (needs at least ${r.min} sights for a city its size)`);
+      log('Sights coverage', key, !r.dup.length, r.dup.length ? 'same place twice: ' + r.dup.slice(0, 5).join('; ') : 'no place listed twice');
+      log('Sights coverage', key, !r.noSrc.length, r.noSrc.length ? 'added without sources: ' + r.noSrc.join(', ') : 'every added sight names its sources');
+      if (bl.area) log('Sights coverage', key, new RegExp(bl.area, 'i').test(r.label) || new RegExp(bl.area, 'i').test(fix.sources.area), `sources asked for "${r.label}" (area ${fix.sources.area}); the day is spent in ${bl.area}`);
+      if (r.bench.length) log('Sights coverage', key, hits >= Math.ceil(r.bench.length * (bl.share || 0.5)), `benchmark: ${hits} of ${r.bench.length} places a free chatbot names are on the list${r.bench.filter(x => !x.hit).length ? ' (not yet: ' + r.bench.filter(x => !x.hit).map(x => x.n).join(', ') + ')' : ''}`);
+      for (const [a, b] of bl.twins || []) { const t = r.twins.find(x => new RegExp(a, 'i').test(x.s)); log('Sights coverage', key, !!(t && new RegExp(b, 'i').test(t.note)), t ? `${t.s}: "${t.note}"` : `${a}: no note telling it apart from ${b}`); }
+    }
+    // Port day: Rome from the ship. Far sights are listed but greyed out (no tick box) when they don't fit.
+    const rome = files.find(f => /rome/.test(f));
+    if (rome) {
+      const fix = JSON.parse(fs.readFileSync(path.join(__dirname, 'fixtures', rome), 'utf8'));
+      await p.getByText('Continue trip').click().catch(() => {}); await p.waitForTimeout(300);
+      const days = await p.evaluate(() => window.__kairouteDays()); const D = days.find(x => /civitavecchia|rome/i.test(x.dest || ''));
+      if (!D) log('Sights coverage', 'rome-port', false, 'the example trip has no Rome port day');
+      else {
+        await p.evaluate(([fam, src]) => { window.__kairouteSeedSources('Rome (from Civitavecchia)', fam, src); window.__kairouteSeedSources('Civitavecchia (Rome)', fam, src); }, [fix.famous, fix.sources]);
+        // The day itself stays a few top sights with the long ride both ways counted (not every sight on the list).
+        await p.evaluate(i => window.__kairouteAt(i, 'plan'), D.i); await p.waitForTimeout(400);
+        const pl = await p.evaluate(() => ({ rides: [...document.querySelectorAll('.tl')].map(e => e.innerText.replace(/\s+/g, ' ')).filter(t => /^(Train|Taxi|Car|Ferry|Bus)[^·]*· /.test(t)), picks: document.querySelectorAll('.tl .nm').length, opt: [...document.querySelectorAll('.tl')].filter(e => /Optional:/.test(e.innerText)).length }));
+        const mins = t => { const h = /(\d+) h/.exec(t), m = /(\d+) min/.exec(t); return (h ? +h[1] * 60 : 0) + (m ? +m[1] : 0); };
+        const first = pl.rides[0] || '', last = pl.rides[pl.rides.length - 1] || '';
+        log('Sights coverage', 'rome-port', mins(first) >= 60 && mins(last) >= 60, `Rome port day counts the ride from the ship (${first.slice(0, 40)}) and back (${last.slice(0, 40)})`);
+        log('Sights coverage', 'rome-port', pl.opt <= 2, `Rome port day adds ${pl.opt} optional stops on its own (at most 2: a longer list is for browsing, not for packing the day)`);
+        await p.evaluate(i => window.__kairouteAt(i, 'sites'), D.i); await p.waitForTimeout(400);
+        const v = await p.evaluate(() => ({ cards: document.querySelectorAll('.sitesmain [data-card]').length, nofit: [...document.querySelectorAll('.sitesmain .nofitcard .name')].map(e => e.innerText), boxes: document.querySelectorAll('.sitesmain input[data-site]').length, twin: [...document.querySelectorAll('.sitesmain .travelnote')].map(e => e.innerText).filter(t => /Not the same place/.test(t)) }));
+        log('Sights coverage', 'rome-port', v.cards >= 30, `Rome port day, Change stops: ${v.cards} sights listed (${v.boxes} can be ticked, ${v.nofit.length} shown greyed out as not fitting the ship time)`);
+        log('Sights coverage', 'rome-port', v.twin.some(t => /Peter|Paul/.test(t)), `look-alike basilicas told apart on screen: ${v.twin.slice(0, 2).join(' / ') || 'no note shown'}`);
+        await p.screenshot({ path: path.join(OUT, 'rome-port-sights.jpg'), type: 'jpeg', quality: 60 }); shots.push({ f: 'rome-port-sights.jpg', cap: 'Rome port day: the full sights list, far ones greyed out' });
+      }
+    }
+    log('Sights coverage', 'coverage', !errs.length, errs.length ? 'page errors: ' + [...new Set(errs)].join(' | ') : 'no page errors');
+    await b5.close(); }
   // Real transport for rides (a stand-in /transit answer for Naples, shaped like the helper's): the plan names the
   // ferry and the train, each ride can be switched to a taxi and the plan follows, the map draws the line's path,
   // the ride back to the ship says what to do if you miss it, and the ship checks still pass.

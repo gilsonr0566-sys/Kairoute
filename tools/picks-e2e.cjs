@@ -21,7 +21,7 @@ const mins = t => { let m = 0; const h = /(\d+)\s*h/.exec(t), n = /(\d+)\s*min/.
   const go = async sel => { await p.evaluate(s => { const el = [...document.querySelectorAll(s)].find(e => e.offsetParent); if (el) el.click(); return !!el; }, sel); await p.waitForTimeout(250); };
   const toDay = async i => { await p.evaluate(i => document.querySelector(`.daychip[data-day="${i}"]`).click(), i); await p.waitForTimeout(250); };
   const toSites = async () => { await go('[data-goto="sites"]'); return p.evaluate(() => !!document.querySelector('input[data-site]')); };
-  const meter = () => p.evaluate(() => { const m = document.querySelector('.meter'); if (!m) return null; return { head: m.querySelector('.mrow b').innerText, parts: (m.querySelector('.mparts') || {}).innerText || '', text: m.innerText }; });
+  const meter = () => p.evaluate(() => { const m = document.querySelector('.meter'); if (!m) return null; return { head: m.querySelector('.mrow b').innerText, parts: (m.querySelector('.mparts:not(.mextra)') || {}).innerText || '', text: m.innerText }; });
   const checked = () => p.evaluate(() => [...document.querySelectorAll('input[data-site]:checked')].map(x => x.dataset.site).sort());
   const planView = () => p.evaluate(() => ({
     stops: [...document.querySelectorAll('.tl')].filter(e => e.querySelector('[data-open]') && !/On the way:/.test(e.innerText)).map(e => ({ name: e.querySelector('.nm').innerText, bonus: !!e.querySelector('.bonus') })),
@@ -30,7 +30,9 @@ const mins = t => { let m = 0; const h = /(\d+)\s*h/.exec(t), n = /(\d+)\s*min/.
     await toDay(i);
     if (!(await toSites())) continue; // a sea day has nothing to pick
     tested++;
-    // 1. Untick everything
+    // 1. Untick everything. A day that started with nothing ticked (every sight here is planned on another day) still
+    // gets optional stops to fill it; only a day the traveler cleared themselves stays empty.
+    const had = (await checked()).length;
     await p.evaluate(() => { for (;;) { const el = document.querySelector('input[data-site]:checked'); if (!el) break; el.click(); } });
     await p.waitForTimeout(250);
     if ((await checked()).length) bad(i, 'some picks would not untick');
@@ -39,7 +41,7 @@ const mins = t => { let m = 0; const h = /(\d+)\s*h/.exec(t), n = /(\d+)\s*min/.
     else if (/Visits|Lunch|Dinner|Walking/.test(m0.parts)) bad(i, 'meter counts things on a cleared day: ' + m0.parts);
     await go('[data-act="toplan"]');
     await shot(i, 'all-unticked'); const pv0 = await planView();
-    if (pv0.stops.length) bad(i, 'plan still shows stops after unticking everything: ' + pv0.stops.map(x => x.name).join(', '));
+    if (had && pv0.stops.length || !had && pv0.stops.some(x => !x.bonus)) bad(i, 'plan still shows stops after unticking everything: ' + pv0.stops.map(x => x.name).join(', '));
     // 2. Reload: still nothing picked
     await p.reload(); await p.waitForTimeout(500);
     if (await p.getByText('Continue trip').isVisible().catch(() => false)) await p.getByText('Continue trip').click();

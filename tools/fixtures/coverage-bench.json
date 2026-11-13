@@ -1,0 +1,123 @@
+{
+ "_note": "Test benchmarks only (never copied into a guide): places a free chatbot names for the city. The check needs a share of them on the list. Districts and far day trips aren't counted.",
+ "civitavecchia-rome": {
+  "cityKey": "civitavecchia rome",
+  "area": "Rome",
+  "share": 0.5,
+  "names": [
+   "Domus Aurea",
+   "Palazzo Massimo",
+   "Baths of Diocletian",
+   "San Luigi dei Francesi",
+   "Orange Garden",
+   "Aventine Keyhole",
+   "Janiculum",
+   "Villa Borghese",
+   "Pincio",
+   "Appian Way",
+   "Catacombs of Priscilla",
+   "Vatican Museums",
+   "Castel Sant'Angelo",
+   "Spanish Steps",
+   "Capitoline Museums",
+   "Santa Maria Maggiore",
+   "St. John Lateran",
+   "Galleria Borghese",
+   "Roman Forum",
+   "Palatine Hill"
+  ],
+  "twins": [
+   [
+    "Saint Paul Outside",
+    "St Peter|St\\. Peter|Peter's"
+   ]
+  ]
+ },
+ "athens": {
+  "cityKey": "athens",
+  "area": "Athens",
+  "share": 0.7,
+  "names": [
+   "Acropolis",
+   "Parthenon",
+   "Acropolis Museum",
+   "Ancient Agora",
+   "Temple of Olympian Zeus",
+   "National Archaeological Museum",
+   "Panathenaic Stadium",
+   "Plaka",
+   "Syntagma",
+   "Lycabettus",
+   "Roman Agora",
+   "Kerameikos",
+   "Hadrian's Arch",
+   "Benaki Museum",
+   "Odeon of Herodes Atticus"
+  ]
+ },
+ "barcelona": {
+  "cityKey": "barcelona",
+  "area": "Barcelona",
+  "share": 0.7,
+  "names": [
+   "Sagrada Família",
+   "Park Güell",
+   "Casa Batlló",
+   "Casa Milà",
+   "Barcelona Cathedral",
+   "Picasso Museum",
+   "Palau de la Música Catalana",
+   "Montjuïc",
+   "Santa Maria del Mar",
+   "La Boqueria",
+   "Camp Nou",
+   "Hospital de Sant Pau",
+   "Ciutadella Park",
+   "Magic Fountain",
+   "Palau Güell"
+  ]
+ },
+ "madrid": {
+  "cityKey": "madrid",
+  "area": "Madrid",
+  "share": 0.7,
+  "names": [
+   "Prado Museum",
+   "Royal Palace of Madrid",
+   "Retiro Park",
+   "Reina Sofía",
+   "Thyssen-Bornemisza",
+   "Plaza Mayor",
+   "Puerta del Sol",
+   "Almudena Cathedral",
+   "Temple of Debod",
+   "Gran Vía",
+   "San Miguel Market",
+   "Puerta de Alcalá",
+   "Cibeles",
+   "Descalzas Reales",
+   "Sorolla Museum"
+  ]
+ },
+ "paris": {
+  "area": "Paris",
+  "share": 0.7,
+  "names": [
+   "Eiffel Tower",
+   "Louvre",
+   "Notre-Dame",
+   "Musée d'Orsay",
+   "Arc de Triomphe",
+   "Sacré-Cœur",
+   "Sainte-Chapelle",
+   "Panthéon",
+   "Luxembourg Garden",
+   "Les Invalides",
+   "Musée Rodin",
+   "Centre Pompidou",
+   "Palais Garnier",
+   "Place de la Concorde",
+   "Tuileries"
+  ]
+ }
+}

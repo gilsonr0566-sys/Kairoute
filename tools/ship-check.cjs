@@ -30,6 +30,28 @@ const SIZES = [['tablet sideways', 1280, 800], ['tablet upright', 800, 1280], ['
         if (!/\d/.test(document.getElementById('cdBig').textContent)) return 'no time shown'; return ''; });
       if (r) fail(`${name}, day ${D.i + 1} (${D.dest}): ${r}`); else ok++;
     }
+    // Exactly one leave-by time per day (Richard, Nov 13: the same day showed 15:57, then 18:16 once pinned). The
+    // value must be the same on every page that shows the day, once pinned after scrolling, after a re-render, and
+    // whether or not optional stops fill the spare time. The pinned header also names the day and place.
+    for (const D of fixedDays) {
+      const seen = [];
+      const read = async (how) => seen.push([how, await p.evaluate(() => (document.getElementById('cdBig') || {}).textContent || 'none')]);
+      for (const v of ['plan', 'sites', 'guide']) { await p.evaluate(([v, i]) => window.__kairouteGo(v, i), [v, D.i]); await p.waitForTimeout(80); await read(v + ' page'); }
+      await p.evaluate(i => window.__kairouteGo('plan', i), D.i); await p.waitForTimeout(80);
+      await p.evaluate(() => { window.scrollTo(0, 3000); document.querySelectorAll('.pane').forEach(x => { x.scrollTop = 3000; }); document.dispatchEvent(new Event('scroll')); }); await p.waitForTimeout(150);
+      await read('after scrolling');
+      const pin = await p.evaluate(() => { const c = document.getElementById('cdCard'); if (!c || !c.classList.contains('pinned')) return null; const t = c.querySelector('.cdday'); return t && getComputedStyle(t).display !== 'none' ? t.textContent : ''; });
+      if (pin === '') fail(`${name}, day ${D.i + 1} (${D.dest}): the pinned countdown doesn't name the day`);
+      else if (pin != null && !pin.includes(D.dest.split(/[ ,(]/)[0]) && !/sea/i.test(pin)) fail(`${name}, day ${D.i + 1}: pinned header says "${pin}", not ${D.dest}`);
+      await p.evaluate(() => window.__kairouteLiveTest.render()); await p.waitForTimeout(100); await read('after a re-render');
+      for (const fill of [false, true]) { await p.evaluate(([i, f]) => { window.__kairouteDay(i, null, { fillTime: f }); window.__kairouteGo('plan', i); }, [D.i, fill]); await p.waitForTimeout(80); await read(fill ? 'optional stops on' : 'optional stops off'); }
+      // Bags at the hotel before the ship, train or flight: the countdown leaves time to collect them and get there.
+      const bag = await p.evaluate(i => { const o = window.__kairouteDay(i), k = o.items.findIndex(x => / fixed: Collect/.test(x)); if (k < 0) return null;
+        const m = /~ .* (\d+) min/.exec(o.items[k + 1] || ''), a = window.__kairouteLiveTest.alarm(i); return { need: 15 + (m ? +m[1] : 0), leaveBy: a.leaveBy, backBy: a.backBy }; }, D.i);
+      if (bag && bag.leaveBy + bag.need > bag.backBy) fail(`${name}, day ${D.i + 1} (${D.dest}): leave-by ${bag.leaveBy} leaves no time to collect bags and travel on (${bag.need} min) before ${bag.backBy}`);
+      const vals = [...new Set(seen.map(x => x[1]))];
+      if (vals.length !== 1) fail(`${name}, day ${D.i + 1} (${D.dest}): leave-by differs: ${seen.map(x => x[0] + ' ' + x[1]).join(', ')}`);
+    }
     // Scroll the timeline (or the page, on phones), then re-render: nothing may move, and the countdown stays visible.
     const D = fixedDays.find(d => d.type === 'port');
     await p.evaluate(i => window.__kairouteGo('plan', i), D.i); await p.waitForTimeout(150);

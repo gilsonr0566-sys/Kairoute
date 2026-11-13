@@ -163,7 +163,7 @@ const CITY_ROME = {
   },
   sites: [
     { id: "vatican", name: "St Peter's Basilica", lat: 41.9022, lng: 12.4539, minutes: 90, kind: "touristy", mustSee: true, category: "Basilica",
-      summary: "The church built over the tomb of the Apostle Peter.",
+      summary: "The church built over the tomb of the Apostle Peter, in Vatican City.",
       guide: "Christian tradition holds that the Apostle Peter was crucified in Nero's circus here around AD 64 and buried on this hill. Jesus had told him, 'You are Peter, and on this rock I will build my church' (Matthew 16:18), and those words run around the inside of the dome in giant letters. The present basilica was built between 1506 and 1626 by the greatest artists of the age: Bramante, Michelangelo, who designed the dome, and Bernini, who made the bronze canopy over the altar and the great colonnade outside, like two arms embracing the world. Just inside on the right is Michelangelo's Pietà, carved when he was only 24, the only work he ever signed.",
       lookFor: ["Michelangelo's Pietà, behind glass on the right as you enter.", "The words of Matthew 16:18 in Latin around the dome.", "The bronze statue of Peter, its foot worn smooth by pilgrims' hands."],
       photoTip: "From the obelisk in the square, frame the façade between Bernini's columns.",
@@ -198,7 +198,7 @@ const CITY_ROME = {
   farther: [
     { id: "stpaulwalls", name: "Basilica of Saint Paul Outside the Walls", lat: 41.8587, lng: 12.4768, minutes: 50, kind: "local", far: true, category: "Bible site",
       travel: "About 20 minutes by metro line B from the Colosseum.",
-      summary: "The great basilica over the tomb of the Apostle Paul: a different church from St Peter's, about 6 km south (\"Outside the Walls\" means beyond Rome's ancient city walls).",
+      summary: "Rome's other great basilica, over the tomb of the Apostle Paul, in the south of the city: a separate visit, about 5 km from St Peter's.",
       guide: "Tradition holds that Paul was beheaded near Rome around AD 67 and buried here, on the road to Ostia. The emperor Constantine built the first church over his grave. Below the main altar you can see the marble slab inscribed 'Paulo Apostolo Mart', 'to Paul, apostle, martyr', and the chain that tradition says bound him. Around the nave runs a row of mosaic portraits of every pope, from Peter to today.",
       lookFor: ["The tomb of Saint Paul under the altar.", "The chain of Paul displayed by the tomb.", "The mosaic portraits of every pope."], photoTip: "From the courtyard with Paul's statue holding his sword.",
       hours: "7:00–18:30", tickets: "Free.", cost: 0, indoor: true, access: "Step-free.",
