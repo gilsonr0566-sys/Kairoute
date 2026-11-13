@@ -471,14 +471,14 @@ main:has(#view.full) { padding: 0; }
 .daysum { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); background: var(--card); border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
 .daysum > div { padding: 10px 12px; border-left: 1px solid var(--line); min-width: 0; }
 .daysum > div:first-child { border-left: 0; }
-.daysum.n4 { grid-template-columns: repeat(4, minmax(0, 1fr)) auto; }
-.daysum.n3 { grid-template-columns: repeat(3, minmax(0, 1fr)) auto; }
-.daysum.n2 { grid-template-columns: repeat(2, minmax(0, 1fr)) auto; }
+.daysum.n4 { grid-template-columns: max-content repeat(3, minmax(0, 1fr)) auto; }
+.daysum.n3 { grid-template-columns: max-content repeat(2, minmax(0, 1fr)) auto; }
+.daysum.n2 { grid-template-columns: max-content repeat(1, minmax(0, 1fr)) auto; }
 /* Change stops and More sit at the end of the summary row, so they need no row of their own (Richard, Nov 13). */
 .daysum > .daytools { display: flex; align-items: center; padding: 6px 10px; }
 .daysum > .daytools .toolrow { flex-wrap: nowrap; gap: 6px; }
 .daysum > .daytools .toolrow > * { flex: none; white-space: nowrap; }
-@media (max-width: 520px) { .daysum > .daytools { grid-column: 1 / -1; border-left: 0; border-top: 1px solid var(--line); } }
+@media (max-width: 520px) { .daysum > .daytools { grid-column: 1 / -1; border-left: 0 !important; border-top: 1px solid var(--line) !important; } }
 .daysum b { display: block; font-family: var(--font-display); font-size: 1.15rem; font-variant-numeric: tabular-nums; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .daysum span { display: block; color: var(--muted); font-size: 0.78rem; line-height: 1.25; }
 @media (max-width: 520px) { .daysum { grid-template-columns: repeat(2, minmax(0, 1fr)); } .daysum > div:nth-child(3) { border-left: 0; } .daysum > div:nth-child(n+3) { border-top: 1px solid var(--line); } }
@@ -829,9 +829,9 @@ html, body { overflow-x: hidden; }
   .card { padding: 14px; gap: 12px; }
   .banner { font-size: .88rem; padding: 10px 12px; flex-wrap: wrap; }
   .daysum { grid-template-columns: repeat(4, minmax(0, 1fr)) !important; }
-  .daysum.n4 { grid-template-columns: repeat(4, minmax(0, 1fr)) auto !important; }
-  .daysum.n3 { grid-template-columns: repeat(3, minmax(0, 1fr)) auto !important; }
-  .daysum.n2 { grid-template-columns: repeat(2, minmax(0, 1fr)) auto !important; }
+  .daysum.n4 { grid-template-columns: max-content repeat(3, minmax(0, 1fr)) auto !important; }
+  .daysum.n3 { grid-template-columns: max-content repeat(2, minmax(0, 1fr)) auto !important; }
+  .daysum.n2 { grid-template-columns: max-content repeat(1, minmax(0, 1fr)) auto !important; }
   .daysum > div { border-top: 0 !important; padding: 8px 6px !important; }
   .daysum > div:nth-child(n+2) { border-left: 1px solid var(--line) !important; }
   .daysum b { font-size: .92rem !important; white-space: normal !important; overflow-wrap: anywhere; line-height: 1.2; }
