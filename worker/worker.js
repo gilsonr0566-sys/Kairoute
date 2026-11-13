@@ -590,7 +590,7 @@ Written text:
     if (url.pathname === "/identify" && req.method === "POST") {
       if (origin && !ALLOWED.some(r => r.test(origin))) return Response.json({ error: "Not allowed" }, { status: 403, headers: h });
       let b; try { b = await req.json(); } catch (e) { return Response.json({ error: "Bad request" }, { status: 400, headers: h }); }
-      const img = typeof b.image === "string" && /^data:image\/(jpeg|png|webp);base64,/.test(b.image) && b.image.length < 400000 ? b.image : null;
+      const img = typeof b.image === "string" && /^data:image\/(jpeg|png|webp);base64,(\/9j\/|iVBOR|UklGR)/.test(b.image) && b.image.length < 400000 ? b.image : null;
       const cands = (Array.isArray(b.cands) ? b.cands : []).slice(0, 25).map((c, i) => ({ n: i + 1, name: String((c && c.name) || "").slice(0, 90), kind: String((c && c.kind) || "").slice(0, 40), m: Math.round(+(c && c.m) || 0) })).filter(c => c.name);
       const dev = String(b.dev || ""); if (!img || !cands.length || !/^[a-f0-9]{16,40}$/.test(dev)) return Response.json({ error: "Bad request" }, { status: 400, headers: h });
       const ik = "id:" + dev + ":" + today(), n = +(await env.USAGE.get(ik)) || 0;
