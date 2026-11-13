@@ -21,6 +21,7 @@ const numV = v => (typeof v === "number" && isFinite(v) ? v : parseFloat(v));
 const { parseJSON } = eval(grab("function parseJSON", "const numV") + "; ({ parseJSON })");
 const fn = name => { const i = src.indexOf("\nfunction " + name + "(") + 1; return src.slice(i, src.indexOf("\n}\n", i) + 2); };
 eval(grab("const LANG_WORDS", "function textLang").replace("const LANG_WORDS", "globalThis.LANG_WORDS") + fn("textLang") + fn("guideInLang") + "globalThis.textLang = textLang; globalThis.guideInLang = guideInLang;");
+eval(grab("const nameStr", "async function cityInParts").replace("const nameStr", "globalThis.nameStr") + grab("function famousMustBar", "let cityArea") + "globalThis.pickPlaces = pickPlaces; globalThis.trimPlaces = trimPlaces; globalThis.famousMustBar = famousMustBar;");
 const cityInParts = eval("(" + grab("async function cityInParts", "// Finished guides are kept") + ")");
 const base = JSON.parse(fs.readFileSync("tools/ai-test-lisbon.json", "utf8")).prompt;
 const status = async () => (await (await fetch(URL_ + "/status")).json());

@@ -134,6 +134,54 @@ const log = (suite, trip, ok, what) => { results.push({ suite, trip, ok, what })
     }
     log('New trip', 'new-trips', !errs.length, errs.length ? 'page errors: ' + [...new Set(errs)].join(' | ') : 'no page errors');
     await b2.close(); }
+  // Famous sights and big stops: with a snapshot of Prague's sources and stand-in AI answers, the top famous
+  // sights must survive every way a guide writer can lose them (left out, filed as a quick stop, called
+  // unvisitable, cut from a long list), saved guides must be repaired, and big stops must split into real parts.
+  { const b3 = await chromium.launch(); const ctx = await b3.newContext({ viewport: { width: 1280, height: 800 } }); const p = await ctx.newPage(); const errs = [];
+    p.on('pageerror', e => errs.push(e.message)); await p.route('**/*', r => /^file:/.test(r.request().url()) ? r.continue() : r.abort());
+    await p.goto('file://' + FILE); await p.evaluate(() => localStorage.setItem('kairoute.intro1', '1')); await p.reload(); await p.waitForTimeout(500);
+    const fix = JSON.parse(fs.readFileSync(path.join(__dirname, 'fixtures', 'prague-sources.json'), 'utf8'));
+    const fr = await p.evaluate(f => window.__kairouteFameCheck(f), fix);
+    fr.forEach(r => log('Famous sights', 'famous', r.pass, `${r.name}: ${r.what}`));
+    // A big stop on the real screens and in the voice tour: listed part by part, each part tickable, and the tour
+    // plays one part at a time with Next part between them.
+    await p.getByText('Continue trip').click().catch(() => {}); await p.waitForTimeout(300);
+    const days = await p.evaluate(() => window.__kairouteDays()); const D = days.find(x => x.type === 'land' && x.city) || days.find(x => x.type !== 'sea' && x.city);
+    const bad = []; await p.evaluate(i => window.__kairouteTruth(i), D.i); const sp = await p.evaluate(i => window.__kairouteSplitStop(i, 3), D.i);
+    if (!sp) bad.push('no stop to split'); else {
+      await p.evaluate(i => window.__kairouteAt(i, 'plan'), D.i); await p.waitForTimeout(150);
+      const onPlan = await p.evaluate(nm => { const tl = [...document.querySelectorAll('.tl')].find(e => e.querySelector('.nm') && e.querySelector('.nm').innerText === nm); return tl ? tl.querySelectorAll('ol.parts li').length : -1; }, sp.name);
+      if (onPlan !== 3) bad.push(`Day plan lists ${onPlan} parts for ${sp.name}, it has 3`);
+      await p.evaluate(i => window.__kairouteAt(i, 'sites'), D.i); await p.waitForTimeout(150);
+      const ticks = await p.evaluate(id => document.querySelectorAll(`input[data-part^="${id}:"]`).length, sp.id);
+      if (ticks !== 3) bad.push(`Change stops shows ${ticks} part ticks, the stop has 3`);
+      await p.evaluate(id => document.querySelector(`input[data-part="${id}:2"]`).click(), sp.id); await p.waitForTimeout(150);
+      const stillPicked = await p.evaluate(id => document.querySelector(`input[data-site="${id}"]`).checked, sp.id);
+      if (!stillPicked) bad.push('unticking a part unticked the whole stop');
+      await p.evaluate(i => window.__kairouteAt(i, 'plan'), D.i); await p.waitForTimeout(150);
+      const after = await p.evaluate(nm => { const tl = [...document.querySelectorAll('.tl')].find(e => e.querySelector('.nm') && e.querySelector('.nm').innerText === nm); return tl ? tl.querySelectorAll('ol.parts li').length : -1; }, sp.name);
+      if (after !== 2) bad.push(`after unticking a part the Day plan lists ${after} parts, not 2`);
+      // Voice tour
+      await p.evaluate(i => window.__kairouteAt(i, 'tour'), D.i); await p.waitForTimeout(150);
+      const btn = async act => { await p.evaluate(a => { const el = [...document.querySelectorAll(`[data-act="${a}"]`)].find(e => e.offsetParent); if (el) el.click(); }, act); await p.waitForTimeout(200); };
+      let reached = false;
+      for (let k = 0; k < 8 && !reached; k++) {
+        const st = await p.evaluate(() => ({ title: (document.querySelector('.tourtitle') || {}).innerText || '', here: !!document.querySelector('[data-act="tourhere"]') }));
+        if (st.here) { await btn('tourhere'); reached = st.title === sp.name; } else await btn('tournext');
+      }
+      if (!reached) bad.push('the tour never reached the split stop');
+      const seen = [];
+      for (let k = 0; k < 3; k++) {
+        const v = await p.evaluate(() => ({ meta: (document.querySelector('.tourcard .stopmeta') || {}).innerText || '', play: [...document.querySelectorAll('.tourcard [data-play^="part:"]')].length, next: !!document.querySelector('[data-act="tourpart"]') }));
+        seen.push(v.meta); if (v.play !== 1) bad.push(`tour part ${k + 1} has ${v.play} play buttons, not 1`);
+        if (!v.next) break; await btn('tourpart');
+      }
+      if (seen.length !== 2 || !/Part 1 of 2/.test(seen[0]) || !/Part 2 of 2/.test(seen[1])) bad.push('tour parts: ' + seen.join(' | '));
+      await p.screenshot({ path: path.join(OUT, 'big-stop-tour.jpg'), type: 'jpeg', quality: 60 }); shots.push({ f: 'big-stop-tour.jpg', cap: 'Voice tour: a big stop, one part at a time' });
+    }
+    log('Famous sights', 'famous', !bad.length, bad.length ? 'Big stop on the screens: ' + bad.join('; ') : 'Big stop on the screens: Day plan lists the parts, each part tickable, the tour plays one part at a time');
+    log('Famous sights', 'famous', !errs.length, errs.length ? 'page errors: ' + [...new Set(errs)].join(' | ') : 'no page errors');
+    await b3.close(); }
   // Real-screen walkthroughs at three sizes
   for (const [nm, w, h] of [['tablet landscape', 1280, 800], ['tablet upright', 800, 1280], ['phone', 412, 900]]) {
     const r = spawnSync('node', [path.join(__dirname, 'picks-e2e.cjs'), FILE, String(w), String(h), path.join(OUT, 'walk-' + w)], { encoding: 'utf8', timeout: 15 * 60 * 1000 });
@@ -154,7 +202,7 @@ details{background:var(--card);border:1px solid var(--line);border-radius:12px;m
 <body><main><h1>Kairoute checks</h1><p class="sub">Run ${esc(when)}. These run automatically before every update; if anything fails, the update is held back.</p>
 <div class="big">${fails ? `${fails} problem${fails > 1 ? 's' : ''} found: this update was held back` : `All ${passed} checks passed`}</div>
 <p>What's checked: on every day of ${TRIPS.length} sample trips, the Day plan, map, Change stops, time bar and Guide must agree with the planner (same stops, same counts, times that add up, no sight on two days, no optional stop shown as a pick, labels that follow the sources). Every stop must be a real guide sight, every restaurant must come from the map data, and meals must be near the route. Then a script taps through the real screens on tablet and phone: untick everything, reload, tick, change the day length, Suggest my tour, and sync between two devices.</p>
-${groups.map(g => { const [suite, trip] = g.split('|'), rs = results.filter(r => r.suite === suite && r.trip === trip), nb = rs.filter(r => !r.ok).length, T = TRIPS.find(x => x.key === trip) || (trip === 'new-trips' ? { label: 'Planning a new trip from a description (several cities)' } : null);
+${groups.map(g => { const [suite, trip] = g.split('|'), rs = results.filter(r => r.suite === suite && r.trip === trip), nb = rs.filter(r => !r.ok).length, T = TRIPS.find(x => x.key === trip) || (trip === 'famous' ? { label: 'Top famous sights and big stops (Prague snapshot)' } : trip === 'new-trips' ? { label: 'Planning a new trip from a description (several cities)' } : null);
   return `<details ${nb ? 'open' : ''}><summary>${esc(suite)}: ${esc(T ? T.label : trip)} <span class="${nb ? 'bad' : 'ok'}">${nb ? nb + ' failed' : 'all passed'}</span></summary><ul>${rs.map(r => `<li class="${r.ok ? 'ok' : 'bad'}">${r.ok ? '✓' : '✗'} ${esc(r.what)}</li>`).join('')}</ul></details>`; }).join('')}
 <h2>Screenshots from this run</h2><div class="shots">${shots.map(s => `<figure><a href="${esc(s.f)}"><img loading="lazy" src="${esc(s.f)}" alt=""></a><figcaption>${esc(s.cap)}</figcaption></figure>`).join('')}</div></main></body></html>`;
   fs.writeFileSync(path.join(OUT, 'index.html'), html);
