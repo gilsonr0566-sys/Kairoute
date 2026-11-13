@@ -49,6 +49,11 @@ it applies, and the main action on the right. They have no day strip, because th
 - A slim navigation bar with Home, Trip, Day plan, Guide, Journal and Settings: on the **left** in landscape
   (tablets, computers and phones held sideways), at the **bottom** in portrait (tablets and phones).
 - It sits in exactly the same place, at the same size, on every page (`tools/nav-check.cjs`).
+- Labels in slim bars, chips and buttons never wrap or get cut off (`white-space: nowrap`, sized for the widest
+  label). Leave room for the real web fonts (Atkinson Hyperlegible, Outfit), which are wider than the fallback
+  fonts test machines use. The layout checks swap in a wide stand-in font (`tools/wide-font.cjs`) so a label
+  that would wrap on a real device fails locally too. (A phone held sideways once wrapped "Day plan" in the
+  68 px bar, and only the live publish caught it.)
 - The tour is a focused mode: the bar steps aside and **Exit tour** brings it back.
 
 ## 7. Same look everywhere
