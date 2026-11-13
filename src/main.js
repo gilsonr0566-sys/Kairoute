@@ -132,7 +132,23 @@ const INTEREST_WORDS = { history: ["history", "roman", "medieval", "ancient", "w
 const RELIGIOUS_RE = /\b(church|cathedral|basilica|monaster|chapel|shrine|mosque|synagogue|abbey|convent|sanctuary|pilgrim|religious|holy|parish|agios|agia|panagia|san |santa |saint|st\.? )/i;
 const isReligious = x => !!x && RELIGIOUS_RE.test((x.category || "") + " " + (x.name || "")) && !/ancient|ruin|archaeolog/i.test((x.category || "") + " " + (x.name || ""));
 const skipReligious = () => P().religious === "off";
-const religiousOk = x => !skipReligious() || !isReligious(x) || x.mustSee;
+// The "Churches & faith" interest: off once the traveler turns it off (noChurches), or when they chose
+// interests and it isn't one of them. Then churches leave the app's own picks and the day's fill too; a famous
+// must-see stays, and with "Bible sites" on, a church with a real Bible connection stays.
+const churchesOff = () => { const p = P(), i = p.interests || []; return !i.includes("churches") && (!!p.noChurches || i.length > 0); };
+const religiousOk = x => !isReligious(x) || x.mustSee || (!skipReligious() && (!churchesOff() || ((P().interests || []).includes("bible") && bibleSite(x))));
+// After an interest or the religious-sites setting changes: every day drops the app's picks that no longer
+// suit (never the traveler's own), and the day is planned again (its fill takes sights that do suit).
+function dropUnwanted() {
+  let n = 0;
+  trip.days.forEach(d => { const c = cityFor(d); if (!c || !Array.isArray(d.selected) || !d.selected.length) return;
+    const mine = new Set(d.mine || []), by = new Map(allSites(c).map(x => [x.id, x]));
+    const keep = d.selected.filter(id => { const x = by.get(id); return !x || mine.has(id) || religiousOk(x); });
+    if (keep.length < d.selected.length) { n += d.selected.length - keep.length; d.selected = keep; if (d.anchor && !keep.includes(d.anchor)) d.anchor = null; } });
+  bonusMemo = new Map(); mealMemo = new Map(); keptMemo = new Map(); eveMemo = new Map();
+  return n;
+}
+const prefsSig = () => { const p = P(); return [(p.interests || []).slice().sort().join(","), p.noChurches ? 1 : 0, p.religious || ""].join("|"); };
 // Quiet places (churches, monasteries, museums...): text first, and audio only once the traveler confirms
 // earbuds (a web page can't reliably tell if earbuds are connected). Settings > Quiet places: Automatic, Always, Off.
 const isQuietPlace = x => !!x && (isReligious(x) || /museum|gallery|library|crypt|catacomb|tomb|memorial|cemetery/i.test((x.category || "") + " " + (x.name || "")));
@@ -477,8 +493,22 @@ function placeLabel(d) { return d.type === "sea" ? "At sea" : d.type === "port" 
 // ("Naples", "Rome") and the start point names the terminal. Without a guide yet the words stay as typed (they
 // say which guide to build) and every screen shows the plain name (mainPlace).
 function tidyDests(t) {
-  let n = 0;
-  try { if (typeof ensureBuiltins === "function") ensureBuiltins(); (t && t.days || []).forEach(d => { if (!d || d.type === "sea" || !/[()]/.test(d.destination || "")) return; const k = cityKeyFor(d); if (!k) return; d.cityKey = k; d.destination = mainPlace(d) || d.destination; n++; }); } catch (e) {}
+  let n = 0; const norm = x => String(x || "").toLowerCase().replace(/[^a-z0-9\u00c0-\u024f]+/g, " ").trim();
+  try { if (typeof ensureBuiltins === "function") ensureBuiltins(); try { for (const k in cities) { const c = cities[k]; if (c && c.ddV !== DEDUPE_V) { if (dedupeSites(c)) n++; c.ddV = DEDUPE_V; } } } catch (e) {} /* not yet set up while the app first loads: render does it */ (t && t.days || []).forEach(d => {
+    if (!d || d.type === "sea") return;
+    // A day name that is just the place as the itinerary wrote it ("Naples, Amalfi, Pompeii") was never typed by
+    // the traveler: it goes, so the day shows the plain destination. Names the traveler typed are kept.
+    if (d.title && !d.titleTyped && (norm(d.title) === norm(d.destination) || norm(d.title) === norm(d.destOrig))) { delete d.title; n++; }
+    // A pick of a sight that was folded into another (two names for one place, or a part of a bigger place) now
+    // points at the sight that stayed.
+    if (Array.isArray(d.selected) && d.selected.length && typeof cityFor === "function") { const c = cityFor(d); if (c) { const all = allSites(c), ids = new Set(all.map(x => x.id));
+      if (d.selected.some(id => !ids.has(id))) { const to = id => { if (ids.has(id)) return id; const h = all.find(x => (x.alias || []).includes(id)); return h ? h.id : id; };
+        const nx = [...new Set(d.selected.map(to))]; if (nx.join() !== d.selected.join()) { d.selected = nx; if (Array.isArray(d.mine)) d.mine = [...new Set(d.mine.map(to))]; if (d.anchor) d.anchor = to(d.anchor); n++; } } } }
+    // Lists of places ("Naples, Amalfi, Pompeii", "Naples (Capri, Sorrento)", "Rome & Vatican") become the guide's
+    // plain name once the day is tied to its guide; the words as written are kept in destOrig.
+    if (!/[(),&\/+]| and /i.test(d.destination || "")) return; const k = cityKeyFor(d); if (!k) return;
+    const plain = (() => { d.cityKey = k; return mainPlace(d); })(); if (!plain || norm(plain) === norm(d.destination)) return;
+    d.destOrig = d.destOrig || d.destination; d.destination = plain; n++; }); } catch (e) {}
   return n;
 }
 try { [trip, ...library.map(x => x.trip)].forEach(tidyDests); } catch (e) {}
@@ -559,7 +589,7 @@ const tmin = (a, b) => {
 // stop, a cautious wait, the ride and getting from the stop. The quickest public line is chosen unless a taxi is
 // much quicker; the traveler can switch any ride on the Day plan, and the plan, the return time and the ship
 // checks all follow the choice. While the lines are being looked up (or none are mapped) the estimate is used.
-const TRANSIT_KEY = "kairoute.transit1";
+const TRANSIT_KEY = "kairoute.transit2"; // transit2: answers kept from before ferries were found by their course are dropped
 const transitMem = (() => { try { return JSON.parse(localStorage.getItem(TRANSIT_KEY) || "{}"); } catch (e) { return {}; } })();
 const transitFail = new Map(), transitQ = new Map(); let transitTimer = 0, transitBusy = false;
 // Speed: asked hundreds of thousands of times while planning, so each place's half of the key is kept with it.
@@ -585,9 +615,11 @@ function transitNear(a, b, kind) {
 }
 function transitFor(a, b) {
   if (!a || !b || !isFinite(a.lat) || !isFinite(b.lat) || hav(a, b) < 4) return null;
-  const dow = planDow(), k = pairKey(a, b) + "|" + dayKind(dow), hit = transitMem[k] || transitMem[pairKey(a, b)] || transitNear(a, b, dayKind(dow)); if (hit) return hit.opts.filter(runsThen);
+  const dow = planDow(), k = pairKey(a, b) + "|" + dayKind(dow), hit = transitMem[k] || transitMem[pairKey(a, b)] || transitNear(a, b, dayKind(dow));
+  // An answer given while a source was busy (or an empty one) is used meanwhile and asked again after 10 minutes.
+  if (hit && !(hit.partial && Date.now() - hit.t > 600000)) return hit.opts.filter(runsThen);
   if (typeof freeAI !== "undefined" && freeAI && !transitQ.has(k) && !(transitFail.get(k) > Date.now() - 120000)) { transitQ.set(k, { a: [+a.lat, +a.lng], b: [+b.lat, +b.lng], dow, pri: typeof trip !== "undefined" && trip.days && trip.days[trip.active] && typeof planDate !== "undefined" && trip.days[trip.active].date === planDate }); clearTimeout(transitTimer); transitTimer = setTimeout(askTransit, 300); }
-  return null;
+  return hit ? hit.opts.filter(runsThen) : null;
 }
 // Up to 12 pairs a request and 3 requests at once (the helper looks the pairs of a request up side by side), the day
 // on screen first; the plan is redrawn as each answer arrives, not after the whole trip is done.
@@ -596,7 +628,7 @@ async function askTransit() {
   const one = async part => {
     let got = 0;
     try { const r = await fetch(freeAI.url + "/transit", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ pairs: part.map(x => ({ a: x[1].a, b: x[1].b, dow: x[1].dow })) }) }); if (!r.ok) throw new Error("transit " + r.status);
-      const j = await r.json(); part.forEach(([k], i) => { const res = (j.results || [])[i]; if (res && Array.isArray(res.opts)) { transitMem[k] = { opts: res.opts, t: Date.now() }; got++; } else transitFail.set(k, Date.now()); });
+      const j = await r.json(); part.forEach(([k], i) => { const res = (j.results || [])[i]; if (res && Array.isArray(res.opts)) { transitMem[k] = { opts: res.opts, t: Date.now(), partial: !!res.partial || !res.opts.length }; got++; } else transitFail.set(k, Date.now()); });
     } catch (e) { part.forEach(([k]) => transitFail.set(k, Date.now())); }
     if (got) transitShow();
   };
@@ -615,7 +647,7 @@ function transitShow() { if (typeof view !== "undefined" && ["plan", "trip", "si
 // A full storage drops older answers rather than failing.
 function transitKeep() {
   const ks = Object.keys(transitMem).sort((x, y) => transitMem[y].t - transitMem[x].t); ks.slice(150).forEach(k => delete transitMem[k]);
-  const slim = keep => { const o = {}; ks.slice(0, keep).forEach(k => { const m = transitMem[k]; if (m) o[k] = { t: m.t, opts: (m.opts || []).map(x => Object.assign({}, x, { path: thinPts(x.path || [], 60) })) }; }); return JSON.stringify(o); };
+  const slim = keep => { const o = {}; ks.slice(0, keep).forEach(k => { const m = transitMem[k]; if (m) o[k] = { t: m.t, partial: !!m.partial, opts: (m.opts || []).map(x => Object.assign({}, x, { path: thinPts(x.path || [], 60) })) }; }); return JSON.stringify(o); };
   for (const n of [150, 60, 20]) { try { localStorage.setItem(TRANSIT_KEY, slim(n)); return; } catch (e) {} }
 }
 const thinPts = (pts, n) => { if (pts.length <= n) return pts; const step = (pts.length - 1) / (n - 1); return Array.from({ length: n }, (_, i) => pts[Math.round(i * step)]); };
@@ -658,7 +690,11 @@ function rideDetail(leg, start, endBy) {
 }
 // The ride between a and b: the chosen (or best) real line, or the road estimate as a taxi.
 function rideLeg(a, b, road, lastMile) {
-  const opts = transitFor(a, b); if (!opts || !opts.length) return road;
+  let opts = transitFor(a, b); if (!opts || !opts.length) return road;
+  // Leaving the ship for the first ride you go when the boat or train goes: with no timetable, plan on half the gap
+  // between sailings plus boarding rather than a full gap (a full gap stays on every ride that must catch one later,
+  // and on the ride back to the ship).
+  if (a.leaveWhenReady && !lastMile) opts = opts.map(o => { if (!o.noTimetable) return o; const w2 = Math.min(o.wait, Math.round(o.every / 2) + 10); return w2 < o.wait ? Object.assign({}, o, { wait: w2, min: o.min - (o.wait - w2), timedStart: true }) : o; }).sort((x, y) => x.min - y.min);
   const taxi = Object.assign({}, road, { how: "Taxi or car", choice: "taxi" });
   const want = trip.legModes && trip.legModes[pairKey(a, b)], picked = want === "taxi" ? null : opts.find(o => rideId(o) === want);
   // Public lines win unless a taxi saves a lot (over 25 min and a third of the time): they're cheaper and run on time.
@@ -833,7 +869,7 @@ function dayWindow(d, city) {
   } else if (d.type === "port") {
     if (!P) return { error: "Choose where the ship docks." };
     w.start = shipToPort(d, d.portArrive) + (d.tender ? 60 : 30); w.endBy = shipToPort(d, d.allAboard) - 45; w.buffer = 45;
-    w.head = [P]; w.tail = [Object.assign({}, P, { backToShip: true })];
+    w.head = [Object.assign({}, P, { leaveWhenReady: true })]; w.tail = [Object.assign({}, P, { backToShip: true })];
     w.startLabel = (d.tender ? "Tender ashore to " : "Off the ship at ") + P.name; w.endLabel = "Back at the ship";
     w.notes.push(`Ship docks ${d.portArrive}${d.tender ? " (tender port, so we allow an hour to get ashore)" : ""}.`);
   }
@@ -1294,7 +1330,7 @@ function buildPlanFor(d) {
     const cands = order.filter(s => !s.mustSee);
     const pool = cands.length ? cands : order; // must-sees go last, but the day must still fit
     if (!pool.length) break;
-    let best = null, bestVal = -1;
+    let best = null, bestVal = -Infinity; // any value counts: a stop that adds no time (or a NaN guess) must still be choosable, or this loop never ends
     // Protect what the day is built around: a stop in the day's main area (several chosen stops within
     // 15 km of each other, like Ancient Corinth with the Canal and Acrocorinth) is worth far more than a lone
     // stop in another direction, so the lone far-off stops give way first.
@@ -1304,6 +1340,7 @@ function buildPlanFor(d) {
       const val = save / (Math.max(20, c.minutes) * (c.kind === style ? 1.4 : 1) * area * area * fameW(c) * fameW(c)); // per minute of sightseeing kept: big sights stay, out-of-the-way short ones go
       if (best === null || val > bestVal) { bestVal = val; best = c; } // a value that can't be worked out (NaN) still lets one go, so this loop always ends
     }
+    if (!best) break;
     dropped0.push(best);
     order = optimize(order.filter(x => x !== best), O, Z);
   }
@@ -2974,7 +3011,7 @@ if (typeof window !== "undefined") {
       invented: meals.filter(x => !x.place.booked && !x.place.generic && !eats.has(keyOf(x.place.name))).map(x => x.place.name),
       farMeals: meals.filter(x => x.type === "meal" && !x.place.booked).map(x => { const k = pts.indexOf(x), a = pts[k - 1], b = pts[k + 1]; return a && b ? { name: x.place.name, extra: Math.round(tmin(a.place, x.place) + tmin(x.place, b.place) - tmin(a.place, b.place)) } : null; }).filter(x => x && x.extra > 25),
       mustLocal: [...sites.values()].filter(x => x.mustSee && sightKind(x, city) === "local").map(x => x.name),
-      closedPicks: stops.filter(x => siteClosed(x.place, d.date)).map(x => x.place.name), closed: (pl.closedToday || []).map(x => x.id) };
+      closedPicks: stops.filter(x => siteClosed(x.place, d.date)).map(x => x.place.name), unwanted: stops.filter(x => !religiousOk(x.place) && !(d.mine || []).includes(x.place.id)).map(x => x.place.name), closed: (pl.closedToday || []).map(x => x.id) };
   };
 }
 // Safety-net hooks: famous sights and big stops, with a sources snapshot and stand-in AI answers, so they run
@@ -3238,13 +3275,86 @@ function updateAudioUI() {
 
 // Strictly the same place (used to keep a guide whole and avoid copies): same Wikidata id, same name, or names
 // that match both ways. A one-way match is too loose here (Areopagus would swallow "Dionysiou Areopagitou" promenade).
-function samePlace(a, b) { return !!(a && b && ((a.wd && b.wd && a.wd === b.wd) || keyOf(a.name) === keyOf(b.name) || (nameMatch(a.name, b.name) && nameMatch(b.name, a.name)))); }
+// One place, one sight. Guides written from different sources name the same place differently ("Oia" and "Oia
+// village", "Fira (Thira)" and "Fira caldera path", "Akrotiri" and "Akrotiri prehistoric town", a Greek and an
+// English name), and sometimes list a small part of a place as its own sight ("Megalochori Bell Tower" beside
+// "Megalochori"). samePlace() is the test; dedupeSites() applies it to a whole guide.
+const PLACE_SMALL = new Set("the of and a an de la el le du del di da des los las in at on st saint san santa sv sveti agios agia agioi hagia".split(" "));
+// Words that only describe the place itself (a village, its old town, its ruins): "Oia" and "Oia village" are one.
+const PLACE_DESC = new Set("village town city old historic historical centre center prehistoric ancient archaeological site ruins remains settlement area district quarter neighborhood neighbourhood caldera path walk trail island isle".split(" "));
+// Small features that belong to a bigger place rather than being sights of their own.
+const PLACE_PART = new Set("bell tower belfry campanile clock beach boardwalk promenade square piazza plaza fountain statue viewpoint view lookout gate bridge steps stairs staircase lanes lane street streets alley harbour harbor marina pier".split(" "));
+// Words naming a different kind of place: "Acropolis" and "Acropolis Museum" are two sights.
+const PLACE_KIND = [["fountain", /\b(fountain|fontana|fuente|font)\b/i], ["worship", RELIGIOUS_RE], ["museum", /\b(museum|museo|musee|gallery|galleria)\b/i], ["castle", /\b(castle|castel|castello|fort|fortress|fortifications?|citadel|kastro|koules)\b/i], ["palace", /\b(palace|palazzo|palacio|palau)\b/i], ["market", /\b(market|mercato|mercat|mercado)\b/i], ["theatre", /\b(theatre|theater|teatro)\b/i], ["park", /\b(park|parc|parque|garden|gardens|jardin)\b/i], ["beach", /\b(beach|plage|playa|spiaggia)\b/i], ["lighthouse", /\b(lighthouse|faro)\b/i]];
+// Words too common to tell two places apart ("San Lorenzo Maggiore" and "San Paolo Maggiore" are two churches).
+const PLACE_GENERIC = new Set("maggiore major great grand new nuovo nuova old little small upper lower royal reale national nazionale real".split(" "));
+const placeWords = n => keyOf(String(n || "").replace(/&/g, " and ")).split(" ").filter(t => t.length > 1 && !PLACE_SMALL.has(t)).map(t => t.replace(/s$/, ""));
+const placeNames = x => { const n = String((x && x.name) || ""), m = /\(([^)]+)\)/.exec(n); return [n.replace(/\([^)]*\)/g, " ")].concat(m ? [m[1]] : []); };
+const placeKind = x => (PLACE_KIND.find(([, re]) => re.test(((x && x.name) || "") + " " + ((x && x.category) || ""))) || [""])[0];
+const isFeat = t => PLACE_PART.has(t) || PLACE_KIND.some(([, re]) => re.test(t));
+// How b relates to a: "same" (one place), "part" (b is a small part of a), or "".
+function placeRel(a, b) {
+  if (!a || !b) return "";
+  if ((a.wd && b.wd && a.wd === b.wd) || keyOf(a.name) === keyOf(b.name) || (nameMatch(a.name, b.name) && nameMatch(b.name, a.name))) return "same";
+  const km = isFinite(a.lat) && isFinite(b.lat) ? hav(a, b) : null;
+  // Two names for the same building (another language, another source): the same kind of place (a church, a
+  // museum...) at the same spot, or a few steps apart and sharing a telling word of their names.
+  const ka = placeKind(a), kb = placeKind(b);
+  if (km != null && ka && ka === kb) {
+    if (km < 0.045) return "same";
+    const tell = n => placeWords(n).filter(t => !isFeat(t) && !PLACE_GENERIC.has(t) && !PLACE_DESC.has(t));
+    if (km < 0.12) { const ta = new Set(placeNames(a).flatMap(tell)); if (placeNames(b).flatMap(tell).some(t => ta.has(t))) return "same"; }
+  }
+  if (km == null || km > 2.5) return "";
+  for (const na of placeNames(a)) for (const nb of placeNames(b)) {
+    const wa = placeWords(na), wb = placeWords(nb); if (!wa.length || !wb.length) continue;
+    // Describing words ("village", "prehistoric") are set aside only for a village or site, never for a building:
+    // "Museum of Prehistoric Thera" and "Archaeological Museum of Thera" are two museums.
+    const strip = !(ka && ka !== "beach") && !(kb && kb !== "beach");
+    for (const [ca, cb] of strip ? [[wa, wb], [wa.filter(t => !PLACE_DESC.has(t)), wb.filter(t => !PLACE_DESC.has(t))]] : [[wa, wb]]) {
+      if (!ca.length || !cb.length) continue;
+      const [sh, lg, shortIsA] = ca.length <= cb.length ? [ca, cb, true] : [cb, ca, false];
+      if (!sh.every(t => lg.includes(t))) continue;
+      const extra = lg.filter(t => !sh.includes(t));
+      if (!extra.length) return "same";
+      if (!extra.some(isFeat) && km < 1.2) return "same"; // "Akrotiri" and "Akrotiri prehistoric town"
+      // A small feature of a village or area named for it: "Megalochori Bell Tower" is part of "Megalochori".
+      const bigKind = shortIsA ? ka : kb;
+      if (shortIsA && sh.length === 1 && (!bigKind || bigKind === "beach") && extra.every(t => PLACE_PART.has(t) || PLACE_DESC.has(t)) && extra.some(t => PLACE_PART.has(t))) return "part";
+    }
+  }
+  return "";
+}
+function samePlace(a, b) { return placeRel(a, b) === "same"; }
+if (typeof window !== "undefined") window.__kairouteDedupe = (sites, farther) => { const c = { sites: JSON.parse(JSON.stringify(sites || [])), farther: JSON.parse(JSON.stringify(farther || [])) }; const n = dedupeSites(c); return { n, kept: allSites(c).map(x => ({ name: x.name, alias: x.alias || [], lookFor: x.lookFor || [] })) }; };
+// Every guide the app holds, checked for two sights that are one place (for the safety net).
+if (typeof window !== "undefined") window.__kairouteDupScan = () => { ensureBuiltins(); const out = []; const seen = new Set(); for (const k in cities) { const c = cities[k]; if (!c || seen.has(c)) continue; seen.add(c); const all = allSites(c); for (let i = 0; i < all.length; i++) for (let j = i + 1; j < all.length; j++) { const r = placeRel(all[i], all[j]) || placeRel(all[j], all[i]); if (r) out.push(c.city + ": " + all[i].name + " / " + all[j].name + " (" + r + ")"); } } return out; };
+// Removes repeats and parts from a guide: of two names for one place the better known (a must-see, then the one
+// with more written about it) stays; a part goes into the bigger place's "look for" list.
+const DEDUPE_V = 1;
+function dedupeSites(c) {
+  if (!c) return 0; let n = 0;
+  const lists = [c.sites || [], c.farther || []], all = lists.flat(), gone = new Set();
+  const rank = x => (x.mustSee ? 1000 : 0) + (x.unesco ? 100 : 0) + (x.quick ? -500 : 0) + String(x.guide || "").length / 100 + (x.builtin ? 0 : 1);
+  for (let i = 0; i < all.length; i++) for (let j = i + 1; j < all.length; j++) {
+    const a = all[i], b = all[j]; if (gone.has(a) || gone.has(b)) continue;
+    let r = placeRel(a, b), big = a, small = b;
+    if (!r) { r = placeRel(b, a); if (r) { big = b; small = a; } }
+    if (!r) continue;
+    if (r === "same") { if (rank(b) > rank(a)) { big = b; small = a; } big.mustSee = big.mustSee || small.mustSee; big.alias = [...new Set([...(big.alias || []), small.name, small.id])]; }
+    else { big.lookFor = [...new Set([...(big.lookFor || []), small.name])].slice(0, 6); big.alias = [...new Set([...(big.alias || []), small.id])]; }
+    gone.add(small); n++;
+  }
+  if (n) { c.sites = (c.sites || []).filter(x => !gone.has(x)); c.farther = (c.farther || []).filter(x => !gone.has(x)); }
+  return n;
+}
 function carryGuide(prev, c) {
   const have = allSites(c);
   const ids = new Set(have.map(x => x.id));
   const keep = (list, into) => (list || []).forEach(x => { if (!x || have.some(y => samePlace(x, y))) return; const k = Object.assign({}, x); if (ids.has(k.id)) k.id = k.id + "-k"; ids.add(k.id); into.push(k); have.push(k); });
   c.farther = c.farther || [];
   keep(prev.sites, c.sites); keep(prev.farther, c.farther);
+  dedupeSites(c);
 }
 if (typeof window !== "undefined") {
   // Test hooks: a fresh guide that lost sights gets them back; naming a sight the guide has never makes a copy.
@@ -3265,7 +3375,7 @@ let builtinsReady = false;
 function ensureBuiltins() {
   if (builtinsReady || typeof BUILTIN_CITIES === "undefined") return; builtinsReady = true;
   for (const [raw, keys] of BUILTIN_CITIES) {
-    const c = Object.assign(cleanCity(raw, raw.city), { ai: false, builtin: true });
+    const c = Object.assign(cleanCity(raw, raw.city), { ai: false, builtin: true }); dedupeSites(c);
     // A written guide (saved, synced or shared) never hides a sight the built-in guide has: those are
     // added back (Naples' written guide had Amalfi but not Sorrento; the built-in one the other way round).
     for (const k of keys) { if (!cities[k]) cities[k] = c; else if (cities[k] !== c && !cities[k].builtin) carryGuide(c, cities[k]); }
@@ -3354,6 +3464,7 @@ function render() {
   if (!planKeep) planGen++;
   if (faithPrefsTidy()) save();
   if (tidyDests(trip)) save();
+  if (trip.prefsSeen !== prefsSig()) { try { dropUnwanted(); } catch (e) {} trip.prefsSeen = prefsSig(); save(); } // interests changed (here or on another device)
   faithSweep();
   bonusMemo = new Map(); mealMemo = new Map(); keptMemo = new Map(); eveMemo = new Map(); avoidMeals = new Set();
   const pkey = view + "|" + trip.active, pos = {}, winY = window.scrollY;
@@ -5434,8 +5545,9 @@ document.addEventListener("click", e => {
   if (t.dataset.app) { if (t.dataset.app === "guide" && speakingId === "voice-sample") stopAudio(); appSet[t.dataset.app] = t.dataset.v; saveAppSet(); render(); return; }
   if (t.dataset.pref) {
     const k = t.dataset.pref, v = t.dataset.v; trip.prefs = P();
-    if (k === "interest") trip.prefs.interests = trip.prefs.interests.includes(v) ? trip.prefs.interests.filter(x => x !== v) : [...trip.prefs.interests, v];
+    if (k === "interest") { const on = !trip.prefs.interests.includes(v); trip.prefs.interests = on ? [...trip.prefs.interests, v] : trip.prefs.interests.filter(x => x !== v); if (v === "churches") { if (on) delete trip.prefs.noChurches; else trip.prefs.noChurches = true; } }
     else { trip.prefs[k] = v; if (k === "access" && (v === "limited" || v === "wheelchair")) trip.prefs.walk = "low"; }
+    if (k === "interest" || k === "religious") { dropUnwanted(); trip.prefsSeen = prefsSig(); }
     save(); render(); return;
   }
   if (t.dataset.wimgdel != null) { readWiz(); wiz.images.splice(+t.dataset.wimgdel, 1); render(); return; }
@@ -5455,8 +5567,8 @@ document.addEventListener("click", e => {
   if (t.dataset.act === "suggestok") { suggestMsg = ""; render(); return; }
   if (t.dataset.act === "aboard" || t.dataset.act === "ashore") { setAboard(day(), t.dataset.act === "aboard"); render(); return; }
   if (t.dataset.act === "daytitle") { dayRenaming = day().id; render(); const el = document.getElementById("dayTitleInput"); if (el) { el.focus(); el.select(); } return; }
-  if (t.dataset.act === "daytitlesave") { const v = ((document.getElementById("dayTitleInput") || {}).value || "").trim().slice(0, 60), d = day(); if (v && v !== dayAuto(d)) d.title = v; else delete d.title; dayRenaming = null; save(); render(); return; }
-  if (t.dataset.act === "daytitleauto") { delete day().title; dayRenaming = null; save(); render(); return; }
+  if (t.dataset.act === "daytitlesave") { const v = ((document.getElementById("dayTitleInput") || {}).value || "").trim().slice(0, 60), d = day(); if (v && v !== dayAuto(d) && v !== d.destination) { d.title = v; d.titleTyped = true; } else { delete d.title; delete d.titleTyped; } dayRenaming = null; save(); render(); return; }
+  if (t.dataset.act === "daytitleauto") { delete day().title; delete day().titleTyped; dayRenaming = null; save(); render(); return; }
   if (t.dataset.act === "daytitlecancel") { dayRenaming = null; render(); return; }
   if (t.dataset.act === "syncstart") { syncStart(); return; }
   if (t.dataset.act === "syncfromlobby") { view = "settings"; setSec = "sync"; render(); toTop(); return; }
@@ -5614,7 +5726,7 @@ document.addEventListener("change", e => {
     d.selected = d.selected || [];
     if (t.checked && !addPick(d, id, true)) { t.checked = false; return; } // won't fit: the box explains
     if (t.checked) { d.anchor = id; anchorJump = true; }
-    else { d.selected = d.selected.filter(x => x !== id); if (d.anchor === id) d.anchor = null; }
+    else { d.selected = d.selected.filter(x => x !== id); markMine(d, id, false); if (d.anchor === id) d.anchor = null; }
     save(); renderKeep(); if (anchorJump) jumpToAnchor(); return; // every change here is in the trip, which keys the plans
   }
   if (t.dataset && t.dataset.part) {

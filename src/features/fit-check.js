@@ -49,8 +49,11 @@ function addPick(d, id, ask) {
   // Closed that day (or open only outside the day's time here): never added; the box offers a day it's open.
   const sx = allSites(city).find(x => x.id === id); if (sx && shutOn(d, sx)) { if (ask) closedOpen(d, sx); return false; }
   if (!fitsWith(d, [id])) { if (ask) fitOpen(d, id); return false; }
-  d.selected = [...d.selected, id]; rememberPick(d, allSites(city).find(x => x.id === id)); return true;
+  d.selected = [...d.selected, id]; rememberPick(d, allSites(city).find(x => x.id === id)); if (ask) markMine(d, id, true); return true;
 }
+// The traveler's own picks (ticked, added by name, moved or swapped in with a tap): these always stay, even when
+// an interest is turned off later. Picks the app chose (starting picks, the day's fill) are not on this list.
+function markMine(d, id, on) { if (!d || !id) return; const m = new Set(d.mine || []); if (on) m.add(id); else m.delete(id); d.mine = [...m]; }
 // Starting picks the app chose (never the traveler's own): trimmed, least important first, until the day fits.
 function fitTrim(d, keep) {
   const city = cityFor(d); if (!city || !Array.isArray(d.selected) || !d.selected.length) return;
@@ -125,8 +128,8 @@ function closedOpen(d, s) {
 let closedState = null;
 function closedGo(kind, to) {
   const C = closedState; closedState = null; const old = document.querySelector(".fitbox"); if (old) old.remove(); if (!C) return;
-  if (kind === "day") { const o = trip.days[to]; if (o && addPick(o, C.s.id, false)) { o.anchor = C.s.id; trip.active = to; } }
-  else if (kind === "alt" && C.alt && addPick(C.d, C.alt.id, false)) C.d.anchor = C.alt.id;
+  if (kind === "day") { const o = trip.days[to]; if (o && addPick(o, C.s.id, false)) { o.anchor = C.s.id; trip.active = to; markMine(o, C.s.id, true); } }
+  else if (kind === "alt" && C.alt && addPick(C.d, C.alt.id, false)) { C.d.anchor = C.alt.id; markMine(C.d, C.alt.id, true); }
   save(); render(); if (typeof jumpToAnchor === "function") jumpToAnchor();
 }
 function fitShow() {
@@ -180,17 +183,17 @@ function fitApply(t) {
   const F = fitState; if (!F) return;
   const d = F.d; d.selected = [...d.selected.filter(i => !F.drop.has(i)), ...(F.id ? [F.id] : [])];
   if (t) { if (t.hours != null) d.hours = t.hours; if (t.startTime) d.startTime = t.startTime; }
-  if (F.s) { d.anchor = F.id; rememberPick(d, F.s); }
+  if (F.s) { d.anchor = F.id; rememberPick(d, F.s); markMine(d, F.id, true); }
   fitState = null; fitShow(); save(); render(); if (F.s) jumpToAnchor();
 }
 function fitDay(o) {
   const id = fitState && fitState.id; fitState = null; fitShow(); if (!o || !id) return;
   const c = cityFor(o); if (!o.selected && c) seedPicks(o, c);
-  if (addPick(o, id, false)) { o.anchor = id; trip.active = trip.days.indexOf(o); save(); render(); jumpToAnchor(); }
+  if (addPick(o, id, false)) { o.anchor = id; markMine(o, id, true); trip.active = trip.days.indexOf(o); save(); render(); jumpToAnchor(); }
 }
 function fitMove(v) {
   if (!v || !fitState) return; const d = fitState.d;
-  if (!addPick(v.o, v.x.id, false)) return;
+  if (!addPick(v.o, v.x.id, false)) return; if ((d.mine || []).includes(v.x.id)) markMine(v.o, v.x.id, true);
   d.selected = d.selected.filter(i => i !== v.x.id); if (d.anchor === v.x.id) d.anchor = null;
   fitState = null; save(); fitOpen(d, null); fitShow(); render();
 }
