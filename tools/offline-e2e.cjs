@@ -82,7 +82,7 @@ async function services(ctx) {
   await p.evaluate(() => { const d = document.querySelector('#offCard details'); if (d) d.open = true; }); await p.waitForTimeout(100);
   await p.screenshot({ path: path.join(OUT, 'offline-ready.png') });
   // 3. Cut the internet. The website goes away too: everything must come from this device.
-  await ctx.setOffline(true); await new Promise(r => srv.close(r)); srv.closeAllConnections && srv.closeAllConnections();
+  await ctx.setOffline(true); { const shut = new Promise(r => srv.close(r)); srv.closeAllConnections && srv.closeAllConnections(); await Promise.race([shut, new Promise(r => setTimeout(r, 3000))]); } // open keep-alive connections must not hold the test
   await ctx.unrouteAll({ behavior: 'ignoreErrors' }); await ctx.route('**/*', r => r.abort('internetdisconnected'));
   await p.reload(); await p.waitForTimeout(1500);
   const opened = await p.evaluate(() => ({ app: !!document.querySelector('header.top'), online: navigator.onLine }));
