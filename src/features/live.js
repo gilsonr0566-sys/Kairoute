@@ -365,11 +365,11 @@ function legTo(from, to) {
   const r = realLegs[k];
   // The more cautious of the street route and the day plan's own time (which uses the train or ferry time the guide
   // gives, plus time for delays on the way back to the ship), so the countdown never promises more time than the plan.
-  if (r) { const m = foot ? r.min : r.min + 10; return m >= est.min ? (foot ? { min: m, how: "Walk", src: "street route" } : { min: m, how: "Taxi", src: "street route + 10 min to find a taxi" }) : { min: est.min, how: est.how, src: "the day plan's time (more cautious than the street route)" }; }
+  if (r) { const m = foot ? r.min : r.min + 10; return m >= est.min ? (foot ? { min: m, how: "Walk", src: "street route" } : { min: m, how: "Taxi", src: "street route + 10 min to find a taxi" }) : { min: est.min, how: est.how, transit: est.transit, src: "the day plan's time (more cautious than the street route)" }; }
   if (freeAI && !legAsked[k]) { legAsked[k] = 1;
     fetch(freeAI.url + "/route", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ legs: [{ m: foot ? "foot" : "car", a: [+from.lng, +from.lat], b: [+to.lng, +to.lat] }] }) })
       .then(x => x.ok ? x.json() : null).then(j => { const rt = j && j.routes && j.routes[0]; if (rt && isFinite(rt.min)) { realLegs[k] = rt; alarmTick(); } }).catch(() => {}); }
-  return { min: est.min, how: est.how, src: "estimate" };
+  return { min: est.min, how: est.how, transit: est.transit, src: "estimate" };
 }
 let alarmFired = {}, liveArrived = {};
 function alarmState(d, plan) {
@@ -427,7 +427,7 @@ function alarmTick() {
   }
   if (fixed) {
     const el = document.getElementById("cdBig"), sub = document.getElementById("cdSub"), msg = document.getElementById("cdMsg"), srcEl = document.getElementById("cdSrc");
-    const fromTxt = st.src === "GPS" ? "where you are" : st.from.name, legTxt = `${st.leg.how.toLowerCase()} ${dur(st.leg.min)}`;
+    const fromTxt = st.src === "GPS" ? "where you are" : st.from.name, legTxt = `${st.leg.transit ? st.leg.how : st.leg.how.toLowerCase()} ${dur(st.leg.min)}`;
     const word = d.type === "port" ? (st.now == null ? `Back at the ship at ${fmt(st.backBy)}, ${dur(toMin(d.allAboard) - st.backBy)} before all aboard (${d.allAboard}).` : `Be back at the ship by ${fmt(st.backBy)} at the latest, ${dur(toMin(d.allAboard) - st.backBy)} before all aboard (${d.allAboard}).`) : d.type === "embark" ? `All aboard ${d.allAboard}. Be at the terminal by ${fmt(st.backBy)}.` : `${MODES[d.mode].label} at ${d.time}. Be at ${st.point.name} by ${fmt(st.backBy)}.`;
     if (sub) sub.textContent = `${word} From ${fromTxt}: ${legTxt}, so leave by ${fmt(st.leaveBy)}.`;
     if (srcEl) srcEl.textContent = `Travel time: ${st.leg.src}${st.src === "GPS" ? ", from your GPS position" : st.src === "plan" ? ", from where the plan has you now" : ""}.`;

@@ -472,8 +472,8 @@ function travel(a, b) {
   const speed = trip.prefs && trip.prefs.walk === "low" ? 3.6 : 4.5;
   if (d < 0.02) return { mode: "walk", how: "Walk", km: 0, min: 0 }; // the same place: no time
   if (d <= lim) return { mode: "walk", how: "Walk", km: d * 1.3, min: Math.max(2, Math.round(d * 1.3 / speed * 60)) };
-  if (d <= 6) return { mode: "ride", how: "Taxi, bus or metro", km: d * 1.3, min: Math.round(10 + d * 1.3 / 22 * 60) };
-  if (d <= 15) return { mode: "ride", how: "Taxi or rideshare", km: d * 1.3, min: Math.round(10 + d * 1.3 / 25 * 60) };
+  if (d <= 6) return rideLeg(a, b, { mode: "ride", how: "Taxi, bus or metro", km: d * 1.3, min: Math.round(10 + d * 1.3 / 22 * 60) });
+  if (d <= 15) return rideLeg(a, b, { mode: "ride", how: "Taxi or rideshare", km: d * 1.3, min: Math.round(10 + d * 1.3 / 25 * 60) }, b.backToShip);
   // 15-40 km: regional roads and local trains, around bays and through towns (Naples to Sorrento is 26 km as the
   // crow flies but about 50 km of coast road); farther: highway or intercity train (Athens to Corinth: about 1 h 20).
   let leg = d <= 40 ? { mode: "ride", how: "Train or car", km: d * 1.35, min: Math.round(15 + d * 1.35 / 45 * 60) }
@@ -482,6 +482,7 @@ function travel(a, b) {
   // the slowest time it names, plus getting to the station or pier, wins over the estimate.
   const said = Math.max(saidMin(a), saidMin(b));
   if (said && !(saidMin(a) && saidMin(b))) leg = Object.assign(leg, { min: Math.max(leg.min, said + 15), said: true });
+  leg = rideLeg(a, b, leg, b.backToShip);
   // A long ride back to the ship gets time for a late train or traffic: missing the ship is not an option.
   if (b.backToShip && leg.min >= 30) { const sl = Math.max(15, Math.round(leg.min * 0.3 / 5) * 5); leg = Object.assign(leg, { min: leg.min + sl, slack: sl }); }
   return leg;
@@ -497,6 +498,58 @@ function saidMin(p) {
   m = m >= 10 && m <= 300 ? Math.round(m) : 0; saidMemo.set(t, m); return m;
 }
 const tmin = (a, b) => (a && b ? travel(a, b).min : 0);
+// ---------- Real transport for rides ----------
+// A ride of more than 4 km names a real way to make it: the train, metro, tram, bus or ferry lines OpenStreetMap
+// maps between the two places (from the helper's /transit), or a taxi. Each line's time counts getting to the
+// stop, a cautious wait, the ride and getting from the stop. The quickest public line is chosen unless a taxi is
+// much quicker; the traveler can switch any ride on the Day plan, and the plan, the return time and the ship
+// checks all follow the choice. While the lines are being looked up (or none are mapped) the estimate is used.
+const TRANSIT_KEY = "kairoute.transit1";
+const transitMem = (() => { try { return JSON.parse(localStorage.getItem(TRANSIT_KEY) || "{}"); } catch (e) { return {}; } })();
+const transitFail = new Map(), transitQ = new Map(); let transitTimer = 0, transitBusy = false;
+const pairKey = (a, b) => [a.lat, a.lng, b.lat, b.lng].map(n => (+n).toFixed(3)).join(",");
+function transitFor(a, b) {
+  if (!a || !b || !isFinite(a.lat) || !isFinite(b.lat) || hav(a, b) < 4) return null;
+  const k = pairKey(a, b), hit = transitMem[k]; if (hit) return hit.opts;
+  if (typeof freeAI !== "undefined" && freeAI && !transitQ.has(k) && !(transitFail.get(k) > Date.now() - 600000)) { transitQ.set(k, { a: [+a.lat, +a.lng], b: [+b.lat, +b.lng] }); clearTimeout(transitTimer); transitTimer = setTimeout(askTransit, 300); }
+  return null;
+}
+async function askTransit() {
+  if (transitBusy || !transitQ.size || !freeAI) return; transitBusy = true; let got = 0;
+  try {
+    while (transitQ.size) {
+      const part = [...transitQ.entries()].slice(0, 6);
+      try { const r = await fetch(freeAI.url + "/transit", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ pairs: part.map(x => x[1]) }) }); if (!r.ok) throw new Error("transit " + r.status);
+        const j = await r.json(); part.forEach(([k], i) => { const res = (j.results || [])[i]; if (res && Array.isArray(res.opts)) { transitMem[k] = { opts: res.opts, t: Date.now() }; got++; } else transitFail.set(k, Date.now()); });
+      } catch (e) { part.forEach(([k]) => transitFail.set(k, Date.now())); }
+      part.forEach(([k]) => transitQ.delete(k));
+    }
+  } finally { transitBusy = false; }
+  if (!got) return;
+  try { const ks = Object.keys(transitMem).sort((x, y) => transitMem[y].t - transitMem[x].t); ks.slice(300).forEach(k => delete transitMem[k]); localStorage.setItem(TRANSIT_KEY, JSON.stringify(transitMem)); } catch (e) {}
+  if (typeof view !== "undefined" && ["plan", "trip", "sites"].includes(view)) { const y = window.scrollY; render(); window.scrollTo(0, y); }
+}
+const rideId = o => o ? o.mode + "|" + o.label : "taxi";
+// What the traveler needs to make a ride: where to catch it, how often it runs, how long, and the choice of ride.
+function rideDetail(leg) {
+  if (!leg.choices) return "";
+  const o = leg.transit, ev = o ? `runs about every ${dur(o.every)}${o.everySrc === "map" ? "" : " (usual for this kind of line; check the timetable)"}` : "";
+  const how = o ? `${o.access.how === "walk" ? "Walk" : "Taxi"} ${dur(o.access.min)} to ${esc(o.from || "the " + (o.mode === "ferry" ? "pier" : "station"))}, ${ev}; ${dur(o.ride)} ride${o.stops ? ` (${o.stops} stops)` : ""}, then ${o.egress.how === "walk" ? "walk" : "taxi"} ${dur(o.egress.min)}${o.to ? " from " + esc(o.to) : ""}.${o.operator ? " " + esc(o.operator) + "." : ""}${o.hours ? " Hours: " + esc(o.hours) + "." : ""}${o.fare ? " Fare: " + esc(o.fare) + "." : ""} Times include waiting and boarding.` : "By road, with time for traffic.";
+  const fall = (leg.slack ? ` Includes ${dur(leg.slack)} spare before the ship.` : "") + (leg.lastMile && o ? ` <b>If you miss it:</b> a taxi takes about ${dur(leg.road)}.` : "");
+  return `<span class="sub ridesub">${how}${fall}</span><label class="ridepick"><span>Ride</span><select data-ride="${esc(leg.key)}">${leg.choices.map(c => `<option value="${esc(c.id)}" ${c.id === leg.choice ? "selected" : ""}>${esc(c.label)} · ${dur(c.min)}</option>`).join("")}</select></label>`;
+}
+// The ride between a and b: the chosen (or best) real line, or the road estimate as a taxi.
+function rideLeg(a, b, road, lastMile) {
+  const opts = transitFor(a, b); if (!opts || !opts.length) return road;
+  const taxi = Object.assign({}, road, { how: "Taxi or car", choice: "taxi" });
+  const want = trip.legModes && trip.legModes[pairKey(a, b)], picked = want === "taxi" ? null : opts.find(o => rideId(o) === want);
+  // Public lines win unless a taxi saves a lot (over 25 min and a third of the time): they're cheaper and run on time.
+  const best = opts[0], auto = best && !(taxi.min < best.min - 25 && taxi.min < best.min * 0.67) ? best : null;
+  const o = want === "taxi" ? null : picked || auto;
+  const base = { choices: [...opts.map(x => ({ id: rideId(x), label: x.label, min: x.min })), { id: "taxi", label: "Taxi or car", min: road.min }], key: pairKey(a, b), road: road.min };
+  if (!o) return Object.assign(taxi, base, { lastMile });
+  return Object.assign({ mode: "ride", how: o.label, km: o.km + o.access.km + o.egress.km, min: o.min, transit: o, choice: rideId(o), lastMile }, base);
+}
 function allSites(city) { return [...(city.sites || []), ...(city.farther || [])]; }
 // Sights already planned on another day in the same city, by site id -> that day.
 function plannedElsewhere(d) {
@@ -1414,7 +1467,7 @@ function faithNote() {
 // and written again. faithStrip() removes Bible talk that nothing backs: with the faith interests off it is kept
 // only at Bible sites; with them on it is kept only where the stop's own guide or the point's facts carry it.
 const faithKey = () => { const i = P().interests || []; return i.includes("bible") ? "bible" : i.includes("churches") ? "churches" : ""; };
-const BIBLE_TALK = /\b(?:gospels?|bible|biblical|scriptures?|apostles?|new testament|old testament|evangelists?|jesus|christ|st\.? paul|saint paul|paul's|(?:acts|matthew|mark|luke|john|romans|corinthians|galatians|ephesians|revelation|genesis|exodus|isaiah|psalms?)\s+\d+:\d+)/i;
+const BIBLE_TALK = /\b(?:gospels?|bible|biblical|scriptures?|apostles?|new testament|old testament|evangelists?|st\.? paul|saint paul|paul's|(?:acts|matthew|mark|luke|john|romans|corinthians|galatians|ephesians|revelation|genesis|exodus|isaiah|psalms?)\s+\d+:\d+)\b/i; // art named for Christ (the Veiled Christ) is not Bible talk
 function faithStrip(text, evidence, bibleSite) {
   const t = String(text || ""); if (!BIBLE_TALK.test(t)) return t;
   const ok = faithKey() ? BIBLE_TALK.test(String(evidence || "")) || bibleSite : bibleSite;
@@ -2702,7 +2755,9 @@ if (typeof window !== "undefined") window.__kairouteQuality = () => { bonusMemo 
   // if the ride back takes half as long again as normal (a slow train, a traffic jam).
   if (d.type === "port" && d.allAboard) { const aa = toMin(d.allAboard), legs = pl.items.filter(x => x.type === "travel"), last = legs[legs.length - 1], base = last ? last.leg.min - (last.leg.slack || 0) : 0, slow = pl.end - (last && last.leg.slack || 0) + base * 0.5;
     if (pl.end > aa - (pl.w.buffer || 45)) issues.push(`back at the ship ${fmt(pl.end)}, less than ${pl.w.buffer || 45} min before all aboard ${d.allAboard}`);
-    else if (slow > aa - 25) issues.push(`ship margin too thin if the ride back is slow: ${fmt(slow)} against all aboard ${d.allAboard}`); }
+    else if (slow > aa - 25) issues.push(`ship margin too thin if the ride back is slow: ${fmt(slow)} against all aboard ${d.allAboard}`);
+    // Missing the train or ferry back: the next one, or a taxi, whichever is sooner, still gets there 15 minutes before all aboard.
+    else if (last && last.leg.transit) { const leave = pl.end - last.leg.min, miss = leave + Math.min(base + last.leg.transit.every, last.leg.road || Infinity); if (miss > aa - 15) issues.push(`missing the ${last.leg.transit.kind.toLowerCase()} back would mean ${fmt(miss)} against all aboard ${d.allAboard}`); } }
   (pl.dropped || []).forEach(x => { const same = kept.filter(k => hav(k, x) < 15); if (same.length && (x.mustSee && !same.every(k => k.mustSee) || same.every(k => (k.minutes || 0) < (x.minutes || 0) * 0.8))) issues.push("left out main sight " + x.name); });
   if (pl.end > pl.endBy + 5) issues.push("ends " + fmt(pl.end) + " after " + fmt(pl.endBy));
   if (pl.endBy - pl.end > 120 && d.type !== "embark" && d.type !== "depart") issues.push("free " + dur(pl.endBy - pl.end));
@@ -2852,6 +2907,19 @@ if (typeof window !== "undefined") window.__kairouteDay = (i, sel, extra) => { c
 if (typeof window !== "undefined") window.__kairoutePlans = (ov) => { if (ov) trip.days.forEach((d, i) => { if (ov.sel && ov.sel[i]) d.selected = ov.sel[i]; if ("fill" in ov) d.fillTime = ov.fill; }); bonusMemo = new Map(); mealMemo = new Map(); keptMemo = new Map(); eveMemo = new Map(); avoidMeals = new Set(); return trip.days.map((d, i) => { const pl = buildPlan(d); if (!pl || !pl.items) return { i, date: d.date, dest: d.destination, none: true }; const pts = pl.items.filter(x => x.place && x.type !== "travel").map(x => ({ lat: x.place.lat, lng: x.place.lng, t: x.type, n: x.place.name })); return { i, date: d.date, dest: d.destination, pts, km: +pl.walkKm.toFixed(2), end: pl.end, endBy: pl.endBy, stops: pl.stops.length, bonus: (pl.bonus || []).map(x => x.name), meals: pl.items.filter(x => x.type === "meal").map(x => x.meal.label + "@" + x.time + " " + x.place.name + " | alts: " + (x.place.alts || []).map(r => r.name + " (" + r.cuisine + ")").join("; ")) }; }); };
 // Test hook: pick each day's stops the way a fresh build does.
 if (typeof window !== "undefined") window.__kairouteFreshPicks = () => { trip.days.forEach(x => { x.selected = null; }); trip.days.forEach(x => { const c = cities[cityKeyFor(x)]; if (c) x.selected = defaultSelection(c, trip.style, x); }); return trip.days.map(x => x.selected); };
+// Faith check (the "Faith talk live check" workflow): set the interests, then list every stored text on a day
+// that talks about the Bible, by stop and field, so it can be traced to where the traveler sees it.
+if (typeof window !== "undefined") window.__kairoutePrefs = patch => { trip.prefs = Object.assign(P(), patch); save(); render(); return { interests: P().interests, theme: P().theme || "" }; };
+if (typeof window !== "undefined") window.__kairouteFaithScan = i => { const d = trip.days[i], city = cityFor(d); if (!city) return { error: "no city" };
+  const plan = buildPlan(d), out = [];
+  for (const it of plan.items) { const s = it.place; if (!s || it.type !== "stop") continue;
+    const fields = { summary: s.summary, guide: s.guide, lookFor: (s.lookFor || []).join(" "), picks: (s.picks || []).map(x => x.t).join(" "), intro: s.intro, wrap: s.wrap, parts: (s.parts || []).map(p => p.name + ": " + p.guide + " " + (p.lookFor || "")).join(" | "), deeper: (deeper[s.id] || {}).text, theme: typeof gxThemeLink === "function" ? gxThemeLink(s, city) : "" };
+    for (const [f, t] of Object.entries(fields)) if (t && BIBLE_TALK.test(t)) out.push({ stop: s.name, field: f, bibleSite: bibleSite(s), text: String(t).split(/(?<=[.!?])\s+/).filter(x => BIBLE_TALK.test(x)).join(" ").slice(0, 400) });
+    out.push({ stop: s.name, field: "_status", text: `walk ${s.parts ? s.parts.length + " points" : "not written"}, written for "${s.extrasFaith == null ? "?" : s.extrasFaith}"` }); }
+  return { day: d.destination, date: d.date, faith: faithKey(), theme: P().theme || "", hits: out }; };
+// Test hook: put transit answers in place for given pairs ([{a:{lat,lng}, b:{lat,lng}, opts}]), as /transit would.
+if (typeof window !== "undefined") window.__kairouteTransitSet = pairs => { (pairs || []).forEach(x => { transitMem[pairKey(x.a, x.b)] = { opts: x.opts, t: Date.now() }; }); return Object.keys(transitMem).length; };
+if (typeof window !== "undefined") window.__kairouteMapLegs = () => { const d = day(), pl = buildPlan(d); return pl && !pl.error ? mapPlanData(pl, d).legs : []; };
 if (typeof window !== "undefined") window.__kairouteGo = (v, i) => { if (typeof i === "number") trip.active = i; view = v; render(); toTop(); };
 if (typeof window !== "undefined") window.kairoutePrewarm = (reserve, log) => saveStops(BUILTIN_CITIES.flatMap(([c]) => allSites(c)), log || ((d, n, s) => console.log(`saved ${d}/${n} ${s.name}`)), reserve ?? 15000);
 function speakLines(id, lines, lc) {
@@ -4252,7 +4320,7 @@ function mapPlanData(plan, d) {
   plan.items.forEach(it => {
     if (it.type === "travel") { pending = it; return; }
     const p = it.place; if (!p || !isFinite(p.lat) || !isFinite(p.lng)) return;
-    if (last && pending) legs.push({ mode: pending.leg.mode === "ride" ? "car" : "foot", a: [last.lng, last.lat], b: [p.lng, p.lat] });
+    if (last && pending) { const o = pending.leg.transit; legs.push({ mode: pending.leg.mode === "ride" ? "car" : "foot", a: [last.lng, last.lat], b: [p.lng, p.lat], path: o && o.path && o.path.length > 1 ? [[last.lng, last.lat], ...o.path, [p.lng, p.lat]] : null }); }
     last = p; pending = null;
     const at = p.lat.toFixed(5) + "," + p.lng.toFixed(5);
     if (it.type === "start" || it.type === "end" || it.type === "fixed") {
@@ -4263,14 +4331,14 @@ function mapPlanData(plan, d) {
     else if (it.type === "stop" && p.along) pts.push({ kind: "along", lab: "", name: "On the way: " + p.name, ll: [p.lng, p.lat], id: p.id });
     else if (it.type === "stop") { n++; pts.push({ kind: "stop", lab: String(n), name: p.name, ll: [p.lng, p.lat], id: p.id }); }
   });
-  return { pts, legs, key: (d ? d.id : "") + "|" + legs.map(l => l.mode + l.a + l.b).join(";") + "|" + pts.map(p => p.kind + p.ll).join(";") };
+  return { pts, legs, key: (d ? d.id : "") + "|" + legs.map(l => l.mode + l.a + l.b + (l.path ? l.path.length : "")).join(";") + "|" + pts.map(p => p.kind + p.ll).join(";") };
 }
 const legKey = l => l.mode + ":" + l.a.map(n => n.toFixed(5)) + ";" + l.b.map(n => n.toFixed(5));
 // Street routes for the legs, from memory, then the device, then the helper. Calls back when new ones arrive.
 async function fetchRoutes(legs, then) {
   const need = [];
   for (const l of legs) {
-    const k = legKey(l); if (routeMem.has(k) || routeAsk.has(k) || routeFail.get(k) > Date.now() - 20000) continue;
+    const k = legKey(l); if (l.path || routeMem.has(k) || routeAsk.has(k) || routeFail.get(k) > Date.now() - 20000) continue;
     const saved = await kv.get("r:" + k);
     if (saved) { routeMem.set(k, saved); continue; }
     need.push(l);
@@ -4289,7 +4357,7 @@ async function fetchRoutes(legs, then) {
   } catch (e) {} finally { need.forEach(l => { const k = legKey(l); routeAsk.delete(k); if (!routeMem.has(k)) routeFail.set(k, Date.now()); }); }
   if (then) then();
 }
-function legLine(l) { const c = routeMem.get(legKey(l)); return Array.isArray(c) ? c : [l.a, l.b]; }
+function legLine(l) { if (l.path) return l.path; const c = routeMem.get(legKey(l)); return Array.isArray(c) ? c : [l.a, l.b]; }
 function routeGeo(data, active) {
   return { type: "FeatureCollection", features: data.legs.map((l, i) => ({ type: "Feature", properties: { mode: l.mode, on: active == null || active === i ? 1 : 0 }, geometry: { type: "LineString", coordinates: legLine(l) } })) };
 }
@@ -4601,7 +4669,7 @@ function renderPlan(d) {
     if (it.type === "start") return `<div class="${cls}">${tcell(it)}<div class="rail"><div class="dot start">S</div></div><div class="what"><div class="nm">${esc(it.label)}</div>${it.place.note ? `<div class="sub">${esc(it.place.note)}</div>` : ""}${plan.w.notes.map(t => `<div class="sub">${esc(t)}</div>`).join("")}</div></div>`;
     if (it.type === "travel") {
       const m = it.leg.mode;
-      return `<div class="tl leg ${m}"><div class="time"></div><div class="rail"></div><div class="what">${legIcon(m)}<span>${it.leg.km < 0.1 ? "Next door" : `<b>${esc(it.leg.how)}</b> · ${dur(it.leg.min)} · ${distTxt(it.leg.km)}`}</span></div></div>`;
+      return `<div class="tl leg ${m}${it.leg.choices ? " ridecho" : ""}"><div class="time"></div><div class="rail"></div><div class="what">${legIcon(m)}<span>${it.leg.km < 0.1 ? "Next door" : `<b>${esc(it.leg.how)}</b> · ${dur(it.leg.min)} · ${distTxt(it.leg.km)}`}${rideDetail(it.leg)}</span></div></div>`;
     }
     if (it.type === "fixed") return `<div class="${cls}">${tcell(it)}<div class="rail"><div class="dot fixed">H</div></div><div class="what"><div class="nm">${esc(it.place.name)}</div><div class="sub">${dur(it.place.minutes)}</div></div></div>`;
     if (it.type === "meal") {
@@ -4799,7 +4867,7 @@ function curTour(d) {
 function stepName(st) { return st.type === "meal" ? st.meal.label + " at " + st.place.name : st.type === "start" || st.type === "end" ? st.label : st.place.name; }
 function walkText(st, next2) {
   const leg = st.leg, nm = stepName(st);
-  let t = leg ? `Next up: ${nm}. It's about ${dur(leg.min)} ${leg.mode === "walk" ? "on foot" : "by " + leg.how.toLowerCase()}.` : `Next up: ${nm}.`;
+  let t = leg ? `Next up: ${nm}. It's about ${dur(leg.min)} ${leg.mode === "walk" ? "on foot" : "by " + (leg.transit ? leg.how : leg.how.toLowerCase())}.` : `Next up: ${nm}.`;
   if (st.type === "stop" && st.place.summary) t += " " + st.place.summary;
   if (st.type === "stop" && st.place.along) t += " It's a quick one, right on your way.";
   if (st.type === "meal") t += " " + (st.place.why || "") + " Plan on about " + dur(st.meal.len) + ".";
@@ -5238,6 +5306,7 @@ document.addEventListener("click", e => {
 });
 document.addEventListener("change", e => {
   const t = e.target;
+  if (t.dataset && t.dataset.ride) { trip.legModes = trip.legModes || {}; trip.legModes[t.dataset.ride] = t.value; save(); const y = window.scrollY; render(); window.scrollTo(0, y); return; }
   if (t.dataset && t.dataset.site) {
     const d = day(), id = t.dataset.site;
     d.selected = d.selected || [];

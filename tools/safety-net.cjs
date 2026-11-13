@@ -183,6 +183,37 @@ const log = (suite, trip, ok, what) => { results.push({ suite, trip, ok, what })
     log('Famous sights', 'famous', !bad.length, bad.length ? 'Big stop on the screens: ' + bad.join('; ') : 'Big stop on the screens: Day plan lists the parts, each part tickable, the tour plays one part at a time');
     log('Famous sights', 'famous', !errs.length, errs.length ? 'page errors: ' + [...new Set(errs)].join(' | ') : 'no page errors');
     await b3.close(); }
+  // Real transport for rides (a stand-in /transit answer for Naples, shaped like the helper's): the plan names the
+  // ferry and the train, each ride can be switched to a taxi and the plan follows, the map draws the line's path,
+  // the ride back to the ship says what to do if you miss it, and the ship checks still pass.
+  { const b4 = await chromium.launch(); const p = await (await b4.newContext({ viewport: { width: 1280, height: 800 } })).newPage(); const errs = [], bad = [];
+    p.on('pageerror', e => errs.push(e.message)); await p.route('**/*', r => /^file:/.test(r.request().url()) ? r.continue() : r.abort());
+    await p.goto('file://' + FILE); await p.evaluate(() => localStorage.setItem('kairoute.intro1', '1')); await p.reload(); await p.waitForTimeout(500);
+    const pairs = JSON.parse(fs.readFileSync(path.join(__dirname, 'fixtures', 'naples-transit.json'), 'utf8'));
+    const i = await p.evaluate(pr => { window.__kairouteTransitSet(pr); const d = window.__kairouteDays().find(x => /Naples/.test(x.dest)); window.__kairouteDay(d.i, 'Pompeii|^Sorrento'); window.__kairouteAt(d.i, 'plan'); return d.i; }, pairs);
+    await p.waitForTimeout(300);
+    const legs = await p.$$eval('.tl.leg.ridecho', els => els.map(e => ({ t: e.innerText, sel: e.querySelector('select[data-ride]') ? [...e.querySelector('select[data-ride]').options].map(o => o.text) : [] })));
+    if (legs.length < 3) bad.push(`${legs.length} rides with a choice, expected 3`);
+    if (!legs[0] || !/Ferry/.test(legs[0].t) || !/Molo Beverello/.test(legs[0].t)) bad.push('the first ride is not the ferry from Molo Beverello: ' + (legs[0] || {}).t);
+    if (!legs.slice(1).some(l => /Circumvesuviana/.test(l.t) && /Pompei Scavi/.test(l.t))) bad.push('no Circumvesuviana ride via Pompei Scavi');
+    if (!legs.every(l => l.sel.some(o => /Taxi/.test(o)))) bad.push('a ride without the taxi choice');
+    const last = legs[legs.length - 1]; if (!last || !/If you miss it/.test(last.t) || !/spare before the ship/.test(last.t)) bad.push('the ride back to the ship does not say what to do if you miss it, or its spare time');
+    const q1 = await p.evaluate(() => window.__kairouteQuality().find(x => /Naples/.test(x.dest)));
+    if (!q1 || q1.issues.length || q1.stops !== 2) bad.push('ship checks with the train and ferry: ' + JSON.stringify(q1 && q1.issues) + ' stops ' + (q1 && q1.stops));
+    const mp = await p.evaluate(() => window.__kairouteMap ? window.__kairouteMap() : null);
+    const pathLegs = await p.evaluate(() => (window.__kairouteMapLegs ? window.__kairouteMapLegs() : []).filter(l => l.path).length);
+    if (pathLegs < 2) bad.push(`map draws ${pathLegs} rides along the line's path, expected 3`);
+    await p.screenshot({ path: path.join(OUT, 'rides-naples.jpg'), type: 'jpeg', quality: 60 }); shots.push({ f: 'rides-naples.jpg', cap: 'Day plan: real ferry and train rides, each with a choice' });
+    // Switch the first ride to a taxi: the plan follows.
+    await p.evaluate(() => { const s = document.querySelector('.tl.leg.ridecho select[data-ride]'); s.value = 'taxi'; s.dispatchEvent(new Event('change', { bubbles: true })); }); await p.waitForTimeout(300);
+    const first = await p.$eval('.tl.leg.ridecho', e => e.innerText).catch(() => '');
+    if (!/^Taxi or car/m.test(first.trim())) bad.push('switching to a taxi did not change the ride: ' + first.slice(0, 80));
+    const q2 = await p.evaluate(() => window.__kairouteQuality().find(x => /Naples/.test(x.dest)));
+    if (!q2 || q2.issues.length) bad.push('ship checks after switching to a taxi: ' + JSON.stringify(q2 && q2.issues));
+    void mp; void i;
+    log('Rides', 'transport', !bad.length, bad.length ? bad.join('; ') : 'Naples: ferry out, Circumvesuviana via Pompeii and back, each ride switchable to a taxi, the plan and ship checks follow, the map draws the real lines');
+    log('Rides', 'transport', !errs.length, errs.length ? 'page errors: ' + [...new Set(errs)].join(' | ') : 'no page errors');
+    await b4.close(); }
   // Real-screen walkthroughs at three sizes
   for (const [nm, w, h] of [['tablet landscape', 1280, 800], ['tablet upright', 800, 1280], ['phone', 412, 900]]) {
     const r = spawnSync('node', [path.join(__dirname, 'picks-e2e.cjs'), FILE, String(w), String(h), path.join(OUT, 'walk-' + w)], { encoding: 'utf8', timeout: 15 * 60 * 1000 });
