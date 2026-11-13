@@ -7,9 +7,10 @@ const URL = process.env.URL || "https://gilsonr0566-sys.github.io/Kairoute/", DA
   const b = await chromium.launch(), p = await b.newPage({ viewport: { width: 1280, height: 800 } });
   p.on("pageerror", e => console.log("PAGE ERROR " + e.message));
   // Every request the page makes for rides: when it went, what came back and how long it took.
-  const sent = new Map();
-  p.on("request", r => { if (/\/transit\b/.test(r.url())) { sent.set(r, Date.now()); let ps = []; try { ps = JSON.parse(r.postData() || "{}").pairs || []; } catch (e) {} console.log(`-> ${r.method()} /transit ` + ps.map(x => x.a.join(",") + ">" + x.b.join(",") + " d" + x.dow).join(" | ")); } });
-  p.on("requestfinished", async r => { if (sent.has(r)) { const res = await r.response(); let body = ""; try { const j = JSON.parse(await res.text()); body = (j.results || []).map(x => x.error || (x.opts || []).map(o => o.label + " " + o.min + "m").join("/") || "none").join(" | "); } catch (e) { body = "?"; } console.log(`<- ${res && res.status()} in ${((Date.now() - sent.get(r)) / 1000).toFixed(1)} s: ${body}`); } });
+  const sent = new Map(), pairsOf = r => { try { return (JSON.parse(r.postData() || "{}").pairs || []).map(x => x.a.join(",") + ">" + x.b.join(",") + " d" + x.dow); } catch (e) { return []; } };
+  p.on("request", r => { if (/\/transit\b/.test(r.url())) sent.set(r, Date.now()); });
+  p.on("requestfinished", async r => { if (!sent.has(r)) return; const res = await r.response(); let ans = []; try { ans = (JSON.parse(await res.text()).results || []).map(x => x.error || (x.opts || []).map(o => o.label + " " + o.min + "m").join(" / ") || "none"); } catch (e) {}
+    console.log(`ride lookup: ${res && res.status()} in ${((Date.now() - sent.get(r)) / 1000).toFixed(1)} s`); pairsOf(r).forEach((q, i) => console.log(`   ${q}: ${ans[i] || "?"}`)); });
   p.on("requestfailed", r => { if (sent.has(r)) console.log(`<- FAILED after ${((Date.now() - sent.get(r)) / 1000).toFixed(1)} s: ${r.failure() && r.failure().errorText}`); });
   try {
     await p.goto(URL); await p.waitForFunction(() => window.__kairouteDays && window.__kairoutePrefs, null, { timeout: 120000 }); // waits out the short "updating" page
