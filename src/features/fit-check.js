@@ -49,7 +49,7 @@ function addPick(d, id, ask) {
   // Closed that day (or open only outside the day's time here): never added; the box offers a day it's open.
   const sx = allSites(city).find(x => x.id === id); if (sx && shutOn(d, sx)) { if (ask) closedOpen(d, sx); return false; }
   if (!fitsWith(d, [id])) { if (ask) fitOpen(d, id); return false; }
-  d.selected = [...d.selected, id]; rememberPick(d, allSites(city).find(x => x.id === id)); return true;
+  d.selected = [...d.selected, id]; delete d.autoEmpty; rememberPick(d, allSites(city).find(x => x.id === id)); return true;
 }
 // Starting picks the app chose (never the traveler's own): trimmed, least important first, until the day fits.
 function fitTrim(d, keep) {

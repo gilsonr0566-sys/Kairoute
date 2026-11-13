@@ -312,6 +312,25 @@ details.more summary { cursor: pointer; font-weight: 700; color: var(--route); }
 
 .seacard { text-align: center; padding: 40px 16px; display: grid; gap: 10px; justify-items: center; }
 .seacard .big { font-size: 2.6rem; }
+/* Days at sea: get ready for the next ports (src/features/voyage.js) */
+.voyday { display: grid; gap: 10px; }
+.voytop { display: flex; flex-wrap: wrap; gap: 10px 16px; justify-content: space-between; align-items: flex-start; }
+.voytop h3 { margin: 2px 0; }
+.voyacts { display: flex; flex-wrap: wrap; gap: 8px; }
+.voyplan { margin: 0; padding: 0; list-style: none; display: grid; gap: 2px; }
+.voyplan li { display: flex; flex-wrap: wrap; gap: 4px 10px; padding: 7px 0; border-top: 1px solid var(--line); }
+.voyplan li:first-child { border-top: 0; }
+.voyplan li > b { color: var(--route); min-width: 3.2em; font-variant-numeric: tabular-nums; }
+.voyrecap li { display: grid; gap: 2px; }
+.voyfold { padding: 12px 14px !important; }
+.voyfold > summary { font-weight: 700; cursor: pointer; min-height: 30px; display: list-item; }
+.voyin { display: grid; gap: 10px; padding-top: 10px; }
+.voyin p { margin: 0; }
+.voydeep { display: flex; gap: 12px; align-items: center; justify-content: space-between; padding: 6px 0; border-top: 1px solid var(--line); }
+.voydeep:first-child { border-top: 0; }
+.voydeep > div { display: grid; gap: 2px; min-width: 0; }
+.voydeep .btn { flex: none; }
+.aboardcard { display: flex; flex-wrap: wrap; gap: 8px 14px; align-items: center; justify-content: space-between; }
 .windowbar { display: flex; flex-wrap: wrap; gap: 8px; }
 .windowbar span { background: var(--card); border: 1px solid var(--line); border-radius: 3px; padding: 4px 12px; font-size: 0.85rem; }
 textarea { min-height: 140px; resize: vertical; line-height: 1.45; }
