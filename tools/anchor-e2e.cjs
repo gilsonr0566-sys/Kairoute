@@ -115,6 +115,16 @@ const FILE = path.resolve(process.argv[2] || path.join(__dirname, '..', 'index.h
     if (errs.length) { fails++; console.log(`FAIL ${tag}: page errors: ${errs.slice(0, 3).join(' | ')}`); }
     await ctx.close();
   }
+  // A written guide saved on the device (Naples with Amalfi but no Sorrento) never hides a built-in sight.
+  { const ctx = await b.newContext(); const p = await ctx.newPage();
+    await p.route('**/*', r => /^file:/.test(r.request().url()) ? r.continue() : r.abort());
+    await p.goto('file://' + FILE); await p.evaluate(() => localStorage.setItem('kairoute.intro1', '1')); await p.reload(); await p.waitForTimeout(500);
+    const want = await p.evaluate(() => { const [raw, keys] = BUILTIN_CITIES.find(([c]) => /Naples/.test(c.city)); const g = JSON.parse(JSON.stringify(raw)); g.farther = (g.farther || []).filter(x => !/Sorrento/.test(x.name)); g.sites = (g.sites || []).filter(x => !/Sorrento/.test(x.name)); g.farther.push({ id: 'amalfi-w', name: 'Amalfi', lat: 40.634, lng: 14.602, minutes: 120, far: true, category: 'Day trip', summary: 'Cliffside town.' }); const out = {}; keys.forEach(k => out[k] = g); localStorage.setItem('wayside.cities', JSON.stringify(out)); return [...(raw.sites || []), ...(raw.farther || [])].map(x => x.name); });
+    await p.reload(); await p.waitForTimeout(500); await p.getByText('Continue trip').click().catch(() => {}); await p.waitForTimeout(300);
+    const got = await p.evaluate(() => { const s = window.__kairouteSights(); const k = Object.keys(s).find(x => /Naples/.test(x)); return k ? s[k].sites.concat(s[k].farther).map(n => n.replace(' [quick]', '')) : null; });
+    if (!got) console.log('note: no Naples day in the sample trip');
+    else { const lost = want.filter(n => !got.includes(n)); if (lost.length || !got.includes('Amalfi')) { fails++; console.log(`FAIL saved Naples guide: missing ${lost.concat(got.includes('Amalfi') ? [] : ['Amalfi']).join(', ')}`); } }
+    await ctx.close(); }
   await b.close();
   console.log(`${tested} picks checked (${boxes} opened the won't-fit box, ${days} fixed with one tap), ${fails} failure(s)`); process.exit(fails ? 1 : 0);
 })();
