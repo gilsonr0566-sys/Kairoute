@@ -48,6 +48,7 @@ jobs:
           node tools/ride-check.cjs
           node tools/anchor-e2e.cjs
           node tools/extras-check.cjs index.html checks/extras
+          node tools/offline-e2e.cjs
       - name: Street map check (no network needed)
         run: MOCK=1 node tools/map-e2e.cjs
       - name: Speed check (phone and tablet, slowed like a mid-range phone; a slow app doesn't go live)

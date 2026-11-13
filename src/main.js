@@ -239,6 +239,7 @@ let trip = sampleTrip();
 let library = [];
 let view = "lobby", siteFilter = "all", busy = null, aiError = "", tripText = "";
 let resetAsk = false, tourTimer = null, delAsk = null, renameId = null;
+let seedSave = null; // see seedPicks
 let wiz = null, cdTimer = null, cdPreview = null, cdSpoken = false, cdWhere = null;
 const translations = {};
 const deeper = {}, answers = {};
@@ -591,7 +592,8 @@ const tmin = (a, b) => {
 // checks all follow the choice. While the lines are being looked up (or none are mapped) the estimate is used.
 const TRANSIT_KEY = "kairoute.transit2"; // transit2: answers kept from before ferries were found by their course are dropped
 const transitMem = (() => { try { return JSON.parse(localStorage.getItem(TRANSIT_KEY) || "{}"); } catch (e) { return {}; } })();
-const transitFail = new Map(), transitQ = new Map(); let transitTimer = 0, transitBusy = false;
+let transitSeen = null;
+const transitFail = new Map(), transitQ = new Map(), transitPins = new Set(); let transitTimer = 0, transitBusy = false; // pins: rides of the trip being kept for offline
 // Speed: asked hundreds of thousands of times while planning, so each place's half of the key is kept with it.
 const pkMemo = new WeakMap();
 const pkOf = p => { if (!p || typeof p !== "object") return (+(p && p.lat)).toFixed(3) + "," + (+(p && p.lng)).toFixed(3);
@@ -616,8 +618,10 @@ function transitNear(a, b, kind) {
 function transitFor(a, b) {
   if (!a || !b || !isFinite(a.lat) || !isFinite(b.lat) || hav(a, b) < 4) return null;
   const dow = planDow(), k = pairKey(a, b) + "|" + dayKind(dow), hit = transitMem[k] || transitMem[pairKey(a, b)] || transitNear(a, b, dayKind(dow));
-  // An answer given while a source was busy (or an empty one) is used meanwhile and asked again after 10 minutes.
-  if (hit && !(hit.partial && Date.now() - hit.t > 600000)) return hit.opts.filter(runsThen);
+  if (transitSeen) transitSeen.push([k, pairKey(a, b), a, b, dayKind(dow)]); // the offline check lists every ride a plan looks up
+  // An answer given while a source was busy (or an empty one) is used meanwhile and asked again after 10 minutes
+  // (with no internet it is simply used: it can't be asked again).
+  if (hit && !(hit.partial && Date.now() - hit.t > 600000 && navigator.onLine !== false)) return hit.opts.filter(runsThen);
   if (typeof freeAI !== "undefined" && freeAI && !transitQ.has(k) && !(transitFail.get(k) > Date.now() - 120000)) { transitQ.set(k, { a: [+a.lat, +a.lng], b: [+b.lat, +b.lng], dow, pri: typeof trip !== "undefined" && trip.days && trip.days[trip.active] && typeof planDate !== "undefined" && trip.days[trip.active].date === planDate }); clearTimeout(transitTimer); transitTimer = setTimeout(askTransit, 300); }
   return hit ? hit.opts.filter(runsThen) : null;
 }
@@ -646,10 +650,21 @@ function transitShow() { if (typeof view !== "undefined" && ["plan", "trip", "si
 // Kept on the phone so the next visit needs no lookups: the newest 150 answers, each line's path thinned for storage.
 // A full storage drops older answers rather than failing.
 function transitKeep() {
-  const ks = Object.keys(transitMem).sort((x, y) => transitMem[y].t - transitMem[x].t); ks.slice(150).forEach(k => delete transitMem[k]);
-  const slim = keep => { const o = {}; ks.slice(0, keep).forEach(k => { const m = transitMem[k]; if (m) o[k] = { t: m.t, partial: !!m.partial, opts: (m.opts || []).map(x => Object.assign({}, x, { path: thinPts(x.path || [], 60) })) }; }); return JSON.stringify(o); };
-  for (const n of [150, 60, 20]) { try { localStorage.setItem(TRANSIT_KEY, slim(n)); return; } catch (e) {} }
+  const ks = Object.keys(transitMem).sort((x, y) => (transitPins.has(y) ? 1 : 0) - (transitPins.has(x) ? 1 : 0) || transitMem[y].t - transitMem[x].t);
+  const thin = m => ({ t: m.t, partial: !!m.partial, opts: (m.opts || []).map(x => Object.assign({}, x, { path: thinPts(x.path || [], 60) })) });
+  const slim = keep => { const o = {}; ks.slice(0, keep).forEach(k => { const m = transitMem[k]; if (m) o[k] = thin(m); }); return JSON.stringify(o); };
+  // Every answer is also kept whole in the device's larger store (no limit), so a long trip planned for offline
+  // keeps every ride it was planned with; it is read back at start-up (see transitLoad).
+  try { const all = {}; Object.keys(transitMem).forEach(k => { all[k] = thin(transitMem[k]); }); transitAll = Object.assign(transitAll || {}, all); kv.set("transitAll", transitAll); } catch (e) {}
+  for (const n of [Math.max(150, transitPins.size + 30), Math.max(60, transitPins.size), Math.max(20, transitPins.size)]) { try { localStorage.setItem(TRANSIT_KEY, slim(n)); return; } catch (e) {} }
 }
+let transitAll = null;
+function transitLoad() {
+  kv.get("transitAll").then(m => { if (!m || typeof m !== "object") return; transitAll = m; let added = 0;
+    for (const k in m) if (!transitMem[k] && m[k] && Array.isArray(m[k].opts)) { transitMem[k] = m[k]; added++; }
+    if (added && typeof render === "function" && typeof view !== "undefined") transitShow(); }).catch(() => {});
+}
+setTimeout(transitLoad, 0);
 const thinPts = (pts, n) => { if (pts.length <= n) return pts; const step = (pts.length - 1) / (n - 1); return Array.from({ length: n }, (_, i) => pts[Math.round(i * step)]); };
 const rideId = o => o ? o.mode + "|" + o.label : "taxi";
 let rideNotice = null, ridePref = "public";
@@ -727,6 +742,7 @@ function refillIfNeeded(d, city) {
   delete d.respread;
   const fresh = defaultSelection(city, trip.style, d);
   fresh.forEach(id => addPick(d, id, false));
+  if (!seedSave) seedSave = setTimeout(() => { seedSave = null; save(); }, 0);
 }
 // "Suggest my tour": fills every day in this city with the best stops that truly fit each day's time.
 // Each day starts from the best sight still unseen and grows around it (nearby, high-value sights first),
@@ -775,10 +791,13 @@ function suggestTour(d0) {
 }
 // A day's starting picks. Earlier days in the same city choose first, in trip order, so which day gets a sight
 // never depends on which day the traveler happened to open first (one sight, one day).
+// The starting picks are saved as soon as they are chosen, so a day keeps the same sights when the app opens again
+// (choosing again later, with other ratings or rides known, or with no internet, could pick differently).
 function seedPicks(d, city) {
-  const i = trip.days.indexOf(d);
-  trip.days.slice(0, Math.max(0, i)).forEach(o => { if (!o.selected && !noShore(o) && cityFor(o) === city) { o.selected = defaultSelection(city, trip.style, o); fitTrim(o); } });
-  if (!d.selected) { d.selected = defaultSelection(city, trip.style, d); fitTrim(d); }
+  const i = trip.days.indexOf(d); let made = false;
+  trip.days.slice(0, Math.max(0, i)).forEach(o => { if (!o.selected && !noShore(o) && cityFor(o) === city) { o.selected = defaultSelection(city, trip.style, o); fitTrim(o); made = true; } });
+  if (!d.selected) { d.selected = defaultSelection(city, trip.style, d); fitTrim(d); made = true; }
+  if (made && !seedSave) seedSave = setTimeout(() => { seedSave = null; save(); }, 0);
 }
 function defaultSelection(city, style, d) {
   const taken = d ? plannedElsewhere(d) : {};
@@ -1130,16 +1149,16 @@ function crowdMark(city) {
 const G_KEY = "kairoute.grat", G_MIN = 4.0, G_FLOOR = 3.6;
 let gStore = {}; try { gStore = JSON.parse(localStorage.getItem(G_KEY) || "{}") || {}; } catch (e) {}
 const gKey = r => keyOf(r.name) + "|" + (+r.lat).toFixed(3) + "|" + (+r.lng).toFixed(3);
-function gOf(r) { const x = r && isFinite(r.lat) ? gStore[gKey(r)] : null; return x && Date.now() - (x.at || 0) < 30 * 86400000 ? x : null; }
+function gOf(r) { const x = r && isFinite(r.lat) ? gStore[gKey(r)] : null; return x && (Date.now() - (x.at || 0) < 30 * 86400000 || (typeof navigator !== "undefined" && navigator.onLine === false)) ? x : null; } // with no internet a saved rating is kept, however old
 const gBad = g => !!g && g.state === "ok" && (g.closed || (g.rating != null && ((g.rating < G_MIN && g.count >= 20) || (g.rating < G_FLOOR && g.count >= 5))));
 const gGood = g => !!g && g.state === "ok" && g.rating >= 4.5 && g.count >= 100;
-let gAsking = new Set(), gNoKey = false;
+let gAsking = new Set(), gNoKey = false, gInFlight = 0;
 function gCheck(plan, city) {
   if (!freeAI || !plan || !plan.items || gNoKey) return;
   const places = [];
   plan.items.forEach(it => { if ((it.type === "meal" || it.type === "evening") && !it.place.generic && !it.place.booked) [it.place].concat(it.place.alts || []).forEach(p => places.push(p)); });
   const todo = places.filter(p => isFinite(p.lat) && !gOf(p) && !gAsking.has(gKey(p))); if (!todo.length) return;
-  todo.forEach(p => gAsking.add(gKey(p)));
+  todo.forEach(p => gAsking.add(gKey(p))); gInFlight++;
   fetch(freeAI.url + "/grating", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ places: todo.map(p => ({ name: p.name, lat: p.lat, lng: p.lng })) }) })
     .then(r => r.ok ? r.json() : null).then(j => {
       if (!j || !j.ratings) return; let changed = false;
@@ -1148,7 +1167,7 @@ function gCheck(plan, city) {
       try { localStorage.setItem(G_KEY, JSON.stringify(gStore)); } catch (e) {}
       crowdMark(city); bonusMemo = new Map(); mealMemo = new Map(); keptMemo = new Map(); eveMemo = new Map();
       if (view === "plan" || view === "tour") { const y = window.scrollY; render(); window.scrollTo(0, y); }
-    }).catch(() => todo.forEach(p => gAsking.delete(gKey(p))));
+    }).catch(() => todo.forEach(p => gAsking.delete(gKey(p)))).finally(() => { gInFlight--; });
 }
 // Short form for alternatives: "★ 4.6 (1,234)", linked to the place on Google Maps.
 const gMini = a => { const g = a.g || gOf(a); return g && g.state === "ok" && g.rating ? ` <a class="grate mini" href="${esc(g.url || "#")}" target="_blank" rel="noopener" title="Rating on Google Maps">★ ${g.rating.toFixed(1)} <small>(${g.count.toLocaleString()}) Google</small></a>` : ""; };
@@ -1156,10 +1175,13 @@ const gLine = r => { const g = r.g || gOf(r); if (!g) return gNoKey ? "" : ""; i
 function crowdFor(city) {
   if (!city) return;
   const k = keyOf(city.city);
-  if (!crowdCache[k] && freeAI) {
-    crowdCache[k] = { map: null };
+  // The last answer is kept on the device, so plans come out the same with no internet.
+  if (!crowdCache[k]) { try { const j = JSON.parse(localStorage.getItem("kairoute.crowd." + k) || "null"); if (j && j.ratings) { crowdCache[k] = { map: Object.keys(j.ratings).length ? j.ratings : null, saved: true }; markSites(city, j); } } catch (e) {} }
+  if ((!crowdCache[k] || (crowdCache[k].saved && !crowdCache[k].fresh)) && freeAI && navigator.onLine !== false) {
+    crowdCache[k] = Object.assign(crowdCache[k] || { map: null }, { fresh: true });
     fetch(`${freeAI.url}/ratings?city=${encodeURIComponent(k)}`).then(r => r.ok ? r.json() : null).then(j => {
-      if (!j || !j.ratings) return; markSites(city, j);
+      if (!j || !j.ratings) return; markSites(city, j); crowdCache[k].saved = true;
+      try { localStorage.setItem("kairoute.crowd." + k, JSON.stringify({ ratings: j.ratings, busy: j.busy || {} })); } catch (e) {}
       if (!Object.keys(j.ratings).length && !Object.keys(j.busy || {}).length) return;
       crowdCache[k].map = j.ratings;
       if (view === "plan" || view === "guide") { const y = window.scrollY; render(); window.scrollTo(0, y); }
@@ -1510,6 +1532,9 @@ function buildPlanFor(d) {
     // Lunches come first: a suggested dinner never takes a place another day of the trip eats lunch at,
     // nor another evening's dinner.
     const today = new Set(meals.flatMap(m => [m].concat(m.alts || [])).map(m => keyOf(m.name)));
+    // Earlier days in the city choose their dinner first, so which day gets a place never depends on which days
+    // happened to be opened before this one.
+    trip.days.forEach((o, k) => { if (k < myIdx && cityFor(o) === city && !eveMemo.has(o)) { try { buildPlan(o); } catch (e) {} } });
     skipEvening = true;
     try { trip.days.forEach((o, k) => { if (o === d || cityFor(o) !== city) return; if (k > myIdx) { try { buildPlan(o); } catch (e) {} } (mealMemo.get(o) || []).forEach(n => today.add(n)); (eveMemo.get(o) || []).forEach(n => today.add(n)); }); } finally { skipEvening = false; }
     const pool = (city.restaurants || []).filter(r => !r.generic && !r.crowdDrop && !mealShut(r, "Dinner") && hav(r, endAt) <= 0.8 && !avoidMeals.has(keyOf(r.name)) && !today.has(keyOf(r.name)));
@@ -1521,7 +1546,7 @@ function buildPlanFor(d) {
     }
   }
   evening.forEach(e => items.push(e));
-  eveMemo.set(d, evening.filter(e => !e.booked).flatMap(e => [e.place].concat(e.place.alts || [])).map(m => keyOf(m.name)));
+  if (!skipEvening) eveMemo.set(d, evening.filter(e => !e.booked).flatMap(e => [e.place].concat(e.place.alts || [])).map(m => keyOf(m.name)));
   avoidMeals = savedAvoid;
   const walkKm = items.filter(i => i.type === "travel" && i.leg.mode === "walk").reduce((a, i) => a + i.leg.km, 0);
   const stops = items.filter(i => i.type === "stop");
@@ -1947,10 +1972,14 @@ function addRealDetails(x, g, vg, osm) {
 function famousMustBar(top) { const sl = top.map(x => x.sl || 0).sort((a, b) => b - a); return sl.length ? Math.max(sl[Math.min(5, sl.length - 1)], 0.6 * sl[0]) : Infinity; }
 let cityArea = null;
 const famousCache = {};
+// A city's fame list and sources are kept on the device too (built-in cities aren't saved with the trip), so the
+// planner ranks sights the same way with no internet and a day's plan comes out the same offline.
+async function srcKept(key, label, ok) { if (!label) return null; const j = await kv.get(key + keyOf(label)); return ok(j) ? j : null; }
 async function famousFor(label) {
-  if (!freeAI || !label) return null; if (famousCache[label]) return famousCache[label];
-  try { const r = await fetch(freeAI.url + "/famous?city=" + encodeURIComponent(label)); if (r.ok) { const j = await r.json(); if (j && Array.isArray(j.main)) return (famousCache[label] = j); } } catch (e) {}
-  return null;
+  if (!label) return null; if (famousCache[label]) return famousCache[label];
+  if (freeAI && navigator.onLine !== false) try { const r = await fetch(freeAI.url + "/famous?city=" + encodeURIComponent(label)); if (r.ok) { const j = await r.json(); if (j && Array.isArray(j.main)) { kv.set("fam:" + keyOf(label), j); return (famousCache[label] = j); } } } catch (e) {}
+  const kept = await srcKept("fam:", label, j => j && Array.isArray(j.main));
+  return kept ? (famousCache[label] = kept) : null;
 }
 // Step one of every guide and plan: the city's sources (worker /sources), gathered from several independent
 // places, global and local (Wikidata, Wikipedia in the local language, English and local Wikivoyage,
@@ -1959,9 +1988,10 @@ async function famousFor(label) {
 // preferred when there is time to add one; restaurants the guidebooks name get a preference.
 const sourcesCache = {};
 async function sourcesFor(label) {
-  if (!freeAI || !label) return null; if (sourcesCache[label]) return sourcesCache[label];
-  try { const r = await fetch(freeAI.url + "/sources?city=" + encodeURIComponent(label)); if (r.ok) { const j = await r.json(); if (j && Array.isArray(j.stops)) return (sourcesCache[label] = j); } } catch (e) {}
-  return null;
+  if (!label) return null; if (sourcesCache[label]) return sourcesCache[label];
+  if (freeAI && navigator.onLine !== false) try { const r = await fetch(freeAI.url + "/sources?city=" + encodeURIComponent(label)); if (r.ok) { const j = await r.json(); if (j && Array.isArray(j.stops)) { kv.set("src:" + keyOf(label), j); return (sourcesCache[label] = j); } } } catch (e) {}
+  const kept = await srcKept("src:", label, j => j && Array.isArray(j.stops));
+  return kept ? (sourcesCache[label] = kept) : null;
 }
 const srcStop = (src, name, ll) => src && (src.stops || []).find(x => nameMatch(name, x.name) || nameMatch(x.name, name) || (x.local && (nameMatch(name, x.local) || nameMatch(x.local, name))) ||
   (ll && x.lat != null && isFinite(numV(ll.lat)) && Math.abs(x.lat - numV(ll.lat)) < 0.0015 && Math.abs(x.lng - numV(ll.lng)) < 0.002 && nameMatch(x.name.split(" ").slice(0, 2).join(" "), name)));
@@ -2258,18 +2288,19 @@ function sightKind(s, city) {
   return s.kind === "local" ? "local" : "touristy";
 }
 function fameFor(d, city) {
-  if (!city || !freeAI) return;
+  if (!city) return Promise.resolve();
   const k = keyOf(city.city);
-  if (fameAsked[k]) { if (fameAsked[k] !== true) fameMark(city, fameAsked[k]); return; }
+  if (fameAsked[k]) { if (fameAsked[k] !== true) fameMark(city, fameAsked[k]); return fameWait[k] || Promise.resolve(); }
   fameAsked[k] = true;
-  sourcesFor(city.city).then(async src => {
+  return (fameWait[k] = sourcesFor(city.city).then(async src => {
     // If the sources step can't answer, the fame list alone still protects the famous sights.
     if (!src) { const fam = await famousFor(city.city); if (fam) src = { stops: fam.main.map(x => Object.assign({ src: ["Wikidata (Wikipedia in many languages)"] }, x)), far: fam.far, eats: [] }; }
     if (!src) { delete fameAsked[k]; return; }
     fameAsked[k] = src; fameMark(city, src);
     if (view === "plan" || view === "guide") { const y = window.scrollY; render(); window.scrollTo(0, y); }
-  }).catch(() => { delete fameAsked[k]; });
+  }).catch(() => { delete fameAsked[k]; }).finally(() => { delete fameWait[k]; }));
 }
+const fameWait = {};
 // How much a sight's fame protects it: 1 for an ordinary sight, up to 3 for a World Heritage site that
 // half the world's Wikipedias write about.
 const fameW = s => travW(s) * (1 + (s && s.unesco ? 0.8 : s && s.heritage ? 0.3 : 0) + Math.min(1.2, ((s && s.fame) || 0) / 80) + Math.min(0.6, Math.max(0, ((s && s.src && s.src.length) || 0) - 1) * 0.15));
@@ -2812,7 +2843,8 @@ const SILENT = (() => { // a tiny silent WAV, played on the tap itself so the br
   let bin = ""; b.forEach(x => bin += String.fromCharCode(x)); return "data:audio/wav;base64," + btoa(bin);
 })();
 let natVoiceNote = "";
-const natVoiceOn = lc => !!(freeAI && natAudio && !tts && !lc && (P().lang || "English") === "English" && appSet.natvoice !== "off");
+// With no internet the helper may be unknown, but recordings saved for offline still play (missing ones fall back to the device voice).
+const natVoiceOn = lc => !!((freeAI || (typeof navigator !== "undefined" && navigator.onLine === false)) && natAudio && !tts && !lc && (P().lang || "English") === "English" && appSet.natvoice !== "off");
 // ---- The Kairoute voice: our own delivery and sound on top of the voice engines ----
 // Delivery: rewrite the written guide the way a guide would say it (no abbreviations, natural pauses).
 function shapeForSpeech(t) {
@@ -2880,13 +2912,17 @@ function toLines(parts) {
   return lines;
 }
 // The whole stop becomes one guide script, in pieces of up to ~2,200 characters, so one voice reads it all.
-async function scriptParts(lines) {
+function scriptChunks(lines) {
   const chunks = []; let cur = "";
   lines.map(shapeForSpeech).map(l => l.replace(/\n\n…\n\n/g, "\n\n")).forEach(l => { if (cur && (cur + "\n\n" + l).length > 2200) { chunks.push(cur); cur = l; } else cur += (cur ? "\n\n" : "") + l; });
   if (cur) chunks.push(cur);
+  return chunks;
+}
+async function scriptParts(lines) {
+  const chunks = scriptChunks(lines);
   const each = await Promise.all(chunks.map(async text => {
     const saved = await kv.get("s:" + text); if (Array.isArray(saved) && saved.length) return saved;
-    try { const r = await fetch(freeAI.url + "/script", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ text }) }); if (r.ok) { const parts = (await r.json()).parts; if (Array.isArray(parts) && parts.length >= 2) { kv.set("s:" + text, parts); return parts; } } } catch (e) {}
+    try { if (!freeAI) throw new Error("offline"); const r = await fetch(freeAI.url + "/script", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ text }) }); if (r.ok) { const parts = (await r.json()).parts; if (Array.isArray(parts) && parts.length >= 2) { kv.set("s:" + text, parts); return parts; } } } catch (e) {}
     return localParts(text);
   }));
   return each.flatMap((ps, i) => i && ps.length && !/^~/.test(ps[0]) ? ["~" + ps[0], ...ps.slice(1)] : ps);
@@ -3486,7 +3522,7 @@ function render() {
     paneMemo.same = paneMemo.key === pkey; paneMemo.key = pkey; }
   { const old = document.querySelector(".coach"); if (old) old.remove(); const ch = coachHTML(); if (ch) document.body.insertAdjacentHTML("beforeend", ch); }
   if (askNotice && !FULL_VIEWS[view]) { const v = document.getElementById("view"); if (v) v.insertAdjacentHTML("afterbegin", `<p class="banner ok" role="status">${esc(askNotice)} <button class="linkbtn" data-act="asknoticeok">OK</button></p>`); }
-  mountMaps(); liveAfterRender();
+  mountMaps(); liveAfterRender(); offAfterRender();
   if (openMenus.length && paneMemo.same) document.querySelectorAll("#view details.moremenu").forEach(el => { if (openMenus.includes(menuKey(el))) { el.open = true; try { placeMenu(el); } catch (e) {} } });
   if (openFolds.size) document.querySelectorAll("#view details").forEach(el => { const sm = el.querySelector("summary"); if (sm && openFolds.has(view + "|" + sm.textContent.trim())) el.open = true; });
   // A re-render of the same screen (live updates, sync, data arriving) never moves what you're looking at:
@@ -3746,7 +3782,7 @@ function pageBar(title) {
 // Settings, privacy and terms share one page: a section list on the left (chips on phones) and one section at a time,
 // so every section fits on a screen and nothing is listed twice.
 let setSec = "display", guideStop = null;
-const SET_SECS = [["display", "Display"], ["voice", "Guide voice"], ["prefs", "Trip preferences"], ["sync", "Connect another device"], ["group", "Group tour"], ["ai", "AI guide"], ["data", "Your data"], ["about", "About"], ["privacy", "Privacy"], ["terms", "Terms"]];
+const SET_SECS = [["display", "Display"], ["voice", "Guide voice"], ["prefs", "Trip preferences"], ["sync", "Connect another device"], ["group", "Group tour"], ["ai", "AI guide"], ["offline", "Offline"], ["data", "Your data"], ["about", "About"], ["privacy", "Privacy"], ["terms", "Terms"]];
 function renderSettings(sec) {
   if (sec) setSec = sec;
   const seg = (key, list) => `<div class="seg" role="group">${list.map(([k, l]) => `<button type="button" data-app="${key}" data-v="${k}" aria-pressed="${appSet[key] === k}">${l}</button>`).join("")}</div>`;
@@ -3774,6 +3810,7 @@ function renderSettings(sec) {
     ai: () => `
   <div class="card"><h3>AI guide</h3><p class="lede">${sample === freeSample ? `On, using Kairoute's free test AI. It builds guides for any city, finds your hotel, reads itinerary photos and answers questions.${freeAI && freeAI.budget ? ` About ${Math.round(100 * (freeAI.left || 0) / freeAI.budget)}% of today's free allowance is left; it resets every evening at 6 pm Central (7 pm in summer).` : ""}` : aiReady() ? "On. Kairoute uses Claude to build city guides, find your hotel, read itinerary photos and answer your questions." : "Off right now. The built-in cities still work fully."}</p>
     ${cl && cl.use ? "" : `<details class="more" ${getKey() ? "open" : ""}><summary>Advanced: use your own Anthropic key</summary><div class="field" style="margin-top:10px"><label for="aikey">Anthropic API key</label><div class="ask"><input type="password" id="aikey" autocomplete="off" placeholder="${getKey() ? "Saved on this device" : "sk-ant-…"}"><button type="button" class="btn small" data-act="savekey">Save</button>${getKey() ? `<button type="button" class="btn ghost small" data-act="clearkey">Remove</button>` : ""}</div><span class="hint">Stored only on this device and sent only to Anthropic. Get one at console.anthropic.com under API keys. Usage on your key is billed to you by Anthropic.</span></div></details>`}</div>`,
+    offline: () => offSettings(),
     data: () => `
   <div class="card"><div><h3>Your data</h3><p class="lede">Trips, guides and journal entries are saved on this device${syncSt() ? ", and copied to your other devices through sync" : ""}. Starting over clears all of it and loads the example trip again.</p></div>
     <div class="actions">${resetAsk ? `<button class="btn" data-act="resetyes" style="background:var(--warn)">Yes, clear everything</button><button class="btn ghost" data-act="resetno">Keep my trips</button>` : `<button class="btn ghost" data-act="reset">Start over</button>`}</div></div>`,
@@ -3784,7 +3821,6 @@ function renderSettings(sec) {
       ["Book it", "Reserve tickets, timed entries and restaurant tables right from a stop."],
       ["Live maps", "Mapbox maps with turn-by-turn walking directions and your blue dot."],
       ["Real photos", "Pictures of every stop showing exactly what to look for."],
-      ["Offline days", "Download each day's maps, audio and photos before you leave the ship."],
       ["Weather smarts", "Read the forecast and move indoor sights to rainy days for you."],
       ["Travel together", "Share a live trip so everyone in your group sees the same plan and journal."],
       ["Running-late alerts", "Phone alerts for the ship countdown, even with the app closed."],
@@ -3907,7 +3943,6 @@ function renderTrips() {
       ["Book it", "Reserve tickets, timed entries and restaurant tables right from a stop."],
       ["Live maps", "Mapbox maps with turn-by-turn walking directions and your blue dot."],
       ["Real photos", "Pictures of every stop showing exactly what to look for."],
-      ["Offline days", "Download each day's maps, audio and photos before you leave the ship."],
       ["Weather smarts", "Read the forecast and move indoor sights to rainy days for you."],
       ["Travel together", "Share a live trip so everyone in your group sees the same plan and journal."],
       ["Running-late alerts", "Phone alerts for the ship countdown, even with the app closed."]
@@ -4357,6 +4392,7 @@ function renderTrip(d) {
   <div class="tripgrid">
     <div class="leftcol pane" data-pane="days">
       <div class="pagehead"><div><div class="eyebrow">${(() => { const dates = new Set(trip.days.map(x => x.date).filter(Boolean)).size || trip.days.length, cities = new Set(trip.days.filter(x => !noShore(x) && x.type !== "port" && x.destination).map(x => keyOf(x.destination))).size, ports = trip.days.filter(x => x.type === "port").length; return `${dates} day${dates === 1 ? "" : "s"}${cities > 1 ? ` · ${cities} cities` : ""}${ports ? ` · ${ports} cruise stop${ports === 1 ? "" : "s"}` : ""}`; })()}</div>${renameId === trip.id ? renameBox(trip.id, trip.name || tripName(trip)) : `<h2 class="dayname">${esc(trip.name || "Your trip")} <button class="linkbtn rename" data-act="rename" data-id="${esc(trip.id)}" aria-label="Rename this trip">✎ Rename</button></h2>`}</div></div>
+      ${offCard()}
       ${aiReady() && missing ? `<button class="btn ghost small" data-act="genall" ${busy ? "disabled" : ""}>${missing === 1 ? `Build the guide for ${esc(missingNames[0])}` : missing <= 3 ? `Build the guides for ${esc(missingNames.join(" and "))}` : `Build the guides for all ${missing} places`}</button>` : ""}
       <div class="itin">${itinerary()}</div>
       <div class="actions"><button class="btn ghost small" data-act="addday">+ Add a day</button><button class="btn ghost small" data-act="addport">+ Add a port day</button></div>
@@ -4868,40 +4904,70 @@ if (typeof window !== "undefined") window.__kairouteMap = () => {
     streetLegs: D ? D.legs.filter(l => Array.isArray(routeMem.get(legKey(l)))).length : 0, onLegs: fs.filter(f => f.properties.on).length,
     marks: kmapMarks.map(m => m.getElement().className.replace(/^mk mk-/, "")), you: !!kmapYou, tiles: vk ? kmap.isSourceLoaded(vk) : false, zoom: kmap ? kmap.getZoom() : 0 };
 };
-// Offline after planning: keep the map tiles (to street level) and street routes for every planned day on
-// the device, in the background, once per day's route. The service worker stores what is fetched here.
+// Offline after planning: keep the map tiles (to street level), label fonts, map icons and street routes for
+// every planned day on the device. Runs quietly in the background once a map has loaded, and in full from
+// "Download for offline" (see features/offline.js). No visible map is needed: the tile address comes from the
+// map style itself.
 let prefetchBusy = false;
 function tileXY(lng, lat, z) { const n = 2 ** z, x = Math.floor((lng + 180) / 360 * n), r = lat * Math.PI / 180, y = Math.floor((1 - Math.log(Math.tan(r) + 1 / Math.cos(r)) / Math.PI) / 2 * n); return [Math.max(0, Math.min(n - 1, x)), Math.max(0, Math.min(n - 1, y))]; }
-async function prefetchTripMaps() {
-  if (prefetchBusy || !kmap || !kmapReady || typeof caches === "undefined" || navigator.onLine === false) return;
-  const conn = navigator.connection; if (conn && (conn.saveData || /2g/.test(conn.effectiveType || ""))) return;
-  const style = kmap.getStyle(), vk = Object.keys(style.sources || {}).find(k => style.sources[k].type === "vector"), vs = vk && kmap.getSource(vk);
-  const tpl = vs && vs.tiles && vs.tiles[0]; if (!tpl) return;
-  prefetchBusy = true;
-  // Label fonts for Latin, Greek and Cyrillic street names, once.
+// The map style for a theme and the address its vector tiles come from (from the device's map store with no internet).
+async function mapBase(theme) {
+  const st = await (await mapFetch(MAP_TILES[theme])).json();
+  const vk = Object.keys(st.sources || {}).find(k => st.sources[k].type === "vector"), src = vk && st.sources[vk];
+  let tpl = src && src.tiles && src.tiles[0];
+  if (!tpl && src && src.url) { const tj = await (await mapFetch(src.url.replace(/^kcache:/, "https:"))).json(); tpl = tj && tj.tiles && tj.tiles[0]; }
+  return { style: st, tpl: tpl ? tpl.replace(/^kcache:/, "https:") : "" };
+}
+// The style's label fonts (Latin, Greek and Cyrillic street names) and icons. Returns the files, for the offline check too.
+function mapStyleFiles(style) {
+  const out = [];
   if (style.glyphs) { const fonts = new Set(); (style.layers || []).forEach(l => { const f = l.layout && l.layout["text-font"]; if (Array.isArray(f) && f.every(x => typeof x === "string")) fonts.add(f.join(",")); });
-    for (const f of fonts) for (const r of ["0-255", "256-511", "768-1023", "1024-1279", "8192-8447"]) await mapFetch(style.glyphs.replace("{fontstack}", encodeURIComponent(f)).replace("{range}", r).replace(/^kcache:/, "https:")).catch(() => {}); }
-  let done = {}; try { done = JSON.parse(localStorage.getItem("kairoute.mapsaved") || "{}") || {}; } catch (e) {}
+    for (const f of fonts) for (const r of ["0-255", "256-511", "768-1023", "1024-1279", "8192-8447"]) out.push(style.glyphs.replace("{fontstack}", encodeURIComponent(f)).replace("{range}", r).replace(/^kcache:/, "https:")); }
+  const sp = style.sprite; (Array.isArray(sp) ? sp.map(x => x.url) : sp ? [sp] : []).forEach(u => { u = String(u).replace(/^kcache:/, "https:"); out.push(u + ".json", u + ".png", u + "@2x.json", u + "@2x.png"); });
+  return out;
+}
+// The tiles that cover one day's route (zoom 10 to street level), and a signature of that route.
+function dayTiles(d, plan, tpl) {
+  const data = mapPlanData(plan, d), sig = tpl + "|" + data.key;
+  if (!data.pts.length) return { data, sig, urls: [] };
+  const lls = [...data.pts.map(p => p.ll), ...data.legs.flatMap(legLine)];
+  let w = Math.min(...lls.map(c => c[0])), e = Math.max(...lls.map(c => c[0])), s = Math.min(...lls.map(c => c[1])), n = Math.max(...lls.map(c => c[1]));
+  const padLat = Math.max(0.004, (n - s) * 0.15), padLng = Math.max(0.005, (e - w) * 0.15); w -= padLng; e += padLng; s -= padLat; n += padLat;
+  const urls = [];
+  for (let z = 10; z <= 14; z++) {
+    const [x0, y0] = tileXY(w, n, z), [x1, y1] = tileXY(e, s, z);
+    if ((x1 - x0 + 1) * (y1 - y0 + 1) > 300) continue; // a very spread-out day keeps only the closer views
+    for (let x = x0; x <= x1; x++) for (let y = y0; y <= y1; y++) urls.push(tpl.replace("{z}", z).replace("{x}", x).replace("{y}", y));
+  }
+  return { data, sig, urls };
+}
+const mapSavedList = () => { try { return JSON.parse(localStorage.getItem("kairoute.mapsaved") || "{}") || {}; } catch (e) { return {}; } };
+// Save one day's map: street routes first (the tiles cover them), then the tiles. Returns false if any tile failed.
+async function saveDayMap(d, plan, tpl, onTile) {
+  const done = mapSavedList();
+  let t = dayTiles(d, plan, tpl); if (!t.urls.length) return true;
+  await fetchRoutes(t.data.legs); t = dayTiles(d, plan, tpl);
+  if (done[d.id] === t.sig) return true;
+  let bad = 0;
+  for (let i = 0; i < t.urls.length; i += 6) { await Promise.all(t.urls.slice(i, i + 6).map(u => mapFetch(u).then(r => { if (!r.ok) bad++; }, () => { bad++; }))); if (onTile) onTile(Math.min(i + 6, t.urls.length), t.urls.length); }
+  if (bad) return false;
+  const now = mapSavedList(); now[d.id] = t.sig; try { localStorage.setItem("kairoute.mapsaved", JSON.stringify(now)); } catch (e) {}
+  return true;
+}
+async function prefetchTripMaps() {
+  if (prefetchBusy || typeof caches === "undefined" || navigator.onLine === false) return;
+  const conn = navigator.connection; if (conn && (conn.saveData || /2g/.test(conn.effectiveType || ""))) return;
+  prefetchBusy = true;
   try {
-    bonusMemo = new Map(); mealMemo = new Map(); keptMemo = new Map(); eveMemo = new Map(); avoidMeals = new Set();
+    const { style, tpl } = await mapBase(kmapTheme || (mapDark() ? "dark" : "light")); if (!tpl) return;
+    for (const u of mapStyleFiles(style)) await mapFetch(u).catch(() => {});
     for (const d of trip.days) {
-      if (noShore(d) || !cityFor(d)) continue;
+      if (noShore(d) || !cityFor(d) || (typeof dayLocked === "function" && dayLocked(d))) continue;
+      bonusMemo = new Map(); mealMemo = new Map(); keptMemo = new Map(); eveMemo = new Map(); avoidMeals = new Set();
       let plan = null; try { plan = buildPlan(d); } catch (e) {} if (!plan || plan.error) continue;
-      const data = mapPlanData(plan, d), sig = tpl + "|" + kmapTheme + "|" + data.key; if (!data.pts.length || done[d.id] === sig) continue;
-      await fetchRoutes(data.legs);
-      const lls = [...data.pts.map(p => p.ll), ...data.legs.flatMap(legLine)];
-      let w = Math.min(...lls.map(c => c[0])), e = Math.max(...lls.map(c => c[0])), s = Math.min(...lls.map(c => c[1])), n = Math.max(...lls.map(c => c[1]));
-      const padLat = Math.max(0.004, (n - s) * 0.15), padLng = Math.max(0.005, (e - w) * 0.15); w -= padLng; e += padLng; s -= padLat; n += padLat;
-      const urls = [];
-      for (let z = 10; z <= 14; z++) {
-        const [x0, y0] = tileXY(w, n, z), [x1, y1] = tileXY(e, s, z);
-        if ((x1 - x0 + 1) * (y1 - y0 + 1) > 300) continue; // a very spread-out day keeps only the closer views
-        for (let x = x0; x <= x1; x++) for (let y = y0; y <= y1; y++) urls.push(tpl.replace("{z}", z).replace("{x}", x).replace("{y}", y).replace(/^kcache:/, "https:"));
-      }
-      for (let i = 0; i < urls.length; i += 6) await Promise.all(urls.slice(i, i + 6).map(u => mapFetch(u).catch(() => {})));
-      done[d.id] = sig; try { localStorage.setItem("kairoute.mapsaved", JSON.stringify(done)); } catch (e) {}
+      await saveDayMap(d, plan, tpl);
     }
-  } finally { prefetchBusy = false; }
+  } catch (e) {} finally { prefetchBusy = false; }
 }
 // ---------- Local events on the day ----------
 // Real, dated events only: Ticketmaster listings for that date near the city (games, concerts, theatre,
@@ -4960,10 +5026,8 @@ function farEatsMerge(city) {
   city.restaurants = (city.restaurants || []).concat((st.list || []).filter(r => !have.has(keyOf(r.name))));
   city._farN = (st.list || []).length;
 }
-function farEatsFor(city, d) {
-  if (!city) return;
-  farEatsMerge(city);
-  if (!freeAI) return;
+// The day's stops (and where the traveler stays) that have no known place to eat close by yet.
+function farEatsBare(city, d, all) {
   const k = keyOf(city.city), st = farEats[k] || (farEats[k] = { list: [], done: [] });
   const sel = allSites(city).filter(x => (d.selected || []).includes(x.id) && isFinite(x.lat) && isFinite(x.lng));
   // Where the traveler stays too, for the suggested dinner at the end of the day.
@@ -4971,8 +5035,17 @@ function farEatsFor(city, d) {
   if (L && isFinite(L.lat) && isFinite(L.lng)) sel.push({ id: "stay-" + keyOf(L.name).replace(/ /g, "-"), name: L.name, lat: L.lat, lng: L.lng });
   // A stop counts as bare with no place to eat close by; where the traveler stays, with fewer than 8
   // (lunches on other days use some of them, and dinner needs a choice of its own).
-  const bare = sel.filter(x => !st.done.includes(x.id) && !farAsked.has(k + "|" + x.id) && (city.restaurants || []).filter(r => hav(r, x) <= 0.8).length < (/^stay-/.test(x.id) ? 8 : 1));
+  return sel.filter(x => !st.done.includes(x.id) && (all || !farAsked.has(k + "|" + x.id)) && (city.restaurants || []).filter(r => hav(r, x) <= 0.8).length < (/^stay-/.test(x.id) ? 8 : 1));
+}
+let farPending = 0;
+function farEatsFor(city, d) {
+  if (!city) return;
+  farEatsMerge(city);
+  if (!freeAI) return;
+  const k = keyOf(city.city), st = farEats[k] || (farEats[k] = { list: [], done: [] });
+  const bare = farEatsBare(city, d);
   if (!bare.length) return;
+  farPending++;
   bare.forEach(x => farAsked.add(k + "|" + x.id));
   fetch(`${freeAI.url}/places`, { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ pts: bare.map(x => ({ lat: x.lat, lng: x.lng })), r: 1500 }) })
     .then(r => r.ok ? r.json() : null).then(async pl => {
@@ -4990,7 +5063,7 @@ function farEatsFor(city, d) {
       try { localStorage.setItem(FAR_EATS_KEY, JSON.stringify(farEats)); } catch (e) {}
       farEatsMerge(city);
       if (view === "plan" || view === "tour") { const y = window.scrollY; render(); window.scrollTo(0, y); }
-    }).catch(() => {});
+    }).catch(() => {}).finally(() => { farPending--; });
 }
 // Days that spend more time getting around than seeing things get a clear warning, so a once-in-a-lifetime
 // day is never quietly wasted in a car.

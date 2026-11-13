@@ -136,8 +136,10 @@ const WX_DAYS = 16;
 function wxKey(city) { const p = city && ((city.sites || [])[0] || {}); return isFinite(p.lat) ? (+p.lat).toFixed(1) + "," + (+p.lng).toFixed(1) : null; }
 function daysAhead(iso) { const t = todayISO(); return Math.round((new Date(iso + "T12:00:00Z") - new Date(t + "T12:00:00Z")) / 864e5); }
 function wxFetch(city) {
-  const k = wxKey(city); if (!k || wxAsked[k] || !freeAI) return; wxAsked[k] = 1;
-  try { const c = JSON.parse(localStorage.getItem("kairoute.wx." + k) || "null"); if (c && Date.now() - c.at < 3 * 3600e3) { wxCache[k] = c; return; } } catch (e) {}
+  const k = wxKey(city); if (!k || wxAsked[k]) return;
+  // The last forecast is used until a newer one arrives (and with no internet), so the plan never changes just because the signal went.
+  try { const c = JSON.parse(localStorage.getItem("kairoute.wx." + k) || "null"); if (c && c.days) { wxCache[k] = c; if (Date.now() - c.at < 3 * 3600e3) { wxAsked[k] = 1; return; } } } catch (e) {}
+  if (!freeAI || navigator.onLine === false) return; wxAsked[k] = 1;
   const [lat, lng] = k.split(",");
   fetch(`${freeAI.url}/weather?lat=${lat}&lng=${lng}`).then(r => r.ok ? r.json() : null).then(j => {
     if (!j || !j.days) return; j.at = Date.now(); wxCache[k] = j; try { localStorage.setItem("kairoute.wx." + k, JSON.stringify(j)); } catch (e) {}
