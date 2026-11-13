@@ -869,6 +869,7 @@ html, body { overflow-x: hidden; }
    the More menu, alerts together above the schedule, and the details of each stop and meal folded. ---- */
 .dayhead { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
 .dayhead > div:first-child { min-width: 0; }
+.dayhead .tourbtn .tb-short { display: none; }
 .dayhead .tourbtn { flex: none; width: auto; min-height: 44px; padding: 8px 18px; background: var(--meal); border-color: var(--meal); color: #fff; }
 .planbar { display: flex; flex-wrap: wrap; gap: 8px 10px; align-items: center; justify-content: space-between; }
 .planbar .seg.daylen { margin: 0; gap: 4px; flex-wrap: nowrap; }
@@ -908,7 +909,10 @@ details.mealmore .mealbox { margin-top: 6px; }
   html.appview .plangrid .right > .card.countdown { gap: 8px; padding: 12px 14px; }
 }
 @media (max-width: 640px) {
-  .dayhead .tourbtn { display: none; } /* phones: the Start the tour button sits above the tab bar */
+  .dayhead { align-items: center; }
+  .dayhead .tourbtn { min-height: 42px; padding: 6px 12px; font-size: .95rem; } /* phones: Start the tour stays at the top, beside the day's name */
+  .dayhead .tourbtn .tb-long { display: none; }
+  .dayhead .tourbtn .tb-short { display: inline; }
   .planbar { gap: 8px; }
   .planbar .seg.daylen { width: 100%; }
   .planbar .seg.daylen button { flex: 1 1 0; justify-content: center; }
@@ -919,6 +923,20 @@ details.mealmore .mealbox { margin-top: 6px; }
   .planmore .menupanel { min-width: min(300px, calc(100vw - 32px)); }
   .countdown .cdbig { font-size: 1.8rem; }
 }
+
+/* Change stops: "See my day plan" floats, so it's one tap away however far down the list you are (Nov 13) */
+.stickybar { position: fixed; z-index: 25; right: max(16px, env(safe-area-inset-right, 0px)); bottom: calc(16px + env(safe-area-inset-bottom, 0px)); left: auto; padding: 8px 8px 8px 16px; margin: 0;
+  background: var(--card); border: 1px solid var(--line); border-radius: 10px; box-shadow: 0 8px 24px rgba(0,0,0,.18); flex-wrap: nowrap; gap: 14px; max-width: calc(100vw - 32px); }
+.stickybar .count { font-size: .9rem; white-space: nowrap; }
+.stickybar .btn { min-height: 46px; padding: 8px 20px; white-space: nowrap; }
+html.appview .sitesmain { padding-bottom: 90px; }
+@media (max-width: 640px) {
+  .stickybar { left: 12px; right: 12px; bottom: calc(68px + env(safe-area-inset-bottom, 0px)); justify-content: space-between; }
+  .stickybar .count { font-size: .85rem; white-space: normal; line-height: 1.2; }
+}
+/* Day plan's More menu: grouped */
+.menugroup { padding: 8px 12px 2px; font-size: .72rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+.menugroup:not(:first-child) { border-top: 1px solid var(--line); margin-top: 4px; padding-top: 10px; }
 </style>
 
 <header class="top">

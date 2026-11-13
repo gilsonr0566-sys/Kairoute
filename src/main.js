@@ -4480,9 +4480,8 @@ ${partsList(s, it.time)}${stopLiveNotes(it, d)}</div></div>`;
   const preview = d.date !== todayISO() && cdPreview == null;
   const wxt = weatherTool(d, plan), wxChip = /wxchip/.test(wxt) ? wxt : "";
   return `
-  <div class="mcta"><button class="btn bigbtn" data-act="tourstart">▶ Start the tour</button></div>
   <div class="plangrid"><div class="plantop">
-  <div class="dayhead">${dayHeading(d)}<button class="btn bigbtn tourbtn" data-act="tourstart">▶ Start the tour</button></div>
+  <div class="dayhead">${dayHeading(d)}<button class="btn bigbtn tourbtn" data-act="tourstart"><span class="tb-long">▶ Start the tour</span><span class="tb-short">▶ Start tour</span></button></div>
   <div class="daysum" role="group" aria-label="Today at a glance">
     <div><b>${fmt(plan.start)}–${fmt(plan.endBy)}</b><span>${d.type === "port" ? "ashore " + dur(plan.endBy - plan.start) : L ? dur(d.hours * 60) + " sightseeing" : "free " + dur(plan.endBy - plan.start)}</span></div>
     <div><b>${stopsN}${optN ? " + " + optN : ""}</b><span>${stopsN === 1 ? "pick" : "picks"}${optN ? " + optional" : ""}${plan.along.length ? ` · ${plan.along.length} on the way` : ""}</span></div>
@@ -4491,14 +4490,18 @@ ${partsList(s, it.time)}${stopLiveNotes(it, d)}</div></div>`;
   </div>
   <div class="planbar">
     ${canLen ? `<div class="seg pace daylen" role="group" aria-label="How long to sightsee today">${DAY_LEN.map(([h, l, sub]) => `<button type="button" data-act="daylen" data-h="${h}" aria-pressed="${+d.hours === h}" title="${esc(l)}: ${esc(sub)} of sightseeing">${esc(l.replace(/ day$/, ""))} <small>${sub}</small></button>`).join("")}</div>` : ""}
-    <div class="toolrow"><button class="btn ghost small" data-goto="sites">Change stops</button><button class="btn ghost small" data-act="suggesttour">Suggest my tour</button>
+    <div class="toolrow"><button class="btn ghost small" data-goto="sites">Change stops</button>
     <details class="moremenu planmore"><summary aria-label="More options for today">More</summary><div class="menupanel" role="menu">
-      <a class="menuitem" role="menuitem" href="${gmapsLink(plan)}" target="_blank" rel="noopener">🗺 Open in Google Maps</a>
-      ${camBtnHTML().replace('class="btn ghost small"', 'class="menuitem" role="menuitem"').replace("📷 What's this?", "📷 What's this? Identify a sight by photo")}
+      <div class="menugroup">Plan this day</div>
+      <button class="menuitem" role="menuitem" data-act="suggesttour">✨ Suggest my tour</button>
+      ${wxChip ? "" : wxt.replace('class="btn ghost small toggle"', 'class="menuitem toggle"').replace("<span>Rainy day</span>", "<span>Rainy day: plan indoor sights</span>")}
       ${preview ? `<button class="menuitem" role="menuitem" data-act="cdpreview">▶ Preview the day live</button>` : ""}
+      <div class="menugroup">On the way</div>
+      <a class="menuitem" role="menuitem" href="${gmapsLink(plan)}" target="_blank" rel="noopener">🗺 Open in Google Maps</a>
+      ${camBtnHTML().replace('class="btn ghost small"', 'class="menuitem" role="menuitem"').replace("📷 What's this?", "📷 Identify a sight by photo")}
+      <div class="menugroup">Meals</div>
       <button class="menuitem" role="menuitem" data-act="bookopen" data-meal="Lunch">🍽 ${(d.booked || {}).Lunch ? "Change my lunch reservation" : "I have a lunch reservation"}</button>
       <button class="menuitem" role="menuitem" data-act="bookopen" data-meal="Dinner">🍽 ${(d.booked || {}).Dinner ? "Change my dinner reservation" : "I have a dinner reservation"}</button>
-      ${wxChip ? "" : wxt.replace('class="btn ghost small toggle"', 'class="menuitem toggle"').replace("<span>Rainy day</span>", "<span>Rainy day: plan indoor sights</span>")}
     </div></details>${wxChip}</div>
   </div>
   </div><div class="left pane" data-pane="map">
