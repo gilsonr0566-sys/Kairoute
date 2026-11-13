@@ -55,7 +55,8 @@ const log = (suite, trip, ok, what) => { results.push({ suite, trip, ok, what })
       // Picks and plan
       if (T.key !== 'rainy') {
         t.picks.forEach(id => { if (!t.selected.includes(id)) bad.push(`${id} is planned but not ticked`); });
-        t.selected.forEach(id => { if (!t.picks.includes(id) && !t.dropped.includes(id) && !t.elsewhere.includes(id)) bad.push(`${id} is ticked but missing from the plan with no explanation`); });
+        t.selected.forEach(id => { if (!t.picks.includes(id) && !t.dropped.includes(id) && !t.elsewhere.includes(id) && !(t.closed || []).includes(id)) bad.push(`${id} is ticked but missing from the plan with no explanation`); });
+        if ((t.closedPicks || []).length) bad.push(`planned on a day it is closed: ${t.closedPicks.join(', ')}`);
       }
       t.bonus.forEach(id => { if (t.selected.includes(id)) bad.push(`${id} is ticked but shown as optional`); });
       [...t.picks, ...t.bonus].forEach(id => { const k = D.city + '/' + id; if (seenBy.has(k)) bad.push(`${id} is also planned on ${seenBy.get(k)}`); seenBy.set(k, D.date); });
@@ -190,6 +191,8 @@ const log = (suite, trip, ok, what) => { results.push({ suite, trip, ok, what })
     log('Walkthrough', nm, r.status === 0, lines[lines.length - 1] || (r.stderr || '').slice(0, 300));
     const dir = path.join(OUT, 'walk-' + w); if (fs.existsSync(dir)) fs.readdirSync(dir).sort().forEach(f => shots.push({ f: 'walk-' + w + '/' + f, cap: `${nm}: ${f.replace(/^\d+-|\.jpg$/g, '').replace(/-/g, ' ')}` }));
   }
+  // Live trip features: opening hours, weather, crowds, running late, the back-to-the-ship alarm, ratings, camera
+  await require('./live-check.cjs').run({ chromium, FILE, log, OUT, shots });
   // Report
   const when = new Date().toUTCString(), passed = results.filter(r => r.ok).length;
   const groups = [...new Set(results.map(r => r.suite + '|' + r.trip))];
@@ -201,8 +204,8 @@ details{background:var(--card);border:1px solid var(--line);border-radius:12px;m
 .shots{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px}figure{margin:0;background:var(--card);border:1px solid var(--line);border-radius:10px;overflow:hidden}figure img{width:100%;display:block}figcaption{padding:6px 10px;font-size:.85rem;color:var(--muted)}</style></head>
 <body><main><h1>Kairoute checks</h1><p class="sub">Run ${esc(when)}. These run automatically before every update; if anything fails, the update is held back.</p>
 <div class="big">${fails ? `${fails} problem${fails > 1 ? 's' : ''} found: this update was held back` : `All ${passed} checks passed`}</div>
-<p>What's checked: on every day of ${TRIPS.length} sample trips, the Day plan, map, Change stops, time bar and Guide must agree with the planner (same stops, same counts, times that add up, no sight on two days, no optional stop shown as a pick, labels that follow the sources). Every stop must be a real guide sight, every restaurant must come from the map data, and meals must be near the route. Then a script taps through the real screens on tablet and phone: untick everything, reload, tick, change the day length, Suggest my tour, and sync between two devices.</p>
-${groups.map(g => { const [suite, trip] = g.split('|'), rs = results.filter(r => r.suite === suite && r.trip === trip), nb = rs.filter(r => !r.ok).length, T = TRIPS.find(x => x.key === trip) || (trip === 'famous' ? { label: 'Top famous sights and big stops (Prague snapshot)' } : trip === 'new-trips' ? { label: 'Planning a new trip from a description (several cities)' } : null);
+<p>What's checked: on every day of ${TRIPS.length} sample trips, the Day plan, map, Change stops, time bar and Guide must agree with the planner (same stops, same counts, times that add up, no sight on two days, no optional stop shown as a pick, labels that follow the sources). Every stop must be a real guide sight, every restaurant must come from the map data, and meals must be near the route. Then a script taps through the real screens on tablet and phone: untick everything, reload, tick, change the day length, Suggest my tour, and sync between two devices. Live trip features are checked with a stand-in server, a fake clock and a fake GPS: opening hours and closed days, the rain swap, crowd tips, re-planning when you fall behind, the back-to-the-ship alerts, traveler ratings and the photo look-up.</p>
+${groups.map(g => { const [suite, trip] = g.split('|'), rs = results.filter(r => r.suite === suite && r.trip === trip), nb = rs.filter(r => !r.ok).length, T = TRIPS.find(x => x.key === trip) || (trip === 'famous' ? { label: 'Top famous sights and big stops (Prague snapshot)' } : trip === 'new-trips' ? { label: 'Planning a new trip from a description (several cities)' } : trip === 'live' ? { label: 'Live trip features: opening hours, weather, crowds, running late, back-to-the-ship alarm, traveler ratings, What am I looking at?' } : null);
   return `<details ${nb ? 'open' : ''}><summary>${esc(suite)}: ${esc(T ? T.label : trip)} <span class="${nb ? 'bad' : 'ok'}">${nb ? nb + ' failed' : 'all passed'}</span></summary><ul>${rs.map(r => `<li class="${r.ok ? 'ok' : 'bad'}">${r.ok ? '✓' : '✗'} ${esc(r.what)}</li>`).join('')}</ul></details>`; }).join('')}
 <h2>Screenshots from this run</h2><div class="shots">${shots.map(s => `<figure><a href="${esc(s.f)}"><img loading="lazy" src="${esc(s.f)}" alt=""></a><figcaption>${esc(s.cap)}</figcaption></figure>`).join('')}</div></main></body></html>`;
   fs.writeFileSync(path.join(OUT, 'index.html'), html);
