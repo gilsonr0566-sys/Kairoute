@@ -3069,7 +3069,9 @@ function ensureBuiltins() {
   if (builtinsReady || typeof BUILTIN_CITIES === "undefined") return; builtinsReady = true;
   for (const [raw, keys] of BUILTIN_CITIES) {
     const c = Object.assign(cleanCity(raw, raw.city), { ai: false, builtin: true });
-    for (const k of keys) if (!cities[k]) cities[k] = c;
+    // A written guide (saved, synced or shared) never hides a sight the built-in guide has: those are
+    // added back (Naples' written guide had Amalfi but not Sorrento; the built-in one the other way round).
+    for (const k of keys) { if (!cities[k]) cities[k] = c; else if (cities[k] !== c && !cities[k].builtin) carryGuide(c, cities[k]); }
   }
 }
 // Fold-out sections stay open across re-renders, so a tap inside one never snaps it shut.
