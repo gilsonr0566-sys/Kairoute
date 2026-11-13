@@ -169,6 +169,13 @@ const log = (suite, trip, ok, what) => { results.push({ suite, trip, ok, what })
         if ((r.unwanted || []).length) bad.push('churches still planned: ' + r.unwanted.join(', '));
         log('Interests off', T.key, !bad.length, bad.length ? bad.join(' | ') : `Churches off: ${pick.app.name} left the plan, ${pick.mine.name} (picked by the traveler) stayed; no other church left that the traveler didn't pick, ${r.kept} famous or own church stops kept trip-wide`); }
       await p.evaluate(() => window.__kairoutePrefs({ interests: ['bible', 'churches'], noChurches: undefined })); }
+    // Must-sees first (Richard: Plaka, a must-see, "doesn't fit today's time" while Syntagma Square stayed). Every
+    // day of every test trip is planned with all its must-sees ticked at 2.5, 4 and 8 hours: a must-see left out
+    // never loses to a lesser stop that takes at least as long (a swap would have fitted it).
+    { const r = await p.evaluate(() => { const out = []; let n = 0; for (const D of window.__kairouteDays()) { if (D.type === 'sea' || !D.city) continue; const t0 = window.__kairouteTruth(D.i); if (!t0.mustSees) continue;
+          for (const H of [2.5, 4, 8]) { window.__kairouteEdit(D.i, { selected: [...new Set(t0.mustSees.map(x => x.id).concat(t0.selected))], hours: H }); const t = window.__kairouteTruth(D.i); n++; (t.outranked || []).forEach(x => out.push(`${D.date} ${D.dest} ${H} h: ${x}`)); }
+          window.__kairouteEdit(D.i, { selected: t0.selected, hours: t0.hours }); } return { n, out }; });
+      log('Must-sees first', T.key, !r.out.length, r.out.length ? r.out.slice(0, 6).join(' | ') : `${r.n} day plans with every must-see ticked (2.5, 4 and 8 hours): no must-see lost to a lesser stop`); }
     log('Day titles', T.key, true, `${titled} automatic day titles name only the destination`);
     log('Closed sights', T.key, true, `${closedTried} days tried adding a sight closed that day: never added, an open day or sight offered`);
     log('One truth', T.key, !errs.length, errs.length ? 'page errors: ' + [...new Set(errs)].join(' | ') : `${checked} days checked, no page errors`);

@@ -39,11 +39,11 @@ const nearestIdx = (pts, p) => { let bi = -1, bd = Infinity; pts.forEach((q, i) 
 // Keep at most n points of a line for the map.
 const thin = (pts, n) => { if (pts.length <= n) return pts; const step = (pts.length - 1) / (n - 1); return Array.from({ length: n }, (_, i) => pts[Math.round(i * step)]); };
 
-async function overpass(q) {
+async function overpass(q, ms = 15000) {
   const why = [];
   for (const ep of OVERPASS) {
     try {
-      const r = await fetch(ep, { method: "POST", signal: AbortSignal.timeout(15000), body: "data=" + encodeURIComponent(q), headers: { "content-type": "application/x-www-form-urlencoded", accept: "application/json", ...UA } });
+      const r = await fetch(ep, { method: "POST", signal: AbortSignal.timeout(ms), body: "data=" + encodeURIComponent(q), headers: { "content-type": "application/x-www-form-urlencoded", accept: "application/json", ...UA } });
       if (r.ok) { const d = await r.json(); if (!d.remark || (d.elements || []).length) return d; why.push(ep.split("/")[2] + ": " + String(d.remark).slice(0, 60)); } else why.push(ep.split("/")[2] + ": " + r.status);
     } catch (e) { why.push(ep.split("/")[2] + ": " + String(e && e.name || e).slice(0, 40)); }
   }
@@ -110,38 +110,69 @@ export async function timetableOptions(a, b, dow) {
 // only when the timetables had no rail answer at all. The free map servers can take a minute when busy, so the answer
 // doesn't wait for them past mapWait ms (the page's request must come back well inside the 100 s a web request may
 // take): it goes out as partial, and `late` gives the full answer once the map does reply, for the cache.
-export async function allOptions(a, b, dow, mapWait = 12000) {
-  const ttP = timetableOptions(a, b, dow).catch(() => null), mapP = transitOptions(a, b).catch(() => null);
+export async function allOptions(a, b, dow, mapWait = 12000, store) {
+  const ttP = timetableOptions(a, b, dow).catch(() => null), mapP = transitOptions(a, b, store).catch(() => null);
   const merge = (tt, map) => { const t = tt || [], hasRail = t.some(o => /train|metro|tram/.test(o.mode));
     const m = (map || []).filter(o => o.mode === "ferry" ? !t.some(x => x.mode === "ferry") : !hasRail);
     return t.concat(m).sort((x, y) => x.min - y.min).slice(0, 5); };
   const TIMEOUT = Symbol("slow"), t0 = Date.now(), tt = await ttP;
   const map = await Promise.race([mapP, new Promise(r => setTimeout(() => r(TIMEOUT), Math.max(1000, mapWait - (Date.now() - t0))))]);
   if (map === TIMEOUT) {
-    const late = mapP.then(m => m ? { opts: merge(tt, m), partial: !tt } : null);
+    const late = mapP.then(m => m ? { opts: merge(tt, m), partial: !tt || !!m.partial } : null);
     if (!tt) { const m = await late; if (!m) throw new Error("map busy"); return m; } // no timetable at all: the map is all there is, so wait for it
     return { opts: merge(tt, null), partial: true, late };
   }
   if (!tt && !map) throw new Error("map busy");
-  return { opts: merge(tt, map), partial: !tt || !map };
+  return { opts: merge(tt, map), partial: !tt || !map || !!map.partial };
 }
-export async function transitOptions(a, b) {
+// Ferries near one point: the mapped ferry courses within reach of it (single ways, and the routes they belong to
+// with their whole course) and the ferry terminals' names. Ferry courses rarely change, so each answer is kept 60 days
+// (an empty one 14) in `store` when given. The free map servers are often busy: a point they couldn't answer for goes
+// on a list (fq:) that the helper's own schedule asks again with longer waits (fillFerries in worker.js), so a busy server never hides a ferry for long.
+export const ferryKey = p => (+p.lat).toFixed(2) + "," + (+p.lng).toFixed(2);
+export const ferryQuery = k => `[out:json][timeout:60];way(around:${R_FERRY + 800},${k})[route=ferry]->.w;.w out geom;rel(bw.w)[route=ferry];out geom;node(around:${R_FERRY + 800},${k})[amenity=ferry_terminal];out;`;
+export function slimFerries(d) {
+  const g = x => thin((x || []).filter(q => isFinite(q.lat)).map(q => ({ lat: +q.lat.toFixed(5), lon: +(q.lon ?? q.lng).toFixed(5) })), 400);
+  const out = { ways: [], rels: [], piers: [] };
+  for (const e of (d && d.elements) || []) {
+    if (e.type === "way" && e.tags && e.tags.route === "ferry") out.ways.push({ type: "way", id: e.id, tags: e.tags, geometry: g(e.geometry) });
+    else if (e.type === "relation" && e.tags) out.rels.push({ type: "relation", id: e.id, tags: e.tags, members: (e.members || []).filter(m => m.type === "way" ? m.geometry : m.type === "node" && /stop|platform|^$/.test(m.role || "")).map(m => m.type === "way" ? { type: "way", ref: m.ref, role: m.role || "", geometry: g(m.geometry) } : { type: "node", ref: m.ref, role: m.role || "", lat: m.lat, lon: m.lon }) });
+    else if (e.type === "node" && e.tags) out.piers.push({ type: "node", id: e.id, lat: e.lat, lon: e.lon, tags: { name: e.tags["name:en"] || e.tags.name || "" } });
+  }
+  return out;
+}
+export async function ferriesNear(p, store, ms) {
+  const k = ferryKey(p);
+  if (store) { const hit = await store.get("fp1:" + k).catch(() => null); if (hit) return hit; }
+  let d; try { d = await overpass(ferryQuery(k), ms); } catch (e) { if (store) await store.put("fq:" + k, 1, 14 * 86400).catch(() => {}); throw e; }
+  const out = slimFerries(d);
+  if (store) await store.put("fp1:" + k, out, (out.ways.length ? 60 : 14) * 86400).catch(() => {});
+  return out;
+}
+export async function transitOptions(a, b, store) {
   const A = `${a.lat},${a.lng}`, B = `${b.lat},${b.lng}`;
+  // Ferries come from their own small, long-kept lookup at each end (ferriesNear); a course or route found at both
+  // ends is a ferry between them. The rail question goes to the map servers separately, so one busy answer doesn't
+  // lose the other.
+  const ferP = Promise.all([ferriesNear(a, store), ferriesNear(b, store)]);
   // Rides of 4 km and more: rail and ferry lines (a bus or tram that far is slower than the taxi the plan offers
   // anyway). Two light questions instead of one heavy one, because the free map servers time out on heavy ones:
   // first which lines stop near both ends, then the path of the few that do.
   const stops = (P, set) => `(node(around:${R_STOP},${P})[railway~"^(station|halt|stop)$"];node(around:${R_STOP},${P})[public_transport=stop_position][~"^(train|light_rail|subway|monorail|ferry)$"~"^yes$"];node(around:${R_STOP},${P})[amenity=ferry_terminal];)->.${set};`;
-  const RT = `[type=route][route~"^(train|light_rail|subway|monorail|ferry)$"]`;
-  // Ferry routes are often mapped as ways only (no pier stops in the route), so a ferry route is also found by its
-  // course passing both piers.
+  const RT = `[type=route][route~"^(train|light_rail|subway|monorail)$"]`;
   const q1 = `[out:json][timeout:20];${stops(A, "sa")}${stops(B, "sb")}rel(bn.sa)${RT}->.ra;rel(bn.sb)${RT}->.rb;rel.ra.rb;out ids;
-way(around:${R_FERRY},${A})[route=ferry]->.fa;way(around:${R_FERRY},${B})[route=ferry]->.fb;way.fa.fb;out geom;
-rel(bw.fa)[route=ferry]->.rfa;rel(bw.fb)[route=ferry]->.rfb;rel.rfa.rfb;out ids;
 .sa out tags;.sb out tags;`;
-  const d1 = await overpass(q1);
-  const ids = [...new Set((d1.elements || []).filter(e => e.type === "relation").map(e => e.id))].slice(0, 8);
-  const d2 = ids.length ? await overpass(`[out:json][timeout:25];rel(id:${ids.join(",")});out geom;`) : { elements: [] };
-  const el = (d1.elements || []).filter(e => e.type !== "relation").concat(d2.elements || []), stopTag = new Map();
+  const railP = (async () => { const d1 = await overpass(q1);
+    const ids = [...new Set((d1.elements || []).filter(e => e.type === "relation").map(e => e.id))].slice(0, 8);
+    const d2 = ids.length ? await overpass(`[out:json][timeout:25];rel(id:${ids.join(",")});out geom;`) : { elements: [] };
+    return (d1.elements || []).filter(e => e.type !== "relation").concat(d2.elements || []); })();
+  const [rail, fer] = await Promise.allSettled([railP, ferP]);
+  if (rail.status === "rejected" && fer.status === "rejected") throw rail.reason;
+  let el = rail.status === "fulfilled" ? rail.value : [], fWays = [];
+  if (fer.status === "fulfilled") { const [fa, fb] = fer.value, inB = (list, id) => list.some(x => x.id === id);
+    el = el.concat(fa.rels.filter(r => inB(fb.rels, r.id)), fa.ways.filter(w => inB(fb.ways, w.id)), fa.piers, fb.piers);
+    fWays = fa.ways.concat(fb.ways.filter(w => !inB(fa.ways, w.id))); }
+  const stopTag = new Map();
   for (const e of el) if ((e.type === "node" || e.type === "way") && e.tags && !(e.tags.route)) stopTag.set(e.type[0] + e.id, { name: e.tags["name:en"] || e.tags.name || "", lat: e.lat ?? (e.center && e.center.lat), lng: e.lon ?? (e.center && e.center.lon) });
   const opts = [];
   for (const r of el.filter(e => e.type === "relation" && e.tags)) {
@@ -172,27 +203,31 @@ rel(bw.fa)[route=ferry]->.rfa;rel(bw.fb)[route=ferry]->.rfb;rel.rfa.rfb;out ids;
   for (const w of el.filter(e => e.type === "way" && e.tags && e.tags.route === "ferry")) {
     const g = (w.geometry || []).map(p => ({ lat: p.lat, lng: p.lon })); if (g.length < 2) continue;
     const s = g[0], e = g[g.length - 1], fwd = hav(s, a) + hav(e, b) <= hav(e, a) + hav(s, b), from = fwd ? s : e, to = fwd ? e : s, path = fwd ? g : g.slice().reverse();
-    const nmFrom = (fwd ? w.tags.from : w.tags.to) || "", nmTo = (fwd ? w.tags.to : w.tags.from) || "";
+    const nmFrom = pierName(stopTag, from) || (fwd ? w.tags.from : w.tags.to) || "", nmTo = pierName(stopTag, to) || (fwd ? w.tags.to : w.tags.from) || "";
     if (hav(from, a) * 1000 > R_FERRY * 1.5 || hav(to, b) * 1000 > R_FERRY * 1.5) continue;
     const km = lineLen(path), dur = mins(w.tags.duration);
     opts.push(mk({ mode: "ferry", ref: w.tags.ref || "", name: w.tags.name || "", operator: w.tags.operator || "", from: nmFrom, to: nmTo, fromPt: from, toPt: to, km, ride: dur || km / SPEED.ferry[0] * 60, every: mins(w.tags.interval), hours: w.tags.opening_hours || "", seasonal: w.tags.seasonal || "", fare: w.tags.charge || w.tags.fee || "", stops: 0, path, a, b, osm: "w" + w.id }));
   }
   // No ferry straight there: a ferry with one change (Naples to Capri, then Capri to Amalfi), from the map's courses.
-  if (!opts.some(o => o.mode === "ferry")) { try { opts.push(...await ferryChain(a, b)); } catch (e) {} }
+  if (!opts.some(o => o.mode === "ferry") && fWays.length) { try { opts.push(...await ferryChain(a, b, fWays)); } catch (e) {} }
   // One option per line (the quickest way to ride it), quickest first.
   const best = new Map();
   for (const o of opts) { const k = o.mode + "|" + (o.ref || o.name || o.operator).toLowerCase(); if (!best.has(k) || best.get(k).min > o.min) best.set(k, o); }
-  return [...best.values()].sort((x, y) => x.min - y.min).slice(0, 5);
+  const res = [...best.values()].sort((x, y) => x.min - y.min).slice(0, 5);
+  if (rail.status === "rejected" || fer.status === "rejected") res.partial = true; // one source was busy: asked again soon
+  return res;
 }
 // A ferry route mapped only by its course: the piers are where the course comes nearest each end (each within
 // reach), named after the nearest mapped ferry terminal; the ride is the course between them, with 15% more for
 // calls on the way that the map does not list.
+// The name of the mapped ferry terminal or stop within 1 km of a point ("" when none).
+const pierName = (stopTag, p) => { let best = null; for (const s of stopTag.values()) if (s.name && isFinite(s.lat)) { const d = hav(s, p); if (d <= 1 && (!best || d < best.d)) best = { d, name: s.name }; } return best ? best.name : ""; };
 export function ferryByCourse(t, line, a, b, stopTag, osm) {
   if (line.length < 2) return null;
   const [ia, da] = nearestIdx(line, a), [ib, db] = nearestIdx(line, b);
   if (ia === ib || da * 1000 > R_FERRY * 1.5 || db * 1000 > R_FERRY * 1.5) return null;
   const path = ia < ib ? line.slice(ia, ib + 1) : line.slice(ib, ia + 1).reverse(), km = lineLen(path); if (km < 2) return null;
-  const named = p => { let best = null; for (const s of stopTag.values()) if (s.name && isFinite(s.lat)) { const d = hav(s, p); if (d <= 1 && (!best || d < best.d)) best = { d, name: s.name }; } return best ? best.name : ""; };
+  const named = p => pierName(stopTag, p);
   const total = lineLen(line), dur = mins(t.duration);
   return mk({ mode: "ferry", ref: t.ref || "", name: t.name || "", operator: t.operator || t.network || "", from: named(path[0]) || (ia < ib ? t.from : t.to) || "", to: named(path[path.length - 1]) || (ia < ib ? t.to : t.from) || "",
     fromPt: path[0], toPt: path[path.length - 1], km, ride: dur && total > 0 ? Math.max(dur * Math.min(1, km / total), km / SPEED.ferry[0] * 60 * 0.8) : km / SPEED.ferry[0] * 60 * 1.15, every: mins(t.interval),

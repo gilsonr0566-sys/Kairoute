@@ -612,7 +612,8 @@ const tmin = (a, b) => {
 // stop, a cautious wait, the ride and getting from the stop. The quickest public line is chosen unless a taxi is
 // much quicker; the traveler can switch any ride on the Day plan, and the plan, the return time and the ship
 // checks all follow the choice. While the lines are being looked up (or none are mapped) the estimate is used.
-const TRANSIT_KEY = "kairoute.transit2"; // transit2: answers kept from before ferries were found by their course are dropped
+const TRANSIT_KEY = "kairoute.transit3"; // transit3: answers kept from before ferries had their own long-kept lookup are dropped
+try { ["kairoute.transit", "kairoute.transit2"].forEach(k => localStorage.removeItem(k)); } catch (e) {}
 const transitMem = (() => { try { return JSON.parse(localStorage.getItem(TRANSIT_KEY) || "{}"); } catch (e) { return {}; } })();
 let transitSeen = null;
 const transitFail = new Map(), transitQ = new Map(), transitPins = new Set(); let transitTimer = 0, transitBusy = false; // pins: rides of the trip being kept for offline
@@ -1495,11 +1496,33 @@ function buildPlanFor(d) {
       if (best) { seq = best.q; dropped.splice(dropped.indexOf(c), 1); }
     }
   }
+  // Priority, checked last: a stop left out must never lose to less important stops that are on the plan. For
+  // each one left out (most important first), the least important planned stops give way, one by one, while what
+  // they're worth together is still less than it; if it then fits, it goes in and they come off. Worth is
+  // must-see x3, the traveler's own pick x2, fame, and time there (Plaka, a must-see, was left out while Syntagma
+  // Square stayed). Whatever came off is then put back wherever it still fits.
+  if (dropped.length) {
+    const lim = w.endBy - tailCost(), mine = new Set(d.mine || []);
+    const worthOf = x => (x.mustSee ? 3 : 1) * (mine.has(x.id) ? 2 : 1) * fameW(x) * Math.max(20, x.minutes || 0);
+    const tryIn = (bare, c) => { let best = null; for (let i = 0; i <= bare.length; i++) { const q = polishDay(withMeals(bare.slice(0, i).concat([c], bare.slice(i))), t0, O, ZZ, style, city), r = simDay(q, t0, O, ZZ, style); if (r.end <= lim && (!best || r.cost < best.cost)) best = { q, cost: r.cost }; } return best; };
+    const tried = new Set();
+    for (let guard = 0; guard < 8; guard++) {
+      const c = dropped.filter(x => !tried.has(x)).sort((a, b) => worthOf(b) - worthOf(a))[0]; if (!c) break; tried.add(c); // a stop bumped out gets its own turn too
+      const bare = seq.filter(x => !x.mealOf), wc = worthOf(c);
+      const lesser = bare.filter(x => worthOf(x) < wc && !(x.mustSee && !c.mustSee)).sort((a, b) => worthOf(a) - worthOf(b));
+      const out = []; let got = null, sum = 0;
+      for (const x of lesser) { if (sum + worthOf(x) >= wc) break; out.push(x); sum += worthOf(x);
+        const b = tryIn(bare.filter(y => !out.includes(y)), c); if (b) { got = b; break; } }
+      if (!got) continue;
+      seq = got.q; dropped.splice(dropped.indexOf(c), 1); dropped.push(...out);
+      for (const x of out.slice()) { const b = tryIn(seq.filter(y => !y.mealOf), x); if (b) { seq = b.q; dropped.splice(dropped.indexOf(x), 1); } }
+    }
+  }
   return { seq, dropped };
   };
   // All or something: when the picks don't all fit, keep as many as possible, must-sees and famous sights
   // first, and try a quick meal before giving up a sight. Only what's truly left over is flagged.
-  const worth = r => r.seq.filter(x => !x.mealOf).reduce((a, x) => a + (x.mustSee ? 3 : 1) * fameW(x) * Math.max(20, x.minutes || 0), 0);
+  const worth = r => { const mine = new Set(d.mine || []); return r.seq.filter(x => !x.mealOf).reduce((a, x) => a + (x.mustSee ? 3 : 1) * (mine.has(x.id) ? 2 : 1) * fameW(x) * Math.max(20, x.minutes || 0), 0); };
   let fitted = fitDay();
   if (fitted.dropped.length && !d.rain) { quickMeals = true; const q = fitDay(); if (worth(q) > worth(fitted) + 1) fitted = q; else quickMeals = false; }
   let seq = fitted.seq; const dropped = fitted.dropped;
@@ -2194,7 +2217,7 @@ let extrasBusy = false;
 // with its own full story where the place deserves one, a walking cue between points, and a closing line that
 // hands over to the next stop. Points are real places from the sources or the map, or a spot at the stop itself
 // (its west front, the view from the steps); never an invented place.
-const EXTRAS_V = 4;
+const EXTRAS_V = 5; // 5: parts only where they belong, English names, no repeats
 let nearWhy = "";
 // The map's named sights near a stop: from Kairoute's helper, or (when the helper is busy) straight from
 // OpenStreetMap's map servers, with the same light query. A stop the map couldn't answer for is marked, so its
@@ -2224,19 +2247,34 @@ async function nearSights(s) {
 }
 // Real points to walk through: the sources' places near the stop, plus the map's named sights there.
 async function walkCands(s, city) {
-  const out = partCands(s, city).slice(), mains = (city.sites || []).filter(x => !x.quick && x !== s);
+  const pc = partCands(s, city), out = pc.slice(), mains = (city.sites || []).filter(x => !x.quick && x !== s);
   for (const x of await nearSights(s)) {
     if (out.length >= 14) break;
-    if (sameSight(x, s) || mains.some(m => sameSight(x, m) || (isFinite(m.lat) && hav(x, m) < 0.03 && nameMatch(m.name.split(" ")[0], x.name))) || otherStop(x, s, mains) || out.some(o => sameSight(x, o) || hav(x, o) < 0.015)) continue;
+    if (sameSight(x, s) || mains.some(m => sameSight(x, m) || (isFinite(m.lat) && hav(x, m) < 0.03 && nameMatch(m.name.split(" ")[0], x.name))) || otherStop(x, s, mains) || out.some(o => sameSight(x, o) || hav(x, o) < 0.015 || sameName(x, o))) continue;
     out.push(x);
   }
   // What each point really is, from Wikidata and Wikipedia: a person (a plaque or a grave named after someone) or a
   // bare "Theatre" sign is not a point to stand at, and the facts go to the guide so the story is true.
   const fx = await placeFacts(out.map(c => c.wd).filter(Boolean));
   for (const c of out) { const f = c.wd && fx[c.wd]; if (f) { c.what = f.what; c.facts = f.text; c.human = (f.types || []).includes("Q5"); } }
+  // Only what really belongs to the stop: a place from the map that just happens to be near counts as a part only if
+  // what's written about it names the stop, or it stands right at the stop (a cathedral's own chapel). A whole
+  // district or village takes only places written about as being in it (a tomb and two chapels near Little Venice
+  // aren't parts of it). Places the city's sources list for the stop (partCands) are kept as they are.
+  const listed = new Set(pc), areaStop = AREA_CAT.test(s.category + " " + s.name) || /old town|historic|quarter|district|village|waterfront|neighbo/i.test(s.category + " " + s.name);
+  const stopWords = uniWords([s.name, s.local].filter(Boolean).join(" ")).filter(t => t.length > 3);
+  const namesStop = c => { const txt = uniWords([c.what, c.facts, c.desc].filter(Boolean).join(" ")); return stopWords.length && stopWords.some(w => txt.some(t => t.slice(0, 5) === w.slice(0, 5))); };
+  const belongs = c => listed.has(c) || namesStop(c) || (!areaStop && c.m != null && c.m <= 80);
+  for (let i = out.length - 1; i >= 0; i--) if (!belongs(out[i])) out.splice(i, 1);
   // A memorial, plaque or bust nobody has written about is usually named after a person: nothing true to tell there.
   return out.filter(c => !c.human && !GENERIC_NAME.test(plainName(c.name)) && !GENERIC_NAME.test(plainName(c.local || "x y")) && !(/memorial|plaque|bust|artwork/.test(c.kind || "") && !c.facts));
 }
+// Words of a name in any script (Greek, Cyrillic...), lower case and without accents.
+const uniWords = n => String(n || "").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").split(/[^\p{L}\p{N}]+/u).filter(t => t.length > 1);
+// Two names for one small place: they share a telling word, allowing for grammar ("Αγία Σωτήρα" and "Αγίου Σωτήρα").
+const PART_SMALL = new Set("the of and church chapel tomb saint st holy agios agia agiou agion panagia ναος εκκλησια αγιος αγια αγιου αγιων ταφος παναγια san santa santo chiesa iglesia".split(" "));
+const sameName = (a, b) => { const tell = n => uniWords(n).filter(t => t.length > 3 && !PART_SMALL.has(t)).map(t => t.slice(0, 5)); const ta = new Set(tell(a.name).concat(tell(a.local))); return tell(b.name).concat(tell(b.local)).some(t => ta.has(t)) && (!isFinite(a.lat) || !isFinite(b.lat) || hav(a, b) < 0.06); };
+const nonLatin = n => /[^\u0000-\u024f\s\d.,'’()\-–&]/.test(String(n || ""));
 const plainName = n => String(n || "").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim();
 const GENERIC_NAME = /^(theat(re|er)|θεατρο|church|chapel|ναος|εκκλησια|museum|μουσειο|fountain|monument|statue|memorial|plaque|kirche|eglise|iglesia|chiesa|kostel|divadlo|teatro|theatre|cinema)$/;
 const factsCache = {};
@@ -2270,10 +2308,11 @@ async function stopExtras(s, city) {
 ${cands.length ? `Real places right here (distance from the middle of ${s.name}):
 ${cands.map((c, i) => `${i + 1}. ${c.name}${c.local ? " [" + c.local + "]" : ""} (${c.m} m)${c.what ? " — " + c.what : c.desc ? " — " + c.desc : ""}${c.facts ? "\n   Facts: " + c.facts.slice(0, 450) : ""}`).join("\n")}
 ` : ""}Plan ${area ? "4 to 8 points" : "2 to 4 points"} in a walking order that never doubles back, starting where a visitor arrives. A point is either one of the places above (give its number as "n") or a spot at ${s.name} itself (give "spot", e.g. "the west front", "inside, at the altar", "the view from the top step"). Never name a place that is not on the list or part of ${s.name}. Prefer the places that come with facts. Build each place's story on its facts and never contradict them; for a place without facts, tell only what you are certain of and keep it short.
-Return ONLY JSON {"intro":"...","parts":[{"n":number or 0,"spot":"","stand":"...","guide":"...","look":"...","next":"...","minutes":number}],"wrap":"...","show":{"what":"","every":0,"first":"","last":"","n":0}}.
+Return ONLY JSON {"intro":"...","parts":[{"n":number or 0,"en":"","spot":"","stand":"...","guide":"...","look":"...","next":"...","minutes":number}],"wrap":"...","show":{"what":"","every":0,"first":"","last":"","n":0}}.
 - "intro": 50 to 90 words said where the group gathers: where they are, why it matters, and the route you'll take ("we'll start at…, then…").
 - "stand": one sentence putting them in place: where to stand and which way to face ("Stand by the fountain and face the clock tower"). Only name what is surely there; never invent doors, gates, colours or views you can't be sure of.
 - "guide": the full spoken story of that point, 110 to 220 words where the place has a lot to tell (a church, a monument, a famous building), 60 to 110 for a small detail. Real history, people, dates you are sure of, and what they are looking at right now ("look up at…", "see the crack in the third step?"). Conversational, like a person thinking aloud, not a script. Every point must teach something specific about what is in front of them (a date, a person, an event, how it was built); no general talk about "layers of history" or "the soul of the city". A spot is only worth a point when something there is worth looking at.
+- "en": for a numbered place, its name as English-speaking visitors know it; if it has no English name, translate it plainly (e.g. "Church of Our Lady of the Rosary"). Leave empty for a spot.
 - "look": one specific detail to spot from that point.
 - "next": for every point except the last, one line taking the group from this point to the next one, with the direction and a landmark to aim for ("Now cross the square toward the church with the twin black towers").
 - "minutes": time at that point, 3 to 20.
@@ -2290,9 +2329,12 @@ Write in ${P().lang}.${faithKey() ? " Only where a point is named in the Bible o
         const ev = [s.guide, s.summary, c && c.facts, c && c.what, c && c.desc].join(" "); x.guide = faithStrip(x.guide, ev, bibleSite(s)); x.look = faithStrip(x.look, ev, bibleSite(s));
         if ((+x.n && !c) || (!c && !spot) || words(x.guide) < 40) continue; // an unknown place, or a story too thin to be worth a stop
         if (spot && !/\d|century|centuries/i.test(String(x.guide))) continue; // a spot with only general talk, no fact about what's in view
-        const nm = c ? c.name : spot.replace(/^\w/, ch => ch.toUpperCase());
-        if (parts.some(p => p.name === nm)) continue;
-        parts.push({ name: nm, spot: !c, local: c && c.local, lat: c ? c.lat : s.lat, lng: c ? c.lng : s.lng, minutes: Math.max(3, Math.min(20, Math.round(numV(x.minutes) || 8))), stand: String(x.stand || "").slice(0, 240), next: String(x.next || x.walk || "").slice(0, 240), guide: String(x.guide).slice(0, 1800), lookFor: String(x.look || "").slice(0, 240), quickId: c && c.quickId, n: +x.n || 0, i: (j.parts || []).indexOf(x) });
+        // Always an English name, with the local one kept to show beneath it.
+        const en = String(x.en || "").trim().slice(0, 80), local = c ? (c.local || (nonLatin(c.name) ? c.name : "")) : "";
+        const nm = c ? (nonLatin(c.name) && en && !nonLatin(en) ? en : nonLatin(c.name) && c.local && !nonLatin(c.local) ? c.local : c.name) : spot.replace(/^\w/, ch => ch.toUpperCase());
+        if (c && nonLatin(nm)) continue; // no English name to show: not a point to send people to
+        if (parts.some(p => p.name === nm || (c && p.n && sameName(p, { name: c.name, local: c.local, lat: c.lat, lng: c.lng })))) continue; // the same place twice
+        parts.push({ name: nm, spot: !c, local: local && local !== nm ? local : "", lat: c ? c.lat : s.lat, lng: c ? c.lng : s.lng, minutes: Math.max(3, Math.min(20, Math.round(numV(x.minutes) || 8))), stand: String(x.stand || "").slice(0, 240), next: String(x.next || x.walk || "").slice(0, 240), guide: String(x.guide).slice(0, 1800), lookFor: String(x.look || "").slice(0, 240), quickId: c && c.quickId, n: +x.n || 0, i: (j.parts || []).indexOf(x) });
       }
     }
     if (parts.length >= 2) { parts = walkOrder(parts.slice(0, 8), s); s.parts = parts; s.partsOff = []; delete s.baseMin; partMinutes(s); s.intro = String(j.intro || "").slice(0, 900); s.wrap = String(j.wrap || "").slice(0, 500);
@@ -2324,7 +2366,7 @@ function queueExtras(plan) {
 // What a big stop holds, for the Change stops card: each part can be unticked.
 function partsPick(s) {
   if (!s.parts || s.parts.length < 2) return "";
-  return `<div class="partpick"><span class="eyebrow">What's here</span>${s.parts.map((p, k) => { const on = !(s.partsOff || []).includes(k); return `<label class="partchk"><input type="checkbox" data-part="${esc(s.id)}:${k}" ${on ? "checked" : ""}><span>${esc(p.name)} <small>${dur(p.minutes)}</small></span></label>`; }).join("")}</div>`;
+  return `<div class="partpick"><span class="eyebrow">What's here</span>${s.parts.map((p, k) => { const on = !(s.partsOff || []).includes(k); return `<label class="partchk"><input type="checkbox" data-part="${esc(s.id)}:${k}" ${on ? "checked" : ""}><span>${esc(p.name)} <small>${dur(p.minutes)}</small>${p.local ? `<small class="local">${esc(p.local)}</small>` : ""}</span></label>`; }).join("")}</div>`;
 }
 // The parts in order, for the Day plan and the Guide.
 function partsList(s, start, withPlay) {
@@ -3114,13 +3156,13 @@ if (typeof window !== "undefined") {
     const sites = new Map([...(city.sites || []), ...(city.farther || [])].map(x => [x.id, x])), eats = new Set((city.restaurants || []).map(r => keyOf(r.name)));
     const stops = pl.items.filter(x => x.type === "stop"), meals = pl.items.filter(x => x.type === "meal" || x.type === "evening");
     const pts = pl.items.filter(x => x.place && x.type !== "travel" && x.type !== "evening");
-    return { autoTitle: d.title ? null : dayAuto(d), place: mainPlace(d), destination: d.destination, stopNames: stops.map(x => x.place.name), keptNames: stops.filter(x => !x.place.bonus && !x.place.along).map(x => x.place.name), closedSel: (d.selected || []).map(id => sites.get(id)).filter(x => x && closedForDay(x, d, pl.w)).map(x => x.name), fill: pl.fill || null, rain: !!d.rain, fillOn: d.fillTime !== false, type: d.type, mustSees: (city.sites || []).filter(x => x.mustSee && !x.quick && religiousOk(x) && !siteClosed(x, d.date)).map(x => ({ id: x.id, minutes: x.minutes || 45 })), selected: (d.selected || []).slice(), picks: stops.filter(x => !x.place.bonus && !x.place.along).map(x => x.place.id), bonus: stops.filter(x => x.place.bonus).map(x => x.place.id), along: stops.filter(x => x.place.along).map(x => x.place.id),
+    return { hours: d.hours, autoTitle: d.title ? null : dayAuto(d), place: mainPlace(d), destination: d.destination, stopNames: stops.map(x => x.place.name), keptNames: stops.filter(x => !x.place.bonus && !x.place.along).map(x => x.place.name), closedSel: (d.selected || []).map(id => sites.get(id)).filter(x => x && closedForDay(x, d, pl.w)).map(x => x.name), fill: pl.fill || null, rain: !!d.rain, fillOn: d.fillTime !== false, type: d.type, mustSees: (city.sites || []).filter(x => x.mustSee && !x.quick && religiousOk(x) && !siteClosed(x, d.date)).map(x => ({ id: x.id, minutes: x.minutes || 45 })), selected: (d.selected || []).slice(), picks: stops.filter(x => !x.place.bonus && !x.place.along).map(x => x.place.id), bonus: stops.filter(x => x.place.bonus).map(x => x.place.id), along: stops.filter(x => x.place.along).map(x => x.place.id),
       dropped: pl.dropped.map(x => x.id), elsewhere: (pl.elsewhere || []).map(x => x.s.id), over: pl.over, end: pl.end, endBy: pl.endBy, times: pl.items.filter(x => x.type !== "travel" && x.type !== "evening").map(x => x.time),
       unknownStops: stops.filter(x => !sites.has(x.place.id) && !(city.sites || []).some(y => y.name === x.place.name)).map(x => x.place.name),
       invented: meals.filter(x => !x.place.booked && !x.place.generic && !eats.has(keyOf(x.place.name))).map(x => x.place.name),
       farMeals: meals.filter(x => x.type === "meal" && !x.place.booked).map(x => { const k = pts.indexOf(x), a = pts[k - 1], b = pts[k + 1]; return a && b ? { name: x.place.name, extra: Math.round(tmin(a.place, x.place) + tmin(x.place, b.place) - tmin(a.place, b.place)) } : null; }).filter(x => x && x.extra > 25),
       mustLocal: [...sites.values()].filter(x => x.mustSee && sightKind(x, city) === "local").map(x => x.name),
-      closedPicks: stops.filter(x => siteClosed(x.place, d.date)).map(x => x.place.name), unwanted: stops.filter(x => !religiousOk(x.place) && !(d.mine || []).includes(x.place.id)).map(x => x.place.name), closed: (pl.closedToday || []).map(x => x.id) };
+      closedPicks: stops.filter(x => siteClosed(x.place, d.date)).map(x => x.place.name), outranked: (() => { const mine = new Set(d.mine || []), wo = x => (x.mustSee ? 3 : 1) * (mine.has(x.id) ? 2 : 1) * fameW(x) * Math.max(20, x.minutes || 0); return (pl.dropped || []).filter(D => D.mustSee).flatMap(D => stops.map(x => x.place).filter(X => !X.mustSee && wo(X) < wo(D) && (X.minutes || 0) >= (D.minutes || 0) && hav(X, D) < 3).map(X => D.name + ' left out while ' + X.name + ' stays')); })(), unwanted: stops.filter(x => !religiousOk(x.place) && !(d.mine || []).includes(x.place.id)).map(x => x.place.name), closed: (pl.closedToday || []).map(x => x.id) };
   };
 }
 // Safety-net hooks: famous sights and big stops, with a sources snapshot and stand-in AI answers, so they run
@@ -3200,6 +3242,16 @@ if (typeof window !== "undefined") window.__kairouteFameCheck = async fix => {
     const keepShow = S.show; delete S.show; delete extrasAsked["prague test|" + S.id]; S.extrasV = 0; const keepParts = S.parts; await stopExtras(S, gone);
     ok("Timed show: the clock's show stays with the clock's own stop, not the square around it", !S.show, S.show ? "the square got " + S.show.what : "kept on the clock");
     S.show = keepShow; S.parts = keepParts; partMinutes(S);
+    // Little Venice (Richard): parts must belong, show English names, never repeat; hours read the same everywhere.
+    { const LV = { id: "lv-test", name: "Little Venice", category: "Waterfront district", lat: 37.4459, lng: 25.3256 };
+      const near = [{ name: "Τάφος Μερμελέχα Αγία Σωτήρα", lat: 37.4461, lng: 25.3258, m: 30, kind: "tomb" }, { name: "Αγίου Σωτήρα", lat: 37.4462, lng: 25.3257, m: 35, kind: "church" },
+        { name: "Παναγία του Ροδαρίου", lat: 37.4455, lng: 25.3262, m: 60, kind: "church" }, { name: "Venetian balcony houses", lat: 37.4458, lng: 25.3255, m: 12, kind: "attraction", desc: "Houses of Little Venice built over the sea" }];
+      const keepNC = nearCache[LV.id]; nearCache[LV.id] = near.map(x => Object.assign({}, x));
+      const got = await walkCands(LV, { city: "Mykonos test", sites: [LV] }); if (keepNC === undefined) delete nearCache[LV.id]; else nearCache[LV.id] = keepNC;
+      ok("Parts: a district takes only places written about as being in it (no nearby tomb or chapels)", got.length === 1 && /balcony/.test(got[0].name), got.map(c => c.name).join(", ") || "none");
+      ok("Parts: one small place under two names is one part (Αγία Σωτήρα / Αγίου Σωτήρα)", sameName(near[0], near[1]) && !sameName(near[1], near[2]), "grammar forms matched");
+      ok("Parts: a name in another script is shown in English, the local name beneath", nonLatin("Παναγία του Ροδαρίου") && !nonLatin("Church of Our Lady of the Rosary") && !nonLatin("Plaça Reial"), "Greek detected, Latin accents fine");
+      ok("Hours read the same everywhere (\"24h\" is \"Open all day\")", hoursText("24h") === "Open all day" && hoursText("24/7") === "Open all day" && hoursText("Mo-Su 08:00-20:00") === "Daily 08:00–20:00" && hoursText("08:00-20:00") === "08:00–20:00", [hoursText("24h"), hoursText("Mo-Su 08:00-20:00")].join(" | ")); }
     // Unticking a part shortens the stop.
     const before = S.minutes; S.partsOff = [1]; partMinutes(S);
     ok("Big stop: unticking a part shortens the visit", S.minutes < before, `${before} min → ${S.minutes} min`);
@@ -3437,10 +3489,12 @@ function placeRel(a, b) {
 function samePlace(a, b) { return placeRel(a, b) === "same"; }
 if (typeof window !== "undefined") window.__kairouteDedupe = (sites, farther) => { const c = { sites: JSON.parse(JSON.stringify(sites || [])), farther: JSON.parse(JSON.stringify(farther || [])) }; const n = dedupeSites(c); return { n, kept: allSites(c).map(x => ({ name: x.name, alias: x.alias || [], lookFor: x.lookFor || [] })) }; };
 // Every guide the app holds, checked for two sights that are one place (for the safety net).
+if (typeof window !== "undefined") window.__kairouteDupCities = () => { ensureBuiltins(); const seen = new Set(); let n = 0, sights = 0; for (const k in cities) { const c = cities[k]; if (!c || seen.has(c)) continue; seen.add(c); n++; sights += allSites(c).length; } return { n, sights, left: window.__kairouteDupScan() }; };
 if (typeof window !== "undefined") window.__kairouteDupScan = () => { ensureBuiltins(); const out = []; const seen = new Set(); for (const k in cities) { const c = cities[k]; if (!c || seen.has(c)) continue; seen.add(c); const all = allSites(c); for (let i = 0; i < all.length; i++) for (let j = i + 1; j < all.length; j++) { const r = placeRel(all[i], all[j]) || placeRel(all[j], all[i]); if (r) out.push(c.city + ": " + all[i].name + " / " + all[j].name + " (" + r + ")"); } } return out; };
 // Removes repeats and parts from a guide: of two names for one place the better known (a must-see, then the one
 // with more written about it) stays; a part goes into the bigger place's "look for" list.
-const DEDUPE_V = 1;
+const DEDUPE_V = 1; const dedupeLog = []; // what was folded, for the review tools
+if (typeof window !== "undefined") window.__kairouteDedupeLog = () => dedupeLog.slice();
 function dedupeSites(c) {
   if (!c) return 0; let n = 0;
   const lists = [c.sites || [], c.farther || []], all = lists.flat(), gone = new Set();
@@ -3450,6 +3504,7 @@ function dedupeSites(c) {
     let r = placeRel(a, b), big = a, small = b;
     if (!r) { r = placeRel(b, a); if (r) { big = b; small = a; } }
     if (!r) continue;
+    try { dedupeLog.push({ city: c.city || "", kept: (r === "same" && rank(b) > rank(a) ? b : big).name, gone: (r === "same" && rank(b) > rank(a) ? a : small).name, rel: r }); } catch (e) {}
     if (r === "same") { if (rank(b) > rank(a)) { big = b; small = a; } big.mustSee = big.mustSee || small.mustSee; big.alias = [...new Set([...(big.alias || []), small.name, small.id])]; }
     else { big.lookFor = [...new Set([...(big.lookFor || []), small.name])].slice(0, 6); big.alias = [...new Set([...(big.alias || []), small.id])]; }
     gone.add(small); n++;
@@ -4631,7 +4686,7 @@ function siteCard(s, d, plan, nr) {
       ${twinNote(s, cityFor(d))}${partsPick(s)}${s.show && s.show.what ? `<p class="travelnote">⏱ ${esc(showLine(s))}</p>` : ""}${nextDoor(s, cityFor(d))}
       ${srcNote(s)}
       ${s.far && s.travel ? `<p class="travelnote">Getting there: ${esc(unitText(s.travel))}</p>` : ""}
-      ${s.hours ? `<p class="travelnote">${esc(s.hours)}${s.closed ? " · " + esc(s.closed) : ""}</p>` : ""}
+      ${s.hours ? `<p class="travelnote">${esc(hoursText(s.hours))}${s.closed ? " · " + esc(s.closed) : ""}</p>` : ""}
       ${P().access !== "none" && s.access ? `<p class="travelnote"><b>Access:</b> ${esc(s.access)}</p>` : ""}
     </div>
   </label>`;
@@ -5150,6 +5205,16 @@ function travelCheck(plan) {
 // An earlier start: when a day can't fit everything (or a long drive pushes it late), try leaving earlier with
 // the same finish time, in half-hour steps down to 06:30, and offer the latest start that fits it all. A start
 // is only offered if nobody would reach a sight before it opens (from the sight's listed hours).
+// Opening hours as people read them, the same way everywhere: map shorthand ("24h", "24/7", "Mo-Su 08:00-20:00")
+// becomes words, times get a proper dash.
+function hoursText(h) {
+  let t = String(h || "").trim(); if (!t) return "";
+  if (/^(24\s*\/\s*7|24\s*h(ours|rs)?|00:00\s*-\s*(24|00):00|open 24 hours)$/i.test(t)) return "Open all day";
+  const days = { Mo: "Mon", Tu: "Tue", We: "Wed", Th: "Thu", Fr: "Fri", Sa: "Sat", Su: "Sun", PH: "holidays" };
+  t = t.replace(/\b(Mo|Tu|We|Th|Fr|Sa|Su|PH)\b/g, m => days[m]).replace(/\bMon\s*-\s*Sun\b:?\s*/g, "Daily ").replace(/\boff\b/g, "closed");
+  t = t.replace(/(\d{1,2}:\d{2})\s*-\s*(\d{1,2}:\d{2})/g, "$1–$2").replace(/\s*;\s*/g, "; ");
+  return t.replace(/^\w/, c => c.toUpperCase());
+}
 function opensAt(s) { const m = String(s.hours || "").match(/(\d{1,2})[:.](\d{2})/); return m ? +m[1] * 60 + +m[2] : null; }
 function earlierStart(d, plan) {
   if (d.type !== "land" || !d.startTime || !(plan.dropped.length || plan.over)) return null;
@@ -5377,7 +5442,7 @@ ${quietOn(s) ? `<p class="banner quiet" role="note">🤫 <span><b>Quiet place.</
       ${s.photoTip || s.travelerTip || s.hours || s.tickets || s.crowds || s.priceNote || s.web || (s.sources && s.sources.length) ? `<details class="more scmore"><summary>Hours, tickets and photo tips</summary><div class="scmorein">
       ${s.photoTip || s.travelerTip ? `<div class="tipsgrid">${s.photoTip ? `<p class="phototip"><b>Photo spot</b> ${esc(s.photoTip)} <a href="${photos}" target="_blank" rel="noopener">See photos</a></p>` : ""}${s.travelerTip ? `<p class="phototip"><b>From travelers</b> ${esc(unitText(s.travelerTip))}</p>` : ""}</div>` : ""}
       ${s.hours || s.tickets || s.crowds || s.priceNote || s.web ? `<div class="before"><span class="eyebrow">Before you go</span>
-        ${s.hours ? `<div><b>Hours</b><span>${esc(s.hours)}${s.closed ? " · " + esc(s.closed) : ""}</span></div>` : ""}
+        ${s.hours ? `<div><b>Hours</b><span>${esc(hoursText(s.hours))}${s.closed ? " · " + esc(s.closed) : ""}</span></div>` : ""}
         ${s.priceNote ? `<div><b>Price</b><span>${esc(s.priceNote)}</span></div>` : ""}
         ${s.tickets ? `<div><b>Tickets</b><span>${esc(s.tickets)}</span></div>` : ""}
         ${s.crowds ? `<div><b>Crowds</b><span>${esc(s.crowds)}</span></div>` : ""}

@@ -7,6 +7,11 @@ const { chromium } = require('playwright');
   await p.click('[data-act="continue"]').catch(() => {}); await p.waitForTimeout(800);
   const n = await p.evaluate(() => document.querySelectorAll('.daychip').length);
   for (let i = 0; i < n; i++) { await p.click(`.daychip[data-day="${i}"]`).catch(() => {}); await p.click('#tab-plan').catch(() => {}); for (let t = 0; t < 40; t++) { await p.waitForTimeout(1500); if (!(await p.evaluate(() => window.__kairouteUpgrading()))) break; } }
-  console.log('SIGHTS ' + JSON.stringify(await p.evaluate(() => window.__kairouteSights())));
+  console.log('SIGHTS ' + JSON.stringify(await p.evaluate(() => window.__kairouteSights ? window.__kairouteSights() : 'no hook')));
+  // Repeats folded (one place under two names, or a part of a bigger place), in every guide the app holds.
+  const log = await p.evaluate(() => window.__kairouteDedupeLog ? window.__kairouteDedupeLog() : []), cities = await p.evaluate(() => window.__kairouteDupCities ? window.__kairouteDupCities() : null);
+  console.log(`DEDUPE ${cities ? cities.n + ' guides checked, ' + cities.sights + ' sights; ' : ''}${log.filter(x => x.rel === 'same').length} repeats merged, ${log.filter(x => x.rel === 'part').length} parts folded into their place`);
+  log.forEach(x => console.log(`  ${x.city}: ${x.rel === 'same' ? 'merged' : 'part of'} "${x.gone}" -> "${x.kept}"`));
+  if (cities) console.log('LEFT ' + JSON.stringify(cities.left));
   await b.close();
 })();
