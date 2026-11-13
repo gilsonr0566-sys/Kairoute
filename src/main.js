@@ -3197,7 +3197,14 @@ function placeMenu(m) {
   else { p.style.top = Math.max(pad, b.top - 4 - Math.min(h, above)) + "px"; p.style.bottom = "auto"; p.style.maxHeight = above + "px"; }
 }
 document.addEventListener("toggle", e => { const m = e.target; if (m.matches && m.matches("details.planmore") && m.open) placeMenu(m); }, true);
-const replaceMenus = () => document.querySelectorAll("details.planmore[open]").forEach(placeMenu);
+// The back-to-the-ship countdown never leaves the screen: once the page scrolls it out of view, it pins to the top.
+function pinChip() {
+  const c = document.getElementById("cdCard"); if (!c) return;
+  const was = c.classList.contains("pinned");
+  if (!was) { const r = c.getBoundingClientRect(); if (r.height && r.top < 8) { c.style.height = r.height + "px"; c.classList.add("pinned"); } }
+  else if (c.getBoundingClientRect().top >= 8) { c.classList.remove("pinned"); c.style.height = ""; }
+}
+const replaceMenus = () => { pinChip(); document.querySelectorAll("details.planmore[open]").forEach(placeMenu); };
 window.addEventListener("resize", replaceMenus); document.addEventListener("scroll", replaceMenus, true);
 // ---- First-run walkthrough: four short, skippable screens; replay from Settings > How Kairoute works ----
 const COACH = [
@@ -3225,7 +3232,7 @@ function render() {
   if (faithPrefsTidy()) save();
   faithSweep();
   bonusMemo = new Map(); mealMemo = new Map(); keptMemo = new Map(); eveMemo = new Map(); avoidMeals = new Set();
-  const pkey = view + "|" + trip.active, pos = {};
+  const pkey = view + "|" + trip.active, pos = {}, winY = window.scrollY;
   panes().forEach(el => { pos[el.dataset.pane || "view"] = el.scrollTop; });
   renderView();
   { const v = document.getElementById("view"), app = !FULL_VIEWS[view] || /^(settings|privacy|terms)$/.test(view);
@@ -3237,12 +3244,15 @@ function render() {
     document.documentElement.classList.toggle("nohead", view === "trip" || setv);
     document.documentElement.classList.toggle("setview", setv);
     if (v) { v.dataset.v = view; v.classList.toggle("panes", app && !!v.querySelector(":scope > .plangrid, :scope > .guidegrid, :scope > .sitesgrid, :scope > .tripgrid, :scope > .setpage")); }
-    if (paneMemo.key === pkey) panes().forEach(el => { const y = pos[el.dataset.pane || "view"]; if (y) el.scrollTop = y; });
-    paneMemo.key = pkey; }
+    paneMemo.same = paneMemo.key === pkey; paneMemo.key = pkey; }
   { const old = document.querySelector(".coach"); if (old) old.remove(); const ch = coachHTML(); if (ch) document.body.insertAdjacentHTML("beforeend", ch); }
   if (askNotice && !FULL_VIEWS[view]) { const v = document.getElementById("view"); if (v) v.insertAdjacentHTML("afterbegin", `<p class="banner ok" role="status">${esc(askNotice)} <button class="linkbtn" data-act="asknoticeok">OK</button></p>`); }
   mountMaps(); liveAfterRender();
   if (openFolds.size) document.querySelectorAll("#view details").forEach(el => { const sm = el.querySelector("summary"); if (sm && openFolds.has(view + "|" + sm.textContent.trim())) el.open = true; });
+  // A re-render of the same screen (live updates, sync, data arriving) never moves what you're looking at:
+  // put every panel, and the page itself, back exactly where it was, after folds have reopened.
+  if (paneMemo.same) { panes().forEach(el => { const y = pos[el.dataset.pane || "view"]; if (y) el.scrollTop = y; }); if (winY && Math.abs(window.scrollY - winY) > 1) window.scrollTo(0, winY); }
+  pinChip();
 }
 function renderView() {
   ensureBuiltins();
@@ -4805,6 +4815,7 @@ ${partsList(s, it.time)}${stopLiveNotes(it, d)}</div></div>`;
   const L = DAY_LEN.find(x => x[0] === +d.hours), canLen = d.type === "land" || d.type === "arrival";
   // Heads-up: everything that needs a decision today, in one place above the schedule, most urgent first.
   const heads = [
+    (b => b ? `<div class="livecard">${b}</div>` : "")(liveBanner(d, plan)),
     plan.over ? `<div class="banner warn" role="alert">This plan runs ${dur(plan.end - plan.endBy)} past ${fmt(plan.endBy)}. Remove a stop with Change stops, or change the times.</div>` : "",
     closedBanner(d, plan),
     plan.dropped.length && !liveOn(d) ? `<div class="banner warn dropped"><span>Didn't fit today: <b>${plan.dropped.map(s => esc(s.name)).join(", ")}</b>. Your picks are over today's time.</span><button type="button" class="btn small" data-act="fitfix">Make it fit</button></div>` : "",
@@ -4821,7 +4832,7 @@ ${partsList(s, it.time)}${stopLiveNotes(it, d)}</div></div>`;
   const wxt = weatherTool(d, plan), wxChip = /wxchip/.test(wxt) ? wxt : "";
   return `
   <div class="plangrid"><div class="plantop">
-  <div class="dayhead">${dayHeading(d)}<button class="btn bigbtn tourbtn" data-act="tourstart"><span class="tb-long">▶ Start the tour</span><span class="tb-short">▶ Start tour</span></button></div>
+  <div class="dayhead">${dayHeading(d)}${countdownCard(d, plan)}<button class="btn bigbtn tourbtn" data-act="tourstart"><span class="tb-long">▶ Start the tour</span><span class="tb-short">▶ Start tour</span></button></div>
   <div class="daysum" role="group" aria-label="Today at a glance">
     <div><b>${fmt(plan.start)}–${fmt(plan.endBy)}</b><span>${d.type === "port" ? "ashore " + dur(plan.endBy - plan.start) : L ? dur(d.hours * 60) + " sightseeing" : "free " + dur(plan.endBy - plan.start)}</span></div>
     <div><b>${stopsN}${optN ? " + " + optN : ""}</b><span>${stopsN === 1 ? "pick" : "picks"}${optN ? " + optional" : ""}${plan.along.length ? ` · ${plan.along.length} on the way` : ""}</span></div>
@@ -4848,7 +4859,7 @@ ${partsList(s, it.time)}${stopLiveNotes(it, d)}</div></div>`;
   <div class="mapbox">${mapSlot(plan, d, "plan")}
     <div class="maplegend"><span><i></i>Walk</span><span><i class="dash"></i>Taxi or transit</span><span style="color:var(--meal)">● Meal</span><span style="color:var(--must)">■ Hotel</span><span>● On the way</span></div>
   </div>
-  <div class="card foldlist"><span class="eyebrow">More about today</span>
+  <details class="card foldlist morefold"><summary>More about today</summary>
   ${checksCard(d, city, plan)}
   ${eventsCard(d, city, plan)}
   ${gxPlanCards(d, city, plan)}
@@ -4859,8 +4870,8 @@ ${partsList(s, it.time)}${stopLiveNotes(it, d)}</div></div>`;
   ${basicsCard(city)}
   <p class="footnote">Times are estimates using a relaxed walking pace and typical taxi times. Check opening hours and book timed tickets for the big sights.</p>
   </details>
-  </div>
-  </div><div class="right pane" data-pane="sched">${countdownCard(d, plan)}${heads ? `<div class="heads" role="region" aria-label="Heads-up for today">${heads}</div>` : ""}${bookFormHTML(d)}<div class="card"><div class="timeline">${rows}</div></div></div></div>`;
+  </details>
+  </div><div class="right pane" data-pane="sched">${heads ? `<div class="heads" role="region" aria-label="Heads-up for today">${heads}</div>` : ""}${bookFormHTML(d)}<div class="card"><div class="timeline">${rows}</div></div></div></div>`;
 }
 // A restaurant's at-a-glance facts on the Day plan: badges and the Google rating. Why it was chosen, the two
 // alternatives and the traveler rating sit in a fold below.
