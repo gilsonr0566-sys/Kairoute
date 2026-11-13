@@ -3791,6 +3791,28 @@ function stopCost(plan, s) {
   if (!isFinite(best)) best = tmin(pts[0] || plan.w.head[0], s) * 2;
   return { min: Math.round(best + mins(s)), spare, alone: !plan.stops.length };
 }
+// Where a pick is on today's plan, so the list and the Day plan always agree on every pick.
+function pickStatus(s, plan) {
+  if (!plan || plan.error) return "";
+  const it = plan.items.find(x => x.type === "stop" && x.place && x.place.id === s.id);
+  if (it) return `<span class="tag here">${it.place.along ? "On the way" : "On your plan"} · ${fmt(it.time)}</span>`;
+  if ((plan.dropped || []).some(x => x.id === s.id)) return `<span class="tag nofit">Picked · doesn't fit today's time</span>`;
+  if ((plan.elsewhere || []).some(x => x.s.id === s.id)) return ""; // the "seen on ..." tag explains it
+  return `<span class="tag nofit">Picked · not on today's plan</span>`;
+}
+// The day's picks as sights. A pick whose id the guide no longer has (the guide was rebuilt or upgraded) is
+// found again by the name saved when it was ticked, and its id is updated, so a pick is never lost.
+function pickedSites(d, city) {
+  const all = allSites(city), out = [];
+  (d.selected || []).forEach((id, k) => {
+    let s = all.find(x => x.id === id);
+    const nm = d.pickNames && d.pickNames[id];
+    if (!s && nm) { s = all.find(x => nameMatch(nm, x.name) || nameMatch(x.name, nm)); if (s) { d.selected[k] = s.id; d.pickNames[s.id] = s.name; if (d.anchor === id) d.anchor = s.id; } }
+    if (s && !out.includes(s)) out.push(s);
+  });
+  return out;
+}
+function rememberPick(d, s) { if (!s) return; d.pickNames = d.pickNames || {}; d.pickNames[s.id] = s.name; }
 // The sight the traveler picked last on this day, while it is still picked (with a spot on the map).
 function siteAnchor(d, city) {
   if (!d.anchor || !(d.selected || []).includes(d.anchor)) return null;
@@ -3810,13 +3832,17 @@ function jumpToAnchor() {
   const card = pane.querySelector(".site.anchor"); if (card) { card.classList.add("flash"); setTimeout(() => card.classList.remove("flash"), 1200); }
 }
 // Closest to the anchor first; anything without a spot on the map keeps its order at the end.
-function nearSort(xs, anc) {
-  const km = x => isFinite(x.lat) && isFinite(x.lng) ? hav(anc, x) : Infinity;
+function nearKm(x, refs) { if (!isFinite(x.lat) || !isFinite(x.lng)) return Infinity; let m = Infinity; for (const r of refs) if (r !== x) m = Math.min(m, hav(r, x)); return m; }
+function nearSort(xs, refs) {
+  refs = Array.isArray(refs) ? refs : [refs];
+  const km = x => nearKm(x, refs);
   return xs.map((x, i) => [x, km(x), i]).sort((a, b) => a[1] - b[1] || a[2] - b[2]).map(a => a[0]);
 }
-function siteCard(s, d, plan, anc) {
-  const on = (d.selected || []).includes(s.id);
-  const isAnc = anc && s === anc, near = anc && !isAnc && isFinite(s.lat) && isFinite(s.lng) ? hav(anc, s) : null;
+function siteCard(s, d, plan, nr) {
+  const on = (d.selected || []).includes(s.id), anc = nr && nr.anc;
+  const isAnc = anc && s === anc;
+  let near = null, nearTo = null;
+  if (nr && !on && nr.refs.length && isFinite(s.lat) && isFinite(s.lng)) for (const r of nr.refs) { const k = hav(r, s); if (near == null || k < near) { near = k; nearTo = r; } }
   const other = plannedElsewhere(d)[s.id];
   let fit = "";
   if (s.far && plan && !plan.error) {
@@ -3830,7 +3856,7 @@ function siteCard(s, d, plan, anc) {
     <div class="body">
       <div class="name">${esc(s.name)}</div>
       <div class="tags">
-        ${isAnc ? `<span class="tag here">Sorting from here</span>` : near != null ? `<span class="tag near">${near < 0.05 ? "Right here" : esc(distTxt(near, true)) + " away"}</span>` : ""}
+        ${on ? pickStatus(s, plan) : near != null ? `<span class="tag near">${near < 0.05 ? "Next to " + esc(nearTo.name) : esc(distTxt(near, true)) + " from " + esc(nearTo.name)}</span>` : ""}
         ${!on && plan && (plan.bonus || []).some(x => x.id === s.id) ? `<span class="tag bonus">On your plan as an optional stop</span>` : ""}
         ${other ? (ex => `<span class="tag seen">${!on ? "Planned for " + esc(fmtDow(other.date)) + " " + esc(fmtDate(other.date)) : ex && ex.earlier ? "Seen " + esc(fmtDow(ex.on.date)) + " " + esc(fmtDate(ex.on.date)) + " · not repeated" : ex && ex.later ? "No room today · seen " + esc(fmtDow(ex.on.date)) + " " + esc(fmtDate(ex.on.date)) : "Today · not repeated " + esc(fmtDow(other.date)) + " " + esc(fmtDate(other.date))}</span>`)(((plan && plan.elsewhere) || []).find(x => x.s.id === s.id)) : ""}
         ${s.mustSee ? `<span class="tag must">Must-see</span>` : ""}${unescoTag(s)}
@@ -3905,9 +3931,16 @@ function renderSites(d) {
   const quick = city.sites.filter(s => s.quick);
   const far = (city.farther || []).filter(x => !away(x));
   const already = [...city.sites.filter(x => !x.quick), ...(city.farther || [])].filter(away);
-  // Picking a sight makes it the anchor: it moves to the top and every other list re-sorts closest first.
-  const anc = siteAnchor(d, city), byNear = xs => anc ? nearSort(xs.filter(x => x !== anc), anc) : xs;
-  const mainL = byNear(main), farL = byNear(far), alreadyL = byNear(already), quickL = byNear(quick);
+  // The traveler's picks always sit at the top: the one picked last first (the anchor), then the rest of the
+  // picks. Everything not picked follows, closest first: to the anchor, or with no anchor to the nearest pick.
+  // Picks keep a steady order, newest first (each new tick goes on top and nothing else moves). Every pick
+  // shows here whatever the filter, and wherever the sight sits in the guide (quick stops, day trips).
+  const anc = siteAnchor(d, city), on = x => d.selected.includes(x.id);
+  const picked = pickedSites(d, city).reverse();
+  const refs = picked.filter(x => isFinite(x.lat) && isFinite(x.lng));
+  const byNear = xs => refs.length ? nearSort(xs, refs) : xs;
+  const mainL = byNear(main.filter(x => !on(x))), farL = byNear(far.filter(x => !on(x))), alreadyL = byNear(already), quickL = byNear(quick.filter(x => !on(x)));
+  const near = { refs, anc };
   const n = d.selected.length;
   const avail = plan && !plan.error ? dur(plan.endBy - plan.start) : "";
   return `<div class="sitesgrid"><div class="sitesside pane" data-pane="side">
@@ -3921,17 +3954,17 @@ function renderSites(d) {
   <div class="card suggest"><div><h3>Let your guide plan it</h3><p class="lede">Picks the best stops for ${(() => { const n = trip.days.filter(o => cityFor(o) === city).length; return n > 1 ? `all ${n} days` : "today"; })()} in ${esc(city.city)}, from your start point, hours, pace, walking and interests. Each day gets its own area, nothing repeats, and every stop fits.</p></div>
     ${suggestMsg ? `<p class="banner" id="suggestNote" role="status">${esc(suggestMsg)}</p>` : ""}<div class="actions"><button class="btn" data-act="suggesttour">Suggest my tour</button><button class="btn ghost small" data-act="freshpicks">Fresh picks for this day only</button></div></div>
   </div><div class="sitesmain pane" data-pane="sites">
-  ${anc ? `<div class="anchorbar" role="status"><span>Closest to <b>${esc(anc.name)}</b> first</span><button type="button" class="linkbtn" data-act="clearanchor">Usual order</button></div>
-  <div class="sitelist anchorlist">${siteCard(anc, d, plan, anc)}</div>` : ""}
-  <div class="sitelist">${mainL.map(s => siteCard(s, d, plan, anc)).join("")}</div>
+  ${picked.length ? `<p class="listlbl">Your picks (${picked.length}), newest first</p>
+  <div class="sitelist anchorlist">${picked.map(s => siteCard(s, d, plan, near)).join("")}</div>` : ""}
+  ${mainL.length ? `${picked.length ? `<p class="listlbl">More to see, closest to your picks first</p>` : ""}<div class="sitelist">${mainL.map(s => siteCard(s, d, plan, near)).join("")}</div>` : ""}
   ${farL.length ? `<div><h3>Worth the trip</h3><p class="lede">Day trips and sights farther out, checked against your time today.</p></div>
-  <div class="sitelist">${farL.map(s => siteCard(s, d, plan, anc)).join("")}</div>` : ""}
+  <div class="sitelist">${farL.map(s => siteCard(s, d, plan, near)).join("")}</div>` : ""}
   ${errBlock()}
   ${addPlaceCard(d)}
   ${alreadyL.length ? `<details class="more already"><summary>Already planned on other days (${alreadyL.length})</summary><p class="lede" style="margin:8px 0">Want to go back? Tick one to see it again today.</p>
-  <div class="sitelist">${alreadyL.map(s => siteCard(s, d, plan, anc)).join("")}</div></details>` : ""}
+  <div class="sitelist">${alreadyL.map(s => siteCard(s, d, plan, near)).join("")}</div></details>` : ""}
   ${quickL.length ? `<details class="more"><summary>Quick stops (${quickL.length})</summary><p class="lede" style="margin:8px 0">Added automatically when your route passes them. Tick one to make it a planned stop.</p>
-  <div class="sitelist">${quickL.map(s => siteCard(s, d, plan, anc)).join("")}</div></details>` : ""}
+  <div class="sitelist">${quickL.map(s => siteCard(s, d, plan, near)).join("")}</div></details>` : ""}
   <div class="stickybar"><span class="count">${n} site${n === 1 ? "" : "s"} picked${plan && !plan.error && (plan.bonus || []).length ? ` · ${plan.bonus.length} optional on your plan` : ""}</span><button class="btn" data-act="toplan">See my day plan</button></div></div></div>`;
 }
 
@@ -5023,7 +5056,7 @@ document.addEventListener("change", e => {
     const d = day(), id = t.dataset.site;
     d.selected = d.selected || [];
     if (t.checked && !d.selected.includes(id) && !fitAsk(d, id)) { t.checked = false; return; } // won't fit: the box explains
-    if (t.checked) { if (!d.selected.includes(id)) d.selected.push(id); d.anchor = id; anchorJump = true; }
+    if (t.checked) { if (!d.selected.includes(id)) d.selected.push(id); d.anchor = id; anchorJump = true; rememberPick(d, allSites(cityFor(d)).find(x => x.id === id)); }
     else { d.selected = d.selected.filter(x => x !== id); if (d.anchor === id) d.anchor = null; }
     save(); render(); if (anchorJump) jumpToAnchor(); return;
   }
