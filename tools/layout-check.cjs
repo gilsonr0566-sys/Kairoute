@@ -6,7 +6,7 @@
 //    countdown in the head), or shows more than one main action,
 //  - shows the same title twice, or has buttons too small to tap.
 // Usage: node tools/layout-check.cjs [path/to/index.html]
-const { chromium } = require('playwright'); const path = require('path');
+const { chromium } = require('playwright'); const path = require('path'); const wideFont = require('./wide-font.cjs');
 const FILE = path.resolve(process.argv[2] || path.join(__dirname, '..', 'index.html'));
 const SIZES = [['tablet sideways', 1280, 800], ['tablet sideways, browser bars', 1280, 720], ['tablet upright', 800, 1280], ['computer', 1440, 900],
   ['phone', 412, 860], ['phone small', 360, 740], ['phone sideways', 860, 412]];
@@ -16,7 +16,7 @@ const DAY_PAGES = ['plan', 'sites', 'guide'];
   const b = await chromium.launch(); let fails = 0, checks = 0;
   for (const [name, w, h] of SIZES) {
     const ctx = await b.newContext({ viewport: { width: w, height: h }, hasTouch: true });
-    await ctx.addInitScript(() => { try { localStorage.setItem('kairoute.intro1', '1'); } catch (e) {} });
+    await ctx.addInitScript(() => { try { localStorage.setItem('kairoute.intro1', '1'); } catch (e) {} }); await ctx.addInitScript(wideFont);
     const p = await ctx.newPage(); const errs = []; p.on('pageerror', e => errs.push(e.message));
     await p.route('**/*', r => /^file:/.test(r.request().url()) ? r.continue() : r.abort());
     await p.goto('file://' + FILE); await p.waitForTimeout(500);

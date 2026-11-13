@@ -30,11 +30,17 @@ self.addEventListener("fetch", e => {
   // is briefly serving the placeholder).
   if (req.mode === "navigate" || (url.origin === location.origin && url.pathname.endsWith("/index.html"))) {
     // "no-cache" checks with the server every time, so a copy the browser kept from an earlier visit is never shown once a new version is out.
-    e.respondWith(fetch(req.url, { cache: "no-cache", credentials: "same-origin" }).then(r => isPlaceholder(r).then(p => {
+    // On a weak signal (a cruise port, a train) the saved copy opens after 3 seconds instead of waiting on the
+    // network; the network answer still refreshes the saved copy, and the page's own update check then moves to
+    // the newer version.
+    const net = fetch(req.url, { cache: "no-cache", credentials: "same-origin" }).then(r => isPlaceholder(r).then(p => {
       if (p) return caches.match("./index.html").then(hit => hit || r);
       if (r.ok) { const copy = r.clone(); caches.open(CACHE).then(c => c.put("./index.html", copy)); }
       return r;
-    })).catch(() => caches.match("./index.html")));
+    }));
+    const slow = new Promise(res => setTimeout(res, 3000)).then(() => caches.match("./index.html")).then(hit => hit || net);
+    e.respondWith(Promise.race([net, slow]).catch(() => caches.match("./index.html")).then(r => r || net));
+    e.waitUntil(net.catch(() => {}));
     return;
   }
   // Fonts, icons, the PDF maker and other files: use the saved copy, refresh it in the background.
