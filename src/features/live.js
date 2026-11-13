@@ -410,7 +410,49 @@ function alarmState(d, plan) {
   // the leave time all agree. On the day: the latest safe time (the plan's cushion before all aboard), counted down
   // from wherever you really are.
   const backBy = now == null && isFinite(plan.end) && plan.end > plan.w.start ? Math.min(plan.endBy, plan.end) : plan.endBy;
-  return { now, from, src, point, leg, backBy, latest: plan.endBy, leaveBy: leg ? backBy - leg.min : null };
+  const st = { now, from, src, point, leg, backBy, latest: plan.endBy, leaveBy: leg ? backBy - leg.min : null };
+  st.ride = point ? rideBack(d, plan, st) : null;
+  // On the day, leave-by is for the ride you can still catch. Before the day, the plan's own leave time stays, so
+  // the countdown and the timeline agree.
+  if (st.ride && now != null) st.leaveBy = st.ride.leaveBy;
+  return st;
+}
+// The train or ferry back (to the ship, or to the station or airport on a travel day). From where the traveler is:
+// the next departure they can still catch that gets them back in time, the last one that does, and when to leave
+// for it. When none is left, the fastest way back by road. Uses the timetable saved with the plan, so it works
+// with no signal. Null when the way back isn't a timetabled ride, or the traveler is already past it.
+function rideBack(d, plan, st) {
+  // The last timetabled train or ferry of the day that ends near the ship (or station): often the ride back itself,
+  // sometimes followed by a short walk or a meal near the port.
+  const end = plan.items.findIndex(i => i.type === "end"); if (end < 2) return null;
+  let ri = -1; for (let k = end - 1; k > 0; k--) { const it = plan.items[k]; if (it.type === "travel" && it.leg.transit && (it.leg.transit.deps || []).length) { ri = k; break; } if (it.type === "travel" && it.leg.mode !== "walk" && it.leg.min > 25) break; }
+  if (ri < 1) return null;
+  const ti = plan.items[ri], o = ti.leg.transit, at = plan.items[ri - 1], origin = at && at.place, land = plan.items[ri + 1] && plan.items[ri + 1].place;
+  if (!origin || !isFinite(origin.lat)) return null;
+  // After the ride: the walk from where it arrives to the ship (a meal there can be skipped in a pinch).
+  const after = land && isFinite(land.lat) && hav(land, st.point) > 0.05 ? legTo(land, st.point).min : 0;
+  const here = st.from, toPoint = hav(here, st.point), toOrigin = hav(here, origin), span = hav(origin, st.point);
+  if (toPoint < 2 || toOrigin > toPoint) return null; // already near the ship, or closer to it than to the ride
+  const slack = ti.leg.slack || 0, safe = safeDeps(o, st.backBy - after, slack);
+  // Getting from here to where the planned ride starts (nothing when you're there already).
+  const extra = toOrigin <= 0.3 ? 0 : legTo(here, origin).min;
+  // GPS between the ride's start and the ship, away from the start: you're on your way back.
+  if (st.src === "GPS" && toOrigin > 1.5 && toOrigin + toPoint <= span * 1.25) return null;
+  const leaveFor = x => x.t - x.lead - extra, now = st.now;
+  const kind = o.kind || "Train", word = kind.toLowerCase(), where = o.from || "the " + (o.mode === "ferry" ? "pier" : "station");
+  const planned = o.deps.find(x => x.t - x.lead >= ti.time) || null;
+  const next = now == null ? (planned && safe.includes(planned) ? planned : safe[safe.length - 1]) : safe.find(x => leaveFor(x) >= now);
+  const last = safe[safe.length - 1] || null;
+  // By road from here, with the same cushion the plan gives a long ride back.
+  const km = toPoint, base = roadGuess(km).min, taxiMin = base + (base >= 30 ? Math.max(15, Math.round(base * 0.3 / 5) * 5) : 0);
+  const sym = (plan.city && plan.city.basics && plan.city.basics.symbol) || "", fare = /^[€£$]$/.test(sym) ? [Math.round((5 + km * 1.3 * 1.6) / 5) * 5, Math.round((8 + km * 1.3 * 2.6) / 5) * 5] : null;
+  // Missed: the planned departure (or, failing that, a safe one in the last half hour) has gone while you're still here.
+  const gone = now == null ? null : planned && safe.includes(planned) && leaveFor(planned) < now ? planned : safe.filter(x => leaveFor(x) < now && leaveFor(x) >= now - 30).pop() || null;
+  const r = { kind, word, where, to: o.to || "", next, last, planned: gone || planned, extra, taxiMin, fare, sym, origin: origin.name, missed: !!gone };
+  r.leaveBy = next ? leaveFor(next) : st.backBy - taxiMin;
+  r.lastLeave = last ? leaveFor(last) : null;
+  r.none = !next;
+  return r;
 }
 function alarmCard(d, plan) {
   if (noShore(d)) return "";
@@ -422,11 +464,13 @@ function alarmCard(d, plan) {
   // A compact countdown in the Day plan's top row, always on screen; tap it for the details.
   const title = fixed ? fixedTitle(d) : "Your day, live";
   return `<details class="moremenu planmore cdchip livecard" id="cdCard"><summary aria-label="${esc(title)}: details">
-      <span class="cdico" aria-hidden="true">${fixed ? (d.type === "departure" ? ({ flight: "✈️", train: "🚆", ship: "🚢", car: "🚌" }[d.mode] || "🧭") : "🚢"): "📍"}</span><span class="cdwords"><span class="cdlbl" id="cdLbl">${fixed ? (today ? "Leave in" : "Leave by") : "Live"}</span><span class="cdto">${fixed ? esc(d.type === "port" ? "back to ship" : d.type === "embark" ? "to the ship" : "to your " + MODES[d.mode].label.toLowerCase()) : "re-plan"}</span></span><b class="cdbig" id="cdBig">${fixed ? "--:--" : (today ? "On" : "Preview")}</b>
+      <span class="cdico" aria-hidden="true">${fixed ? (d.type === "departure" ? ({ flight: "✈️", train: "🚆", ferry: "⛴️", ship: "🚢", car: "🚌" }[d.mode] || "🧭") : "🚢"): "📍"}</span><span class="cdwords"><span class="cdlbl" id="cdLbl">${fixed ? (today ? "Leave in" : "Leave by") : "Live"}</span><span class="cdto">${fixed ? esc(d.type === "port" ? "back to ship" : d.type === "embark" ? "to the ship" : "to your " + MODES[d.mode].label.toLowerCase()) : "re-plan"}</span></span><b class="cdbig" id="cdBig">${fixed ? "--:--" : (today ? "On" : "Preview")}</b>
     </summary><div class="menupanel cdpanel" role="dialog" aria-label="${esc(title)}">
     <div><span class="eyebrow">${esc(title)}${!today && live ? " · preview" : ""}</span></div>
     ${fixed ? `<div class="cdsub" id="cdSub"></div><div class="cdsrc" id="cdSrc"></div>
     <div class="banner" id="cdMsg" hidden></div>
+    ${d.type === "port" ? `<p class="cdagent" id="cdAgent" ${d.portAgent ? "" : "hidden"}>${d.portAgent ? `Can't make all aboard? Call the port agent: <a href="tel:${esc(String(d.portAgent).replace(/[^\d+]/g, ""))}">${esc(d.portAgent)}</a>` : ""}</p>
+    <details class="cdwhere"><summary>${d.portAgent ? "Port agent's phone" : "Add the port agent's phone"}</summary><div class="field"><label for="cdAgentIn">Port agent's phone (it's in your cruise documents for each port)</label><input id="cdAgentIn" type="tel" inputmode="tel" value="${esc(d.portAgent || "")}" placeholder="+39 081 ..."></div></details>` : ""}
       ${gpsOn ? "" : `<details class="cdwhere" ${cdWhere && cdWhere !== "auto" ? "open" : ""}><summary>${today ? "GPS off? Pick your spot" : "Count from another spot"}</summary><div class="field"><label for="cdWhere">Where are you?</label>
       <select id="cdWhere"><option value="auto">Wherever the plan says</option>${items.map((i, k) => `<option value="${k}" ${String(cdWhere) === String(k) ? "selected" : ""}>${esc(i.place.name)}</option>`).join("")}</select></div></details>`}` : ""}
     <div class="actions">
@@ -461,7 +505,11 @@ function alarmTick() {
     const el = document.getElementById("cdBig"), sub = document.getElementById("cdSub"), msg = document.getElementById("cdMsg"), srcEl = document.getElementById("cdSrc");
     const fromTxt = st.src === "GPS" ? "where you are" : st.from.name, legTxt = `${st.leg.transit ? st.leg.how : st.leg.how.toLowerCase()} ${dur(st.leg.min)}`;
     const word = d.type === "port" ? (st.now == null ? `Back at the ship at ${fmt(st.backBy)}, ${dur(shipToPort(d, d.allAboard) - st.backBy)} before all aboard (${d.allAboard}).` : `Be back at the ship by ${fmt(st.backBy)} at the latest, ${dur(shipToPort(d, d.allAboard) - st.backBy)} before all aboard (${d.allAboard}).`) : d.type === "embark" ? `All aboard ${d.allAboard}. Be at the terminal by ${fmt(st.backBy)}.` : `${MODES[d.mode].label} at ${d.time}. Be at ${st.point.name} by ${fmt(st.backBy)}.`;
-    if (sub) sub.textContent = `${word} From ${fromTxt}: ${legTxt}, so leave by ${fmt(st.leaveBy)}.`;
+    const R = st.ride, dest = d.type === "departure" ? st.point.name : "the ship";
+    const rideTxt = !R ? "" : R.none ? `No ${R.word} from ${R.where} gets you to ${dest} in time any more. Take a taxi now: about ${dur(R.taxiMin)} by road${R.fare ? `, roughly ${R.sym}${R.fare[0]}–${R.fare[1]} (agree the fare first)` : ""}.`
+      : `${R.missed ? `You've missed the ${fmt(R.planned.t)} ${R.word}. ` : ""}${R.kind} ${R.to ? "to " + R.to + " " : ""}leaves ${R.where} at ${fmt(R.next.t)}: leave ${R.extra ? fromTxt : "for the " + (R.word === "ferry" ? "pier" : "station")} by ${fmt(R.leaveBy)}.${R.last && R.last !== R.next ? ` Last safe ${R.word}: ${fmt(R.last.t)}.` : ` This is the last ${R.word} that gets you back in time.`} If you miss it, a taxi takes about ${dur(R.taxiMin)}.`;
+    if (sub) sub.textContent = R && st.now != null ? `${word} ${rideTxt}` : `${word} From ${fromTxt}: ${legTxt}, so leave by ${fmt(st.leaveBy)}.${R ? " " + rideTxt : ""}`;
+    const agent = document.getElementById("cdAgent"); if (agent) agent.hidden = !(R && (R.none || R.missed) && d.portAgent);
     if (srcEl) srcEl.textContent = `Travel time: ${st.leg.src}${st.src === "GPS" ? ", from your GPS position" : st.src === "plan" ? ", from where the plan has you now" : ""}.`;
     if (srcEl && (d.type === "port" || d.type === "embark")) srcEl.textContent += " Being on board on time is your responsibility: confirm the all-aboard time with your cruise line on the day. Ships don't wait.";
     const chip = document.getElementById("cdCard"), lbl = document.getElementById("cdLbl");
@@ -470,14 +518,24 @@ function alarmTick() {
       const left = st.leaveBy - st.now;
       const big = left > 0 ? (left >= 60 ? Math.floor(left / 60) + "h " + String(Math.floor(left % 60)).padStart(2, "0") + "m" : Math.ceil(left) + " min") : "Go now";
       if (el) el.textContent = big;
-      const level = left <= 0 ? "go" : left <= 15 ? "soon" : "";
+      const level = left <= 0 ? "go" : left <= 15 || (R && R.none) ? "soon" : "";
       if (lbl) lbl.textContent = left > 0 ? "Leave in" : "Leave";
+      const to = chip && chip.querySelector(".cdto"); if (to && R) to.textContent = R.none ? "taxi back now" : `for the ${fmt(R.next.t)} ${R.word}`;
       if (chip) { chip.classList.toggle("amber", left > 15 && left <= 30); chip.classList.toggle("soon", level === "soon"); chip.classList.toggle("go", level === "go"); }
-      const text = left <= 0 ? `Head back now: you're ${dur(Math.ceil(-left))} past your leave-by time.` : left <= 30 ? `Start heading back in ${Math.ceil(left)} minutes.` : `You have time. Leave ${fromTxt} by ${fmt(st.leaveBy)}.`;
+      let text = left <= 0 ? `Head back now: you're ${dur(Math.ceil(-left))} past your leave-by time.` : left <= 30 ? `Start heading back in ${Math.ceil(left)} minutes.` : `You have time. Leave ${fromTxt} by ${fmt(st.leaveBy)}.`;
+      if (R && R.none) text = `Missed the last safe ${R.word}. Take a taxi to ${dest} now (about ${dur(R.taxiMin)}).${d.portAgent && d.type === "port" ? " If you can't make all aboard, call the port agent: " + d.portAgent + "." : ""}`;
+      else if (R && left > 0) text = (R.missed ? `Missed the ${fmt(R.planned.t)} ${R.word}: the next safe one is ${fmt(R.next.t)}. ` : "") + (R.next === R.last && left <= 30 ? `Last safe ${R.word} back: leave in ${Math.ceil(left)} minutes.` : left <= 30 ? `Leave in ${Math.ceil(left)} minutes for the ${fmt(R.next.t)} ${R.word}.` : `You have time. Leave by ${fmt(st.leaveBy)} for the ${fmt(R.next.t)} ${R.word}.`);
       if (msg) { msg.hidden = false; msg.className = "banner" + (level ? " warn" : ""); msg.textContent = text; }
       // Alerts at 30, 15 and 5 minutes before leaving, and at leave-by, each once (real days only).
       if (isToday(d)) for (const th of [30, 15, 5, 0]) { const k = d.id + "|" + th; if (left <= th && left > th - 10 && !alarmFired[k]) { alarmFired[k] = 1;
         liveAlert(fixedTitle(d), th ? `Leave in ${th} minutes to be at ${d.type === "departure" ? st.point.name : "the ship"} by ${fmt(st.backBy)} (${legTxt} from ${fromTxt}).` : `Time to go. Leave now to be at ${d.type === "departure" ? st.point.name : "the ship"} by ${fmt(st.backBy)}.`, th <= 15); } }
+      if (isToday(d) && R) {
+        const once = (k, title, body) => { k = d.id + "|" + k; if (!alarmFired[k]) { alarmFired[k] = 1; liveAlert(title, body, true); } };
+        if (R.none) once("taxi", "Take a taxi now", text);
+        else if (R.missed) once("missed|" + R.next.t, `Missed the ${R.word}`, `The ${fmt(R.planned.t)} ${R.word} has gone. Next safe one: ${fmt(R.next.t)} from ${R.where}. Leave by ${fmt(R.leaveBy)}.`);
+        // Warn early: about 30 minutes before you must leave for the last safe departure.
+        if (!R.none && R.lastLeave != null && R.lastLeave - st.now <= 30 && R.lastLeave - st.now > 0) once("lastsafe", `Last safe ${R.word} soon`, `The last ${R.word} that gets you to ${dest} in time leaves ${R.where} at ${fmt(R.last.t)}. Leave by ${fmt(R.lastLeave)}.`);
+      }
       if (bar) { bar.className = level; bar.innerHTML = `<span class="ab-time">${esc(big)}</span><span class="ab-txt">${esc(fixedTitle(d))}: leave by ${fmt(st.leaveBy)} · ${esc(legTxt)}</span><button data-act="alarmopen">Open</button>`; }
     }
   }
@@ -599,5 +657,10 @@ if (typeof window !== "undefined") window.__kairouteLiveTest = {
   alarm: i => { const d = trip.days[i], p = buildPlan(d), st = alarmState(d, p); return { now: st.now, leaveBy: st.leaveBy, backBy: st.backBy, live: liveOn(d), src: st.src, from: st.from.name, alerts: liveAlertLog.length }; },
   siteIdByName: (i, re) => { const s = allSites(cityFor(trip.days[i])).find(x => new RegExp(re).test(x.name)); return s ? s.id : null; },
   bookCount: i => { const p = buildPlan(trip.days[i]); return p && !p.error ? p.items.filter(x => x.type === "stop" && !x.place.along && !x.place.bonus && bookAhead(x.place)).length : 0; },
+  // The ride back: where the plan's last leg starts and ends, a timetable to put on it, and the countdown's view of it.
+  lastLeg: i => { const p = buildPlan(trip.days[i]), e = p.items.findIndex(x => x.type === "end"); let k = e - 1; while (k > 0 && !(p.items[k].type === "travel" && hav(p.items[k - 1].place, p.items[k + 1].place) >= 4)) k--;
+    const o = p.items[k - 1].place, b = p.items[k + 1].place; return { from: { name: o.name, lat: o.lat, lng: o.lng }, to: { name: b.name, lat: b.lat, lng: b.lng }, key: pairKey(o, b) + "|" + dayKind(new Date(trip.days[i].date + "T12:00:00Z").getUTCDay()), leg: p.items[k].leg.how, endBy: p.endBy, legAt: p.items[k].time }; },
+  addTransit: (k, opts) => { transitMem[k] = { opts, t: Date.now() }; },
+  ride: i => { const d = trip.days[i], p = buildPlan(d), st = alarmState(d, p), r = st.ride; return { leaveBy: st.leaveBy, src: st.src, ride: r && { next: r.next && r.next.t, last: r.last && r.last.t, planned: r.planned && r.planned.t, missed: r.missed, none: r.none, extra: r.extra, taxiMin: r.taxiMin, fare: r.fare } }; },
   siteLL: i => { const p = buildPlan(trip.days[i]), s = p.items.find(x => x.type === "stop" && !x.place.along).place; return { name: s.name, lat: s.lat, lng: s.lng }; }
 };

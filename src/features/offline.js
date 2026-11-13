@@ -40,7 +40,9 @@ function offPlan(d) {
   return { plan: plan && !plan.error ? plan : null, rides };
 }
 const offSites = plan => plan.items.filter(i => i.type === "stop").map(i => allSites(plan.city).find(x => x.id === i.place.id) || i.place);
-const offRideOk = (r, tried) => !!(transitMem[r[0]] || transitMem[r[1]] || tried[r[0]]);
+// A ride is covered by its own answer, by one for nearly the same trip (both ends close by), or by a lookup that found nothing.
+const offRideHas = r => !!(transitMem[r[0]] || transitMem[r[1]] || (r[2] && transitNear(r[2], r[3], r[4])));
+const offRideOk = (r, tried) => offRideHas(r) || !!tried[r[0]];
 // The day's time zone, from the Day plan thread's saved zone when it's there, else the city's own clock.
 function offZoneOk(d) {
   try { if (typeof dayZone === "function") { const z = dayZone(d); return !!(z && z.known); } } catch (e) {}
@@ -104,7 +106,7 @@ async function offCheckDay(d, base, mem) {
   put("plan", true);
   const tried = (mem.tried || {}), noRide = rides.filter(r => !offRideOk(r, tried)).length;
   put("rides", !noRide, noRide === 1 ? "1 ride timetable" : noRide + " ride timetables");
-  if (rides.some(r => !transitMem[r[0]] && !transitMem[r[1]] && tried[r[0]])) out.notes.push("No published timetable was found for a ride, so the plan uses the cautious taxi time.");
+  if (rides.some(r => !offRideHas(r) && tried[r[0]])) out.notes.push("No published timetable was found for a ride, so the plan uses the cautious taxi time.");
   // The written guide comes with the city guide, which is always kept on the device.
   const thin = offSites(plan).filter(s => !s.along && !s.quick && (!s.guide || String(s.guide).length < 40)).length;
   put("text", true); if (thin) out.notes.push(`${thin === 1 ? "One stop has" : thin + " stops have"} only a short written guide.`);
@@ -186,7 +188,9 @@ async function offDownload() {
       const todo = plan.items.filter(i => i.type === "stop" && !(i.place.extrasV >= EXTRAS_V) && !extrasAsked[keyOf(plan.city.city) + "|" + i.place.id] && walkWorthy(i.place, plan.city)).map(i => plan.city.sites.find(x => x.id === i.place.id) || i.place);
       for (const s of todo) { if (offRun.stop) break; try { await Promise.race([stopExtras(s, plan.city), offSleep(90000)]); } catch (e) {} }
     }
-    // 3. Everything each plan is built from, until a round asks for nothing new: places to eat, their ratings,
+    // 3. Each city's sources and fame list, which rank the sights in every plan, kept on the device.
+    for (const c of [...new Set(days.map(cityFor))]) { if (offRun.stop) break; try { await Promise.race([fameFor(null, c), offSleep(60000)]); } catch (e) {} }
+    // 4. Everything each plan is built from, until a round asks for nothing new: places to eat, their ratings,
     //    travelers' ratings, weather, rides on real timetables, the day's time zone.
     for (let round = 0; round < 6 && !offRun.stop; round++) {
       step(16 + round * 2.5, "Saving places to eat, ratings and ride timetables");
@@ -198,7 +202,7 @@ async function offDownload() {
       }
       await offSettle(60000);
       // A second round always runs: new places to eat can change a day's meals, which then need their ratings.
-      const missing = days.flatMap(d => offPlan(d).rides).filter(r => !transitMem[r[0]] && !transitMem[r[1]]);
+      const missing = days.flatMap(d => offPlan(d).rides).filter(r => !offRideHas(r));
       if (round >= 1 && !missing.length && !farPending && !gInFlight) break;
       // A ride still without a timetable after six tries is remembered as checked, so it doesn't hold up "Ready"
       // (the plan keeps the cautious taxi time for it). Otherwise it is asked again.
@@ -207,7 +211,7 @@ async function offDownload() {
     }
     transitKeep(); offKeep(mem);
     for (let k = 0; k < 20 && days.some(d => !offZoneOk(d)); k++) await offSleep(400);
-    // 4. Maps: the style, label fonts and icons for light and dark, then each day's street routes and tiles.
+    // 5. Maps: the style, label fonts and icons for light and dark, then each day's street routes and tiles.
     if (!offRun.stop) {
       step(32, "Saving the street maps");
       let tpl = "";
@@ -220,7 +224,7 @@ async function offDownload() {
         if (!ok) failed.push("map for " + (mainPlace(d) || d.destination));
       }
     }
-    // 5. Stories in the natural voice, every stop once (a stop on two days is recorded once).
+    // 6. Stories in the natural voice, every stop once (a stop on two days is recorded once).
     if (!offRun.stop && offNatural() && freeAI) {
       const seen = new Set(), todo = [];
       for (const d of days) { const { plan } = offPlan(d); if (!plan) continue; for (const l of offSpoken(d, plan)) { const k = l.join("\n"); if (!seen.has(k)) { seen.add(k); if (!(await offStorySaved(l))) todo.push({ l, d }); } } }
@@ -230,7 +234,7 @@ async function offDownload() {
         if (!(await offRecord(x.l, k === 1 || k % 10 === 0))) { stoppedVoice = true; break; }
       }
     }
-    // 6. Time zones the Day plan thread looks up, and anything else the app keeps, then check the device itself.
+    // 7. Time zones the Day plan thread looks up, and anything else the app keeps, then check the device itself.
     step(99, "Checking everything is on this device");
     try { await fetch(new URL("index.html", location.href).href, { cache: "no-cache" }); await Promise.all(OFF_APP_FILES.slice(1).concat("ai.json").map(u => fetch(new URL(u, location.href).href).then(r => r.ok && r.arrayBuffer()).catch(() => {}))); } catch (e) {}
   } catch (e) { failed.push(String(e && e.message || e)); }
@@ -338,6 +342,8 @@ document.addEventListener("click", e => {
 });
 // The status follows the connection: coming back online offers to finish; going offline says what's missing.
 if (typeof window !== "undefined") {
+  // The sights' ranking is applied from the saved sources as soon as the app opens, so plans match with no internet.
+  setTimeout(() => { try { [...new Set((trip.days || []).map(d => cityFor(d)).filter(Boolean))].forEach(c => fameFor(null, c)); } catch (e) {} }, 0);
   addEventListener("online", () => { offMsg = ""; offSoon(300); offPaint(); });
   addEventListener("offline", () => { offSoon(100); offPaint(); });
   window.__kairouteOffline = { setPass: v => { if (v == null) delete trip.pass; else trip.pass = v; save(); }, check: () => offCheck(), download: () => offDownload(), state: () => ({ run: offRun, rep: offFresh(), msg: offMsg, failed: offFailed, transit: Object.keys(transitMem).length, pins: transitPins.size }), plan: i => { const { plan } = offPlan(trip.days[i]); return plan ? plan.items.filter(x => x.type !== "travel").map(x => (x.type || "") + "@" + x.time + ":" + ((x.place && x.place.name) || x.label || "") + (x.type === "travel" ? "" : "")).join(" | ") + " || rides " + plan.items.filter(x => x.type === "travel").map(x => x.leg.how + " " + x.leg.min).join(", ") : null; } };

@@ -107,7 +107,7 @@ const DAY_TYPES = [
   { key: "port", label: "Cruise port day", short: "In port", icon: "⚓" },
   { key: "sea", label: "Day at sea", short: "At sea", icon: "〰" }
 ];
-const MODES = { flight: { label: "Flight", list: "airport", clear: 75, need: 180, word: "airport" }, train: { label: "Train", list: "station", clear: 15, need: 30, word: "station" }, ship: { label: "Ship", list: "cruise", clear: 60, need: 60, word: "port" }, car: { label: "Car or bus", list: "hotel", clear: 10, need: 20, word: "starting point" } };
+const MODES = { flight: { label: "Flight", list: "airport", clear: 75, need: 180, word: "airport" }, train: { label: "Train", list: "station", clear: 15, need: 30, word: "station" }, ship: { label: "Ship", list: "cruise", clear: 60, need: 60, word: "port" }, ferry: { label: "Ferry", list: "cruise", clear: 20, need: 40, word: "ferry terminal" }, car: { label: "Car or bus", list: "hotel", clear: 10, need: 20, word: "starting point" } };
 const INTERESTS = [["history", "History"], ["art", "Art & museums"], ["architecture", "Architecture"], ["food", "Food & markets"], ["views", "Views & nature"], ["churches", "Churches & faith"], ["bible", "Bible sites"], ["shopping", "Shopping"], ["beaches", "Beaches"], ["kids", "Kid-friendly"]];
 const INTEREST_WORDS = { history: ["history", "roman", "medieval", "ancient", "war", "castle", "ruins"], art: ["museum", "art", "picasso", "painting", "gallery"], architecture: ["architecture", "gaudí", "gaudi", "house", "façade", "building", "palace"], food: ["market", "food", "tapas"], views: ["view", "park", "hill", "garden", "nature"], churches: ["church", "basilica", "cathedral", "monastery", "chapel", "shrine", "madonna", "synagogue", "mosque", "temple"], bible: ["paul", "apostle", "bible", "biblical", "christian", "saint", "basilica", "church", "cathedral", "monastery"], shopping: ["shop", "market", "street"], beaches: ["beach", "sea"], kids: ["park", "beach", "amusement", "zoo"] };
 // Religious sites: places of worship (churches, monasteries, mosques, synagogues...). Ancient ruins of temples
@@ -207,6 +207,7 @@ let trip = sampleTrip();
 let library = [];
 let view = "lobby", siteFilter = "all", busy = null, aiError = "", tripText = "";
 let resetAsk = false, tourTimer = null, delAsk = null, renameId = null;
+let seedSave = null; // see seedPicks
 let wiz = null, cdTimer = null, cdPreview = null, cdSpoken = false, cdWhere = null;
 const translations = {};
 const deeper = {}, answers = {};
@@ -489,12 +490,9 @@ function travel(a, b) {
   const speed = trip.prefs && trip.prefs.walk === "low" ? 3.6 : 4.5;
   if (d < 0.02) return { mode: "walk", how: "Walk", km: 0, min: 0 }; // the same place: no time
   if (d <= lim) return { mode: "walk", how: "Walk", km: d * 1.3, min: Math.max(2, Math.round(d * 1.3 / speed * 60)) };
-  if (d <= 6) return rideLeg(a, b, { mode: "ride", how: "Taxi, bus or metro", km: d * 1.3, min: Math.round(10 + d * 1.3 / 22 * 60) });
-  if (d <= 15) return rideLeg(a, b, { mode: "ride", how: "Taxi or rideshare", km: d * 1.3, min: Math.round(10 + d * 1.3 / 25 * 60) }, b.backToShip);
-  // 15-40 km: regional roads and local trains, around bays and through towns (Naples to Sorrento is 26 km as the
-  // crow flies but about 50 km of coast road); farther: highway or intercity train (Athens to Corinth: about 1 h 20).
-  let leg = d <= 40 ? { mode: "ride", how: "Train or car", km: d * 1.35, min: Math.round(15 + d * 1.35 / 45 * 60) }
-    : { mode: "ride", how: "Train or car", km: d * 1.25, min: Math.round(15 + d * 1.25 / 85 * 60) };
+  if (d <= 6) return rideLeg(a, b, roadGuess(d));
+  if (d <= 15) return rideLeg(a, b, roadGuess(d), b.backToShip);
+  let leg = roadGuess(d);
   // A day trip's own note says how long the trip really takes ("1 hour on the Circumvesuviana train", "60-75 min"):
   // the slowest time it names, plus getting to the station or pier, wins over the estimate.
   const said = Math.max(saidMin(a), saidMin(b));
@@ -503,6 +501,15 @@ function travel(a, b) {
   // A long ride back to the ship gets time for a late train or traffic: missing the ship is not an option.
   if (b.backToShip && leg.min >= 30) { const sl = Math.max(15, Math.round(leg.min * 0.3 / 5) * 5); leg = Object.assign(leg, { min: leg.min + sl, slack: sl }); }
   return leg;
+}
+// By road (taxi, car or bus), as the crow flies d km. 15-40 km: regional roads around bays and through towns
+// (Naples to Sorrento is 26 km as the crow flies but about 50 km of coast road); farther: highway (Athens to
+// Corinth: about 1 h 20).
+function roadGuess(d) {
+  if (d <= 6) return { mode: "ride", how: "Taxi, bus or metro", km: d * 1.3, min: Math.round(10 + d * 1.3 / 22 * 60) };
+  if (d <= 15) return { mode: "ride", how: "Taxi or rideshare", km: d * 1.3, min: Math.round(10 + d * 1.3 / 25 * 60) };
+  return d <= 40 ? { mode: "ride", how: "Train or car", km: d * 1.35, min: Math.round(15 + d * 1.35 / 45 * 60) }
+    : { mode: "ride", how: "Train or car", km: d * 1.25, min: Math.round(15 + d * 1.25 / 85 * 60) };
 }
 const saidMemo = new Map();
 function saidMin(p) {
@@ -531,10 +538,18 @@ const planDow = () => { const t = typeof planDate !== "undefined" && planDate ? 
 const dayKind = dow => dow === 0 ? "su" : dow === 6 ? "sa" : "wk";
 // Seasonal lines (a summer ferry) are offered only in the months they run, against the plan's own date.
 const runsThen = o => { if (!o || !Array.isArray(o.months) || !o.months.length) return true; const t = typeof planDate !== "undefined" && planDate ? Date.parse(planDate + "T12:00:00Z") : NaN; return !isFinite(t) || o.months.includes(new Date(t).getUTCMonth() + 1); };
+// A saved timetable for nearly the same trip (both ends within about 600 m), so a day re-planned from where the
+// traveler stands (GPS) still knows the trains, with no signal.
+function transitNear(a, b, kind) {
+  let best = null, bd = 0.6;
+  for (const k in transitMem) { const [ks, kd] = k.split("|"); if (kd && kd !== kind) continue; const n = ks.split(",").map(Number); if (n.length !== 4) continue;
+    const e = Math.max(hav(a, { lat: n[0], lng: n[1] }), hav(b, { lat: n[2], lng: n[3] })); if (e < bd) { bd = e; best = transitMem[k]; } }
+  return best;
+}
 function transitFor(a, b) {
   if (!a || !b || !isFinite(a.lat) || !isFinite(b.lat) || hav(a, b) < 4) return null;
-  const dow = planDow(), k = pairKey(a, b) + "|" + dayKind(dow), hit = transitMem[k] || transitMem[pairKey(a, b)];
-  if (transitSeen) transitSeen.push([k, pairKey(a, b)]); // the offline check lists every ride a plan looks up
+  const dow = planDow(), k = pairKey(a, b) + "|" + dayKind(dow), hit = transitMem[k] || transitMem[pairKey(a, b)] || transitNear(a, b, dayKind(dow));
+  if (transitSeen) transitSeen.push([k, pairKey(a, b), a, b, dayKind(dow)]); // the offline check lists every ride a plan looks up
   if (hit) return hit.opts.filter(runsThen);
   if (typeof freeAI !== "undefined" && freeAI && !transitQ.has(k) && !(transitFail.get(k) > Date.now() - 120000)) { transitQ.set(k, { a: [+a.lat, +a.lng], b: [+b.lat, +b.lng], dow, pri: typeof trip !== "undefined" && trip.days && trip.days[trip.active] && typeof planDate !== "undefined" && trip.days[trip.active].date === planDate }); clearTimeout(transitTimer); transitTimer = setTimeout(askTransit, 300); }
   return null;
@@ -595,13 +610,16 @@ function switchRide(key, val) {
 // What the traveler needs to make a ride: where to catch it, how often it runs, how long, and the choice of ride.
 // Departures from the timetable: the next one after you reach the station, and on the way back to the ship the last
 // one that still gets you there in time.
-function depLine(o, start, endBy, back) {
+// Departures that still get the traveler there by endBy, with the ride's own cushion for delays (the same rule on
+// the timeline and in the live countdown, so both always name the same last safe departure).
+const safeDeps = (o, endBy, slack) => (o && o.deps || []).filter(d => d.t - d.lead + d.dur + (slack || 0) <= endBy);
+function depLine(o, start, endBy, back, slack) {
   if (!o) return "";
   const when = o.checked ? ` (timetable checked ${fmtDate(o.checked)}; check again before you go)` : "";
   if (!o.deps || !o.deps.length) return o.noTimetable ? ` No published timetable found for this ${o.kind.toLowerCase()}: planned with a full gap between departures. Check the ${o.kind.toLowerCase()} timetable before you go.` : "";
   const at = start + o.access.min, nx = isFinite(start) ? o.deps.find(d => d.t >= at) : null;
   let t = nx ? ` Next departure about ${fmt(nx.t)}${when}.` : ` Departures about every ${dur(o.every)}${when}.`;
-  if (back && isFinite(endBy)) { const ok = o.deps.filter(d => d.t + d.dur - d.lead <= endBy); if (ok.length) t += ` <b>Last safe departure back: ${fmt(ok[ok.length - 1].t)}.</b>`; }
+  if (back && isFinite(endBy)) { const ok = safeDeps(o, endBy, slack); if (ok.length) t += ` <b>Last safe departure back: ${fmt(ok[ok.length - 1].t)}.</b>`; }
   return t;
 }
 function rideDetail(leg, start, endBy) {
@@ -609,7 +627,7 @@ function rideDetail(leg, start, endBy) {
   const o = leg.transit, ev = o ? `runs about every ${dur(o.every)}${o.everySrc === "timetable" ? " (from the timetable)" : o.everySrc === "map" ? "" : " (usual for this kind of line; check the timetable)"}` : "";
   const ride = o && o.steps && o.steps.length ? o.steps.map(esc).join("; then ") : o ? `${dur(o.ride)} ride${o.stops ? ` (${o.stops} stops)` : ""}` : "";
   const how = o ? `${o.access.how === "walk" ? "Walk" : "Taxi"} ${dur(o.access.min)} to ${esc(o.from || "the " + (o.mode === "ferry" ? "pier" : "station"))}, ${ev}. ${ride}, then ${o.egress.how === "walk" ? "walk" : "taxi"} ${dur(o.egress.min)}${o.to && !(o.steps && o.steps.length) ? " from " + esc(o.to) : ""}.${o.operator ? " " + esc(o.operator) + "." : ""}${o.hours ? " Hours: " + esc(o.hours) + "." : ""}${o.fare ? " Fare: " + esc(o.fare) + "." : ""} Times include waiting and boarding.` : "By road, with time for traffic.";
-  const fall = depLine(o, start, endBy, leg.lastMile) + (leg.slack ? ` Includes ${dur(leg.slack)} spare before the ship.` : "") + (leg.lastMile && o ? ` <b>If you miss it:</b> a taxi takes about ${dur(leg.road)}.` : "");
+  const fall = depLine(o, start, endBy, leg.lastMile, leg.slack) + (leg.slack ? ` Includes ${dur(leg.slack)} spare before the ship.` : "") + (leg.lastMile && o ? ` <b>If you miss it:</b> a taxi takes about ${dur(leg.road)}.` : "");
   const note = rideNotice && rideNotice.key === leg.key ? `<span class="ridenote">${rideNotice.text}${rideNotice.undo != null ? ` <button class="linkbtn" data-act="rideundo">Undo</button>` : ""}</span>` : "";
   return `<span class="sub ridesub">${how}${fall}</span>${note}<label class="ridepick"><span>Ride</span><select data-ride="${esc(leg.key)}">${leg.choices.map(c => `<option value="${esc(c.id)}" ${c.id === leg.choice ? "selected" : ""}>${esc(c.label)} · ${dur(c.min)}</option>`).join("")}</select></label>`;
 }
@@ -648,6 +666,7 @@ function refillIfNeeded(d, city) {
   delete d.respread;
   const fresh = defaultSelection(city, trip.style, d);
   fresh.forEach(id => addPick(d, id, false));
+  if (!seedSave) seedSave = setTimeout(() => { seedSave = null; save(); }, 0);
 }
 // "Suggest my tour": fills every day in this city with the best stops that truly fit each day's time.
 // Each day starts from the best sight still unseen and grows around it (nearby, high-value sights first),
@@ -696,10 +715,13 @@ function suggestTour(d0) {
 }
 // A day's starting picks. Earlier days in the same city choose first, in trip order, so which day gets a sight
 // never depends on which day the traveler happened to open first (one sight, one day).
+// The starting picks are saved as soon as they are chosen, so a day keeps the same sights when the app opens again
+// (choosing again later, with other ratings or rides known, or with no internet, could pick differently).
 function seedPicks(d, city) {
-  const i = trip.days.indexOf(d);
-  trip.days.slice(0, Math.max(0, i)).forEach(o => { if (!o.selected && !noShore(o) && cityFor(o) === city) { o.selected = defaultSelection(city, trip.style, o); fitTrim(o); } });
-  if (!d.selected) { d.selected = defaultSelection(city, trip.style, d); fitTrim(d); }
+  const i = trip.days.indexOf(d); let made = false;
+  trip.days.slice(0, Math.max(0, i)).forEach(o => { if (!o.selected && !noShore(o) && cityFor(o) === city) { o.selected = defaultSelection(city, trip.style, o); fitTrim(o); made = true; } });
+  if (!d.selected) { d.selected = defaultSelection(city, trip.style, d); fitTrim(d); made = true; }
+  if (made && !seedSave) seedSave = setTimeout(() => { seedSave = null; save(); }, 0);
 }
 function defaultSelection(city, style, d) {
   const taken = d ? plannedElsewhere(d) : {};
@@ -1839,10 +1861,14 @@ function addRealDetails(x, g, vg, osm) {
 function famousMustBar(top) { const sl = top.map(x => x.sl || 0).sort((a, b) => b - a); return sl.length ? Math.max(sl[Math.min(5, sl.length - 1)], 0.6 * sl[0]) : Infinity; }
 let cityArea = null;
 const famousCache = {};
+// A city's fame list and sources are kept on the device too (built-in cities aren't saved with the trip), so the
+// planner ranks sights the same way with no internet and a day's plan comes out the same offline.
+async function srcKept(key, label, ok) { if (!label) return null; const j = await kv.get(key + keyOf(label)); return ok(j) ? j : null; }
 async function famousFor(label) {
-  if (!freeAI || !label) return null; if (famousCache[label]) return famousCache[label];
-  try { const r = await fetch(freeAI.url + "/famous?city=" + encodeURIComponent(label)); if (r.ok) { const j = await r.json(); if (j && Array.isArray(j.main)) return (famousCache[label] = j); } } catch (e) {}
-  return null;
+  if (!label) return null; if (famousCache[label]) return famousCache[label];
+  if (freeAI && navigator.onLine !== false) try { const r = await fetch(freeAI.url + "/famous?city=" + encodeURIComponent(label)); if (r.ok) { const j = await r.json(); if (j && Array.isArray(j.main)) { kv.set("fam:" + keyOf(label), j); return (famousCache[label] = j); } } } catch (e) {}
+  const kept = await srcKept("fam:", label, j => j && Array.isArray(j.main));
+  return kept ? (famousCache[label] = kept) : null;
 }
 // Step one of every guide and plan: the city's sources (worker /sources), gathered from several independent
 // places, global and local (Wikidata, Wikipedia in the local language, English and local Wikivoyage,
@@ -1851,9 +1877,10 @@ async function famousFor(label) {
 // preferred when there is time to add one; restaurants the guidebooks name get a preference.
 const sourcesCache = {};
 async function sourcesFor(label) {
-  if (!freeAI || !label) return null; if (sourcesCache[label]) return sourcesCache[label];
-  try { const r = await fetch(freeAI.url + "/sources?city=" + encodeURIComponent(label)); if (r.ok) { const j = await r.json(); if (j && Array.isArray(j.stops)) return (sourcesCache[label] = j); } } catch (e) {}
-  return null;
+  if (!label) return null; if (sourcesCache[label]) return sourcesCache[label];
+  if (freeAI && navigator.onLine !== false) try { const r = await fetch(freeAI.url + "/sources?city=" + encodeURIComponent(label)); if (r.ok) { const j = await r.json(); if (j && Array.isArray(j.stops)) { kv.set("src:" + keyOf(label), j); return (sourcesCache[label] = j); } } } catch (e) {}
+  const kept = await srcKept("src:", label, j => j && Array.isArray(j.stops));
+  return kept ? (sourcesCache[label] = kept) : null;
 }
 const srcStop = (src, name, ll) => src && (src.stops || []).find(x => nameMatch(name, x.name) || nameMatch(x.name, name) || (x.local && (nameMatch(name, x.local) || nameMatch(x.local, name))) ||
   (ll && x.lat != null && isFinite(numV(ll.lat)) && Math.abs(x.lat - numV(ll.lat)) < 0.0015 && Math.abs(x.lng - numV(ll.lng)) < 0.002 && nameMatch(x.name.split(" ").slice(0, 2).join(" "), name)));
@@ -2150,18 +2177,19 @@ function sightKind(s, city) {
   return s.kind === "local" ? "local" : "touristy";
 }
 function fameFor(d, city) {
-  if (!city || !freeAI) return;
+  if (!city) return Promise.resolve();
   const k = keyOf(city.city);
-  if (fameAsked[k]) { if (fameAsked[k] !== true) fameMark(city, fameAsked[k]); return; }
+  if (fameAsked[k]) { if (fameAsked[k] !== true) fameMark(city, fameAsked[k]); return fameWait[k] || Promise.resolve(); }
   fameAsked[k] = true;
-  sourcesFor(city.city).then(async src => {
+  return (fameWait[k] = sourcesFor(city.city).then(async src => {
     // If the sources step can't answer, the fame list alone still protects the famous sights.
     if (!src) { const fam = await famousFor(city.city); if (fam) src = { stops: fam.main.map(x => Object.assign({ src: ["Wikidata (Wikipedia in many languages)"] }, x)), far: fam.far, eats: [] }; }
     if (!src) { delete fameAsked[k]; return; }
     fameAsked[k] = src; fameMark(city, src);
     if (view === "plan" || view === "guide") { const y = window.scrollY; render(); window.scrollTo(0, y); }
-  }).catch(() => { delete fameAsked[k]; });
+  }).catch(() => { delete fameAsked[k]; }).finally(() => { delete fameWait[k]; }));
 }
+const fameWait = {};
 // How much a sight's fame protects it: 1 for an ordinary sight, up to 3 for a World Heritage site that
 // half the world's Wikipedias write about.
 const fameW = s => travW(s) * (1 + (s && s.unesco ? 0.8 : s && s.heritage ? 0.3 : 0) + Math.min(1.2, ((s && s.fame) || 0) / 80) + Math.min(0.6, Math.max(0, ((s && s.src && s.src.length) || 0) - 1) * 0.15));
@@ -2485,7 +2513,7 @@ ${wiz && (wiz.cruiseLine || wiz.ship) ? "Cruise: " + [wiz.cruiseLine, wiz.ship, 
 
 First write one line that starts with STOPS: and lists, in order, every city, port, island or event place the traveler mentions or that appears in the photos, separated by " > ", followed by the count, for example "STOPS: Athens > Mykonos > Santorini > Rome (3 ports)". Then write one line per day, nothing else, in exactly this format with | between fields:
 DAY|date YYYY-MM-DD|destination|type|mode|time HH:MM|portArrive HH:MM|allAboard HH:MM|tender yes/no|lodging|estimated yes/no
-type is one of arrival, land, embark, port, sea, departure. mode is flight, train, ship or car. Leave a field empty when it doesn't apply, but keep the | separators. No JSON, no commentary.
+type is one of arrival, land, embark, port, sea, departure. mode is flight, train, ferry, ship or car. Leave a field empty when it doesn't apply, but keep the | separators. No JSON, no commentary.
 Rules:
 - One entry per day per city. On a day you travel between two cities, make two entries with the same date: a "departure" in the first city and an "arrival" in the second, with the mode used (flight, train, or car for a drive or bus).
 - First day in a city reached by plane, train, car or by getting off a cruise: "arrival" with mode and time = arrival time. Last day when leaving: "departure" with mode and time = departure time. Days in between: "land". A trip that is just one city or one event day is fine: use "land" days.
@@ -5570,6 +5598,7 @@ document.addEventListener("change", e => {
   }
   if (t.id === "f-rain") { day().rain = t.checked; save(); render(); return; }
   if (t.id === "cdWhere") { cdWhere = t.value; tickCountdown(); return; }
+  if (t.id === "cdAgentIn") { const d = day(); if (d) { d.portAgent = t.value.trim().slice(0, 40); save(); render(); } return; }
   if (t.id === "p-lang") { trip.prefs = P(); trip.prefs.lang = t.value; save(); render(); return; }
   if (t.id === "p-party") { trip.prefs = P(); trip.prefs.party = Math.max(1, Math.min(20, +t.value || 2)); save(); render(); return; }
   if (t.dataset && t.dataset.note) { jUpdate(t.dataset.note, j => { j.note = t.value; }); return; }

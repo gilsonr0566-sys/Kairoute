@@ -45,6 +45,7 @@ jobs:
           node tools/layout-check.cjs
           node tools/ship-check.cjs
           node tools/time-check.cjs
+          node tools/ride-check.cjs
           node tools/anchor-e2e.cjs
           node tools/extras-check.cjs index.html checks/extras
           node tools/offline-e2e.cjs
