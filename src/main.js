@@ -529,11 +529,13 @@ const pairKey = (a, b) => [a.lat, a.lng, b.lat, b.lng].map(n => (+n).toFixed(3))
 // Timetables differ on weekdays, Saturdays and Sundays: the plan's own day picks which.
 const planDow = () => { const t = typeof planDate !== "undefined" && planDate ? Date.parse(planDate + "T12:00:00Z") : NaN; return isFinite(t) ? new Date(t).getUTCDay() : 3; };
 const dayKind = dow => dow === 0 ? "su" : dow === 6 ? "sa" : "wk";
+// Seasonal lines (a summer ferry) are offered only in the months they run, against the plan's own date.
+const runsThen = o => { if (!o || !Array.isArray(o.months) || !o.months.length) return true; const t = typeof planDate !== "undefined" && planDate ? Date.parse(planDate + "T12:00:00Z") : NaN; return !isFinite(t) || o.months.includes(new Date(t).getUTCMonth() + 1); };
 function transitFor(a, b) {
   if (!a || !b || !isFinite(a.lat) || !isFinite(b.lat) || hav(a, b) < 4) return null;
   const dow = planDow(), k = pairKey(a, b) + "|" + dayKind(dow), hit = transitMem[k] || transitMem[pairKey(a, b)];
   if (transitSeen) transitSeen.push([k, pairKey(a, b)]); // the offline check lists every ride a plan looks up
-  if (hit) return hit.opts;
+  if (hit) return hit.opts.filter(runsThen);
   if (typeof freeAI !== "undefined" && freeAI && !transitQ.has(k) && !(transitFail.get(k) > Date.now() - 120000)) { transitQ.set(k, { a: [+a.lat, +a.lng], b: [+b.lat, +b.lng], dow, pri: typeof trip !== "undefined" && trip.days && trip.days[trip.active] && typeof planDate !== "undefined" && trip.days[trip.active].date === planDate }); clearTimeout(transitTimer); transitTimer = setTimeout(askTransit, 300); }
   return null;
 }
@@ -3034,6 +3036,8 @@ if (typeof window !== "undefined") window.__kairouteFaithScan = i => { const d =
     out.push({ stop: s.name, field: "_status", text: `walk ${s.parts ? s.parts.length + " points" : "not written"}, written for "${s.extrasFaith == null ? "?" : s.extrasFaith}"` }); }
   return { day: d.destination, date: d.date, faith: faithKey(), theme: P().theme || "", hits: out }; };
 // Test hook: put transit answers in place for given pairs ([{a:{lat,lng}, b:{lat,lng}, opts}]), as /transit would.
+// Test hook: is a line with these running months offered on this date? (a summer ferry in July and in January)
+if (typeof window !== "undefined") window.__kairouteRunsThen = (iso, months) => { const p = planDate; planDate = iso; try { return runsThen({ months }); } finally { planDate = p; } };
 if (typeof window !== "undefined") window.__kairouteTransitSet = pairs => { (pairs || []).forEach(x => { transitMem[pairKey(x.a, x.b)] = { opts: x.opts, t: Date.now() }; }); return Object.keys(transitMem).length; };
 if (typeof window !== "undefined") window.__kairouteMapLegs = () => { const d = day(), pl = buildPlan(d); return pl && !pl.error ? mapPlanData(pl, d).legs : []; };
 // Test hook: try to add, on day i, a sight that is closed that day (the first one found): it must not be added and the
