@@ -2926,6 +2926,41 @@ document.addEventListener("toggle", e => {
 document.addEventListener("click", e => {
   document.querySelectorAll("details.planmore[open]").forEach(m => { if (!m.contains(e.target) || e.target.closest(".menuitem:not(.toggle)")) m.open = false; });
 }, true);
+// The More menu is placed on screen from where its button actually is: lined up with the button, kept
+// clear of the side rail / bottom tab bar and the screen edges, and flipped above the button when there
+// is no room below. Nothing on the page can clip it or cover it, on any day or screen size.
+function placeMenu(m) {
+  const p = m.querySelector(".menupanel"), sm = m.querySelector("summary"); if (!p || !sm) return;
+  const vw = document.documentElement.clientWidth, vh = window.innerHeight, pad = 8;
+  let minL = pad, maxB = vh - pad;
+  const tabs = document.querySelector(".tabs");
+  if (tabs) { const t = tabs.getBoundingClientRect(), cs = getComputedStyle(tabs);
+    if (cs.position === "fixed" && t.width && t.height) {
+      if (t.left <= 0 && t.height > vh * .6) minL = Math.max(minL, t.right + pad);          // side rail
+      else if (t.bottom >= vh - 1 && t.width > vw * .6) maxB = Math.min(maxB, t.top - pad); // bottom bar
+    } }
+  const w = Math.min(320, vw - minL - pad);
+  p.style.position = "fixed"; p.style.width = w + "px"; p.style.minWidth = "0"; p.style.right = "auto";
+  p.style.maxHeight = ""; p.style.overflowY = "auto";
+  const b = sm.getBoundingClientRect();
+  if (b.bottom < 0 || b.top > vh) { m.open = false; return; }   // button scrolled away: close the menu
+  let left = b.right - w;                       // right edges line up when that fits
+  if (left < minL) left = b.left;               // otherwise left edges line up
+  left = Math.max(minL, Math.min(left, vw - pad - w));
+  p.style.left = left + "px";
+  let h = p.scrollHeight, below = maxB - b.bottom - 4, above = b.top - 4 - pad;
+  if (h > below && h > above && !m._scrolled) {
+    // Too tall for either side: scroll the page up just enough for the whole menu to fit under its button.
+    let sc = m.parentElement; while (sc && sc !== document.body && !(sc.scrollHeight > sc.clientHeight + 1 && /auto|scroll/.test(getComputedStyle(sc).overflowY))) sc = sc.parentElement;
+    const need = Math.min(h - below + 4, b.top - pad - 60);
+    if (need > 0) { m._scrolled = true; if (!sc || sc === document.body) window.scrollBy(0, need); else sc.scrollTop += need; m._scrolled = false; return placeMenu(m); }
+  }
+  if (h <= below || below >= above) { p.style.top = (b.bottom + 4) + "px"; p.style.bottom = "auto"; p.style.maxHeight = Math.max(120, below) + "px"; }
+  else { p.style.top = Math.max(pad, b.top - 4 - Math.min(h, above)) + "px"; p.style.bottom = "auto"; p.style.maxHeight = above + "px"; }
+}
+document.addEventListener("toggle", e => { const m = e.target; if (m.matches && m.matches("details.planmore") && m.open) placeMenu(m); }, true);
+const replaceMenus = () => document.querySelectorAll("details.planmore[open]").forEach(placeMenu);
+window.addEventListener("resize", replaceMenus); document.addEventListener("scroll", replaceMenus, true);
 // ---- First-run walkthrough: four short, skippable screens; replay from Settings > How Kairoute works ----
 const COACH = [
   ["🧭", "Plan a trip in a minute", "Tap <b>Plan a new trip</b>. Type where you're going, or snap a photo of your itinerary or cruise schedule. Kairoute builds every day for you."],
