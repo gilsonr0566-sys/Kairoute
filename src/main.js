@@ -1407,7 +1407,33 @@ function cleanCity(c, dest) {
 }
 function faithNote() {
   const i = P().interests;
-  return i.includes("bible") ? " The travelers follow St Paul and St John: share the faith perspective, including any Bible connection with chapter and verse, and the place's meaning for Christians." : i.includes("churches") ? " The travelers value faith: include the place's religious meaning where it has one." : "";
+  return i.includes("bible") ? " The travelers follow St Paul and St John. Only where the place itself is named in the Bible or a documented early-Christian event happened there, tell that connection with chapter and verse. Never link a place to the Bible or the Gospels by theme, likeness or general Christian ideas: if it has no such connection, say nothing about the Bible." : i.includes("churches") ? " The travelers value faith: for a place of worship or a place with documented religious history, include its religious meaning; elsewhere don't add any." : " Don't bring in the Bible, the Gospels or faith themes unless the place is itself a place of worship or a Bible site.";
+}
+// Faith talk follows the traveler's interests and must rest on real evidence. faithKey() is the interest a
+// walk-through was written for: when the traveler changes it, walks written for the other setting are cleared
+// and written again. faithStrip() removes Bible talk that nothing backs: with the faith interests off it is kept
+// only at Bible sites; with them on it is kept only where the stop's own guide or the point's facts carry it.
+const faithKey = () => { const i = P().interests || []; return i.includes("bible") ? "bible" : i.includes("churches") ? "churches" : ""; };
+const BIBLE_TALK = /\b(?:gospels?|bible|biblical|scriptures?|apostles?|new testament|old testament|evangelists?|jesus|christ|st\.? paul|saint paul|paul's|(?:acts|matthew|mark|luke|john|romans|corinthians|galatians|ephesians|revelation|genesis|exodus|isaiah|psalms?)\s+\d+:\d+)/i;
+function faithStrip(text, evidence, bibleSite) {
+  const t = String(text || ""); if (!BIBLE_TALK.test(t)) return t;
+  const ok = faithKey() ? BIBLE_TALK.test(String(evidence || "")) || bibleSite : bibleSite;
+  return ok ? t : t.split(/(?<=[.!?])\s+/).filter(x => !BIBLE_TALK.test(x)).join(" ").trim();
+}
+const bibleSite = s => !!s && (/bible|biblical/i.test(s.category || "") || BIBLE_TALK.test((s.guide || "") + " " + (s.summary || "")));
+let faithSwept = null;
+function faithSweep(only) {
+  const fk = faithKey(); if (!only && (faithSwept === fk || typeof trip === "undefined" || !trip || !trip.days)) return 0; if (!only) faithSwept = fk;
+  let n = 0; const seen = new Set();
+  for (const c of only || trip.days.map(d => cityFor(d))) { if (!c || seen.has(c)) continue; seen.add(c);
+    for (const s of allSites(c)) { if (!s.parts && !s.intro) continue;
+      const was = s.extrasFaith != null ? s.extrasFaith : BIBLE_TALK.test([s.intro, s.wrap, ...(s.parts || []).map(p => p.guide + " " + (p.lookFor || ""))].join(" ")) && !bibleSite(s) ? "bible" : fk;
+      if (was === fk) { s.extrasFaith = fk; continue; }
+      if (s.baseMin != null) s.minutes = s.baseMin; delete s.baseMin; delete s.parts; delete s.partsOff; delete s.intro; delete s.wrap; s.extrasV = 0; delete s.extrasFaith;
+      delete extrasAsked[keyOf(c.city) + "|" + s.id]; n++; } }
+  Object.keys(deeper).forEach(k => delete deeper[k]);
+  if (n) save();
+  return n;
 }
 // Add any place the traveler names, or more day trips beyond what the guide listed.
 let addBusy = null;
@@ -1421,7 +1447,7 @@ ${ask ? `They want to visit: "${ask}". If it is one sight, return it. If it is a
 Return ONLY JSON: {"places":[{"id","name","lat","lng","minutes","kind":"touristy"|"local","mustSee":boolean,"category","far":boolean,"travel","summary","guide","lookFor","photoTip","picks","hours","closed","tickets","crowds","cost","indoor","access"}]}
 - "far": true if it is more than about 6 km from the center of ${base}; then "travel" says how to get there and the one-way time, and "minutes" is time on site.
 - "guide": spoken narration in second person, 110-150 words, with real history and stories. "lookFor": 3 specific details. "picks": 3 insider extras a professional guide would share, each {"k": "spot"|"timing"|"story"|"taste", "t": one or two sentences}. "cost": typical adult ticket in local currency as a number (0 if free).
-- Write human-readable text in ${P().lang}. Real coordinates.${P().interests.includes("bible") ? "\n- The travelers follow St Paul and St John: in each guide, tell any Bible connection with chapter and verse." : ""}`;
+- Write human-readable text in ${P().lang}. Real coordinates.${P().interests.includes("bible") ? "\n- The travelers follow St Paul and St John: where a place is named in the Bible or a documented early-Christian event happened there, tell it with chapter and verse. Never invent or force a connection." : ""}`;
   try {
     const r = await sample(prompt, { modelTier: "default" });
     const j = parseJSON(r.text || "");
@@ -1459,7 +1485,7 @@ Date of visit: ${d.date || "not given"}
 Kind of day: ${typeInfo(d.type).label}${isPort ? ". The traveler arrives on a cruise ship and must be back aboard the same day; if the port is a gateway to a bigger city (for example Civitavecchia for Rome), put that city's highlights in \"farther\" with honest travel times" : ""}.
 ${d.event ? "Special event: " + d.event + ". Include its venue as a mustSee site." : ""}
 This guide is shared by every Kairoute traveler, so it covers the whole place, balanced: the famous sights first, then museums, history, neighborhoods, views, markets and the most important places of worship (with what makes them sacred). Each traveler's own interests are applied later, when their days are planned, so never let one interest crowd out the famous sights.
-Where a place has a real Bible or early Christian connection (for example Paul's journeys through Athens, Corinth, Ephesus, Crete, Malta and Rome, John in Ephesus and Patmos, early churches and catacombs), include the place and tell that connection in its guide with chapter and verse.
+Where a place has a real, documented Bible or early Christian connection (for example Paul's journeys through Athens, Corinth, Ephesus, Crete, Malta and Rome, John in Ephesus and Patmos, early churches and catacombs), include the place and tell that connection in its guide with chapter and verse. Never tie any other place to the Bible or the Gospels by theme or likeness.
 Keep four kinds of statement clearly apart in every guide: documented history ("was built in 1450"), what scholars think ("historians believe"), religious tradition ("tradition holds that Paul preached here") and legend ("legend says"). Never present tradition, legend or a guess as documented fact, and never invent a date, number, name or price: if unsure, leave it out.
 
 Return ONLY a JSON object, no commentary, with this shape:
@@ -1851,7 +1877,7 @@ function walkOrder(parts, s) {
 }
 async function stopExtras(s, city) {
   const key = keyOf(city.city) + "|" + s.id; if (extrasAsked[key] || s.extrasV >= EXTRAS_V) return; extrasAsked[key] = true;
-  const cands = await walkCands(s, city), area = AREA_CAT.test(s.category + " " + s.name) || cands.length >= 2;
+  const fk = faithKey(), cands = await walkCands(s, city), area = AREA_CAT.test(s.category + " " + s.name) || cands.length >= 2;
   // The map was busy and there's little to walk between: wait for a better moment rather than write a thin walk.
   if (nearFailed[s.id] && cands.length < 4 && area) { delete extrasAsked[key]; delete nearCache[s.id]; return; }
   const ask = `You are the best licensed walking-tour guide in ${city.city}, leading a small group in person through "${s.name}"${s.category ? " (" + s.category + ")" : ""}. Write the walk-through exactly as you would speak it on the spot: the group must always be standing in front of what you are talking about.
@@ -1868,13 +1894,14 @@ Return ONLY JSON {"intro":"...","parts":[{"n":number or 0,"spot":"","stand":"...
 - "wrap": 25 to 50 words closing the stop and handing over to the next one.
 - "show": only for a famous show that runs on a fixed timetable here (like a clock's hourly show or the changing of the guard): "what" names it, "every" is minutes between shows, "first"/"last" the first and last as HH:MM, "n" the point it happens at. Otherwise leave "what" empty.
 Like the best guides, mix the history with stories about people, a light touch of humour and a practical tip where it helps (where to stand for the photo, which door is the way in).
-Write in ${P().lang}.${faithNote() ? " Where a point really has a Bible or faith connection, tell it with chapter and verse; don't force one onto a place that has none." : ""}`;
+Write in ${P().lang}.${faithKey() ? " Only where a point is named in the Bible or its facts above record a Bible or early-Christian event, tell that with chapter and verse; never force a connection onto a place that has none." : " Don't bring in the Bible, the Gospels or faith themes unless the facts above are about them."}`;
   try {
     let parts = [], j = {};
     for (let tries = 0; tries < 2 && parts.length < 2; tries++) {
       const r = await sample(ask, { modelTier: "default" }); j = parseJSON(r.text || "") || {}; parts = [];
       for (const x of j.parts || []) {
         const c = +x.n ? cands[+x.n - 1] : null, spot = !c && x.spot ? String(x.spot).slice(0, 80) : "";
+        const ev = [s.guide, s.summary, c && c.facts, c && c.what, c && c.desc].join(" "); x.guide = faithStrip(x.guide, ev, bibleSite(s)); x.look = faithStrip(x.look, ev, bibleSite(s));
         if ((+x.n && !c) || (!c && !spot) || words(x.guide) < 40) continue; // an unknown place, or a story too thin to be worth a stop
         if (spot && !/\d|century|centuries/i.test(String(x.guide))) continue; // a spot with only general talk, no fact about what's in view
         const nm = c ? c.name : spot.replace(/^\w/, ch => ch.toUpperCase());
@@ -1893,7 +1920,9 @@ Return ONLY JSON {"intro":"...","wrap":"..."}. "intro": 50 to 90 words said wher
     const showElsewhere = sh.what && (city.sites || []).some(m => m !== s && !m.quick && m.name.toLowerCase().split(/\W+/).some(w => w.length >= 5 && !GEN.test(w) && w !== keyOf(city.city) && String(sh.what).toLowerCase().includes(w)));
     if (sh.what && !showElsewhere && String(sh.what).length < 120) { const every = Math.round(numV(sh.every) || 0), pi = (s.parts || []).findIndex(p => p.i === (+sh.n || 0) - 1);
       s.show = { what: String(sh.what), every: every >= 10 && every <= 720 ? every : 0, first: hhmm(sh.first) != null ? String(sh.first) : "", last: hhmm(sh.last) != null ? String(sh.last) : "", part: pi >= 0 ? pi : null, note: "Times from your guide; check on the day" }; }
-    s.extrasV = EXTRAS_V; save();
+    const evAll = [s.guide, s.summary, ...cands.map(c => c.facts || "")].join(" ");
+    if (s.intro) s.intro = faithStrip(s.intro, evAll, bibleSite(s)); if (s.wrap) s.wrap = faithStrip(s.wrap, evAll, bibleSite(s));
+    s.extrasV = EXTRAS_V; s.extrasFaith = fk; save();
     if (["plan", "sites", "guide", "tour"].includes(view)) { const y = window.scrollY; render(); window.scrollTo(0, y); }
   } catch (e) { delete extrasAsked[key]; }
 }
@@ -2350,7 +2379,7 @@ async function goDeeper(site, city) {
     await sample(`You are a warm, expert tour guide speaking to a traveler standing at ${site.name} in ${city.city}${city.country ? ", " + city.country : ""}. They already heard this introduction:\n"${site.guide}"\n\nContinue the tour with about 300 more words of spoken narration they haven't heard: deeper history, a surprising story or legend, how locals see the place, and one insider tip for visiting (best time, hidden corner, or etiquette).${faithNote()}${themeNote()} Plain paragraphs, no headings or lists, no markdown.`, {
       modelTier: "default", onText: ({ text }) => { deeper[k].text = text; const el = document.getElementById("deep-" + k); if (el) el.innerHTML = paras(text); }
     });
-    deeper[k].loading = false; renderGuideOnly();
+    deeper[k].text = faithStrip(deeper[k].text, site.guide + " " + (site.summary || ""), bibleSite(site)); deeper[k].loading = false; renderGuideOnly();
   } catch (e) { deeper[k] = { text: deeper[k].text || "", loading: false, error: "The guide couldn't continue right now. Try again in a moment." }; renderGuideOnly(); }
 }
 // ---- Ask your guide ----
@@ -2730,7 +2759,7 @@ if (typeof window !== "undefined") window.__kairouteFameCheck = async fix => {
     const story = n => Array.from({ length: n }, (_, i) => "word" + i).join(" ");
     let asked = "", asks = [];
     sample = async q => { asks.push(q); if (!asked) asked = q; return { text: JSON.stringify({ intro: "We're standing at the old heart of the city. We'll start by the church, then the town hall, then the west front.", parts: [
-      { n: 1, stand: "Stand by the monument and face the church with the twin towers.", guide: story(150), look: "the golden Madonna", next: "Now walk 40 m to the tower on your left.", minutes: 8 },
+      { n: 1, stand: "Stand by the monument and face the church with the twin towers.", guide: story(150) + ". The Gospel of Luke 2:7 is told in the carving above you.", look: "the golden Madonna", next: "Now walk 40 m to the tower on your left.", minutes: 8 },
       { n: 2, stand: "Stand under the tower.", guide: story(120), look: "the plaque", next: "Walk to the middle of the square.", minutes: 6 },
       { n: 99, stand: "Stand here.", guide: story(120), look: "", walk: "Walk on.", minutes: 5 },
       { n: 0, spot: "the west front", stand: "Stand back by the café tables and look at the whole square.", guide: story(80), look: "the pastel houses", next: "", minutes: 5 },
@@ -2738,6 +2767,14 @@ if (typeof window !== "undefined") window.__kairouteFameCheck = async fix => {
     delete extrasAsked["prague test|" + S.id]; S.extrasV = 0; await stopExtras(S, gone);
     const P0 = S.parts || [], realPt = P0.filter(p => !p.spot).every(p => cands.some(c => c.name === p.name && c.lat === p.lat && c.lng === p.lng)), spot = P0.find(p => p.spot);
     ok("Live guide: points are real nearby places or spots at the stop (an invented place and a thin story are refused)", P0.length === 3 && realPt && spot && spot.lat === S.lat, P0.map(p => p.name).join(", ") || "no parts");
+    ok("Faith: Bible talk that nothing backs is taken out of the walk (the square isn't a Bible site)", P0.length && !/Gospel/.test(P0[0].guide) && words(P0[0].guide) >= 150, P0.length ? P0[0].guide.slice(-60) : "no parts");
+    { const keepP = S.parts, keepI = S.intro, keepW = S.wrap, keepF = S.extrasFaith, keepM = S.minutes, keepB = S.baseMin;
+      S.extrasFaith = faithKey() === "bible" ? "" : "bible"; const n1 = faithSweep([gone]);
+      const cleared = !S.parts && !S.intro && S.extrasV === 0;
+      S.parts = keepP; S.intro = keepI; S.wrap = keepW; S.extrasFaith = faithKey(); S.extrasV = EXTRAS_V; S.minutes = keepM; if (keepB != null) S.baseMin = keepB;
+      const n2 = faithSweep([gone]);
+      ok("Faith: when the traveler changes the faith interests, walks written for the other setting are cleared and written again", n1 >= 1 && cleared && n2 === 0, `cleared ${n1}, then ${n2} once it matches`); void keepF; }
+    ok("Faith: with the faith interests off, Bible talk stays only at Bible sites", (() => { const keepI = trip.prefs.interests; trip.prefs.interests = []; const a = faithStrip("Paul landed here. Acts 28:13 tells it.", "Acts 28:13 Paul", false), b = faithStrip("Paul landed here. Acts 28:13 tells it.", "", true); trip.prefs.interests = keepI; return a === "Paul landed here." && /Acts 28:13/.test(b); })(), "checked both ways");
     const sp1 = partSpeech(S, 0, true), spL = partSpeech(S, 2, false);
     const cuesOk = P0.slice(1).every(p => /^(About \d+ m|A few steps on)/.test(p.cue)) && !P0[0].cue && !/40 m/.test(P0.map(p => p.cue).join(" "));
     ok("Live guide: the walk opens where you stand, puts you in place at each point, walks you on with the real distance, and hands over at the end", /old heart/.test(sp1) && /Stand by the monument/.test(sp1) && cuesOk && /Next we head to the clock/.test(spL) && !/Next we head/.test(sp1), P0.map(p => p.cue || "(start)").join(" | "));
@@ -2984,6 +3021,7 @@ let paneMemo = { key: "", pos: {} };
 function panes() { return [document.getElementById("view"), ...document.querySelectorAll("#view .pane[data-pane]")].filter(Boolean); }
 function toTop() { window.scrollTo(0, 0); panes().forEach(el => { el.scrollTop = 0; }); }
 function render() {
+  faithSweep();
   bonusMemo = new Map(); mealMemo = new Map(); keptMemo = new Map(); eveMemo = new Map(); avoidMeals = new Set();
   const pkey = view + "|" + trip.active, pos = {};
   panes().forEach(el => { pos[el.dataset.pane || "view"] = el.scrollTop; });
