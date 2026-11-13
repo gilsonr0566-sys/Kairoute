@@ -1438,7 +1438,11 @@ function faithSweep(only) {
 // Add any place the traveler names, or more day trips beyond what the guide listed.
 let addBusy = null;
 async function addPlaces(d, ask) {
-  const city = cityFor(d); if (!city || !aiReady() || addBusy) return;
+  const city = cityFor(d); if (!city || addBusy) return;
+  // A place already in the guide is used as it is (same gate, same box), never added twice.
+  const known = ask && allSites(city).find(s => nameMatch(ask, s.name) && nameMatch(s.name, ask));
+  if (known) { useKnown(d, known); return; }
+  if (!aiReady()) return;
   addBusy = ask ? "Finding " + ask + "…" : "Looking farther afield…"; aiError = ""; render();
   const have = allSites(city).map(x => x.name).join(", ");
   const base = cityKeyFor(d) === "barcelona" ? "Barcelona" : city.city;
@@ -1452,16 +1456,28 @@ Return ONLY JSON: {"places":[{"id","name","lat","lng","minutes","kind":"touristy
     const r = await sample(prompt, { modelTier: "default" });
     const j = parseJSON(r.text || "");
     const okLL = p => p && isFinite(numV(p.lat)) && isFinite(numV(p.lng));
-    const added = (j.places || []).filter(okLL).map((x, i) => { const st = normSite(x, i, "-add" + Date.now().toString(36) + i); st.added = true; return st; });
-    if (!added.length) throw new Error("none");
+    const found = (j.places || []).filter(okLL).map((x, i) => { const st = normSite(x, i, "-add" + Date.now().toString(36) + i); st.added = true; return st; });
+    if (!found.length) throw new Error("none");
+    // Anything the guide already has stays one sight: the existing one is picked instead of a copy.
+    const dup = found.map(st => allSites(city).find(s => samePlace(st, s))).filter(Boolean);
+    const added = found.filter(st => !allSites(city).some(s => samePlace(st, s)));
+    if (!added.length) { addBusy = null; useKnown(d, dup[0]); return; }
     const center = (city.starts && city.starts.point && city.starts.point[0]) || allSites(city)[0];
     added.forEach(st => { if (center && hav(center, st) > 6) st.far = true; (st.far ? (city.farther = city.farther || []) : city.sites).push(st); });
     // Found places join the list; each is picked only if it fits the day (the first that doesn't opens the box).
     let asked = false;
-    if (ask) added.forEach(st => { if (!addPick(d, st.id, !asked) && fitState) asked = true; });
+    if (ask) dup.concat(added).forEach(st => { if ((d.selected || []).includes(st.id)) return; if (!addPick(d, st.id, !asked) && fitState) asked = true; });
     addBusy = null; save(); render(); if (fitState) fitShow();
     const el = document.getElementById("s-" + added[0].id); if (el) el.closest("label").scrollIntoView({ block: "center" });
   } catch (e) { addBusy = null; aiError = ask ? `I couldn't find "${ask}". Try the full name, like "Ancient Corinth".` : "No more day trips came back. Try again in a moment."; render(); }
+}
+function useKnown(d, s) {
+  aiError = "";
+  const had = (d.selected || []).includes(s.id);
+  if (!had) addPick(d, s.id, true);
+  save(); render(); if (fitState) fitShow();
+  const el = document.getElementById("s-" + s.id) || document.querySelector(`[data-card="${s.id}"]`);
+  if (el) (el.closest("label") || el).scrollIntoView({ block: "center" });
 }
 function addPlaceCard(d) {
   if (!aiReady()) return `<div class="card addplace"><h3>Don't see a place you want?</h3><p class="lede">Adding any place, or more day trips, uses Claude. Turn on the AI guide in Settings to turn it on.</p></div>`;
@@ -2944,13 +2960,20 @@ function updateAudioUI() {
   });
 }
 
-function samePlace(a, b) { return a && b && (sameSight(a, b) || nameMatch(a.name, b.name) || nameMatch(b.name, a.name) || (isFinite(a.lat) && isFinite(b.lat) && hav(a, b) < 0.08 && keyOf(a.name).slice(0, 6) === keyOf(b.name).slice(0, 6))); }
+// Strictly the same place (used to keep a guide whole and avoid copies): same Wikidata id, same name, or names
+// that match both ways. A one-way match is too loose here (Areopagus would swallow "Dionysiou Areopagitou" promenade).
+function samePlace(a, b) { return !!(a && b && ((a.wd && b.wd && a.wd === b.wd) || keyOf(a.name) === keyOf(b.name) || (nameMatch(a.name, b.name) && nameMatch(b.name, a.name)))); }
 function carryGuide(prev, c) {
   const have = allSites(c);
   const ids = new Set(have.map(x => x.id));
-  const keep = (list, into) => (list || []).forEach(x => { if (!x || !isFinite(x.lat) || have.some(y => samePlace(x, y))) return; const k = Object.assign({}, x); if (ids.has(k.id)) k.id = k.id + "-k"; ids.add(k.id); into.push(k); have.push(k); });
+  const keep = (list, into) => (list || []).forEach(x => { if (!x || have.some(y => samePlace(x, y))) return; const k = Object.assign({}, x); if (ids.has(k.id)) k.id = k.id + "-k"; ids.add(k.id); into.push(k); have.push(k); });
   c.farther = c.farther || [];
   keep(prev.sites, c.sites); keep(prev.farther, c.farther);
+}
+if (typeof window !== "undefined") {
+  // Test hooks: a fresh guide that lost sights gets them back; naming a sight the guide has never makes a copy.
+  window.__kairouteCarryCheck = () => { const city = cityFor(day()); if (!city) return null; const prev = JSON.parse(JSON.stringify(city)), c = JSON.parse(JSON.stringify(city)); const gone = c.sites.splice(0, 2).concat((c.farther || []).splice(0, 1)); carryGuide(prev, c); return { gone: gone.map(x => x.name), back: gone.filter(x => allSites(c).some(y => samePlace(x, y))).map(x => x.name), dup: allSites(c).length - allSites(prev).length, lost: allSites(prev).filter(x => !allSites(c).some(y => y.id === x.id || y.id === x.id + "-k")).map(x => x.name + (isFinite(x.lat) ? "" : " (no map spot)")) }; };
+  window.__kairouteFind = name => { const n = allSites(cityFor(day())).length; addPlaces(day(), name); return { before: n, after: allSites(cityFor(day())).length }; };
 }
 function remapPicks(x, prev, c) {
   const old = allSites(prev), now = allSites(c), out = [];
@@ -4558,6 +4581,12 @@ function upgradeThin(d, city) {
 if (typeof window !== "undefined") window.__kairouteUpgrading = () => upgrading;
 if (typeof window !== "undefined") window.__kairouteSights = () => { ensureBuiltins(); const out = {}; trip.days.forEach(d => { const c = cityFor(d); if (!c || out[d.destination]) return; out[d.destination] = { builtin: !!c.builtin, sites: (c.sites || []).map(x => x.name + (x.quick ? " [quick]" : "")), farther: (c.farther || []).map(x => x.name) }; }); return out; };
 if (typeof window !== "undefined") window.__kairouteThin = () => { ensureBuiltins(); return trip.days.map((d, i) => { const c = cityFor(d); return c ? i + " " + d.destination + ": " + (c.sites || []).filter(x => !x.quick).length + (c.builtin ? " builtin" : "") : null; }).filter(Boolean).join("\n"); };
+// The schedule says plainly when you get to each place and when you leave it.
+function tcell(it) {
+  const len = it.type === "meal" || it.type === "evening" ? (it.meal && it.meal.len) || 0 : it.type === "stop" || it.type === "fixed" ? (it.place && it.place.minutes) || 0 : 0;
+  const arr = it.type === "start" ? null : it.time, lv = it.type === "end" || it.type === "evening" ? null : it.type === "start" ? it.time : it.time + len;
+  return `<div class="time">${arr != null ? `<span class="ta">Arrive</span>${fmt(arr)}` : ""}${lv != null && (arr == null || len >= 5) ? `<span class="ta">Leave</span>${fmt(lv)}` : ""}</div>`;
+}
 function renderPlan(d) {
   const city = cityFor(d);
   if (!city) return `${dayHeading(d)}${busyBlock()}${errBlock()}${needsCity(d)}`;
@@ -4569,33 +4598,33 @@ function renderPlan(d) {
   const rows = plan.items.map((it, idx) => {
     const pv = plan.items[idx - 1], nx = plan.items[idx + 1], rideIn = pv && pv.type === "travel" && pv.leg.mode === "ride", rideOut = nx && nx.type === "travel" && nx.leg.mode === "ride";
     const cls = `tl ${idx === 0 ? "first" : ""} ${idx === plan.items.length - 1 || it.type === "end" ? "last" : ""} ${rideIn ? "rin" : ""} ${rideOut ? "rout" : ""}`;
-    if (it.type === "start") return `<div class="${cls}"><div class="time">${fmt(it.time)}</div><div class="rail"><div class="dot start">S</div></div><div class="what"><div class="nm">${esc(it.label)}</div>${it.place.note ? `<div class="sub">${esc(it.place.note)}</div>` : ""}${plan.w.notes.map(t => `<div class="sub">${esc(t)}</div>`).join("")}</div></div>`;
+    if (it.type === "start") return `<div class="${cls}">${tcell(it)}<div class="rail"><div class="dot start">S</div></div><div class="what"><div class="nm">${esc(it.label)}</div>${it.place.note ? `<div class="sub">${esc(it.place.note)}</div>` : ""}${plan.w.notes.map(t => `<div class="sub">${esc(t)}</div>`).join("")}</div></div>`;
     if (it.type === "travel") {
       const m = it.leg.mode;
       return `<div class="tl leg ${m}"><div class="time"></div><div class="rail"></div><div class="what">${legIcon(m)}<span>${it.leg.km < 0.1 ? "Next door" : `<b>${esc(it.leg.how)}</b> · ${dur(it.leg.min)} · ${distTxt(it.leg.km)}`}</span></div></div>`;
     }
-    if (it.type === "fixed") return `<div class="${cls}"><div class="time">${fmt(it.time)}</div><div class="rail"><div class="dot fixed">H</div></div><div class="what"><div class="nm">${esc(it.place.name)}</div><div class="sub">${dur(it.place.minutes)}</div></div></div>`;
+    if (it.type === "fixed") return `<div class="${cls}">${tcell(it)}<div class="rail"><div class="dot fixed">H</div></div><div class="what"><div class="nm">${esc(it.place.name)}</div><div class="sub">${dur(it.place.minutes)}</div></div></div>`;
     if (it.type === "meal") {
       const r = it.place, lbl = it.meal.label;
-      return `<div class="${cls}"><div class="time">${fmt(it.time)}</div><div class="rail"><div class="dot meal">${lbl[0]}</div></div><div class="what">
+      return `<div class="${cls}">${tcell(it)}<div class="rail"><div class="dot meal">${lbl[0]}</div></div><div class="what">
         <div class="nm">${it.meal.quick && !r.booked ? "Quick " + lbl.toLowerCase() : lbl}: ${esc(r.name)}</div><div class="sub">${[r.booked ? "Your reservation" : "", r.cuisine, r.price, r.generic || r.booked ? "" : r.kind === "local" ? "Local spot" : "Popular with visitors", dur(it.meal.len)].filter(Boolean).map(esc).join(" · ")}</div>
         ${mealFacts(r)}${r.booked ? bookedLinks(lbl) : mealMore(r, city, lbl)}</div></div>`;
     }
     if (it.type === "stop") {
       const s = it.place;
-      if (s.along) return `<div class="${cls}"><div class="time">${fmt(it.time)}</div><div class="rail"><div class="dot quick"></div></div><div class="what"><button class="nm namebtn" data-open="${esc(s.id)}">On the way: ${esc(s.name)}</button><div class="sub">${esc(s.lookFor[0] || s.summary)}</div></div></div>`;
-      if (s.bonus) return `<div class="${cls} optional"><div class="time">${fmt(it.time)}</div><div class="rail"><div class="dot bonusdot">+</div></div><div class="what">
+      if (s.along) return `<div class="${cls}">${tcell(it)}<div class="rail"><div class="dot quick"></div></div><div class="what"><button class="nm namebtn" data-open="${esc(s.id)}">On the way: ${esc(s.name)}</button><div class="sub">${esc(s.lookFor[0] || s.summary)}</div></div></div>`;
+      if (s.bonus) return `<div class="${cls} optional">${tcell(it)}<div class="rail"><div class="dot bonusdot">+</div></div><div class="what">
         <button class="nm namebtn" data-open="${esc(s.id)}">Optional: ${esc(s.name)}</button><div class="sub">${dur(s.minutes)} · ${cat(s)}${s.mustSee ? " · Must-see" : ""}</div>
         <div class="sub bonus">Not one of your picks: it fits your free time, right on your route.</div>
         <div class="optacts"><button class="btn small" data-act="bonusadd" data-id="${esc(s.id)}">Add to my picks</button><button class="btn ghost small" data-act="bonusskip" data-id="${esc(s.id)}">Skip it</button></div></div></div>`;
       n++;
-      return `<div class="${cls}"><div class="time">${fmt(it.time)}</div><div class="rail"><div class="dot">${n}</div></div><div class="what">
+      return `<div class="${cls}">${tcell(it)}<div class="rail"><div class="dot">${n}</div></div><div class="what">
         <button class="nm namebtn" data-open="${esc(s.id)}">${esc(s.name)}</button><div class="sub">${dur(s.minutes)} · ${cat(s)}${s.mustSee ? " · Must-see" : ""}${s.unesco ? " · UNESCO" : ""}${s.far && s.travel ? " · " + esc(unitText(s.travel)) : ""}</div>
 ${partsList(s, it.time)}${stopLiveNotes(it, d)}</div></div>`;
     }
     if (it.type === "evening") {
       const r = it.place, lbl = it.meal.label;
-      return `<div class="tl evening"><div class="time">${fmt(it.time)}</div><div class="rail"><div class="dot meal">${lbl[0]}</div></div><div class="what">
+      return `<div class="tl evening">${tcell(it)}<div class="rail"><div class="dot meal">${lbl[0]}</div></div><div class="what">
         <div class="nm">${it.booked ? lbl + ": " + esc(r.name) : "Suggested dinner: " + esc(r.name)}</div>
         <div class="sub">${[it.booked ? "Your reservation" : "", r.cuisine, r.price, it.leg ? (it.leg.km < 0.1 ? "next door" : dur(it.leg.min) + " " + (it.leg.mode === "walk" ? "walk" : "ride") + " from " + (it.near || "where you finish")) : ""].filter(Boolean).map(esc).join(" · ")}</div>
         ${it.late ? `<div class="banner warn">You'll reach it about ${dur(it.time - it.meal.from)} after your reservation. Remove a stop, or ask the restaurant for a later table.</div>` : ""}
@@ -4603,7 +4632,7 @@ ${partsList(s, it.time)}${stopLiveNotes(it, d)}</div></div>`;
     }
     if (it.type === "end") {
       const spare = plan.endBy - plan.end;
-      return `<div class="${cls}"><div class="time">${fmt(it.time)}</div><div class="rail"><div class="dot start">${it.place ? "E" : "✓"}</div></div><div class="what"><div class="nm">${esc(it.label)}</div>
+      return `<div class="${cls}">${tcell(it)}<div class="rail"><div class="dot start">${it.place ? "E" : "✓"}</div></div><div class="what"><div class="nm">${esc(it.label)}</div>
       <div class="sub">${d.type === "port" ? `All aboard ${esc(d.allAboard)}, so you have a 45-minute cushion${spare > 10 ? " plus " + dur(spare) + " spare" : ""}.` :
         d.type === "departure" ? `${MODES[d.mode].label} at ${esc(d.time)}${spare > 10 ? ". " + dur(spare) + " spare" : ""}.` :
         d.type === "embark" ? `All aboard ${esc(d.allAboard)}${spare > 10 ? ". " + dur(spare) + " spare" : ""}.` : spare > 10 ? dur(spare) + " to spare." : ""}</div>

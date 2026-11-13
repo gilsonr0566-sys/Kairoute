@@ -101,6 +101,17 @@ const FILE = path.resolve(process.argv[2] || path.join(__dirname, '..', 'index.h
       if (act === 'untick' && t.picks.includes(sid)) bad(2, `${sid} still in picks after unticking`);
       if (act === 'untick' && t.picks[0] !== 'corinth-canal-far') bad(2, `unticking moved the other picks (${t.picks.join(', ')})`);
     }
+    // A guide refresh never loses sights; searching for a sight the guide has uses it (same gate), never a copy.
+    const cg = await p.evaluate(() => window.__kairouteCarryCheck());
+    if (cg && (cg.lost.length || cg.dup)) bad(2, `guide refresh lost or doubled sights: lost ${cg.lost.join(', ')}, extra ${cg.dup}`);
+    const want = await p.evaluate(() => { const x = [...document.querySelectorAll('.sitesmain [data-card]')].find(c => !c.querySelector('input:checked')); return x && { id: x.dataset.card, name: x.querySelector('.name') ? x.querySelector('.name').innerText : '' }; });
+    if (want && want.name) {
+      const fr = await p.evaluate(n => window.__kairouteFind(n), want.name.toLowerCase()); await p.waitForTimeout(500);
+      const st = await p.evaluate(id => ({ on: !!document.querySelector(`input[data-site="${id}"]:checked`), box: !!document.querySelector('.fitbox') }), want.id);
+      if (fr.after !== fr.before) bad(2, `searching "${want.name}" added a copy`);
+      if (!st.on && !st.box) bad(2, `searching "${want.name}" neither picked it nor explained why`);
+      if (st.box) await p.evaluate(() => document.querySelector('.fitbox [data-act="fitcancel"]').click());
+    } else console.log('note: no unpicked card to search for');
     if (errs.length) { fails++; console.log(`FAIL ${tag}: page errors: ${errs.slice(0, 3).join(' | ')}`); }
     await ctx.close();
   }
