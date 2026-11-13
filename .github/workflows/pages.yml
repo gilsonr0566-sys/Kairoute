@@ -50,6 +50,8 @@ jobs:
           node tools/extras-check.cjs index.html checks/extras
       - name: Street map check (no network needed)
         run: MOCK=1 node tools/map-e2e.cjs
+      - name: Speed check (phone and tablet, slowed like a mid-range phone; a slow app doesn't go live)
+        run: node tools/perf-check.cjs . --json checks/speed.json
       - name: Keep the safety-net report even when it fails
         if: always()
         uses: actions/upload-artifact@v4
