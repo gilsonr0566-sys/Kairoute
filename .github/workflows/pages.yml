@@ -37,6 +37,7 @@ jobs:
           sh build.sh
           npm i --no-save playwright@1 && npx playwright install --with-deps chromium
           node tools/plan-test.cjs
+          node tools/ferry-unit.mjs
           node tools/safety-net.cjs
           node tools/nav-check.cjs
           node tools/pill-check.cjs
