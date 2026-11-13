@@ -13,3 +13,12 @@ id = "5062677df32b4a3b9e877e2b355057de"
 
 [vars]
 PAID = "1" # Richard's account is on Workers Paid (confirmed Nov 11); extras capped by MONTH_EXTRA
+
+# Group tours: one small Durable Object per group code (see extras.js).
+[[durable_objects.bindings]]
+name = "GROUPS"
+class_name = "Group"
+
+[[migrations]]
+tag = "v1-groups"
+new_sqlite_classes = ["Group"]

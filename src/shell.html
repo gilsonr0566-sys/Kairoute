@@ -813,6 +813,28 @@ html, body { overflow-x: hidden; }
 .coach .art { width: 64px; height: 64px; border-radius: 8px; background: var(--route-soft); display: grid; place-items: center; font-size: 2rem; }
 .coach .dots { display: flex; gap: 6px; } .coach .dots i { width: 8px; height: 8px; border-radius: 50%; background: var(--line); } .coach .dots i.on { background: var(--route); width: 20px; border-radius: 4px; }
 .coach .row { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+/* Guide extras (src/features/guide-extras.js): one compact group of folds on the Day plan, squared corners */
+.gxcard > summary { font-weight: 600; }
+.gxin { display: grid; gap: 8px; margin-top: 10px; }
+.gxin p { margin: 0; }
+.gxlist { margin: 0; padding-left: 18px; display: grid; gap: 4px; font-size: 0.92rem; }
+.gxsun { grid-template-columns: repeat(auto-fill, minmax(min(100%, 130px), 1fr)); }
+.gxkidsbox { border-left: 4px solid var(--meal); padding-left: 10px; }
+.gxkids { font-size: 1.02rem; line-height: 1.5; margin: 4px 0; }
+.gxtheme { border-left: 4px solid var(--route); padding: 2px 0 2px 10px; margin: 6px 0; font-size: 0.95rem; }
+.gxbadges { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px; }
+.gxbadge { background: var(--meal-soft); color: var(--ink); border-radius: 4px; padding: 4px 8px; font-size: 0.88rem; }
+.gxprice { display: grid; gap: 6px; }
+.gxpricerow { display: flex; gap: 6px; align-items: center; }
+.gxpricerow input { max-width: 140px; }
+.gxpricerow select { width: auto; }
+.gxwarn { font-size: 0.9rem; }
+.grpbar { display: flex; flex-wrap: wrap; gap: 6px 12px; align-items: center; justify-content: space-between; }
+.grpacts { display: flex; gap: 6px; flex-wrap: wrap; }
+.grpform { flex-basis: 100%; display: flex; gap: 6px; }
+.grpform input { flex: 1; min-width: 0; }
+.grpform select { width: auto; }
+.grpregroup { display: flex; gap: 10px; align-items: center; justify-content: space-between; flex-wrap: wrap; }
 </style>
 
 <header class="top">

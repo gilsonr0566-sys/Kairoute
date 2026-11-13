@@ -1,3 +1,5 @@
+import { extras, Group } from "./extras.js";
+export { Group };
 // Kairoute AI helper. The website sends a prompt (and optional photos); this Worker asks Workers AI
 // and streams the answer back. Usage is counted from real token counts. On the free plan it stays inside
 // Cloudflare's free allowance; on Workers Paid a monthly ceiling (about $5 extra) is the hard stop.
@@ -65,6 +67,8 @@ export default {
     if (req.method === "OPTIONS") return new Response(null, { headers: h });
     const url = new URL(req.url);
     const { DAILY_NEURONS, VOICE_DAILY, LAB_LEFT, VOICE_TOTAL = DAILY_NEURONS } = await limits(env), lab = req.headers.get("x-kairoute-lab") === "1";
+    // Guide extras (viewpoints, restrooms, local know-how, kids' stories, city primers, theme links, film locations, group tours): see extras.js.
+    if (url.pathname.startsWith("/x/")) return extras(req, env, ctx, url, h, { origin, ALLOWED, MODEL, IN_RATE, OUT_RATE, DAILY_NEURONS, used, addUse, sha });
     // /usage: the numbers behind the owner's "Usage & cost" page. Counts only, nothing about travelers.
     if (url.pathname === "/usage") {
       const g = k => env.USAGE.get(k).then(v => +v || 0), d0 = new Date(), days = [];
