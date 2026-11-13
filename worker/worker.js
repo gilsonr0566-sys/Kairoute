@@ -425,17 +425,21 @@ export default {
     if (url.pathname === "/transit" && req.method === "POST") {
       let b; try { b = await req.json(); } catch (e) { return Response.json({ error: "Bad request" }, { status: 400, headers: h }); }
       const ok = v => Array.isArray(v) && v.length === 2 && v.every(n => typeof n === "number" && isFinite(n)) && Math.abs(v[0]) <= 90 && Math.abs(v[1]) <= 180;
-      const pairs = (Array.isArray(b.pairs) ? b.pairs : []).slice(0, 12), out = [];
-      for (const pr of pairs) {
-        if (!pr || !ok(pr.a) || !ok(pr.b)) { out.push({ error: "bad" }); continue; }
+      // Pairs are looked up side by side, so a page asking for several still gets its answer in well under a minute.
+      const pairs = (Array.isArray(b.pairs) ? b.pairs : []).slice(0, 12);
+      const out = await Promise.all(pairs.map(async pr => {
+        if (!pr || !ok(pr.a) || !ok(pr.b)) return { error: "bad" };
         const dow = Number.isInteger(pr.dow) && pr.dow >= 0 && pr.dow <= 6 ? pr.dow : 3, kind = dow === 0 ? "su" : dow === 6 ? "sa" : "wk";
         const key = "tr2:" + kind + ":" + [...pr.a, ...pr.b].map(n => n.toFixed(3)).join(",");
-        const hit = await env.USAGE.get(key, "json"); if (hit) { out.push(hit); continue; }
+        const hit = await env.USAGE.get(key, "json"); if (hit) return hit;
         try { const r = await allOptions({ lat: pr.a[0], lng: pr.a[1] }, { lat: pr.b[0], lng: pr.b[1] }, dow), res = { opts: r.opts };
           // A full answer is kept 14 days (timetables change); one where a source was busy only 1 day, so it is asked again soon.
-          ctx.waitUntil(env.USAGE.put(key, JSON.stringify(res), { expirationTtl: (r.partial ? 1 : r.opts.length ? 14 : 7) * 86400 })); out.push(res);
-        } catch (e) { out.push({ error: "map busy" }); }
-      }
+          // When the map answered after the reply went out, its full answer replaces the partial one.
+          const keep = x => env.USAGE.put(key, JSON.stringify({ opts: x.opts }), { expirationTtl: (x.partial ? 1 : x.opts.length ? 14 : 7) * 86400 });
+          ctx.waitUntil(keep(r).then(() => r.late ? r.late.then(f => f && keep(f)) : null).catch(() => {}));
+          return res;
+        } catch (e) { return { error: "map busy" }; }
+      }));
       return Response.json({ results: out }, { headers: h });
     }
     // /nearsights?lat=&lng=&r=: the named sights OpenStreetMap knows within r metres of a point (monuments, churches,
