@@ -18,7 +18,10 @@ const SIZES = [['tablet upright', 800, 1280], ['tablet sideways', 1280, 800], ['
       await p.evaluate(i => window.__kairouteGo('plan', i), i); await p.waitForTimeout(120);
       const sm = p.locator('details.planmore:not(.cdchip) > summary').filter({ visible: true }).first();
       if (!(await sm.count())) { if (!(await p.evaluate(i => window.__kairouteDays()[i].type === 'sea', i))) bad.push(`day ${i + 1}: no More button`); continue; }
-      await sm.scrollIntoViewIfNeeded(); await sm.click(); await p.waitForTimeout(120);
+      // The day can redraw itself as data arrives in the background (the open menu survives that), so a click that
+      // lands while the screen is being swapped is tried again on the new screen.
+      for (let k = 0; k < 3; k++) { try { await sm.scrollIntoViewIfNeeded({ timeout: 3000 }); await sm.click({ timeout: 3000 }); break; } catch (e) { if (k === 2) throw e; await p.waitForTimeout(300); } }
+      await p.waitForTimeout(120);
       const r = await p.evaluate(() => {
         const m = [...document.querySelectorAll('details.planmore[open]')].find(e => e.offsetParent); if (!m) return ['menu did not open'];
         const vw = document.documentElement.clientWidth, vh = window.innerHeight, out = [];
