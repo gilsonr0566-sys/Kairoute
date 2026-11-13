@@ -18,7 +18,7 @@ const LIMIT = { ready: 2500, tap: 300, tapWorst: 900, freeze: 500 };
 const MIME = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css', '.json': 'application/json', '.png': 'image/png', '.svg': 'image/svg+xml', '.webmanifest': 'application/manifest+json', '.txt': 'text/plain' };
 const server = http.createServer((q, r) => { let f = path.join(ROOT, decodeURIComponent(q.url.split('?')[0])); if (f.endsWith('/')) f += 'index.html';
   fs.readFile(f, (e, b) => { if (e) { r.writeHead(404); return r.end(); } r.writeHead(200, { 'content-type': MIME[path.extname(f)] || 'application/octet-stream' }); r.end(b); }); });
-const SIZES = [['phone', { ...devices['Galaxy S9+'], viewport: { width: 412, height: 860 } }], ['tablet', { viewport: { width: 1280, height: 800 }, hasTouch: true, deviceScaleFactor: 1 }]];
+const SIZES = [['phone', { ...devices['Galaxy S9+'], viewport: { width: 412, height: 860 } }], ['tablet', { viewport: { width: 1280, height: 800 }, hasTouch: true, isMobile: true, deviceScaleFactor: 2 }]];
 (async () => {
   let URL = LIVE; if (!LIVE) { await new Promise(r => server.listen(0, r)); URL = `http://127.0.0.1:${server.address().port}/`; }
   const b = await chromium.launch(); let fails = 0; const rows = [];
