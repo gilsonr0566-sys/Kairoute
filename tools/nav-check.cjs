@@ -3,7 +3,7 @@
 // Fails the publish if any page draws it differently. Usage: node tools/nav-check.cjs [path/to/index.html]
 const { chromium } = require('playwright'); const path = require('path');
 const FILE = path.resolve(process.argv[2] || path.join(__dirname, '..', 'index.html'));
-const SIZES = [['tablet upright', 800, 1280], ['tablet upright, browser bars', 800, 1180], ['tablet sideways', 1280, 800], ['tablet sideways, browser bars', 1280, 720], ['computer', 1440, 900], ['phone', 412, 860], ['phone small', 360, 740]];
+const SIZES = [['tablet upright', 800, 1280], ['tablet upright, browser bars', 800, 1180], ['tablet sideways', 1280, 800], ['tablet sideways, browser bars', 1280, 720], ['computer', 1440, 900], ['phone', 412, 860], ['phone small', 360, 740], ['phone sideways', 860, 412]];
 const PAGES = ['trip', 'plan', 'sites', 'guide', 'journal', 'settings', 'privacy', 'terms'];
 (async () => {
   const b = await chromium.launch(); let fails = 0;
