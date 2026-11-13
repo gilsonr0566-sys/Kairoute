@@ -858,6 +858,61 @@ html, body { overflow-x: hidden; }
 .grpform input { flex: 1; min-width: 0; }
 .grpform select { width: auto; }
 .grpregroup { display: flex; gap: 10px; align-items: center; justify-content: space-between; flex-wrap: wrap; }
+
+/* ---- Day plan, decluttered (Nov 13): the day at a glance on top, one main action, every less-used tool in
+   the More menu, alerts together above the schedule, and the details of each stop and meal folded. ---- */
+.dayhead { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
+.dayhead > div:first-child { min-width: 0; }
+.dayhead .tourbtn { flex: none; width: auto; min-height: 44px; padding: 8px 18px; background: var(--meal); border-color: var(--meal); color: #fff; }
+.planbar { display: flex; flex-wrap: wrap; gap: 8px 10px; align-items: center; justify-content: space-between; }
+.planbar .seg.daylen { margin: 0; gap: 4px; flex-wrap: nowrap; }
+.planbar .seg.daylen button { min-height: 36px; padding: 5px 10px; }
+.planbar .toolrow { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.planbar .toolrow > .btn, .planbar .moremenu > summary { min-height: 36px; padding: 5px 12px; font-size: .9rem; }
+.planmore .menupanel { position: absolute; right: 0; top: calc(100% + 4px); z-index: 1000; background: var(--card); border: 1px solid var(--line); border-radius: 8px; box-shadow: 0 10px 30px rgba(0,0,0,.18); min-width: 280px; padding: 6px; display: grid; gap: 2px; }
+.menuitem { display: flex; gap: 10px; align-items: center; width: 100%; text-align: left; background: none; border: 0; border-radius: 6px; padding: 10px 12px; font: inherit; font-size: .95rem; color: var(--ink); text-decoration: none; cursor: pointer; min-height: 44px; }
+.menuitem:hover, .menuitem:focus-visible { background: var(--route-soft); }
+.menuitem.toggle input { margin: 0; width: 18px; height: 18px; }
+.heads { display: grid; gap: 8px; }
+.heads .banner { margin: 0; padding: 9px 12px; font-size: .9rem; }
+.heads .lede { margin: 0; }
+.tl .namebtn { display: inline; background: none; border: 0; padding: 0; margin: 0; font: inherit; font-weight: 700; color: var(--ink); text-align: left; cursor: pointer; }
+.tl .namebtn::after { content: " ›"; color: var(--route); font-weight: 800; }
+.tl.optional .namebtn { color: var(--muted); }
+.tl .what .sub + .sub { margin-top: 1px; }
+.tl .mealfacts { display: flex; flex-wrap: wrap; gap: 4px 8px; align-items: center; margin-top: 3px; }
+.tl .mealfacts .badge { margin: 0; }
+details.mealmore { margin-top: 4px; }
+details.mealmore > summary { font-size: .86rem; font-weight: 600; color: var(--route); }
+details.mealmore .mealbox { margin-top: 6px; }
+.tl .optacts { margin-top: 4px; }
+.foldlist { gap: 0 !important; padding: 4px 14px !important; }
+.foldlist > .eyebrow { padding: 8px 0 6px; }
+.foldlist > details, .foldlist > .card { border: 0; border-top: 1px solid var(--line); border-radius: 0; background: none; padding: 11px 0; margin: 0; box-shadow: none; }
+.foldlist > details > summary { font-weight: 700; color: var(--ink); cursor: pointer; }
+.foldlist .footnote { margin: 4px 0 0; }
+.plangrid .maplegend { padding: 6px 12px; font-size: .76rem; gap: 4px 12px; }
+.countdown .cdrow { align-items: center; gap: 4px 14px; flex-wrap: nowrap; }
+.countdown .cdbig { font-size: 2.1rem; flex: none; }
+.countdown .cdsub { margin-top: 0; max-width: none; }
+.countdown .cdwhere > summary { font-size: .88rem; font-weight: 600; color: var(--route); cursor: pointer; }
+.countdown .cdwhere .field { margin-top: 8px; }
+@media (min-width: 800px) and (min-height: 560px) {
+  html.appview .plangrid .plantop { max-height: none; overflow: visible; gap: 10px; }
+  html.appview .plangrid .right > .card.countdown { gap: 8px; padding: 12px 14px; }
+}
+@media (max-width: 640px) {
+  .dayhead .tourbtn { display: none; } /* phones: the Start the tour button sits above the tab bar */
+  .planbar { gap: 8px; }
+  .planbar .seg.daylen { width: 100%; }
+  .planbar .seg.daylen button { flex: 1 1 0; justify-content: center; }
+  .planbar .toolrow { width: 100%; flex-wrap: nowrap !important; overflow: visible; }
+  .planbar .toolrow > * { flex: 1 1 auto; }
+  .planbar .toolrow > .btn { justify-content: center; }
+  .planbar .moremenu > summary { width: 100%; justify-content: center; }
+  .planmore .menupanel { min-width: min(300px, calc(100vw - 32px)); }
+  .countdown .cdbig { font-size: 1.8rem; }
+}
 </style>
 
 <header class="top">
