@@ -505,7 +505,7 @@ let suggestMsg = "";
 function suggestTour(d0) {
   const city = cityFor(d0); if (!city) return 0;
   const days = trip.days.filter(o => cityFor(o) === city);
-  const ints = ((trip.prefs && trip.prefs.interests) || []).map(x => INTEREST_WORDS[x] || []).flat(), style = trip.style || "mix";
+  const ints = interestWords(), style = trip.style || "mix";
   const score = x => (x.mustSee ? 3 : 1) + ints.reduce((a, w) => a + ((x.category + " " + x.summary).toLowerCase().includes(w) ? 1 : 0), 0) * 0.8 + (style === "mix" || x.kind === style ? 0.5 : 0) + (fameW(x) - 1) * 1.5;
   const used = new Set(); let total = 0;
   const fills = days.map(o => o.fillTime);
@@ -538,7 +538,7 @@ function defaultSelection(city, style, d) {
   const taken = d ? plannedElsewhere(d) : {};
   const s = city.sites.filter(x => !x.quick && !taken[x.id] && religiousOk(x));
   const picks = s.filter(x => x.mustSee || x.unesco).map(x => x.id);
-  const ints = ((trip.prefs && trip.prefs.interests) || []).map(x => INTEREST_WORDS[x] || []).flat();
+  const ints = interestWords();
   const score = x => ints.reduce((a, w) => a + ((x.category + " " + x.summary).toLowerCase().includes(w) ? 1 : 0), 0) + (style === "mix" || x.kind === style ? 0.5 : 0) + (fameW(x) - 1) * 1.5;
   const extra = s.filter(x => !x.mustSee).sort((a, b) => score(b) - score(a)).slice(0, 2).map(x => x.id);
   const carried = d ? carryOver(d).filter(id => !taken[id]) : [];
@@ -2230,7 +2230,7 @@ async function goDeeper(site, city) {
   if (!aiReady()) return;
   const k = site.id; deeper[k] = { text: "", loading: true }; renderGuideOnly();
   try {
-    await sample(`You are a warm, expert tour guide speaking to a traveler standing at ${site.name} in ${city.city}${city.country ? ", " + city.country : ""}. They already heard this introduction:\n"${site.guide}"\n\nContinue the tour with about 300 more words of spoken narration they haven't heard: deeper history, a surprising story or legend, how locals see the place, and one insider tip for visiting (best time, hidden corner, or etiquette).${faithNote()} Plain paragraphs, no headings or lists, no markdown.`, {
+    await sample(`You are a warm, expert tour guide speaking to a traveler standing at ${site.name} in ${city.city}${city.country ? ", " + city.country : ""}. They already heard this introduction:\n"${site.guide}"\n\nContinue the tour with about 300 more words of spoken narration they haven't heard: deeper history, a surprising story or legend, how locals see the place, and one insider tip for visiting (best time, hidden corner, or etiquette).${faithNote()}${themeNote()} Plain paragraphs, no headings or lists, no markdown.`, {
       modelTier: "default", onText: ({ text }) => { deeper[k].text = text; const el = document.getElementById("deep-" + k); if (el) el.innerHTML = paras(text); }
     });
     deeper[k].loading = false; renderGuideOnly();
@@ -2282,9 +2282,10 @@ async function askGuide(site, city, q, opts) {
   askState.n++;
   const prev = answers[k] && answers[k].text ? `Earlier, the traveler asked "${answers[k].q}" and you answered: "${answers[k].text}"\n\n` : "";
   answers[k] = { q, text: "", loading: true }; renderGuideOnly();
+  const more = await askExtra(site, city, q); // real restrooms, water, pharmacies and cash machines from the map, when asked
   const prompt = `You are a knowledgeable local guide answering a traveler's question.
 Facts you can rely on:
-${askContext(site, city, d)}
+${askContext(site, city, d)}${more}
 
 ${prev}Question: "${q}"
 
@@ -2293,7 +2294,7 @@ How to answer:
 - Use the facts above and well-established knowledge only. Never make up names, places, dates, prices, opening hours or numbers.
 - Recommend only places named in the facts above. If none fit, say so.
 - For hours, prices or tickets not given above, say you don't have current details and suggest the official site or the ticket desk.
-- If you don't know or aren't sure, say kindly that you don't have a reliable answer, and if possible say where they could find out.${faithNote()}
+- If you don't know or aren't sure, say kindly that you don't have a reliable answer, and if possible say where they could find out.${faithNote()}${themeNote()}
 - No markdown.`;
   try {
     await sample(prompt, { modelTier: "quick", cache: false, onText: ({ text }) => { answers[k].text = text; const el = document.getElementById("ans-" + k.replace(/[^\w-]/g, "_")); if (el) el.textContent = text; } });
@@ -3037,7 +3038,7 @@ function pageBar(title) {
 // Settings, privacy and terms share one page: a section list on the left (chips on phones) and one section at a time,
 // so every section fits on a screen and nothing is listed twice.
 let setSec = "display", guideStop = null;
-const SET_SECS = [["display", "Display"], ["voice", "Guide voice"], ["prefs", "Trip preferences"], ["sync", "Sync devices"], ["ai", "AI guide"], ["data", "Your data"], ["about", "About"], ["privacy", "Privacy"], ["terms", "Terms"]];
+const SET_SECS = [["display", "Display"], ["voice", "Guide voice"], ["prefs", "Trip preferences"], ["sync", "Sync devices"], ["group", "Group tour"], ["ai", "AI guide"], ["data", "Your data"], ["about", "About"], ["privacy", "Privacy"], ["terms", "Terms"]];
 function renderSettings(sec) {
   if (sec) setSec = sec;
   const seg = (key, list) => `<div class="seg" role="group">${list.map(([k, l]) => `<button type="button" data-app="${key}" data-v="${k}" aria-pressed="${appSet[key] === k}">${l}</button>`).join("")}</div>`;
@@ -3061,6 +3062,7 @@ function renderSettings(sec) {
 `,
     prefs: () => settingsCard().replace('<details class="card more">', '<details class="card more" open>'),
     sync: () => syncCard(),
+    group: () => groupCard(),
     ai: () => `
   <div class="card"><h3>AI guide</h3><p class="lede">${sample === freeSample ? `On, using Kairoute's free test AI. It builds guides for any city, finds your hotel, reads itinerary photos and answers questions.${freeAI && freeAI.budget ? ` About ${Math.round(100 * (freeAI.left || 0) / freeAI.budget)}% of today's free allowance is left; it resets every evening at 6 pm Central (7 pm in summer).` : ""}` : aiReady() ? "On. Kairoute uses Claude to build city guides, find your hotel, read itinerary photos and answer your questions." : "Off right now. The built-in cities still work fully."}</p>
     ${cl && cl.use ? "" : `<details class="more" ${getKey() ? "open" : ""}><summary>Advanced: use your own Anthropic key</summary><div class="field" style="margin-top:10px"><label for="aikey">Anthropic API key</label><div class="ask"><input type="password" id="aikey" autocomplete="off" placeholder="${getKey() ? "Saved on this device" : "sk-ant-…"}"><button type="button" class="btn small" data-act="savekey">Save</button>${getKey() ? `<button type="button" class="btn ghost small" data-act="clearkey">Remove</button>` : ""}</div><span class="hint">Stored only on this device and sent only to Anthropic. Get one at console.anthropic.com under API keys. Usage on your key is billed to you by Anthropic.</span></div></details>`}</div>`,
@@ -3218,6 +3220,7 @@ function settingsCard() {
     <div class="field"><span class="lbl">Walking</span>${seg("walk", [["low", "Short walks only"], ["medium", "Up to 30 minutes"], ["high", "Happy to walk a lot"]])}</div>
     <div class="field"><span class="lbl">Accessibility</span>${seg("access", ACCESS)}</div>
     <div class="field"><span class="lbl">Interests</span><div class="seg" role="group">${INTERESTS.map(([k, l]) => `<button type="button" data-pref="interest" data-v="${k}" aria-pressed="${p.interests.includes(k)}">${l}</button>`).join("")}</div></div>
+    ${themeField()}${kidsField()}
     <div class="field"><span class="lbl">Religious sites</span>${seg("religious", [["on", "Include them"], ["off", "Skip them"]]).replace('data-v="on" aria-pressed="false"', p.religious === "off" ? 'data-v="on" aria-pressed="false"' : 'data-v="on" aria-pressed="true"')}<span class="hint">Churches, monasteries and other places of worship. Famous landmarks stay either way.</span></div>
     <div class="field"><span class="lbl">Guide voice</span>${seg("voice", VOICES)}</div>
     <div class="row2"><div class="field"><label for="p-lang">Guide language</label><select id="p-lang">${LANGS.map(([n]) => `<option ${p.lang === n ? "selected" : ""}>${n}</option>`).join("")}</select></div>
@@ -3400,6 +3403,7 @@ function renderJournal() {
   const entries = Object.values(trip.journal || {}).filter(j => j.rating || j.note || (j.photos && j.photos.length)).sort((a, b) => (a.date || "").localeCompare(b.date || ""));
   return `<div><h2>Trip journal</h2>${entries.length ? `<p class="lede">Your ratings, notes and photos from the Guide tab.</p>` : ""}</div>
     ${memCard()}
+    ${gxBookCard()}${gxBadgeShelf()}
     ${entries.length ? `<div class="sitelist">${entries.map(j => `<div class="card"><div><div class="eyebrow">${esc(fmtDate(j.date))} · ${esc(j.city || "")}</div><h3>${esc(j.name || "")}</h3></div>
       ${j.meal ? `<span class="eyebrow">Meal</span>` : ""}${j.rating ? `<div class="stars static">${"★".repeat(j.rating)}<span style="opacity:.25">${"★".repeat(5 - j.rating)}</span></div>` : ""}
       ${j.note ? `<p>${esc(j.note)}</p>` : ""}
@@ -4383,6 +4387,7 @@ ${partsList(s, it.time)}<button class="link" data-open="${esc(s.id)}">Open the g
   ${plan.dropped.length ? `<div class="banner warn dropped"><span>Didn't fit today: <b>${plan.dropped.map(s => esc(s.name)).join(", ")}</b>. Change the times on Trip, or swap them in with Change stops.</span></div>` : ""}
   ${checksCard(d, city, plan)}
   ${eventsCard(d, city, plan)}
+  ${gxPlanCards(d, city, plan)}
   ${aiReady() || askState.pending.length ? `<div class="card">${askBlock(null, "Ask about today: what to wear, where to get water, how to get tickets…")}</div>` : ""}
   <details class="more goodtoknow"><summary>Good to know today: getting around, costs, local words</summary>
   ${gettingAround(city, plan)}
@@ -4420,6 +4425,7 @@ ${quietOn(s) ? `<p class="banner quiet" role="note">🤫 <span><b>Quiet place.</
       </div><div class="scside">
       ${s.lookFor && s.lookFor.length ? `<div class="field"><span class="eyebrow">What to look for</span><ol class="lookfor">${s.lookFor.map(x => `<li><span>${esc(x)}</span></li>`).join("")}</ol></div>` : ""}
       ${picksBlock(s)}
+      ${gxStopExtras(s, city)}
       ${srcNote(s)}
       ${s.photoTip || s.travelerTip || s.hours || s.tickets || s.crowds || s.priceNote || s.web || (s.sources && s.sources.length) ? `<details class="more scmore"><summary>Hours, tickets and photo tips</summary><div class="scmorein">
       ${s.photoTip || s.travelerTip ? `<div class="tipsgrid">${s.photoTip ? `<p class="phototip"><b>Photo spot</b> ${esc(s.photoTip)} <a href="${photos}" target="_blank" rel="noopener">See photos</a></p>` : ""}${s.travelerTip ? `<p class="phototip"><b>From travelers</b> ${esc(unitText(s.travelerTip))}</p>` : ""}</div>` : ""}
@@ -4512,7 +4518,7 @@ function renderTour(d) {
   const portBar = d.type === "port" ? `<div class="banner warn tourship"><span>All aboard <b>${esc(d.allAboard)}</b>. Be back at the ship by <b>${fmt(plan.endBy)}</b>.</span><span id="tourShip"></span></div>` : "";
   const head = `<div class="tourhead"><div><div class="eyebrow">Tour · ${esc(dayName(d))} · ${esc(fmtDate(d.date))}</div>
       <div class="tourbar"><i style="width:${pct}%"></i></div><div class="lede" style="font-size:.85rem">Step ${T.i + 1} of ${steps.length} · planned for ${fmt(st.time)}</div></div>
-    <button class="btn ghost small" data-act="tourexit">Exit tour</button></div>${portBar}${followBar()}`;
+    <button class="btn ghost small" data-act="tourexit">Exit tour</button></div>${portBar}${followBar()}${groupBar()}`;
   let body = "";
   if (T.phase === "walk" && st.type !== "start") {
     const nm = stepName(st);
@@ -4581,6 +4587,7 @@ ${quietOn(s) ? `<p class="banner quiet" role="note">🤫 <span><b>Quiet place.</
       ${s.lookFor && s.lookFor.length ? `<div class="field"><span class="eyebrow">Can you find these?</span>
         <div class="finds">${s.lookFor.map((x, k) => `<button class="find ${found.includes(k) ? "on" : ""}" data-find="${k}"><span class="fk">${found.includes(k) ? "✓" : k + 1}</span><span>${esc(x)}</span></button>`).join("")}</div></div>` : ""}
       ${picksBlock(s)}
+      ${gxStopExtras(s, city, true)}
       ${srcNote(s)}
       ${s.photoTip ? `<p class="phototip"><b>Photo spot:</b> ${esc(s.photoTip)}</p>` : ""}
       <details class="more" id="story-${esc(s.id)}" ${quietOn(s) ? "open" : ""}><summary>Read the story</summary><div class="guidetext" style="margin-top:8px">${paras(unitText(s.guide))}</div></details>
