@@ -122,14 +122,20 @@ async function run({ chromium, FILE, log, OUT, shots }) {
     await p.clock.setFixedTime(new Date(D.date + 'T08:00:00'));
     await L(i => window.__kairouteAt(i, 'plan'), D.i); await p.waitForTimeout(150);
     const pr = await L(() => window.__kairouteLiveProbe());
+    // The countdown follows GPS by itself on the day, so stand somewhere real (the first stop), not at 0,0.
+    await ctx.setGeolocation({ latitude: pr.first.lat + 0.0003, longitude: pr.first.lng }); await p.waitForTimeout(1200);
     const before = await L(i => window.__kairouteLiveTest.plan(i), D.i);
     const big0 = await L(() => (document.getElementById('cdBig') || {}).innerText || '');
     if (!/h|min/.test(big0)) bad.push('no live countdown on the day (shows "' + big0 + '")');
     await ctx.setGeolocation({ latitude: pr.first.lat, longitude: pr.first.lng });
     const [hh, mm] = pr.lateAt.split(':').map(Number);
     await p.clock.setFixedTime(new Date(`${D.date}T${String(hh).padStart(2, '0')}:${String(mm).padStart(2, '0')}:00`));
-    await L(() => document.querySelector('[data-act=livegps]').click()); await p.waitForTimeout(1200);
-    await p.clock.runFor(21000); await p.waitForTimeout(500);
+    // On the day the countdown follows GPS by itself; the button only exists after location was refused.
+    await L(() => { const b = document.querySelector('[data-act=livegps]'); if (b) b.click(); }); await p.waitForTimeout(1200);
+    const src = await L(() => (document.getElementById('cdSrc') || {}).innerText || '');
+    if (!/GPS position/.test(src)) bad.push('on the day the countdown does not use GPS by itself ("' + src + '")');
+    if (await L(() => !!document.querySelector('#cdCard details.cdwhere'))) bad.push('"Pick your spot" shows even though GPS is working');
+    await p.clock.runFor(61000); // past the once-a-minute location refresh, so the position is fresh at the new time await p.waitForTimeout(500);
     const after = await L(i => window.__kairouteLiveTest.plan(i), D.i);
     if (!after.live) bad.push('falling 40 minutes behind at a stop did not re-plan the day');
     else {
