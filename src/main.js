@@ -410,26 +410,29 @@ async function syncStart() {
   syncBusy = false; render();
 }
 async function syncLink() {
-  const code = String(((document.getElementById("sync-code") || {}).value) || "").toUpperCase().replace(/[^A-Z0-9]/g, "");
+  // Typed or pasted in any form: spaces, dashes, lower case, or inside a longer message ("My code is k7mq-4rx2").
+  const raw = String(((document.getElementById("sync-code") || {}).value) || "").toUpperCase();
+  let code = raw.replace(/[^A-Z0-9]/g, "");
+  if (code.length !== 8) { const m = raw.match(/\b([A-Z0-9]{4})[\s\-–]*([A-Z0-9]{4})\b/); if (m) code = m[1] + m[2]; }
   if (code.length !== 8) { syncNote = "A sync code has 8 letters and numbers, like K7MQ-4RX2."; render(); return; }
   syncNote = ""; syncBusy = true; render();
   try {
     const g = await syncCall({ op: "get", code });
     if (g.status === 200 && g.j) { syncBusy = false; syncSet({ code, rev: g.j.rev, at: Date.now() }); syncMerge(g.j.data, true); syncJoin = null; syncNote = "Linked. Your trips now match your other device."; syncPush(); }
-    else syncNote = g.status === 404 ? "That code wasn't found. Check it on your other device (Settings > Sync)." : g.status === 429 ? "Too many tries today. Try again tomorrow." : "Sync couldn't connect just now. Try again in a minute.";
+    else syncNote = g.status === 404 ? "That code wasn't found. Check it on your other device (Settings > Connect another device)." : g.status === 429 ? "Too many tries today. Try again tomorrow." : "Sync couldn't connect just now. Try again in a minute.";
   } catch (e) { syncNote = "Linking needs the internet. Try again when you're online."; }
   syncBusy = false; render();
 }
 const fmtCode = c => c ? c.slice(0, 4) + "-" + c.slice(4) : "";
 function syncCard() {
   const st = syncSt();
-  return `<div class="card" id="synccard"><h3>Sync between devices</h3>
+  return `<div class="card" id="synccard"><h3>Connect another device</h3>
     ${st ? `<p class="lede">On. Your trips and journal stay the same on every device linked with this code:</p><p class="synccode" aria-label="Sync code">${esc(fmtCode(st.code))}</p>
-      <p class="lede small">On your other phone, tablet or computer: open Kairoute, go to Settings > Sync between devices, tap "I have a code" and type it in.${st.at ? " Last synced " + esc(new Date(st.at).toLocaleTimeString([], { hour: "numeric", minute: "2-digit" })) + "." : ""}</p>
+      <p class="lede small">On your other phone, tablet or computer: open Kairoute, go to Settings > Connect another device, tap "I have a code" and type it in.${st.at ? " Last synced " + esc(new Date(st.at).toLocaleTimeString([], { hour: "numeric", minute: "2-digit" })) + "." : ""}</p>
       <div class="actions"><button class="btn ghost small" data-act="syncnow" ${syncBusy ? "disabled" : ""}>Sync now</button><button class="btn ghost small" data-act="syncoff">Stop syncing on this device</button></div>`
-    : `<p class="lede">Plan on your phone, see it on your tablet or computer. Turn sync on here to get a short code, then type that code on your other device. No account or password.</p>
-      ${syncJoin ? `<div class="ask"><input id="sync-code" type="text" inputmode="text" autocapitalize="characters" autocomplete="off" maxlength="9" placeholder="e.g. K7MQ-4RX2" aria-label="Sync code"><button class="btn" data-act="synclink" ${syncBusy ? "disabled" : ""}>${syncBusy ? "Linking…" : "Link"}</button></div><p class="lede small">Your synced trips come to this device. Any other trips already here are kept and shared too.</p>`
-        : `<div class="actions"><button class="btn" data-act="syncstart" ${syncBusy ? "disabled" : ""}>${syncBusy ? "Turning on…" : "Turn on sync"}</button><button class="btn ghost" data-act="syncjoin">I have a code</button></div>`}`}
+    : `<p class="lede">Plan on your phone, see it on your tablet or computer. Tap Get my code on one device, then tap I have a code on the other and type it in. No account or password.</p>
+      ${syncJoin ? `<div class="syncjoin"><label for="sync-code">Type or paste the code from your other device</label><input id="sync-code" type="text" inputmode="text" autocapitalize="characters" autocorrect="off" spellcheck="false" autocomplete="off" placeholder="K7MQ-4RX2" enterkeyhint="go"><button class="btn" data-act="synclink" ${syncBusy ? "disabled" : ""}>${syncBusy ? "Linking…" : "Link this device"}</button></div><p class="lede small">Your synced trips come to this device. Any other trips already here are kept and shared too.</p>`
+        : `<div class="actions"><button class="btn" data-act="syncstart" ${syncBusy ? "disabled" : ""}>${syncBusy ? "Getting a code…" : "Get my code"}</button><button class="btn ghost" data-act="syncjoin">I have a code</button></div>`}`}
     ${syncNote ? `<p class="banner" role="status">${esc(syncNote)}</p>` : ""}</div>`;
 }
 if (typeof window !== "undefined") {
@@ -3111,7 +3114,7 @@ function pageBar(title) {
 // Settings, privacy and terms share one page: a section list on the left (chips on phones) and one section at a time,
 // so every section fits on a screen and nothing is listed twice.
 let setSec = "display", guideStop = null;
-const SET_SECS = [["display", "Display"], ["voice", "Guide voice"], ["prefs", "Trip preferences"], ["sync", "Sync devices"], ["group", "Group tour"], ["ai", "AI guide"], ["data", "Your data"], ["about", "About"], ["privacy", "Privacy"], ["terms", "Terms"]];
+const SET_SECS = [["display", "Display"], ["voice", "Guide voice"], ["prefs", "Trip preferences"], ["sync", "Connect another device"], ["group", "Group tour"], ["ai", "AI guide"], ["data", "Your data"], ["about", "About"], ["privacy", "Privacy"], ["terms", "Terms"]];
 function renderSettings(sec) {
   if (sec) setSec = sec;
   const seg = (key, list) => `<div class="seg" role="group">${list.map(([k, l]) => `<button type="button" data-app="${key}" data-v="${k}" aria-pressed="${appSet[key] === k}">${l}</button>`).join("")}</div>`;
@@ -3256,6 +3259,7 @@ document.addEventListener("keydown", e => {
   if (e.key === "Escape" && document.getElementById("film")) closeFilm();
   if (e.target && e.target.id === "dayTitleInput") { if (e.key === "Enter") { e.preventDefault(); const b = document.querySelector('[data-act="daytitlesave"]'); if (b) b.click(); } else if (e.key === "Escape") { dayRenaming = null; render(); } return; }
   if (e.target && e.target.id === "renameInput") { if (e.key === "Enter") { e.preventDefault(); doRename(renameId); } else if (e.key === "Escape") { renameId = null; render(); } return; }
+  if (e.key === "Enter" && e.target && e.target.id === "sync-code") { e.preventDefault(); if (!syncBusy) syncLink(); return; }
   if (e.key === "Enter" && e.target && e.target.id === "addPlace" && e.target.value.trim()) { e.preventDefault(); addPlaces(day(), e.target.value.trim()); }
 });
 function renderTrips() {
