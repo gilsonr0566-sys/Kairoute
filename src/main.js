@@ -1255,7 +1255,7 @@ function buildPlanFor(d) {
     const cands = order.filter(s => !s.mustSee);
     const pool = cands.length ? cands : order; // must-sees go last, but the day must still fit
     if (!pool.length) break;
-    let best = null, bestVal = -1;
+    let best = null, bestVal = -Infinity; // any value counts: a stop that adds no time (or a NaN guess) must still be choosable, or this loop never ends
     // Protect what the day is built around: a stop in the day's main area (several chosen stops within
     // 15 km of each other, like Ancient Corinth with the Canal and Acrocorinth) is worth far more than a lone
     // stop in another direction, so the lone far-off stops give way first.
@@ -1265,6 +1265,7 @@ function buildPlanFor(d) {
       const val = save / (Math.max(20, c.minutes) * (c.kind === style ? 1.4 : 1) * area * area * fameW(c) * fameW(c)); // per minute of sightseeing kept: big sights stay, out-of-the-way short ones go
       if (val > bestVal) { bestVal = val; best = c; }
     }
+    if (!best) break;
     dropped0.push(best);
     order = optimize(order.filter(x => x !== best), O, Z);
   }
