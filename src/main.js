@@ -4976,5 +4976,3 @@ document.addEventListener("submit", e => {
   }
 });
 
-render();
-})();
