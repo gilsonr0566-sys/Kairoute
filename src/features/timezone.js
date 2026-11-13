@@ -104,7 +104,7 @@ function shipSheetHTML(d) {
   else if (shipChk.step === "read") body = `<h2>Reading the ship's clock…</h2><p class="lede small"><span class="spinner"></span> This happens on your phone, no internet needed.</p>`;
   else body = `<h2>The photo shows ${esc(fmt12(shipChk.read))}. Use this?</h2><p class="lede small">Check it against the clock before you confirm.</p>
     <div class="shipbtns"><button class="btn" data-act="shipuseread">Yes, use ${esc(fmt12(shipChk.read))}</button><button class="btn ghost" data-act="shiptype">No, type it</button><button class="btn ghost" data-act="shipsnap">Try again</button></div>`;
-  return `<div class="shipsheet" role="dialog" aria-modal="true" aria-label="Check the ship's clock"><div class="shipcard">
+  return `<div class="shipsheet" role="region" aria-label="Check the ship's clock"><div class="shipcard">
     <div class="eyebrow">Ship's clock · ${esc(lab)} now ${esc(shown)}</div>${body}
     <button class="linkbtn shiplater" data-act="shiplater">Later</button></div></div>`;
 }
@@ -119,7 +119,9 @@ function shipMount() {
   const old = document.querySelector(".shipsheet"); if (old) old.remove();
   const d = typeof day === "function" ? day() : null;
   if (!shipChk && shipCheckDue(d) && !shipLater[d.id]) shipChk = { step: "ask" };
-  if (shipChk && d && view === "plan") document.body.insertAdjacentHTML("beforeend", shipSheetHTML(d));
+  // A card in the Day plan's head, under the countdown: in plain view, but it never covers the plan or its buttons.
+  const head = document.querySelector("#view .plantop .dayhead");
+  if (shipChk && d && view === "plan") { if (head) head.insertAdjacentHTML("afterend", shipSheetHTML(d)); else document.body.insertAdjacentHTML("beforeend", shipSheetHTML(d)); }
 }
 const shipLater = {};
 // Reads the time from a photo of a clock or a ship's TV, on the device (Tesseract, bundled; works offline).
