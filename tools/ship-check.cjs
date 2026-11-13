@@ -22,6 +22,10 @@ const SIZES = [['tablet sideways', 1280, 800], ['tablet upright', 800, 1280], ['
       const r = await p.evaluate(() => { const c = document.getElementById('cdCard'); if (!c) return 'no countdown';
         if (!c.closest('.dayhead')) return 'countdown is not in the top row';
         if (document.querySelector('.right.pane #cdCard, .timeline #cdCard')) return 'countdown is inside the timeline side';
+        // Exactly one deadline clock on the page (Richard, Nov 13: two clocks with different times could make someone miss the ship).
+        if (document.querySelectorAll('#cdCard, #cdBig, .cdchip').length !== 2 || document.querySelectorAll('#cdBig').length !== 1) return 'more than one countdown on the page';
+        const sum = (document.querySelector('.daysum') || {}).textContent || '';
+        if (/back on board|at the (station|airport|port)|finish/i.test(sum)) return 'a second deadline time is shown in the day summary: ' + sum.replace(/\s+/g, ' ').trim();
         const s = c.querySelector('summary').getBoundingClientRect(); if (s.top < 0 || s.bottom > innerHeight || s.height < 40) return 'countdown not fully on screen';
         if (!/\d/.test(document.getElementById('cdBig').textContent)) return 'no time shown'; return ''; });
       if (r) fail(`${name}, day ${D.i + 1} (${D.dest}): ${r}`); else ok++;
