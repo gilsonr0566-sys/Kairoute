@@ -10,7 +10,7 @@ permissions:
   id-token: write
 concurrency:
   group: publish-site
-  cancel-in-progress: true
+  cancel-in-progress: false # finish each publish; a newer one waits its turn (cancelling could leave GitHub's placeholder live)
 jobs:
   deploy:
     runs-on: ubuntu-latest
