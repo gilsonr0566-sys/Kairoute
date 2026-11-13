@@ -39,7 +39,7 @@ const log = (suite, trip, ok, what) => { results.push({ suite, trip, ok, what })
     const days = await p.evaluate(() => window.__kairouteDays());
     // Open every day once first, as a traveler would, so each day has its picks before days are compared.
     for (const D of days) if (D.type !== 'sea' && D.city) await p.evaluate(i => window.__kairouteTruth(i), D.i);
-    let checked = 0, closedTried = 0; const seenBy = new Map(), fillBy = new Map();
+    let checked = 0, closedTried = 0, titled = 0; const seenBy = new Map(), fillBy = new Map();
     for (const D of days) {
       if (D.type === 'sea' || !D.city) continue;
       const t = await p.evaluate(i => window.__kairouteTruth(i), D.i);
@@ -61,6 +61,10 @@ const log = (suite, trip, ok, what) => { results.push({ suite, trip, ok, what })
       t.bonus.forEach(id => { if (t.selected.includes(id)) bad.push(`${id} is ticked but shown as optional`); });
       [...t.picks, ...t.bonus].forEach(id => { const k = D.city + '/' + id; if (seenBy.has(k)) bad.push(`${id} is also planned on ${seenBy.get(k)}`); seenBy.set(k, D.date); });
       // Filling the day: spare time is filled (the fill never stops early), must-sees first (checked per city below).
+      // Day title: the main destination only ("Naples"), never side places in brackets ("Naples (Capri, Sorrento)"):
+      // a client reading Capri in the title expects to go there. The traveler can rename a day themselves.
+      if (/[()]/.test(t.destination || '')) bad.push(`the port or city is still called "${t.destination}" (should be just ${t.place})`);
+      if (t.autoTitle) { titled++; if (t.autoTitle !== t.place || /[()]/.test(t.autoTitle)) bad.push(`day title "${t.autoTitle}" should be just the destination (${t.place})`); }
       if (T.key !== 'rainy' && (t.closedSel || []).length) bad.push(`picked on a day it is closed: ${t.closedSel.join(', ')}`);
       { const ct = await p.evaluate(i => window.__kairouteClosedTry(i), D.i); if (ct) { closedTried++;
         if (ct.added) bad.push(`${ct.sight} was added on a day it is closed`);
@@ -117,6 +121,7 @@ const log = (suite, trip, ok, what) => { results.push({ suite, trip, ok, what })
     // Screenshots: the first planned day of each trip
     const first = days.find(D => D.type !== 'sea' && D.city);
     if (first) for (const [v, nm] of [['plan', 'day plan'], ['sites', 'change stops']]) { await p.evaluate(([i, v]) => window.__kairouteAt(i, v), [first.i, v]); await p.waitForTimeout(200); const f = `${T.key}-${v}.jpg`; await p.screenshot({ path: path.join(OUT, f), type: 'jpeg', quality: 60 }); shots.push({ f, cap: `${T.label}: ${nm}, ${first.date}` }); }
+    log('Day titles', T.key, true, `${titled} automatic day titles name only the destination`);
     log('Closed sights', T.key, true, `${closedTried} days tried adding a sight closed that day: never added, an open day or sight offered`);
     log('One truth', T.key, !errs.length, errs.length ? 'page errors: ' + [...new Set(errs)].join(' | ') : `${checked} days checked, no page errors`);
     await ctx.close();

@@ -32,6 +32,9 @@ const FILE = path.resolve(process.argv[2] || path.join(__dirname, '..', 'index.h
       else await p.evaluate(id => document.querySelector(`input[data-site="${id}"]`).click(), id);
       await p.waitForTimeout(900);
       // Doesn't fit: the box opens, the sight stays unticked, timing is shown; untick the suggested picks until it fits, then Add.
+      // A sight closed that day gets its own box (an open day or an open sight, never the time fixes).
+      const closedBox = await p.evaluate(() => { const b = document.querySelector('.fitbox'); return b && /is closed on/.test(b.querySelector('h3').innerText) ? { offers: b.querySelectorAll('[data-act=closedday],[data-act=closedalt]').length, none: /isn't open on any day/.test(b.innerText) } : null; });
+      if (closedBox) { if (!closedBox.offers && !closedBox.none) bad(i, `refusing ${pickId} (closed that day) offered nothing`); await p.evaluate(() => document.querySelector('.fitbox [data-act="fitcancel"]').click()); await p.waitForTimeout(200); if (await p.evaluate(() => !!document.querySelector('.fitbox'))) bad(i, 'closed box did not close'); continue; }
       if (await p.evaluate(() => !!document.querySelector('.fitbox'))) {
         boxes++;
         const st = await p.evaluate(id => ({ ticked: !!(document.querySelector(`input[data-site="${id}"]`) || {}).checked, meter: !!document.querySelector('.fitbox .meter .mbar'), add: document.querySelector('.fitbox [data-act="fitadd"]').disabled, fixes: [...document.querySelectorAll('.fitbox [data-act="fitfixgo"]')].map(b => b.innerText) }), pickId);
