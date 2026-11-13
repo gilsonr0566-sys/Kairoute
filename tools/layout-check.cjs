@@ -21,10 +21,11 @@ const DAY_PAGES = ['plan', 'sites', 'guide'];
     await p.route('**/*', r => /^file:/.test(r.request().url()) ? r.continue() : r.abort());
     await p.goto('file://' + FILE); await p.waitForTimeout(500);
     const days = await p.evaluate(() => window.__kairouteDays());
-    const land = days.find(d => d.city && d.type === 'land'), port = days.find(d => d.city && d.type === 'port');
+    const land = days.find(d => d.city && d.type === 'land'), port = days.find(d => d.city && d.type === 'port'), sea = days.find(d => d.type === 'sea');
     const tablet = w >= 800 && h >= 560, bad = [];
-    for (const D of [land, port].filter(Boolean)) for (const v of PAGES) {
+    for (const D of [land, port, sea].filter(Boolean)) for (const v of PAGES) {
       if (D === port && !DAY_PAGES.concat('tour').includes(v)) continue;
+      if (D === sea && v !== 'plan') continue; // a day at sea: its "get ready for the next ports" page
       await p.evaluate(([v, i]) => { window.__kairouteGo(v, i); }, [v, D.i]); await p.waitForTimeout(150);
       // walk through the pages a traveler would visit, scrolled the way they'd leave them
       const r = await p.evaluate(({ v, tablet, dayPage, fixedDay }) => {
@@ -58,7 +59,7 @@ const DAY_PAGES = ['plan', 'sites', 'guide'];
         return out;
       }, { v, tablet, dayPage: DAY_PAGES.includes(v), fixedDay: D === port });
       checks++;
-      if (r.length) bad.push(`${v}${D === port ? ' (port day)' : ''}: ${r.join('; ')}`);
+      if (r.length) bad.push(`${v}${D === port ? ' (port day)' : D === sea ? ' (day at sea)' : ''}: ${r.join('; ')}`);
     }
     if (errs.length) bad.push('page errors: ' + errs.slice(0, 2).join(' | '));
     if (bad.length) { fails++; console.log(`FAIL ${name} (${w}x${h}):\n  ` + bad.join('\n  ')); }

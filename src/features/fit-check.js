@@ -49,7 +49,7 @@ function addPick(d, id, ask) {
   // Closed that day (or open only outside the day's time here): never added; the box offers a day it's open.
   const sx = allSites(city).find(x => x.id === id); if (sx && shutOn(d, sx)) { if (ask) closedOpen(d, sx); return false; }
   if (!fitsWith(d, [id])) { if (ask) fitOpen(d, id); return false; }
-  d.selected = [...d.selected, id]; rememberPick(d, allSites(city).find(x => x.id === id)); if (ask) markMine(d, id, true); return true;
+  d.selected = [...d.selected, id]; delete d.autoEmpty; rememberPick(d, allSites(city).find(x => x.id === id)); if (ask) markMine(d, id, true); return true;
 }
 // The traveler's own picks (ticked, added by name, moved or swapped in with a tap): these always stay, even when
 // an interest is turned off later. Picks the app chose (starting picks, the day's fill) are not on this list.
