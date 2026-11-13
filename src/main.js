@@ -108,7 +108,7 @@ const DAY_TYPES = [
   { key: "sea", label: "Day at sea", short: "At sea", icon: "〰" }
 ];
 const MODES = { flight: { label: "Flight", list: "airport", clear: 75, need: 180, word: "airport" }, train: { label: "Train", list: "station", clear: 15, need: 30, word: "station" }, ship: { label: "Ship", list: "cruise", clear: 60, need: 60, word: "port" }, car: { label: "Car or bus", list: "hotel", clear: 10, need: 20, word: "starting point" } };
-const INTERESTS = [["history", "History"], ["art", "Art & museums"], ["architecture", "Architecture"], ["food", "Food & markets"], ["views", "Views & nature"], ["churches", "Churches & faith"], ["bible", "Bible sites: St Paul & St John"], ["shopping", "Shopping"], ["beaches", "Beaches"], ["kids", "Kid-friendly"]];
+const INTERESTS = [["history", "History"], ["art", "Art & museums"], ["architecture", "Architecture"], ["food", "Food & markets"], ["views", "Views & nature"], ["churches", "Churches & faith"], ["bible", "Bible sites"], ["shopping", "Shopping"], ["beaches", "Beaches"], ["kids", "Kid-friendly"]];
 const INTEREST_WORDS = { history: ["history", "roman", "medieval", "ancient", "war", "castle", "ruins"], art: ["museum", "art", "picasso", "painting", "gallery"], architecture: ["architecture", "gaudí", "gaudi", "house", "façade", "building", "palace"], food: ["market", "food", "tapas"], views: ["view", "park", "hill", "garden", "nature"], churches: ["church", "basilica", "cathedral", "monastery", "chapel", "shrine", "madonna", "synagogue", "mosque", "temple"], bible: ["paul", "apostle", "bible", "biblical", "christian", "saint", "basilica", "church", "cathedral", "monastery"], shopping: ["shop", "market", "street"], beaches: ["beach", "sea"], kids: ["park", "beach", "amusement", "zoo"] };
 // Religious sites: places of worship (churches, monasteries, mosques, synagogues...). Ancient ruins of temples
 // count as history, not worship. With "Religious sites: Skip them" on a trip, these leave suggestions, except a
@@ -1466,10 +1466,12 @@ ${P().access !== "none" ? "- The travelers need: " + ACCESS.find(a => a[0] === P
     if (builtinNow && c.sites.length <= (builtinNow.sites || []).length) throw new Error("not fuller");
     if (fresh) keepGuide(d, raw);
     const key = keyOf(label) + (d.event ? "|" + keyOf(d.event) : "");
-    const wasBuiltin = !!(cities[key] && cities[key].builtin) || !!(cityFor(d) && cityFor(d).builtin);
+    const prev = cities[key] || cityFor(d);
+    // A new guide never makes a sight vanish: any sight the previous guide had that the new one lacks (by name)
+    // is kept, and every pick is carried over to the same sight in the new guide.
+    if (prev) carryGuide(prev, c);
     cities[key] = c;
-    // A fuller guide replacing a built-in one has new stop ids, so those days get fresh picks.
-    trip.days.forEach(x => { if (keyOf(x.destination) === keyOf(label) && !x.event === !d.event) { x.cityKey = key; x.pointIdx = 0; if (wasBuiltin) x.selected = null; if (!x.selected) x.selected = defaultSelection(c, trip.style, x); } });
+    trip.days.forEach(x => { if (keyOf(x.destination) === keyOf(label) && !x.event === !d.event) { x.cityKey = key; x.pointIdx = 0; if (prev && x.selected) x.selected = remapPicks(x, prev, c); if (!x.selected) x.selected = defaultSelection(c, trip.style, x); } });
     save();
     stopTicker();
     if (!quiet) { busy = null; view = "plan"; render(); toTop(); }
@@ -2850,6 +2852,20 @@ function updateAudioUI() {
   });
 }
 
+function sameSight(a, b) { return a && b && (nameMatch(a.name, b.name) || nameMatch(b.name, a.name) || (isFinite(a.lat) && isFinite(b.lat) && hav(a, b) < 0.08 && keyOf(a.name).slice(0, 6) === keyOf(b.name).slice(0, 6))); }
+function carryGuide(prev, c) {
+  const have = allSites(c);
+  const ids = new Set(have.map(x => x.id));
+  const keep = (list, into) => (list || []).forEach(x => { if (!x || !isFinite(x.lat) || have.some(y => sameSight(x, y))) return; const k = Object.assign({}, x); if (ids.has(k.id)) k.id = k.id + "-k"; ids.add(k.id); into.push(k); have.push(k); });
+  c.farther = c.farther || [];
+  keep(prev.sites, c.sites); keep(prev.farther, c.farther);
+}
+function remapPicks(x, prev, c) {
+  const old = allSites(prev), now = allSites(c), out = [];
+  (x.selected || []).forEach(id => { const o = old.find(s => s.id === id); const n = now.find(s => s.id === id && (!o || sameSight(o, s))) || (o && now.find(s => sameSight(o, s))); if (n && !out.includes(n.id)) { out.push(n.id); rememberPick(x, n); } });
+  if (x.anchor && !out.includes(x.anchor)) { const o = old.find(s => s.id === x.anchor), n = o && now.find(s => sameSight(o, s)); x.anchor = n ? n.id : null; }
+  return out;
+}
 // ---------- Rendering ----------
 const $view = document.getElementById("view");
 const FULL_VIEWS = { lobby: () => renderLobby(), settings: () => renderSettings(), privacy: () => renderPrivacy(), terms: () => renderTerms() };
@@ -3848,14 +3864,19 @@ function siteCard(s, d, plan, nr) {
   let near = null, nearTo = null;
   if (nr && !on && nr.refs.length && isFinite(s.lat) && isFinite(s.lng)) for (const r of nr.refs) { const k = hav(r, s); if (near == null || k < near) { near = k; nearTo = r; } }
   const other = plannedElsewhere(d)[s.id];
-  let fit = "";
-  if (s.far && plan && !plan.error) {
-    const c = stopCost(plan, s);
-    fit = c.onRoute ? `<span class="tag fit">On your route · ${dur(c.min)} of your day</span>`
-      : c.min <= c.spare ? `<span class="tag fit">Fits today · adds ${dur(c.min)}${c.alone ? " round trip" : " from your route"}</span>`
-      : `<span class="tag nofit">Adds ${dur(c.min)}${c.alone ? " round trip" : " from your route"}, you have ${dur(Math.max(0, c.spare))} spare</span>`;
+  // Not picked yet: does it still fit today? Sights that fit say what they add; sights that don't stay in view
+  // but can't be ticked (no checkbox), so a day can never be over its time.
+  let fit = "", fs;
+  if (!on && plan && !plan.error) {
+    fs = siteFits(d, s, plan); const c = fitCostOf(plan, s);
+    fit = fs === false ? `<span class="tag nofit">Needs ${dur(c.min)} · ${c.spare >= 5 ? dur(c.spare) + " left today" : "no time left today"}</span>`
+      : fs === true ? `<span class="tag fit">Fits · adds ${dur(c.min)}</span>` : "";
   }
-  return `<label class="site ${on ? "on" : ""}${isAnc ? " anchor" : ""}" for="s-${esc(s.id)}">
+  if (fs === false) return `<div class="site nofitcard" data-card="${esc(s.id)}" aria-disabled="true">
+    <span class="nobox" aria-hidden="true"></span>
+    <div class="body"><div class="name">${esc(s.name)}</div><div class="tags">${fit}${near != null ? `<span class="tag near">${near < 0.05 ? "Next to " + esc(nearTo.name) : esc(distTxt(near, true)) + " from " + esc(nearTo.name)}</span>` : ""}${s.mustSee ? `<span class="tag must">Must-see</span>` : ""}<span class="tag">${dur(s.minutes)} there</span></div>
+    <p class="sum">${esc(unitText(s.summary))}</p></div></div>`;
+  return `<label class="site ${on ? "on" : ""}${isAnc ? " anchor" : ""}" for="s-${esc(s.id)}" data-card="${esc(s.id)}">
     <input type="checkbox" id="s-${esc(s.id)}" data-site="${esc(s.id)}" ${on ? "checked" : ""}>
     <div class="body">
       <div class="name">${esc(s.name)}</div>
@@ -3913,7 +3934,7 @@ function timeMeter(plan, d) {
   const { avail, used } = m, pct = Math.min(100, Math.round(used / avail * 100));
   const full = m.dropped.length || m.over, near = !full && used > avail - 45;
   const parts = [m.visits ? `Visits ${dur(m.visits)}` : "", ...m.meals.map(x => `${x.label} ${dur(x.len)}`), m.moving ? `Walking and rides ${dur(m.moving)}` : "", m.settle ? `${d.mode === "ship" ? "Ship" : d.mode === "train" ? "Station" : d.mode === "car" ? "Drive" : "Airport"} to hotel and check-in ${dur(m.settle)}` : "", m.leave ? `Bags and transfer to the ${d.type === "embark" ? "ship" : (MODES[d.mode] || {}).word || "station"} ${dur(m.leave)}` : "", m.extra ? `Picks that don't fit ${dur(m.extra)}` : ""].filter(Boolean);
-  const msg = full ? `Your day is full. ${m.dropped.length ? `<b>${m.dropped.map(x => esc(x.name)).join(", ")}</b> won't fit. Untick something or give the day more time.` : `It runs ${dur(m.late)} late.`}`
+  const msg = full ? `Your picks are over today's time. ${m.dropped.length ? `<b>${m.dropped.map(x => esc(x.name)).join(", ")}</b> won't fit.` : `It runs ${dur(m.late)} late.`} <button type="button" class="btn small" data-act="fitfix">Make it fit</button>`
     : near ? (avail - used >= 5 ? `Almost full: about ${dur(avail - used)} left.` : `Full, and everything you picked fits.`)
     : !m.visits && !m.dropped.length ? `Nothing picked yet: ${dur(Math.max(0, avail - used))} free.${m.settle || m.leave ? " Only your fixed travel is counted." : ""}`
     : `${dur(Math.max(0, avail - used))} free. Meals and walking are included.`;
@@ -3944,7 +3965,8 @@ function renderSites(d) {
   const refs = picked.filter(x => isFinite(x.lat) && isFinite(x.lng));
   const byNear = xs => refs.length ? nearSort(xs, refs) : xs;
   const mainL = byNear(main.filter(x => !on(x))), farL = byNear(far.filter(x => !on(x))), alreadyL = byNear(already), quickL = byNear(quick.filter(x => !on(x)));
-  const near = { refs, anc };
+  const near = { refs, anc }; sitesCtx = { d, plan, near };
+  const leftTxt = (mm => mm ? ` · <b>${mm.left >= 5 ? dur(mm.left) + " left today" : "today is full"}</b>` : "")(plan && !plan.error ? timeLeft(plan, d) : null);
   const n = d.selected.length;
   const avail = plan && !plan.error ? dur(plan.endBy - plan.start) : "";
   return `<div class="sitesgrid"><div class="sitesside pane" data-pane="side">
@@ -3958,9 +3980,9 @@ function renderSites(d) {
   <div class="card suggest"><div><h3>Let your guide plan it</h3><p class="lede">Picks the best stops for ${(() => { const n = trip.days.filter(o => cityFor(o) === city).length; return n > 1 ? `all ${n} days` : "today"; })()} in ${esc(city.city)}, from your start point, hours, pace, walking and interests. Each day gets its own area, nothing repeats, and every stop fits.</p></div>
     ${suggestMsg ? `<p class="banner" id="suggestNote" role="status">${esc(suggestMsg)}</p>` : ""}<div class="actions"><button class="btn" data-act="suggesttour">Suggest my tour</button><button class="btn ghost small" data-act="freshpicks">Fresh picks for this day only</button></div></div>
   </div><div class="sitesmain pane" data-pane="sites">
-  ${picked.length ? `<p class="listlbl">Your picks (${picked.length}), newest first</p>
+  ${picked.length ? `<p class="listlbl">Your picks (${picked.length}), newest first${leftTxt}</p>
   <div class="sitelist anchorlist">${picked.map(s => siteCard(s, d, plan, near)).join("")}</div>` : ""}
-  ${mainL.length ? `${picked.length ? `<p class="listlbl">More to see, closest to your picks first</p>` : ""}<div class="sitelist">${mainL.map(s => siteCard(s, d, plan, near)).join("")}</div>` : ""}
+  ${mainL.length ? `<p class="listlbl">${picked.length ? "More to see, closest to your picks first" : "Sights to pick from" + leftTxt}</p><div class="sitelist">${mainL.map(s => siteCard(s, d, plan, near)).join("")}</div>` : ""}
   ${farL.length ? `<div><h3>Worth the trip</h3><p class="lede">Day trips and sights farther out, checked against your time today.</p></div>
   <div class="sitelist">${farL.map(s => siteCard(s, d, plan, near)).join("")}</div>` : ""}
   ${errBlock()}
@@ -4467,7 +4489,7 @@ ${partsList(s, it.time)}${stopLiveNotes(it, d)}</div></div>`;
   const heads = [
     plan.over ? `<div class="banner warn" role="alert">This plan runs ${dur(plan.end - plan.endBy)} past ${fmt(plan.endBy)}. Remove a stop with Change stops, or change the times.</div>` : "",
     closedBanner(d, plan),
-    plan.dropped.length && !liveOn(d) ? `<div class="banner warn dropped"><span>Didn't fit today: <b>${plan.dropped.map(s => esc(s.name)).join(", ")}</b>. Change the times on Trip, or swap them in with Change stops.</span></div>` : "",
+    plan.dropped.length && !liveOn(d) ? `<div class="banner warn dropped"><span>Didn't fit today: <b>${plan.dropped.map(s => esc(s.name)).join(", ")}</b>. Your picks are over today's time.</span><button type="button" class="btn small" data-act="fitfix">Make it fit</button></div>` : "",
     (tc => tc ? `<div class="banner warn" role="alert">This day has ${dur(tc.ride)} of travel for ${dur(tc.see)} at the sights. Consider fewer far-apart stops, more hours, or splitting it over two days.</div>` : "")(travelCheck(plan)),
     plan.endBy - plan.start < 90 ? `<div class="banner warn">There isn't much time today, so keep it close: a coffee and one nearby sight at most.</div>` : "",
     weatherBanner(d, plan),
@@ -4901,7 +4923,7 @@ document.addEventListener("click", e => {
   if (t.dataset.act === "coachnext") { coachStep++; if (coachStep >= COACH.length) coachDone(); render(); return; }
   if (t.dataset.act === "coachskip") { coachDone(); render(); return; }
   if (t.dataset.act === "coachreplay") { coachStep = 0; view = "lobby"; render(); return; }
-  if (t.dataset.act === "bonusadd") { const d = day(); d.selected = [...new Set([...(d.selected || []), t.dataset.id])]; d.skipBonus = (d.skipBonus || []).filter(x => x !== t.dataset.id); save(); render(); return; }
+  if (t.dataset.act === "bonusadd") { const d = day(); if (!(d.selected || []).includes(t.dataset.id) && !fitAsk(d, t.dataset.id)) return; d.selected = [...new Set([...(d.selected || []), t.dataset.id])]; d.skipBonus = (d.skipBonus || []).filter(x => x !== t.dataset.id); save(); render(); return; }
   if (t.dataset.act === "bonusskip") { const d = day(); d.skipBonus = [...new Set([...(d.skipBonus || []), t.dataset.id])]; save(); render(); return; }
   if (t.dataset.act === "daylen") { const d = day(); d.hours = +t.dataset.h; save(); render(); return; } // keeps the traveler's picks
   if (t.dataset.act === "lateend") { const d = day(); d.hours = +t.dataset.h; save(); render(); return; }

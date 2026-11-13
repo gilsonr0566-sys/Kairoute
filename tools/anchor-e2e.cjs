@@ -16,6 +16,12 @@ const FILE = path.resolve(process.argv[2] || path.join(__dirname, '..', 'index.h
     for (let i = 0; i < n; i++) {
       await p.evaluate(i => document.querySelector(`.daychip[data-day="${i}"]`).click(), i); await p.waitForTimeout(200);
       await p.evaluate(() => { const el = [...document.querySelectorAll('[data-goto="sites"]')].find(e => e.offsetParent); if (el) el.click(); }); await p.waitForTimeout(250);
+      // What still fits: once the list settles, a sight has a checkbox exactly when it fits the day (checked
+      // against the real plan), sights that don't fit are still shown, and the time left is at the top.
+      for (let w = 0; w < 60 && await p.evaluate(() => window.__kairouteFitPending()); w++) await p.waitForTimeout(100);
+      const fitBad = await p.evaluate(() => { const out = []; const cards = [...document.querySelectorAll('.sitesmain > .sitelist:not(.anchorlist) [data-card]')]; for (const c of cards.slice(0, 6).concat(cards.filter(x => x.classList.contains('nofitcard')).slice(0, 3))) { const id = c.dataset.card, box = !!c.querySelector('input[data-site]'), ex = window.__kairouteFitExact(id); if (box && !ex && c.querySelector('.tag.fit')) out.push(id + ' says it fits but does not'); if (!box && ex) out.push(id + ' fits but cannot be ticked'); } return out; });
+      if (fitBad.length) bad(i, 'fit marks wrong: ' + fitBad.join('; '));
+      if (!(await p.evaluate(() => [...document.querySelectorAll('.sitesmain .listlbl')].some(x => /left today|today is full/.test(x.innerText)) || !document.querySelector('.sitesmain .listlbl')))) bad(i, 'time left is not shown above the sights');
       // Pick the last visible unticked sight in the main list (the one farthest down the page).
       const id = await p.evaluate(() => { const xs = [...document.querySelectorAll('.sitesmain > .sitelist input[data-site]:not(:checked)')].filter(e => e.closest('.site').offsetParent); const x = xs[xs.length - 1]; return x ? x.dataset.site : null; });
       if (!id) continue; tested++;
@@ -26,6 +32,9 @@ const FILE = path.resolve(process.argv[2] || path.join(__dirname, '..', 'index.h
         const st = await p.evaluate(id => ({ ticked: document.querySelector(`input[data-site="${id}"]`).checked, meter: !!document.querySelector('.fitbox .meter .mbar'), add: document.querySelector('.fitbox [data-act="fitadd"]').disabled, sugg: [...document.querySelectorAll('.fitbox .fitrow')].filter(r => r.querySelector('.tag.here')).map(r => r.querySelector('input').dataset.fitdrop), more: !!document.querySelector('.fitbox [data-act="fitmore"]') }), id);
         if (SHOTS && !shotTaken[tag + 'o']) { require('fs').mkdirSync(SHOTS, { recursive: true }); await p.screenshot({ path: path.join(SHOTS, `${tag}-box-open.png`) }); shotTaken[tag + 'o'] = 1; }
         if (st.ticked) bad(i, 'sight that does not fit got ticked');
+        const fx = await p.evaluate(() => ({ fixed: window.__kairouteTimesFixed(), times: !!document.querySelector('.fitbox [data-act="fittime"]'), why: !!document.querySelector('.fitbox .fitwhy') }));
+        if (fx.fixed && (fx.times || !fx.why)) bad(i, 'ship/train/flight day offers time changes or no explanation');
+        if (!fx.fixed && fx.why) bad(i, 'hotel day says its times are fixed');
         if (!st.meter) bad(i, 'no timing in the box');
         if (!st.add) bad(i, 'Add is on before it fits');
         if (!st.sugg.length && await p.evaluate(() => !!document.querySelector('.fitbox [data-act="fitday"]'))) {
