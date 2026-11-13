@@ -518,7 +518,7 @@ function refillIfNeeded(d, city) {
   if (!d || !d.respread || !city) return;
   delete d.respread;
   const fresh = defaultSelection(city, trip.style, d);
-  d.selected = [...new Set([...(d.selected || []), ...fresh])];
+  fresh.forEach(id => addPick(d, id, false));
 }
 // "Suggest my tour": fills every day in this city with the best stops that truly fit each day's time.
 // Each day starts from the best sight still unseen and grows around it (nearby, high-value sights first),
@@ -568,8 +568,8 @@ function suggestTour(d0) {
 // never depends on which day the traveler happened to open first (one sight, one day).
 function seedPicks(d, city) {
   const i = trip.days.indexOf(d);
-  trip.days.slice(0, Math.max(0, i)).forEach(o => { if (!o.selected && o.type !== "sea" && cityFor(o) === city) o.selected = defaultSelection(city, trip.style, o); });
-  if (!d.selected) d.selected = defaultSelection(city, trip.style, d);
+  trip.days.slice(0, Math.max(0, i)).forEach(o => { if (!o.selected && o.type !== "sea" && cityFor(o) === city) { o.selected = defaultSelection(city, trip.style, o); fitTrim(o); } });
+  if (!d.selected) { d.selected = defaultSelection(city, trip.style, d); fitTrim(d); }
 }
 function defaultSelection(city, style, d) {
   const taken = d ? plannedElsewhere(d) : {};
@@ -1430,8 +1430,10 @@ Return ONLY JSON: {"places":[{"id","name","lat","lng","minutes","kind":"touristy
     if (!added.length) throw new Error("none");
     const center = (city.starts && city.starts.point && city.starts.point[0]) || allSites(city)[0];
     added.forEach(st => { if (center && hav(center, st) > 6) st.far = true; (st.far ? (city.farther = city.farther || []) : city.sites).push(st); });
-    if (ask) { d.selected = d.selected || []; added.forEach(st => d.selected.push(st.id)); }
-    addBusy = null; save(); render();
+    // Found places join the list; each is picked only if it fits the day (the first that doesn't opens the box).
+    let asked = false;
+    if (ask) added.forEach(st => { if (!addPick(d, st.id, !asked) && fitState) asked = true; });
+    addBusy = null; save(); render(); if (fitState) fitShow();
     const el = document.getElementById("s-" + added[0].id); if (el) el.closest("label").scrollIntoView({ block: "center" });
   } catch (e) { addBusy = null; aiError = ask ? `I couldn't find "${ask}". Try the full name, like "Ancient Corinth".` : "No more day trips came back. Try again in a moment."; render(); }
 }
@@ -1519,7 +1521,7 @@ ${P().access !== "none" ? "- The travelers need: " + ACCESS.find(a => a[0] === P
     // is kept, and every pick is carried over to the same sight in the new guide.
     if (prev) carryGuide(prev, c);
     cities[key] = c;
-    trip.days.forEach(x => { if (keyOf(x.destination) === keyOf(label) && !x.event === !d.event) { x.cityKey = key; x.pointIdx = 0; if (prev && x.selected) x.selected = remapPicks(x, prev, c); if (!x.selected) x.selected = defaultSelection(c, trip.style, x); } });
+    trip.days.forEach(x => { if (keyOf(x.destination) === keyOf(label) && !x.event === !d.event) { x.cityKey = key; x.pointIdx = 0; if (prev && x.selected) x.selected = remapPicks(x, prev, c); if (!x.selected) { x.selected = defaultSelection(c, trip.style, x); fitTrim(x); } } });
     save();
     stopTicker();
     if (!quiet) { busy = null; view = "plan"; render(); toTop(); }
@@ -1692,7 +1694,7 @@ function tickOnOneDay(city, s) {
   if (!days.length || days.some(d => (d.selected || []).includes(s.id))) return;
   const live = days.filter(d => Array.isArray(d.selected) && d.selected.length); if (!live.length) return;
   const near = d => { const ps = d.selected.map(id => allSites(city).find(x => x.id === id)).filter(x => x && isFinite(x.lat)); return ps.length ? Math.min(...ps.map(x => hav(x, s))) : 99; };
-  live.sort((a, b) => near(a) - near(b))[0].selected.push(s.id);
+  for (const d of live.sort((a, b) => near(a) - near(b))) if (addPick(d, s.id, false)) return; // only where it fits
 }
 async function fillFamous(city, missing, bar) {
   const k = keyOf(city.city); famousFilling[k] = true;
@@ -2905,18 +2907,18 @@ function updateAudioUI() {
   });
 }
 
-function sameSight(a, b) { return a && b && (nameMatch(a.name, b.name) || nameMatch(b.name, a.name) || (isFinite(a.lat) && isFinite(b.lat) && hav(a, b) < 0.08 && keyOf(a.name).slice(0, 6) === keyOf(b.name).slice(0, 6))); }
+function samePlace(a, b) { return a && b && (sameSight(a, b) || nameMatch(a.name, b.name) || nameMatch(b.name, a.name) || (isFinite(a.lat) && isFinite(b.lat) && hav(a, b) < 0.08 && keyOf(a.name).slice(0, 6) === keyOf(b.name).slice(0, 6))); }
 function carryGuide(prev, c) {
   const have = allSites(c);
   const ids = new Set(have.map(x => x.id));
-  const keep = (list, into) => (list || []).forEach(x => { if (!x || !isFinite(x.lat) || have.some(y => sameSight(x, y))) return; const k = Object.assign({}, x); if (ids.has(k.id)) k.id = k.id + "-k"; ids.add(k.id); into.push(k); have.push(k); });
+  const keep = (list, into) => (list || []).forEach(x => { if (!x || !isFinite(x.lat) || have.some(y => samePlace(x, y))) return; const k = Object.assign({}, x); if (ids.has(k.id)) k.id = k.id + "-k"; ids.add(k.id); into.push(k); have.push(k); });
   c.farther = c.farther || [];
   keep(prev.sites, c.sites); keep(prev.farther, c.farther);
 }
 function remapPicks(x, prev, c) {
   const old = allSites(prev), now = allSites(c), out = [];
-  (x.selected || []).forEach(id => { const o = old.find(s => s.id === id); const n = now.find(s => s.id === id && (!o || sameSight(o, s))) || (o && now.find(s => sameSight(o, s))); if (n && !out.includes(n.id)) { out.push(n.id); rememberPick(x, n); } });
-  if (x.anchor && !out.includes(x.anchor)) { const o = old.find(s => s.id === x.anchor), n = o && now.find(s => sameSight(o, s)); x.anchor = n ? n.id : null; }
+  (x.selected || []).forEach(id => { const o = old.find(s => s.id === id); const n = now.find(s => s.id === id && (!o || samePlace(o, s))) || (o && now.find(s => samePlace(o, s))); if (n && !out.includes(n.id)) { out.push(n.id); rememberPick(x, n); } });
+  if (x.anchor && !out.includes(x.anchor)) { const o = old.find(s => s.id === x.anchor), n = o && now.find(s => samePlace(o, s)); x.anchor = n ? n.id : null; }
   return out;
 }
 // ---------- Rendering ----------
@@ -5011,7 +5013,7 @@ document.addEventListener("click", e => {
   if (t.dataset.act === "coachnext") { coachStep++; if (coachStep >= COACH.length) coachDone(); render(); return; }
   if (t.dataset.act === "coachskip") { coachDone(); render(); return; }
   if (t.dataset.act === "coachreplay") { coachStep = 0; view = "lobby"; render(); return; }
-  if (t.dataset.act === "bonusadd") { const d = day(); if (!(d.selected || []).includes(t.dataset.id) && !fitAsk(d, t.dataset.id)) return; d.selected = [...new Set([...(d.selected || []), t.dataset.id])]; d.skipBonus = (d.skipBonus || []).filter(x => x !== t.dataset.id); save(); render(); return; }
+  if (t.dataset.act === "bonusadd") { const d = day(); if (!addPick(d, t.dataset.id, true)) return; d.selected = [...new Set([...(d.selected || []), t.dataset.id])]; d.skipBonus = (d.skipBonus || []).filter(x => x !== t.dataset.id); save(); render(); return; }
   if (t.dataset.act === "bonusskip") { const d = day(); d.skipBonus = [...new Set([...(d.skipBonus || []), t.dataset.id])]; save(); render(); return; }
   if (t.dataset.act === "daylen") { const d = day(); d.hours = +t.dataset.h; save(); render(); return; } // keeps the traveler's picks
   if (t.dataset.act === "lateend") { const d = day(); d.hours = +t.dataset.h; save(); render(); return; }
@@ -5100,7 +5102,7 @@ document.addEventListener("click", e => {
     }, 40);
     return;
   }
-  if (act === "freshpicks") { const d = day(), city = cityFor(d); if (city) { const a = siteAnchor(d, city); d.selected = []; d.selected = defaultSelection(city, trip.style, d); if (a && !d.selected.includes(a.id)) d.selected.unshift(a.id); save(); render(); } return; }
+  if (act === "freshpicks") { const d = day(), city = cityFor(d); if (city) { const a = siteAnchor(d, city); d.selected = []; d.selected = defaultSelection(city, trip.style, d); if (a && !d.selected.includes(a.id)) d.selected.unshift(a.id); fitTrim(d, a ? [a.id] : []); save(); render(); } return; }
   if (act === "clearanchor") { day().anchor = null; save(); render(); jumpToAnchor(); return; }
   if (act === "addplace") { const v = (document.getElementById("addPlace") || {}).value || ""; if (v.trim()) addPlaces(day(), v.trim()); return; }
   if (act === "moretrips") { addPlaces(day(), ""); return; }
@@ -5172,8 +5174,8 @@ document.addEventListener("change", e => {
   if (t.dataset && t.dataset.site) {
     const d = day(), id = t.dataset.site;
     d.selected = d.selected || [];
-    if (t.checked && !d.selected.includes(id) && !fitAsk(d, id)) { t.checked = false; return; } // won't fit: the box explains
-    if (t.checked) { if (!d.selected.includes(id)) d.selected.push(id); d.anchor = id; anchorJump = true; rememberPick(d, allSites(cityFor(d)).find(x => x.id === id)); }
+    if (t.checked && !addPick(d, id, true)) { t.checked = false; return; } // won't fit: the box explains
+    if (t.checked) { d.anchor = id; anchorJump = true; }
     else { d.selected = d.selected.filter(x => x !== id); if (d.anchor === id) d.anchor = null; }
     save(); render(); if (anchorJump) jumpToAnchor(); return;
   }

@@ -37,8 +37,26 @@ function timeOptions(d, sel) {
   for (let h = h0 + 0.5; h <= h0 + 6; h += 0.5) { const r = fitTrial(d, sel, { hours: h }); if (!r.m || r.m.endBy > 23 * 60) break; if (fitsAll(r)) { out.push({ kind: "later", hours: h, end: r.m.endBy }); break; } }
   return out;
 }
-// Returns true when the sight can simply be ticked; otherwise opens the box and returns false.
+// The one gate every way of adding a stop goes through (ticking, the guide's optional stops, finding a
+// place by name, a must-see found later, a day's starting picks): a stop is added only if the day, with it,
+// still fits. With ask, a stop that doesn't fit opens the box; without, it is simply not added.
 function fitAsk(d, id) { return fitOpen(d, id); }
+function fitsWith(d, ids) { return fitsAll(fitTrial(d, [...new Set([...(d.selected || []), ...ids])])); }
+function addPick(d, id, ask) {
+  const city = cityFor(d); if (!city) return false;
+  d.selected = d.selected || []; if (d.selected.includes(id)) return true;
+  if (!fitsWith(d, [id])) { if (ask) fitOpen(d, id); return false; }
+  d.selected = [...d.selected, id]; rememberPick(d, allSites(city).find(x => x.id === id)); return true;
+}
+// Starting picks the app chose (never the traveler's own): trimmed, least important first, until the day fits.
+function fitTrim(d, keep) {
+  const city = cityFor(d); if (!city || !Array.isArray(d.selected) || !d.selected.length) return;
+  const value = x => (x.mustSee ? 100 : 0) + (x.unesco ? 20 : 0) + (fameW(x) || 1) * 5;
+  for (let g = 0; g < 12 && d.selected.length && !fitsAll(fitTrial(d, d.selected)); g++) {
+    const cand = allSites(city).filter(x => d.selected.includes(x.id) && !(keep || []).includes(x.id)).sort((a, b) => value(a) - value(b))[0];
+    if (!cand) break; d.selected = d.selected.filter(i => i !== cand.id);
+  }
+}
 function fitOpen(d, id) {
   const city = cityFor(d); if (!city) return true;
   const s = id ? allSites(city).find(x => x.id === id) : null; if (id && !s) return true;
@@ -64,7 +82,21 @@ function fitOpen(d, id) {
   const dayFirst = !!s && others.length > 0 && !sugg.length;
   if (dayFirst) sugg = [];
   rows.sort((a, b) => (sugg.includes(b.x.id) - sugg.includes(a.x.id)) || b.frees - a.frees);
-  fitState = { d, id, s, need, never, others, moves, dayFirst, canRoom, base: base.m, rows, sugg, drop: new Set(), times };
+  // Ready-made fixes the traveler accepts with one tap: the app does the arithmetic.
+  const endOf = r => r && r.p && !r.p.error ? r.p.end : null;
+  const fixes = [];
+  const swapSet = ids => { const r = fitTrial(d, target.filter(i => !ids.includes(i))); return fitsAll(r) ? { kind: "swap", drop: ids, end: endOf(r) } : null; };
+  const byVal = rows.slice().sort((a, b) => value(a.x) - value(b.x) || a.frees - b.frees);
+  for (const r of byVal.filter(r => r.alone)) { const f = swapSet([r.x.id]); if (f) { f.must = r.x.mustSee; fixes.push(f); } if (fixes.length >= 2) break; }
+  // Two picks at most: a bigger swap rebuilds the day, and another day or new times serve better.
+  if (!fixes.length && canRoom) { const ids = []; for (const r of byVal.slice(0, 2)) { ids.push(r.x.id); const f = swapSet(ids); if (f) { f.must = ids.some(i => (picks.find(x => x.id === i) || {}).mustSee); fixes.push(f); break; } } }
+  times.forEach(t => fixes.push(Object.assign({}, t, { how: t.kind, kind: "time" })));
+  others.forEach(o => fixes.push({ kind: "day", o }));
+  moves.forEach(v => fixes.push({ kind: "move", x: v.x, o: v.o }));
+  // A swap that costs a must-see comes after other ways (a new time or another day), never first.
+  const rank = f => f.kind === "swap" ? (f.must ? 3 : 0) : f.kind === "time" ? 1 : 2;
+  fixes.sort((a, b) => rank(a) - rank(b));
+  fitState = { fixes, d, id, s, need, never, others, moves, dayFirst, canRoom, base: base.m, rows, sugg, drop: new Set(), times };
   fitShow(); return false;
 }
 function fitShow() {
@@ -91,19 +123,24 @@ function fitHTML() {
       <p>${ok ? `<b>It fits now</b>${avail - used >= 5 ? `, with ${dur(avail - used)} to spare` : ""}.` : `<b>${over ? dur(over) + " over" : "Doesn't fit the route and opening hours"}.</b> ${fitNext(F)}`}</p>
     </div>
     ${timesFixed(d) ? `<p class="fitwhy">${fixedWhy(d, !!F.s)}</p>` : ""}
-    ${F.dayFirst ? otherDays("Best: see it on another day and keep today as planned") : ""}
-    ${F.rows.length ? `<div class="fitlist"><p class="lbl">${F.canRoom ? "Make room: untick a pick" : "Unticking won't make enough room today"}</p>${F.rows.map(x => `<label class="fitrow"><input type="checkbox" data-fitdrop="${esc(x.x.id)}" ${F.drop.has(x.x.id) ? "" : "checked"}><span class="nm">${esc(x.x.name)}</span><span class="tags">${F.sugg.includes(x.x.id) ? `<span class="tag here">Suggested</span>` : ""}${x.x.mustSee ? `<span class="tag must">Must-see</span>` : ""}<span class="tag">Frees ${x.frees >= 5 ? "about " + dur(x.frees) : "little time"}</span></span></label>`).join("")}</div>` : ""}
-    ${F.times.length ? `<div class="fitmore"><p class="lbl">Or change today's times</p><div class="actions">${F.times.map((t, k) => `<button type="button" class="btn ghost small" data-act="fittime" data-k="${k}">${t.kind === "earlier" ? `Start earlier, at ${esc(t.startTime)}` : `Finish later, at ${fmt(t.end)}`}${F.s ? " and add it" : " and keep every pick"}</button>`).join("")}</div></div>`
-      : ""}
-    ${F.never && !F.times.length ? `<p class="mparts"><b>Even on its own it doesn't fit this day.</b></p>` : ""}
-    ${!F.dayFirst ? otherDays("Or see it on another day") : ""}
-    ${F.moves.length ? `<div class="fitmore"><p class="lbl">Or move a pick to another day</p><div class="actions">${F.moves.map((v, k) => `<button type="button" class="btn ghost small" data-act="fitmove" data-k="${k}">Move ${esc(v.x.name)} to ${esc(fmtDow(v.o.date))} ${esc(fmtDate(v.o.date))}</button>`).join("")}</div></div>` : ""}
+    ${F.fixes.length ? `<div class="fitfixes"><p class="lbl">${F.s ? "Ways to fit it in, one tap" : "Ways to make it fit, one tap"}</p>${F.fixes.map((f, k) => `<button type="button" class="btn ${k ? "ghost " : ""}fixbtn" data-act="fitfixgo" data-k="${k}">${fixLabel(F, f)}</button>`).join("")}</div>`
+      : `<p class="mparts"><b>${F.s ? "There's no way to fit it into this day." : "Untick picks below until it fits."}</b></p>`}
+    ${F.rows.length ? `<details class="fitown"${F.drop.size ? " open" : ""}><summary>Or choose what to untick yourself</summary><div class="fitlist">${F.rows.map(x => `<label class="fitrow"><input type="checkbox" data-fitdrop="${esc(x.x.id)}" ${F.drop.has(x.x.id) ? "" : "checked"}><span class="nm">${esc(x.x.name)}</span><span class="tags">${x.x.mustSee ? `<span class="tag must">Must-see</span>` : ""}<span class="tag">Frees ${x.frees >= 5 ? "about " + dur(x.frees) : "little time"}</span></span></label>`).join("")}</div></details>` : ""}
     <div class="row"><button type="button" class="btn ghost" data-act="fitcancel">${F.s ? "Keep my day as is" : "Not now"}</button><button type="button" class="btn" data-act="fitadd" ${ok ? "" : "disabled"}>${F.s ? "Add " + esc(F.s.name) : "Done"}</button></div>`;
 }
+function endWord(d) { return d.type === "port" || d.type === "embark" ? "back on board" : d.type === "departure" ? "at the " + ((MODES[d.mode] || {}).word || "station") : "finish"; }
+function fixLabel(F, f) {
+  const d = F.d, nm = id => esc((allSites(cityFor(d)).find(x => x.id === id) || {}).name || "");
+  const at = f.end != null ? ` · ${endWord(d)} ${fmt(f.end)}` : "";
+  if (f.kind === "swap") return F.s ? `Swap ${f.drop.map(nm).join(" and ")} for ${esc(F.s.name)}${at}` : `Leave out ${f.drop.map(nm).join(" and ")}${at}`;
+  if (f.kind === "time") return `${f.how === "earlier" ? `Start at ${esc(f.startTime)} instead of ${esc(d.startTime)}` : `Finish at ${fmt(f.end)} instead of ${fmt(F.base.endBy)}`}${F.s ? ", and add it" : ", and keep every pick"}`;
+  if (f.kind === "day") return `Add it to ${esc(fmtDow(f.o.date))} ${esc(fmtDate(f.o.date))} instead`;
+  if (f.kind === "move") return `Move ${esc(f.x.name)} to ${esc(fmtDow(f.o.date))} ${esc(fmtDate(f.o.date))}`;
+  return "";
+}
 function fitNext(F) {
-  const ways = [F.canRoom ? `untick ${F.drop.size ? "more" : F.sugg.length === 1 ? "the suggested pick" : "picks"} below` : "", F.times.length ? "change today's times" : "", F.others.length ? "see it on another day" : "", F.moves.length ? "move a pick to another day" : ""].filter(Boolean);
-  if (!ways.length) return F.s ? "Even with nothing else picked, it can't fit this day." : "Untick picks below until it fits.";
-  return (F.canRoom || !F.rows.length ? "" : "Unticking alone can't make enough room. ") + ways.join(", or ").replace(/^./, c => c.toUpperCase()) + ".";
+  if (F.fixes.length) return "Pick one of the ways below and Kairoute rearranges your day.";
+  return F.s ? "Even with nothing else picked, it can't fit this day." : "Untick picks below until it fits.";
 }
 function otherDays(label) {
   const F = fitState; if (!F.others.length) return "";
@@ -115,6 +152,17 @@ function fitApply(t) {
   if (t) { if (t.hours != null) d.hours = t.hours; if (t.startTime) d.startTime = t.startTime; }
   if (F.s) { d.anchor = F.id; rememberPick(d, F.s); }
   fitState = null; fitShow(); save(); render(); if (F.s) jumpToAnchor();
+}
+function fitDay(o) {
+  const id = fitState && fitState.id; fitState = null; fitShow(); if (!o || !id) return;
+  const c = cityFor(o); if (!o.selected && c) seedPicks(o, c);
+  if (addPick(o, id, false)) { o.anchor = id; trip.active = trip.days.indexOf(o); save(); render(); jumpToAnchor(); }
+}
+function fitMove(v) {
+  if (!v || !fitState) return; const d = fitState.d;
+  if (!addPick(v.o, v.x.id, false)) return;
+  d.selected = d.selected.filter(i => i !== v.x.id); if (d.anchor === v.x.id) d.anchor = null;
+  fitState = null; save(); fitOpen(d, null); fitShow(); render();
 }
 document.addEventListener("change", e => {
   const t = e.target; if (!t.dataset || !t.dataset.fitdrop || !fitState) return;
@@ -128,14 +176,14 @@ document.addEventListener("click", e => {
   const t = t0; if (!t || !fitState) return;
   if (t.dataset.act === "fitcancel") { fitState = null; fitShow(); }
   else if (t.dataset.act === "fitadd" && !t.disabled) fitApply();
+  else if (t.dataset.act === "fitfixgo") { const f = fitState.fixes[+t.dataset.k]; if (!f) return;
+    if (f.kind === "swap") { fitState.drop = new Set(f.drop); fitApply(); }
+    else if (f.kind === "time") fitApply(f);
+    else if (f.kind === "day") { t.dataset.act = "fitday"; t.dataset.fitday = trip.days.indexOf(f.o); fitDay(f.o); }
+    else if (f.kind === "move") fitMove(f); }
   else if (t.dataset.act === "fittime") { const o = fitState.times[+t.dataset.k]; if (o) fitApply(o); }
-  else if (t.dataset.act === "fitday") { const o = trip.days[+t.dataset.fitday], id = fitState.id; fitState = null; fitShow(); if (!o) return;
-    const c = cityFor(o); if (!o.selected && c) seedPicks(o, c);
-    o.selected = [...(o.selected || []), id]; o.anchor = id; rememberPick(o, c && allSites(c).find(x => x.id === id)); trip.active = trip.days.indexOf(o); save(); render(); jumpToAnchor(); }
-  else if (t.dataset.act === "fitmove") { const v = fitState.moves[+t.dataset.k]; if (!v) return; const d = fitState.d;
-    d.selected = d.selected.filter(i => i !== v.x.id); if (d.anchor === v.x.id) d.anchor = null;
-    v.o.selected = [...(v.o.selected || []), v.x.id]; rememberPick(v.o, v.x); fitState = null; save();
-    if (fitOpen(d, null)) fitShow(); render(); }
+  else if (t.dataset.act === "fitday") fitDay(trip.days[+t.dataset.fitday]);
+  else if (t.dataset.act === "fitmove") fitMove(fitState.moves[+t.dataset.k]);
 });
 document.addEventListener("keydown", e => { if (e.key === "Escape" && fitState) { fitState = null; fitShow(); } });
 
@@ -152,8 +200,6 @@ function siteFits(d, s, plan) {
   const k = fitKey(d); if (fitMemo.key !== k) { fitMemo = { key: k, res: new Map() }; fitQueue = []; }
   if (fitMemo.res.has(s.id)) return fitMemo.res.get(s.id);
   const m = meterCalc(plan, d); if (m && (m.over || m.dropped.length)) { fitMemo.res.set(s.id, false); return false; } // already full: nothing more fits
-  const c = fitCostOf(plan, s);
-  if (c.min > c.spare + 90) { fitMemo.res.set(s.id, false); return false; } // far more than the time left
   if (!fitQueue.includes(s.id)) fitQueue.push(s.id);
   clearTimeout(fitTimer); fitTimer = setTimeout(fitRefine, 30);
   return undefined;
@@ -174,3 +220,4 @@ function fitRefine() {
 if (typeof window !== "undefined") window.__kairouteFitPending = () => fitQueue.length;
 if (typeof window !== "undefined") window.__kairouteFitExact = id => { const d = day(); return fitsAll(fitTrial(d, [...d.selected, id])); };
 if (typeof window !== "undefined") window.__kairouteTimesFixed = () => timesFixed(day());
+if (typeof window !== "undefined") window.__kairouteTryAdd = id => addPick(day(), id, true);
