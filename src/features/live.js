@@ -236,7 +236,7 @@ function liveAct(act, t) {
   if (act === "wxkeep") { d.wxKeep = true; save(); render(); return true; }
   if (act === "livereplan") { replanNow(d); return true; }
   if (act === "liveundo") { d.live = liveUndo; liveUndo = null; liveMsg = null; liveHold = Date.now() + 30 * 60e3; save(); render(); return true; }
-  if (act === "livegps") { liveGeoStart(); render(); return true; }
+  if (act === "livegps") { geoPerm = "unknown"; liveGeoStart(); render(); return true; }
   if (act === "livealerts") { try { Notification.requestPermission().then(() => render()); } catch (e) {} return true; }
   if (act === "alarmopen") { view = "plan"; render(); toTop(); return true; }
   if (act === "raterow" || act === "busyrow") { const city = cityFor(d), s = city && allSites(city).find(x => x.id === t.dataset.sid); if (!s) return true;
@@ -389,21 +389,23 @@ function alarmCard(d, plan) {
   if (d.type === "sea") return "";
   const fixed = !!fixedTitle(d) && plan.w.tail.length, live = liveNow(d) != null, items = plan.items.filter(i => i.type === "stop" || i.type === "meal");
   if (!fixed && !live) return "";
-  const today = d.date === todayISO(), gpsOn = geoFresh() || liveGeo != null;
+  const today = d.date === todayISO(), gpsOn = geoFresh();
+  // On the day, the countdown follows the device's GPS by itself: no button to press, no place to pick.
+  if (today && (fixed || live)) setTimeout(liveGeoAuto, 0);
   return `<div class="card countdown livecard" id="cdCard">
     <div><span class="eyebrow">${fixed ? esc(fixedTitle(d)) : "Your day, live"}${!today && live ? " · preview" : ""}</span></div>
     ${fixed ? `<div class="cdrow"><div class="cdbig" id="cdBig">--:--</div><div class="cdtext"><div class="cdsub" id="cdSub"></div><div class="cdsrc" id="cdSrc"></div></div></div>
     <div class="banner" id="cdMsg" hidden></div>
-      ${gpsOn ? "" : `<details class="cdwhere" ${cdWhere && cdWhere !== "auto" ? "open" : ""}><summary>Somewhere else? Count from there</summary><div class="field"><label for="cdWhere">Where are you now?</label>
+      ${gpsOn ? "" : `<details class="cdwhere" ${cdWhere && cdWhere !== "auto" ? "open" : ""}><summary>${today ? "GPS off? Pick your spot" : "Count from another spot"}</summary><div class="field"><label for="cdWhere">Where are you?</label>
       <select id="cdWhere"><option value="auto">Wherever the plan says</option>${items.map((i, k) => `<option value="${k}" ${String(cdWhere) === String(k) ? "selected" : ""}>${esc(i.place.name)}</option>`).join("")}</select></div></details>`}` : ""}
     ${liveBanner(d, plan)}
     <div class="actions">
-      ${today ? `<button class="btn ghost small" data-act="livegps">${gpsOn ? "📍 Using your location" : "Use my location"}</button>` : ""}
+      ${today && !gpsOn && geoPerm === "denied" ? `<button class="btn ghost small" data-act="livegps">Try my location again</button>` : ""}
       ${live ? `<button class="btn small" data-act="livereplan">Running late? Re-plan from now</button>` : ""}
       ${today && typeof Notification !== "undefined" && Notification.permission === "default" ? `<button class="btn ghost small" data-act="livealerts">Turn on alerts</button>` : ""}
       ${!today && cdPreview != null ? `<button class="btn ghost small" data-act="cdpreview">Stop preview</button>` : ""}
     </div>
-    ${today ? `<p class="lede small">${fixed ? "Alerts 30, 15 and 5 minutes before you need to leave, by sound, vibration and notification. " : ""}${gpsOn ? "If you fall behind at a stop, the day re-plans itself." : "Turn on your location so the countdown uses where you really are."}</p>` : ""}
+    ${today ? `<p class="lede small">${fixed ? "Alerts 30, 15 and 5 minutes before you need to leave, by sound, vibration and notification. " : ""}${gpsOn ? "Using your GPS. If you fall behind at a stop, the day re-plans itself." : geoPerm === "denied" || !navigator.geolocation ? "Location is off for Kairoute, so this counts from where the plan has you. Turn location on in your browser or phone settings for a live count from where you really are." : "Finding your location…"}</p>` : ""}
   </div>`;
 }
 function alarmTick() {
@@ -430,7 +432,7 @@ function alarmTick() {
     if (sub) sub.textContent = `${word} From ${fromTxt}: ${legTxt}, so leave by ${fmt(st.leaveBy)}.`;
     if (srcEl) srcEl.textContent = `Travel time: ${st.leg.src}${st.src === "GPS" ? ", from your GPS position" : st.src === "plan" ? ", from where the plan has you now" : ""}.`;
     if (srcEl && (d.type === "port" || d.type === "embark")) srcEl.textContent += " Being on board on time is your responsibility: confirm the all-aboard time with your cruise line on the day. Ships don't wait.";
-    if (st.now == null) { if (el) el.textContent = fmt(st.leaveBy); if (msg) msg.hidden = true; if (srcEl) srcEl.textContent += ` On ${fmtDate(d.date)} this becomes a live countdown with alerts.`; }
+    if (st.now == null) { if (el) el.textContent = fmt(st.leaveBy); if (msg) msg.hidden = true; if (srcEl) srcEl.textContent += ` On ${fmtDate(d.date)} it counts down live from your GPS position, with alerts.`; }
     else {
       const left = st.leaveBy - st.now;
       const big = left > 0 ? (left >= 60 ? Math.floor(left / 60) + "h " + String(Math.floor(left % 60)).padStart(2, "0") + "m" : Math.ceil(left) + " min") : "Go now";
@@ -464,11 +466,21 @@ function liveAlert(title, body, loud) {
     else new Notification(title, opt); } } catch (e) {}
 }
 // Location for the live day (shares the tour's position when the tour is following you).
-let liveGeo = null, liveGeoPoll = null;
+let liveGeo = null, liveGeoPoll = null, geoPerm = "unknown";
+// Start following the device's position without being asked, unless the person has said no to location.
+function liveGeoAuto() {
+  if (liveGeo != null || !navigator.geolocation || geoPerm === "denied") return;
+  const was = geoPerm;
+  if (navigator.permissions && navigator.permissions.query) navigator.permissions.query({ name: "geolocation" }).then(p => {
+    geoPerm = p.state; if (p.state !== "denied") liveGeoStart(); else if (was !== "denied") render();
+    p.onchange = () => { geoPerm = p.state; if (p.state !== "denied") liveGeoStart(); render(); };
+  }).catch(() => liveGeoStart());
+  else liveGeoStart();
+}
 function liveGeoStart() {
   if (liveGeo != null || !navigator.geolocation) return;
-  try { liveGeo = navigator.geolocation.watchPosition(pos => { if (geoWatch == null) geoPos = { lat: pos.coords.latitude, lng: pos.coords.longitude, acc: pos.coords.accuracy, at: Date.now() }; alarmTick(); },
-    err => { if (err && err.code === 1) { try { navigator.geolocation.clearWatch(liveGeo); } catch (e) {} liveGeo = null; clearInterval(liveGeoPoll); render(); } }, { enableHighAccuracy: true, maximumAge: 15000, timeout: 30000 });
+  try { liveGeo = navigator.geolocation.watchPosition(pos => { const first = !geoFresh(); if (geoWatch == null) geoPos = { lat: pos.coords.latitude, lng: pos.coords.longitude, acc: pos.coords.accuracy, at: Date.now() }; geoPerm = "granted"; if (first && view === "plan") render(); else alarmTick(); },
+    err => { if (err && err.code === 1) { geoPerm = "denied"; try { navigator.geolocation.clearWatch(liveGeo); } catch (e) {} liveGeo = null; clearInterval(liveGeoPoll); render(); } }, { enableHighAccuracy: true, maximumAge: 15000, timeout: 30000 });
     // Standing still, some phones stop reporting: ask once a minute so the countdown always uses a fresh position.
     liveGeoPoll = setInterval(() => { if (liveGeo != null && geoWatch == null) navigator.geolocation.getCurrentPosition(pos => { geoPos = { lat: pos.coords.latitude, lng: pos.coords.longitude, acc: pos.coords.accuracy, at: Date.now() }; }, () => {}, { enableHighAccuracy: true, maximumAge: 30000, timeout: 20000 }); }, 60000);
   } catch (e) { liveGeo = null; }
