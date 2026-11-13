@@ -198,6 +198,9 @@ const log = (suite, trip, ok, what) => { results.push({ suite, trip, ok, what })
     if (!legs.slice(1).some(l => /Circumvesuviana/.test(l.t) && /Pompei Scavi/.test(l.t))) bad.push('no Circumvesuviana ride via Pompei Scavi');
     if (!legs.every(l => l.sel.some(o => /Taxi/.test(o)))) bad.push('a ride without the taxi choice');
     const last = legs[legs.length - 1]; if (!last || !/If you miss it/.test(last.t) || !/spare before the ship/.test(last.t)) bad.push('the ride back to the ship does not say what to do if you miss it, or its spare time');
+    if (!legs.some(l => /Next departure about \d\d:\d\d/.test(l.t) && /timetable checked/.test(l.t))) bad.push('no ride shows its next departure from the timetable');
+    if (!last || !/Last safe departure back: \d\d:\d\d/.test(last.t)) bad.push('the ride back to the ship does not show the last safe departure');
+    if (!/No published timetable found/.test((legs[0] || {}).t || '')) bad.push('the ferry without a timetable does not say so');
     const q1 = await p.evaluate(() => window.__kairouteQuality().find(x => /Naples/.test(x.dest)));
     if (!q1 || q1.issues.length || q1.stops !== 2) bad.push('ship checks with the train and ferry: ' + JSON.stringify(q1 && q1.issues) + ' stops ' + (q1 && q1.stops));
     const mp = await p.evaluate(() => window.__kairouteMap ? window.__kairouteMap() : null);
