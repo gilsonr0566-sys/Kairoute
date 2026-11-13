@@ -107,13 +107,23 @@ export async function timetableOptions(a, b, dow) {
   return out.sort((x, y) => x.min - y.min).slice(0, 4);
 }
 // Both sources: real timetables first; the map adds what timetables lack (ferries mostly). A map rail line is kept
-// only when the timetables had no rail answer at all.
-export async function allOptions(a, b, dow) {
-  const [tt, map] = await Promise.all([timetableOptions(a, b, dow).catch(() => null), transitOptions(a, b).catch(() => null)]);
+// only when the timetables had no rail answer at all. The free map servers can take a minute when busy, so the answer
+// doesn't wait for them past mapWait ms (the page's request must come back well inside the 100 s a web request may
+// take): it goes out as partial, and `late` gives the full answer once the map does reply, for the cache.
+export async function allOptions(a, b, dow, mapWait = 12000) {
+  const ttP = timetableOptions(a, b, dow).catch(() => null), mapP = transitOptions(a, b).catch(() => null);
+  const merge = (tt, map) => { const t = tt || [], hasRail = t.some(o => /train|metro|tram/.test(o.mode));
+    const m = (map || []).filter(o => o.mode === "ferry" ? !t.some(x => x.mode === "ferry") : !hasRail);
+    return t.concat(m).sort((x, y) => x.min - y.min).slice(0, 5); };
+  const TIMEOUT = Symbol("slow"), t0 = Date.now(), tt = await ttP;
+  const map = await Promise.race([mapP, new Promise(r => setTimeout(() => r(TIMEOUT), Math.max(1000, mapWait - (Date.now() - t0))))]);
+  if (map === TIMEOUT) {
+    const late = mapP.then(m => m ? { opts: merge(tt, m), partial: !tt } : null);
+    if (!tt) { const m = await late; if (!m) throw new Error("map busy"); return m; } // no timetable at all: the map is all there is, so wait for it
+    return { opts: merge(tt, null), partial: true, late };
+  }
   if (!tt && !map) throw new Error("map busy");
-  const t = tt || [], hasRail = t.some(o => /train|metro|tram/.test(o.mode));
-  const m = (map || []).filter(o => o.mode === "ferry" ? !t.some(x => x.mode === "ferry") : !hasRail);
-  return { opts: t.concat(m).sort((x, y) => x.min - y.min).slice(0, 5), partial: !tt || !map };
+  return { opts: merge(tt, map), partial: !tt || !map };
 }
 export async function transitOptions(a, b) {
   const A = `${a.lat},${a.lng}`, B = `${b.lat},${b.lng}`;

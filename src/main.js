@@ -514,7 +514,7 @@ const dayKind = dow => dow === 0 ? "su" : dow === 6 ? "sa" : "wk";
 function transitFor(a, b) {
   if (!a || !b || !isFinite(a.lat) || !isFinite(b.lat) || hav(a, b) < 4) return null;
   const dow = planDow(), k = pairKey(a, b) + "|" + dayKind(dow), hit = transitMem[k] || transitMem[pairKey(a, b)]; if (hit) return hit.opts;
-  if (typeof freeAI !== "undefined" && freeAI && !transitQ.has(k) && !(transitFail.get(k) > Date.now() - 600000)) { transitQ.set(k, { a: [+a.lat, +a.lng], b: [+b.lat, +b.lng], dow }); clearTimeout(transitTimer); transitTimer = setTimeout(askTransit, 300); }
+  if (typeof freeAI !== "undefined" && freeAI && !transitQ.has(k) && !(transitFail.get(k) > Date.now() - 120000)) { transitQ.set(k, { a: [+a.lat, +a.lng], b: [+b.lat, +b.lng], dow }); clearTimeout(transitTimer); transitTimer = setTimeout(askTransit, 300); }
   return null;
 }
 async function askTransit() {

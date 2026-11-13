@@ -6,7 +6,8 @@ const pairs = [["ship", "sorrento"], ["sorrento", "pompeii"], ["pompeii", "ship"
 for (const [x, y] of pairs) {
   const t0 = Date.now();
   try {
-    const r = await fetch(U + "/transit", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ pairs: [{ a: P[x], b: P[y], dow: 1 }] }), signal: AbortSignal.timeout(120000) });
+    const ask = () => fetch(U + "/transit", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ pairs: [{ a: P[x], b: P[y], dow: 1 }] }), signal: AbortSignal.timeout(120000) });
+    const r = await ask().catch(() => ask()); // a dropped connection is tried once more
     const txt = await r.text(); let j = null; try { j = JSON.parse(txt); } catch (e) {}
     console.log(`\n== ${x} -> ${y}: HTTP ${r.status} in ${((Date.now() - t0) / 1000).toFixed(1)} s`);
     const res = j && j.results && j.results[0];
@@ -16,3 +17,9 @@ for (const [x, y] of pairs) {
     if (!(res.opts || []).length) console.log("   no options");
   } catch (e) { console.log(`\n== ${x} -> ${y}: failed after ${((Date.now() - t0) / 1000).toFixed(1)} s: ${e.message}`); }
 }
+// All three in one request, as the page asks: must come back well inside the 100 s a web request may take.
+{ const t0 = Date.now();
+  try { const r = await fetch(U + "/transit", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ pairs: pairs.map(([x, y]) => ({ a: P[x], b: P[y], dow: 3 })) }), signal: AbortSignal.timeout(120000) });
+    const j = await r.json().catch(() => null);
+    console.log(`\n== all three together (a Wednesday): HTTP ${r.status} in ${((Date.now() - t0) / 1000).toFixed(1)} s: ` + (j && j.results ? j.results.map(x => x.error || (x.opts || []).length + " options").join(", ") : "no answer"));
+  } catch (e) { console.log(`\n== all three together: failed after ${((Date.now() - t0) / 1000).toFixed(1)} s: ${e.message}`); } }
