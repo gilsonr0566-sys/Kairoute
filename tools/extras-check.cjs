@@ -42,6 +42,7 @@ async function page(b, w, h) {
     if (/cdnjs\.cloudflare\.com\/ajax\/libs\/jspdf/.test(url)) { const local = process.env.JSPDF_FILE; return local && fs.existsSync(local) ? r.fulfill({ status: 200, contentType: 'application/javascript', body: fs.readFileSync(local, 'utf8') }) : r.continue(); }
     if (/\/ai\.json$/.test(url)) return r.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify({ url: W }) });
     if (url.startsWith(W)) { const o = helper(url, r.request().postData()); const st = o.__status || 200; delete o.__status; return r.fulfill({ status: st, contentType: 'application/json', body: JSON.stringify(o), headers: { 'access-control-allow-origin': '*' } }); }
+    if (/overpass/.test(url)) return r.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify({ elements: [{ type: 'node', lat: 37.97, lon: 23.72, tags: { tourism: 'viewpoint', name: 'Direct viewpoint' } }] }), headers: { 'access-control-allow-origin': '*' } });
     if (/open-meteo/.test(url)) return r.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify({ timezone: /longitude=2\./.test(url) ? 'Europe/Madrid' : /longitude=-/.test(url) ? 'America/Chicago' : 'Europe/Athens' }), headers: { 'access-control-allow-origin': '*' } });
     return r.abort();
   });
@@ -114,6 +115,9 @@ const shot = async (p, n) => { if (SHOTS) { fs.mkdirSync(SHOTS, { recursive: tru
   /Public toilets/.test(amen) && /only mention these/.test(amen) ? ok('restroom question gets real map places') : bad('ask extra: ' + amen);
   const none = await p.evaluate(async () => window.__kairouteExtras.askExtra(null, null, 'Who built this temple?'));
   none === '' ? ok('history questions are not sent to the map') : bad('non-practical question fetched map data');
+
+  const direct = await p.evaluate(async () => window.__kairouteExtras.gxNearDirect('view', '37.970', '23.720'));
+  direct && direct.spots && direct.spots[0].name === 'Direct viewpoint' ? ok('when the helper is busy, the device asks OpenStreetMap itself') : bad('direct map fallback: ' + JSON.stringify(direct));
 
   console.log('Trip storybook');
   await p.evaluate(() => window.__kairouteGo('journal')); await p.waitForTimeout(300);
