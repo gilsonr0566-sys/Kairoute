@@ -1,0 +1,599 @@
+{
+"note": "Snapshot of Kairoute's /famous and /sources answers for Prague (Nov 13, 2026), trimmed to the old town and castle. Used by the safety net's famous-sights checks.",
+"famous": {
+"area": "Prague",
+"port": "Prague",
+"main": [
+{
+"name": "Prague Castle",
+"wd": "Q193369",
+"sl": 66,
+"lat": 50.09,
+"lng": 14.4,
+"unesco": false,
+"heritage": true
+},
+{
+"name": "Charles Bridge",
+"wd": "Q204871",
+"sl": 62,
+"lat": 50.08639,
+"lng": 14.41194,
+"unesco": false,
+"heritage": true
+},
+{
+"name": "St. Vitus Cathedral",
+"wd": "Q5949",
+"sl": 60,
+"lat": 50.09083,
+"lng": 14.40056,
+"unesco": false,
+"heritage": true
+},
+{
+"name": "National Library of the Czech Republic",
+"wd": "Q1967876",
+"sl": 58,
+"lat": 50.08667,
+"lng": 14.41583,
+"unesco": false,
+"heritage": false
+},
+{
+"name": "Old Town",
+"wd": "Q748211",
+"sl": 51,
+"lat": 50.0847,
+"lng": 14.4203,
+"unesco": true,
+"heritage": false
+},
+{
+"name": "Dancing House",
+"wd": "Q244816",
+"sl": 50,
+"lat": 50.07556,
+"lng": 14.41417,
+"unesco": false,
+"heritage": false
+},
+{
+"name": "Prague Astronomical Clock",
+"wd": "Q729370",
+"sl": 47,
+"lat": 50.08699,
+"lng": 14.4207,
+"unesco": false,
+"heritage": true
+},
+{
+"name": "Malá Strana",
+"wd": "Q753289",
+"sl": 45,
+"lat": 50.08806,
+"lng": 14.40389,
+"unesco": false,
+"heritage": false
+},
+{
+"name": "National Museum in Prague",
+"wd": "Q188112",
+"sl": 41,
+"lat": 50.07984,
+"lng": 14.43042,
+"unesco": false,
+"heritage": false
+},
+{
+"name": "Wenceslas Square",
+"wd": "Q847613",
+"sl": 41,
+"lat": 50.08231,
+"lng": 14.42614,
+"unesco": false,
+"heritage": false
+},
+{
+"name": "Old Town Square",
+"wd": "Q421678",
+"sl": 40,
+"lat": 50.0875,
+"lng": 14.42139,
+"unesco": false,
+"heritage": true
+},
+{
+"name": "Vyšehrad",
+"wd": "Q616334",
+"sl": 40,
+"lat": 50.06443,
+"lng": 14.41764,
+"unesco": false,
+"heritage": true
+},
+{
+"name": "Church of Our Lady before Týn",
+"wd": "Q1453427",
+"sl": 38,
+"lat": 50.08771,
+"lng": 14.4227,
+"unesco": false,
+"heritage": true
+},
+{
+"name": "Old New Synagogue",
+"wd": "Q443107",
+"sl": 33,
+"lat": 50.09,
+"lng": 14.41861,
+"unesco": false,
+"heritage": true
+},
+{
+"name": "Old Jewish Cemetery",
+"wd": "Q438026",
+"sl": 29,
+"lat": 50.08972,
+"lng": 14.41722,
+"unesco": false,
+"heritage": true
+},
+{
+"name": "Powder Tower",
+"wd": "Q1488700",
+"sl": 28,
+"lat": 50.08722,
+"lng": 14.42778,
+"unesco": false,
+"heritage": true
+},
+{
+"name": "Golden Lane",
+"wd": "Q1535529",
+"sl": 28,
+"lat": 50.09204,
+"lng": 14.40418,
+"unesco": false,
+"heritage": true
+},
+{
+"name": "Petřín",
+"wd": "Q427604",
+"sl": 28,
+"lat": 50.08167,
+"lng": 14.39444,
+"unesco": false,
+"heritage": false
+},
+{
+"name": "St. George's Basilica",
+"wd": "Q1437065",
+"sl": 27,
+"lat": 50.09111,
+"lng": 14.40222,
+"unesco": false,
+"heritage": true
+},
+{
+"name": "Lennon Wall",
+"wd": "Q1630131",
+"sl": 25,
+"lat": 50.08624,
+"lng": 14.40695,
+"unesco": false,
+"heritage": false
+},
+{
+"name": "Old Town Hall",
+"wd": "Q2332231",
+"sl": 23,
+"lat": 50.08711,
+"lng": 14.42061,
+"unesco": false,
+"heritage": true
+},
+{
+"name": "Church of Saint Nicholas",
+"wd": "Q2595999",
+"sl": 23,
+"lat": 50.08778,
+"lng": 14.41986,
+"unesco": false,
+"heritage": true
+}
+],
+"far": []
+},
+"sources": {
+"area": "Prague",
+"lang": "cs",
+"langName": "Czech",
+"stops": [
+{
+"name": "Prague Castle",
+"local": "Pražský hrad",
+"wd": "Q193369",
+"lat": 50.09,
+"lng": 14.4,
+"sl": 66,
+"unesco": false,
+"heritage": true,
+"src": [
+"Wikidata (Wikipedia in many languages)",
+"national heritage register",
+"Wikivoyage (English)",
+"Wikipedia in Czech"
+]
+},
+{
+"name": "Charles Bridge",
+"local": "Karlův most",
+"wd": "Q204871",
+"lat": 50.08639,
+"lng": 14.41194,
+"sl": 62,
+"unesco": false,
+"heritage": true,
+"src": [
+"Wikidata (Wikipedia in many languages)",
+"national heritage register",
+"Wikivoyage (English)",
+"Wikipedia in Czech"
+]
+},
+{
+"name": "St. Vitus Cathedral",
+"local": "Katedrála svatého Víta, Václava a Vojtěcha",
+"wd": "Q5949",
+"lat": 50.09083,
+"lng": 14.40056,
+"sl": 60,
+"unesco": false,
+"heritage": true,
+"src": [
+"Wikidata (Wikipedia in many languages)",
+"national heritage register",
+"Wikivoyage (English)",
+"Wikipedia in Czech"
+]
+},
+{
+"name": "Prague Astronomical Clock",
+"local": "Staroměstský orloj",
+"wd": "Q729370",
+"lat": 50.08699,
+"lng": 14.4207,
+"sl": 47,
+"unesco": false,
+"heritage": true,
+"src": [
+"Wikidata (Wikipedia in many languages)",
+"national heritage register",
+"Wikivoyage (English)",
+"Wikipedia in Czech"
+]
+},
+{
+"name": "Old Town Square",
+"local": "Staroměstské náměstí",
+"wd": "Q421678",
+"lat": 50.0875,
+"lng": 14.42139,
+"sl": 40,
+"unesco": false,
+"heritage": true,
+"src": [
+"Wikidata (Wikipedia in many languages)",
+"national heritage register",
+"Wikivoyage (English)",
+"Wikipedia in Czech"
+]
+},
+{
+"name": "Vyšehrad",
+"wd": "Q616334",
+"lat": 50.06443,
+"lng": 14.41764,
+"sl": 40,
+"unesco": false,
+"heritage": true,
+"src": [
+"Wikidata (Wikipedia in many languages)",
+"national heritage register",
+"Wikivoyage (English)",
+"Wikipedia in Czech"
+]
+},
+{
+"name": "Church of Our Lady before Týn",
+"local": "Kostel Panny Marie před Týnem",
+"wd": "Q1453427",
+"lat": 50.08771,
+"lng": 14.4227,
+"sl": 38,
+"unesco": false,
+"heritage": true,
+"src": [
+"Wikidata (Wikipedia in many languages)",
+"national heritage register",
+"Wikivoyage (English)",
+"Wikipedia in Czech"
+]
+},
+{
+"name": "Old New Synagogue",
+"local": "Staronová synagoga",
+"wd": "Q443107",
+"lat": 50.09,
+"lng": 14.41861,
+"sl": 33,
+"unesco": false,
+"heritage": true,
+"src": [
+"Wikidata (Wikipedia in many languages)",
+"national heritage register",
+"Wikivoyage (English)",
+"Wikipedia in Czech"
+]
+},
+{
+"name": "Old Jewish Cemetery",
+"local": "Starý židovský hřbitov v Praze-Josefově",
+"wd": "Q438026",
+"lat": 50.08972,
+"lng": 14.41722,
+"sl": 29,
+"unesco": false,
+"heritage": true,
+"src": [
+"Wikidata (Wikipedia in many languages)",
+"national heritage register",
+"Wikivoyage (English)",
+"Wikipedia in Czech"
+]
+},
+{
+"name": "Powder Tower",
+"local": "Prašná brána",
+"wd": "Q1488700",
+"lat": 50.08722,
+"lng": 14.42778,
+"sl": 28,
+"unesco": false,
+"heritage": true,
+"src": [
+"Wikidata (Wikipedia in many languages)",
+"national heritage register",
+"Wikivoyage (English)",
+"Wikipedia in Czech"
+]
+},
+{
+"name": "Golden Lane",
+"local": "Zlatá ulička",
+"wd": "Q1535529",
+"lat": 50.09204,
+"lng": 14.40418,
+"sl": 28,
+"unesco": false,
+"heritage": true,
+"src": [
+"Wikidata (Wikipedia in many languages)",
+"national heritage register",
+"Wikivoyage (English)",
+"Wikipedia in Czech"
+]
+},
+{
+"name": "St. George's Basilica",
+"local": "Bazilika svatého Jiří",
+"wd": "Q1437065",
+"lat": 50.09111,
+"lng": 14.40222,
+"sl": 27,
+"unesco": false,
+"heritage": true,
+"src": [
+"Wikidata (Wikipedia in many languages)",
+"national heritage register",
+"Wikivoyage (English)",
+"Wikipedia in Czech"
+]
+},
+{
+"name": "Old Town",
+"local": "Staré Město (Praha)",
+"wd": "Q748211",
+"lat": 50.0847,
+"lng": 14.4203,
+"sl": 51,
+"unesco": true,
+"heritage": false,
+"src": [
+"Wikidata (Wikipedia in many languages)",
+"UNESCO World Heritage",
+"Wikipedia in Czech"
+]
+},
+{
+"name": "Dancing House",
+"local": "Tančící dům",
+"wd": "Q244816",
+"lat": 50.07556,
+"lng": 14.41417,
+"sl": 50,
+"unesco": false,
+"heritage": false,
+"src": [
+"Wikidata (Wikipedia in many languages)",
+"Wikivoyage (English)",
+"Wikipedia in Czech"
+]
+},
+{
+"name": "National Museum in Prague",
+"local": "Národní muzeum",
+"wd": "Q188112",
+"lat": 50.07984,
+"lng": 14.43042,
+"sl": 41,
+"unesco": false,
+"heritage": false,
+"src": [
+"Wikidata (Wikipedia in many languages)",
+"Wikivoyage (English)",
+"Wikipedia in Czech"
+]
+},
+{
+"name": "Wenceslas Square",
+"local": "Václavské náměstí",
+"wd": "Q847613",
+"lat": 50.08231,
+"lng": 14.42614,
+"sl": 41,
+"unesco": false,
+"heritage": false,
+"src": [
+"Wikidata (Wikipedia in many languages)",
+"Wikivoyage (English)",
+"Wikipedia in Czech"
+]
+},
+{
+"name": "Petřín",
+"wd": "Q427604",
+"lat": 50.08167,
+"lng": 14.39444,
+"sl": 28,
+"unesco": false,
+"heritage": false,
+"src": [
+"Wikidata (Wikipedia in many languages)",
+"Wikivoyage (English)",
+"Wikipedia in Czech"
+]
+},
+{
+"name": "Old Town Hall",
+"local": "Staroměstská radnice",
+"wd": "Q2332231",
+"lat": 50.08711,
+"lng": 14.42061,
+"sl": 23,
+"unesco": false,
+"heritage": true,
+"src": [
+"Wikidata (Wikipedia in many languages)",
+"national heritage register",
+"Wikipedia in Czech"
+]
+},
+{
+"name": "Church of Saint Nicholas",
+"local": "Kostel svatého Mikuláše (Staré Město)",
+"wd": "Q2595999",
+"lat": 50.08778,
+"lng": 14.41986,
+"sl": 23,
+"unesco": false,
+"heritage": true,
+"src": [
+"Wikidata (Wikipedia in many languages)",
+"national heritage register",
+"Wikipedia in Czech"
+]
+},
+{
+"name": "Jan Hus Memorial",
+"local": "Pomník mistra Jana Husa",
+"wd": "Q3499497",
+"lat": 50.08778,
+"lng": 14.42111,
+"sl": 16,
+"unesco": false,
+"heritage": true,
+"src": [
+"Wikivoyage (English)",
+"national heritage register",
+"Wikipedia in Czech"
+]
+},
+{
+"name": "House of the Black Madonna",
+"local": "Dům U Černé Matky Boží",
+"wd": "Q2717859",
+"lat": 50.087,
+"lng": 14.42545,
+"sl": 18,
+"unesco": false,
+"heritage": true,
+"src": [
+"Wikivoyage (English)",
+"national heritage register",
+"Wikipedia in Czech"
+]
+},
+{
+"name": "Old Royal Palace",
+"local": "Starý královský palác (Pražský hrad)",
+"wd": "Q2340793",
+"lat": 50.09045,
+"lng": 14.40142,
+"sl": 17,
+"unesco": false,
+"heritage": true,
+"src": [
+"Wikivoyage (English)",
+"national heritage register",
+"Wikipedia in Czech"
+]
+},
+{
+"name": "Lennon Wall",
+"local": "Lennonova zeď",
+"wd": "Q1630131",
+"lat": 50.08624,
+"lng": 14.40695,
+"sl": 25,
+"unesco": false,
+"heritage": false,
+"src": [
+"Wikidata (Wikipedia in many languages)",
+"Wikivoyage (English)",
+"Wikipedia in Czech"
+]
+},
+{
+"name": "National Library of the Czech Republic",
+"local": "Národní knihovna České republiky",
+"wd": "Q1967876",
+"lat": 50.08667,
+"lng": 14.41583,
+"sl": 58,
+"unesco": false,
+"heritage": false,
+"src": [
+"Wikidata (Wikipedia in many languages)",
+"Wikipedia in Czech"
+]
+},
+{
+"name": "Malá Strana",
+"wd": "Q753289",
+"lat": 50.08806,
+"lng": 14.40389,
+"sl": 45,
+"unesco": false,
+"heritage": false,
+"src": [
+"Wikidata (Wikipedia in many languages)",
+"Wikipedia in Czech"
+]
+}
+],
+"eats": [],
+"far": []
+}
+}
