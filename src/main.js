@@ -107,7 +107,7 @@ const DAY_TYPES = [
   { key: "port", label: "Cruise port day", short: "In port", icon: "⚓" },
   { key: "sea", label: "Day at sea", short: "At sea", icon: "〰" }
 ];
-const MODES = { flight: { label: "Flight", list: "airport", clear: 75, need: 180, word: "airport" }, train: { label: "Train", list: "station", clear: 15, need: 30, word: "station" }, ship: { label: "Ship", list: "cruise", clear: 60, need: 60, word: "port" }, car: { label: "Car or bus", list: "hotel", clear: 10, need: 20, word: "starting point" } };
+const MODES = { flight: { label: "Flight", list: "airport", clear: 75, need: 180, word: "airport" }, train: { label: "Train", list: "station", clear: 15, need: 30, word: "station" }, ship: { label: "Ship", list: "cruise", clear: 60, need: 60, word: "port" }, ferry: { label: "Ferry", list: "cruise", clear: 20, need: 40, word: "ferry terminal" }, car: { label: "Car or bus", list: "hotel", clear: 10, need: 20, word: "starting point" } };
 const INTERESTS = [["history", "History"], ["art", "Art & museums"], ["architecture", "Architecture"], ["food", "Food & markets"], ["views", "Views & nature"], ["churches", "Churches & faith"], ["bible", "Bible sites"], ["shopping", "Shopping"], ["beaches", "Beaches"], ["kids", "Kid-friendly"]];
 const INTEREST_WORDS = { history: ["history", "roman", "medieval", "ancient", "war", "castle", "ruins"], art: ["museum", "art", "picasso", "painting", "gallery"], architecture: ["architecture", "gaudí", "gaudi", "house", "façade", "building", "palace"], food: ["market", "food", "tapas"], views: ["view", "park", "hill", "garden", "nature"], churches: ["church", "basilica", "cathedral", "monastery", "chapel", "shrine", "madonna", "synagogue", "mosque", "temple"], bible: ["paul", "apostle", "bible", "biblical", "christian", "saint", "basilica", "church", "cathedral", "monastery"], shopping: ["shop", "market", "street"], beaches: ["beach", "sea"], kids: ["park", "beach", "amusement", "zoo"] };
 // Religious sites: places of worship (churches, monasteries, mosques, synagogues...). Ancient ruins of temples
@@ -489,12 +489,9 @@ function travel(a, b) {
   const speed = trip.prefs && trip.prefs.walk === "low" ? 3.6 : 4.5;
   if (d < 0.02) return { mode: "walk", how: "Walk", km: 0, min: 0 }; // the same place: no time
   if (d <= lim) return { mode: "walk", how: "Walk", km: d * 1.3, min: Math.max(2, Math.round(d * 1.3 / speed * 60)) };
-  if (d <= 6) return rideLeg(a, b, { mode: "ride", how: "Taxi, bus or metro", km: d * 1.3, min: Math.round(10 + d * 1.3 / 22 * 60) });
-  if (d <= 15) return rideLeg(a, b, { mode: "ride", how: "Taxi or rideshare", km: d * 1.3, min: Math.round(10 + d * 1.3 / 25 * 60) }, b.backToShip);
-  // 15-40 km: regional roads and local trains, around bays and through towns (Naples to Sorrento is 26 km as the
-  // crow flies but about 50 km of coast road); farther: highway or intercity train (Athens to Corinth: about 1 h 20).
-  let leg = d <= 40 ? { mode: "ride", how: "Train or car", km: d * 1.35, min: Math.round(15 + d * 1.35 / 45 * 60) }
-    : { mode: "ride", how: "Train or car", km: d * 1.25, min: Math.round(15 + d * 1.25 / 85 * 60) };
+  if (d <= 6) return rideLeg(a, b, roadGuess(d));
+  if (d <= 15) return rideLeg(a, b, roadGuess(d), b.backToShip);
+  let leg = roadGuess(d);
   // A day trip's own note says how long the trip really takes ("1 hour on the Circumvesuviana train", "60-75 min"):
   // the slowest time it names, plus getting to the station or pier, wins over the estimate.
   const said = Math.max(saidMin(a), saidMin(b));
@@ -503,6 +500,15 @@ function travel(a, b) {
   // A long ride back to the ship gets time for a late train or traffic: missing the ship is not an option.
   if (b.backToShip && leg.min >= 30) { const sl = Math.max(15, Math.round(leg.min * 0.3 / 5) * 5); leg = Object.assign(leg, { min: leg.min + sl, slack: sl }); }
   return leg;
+}
+// By road (taxi, car or bus), as the crow flies d km. 15-40 km: regional roads around bays and through towns
+// (Naples to Sorrento is 26 km as the crow flies but about 50 km of coast road); farther: highway (Athens to
+// Corinth: about 1 h 20).
+function roadGuess(d) {
+  if (d <= 6) return { mode: "ride", how: "Taxi, bus or metro", km: d * 1.3, min: Math.round(10 + d * 1.3 / 22 * 60) };
+  if (d <= 15) return { mode: "ride", how: "Taxi or rideshare", km: d * 1.3, min: Math.round(10 + d * 1.3 / 25 * 60) };
+  return d <= 40 ? { mode: "ride", how: "Train or car", km: d * 1.35, min: Math.round(15 + d * 1.35 / 45 * 60) }
+    : { mode: "ride", how: "Train or car", km: d * 1.25, min: Math.round(15 + d * 1.25 / 85 * 60) };
 }
 const saidMemo = new Map();
 function saidMin(p) {
@@ -530,9 +536,17 @@ const planDow = () => { const t = typeof planDate !== "undefined" && planDate ? 
 const dayKind = dow => dow === 0 ? "su" : dow === 6 ? "sa" : "wk";
 // Seasonal lines (a summer ferry) are offered only in the months they run, against the plan's own date.
 const runsThen = o => { if (!o || !Array.isArray(o.months) || !o.months.length) return true; const t = typeof planDate !== "undefined" && planDate ? Date.parse(planDate + "T12:00:00Z") : NaN; return !isFinite(t) || o.months.includes(new Date(t).getUTCMonth() + 1); };
+// A saved timetable for nearly the same trip (both ends within about 600 m), so a day re-planned from where the
+// traveler stands (GPS) still knows the trains, with no signal.
+function transitNear(a, b, kind) {
+  let best = null, bd = 0.6;
+  for (const k in transitMem) { const [ks, kd] = k.split("|"); if (kd && kd !== kind) continue; const n = ks.split(",").map(Number); if (n.length !== 4) continue;
+    const e = Math.max(hav(a, { lat: n[0], lng: n[1] }), hav(b, { lat: n[2], lng: n[3] })); if (e < bd) { bd = e; best = transitMem[k]; } }
+  return best;
+}
 function transitFor(a, b) {
   if (!a || !b || !isFinite(a.lat) || !isFinite(b.lat) || hav(a, b) < 4) return null;
-  const dow = planDow(), k = pairKey(a, b) + "|" + dayKind(dow), hit = transitMem[k] || transitMem[pairKey(a, b)]; if (hit) return hit.opts.filter(runsThen);
+  const dow = planDow(), k = pairKey(a, b) + "|" + dayKind(dow), hit = transitMem[k] || transitMem[pairKey(a, b)] || transitNear(a, b, dayKind(dow)); if (hit) return hit.opts.filter(runsThen);
   if (typeof freeAI !== "undefined" && freeAI && !transitQ.has(k) && !(transitFail.get(k) > Date.now() - 120000)) { transitQ.set(k, { a: [+a.lat, +a.lng], b: [+b.lat, +b.lng], dow, pri: typeof trip !== "undefined" && trip.days && trip.days[trip.active] && typeof planDate !== "undefined" && trip.days[trip.active].date === planDate }); clearTimeout(transitTimer); transitTimer = setTimeout(askTransit, 300); }
   return null;
 }
@@ -582,13 +596,16 @@ function switchRide(key, val) {
 // What the traveler needs to make a ride: where to catch it, how often it runs, how long, and the choice of ride.
 // Departures from the timetable: the next one after you reach the station, and on the way back to the ship the last
 // one that still gets you there in time.
-function depLine(o, start, endBy, back) {
+// Departures that still get the traveler there by endBy, with the ride's own cushion for delays (the same rule on
+// the timeline and in the live countdown, so both always name the same last safe departure).
+const safeDeps = (o, endBy, slack) => (o && o.deps || []).filter(d => d.t - d.lead + d.dur + (slack || 0) <= endBy);
+function depLine(o, start, endBy, back, slack) {
   if (!o) return "";
   const when = o.checked ? ` (timetable checked ${fmtDate(o.checked)}; check again before you go)` : "";
   if (!o.deps || !o.deps.length) return o.noTimetable ? ` No published timetable found for this ${o.kind.toLowerCase()}: planned with a full gap between departures. Check the ${o.kind.toLowerCase()} timetable before you go.` : "";
   const at = start + o.access.min, nx = isFinite(start) ? o.deps.find(d => d.t >= at) : null;
   let t = nx ? ` Next departure about ${fmt(nx.t)}${when}.` : ` Departures about every ${dur(o.every)}${when}.`;
-  if (back && isFinite(endBy)) { const ok = o.deps.filter(d => d.t + d.dur - d.lead <= endBy); if (ok.length) t += ` <b>Last safe departure back: ${fmt(ok[ok.length - 1].t)}.</b>`; }
+  if (back && isFinite(endBy)) { const ok = safeDeps(o, endBy, slack); if (ok.length) t += ` <b>Last safe departure back: ${fmt(ok[ok.length - 1].t)}.</b>`; }
   return t;
 }
 function rideDetail(leg, start, endBy) {
@@ -596,7 +613,7 @@ function rideDetail(leg, start, endBy) {
   const o = leg.transit, ev = o ? `runs about every ${dur(o.every)}${o.everySrc === "timetable" ? " (from the timetable)" : o.everySrc === "map" ? "" : " (usual for this kind of line; check the timetable)"}` : "";
   const ride = o && o.steps && o.steps.length ? o.steps.map(esc).join("; then ") : o ? `${dur(o.ride)} ride${o.stops ? ` (${o.stops} stops)` : ""}` : "";
   const how = o ? `${o.access.how === "walk" ? "Walk" : "Taxi"} ${dur(o.access.min)} to ${esc(o.from || "the " + (o.mode === "ferry" ? "pier" : "station"))}, ${ev}. ${ride}, then ${o.egress.how === "walk" ? "walk" : "taxi"} ${dur(o.egress.min)}${o.to && !(o.steps && o.steps.length) ? " from " + esc(o.to) : ""}.${o.operator ? " " + esc(o.operator) + "." : ""}${o.hours ? " Hours: " + esc(o.hours) + "." : ""}${o.fare ? " Fare: " + esc(o.fare) + "." : ""} Times include waiting and boarding.` : "By road, with time for traffic.";
-  const fall = depLine(o, start, endBy, leg.lastMile) + (leg.slack ? ` Includes ${dur(leg.slack)} spare before the ship.` : "") + (leg.lastMile && o ? ` <b>If you miss it:</b> a taxi takes about ${dur(leg.road)}.` : "");
+  const fall = depLine(o, start, endBy, leg.lastMile, leg.slack) + (leg.slack ? ` Includes ${dur(leg.slack)} spare before the ship.` : "") + (leg.lastMile && o ? ` <b>If you miss it:</b> a taxi takes about ${dur(leg.road)}.` : "");
   const note = rideNotice && rideNotice.key === leg.key ? `<span class="ridenote">${rideNotice.text}${rideNotice.undo != null ? ` <button class="linkbtn" data-act="rideundo">Undo</button>` : ""}</span>` : "";
   return `<span class="sub ridesub">${how}${fall}</span>${note}<label class="ridepick"><span>Ride</span><select data-ride="${esc(leg.key)}">${leg.choices.map(c => `<option value="${esc(c.id)}" ${c.id === leg.choice ? "selected" : ""}>${esc(c.label)} · ${dur(c.min)}</option>`).join("")}</select></label>`;
 }
@@ -2469,7 +2486,7 @@ ${wiz && (wiz.cruiseLine || wiz.ship) ? "Cruise: " + [wiz.cruiseLine, wiz.ship, 
 
 First write one line that starts with STOPS: and lists, in order, every city, port, island or event place the traveler mentions or that appears in the photos, separated by " > ", followed by the count, for example "STOPS: Athens > Mykonos > Santorini > Rome (3 ports)". Then write one line per day, nothing else, in exactly this format with | between fields:
 DAY|date YYYY-MM-DD|destination|type|mode|time HH:MM|portArrive HH:MM|allAboard HH:MM|tender yes/no|lodging|estimated yes/no
-type is one of arrival, land, embark, port, sea, departure. mode is flight, train, ship or car. Leave a field empty when it doesn't apply, but keep the | separators. No JSON, no commentary.
+type is one of arrival, land, embark, port, sea, departure. mode is flight, train, ferry, ship or car. Leave a field empty when it doesn't apply, but keep the | separators. No JSON, no commentary.
 Rules:
 - One entry per day per city. On a day you travel between two cities, make two entries with the same date: a "departure" in the first city and an "arrival" in the second, with the mode used (flight, train, or car for a drive or bus).
 - First day in a city reached by plane, train, car or by getting off a cruise: "arrival" with mode and time = arrival time. Last day when leaving: "departure" with mode and time = departure time. Days in between: "land". A trip that is just one city or one event day is fine: use "land" days.
@@ -5512,6 +5529,7 @@ document.addEventListener("change", e => {
   }
   if (t.id === "f-rain") { day().rain = t.checked; save(); render(); return; }
   if (t.id === "cdWhere") { cdWhere = t.value; tickCountdown(); return; }
+  if (t.id === "cdAgentIn") { const d = day(); if (d) { d.portAgent = t.value.trim().slice(0, 40); save(); render(); } return; }
   if (t.id === "p-lang") { trip.prefs = P(); trip.prefs.lang = t.value; save(); render(); return; }
   if (t.id === "p-party") { trip.prefs = P(); trip.prefs.party = Math.max(1, Math.min(20, +t.value || 2)); save(); render(); return; }
   if (t.dataset && t.dataset.note) { jUpdate(t.dataset.note, j => { j.note = t.value; }); return; }
