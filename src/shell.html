@@ -714,7 +714,7 @@ details.scmore .journal { border-top: 0; padding-top: 0; }
 .page.setpage { max-width: 1100px; gap: 12px; }
 .pagebar .pagetitle { font-size: 1.15rem; margin: 0; flex: 1; text-align: center; }
 .setgrid { display: grid; gap: 14px; min-width: 0; }
-.setnav { display: flex; gap: 6px; overflow-x: auto; scrollbar-width: none; padding-bottom: 2px; }
+.setnav { display: flex; flex-wrap: wrap; gap: 6px; } /* every section visible at once, no sideways scrolling on phones */
 .setnav::-webkit-scrollbar { display: none; }
 .setlink { flex: none; border: 1px solid var(--line); background: var(--card); color: var(--ink); border-radius: 6px; padding: 7px 14px; font: inherit; font-size: .9rem; font-weight: 700; cursor: pointer; white-space: nowrap; }
 .setlink[aria-current="page"] { background: var(--route); border-color: var(--route); color: var(--card); }
