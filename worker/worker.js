@@ -105,7 +105,7 @@ export default {
       if (ph.length >= 5) { const out = JSON.stringify({ places: ph.filter(p => p.name), src: "photon" }); ctx.waitUntil(env.USAGE.put(key, out, { expirationTtl: 30 * 86400 })); return new Response(out, { headers: { ...h, "content-type": "application/json" } }); }
       let data = null; const tried = [];
       for (const ep of ["https://overpass-api.de/api/interpreter", "https://overpass.private.coffee/api/interpreter", "https://maps.mail.ru/osm/tools/overpass/api/interpreter"]) {
-        try { const rr = await fetch(ep, { method: "POST", signal: AbortSignal.timeout(20000), body: "data=" + encodeURIComponent(q), headers: { "content-type": "application/x-www-form-urlencoded", accept: "application/json", "user-agent": "Kairoute/1.0 (travel guide; https://gilsonr0566-sys.github.io/Kairoute/)" } }); tried.push(ep.split("/")[2] + " " + rr.status); if (rr.ok) { data = await rr.json(); break; } } catch (e) { tried.push(ep.split("/")[2] + " " + e.message); }
+        try { const rr = await fetch(ep, { method: "POST", signal: AbortSignal.timeout(16000), body: "data=" + encodeURIComponent(q), headers: { "content-type": "application/x-www-form-urlencoded", accept: "application/json", "user-agent": "Kairoute/1.0 (travel guide; https://gilsonr0566-sys.github.io/Kairoute/)" } }); tried.push(ep.split("/")[2] + " " + rr.status); if (rr.ok) { data = await rr.json(); break; } } catch (e) { tried.push(ep.split("/")[2] + " " + e.message); }
       }
       // Last resort: Nominatim (OpenStreetMap's own search), one point a second as its rules ask.
       if (!data) {
@@ -426,12 +426,12 @@ export default {
       if (!isFinite(la) || !isFinite(ln)) return Response.json({ error: "Bad request" }, { status: 400, headers: h });
       const key = "ns2:" + r + ":" + la + "," + ln, hit = await env.USAGE.get(key); if (hit) return new Response(hit, { headers: { ...h, "content-type": "application/json" } });
       const A = `(around:${r},${la},${ln})`;
-      const q = `[out:json][timeout:25];(nwr["tourism"~"^(attraction|artwork|viewpoint|museum|gallery)$"]["name"]${A};nwr["historic"]["name"]${A};nwr["amenity"~"^(place_of_worship|fountain|clock|theatre)$"]["name"]${A};nwr["man_made"~"^(tower|obelisk)$"]["name"]${A};);out center tags 200;`;
+      const q = `[out:json][timeout:15];(node["tourism"~"^(attraction|artwork|viewpoint|museum|gallery)$"]["name"]${A};way["tourism"~"^(attraction|museum|gallery)$"]["name"]${A};node["historic"]["name"]${A};way["historic"]["name"]${A};node["amenity"~"^(place_of_worship|fountain|clock|theatre)$"]["name"]${A};way["amenity"~"^(place_of_worship|theatre)$"]["name"]${A};);out center tags 150;`; // node and way only: light enough for the map servers' busy limits
       const UA = { "user-agent": "Kairoute/1.0 (travel guide; https://gilsonr0566-sys.github.io/Kairoute/)" };
       let data = null;
       const why = [];
       for (const ep of ["https://overpass-api.de/api/interpreter", "https://overpass.private.coffee/api/interpreter", "https://overpass.kumi.systems/api/interpreter", "https://maps.mail.ru/osm/tools/overpass/api/interpreter"]) {
-        try { const rr = await fetch(ep, { method: "POST", signal: AbortSignal.timeout(20000), body: "data=" + encodeURIComponent(q), headers: { "content-type": "application/x-www-form-urlencoded", accept: "application/json", ...UA } }); if (rr.ok) { const d = await rr.json(); if ((d.elements || []).length || !d.remark) { data = d; if ((d.elements || []).length) break; } else why.push(ep.split("/")[2] + ": empty, " + String(d.remark).slice(0, 60)); } else why.push(ep.split("/")[2] + ": " + rr.status); } catch (e) { why.push(ep.split("/")[2] + ": " + String(e && e.name || e).slice(0, 40)); } // a timed-out answer comes back empty with a remark: try the next server
+        try { const rr = await fetch(ep, { method: "POST", signal: AbortSignal.timeout(16000), body: "data=" + encodeURIComponent(q), headers: { "content-type": "application/x-www-form-urlencoded", accept: "application/json", ...UA } }); if (rr.ok) { const d = await rr.json(); if ((d.elements || []).length || !d.remark) { data = d; if ((d.elements || []).length) break; } else why.push(ep.split("/")[2] + ": empty, " + String(d.remark).slice(0, 60)); } else why.push(ep.split("/")[2] + ": " + rr.status); } catch (e) { why.push(ep.split("/")[2] + ": " + String(e && e.name || e).slice(0, 40)); } // a timed-out answer comes back empty with a remark: try the next server
       }
       if (!data) { const old = await env.USAGE.get("ns1:" + r + ":" + la + "," + ln); if (old) return new Response(old, { headers: { ...h, "content-type": "application/json" } });
         return Response.json({ error: "map busy", why }, { status: 502, headers: h }); }

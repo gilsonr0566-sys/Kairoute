@@ -1719,12 +1719,31 @@ let extrasBusy = false;
 // (its west front, the view from the steps); never an invented place.
 const EXTRAS_V = 4;
 let nearWhy = "";
+// The map's named sights near a stop: from Kairoute's helper, or (when the helper is busy) straight from
+// OpenStreetMap's map servers, with the same light query. A stop the map couldn't answer for is marked, so its
+// walk-through waits for a better moment instead of being written thin.
+const nearQuery = (la, ln, r) => { const A = `(around:${r},${la},${ln})`; return `[out:json][timeout:15];(node["tourism"~"^(attraction|artwork|viewpoint|museum|gallery)$"]["name"]${A};way["tourism"~"^(attraction|museum|gallery)$"]["name"]${A};node["historic"]["name"]${A};way["historic"]["name"]${A};node["amenity"~"^(place_of_worship|fountain|clock|theatre)$"]["name"]${A};way["amenity"~"^(place_of_worship|theatre)$"]["name"]${A};);out center tags 150;`; };
+function nearFromOsm(d) {
+  const seen = new Set(), out = [];
+  for (const e of d.elements || []) { const t = e.tags || {}, lat = e.lat != null ? e.lat : e.center && e.center.lat, lng = e.lon != null ? e.lon : e.center && e.center.lon, name = t["name:en"] || t.name;
+    if (!name || !isFinite(lat) || seen.has(name.toLowerCase())) continue; seen.add(name.toLowerCase());
+    if (/^(memorial|boundary_stone|milestone|wayside_cross|wayside_shrine|tomb|grave)$/.test(t.historic || "") && !t.wikidata && !t.wikipedia) continue;
+    out.push({ name, local: t.name && t.name !== name ? t.name : undefined, lat: +(+lat).toFixed(5), lng: +(+lng).toFixed(5), kind: t.tourism || t.historic || t.amenity || "", wd: t.wikidata || undefined, wiki: !!(t.wikipedia || t.wikidata), desc: (t.description || t.inscription || "").slice(0, 200) || undefined }); }
+  return out.slice(0, 60);
+}
+const nearFailed = {};
 async function nearSights(s) {
   if (nearCache[s.id]) return nearCache[s.id];
   if (!freeAI || !isFinite(s.lat)) return [];
   const t = s.category + " " + s.name, r = /castle|palace|citadel|fortress|kremlin|acropolis|archaeolog|ancient|forum|monaster|abbey|park|garden|campus|cemetery|island|hill|complex/i.test(t) ? 450 : /old town|historic|quarter|district|village/i.test(t) ? 350 : AREA_CAT.test(t) ? 200 : 120;
-  try { const rr = await fetch(`${freeAI.url}/nearsights?lat=${s.lat}&lng=${s.lng}&r=${r}`); if (rr.ok) { const j = await rr.json(); return (nearCache[s.id] = (j.sights || []).map(x => Object.assign(x, { m: Math.round(hav(x, s) * 1000), sl: x.wiki ? 5 : 0 }))); } nearWhy = rr.status + " " + (await rr.text()).slice(0, 300); } catch (e) { nearWhy = String(e).slice(0, 100); }
-  return [];
+  const keep = list => { delete nearFailed[s.id]; return (nearCache[s.id] = list.map(x => Object.assign(x, { m: Math.round(hav(x, s) * 1000), sl: x.wiki ? 5 : 0 }))); };
+  try { const rr = await fetch(`${freeAI.url}/nearsights?lat=${s.lat}&lng=${s.lng}&r=${r}`); if (rr.ok) { const j = await rr.json(); return keep(j.sights || []); } nearWhy = rr.status + " " + (await rr.text()).slice(0, 300); } catch (e) { nearWhy = String(e).slice(0, 100); }
+  const q = nearQuery((+s.lat).toFixed(4), (+s.lng).toFixed(4), r);
+  for (const ep of ["https://overpass-api.de/api/interpreter", "https://overpass.private.coffee/api/interpreter", "https://overpass.kumi.systems/api/interpreter"]) {
+    try { const rr = await fetch(ep, { method: "POST", body: "data=" + encodeURIComponent(q), headers: { "content-type": "application/x-www-form-urlencoded" }, signal: AbortSignal.timeout(18000) });
+      if (!rr.ok) continue; const d = await rr.json(); if (d.remark && !(d.elements || []).length) continue; nearWhy += " · asked the map directly"; return keep(nearFromOsm(d)); } catch (e) {}
+  }
+  nearFailed[s.id] = true; return [];
 }
 // Real points to walk through: the sources' places near the stop, plus the map's named sights there.
 async function walkCands(s, city) {
@@ -1738,7 +1757,8 @@ async function walkCands(s, city) {
   // bare "Theatre" sign is not a point to stand at, and the facts go to the guide so the story is true.
   const fx = await placeFacts(out.map(c => c.wd).filter(Boolean));
   for (const c of out) { const f = c.wd && fx[c.wd]; if (f) { c.what = f.what; c.facts = f.text; c.human = (f.types || []).includes("Q5"); } }
-  return out.filter(c => !c.human && !GENERIC_NAME.test(plainName(c.name)) && !GENERIC_NAME.test(plainName(c.local || "x y")));
+  // A memorial, plaque or bust nobody has written about is usually named after a person: nothing true to tell there.
+  return out.filter(c => !c.human && !GENERIC_NAME.test(plainName(c.name)) && !GENERIC_NAME.test(plainName(c.local || "x y")) && !(/memorial|plaque|bust|artwork/.test(c.kind || "") && !c.facts));
 }
 const plainName = n => String(n || "").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim();
 const GENERIC_NAME = /^(theat(re|er)|θεατρο|church|chapel|ναος|εκκλησια|museum|μουσειο|fountain|monument|statue|memorial|plaque|kirche|eglise|iglesia|chiesa|kostel|divadlo|teatro|theatre|cinema)$/;
@@ -1767,6 +1787,8 @@ function walkOrder(parts, s) {
 async function stopExtras(s, city) {
   const key = keyOf(city.city) + "|" + s.id; if (extrasAsked[key] || s.extrasV >= EXTRAS_V) return; extrasAsked[key] = true;
   const cands = await walkCands(s, city), area = AREA_CAT.test(s.category + " " + s.name) || cands.length >= 2;
+  // The map was busy and there's little to walk between: wait for a better moment rather than write a thin walk.
+  if (nearFailed[s.id] && cands.length < 4 && area) { delete extrasAsked[key]; delete nearCache[s.id]; return; }
   const ask = `You are the best licensed walking-tour guide in ${city.city}, leading a small group in person through "${s.name}"${s.category ? " (" + s.category + ")" : ""}. Write the walk-through exactly as you would speak it on the spot: the group must always be standing in front of what you are talking about.
 ${cands.length ? `Real places right here (distance from the middle of ${s.name}):
 ${cands.map((c, i) => `${i + 1}. ${c.name}${c.local ? " [" + c.local + "]" : ""} (${c.m} m)${c.what ? " — " + c.what : c.desc ? " — " + c.desc : ""}${c.facts ? "\n   Facts: " + c.facts.slice(0, 450) : ""}`).join("\n")}
