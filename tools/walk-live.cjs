@@ -8,6 +8,12 @@ const STOPS = [
   const b = await chromium.launch(); const p = await b.newPage(); const errs = []; p.on('pageerror', e => errs.push(e.message));
   await p.goto('https://gilsonr0566-sys.github.io/Kairoute/?t=' + Date.now()); await p.evaluate(() => localStorage.setItem('kairoute.intro1', '1')); await p.reload(); await p.waitForTimeout(4000);
   let bad = 0;
+  // The benchmark video Richard shared: its title and, where YouTube offers them, its captions.
+  try { const VID = process.env.VIDEO || 'YqrSRSIBJzI'; const o = await (await fetch('https://www.youtube.com/oembed?format=json&url=https://www.youtube.com/watch?v=' + VID)).json(); console.log('VIDEO: ' + o.title + ' · ' + o.author_name);
+    const page = await (await fetch('https://www.youtube.com/watch?v=' + VID, { headers: { 'accept-language': 'en' } })).text(); const m = /"captionTracks":(\[.*?\])/.exec(page);
+    if (m) { const tr = JSON.parse(m[1]); const t = tr.find(x => /^en/.test(x.languageCode)) || tr[0]; const xml = await (await fetch(t.baseUrl.replace(/\\u0026/g, '&'))).text();
+      const text = xml.replace(/<[^>]+>/g, ' ').replace(/&amp;#39;|&#39;/g, "'").replace(/&amp;quot;|&quot;/g, '"').replace(/&amp;/g, '&').replace(/\s+/g, ' '); console.log('CAPTIONS (' + text.split(' ').length + ' words): ' + text.slice(0, 12000)); }
+    else console.log('No captions found on the page'); } catch (e) { console.log('Video lookup failed: ' + e.message); }
   for (const [city, stop] of STOPS) {
     const r = await p.evaluate(([c, s]) => window.__kairouteWalkProbe(c, s), [city, stop]);
     console.log(`\n===== ${stop.name}, ${city} =====\nsources loaded: ${r.sources}; real points nearby: ${r.cands.join(', ')}`);
