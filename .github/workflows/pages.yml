@@ -5,6 +5,7 @@ on:
   workflow_dispatch:
 permissions:
   contents: read
+  actions: read
   pages: write
   id-token: write
 concurrency:
@@ -72,6 +73,18 @@ jobs:
           mkdir _site && cp -r index.html usage.html version.txt .nojekyll manifest.webmanifest sw.js icons lib checks _site/
           cp app/android/app/build/outputs/apk/debug/app-debug.apk _site/Kairoute.apk
           if [ -f ai.json ]; then cp ai.json _site/; fi
+      - name: Wait for GitHub's own branch copy to finish first
+        # GitHub also publishes the repository as-is on every push (index.html there is only a placeholder).
+        # That copy must never land after the real app, so wait until it is done before publishing.
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          for i in $(seq 1 60); do
+            left=$(curl -s -H "Authorization: Bearer $GH_TOKEN" "https://api.github.com/repos/${{ github.repository }}/actions/runs?head_sha=${{ github.sha }}&per_page=50" \
+              | jq '[.workflow_runs[]? | select(.name == "pages build and deployment" and .status != "completed")] | length')
+            [ "$left" = "0" ] && { echo "branch copy finished (or none)"; break; }
+            echo "waiting for the branch copy ($left running)"; sleep 10
+          done
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
