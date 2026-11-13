@@ -1,0 +1,22 @@
+name: Sources snapshot
+on:
+  workflow_dispatch:
+    inputs:
+      cities:
+        default: "Civitavecchia (Rome)|Athens|Barcelona|Madrid|Paris"
+  push:
+    branches: ["claude/**"]
+    paths: ["tools/sources-snapshot.mjs"]
+permissions:
+  contents: read
+jobs:
+  snap:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - env:
+          CITIES: ${{ inputs.cities || 'Civitavecchia (Rome)|Athens|Barcelona|Madrid|Paris' }}
+        run: node tools/sources-snapshot.mjs
