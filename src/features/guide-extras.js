@@ -381,7 +381,7 @@ async function gxMakeBook() {
     let stopsSeen = 0, km = 0, saved = 0, sym = "";
     for (let i = 0; i < trip.days.length; i++) {
       const d = trip.days[i], city = cityFor(d); if (d.type === "sea" || !city) continue;
-      gxBook.msg = `Day ${i + 1} of ${trip.days.length}: ${d.destination}`; render();
+      gxBook.msg = `Day ${i + 1} of ${trip.days.length}: ${mainPlace(d)}`; render();
       refillIfNeeded(d, city); if (!d.selected) d.selected = defaultSelection(city, trip.style, d);
       const plan = buildPlan(d); if (!plan || plan.error) continue;
       page(); km += plan.walkKm || 0; const sv = gxSavings(d, plan); if (sv && sv.save > 0) { saved += sv.save; sym = sv.sym; }
