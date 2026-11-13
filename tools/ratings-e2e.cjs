@@ -7,7 +7,7 @@ const { chromium } = require('playwright');
   await p.click(`.daychip[data-day="${process.env.DAY || 1}"]`).catch(() => {}); await p.click('#tab-plan').catch(() => {});
   for (let t = 0; t < 20; t++) { await p.waitForTimeout(1500); if (await p.evaluate(() => document.querySelectorAll('.grate:not(.none)').length >= 2)) break; }
   await p.waitForTimeout(2000);
-  console.log('RATINGS ' + JSON.stringify(await p.evaluate(() => [...document.querySelectorAll('.mealbox, .tl.evening')].map(e => e.innerText.replace(/\s+/g, ' ').slice(0, 300)))));
+  console.log('RATINGS ' + JSON.stringify(await p.evaluate(() => [...document.querySelectorAll('.tl:has(.dot.meal)')].map(e => e.innerText.replace(/\s+/g, ' ').slice(0, 300)))));
   console.log('CHECKS ' + JSON.stringify(await p.evaluate(() => [...document.querySelectorAll('.checks li')].map(e => e.innerText))));
   await p.screenshot({ path: 'ratings.png', fullPage: false });
   await b.close();
