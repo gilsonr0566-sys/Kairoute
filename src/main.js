@@ -1691,38 +1691,77 @@ function showLine(s, start) {
   const n = start != null ? nextShow(sh, start) : null;
   return `${sh.what}: ${showWhen(sh)}${n != null ? (n < start + s.minutes ? ` · catch the ${fmt(n)} show during your visit` : ` · next one ${fmt(n)}, after your planned visit`) : ""}`;
 }
-const extrasAsked = {};
+const extrasAsked = {}, nearCache = {};
 let extrasBusy = false;
-// Asked once per stop, only for stops on a plan the traveler opens, then kept with the trip.
+// The live-guide standard (Richard, Nov 13: "exactly like having the guide walk us through"). At every stop worth
+// it, the voice tour is a walk: an opening where you stand, then point by point ("stand here, look at…"), each
+// with its own full story where the place deserves one, a walking cue between points, and a closing line that
+// hands over to the next stop. Points are real places from the sources or the map, or a spot at the stop itself
+// (its west front, the view from the steps); never an invented place.
+const EXTRAS_V = 2;
+async function nearSights(s) {
+  if (nearCache[s.id]) return nearCache[s.id];
+  if (!freeAI || !isFinite(s.lat)) return [];
+  const t = s.category + " " + s.name, r = /castle|palace|citadel|fortress|kremlin|acropolis|archaeolog|ancient|forum|monaster|abbey|park|garden|campus|cemetery|island|hill|complex/i.test(t) ? 450 : /old town|historic|quarter|district|village/i.test(t) ? 350 : AREA_CAT.test(t) ? 200 : 120;
+  try { const rr = await fetch(`${freeAI.url}/nearsights?lat=${s.lat}&lng=${s.lng}&r=${r}`); if (rr.ok) { const j = await rr.json(); return (nearCache[s.id] = (j.sights || []).map(x => Object.assign(x, { m: Math.round(hav(x, s) * 1000), sl: x.wiki ? 5 : 0 }))); } } catch (e) {}
+  return [];
+}
+// Real points to walk through: the sources' places near the stop, plus the map's named sights there.
+async function walkCands(s, city) {
+  const out = partCands(s, city).slice(), mains = (city.sites || []).filter(x => !x.quick && x !== s);
+  for (const x of await nearSights(s)) {
+    if (out.length >= 14) break;
+    if (sameSight(x, s) || mains.some(m => sameSight(x, m) || (isFinite(m.lat) && hav(x, m) < 0.03 && nameMatch(m.name.split(" ")[0], x.name))) || out.some(o => sameSight(x, o) || hav(x, o) < 0.015)) continue;
+    out.push(x);
+  }
+  return out;
+}
+const words = t => String(t || "").split(/\s+/).filter(Boolean).length;
 async function stopExtras(s, city) {
-  const key = keyOf(city.city) + "|" + s.id; if (extrasAsked[key] || s.extrasV >= 1) return; extrasAsked[key] = true;
-  const cands = partCands(s, city);
-  const ask = `You are a local tour guide in ${city.city}. The traveler is visiting "${s.name}"${s.category ? " (" + s.category + ")" : ""}.
-${cands.length >= 2 ? `These real places are right here (distance from the middle of ${s.name}):
-${cands.map((c, i) => `${i + 1}. ${c.name}${c.local ? " [" + c.local + "]" : ""} (${c.m} m)`).join("\n")}
-Choose the 2 to 6 of them a visitor should stand in front of during a visit to ${s.name}, in a sensible walking order, and leave out any that are not really part of a visit here.` : `There is no list of parts for this stop: return "parts": [].`}
-Return ONLY JSON {"parts":[{"n":number from the list,"minutes":5 to 20,"cue":"one short line telling them where to walk from the previous part, e.g. Walk 40 m to the tower on the south side","guide":"40 to 70 words in second person about what they are looking at right now","lookFor":"one specific detail to spot"}],"show":{"what":"","every":0,"first":"","last":"","n":0}}.
-"show" is only for a famous show that runs on a fixed timetable at ${s.name} or one of these parts (like a clock's hourly show or the changing of the guard): "what" names it, "every" is minutes between shows, "first" and "last" are the first and last show as HH:MM, and "n" is the part it happens at (0 for ${s.name} itself). If there is no such show, or you are not sure of its timetable, leave "what" empty. Write in ${P().lang}.`;
+  const key = keyOf(city.city) + "|" + s.id; if (extrasAsked[key] || s.extrasV >= EXTRAS_V) return; extrasAsked[key] = true;
+  const cands = await walkCands(s, city), area = AREA_CAT.test(s.category + " " + s.name) || cands.length >= 2;
+  const ask = `You are the best licensed walking-tour guide in ${city.city}, leading a small group in person through "${s.name}"${s.category ? " (" + s.category + ")" : ""}. Write the walk-through exactly as you would speak it on the spot: the group must always be standing in front of what you are talking about.
+${cands.length ? `Real places right here (distance from the middle of ${s.name}):
+${cands.map((c, i) => `${i + 1}. ${c.name}${c.local ? " [" + c.local + "]" : ""} (${c.m} m)${c.desc ? " — " + c.desc : ""}`).join("\n")}
+` : ""}Plan ${area ? "4 to 8 points" : "2 to 4 points"} in a walking order that never doubles back, starting where a visitor arrives. A point is either one of the places above (give its number as "n") or a spot at ${s.name} itself (give "spot", e.g. "the west front", "inside, at the altar", "the view from the top step"). Never name a place that is not on the list or part of ${s.name}.
+Return ONLY JSON {"intro":"...","parts":[{"n":number or 0,"spot":"","stand":"...","guide":"...","look":"...","walk":"...","minutes":number}],"wrap":"...","show":{"what":"","every":0,"first":"","last":"","n":0}}.
+- "intro": 50 to 90 words said where the group gathers: where they are, why it matters, and the route you'll take ("we'll start at…, then…").
+- "stand": one sentence putting them in place: where to stand and which way to face ("Stand by the fountain and face the clock tower").
+- "guide": the full spoken story of that point, 110 to 220 words where the place has a lot to tell (a church, a monument, a famous building), 60 to 110 for a small detail. Real history, people, dates you are sure of, and what they are looking at right now ("look up at…", "see the crack in the third step?"). Conversational, like a person thinking aloud, not a script.
+- "look": one specific detail to spot from that point.
+- "walk": for every point after the first, one line to get there from the previous point, with distance and a landmark ("Walk 40 m along the north side to the church with the twin towers").
+- "minutes": time at that point, 3 to 20.
+- "wrap": 25 to 50 words closing the stop and handing over to the next one.
+- "show": only for a famous show that runs on a fixed timetable here (like a clock's hourly show or the changing of the guard): "what" names it, "every" is minutes between shows, "first"/"last" the first and last as HH:MM, "n" the point it happens at. Otherwise leave "what" empty.
+Write in ${P().lang}.${faithNote()}`;
   try {
-    const r = await sample(ask, { modelTier: "default" }); const j = parseJSON(r.text || "") || {};
-    const parts = [];
-    for (const x of j.parts || []) { const c = cands[(+x.n || 0) - 1]; if (!c || parts.some(p => p.name === c.name) || !x.guide) continue;
-      parts.push({ name: c.name, local: c.local, lat: c.lat, lng: c.lng, minutes: Math.max(3, Math.min(30, Math.round(numV(x.minutes) || 8))), cue: String(x.cue || "").slice(0, 200), guide: String(x.guide).slice(0, 900), lookFor: String(x.lookFor || "").slice(0, 200), quickId: c.quickId, n: +x.n }); }
-    if (parts.length >= 2) { s.parts = parts.slice(0, 6); s.partsOff = []; partMinutes(s); }
+    let parts = [], j = {};
+    for (let tries = 0; tries < 2 && parts.length < 2; tries++) {
+      const r = await sample(ask, { modelTier: "default" }); j = parseJSON(r.text || "") || {}; parts = [];
+      for (const x of j.parts || []) {
+        const c = +x.n ? cands[+x.n - 1] : null, spot = !c && x.spot ? String(x.spot).slice(0, 80) : "";
+        if ((+x.n && !c) || (!c && !spot) || words(x.guide) < 40) continue; // an unknown place, or a story too thin to be worth a stop
+        const nm = c ? c.name : spot.replace(/^\w/, ch => ch.toUpperCase());
+        if (parts.some(p => p.name === nm)) continue;
+        parts.push({ name: nm, spot: !c, local: c && c.local, lat: c ? c.lat : s.lat, lng: c ? c.lng : s.lng, minutes: Math.max(3, Math.min(20, Math.round(numV(x.minutes) || 8))), stand: String(x.stand || "").slice(0, 240), cue: String(x.walk || "").slice(0, 240), guide: String(x.guide).slice(0, 1800), lookFor: String(x.look || "").slice(0, 240), quickId: c && c.quickId, n: +x.n || 0, i: (j.parts || []).indexOf(x) });
+      }
+    }
+    if (parts.length >= 2) { s.parts = parts.slice(0, 8); s.partsOff = []; delete s.baseMin; partMinutes(s); s.intro = String(j.intro || "").slice(0, 900); s.wrap = String(j.wrap || "").slice(0, 500); }
     const sh = j.show || {};
-    if (sh.what && String(sh.what).length < 120) { const every = Math.round(numV(sh.every) || 0), pi = +sh.n ? (s.parts || []).findIndex(p => p.n === +sh.n) : -1;
+    if (sh.what && String(sh.what).length < 120) { const every = Math.round(numV(sh.every) || 0), pi = (s.parts || []).findIndex(p => p.i === (+sh.n || 0) - 1);
       s.show = { what: String(sh.what), every: every >= 10 && every <= 720 ? every : 0, first: hhmm(sh.first) != null ? String(sh.first) : "", last: hhmm(sh.last) != null ? String(sh.last) : "", part: pi >= 0 ? pi : null, note: "Times from your guide; check on the day" }; }
-    s.extrasV = 1; save();
+    s.extrasV = EXTRAS_V; save();
     if (["plan", "sites", "guide", "tour"].includes(view)) { const y = window.scrollY; render(); window.scrollTo(0, y); }
   } catch (e) { delete extrasAsked[key]; }
 }
-// Big stops and the best-known stops on today's plan get their parts and show times.
+// Every stop on today's plan that deserves a walk-through gets one: areas, big stops and the best-known stops.
+const walkWorthy = (s, city) => !s.along && !s.quick && (AREA_CAT.test(s.category + " " + s.name) || s.mustSee || s.unesco || bigStop(s, city) || (s.minutes || 0) >= 40);
 function queueExtras(plan) {
   if (extrasBusy || !plan || plan.error || typeof sample !== "function" || !sample) return;
-  const city = plan.city, todo = plan.items.filter(i => i.type === "stop" && !i.place.along && !(i.place.extrasV >= 1) && !extrasAsked[keyOf(city.city) + "|" + i.place.id] && (bigStop(i.place, city) || i.place.mustSee)).map(i => city.sites.find(x => x.id === i.place.id) || i.place);
+  const city = plan.city, todo = plan.items.filter(i => i.type === "stop" && !(i.place.extrasV >= EXTRAS_V) && !extrasAsked[keyOf(city.city) + "|" + i.place.id] && walkWorthy(i.place, city)).map(i => city.sites.find(x => x.id === i.place.id) || i.place);
   if (!todo.length) return;
   extrasBusy = true;
-  (async () => { try { for (const s of todo.slice(0, 6)) await stopExtras(s, city); } finally { extrasBusy = false; } })();
+  (async () => { try { for (const s of todo.slice(0, 8)) await stopExtras(s, city); } finally { extrasBusy = false; } })();
 }
 // What a big stop holds, for the Change stops card: each part can be unticked.
 function partsPick(s) {
@@ -1733,12 +1772,13 @@ function partsPick(s) {
 function partsList(s, start, withPlay) {
   if (!s.parts || s.parts.length < 2) return s.show && s.show.what ? `<div class="sub show">⏱ ${esc(showLine(s, start))}</div>` : "";
   const pp = partPlan(s, start == null ? 9 * 60 : start);
-  return `${s.show && s.show.what ? `<div class="sub show">⏱ ${esc(showLine(s, start))}</div>` : ""}<ol class="parts">${pp.list.map((x, i) => `<li><b>${esc(x.p.name)}</b>${start != null ? ` <small>${fmt(x.time)}${x.wait ? " · wait " + dur(x.wait) + " for the show" : ""}</small>` : ""}${withPlay ? `${i && x.p.cue ? `<span class="cue">${esc(x.p.cue)}</span>` : ""}<span class="pguide">${esc(unitText(x.p.guide))}</span>${x.p.lookFor ? `<span class="cue">Look for: ${esc(x.p.lookFor)}</span>` : ""}<button class="btn ghost small" data-play="part:${esc(s.id)}:${x.k}" data-label="▶ Play">▶ Play</button>` : ""}</li>`).join("")}</ol>`;
+  return `${s.show && s.show.what ? `<div class="sub show">⏱ ${esc(showLine(s, start))}</div>` : ""}<ol class="parts">${pp.list.map((x, i) => `<li><b>${esc(x.p.name)}</b>${start != null ? ` <small>${fmt(x.time)}${x.wait ? " · wait " + dur(x.wait) + " for the show" : ""}</small>` : ""}${withPlay ? `${i && x.p.cue ? `<span class="cue">${esc(x.p.cue)}</span>` : ""}${x.p.stand ? `<span class="cue"><b>Stand here:</b> ${esc(x.p.stand)}</span>` : ""}<span class="pguide">${esc(unitText(x.p.guide))}</span>${x.p.lookFor ? `<span class="cue">Look for: ${esc(x.p.lookFor)}</span>` : ""}<button class="btn ghost small" data-play="part:${esc(s.id)}:${x.k}" data-label="▶ Play">▶ Play</button>` : ""}</li>`).join("")}</ol>`;
 }
 function partSpeech(s, k, first) {
   const p = s.parts[k]; if (!p) return "";
-  const on = partsOn(s);
-  return (first ? `${s.name}. ${s.summary || ""} We'll take it in ${on.length} parts: ${on.map(x => x.name).join(", ")}. First, ${p.name}.` : `${p.cue || "Next, " + p.name + "."}`) + "\n\n" + p.guide + (p.lookFor ? "\n\nLook for this: " + p.lookFor : "");
+  const on = partsOn(s), last = on[on.length - 1] === p;
+  const open = first ? (s.intro || `${s.name}. ${s.summary || ""} We'll take it in ${on.length} parts: ${on.map(x => x.name).join(", ")}.`) + "\n\n" : (p.cue ? p.cue + "\n\n" : "");
+  return open + (p.stand ? p.stand + "\n\n" : "") + p.guide + (p.lookFor ? "\n\nBefore we move on, look for this: " + p.lookFor : "") + (last && s.wrap ? "\n\n" + s.wrap : "");
 }
 // "Famous sight" or "Local favorite", from the evidence, never both: a must-see, a World Heritage site or a sight
 // with many Wikipedia language editions (at least 25, and at least 30% of the city's 5th most famous) is a
@@ -2538,10 +2578,21 @@ if (typeof window !== "undefined") window.__kairouteFameCheck = async fix => {
     fameAsked["prague test"] = src;
     const S = gone.sites.find(x => x.name === "Old Town Square"), cands = partCands(S, gone);
     ok("Big stop: Old Town Square has real parts to show", cands.length >= 2, cands.map(x => x.name + " " + x.m + " m").join(", ") || "none");
-    sample = async () => ({ text: JSON.stringify({ parts: [{ n: 1, minutes: 8, cue: "", guide: "You are standing in front of it.", lookFor: "x" }, { n: 2, minutes: 6, cue: "Walk 40 m to your left.", guide: "Now this one.", lookFor: "y" }, { n: 99, minutes: 5, cue: "Walk on.", guide: "An invented place.", lookFor: "" }], show: { what: "", every: 0 } }) });
-    delete extrasAsked["prague test|" + S.id]; await stopExtras(S, gone);
-    const real = (S.parts || []).every(p => cands.some(c => c.name === p.name && c.lat === p.lat && c.lng === p.lng));
-    ok("Big stop: split into parts, each a real nearby place (an invented one is refused)", S.parts && S.parts.length === 2 && real, (S.parts || []).map(p => p.name).join(", ") || "no parts");
+    const story = n => Array.from({ length: n }, (_, i) => "word" + i).join(" ");
+    let asked = "";
+    sample = async q => { asked = q; return { text: JSON.stringify({ intro: "We're standing at the old heart of the city. We'll start by the church, then the town hall, then the west front.", parts: [
+      { n: 1, stand: "Stand by the monument and face the church with the twin towers.", guide: story(150), look: "the golden Madonna", walk: "", minutes: 8 },
+      { n: 2, stand: "Stand under the tower.", guide: story(120), look: "the plaque", walk: "Walk 40 m to your left, past the fountain.", minutes: 6 },
+      { n: 99, stand: "Stand here.", guide: story(120), look: "", walk: "Walk on.", minutes: 5 },
+      { n: 0, spot: "the west front", stand: "Stand back by the café tables and look at the whole square.", guide: story(80), look: "the pastel houses", walk: "Walk to the middle of the square.", minutes: 5 },
+      { n: 3, stand: "Stand here.", guide: story(12), look: "", walk: "", minutes: 5 }], wrap: "That's the square. Next we head to the clock.", show: { what: "", every: 0 } }) }; };
+    delete extrasAsked["prague test|" + S.id]; S.extrasV = 0; await stopExtras(S, gone);
+    const P0 = S.parts || [], realPt = P0.filter(p => !p.spot).every(p => cands.some(c => c.name === p.name && c.lat === p.lat && c.lng === p.lng)), spot = P0.find(p => p.spot);
+    ok("Live guide: points are real nearby places or spots at the stop (an invented place and a thin story are refused)", P0.length === 3 && realPt && spot && spot.lat === S.lat, P0.map(p => p.name).join(", ") || "no parts");
+    const sp1 = partSpeech(S, 0, true), spL = partSpeech(S, 2, false);
+    ok("Live guide: the walk opens where you stand, puts you in place at each point, and hands over at the end", /old heart/.test(sp1) && /Stand by the monument/.test(sp1) && /Walk to the middle/.test(spL) && /Next we head to the clock/.test(spL) && !/Next we head/.test(sp1), "opening, stand-here line, walk cue and closing in order");
+    ok("Live guide: the guide is asked for full stories, stand-here lines and walk cues", /110 to 220 words/.test(asked) && /"stand"/.test(asked) && /never doubles back/.test(asked), "asked for the live-guide standard");
+    ok("Live guide: every area, castle, old town or must-see stop gets a walk-through, even without sources", walkWorthy({ name: "Plaka and Anafiotika", category: "Old town", minutes: 30 }, { city: "x", sites: [] }) && walkWorthy({ name: "A cathedral", category: "Church", mustSee: true, minutes: 30 }, { city: "x", sites: [] }) && !walkWorthy({ name: "A fountain", category: "Fountain", minutes: 10, quick: true }, { city: "x", sites: [] }), "Plaka qualifies; a quick fountain does not");
     const C = gone.sites.find(x => sameSight(clock, x));
     sample = async () => ({ text: JSON.stringify({ parts: [], show: { what: "The clock's show", every: 60, first: "09:00", last: "23:00", n: 0 } }) });
     delete extrasAsked["prague test|" + C.id]; C.extrasV = 0; await stopExtras(C, gone);
@@ -2551,6 +2602,17 @@ if (typeof window !== "undefined") window.__kairouteFameCheck = async fix => {
     ok("Big stop: unticking a part shortens the visit", S.minutes < before, `${before} min → ${S.minutes} min`);
   } finally { sample = keepS; if (keepFA === undefined) delete fameAsked["prague test"]; else fameAsked["prague test"] = keepFA; }
   return out;
+};
+// Live check (run by the "Walk-through live check" workflow against the published site): write one stop's
+// walk-through with the real sources, map and AI, and return it so the script can be read.
+if (typeof window !== "undefined") window.__kairouteWalkProbe = async (cityName, stop) => {
+  const city = { city: cityName, sites: [Object.assign({ id: keyOf(stop.name).replace(/ /g, "-"), minutes: 45, kind: "touristy", mustSee: true, quick: false, summary: "", guide: "", lookFor: [], picks: [] }, stop)], farther: [], restaurants: [] };
+  const src = await sourcesFor(cityName); if (src) fameAsked[keyOf(cityName)] = src;
+  const s = city.sites[0], cands = await walkCands(s, city);
+  await stopExtras(s, city);
+  return { sources: !!src, cands: cands.map(c => c.name + " (" + c.m + " m)"), intro: s.intro, wrap: s.wrap, show: s.show, minutes: s.minutes,
+    parts: (s.parts || []).map(p => ({ name: p.name, spot: p.spot, words: words(p.guide), stand: p.stand, walk: p.cue, look: p.lookFor, minutes: p.minutes })),
+    script: (s.parts || []).map((p, k) => partSpeech(s, k, k === 0)).join("\n\n— next point —\n\n") };
 };
 // Safety-net hook: give a planned stop parts (as a big stop gets them), to walk the screens and the tour through.
 if (typeof window !== "undefined") window.__kairouteSplitStop = (i, n) => {
@@ -4400,8 +4462,8 @@ function tourMap(plan, d, prev, st) {
 function renderTour(d) {
   const city = cityFor(d);
   if (!city) return `${dayHeading(d)}${busyBlock()}${errBlock()}${needsCity(d)}`;
-  refillIfNeeded(d, city); if (!d.selected) d.selected = defaultSelection(city, trip.style, d);
-  const plan = buildPlan(d);
+  refillIfNeeded(d, city); if (!d.selected) d.selected = defaultSelection(city, trip.style, d); fameFor(d, city);
+  const plan = buildPlan(d); queueExtras(plan);
   if (!plan || plan.error) return `${dayHeading(d)}<div class="card empty"><p>${esc(plan ? plan.error : "Set up your day first.")}</p><button class="btn" data-goto="trip">Edit this day</button></div>`;
   const steps = tourSteps(plan), T = curTour(d);
   T.i = Math.min(T.i, steps.length - 1);
@@ -4460,10 +4522,13 @@ function renderTour(d) {
       <p class="timeleft" id="tourLeft"></p>
       <ol class="partsteps">${pp.map((x, i) => `<li class="${i < pk ? "done" : i === pk ? "on" : ""}">${i < pk ? "✓ " : ""}${esc(x.p.name)}</li>`).join("")}</ol>
       ${pk && cp.p.cue ? `<p class="tourleg walk">${legIcon("walk")}<span>${esc(cp.p.cue)}</span></p>` : ""}
+      ${!pk && s.intro ? `<p class="lede">${esc(unitText(s.intro))}</p>` : ""}
+      ${cp.p.stand ? `<p class="stand"><b>Stand here:</b> ${esc(cp.p.stand)}</p>` : ""}
       ${cp.wait ? `<p class="banner">⏱ ${esc(s.show.what)} at ${fmt(cp.time)}. Be in front of ${esc(cp.p.name)} by then.</p>` : ""}
       <div class="audio"><button class="btn bigplay" data-play="part:${esc(s.id)}:${cp.k}" data-label="▶ Play this part">▶ Play this part</button><span class="state" aria-live="polite"></span></div>
       <p class="guidetext">${esc(unitText(cp.p.guide))}</p>
       ${cp.p.lookFor ? `<div class="field"><span class="eyebrow">Can you find it?</span><p>${esc(cp.p.lookFor)}</p></div>` : ""}
+      ${pk + 1 === pp.length && s.wrap ? `<p class="lede">${esc(unitText(s.wrap))}</p>` : ""}
       ${s.show && s.show.what && !cp.wait ? `<p class="travelnote">⏱ ${esc(showLine(s, st.time))}</p>` : ""}
       <details class="more" id="story-${esc(s.id)}"><summary>The whole story of ${esc(s.name)}</summary><div class="guidetext" style="margin-top:8px">${paras(unitText(s.guide))}</div></details>
       ${journalBlock(s)}
@@ -4471,6 +4536,7 @@ function renderTour(d) {
     </div>`;
     else body = `<div class="tourcard">
       <div class="stophead"><span class="stopnum big">${s.along ? "•" : stopNo}</span><div><h2 class="tourtitle">${esc(s.name)}</h2><p class="stopmeta">${esc(String(s.category || "").replace(/^\w/, c => c.toUpperCase()))}</p></div></div>
+      ${walkWorthy(s, city) && !(s.extrasV >= EXTRAS_V) && extrasAsked[keyOf(city.city) + "|" + s.id] ? `<p class="ai-note"><span class="spinner"></span> Your guide is planning the walk-through, point by point. The story below plays meanwhile.</p>` : ""}
       <p class="timeleft" id="tourLeft"></p>
 ${quietOn(s) ? `<p class="banner quiet" role="note">🤫 <span><b>Quiet place.</b> The story is below to read. Audio plays only after you confirm your earbuds are in.</span></p>` : ""}
       <div class="audio"><button class="btn bigplay" data-play="${esc(s.id)}" data-label="${quietOn(s) ? "🎧 Play with earbuds" : "▶ Play the story"}">${quietOn(s) ? "🎧 Play with earbuds" : "▶ Play the story"}</button><span class="state" aria-live="polite"></span></div>
