@@ -3463,10 +3463,14 @@ function placeMenu(m) {
 document.addEventListener("toggle", e => { const m = e.target; if (m.matches && m.matches("details.planmore") && m.open) placeMenu(m); }, true);
 // The back-to-the-ship countdown never leaves the screen: once the page scrolls it out of view, it pins to the top.
 function pinChip() {
-  const c = document.getElementById("cdCard"); if (!c) return;
+  pinDay(); const c = document.getElementById("cdCard"); if (!c) return;
   const was = c.classList.contains("pinned");
   if (!was) { const r = c.getBoundingClientRect(); if (r.height && r.top < 8) { c.style.height = r.height + "px"; c.classList.add("pinned"); } }
   else if (c.getBoundingClientRect().top >= 8) { c.classList.remove("pinned"); c.style.height = ""; }
+}
+function pinDay() {
+  const p = document.querySelector(".daypin"), h = p && p.parentElement; if (!p) return;
+  p.classList.toggle("on", h.getBoundingClientRect().bottom < 8);
 }
 const replaceMenus = () => { pinChip(); document.querySelectorAll("details.planmore[open]").forEach(placeMenu); };
 window.addEventListener("resize", replaceMenus); document.addEventListener("scroll", replaceMenus, true);
@@ -3639,7 +3643,11 @@ function dayHeading(d) {
 // The one head every day page shares (Day plan, Change stops, Guide): the day's name on the left; on the right the
 // back-to-the-ship countdown on ship, train and flight days, then the page's actions (one main action at most).
 const tourBtnHTML = () => `<button class="btn bigbtn tourbtn" data-act="tourstart"><span class="tb-long">▶ Start the tour</span><span class="tb-short">▶ Start tour</span></button>`;
-function pageHead(d, plan, acts) { return `<div class="dayhead pagehead">${dayHeading(d)}${plan && !plan.error ? countdownCard(d, plan) : ""}${acts ? `<div class="headacts">${acts}</div>` : ""}</div>`; }
+function pageHead(d, plan, acts) { const cd = plan && !plan.error ? countdownCard(d, plan) : ""; return `<div class="dayhead pagehead">${dayHeading(d)}${cd || dayPin(d)}${acts ? `<div class="headacts">${acts}</div>` : ""}</div>`; }
+// The day and place stay on screen while the page scrolls (Richard, Nov 13: "lock the destination and date on the
+// top"). On ship, train and flight days they ride in the pinned countdown; on other days a slim bar of their own.
+const dayPinText = d => [fmtDow(d.date) + " " + fmtDate(d.date), d.type === "sea" ? "At sea" : mainPlace(d)].filter(Boolean).join(" · ");
+const dayPin = d => `<div class="daypin" aria-hidden="true">${esc(dayPinText(d))}</div>`;
 function needsCity(d) {
   const ready = aiReady();
   if (ready) return `<div class="card empty">
@@ -5215,7 +5223,7 @@ function legendHTML(plan) {
   const cdHTML = countdownCard(d, plan), walkTile = plan.walkKm >= 0.15; // under about 0.1 mi of walking says nothing
   return `
   <div class="plangrid"><div class="plantop">
-  <div class="dayhead">${dayHeading(d)}${cdHTML}<button class="btn bigbtn tourbtn" data-act="tourstart"><span class="tb-long">▶ Start the tour</span><span class="tb-short">▶ Start tour</span></button></div>
+  <div class="dayhead">${dayHeading(d)}${cdHTML || dayPin(d)}<button class="btn bigbtn tourbtn" data-act="tourstart"><span class="tb-long">▶ Start the tour</span><span class="tb-short">▶ Start tour</span></button></div>
   <div class="daysum n${2 + (walkTile ? 1 : 0) + (cdHTML ? 0 : 1)}" role="group" aria-label="Today at a glance">
     <div><b>${fmt(plan.start)}–${fmt(plan.endBy)}</b><span>${d.type === "port" ? "ashore " + dur(plan.endBy - plan.start) : L ? dur(d.hours * 60) + " sightseeing" : "free " + dur(plan.endBy - plan.start)}</span></div>
     <div><b>${stopsN}${optN ? " + " + optN : ""}</b><span>${stopsN === 1 ? "pick" : "picks"}${optN ? " + optional" : ""}${plan.along.length ? ` · ${plan.along.length} on the way` : ""}</span></div>
