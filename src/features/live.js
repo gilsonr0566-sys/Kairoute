@@ -409,18 +409,23 @@ function alarmState(d, plan) {
   // safe wherever they are and doesn't move when optional stops come and go or the route is reordered (Richard,
   // Nov 13: the same day showed 15:57, then 18:16 a minute later).
   else { from = plan.w.head[0]; src = "plan"; }
-  const point = plan.w.tail[plan.w.tail.length - 1];
-  let leg = point ? legTo(from, point) : null;
-  if (point && src === "plan" && now == null) { const kept = items.filter(i => i.place && !i.place.bonus && !i.place.along);
-    kept.forEach(i => { const l = legTo(i.place, point); if (!leg || l.min > leg.min || from === plan.w.head[0]) { leg = l; from = i.place; } }); }
+  const T = plan.w.tail, point = T[T.length - 1];
+  // A stop on the way that the traveler can't skip (collecting bags at the hotel before the ship, train or flight):
+  // the countdown is to that stop, early enough to finish there and still reach the end in time.
+  const via = T.length > 1 && T[0].fixed ? T[0] : null;
+  let viaMin = 0; if (via) T.forEach((p, k) => { viaMin += (p.fixed ? p.minutes || 0 : 0) + (T[k + 1] ? legTo(p, T[k + 1]).min : 0); });
+  const target = via || point;
+  let leg = target ? legTo(from, target) : null;
+  if (target && src === "plan" && now == null) { const picked = items.filter(i => i.type === "stop" && !i.place.bonus && !i.place.along);
+    // Meals count only when they go with the traveler's own picks (with no picks the meal is an optional extra too).
+    (picked.length ? items.filter(i => i.type === "meal").concat(picked) : []).forEach(i => { const l = legTo(i.place, target); if (!leg || l.min > leg.min || from === plan.w.head[0]) { leg = l; from = i.place; } }); }
   // One return time, the same before and on the day: the latest safe time back (the plan's cushion before all aboard),
   // never the plan's own finish, which moves whenever stops are added or removed. On the day it counts down from
   // wherever the traveler really is.
-  const backBy = plan.endBy;
-  const st = { now, from, src, point, leg, backBy, latest: plan.endBy, leaveBy: leg ? backBy - leg.min : null };
-  st.ride = point ? rideBack(d, plan, st) : null;
-  // On the day, leave-by is for the ride you can still catch. Before the day, the plan's own leave time stays, so
-  // the countdown and the timeline agree.
+  const backBy = plan.endBy, goBy = backBy - viaMin;
+  const st = { now, from, src, point, via, goBy, leg, backBy, latest: plan.endBy, leaveBy: leg ? goBy - leg.min : null };
+  st.ride = point && !via ? rideBack(d, plan, st) : null;
+  // On the day, leave-by is for the train or ferry you can still catch.
   if (st.ride && now != null) st.leaveBy = st.ride.leaveBy;
   return st;
 }
@@ -515,7 +520,8 @@ function alarmTick() {
     const R = st.ride, dest = d.type === "departure" ? st.point.name : "the ship";
     const rideTxt = !R ? "" : R.none ? `No ${R.word} from ${R.where} gets you to ${dest} in time any more. Take a taxi now: about ${dur(R.taxiMin)} by road${R.fare ? `, roughly ${R.sym}${R.fare[0]}–${R.fare[1]} (agree the fare first)` : ""}.`
       : `${R.missed ? `You've missed the ${fmt(R.planned.t)} ${R.word}. ` : ""}${R.kind} ${R.to ? "to " + R.to + " " : ""}leaves ${R.where} at ${fmt(R.next.t)}: leave ${R.extra ? fromTxt : "for the " + (R.word === "ferry" ? "pier" : "station")} by ${fmt(R.leaveBy)}.${R.last && R.last !== R.next ? ` Last safe ${R.word}: ${fmt(R.last.t)}.` : ` This is the last ${R.word} that gets you back in time.`} If you miss it, a taxi takes about ${dur(R.taxiMin)}.`;
-    if (sub) sub.textContent = R && st.now != null ? `${word} ${rideTxt}` : `${word} From ${fromTxt}: ${legTxt}, so leave by ${fmt(st.leaveBy)}.${R ? " " + rideTxt : ""}`;
+    const viaTxt = st.via ? ` ${st.via.name} by ${fmt(st.goBy)}: ${dur(st.via.minutes || 0)} there, then the trip on takes the rest.` : "";
+    if (sub) sub.textContent = R && st.now != null ? `${word} ${rideTxt}` : `${word}${viaTxt} From ${fromTxt}: ${legTxt}, so leave by ${fmt(st.leaveBy)}.${R ? " " + rideTxt : ""}`;
     const agent = document.getElementById("cdAgent"); if (agent) agent.hidden = !(R && (R.none || R.missed) && d.portAgent);
     if (srcEl) srcEl.textContent = `Travel time: ${st.leg.src}${st.src === "GPS" ? ", from your GPS position" : st.src === "plan" ? ", from where the plan has you now" : ""}.`;
     if (srcEl && (d.type === "port" || d.type === "embark")) srcEl.textContent += " Being on board on time is your responsibility: confirm the all-aboard time with your cruise line on the day. Ships don't wait.";
