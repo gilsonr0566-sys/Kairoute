@@ -6,6 +6,11 @@ const URL = process.env.URL || "https://gilsonr0566-sys.github.io/Kairoute/", DA
 (async () => {
   const b = await chromium.launch(), p = await b.newPage({ viewport: { width: 1280, height: 800 } });
   p.on("pageerror", e => console.log("PAGE ERROR " + e.message));
+  // Every request the page makes for rides: when it went, what came back and how long it took.
+  const sent = new Map();
+  p.on("request", r => { if (/\/transit\b/.test(r.url())) { sent.set(r, Date.now()); console.log(`-> ${r.method()} ${r.url()} ${(r.postData() || "").slice(0, 160)}`); } });
+  p.on("requestfinished", async r => { if (sent.has(r)) { const res = await r.response(); const body = res ? (await res.text().catch(() => "")).slice(0, 200) : ""; console.log(`<- ${res && res.status()} in ${((Date.now() - sent.get(r)) / 1000).toFixed(1)} s: ${body}`); } });
+  p.on("requestfailed", r => { if (sent.has(r)) console.log(`<- FAILED after ${((Date.now() - sent.get(r)) / 1000).toFixed(1)} s: ${r.failure() && r.failure().errorText}`); });
   try {
     await p.goto(URL); await p.waitForFunction(() => window.__kairouteDays && window.__kairoutePrefs, null, { timeout: 120000 }); // waits out the short "updating" page
     console.log("Version", await p.evaluate(() => fetch("version.txt", { cache: "no-store" }).then(r => r.text()).catch(() => "?")));
@@ -13,6 +18,7 @@ const URL = process.env.URL || "https://gilsonr0566-sys.github.io/Kairoute/", DA
     console.log("Prefs now", JSON.stringify(await p.evaluate(() => { const i = window.__kairoutePrefs({}).interests.filter(x => x !== "bible" && x !== "churches"); return window.__kairoutePrefs({ interests: i, theme: "" }); })));
     const days = await p.evaluate(() => window.__kairouteDays()), d = days.find(x => DAY.test(x.dest + " " + x.city)) || days[0];
     console.log("Day", JSON.stringify(d));
+    console.log("Helper", JSON.stringify(await p.evaluate(() => fetch("ai.json", { cache: "no-store" }).then(r => r.json()).catch(e => String(e)))));
     for (const v of ["plan", "guide", "tour"]) {
       await p.evaluate(([v, i]) => window.__kairouteGo(v, i), [v, d.i]);
       await p.waitForTimeout(v === "plan" ? 150000 : 8000); // the plan writes the walk-throughs
