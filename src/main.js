@@ -3358,6 +3358,10 @@ function render() {
   bonusMemo = new Map(); mealMemo = new Map(); keptMemo = new Map(); eveMemo = new Map(); avoidMeals = new Set();
   const pkey = view + "|" + trip.active, pos = {}, winY = window.scrollY;
   panes().forEach(el => { pos[el.dataset.pane || "view"] = el.scrollTop; });
+  // A menu or the countdown's details that the traveler has open stays open through a background re-render
+  // (data arriving, live updates); only a tap outside or picking an item closes it.
+  const menuKey = el => el.id || ((el.querySelector("summary") || {}).getAttribute && el.querySelector("summary").getAttribute("aria-label")) || "";
+  const openMenus = [...document.querySelectorAll("#view details.moremenu[open]")].map(menuKey).filter(Boolean);
   renderView();
   { const v = document.getElementById("view"), app = !FULL_VIEWS[view] || /^(settings|privacy|terms)$/.test(view);
     document.documentElement.classList.toggle("appview", app);
@@ -3372,6 +3376,7 @@ function render() {
   { const old = document.querySelector(".coach"); if (old) old.remove(); const ch = coachHTML(); if (ch) document.body.insertAdjacentHTML("beforeend", ch); }
   if (askNotice && !FULL_VIEWS[view]) { const v = document.getElementById("view"); if (v) v.insertAdjacentHTML("afterbegin", `<p class="banner ok" role="status">${esc(askNotice)} <button class="linkbtn" data-act="asknoticeok">OK</button></p>`); }
   mountMaps(); liveAfterRender();
+  if (openMenus.length && paneMemo.same) document.querySelectorAll("#view details.moremenu").forEach(el => { if (openMenus.includes(menuKey(el))) { el.open = true; try { placeMenu(el); } catch (e) {} } });
   if (openFolds.size) document.querySelectorAll("#view details").forEach(el => { const sm = el.querySelector("summary"); if (sm && openFolds.has(view + "|" + sm.textContent.trim())) el.open = true; });
   // A re-render of the same screen (live updates, sync, data arriving) never moves what you're looking at:
   // put every panel, and the page itself, back exactly where it was, after folds have reopened.
