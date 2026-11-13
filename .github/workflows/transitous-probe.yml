@@ -1,0 +1,21 @@
+name: Timetable probe
+on:
+  workflow_dispatch:
+    inputs:
+      pairs:
+        description: "lat,lng>lat,lng;... (empty = the built-in examples)"
+        default: ""
+permissions:
+  contents: read
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - env:
+          PAIRS: ${{ inputs.pairs }}
+        run: node tools/transitous-probe.mjs || true
