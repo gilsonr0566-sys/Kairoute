@@ -1,4 +1,5 @@
 import { extras, Group } from "./extras.js";
+import { transitOptions } from "./transit.js";
 export { Group };
 // Kairoute AI helper. The website sends a prompt (and optional photos); this Worker asks Workers AI
 // and streams the answer back. Usage is counted from real token counts. On the free plan it stays inside
@@ -417,6 +418,23 @@ export default {
       const out = new Array(legs.length).fill(null); let next = 0;
       await Promise.all([0, 1, 2].map(async () => { while (next < legs.length) { const i = next++; if (legs[i]) out[i] = await routeLeg(legs[i], env, ctx).catch(() => null); } }));
       return Response.json({ routes: out }, { headers: h });
+    }
+    // /transit (POST {pairs:[{a:[lat,lng], b:[lat,lng]}]}): the mapped train, metro, tram, bus and ferry lines
+    // between each pair of points, with stops, the real path and a cautious time (see transit.js). Each pair is
+    // looked up once and kept for 30 days (an empty answer for 7), so every traveler on the same trip shares it.
+    if (url.pathname === "/transit" && req.method === "POST") {
+      let b; try { b = await req.json(); } catch (e) { return Response.json({ error: "Bad request" }, { status: 400, headers: h }); }
+      const ok = v => Array.isArray(v) && v.length === 2 && v.every(n => typeof n === "number" && isFinite(n)) && Math.abs(v[0]) <= 90 && Math.abs(v[1]) <= 180;
+      const pairs = (Array.isArray(b.pairs) ? b.pairs : []).slice(0, 12), out = [];
+      for (const pr of pairs) {
+        if (!pr || !ok(pr.a) || !ok(pr.b)) { out.push({ error: "bad" }); continue; }
+        const key = "tr1:" + [...pr.a, ...pr.b].map(n => n.toFixed(3)).join(",");
+        const hit = await env.USAGE.get(key, "json"); if (hit) { out.push(hit); continue; }
+        try { const opts = await transitOptions({ lat: pr.a[0], lng: pr.a[1] }, { lat: pr.b[0], lng: pr.b[1] }), res = { opts };
+          ctx.waitUntil(env.USAGE.put(key, JSON.stringify(res), { expirationTtl: (opts.length ? 30 : 7) * 86400 })); out.push(res);
+        } catch (e) { out.push({ error: "map busy" }); }
+      }
+      return Response.json({ results: out }, { headers: h });
     }
     // /nearsights?lat=&lng=&r=: the named sights OpenStreetMap knows within r metres of a point (monuments, churches,
     // artworks, viewpoints, museums, historic buildings, fountains). These are the real points a guide stops at
