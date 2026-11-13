@@ -48,7 +48,11 @@ const mins = t => { let m = 0; const h = /(\d+)\s*h/.exec(t), n = /(\d+)\s*min/.
     // 3. Tick two sights
     const names = await p.evaluate(() => { const out = []; for (const el of document.querySelectorAll('.sitelist input[data-site]:not(:checked)')) { if (!el.closest('.site').offsetParent) continue; out.push([el.dataset.site, el.closest('.site').querySelector('.name').innerText]); if (out.length === 2) break; } return out; });
     // A sight that won't fit stays unticked and opens the "won't fit" box (timing + what to change); close it.
-    for (const [id] of names.slice()) { await p.evaluate(id => document.querySelector(`input[data-site="${id}"]`).click(), id); await p.waitForTimeout(200);
+    for (const [id] of names.slice()) {
+      // After the first tick a sight that no longer fits loses its checkbox (shown, but can't be picked).
+      const can = await p.evaluate(id => { const x = document.querySelector(`input[data-site="${id}"]`); if (x) { x.click(); return 'ok'; } return document.querySelector(`.nofitcard[data-card="${id}"]`) ? 'nofit' : 'missing'; }, id);
+      if (can !== 'ok') { if (can === 'missing') bad(i, `${id} vanished from the list`); names.splice(names.findIndex(x => x[0] === id), 1); continue; }
+      await p.waitForTimeout(200);
       const box = await p.evaluate(id => { const b = document.querySelector('.fitbox'); if (!b) return null; const r = { meter: !!b.querySelector('.meter .mbar'), ticked: document.querySelector(`input[data-site="${id}"]`).checked }; b.querySelector('[data-act="fitcancel"]').click(); return r; }, id);
       if (box) { await p.waitForTimeout(150); if (!box.meter || box.ticked) bad(i, `won't-fit box for ${id} is missing its timing or the sight got ticked`); names.splice(names.findIndex(x => x[0] === id), 1); } }
     const picked = await checked();
