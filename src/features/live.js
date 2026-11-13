@@ -136,8 +136,10 @@ const WX_DAYS = 16;
 function wxKey(city) { const p = city && ((city.sites || [])[0] || {}); return isFinite(p.lat) ? (+p.lat).toFixed(1) + "," + (+p.lng).toFixed(1) : null; }
 function daysAhead(iso) { const t = todayISO(); return Math.round((new Date(iso + "T12:00:00Z") - new Date(t + "T12:00:00Z")) / 864e5); }
 function wxFetch(city) {
-  const k = wxKey(city); if (!k || wxAsked[k] || !freeAI) return; wxAsked[k] = 1;
-  try { const c = JSON.parse(localStorage.getItem("kairoute.wx." + k) || "null"); if (c && Date.now() - c.at < 3 * 3600e3) { wxCache[k] = c; return; } } catch (e) {}
+  const k = wxKey(city); if (!k || wxAsked[k]) return;
+  // The last forecast is used until a newer one arrives (and with no internet), so the plan never changes just because the signal went.
+  try { const c = JSON.parse(localStorage.getItem("kairoute.wx." + k) || "null"); if (c && c.days) { wxCache[k] = c; if (Date.now() - c.at < 3 * 3600e3) { wxAsked[k] = 1; return; } } } catch (e) {}
+  if (!freeAI || navigator.onLine === false) return; wxAsked[k] = 1;
   const [lat, lng] = k.split(",");
   fetch(`${freeAI.url}/weather?lat=${lat}&lng=${lng}`).then(r => r.ok ? r.json() : null).then(j => {
     if (!j || !j.days) return; j.at = Date.now(); wxCache[k] = j; try { localStorage.setItem("kairoute.wx." + k, JSON.stringify(j)); } catch (e) {}
@@ -181,12 +183,12 @@ function closedAlt(d, s) {
   const rank = x => (x.kind && x.kind === s.kind ? 2 : 0) + (fameW(x) || 1) - hav(x, s) / 5;
   return c.sort((a, b) => rank(b) - rank(a)).slice(0, 8).find(x => fitsAll(fitTrial(d, [...sel, x.id]))) || null;
 }
-function swapClosed(id, alt) { const d = day(); d.selected = (d.selected || []).filter(x => x !== id); if (!d.selected.includes(alt)) d.selected = d.selected.concat(alt); d.anchor = alt; save(); render(); }
+function swapClosed(id, alt) { const d = day(); d.selected = (d.selected || []).filter(x => x !== id); if (!d.selected.includes(alt)) d.selected = d.selected.concat(alt); d.anchor = alt; markMine(d, alt, true); save(); render(); }
 function moveClosed(id, to) {
   const d = day(), o = trip.days[to]; if (!o) return;
   d.selected = (d.selected || []).filter(x => x !== id);
   if (!o.selected) { const c = cityFor(o); o.selected = c ? defaultSelection(c, trip.style, o) : []; }
-  if (!o.selected.includes(id)) o.selected = o.selected.concat(id);
+  if (!o.selected.includes(id)) o.selected = o.selected.concat(id); markMine(o, id, true);
   save(); render();
 }
 
@@ -242,7 +244,7 @@ let busySent = {};
 function reportBusy(s, level) {
   const d = day(), city = cityFor(d); if (!city || !s) return; const k = d.id + "|" + s.id; busySent[k] = level;
   try { localStorage.setItem("kairoute.busy." + k, String(level)); } catch (e) {}
-  if (freeAI) fetch(`${freeAI.url}/rate`, { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ city: keyOf(city.city), place: keyOf(s.name), busy: level, hour: new Date().getHours(), dev: devId() }) }).catch(() => {});
+  if (freeAI) fetch(`${freeAI.url}/rate`, { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ city: keyOf(city.city), place: keyOf(s.name), busy: level, hour: Math.floor((nowMin(d) % 1440) / 60), /* the place's own hour */ dev: devId() }) }).catch(() => {});
   render();
 }
 const busyMine = (d, s) => { const k = d.id + "|" + s.id; if (busySent[k] == null) { try { busySent[k] = +localStorage.getItem("kairoute.busy." + k) || 0; } catch (e) { busySent[k] = 0; } } return busySent[k]; };
@@ -340,7 +342,7 @@ function liveWindow(d, w) {
   w.startLabel = L.finish > 0 ? "Now" : L.gps && !L.atStop ? "Now: where you are" : "Now: leaving " + L.name; w.notes = [];
 }
 const geoFresh = () => !!(geoPos && geoPos.at && Date.now() - geoPos.at < 3 * 60e3 && (geoPos.acc || 0) < 150);
-let liveMsg = null, liveUndo = null, liveLastAuto = 0, liveHold = 0;
+let liveMsg = null, liveUndo = null, liveLastAuto = {}, liveHold = 0; // last automatic re-plan, per day
 const durOf = i => i.type === "meal" ? i.meal.len : i.place.minutes || 0;
 function replanNow(d, o) {
   o = o || {}; const now = liveNow(d); if (now == null) return false;
@@ -468,7 +470,7 @@ function alarmCard(d, plan) {
     ${fixed ? `<div class="cdsub" id="cdSub"></div><div class="cdsrc" id="cdSrc"></div>
     <div class="banner" id="cdMsg" hidden></div>
     ${d.type === "port" ? `<p class="cdagent" id="cdAgent" ${d.portAgent ? "" : "hidden"}>${d.portAgent ? `Can't make all aboard? Call the port agent: <a href="tel:${esc(String(d.portAgent).replace(/[^\d+]/g, ""))}">${esc(d.portAgent)}</a>` : ""}</p>
-    <details class="cdwhere"><summary>${d.portAgent ? "Port agent's phone" : "Add the port agent's phone"}</summary><div class="field"><label for="cdAgentIn">Port agent's phone (it's in your cruise documents for each port)</label><input id="cdAgentIn" type="tel" inputmode="tel" value="${esc(d.portAgent || "")}" placeholder="+39 081 ..."></div></details>` : ""}
+    <details class="cdwhere cdagentfold"><summary>${d.portAgent ? "Port agent's phone" : "Add the port agent's phone"}</summary><div class="field"><label for="cdAgentIn">Port agent's phone (it's in your cruise documents for each port)</label><input id="cdAgentIn" type="tel" inputmode="tel" value="${esc(d.portAgent || "")}" placeholder="+39 081 ..."></div></details>` : ""}
       ${gpsOn ? "" : `<details class="cdwhere" ${cdWhere && cdWhere !== "auto" ? "open" : ""}><summary>${today ? "GPS off? Pick your spot" : "Count from another spot"}</summary><div class="field"><label for="cdWhere">Where are you?</label>
       <select id="cdWhere"><option value="auto">Wherever the plan says</option>${items.map((i, k) => `<option value="${k}" ${String(cdWhere) === String(k) ? "selected" : ""}>${esc(i.place.name)}</option>`).join("")}</select></div></details>`}` : ""}
     <div class="actions">
@@ -489,15 +491,15 @@ function alarmTick() {
   const fixed = !!fixedTitle(d) && plan.w.tail.length, st = fixed ? alarmState(d, plan) : null, live = isToday(d) || cdPreview != null;
   // Running late, noticed by GPS: still at a stop well past the time the plan leaves it, or nowhere near the
   // stop the plan expected 20 minutes ago. At most once every 10 minutes, and never right after an Undo.
-  if (isToday(d) && geoFresh() && Date.now() - liveLastAuto > 10 * 60e3 && Date.now() > liveHold) {
+  if (isToday(d) && geoFresh() && Math.abs(Date.now() - (liveLastAuto[d.id] || 0)) > 10 * 60e3 && Date.now() > liveHold) {
     const now = nowMin(d), items = plan.items.filter(i => (i.type === "stop" && !i.place.along) || i.type === "meal");
     const near = items.find(i => hav(geoPos, i.place) <= 0.12);
     if (near) { const k = d.id + "|" + near.place.name; if (!liveArrived[k]) liveArrived[k] = now;
       // You'll leave here when your visit is done (or now, if you've stayed past it): compare that with the plan.
       const leave = Math.max(now, liveArrived[k] + durOf(near)), behind = leave - (near.time + durOf(near));
-      if (behind > 15 && !(liveOn(d) && d.live.atStop && d.live.name === near.place.name)) { liveLastAuto = Date.now(); replanNow(d, { auto: true, at: near, behind, finish: Math.max(5, leave - now) }); return; } }
+      if (behind > 15 && !(liveOn(d) && d.live.atStop && d.live.name === near.place.name)) { liveLastAuto[d.id] = Date.now(); replanNow(d, { auto: true, at: near, behind, finish: Math.max(5, leave - now) }); return; } }
     else { const due = items.filter(i => i.time + 20 < now && !(d.live && (d.live.done || []).includes(i.place.id))).pop();
-      if (due && !(liveOn(d) && d.live.at > due.time)) { liveLastAuto = Date.now(); replanNow(d, { auto: true, behind: now - due.time }); return; } }
+      if (due && !(liveOn(d) && d.live.at > due.time)) { liveLastAuto[d.id] = Date.now(); replanNow(d, { auto: true, behind: now - due.time }); return; } }
   }
   if (fixed) {
     const el = document.getElementById("cdBig"), sub = document.getElementById("cdSub"), msg = document.getElementById("cdMsg"), srcEl = document.getElementById("cdSrc");
@@ -573,7 +575,7 @@ function liveGeoStart() {
   try { liveGeo = navigator.geolocation.watchPosition(pos => { const first = !geoFresh(); if (geoWatch == null) geoPos = { lat: pos.coords.latitude, lng: pos.coords.longitude, acc: pos.coords.accuracy, at: Date.now() }; geoPerm = "granted"; if (first && view === "plan") render(); else alarmTick(); },
     err => { if (err && err.code === 1) { geoPerm = "denied"; try { navigator.geolocation.clearWatch(liveGeo); } catch (e) {} liveGeo = null; clearInterval(liveGeoPoll); render(); } }, { enableHighAccuracy: true, maximumAge: 15000, timeout: 30000 });
     // Standing still, some phones stop reporting: ask once a minute so the countdown always uses a fresh position.
-    liveGeoPoll = setInterval(() => { if (liveGeo != null && geoWatch == null) navigator.geolocation.getCurrentPosition(pos => { geoPos = { lat: pos.coords.latitude, lng: pos.coords.longitude, acc: pos.coords.accuracy, at: Date.now() }; }, () => {}, { enableHighAccuracy: true, maximumAge: 30000, timeout: 20000 }); }, 60000);
+    liveGeoPoll = setInterval(() => { if (liveGeo != null && geoWatch == null) navigator.geolocation.getCurrentPosition(pos => { geoPos = { lat: pos.coords.latitude, lng: pos.coords.longitude, acc: pos.coords.accuracy, at: Date.now() }; alarmTick(); /* standing still at a stop: the fresh position re-checks running late at once */ }, () => {}, { enableHighAccuracy: true, maximumAge: 30000, timeout: 20000 }); }, 60000);
   } catch (e) { liveGeo = null; }
 }
 if (typeof window !== "undefined") setInterval(() => { try { alarmTick(); } catch (e) { console.warn("live", e); } }, 20000);

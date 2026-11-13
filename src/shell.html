@@ -1021,6 +1021,35 @@ details.morefold:not([open]) { padding-bottom: 0 !important; }
   .dayhead .cdchip > summary { justify-content: center; min-height: 46px; }
   .cdchip .cdbig { font-size: 1.5rem; }
 }
+/* Offline: "Ready for offline" card (Trip screen, Settings) and the one-line banner on the Day plan and Guide */
+.offcard { gap: 10px; border-left: 4px solid var(--line); }
+.offcard.ok { border-left-color: var(--route); }
+.offcard.warn { border-left-color: var(--meal); }
+.offcard.run { border-left-color: var(--ride); }
+.offhead { display: flex; gap: 12px; align-items: center; }
+.offico { flex: none; width: 34px; height: 34px; border-radius: 8px; display: grid; place-items: center; font-weight: 800; background: var(--route-soft); color: var(--route); font-size: 1rem; }
+.offcard.warn .offico { background: var(--meal-soft); color: var(--meal); }
+.offcard.run .offico { background: color-mix(in srgb, var(--ride) 16%, transparent); color: var(--ride); }
+.offtxt { flex: 1; min-width: 0; display: grid; gap: 2px; }
+.offtxt b { font-family: var(--font-display); font-size: 1.02rem; }
+.offtxt span { color: var(--muted); font-size: .9rem; }
+.offhead .btn { flex: none; }
+.offbar { height: 8px; border-radius: 4px; background: var(--route-soft); overflow: hidden; }
+.offbar i { display: block; height: 100%; background: var(--route); border-radius: 4px; transition: width .4s; }
+.offmsg { font-size: .88rem; color: var(--muted); }
+.offdays summary { cursor: pointer; font-weight: 700; font-size: .9rem; }
+.offdays ul { list-style: none; margin: 8px 0 0; padding: 0; display: grid; gap: 6px; }
+.offdays li { display: grid; grid-template-columns: 56px minmax(0, 1fr); gap: 2px 8px; font-size: .86rem; padding: 6px 0; border-top: 1px solid var(--line); }
+.offd { font-weight: 700; color: var(--muted); }
+.offp { font-weight: 700; }
+.offparts { grid-column: 2; display: flex; flex-wrap: wrap; gap: 4px 10px; }
+.offparts i { font-style: normal; color: var(--route); white-space: nowrap; }
+.offparts i.n { color: var(--meal); font-weight: 700; }
+.offdays li.lock .offparts i { color: var(--muted); }
+.offban { align-items: center; flex-wrap: wrap; margin-bottom: 10px; }
+.offban > span:first-of-type { flex: 1; min-width: 220px; }
+.offbtns { display: flex; gap: 8px; }
+@media (max-width: 520px) { .offhead { flex-wrap: wrap; } .offhead .btn { width: 100%; } }
 
 /* ---- Every page shares the Day plan's look (Nov 13, docs/design-rules.md): one head row (title, ship countdown,
    one main action), less-used things folded, panels that scroll on their own, nothing said twice. ---- */
@@ -1097,7 +1126,7 @@ details.morefold:not([open]) { padding-bottom: 0 !important; }
     display: flex !important; flex-direction: column; align-items: stretch; gap: 0; background: var(--card); border-right: 1px solid var(--line); overflow-y: auto; scrollbar-width: none; }
   html.railnav .tabs .railonly { display: flex !important; }
   html.railnav .tabs .railgap { flex: 1; }
-  html.railnav .tab { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; padding: 4px 2px !important; margin: 0 6px; border: 0; border-radius: 8px; font-size: .66rem !important; font-weight: 700; color: var(--muted); min-height: 50px; }
+  html.railnav .tab { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; padding: 4px 0 !important; margin: 0 3px; border: 0; border-radius: 8px; font-size: .62rem !important; font-weight: 700; letter-spacing: -.01em; white-space: nowrap; color: var(--muted); min-height: 50px; } /* labels fit the slim bar in any font (Day plan, Settings) */
   html.railnav .tab svg { display: block; width: 20px; height: 20px; }
   html.railnav .tab[aria-selected="true"] { background: var(--route-soft); color: var(--route); border: 0; }
   html.railnav .tab.railhome { color: var(--ink); }
@@ -1120,8 +1149,10 @@ details.morefold:not([open]) { padding-bottom: 0 !important; }
 /* Local time (Nov 13): whose clock the times are, and the ship's-clock check */
 .tzline { margin: 0 0 8px; font-size: .84rem; color: var(--muted); }
 .tzline.warn { color: var(--ink); background: var(--meal-soft, rgba(232,120,60,.12)); border-left: 3px solid var(--meal); padding: 6px 10px; border-radius: 4px; }
-.shipsheet { position: fixed; inset: 0; z-index: 90; background: rgba(0,0,0,.45); display: grid; place-items: center; padding: 16px; }
-.shipcard { background: var(--card); color: var(--ink); border-radius: 12px; max-width: 460px; width: 100%; padding: 18px 18px 12px; box-shadow: 0 20px 60px rgba(0,0,0,.35); display: grid; gap: 10px; }
+.shipsheet { display: block; }
+.shipcard { background: var(--card); color: var(--ink); border: 2px solid var(--route); border-radius: 12px; padding: 14px 16px 10px; display: grid; gap: 10px; }
+.shipsheet:not(.plantop *) { position: fixed; left: 12px; right: 12px; bottom: calc(80px + env(safe-area-inset-bottom, 0px)); z-index: 30; } /* fallback when there's no Day plan head */
+.shipcard .shipbtns { grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); }
 .shipcard h2 { margin: 0; font-size: 1.35rem; }
 .shipcard .shipbtns { display: grid; gap: 8px; }
 .shipcard .shipbtns .btn { min-height: 48px; justify-content: center; font-size: 1rem; }

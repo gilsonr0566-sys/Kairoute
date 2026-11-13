@@ -138,6 +138,37 @@ const log = (suite, trip, ok, what) => { results.push({ suite, trip, ok, what })
       log('Staying on board', T.key, !abBad.length, abBad.length ? abBad.join(' | ') : `${ab} port days: on board and back again with one tap`); }
     if (T.key === TRIPS[0].key) { const sz = await p.evaluate(() => ({ jul: window.__kairouteRunsThen('2027-07-12', [4, 5, 6, 7, 8, 9, 10]), jan: window.__kairouteRunsThen('2027-01-12', [4, 5, 6, 7, 8, 9, 10]), all: window.__kairouteRunsThen('2027-01-12', null) }));
       log('Seasonal ferries', T.key, sz.jul && !sz.jan && sz.all, sz.jul && !sz.jan && sz.all ? 'a ferry that runs April to October is offered in July, not in January; year-round lines always' : 'seasonal check wrong: ' + JSON.stringify(sz)); }
+    // Naples, Sorrento and Pompeii with the real lines (Richard's loop): the ferry from the ship's pier wins the first
+    // ride over a 75-minute taxi, Sorrento comes before Pompeii, the train brings you back, and the day ends in time.
+    if (T.key === TRIPS[0].key) { const D = (await p.evaluate(() => window.__kairouteDays())).find(x => /naples/i.test(x.city || '') && x.type === 'port');
+      if (D) { const r = await p.evaluate(i => { window.__kairouteEdit(i, { selected: ['sorrento-far', 'pompeii-far'], legModes: undefined });
+          const ship = { lat: 40.8380, lng: 14.2550 }, sor = { lat: 40.6263, lng: 14.3757 }, pom = { lat: 40.7489, lng: 14.4848 };
+          const op = (mode, label, ride, every, from, to, tt) => ({ mode, kind: mode === 'ferry' ? 'Ferry' : 'Train', label, operator: '', from: '', to: '', ride, wait: tt ? 10 : Math.min(every, 60) + (mode === 'ferry' ? 10 : 3), every, everySrc: tt ? 'timetable' : 'usual', access: { how: 'walk', min: 5, km: 0.3 }, egress: { how: 'walk', min: 8, km: 0.5 }, min: 13 + ride + (tt ? 10 : Math.min(every, 60) + (mode === 'ferry' ? 10 : 3)), km: 30, stops: 0, hours: '', path: [[from.lng, from.lat], [to.lng, to.lat]], fromPt: [from.lng, from.lat], toPt: [to.lng, to.lat], src: 'test', noTimetable: !tt });
+          window.__kairouteTransitSet([{ a: ship, b: sor, opts: [op('ferry', 'Ferry Napoli - Sorrento', 45, 60, ship, sor)] }, { a: sor, b: pom, opts: [op('train', 'Train Circumvesuviana', 30, 30, sor, pom, true)] }, { a: pom, b: ship, opts: [op('train', 'Train Circumvesuviana', 40, 30, pom, ship, true)] }]);
+          return { legs: window.__kairouteRideLegs(i).legs, t: window.__kairouteTruth(i) }; }, D.i);
+        const L = r.legs || [], first = L[0] || {}, iS = L.findIndex(x => x.to === 'Sorrento'), iP = L.findIndex(x => x.to === 'Pompeii');
+        const okL = /^Ferry/.test(first.how || '') && first.to === 'Sorrento' && iS >= 0 && iP > iS && !r.t.over;
+        log('Ferry out, train back', T.key, okL, okL ? `Naples: ${L.map(x => `${x.how} to ${x.to}`).join(', ')}` : 'Naples loop wrong: ' + JSON.stringify(L.map(x => [x.how, x.to, x.min])) + ' over=' + r.t.over); } }
+    // Turning off "Churches & faith" (Richard: "I just turned off churches and its still showing churches"): the
+    // app's own church picks leave every day and the fill doesn't add new ones; the traveler's own picks and famous
+    // must-sees stay. Done through the real Interests button.
+    if (T.key === TRIPS[0].key) { const RE = /\b(church|cathedral|basilica|monaster|chapel|shrine|abbey|agios|agia|panagia|saint|st\.? )/i;
+      const days = await p.evaluate(() => window.__kairouteDays()); let pick = null;
+      await p.evaluate(() => window.__kairoutePrefs({ interests: ['churches'], noChurches: undefined }));
+      for (const D of days) { const t = await p.evaluate(i => window.__kairouteTruth(i), D.i); if (!t.picks) continue;
+        const must = new Set((t.mustSees || []).map(x => x.id)), ch = t.picks.map((id, k) => ({ id, name: t.keptNames[k] })).filter(x => RE.test(x.name) && !/ancient|ruin/i.test(x.name) && !must.has(x.id));
+        if (ch.length >= 2) { pick = { i: D.i, mine: ch[0], app: ch[1] }; break; } }
+      if (!pick) log('Interests off', T.key, false, 'no day with two church picks to test');
+      else { const r = await p.evaluate(async P => { window.__kairouteEdit(P.i, { mine: [P.mine.id] }); window.__kairouteGo('settings'); const sec = document.querySelector('[data-setsec="prefs"]'); if (sec) sec.click();
+          const btn = document.querySelector('[data-pref="interest"][data-v="churches"]'); if (!btn) return { nobtn: true }; btn.click(); await new Promise(z => setTimeout(z, 200));
+          const t = window.__kairouteTruth(P.i); return { on: (document.querySelector('[data-pref="interest"][data-v="churches"]') || btn).getAttribute('aria-pressed'), mineKept: t.stopNames.includes(P.mine.name), appGone: !t.stopNames.includes(P.app.name), stops: t.stopNames.length,
+            unwanted: window.__kairouteDays().flatMap(x => (window.__kairouteTruth(x.i).unwanted || []).map(n => x.date + ' ' + n)),
+            kept: window.__kairouteDays().flatMap(x => window.__kairouteTruth(x.i).stopNames || []).filter(n => /\b(church|cathedral|basilica|chapel|monaster|agios|agia|panagia|saint)/i.test(n)).length }; }, pick);
+        const bad = []; if (r.nobtn) bad.push('no Churches button in Settings'); else { if (r.on !== 'false') bad.push('button still on');
+          if (!r.appGone) bad.push(`${pick.app.name} (the app's pick) still planned`); if (!r.mineKept) bad.push(`${pick.mine.name} (the traveler's own pick) was removed`); if (!r.stops) bad.push('day left empty'); }
+        if ((r.unwanted || []).length) bad.push('churches still planned: ' + r.unwanted.join(', '));
+        log('Interests off', T.key, !bad.length, bad.length ? bad.join(' | ') : `Churches off: ${pick.app.name} left the plan, ${pick.mine.name} (picked by the traveler) stayed; no other church left that the traveler didn't pick, ${r.kept} famous or own church stops kept trip-wide`); }
+      await p.evaluate(() => window.__kairoutePrefs({ interests: ['bible', 'churches'], noChurches: undefined })); }
     log('Day titles', T.key, true, `${titled} automatic day titles name only the destination`);
     log('Closed sights', T.key, true, `${closedTried} days tried adding a sight closed that day: never added, an open day or sight offered`);
     log('One truth', T.key, !errs.length, errs.length ? 'page errors: ' + [...new Set(errs)].join(' | ') : `${checked} days checked, no page errors`);
@@ -173,6 +204,25 @@ const log = (suite, trip, ok, what) => { results.push({ suite, trip, ok, what })
     }
     log('New trip', 'new-trips', !errs.length, errs.length ? 'page errors: ' + [...new Set(errs)].join(' | ') : 'no page errors');
     await b2.close(); }
+  // Duplicate sights (Richard, Santorini: "I think there are several duplicate stops"): the same place under two
+  // names (Oia / Oia village, Fira (Thira) / Fira caldera path, a Greek and an English name) is one sight, a small
+  // part of a village (Megalochori Bell Tower) folds into it, and look-alike names that are different places stay
+  // apart (Acropolis / Acropolis Museum, San Lorenzo / San Paolo Maggiore, two museums of Thera). Every guide the
+  // app holds is scanned too.
+  { const b4 = await chromium.launch(); const p = await b4.newPage(); const errs = []; p.on('pageerror', e => errs.push(e.message));
+    await p.route('**/*', r => /^file:/.test(r.request().url()) ? r.continue() : r.abort());
+    await p.goto('file://' + FILE); await p.evaluate(() => localStorage.setItem('kairoute.intro1', '1')); await p.reload(); await p.waitForTimeout(400);
+    const FX = require('./dedupe-fixture.cjs'), want = { Santorini: [['Oia', 'Oia village'], ['Akrotiri', 'Akrotiri prehistoric town'], ['Fira (Thira)', 'Fira caldera path'], ['Pyrgos Kallistis', 'Pyrgos village'], ['Museum of Prehistoric Thera', 'Museum of Prehistoric Thera'], ['Megalochori Bell Tower', 'Megalochori'], ['Kamari Beach Boardwalk', 'Kamari']], Chania: [['Church of Saint Nicholas, Splantzia', 'Agios Nikolaos in Chania (Splantzia)'], ['Nautical Museum of Crete', 'Maritime Museum of Crete']] };
+    const apart = { Santorini: ['Archaeological Museum of Thera', 'Museum of Prehistoric Thera', 'Nea Kameni', 'Palea Kameni'], Athens: ['Acropolis and Parthenon', 'Acropolis Museum', 'Ancient Agora', 'Roman Agora and Tower of the Winds'], Naples: ['San Lorenzo Maggiore', 'San Paolo Maggiore', 'Castel Nuovo', 'Royal Palace of Naples', 'Fontana di Palazzo Reale'] };
+    const bad = []; let folded = 0;
+    for (const [city, L] of Object.entries(FX)) { const sites = L.map(([name, lat, lng, category], i) => ({ id: 's' + i, name, lat, lng, category, guide: name === 'Fira caldera path' ? 'x'.repeat(400) : '' }));
+      const r = await p.evaluate(s => window.__kairouteDedupe(s, []), sites), names = r.kept.map(x => x.name), cnt = n => names.filter(x => x === n).length;
+      for (const [gone, into] of want[city] || []) { const k = r.kept.find(x => x.name === into); if (!k || (gone !== into && names.includes(gone)) || cnt(into) !== 1) bad.push(`${city}: "${gone}" and "${into}" still listed separately`); else folded++; }
+      for (const n of apart[city] || []) if (!names.includes(n)) bad.push(`${city}: "${n}" was folded into another sight but is a different place`); }
+    const scan = await p.evaluate(() => window.__kairouteDupScan()); scan.forEach(x => bad.push('guide still lists one place twice: ' + x));
+    if (errs.length) bad.push('page errors: ' + [...new Set(errs)].join(' | '));
+    log('Duplicate sights', 'guides', !bad.length, bad.length ? bad.join(' | ') : `${folded} repeats folded (same place under two names, or a part of a village); look-alike names of different places kept apart; no guide lists a place twice`);
+    await b4.close(); }
   // Famous sights and big stops: with a snapshot of Prague's sources and stand-in AI answers, the top famous
   // sights must survive every way a guide writer can lose them (left out, filed as a quick stop, called
   // unvisitable, cut from a long list), saved guides must be repaired, and big stops must split into real parts.

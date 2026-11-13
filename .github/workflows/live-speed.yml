@@ -1,0 +1,22 @@
+name: Live speed test
+# Times the published app the way a phone in port would see it: a mid-range phone's speed and a 4G connection.
+# Runs after each publish and on demand; the numbers are in the run's log.
+on:
+  workflow_dispatch:
+  workflow_run:
+    workflows: ["Publish website"]
+    types: [completed]
+permissions:
+  contents: read
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm i --no-save playwright@1 && npx playwright install --with-deps chromium
+      - name: Speed test of the live site
+        run: node tools/perf-check.cjs https://gilsonr0566-sys.github.io/Kairoute/

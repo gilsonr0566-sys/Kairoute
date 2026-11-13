@@ -1,0 +1,26 @@
+name: Offline test
+on:
+  push:
+    paths: ["src/**", "sw.js", "build.sh", "tools/offline-e2e.cjs"]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build the app (the repository's index.html is only a placeholder)
+        run: sh build.sh
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Download a trip, cut the internet, use every day
+        run: npm i --no-save playwright@1 && npx playwright install --with-deps chromium && node tools/offline-e2e.cjs
+      - name: Keep the screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: offline-check
+          path: checks/offline-*.png

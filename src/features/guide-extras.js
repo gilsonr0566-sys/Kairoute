@@ -75,13 +75,17 @@ function gxSun(iso, lat, lng) {
 }
 // The city's own clock (time zone and daylight saving), from Open-Meteo's free time zone lookup, kept with the city.
 const gxTzAsked = new Set();
+// Zones are also kept in their own list on the device: built-in guides aren't saved with the trip, and the zone
+// must survive a restart with no internet.
+const gxTzSaved = () => { try { return JSON.parse(localStorage.getItem("kairoute.tz") || "{}") || {}; } catch (e) { return {}; } };
 function gxTz(city) {
   if (city.tz) return city.tz;
+  { const z = gxTzSaved()[keyOf(city.city)]; if (z) { city.tz = z; return z; } }
   const c = gxCenter(city), k = keyOf(city.city);
   if (!c || gxTzAsked.has(k) || (typeof navigator !== "undefined" && navigator.onLine === false)) return null;
   gxTzAsked.add(k);
   fetch(`https://api.open-meteo.com/v1/forecast?latitude=${c.lat.toFixed(3)}&longitude=${c.lng.toFixed(3)}&timezone=auto&forecast_days=1&daily=sunrise`)
-    .then(r => r.json()).then(j => { if (j && j.timezone && j.timezone !== "GMT") { try { new Intl.DateTimeFormat("en-US", { timeZone: j.timezone }); city.tz = j.timezone; save(); gxRefresh(); } catch (e) {} } }).catch(() => { setTimeout(() => gxTzAsked.delete(k), 60000); });
+    .then(r => r.json()).then(j => { if (j && j.timezone && j.timezone !== "GMT") { try { new Intl.DateTimeFormat("en-US", { timeZone: j.timezone }); city.tz = j.timezone; try { const m = gxTzSaved(); m[k] = j.timezone; localStorage.setItem("kairoute.tz", JSON.stringify(m)); } catch (e) {} save(); gxRefresh(); } catch (e) {} } }).catch(() => { setTimeout(() => gxTzAsked.delete(k), 60000); });
   return null;
 }
 function gxLocalMin(dt, tz) {

@@ -34,10 +34,17 @@ async function run({ chromium, FILE, log, OUT, shots }) {
     }
     return r.abort();
   });
+  // The ship's-clock question (checked in time-check.cjs) pops up on a ship day that is "today" under the fake
+  // clock; here it would cover the buttons this check taps, so it is answered "Later" whenever it appears.
+  await ctx.addInitScript(() => { new MutationObserver(() => { const b = document.querySelector('.shipsheet [data-act="shiplater"]'); if (b) b.click(); }).observe(document, { childList: true, subtree: true }); });
   await p.goto('file://' + FILE); await p.evaluate(() => localStorage.setItem('kairoute.intro1', '1')); await p.reload(); await p.waitForTimeout(500);
   await p.getByText('Continue trip').click().catch(() => {}); await p.waitForTimeout(300);
   const days = await p.evaluate(() => window.__kairouteDays());
   const L = (fn, arg) => p.evaluate(fn, arg);
+  // Plan times are the port's own clock (the app counts in the destination's time zone, whatever the device says),
+  // so "08:00 on that day" means 08:00 there.
+  const loc = async (D, h, m = 0) => { const off = await L(([i, iso]) => { const T = window.__kairouteTime; return T ? T.zoneOffset(T.dayZone(i).tz, iso) : -new Date(iso + 'T12:00:00').getTimezoneOffset(); }, [D.i, D.date]);
+    return new Date(Date.parse(D.date + 'T00:00:00Z') + (h * 60 + m - off) * 60000); };
   const shot = async (f, cap) => { await p.screenshot({ path: path.join(OUT, f), type: 'jpeg', quality: 60 }); shots.push({ f, cap }); };
 
   // ---- Opening hours: every planned stop is inside its hours, or the Day plan warns ----
@@ -85,7 +92,7 @@ async function run({ chromium, FILE, log, OUT, shots }) {
 
   // ---- Weather ----
   { const bad = []; const D = days.find(x => x.city === 'barcelona' && x.type === 'land') || days.find(x => x.city === 'barcelona');
-    await p.clock.setFixedTime(new Date(D.date + 'T07:00:00'));
+    await p.clock.setFixedTime(await loc(D, 7));
     const hours = []; for (let h = 7; h <= 21; h++) hours.push([h, 24, h >= 12 && h <= 17 ? 90 : 5, h >= 12 && h <= 17 ? 3 : 0]);
     await L(([c, dt, hrs]) => window.__kairouteLiveTest.setWx(c, { [dt]: { tmax: 24, tmin: 17, prob: 90, mm: 14, code: 63, hours: hrs } }), ['barcelona', D.date, hours]);
     await L(i => window.__kairouteAt(i, 'plan'), D.i); await p.waitForTimeout(150);
@@ -119,7 +126,7 @@ async function run({ chromium, FILE, log, OUT, shots }) {
 
   // ---- Running late + back-to-the-ship alarm, on the day, with GPS ----
   { const bad = []; const D = days.find(x => x.type === 'port' && x.city);
-    await p.clock.setFixedTime(new Date(D.date + 'T08:00:00'));
+    await p.clock.setFixedTime(await loc(D, 8));
     await L(i => window.__kairouteAt(i, 'plan'), D.i); await p.waitForTimeout(150);
     const pr = await L(() => window.__kairouteLiveProbe());
     // The countdown follows GPS by itself on the day, so stand somewhere real (the first stop), not at 0,0.
@@ -129,13 +136,13 @@ async function run({ chromium, FILE, log, OUT, shots }) {
     if (!/h|min/.test(big0)) bad.push('no live countdown on the day (shows "' + big0 + '")');
     await ctx.setGeolocation({ latitude: pr.first.lat, longitude: pr.first.lng });
     const [hh, mm] = pr.lateAt.split(':').map(Number);
-    await p.clock.setFixedTime(new Date(`${D.date}T${String(hh).padStart(2, '0')}:${String(mm).padStart(2, '0')}:00`));
+    await p.clock.setFixedTime(await loc(D, hh, mm));
     // On the day the countdown follows GPS by itself; the button only exists after location was refused.
     await L(() => { const b = document.querySelector('[data-act=livegps]'); if (b) b.click(); }); await p.waitForTimeout(1200);
     const src = await L(() => (document.getElementById('cdSrc') || {}).textContent || '');
     if (!/GPS position/.test(src)) bad.push('on the day the countdown does not use GPS by itself ("' + src + '")');
-    if (await L(() => !!document.querySelector('#cdCard details.cdwhere'))) bad.push('"Pick your spot" shows even though GPS is working');
-    await p.clock.runFor(61000); // past the once-a-minute location refresh, so the position is fresh at the new time await p.waitForTimeout(500);
+    if (await L(() => !!document.querySelector('#cdCard details.cdwhere:not(.cdagentfold)'))) bad.push('"Pick your spot" shows even though GPS is working');
+    await p.clock.runFor(61000); await p.waitForTimeout(500); // past the once-a-minute location refresh, so the position is fresh at the new time
     const after = await L(i => window.__kairouteLiveTest.plan(i), D.i);
     if (!after.live) bad.push('falling 40 minutes behind at a stop did not re-plan the day');
     else {
@@ -163,7 +170,7 @@ async function run({ chromium, FILE, log, OUT, shots }) {
     const lb = await L(() => { const t = document.getElementById('alarmBar').innerText; const m = /leave by (\d\d):(\d\d)/i.exec(t); return m ? +m[1] * 60 + +m[2] : null; });
     if (lb == null) bad2.push('leave-by time not shown');
     else {
-      const at = m => new Date(`${D.date}T${String(Math.floor(m / 60)).padStart(2, '0')}:${String(m % 60).padStart(2, '0')}:00`);
+      const at0 = await loc(D, 0), at = m => new Date(at0.getTime() + m * 60000);
       for (const [th, re] of [[29, /30 minutes/], [14, /15 minutes/], [4, /5 minutes/], [-1, /Time to go/]]) {
         await p.clock.setFixedTime(at(lb - th)); await p.clock.runFor(61000); await p.waitForTimeout(150);
         const al = await L(() => window.__kairouteLiveTest.alerts()); if (!al.some(a => re.test(a.b))) bad2.push(`no alert ${th >= 0 ? th + 1 + ' minutes before leave-by' : 'at leave-by'}`); }
@@ -180,7 +187,7 @@ async function run({ chromium, FILE, log, OUT, shots }) {
     const star = await p.$('.timeline [data-act="raterow"][data-n="5"]');
     if (!star) bad.push('no "Been here? Rate it" on a past day'); else { await star.click(); await p.waitForTimeout(200);
       if (!posted.some(x => x.pth === '/rate' && x.body.stars === 5)) bad.push('rating not sent to the server'); }
-    await p.clock.setFixedTime(new Date(D.date + 'T20:30:00')); await L(i => window.__kairouteAt(i, 'plan'), D.i); await p.waitForTimeout(150);
+    await p.clock.setFixedTime(await loc(D, 20, 30)); await L(i => window.__kairouteAt(i, 'plan'), D.i); await p.waitForTimeout(150);
     const busy = await p.$('.timeline [data-act="busyrow"][data-n="3"]');
     if (!busy) bad.push('no "How busy?" on the day'); else { await busy.click(); await p.waitForTimeout(200);
       if (!posted.some(x => x.pth === '/rate' && x.body.busy === 3 && x.body.hour === 20)) bad.push('busy report not sent with the hour'); }
@@ -191,7 +198,7 @@ async function run({ chromium, FILE, log, OUT, shots }) {
 
   // ---- What am I looking at? ----
   { const bad = []; const D = days.find(x => x.type === 'land' && x.city === 'athens') || days.find(x => x.city);
-    await p.clock.setFixedTime(new Date(D.date + 'T11:00:00'));
+    await p.clock.setFixedTime(await loc(D, 11));
     await L(i => window.__kairouteAt(i, 'guide'), D.i); await p.waitForTimeout(150);
     const geo = await L(i => window.__kairouteLiveTest.siteLL(i), D.i);
     await ctx.setGeolocation({ latitude: geo.lat + 0.0003, longitude: geo.lng });
