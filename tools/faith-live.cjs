@@ -7,7 +7,7 @@ const URL = process.env.URL || "https://gilsonr0566-sys.github.io/Kairoute/", DA
   const b = await chromium.launch(), p = await b.newPage({ viewport: { width: 1280, height: 800 } });
   p.on("pageerror", e => console.log("PAGE ERROR " + e.message));
   try {
-    await p.goto(URL); await p.waitForFunction(() => window.__kairouteDays && window.__kairoutePrefs, null, { timeout: 30000 });
+    await p.goto(URL); await p.waitForFunction(() => window.__kairouteDays && window.__kairoutePrefs, null, { timeout: 120000 }); // waits out the short "updating" page
     console.log("Version", await p.evaluate(() => fetch("version.txt", { cache: "no-store" }).then(r => r.text()).catch(() => "?")));
     console.log("Prefs before", JSON.stringify(await p.evaluate(() => window.__kairoutePrefs({}))));
     console.log("Prefs now", JSON.stringify(await p.evaluate(() => { const i = window.__kairoutePrefs({}).interests.filter(x => x !== "bible" && x !== "churches"); return window.__kairoutePrefs({ interests: i, theme: "" }); })));
@@ -19,6 +19,11 @@ const URL = process.env.URL || "https://gilsonr0566-sys.github.io/Kairoute/", DA
       const text = await p.evaluate(() => document.body.innerText), hits = text.split(/\n+/).filter(l => BIBLE.test(l));
       console.log(`\n== ${v}: ${hits.length} lines mention the Bible`); hits.slice(0, 20).forEach(l => console.log("   " + l.slice(0, 300)));
     }
+    // The rides on this day as the Day plan shows them (real transport from the helper's /transit).
+    await p.evaluate(([i]) => window.__kairouteDay(i, "Pompeii|^Sorrento"), [d.i]); await p.evaluate(([v, i]) => window.__kairouteGo(v, i), ["plan", d.i]); await p.waitForTimeout(45000);
+    await p.evaluate(([v, i]) => window.__kairouteGo(v, i), ["plan", d.i]); await p.waitForTimeout(1500);
+    const rides = await p.$$eval(".tl.leg", els => els.map(e => e.innerText.replace(/\n+/g, " / ")));
+    console.log("\n== Rides on the Day plan (Pompeii and Sorrento picked)"); rides.forEach(r => console.log("   " + r.slice(0, 600)));
     const scan = await p.evaluate(i => window.__kairouteFaithScan(i), d.i);
     console.log("\n== Stored text on " + scan.day + " " + scan.date + " (faith '" + scan.faith + "', theme '" + scan.theme + "')");
     (scan.hits || []).forEach(h => console.log(`   ${h.stop} / ${h.field}${h.bibleSite ? " (Bible site)" : ""}: ${h.text}`));
