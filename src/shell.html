@@ -989,6 +989,102 @@ details.morefold:not([open]) { padding-bottom: 0 !important; }
   .dayhead .cdchip > summary { justify-content: center; min-height: 46px; }
   .cdchip .cdbig { font-size: 1.5rem; }
 }
+
+/* ---- Every page shares the Day plan's look (Nov 13, docs/design-rules.md): one head row (title, ship countdown,
+   one main action), less-used things folded, panels that scroll on their own, nothing said twice. ---- */
+/* panels never grow wider than the screen because of a long button label (the Guide's "Next: ..." ran off phones) */
+.plantop, .guideside, .sitesside, .sitesmain, .guidemain, .guidemain .stoplist { grid-template-columns: minmax(0, 1fr); }
+.pagehead { display: flex; align-items: center; justify-content: space-between; gap: 10px 12px; min-width: 0; }
+.pagehead > div:first-child { min-width: 0; flex: 1 1 auto; }
+.pagehead .dayname { margin: 0; }
+.headacts { display: flex; gap: 8px; align-items: center; flex: none; margin-left: auto; }
+.headacts .btn.small { min-height: 40px; }
+#view > .pagehead { margin-bottom: 2px; }
+/* folds are easy to tap: every fold title is at least 36px tall */
+#view details:not(.moremenu):not(.cdchip) > summary { padding-block: 8px; }
+/* Change stops: the four filters on one line */
+.sitesside .filters { flex-wrap: nowrap !important; overflow-x: auto; scrollbar-width: none; }
+.sitesside .filters::-webkit-scrollbar { display: none; }
+.sitesside .filters button { flex: none; white-space: nowrap; min-height: 36px; padding: 6px 9px !important; font-size: .88rem !important; }
+.card.suggest { gap: 8px; }
+.card.suggest .actions { gap: 6px; }
+.sitesside > .ai-note { font-size: .78rem; }
+/* Tour: one compact head row; the next step's button always within reach */
+.tourhead { align-items: center; flex-wrap: wrap; }
+.tourhead > .tourwhere { flex: 1 1 220px; min-width: 0; display: grid; gap: 6px; }
+.tourhead > .headacts { flex: none; display: flex; gap: 8px; }
+.tourhead .lede.small { font-size: .85rem; }
+.tourcard .tcmain, .tourcard .tcside { display: grid; gap: 16px; align-content: start; min-width: 0; }
+.tourcard .tourmain { position: sticky; bottom: 0; z-index: 2; background: var(--card); margin: 0 -22px -22px; padding: 12px 22px calc(12px + env(safe-area-inset-bottom, 0px)); border-top: 1px solid var(--line); border-radius: 0 0 8px 8px; }
+.follow { padding: 6px 10px; }
+@media (max-width: 640px) {
+  .pagehead { flex-wrap: wrap; gap: 8px; }
+  .pagehead > div:first-child { flex-basis: 100%; }
+  .pagehead .cdchip { flex: 1 1 auto; min-width: 0; }
+  .pagehead .cdchip > summary { justify-content: center; }
+  .headacts { flex: 1 1 auto; flex-wrap: wrap; justify-content: flex-end; }
+  .headacts .tourbtn { min-height: 42px; }
+  .tourcard { padding: 16px; }
+  .tourcard .tourmain { margin: 0 -16px -16px; padding: 10px 16px calc(10px + env(safe-area-inset-bottom, 0px)); }
+  .tourhead .headacts { width: 100%; }
+  .tourhead .headacts > * { flex: 1 1 0; }
+  .tourhead .cdchip { flex: 1 1 100%; }
+  .tourhead .cdchip > summary { justify-content: center; }
+}
+/* Phones (upright or sideways): the tour's next-step button stays at the bottom of the screen */
+@media (max-width: 799px), (max-height: 559px) {
+  .tourcard .tourmain { position: fixed; left: 0; right: 0; bottom: 0; margin: 0; border-radius: 0; z-index: 19; justify-content: flex-end; box-shadow: 0 -4px 16px rgba(0,0,0,.10); }
+  #view[data-v="tour"] { padding-bottom: calc(96px + env(safe-area-inset-bottom, 0px)) !important; }
+}
+@media (min-width: 800px) and (min-height: 560px) {
+  html.appview .guidegrid, html.appview .sitesgrid { gap: 12px 18px; }
+  /* Tour on tablets: the screen never scrolls; the card fills it and its parts scroll on their own */
+  html.appview #view[data-v="tour"] { overflow: hidden; display: flex; flex-direction: column; gap: 10px; }
+  html.appview #view[data-v="tour"] > * { flex: none; }
+  html.appview #view[data-v="tour"] > .tourcard { flex: 1 1 auto; min-height: 0; overflow-y: auto; overscroll-behavior: contain; max-width: 900px; align-content: start; }
+  html.appview #view[data-v="tour"] .tourmain { margin-top: auto; }
+}
+@media (min-width: 1000px) and (min-height: 560px) {
+  html.appview .sitesgrid { grid-template-columns: 340px minmax(0, 1fr); }
+  /* sideways: the map on the left, the step on the right */
+  html.appview #view[data-v="tour"] > .tourcard { max-width: none; }
+  html.appview #view[data-v="tour"] > .tourcard:has(> .tourmap) { grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); column-gap: 24px; }
+  html.appview #view[data-v="tour"] > .tourcard:has(> .tourmap) > * { grid-column: 2; }
+  html.appview #view[data-v="tour"] > .tourcard:has(> .tourmap) > .tourmap { grid-column: 1; grid-row: 1 / span 12; position: sticky; top: 0; align-self: start; }
+  /* a stop: what to do here on the left (play, find, next), the story and your journal on the right */
+  html.appview #view[data-v="tour"] > .tourcard:has(> .tcmain) { overflow: hidden; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); grid-template-rows: minmax(0, 1fr) auto; column-gap: 24px; row-gap: 0; }
+  html.appview #view[data-v="tour"] > .tourcard > .tcmain { grid-column: 1; grid-row: 1; overflow-y: auto; min-height: 0; padding-right: 4px; padding-bottom: 12px; }
+  html.appview #view[data-v="tour"] > .tourcard > .tcside { grid-column: 2; grid-row: 1 / span 2; overflow-y: auto; min-height: 0; padding-right: 4px; margin-bottom: -22px; padding-bottom: 22px; }
+  html.appview #view[data-v="tour"] > .tourcard > .tcmain ~ .tourmain { grid-column: 1; grid-row: 2; margin-right: 0; border-radius: 0 0 0 8px; }
+}
+/* Phones held sideways: the navigation becomes a slim bar on the left and the header shrinks to the day strip,
+   so the content gets the height (same rule as tablets held sideways). */
+@media (orientation: landscape) and (max-height: 559px) and (min-width: 560px) {
+  html.railnav body { padding-left: calc(68px + env(safe-area-inset-left, 0px)); }
+  html.railnav .tabs { position: fixed; z-index: 21; left: 0; top: 0; bottom: 0; width: calc(68px + env(safe-area-inset-left, 0px)); padding: max(4px, env(safe-area-inset-top, 0px)) 0 max(4px, env(safe-area-inset-bottom, 0px)) env(safe-area-inset-left, 0px);
+    display: flex !important; flex-direction: column; align-items: stretch; gap: 0; background: var(--card); border-right: 1px solid var(--line); overflow-y: auto; scrollbar-width: none; }
+  html.railnav .tabs .railonly { display: flex !important; }
+  html.railnav .tabs .railgap { flex: 1; }
+  html.railnav .tab { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; padding: 4px 2px !important; margin: 0 6px; border: 0; border-radius: 8px; font-size: .66rem !important; font-weight: 700; color: var(--muted); min-height: 50px; }
+  html.railnav .tab svg { display: block; width: 20px; height: 20px; }
+  html.railnav .tab[aria-selected="true"] { background: var(--route-soft); color: var(--route); border: 0; }
+  html.railnav .tab.railhome { color: var(--ink); }
+  html.railnav .tab.railhome svg { width: 20px; height: 23px; }
+  html.railnav .brand, html.railnav .tripname { display: none !important; }
+  html.railnav .top .wrap { padding-block: 6px 0; gap: 0; }
+  html.railnav.nohead header.top { border: 0; background: none; position: static; }
+  html.railnav.nohead .top .wrap { display: block; padding: 0; }
+  html.railnav.nohead .top .wrap > :not(.tabs) { display: none; }
+  html.railnav .pagebar .home, html.railnav .pagebar .btn { display: none; }
+  html.railnav .pagebar .pagetitle { text-align: left; }
+  html.railnav main .wrap { padding-bottom: 24px; }
+}
+/* Tablets held sideways: the welcome banner and the trip card fit without scrolling */
+@media (min-width: 800px) and (max-height: 860px) {
+  .hero { padding-bottom: 40px; }
+  .lobbybody { gap: 14px; }
+  .lobbyfoot { padding-block: 12px; }
+}
 </style>
 
 <header class="top">
