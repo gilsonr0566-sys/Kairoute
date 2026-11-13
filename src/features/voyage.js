@@ -232,6 +232,10 @@ if (typeof window !== "undefined") window.__kairouteVoyageCheck = () => {
     trip = sampleTrip(); fresh(); const e2 = trip.days[emb]; e2.selected = []; e2.autoEmpty = false; fresh();
     ok("A boarding day the traveler cleared stays clear", !buildPlan(e2).items.some(x => x.type === "stop"));
     ok("Sample boarding day keeps something to do", pe && pe.items.some(x => x.type === "stop"));
+    // 7. The boarding day's one leave-by time runs through the bag pickup and doesn't move with the stops.
+    trip = sampleTrip(); fresh(); const e3 = trip.days[emb], lb = f => { e3.fillTime = f; fresh(); const p = buildPlan(e3); return p && p.items ? alarmState(e3, p) : null; };
+    const s1 = lb(true), s0 = lb(false);
+    ok("Boarding day: leave-by allows for collecting the bags, the same with or without optional stops", s1 && s0 && s1.via && s1.leaveBy === s0.leaveBy && s1.leaveBy <= s1.backBy - (s1.via.minutes || 0), s1 && s0 ? fmt(s1.leaveBy) + " / " + fmt(s0.leaveBy) + (s1.via ? " via " + s1.via.name : " (no bag stop)") : "no plan");
   } catch (e) { ok("checks ran", false, String(e && e.stack || e)); }
   finally { trip = keep; view = keepView; voySel = null; fresh(); render(); }
   return res;
