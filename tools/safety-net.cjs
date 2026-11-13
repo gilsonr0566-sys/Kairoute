@@ -161,7 +161,7 @@ const log = (suite, trip, ok, what) => { results.push({ suite, trip, ok, what })
       const bad = [];
       if (got.map(x => x.date).join() !== N.want.join()) bad.push(`dates ${got.map(x => x.date.slice(5)).join(', ')} instead of ${N.want.map(x => x.slice(5)).join(', ')}`);
       for (let k = 1; k < got.length; k++) if (got[k].date < got[k - 1].date) { bad.push('dates go backwards'); break; }
-      const tv = await p.evaluate(() => ({ rows: [...document.querySelectorAll('.itrow .dt')].map(x => x.innerText), head: (document.querySelector('.leftcol p') || {}).innerText || '', btn: ([...document.querySelectorAll('[data-act="genall"]')][0] || {}).innerText || '' }));
+      const tv = await p.evaluate(() => ({ rows: [...document.querySelectorAll('.itrow .dt')].map(x => x.innerText), head: (document.querySelector('.leftcol .pagehead .eyebrow') || {}).textContent || '', btn: ([...document.querySelectorAll('[data-act="genall"]')][0] || {}).innerText || '' }));
       if (tv.rows.length !== got.length) bad.push(`Trip screen lists ${tv.rows.length} days, the trip has ${got.length}`);
       { const nd = new Set(got.map(x => x.date)).size; if (!new RegExp('\\b' + nd + ' days').test(tv.head)) bad.push(`Trip screen says "${tv.head}" for ${nd} calendar days`); }
       if (/all 1 places|all [012] places/.test(tv.btn)) bad.push(`guide button reads "${tv.btn}"`);

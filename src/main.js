@@ -1409,7 +1409,7 @@ let changeImgs = [], changeText = "";
 function changeCard() {
   if (!aiReady()) return "";
   return `<details class="card change more" ${changeText || changeImgs.length || busy ? "open" : ""}><summary>Change my trip by telling your guide</summary><p class="lede">Say what changed, or add a photo of the new booking. I'll update the days and keep everything else.</p>
-    <div class="chips">${(() => { const c = trip.days.filter(x => x.type !== "sea" && x.type !== "port").map(x => x.destination); const first = c[0] || "the first city", last = c[c.length - 1] || "the last city";
+    <div class="chips">${(() => { const c = trip.days.filter(x => !noShore(x) && x.type !== "port").map(x => x.destination); const first = c[0] || "the first city", last = c[c.length - 1] || "the last city";
       return [`Add a day in ${first}`, "We fly home a day later", `We're staying at a different hotel in ${first}`, `Remove a day in ${last}`]; })().map(x => `<button class="chip" data-chg="${esc(x)}">${esc(x)}</button>`).join("")}</div>
     <textarea id="chgText" rows="2" placeholder="e.g. Our flight now lands at 2 pm on June 30, and we're staying at the Hotel Grande Bretagne">${esc(changeText)}</textarea>
     <div class="actions">${changeImgs.length ? changeImgs.map((x, i) => `<img class="thumb" src="${x.url}" alt="New booking photo ${i + 1}">`).join("") : ""}
@@ -3269,7 +3269,7 @@ function render() {
     const tabsEl = document.querySelector("header.top .tabs");
     const setv = /^(settings|privacy|terms)$/.test(view);
     document.documentElement.classList.toggle("railnav", app && view !== "tour" && (setv || !FULL_VIEWS[view]) && tabsEl && !tabsEl.hidden);
-    document.documentElement.classList.toggle("nohead", view === "trip" || setv);
+    document.documentElement.classList.toggle("nohead", view === "trip" || view === "journal" || setv);
     document.documentElement.classList.toggle("setview", setv);
     if (v) { v.dataset.v = view; v.classList.toggle("panes", app && !!v.querySelector(":scope > .plangrid, :scope > .guidegrid, :scope > .sitesgrid, :scope > .tripgrid, :scope > .setpage")); }
     paneMemo.same = paneMemo.key === pkey; paneMemo.key = pkey; }
@@ -3302,14 +3302,15 @@ function renderView() {
   document.getElementById("tripName").textContent = trip.name || tripName(trip);
   const tripScreens = view === "trips" || view === "wizard";
   // No duplication: on the Trip screen the day list on the left is the day picker and shows the trip name, so the top day strip and trip name step aside.
-  document.getElementById("dayRow").hidden = tripScreens || view === "trip";
-  document.getElementById("tripName").hidden = view === "trip" || tripScreens;
+  // The Journal is about the whole trip too, so it has no day strip either.
+  document.getElementById("dayRow").hidden = tripScreens || view === "trip" || view === "journal";
+  document.getElementById("tripName").hidden = view === "trip" || view === "journal" || tripScreens;
   document.getElementById("dayCount").textContent = (trip.active + 1) + " of " + trip.days.length;
   document.querySelector(".tabs").hidden = tripScreens;
   if (view === "trips") { $view.innerHTML = renderTrips(); return; }
   if (view === "wizard") { $view.innerHTML = renderWizard(); return; }
   if (view === "journal") { $view.innerHTML = renderJournal(); return; }
-  if (view === "tour") { $view.innerHTML = renderTour(d); updateAudioUI(); startTourTimer(); return; }
+  if (view === "tour") { $view.innerHTML = renderTour(d); updateAudioUI(); startTourTimer(); startCountdown(); return; }
   if (tourTimer) { clearInterval(tourTimer); tourTimer = null; }
   if (view === "trip") $view.innerHTML = renderTrip(d);
   else if (noShore(d)) $view.innerHTML = renderSea(d);
@@ -3360,6 +3361,10 @@ function dayHeading(d) {
     <button class="btn small" data-act="daytitlesave">Save</button>${d.title ? `<button class="btn ghost small" data-act="daytitleauto">Use "${esc(dayAuto(d))}"</button>` : ""}<button class="btn ghost small" data-act="daytitlecancel">Cancel</button></div></div>`;
   return `<div><div class="eyebrow">${sub}${d.type === "port" && !d.aboard ? ` · <button class="linkbtn" data-act="aboard">⚓ Staying on board?</button>` : ""}</div><h2 class="dayname">${esc(dayName(d))} <button class="linkbtn rename" data-act="daytitle" aria-label="Rename this day">✎ Rename</button></h2></div>`;
 }
+// The one head every day page shares (Day plan, Change stops, Guide): the day's name on the left; on the right the
+// back-to-the-ship countdown on ship, train and flight days, then the page's actions (one main action at most).
+const tourBtnHTML = () => `<button class="btn bigbtn tourbtn" data-act="tourstart"><span class="tb-long">▶ Start the tour</span><span class="tb-short">▶ Start tour</span></button>`;
+function pageHead(d, plan, acts) { return `<div class="dayhead pagehead">${dayHeading(d)}${plan && !plan.error ? countdownCard(d, plan) : ""}${acts ? `<div class="headacts">${acts}</div>` : ""}</div>`; }
 function needsCity(d) {
   const ready = aiReady();
   if (ready) return `<div class="card empty">
@@ -3834,7 +3839,11 @@ function shrinkImage(file, max) {
 }
 function renderJournal() {
   const entries = Object.values(trip.journal || {}).filter(j => j.rating || j.note || (j.photos && j.photos.length)).sort((a, b) => (a.date || "").localeCompare(b.date || ""));
-  return `<div><h2>Trip journal</h2>${entries.length ? `<p class="lede">Your ratings, notes and photos from the Guide tab.</p>` : ""}</div>
+  // Same head as every page (docs/design-rules.md): trip facts, title, and the two things to make on the right.
+  const canMake = trip.days.some(d => cityFor(d));
+  return `<div class="dayhead pagehead"><div><div class="eyebrow">${esc(trip.name || tripName(trip))}</div><h2>Trip journal</h2></div>
+    ${canMake ? `<div class="headacts">${mem.busy || mem.url ? "" : `<button class="btn small" data-act="memmake">Make my memory video</button>`}${gxBook.busy ? "" : `<button class="btn ghost small" data-gx-book="1">Make my storybook</button>`}</div>` : ""}</div>
+    ${entries.length ? "" : `<p class="lede small">A one-minute video and a PDF photo book of your trip, made on this device from your photos, notes and stars.</p>`}
     ${memCard()}
     ${gxBookCard()}${gxBadgeShelf()}
     ${entries.length ? `<div class="sitelist">${entries.map(j => `<div class="card"><div><div class="eyebrow">${esc(fmtDate(j.date))} · ${esc(j.city || "")}</div><h3>${esc(j.name || "")}</h3></div>
@@ -3850,13 +3859,11 @@ function renderJournal() {
 const MEM_W = 720, MEM_H = 1280, MEM_FADE = 0.6;
 let mem = { busy: false, pct: 0, url: "", blob: null, ext: "", err: "", msg: "" };
 function memCard() {
-  const has = Object.values(trip.journal || {}).some(j => j.rating || j.note || (j.photos && j.photos.length)) || trip.days.some(d => cityFor(d));
-  if (!has) return "";
-  return `<div class="card memcard"><div><span class="eyebrow">Keep the memories</span><h3>Your trip as a short video</h3>
-    <p class="lede">Kairoute turns your photos, journal notes and ratings, plus photos of the places you visited, into a video about a minute long. Save it or share it to Facebook, Instagram or anywhere else. It's made right on this device.</p></div>
+  if (!mem.busy && !mem.url && !mem.err) return ""; // the Make button lives in the Journal's head
+  return `<div class="card memcard"><span class="eyebrow">Your memory video</span>
     ${mem.busy ? `<p><b>${esc(mem.msg || "Making your video…")}</b></p><div class="memprog" role="progressbar" aria-valuenow="${Math.round(mem.pct)}" aria-valuemin="0" aria-valuemax="100"><i style="width:${mem.pct.toFixed(0)}%"></i></div>`
     : mem.url ? `<video class="memvideo" src="${mem.url}" controls playsinline></video><div class="actions"><button class="btn" data-act="memsave">Save video</button>${navigator.canShare && navigator.canShare({ files: [new File([mem.blob], "kairoute-trip." + mem.ext, { type: mem.blob.type })] }) ? `<button class="btn" data-act="memshare">Share</button>` : ""}<button class="btn ghost" data-act="memmake">Make it again</button></div>`
-    : `<div class="actions"><button class="btn bigbtn" data-act="memmake">Make my memory video</button></div>`}
+    : `<div class="actions"><button class="btn small" data-act="memmake">Try again</button></div>`}
     ${mem.err ? `<p class="banner warn" role="alert">${esc(mem.err)}</p>` : ""}</div>`;
 }
 function memRefresh() { if (view === "journal") { const y = window.scrollY; render(); window.scrollTo(0, y); } else if (view === "tour") render(); }
@@ -4110,7 +4117,7 @@ function renderTrip(d) {
   ${changeCard()}
   <div class="tripgrid">
     <div class="leftcol pane" data-pane="days">
-      <div>${renameId === trip.id ? renameBox(trip.id, trip.name || tripName(trip)) : `<div class="setrow"><h2>${esc(trip.name || "Your trip")}</h2><button class="btn ghost small" data-act="rename" data-id="${esc(trip.id)}">Rename</button></div>`}<p class="lede">${(() => { const dates = new Set(trip.days.map(x => x.date).filter(Boolean)).size || trip.days.length, cities = new Set(trip.days.filter(x => !noShore(x) && x.type !== "port" && x.destination).map(x => keyOf(x.destination))).size; return `${dates} day${dates === 1 ? "" : "s"}${cities > 1 ? `, ${cities} cities` : ""}`; })()}${(() => { const n = trip.days.filter(x => x.type === "port").length; return n ? `, ${n} cruise stop${n === 1 ? "" : "s"}` : ""; })()}. Tap a day to edit it.</p></div>
+      <div class="pagehead"><div><div class="eyebrow">${(() => { const dates = new Set(trip.days.map(x => x.date).filter(Boolean)).size || trip.days.length, cities = new Set(trip.days.filter(x => !noShore(x) && x.type !== "port" && x.destination).map(x => keyOf(x.destination))).size, ports = trip.days.filter(x => x.type === "port").length; return `${dates} day${dates === 1 ? "" : "s"}${cities > 1 ? ` · ${cities} cities` : ""}${ports ? ` · ${ports} cruise stop${ports === 1 ? "" : "s"}` : ""}`; })()}</div>${renameId === trip.id ? renameBox(trip.id, trip.name || tripName(trip)) : `<h2 class="dayname">${esc(trip.name || "Your trip")} <button class="linkbtn rename" data-act="rename" data-id="${esc(trip.id)}" aria-label="Rename this trip">✎ Rename</button></h2>`}</div></div>
       ${aiReady() && missing ? `<button class="btn ghost small" data-act="genall" ${busy ? "disabled" : ""}>${missing === 1 ? `Build the guide for ${esc(missingNames[0])}` : missing <= 3 ? `Build the guides for ${esc(missingNames.join(" and "))}` : `Build the guides for all ${missing} places`}</button>` : ""}
       <div class="itin">${itinerary()}</div>
       <div class="actions"><button class="btn ghost small" data-act="addday">+ Add a day</button><button class="btn ghost small" data-act="addport">+ Add a port day</button></div>
@@ -4315,11 +4322,11 @@ function timeMeter(plan, d) {
   const msg = full ? `Your picks are over today's time. ${m.dropped.length ? `<b>${m.dropped.map(x => esc(x.name)).join(", ")}</b> won't fit.` : `It runs ${dur(m.late)} late.`} <button type="button" class="btn small" data-act="fitfix">Make it fit</button>`
     : near ? (avail - used >= 5 ? `Almost full: about ${dur(avail - used)} left.` : `Full, and everything you picked fits.`)
     : !m.visits && !m.dropped.length ? `Nothing picked yet: ${dur(Math.max(0, avail - used))} free.${m.settle || m.leave ? " Only your fixed travel is counted." : ""}`
-    : `${dur(Math.max(0, avail - used))} free. Meals and walking are included.`;
-  const extras = m.bonus ? `<p class="mparts">Your guide also suggests ${m.bonus} bonus stop${m.bonus > 1 ? "s" : ""} (${dur(m.bonusMin)}) for the free time. They aren't counted above and make way for anything you tick.</p>` : "";
+    : "";
+  const extras = m.bonus ? `<p class="mparts">Plus ${m.bonus} optional stop${m.bonus > 1 ? "s" : ""} (${dur(m.bonusMin)}) for your free time, not counted here.</p>` : "";
   return `<div class="meter ${full ? "full" : near ? "near" : ""}" role="status" aria-live="polite">
     <div class="mrow"><b>${dur(Math.min(used, 24 * 60))} of ${dur(avail)}</b><span>${fmt(m.start)} to ${fmt(m.endBy)}</span></div>
-    <div class="mbar"><i style="width:${pct}%"></i></div>${parts.length ? `<p class="mparts">${parts.map(esc).join(" · ")}</p>` : ""}<p>${msg}</p>${extras}</div>`;
+    <div class="mbar"><i style="width:${pct}%"></i></div>${parts.length ? `<p class="mparts">${parts.map(esc).join(" · ")}</p>` : ""}${msg ? `<p>${msg}</p>` : ""}${extras}</div>`;
 }
 const d0 = plan => `${fmt(plan.start)} to ${fmt(plan.endBy)}`;
 function renderSites(d) {
@@ -4347,16 +4354,15 @@ function renderSites(d) {
   const leftTxt = (mm => mm ? ` · <b>${mm.left >= 5 ? dur(mm.left) + " left today" : "today is full"}</b>` : "")(plan && !plan.error ? timeLeft(plan, d) : null);
   const n = d.selected.length;
   const avail = plan && !plan.error ? dur(plan.endBy - plan.start) : "";
-  return `<div class="sitesgrid"><div class="sitesside pane" data-pane="side">
-  ${dayHeading(d)}
-  <p class="lede">Tick what you'd like to see${avail ? ` in the ${avail} you have` : ""}. Your route is worked out for you, and anything that won't fit is flagged on the plan.</p>
-  ${city.ai ? `<p class="ai-note">Written by your AI guide from checked sources: every place is confirmed on the map, stories draw on Wikipedia and Wikivoyage (CC BY-SA), hours and access on OpenStreetMap contributors (ODbL). Check opening hours before you go.</p>` : city.builtin ? `<p class="ai-note">Kairoute guide. Hours and prices are typical: check before you go.</p>` : ""}
+  const nDays = trip.days.filter(o => cityFor(o) === city).length;
+  return `${pageHead(d, plan, "")}<div class="sitesgrid"><div class="sitesside pane" data-pane="side">
   <div class="filters seg" role="group" aria-label="Filter">
     ${[["all", "All"], ["must", "Must-sees"], ["touristy", "Famous"], ["local", "Local favorites"]].map(([k, l]) => `<button type="button" data-filter="${k}" aria-pressed="${f === k}">${l}</button>`).join("")}
   </div>
   ${timeMeter(plan, d)}${plan && !plan.error ? laterEndBanner(d, plan) + elsewhereNote(plan) : ""}
-  <div class="card suggest"><div><h3>Let your guide plan it</h3><p class="lede">Picks the best stops for ${(() => { const n = trip.days.filter(o => cityFor(o) === city).length; return n > 1 ? `all ${n} days` : "today"; })()} in ${esc(city.city)}, from your start point, hours, pace, walking and interests. Each day gets its own area, nothing repeats, and every stop fits.</p></div>
-    ${suggestMsg ? `<p class="banner" id="suggestNote" role="status">${esc(suggestMsg)}</p>` : ""}<div class="actions"><button class="btn" data-act="suggesttour">Suggest my tour</button><button class="btn ghost small" data-act="freshpicks">Fresh picks for this day only</button></div></div>
+  <div class="card suggest"><div><h3>Let your guide plan it</h3><p class="lede small">The best stops for ${nDays > 1 ? `all ${nDays} days` : "today"} in ${esc(city.city)}, fitted to your hours, pace and interests. Nothing repeats.</p></div>
+    ${suggestMsg ? `<p class="banner" id="suggestNote" role="status">${esc(suggestMsg)}</p>` : ""}<div class="actions"><button class="btn small" data-act="suggesttour">Suggest my tour</button><button class="btn ghost small" data-act="freshpicks">Fresh picks for this day only</button></div></div>
+  ${city.ai ? `<p class="ai-note">Written by your AI guide from checked sources: every place is confirmed on the map, stories draw on Wikipedia and Wikivoyage (CC BY-SA), hours and access on OpenStreetMap contributors (ODbL). Check opening hours before you go.</p>` : city.builtin ? `<p class="ai-note">Kairoute guide. Hours and prices are typical: check before you go.</p>` : ""}
   </div><div class="sitesmain pane" data-pane="sites">
   ${picked.length ? `<p class="listlbl">Your picks (${picked.length}), newest first${leftTxt}</p>
   <div class="sitelist anchorlist">${picked.map(s => siteCard(s, d, plan, near)).join("")}</div>` : ""}
@@ -5007,9 +5013,9 @@ function renderGuide(d) {
   const navBtn = (x, dir) => x ? `<button type="button" class="btn ${dir === "next" ? "" : "ghost"} small" data-jump="${esc(x.s.id)}">${dir === "next" ? "Next: " + esc(x.s.name) + " ›" : "‹ " + esc(x.s.name)}</button>` : "<span></span>";
   const cards = cur ? stopCard(cur.s, cur.num, city, cur.t) + `<div class="stopnav">${navBtn(prv, "prev")}${navBtn(nxt, "next")}</div>` : "";
   const jumps = stops.map(x => `<button type="button" class="chip ${x === cur ? "on" : ""}" data-jump="${esc(x.s.id)}" aria-pressed="${x === cur}"><b>${x.num || (x.s.bonus ? "+" : "•")}</b> ${x.s.bonus ? "Optional: " : ""}${esc(x.s.name)}</button>`).join("");
-  return `<div class="mcta"><button class="btn bigbtn" data-act="tourstart">▶ Start the tour</button></div>
-    <div class="guidegrid"><div class="guideside pane" data-pane="side">${dayHeading(d)}<p class="lede">Pick a stop to read or hear its story. For a guided walk through the day, use Tour mode.</p>
-    <div class="planacts"><button class="btn bigbtn" data-act="tourstart">▶ Start the tour</button></div><div class="camrow">${camBtnHTML()}</div>
+  // Same head as the Day plan (docs/design-rules.md): day name, the ship countdown, one main action. The stop list is the picker.
+  return `${pageHead(d, plan, camBtnHTML() + tourBtnHTML())}
+    <div class="guidegrid"><div class="guideside pane" data-pane="side">
     ${jumps ? `<nav class="jumps" aria-label="Jump to a stop">${jumps}</nav>` : ""}</div>
     <div class="guidemain pane" data-pane="stories">${cards ? `<div class="stoplist">${cards}</div>` : `<div class="card empty"><p>No stops planned for today.</p><button class="btn" data-goto="sites">Choose stops</button></div>`}</div></div>`;
 }
@@ -5061,10 +5067,11 @@ function renderTour(d) {
   const stopsOnly = steps.filter(x => x.type === "stop" && !x.place.along);
   const stopNo = st.type === "stop" && !st.place.along ? stopsOnly.indexOf(steps.find((x, k) => k === T.i)) + 1 : 0;
   const pct = Math.round(T.i / Math.max(1, steps.length - 1) * 100);
-  const portBar = d.type === "port" ? `<div class="banner warn tourship"><span>All aboard <b>${esc(d.allAboard)}</b>. Be back at the ship by <b>${fmt(plan.endBy)}</b>.</span><span id="tourShip"></span></div>` : "";
-  const head = `<div class="tourhead"><div><div class="eyebrow">Tour · ${esc(dayName(d))} · ${esc(fmtDate(d.date))}</div>
-      <div class="tourbar"><i style="width:${pct}%"></i></div><div class="lede" style="font-size:.85rem">Step ${T.i + 1} of ${steps.length} · planned for ${fmt(st.time)}</div></div>
-    <div class="actions">${camBtnHTML()}<button class="btn ghost small" data-act="tourexit">Exit tour</button></div></div>${portBar}${followBar()}${groupBar()}`;
+  // One compact head row (docs/design-rules.md): where you are in the day, the back-to-the-ship countdown on ship,
+  // train and flight days (the same one as on the Day plan), and the two small tools. Follow me sits just below.
+  const head = `<div class="tourhead"><div class="tourwhere"><div class="eyebrow">Tour · ${esc(dayName(d))} · ${esc(fmtDate(d.date))}</div>
+      <div class="tourbar"><i style="width:${pct}%"></i></div><div class="lede small">Step ${T.i + 1} of ${steps.length} · planned for ${fmt(st.time)}</div></div>
+    ${countdownCard(d, plan)}<div class="headacts">${camBtnHTML()}<button class="btn ghost small" data-act="tourexit">Exit tour</button></div></div>${followBar()}${groupBar()}`;
   let body = "";
   if (T.phase === "walk" && st.type !== "start") {
     const nm = stepName(st);
@@ -5108,7 +5115,7 @@ function renderTour(d) {
     const found = T.found || [];
     const pp = s.parts && partsOn(s).length >= 2 ? partPlan(s, st.time).list : null, pk = pp ? Math.min(T.part || 0, pp.length - 1) : 0, cp = pp && pp[pk];
     if (pp) body = `<div class="tourcard">
-      <div class="stophead"><span class="stopnum big">${stopNo}</span><div><h2 class="tourtitle">${esc(s.name)}</h2><p class="stopmeta">Part ${pk + 1} of ${pp.length}: <b>${esc(cp.p.name)}</b></p></div></div>
+      <div class="tcmain"><div class="stophead"><span class="stopnum big">${stopNo}</span><div><h2 class="tourtitle">${esc(s.name)}</h2><p class="stopmeta">Part ${pk + 1} of ${pp.length}: <b>${esc(cp.p.name)}</b></p></div></div>
       <p class="timeleft" id="tourLeft"></p>
       <ol class="partsteps">${pp.map((x, i) => `<li class="${i < pk ? "done" : i === pk ? "on" : ""}">${i < pk ? "✓ " : ""}${esc(x.p.name)}</li>`).join("")}</ol>
       ${pk && cp.p.cue ? `<p class="tourleg walk">${legIcon("walk")}<span>${esc(cp.p.cue)}</span></p>` : ""}
@@ -5119,26 +5126,26 @@ function renderTour(d) {
       <p class="guidetext">${esc(unitText(cp.p.guide))}</p>
       ${cp.p.lookFor ? `<div class="field"><span class="eyebrow">Can you find it?</span><p>${esc(cp.p.lookFor)}</p></div>` : ""}
       ${pk + 1 === pp.length && s.wrap ? `<p class="lede">${esc(unitText(s.wrap))}</p>` : ""}
-      ${s.show && s.show.what && !cp.wait ? `<p class="travelnote">⏱ ${esc(showLine(s, st.time))}</p>` : ""}
-      <details class="more" id="story-${esc(s.id)}"><summary>The whole story of ${esc(s.name)}</summary><div class="guidetext" style="margin-top:8px">${paras(unitText(s.guide))}</div></details>
-      ${journalBlock(s)}
+      ${s.show && s.show.what && !cp.wait ? `<p class="travelnote">⏱ ${esc(showLine(s, st.time))}</p>` : ""}</div>
+      <div class="tcside"><details class="more" id="story-${esc(s.id)}"><summary>The whole story of ${esc(s.name)}</summary><div class="guidetext" style="margin-top:8px">${paras(unitText(s.guide))}</div></details>
+      ${journalBlock(s)}</div>
       <div class="actions tourmain">${pk + 1 < pp.length ? `<button class="btn bigbtn" data-act="tourpart">Next part: ${esc(pp[pk + 1].p.name)}</button>` : `<button class="btn bigbtn" data-act="tournext">${nxt ? "Next: " + esc(stepName(nxt)) : "Finish"}</button>`}</div>
     </div>`;
     else body = `<div class="tourcard">
-      <div class="stophead"><span class="stopnum big">${s.along ? "•" : stopNo}</span><div><h2 class="tourtitle">${esc(s.name)}</h2><p class="stopmeta">${esc(String(s.category || "").replace(/^\w/, c => c.toUpperCase()))}</p></div></div>
+      <div class="tcmain"><div class="stophead"><span class="stopnum big">${s.along ? "•" : stopNo}</span><div><h2 class="tourtitle">${esc(s.name)}</h2><p class="stopmeta">${esc(String(s.category || "").replace(/^\w/, c => c.toUpperCase()))}</p></div></div>
       ${walkWorthy(s, city) && !(s.extrasV >= EXTRAS_V) && extrasAsked[keyOf(city.city) + "|" + s.id] ? `<p class="ai-note"><span class="spinner"></span> Your guide is planning the walk-through, point by point. The story below plays meanwhile.</p>` : ""}
       <p class="timeleft" id="tourLeft"></p>
 ${quietOn(s) ? `<p class="banner quiet" role="note">🤫 <span><b>Quiet place.</b> The story is below to read. Audio plays only after you confirm your earbuds are in.</span></p>` : ""}
       <div class="audio"><button class="btn bigplay" data-play="${esc(s.id)}" data-label="${quietOn(s) ? "🎧 Play with earbuds" : "▶ Play the story"}">${quietOn(s) ? "🎧 Play with earbuds" : "▶ Play the story"}</button><span class="state" aria-live="polite"></span></div>
       ${s.lookFor && s.lookFor.length ? `<div class="field"><span class="eyebrow">Can you find these?</span>
-        <div class="finds">${s.lookFor.map((x, k) => `<button class="find ${found.includes(k) ? "on" : ""}" data-find="${k}"><span class="fk">${found.includes(k) ? "✓" : k + 1}</span><span>${esc(x)}</span></button>`).join("")}</div></div>` : ""}
-      ${picksBlock(s)}
+        <div class="finds">${s.lookFor.map((x, k) => `<button class="find ${found.includes(k) ? "on" : ""}" data-find="${k}"><span class="fk">${found.includes(k) ? "✓" : k + 1}</span><span>${esc(x)}</span></button>`).join("")}</div></div>` : ""}</div>
+      <div class="tcside">${picksBlock(s)}
       ${gxStopExtras(s, city, true)}
       ${srcNote(s)}
       ${s.photoTip ? `<p class="phototip"><b>Photo spot:</b> ${esc(s.photoTip)}</p>` : ""}
       <details class="more" id="story-${esc(s.id)}" ${quietOn(s) ? "open" : ""}><summary>Read the story</summary><div class="guidetext" style="margin-top:8px">${paras(unitText(s.guide))}</div></details>
       ${aiReady() || askState.pending.length ? askBlock(s) : ""}
-      ${journalBlock(s)}
+      ${journalBlock(s)}</div>
       <div class="actions tourmain"><button class="btn bigbtn" data-act="tournext">${nxt ? "Next: " + esc(stepName(nxt)) : "Finish"}</button></div>
     </div>`;
   }
@@ -5164,13 +5171,7 @@ function tickTour() {
     if (left <= 10 && left > 0 && T.nudged < 1 && planned > 15) { T.nudged = 1; save(); if (!speakingId) speakText("nudge", `About ten more minutes here${nxt ? ", then " + stepName(nxt) : ""}.`); }
     if (left <= 0 && T.nudged < 2) { T.nudged = 2; save(); if (!speakingId) speakText("nudge", `Time to move on${nxt ? ". Next up, " + stepName(nxt) : ""}.`); }
   }
-  const sh = document.getElementById("tourShip");
-  if (sh && d.type === "port" && d.date === todayISO()) {
-    const now = new Date().getHours() * 60 + new Date().getMinutes();
-    const from = st.place || plan.w.head[0], port = plan.w.tail[plan.w.tail.length - 1];
-    const leaveBy = plan.endBy - travel(from, port).min;
-    sh.textContent = now >= leaveBy ? " Head back now." : ` Leave by ${fmt(leaveBy)} (${dur(leaveBy - now)}).`;
-  }
+
 }
 // ---------- Follow me: GPS moves the tour along ----------
 let geoWatch = null, geoPoll = null, geoState = "off", geoPos = null, geoMsg = "";

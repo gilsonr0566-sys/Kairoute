@@ -349,10 +349,10 @@ function gxStopExtras(s, city, inTour) {
 let gxBook = { busy: false, msg: "", err: "" };
 function gxBookCard() {
   const days = trip.days.filter(d => !noShore(d) && cityFor(d)).length; if (!days) return "";
-  return `<div class="card"><span class="eyebrow">Trip storybook</span><h3>Your trip as a photo book</h3>
-    <p class="lede">A PDF book of your trip: every day's route, your photos and notes, your stars, and the story of each place. Save it, share it, or print it at home.</p>
-    ${gxBook.busy ? `<p><span class="spinner"></span> ${esc(gxBook.msg || "Making your book…")}</p>` : `<div class="actions"><button class="btn" data-gx-book="1">Make my storybook</button></div>`}
-    ${gxBook.err ? `<p class="banner warn">${esc(gxBook.err)}</p>` : ""}<p class="ai-note">Printed, bound books are coming in a later version.</p></div>`;
+  if (!gxBook.busy && !gxBook.err) return ""; // the Make my storybook button lives in the Journal's head
+  return `<div class="card"><span class="eyebrow">Trip storybook</span>
+    ${gxBook.busy ? `<p><span class="spinner"></span> ${esc(gxBook.msg || "Making your book…")}</p>` : ""}
+    ${gxBook.err ? `<p class="banner warn">${esc(gxBook.err)}</p><div class="actions"><button class="btn small" data-gx-book="1">Try again</button></div>` : ""}</div>`;
 }
 async function gxImgData(src, maxW) {
   const im = typeof src === "string" ? await loadImg(src) : src; if (!im) return null;
