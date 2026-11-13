@@ -876,7 +876,7 @@ html, body { overflow-x: hidden; }
 .planbar .seg.daylen button { min-height: 36px; padding: 5px 10px; }
 .planbar .toolrow { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
 .planbar .toolrow > .btn, .planbar .moremenu > summary { min-height: 36px; padding: 5px 12px; font-size: .9rem; }
-.planmore .menupanel { position: absolute; right: 0; top: calc(100% + 4px); z-index: 1000; background: var(--card); border: 1px solid var(--line); border-radius: 8px; box-shadow: 0 10px 30px rgba(0,0,0,.18); min-width: 280px; padding: 6px; display: grid; gap: 2px; }
+.planmore .menupanel { position: fixed; right: auto; z-index: 1000; background: var(--card); border: 1px solid var(--line); border-radius: 8px; box-shadow: 0 10px 30px rgba(0,0,0,.18); min-width: 280px; padding: 6px; display: grid; gap: 2px; }
 .menuitem { display: flex; gap: 10px; align-items: center; width: 100%; text-align: left; background: none; border: 0; border-radius: 6px; padding: 10px 12px; font: inherit; font-size: .95rem; color: var(--ink); text-decoration: none; cursor: pointer; min-height: 44px; }
 .menuitem:hover, .menuitem:focus-visible { background: var(--route-soft); }
 .menuitem.toggle input { margin: 0; width: 18px; height: 18px; }
@@ -920,7 +920,6 @@ details.mealmore .mealbox { margin-top: 6px; }
   .planbar .toolrow > * { flex: 1 1 auto; }
   .planbar .toolrow > .btn { justify-content: center; }
   .planbar .moremenu > summary { width: 100%; justify-content: center; }
-  .planmore .menupanel { min-width: min(300px, calc(100vw - 32px)); }
   .countdown .cdbig { font-size: 1.8rem; }
 }
 
