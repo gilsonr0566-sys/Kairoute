@@ -113,7 +113,7 @@ export async function extras(req, env, ctx, url, h, H) {
   if (p === "/x/knowhow") {
     const city = String(q.get("city") || "").replace(/\s*\(.*?\)\s*/g, " ").split(",")[0].trim().slice(0, 80), country = String(q.get("country") || "").trim().slice(0, 60);
     if (!city) return json({ error: "Empty" }, 400);
-    const key = "kh3:" + (await H.sha((city + "|" + country).toLowerCase())), hit = await env.USAGE.get(key); if (hit) return sendRaw(hit);
+    const key = "kh4:" + (await H.sha((city + "|" + country).toLowerCase())), hit = await env.USAGE.get(key); if (hit) return sendRaw(hit);
     const [cp, kp] = await Promise.all([voyage(city), country ? voyage(country) : null]);
     const SECT = /^(respect|stay safe|stay healthy|buy|money|costs?|tipping|bargaining|haggling|shopping|cope|scams?|crime|eat|etiquette|dress code|talk)$/i;
     const parts = [];
@@ -137,7 +137,7 @@ ${material}`;
       if (j) { groups = {}; for (const g of ["etiquette", "tipping", "prices", "scams"]) groups[g] = (Array.isArray(j[g]) ? j[g] : []).map(x => typeof x === "string" ? { t: x } : x).filter(x => x && x.t && String(x.t).length < 260).slice(0, 5).map(x => ({ t: String(x.t).trim(), src: usable.some(u => u.src === x.src) ? x.src : usable[0].src })); }
     } catch (e) {}
     // A condensed item must not bring in numbers that aren't in the sections.
-    if (groups) for (const g in groups) groups[g] = groups[g].filter(x => !(String(x.t).match(/\d[\d.,]*/g) || []).some(n => !material.includes(n.replace(/[.,]$/, ""))));
+    if (groups) for (const g in groups) groups[g] = groups[g].filter(x => !/\b(AAVE|ethnic|slang|race|racial)\b/i.test(x.t)).filter(x => !(String(x.t).match(/\d[\d.,]*/g) || []).some(n => !material.includes(n.replace(/[.,]$/, ""))));
     const has = groups && Object.values(groups).some(a => a.length);
     const body = JSON.stringify(has ? { groups, sources, at: new Date().toISOString().slice(0, 10) } : { raw: usable.map(x => ({ src: x.src, text: x.text.slice(0, 1800) })), sources });
     if (has) ctx.waitUntil(env.USAGE.put(key, body, { expirationTtl: 60 * 86400 }));

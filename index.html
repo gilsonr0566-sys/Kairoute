@@ -7215,12 +7215,31 @@ function gxGet(key, path, opts) {
   gxPending.add(key);
   fetch(freeAI.url + path, opts && opts.body ? { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify(opts.body) } : {})
     .then(r => r.ok ? r.json() : Promise.reject(r.status))
+    .catch(st => opts && opts.fallback ? opts.fallback().then(v => v || Promise.reject(st), () => Promise.reject(st)) : Promise.reject(st))
     .then(v => { gxCache[key] = { v, t: Date.now() }; gxSaveCache(); gxRefresh(); })
     .catch(st => { gxFailed.set(key, Date.now() + (st === 422 || st === 400 ? 864e5 : 90000)); if (st === 422 || st === 400) { gxCache[key] = { v: null, t: Date.now() }; gxSaveCache(); } })
     .finally(() => gxPending.delete(key));
   return undefined;
 }
 const gxR3 = n => (+n).toFixed(3);
+// When Kairoute's helper can't reach the map servers (they turn away busy callers), the device asks OpenStreetMap's
+// Overpass service itself: same query, same answer format, from the traveler's own connection.
+async function gxNearDirect(what, lat, lng) {
+  const A = what === "view" ? `(around:2000,${lat},${lng})` : `(around:700,${lat},${lng})`;
+  const q = what === "view" ? `[out:json][timeout:12];(node["tourism"="viewpoint"]["name"]${A};way["tourism"="viewpoint"]["name"]${A};);out center tags 80;`
+    : `[out:json][timeout:12];(node["amenity"~"^(toilets|drinking_water|pharmacy|atm)$"]${A};way["amenity"~"^(toilets|pharmacy)$"]${A};node["amenity"="bank"]["atm"="yes"]${A};);out center tags 200;`;
+  for (const ep of ["https://overpass-api.de/api/interpreter", "https://overpass.private.coffee/api/interpreter"]) {
+    try {
+      const r = await fetch(ep, { method: "POST", body: "data=" + encodeURIComponent(q), headers: { "content-type": "application/x-www-form-urlencoded" }, signal: AbortSignal.timeout(15000) });
+      if (!r.ok) continue; const d = await r.json(); if (d.remark && !(d.elements || []).length) continue;
+      const list = (d.elements || []).map(e => { const t = e.tags || {}, la = e.lat != null ? e.lat : e.center && e.center.lat, ln = e.lon != null ? e.lon : e.center && e.center.lon; if (!isFinite(la)) return null;
+        return what === "view" ? { name: t["name:en"] || t.name || "", local: t.name && t["name:en"] && t.name !== t["name:en"] ? t.name : undefined, lat: +(+la).toFixed(5), lng: +(+ln).toFixed(5), wd: t.wikidata || undefined, desc: (t.description || "").slice(0, 160) || undefined }
+          : { kind: t.amenity === "bank" ? "atm" : t.amenity, name: t["name:en"] || t.name || t.operator || t.brand || "", lat: +(+la).toFixed(5), lng: +(+ln).toFixed(5), fee: t.fee || undefined, hours: t.opening_hours || undefined, wheelchair: t.wheelchair || undefined, access: t.access || undefined }; }).filter(x => x && (what !== "view" || x.name));
+      return what === "view" ? { spots: list.slice(0, 120), source: "OpenStreetMap" } : { places: list.slice(0, 120), source: "OpenStreetMap" };
+    } catch (e) {}
+  }
+  return null;
+}
 const gxStopsOf = plan => plan.items.filter(i => i.type === "stop" && i.place && isFinite(i.place.lat));
 function gxCenter(city) {
   const pts = (city.sites || []).filter(x => isFinite(x.lat)).slice(0, 12);
@@ -7276,7 +7295,7 @@ function gxViewpoints(plan) {
   const pts = gxStopsOf(plan).map(i => i.place), seen = new Set(), keys = [];
   pts.forEach(p => { const k = p.lat.toFixed(2) + "," + p.lng.toFixed(2); if (!seen.has(k) && keys.length < 4) { seen.add(k); keys.push(p); } });
   let all = [], done = true;
-  keys.forEach(p => { const v = gxGet("view:" + gxR3(p.lat) + "," + gxR3(p.lng), `/x/near?what=view&lat=${gxR3(p.lat)}&lng=${gxR3(p.lng)}`); if (v === undefined) done = false; else if (v && v.spots) all = all.concat(v.spots); });
+  keys.forEach(p => { const v = gxGet("view:" + gxR3(p.lat) + "," + gxR3(p.lng), `/x/near?what=view&lat=${gxR3(p.lat)}&lng=${gxR3(p.lng)}`, { fallback: () => gxNearDirect("view", gxR3(p.lat), gxR3(p.lng)) }); if (v === undefined) done = false; else if (v && v.spots) all = all.concat(v.spots); });
   const uniq = []; all.forEach(v => { if (!uniq.some(u => keyOf(u.name) === keyOf(v.name) || hav(u, v) < 0.05)) uniq.push(v); });
   return { done, spots: uniq.map(v => { const near = pts.slice().sort((a, b) => hav(a, v) - hav(b, v))[0]; return Object.assign({}, v, { near, km: near ? hav(near, v) : 0 }); }).filter(v => v.km <= 1.6).sort((a, b) => (b.wd ? 1 : 0) - (a.wd ? 1 : 0) || a.km - b.km) };
 }
@@ -7345,7 +7364,9 @@ async function askExtra(site, city, q) {
   if (!here) return "";
   const key = "amen:" + gxR3(here.lat) + "," + gxR3(here.lng);
   let v = gxCache[key] && gxCache[key].v;
-  if (!v) { try { const r = await fetch(`${freeAI.url}/x/near?what=amen&lat=${gxR3(here.lat)}&lng=${gxR3(here.lng)}`, { signal: AbortSignal.timeout(20000) }); if (r.ok) { v = await r.json(); gxCache[key] = { v, t: Date.now() }; gxSaveCache(); } } catch (e) {} }
+  if (!v) { try { const r = await fetch(`${freeAI.url}/x/near?what=amen&lat=${gxR3(here.lat)}&lng=${gxR3(here.lng)}`, { signal: AbortSignal.timeout(20000) }); if (r.ok) v = await r.json(); } catch (e) {}
+    if (!v) v = await gxNearDirect("amen", gxR3(here.lat), gxR3(here.lng));
+    if (v) { gxCache[key] = { v, t: Date.now() }; gxSaveCache(); } }
   const from = here === geoPos ? "where the traveler is now" : here.name;
   if (!v || !v.places) return `\nNo map data on ${want.map(a => a[2].toLowerCase()).join(" or ")} could be loaded right now: say so, and suggest asking at a café, museum or the ticket desk.`;
   return "\n" + want.map(([kind, , label]) => {
@@ -7607,7 +7628,7 @@ if (typeof document !== "undefined") {
   document.addEventListener("toggle", e => { const el = e.target; if (el && el.dataset && el.dataset.gxFold) { if (el.open) gxOpen.add(el.dataset.gxFold); else gxOpen.delete(el.dataset.gxFold); } }, true);
 }
 const gxOpen = new Set();
-if (typeof window !== "undefined") window.__kairouteExtras = { gxSun, gxLocalMin, interestWords, themeOf, gxSavings, askExtra, THEMES };
+if (typeof window !== "undefined") window.__kairouteExtras = { gxNearDirect, gxSun, gxLocalMin, interestWords, themeOf, gxSavings, askExtra, THEMES };
 // ===================== Group tours =====================
 // One person leads; everyone else follows on their own phone. Followers get the leader's trip once (it then
 // works offline), move to the leader's step as the leader moves, hear the same story start when the leader
@@ -8343,4 +8364,4 @@ render();
 
 </script>
 <script>if ("serviceWorker" in navigator) addEventListener("load", () => navigator.serviceWorker.register("sw.js").catch(() => {}));</script>
-<script>(function(){var B="8ba9882-1794539121";function chk(){if(location.protocol!=="https:")return;fetch("version.txt",{cache:"no-store"}).then(function(r){return r.ok?r.text():""}).then(function(t){t=t.trim();if(t&&t!==B)location.reload()}).catch(function(){})}addEventListener("load",chk);document.addEventListener("visibilitychange",function(){if(document.visibilityState==="visible")chk()})})();</script>
+<script>(function(){var B="7b79ff4-1794539758";function chk(){if(location.protocol!=="https:")return;fetch("version.txt",{cache:"no-store"}).then(function(r){return r.ok?r.text():""}).then(function(t){t=t.trim();if(t&&t!==B)location.reload()}).catch(function(){})}addEventListener("load",chk);document.addEventListener("visibilitychange",function(){if(document.visibilityState==="visible")chk()})})();</script>

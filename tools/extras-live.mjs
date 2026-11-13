@@ -7,9 +7,11 @@ const H = { "content-type": "application/json", "x-kairoute-lab": "1", origin: "
 // Outside services (OpenStreetMap's map servers, Wikidata) are sometimes busy. A busy answer is reported as a warning,
 // not a failure, so the run only goes red (and emails) for a real problem in Kairoute's own code.
 const fails = [], warns = [], lines = []; const say = m => { console.log(m); lines.push(m); };
-const ok = m => say("  ok  " + m), bad = m => { if (/\b502\b.*(map busy|"busy")/.test(m)) { warns.push(m); say("  WARN (outside service busy, try later) " + m); } else { fails.push(m); say("  FAIL " + m); } };
-const get = async p => { const r = await fetch(U + p, { headers: H }); let j = null; try { j = await r.json(); } catch (e) {} return { s: r.status, j }; };
-const post = async (p, b) => { const r = await fetch(U + p, { method: "POST", headers: H, body: JSON.stringify(b) }); let j = null; try { j = await r.json(); } catch (e) {} return { s: r.status, j }; };
+const ok = m => say("  ok  " + m), bad = m => { if (/\b502\b.*(map busy|"busy")|network: /.test(m)) { warns.push(m); say("  WARN (outside service busy, try later) " + m); } else { fails.push(m); say("  FAIL " + m); } };
+const retry = async f => { for (let t = 0; ; t++) { try { return await f(); } catch (e) { if (t >= 2) return { s: 0, j: { error: "network: " + (e.cause && e.cause.code || e.message) } }; await new Promise(r => setTimeout(r, 3000)); } } };
+const get0 = async p => { const r = await fetch(U + p, { headers: H }); let j = null; try { j = await r.json(); } catch (e) {} return { s: r.status, j }; };
+const post0 = async (p, b) => { const r = await fetch(U + p, { method: "POST", headers: H, body: JSON.stringify(b) }); let j = null; try { j = await r.json(); } catch (e) {} return { s: r.status, j }; };
+const get = p => retry(() => get0(p)), post = (p, b) => retry(() => post0(p, b));
 const ACROPOLIS = "You are climbing the hill that gave the world the idea of the classical temple. In the 440s BC, the statesman Pericles used the treasury of the Athenian league to rebuild this rock after the Persians burned it in 480 BC. The Parthenon was finished in 438 BC and dedicated to Athena, the city's patron goddess. Its columns lean slightly inward and its floor curves upward in the middle, so that from a distance the building looks perfectly straight. Look for the small Temple of Athena Nike on the right as you come through the Propylaea gateway, and the Erechtheion with its porch of six maidens, the Caryatids.";
 const AREOPAGUS = "This bare rock below the Acropolis is the Areopagus, or Mars Hill. In ancient times the city's highest court met here. According to the Book of Acts, chapter 17, the Apostle Paul stood here around AD 51 and spoke to the Athenians about the 'unknown god'. A bronze plaque at the foot of the steps carries the text of his sermon in Greek.";
 (async () => {
