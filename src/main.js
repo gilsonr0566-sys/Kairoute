@@ -1515,7 +1515,9 @@ function buildPlanFor(d) {
     const taken = new Set([...Object.keys(plannedElsewhere(d)), ...leavingReserve(d, city)]);
     trip.days.slice(0, trip.days.indexOf(d)).forEach(o => { if (cityFor(o) !== city) return; if (!bonusMemo.has(o)) { try { buildPlan(o); } catch (e) {} } (bonusMemo.get(o) || []).forEach(id => taken.add(id)); });
     const inSeq = new Set(seq.filter(x => !x.mealOf).map(x => x.id)), skip = new Set((d.selected || []).concat(dropped.map(x => x.id)));
-    const pool = (city.sites || []).concat(city.farther || []).filter(x => !x.quick && religiousOk(x) && !inSeq.has(x.id) && !skip.has(x.id) && !taken.has(x.id) && !(d.skipBonus || []).includes(x.id) && !closedForDay(x, d, w) && (!d.rain || x.indoor))
+    // An optional stop the app adds on its own must come with its story: a sight listed from the sources whose story
+    // isn't written yet is offered in the sights list, never slipped into the day as an extra.
+    const pool = (city.sites || []).concat(city.farther || []).filter(x => !x.quick && !(x.srcOnly && !x.guide) && religiousOk(x) && !inSeq.has(x.id) && !skip.has(x.id) && !taken.has(x.id) && !(d.skipBonus || []).includes(x.id) && !closedForDay(x, d, w) && (!d.rain || x.indoor))
       .map(x => Object.assign({}, x, { minutes: Math.round(x.minutes * mult / 5) * 5 || x.minutes, bonus: true }, live(x)));
     const limit = w.endBy - 15 - tailCost(), leaving = d.type === "embark" || d.type === "departure";
     let capped = false;
@@ -1906,6 +1908,7 @@ ${P().access !== "none" ? "- The travelers need: " + ACCESS.find(a => a[0] === P
       if (JSON.stringify([raw.verified, raw.grounded, (raw.restaurants || []).length, raw.startsOk, raw.eatsV]) !== before) fresh = true;
     }
     const c = cleanCity(raw, label);
+    if (raw.area) c.area = String(raw.area);
     if (!c.sites.length) throw new Error("empty");
     if (!guideInLang(c, P().lang)) throw new Error("The guide came back in the wrong language. Try again.");
     // Never swap a built-in guide for a thinner one (and don't save it for others): keep what the traveler has.
@@ -2058,6 +2061,7 @@ function fameMark(city, src) {
     if (hit) { s.fame = hit.sl || 0; s.unesco = !!hit.unesco; s.heritage = !!hit.heritage; s.src = hit.src || []; if (hit.web && !s.web) s.web = hit.web; if (hit.local) s.local = hit.local; }
   }
   famousRepair(city, src);
+  sourceSights(city, src);
   for (const s of [...(city.sites || []), ...(city.farther || [])]) s.kind = sightKind(s, city);
   for (const r of city.restaurants || []) {
     const e = (src.eats || []).find(x => (nameMatch(r.name, x.name) || nameMatch(x.name, r.name)) && (x.lat == null || hav(x, r) < 0.4));
@@ -2074,7 +2078,10 @@ function famousTop(city, src) {
   const mid = pts.length ? { lat: la[pts.length >> 1], lng: ln[pts.length >> 1] } : null;
   return (src.stops || []).filter(x => vis(x) && (!mid || hav(x, mid) <= 8)).sort((a, b) => (b.sl || 0) - (a.sl || 0)).slice(0, 12);
 }
-const sameSight = (x, s) => nameMatch(x.name, s.name) || nameMatch(s.name, x.name) || !!(x.local && (nameMatch(x.local, s.name) || (s.local && keyOf(s.local) === keyOf(x.local)))) || !!(x.wd && s.wd && x.wd === s.wd);
+// A local name in another script (Greek, Arabic, Japanese...) has no letters left after keyOf(), and an empty name
+// "matches" anything, so local names only count when they still have letters to compare.
+const hasKey = n => !!n && keyOf(n).length >= 3;
+const sameSight = (x, s) => nameMatch(x.name, s.name) || nameMatch(s.name, x.name) || !!(hasKey(x.local) && (nameMatch(x.local, s.name) || (hasKey(s.local) && keyOf(s.local) === keyOf(x.local)))) || !!(x.wd && s.wd && x.wd === s.wd);
 function famousGaps(city, src) {
   const top = famousTop(city, src), bar = famousMustBar(top), all = allSites(city);
   return { top, bar, missing: top.filter(x => !all.some(s => sameSight(x, s))), hidden: (city.sites || []).filter(s => s.quick && top.some(x => sameSight(x, s))) };
@@ -2348,15 +2355,25 @@ function fameFor(d, city) {
   const k = keyOf(city.city);
   if (fameAsked[k]) { if (fameAsked[k] !== true) fameMark(city, fameAsked[k]); return fameWait[k] || Promise.resolve(); }
   fameAsked[k] = true;
-  return (fameWait[k] = sourcesFor(city.city).then(async src => {
+  const lbl = srcLabel(city, d);
+  return (fameWait[k] = sourcesFor(lbl).then(async src => {
     // If the sources step can't answer, the fame list alone still protects the famous sights.
-    if (!src) { const fam = await famousFor(city.city); if (fam) src = { stops: fam.main.map(x => Object.assign({ src: ["Wikidata (Wikipedia in many languages)"] }, x)), far: fam.far, eats: [] }; }
+    if (!src) { const fam = await famousFor(lbl); if (fam) src = { stops: fam.main.map(x => Object.assign({ src: ["Wikidata (Wikipedia in many languages)"] }, x)), far: fam.far, eats: [] }; }
     if (!src) { delete fameAsked[k]; return; }
     fameAsked[k] = src; fameMark(city, src);
     if (view === "plan" || view === "guide") { const y = window.scrollY; render(); window.scrollTo(0, y); }
   }).catch(() => { delete fameAsked[k]; }).finally(() => { delete fameWait[k]; }));
 }
 const fameWait = {};
+// Which city a guide's sources are asked for: the city the day is really spent in. A gateway port's guide can be
+// titled by the port ("Civitavecchia") while the day is in Rome, so the guide's own area (from its fame step) or
+// the day's bracketed destination ("Civitavecchia (Rome)") wins over the guide's title.
+function srcLabel(city, d) {
+  if (city && city.area) return city.area;
+  const dest = String((d && d.destination) || "");
+  if (/\(.+\)/.test(dest) && !/\(.+\)/.test(String((city && city.city) || ""))) return dest;
+  return (city && city.city) || dest;
+}
 // How much a sight's fame protects it: 1 for an ordinary sight, up to 3 for a World Heritage site that
 // half the world's Wikipedias write about.
 const fameW = s => travW(s) * (1 + (s && s.unesco ? 0.8 : s && s.heritage ? 0.3 : 0) + Math.min(1.2, ((s && s.fame) || 0) / 80) + Math.min(0.6, Math.max(0, ((s && s.src && s.src.length) || 0) - 1) * 0.15));
@@ -2523,7 +2540,7 @@ async function cityInParts(prompt, show, label) {
   }
   // Anything the writer returned that wasn't one of the confirmed places is left out.
   const keep = xs => { if (!grounded) return xs; const lost = xs.filter(x => x.onMap !== true); if (lost.length) console.info("Kairoute left out written places that didn't match a checked place: " + lost.map(x => x.name).join("; ")); return xs.filter(x => x.onMap === true); };
-  return Object.assign({}, info, { sites: keep(sites), farther: keep(farther), grounded: !!grounded });
+  return Object.assign({}, info, { sites: keep(sites), farther: keep(farther), grounded: !!grounded }, cityArea ? { area: cityArea } : {});
 }
 // Real-world check for an AI-written city, against OpenStreetMap (the open world map):
 // every sight is looked up by name; found ones get the map's exact location, ones the map can't find
@@ -4611,7 +4628,7 @@ function siteCard(s, d, plan, nr) {
         ${closedOn(s, d.date) ? `<span class="tag nofit">${esc(s.closed)}</span>` : ""}
       </div>
       <p class="sum">${esc(unitText(s.summary))}</p>
-      ${partsPick(s)}${s.show && s.show.what ? `<p class="travelnote">⏱ ${esc(showLine(s))}</p>` : ""}${nextDoor(s, cityFor(d))}
+      ${twinNote(s, cityFor(d))}${partsPick(s)}${s.show && s.show.what ? `<p class="travelnote">⏱ ${esc(showLine(s))}</p>` : ""}${nextDoor(s, cityFor(d))}
       ${srcNote(s)}
       ${s.far && s.travel ? `<p class="travelnote">Getting there: ${esc(unitText(s.travel))}</p>` : ""}
       ${s.hours ? `<p class="travelnote">${esc(s.hours)}${s.closed ? " · " + esc(s.closed) : ""}</p>` : ""}
@@ -4695,7 +4712,7 @@ function renderSites(d) {
   ${timeMeter(plan, d)}${plan && !plan.error ? laterEndBanner(d, plan) + elsewhereNote(plan) : ""}
   <div class="card suggest"><div><h3>Let your guide plan it</h3><p class="lede small">The best stops for ${nDays > 1 ? `all ${nDays} days` : "today"} in ${esc(city.city)}, fitted to your hours, pace and interests. Nothing repeats.</p></div>
     ${suggestMsg ? `<p class="banner" id="suggestNote" role="status">${esc(suggestMsg)}</p>` : ""}<div class="actions"><button class="btn small" data-act="suggesttour">Suggest my tour</button><button class="btn ghost small" data-act="freshpicks">Fresh picks for this day only</button></div></div>
-  ${city.ai ? `<p class="ai-note">Written by your AI guide from checked sources: every place is confirmed on the map, stories draw on Wikipedia and Wikivoyage (CC BY-SA), hours and access on OpenStreetMap contributors (ODbL). Check opening hours before you go.</p>` : city.builtin ? `<p class="ai-note">Kairoute guide. Hours and prices are typical: check before you go.</p>` : ""}
+  ${city.ai ? `<p class="ai-note">Written by your AI guide from checked sources: every place is confirmed on the map, stories draw on Wikipedia and Wikivoyage (CC BY-SA), hours and access on OpenStreetMap contributors (ODbL). Check opening hours before you go.</p>` : city.builtin ? `<p class="ai-note">Kairoute guide. Hours and prices are typical: check before you go.</p>` : ""}${city.sites.some(x => x.srcOnly) ? `<p class="ai-note">More sights come from checked sources (Wikidata, Wikipedia, heritage registers); their short descriptions are from Wikivoyage (CC BY-SA). Each one's full story is written when you add it to a day.</p>` : ""}
   </div><div class="sitesmain pane" data-pane="sites">
   ${picked.length ? `<p class="listlbl">Your picks (${picked.length}), newest first${leftTxt}</p>
   <div class="sitelist anchorlist">${picked.map(s => siteCard(s, d, plan, near)).join("")}</div>` : ""}
@@ -5173,13 +5190,15 @@ const laterEndBanner = (d, plan) => (e => e ? `<div class="banner ok"><span>You 
 // full guide is fetched from the shared cache (free) or built once in the background (it's then shared with
 // every traveler), and replaces the thin one.
 const THIN_SIGHTS = 10, upgradeTried = new Set();
-const isThin = c => !!(c && c.builtin && (c.sites || []).filter(x => !x.quick).length < THIN_SIGHTS);
+const isThin = c => !!(c && c.builtin && (c.sites || []).filter(x => !x.quick && !x.srcOnly).length < THIN_SIGHTS);
 let upgrading = null;
 function upgradeThin(d, city) {
   if (!isThin(city) || !aiReady() || busy || upgrading) return;
   const k = keyOf(d.destination); if (upgradeTried.has(k)) return; upgradeTried.add(k);
   upgrading = d.destination;
-  generateCity(d, true).then(ok => { upgrading = null; if (ok && (view === "plan" || view === "guide")) render(); }).catch(() => { upgrading = null; });
+  // A build that fails (a busy service, the daily allowance) is tried again later, not only on the next app start.
+  const again = () => setTimeout(() => upgradeTried.delete(k), 10 * 60000);
+  generateCity(d, true).then(ok => { upgrading = null; if (!ok) again(); if (ok && (view === "plan" || view === "guide")) render(); }).catch(() => { upgrading = null; again(); });
 }
 if (typeof window !== "undefined") window.__kairouteUpgrading = () => upgrading;
 if (typeof window !== "undefined") window.__kairouteSights = () => { ensureBuiltins(); const out = {}; trip.days.forEach(d => { const c = cityFor(d); if (!c || out[d.destination]) return; out[d.destination] = { builtin: !!c.builtin, sites: (c.sites || []).map(x => x.name + (x.quick ? " [quick]" : "")), farther: (c.farther || []).map(x => x.name) }; }); return out; };
@@ -5194,7 +5213,7 @@ function renderPlan(d) {
   const city = cityFor(d);
   if (!city) return `${dayHeading(d)}${busyBlock()}${errBlock()}${needsCity(d)}`;
   refillIfNeeded(d, city); if (!d.selected) seedPicks(d, city); crowdFor(city); fameFor(d, city); farEatsFor(city, d); upgradeThin(d, city);
-  const plan = buildPlan(d); if (plan && !plan.error) { gCheck(plan, city); queueExtras(plan); }
+  const plan = buildPlan(d); if (plan && !plan.error) { gCheck(plan, city); queueExtras(plan); writeSrcSights(plan, city); }
   if (plan.error) return `${dayHeading(d)}<div class="card empty"><p>${esc(plan.error)}</p><button class="btn" data-goto="trip">Edit this day</button></div>`;
   let n = 0;
   const cat = s => esc(String(s.category || "").replace(/^\w/, c => c.toUpperCase()));

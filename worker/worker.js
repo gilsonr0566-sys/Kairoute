@@ -759,13 +759,13 @@ async function voyagePages(host, title, UA) {
   const get = async t => { try { const r = await fetch(`https://${host}/w/api.php?action=parse&prop=wikitext&format=json&formatversion=2&redirects=1&page=` + encodeURIComponent(t), { headers: UA, signal: AbortSignal.timeout(12000) }); if (r.ok) { const j = await r.json(); if (j.parse && j.parse.wikitext) return { title: j.parse.title, wt: j.parse.wikitext }; } } catch (e) {} return null; };
   const top = await get(title); if (!top) return { pages: 0, listings: [] };
   // Big cities keep their sights on district pages (Rome/Vatican, Barcelona/Eixample): read those too.
-  const esc = top.title.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), subs = [...new Set([...top.wt.matchAll(new RegExp("\\[\\[" + esc + "/([^|\\]#]+)", "g"))].map(m => top.title + "/" + m[1].trim()))].slice(0, 8);
+  const esc = top.title.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), subs = [...new Set([...top.wt.matchAll(new RegExp("\\[\\[" + esc + "/([^|\\]#]+)", "g"))].map(m => top.title + "/" + m[1].trim()))].slice(0, 14);
   const more = (await Promise.all(subs.map(get))).filter(Boolean);
   const listings = [top, ...more].flatMap(p => parseListings(p.wt));
   return { pages: 1 + more.length, title: top.title, listings };
 }
 async function sourcesData(label, env, ctx) {
-  const key = "sr3:" + (await sha(label.toLowerCase())), hit = await env.USAGE.get(key); if (hit) return JSON.parse(hit);
+  const key = "sr4:" + (await sha(label.toLowerCase())), hit = await env.USAGE.get(key); if (hit) return JSON.parse(hit);
   const UA = { "user-agent": "Kairoute/1.0 (travel guide; https://gilsonr0566-sys.github.io/Kairoute/)" };
   const getJ = async (u, ms, opt) => { for (let t = 0; t < 2; t++) { try { const r = await fetch(u, Object.assign({ headers: { ...UA, accept: "application/json" }, signal: AbortSignal.timeout(ms || 20000) }, opt || {})); if (r.ok) return await r.json(); } catch (e) {} } return null; };
   const T = {}, t0 = Date.now(), lap = k => { T[k] = Date.now() - t0; };
@@ -824,7 +824,7 @@ async function sourcesData(label, env, ctx) {
   const near = x => x.lat == null || kmOf(x, center) <= 12;
   const stops = [...byId.values(), ...noId].filter(x => x.name && !/^Q\d+$/.test(x.name) && near(x) && fold(x.name) !== fold(area))
     .map(x => ({ name: x.name, local: x.local && x.local !== x.name ? x.local : undefined, wd: x.wd || undefined, lat: x.lat != null ? +(+x.lat).toFixed(5) : undefined, lng: x.lng != null ? +(+x.lng).toFixed(5) : undefined, sl: x.sl || 0, unesco: !!x.unesco, heritage: !!x.heritage, web: x.web, src: [...x.src], en: x.en || undefined, lc: x.lc || undefined }))
-    .sort((a, b) => b.src.length - a.src.length || b.sl - a.sl).slice(0, 90);
+    .sort((a, b) => b.src.length - a.src.length || b.sl - a.sl).slice(0, 160);
   // Restaurants and cafes the guidebooks name (English and local), for cross-checking the map's list.
   const eats = [];
   for (const [v, src] of [[enV, S.enVoy], [lcV, S.lcVoy]]) for (const l of v.listings.filter(l => l.kind === "eat" || l.kind === "drink")) {
