@@ -121,6 +121,21 @@ const log = (suite, trip, ok, what) => { results.push({ suite, trip, ok, what })
     // Screenshots: the first planned day of each trip
     const first = days.find(D => D.type !== 'sea' && D.city);
     if (first) for (const [v, nm] of [['plan', 'day plan'], ['sites', 'change stops']]) { await p.evaluate(([i, v]) => window.__kairouteAt(i, v), [first.i, v]); await p.waitForTimeout(200); const f = `${T.key}-${v}.jpg`; await p.screenshot({ path: path.join(OUT, f), type: 'jpeg', quality: 60 }); shots.push({ f, cap: `${T.label}: ${nm}, ${first.date}` }); }
+    // Staying on board (port days): one tap; no shore plan, no ship-time alerts, not a tour day, the title says so,
+    // the picks go to another day here or back to the list, and going ashore after all puts everything back.
+    { let ab = 0; const abBad = [];
+      for (const D of (await p.evaluate(() => window.__kairouteDays())).filter(x => x.type === 'port').slice(0, 3)) {
+        const r = await p.evaluate(i => window.__kairouteAboard(i), D.i); if (!r) continue; ab++; const o = r.on, f = r.off, w = `${D.date}:`;
+        if (!o.aboard || o.selected || !o.card || !o.sitesCard) abBad.push(`${w} staying on board still shows a shore plan or keeps picks`);
+        if (o.alarm) abBad.push(`${w} ship-time alerts still on while staying on board`);
+        if (o.tourDay) abBad.push(`${w} a day on board still counts as a tour day`);
+        if (!/, staying aboard$/.test(o.title) || !/staying aboard/.test(o.chip)) abBad.push(`${w} title doesn't say staying aboard ("${o.title}")`);
+        if (r.before && !o.note) abBad.push(`${w} didn't say where the picks went`);
+        if (o.movedTo && !o.elsewhere) abBad.push(`${w} said picks moved to another day but they aren't there`);
+        if (o.elsewhere && !/Moved to another day/.test(o.note)) abBad.push(`${w} picks moved to another day without saying so`);
+        if (f.aboard || f.card || !f.restored || f.elsewhere) abBad.push(`${w} going ashore after all didn't put the day back`);
+      }
+      log('Staying on board', T.key, !abBad.length, abBad.length ? abBad.join(' | ') : `${ab} port days: on board and back again with one tap`); }
     log('Day titles', T.key, true, `${titled} automatic day titles name only the destination`);
     log('Closed sights', T.key, true, `${closedTried} days tried adding a sight closed that day: never added, an open day or sight offered`);
     log('One truth', T.key, !errs.length, errs.length ? 'page errors: ' + [...new Set(errs)].join(' | ') : `${checked} days checked, no page errors`);

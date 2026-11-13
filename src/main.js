@@ -450,6 +450,11 @@ function looseKey(dest) {
 }
 const cityKeyFor = d => d.cityKey && cities[d.cityKey] ? d.cityKey : (cities[keyOf(d.destination)] ? keyOf(d.destination) : looseKey(d.destination));
 const cityFor = d => { const k = cityKeyFor(d); return k ? cities[k] : null; };
+// A port day the traveler spends on the ship ("Staying on board", set in the trip setup or on the day) is planned
+// like a day at sea: no shore plan, no countdown or ship-time alerts, no tour day (pricing counts tourDay only).
+const noShore = d => !!d && (d.type === "sea" || (d.type === "port" && !!d.aboard));
+const tourDay = d => !!d && !noShore(d);
+function placeLabel(d) { return d.type === "sea" ? "At sea" : d.type === "port" && d.aboard ? (mainPlace(d) || "Port") + ", staying aboard" : mainPlace(d); }
 // A day's place is stored by its real name. Itineraries often add side places in brackets ("Naples (Capri,
 // Sorrento)", "Kusadasi (Ephesus)"), which then showed as the port's name and the day's title, promising places
 // the plan may not include. Once the day is tied to its guide, the place is kept as the guide's plain name
@@ -678,7 +683,7 @@ function suggestTour(d0) {
 // never depends on which day the traveler happened to open first (one sight, one day).
 function seedPicks(d, city) {
   const i = trip.days.indexOf(d);
-  trip.days.slice(0, Math.max(0, i)).forEach(o => { if (!o.selected && o.type !== "sea" && cityFor(o) === city) { o.selected = defaultSelection(city, trip.style, o); fitTrim(o); } });
+  trip.days.slice(0, Math.max(0, i)).forEach(o => { if (!o.selected && !noShore(o) && cityFor(o) === city) { o.selected = defaultSelection(city, trip.style, o); fitTrim(o); } });
   if (!d.selected) { d.selected = defaultSelection(city, trip.style, d); fitTrim(d); }
 }
 function defaultSelection(city, style, d) {
@@ -1170,7 +1175,7 @@ function buildPlanFor(d) {
   const openDay = (s, o) => { let ow = null; try { ow = dayWindow(o, city); } catch (e) {} return !closedForDay(s, o, ow); };
   chosen = chosen.filter(s => { if (!closedForDay(s, d, w)) return true;
     const o = trip.days.slice(myDay + 1).find(o => cityFor(o) === city && (o.selected || []).includes(s.id) && openDay(s, o));
-    if (o) elsewhere.push({ s, on: o, later: true }); else closedToday.push(Object.assign({}, s, { why: closedForDayWhy(s, d, w), openOn: trip.days.find(o => o !== d && cityFor(o) === city && o.type !== "sea" && openDay(s, o)) || null }));
+    if (o) elsewhere.push({ s, on: o, later: true }); else closedToday.push(Object.assign({}, s, { why: closedForDayWhy(s, d, w), openOn: trip.days.find(o => o !== d && cityFor(o) === city && !noShore(o) && openDay(s, o)) || null }));
     return false; });
   const swaps = [];
   if (d.rain) {
@@ -2426,7 +2431,7 @@ function keepGuide(d, raw) {
 async function buildAllGuides() {
   if (!aiReady()) return;
   const todo = [];
-  trip.days.forEach(d => { if (d.type !== "sea" && !cityFor(d) && d.destination && !todo.some(x => keyOf(x.destination) === keyOf(d.destination))) todo.push(d); });
+  trip.days.forEach(d => { if (!noShore(d) && !cityFor(d) && d.destination && !todo.some(x => keyOf(x.destination) === keyOf(d.destination))) todo.push(d); });
   aiError = "";
   for (let i = 0; i < todo.length; i++) {
     busy = { prefix: `${i + 1} of ${todo.length}: `, text: `${i + 1} of ${todo.length}: starting ${todo[i].destination}…` }; render();
@@ -2857,7 +2862,7 @@ if (typeof window !== "undefined") window.__kairouteQuality = () => { bonusMemo 
 if (typeof window !== "undefined") window.__kairouteSyncCheck = () => {
   storeInLibrary(); markChanges();
   const me = library.find(x => x.id === trip.id), other = JSON.parse(JSON.stringify(me));
-  const di = trip.days.findIndex(d => d.type !== "sea"), dj = trip.days.findIndex((d, k) => k !== di && d.type !== "sea");
+  const di = trip.days.findIndex(d => !noShore(d)), dj = trip.days.findIndex((d, k) => k !== di && !noShore(d));
   other.trip.days[di].selected = ["old-pick-a", "old-pick-b"]; other.trip.days[dj].title = "Renamed on the phone";
   const t = Date.now(); other.stamps["d:" + other.trip.days[di].id] = t - 60000; other.stamps["d:" + other.trip.days[dj].id] = t - 1000;
   const mine = JSON.parse(JSON.stringify(me)); mine.trip.days[di].selected = []; mine.stamps["d:" + mine.trip.days[di].id] = t;
@@ -3022,6 +3027,16 @@ if (typeof window !== "undefined") window.__kairouteClosedTry = i => { const d =
   const s = allSites(city).find(x => !x.quick && !(d.selected || []).includes(x.id) && closedForDay(x, d, w)); if (!s) return null;
   trip.active = i; const added = addPick(d, s.id, true), box = document.querySelector(".fitbox"), out = { sight: s.name, added, title: box ? box.querySelector("h3").innerText : "", offers: box ? [...box.querySelectorAll("[data-act=closedday],[data-act=closedalt]")].map(b => b.innerText) : [], none: !!(box && /isn't open on any day/.test(box.innerText)) };
   if (box) box.remove(); closedState = null; return out; };
+// Test hook: stay on board on port day i, then go ashore again; reports what each screen showed.
+if (typeof window !== "undefined") window.__kairouteAboard = i => {
+  const d = trip.days[i]; if (!d || d.type !== "port") return null; trip.active = i; view = "plan"; render();
+  const before = (d.selected || []).slice(); document.querySelector('[data-act="aboard"]').click();
+  const bar = alarmBarEl(), on = { aboard: !!d.aboard, selected: (d.selected || []).length, card: !!document.querySelector(".aboardcard"), plan: !!document.querySelector(".timeline, .tl, .stopcard"), chip: (document.querySelector(`.daychip[data-day="${i}"]`) || {}).innerText || "", title: dayName(d), tourDay: tourDay(d), alarm: !!(bar && !bar.hidden), note: aboardNote ? aboardNote.text : "", movedTo: Object.keys(d.aboardMoved || {}).length, elsewhere: trip.days.filter(o => o !== d).reduce((a, o) => a + (o.selected || []).filter(id => before.includes(id)).length, 0) };
+  view = "sites"; render(); on.sitesCard = !!document.querySelector(".aboardcard"); view = "plan"; render();
+  document.querySelector('[data-act="ashore"]').click();
+  const off = { aboard: !!d.aboard, restored: before.every(id => (d.selected || []).includes(id)), elsewhere: trip.days.filter(o => o !== d).reduce((a, o) => a + (o.selected || []).filter(id => before.includes(id)).length, 0), card: !!document.querySelector(".aboardcard"), title: dayName(d) };
+  return { before: before.length, on, off };
+};
 if (typeof window !== "undefined") window.__kairouteGo = (v, i) => { if (typeof i === "number") trip.active = i; view = v; render(); toTop(); };
 if (typeof window !== "undefined") window.kairoutePrewarm = (reserve, log) => saveStops(BUILTIN_CITIES.flatMap(([c]) => allSites(c)), log || ((d, n, s) => console.log(`saved ${d}/${n} ${s.name}`)), reserve ?? 15000);
 function speakLines(id, lines, lc) {
@@ -3279,7 +3294,7 @@ function renderView() {
   if (full) { if (tourTimer) { clearInterval(tourTimer); tourTimer = null; } stopCountdownIfAny(); $view.innerHTML = FULL_VIEWS[view](); return; }
   document.getElementById("aiStatus").textContent = aiReady() ? "AI guide on" : "Your own guide, any city";
   document.getElementById("dayChips").innerHTML = trip.days.map((x, i) =>
-    `<button class="daychip" data-day="${i}" aria-pressed="${i === trip.active}"><b>${esc(fmtDate(x.date) || "Day " + (i + 1))}</b> · ${esc(x.title && x.title.trim() ? x.title.trim() : x.type === "sea" ? "At sea" : mainPlace(x) || "New day")}</button>`).join("");
+    `<button class="daychip" data-day="${i}" aria-pressed="${i === trip.active}"><b>${esc(fmtDate(x.date) || "Day " + (i + 1))}</b> · ${esc(x.title && x.title.trim() ? x.title.trim() : placeLabel(x) || "New day")}</button>`).join("");
   const chip = document.querySelector('.daychip[aria-pressed="true"]');
   if (chip && chip.scrollIntoView) { const box = chip.parentElement; const cr = chip.getBoundingClientRect(), br = box.getBoundingClientRect(); box.scrollTo({ left: box.scrollLeft + (cr.left + cr.width / 2) - (br.left + br.width / 2), behavior: "instant" }); }
   document.querySelectorAll(".tab").forEach(t => t.setAttribute("aria-selected", t.dataset.view === (view === "sites" ? "plan" : view) ? "true" : "false"));
@@ -3297,7 +3312,7 @@ function renderView() {
   if (view === "tour") { $view.innerHTML = renderTour(d); updateAudioUI(); startTourTimer(); return; }
   if (tourTimer) { clearInterval(tourTimer); tourTimer = null; }
   if (view === "trip") $view.innerHTML = renderTrip(d);
-  else if (d.type === "sea") $view.innerHTML = renderSea(d);
+  else if (noShore(d)) $view.innerHTML = renderSea(d);
   else if (view === "sites") { $view.innerHTML = renderSites(d); const h = document.querySelector("header.top"); if (h) document.documentElement.style.setProperty("--hdr", (h.offsetHeight + 8) + "px"); }
   else if (view === "plan") $view.innerHTML = renderPlan(d);
   else $view.innerHTML = renderGuide(d);
@@ -3315,9 +3330,27 @@ function mainPlace(d) {
   const city = cityFor(d), plain = n => String(n || "").replace(/\s*\(.*?\)\s*/g, " ").replace(/\s+/g, " ").trim();
   return plain(city && city.city) || plain(d.destination);
 }
+// Staying on board (one tap, undone the same way): the day's picks are offered to another shore day in the same
+// place when they fit there (never past that day's time), the rest go back to the sights list; going ashore after
+// all puts them back and takes back the moves.
+let aboardNote = null;
+function setAboard(d, on) {
+  if (!d || d.type !== "port" || !!d.aboard === !!on) return;
+  if (on) {
+    const picks = (d.selected || []).slice(), moved = {}, names = [];
+    const city = cityFor(d), others = city ? trip.days.filter(o => o !== d && cityFor(o) === city && tourDay(o)) : [];
+    picks.forEach(id => { for (const o of others) { const had = (o.selected || []).includes(id); if (!had && addPick(o, id, false)) { (moved[o.id] = moved[o.id] || []).push(id); const s = allSites(city).find(x => x.id === id); if (s) names.push(s.name); break; } } });
+    d.aboard = true; d.aboardPicks = picks; d.aboardMoved = moved; d.selected = [];
+    const back = picks.length - names.length;
+    aboardNote = { day: d.id, text: picks.length ? [names.length ? `Moved to another day here: ${names.join(", ")}.` : "", back ? `${back} pick${back > 1 ? "s are" : " is"} back in the sights list.` : ""].filter(Boolean).join(" ") : "Nothing was picked for this day." };
+  } else {
+    Object.entries(d.aboardMoved || {}).forEach(([oid, ids]) => { const o = trip.days.find(x => x.id === oid); if (o && o.selected) o.selected = o.selected.filter(id => !ids.includes(id)); });
+    d.aboard = false; d.selected = Array.isArray(d.aboardPicks) && d.aboardPicks.length ? d.aboardPicks.slice() : null; delete d.aboardPicks; delete d.aboardMoved; aboardNote = null;
+  }
+  edited(); save();
+}
 function dayAuto(d) {
-  if (d.type === "sea") return "At sea";
-  return mainPlace(d) || "New day";
+  return placeLabel(d) || "New day";
 }
 const dayName = d => (d.title && d.title.trim()) || dayAuto(d);
 let dayRenaming = null;
@@ -3325,7 +3358,7 @@ function dayHeading(d) {
   const sub = [fmtDow(d.date) + " " + fmtDate(d.date), d.type === "sea" ? "" : mainPlace(d), typeInfo(d.type).short].filter(Boolean).map(esc).join(" · ");
   if (dayRenaming === d.id) return `<div><div class="eyebrow">${sub}</div><div class="renamebox dayrename"><input id="dayTitleInput" type="text" maxlength="60" value="${esc(dayName(d))}" aria-label="Name this day" enterkeyhint="done">
     <button class="btn small" data-act="daytitlesave">Save</button>${d.title ? `<button class="btn ghost small" data-act="daytitleauto">Use "${esc(dayAuto(d))}"</button>` : ""}<button class="btn ghost small" data-act="daytitlecancel">Cancel</button></div></div>`;
-  return `<div><div class="eyebrow">${sub}</div><h2 class="dayname">${esc(dayName(d))} <button class="linkbtn rename" data-act="daytitle" aria-label="Rename this day">✎ Rename</button></h2></div>`;
+  return `<div><div class="eyebrow">${sub}${d.type === "port" && !d.aboard ? ` · <button class="linkbtn" data-act="aboard">⚓ Staying on board?</button>` : ""}</div><h2 class="dayname">${esc(dayName(d))} <button class="linkbtn rename" data-act="daytitle" aria-label="Rename this day">✎ Rename</button></h2></div>`;
 }
 function needsCity(d) {
   const ready = aiReady();
@@ -3433,7 +3466,7 @@ function renderLobby() {
     ${cur ? `<div class="resume">
       <div class="stamp"><span>Day<b>${cur.active + 1}</b></span></div>
       <div><div class="eyebrow">Pick up where you left off</div>${renameId === cur.id ? renameBox(cur.id, cur.name || tripName(cur)) : `<h3>${esc(cur.name || tripName(cur))}</h3>`}
-        <div class="meta">${esc(tripSpan(cur))} · ${cur.days.length} days · ${(() => { const td = cur.days.find(x => x.date === todayISO()); const dd = td || d; return (td ? "Today: " : "Next: ") + esc(dd.type === "sea" ? "At sea" : mainPlace(dd) || "New day"); })()}</div></div>
+        <div class="meta">${esc(tripSpan(cur))} · ${cur.days.length} days · ${(() => { const td = cur.days.find(x => x.date === todayISO()); const dd = td || d; return (td ? "Today: " : "Next: ") + esc(placeLabel(dd) || "New day"); })()}</div></div>
       <div class="go"><button class="btn" data-act="continue">Continue trip</button></div>
       <div class="resacts"><span class="lede">${syncSt() ? "Synced across your devices" + (syncSt().at ? " · last synced " + esc(new Date(syncSt().at).toLocaleTimeString([], { hour: "numeric", minute: "2-digit" })) : "") : `Saved on this device · <button class="linkbtn" data-act="syncfromlobby">Sync with another device</button>`}</span><button class="btn ghost small" data-goto="trip" data-act2="edit">Edit itinerary</button>${moreMenu(cur.id, `<button class="btn ghost small" data-act="rename" data-id="${esc(cur.id)}">Rename</button><button class="btn ghost small" data-act="archive" data-id="${esc(cur.id)}">Archive</button>${delBtn(cur.id)}`)}</div>
     </div>` : ""}
@@ -3741,7 +3774,7 @@ function budgetCard(plan) {
 function tripBudget() {
   const by = {}; let days = 0, missing = 0;
   trip.days.forEach(d => {
-    if (d.type === "sea") return;
+    if (noShore(d)) return;
     const city = cityFor(d); if (!city) { missing++; return; }
     refillIfNeeded(d, city); if (!d.selected) seedPicks(d, city);
     const plan = buildPlan(d); if (!plan || plan.error) return;
@@ -3851,7 +3884,7 @@ async function spotPhoto(p) {
 }
 async function memSlides() {
   const slides = [], J = trip.journal || {}, used = new Set();
-  const days = trip.days.filter(d => d.type !== "sea" && cityFor(d));
+  const days = trip.days.filter(d => !noShore(d) && cityFor(d));
   const first = days[0], last = days[days.length - 1] || first;
   slides.push({ kind: "title", title: trip.name || tripName(trip), sub: first ? fmtDate(first.date) + (last && last.date !== first.date ? " – " + fmtDate(last.date) : "") : "", line: [...new Set(days.map(d => d.destination))].slice(0, 4).join(" · ") });
   for (const [i, d] of days.entries()) {
@@ -3977,9 +4010,9 @@ async function memShare() {
 function itineraryText() {
   const out = [(trip.name || tripName(trip)), ""];
   trip.days.forEach(d => {
-    out.push(`${fmtDow(d.date)} ${fmtDate(d.date)} · ${d.type === "sea" ? "At sea" : mainPlace(d)} · ${typeInfo(d.type).short} · ${dayMeta(d)}`);
+    out.push(`${fmtDow(d.date)} ${fmtDate(d.date)} · ${placeLabel(d)} · ${typeInfo(d.type).short} · ${dayMeta(d)}`);
     const city = cityFor(d);
-    if (d.type !== "sea" && city) {
+    if (!noShore(d) && city) {
       refillIfNeeded(d, city); if (!d.selected) seedPicks(d, city);
       const plan = buildPlan(d);
       if (plan && !plan.error) plan.items.forEach(it => {
@@ -3987,7 +4020,7 @@ function itineraryText() {
         const nm = it.type === "meal" ? it.meal.label + ": " + it.place.name : it.type === "start" || it.type === "end" ? it.label : (it.place.along ? "On the way: " : it.place.bonus ? "Optional: " : "") + it.place.name;
         out.push(`   ${fmt(it.time)}  ${nm}`);
       });
-    } else if (d.type !== "sea") out.push("   (guide not built yet)");
+    } else if (!noShore(d)) out.push("   (guide not built yet)");
     out.push("");
   });
   return out.join("\n");
@@ -4003,9 +4036,9 @@ async function exportPDF() {
   line(trip.name || tripName(trip), 20, true, 6);
   line("Made with Kairoute. Times are estimates; check opening hours and your cruise documents.", 9, false, 10);
   trip.days.forEach(d => {
-    line(`${fmtDow(d.date)} ${fmtDate(d.date)}  ${d.type === "sea" ? "At sea" : mainPlace(d)}  (${typeInfo(d.type).short}: ${dayMeta(d)})`, 12, true, 2);
+    line(`${fmtDow(d.date)} ${fmtDate(d.date)}  ${placeLabel(d)}  (${typeInfo(d.type).short}: ${dayMeta(d)})`, 12, true, 2);
     const city = cityFor(d);
-    if (d.type !== "sea" && city) {
+    if (!noShore(d) && city) {
       refillIfNeeded(d, city); if (!d.selected) seedPicks(d, city);
       const plan = buildPlan(d);
       if (plan && !plan.error) plan.items.forEach(it => {
@@ -4013,7 +4046,7 @@ async function exportPDF() {
         const nm = it.type === "meal" ? it.meal.label + ": " + it.place.name : it.type === "start" || it.type === "end" ? it.label : (it.place.along ? "On the way: " : it.place.bonus ? "Optional: " : "") + it.place.name;
         line(`${fmt(it.time)}   ${nm}`, 10, false);
       });
-    } else if (d.type !== "sea") line("Guide not built yet.", 10, false);
+    } else if (!noShore(d)) line("Guide not built yet.", 10, false);
     y += 8;
   });
   try { await dl.save({ filename: (trip.name || "trip").replace(/[^\w\- ]+/g, "").trim().replace(/\s+/g, "-") + ".pdf", data: doc.output("blob") }); }
@@ -4029,10 +4062,15 @@ function gettingAround(city, plan) {
     ${tips.length ? `<ul class="tips">${tips.map(t => `<li><span><b>${esc(t.mode)}:</b> ${esc(t.tip)}</span></li>`).join("")}</ul>` : ""}</div>`;
 }
 function renderSea(d) {
+  if (d.type === "port") return `${dayHeading(d)}<div class="card seacard aboardcard"><div class="big" aria-hidden="true">⚓</div><h3>Staying on board in ${esc(mainPlace(d) || "port")}</h3>
+    <p class="lede">No shore plan today, and no ship-time alerts. Enjoy the ship.</p>${aboardNote && aboardNote.day === d.id ? `<p class="banner" role="status">${esc(aboardNote.text)}</p>` : ""}
+    <div class="row"><button class="btn" data-act="ashore">Go ashore after all</button></div>
+    ${(k => k >= 0 ? `<button class="btn ghost" data-readahead="${k}">Read ahead: the ${esc(mainPlace(trip.days[k]))} guide</button>` : "")(trip.days.findIndex((x, i) => i > trip.active && !noShore(x)))}</div>`;
   return `${dayHeading(d)}<div class="card seacard"><div class="big" aria-hidden="true">〰</div><h3>A day at sea</h3><p class="lede">Nothing to plan today. A good time to read ahead in the guide for your next port.</p>
-    ${(k => k >= 0 ? `<button class="btn" data-readahead="${k}">Read ahead: the ${esc(mainPlace(trip.days[k]))} guide</button>` : "")(trip.days.findIndex((x, i) => i > trip.active && x.type !== "sea"))}</div>`;
+    ${(k => k >= 0 ? `<button class="btn" data-readahead="${k}">Read ahead: the ${esc(mainPlace(trip.days[k]))} guide</button>` : "")(trip.days.findIndex((x, i) => i > trip.active && !noShore(x)))}</div>`;
 }
 function dayMeta(x) {
+  if (x.type === "port" && x.aboard) return "Staying on board";
   if (x.type === "port") return `Ashore ${x.portArrive}, all aboard ${x.allAboard}${x.tender ? " · tender" : ""}`;
   if (x.type === "arrival") return `${MODES[x.mode].label} arrives ${x.time || "?"}`;
   if (x.type === "departure") return `${MODES[x.mode].label} leaves ${x.time || "?"}`;
@@ -4049,7 +4087,7 @@ function itinerary() {
     out += `<button class="itrow ${i === trip.active ? "active" : ""}" data-day="${i}">
       <span class="dt">${esc(fmtDate(x.date))}</span>
       <span class="ic ${x.type}" aria-hidden="true">${typeInfo(x.type).icon}</span>
-      <span class="tx"><b>${esc(x.type === "sea" ? "At sea" : mainPlace(x) || "New day")}</b><span>${esc(typeInfo(x.type).short)} · ${esc(dayMeta(x))}${x.estimated ? " · estimated" : ""}</span>${built ? "" : `<span class="ok" style="display:block;color:var(--meal);font-weight:700">Guide not built yet</span>`}</span>
+      <span class="tx"><b>${esc(placeLabel(x) || "New day")}</b><span>${esc(typeInfo(x.type).short)} · ${esc(dayMeta(x))}${x.estimated ? " · estimated" : ""}</span>${built ? "" : `<span class="ok" style="display:block;color:var(--meal);font-weight:700">Guide not built yet</span>`}</span>
     </button>`;
   });
   return out;
@@ -4057,7 +4095,7 @@ function itinerary() {
 function opts(list, cur) { return list.map((s, i) => `<option value="${i}" ${String(cur) === String(i) ? "selected" : ""}>${esc(s.name)}</option>`).join(""); }
 function renderTrip(d) {
   const city = cityFor(d);
-  const missingNames = trip.days.filter(x => x.type !== "sea" && !cityFor(x) && x.destination).map(x => x.destination).filter((v, i, a) => a.findIndex(y => keyOf(y) === keyOf(v)) === i), missing = missingNames.length;
+  const missingNames = trip.days.filter(x => !noShore(x) && !cityFor(x) && x.destination).map(x => x.destination).filter((v, i, a) => a.findIndex(y => keyOf(y) === keyOf(v)) === i), missing = missingNames.length;
   const t = d.type;
   const lk = cityKeyFor(d) || keyOf(d.destination);
   const L = trip.lodging[lk] || { idx: 0 };
@@ -4072,7 +4110,7 @@ function renderTrip(d) {
   ${changeCard()}
   <div class="tripgrid">
     <div class="leftcol pane" data-pane="days">
-      <div>${renameId === trip.id ? renameBox(trip.id, trip.name || tripName(trip)) : `<div class="setrow"><h2>${esc(trip.name || "Your trip")}</h2><button class="btn ghost small" data-act="rename" data-id="${esc(trip.id)}">Rename</button></div>`}<p class="lede">${(() => { const dates = new Set(trip.days.map(x => x.date).filter(Boolean)).size || trip.days.length, cities = new Set(trip.days.filter(x => x.type !== "sea" && x.type !== "port" && x.destination).map(x => keyOf(x.destination))).size; return `${dates} day${dates === 1 ? "" : "s"}${cities > 1 ? `, ${cities} cities` : ""}`; })()}${(() => { const n = trip.days.filter(x => x.type === "port").length; return n ? `, ${n} cruise stop${n === 1 ? "" : "s"}` : ""; })()}. Tap a day to edit it.</p></div>
+      <div>${renameId === trip.id ? renameBox(trip.id, trip.name || tripName(trip)) : `<div class="setrow"><h2>${esc(trip.name || "Your trip")}</h2><button class="btn ghost small" data-act="rename" data-id="${esc(trip.id)}">Rename</button></div>`}<p class="lede">${(() => { const dates = new Set(trip.days.map(x => x.date).filter(Boolean)).size || trip.days.length, cities = new Set(trip.days.filter(x => !noShore(x) && x.type !== "port" && x.destination).map(x => keyOf(x.destination))).size; return `${dates} day${dates === 1 ? "" : "s"}${cities > 1 ? `, ${cities} cities` : ""}`; })()}${(() => { const n = trip.days.filter(x => x.type === "port").length; return n ? `, ${n} cruise stop${n === 1 ? "" : "s"}` : ""; })()}. Tap a day to edit it.</p></div>
       ${aiReady() && missing ? `<button class="btn ghost small" data-act="genall" ${busy ? "disabled" : ""}>${missing === 1 ? `Build the guide for ${esc(missingNames[0])}` : missing <= 3 ? `Build the guides for ${esc(missingNames.join(" and "))}` : `Build the guides for all ${missing} places`}</button>` : ""}
       <div class="itin">${itinerary()}</div>
       <div class="actions"><button class="btn ghost small" data-act="addday">+ Add a day</button><button class="btn ghost small" data-act="addport">+ Add a port day</button></div>
@@ -4117,7 +4155,8 @@ function renderTrip(d) {
           <span class="hint">${L.ll ? "Found on the map: " + esc(L.name) : aiReady() ? "Type the name and tap Find it." : "Pick an area for now, or turn on the AI guide in Settings to find your exact hotel."}</span>` : `<span class="hint">Used for every day you're in ${esc(d.destination || "this city")}.</span>`}
         </div>` : ""}
         <details class="more dayopts" ${d.event ? "open" : ""}><summary>More options for this day</summary>
-        ${t === "port" ? `<label class="check"><input type="checkbox" id="f-tender" ${d.tender ? "checked" : ""}><span>Tender port (small boats take you ashore)</span></label>` : ""}
+        ${t === "port" ? `<label class="check"><input type="checkbox" id="f-aboard" ${d.aboard ? "checked" : ""}><span>Staying on board this day (not going ashore)</span></label>` : ""}
+        ${t === "port" && !d.aboard ? `<label class="check"><input type="checkbox" id="f-tender" ${d.tender ? "checked" : ""}><span>Tender port (small boats take you ashore)</span></label>` : ""}
         ${t === "land" ? `<label class="check"><input type="checkbox" id="f-return" ${d.returnToStart ? "checked" : ""}><span>Finish back at the hotel</span></label>` : ""}
         <div class="field"><label for="f-event">Event (optional)</label><input type="text" id="f-event" value="${esc(d.event)}" placeholder="e.g. a ball game, a festival, a concert"></div>
         <div class="field"><span class="lbl">Your style (all days)</span>
@@ -4601,7 +4640,7 @@ async function prefetchTripMaps() {
   try {
     bonusMemo = new Map(); mealMemo = new Map(); keptMemo = new Map(); eveMemo = new Map(); avoidMeals = new Set();
     for (const d of trip.days) {
-      if (d.type === "sea" || !cityFor(d)) continue;
+      if (noShore(d) || !cityFor(d)) continue;
       let plan = null; try { plan = buildPlan(d); } catch (e) {} if (!plan || plan.error) continue;
       const data = mapPlanData(plan, d), sig = tpl + "|" + kmapTheme + "|" + data.key; if (!data.pts.length || done[d.id] === sig) continue;
       await fetchRoutes(data.legs);
@@ -5276,6 +5315,7 @@ document.addEventListener("click", e => {
   if (t.dataset.act === "lateend") { const d = day(); d.hours = +t.dataset.h; save(); render(); return; }
   if (t.dataset.act === "earlystart") { const d = day(); d.startTime = t.dataset.v; d.hours = +t.dataset.h; save(); render(); return; }
   if (t.dataset.act === "suggestok") { suggestMsg = ""; render(); return; }
+  if (t.dataset.act === "aboard" || t.dataset.act === "ashore") { setAboard(day(), t.dataset.act === "aboard"); render(); return; }
   if (t.dataset.act === "daytitle") { dayRenaming = day().id; render(); const el = document.getElementById("dayTitleInput"); if (el) { el.focus(); el.select(); } return; }
   if (t.dataset.act === "daytitlesave") { const v = ((document.getElementById("dayTitleInput") || {}).value || "").trim().slice(0, 60), d = day(); if (v && v !== dayAuto(d)) d.title = v; else delete d.title; dayRenaming = null; save(); render(); return; }
   if (t.dataset.act === "daytitleauto") { delete day().title; dayRenaming = null; save(); render(); return; }
@@ -5467,6 +5507,7 @@ document.addEventListener("change", e => {
     return;
   }
   if (t.id === "f-type") { readForm(); const d = day(); d.type = t.value; d.pointIdx = 0; if (d.type === "departure" && d.mode === "ship") d.mode = "flight"; d.selected = null; edited(); save(); render(); return; }
+  if (t.id === "f-aboard") { setAboard(day(), t.checked); render(); return; }
   if (["f-point", "f-return", "f-along", "f-fill", "f-lodging", "f-tender", "f-date"].includes(t.id)) { readForm(); edited(); save(); render(); return; }
   if (t.closest && t.closest("#dayForm")) { readForm(); edited(); save(); }
 });

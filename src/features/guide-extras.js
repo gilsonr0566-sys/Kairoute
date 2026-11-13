@@ -298,7 +298,7 @@ function gxPrimer(city) {
 }
 function gxPrimerCard(d, city) {
   const i = trip.days.indexOf(d), k = cityKeyFor(d);
-  if (trip.days.slice(0, i).some(o => cityKeyFor(o) === k && o.type !== "sea")) return "";
+  if (trip.days.slice(0, i).some(o => cityKeyFor(o) === k && !noShore(o))) return "";
   const pr = gxPrimer(city); if (pr === null) return "";
   const id = "primer:" + keyOf(city.city);
   return `<details class="more gxcard" data-gx-fold="primer" ${gxOpen.has("primer") ? "open" : ""}><summary>Before you arrive: the story of ${esc(String(city.city).split(",")[0])}</summary><div class="gxin">
@@ -348,7 +348,7 @@ function gxStopExtras(s, city, inTour) {
 // Wikipedia photo), your stars and notes, and the guide's story of each stop. Printed books come later.
 let gxBook = { busy: false, msg: "", err: "" };
 function gxBookCard() {
-  const days = trip.days.filter(d => d.type !== "sea" && cityFor(d)).length; if (!days) return "";
+  const days = trip.days.filter(d => !noShore(d) && cityFor(d)).length; if (!days) return "";
   return `<div class="card"><span class="eyebrow">Trip storybook</span><h3>Your trip as a photo book</h3>
     <p class="lede">A PDF book of your trip: every day's route, your photos and notes, your stars, and the story of each place. Save it, share it, or print it at home.</p>
     ${gxBook.busy ? `<p><span class="spinner"></span> ${esc(gxBook.msg || "Making your book…")}</p>` : `<div class="actions"><button class="btn" data-gx-book="1">Make my storybook</button></div>`}
@@ -380,7 +380,7 @@ async function gxMakeBook() {
     doc.setFontSize(11); doc.text("A trip to remember, with Kairoute", W / 2, H - 70, { align: "center" });
     let stopsSeen = 0, km = 0, saved = 0, sym = "";
     for (let i = 0; i < trip.days.length; i++) {
-      const d = trip.days[i], city = cityFor(d); if (d.type === "sea" || !city) continue;
+      const d = trip.days[i], city = cityFor(d); if (noShore(d) || !city) continue;
       gxBook.msg = `Day ${i + 1} of ${trip.days.length}: ${mainPlace(d)}`; render();
       refillIfNeeded(d, city); if (!d.selected) d.selected = defaultSelection(city, trip.style, d);
       const plan = buildPlan(d); if (!plan || plan.error) continue;
@@ -403,7 +403,7 @@ async function gxMakeBook() {
       }
     }
     page(); text("The trip in numbers", 22, "bold", [18, 60, 58], 8);
-    text(`${stopsSeen} places · about ${distTxt(km)} on foot · ${trip.days.filter(d => d.type !== "sea").length} days`, 13, "normal", null, 6);
+    text(`${stopsSeen} places · about ${distTxt(km)} on foot · ${trip.days.filter(d => !noShore(d)).length} days`, 13, "normal", null, 6);
     if (saved > 0) text(`Saved about ${money(sym, saved)} compared with the ship's tours.`, 13, "normal", null, 6);
     const badges = Object.values(trip.badges || {}); if (badges.length) text("Explorer badges: " + badges.map(b => b.name).join(", "), 11, "normal", null, 6);
     text("Made with Kairoute. Stories are from Kairoute's checked city guides; photos are yours unless marked.", 9, "italic", [120, 120, 120]);

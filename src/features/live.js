@@ -146,7 +146,7 @@ function wxFetch(city) {
 }
 // The forecast for one day, read into plain facts: wet hours (rain 50%+ and at least 0.3 mm), hot hours (33 °C+).
 function wxFor(d, city) {
-  if (!d || !d.date || d.type === "sea") return null; const k = wxKey(city); if (!k) return null;
+  if (!d || !d.date || noShore(d)) return null; const k = wxKey(city); if (!k) return null;
   const ahead = daysAhead(d.date); if (ahead < 0 || ahead >= WX_DAYS) return null;
   wxFetch(city); const f = wxCache[k], day0 = f && f.days && f.days[d.date]; if (!day0) return null;
   const wet = [], hot = []; let maxP = 0;
@@ -410,7 +410,7 @@ function alarmState(d, plan) {
   return { now, from, src, point, leg, backBy, latest: plan.endBy, leaveBy: leg ? backBy - leg.min : null };
 }
 function alarmCard(d, plan) {
-  if (d.type === "sea") return "";
+  if (noShore(d)) return "";
   const fixed = !!fixedTitle(d) && plan.w.tail.length, live = liveNow(d) != null, items = plan.items.filter(i => i.type === "stop" || i.type === "meal");
   if (!fixed && !live) return "";
   const today = d.date === todayISO(), gpsOn = geoFresh();
@@ -437,7 +437,7 @@ function alarmCard(d, plan) {
 }
 function alarmTick() {
   const d = day(), bar = alarmBarEl();
-  const city = d && cityFor(d), plan = city && d.type !== "sea" ? buildPlan(d) : null;
+  const city = d && cityFor(d), plan = city && !noShore(d) ? buildPlan(d) : null;
   if (!plan || plan.error) { if (bar) bar.hidden = true; document.documentElement.classList.remove("alarmon"); return; }
   const fixed = !!fixedTitle(d) && plan.w.tail.length, st = fixed ? alarmState(d, plan) : null, live = d.date === todayISO() || cdPreview != null;
   // Running late, noticed by GPS: still at a stop well past the time the plan leaves it, or nowhere near the
