@@ -183,12 +183,12 @@ function closedAlt(d, s) {
   const rank = x => (x.kind && x.kind === s.kind ? 2 : 0) + (fameW(x) || 1) - hav(x, s) / 5;
   return c.sort((a, b) => rank(b) - rank(a)).slice(0, 8).find(x => fitsAll(fitTrial(d, [...sel, x.id]))) || null;
 }
-function swapClosed(id, alt) { const d = day(); d.selected = (d.selected || []).filter(x => x !== id); if (!d.selected.includes(alt)) d.selected = d.selected.concat(alt); d.anchor = alt; save(); render(); }
+function swapClosed(id, alt) { const d = day(); d.selected = (d.selected || []).filter(x => x !== id); if (!d.selected.includes(alt)) d.selected = d.selected.concat(alt); d.anchor = alt; markMine(d, alt, true); save(); render(); }
 function moveClosed(id, to) {
   const d = day(), o = trip.days[to]; if (!o) return;
   d.selected = (d.selected || []).filter(x => x !== id);
   if (!o.selected) { const c = cityFor(o); o.selected = c ? defaultSelection(c, trip.style, o) : []; }
-  if (!o.selected.includes(id)) o.selected = o.selected.concat(id);
+  if (!o.selected.includes(id)) o.selected = o.selected.concat(id); markMine(o, id, true);
   save(); render();
 }
 
