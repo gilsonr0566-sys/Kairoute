@@ -37,13 +37,14 @@ const FILE = path.resolve(process.argv[2] || path.join(__dirname, '..', 'index.h
       if (closedBox) { if (!closedBox.offers && !closedBox.none) bad(i, `refusing ${pickId} (closed that day) offered nothing`); await p.evaluate(() => document.querySelector('.fitbox [data-act="fitcancel"]').click()); await p.waitForTimeout(200); if (await p.evaluate(() => !!document.querySelector('.fitbox'))) bad(i, 'closed box did not close'); continue; }
       if (await p.evaluate(() => !!document.querySelector('.fitbox'))) {
         boxes++;
-        const st = await p.evaluate(id => ({ ticked: !!(document.querySelector(`input[data-site="${id}"]`) || {}).checked, meter: !!document.querySelector('.fitbox .meter .mbar'), add: document.querySelector('.fitbox [data-act="fitadd"]').disabled, fixes: [...document.querySelectorAll('.fitbox [data-act="fitfixgo"]')].map(b => b.innerText) }), pickId);
+        const st = await p.evaluate(id => ({ ticked: !!(document.querySelector(`input[data-site="${id}"]`) || {}).checked, meter: !!document.querySelector('.fitbox .meter .mbar'), add: (b => b ? b.disabled : null)(document.querySelector('.fitbox [data-act="fitadd"]')), closed: /\bclosed\b/i.test((document.querySelector('.fitbox') || {}).innerText || ''), fixes: [...document.querySelectorAll('.fitbox [data-act="fitfixgo"]')].map(b => b.innerText) }), pickId);
         if (SHOTS && !shotTaken[tag + 'o']) { require('fs').mkdirSync(SHOTS, { recursive: true }); await p.screenshot({ path: path.join(SHOTS, `${tag}-box-open.png`) }); shotTaken[tag + 'o'] = 1; }
         if (st.ticked) bad(i, 'sight that does not fit got ticked');
-        if (!st.meter) bad(i, 'no timing in the box');
-        if (!st.add) bad(i, 'Add is on before it fits');
+        // A sight closed that day gets its own box (no timing, no Add): it must say so and offer another day or Keep.
+        if (st.add === null) { if (!st.closed) bad(i, 'box without Add does not say the sight is closed'); }
+        else { if (!st.meter) bad(i, 'no timing in the box'); if (!st.add) bad(i, 'Add is on before it fits'); }
         const fx = await p.evaluate(() => ({ fixed: window.__kairouteTimesFixed(), times: [...document.querySelectorAll('.fitbox [data-act="fitfixgo"]')].some(b => /^(Start at|Finish at)/.test(b.innerText)), why: !!document.querySelector('.fitbox .fitwhy') }));
-        if (fx.fixed && (fx.times || !fx.why)) bad(i, 'ship/train/flight day offers time changes or no explanation');
+        if (fx.fixed && (fx.times || (!fx.why && st.add !== null))) bad(i, 'ship/train/flight day offers time changes or no explanation');
         if (!fx.fixed && fx.why) bad(i, 'hotel day says its times are fixed');
         if (!st.fixes.length) { await p.evaluate(() => document.querySelector('.fitbox [data-act="fitcancel"]').click()); await p.waitForTimeout(200); if (await p.evaluate(() => !!document.querySelector('.fitbox'))) bad(i, 'box did not close'); console.log(`note ${tag} day ${i + 1}: no way to fit ${pickId}`); continue; }
         // One tap on the first ready-made fix: the sight is planned (here or on another day) and no day is over.
