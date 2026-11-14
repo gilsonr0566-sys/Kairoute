@@ -20,7 +20,7 @@ const GATE = !!process.env.GATE;
 // Sights the Change stops list must offer for the demo trip (a benchmark the sources must meet, never copied into
 // the app). hard = blocks a publish; soft = logged as a warning until the guide has it.
 const PICKER = [[/athens/i, [/acropolis/i, /corinth/i], []], [/naples/i, [/pompeii/i, /sorrento/i, /capri/i], [/amalfi|positano/i]],
-  [/rome|civitavecchia/i, [/colosseum/i, /vatican|st\.? peter/i], []], [/barcelona/i, [/sagrada/i], []], [/kusadasi|ephesus/i, [/ephesus/i], []]];
+  [/rome|civitavecchia/i, [/colosse(um|o)/i, /vatican|st\.? peter/i], []], [/barcelona/i, [/sagrada/i], []], [/kusadasi|ephesus/i, [/ephesus/i], []]];
 const OUT = path.join(__dirname, "..", "checks", "demo"); fs.mkdirSync(OUT, { recursive: true });
 const SIZES = { tablet: { width: 1280, height: 800 }, upright: { width: 800, height: 1280 }, phone: { width: 412, height: 915 } };
 const FREEZE_MS = 1500, SLOW_MS = 600;
