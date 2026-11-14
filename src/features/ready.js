@@ -11,7 +11,12 @@ const readyStops = plan => plan && !plan.error ? plan.stops.filter(s => !s.place
 const readySig = plan => readyStops(plan).map(p => p.id || p.name).sort().join("|");
 // Days that can be hearted: any day with a plan of its own (a day at sea or on board counts once it has a plan).
 const readyDays = () => trip.days.filter(d => !throughTo(d) && (noShore(d) || cityFor(d)));
-const selSig = d => (Array.isArray(d.selected) ? d.selected.slice().sort() : []).join("|");
+const selSig = d => selKey(d);
+function selKey(d) { return (Array.isArray(d.selected) ? d.selected.slice().sort() : []).join("|"); }
+// A change the app makes to a hearted day's sights (a pick that no longer fits once the ship leaves earlier, a sight
+// now closed, a guide merging two copies of a sight) is not the traveler's change: the heart must turn to an outline
+// with a note, not go quietly off. Every place the app edits d.selected on its own calls this with the key from before.
+function readyKeep(d, was) { if (d && d.ready && d.ready.sel != null && d.ready.sel === was) d.ready.sel = selKey(d); }
 function readyState(d) {
   if (!d || !d.ready) return "";
   // The traveler changed the day's sights themselves: it's theirs to mark ready again (no warning needed).

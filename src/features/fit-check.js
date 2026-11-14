@@ -67,6 +67,7 @@ function markMine(d, id, on) { if (!d || !id) return; const m = new Set(d.mine |
 function fitTrim(d, keep) {
   const city = cityFor(d); if (!city || !Array.isArray(d.selected) || !d.selected.length) return;
   const value = x => (x.mustSee ? 100 : 0) + (x.unesco ? 20 : 0) + (fameW(x) || 1) * 5;
+  const was = selKey(d);
   d.selected = d.selected.filter(id => { const x = allSites(city).find(y => y.id === id); return !x || (keep || []).includes(id) || !shutOn(d, x); }); // closed that day: never one of the app's picks
   for (let g = 0; g < 12 && d.selected.length; g++) {
     const t = fitTrial(d, d.selected); if (fitsAll(t)) break;
@@ -75,6 +76,7 @@ function fitTrim(d, keep) {
     const cand = allSites(city).filter(x => d.selected.includes(x.id) && !(keep || []).includes(x.id)).sort((a, b) => (out.has(b.id) ? 1 : 0) - (out.has(a.id) ? 1 : 0) || value(a) - value(b))[0];
     if (!cand) break; d.selected = d.selected.filter(i => i !== cand.id);
   }
+  readyKeep(d, was);
 }
 function fitOpen(d, id) {
   const city = cityFor(d); if (!city) return true;

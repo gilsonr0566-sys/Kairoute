@@ -145,7 +145,7 @@ function dropUnwanted() {
   trip.days.forEach(d => { const c = cityFor(d); if (!c || !Array.isArray(d.selected) || !d.selected.length) return;
     const mine = new Set(d.mine || []), by = new Map(allSites(c).map(x => [x.id, x]));
     const keep = d.selected.filter(id => { const x = by.get(id); return !x || mine.has(id) || religiousOk(x); });
-    if (keep.length < d.selected.length) { n += d.selected.length - keep.length; d.selected = keep; if (d.anchor && !keep.includes(d.anchor)) d.anchor = null; } });
+    if (keep.length < d.selected.length) { const was = selKey(d); n += d.selected.length - keep.length; d.selected = keep; readyKeep(d, was); if (d.anchor && !keep.includes(d.anchor)) d.anchor = null; } });
   bonusMemo = new Map(); mealMemo = new Map(); keptMemo = new Map(); eveMemo = new Map();
   return n;
 }
@@ -529,7 +529,7 @@ function tidyDests(t) {
     // points at the sight that stayed.
     if (Array.isArray(d.selected) && d.selected.length && typeof cityFor === "function") { const c = cityFor(d); if (c) { const all = allSites(c), ids = new Set(all.map(x => x.id));
       if (d.selected.some(id => !ids.has(id))) { const to = id => { if (ids.has(id)) return id; const h = all.find(x => (x.alias || []).includes(id)); return h ? h.id : id; };
-        const nx = [...new Set(d.selected.map(to))]; if (nx.join() !== d.selected.join()) { d.selected = nx; if (Array.isArray(d.mine)) d.mine = [...new Set(d.mine.map(to))]; if (d.anchor) d.anchor = to(d.anchor); n++; } } } }
+        const nx = [...new Set(d.selected.map(to))]; if (nx.join() !== d.selected.join()) { const was = selKey(d); d.selected = nx; readyKeep(d, was); if (Array.isArray(d.mine)) d.mine = [...new Set(d.mine.map(to))]; if (d.anchor) d.anchor = to(d.anchor); n++; } } } }
     // Lists of places ("Naples, Amalfi, Pompeii", "Naples (Capri, Sorrento)", "Rome & Vatican") become the guide's
     // plain name once the day is tied to its guide; the words as written are kept in destOrig.
     if (!/[(),&\/+]| and /i.test(d.destination || "")) return; const k = cityKeyFor(d); if (!k) return;
@@ -874,9 +874,7 @@ let movedNote = ""; // "Sorrento moved here from Mon Jul 12." after picking a si
 // way to fit it back in (swap it for a stop, or see it on another day).
 function settlePicks(d) {
   if (!d || !Array.isArray(d.selected) || (!d.selected.length && !(d.bumped || []).length) || !cityFor(d) || busy || (typeof liveOn === "function" && liveOn(d))) return false;
-  let moved = false;
-  // These are the app's changes, not the traveler's: a day marked ready keeps its mark and shows what changed.
-  const selWas = (d.selected || []).slice().sort().join("|"), mine = !!(d.ready && d.ready.sel === selWas);
+  let moved = false; const was = selKey(d);
   // Picks that came off when the day got shorter go back on by themselves once it is long enough again
   // (Light day, then Full day again: the same picks as before).
   const p0 = buildPlan(d), win = p => p.endBy - p.start;
@@ -893,8 +891,7 @@ function settlePicks(d) {
     if (gone.has(d.anchor)) d.anchor = d.selected[d.selected.length - 1] || null;
     forget0(d); moved = true;
   }
-  if (moved && mine) d.ready.sel = d.selected.slice().sort().join("|");
-  if (moved) save();
+  if (moved) { readyKeep(d, was); save(); }
   return moved;
 }
 if (typeof window !== "undefined") { window.__kairouteSetHours = h => { const d = day(); d.hours = h; render(); }; window.__kairouteSelCount = () => (day().selected || []).length;
