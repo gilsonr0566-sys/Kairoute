@@ -467,6 +467,16 @@ const log = (suite, trip, ok, what) => { results.push({ suite, trip, ok, what })
     log('Rides', 'transport', !bad.length, bad.length ? bad.join('; ') : 'Naples: ferry out, Circumvesuviana via Pompeii and back, each ride switchable to a taxi, the plan and ship checks follow, the map draws the real lines');
     log('Rides', 'transport', !errs.length, errs.length ? 'page errors: ' + [...new Set(errs)].join(' | ') : 'no page errors');
     await b4.close(); }
+  // Closing times shape the order (demo review, Nov 14: Madrid arrival day planned the Royal Palace first and the
+  // Prado at 18:52, closing 19:00). No day of the sample trip plans a stop it would reach too late to visit while it
+  // has another stop that could give way.
+  { const b7 = await chromium.launch(); const p = await (await b7.newContext({ viewport: { width: 1280, height: 800 } })).newPage(); const errs = [];
+    p.on('pageerror', e => errs.push(e.message)); await p.route('**/*', r => /^file:/.test(r.request().url()) ? r.continue() : r.abort());
+    await p.goto('file://' + FILE); await p.evaluate(() => localStorage.setItem('kairoute.intro1', '1')); await p.reload(); await p.waitForTimeout(500);
+    const late = await p.evaluate(() => window.__kairouteDays().map(d => ({ d, r: window.__kairouteLateStops(d.i) })).filter(x => x.r && x.r.late.length && x.r.n > 1).map(x => `day ${x.d.i + 1} ${x.d.dest}: ${x.r.late.join(', ')}`));
+    log('Closing times', 'planner', !late.length, late.length ? 'planned too late to visit: ' + late.join('; ') : 'no day plans a stop after it closes to visitors (the order or a stop giving way avoids it)');
+    log('Closing times', 'planner', !errs.length, errs.length ? 'page errors: ' + [...new Set(errs)].join(' | ') : 'no page errors');
+    await b7.close(); }
   // Timetable changes (Richard, Nov 14: "what if there was a train or ferry time change"): the day before and the
   // morning of a day, its rides are looked up again. A changed departure re-plans that day only and its Day plan says
   // so with the new time; an unchanged answer says nothing; with no signal each ride says when it was last checked.

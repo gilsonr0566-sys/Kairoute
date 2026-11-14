@@ -1123,7 +1123,7 @@ const hoursOf = r => (r && (r.hours || ((/Hours listed: (.*?)\. Check/.exec(r.wh
 // "closed" only when the listed hours say it's shut at both usual times for that meal on the plan's date.
 function mealShut(r, label, iso) { const t = MEAL_CHECK[label] || MEAL_CHECK.Lunch, h = hoursOf(r); if (!h || r.booked) return false; return t.every(m => ohState(h, iso || planDate, m) === "closed"); }
 function simDay(seq, t0, O, Z, style) {
-  let clock = t0, prev = O, cost = 0, seenDinner = false;
+  let clock = t0, prev = O, cost = 0, seenDinner = false, late = 0; // late: stops reached after their last sensible entry
   const been = [];
   for (let i = 0; i < seq.length; i++) {
     const p = seq[i];
@@ -1153,7 +1153,7 @@ function simDay(seq, t0, O, Z, style) {
       clock += m.len;
     } else {
       // Opening hours: wait for it to open, and never arrive after the last entry. Then weather and rush hours.
-      if (p.oh) { const f = ohFit(p.oh, clock, p.minutes); if (f.wait) { cost += f.wait * 0.6; clock += f.wait; } if (f.late) cost += 300 + f.late * 10; }
+      if (p.oh) { const f = ohFit(p.oh, clock, p.minutes); if (f.wait) { cost += f.wait * 0.6; clock += f.wait; } if (f.late) { cost += 300 + f.late * 10; late++; } }
       cost += visitPenalty(p, clock, p.minutes || 0) + climateHeat(p, clock, p.minutes || 0);
       // Port days: a stop a long ride from the ship is seen early, so a late train or traffic jam on the way back
       // can never cost the ship. The farther it is and the later it would be, the more it costs.
@@ -1163,7 +1163,7 @@ function simDay(seq, t0, O, Z, style) {
     prev = p;
   }
   if (Z) { clock += tmin(prev, Z); cost += hav(prev, Z) * 0.4; }
-  return { cost: clock - t0 + cost, end: clock };
+  return { cost: clock - t0 + cost, end: clock, late };
 }
 // Polish a whole sequence (meals included): move any one item to any other place, reverse any stretch,
 // or swap a meal's restaurant, keeping every change that makes the day shorter. Removes zigzags,
@@ -1576,10 +1576,22 @@ function buildPlanFor(d) {
   // Safety net, checked on the real simulated day: if the day still runs late (a reserved table across town
   // can do that), the stop that frees the most time for the least sightseeing gives way, until it fits.
   // The step after this one then puts back every dropped stop that fits somewhere else in the day.
+  // A stop reached after it closes to visitors (its last entry, or too near closing for the visit) doesn't fit
+  // either: the day is not planned with a "you'd get there too late" stop while dropping it or another order
+  // would avoid it (Madrid arrival day: Royal Palace first, then the Prado at 18:52, closing at 19:00).
+  const worthIn = x => (x.mustSee ? 3 : 1) * ((d.mine || []).includes(x.id) ? 2 : 1) * fameW(x) * Math.max(20, x.minutes || 0);
   { const lim = w.endBy - tailCost();
     for (let guard = 0; guard < 12; guard++) {
-      if (simDay(seq, t0, O, ZZ, style).end <= lim + (hardEnd(d) ? 0 : 5)) break; // a ship, train or plane has no leeway: it won't wait
+      const r0 = simDay(seq, t0, O, ZZ, style), over = r0.end > lim + (hardEnd(d) ? 0 : 5); // a ship, train or plane has no leeway: it won't wait
+      if (!over && !r0.late) break;
       const bare = seq.filter(x => !x.mealOf); if (bare.length < 2) break;
+      // Only lateness: the least important stop whose leaving out gets every other stop there in time gives way.
+      if (!over) {
+        const tryOut = list => list.map(c => ({ c, q: polishDay(withMeals(bare.filter(x => x !== c)), t0, O, ZZ, style, city) })).map(x => Object.assign(x, { r: simDay(x.q, t0, O, ZZ, style) })).filter(x => x.r.late < r0.late && x.r.end <= lim + (hardEnd(d) ? 0 : 5)).sort((a, b) => worthIn(a.c) - worthIn(b.c))[0];
+        const nm = bare.filter(x => !x.mustSee), got = (nm.length && tryOut(nm)) || tryOut(bare);
+        if (!got) break;
+        seq = got.q; dropped.push(got.c); continue;
+      }
       // First, long visits give 15 minutes each (down to 70% of the guide's time, never under 1 h 30).
       const floor = x => Math.max(90, Math.round((x.shortFrom || x.minutes) * 0.7 / 5) * 5);
       if (bare.some(x => x.minutes >= 120 && x.minutes - 15 >= floor(x))) {
@@ -1598,10 +1610,10 @@ function buildPlanFor(d) {
     const lim = w.endBy - tailCost();
     const rank = x => (x.mustSee ? 3 : 1) * fameW(x) * (seq.filter(y => !y.mealOf && hav(y, x) < 15).length + 1);
     for (const c of dropped.slice().sort((a, b) => rank(b) - rank(a))) {
-      const bare = seq.filter(x => !x.mealOf); let best = null;
+      const bare = seq.filter(x => !x.mealOf), late0 = simDay(seq, t0, O, ZZ, style).late; let best = null;
       for (let i = 0; i <= bare.length; i++) {
         const q = polishDay(withMeals(bare.slice(0, i).concat([c], bare.slice(i))), t0, O, ZZ, style, city), r = simDay(q, t0, O, ZZ, style);
-        if (r.end <= lim && (!best || r.cost < best.cost)) best = { q, cost: r.cost };
+        if (r.end <= lim && r.late <= late0 && (!best || r.cost < best.cost)) best = { q, cost: r.cost };
       }
       if (best) { seq = best.q; dropped.splice(dropped.indexOf(c), 1); }
     }
@@ -1614,7 +1626,7 @@ function buildPlanFor(d) {
   if (dropped.length) {
     const lim = w.endBy - tailCost(), mine = new Set(d.mine || []);
     const worthOf = x => (x.mustSee ? 3 : 1) * (mine.has(x.id) ? 2 : 1) * fameW(x) * Math.max(20, x.minutes || 0);
-    const tryIn = (bare, c) => { let best = null; for (let i = 0; i <= bare.length; i++) { const q = polishDay(withMeals(bare.slice(0, i).concat([c], bare.slice(i))), t0, O, ZZ, style, city), r = simDay(q, t0, O, ZZ, style); if (r.end <= lim && (!best || r.cost < best.cost)) best = { q, cost: r.cost }; } return best; };
+    const tryIn = (bare, c) => { const late0 = simDay(polishDay(withMeals(bare), t0, O, ZZ, style, city), t0, O, ZZ, style).late; let best = null; for (let i = 0; i <= bare.length; i++) { const q = polishDay(withMeals(bare.slice(0, i).concat([c], bare.slice(i))), t0, O, ZZ, style, city), r = simDay(q, t0, O, ZZ, style); if (r.end <= lim && r.late <= late0 && (!best || r.cost < best.cost)) best = { q, cost: r.cost }; } return best; };
     const tried = new Set();
     for (let guard = 0; guard < 8; guard++) {
       const c = dropped.filter(x => !tried.has(x)).sort((a, b) => worthOf(b) - worthOf(a))[0]; if (!c) break; tried.add(c); // a stop bumped out gets its own turn too
