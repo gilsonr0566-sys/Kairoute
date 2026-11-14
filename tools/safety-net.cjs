@@ -257,6 +257,30 @@ const log = (suite, trip, ok, what) => { results.push({ suite, trip, ok, what })
       const v = await p.evaluate(() => ({ stops: [...document.querySelectorAll('.tl .nm')].map(e => e.innerText), drop: (document.querySelector('.banner.dropped') || {}).innerText || '' }));
       const okP = v.stops.some(n => /^Pompeii/.test(n)) && !v.drop;
       log('New trip', 'new-trips', okP, 'A port\'s top day trip leads the day: ' + (okP ? 'Naples plans Pompeii (' + v.stops.join(', ') + ')' : 'picks ' + sel.join(', ') + ' / plan ' + JSON.stringify(v))); }
+    // Live demo run, Nov 14 (after the speed work): the sources arrived after the Naples day's picks were made, so Pompeii
+    // was never weighed and the day planned only the town. Once the sources say Pompeii is the top day trip, a day whose
+    // picks are still all the app's own gets it; a day the traveler has ticked is left as they made it.
+    { const mk = () => p.evaluate(([d, a]) => window.__kairouteNewTrip(d, a), ['Naples port day', 'STOPS: Naples\nSHIP: Princess Cruises|Sun Princess\nDAY|2027-07-12|Naples|port|ship||07:00|19:00|no||no|']);
+      const W = { Pompeii: { fame: 420, unesco: true }, Spaccanapoli: { fame: 90, unesco: true }, Sansevero: { fame: 40 }, 'Naples Cathedral': { fame: 60 }, 'Piazza del Plebiscito': { fame: 70 } };
+      await mk(); await p.waitForTimeout(300); await p.evaluate(() => window.__kairouteSiteSet(0, { Pompeii: { fame: 0, unesco: false }, Spaccanapoli: { fame: 0, unesco: false }, Sansevero: { fame: 0 }, 'Naples Cathedral': { fame: 0 }, 'Piazza del Plebiscito': { fame: 0 } }, true)); await p.evaluate(() => window.__kairouteAt(0, 'plan')); await p.waitForTimeout(200);
+      const before = await p.evaluate(() => window.__kairoutePicker(0).picked);
+      await p.evaluate(w => window.__kairouteSiteSet(0, w, 'late'), W); await p.evaluate(() => window.__kairouteAt(0, 'plan')); await p.waitForTimeout(300);
+      const v = await p.evaluate(() => [...document.querySelectorAll('.tl .nm')].map(e => e.innerText));
+      const okL = !before.some(n => /^Pompeii/.test(n)) && v.some(n => /^Pompeii/.test(n));
+      await mk(); await p.waitForTimeout(300); await p.evaluate(() => window.__kairouteAt(0, 'plan')); await p.waitForTimeout(200);
+      const own = await p.evaluate(() => { const pk = window.__kairoutePicker(0).picked; window.__kairouteEdit(0, { ownList: true }); return pk; });
+      await p.evaluate(w => window.__kairouteSiteSet(0, w, 'late'), W); await p.waitForTimeout(200);
+      const own2 = await p.evaluate(() => window.__kairoutePicker(0).picked), okO = JSON.stringify(own) === JSON.stringify(own2);
+      log('New trip', 'new-trips', okL && okO, 'Sources arriving after the picks: ' + (okL ? 'Pompeii leads once known (' + v.join(', ') + ')' : 'before ' + before.join(', ') + ' / after ' + v.join(', ')) + (okO ? '; a list the traveler made is left alone' : '; the traveler\'s list was changed: ' + own.join(', ') + ' -> ' + own2.join(', '))); }
+    // Live ferry check, Nov 14: the traveler ticked Sorrento and Pompeii; the app later added two must-sees in town, and
+    // when the day ran over, Sorrento (the traveler's own) gave way. The app's additions give way first.
+    { await p.evaluate(([d, a]) => window.__kairouteNewTrip(d, a), ['Naples port day', 'STOPS: Naples\nDAY|2027-07-12|Naples|port|ship||08:00|17:30|no||no|']); await p.waitForTimeout(300);
+      const r = await p.evaluate(() => { const own = window.__kairouteDay(0, 'Pompeii|^Sorrento'); const ids = window.__kairouteTruth(0).picks.slice();
+        const town = window.__kairouteWeights(0).sites.slice(0, 3).map(x => x.id); window.__kairouteEdit(0, { mine: ids });
+        window.__kairouteSiteSet(0, Object.fromEntries(town.map(id => [id, { mustSee: true }])), false);
+        window.__kairouteDay(0, [...ids, ...town]); const t = window.__kairouteTruth(0); return { ids, town, stops: t.stopNames, picks: t.picks, sel: t.selected, dropped: t.dropped, elsewhere: t.elsewhere, closed: t.closedSel, out: t.outranked, unw: t.unwanted }; });
+      const okM = /Sorrento/.test(r.stops.join()) && /Pompeii/.test(r.stops.join());
+      log('Fit', 'fit', okM, 'The traveler\'s own picks outrank stops the app added: ' + (okM ? 'Sorrento and Pompeii stay (' + r.stops.join(', ') + ')' : JSON.stringify(r))); }
     // Demo run, Nov 14: boarding day in Athens (9:00 to 18:30) after four Athens days planned no stops.
     { await p.evaluate(([d, a]) => window.__kairouteNewTrip(d, a), ['Athens then cruise', 'STOPS: Athens\nDAY|2027-06-30|Athens|arrival|flight|14:00||||||\nDAY|2027-07-01|Athens|land||||||||\nDAY|2027-07-02|Athens|land||||||||\nDAY|2027-07-03|Athens|land||||||||\nDAY|2027-07-04|Athens (Piraeus)|embark|ship|09:00||18:30|no||no|']); await p.waitForTimeout(300);
       const days = await p.evaluate(() => window.__kairouteDays()); const ei = days.findIndex(x => x.type === 'embark');
@@ -278,6 +302,13 @@ const log = (suite, trip, ok, what) => { results.push({ suite, trip, ok, what })
     { const S = (id, name, lat, lng, x) => Object.assign({ id, name, lat, lng, category: 'Ancient site', minutes: 60 }, x || {});
       const names = await p.evaluate(s => window.__kairouteFoldNames(s), [S('colosseum', 'Colosseum and Roman Forum', 41.8902, 12.4922, { builtin: true, mustSee: true }), S('forum', 'Roman Forum', 41.8925, 12.4853, { mustSee: true, guide: 'y'.repeat(900) })]);
       log('New trip', 'new-trips', names.some(n => /colosseum/i.test(n)), 'Folding a combined sight keeps every place in its name: ' + names.join(', ')); }
+    // Demo review, Nov 14: Athens Jun 30 planned both "Acropolis and Parthenon" and the sources' "Acropolis of Athens".
+    // The city's own name tells nothing apart; look-alikes with telling words stay apart.
+    { const S = (id, name, lat, lng, x) => Object.assign({ id, name, lat, lng, category: 'Ancient site', minutes: 60 }, x || {});
+      const r = await p.evaluate(([a, b, c, d2]) => [window.__kairouteFoldNames([a, b], 'Athens'), window.__kairouteFoldNames([c, d2], 'Athens')],
+        [S('acropolis', 'Acropolis and Parthenon', 37.9715, 23.7257, { builtin: true, mustSee: true }), S('src1', 'Acropolis of Athens', 37.9719, 23.7262, { srcOnly: true }),
+         S('acrmus', 'Acropolis Museum', 37.9685, 23.7285, { category: 'Museum' }), S('citymus', 'Athens City Museum', 37.9800, 23.7290, { category: 'Museum' })]);
+      log('New trip', 'new-trips', r[0].length === 1 && /Parthenon/.test(r[0][0]) && r[1].length === 2, 'The city\'s own name doesn\'t make a second sight: ' + r[0].join(', ') + ' | apart: ' + r[1].join(', ')); }
     log('New trip', 'new-trips', !errs.length, errs.length ? 'page errors: ' + [...new Set(errs)].join(' | ') : 'no page errors');
     await b2.close(); }
   // Duplicate sights (Richard, Santorini: "I think there are several duplicate stops"): the same place under two

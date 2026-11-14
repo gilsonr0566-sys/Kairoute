@@ -5,6 +5,9 @@ on:
       pairs:
         description: "lat,lng>lat,lng;... (empty = the built-in examples)"
         default: ""
+      date:
+        description: "trip date YYYY-MM-DD for timetables (empty = the next weekday)"
+        default: ""
       ferry:
         description: "lat,lng>lat,lng for the ferry probe (empty = Naples terminal > Amalfi)"
         default: ""
@@ -21,6 +24,7 @@ jobs:
           node-version: 22
       - env:
           PAIRS: ${{ inputs.pairs }}
+          DATE: ${{ inputs.date }}
         run: node tools/transit-probe.mjs || true
       - env:
           FERRY: ${{ inputs.ferry }}

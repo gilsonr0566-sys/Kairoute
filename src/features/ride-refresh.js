@@ -40,8 +40,8 @@ function rrCompare(r, fresh) {
   if (Math.abs((o.min || 0) - (r.min || 0)) >= 5) return { mode: r.mode, label: r.label, was: r.min, now: o.min, kind: "min" };
   return null;
 }
-async function rrFetch(rides, dow) {
-  const r = await fetch(freeAI.url + "/transit", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ pairs: rides.map(x => ({ a: x.a, b: x.b, dow, fresh: true })) }) });
+async function rrFetch(rides, dow, date) {
+  const r = await fetch(freeAI.url + "/transit", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ pairs: rides.map(x => ({ a: x.a, b: x.b, dow, date, fresh: true })) }) });
   if (!r.ok) throw new Error("transit " + r.status);
   return (await r.json()).results || [];
 }
@@ -50,7 +50,7 @@ async function rrCheckDay(d, slot, fetcher) {
   const plan = buildPlan(d); if (!plan || plan.error) return null;
   const rides = rrRides(d, plan); if (!rides.length) { rrDone[d.id + "|" + slot] = Date.now(); rrSave(); return []; }
   const before = rrLeaveBy(d, plan), dow = new Date(Date.parse(d.date + "T12:00:00Z")).getUTCDay();
-  const res = await (fetcher || rrFetch)(rides, dow);
+  const res = await (fetcher || rrFetch)(rides, dow, d.date);
   const changes = []; let answered = 0;
   rides.forEach((r, i) => {
     const x = res[i]; if (!x || !Array.isArray(x.opts) || x.partial) return; // a busy source: try again later

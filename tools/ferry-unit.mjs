@@ -1,7 +1,7 @@
 // Offline check of the ferry logic in worker/transit.js (no network): a ferry route mapped only by its course (no
 // pier stops, like many seasonal coastal ferries) is offered between the two piers it passes, named after the
 // nearest terminals, with its months from opening_hours or seasonal=*. Exits 1 on a problem.
-import { topRides, ferryByCourse, runMonths, ferryChain, transitOptions, slimFerries, ferryKey, keptFerries } from "../worker/transit.js";
+import { topRides, ferryByCourse, runMonths, ferryChain, transitOptions, slimFerries, ferryKey, keptFerries, timetableOptions, mergeRides } from "../worker/transit.js";
 let bad = 0; const ok = (c, m) => { console.log((c ? "ok   " : "FAIL ") + m); if (!c) bad++; };
 // Naples Molo Beverello to Amalfi along the coast (a course of a few points), as OpenStreetMap often maps it.
 const line = [[40.8366, 14.2563], [40.79, 14.27], [40.70, 14.30], [40.62, 14.36], [40.58, 14.45], [40.60, 14.55], [40.6327, 14.6029]].map(([lat, lng]) => ({ lat, lng }));
@@ -67,4 +67,20 @@ ok(!(await ferryChain(ship, { lat: 38.12, lng: 13.36 }, ways)).length, "no chang
   globalThis.fetch = realFetch; }
 { const many = [1, 2, 3, 4, 5].map(i => ({ mode: "train", label: "T" + i, min: 100 + i })).concat([{ mode: "ferry", label: "F", min: 134 }]), t = topRides(many, 5);
   ok(t.length === 5 && t.some(o => o.mode === "ferry"), "a long list of quicker trains never pushes the ferry out (" + t.map(o => o.label).join(",") + ")"); }
+// Trip date: the timetable is asked for the trip's own date (a summer ferry shows only then), the answer marked with it;
+// when that date isn't published yet (nothing comes back) the next date of the same weekday kind is asked instead.
+{ const realFetch = globalThis.fetch, asked = []; let empty = false;
+  const it = (h) => ({ startTime: `2027-07-12T0${h}:00:00Z`, endTime: `2027-07-12T0${h + 1}:30:00Z`, duration: 5400, legs: [{ mode: "FERRY", startTime: `2027-07-12T0${h}:00:00Z`, duration: 5400, routeShortName: "", agencyName: "NLG", from: { name: "Molo Beverello", tz: "Europe/Rome" }, to: { name: "Amalfi" } }] });
+  globalThis.fetch = async u => { const t = new URL(u).searchParams.get("time"); asked.push(t); return { ok: true, json: async () => ({ itineraries: empty && t.startsWith("2027-07-12") ? [] : [it(6), it(8)] }) }; };
+  const A = { lat: 40.8366, lng: 14.2563 }, B = { lat: 40.6327, lng: 14.6029 }, yr = new Date().getUTCFullYear() + 1, date = yr + "-07-12";
+  const r = await timetableOptions(A, B, 1, date);
+  ok(asked.length && asked.every(t => t.startsWith(date)), `timetable asked for the trip's own date (${asked[0]})`);
+  ok(r.length && r.every(o => o.forDate === date && o.mode === "ferry"), "rides found for that date are marked with it");
+  asked.length = 0; empty = true;
+  const r2 = await timetableOptions(A, B, 1, date);
+  ok(asked.some(t => !t.startsWith(date)) && r2.every(o => !o.forDate), "date not published yet: the usual day is asked and the rides aren't marked as that date's");
+  globalThis.fetch = realFetch; }
+{ const slow = { mode: "ferry", label: "Ferry via Capri", min: 210 }, quick = { mode: "ferry", label: "Ferry Napoli - Amalfi", min: 120 }, train = { mode: "train", label: "Train", min: 150 };
+  ok(mergeRides([slow, train], [quick]).includes(quick), "a slow timetable ferry never hides a much quicker map ferry");
+  ok(!mergeRides([{ ...quick, min: 125 }, train], [quick]).includes(quick), "a timetable ferry about as quick replaces the map's estimate"); }
 console.log(bad ? `${bad} ferry check(s) failed` : "ferry checks passed"); process.exit(bad ? 1 : 0);

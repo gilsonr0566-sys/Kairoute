@@ -452,13 +452,16 @@ export default {
       const out = await Promise.all(pairs.map(async pr => {
         if (!pr || !ok(pr.a) || !ok(pr.b)) return { error: "bad" };
         const dow = Number.isInteger(pr.dow) && pr.dow >= 0 && pr.dow <= 6 ? pr.dow : 3, kind = dow === 0 ? "su" : dow === 6 ? "sa" : "wk";
-        const key = "tr4:" + kind + ":" + [...pr.a, ...pr.b].map(n => n.toFixed(3)).join(",");
+        // The trip's date (when the page gives it) picks the timetable; answers are kept per month, since a summer
+        // ferry runs in July and not in November.
+        const date = typeof pr.date === "string" && /^\d{4}-\d{2}-\d{2}$/.test(pr.date) ? pr.date : null;
+        const key = "tr4:" + kind + ":" + [...pr.a, ...pr.b].map(n => n.toFixed(3)).join(",") + (date ? ":m" + +date.slice(5, 7) : "");
         // A full answer is kept 14 days (timetables change); one where a source was busy only 1 day. When the map answered
         // after the reply went out, its full answer replaces the partial one. A partial answer met again after 10 minutes
         // is looked up afresh in the background (once per 10 minutes), so a busy map server never hides a ferry for a day.
         const keep = x => env.USAGE.put(key, JSON.stringify({ opts: x.opts, partial: !!x.partial, t: Date.now() }), { expirationTtl: (x.partial ? 1 : x.opts.length ? 14 : 7) * 86400 });
         const store = { get: k => env.USAGE.get(k, "json"), put: (k, v, ttl) => env.USAGE.put(k, JSON.stringify(v), { expirationTtl: ttl }) };
-        const look = () => allOptions({ lat: pr.a[0], lng: pr.a[1] }, { lat: pr.b[0], lng: pr.b[1] }, dow, 12000, store);
+        const look = () => allOptions({ lat: pr.a[0], lng: pr.a[1] }, { lat: pr.b[0], lng: pr.b[1] }, dow, 12000, store, date);
         // A saved answer with no ferry gets the ferries kept for both ends (filled in later by the schedule when the
         // map servers were busy), so a ferry shows up as soon as it is known, without waiting for the answer to expire.
         const withFerries = async x => { if ((x.opts || []).some(o => o.mode === "ferry")) return x;
