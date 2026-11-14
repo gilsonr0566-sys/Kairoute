@@ -57,6 +57,11 @@ const MIME = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css
   }
   await step('Trip screen'); await tap('.tab[data-view="trip"]', 'open Trip screen'); await p.waitForTimeout(3000);
   await step('Guide'); await tap('.tab[data-view="guide"]', 'open Guide'); await p.waitForTimeout(5000);
+  // Sitting still: the Day plan left alone for 60 s should make no plans and no redraws.
+  await step('Day plan, left alone (60 s)'); await tap('.tab[data-view="plan"]', 'back to Day plan'); await p.waitForTimeout(10000);
+  const i0 = await p.evaluate(() => window.__kairoutePlanStat ? window.__kairoutePlanStat() : null); await p.waitForTimeout(60000);
+  const i1 = await p.evaluate(() => window.__kairoutePlanStat ? window.__kairoutePlanStat() : null);
+  const idle = i0 && i1 ? `${i1.built - i0.built} new plans, ${i1.renders - i0.renders} redraws, ${i1.dataGen - i0.dataGen} internet answers` : 'not measured (older app)';
   const lt = await p.evaluate(() => window.__lt);
   const pEnd = await p.evaluate(() => performance.now());
   const { profile } = await cdp.send('Profiler.stop');
@@ -80,6 +85,7 @@ const MIME = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css
   console.log(`\nFreeze probe: ${URL} as a ${DEV}, CPU slowed ${CPU}x, real internet. App ready in ${ready} ms. ${reqs} requests.`);
   console.log(`Freezes over 100 ms: ${big.length}, ${big.reduce((a, x) => a + x.ms, 0)} ms in all; over 300 ms: ${big.filter(x => x.ms >= 300).length}; longest ${Math.max(0, ...big.map(x => x.ms))} ms`);
   console.log('Requests by kind: ' + [...reqKinds].sort((a, c) => c[1] - a[1]).slice(0, 10).map(([k, v]) => k + ' ' + v).join(', '));
+  console.log('Left alone on the Day plan for 60 s: ' + idle);
   console.log('\nBy what the traveler was doing (count, total, longest):');
   Object.entries(byStep).forEach(([k, v]) => console.log(`  ${k.padEnd(48)} ${String(v.n).padStart(3)} ${String(v.total).padStart(6)} ms ${String(v.worst).padStart(6)} ms`));
   console.log('\nFreezes over 250 ms, and what the app was busy with (ms):');
