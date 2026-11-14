@@ -382,6 +382,19 @@ const log = (suite, trip, ok, what) => { results.push({ suite, trip, ok, what })
     if (!/^Taxi or car/m.test(first.trim())) bad.push('switching to a taxi did not change the ride: ' + first.slice(0, 80));
     const q2 = await p.evaluate(() => window.__kairouteQuality().find(x => /Naples/.test(x.dest)));
     if (!q2 || q2.issues.length) bad.push('ship checks after switching to a taxi: ' + JSON.stringify(q2 && q2.issues));
+    // Richard, Nov 14: picking the ferry took Sorrento off his tour, and then the ferry was gone from the menu. A ride
+    // that costs a stop is not switched by itself: the plan keeps every stop and the ride it had, says why, and offers
+    // to take it anyway; taken anyway, the choice is kept and stays selectable.
+    { const sw = await p.evaluate(([pr, i]) => { const slow = JSON.parse(JSON.stringify(pr)); const f = slow[0].opts[0]; f.wait = 200; f.min = 300; window.__kairouteTransitSet(slow);
+        const key = window.__kairouteRideLegs(i).legs[0].key.split('|')[0]; window.__kairouteRideSwitch(i, key, 'taxi');
+        const before = window.__kairouteRideSwitch(i, key, 'taxi'), tried = window.__kairouteRideSwitch(i, key, 'ferry|Ferry Napoli - Sorrento'), forced = window.__kairouteRideSwitch(i, key, 'ferry|Ferry Napoli - Sorrento', true);
+        window.__kairouteTransitSet(pr); return { before, tried, forced }; }, [pairs, i]);
+      const sb = [];
+      if (sw.tried.stops.join() !== sw.before.stops.join()) sb.push('switching to a slow ferry dropped a stop: ' + sw.before.stops.join(', ') + ' -> ' + sw.tried.stops.join(', '));
+      if (sw.tried.choice !== 'taxi' || !sw.tried.choices.some(c => /^ferry/.test(c))) sb.push('after a refused switch the ride or its ferry choice changed: ' + JSON.stringify([sw.tried.choice, sw.tried.choices]));
+      if (!/wouldn't fit|doesn't make this ride/.test(sw.tried.notice)) sb.push('no reason given for keeping the ride: ' + sw.tried.notice);
+      if (sw.tried.canForce && (sw.forced.kept !== 'ferry|Ferry Napoli - Sorrento' || !/left out/.test(sw.forced.notice))) sb.push('taking the ferry anyway was not kept or not explained: ' + JSON.stringify(sw.forced));
+      if (sb.length) bad.push(...sb); else log('Ride switch keeps stops', 'transport', true, `a slower ride never drops a stop by itself (${sw.before.stops.join(', ')} kept; "${sw.tried.notice.slice(0, 90)}…"); taken anyway, it is kept and explained`); }
     void mp; void i;
     log('Rides', 'transport', !bad.length, bad.length ? bad.join('; ') : 'Naples: ferry out, Circumvesuviana via Pompeii and back, each ride switchable to a taxi, the plan and ship checks follow, the map draws the real lines');
     log('Rides', 'transport', !errs.length, errs.length ? 'page errors: ' + [...new Set(errs)].join(' | ') : 'no page errors');
