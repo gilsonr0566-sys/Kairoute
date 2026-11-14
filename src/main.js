@@ -2326,6 +2326,18 @@ function tickOnOneDay(city, s) {
   const near = d => { const ps = d.selected.map(id => allSites(city).find(x => x.id === id)).filter(x => x && isFinite(x.lat)); return ps.length ? Math.min(...ps.map(x => hav(x, s))) : 99; };
   for (const d of live.sort((a, b) => near(a) - near(b))) if (addPick(d, s.id, false)) return; // only where it fits
 }
+// Famous places written in are kept on the device for every city, built-in ones included (a built-in guide isn't
+// saved with the trip and is rebuilt from the app on every start). Without this, reopening the app with no
+// internet lost them, so a day ticked with one (the Prado, the Acropolis) planned differently offline, and every
+// online start paid to write them again. They come back, with the same id the day's picks use, before the
+// sources are checked, so the check finds them present.
+const FILL_KEY = "fill:";
+function keepFills(city) { try { kv.set(FILL_KEY + keyOf(city.city), (city.sites || []).filter(s => s.famousFix)); } catch (e) {} }
+function restoreFills(city, list) {
+  if (!Array.isArray(list)) return 0; let n = 0;
+  for (const st of list) if (st && st.name && st.id && !allSites(city).some(s => s.id === st.id || sameSight(st, s))) { city.sites.push(Object.assign({}, st)); n++; }
+  return n;
+}
 async function fillFamous(city, missing, bar) {
   const k = keyOf(city.city); famousFilling[k] = true;
   const prompt = `You are an expert tour guide writing data for a self-guided tour app in ${city.city}${city.country ? ", " + city.country : ""}. Write these real places, which the guide is missing. Keep each name exactly as given. If a name is a whole district or neighbourhood rather than one place to visit, leave it out.
@@ -2342,6 +2354,7 @@ Return ONLY JSON: {"places":[{"n":number,"minutes","category","summary","guide",
       Object.assign(st, { fame: m.sl || 0, unesco: !!m.unesco, heritage: !!m.heritage, src: m.src || [], local: m.local, wd: m.wd, famousFix: true });
       city.sites.push(st); added++; if (st.mustSee) tickOnOneDay(city, st);
     }
+    if (added) keepFills(city);
     if (added) { city.famousMissing = (city.famousMissing || []).filter(n => !city.sites.some(s => s.name === n)); console.info("Kairoute wrote in famous places the guide had left out in " + city.city); save(); if (["plan", "sites", "guide"].includes(view)) { const y = window.scrollY; render(); window.scrollTo(0, y); } }
   } catch (e) { famousFilling[k] = false; }
 }
@@ -2601,6 +2614,7 @@ function fameFor(d, city) {
     // If the sources step can't answer, the fame list alone still protects the famous sights.
     if (!src) { const fam = await famousFor(lbl); if (fam) src = { stops: fam.main.map(x => Object.assign({ src: ["Wikidata (Wikipedia in many languages)"] }, x)), far: fam.far, eats: [] }; }
     if (!src) { delete fameAsked[k]; return; }
+    restoreFills(city, await kv.get(FILL_KEY + k));
     fameAsked[k] = src; fameMark(city, src);
     if (view === "plan" || view === "guide") dataRender();
   }).catch(() => { delete fameAsked[k]; }).finally(() => { delete fameWait[k]; }));

@@ -15,7 +15,7 @@ const srv = http.createServer((q, r) => { let f = path.join(ROOT, decodeURICompo
 const PNG1 = Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==', 'base64');
 const style = theme => ({ version: 8, sources: { openmaptiles: { type: 'vector', url: 'https://tiles.openfreemap.org/planet' } }, glyphs: 'https://tiles.openfreemap.org/fonts/{fontstack}/{range}.pbf', sprite: 'https://tiles.openfreemap.org/sprites/ofm_f384/ofm',
   layers: [{ id: 'bg', type: 'background', paint: { 'background-color': theme === 'dark' ? '#223' : '#eef0ea' } }, { id: 'water', type: 'fill', source: 'openmaptiles', 'source-layer': 'water', paint: { 'fill-color': '#9cf' } }, { id: 'lab', type: 'symbol', source: 'openmaptiles', 'source-layer': 'place', layout: { 'text-field': '{name}', 'text-font': ['Noto Sans Regular'] } }] });
-let tileHits = 0, speakHits = 0;
+let tileHits = 0, speakHits = 0, fillHits = 0;
 // Stand-ins for Kairoute's helper and the outside services.
 async function services(ctx) {
   await ctx.route(/^https?:\/\/(?!localhost:\d{4,5}\/)/, async r => {
@@ -43,6 +43,10 @@ async function services(ctx) {
       if (w === '/grating') return r.fulfill({ json: { ratings: Object.fromEntries((body.places || []).map(x => [x.name, { state: 'ok', rating: 4.5, count: 321, url: '' }])) } });
       if (w === '/places') return r.fulfill({ json: { places: [] } });
       if (w === '/ratings') return r.fulfill({ json: { ratings: {}, busy: {} } });
+      // Barcelona's sources name a famous place its built-in guide lacks (one source only, so it isn't added as a bare
+      // sight from the sources), so the app writes it in once, online.
+      if (w === '/sources') return /barcelona/i.test(u.searchParams.get('city') || '') ? r.fulfill({ json: { stops: [{ name: 'Kairoute Test Tower', lat: 41.3870, lng: 2.1700, sl: 999, src: ['English Wikivoyage'] }], far: [], eats: [] } }) : r.fulfill({ status: 404, json: {} });
+      if (w === '/sample' && /which the guide is missing/.test(body.prompt || '') && /Kairoute Test Tower/.test(body.prompt || '')) { fillHits++; return r.fulfill({ json: { text: JSON.stringify({ places: [{ n: 1, minutes: 45, category: 'Landmark', summary: 'A test landmark.', guide: 'You stand before the test tower.', lookFor: ['a', 'b', 'c'], picks: [], hours: '9-18', closed: '', tickets: '', crowds: '', cost: 0, indoor: false, access: '' }] }) } }); }
       if (w === '/sample') return r.fulfill({ status: 503, json: { error: 'busy' } });
       return r.fulfill({ status: 404, json: {} });
     }
@@ -102,6 +106,12 @@ async function services(ctx) {
     const ban = await p.evaluate(() => (document.getElementById('offBanner') || {}).textContent || '');
     if (ban) fail(`day ${i + 1}: a "not saved" banner shows on a saved day: ${ban}`);
   }
+  // A famous place written in online (here into a built-in guide, which isn't saved with the trip) is still there
+  // after reopening with no internet, so a day ticked with it plans the same.
+  const tower = await p.evaluate(() => { const s = window.__kairouteSights(); return Object.keys(s).filter(k => s[k].sites.some(n => /Kairoute Test Tower/.test(n))); });
+  if (!fillHits) fail('the app never wrote in the famous place Barcelona\'s guide lacks (test stand-in not reached)');
+  else if (!tower.length) fail('a famous place written in online (Kairoute Test Tower, Barcelona) is gone after reopening with no internet');
+  else ok('a famous place written in online is still in the guide after reopening with no internet (' + tower.join(', ') + ')');
   if (same === days.length && days.length) ok(`with no internet: all ${same} days plan exactly the same (stops, meals, times; ${rides} days with real train/ferry rides)`);
   if (maps === days.length && days.length) ok(`with no internet: the street map draws from saved tiles on all ${maps} days`);
   await p.evaluate(() => window.__kairouteGo('plan', 6)); await p.waitForTimeout(800); await p.screenshot({ path: path.join(OUT, 'offline-dayplan-no-internet.png') });
