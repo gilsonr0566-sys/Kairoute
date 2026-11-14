@@ -13,6 +13,8 @@
   --route: #146B61;
   --route-soft: #DCEEEA;
   --ride: #7B3FE4;
+  /* One colour per way of getting around (see docs/design-rules.md). */
+  --t-walk: #146B61; --t-car: #7B3FE4; --t-bus: #C2185B; --t-train: #1F6FD1; --t-ferry: #8F5D00; --t-flight: #4F5D6B; --t-ship: #7A4B2A;
   --meal: #D9532A;
   --meal-soft: #FCE8DF;
   --must: #A8325C;
@@ -27,12 +29,14 @@
     --paper: #0E1418; --card: #161F25; --ink: #E6ECE9; --muted: #9AA8AF; --line: #2A363D;
     --route: #4CC2B0; --route-soft: #143A36; --ride: #C3A0FF; --meal: #F58A62; --meal-soft: #3D2219;
     --must: #EB7EA4; --must-soft: #3E1C29; --warn: #F08A5D; color-scheme: dark;
+  --t-walk: #4CC2B0; --t-car: #E3A3FF; --t-bus: #FF5C9E; --t-train: #4D9DFF; --t-ferry: #FFC23D; --t-flight: #B4C2CE; --t-ship: #E0A97E;
   }
 }
 :root[data-theme="dark"] {
   --paper: #0E1418; --card: #161F25; --ink: #E6ECE9; --muted: #9AA8AF; --line: #2A363D;
   --route: #4CC2B0; --route-soft: #143A36; --ride: #C3A0FF; --meal: #F58A62; --meal-soft: #3D2219;
   --must: #EB7EA4; --must-soft: #3E1C29; --warn: #F08A5D; color-scheme: dark;
+  --t-walk: #4CC2B0; --t-car: #E3A3FF; --t-bus: #FF5C9E; --t-train: #4D9DFF; --t-ferry: #FFC23D; --t-flight: #B4C2CE; --t-ship: #E0A97E;
 }
 * { box-sizing: border-box; }
 body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--font-body); font-size: 16px; line-height: 1.5; }
@@ -172,20 +176,35 @@ button.mk { cursor: pointer; }
 .maplegend .you { color: #1A73E8; }
 .maplegend { display: flex; gap: 14px; flex-wrap: wrap; padding: 10px 14px; border-top: 1px solid var(--line); font-size: 0.82rem; color: var(--muted); }
 .maplegend i { display: inline-block; width: 18px; height: 0; border-top: 3px solid var(--route); vertical-align: middle; margin-right: 6px; }
-.maplegend i.dash { border-top-style: dashed; border-top-color: var(--ride); }
+.maplegend .lk { display: inline-flex; align-items: center; gap: 4px; color: var(--lc); font-weight: 600; }
+.maplegend .lk .legico { width: 16px; height: 16px; }
+.maplegend i.k-car { border-top: 3px dashed var(--lc); } .maplegend i.k-bus { border: 0; height: 3px; background: repeating-linear-gradient(90deg, var(--lc) 0 4px, transparent 4px 7px); } .maplegend i.k-ferry { border-top: 4px dotted var(--lc); }
+.maplegend i.k-train { border: 0; height: 3px; background: repeating-linear-gradient(90deg, var(--lc) 0 9px, transparent 9px 11px); } .maplegend i.k-walk { border-top-color: var(--lc); }
 .timeline { display: grid; }
 .tl { display: grid; grid-template-columns: 58px 30px 1fr; column-gap: 8px; }
 .tl .time { font-variant-numeric: tabular-nums; font-weight: 700; font-size: 0.9rem; padding-top: 12px; text-align: right; }
 .tl .rail { position: relative; display: flex; justify-content: center; }
 .tl .rail::before { content: ""; position: absolute; top: 0; bottom: 0; width: 4px; background: linear-gradient(var(--rin, var(--route)) 0 50%, var(--rout, var(--route)) 50% 100%); left: 13px; }
-.tl.rin { --rin: var(--ride); } .tl.rout { --rout: var(--ride); }
+/* Each way of getting around has its own colour (--t-*), icon and line pattern: walk solid, car long dash, bus short dash, train long rails, ferry dots. */
+.tl.rin-walk { --rin: var(--t-walk); } .tl.rout-walk { --rout: var(--t-walk); } .k-walk { --lc: var(--t-walk); }
+.tl.leg.k-walk .rail::before { background: var(--lc); }
+.tl.rin-car { --rin: var(--t-car); } .tl.rout-car { --rout: var(--t-car); } .k-car { --lc: var(--t-car); }
+.tl.leg.k-car .rail::before { background: repeating-linear-gradient(var(--lc) 0 8px, transparent 8px 13px); }
+.tl.rin-bus { --rin: var(--t-bus); } .tl.rout-bus { --rout: var(--t-bus); } .k-bus { --lc: var(--t-bus); }
+.tl.leg.k-bus .rail::before { background: repeating-linear-gradient(var(--lc) 0 4px, transparent 4px 7px); }
+.tl.rin-train { --rin: var(--t-train); } .tl.rout-train { --rout: var(--t-train); } .k-train { --lc: var(--t-train); }
+.tl.leg.k-train .rail::before { background: repeating-linear-gradient(var(--lc) 0 14px, transparent 14px 17px); }
+.tl.rin-ferry { --rin: var(--t-ferry); } .tl.rout-ferry { --rout: var(--t-ferry); } .k-ferry { --lc: var(--t-ferry); }
+.tl.leg.k-ferry .rail::before { background: radial-gradient(circle, var(--lc) 2.4px, transparent 2.6px) center top / 4px 8px repeat-y; }
+.tl.rin-flight { --rin: var(--t-flight); } .tl.rout-flight { --rout: var(--t-flight); } .k-flight { --lc: var(--t-flight); }
+.tl.leg.k-flight .rail::before { background: repeating-linear-gradient(var(--lc) 0 10px, transparent 10px 14px); }
+.tl.rin-ship { --rin: var(--t-ship); } .tl.rout-ship { --rout: var(--t-ship); } .k-ship { --lc: var(--t-ship); }
+.tl.leg.k-ship .rail::before { background: repeating-linear-gradient(var(--lc) 0 14px, transparent 14px 18px); }
 .tl.first .rail::before { top: 18px; }
 .tl.last .rail::before { bottom: calc(100% - 22px); }
-.tl.leg .rail::before { background: repeating-linear-gradient(var(--ride) 0 7px, transparent 7px 12px); width: 4px; left: 13px; }
-.tl.leg.walk .rail::before { background: var(--route); width: 4px; left: 13px; }
+.tl.leg .rail::before { width: 4px; left: 13px; }
 .tl.leg .what { display: flex; align-items: center; gap: 8px; }
-.tl.leg.ride .what { color: var(--ride); }
-.tl.leg.walk .what { color: var(--route); }
+.tl.leg[data-kind] .what { color: var(--lc, var(--route)); }
 .tl.leg .what b { font-weight: 700; }
 .tl.leg.ridecho .what { align-items: flex-start; }
 .tl.leg .ridesub { display: block; color: var(--muted); font-size: 0.85rem; margin-top: 2px; }
@@ -194,7 +213,7 @@ button.mk { cursor: pointer; }
 .tl.leg .ridepick select { font: inherit; padding: 3px 6px; border-radius: 0; max-width: 100%; }
 .legico { width: 20px; height: 20px; flex: none; }
 .tourleg { display: flex; align-items: center; gap: 8px; }
-.tourleg.ride { color: var(--ride); }
+.tourleg[class*="k-"] { color: var(--lc, var(--route)); }
 .tourleg .legico { width: 26px; height: 26px; }
 .dot { position: relative; z-index: 1; margin-top: 10px; width: 26px; height: 26px; border-radius: 50%; background: var(--card); border: 3px solid var(--route); display: grid; place-items: center; font-size: 0.75rem; font-weight: 800; font-family: var(--font-display); }
 .dot.start { border-radius: 6px; background: var(--ink); border-color: var(--ink); color: var(--paper); }
