@@ -47,4 +47,20 @@ ok(!(await ferryChain(ship, { lat: 38.12, lng: 13.36 }, ways)).length, "no chang
   const mem3 = new Map(), store3 = { get: async k => mem3.get(k) || null, put: async (k, v) => { mem3.set(k, v); } };
   ok((await keptFerries(ship, sorrento, store3)) === null && mem3.has("fq:" + ferryKey(ship)), "nothing kept yet: none added, and the ends are listed for the schedule");
   globalThis.fetch = realFetch; }
+// The helper itself: a saved train-only answer (as Richard's Naples day had) gets the ferry once both ends are known,
+// and until then is marked partial so the page asks again instead of keeping it for good.
+{ const realFetch = globalThis.fetch; globalThis.fetch = async () => { throw new Error("busy"); };
+  const worker = (await import("../worker/worker.js")).default, kv = new Map();
+  const env = { USAGE: { get: async (k, t) => { const v = kv.get(k); return v == null ? null : t === "json" ? JSON.parse(v) : v; }, put: async (k, v) => { kv.set(k, v); }, delete: async k => { kv.delete(k); }, list: async ({ prefix }) => ({ keys: [...kv.keys()].filter(k => k.startsWith(prefix)).map(name => ({ name })) }) } };
+  const ctx = { waitUntil: () => {} }, a = [40.852, 14.26], b = [40.6263, 14.3757];
+  kv.set("tr4:wk:" + [...a, ...b].map(n => n.toFixed(3)).join(","), JSON.stringify({ opts: [{ mode: "train", label: "Train 1 (Eav) + 1 change", min: 112 }], partial: false, t: Date.now() }));
+  const ask = async () => (await (await worker.fetch(new Request("https://x/transit", { method: "POST", body: JSON.stringify({ pairs: [{ a, b, dow: 3 }] }) }), env, ctx)).json()).results[0];
+  const r1 = await ask();
+  ok(r1.partial === true && !r1.opts.some(o => o.mode === "ferry"), "ferries at an end not known yet: the saved answer is sent as partial (asked again soon)");
+  const sw = { type: "way", id: 9, tags: { route: "ferry", name: "Napoli - Sorrento", duration: "0:45" }, geometry: [[40.8366, 14.2563], [40.75, 14.30], [40.6290, 14.3760]].map(([lat, lon]) => ({ lat, lon })) };
+  const kept = JSON.stringify(slimFerries({ elements: [sw] }));
+  kv.set("fp1:" + ferryKey({ lat: a[0], lng: a[1] }), kept); kv.set("fp1:" + ferryKey({ lat: b[0], lng: b[1] }), kept);
+  const r2 = await ask(), f2 = r2.opts.find(o => o.mode === "ferry");
+  ok(!!f2 && r2.opts.some(o => o.mode === "train"), `once both ends are known the saved answer offers the ferry beside the train (${f2 ? f2.label + ", " + f2.min + " min" : "none"})`);
+  globalThis.fetch = realFetch; }
 console.log(bad ? `${bad} ferry check(s) failed` : "ferry checks passed"); process.exit(bad ? 1 : 0);

@@ -67,9 +67,11 @@ async function limits(env) {
 // for long. A place still unanswered stays listed (for 14 days) and is tried again next time.
 async function fillFerries(env) {
   const store = { get: k => env.USAGE.get(k, "json"), put: (k, v, ttl) => env.USAGE.put(k, JSON.stringify(v), { expirationTtl: ttl }) };
-  const l = await env.USAGE.list({ prefix: "fq:", limit: 12 });
-  for (const { name } of l.keys) { const [lat, lng] = name.slice(3).split(",").map(Number); if (!isFinite(lat) || !isFinite(lng)) { await env.USAGE.delete(name); continue; }
-    try { await ferriesNear({ lat, lng }, store, 45000); await env.USAGE.delete(name); } catch (e) {} }
+  const l = await env.USAGE.list({ prefix: "fq:", limit: 60 }), keys = l.keys.map(k => k.name), t0 = Date.now();
+  // Four at a time, and none started after 12 minutes (a scheduled run may last 15): the rest wait for the next run.
+  await Promise.all([0, 1, 2, 3].map(async () => { while (keys.length && Date.now() - t0 < 12 * 60000) { const name = keys.shift();
+    const [lat, lng] = name.slice(3).split(",").map(Number); if (!isFinite(lat) || !isFinite(lng)) { await env.USAGE.delete(name); continue; }
+    try { await ferriesNear({ lat, lng }, store, 45000); await env.USAGE.delete(name); } catch (e) {} } }));
 }
 
 export default {
@@ -460,7 +462,10 @@ export default {
         // map servers were busy), so a ferry shows up as soon as it is known, without waiting for the answer to expire.
         const withFerries = async x => { if ((x.opts || []).some(o => o.mode === "ferry")) return x;
           const kf = await keptFerries({ lat: pr.a[0], lng: pr.a[1] }, { lat: pr.b[0], lng: pr.b[1] }, store).catch(() => null);
-          return kf && kf.length ? { opts: (x.opts || []).concat(kf).sort((p, q) => p.min - q.min).slice(0, 6), partial: x.partial } : x; };
+          // An end whose ferries aren't known yet (waiting for the schedule) makes the answer partial, so the page asks
+          // again in 10 minutes instead of keeping a ferry-less answer for good.
+          if (kf === null) return { opts: x.opts, partial: true };
+          return kf.length ? { opts: (x.opts || []).concat(kf).sort((p, q) => p.min - q.min).slice(0, 6), partial: x.partial } : x; };
         const hit = await env.USAGE.get(key, "json");
         if (hit) {
           if (hit.partial && Date.now() - (hit.t || 0) > 600000 && !(await env.USAGE.get("lk:" + key))) {

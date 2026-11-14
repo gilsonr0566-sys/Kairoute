@@ -11,9 +11,9 @@ binding = "AI"
 binding = "USAGE"
 id = "5062677df32b4a3b9e877e2b355057de"
 
-# Every 30 minutes: ferries for places the map servers were too busy to answer (fillFerries in worker.js).
+# Every 15 minutes: ferries for places the map servers were too busy to answer (fillFerries in worker.js).
 [triggers]
-crons = ["*/30 * * * *"]
+crons = ["*/15 * * * *"]
 
 [vars]
 PAID = "1" # Richard's account is on Workers Paid (confirmed Nov 11); extras capped by MONTH_EXTRA
