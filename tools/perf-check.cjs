@@ -14,7 +14,7 @@ const REF_MS = 240; // the calibration work on the machine the limits were set o
 // Limits (ms, at the calibrated speed). Google calls a tap response over 200 ms "needs improvement"; the limits
 // leave room for test-machine noise but are far below the 400 to 900 ms taps (2 s at worst) measured before the
 // speed work of Nov 13 2026.
-const LIMIT = { ready: 2500, tap: 300, tapWorst: 900, freeze: 500 };
+const LIMIT = { ready: 2500, tap: 300, tapWorst: 900, freeze: 500, freezeAny: 750 }; // freezeAny: longest freeze anywhere while the traveler uses the app
 const MIME = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css', '.json': 'application/json', '.png': 'image/png', '.svg': 'image/svg+xml', '.webmanifest': 'application/manifest+json', '.txt': 'text/plain' };
 const server = http.createServer((q, r) => { let f = path.join(ROOT, decodeURIComponent(q.url.split('?')[0])); if (f.endsWith('/')) f += 'index.html';
   fs.readFile(f, (e, b) => { if (e) { r.writeHead(404); return r.end(); } r.writeHead(200, { 'content-type': MIME[path.extname(f)] || 'application/octet-stream' }); r.end(b); }); });
@@ -32,7 +32,7 @@ const SIZES = [['phone', { ...devices['Galaxy S9+'], viewport: { width: 412, hei
   for (const [name, opts] of SIZES) {
     const ctx = await b.newContext(opts);
     await ctx.addInitScript(() => { try { localStorage.setItem('kairoute.intro1', '1'); } catch (e) {}
-      window.__lt = []; try { new PerformanceObserver(l => l.getEntries().forEach(e => window.__lt.push(e.duration))).observe({ type: 'longtask', buffered: true }); } catch (e) {} });
+      window.__lt = []; try { new PerformanceObserver(l => l.getEntries().forEach(e => { window.__lt.push(e.duration); if (window.__ltOn) window.__ltRun.push(Math.round(e.duration)); })).observe({ type: 'longtask', buffered: true }); } catch (e) {} });
     const p = await ctx.newPage(); p.on('pageerror', e => fail(`${name}: page error ${e.message}`));
     // No outside network (maps tiles, fonts, AI): the check measures the app itself.
     await p.route('**/*', r => r.request().url().startsWith(URL) && !/sw\.js$/.test(r.request().url()) ? r.continue() : r.abort());
@@ -49,6 +49,7 @@ const SIZES = [['phone', { ...devices['Galaxy S9+'], viewport: { width: 412, hei
     rows.push([name, 'App ready to use', ready, LIMIT.ready]); rows.push([name, '  busy time while opening (long tasks)', loadLong, null]);
     if (ready > LIMIT.ready) fail(`${name}: app took ${ready} ms to open (limit ${LIMIT.ready})`);
     const days = await p.evaluate(() => window.__kairouteDays());
+    await p.evaluate(() => { window.__ltRun = []; window.__ltOn = true; }); // every freeze from here on counts
     // One tap = from the touch until the screen has painted the result.
     const tap = async (sel, label, idx = 0) => {
       const loc = p.locator(sel).nth(idx); if (!(await loc.count())) return null;
@@ -89,6 +90,11 @@ const SIZES = [['phone', { ...devices['Galaxy S9+'], viewport: { width: 412, hei
     add('Back to Day plan', await tap('.tab[data-view="plan"], [data-goto="plan"]', 'plan'));
     add('Open Guide tab', await tap('.tab[data-view="guide"]', 'guide'));
     add('Open Trip tab', await tap('.tab[data-view="trip"]', 'trip'));
+    // No freeze anywhere: whatever the app does in the background (answers arriving, the offline check, plans being
+    // made ahead), the screen must never lock up for long.
+    const longest = await p.evaluate(() => Math.max(0, ...window.__ltRun));
+    rows.push([name, 'Longest freeze anywhere while using the app', longest, LIMIT.freezeAny]);
+    if (longest > LIMIT.freezeAny) fail(`${name}: the screen froze for ${longest} ms (limit ${LIMIT.freezeAny})`);
     for (const [k, v] of Object.entries(res)) { const avg = Math.round(v.reduce((a, x) => a + x, 0) / v.length), worst = Math.max(...v);
       // A screen opened once (the Trip screen, which plans every day) is held to the worst-case limit.
       const lim = v.length > 1 ? LIMIT.tap : LIMIT.tapWorst;

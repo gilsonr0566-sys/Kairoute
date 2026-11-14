@@ -1393,7 +1393,7 @@ let bonusMemo = new Map(); // per render: each day's bonus stops, so two days in
 //  - and at most 2 minutes, as a backstop.
 // On a reuse, the day's memo entries (what later days see of it) are put back exactly as the full build left
 // them, so the rest of the planner sees the same thing either way.
-let planStore = { sig: "", at: 0, map: new Map() };
+let planStore = { sig: "", at: 0, map: new Map(), old: null, oldAt: 0 }, renderNo = 0; // renderNo: counts redraws
 const citiesSig = () => { let n = 0; for (const k in cities) { const c = cities[k]; n += 1 + ((c && c.sites) || []).length * 7 + ((c && c.farther) || []).length * 13 + ((c && c.restaurants) || []).length * 3; } return n; };
 function planKey(d) {
   const i = trip.days.indexOf(d), a = trip.active;
@@ -1403,15 +1403,30 @@ function planKey(d) {
 function buildPlan(d) {
   if (!d || typeof d !== "object") return buildPlanRaw(d);
   const sig = planGen + "|" + todayISO() + "|" + citiesSig();
-  if (planStore.sig !== sig || Date.now() - planStore.at > 120000 || planStore.map.size > 400) planStore = { sig, at: Date.now(), map: new Map() };
-  const k = planKey(d), hit = planStore.map.get(k);
-  if (hit && hit.d === d) {
-    for (const [m, v] of [[keptMemo, hit.kept], [mealMemo, hit.meal], [bonusMemo, hit.bonus], [eveMemo, hit.eve]]) { if (v === undefined) m.delete(d); else m.set(d, v); }
-    return hit.plan;
+  if (planStore.sig !== sig || Date.now() - planStore.at > 120000 || planStore.map.size > 400) {
+    // The plans made just before an answer arrived are kept one more round (same day, under 2 minutes old) for moving
+    // between days and screens only: see "A tap shows the last plan" below.
+    const P = planStore, now = Date.now(), sameDay = P.sig.split("|")[1] === todayISO(), useMap = P.map.size && now - P.at < 120000;
+    const old = !sameDay ? null : useMap ? P.map : P.old && now - P.oldAt < 120000 ? P.old : null;
+    planStore = { sig, at: now, map: new Map(), old, oldAt: useMap ? P.at : P.oldAt };
   }
-  const st = planStore, plan = buildPlanRaw(d);
+  const k = planKey(d), restore = e => {
+    for (const [m, v] of [[keptMemo, e.kept], [mealMemo, e.meal], [bonusMemo, e.bonus], [eveMemo, e.eve]]) { if (v === undefined) m.delete(d); else m.set(d, v); }
+    if (transitSeen) transitSeen.push(...e.rides); // the offline check still learns every ride the plan uses
+    return e.plan; };
+  const hit = planStore.map.get(k); if (hit && hit.d === d) return restore(hit);
+  // A tap shows the last plan: when the traveler only moves to another day or screen (renderKeep) and the trip itself
+  // is unchanged, a plan made moments ago, before some answer from the internet arrived, is shown at once; the fresh
+  // plan follows in the next quiet moment (one redraw). Never for any change the traveler made: the key holds the whole
+  // trip, so a changed pick, time or ride never matches.
+  const was = planKeep && planStore.old && planStore.old.get(k);
+  if (was && was.d === d && (was.shown == null || was.shown === renderNo)) { if (was.shown == null) { was.shown = renderNo; dataRender(true); } return restore(was); }
+  // The rides the build looks up are kept with the plan, so a reused plan names them too.
+  const outer = transitSeen; transitSeen = []; let plan, rides;
+  try { plan = buildPlanRaw(d); } finally { rides = transitSeen; transitSeen = outer; if (outer) outer.push(...rides); }
+  const st = planStore;
   // Kept only when nothing moved during the build itself.
-  if (st === planStore && planGen + "|" + todayISO() + "|" + citiesSig() === sig && planKey(d) === k) st.map.set(k, { d, plan, kept: keptMemo.get(d), meal: mealMemo.get(d), bonus: bonusMemo.get(d), eve: eveMemo.get(d) });
+  if (st === planStore && planGen + "|" + todayISO() + "|" + citiesSig() === sig && planKey(d) === k) st.map.set(k, { d, plan, rides, kept: keptMemo.get(d), meal: mealMemo.get(d), bonus: bonusMemo.get(d), eve: eveMemo.get(d) });
   return plan;
 }
 function buildPlanRaw(d) { const prev = planDate, pw = planWx; if (!planDepth) tminEpoch++; planDepth++; planDate = d && d.date; planWx = d && cityFor(d) ? wxFor(d, cityFor(d)) : null; try { let pl = buildPlanFor(d);
@@ -3799,20 +3814,22 @@ function toTop() { window.scrollTo(0, 0); panes().forEach(el => { el.scrollTop =
 // land a few at a time right after a tap. Each used to redraw the whole screen on its own; now answers arriving
 // close together share one redraw, and it waits until the traveler's finger is off the screen and the page has
 // stopped scrolling, so a tap or a scroll is never held up by a redraw. keep: the news can't change a plan.
-let drTimer = 0, drKeep = true, lastTouch = 0;
+let drTimer = 0, drKeep = true, lastTouch = 0, drLast = 0; // drLast: when the last data redraw ran
 if (typeof window !== "undefined") { const touched = () => { lastTouch = Date.now(); };
   window.addEventListener("pointerdown", touched, { capture: true, passive: true }); document.addEventListener("scroll", touched, { capture: true, passive: true }); }
-function dataRender(keep) { drKeep = drKeep && !!keep; if (!drTimer) drTimer = setTimeout(drRun, 120); }
+// While answers keep streaming in (the first minute of a trip asks hundreds of things), redraws are spaced at least
+// ~0.9 s apart, so the screen is never redrawn back to back.
+function dataRender(keep) { drKeep = drKeep && !!keep; if (!drTimer) drTimer = setTimeout(drRun, Math.max(120, 900 - (Date.now() - drLast))); }
 function drRun() {
   const quiet = Date.now() - lastTouch; if (quiet < 300) { drTimer = setTimeout(drRun, 300 - quiet); return; }
-  drTimer = 0; const k = drKeep; drKeep = true; const y = window.scrollY;
+  drTimer = 0; drLast = Date.now(); const k = drKeep; drKeep = true; const y = window.scrollY;
   if (k) renderKeep(); else render();
   window.scrollTo(0, y);
 }
 let planKeep = false;
 function renderKeep() { const was = planKeep; planKeep = true; try { render(); } finally { planKeep = was; } }
 function render() {
-  if (!planKeep) planGen++;
+  renderNo++; if (!planKeep) planGen++;
   if (faithPrefsTidy()) save();
   if (tidyDests(trip)) save();
   if (restoreKeys.size) setTimeout(restoreSplits, 1500); // sights once folded by mistake come back from the saved guide
@@ -5144,6 +5161,7 @@ function ensureMap(ml) {
   return kmap;
 }
 // After each render: put the live map in the slot the screen left for it, with this screen's route.
+let mapWait = false;
 function mountMaps() {
   const slot = document.querySelector("#view [data-map]");
   if (!slot || kmapNoGo) return;
@@ -5158,8 +5176,13 @@ function mountMaps() {
     drawMapData();
   };
   // Already loaded: attach right away, so a re-render never flashes the diagram.
-  if (window.maplibregl) { try { attach(window.maplibregl); } catch (e) { kmapNoGo = true; } return; }
-  loadMapLib().then(attach).catch(() => { kmapNoGo = true; }); // the diagram stays
+  if (window.maplibregl && kmap) { try { attach(window.maplibregl); } catch (e) { kmapNoGo = true; } return; }
+  // Starting the map the first time holds the screen for a moment on a slow phone (the map engine sets itself up), so
+  // it waits for a quiet moment: never in the middle of a tap or a scroll. The route diagram shows until then.
+  if (mapWait) return; mapWait = true;
+  (window.maplibregl ? Promise.resolve(window.maplibregl) : loadMapLib()).then(ml => new Promise(r => {
+    const go = () => { if (Date.now() - lastTouch < 600) return setTimeout(go, 300); typeof requestIdleCallback === "function" ? requestIdleCallback(() => r(ml), { timeout: 1500 }) : r(ml); };
+    go(); })).then(ml => { mapWait = false; try { attach(ml); } catch (e) { kmapNoGo = true; } }).catch(() => { mapWait = false; kmapNoGo = true; }); // the diagram stays
 }
 function drawMapData() {
   const ml = window.maplibregl, D = kmapData; if (!kmap || !kmapReady || !D || !ml) return;

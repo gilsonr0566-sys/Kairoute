@@ -21,7 +21,7 @@ const MIME = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css
     window.__lt = []; window.__step = 'opening';
     try { new PerformanceObserver(l => l.getEntries().forEach(e => window.__lt.push({ at: Math.round(e.startTime), ms: Math.round(e.duration), step: window.__step }))).observe({ type: 'longtask', buffered: true }); } catch (e) {} });
   const p = await ctx.newPage(); const errs = []; p.on('pageerror', e => errs.push(e.message));
-  let reqs = 0; p.on('request', () => reqs++);
+  let reqs = 0; const reqKinds = new Map(); p.on('request', r => { reqs++; let k; try { const u = new (require('url').URL)(r.url()); k = u.host + u.pathname.replace(/\/[^/]*\d[^/]*/g, '/#').split('/').slice(0, 3).join('/'); } catch (e) { k = 'other'; } reqKinds.set(k, (reqKinds.get(k) || 0) + 1); });
   const cdp = await ctx.newCDPSession(p); await cdp.send('Emulation.setCPUThrottlingRate', { rate: CPU });
   await cdp.send('Network.enable'); await cdp.send('Network.emulateNetworkConditions', { offline: false, latency: 80, downloadThroughput: 20e6 / 8, uploadThroughput: 5e6 / 8 });
   await cdp.send('Profiler.enable'); await cdp.send('Profiler.setSamplingInterval', { interval: 500 }); await cdp.send('Profiler.start');
@@ -58,6 +58,7 @@ const MIME = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css
   await step('Trip screen'); await tap('.tab[data-view="trip"]', 'open Trip screen'); await p.waitForTimeout(3000);
   await step('Guide'); await tap('.tab[data-view="guide"]', 'open Guide'); await p.waitForTimeout(5000);
   const lt = await p.evaluate(() => window.__lt);
+  const pEnd = await p.evaluate(() => performance.now());
   const { profile } = await cdp.send('Profiler.stop');
   // Busy time by function (inclusive), over the whole visit.
   const byId = new Map(profile.nodes.map(n => [n.id, n])), parent = new Map(); profile.nodes.forEach(n => (n.children || []).forEach(c => parent.set(c, n.id)));
@@ -67,13 +68,22 @@ const MIME = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css
     if (/^\((idle|program|garbage collector|root)\)/.test(n.callFrame.functionName)) continue;
     self.set(nm(n), (self.get(nm(n)) || 0) + t); const seen = new Set(); let cur = id;
     while (cur) { const m = byId.get(cur), k = nm(m); if (!seen.has(k)) { seen.add(k); incl.set(k, (incl.get(k) || 0) + t); } cur = parent.get(cur); } }
+  // What each long freeze was doing: the app functions busiest inside its time window (page clock lined up with the
+  // profile at the moment it stopped, so a few ms off at most).
+  const sampleAt = []; { let t = profile.startTime; profile.samples.forEach((sid, i) => { t += profile.timeDeltas[i] || 0; sampleAt.push([pEnd - (profile.endTime - t) / 1000, sid, profile.timeDeltas[i] || 0]); }); }
+  const inside = x => { const m = new Map(); sampleAt.forEach(([at, sid, dt]) => { if (at < x.at || at > x.at + x.ms) return; const seen = new Set(); let cur = sid;
+      while (cur) { const n = byId.get(cur), fnm = n.callFrame.functionName; if (fnm && !/^\(/.test(fnm) && !seen.has(fnm)) { seen.add(fnm); m.set(fnm, (m.get(fnm) || 0) + dt); } cur = parent.get(cur); } });
+    return [...m].sort((a, c) => c[1] - a[1]).slice(0, 8).map(([k, v]) => k + ' ' + Math.round(v / 1000)).join(', '); };
   const top = (m, n) => [...m].sort((a, c) => c[1] - a[1]).slice(0, n).map(([k, v]) => `${String(Math.round(v / 1000)).padStart(7)} ms  ${k}`);
   const big = lt.filter(x => x.ms >= 100), byStep = {};
   big.forEach(x => { const s = byStep[x.step] || (byStep[x.step] = { n: 0, total: 0, worst: 0 }); s.n++; s.total += x.ms; s.worst = Math.max(s.worst, x.ms); });
   console.log(`\nFreeze probe: ${URL} as a ${DEV}, CPU slowed ${CPU}x, real internet. App ready in ${ready} ms. ${reqs} requests.`);
   console.log(`Freezes over 100 ms: ${big.length}, ${big.reduce((a, x) => a + x.ms, 0)} ms in all; over 300 ms: ${big.filter(x => x.ms >= 300).length}; longest ${Math.max(0, ...big.map(x => x.ms))} ms`);
+  console.log('Requests by kind: ' + [...reqKinds].sort((a, c) => c[1] - a[1]).slice(0, 10).map(([k, v]) => k + ' ' + v).join(', '));
   console.log('\nBy what the traveler was doing (count, total, longest):');
   Object.entries(byStep).forEach(([k, v]) => console.log(`  ${k.padEnd(48)} ${String(v.n).padStart(3)} ${String(v.total).padStart(6)} ms ${String(v.worst).padStart(6)} ms`));
+  console.log('\nFreezes over 250 ms, and what the app was busy with (ms):');
+  lt.filter(x => x.ms >= 250).forEach(x => console.log(`  ${String(x.ms).padStart(5)} ms at ${(x.at / 1000).toFixed(1)} s  [${x.step}]  ${inside(x)}`));
   console.log('\nTaps (ms until the screen showed the result):'); taps.forEach(t => console.log(`  ${t.label.padEnd(40)} ${t.ms}`));
   console.log('\nBusiest parts of the app (inclusive):\n' + top(incl, 45).join('\n'));
   console.log('\nBusiest single functions (self):\n' + top(self, 25).join('\n'));
