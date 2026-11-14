@@ -278,6 +278,13 @@ const log = (suite, trip, ok, what) => { results.push({ suite, trip, ok, what })
     { const S = (id, name, lat, lng, x) => Object.assign({ id, name, lat, lng, category: 'Ancient site', minutes: 60 }, x || {});
       const names = await p.evaluate(s => window.__kairouteFoldNames(s), [S('colosseum', 'Colosseum and Roman Forum', 41.8902, 12.4922, { builtin: true, mustSee: true }), S('forum', 'Roman Forum', 41.8925, 12.4853, { mustSee: true, guide: 'y'.repeat(900) })]);
       log('New trip', 'new-trips', names.some(n => /colosseum/i.test(n)), 'Folding a combined sight keeps every place in its name: ' + names.join(', ')); }
+    // Demo review, Nov 14: Athens Jun 30 planned both "Acropolis and Parthenon" and the sources' "Acropolis of Athens".
+    // The city's own name tells nothing apart; look-alikes with telling words stay apart.
+    { const S = (id, name, lat, lng, x) => Object.assign({ id, name, lat, lng, category: 'Ancient site', minutes: 60 }, x || {});
+      const r = await p.evaluate(([a, b, c, d2]) => [window.__kairouteFoldNames([a, b], 'Athens'), window.__kairouteFoldNames([c, d2], 'Athens')],
+        [S('acropolis', 'Acropolis and Parthenon', 37.9715, 23.7257, { builtin: true, mustSee: true }), S('src1', 'Acropolis of Athens', 37.9719, 23.7262, { srcOnly: true }),
+         S('acrmus', 'Acropolis Museum', 37.9685, 23.7285, { category: 'Museum' }), S('citymus', 'Athens City Museum', 37.9800, 23.7290, { category: 'Museum' })]);
+      log('New trip', 'new-trips', r[0].length === 1 && /Parthenon/.test(r[0][0]) && r[1].length === 2, 'The city\'s own name doesn\'t make a second sight: ' + r[0].join(', ') + ' | apart: ' + r[1].join(', ')); }
     log('New trip', 'new-trips', !errs.length, errs.length ? 'page errors: ' + [...new Set(errs)].join(' | ') : 'no page errors');
     await b2.close(); }
   // Duplicate sights (Richard, Santorini: "I think there are several duplicate stops"): the same place under two

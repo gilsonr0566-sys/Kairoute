@@ -3674,7 +3674,11 @@ const PLACE_SYN = { nautical: "maritime", naval: "maritime", duomo: "cathedral",
   torre: "tower", tour: "tower", turm: "tower", orologio: "clock", reloj: "clock", horloge: "clock", astronomico: "astronomical", astronomique: "astronomical", regionale: "regional",
   santuario: "sanctuary", sanctuaire: "sanctuary", giardino: "garden", jardin: "garden", jardi: "garden", mercato: "market", mercado: "market", mercat: "market", marche: "market",
   ponte: "bridge", puente: "bridge", pont: "bridge", porta: "gate", puerta: "gate", teatro: "theatre", theater: "theatre", monte: "mount", mt: "mount", hill: "mount", lofos: "mount" };
-const placeWords = n => keyOf(String(n || "").replace(/&/g, " and ")).split(" ").filter(t => t.length > 1 && !PLACE_SMALL.has(t)).map(t => t.replace(/s$/, "")).map(t => PLACE_SYN[t] || t);
+// While a city's sights are compared, the city's own name tells nothing apart ("Acropolis of Athens" is the Athens
+// guide's "Acropolis and Parthenon"); a name that is only the city's name keeps it.
+let placeCity = null;
+const placeWords = n => { const w = placeWords0(n), c = placeCity && w.filter(t => !placeCity.has(t)); return c && c.length ? c : w; };
+const placeWords0 = n => keyOf(String(n || "").replace(/&/g, " and ")).split(" ").filter(t => t.length > 1 && !PLACE_SMALL.has(t)).map(t => t.replace(/s$/, "")).map(t => PLACE_SYN[t] || t);
 const placeNames = x => { const n = String((x && x.name) || ""), alt = [...n.matchAll(/[([]([^)\]]+)[)\]]/g)].map(m => m[1]); return [n.replace(/[([][^)\]]*[)\]]/g, " ")].concat(alt, x && x.local && keyOf(x.local) !== keyOf(n) ? [String(x.local)] : []); }; // "Name (other name)", "Name [local name]" and the sources' local name
 const placeKind = x => (PLACE_KIND.find(([, re]) => re.test(((x && x.name) || "") + " " + ((x && x.category) || ""))) || [""])[0];
 const isFeat = t => PLACE_PART.has(t) || PLACE_KIND.some(([, re]) => re.test(t));
@@ -3720,6 +3724,7 @@ function placeRel(a, b) {
   return "";
 }
 function samePlace(a, b) { return placeRel(a, b) === "same"; }
+if (typeof window !== "undefined") window.__kairoutePlaceRel = (a, b, city) => { const was = placeCity; placeCity = city ? new Set(placeWords0(city)) : null; try { return [placeRel(a, b), placeRel(b, a), placeWords(a.name), placeWords(b.name), placeKind(a), placeKind(b), placeWords(a.name).map(isFeat)]; } finally { placeCity = was; } };
 if (typeof window !== "undefined") window.__kairouteDedupe = (sites, farther) => { const c = { sites: JSON.parse(JSON.stringify(sites || [])), farther: JSON.parse(JSON.stringify(farther || [])) }; const n = dedupeSites(c); return { n, kept: allSites(c).map(x => ({ name: x.name, alias: x.alias || [], lookFor: x.lookFor || [] })) }; };
 // Every guide the app holds, checked for two sights that are one place (for the safety net).
 if (typeof window !== "undefined") window.__kairouteDupCities = () => { ensureBuiltins(); const seen = new Set(); let n = 0, sights = 0; for (const k in cities) { const c = cities[k]; if (!c || seen.has(c)) continue; seen.add(c); n++; sights += allSites(c).length; } return { n, sights, left: window.__kairouteDupScan() }; };
@@ -3732,10 +3737,15 @@ if (typeof window !== "undefined") window.__kairouteTwins = () => { ensureBuilti
 if (typeof window !== "undefined") window.__kairouteDupScan = () => { ensureBuiltins(); const out = []; const seen = new Set(); for (const k in cities) { const c = cities[k]; if (!c || seen.has(c)) continue; seen.add(c); const all = allSites(c); for (let i = 0; i < all.length; i++) for (let j = i + 1; j < all.length; j++) { const r = placeRel(all[i], all[j]) || placeRel(all[j], all[i]); if (r) out.push(c.city + ": " + all[i].name + " / " + all[j].name + " (" + r + ")"); } } return out; };
 // Removes repeats and parts from a guide: of two names for one place the better known (a must-see, then the one
 // with more written about it) stays; a part goes into the bigger place's "look for" list.
-const DEDUPE_V = 3; const dedupeLog = []; // what was folded, for the review tools
+const DEDUPE_V = 4; // 4: the city's own name tells nothing apart (Acropolis of Athens)
 if (typeof window !== "undefined") window.__kairouteDedupeLog = () => dedupeLog.slice();
 function dedupeSites(c) {
-  if (!c) return 0; let n = 0;
+  if (!c) return 0;
+  const was = placeCity; placeCity = c.city ? new Set(placeWords0(String(c.city).split(",")[0]).filter(t => t.length > 2)) : null;
+  try { return dedupeSites0(c); } finally { placeCity = was; }
+}
+function dedupeSites0(c) {
+  let n = 0;
   const lists = [c.sites || [], c.farther || []], all = lists.flat(), gone = new Set();
   const rank = x => (x.mustSee ? 1000 : 0) + (x.unesco ? 100 : 0) + (x.quick ? -500 : 0) + (x.srcOnly ? -50 : 0) + String(x.guide || "").length / 100 + (x.builtin ? 0 : 1); // a written sight beats a bare one from the sources
   for (let i = 0; i < all.length; i++) for (let j = i + 1; j < all.length; j++) {
@@ -3773,7 +3783,7 @@ function undoMerges(c, key) {
   return back;
 }
 // Check hook: fold a made-up guide and return the names it keeps.
-if (typeof window !== "undefined") window.__kairouteFoldNames = sites => { const c = { city: "Test", sites: JSON.parse(JSON.stringify(sites)), farther: [] }; dedupeSites(c); return c.sites.map(x => x.name); };
+if (typeof window !== "undefined") window.__kairouteFoldNames = (sites, city) => { const c = { city: city || "Test", sites: JSON.parse(JSON.stringify(sites)), farther: [] }; dedupeSites(c); return c.sites.map(x => x.name); };
 const restoreKeys = new Set();
 if (typeof window !== "undefined") window.__kairouteUndoCheck = () => { const M = (id, name, lat, lng) => ({ id, name, lat, lng, category: "Museum" });
   const c = { city: "Test", sites: [Object.assign(M("a", "Natural History Museum of Crete", 35.3414, 25.1327), { merged: [M("b", "Historical Museum of Crete", 35.3412, 25.1325)], alias: ["Historical Museum of Crete", "b", "Maritime Museum of Chania"] }), Object.assign(M("p", "Prado Museum", 40.4138, -3.6921), { alias: ["Museo del Prado", "museo-prado"] })], farther: [] };
