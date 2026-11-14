@@ -121,6 +121,24 @@ const FILE = path.resolve(process.argv[2] || path.join(__dirname, '..', 'index.h
       if (sc.noDay.length) bad(2, `scheduled sights not naming their day: ${sc.noDay.join(', ')}`);
       if (sc.stray.length) bad(2, `sights planned on another day above the line: ${sc.stray.join(', ')}`);
       if (!sc.n) console.log('note: day 3 has no sights scheduled on other days'); await p.waitForTimeout(200);
+      // A sight moved here from another day that then stops fitting goes back to that day: never lost from both.
+      const mv = await p.evaluate(() => { const c = [...document.querySelectorAll('.sitelist.sched [data-card]')].find(c => c.querySelector('input[data-site]')); if (!c) return null; const m = c.innerText.match(/Day (\d+) · /); return m && { id: c.dataset.card, from: +m[1] - 1 }; });
+      if (mv) {
+        await p.evaluate(id => document.querySelector(`input[data-site="${id}"]`).click(), mv.id); await p.waitForTimeout(500);
+        if (await p.evaluate(() => !!document.querySelector('.fitbox'))) { await p.evaluate(() => document.querySelector('.fitbox [data-act="fitcancel"]').click()); console.log(`note: ${mv.id} doesn't fit day 3, so the move-back check was skipped`); }
+        else {
+          const on = await p.evaluate(m => ({ here: (window.__kairouteTruth(2).selected || []).includes(m.id), there: (window.__kairouteTruth(m.from).selected || []).includes(m.id) }), mv);
+          if (!on.here || on.there) bad(2, `ticking scheduled ${mv.id} didn't move it here (here ${on.here}, still on day ${mv.from + 1} ${on.there})`);
+          await p.evaluate(() => window.__kairouteSetHours(0.5)); await p.waitForTimeout(500);
+          const r = await p.evaluate(m => ({ here: (window.__kairouteSelCount() || 0), on3: (window.__kairouteTruth(2).selected || []).includes(m.id), back: (window.__kairouteTruth(m.from).selected || []).includes(m.id), note: [...document.querySelectorAll('.banner.bumped')].map(b => b.innerText).join(' ') }), mv);
+          if (!r.on3 && !r.back) bad(2, `${mv.id} was moved here, stopped fitting and is now on no day`);
+          if (!r.on3 && r.back && !/went back to/.test(r.note)) bad(2, `${mv.id} went back to day ${mv.from + 1} without a note saying so`);
+          if (r.on3) console.log(`note: ${mv.id} still fits day 3 at half an hour`);
+          await p.evaluate(() => window.__kairouteSetHours(8)); await p.waitForTimeout(400);
+          const dup = await p.evaluate(m => (window.__kairouteTruth(2).selected || []).includes(m.id) && (window.__kairouteTruth(m.from).selected || []).includes(m.id), mv);
+          if (dup) bad(2, `${mv.id} is now picked on two days`);
+        }
+      }
     }
     // Richard's sequence on the first Athens day: tick Ancient Corinth, then Corinth Canal, then untick one.
     await p.evaluate(() => document.querySelector('.daychip[data-day="2"]').click()); await p.waitForTimeout(200);
