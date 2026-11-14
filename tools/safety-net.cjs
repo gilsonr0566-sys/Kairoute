@@ -235,6 +235,9 @@ const log = (suite, trip, ok, what) => { results.push({ suite, trip, ok, what })
     if (errs.length) bad.push('page errors: ' + [...new Set(errs)].join(' | '));
     { const nm = await p.evaluate(() => window.__kairouteNameCheck ? window.__kairouteNameCheck() : null); // Madrid, Nov 14: a sight named "[object Object]"
       if (JSON.stringify(nm) !== JSON.stringify(['Casa Gallardo', 'Plaza Mayor'])) bad.push('a sight name written as an object came out as ' + JSON.stringify(nm) + ' (want it read, or the sight dropped)'); }
+    { const td = await p.evaluate(() => window.__kairouteTransitDue ? window.__kairouteTransitDue() : null); // Richard, Nov 14: a phone kept an old ride with no ferry
+      if (!td || !td.old || !td.oldEmpty || !td.near || td.fresh || td.busyNow || !td.busyLater) bad.push('kept ride answers: an old, empty, nearby or busy answer is not asked again as it should be ' + JSON.stringify(td));
+      else log('Kept rides refresh', 'rides', true, 'a ride answer kept from an older version, an empty one, or a nearby trip\'s is asked again when online; a fresh one is kept'); }
     log('Duplicate sights', 'guides', !bad.length, bad.length ? bad.join(' | ') : `${folded} repeats folded (same place under two names, or a part of a village); look-alike names of different places kept apart; no guide lists a place twice`);
     await b4.close(); }
   // Famous sights and big stops: with a snapshot of Prague's sources and stand-in AI answers, the top famous
