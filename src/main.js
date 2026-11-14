@@ -1053,9 +1053,30 @@ function fixedStop(p, label, minutes) { return Object.assign({}, p, { id: "fx-" 
 // The time window and the fixed points at each end of a day.
 // "Hours to sightsee" are for seeing things: a lunch that falls inside them is added on top, not taken out.
 const lunchIn = (from, hours) => { const end = from + hours * 60, L = MEALS[0]; return from < L.to - 30 && end > L.from + 45 ? Math.max(end, Math.min(end + L.len, MEALS[1].from)) : end; }; // never pushed into dinner time
+// Where a start point (hotel area, port, airport, station) goes once the map lookup has answered: k its kind, site a
+// sight of the same name, r the lookup's answer, mid the middle of the city's sights.
+function placeStart(k, p, site, r, mid) {
+  const gate = k === "airport" || k === "cruise", lim = gate ? 150 : 15, moved = /Location approximate: city centre\./.test(p.note || "");
+  const at = { lat: numV(p.lat), lng: numV(p.lng) };
+  if (moved) p.note = String(p.note).replace(/\s*Location approximate: city centre\./, "").trim();
+  if (site && !gate) { p.lat = numV(site.lat); p.lng = numV(site.lng); }
+  else if (r && r.real && r.lat != null && hav(r, mid) <= lim) { p.lat = r.lat; p.lng = r.lng; delete p.unknown; }
+  else if (gate) { if (moved || !isFinite(at.lat) || hav(at, mid) > lim) p.unknown = true; }
+  else if (site) { p.lat = numV(site.lat); p.lng = numV(site.lng); }
+  else if (hav(at, mid) > lim) { p.lat = mid.lat; p.lng = mid.lng; p.note = ((p.note || "") + " Location approximate: city centre.").trim(); }
+  return p;
+}
+if (typeof window !== "undefined") window.__kairoutePlaceStart = (k, p, site, r, mid) => placeStart(k, Object.assign({}, p), site, r, mid);
+if (typeof window !== "undefined") window.__kairoutePortTest = (i, patch) => { const d = trip.days[i], c = cityFor(d), P = dayPoint(d, c); if (!P) return { error: "no point" }; const was = Object.assign({}, P); Object.assign(P, patch); let w; try { w = dayWindow(d, c); } finally { for (const k of Object.keys(P)) delete P[k]; Object.assign(P, was); } return { name: P.name, error: w.error || null, unsure: !!w.unsure }; };
+// STARTS_V 2: cruise ports and airports are never moved to the city centre (guides checked before are checked again).
+const STARTS_V = 2;
+// A start point placed on a guess (a port or airport the map lookup couldn't find, or one an older guide moved to the
+// city centre): no plan is built from it, because every ride time and the leave-by would be wrong.
+const unsurePoint = P => !!P && (P.unknown || /Location approximate: city centre/.test(P.note || ""));
 function dayWindow(d, city) {
   const L = lodgingFor(d, city), P = dayPoint(d, city);
   const w = { head: [], tail: [], start: 0, endBy: 0, notes: [], notesEnd: [], buffer: 0 };
+  if (unsurePoint(P) && !throughTo(d) && d.type !== "land") return { error: `We couldn't find exactly where ${P.name} is, so this day isn't planned on a guess (every ride time and the time to head back depend on it). It's being looked up again; you can also pick another ${d.type === "port" || d.type === "embark" || d.mode === "ship" ? "cruise terminal" : "arrival point"} in the day's settings.`, unsure: true };
   if (throughTo(d)) return { error: "This day's plan is on the next page, with your " + (throughTo(d).type === "embark" ? "boarding" : "departure") + ".", through: true };
   if (d.type === "land") {
     if (!L) return { error: "Choose where you're staying in " + d.destination + "." };
@@ -2054,7 +2075,7 @@ function cleanCity(c, dest) {
   const starts = {};
   for (const k of ["cruise", "airport", "station", "hotel", "point"]) starts[k] = ((c.starts && c.starts[k]) || []).filter(okLL).map(p => ({ name: String(p.name), lat: num(p.lat), lng: num(p.lng), note: p.note ? String(p.note) : "" }));
   return {
-    city: String(c.city || dest), country: String(c.country || ""), ai: true, verified: c.verified || 0, grounded: !!c.grounded, gv: String(c.gv || ""), eatsV: +c.eatsV || 0, startsOk: !!c.startsOk, starts,
+    city: String(c.city || dest), country: String(c.country || ""), ai: true, verified: c.verified || 0, grounded: !!c.grounded, gv: String(c.gv || ""), eatsV: +c.eatsV || 0, startsOk: c.startsOk === true ? 1 : +c.startsOk || 0, starts,
     sites: (c.sites || []).filter(okLL).map((s, i) => site(s, i)),
     farther: (c.farther || []).filter(okLL).map((s, i) => Object.assign(site(s, i, "-far"), { far: true })),
     basics: c.basics ? {
@@ -2957,7 +2978,7 @@ async function realPlaces(raw, label) {
   if (!freeAI || !raw) return raw;
   const realEats = (raw.restaurants || []).length && raw.restaurants.every(r => r.onMap);
   // eatsV: bump when the way places to eat are chosen improves; older guides get new restaurants (no AI needed).
-  if (raw.verified >= 2 && raw.grounded && realEats && raw.startsOk && raw.eatsV === EATS_V) return raw;
+  if (raw.verified >= 2 && raw.grounded && realEats && raw.startsOk >= STARTS_V && raw.eatsV === EATS_V) return raw;
   const okLL = x => x && x.name && isFinite(numV(x.lat)) && isFinite(numV(x.lng));
   const pos = x => ({ lat: numV(x.lat), lng: numV(x.lng) });
   const post = (path, body) => fetch(freeAI.url + path, { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify(body) }).then(r => r.ok ? r.json() : null).catch(() => null);
@@ -2979,15 +3000,17 @@ async function realPlaces(raw, label) {
       const all = []; for (const k of Object.keys(raw.starts)) (raw.starts[k] || []).filter(okLL).forEach(p => all.push([k, p]));
       const lookup = all.filter(([k, p]) => !ss.some(x => nameMatch(x.name, p.name) || keyOf(p.name).includes(keyOf(x.name))));
       const g = lookup.length ? await groundNames(lookup.map(([, p]) => p.name), label, new Set(lookup.filter(([k]) => k === "airport" || k === "cruise").map(([, p]) => p.name))) : null;
+      if (lookup.length && !g) return raw; // the map lookup is unavailable right now: check again next time rather than guess
       for (const [k, p] of all) {
         const site = ss.find(x => nameMatch(x.name, p.name) || keyOf(p.name).includes(keyOf(x.name)));
-        const r = g && g.get(p.name), lim = k === "airport" || k === "cruise" ? 60 : 15;
-        if (site) { p.lat = numV(site.lat); p.lng = numV(site.lng); }
-        else if (r && r.real && r.lat != null && hav(r, mid) <= lim) { p.lat = r.lat; p.lng = r.lng; }
-        else if (hav(pos(p), mid) > lim) { p.lat = mid.lat; p.lng = mid.lng; p.note = ((p.note || "") + " Location approximate: city centre.").trim(); }
+        // A cruise port or airport is often in another town, far from the city it serves (Civitavecchia is 70 km from
+        // Rome, Piraeus 10 km from Athens, Livorno 90 km from Florence): it is never moved to the city centre. Its real
+        // spot is looked up; if nothing sure is found, it is marked unknown and the day isn't planned from a guess
+        // (a ship day planned from central Rome walked to the Colosseum in 21 minutes, Nov 14).
+        placeStart(k, p, site, g && g.get(p.name), mid);
       }
     } }
-  raw.startsOk = true;
+  raw.startsOk = STARTS_V;
   const main = (raw.sites || []).filter(x => okLL(x) && !x.quick), must = main.filter(x => x.mustSee);
   const pts = main.slice(0, 14).map(pos);
   const pl = pts.length ? await post("/places", { pts, r: 700 }) : null;
@@ -3023,7 +3046,7 @@ async function realPlaces(raw, label) {
 async function checkSavedCities() {
   for (const k of Object.keys(cities)) {
     const c = cities[k]; if (!c || !c.ai) continue;
-    if (c.grounded && c.gv === GUIDE_V && (c.sites || []).some(x => x.sources && x.sources.length)) { if (!(c.restaurants || []).length || !c.startsOk || c.eatsV !== EATS_V) { try { await realPlaces(c, c.city); if ((c.restaurants || []).length) { save(); if (typeof render === "function" && view !== "tour") render(); } } catch (e) {} } continue; }
+    if (c.grounded && c.gv === GUIDE_V && (c.sites || []).some(x => x.sources && x.sources.length)) { if (!(c.restaurants || []).length || !(c.startsOk >= STARTS_V) || c.eatsV !== EATS_V) { try { await realPlaces(c, c.city); if ((c.restaurants || []).length) { save(); if (typeof render === "function" && view !== "tour") render(); } } catch (e) {} } continue; }
     // Written before places and facts were checked: set it aside so it's rebuilt (one tap) with real places and facts.
     delete cities[k]; trip.days.forEach(x => { if (x.cityKey === k) { x.cityKey = null; x.selected = null; } });
     save(); if (typeof render === "function" && view !== "tour") render();
