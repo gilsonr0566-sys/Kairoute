@@ -128,11 +128,17 @@ export function topRides(list, n) {
   if (f && !top.includes(f)) { let i = top.length - 1; while (i >= 0 && top[i].mode === "ferry") i--; if (i >= 0) top.splice(i, 1); top.push(f); }
   return top;
 }
+// Timetable rides plus what the map adds. A map ferry is left out only when the timetables already have a ferry about
+// as quick (within 15 min): a timetable that knows only a slow ferry (one that goes round by Capri) must not hide a
+// quicker ferry the map has (Naples-Amalfi, Nov 14).
+export function mergeRides(tt, map) {
+  const t = tt || [], hasRail = t.some(o => /train|metro|tram/.test(o.mode));
+  const m = (map || []).filter(o => o.mode === "ferry" ? !t.some(x => x.mode === "ferry" && x.min <= o.min + 15) : !hasRail);
+  return topRides(t.concat(m), 5);
+}
 export async function allOptions(a, b, dow, mapWait = 12000, store, date) {
   const ttP = timetableOptions(a, b, dow, date).catch(() => null), mapP = transitOptions(a, b, store).catch(() => null);
-  const merge = (tt, map) => { const t = tt || [], hasRail = t.some(o => /train|metro|tram/.test(o.mode));
-    const m = (map || []).filter(o => o.mode === "ferry" ? !t.some(x => x.mode === "ferry") : !hasRail);
-    return topRides(t.concat(m), 5); };
+  const merge = mergeRides;
   const TIMEOUT = Symbol("slow"), t0 = Date.now(), tt = await ttP;
   const map = await Promise.race([mapP, new Promise(r => setTimeout(() => r(TIMEOUT), Math.max(1000, mapWait - (Date.now() - t0))))]);
   if (map === TIMEOUT) {
