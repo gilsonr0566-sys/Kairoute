@@ -3487,6 +3487,13 @@ if (typeof window !== "undefined") window.__kairouteSplitStop = (i, n) => {
 // screen does, so date handling and the Trip screen can be checked without the network.
 // Live check of the whole intake with the real AI: type a trip, build its guides, report what each day got.
 // Test hook (tools/demo-flow.cjs): what the app is doing and the trip as entered, for checks on the live site.
+// Test hook: what a day's plan is built from that comes from outside (each loaded from the device when offline), so
+// the demo flow can say why an offline plan differs from the online one.
+if (typeof window !== "undefined") window.__kairouteInputs = i => { const d = trip.days[i], c = cityFor(d); if (!c) return null; const k = keyOf(c.city);
+  const wk = typeof wxFor === "function" ? wxFor(d, c) : null;
+  return { city: k, label: srcLabel(c, d), fame: fameAsked[k] === true ? "loading" : fameAsked[k] ? "applied" : "none", crowd: crowdCache[k] ? (crowdCache[k].map ? Object.keys(crowdCache[k].map).length : 0) : "none",
+    wx: wk ? JSON.stringify(wk).slice(0, 80) : "none", sites: (c.sites || []).length, farther: (c.farther || []).length, famed: (c.sites || []).filter(x => x.fame).length, must: (c.sites || []).filter(x => x.mustSee).map(x => x.name).join("; ").slice(0, 300),
+    eats: (c.restaurants || []).length, rides: Object.keys(transitMem).length, online: navigator.onLine }; };
 if (typeof window !== "undefined") window.__kairouteState = () => ({ view, busy: busy ? busy.text || "busy" : "", err: aiError || "", ship: trip.ship || null, name: trip.name || "",
   days: trip.days.map((d, i) => ({ i, date: d.date, type: d.type, dest: d.destination, arrive: d.portArrive || "", aboard: d.allAboard || "", estimated: !!d.estimated, wants: d.wants || [], picks: (d.selected || []).length, stayAboard: !!d.aboard, guide: !!cityFor(d) })) });
 if (typeof window !== "undefined") window.__kairouteAiReady = () => aiReady();
