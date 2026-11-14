@@ -33,12 +33,16 @@ function closedByText(t, iso) {
 function siteWindow(s, iso) {
   if (!s || !iso || isOpenAir(s)) return null;
   const h = String(s.hours || "").trim(); if (!h) return null;
+  // "00:00-00:00", "00:00-24:00" or "24/7" on the map is often a placeholder (an open ground like the Circus Maximus,
+  // or a mapper's guess) rather than real hours: treated as unknown, never shown as "Open 00:00–00:00".
+  if (/^(24\/7|(Mo-Su\s*)?00:00-(00|24):00)$/.test(h.replace(/\s+(?=\d)/g, " ").trim())) return null;
   if (isOsmHours(h)) {
     const spans = []; let cur = null;
     for (let m = 0; m <= 1440; m += 15) {
       const st = m < 1440 ? ohState(h, iso, m) : "closed"; if (st == null) return null;
       if (st === "open" && cur == null) cur = m; if (st !== "open" && cur != null) { spans.push([cur, m]); cur = null; }
     }
+    if (spans.length === 1 && spans[0][0] === 0 && spans[0][1] >= 1440) return null; // open round the clock: nothing to plan around
     return { spans, src: "OpenStreetMap", text: h };
   }
   if (/24 ?hours|always open|open all day|open 24/i.test(h)) return null;
@@ -63,6 +67,7 @@ function siteWindow(s, iso) {
   if (le) w.last = +le[1] * 60 + +le[2]; else if (lb) w.last = b - +lb[1] * (/^h/i.test(lb[2]) ? 60 : 1);
   return w;
 }
+if (typeof window !== "undefined") window.__kairouteHours = (h, iso) => siteWindow({ name: "Test ruins", category: "Ruins", hours: h }, iso || "2027-07-13");
 // Closed on the plan's date: OpenStreetMap hours with no opening that day, or else the guide's closed days.
 function siteClosed(s, iso) {
   if (!s || !iso) return false;
