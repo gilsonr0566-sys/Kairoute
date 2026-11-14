@@ -67,11 +67,12 @@ async function limits(env) {
 // for long. A place still unanswered stays listed (for 14 days) and is tried again next time.
 async function fillFerries(env) {
   const store = { get: k => env.USAGE.get(k, "json"), put: (k, v, ttl) => env.USAGE.put(k, JSON.stringify(v), { expirationTtl: ttl }) };
-  const l = await env.USAGE.list({ prefix: "fq:", limit: 60 }), keys = l.keys.map(k => k.name), t0 = Date.now();
+  const l = await env.USAGE.list({ prefix: "fq:", limit: 60 }), keys = l.keys.map(k => k.name), t0 = Date.now(), run = { t: new Date().toISOString(), listed: keys.length, filled: [], failed: [] };
   // Four at a time, and none started after 12 minutes (a scheduled run may last 15): the rest wait for the next run.
   await Promise.all([0, 1, 2, 3].map(async () => { while (keys.length && Date.now() - t0 < 12 * 60000) { const name = keys.shift();
     const [lat, lng] = name.slice(3).split(",").map(Number); if (!isFinite(lat) || !isFinite(lng)) { await env.USAGE.delete(name); continue; }
-    try { await ferriesNear({ lat, lng }, store, 45000); await env.USAGE.delete(name); } catch (e) {} } }));
+    try { await ferriesNear({ lat, lng }, store, 45000); await env.USAGE.delete(name); run.filled.push(name.slice(3)); } catch (e) { run.failed.push(name.slice(3) + ": " + ((e.why || []).join("; ") || e.message).slice(0, 200)); } } }));
+  run.ms = Date.now() - t0; await env.USAGE.put("fqrun", JSON.stringify(run), { expirationTtl: 7 * 86400 }); // the last run, for the live check
 }
 
 export default {
@@ -441,7 +442,7 @@ export default {
     if (url.pathname === "/ferries") {
       const p = { lat: +url.searchParams.get("lat"), lng: +url.searchParams.get("lng") }; if (!isFinite(p.lat) || !isFinite(p.lng)) return Response.json({ error: "Bad request" }, { status: 400, headers: h });
       const k = ferryKey(p), kept = await env.USAGE.get("fp1:" + k, "json"), listed = !!(await env.USAGE.get("fq:" + k));
-      return Response.json({ key: k, kept: !!kept, listed, courses: kept ? [...new Set(kept.ways.map(w => w.tags.name || w.tags.ref || "").filter(Boolean))] : [], routes: kept ? kept.rels.length : 0 }, { headers: h });
+      return Response.json({ key: k, kept: !!kept, listed, schedule: await env.USAGE.get("fqrun", "json"), courses: kept ? [...new Set(kept.ways.map(w => w.tags.name || w.tags.ref || "").filter(Boolean))] : [], routes: kept ? kept.rels.length : 0 }, { headers: h });
     }
     if (url.pathname === "/transit" && req.method === "POST") {
       let b; try { b = await req.json(); } catch (e) { return Response.json({ error: "Bad request" }, { status: 400, headers: h }); }

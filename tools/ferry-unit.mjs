@@ -46,6 +46,8 @@ ok(!(await ferryChain(ship, { lat: 38.12, lng: 13.36 }, ways)).length, "no chang
   ok(kf && kf.length === 1 && kf[0].mode === "ferry", "a saved answer without a ferry gets the kept ferry added (no map servers asked)");
   const mem3 = new Map(), store3 = { get: async k => mem3.get(k) || null, put: async (k, v) => { mem3.set(k, v); } };
   ok((await keptFerries(ship, sorrento, store3)) === null && mem3.has("fq:" + ferryKey(ship)), "nothing kept yet: none added, and the ends are listed for the schedule");
+  const clipped = slimFerries({ elements: [{ type: "way", id: 5, tags: { route: "ferry" }, geometry: [null, { lat: 40.8, lon: 14.2 }, { lat: 40.7, lon: 14.3 }, null] }, { type: "relation", id: 6, tags: { route: "ferry" }, members: [{ type: "way", ref: 1, geometry: [null, { lat: 40.8, lon: 14.2 }] }] }] });
+  ok(clipped.ways[0].geometry.length === 2 && clipped.rels.length === 1, "a course clipped to the day-trip box (map points outside it come back empty) is kept without them");
   globalThis.fetch = realFetch; }
 // The helper itself: a saved train-only answer (as Richard's Naples day had) gets the ferry once both ends are known,
 // and until then is marked partial so the page asks again instead of keeping it for good.
