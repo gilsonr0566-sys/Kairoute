@@ -8,6 +8,7 @@
 // Wikipedia facts), and kept on the device.
 // The same rule runs for every city and every port, including gateway ports ("Civitavecchia (Rome)"): the sources
 // are asked for the city the day is really spent in.
+const SRC_KIND_CAP = { Church: 12, Museum: 12, Palace: 8 };
 const SRC_MAX_MAIN = 45, SRC_MAX_QUICK = 12, SRC_R = 8;
 // Entries that are not one place to visit: a whole city or country, a district, transport, institutions.
 const SRC_NEVER = /\b(city|district|business area|ministerios|rione|quartiere|municipality|province|region|metro|subway|railway|station|airport|line|radio|embassy|bank|ministry|school|hospital|programme|organization|organisation)\b/i;
@@ -78,7 +79,7 @@ function sourceSights(city, src) {
   const centre = srcCentre(city, src); if (!centre) return 0;
   const area = String(src.area || city.city).replace(/\s*\(.*\)/, "");
   const all = allSites(city), mainN = () => (city.sites || []).filter(x => !x.quick).length, quickN = () => (city.sites || []).filter(x => x.quick).length;
-  const score = x => (x.sl || 0) + 8 * (x.src || []).length + (x.unesco ? 30 : x.heritage ? 5 : 0);
+  const score = x => (x.sl || 0) + 8 * (x.src || []).length + (x.unesco ? 30 : x.heritage ? 5 : 0) + ((x.src || []).some(t => /Wikivoyage/.test(t)) ? 10 : 0); // travelers recommend it
   const cands = src.stops.filter(x => srcWorthy(x) && (x.src || []).length >= 2 && x.name && keyOf(x.name) !== keyOf(area) && hav(x, centre) <= SRC_R)
     .sort((a, b) => score(b) - score(a));
   let n = 0;
@@ -93,6 +94,10 @@ function sourceSights(city, src) {
     if (srcHas(allSites(city), x, area, src)) continue;
     const q = srcQuick(x.name, x.local);
     if (q ? quickN() >= SRC_MAX_QUICK + 5 : mainN() >= SRC_MAX_MAIN) continue;
+    // Variety: one kind of place (churches, museums, palaces) never fills the list; the next best of another kind
+    // (a famous staircase, a hill with a view, the catacombs) gets the room.
+    const kind = srcKind(x.name, x.local)[1], cap = SRC_KIND_CAP[kind];
+    if (cap && (city.sites || []).filter(s => !s.quick && srcKind(s.name, s.local)[1] === kind).length >= cap) continue;
     city.sites.push(make(x, {})); n++;
   }
   if (n) { try { console.info(`Kairoute added ${n} sights from the sources for ${city.city}`); } catch (e) {} }
@@ -162,7 +167,7 @@ if (typeof window !== "undefined") {
     const all = allSites(c), dup = [];
     for (let i = 0; i < all.length; i++) for (let j = i + 1; j < all.length; j++) if (placeRel(all[i], all[j]) === "same") dup.push(all[i].name + " = " + all[j].name);
     const centre = srcCentre(c, fix.sources), min = srcCoverageMin(fix.sources, centre);
-    const has = n => all.find(s => nameMatch(n, s.name) || nameMatch(s.name, n) || (s.local && nameMatch(n, s.local)));
+    const has = alt => alt.split("|").map(n => all.find(s => nameMatch(n, s.name) || nameMatch(s.name, n) || (s.local && nameMatch(n, s.local)))).find(Boolean); // "A|B": either name
     const bench = (fix.bench || []).map(n => ({ n, hit: has(n) ? has(n).name : "" }));
     const twins = all.map(s => ({ s: s.name, note: twinNote(s, c).replace(/<[^>]+>/g, "") })).filter(x => x.note);
     const noSrc = all.filter(s => s.srcOnly && !(s.src && s.src.length)).map(s => s.name);
