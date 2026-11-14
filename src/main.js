@@ -996,10 +996,13 @@ function defaultSelection(city, style, d) {
   let lead = null;
   if (d && (d.type === "port" || d.type === "land")) {
     const far = (city.farther || []).filter(x => !taken[x.id] && religiousOk(x) && !shut(x) && (x.mustSee || x.unesco || fameW(x) > 1));
-    const best = far.sort((a, b) => fameW(b) - fameW(a) || (b.mustSee ? 1 : 0) - (a.mustSee ? 1 : 0))[0];
+    const best = far.sort((a, b) => fameW(b) - fameW(a) || (b.fame || 0) - (a.fame || 0) || (b.mustSee ? 1 : 0) - (a.mustSee ? 1 : 0))[0];
     const top = Math.max(1, ...s.filter(x => x.mustSee || x.unesco).map(x => fameW(x)));
+    // fameW tops out for the best-known places (Pompeii and Naples' UNESCO old town both reach it), so the raw count of
+    // Wikipedias writing about each also decides: a day trip written about in at least 80% as many is as famous.
+    const topSl = Math.max(0, ...s.filter(x => x.mustSee || x.unesco).map(x => x.fame || 0));
     let fits = false; if (best) { try { fits = fitsAll(fitTrial(d, [best.id])); } catch (e) {} }
-    if (best && fits && fameW(best) >= top) lead = best.id;
+    if (best && fits && (fameW(best) >= top || ((best.fame || 0) > 0 && (best.fame || 0) >= topSl * 0.8))) lead = best.id;
   }
   let sel = [...new Set([...(lead ? [lead] : []), ...carried, ...picks, ...extra])];
   // When another day later in the trip is in the same city, give this day only what fits its hours
@@ -1022,6 +1025,12 @@ function defaultSelection(city, style, d) {
   return sel;
 }
 
+// Live check: why a port or city day does or doesn't start with its top day trip.
+if (typeof window !== "undefined") window.__kairouteLeadWhy = i => { const d = trip.days[i], city = cityFor(d); if (!city) return null; const taken = plannedElsewhere(d);
+  const far = (city.farther || []).map(x => ({ name: x.name, w: +fameW(x).toFixed(2), sl: x.fame || 0, must: !!x.mustSee, unesco: !!x.unesco, taken: !!taken[x.id], closed: (() => { try { return closedForDay(x, d, dayWindow(d, city)); } catch (e) { return null; } })(), fits: (() => { try { return fitsAll(fitTrial(d, [x.id])); } catch (e) { return "err " + e.message; } })() }));
+  const town = city.sites.filter(x => !x.quick && (x.mustSee || x.unesco)).map(x => ({ name: x.name, w: +fameW(x).toFixed(2), sl: x.fame || 0 }));
+  let ds = null; try { ds = defaultSelection(city, trip.style, d); } catch (e) {}
+  return { day: d.date + " " + d.destination, lead: ds && ds.lead || null, selected: (d.selected || []).length, mine: (d.mine || []).length, seedSig: !!d.seedSig, far, town }; };
 // ---------- Places for a day ----------
 function pointList(city, listKey) { return (city && city.starts && city.starts[listKey]) || []; }
 function lodgingFor(d, city) {
@@ -2075,7 +2084,7 @@ function cleanCity(c, dest) {
   const starts = {};
   for (const k of ["cruise", "airport", "station", "hotel", "point"]) starts[k] = ((c.starts && c.starts[k]) || []).filter(okLL).map(p => ({ name: String(p.name), lat: num(p.lat), lng: num(p.lng), note: p.note ? String(p.note) : "" }));
   return {
-    city: String(c.city || dest), country: String(c.country || ""), ai: true, verified: c.verified || 0, grounded: !!c.grounded, gv: String(c.gv || ""), eatsV: +c.eatsV || 0, startsOk: c.startsOk === true ? 1 : +c.startsOk || 0, starts,
+    city: String(c.city || dest), country: String(c.country || ""), ai: true, verified: c.verified || 0, grounded: !!c.grounded, gv: String(c.gv || ""), eatsV: +c.eatsV || 0, farFillV: +c.farFillV || 0, startsOk: c.startsOk === true ? 1 : +c.startsOk || 0, starts,
     sites: (c.sites || []).filter(okLL).map((s, i) => site(s, i)),
     farther: (c.farther || []).filter(okLL).map((s, i) => Object.assign(site(s, i, "-far"), { far: true })),
     basics: c.basics ? {
@@ -2440,6 +2449,7 @@ function famousRepair(city, src) {
   for (const s of city.sites || []) { const x = g.top.find(y => sameSight(y, s)); if (x && (x.sl || 0) >= g.bar && !s.mustSee) { s.mustSee = true; tickOnOneDay(city, s); } }
   city.famousMissing = g.missing.map(x => x.name);
   if (g.missing.length && !famousFilling[keyOf(city.city)] && typeof sample === "function" && sample) fillFamous(city, g.missing.slice(0, 4), g.bar);
+  else fillFarther(city, src);
 }
 // A port's top day trip (Pompeii from Naples) is only known to be top once the sources say how famous it is, and they
 // often arrive after the day's starting picks were made. A day whose picks are still all the app's own (the traveler
@@ -2471,12 +2481,44 @@ function tickOnOneDay(city, s) {
 // online start paid to write them again. They come back, with the same id the day's picks use, before the
 // sources are checked, so the check finds them present.
 const FILL_KEY = "fill:";
-function keepFills(city) { try { kv.set(FILL_KEY + keyOf(city.city), (city.sites || []).filter(s => s.famousFix)); } catch (e) {} }
+function keepFills(city) { try { kv.set(FILL_KEY + keyOf(city.city), [...(city.sites || []), ...(city.farther || [])].filter(s => s.famousFix)); } catch (e) {} }
 function restoreFills(city, list) {
   if (!Array.isArray(list)) return 0; let n = 0;
-  for (const st of list) if (st && st.name && st.id && !allSites(city).some(s => s.id === st.id || sameSight(st, s))) { city.sites.push(Object.assign({}, st)); n++; }
+  for (const st of list) if (st && st.name && st.id && !allSites(city).some(s => s.id === st.id || sameSight(st, s))) { (st.far ? (city.farther = city.farther || []) : city.sites).push(Object.assign({}, st)); n++; }
   return n;
 }
+// Famous day trips the guide left out (Naples without Vesuvius or Amalfi, Messina without Etna): the writer lists only
+// a few, so the sources' best-known places within a day's reach that the guide lacks are offered to the writer, who
+// keeps the ones a visitor would really go to (not suburbs, regions or businesses). Places and positions come from
+// the sources, never the AI. Once per guide (FARFILL_V), up to 4.
+const FARFILL_V = 1, farFilling = {};
+function farGaps(city, src) {
+  const all = allSites(city), inGuide = y => all.some(s => sameSight(y, s) || (s.merged || []).some(m => sameSight(y, m)) || (s.lookFor || []).some(n => typeof n === "string" && nameMatch(n, y.name) && nameMatch(y.name, n)));
+  return (src.far || []).filter(y => y && y.name && isFinite(y.lat) && y.km >= 8 && y.km <= 100 && (y.sl || 0) >= 25 && !inGuide(y)).sort((a, b) => (b.sl || 0) - (a.sl || 0)).slice(0, 10);
+}
+async function fillFarther(city, src) {
+  const k = keyOf(city.city); if (farFilling[k] || city.farFillV === FARFILL_V || typeof sample !== "function" || !sample) return;
+  const cands = farGaps(city, src); if (!cands.length) { city.farFillV = FARFILL_V; return; }
+  farFilling[k] = true;
+  const prompt = `You are an expert tour guide writing data for a self-guided tour app in ${city.city}${city.country ? ", " + city.country : ""}. These real places are within a day trip of ${city.city} and the guide doesn't have them yet. Keep ONLY the ones a visitor staying in ${city.city} or arriving on a cruise ship would genuinely go to as a day trip (a famous site, a scenic town, an island reachable by ferry, a natural wonder). Leave out suburbs and ordinary towns, regions and provinces, island groups, companies and anything else that isn't a place to visit. Keep each name exactly as given.
+${cands.map((x, i) => `${i + 1}. ${x.name} (${Math.round(x.km)} km away)`).join("\n")}
+Return ONLY JSON: {"places":[{"n":number,"minutes","category","summary","guide","lookFor","photoTip","picks","hours","closed","tickets","crowds","cost","indoor","access"}]} with at most 4 places, the best first; an empty list if none qualify.
+- "minutes": time to spend there (not counting the trip). "guide": spoken narration in second person, 110-150 words, with real history and stories. "lookFor": 3 specific details. "picks": 3 insider extras, each {"k": "spot"|"timing"|"story"|"taste", "t": one or two sentences}. "cost": typical adult ticket in local currency as a number (0 if free).
+- Write human-readable text in ${P().lang}.${faithNote()}`;
+  try {
+    const r = await sample(prompt, { modelTier: "default" }); const j = parseJSON(r.text || ""); if (!j || !Array.isArray(j.places)) { farFilling[k] = false; return; }
+    let added = 0; city.farther = city.farther || [];
+    for (const x of j.places.slice(0, 4)) {
+      const m = cands[(+x.n || 0) - 1]; if (!m || allSites(city).some(s => sameSight(m, s))) continue;
+      const st = normSite(Object.assign({}, x, { id: keyOf(m.name).replace(/ /g, "-") + "-far", name: m.name, lat: m.lat, lng: m.lng, kind: "touristy", far: true }), 0);
+      Object.assign(st, { far: true, fame: m.sl || 0, unesco: !!m.unesco, heritage: !!m.heritage, src: ["Wikidata (Wikipedia in many languages)"], wd: m.wd, famousFix: true });
+      city.farther.push(st); added++;
+    }
+    city.farFillV = FARFILL_V;
+    if (added) { keepFills(city); console.info("Kairoute added famous day trips the guide had left out in " + city.city); save(); if (["plan", "sites", "guide"].includes(view)) { const y = window.scrollY; render(); window.scrollTo(0, y); } }
+  } catch (e) {} finally { farFilling[k] = false; }
+}
+if (typeof window !== "undefined") window.__kairouteFarGaps = (city, src) => farGaps(city, src).map(x => x.name);
 async function fillFamous(city, missing, bar) {
   const k = keyOf(city.city); famousFilling[k] = true;
   const prompt = `You are an expert tour guide writing data for a self-guided tour app in ${city.city}${city.country ? ", " + city.country : ""}. Write these real places, which the guide is missing. Keep each name exactly as given. If a name is a whole district or neighbourhood rather than one place to visit, leave it out.
@@ -3917,7 +3959,7 @@ if (typeof window !== "undefined") window.__kairouteDedupe = (sites, farther) =>
 if (typeof window !== "undefined") window.__kairouteFamousAudit = () => { ensureBuiltins(); const out = [], seen = new Set();
   for (const k in cities) { const c = cities[k]; if (!c || seen.has(c)) continue; seen.add(c); const src = fameAsked[keyOf(c.city)];
     const all = allSites(c), row = { city: c.city, sources: !!(src && src !== true), missing: [], folded: [], far: [], wideFolds: [] };
-    for (const x of all) for (const m of x.merged || []) { const km = isFinite(m.lat) && isFinite(x.lat) ? hav(m, x) : null; if (km != null && km > 1) row.wideFolds.push(`${m.name} -> ${x.name} (${km.toFixed(1)} km)`); }
+    for (const x of all) for (const m of x.merged || []) { const km = isFinite(m.lat) && isFinite(x.lat) ? hav(m, x) : null; if (km != null && km > 1 && !nameMatch(m.name, x.name) && !nameMatch(x.name, m.name)) row.wideFolds.push(`${m.name} -> ${x.name} (${km.toFixed(1)} km)`); }
     if (src && src !== true) {
       const vis = y => (y.src || []).some(t => /Wikivoyage|heritage|UNESCO/.test(t));
       const top = (src.stops || []).filter(y => y.lat != null && vis(y)).sort((a, b) => (b.sl || 0) - (a.sl || 0)).slice(0, 15), farTop = (src.far || []).slice().sort((a, b) => (b.sl || 0) - (a.sl || 0)).slice(0, 8);

@@ -22,5 +22,6 @@ const URL = process.env.URL || 'https://gilsonr0566-sys.github.io/Kairoute/';
     for (const x of r.wideFolds) { console.log('WIDE    ' + x); bad++; }
     if (!r.missing.length && !r.folded.length && !r.wideFolds.length) console.log('ok');
   }
+  for (const d of days) if (d.type === 'port' || d.type === 'land') { const w = await p.evaluate(i => window.__kairouteLeadWhy ? window.__kairouteLeadWhy(i) : null, d.i); if (w) console.log('LEAD ' + JSON.stringify(w).slice(0, 1500)); }
   console.log(`\n${bad} problem(s)`); await b.close(); process.exit(bad ? 1 : 0);
 })();

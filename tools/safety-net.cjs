@@ -313,6 +313,14 @@ const log = (suite, trip, ok, what) => { results.push({ suite, trip, ok, what })
       const h = await p.evaluate(() => [window.__kairouteHours('00:00-00:00'), window.__kairouteHours('Mo-Su 00:00-24:00'), window.__kairouteHours('24/7'), window.__kairouteHours('Mo-Su 09:00-19:00')]);
       if (h[0] || h[1] || h[2] || !h[3]) bad.push('round-the-clock map hours read as real hours: ' + JSON.stringify(h));
       log('Port days', 'ports', !bad.length, 'Ports in another town: ' + (bad.length ? bad.join('; ') : 'Civitavecchia used where the map has it (70 km from Rome), never moved to the centre, a port in an unknown spot stops the plan, 00:00-00:00 hours are unknown')); }
+    // Missing sights audit, Nov 14: guides left out famous day trips (Naples without Vesuvius, Messina without Etna)
+    // because the writer lists only a few. The sources' best-known places within a day's reach that the guide lacks
+    // are offered to the writer; what the guide has (or folded into another sight) and places too near or too far aren't.
+    { const city = { city: 'Naples', sites: [{ id: 'duomo', name: 'Naples Cathedral', lat: 40.852, lng: 14.26 }], farther: [{ id: 'pompeii-far', name: 'Pompeii', lat: 40.749, lng: 14.485, far: true, merged: [{ name: 'Pompei Scavi' }] }] };
+      const src = { far: [{ name: 'Mount Vesuvius', lat: 40.821, lng: 14.426, km: 12, sl: 136 }, { name: 'Pompeii', lat: 40.749, lng: 14.485, km: 22, sl: 150 }, { name: 'Pompei Scavi', lat: 40.75, lng: 14.48, km: 22, sl: 60 }, { name: 'Amalfi', lat: 40.634, lng: 14.602, km: 38, sl: 88 }, { name: 'Rome', lat: 41.9, lng: 12.5, km: 190, sl: 400 }, { name: 'Fuorigrotta', lat: 40.83, lng: 14.19, km: 5, sl: 40 }] };
+      const g = await p.evaluate(([c, s]) => window.__kairouteFarGaps(c, s), [city, src]);
+      const okF = JSON.stringify(g) === JSON.stringify(['Mount Vesuvius', 'Amalfi']);
+      log('Sights', 'sights', okF, 'Famous day trips the guide lacks are offered to the writer: ' + (okF ? g.join(', ') : 'got ' + JSON.stringify(g))); }
     // Demo run, Nov 14: boarding day in Athens (9:00 to 18:30) after four Athens days planned no stops.
     { await p.evaluate(([d, a]) => window.__kairouteNewTrip(d, a), ['Athens then cruise', 'STOPS: Athens\nDAY|2027-06-30|Athens|arrival|flight|14:00||||||\nDAY|2027-07-01|Athens|land||||||||\nDAY|2027-07-02|Athens|land||||||||\nDAY|2027-07-03|Athens|land||||||||\nDAY|2027-07-04|Athens (Piraeus)|embark|ship|09:00||18:30|no||no|']); await p.waitForTimeout(300);
       const days = await p.evaluate(() => window.__kairouteDays()); const ei = days.findIndex(x => x.type === 'embark');
