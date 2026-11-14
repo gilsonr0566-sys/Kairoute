@@ -172,6 +172,23 @@ export async function transitOptions(a, b, store) {
   if (fer.status === "fulfilled") { const [fa, fb] = fer.value, inB = (list, id) => list.some(x => x.id === id);
     el = el.concat(fa.rels.filter(r => inB(fb.rels, r.id)), fa.ways.filter(w => inB(fb.ways, w.id)), fa.piers, fb.piers);
     fWays = fa.ways.concat(fb.ways.filter(w => !inB(fa.ways, w.id))); }
+  const res = await buildOpts(el, fWays, a, b);
+  if (rail.status === "rejected" || fer.status === "rejected") res.partial = true; // one source was busy: asked again soon
+  return res;
+}
+// Ferries between two points from the kept answers alone (no map servers asked): what the helper adds to a saved
+// pair answer that has no ferry, so a ferry filled in later by the schedule shows up at once. null when either end
+// has no kept answer yet (that end is then listed for the schedule).
+export async function keptFerries(a, b, store) {
+  const ends = await Promise.all([a, b].map(async p => { const k = ferryKey(p), hit = await store.get("fp1:" + k).catch(() => null);
+    if (!hit && !(await store.get("fq:" + k).catch(() => null))) await store.put("fq:" + k, 1, 14 * 86400).catch(() => {}); return hit; }));
+  if (!ends[0] || !ends[1]) return null;
+  const [fa, fb] = ends, inB = (list, id) => list.some(x => x.id === id);
+  const el = [].concat(fa.rels.filter(r => inB(fb.rels, r.id)), fa.ways.filter(w => inB(fb.ways, w.id)), fa.piers, fb.piers);
+  return (await buildOpts(el, fa.ways.concat(fb.ways.filter(w => !inB(fa.ways, w.id))), a, b)).filter(o => o.mode === "ferry");
+}
+// From the map's lines (rail relations, ferry routes and courses, stop and terminal names) to the options offered.
+async function buildOpts(el, fWays, a, b) {
   const stopTag = new Map();
   for (const e of el) if ((e.type === "node" || e.type === "way") && e.tags && !(e.tags.route)) stopTag.set(e.type[0] + e.id, { name: e.tags["name:en"] || e.tags.name || "", lat: e.lat ?? (e.center && e.center.lat), lng: e.lon ?? (e.center && e.center.lon) });
   const opts = [];
@@ -213,9 +230,7 @@ export async function transitOptions(a, b, store) {
   // One option per line (the quickest way to ride it), quickest first.
   const best = new Map();
   for (const o of opts) { const k = o.mode + "|" + (o.ref || o.name || o.operator).toLowerCase(); if (!best.has(k) || best.get(k).min > o.min) best.set(k, o); }
-  const res = [...best.values()].sort((x, y) => x.min - y.min).slice(0, 5);
-  if (rail.status === "rejected" || fer.status === "rejected") res.partial = true; // one source was busy: asked again soon
-  return res;
+  return [...best.values()].sort((x, y) => x.min - y.min).slice(0, 5);
 }
 // A ferry route mapped only by its course: the piers are where the course comes nearest each end (each within
 // reach), named after the nearest mapped ferry terminal; the ride is the course between them, with 15% more for
