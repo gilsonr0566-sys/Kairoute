@@ -228,9 +228,9 @@ const log = (suite, trip, ok, what) => { results.push({ suite, trip, ok, what })
         for (const n of ['Sorrento', 'Pompeii', 'Capri']) if (!offered.includes(n)) bad.push(`day ${i + 1} doesn't offer ${n}`); }
       await p.evaluate(() => window.__kairouteAt(1, 'sites')); await p.waitForTimeout(300);
       const txt = await p.evaluate(() => document.body.innerText);
-      if (!/Sorrento/.test(txt) || !/Planned for/.test(txt)) bad.push('Change stops on day 2 does not show Sorrento tagged with the day it is planned');
+      if (!/Sorrento/.test(txt) || !/Day \d+ · /.test(txt)) bad.push('Change stops on day 2 does not show Sorrento tagged with the day it is planned');
       // Ticking a sight planned on day 1 (Pompeii) on day 2 moves it: on day 2 now, off day 1, and the traveler is told.
-      const mv = await p.evaluate(() => { const card = [...document.querySelectorAll('.site')].find(c => /Pompeii/.test(c.querySelector('.name') ? c.querySelector('.name').innerText : '') && /Planned for/.test(c.innerText) && c.querySelector('input[data-site]')); if (!card) return { err: 'Pompeii is not offered with a tick box and its day on day 2' }; const x = card.querySelector('input[data-site]'); x.click(); return { id: x.dataset.site, box: !!document.querySelector('.fitbox') }; });
+      const mv = await p.evaluate(() => { const card = [...document.querySelectorAll('.site')].find(c => /Pompeii/.test(c.querySelector('.name') ? c.querySelector('.name').innerText : '') && /Day \d+ · /.test(c.innerText) && c.querySelector('input[data-site]')); if (!card) return { err: 'Pompeii is not offered with a tick box and its day on day 2' }; const x = card.querySelector('input[data-site]'); x.click(); return { id: x.dataset.site, box: !!document.querySelector('.fitbox') }; });
       await p.waitForTimeout(300);
       if (mv.err) bad.push(mv.err); else if (mv.box) bad.push('Pompeii does not fit day 2 (the check needs a sight that does)'); else {
         const [p0, p1] = await Promise.all([0, 1].map(i => p.evaluate(i => window.__kairoutePicker(i).picked, i)));
@@ -243,7 +243,7 @@ const log = (suite, trip, ok, what) => { results.push({ suite, trip, ok, what })
     // The day names the one left out and points to the booking's real times; with those (7:00 to 19:00) both fit.
     { await p.evaluate(([d, a]) => window.__kairouteNewTrip(d, a), ['Sun Princess to Naples July 12 2027, want Pompeii and Sorrento', 'STOPS: Naples\nSHIP: Princess Cruises|Sun Princess\nDAY|2027-07-12|Naples|port|ship||08:00|17:00|no||yes|Pompeii; Sorrento']); await p.waitForTimeout(300);
       await p.evaluate(() => window.__kairouteAt(0, 'plan')); await p.waitForTimeout(300);
-      const look = () => p.evaluate(() => ({ stops: [...document.querySelectorAll('.tl .nm')].map(e => e.innerText), drop: (document.querySelector('.banner.dropped') || {}).innerText || '' }));
+      const look = () => p.evaluate(() => ({ stops: [...document.querySelectorAll('.tl .nm')].map(e => e.innerText), drop: [...document.querySelectorAll('.banner.dropped, .banner.bumped')].map(e => e.innerText).join(' ') }));
       const a = await look(), bad = [], has = (l, n) => l.some(x => new RegExp(n, 'i').test(x));
       if (!(has(a.stops, 'pompeii') && has(a.stops, 'sorrento')) && !(/sorrento|pompeii/i.test(a.drop) && /estimated/.test(a.drop))) bad.push('estimated day leaves a named place out without saying so: ' + JSON.stringify(a));
       await p.evaluate(() => window.__kairouteEdit(0, { portArrive: '07:00', allAboard: '19:00', estimated: false })); await p.waitForTimeout(300);

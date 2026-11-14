@@ -847,6 +847,40 @@ function refillIfNeeded(d, city) {
 // and no sight repeats across days.
 let suggestMsg = "";
 let movedNote = ""; // "Sorrento moved here from Mon Jul 12." after picking a sight planned on another day
+// A pick that doesn't fit the day never stays ticked (Richard, Nov 14). When a pick stops fitting (the day's
+// hours, rides or opening times changed), it comes off, and the list and the Day plan say why, with a one-tap
+// way to fit it back in (swap it for a stop, or see it on another day).
+function settlePicks(d) {
+  if (!d || !Array.isArray(d.selected) || (!d.selected.length && !(d.bumped || []).length) || !cityFor(d) || busy || (typeof liveOn === "function" && liveOn(d))) return false;
+  let moved = false;
+  // Picks that came off when the day got shorter go back on by themselves once it is long enough again
+  // (Light day, then Full day again: the same picks as before).
+  const p0 = buildPlan(d), win = p => p.endBy - p.start;
+  if (p0 && !p0.error && (d.bumped || []).some(b => b.w != null && win(p0) > b.w)) {
+    for (const b of d.bumped.slice()) if (b.w != null && win(p0) > b.w && addPick(d, b.id, false)) { forget0(d); moved = true; }
+  }
+  for (let g = 0; g < 6; g++) {
+    const p = buildPlan(d); if (!p || p.error) break;
+    const out = (p.dropped || []).filter(x => d.selected.includes(x.id));
+    if (!out.length) break;
+    const gone = new Set(out.map(x => x.id));
+    d.bumped = (d.bumped || []).filter(b => !gone.has(b.id)).concat(out.map(x => ({ id: x.id, name: x.name, w: win(p) })));
+    d.selected = d.selected.filter(id => !gone.has(id));
+    if (gone.has(d.anchor)) d.anchor = d.selected[d.selected.length - 1] || null;
+    forget0(d); moved = true;
+  }
+  if (moved) save();
+  return moved;
+}
+if (typeof window !== "undefined") { window.__kairouteSetHours = h => { const d = day(); d.hours = h; render(); }; window.__kairouteSelCount = () => (day().selected || []).length;
+  // Puts a pick on the day past the gate, the way an older version or a change of hours could leave one.
+  window.__kairouteForcePick = id => { const d = day(); d.selected = [...(d.selected || []), id]; render(); return (d.selected || []).includes(id); }; }
+function bumpedNote(d) {
+  const city = cityFor(d), b = (d.bumped || []).filter(x => !(d.selected || []).includes(x.id) && allSites(city || {}).some(s => s.id === x.id));
+  if (!b.length) return "";
+  return `<div class="banner warn bumped"><span>${b.length === 1 ? `<b>${esc(b[0].name)}</b> no longer fits today's time, so it's off your picks.` : `These no longer fit today's time, so they're off your picks: <b>${b.map(x => esc(x.name)).join(", ")}</b>.`}${estShip(d) ? ` The ship times here are estimated; your booking's real times may leave room.` : ""}</span>
+    <span class="actions">${b.map(x => `<button type="button" class="btn small" data-act="fitask" data-id="${esc(x.id)}">${b.length === 1 ? "Ways to fit it in" : "Fit in " + esc(x.name)}</button>`).join("")}<button type="button" class="btn ghost small" data-act="bumpok">OK</button></span></div>`;
+}
 function forget0(o) { bonusMemo.delete(o); mealMemo.delete(o); keptMemo.delete(o); eveMemo.delete(o); }
 function dayWindowSafe(d, city) { try { return dayWindow(d, city); } catch (e) { return null; } }
 function suggestTour(d0) {
@@ -4010,6 +4044,7 @@ function render() {
   if (trip.prefsSeen !== prefsSig()) { try { dropUnwanted(); } catch (e) {} trip.prefsSeen = prefsSig(); save(); } // interests changed (here or on another device)
   faithSweep();
   bonusMemo = new Map(); mealMemo = new Map(); keptMemo = new Map(); eveMemo = new Map(); avoidMeals = new Set();
+  if (["sites", "plan", "trip", "guide"].includes(view)) settlePicks(day());
   const pkey = view + "|" + trip.active, pos = {}, winY = window.scrollY;
   panes().forEach(el => { pos[el.dataset.pane || "view"] = el.scrollTop; });
   // A menu or the countdown's details that the traveler has open stays open through a background re-render
@@ -5067,8 +5102,8 @@ function siteCard(s, d, plan, nr) {
   }
   if (fs === false) return `<div class="site nofitcard" data-card="${esc(s.id)}" aria-disabled="true">
     <span class="nobox" aria-hidden="true"></span>
-    <div class="body"><div class="name">${esc(s.name)}</div><div class="tags">${fit}${other ? `<span class="tag seen">Planned for ${esc(fmtDow(other.date))} ${esc(fmtDate(other.date))}</span>` : ""}${near != null ? `<span class="tag near">${near < 0.05 ? "Next to " + esc(nearTo.name) : esc(distTxt(near, true)) + " from " + esc(nearTo.name)}</span>` : ""}${s.mustSee ? `<span class="tag must">Must-see</span>` : ""}<span class="tag">${dur(s.minutes)} there</span></div>
-    <p class="sum">${esc(unitText(s.summary))}</p></div></div>`;
+    <div class="body"><div class="name">${esc(s.name)}</div><div class="tags">${fit}${other ? `<span class="tag seen">${esc(schedWhen(other))}</span>` : ""}${near != null ? `<span class="tag near">${near < 0.05 ? "Next to " + esc(nearTo.name) : esc(distTxt(near, true)) + " from " + esc(nearTo.name)}</span>` : ""}${s.mustSee ? `<span class="tag must">Must-see</span>` : ""}<span class="tag">${dur(s.minutes)} there</span></div>
+    <p class="sum">${esc(unitText(s.summary))}</p><button type="button" class="btn ghost small" data-act="fitask" data-id="${esc(s.id)}">Ways to fit it in</button></div></div>`;
   return `<label class="site ${on ? "on" : ""}${isAnc ? " anchor" : ""}" for="s-${esc(s.id)}" data-card="${esc(s.id)}">
     <input type="checkbox" id="s-${esc(s.id)}" data-site="${esc(s.id)}" ${on ? "checked" : ""}>
     <div class="body">
@@ -5076,7 +5111,7 @@ function siteCard(s, d, plan, nr) {
       <div class="tags">
         ${on ? pickStatus(s, plan) : near != null ? `<span class="tag near">${near < 0.05 ? "Next to " + esc(nearTo.name) : esc(distTxt(near, true)) + " from " + esc(nearTo.name)}</span>` : ""}
         ${!on && plan && (plan.bonus || []).some(x => x.id === s.id) ? `<span class="tag bonus">On your plan as an optional stop</span>` : ""}
-        ${other ? (ex => `<span class="tag seen">${!on ? "Planned for " + esc(fmtDow(other.date)) + " " + esc(fmtDate(other.date)) : ex && ex.earlier ? "Seen " + esc(fmtDow(ex.on.date)) + " " + esc(fmtDate(ex.on.date)) + " · not repeated" : ex && ex.later ? "No room today · seen " + esc(fmtDow(ex.on.date)) + " " + esc(fmtDate(ex.on.date)) : "Today · not repeated " + esc(fmtDow(other.date)) + " " + esc(fmtDate(other.date))}</span>`)(((plan && plan.elsewhere) || []).find(x => x.s.id === s.id)) : ""}
+        ${other ? (ex => `<span class="tag seen">${!on ? esc(schedWhen(other)) : ex && ex.earlier ? "Seen " + esc(fmtDow(ex.on.date)) + " " + esc(fmtDate(ex.on.date)) + " · not repeated" : ex && ex.later ? "No room today · seen " + esc(fmtDow(ex.on.date)) + " " + esc(fmtDate(ex.on.date)) : "Today · not repeated " + esc(fmtDow(other.date)) + " " + esc(fmtDate(other.date))}</span>`)(((plan && plan.elsewhere) || []).find(x => x.s.id === s.id)) : ""}
         ${s.mustSee ? `<span class="tag must">Must-see</span>` : ""}${unescoTag(s)}
         ${sightKind(s, cityFor(d)) === "local" ? `<span class="tag local">Local favorite</span>` : `<span class="tag">Famous sight</span>`}
         <span class="tag">${dur(s.minutes)} there</span>
@@ -5145,6 +5180,8 @@ if (typeof window !== "undefined") window.__kairoutePicker = i => { const d = tr
   const elsewhere = plannedElsewhere(d), away = x => elsewhere[x.id] && !d.selected.includes(x.id), nm = l => l.map(x => x.name);
   return { city: city.city, picked: nm(allSites(city).filter(x => d.selected.includes(x.id))), main: nm(city.sites.filter(x => !x.quick)), far: nm(city.farther || []), quick: nm(city.sites.filter(x => x.quick)), elsewhere: nm(allSites(city).filter(away)).map(n => n + " (day " + ((trip.days.indexOf(elsewhere[allSites(city).find(x => x.name === n).id]) + 1) || "?") + ")") }; };
 const d0 = plan => `${fmt(plan.start)} to ${fmt(plan.endBy)}`;
+// Which day a sight is already planned on, as the list shows it: "Day 3 · Fri Jul 2 · Corinth day".
+function schedWhen(o) { const i = trip.days.indexOf(o); return `Day ${i + 1} · ${fmtDow(o.date)} ${fmtDate(o.date)} · ${dayName(o)}`; }
 function renderSites(d) {
   const city = cityFor(d);
   if (!city) return `${dayHeading(d)}${busyBlock()}${errBlock()}${needsCity(d)}`;
@@ -5164,7 +5201,11 @@ function renderSites(d) {
   const picked = pickedSites(d, city).reverse();
   const refs = picked.filter(x => isFinite(x.lat) && isFinite(x.lng));
   const byNear = xs => refs.length ? nearSort(xs, refs) : xs;
-  const mainL = byNear(main.filter(x => !on(x))), farL = byNear(far.filter(x => !on(x))), quickL = byNear(quick.filter(x => !on(x)));
+  // Sights already planned on another day go to the bottom, below an "Already scheduled" line, in trip order
+  // (Richard, Nov 14), so what's still free for today sits on top.
+  const elsew = plannedElsewhere(d), sch = x => !!elsew[x.id];
+  const mainL = byNear(main.filter(x => !on(x) && !sch(x))), farL = byNear(far.filter(x => !on(x) && !sch(x))), quickL = byNear(quick.filter(x => !on(x) && !sch(x)));
+  const schedL = [...main, ...far, ...quick].filter(x => !on(x) && sch(x)).sort((a, b) => trip.days.indexOf(elsew[a.id]) - trip.days.indexOf(elsew[b.id]) || a.name.localeCompare(b.name));
   const near = { refs, anc }; sitesCtx = { d, plan, near };
   const leftTxt = (mm => mm ? ` · <b>${mm.left >= 5 ? dur(mm.left) + " left today" : "today is full"}</b>` : "")(plan && !plan.error ? timeLeft(plan, d) : null);
   const n = d.selected.length;
@@ -5179,6 +5220,7 @@ function renderSites(d) {
     ${suggestMsg ? `<p class="banner" id="suggestNote" role="status">${esc(suggestMsg)}</p>` : ""}${movedNote ? `<p class="banner ok" id="movedNote" role="status">${esc(movedNote)}</p>` : ""}<div class="actions"><button class="btn small" data-act="suggesttour">Suggest my tour</button><button class="btn ghost small" data-act="freshpicks">Fresh picks for this day only</button></div></div>
   ${city.ai ? `<p class="ai-note">Written by your AI guide from checked sources: every place is confirmed on the map, stories draw on Wikipedia and Wikivoyage (CC BY-SA), hours and access on OpenStreetMap contributors (ODbL). Check opening hours before you go.</p>` : city.builtin ? `<p class="ai-note">Kairoute guide. Hours and prices are typical: check before you go.</p>` : ""}${city.sites.some(x => x.srcOnly) ? `<p class="ai-note">More sights come from checked sources (Wikidata, Wikipedia, heritage registers); their short descriptions are from Wikivoyage (CC BY-SA). Each one's full story is written when you add it to a day.</p>` : ""}
   </div><div class="sitesmain pane" data-pane="sites">
+  ${bumpedNote(d)}
   ${picked.length ? `<p class="listlbl">Your picks (${picked.length}), newest first${leftTxt}</p>
   <div class="sitelist anchorlist">${picked.map(s => siteCard(s, d, plan, near)).join("")}</div>` : ""}
   ${mainL.length ? `<p class="listlbl">${picked.length ? "More to see, closest to your picks first" : "Sights to pick from" + leftTxt}</p><div class="sitelist">${mainL.map(s => siteCard(s, d, plan, near)).join("")}</div>` : ""}
@@ -5188,6 +5230,8 @@ function renderSites(d) {
   ${addPlaceCard(d)}
   ${quickL.length ? `<details class="more"><summary>Quick stops (${quickL.length})</summary><p class="lede" style="margin:8px 0">Added automatically when your route passes them. Tick one to make it a planned stop.</p>
   <div class="sitelist">${quickL.map(s => siteCard(s, d, plan, near)).join("")}</div></details>` : ""}
+  ${schedL.length ? `<div class="schedline" role="separator"><span>Already scheduled on other days (${schedL.length})</span></div>
+  <p class="lede small">Tick one to move it to today; it comes off its other day.</p><div class="sitelist sched">${schedL.map(s => siteCard(s, d, plan, near)).join("")}</div>` : ""}
   <div class="stickybar"><span class="count">${n} site${n === 1 ? "" : "s"} picked${plan && !plan.error && (plan.bonus || []).length ? ` · ${plan.bonus.length} optional on your plan` : ""}</span><button class="btn" data-act="toplan">See my day plan</button></div></div></div>`;
 }
 
@@ -5770,7 +5814,7 @@ ${partsList(s, it.time)}${stopLiveNotes(it, d)}</div></div>`;
     (b => b ? `<div class="livecard">${b}</div>` : "")(liveBanner(d, plan)),
     rideChangeBanner(d),
     plan.over ? `<div class="banner warn" role="alert">This plan runs ${dur(plan.end - plan.endBy)} past ${fmt(plan.endBy)}. Remove a stop with Change stops, or change the times.</div>` : "",
-    closedBanner(d, plan),
+    closedBanner(d, plan), liveOn(d) ? "" : bumpedNote(d),
     plan.dropped.length && !liveOn(d) ? `<div class="banner warn dropped"><span>Didn't fit today: <b>${plan.dropped.map(s => esc(s.name)).join(", ")}</b>. Your picks are over today's time.${estShip(d) ? ` The ship times here are estimated; your booking's real times may leave room.` : ""}</span>${estShip(d) && aiReady() ? `<button type="button" class="btn small ghost" data-act="shiptimes">Add ship times</button>` : ""}<button type="button" class="btn small" data-act="fitfix">Make it fit</button></div>` : "",
     (tc => tc ? `<div class="banner warn" role="alert">This day has ${dur(tc.ride)} of travel for ${dur(tc.see)} at the sights. Consider fewer far-apart stops, more hours, or splitting it over two days.</div>` : "")(travelCheck(plan)),
     plan.endBy - plan.start < 90 ? `<div class="banner warn">There isn't much time today, so keep it close: a coffee and one nearby sight at most.</div>` : "",

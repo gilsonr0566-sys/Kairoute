@@ -91,6 +91,37 @@ const FILE = path.resolve(process.argv[2] || path.join(__dirname, '..', 'index.h
       const order = await p.evaluate(() => [...document.querySelectorAll('.sitesmain input[data-site]')].filter(x => !x.closest('details')).map(x => x.checked));
       if (order.indexOf(false) >= 0 && order.lastIndexOf(true) > order.indexOf(false)) bad(i, 'a picked sight sits below an unpicked one');
     }
+    // A pick that stops fitting (here: the day shortened to 2 hours) never stays ticked: it comes off, a note
+    // says why with a way to fit it back in, and the count matches the plan (Richard, Nov 14: National Garden).
+    if (tag === 'tablet') {
+      await p.evaluate(() => document.querySelector('.daychip[data-day="2"]').click()); await p.waitForTimeout(200);
+      await p.evaluate(() => { const el = [...document.querySelectorAll('[data-goto="sites"]')].find(e => e.offsetParent); if (el) el.click(); }); await p.waitForTimeout(300);
+      const before = await p.evaluate(() => window.__kairouteSelCount());
+      await p.evaluate(() => window.__kairouteSetHours(1.5)); await p.waitForTimeout(400);
+      // A long sight that can't fit forced onto the short day (Richard's National Garden case) comes straight off.
+      const big = await p.evaluate(() => { const c = [...document.querySelectorAll('.sitesmain .nofitcard')][0]; return c ? c.dataset.card : null; });
+      if (big) { const kept = await p.evaluate(id => window.__kairouteForcePick(id), big); await p.waitForTimeout(300); if (kept) bad(2, `${big} stayed picked though it doesn't fit`); }
+      const st = await p.evaluate(() => { const ticked = [...document.querySelectorAll('.sitesmain input[data-site]:checked')]; const sb = document.querySelector('.stickybar .count'); return { n: ticked.length, nofit: ticked.filter(x => /doesn't fit|not on today/.test(x.closest('.site').innerText)).map(x => x.dataset.site), count: sb ? parseInt(sb.innerText, 10) : -1, note: !!document.querySelector('.banner.bumped'), sel: window.__kairouteSelCount() }; });
+      if (st.nofit.length) bad(0, `picks stay ticked though they don't fit: ${st.nofit.join(', ')}`);
+      if (st.count !== st.n) bad(0, `count says ${st.count} picked, ${st.n} ticked`);
+      if ((before > st.sel || big) && !st.note) bad(0, 'picks came off without saying why');
+      if (st.note) { await p.evaluate(() => document.querySelector('.banner.bumped [data-act="fitask"]').click()); await p.waitForTimeout(400);
+        if (!(await p.evaluate(() => !!document.querySelector('.fitbox')))) bad(0, '"Ways to fit it in" opened nothing');
+        else await p.evaluate(() => document.querySelector('.fitbox [data-act="fitcancel"]').click()); }
+      else console.log(`note: shortening day 3 to 1.5 h took nothing off (${before} picks)`);
+      const nf = await p.evaluate(() => { const b = document.querySelector('.nofitcard [data-act="fitask"]'); if (!b) return null; b.click(); return true; }); await p.waitForTimeout(400);
+      if (nf && !(await p.evaluate(() => !!document.querySelector('.fitbox')))) bad(0, 'a greyed sight\'s "Ways to fit it in" opened nothing');
+      if (nf) await p.evaluate(() => { const c = document.querySelector('.fitbox [data-act="fitcancel"]'); if (c) c.click(); });
+      await p.evaluate(() => window.__kairouteSetHours(8));
+      // Sights planned on another day sit at the bottom, under the "Already scheduled" line, each naming its day.
+      const sc = await p.evaluate(() => { const cards = [...document.querySelectorAll('.sitesmain [data-card]')].filter(c => !c.closest('details')); const inSch = c => !!c.closest('.sitelist.sched'); const firstSch = cards.findIndex(inSch);
+        return { n: cards.filter(inSch).length, mixed: firstSch >= 0 && cards.slice(firstSch).some(c => !inSch(c)), noDay: cards.filter(inSch).filter(c => !/Day \d+ · /.test(c.innerText)).map(c => c.dataset.card), stray: cards.filter(c => !inSch(c) && /^Day \d+ · /m.test([...c.querySelectorAll('.tag.seen')].map(t => t.innerText).join('\n'))).map(c => c.dataset.card), line: !!document.querySelector('.schedline') }; });
+      if (sc.n && !sc.line) bad(2, 'scheduled sights without the "Already scheduled" line');
+      if (sc.mixed) bad(2, 'a free sight sits below the "Already scheduled" line');
+      if (sc.noDay.length) bad(2, `scheduled sights not naming their day: ${sc.noDay.join(', ')}`);
+      if (sc.stray.length) bad(2, `sights planned on another day above the line: ${sc.stray.join(', ')}`);
+      if (!sc.n) console.log('note: day 3 has no sights scheduled on other days'); await p.waitForTimeout(200);
+    }
     // Richard's sequence on the first Athens day: tick Ancient Corinth, then Corinth Canal, then untick one.
     await p.evaluate(() => document.querySelector('.daychip[data-day="2"]').click()); await p.waitForTimeout(200);
     await p.evaluate(() => { const el = [...document.querySelectorAll('[data-goto="sites"]')].find(e => e.offsetParent); if (el) el.click(); }); await p.waitForTimeout(250);
