@@ -641,12 +641,20 @@ const runsThen = o => { if (!o || !Array.isArray(o.months) || !o.months.length) 
 // A saved timetable for nearly the same trip (both ends within about 600 m), so a day re-planned from where the
 // traveler stands (GPS) still knows the trains, with no signal.
 let nearList = null;
+// Speed: a plan asks this for every pair of places with no answer of its own, thousands of times; scanning every kept
+// answer each time took ~19 s of a phone's time over one visit with a full trip's rides kept. The kept answers are
+// filed by the start's latitude (a 0.006-degree band, the same 600 m the match allows), and each pair's result is
+// remembered until the kept answers change.
+const NEAR_BAND = 0.006, nearHits = new Map();
 function transitNear(a, b, kind) {
   // The kept answers with lines, read once per change (not split apart on every lookup).
-  if (!nearList || nearList.g !== nearGen) { const l = []; for (const k in transitMem) { const [ks, kd] = k.split("|"), m = transitMem[k]; if (!(m.opts || []).length) continue; const n = ks.split(",").map(Number); if (n.length === 4) l.push({ kd, m, A: { lat: n[0], lng: n[1] }, B: { lat: n[2], lng: n[3] } }); } nearList = { g: nearGen, l }; }
-  let best = null, bd = 0.6;
-  for (const x of nearList.l) { if (x.kd && x.kd !== kind) continue; if (Math.abs(x.A.lat - a.lat) > 0.006 || Math.abs(x.B.lat - b.lat) > 0.006) continue; const e = Math.max(hav(a, x.A), hav(b, x.B)); if (e < bd) { bd = e; best = x.m; } }
-  return best;
+  if (!nearList || nearList.g !== nearGen) { const l = new Map(); for (const k in transitMem) { const [ks, kd] = k.split("|"), m = transitMem[k]; if (!(m.opts || []).length) continue; const n = ks.split(",").map(Number); if (n.length !== 4) continue; const x = { kd, m, A: { lat: n[0], lng: n[1] }, B: { lat: n[2], lng: n[3] } }, band = Math.floor(n[0] / NEAR_BAND); if (!l.has(band)) l.set(band, []); l.get(band).push(x); } nearList = { g: nearGen, l }; nearHits.clear(); }
+  const al = +a.lat, bl = +b.lat, hk = al + "," + a.lng + "," + bl + "," + b.lng + "|" + kind;
+  if (nearHits.has(hk)) return nearHits.get(hk);
+  let best = null, bd = 0.6; const band = Math.floor(al / NEAR_BAND);
+  for (let j = band - 1; j <= band + 1; j++) for (const x of nearList.l.get(j) || []) { if (x.kd && x.kd !== kind) continue; if (Math.abs(x.A.lat - al) > 0.006 || Math.abs(x.B.lat - bl) > 0.006) continue; const e = Math.max(hav(a, x.A), hav(b, x.B)); if (e < bd) { bd = e; best = x.m; } }
+  if (nearHits.size > 20000) nearHits.clear();
+  nearHits.set(hk, best); return best;
 }
 // Speed: a nearby answer for an empty one is looked for once per change to the kept answers, not on every one of the
 // hundreds of thousands of ride lookups a plan makes (looking every time froze Change stops, Nov 14).
@@ -711,15 +719,27 @@ if (typeof window !== "undefined") window.__kairouteTransitMerge = transitMerge;
 function transitShow() { nearGen++; if (typeof view !== "undefined" && ["plan", "trip", "sites"].includes(view)) dataRender(); }
 // Kept on the phone so the next visit needs no lookups: the newest 150 answers, each line's path thinned for storage.
 // A full storage drops older answers rather than failing.
-function transitKeep() {
-  const ks = Object.keys(transitMem).sort((x, y) => (transitPins.has(y) ? 1 : 0) - (transitPins.has(x) ? 1 : 0) || transitMem[y].t - transitMem[x].t);
-  const thin = m => ({ t: m.t, v: m.v, partial: !!m.partial, opts: (m.opts || []).map(x => Object.assign({}, x, { path: thinPts(x.path || [], 60) })) });
-  const slim = keep => { const o = {}; ks.slice(0, keep).forEach(k => { const m = transitMem[k]; if (m) o[k] = thin(m); }); return JSON.stringify(o); };
+// Speed: saving copied and thinned every kept answer and wrote the whole set to both stores every few seconds while
+// answers streamed in (~20 s of a phone's time over one visit to a full trip). Now each answer is thinned once, the
+// device store is split in 16 parts and only the parts with a new answer are written, and the quick start-up copy
+// (localStorage) is written at most once a minute, or at once when the page is hidden, closed or goes offline.
+const thinMemo = new WeakMap(), TA_PARTS = 16, taWrote = new Map();
+const taPart = k => { let h = 0; for (let i = 0; i < k.length; i++) h = (h * 31 + k.charCodeAt(i)) | 0; return Math.abs(h) % TA_PARTS; };
+let transitLsAt = 0;
+function transitKeep(now) {
+  const thin = m => { let t = thinMemo.get(m); if (!t) { t = { t: m.t, v: m.v, partial: !!m.partial, opts: (m.opts || []).map(x => Object.assign({}, x, { path: thinPts(x.path || [], 60) })) }; thinMemo.set(m, t); } return t; };
   // Every answer is also kept whole in the device's larger store (no limit), so a long trip planned for offline
   // keeps every ride it was planned with; it is read back at start-up (see transitLoad).
-  try { const all = {}; Object.keys(transitMem).forEach(k => { all[k] = thin(transitMem[k]); }); transitAll = Object.assign(transitAll || {}, all); kv.set("transitAll", transitAll); } catch (e) {}
+  try { const dirty = new Set(); transitAll = transitAll || {};
+    for (const k in transitMem) { const m = transitMem[k]; if (taWrote.get(k) === m) continue; transitAll[k] = thin(m); taWrote.set(k, m); dirty.add(taPart(k)); }
+    for (const i of dirty) { const part = {}; for (const k in transitAll) if (taPart(k) === i) part[k] = transitAll[k]; kv.set("transitAll:" + i, part); } } catch (e) {}
+  if (!now && Date.now() - transitLsAt < 60000) { clearTimeout(transitLsT); transitLsT = setTimeout(() => transitKeep(true), 60000 - (Date.now() - transitLsAt)); return; }
+  clearTimeout(transitLsT); transitLsAt = Date.now();
+  const ks = Object.keys(transitMem).sort((x, y) => (transitPins.has(y) ? 1 : 0) - (transitPins.has(x) ? 1 : 0) || transitMem[y].t - transitMem[x].t);
+  const slim = keep => { const o = {}; ks.slice(0, keep).forEach(k => { const m = transitMem[k]; if (m) o[k] = thin(m); }); return JSON.stringify(o); };
   for (const n of [Math.max(150, transitPins.size + 30), Math.max(60, transitPins.size), Math.max(20, transitPins.size)]) { try { localStorage.setItem(TRANSIT_KEY, slim(n)); return; } catch (e) {} }
 }
+let transitLsT = 0;
 // Answers are kept on the device as they arrive (a few seconds later, in a quiet moment), not only once every ride
 // has been asked: a long trip can keep the helper busy for many minutes, and a phone that lost its signal, was closed
 // or went offline in that time came back with no rides at all, so its plans changed order offline (demo run, Nov 14).
@@ -732,13 +752,15 @@ function transitKeepSoon() {
   transitKeepT = setTimeout(run, now - transitKeepFirst > 15000 ? 0 : 4000); // at most ~15 s between saves while answers stream in
 }
 if (typeof window !== "undefined") {
-  const keepNow = () => { if (transitKeepT) { clearTimeout(transitKeepT); transitKeepT = 0; transitKeepFirst = 0; try { transitKeep(); } catch (e) {} } };
+  const keepNow = () => { if (transitKeepT || transitLsT) { clearTimeout(transitKeepT); transitKeepT = 0; transitKeepFirst = 0; try { transitKeep(true); } catch (e) {} } };
   window.addEventListener("offline", keepNow); window.addEventListener("pagehide", keepNow);
   document.addEventListener("visibilitychange", () => { if (document.visibilityState === "hidden") keepNow(); });
 }
 let transitAll = null;
 function transitLoad() {
-  kv.get("transitAll").then(m => { if (!m || typeof m !== "object") return; transitAll = m; let added = 0;
+  // The device store: the older single copy, then its 16 parts (newer answers win either way).
+  Promise.all([kv.get("transitAll")].concat(Array.from({ length: TA_PARTS }, (_, i) => kv.get("transitAll:" + i)))).then(ms => { const m = {}; ms.forEach(x => { if (x && typeof x === "object") for (const k in x) if (x[k] && (!m[k] || (x[k].t || 0) >= (m[k].t || 0))) m[k] = x[k]; });
+    if (!Object.keys(m).length) return; transitAll = Object.assign(m, transitAll || {}); let added = 0;
     for (const k in m) if (m[k] && Array.isArray(m[k].opts) && (!transitMem[k] || (m[k].v === TRANSIT_V && (transitMem[k].v !== TRANSIT_V || m[k].t > transitMem[k].t)))) { transitMem[k] = m[k]; added++; } // the newer of the two kept copies
     if (added) nearGen++;
     if (added && typeof render === "function" && typeof view !== "undefined") transitShow(); }).catch(() => {});
@@ -1210,7 +1232,7 @@ function polishDay(seq, t0, O, Z, style, city) {
     }
     best.forEach((x, i) => {
       if (!x.mealOf || x.mealOf.booked) return;
-      for (const r0 of mealSpots(best, O, Z, city)) {
+      for (const r0 of mealPick(best, O, Z, city, x.mealOf, style)) {
         const r = r0.generic ? Object.assign({}, r0, { name: r0.name.replace(/^Lunch/, x.mealOf.label) }) : r0;
         if (best.some(y => y.mealOf && y.name === r.name)) continue;
         const q = best.slice(); q[i] = Object.assign({}, r, { mealOf: x.mealOf }); const c = C(q);
@@ -1235,6 +1257,31 @@ function mealSpots(seq, O, Z, city) {
   // Every place near here is already another day's meal: "Lunch near <stop>" rather than the same restaurant twice.
   if (!fresh.length && !gen.length && near.length) { const a = seq.find(x => !x.mealOf) || O; if (a) gen.push({ name: "Lunch near " + a.name, lat: a.lat, lng: a.lng, generic: true, kind: "local", cuisine: "Your pick", price: "", why: "You've eaten at the guide's places around here on other days: try somewhere new nearby, a café or taverna full of locals." }); }
   return (fresh.length ? fresh : []).concat(gen); // never repeat another day's restaurant
+}
+// The places worth trying for one meal: with real map data a big city has hundreds of places to eat near the
+// route, and every one was tried at every point of the day, inside every what-if the planner weighs (a Naples day
+// took 2-4 s on a phone). Only the best few by the same things the day's simulation scores for a meal (the
+// detour off the route, travelers' ratings, the right style, open for this meal) can win, so only those are tried.
+// The "Lunch near <stop>" choices are always kept.
+const MEAL_TRY = 8;
+// Worked out once per set of stops in a day's plan (the planner asks again for every order it weighs).
+let mealPickMemo = { g: -1, m: new Map() };
+function mealPick(seq, O, Z, city, m, style) {
+  const bare = seq.filter(x => !x.mealOf), key = m.label + "|" + (m.quick ? 1 : 0) + "|" + style + "|" + planDate + "|" + [...avoidMeals].join(",") + "|" + bare.map(x => (x.id || "") + "~" + x.name + "~" + x.lat + "," + x.lng).sort().join(",") + "|" + (O ? O.lat + "," + O.lng : "") + "|" + (Z ? Z.lat + "," + Z.lng : "");
+  if (mealPickMemo.city !== city) { mealPickMemo.city = city; mealPickMemo.m = new Map(); }
+  const got = mealPickMemo.m.get(key); if (got) return got;
+  // In a set order (the "Lunch near" choices by name), so the answer never depends on which order asked first.
+  const v = mealPickRaw(seq, O, Z, city, m, style), gen = v.filter(r => r.generic).sort((a, b) => a.name < b.name ? -1 : a.name > b.name ? 1 : 0), out = v.filter(r => !r.generic).concat(gen);
+  mealPickMemo.m.set(key, out); return out;
+}
+function mealPickRaw(seq, O, Z, city, m, style) {
+  const all = mealSpots(seq, O, Z, city); if (all.length <= MEAL_TRY) return all;
+  const pts = [O].concat(seq.filter(x => !x.mealOf), [Z]).filter(x => x && isFinite(numV(x.lat)));
+  // The detour, whatever order the stops end up in: twice the walk from the nearest stop.
+  const det = r => { let b = Infinity; for (const p of pts) b = Math.min(b, hav(p, r)); return pts.length ? 2 * b : 0; };
+  const score = r => det(r) * 15 + (!r.generic && mealShut(r, m.label) ? 400 : 0) + (style !== "mix" && r.kind && r.kind !== style ? 8 : 0) - (r.recommended ? 6 : 0) - (r.bothGuides ? 4 : 0) - (r.top ? 8 : 0) - (r.crowdTop ? 10 : 0) - (gGood(r.g) ? 6 : 0);
+  const gen = all.filter(r => r.generic), real = all.filter(r => !r.generic).map(r => [score(r), r]).sort((a, b) => a[0] - b[0]).slice(0, MEAL_TRY).map(x => x[1]);
+  return real.concat(gen);
 }
 // Two alternatives for each meal, a short walk away, chosen to be different from the main pick and from
 // each other (another cuisine or style), favouring places travelers recommend. Never one used on another day.
@@ -1415,7 +1462,7 @@ function placeMeals(order, meals, t0, O, Z, style, city) {
   let seq = order.slice();
   for (const m of meals) {
     let best = null;
-    for (const r0 of m.booked ? [m.node] : mealSpots(seq, O, Z, city)) {
+    for (const r0 of m.booked ? [m.node] : mealPick(seq, O, Z, city, m, style)) {
       const r = r0.generic ? Object.assign({}, r0, { name: r0.name.replace(/^Lunch/, m.label) }) : r0;
       if (seq.some(x => x.mealOf && x.name === r.name)) continue;
       const node = Object.assign({}, r, { mealOf: m });
@@ -1511,6 +1558,10 @@ function buildPlanRaw(d) { const prev = planDate, pw = planWx; if (!planDepth) t
       if (p2 && !p2.error && !p2.over && (p2.dropped || []).length < pl.dropped.length) { p2.fastRides = true; pl = p2; } }
     return pl; } finally { planDate = prev; planWx = pw; planDepth--; } }
 function buildPlanFor(d) {
+  const memo0 = mealPickMemo; mealPickMemo = { g: -1, m: new Map() }; // meal choices are remembered for this day's plan only
+  try { return buildPlanForDay(d); } finally { mealPickMemo = memo0; }
+}
+function buildPlanForDay(d) {
   const city = cityFor(d); if (!city) return null;
   const w = dayWindow(d, city); if (w.error) return w;
   liveWindow(d, w); // running late: the day re-planned from where you are now
@@ -2631,7 +2682,7 @@ function sightKind(s, city) {
 function fameFor(d, city) {
   if (!city) return Promise.resolve();
   const k = keyOf(city.city);
-  if (fameAsked[k]) { if (fameAsked[k] !== true) fameMark(city, fameAsked[k]); return fameWait[k] || Promise.resolve(); }
+  if (fameAsked[k]) { if (fameAsked[k] !== true) fameMarkOnce(city, fameAsked[k]); return fameWait[k] || Promise.resolve(); }
   fameAsked[k] = true;
   const lbl = srcLabel(city, d);
   return (fameWait[k] = sourcesFor(lbl).then(async src => {
@@ -2639,11 +2690,25 @@ function fameFor(d, city) {
     if (!src) { const fam = await famousFor(lbl); if (fam) src = { stops: fam.main.map(x => Object.assign({ src: ["Wikidata (Wikipedia in many languages)"] }, x)), far: fam.far, eats: [] }; }
     if (!src) { delete fameAsked[k]; return; }
     restoreFills(city, await kv.get(FILL_KEY + k));
-    fameAsked[k] = src; fameMark(city, src);
+    fameAsked[k] = src; fameMarkOnce(city, src);
     if (view === "plan" || view === "guide") dataRender();
   }).catch(() => { delete fameAsked[k]; }).finally(() => { delete fameWait[k]; }));
 }
 const fameWait = {};
+// Marking a guide from its sources (match every sight, add the places the sources name, fold duplicates) is heavy:
+// ~0.4 s on a mid-range phone for a big city. It was done on every redraw. Now it runs again only when the guide or
+// its sources changed since it last ran (a guide rewritten, a sight added by hand, a new answer).
+const fameDone = new WeakMap();
+const fameIn = city => { let t = ""; for (const x of city.sites || []) t += x.id + ":" + x.name + ":" + (x.local || "") + ":" + (x.quick ? 1 : 0) + (x.mustSee ? 1 : 0) + ";"; t += "|"; for (const x of city.farther || []) t += x.id + ":" + x.name + ";"; t += "|"; for (const x of city.restaurants || []) t += x.name + ";"; return strHash(t); };
+function fameMarkOnce(city, src) {
+  const m = fameDone.get(city);
+  if (m && m.src === src && m.g === dataGen + "|" + planGen) return;
+  // What the marking reads: which sights and places to eat the guide has (not ratings, crowds or picks).
+  const h = fameIn(city);
+  if (m && m.src === src && m.h === h) { m.g = dataGen + "|" + planGen; return; }
+  fameMark(city, src);
+  fameDone.set(city, { src, h: fameIn(city), g: dataGen + "|" + planGen });
+}
 // Which city a guide's sources are asked for: the city the day is really spent in. A gateway port's guide can be
 // titled by the port ("Civitavecchia") while the day is in Rome, so the guide's own area (from its fame step) or
 // the day's bracketed destination ("Civitavecchia (Rome)") wins over the guide's title.
