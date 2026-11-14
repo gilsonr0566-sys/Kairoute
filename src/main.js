@@ -3715,7 +3715,7 @@ function undoMerges(c, key) {
   return back;
 }
 // Check hook: fold a made-up guide and return the names it keeps.
-if (typeof window !== "undefined") window.__kairouteDedupe = sites => { const c = { city: "Test", sites: JSON.parse(JSON.stringify(sites)), farther: [] }; dedupeSites(c); return c.sites.map(x => x.name); };
+if (typeof window !== "undefined") window.__kairouteFoldNames = sites => { const c = { city: "Test", sites: JSON.parse(JSON.stringify(sites)), farther: [] }; dedupeSites(c); return c.sites.map(x => x.name); };
 const restoreKeys = new Set();
 if (typeof window !== "undefined") window.__kairouteUndoCheck = () => { const M = (id, name, lat, lng) => ({ id, name, lat, lng, category: "Museum" });
   const c = { city: "Test", sites: [Object.assign(M("a", "Natural History Museum of Crete", 35.3414, 25.1327), { merged: [M("b", "Historical Museum of Crete", 35.3412, 25.1325)], alias: ["Historical Museum of Crete", "b", "Maritime Museum of Chania"] }), Object.assign(M("p", "Prado Museum", 40.4138, -3.6921), { alias: ["Museo del Prado", "museo-prado"] })], farther: [] };

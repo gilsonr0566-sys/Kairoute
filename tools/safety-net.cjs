@@ -276,7 +276,7 @@ const log = (suite, trip, ok, what) => { results.push({ suite, trip, ok, what })
     // Demo gate, Nov 14: Rome's built-in "Colosseum and Roman Forum" folded into a written "Roman Forum", and the Colosseum
     // vanished from Change stops. The name that covers more is kept.
     { const S = (id, name, lat, lng, x) => Object.assign({ id, name, lat, lng, category: 'Ancient site', minutes: 60 }, x || {});
-      const names = await p.evaluate(s => window.__kairouteDedupe(s), [S('colosseum', 'Colosseum and Roman Forum', 41.8902, 12.4922, { builtin: true, mustSee: true }), S('forum', 'Roman Forum', 41.8925, 12.4853, { mustSee: true, guide: 'y'.repeat(900) })]);
+      const names = await p.evaluate(s => window.__kairouteFoldNames(s), [S('colosseum', 'Colosseum and Roman Forum', 41.8902, 12.4922, { builtin: true, mustSee: true }), S('forum', 'Roman Forum', 41.8925, 12.4853, { mustSee: true, guide: 'y'.repeat(900) })]);
       log('New trip', 'new-trips', names.some(n => /colosseum/i.test(n)), 'Folding a combined sight keeps every place in its name: ' + names.join(', ')); }
     log('New trip', 'new-trips', !errs.length, errs.length ? 'page errors: ' + [...new Set(errs)].join(' | ') : 'no page errors');
     await b2.close(); }
