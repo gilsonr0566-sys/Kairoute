@@ -683,7 +683,7 @@ async function askTransit() {
     // A ride the helper couldn't answer is asked again by itself once the 2-minute pause is over (the page is redrawn,
     // which asks again), instead of showing the road estimate until the traveler happens to touch something.
     if (got < part.length) { clearTimeout(transitRetry); transitRetry = setTimeout(transitShow, 125000); }
-    if (got) transitShow();
+    if (got) { transitShow(); transitKeepSoon(); }
   };
   try {
     while (transitQ.size) {
@@ -717,6 +717,22 @@ function transitKeep() {
   // keeps every ride it was planned with; it is read back at start-up (see transitLoad).
   try { const all = {}; Object.keys(transitMem).forEach(k => { all[k] = thin(transitMem[k]); }); transitAll = Object.assign(transitAll || {}, all); kv.set("transitAll", transitAll); } catch (e) {}
   for (const n of [Math.max(150, transitPins.size + 30), Math.max(60, transitPins.size), Math.max(20, transitPins.size)]) { try { localStorage.setItem(TRANSIT_KEY, slim(n)); return; } catch (e) {} }
+}
+// Answers are kept on the device as they arrive (a few seconds later, in a quiet moment), not only once every ride
+// has been asked: a long trip can keep the helper busy for many minutes, and a phone that lost its signal, was closed
+// or went offline in that time came back with no rides at all, so its plans changed order offline (demo run, Nov 14).
+let transitKeepT = 0, transitKeepFirst = 0;
+function transitKeepSoon() {
+  const now = Date.now(); if (!transitKeepFirst) transitKeepFirst = now;
+  clearTimeout(transitKeepT);
+  const run = () => { transitKeepT = 0; transitKeepFirst = 0; const go = () => { try { transitKeep(); } catch (e) {} };
+    if (typeof requestIdleCallback === "function") requestIdleCallback(go, { timeout: 3000 }); else go(); };
+  transitKeepT = setTimeout(run, now - transitKeepFirst > 15000 ? 0 : 4000); // at most ~15 s between saves while answers stream in
+}
+if (typeof window !== "undefined") {
+  const keepNow = () => { if (transitKeepT) { clearTimeout(transitKeepT); transitKeepT = 0; transitKeepFirst = 0; try { transitKeep(); } catch (e) {} } };
+  window.addEventListener("offline", keepNow); window.addEventListener("pagehide", keepNow);
+  document.addEventListener("visibilitychange", () => { if (document.visibilityState === "hidden") keepNow(); });
 }
 let transitAll = null;
 function transitLoad() {
@@ -5440,6 +5456,14 @@ const LEG_KINDS = {
 };
 // Which kind a leg is: a timetabled line by its own mode, any other ride by road (a planner can name it with leg.kind).
 const legKind = leg => !leg || leg.mode === "walk" ? "walk" : leg.transit ? ({ ferry: "ferry", bus: "bus", trolleybus: "bus" }[leg.transit.mode] || "train") : LEG_KINDS[leg.kind] ? leg.kind : "car";
+// Why an optional stop is on the plan. "Right on your route" only when it really is (a short walk from the stop
+// before); one reached by a ride or a longer walk says how far out it is, so the traveler can judge it.
+function bonusWhy(pv) {
+  const leg = pv && pv.type === "travel" ? pv.leg : null;
+  if (!leg || (leg.mode === "walk" && leg.min <= 15)) return "Not one of your picks: it fits your free time, right on your route.";
+  const k = legKind(leg), how = k === "walk" ? "on foot" : "by " + (LEG_KINDS[k] ? LEG_KINDS[k].label : "ride").toLowerCase();
+  return `Not one of your picks: ${dur(leg.min)} ${esc(how)} from your route, and it still fits your free time.`;
+}
 const legIcon = m => { const k = LEG_KINDS[m] ? m : m === "ride" ? "car" : "walk"; return `<svg class="legico k-${k}" viewBox="0 0 24 24" aria-label="${LEG_KINDS[k].label}" role="img">${LEG_KINDS[k].path}</svg>`; };
 // ---- Real places to eat at day-trip stops ----
 // A city's restaurants are gathered around its own sights. A day trip (e.g. Ancient Corinth from Athens) needs
@@ -5601,7 +5625,7 @@ function renderPlan(d) {
       if (s.along) return `<div class="${cls}">${tcell(it)}<div class="rail"><div class="dot quick"></div></div><div class="what"><button class="nm namebtn" data-open="${esc(s.id)}">On the way: ${esc(s.name)}</button><div class="sub">${esc(s.lookFor[0] || s.summary)}</div></div></div>`;
       if (s.bonus) return `<div class="${cls} optional">${tcell(it)}<div class="rail"><div class="dot bonusdot">+</div></div><div class="what">
         <button class="nm namebtn" data-open="${esc(s.id)}">Optional: ${esc(s.name)}</button><div class="sub">${dur(s.minutes)} · ${cat(s)}${s.mustSee ? " · Must-see" : ""}</div>
-        <div class="sub bonus">Not one of your picks: it fits your free time, right on your route.</div>
+        <div class="sub bonus">${bonusWhy(pv)}</div>
         <div class="optacts"><button class="btn small" data-act="bonusadd" data-id="${esc(s.id)}">Add to my picks</button><button class="btn ghost small" data-act="bonusskip" data-id="${esc(s.id)}">Skip it</button></div></div></div>`;
       n++;
       return `<div class="${cls}">${tcell(it)}<div class="rail"><div class="dot">${n}</div></div><div class="what">
@@ -5660,7 +5684,7 @@ function legendHTML(plan) {
   <div class="dayhead">${dayHeading(d)}${cdHTML || dayPin(d)}<button class="btn bigbtn tourbtn" data-act="tourstart"><span class="tb-long">▶ Start the tour</span><span class="tb-short">▶ Start tour</span></button></div>
   <div class="daysum n${2 + (walkTile ? 1 : 0) + (cdHTML ? 0 : 1)}" role="group" aria-label="Today at a glance">
     <div><b>${fmt(plan.start)}–${fmt(plan.endBy)}</b><span>${d.type === "port" ? "ashore " + dur(plan.endBy - plan.start) : d.type === "embark" || d.type === "departure" ? dur(plan.endBy - plan.start) + " before you go" : L ? dur(d.hours * 60) + " sightseeing" : "free " + dur(plan.endBy - plan.start)}</span></div>
-    <div><b>${stopsN}${optN ? " + " + optN : ""}</b><span>${stopsN === 1 ? "pick" : "picks"}${optN ? " + optional" : ""}${plan.along.length ? ` · ${plan.along.length} on the way` : ""}</span></div>
+    <div><b>${stopsN}${optN ? " + " + optN : ""}</b><span>${stopsN === 1 ? "pick" : "picks"}${optN ? " + optional" : ""}${plan.along.length && !optN ? ` · ${plan.along.length} on the way` : ""}</span></div>
     ${walkTile ? `<div><b>${distTxt(plan.walkKm)}</b><span>walking</span></div>` : ""}
     ${cdHTML ? "" : `<div><b>${fmt(plan.end)}</b><span>${d.type === "port" ? "back on board" : "finish"}</span></div>`}
     <div class="daytools"><div class="toolrow"><button class="btn ghost small" data-goto="sites">Change stops</button>
@@ -5730,7 +5754,7 @@ function stopCard(s, num, city, at) {
   const photos = `https://commons.wikimedia.org/w/index.php?search=${encodeURIComponent(s.name + " " + city.city)}&title=Special:MediaSearch&type=image`;
   return `<article class="stopcard" id="stop-${esc(s.id)}">
     <div class="stopbody"><div class="scmain">
-      <div class="head stophead"><span class="stopnum">${s.along ? "•" : num}</span><div><h3>${esc(s.name)}</h3><p class="stopmeta">${[s.category ? String(s.category).replace(/^\w/, c => c.toUpperCase()) : (s.along ? "On the way" : ""), s.minutes ? dur(s.minutes) : "", s.mustSee ? "Must-see" : "", s.unesco ? "UNESCO World Heritage" : ""].filter(Boolean).map(esc).join(" · ")}</p></div></div>
+      <div class="head stophead"><span class="stopnum">${s.along ? "•" : num || (s.bonus ? "+" : "•")}</span><div><h3>${esc(s.name)}</h3><p class="stopmeta">${[s.category ? String(s.category).replace(/^\w/, c => c.toUpperCase()) : (s.along ? "On the way" : ""), s.minutes ? dur(s.minutes) : "", s.mustSee ? "Must-see" : "", s.unesco ? "UNESCO World Heritage" : ""].filter(Boolean).map(esc).join(" · ")}</p></div></div>
       <p class="lede">${esc(unitText(s.summary))}</p>
       ${s.parts && s.parts.length >= 2 ? `<div class="field partsbox"><span class="eyebrow">What's here, in walking order</span>${partsList(s, at, true)}</div>` : partsList(s, at)}
 ${quietOn(s) ? `<p class="banner quiet" role="note">🤫 <span><b>Quiet place.</b> Read the story below. Audio plays only after you confirm your earbuds are in.</span></p>` : ""}<div class="audio"><button class="btn" data-play="${esc(s.id)}" data-label="${quietOn(s) ? "🎧 Play with earbuds" : "▶ Play audio guide"}">${quietOn(s) ? "🎧 Play with earbuds" : "▶ Play audio guide"}</button><span class="state" aria-live="polite"></span></div>
