@@ -236,6 +236,31 @@ if (typeof window !== "undefined") window.__kairouteVoyageCheck = () => {
     trip = sampleTrip(); fresh(); const e3 = trip.days[emb], lb = f => { e3.fillTime = f; fresh(); const p = buildPlan(e3); return p && p.items ? alarmState(e3, p) : null; };
     const s1 = lb(true), s0 = lb(false);
     ok("Boarding day: leave-by allows for collecting the bags, the same with or without optional stops", s1 && s0 && s1.via && s1.leaveBy === s0.leaveBy && s1.leaveBy <= s1.backBy - (s1.via.minutes || 0), s1 && s0 ? fmt(s1.leaveBy) + " / " + fmt(s0.leaveBy) + (s1.via ? " via " + s1.via.name : " (no bag stop)") : "no plan");
+    // 8. Boarding day: the traveler's boarding time sets when the plan gets them to the terminal (never guessed).
+    trip = sampleTrip(); fresh(); const b8 = trip.days[emb], aa8 = shipToPort(b8, b8.allAboard);
+    delete b8.boardTime; fresh(); let p8 = buildPlan(b8);
+    ok("Boarding day without a boarding time: there an hour before all aboard, and the app asks for it", p8.endBy === aa8 - 60 && /id="bc-time"/.test(boardCard(b8, p8)) && p8.w.notesEnd.some(t => /add it/.test(t)), fmt(p8.endBy));
+    b8.boardTime = "12:30"; b8.selected = null; delete b8.autoEmpty; fresh(); if (!b8.selected) seedPicks(b8, cityFor(b8)); fresh(); p8 = buildPlan(b8);
+    const st8 = alarmState(b8, p8, { before: true }), stops8 = p8.items.filter(x => x.type === "stop" && !x.place.along);
+    ok("Boarding time 12:30: the plan reaches the terminal by 12:30 with sights only nearby, and the countdown counts to it", p8.endBy === toMin("12:30") && p8.end <= p8.endBy && !p8.over && stops8.every(x => nearLeaving(x.place, p8.w)) && st8.backBy === toMin("12:30") && !/id="bc-time"/.test(boardCard(b8, p8)), `${fmt(p8.end)} ≤ ${fmt(p8.endBy)}, ${stops8.length} stop(s), leave by ${fmt(st8.leaveBy)}`);
+    const lv = f => { b8.fillTime = f; fresh(); return alarmState(b8, buildPlan(b8), { before: true }).leaveBy; };
+    ok("Boarding time set: one leave-by with or without optional stops", lv(true) === lv(false), fmt(lv(true)));
+    b8.fillTime = true; b8.boardTime = "18:15"; fresh(); p8 = buildPlan(b8);
+    ok("A boarding time close to all aboard still has you there an hour before all aboard", p8.endBy === aa8 - 60, fmt(p8.endBy));
+    b8.boardTime = "12:30"; fresh(); p8 = buildPlan(b8);
+    // Calendar alarms: two events, four alarms, the evening before at 7 PM and the countdown's leave-by, in UTC.
+    const ics = boardICS(b8), off8 = zoneOffset(dayZone(b8).tz, b8.date), u8 = (iso, m) => new Date(new Date(iso + "T00:00:00Z").getTime() + (m - off8) * 60000).toISOString().replace(/[-:]/g, "").replace(/\.\d+Z$/, "Z");
+    ok("Calendar reminders: the evening before at 7 PM and at the leave-by time, with alarms, in the port's time", ics && (ics.text.match(/BEGIN:VEVENT/g) || []).length === 2 && (ics.text.match(/BEGIN:VALARM/g) || []).length === 4 && ics.text.includes("DTSTART:" + u8(addDays(b8.date, -1), 19 * 60)) && ics.text.includes("DTSTART:" + u8(b8.date, alarmState(b8, p8, { before: true }).leaveBy)) && !/guarantee/i.test(ics.text), ics ? "leave " + fmt(ics.leave) : "none");
+    const prev8 = trip.days[emb - 1];
+    ok("The day before boarding reminds you, other days don't", /boardeve/.test(boardEve(prev8)) && !boardEve(trip.days[emb]) && !boardEve(trip.days[0]));
+    const r8 = boardRead({ boardTime: null, terminal: null }, b8), r9 = boardRead({ boardTime: "9:05", allAboard: "17:00", date: "2027-07-05", terminal: "Terminal A" }, b8);
+    ok("Reading a boarding pass never guesses or saves by itself", !r8.found && r8.time === "12:30" && r9.time === "09:05" && /2027-07-05/.test(r9.msg) && /17:00/.test(r9.msg) && b8.boardTime === "12:30", r9.msg);
+    b8.boardChecks = { passport: 1, tags: 1 };
+    ok("What to have on you counts what's ticked", /2 of 9/.test(boardCard(b8, p8)));
+    // Every cruise trip, not one: boarding in Barcelona with a 13:00 boarding time.
+    trip = sampleTrip(); trip.days = [newDay({ date: "2027-08-01", destination: "Barcelona", type: "land", startTime: "09:00", hours: 8, cityKey: "barcelona" }), newDay({ date: "2027-08-02", destination: "Barcelona", type: "embark", startTime: "09:00", allAboard: "17:30", boardTime: "13:00", cityKey: "barcelona" }), newDay({ date: "2027-08-03", destination: "At sea", type: "sea" })]; trip.active = 1; fresh();
+    const bb = trip.days[1]; seedPicks(bb, cityFor(bb)); fresh(); const pb = buildPlan(bb);
+    ok("Boarding in Barcelona at 13:00: there on time, nearby sights only, no far day trips", pb && !pb.error && pb.endBy === toMin("13:00") && pb.end <= pb.endBy && pb.items.filter(x => x.type === "stop").every(x => nearLeaving(x.place, pb.w) && !x.place.far), pb && pb.items ? pb.items.filter(x => x.type === "stop").map(x => x.place.name).join(", ") + " · end " + fmt(pb.end) : String(pb && pb.error));
   } catch (e) { ok("checks ran", false, String(e && e.stack || e)); }
   finally { trip = keep; view = keepView; voySel = null; fresh(); render(); }
   return res;

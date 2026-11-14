@@ -399,11 +399,12 @@ function legTo(from, to) {
   return { min: est.min, how: est.how, transit: est.transit, src: "estimate" };
 }
 let alarmFired = {}, liveArrived = {};
-function alarmState(d, plan) {
-  const now = liveNow(d), items = plan.items.filter(i => i.type === "stop" || i.type === "meal");
+function alarmState(d, plan, opt) {
+  // opt.before: the before-the-day reading (the one leave-by time), whatever the clock says (calendar reminders).
+  const now = opt && opt.before ? null : liveNow(d), items = plan.items.filter(i => i.type === "stop" || i.type === "meal");
   let from = null, src = "";
   if (geoFresh() && now != null && isToday(d)) { from = { name: "where you are", lat: geoPos.lat, lng: geoPos.lng }; src = "GPS"; }
-  else if (cdWhere != null && cdWhere !== "auto" && items[+cdWhere]) { from = items[+cdWhere].place; src = "chosen"; }
+  else if (!(opt && opt.before) && cdWhere != null && cdWhere !== "auto" && items[+cdWhere]) { from = items[+cdWhere].place; src = "chosen"; }
   else if (now != null) { const at = items.filter(i => i.time <= now).pop(); from = at ? at.place : plan.w.head[0]; src = "plan"; }
   // Before the day: from the farthest place the traveler picked (the slowest way back), so the one leave-by time is
   // safe wherever they are and doesn't move when optional stops come and go or the route is reordered (Richard,
@@ -517,7 +518,7 @@ function alarmTick() {
   if (fixed) {
     const el = document.getElementById("cdBig"), sub = document.getElementById("cdSub"), msg = document.getElementById("cdMsg"), srcEl = document.getElementById("cdSrc");
     const fromTxt = st.src === "GPS" ? "where you are" : st.from.name, legTxt = `${st.leg.transit ? st.leg.how : st.leg.how.toLowerCase()} ${dur(st.leg.min)}`;
-    const word = d.type === "port" ? `Be back at the ship by ${fmt(st.backBy)} at the latest, ${dur(shipToPort(d, d.allAboard) - st.backBy)} before all aboard (${d.allAboard}).` : d.type === "embark" ? `All aboard ${d.allAboard}. Be at the terminal by ${fmt(st.backBy)}.` : `${MODES[d.mode].label} at ${d.time}. Be at ${st.point.name} by ${fmt(st.backBy)}.`;
+    const word = d.type === "port" ? `Be back at the ship by ${fmt(st.backBy)} at the latest, ${dur(shipToPort(d, d.allAboard) - st.backBy)} before all aboard (${d.allAboard}).` : d.type === "embark" ? `${boardAt(d) != null ? `Boarding time ${fmt(boardAt(d))}, all aboard` : "All aboard"} ${d.allAboard}. Be at the terminal by ${fmt(st.backBy)}.` : `${MODES[d.mode].label} at ${d.time}. Be at ${st.point.name} by ${fmt(st.backBy)}.`;
     const R = st.ride, dest = d.type === "departure" ? st.point.name : "the ship";
     const rideTxt = !R ? "" : R.none ? `No ${R.word} from ${R.where} gets you to ${dest} in time any more. Take a taxi now: about ${dur(R.taxiMin)} by road${R.fare ? `, roughly ${R.sym}${R.fare[0]}–${R.fare[1]} (agree the fare first)` : ""}.`
       : `${R.missed ? `You've missed the ${fmt(R.planned.t)} ${R.word}. ` : ""}${R.kind} ${R.to ? "to " + R.to + " " : ""}leaves ${R.where} at ${fmt(R.next.t)}: leave ${R.extra ? fromTxt : "for the " + (R.word === "ferry" ? "pier" : "station")} by ${fmt(R.leaveBy)}.${R.last && R.last !== R.next ? ` Last safe ${R.word}: ${fmt(R.last.t)}.` : ` This is the last ${R.word} that gets you back in time.`} If you miss it, a taxi takes about ${dur(R.taxiMin)}.`;

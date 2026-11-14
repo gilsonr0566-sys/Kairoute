@@ -1018,7 +1018,11 @@ function dayWindow(d, city) {
     const ship = d.type === "embark", m = ship ? MODES.ship : MODES[d.mode], thru = throughFrom(d);
     if (!P) return { error: ship ? "Choose the cruise port." : "Choose your departure " + m.word + "." };
     const end = Object.assign({}, P, { deadline: true });
-    w.endBy = ship ? shipToPort(d, d.allAboard) - 60 : toMin(d.time) - m.need;
+    // Boarding: the cruise line gives each passenger a boarding (check-in) time. With it, the plan gets you to the
+    // terminal at that time; never later than an hour before all aboard, when check-in starts closing.
+    const latest = ship ? shipToPort(d, d.allAboard) - 60 : null, bt = ship ? boardAt(d) : null;
+    w.endBy = ship ? (bt != null ? Math.min(bt, latest) : latest) : toMin(d.time) - m.need;
+    if (ship) { w.boardAt = bt; w.latest = latest; }
     w.beBy = w.endBy; w.deadlineWord = ship ? "the cruise terminal" : "the " + m.word;
     if (thru) {
       // Off a ship, plane or train and leaving the same day, with no hotel: the bags go into storage near where
@@ -1037,8 +1041,8 @@ function dayWindow(d, city) {
       if (!d.noBags) w.notes.push("Most hotels keep your bags for the day after check-out: ask at the desk.");
     }
     w.endLabel = ship ? "Boarding at " + P.name : "At " + P.name;
-    w.notesEnd.push(ship ? `All aboard ${d.allAboard}: be at the terminal by ${fmt(w.endBy)}, an hour early for check-in. Being aboard on time is your responsibility: check your boarding time with your cruise line.`
-      : `${m.label} leaves ${d.time}: be at the ${m.word} by ${fmt(w.endBy)}, ${dur(m.need)} early${d.mode === "flight" ? " for an international flight" : ""}.`);
+    if (ship) w.notesEnd.push(...boardNotes(d, w));
+    else w.notesEnd.push(`${m.label} leaves ${d.time}: be at the ${m.word} by ${fmt(w.endBy)}, ${dur(m.need)} early${d.mode === "flight" ? " for an international flight" : ""}.`);
   } else if (d.type === "port") {
     if (!P) return { error: "Choose where the ship docks." };
     w.start = shipToPort(d, d.portArrive) + (d.tender ? 60 : 30); w.endBy = shipToPort(d, d.allAboard) - 45; w.buffer = 45;
@@ -1736,7 +1740,8 @@ function buildPlanFor(d) {
       }
       }
       // Boarding or leaving: when nothing fits with a full sit-down lunch, a quick lunch makes room for a sight.
-      if (!pick && leaving && !quickMeals && !d.rain) { quickMeals = true; seq = withMeals(seq.filter(x => !x.mealOf)); n--; continue; }
+      // Only when the day with that lunch still ends in time: a meal never pushes past the hard end.
+      if (!pick && leaving && !quickMeals && !d.rain) { quickMeals = true; const q = withMeals(seq.filter(x => !x.mealOf)); if (simDay(q, t0, O, ZZ, style).end <= limit) { seq = q; n--; continue; } quickMeals = false; }
       if (!pick) break;
       const pol = polishDay(pick.q, t0, O, ZZ, style, city); seq = simDay(pol, t0, O, ZZ, style).end <= limit ? pol : pick.q; bonus.push(pick.c); pool.splice(pool.indexOf(pick.c), 1);
     }
@@ -5712,6 +5717,7 @@ ${partsList(s, it.time)}${stopLiveNotes(it, d)}</div></div>`;
   // Heads-up: everything that needs a decision today, in one place above the schedule, most urgent first.
   const heads = [
     readyBanner(d),
+    boardCard(d, plan), boardEve(d),
     (b => b ? `<div class="livecard">${b}</div>` : "")(liveBanner(d, plan)),
     rideChangeBanner(d),
     plan.over ? `<div class="banner warn" role="alert">This plan runs ${dur(plan.end - plan.endBy)} past ${fmt(plan.endBy)}. Remove a stop with Change stops, or change the times.</div>` : "",
