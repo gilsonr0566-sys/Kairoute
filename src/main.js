@@ -3789,6 +3789,23 @@ function samePlace(a, b) { return placeRel(a, b) === "same"; }
 if (typeof window !== "undefined") window.__kairoutePlaceRel = (a, b, city) => { const was = placeCity; placeCity = city ? new Set(placeWords0(city)) : null; try { return [placeRel(a, b), placeRel(b, a), placeWords(a.name), placeWords(b.name), placeKind(a), placeKind(b), placeWords(a.name).map(isFeat)]; } finally { placeCity = was; } };
 if (typeof window !== "undefined") window.__kairouteDedupe = (sites, farther) => { const c = { sites: JSON.parse(JSON.stringify(sites || [])), farther: JSON.parse(JSON.stringify(farther || [])) }; const n = dedupeSites(c); return { n, kept: allSites(c).map(x => ({ name: x.name, alias: x.alias || [], lookFor: x.lookFor || [] })) }; };
 // Every guide the app holds, checked for two sights that are one place (for the safety net).
+// Missing-sights audit (live check): for every guide the app holds, the sources' best-known places (the town's top 15
+// and the top 8 day trips) and where each is in the guide: its own sight, folded into another (and how far apart), or
+// missing. Also every fold whose two places are more than 1 km apart (two places, not two names for one).
+if (typeof window !== "undefined") window.__kairouteFamousAudit = () => { ensureBuiltins(); const out = [], seen = new Set();
+  for (const k in cities) { const c = cities[k]; if (!c || seen.has(c)) continue; seen.add(c); const src = fameAsked[keyOf(c.city)];
+    const all = allSites(c), row = { city: c.city, sources: !!(src && src !== true), missing: [], folded: [], far: [], wideFolds: [] };
+    for (const x of all) for (const m of x.merged || []) { const km = isFinite(m.lat) && isFinite(x.lat) ? hav(m, x) : null; if (km != null && km > 1) row.wideFolds.push(`${m.name} -> ${x.name} (${km.toFixed(1)} km)`); }
+    if (src && src !== true) {
+      const vis = y => (y.src || []).some(t => /Wikivoyage|heritage|UNESCO/.test(t));
+      const top = (src.stops || []).filter(y => y.lat != null && vis(y)).sort((a, b) => (b.sl || 0) - (a.sl || 0)).slice(0, 15), farTop = (src.far || []).slice().sort((a, b) => (b.sl || 0) - (a.sl || 0)).slice(0, 8);
+      for (const [list, kind] of [[top, "town"], [farTop, "day trip"]]) for (const y of list) {
+        const own = all.find(s => sameSight(y, s)); if (own) continue;
+        const into = all.find(s => (s.merged || []).some(m => sameSight(y, m)) || (s.alias || []).some(a => typeof a === "string" && nameMatch(a, y.name) && nameMatch(y.name, a)));
+        (into ? row.folded : row.missing).push(`${y.name} (${kind}, fame ${y.sl || 0})` + (into ? ` -> ${into.name}` : "")); }
+    }
+    out.push(row); }
+  return out; };
 if (typeof window !== "undefined") window.__kairouteDupCities = () => { ensureBuiltins(); const seen = new Set(); let n = 0, sights = 0; for (const k in cities) { const c = cities[k]; if (!c || seen.has(c)) continue; seen.add(c); n++; sights += allSites(c).length; } return { n, sights, left: window.__kairouteDupScan() }; };
 if (typeof window !== "undefined") window.__kairouteNameCheck = () => cleanCity({ sites: [{ name: { name: "Casa Gallardo" }, lat: 40.42, lng: -3.70 }, { name: {}, lat: 40.42, lng: -3.70 }, { name: "Plaza Mayor", lat: 40.415, lng: -3.707 }] }, "Madrid").sites.map(x => x.name);
 // Near twins: two sights of one city within 300 m whatever their names, with what the app knows of each (review tool).
