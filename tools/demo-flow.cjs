@@ -226,16 +226,20 @@ async function partA(b) {
   // 2. Change stops: tick a sight, see it on the Day plan, untick it.
   const ed = days.find(d => d.type === "land") || first;
   await timed(p, "open Change stops", go("sites", ed.i), 3000); await shot(p, "A2-change-stops-tablet");
-  const pick = await p.evaluate(() => { const all = [...document.querySelectorAll("label.site:not(.on) input[data-site]")], el = all.find(x => !x.closest(".sched")) || all[0]; // a free sight first: one scheduled on another day moves (and changes that day) if (!el) return null; const name = ((el.closest("label").querySelector(".name, h3, b") || {}).innerText || "").trim(); return { id: el.dataset.site, name }; });
+  const pick = await p.evaluate(() => { const all = [...document.querySelectorAll("label.site:not(.on) input[data-site]")], el = all.find(x => !x.closest(".sched")) || all[0]; /* a free sight first: one scheduled on another day moves (and changes that day) */ if (!el) return null; const name = ((el.closest("label").querySelector(".name, h3, b") || {}).innerText || "").trim(); return { id: el.dataset.site, name }; });
   if (ok(!!pick, `Change stops lists sights to add on day ${ed.i + 1}`)) {
-    const before = (await S()).days[ed.i].picks;
+    const before = (await S()).days[ed.i].picks, selOf = i => p.evaluate(i => { const T = window.__kairouteTruth(i); return (T.selected || []).join(", "); }, ed.i), sel0 = await selOf();
+    const pk0 = (await S()).days.map(x => x.picks);
     await p.evaluate(() => { window.__lt = []; }); const tc = Date.now();
     await p.locator(`label[for="s-${pick.id}"]`).first().click();
     await p.waitForTimeout(1500); const clickMs = Date.now() - tc, lt = await p.evaluate(() => Math.round(Math.max(0, ...window.__lt)));
     ok(lt < FREEZE_MS, `ticking a sight responds without freezing (longest block ${lt} ms, ${clickMs} ms)`);
-    const fitbox = await p.evaluate(() => !!document.querySelector(".fitbox, .banner.bumped"));
     const after = (await S()).days[ed.i].picks;
-    ok(after === before + 1 || fitbox, `ticking "${pick.name}" adds it to the picks (or explains why it doesn't fit) (${before} -> ${after})`);
+    // Explained either way: the won't-fit box, or the pick went in and another came off with the "no longer fits"
+    // note (fresh ride times can arrive between the check and the plan).
+    const fitbox = await p.evaluate(([i, id]) => !!document.querySelector(".fitbox") || (!!document.querySelector(".banner.bumped") && (window.__kairouteTruth(i).selected || []).includes(id)), [ed.i, pick.id]);
+    const why = after === before + 1 || fitbox ? "" : `; picks were [${sel0}], now [${await selOf()}]; notes: ${await p.evaluate(() => [...document.querySelectorAll(".banner, .movednote, .bumped, .note, [role=status]")].map(x => x.innerText.replace(/\s+/g, " ").trim()).filter(Boolean).slice(0, 6).join(" | ").slice(0, 600))}`;
+    ok(after === before + 1 || fitbox, `ticking "${pick.name}" adds it to the picks (or explains why it doesn't fit) (${before} -> ${after})${why}`);
     if (after === before + 1) {
       await p.evaluate(go("plan", ed.i)); await p.waitForTimeout(4000); const s = await seen(p);
       const inPlan = s.stops.concat(s.optional).some(x => x.toLowerCase().includes(pick.name.toLowerCase().slice(0, 12)));
@@ -245,6 +249,9 @@ async function partA(b) {
       await p.locator(`label[for="s-${pick.id}"]`).first().click().catch(() => {}); await p.waitForTimeout(1000);
       ok((await S()).days[ed.i].picks === before, "unticking it removes it again");
     } else await p.evaluate(() => { const b = document.querySelector(".fitbox [data-act=fitcancel], .fitbox .btn.ghost"); if (b) b.click(); });
+    // A pick that moved here from another day (one sight, one day) changed that day too: later checks compare with the trip as it is now.
+    const pk1 = (await S()).days.map(x => x.picks);
+    for (const d of days) if (pk1[d.i] !== pk0[d.i] && plans[d.i]) { await p.evaluate(go("plan", d.i)); await p.waitForTimeout(4000); const s = await seen(p); plans[d.i] = Object.assign({}, plans[d.i], { stops: s.stops }); log(`     day ${d.i + 1} changed by the tick: [${s.stops.join("; ")}]`); }
   }
 
   // 3. Rides: on the Naples day, pick the ferry when it is offered; Sorrento and the other stops must stay.

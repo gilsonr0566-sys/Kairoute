@@ -276,7 +276,18 @@ const log = (suite, trip, ok, what) => { results.push({ suite, trip, ok, what })
       const old1 = await p.evaluate(() => { const pk = window.__kairoutePicker(0).picked; window.__kairouteEdit(0, { seedSig: null }); return pk; });
       await p.evaluate(w => window.__kairouteSiteSet(0, w, 'late'), W); await p.waitForTimeout(200);
       const old2 = await p.evaluate(() => window.__kairoutePicker(0).picked);
-      const okO = JSON.stringify(own) === JSON.stringify(own2) && JSON.stringify(old1) === JSON.stringify(old2);
+      // Live demo, Nov 14: a pick the app itself took off (the day got shorter) made the list look like the traveler's,
+      // so Pompeii never led. The app's own change keeps the list the app's.
+      await mk(); await p.waitForTimeout(300); await p.evaluate(() => window.__kairouteSiteSet(0, { Pompeii: { fame: 0, unesco: false }, Spaccanapoli: { fame: 0, unesco: false }, Sansevero: { fame: 0 }, 'Naples Cathedral': { fame: 0 }, 'Piazza del Plebiscito': { fame: 0 } }, true)); await p.evaluate(() => window.__kairouteAt(0, 'plan')); await p.waitForTimeout(200);
+      const sh0 = await p.evaluate(() => window.__kairoutePicker(0).picked);
+      await p.evaluate(() => { window.__kairouteTime.set(0, { allAboard: '10:30' }); window.__kairouteAt(0, 'plan'); }); await p.waitForTimeout(300);
+      const sh1 = await p.evaluate(() => window.__kairoutePicker(0).picked), mark = await p.evaluate(() => [window.__kairouteState().days[0].picks, window.__kairouteLeadWhy(0).seedSig]);
+      await p.evaluate(() => { window.__kairouteTime.set(0, { allAboard: '19:00' }); window.__kairouteAt(0, 'plan'); }); await p.waitForTimeout(300);
+      await p.evaluate(w => window.__kairouteSiteSet(0, w, 'late'), W); await p.evaluate(() => window.__kairouteAt(0, 'plan')); await p.waitForTimeout(300);
+      const sh2 = await p.evaluate(() => window.__kairoutePicker(0).picked);
+      const okS = mark[0] < sh0.length && mark[1] === 'app picks' && sh2.some(n => /^Pompeii/.test(n));
+      if (!okS) own2.push('[after the app took a pick off: ' + sh0.join(', ') + ' -> ' + sh1.join(', ') + ' (' + mark.join(', ') + ') -> ' + sh2.join(', ') + ']');
+      const okO = okS && JSON.stringify(own) === JSON.stringify(own2) && JSON.stringify(old1) === JSON.stringify(old2);
       log('New trip', 'new-trips', okL && okO, 'Sources arriving after the picks: ' + (okL ? 'Pompeii leads once known (' + v.join(', ') + ')' : 'before ' + before.join(', ') + ' / after ' + v.join(', ')) + (okO ? '; a list the traveler made is left alone' : '; the traveler\'s list was changed: ' + own.join(', ') + ' -> ' + own2.join(', '))); }
     // Live ferry check, Nov 14: the traveler ticked Sorrento and Pompeii; the app later added two must-sees in town, and
     // when the day ran over, Sorrento (the traveler's own) gave way. The app's additions give way first.
@@ -294,6 +305,12 @@ const log = (suite, trip, ok, what) => { results.push({ suite, trip, ok, what })
       const src = { stops: [{ name: 'Ancient Corinth', lat: 37.9057, lng: 22.8789, wd: 'Q1', sl: 60, src: ['Wikivoyage'] }, { name: 'Corinth', lat: 37.94, lng: 22.93, wd: 'Q1', sl: 40, src: ['Wikivoyage'] }], far: [], eats: [] };
       const fm = await p.evaluate(([s, src]) => window.__kairouteFameMarkTest(s, src, 'Athens'), [[AC, CC], src]);
       const up = await p.evaluate(s => window.__kairouteUpgradeTest(s, 'Athens'), [Object.assign({}, AC, { wd: 'Q1', alias: ['Corinth Canal', 'corinth-canal-far'], merged: [Object.assign({}, CC, { wd: 'Q1' })] })]);
+      // Live dump, Nov 14: the Natural History Museum of Crete took the Historical Museum's id; Chania's Maritime Museum the Archaeological Museum's.
+      const NH = { id: 'nhm', name: 'Natural History Museum of Crete', lat: 35.3412, lng: 25.1281, category: 'Museum', minutes: 60 }, MM = { id: 'mm', name: 'Maritime Museum of Chania', lat: 35.5194, lng: 24.0156, category: 'Museum', minutes: 45 };
+      const fm2 = await p.evaluate(([s, src]) => window.__kairouteFameMarkTest(s, src, 'Crete'), [[NH, MM], { stops: [{ name: 'Historical Museum of Crete', lat: 35.3418, lng: 25.1304, wd: 'Q4204518', sl: 30, src: ['Wikivoyage'] }, { name: 'Archaeological Museum of Chania', lat: 35.5165, lng: 24.0175, wd: 'Q2', sl: 30, src: ['Wikivoyage'] }], far: [], eats: [] }]);
+      const fm3 = await p.evaluate(([s, src]) => window.__kairouteFameMarkTest(s, src, 'Athens'), [[AC], { stops: [{ name: 'Ancient Corinth', lat: 37.9057, lng: 22.8789, wd: 'Q1', sl: 60, src: ['Wikivoyage'] }], far: [], eats: [] }]);
+      if (fm2.error || fm2.wd.some(Boolean)) fm.error = 'a different museum took a source id: ' + JSON.stringify(fm2);
+      if (fm3.error || fm3.wd[0] !== 'Q1') fm.error = 'a sure match lost its source id: ' + JSON.stringify(fm3);
       const okC = !fm.error && fm.names.includes('Corinth Canal') && up.includes('Corinth Canal') && up.includes('Ancient Corinth');
       log('Duplicates', 'dedupe', okC, 'A loose source match never makes two places one: ' + (okC ? 'Corinth Canal stays beside Ancient Corinth, and a guide saved with the wrong fold gets it back' : JSON.stringify({ fm, up }))); }
     // Richard, Nov 14 (Rome, Jul 13): the guide moved Civitavecchia's cruise port to central Rome ("Location approximate:
@@ -321,6 +338,12 @@ const log = (suite, trip, ok, what) => { results.push({ suite, trip, ok, what })
       const g = await p.evaluate(([c, s]) => window.__kairouteFarGaps(c, s), [city, src]);
       const okF = JSON.stringify(g) === JSON.stringify(['Mount Vesuvius', 'Amalfi']);
       log('Sights', 'sights', okF, 'Famous day trips the guide lacks are offered to the writer: ' + (okF ? g.join(', ') : 'got ' + JSON.stringify(g))); }
+    // Live audit, Nov 14: Santorini's port day led with Naxos (an island 80 km across the sea), and day trips written in
+    // without how to get there were timed as a drive. On a port day only a short trip from the ship leads the day.
+    { const days = await p.evaluate(() => window.__kairouteDays()), pi = days.findIndex(x => x.type === 'port' && x.city);
+      const lt = pi < 0 ? null : await p.evaluate(i => ({ far: window.__kairouteLeadTest(i, { id: 'far-island-far', name: 'Faraway Island', dlat: 0.75, fame: 100000, mustSee: true, unesco: true, src: ['Wikivoyage', 'UNESCO', 'Wikidata (Wikipedia in many languages)'] }), near: window.__kairouteLeadTest(i, { id: 'near-ruins-far', name: 'Nearby Ruins', category: 'Archaeological site', dlat: 0.12, fame: 100000, mustSee: true, unesco: true, src: ['Wikivoyage', 'UNESCO', 'Wikidata (Wikipedia in many languages)'], travel: 'Train, 30-40 min' }) }), pi);
+      const okL = !!lt && lt.far && lt.far.lead !== lt.far.id && lt.near && lt.near.lead === lt.near.id;
+      log('Port days', 'ports', okL, 'On a port day only a short trip from the ship leads: ' + (okL ? 'an island 80 km away stays a choice; ruins 30-40 min away lead' : JSON.stringify(lt))); }
     // Demo run, Nov 14: boarding day in Athens (9:00 to 18:30) after four Athens days planned no stops.
     { await p.evaluate(([d, a]) => window.__kairouteNewTrip(d, a), ['Athens then cruise', 'STOPS: Athens\nDAY|2027-06-30|Athens|arrival|flight|14:00||||||\nDAY|2027-07-01|Athens|land||||||||\nDAY|2027-07-02|Athens|land||||||||\nDAY|2027-07-03|Athens|land||||||||\nDAY|2027-07-04|Athens (Piraeus)|embark|ship|09:00||18:30|no||no|']); await p.waitForTimeout(300);
       const days = await p.evaluate(() => window.__kairouteDays()); const ei = days.findIndex(x => x.type === 'embark');
