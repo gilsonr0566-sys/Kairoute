@@ -498,6 +498,7 @@ function alarmCard(d, plan) {
 }
 function alarmTick() {
   const d = day(), bar = alarmBarEl();
+  if (d && geoPos && !geoFresh() && isToday(d)) geoRefresh();
   const city = d && cityFor(d), plan = city && !noShore(d) ? buildPlan(d) : null;
   if (!plan || plan.error) { if (bar) bar.hidden = true; document.documentElement.classList.remove("alarmon"); return; }
   const fixed = !!fixedTitle(d) && plan.w.tail.length, st = fixed ? alarmState(d, plan) : null, live = isToday(d) || cdPreview != null;
@@ -591,6 +592,15 @@ function liveGeoStart() {
     liveGeoPoll = setInterval(() => { if (liveGeo != null && geoWatch == null) navigator.geolocation.getCurrentPosition(pos => { geoPos = { lat: pos.coords.latitude, lng: pos.coords.longitude, acc: pos.coords.accuracy, at: Date.now() }; alarmTick(); /* standing still at a stop: the fresh position re-checks running late at once */ }, () => {}, { enableHighAccuracy: true, maximumAge: 30000, timeout: 20000 }); }, 60000);
   } catch (e) { liveGeo = null; }
 }
+// A position that has gone stale (the phone slept, or the poll hasn't come round yet): ask for a fresh one at once
+// rather than counting down from where the plan guesses you are for up to a minute.
+let geoAsking = false;
+function geoRefresh() {
+  if (geoAsking || liveGeo == null || geoWatch != null || !navigator.geolocation) return; geoAsking = true;
+  navigator.geolocation.getCurrentPosition(pos => { geoAsking = false; geoPos = { lat: pos.coords.latitude, lng: pos.coords.longitude, acc: pos.coords.accuracy, at: Date.now() }; alarmTick(); },
+    () => { geoAsking = false; }, { enableHighAccuracy: true, maximumAge: 0, timeout: 20000 });
+}
+if (typeof document !== "undefined") document.addEventListener("visibilitychange", () => { if (!document.hidden && geoPos && !geoFresh()) geoRefresh(); });
 if (typeof window !== "undefined") setInterval(() => { try { alarmTick(); } catch (e) { console.warn("live", e); } }, 20000);
 if (typeof window !== "undefined") window.__kairouteLiveProbe = () => { const d = day(), plan = buildPlan(d); const it = plan.items.filter(i => i.type === "stop" && !i.place.along);
   const f = it[0]; return { first: { name: f.place.name, lat: f.place.lat, lng: f.place.lng }, planned: fmt(f.time), lateAt: fmt(Math.round(f.time + f.place.minutes + 40)), endBy: fmt(plan.endBy), live: d.live || null }; };
