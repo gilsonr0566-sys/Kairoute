@@ -701,7 +701,8 @@ async function askTransit() {
 // one hour to the next; a busy map server or a long list of quicker trains used to drop it, so the ferry appeared
 // and then vanished from the ride menu: Richard's Naples day, Nov 14). Seasonal lines still follow their months.
 function transitMerge(res, prev) {
-  const partial = !!res.partial || !res.opts.length, opts = res.opts.slice(), have = new Set(opts.map(rideId));
+  // Each line notes when it was last confirmed (at), so with no signal the Day plan can say "last checked <date>".
+  const now = Date.now(), partial = !!res.partial || !res.opts.length, opts = res.opts.map(o => Object.assign({}, o, { at: now })), have = new Set(opts.map(rideId));
   for (const o of (prev && prev.opts) || []) if ((partial || o.mode === "ferry") && !have.has(rideId(o))) { opts.push(o); have.add(rideId(o)); }
   return { opts: opts.sort((x, y) => x.min - y.min), t: Date.now(), v: TRANSIT_V, partial };
 }
@@ -778,7 +779,9 @@ if (typeof window !== "undefined") window.__kairouteRideSwitch = (i, key, val, f
 const safeDeps = (o, endBy, slack) => (o && o.deps || []).filter(d => d.t - d.lead + d.dur + (slack || 0) <= endBy);
 function depLine(o, start, endBy, back, slack) {
   if (!o) return "";
-  const when = o.checked ? ` (timetable checked ${fmtDate(o.checked)}; check again before you go)` : "";
+  // With no signal the times are the ones kept on the device: say when they were last checked.
+  const off = typeof navigator !== "undefined" && navigator.onLine === false, seen = o.at ? new Date(o.at).toISOString().slice(0, 10) : o.checked;
+  const when = off && seen ? ` (no signal: timetable last checked ${fmtDate(seen)})` : o.checked ? ` (timetable checked ${fmtDate(o.checked)}; Kairoute checks it again the day before and the morning of)` : "";
   if (!o.deps || !o.deps.length) return o.noTimetable ? ` No published timetable found for this ${o.kind.toLowerCase()}: planned with a full gap between departures. Check the ${o.kind.toLowerCase()} timetable before you go.` : "";
   const at = start + o.access.min, nx = isFinite(start) ? o.deps.find(d => d.t >= at) : null;
   let t = nx ? ` Next departure about ${fmt(nx.t)}${when}.` : ` Departures about every ${dur(o.every)}${when}.`;
@@ -889,8 +892,8 @@ function seedPicks(d, city) {
   const i = trip.days.indexOf(d); let made = false;
   // A day that starts with no picks (everything is planned on other days) is not a day cleared on purpose: the
   // planner still fills it (autoEmpty). The traveler's first tick or untick makes the list theirs.
-  trip.days.slice(0, Math.max(0, i)).forEach(o => { if (!o.selected && !noShore(o) && !throughTo(o) && cityFor(o) === city) { o.selected = defaultSelection(city, trip.style, o); fitTrim(o); o.autoEmpty = !o.selected.length; made = true; } });
-  if (!d.selected) { const w = wantIds(d, city); d.selected = [...new Set([...w, ...defaultSelection(city, trip.style, d)])]; fitTrim(d, w); w.forEach(id => markMine(d, id, true)); d.autoEmpty = !d.selected.length; made = true; wantsFind(d, city); }
+  trip.days.slice(0, Math.max(0, i)).forEach(o => { if (!o.selected && !noShore(o) && !throughTo(o) && cityFor(o) === city) { o.selected = defaultSelection(city, trip.style, o); fitTrim(o, o.selected.lead ? [o.selected.lead] : []); o.selected = [...o.selected]; o.autoEmpty = !o.selected.length; made = true; } });
+  if (!d.selected) { const w = wantIds(d, city); const ds = defaultSelection(city, trip.style, d); d.selected = [...new Set([...w, ...ds])]; fitTrim(d, w.length ? w : ds.lead ? [ds.lead] : []); w.forEach(id => markMine(d, id, true)); d.autoEmpty = !d.selected.length; made = true; wantsFind(d, city); }
   if (made && !seedSave) seedSave = setTimeout(() => { seedSave = null; save(); }, 0);
 }
 // Places the traveler named for a day when they described the trip ("Naples on July 12, we want Pompeii and
@@ -923,7 +926,18 @@ function defaultSelection(city, style, d) {
   const extra = s.filter(x => !x.mustSee).sort((a, b) => score(b) - score(a)).slice(0, 2).map(x => x.id);
   const byId0 = new Map(allSites(city).map(x => [x.id, x]));
   const carried = d ? carryOver(d).filter(id => !taken[id] && !(byId0.get(id) && shut(byId0.get(id)))) : [];
-  let sel = [...new Set([...carried, ...picks, ...extra])];
+  // A port's or city's top day trip (Pompeii from Naples, Taormina from Messina) leads the day when it is at least as
+  // famous as the best sight still free in town and the day has time for it: a one-day port never skips the reason
+  // people stop there. On a city stay, the town's own top sights take the first day and the day trip a later one.
+  let lead = null;
+  if (d && (d.type === "port" || d.type === "land")) {
+    const far = (city.farther || []).filter(x => !taken[x.id] && religiousOk(x) && !shut(x) && (x.mustSee || x.unesco || fameW(x) > 1));
+    const best = far.sort((a, b) => fameW(b) - fameW(a) || (b.mustSee ? 1 : 0) - (a.mustSee ? 1 : 0))[0];
+    const top = Math.max(1, ...s.filter(x => x.mustSee || x.unesco).map(x => fameW(x)));
+    let fits = false; if (best) { try { fits = fitsAll(fitTrial(d, [best.id])); } catch (e) {} }
+    if (best && fits && fameW(best) >= top) lead = best.id;
+  }
+  let sel = [...new Set([...(lead ? [lead] : []), ...carried, ...picks, ...extra])];
   // When another day later in the trip is in the same city, give this day only what fits its hours
   // (allowing for lunch and getting between stops) and leave the rest for that day, rather than
   // overfilling this one and showing "Didn't fit".
@@ -932,12 +946,15 @@ function defaultSelection(city, style, d) {
     const later = trip.days.some((o, j) => j > i && (cityKeyFor(o) || keyOf(o.destination)) === k);
     let w = null; try { w = dayWindow(d, city); } catch (e) {}
     if (later && w && !w.error && w.endBy > w.start) {
-      let left = w.endBy - w.start - 60 - (w.buffer || 0); const byId = new Map(city.sites.map(x => [x.id, x]));
+      let left = w.endBy - w.start - 60 - (w.buffer || 0); const byId = new Map(allSites(city).map(x => [x.id, x]));
       sel = sel.filter((id, n) => { const x = byId.get(id), need = (x ? x.minutes || 45 : 45) + 15; if (n > 0 && need > left) return false; left -= need; return true; });
     }
   }
   // On a short day, keep it light: start with the must-sees only.
-  if (d && d.type !== "land" && d.type !== "port") sel = [...new Set([...carried, ...picks])].slice(0, 2);
+  // When the must-sees are all on other days (a boarding day after four days in Athens), the best free sights close
+  // to the hotel or the ship are picked instead, so a long day is never left with nothing planned.
+  if (d && d.type !== "land" && d.type !== "port") { sel = [...new Set([...carried, ...picks])].slice(0, 2); if (!sel.length) sel = extra.slice(0, 2); }
+  if (lead && sel.includes(lead)) sel.lead = lead;
   return sel;
 }
 
@@ -1123,7 +1140,7 @@ const hoursOf = r => (r && (r.hours || ((/Hours listed: (.*?)\. Check/.exec(r.wh
 // "closed" only when the listed hours say it's shut at both usual times for that meal on the plan's date.
 function mealShut(r, label, iso) { const t = MEAL_CHECK[label] || MEAL_CHECK.Lunch, h = hoursOf(r); if (!h || r.booked) return false; return t.every(m => ohState(h, iso || planDate, m) === "closed"); }
 function simDay(seq, t0, O, Z, style) {
-  let clock = t0, prev = O, cost = 0, seenDinner = false;
+  let clock = t0, prev = O, cost = 0, seenDinner = false, late = 0; // late: stops reached after their last sensible entry
   const been = [];
   for (let i = 0; i < seq.length; i++) {
     const p = seq[i];
@@ -1153,7 +1170,7 @@ function simDay(seq, t0, O, Z, style) {
       clock += m.len;
     } else {
       // Opening hours: wait for it to open, and never arrive after the last entry. Then weather and rush hours.
-      if (p.oh) { const f = ohFit(p.oh, clock, p.minutes); if (f.wait) { cost += f.wait * 0.6; clock += f.wait; } if (f.late) cost += 300 + f.late * 10; }
+      if (p.oh) { const f = ohFit(p.oh, clock, p.minutes); if (f.wait) { cost += f.wait * 0.6; clock += f.wait; } if (f.late) { cost += 300 + f.late * 10; late++; } }
       cost += visitPenalty(p, clock, p.minutes || 0) + climateHeat(p, clock, p.minutes || 0);
       // Port days: a stop a long ride from the ship is seen early, so a late train or traffic jam on the way back
       // can never cost the ship. The farther it is and the later it would be, the more it costs.
@@ -1163,7 +1180,7 @@ function simDay(seq, t0, O, Z, style) {
     prev = p;
   }
   if (Z) { clock += tmin(prev, Z); cost += hav(prev, Z) * 0.4; }
-  return { cost: clock - t0 + cost, end: clock };
+  return { cost: clock - t0 + cost, end: clock, late };
 }
 // Polish a whole sequence (meals included): move any one item to any other place, reverse any stretch,
 // or swap a meal's restaurant, keeping every change that makes the day shorter. Removes zigzags,
@@ -1599,10 +1616,22 @@ function buildPlanFor(d) {
   // Safety net, checked on the real simulated day: if the day still runs late (a reserved table across town
   // can do that), the stop that frees the most time for the least sightseeing gives way, until it fits.
   // The step after this one then puts back every dropped stop that fits somewhere else in the day.
+  // A stop reached after it closes to visitors (its last entry, or too near closing for the visit) doesn't fit
+  // either: the day is not planned with a "you'd get there too late" stop while dropping it or another order
+  // would avoid it (Madrid arrival day: Royal Palace first, then the Prado at 18:52, closing at 19:00).
+  const worthIn = x => (x.mustSee ? 3 : 1) * ((d.mine || []).includes(x.id) ? 2 : 1) * fameW(x) * Math.max(20, x.minutes || 0);
   { const lim = w.endBy - tailCost();
     for (let guard = 0; guard < 12; guard++) {
-      if (simDay(seq, t0, O, ZZ, style).end <= lim + (hardEnd(d) ? 0 : 5)) break; // a ship, train or plane has no leeway: it won't wait
+      const r0 = simDay(seq, t0, O, ZZ, style), over = r0.end > lim + (hardEnd(d) ? 0 : 5); // a ship, train or plane has no leeway: it won't wait
+      if (!over && !r0.late) break;
       const bare = seq.filter(x => !x.mealOf); if (bare.length < 2) break;
+      // Only lateness: the least important stop whose leaving out gets every other stop there in time gives way.
+      if (!over) {
+        const tryOut = list => list.map(c => ({ c, q: polishDay(withMeals(bare.filter(x => x !== c)), t0, O, ZZ, style, city) })).map(x => Object.assign(x, { r: simDay(x.q, t0, O, ZZ, style) })).filter(x => x.r.late < r0.late && x.r.end <= lim + (hardEnd(d) ? 0 : 5)).sort((a, b) => worthIn(a.c) - worthIn(b.c))[0];
+        const nm = bare.filter(x => !x.mustSee), got = (nm.length && tryOut(nm)) || tryOut(bare);
+        if (!got) break;
+        seq = got.q; dropped.push(got.c); continue;
+      }
       // First, long visits give 15 minutes each (down to 70% of the guide's time, never under 1 h 30).
       const floor = x => Math.max(90, Math.round((x.shortFrom || x.minutes) * 0.7 / 5) * 5);
       if (bare.some(x => x.minutes >= 120 && x.minutes - 15 >= floor(x))) {
@@ -1621,10 +1650,10 @@ function buildPlanFor(d) {
     const lim = w.endBy - tailCost();
     const rank = x => (x.mustSee ? 3 : 1) * fameW(x) * (seq.filter(y => !y.mealOf && hav(y, x) < 15).length + 1);
     for (const c of dropped.slice().sort((a, b) => rank(b) - rank(a))) {
-      const bare = seq.filter(x => !x.mealOf); let best = null;
+      const bare = seq.filter(x => !x.mealOf), late0 = simDay(seq, t0, O, ZZ, style).late; let best = null;
       for (let i = 0; i <= bare.length; i++) {
         const q = polishDay(withMeals(bare.slice(0, i).concat([c], bare.slice(i))), t0, O, ZZ, style, city), r = simDay(q, t0, O, ZZ, style);
-        if (r.end <= lim && (!best || r.cost < best.cost)) best = { q, cost: r.cost };
+        if (r.end <= lim && r.late <= late0 && (!best || r.cost < best.cost)) best = { q, cost: r.cost };
       }
       if (best) { seq = best.q; dropped.splice(dropped.indexOf(c), 1); }
     }
@@ -1637,7 +1666,7 @@ function buildPlanFor(d) {
   if (dropped.length) {
     const lim = w.endBy - tailCost(), mine = new Set(d.mine || []);
     const worthOf = x => (x.mustSee ? 3 : 1) * (mine.has(x.id) ? 2 : 1) * fameW(x) * Math.max(20, x.minutes || 0);
-    const tryIn = (bare, c) => { let best = null; for (let i = 0; i <= bare.length; i++) { const q = polishDay(withMeals(bare.slice(0, i).concat([c], bare.slice(i))), t0, O, ZZ, style, city), r = simDay(q, t0, O, ZZ, style); if (r.end <= lim && (!best || r.cost < best.cost)) best = { q, cost: r.cost }; } return best; };
+    const tryIn = (bare, c) => { const late0 = simDay(polishDay(withMeals(bare), t0, O, ZZ, style, city), t0, O, ZZ, style).late; let best = null; for (let i = 0; i <= bare.length; i++) { const q = polishDay(withMeals(bare.slice(0, i).concat([c], bare.slice(i))), t0, O, ZZ, style, city), r = simDay(q, t0, O, ZZ, style); if (r.end <= lim && r.late <= late0 && (!best || r.cost < best.cost)) best = { q, cost: r.cost }; } return best; };
     const tried = new Set();
     for (let guard = 0; guard < 8; guard++) {
       const c = dropped.filter(x => !tried.has(x)).sort((a, b) => worthOf(b) - worthOf(a))[0]; if (!c) break; tried.add(c); // a stop bumped out gets its own turn too
@@ -1849,12 +1878,23 @@ function sequenceDates(days) {
   });
   return changed;
 }
-function parseDayLines(out) { const days = parseDayLines0(out); sequenceDates(days); return days; }
+// A city stay that ends the day the cruise boards there ("4 nights in Athens, then this cruise" with the ship leaving
+// Athens on Jul 4) is one day, the boarding day: the AI sometimes gives a leaving day and a boarding day on the same
+// date, and putting them in order then pushed the whole cruise a day late. The boarding day (from the booking) wins.
+function mergeBoarding(days) {
+  for (let i = days.length - 1; i > 0; i--) { const d = days[i], p = days[i - 1];
+    if (d.type === "embark" && (p.type === "departure" || p.type === "land") && p.date && p.date === d.date && keyOf(mainPlace(p)) === keyOf(mainPlace(d))) {
+      if (p._lodging && !d._lodging) d._lodging = p._lodging; days.splice(i - 1, 1); } }
+  return days;
+}
+function parseDayLines(out) { const days = mergeBoarding(parseDayLines0(out)); sequenceDates(days); return days; }
 function parseDayLines0(out) {
   const types = DAY_TYPES.map(t => t.key), hm = v => /^\d\d:\d\d$/.test((v || "").trim()) ? v.trim() : "";
   // The format line itself ("DAY|date YYYY-MM-DD|destination|type|…") is sometimes echoed back by the AI: never a day.
   return String(out).split("\n").filter(l => /^\s*DAY\|/.test(l)).map(l => l.trim().split("|").map(x => x.trim())).filter(f => f[2] && !/yyyy|^date\b/i.test(f[1] || "") && !/^destination$/i.test(f[2]) && !/^type$/i.test(f[3] || "")).map(f => {
-    const [, date, destination, type0, mode0, time, pa, aa, tender, lodging, est, want] = f;
+    let [, date, destination, type0, mode0, time, pa, aa, tender, lodging, est, want] = f;
+    // A column slipped (the yes/no for estimated landed in the places column): read it as the yes/no it is.
+    if (/^(yes|no)$/i.test(want || "") && !/^(yes|no)$/i.test(est || "")) { if (!lodging && est) lodging = est; est = want; want = ""; }
     const type = types.includes(type0) ? type0 : "land", mode = MODES[mode0] ? mode0 : "flight";
     return newDay({
       date: /^\d{4}-\d{2}-\d{2}$/.test(date) ? date : "", destination, type, mode,
@@ -3701,7 +3741,11 @@ function dedupeSites(c) {
     if (!r) { r = placeRel(b, a); if (r) { big = b; small = a; } }
     if (!r) continue;
     try { dedupeLog.push({ city: c.city || "", kept: (r === "same" && rank(b) > rank(a) ? b : big).name, gone: (r === "same" && rank(b) > rank(a) ? a : small).name, rel: r }); } catch (e) {}
-    if (r === "same") { if (rank(b) > rank(a)) { big = b; small = a; } big.mustSee = big.mustSee || small.mustSee; big.alias = [...new Set([...(big.alias || []), small.name, small.id])]; }
+    if (r === "same") { if (rank(b) > rank(a)) { big = b; small = a; } big.mustSee = big.mustSee || small.mustSee; big.alias = [...new Set([...(big.alias || []), small.name, small.id])];
+      // A name that joins more places ("Colosseum and Roman Forum" folded into "Roman Forum") is kept as the shown name, so
+      // the place it adds (the Colosseum) never disappears from the guide.
+      const pw = n => placeWords(String(n).replace(/\(.*?\)|\[.*?\]/g, " ")), wb = pw(big.name), ws = pw(small.name); // bracketed notes ("via boat", a local name) aren't more places
+      if (/\s(and|&)\s/i.test(String(small.name).replace(/\(.*?\)|\[.*?\]/g, " ")) && ws.length > wb.length && wb.every(t => ws.includes(t))) { big.alias = [...new Set([...big.alias.filter(x => x !== small.name), big.name])]; big.name = small.name; } }
     else { big.lookFor = [...new Set([...(big.lookFor || []), small.name])].slice(0, 6); big.alias = [...new Set([...(big.alias || []), small.id])]; }
     // A copy of what was folded is kept, so a fold the rules later tell apart can be undone (undoMerges).
     { const copy = Object.assign({}, small); delete copy.merged; big.merged = (big.merged || []).filter(x => x.id !== copy.id).concat([copy]); }
@@ -3725,6 +3769,8 @@ function undoMerges(c, key) {
   }
   return back;
 }
+// Check hook: fold a made-up guide and return the names it keeps.
+if (typeof window !== "undefined") window.__kairouteFoldNames = sites => { const c = { city: "Test", sites: JSON.parse(JSON.stringify(sites)), farther: [] }; dedupeSites(c); return c.sites.map(x => x.name); };
 const restoreKeys = new Set();
 if (typeof window !== "undefined") window.__kairouteUndoCheck = () => { const M = (id, name, lat, lng) => ({ id, name, lat, lng, category: "Museum" });
   const c = { city: "Test", sites: [Object.assign(M("a", "Natural History Museum of Crete", 35.3414, 25.1327), { merged: [M("b", "Historical Museum of Crete", 35.3412, 25.1325)], alias: ["Historical Museum of Crete", "b", "Maritime Museum of Chania"] }), Object.assign(M("p", "Prado Museum", 40.4138, -3.6921), { alias: ["Museo del Prado", "museo-prado"] })], farther: [] };
@@ -5023,6 +5069,10 @@ function timeMeter(plan, d) {
     <div class="mrow"><b>${dur(Math.min(used, 24 * 60))} of ${dur(avail)}</b><span>${fmt(m.start)} to ${fmt(m.endBy)}</span></div>
     <div class="mbar"><i style="width:${pct}%"></i></div>${parts.length ? `<p class="mparts">${parts.map(esc).join(" · ")}</p>` : ""}${msg ? `<p>${msg}</p>` : ""}${extras}</div>`;
 }
+// A day's guide with each sight's weight (checks: a port's top day trip must be weighed against the city's sights).
+if (typeof window !== "undefined") window.__kairouteWeights = i => { const c = cityFor(trip.days[i]); if (!c) return null; const w = x => ({ id: x.id, name: x.name, must: !!x.mustSee, unesco: !!x.unesco, fame: +fameW(x).toFixed(2), min: x.minutes }); return { sites: c.sites.filter(x => !x.quick).map(w), far: (c.farther || []).map(w) }; };
+// Checks: give a guide's sights the source weights the live site would (fame, UNESCO) and plan the day afresh.
+if (typeof window !== "undefined") window.__kairouteSiteSet = (i, patches, reseed) => { const d = trip.days[i], c = cityFor(d); if (!c) return null; for (const [id, p] of Object.entries(patches)) { const x = allSites(c).find(y => y.id === id) || allSites(c).find(y => y.name.toLowerCase().startsWith(id.toLowerCase())); if (x) Object.assign(x, p); } if (reseed) { trip.days.forEach(o => { if (cityFor(o) === c) { delete o.selected; delete o.mine; delete o.anchor; } }); seedPicks(d, c); } render(); return (d.selected || []).slice(); };
 // What Change stops offers for a day, by section (live checks: a day trip like Sorrento or Amalfi must always be offered).
 if (typeof window !== "undefined") window.__kairoutePicker = i => { const d = trip.days[i], city = cityFor(d); if (!city) return { error: "no guide" }; if (!d.selected) seedPicks(d, city);
   const elsewhere = plannedElsewhere(d), away = x => elsewhere[x.id] && !d.selected.includes(x.id), nm = l => l.map(x => x.name);
@@ -5649,6 +5699,7 @@ ${partsList(s, it.time)}${stopLiveNotes(it, d)}</div></div>`;
   // Heads-up: everything that needs a decision today, in one place above the schedule, most urgent first.
   const heads = [
     (b => b ? `<div class="livecard">${b}</div>` : "")(liveBanner(d, plan)),
+    rideChangeBanner(d),
     plan.over ? `<div class="banner warn" role="alert">This plan runs ${dur(plan.end - plan.endBy)} past ${fmt(plan.endBy)}. Remove a stop with Change stops, or change the times.</div>` : "",
     closedBanner(d, plan),
     plan.dropped.length && !liveOn(d) ? `<div class="banner warn dropped"><span>Didn't fit today: <b>${plan.dropped.map(s => esc(s.name)).join(", ")}</b>. Your picks are over today's time.${estShip(d) ? ` The ship times here are estimated; your booking's real times may leave room.` : ""}</span>${estShip(d) && aiReady() ? `<button type="button" class="btn small ghost" data-act="shiptimes">Add ship times</button>` : ""}<button type="button" class="btn small" data-act="fitfix">Make it fit</button></div>` : "",
@@ -6090,6 +6141,7 @@ document.addEventListener("click", e => {
     const a = answers[t.dataset.playAns]; if (a && a.text) speakText("ans:" + t.dataset.playAns, a.text); renderGuideOnly(); return; }
   if (t.dataset.act === "asknoticeok") { askNotice = ""; render(); return; }
   if (t.dataset.act === "rideforce" && rideNotice && rideNotice.force) { switchRide(rideNotice.key, rideNotice.force, true); const y = window.scrollY; render(); window.scrollTo(0, y); return; }
+  if (t.dataset.act === "ridechangeok") { const d = day(); if (d) { delete d.rideChange; save(); } const y = window.scrollY; render(); window.scrollTo(0, y); return; }
   if (t.dataset.act === "rideundo" && rideNotice) { if (rideNotice.undo === "") delete trip.legModes[rideNotice.key]; else trip.legModes[rideNotice.key] = rideNotice.undo; rideNotice = null; save(); const y = window.scrollY; render(); window.scrollTo(0, y); return; }
   if (t.dataset.act === "coachnext") { coachStep++; if (coachStep >= COACH.length) coachDone(); render(); return; }
   if (t.dataset.act === "coachskip") { coachDone(); render(); return; }

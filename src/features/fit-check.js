@@ -66,8 +66,11 @@ function fitTrim(d, keep) {
   const city = cityFor(d); if (!city || !Array.isArray(d.selected) || !d.selected.length) return;
   const value = x => (x.mustSee ? 100 : 0) + (x.unesco ? 20 : 0) + (fameW(x) || 1) * 5;
   d.selected = d.selected.filter(id => { const x = allSites(city).find(y => y.id === id); return !x || (keep || []).includes(id) || !shutOn(d, x); }); // closed that day: never one of the app's picks
-  for (let g = 0; g < 12 && d.selected.length && !fitsAll(fitTrial(d, d.selected)); g++) {
-    const cand = allSites(city).filter(x => d.selected.includes(x.id) && !(keep || []).includes(x.id)).sort((a, b) => value(a) - value(b))[0];
+  for (let g = 0; g < 12 && d.selected.length; g++) {
+    const t = fitTrial(d, d.selected); if (fitsAll(t)) break;
+    // What the plan itself left out goes first (it weighed route, hours and worth), then the least important.
+    const out = new Set(((t.m && t.m.dropped) || []).map(x => x.id));
+    const cand = allSites(city).filter(x => d.selected.includes(x.id) && !(keep || []).includes(x.id)).sort((a, b) => (out.has(b.id) ? 1 : 0) - (out.has(a.id) ? 1 : 0) || value(a) - value(b))[0];
     if (!cand) break; d.selected = d.selected.filter(i => i !== cand.id);
   }
 }
@@ -267,3 +270,5 @@ if (typeof window !== "undefined") window.__kairouteFitPending = () => fitQueue.
 if (typeof window !== "undefined") window.__kairouteFitExact = id => { const d = day(); return fitsAll(fitTrial(d, [...d.selected, id])); };
 if (typeof window !== "undefined") window.__kairouteTimesFixed = () => timesFixed(day());
 if (typeof window !== "undefined") window.__kairouteTryAdd = id => addPick(day(), id, true);
+// Safety net: day i's stops reached after their last sensible entry (the "you'd get there too late" warning).
+if (typeof window !== "undefined") window.__kairouteLateStops = i => { const d = trip.days[i], pl = cityFor(d) && !noShore(d) ? buildPlan(d) : null; return pl && !pl.error ? { n: pl.items.filter(x => x.type === "stop" && !x.place.along).length, late: pl.items.filter(x => x.type === "stop" && x.ohLate).map(x => `${x.place.name} at ${fmt(x.time)} (closes ${fmt(x.closes)})`) } : null; };

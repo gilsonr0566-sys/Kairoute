@@ -468,6 +468,13 @@ export default {
           if (kf === null) return { opts: x.opts, partial: true };
           return kf.length ? { opts: topRides((x.opts || []).concat(kf), 6), partial: x.partial } : x; };
         const hit = await env.USAGE.get(key, "json");
+        // fresh: the page re-checks a ride the day before and the morning of the day it is taken (timetables change).
+        // A kept answer over 6 hours old is looked up again now (one live look per ride per 6 hours, shared by every
+        // traveler); a busy source keeps the kept answer.
+        if (hit && pr.fresh && Date.now() - (hit.t || 0) > 6 * 3600e3 && !(await env.USAGE.get("lf:" + key))) {
+          await env.USAGE.put("lf:" + key, "1", { expirationTtl: 6 * 3600 }).catch(() => {});
+          try { const r = await look(); if (!r.partial && r.opts.length) { ctx.waitUntil(keep(r).catch(() => {})); return withFerries({ opts: r.opts, partial: false }); } } catch (e) {}
+        }
         if (hit) {
           if (hit.partial && Date.now() - (hit.t || 0) > 600000 && !(await env.USAGE.get("lk:" + key))) {
             ctx.waitUntil(env.USAGE.put("lk:" + key, "1", { expirationTtl: 600 }).then(look).then(r => (!r.partial || r.opts.length > (hit.opts || []).length) ? keep(r).then(() => r.late ? r.late.then(f => f && keep(f)) : null) : (r.late ? r.late.then(f => f && keep(f)) : null)).catch(() => {}));
