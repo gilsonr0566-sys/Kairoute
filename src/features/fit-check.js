@@ -9,10 +9,12 @@
 // day plan (route, meals, opening hours), the same one the time meter and the Day plan show.
 let fitState = null;
 function fitTrial(d, sel, t) {
-  const keep = { selected: d.selected, hours: d.hours, startTime: d.startTime };
-  d.selected = sel; if (t && t.hours != null) d.hours = t.hours; if (t && t.startTime) d.startTime = t.startTime; forget0(d);
+  // Whether picks fit is measured without the optional stops that fill spare time (the time meter never counts
+  // them), so the trial plans the day once instead of twice (with them, then again without).
+  const keep = { selected: d.selected, hours: d.hours, startTime: d.startTime, fillTime: d.fillTime };
+  d.selected = sel; d.fillTime = false; if (t && t.hours != null) d.hours = t.hours; if (t && t.startTime) d.startTime = t.startTime; forget0(d);
   try { const p = buildPlan(d), m = meterCalc(p, d); return { p, m }; }
-  finally { Object.assign(d, keep); forget0(d); }
+  finally { Object.assign(d, keep); if (keep.fillTime === undefined) delete d.fillTime; forget0(d); }
 }
 const fitsAll = r => !!(r && r.m && !r.m.over && !r.m.dropped.length && !((r.p && r.p.closedToday) || []).length); // a pick the day can't visit (closed) never "fits"
 // Only a hotel day's times are the traveler's to change; arrival, departure, boarding and port days are set

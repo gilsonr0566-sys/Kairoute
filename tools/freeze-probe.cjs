@@ -9,6 +9,9 @@ const CPU = +arg('--cpu', 4), DEV = arg('--device', 'phone'), OUT = arg('--out',
 // --record file.json.gz: keep every internet answer (not map tiles) so later runs can replay the same day exactly.
 // --replay file.json.gz: answer from that recording instead of the internet (map tiles are left out).
 const REC = arg('--record', ''), REP = arg('--replay', '');
+// --gate: fail (exit 1) when the visit froze too long: any one freeze over --max-freeze ms (default 2000), all freezes
+// over 100 ms adding up to more than --max-total ms (default 60000), or the Day plan re-planning or redrawing while left alone.
+const GATE = process.argv.includes('--gate'), MAXF = +arg('--max-freeze', 2000), MAXT = +arg('--max-total', 60000);
 const zlib = require('zlib');
 const netKey = (m, u, pd) => m + ' ' + u + (pd ? ' ' + require('crypto').createHash('md5').update(pd).digest('hex') : '');
 const isTile = u => /tiles\.openfreemap|\/fonts\/|\.pbf(\?|$)|\/sprites?\//.test(u);
@@ -119,4 +122,10 @@ const MIME = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css
   if (REC) { fs.writeFileSync(REC, zlib.gzipSync(JSON.stringify(recRows))); console.log(`Recorded ${recRows.length} internet answers to ${REC} (${Math.round(fs.statSync(REC).size / 1024)} KB)`); }
   if (OUT) fs.writeFileSync(OUT, JSON.stringify({ URL, DEV, CPU, ready, lt, taps, incl: top(incl, 80), self: top(self, 40) }, null, 1));
   await b.close(); if (server) server.close();
+  if (GATE) { const longest = Math.max(0, ...big.map(x => x.ms)), total = big.reduce((a, x) => a + x.ms, 0), probs = [];
+    if (longest > MAXF) probs.push(`longest freeze ${longest} ms (limit ${MAXF})`);
+    if (total > MAXT) probs.push(`frozen ${total} ms in all (limit ${MAXT})`);
+    if (i0 && i1 && (i1.built - i0.built || i1.renders - i0.renders)) probs.push(`left alone, the Day plan made ${i1.built - i0.built} plans and ${i1.renders - i0.renders} redraws (must be 0)`);
+    console.log(probs.length ? 'FAIL freeze gate: ' + probs.join('; ') : `Freeze gate passed (longest ${longest} ms, ${total} ms in all, idle page still)`);
+    process.exit(probs.length ? 1 : 0); }
 })();

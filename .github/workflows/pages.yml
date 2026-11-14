@@ -61,6 +61,9 @@ jobs:
         run: MOCK=1 node tools/map-e2e.cjs
       - name: Speed check (phone and tablet, slowed like a mid-range phone; a slow app doesn't go live)
         run: node tools/perf-check.cjs . --json checks/speed.json
+      - name: Freeze check with real internet answers (a recorded visit to the live app replayed on this build, slow phone)
+        run: node tools/freeze-probe.cjs . --cpu 4 --device phone --replay tools/fixtures/net-live.json.gz --gate | grep -E "Replaying|Freeze probe|Freezes over|Left alone|gate|FAIL"; exit ${PIPESTATUS[0]}
+        shell: bash
       - name: Keep the safety-net report even when it fails
         if: always()
         uses: actions/upload-artifact@v4
