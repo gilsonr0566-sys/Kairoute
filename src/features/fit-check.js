@@ -8,11 +8,11 @@
 // unticking or another day (the ship's 45-minute safety margin is never touched). Every check uses the real
 // day plan (route, meals, opening hours), the same one the time meter and the Day plan show.
 let fitState = null;
-function fitTrial(d, sel, t) {
-  // Whether picks fit is measured without the optional stops that fill spare time (the time meter never counts
-  // them), so the trial plans the day once instead of twice (with them, then again without).
+function fitTrial(d, sel, t, fast) {
+  // fast (the Sights list's marks): measured without the optional stops that fill spare time (the time meter never
+  // counts them), so a check plans the day once instead of twice. The won't-fit box and its fixes plan in full.
   const keep = { selected: d.selected, hours: d.hours, startTime: d.startTime, fillTime: d.fillTime };
-  d.selected = sel; d.fillTime = false; if (t && t.hours != null) d.hours = t.hours; if (t && t.startTime) d.startTime = t.startTime; forget0(d);
+  d.selected = sel; if (fast) d.fillTime = false; if (t && t.hours != null) d.hours = t.hours; if (t && t.startTime) d.startTime = t.startTime; forget0(d);
   try { const p = buildPlan(d), m = meterCalc(p, d); return { p, m }; }
   finally { Object.assign(d, keep); if (keep.fillTime === undefined) delete d.fillTime; forget0(d); }
 }
@@ -275,14 +275,14 @@ function fitRefine() {
     const id = fitQueue.shift();
     if (fitMemo.res.has(id)) continue;
     const s = allSites(city).find(x => x.id === id);
-    const ok = s && fitNever(ctx.plan, d, s) ? false : fitsAll(fitTrial(d, [...d.selected, id])); fitMemo.res.set(id, ok);
+    const ok = s && fitNever(ctx.plan, d, s) ? false : fitsAll(fitTrial(d, [...d.selected, id], null, true)); fitMemo.res.set(id, ok);
     const el = document.querySelector(`#view [data-card="${CSS.escape(id)}"]`);
     if (el && s && !d.selected.includes(id)) el.outerHTML = siteCard(s, d, ctx.plan, ctx.near);
   }
   if (fitQueue.length) fitTimer = setTimeout(fitRefine, 16);
 }
 if (typeof window !== "undefined") window.__kairouteFitPending = () => fitQueue.length;
-if (typeof window !== "undefined") window.__kairouteFitExact = id => { const d = day(); return fitsAll(fitTrial(d, [...d.selected, id])); };
+if (typeof window !== "undefined") window.__kairouteFitExact = id => { const d = day(); return fitsAll(fitTrial(d, [...d.selected, id], null, true)); };
 if (typeof window !== "undefined") window.__kairouteTimesFixed = () => timesFixed(day());
 if (typeof window !== "undefined") window.__kairouteTryAdd = id => addPick(day(), id, true);
 // Safety net: day i's stops reached after their last sensible entry (the "you'd get there too late" warning).

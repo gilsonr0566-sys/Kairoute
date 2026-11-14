@@ -1264,13 +1264,15 @@ function mealSpots(seq, O, Z, city) {
 // detour off the route, travelers' ratings, the right style, open for this meal) can win, so only those are tried.
 // The "Lunch near <stop>" choices are always kept.
 const MEAL_TRY = 8;
-// Worked out once per set of stops in a plan (the planner asks again for every order it weighs).
+// Worked out once per set of stops in a day's plan (the planner asks again for every order it weighs).
 let mealPickMemo = { g: -1, m: new Map() };
 function mealPick(seq, O, Z, city, m, style) {
-  const bare = seq.filter(x => !x.mealOf), key = m.label + "|" + (m.quick ? 1 : 0) + "|" + style + "|" + planDate + "|" + [...avoidMeals].join(",") + "|" + bare.map(x => x.id || x.name).sort().join(",") + "|" + (O ? O.lat + "," + O.lng : "") + "|" + (Z ? Z.lat + "," + Z.lng : "");
-  if (mealPickMemo.g !== tminEpoch || mealPickMemo.city !== city) mealPickMemo = { g: tminEpoch, city, m: new Map() };
+  const bare = seq.filter(x => !x.mealOf), key = m.label + "|" + (m.quick ? 1 : 0) + "|" + style + "|" + planDate + "|" + [...avoidMeals].join(",") + "|" + bare.map(x => (x.id || "") + "~" + x.name + "~" + x.lat + "," + x.lng).sort().join(",") + "|" + (O ? O.lat + "," + O.lng : "") + "|" + (Z ? Z.lat + "," + Z.lng : "");
+  if (mealPickMemo.city !== city) { mealPickMemo.city = city; mealPickMemo.m = new Map(); }
   const got = mealPickMemo.m.get(key); if (got) return got;
-  const v = mealPickRaw(seq, O, Z, city, m, style); mealPickMemo.m.set(key, v); return v;
+  // In a set order (the "Lunch near" choices by name), so the answer never depends on which order asked first.
+  const v = mealPickRaw(seq, O, Z, city, m, style), gen = v.filter(r => r.generic).sort((a, b) => a.name < b.name ? -1 : a.name > b.name ? 1 : 0), out = v.filter(r => !r.generic).concat(gen);
+  mealPickMemo.m.set(key, out); return out;
 }
 function mealPickRaw(seq, O, Z, city, m, style) {
   const all = mealSpots(seq, O, Z, city); if (all.length <= MEAL_TRY) return all;
@@ -1556,6 +1558,10 @@ function buildPlanRaw(d) { const prev = planDate, pw = planWx; if (!planDepth) t
       if (p2 && !p2.error && !p2.over && (p2.dropped || []).length < pl.dropped.length) { p2.fastRides = true; pl = p2; } }
     return pl; } finally { planDate = prev; planWx = pw; planDepth--; } }
 function buildPlanFor(d) {
+  const memo0 = mealPickMemo; mealPickMemo = { g: -1, m: new Map() }; // meal choices are remembered for this day's plan only
+  try { return buildPlanForDay(d); } finally { mealPickMemo = memo0; }
+}
+function buildPlanForDay(d) {
   const city = cityFor(d); if (!city) return null;
   const w = dayWindow(d, city); if (w.error) return w;
   liveWindow(d, w); // running late: the day re-planned from where you are now
