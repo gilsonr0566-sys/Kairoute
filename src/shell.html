@@ -102,6 +102,10 @@ main .wrap { padding-block: 20px 64px; display: grid; gap: 18px; }
 .card { background: var(--card); border: 1px solid var(--line); border-radius: var(--r); padding: 16px; display: grid; gap: 14px; min-width: 0; }
 .banner { background: var(--route-soft); border-radius: var(--r); padding: 12px 14px; font-size: 0.92rem; display: flex; gap: 10px; align-items: flex-start; }
 .banner.warn { background: var(--meal-soft); }
+.banner.bumped { flex-wrap: wrap; } .banner.bumped .actions { display: flex; flex-wrap: wrap; gap: 8px; }
+.schedline { display: flex; align-items: center; gap: 12px; margin: 22px 0 6px; font-weight: 700; font-size: .85rem; letter-spacing: .04em; text-transform: uppercase; color: var(--muted); }
+.schedline::before, .schedline::after { content: ""; flex: 1; border-top: 2px solid var(--line, #ccc); }
+.site.nofitcard [data-act="fitask"] { margin-top: 8px; }
 .eyebrow { font-size: 0.75rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); font-weight: 700; }
 
 .field { display: grid; gap: 6px; min-width: 0; }

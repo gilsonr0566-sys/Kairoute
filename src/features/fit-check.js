@@ -56,7 +56,7 @@ function addPick(d, id, ask) {
   if (from) { from.selected = from.selected.filter(x => x !== id); markMine(from, id, false); if (from.anchor === id) from.anchor = null; }
   // The won't-fit box measures the day as if the sight came here (before it goes back to its own day).
   if (!fitsWith(d, [id])) { if (ask) fitOpen(d, id); if (from) { from.selected = back.sel; from.mine = back.mine; from.anchor = back.anchor; } return false; }
-  d.selected = [...d.selected, id]; delete d.autoEmpty; rememberPick(d, sx); if (ask) markMine(d, id, true);
+  d.selected = [...d.selected, id]; delete d.autoEmpty; if (d.bumped) d.bumped = d.bumped.filter(b => b.id !== id); rememberPick(d, sx); if (ask) markMine(d, id, true);
   if (from) movedNote = (sx ? sx.name : "That sight") + " moved here from " + fmtDow(from.date) + " " + fmtDate(from.date) + ".";
   return true;
 }
@@ -217,6 +217,8 @@ document.addEventListener("change", e => {
 document.addEventListener("click", e => {
   const t0 = e.target.closest && e.target.closest("button");
   if (t0 && t0.dataset.act === "fitfix") { const d = day(); if (fitOpen(d, null)) render(); return; }
+  if (t0 && t0.dataset.act === "fitask") { const d = day(); if (addPick(d, t0.dataset.id, true)) { save(); render(); } return; }
+  if (t0 && t0.dataset.act === "bumpok") { const d = day(); d.bumped = []; save(); render(); return; }
   if (closedState) { if (t0 && t0.dataset.act === "closedday") { closedGo("day", +t0.dataset.to); return; } if (t0 && t0.dataset.act === "closedalt") { closedGo("alt"); return; }
     if ((t0 && t0.dataset.act === "fitcancel") || (e.target.classList && e.target.classList.contains("fitbox"))) { closedState = null; const old = document.querySelector(".fitbox"); if (old) old.remove(); return; } }
   if (fitState && e.target.classList && e.target.classList.contains("fitbox")) { fitState = null; fitShow(); return; }
