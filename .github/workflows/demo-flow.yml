@@ -8,9 +8,6 @@ on:
       parts:
         description: "A = the Sun Princess trip, B = building a new trip"
         default: "AB"
-  push:
-    branches: [claude/project-thread-eh5ese]
-    paths: [tools/demo-flow.cjs, .github/workflows/demo-flow.yml]
   schedule:
     - cron: "17 10 * * *"
 permissions:
