@@ -1,0 +1,37 @@
+name: Freeze probe
+# Uses the app like a traveler (real internet, mid-range phone and tablet speed) and lists every freeze, what was
+# happening at the time, tap times and the busiest code. Runs on the speed thread's branch pushes and on demand.
+on:
+  workflow_dispatch:
+    inputs:
+      url:
+        description: "Site to test (blank = the live site and this branch's build)"
+        required: false
+  push:
+    branches: [claude/project-thread-m88qb4]
+    paths: [src/**, tools/freeze-probe.cjs, .github/workflows/freeze-probe.yml]
+permissions:
+  contents: read
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm i --no-save playwright@1 && npx playwright install --with-deps chromium
+      - name: Live site, phone
+        run: node tools/freeze-probe.cjs ${{ github.event.inputs.url || 'https://gilsonr0566-sys.github.io/Kairoute/' }} --cpu 4 --device phone --out live-phone.json
+      - name: Live site, tablet
+        run: node tools/freeze-probe.cjs ${{ github.event.inputs.url || 'https://gilsonr0566-sys.github.io/Kairoute/' }} --cpu 6 --device tablet --out live-tablet.json
+      - name: This branch, phone
+        run: sh build.sh && node tools/freeze-probe.cjs . --cpu 4 --device phone --out branch-phone.json
+      - name: This branch, tablet
+        run: node tools/freeze-probe.cjs . --cpu 6 --device tablet --out branch-tablet.json
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: freeze-probe
+          path: "*.json"

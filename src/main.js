@@ -705,7 +705,7 @@ function transitMerge(res, prev) {
   return { opts: opts.sort((x, y) => x.min - y.min), t: Date.now(), v: TRANSIT_V, partial };
 }
 if (typeof window !== "undefined") window.__kairouteTransitMerge = transitMerge;
-function transitShow() { nearGen++; if (typeof view !== "undefined" && ["plan", "trip", "sites"].includes(view)) { const y = window.scrollY; render(); window.scrollTo(0, y); } }
+function transitShow() { nearGen++; if (typeof view !== "undefined" && ["plan", "trip", "sites"].includes(view)) dataRender(); }
 // Kept on the phone so the next visit needs no lookups: the newest 150 answers, each line's path thinned for storage.
 // A full storage drops older answers rather than failing.
 function transitKeep() {
@@ -1286,7 +1286,7 @@ function gCheck(plan, city) {
       if (!changed) return;
       try { localStorage.setItem(G_KEY, JSON.stringify(gStore)); } catch (e) {}
       crowdMark(city); bonusMemo = new Map(); mealMemo = new Map(); keptMemo = new Map(); eveMemo = new Map();
-      if (view === "plan" || view === "tour") { const y = window.scrollY; render(); window.scrollTo(0, y); }
+      if (view === "plan" || view === "tour") dataRender();
     }).catch(() => todo.forEach(p => gAsking.delete(gKey(p)))).finally(() => { gInFlight--; });
 }
 // Short form for alternatives: "★ 4.6 (1,234)", linked to the place on Google Maps.
@@ -1304,7 +1304,7 @@ function crowdFor(city) {
       try { localStorage.setItem("kairoute.crowd." + k, JSON.stringify({ ratings: j.ratings, busy: j.busy || {} })); } catch (e) {}
       if (!Object.keys(j.ratings).length && !Object.keys(j.busy || {}).length) return;
       crowdCache[k].map = j.ratings;
-      if (view === "plan" || view === "guide") { const y = window.scrollY; render(); window.scrollTo(0, y); }
+      if (view === "plan" || view === "guide") dataRender();
     }).catch(() => {});
   }
   crowdMark(city);
@@ -2437,7 +2437,7 @@ Return ONLY JSON {"intro":"...","wrap":"..."}. "intro": 50 to 90 words said wher
     const evAll = [s.guide, s.summary, ...cands.map(c => c.facts || "")].join(" ");
     if (s.intro) s.intro = faithStrip(s.intro, evAll, bibleSite(s)); if (s.wrap) s.wrap = faithStrip(s.wrap, evAll, bibleSite(s));
     s.extrasV = EXTRAS_V; s.extrasFaith = fk; save();
-    if (["plan", "sites", "guide", "tour"].includes(view)) { const y = window.scrollY; render(); window.scrollTo(0, y); }
+    if (["plan", "sites", "guide", "tour"].includes(view)) dataRender();
   } catch (e) { delete extrasAsked[key]; }
 }
 // Every stop on today's plan that deserves a walk-through gets one: areas, big stops and the best-known stops.
@@ -2489,7 +2489,7 @@ function fameFor(d, city) {
     if (!src) { const fam = await famousFor(lbl); if (fam) src = { stops: fam.main.map(x => Object.assign({ src: ["Wikidata (Wikipedia in many languages)"] }, x)), far: fam.far, eats: [] }; }
     if (!src) { delete fameAsked[k]; return; }
     fameAsked[k] = src; fameMark(city, src);
-    if (view === "plan" || view === "guide") { const y = window.scrollY; render(); window.scrollTo(0, y); }
+    if (view === "plan" || view === "guide") dataRender();
   }).catch(() => { delete fameAsked[k]; }).finally(() => { delete fameWait[k]; }));
 }
 const fameWait = {};
@@ -3795,6 +3795,20 @@ function panes() { return [document.getElementById("view"), ...document.querySel
 function toTop() { window.scrollTo(0, 0); panes().forEach(el => { el.scrollTop = 0; }); }
 // A redraw that only moves to another day or screen (or brings news that can't change a plan) keeps the plans
 // already made; any other redraw follows a change, so plans are made fresh (see planStore).
+// Speed: answers from the internet (rides, ratings, restaurants, weather, events, the guide's walk-throughs) often
+// land a few at a time right after a tap. Each used to redraw the whole screen on its own; now answers arriving
+// close together share one redraw, and it waits until the traveler's finger is off the screen and the page has
+// stopped scrolling, so a tap or a scroll is never held up by a redraw. keep: the news can't change a plan.
+let drTimer = 0, drKeep = true, lastTouch = 0;
+if (typeof window !== "undefined") { const touched = () => { lastTouch = Date.now(); };
+  window.addEventListener("pointerdown", touched, { capture: true, passive: true }); document.addEventListener("scroll", touched, { capture: true, passive: true }); }
+function dataRender(keep) { drKeep = drKeep && !!keep; if (!drTimer) drTimer = setTimeout(drRun, 120); }
+function drRun() {
+  const quiet = Date.now() - lastTouch; if (quiet < 300) { drTimer = setTimeout(drRun, 300 - quiet); return; }
+  drTimer = 0; const k = drKeep; drKeep = true; const y = window.scrollY;
+  if (k) renderKeep(); else render();
+  window.scrollTo(0, y);
+}
 let planKeep = false;
 function renderKeep() { const was = planKeep; planKeep = true; try { render(); } finally { planKeep = was; } }
 function render() {
@@ -5295,7 +5309,7 @@ function eventsFor(d, city) {
       .filter(l => new RegExp("\\b(" + month + "|every " + dow + "|" + dow + "s\\b|" + nth + " " + dow + ")", "i").test(l.content + " " + l.hours))
       .slice(0, 4).map(l => ({ name: l.name, date: d.date, time: "", venue: "", lat: isFinite(l.lat) ? l.lat : null, lng: isFinite(l.lng) ? l.lng : null, url: l.url || "", kind: "Local tradition", genre: "", note: l.content.slice(0, 200), src: "Wikivoyage" }));
     eventsCache[k] = { done: true, events: (tm.events || []).concat(recurring) };
-    if (view === "plan") { const y = window.scrollY; renderKeep(); window.scrollTo(0, y); } // events never change a plan
+    if (view === "plan") dataRender(true); // events never change a plan
   });
   return null;
 }
@@ -5377,7 +5391,7 @@ function farEatsFor(city, d) {
       st.list = st.list.concat(list); st.done = st.done.concat(bare.map(x => x.id));
       try { localStorage.setItem(FAR_EATS_KEY, JSON.stringify(farEats)); } catch (e) {}
       farEatsMerge(city);
-      if (view === "plan" || view === "tour") { const y = window.scrollY; render(); window.scrollTo(0, y); }
+      if (view === "plan" || view === "tour") dataRender();
     }).catch(() => {}).finally(() => { farPending--; });
 }
 // Days that spend more time getting around than seeing things get a clear warning, so a once-in-a-lifetime
