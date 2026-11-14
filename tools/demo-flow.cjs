@@ -87,7 +87,11 @@ async function partA(b) {
   await shot(p, "A0-lobby-tablet");
   // The lobby's "Open your Sun Princess trip" button, as the traveler taps it.
   const sample = p.locator('[data-act="loadsample"]').first();
-  if (await sample.isVisible().catch(() => false)) await sample.click(); else await p.evaluate(() => { trip = sampleTrip(); view = "plan"; save(); render(); });
+  const cont0 = p.locator('[data-act="continue"]').first();
+  if (await sample.isVisible().catch(() => false)) await sample.click(); else if (await cont0.isVisible().catch(() => false)) await cont0.click();
+  const S = () => p.evaluate(() => window.__kairouteState());
+  if (!ok(await p.evaluate(() => !!window.__kairouteState), "the live site has the demo-flow test hook")) throw new Error("live site is older than the demo-flow hook");
+  ok(/sun princess/i.test(JSON.stringify((await S()).ship || "")) || (await S()).days.some(d => /piraeus/i.test(d.dest)), "the Sun Princess trip is open");
   await p.waitForTimeout(2000);
   const days = await p.evaluate(() => window.__kairouteDays());
   log("Days: " + days.map(d => `${d.i}:${d.date} ${d.type} ${d.dest}${d.city ? "" : " (no guide yet)"}`).join(" | "));
@@ -103,7 +107,7 @@ async function partA(b) {
     let s = await seen(p);
     if (!s.stops.length && d.type !== "sea") { await p.waitForTimeout(8000); s = await seen(p); } // restaurants / rides still arriving
     plans[d.i] = s;
-    const aboard = await p.evaluate(i => !!trip.days[i].aboard, d.i);
+    const aboard = (await S()).days[d.i].stayAboard;
     const needs = d.type !== "sea" && !aboard && d.type !== "departure";
     log(`     day ${d.i + 1} ${d.date} ${d.dest}: ${s.stops.length} stops [${s.stops.join("; ")}]${s.optional.length ? ", optional: " + s.optional.join("; ") : ""}, ${s.meals.length} meals, rides: ${s.rides.map(r => r.chosen).join(" / ") || "none to choose"}`);
     if (needs) ok(s.stops.length > 0, `day ${d.i + 1} ${d.dest} (${d.date}) has stops on its Day plan`);
@@ -123,15 +127,15 @@ async function partA(b) {
   // 2. Change stops: tick a sight, see it on the Day plan, untick it.
   const ed = days.find(d => d.type === "land") || first;
   await timed(p, "open Change stops", go("sites", ed.i), 3000); await shot(p, "A2-change-stops-tablet");
-  const pick = await p.evaluate(() => { const el = [...document.querySelectorAll("label.site:not(.on) input[data-site]")][0]; if (!el) return null; const name = ((el.closest("label").querySelector("h3, b, .nm") || {}).innerText || "").trim(); return { id: el.dataset.site, name }; });
+  const pick = await p.evaluate(() => { const el = [...document.querySelectorAll("label.site:not(.on) input[data-site]")][0]; if (!el) return null; const name = ((el.closest("label").querySelector(".name, h3, b") || {}).innerText || "").trim(); return { id: el.dataset.site, name }; });
   if (ok(!!pick, `Change stops lists sights to add on day ${ed.i + 1}`)) {
-    const before = (await p.evaluate(i => trip.days[i].selected.length, ed.i));
+    const before = (await S()).days[ed.i].picks;
     await p.evaluate(() => { window.__lt = []; }); const tc = Date.now();
     await p.locator(`label[for="s-${pick.id}"]`).first().click();
     await p.waitForTimeout(1500); const clickMs = Date.now() - tc, lt = await p.evaluate(() => Math.round(Math.max(0, ...window.__lt)));
     ok(lt < FREEZE_MS, `ticking a sight responds without freezing (longest block ${lt} ms, ${clickMs} ms)`);
     const fitbox = await p.evaluate(() => !!document.querySelector(".fitbox"));
-    const after = await p.evaluate(i => trip.days[i].selected.length, ed.i);
+    const after = (await S()).days[ed.i].picks;
     ok(after === before + 1 || fitbox, `ticking "${pick.name}" adds it to the picks (or explains why it doesn't fit) (${before} -> ${after})`);
     if (after === before + 1) {
       await p.evaluate(go("plan", ed.i)); await p.waitForTimeout(4000); const s = await seen(p);
@@ -140,7 +144,7 @@ async function partA(b) {
       ok(inPlan || dropped.length > 0, `"${pick.name}" shows on the Day plan (or the plan says what didn't fit)`);
       await p.evaluate(go("sites", ed.i)); await p.waitForTimeout(1500);
       await p.locator(`label[for="s-${pick.id}"]`).first().click().catch(() => {}); await p.waitForTimeout(1000);
-      ok(await p.evaluate(i => trip.days[i].selected.length, ed.i) === before, "unticking it removes it again");
+      ok((await S()).days[ed.i].picks === before, "unticking it removes it again");
     } else await p.evaluate(() => { const b = document.querySelector(".fitbox [data-act=fitcancel], .fitbox .btn.ghost"); if (b) b.click(); });
   }
 
@@ -231,6 +235,7 @@ async function partA(b) {
 async function buildNew(b, label, text, photo) {
   const ctx = await newCtx(b, "tablet"), p = await ctx.newPage(), errs = watch(p, label);
   await open(p);
+  if (!ok(await p.evaluate(() => !!window.__kairouteState), `${label}: the live site has the demo-flow test hook`)) { await ctx.close(); return null; }
   const ready = await p.waitForFunction(() => window.__kairouteAiReady && window.__kairouteAiReady(), null, { timeout: 90000 }).then(() => true).catch(() => false);
   if (!ok(ready, `${label}: the AI guide is on, so a new trip can be built`)) { await ctx.close(); return null; }
   await p.locator('[data-act="newtrip"]').first().click(); await p.waitForTimeout(800);
@@ -242,7 +247,7 @@ async function buildNew(b, label, text, photo) {
   // Wait for the trip and its city guides (the traveler sees a progress block meanwhile).
   let last = "";
   for (;;) {
-    const st = await p.evaluate(() => ({ busy: typeof busy !== "undefined" && busy ? busy.text || "busy" : "", err: typeof aiError !== "undefined" ? aiError : "", view, days: window.__kairouteDays() }));
+    const st = await p.evaluate(() => window.__kairouteState());
     if (st.busy !== last) { log(`     ${sec(t0)} s: ${st.busy || "(idle)"} [${st.view}]`); last = st.busy; }
     if (st.err) { ok(false, `${label}: building the trip failed: ${st.err}`); break; }
     // The traveler should not have to tap anything more: city guides start on their own. If a button is still
@@ -251,12 +256,12 @@ async function buildNew(b, label, text, photo) {
       if (!report.tapped) ok(false, `${label}: after the trip was built, the city guides waited for an extra tap on "Build the guides"`, true);
       report.tapped = 1; await p.locator('[data-act="genall"]').first().click(); await p.waitForTimeout(2000); continue;
     }
-    if (!st.busy && st.view !== "wizard" && st.days.length > 3 && st.days.filter(d => d.type !== "sea").every(d => d.city)) break;
+    if (!st.busy && st.view !== "wizard" && st.days.length > 3 && st.days.filter(d => d.type !== "sea").every(d => d.guide)) break;
     if (Date.now() - t0 > 900000) { ok(false, `${label}: the trip was not ready after 15 minutes (${st.busy})`); break; }
     await p.waitForTimeout(3000);
   }
   report.timings["build " + label] = sec(t0); log(`     built in ${sec(t0)} s`);
-  const t = await p.evaluate(() => ({ ship: trip.ship || null, days: trip.days.map((d, i) => ({ i, date: d.date, type: d.type, dest: d.destination, arrive: d.portArrive, aboard: d.allAboard, estimated: !!d.estimated, wants: d.wants || [] })) }));
+  const t = await p.evaluate(() => window.__kairouteState());
   log("     " + t.days.map(d => `${d.date} ${d.type} ${d.dest}${d.arrive || d.aboard ? ` ${d.arrive || "?"}-${d.aboard || "?"}` : ""}${d.estimated ? " est." : ""}${d.wants.length ? " wants:" + d.wants.join("/") : ""}`).join("\n     "));
   ok(t.ship && /sun princess/i.test(t.ship.name || ""), `${label}: the ship is kept (${JSON.stringify(t.ship)})`);
   for (const dt of ["2027-06-30", "2027-07-01", "2027-07-02", "2027-07-03"]) ok(t.days.some(d => d.date === dt && /athens/i.test(d.dest)), `${label}: an Athens day on ${dt}`);
