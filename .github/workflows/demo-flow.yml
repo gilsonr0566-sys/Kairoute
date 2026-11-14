@@ -1,0 +1,42 @@
+name: Demo flow
+# Richard's Greece trip end to end on the live site, phone and tablet sizes, real AI and services:
+# the Sun Princess trip (every Day plan, Change stops, rides incl. the Naples ferry, Guide, Tour, offline)
+# and building the trip from words and from the itinerary photo. Daily and on demand; report in the run summary.
+on:
+  workflow_dispatch:
+    inputs:
+      parts:
+        description: "A = the Sun Princess trip, B = building a new trip"
+        default: "AB"
+  push:
+    branches: [claude/project-thread-eh5ese]
+    paths: [tools/demo-flow.cjs, .github/workflows/demo-flow.yml]
+  schedule:
+    - cron: "17 10 * * *"
+permissions:
+  contents: read
+concurrency:
+  group: demo-flow
+  cancel-in-progress: false
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 75
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm i --no-save playwright@1 && npx playwright install --with-deps chromium
+      - name: Demo flow on the live site
+        run: node tools/demo-flow.cjs
+        env:
+          PARTS: ${{ github.event.inputs.parts || 'AB' }}
+      - name: Report
+        if: always()
+        run: cat checks/demo/report.md >> "$GITHUB_STEP_SUMMARY" || true
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: demo-flow
+          path: checks/demo/
