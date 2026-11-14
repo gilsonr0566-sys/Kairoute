@@ -619,7 +619,7 @@ try { ["kairoute.transit", "kairoute.transit2"].forEach(k => localStorage.remove
 // trip earlier never keep showing an old ride (Richard's Naples day kept "Train or car" with no ferry).
 const TRANSIT_V = 4;
 const transitMem = (() => { try { return JSON.parse(localStorage.getItem(TRANSIT_KEY) || "{}"); } catch (e) { return {}; } })();
-let transitSeen = null;
+let transitSeen = null, transitRetry = 0;
 const transitFail = new Map(), transitQ = new Map(), transitPins = new Set(); let transitTimer = 0, transitBusy = false; // pins: rides of the trip being kept for offline
 // Speed: asked hundreds of thousands of times while planning, so each place's half of the key is kept with it.
 const pkMemo = new WeakMap();
@@ -638,13 +638,13 @@ const runsThen = o => { if (!o || !Array.isArray(o.months) || !o.months.length) 
 // traveler stands (GPS) still knows the trains, with no signal.
 function transitNear(a, b, kind) {
   let best = null, bd = 0.6;
-  for (const k in transitMem) { const [ks, kd] = k.split("|"); if (kd && kd !== kind) continue; const n = ks.split(",").map(Number); if (n.length !== 4) continue;
+  for (const k in transitMem) { const [ks, kd] = k.split("|"); if (kd && kd !== kind || !(transitMem[k].opts || []).length) continue; const n = ks.split(",").map(Number); if (n.length !== 4) continue;
     const e = Math.max(hav(a, { lat: n[0], lng: n[1] }), hav(b, { lat: n[2], lng: n[3] })); if (e < bd) { bd = e; best = transitMem[k]; } }
   return best;
 }
 function transitFor(a, b) {
   if (!a || !b || !isFinite(a.lat) || !isFinite(b.lat) || hav(a, b) < 4) return null;
-  const dow = planDow(), k = pairKey(a, b) + "|" + dayKind(dow), exact = transitMem[k] || transitMem[pairKey(a, b)], hit = exact || transitNear(a, b, dayKind(dow));
+  const dow = planDow(), k = pairKey(a, b) + "|" + dayKind(dow), exact = transitMem[k] || transitMem[pairKey(a, b)], hit = exact && exact.opts && exact.opts.length ? exact : transitNear(a, b, dayKind(dow)) || exact; // an empty exact answer never hides a nearby one's lines
   if (transitSeen) transitSeen.push([k, pairKey(a, b), a, b, dayKind(dow)]); // the offline check lists every ride a plan looks up
   // Used meanwhile, and asked again when online: an answer from an older version (at once), one given while a source
   // was busy or an empty one (after 10 minutes), or a nearby trip's answer (the exact ride is asked). With no internet
@@ -669,8 +669,11 @@ async function askTransit() {
   const one = async part => {
     let got = 0;
     try { const r = await fetch(freeAI.url + "/transit", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ pairs: part.map(x => ({ a: x[1].a, b: x[1].b, dow: x[1].dow })) }) }); if (!r.ok) throw new Error("transit " + r.status);
-      const j = await r.json(); part.forEach(([k], i) => { const res = (j.results || [])[i]; if (res && Array.isArray(res.opts)) { transitMem[k] = { opts: res.opts, t: Date.now(), v: TRANSIT_V, partial: !!res.partial || !res.opts.length }; got++; } else transitFail.set(k, Date.now()); });
+      const j = await r.json(); part.forEach(([k, q], i) => { const res = (j.results || [])[i]; if (res && Array.isArray(res.opts)) { transitMem[k] = transitMerge(res, transitMem[k] || transitNear({ lat: q.a[0], lng: q.a[1] }, { lat: q.b[0], lng: q.b[1] }, k.split("|")[1])); got++; } else transitFail.set(k, Date.now()); });
     } catch (e) { part.forEach(([k]) => transitFail.set(k, Date.now())); }
+    // A ride the helper couldn't answer is asked again by itself once the 2-minute pause is over (the page is redrawn,
+    // which asks again), instead of showing the road estimate until the traveler happens to touch something.
+    if (got < part.length) { clearTimeout(transitRetry); transitRetry = setTimeout(transitShow, 125000); }
     if (got) transitShow();
   };
   try {
@@ -683,6 +686,16 @@ async function askTransit() {
   } finally { transitBusy = false; }
   transitKeep();
 }
+// A new answer never takes away a ride the traveler was already shown. When a source was busy (a partial or empty
+// answer) every ride the kept answer had stays, and a ferry once found always stays (ferry courses don't change from
+// one hour to the next; a busy map server or a long list of quicker trains used to drop it, so the ferry appeared
+// and then vanished from the ride menu: Richard's Naples day, Nov 14). Seasonal lines still follow their months.
+function transitMerge(res, prev) {
+  const partial = !!res.partial || !res.opts.length, opts = res.opts.slice(), have = new Set(opts.map(rideId));
+  for (const o of (prev && prev.opts) || []) if ((partial || o.mode === "ferry") && !have.has(rideId(o))) { opts.push(o); have.add(rideId(o)); }
+  return { opts: opts.sort((x, y) => x.min - y.min), t: Date.now(), v: TRANSIT_V, partial };
+}
+if (typeof window !== "undefined") window.__kairouteTransitMerge = transitMerge;
 function transitShow() { if (typeof view !== "undefined" && ["plan", "trip", "sites"].includes(view)) { const y = window.scrollY; render(); window.scrollTo(0, y); } }
 // Kept on the phone so the next visit needs no lookups: the newest 150 answers, each line's path thinned for storage.
 // A full storage drops older answers rather than failing.
@@ -835,11 +848,29 @@ function seedPicks(d, city) {
   // A day that starts with no picks (everything is planned on other days) is not a day cleared on purpose: the
   // planner still fills it (autoEmpty). The traveler's first tick or untick makes the list theirs.
   trip.days.slice(0, Math.max(0, i)).forEach(o => { if (!o.selected && !noShore(o) && !throughTo(o) && cityFor(o) === city) { o.selected = defaultSelection(city, trip.style, o); fitTrim(o); o.autoEmpty = !o.selected.length; made = true; } });
-  if (!d.selected) { d.selected = defaultSelection(city, trip.style, d); fitTrim(d); d.autoEmpty = !d.selected.length; made = true; }
+  if (!d.selected) { const w = wantIds(d, city); d.selected = [...new Set([...w, ...defaultSelection(city, trip.style, d)])]; fitTrim(d, w); w.forEach(id => markMine(d, id, true)); d.autoEmpty = !d.selected.length; made = true; wantsFind(d, city); }
   if (made && !seedSave) seedSave = setTimeout(() => { seedSave = null; save(); }, 0);
 }
+// Places the traveler named for a day when they described the trip ("Naples on July 12, we want Pompeii and
+// Sorrento"): they are that day's picks from the start, the traveler's own (kept like a tick), and no other day takes
+// them. The guide's own sight is used when it has one; a place the guide doesn't list is looked up once by name
+// (the same way as adding a place by name), and picked if the day has room.
+function wantMatch(w, city) {
+  const all = allSites(city), both = all.filter(s => nameMatch(w, s.name) && nameMatch(s.name, w)), one = all.filter(s => nameMatch(w, s.name));
+  const best = l => l.slice().sort((a, b) => (b.mustSee ? 1 : 0) - (a.mustSee ? 1 : 0) || (fameW(b) || 1) - (fameW(a) || 1))[0];
+  return best(both) || best(one) || null;
+}
+function wantIds(d, city) { return [...new Set((d.wants || []).map(w => wantMatch(w, city)).filter(Boolean).map(s => s.id))]; }
+function wantsFind(d, city) {
+  const miss = (d.wants || []).filter(w => !wantMatch(w, city) && !(d.wantsAsked || []).includes(w));
+  if (!miss.length || typeof aiReady !== "function" || !aiReady()) return;
+  d.wantsAsked = [...(d.wantsAsked || []), ...miss];
+  (async () => { for (const w of miss) { for (let k = 0; k < 40 && addBusy; k++) await new Promise(r => setTimeout(r, 1500)); try { await addPlaces(d, w); } catch (e) {} } })();
+}
+if (typeof window !== "undefined") window.__kairouteWants = (i, wants) => { const d = trip.days[i], c = cityFor(d); if (!c) return { error: 'no guide for ' + d.destination }; if (wants) d.wants = wants; d.selected = null; trip.days.forEach(o => { if (o !== d && cityFor(o) === c) o.selected = null; }); seedPicks(d, c); return { ship: trip.ship || null, wants: d.wants || [], picked: d.selected.map(id => (allSites(c).find(x => x.id === id) || {}).name), mine: (d.mine || []).map(id => (allSites(c).find(x => x.id === id) || {}).name), wanted: wantIds(d, c).map(id => allSites(c).find(x => x.id === id).name) }; };
 function defaultSelection(city, style, d) {
   const taken = d ? plannedElsewhere(d) : {};
+  if (d) trip.days.forEach(o => { if (o !== d && o.wants && cityFor(o) === city) wantIds(o, city).forEach(id => { if (!taken[id]) taken[id] = o; }); }); // named for another day
   let dw = null; if (d) { try { dw = dayWindow(d, city); } catch (e) {} }
   const shut = x => d && closedForDay(x, d, dw); // never start a day with a sight it can't be visited
   const leaving = d && (d.type === "embark" || d.type === "departure");
@@ -1648,6 +1679,15 @@ function buildPlanFor(d) {
 const aiReady = () => !!sample;
 // "Change my trip": say what changed or show the new booking, and the AI rewrites the days.
 let changeImgs = [], changeText = "";
+// A cruise whose port times the traveler didn't give: the times shown are an estimate until they add their cruise
+// itinerary (a photo or the times typed), which the trip change below reads exactly. Kairoute never guesses a ship's
+// times as if they were real: the cruise line's times are the final word.
+function shipTimesBanner() {
+  const est = trip.days.filter(x => (x.type === "port" || x.type === "embark") && x.estimated && !noShore(x));
+  if (!est.length) return "";
+  const ship = trip.ship && trip.ship.name ? esc(trip.ship.name) : "your ship";
+  return `<div class="banner warn shiptimes"><span><b>Ship times are estimated.</b> Add a photo of ${ship}'s itinerary from your booking or cruise app, or type the times, and I'll use the exact arrival and all-aboard times for ${est.length === 1 ? esc(placeLabel(est[0]) || est[0].destination) : est.length + " port days"}.</span>${aiReady() ? `<button class="btn small" data-act="shiptimes">Add ship times</button>` : ""}</div>`;
+}
 function changeCard() {
   if (!aiReady()) return "";
   return `<details class="card change more" ${changeText || changeImgs.length || busy ? "open" : ""}><summary>Change my trip by telling your guide</summary><p class="lede">Say what changed, or add a photo of the new booking. I'll update the days and keep everything else.</p>
@@ -1665,12 +1705,12 @@ async function changeTrip() {
   const lines = trip.days.map(d => ["DAY", d.date, d.destination, d.type, d.mode, d.time, d.portArrive, d.allAboard, d.tender ? "yes" : "no", "", d.estimated ? "yes" : "no"].join("|")).join("\n");
   try {
     const imgs = changeImgs.map(x => x.blob);
-    const r = await sample(`Here is a traveler's trip, one day per line (DAY|date YYYY-MM-DD|destination|type|mode|time HH:MM|portArrive|allAboard|tender yes/no|lodging|estimated yes/no):\n${lines}\n\n${tx ? `What changed, in their words: "${tx}"\n` : ""}${imgs.length ? "Photos of their new or updated booking are attached; copy their dates, places and times exactly.\n" : ""}Apply the change and write the complete updated trip in the same DAY line format. Keep every day that isn't affected exactly as it is. Types: arrival, land, embark, port, sea, departure. Modes: flight, train, ship, car. On a travel day between two cities make a departure and an arrival with the same date. Only DAY lines.`, { modelTier: "complex", ...(imgs.length ? { images: imgs } : {}) });
+    const r = await sample(`Here is a traveler's trip, one day per line (DAY|date YYYY-MM-DD|destination|type|mode|time HH:MM|portArrive|allAboard|tender yes/no|lodging|estimated yes/no):\n${lines}\n\n${tx ? `What changed, in their words: "${tx}"\n` : ""}${imgs.length ? "Photos of their new or updated booking are attached; copy their dates, places and times exactly.\n" : ""}Apply the change and write the complete updated trip in the same DAY line format. A day whose times the traveler gives here or the photos show gets estimated no. Keep every day that isn't affected exactly as it is. Types: arrival, land, embark, port, sea, departure. Modes: flight, train, ship, car. On a travel day between two cities make a departure and an arrival with the same date. Only DAY lines.`, { modelTier: "complex", ...(imgs.length ? { images: imgs } : {}) });
     const days = parseDayLines(r.text || "");
     if (!days.length || r.truncated) throw new Error("short");
     const old = {}; trip.days.forEach(d => { old[d.date + "|" + keyOf(d.destination) + "|" + d.type] = d; });
     const before = trip.days.length, activeDay = trip.days[trip.active];
-    trip.days = days.map(d => { const o = old[d.date + "|" + keyOf(d.destination) + "|" + d.type]; return o ? Object.assign(o, { time: d.time, portArrive: d.portArrive, allAboard: d.allAboard, mode: d.mode }) : d; });
+    trip.days = days.map(d => { const o = old[d.date + "|" + keyOf(d.destination) + "|" + d.type]; return o ? Object.assign(o, { time: d.time, portArrive: d.portArrive, allAboard: d.allAboard, mode: d.mode, estimated: d.estimated }) : d; });
     if (days.some(d => d._lodging)) { trip.lodging = trip.lodging || {}; days.forEach(dd => { if (dd._lodging) trip.lodging[keyOf(dd.destination)] = { idx: "custom", name: dd._lodging, ll: null }; }); }
     trip.days.forEach(dd => delete dd._lodging);
     const ai = trip.days.indexOf(activeDay); trip.active = ai >= 0 ? ai : Math.min(trip.active, trip.days.length - 1); trip.tour = null;
@@ -1725,12 +1765,13 @@ function parseDayLines(out) { const days = parseDayLines0(out); sequenceDates(da
 function parseDayLines0(out) {
   const types = DAY_TYPES.map(t => t.key), hm = v => /^\d\d:\d\d$/.test((v || "").trim()) ? v.trim() : "";
   return String(out).split("\n").filter(l => /^\s*DAY\|/.test(l)).map(l => l.trim().split("|").map(x => x.trim())).filter(f => f[2]).map(f => {
-    const [, date, destination, type0, mode0, time, pa, aa, tender, lodging, est] = f;
+    const [, date, destination, type0, mode0, time, pa, aa, tender, lodging, est, want] = f;
     const type = types.includes(type0) ? type0 : "land", mode = MODES[mode0] ? mode0 : "flight";
     return newDay({
       date: /^\d{4}-\d{2}-\d{2}$/.test(date) ? date : "", destination, type, mode,
       time: hm(time) || (type === "departure" ? "15:00" : "10:30"), portArrive: hm(pa) || "08:00", allAboard: hm(aa) || "16:30",
-      tender: /^y/i.test(tender || ""), hours: type === "arrival" ? 6 : 8, _lodging: lodging || "", estimated: /^y/i.test(est || "")
+      tender: /^y/i.test(tender || ""), hours: type === "arrival" ? 6 : 8, _lodging: lodging || "", estimated: /^y/i.test(est || ""),
+      ...(want && want.trim() ? { wants: want.split(/[;,]/).map(x => x.trim()).filter(x => x.length > 1).slice(0, 8) } : {})
     });
   });
 }
@@ -2756,8 +2797,8 @@ ${imgs ? "Photos of the traveler's itinerary, booking confirmations or tickets a
 ${wiz && wiz.hotels ? "Where they are staying: " + wiz.hotels : ""}
 ${wiz && (wiz.cruiseLine || wiz.ship) ? "Cruise: " + [wiz.cruiseLine, wiz.ship, wiz.sail ? "sailing " + wiz.sail : ""].filter(Boolean).join(", ") + ". If you know this ship's published itinerary for that sailing, use its ports and times; otherwise use the cruise line's typical itinerary for that route." : ""}
 
-First write one line that starts with STOPS: and lists, in order, every city, port, island or event place the traveler mentions or that appears in the photos, separated by " > ", followed by the count, for example "STOPS: Athens > Mykonos > Santorini > Rome (3 ports)". Then write one line per day, nothing else, in exactly this format with | between fields:
-DAY|date YYYY-MM-DD|destination|type|mode|time HH:MM|portArrive HH:MM|allAboard HH:MM|tender yes/no|lodging|estimated yes/no
+First write one line that starts with STOPS: and lists, in order, every city, port, island or event place where the traveler stays, docks or arrives (not the sights or towns they visit on a day trip from there, which go in that day's want), as mentioned or shown in the photos, separated by " > ", followed by the count, for example "STOPS: Athens > Mykonos > Santorini > Rome (3 ports)". If the traveler names a cruise ship, then write one line "SHIP: <cruise line>|<ship name>", for example "SHIP: Princess Cruises|Sun Princess". Then write one line per day, nothing else, in exactly this format with | between fields:
+DAY|date YYYY-MM-DD|destination|type|mode|time HH:MM|portArrive HH:MM|allAboard HH:MM|tender yes/no|lodging|estimated yes/no|want
 type is one of arrival, land, embark, port, sea, departure. mode is flight, train, ferry, ship or car. Leave a field empty when it doesn't apply, but keep the | separators. No JSON, no commentary.
 Rules:
 - One entry per day per city. On a day you travel between two cities, make two entries with the same date: a "departure" in the first city and an "arrival" in the second, with the mode used (flight, train, or car for a drive or bus).
@@ -2768,6 +2809,8 @@ Rules:
 - If the traveler doesn't name the ports, choose a realistic route and use real port names; mark them estimated.
 - If dates are missing, start on the first Monday at least 60 days from ${new Date().toISOString().slice(0, 10)}. If times are missing, use typical ones (flights arrive 10:30, leave 15:00; ports 08:00 to 17:00).
 - "lodging": the hotel name if given, else empty. "estimated": yes for anything you chose or are not sure of.
+- "want": the sights, ruins, towns or areas the traveler says they want to see or visit on that day, in their own words, separated by ";" (for example "Pompeii; Sorrento" for "in Naples we want to see Pompeii and Sorrento"). A place they will visit from a port or city as a day trip is a want of that day, never a day or port of its own. Only places the traveler named; empty when they named none. Never add places they didn't name.
+- A ship's port times: use the times the traveler gives or the photos show. Otherwise, only if you know that ship's published times for that port and date, use them; else use typical times and mark the day estimated yes.
 - Use the common English city name, and for gateway ports add the big city in brackets, e.g. "Civitavecchia (Rome)".`;
   try {
     const say = t => { if (busy) { busy.text = t; updateBusy(); } };
@@ -2789,7 +2832,7 @@ Rules:
     const mm0 = String(text).toLowerCase().match(/\b(\d{1,2}|one|two|three|four|five|six|seven|eight|nine|ten|eleven|twelve|thirteen|fourteen|fifteen)\s+(?:different\s+)?(?:ports?|destinations?|stops?|islands?|ports of call)\b/);
     // "9 destinations" often counts the city where the cruise ends, so only hold the AI to the count when nothing was attached.
     const want = mm0 && !imgs ? (NUMW[mm0[1]] || +mm0[1]) : 0;
-    const missingNames = () => named.filter(n => { const k = keyOf(n.replace(/\(.*\)/, "")); return k && !days.some(dd => keyOf(dd.destination).includes(k) || k.includes(keyOf(dd.destination.replace(/\(.*\)/, "")))); });
+    const missingNames = () => named.filter(n => { const k = keyOf(n.replace(/\(.*\)/, "")); return k && !days.some(dd => keyOf(dd.destination).includes(k) || k.includes(keyOf(dd.destination.replace(/\(.*\)/, ""))) || (dd.wants || []).some(w => keyOf(w).includes(k) || k.includes(keyOf(w)))); });
     let miss = missingNames(), ports = days.filter(x => x.type === "port").length;
     const shortOf = () => want && ports + 1 < want;
     if (days.length && (miss.length || shortOf())) {
@@ -2799,12 +2842,18 @@ Rules:
       if (fixed.length >= days.length && !fix.truncated) { days = fixed; miss = missingNames(); ports = days.filter(x => x.type === "port").length; }
     }
     if (!days.length) throw new Error("none");
+    // Ship times the traveler didn't give (no times in their words, no photos) are the AI's guess: always marked
+    // estimated, so the day says to check them against the cruise documents (Richard's Naples test: wrong dock times
+    // shown as if they were real).
+    const gaveTimes = !!imgs || /\b\d{1,2}(:\d\d)?\s*(am|pm|a\.m\.|p\.m\.)|\b\d{1,2}[:.h]\d\d\b/i.test(text);
+    if (!gaveTimes) days.forEach(dd => { if (dd.type === "port" || dd.type === "embark") dd.estimated = true; });
     const lodging = {};
     days.forEach(dd => { if (dd._lodging && !lodging[keyOf(dd.destination)]) lodging[keyOf(dd.destination)] = { idx: "custom", name: dd._lodging, ll: null }; delete dd._lodging; });
     const prefs = wiz ? { pace: wiz.pace, walk: wiz.walk, interests: wiz.interests.slice(), travelers: wiz.travelers, access: wiz.access, party: wiz.party, lang: wiz.lang, voice: wiz.voice } : P();
     if (prefs.pace === "relaxed") days.forEach(x => { if (x.type === "land") x.hours = 6.5; });
     if (prefs.pace === "packed") days.forEach(x => { if (x.type === "land") x.hours = 10; });
-    trip = { id: "t" + Date.now(), name: (wiz && wiz.name) || "", active: 0, sourceText: String(text).slice(0, 4000), portCheck: (want && ports + 1 < want) || miss.length ? { expected: want || ports, got: ports, missing: miss } : null, style: wiz ? wiz.style : (trip.style || "mix"), prefs, lodging, days, sample: false };
+    const shipM = out.match(/^SHIP:\s*([^|\n]*)\|([^\n]+)$/m), ship = shipM ? { line: shipM[1].trim(), name: shipM[2].trim() } : wiz && wiz.ship ? { line: wiz.cruiseLine || "", name: wiz.ship } : null;
+    trip = { id: "t" + Date.now(), ...(ship && ship.name ? { ship } : {}), name: (wiz && wiz.name) || "", active: 0, sourceText: String(text).slice(0, 4000), portCheck: (want && ports + 1 < want) || miss.length ? { expected: want || ports, got: ports, missing: miss } : null, style: wiz ? wiz.style : (trip.style || "mix"), prefs, lodging, days, sample: false };
     if (!trip.name) trip.name = tripName(trip);
     wiz = null; busy = null; tripText = ""; save(); view = "trip"; render(); toTop();
   } catch (e) { busy = null; aiError = aiErrorText(e, "Your itinerary"); render(); }
@@ -3302,6 +3351,9 @@ if (typeof window !== "undefined") window.__kairouteSplitStop = (i, n) => {
 };
 // Safety-net hook: plan a new trip from a description with a stand-in AI answer, the same way the New trip
 // screen does, so date handling and the Trip screen can be checked without the network.
+// Live check of the whole intake with the real AI: type a trip, build its guides, report what each day got.
+if (typeof window !== "undefined") window.__kairouteAiReady = () => aiReady();
+if (typeof window !== "undefined") window.__kairouteBuildTrip = async text => { await buildTripFromText(text); if (aiError) return { error: aiError }; await buildAllGuides(); return { error: aiError || "", ship: trip.ship || null, days: trip.days.map((d, i) => { const c = cityFor(d); return { i, date: d.date, type: d.type, dest: d.destination, arrive: d.portArrive, aboard: d.allAboard, estimated: !!d.estimated, wants: d.wants || [], guide: !!c }; }) }; };
 if (typeof window !== "undefined") window.__kairouteNewTrip = async (desc, answer) => { const keep = sample; sample = async () => ({ text: answer, truncated: false }); try { await buildTripFromText(desc); } finally { sample = keep; } return trip.days.map(d => ({ date: d.date, type: d.type, dest: d.destination })); };
 if (typeof window !== "undefined") window.__kairouteMeter = (clearAll) => { bonusMemo = new Map(); mealMemo = new Map(); keptMemo = new Map(); eveMemo = new Map(); avoidMeals = new Set(); const saved = trip.days.map(d => d.selected); if (clearAll) trip.days.forEach(d => { d.selected = []; }); try { return trip.days.map((d, i) => { let pl = null; try { pl = buildPlan(d); } catch (e) { return { i, err: e.message }; } const m = meterCalc(pl, d); return m ? { i, date: d.date, dest: d.destination, type: d.type, avail: m.avail, used: m.used, visits: m.visits, eat: m.eat, moving: m.moving, settle: m.settle, leave: m.leave, extra: m.extra, bonus: m.bonus, stops: pl.stops.length, booked: !!(d.booked && Object.keys(d.booked).length) } : { i, skip: true }; }); } finally { trip.days.forEach((d, k) => { d.selected = saved[k]; }); bonusMemo = new Map(); mealMemo = new Map(); keptMemo = new Map(); eveMemo = new Map(); } };
 if (typeof window !== "undefined") window.__kairouteDay = (i, sel, extra) => { const d = trip.days[i]; if (typeof sel === "string") { const all = allSites(cityFor(d)); sel = all.filter(x => new RegExp(sel, "i").test(x.name)).map(x => x.id); if (!sel.length) return all.map(x => x.id + " " + x.name); } if (sel) d.selected = sel; if (extra) Object.assign(d, extra); bonusMemo = new Map(); mealMemo = new Map(); keptMemo = new Map(); eveMemo = new Map(); avoidMeals = new Set(); const pl = buildPlan(d); if (!pl || pl.error) return pl; return { dropped: (pl.dropped || []).map(x => x.name), end: fmt(pl.end), endBy: fmt(pl.endBy), rideMin: pl.items.filter(x => x.type === "travel" && x.leg.mode === "ride").reduce((a, x) => a + x.leg.min, 0), items: pl.items.map(it => it.type === "travel" ? "   ~ " + it.leg.how + " " + it.leg.min + " min " + it.leg.km.toFixed(1) + " km" : fmt(it.time) + " " + it.type + ": " + (it.place ? it.place.name : it.label)) }; };
@@ -4597,6 +4649,7 @@ function renderTrip(d) {
   return `
   ${trip.sample && !trip.bannerSeen ? `<div class="banner"><span>This is your Sun Princess trip: Athens, the 11-night cruise from Piraeus on July 4, 2027, then Barcelona and Madrid. Ports and times come from your booking; all-aboard is set 30 minutes before sailing. Flight, hotel and train times are my guesses, so tap a day to change them.</span><button class="btn ghost small" data-act="gotit" style="white-space:nowrap">Got it</button></div>` : ""}
   ${stopsBanner()}
+  ${shipTimesBanner()}
   ${changeCard()}
   <div class="tripgrid">
     <div class="leftcol pane" data-pane="days">
@@ -5929,6 +5982,7 @@ document.addEventListener("click", e => {
   }
   if (act === "fixstops") { fixStops(); return; }
   if (act === "changetrip") { changeTrip(); return; }
+  if (act === "shiptimes") { const est = trip.days.filter(x => (x.type === "port" || x.type === "embark") && x.estimated); changeText = changeText || `${trip.ship && trip.ship.name ? trip.ship.name + " port" : "Ship port"} times: ` + est.map(x => `${x.destination} ${x.date}: arrive ?, all aboard ?`).join("; "); render(); const c = document.querySelector("details.change"); if (c) { c.open = true; c.scrollIntoView({ block: "center" }); const t = document.getElementById("chgText"); if (t) t.focus(); } return; }
   if (act === "suggesttour") {
     // Visible right away: the button says it's working, then the plan shows what changed on each day.
     t.disabled = true; t.textContent = "Planning your days…";

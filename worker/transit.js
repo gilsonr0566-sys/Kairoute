@@ -104,17 +104,25 @@ export async function timetableOptions(a, b, dow) {
       min: Math.round(typ + wait), km: +km.toFixed(1), stops: x.ride.reduce((n, l) => n + ((l.intermediateStops || []).length), 0), hours: "", fare: "", steps, deps: deps.slice(0, 30), checked: new Date().toISOString().slice(0, 10),
       path: thin(path.length > 1 ? path : [a, b], 160).map(p => [+p.lng.toFixed(5), +p.lat.toFixed(5)]), fromPt: [+a.lng, +a.lat], toPt: [+b.lng, +b.lat], src: "Transitous timetables (" + (m.agencyName || "operator") + ")" });
   }
-  return out.sort((x, y) => x.min - y.min).slice(0, 4);
+  return topRides(out, 4);
 }
 // Both sources: real timetables first; the map adds what timetables lack (ferries mostly). A map rail line is kept
 // only when the timetables had no rail answer at all. The free map servers can take a minute when busy, so the answer
 // doesn't wait for them past mapWait ms (the page's request must come back well inside the 100 s a web request may
 // take): it goes out as partial, and `late` gives the full answer once the map does reply, for the cache.
+// The quickest n rides, always with the quickest ferry among them: a ferry is often slower door to door than a few
+// train variants, but it is a different way to go (and the one travelers ask for), so a list of quicker trains never
+// pushes it out (the ferry to Sorrento appeared and then vanished, Nov 14).
+export function topRides(list, n) {
+  const s = list.slice().sort((x, y) => x.min - y.min), top = s.slice(0, n), f = s.find(o => o.mode === "ferry");
+  if (f && !top.includes(f)) { let i = top.length - 1; while (i >= 0 && top[i].mode === "ferry") i--; if (i >= 0) top.splice(i, 1); top.push(f); }
+  return top;
+}
 export async function allOptions(a, b, dow, mapWait = 12000, store) {
   const ttP = timetableOptions(a, b, dow).catch(() => null), mapP = transitOptions(a, b, store).catch(() => null);
   const merge = (tt, map) => { const t = tt || [], hasRail = t.some(o => /train|metro|tram/.test(o.mode));
     const m = (map || []).filter(o => o.mode === "ferry" ? !t.some(x => x.mode === "ferry") : !hasRail);
-    return t.concat(m).sort((x, y) => x.min - y.min).slice(0, 5); };
+    return topRides(t.concat(m), 5); };
   const TIMEOUT = Symbol("slow"), t0 = Date.now(), tt = await ttP;
   const map = await Promise.race([mapP, new Promise(r => setTimeout(() => r(TIMEOUT), Math.max(1000, mapWait - (Date.now() - t0))))]);
   if (map === TIMEOUT) {
@@ -233,7 +241,7 @@ async function buildOpts(el, fWays, a, b) {
   // One option per line (the quickest way to ride it), quickest first.
   const best = new Map();
   for (const o of opts) { const k = o.mode + "|" + (o.ref || o.name || o.operator).toLowerCase(); if (!best.has(k) || best.get(k).min > o.min) best.set(k, o); }
-  return [...best.values()].sort((x, y) => x.min - y.min).slice(0, 5);
+  return topRides([...best.values()], 5);
 }
 // A ferry route mapped only by its course: the piers are where the course comes nearest each end (each within
 // reach), named after the nearest mapped ferry terminal; the ride is the course between them, with 15% more for
