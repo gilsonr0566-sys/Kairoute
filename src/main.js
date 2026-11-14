@@ -3737,7 +3737,7 @@ if (typeof window !== "undefined") window.__kairouteTwins = () => { ensureBuilti
 if (typeof window !== "undefined") window.__kairouteDupScan = () => { ensureBuiltins(); const out = []; const seen = new Set(); for (const k in cities) { const c = cities[k]; if (!c || seen.has(c)) continue; seen.add(c); const all = allSites(c); for (let i = 0; i < all.length; i++) for (let j = i + 1; j < all.length; j++) { const r = placeRel(all[i], all[j]) || placeRel(all[j], all[i]); if (r) out.push(c.city + ": " + all[i].name + " / " + all[j].name + " (" + r + ")"); } } return out; };
 // Removes repeats and parts from a guide: of two names for one place the better known (a must-see, then the one
 // with more written about it) stays; a part goes into the bigger place's "look for" list.
-const DEDUPE_V = 4; // 4: the city's own name tells nothing apart (Acropolis of Athens)
+const DEDUPE_V = 4; const dedupeLog = []; // 4: the city's own name tells nothing apart (Acropolis of Athens); dedupeLog: what was folded, for the review tools
 if (typeof window !== "undefined") window.__kairouteDedupeLog = () => dedupeLog.slice();
 function dedupeSites(c) {
   if (!c) return 0;
