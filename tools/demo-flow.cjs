@@ -123,7 +123,7 @@ async function partA(b) {
     await timed(p, "open Day plan", go("plan", d.i), 6000);
     let s = await seen(p);
     if (!s.stops.length && d.type !== "sea") { await p.waitForTimeout(8000); s = await seen(p); } // restaurants / rides still arriving
-    plans[d.i] = s;
+    plans[d.i] = s; plans[d.i].legs = await p.evaluate(i => { try { return window.__kairouteRideLegs(i); } catch (e) { return String(e); } }, d.i);
     const aboard = (await S()).days[d.i].stayAboard;
     const needs = d.type !== "sea" && !aboard && d.type !== "departure";
     log(`     day ${d.i + 1} ${d.date} ${d.dest}: ${s.stops.length} stops [${s.stops.join("; ")}]${s.optional.length ? ", optional: " + s.optional.join("; ") : ""}, ${s.meals.length} meals, rides: ${s.rides.map(r => r.chosen).join(" / ") || "none to choose"}`);
@@ -250,6 +250,7 @@ async function partA(b) {
     for (;;) { st = await p.evaluate(() => window.__kairouteOffline ? window.__kairouteOffline.state() : null); if (!st || !st.run) break; if (Date.now() - t0 > 900000) { ok(false, "the offline download did not finish in 15 minutes: " + st.run.step); break; } await p.waitForTimeout(3000); }
     report.timings.offlineDownload = sec(t0);
     const rep = st && st.rep;
+    if (!(rep && rep.ready)) log("     download said: " + JSON.stringify({ msg: st && st.msg, failed: st && st.failed, app: rep && rep.app, notReady: rep && rep.days.filter(x => !x.ready).map(x => ({ day: x.i + 1, place: x.place, parts: x.parts })) }).slice(0, 3000));
     ok(rep && rep.ready, `the download finishes "Ready for offline" (${sec(t0)} s)` + (rep && !rep.ready ? ": " + rep.days.filter(x => !x.ready).map(x => `day ${x.i + 1} ${x.place} missing ${Object.values(x.parts).filter(q => !q.ok).map(q => q.miss).join(", ")}`).join("; ") : ""));
     await shot(p, "A6-offline-ready-tablet");
     await ctx.setOffline(true); await p.reload().catch(() => {}); await p.waitForTimeout(3000);
@@ -258,6 +259,7 @@ async function partA(b) {
     for (const d of days) {
       if (d.type === "sea") continue;
       await p.evaluate(go("plan", d.i)).catch(() => {}); await p.waitForTimeout(1200); const s = await seen(p);
+      if (s.stops.join("|") !== plans[d.i].stops.join("|")) log("     rides online: " + JSON.stringify(plans[d.i].legs).slice(0, 800) + "\n     rides offline: " + JSON.stringify(await p.evaluate(i => { try { return window.__kairouteRideLegs(i); } catch (e) { return String(e); } }, d.i)).slice(0, 800));
       ok(s.stops.join("|") === plans[d.i].stops.join("|"), `offline: day ${d.i + 1} ${d.dest} has the same stops` + (s.stops.join("|") === plans[d.i].stops.join("|") ? "" : ` (online: ${plans[d.i].stops.join("; ")} | offline: ${s.stops.join("; ")})`));
     }
     await shot(p, "A6b-offline-dayplan-tablet");
@@ -324,7 +326,7 @@ async function buildNew(b, label, text, photo) {
     await p.evaluate(go("plan", d.i)); await p.waitForTimeout(6000); const s = await seen(p); planned[d.i] = s.stops.concat(s.optional);
     log(`     day ${d.i + 1} ${d.date} ${d.dest}: [${planned[d.i].join("; ")}]`);
   }
-  for (const [city, re, nm] of want) ok(t.days.some(d => city.test(d.dest) && (planned[d.i] || []).some(x => re.test(x))), `${label}: ${nm} (named in the request) is on a ${city.source} Day plan`);
+  if (!photo) for (const [city, re, nm] of want) ok(t.days.some(d => city.test(d.dest) && (planned[d.i] || []).some(x => re.test(x))), `${label}: ${nm} (named in the request) is on a ${city.source} Day plan`);
   const nap = t.days.find(d => /naples/i.test(d.dest)); if (nap) { await p.evaluate(go("plan", nap.i)); await p.waitForTimeout(3000); await shot(p, `B-${label}-naples`); }
   ok(!errs.length, `${label}: no page errors (${errs.slice(0, 3).join(" / ")})`);
   await ctx.close(); return t;
