@@ -614,6 +614,10 @@ const tmin = (a, b) => {
 // checks all follow the choice. While the lines are being looked up (or none are mapped) the estimate is used.
 const TRANSIT_KEY = "kairoute.transit3"; // transit3: answers kept from before ferries had their own long-kept lookup are dropped
 try { ["kairoute.transit", "kairoute.transit2"].forEach(k => localStorage.removeItem(k)); } catch (e) {}
+// Each answer carries the version of the helper's answers it came from. One kept from an older version (before ferries
+// had their own lookup, or an empty answer kept as final) is used only until a fresh one arrives: phones that planned a
+// trip earlier never keep showing an old ride (Richard's Naples day kept "Train or car" with no ferry).
+const TRANSIT_V = 4;
 const transitMem = (() => { try { return JSON.parse(localStorage.getItem(TRANSIT_KEY) || "{}"); } catch (e) { return {}; } })();
 let transitSeen = null;
 const transitFail = new Map(), transitQ = new Map(), transitPins = new Set(); let transitTimer = 0, transitBusy = false; // pins: rides of the trip being kept for offline
@@ -640,14 +644,24 @@ function transitNear(a, b, kind) {
 }
 function transitFor(a, b) {
   if (!a || !b || !isFinite(a.lat) || !isFinite(b.lat) || hav(a, b) < 4) return null;
-  const dow = planDow(), k = pairKey(a, b) + "|" + dayKind(dow), hit = transitMem[k] || transitMem[pairKey(a, b)] || transitNear(a, b, dayKind(dow));
+  const dow = planDow(), k = pairKey(a, b) + "|" + dayKind(dow), exact = transitMem[k] || transitMem[pairKey(a, b)], hit = exact || transitNear(a, b, dayKind(dow));
   if (transitSeen) transitSeen.push([k, pairKey(a, b), a, b, dayKind(dow)]); // the offline check lists every ride a plan looks up
-  // An answer given while a source was busy (or an empty one) is used meanwhile and asked again after 10 minutes
-  // (with no internet it is simply used: it can't be asked again).
-  if (hit && !(hit.partial && Date.now() - hit.t > 600000 && navigator.onLine !== false)) return hit.opts.filter(runsThen);
+  // Used meanwhile, and asked again when online: an answer from an older version (at once), one given while a source
+  // was busy or an empty one (after 10 minutes), or a nearby trip's answer (the exact ride is asked). With no internet
+  // whatever is kept is simply used.
+  if (hit && !transitDue(exact, hit)) return hit.opts.filter(runsThen);
   if (typeof freeAI !== "undefined" && freeAI && !transitQ.has(k) && !(transitFail.get(k) > Date.now() - 120000)) { transitQ.set(k, { a: [+a.lat, +a.lng], b: [+b.lat, +b.lng], dow, pri: typeof trip !== "undefined" && trip.days && trip.days[trip.active] && typeof planDate !== "undefined" && trip.days[trip.active].date === planDate }); clearTimeout(transitTimer); transitTimer = setTimeout(askTransit, 300); }
   return hit ? hit.opts.filter(runsThen) : null;
 }
+function transitDue(exact, hit) {
+  if (typeof navigator !== "undefined" && navigator.onLine === false) return false;
+  if (!exact) return true;
+  if (exact.v !== TRANSIT_V) return true;
+  return (exact.partial || !(exact.opts || []).length) && Date.now() - exact.t > 600000;
+}
+if (typeof window !== "undefined") window.__kairouteTransitDue = () => { const now = Date.now(), opts = [{ mode: "train" }];
+  return { old: transitDue({ opts, t: now }, {}), oldEmpty: transitDue({ opts: [], t: now }, {}), near: transitDue(null, { opts }), fresh: transitDue({ opts, t: now, v: TRANSIT_V }, {}),
+    busyNow: transitDue({ opts, t: now, v: TRANSIT_V, partial: true }, {}), busyLater: transitDue({ opts, t: now - 700000, v: TRANSIT_V, partial: true }, {}) }; };
 // Up to 12 pairs a request and 3 requests at once (the helper looks the pairs of a request up side by side), the day
 // on screen first; the plan is redrawn as each answer arrives, not after the whole trip is done.
 async function askTransit() {
@@ -655,7 +669,7 @@ async function askTransit() {
   const one = async part => {
     let got = 0;
     try { const r = await fetch(freeAI.url + "/transit", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ pairs: part.map(x => ({ a: x[1].a, b: x[1].b, dow: x[1].dow })) }) }); if (!r.ok) throw new Error("transit " + r.status);
-      const j = await r.json(); part.forEach(([k], i) => { const res = (j.results || [])[i]; if (res && Array.isArray(res.opts)) { transitMem[k] = { opts: res.opts, t: Date.now(), partial: !!res.partial || !res.opts.length }; got++; } else transitFail.set(k, Date.now()); });
+      const j = await r.json(); part.forEach(([k], i) => { const res = (j.results || [])[i]; if (res && Array.isArray(res.opts)) { transitMem[k] = { opts: res.opts, t: Date.now(), v: TRANSIT_V, partial: !!res.partial || !res.opts.length }; got++; } else transitFail.set(k, Date.now()); });
     } catch (e) { part.forEach(([k]) => transitFail.set(k, Date.now())); }
     if (got) transitShow();
   };
@@ -674,7 +688,7 @@ function transitShow() { if (typeof view !== "undefined" && ["plan", "trip", "si
 // A full storage drops older answers rather than failing.
 function transitKeep() {
   const ks = Object.keys(transitMem).sort((x, y) => (transitPins.has(y) ? 1 : 0) - (transitPins.has(x) ? 1 : 0) || transitMem[y].t - transitMem[x].t);
-  const thin = m => ({ t: m.t, partial: !!m.partial, opts: (m.opts || []).map(x => Object.assign({}, x, { path: thinPts(x.path || [], 60) })) });
+  const thin = m => ({ t: m.t, v: m.v, partial: !!m.partial, opts: (m.opts || []).map(x => Object.assign({}, x, { path: thinPts(x.path || [], 60) })) });
   const slim = keep => { const o = {}; ks.slice(0, keep).forEach(k => { const m = transitMem[k]; if (m) o[k] = thin(m); }); return JSON.stringify(o); };
   // Every answer is also kept whole in the device's larger store (no limit), so a long trip planned for offline
   // keeps every ride it was planned with; it is read back at start-up (see transitLoad).
@@ -684,7 +698,7 @@ function transitKeep() {
 let transitAll = null;
 function transitLoad() {
   kv.get("transitAll").then(m => { if (!m || typeof m !== "object") return; transitAll = m; let added = 0;
-    for (const k in m) if (!transitMem[k] && m[k] && Array.isArray(m[k].opts)) { transitMem[k] = m[k]; added++; }
+    for (const k in m) if (m[k] && Array.isArray(m[k].opts) && (!transitMem[k] || (m[k].v === TRANSIT_V && (transitMem[k].v !== TRANSIT_V || m[k].t > transitMem[k].t)))) { transitMem[k] = m[k]; added++; } // the newer of the two kept copies
     if (added && typeof render === "function" && typeof view !== "undefined") transitShow(); }).catch(() => {});
 }
 setTimeout(transitLoad, 0);
@@ -3307,7 +3321,7 @@ if (typeof window !== "undefined") window.__kairouteFaithScan = i => { const d =
 // Test hook: put transit answers in place for given pairs ([{a:{lat,lng}, b:{lat,lng}, opts}]), as /transit would.
 // Test hook: is a line with these running months offered on this date? (a summer ferry in July and in January)
 if (typeof window !== "undefined") window.__kairouteRunsThen = (iso, months) => { const p = planDate; planDate = iso; try { return runsThen({ months }); } finally { planDate = p; } };
-if (typeof window !== "undefined") window.__kairouteTransitSet = pairs => { (pairs || []).forEach(x => { transitMem[pairKey(x.a, x.b)] = { opts: x.opts, t: Date.now() }; }); return Object.keys(transitMem).length; };
+if (typeof window !== "undefined") window.__kairouteTransitSet = pairs => { (pairs || []).forEach(x => { transitMem[pairKey(x.a, x.b)] = { opts: x.opts, t: Date.now(), v: TRANSIT_V }; }); return Object.keys(transitMem).length; };
 if (typeof window !== "undefined") window.__kairouteMapLegs = () => { const d = day(), pl = buildPlan(d); return pl && !pl.error ? mapPlanData(pl, d).legs : []; };
 // Test hook: try to add, on day i, a sight that is closed that day (the first one found): it must not be added and the
 // box must say it's closed and offer an open day or an open sight instead.
