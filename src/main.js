@@ -3687,10 +3687,10 @@ function dedupeSites(c) {
     if (!r) continue;
     try { dedupeLog.push({ city: c.city || "", kept: (r === "same" && rank(b) > rank(a) ? b : big).name, gone: (r === "same" && rank(b) > rank(a) ? a : small).name, rel: r }); } catch (e) {}
     if (r === "same") { if (rank(b) > rank(a)) { big = b; small = a; } big.mustSee = big.mustSee || small.mustSee; big.alias = [...new Set([...(big.alias || []), small.name, small.id])];
-      // A name that covers more ("Colosseum and Roman Forum" folded into "Roman Forum") is kept as the shown name, so
+      // A name that joins more places ("Colosseum and Roman Forum" folded into "Roman Forum") is kept as the shown name, so
       // the place it adds (the Colosseum) never disappears from the guide.
-      const wb = placeWords(big.name), ws = placeWords(small.name);
-      if (ws.length > wb.length && wb.every(t => ws.includes(t))) { big.alias = [...new Set([...big.alias.filter(x => x !== small.name), big.name])]; big.name = small.name; } }
+      const pw = n => placeWords(String(n).replace(/\(.*?\)|\[.*?\]/g, " ")), wb = pw(big.name), ws = pw(small.name); // bracketed notes ("via boat", a local name) aren't more places
+      if (/\s(and|&)\s/i.test(String(small.name).replace(/\(.*?\)|\[.*?\]/g, " ")) && ws.length > wb.length && wb.every(t => ws.includes(t))) { big.alias = [...new Set([...big.alias.filter(x => x !== small.name), big.name])]; big.name = small.name; } }
     else { big.lookFor = [...new Set([...(big.lookFor || []), small.name])].slice(0, 6); big.alias = [...new Set([...(big.alias || []), small.id])]; }
     // A copy of what was folded is kept, so a fold the rules later tell apart can be undone (undoMerges).
     { const copy = Object.assign({}, small); delete copy.merged; big.merged = (big.merged || []).filter(x => x.id !== copy.id).concat([copy]); }
