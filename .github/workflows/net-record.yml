@@ -1,0 +1,26 @@
+name: Record internet answers
+# Uses the live app like a traveler with the real internet and keeps every answer (guide helper, sources, weather,
+# rides; not map tiles) in tools/fixtures/net-live.json.gz on the speed branch, so speed tests can replay a real day
+# without the internet. Run on demand.
+on:
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  record:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: claude/project-thread-m88qb4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm i --no-save playwright@1 && npx playwright install --with-deps chromium
+      - name: Record (live site, phone)
+        run: mkdir -p tools/fixtures && node tools/freeze-probe.cjs https://gilsonr0566-sys.github.io/Kairoute/ --cpu 4 --device phone --record tools/fixtures/net-live.json.gz | grep -E "Recorded|Freeze probe|Freezes over|Left alone"
+      - name: Save to the speed branch
+        run: |
+          git config user.name "github-actions[bot]"; git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add tools/fixtures/net-live.json.gz && git commit -m "Recorded internet answers from the live app" && git push origin HEAD:claude/project-thread-m88qb4
