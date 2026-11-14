@@ -228,14 +228,15 @@ async function partA(b) {
   await timed(p, "open Change stops", go("sites", ed.i), 3000); await shot(p, "A2-change-stops-tablet");
   const pick = await p.evaluate(() => { const el = [...document.querySelectorAll("label.site:not(.on) input[data-site]")][0]; if (!el) return null; const name = ((el.closest("label").querySelector(".name, h3, b") || {}).innerText || "").trim(); return { id: el.dataset.site, name }; });
   if (ok(!!pick, `Change stops lists sights to add on day ${ed.i + 1}`)) {
-    const before = (await S()).days[ed.i].picks;
+    const before = (await S()).days[ed.i].picks, selOf = i => p.evaluate(i => { const T = window.__kairouteTruth(i); return (T.selected || []).join(", "); }, ed.i), sel0 = await selOf();
     await p.evaluate(() => { window.__lt = []; }); const tc = Date.now();
     await p.locator(`label[for="s-${pick.id}"]`).first().click();
     await p.waitForTimeout(1500); const clickMs = Date.now() - tc, lt = await p.evaluate(() => Math.round(Math.max(0, ...window.__lt)));
     ok(lt < FREEZE_MS, `ticking a sight responds without freezing (longest block ${lt} ms, ${clickMs} ms)`);
     const fitbox = await p.evaluate(() => !!document.querySelector(".fitbox"));
     const after = (await S()).days[ed.i].picks;
-    ok(after === before + 1 || fitbox, `ticking "${pick.name}" adds it to the picks (or explains why it doesn't fit) (${before} -> ${after})`);
+    const why = after === before + 1 || fitbox ? "" : `; picks were [${sel0}], now [${await selOf()}]; notes: ${await p.evaluate(() => [...document.querySelectorAll(".banner, .movednote, .bumped, .note, [role=status]")].map(x => x.innerText.replace(/\s+/g, " ").trim()).filter(Boolean).slice(0, 6).join(" | ").slice(0, 600))}`;
+    ok(after === before + 1 || fitbox, `ticking "${pick.name}" adds it to the picks (or explains why it doesn't fit) (${before} -> ${after})${why}`);
     if (after === before + 1) {
       await p.evaluate(go("plan", ed.i)); await p.waitForTimeout(4000); const s = await seen(p);
       const inPlan = s.stops.concat(s.optional).some(x => x.toLowerCase().includes(pick.name.toLowerCase().slice(0, 12)));
