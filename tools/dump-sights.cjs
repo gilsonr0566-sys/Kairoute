@@ -13,5 +13,13 @@ const { chromium } = require('playwright');
   console.log(`DEDUPE ${cities ? cities.n + ' guides checked, ' + cities.sights + ' sights; ' : ''}${log.filter(x => x.rel === 'same').length} repeats merged, ${log.filter(x => x.rel === 'part').length} parts folded into their place`);
   log.forEach(x => console.log(`  ${x.city}: ${x.rel === 'same' ? 'merged' : 'part of'} "${x.gone}" -> "${x.kept}"`));
   if (cities) console.log('LEFT ' + JSON.stringify(cities.left));
+  // Near twins: two sights of one city within 300 m, whatever their names, with what the app knows of each, so a
+  // repeat under two languages' names (Duomo di Messina / Messina Cathedral) shows how it got in.
+  const twins = await p.evaluate(() => { try { const out = []; const seen = new Set(); const f = x => [x.name, x.srcOnly ? 'src' : 'guide', x.wd || '-', x.local || '-', x.category || '-'].join(' | ');
+    for (const k in cities) { const c = cities[k]; if (!c || seen.has(c)) continue; seen.add(c); const all = allSites(c).filter(x => isFinite(x.lat));
+      for (let i = 0; i < all.length; i++) for (let j = i + 1; j < all.length; j++) { const d = hav(all[i], all[j]); if (d > 0.3) continue;
+        const r = placeRel(all[i], all[j]) || placeRel(all[j], all[i]) || 'apart'; out.push(c.city + ' ' + Math.round(d * 1000) + 'm ' + r + ': ' + f(all[i]) + '  <>  ' + f(all[j])); } }
+    return out; } catch (e) { return ['twin scan failed: ' + e]; } });
+  twins.forEach(x => console.log('TWIN ' + x));
   await b.close();
 })();
