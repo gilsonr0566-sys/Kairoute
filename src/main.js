@@ -1110,16 +1110,17 @@ function simDay(seq, t0, O, Z, style) {
   const been = [];
   for (let i = 0; i < seq.length; i++) {
     const p = seq[i];
-    clock += tmin(prev, p); cost += hav(prev, p) * 0.4; // straight-line distance breaks ties, so equal-time orders never cross
+    const km = hav(prev, p), tp = tmin(prev, p);
+    clock += tp; cost += km * 0.4; // straight-line distance breaks ties, so equal-time orders never cross
     // Never go back to an area already left behind: a long ride (over 20 km) to somewhere within 10 km of
     // an earlier stop, other than the one just left, is backtracking (e.g. Corinth, Athens, Corinth again).
-    if (hav(prev, p) > 20 && been.slice(0, -1).some(b => hav(b, p) < 10)) cost += 600;
+    if (km > 20) { for (let j = 0; j < been.length - 1; j++) if (hav(been[j], p) < 10) { cost += 600; break; } }
     been.push(p);
     if (p.mealOf) {
       // A meal is eaten where you are: a stop that adds more than 20 minutes of travel just to eat costs a lot,
       // so a long detour for lunch never wins (eating a bit later nearby does).
       const nx = seq[i + 1] || Z;
-      if (nx) { const extra = tmin(prev, p) + tmin(p, nx) - tmin(prev, nx); if (extra > 20) cost += (extra - 20) * 12; }
+      if (nx) { const extra = tp + tmin(p, nx) - tmin(prev, nx); if (extra > 20) cost += (extra - 20) * 12; }
       const m = p.mealOf;
       if (m.label === "Lunch" && seenDinner) cost += 500; if (m.label !== "Lunch") seenDinner = true;
       if (clock < m.from) { cost += (m.from - clock) * 0.6; clock = m.from; }
@@ -1400,8 +1401,8 @@ function planKey(d) {
   let t; try { trip.active = 0; t = JSON.stringify(trip); } finally { trip.active = a; } // which day is on screen never changes a plan
   return t + "|" + i + "|" + (i < 0 ? JSON.stringify(d) : "") + "|" + ridePref + "|" + skipEvening + "|" + [...avoidMeals].join(",") + "|" + Object.keys(transitMem).length;
 }
-function buildPlan(d) {
-  if (!d || typeof d !== "object") return buildPlanRaw(d);
+// The store, emptied when anything that shapes plans has changed since it was filled. Returns the current signature.
+function planFresh() {
   const sig = planGen + "|" + todayISO() + "|" + citiesSig();
   if (planStore.sig !== sig || Date.now() - planStore.at > 120000 || planStore.map.size > 400) {
     // The plans made just before an answer arrived are kept one more round (same day, under 2 minutes old) for moving
@@ -1410,6 +1411,13 @@ function buildPlan(d) {
     const old = !sameDay ? null : useMap ? P.map : P.old && now - P.oldAt < 120000 ? P.old : null;
     planStore = { sig, at: now, map: new Map(), old, oldAt: useMap ? P.at : P.oldAt };
   }
+  return sig;
+}
+// A plan already made for this day (fresh, or from just before an answer arrived), without making one.
+function planPeek(d) { planFresh(); const k = planKey(d), h = planStore.map.get(k) || (planStore.old && planStore.old.get(k)); return h && h.d === d ? h.plan : null; }
+function buildPlan(d) {
+  if (!d || typeof d !== "object") return buildPlanRaw(d);
+  const sig = planFresh();
   const k = planKey(d), restore = e => {
     for (const [m, v] of [[keptMemo, e.kept], [mealMemo, e.meal], [bonusMemo, e.bonus], [eveMemo, e.eve]]) { if (v === undefined) m.delete(d); else m.set(d, v); }
     if (transitSeen) transitSeen.push(...e.rides); // the offline check still learns every ride the plan uses
@@ -3816,7 +3824,8 @@ function toTop() { window.scrollTo(0, 0); panes().forEach(el => { el.scrollTop =
 // stopped scrolling, so a tap or a scroll is never held up by a redraw. keep: the news can't change a plan.
 let drTimer = 0, drKeep = true, lastTouch = 0, drLast = 0; // drLast: when the last data redraw ran
 if (typeof window !== "undefined") { const touched = () => { lastTouch = Date.now(); };
-  window.addEventListener("pointerdown", touched, { capture: true, passive: true }); document.addEventListener("scroll", touched, { capture: true, passive: true }); }
+  // The traveler's own hands only (a scroll the app makes itself after a redraw doesn't count).
+  ["pointerdown", "touchstart", "touchmove", "wheel", "keydown"].forEach(t => window.addEventListener(t, touched, { capture: true, passive: true })); }
 // While answers keep streaming in (the first minute of a trip asks hundreds of things), redraws are spaced at least
 // ~0.9 s apart, so the screen is never redrawn back to back.
 function dataRender(keep) { drKeep = drKeep && !!keep; if (!drTimer) drTimer = setTimeout(drRun, Math.max(120, 900 - (Date.now() - drLast))); }
@@ -4388,16 +4397,36 @@ function budgetCard(plan) {
       <div class="stat"><b>${money(b.sym, b.total)}</b><span>total</span></div>
     </div><p class="footnote">Rough figures from typical prices. Change the number of people in Settings.</p></div>`;
 }
-function tripBudget() {
-  const by = {}; let days = 0, missing = 0;
+// The Trip screen's budget adds up every day's plan. Plans already made are used at once; any day not yet planned is
+// worked out one at a time in quiet moments afterwards and the total filled in then, so opening the Trip screen never
+// waits for twenty days of planning. full: plan every day now (tools and tests).
+let budgetTimer = 0, budgetSteps = 0;
+function tripBudget(full) {
+  const by = {}; let days = 0, missing = 0, todo = 0;
   trip.days.forEach(d => {
     if (noShore(d)) return;
     const city = cityFor(d); if (!city) { missing++; return; }
-    refillIfNeeded(d, city); if (!d.selected) seedPicks(d, city);
-    const plan = buildPlan(d); if (!plan || plan.error) return;
+    let plan = d.selected ? planPeek(d) : null;
+    if (!plan && !full) { todo++; return; }
+    if (!plan) { refillIfNeeded(d, city); if (!d.selected) seedPicks(d, city); plan = buildPlan(d); }
+    if (!plan || plan.error) return;
     const b = planBudget(plan); by[b.sym] = (by[b.sym] || 0) + b.total; days++;
   });
-  return { by, days, missing };
+  if (todo && !budgetTimer && budgetSteps < 3 * trip.days.length) budgetTimer = setTimeout(budgetStep, 300); // capped, in case answers keep arriving
+  return { by, days, missing, todo };
+}
+function budgetHtml() {
+  const tb = tripBudget(), parts = Object.entries(tb.by).map(([k, v]) => money(k, v)).join(" + ");
+  return `<details class="card more tripbudget"><summary>Trip budget: ${tb.todo ? "adding up your days…" : parts || "-"} <span class="lede" style="font-weight:400">for ${P().party} people</span></summary>
+          <p class="footnote">Tickets, food and getting around for the ${tb.days} planned day${tb.days === 1 ? "" : "s"}${tb.missing ? `. ${tb.missing} day${tb.missing === 1 ? "" : "s"} still need a guide` : ""}. Flights, the cruise and hotels aren't included.</p></details>`;
+}
+function budgetStep() {
+  budgetTimer = 0; const box = document.querySelector("#view .tripbudget"); if (!box || view !== "trip") { budgetSteps = 0; return; }
+  budgetSteps++;
+  if (Date.now() - lastTouch < 600) { budgetTimer = setTimeout(budgetStep, 400); return; }
+  const d = trip.days.find(x => !noShore(x) && cityFor(x) && !(x.selected && planPeek(x)));
+  if (d) { const city = cityFor(d); try { refillIfNeeded(d, city); if (!d.selected) { seedPicks(d, city); save(); } buildPlan(d); } catch (e) {} }
+  const open = box.open; box.outerHTML = budgetHtml(); const nb = document.querySelector("#view .tripbudget"); if (nb) nb.open = open;
 }
 function basicsCard(city) {
   const b = city.basics; if (!b) return "";
@@ -4728,9 +4757,7 @@ function renderTrip(d) {
       ${aiReady() && missing ? `<button class="btn ghost small" data-act="genall" ${busy ? "disabled" : ""}>${missing === 1 ? `Build the guide for ${esc(missingNames[0])}` : missing <= 3 ? `Build the guides for ${esc(missingNames.join(" and "))}` : `Build the guides for all ${missing} places`}</button>` : ""}
       <div class="itin">${itinerary()}</div>
       <div class="actions"><button class="btn ghost small" data-act="addday">+ Add a day</button><button class="btn ghost small" data-act="addport">+ Add a port day</button></div>
-      ${(() => { const tb = tripBudget(); const parts = Object.entries(tb.by).map(([k, v]) => money(k, v)).join(" + ");
-        return `<details class="card more tripbudget"><summary>Trip budget: ${parts || "-"} <span class="lede" style="font-weight:400">for ${P().party} people</span></summary>
-          <p class="footnote">Tickets, food and getting around for the ${tb.days} planned day${tb.days === 1 ? "" : "s"}${tb.missing ? `. ${tb.missing} day${tb.missing === 1 ? "" : "s"} still need a guide` : ""}. Flights, the cruise and hotels aren't included.</p></details>`; })()}
+      ${budgetHtml()}
       <details class="card more">
         <summary>Share, print or rebuild the trip</summary>
         <div class="actions"><button class="btn ghost small" data-act="pdf">Save as PDF</button><button class="btn ghost small" data-act="copytrip">Copy itinerary</button></div>

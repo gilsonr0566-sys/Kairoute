@@ -147,13 +147,14 @@ async function offCheck(eager) {
 async function offCheckNow(eager) { // eager: asked for (a download ending, a test), so no waiting for quiet moments
   offChecking = true;
   try {
-    const key = offKey(), mem = offMem();
+    const mem = offMem();
     let base = null; try { base = await mapBase(mapDark() ? "dark" : "light"); } catch (e) {}
     // One day at a time, each in a quiet moment: the check builds every day's plan, and it must never freeze a tap.
     const days = []; for (const d of offDays()) { if (eager || offHurry) await offSleep(0); else await offQuiet(); days.push(await offCheckDay(d, base, mem)); }
     const app = await offAppCheck();
     const todo = days.filter(x => !x.ready);
-    offRep = { key, at: Date.now(), days, app, ready: !!days.length && !todo.length && app.ok, todo: todo.length, notes: [...new Set(days.flatMap(x => x.notes))] };
+    // The key is taken after the days are checked: checking a day can pick its sights for the first time.
+    offRep = { key: offKey(), at: Date.now(), days, app, ready: !!days.length && !todo.length && app.ok, todo: todo.length, notes: [...new Set(days.flatMap(x => x.notes))] };
     return offRep;
   } finally { offChecking = false; offHurry = false; if (offAgain) { offAgain = false; offSoon(200); } }
 }

@@ -14,7 +14,7 @@ const REF_MS = 240; // the calibration work on the machine the limits were set o
 // Limits (ms, at the calibrated speed). Google calls a tap response over 200 ms "needs improvement"; the limits
 // leave room for test-machine noise but are far below the 400 to 900 ms taps (2 s at worst) measured before the
 // speed work of Nov 13 2026.
-const LIMIT = { ready: 2500, tap: 300, tapWorst: 900, freeze: 500, freezeAny: 750 }; // freezeAny: longest freeze anywhere while the traveler uses the app
+const LIMIT = { ready: 2500, tap: 300, tapWorst: 900, freeze: 500, freezeAny: 600 }; // freezeAny: longest freeze anywhere while the traveler uses the app
 const MIME = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css', '.json': 'application/json', '.png': 'image/png', '.svg': 'image/svg+xml', '.webmanifest': 'application/manifest+json', '.txt': 'text/plain' };
 const server = http.createServer((q, r) => { let f = path.join(ROOT, decodeURIComponent(q.url.split('?')[0])); if (f.endsWith('/')) f += 'index.html';
   fs.readFile(f, (e, b) => { if (e) { r.writeHead(404); return r.end(); } r.writeHead(200, { 'content-type': MIME[path.extname(f)] || 'application/octet-stream' }); r.end(b); }); });
