@@ -13,5 +13,9 @@ const { chromium } = require('playwright');
   console.log(`DEDUPE ${cities ? cities.n + ' guides checked, ' + cities.sights + ' sights; ' : ''}${log.filter(x => x.rel === 'same').length} repeats merged, ${log.filter(x => x.rel === 'part').length} parts folded into their place`);
   log.forEach(x => console.log(`  ${x.city}: ${x.rel === 'same' ? 'merged' : 'part of'} "${x.gone}" -> "${x.kept}"`));
   if (cities) console.log('LEFT ' + JSON.stringify(cities.left));
+  // Near twins: two sights of one city within 300 m, whatever their names, with what the app knows of each, so a
+  // repeat under two languages' names (Duomo di Messina / Messina Cathedral) shows how it got in.
+  const twins = await p.evaluate(() => window.__kairouteTwins ? window.__kairouteTwins() : ['no twins hook']);
+  twins.forEach(x => console.log('TWIN ' + x));
   await b.close();
 })();

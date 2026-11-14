@@ -129,7 +129,7 @@ const INTEREST_WORDS = { history: ["history", "roman", "medieval", "ancient", "w
 // Religious sites: places of worship (churches, monasteries, mosques, synagogues...). Ancient ruins of temples
 // count as history, not worship. With "Religious sites: Skip them" on a trip, these leave suggestions, except a
 // must-see landmark that happens to be religious (e.g. the Sagrada Família) stays as a normal sight.
-const RELIGIOUS_RE = /\b(church|cathedral|basilica|monaster|chapel|shrine|mosque|synagogue|abbey|convent|sanctuary|pilgrim|religious|holy|parish|agios|agia|panagia|san |santa |saint|st\.? )/i;
+const RELIGIOUS_RE = /\b(church|cathedral|duomo|cattedrale|catedral|chiesa|iglesia|[eé]glise|kirche|basilica|monaster|chapel|shrine|mosque|synagogue|abbey|convent|sanctuary|pilgrim|religious|holy|parish|agios|agia|panagia|san |santa |saint|st\.? )/i;
 const isReligious = x => !!x && RELIGIOUS_RE.test((x.category || "") + " " + (x.name || "")) && !/ancient|ruin|archaeolog/i.test((x.category || "") + " " + (x.name || ""));
 const skipReligious = () => P().religious === "off";
 // The "Churches & faith" interest: off once the traveler turns it off (noChurches), or when they chose
@@ -1739,11 +1739,13 @@ function salvageJSON(t) {
   try { return JSON.parse(t.slice(0, lastOk + 1) + lastStack.reverse().join("")); } catch (e) { return null; }
 }
 const numV = v => (typeof v === "number" && isFinite(v) ? v : parseFloat(v));
+// A writer sometimes gives a name as an object ({"name": ...}, {"en": ...}); a name that can't be read means no sight.
+function siteName(n) { if (n && typeof n === "object") n = n.name || n.en || n.n || n.local || ""; n = typeof n === "string" || typeof n === "number" ? String(n).trim() : ""; return /^\[object|^(undefined|null|site)$/i.test(n) ? "" : n; }
 function normSite(s, i, extra) {
   const num = numV;
   return {
     id: String(s.id || ("s" + i)).replace(/[^a-z0-9-]/gi, "-").toLowerCase() + (extra || ""),
-    name: String(s.name || "Site"), lat: num(s.lat), lng: num(s.lng),
+    name: siteName(s.name) || "Site", lat: num(s.lat), lng: num(s.lng),
     minutes: Math.max(5, Math.min(360, Math.round(num(s.minutes) || 45))),
     kind: s.kind === "local" ? "local" : "touristy", mustSee: !!s.mustSee, quick: !!s.quick, far: !!s.far,
     category: String(s.category || ""), summary: String(s.summary || ""), guide: String(s.guide || ""),
@@ -1756,7 +1758,7 @@ function normSite(s, i, extra) {
 }
 function cleanCity(c, dest) {
   const num = numV;
-  const okLL = p => p && isFinite(num(p.lat)) && isFinite(num(p.lng));
+  const okLL = p => p && isFinite(num(p.lat)) && isFinite(num(p.lng)) && !!siteName(p.name);
   const site = normSite;
   const starts = {};
   for (const k of ["cruise", "airport", "station", "hotel", "point"]) starts[k] = ((c.starts && c.starts[k]) || []).filter(okLL).map(p => ({ name: String(p.name), lat: num(p.lat), lng: num(p.lng), note: p.note ? String(p.note) : "" }));
@@ -2081,10 +2083,13 @@ const fameAsked = {};
 function fameMark(city, src) {
   for (const s of [...(city.sites || []), ...(city.farther || [])]) {
     const hit = srcStop(src, s.name, s) || ((src.far || []).find(x => nameMatch(s.name, x.name) || nameMatch(x.name, s.name)) && Object.assign({ src: ["Wikidata (Wikipedia in many languages)"] }, (src.far || []).find(x => nameMatch(s.name, x.name) || nameMatch(x.name, s.name))));
-    if (hit) { s.fame = hit.sl || 0; s.unesco = !!hit.unesco; s.heritage = !!hit.heritage; s.src = hit.src || []; if (hit.web && !s.web) s.web = hit.web; if (hit.local) s.local = hit.local; }
+    if (hit) { s.fame = hit.sl || 0; s.unesco = !!hit.unesco; s.heritage = !!hit.heritage; s.src = hit.src || []; if (hit.web && !s.web) s.web = hit.web; if (hit.local) s.local = hit.local; if (hit.wd && !s.wd) s.wd = hit.wd; }
   }
   famousRepair(city, src);
   sourceSights(city, src);
+  // Every way a sight gets in (the written guide, famous sights written in, places added from the sources) ends in one
+  // check, so one place under two names (Prado Museum / Museo del Prado) is offered once.
+  dedupeSites(city);
   for (const s of [...(city.sites || []), ...(city.farther || [])]) s.kind = sightKind(s, city);
   for (const r of city.restaurants || []) {
     const e = (src.eats || []).find(x => (nameMatch(r.name, x.name) || nameMatch(x.name, r.name)) && (x.lat == null || hav(x, r) < 0.4));
@@ -3449,9 +3454,17 @@ const PLACE_PART = new Set("bell tower belfry campanile clock beach boardwalk pr
 const PLACE_KIND = [["fountain", /\b(fountain|fontana|fuente|font)\b/i], ["worship", RELIGIOUS_RE], ["museum", /\b(museum|museo|musee|gallery|galleria)\b/i], ["castle", /\b(castle|castel|castello|fort|fortress|fortifications?|citadel|kastro|koules)\b/i], ["palace", /\b(palace|palazzo|palacio|palau)\b/i], ["market", /\b(market|mercato|mercat|mercado)\b/i], ["theatre", /\b(theatre|theater|teatro)\b/i], ["park", /\b(park|parc|parque|garden|gardens|jardin)\b/i], ["beach", /\b(beach|plage|playa|spiaggia)\b/i], ["lighthouse", /\b(lighthouse|faro)\b/i]];
 // Words too common to tell two places apart ("San Lorenzo Maggiore" and "San Paolo Maggiore" are two churches).
 const PLACE_GENERIC = new Set("maggiore major great grand new nuovo nuova old little small upper lower royal reale national nazionale nacional real".split(" "));
-const PLACE_SYN = { nautical: "maritime", naval: "maritime" }; // one museum, two English names (Chania's Maritime / Nautical Museum)
+// One place under two names: two English names (Chania's Maritime / Nautical Museum), or the local-language name beside
+// the English one (Duomo di Messina / Messina Cathedral, Fontana di Orione / Fountain of Orion).
+const PLACE_SYN = { nautical: "maritime", naval: "maritime", duomo: "cathedral", cattedrale: "cathedral", catedral: "cathedral", cathedrale: "cathedral", kathedrale: "cathedral", catedrala: "cathedral",
+  chiesa: "church", iglesia: "church", eglise: "church", kirche: "church", igreja: "church", basilique: "basilica", basilika: "basilica", cappella: "chapel", capilla: "chapel", chapelle: "chapel", kapelle: "chapel",
+  museo: "museum", musee: "museum", museu: "museum", fontana: "fountain", fuente: "fountain", fontaine: "fountain", brunnen: "fountain", font: "fountain",
+  palazzo: "palace", palacio: "palace", palais: "palace", palau: "palace", castello: "castle", castillo: "castle", chateau: "castle", castell: "castle", forte: "fort", fuerte: "fort",
+  torre: "tower", tour: "tower", turm: "tower", orologio: "clock", reloj: "clock", horloge: "clock", astronomico: "astronomical", astronomique: "astronomical", regionale: "regional",
+  santuario: "sanctuary", sanctuaire: "sanctuary", giardino: "garden", jardin: "garden", jardi: "garden", mercato: "market", mercado: "market", mercat: "market", marche: "market",
+  ponte: "bridge", puente: "bridge", pont: "bridge", porta: "gate", puerta: "gate", teatro: "theatre", theater: "theatre", monte: "mount", mt: "mount", hill: "mount", lofos: "mount" };
 const placeWords = n => keyOf(String(n || "").replace(/&/g, " and ")).split(" ").filter(t => t.length > 1 && !PLACE_SMALL.has(t)).map(t => t.replace(/s$/, "")).map(t => PLACE_SYN[t] || t);
-const placeNames = x => { const n = String((x && x.name) || ""), alt = [...n.matchAll(/[([]([^)\]]+)[)\]]/g)].map(m => m[1]); return [n.replace(/[([][^)\]]*[)\]]/g, " ")].concat(alt); }; // "Name (other name)" and "Name [local name]"
+const placeNames = x => { const n = String((x && x.name) || ""), alt = [...n.matchAll(/[([]([^)\]]+)[)\]]/g)].map(m => m[1]); return [n.replace(/[([][^)\]]*[)\]]/g, " ")].concat(alt, x && x.local && keyOf(x.local) !== keyOf(n) ? [String(x.local)] : []); }; // "Name (other name)", "Name [local name]" and the sources' local name
 const placeKind = x => (PLACE_KIND.find(([, re]) => re.test(((x && x.name) || "") + " " + ((x && x.category) || ""))) || [""])[0];
 const isFeat = t => PLACE_PART.has(t) || PLACE_KIND.some(([, re]) => re.test(t));
 // How b relates to a: "same" (one place), "part" (b is a small part of a), or "".
@@ -3499,15 +3512,21 @@ function samePlace(a, b) { return placeRel(a, b) === "same"; }
 if (typeof window !== "undefined") window.__kairouteDedupe = (sites, farther) => { const c = { sites: JSON.parse(JSON.stringify(sites || [])), farther: JSON.parse(JSON.stringify(farther || [])) }; const n = dedupeSites(c); return { n, kept: allSites(c).map(x => ({ name: x.name, alias: x.alias || [], lookFor: x.lookFor || [] })) }; };
 // Every guide the app holds, checked for two sights that are one place (for the safety net).
 if (typeof window !== "undefined") window.__kairouteDupCities = () => { ensureBuiltins(); const seen = new Set(); let n = 0, sights = 0; for (const k in cities) { const c = cities[k]; if (!c || seen.has(c)) continue; seen.add(c); n++; sights += allSites(c).length; } return { n, sights, left: window.__kairouteDupScan() }; };
+if (typeof window !== "undefined") window.__kairouteNameCheck = () => cleanCity({ sites: [{ name: { name: "Casa Gallardo" }, lat: 40.42, lng: -3.70 }, { name: {}, lat: 40.42, lng: -3.70 }, { name: "Plaza Mayor", lat: 40.415, lng: -3.707 }] }, "Madrid").sites.map(x => x.name);
+// Near twins: two sights of one city within 300 m whatever their names, with what the app knows of each (review tool).
+if (typeof window !== "undefined") window.__kairouteTwins = () => { ensureBuiltins(); const out = [], seen = new Set(), f = x => [x.name, x.srcOnly ? "src" : "guide", x.wd || "-", x.local || "-", x.category || "-"].join(" | ");
+  for (const k in cities) { const c = cities[k]; if (!c || seen.has(c)) continue; seen.add(c); const all = allSites(c).filter(x => isFinite(x.lat));
+    for (let i = 0; i < all.length; i++) for (let j = i + 1; j < all.length; j++) { const d = hav(all[i], all[j]); if (d > 0.3) continue; out.push(c.city + " " + Math.round(d * 1000) + "m " + (placeRel(all[i], all[j]) || placeRel(all[j], all[i]) || "apart") + ": " + f(all[i]) + "  <>  " + f(all[j])); } }
+  return out; };
 if (typeof window !== "undefined") window.__kairouteDupScan = () => { ensureBuiltins(); const out = []; const seen = new Set(); for (const k in cities) { const c = cities[k]; if (!c || seen.has(c)) continue; seen.add(c); const all = allSites(c); for (let i = 0; i < all.length; i++) for (let j = i + 1; j < all.length; j++) { const r = placeRel(all[i], all[j]) || placeRel(all[j], all[i]); if (r) out.push(c.city + ": " + all[i].name + " / " + all[j].name + " (" + r + ")"); } } return out; };
 // Removes repeats and parts from a guide: of two names for one place the better known (a must-see, then the one
 // with more written about it) stays; a part goes into the bigger place's "look for" list.
-const DEDUPE_V = 2; const dedupeLog = []; // what was folded, for the review tools
+const DEDUPE_V = 3; const dedupeLog = []; // what was folded, for the review tools
 if (typeof window !== "undefined") window.__kairouteDedupeLog = () => dedupeLog.slice();
 function dedupeSites(c) {
   if (!c) return 0; let n = 0;
   const lists = [c.sites || [], c.farther || []], all = lists.flat(), gone = new Set();
-  const rank = x => (x.mustSee ? 1000 : 0) + (x.unesco ? 100 : 0) + (x.quick ? -500 : 0) + String(x.guide || "").length / 100 + (x.builtin ? 0 : 1);
+  const rank = x => (x.mustSee ? 1000 : 0) + (x.unesco ? 100 : 0) + (x.quick ? -500 : 0) + (x.srcOnly ? -50 : 0) + String(x.guide || "").length / 100 + (x.builtin ? 0 : 1); // a written sight beats a bare one from the sources
   for (let i = 0; i < all.length; i++) for (let j = i + 1; j < all.length; j++) {
     const a = all[i], b = all[j]; if (gone.has(a) || gone.has(b)) continue;
     let r = placeRel(a, b), big = a, small = b;

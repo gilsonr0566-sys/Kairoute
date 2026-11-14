@@ -9,5 +9,10 @@ module.exports = { // live guide lists from the dump (positions approximate, fro
  // Live guides folded these by their rough map spots (Nov 14): different museums side by side, and two names for one.
  Heraklion: [['Historical Museum of Crete',35.3412,25.1325,'Museum'],['Natural History Museum of Crete',35.3414,25.1327,'Museum'],['Heraklion Archaeological Museum',35.3389,25.1372,'Museum'],['Αρχαιολογικό Μουσείο Ηρακλείου',35.3390,25.1373,'Museum']],
  Mykonos: [['Aegean Maritime Museum',37.4440,25.3290,'Museum'],["Lena's House Museum",37.4441,25.3291,'Museum'],['Delos',37.3960,25.2680,'Archaeological site'],['Delos (via boat)',37.3962,25.2682,'Archaeological site']],
+ // Places added from the sources carry their local name (5th) and are marked as from the sources (6th) (Messina, Nov 14:
+ // the guide's Italian names beside the sources' English ones), and one place under an English and a local word (Athens).
+ Messina: [['Duomo di Messina',38.1932,15.5551,'Church'],['Fontana di Orione',38.1935,15.5544,'Fountain'],['Fontana del Nettuno',38.1990,15.5590,'Fountain'],['Orologio astronomico di Messina',38.1933,15.5553,'Landmark'],
+  ['Messina Cathedral',38.1939,15.5560,'Church','Duomo di Messina',1],['Fountain of Orion',38.1936,15.5543,'Fountain','Fontana di Orione',1],['Fountain of Neptune',38.1991,15.5591,'Fountain','Fontana del Nettuno',1],['Astronomical clock in Messina',38.1934,15.5552,'Landmark','Orologio astronomico di Messina',1]],
+ AthensHill: [['Lycabettus Hill',37.9819,23.7434,'Viewpoint'],['Mount Lycabettus',37.9821,23.7436,'Viewpoint','Λυκαβηττός',1]],
  Madrid: [['Prado Museum',40.4138,-3.6921,'Museum'],['Museo del Prado',40.4139,-3.6922,'Museum'],['Reina Sofía Museum (Guernica)',40.4086,-3.6944,'Museum'],['Museo Nacional Centro de Arte Reina Sofía',40.4087,-3.6945,'Museum']]
 };
