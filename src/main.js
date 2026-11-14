@@ -2179,6 +2179,7 @@ function addPlaceCard(d) {
     <div class="actions"><button class="btn ghost" data-act="moretrips" ${addBusy ? "disabled" : ""}>Show more day trips farther out</button>${addBusy ? `<span class="lede"><span class="spinner"></span> ${esc(addBusy)}</span>` : ""}</div></div>`;
 }
 function aiErrorText(e, what) {
+  try { console.warn("Kairoute: " + what + " failed: " + ((e && (e.stack || e.message)) || e)); } catch (x) {} // for support and the live checks
   return e && e.code === "not_granted" ? "Claude access was turned off, so only the built-in Barcelona guide works." :
     e && e.code === "rate_limited" ? "Too many requests right now. Try again in a minute." :
     what + " didn't come through. Try again.";

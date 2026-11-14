@@ -349,6 +349,10 @@ async function partA(b) {
 
 async function buildNew(b, label, text, photo) {
   const ctx = await newCtx(b, "tablet"), p = await ctx.newPage(), errs = watch(p, label);
+  // When building fails, say why: each answer from the AI helper that isn't OK, and what it said.
+  p.on("response", async r => { try { const u = new URL(r.url()); if (/workers\.dev$/.test(u.hostname) && /^\/(sample|status)/.test(u.pathname) && (!r.ok() || u.pathname === "/status")) log(`     helper ${u.pathname} ${r.status()}: ${(await r.text()).slice(0, 300)}`); } catch (e) {} });
+  p.on("console", m => { if (/^Kairoute: .* failed/.test(m.text())) log("     " + m.text().slice(0, 600)); });
+  p.on("requestfailed", r => { if (/workers\.dev\/sample/.test(r.url())) log(`     helper /sample request failed: ${(r.failure() || {}).errorText}`); });
   await open(p);
   if (!ok(await p.evaluate(() => !!window.__kairouteState), `${label}: the live site has the demo-flow test hook`)) { await ctx.close(); return null; }
   const ready = await p.waitForFunction(() => window.__kairouteAiReady && window.__kairouteAiReady(), null, { timeout: 90000 }).then(() => true).catch(() => false);
