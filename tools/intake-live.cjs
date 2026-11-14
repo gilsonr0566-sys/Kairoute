@@ -42,6 +42,20 @@ const TEXT = "I'm going on the Sun Princess to Naples on July 12, 2027. I want t
     ok(/pompeii/i.test(r1.names) && /sorrento/i.test(r1.names), "Pompeii and Sorrento are on the day plan");
     const ferry1 = r1.menus.some(m => /ferry/i.test(m)) || r1.rides.some(r => /ferry/i.test(r));
     ok(ferry1, "a ride to Sorrento offers the ferry");
+    // Pick the ferry (Richard, Nov 14: picking it took Sorrento off and then the ferry was gone): every stop stays,
+    // and whatever the plan does, the ferry stays in the menu. Then reload: the saved trip keeps all of it.
+    const legs1 = await p.evaluate(i => window.__kairouteRideLegs(i), d.i), toS = ((legs1 && legs1.legs) || []).find(l => /sorrento/i.test(l.to));
+    if (toS) { const id = await p.evaluate(([i, k]) => { const pl = window.__kairouteRideSwitch(i, k, null); return pl.choices.find(c => /^ferry/.test(c)) || null; }, [d.i, toS.key.split("|")[0]]);
+      ok(!!id, "the ride to Sorrento has a ferry choice (" + id + ")");
+      if (id) { const sw = await p.evaluate(([i, k, v]) => window.__kairouteRideSwitch(i, k, v), [d.i, toS.key.split("|")[0], id]);
+        console.log("   after picking the ferry: " + JSON.stringify(sw));
+        ok(sw.stops.some(n => /sorrento/i.test(n)) && sw.stops.some(n => /pompeii/i.test(n)), "picking the ferry keeps Sorrento and Pompeii (" + sw.stops.join(", ") + ")");
+        ok(sw.choices.includes(id), "the ferry is still in the ride menu after picking it");
+        await p.reload(); await p.waitForFunction(() => window.__kairouteRideLegs && window.__kairouteDays, null, { timeout: 180000 }); await p.evaluate(i => window.__kairouteGo("plan", i), d.i); await p.waitForTimeout(20000);
+        const again = await p.evaluate(([i, k]) => window.__kairouteRideSwitch(i, k, null), [d.i, toS.key.split("|")[0]]).catch(e => ({ error: String(e) }));
+        console.log("   saved trip after reload: " + JSON.stringify(again));
+        ok(again.choices && again.choices.includes(id) && again.stops.some(n => /sorrento/i.test(n)), "after reopening the saved trip, Sorrento is there and the ferry is still offered"); } }
+    else ok(false, "no ride to Sorrento on the day plan");
     await p.waitForTimeout(180000); await p.evaluate(i => window.__kairouteGo("plan", i), d.i); await p.waitForTimeout(5000);
     const r2 = await look("three minutes later");
     ok(r2.menus.some(m => /ferry/i.test(m)) || r2.rides.some(r => /ferry/i.test(r)), "three minutes later the ferry is still offered and selectable");
