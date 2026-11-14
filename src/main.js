@@ -2132,11 +2132,17 @@ function faithSweep(only) {
 let addBusy = null;
 async function addPlaces(d, ask) {
   const city = cityFor(d); if (!city || addBusy) return;
-  // A place already in the guide is used as it is (same gate, same box), never added twice.
-  const known = ask && allSites(city).find(s => nameMatch(ask, s.name) && nameMatch(s.name, ask));
+  // A place already in the guide is used as it is (same gate, same box), never added twice. "Roman Agora" finds
+  // "Roman Agora and Tower of the Winds".
+  const known = ask && findKnown(city, ask);
   if (known) { useKnown(d, known); return; }
-  if (!aiReady()) return;
-  addBusy = ask ? "Finding " + ask + "…" : "Looking farther afield…"; aiError = ""; render();
+  if (!aiReady() && !freeAI) return;
+  addBusy = ask ? "Finding " + ask + "…" : "Looking farther afield…"; aiError = ""; addNote = ""; render();
+  // 1. The real place first, from the map and the encyclopedia (Richard, Nov 14: typing a real place found nothing
+  // while the AI allowance was used up). This needs no AI, and the place's position comes from the map, never the AI.
+  let real = null;
+  if (ask && freeAI) { try { const g = await groundNames([ask], d.destination || city.city, new Set([ask])); const r = g && g.get(ask); if (r && r.real && isFinite(r.lat) && isFinite(r.lng)) real = r; } catch (e) {} }
+  if (real) { const k = allSites(city).find(x => samePlace(x, { name: real.title || ask }) || (isFinite(x.lat) && hav(x, real) < 0.15 && (nameMatch(ask, x.name) || nameMatch(x.name, ask)))); if (k) { addBusy = null; useKnown(d, k); return; } }
   const have = allSites(city).map(x => x.name).join(", ");
   const base = cityKeyFor(d) === "barcelona" ? "Barcelona" : city.city;
   const prompt = `You are an expert tour guide writing data for a self-guided tour app. The traveler is based in ${base}${city.country ? ", " + city.country : ""} for the day${d.type === "port" ? " on a cruise port stop and must be back aboard the same day" : ""}.
@@ -2145,29 +2151,65 @@ Return ONLY JSON: {"places":[{"id","name","lat","lng","minutes","kind":"touristy
 - "far": true if it is more than about 6 km from the center of ${base}; then "travel" says how to get there and the one-way time, and "minutes" is time on site.
 - "guide": spoken narration in second person, 110-150 words, with real history and stories. "lookFor": 3 specific details. "picks": 3 insider extras a professional guide would share, each {"k": "spot"|"timing"|"story"|"taste", "t": one or two sentences}. "cost": typical adult ticket in local currency as a number (0 if free).
 - Write human-readable text in ${P().lang}. Real coordinates.${P().interests.includes("bible") ? "\n- The travelers follow St Paul and St John: where a place is named in the Bible or a documented early-Christian event happened there, tell it with chapter and verse. Never invent or force a connection." : ""}`;
-  try {
-    const r = await sample(prompt, { modelTier: "default" });
-    const j = parseJSON(r.text || "");
-    const okLL = p => p && isFinite(numV(p.lat)) && isFinite(numV(p.lng));
-    const found = (j.places || []).filter(okLL).map((x, i) => { const st = normSite(x, i, "-add" + Date.now().toString(36) + i); st.added = true; return st; });
-    if (!found.length) throw new Error("none");
-    // Anything the guide already has stays one sight: the existing one is picked instead of a copy.
-    const dup = found.map(st => allSites(city).find(s => samePlace(st, s))).filter(Boolean);
-    const added = found.filter(st => !allSites(city).some(s => samePlace(st, s)));
-    if (!added.length) { addBusy = null; useKnown(d, dup[0]); return; }
-    const center = (city.starts && city.starts.point && city.starts.point[0]) || allSites(city)[0];
-    added.forEach(st => { if (center && hav(center, st) > 6) st.far = true; (st.far ? (city.farther = city.farther || []) : city.sites).push(st); });
-    // Found places join the list; each is picked only if it fits the day (the first that doesn't opens the box).
-    let asked = false;
-    if (ask) dup.concat(added).forEach(st => { if ((d.selected || []).includes(st.id)) return; if (!addPick(d, st.id, !asked) && fitState) asked = true; });
-    addBusy = null; save(); render(); if (fitState) fitShow();
-    const el = document.getElementById("s-" + added[0].id); if (el) el.closest("label").scrollIntoView({ block: "center" });
-  } catch (e) { addBusy = null; aiError = ask ? `I couldn't find "${ask}". Try the full name, like "Ancient Corinth".` : "No more day trips came back. Try again in a moment."; render(); }
+  let found = [], aiErr = "";
+  // 2. The guide writes the story (and, for a town or area, its sights). If it can't right now, the place is still
+  // added from the map and the encyclopedia, and its story can be written later.
+  if (aiReady()) {
+    try {
+      const r = await sample(prompt + (real ? `\n- "${ask}" is ${real.title ? `"${real.title}" ` : ""}at ${real.lat.toFixed(5)}, ${real.lng.toFixed(5)} (from the map): use that position.` : ""), { modelTier: "default" });
+      const j = parseJSON(r.text || "");
+      const okLL = p => p && isFinite(numV(p.lat)) && isFinite(numV(p.lng));
+      found = (j.places || []).filter(okLL).map((x, i) => { const st = normSite(x, i, "-add" + Date.now().toString(36) + i); st.added = true; return st; });
+    } catch (e) { aiErr = (e && e.message) || ""; }
+  }
+  if (real) {
+    const first = found.find(st => nameMatch(ask, st.name) || nameMatch(st.name, ask) || (real.title && nameMatch(real.title, st.name))) || (found.length === 1 ? found[0] : null);
+    if (first) { first.lat = +real.lat; first.lng = +real.lng; first.onMap = true; }
+    else found.unshift(placeFromSources(real, ask));
+  }
+  if (!found.length) {
+    addBusy = null;
+    aiError = ask ? (/allowance|limit|too many/i.test(aiErr) ? `The map couldn't find "${ask}", and the AI guide's allowance for today is used up. Try the full name, like "Ancient Corinth".` : `I couldn't find "${ask}". Try the full name, like "Ancient Corinth".`)
+      : (/allowance|limit|too many/i.test(aiErr) ? "The AI guide's allowance for today is used up. Try again after it resets." : "No more day trips came back. Try again in a moment.");
+    render(); return;
+  }
+  // Anything the guide already has stays one sight: the existing one is picked instead of a copy.
+  const dup = found.map(st => allSites(city).find(x => samePlace(st, x))).filter(Boolean);
+  const added = found.filter(st => !allSites(city).some(x => samePlace(st, x)));
+  if (!added.length) { addBusy = null; useKnown(d, dup[0]); return; }
+  const center = (city.starts && city.starts.point && city.starts.point[0]) || allSites(city)[0];
+  added.forEach(st => { if (center && hav(center, st) > 6) st.far = true; (st.far ? (city.farther = city.farther || []) : city.sites).push(st); });
+  // Found places join the list; each is picked only if it fits the day (the first that doesn't opens the box).
+  let asked = false;
+  if (ask) dup.concat(added).forEach(st => { if ((d.selected || []).includes(st.id)) return; if (!addPick(d, st.id, !asked) && fitState) asked = true; });
+  addNote = ask ? `Added ${added.map(x => x.name).join(", ")}${(d.selected || []).includes(added[0].id) ? " to today" : " to your list"}.${added[0].fromSources && !found.some(x => !x.fromSources) ? " Found on the map; the guide writes its full story when the AI is free again." : ""}` : "";
+  addBusy = null; save(); render(); if (fitState) fitShow();
+  const el = document.getElementById("s-" + added[0].id) || document.querySelector(`[data-card="${added[0].id}"]`); if (el) (el.closest("label") || el).scrollIntoView({ block: "center" });
 }
+// The traveler's words matched to a sight the guide already has: both names match each other, or every word typed
+// is in the sight's name (the best known such sight wins, then the shortest name).
+function findKnown(city, ask) {
+  const all = allSites(city), k = keyOf(ask);
+  return all.find(x => keyOf(x.name) === k) || all.find(x => nameMatch(ask, x.name) && nameMatch(x.name, ask))
+    || all.filter(x => nameMatch(ask, x.name)).sort((a, b) => (b.mustSee ? 1 : 0) - (a.mustSee ? 1 : 0) || (fameW(b) || 0) - (fameW(a) || 0) || a.name.length - b.name.length)[0] || null;
+}
+// A place found on the map and in the encyclopedia, before (or without) the AI guide: real position, the
+// encyclopedia's own words for the summary and the story, a usual visit length.
+function placeFromSources(r, ask) {
+  const facts = String(r.facts || "").replace(/\s+/g, " ").trim();
+  const first = (facts.match(/^.*?[.!?](\s|$)/) || [facts])[0].trim();
+  const st = normSite({ id: keyOf(r.title || ask).replace(/ /g, "-"), name: r.title || ask, lat: r.lat, lng: r.lng, minutes: 60, kind: "touristy", category: "Sight",
+    summary: first.slice(0, 220) || ask, guide: facts.slice(0, 900) }, 0, "-add" + Date.now().toString(36));
+  st.added = true; st.onMap = true; if (r.osm) st.osm = r.osm; st.fromSources = true;
+  return st;
+}
+// Test hook: a stand-in helper (map lookups answered by the test) with the AI allowance used up, or an AI answer.
+if (typeof window !== "undefined") window.__kairouteMockHelper = (url, aiText) => { freeAI = { url }; sample = aiText == null ? async () => { throw new Error("The free AI allowance for today is used up."); } : async () => ({ text: aiText }); render(); return true; };
+let addNote = ""; // what the "Don't see a place you want?" box did, shown in that box
 function useKnown(d, s) {
   aiError = "";
-  const had = (d.selected || []).includes(s.id);
-  if (!had) addPick(d, s.id, true);
+  const had = (d.selected || []).includes(s.id), ok = had || addPick(d, s.id, true);
+  addNote = had ? `${s.name} is already one of today's picks.` : ok ? `${s.name} was already in your list. It's now picked for today.` : `${s.name} is already in your list.`;
   save(); render(); if (fitState) fitShow();
   const el = document.getElementById("s-" + s.id) || document.querySelector(`[data-card="${s.id}"]`);
   if (el) (el.closest("label") || el).scrollIntoView({ block: "center" });
@@ -2175,7 +2217,7 @@ function useKnown(d, s) {
 function addPlaceCard(d) {
   if (!aiReady()) return `<div class="card addplace"><h3>Don't see a place you want?</h3><p class="lede">Adding any place, or more day trips, uses Claude. Turn on the AI guide in Settings to turn it on.</p></div>`;
   return `<div class="card addplace"><div><h3>Don't see a place you want?</h3><p class="lede">Name it and your guide adds it to today, with the travel time and its story.</p></div>
-    <div class="addrow"><input id="addPlace" type="text" placeholder="e.g. Ancient Corinth" enterkeyhint="go" ${addBusy ? "disabled" : ""}><button class="btn" data-act="addplace" ${addBusy ? "disabled" : ""}>Add it</button></div>
+    ${addNote ? `<p class="banner ok" role="status">${esc(addNote)}</p>` : ""}<div class="addrow"><input id="addPlace" type="text" placeholder="e.g. Ancient Corinth" enterkeyhint="go" ${addBusy ? "disabled" : ""}><button class="btn" data-act="addplace" ${addBusy ? "disabled" : ""}>Add it</button></div>
     <div class="actions"><button class="btn ghost" data-act="moretrips" ${addBusy ? "disabled" : ""}>Show more day trips farther out</button>${addBusy ? `<span class="lede"><span class="spinner"></span> ${esc(addBusy)}</span>` : ""}</div></div>`;
 }
 function aiErrorText(e, what) {
