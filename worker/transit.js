@@ -130,9 +130,12 @@ export async function allOptions(a, b, dow, mapWait = 12000, store) {
 // (an empty one 14) in `store` when given. The free map servers are often busy: a point they couldn't answer for goes
 // on a list (fq:) that the helper's own schedule asks again with longer waits (fillFerries in worker.js), so a busy server never hides a ferry for long.
 export const ferryKey = p => (+p.lat).toFixed(2) + "," + (+p.lng).toFixed(2);
-export const ferryQuery = k => `[out:json][timeout:60];way(around:${R_FERRY + 800},${k})[route=ferry]->.w;.w out geom;rel(bw.w)[route=ferry];out geom;node(around:${R_FERRY + 800},${k})[amenity=ferry_terminal];out;`;
+// Routes' courses are kept only within about 50 km (a day's ferry ride): a long-haul route (Naples-Palermo) with its
+// whole course made the answer heavy enough for busy map servers to time out on.
+export const ferryQuery = k => { const [la, ln] = k.split(",").map(Number), bb = [la - 0.45, ln - 0.6, la + 0.45, ln + 0.6].map(n => n.toFixed(2)).join(",");
+  return `[out:json][timeout:60];way(around:${R_FERRY + 800},${k})[route=ferry]->.w;.w out geom(${bb});rel(bw.w)[route=ferry];out geom(${bb});node(around:${R_FERRY + 800},${k})[amenity=ferry_terminal];out;`; };
 export function slimFerries(d) {
-  const g = x => thin((x || []).filter(q => isFinite(q.lat)).map(q => ({ lat: +q.lat.toFixed(5), lon: +(q.lon ?? q.lng).toFixed(5) })), 400);
+  const g = x => thin((x || []).filter(q => q && isFinite(q.lat)).map(q => ({ lat: +q.lat.toFixed(5), lon: +(q.lon ?? q.lng).toFixed(5) })), 400);
   const out = { ways: [], rels: [], piers: [] };
   for (const e of (d && d.elements) || []) {
     if (e.type === "way" && e.tags && e.tags.route === "ferry") out.ways.push({ type: "way", id: e.id, tags: e.tags, geometry: g(e.geometry) });
