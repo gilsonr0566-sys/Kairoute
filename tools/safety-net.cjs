@@ -239,6 +239,16 @@ const log = (suite, trip, ok, what) => { results.push({ suite, trip, ok, what })
         else if (p0.some(n => /^Pompeii/.test(n))) bad.push('Pompeii is now picked on two days');
         else if (!/moved here/.test(note)) bad.push('no note that Pompeii moved from day 1'); }
       log('New trip', 'new-trips', !bad.length, 'Three Naples days: ' + (bad.length ? bad.join('; ') : 'every day offers Sorrento, Pompeii and Capri; one planned on another day is shown with that day, and ticking it moves it here')); }
+    // Richard, Nov 14 (typed trip, no ship times given): Pompeii and Sorrento don't both fit the estimated 8:00 to 17:00.
+    // The day names the one left out and points to the booking's real times; with those (7:00 to 19:00) both fit.
+    { await p.evaluate(([d, a]) => window.__kairouteNewTrip(d, a), ['Sun Princess to Naples July 12 2027, want Pompeii and Sorrento', 'STOPS: Naples\nSHIP: Princess Cruises|Sun Princess\nDAY|2027-07-12|Naples|port|ship||08:00|17:00|no||yes|Pompeii; Sorrento']); await p.waitForTimeout(300);
+      await p.evaluate(() => window.__kairouteAt(0, 'plan')); await p.waitForTimeout(300);
+      const look = () => p.evaluate(() => ({ stops: [...document.querySelectorAll('.tl .nm')].map(e => e.innerText), drop: (document.querySelector('.banner.dropped') || {}).innerText || '' }));
+      const a = await look(), bad = [], has = (l, n) => l.some(x => new RegExp(n, 'i').test(x));
+      if (!(has(a.stops, 'pompeii') && has(a.stops, 'sorrento')) && !(/sorrento|pompeii/i.test(a.drop) && /estimated/.test(a.drop))) bad.push('estimated day leaves a named place out without saying so: ' + JSON.stringify(a));
+      await p.evaluate(() => window.__kairouteEdit(0, { portArrive: '07:00', allAboard: '19:00', estimated: false })); await p.waitForTimeout(300);
+      const c = await look(); if (!(has(c.stops, 'pompeii') && has(c.stops, 'sorrento'))) bad.push('with the booking times both should be planned: ' + JSON.stringify(c));
+      log('New trip', 'new-trips', !bad.length, 'Named places on estimated ship times: ' + (bad.length ? bad.join('; ') : 'the one that does not fit is named with the ask for real ship times; with 7:00 to 19:00 both are planned')); }
     log('New trip', 'new-trips', !errs.length, errs.length ? 'page errors: ' + [...new Set(errs)].join(' | ') : 'no page errors');
     await b2.close(); }
   // Duplicate sights (Richard, Santorini: "I think there are several duplicate stops"): the same place under two

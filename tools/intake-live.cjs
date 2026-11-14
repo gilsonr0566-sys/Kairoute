@@ -29,7 +29,16 @@ const TEXT = "I'm going on the Sun Princess to Naples on July 12, 2027. I want t
     await p.evaluate(() => window.__kairouteGo("trip", 0)).catch(() => {}); await p.waitForTimeout(1500);
     const banner = await p.evaluate(() => (document.querySelector(".banner.shiptimes") || {}).innerText || "");
     ok(/Ship times are estimated/.test(banner), "the Trip screen asks for the booking's ship times (" + banner.slice(0, 120) + ")");
-    await p.evaluate(i => window.__kairouteGo("plan", i), d.i); await p.waitForTimeout(60000);
+    // On the estimated times (8:00 to 17:00) both named places may not fit: the day must say so plainly, name the one
+    // left out and point to the booking's real times, never swap it for something else unannounced.
+    await p.evaluate(i => window.__kairouteGo("plan", i), d.i); await p.waitForTimeout(20000);
+    { const est = await p.evaluate(() => ({ stops: [...document.querySelectorAll(".tl .nm")].map(e => e.innerText), drop: (document.querySelector(".banner.dropped") || {}).innerText || "" }));
+      console.log("   on estimated times: " + JSON.stringify(est));
+      const both = est.stops.some(n => /pompeii/i.test(n)) && est.stops.some(n => /sorrento/i.test(n));
+      ok(both || (/sorrento|pompeii/i.test(est.drop) && /estimated/.test(est.drop)), "on estimated times, both named places are planned or the one left out is named with the ask for real ship times"); }
+    // The traveler adds the booking's times (Sun Princess, Naples, Jul 12 2027: 07:00 to 19:00, from the itinerary).
+    await p.evaluate(i => window.__kairouteEdit(i, { portArrive: "07:00", allAboard: "19:00", estimated: false }), d.i);
+    await p.evaluate(i => window.__kairouteGo("plan", i), d.i); await p.waitForTimeout(40000);
     await p.evaluate(i => window.__kairouteGo("plan", i), d.i); await p.waitForTimeout(30000);
     const look = async label => {
       const legs = await p.evaluate(i => window.__kairouteRideLegs(i), d.i);
@@ -41,7 +50,7 @@ const TEXT = "I'm going on the Sun Princess to Naples on July 12, 2027. I want t
       return { names, menus, rides, stops };
     };
     const r1 = await look("Naples day after it settles");
-    ok(/pompeii/i.test(r1.names) && /sorrento/i.test(r1.names), "Pompeii and Sorrento are on the day plan");
+    ok(/pompeii/i.test(r1.names) && /sorrento/i.test(r1.names), "with the booking's times, Pompeii and Sorrento are both on the day plan");
     const ferry1 = r1.menus.some(m => /ferry/i.test(m)) || r1.rides.some(r => /ferry/i.test(r));
     ok(ferry1, "a ride to Sorrento offers the ferry");
     // Pick the ferry (Richard, Nov 14: picking it took Sorrento off and then the ferry was gone): every stop stays,

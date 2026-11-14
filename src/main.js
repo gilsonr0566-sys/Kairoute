@@ -485,6 +485,8 @@ const cityKeyFor = d => d.cityKey && cities[d.cityKey] ? d.cityKey : (cities[key
 const cityFor = d => { const k = cityKeyFor(d); return k ? cities[k] : null; };
 // A port day the traveler spends on the ship ("Staying on board", set in the trip setup or on the day) is planned
 // like a day at sea: no shore plan, no countdown or ship-time alerts, no tour day (pricing counts tourDay only).
+// A day ashore from a ship whose times the traveler hasn't given yet (planned on estimated times).
+const estShip = d => !!d && !!d.estimated && /port|embark/.test(d.type || "") && !noShore(d);
 const noShore = d => !!d && (d.type === "sea" || (d.type === "port" && !!d.aboard));
 const tourDay = d => !!d && !noShore(d);
 // Days that end at a ship, train or plane: no leeway past the "be there by" time.
@@ -5516,7 +5518,7 @@ ${partsList(s, it.time)}${stopLiveNotes(it, d)}</div></div>`;
     (b => b ? `<div class="livecard">${b}</div>` : "")(liveBanner(d, plan)),
     plan.over ? `<div class="banner warn" role="alert">This plan runs ${dur(plan.end - plan.endBy)} past ${fmt(plan.endBy)}. Remove a stop with Change stops, or change the times.</div>` : "",
     closedBanner(d, plan),
-    plan.dropped.length && !liveOn(d) ? `<div class="banner warn dropped"><span>Didn't fit today: <b>${plan.dropped.map(s => esc(s.name)).join(", ")}</b>. Your picks are over today's time.</span><button type="button" class="btn small" data-act="fitfix">Make it fit</button></div>` : "",
+    plan.dropped.length && !liveOn(d) ? `<div class="banner warn dropped"><span>Didn't fit today: <b>${plan.dropped.map(s => esc(s.name)).join(", ")}</b>. Your picks are over today's time.${estShip(d) ? ` The ship times here are estimated; your booking's real times may leave room.` : ""}</span>${estShip(d) && aiReady() ? `<button type="button" class="btn small ghost" data-act="shiptimes">Add ship times</button>` : ""}<button type="button" class="btn small" data-act="fitfix">Make it fit</button></div>` : "",
     (tc => tc ? `<div class="banner warn" role="alert">This day has ${dur(tc.ride)} of travel for ${dur(tc.see)} at the sights. Consider fewer far-apart stops, more hours, or splitting it over two days.</div>` : "")(travelCheck(plan)),
     plan.endBy - plan.start < 90 ? `<div class="banner warn">There isn't much time today, so keep it close: a coffee and one nearby sight at most.</div>` : "",
     weatherBanner(d, plan),
@@ -6035,7 +6037,7 @@ document.addEventListener("click", e => {
   }
   if (act === "fixstops") { fixStops(); return; }
   if (act === "changetrip") { changeTrip(); return; }
-  if (act === "shiptimes") { const est = trip.days.filter(x => (x.type === "port" || x.type === "embark") && x.estimated); changeText = changeText || `${trip.ship && trip.ship.name ? trip.ship.name + " port" : "Ship port"} times: ` + est.map(x => `${x.destination} ${x.date}: arrive ?, all aboard ?`).join("; "); render(); const c = document.querySelector("details.change"); if (c) { c.open = true; c.scrollIntoView({ block: "center" }); const t = document.getElementById("chgText"); if (t) t.focus(); } return; }
+  if (act === "shiptimes") { const est = trip.days.filter(x => (x.type === "port" || x.type === "embark") && x.estimated); view = "trip"; changeText = changeText || `${trip.ship && trip.ship.name ? trip.ship.name + " port" : "Ship port"} times: ` + est.map(x => `${x.destination} ${x.date}: arrive ?, all aboard ?`).join("; "); render(); const c = document.querySelector("details.change"); if (c) { c.open = true; c.scrollIntoView({ block: "center" }); const t = document.getElementById("chgText"); if (t) t.focus(); } return; }
   if (act === "suggesttour") {
     // Visible right away: the button says it's working, then the plan shows what changed on each day.
     t.disabled = true; t.textContent = "Planning your days…";
