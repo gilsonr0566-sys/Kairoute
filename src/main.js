@@ -2182,6 +2182,7 @@ function aiErrorText(e, what) {
   try { console.warn("Kairoute: " + what + " failed: " + ((e && (e.stack || e.message)) || e)); } catch (x) {} // for support and the live checks
   return e && e.code === "not_granted" ? "Claude access was turned off, so only the built-in Barcelona guide works." :
     e && e.code === "rate_limited" ? "Too many requests right now. Try again in a minute." :
+    /allowance/i.test((e && e.message) || "") ? e.message : // the helper's own words: when it resets (never a bare "try again")
     what + " didn't come through. Try again.";
 }
 let progressTicker = 0; const stopTicker = () => clearInterval(progressTicker);
