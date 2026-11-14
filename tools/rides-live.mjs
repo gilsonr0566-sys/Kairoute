@@ -15,8 +15,12 @@ for (const [x, y] of pairs) {
     if (res.error) { console.log("   error: " + res.error); continue; }
     (res.opts || []).forEach(o => console.log(`   ${o.mode} · ${o.label} · ${o.min} min · every ${o.every || "?"} (${o.everySrc || "map"})${o.noTimetable ? " · no timetable" : ""} · deps ${(o.deps || []).length} · path ${(o.path || []).length} pts · checked ${o.checked || "-"}`));
     if (!(res.opts || []).length) console.log("   no options");
+    if (res.partial) console.log("   (partial: a source was busy, asked again soon)");
   } catch (e) { console.log(`\n== ${x} -> ${y}: failed after ${((Date.now() - t0) / 1000).toFixed(1)} s: ${e.message}`); }
 }
+// What the helper keeps about ferries at each place (filled by its 30-minute schedule when the map servers are busy).
+for (const [n, p] of Object.entries(P)) { const j = await fetch(`${U}/ferries?lat=${p[0]}&lng=${p[1]}`).then(r => r.json()).catch(e => ({ error: e.message }));
+  console.log(`\n== ferries kept at ${n}: ` + JSON.stringify(j)); }
 // All three in one request, as the page asks: must come back well inside the 100 s a web request may take.
 { const t0 = Date.now();
   try { const r = await fetch(U + "/transit", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ pairs: pairs.map(([x, y]) => ({ a: P[x], b: P[y], dow: 3 })) }), signal: AbortSignal.timeout(120000) });

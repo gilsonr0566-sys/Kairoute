@@ -1,5 +1,5 @@
 import { extras, Group } from "./extras.js";
-import { allOptions, ferriesNear } from "./transit.js";
+import { allOptions, ferriesNear, keptFerries, ferryKey } from "./transit.js";
 export { Group };
 // Kairoute AI helper. The website sends a prompt (and optional photos); this Worker asks Workers AI
 // and streams the answer back. Usage is counted from real token counts. On the free plan it stays inside
@@ -434,6 +434,13 @@ export default {
     // between each pair of points, with stops, the real path and a cautious time (see transit.js). Each pair is
     // looked up once and kept (see keep below), so every traveler on the same trip shares it. Keys are tr4: since ferries come from their own
     // long-kept lookup at each end (answers from before that are not reused).
+    // /ferries?lat=&lng=: what the helper keeps about ferries near a point (for the live checks): kept or still
+    // waiting for the schedule, and the ferry courses' names.
+    if (url.pathname === "/ferries") {
+      const p = { lat: +url.searchParams.get("lat"), lng: +url.searchParams.get("lng") }; if (!isFinite(p.lat) || !isFinite(p.lng)) return Response.json({ error: "Bad request" }, { status: 400, headers: h });
+      const k = ferryKey(p), kept = await env.USAGE.get("fp1:" + k, "json"), listed = !!(await env.USAGE.get("fq:" + k));
+      return Response.json({ key: k, kept: !!kept, listed, courses: kept ? [...new Set(kept.ways.map(w => w.tags.name || w.tags.ref || "").filter(Boolean))] : [], routes: kept ? kept.rels.length : 0 }, { headers: h });
+    }
     if (url.pathname === "/transit" && req.method === "POST") {
       let b; try { b = await req.json(); } catch (e) { return Response.json({ error: "Bad request" }, { status: 400, headers: h }); }
       const ok = v => Array.isArray(v) && v.length === 2 && v.every(n => typeof n === "number" && isFinite(n)) && Math.abs(v[0]) <= 90 && Math.abs(v[1]) <= 180;
@@ -449,14 +456,19 @@ export default {
         const keep = x => env.USAGE.put(key, JSON.stringify({ opts: x.opts, partial: !!x.partial, t: Date.now() }), { expirationTtl: (x.partial ? 1 : x.opts.length ? 14 : 7) * 86400 });
         const store = { get: k => env.USAGE.get(k, "json"), put: (k, v, ttl) => env.USAGE.put(k, JSON.stringify(v), { expirationTtl: ttl }) };
         const look = () => allOptions({ lat: pr.a[0], lng: pr.a[1] }, { lat: pr.b[0], lng: pr.b[1] }, dow, 12000, store);
+        // A saved answer with no ferry gets the ferries kept for both ends (filled in later by the schedule when the
+        // map servers were busy), so a ferry shows up as soon as it is known, without waiting for the answer to expire.
+        const withFerries = async x => { if ((x.opts || []).some(o => o.mode === "ferry")) return x;
+          const kf = await keptFerries({ lat: pr.a[0], lng: pr.a[1] }, { lat: pr.b[0], lng: pr.b[1] }, store).catch(() => null);
+          return kf && kf.length ? { opts: (x.opts || []).concat(kf).sort((p, q) => p.min - q.min).slice(0, 6), partial: x.partial } : x; };
         const hit = await env.USAGE.get(key, "json");
         if (hit) {
           if (hit.partial && Date.now() - (hit.t || 0) > 600000 && !(await env.USAGE.get("lk:" + key))) {
             ctx.waitUntil(env.USAGE.put("lk:" + key, "1", { expirationTtl: 600 }).then(look).then(r => (!r.partial || r.opts.length > (hit.opts || []).length) ? keep(r).then(() => r.late ? r.late.then(f => f && keep(f)) : null) : (r.late ? r.late.then(f => f && keep(f)) : null)).catch(() => {}));
           }
-          return { opts: hit.opts, partial: !!hit.partial };
+          return withFerries({ opts: hit.opts, partial: !!hit.partial });
         }
-        try { const r = await look(), res = { opts: r.opts, partial: !!r.partial };
+        try { const r = await look(), res = await withFerries({ opts: r.opts, partial: !!r.partial });
           ctx.waitUntil(keep(r).then(() => r.late ? r.late.then(f => f && keep(f)) : null).catch(() => {}));
           return res;
         } catch (e) { return { error: "map busy" }; }

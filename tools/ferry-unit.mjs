@@ -1,7 +1,7 @@
 // Offline check of the ferry logic in worker/transit.js (no network): a ferry route mapped only by its course (no
 // pier stops, like many seasonal coastal ferries) is offered between the two piers it passes, named after the
 // nearest terminals, with its months from opening_hours or seasonal=*. Exits 1 on a problem.
-import { ferryByCourse, runMonths, ferryChain, transitOptions, slimFerries, ferryKey } from "../worker/transit.js";
+import { ferryByCourse, runMonths, ferryChain, transitOptions, slimFerries, ferryKey, keptFerries } from "../worker/transit.js";
 let bad = 0; const ok = (c, m) => { console.log((c ? "ok   " : "FAIL ") + m); if (!c) bad++; };
 // Naples Molo Beverello to Amalfi along the coast (a course of a few points), as OpenStreetMap often maps it.
 const line = [[40.8366, 14.2563], [40.79, 14.27], [40.70, 14.30], [40.62, 14.36], [40.58, 14.45], [40.60, 14.55], [40.6327, 14.6029]].map(([lat, lng]) => ({ lat, lng }));
@@ -42,5 +42,9 @@ ok(!(await ferryChain(ship, { lat: 38.12, lng: 13.36 }, ways)).length, "no chang
   const mem2 = new Map(), store2 = { get: async k => mem2.get(k) || null, put: async (k, v) => { mem2.set(k, v); } };
   const r2 = await transitOptions(ship, sorrento, store2).catch(e => e);
   ok(r2 instanceof Error && mem2.has("fq:" + ferryKey(ship)) && mem2.has("fq:" + ferryKey(sorrento)), "nothing kept and servers busy: both ends listed for the fill job");
+  const kf = await keptFerries(ship, sorrento, store);
+  ok(kf && kf.length === 1 && kf[0].mode === "ferry", "a saved answer without a ferry gets the kept ferry added (no map servers asked)");
+  const mem3 = new Map(), store3 = { get: async k => mem3.get(k) || null, put: async (k, v) => { mem3.set(k, v); } };
+  ok((await keptFerries(ship, sorrento, store3)) === null && mem3.has("fq:" + ferryKey(ship)), "nothing kept yet: none added, and the ends are listed for the schedule");
   globalThis.fetch = realFetch; }
 console.log(bad ? `${bad} ferry check(s) failed` : "ferry checks passed"); process.exit(bad ? 1 : 0);
