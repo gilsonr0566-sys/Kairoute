@@ -48,6 +48,10 @@ const URL = process.env.URL || "https://gilsonr0566-sys.github.io/Kairoute/";
       await p.evaluate(i => window.__kairouteGo("plan", i), d.i); await p.waitForTimeout(1500);
       const btn = await p.$('[data-goto="sites"]'); if (btn) { await btn.click(); await p.waitForTimeout(2500); }
       const v = await p.evaluate(() => ({ boxes: document.querySelectorAll('input[type=checkbox]').length, text: document.body.innerText.slice(0, 200).replace(/\n+/g, " / ") }));
+      const pk = await p.evaluate(i => window.__kairoutePicker ? window.__kairoutePicker(i) : null, d.i);
+      console.log("   Change stops offers: " + JSON.stringify(pk));
+      if (pk && !pk.error) { const all0 = [...pk.picked, ...pk.main, ...pk.far, ...pk.quick, ...pk.elsewhere].join(" | "); console.log("info Amalfi " + (/amalfi/i.test(all0) ? "is" : "is not") + " in this Naples guide"); }
+      if (pk && !pk.error) for (const want of ["Sorrento", "Pompeii", "Capri"]) { const all = [...pk.picked, ...pk.main, ...pk.far, ...pk.quick, ...pk.elsewhere].join(" | "); const okW = new RegExp(want, "i").test(all); console.log((okW ? "ok   " : "FAIL ") + want + " is offered in Change stops"); if (!okW) bad++; }
       const okS = !!btn && v.boxes >= 5 && !errs.length;
       console.log((okS ? "ok   " : "FAIL ") + "Change stops opens the stops list (" + (btn ? v.boxes + " sights" : "no button") + ")" + (errs.length ? " page errors: " + errs.join(" || ") : "") + (okS ? "" : " :: " + v.text));
       if (!okS) bad++; }

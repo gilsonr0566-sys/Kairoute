@@ -2,6 +2,10 @@ name: Intake live check
 # Richard's Naples test end to end on the live site with the real AI: typed trip, picks, ship times, ferry that stays.
 on:
   workflow_dispatch:
+    inputs:
+      site:
+        description: "live = the published site, branch = this branch's build before publishing"
+        default: "live"
 permissions:
   contents: read
 jobs:
@@ -13,4 +17,11 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
+      - name: Serve this branch's build instead of the live site (to test a change before it is published)
+        if: ${{ github.event.inputs.site == 'branch' }}
+        run: |
+          sh build.sh
+          nohup python3 -m http.server 8080 >/dev/null 2>&1 &
+          sleep 2 && curl -sf http://localhost:8080/ >/dev/null
+          echo "URL=http://localhost:8080/" >> "$GITHUB_ENV"
       - run: npm i playwright@1 && npx playwright install chromium && node tools/intake-live.cjs

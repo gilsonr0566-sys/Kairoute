@@ -219,6 +219,26 @@ const log = (suite, trip, ok, what) => { results.push({ suite, trip, ok, what })
       else { if (!w.ship || w.ship.name !== 'Sun Princess') bad.push('ship not kept: ' + JSON.stringify(w.ship));
         for (const n of ['Pompeii', 'Sorrento']) { if (!w.picked.some(x => x && x.includes(n))) bad.push(n + ' not picked (' + w.picked.join(', ') + ')'); if (!w.mine.some(x => x && x.includes(n))) bad.push(n + ' not kept as the traveler\'s own pick'); } }
       log('New trip', 'new-trips', !bad.length, 'Sun Princess to Naples, wants Pompeii and Sorrento: ' + (bad.length ? bad.join('; ') : 'ship kept; Pompeii and Sorrento are the day\'s own picks from the start (' + w.picked.join(', ') + ')')); }
+    // Richard, Nov 14: "my selections don't even offer Sorrento or Amalfi": on a trip with several Naples days, the
+    // day trips planned on one day vanished from the other days' Change stops. Every day offers every day trip.
+    { await p.evaluate(([d, a]) => window.__kairouteNewTrip(d, a), ['Naples three days', 'STOPS: Naples\nDAY|2027-07-12|Naples|port|ship||08:00|17:00|no||yes|Pompeii; Sorrento\nDAY|2027-07-13|Naples|port|ship||08:00|17:00|no||yes|\nDAY|2027-07-14|Naples|port|ship||08:00|17:00|no||yes|']); await p.waitForTimeout(300);
+      const bad = [];
+      for (const i of [0, 1, 2]) { const pk = await p.evaluate(i => window.__kairoutePicker(i), i); if (!pk || pk.error) { bad.push('day ' + (i + 1) + ': ' + JSON.stringify(pk)); continue; }
+        const offered = [...pk.picked, ...pk.main, ...pk.far].join(' | ');
+        for (const n of ['Sorrento', 'Pompeii', 'Capri']) if (!offered.includes(n)) bad.push(`day ${i + 1} doesn't offer ${n}`); }
+      await p.evaluate(() => window.__kairouteAt(1, 'sites')); await p.waitForTimeout(300);
+      const txt = await p.evaluate(() => document.body.innerText);
+      if (!/Sorrento/.test(txt) || !/Planned for/.test(txt)) bad.push('Change stops on day 2 does not show Sorrento tagged with the day it is planned');
+      // Ticking a sight planned on day 1 (Pompeii) on day 2 moves it: on day 2 now, off day 1, and the traveler is told.
+      const mv = await p.evaluate(() => { const card = [...document.querySelectorAll('.site')].find(c => /Pompeii/.test(c.querySelector('.name') ? c.querySelector('.name').innerText : '') && /Planned for/.test(c.innerText) && c.querySelector('input[data-site]')); if (!card) return { err: 'Pompeii is not offered with a tick box and its day on day 2' }; const x = card.querySelector('input[data-site]'); x.click(); return { id: x.dataset.site, box: !!document.querySelector('.fitbox') }; });
+      await p.waitForTimeout(300);
+      if (mv.err) bad.push(mv.err); else if (mv.box) bad.push('Pompeii does not fit day 2 (the check needs a sight that does)'); else {
+        const [p0, p1] = await Promise.all([0, 1].map(i => p.evaluate(i => window.__kairoutePicker(i).picked, i)));
+        const note = await p.evaluate(() => (document.getElementById('movedNote') || {}).innerText || '');
+        if (!p1.some(n => /^Pompeii/.test(n))) bad.push('ticking Pompeii on day 2 did not pick it there (' + p1.join(', ') + ')');
+        else if (p0.some(n => /^Pompeii/.test(n))) bad.push('Pompeii is now picked on two days');
+        else if (!/moved here/.test(note)) bad.push('no note that Pompeii moved from day 1'); }
+      log('New trip', 'new-trips', !bad.length, 'Three Naples days: ' + (bad.length ? bad.join('; ') : 'every day offers Sorrento, Pompeii and Capri; one planned on another day is shown with that day, and ticking it moves it here')); }
     log('New trip', 'new-trips', !errs.length, errs.length ? 'page errors: ' + [...new Set(errs)].join(' | ') : 'no page errors');
     await b2.close(); }
   // Duplicate sights (Richard, Santorini: "I think there are several duplicate stops"): the same place under two
