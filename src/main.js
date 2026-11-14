@@ -683,7 +683,7 @@ async function askTransit() {
     // A ride the helper couldn't answer is asked again by itself once the 2-minute pause is over (the page is redrawn,
     // which asks again), instead of showing the road estimate until the traveler happens to touch something.
     if (got < part.length) { clearTimeout(transitRetry); transitRetry = setTimeout(transitShow, 125000); }
-    if (got) transitShow();
+    if (got) { transitShow(); transitKeepSoon(); }
   };
   try {
     while (transitQ.size) {
@@ -716,6 +716,22 @@ function transitKeep() {
   // keeps every ride it was planned with; it is read back at start-up (see transitLoad).
   try { const all = {}; Object.keys(transitMem).forEach(k => { all[k] = thin(transitMem[k]); }); transitAll = Object.assign(transitAll || {}, all); kv.set("transitAll", transitAll); } catch (e) {}
   for (const n of [Math.max(150, transitPins.size + 30), Math.max(60, transitPins.size), Math.max(20, transitPins.size)]) { try { localStorage.setItem(TRANSIT_KEY, slim(n)); return; } catch (e) {} }
+}
+// Answers are kept on the device as they arrive (a few seconds later, in a quiet moment), not only once every ride
+// has been asked: a long trip can keep the helper busy for many minutes, and a phone that lost its signal, was closed
+// or went offline in that time came back with no rides at all, so its plans changed order offline (demo run, Nov 14).
+let transitKeepT = 0, transitKeepFirst = 0;
+function transitKeepSoon() {
+  const now = Date.now(); if (!transitKeepFirst) transitKeepFirst = now;
+  clearTimeout(transitKeepT);
+  const run = () => { transitKeepT = 0; transitKeepFirst = 0; const go = () => { try { transitKeep(); } catch (e) {} };
+    if (typeof requestIdleCallback === "function") requestIdleCallback(go, { timeout: 3000 }); else go(); };
+  transitKeepT = setTimeout(run, now - transitKeepFirst > 15000 ? 0 : 4000); // at most ~15 s between saves while answers stream in
+}
+if (typeof window !== "undefined") {
+  const keepNow = () => { if (transitKeepT) { clearTimeout(transitKeepT); transitKeepT = 0; transitKeepFirst = 0; try { transitKeep(); } catch (e) {} } };
+  window.addEventListener("offline", keepNow); window.addEventListener("pagehide", keepNow);
+  document.addEventListener("visibilitychange", () => { if (document.visibilityState === "hidden") keepNow(); });
 }
 let transitAll = null;
 function transitLoad() {

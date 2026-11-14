@@ -36,7 +36,14 @@ function offPlan(d) {
   offForget(); refillIfNeeded(d, city); if (!d.selected) seedPicks(d, city);
   transitSeen = []; let plan = null;
   try { plan = buildPlan(d); } catch (e) { plan = null; }
-  const rides = transitSeen; transitSeen = null; offForget();
+  const seen = transitSeen; transitSeen = null; offForget();
+  // The rides the day actually takes. While planning, the app also weighs rides between many other pairs of places;
+  // offline it weighs them with whatever is kept on the device (every answer is kept as it arrives), so the plan comes
+  // out the same, but only the rides on the plan itself need their own timetable before the day counts as ready.
+  // (Counting every ride weighed asked for thousands of timetables a day and the download never reached "Ready".)
+  const legs = new Set(); let prev = null;
+  if (plan && !plan.error) plan.items.forEach(it => { if (!it.place) return; if (prev) { legs.add(pairKey(prev, it.place)); legs.add(pairKey(it.place, prev)); } prev = it.place; });
+  const rides = [], had = new Set(); (seen || []).forEach(r => { if (legs.has(r[1]) && !had.has(r[0])) { had.add(r[0]); rides.push(r); } });
   return { plan: plan && !plan.error ? plan : null, rides };
 }
 const offSites = plan => plan.items.filter(i => i.type === "stop").map(i => allSites(plan.city).find(x => x.id === i.place.id) || i.place);
@@ -189,14 +196,7 @@ async function offDownload() {
     // 1. Guides for any place that doesn't have one yet.
     if (offDays().some(d => !cityFor(d)) && aiReady()) { step(2, "Building the city guides first"); await buildAllGuides(); }
     const days = offDays().filter(d => cityFor(d));
-    // 2. Stop details (big stops split into parts) before anything is recorded, so the stories match.
     let n = 0;
-    for (const d of days) {
-      if (offRun.stop) break; n++; step(3 + 12 * n / days.length, `Checking the plan for ${mainPlace(d) || d.destination} (day ${n} of ${days.length})`);
-      const { plan } = offPlan(d); if (!plan || typeof sample !== "function" || !sample) continue;
-      const todo = plan.items.filter(i => i.type === "stop" && !(i.place.extrasV >= EXTRAS_V) && !extrasAsked[keyOf(plan.city.city) + "|" + i.place.id] && walkWorthy(i.place, plan.city)).map(i => plan.city.sites.find(x => x.id === i.place.id) || i.place);
-      for (const s of todo) { if (offRun.stop) break; try { await Promise.race([stopExtras(s, plan.city), offSleep(90000)]); } catch (e) {} }
-    }
     // 3. Each city's sources and fame list, which rank the sights in every plan, kept on the device.
     for (const c of [...new Set(days.map(cityFor))]) { if (offRun.stop) break; try { await Promise.race([fameFor(null, c), offSleep(60000)]); } catch (e) {} }
     // 4. Everything each plan is built from, until a round asks for nothing new: places to eat, their ratings,
@@ -221,9 +221,9 @@ async function offDownload() {
     transitKeep(); offKeep(mem);
     for (let k = 0; k < 20 && days.some(d => !offZoneOk(d)); k++) await offSleep(400);
     // 5. Maps: the style, label fonts and icons for light and dark, then each day's street routes and tiles.
+    let tpl = "";
     if (!offRun.stop) {
       step(32, "Saving the street maps");
-      let tpl = "";
       for (const t of ["light", "dark"]) { try { const b = await mapBase(t); tpl = tpl || b.tpl; for (const u of mapStyleFiles(b.style)) await mapFetch(u).catch(() => {}); } catch (e) {} }
       try { tpl = (await mapBase(mapDark() ? "dark" : "light")).tpl || tpl; } catch (e) {}
       n = 0;
@@ -232,6 +232,18 @@ async function offDownload() {
         const ok = await saveDayMap(d, plan, tpl, (a, b) => step(32 + 28 * (n - 1 + a / b) / days.length, `Saving the street map for ${mainPlace(d) || d.destination} (day ${n} of ${days.length})`));
         if (!ok) failed.push("map for " + (mainPlace(d) || d.destination));
       }
+    }
+    // 2. Stop details (big stops split into parts) before anything is recorded, so the stories match. After the plans,
+    //    rides and maps (the trip works offline without them), a few stops at a time.
+    if (!offRun.stop && typeof sample === "function" && sample) {
+      const todo = [], had = new Set(); let k = 0;
+      for (const d of days) { const { plan } = offPlan(d); if (!plan) continue;
+        plan.items.filter(i => i.type === "stop" && !(i.place.extrasV >= EXTRAS_V) && !extrasAsked[keyOf(plan.city.city) + "|" + i.place.id] && walkWorthy(i.place, plan.city))
+          .forEach(i => { const key = keyOf(plan.city.city) + "|" + i.place.id; if (had.has(key)) return; had.add(key); todo.push({ s: plan.city.sites.find(x => x.id === i.place.id) || i.place, c: plan.city, d }); }); }
+      const work = async () => { for (let x; (x = todo.shift()) && !offRun.stop;) { k++; step(60, `Writing the guide's walk-throughs (${k} of ${k + todo.length})`); try { await Promise.race([stopExtras(x.s, x.c), offSleep(90000)]); } catch (e) {} } };
+      await Promise.all([work(), work(), work()]);
+      // A stop's details can change what its day's map shows: a day whose map no longer matches is saved again.
+      if (tpl) for (const d of days) { if (offRun.stop) break; const { plan } = offPlan(d); if (plan && mapSavedList()[d.id] !== dayTiles(d, plan, tpl).sig) await saveDayMap(d, plan, tpl, () => {}); }
     }
     // 6. Stories in the natural voice, every stop once (a stop on two days is recorded once).
     if (!offRun.stop && offNatural() && freeAI) {
