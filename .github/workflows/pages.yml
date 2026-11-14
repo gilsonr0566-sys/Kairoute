@@ -50,6 +50,12 @@ jobs:
           node tools/anchor-e2e.cjs
           node tools/extras-check.cjs index.html checks/extras
           node tools/offline-e2e.cjs
+      - name: Demo flow gate (Richard's Greece trip on this build, real internet; a failure stops the update going live)
+        run: |
+          python3 -m http.server 8765 >/dev/null 2>&1 &
+          sleep 1
+          URL=http://localhost:8765/ PARTS=A GATE=1 node tools/demo-flow.cjs
+          cat checks/demo/report.md >> "$GITHUB_STEP_SUMMARY" || true
       - name: Street map check (no network needed)
         run: MOCK=1 node tools/map-e2e.cjs
       - name: Speed check (phone and tablet, slowed like a mid-range phone; a slow app doesn't go live)

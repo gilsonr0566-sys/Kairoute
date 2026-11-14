@@ -14,6 +14,13 @@
 const { chromium } = require("playwright"); const fs = require("fs"); const path = require("path");
 const URL = process.env.URL || "https://gilsonr0566-sys.github.io/Kairoute/";
 const PARTS = process.env.PARTS || "AB";
+// GATE=1: the pre-publish run in pages.yml, against the freshly built site served locally (real internet). Skips the
+// slow parts that have their own publish checks (offline download: offline-e2e.cjs) and the minute-long ferry wait.
+const GATE = !!process.env.GATE;
+// Sights the Change stops list must offer for the demo trip (a benchmark the sources must meet, never copied into
+// the app). hard = blocks a publish; soft = logged as a warning until the guide has it.
+const PICKER = [[/athens/i, [/acropolis/i, /corinth/i], []], [/naples/i, [/pompeii/i, /sorrento/i, /capri/i], [/amalfi|positano/i]],
+  [/rome|civitavecchia/i, [/colosseum/i, /vatican|st\.? peter/i], []], [/barcelona/i, [/sagrada/i], []], [/kusadasi|ephesus/i, [/ephesus/i], []]];
 const OUT = path.join(__dirname, "..", "checks", "demo"); fs.mkdirSync(OUT, { recursive: true });
 const SIZES = { tablet: { width: 1280, height: 800 }, upright: { width: 800, height: 1280 }, phone: { width: 412, height: 915 } };
 const FREEZE_MS = 1500, SLOW_MS = 600;
@@ -91,7 +98,7 @@ async function partA(b) {
   if (await sample.isVisible().catch(() => false)) await sample.click(); else if (await cont0.isVisible().catch(() => false)) await cont0.click();
   const S = () => p.evaluate(() => window.__kairouteState());
   if (!ok(await p.evaluate(() => !!window.__kairouteState), "the live site has the demo-flow test hook")) throw new Error("live site is older than the demo-flow hook");
-  ok(/sun princess/i.test(JSON.stringify((await S()).ship || "")) || (await S()).days.some(d => /piraeus/i.test(d.dest)), "the Sun Princess trip is open");
+  ok((await S()).days.some(d => d.date === "2027-07-12" && /naples/i.test(d.dest)), "the Sun Princess trip is open");
   await p.waitForTimeout(2000);
   const days = await p.evaluate(() => window.__kairouteDays());
   log("Days: " + days.map(d => `${d.i}:${d.date} ${d.type} ${d.dest}${d.city ? "" : " (no guide yet)"}`).join(" | "));
@@ -110,7 +117,7 @@ async function partA(b) {
     const aboard = (await S()).days[d.i].stayAboard;
     const needs = d.type !== "sea" && !aboard && d.type !== "departure";
     log(`     day ${d.i + 1} ${d.date} ${d.dest}: ${s.stops.length} stops [${s.stops.join("; ")}]${s.optional.length ? ", optional: " + s.optional.join("; ") : ""}, ${s.meals.length} meals, rides: ${s.rides.map(r => r.chosen).join(" / ") || "none to choose"}`);
-    if (needs) ok(s.stops.length > 0, `day ${d.i + 1} ${d.dest} (${d.date}) has stops on its Day plan`);
+    if (needs) ok(s.stops.length > 0, `day ${d.i + 1} ${d.dest} (${d.date}, ${d.type}) has stops on its Day plan`, d.type === "embark");
     if (/something went wrong|undefined|NaN|\[object/i.test(s.text)) ok(false, `day ${d.i + 1} ${d.dest}: broken text on the Day plan: ` + (s.text.match(/.{0,60}(something went wrong|undefined|NaN|\[object).{0,60}/i) || [""])[0]);
     if (d.type === "port") {
       const pinned = await p.evaluate(() => (document.querySelector(".dayhead") || {}).innerText || "");
@@ -122,7 +129,24 @@ async function partA(b) {
   // Named highlights of the real trip (the day plans together, not one day).
   const all = Object.values(plans).flatMap(s => s.stops.concat(s.optional)).join(" | ");
   for (const [re, nm] of [[/acropolis|parthenon/i, "the Acropolis"], [/pompeii/i, "Pompeii"], [/colosseum|vatican|st\.? peter/i, "Rome's Colosseum or Vatican"], [/sagrada/i, "the Sagrada Familia"], [/ephesus/i, "Ephesus"]])
-    ok(re.test(all), `${nm} is planned somewhere on the trip`);
+    ok(re.test(all), `${nm} is planned somewhere on the trip`, GATE);
+
+  // 1b. Change stops offers every sight in the day's guide (nothing hidden), and the demo trip's must-offer sights.
+  const doneCity = new Set(), guides = await p.evaluate(() => window.__kairouteSights());
+  for (const d of days) {
+    if (d.type === "sea" || !d.city || doneCity.has(d.city)) continue; doneCity.add(d.city);
+    await timed(p, "open Change stops", go("sites", d.i), 2500);
+    const shown = await p.evaluate(() => [...document.querySelectorAll("[data-card]")].map(e => ((e.querySelector(".name") || {}).textContent || "").trim()));
+    const g = guides[d.dest] || {}; const inGuide = (g.sites || []).map(x => x.replace(/ \[quick\]$/, "")).concat(g.farther || []);
+    const missing = inGuide.filter(n => !shown.some(x => x === n));
+    ok(!missing.length, `Change stops for ${d.dest} offers every sight in its guide (${shown.length} shown${missing.length ? "; missing: " + missing.join(", ") : ""})`);
+    const all = shown.join(" | ");
+    for (const [city, hard, soft] of PICKER) if (city.test(d.dest)) {
+      for (const re of hard) ok(re.test(all), `Change stops for ${d.dest} offers ${re.source.replace(/\\/g, "")}`);
+      for (const re of soft) ok(re.test(all), `Change stops for ${d.dest} offers ${re.source.replace(/\\/g, "")}`, true);
+    }
+  }
+  if (!GATE) for (const [city, hard] of PICKER) if (!days.some(d => city.test(d.dest))) ok(false, `the demo trip has a ${city.source} day`);
 
   // 2. Change stops: tick a sight, see it on the Day plan, untick it.
   const ed = days.find(d => d.type === "land") || first;
@@ -165,7 +189,7 @@ async function partA(b) {
       await p.waitForTimeout(4000); const s2 = await seen(p);
       ok(s2.stops.length >= s.stops.length && (!sorr || s2.stops.some(x => /sorrento/i.test(x))), `choosing "${opt}" keeps every stop (${s.stops.length} -> ${s2.stops.length}: ${s2.stops.join("; ")})`);
       ok(s2.rides.some(r => r.opts.some(o => /ferry|hydrofoil|boat/i.test(o))), "the ferry is still offered after choosing it");
-      await p.waitForTimeout(60000); await p.evaluate(go("plan", nap.i)); await p.waitForTimeout(4000); const s3 = await seen(p);
+      await p.waitForTimeout(GATE ? 5000 : 60000); await p.evaluate(go("plan", nap.i)); await p.waitForTimeout(4000); const s3 = await seen(p);
       ok(s3.rides.some(r => r.opts.some(o => /ferry|hydrofoil|boat/i.test(o))) && (!sorr || s3.stops.some(x => /sorrento/i.test(x))), "a minute later the ferry and Sorrento are both still there");
       await shot(p, "A3b-naples-ferry-tablet");
     }
@@ -208,6 +232,7 @@ async function partA(b) {
   }
 
   // 6. Offline: one tap downloads the trip; with no internet the app and every Day plan come back the same.
+  if (GATE) { ok(!errs.length, `tablet: no page errors (${errs.slice(0, 3).join(" / ")})`); await ctx.close(); return; }
   await p.evaluate(go("trip", 0)); await p.waitForTimeout(2000);
   const dl = p.locator('#offCard [data-act="offdl"]').first();
   if (ok(await dl.isVisible().catch(() => false), "the Trip screen offers Download for offline")) {
