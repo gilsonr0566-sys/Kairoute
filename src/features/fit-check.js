@@ -249,6 +249,18 @@ function siteFits(d, s, plan) {
   clearTimeout(fitTimer); fitTimer = setTimeout(fitRefine, 30);
   return undefined;
 }
+// Speed: each "does it fit" check plans the whole day again (up to 2 s on a phone for a big port day with real data,
+// once for every sight in the list after every tick). A sight whose own visit is longer than all the time the day
+// could possibly free up can't fit, so it is marked without planning: the time left, plus every long visit cut to
+// its shortest (70%, never under 1 h 30), plus every meal made quick. Anything closer is still planned in full.
+function fitNever(plan, d, s) {
+  if (trip.days.some(o => o !== d && (o.selected || []).includes(s.id))) return false; // ticked on another day: the plan decides where it goes
+  const m = meterCalc(plan, d); if (!m || !plan || plan.error) return false;
+  const short = x => (x || 0) >= 120 ? Math.max(90, Math.round(x * 0.7 / 5) * 5) : (x || 0);
+  const slack = plan.items.filter(x => x.type === "stop").reduce((a, x) => a + (x.place.minutes || 0) - short(x.place.minutes), 0)
+    + plan.items.filter(x => x.type === "meal" && !x.meal.quick).reduce((a, x) => a + Math.max(0, x.meal.len - (QUICK_MEAL[x.meal.label] || x.meal.len)), 0);
+  return short(s.minutes || 0) > (m.avail - m.used) + slack + 10;
+}
 function fitRefine() {
   const ctx = sitesCtx; if (!ctx || view !== "sites" || fitState) return;
   const d = ctx.d; if (d !== day() || fitMemo.key !== fitKey(d)) return;
@@ -260,8 +272,9 @@ function fitRefine() {
     if (performance.now() - t0 > 10 || (performance.now() > t0 && pend())) break;
     const id = fitQueue.shift();
     if (fitMemo.res.has(id)) continue;
-    const ok = fitsAll(fitTrial(d, [...d.selected, id])); fitMemo.res.set(id, ok);
-    const el = document.querySelector(`#view [data-card="${CSS.escape(id)}"]`), s = allSites(city).find(x => x.id === id);
+    const s = allSites(city).find(x => x.id === id);
+    const ok = s && fitNever(ctx.plan, d, s) ? false : fitsAll(fitTrial(d, [...d.selected, id])); fitMemo.res.set(id, ok);
+    const el = document.querySelector(`#view [data-card="${CSS.escape(id)}"]`);
     if (el && s && !d.selected.includes(id)) el.outerHTML = siteCard(s, d, ctx.plan, ctx.near);
   }
   if (fitQueue.length) fitTimer = setTimeout(fitRefine, 16);

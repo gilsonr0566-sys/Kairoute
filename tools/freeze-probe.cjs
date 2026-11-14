@@ -33,7 +33,7 @@ const MIME = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css
     let miss = 0;
     await ctx.route(u => !own(u.href), async rt => { const q = rt.request(), u = q.url();
       if (isTile(u)) return rt.abort();
-      const r = recd.get(netKey(q.method(), u, q.postData())) || byPath.get(q.method() + ' ' + u.split('?')[0]);
+      const r = recd.get(netKey(q.method(), u, q.postData())) || (q.method() === 'GET' ? byPath.get('GET ' + u.split('?')[0]) : null); // a question never asked while recording fails, like a dropped signal
       if (!r) { if (++miss <= 20) console.log('replay: no answer for ' + q.method() + ' ' + u.slice(0, 140)); return rt.abort(); }
       await new Promise(z => setTimeout(z, Math.min(r.t || 100, 3000)));
       rt.fulfill({ status: r.s, headers: { 'content-type': r.ct || 'application/json', 'access-control-allow-origin': '*' }, body: Buffer.from(r.b, 'base64') }); });
