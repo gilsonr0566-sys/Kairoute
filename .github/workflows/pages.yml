@@ -104,5 +104,46 @@ jobs:
       - uses: actions/upload-pages-artifact@v3
         with:
           path: _site
+          retention-days: 7 # kept so a failed publish can put this version back (job "restore")
       - id: deployment
         uses: actions/deploy-pages@v4
+  restore:
+    # A failed check keeps an update off the site, but GitHub's own branch copy has already published the
+    # "Kairoute is updating" placeholder, which then stayed live until a later publish passed (Nov 14: 45 min).
+    # Put the last good version back, so travelers always land on a working app.
+    needs: deploy
+    if: failure()
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+    steps:
+      - name: Find the last good publish
+        id: last
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          id=$(curl -s -H "Authorization: Bearer $GH_TOKEN" "https://api.github.com/repos/${{ github.repository }}/actions/workflows/pages.yml/runs?status=success&per_page=1" | jq -r '.workflow_runs[0].id // empty')
+          [ -n "$id" ] || { echo "no earlier good publish found"; exit 1; }
+          echo "id=$id" >> "$GITHUB_OUTPUT"; echo "Putting back the site from publish run $id"
+      - uses: actions/download-artifact@v4
+        with:
+          name: github-pages
+          run-id: ${{ steps.last.outputs.id }}
+          github-token: ${{ github.token }}
+          path: last
+      - name: Wait for GitHub's own branch copy to finish first
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          for i in $(seq 1 60); do
+            left=$(curl -s -H "Authorization: Bearer $GH_TOKEN" "https://api.github.com/repos/${{ github.repository }}/actions/runs?head_sha=${{ github.sha }}&per_page=50" \
+              | jq '[.workflow_runs[]? | select(.name == "pages build and deployment" and .status != "completed")] | length')
+            [ "$left" = "0" ] && break
+            echo "waiting for the branch copy ($left running)"; sleep 10
+          done
+      - uses: actions/upload-artifact@v4
+        with:
+          name: github-pages
+          path: last/artifact.tar
+          retention-days: 7
+      - uses: actions/deploy-pages@v4
