@@ -54,10 +54,13 @@ function addPick(d, id, ask) {
   // off the other day), so it is seen today rather than ticked twice and planned once.
   const from = ask ? plannedElsewhere(d)[id] : null, back = from && { sel: from.selected.slice(), mine: (from.mine || []).slice(), anchor: from.anchor };
   if (from) { from.selected = from.selected.filter(x => x !== id); markMine(from, id, false); if (from.anchor === id) from.anchor = null; }
-  // The won't-fit box measures the day as if the sight came here (before it goes back to its own day).
-  if (!fitsWith(d, [id])) { if (ask) fitOpen(d, id); if (from) { from.selected = back.sel; from.mine = back.mine; from.anchor = back.anchor; } return false; }
-  d.selected = [...d.selected, id]; delete d.autoEmpty; if (d.bumped) d.bumped = d.bumped.filter(b => b.id !== id); rememberPick(d, sx); if (ask) markMine(d, id, true);
-  if (from) movedNote = (sx ? sx.name : "That sight") + " moved here from " + fmtDow(from.date) + " " + fmtDate(from.date) + ".";
+  // The won't-fit box measures the day as if the sight came here (before it goes back to its own day), and exactly
+  // as the day will be once it is added: the traveler's own picks weigh more in the plan, so the trial counts this
+  // one as theirs too. Otherwise the trial and the real plan can disagree, and a pick that "fit" is taken off again.
+  const mine0 = (d.mine || []).slice(); if (ask) markMine(d, id, true);
+  if (!fitsWith(d, [id])) { if (ask) fitOpen(d, id); d.mine = mine0; if (from) { from.selected = back.sel; from.mine = back.mine; from.anchor = back.anchor; } return false; }
+  d.selected = [...d.selected, id]; delete d.autoEmpty; if (d.bumped) d.bumped = d.bumped.filter(b => b.id !== id); rememberPick(d, sx);
+  if (from) { movedNote = (sx ? sx.name : "That sight") + " moved here from " + fmtDow(from.date) + " " + fmtDate(from.date) + "."; d.movedIn = { ...(d.movedIn || {}), [id]: from.date }; } // remembered so it can go back if it stops fitting here
   return true;
 }
 // The traveler's own picks (ticked, added by name, moved or swapped in with a tap): these always stay, even when

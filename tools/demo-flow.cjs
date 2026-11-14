@@ -226,14 +226,14 @@ async function partA(b) {
   // 2. Change stops: tick a sight, see it on the Day plan, untick it.
   const ed = days.find(d => d.type === "land") || first;
   await timed(p, "open Change stops", go("sites", ed.i), 3000); await shot(p, "A2-change-stops-tablet");
-  const pick = await p.evaluate(() => { const el = [...document.querySelectorAll("label.site:not(.on) input[data-site]")][0]; if (!el) return null; const name = ((el.closest("label").querySelector(".name, h3, b") || {}).innerText || "").trim(); return { id: el.dataset.site, name }; });
+  const pick = await p.evaluate(() => { const all = [...document.querySelectorAll("label.site:not(.on) input[data-site]")], el = all.find(x => !x.closest(".sched")) || all[0]; // a free sight first: one scheduled on another day moves (and changes that day) if (!el) return null; const name = ((el.closest("label").querySelector(".name, h3, b") || {}).innerText || "").trim(); return { id: el.dataset.site, name }; });
   if (ok(!!pick, `Change stops lists sights to add on day ${ed.i + 1}`)) {
     const before = (await S()).days[ed.i].picks;
     await p.evaluate(() => { window.__lt = []; }); const tc = Date.now();
     await p.locator(`label[for="s-${pick.id}"]`).first().click();
     await p.waitForTimeout(1500); const clickMs = Date.now() - tc, lt = await p.evaluate(() => Math.round(Math.max(0, ...window.__lt)));
     ok(lt < FREEZE_MS, `ticking a sight responds without freezing (longest block ${lt} ms, ${clickMs} ms)`);
-    const fitbox = await p.evaluate(() => !!document.querySelector(".fitbox"));
+    const fitbox = await p.evaluate(() => !!document.querySelector(".fitbox, .banner.bumped"));
     const after = (await S()).days[ed.i].picks;
     ok(after === before + 1 || fitbox, `ticking "${pick.name}" adds it to the picks (or explains why it doesn't fit) (${before} -> ${after})`);
     if (after === before + 1) {
