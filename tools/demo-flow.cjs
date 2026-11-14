@@ -226,7 +226,7 @@ async function partA(b) {
   // 2. Change stops: tick a sight, see it on the Day plan, untick it.
   const ed = days.find(d => d.type === "land") || first;
   await timed(p, "open Change stops", go("sites", ed.i), 3000); await shot(p, "A2-change-stops-tablet");
-  const pick = await p.evaluate(() => { const el = [...document.querySelectorAll("label.site:not(.on) input[data-site]")][0]; if (!el) return null; const name = ((el.closest("label").querySelector(".name, h3, b") || {}).innerText || "").trim(); return { id: el.dataset.site, name }; });
+  const pick = await p.evaluate(() => { const all = [...document.querySelectorAll("label.site:not(.on) input[data-site]")], el = all.find(x => !x.closest(".sched")) || all[0]; /* a free sight first: one scheduled on another day moves (and changes that day) */ if (!el) return null; const name = ((el.closest("label").querySelector(".name, h3, b") || {}).innerText || "").trim(); return { id: el.dataset.site, name }; });
   if (ok(!!pick, `Change stops lists sights to add on day ${ed.i + 1}`)) {
     const before = (await S()).days[ed.i].picks, selOf = i => p.evaluate(i => { const T = window.__kairouteTruth(i); return (T.selected || []).join(", "); }, ed.i), sel0 = await selOf();
     const pk0 = (await S()).days.map(x => x.picks);

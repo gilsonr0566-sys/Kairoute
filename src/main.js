@@ -879,7 +879,7 @@ function settlePicks(d) {
   // (Light day, then Full day again: the same picks as before).
   const p0 = buildPlan(d), win = p => p.endBy - p.start;
   if (p0 && !p0.error && (d.bumped || []).some(b => b.w != null && win(p0) > b.w)) {
-    for (const b of d.bumped.slice()) if (b.w != null && win(p0) > b.w && addPick(d, b.id, false)) { forget0(d); moved = true; }
+    for (const b of d.bumped.slice()) if (!b.back && b.w != null && win(p0) > b.w && !plannedElsewhere(d)[b.id] && addPick(d, b.id, false)) { forget0(d); moved = true; }
   }
   for (let g = 0; g < 6; g++) {
     const p = buildPlan(d); if (!p || p.error) break;
@@ -891,6 +891,14 @@ function settlePicks(d) {
     if (gone.has(d.anchor)) d.anchor = d.selected[d.selected.length - 1] || null;
     forget0(d); moved = true;
   }
+  // A sight the traveler moved here from another day, that then stops fitting here (real ride times came in, the day
+  // got shorter), goes back to the day it came from when it still fits there, so it is never lost from both days.
+  for (const b of (d.bumped || []).slice()) {
+    const from = d.movedIn && d.movedIn[b.id], o = from && trip.days.find(x => x !== d && x.date === from && cityFor(x) === cityFor(d));
+    if (!o || d.selected.includes(b.id) || plannedElsewhere(d)[b.id]) continue;
+    if (addPick(o, b.id, false)) { markMine(o, b.id, true); forget0(o); b.back = from; moved = true; }
+  }
+  if (d.movedIn) for (const id of Object.keys(d.movedIn)) if (!d.selected.includes(id)) delete d.movedIn[id];
   if (moved) { readyKeep(d, was); save(); }
   return moved;
 }
@@ -898,10 +906,13 @@ if (typeof window !== "undefined") { window.__kairouteSetHours = h => { const d 
   // Puts a pick on the day past the gate, the way an older version or a change of hours could leave one.
   window.__kairouteForcePick = id => { const d = day(); d.selected = [...(d.selected || []), id]; render(); return (d.selected || []).includes(id); }; }
 function bumpedNote(d) {
-  const city = cityFor(d), b = (d.bumped || []).filter(x => !(d.selected || []).includes(x.id) && allSites(city || {}).some(s => s.id === x.id));
-  if (!b.length) return "";
+  const city = cityFor(d), b0 = (d.bumped || []).filter(x => !(d.selected || []).includes(x.id) && allSites(city || {}).some(s => s.id === x.id));
+  // Sights that went back to the day they were moved from: said plainly, with nothing to fix.
+  const back = b0.filter(x => x.back), b = b0.filter(x => !x.back);
+  const backNote = back.length ? `<div class="banner warn bumped"><span>${back.map(x => `<b>${esc(x.name)}</b> no longer fits today's time, so it went back to ${esc(fmtDow(x.back) + " " + fmtDate(x.back))}.`).join(" ")}</span><span class="actions"><button type="button" class="btn ghost small" data-act="bumpok">OK</button></span></div>` : "";
+  if (!b.length) return backNote;
   return `<div class="banner warn bumped"><span>${b.length === 1 ? `<b>${esc(b[0].name)}</b> no longer fits today's time, so it's off your picks.` : `These no longer fit today's time, so they're off your picks: <b>${b.map(x => esc(x.name)).join(", ")}</b>.`}${estShip(d) ? ` The ship times here are estimated; your booking's real times may leave room.` : ""}</span>
-    <span class="actions">${b.map(x => `<button type="button" class="btn small" data-act="fitask" data-id="${esc(x.id)}">${b.length === 1 ? "Ways to fit it in" : "Fit in " + esc(x.name)}</button>`).join("")}<button type="button" class="btn ghost small" data-act="bumpok">OK</button></span></div>`;
+    <span class="actions">${b.map(x => `<button type="button" class="btn small" data-act="fitask" data-id="${esc(x.id)}">${b.length === 1 ? "Ways to fit it in" : "Fit in " + esc(x.name)}</button>`).join("")}<button type="button" class="btn ghost small" data-act="bumpok">OK</button></span></div>` + backNote;
 }
 function forget0(o) { bonusMemo.delete(o); mealMemo.delete(o); keptMemo.delete(o); eveMemo.delete(o); }
 function dayWindowSafe(d, city) { try { return dayWindow(d, city); } catch (e) { return null; } }
