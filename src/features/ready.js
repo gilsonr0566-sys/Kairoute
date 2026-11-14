@@ -16,7 +16,9 @@ function selKey(d) { return (Array.isArray(d.selected) ? d.selected.slice().sort
 // A change the app makes to a hearted day's sights (a pick that no longer fits once the ship leaves earlier, a sight
 // now closed, a guide merging two copies of a sight) is not the traveler's change: the heart must turn to an outline
 // with a note, not go quietly off. Every place the app edits d.selected on its own calls this with the key from before.
-function readyKeep(d, was) { if (d && d.ready && d.ready.sel != null && d.ready.sel === was) d.ready.sel = selKey(d); }
+// The same goes for the "these are still the app's own picks" mark (seedSig): a pick the app took off doesn't make the
+// list the traveler's, so a famous day trip found later can still lead the day (Pompeii on Naples, Nov 14).
+function readyKeep(d, was) { if (!d) return; if (d.ready && d.ready.sel != null && d.ready.sel === was) d.ready.sel = selKey(d); if (d.seedSig && d.seedSig === was) d.seedSig = selKey(d); }
 function readyState(d) {
   if (!d || !d.ready) return "";
   // The traveler changed the day's sights themselves: it's theirs to mark ready again (no warning needed).
