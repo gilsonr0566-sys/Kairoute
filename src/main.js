@@ -875,6 +875,8 @@ let movedNote = ""; // "Sorrento moved here from Mon Jul 12." after picking a si
 function settlePicks(d) {
   if (!d || !Array.isArray(d.selected) || (!d.selected.length && !(d.bumped || []).length) || !cityFor(d) || busy || (typeof liveOn === "function" && liveOn(d))) return false;
   let moved = false;
+  // These are the app's changes, not the traveler's: a day marked ready keeps its mark and shows what changed.
+  const selWas = (d.selected || []).slice().sort().join("|"), mine = !!(d.ready && d.ready.sel === selWas);
   // Picks that came off when the day got shorter go back on by themselves once it is long enough again
   // (Light day, then Full day again: the same picks as before).
   const p0 = buildPlan(d), win = p => p.endBy - p.start;
@@ -891,6 +893,7 @@ function settlePicks(d) {
     if (gone.has(d.anchor)) d.anchor = d.selected[d.selected.length - 1] || null;
     forget0(d); moved = true;
   }
+  if (moved && mine) d.ready.sel = d.selected.slice().sort().join("|");
   if (moved) save();
   return moved;
 }
