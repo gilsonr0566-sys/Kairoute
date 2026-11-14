@@ -4017,13 +4017,31 @@ document.addEventListener("toggle", e => { const m = e.target; if (m.matches && 
 // The back-to-the-ship countdown never leaves the screen: once the page scrolls it out of view, it pins to the top.
 function pinChip() {
   pinDay(); const c = document.getElementById("cdCard"); if (!c) return;
-  const was = c.classList.contains("pinned");
-  if (!was) { const r = c.getBoundingClientRect(); if (r.height && r.top < 8) { c.style.height = r.height + "px"; c.classList.add("pinned"); } }
-  else if (c.getBoundingClientRect().top >= 8) { c.classList.remove("pinned"); c.style.height = ""; }
+  const was = c.classList.contains("pinned"), row = document.getElementById("dayRow");
+  const at = 8 + (row && row.classList.contains("pinned") ? row.offsetHeight - 2 : 0); // pins just below the pinned day strip
+  if (!was) { const r = c.getBoundingClientRect(); if (r.height && r.top < at) { c.style.height = r.height + "px"; c.classList.add("pinned"); } }
+  else if (c.getBoundingClientRect().top >= at) { c.classList.remove("pinned"); c.style.height = ""; }
+}
+// Scrolled down on a phone: the day strip itself pins to the top (Richard, Nov 14), so any day can be picked without
+// scrolling back up. A spacer keeps its place so the page doesn't jump. Tablets never need it (their header stays put).
+function pinRow() {
+  const row = document.getElementById("dayRow"), root = document.documentElement; if (!row) return false;
+  let sp = document.getElementById("dayRowSpace");
+  if (!sp) { sp = document.createElement("div"); sp.id = "dayRowSpace"; sp.setAttribute("aria-hidden", "true"); row.insertAdjacentElement("afterend", sp); }
+  const was = row.classList.contains("pinned"), can = !row.hidden && row.offsetParent !== null || was;
+  let on = false;
+  if (!row.hidden && can) on = was ? sp.getBoundingClientRect().top < 0 : row.getBoundingClientRect().top < 0;
+  if (on !== was) {
+    if (on) { sp.style.height = row.offsetHeight + "px"; row.classList.add("pinned"); }
+    else { row.classList.remove("pinned"); sp.style.height = ""; }
+  }
+  root.classList.toggle("rowpinned", on);
+  if (on) root.style.setProperty("--rowh", row.offsetHeight + "px"); else root.style.removeProperty("--rowh");
+  return on;
 }
 function pinDay() {
-  const p = document.querySelector(".daypin"), h = p && p.parentElement; if (!p) return;
-  p.classList.toggle("on", h.getBoundingClientRect().bottom < 8);
+  const row = pinRow(), p = document.querySelector(".daypin"), h = p && p.parentElement; if (!p) return;
+  p.classList.toggle("on", !row && h.getBoundingClientRect().bottom < 8); // the pinned strip already says which day
 }
 const replaceMenus = () => { pinChip(); document.querySelectorAll("details.planmore[open]").forEach(placeMenu); };
 window.addEventListener("resize", replaceMenus); document.addEventListener("scroll", replaceMenus, true);
@@ -6247,7 +6265,8 @@ function jumpToToday(t) { const i = t.days.findIndex(x => isToday(x)); if (i >= 
 document.addEventListener("click", e => {
   const t = e.target.closest("button, a"); if (!t) return;
   if (t.dataset.view) { if (view === "trip") readForm(); view = t.dataset.view; aiError = ""; save(); renderKeep(); toTop(); return; }
-  if (t.dataset.day != null && !t.dataset.act) { if (view === "trip") readForm(); trip.active = +t.dataset.day; aiError = ""; cdPreview = null; cdWhere = null; cdSpoken = false; stopAudio(); save(); renderKeep();
+  if (t.dataset.day != null && !t.dataset.act) { const fromPin = !!t.closest(".dayrow.pinned"); if (view === "trip") readForm(); trip.active = +t.dataset.day; aiError = ""; cdPreview = null; cdWhere = null; cdSpoken = false; stopAudio(); save(); renderKeep();
+    if (fromPin) toTop(); // picked from the pinned strip: start the new day from its top
     if (t.classList.contains("itrow") && innerWidth < 800) { const f = document.getElementById("dayForm"); if (f) f.scrollIntoView({ block: "start" }); }
     return; }
   if (t.dataset.readahead) { trip.active = +t.dataset.readahead; view = "guide"; guideStop = null; save(); render(); toTop(); return; }
