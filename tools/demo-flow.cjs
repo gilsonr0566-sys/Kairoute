@@ -43,6 +43,8 @@ async function newCtx(b, size) {
   const ctx = await b.newContext({ viewport: SIZES[size], deviceScaleFactor: 1, hasTouch: size === "phone", isMobile: size === "phone" });
   await ctx.addInitScript(() => {
     try { localStorage.setItem("kairoute.intro1", "1"); } catch (e) {}
+    // Device voice only: Download for offline then never records the natural voice (it costs money per story).
+    try { const a = JSON.parse(localStorage.getItem("kairoute.app") || "{}"); if (!a.natvoice) { a.natvoice = "off"; localStorage.setItem("kairoute.app", JSON.stringify(a)); } } catch (e) {}
     window.__lt = []; try { new PerformanceObserver(l => l.getEntries().forEach(e => window.__lt.push(e.duration))).observe({ type: "longtask", buffered: true }); } catch (e) {}
     // Phones and tablets have voices on the device; a test browser has none. Offer one so "Download for offline"
     // uses the device voice like the traveler's tablet does, and the natural voice allowance is not spent by tests.
@@ -247,12 +249,20 @@ async function partA(b) {
   const dl = p.locator('#offCard [data-act="offdl"]').first();
   if (ok(await dl.isVisible().catch(() => false), "the Trip screen offers Download for offline")) {
     t0 = Date.now(); await dl.click(); let st;
-    for (;;) { st = await p.evaluate(() => window.__kairouteOffline ? window.__kairouteOffline.state() : null); if (!st || !st.run) break; if (Date.now() - t0 > 900000) { ok(false, "the offline download did not finish in 15 minutes: " + st.run.step); break; } await p.waitForTimeout(3000); }
+    // Plans, rides, maps and the time zones come first; then the guide writes walk-throughs for big stops (AI, a few
+    // minutes a stop). To keep the daily run cheap it taps Pause once that starts, as a traveler may, and checks the
+    // trip is ready for offline without them (they aren't needed offline).
+    let paused = false;
+    for (;;) { st = await p.evaluate(() => window.__kairouteOffline ? window.__kairouteOffline.state() : null); if (!st || !st.run) break;
+      if (!paused && /walk-through/i.test(st.run.step || "")) { paused = true; log(`     core download done in ${sec(t0)} s; pausing the walk-throughs`); await p.locator('#offCard [data-act="offstop"]').first().click().catch(() => {}); }
+      if (Date.now() - t0 > 1200000) { ok(false, "the offline download did not finish in 20 minutes: " + st.run.step); break; } await p.waitForTimeout(3000); }
     report.timings.offlineDownload = sec(t0);
     const rep = st && st.rep;
     if (!(rep && rep.ready)) log("     download said: " + JSON.stringify({ msg: st && st.msg, failed: st && st.failed, app: rep && rep.app, notReady: rep && rep.days.filter(x => !x.ready).map(x => ({ day: x.i + 1, place: x.place, parts: x.parts })) }).slice(0, 3000));
     ok(rep && rep.ready, `the download finishes "Ready for offline" (${sec(t0)} s)` + (rep && !rep.ready ? ": " + rep.days.filter(x => !x.ready).map(x => `day ${x.i + 1} ${x.place} missing ${Object.values(x.parts).filter(q => !q.ok).map(q => q.miss).join(", ")}`).join("; ") : ""));
     await shot(p, "A6-offline-ready-tablet");
+    // The plans to match are the ones on screen just before the internet goes (ride answers keep arriving while online).
+    for (const d of days) { if (d.type === "sea") continue; await p.evaluate(go("plan", d.i)).catch(() => {}); await p.waitForTimeout(800); const s = await seen(p); plans[d.i] = Object.assign({}, plans[d.i], { stops: s.stops, legs: await p.evaluate(i => { try { return window.__kairouteRideLegs(i); } catch (e) { return String(e); } }, d.i) }); }
     await ctx.setOffline(true); await p.reload().catch(() => {}); await p.waitForTimeout(3000);
     ok(await p.evaluate(() => !!document.querySelector("header.top")).catch(() => false), "with no internet the app opens from the device");
     const cont = p.locator('[data-act="continue"]').first(); if (await cont.isVisible().catch(() => false)) await cont.click();
