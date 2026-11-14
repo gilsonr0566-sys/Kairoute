@@ -18,7 +18,9 @@ const TEXT = "I'm going on the Sun Princess to Naples on July 12, 2027. I want t
     console.log("Trip: " + JSON.stringify(t));
     if (t.error) throw new Error("trip not built: " + t.error);
     ok(t.ship && /sun princess/i.test(t.ship.name), "the ship is kept (" + JSON.stringify(t.ship) + ")");
-    const d = t.days.find(x => /naples/i.test(x.dest) && x.type === "port");
+    ok(t.days.length === 1, "one day, as described (" + t.days.length + " days)");
+    const d = t.days.find(x => /naples/i.test(x.dest) && (x.wants || []).length) || t.days.find(x => /naples/i.test(x.dest) && x.type === "port");
+    ok(d && d.type === "port", "the Naples day is a port day (" + (d && d.type) + ")");
     ok(!!d, "a Naples port day on July 12 (" + t.days.map(x => x.date + " " + x.type + " " + x.dest).join(", ") + ")");
     if (!d) throw new Error("no Naples port day");
     ok(d.date === "2027-07-12", "on July 12, 2027 (" + d.date + ")");

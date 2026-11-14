@@ -8,7 +8,7 @@ async function naples(p, label) {
   await p.goto(URL); await p.waitForFunction(() => window.__kairouteDays && window.__kairouteDay && window.__kairouteRideLegs, null, { timeout: 180000 });
   const days = await p.evaluate(() => window.__kairouteDays()), d = days.find(x => /naples/i.test(x.dest + " " + x.city));
   if (!d) throw new Error("no Naples day in the sample trip");
-  await p.evaluate(i => window.__kairouteDay(i, "Pompeii|^Sorrento"), d.i);
+  await p.evaluate(i => { window.__kairouteDay(i, "Pompeii|^Sorrento"); window.__kairouteEdit(i, { mine: window.__kairouteTruth(i).picks.slice() }); }, d.i); // ticked by the traveler, as Richard did
   for (let k = 0; k < 2; k++) { await p.evaluate(i => window.__kairouteGo("plan", i), d.i); await p.waitForTimeout(40000); }
   const rides = await p.$$eval(".tl.leg", els => els.map(e => e.innerText.replace(/\n+/g, " / ")));
   const menus = await p.$$eval(".tl.leg select", els => els.map(s => [...s.options].map(o => o.textContent.trim()).join(" | ")));
@@ -29,18 +29,28 @@ const URL = process.env.URL || "https://gilsonr0566-sys.github.io/Kairoute/";
     console.log("Version", await p.evaluate(() => fetch("version.txt", { cache: "no-store" }).then(r => r.text()).catch(() => "?")));
     const days = await p.evaluate(() => window.__kairouteDays()), d = days.find(x => /naples/i.test(x.dest + " " + x.city));
     if (!d) throw new Error("no Naples day in the sample trip");
-    await p.evaluate(i => window.__kairouteDay(i, "Pompeii|^Sorrento"), d.i);
+    await p.evaluate(i => { window.__kairouteDay(i, "Pompeii|^Sorrento"); window.__kairouteEdit(i, { mine: window.__kairouteTruth(i).picks.slice() }); }, d.i); // ticked by the traveler, as Richard did
     for (let k = 0; k < 2; k++) { await p.evaluate(i => window.__kairouteGo("plan", i), d.i); await p.waitForTimeout(40000); }
     const rides = await p.$$eval(".tl.leg", els => els.map(e => e.innerText.replace(/\n+/g, " / ")));
     console.log("\n== Rides on the Day plan"); rides.forEach(r => console.log("   " + r.slice(0, 400)));
     const menus = await p.$$eval(".tl.leg select", els => els.map(s => [...s.options].map(o => o.textContent.trim()).join(" | ")));
     console.log("\n== Ride menus"); menus.forEach(m => console.log("   " + m.slice(0, 400)));
     const legs = await p.evaluate(i => window.__kairouteRideLegs(i), d.i);
+    console.log("\n== Stops: " + JSON.stringify(await p.evaluate(i => window.__kairouteTruth(i).stopNames, d.i)));
     console.log("\n== Ride legs: " + JSON.stringify(legs).slice(0, 3000));
     const first = rides.find(r => /sorrento/i.test(r)) || "", firstMenu = menus.find(m => /ferry/i.test(m));
     const ok = /ferry/i.test(first) || !!firstMenu;
     console.log((ok ? "ok   " : "FAIL ") + "the ride from the ship to Sorrento offers the ferry" + (ok ? "" : ": " + first.slice(0, 200)));
     if (!ok) bad++;
+    // Change stops (Richard, Nov 14: "Change stops button isn't working now"): tap it on the Day plan; the stops list
+    // must open with its sights, and no page error.
+    { const errs = []; p.on("pageerror", e => errs.push(e.message + " @ " + String(e.stack || "").split("\n").slice(1, 3).join(" | ")));
+      await p.evaluate(i => window.__kairouteGo("plan", i), d.i); await p.waitForTimeout(1500);
+      const btn = await p.$('[data-goto="sites"]'); if (btn) { await btn.click(); await p.waitForTimeout(2500); }
+      const v = await p.evaluate(() => ({ boxes: document.querySelectorAll('input[type=checkbox]').length, text: document.body.innerText.slice(0, 200).replace(/\n+/g, " / ") }));
+      const okS = !!btn && v.boxes >= 5 && !errs.length;
+      console.log((okS ? "ok   " : "FAIL ") + "Change stops opens the stops list (" + (btn ? v.boxes + " sights" : "no button") + ")" + (errs.length ? " page errors: " + errs.join(" || ") : "") + (okS ? "" : " :: " + v.text));
+      if (!okS) bad++; }
     // A phone that planned the trip earlier: its kept answers are from an older version and hold no lines.
     const old = {}; for (const l of (legs.legs || [])) { old[l.key] = { opts: [], t: Date.now() - 60000 }; old[l.key.split("|")[0]] = { opts: [], t: Date.now() - 60000 }; }
     const ctx = await b.newContext({ viewport: { width: 1280, height: 800 } });
