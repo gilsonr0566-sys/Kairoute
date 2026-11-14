@@ -1554,8 +1554,9 @@ function buildPlanFor(d) {
     if (over > 0 && can > 0) { const f = Math.min(1, (over + 10) / can);
       order = order.map(s => long.includes(s) ? Object.assign({}, s, { minutes: s.minutes - Math.round(room(s) * f / 5) * 5, shortFrom: s.minutes }) : s); } }
   while (order.length && total(order) > budget) {
-    const cands = order.filter(s => !s.mustSee);
-    const pool = cands.length ? cands : order; // must-sees go last, but the day must still fit
+    // Who gives way: neither the traveler's own pick nor a must-see first, then the app's own picks (a must-see the app
+    // added never pushes out a place the traveler ticked), then non-must-sees; must-sees go last, but the day must fit.
+    const own = new Set(d.mine || []), pool = [s => !s.mustSee && !own.has(s.id), s => !own.has(s.id), s => !s.mustSee, () => true].map(f => order.filter(f)).find(t => t.length) || [];
     if (!pool.length) break;
     let best = null, bestVal = -Infinity; // any value counts: a stop that adds no time (or a NaN guess) must still be choosable, or this loop never ends
     // Protect what the day is built around: a stop in the day's main area (several chosen stops within
@@ -1625,6 +1626,10 @@ function buildPlanFor(d) {
   // either: the day is not planned with a "you'd get there too late" stop while dropping it or another order
   // would avoid it (Madrid arrival day: Royal Palace first, then the Prado at 18:52, closing at 19:00).
   const worthIn = x => (x.mustSee ? 3 : 1) * ((d.mine || []).includes(x.id) ? 2 : 1) * fameW(x) * Math.max(20, x.minutes || 0);
+  // Who gives way first: stops that are neither the traveler's own ticks nor must-sees, then the app's own picks
+  // (a must-see the app added never pushes out a place the traveler chose: Sorrento ticked, Castel Nuovo added
+  // later by the app, Nov 14), then non-must-sees, then any.
+  const mineX = x => (d.mine || []).includes(x.id), giveWay = l => [x => !x.mustSee && !mineX(x), x => !mineX(x), x => !x.mustSee, () => true].map(f => l.filter(f)).find(t => t.length) || [];
   { const lim = w.endBy - tailCost();
     for (let guard = 0; guard < 12; guard++) {
       const r0 = simDay(seq, t0, O, ZZ, style), over = r0.end > lim + (hardEnd(d) ? 0 : 5); // a ship, train or plane has no leeway: it won't wait
@@ -1633,7 +1638,8 @@ function buildPlanFor(d) {
       // Only lateness: the least important stop whose leaving out gets every other stop there in time gives way.
       if (!over) {
         const tryOut = list => list.map(c => ({ c, q: polishDay(withMeals(bare.filter(x => x !== c)), t0, O, ZZ, style, city) })).map(x => Object.assign(x, { r: simDay(x.q, t0, O, ZZ, style) })).filter(x => x.r.late < r0.late && x.r.end <= lim + (hardEnd(d) ? 0 : 5)).sort((a, b) => worthIn(a.c) - worthIn(b.c))[0];
-        const nm = bare.filter(x => !x.mustSee), got = (nm.length && tryOut(nm)) || tryOut(bare);
+        const tiers = [x => !x.mustSee && !mineX(x), x => !mineX(x), x => !x.mustSee, () => true].map(f => bare.filter(f)).filter(t => t.length);
+        let got = null; for (const t of tiers) if ((got = tryOut(t))) break;
         if (!got) break;
         seq = got.q; dropped.push(got.c); continue;
       }
@@ -1643,7 +1649,7 @@ function buildPlanFor(d) {
         seq = seq.map(x => !x.mealOf && x.minutes >= 120 && x.minutes - 15 >= floor(x) ? Object.assign({}, x, { minutes: x.minutes - 15, shortFrom: x.shortFrom || x.minutes }) : x);
         seq = polishDay(seq, t0, O, ZZ, style, city); guard--; continue;
       }
-      const cands = bare.filter(x => !x.mustSee).length ? bare.filter(x => !x.mustSee) : bare;
+      const cands = giveWay(bare);
       let best = null;
       for (const c of cands) { const q = polishDay(withMeals(bare.filter(x => x !== c)), t0, O, ZZ, style, city), e = simDay(q, t0, O, ZZ, style).end, val = (simDay(seq, t0, O, ZZ, style).end - e) / Math.max(20, c.minutes || 0); if (!best || val > best.val) best = { val, q, c }; }
       seq = best.q; dropped.push(best.c);
@@ -1654,7 +1660,7 @@ function buildPlanFor(d) {
   if (dropped.length) {
     const lim = w.endBy - tailCost();
     const rank = x => (x.mustSee ? 3 : 1) * fameW(x) * (seq.filter(y => !y.mealOf && hav(y, x) < 15).length + 1);
-    for (const c of dropped.slice().sort((a, b) => rank(b) - rank(a))) {
+    for (const c of dropped.slice().sort((a, b) => (mineX(b) ? 1 : 0) - (mineX(a) ? 1 : 0) || rank(b) - rank(a))) { // the traveler's own picks go back first
       const bare = seq.filter(x => !x.mealOf), late0 = simDay(seq, t0, O, ZZ, style).late; let best = null;
       for (let i = 0; i <= bare.length; i++) {
         const q = polishDay(withMeals(bare.slice(0, i).concat([c], bare.slice(i))), t0, O, ZZ, style, city), r = simDay(q, t0, O, ZZ, style);
@@ -1676,7 +1682,7 @@ function buildPlanFor(d) {
     for (let guard = 0; guard < 8; guard++) {
       const c = dropped.filter(x => !tried.has(x)).sort((a, b) => worthOf(b) - worthOf(a))[0]; if (!c) break; tried.add(c); // a stop bumped out gets its own turn too
       const bare = seq.filter(x => !x.mealOf), wc = worthOf(c);
-      const lesser = bare.filter(x => worthOf(x) < wc && !(x.mustSee && !c.mustSee)).sort((a, b) => worthOf(a) - worthOf(b));
+      const lesser = bare.filter(x => worthOf(x) < wc && !(mine.has(x.id) && !mine.has(c.id)) && !(x.mustSee && !c.mustSee && !(mine.has(c.id) && !mine.has(x.id)))).sort((a, b) => worthOf(a) - worthOf(b));
       const out = []; let got = null, sum = 0;
       for (const x of lesser) { if (sum + worthOf(x) >= wc) break; out.push(x); sum += worthOf(x);
         const b = tryIn(bare.filter(y => !out.includes(y)), c); if (b) { got = b; break; } }
@@ -2279,6 +2285,7 @@ function fameMark(city, src) {
   }
   famousRepair(city, src);
   sourceSights(city, src);
+  leadLate(city);
   // Every way a sight gets in (the written guide, famous sights written in, places added from the sources) ends in one
   // check, so one place under two names (Prado Museum / Museo del Prado) is offered once.
   dedupeSites(city);
@@ -2313,6 +2320,20 @@ function famousRepair(city, src) {
   for (const s of city.sites || []) { const x = g.top.find(y => sameSight(y, s)); if (x && (x.sl || 0) >= g.bar && !s.mustSee) { s.mustSee = true; tickOnOneDay(city, s); } }
   city.famousMissing = g.missing.map(x => x.name);
   if (g.missing.length && !famousFilling[keyOf(city.city)] && typeof sample === "function" && sample) fillFamous(city, g.missing.slice(0, 4), g.bar);
+}
+// A port's top day trip (Pompeii from Naples) is only known to be top once the sources say how famous it is, and they
+// often arrive after the day's starting picks were made. A day whose picks are still all the app's own (the traveler
+// hasn't ticked, unticked or hearted anything, and named no places) gets the day trip at the front once it is known,
+// the same as if the sources had been there from the start; the trim then keeps it.
+function leadLate(city) {
+  if (typeof trip === "undefined" || !trip || !trip.days) return;
+  for (const o of trip.days) {
+    if (!Array.isArray(o.selected) || !o.selected.length || cityFor(o) !== city || (o.type !== "port" && o.type !== "land")) continue;
+    if (o.ready || o.ownList || (o.mine || []).length || (o.wants || []).length || noShore(o)) continue;
+    let ds = null; try { ds = defaultSelection(city, trip.style, o); } catch (e) { continue; }
+    if (!ds || !ds.lead || o.selected.includes(ds.lead)) continue;
+    o.selected = [ds.lead, ...o.selected]; try { fitTrim(o, [ds.lead]); } catch (e) {} o.selected = [...o.selected];
+  }
 }
 // A must-see found late is ticked on one day in that city (the day whose picks are nearest), unless the traveler
 // already has it or has cleared every day there; the planner then fits it like any pick.
@@ -5098,7 +5119,7 @@ function timeMeter(plan, d) {
 // A day's guide with each sight's weight (checks: a port's top day trip must be weighed against the city's sights).
 if (typeof window !== "undefined") window.__kairouteWeights = i => { const c = cityFor(trip.days[i]); if (!c) return null; const w = x => ({ id: x.id, name: x.name, must: !!x.mustSee, unesco: !!x.unesco, fame: +fameW(x).toFixed(2), min: x.minutes }); return { sites: c.sites.filter(x => !x.quick).map(w), far: (c.farther || []).map(w) }; };
 // Checks: give a guide's sights the source weights the live site would (fame, UNESCO) and plan the day afresh.
-if (typeof window !== "undefined") window.__kairouteSiteSet = (i, patches, reseed) => { const d = trip.days[i], c = cityFor(d); if (!c) return null; for (const [id, p] of Object.entries(patches)) { const x = allSites(c).find(y => y.id === id) || allSites(c).find(y => y.name.toLowerCase().startsWith(id.toLowerCase())); if (x) Object.assign(x, p); } if (reseed) { trip.days.forEach(o => { if (cityFor(o) === c) { delete o.selected; delete o.mine; delete o.anchor; } }); seedPicks(d, c); } render(); return (d.selected || []).slice(); };
+if (typeof window !== "undefined") window.__kairouteSiteSet = (i, patches, reseed) => { const d = trip.days[i], c = cityFor(d); if (!c) return null; for (const [id, p] of Object.entries(patches)) { const x = allSites(c).find(y => y.id === id) || allSites(c).find(y => y.name.toLowerCase().startsWith(id.toLowerCase())); if (x) Object.assign(x, p); } if (reseed === "late") leadLate(c); else if (reseed) { trip.days.forEach(o => { if (cityFor(o) === c) { delete o.selected; delete o.mine; delete o.anchor; } }); seedPicks(d, c); } render(); return (d.selected || []).slice(); };
 // What Change stops offers for a day, by section (live checks: a day trip like Sorrento or Amalfi must always be offered).
 if (typeof window !== "undefined") window.__kairoutePicker = i => { const d = trip.days[i], city = cityFor(d); if (!city) return { error: "no guide" }; if (!d.selected) seedPicks(d, city);
   const elsewhere = plannedElsewhere(d), away = x => elsewhere[x.id] && !d.selected.includes(x.id), nm = l => l.map(x => x.name);
@@ -6340,7 +6361,7 @@ document.addEventListener("change", e => {
     const d = day(), id = t.dataset.site;
     d.selected = d.selected || []; movedNote = "";
     if (t.checked && !addPick(d, id, true)) { t.checked = false; return; }
-    delete d.autoEmpty; // the traveler's first tick or untick makes the list theirs
+    delete d.autoEmpty; d.ownList = true; // the traveler's first tick or untick makes the list theirs
     if (t.checked) { d.anchor = id; anchorJump = true; }
     else { d.selected = d.selected.filter(x => x !== id); markMine(d, id, false); if (d.anchor === id) d.anchor = null; }
     save(); renderKeep(); if (anchorJump) jumpToAnchor(); return; // every change here is in the trip, which keys the plans
