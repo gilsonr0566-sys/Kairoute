@@ -4,6 +4,9 @@ name: Record internet answers
 # without the internet. Run on demand.
 on:
   workflow_dispatch:
+  push:
+    branches: [claude/project-thread-m88qb4]
+    paths: [.github/workflows/net-record.yml]
 permissions:
   contents: write
 jobs:
