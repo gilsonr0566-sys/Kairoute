@@ -1,0 +1,16 @@
+name: Intake live check
+# Richard's Naples test end to end on the live site with the real AI: typed trip, picks, ship times, ferry that stays.
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm i playwright@1 && npx playwright install chromium && node tools/intake-live.cjs

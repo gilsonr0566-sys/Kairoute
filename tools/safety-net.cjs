@@ -209,6 +209,16 @@ const log = (suite, trip, ok, what) => { results.push({ suite, trip, ok, what })
       log('New trip', 'new-trips', !bad.length, `${N.label}: ${bad.length ? bad.join('; ') : 'dates in order, Trip screen counts right'}`);
       const f = 'new-trip-' + NEW.indexOf(N) + '.jpg'; await p.screenshot({ path: path.join(OUT, f), type: 'jpeg', quality: 60 }); shots.push({ f, cap: 'New trip: ' + N.label });
     }
+    // Richard, Nov 14: "I'm on the Sun Princess to Naples on July 12, 2027 and want to go to Pompeii and Sorrento":
+    // the ship is kept and the two places are the day's own picks from the start (they weren't part of the tour).
+    { await p.evaluate(([d, a]) => window.__kairouteNewTrip(d, a), ['I am on the Sun Princess to Naples on July 12, 2027. I want to go to Pompeii and Sorrento.', 'STOPS: Naples (1 port)\nSHIP: Princess Cruises|Sun Princess\nDAY|2027-07-12|Naples|port|ship||07:00|18:30|no||yes|Pompeii; Sorrento']); await p.waitForTimeout(300);
+      const banner = await p.evaluate(() => (document.querySelector('.banner.shiptimes') || {}).innerText || '');
+      const w = await p.evaluate(() => window.__kairouteWants(0)), bad = [];
+      if (!/Ship times are estimated/.test(banner) || !/Sun Princess/.test(banner)) bad.push('no "ship times are estimated" ask on the Trip screen (' + banner.slice(0, 80) + ')');
+      if (!w || w.error) bad.push(JSON.stringify(w));
+      else { if (!w.ship || w.ship.name !== 'Sun Princess') bad.push('ship not kept: ' + JSON.stringify(w.ship));
+        for (const n of ['Pompeii', 'Sorrento']) { if (!w.picked.some(x => x && x.includes(n))) bad.push(n + ' not picked (' + w.picked.join(', ') + ')'); if (!w.mine.some(x => x && x.includes(n))) bad.push(n + ' not kept as the traveler\'s own pick'); } }
+      log('New trip', 'new-trips', !bad.length, 'Sun Princess to Naples, wants Pompeii and Sorrento: ' + (bad.length ? bad.join('; ') : 'ship kept; Pompeii and Sorrento are the day\'s own picks from the start (' + w.picked.join(', ') + ')')); }
     log('New trip', 'new-trips', !errs.length, errs.length ? 'page errors: ' + [...new Set(errs)].join(' | ') : 'no page errors');
     await b2.close(); }
   // Duplicate sights (Richard, Santorini: "I think there are several duplicate stops"): the same place under two
@@ -238,6 +248,13 @@ const log = (suite, trip, ok, what) => { results.push({ suite, trip, ok, what })
     { const td = await p.evaluate(() => window.__kairouteTransitDue ? window.__kairouteTransitDue() : null); // Richard, Nov 14: a phone kept an old ride with no ferry
       if (!td || !td.old || !td.oldEmpty || !td.near || td.fresh || td.busyNow || !td.busyLater) bad.push('kept ride answers: an old, empty, nearby or busy answer is not asked again as it should be ' + JSON.stringify(td));
       else log('Kept rides refresh', 'rides', true, 'a ride answer kept from an older version, an empty one, or a nearby trip\'s is asked again when online; a fresh one is kept'); }
+    { const mg = await p.evaluate(() => { const M = window.__kairouteTransitMerge; if (!M) return null; // Richard, Nov 14: the ferry to Sorrento appeared, then vanished from the ride menu
+        const fer = { mode: 'ferry', label: 'Ferry Napoli - Sorrento', min: 70 }, tr = { mode: 'train', label: 'Train 1 (Eav)', min: 60 }, tr2 = { mode: 'train', label: 'Train 2', min: 65 };
+        const ids = r => r.opts.map(o => o.label).join(',');
+        return { empty: ids(M({ opts: [], partial: true }, { opts: [tr, fer] })), busy: ids(M({ opts: [tr2], partial: true }, { opts: [tr, fer] })), full: ids(M({ opts: [tr, tr2] }, { opts: [tr, fer] })), first: ids(M({ opts: [tr] }, null)), fullPartial: M({ opts: [tr] }, { opts: [fer] }).partial }; });
+      const want = { empty: 'Train 1 (Eav),Ferry Napoli - Sorrento', busy: 'Train 1 (Eav),Train 2,Ferry Napoli - Sorrento', full: 'Train 1 (Eav),Train 2,Ferry Napoli - Sorrento', first: 'Train 1 (Eav)', fullPartial: false };
+      if (JSON.stringify(mg) !== JSON.stringify(want)) bad.push('a new ride answer took away rides already shown: ' + JSON.stringify(mg));
+      else log('Ferry stays once found', 'rides', true, 'a busy or empty answer keeps every ride already shown, and a ferry once found stays in the ride menu'); }
     log('Duplicate sights', 'guides', !bad.length, bad.length ? bad.join(' | ') : `${folded} repeats folded (same place under two names, or a part of a village); look-alike names of different places kept apart; no guide lists a place twice`);
     await b4.close(); }
   // Famous sights and big stops: with a snapshot of Prague's sources and stand-in AI answers, the top famous

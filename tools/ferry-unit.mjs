@@ -1,7 +1,7 @@
 // Offline check of the ferry logic in worker/transit.js (no network): a ferry route mapped only by its course (no
 // pier stops, like many seasonal coastal ferries) is offered between the two piers it passes, named after the
 // nearest terminals, with its months from opening_hours or seasonal=*. Exits 1 on a problem.
-import { ferryByCourse, runMonths, ferryChain, transitOptions, slimFerries, ferryKey, keptFerries } from "../worker/transit.js";
+import { topRides, ferryByCourse, runMonths, ferryChain, transitOptions, slimFerries, ferryKey, keptFerries } from "../worker/transit.js";
 let bad = 0; const ok = (c, m) => { console.log((c ? "ok   " : "FAIL ") + m); if (!c) bad++; };
 // Naples Molo Beverello to Amalfi along the coast (a course of a few points), as OpenStreetMap often maps it.
 const line = [[40.8366, 14.2563], [40.79, 14.27], [40.70, 14.30], [40.62, 14.36], [40.58, 14.45], [40.60, 14.55], [40.6327, 14.6029]].map(([lat, lng]) => ({ lat, lng }));
@@ -65,4 +65,6 @@ ok(!(await ferryChain(ship, { lat: 38.12, lng: 13.36 }, ways)).length, "no chang
   const r2 = await ask(), f2 = r2.opts.find(o => o.mode === "ferry");
   ok(!!f2 && r2.opts.some(o => o.mode === "train"), `once both ends are known the saved answer offers the ferry beside the train (${f2 ? f2.label + ", " + f2.min + " min" : "none"})`);
   globalThis.fetch = realFetch; }
+{ const many = [1, 2, 3, 4, 5].map(i => ({ mode: "train", label: "T" + i, min: 100 + i })).concat([{ mode: "ferry", label: "F", min: 134 }]), t = topRides(many, 5);
+  ok(t.length === 5 && t.some(o => o.mode === "ferry"), "a long list of quicker trains never pushes the ferry out (" + t.map(o => o.label).join(",") + ")"); }
 console.log(bad ? `${bad} ferry check(s) failed` : "ferry checks passed"); process.exit(bad ? 1 : 0);

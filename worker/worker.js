@@ -1,5 +1,5 @@
 import { extras, Group } from "./extras.js";
-import { allOptions, ferriesNear, keptFerries, ferryKey } from "./transit.js";
+import { allOptions, ferriesNear, keptFerries, ferryKey, topRides } from "./transit.js";
 export { Group };
 // Kairoute AI helper. The website sends a prompt (and optional photos); this Worker asks Workers AI
 // and streams the answer back. Usage is counted from real token counts. On the free plan it stays inside
@@ -466,7 +466,7 @@ export default {
           // An end whose ferries aren't known yet (waiting for the schedule) makes the answer partial, so the page asks
           // again in 10 minutes instead of keeping a ferry-less answer for good.
           if (kf === null) return { opts: x.opts, partial: true };
-          return kf.length ? { opts: (x.opts || []).concat(kf).sort((p, q) => p.min - q.min).slice(0, 6), partial: x.partial } : x; };
+          return kf.length ? { opts: topRides((x.opts || []).concat(kf), 6), partial: x.partial } : x; };
         const hit = await env.USAGE.get(key, "json");
         if (hit) {
           if (hit.partial && Date.now() - (hit.t || 0) > 600000 && !(await env.USAGE.get("lk:" + key))) {
