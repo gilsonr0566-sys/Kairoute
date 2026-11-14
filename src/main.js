@@ -1823,12 +1823,23 @@ function sequenceDates(days) {
   });
   return changed;
 }
-function parseDayLines(out) { const days = parseDayLines0(out); sequenceDates(days); return days; }
+// A city stay that ends the day the cruise boards there ("4 nights in Athens, then this cruise" with the ship leaving
+// Athens on Jul 4) is one day, the boarding day: the AI sometimes gives a leaving day and a boarding day on the same
+// date, and putting them in order then pushed the whole cruise a day late. The boarding day (from the booking) wins.
+function mergeBoarding(days) {
+  for (let i = days.length - 1; i > 0; i--) { const d = days[i], p = days[i - 1];
+    if (d.type === "embark" && (p.type === "departure" || p.type === "land") && p.date && p.date === d.date && keyOf(mainPlace(p)) === keyOf(mainPlace(d))) {
+      if (p._lodging && !d._lodging) d._lodging = p._lodging; days.splice(i - 1, 1); } }
+  return days;
+}
+function parseDayLines(out) { const days = mergeBoarding(parseDayLines0(out)); sequenceDates(days); return days; }
 function parseDayLines0(out) {
   const types = DAY_TYPES.map(t => t.key), hm = v => /^\d\d:\d\d$/.test((v || "").trim()) ? v.trim() : "";
   // The format line itself ("DAY|date YYYY-MM-DD|destination|type|…") is sometimes echoed back by the AI: never a day.
   return String(out).split("\n").filter(l => /^\s*DAY\|/.test(l)).map(l => l.trim().split("|").map(x => x.trim())).filter(f => f[2] && !/yyyy|^date\b/i.test(f[1] || "") && !/^destination$/i.test(f[2]) && !/^type$/i.test(f[3] || "")).map(f => {
-    const [, date, destination, type0, mode0, time, pa, aa, tender, lodging, est, want] = f;
+    let [, date, destination, type0, mode0, time, pa, aa, tender, lodging, est, want] = f;
+    // A column slipped (the yes/no for estimated landed in the places column): read it as the yes/no it is.
+    if (/^(yes|no)$/i.test(want || "") && !/^(yes|no)$/i.test(est || "")) { if (!lodging && est) lodging = est; est = want; want = ""; }
     const type = types.includes(type0) ? type0 : "land", mode = MODES[mode0] ? mode0 : "flight";
     return newDay({
       date: /^\d{4}-\d{2}-\d{2}$/.test(date) ? date : "", destination, type, mode,

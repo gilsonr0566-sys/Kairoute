@@ -263,6 +263,16 @@ const log = (suite, trip, ok, what) => { results.push({ suite, trip, ok, what })
       const pk = ei >= 0 ? await p.evaluate(i => window.__kairoutePicker(i), ei) : null;
       const okE = !!pk && pk.picked.length > 0;
       log('New trip', 'new-trips', okE, 'Boarding day after a city stay: ' + (okE ? 'plans ' + pk.picked.join(', ') : 'no picks (' + JSON.stringify(pk) + ')')); }
+    // Demo run, Nov 14 (itinerary photo + "4 nights in Athens, then this cruise"): the AI gave a leaving day and a boarding
+    // day in Athens on Jul 4, and ordering the dates pushed the whole cruise a day late; a slipped column put "yes" in the
+    // places column. The boarding day wins (Jul 4), the ports keep the photo's dates, the yes/no is read as one.
+    { await p.evaluate(([d, a]) => window.__kairouteNewTrip(d, a), ['Flying into Athens June 30, 2027 for 4 nights, then this cruise.', 'STOPS: Athens, Heraklion\nSHIP: Princess Cruises|Sun Princess\nDAY|2027-06-30|Athens|arrival|flight|10:30|||||no|\nDAY|2027-07-01|Athens|land|||||||no|\nDAY|2027-07-02|Athens|land|||||||no|\nDAY|2027-07-03|Athens|land|||||||no|\nDAY|2027-07-04|Athens|departure|ship|||||no||yes\nDAY|2027-07-04|Athens (Piraeus)|embark|ship|||18:30|no||no|\nDAY|2027-07-05|Heraklion|port|ship||07:00|17:00|no||no|']); await p.waitForTimeout(300);
+      const days = await p.evaluate(() => window.__kairouteDays()), bad = [];
+      const emb = days.filter(x => x.type === 'embark'), her = days.find(x => /heraklion/i.test(x.dest));
+      if (emb.length !== 1 || emb[0].date !== '2027-07-04') bad.push('boarding day not on Jul 4: ' + JSON.stringify(emb));
+      if (days.some(x => x.type === 'departure' && x.date === '2027-07-04')) bad.push('a leaving day is left beside the boarding day');
+      if (!her || her.date !== '2027-07-05') bad.push('Heraklion moved off the photo\'s Jul 5: ' + JSON.stringify(her));
+      log('New trip', 'new-trips', !bad.length, 'City stay then cruise from a photo: ' + (bad.length ? bad.join('; ') : 'one boarding day on Jul 4, ports on the photo\'s dates')); }
     log('New trip', 'new-trips', !errs.length, errs.length ? 'page errors: ' + [...new Set(errs)].join(' | ') : 'no page errors');
     await b2.close(); }
   // Duplicate sights (Richard, Santorini: "I think there are several duplicate stops"): the same place under two
