@@ -249,6 +249,20 @@ const log = (suite, trip, ok, what) => { results.push({ suite, trip, ok, what })
       await p.evaluate(() => window.__kairouteEdit(0, { portArrive: '07:00', allAboard: '19:00', estimated: false })); await p.waitForTimeout(300);
       const c = await look(); if (!(has(c.stops, 'pompeii') && has(c.stops, 'sorrento'))) bad.push('with the booking times both should be planned: ' + JSON.stringify(c));
       log('New trip', 'new-trips', !bad.length, 'Named places on estimated ship times: ' + (bad.length ? bad.join('; ') : 'the one that does not fit is named with the ask for real ship times; with 7:00 to 19:00 both are planned')); }
+    // Demo run, Nov 14: the Naples port day planned only city sights and no Pompeii. A port's top day trip leads the day
+    // when the sources rate it at least as famous as the town's best free sight (and the day has time for it).
+    { await p.evaluate(([d, a]) => window.__kairouteNewTrip(d, a), ['Naples port day', 'STOPS: Naples\nSHIP: Princess Cruises|Sun Princess\nDAY|2027-07-12|Naples|port|ship||07:00|19:00|no||no|']); await p.waitForTimeout(300);
+      const sel = await p.evaluate(() => window.__kairouteSiteSet(0, { Pompeii: { fame: 420, unesco: true }, Spaccanapoli: { fame: 90, unesco: true }, Sansevero: { fame: 40 }, 'Naples Cathedral': { fame: 60 }, 'Piazza del Plebiscito': { fame: 70 } }, true));
+      await p.evaluate(() => window.__kairouteAt(0, 'plan')); await p.waitForTimeout(300);
+      const v = await p.evaluate(() => ({ stops: [...document.querySelectorAll('.tl .nm')].map(e => e.innerText), drop: (document.querySelector('.banner.dropped') || {}).innerText || '' }));
+      const okP = v.stops.some(n => /^Pompeii/.test(n)) && !v.drop;
+      log('New trip', 'new-trips', okP, 'A port\'s top day trip leads the day: ' + (okP ? 'Naples plans Pompeii (' + v.stops.join(', ') + ')' : 'picks ' + sel.join(', ') + ' / plan ' + JSON.stringify(v))); }
+    // Demo run, Nov 14: boarding day in Athens (9:00 to 18:30) after four Athens days planned no stops.
+    { await p.evaluate(([d, a]) => window.__kairouteNewTrip(d, a), ['Athens then cruise', 'STOPS: Athens\nDAY|2027-06-30|Athens|arrival|flight|14:00||||||\nDAY|2027-07-01|Athens|land||||||||\nDAY|2027-07-02|Athens|land||||||||\nDAY|2027-07-03|Athens|land||||||||\nDAY|2027-07-04|Athens (Piraeus)|embark|ship|09:00||18:30|no||no|']); await p.waitForTimeout(300);
+      const days = await p.evaluate(() => window.__kairouteDays()); const ei = days.findIndex(x => x.type === 'embark');
+      const pk = ei >= 0 ? await p.evaluate(i => window.__kairoutePicker(i), ei) : null;
+      const okE = !!pk && pk.picked.length > 0;
+      log('New trip', 'new-trips', okE, 'Boarding day after a city stay: ' + (okE ? 'plans ' + pk.picked.join(', ') : 'no picks (' + JSON.stringify(pk) + ')')); }
     log('New trip', 'new-trips', !errs.length, errs.length ? 'page errors: ' + [...new Set(errs)].join(' | ') : 'no page errors');
     await b2.close(); }
   // Duplicate sights (Richard, Santorini: "I think there are several duplicate stops"): the same place under two

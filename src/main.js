@@ -872,8 +872,8 @@ function seedPicks(d, city) {
   const i = trip.days.indexOf(d); let made = false;
   // A day that starts with no picks (everything is planned on other days) is not a day cleared on purpose: the
   // planner still fills it (autoEmpty). The traveler's first tick or untick makes the list theirs.
-  trip.days.slice(0, Math.max(0, i)).forEach(o => { if (!o.selected && !noShore(o) && !throughTo(o) && cityFor(o) === city) { o.selected = defaultSelection(city, trip.style, o); fitTrim(o); o.autoEmpty = !o.selected.length; made = true; } });
-  if (!d.selected) { const w = wantIds(d, city); d.selected = [...new Set([...w, ...defaultSelection(city, trip.style, d)])]; fitTrim(d, w); w.forEach(id => markMine(d, id, true)); d.autoEmpty = !d.selected.length; made = true; wantsFind(d, city); }
+  trip.days.slice(0, Math.max(0, i)).forEach(o => { if (!o.selected && !noShore(o) && !throughTo(o) && cityFor(o) === city) { o.selected = defaultSelection(city, trip.style, o); fitTrim(o, o.selected.lead ? [o.selected.lead] : []); o.selected = [...o.selected]; o.autoEmpty = !o.selected.length; made = true; } });
+  if (!d.selected) { const w = wantIds(d, city); const ds = defaultSelection(city, trip.style, d); d.selected = [...new Set([...w, ...ds])]; fitTrim(d, w.length ? w : ds.lead ? [ds.lead] : []); w.forEach(id => markMine(d, id, true)); d.autoEmpty = !d.selected.length; made = true; wantsFind(d, city); }
   if (made && !seedSave) seedSave = setTimeout(() => { seedSave = null; save(); }, 0);
 }
 // Places the traveler named for a day when they described the trip ("Naples on July 12, we want Pompeii and
@@ -906,7 +906,18 @@ function defaultSelection(city, style, d) {
   const extra = s.filter(x => !x.mustSee).sort((a, b) => score(b) - score(a)).slice(0, 2).map(x => x.id);
   const byId0 = new Map(allSites(city).map(x => [x.id, x]));
   const carried = d ? carryOver(d).filter(id => !taken[id] && !(byId0.get(id) && shut(byId0.get(id)))) : [];
-  let sel = [...new Set([...carried, ...picks, ...extra])];
+  // A port's or city's top day trip (Pompeii from Naples, Taormina from Messina) leads the day when it is at least as
+  // famous as the best sight still free in town and the day has time for it: a one-day port never skips the reason
+  // people stop there. On a city stay, the town's own top sights take the first day and the day trip a later one.
+  let lead = null;
+  if (d && (d.type === "port" || d.type === "land")) {
+    const far = (city.farther || []).filter(x => !taken[x.id] && religiousOk(x) && !shut(x) && (x.mustSee || x.unesco || fameW(x) > 1));
+    const best = far.sort((a, b) => fameW(b) - fameW(a) || (b.mustSee ? 1 : 0) - (a.mustSee ? 1 : 0))[0];
+    const top = Math.max(1, ...s.filter(x => x.mustSee || x.unesco).map(x => fameW(x)));
+    let fits = false; if (best) { try { fits = fitsAll(fitTrial(d, [best.id])); } catch (e) {} }
+    if (best && fits && fameW(best) >= top) lead = best.id;
+  }
+  let sel = [...new Set([...(lead ? [lead] : []), ...carried, ...picks, ...extra])];
   // When another day later in the trip is in the same city, give this day only what fits its hours
   // (allowing for lunch and getting between stops) and leave the rest for that day, rather than
   // overfilling this one and showing "Didn't fit".
@@ -915,12 +926,15 @@ function defaultSelection(city, style, d) {
     const later = trip.days.some((o, j) => j > i && (cityKeyFor(o) || keyOf(o.destination)) === k);
     let w = null; try { w = dayWindow(d, city); } catch (e) {}
     if (later && w && !w.error && w.endBy > w.start) {
-      let left = w.endBy - w.start - 60 - (w.buffer || 0); const byId = new Map(city.sites.map(x => [x.id, x]));
+      let left = w.endBy - w.start - 60 - (w.buffer || 0); const byId = new Map(allSites(city).map(x => [x.id, x]));
       sel = sel.filter((id, n) => { const x = byId.get(id), need = (x ? x.minutes || 45 : 45) + 15; if (n > 0 && need > left) return false; left -= need; return true; });
     }
   }
   // On a short day, keep it light: start with the must-sees only.
-  if (d && d.type !== "land" && d.type !== "port") sel = [...new Set([...carried, ...picks])].slice(0, 2);
+  // When the must-sees are all on other days (a boarding day after four days in Athens), the best free sights close
+  // to the hotel or the ship are picked instead, so a long day is never left with nothing planned.
+  if (d && d.type !== "land" && d.type !== "port") { sel = [...new Set([...carried, ...picks])].slice(0, 2); if (!sel.length) sel = extra.slice(0, 2); }
+  if (lead && sel.includes(lead)) sel.lead = lead;
   return sel;
 }
 
@@ -4962,6 +4976,10 @@ function timeMeter(plan, d) {
     <div class="mrow"><b>${dur(Math.min(used, 24 * 60))} of ${dur(avail)}</b><span>${fmt(m.start)} to ${fmt(m.endBy)}</span></div>
     <div class="mbar"><i style="width:${pct}%"></i></div>${parts.length ? `<p class="mparts">${parts.map(esc).join(" · ")}</p>` : ""}${msg ? `<p>${msg}</p>` : ""}${extras}</div>`;
 }
+// A day's guide with each sight's weight (checks: a port's top day trip must be weighed against the city's sights).
+if (typeof window !== "undefined") window.__kairouteWeights = i => { const c = cityFor(trip.days[i]); if (!c) return null; const w = x => ({ id: x.id, name: x.name, must: !!x.mustSee, unesco: !!x.unesco, fame: +fameW(x).toFixed(2), min: x.minutes }); return { sites: c.sites.filter(x => !x.quick).map(w), far: (c.farther || []).map(w) }; };
+// Checks: give a guide's sights the source weights the live site would (fame, UNESCO) and plan the day afresh.
+if (typeof window !== "undefined") window.__kairouteSiteSet = (i, patches, reseed) => { const d = trip.days[i], c = cityFor(d); if (!c) return null; for (const [id, p] of Object.entries(patches)) { const x = allSites(c).find(y => y.id === id) || allSites(c).find(y => y.name.toLowerCase().startsWith(id.toLowerCase())); if (x) Object.assign(x, p); } if (reseed) { trip.days.forEach(o => { if (cityFor(o) === c) { delete o.selected; delete o.mine; delete o.anchor; } }); seedPicks(d, c); } render(); return (d.selected || []).slice(); };
 // What Change stops offers for a day, by section (live checks: a day trip like Sorrento or Amalfi must always be offered).
 if (typeof window !== "undefined") window.__kairoutePicker = i => { const d = trip.days[i], city = cityFor(d); if (!city) return { error: "no guide" }; if (!d.selected) seedPicks(d, city);
   const elsewhere = plannedElsewhere(d), away = x => elsewhere[x.id] && !d.selected.includes(x.id), nm = l => l.map(x => x.name);
