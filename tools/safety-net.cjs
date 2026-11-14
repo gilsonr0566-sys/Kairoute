@@ -338,6 +338,12 @@ const log = (suite, trip, ok, what) => { results.push({ suite, trip, ok, what })
       const g = await p.evaluate(([c, s]) => window.__kairouteFarGaps(c, s), [city, src]);
       const okF = JSON.stringify(g) === JSON.stringify(['Mount Vesuvius', 'Amalfi']);
       log('Sights', 'sights', okF, 'Famous day trips the guide lacks are offered to the writer: ' + (okF ? g.join(', ') : 'got ' + JSON.stringify(g))); }
+    // Richard, Nov 14 (Athens airport metro): stop names only in Greek capitals, the operator's legal name on every line,
+    // and the airport train split into two M3 legs. Readable for every city: Latin letters, no operator, one leg per line.
+    { const r = await p.evaluate(() => window.__kairouteTidyRide({ mode: 'metro', label: 'Metro M3 (Urban Rail Transport S.A.) + 2 changes', from: 'ΕΛ. ΒΕΝΙΖΕΛΟΣ', to: 'ΑΚΡΟΠΟΛΗ', steps: ['Metro M3 (Urban Rail Transport S.A.): ΕΛ. ΒΕΝΙΖΕΛΟΣ to ΣΥΝΔΕΣΗ ΠΡΟΑΣΤΙΑΚΟΥ, 16 min', 'Metro M3 (Urban Rail Transport S.A.): Δ. ΠΛΑΚΕΝΤΙΑΣ to ΣΥΝΤΑΓΜΑ, 18 min', 'Metro M2 (Urban Rail Transport S.A.): ΣΥΝΤΑΓΜΑ to ΑΚΡΟΠΟΛΗ, 1 min'] }));
+      const txt = r.label + ' | ' + r.steps.join('; then ');
+      const okR = r.label === 'Metro M3 + 1 change' && r.steps.length === 2 && /Venizelos to Syntagma, 34 min/.test(txt) && !/[\u0370-\u03ff]|S\.A\./.test(txt) && r.rawLabel === 'Metro M3 (Urban Rail Transport S.A.) + 2 changes';
+      log('Rides', 'rides', okR, 'Ride directions are readable: ' + (okR ? txt : JSON.stringify(r))); }
     // Live audit, Nov 14: Santorini's port day led with Naxos (an island 80 km across the sea), and day trips written in
     // without how to get there were timed as a drive. On a port day only a short trip from the ship leads the day.
     { const days = await p.evaluate(() => window.__kairouteDays()), pi = days.findIndex(x => x.type === 'port' && x.city);
