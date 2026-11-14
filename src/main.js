@@ -2,19 +2,20 @@
 "use strict";
 // Speed: day plans are kept and reused until something that shapes them changes (see planStore). Any answer from
 // the outside world that could change a plan (a guide, restaurants, ratings, weather, opening hours, rides...)
-// starts a new "generation" of plans the moment it arrives. Answers that never shape a plan (voice, events, the
-// map's street lines and tiles, group and device sync, status) don't. Every other fetch counts, so a new kind of
-// data is always safe by default.
-let planGen = 0;
+// moves "dataGen" on the moment it arrives; a kept plan is then checked against what it was made from (its city's
+// guide, ratings, weather, the rides it used) and reused when none of that changed, so an answer about Barcelona
+// never re-plans Naples. Answers that never shape a plan (voice, events, the map's street lines and tiles, group and
+// device sync, status) don't count. Every other fetch counts, so a new kind of data is always safe by default.
+let planGen = 0, dataGen = 0; // planGen: the traveler changed something; dataGen: an answer arrived
 const NOPLAN_URL = /\/(speak|script|voiceplan|events|route|x\/group|status|identify|sync|usage)(\?|$)|\/version\.txt|openfreemap|tiles?\.|\/tiles\/|fonts\.(googleapis|gstatic)|\.(pbf|png|jpe?g|webp|mp3|woff2?)(\?|$)/;
 const fetch = (input, init) => {
   const p = window.fetch(input, init), u = String((input && input.url) || input || "");
   if (NOPLAN_URL.test(u)) return p;
-  const bump = v => { planGen++; return v; };
-  const wrap = r => { if (!r || typeof r !== "object") return r; ["json", "text", "blob", "arrayBuffer"].forEach(m => { const f = r[m]; if (typeof f === "function") r[m] = () => f.call(r).then(bump, e => { planGen++; throw e; }); });
+  const bump = v => { dataGen++; return v; };
+  const wrap = r => { if (!r || typeof r !== "object") return r; ["json", "text", "blob", "arrayBuffer"].forEach(m => { const f = r[m]; if (typeof f === "function") r[m] = () => f.call(r).then(bump); });
     const c = r.clone; if (typeof c === "function") r.clone = () => wrap(c.call(r)); return r; };
-  planGen++;
-  return p.then(r => { planGen++; return wrap(r); }, e => { planGen++; throw e; });
+  // A request that failed brought nothing new, so it changes nothing.
+  return p.then(r => { dataGen++; return wrap(r); });
 };
 
 // ---------- Capabilities (AI + voice) ----------
@@ -1435,15 +1436,35 @@ const citiesSig = () => { let n = 0; for (const k in cities) { const c = cities[
 function planKey(d) {
   const i = trip.days.indexOf(d), a = trip.active;
   let t; try { trip.active = 0; t = JSON.stringify(trip); } finally { trip.active = a; } // which day is on screen never changes a plan
-  return t + "|" + i + "|" + (i < 0 ? JSON.stringify(d) : "") + "|" + ridePref + "|" + skipEvening + "|" + [...avoidMeals].join(",") + "|" + Object.keys(transitMem).length;
+  return t + "|" + i + "|" + (i < 0 ? JSON.stringify(d) : "") + "|" + ridePref + "|" + skipEvening + "|" + [...avoidMeals].join(",") + "|" + (Object.keys(transitMem).length ? 1 : 0); // the answers themselves are checked per plan (dayFp)
 }
+// What a day's plan was made from, as a short fingerprint: its city's guide (sights, places to eat, marks from the
+// sources and ratings, all kept on the city), the ratings on file for its places to eat, the day's weather and the
+// answers for the rides it looked up. Worked out again only after an answer has arrived (dataGen moved).
+function strHash(t) { let h = 2166136261; for (let i = 0; i < t.length; i++) h = Math.imul(h ^ t.charCodeAt(i), 16777619); return (h >>> 0).toString(36) + t.length; }
+const cityFpMemo = new WeakMap();
+function cityFp(city) {
+  if (!city) return "";
+  let m = cityFpMemo.get(city); if (m && m.g === dataGen) return m.h;
+  let h; try { const gs = (city.restaurants || []).map(r => { const x = gStore[gKey(r)]; return x ? JSON.stringify(x) : ""; }).join(); h = strHash(JSON.stringify(city)) + ":" + strHash(gs); } catch (e) { h = "x" + dataGen; }
+  cityFpMemo.set(city, { g: dataGen, h }); return h;
+}
+function dayFp(d, rides) {
+  const city = cityFor(d); let wx = ""; try { wx = JSON.stringify(typeof wxFor === "function" ? wxFor(d, city) : null) || ""; } catch (e) {}
+  const rs = (rides || []).map(r => { const e = transitMem[r[0]] || transitMem[r[1]]; return e && e.opts && e.opts.length ? (e.t || 1) + "." + e.opts.length : "n" + nearGen + "." + (e ? e.t : 0); }).join();
+  return cityFp(city) + "|" + strHash(wx) + "|" + strHash(rs);
+}
+// A kept plan still matches what it was made from.
+const planStat = { hit: 0, kept: 0, stale: 0, built: 0, changed: 0 }; // how plans were served (speed checks read it)
+const planOk = (e, d) => e.dg === dataGen || (e.fp === dayFp(d, e.rides) ? ((e.dg = dataGen), planStat.kept++, true) : (planStat.changed++, false));
+if (typeof window !== "undefined") window.__kairoutePlanStat = () => Object.assign({ renders: renderNo, dataGen }, planStat);
 // The store, emptied when anything that shapes plans has changed since it was filled. Returns the current signature.
 function planFresh() {
   const sig = planGen + "|" + todayISO() + "|" + citiesSig();
-  if (planStore.sig !== sig || Date.now() - planStore.at > 120000 || planStore.map.size > 400) {
+  if (planStore.sig !== sig || planStore.map.size > 400) { // plans don't age: a kept plan is checked against what it was made from (planOk)
     // The plans made just before an answer arrived are kept one more round (same day, under 2 minutes old) for moving
     // between days and screens only: see "A tap shows the last plan" below.
-    const P = planStore, now = Date.now(), sameDay = P.sig.split("|")[1] === todayISO(), useMap = P.map.size && now - P.at < 120000;
+    const P = planStore, now = Date.now(), sameDay = P.sig.split("|")[1] === todayISO(), useMap = P.map.size && now - P.at < 240000;
     const old = !sameDay ? null : useMap ? P.map : P.old && now - P.oldAt < 120000 ? P.old : null;
     planStore = { sig, at: now, map: new Map(), old, oldAt: useMap ? P.at : P.oldAt };
   }
@@ -1458,19 +1479,22 @@ function buildPlan(d) {
     for (const [m, v] of [[keptMemo, e.kept], [mealMemo, e.meal], [bonusMemo, e.bonus], [eveMemo, e.eve]]) { if (v === undefined) m.delete(d); else m.set(d, v); }
     if (transitSeen) transitSeen.push(...e.rides); // the offline check still learns every ride the plan uses
     return e.plan; };
-  const hit = planStore.map.get(k); if (hit && hit.d === d) return restore(hit);
+  const hit = planStore.map.get(k); if (hit && hit.d === d && planOk(hit, d)) { planStat.hit++; return restore(hit); }
   // A tap shows the last plan: when the traveler only moves to another day or screen (renderKeep) and the trip itself
   // is unchanged, a plan made moments ago, before some answer from the internet arrived, is shown at once; the fresh
   // plan follows in the next quiet moment (one redraw). Never for any change the traveler made: the key holds the whole
   // trip, so a changed pick, time or ride never matches.
-  const was = planKeep && planStore.old && planStore.old.get(k);
-  if (was && was.d === d && (was.shown == null || was.shown === renderNo)) { if (was.shown == null) { was.shown = renderNo; dataRender(true); } return restore(was); }
+  const was = hit && hit.d === d ? hit : planStore.old && planStore.old.get(k);
+  if (was && was.d === d) {
+    if (was !== hit && planOk(was, d)) { planStore.map.set(k, was); return restore(was); } // made before, and nothing it used has changed
+    if (planKeep && (was.shown == null || was.shown === renderNo)) { if (was.shown == null) { was.shown = renderNo; dataRender(true); } planStat.stale++; return restore(was); }
+  }
   // The rides the build looks up are kept with the plan, so a reused plan names them too.
-  const outer = transitSeen; transitSeen = []; let plan, rides;
+  planStat.built++; const outer = transitSeen; transitSeen = []; let plan, rides;
   try { plan = buildPlanRaw(d); } finally { rides = transitSeen; transitSeen = outer; if (outer) outer.push(...rides); }
   const st = planStore;
   // Kept only when nothing moved during the build itself.
-  if (st === planStore && planGen + "|" + todayISO() + "|" + citiesSig() === sig && planKey(d) === k) st.map.set(k, { d, plan, rides, kept: keptMemo.get(d), meal: mealMemo.get(d), bonus: bonusMemo.get(d), eve: eveMemo.get(d) });
+  if (st === planStore && planGen + "|" + todayISO() + "|" + citiesSig() === sig && planKey(d) === k) st.map.set(k, { d, plan, rides, dg: dataGen, fp: dayFp(d, rides), kept: keptMemo.get(d), meal: mealMemo.get(d), bonus: bonusMemo.get(d), eve: eveMemo.get(d) });
   return plan;
 }
 function buildPlanRaw(d) { const prev = planDate, pw = planWx; if (!planDepth) tminEpoch++; planDepth++; planDate = d && d.date; planWx = d && cityFor(d) ? wxFor(d, cityFor(d)) : null; try { let pl = buildPlanFor(d);
@@ -3887,17 +3911,30 @@ function toTop() { window.scrollTo(0, 0); panes().forEach(el => { el.scrollTop =
 // land a few at a time right after a tap. Each used to redraw the whole screen on its own; now answers arriving
 // close together share one redraw, and it waits until the traveler's finger is off the screen and the page has
 // stopped scrolling, so a tap or a scroll is never held up by a redraw. keep: the news can't change a plan.
-let drTimer = 0, drKeep = true, lastTouch = 0, drLast = 0; // drLast: when the last data redraw ran
+let drTimer = 0, drKeep = true, lastTouch = 0, drLast = 0, pressing = false; // drLast: when the last data redraw ran
 if (typeof window !== "undefined") { const touched = () => { lastTouch = Date.now(); };
   // The traveler's own hands only (a scroll the app makes itself after a redraw doesn't count).
-  ["pointerdown", "touchstart", "touchmove", "wheel", "keydown"].forEach(t => window.addEventListener(t, touched, { capture: true, passive: true })); }
+  ["pointerdown", "touchstart", "touchmove", "wheel", "keydown", "click"].forEach(t => window.addEventListener(t, touched, { capture: true, passive: true }));
+  // While a finger or the mouse button is down, a redraw would swap the button under it and the tap would be lost.
+  window.addEventListener("pointerdown", () => { pressing = true; }, { capture: true, passive: true });
+  ["pointerup", "pointercancel"].forEach(t => window.addEventListener(t, () => { pressing = false; lastTouch = Date.now(); }, { capture: true, passive: true })); }
 // While answers keep streaming in (the first minute of a trip asks hundreds of things), redraws are spaced at least
 // ~0.9 s apart, so the screen is never redrawn back to back.
 function dataRender(keep) { drKeep = drKeep && !!keep; if (!drTimer) drTimer = setTimeout(drRun, Math.max(120, 900 - (Date.now() - drLast))); }
+// What the screen shows depends on: the screen, the day, and what that day's plan was made from.
+let shownFp = "";
+function viewFp() { try { const d = day(); if (!d || typeof d !== "object") return view + "|-|" + dataGen; const e = planStore.map.get(planKey(d)); return view + "|" + trip.active + "|" + (view === "trip" ? dataGen : dayFp(d, e ? e.rides : [])); } catch (e) { return "x" + dataGen; } }
 function drRun() {
-  const quiet = Date.now() - lastTouch; if (quiet < 300) { drTimer = setTimeout(drRun, 300 - quiet); return; }
-  drTimer = 0; drLast = Date.now(); const k = drKeep; drKeep = true; const y = window.scrollY;
-  if (k) renderKeep(); else render();
+  // Waits for the traveler's hands: nothing pressed, and 600 ms since the last tap, touch or scroll (time for a second tap).
+  const quiet = Date.now() - lastTouch; if (pressing || quiet < 600) { drTimer = setTimeout(drRun, pressing ? 200 : 600 - quiet); return; }
+  drTimer = 0; drLast = Date.now(); const k = drKeep; drKeep = true;
+  // A page that is drawn and right stays still: an answer that changed nothing the screen shows (another city's
+  // guide, a ride on another day) doesn't redraw it. News that can't change a plan (events) always does.
+  if (!k && viewFp() === shownFp) return;
+  const y = window.scrollY;
+  // Answers are tracked by each plan's fingerprint (dayFp), so a redraw for them never throws away plans that
+  // didn't use them.
+  renderKeep();
   window.scrollTo(0, y);
 }
 let planKeep = false;
@@ -3935,7 +3972,7 @@ function render() {
   // A re-render of the same screen (live updates, sync, data arriving) never moves what you're looking at:
   // put every panel, and the page itself, back exactly where it was, after folds have reopened.
   if (paneMemo.same) { panes().forEach(el => { const y = pos[el.dataset.pane || "view"]; if (y) el.scrollTop = y; }); if (winY && Math.abs(window.scrollY - winY) > 1) window.scrollTo(0, winY); }
-  centerChip(); pinChip(); seedSoon();
+  centerChip(); shownFp = viewFp(); pinChip(); seedSoon();
 }
 // Speed: a new trip's days get their starting picks in the background, one day at a time while the app is idle,
 // instead of all at once on the tap that first opens a day (that tap used to take a second or more). The picks
@@ -3962,6 +3999,12 @@ function centerChip() {
   if (!chipCenter) return; chipCenter = false;
   const chip = document.querySelector('.daychip[aria-pressed="true"]');
   if (chip && chip.scrollIntoView && !chip.closest("[hidden]")) { const box = chip.parentElement; const cr = chip.getBoundingClientRect(), br = box.getBoundingClientRect(); box.scrollTo({ left: box.scrollLeft + (cr.left + cr.width / 2) - (br.left + br.width / 2), behavior: "instant" }); }
+}
+// A redraw that would put back exactly what is already on screen leaves the page alone, so a button is never
+// swapped out from under the traveler's finger (and the live map, ticks and countdown stay as they are).
+function setView(html) {
+  if ($view._html === html && $view._first && $view._first.parentNode === $view) return false; // still the page this html made
+  $view.innerHTML = html; $view._html = html; $view._first = $view.firstElementChild; return true;
 }
 function renderView() {
   ensureBuiltins();
@@ -3995,10 +4038,10 @@ function renderView() {
   if (throughTo(d) && view !== "trip") { if (view === "tour") view = "plan"; $view.innerHTML = renderThrough(d); updateAudioUI(); return; }
   if (view === "tour") { $view.innerHTML = renderTour(d); updateAudioUI(); startTourTimer(); startCountdown(); return; }
   if (tourTimer) { clearInterval(tourTimer); tourTimer = null; }
-  if (view === "trip") $view.innerHTML = renderTrip(d);
-  else if (noShore(d)) $view.innerHTML = renderSea(d);
-  else if (view === "sites") { $view.innerHTML = renderSites(d); const h = document.querySelector("header.top"); if (h) document.documentElement.style.setProperty("--hdr", (h.offsetHeight + 8) + "px"); }
-  else if (view === "plan") $view.innerHTML = renderPlan(d);
+  if (view === "trip") setView(renderTrip(d));
+  else if (noShore(d)) setView(renderSea(d));
+  else if (view === "sites") { setView(renderSites(d)); const h = document.querySelector("header.top"); if (h) document.documentElement.style.setProperty("--hdr", (h.offsetHeight + 8) + "px"); }
+  else if (view === "plan") setView(renderPlan(d));
   else $view.innerHTML = renderGuide(d);
   updateAudioUI();
   startCountdown();
