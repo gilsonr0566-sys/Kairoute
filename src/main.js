@@ -1210,7 +1210,7 @@ function polishDay(seq, t0, O, Z, style, city) {
     }
     best.forEach((x, i) => {
       if (!x.mealOf || x.mealOf.booked) return;
-      for (const r0 of mealSpots(best, O, Z, city)) {
+      for (const r0 of mealPick(best, O, Z, city, x.mealOf, style)) {
         const r = r0.generic ? Object.assign({}, r0, { name: r0.name.replace(/^Lunch/, x.mealOf.label) }) : r0;
         if (best.some(y => y.mealOf && y.name === r.name)) continue;
         const q = best.slice(); q[i] = Object.assign({}, r, { mealOf: x.mealOf }); const c = C(q);
@@ -1235,6 +1235,20 @@ function mealSpots(seq, O, Z, city) {
   // Every place near here is already another day's meal: "Lunch near <stop>" rather than the same restaurant twice.
   if (!fresh.length && !gen.length && near.length) { const a = seq.find(x => !x.mealOf) || O; if (a) gen.push({ name: "Lunch near " + a.name, lat: a.lat, lng: a.lng, generic: true, kind: "local", cuisine: "Your pick", price: "", why: "You've eaten at the guide's places around here on other days: try somewhere new nearby, a café or taverna full of locals." }); }
   return (fresh.length ? fresh : []).concat(gen); // never repeat another day's restaurant
+}
+// The places worth trying for one meal: with real map data a big city has hundreds of places to eat near the
+// route, and every one was tried at every point of the day, inside every what-if the planner weighs (a Naples day
+// took 2-4 s on a phone). Only the best few by the same things the day's simulation scores for a meal (the
+// detour off the route, travelers' ratings, the right style, open for this meal) can win, so only those are tried.
+// The "Lunch near <stop>" choices are always kept.
+const MEAL_TRY = 8;
+function mealPick(seq, O, Z, city, m, style) {
+  const all = mealSpots(seq, O, Z, city); if (all.length <= MEAL_TRY) return all;
+  const pts = [O].concat(seq.filter(x => !x.mealOf), [Z]).filter(x => x && isFinite(numV(x.lat)));
+  const det = r => { if (pts.length < 2) return pts.length ? hav(pts[0], r) * 2 : 0; let b = Infinity; for (let i = 0; i + 1 < pts.length; i++) b = Math.min(b, hav(pts[i], r) + hav(r, pts[i + 1]) - hav(pts[i], pts[i + 1])); return b; };
+  const score = r => det(r) * 15 + (!r.generic && mealShut(r, m.label) ? 400 : 0) + (style !== "mix" && r.kind && r.kind !== style ? 8 : 0) - (r.recommended ? 6 : 0) - (r.bothGuides ? 4 : 0) - (r.top ? 8 : 0) - (r.crowdTop ? 10 : 0) - (gGood(r.g) ? 6 : 0);
+  const gen = all.filter(r => r.generic), real = all.filter(r => !r.generic).map(r => [score(r), r]).sort((a, b) => a[0] - b[0]).slice(0, MEAL_TRY).map(x => x[1]);
+  return real.concat(gen);
 }
 // Two alternatives for each meal, a short walk away, chosen to be different from the main pick and from
 // each other (another cuisine or style), favouring places travelers recommend. Never one used on another day.
@@ -1415,7 +1429,7 @@ function placeMeals(order, meals, t0, O, Z, style, city) {
   let seq = order.slice();
   for (const m of meals) {
     let best = null;
-    for (const r0 of m.booked ? [m.node] : mealSpots(seq, O, Z, city)) {
+    for (const r0 of m.booked ? [m.node] : mealPick(seq, O, Z, city, m, style)) {
       const r = r0.generic ? Object.assign({}, r0, { name: r0.name.replace(/^Lunch/, m.label) }) : r0;
       if (seq.some(x => x.mealOf && x.name === r.name)) continue;
       const node = Object.assign({}, r, { mealOf: m });
@@ -2631,7 +2645,7 @@ function sightKind(s, city) {
 function fameFor(d, city) {
   if (!city) return Promise.resolve();
   const k = keyOf(city.city);
-  if (fameAsked[k]) { if (fameAsked[k] !== true) fameMark(city, fameAsked[k]); return fameWait[k] || Promise.resolve(); }
+  if (fameAsked[k]) { if (fameAsked[k] !== true) fameMarkOnce(city, fameAsked[k]); return fameWait[k] || Promise.resolve(); }
   fameAsked[k] = true;
   const lbl = srcLabel(city, d);
   return (fameWait[k] = sourcesFor(lbl).then(async src => {
@@ -2639,11 +2653,24 @@ function fameFor(d, city) {
     if (!src) { const fam = await famousFor(lbl); if (fam) src = { stops: fam.main.map(x => Object.assign({ src: ["Wikidata (Wikipedia in many languages)"] }, x)), far: fam.far, eats: [] }; }
     if (!src) { delete fameAsked[k]; return; }
     restoreFills(city, await kv.get(FILL_KEY + k));
-    fameAsked[k] = src; fameMark(city, src);
+    fameAsked[k] = src; fameMarkOnce(city, src);
     if (view === "plan" || view === "guide") dataRender();
   }).catch(() => { delete fameAsked[k]; }).finally(() => { delete fameWait[k]; }));
 }
 const fameWait = {};
+// Marking a guide from its sources (match every sight, add the places the sources name, fold duplicates) is heavy:
+// ~0.4 s on a mid-range phone for a big city. It was done on every redraw. Now it runs again only when the guide or
+// its sources changed since it last ran (a guide rewritten, a sight added by hand, a new answer).
+const fameDone = new WeakMap();
+function fameMarkOnce(city, src) {
+  const m = fameDone.get(city);
+  if (m && m.src === src && m.g === dataGen + "|" + planGen) return;
+  let h = ""; try { h = strHash(JSON.stringify(city)); } catch (e) {}
+  if (m && m.src === src && h && m.h === h) { m.g = dataGen + "|" + planGen; return; }
+  fameMark(city, src);
+  let h2 = ""; try { h2 = strHash(JSON.stringify(city)); } catch (e) {}
+  fameDone.set(city, { src, h: h2, g: dataGen + "|" + planGen });
+}
 // Which city a guide's sources are asked for: the city the day is really spent in. A gateway port's guide can be
 // titled by the port ("Civitavecchia") while the day is in Rome, so the guide's own area (from its fame step) or
 // the day's bracketed destination ("Civitavecchia (Rome)") wins over the guide's title.
