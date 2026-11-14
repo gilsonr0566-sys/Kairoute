@@ -8,6 +8,9 @@ on:
       parts:
         description: "A = the Sun Princess trip, B = building a new trip"
         default: "AB"
+      site:
+        description: "live = the published site, branch = this branch's build before publishing"
+        default: "live"
   schedule:
     - cron: "17 10 * * *"
 permissions:
@@ -24,6 +27,13 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
+      - name: Serve this branch's build instead of the live site (to test a change before it is published)
+        if: ${{ github.event.inputs.site == 'branch' }}
+        run: |
+          sh build.sh
+          nohup python3 -m http.server 8080 >/dev/null 2>&1 &
+          sleep 2 && curl -sf http://localhost:8080/ >/dev/null
+          echo "URL=http://localhost:8080/" >> "$GITHUB_ENV"
       - run: npm i --no-save playwright@1 && npx playwright install --with-deps chromium
       - name: Demo flow on the live site
         run: node tools/demo-flow.cjs

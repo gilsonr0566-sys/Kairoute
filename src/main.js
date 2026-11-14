@@ -3686,7 +3686,11 @@ function dedupeSites(c) {
     if (!r) { r = placeRel(b, a); if (r) { big = b; small = a; } }
     if (!r) continue;
     try { dedupeLog.push({ city: c.city || "", kept: (r === "same" && rank(b) > rank(a) ? b : big).name, gone: (r === "same" && rank(b) > rank(a) ? a : small).name, rel: r }); } catch (e) {}
-    if (r === "same") { if (rank(b) > rank(a)) { big = b; small = a; } big.mustSee = big.mustSee || small.mustSee; big.alias = [...new Set([...(big.alias || []), small.name, small.id])]; }
+    if (r === "same") { if (rank(b) > rank(a)) { big = b; small = a; } big.mustSee = big.mustSee || small.mustSee; big.alias = [...new Set([...(big.alias || []), small.name, small.id])];
+      // A name that covers more ("Colosseum and Roman Forum" folded into "Roman Forum") is kept as the shown name, so
+      // the place it adds (the Colosseum) never disappears from the guide.
+      const wb = placeWords(big.name), ws = placeWords(small.name);
+      if (ws.length > wb.length && wb.every(t => ws.includes(t))) { big.alias = [...new Set([...big.alias.filter(x => x !== small.name), big.name])]; big.name = small.name; } }
     else { big.lookFor = [...new Set([...(big.lookFor || []), small.name])].slice(0, 6); big.alias = [...new Set([...(big.alias || []), small.id])]; }
     // A copy of what was folded is kept, so a fold the rules later tell apart can be undone (undoMerges).
     { const copy = Object.assign({}, small); delete copy.merged; big.merged = (big.merged || []).filter(x => x.id !== copy.id).concat([copy]); }
@@ -3710,6 +3714,8 @@ function undoMerges(c, key) {
   }
   return back;
 }
+// Check hook: fold a made-up guide and return the names it keeps.
+if (typeof window !== "undefined") window.__kairouteDedupe = sites => { const c = { city: "Test", sites: JSON.parse(JSON.stringify(sites)), farther: [] }; dedupeSites(c); return c.sites.map(x => x.name); };
 const restoreKeys = new Set();
 if (typeof window !== "undefined") window.__kairouteUndoCheck = () => { const M = (id, name, lat, lng) => ({ id, name, lat, lng, category: "Museum" });
   const c = { city: "Test", sites: [Object.assign(M("a", "Natural History Museum of Crete", 35.3414, 25.1327), { merged: [M("b", "Historical Museum of Crete", 35.3412, 25.1325)], alias: ["Historical Museum of Crete", "b", "Maritime Museum of Chania"] }), Object.assign(M("p", "Prado Museum", 40.4138, -3.6921), { alias: ["Museo del Prado", "museo-prado"] })], farther: [] };
