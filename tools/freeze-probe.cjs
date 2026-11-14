@@ -6,6 +6,15 @@ const { chromium, devices } = require('playwright'); const path = require('path'
 const arg = (k, d) => { const i = process.argv.indexOf(k); return i > 0 ? process.argv[i + 1] : d; };
 const TARGET = process.argv[2] || path.join(__dirname, '..');
 const CPU = +arg('--cpu', 4), DEV = arg('--device', 'phone'), OUT = arg('--out', '');
+// --record file.json.gz: keep every internet answer (not map tiles) so later runs can replay the same day exactly.
+// --replay file.json.gz: answer from that recording instead of the internet (map tiles are left out).
+const REC = arg('--record', ''), REP = arg('--replay', '');
+// --gate: fail (exit 1) when the visit froze too long: any one freeze over --max-freeze ms (default 2000), all freezes
+// over 100 ms adding up to more than --max-total ms (default 60000), or the Day plan re-planning or redrawing while left alone.
+const GATE = process.argv.includes('--gate'), MAXF = +arg('--max-freeze', 2000), MAXT = +arg('--max-total', 60000);
+const zlib = require('zlib');
+const netKey = (m, u, pd) => m + ' ' + u + (pd ? ' ' + require('crypto').createHash('md5').update(pd).digest('hex') : '');
+const isTile = u => /tiles\.openfreemap|\/fonts\/|\.pbf(\?|$)|\/sprites?\//.test(u);
 const MIME = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css', '.json': 'application/json', '.png': 'image/png', '.svg': 'image/svg+xml', '.webmanifest': 'application/manifest+json', '.txt': 'text/plain', '.wasm': 'application/wasm' };
 (async () => {
   let URL = TARGET, server = null;
@@ -16,11 +25,27 @@ const MIME = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css
   URL = URL.replace(/\/?$/, '/');
   const b = await chromium.launch();
   const opts = DEV === 'tablet' ? { viewport: { width: 1280, height: 800 }, deviceScaleFactor: 2, isMobile: true, hasTouch: true } : { ...devices['Galaxy S9+'], viewport: { width: 412, height: 860 } };
-  const ctx = await b.newContext(opts);
+  const ctx = await b.newContext({ ...opts, ...(REC || REP ? { serviceWorkers: 'block' } : {}) });
   await ctx.addInitScript(() => { try { localStorage.setItem('kairoute.intro1', '1'); } catch (e) {}
     window.__lt = []; window.__step = 'opening';
     try { new PerformanceObserver(l => l.getEntries().forEach(e => window.__lt.push({ at: Math.round(e.startTime), ms: Math.round(e.duration), step: window.__step }))).observe({ type: 'longtask', buffered: true }); } catch (e) {} });
-  const p = await ctx.newPage(); const errs = []; p.on('pageerror', e => errs.push(e.message));
+  const own = u => u.startsWith(URL);
+  const recd = new Map();
+  if (REP) { const rows = JSON.parse(zlib.gunzipSync(fs.readFileSync(REP)).toString()); const byPath = new Map();
+    rows.forEach(r => { recd.set(r.k, r); const pk = r.m + ' ' + r.u.split('?')[0]; if (!byPath.has(pk)) byPath.set(pk, r); });
+    let miss = 0;
+    await ctx.route(u => !own(u.href), async rt => { const q = rt.request(), u = q.url();
+      if (isTile(u)) return rt.abort();
+      const r = recd.get(netKey(q.method(), u, q.postData())) || (q.method() === 'GET' ? byPath.get('GET ' + u.split('?')[0]) : null); // a question never asked while recording fails, like a dropped signal
+      if (!r) { if (++miss <= 20) console.log('replay: no answer for ' + q.method() + ' ' + u.slice(0, 140)); return rt.abort(); }
+      await new Promise(z => setTimeout(z, Math.min(r.t || 100, 3000)));
+      rt.fulfill({ status: r.s, headers: { 'content-type': r.ct || 'application/json', 'access-control-allow-origin': '*' }, body: Buffer.from(r.b, 'base64') }); });
+    console.log(`Replaying ${rows.length} recorded internet answers from ${REP}`); }
+  const p = await ctx.newPage(); const errs = [];
+  const recRows = [];
+  if (REC) { const t0s = new Map(); p.on('request', q => t0s.set(q, Date.now()));
+    p.on('response', async r => { const q = r.request(), u = q.url(); if (own(u) || isTile(u) || u.startsWith('data:')) return;
+      try { const b = await r.body(); recRows.push({ k: netKey(q.method(), u, q.postData()), m: q.method(), u, s: r.status(), ct: r.headers()['content-type'] || '', t: Date.now() - (t0s.get(q) || Date.now()), b: b.toString('base64') }); } catch (e) {} }); } p.on('pageerror', e => errs.push(e.message));
   let reqs = 0; const reqKinds = new Map(); p.on('request', r => { reqs++; let k; try { const u = new (require('url').URL)(r.url()); k = u.host + u.pathname.replace(/\/[^/]*\d[^/]*/g, '/#').split('/').slice(0, 3).join('/'); } catch (e) { k = 'other'; } reqKinds.set(k, (reqKinds.get(k) || 0) + 1); });
   const cdp = await ctx.newCDPSession(p); await cdp.send('Emulation.setCPUThrottlingRate', { rate: CPU });
   await cdp.send('Network.enable'); await cdp.send('Network.emulateNetworkConditions', { offline: false, latency: 80, downloadThroughput: 20e6 / 8, uploadThroughput: 5e6 / 8 });
@@ -94,6 +119,13 @@ const MIME = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css
   console.log('\nBusiest parts of the app (inclusive):\n' + top(incl, 45).join('\n'));
   console.log('\nBusiest single functions (self):\n' + top(self, 25).join('\n'));
   if (errs.length) console.log('\nPage errors:\n' + [...new Set(errs)].slice(0, 10).join('\n'));
+  if (REC) { fs.writeFileSync(REC, zlib.gzipSync(JSON.stringify(recRows))); console.log(`Recorded ${recRows.length} internet answers to ${REC} (${Math.round(fs.statSync(REC).size / 1024)} KB)`); }
   if (OUT) fs.writeFileSync(OUT, JSON.stringify({ URL, DEV, CPU, ready, lt, taps, incl: top(incl, 80), self: top(self, 40) }, null, 1));
   await b.close(); if (server) server.close();
+  if (GATE) { const longest = Math.max(0, ...big.map(x => x.ms)), total = big.reduce((a, x) => a + x.ms, 0), probs = [];
+    if (longest > MAXF) probs.push(`longest freeze ${longest} ms (limit ${MAXF})`);
+    if (total > MAXT) probs.push(`frozen ${total} ms in all (limit ${MAXT})`);
+    if (i0 && i1 && (i1.built - i0.built || i1.renders - i0.renders)) probs.push(`left alone, the Day plan made ${i1.built - i0.built} plans and ${i1.renders - i0.renders} redraws (must be 0)`);
+    console.log(probs.length ? 'FAIL freeze gate: ' + probs.join('; ') : `Freeze gate passed (longest ${longest} ms, ${total} ms in all, idle page still)`);
+    process.exit(probs.length ? 1 : 0); }
 })();

@@ -40,7 +40,11 @@ const SIZES = [['tablet sideways', 1280, 800], ['tablet upright', 800, 1280], ['
       await p.evaluate(i => window.__kairouteGo('plan', i), D.i); await p.waitForTimeout(80);
       await p.evaluate(() => { window.scrollTo(0, 3000); document.querySelectorAll('.pane').forEach(x => { x.scrollTop = 3000; }); document.dispatchEvent(new Event('scroll')); }); await p.waitForTimeout(150);
       await read('after scrolling');
-      const pin = await p.evaluate(() => { const c = document.getElementById('cdCard'); if (!c || !c.classList.contains('pinned')) return null; const t = c.querySelector('.cdday'); return t && getComputedStyle(t).display !== 'none' ? t.textContent : ''; });
+      const pin = await p.evaluate(() => { const c = document.getElementById('cdCard'); if (!c || !c.classList.contains('pinned')) return null; const t = c.querySelector('.cdday'); if (t && getComputedStyle(t).display !== 'none') return t.textContent;
+        // On phones the day strip pins above the countdown (Richard, Nov 14) and its highlighted day names the day.
+        const row = document.querySelector('#dayRow.pinned'), chip = row && row.querySelector('.daychip[aria-pressed="true"]'); if (!chip) return '';
+        const r = row.getBoundingClientRect(), k = chip.getBoundingClientRect(), cs = c.querySelector('summary').getBoundingClientRect();
+        return k.left >= r.left - 1 && k.right <= r.right + 1 && r.top >= -1 && cs.top >= r.bottom - 2 ? chip.textContent : ''; });
       if (pin === '') fail(`${name}, day ${D.i + 1} (${D.dest}): the pinned countdown doesn't name the day`);
       else if (pin != null && !pin.includes(D.dest.split(/[ ,(]/)[0]) && !/sea/i.test(pin)) fail(`${name}, day ${D.i + 1}: pinned header says "${pin}", not ${D.dest}`);
       await p.evaluate(() => window.__kairouteLiveTest.render()); await p.waitForTimeout(100); await read('after a re-render');

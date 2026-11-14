@@ -65,10 +65,18 @@ const mins = t => { let m = 0; const h = /(\d+)\s*h/.exec(t), n = /(\d+)\s*min/.
     await shot(i, 'two-ticked'); const pv1 = await planView();
     for (const [, nm] of names) if (!pv1.stops.some(x => x.name === nm) && !pv1.banners.includes(nm)) bad(i, `${nm} is ticked but neither on the plan nor explained`);
     for (const s of pv1.stops) if (!s.bonus && !names.some(([, nm]) => nm === s.name)) bad(i, `${s.name} is on the plan but wasn't ticked`);
-    // 4. Day length keeps the picks
+    // 4. Day length: picks stay, except ones a shorter day can't fit, which come off with a note naming them
+    // (a pick that doesn't fit never stays ticked); going back to the first length brings back the same picks.
     if (await p.evaluate(() => !!document.querySelector('[data-act="daylen"][aria-pressed="false"]'))) {
+      const orig = await p.evaluate(() => { const b = document.querySelector('[data-act="daylen"][aria-pressed="true"]'); return b ? b.dataset.h : null; });
       await go('[data-act="daylen"][aria-pressed="false"]'); await toSites();
-      if ((await checked()).join() !== picked.join()) bad(i, 'changing the day length changed the picks');
+      const now = await checked(), off = picked.filter(x => !now.includes(x)), extra = now.filter(x => !picked.includes(x));
+      const note = await p.evaluate(() => (document.querySelector('.banner.bumped') || {}).innerText || '');
+      const offNames = await p.evaluate(ids => ids.map(id => { const c = document.querySelector(`[data-card="${id}"] .name`); return c ? c.innerText : id; }), off);
+      if (extra.length) bad(i, `changing the day length added picks: ${extra.join(', ')}`);
+      if (off.length && offNames.some(nm => !note.includes(nm))) bad(i, `changing the day length took off ${offNames.join(', ')} without saying so`);
+      if (orig) { await go('[data-act="toplan"]'); await go(`[data-act="daylen"][data-h="${orig}"]`); await p.waitForTimeout(300); await toSites();
+        if ((await checked()).join() !== picked.join()) bad(i, 'going back to the first day length did not bring back the same picks'); }
     }
   }
   // 5. Suggest my tour: every pick it makes fits its day, and no sight is on two days

@@ -8,11 +8,13 @@
 // unticking or another day (the ship's 45-minute safety margin is never touched). Every check uses the real
 // day plan (route, meals, opening hours), the same one the time meter and the Day plan show.
 let fitState = null;
-function fitTrial(d, sel, t) {
-  const keep = { selected: d.selected, hours: d.hours, startTime: d.startTime };
-  d.selected = sel; if (t && t.hours != null) d.hours = t.hours; if (t && t.startTime) d.startTime = t.startTime; forget0(d);
+function fitTrial(d, sel, t, fast) {
+  // fast (the Sights list's marks): measured without the optional stops that fill spare time (the time meter never
+  // counts them), so a check plans the day once instead of twice. The won't-fit box and its fixes plan in full.
+  const keep = { selected: d.selected, hours: d.hours, startTime: d.startTime, fillTime: d.fillTime };
+  d.selected = sel; if (fast) d.fillTime = false; if (t && t.hours != null) d.hours = t.hours; if (t && t.startTime) d.startTime = t.startTime; forget0(d);
   try { const p = buildPlan(d), m = meterCalc(p, d); return { p, m }; }
-  finally { Object.assign(d, keep); forget0(d); }
+  finally { Object.assign(d, keep); if (keep.fillTime === undefined) delete d.fillTime; forget0(d); }
 }
 const fitsAll = r => !!(r && r.m && !r.m.over && !r.m.dropped.length && !((r.p && r.p.closedToday) || []).length); // a pick the day can't visit (closed) never "fits"
 // Only a hotel day's times are the traveler's to change; arrival, departure, boarding and port days are set
@@ -54,7 +56,7 @@ function addPick(d, id, ask) {
   if (from) { from.selected = from.selected.filter(x => x !== id); markMine(from, id, false); if (from.anchor === id) from.anchor = null; }
   // The won't-fit box measures the day as if the sight came here (before it goes back to its own day).
   if (!fitsWith(d, [id])) { if (ask) fitOpen(d, id); if (from) { from.selected = back.sel; from.mine = back.mine; from.anchor = back.anchor; } return false; }
-  d.selected = [...d.selected, id]; delete d.autoEmpty; rememberPick(d, sx); if (ask) markMine(d, id, true);
+  d.selected = [...d.selected, id]; delete d.autoEmpty; if (d.bumped) d.bumped = d.bumped.filter(b => b.id !== id); rememberPick(d, sx); if (ask) markMine(d, id, true);
   if (from) movedNote = (sx ? sx.name : "That sight") + " moved here from " + fmtDow(from.date) + " " + fmtDate(from.date) + ".";
   return true;
 }
@@ -215,6 +217,8 @@ document.addEventListener("change", e => {
 document.addEventListener("click", e => {
   const t0 = e.target.closest && e.target.closest("button");
   if (t0 && t0.dataset.act === "fitfix") { const d = day(); if (fitOpen(d, null)) render(); return; }
+  if (t0 && t0.dataset.act === "fitask") { const d = day(); if (addPick(d, t0.dataset.id, true)) { save(); render(); } return; }
+  if (t0 && t0.dataset.act === "bumpok") { const d = day(); d.bumped = []; save(); render(); return; }
   if (closedState) { if (t0 && t0.dataset.act === "closedday") { closedGo("day", +t0.dataset.to); return; } if (t0 && t0.dataset.act === "closedalt") { closedGo("alt"); return; }
     if ((t0 && t0.dataset.act === "fitcancel") || (e.target.classList && e.target.classList.contains("fitbox"))) { closedState = null; const old = document.querySelector(".fitbox"); if (old) old.remove(); return; } }
   if (fitState && e.target.classList && e.target.classList.contains("fitbox")) { fitState = null; fitShow(); return; }
@@ -249,6 +253,18 @@ function siteFits(d, s, plan) {
   clearTimeout(fitTimer); fitTimer = setTimeout(fitRefine, 30);
   return undefined;
 }
+// Speed: each "does it fit" check plans the whole day again (up to 2 s on a phone for a big port day with real data,
+// once for every sight in the list after every tick). A sight whose own visit is longer than all the time the day
+// could possibly free up can't fit, so it is marked without planning: the time left, plus every long visit cut to
+// its shortest (70%, never under 1 h 30), plus every meal made quick. Anything closer is still planned in full.
+function fitNever(plan, d, s) {
+  if (trip.days.some(o => o !== d && (o.selected || []).includes(s.id))) return false; // ticked on another day: the plan decides where it goes
+  const m = meterCalc(plan, d); if (!m || !plan || plan.error) return false;
+  const short = x => (x || 0) >= 120 ? Math.max(90, Math.round(x * 0.7 / 5) * 5) : (x || 0);
+  const slack = plan.items.filter(x => x.type === "stop").reduce((a, x) => a + (x.place.minutes || 0) - short(x.place.minutes), 0)
+    + plan.items.filter(x => x.type === "meal" && !x.meal.quick).reduce((a, x) => a + Math.max(0, x.meal.len - (QUICK_MEAL[x.meal.label] || x.meal.len)), 0);
+  return short(s.minutes || 0) > (m.avail - m.used) + slack + 10;
+}
 function fitRefine() {
   const ctx = sitesCtx; if (!ctx || view !== "sites" || fitState) return;
   const d = ctx.d; if (d !== day() || fitMemo.key !== fitKey(d)) return;
@@ -260,14 +276,15 @@ function fitRefine() {
     if (performance.now() - t0 > 10 || (performance.now() > t0 && pend())) break;
     const id = fitQueue.shift();
     if (fitMemo.res.has(id)) continue;
-    const ok = fitsAll(fitTrial(d, [...d.selected, id])); fitMemo.res.set(id, ok);
-    const el = document.querySelector(`#view [data-card="${CSS.escape(id)}"]`), s = allSites(city).find(x => x.id === id);
+    const s = allSites(city).find(x => x.id === id);
+    const ok = s && fitNever(ctx.plan, d, s) ? false : fitsAll(fitTrial(d, [...d.selected, id], null, true)); fitMemo.res.set(id, ok);
+    const el = document.querySelector(`#view [data-card="${CSS.escape(id)}"]`);
     if (el && s && !d.selected.includes(id)) el.outerHTML = siteCard(s, d, ctx.plan, ctx.near);
   }
   if (fitQueue.length) fitTimer = setTimeout(fitRefine, 16);
 }
 if (typeof window !== "undefined") window.__kairouteFitPending = () => fitQueue.length;
-if (typeof window !== "undefined") window.__kairouteFitExact = id => { const d = day(); return fitsAll(fitTrial(d, [...d.selected, id])); };
+if (typeof window !== "undefined") window.__kairouteFitExact = id => { const d = day(); return fitsAll(fitTrial(d, [...d.selected, id], null, true)); };
 if (typeof window !== "undefined") window.__kairouteTimesFixed = () => timesFixed(day());
 if (typeof window !== "undefined") window.__kairouteTryAdd = id => addPick(day(), id, true);
 // Safety net: day i's stops reached after their last sensible entry (the "you'd get there too late" warning).
