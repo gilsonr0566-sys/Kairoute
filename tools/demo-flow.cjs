@@ -10,7 +10,7 @@
 //     booking's times), the named places are on their days. Then the same with the photo of the cruise itinerary
 //     (tools/fixtures/sun-princess-2027-itinerary.jpg): every port's arrive / all-aboard time must match the photo.
 // Writes checks/demo/report.md, report.json and screenshots. Exit 1 on any FAIL.
-// Usage: node tools/demo-flow.cjs        (PARTS=A or PARTS=B to run one part; URL=... for another site)
+// Usage: node tools/demo-flow.cjs        (PARTS=A or PARTS=B to run one part, PARTS=D the boarding day alone; URL=... for another site)
 const { chromium } = require("playwright"); const fs = require("fs"); const path = require("path");
 const URL = process.env.URL || "https://gilsonr0566-sys.github.io/Kairoute/";
 const PARTS = process.env.PARTS || "AB";
@@ -97,6 +97,69 @@ const seen = p => p.evaluate(() => {
 });
 const shot = (p, name) => p.screenshot({ path: path.join(OUT, name + ".png") }).catch(() => {});
 
+// Boarding day (Piraeus, July 4) in a fresh browser: asks for the boarding time, plans the ride to the terminal to
+// arrive by it and never later than an hour before all aboard, keeps the documents checklist, and saves calendar
+// alarms. The boarding-pass photo is not sent (it costs an AI call); its button must be offered.
+async function boardingDay(b) {
+  log("\n=== Boarding day (Piraeus) ===");
+  const ctx = await newCtx(b, "tablet"), p = await ctx.newPage(), errs = watch(p, "boarding");
+  await open(p);
+  const sample = p.locator('[data-act="loadsample"]').first(), cont0 = p.locator('[data-act="continue"]').first();
+  if (await sample.isVisible().catch(() => false)) await sample.click(); else if (await cont0.isVisible().catch(() => false)) await cont0.click();
+  await p.waitForTimeout(2000);
+  const d = (await p.evaluate(() => window.__kairouteDays())).find(x => x.type === "embark");
+  if (!ok(!!d, "the trip has a boarding day")) { await ctx.close(); return; }
+  const st = () => p.evaluate(i => { try { return JSON.parse(localStorage.getItem("wayside.trip2")).days[i] || {}; } catch (e) { return {}; } }, d.i); // the saved trip, as the device keeps it
+  const hm = t => { const m = /(\d{1,2}):(\d{2})\s*(AM|PM)?/i.exec(t || ""); if (!m) return NaN; let h = +m[1] % (m[3] ? 12 : 24); if (/pm/i.test(m[3] || "")) h += 12; return h * 60 + +m[2]; };
+  const plan = () => p.evaluate(i => window.__kairouteDay(i), d.i);
+  await p.evaluate(go("plan", d.i)); await p.waitForTimeout(4000);
+  const aa = (await p.evaluate(i => { const t = (document.querySelector(".boardcard") || {}).innerText || ""; return t; }, d.i));
+  const card = p.locator(".boardcard").first();
+  if (!ok(await card.isVisible().catch(() => false), `day ${d.i + 1} ${d.dest}: the Day plan shows the boarding card`)) { await shot(p, "B0-boarding-missing"); await ctx.close(); return; }
+  const day0 = await st(), aboard = await p.evaluate(i => { const t = document.querySelector(".boardcard").innerText; const m = /all aboard\s*(\d{1,2}:\d{2}\s*(AM|PM)?)/i.exec(document.body.innerText); return m ? m[1] : ""; }, d.i);
+  const asking = await p.locator("#bc-time").isVisible().catch(() => false);
+  ok(asking || !!day0.boardTime, `boarding day asks "When do you board?" (${asking ? "asking" : "already set " + day0.boardTime})`);
+  if (asking) ok(/an hour before all aboard/i.test(aa), "until the boarding time is typed, the plan gets you there an hour before all aboard");
+  ok(await p.locator(".bc-photo").isVisible().catch(() => false), "a Read my boarding pass (photo) button is offered", true);
+  await shot(p, "B1-boarding-ask-tablet");
+  const tryTime = async t => {
+    if (!(await p.locator("#bc-time").isVisible().catch(() => false))) { await p.locator('[data-act="boardchange"]').first().click(); await p.waitForTimeout(800); }
+    await p.locator("#bc-time").fill(t); await p.locator('[data-act="boardsave"]').first().click(); await p.waitForTimeout(4000);
+    return { day: await st(), plan: await plan(), shown: await p.evaluate(() => (document.querySelector(".boardcard .bc-set") || {}).innerText || "") };
+  };
+  // An early boarding time: the plan arrives at the terminal by it.
+  let r = await tryTime("12:30");
+  const allAboard = hm(r.day.allAboard) || hm(aboard);
+  log(`     boarding 12:30: card "${r.shown.replace(/\s+/g, " ").slice(0, 120)}", plan ends ${r.plan && r.plan.end}, be at terminal by ${r.plan && r.plan.endBy}; ${(r.plan && r.plan.items || []).length} items`);
+  ok(r.day.boardTime === "12:30" && /12:30/.test(r.shown), "a typed boarding time is saved and shown on the card");
+  ok(r.plan && !r.plan.error && hm(r.plan.endBy) === 12 * 60 + 30 && hm(r.plan.end) <= 12 * 60 + 30, `with boarding at 12:30 the plan reaches the terminal by 12:30 (ends ${r.plan && r.plan.end}, due ${r.plan && r.plan.endBy})`);
+  await shot(p, "B2-boarding-set-tablet");
+  // A boarding time later than an hour before all aboard: the hour before all aboard wins.
+  if (isFinite(allAboard)) {
+    const late = allAboard - 20, lt = String(Math.floor(late / 60)).padStart(2, "0") + ":" + String(late % 60).padStart(2, "0");
+    r = await tryTime(lt);
+    ok(r.plan && !r.plan.error && hm(r.plan.endBy) <= allAboard - 60 && hm(r.plan.end) <= allAboard - 60, `with boarding at ${lt} (20 min before all aboard) the plan still reaches the terminal an hour before all aboard (due ${r.plan && r.plan.endBy}, ends ${r.plan && r.plan.end})`);
+  } else ok(false, "the boarding day's all-aboard time could not be read");
+  // Documents checklist.
+  const fold = p.locator(".bc-list summary").first(); if (await fold.isVisible().catch(() => false)) { await fold.click(); await p.waitForTimeout(400); }
+  const box = p.locator("[data-board-check]").first();
+  if (ok(await box.isVisible().catch(() => false), "the boarding documents checklist is shown")) {
+    const before = await p.evaluate(() => (document.querySelector(".bc-list summary") || {}).innerText || "");
+    await box.check().catch(() => {}); await p.waitForTimeout(800);
+    const after = await p.evaluate(() => (document.querySelector(".bc-list summary") || {}).innerText || "");
+    ok(/(\d+) of (\d+)/.test(after) && +after.match(/(\d+) of/)[1] === +((before.match(/(\d+) of/) || [0, 0])[1]) + 1, `ticking a document counts it ("${before.trim()}" then "${after.trim()}")`);
+  }
+  // Calendar alarms: a calendar file with alarms.
+  const calBtn = p.locator('[data-act="boardcal"]').first();
+  if (ok(await calBtn.isVisible().catch(() => false), "an Add to calendar (alarms) button is offered")) {
+    const dlP = p.waitForEvent("download", { timeout: 10000 }).catch(() => null); await calBtn.click(); const dl = await dlP;
+    let ics = ""; if (dl) { try { ics = fs.readFileSync(await dl.path(), "utf8"); } catch (e) {} }
+    ok(/BEGIN:VCALENDAR/.test(ics) && (ics.match(/BEGIN:VALARM/g) || []).length >= 2, `the calendar file has the boarding alarms (${(ics.match(/BEGIN:VALARM/g) || []).length} alarms${dl ? ", " + dl.suggestedFilename() : ", no file"})`);
+  }
+  await shot(p, "B3-boarding-done-tablet");
+  ok(!errs.length, `boarding day: no page errors (${errs.slice(0, 3).join(" / ")})`);
+  await ctx.close();
+}
 async function partA(b) {
   log("\n=== Part A: the Sun Princess trip on the live site ===");
   const ctx = await newCtx(b, "tablet"), p = await ctx.newPage(), errs = watch(p, "tablet");
@@ -350,6 +413,7 @@ async function buildNew(b, label, text, photo) {
 (async () => {
   const b = await chromium.launch({ args: ["--use-gl=swiftshader", "--enable-unsafe-swiftshader", "--ignore-gpu-blocklist"] });
   try { if (PARTS.includes("A")) await partA(b); } catch (e) { ok(false, "Part A stopped: " + e.message.split("\n")[0]); }
+  try { if (/[AD]/.test(PARTS)) await boardingDay(b); } catch (e) { ok(false, "Boarding day check stopped: " + e.message.split("\n")[0]); }
   if (PARTS.includes("B")) {
     log("\n=== Part B: building the trip from words, then from the itinerary photo ===");
     try { await buildNew(b, "typed", TEXT, null); } catch (e) { ok(false, "typed trip stopped: " + e.message.split("\n")[0]); }
