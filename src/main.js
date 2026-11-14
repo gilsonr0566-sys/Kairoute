@@ -517,7 +517,7 @@ function placeLabel(d) { return d.type === "sea" ? "At sea" : d.type === "port" 
 // say which guide to build) and every screen shows the plain name (mainPlace).
 function tidyDests(t) {
   let n = 0; const norm = x => String(x || "").toLowerCase().replace(/[^a-z0-9\u00c0-\u024f]+/g, " ").trim();
-  try { if (typeof ensureBuiltins === "function") ensureBuiltins(); try { for (const k in cities) { const c = cities[k]; if (c && c.ddV !== DEDUPE_V) { if (dedupeSites(c)) n++; c.ddV = DEDUPE_V; } } } catch (e) {} /* not yet set up while the app first loads: render does it */ (t && t.days || []).forEach(d => {
+  try { if (typeof ensureBuiltins === "function") ensureBuiltins(); try { for (const k in cities) { const c = cities[k]; if (c && c.ddV !== DEDUPE_V) { if (c.ddV && undoMerges(c, k)) n++; if (dedupeSites(c)) n++; c.ddV = DEDUPE_V; } } } catch (e) {} /* not yet set up while the app first loads: render does it */ (t && t.days || []).forEach(d => {
     if (!d || d.type === "sea") return;
     // A day name that is just the place as the itinerary wrote it ("Naples, Amalfi, Pompeii") was never typed by
     // the traveler: it goes, so the day shows the plain destination. Names the traveler typed are kept.
@@ -3448,23 +3448,32 @@ const PLACE_PART = new Set("bell tower belfry campanile clock beach boardwalk pr
 // Words naming a different kind of place: "Acropolis" and "Acropolis Museum" are two sights.
 const PLACE_KIND = [["fountain", /\b(fountain|fontana|fuente|font)\b/i], ["worship", RELIGIOUS_RE], ["museum", /\b(museum|museo|musee|gallery|galleria)\b/i], ["castle", /\b(castle|castel|castello|fort|fortress|fortifications?|citadel|kastro|koules)\b/i], ["palace", /\b(palace|palazzo|palacio|palau)\b/i], ["market", /\b(market|mercato|mercat|mercado)\b/i], ["theatre", /\b(theatre|theater|teatro)\b/i], ["park", /\b(park|parc|parque|garden|gardens|jardin)\b/i], ["beach", /\b(beach|plage|playa|spiaggia)\b/i], ["lighthouse", /\b(lighthouse|faro)\b/i]];
 // Words too common to tell two places apart ("San Lorenzo Maggiore" and "San Paolo Maggiore" are two churches).
-const PLACE_GENERIC = new Set("maggiore major great grand new nuovo nuova old little small upper lower royal reale national nazionale real".split(" "));
-const placeWords = n => keyOf(String(n || "").replace(/&/g, " and ")).split(" ").filter(t => t.length > 1 && !PLACE_SMALL.has(t)).map(t => t.replace(/s$/, ""));
-const placeNames = x => { const n = String((x && x.name) || ""), m = /\(([^)]+)\)/.exec(n); return [n.replace(/\([^)]*\)/g, " ")].concat(m ? [m[1]] : []); };
+const PLACE_GENERIC = new Set("maggiore major great grand new nuovo nuova old little small upper lower royal reale national nazionale nacional real".split(" "));
+const PLACE_SYN = { nautical: "maritime", naval: "maritime" }; // one museum, two English names (Chania's Maritime / Nautical Museum)
+const placeWords = n => keyOf(String(n || "").replace(/&/g, " and ")).split(" ").filter(t => t.length > 1 && !PLACE_SMALL.has(t)).map(t => t.replace(/s$/, "")).map(t => PLACE_SYN[t] || t);
+const placeNames = x => { const n = String((x && x.name) || ""), alt = [...n.matchAll(/[([]([^)\]]+)[)\]]/g)].map(m => m[1]); return [n.replace(/[([][^)\]]*[)\]]/g, " ")].concat(alt); }; // "Name (other name)" and "Name [local name]"
 const placeKind = x => (PLACE_KIND.find(([, re]) => re.test(((x && x.name) || "") + " " + ((x && x.category) || ""))) || [""])[0];
 const isFeat = t => PLACE_PART.has(t) || PLACE_KIND.some(([, re]) => re.test(t));
 // How b relates to a: "same" (one place), "part" (b is a small part of a), or "".
 function placeRel(a, b) {
   if (!a || !b) return "";
-  if ((a.wd && b.wd && a.wd === b.wd) || keyOf(a.name) === keyOf(b.name) || (nameMatch(a.name, b.name) && nameMatch(b.name, a.name))) return "same";
+  // Near-identical names count as one place only when neither has a telling word the other lacks: "Natural History
+  // Museum of Crete" is not the "Historical Museum of Crete".
+  const loose = (w, g) => { const gw = keyOf(g).split(" "); return keyOf(String(w).replace(/\(.*?\)/g, " ")).split(" ").filter(t => t.length > 1 && !SMALL_WORDS.has(t) && !PLACE_GENERIC.has(t) && !PLACE_DESC.has(t) && !gw.some(x => x === t || (x.length > 4 && t.length > 4 && (x.startsWith(t.slice(0, 5)) || t.startsWith(x.slice(0, 5)))))); };
+  if ((a.wd && b.wd && a.wd === b.wd) || keyOf(a.name) === keyOf(b.name) || (nameMatch(a.name, b.name) && nameMatch(b.name, a.name) && !loose(a.name, b.name).length && !loose(b.name, a.name).length)) return "same";
   const km = isFinite(a.lat) && isFinite(b.lat) ? hav(a, b) : null;
   // Two names for the same building (another language, another source): the same kind of place (a church, a
   // museum...) at the same spot, or a few steps apart and sharing a telling word of their names.
+  // Two different museums or churches can stand side by side ("Lena's House" by the Aegean Maritime Museum) and a
+  // guide's map spots can be rough, so names that tell them apart win: the telling words of one name must all be in
+  // the other ("Prado Museum" and "Museo del Prado"). "Historical Museum of Crete" and "Natural History Museum of
+  // Crete" are two museums. Only a name in another script (nothing to compare) is matched by the spot alone.
   const ka = placeKind(a), kb = placeKind(b);
-  if (km != null && ka && ka === kb) {
-    if (km < 0.045) return "same";
-    const tell = n => placeWords(n).filter(t => !isFeat(t) && !PLACE_GENERIC.has(t) && !PLACE_DESC.has(t));
-    if (km < 0.12) { const ta = new Set(placeNames(a).flatMap(tell)); if (placeNames(b).flatMap(tell).some(t => ta.has(t))) return "same"; }
+  if (km != null && ka && ka === kb && km < 0.12) {
+    const tell = n => placeWords(n).filter(t => !isFeat(t) && !PLACE_GENERIC.has(t));
+    const na = placeNames(a).map(tell).filter(w => w.length), nb = placeNames(b).map(tell).filter(w => w.length);
+    if ((!na.length || !nb.length) && km < 0.045) return "same";
+    for (const x of na) for (const y of nb) { const [sh, lg] = x.length <= y.length ? [x, y] : [y, x]; if (sh.every(t => lg.includes(t))) return "same"; }
   }
   if (km == null || km > 2.5) return "";
   for (const na of placeNames(a)) for (const nb of placeNames(b)) {
@@ -3493,7 +3502,7 @@ if (typeof window !== "undefined") window.__kairouteDupCities = () => { ensureBu
 if (typeof window !== "undefined") window.__kairouteDupScan = () => { ensureBuiltins(); const out = []; const seen = new Set(); for (const k in cities) { const c = cities[k]; if (!c || seen.has(c)) continue; seen.add(c); const all = allSites(c); for (let i = 0; i < all.length; i++) for (let j = i + 1; j < all.length; j++) { const r = placeRel(all[i], all[j]) || placeRel(all[j], all[i]); if (r) out.push(c.city + ": " + all[i].name + " / " + all[j].name + " (" + r + ")"); } } return out; };
 // Removes repeats and parts from a guide: of two names for one place the better known (a must-see, then the one
 // with more written about it) stays; a part goes into the bigger place's "look for" list.
-const DEDUPE_V = 1; const dedupeLog = []; // what was folded, for the review tools
+const DEDUPE_V = 2; const dedupeLog = []; // what was folded, for the review tools
 if (typeof window !== "undefined") window.__kairouteDedupeLog = () => dedupeLog.slice();
 function dedupeSites(c) {
   if (!c) return 0; let n = 0;
@@ -3507,10 +3516,46 @@ function dedupeSites(c) {
     try { dedupeLog.push({ city: c.city || "", kept: (r === "same" && rank(b) > rank(a) ? b : big).name, gone: (r === "same" && rank(b) > rank(a) ? a : small).name, rel: r }); } catch (e) {}
     if (r === "same") { if (rank(b) > rank(a)) { big = b; small = a; } big.mustSee = big.mustSee || small.mustSee; big.alias = [...new Set([...(big.alias || []), small.name, small.id])]; }
     else { big.lookFor = [...new Set([...(big.lookFor || []), small.name])].slice(0, 6); big.alias = [...new Set([...(big.alias || []), small.id])]; }
+    // A copy of what was folded is kept, so a fold the rules later tell apart can be undone (undoMerges).
+    { const copy = Object.assign({}, small); delete copy.merged; big.merged = (big.merged || []).filter(x => x.id !== copy.id).concat([copy]); }
     gone.add(small); n++;
   }
   if (n) { c.sites = (c.sites || []).filter(x => !gone.has(x)); c.farther = (c.farther || []).filter(x => !gone.has(x)); }
   return n;
+}
+// Undoes folds the current rules tell apart (two different museums side by side were once folded as one): a kept copy
+// goes straight back; a fold from before copies were kept is fetched back from the saved guide (restoreSplits).
+function undoMerges(c, key) {
+  let back = 0;
+  for (const list of [c.sites || [], c.farther || []]) for (const big of list.slice()) {
+    for (const m of (big.merged || []).slice()) { if (placeRel(m, big) || placeRel(big, m)) continue;
+      big.merged = big.merged.filter(x => x !== m); big.alias = (big.alias || []).filter(x => x !== m.name && x !== m.id); big.lookFor = (big.lookFor || []).filter(x => x !== m.name);
+      list.push(m); back++; try { dedupeLog.push({ city: c.city || "", kept: big.name, gone: m.name, rel: "undone" }); } catch (e) {} }
+    const copies = new Set((big.merged || []).map(x => x.name));
+    for (const nm of big.alias || []) { if (typeof nm !== "string" || !/[A-Z ]/.test(nm) || copies.has(nm)) continue; // ids are lower-case words joined by dashes
+      const ghost = { name: nm, lat: big.lat, lng: big.lng, category: big.category };
+      if (!placeRel(ghost, big) && !placeRel(big, ghost)) { c.restore = [...new Set([...(c.restore || []), nm])]; restoreKeys.add(key); } }
+  }
+  return back;
+}
+const restoreKeys = new Set();
+if (typeof window !== "undefined") window.__kairouteUndoCheck = () => { const M = (id, name, lat, lng) => ({ id, name, lat, lng, category: "Museum" });
+  const c = { city: "Test", sites: [Object.assign(M("a", "Natural History Museum of Crete", 35.3414, 25.1327), { merged: [M("b", "Historical Museum of Crete", 35.3412, 25.1325)], alias: ["Historical Museum of Crete", "b", "Maritime Museum of Chania"] }), Object.assign(M("p", "Prado Museum", 40.4138, -3.6921), { alias: ["Museo del Prado", "museo-prado"] })], farther: [] };
+  const n = undoMerges(c, "__test"); restoreKeys.delete("__test"); return { n, names: c.sites.map(x => x.name), restore: c.restore || [] }; };
+// Fetches back sights folded away before copies were kept, from the guide saved for every traveler (no AI writing).
+async function restoreSplits() {
+  if (typeof freeAI === "undefined" || !freeAI || !restoreKeys.size) return;
+  for (const key of [...restoreKeys]) { restoreKeys.delete(key);
+    const c = cities[key], d = (trip.days || []).find(x => x.cityKey === key || keyOf(x.destination) === key); if (!c || !d || !(c.restore || []).length) continue;
+    try { const raw = await cachedGuide(d); if (!raw) continue; const fresh = cleanCity(raw, d.destination), want = new Set(c.restore.map(keyOf)), have = new Set(allSites(c).map(x => x.id));
+      for (const [from, into] of [[fresh.sites || [], c.sites = c.sites || []], [fresh.farther || [], c.farther = c.farther || []]]) for (const x of from) {
+        if (!want.has(keyOf(x.name)) || allSites(c).some(y => keyOf(y.name) === keyOf(x.name))) continue;
+        if (have.has(x.id)) x.id = x.id + "-r"; into.push(x); have.add(x.id); want.delete(keyOf(x.name));
+        allSites(c).forEach(y => { if (Array.isArray(y.alias)) y.alias = y.alias.filter(a => keyOf(a) !== keyOf(x.name)); });
+        try { dedupeLog.push({ city: c.city || "", kept: "", gone: x.name, rel: "restored" }); } catch (e) {} }
+      c.restore = [...want].length ? c.restore.filter(n => want.has(keyOf(n))) : undefined; save(); render();
+    } catch (e) {}
+  }
 }
 function carryGuide(prev, c) {
   const have = allSites(c);
@@ -3632,6 +3677,7 @@ function render() {
   if (!planKeep) planGen++;
   if (faithPrefsTidy()) save();
   if (tidyDests(trip)) save();
+  if (restoreKeys.size) setTimeout(restoreSplits, 1500); // sights once folded by mistake come back from the saved guide
   if (trip.prefsSeen !== prefsSig()) { try { dropUnwanted(); } catch (e) {} trip.prefsSeen = prefsSig(); save(); } // interests changed (here or on another device)
   faithSweep();
   bonusMemo = new Map(); mealMemo = new Map(); keptMemo = new Map(); eveMemo = new Map(); avoidMeals = new Set();
