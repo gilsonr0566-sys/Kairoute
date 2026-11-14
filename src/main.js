@@ -668,9 +668,9 @@ function transitFor(a, b) {
   // Used meanwhile, and asked again when online: an answer from an older version (at once), one given while a source
   // was busy or an empty one (after 10 minutes), or a nearby trip's answer (the exact ride is asked). With no internet
   // whatever is kept is simply used.
-  if (hit && !transitDue(exact, hit)) return hit.opts.filter(runsThen);
+  if (hit && !transitDue(exact, hit)) return hit.opts.filter(runsThen).map(tidyRide);
   if (typeof freeAI !== "undefined" && freeAI && !transitQ.has(k) && !(transitFail.get(k) > Date.now() - 120000)) { transitQ.set(k, { a: [+a.lat, +a.lng], b: [+b.lat, +b.lng], dow, date: typeof planDate !== "undefined" && planDate ? planDate : undefined, pri: typeof trip !== "undefined" && trip.days && trip.days[trip.active] && typeof planDate !== "undefined" && trip.days[trip.active].date === planDate }); clearTimeout(transitTimer); transitTimer = setTimeout(askTransit, 300); }
-  return hit ? hit.opts.filter(runsThen) : null;
+  return hit ? hit.opts.filter(runsThen).map(tidyRide) : null;
 }
 function transitDue(exact, hit) {
   if (typeof navigator !== "undefined" && navigator.onLine === false) return false;
@@ -767,7 +767,7 @@ function transitLoad() {
 }
 setTimeout(transitLoad, 0);
 const thinPts = (pts, n) => { if (pts.length <= n) return pts; const step = (pts.length - 1) / (n - 1); return Array.from({ length: n }, (_, i) => pts[Math.round(i * step)]); };
-const rideId = o => o ? o.mode + "|" + o.label : "taxi";
+const rideId = o => o ? o.mode + "|" + (o.rawLabel || o.label) : "taxi"; // the timetable's own label: saved ride choices keep working when the shown one is tidied
 let rideNotice = null, ridePref = "public";
 // Switching a ride re-plans the whole day, and never costs a stop by itself (Richard, Nov 14: picking the ferry took
 // Sorrento off his tour, and with Sorrento gone the ferry ride, and its menu, vanished too). A switch that would run
