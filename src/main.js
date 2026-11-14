@@ -1021,7 +1021,11 @@ function dayWindow(d, city) {
     const ship = d.type === "embark", m = ship ? MODES.ship : MODES[d.mode], thru = throughFrom(d);
     if (!P) return { error: ship ? "Choose the cruise port." : "Choose your departure " + m.word + "." };
     const end = Object.assign({}, P, { deadline: true });
-    w.endBy = ship ? shipToPort(d, d.allAboard) - 60 : toMin(d.time) - m.need;
+    // Boarding: the cruise line gives each passenger a boarding (check-in) time. With it, the plan gets you to the
+    // terminal at that time; never later than an hour before all aboard, when check-in starts closing.
+    const latest = ship ? shipToPort(d, d.allAboard) - 60 : null, bt = ship ? boardAt(d) : null;
+    w.endBy = ship ? (bt != null ? Math.min(bt, latest) : latest) : toMin(d.time) - m.need;
+    if (ship) { w.boardAt = bt; w.latest = latest; }
     w.beBy = w.endBy; w.deadlineWord = ship ? "the cruise terminal" : "the " + m.word;
     if (thru) {
       // Off a ship, plane or train and leaving the same day, with no hotel: the bags go into storage near where
@@ -1040,8 +1044,8 @@ function dayWindow(d, city) {
       if (!d.noBags) w.notes.push("Most hotels keep your bags for the day after check-out: ask at the desk.");
     }
     w.endLabel = ship ? "Boarding at " + P.name : "At " + P.name;
-    w.notesEnd.push(ship ? `All aboard ${d.allAboard}: be at the terminal by ${fmt(w.endBy)}, an hour early for check-in. Being aboard on time is your responsibility: check your boarding time with your cruise line.`
-      : `${m.label} leaves ${d.time}: be at the ${m.word} by ${fmt(w.endBy)}, ${dur(m.need)} early${d.mode === "flight" ? " for an international flight" : ""}.`);
+    if (ship) w.notesEnd.push(...boardNotes(d, w));
+    else w.notesEnd.push(`${m.label} leaves ${d.time}: be at the ${m.word} by ${fmt(w.endBy)}, ${dur(m.need)} early${d.mode === "flight" ? " for an international flight" : ""}.`);
   } else if (d.type === "port") {
     if (!P) return { error: "Choose where the ship docks." };
     w.start = shipToPort(d, d.portArrive) + (d.tender ? 60 : 30); w.endBy = shipToPort(d, d.allAboard) - 45; w.buffer = 45;
@@ -1745,7 +1749,8 @@ function buildPlanFor(d) {
       }
       }
       // Boarding or leaving: when nothing fits with a full sit-down lunch, a quick lunch makes room for a sight.
-      if (!pick && leaving && !quickMeals && !d.rain) { quickMeals = true; seq = withMeals(seq.filter(x => !x.mealOf)); n--; continue; }
+      // Only when the day with that lunch still ends in time: a meal never pushes past the hard end.
+      if (!pick && leaving && !quickMeals && !d.rain) { quickMeals = true; const q = withMeals(seq.filter(x => !x.mealOf)); if (simDay(q, t0, O, ZZ, style).end <= limit) { seq = q; n--; continue; } quickMeals = false; }
       if (!pick) break;
       const pol = polishDay(pick.q, t0, O, ZZ, style, city); seq = simDay(pol, t0, O, ZZ, style).end <= limit ? pol : pick.q; bonus.push(pick.c); pool.splice(pool.indexOf(pick.c), 1);
     }
@@ -2345,6 +2350,18 @@ function tickOnOneDay(city, s) {
   const near = d => { const ps = d.selected.map(id => allSites(city).find(x => x.id === id)).filter(x => x && isFinite(x.lat)); return ps.length ? Math.min(...ps.map(x => hav(x, s))) : 99; };
   for (const d of live.sort((a, b) => near(a) - near(b))) if (addPick(d, s.id, false)) return; // only where it fits
 }
+// Famous places written in are kept on the device for every city, built-in ones included (a built-in guide isn't
+// saved with the trip and is rebuilt from the app on every start). Without this, reopening the app with no
+// internet lost them, so a day ticked with one (the Prado, the Acropolis) planned differently offline, and every
+// online start paid to write them again. They come back, with the same id the day's picks use, before the
+// sources are checked, so the check finds them present.
+const FILL_KEY = "fill:";
+function keepFills(city) { try { kv.set(FILL_KEY + keyOf(city.city), (city.sites || []).filter(s => s.famousFix)); } catch (e) {} }
+function restoreFills(city, list) {
+  if (!Array.isArray(list)) return 0; let n = 0;
+  for (const st of list) if (st && st.name && st.id && !allSites(city).some(s => s.id === st.id || sameSight(st, s))) { city.sites.push(Object.assign({}, st)); n++; }
+  return n;
+}
 async function fillFamous(city, missing, bar) {
   const k = keyOf(city.city); famousFilling[k] = true;
   const prompt = `You are an expert tour guide writing data for a self-guided tour app in ${city.city}${city.country ? ", " + city.country : ""}. Write these real places, which the guide is missing. Keep each name exactly as given. If a name is a whole district or neighbourhood rather than one place to visit, leave it out.
@@ -2361,6 +2378,7 @@ Return ONLY JSON: {"places":[{"n":number,"minutes","category","summary","guide",
       Object.assign(st, { fame: m.sl || 0, unesco: !!m.unesco, heritage: !!m.heritage, src: m.src || [], local: m.local, wd: m.wd, famousFix: true });
       city.sites.push(st); added++; if (st.mustSee) tickOnOneDay(city, st);
     }
+    if (added) keepFills(city);
     if (added) { city.famousMissing = (city.famousMissing || []).filter(n => !city.sites.some(s => s.name === n)); console.info("Kairoute wrote in famous places the guide had left out in " + city.city); save(); if (["plan", "sites", "guide"].includes(view)) { const y = window.scrollY; render(); window.scrollTo(0, y); } }
   } catch (e) { famousFilling[k] = false; }
 }
@@ -2620,6 +2638,7 @@ function fameFor(d, city) {
     // If the sources step can't answer, the fame list alone still protects the famous sights.
     if (!src) { const fam = await famousFor(lbl); if (fam) src = { stops: fam.main.map(x => Object.assign({ src: ["Wikidata (Wikipedia in many languages)"] }, x)), far: fam.far, eats: [] }; }
     if (!src) { delete fameAsked[k]; return; }
+    restoreFills(city, await kv.get(FILL_KEY + k));
     fameAsked[k] = src; fameMark(city, src);
     if (view === "plan" || view === "guide") dataRender();
   }).catch(() => { delete fameAsked[k]; }).finally(() => { delete fameWait[k]; }));
@@ -5746,6 +5765,7 @@ ${partsList(s, it.time)}${stopLiveNotes(it, d)}</div></div>`;
   // Heads-up: everything that needs a decision today, in one place above the schedule, most urgent first.
   const heads = [
     readyBanner(d),
+    boardCard(d, plan), boardEve(d),
     (b => b ? `<div class="livecard">${b}</div>` : "")(liveBanner(d, plan)),
     rideChangeBanner(d),
     plan.over ? `<div class="banner warn" role="alert">This plan runs ${dur(plan.end - plan.endBy)} past ${fmt(plan.endBy)}. Remove a stop with Change stops, or change the times.</div>` : "",
