@@ -26,4 +26,5 @@ jobs:
       - name: Save to the speed branch
         run: |
           git config user.name "github-actions[bot]"; git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add tools/fixtures/net-live.json.gz && git commit -m "Recorded internet answers from the live app" && git push origin HEAD:claude/project-thread-m88qb4
+          git add tools/fixtures/net-live.json.gz && git commit -m "Recorded internet answers from the live app"
+          for i in 1 2 3 4; do git pull --rebase -q origin claude/project-thread-m88qb4 && git push origin HEAD:claude/project-thread-m88qb4 && break; sleep 5; done
