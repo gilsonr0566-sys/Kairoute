@@ -211,7 +211,7 @@ const log = (suite, trip, ok, what) => { results.push({ suite, trip, ok, what })
     }
     // Richard, Nov 14: "I'm on the Sun Princess to Naples on July 12, 2027 and want to go to Pompeii and Sorrento":
     // the ship is kept and the two places are the day's own picks from the start (they weren't part of the tour).
-    { await p.evaluate(([d, a]) => window.__kairouteNewTrip(d, a), ['I am on the Sun Princess to Naples on July 12, 2027. I want to go to Pompeii and Sorrento.', 'STOPS: Naples (1 port)\nSHIP: Princess Cruises|Sun Princess\nDAY|2027-07-12|Naples|port|ship||07:00|18:30|no||yes|Pompeii; Sorrento']); await p.waitForTimeout(300);
+    { await p.evaluate(([d, a]) => window.__kairouteNewTrip(d, a), ['I am on the Sun Princess to Naples on July 12, 2027. I want to go to Pompeii and Sorrento.', 'STOPS: Naples (1 port)\nSHIP: Princess Cruises|Sun Princess\nDAY|date YYYY-MM-DD|destination|type|mode|time HH:MM|portArrive HH:MM|allAboard HH:MM|tender yes/no|lodging|estimated yes/no|want\nDAY|2027-07-12|Naples|port|ship||07:00|18:30|no||yes|Pompeii; Sorrento']).then(r => { if (r.length !== 1) throw new Error('the AI\'s echoed format line became a day: ' + JSON.stringify(r)); }).catch(e => { log('New trip', 'new-trips', false, e.message); }); await p.waitForTimeout(300);
       const banner = await p.evaluate(() => (document.querySelector('.banner.shiptimes') || {}).innerText || '');
       const w = await p.evaluate(() => window.__kairouteWants(0)), bad = [];
       if (!/Ship times are estimated/.test(banner) || !/Sun Princess/.test(banner)) bad.push('no "ship times are estimated" ask on the Trip screen (' + banner.slice(0, 80) + ')');
@@ -395,6 +395,15 @@ const log = (suite, trip, ok, what) => { results.push({ suite, trip, ok, what })
       if (!/wouldn't fit|doesn't make this ride/.test(sw.tried.notice)) sb.push('no reason given for keeping the ride: ' + sw.tried.notice);
       if (sw.tried.canForce && (sw.forced.kept !== 'ferry|Ferry Napoli - Sorrento' || !/left out/.test(sw.forced.notice))) sb.push('taking the ferry anyway was not kept or not explained: ' + JSON.stringify(sw.forced));
       if (sb.length) bad.push(...sb); else log('Ride switch keeps stops', 'transport', true, `a slower ride never drops a stop by itself (${sw.before.stops.join(', ')} kept; "${sw.tried.notice.slice(0, 90)}…"); taken anyway, it is kept and explained`); }
+    // Speed with many kept ride answers (Richard, Nov 14: "Change stops button isn't working": the page froze looking
+    // for a nearby answer on every one of the plan's ride lookups). 2,000 kept answers elsewhere plus every ride of
+    // the day kept empty: the Day plan and Change stops must still open quickly.
+    { const extra = []; for (let k = 0; k < 2000; k++) extra.push({ a: { lat: 35 + (k % 50) * 0.2, lng: -5 + Math.floor(k / 50) * 0.3 }, b: { lat: 35.1 + (k % 50) * 0.2, lng: -4.8 + Math.floor(k / 50) * 0.3 }, opts: [{ mode: 'train', kind: 'Train', label: 'T' + k, min: 30, ride: 20, wait: 5, every: 30, access: { how: 'walk', min: 2, km: 0.1 }, egress: { how: 'walk', min: 3, km: 0.2 }, km: 10, path: [] }] });
+      await p.evaluate(([ex, i]) => { window.__kairouteTransitSet(ex); window.__kairouteEmptyRides(i); window.__kairouteAt(i, 'plan'); }, [extra, i]); await p.waitForTimeout(300);
+      const t0 = Date.now(); await p.click('[data-goto="sites"]'); const opened = await p.waitForFunction(() => document.querySelectorAll('input[type=checkbox]').length > 3, null, { timeout: 20000 }).then(() => true).catch(() => false); const ms = Date.now() - t0;
+      if (!opened || ms > 5000) bad.push(`Change stops took ${ms} ms to open with many kept ride answers${opened ? '' : ' (did not open)'}`);
+      else log('Change stops with many kept rides', 'transport', true, `opens in ${ms} ms with 2,000 kept ride answers and every ride of the day kept empty`);
+      await p.evaluate(i => window.__kairouteAt(i, 'plan'), i); }
     void mp; void i;
     log('Rides', 'transport', !bad.length, bad.length ? bad.join('; ') : 'Naples: ferry out, Circumvesuviana via Pompeii and back, each ride switchable to a taxi, the plan and ship checks follow, the map draws the real lines');
     log('Rides', 'transport', !errs.length, errs.length ? 'page errors: ' + [...new Set(errs)].join(' | ') : 'no page errors');

@@ -636,15 +636,22 @@ const dayKind = dow => dow === 0 ? "su" : dow === 6 ? "sa" : "wk";
 const runsThen = o => { if (!o || !Array.isArray(o.months) || !o.months.length) return true; const t = typeof planDate !== "undefined" && planDate ? Date.parse(planDate + "T12:00:00Z") : NaN; return !isFinite(t) || o.months.includes(new Date(t).getUTCMonth() + 1); };
 // A saved timetable for nearly the same trip (both ends within about 600 m), so a day re-planned from where the
 // traveler stands (GPS) still knows the trains, with no signal.
+let nearList = null;
 function transitNear(a, b, kind) {
+  // The kept answers with lines, read once per change (not split apart on every lookup).
+  if (!nearList || nearList.g !== nearGen) { const l = []; for (const k in transitMem) { const [ks, kd] = k.split("|"), m = transitMem[k]; if (!(m.opts || []).length) continue; const n = ks.split(",").map(Number); if (n.length === 4) l.push({ kd, m, A: { lat: n[0], lng: n[1] }, B: { lat: n[2], lng: n[3] } }); } nearList = { g: nearGen, l }; }
   let best = null, bd = 0.6;
-  for (const k in transitMem) { const [ks, kd] = k.split("|"); if (kd && kd !== kind || !(transitMem[k].opts || []).length) continue; const n = ks.split(",").map(Number); if (n.length !== 4) continue;
-    const e = Math.max(hav(a, { lat: n[0], lng: n[1] }), hav(b, { lat: n[2], lng: n[3] })); if (e < bd) { bd = e; best = transitMem[k]; } }
+  for (const x of nearList.l) { if (x.kd && x.kd !== kind) continue; if (Math.abs(x.A.lat - a.lat) > 0.006 || Math.abs(x.B.lat - b.lat) > 0.006) continue; const e = Math.max(hav(a, x.A), hav(b, x.B)); if (e < bd) { bd = e; best = x.m; } }
   return best;
 }
+// Speed: a nearby answer for an empty one is looked for once per change to the kept answers, not on every one of the
+// hundreds of thousands of ride lookups a plan makes (looking every time froze Change stops, Nov 14).
+let nearGen = 0;
+function nearOnce(exact, a, b, kind) { const m = nearMemo.get(exact); if (m && m.g === nearGen) return m.v; const v = transitNear(a, b, kind); nearMemo.set(exact, { g: nearGen, v }); return v; }
+const nearMemo = new WeakMap();
 function transitFor(a, b) {
   if (!a || !b || !isFinite(a.lat) || !isFinite(b.lat) || hav(a, b) < 4) return null;
-  const dow = planDow(), k = pairKey(a, b) + "|" + dayKind(dow), exact = transitMem[k] || transitMem[pairKey(a, b)], hit = exact && exact.opts && exact.opts.length ? exact : transitNear(a, b, dayKind(dow)) || exact; // an empty exact answer never hides a nearby one's lines
+  const dow = planDow(), k = pairKey(a, b) + "|" + dayKind(dow), exact = transitMem[k] || transitMem[pairKey(a, b)], hit = exact && exact.opts && exact.opts.length ? exact : (exact ? nearOnce(exact, a, b, dayKind(dow)) : transitNear(a, b, dayKind(dow))) || exact; // an empty exact answer never hides a nearby one's lines
   if (transitSeen) transitSeen.push([k, pairKey(a, b), a, b, dayKind(dow)]); // the offline check lists every ride a plan looks up
   // Used meanwhile, and asked again when online: an answer from an older version (at once), one given while a source
   // was busy or an empty one (after 10 minutes), or a nearby trip's answer (the exact ride is asked). With no internet
@@ -669,7 +676,7 @@ async function askTransit() {
   const one = async part => {
     let got = 0;
     try { const r = await fetch(freeAI.url + "/transit", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ pairs: part.map(x => ({ a: x[1].a, b: x[1].b, dow: x[1].dow })) }) }); if (!r.ok) throw new Error("transit " + r.status);
-      const j = await r.json(); part.forEach(([k, q], i) => { const res = (j.results || [])[i]; if (res && Array.isArray(res.opts)) { transitMem[k] = transitMerge(res, transitMem[k] || transitNear({ lat: q.a[0], lng: q.a[1] }, { lat: q.b[0], lng: q.b[1] }, k.split("|")[1])); got++; } else transitFail.set(k, Date.now()); });
+      const j = await r.json(); part.forEach(([k, q], i) => { const res = (j.results || [])[i]; if (res && Array.isArray(res.opts)) { transitMem[k] = transitMerge(res, transitMem[k] || transitNear({ lat: q.a[0], lng: q.a[1] }, { lat: q.b[0], lng: q.b[1] }, k.split("|")[1])); nearGen++; got++; } else transitFail.set(k, Date.now()); });
     } catch (e) { part.forEach(([k]) => transitFail.set(k, Date.now())); }
     // A ride the helper couldn't answer is asked again by itself once the 2-minute pause is over (the page is redrawn,
     // which asks again), instead of showing the road estimate until the traveler happens to touch something.
@@ -696,7 +703,7 @@ function transitMerge(res, prev) {
   return { opts: opts.sort((x, y) => x.min - y.min), t: Date.now(), v: TRANSIT_V, partial };
 }
 if (typeof window !== "undefined") window.__kairouteTransitMerge = transitMerge;
-function transitShow() { if (typeof view !== "undefined" && ["plan", "trip", "sites"].includes(view)) { const y = window.scrollY; render(); window.scrollTo(0, y); } }
+function transitShow() { nearGen++; if (typeof view !== "undefined" && ["plan", "trip", "sites"].includes(view)) { const y = window.scrollY; render(); window.scrollTo(0, y); } }
 // Kept on the phone so the next visit needs no lookups: the newest 150 answers, each line's path thinned for storage.
 // A full storage drops older answers rather than failing.
 function transitKeep() {
@@ -712,6 +719,7 @@ let transitAll = null;
 function transitLoad() {
   kv.get("transitAll").then(m => { if (!m || typeof m !== "object") return; transitAll = m; let added = 0;
     for (const k in m) if (m[k] && Array.isArray(m[k].opts) && (!transitMem[k] || (m[k].v === TRANSIT_V && (transitMem[k].v !== TRANSIT_V || m[k].t > transitMem[k].t)))) { transitMem[k] = m[k]; added++; } // the newer of the two kept copies
+    if (added) nearGen++;
     if (added && typeof render === "function" && typeof view !== "undefined") transitShow(); }).catch(() => {});
 }
 setTimeout(transitLoad, 0);
@@ -1778,7 +1786,8 @@ function sequenceDates(days) {
 function parseDayLines(out) { const days = parseDayLines0(out); sequenceDates(days); return days; }
 function parseDayLines0(out) {
   const types = DAY_TYPES.map(t => t.key), hm = v => /^\d\d:\d\d$/.test((v || "").trim()) ? v.trim() : "";
-  return String(out).split("\n").filter(l => /^\s*DAY\|/.test(l)).map(l => l.trim().split("|").map(x => x.trim())).filter(f => f[2]).map(f => {
+  // The format line itself ("DAY|date YYYY-MM-DD|destination|type|…") is sometimes echoed back by the AI: never a day.
+  return String(out).split("\n").filter(l => /^\s*DAY\|/.test(l)).map(l => l.trim().split("|").map(x => x.trim())).filter(f => f[2] && !/yyyy|^date\b/i.test(f[1] || "") && !/^destination$/i.test(f[2]) && !/^type$/i.test(f[3] || "")).map(f => {
     const [, date, destination, type0, mode0, time, pa, aa, tender, lodging, est, want] = f;
     const type = types.includes(type0) ? type0 : "land", mode = MODES[mode0] ? mode0 : "flight";
     return newDay({
@@ -2815,6 +2824,8 @@ First write one line that starts with STOPS: and lists, in order, every city, po
 DAY|date YYYY-MM-DD|destination|type|mode|time HH:MM|portArrive HH:MM|allAboard HH:MM|tender yes/no|lodging|estimated yes/no|want
 type is one of arrival, land, embark, port, sea, departure. mode is flight, train, ferry, ship or car. Leave a field empty when it doesn't apply, but keep the | separators. No JSON, no commentary.
 Rules:
+- Only the days the traveler describes: when they describe one day (for example a single port stop of their cruise), the itinerary is that one day. Never add days, ports or cities they didn't mention or show.
+- A traveler who is on a cruise and names a place the ship visits on a date (for example "on the Sun Princess to Naples on July 12") has a "port" day there. Use "embark" only for the city where they say the cruise starts or they board, and "arrival" with mode ship only where it ends.
 - One entry per day per city. On a day you travel between two cities, make two entries with the same date: a "departure" in the first city and an "arrival" in the second, with the mode used (flight, train, or car for a drive or bus).
 - First day in a city reached by plane, train, car or by getting off a cruise: "arrival" with mode and time = arrival time. Last day when leaving: "departure" with mode and time = departure time. Days in between: "land". A trip that is just one city or one event day is fine: use "land" days.
 - The day a cruise leaves: "embark" in the departure city with allAboard. Flying in and boarding the same day: an "arrival" (mode flight, time) and an "embark" with the same date. Getting off the cruise and flying or taking a train home the same day: an "arrival" (mode ship, time off the ship) and a "departure" (mode, time) with the same date. Each stop: "port" with portArrive and allAboard (30 minutes before sailing). Days with no stop: "sea". A cruise that ends in a city: the next day there is an "arrival" with mode ship and time when passengers get off (usually 07:00-08:00).
@@ -3387,7 +3398,12 @@ if (typeof window !== "undefined") window.__kairouteFaithScan = i => { const d =
 // Test hook: put transit answers in place for given pairs ([{a:{lat,lng}, b:{lat,lng}, opts}]), as /transit would.
 // Test hook: is a line with these running months offered on this date? (a summer ferry in July and in January)
 if (typeof window !== "undefined") window.__kairouteRunsThen = (iso, months) => { const p = planDate; planDate = iso; try { return runsThen({ months }); } finally { planDate = p; } };
-if (typeof window !== "undefined") window.__kairouteTransitSet = pairs => { (pairs || []).forEach(x => { transitMem[pairKey(x.a, x.b)] = { opts: x.opts, t: Date.now(), v: TRANSIT_V }; }); return Object.keys(transitMem).length; };
+// Speed check: every ride of 4 km or more between the day's sights kept as an empty answer, as a phone has after the
+// helper answered "no lines" for most of them (what made Change stops freeze, Nov 14).
+if (typeof window !== "undefined") window.__kairouteEmptyRides = i => { const c = cityFor(trip.days[i]), all = allSites(c); let n = 0; const kd = dayKind(planDow());
+  for (const x of all) for (const y of all) if (x !== y && isFinite(x.lat) && isFinite(y.lat) && hav(x, y) >= 4) { const k = pairKey(x, y) + "|" + kd; if (!transitMem[k]) { transitMem[k] = { opts: [], t: Date.now(), v: TRANSIT_V }; n++; } }
+  nearGen++; return n; };
+if (typeof window !== "undefined") window.__kairouteTransitSet = pairs => { nearGen++; (pairs || []).forEach(x => { transitMem[pairKey(x.a, x.b)] = { opts: x.opts, t: Date.now(), v: TRANSIT_V }; }); return Object.keys(transitMem).length; };
 if (typeof window !== "undefined") window.__kairouteMapLegs = () => { const d = day(), pl = buildPlan(d); return pl && !pl.error ? mapPlanData(pl, d).legs : []; };
 // Test hook: try to add, on day i, a sight that is closed that day (the first one found): it must not be added and the
 // box must say it's closed and offer an open day or an open sight instead.

@@ -683,7 +683,7 @@ if (typeof window !== "undefined") window.__kairouteLiveTest = {
   // The ride back: where the plan's last leg starts and ends, a timetable to put on it, and the countdown's view of it.
   lastLeg: i => { const p = buildPlan(trip.days[i]), e = p.items.findIndex(x => x.type === "end"); let k = e - 1; while (k > 0 && !(p.items[k].type === "travel" && hav(p.items[k - 1].place, p.items[k + 1].place) >= 4)) k--;
     const o = p.items[k - 1].place, b = p.items[k + 1].place; return { from: { name: o.name, lat: o.lat, lng: o.lng }, to: { name: b.name, lat: b.lat, lng: b.lng }, key: pairKey(o, b) + "|" + dayKind(new Date(trip.days[i].date + "T12:00:00Z").getUTCDay()), leg: p.items[k].leg.how, endBy: p.endBy, legAt: p.items[k].time }; },
-  addTransit: (k, opts) => { transitMem[k] = { opts, t: Date.now(), v: TRANSIT_V }; },
+  addTransit: (k, opts) => { transitMem[k] = { opts, t: Date.now(), v: TRANSIT_V }; nearGen++; },
   ride: i => { const d = trip.days[i], p = buildPlan(d), st = alarmState(d, p), r = st.ride; return { leaveBy: st.leaveBy, src: st.src, ride: r && { next: r.next && r.next.t, last: r.last && r.last.t, planned: r.planned && r.planned.t, missed: r.missed, none: r.none, extra: r.extra, taxiMin: r.taxiMin, fare: r.fare } }; },
   siteLL: i => { const p = buildPlan(trip.days[i]), s = p.items.find(x => x.type === "stop" && !x.place.along).place; return { name: s.name, lat: s.lat, lng: s.lng }; }
 };
