@@ -74,9 +74,19 @@ function localMin(iso, tz, lng) {
   try { if (tz) { const p = new Intl.DateTimeFormat("en-GB", { timeZone: tz, hour: "2-digit", minute: "2-digit", hourCycle: "h23" }).formatToParts(t); const g = k => +(p.find(x => x.type === k) || {}).value; return g("hour") * 60 + g("minute"); } } catch (e) {}
   return ((t.getUTCHours() + Math.round(lng / 15)) * 60 + t.getUTCMinutes() + 1440) % 1440;
 }
-export async function timetableOptions(a, b, dow) {
+// The trip's own date at about hh:00 local time (seasonal lines, such as summer ferries, run only then).
+function onDate(iso, lng, hh) { const d = new Date(iso + "T00:00:00Z"); if (!isFinite(d)) return null; d.setUTCHours(hh - Math.round(lng / 15), 0, 0, 0); return d.toISOString().replace(/\.\d+Z$/, "Z"); }
+export async function timetableOptions(a, b, dow, date) {
+  // The trip's own date first: a summer ferry doesn't show on a November date. When the operators haven't
+  // published that far ahead yet (nothing at all comes back), the next date of the same kind is used.
+  if (date && /^\d{4}-\d{2}-\d{2}$/.test(date) && Date.parse(date) > Date.now() - 86400e3) {
+    try { const r = await timetableAt(a, b, hh => onDate(date, a.lng, hh)); if (r.length) return r.map(o => Object.assign(o, { forDate: date })); } catch (e) {}
+  }
+  return timetableAt(a, b, hh => dayFor(dow, a.lng, hh));
+}
+async function timetableAt(a, b, when) {
   // Morning, midday and late afternoon, so the plan knows the departures through the day (the last ones back included).
-  const ask = hh => fetch(`https://api.transitous.org/api/v1/plan?fromPlace=${a.lat},${a.lng}&toPlace=${b.lat},${b.lng}&time=${dayFor(dow, a.lng, hh)}&numItineraries=6`, { headers: UA, signal: AbortSignal.timeout(20000) }).then(r => r.ok ? r.json() : Promise.reject(new Error("timetable " + r.status)));
+  const ask = hh => fetch(`https://api.transitous.org/api/v1/plan?fromPlace=${a.lat},${a.lng}&toPlace=${b.lat},${b.lng}&time=${when(hh)}&numItineraries=6`, { headers: UA, signal: AbortSignal.timeout(20000) }).then(r => r.ok ? r.json() : Promise.reject(new Error("timetable " + r.status)));
   const all = await Promise.allSettled([ask(8), ask(12), ask(16)]);
   if (!all.some(x => x.status === "fulfilled")) throw new Error("timetable busy");
   const seen = new Set(), its = []; for (const x of all) if (x.status === "fulfilled") for (const it of x.value.itineraries || []) { const k = it.startTime + "|" + it.endTime; if (!seen.has(k)) { seen.add(k); its.push(it); } }
@@ -118,8 +128,8 @@ export function topRides(list, n) {
   if (f && !top.includes(f)) { let i = top.length - 1; while (i >= 0 && top[i].mode === "ferry") i--; if (i >= 0) top.splice(i, 1); top.push(f); }
   return top;
 }
-export async function allOptions(a, b, dow, mapWait = 12000, store) {
-  const ttP = timetableOptions(a, b, dow).catch(() => null), mapP = transitOptions(a, b, store).catch(() => null);
+export async function allOptions(a, b, dow, mapWait = 12000, store, date) {
+  const ttP = timetableOptions(a, b, dow, date).catch(() => null), mapP = transitOptions(a, b, store).catch(() => null);
   const merge = (tt, map) => { const t = tt || [], hasRail = t.some(o => /train|metro|tram/.test(o.mode));
     const m = (map || []).filter(o => o.mode === "ferry" ? !t.some(x => x.mode === "ferry") : !hasRail);
     return topRides(t.concat(m), 5); };

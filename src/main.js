@@ -619,7 +619,8 @@ try { ["kairoute.transit", "kairoute.transit2"].forEach(k => localStorage.remove
 // Each answer carries the version of the helper's answers it came from. One kept from an older version (before ferries
 // had their own lookup, or an empty answer kept as final) is used only until a fresh one arrives: phones that planned a
 // trip earlier never keep showing an old ride (Richard's Naples day kept "Train or car" with no ferry).
-const TRANSIT_V = 4;
+// 5: answers are looked up for the trip's own date (a summer ferry isn't on a November timetable), asked again once.
+const TRANSIT_V = 5;
 const transitMem = (() => { try { return JSON.parse(localStorage.getItem(TRANSIT_KEY) || "{}"); } catch (e) { return {}; } })();
 let transitSeen = null, transitRetry = 0;
 const transitFail = new Map(), transitQ = new Map(), transitPins = new Set(); let transitTimer = 0, transitBusy = false; // pins: rides of the trip being kept for offline
@@ -659,7 +660,7 @@ function transitFor(a, b) {
   // was busy or an empty one (after 10 minutes), or a nearby trip's answer (the exact ride is asked). With no internet
   // whatever is kept is simply used.
   if (hit && !transitDue(exact, hit)) return hit.opts.filter(runsThen);
-  if (typeof freeAI !== "undefined" && freeAI && !transitQ.has(k) && !(transitFail.get(k) > Date.now() - 120000)) { transitQ.set(k, { a: [+a.lat, +a.lng], b: [+b.lat, +b.lng], dow, pri: typeof trip !== "undefined" && trip.days && trip.days[trip.active] && typeof planDate !== "undefined" && trip.days[trip.active].date === planDate }); clearTimeout(transitTimer); transitTimer = setTimeout(askTransit, 300); }
+  if (typeof freeAI !== "undefined" && freeAI && !transitQ.has(k) && !(transitFail.get(k) > Date.now() - 120000)) { transitQ.set(k, { a: [+a.lat, +a.lng], b: [+b.lat, +b.lng], dow, date: typeof planDate !== "undefined" && planDate ? planDate : undefined, pri: typeof trip !== "undefined" && trip.days && trip.days[trip.active] && typeof planDate !== "undefined" && trip.days[trip.active].date === planDate }); clearTimeout(transitTimer); transitTimer = setTimeout(askTransit, 300); }
   return hit ? hit.opts.filter(runsThen) : null;
 }
 function transitDue(exact, hit) {
@@ -677,7 +678,7 @@ async function askTransit() {
   if (transitBusy || !transitQ.size || !freeAI) return; transitBusy = true;
   const one = async part => {
     let got = 0;
-    try { const r = await fetch(freeAI.url + "/transit", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ pairs: part.map(x => ({ a: x[1].a, b: x[1].b, dow: x[1].dow })) }) }); if (!r.ok) throw new Error("transit " + r.status);
+    try { const r = await fetch(freeAI.url + "/transit", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ pairs: part.map(x => ({ a: x[1].a, b: x[1].b, dow: x[1].dow, date: x[1].date })) }) }); if (!r.ok) throw new Error("transit " + r.status);
       const j = await r.json(); part.forEach(([k, q], i) => { const res = (j.results || [])[i]; if (res && Array.isArray(res.opts)) { transitMem[k] = transitMerge(res, transitMem[k] || transitNear({ lat: q.a[0], lng: q.a[1] }, { lat: q.b[0], lng: q.b[1] }, k.split("|")[1])); nearGen++; got++; } else transitFail.set(k, Date.now()); });
     } catch (e) { part.forEach(([k]) => transitFail.set(k, Date.now())); }
     // A ride the helper couldn't answer is asked again by itself once the 2-minute pause is over (the page is redrawn,
@@ -780,7 +781,9 @@ function depLine(o, start, endBy, back, slack) {
   if (!o) return "";
   // With no signal the times are the ones kept on the device: say when they were last checked.
   const off = typeof navigator !== "undefined" && navigator.onLine === false, seen = o.at ? new Date(o.at).toISOString().slice(0, 10) : o.checked;
-  const when = off && seen ? ` (no signal: timetable last checked ${fmtDate(seen)})` : o.checked ? ` (timetable checked ${fmtDate(o.checked)}; Kairoute checks it again the day before and the morning of)` : "";
+  // Times from today's timetable when the operator hasn't published the one for the trip's date yet (a summer ferry).
+  const later = !o.forDate && o.checked && typeof planDate !== "undefined" && planDate && Date.parse(planDate) - Date.now() > 45 * 86400e3 ? `; the timetable for ${fmtDate(planDate)} isn't published yet, so these are today's times` : "";
+  const when = off && seen ? ` (no signal: timetable last checked ${fmtDate(seen)})` : o.checked ? ` (timetable checked ${fmtDate(o.checked)}${later}; Kairoute checks it again the day before and the morning of)` : "";
   if (!o.deps || !o.deps.length) return o.noTimetable ? ` No published timetable found for this ${o.kind.toLowerCase()}: planned with a full gap between departures. Check the ${o.kind.toLowerCase()} timetable before you go.` : "";
   const at = start + o.access.min, nx = isFinite(start) ? o.deps.find(d => d.t >= at) : null;
   let t = nx ? ` Next departure about ${fmt(nx.t)}${when}.` : ` Departures about every ${dur(o.every)}${when}.`;
