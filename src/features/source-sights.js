@@ -133,7 +133,7 @@ Return ONLY JSON: {"places":[{"n":number,"guide","lookFor","photoTip","picks","h
       const w = normSite(Object.assign({}, s, x), 0), keep = { guide: w.guide, lookFor: w.lookFor, photoTip: w.photoTip, picks: w.picks, hours: w.hours, closed: w.closed, tickets: w.tickets, crowds: w.crowds, cost: w.cost, indoor: w.indoor, access: w.access };
       Object.assign(s, keep); srcWritten[srcWKey(city, s)] = keep; got++;
     }
-    if (got) { srcWSave(); save(); if (["plan", "sites", "guide", "tour"].includes(view)) { const y = window.scrollY; render(); window.scrollTo(0, y); } }
+    if (got) { srcWSave(); save(); if (["plan", "sites", "guide", "tour"].includes(view)) dataRender(); }
   } catch (e) { todo.forEach(s => setTimeout(() => srcAsked.delete(srcWKey(city, s)), 5 * 60000)); }
 }
 // Two places with look-alike names (St Peter's Basilica and the Basilica of St Paul Outside the Walls) are told

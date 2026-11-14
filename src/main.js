@@ -705,7 +705,7 @@ function transitMerge(res, prev) {
   return { opts: opts.sort((x, y) => x.min - y.min), t: Date.now(), v: TRANSIT_V, partial };
 }
 if (typeof window !== "undefined") window.__kairouteTransitMerge = transitMerge;
-function transitShow() { nearGen++; if (typeof view !== "undefined" && ["plan", "trip", "sites"].includes(view)) { const y = window.scrollY; render(); window.scrollTo(0, y); } }
+function transitShow() { nearGen++; if (typeof view !== "undefined" && ["plan", "trip", "sites"].includes(view)) dataRender(); }
 // Kept on the phone so the next visit needs no lookups: the newest 150 answers, each line's path thinned for storage.
 // A full storage drops older answers rather than failing.
 function transitKeep() {
@@ -1110,16 +1110,17 @@ function simDay(seq, t0, O, Z, style) {
   const been = [];
   for (let i = 0; i < seq.length; i++) {
     const p = seq[i];
-    clock += tmin(prev, p); cost += hav(prev, p) * 0.4; // straight-line distance breaks ties, so equal-time orders never cross
+    const km = hav(prev, p), tp = tmin(prev, p);
+    clock += tp; cost += km * 0.4; // straight-line distance breaks ties, so equal-time orders never cross
     // Never go back to an area already left behind: a long ride (over 20 km) to somewhere within 10 km of
     // an earlier stop, other than the one just left, is backtracking (e.g. Corinth, Athens, Corinth again).
-    if (hav(prev, p) > 20 && been.slice(0, -1).some(b => hav(b, p) < 10)) cost += 600;
+    if (km > 20) { for (let j = 0; j < been.length - 1; j++) if (hav(been[j], p) < 10) { cost += 600; break; } }
     been.push(p);
     if (p.mealOf) {
       // A meal is eaten where you are: a stop that adds more than 20 minutes of travel just to eat costs a lot,
       // so a long detour for lunch never wins (eating a bit later nearby does).
       const nx = seq[i + 1] || Z;
-      if (nx) { const extra = tmin(prev, p) + tmin(p, nx) - tmin(prev, nx); if (extra > 20) cost += (extra - 20) * 12; }
+      if (nx) { const extra = tp + tmin(p, nx) - tmin(prev, nx); if (extra > 20) cost += (extra - 20) * 12; }
       const m = p.mealOf;
       if (m.label === "Lunch" && seenDinner) cost += 500; if (m.label !== "Lunch") seenDinner = true;
       if (clock < m.from) { cost += (m.from - clock) * 0.6; clock = m.from; }
@@ -1286,7 +1287,7 @@ function gCheck(plan, city) {
       if (!changed) return;
       try { localStorage.setItem(G_KEY, JSON.stringify(gStore)); } catch (e) {}
       crowdMark(city); bonusMemo = new Map(); mealMemo = new Map(); keptMemo = new Map(); eveMemo = new Map();
-      if (view === "plan" || view === "tour") { const y = window.scrollY; render(); window.scrollTo(0, y); }
+      if (view === "plan" || view === "tour") dataRender();
     }).catch(() => todo.forEach(p => gAsking.delete(gKey(p)))).finally(() => { gInFlight--; });
 }
 // Short form for alternatives: "★ 4.6 (1,234)", linked to the place on Google Maps.
@@ -1304,7 +1305,7 @@ function crowdFor(city) {
       try { localStorage.setItem("kairoute.crowd." + k, JSON.stringify({ ratings: j.ratings, busy: j.busy || {} })); } catch (e) {}
       if (!Object.keys(j.ratings).length && !Object.keys(j.busy || {}).length) return;
       crowdCache[k].map = j.ratings;
-      if (view === "plan" || view === "guide") { const y = window.scrollY; render(); window.scrollTo(0, y); }
+      if (view === "plan" || view === "guide") dataRender();
     }).catch(() => {});
   }
   crowdMark(city);
@@ -1393,25 +1394,47 @@ let bonusMemo = new Map(); // per render: each day's bonus stops, so two days in
 //  - and at most 2 minutes, as a backstop.
 // On a reuse, the day's memo entries (what later days see of it) are put back exactly as the full build left
 // them, so the rest of the planner sees the same thing either way.
-let planStore = { sig: "", at: 0, map: new Map() };
+let planStore = { sig: "", at: 0, map: new Map(), old: null, oldAt: 0 }, renderNo = 0; // renderNo: counts redraws
 const citiesSig = () => { let n = 0; for (const k in cities) { const c = cities[k]; n += 1 + ((c && c.sites) || []).length * 7 + ((c && c.farther) || []).length * 13 + ((c && c.restaurants) || []).length * 3; } return n; };
 function planKey(d) {
   const i = trip.days.indexOf(d), a = trip.active;
   let t; try { trip.active = 0; t = JSON.stringify(trip); } finally { trip.active = a; } // which day is on screen never changes a plan
   return t + "|" + i + "|" + (i < 0 ? JSON.stringify(d) : "") + "|" + ridePref + "|" + skipEvening + "|" + [...avoidMeals].join(",") + "|" + Object.keys(transitMem).length;
 }
+// The store, emptied when anything that shapes plans has changed since it was filled. Returns the current signature.
+function planFresh() {
+  const sig = planGen + "|" + todayISO() + "|" + citiesSig();
+  if (planStore.sig !== sig || Date.now() - planStore.at > 120000 || planStore.map.size > 400) {
+    // The plans made just before an answer arrived are kept one more round (same day, under 2 minutes old) for moving
+    // between days and screens only: see "A tap shows the last plan" below.
+    const P = planStore, now = Date.now(), sameDay = P.sig.split("|")[1] === todayISO(), useMap = P.map.size && now - P.at < 120000;
+    const old = !sameDay ? null : useMap ? P.map : P.old && now - P.oldAt < 120000 ? P.old : null;
+    planStore = { sig, at: now, map: new Map(), old, oldAt: useMap ? P.at : P.oldAt };
+  }
+  return sig;
+}
+// A plan already made for this day (fresh, or from just before an answer arrived), without making one.
+function planPeek(d) { planFresh(); const k = planKey(d), h = planStore.map.get(k) || (planStore.old && planStore.old.get(k)); return h && h.d === d ? h.plan : null; }
 function buildPlan(d) {
   if (!d || typeof d !== "object") return buildPlanRaw(d);
-  const sig = planGen + "|" + todayISO() + "|" + citiesSig();
-  if (planStore.sig !== sig || Date.now() - planStore.at > 120000 || planStore.map.size > 400) planStore = { sig, at: Date.now(), map: new Map() };
-  const k = planKey(d), hit = planStore.map.get(k);
-  if (hit && hit.d === d) {
-    for (const [m, v] of [[keptMemo, hit.kept], [mealMemo, hit.meal], [bonusMemo, hit.bonus], [eveMemo, hit.eve]]) { if (v === undefined) m.delete(d); else m.set(d, v); }
-    return hit.plan;
-  }
-  const st = planStore, plan = buildPlanRaw(d);
+  const sig = planFresh();
+  const k = planKey(d), restore = e => {
+    for (const [m, v] of [[keptMemo, e.kept], [mealMemo, e.meal], [bonusMemo, e.bonus], [eveMemo, e.eve]]) { if (v === undefined) m.delete(d); else m.set(d, v); }
+    if (transitSeen) transitSeen.push(...e.rides); // the offline check still learns every ride the plan uses
+    return e.plan; };
+  const hit = planStore.map.get(k); if (hit && hit.d === d) return restore(hit);
+  // A tap shows the last plan: when the traveler only moves to another day or screen (renderKeep) and the trip itself
+  // is unchanged, a plan made moments ago, before some answer from the internet arrived, is shown at once; the fresh
+  // plan follows in the next quiet moment (one redraw). Never for any change the traveler made: the key holds the whole
+  // trip, so a changed pick, time or ride never matches.
+  const was = planKeep && planStore.old && planStore.old.get(k);
+  if (was && was.d === d && (was.shown == null || was.shown === renderNo)) { if (was.shown == null) { was.shown = renderNo; dataRender(true); } return restore(was); }
+  // The rides the build looks up are kept with the plan, so a reused plan names them too.
+  const outer = transitSeen; transitSeen = []; let plan, rides;
+  try { plan = buildPlanRaw(d); } finally { rides = transitSeen; transitSeen = outer; if (outer) outer.push(...rides); }
+  const st = planStore;
   // Kept only when nothing moved during the build itself.
-  if (st === planStore && planGen + "|" + todayISO() + "|" + citiesSig() === sig && planKey(d) === k) st.map.set(k, { d, plan, kept: keptMemo.get(d), meal: mealMemo.get(d), bonus: bonusMemo.get(d), eve: eveMemo.get(d) });
+  if (st === planStore && planGen + "|" + todayISO() + "|" + citiesSig() === sig && planKey(d) === k) st.map.set(k, { d, plan, rides, kept: keptMemo.get(d), meal: mealMemo.get(d), bonus: bonusMemo.get(d), eve: eveMemo.get(d) });
   return plan;
 }
 function buildPlanRaw(d) { const prev = planDate, pw = planWx; if (!planDepth) tminEpoch++; planDepth++; planDate = d && d.date; planWx = d && cityFor(d) ? wxFor(d, cityFor(d)) : null; try { let pl = buildPlanFor(d);
@@ -2437,7 +2460,7 @@ Return ONLY JSON {"intro":"...","wrap":"..."}. "intro": 50 to 90 words said wher
     const evAll = [s.guide, s.summary, ...cands.map(c => c.facts || "")].join(" ");
     if (s.intro) s.intro = faithStrip(s.intro, evAll, bibleSite(s)); if (s.wrap) s.wrap = faithStrip(s.wrap, evAll, bibleSite(s));
     s.extrasV = EXTRAS_V; s.extrasFaith = fk; save();
-    if (["plan", "sites", "guide", "tour"].includes(view)) { const y = window.scrollY; render(); window.scrollTo(0, y); }
+    if (["plan", "sites", "guide", "tour"].includes(view)) dataRender();
   } catch (e) { delete extrasAsked[key]; }
 }
 // Every stop on today's plan that deserves a walk-through gets one: areas, big stops and the best-known stops.
@@ -2489,7 +2512,7 @@ function fameFor(d, city) {
     if (!src) { const fam = await famousFor(lbl); if (fam) src = { stops: fam.main.map(x => Object.assign({ src: ["Wikidata (Wikipedia in many languages)"] }, x)), far: fam.far, eats: [] }; }
     if (!src) { delete fameAsked[k]; return; }
     fameAsked[k] = src; fameMark(city, src);
-    if (view === "plan" || view === "guide") { const y = window.scrollY; render(); window.scrollTo(0, y); }
+    if (view === "plan" || view === "guide") dataRender();
   }).catch(() => { delete fameAsked[k]; }).finally(() => { delete fameWait[k]; }));
 }
 const fameWait = {};
@@ -3795,10 +3818,27 @@ function panes() { return [document.getElementById("view"), ...document.querySel
 function toTop() { window.scrollTo(0, 0); panes().forEach(el => { el.scrollTop = 0; }); }
 // A redraw that only moves to another day or screen (or brings news that can't change a plan) keeps the plans
 // already made; any other redraw follows a change, so plans are made fresh (see planStore).
+// Speed: answers from the internet (rides, ratings, restaurants, weather, events, the guide's walk-throughs) often
+// land a few at a time right after a tap. Each used to redraw the whole screen on its own; now answers arriving
+// close together share one redraw, and it waits until the traveler's finger is off the screen and the page has
+// stopped scrolling, so a tap or a scroll is never held up by a redraw. keep: the news can't change a plan.
+let drTimer = 0, drKeep = true, lastTouch = 0, drLast = 0; // drLast: when the last data redraw ran
+if (typeof window !== "undefined") { const touched = () => { lastTouch = Date.now(); };
+  // The traveler's own hands only (a scroll the app makes itself after a redraw doesn't count).
+  ["pointerdown", "touchstart", "touchmove", "wheel", "keydown"].forEach(t => window.addEventListener(t, touched, { capture: true, passive: true })); }
+// While answers keep streaming in (the first minute of a trip asks hundreds of things), redraws are spaced at least
+// ~0.9 s apart, so the screen is never redrawn back to back.
+function dataRender(keep) { drKeep = drKeep && !!keep; if (!drTimer) drTimer = setTimeout(drRun, Math.max(120, 900 - (Date.now() - drLast))); }
+function drRun() {
+  const quiet = Date.now() - lastTouch; if (quiet < 300) { drTimer = setTimeout(drRun, 300 - quiet); return; }
+  drTimer = 0; drLast = Date.now(); const k = drKeep; drKeep = true; const y = window.scrollY;
+  if (k) renderKeep(); else render();
+  window.scrollTo(0, y);
+}
 let planKeep = false;
 function renderKeep() { const was = planKeep; planKeep = true; try { render(); } finally { planKeep = was; } }
 function render() {
-  if (!planKeep) planGen++;
+  renderNo++; if (!planKeep) planGen++;
   if (faithPrefsTidy()) save();
   if (tidyDests(trip)) save();
   if (restoreKeys.size) setTimeout(restoreSplits, 1500); // sights once folded by mistake come back from the saved guide
@@ -4357,16 +4397,36 @@ function budgetCard(plan) {
       <div class="stat"><b>${money(b.sym, b.total)}</b><span>total</span></div>
     </div><p class="footnote">Rough figures from typical prices. Change the number of people in Settings.</p></div>`;
 }
-function tripBudget() {
-  const by = {}; let days = 0, missing = 0;
+// The Trip screen's budget adds up every day's plan. Plans already made are used at once; any day not yet planned is
+// worked out one at a time in quiet moments afterwards and the total filled in then, so opening the Trip screen never
+// waits for twenty days of planning. full: plan every day now (tools and tests).
+let budgetTimer = 0, budgetSteps = 0;
+function tripBudget(full) {
+  const by = {}; let days = 0, missing = 0, todo = 0;
   trip.days.forEach(d => {
     if (noShore(d)) return;
     const city = cityFor(d); if (!city) { missing++; return; }
-    refillIfNeeded(d, city); if (!d.selected) seedPicks(d, city);
-    const plan = buildPlan(d); if (!plan || plan.error) return;
+    let plan = d.selected ? planPeek(d) : null;
+    if (!plan && !full) { todo++; return; }
+    if (!plan) { refillIfNeeded(d, city); if (!d.selected) seedPicks(d, city); plan = buildPlan(d); }
+    if (!plan || plan.error) return;
     const b = planBudget(plan); by[b.sym] = (by[b.sym] || 0) + b.total; days++;
   });
-  return { by, days, missing };
+  if (todo && !budgetTimer && budgetSteps < 3 * trip.days.length) budgetTimer = setTimeout(budgetStep, 300); // capped, in case answers keep arriving
+  return { by, days, missing, todo };
+}
+function budgetHtml() {
+  const tb = tripBudget(), parts = Object.entries(tb.by).map(([k, v]) => money(k, v)).join(" + ");
+  return `<details class="card more tripbudget"><summary>Trip budget: ${tb.todo ? "adding up your days…" : parts || "-"} <span class="lede" style="font-weight:400">for ${P().party} people</span></summary>
+          <p class="footnote">Tickets, food and getting around for the ${tb.days} planned day${tb.days === 1 ? "" : "s"}${tb.missing ? `. ${tb.missing} day${tb.missing === 1 ? "" : "s"} still need a guide` : ""}. Flights, the cruise and hotels aren't included.</p></details>`;
+}
+function budgetStep() {
+  budgetTimer = 0; const box = document.querySelector("#view .tripbudget"); if (!box || view !== "trip") { budgetSteps = 0; return; }
+  budgetSteps++;
+  if (Date.now() - lastTouch < 600) { budgetTimer = setTimeout(budgetStep, 400); return; }
+  const d = trip.days.find(x => !noShore(x) && cityFor(x) && !(x.selected && planPeek(x)));
+  if (d) { const city = cityFor(d); try { refillIfNeeded(d, city); if (!d.selected) { seedPicks(d, city); save(); } buildPlan(d); } catch (e) {} }
+  const open = box.open; box.outerHTML = budgetHtml(); const nb = document.querySelector("#view .tripbudget"); if (nb) nb.open = open;
 }
 function basicsCard(city) {
   const b = city.basics; if (!b) return "";
@@ -4697,9 +4757,7 @@ function renderTrip(d) {
       ${aiReady() && missing ? `<button class="btn ghost small" data-act="genall" ${busy ? "disabled" : ""}>${missing === 1 ? `Build the guide for ${esc(missingNames[0])}` : missing <= 3 ? `Build the guides for ${esc(missingNames.join(" and "))}` : `Build the guides for all ${missing} places`}</button>` : ""}
       <div class="itin">${itinerary()}</div>
       <div class="actions"><button class="btn ghost small" data-act="addday">+ Add a day</button><button class="btn ghost small" data-act="addport">+ Add a port day</button></div>
-      ${(() => { const tb = tripBudget(); const parts = Object.entries(tb.by).map(([k, v]) => money(k, v)).join(" + ");
-        return `<details class="card more tripbudget"><summary>Trip budget: ${parts || "-"} <span class="lede" style="font-weight:400">for ${P().party} people</span></summary>
-          <p class="footnote">Tickets, food and getting around for the ${tb.days} planned day${tb.days === 1 ? "" : "s"}${tb.missing ? `. ${tb.missing} day${tb.missing === 1 ? "" : "s"} still need a guide` : ""}. Flights, the cruise and hotels aren't included.</p></details>`; })()}
+      ${budgetHtml()}
       <details class="card more">
         <summary>Share, print or rebuild the trip</summary>
         <div class="actions"><button class="btn ghost small" data-act="pdf">Save as PDF</button><button class="btn ghost small" data-act="copytrip">Copy itinerary</button></div>
@@ -5130,6 +5188,7 @@ function ensureMap(ml) {
   return kmap;
 }
 // After each render: put the live map in the slot the screen left for it, with this screen's route.
+let mapWait = false;
 function mountMaps() {
   const slot = document.querySelector("#view [data-map]");
   if (!slot || kmapNoGo) return;
@@ -5144,8 +5203,13 @@ function mountMaps() {
     drawMapData();
   };
   // Already loaded: attach right away, so a re-render never flashes the diagram.
-  if (window.maplibregl) { try { attach(window.maplibregl); } catch (e) { kmapNoGo = true; } return; }
-  loadMapLib().then(attach).catch(() => { kmapNoGo = true; }); // the diagram stays
+  if (window.maplibregl && kmap) { try { attach(window.maplibregl); } catch (e) { kmapNoGo = true; } return; }
+  // Starting the map the first time holds the screen for a moment on a slow phone (the map engine sets itself up), so
+  // it waits for a quiet moment: never in the middle of a tap or a scroll. The route diagram shows until then.
+  if (mapWait) return; mapWait = true;
+  (window.maplibregl ? Promise.resolve(window.maplibregl) : loadMapLib()).then(ml => new Promise(r => {
+    const go = () => { if (Date.now() - lastTouch < 600) return setTimeout(go, 300); typeof requestIdleCallback === "function" ? requestIdleCallback(() => r(ml), { timeout: 1500 }) : r(ml); };
+    go(); })).then(ml => { mapWait = false; try { attach(ml); } catch (e) { kmapNoGo = true; } }).catch(() => { mapWait = false; kmapNoGo = true; }); // the diagram stays
 }
 function drawMapData() {
   const ml = window.maplibregl, D = kmapData; if (!kmap || !kmapReady || !D || !ml) return;
@@ -5295,7 +5359,7 @@ function eventsFor(d, city) {
       .filter(l => new RegExp("\\b(" + month + "|every " + dow + "|" + dow + "s\\b|" + nth + " " + dow + ")", "i").test(l.content + " " + l.hours))
       .slice(0, 4).map(l => ({ name: l.name, date: d.date, time: "", venue: "", lat: isFinite(l.lat) ? l.lat : null, lng: isFinite(l.lng) ? l.lng : null, url: l.url || "", kind: "Local tradition", genre: "", note: l.content.slice(0, 200), src: "Wikivoyage" }));
     eventsCache[k] = { done: true, events: (tm.events || []).concat(recurring) };
-    if (view === "plan") { const y = window.scrollY; renderKeep(); window.scrollTo(0, y); } // events never change a plan
+    if (view === "plan") dataRender(true); // events never change a plan
   });
   return null;
 }
@@ -5377,7 +5441,7 @@ function farEatsFor(city, d) {
       st.list = st.list.concat(list); st.done = st.done.concat(bare.map(x => x.id));
       try { localStorage.setItem(FAR_EATS_KEY, JSON.stringify(farEats)); } catch (e) {}
       farEatsMerge(city);
-      if (view === "plan" || view === "tour") { const y = window.scrollY; render(); window.scrollTo(0, y); }
+      if (view === "plan" || view === "tour") dataRender();
     }).catch(() => {}).finally(() => { farPending--; });
 }
 // Days that spend more time getting around than seeing things get a clear warning, so a once-in-a-lifetime

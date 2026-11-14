@@ -143,7 +143,7 @@ function wxFetch(city) {
   const [lat, lng] = k.split(",");
   fetch(`${freeAI.url}/weather?lat=${lat}&lng=${lng}`).then(r => r.ok ? r.json() : null).then(j => {
     if (!j || !j.days) return; j.at = Date.now(); wxCache[k] = j; try { localStorage.setItem("kairoute.wx." + k, JSON.stringify(j)); } catch (e) {}
-    if (view === "plan" || view === "tour") render();
+    if (view === "plan" || view === "tour") dataRender();
   }).catch(() => {});
 }
 // The forecast for one day, read into plain facts: wet hours (rain 50%+ and at least 0.3 mm), hot hours (33 °C+).

@@ -18,7 +18,10 @@ const ONE_ZONE = { greece: "Europe/Athens", italy: "Europe/Rome", "vatican city"
   japan: "Asia/Tokyo", "south korea": "Asia/Seoul", singapore: "Asia/Singapore", thailand: "Asia/Bangkok", vietnam: "Asia/Ho_Chi_Minh", "new zealand": "Pacific/Auckland",
   "united arab emirates": "Asia/Dubai", uae: "Asia/Dubai", "south africa": "Africa/Johannesburg", china: "Asia/Shanghai", "hong kong": "Asia/Hong_Kong", india: "Asia/Kolkata" };
 const zoneAsked = {};
-function zoneOk(tz) { try { new Intl.DateTimeFormat("en-US", { timeZone: tz }); return true; } catch (e) { return false; } }
+// Speed: the browser's date formatters are slow to make and these run on every redraw, so each zone's is made once.
+const zoneFmts = new Map();
+function zoneFmt(tz) { let f = zoneFmts.get(tz); if (f === undefined) { try { f = new Intl.DateTimeFormat("en-CA", { timeZone: tz, year: "numeric", month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit", second: "2-digit", hourCycle: "h23" }); } catch (e) { f = null; } zoneFmts.set(tz, f); } return f; }
+function zoneOk(tz) { return !!zoneFmt(tz); }
 function dayCoords(d) {
   const c = typeof cityFor === "function" ? cityFor(d) : null; if (!c) return null;
   const st = c.starts || {}, p = isFinite(c.lat) ? c : [].concat(...Object.values(st)).find(x => x && isFinite(x.lat)) || (c.sites || []).find(x => isFinite(x.lat));
@@ -59,8 +62,8 @@ function deviceZone() { try { return Intl.DateTimeFormat().resolvedOptions().tim
 function zoneNow(tz, at) {
   const t = at || new Date();
   try {
-    const p = {}; new Intl.DateTimeFormat("en-CA", { timeZone: tz, year: "numeric", month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit", second: "2-digit", hourCycle: "h23" })
-      .formatToParts(t).forEach(x => { p[x.type] = x.value; });
+    const f = zoneFmt(tz); if (!f) throw new Error("zone");
+    const p = {}; f.formatToParts(t).forEach(x => { p[x.type] = x.value; });
     return { date: `${p.year}-${p.month}-${p.day}`, min: (+p.hour % 24) * 60 + +p.minute + +p.second / 60 };
   } catch (e) { return { date: t.getFullYear() + "-" + String(t.getMonth() + 1).padStart(2, "0") + "-" + String(t.getDate()).padStart(2, "0"), min: t.getHours() * 60 + t.getMinutes() + t.getSeconds() / 60 }; }
 }

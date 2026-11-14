@@ -138,21 +138,30 @@ async function offAppCheck() {
   return { ok, miss: ok ? "" : "the app's own files" };
 }
 const offKey = () => trip.id + "|" + trip.pass + "|" + appSet.natvoice + "|" + appSet.guide + "|" + offDays().map(d => d.id + ":" + d.destination + ":" + d.date + ":" + d.type + ":" + (d.aboard ? "b" : "") + ":" + (d.selected || []).join(",")).join(";");
-async function offCheck() {
+let offHurry = false; // someone is waiting on the check: stop waiting for quiet moments
+async function offCheck(eager) {
+  if (offChecking && eager) { offHurry = true; while (offChecking) await offSleep(50); }
   if (offChecking) { offAgain = true; return offRep; }
-  return offCheckNow();
+  return offCheckNow(eager);
 }
-async function offCheckNow() {
+async function offCheckNow(eager) { // eager: asked for (a download ending, a test), so no waiting for quiet moments
   offChecking = true;
   try {
-    const key = offKey(), mem = offMem();
+    const mem = offMem();
     let base = null; try { base = await mapBase(mapDark() ? "dark" : "light"); } catch (e) {}
-    const days = []; for (const d of offDays()) days.push(await offCheckDay(d, base, mem));
+    // One day at a time, each in a quiet moment: the check builds every day's plan, and it must never freeze a tap.
+    const days = []; for (const d of offDays()) { if (eager || offHurry) await offSleep(0); else await offQuiet(); days.push(await offCheckDay(d, base, mem)); }
     const app = await offAppCheck();
     const todo = days.filter(x => !x.ready);
-    offRep = { key, at: Date.now(), days, app, ready: !!days.length && !todo.length && app.ok, todo: todo.length, notes: [...new Set(days.flatMap(x => x.notes))] };
+    // The key is taken after the days are checked: checking a day can pick its sights for the first time.
+    offRep = { key: offKey(), at: Date.now(), days, app, ready: !!days.length && !todo.length && app.ok, todo: todo.length, notes: [...new Set(days.flatMap(x => x.notes))] };
     return offRep;
-  } finally { offChecking = false; if (offAgain) { offAgain = false; offSoon(200); } }
+  } finally { offChecking = false; offHurry = false; if (offAgain) { offAgain = false; offSoon(200); } }
+}
+// Waits until the traveler hasn't touched or scrolled for a moment and no redraw is due, then for an idle slot.
+async function offQuiet() {
+  for (let n = 0; n < 40 && !offHurry && (Date.now() - lastTouch < 1500 || drTimer); n++) await offSleep(400);
+  await new Promise(r => typeof requestIdleCallback === "function" ? requestIdleCallback(() => r(), { timeout: 2000 }) : setTimeout(r, 30));
 }
 function offSoon(ms) {
   clearTimeout(offTimer);
@@ -239,8 +248,8 @@ async function offDownload() {
     try { await fetch(new URL("index.html", location.href).href, { cache: "no-cache" }); await Promise.all(OFF_APP_FILES.slice(1).concat("ai.json").map(u => fetch(new URL(u, location.href).href).then(r => r.ok && r.arrayBuffer()).catch(() => {}))); } catch (e) {}
   } catch (e) { failed.push(String(e && e.message || e)); }
   const stopped = offRun.stop; offFailed = failed;
-  while (offChecking) await offSleep(100); // a check started before the download ended would be out of date
-  try { await offCheckNow(); } catch (e) {} offRun = null;
+  offHurry = true; while (offChecking) await offSleep(100); // a check started before the download ended would be out of date
+  try { await offCheckNow(true); } catch (e) {} offRun = null;
   const r = offRep;
   offMsg = stopped ? "Download paused. Tap Download for offline to carry on." :
     r.ready ? "" :
@@ -346,5 +355,5 @@ if (typeof window !== "undefined") {
   setTimeout(() => { try { [...new Set((trip.days || []).map(d => cityFor(d)).filter(Boolean))].forEach(c => fameFor(null, c)); } catch (e) {} }, 0);
   addEventListener("online", () => { offMsg = ""; offSoon(300); offPaint(); });
   addEventListener("offline", () => { offSoon(100); offPaint(); });
-  window.__kairouteOffline = { setPass: v => { if (v == null) delete trip.pass; else trip.pass = v; save(); }, check: () => offCheck(), download: () => offDownload(), state: () => ({ run: offRun, rep: offFresh(), msg: offMsg, failed: offFailed, transit: Object.keys(transitMem).length, pins: transitPins.size }), plan: i => { const { plan } = offPlan(trip.days[i]); return plan ? plan.items.filter(x => x.type !== "travel").map(x => (x.type || "") + "@" + x.time + ":" + ((x.place && x.place.name) || x.label || "") + (x.type === "travel" ? "" : "")).join(" | ") + " || rides " + plan.items.filter(x => x.type === "travel").map(x => x.leg.how + " " + x.leg.min).join(", ") : null; } };
+  window.__kairouteOffline = { setPass: v => { if (v == null) delete trip.pass; else trip.pass = v; save(); }, check: () => offCheck(true), download: () => offDownload(), state: () => ({ run: offRun, rep: offFresh(), msg: offMsg, failed: offFailed, transit: Object.keys(transitMem).length, pins: transitPins.size }), plan: i => { const { plan } = offPlan(trip.days[i]); return plan ? plan.items.filter(x => x.type !== "travel").map(x => (x.type || "") + "@" + x.time + ":" + ((x.place && x.place.name) || x.label || "") + (x.type === "travel" ? "" : "")).join(" | ") + " || rides " + plan.items.filter(x => x.type === "travel").map(x => x.leg.how + " " + x.leg.min).join(", ") : null; } };
 }
