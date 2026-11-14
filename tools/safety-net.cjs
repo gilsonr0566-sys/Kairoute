@@ -270,7 +270,13 @@ const log = (suite, trip, ok, what) => { results.push({ suite, trip, ok, what })
       await mk(); await p.waitForTimeout(300); await p.evaluate(() => window.__kairouteAt(0, 'plan')); await p.waitForTimeout(200);
       const own = await p.evaluate(() => { const pk = window.__kairoutePicker(0).picked; window.__kairouteEdit(0, { ownList: true }); return pk; });
       await p.evaluate(w => window.__kairouteSiteSet(0, w, 'late'), W); await p.waitForTimeout(200);
-      const own2 = await p.evaluate(() => window.__kairoutePicker(0).picked), okO = JSON.stringify(own) === JSON.stringify(own2);
+      const own2 = await p.evaluate(() => window.__kairoutePicker(0).picked);
+      // A day saved before the app marked its own picks (Richard's trip, Nov 14: the Corinth Canal vanished) is the traveler's.
+      await mk(); await p.waitForTimeout(300); await p.evaluate(() => window.__kairouteSiteSet(0, { Pompeii: { fame: 0, unesco: false } }, true)); await p.evaluate(() => window.__kairouteAt(0, 'plan')); await p.waitForTimeout(200);
+      const old1 = await p.evaluate(() => { const pk = window.__kairoutePicker(0).picked; window.__kairouteEdit(0, { seedSig: null }); return pk; });
+      await p.evaluate(w => window.__kairouteSiteSet(0, w, 'late'), W); await p.waitForTimeout(200);
+      const old2 = await p.evaluate(() => window.__kairoutePicker(0).picked);
+      const okO = JSON.stringify(own) === JSON.stringify(own2) && JSON.stringify(old1) === JSON.stringify(old2);
       log('New trip', 'new-trips', okL && okO, 'Sources arriving after the picks: ' + (okL ? 'Pompeii leads once known (' + v.join(', ') + ')' : 'before ' + before.join(', ') + ' / after ' + v.join(', ')) + (okO ? '; a list the traveler made is left alone' : '; the traveler\'s list was changed: ' + own.join(', ') + ' -> ' + own2.join(', '))); }
     // Live ferry check, Nov 14: the traveler ticked Sorrento and Pompeii; the app later added two must-sees in town, and
     // when the day ran over, Sorrento (the traveler's own) gave way. The app's additions give way first.
@@ -281,6 +287,15 @@ const log = (suite, trip, ok, what) => { results.push({ suite, trip, ok, what })
         window.__kairouteDay(0, [...ids, ...town]); const t = window.__kairouteTruth(0); return { ids, town, stops: t.stopNames, picks: t.picks, sel: t.selected, dropped: t.dropped, elsewhere: t.elsewhere, closed: t.closedSel, out: t.outranked, unw: t.unwanted }; });
       const okM = /Sorrento/.test(r.stops.join()) && /Pompeii/.test(r.stops.join());
       log('Fit', 'fit', okM, 'The traveler\'s own picks outrank stops the app added: ' + (okM ? 'Sorrento and Pompeii stay (' + r.stops.join(', ') + ')' : JSON.stringify(r))); }
+    // Live sights review, Nov 14 (Richard: "Corinth canal isn't showing anymore"): a loose source match gave the Corinth
+    // Canal Ancient Corinth's id, and the duplicates check made them one place. Ids come only from sure matches, and a
+    // guide saved with such a fold gets the place back.
+    { const AC = { id: 'corinth-far', name: 'Ancient Corinth', lat: 37.9057, lng: 22.8789, category: 'Archaeological site', minutes: 120, mustSee: true }, CC = { id: 'corinth-canal-far', name: 'Corinth Canal', lat: 37.9358, lng: 22.9861, category: 'Canal', minutes: 30 };
+      const src = { stops: [{ name: 'Ancient Corinth', lat: 37.9057, lng: 22.8789, wd: 'Q1', sl: 60, src: ['Wikivoyage'] }, { name: 'Corinth', lat: 37.94, lng: 22.93, wd: 'Q1', sl: 40, src: ['Wikivoyage'] }], far: [], eats: [] };
+      const fm = await p.evaluate(([s, src]) => window.__kairouteFameMarkTest(s, src, 'Athens'), [[AC, CC], src]);
+      const up = await p.evaluate(s => window.__kairouteUpgradeTest(s, 'Athens'), [Object.assign({}, AC, { wd: 'Q1', alias: ['Corinth Canal', 'corinth-canal-far'], merged: [Object.assign({}, CC, { wd: 'Q1' })] })]);
+      const okC = !fm.error && fm.names.includes('Corinth Canal') && up.includes('Corinth Canal') && up.includes('Ancient Corinth');
+      log('Duplicates', 'dedupe', okC, 'A loose source match never makes two places one: ' + (okC ? 'Corinth Canal stays beside Ancient Corinth, and a guide saved with the wrong fold gets it back' : JSON.stringify({ fm, up }))); }
     // Demo run, Nov 14: boarding day in Athens (9:00 to 18:30) after four Athens days planned no stops.
     { await p.evaluate(([d, a]) => window.__kairouteNewTrip(d, a), ['Athens then cruise', 'STOPS: Athens\nDAY|2027-06-30|Athens|arrival|flight|14:00||||||\nDAY|2027-07-01|Athens|land||||||||\nDAY|2027-07-02|Athens|land||||||||\nDAY|2027-07-03|Athens|land||||||||\nDAY|2027-07-04|Athens (Piraeus)|embark|ship|09:00||18:30|no||no|']); await p.waitForTimeout(300);
       const days = await p.evaluate(() => window.__kairouteDays()); const ei = days.findIndex(x => x.type === 'embark');

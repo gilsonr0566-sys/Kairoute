@@ -520,7 +520,7 @@ function placeLabel(d) { return d.type === "sea" ? "At sea" : d.type === "port" 
 // say which guide to build) and every screen shows the plain name (mainPlace).
 function tidyDests(t) {
   let n = 0; const norm = x => String(x || "").toLowerCase().replace(/[^a-z0-9\u00c0-\u024f]+/g, " ").trim();
-  try { if (typeof ensureBuiltins === "function") ensureBuiltins(); try { for (const k in cities) { const c = cities[k]; if (c && c.ddV !== DEDUPE_V) { if (c.ddV && undoMerges(c, k)) n++; if (dedupeSites(c)) n++; c.ddV = DEDUPE_V; } } } catch (e) {} /* not yet set up while the app first loads: render does it */ (t && t.days || []).forEach(d => {
+  try { if (typeof ensureBuiltins === "function") ensureBuiltins(); try { for (const k in cities) { const c = cities[k]; if (c && c.ddV !== DEDUPE_V) { if (c.ddV && c.ddV < 5) dropSourceIds(c); if (c.ddV && undoMerges(c, k)) n++; if (dedupeSites(c)) n++; c.ddV = DEDUPE_V; } } } catch (e) {} /* not yet set up while the app first loads: render does it */ (t && t.days || []).forEach(d => {
     if (!d || d.type === "sea") return;
     // A day name that is just the place as the itinerary wrote it ("Naples, Amalfi, Pompeii") was never typed by
     // the traveler: it goes, so the day shows the plain destination. Names the traveler typed are kept.
@@ -893,12 +893,15 @@ function suggestTour(d0) {
 // never depends on which day the traveler happened to open first (one sight, one day).
 // The starting picks are saved as soon as they are chosen, so a day keeps the same sights when the app opens again
 // (choosing again later, with other ratings or rides known, or with no internet, could pick differently).
+// The app's starting picks for a day, as made: while the day's picks still match, nobody has changed them. A saved
+// day without this mark (planned before it existed) is treated as the traveler's own and never re-picked.
+const seedSigOf = d => (Array.isArray(d.selected) ? d.selected.slice().sort() : []).join("|");
 function seedPicks(d, city) {
   const i = trip.days.indexOf(d); let made = false;
   // A day that starts with no picks (everything is planned on other days) is not a day cleared on purpose: the
   // planner still fills it (autoEmpty). The traveler's first tick or untick makes the list theirs.
-  trip.days.slice(0, Math.max(0, i)).forEach(o => { if (!o.selected && !noShore(o) && !throughTo(o) && cityFor(o) === city) { o.selected = defaultSelection(city, trip.style, o); fitTrim(o, o.selected.lead ? [o.selected.lead] : []); o.selected = [...o.selected]; o.autoEmpty = !o.selected.length; made = true; } });
-  if (!d.selected) { const w = wantIds(d, city); const ds = defaultSelection(city, trip.style, d); d.selected = [...new Set([...w, ...ds])]; fitTrim(d, w.length ? w : ds.lead ? [ds.lead] : []); w.forEach(id => markMine(d, id, true)); d.autoEmpty = !d.selected.length; made = true; wantsFind(d, city); }
+  trip.days.slice(0, Math.max(0, i)).forEach(o => { if (!o.selected && !noShore(o) && !throughTo(o) && cityFor(o) === city) { o.selected = defaultSelection(city, trip.style, o); fitTrim(o, o.selected.lead ? [o.selected.lead] : []); o.selected = [...o.selected]; o.autoEmpty = !o.selected.length; o.seedSig = seedSigOf(o); made = true; } });
+  if (!d.selected) { const w = wantIds(d, city); const ds = defaultSelection(city, trip.style, d); d.selected = [...new Set([...w, ...ds])]; fitTrim(d, w.length ? w : ds.lead ? [ds.lead] : []); w.forEach(id => markMine(d, id, true)); d.autoEmpty = !d.selected.length; d.seedSig = seedSigOf(d); made = true; wantsFind(d, city); }
   if (made && !seedSave) seedSave = setTimeout(() => { seedSave = null; save(); }, 0);
 }
 // Places the traveler named for a day when they described the trip ("Naples on July 12, we want Pompeii and
@@ -2286,7 +2289,13 @@ const fameAsked = {};
 function fameMark(city, src) {
   for (const s of [...(city.sites || []), ...(city.farther || [])]) {
     const hit = srcStop(src, s.name, s) || ((src.far || []).find(x => nameMatch(s.name, x.name) || nameMatch(x.name, s.name)) && Object.assign({ src: ["Wikidata (Wikipedia in many languages)"] }, (src.far || []).find(x => nameMatch(s.name, x.name) || nameMatch(x.name, s.name))));
-    if (hit) { s.fame = hit.sl || 0; s.unesco = !!hit.unesco; s.heritage = !!hit.heritage; s.src = hit.src || []; if (hit.web && !s.web) s.web = hit.web; if (hit.local) s.local = hit.local; if (hit.wd && !s.wd) s.wd = hit.wd; }
+    if (hit) { s.fame = hit.sl || 0; s.unesco = !!hit.unesco; s.heritage = !!hit.heritage; s.src = hit.src || []; if (hit.web && !s.web) s.web = hit.web; 
+      // The sources' id and local name say "this is the same place" to the duplicates check, so they are only taken
+      // from a hit that is surely this sight: the names match both ways, or the source's spot is right here. A loose
+      // hit (the Corinth Canal matched to Ancient Corinth's entry, Santa Maria della Vittoria to the Vittoriano) once
+      // made two places one, and the Corinth Canal vanished from the guide (Nov 14).
+      const sure = (nameMatch(s.name, hit.name || "") && nameMatch(hit.name || "", s.name)) || (isFinite(hit.lat) && isFinite(s.lat) && hav(hit, s) < 0.25);
+      if (sure) { if (hit.local) s.local = hit.local; if (hit.wd) s.wd = hit.wd; } else { delete s.local; delete s.wd; } }
   }
   famousRepair(city, src);
   sourceSights(city, src);
@@ -2334,10 +2343,10 @@ function leadLate(city) {
   if (typeof trip === "undefined" || !trip || !trip.days) return;
   for (const o of trip.days) {
     if (!Array.isArray(o.selected) || !o.selected.length || cityFor(o) !== city || (o.type !== "port" && o.type !== "land")) continue;
-    if (o.ready || o.ownList || (o.mine || []).length || (o.wants || []).length || noShore(o)) continue;
+    if (o.ready || o.ownList || (o.mine || []).length || (o.wants || []).length || noShore(o) || !o.seedSig || o.seedSig !== seedSigOf(o)) continue;
     let ds = null; try { ds = defaultSelection(city, trip.style, o); } catch (e) { continue; }
     if (!ds || !ds.lead || o.selected.includes(ds.lead)) continue;
-    o.selected = [ds.lead, ...o.selected]; try { fitTrim(o, [ds.lead]); } catch (e) {} o.selected = [...o.selected];
+    o.selected = [ds.lead, ...o.selected]; try { fitTrim(o, [ds.lead]); } catch (e) {} o.selected = [...o.selected]; o.seedSig = seedSigOf(o);
   }
 }
 // A must-see found late is ticked on one day in that city (the day whose picks are nearest), unless the traveler
@@ -3790,7 +3799,10 @@ if (typeof window !== "undefined") window.__kairouteTwins = () => { ensureBuilti
 if (typeof window !== "undefined") window.__kairouteDupScan = () => { ensureBuiltins(); const out = []; const seen = new Set(); for (const k in cities) { const c = cities[k]; if (!c || seen.has(c)) continue; seen.add(c); const all = allSites(c); for (let i = 0; i < all.length; i++) for (let j = i + 1; j < all.length; j++) { const r = placeRel(all[i], all[j]) || placeRel(all[j], all[i]); if (r) out.push(c.city + ": " + all[i].name + " / " + all[j].name + " (" + r + ")"); } } return out; };
 // Removes repeats and parts from a guide: of two names for one place the better known (a must-see, then the one
 // with more written about it) stays; a part goes into the bigger place's "look for" list.
-const DEDUPE_V = 4; const dedupeLog = []; // 4: the city's own name tells nothing apart (Acropolis of Athens); dedupeLog: what was folded, for the review tools
+const DEDUPE_V = 5; const dedupeLog = []; // 4: the city's own name tells nothing apart (Acropolis of Athens); 5: source ids and local names taken only from sure matches (old ones dropped, so wrong merges are undone); dedupeLog: what was folded, for the review tools
+// Ids and local names a saved guide took from a loose source match can't be told from good ones, so all are dropped
+// (folded copies too) and taken again, sure matches only, when the sources next load.
+function dropSourceIds(c) { for (const x of allSites(c)) { delete x.wd; delete x.local; for (const m of x.merged || []) { delete m.wd; delete m.local; } } }
 if (typeof window !== "undefined") window.__kairouteDedupeLog = () => dedupeLog.slice();
 function dedupeSites(c) {
   if (!c) return 0;
@@ -3835,6 +3847,10 @@ function undoMerges(c, key) {
   }
   return back;
 }
+// Check hooks: sources marked on a made-up guide (a loose hit must not give a sight another place's id), and a saved
+// guide from before DEDUPE_V 5 with a fold made by a wrong shared id (it must come back apart).
+if (typeof window !== "undefined") window.__kairouteFameMarkTest = (sites, src, city) => { const c = { city: city || "Test", sites: JSON.parse(JSON.stringify(sites)), farther: [] }; const k = "__fm"; try { fameMark(c, src); } catch (e) { return { error: e.message }; } return { names: c.sites.map(x => x.name), wd: c.sites.map(x => x.wd || null) }; };
+if (typeof window !== "undefined") window.__kairouteUpgradeTest = (sites, city) => { const c = { city: city || "Test", sites: JSON.parse(JSON.stringify(sites)), farther: [], ddV: 4 }; dropSourceIds(c); undoMerges(c, "__up"); restoreKeys.delete("__up"); dedupeSites(c); return c.sites.map(x => x.name); };
 // Check hook: fold a made-up guide and return the names it keeps.
 if (typeof window !== "undefined") window.__kairouteFoldNames = (sites, city) => { const c = { city: city || "Test", sites: JSON.parse(JSON.stringify(sites)), farther: [] }; dedupeSites(c); return c.sites.map(x => x.name); };
 const restoreKeys = new Set();
