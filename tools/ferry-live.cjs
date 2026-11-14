@@ -22,7 +22,7 @@ async function naples(p, label) {
 const URL = process.env.URL || "https://gilsonr0566-sys.github.io/Kairoute/";
 (async () => {
   let bad = 0;
-  const b = await chromium.launch(), p = await b.newPage({ viewport: { width: 1280, height: 800 } });
+  const b = await chromium.launch(), p = await b.newPage({ viewport: { width: 1280, height: 800 } }); await p.addInitScript(() => { try { localStorage.setItem("kairoute.intro1", "1"); } catch (e) {} }); // skip the first-run walkthrough (it covers the screen)
   p.on("pageerror", e => console.log("PAGE ERROR " + e.message));
   try {
     await p.goto(URL); await p.waitForFunction(() => window.__kairouteDays && window.__kairouteDay && window.__kairouteRideLegs, null, { timeout: 180000 });
@@ -57,7 +57,7 @@ const URL = process.env.URL || "https://gilsonr0566-sys.github.io/Kairoute/";
       if (!okS) bad++; }
     // A phone that planned the trip earlier: its kept answers are from an older version and hold no lines.
     const old = {}; for (const l of (legs.legs || [])) { old[l.key] = { opts: [], t: Date.now() - 60000 }; old[l.key.split("|")[0]] = { opts: [], t: Date.now() - 60000 }; }
-    const ctx = await b.newContext({ viewport: { width: 1280, height: 800 } });
+    const ctx = await b.newContext({ viewport: { width: 1280, height: 800 } }); await ctx.addInitScript(() => { try { localStorage.setItem("kairoute.intro1", "1"); } catch (e) {} }); // skip the first-run walkthrough (it covers the screen)
     await ctx.addInitScript(o => { try { if (!sessionStorage.getItem("seeded")) { localStorage.setItem("kairoute.transit3", o); sessionStorage.setItem("seeded", "1"); } } catch (e) {} }, JSON.stringify(old));
     const p2 = await ctx.newPage(); p2.on("pageerror", e => console.log("PAGE ERROR " + e.message));
     const r2 = await naples(p2, "phone with old kept rides (" + Object.keys(old).length + " kept)");

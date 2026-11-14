@@ -8,7 +8,7 @@ const URL = process.env.URL || "https://gilsonr0566-sys.github.io/Kairoute/";
 const TEXT = "I'm going on the Sun Princess to Naples on July 12, 2027. I want to go to Pompeii and Sorrento.";
 (async () => {
   let bad = 0; const ok = (c, m) => { console.log((c ? "ok   " : "FAIL ") + m); if (!c) bad++; };
-  const b = await chromium.launch(), p = await b.newPage({ viewport: { width: 1280, height: 800 } });
+  const b = await chromium.launch(), p = await b.newPage({ viewport: { width: 1280, height: 800 } }); await p.addInitScript(() => { try { localStorage.setItem("kairoute.intro1", "1"); } catch (e) {} }); // skip the first-run walkthrough (it covers the screen)
   p.on("pageerror", e => console.log("PAGE ERROR " + e.message));
   try {
     await p.goto(URL); await p.waitForFunction(() => window.__kairouteBuildTrip && window.__kairouteRideLegs, null, { timeout: 180000 });
