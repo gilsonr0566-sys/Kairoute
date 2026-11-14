@@ -43,6 +43,10 @@ it applies, and the main action on the right. They have no day strip, because th
   Change stops, Guide, Tour). On tablets it stays on screen because the page doesn't scroll; on phones it pins
   to the top once you scroll past it. It never jumps or covers the content.
 - Its colour follows the time left: green, amber at 30 min, red at 15, flashing at leave-by.
+- The day strip is always within reach (Richard, Nov 14): on tablets the header stays put; on phones the strip pins to
+  the top once you scroll past it, with the countdown just under it, so any day can be picked without scrolling
+  back up. Picking a day from the pinned strip opens that day from its top. The pinned strip names the day, so the
+  countdown doesn't repeat it.
 - In the tour, the next step's button (I'm here / Next) stays reachable at the bottom of the screen.
 
 ## 6. Navigation
