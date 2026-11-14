@@ -4966,8 +4966,8 @@ function mapSVG(plan) {
     if (it.type === "travel") { pendingLeg = it; return; }
     if (!it.place) return;
     if (lastPlace && pendingLeg) {
-      const ride = pendingLeg.leg.mode === "ride";
-      legs += `<line x1="${X(lastPlace).toFixed(1)}" y1="${Y(lastPlace).toFixed(1)}" x2="${X(it.place).toFixed(1)}" y2="${Y(it.place).toFixed(1)}" stroke="${ride ? "var(--ride)" : "var(--route)"}" stroke-width="${ride ? 4 : 5}" stroke-linecap="round"${ride ? ' stroke-dasharray="7 6"' : ""}/>`;
+      const k = legKind(pendingLeg.leg), dash = LEG_KINDS[k].dash;
+      legs += `<line class="leg-${k}" x1="${X(lastPlace).toFixed(1)}" y1="${Y(lastPlace).toFixed(1)}" x2="${X(it.place).toFixed(1)}" y2="${Y(it.place).toFixed(1)}" stroke="var(--t-${k})" stroke-width="${k === "walk" ? 5 : 4}" stroke-linecap="${k === "ferry" ? "round" : "butt"}"${dash ? ` stroke-dasharray="${dash.join(" ")}"` : ""}/>`;
     }
     lastPlace = it.place; pendingLeg = null;
   });
@@ -5058,7 +5058,7 @@ function mapPlanData(plan, d) {
   plan.items.forEach(it => {
     if (it.type === "travel") { pending = it; return; }
     const p = it.place; if (!p || !isFinite(p.lat) || !isFinite(p.lng)) return;
-    if (last && pending) { const o = pending.leg.transit; legs.push({ mode: pending.leg.mode === "ride" ? "car" : "foot", a: [last.lng, last.lat], b: [p.lng, p.lat], path: o && o.path && o.path.length > 1 ? [[last.lng, last.lat], ...o.path, [p.lng, p.lat]] : null }); }
+    if (last && pending) { const o = pending.leg.transit; legs.push({ mode: pending.leg.mode === "ride" ? "car" : "foot", kind: legKind(pending.leg), a: [last.lng, last.lat], b: [p.lng, p.lat], path: o && o.path && o.path.length > 1 ? [[last.lng, last.lat], ...o.path, [p.lng, p.lat]] : null }); }
     last = p; pending = null;
     const at = p.lat.toFixed(5) + "," + p.lng.toFixed(5);
     if (it.type === "start" || it.type === "end" || it.type === "fixed") {
@@ -5069,7 +5069,7 @@ function mapPlanData(plan, d) {
     else if (it.type === "stop" && p.along) pts.push({ kind: "along", lab: "", name: "On the way: " + p.name, ll: [p.lng, p.lat], id: p.id });
     else if (it.type === "stop") { n++; pts.push({ kind: "stop", lab: String(n), name: p.name, ll: [p.lng, p.lat], id: p.id }); }
   });
-  return { pts, legs, key: (d ? d.id : "") + "|" + legs.map(l => l.mode + l.a + l.b + (l.path ? l.path.length : "")).join(";") + "|" + pts.map(p => p.kind + p.ll).join(";") };
+  return { pts, legs, key: (d ? d.id : "") + "|" + legs.map(l => l.mode + (l.kind || "") + l.a + l.b + (l.path ? l.path.length : "")).join(";") + "|" + pts.map(p => p.kind + p.ll).join(";") };
 }
 const legKey = l => l.mode + ":" + l.a.map(n => n.toFixed(5)) + ";" + l.b.map(n => n.toFixed(5));
 // Street routes for the legs, from memory, then the device, then the helper. Calls back when new ones arrive.
@@ -5097,7 +5097,7 @@ async function fetchRoutes(legs, then) {
 }
 function legLine(l) { if (l.path) return l.path; const c = routeMem.get(legKey(l)); return Array.isArray(c) ? c : [l.a, l.b]; }
 function routeGeo(data, active) {
-  return { type: "FeatureCollection", features: data.legs.map((l, i) => ({ type: "Feature", properties: { mode: l.mode, on: active == null || active === i ? 1 : 0 }, geometry: { type: "LineString", coordinates: legLine(l) } })) };
+  return { type: "FeatureCollection", features: data.legs.map((l, i) => ({ type: "Feature", properties: { mode: l.mode, kind: l.kind || (l.mode === "foot" ? "walk" : "car"), on: active == null || active === i ? 1 : 0 }, geometry: { type: "LineString", coordinates: legLine(l) } })) };
 }
 function cssVar(n, el) { return getComputedStyle(el || document.documentElement).getPropertyValue(n).trim(); }
 function ensureMap(ml) {
@@ -5111,11 +5111,13 @@ function ensureMap(ml) {
   kmap.addControl(new ml.NavigationControl({ showCompass: false }), "top-right");
   kmap.addControl(new ml.ScaleControl({ unit: useMiles() ? "imperial" : "metric", maxWidth: 90 }), "bottom-left");
   kmap.on("load", () => {
-    const walk = cssVar("--route") || "#146B61", ride = cssVar("--ride") || "#7B3FE4";
+    const walk = cssVar("--route") || "#146B61";
     kmap.addSource("route", { type: "geojson", data: { type: "FeatureCollection", features: [] } });
     kmap.addLayer({ id: "route-case", type: "line", source: "route", layout: { "line-join": "round", "line-cap": "round" }, paint: { "line-color": theme === "dark" ? "#0B1716" : "#FFFFFF", "line-width": ["case", ["==", ["get", "on"], 1], 9, 6], "line-opacity": ["case", ["==", ["get", "on"], 1], 0.9, 0.4] } });
-    kmap.addLayer({ id: "route-walk", type: "line", source: "route", filter: ["==", ["get", "mode"], "foot"], layout: { "line-join": "round", "line-cap": "round" }, paint: { "line-color": walk, "line-width": ["case", ["==", ["get", "on"], 1], 5, 3], "line-opacity": ["case", ["==", ["get", "on"], 1], 1, 0.35] } });
-    kmap.addLayer({ id: "route-ride", type: "line", source: "route", filter: ["==", ["get", "mode"], "car"], layout: { "line-join": "round" }, paint: { "line-color": ride, "line-width": ["case", ["==", ["get", "on"], 1], 4.5, 3], "line-dasharray": [2, 1.6], "line-opacity": ["case", ["==", ["get", "on"], 1], 1, 0.35] } });
+    // One layer per kind of leg: its own colour and line pattern (line patterns are in line widths here).
+    for (const k of Object.keys(LEG_KINDS)) { const dash = LEG_KINDS[k].dash, w = k === "walk" ? [5, 3] : [4.5, 3];
+      kmap.addLayer({ id: "route-" + k, type: "line", source: "route", filter: ["==", ["get", "kind"], k], layout: { "line-join": "round", "line-cap": k === "walk" || k === "ferry" ? "round" : "butt" },
+        paint: Object.assign({ "line-color": cssVar("--t-" + k) || walk, "line-width": ["case", ["==", ["get", "on"], 1], w[0], w[1]], "line-opacity": ["case", ["==", ["get", "on"], 1], 1, 0.35] }, dash ? { "line-dasharray": dash.map(n => +(n / 3.5).toFixed(2)) } : {}) }); }
     kmapReady = true; kmapEl.dataset.ready = "1";
     mountMaps();
     prefetchTripMaps();
@@ -5305,11 +5307,22 @@ function eventsCard(d, city, plan) {
   return `<div class="card events"><div><span class="eyebrow">Happening while you're here</span><h3>Off the beaten path on ${esc(fmtDow(d.date))} ${esc(fmtDate(d.date))}</h3></div><ul class="evlist">${rows}</ul>
     <p class="footnote">Real listings for this date from ${[...new Set(ev.events.map(e => e.src))].join(" and ")}. Check times and tickets on the official page.</p></div>`;
 }
-// Walking and riding look different everywhere: solid teal with a walker for walking, dashed violet with a
-// car for taxi, bus, metro or train, on the map, the day timeline and in Tour mode.
-const legIcon = m => m === "ride"
-  ? `<svg class="legico" viewBox="0 0 24 24" aria-label="By car or transit" role="img"><path fill="currentColor" d="M5 11l1.6-4.6A2 2 0 0 1 8.5 5h7a2 2 0 0 1 1.9 1.4L19 11a2 2 0 0 1 2 2v4a1 1 0 0 1-1 1h-1a2 2 0 0 1-4 0H9a2 2 0 0 1-4 0H4a1 1 0 0 1-1-1v-4a2 2 0 0 1 2-2zm2.1 0h9.8l-1.2-3.4a.9.9 0 0 0-.8-.6H9.1a.9.9 0 0 0-.8.6zM7 15.5a1.2 1.2 0 1 0 0-2.4 1.2 1.2 0 0 0 0 2.4zm10 0a1.2 1.2 0 1 0 0-2.4 1.2 1.2 0 0 0 0 2.4z"/></svg>`
-  : `<svg class="legico" viewBox="0 0 24 24" aria-label="On foot" role="img"><path fill="currentColor" d="M13.5 5.5a2 2 0 1 0 0-4 2 2 0 0 0 0 4zM9.8 8.9L7 23h2.1l1.8-8 2.1 2v6h2v-7.5l-2.1-2 .6-3A7.3 7.3 0 0 0 19 13v-2a5.1 5.1 0 0 1-4.4-2.4l-1-1.6a2 2 0 0 0-1.7-1c-.3 0-.5.1-.8.1L6 8.3V13h2V9.6z"/></svg>`;
+// One look for each way of getting around, the same everywhere (Day plan timeline, both maps, the map key, Tour
+// mode): its own colour, icon and line pattern (Richard, Nov 14: "make all the transportation colors vastly
+// different"). Colours are the --t-* tokens in shell.html, chosen to stay apart for colour-blind eyes and to read
+// on light and dark; the icon and the pattern mean nobody needs the colour alone. See docs/design-rules.md.
+const LEG_KINDS = {
+  walk: { label: "Walk", dash: null, path: '<path fill="currentColor" d="M13.5 5.5a2 2 0 1 0 0-4 2 2 0 0 0 0 4zM9.8 8.9L7 23h2.1l1.8-8 2.1 2v6h2v-7.5l-2.1-2 .6-3A7.3 7.3 0 0 0 19 13v-2a5.1 5.1 0 0 1-4.4-2.4l-1-1.6a2 2 0 0 0-1.7-1c-.3 0-.5.1-.8.1L6 8.3V13h2V9.6z"/>' },
+  car: { label: "Taxi or car", dash: [8, 5], path: '<path fill="currentColor" d="M5 11l1.6-4.6A2 2 0 0 1 8.5 5h7a2 2 0 0 1 1.9 1.4L19 11a2 2 0 0 1 2 2v4a1 1 0 0 1-1 1h-1a2 2 0 0 1-4 0H9a2 2 0 0 1-4 0H4a1 1 0 0 1-1-1v-4a2 2 0 0 1 2-2zm2.1 0h9.8l-1.2-3.4a.9.9 0 0 0-.8-.6H9.1a.9.9 0 0 0-.8.6zM7 15.5a1.2 1.2 0 1 0 0-2.4 1.2 1.2 0 0 0 0 2.4zm10 0a1.2 1.2 0 1 0 0-2.4 1.2 1.2 0 0 0 0 2.4z"/>' },
+  bus: { label: "Bus", dash: [4, 3], path: '<path fill="currentColor" d="M4 16c0 .88.39 1.67 1 2.22V20c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h8v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1.78c.61-.55 1-1.34 1-2.22V6c0-3.5-3.58-4-8-4s-8 .5-8 4v10zm3.5 1c-.83 0-1.5-.67-1.5-1.5S6.67 14 7.5 14s1.5.67 1.5 1.5S8.33 17 7.5 17zm9 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm1.5-6H6V6h12v5z"/>' },
+  train: { label: "Train, metro or tram", dash: [14, 3], path: '<path fill="currentColor" d="M12 2c-4 0-8 .5-8 4v9.5C4 17.43 5.57 19 7.5 19L6 20.5v.5h2.23l2-2H14l2 2h2v-.5L16.5 19c1.93 0 3.5-1.57 3.5-3.5V6c0-3.5-3.58-4-8-4zM7.5 17c-.83 0-1.5-.67-1.5-1.5S6.67 14 7.5 14s1.5.67 1.5 1.5S8.33 17 7.5 17zm3.5-7H6V6h5v4zm2 0V6h5v4h-5zm3.5 7c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/>' },
+  ferry: { label: "Ferry", dash: [0.1, 5], path: '<path fill="currentColor" d="M20 21c-1.39 0-2.78-.47-4-1.32-2.44 1.71-5.56 1.71-8 0C6.78 20.53 5.39 21 4 21H2v2h2c1.38 0 2.74-.35 4-.99 2.52 1.29 5.48 1.29 8 0 1.26.65 2.62.99 4 .99h2v-2h-2zM3.95 19H4c1.6 0 3.02-.88 4-2 .98 1.12 2.4 2 4 2s3.02-.88 4-2c.98 1.12 2.4 2 4 2h.05l1.89-6.68c.08-.26.06-.54-.06-.78s-.34-.42-.6-.5L20 10.62V6c0-1.1-.9-2-2-2h-3V1H9v3H6c-1.1 0-2 .9-2 2v4.62l-1.29.42c-.26.08-.48.26-.6.5s-.15.52-.06.78L3.95 19zM6 6h12v3.97L12 8 6 9.97V6z"/>' },
+  flight: { label: "Flight", dash: [10, 4, 2, 4], path: '<path fill="currentColor" d="M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z"/>' },
+  ship: { label: "Ship", dash: [14, 4], path: '<path fill="currentColor" d="M3 14l1.6 5.2c.3.9 1 1.3 1.9 1.3h11c.9 0 1.6-.4 1.9-1.3L21 14l-9-3-9 3zM6 12.3V7h3V4h6v3h3v5.3l-6-2-6 2zM2 22c1.6 0 3-.5 4-1.2 2.4 1.6 9.6 1.6 12 0 1 .7 2.4 1.2 4 1.2v-1c-1.4 0-2.6-.4-3.5-1.1-2.6 1.5-10.4 1.5-13 0C4.6 20.6 3.4 21 2 21v1z"/>' }
+};
+// Which kind a leg is: a timetabled line by its own mode, any other ride by road (a planner can name it with leg.kind).
+const legKind = leg => !leg || leg.mode === "walk" ? "walk" : leg.transit ? ({ ferry: "ferry", bus: "bus", trolleybus: "bus" }[leg.transit.mode] || "train") : LEG_KINDS[leg.kind] ? leg.kind : "car";
+const legIcon = m => { const k = LEG_KINDS[m] ? m : m === "ride" ? "car" : "walk"; return `<svg class="legico k-${k}" viewBox="0 0 24 24" aria-label="${LEG_KINDS[k].label}" role="img">${LEG_KINDS[k].path}</svg>`; };
 // ---- Real places to eat at day-trip stops ----
 // A city's restaurants are gathered around its own sights. A day trip (e.g. Ancient Corinth from Athens) needs
 // its own: when a planned stop has no known place to eat within a short walk, Kairoute asks the map
@@ -5451,12 +5464,12 @@ function renderPlan(d) {
   let n = 0;
   const cat = s => esc(String(s.category || "").replace(/^\w/, c => c.toUpperCase()));
   const rows = plan.items.map((it, idx) => {
-    const pv = plan.items[idx - 1], nx = plan.items[idx + 1], rideIn = pv && pv.type === "travel" && pv.leg.mode === "ride", rideOut = nx && nx.type === "travel" && nx.leg.mode === "ride";
-    const cls = `tl ${idx === 0 ? "first" : ""} ${idx === plan.items.length - 1 || it.type === "end" ? "last" : ""} ${rideIn ? "rin" : ""} ${rideOut ? "rout" : ""}`;
+    const pv = plan.items[idx - 1], nx = plan.items[idx + 1], rideIn = pv && pv.type === "travel" && pv.leg.mode !== "walk" && legKind(pv.leg), rideOut = nx && nx.type === "travel" && nx.leg.mode !== "walk" && legKind(nx.leg);
+    const cls = `tl ${idx === 0 ? "first" : ""} ${idx === plan.items.length - 1 || it.type === "end" ? "last" : ""} ${rideIn ? "rin rin-" + rideIn : ""} ${rideOut ? "rout rout-" + rideOut : ""}`;
     if (it.type === "start") return `<div class="${cls}">${tcell(it)}<div class="rail"><div class="dot start">S</div></div><div class="what"><div class="nm">${esc(it.label)}</div>${it.place.note ? `<div class="sub">${esc(it.place.note)}</div>` : ""}${plan.w.notes.map(t => `<div class="sub">${esc(t)}</div>`).join("")}</div></div>`;
     if (it.type === "travel") {
-      const m = it.leg.mode;
-      return `<div class="tl leg ${m}${it.leg.choices ? " ridecho" : ""}"><div class="time"></div><div class="rail"></div><div class="what">${legIcon(m)}<span>${it.leg.km < 0.1 ? "Next door" : `<b>${esc(it.leg.how)}</b> · ${dur(it.leg.min)} · ${distTxt(it.leg.km)}`}${rideDetail(it.leg, it.time, plan.w && plan.w.endBy)}</span></div></div>`;
+      const m = it.leg.mode, k = legKind(it.leg);
+      return `<div class="tl leg ${m} k-${k}${it.leg.choices ? " ridecho" : ""}" data-kind="${k}"><div class="time"></div><div class="rail"></div><div class="what">${legIcon(k)}<span>${it.leg.km < 0.1 ? "Next door" : `<b>${esc(it.leg.how)}</b> · ${dur(it.leg.min)} · ${distTxt(it.leg.km)}`}${rideDetail(it.leg, it.time, plan.w && plan.w.endBy)}</span></div></div>`;
     }
     if (it.type === "fixed") return `<div class="${cls}">${tcell(it)}<div class="rail"><div class="dot fixed">H</div></div><div class="what"><div class="nm">${esc(it.place.name)}</div><div class="sub">${dur(it.place.minutes)}</div></div></div>`;
     if (it.type === "meal") {
@@ -5516,7 +5529,8 @@ ${partsList(s, it.time)}${stopLiveNotes(it, d)}</div></div>`;
   // The map key lists only what today's map really shows (no "Hotel" on a cruise day).
 function legendHTML(plan) {
   const tr = plan.items.filter(i => i.type === "travel" && i.leg.min > 0);
-  return [tr.some(i => i.leg.mode === "walk") ? `<span><i></i>Walk</span>` : "", tr.some(i => i.leg.mode !== "walk") ? `<span><i class="dash"></i>Taxi or transit</span>` : "",
+  const kinds = new Set(tr.map(i => legKind(i.leg)));
+  return [...Object.keys(LEG_KINDS).filter(k => kinds.has(k)).map(k => `<span class="lk k-${k}" data-kind="${k}"><i class="k-${k}"></i>${legIcon(k)}${LEG_KINDS[k].label}</span>`),
     plan.items.some(i => i.type === "meal") ? `<span style="color:var(--meal)">● Meal</span>` : "", plan.items.some(i => i.type === "fixed") ? `<span style="color:var(--must)">■ Hotel</span>` : "",
     (plan.along || []).length ? `<span>● On the way</span>` : ""].join("");
 }
@@ -5706,7 +5720,7 @@ function renderTour(d) {
     body = `<div class="tourcard">
       <div class="eyebrow">${st.leg && st.leg.mode === "walk" ? "Walk to" : "Head to"}</div>
       <h2 class="tourtitle">${esc(nm)}</h2>
-      ${st.leg ? `<p class="tourleg ${st.leg.mode}">${legIcon(st.leg.mode)}<span>${esc(st.leg.how)} · ${dur(st.leg.min)} · ${distTxt(st.leg.km)}</span></p>` : ""}
+      ${st.leg ? `<p class="tourleg ${st.leg.mode} k-${legKind(st.leg)}">${legIcon(legKind(st.leg))}<span>${esc(st.leg.how)} · ${dur(st.leg.min)} · ${distTxt(st.leg.km)}</span></p>` : ""}
       <p class="lede">Arrive around ${fmt(st.time)}.</p>
       ${tourMap(plan, d, prev, st)}
       ${nxt && nxt.type === "stop" && nxt.place.along ? `<div class="banner">On the way: <b>${esc(nxt.place.name)}</b>. ${esc(nxt.place.lookFor[0] || "")}</div>` : ""}

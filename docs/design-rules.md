@@ -59,7 +59,7 @@ it applies, and the main action on the right. They have no day strip, because th
 ## 7. Same look everywhere
 - Squared corners, no pills: tags 4 px, chips/buttons/fields 6–8 px, cards 10 px (`tools/pill-check.cjs`).
 - Colours: deep green ink, route green for actions and selection, sunrise orange only for the main action and
-  meals, red for must-sees and warnings. Selected chips are filled route green.
+  meals, red for must-sees and warnings. Ways of getting around have their own colours (section 9). Selected chips are filled route green.
 - Type: page title `h2` (1.3 rem on tablets), section titles `h3`, grey `.eyebrow` labels, grey `.lede` for one-line
   notes. Cards: white, 1 px line, 10 px corners, 14 px padding on tablets.
 - Nothing runs off the side of the screen, on any page, at any size (no sideways scrolling of the page).
@@ -70,10 +70,35 @@ it applies, and the main action on the right. They have no day strip, because th
 - Empty states say what to do next in one line and offer the one button that does it.
 - Emoji only as small icons on buttons that already have words (📷 What's this?), never as decoration.
 
+## 9. Ways of getting around
+Every way of getting around has its own colour, icon and line, the same on the Day plan timeline, both maps, the
+map key and in Tour mode. Never draw a leg in another kind's colour, and never use the colour alone: the icon and
+the line pattern carry the meaning for colour-blind travellers.
+
+| Kind | Light | Dark | Line | Icon |
+|---|---|---|---|---|
+| Walk | `#146B61` teal | `#4CC2B0` | solid | walker |
+| Taxi or car | `#7B3FE4` violet | `#E3A3FF` | long dashes | car |
+| Bus | `#C2185B` raspberry | `#FF5C9E` | short dashes | bus |
+| Train, metro or tram | `#1F6FD1` blue | `#4D9DFF` | long rails | train |
+| Ferry | `#8F5D00` amber | `#FFC23D` | dots | boat |
+| Flight | `#4F5D6B` slate | `#B4C2CE` | dash-dot | plane |
+| Ship | `#7A4B2A` brown | `#E0A97E` | very long dashes | ship |
+
+- One definition: the colours are the `--t-*` tokens in `src/shell.html`. The kinds, labels, icons and line
+  patterns are `LEG_KINDS` in `src/main.js`, and `legKind(leg)` says which kind a leg is. A new kind of ride gets
+  a new entry in both, never a reused colour.
+- Each colour reads at 4.5:1 or better on the page and on cards, in light and dark. Under normal, deuteranope,
+  protanope and tritanope vision, any two ride colours stay clearly apart.
+- Meal orange and must-see red are never used for lines.
+- `tools/layout-check.cjs` enforces all of this: the contrast, the colour-blind separation, and that each ferry,
+  bus, train, car and walk leg uses its own look on the timeline, the map and the key.
+
 ## Checklist for a new screen
 - [ ] Nothing is shown twice. No paragraph explains what the screen already shows.
 - [ ] Fits one tablet screen, sideways and upright; panels scroll on their own.
 - [ ] Same head as the other pages; one orange main action; less-used things in More or a fold.
 - [ ] Countdown in the head on ship, train and flight days.
 - [ ] Nav bar unchanged; no sideways scrolling; no pills.
+- [ ] Rides use their own kind's colour, icon and line (section 9).
 - [ ] `node tools/layout-check.cjs` passes.

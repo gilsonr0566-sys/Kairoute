@@ -594,11 +594,13 @@ function liveGeoStart() {
 }
 // A position that has gone stale (the phone slept, or the poll hasn't come round yet): ask for a fresh one at once
 // rather than counting down from where the plan guesses you are for up to a minute.
-let geoAsking = false;
+let geoAsking = false, geoAskAt = 0;
 function geoRefresh() {
-  if (geoAsking || liveGeo == null || geoWatch != null || !navigator.geolocation) return; geoAsking = true;
+  // A request that never answered (some phones drop one) never blocks the next: after 30 seconds, ask again.
+  if ((geoAsking && Math.abs(Date.now() - geoAskAt) < 30000) || liveGeo == null || geoWatch != null || !navigator.geolocation) return; geoAsking = true; geoAskAt = Date.now();
+  // A fix the phone took in the last 30 seconds is good enough and comes back at once; otherwise it takes a new one.
   navigator.geolocation.getCurrentPosition(pos => { geoAsking = false; geoPos = { lat: pos.coords.latitude, lng: pos.coords.longitude, acc: pos.coords.accuracy, at: Date.now() }; alarmTick(); },
-    () => { geoAsking = false; }, { enableHighAccuracy: true, maximumAge: 0, timeout: 20000 });
+    () => { geoAsking = false; }, { enableHighAccuracy: true, maximumAge: 30000, timeout: 20000 });
 }
 if (typeof document !== "undefined") document.addEventListener("visibilitychange", () => { if (!document.hidden && geoPos && !geoFresh()) geoRefresh(); });
 if (typeof window !== "undefined") setInterval(() => { try { alarmTick(); } catch (e) { console.warn("live", e); } }, 20000);
@@ -683,6 +685,10 @@ if (typeof window !== "undefined") window.__kairouteLiveTest = {
   // The ride back: where the plan's last leg starts and ends, a timetable to put on it, and the countdown's view of it.
   lastLeg: i => { const p = buildPlan(trip.days[i]), e = p.items.findIndex(x => x.type === "end"); let k = e - 1; while (k > 0 && !(p.items[k].type === "travel" && hav(p.items[k - 1].place, p.items[k + 1].place) >= 4)) k--;
     const o = p.items[k - 1].place, b = p.items[k + 1].place; return { from: { name: o.name, lat: o.lat, lng: o.lng }, to: { name: b.name, lat: b.lat, lng: b.lng }, key: pairKey(o, b) + "|" + dayKind(new Date(trip.days[i].date + "T12:00:00Z").getUTCDay()), leg: p.items[k].leg.how, endBy: p.endBy, legAt: p.items[k].time }; },
+  // Every ride leg of the day (not walks), with its timetable key and how the screen draws it.
+  rideLegs: i => { const p = buildPlan(trip.days[i]), wd = dayKind(new Date(trip.days[i].date + "T12:00:00Z").getUTCDay());
+    return p.items.map((it, k) => it.type === "travel" && it.leg.mode !== "walk" ? { k, from: p.items[k - 1].place.name, to: p.items[k + 1].place.name, key: pairKey(p.items[k - 1].place, p.items[k + 1].place) + "|" + wd, how: it.leg.how, kind: legKind(it.leg), far: hav(p.items[k - 1].place, p.items[k + 1].place) >= 4 } : null).filter(Boolean); },
+  geo: () => ({ fresh: geoFresh(), age: geoPos && Date.now() - geoPos.at, acc: geoPos && geoPos.acc, watching: liveGeo != null, guideWatch: geoWatch != null, asking: geoAsking, perm: geoPerm }),
   addTransit: (k, opts) => { transitMem[k] = { opts, t: Date.now(), v: TRANSIT_V }; nearGen++; },
   ride: i => { const d = trip.days[i], p = buildPlan(d), st = alarmState(d, p), r = st.ride; return { leaveBy: st.leaveBy, src: st.src, ride: r && { next: r.next && r.next.t, last: r.last && r.last.t, planned: r.planned && r.planned.t, missed: r.missed, none: r.none, extra: r.extra, taxiMin: r.taxiMin, fare: r.fare } }; },
   siteLL: i => { const p = buildPlan(trip.days[i]), s = p.items.find(x => x.type === "stop" && !x.place.along).place; return { name: s.name, lat: s.lat, lng: s.lng }; }

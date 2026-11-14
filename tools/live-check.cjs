@@ -141,7 +141,7 @@ async function run({ chromium, FILE, log, OUT, shots }) {
     await L(() => { const b = document.querySelector('[data-act=livegps]'); if (b) b.click(); }); await p.waitForTimeout(1200);
     // A position from before the clock moved is stale: the app asks for a fresh one at once, so give it a moment.
     let src = ''; for (let k = 0; k < 15; k++) { src = await L(() => (document.getElementById('cdSrc') || {}).textContent || ''); if (/GPS position/.test(src)) break; await p.waitForTimeout(300); }
-    if (!/GPS position/.test(src)) bad.push('on the day the countdown does not use GPS by itself ("' + src + '")');
+    if (!/GPS position/.test(src)) bad.push('on the day the countdown does not use GPS by itself ("' + src + '") ' + JSON.stringify(await L(() => window.__kairouteLiveTest.geo())));
     if (await L(() => !!document.querySelector('#cdCard details.cdwhere:not(.cdagentfold)'))) bad.push('"Pick your spot" shows even though GPS is working');
     await p.clock.runFor(61000); await p.waitForTimeout(500); // past the once-a-minute location refresh, so the position is fresh at the new time
     const after = await L(i => window.__kairouteLiveTest.plan(i), D.i);
