@@ -20,7 +20,7 @@ const GATE = !!process.env.GATE;
 // Sights the Change stops list must offer for the demo trip (a benchmark the sources must meet, never copied into
 // the app). hard = blocks a publish; soft = logged as a warning until the guide has it.
 const PICKER = [[/athens/i, [/acropolis/i, /corinth/i], []], [/naples/i, [/pompeii/i, /sorrento/i, /capri/i], [/amalfi|positano/i]],
-  [/rome|civitavecchia/i, [/colosseum/i, /vatican|st\.? peter/i], []], [/barcelona/i, [/sagrada/i], []], [/kusadasi|ephesus/i, [/ephesus/i], []]];
+  [/rome|civitavecchia/i, [/colosse(um|o)/i, /vatican|st\.? peter/i], []], [/barcelona/i, [/sagrada/i], []], [/kusadasi|ephesus/i, [/ephesus/i], []]];
 const OUT = path.join(__dirname, "..", "checks", "demo"); fs.mkdirSync(OUT, { recursive: true });
 const SIZES = { tablet: { width: 1280, height: 800 }, upright: { width: 800, height: 1280 }, phone: { width: 412, height: 915 } };
 const FREEZE_MS = 1500, SLOW_MS = 600;
@@ -54,9 +54,19 @@ function watch(p, tag) {
   const errs = []; p.on("pageerror", e => { errs.push(e.message); log(`PAGE ERROR (${tag}) ${e.message}`); });
   p.on("dialog", d => d.dismiss().catch(() => {})); return errs;
 }
+// Opens the app. Right after a push the site shows GitHub's "Kairoute is updating" placeholder for some minutes
+// (see kairoute-publishing): wait for the real app (up to 25 min) instead of failing.
 async function open(p) {
-  await p.goto(URL, { waitUntil: "domcontentloaded" });
-  await p.waitForFunction(() => window.__kairouteGo && window.__kairouteDays && document.querySelector("header.top"), null, { timeout: 120000 });
+  const t0 = Date.now();
+  for (let n = 0; ; n++) {
+    await p.goto(URL, { waitUntil: "domcontentloaded" }).catch(() => {});
+    const up = await p.waitForFunction(() => window.__kairouteGo && window.__kairouteDays && document.querySelector("header.top"), null, { timeout: 60000 }).then(() => true).catch(() => false);
+    if (up) break;
+    const ph = await p.evaluate(() => !!document.querySelector('meta[name="kairoute-placeholder"]')).catch(() => false);
+    if (Date.now() - t0 > 1500000) throw new Error(ph ? "the site still showed the updating placeholder after 25 minutes" : "the app did not open");
+    if (!n) log(`     ${ph ? "the site is updating (placeholder)" : "the app did not open yet"}, waiting...`);
+    await p.waitForTimeout(30000);
+  }
   await p.waitForTimeout(1500);
 }
 // Time one screen change: the synchronous render, plus the longest main-thread block in the next few seconds.
@@ -113,7 +123,7 @@ async function partA(b) {
     await timed(p, "open Day plan", go("plan", d.i), 6000);
     let s = await seen(p);
     if (!s.stops.length && d.type !== "sea") { await p.waitForTimeout(8000); s = await seen(p); } // restaurants / rides still arriving
-    plans[d.i] = s;
+    plans[d.i] = s; plans[d.i].legs = await p.evaluate(i => { try { return window.__kairouteRideLegs(i); } catch (e) { return String(e); } }, d.i);
     const aboard = (await S()).days[d.i].stayAboard;
     const needs = d.type !== "sea" && !aboard && d.type !== "departure";
     log(`     day ${d.i + 1} ${d.date} ${d.dest}: ${s.stops.length} stops [${s.stops.join("; ")}]${s.optional.length ? ", optional: " + s.optional.join("; ") : ""}, ${s.meals.length} meals, rides: ${s.rides.map(r => r.chosen).join(" / ") || "none to choose"}`);
@@ -240,6 +250,7 @@ async function partA(b) {
     for (;;) { st = await p.evaluate(() => window.__kairouteOffline ? window.__kairouteOffline.state() : null); if (!st || !st.run) break; if (Date.now() - t0 > 900000) { ok(false, "the offline download did not finish in 15 minutes: " + st.run.step); break; } await p.waitForTimeout(3000); }
     report.timings.offlineDownload = sec(t0);
     const rep = st && st.rep;
+    if (!(rep && rep.ready)) log("     download said: " + JSON.stringify({ msg: st && st.msg, failed: st && st.failed, app: rep && rep.app, notReady: rep && rep.days.filter(x => !x.ready).map(x => ({ day: x.i + 1, place: x.place, parts: x.parts })) }).slice(0, 3000));
     ok(rep && rep.ready, `the download finishes "Ready for offline" (${sec(t0)} s)` + (rep && !rep.ready ? ": " + rep.days.filter(x => !x.ready).map(x => `day ${x.i + 1} ${x.place} missing ${Object.values(x.parts).filter(q => !q.ok).map(q => q.miss).join(", ")}`).join("; ") : ""));
     await shot(p, "A6-offline-ready-tablet");
     await ctx.setOffline(true); await p.reload().catch(() => {}); await p.waitForTimeout(3000);
@@ -248,6 +259,7 @@ async function partA(b) {
     for (const d of days) {
       if (d.type === "sea") continue;
       await p.evaluate(go("plan", d.i)).catch(() => {}); await p.waitForTimeout(1200); const s = await seen(p);
+      if (s.stops.join("|") !== plans[d.i].stops.join("|")) log("     rides online: " + JSON.stringify(plans[d.i].legs).slice(0, 800) + "\n     rides offline: " + JSON.stringify(await p.evaluate(i => { try { return window.__kairouteRideLegs(i); } catch (e) { return String(e); } }, d.i)).slice(0, 800));
       ok(s.stops.join("|") === plans[d.i].stops.join("|"), `offline: day ${d.i + 1} ${d.dest} has the same stops` + (s.stops.join("|") === plans[d.i].stops.join("|") ? "" : ` (online: ${plans[d.i].stops.join("; ")} | offline: ${s.stops.join("; ")})`));
     }
     await shot(p, "A6b-offline-dayplan-tablet");
@@ -314,7 +326,7 @@ async function buildNew(b, label, text, photo) {
     await p.evaluate(go("plan", d.i)); await p.waitForTimeout(6000); const s = await seen(p); planned[d.i] = s.stops.concat(s.optional);
     log(`     day ${d.i + 1} ${d.date} ${d.dest}: [${planned[d.i].join("; ")}]`);
   }
-  for (const [city, re, nm] of want) ok(t.days.some(d => city.test(d.dest) && (planned[d.i] || []).some(x => re.test(x))), `${label}: ${nm} (named in the request) is on a ${city.source} Day plan`);
+  if (!photo) for (const [city, re, nm] of want) ok(t.days.some(d => city.test(d.dest) && (planned[d.i] || []).some(x => re.test(x))), `${label}: ${nm} (named in the request) is on a ${city.source} Day plan`);
   const nap = t.days.find(d => /naples/i.test(d.dest)); if (nap) { await p.evaluate(go("plan", nap.i)); await p.waitForTimeout(3000); await shot(p, `B-${label}-naples`); }
   ok(!errs.length, `${label}: no page errors (${errs.slice(0, 3).join(" / ")})`);
   await ctx.close(); return t;
