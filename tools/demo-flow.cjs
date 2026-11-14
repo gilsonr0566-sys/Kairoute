@@ -54,9 +54,19 @@ function watch(p, tag) {
   const errs = []; p.on("pageerror", e => { errs.push(e.message); log(`PAGE ERROR (${tag}) ${e.message}`); });
   p.on("dialog", d => d.dismiss().catch(() => {})); return errs;
 }
+// Opens the app. Right after a push the site shows GitHub's "Kairoute is updating" placeholder for some minutes
+// (see kairoute-publishing): wait for the real app (up to 25 min) instead of failing.
 async function open(p) {
-  await p.goto(URL, { waitUntil: "domcontentloaded" });
-  await p.waitForFunction(() => window.__kairouteGo && window.__kairouteDays && document.querySelector("header.top"), null, { timeout: 120000 });
+  const t0 = Date.now();
+  for (let n = 0; ; n++) {
+    await p.goto(URL, { waitUntil: "domcontentloaded" }).catch(() => {});
+    const up = await p.waitForFunction(() => window.__kairouteGo && window.__kairouteDays && document.querySelector("header.top"), null, { timeout: 60000 }).then(() => true).catch(() => false);
+    if (up) break;
+    const ph = await p.evaluate(() => !!document.querySelector('meta[name="kairoute-placeholder"]')).catch(() => false);
+    if (Date.now() - t0 > 1500000) throw new Error(ph ? "the site still showed the updating placeholder after 25 minutes" : "the app did not open");
+    if (!n) log(`     ${ph ? "the site is updating (placeholder)" : "the app did not open yet"}, waiting...`);
+    await p.waitForTimeout(30000);
+  }
   await p.waitForTimeout(1500);
 }
 // Time one screen change: the synchronous render, plus the longest main-thread block in the next few seconds.
