@@ -700,7 +700,8 @@ async function askTransit() {
 // one hour to the next; a busy map server or a long list of quicker trains used to drop it, so the ferry appeared
 // and then vanished from the ride menu: Richard's Naples day, Nov 14). Seasonal lines still follow their months.
 function transitMerge(res, prev) {
-  const partial = !!res.partial || !res.opts.length, opts = res.opts.slice(), have = new Set(opts.map(rideId));
+  // Each line notes when it was last confirmed (at), so with no signal the Day plan can say "last checked <date>".
+  const now = Date.now(), partial = !!res.partial || !res.opts.length, opts = res.opts.map(o => Object.assign({}, o, { at: now })), have = new Set(opts.map(rideId));
   for (const o of (prev && prev.opts) || []) if ((partial || o.mode === "ferry") && !have.has(rideId(o))) { opts.push(o); have.add(rideId(o)); }
   return { opts: opts.sort((x, y) => x.min - y.min), t: Date.now(), v: TRANSIT_V, partial };
 }
@@ -761,7 +762,9 @@ if (typeof window !== "undefined") window.__kairouteRideSwitch = (i, key, val, f
 const safeDeps = (o, endBy, slack) => (o && o.deps || []).filter(d => d.t - d.lead + d.dur + (slack || 0) <= endBy);
 function depLine(o, start, endBy, back, slack) {
   if (!o) return "";
-  const when = o.checked ? ` (timetable checked ${fmtDate(o.checked)}; check again before you go)` : "";
+  // With no signal the times are the ones kept on the device: say when they were last checked.
+  const off = typeof navigator !== "undefined" && navigator.onLine === false, seen = o.at ? new Date(o.at).toISOString().slice(0, 10) : o.checked;
+  const when = off && seen ? ` (no signal: timetable last checked ${fmtDate(seen)})` : o.checked ? ` (timetable checked ${fmtDate(o.checked)}; Kairoute checks it again the day before and the morning of)` : "";
   if (!o.deps || !o.deps.length) return o.noTimetable ? ` No published timetable found for this ${o.kind.toLowerCase()}: planned with a full gap between departures. Check the ${o.kind.toLowerCase()} timetable before you go.` : "";
   const at = start + o.access.min, nx = isFinite(start) ? o.deps.find(d => d.t >= at) : null;
   let t = nx ? ` Next departure about ${fmt(nx.t)}${when}.` : ` Departures about every ${dur(o.every)}${when}.`;
@@ -5615,6 +5618,7 @@ ${partsList(s, it.time)}${stopLiveNotes(it, d)}</div></div>`;
   // Heads-up: everything that needs a decision today, in one place above the schedule, most urgent first.
   const heads = [
     (b => b ? `<div class="livecard">${b}</div>` : "")(liveBanner(d, plan)),
+    rideChangeBanner(d),
     plan.over ? `<div class="banner warn" role="alert">This plan runs ${dur(plan.end - plan.endBy)} past ${fmt(plan.endBy)}. Remove a stop with Change stops, or change the times.</div>` : "",
     closedBanner(d, plan),
     plan.dropped.length && !liveOn(d) ? `<div class="banner warn dropped"><span>Didn't fit today: <b>${plan.dropped.map(s => esc(s.name)).join(", ")}</b>. Your picks are over today's time.${estShip(d) ? ` The ship times here are estimated; your booking's real times may leave room.` : ""}</span>${estShip(d) && aiReady() ? `<button type="button" class="btn small ghost" data-act="shiptimes">Add ship times</button>` : ""}<button type="button" class="btn small" data-act="fitfix">Make it fit</button></div>` : "",
@@ -6056,6 +6060,7 @@ document.addEventListener("click", e => {
     const a = answers[t.dataset.playAns]; if (a && a.text) speakText("ans:" + t.dataset.playAns, a.text); renderGuideOnly(); return; }
   if (t.dataset.act === "asknoticeok") { askNotice = ""; render(); return; }
   if (t.dataset.act === "rideforce" && rideNotice && rideNotice.force) { switchRide(rideNotice.key, rideNotice.force, true); const y = window.scrollY; render(); window.scrollTo(0, y); return; }
+  if (t.dataset.act === "ridechangeok") { const d = day(); if (d) { delete d.rideChange; save(); } const y = window.scrollY; render(); window.scrollTo(0, y); return; }
   if (t.dataset.act === "rideundo" && rideNotice) { if (rideNotice.undo === "") delete trip.legModes[rideNotice.key]; else trip.legModes[rideNotice.key] = rideNotice.undo; rideNotice = null; save(); const y = window.scrollY; render(); window.scrollTo(0, y); return; }
   if (t.dataset.act === "coachnext") { coachStep++; if (coachStep >= COACH.length) coachDone(); render(); return; }
   if (t.dataset.act === "coachskip") { coachDone(); render(); return; }

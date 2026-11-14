@@ -467,6 +467,45 @@ const log = (suite, trip, ok, what) => { results.push({ suite, trip, ok, what })
     log('Rides', 'transport', !bad.length, bad.length ? bad.join('; ') : 'Naples: ferry out, Circumvesuviana via Pompeii and back, each ride switchable to a taxi, the plan and ship checks follow, the map draws the real lines');
     log('Rides', 'transport', !errs.length, errs.length ? 'page errors: ' + [...new Set(errs)].join(' | ') : 'no page errors');
     await b4.close(); }
+  // Timetable changes (Richard, Nov 14: "what if there was a train or ferry time change"): the day before and the
+  // morning of a day, its rides are looked up again. A changed departure re-plans that day only and its Day plan says
+  // so with the new time; an unchanged answer says nothing; with no signal each ride says when it was last checked.
+  { const b6 = await chromium.launch(); const ctx6 = await b6.newContext({ viewport: { width: 1280, height: 800 } }), p = await ctx6.newPage(); const errs = [], bad = [];
+    p.on('pageerror', e => errs.push(e.message)); await p.route('**/*', r => /^file:/.test(r.request().url()) ? r.continue() : r.abort());
+    await p.goto('file://' + FILE); await p.evaluate(() => localStorage.setItem('kairoute.intro1', '1')); await p.reload(); await p.waitForTimeout(500);
+    const pairs = JSON.parse(fs.readFileSync(path.join(__dirname, 'fixtures', 'naples-transit.json'), 'utf8'));
+    const r = await p.evaluate(async pr => {
+      window.__kairouteTransitSet(pr); const days = window.__kairouteDays(), d = days.find(x => /Naples/.test(x.dest)), other = days.find(x => /Rome/.test(x.dest));
+      window.__kairouteDay(d.i, 'Pompeii|^Sorrento'); window.__kairouteAt(d.i, 'plan');
+      const otherBefore = window.__kairouteTruth ? JSON.stringify(window.__kairouteTruth(other.i)) : '';
+      const rides = window.__kairouteRideRides(d.i), timed = rides.filter(x => x.was != null);
+      const k3 = a => a.map(n => (+n).toFixed(3)).join(',');
+      const find = x => pr.find(q => k3([q.a.lat, q.a.lng, q.b.lat, q.b.lng]) === k3([...x.a, ...x.b]));
+      const same = await window.__kairouteRideRefresh(d.i, rs => rs.map(x => ({ opts: JSON.parse(JSON.stringify((find(x) || { opts: [] }).opts)) })));
+      const bannerSame = !!document.querySelector('.ridechange');
+      const moved = await window.__kairouteRideRefresh(d.i, rs => rs.map(x => { const o = JSON.parse(JSON.stringify((find(x) || { opts: [] }).opts)); if (x.was != null) o.forEach(y => (y.deps || []).forEach(q => { q.t += 20; })); return { opts: o }; }));
+      window.__kairouteAt(d.i, 'plan'); await new Promise(f => setTimeout(f, 200));
+      const banner = (document.querySelector('.ridechange') || {}).innerText || '';
+      const otherAfter = window.__kairouteTruth ? JSON.stringify(window.__kairouteTruth(other.i)) : '';
+      const ok = document.querySelector('[data-act="ridechangeok"]'); if (ok) ok.click(); await new Promise(f => setTimeout(f, 200));
+      const gone = !document.querySelector('.ridechange');
+      const slots = [window.__kairouteRideSlot(d.i, d.date), window.__kairouteRideSlot(d.i, new Date(Date.parse(d.date + 'T12:00:00Z') - 86400e3).toISOString().slice(0, 10)), window.__kairouteRideSlot(d.i, '2020-01-01')];
+      return { n: rides.length, timed: timed.length, same, bannerSame, moved, banner, gone, slots, otherSame: otherBefore === otherAfter, i: d.i };
+    }, pairs);
+    if (!r.timed) bad.push(`no ride on the Naples day has a timetable departure (${r.n} rides)`);
+    if (!Array.isArray(r.same) || r.same.length || r.bannerSame) bad.push('an unchanged timetable was reported as a change: ' + JSON.stringify(r.same));
+    if (!Array.isArray(r.moved) || !r.moved.length || r.moved[0].now - r.moved[0].was !== 20) bad.push('a departure 20 minutes later was not found: ' + JSON.stringify(r.moved));
+    if (!/times? changed/.test(r.banner) || !/now leaves at \d\d:\d\d \(was \d\d:\d\d\)/.test(r.banner)) bad.push('the Day plan does not say the time changed with the new departure: ' + r.banner.slice(0, 160));
+    if (!r.gone) bad.push('OK does not put the notice away');
+    if (!r.otherSame) bad.push('another day changed when only the Naples day was re-checked');
+    if (r.slots.join() !== 'day,eve,') bad.push('checks are not due the day before and on the day: ' + JSON.stringify(r.slots));
+    await ctx6.setOffline(true); await p.evaluate(i => window.__kairouteAt(i, 'plan'), r.i); await p.waitForTimeout(300);
+    const offTxt = await p.$$eval('.tl.leg.ridecho', els => els.map(e => e.innerText).join(' ')).catch(() => '');
+    if (!/no signal: timetable last checked/.test(offTxt)) bad.push('with no signal the rides do not say when the timetable was last checked');
+    await ctx6.setOffline(false);
+    log('Timetable changes', 'transport', !bad.length, bad.length ? bad.join('; ') : `rides re-checked the day before and on the day; a departure moved 20 min is shown ("${r.banner.replace(/\s+/g, ' ').slice(0, 110)}…"), only that day re-planned; unchanged says nothing; offline says when last checked`);
+    log('Timetable changes', 'transport', !errs.length, errs.length ? 'page errors: ' + [...new Set(errs)].join(' | ') : 'no page errors');
+    await b6.close(); }
   // Real-screen walkthroughs at three sizes
   for (const [nm, w, h] of [['tablet landscape', 1280, 800], ['tablet upright', 800, 1280], ['phone', 412, 900]]) {
     const r = spawnSync('node', [path.join(__dirname, 'picks-e2e.cjs'), FILE, String(w), String(h), path.join(OUT, 'walk-' + w)], { encoding: 'utf8', timeout: 15 * 60 * 1000 });
