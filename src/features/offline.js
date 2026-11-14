@@ -161,7 +161,7 @@ async function offCheckNow(eager) { // eager: asked for (a download ending, a te
     const app = await offAppCheck();
     const todo = days.filter(x => !x.ready);
     // The key is taken after the days are checked: checking a day can pick its sights for the first time.
-    offRep = { key: offKey(), at: Date.now(), days, app, ready: !!days.length && !todo.length && app.ok, todo: todo.length, notes: [...new Set(days.flatMap(x => x.notes))] };
+    offRep = { key: offKey(), dg: dataGen, at: Date.now(), days, app, ready: !!days.length && !todo.length && app.ok, todo: todo.length, notes: [...new Set(days.flatMap(x => x.notes))] };
     return offRep;
   } finally { offChecking = false; offHurry = false; if (offAgain) { offAgain = false; offSoon(200); } }
 }
@@ -351,7 +351,7 @@ function offAfterRender() {
     if (html && v && !FULL_VIEWS[view] && !document.getElementById("offBanner")) v.insertAdjacentHTML("afterbegin", html);
     if (view === "settings" && setSec === "offline") offSpace();
     // Checked again when the trip changes, and at most once a minute otherwise (the check builds every day's plan).
-    if (!offRep || offRep.key !== offKey()) offSoon(); else if (Date.now() - offRep.at > 60000) offSoon(3000);
+    if (!offRep || offRep.key !== offKey()) offSoon(); else if (offRep.dg !== dataGen && Date.now() - offRep.at > 60000 && (view === "trip" || view === "settings")) offSoon(3000); // after new answers, only where the status is shown: a page left alone sits still
   } catch (e) { console.warn("offline", e); }
 }
 document.addEventListener("click", e => {
