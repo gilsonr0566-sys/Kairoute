@@ -835,7 +835,7 @@ function carryOver(d) {
   return ids;
 }
 function refillIfNeeded(d, city) {
-  if (!d || !d.respread || !city) return;
+  if (!d || !d.respread || !city || d.ready) return; // a day marked ready keeps its picks
   delete d.respread;
   const fresh = defaultSelection(city, trip.style, d);
   fresh.forEach(id => addPick(d, id, false));
@@ -851,10 +851,12 @@ function forget0(o) { bonusMemo.delete(o); mealMemo.delete(o); keptMemo.delete(o
 function dayWindowSafe(d, city) { try { return dayWindow(d, city); } catch (e) { return null; } }
 function suggestTour(d0) {
   const city = cityFor(d0); if (!city) return 0;
-  const days = trip.days.filter(o => cityFor(o) === city);
+  // Days the traveler marked ready keep their sights; the others are filled around them.
+  const days = trip.days.filter(o => cityFor(o) === city && !o.ready);
   const ints = interestWords(), style = trip.style || "mix";
   const score = x => (x.mustSee ? 3 : 1) + ints.reduce((a, w) => a + ((x.category + " " + x.summary).toLowerCase().includes(w) ? 1 : 0), 0) * 0.8 + (style === "mix" || x.kind === style ? 0.5 : 0) + (fameW(x) - 1) * 1.5;
   const used = new Set(); let total = 0;
+  trip.days.forEach(o => { if (o.ready && cityFor(o) === city) { (o.selected || []).forEach(id => used.add(id)); (o.ready.bonus || []).forEach(id => used.add(id)); } });
   const fills = days.map(o => o.fillTime);
   // A sight the traveler picked to sort by stays theirs: that day is built around it, closest sights first,
   // and no other day takes it.
@@ -1701,11 +1703,14 @@ function buildPlanFor(d) {
   if (d.fillTime !== false && !d.rain && !(Array.isArray(d.selected) && !d.selected.length && !d.autoEmpty)) {
     const ints = interestWords(), likes = c => ints.reduce((a, w) => a + ((c.category + " " + c.summary).toLowerCase().includes(w) ? 1 : 0), 0);
     const taken = new Set([...Object.keys(plannedElsewhere(d)), ...leavingReserve(d, city)]);
+    // A day marked ready keeps the optional stops it had; other days leave those alone.
+    trip.days.forEach(o => { if (o !== d && o.ready && cityFor(o) === city) (o.ready.bonus || []).forEach(id => taken.add(id)); });
+    const keepBonus = d.ready && Array.isArray(d.ready.bonus) ? new Set(d.ready.bonus) : null;
     trip.days.slice(0, trip.days.indexOf(d)).forEach(o => { if (cityFor(o) !== city) return; if (!bonusMemo.has(o)) { try { buildPlan(o); } catch (e) {} } (bonusMemo.get(o) || []).forEach(id => taken.add(id)); });
     const inSeq = new Set(seq.filter(x => !x.mealOf).map(x => x.id)), skip = new Set((d.selected || []).concat(dropped.map(x => x.id)));
     // An optional stop the app adds on its own must come with its story: a sight listed from the sources whose story
     // isn't written yet is offered in the sights list, never slipped into the day as an extra.
-    const pool = (city.sites || []).concat(city.farther || []).filter(x => !x.quick && !(x.srcOnly && !x.guide) && religiousOk(x) && !inSeq.has(x.id) && !skip.has(x.id) && !taken.has(x.id) && !(d.skipBonus || []).includes(x.id) && !closedForDay(x, d, w) && (!d.rain || x.indoor))
+    const pool = (city.sites || []).concat(city.farther || []).filter(x => !x.quick && !(x.srcOnly && !x.guide) && religiousOk(x) && !inSeq.has(x.id) && !skip.has(x.id) && !taken.has(x.id) && !(d.skipBonus || []).includes(x.id) && !closedForDay(x, d, w) && (!d.rain || x.indoor) && (!keepBonus || keepBonus.has(x.id)))
       .map(x => Object.assign({}, x, { minutes: Math.round(x.minutes * mult / 5) * 5 || x.minutes, bonus: true }, live(x)));
     const limit = w.endBy - 15 - tailCost(), leaving = d.type === "embark" || d.type === "departure";
     let capped = false;
@@ -3490,6 +3495,13 @@ if (typeof window !== "undefined") window.__kairouteSplitStop = (i, n) => {
 // screen does, so date handling and the Trip screen can be checked without the network.
 // Live check of the whole intake with the real AI: type a trip, build its guides, report what each day got.
 // Test hook (tools/demo-flow.cjs): what the app is doing and the trip as entered, for checks on the live site.
+// Test hook: what a day's plan is built from that comes from outside (each loaded from the device when offline), so
+// the demo flow can say why an offline plan differs from the online one.
+if (typeof window !== "undefined") window.__kairouteInputs = i => { const d = trip.days[i], c = cityFor(d); if (!c) return null; const k = keyOf(c.city);
+  const wk = typeof wxFor === "function" ? wxFor(d, c) : null;
+  return { city: k, label: srcLabel(c, d), fame: fameAsked[k] === true ? "loading" : fameAsked[k] ? "applied" : "none", crowd: crowdCache[k] ? (crowdCache[k].map ? Object.keys(crowdCache[k].map).length : 0) : "none",
+    wx: wk ? JSON.stringify(wk).slice(0, 80) : "none", sites: (c.sites || []).length, farther: (c.farther || []).length, famed: (c.sites || []).filter(x => x.fame).length, must: (c.sites || []).filter(x => x.mustSee).map(x => x.name).join("; ").slice(0, 300),
+    eats: (c.restaurants || []).length, rides: Object.keys(transitMem).length, online: navigator.onLine }; };
 if (typeof window !== "undefined") window.__kairouteState = () => ({ view, busy: busy ? busy.text || "busy" : "", err: aiError || "", ship: trip.ship || null, name: trip.name || "",
   days: trip.days.map((d, i) => ({ i, date: d.date, type: d.type, dest: d.destination, arrive: d.portArrive || "", aboard: d.allAboard || "", estimated: !!d.estimated, wants: d.wants || [], picks: (d.selected || []).length, stayAboard: !!d.aboard, guide: !!cityFor(d) })) });
 if (typeof window !== "undefined") window.__kairouteAiReady = () => aiReady();
@@ -4030,7 +4042,7 @@ function renderView() {
   // Speed: the day strip is redrawn only when it changed, and centred on the day after the screen is drawn
   // (measuring it here, before the new screen, made the browser lay out the whole page twice per tap).
   { const box = document.getElementById("dayChips"), html = trip.days.map((x, i) =>
-    `<button class="daychip" data-day="${i}" aria-pressed="${i === trip.active}"><b>${esc(fmtDate(x.date) || "Day " + (i + 1))}</b> · ${esc(x.title && x.title.trim() ? x.title.trim() : placeLabel(x) || "New day")}</button>`).join("");
+    `<button class="daychip" data-day="${i}" aria-pressed="${i === trip.active}"><b>${esc(fmtDate(x.date) || "Day " + (i + 1))}</b> · ${esc(x.title && x.title.trim() ? x.title.trim() : placeLabel(x) || "New day")}${heartDot(x)}</button>`).join("");
     if (box._html !== html || box.children.length !== trip.days.length) { box.innerHTML = html; box._html = html; chipCenter = true; } }
   document.querySelectorAll(".tab").forEach(t => t.setAttribute("aria-selected", t.dataset.view === (view === "sites" ? "plan" : view) ? "true" : "false"));
   const d = day();
@@ -4040,7 +4052,7 @@ function renderView() {
   // The Journal is about the whole trip too, so it has no day strip either.
   document.getElementById("dayRow").hidden = tripScreens || view === "trip" || view === "journal";
   document.getElementById("tripName").hidden = view === "trip" || view === "journal" || tripScreens;
-  document.getElementById("dayCount").textContent = (trip.active + 1) + " of " + trip.days.length;
+  { const rc = readyCount(); document.getElementById("dayCount").innerHTML = (trip.active + 1) + " of " + trip.days.length + (rc.done ? ` <span class="dcready" title="${rc.done} of ${rc.of} days ready">${heartSVG(true)}${rc.done}</span>` : ""); }
   document.querySelector(".tabs").hidden = tripScreens;
   if (view === "trips") { $view.innerHTML = renderTrips(); return; }
   if (view === "wizard") { $view.innerHTML = renderWizard(); return; }
@@ -4095,7 +4107,7 @@ function dayHeading(d) {
   const sub = [fmtDow(d.date) + " " + fmtDate(d.date), d.type === "sea" ? "" : mainPlace(d), typeInfo(d.type).short].filter(Boolean).map(esc).join(" · ");
   if (dayRenaming === d.id) return `<div><div class="eyebrow">${sub}</div><div class="renamebox dayrename"><input id="dayTitleInput" type="text" maxlength="60" value="${esc(dayName(d))}" aria-label="Name this day" enterkeyhint="done">
     <button class="btn small" data-act="daytitlesave">Save</button>${d.title ? `<button class="btn ghost small" data-act="daytitleauto">Use "${esc(dayAuto(d))}"</button>` : ""}<button class="btn ghost small" data-act="daytitlecancel">Cancel</button></div></div>`;
-  return `<div><div class="eyebrow">${sub}${d.type === "port" && !d.aboard ? ` · <button class="linkbtn" data-act="aboard">⚓ Staying on board?</button>` : ""}</div><h2 class="dayname">${esc(dayName(d))} <button class="linkbtn rename" data-act="daytitle" aria-label="Rename this day">✎ Rename</button></h2></div>`;
+  return `<div><div class="eyebrow">${sub}${d.type === "port" && !d.aboard ? ` · <button class="linkbtn" data-act="aboard">⚓ Staying on board?</button>` : ""}</div><h2 class="dayname">${esc(dayName(d))} <button class="linkbtn rename" data-act="daytitle" aria-label="Rename this day">✎ Rename</button>${heartBtn(d)}</h2></div>`;
 }
 // The one head every day page shares (Day plan, Change stops, Guide): the day's name on the left; on the right the
 // back-to-the-ship countdown on ship, train and flight days, then the page's actions (one main action at most).
@@ -4847,7 +4859,7 @@ function itinerary() {
     out += `<button class="itrow ${i === trip.active ? "active" : ""}" data-day="${i}">
       <span class="dt">${esc(fmtDate(x.date))}</span>
       <span class="ic ${x.type}" aria-hidden="true">${typeInfo(x.type).icon}</span>
-      <span class="tx"><b>${esc(placeLabel(x) || "New day")}</b><span>${esc(typeInfo(x.type).short)} · ${esc(dayMeta(x))}${x.estimated ? " · estimated" : ""}</span>${built ? "" : `<span class="ok" style="display:block;color:var(--meal);font-weight:700">Guide not built yet</span>`}</span>
+      <span class="tx"><b>${esc(placeLabel(x) || "New day")}</b><span>${esc(typeInfo(x.type).short)} · ${esc(dayMeta(x))}${x.estimated ? " · estimated" : ""}</span>${built ? "" : `<span class="ok" style="display:block;color:var(--meal);font-weight:700">Guide not built yet</span>`}</span>${heartDot(x)}
     </button>`;
   });
   return out;
@@ -4872,6 +4884,7 @@ function renderTrip(d) {
   <div class="tripgrid">
     <div class="leftcol pane" data-pane="days">
       <div class="pagehead"><div><div class="eyebrow">${(() => { const dates = new Set(trip.days.map(x => x.date).filter(Boolean)).size || trip.days.length, cities = new Set(trip.days.filter(x => !noShore(x) && x.type !== "port" && x.destination).map(x => keyOf(x.destination))).size, ports = trip.days.filter(x => x.type === "port").length; return `${dates} day${dates === 1 ? "" : "s"}${cities > 1 ? ` · ${cities} cities` : ""}${ports ? ` · ${ports} cruise stop${ports === 1 ? "" : "s"}` : ""}`; })()}</div>${renameId === trip.id ? renameBox(trip.id, trip.name || tripName(trip)) : `<h2 class="dayname">${esc(trip.name || "Your trip")} <button class="linkbtn rename" data-act="rename" data-id="${esc(trip.id)}" aria-label="Rename this trip">✎ Rename</button></h2>`}</div></div>
+      ${readyTripLine()}
       ${offCard()}
       ${esimCard()}
       ${aiReady() && missing ? `<button class="btn ghost small" data-act="genall" ${busy ? "disabled" : ""}>${missing === 1 ? `Build the guide for ${esc(missingNames[0])}` : missing <= 3 ? `Build the guides for ${esc(missingNames.join(" and "))}` : `Build the guides for all ${missing} places`}</button>` : ""}
@@ -5711,6 +5724,7 @@ ${partsList(s, it.time)}${stopLiveNotes(it, d)}</div></div>`;
   const L = DAY_LEN.find(x => x[0] === +d.hours), canLen = d.type === "land" || d.type === "arrival";
   // Heads-up: everything that needs a decision today, in one place above the schedule, most urgent first.
   const heads = [
+    readyBanner(d),
     (b => b ? `<div class="livecard">${b}</div>` : "")(liveBanner(d, plan)),
     rideChangeBanner(d),
     plan.over ? `<div class="banner warn" role="alert">This plan runs ${dur(plan.end - plan.endBy)} past ${fmt(plan.endBy)}. Remove a stop with Change stops, or change the times.</div>` : "",

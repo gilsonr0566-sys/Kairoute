@@ -262,15 +262,20 @@ async function partA(b) {
     ok(rep && rep.ready, `the download finishes "Ready for offline" (${sec(t0)} s)` + (rep && !rep.ready ? ": " + rep.days.filter(x => !x.ready).map(x => `day ${x.i + 1} ${x.place} missing ${Object.values(x.parts).filter(q => !q.ok).map(q => q.miss).join(", ")}`).join("; ") : ""));
     await shot(p, "A6-offline-ready-tablet");
     // The plans to match are the ones on screen just before the internet goes (ride answers keep arriving while online).
-    for (const d of days) { if (d.type === "sea") continue; await p.evaluate(go("plan", d.i)).catch(() => {}); await p.waitForTimeout(800); const s = await seen(p); plans[d.i] = Object.assign({}, plans[d.i], { stops: s.stops, legs: await p.evaluate(i => { try { return window.__kairouteRideLegs(i); } catch (e) { return String(e); } }, d.i) }); }
+    for (const d of days) { if (d.type === "sea") continue; await p.evaluate(go("plan", d.i)).catch(() => {}); await p.waitForTimeout(800); const s = await seen(p); plans[d.i] = Object.assign({}, plans[d.i], { stops: s.stops, inputs: await p.evaluate(i => window.__kairouteInputs ? window.__kairouteInputs(i) : null, d.i).catch(() => null), legs: await p.evaluate(i => { try { return window.__kairouteRideLegs(i); } catch (e) { return String(e); } }, d.i) }); }
     await ctx.setOffline(true); await p.reload().catch(() => {}); await p.waitForTimeout(3000);
     ok(await p.evaluate(() => !!document.querySelector("header.top")).catch(() => false), "with no internet the app opens from the device");
     const cont = p.locator('[data-act="continue"]').first(); if (await cont.isVisible().catch(() => false)) await cont.click();
     for (const d of days) {
       if (d.type === "sea") continue;
-      await p.evaluate(go("plan", d.i)).catch(() => {}); await p.waitForTimeout(1200); const s = await seen(p);
+      await p.evaluate(go("plan", d.i)).catch(() => {}); await p.waitForTimeout(1200); let s = await seen(p), late = false;
+      if (s.stops.join("|") !== plans[d.i].stops.join("|")) { await p.waitForTimeout(6000); const s2 = await seen(p);
+        log(`     day ${d.i + 1}: ${s2.stops.join("|") === plans[d.i].stops.join("|") ? "matches after 6 s more (the plan changed on screen a moment after opening)" : "still differs after 6 s"}`);
+        if (s2.stops.join("|") === plans[d.i].stops.join("|")) { s = s2; late = true; }
+        log("     inputs online: " + JSON.stringify(plans[d.i].inputs) + "\n     inputs offline: " + JSON.stringify(await p.evaluate(i => window.__kairouteInputs ? window.__kairouteInputs(i) : null, d.i).catch(() => null))); }
       if (s.stops.join("|") !== plans[d.i].stops.join("|")) log("     rides online: " + JSON.stringify(plans[d.i].legs).slice(0, 800) + "\n     rides offline: " + JSON.stringify(await p.evaluate(i => { try { return window.__kairouteRideLegs(i); } catch (e) { return String(e); } }, d.i)).slice(0, 800));
       ok(s.stops.join("|") === plans[d.i].stops.join("|"), `offline: day ${d.i + 1} ${d.dest} has the same stops` + (s.stops.join("|") === plans[d.i].stops.join("|") ? "" : ` (online: ${plans[d.i].stops.join("; ")} | offline: ${s.stops.join("; ")})`));
+      if (late) ok(false, `offline: day ${d.i + 1} ${d.dest} shows its plan straight away (it changed on screen a moment after opening)`, true);
     }
     await shot(p, "A6b-offline-dayplan-tablet");
     await ctx.setOffline(false);
