@@ -1,8 +1,8 @@
 // Rides live check: asks the live helper's /transit for the Naples port-day rides (as the app does) and prints
 // what comes back, how long it took, and any error. Always exits 0 (it reports).
 const U = "https://kairoute-ai.rickgilson.workers.dev";
-const P = { ship: [40.8387, 14.2546], sorrento: [40.6263, 14.3757], pompeii: [40.749, 14.4848] };
-const pairs = [["ship", "sorrento"], ["sorrento", "pompeii"], ["pompeii", "ship"]];
+const P = { ship: [40.8387, 14.2546], sorrento: [40.6263, 14.3757], pompeii: [40.749, 14.4848], cathedral: [40.852, 14.26] };
+const pairs = [["ship", "sorrento"], ["sorrento", "pompeii"], ["pompeii", "ship"], ["cathedral", "sorrento"]];
 for (const [x, y] of pairs) {
   const t0 = Date.now();
   try {
