@@ -85,7 +85,7 @@ function zoneNote(d) {
   const ship = d.shipOff ? ` The ship's clock is ${dur(Math.abs(d.shipOff))} ${d.shipOff > 0 ? "ahead of" : "behind"} ${esc(lab)}: all aboard ${esc(d.allAboard)} ship time is ${fmt(toMin(d.allAboard) - d.shipOff)} ${esc(lab)}.` : "";
   const est = z.known ? "" : " (time zone estimated until you're online once)";
   if (!gap) return `<p class="tzline">All times are ${esc(lab)}${est}.${ship}</p>`;
-  return `<p class="tzline warn"><b>All times are ${esc(lab)}${est}.</b> This device is set to a different time zone (${dur(Math.abs(gap))} ${gap > 0 ? "behind" : "ahead"}); Kairoute already counts from ${esc(lab)}, so follow these times.${ship}</p>`;
+  return `<p class="tzline warn"><b>All times are ${esc(lab)}${est}.</b> Your device is on a different time zone (${dur(Math.abs(gap))} ${gap > 0 ? "behind" : "ahead"}); follow these times.${ship}</p>`;
 }
 
 // ---------- Ship's clock check: on a ship day, confirm the ship's clock matches the port's ----------
