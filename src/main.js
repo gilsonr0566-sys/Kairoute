@@ -485,6 +485,8 @@ const cityKeyFor = d => d.cityKey && cities[d.cityKey] ? d.cityKey : (cities[key
 const cityFor = d => { const k = cityKeyFor(d); return k ? cities[k] : null; };
 // A port day the traveler spends on the ship ("Staying on board", set in the trip setup or on the day) is planned
 // like a day at sea: no shore plan, no countdown or ship-time alerts, no tour day (pricing counts tourDay only).
+// A day ashore from a ship whose times the traveler hasn't given yet (planned on estimated times).
+const estShip = d => !!d && !!d.estimated && /port|embark/.test(d.type || "") && !noShore(d);
 const noShore = d => !!d && (d.type === "sea" || (d.type === "port" && !!d.aboard));
 const tourDay = d => !!d && !noShore(d);
 // Days that end at a ship, train or plane: no leeway past the "be there by" time.
@@ -821,6 +823,7 @@ function refillIfNeeded(d, city) {
 // checking the real planned day (route, meals, opening days) after every addition, so nothing is dropped
 // and no sight repeats across days.
 let suggestMsg = "";
+let movedNote = ""; // "Sorrento moved here from Mon Jul 12." after picking a sight planned on another day
 function forget0(o) { bonusMemo.delete(o); mealMemo.delete(o); keptMemo.delete(o); eveMemo.delete(o); }
 function dayWindowSafe(d, city) { try { return dayWindow(d, city); } catch (e) { return null; } }
 function suggestTour(d0) {
@@ -4832,7 +4835,7 @@ function siteCard(s, d, plan, nr) {
   }
   if (fs === false) return `<div class="site nofitcard" data-card="${esc(s.id)}" aria-disabled="true">
     <span class="nobox" aria-hidden="true"></span>
-    <div class="body"><div class="name">${esc(s.name)}</div><div class="tags">${fit}${near != null ? `<span class="tag near">${near < 0.05 ? "Next to " + esc(nearTo.name) : esc(distTxt(near, true)) + " from " + esc(nearTo.name)}</span>` : ""}${s.mustSee ? `<span class="tag must">Must-see</span>` : ""}<span class="tag">${dur(s.minutes)} there</span></div>
+    <div class="body"><div class="name">${esc(s.name)}</div><div class="tags">${fit}${other ? `<span class="tag seen">Planned for ${esc(fmtDow(other.date))} ${esc(fmtDate(other.date))}</span>` : ""}${near != null ? `<span class="tag near">${near < 0.05 ? "Next to " + esc(nearTo.name) : esc(distTxt(near, true)) + " from " + esc(nearTo.name)}</span>` : ""}${s.mustSee ? `<span class="tag must">Must-see</span>` : ""}<span class="tag">${dur(s.minutes)} there</span></div>
     <p class="sum">${esc(unitText(s.summary))}</p></div></div>`;
   return `<label class="site ${on ? "on" : ""}${isAnc ? " anchor" : ""}" for="s-${esc(s.id)}" data-card="${esc(s.id)}">
     <input type="checkbox" id="s-${esc(s.id)}" data-site="${esc(s.id)}" ${on ? "checked" : ""}>
@@ -4901,6 +4904,10 @@ function timeMeter(plan, d) {
     <div class="mrow"><b>${dur(Math.min(used, 24 * 60))} of ${dur(avail)}</b><span>${fmt(m.start)} to ${fmt(m.endBy)}</span></div>
     <div class="mbar"><i style="width:${pct}%"></i></div>${parts.length ? `<p class="mparts">${parts.map(esc).join(" · ")}</p>` : ""}${msg ? `<p>${msg}</p>` : ""}${extras}</div>`;
 }
+// What Change stops offers for a day, by section (live checks: a day trip like Sorrento or Amalfi must always be offered).
+if (typeof window !== "undefined") window.__kairoutePicker = i => { const d = trip.days[i], city = cityFor(d); if (!city) return { error: "no guide" }; if (!d.selected) seedPicks(d, city);
+  const elsewhere = plannedElsewhere(d), away = x => elsewhere[x.id] && !d.selected.includes(x.id), nm = l => l.map(x => x.name);
+  return { city: city.city, picked: nm(allSites(city).filter(x => d.selected.includes(x.id))), main: nm(city.sites.filter(x => !x.quick)), far: nm(city.farther || []), quick: nm(city.sites.filter(x => x.quick)), elsewhere: nm(allSites(city).filter(away)).map(n => n + " (day " + ((trip.days.indexOf(elsewhere[allSites(city).find(x => x.name === n).id]) + 1) || "?") + ")") }; };
 const d0 = plan => `${fmt(plan.start)} to ${fmt(plan.endBy)}`;
 function renderSites(d) {
   const city = cityFor(d);
@@ -4908,12 +4915,11 @@ function renderSites(d) {
   refillIfNeeded(d, city); if (!d.selected) seedPicks(d, city); fameFor(d, city);
   const plan = buildPlan(d); queueExtras(plan);
   const f = siteFilter;
-  const elsewhere = plannedElsewhere(d);
-  const away = x => elsewhere[x.id] && !d.selected.includes(x.id);
-  const main = city.sites.filter(s => !s.quick && !away(s) && (f === "all" || (f === "must" ? s.mustSee : sightKind(s, city) === f)));
+  // Nothing is hidden (Richard, Nov 14: "my selections don't even offer Sorrento or Amalfi": they were planned on
+  // another day and sat in a closed fold). A sight planned on another day stays in its own list, tagged with that day.
+  const main = city.sites.filter(s => !s.quick && (f === "all" || (f === "must" ? s.mustSee : sightKind(s, city) === f)));
   const quick = city.sites.filter(s => s.quick);
-  const far = (city.farther || []).filter(x => !away(x));
-  const already = [...city.sites.filter(x => !x.quick), ...(city.farther || [])].filter(away);
+  const far = (city.farther || []).slice();
   // The traveler's picks always sit at the top: the one picked last first (the anchor), then the rest of the
   // picks. Everything not picked follows, closest first: to the anchor, or with no anchor to the nearest pick.
   // Picks keep a steady order, newest first (each new tick goes on top and nothing else moves). Every pick
@@ -4922,7 +4928,7 @@ function renderSites(d) {
   const picked = pickedSites(d, city).reverse();
   const refs = picked.filter(x => isFinite(x.lat) && isFinite(x.lng));
   const byNear = xs => refs.length ? nearSort(xs, refs) : xs;
-  const mainL = byNear(main.filter(x => !on(x))), farL = byNear(far.filter(x => !on(x))), alreadyL = byNear(already), quickL = byNear(quick.filter(x => !on(x)));
+  const mainL = byNear(main.filter(x => !on(x))), farL = byNear(far.filter(x => !on(x))), quickL = byNear(quick.filter(x => !on(x)));
   const near = { refs, anc }; sitesCtx = { d, plan, near };
   const leftTxt = (mm => mm ? ` · <b>${mm.left >= 5 ? dur(mm.left) + " left today" : "today is full"}</b>` : "")(plan && !plan.error ? timeLeft(plan, d) : null);
   const n = d.selected.length;
@@ -4934,7 +4940,7 @@ function renderSites(d) {
   </div>
   ${timeMeter(plan, d)}${plan && !plan.error ? laterEndBanner(d, plan) + elsewhereNote(plan) : ""}
   <div class="card suggest"><div><h3>Let your guide plan it</h3><p class="lede small">The best stops for ${nDays > 1 ? `all ${nDays} days` : "today"} in ${esc(city.city)}, fitted to your hours, pace and interests. Nothing repeats.</p></div>
-    ${suggestMsg ? `<p class="banner" id="suggestNote" role="status">${esc(suggestMsg)}</p>` : ""}<div class="actions"><button class="btn small" data-act="suggesttour">Suggest my tour</button><button class="btn ghost small" data-act="freshpicks">Fresh picks for this day only</button></div></div>
+    ${suggestMsg ? `<p class="banner" id="suggestNote" role="status">${esc(suggestMsg)}</p>` : ""}${movedNote ? `<p class="banner ok" id="movedNote" role="status">${esc(movedNote)}</p>` : ""}<div class="actions"><button class="btn small" data-act="suggesttour">Suggest my tour</button><button class="btn ghost small" data-act="freshpicks">Fresh picks for this day only</button></div></div>
   ${city.ai ? `<p class="ai-note">Written by your AI guide from checked sources: every place is confirmed on the map, stories draw on Wikipedia and Wikivoyage (CC BY-SA), hours and access on OpenStreetMap contributors (ODbL). Check opening hours before you go.</p>` : city.builtin ? `<p class="ai-note">Kairoute guide. Hours and prices are typical: check before you go.</p>` : ""}${city.sites.some(x => x.srcOnly) ? `<p class="ai-note">More sights come from checked sources (Wikidata, Wikipedia, heritage registers); their short descriptions are from Wikivoyage (CC BY-SA). Each one's full story is written when you add it to a day.</p>` : ""}
   </div><div class="sitesmain pane" data-pane="sites">
   ${picked.length ? `<p class="listlbl">Your picks (${picked.length}), newest first${leftTxt}</p>
@@ -4944,8 +4950,6 @@ function renderSites(d) {
   <div class="sitelist">${farL.map(s => siteCard(s, d, plan, near)).join("")}</div>` : ""}
   ${errBlock()}
   ${addPlaceCard(d)}
-  ${alreadyL.length ? `<details class="more already"><summary>Already planned on other days (${alreadyL.length})</summary><p class="lede" style="margin:8px 0">Want to go back? Tick one to see it again today.</p>
-  <div class="sitelist">${alreadyL.map(s => siteCard(s, d, plan, near)).join("")}</div></details>` : ""}
   ${quickL.length ? `<details class="more"><summary>Quick stops (${quickL.length})</summary><p class="lede" style="margin:8px 0">Added automatically when your route passes them. Tick one to make it a planned stop.</p>
   <div class="sitelist">${quickL.map(s => siteCard(s, d, plan, near)).join("")}</div></details>` : ""}
   <div class="stickybar"><span class="count">${n} site${n === 1 ? "" : "s"} picked${plan && !plan.error && (plan.bonus || []).length ? ` · ${plan.bonus.length} optional on your plan` : ""}</span><button class="btn" data-act="toplan">See my day plan</button></div></div></div>`;
@@ -5514,7 +5518,7 @@ ${partsList(s, it.time)}${stopLiveNotes(it, d)}</div></div>`;
     (b => b ? `<div class="livecard">${b}</div>` : "")(liveBanner(d, plan)),
     plan.over ? `<div class="banner warn" role="alert">This plan runs ${dur(plan.end - plan.endBy)} past ${fmt(plan.endBy)}. Remove a stop with Change stops, or change the times.</div>` : "",
     closedBanner(d, plan),
-    plan.dropped.length && !liveOn(d) ? `<div class="banner warn dropped"><span>Didn't fit today: <b>${plan.dropped.map(s => esc(s.name)).join(", ")}</b>. Your picks are over today's time.</span><button type="button" class="btn small" data-act="fitfix">Make it fit</button></div>` : "",
+    plan.dropped.length && !liveOn(d) ? `<div class="banner warn dropped"><span>Didn't fit today: <b>${plan.dropped.map(s => esc(s.name)).join(", ")}</b>. Your picks are over today's time.${estShip(d) ? ` The ship times here are estimated; your booking's real times may leave room.` : ""}</span>${estShip(d) && aiReady() ? `<button type="button" class="btn small ghost" data-act="shiptimes">Add ship times</button>` : ""}<button type="button" class="btn small" data-act="fitfix">Make it fit</button></div>` : "",
     (tc => tc ? `<div class="banner warn" role="alert">This day has ${dur(tc.ride)} of travel for ${dur(tc.see)} at the sights. Consider fewer far-apart stops, more hours, or splitting it over two days.</div>` : "")(travelCheck(plan)),
     plan.endBy - plan.start < 90 ? `<div class="banner warn">There isn't much time today, so keep it close: a coffee and one nearby sight at most.</div>` : "",
     weatherBanner(d, plan),
@@ -6033,7 +6037,7 @@ document.addEventListener("click", e => {
   }
   if (act === "fixstops") { fixStops(); return; }
   if (act === "changetrip") { changeTrip(); return; }
-  if (act === "shiptimes") { const est = trip.days.filter(x => (x.type === "port" || x.type === "embark") && x.estimated); changeText = changeText || `${trip.ship && trip.ship.name ? trip.ship.name + " port" : "Ship port"} times: ` + est.map(x => `${x.destination} ${x.date}: arrive ?, all aboard ?`).join("; "); render(); const c = document.querySelector("details.change"); if (c) { c.open = true; c.scrollIntoView({ block: "center" }); const t = document.getElementById("chgText"); if (t) t.focus(); } return; }
+  if (act === "shiptimes") { const est = trip.days.filter(x => (x.type === "port" || x.type === "embark") && x.estimated); view = "trip"; changeText = changeText || `${trip.ship && trip.ship.name ? trip.ship.name + " port" : "Ship port"} times: ` + est.map(x => `${x.destination} ${x.date}: arrive ?, all aboard ?`).join("; "); render(); const c = document.querySelector("details.change"); if (c) { c.open = true; c.scrollIntoView({ block: "center" }); const t = document.getElementById("chgText"); if (t) t.focus(); } return; }
   if (act === "suggesttour") {
     // Visible right away: the button says it's working, then the plan shows what changed on each day.
     t.disabled = true; t.textContent = "Planning your days…";
@@ -6122,7 +6126,7 @@ document.addEventListener("change", e => {
   if (t.dataset && t.dataset.ride) { switchRide(t.dataset.ride, t.value); const y = window.scrollY; render(); window.scrollTo(0, y); return; }
   if (t.dataset && t.dataset.site) {
     const d = day(), id = t.dataset.site;
-    d.selected = d.selected || [];
+    d.selected = d.selected || []; movedNote = "";
     if (t.checked && !addPick(d, id, true)) { t.checked = false; return; }
     delete d.autoEmpty; // the traveler's first tick or untick makes the list theirs
     if (t.checked) { d.anchor = id; anchorJump = true; }

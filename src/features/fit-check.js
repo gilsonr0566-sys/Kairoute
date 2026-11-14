@@ -48,8 +48,15 @@ function addPick(d, id, ask) {
   d.selected = d.selected || []; if (d.selected.includes(id)) return true;
   // Closed that day (or open only outside the day's time here): never added; the box offers a day it's open.
   const sx = allSites(city).find(x => x.id === id); if (sx && shutOn(d, sx)) { if (ask) closedOpen(d, sx); return false; }
-  if (!fitsWith(d, [id])) { if (ask) fitOpen(d, id); return false; }
-  d.selected = [...d.selected, id]; delete d.autoEmpty; rememberPick(d, allSites(city).find(x => x.id === id)); if (ask) markMine(d, id, true); return true;
+  // A sight is on one day only. When the traveler picks one planned on another day here, it moves here (and comes
+  // off the other day), so it is seen today rather than ticked twice and planned once.
+  const from = ask ? plannedElsewhere(d)[id] : null, back = from && { sel: from.selected.slice(), mine: (from.mine || []).slice(), anchor: from.anchor };
+  if (from) { from.selected = from.selected.filter(x => x !== id); markMine(from, id, false); if (from.anchor === id) from.anchor = null; }
+  // The won't-fit box measures the day as if the sight came here (before it goes back to its own day).
+  if (!fitsWith(d, [id])) { if (ask) fitOpen(d, id); if (from) { from.selected = back.sel; from.mine = back.mine; from.anchor = back.anchor; } return false; }
+  d.selected = [...d.selected, id]; delete d.autoEmpty; rememberPick(d, sx); if (ask) markMine(d, id, true);
+  if (from) movedNote = (sx ? sx.name : "That sight") + " moved here from " + fmtDow(from.date) + " " + fmtDate(from.date) + ".";
+  return true;
 }
 // The traveler's own picks (ticked, added by name, moved or swapped in with a tap): these always stay, even when
 // an interest is turned off later. Picks the app chose (starting picks, the day's fill) are not on this list.
