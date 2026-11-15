@@ -648,12 +648,17 @@ Written text:
       if (hit) return new Response(hit, { headers: { ...h, "content-type": "audio/mpeg", "x-cached": "1", "cache-control": "public, max-age=31536000" } });
       const cost = text.length * vm.rate, vk = "v:" + today();
       const vUsed = +(await env.USAGE.get(vk)) || 0, u = await used(env);
-      if (lab ? cost > LAB_LEFT : (vUsed + cost > VOICE_DAILY || u + cost > VOICE_TOTAL)) return Response.json({ error: "voice allowance used up" }, { status: 429, headers: h });
+      // Hand-written stop scripts (tools/voice-render.mjs, Richard's go on Nov 15) are recorded once, ahead, by the
+      // "Record stop scripts" workflow with the recorder key. They are paid from the monthly extra (counted like the
+      // voice lab), never from travelers' daily allowance, and stop at the monthly ceiling.
+      const rec = !!env.REC_KEY && req.headers.get("x-kairoute-rec") === env.REC_KEY;
+      const recLeft = rec ? Math.max(0, MONTH_EXTRA - (+(await env.USAGE.get("x:" + month())) || 0)) : 0;
+      if (rec ? cost > recLeft : lab ? cost > LAB_LEFT : (vUsed + cost > VOICE_DAILY || u + cost > VOICE_TOTAL)) return Response.json({ error: "voice allowance used up" }, { status: 429, headers: h });
       let audio;
       try { const r = await env.AI.run(vm.id, { text, speaker, encoding: "mp3" }, { returnRawResponse: true }); if (!r.ok) throw new Error("tts " + r.status); audio = await r.arrayBuffer(); }
       catch (e) { return Response.json({ error: "The voice service is busy." }, { status: 502, headers: h }); }
       if (!audio || audio.byteLength < 1000) return Response.json({ error: "No audio" }, { status: 502, headers: h });
-      ctx.waitUntil(Promise.all([addUse(env, cost, lab), lab ? null : env.USAGE.put(vk, String(+(vUsed + cost).toFixed(1)), { expirationTtl: 3 * 86400 }), env.USAGE.put(key, audio, { expirationTtl: 365 * 86400 })]));
+      ctx.waitUntil(Promise.all([addUse(env, cost, lab || rec), lab || rec ? null : env.USAGE.put(vk, String(+(vUsed + cost).toFixed(1)), { expirationTtl: 3 * 86400 }), env.USAGE.put(key, audio, { expirationTtl: 365 * 86400 })]));
       return new Response(audio, { headers: { ...h, "content-type": "audio/mpeg", "cache-control": "public, max-age=31536000" } });
     }
     // /identify: "What am I looking at?" A photo plus the real places around the traveler (the guide's stops and

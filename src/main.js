@@ -483,7 +483,7 @@ function looseKey(dest) {
   return Object.keys(cities).filter(k => !k.includes("|") && k.length > 2).sort((a, b) => b.length - a.length).find(k => dk.includes(" " + k + " ")) || null;
 }
 const cityKeyFor = d => d.cityKey && cities[d.cityKey] ? d.cityKey : (cities[keyOf(d.destination)] ? keyOf(d.destination) : looseKey(d.destination));
-const cityFor = d => { const k = cityKeyFor(d); return k ? cities[k] : null; };
+const cityFor = d => { const k = cityKeyFor(d), c = k ? cities[k] : null; if (c && typeof scriptStops === "function") scriptStops(c); return c; }; // a stop with a hand-written script gets it (stop-scripts.js)
 // A port day the traveler spends on the ship ("Staying on board", set in the trip setup or on the day) is planned
 // like a day at sea: no shore plan, no countdown or ship-time alerts, no tour day (pricing counts tourDay only).
 // A day ashore from a ship whose times the traveler hasn't given yet (planned on estimated times).
