@@ -1,0 +1,31 @@
+name: Record stop scripts
+# Records the hand-written stop scripts in Kairoute's voice (Aurora) and saves the recordings with the code, so
+# the app plays them straight from the website (no AI helper, works offline after the first play). Runs when a
+# script changes on a work branch, or by hand; only changed paragraphs are recorded (about $0.03 per 1,000 characters).
+on:
+  workflow_dispatch:
+  push:
+    branches: ["claude/**"]
+    paths: ["src/features/stop-scripts.js", "tools/voice-render.mjs", ".github/workflows/voice-render.yml"]
+permissions:
+  contents: write
+concurrency:
+  group: voice-render-${{ github.ref }}
+jobs:
+  record:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        run: node tools/voice-render.mjs
+      - name: Save the recordings on this branch
+        run: |
+          git add audio
+          if git diff --cached --quiet; then echo "Nothing new to save."; exit 0; fi
+          git -c user.name="Kairoute recorder" -c user.email="actions@users.noreply.github.com" commit -m "Record stop scripts (Aurora)"
+          git push
