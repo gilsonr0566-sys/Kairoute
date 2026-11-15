@@ -1,16 +1,17 @@
 // Records the hand-written stop scripts (src/features/stop-scripts.js) in Kairoute's voice, Aurora (Deepgram
 // aura-2 on Cloudflare Workers AI), one file per paragraph: audio/<script id>/p<part>-<paragraph>.mp3.
 // Only paragraphs whose words changed are recorded again (audio/<id>/manifest.json keeps a hash of each).
-// Needs CLOUDFLARE_API_TOKEN. Cost: about 2.7 neurons a character (11,400 characters ≈ 31,000 neurons ≈ $0.35).
+// Records through Kairoute's AI helper (/speak with the recorder key, which is derived from CLOUDFLARE_API_TOKEN
+// and set on the helper by the "Publish website" workflow), paid from the monthly extra. Cost: about 2.7 neurons a character (11,400 characters ≈ 31,000 neurons ≈ $0.35).
 // Usage: node tools/voice-render.mjs [--dry]
 import fs from "node:fs"; import vm from "node:vm"; import crypto from "node:crypto";
 const dry = process.argv.includes("--dry");
 const code = fs.readFileSync("src/features/stop-scripts.js", "utf8");
 const noop = () => {}, ctx = vm.createContext({ partSpeech: noop, speakText: noop, speakSite: noop, updateAudioUI: noop });
 const { S, say } = vm.runInContext(code + "\n;({ S: STOP_SCRIPTS, say: sayText })", ctx);
-const T = process.env.CLOUDFLARE_API_TOKEN, H = { Authorization: "Bearer " + T };
-let acc = null;
-if (!dry) { if (!T) { console.error("No CLOUDFLARE_API_TOKEN"); process.exit(1); } acc = (await (await fetch("https://api.cloudflare.com/client/v4/accounts", { headers: H })).json()).result[0].id; }
+const T = process.env.CLOUDFLARE_API_TOKEN, AI = JSON.parse(fs.readFileSync("ai.json", "utf8")).url;
+const KEY = T ? crypto.createHash("sha256").update(T).digest("hex").slice(0, 40) : "";
+if (!dry && !T) { console.error("No CLOUDFLARE_API_TOKEN"); process.exit(1); }
 let made = 0, kept = 0, chars = 0, failed = 0;
 for (const sc of S) {
   const dir = `audio/${sc.id}`; fs.mkdirSync(dir, { recursive: true });
@@ -22,9 +23,9 @@ for (const sc of S) {
     chars += text.length; if (dry) { console.log("would record", f, text.length); continue; }
     let ok = false;
     for (let tries = 0; tries < 3 && !ok; tries++) {
-      const r = await fetch(`https://api.cloudflare.com/client/v4/accounts/${acc}/ai/run/@cf/deepgram/aura-2-en`, { method: "POST", headers: { ...H, "content-type": "application/json" }, body: JSON.stringify({ text, speaker: "aurora", encoding: "mp3" }) });
+      const r = await fetch(AI + "/speak", { method: "POST", headers: { "content-type": "application/json", "x-kairoute-rec": KEY }, body: JSON.stringify({ text, model: "aura-2", speaker: "aurora" }) });
       const b = Buffer.from(await r.arrayBuffer());
-      if (r.ok && b.length > 1000 && !/json/.test(r.headers.get("content-type") || "")) { fs.writeFileSync(f, b); ok = true; made++; console.log("recorded", f, b.length, "bytes"); }
+      if (r.ok && b.length > 1000 && /audio/.test(r.headers.get("content-type") || "")) { fs.writeFileSync(f, b); ok = true; made++; console.log("recorded", f, b.length, "bytes"); }
       else { console.log("retry", f, r.status, b.toString("utf8", 0, 200)); await new Promise(z => setTimeout(z, 2000)); }
     }
     if (!ok) { failed++; delete now[`p${k}-${i}`]; }

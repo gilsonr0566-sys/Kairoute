@@ -81,6 +81,8 @@ jobs:
           if [ -n "$TICKETMASTER_KEY" ]; then printf '%s' "$TICKETMASTER_KEY" | npx -y wrangler@4 secret put TM_KEY >/dev/null && echo "Events key set."; else echo "No TICKETMASTER_KEY secret yet; events use Wikivoyage only."; fi
           # Restaurant ratings: the Google Places key lives only in GitHub secrets and the Worker's secret store.
           if [ -n "$GOOGLE_PLACES_KEY" ]; then printf '%s' "$GOOGLE_PLACES_KEY" | npx -y wrangler@4 secret put GPLACES_KEY >/dev/null && echo "Ratings key set."; else echo "No GOOGLE_PLACES_KEY secret yet; restaurants show as not yet rated."; fi
+          # Recorder key for the "Record stop scripts" workflow: derived from the Cloudflare token, so it lives nowhere else.
+          printf '%s' "$CLOUDFLARE_API_TOKEN" | sha256sum | cut -c1-40 | tr -d '\n' | npx -y wrangler@4 secret put REC_KEY >/dev/null && echo "Recorder key set."
           url=$(grep -oE 'https://[a-z0-9.-]+\.workers\.dev' deploy.log | head -1)
           if [ -n "$url" ]; then printf '{"url":"%s"}\n' "$url" > ../ai.json; cat ../ai.json; fi
       - name: Build the Android app

@@ -1,12 +1,10 @@
 name: Record stop scripts
 # Records the hand-written stop scripts in Kairoute's voice (Aurora) and saves the recordings with the code, so
-# the app plays them straight from the website (no AI helper, works offline after the first play). Runs when a
-# script changes on a work branch, or by hand; only changed paragraphs are recorded (about $0.03 per 1,000 characters).
+# the app plays them straight from the website (no AI helper, works offline after the first play). Run by hand
+# after a script changes; only changed paragraphs are recorded (about $0.03 per 1,000 characters). Then run
+# "Publish website" so the new recordings go live (a push from this workflow doesn't start it by itself).
 on:
   workflow_dispatch:
-  push:
-    branches: ["claude/**"]
-    paths: ["src/features/stop-scripts.js", "tools/voice-render.mjs", ".github/workflows/voice-render.yml"]
 permissions:
   contents: write
 concurrency:
