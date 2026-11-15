@@ -5220,11 +5220,11 @@ function renderTrip(d) {
       ${esimCard()}
       ${aiReady() && missing ? `<button class="btn ghost small" data-act="genall" ${busy ? "disabled" : ""}>${missing === 1 ? `Build the guide for ${esc(missingNames[0])}` : missing <= 3 ? `Build the guides for ${esc(missingNames.join(" and "))}` : `Build the guides for all ${missing} places`}</button>` : ""}
       <div class="itin">${itinerary()}</div>
-      <div class="actions"><button class="btn ghost small" data-act="addday">+ Add a day</button><button class="btn ghost small" data-act="addport">+ Add a port day</button></div>
+      <div class="actions"><button class="btn ghost small" data-act="addday">+ Add a day</button><button class="btn ghost small" data-act="addport">+ Add a port day</button><button class="btn ghost small" data-act="printtrip">🖨 Print or save as PDF</button></div>
       ${budgetHtml()}
       <details class="card more">
-        <summary>Share, print or rebuild the trip</summary>
-        <div class="actions"><button class="btn ghost small" data-act="pdf">Save as PDF</button><button class="btn ghost small" data-act="copytrip">Copy itinerary</button></div>
+        <summary>Share or rebuild the trip</summary>
+        <div class="actions"><button class="btn ghost small" data-act="copytrip">Copy itinerary</button></div>
         <div id="copyBox"></div>
         ${aiReady() ? `<div class="field"><label for="f-triptext">Your trip</label><textarea id="f-triptext" placeholder="Flying into Athens on May 3 and staying 4 days at the Hotel Grande Bretagne. Then a cruise from Piraeus to Mykonos, Santorini… ending in Barcelona. 3 days in Barcelona, train to Madrid for 2 days, flying home at 4 pm.">${esc(tripText)}</textarea><span class="hint">Your guide lays out every day, with port times, flights and trains. This replaces the trip above.</span></div>
         <div class="actions"><button class="btn" data-act="parsetrip" ${busy ? "disabled" : ""}>Build my itinerary</button></div>` : `<p class="ai-note">This uses the AI guide. Turn on the AI guide in Settings to turn it on.</p>`}
@@ -6122,6 +6122,7 @@ function legendHTML(plan) {
     <div class="maplegend">${legendHTML(plan)}</div>
   </div>
   <details class="card foldlist morefold"><summary>More about today</summary>
+  <div class="actions"><button class="btn ghost small" data-act="printday">🖨 Print or save this day as PDF</button></div>
   ${checksCard(d, city, plan)}
   ${eventsCard(d, city, plan)}
   ${gxPlanCards(d, city, plan)}
@@ -6621,7 +6622,8 @@ document.addEventListener("click", e => {
     const plan = buildPlan(day()); if (!plan || plan.error) return;
     cdPreview = plan.start + Math.round((plan.endBy - plan.start) * 0.5); cdSpoken = false; render(); return;
   }
-  if (act === "pdf") { readForm(); exportPDF(); return; }
+  if (act === "printtrip") { readForm(); printPlan(null); return; }
+  if (act === "printday") { printPlan(trip.active); return; }
   if (act === "copytrip") {
     const text = itineraryText();
     const box = document.getElementById("copyBox");
