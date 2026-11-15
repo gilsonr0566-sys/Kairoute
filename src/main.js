@@ -989,6 +989,9 @@ function wantsFind(d, city) {
 }
 if (typeof window !== "undefined") window.__kairouteWants = (i, wants) => { const d = trip.days[i], c = cityFor(d); if (!c) return { error: 'no guide for ' + d.destination }; if (wants) d.wants = wants; d.selected = null; trip.days.forEach(o => { if (o !== d && cityFor(o) === c) o.selected = null; }); seedPicks(d, c); return { ship: trip.ship || null, wants: d.wants || [], picked: d.selected.map(id => (allSites(c).find(x => x.id === id) || {}).name), mine: (d.mine || []).map(id => (allSites(c).find(x => x.id === id) || {}).name), wanted: wantIds(d, c).map(id => allSites(c).find(x => x.id === id).name) }; };
 
+// How far a day trip is, for choosing the day's lead: the road estimate, or the guide's own note if slower. Not the
+// live timetable answer, which changes as lookups come in (Pompeii led one run and not the next, Nov 14).
+function leadMin(a, b) { const leg = roadGuess(hav(a, b)).min, said = saidMin(b); return said ? Math.max(leg, said + 15) : leg; }
 function defaultSelection(city, style, d) {
   const taken = d ? plannedElsewhere(d) : {};
   if (d) trip.days.forEach(o => { if (o !== d && o.wants && cityFor(o) === city) wantIds(o, city).forEach(id => { if (!taken[id]) taken[id] = o; }); }); // named for another day
@@ -1016,7 +1019,7 @@ function defaultSelection(city, style, d) {
     let fits = false; if (best) { try { fits = fitsAll(fitTrial(d, [best.id])); } catch (e) {} }
     // On a port day the leading day trip is a short trip from the ship (Pompeii from Naples, about an hour), never an
     // island across the sea or a town an hour and a half away (Naxos from Santorini): those stay in the list to choose.
-    let near = true; if (best && d.type === "port") { try { near = travel(dayPoint(d, city), best).min <= 75; } catch (e) { near = false; } }
+    let near = true; if (best && d.type === "port") { try { near = leadMin(dayPoint(d, city), best) <= 75; } catch (e) { near = false; } }
     if (best && fits && near && (fameW(best) >= top || ((best.fame || 0) > 0 && (best.fame || 0) >= topSl * 0.8))) lead = best.id;
   }
   let sel = [...new Set([...(lead ? [lead] : []), ...carried, ...picks, ...extra])];
@@ -1045,7 +1048,7 @@ function defaultSelection(city, style, d) {
 if (typeof window !== "undefined") window.__kairouteLeadTest = (i, extra) => { const d = trip.days[i], city = cityFor(d); if (!city) return null; const P = dayPoint(d, city); const x = normSite(Object.assign({ minutes: 120, category: "Island", lat: P.lat + (extra.dlat || 0), lng: P.lng }, extra), 0); Object.assign(x, { far: true, fame: extra.fame || 0, mustSee: !!extra.mustSee, unesco: !!extra.unesco, src: extra.src || x.src || [] }); city.farther = city.farther || []; city.farther.push(x); forget0(d);
   try { const ds = defaultSelection(city, trip.style, d); return { lead: ds.lead || null, id: x.id, type: d.type }; } finally { city.farther = city.farther.filter(y => y !== x); forget0(d); } };
 if (typeof window !== "undefined") window.__kairouteLeadWhy = i => { const d = trip.days[i], city = cityFor(d); if (!city) return null; const taken = plannedElsewhere(d);
-  const far = (city.farther || []).map(x => ({ name: x.name, w: +fameW(x).toFixed(2), sl: x.fame || 0, must: !!x.mustSee, unesco: !!x.unesco, oneWay: (() => { try { return travel(dayPoint(d, city), x).min; } catch (e) { return null; } })(), taken: !!taken[x.id], closed: (() => { try { return closedForDay(x, d, dayWindow(d, city)); } catch (e) { return null; } })(), fits: (() => { try { return fitsAll(fitTrial(d, [x.id])); } catch (e) { return "err " + e.message; } })() }));
+  const far = (city.farther || []).map(x => ({ name: x.name, w: +fameW(x).toFixed(2), sl: x.fame || 0, must: !!x.mustSee, unesco: !!x.unesco, oneWay: (() => { try { return leadMin(dayPoint(d, city), x); } catch (e) { return null; } })(), taken: !!taken[x.id], closed: (() => { try { return closedForDay(x, d, dayWindow(d, city)); } catch (e) { return null; } })(), fits: (() => { try { return fitsAll(fitTrial(d, [x.id])); } catch (e) { return "err " + e.message; } })() }));
   const town = city.sites.filter(x => !x.quick && (x.mustSee || x.unesco)).map(x => ({ name: x.name, w: +fameW(x).toFixed(2), sl: x.fame || 0 }));
   let ds = null; try { ds = defaultSelection(city, trip.style, d); } catch (e) {}
   return { day: d.date + " " + d.destination, lead: ds && ds.lead || null, selected: (d.selected || []).length, mine: (d.mine || []).length, seedSig: d.seedSig ? (d.seedSig === seedSigOf(d) ? "app picks" : "changed") : false, far, town }; };
