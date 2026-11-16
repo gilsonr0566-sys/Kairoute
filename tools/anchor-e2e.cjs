@@ -98,6 +98,11 @@ const FILE = path.resolve(process.argv[2] || path.join(__dirname, '..', 'index.h
       await p.evaluate(() => { const el = [...document.querySelectorAll('[data-goto="sites"]')].find(e => e.offsetParent); if (el) el.click(); }); await p.waitForTimeout(300);
       const before = await p.evaluate(() => window.__kairouteSelCount());
       await p.evaluate(() => window.__kairouteSetHours(1.5)); await p.waitForTimeout(400);
+      // Nov 16: a shorter day asks first, naming the picks that would drop; nothing comes off until "Shorten anyway".
+      const ask = await p.evaluate(() => { const b = document.querySelector('.banner.cutask'); return b ? b.innerText : ''; });
+      if (before > 0 && !ask) bad(0, 'shortening the day did not ask before dropping picks');
+      if (ask) { if ((await p.evaluate(() => window.__kairouteSelCount())) !== before) bad(0, 'picks came off before "Shorten anyway"');
+        await p.evaluate(() => document.querySelector('.banner.cutask [data-act="cutok"]').click()); await p.waitForTimeout(400); }
       // A long sight that can't fit forced onto the short day (Richard's National Garden case) comes straight off.
       const big = await p.evaluate(() => { const c = [...document.querySelectorAll('.sitesmain .nofitcard')][0]; return c ? c.dataset.card : null; });
       if (big) { const kept = await p.evaluate(id => window.__kairouteForcePick(id), big); await p.waitForTimeout(300); if (kept) bad(2, `${big} stayed picked though it doesn't fit`); }
