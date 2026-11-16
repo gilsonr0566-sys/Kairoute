@@ -49,6 +49,7 @@ jobs:
           node tools/ride-check.cjs
           node tools/ready-check.cjs
           node tools/reorder-check.cjs
+          node tools/hours-check.cjs
           node tools/anchor-e2e.cjs
           node tools/addplace-e2e.cjs
           node tools/text-check.cjs
