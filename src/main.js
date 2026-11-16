@@ -908,6 +908,8 @@ function settlePicks(d) {
   const tk = timeKey(d), p1 = buildPlan(d), out1 = p1 && !p1.error ? (p1.dropped || []).filter(x => d.selected.includes(x.id)) : [];
   if (!out1.length || !d.timeSnap || d.timeSnap.key === tk) delete d.pendingCut;
   else if (!d.cutOk) { d.pendingCut = { names: out1.map(x => x.name), prev: d.timeSnap.vals }; return moved; }
+  // The same for a new order of stops the traveler dragged (see reorder.js): asked first, "Put back" / "Keep new order".
+  if (d.pendingOrder) { const left = new Set(out1.map(x => x.name)); if (!(d.pendingOrder.names || []).some(n => left.has(n))) delete d.pendingOrder; else if (!d.orderOk) return moved; }
   for (let g = 0; g < 6; g++) {
     const p = buildPlan(d); if (!p || p.error) break;
     const out = (p.dropped || []).filter(x => d.selected.includes(x.id));
@@ -927,7 +929,7 @@ function settlePicks(d) {
   }
   if (d.movedIn) for (const id of Object.keys(d.movedIn)) if (!d.selected.includes(id)) delete d.movedIn[id];
   if (!d.timeSnap || d.timeSnap.key !== tk) { d.timeSnap = { key: tk, vals: { hours: d.hours, startTime: d.startTime } }; moved = moved || !!d.cutOk; }
-  delete d.cutOk;
+  delete d.cutOk; delete d.orderOk;
   if (moved) { readyKeep(d, was); save(); }
   return moved;
 }
@@ -935,10 +937,18 @@ if (typeof window !== "undefined") { window.__kairouteSetHours = h => { const d 
   // Puts a pick on the day past the gate, the way an older version or a change of hours could leave one.
   window.__kairouteForcePick = id => { const d = day(); d.selected = [...(d.selected || []), id]; render(); return (d.selected || []).includes(id); }; }
 const timeKey = d => [d.hours, d.startTime].join("|");
+// One notice for every change of the traveler's that would take something off the day (a shorter day, a new order of
+// stops, changing a day marked ready): it says what and why, and offers to undo (first, the safe choice) or go ahead.
+// back and ahead are [data-act, label].
+function askNote(cls, msg, back, ahead) {
+  return `<div class="banner warn asknote ${cls}" role="alert"><span>${msg}</span>
+    <span class="actions"><button type="button" class="btn small" data-act="${back[0]}">${back[1]}</button><button type="button" class="btn small ghost" data-act="${ahead[0]}">${ahead[1]}</button></span></div>`;
+}
+const namesHTML = n => n.length === 1 ? `<b>${esc(n[0])}</b>` : `<b>${n.slice(0, -1).map(esc).join(", ")}</b> and <b>${esc(n[n.length - 1])}</b>`;
 function cutNote(d) {
   const c = d.pendingCut; if (!c || !c.names || !c.names.length) return "";
-  return `<div class="banner warn cutask" role="alert"><span>With the shorter day, ${c.names.length === 1 ? `<b>${esc(c.names[0])}</b> no longer fits` : `these no longer fit: <b>${c.names.map(esc).join(", ")}</b>`}. Shorten the day and take ${c.names.length === 1 ? "it" : "them"} off your picks?</span>
-    <span class="actions"><button type="button" class="btn small" data-act="cutkeep">Keep my hours</button><button type="button" class="btn small ghost" data-act="cutok">Shorten anyway</button></span></div>`;
+  return askNote("cutask", `With the shorter day, ${c.names.length === 1 ? `<b>${esc(c.names[0])}</b> no longer fits` : `these no longer fit: <b>${c.names.map(esc).join(", ")}</b>`}. Shorten the day and take ${c.names.length === 1 ? "it" : "them"} off your picks?`,
+    ["cutkeep", "Keep my hours"], ["cutok", "Shorten anyway"]);
 }
 function bumpedNote(d) {
   if (d.pendingCut) return cutNote(d);
@@ -1210,7 +1220,22 @@ function routeCost(order, O, Z) {
   if (Z) c += tmin(prev, Z);
   return c;
 }
-function optimize(nodes, O, Z) {
+// The traveler's own order (they dragged the stops, Richard Nov 16): while a day with one is planned, ownOrd maps
+// each of its stops to its place. Routing and polishing keep those stops in that order; meals, quick sights on the
+// way and stops added later still go wherever they fit best. If the order costs a stop (it would close first, or the
+// day would run past a ship, train or flight time), the stop drops, never the safety margin.
+let ownOrd = null;
+const ownKey = x => !!(x && !x.mealOf && ownOrd && ownOrd.has(x.id));
+function keepOwn(q) {
+  if (!ownOrd) return q;
+  const slots = [], items = []; q.forEach((x, i) => { if (ownKey(x)) { slots.push(i); items.push(x); } });
+  if (items.length < 2) return q;
+  items.sort((a, b) => ownOrd.get(a.id) - ownOrd.get(b.id));
+  const out = q.slice(); slots.forEach((at, k) => { out[at] = items[k]; }); return out;
+}
+function ownOk(q) { if (!ownOrd) return true; let last = -1; for (const x of q) if (ownKey(x)) { const v = ownOrd.get(x.id); if (v < last) return false; last = v; } return true; }
+function optimize(nodes, O, Z) { return keepOwn(optimizeFree(nodes, O, Z)); }
+function optimizeFree(nodes, O, Z) {
   const rest = nodes.slice(), order = [];
   let cur = O;
   while (rest.length) {
@@ -1342,16 +1367,16 @@ function simDay(seq, t0, O, Z, style) {
 // crossings and out-and-back trips to lunch.
 function polishDay(seq, t0, O, Z, style, city) {
   const C = q => simDay(q, t0, O, Z, style).cost;
-  let best = seq.slice(), bc = C(best), improved = true, guard = 0;
+  let best = keepOwn(seq.slice()), bc = C(best), improved = true, guard = 0;
   while (improved && guard++ < 60) {
     improved = false;
     for (let i = 0; i < best.length; i++) for (let j = 0; j < best.length; j++) {
       if (i === j) continue;
-      const q = best.slice(); const [x] = q.splice(i, 1); q.splice(j, 0, x);
+      const q = best.slice(); const [x] = q.splice(i, 1); q.splice(j, 0, x); if (!ownOk(q)) continue;
       const c = C(q); if (c + 0.01 < bc) { best = q; bc = c; improved = true; }
     }
     for (let i = 0; i < best.length - 1; i++) for (let k = i + 1; k < best.length; k++) {
-      const q = best.slice(0, i).concat(best.slice(i, k + 1).reverse(), best.slice(k + 1));
+      const q = best.slice(0, i).concat(best.slice(i, k + 1).reverse(), best.slice(k + 1)); if (!ownOk(q)) continue;
       const c = C(q); if (c + 0.01 < bc) { best = q; bc = c; improved = true; }
     }
     best.forEach((x, i) => {
@@ -1682,8 +1707,9 @@ function buildPlanRaw(d) { const prev = planDate, pw = planWx; if (!planDepth) t
       if (p2 && !p2.error && !p2.over && (p2.dropped || []).length < pl.dropped.length) { p2.fastRides = true; pl = p2; } }
     return pl; } finally { planDate = prev; planWx = pw; planDepth--; } }
 function buildPlanFor(d) {
-  const memo0 = mealPickMemo; mealPickMemo = { g: -1, m: new Map() }; // meal choices are remembered for this day's plan only
-  try { return buildPlanForDay(d); } finally { mealPickMemo = memo0; }
+  const memo0 = mealPickMemo, own0 = ownOrd; mealPickMemo = { g: -1, m: new Map() }; // meal choices are remembered for this day's plan only
+  ownOrd = d && Array.isArray(d.order) && d.order.length > 1 ? new Map(d.order.map((id, i) => [id, i])) : null;
+  try { return buildPlanForDay(d); } finally { mealPickMemo = memo0; ownOrd = own0; }
 }
 function buildPlanForDay(d) {
   const city = cityFor(d); if (!city) return null;
@@ -6054,6 +6080,7 @@ function renderPlan(d) {
   const plan = buildPlan(d); if (plan && !plan.error) { gCheck(plan, city); queueExtras(plan); writeSrcSights(plan, city); }
   if (plan.error) return `${dayHeading(d)}<div class="card empty"><p>${esc(plan.error)}</p><button class="btn" data-goto="trip">Edit this day</button></div>`;
   let n = 0;
+  const canDrag = plan.stops.filter(x => !x.place.along && !x.place.bonus).length > 1; // two or more stops: drag them into any order
   const cat = s => esc(String(s.category || "").replace(/^\w/, c => c.toUpperCase()));
   const rows = plan.items.map((it, idx) => {
     const pv = plan.items[idx - 1], nx = plan.items[idx + 1], rideIn = pv && pv.type === "travel" && pv.leg.mode !== "walk" && legKind(pv.leg), rideOut = nx && nx.type === "travel" && nx.leg.mode !== "walk" && legKind(nx.leg);
@@ -6078,7 +6105,7 @@ function renderPlan(d) {
         <div class="sub bonus">${bonusWhy(pv)}</div>
         <div class="optacts"><button class="btn small" data-act="bonusadd" data-id="${esc(s.id)}">Add to my picks</button><button class="btn ghost small" data-act="bonusskip" data-id="${esc(s.id)}">Skip it</button></div></div></div>`;
       n++;
-      return `<div class="${cls}">${tcell(it)}<div class="rail"><div class="dot">${n}</div></div><div class="what">
+      return `<div class="${cls}" data-stop="${esc(s.id)}">${tcell(it)}<div class="rail"><div class="dot">${n}</div></div><div class="what">${canDrag ? dragHandle(s) : ""}
         <button class="nm namebtn" data-open="${esc(s.id)}">${esc(s.name)}</button><div class="sub">${dur(s.minutes)} · ${cat(s)}${s.mustSee ? " · Must-see" : ""}${s.unesco ? " · UNESCO" : ""}${s.far && s.travel ? " · " + esc(unitText(s.travel)) : ""}</div>
 ${partsList(s, it.time)}${stopLiveNotes(it, d)}</div></div>`;
     }
@@ -6102,14 +6129,15 @@ ${partsList(s, it.time)}${stopLiveNotes(it, d)}</div></div>`;
   const stopsN = plan.stops.filter(s => !s.place.along && !s.place.bonus).length, optN = plan.stops.filter(s => s.place.bonus).length;
   const L = DAY_LEN.find(x => x[0] === +d.hours), canLen = d.type === "land" || d.type === "arrival";
   // Heads-up: everything that needs a decision today, in one place above the schedule, most urgent first.
+  const askOut = new Set(d.pendingOrder && orderNote(d, plan) ? d.pendingOrder.names : []), dropNow = plan.dropped.filter(s => !askOut.has(s.name)); // the order question already names those
   const heads = [
-    readyBanner(d),
+    orderNote(d, plan), readyBanner(d),
     boardCard(d, plan), boardEve(d),
     (b => b ? `<div class="livecard">${b}</div>` : "")(liveBanner(d, plan)),
     rideChangeBanner(d),
     plan.over ? `<div class="banner warn" role="alert">This plan runs ${dur(plan.end - plan.endBy)} past ${fmt(plan.endBy)}. Remove a stop with Change stops, or change the times.</div>` : "",
     closedBanner(d, plan), liveOn(d) ? "" : bumpedNote(d),
-    plan.dropped.length && !liveOn(d) ? `<div class="banner warn dropped"><span>Didn't fit today: <b>${plan.dropped.map(s => esc(s.name)).join(", ")}</b>. Your picks are over today's time.${estShip(d) ? ` The ship times here are estimated; your booking's real times may leave room.` : ""}</span>${estShip(d) && aiReady() ? `<button type="button" class="btn small ghost" data-act="shiptimes">Add ship times</button>` : ""}<button type="button" class="btn small" data-act="fitfix">Make it fit</button></div>` : "",
+    dropNow.length && !liveOn(d) ? `<div class="banner warn dropped"><span>Didn't fit today: <b>${dropNow.map(s => esc(s.name)).join(", ")}</b>. Your picks are over today's time.${estShip(d) ? ` The ship times here are estimated; your booking's real times may leave room.` : ""}</span>${estShip(d) && aiReady() ? `<button type="button" class="btn small ghost" data-act="shiptimes">Add ship times</button>` : ""}<button type="button" class="btn small" data-act="fitfix">Make it fit</button></div>` : "",
     (tc => tc ? `<div class="banner warn" role="alert">This day has ${dur(tc.ride)} of travel for ${dur(tc.see)} at the sights. Consider fewer far-apart stops, more hours, or splitting it over two days.</div>` : "")(travelCheck(plan)),
     plan.endBy - plan.start < 90 ? `<div class="banner warn">There isn't much time today, so keep it close: a coffee and one nearby sight at most.</div>` : "",
     weatherBanner(d, plan),
@@ -6173,7 +6201,7 @@ function legendHTML(plan) {
   <p class="footnote">Times are estimates using a relaxed walking pace and typical taxi times. Check opening hours and book timed tickets for the big sights.</p>
   </details>
   </details>
-  </div><div class="right pane" data-pane="sched">${heads ? `<div class="heads" role="region" aria-label="Heads-up for today">${heads}</div>` : ""}${bookFormHTML(d)}<div class="card">${zoneNote(d)}<div class="timeline">${rows}</div></div></div></div>`;
+  </div><div class="right pane" data-pane="sched">${heads ? `<div class="heads" role="region" aria-label="Heads-up for today">${heads}</div>` : ""}${bookFormHTML(d)}<div class="card">${zoneNote(d)}${canDrag ? orderLine(d) : ""}<div class="timeline">${rows}</div></div></div></div>`;
 }
 // A restaurant's at-a-glance facts on the Day plan: badges and the Google rating. Why it was chosen, the two
 // alternatives and the traveler rating sit in a fold below.
