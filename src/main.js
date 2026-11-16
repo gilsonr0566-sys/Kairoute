@@ -1368,6 +1368,15 @@ function crossCount(O, seq, Z) {
   }
   return n;
 }
+// Starting orders for the loop pass: the order found, its reverse, and the stops taken round the start point in each
+// direction (a sweep gives a loop with no crossings by construction; the polish then fixes hours and meals). Live
+// Jul 1 Athens, Nov 16: from the found order alone the polish stayed stuck in a tangled route.
+function loopSeeds(seq, O, Z) {
+  const out = [seq, seq.slice().reverse()], pts = seq.filter(p => isFinite(p.lat) && isFinite(p.lng)); if (!O || pts.length < 3 || pts.length !== seq.length) return out;
+  const all = [O, Z, ...pts].filter(Boolean), cy = all.reduce((a, p) => a + +p.lat, 0) / all.length, cx = all.reduce((a, p) => a + +p.lng, 0) / all.length, k = Math.cos(cy * Math.PI / 180);
+  const ang = p => Math.atan2(+p.lat - cy, (+p.lng - cx) * k), a0 = ang(O), rel = p => { let a = ang(p) - a0; while (a < 0) a += 2 * Math.PI; return a; };
+  const ccw = seq.slice().sort((a, b) => rel(a) - rel(b)); out.push(ccw, ccw.slice().reverse()); return out;
+}
 function simDay(seq, t0, O, Z, style) {
   let clock = t0, prev = O, cost = 0, seenDinner = false, late = 0; // late: stops reached after their last sensible entry
   const been = [];
@@ -2009,11 +2018,10 @@ function buildPlanForDay(d) {
     fill = { spare: Math.round(limit - simDay(seq, t0, O, ZZ, style).end), capped, mustLeft: pool.filter(x => x.mustSee && t0 + tmin(O, x) + (x.minutes || 0) + (ZZ ? tmin(x, ZZ) : 0) <= limit).map(x => x.id) }; // must-sees that could have fitted on their own
   }
   // One loop, last: the stops the day keeps are settled above with the usual costs, then their order is polished once
-  // more with crossing paths counted (from the order found and from its reverse, so it is not stuck going the wrong way
-  // round). The loop is taken only when it is no later for any opening time and still ends
+  // more with crossing paths counted, from several starting orders (loopSeeds). The loop is taken only when it is no later for any opening time and still ends
   // in time, so it never costs a stop, a meal or the ship (and a plan weighs it once, not in every trial).
   if (seq.length > 2 && !ownOrd && !mealPin) { const r0 = simDay(seq, t0, O, ZZ, style); crossOn = true; // a day the traveler put in order (or placed lunch on) keeps it
-    try { const q1 = polishDay(seq, t0, O, ZZ, style, city), q2 = polishDay(seq.slice().reverse(), t0, O, ZZ, style, city), c1 = simDay(q1, t0, O, ZZ, style), c2 = simDay(q2, t0, O, ZZ, style), q = c2.cost < c1.cost ? q2 : q1, r = c2.cost < c1.cost ? c2 : c1; if (r.late <= r0.late && r.end <= Math.max(r0.end, w.endBy - tailCost())) seq = q; } finally { crossOn = false; } }
+    try { let q = null, r = null; for (const s0 of loopSeeds(seq, O, ZZ)) { const qi = polishDay(s0, t0, O, ZZ, style, city), ri = simDay(qi, t0, O, ZZ, style); if (ri.late <= r0.late && ri.end <= Math.max(r0.end, w.endBy - tailCost()) && (!r || ri.cost < r.cost)) { q = qi; r = ri; } } if (q) seq = q; } finally { crossOn = false; } }
   bonusMemo.set(d, bonus.map(x => x.id));
   keptMemo.set(d, seq.filter(x => !x.mealOf && !x.bonus && !x.along).map(x => x.id));
   // A sight that doesn't fit today but is also ticked on a later day here isn't lost: it's seen that day.
@@ -3722,7 +3730,7 @@ async function saveStops(sites, onStep, reserve) {
   return { done, made, total: sites.length, stopped: false };
 }
 // Quality check for every day of a trip (used by the automated planner test).
-if (typeof window !== "undefined") window.__kairouteCrossings = () => trip.days.map((d, i) => { const r = window.__kairouteRoute(i); if (!r || r.length < 4) return 0; return crossCount(r[0], r.slice(1, -1), r[r.length - 1]); });
+if (typeof window !== "undefined") window.__kairouteCrossings = () => trip.days.map((d, i) => { let r = window.__kairouteRoute(i); if (!r) return 0; r = r.filter(x => x.type !== "evening"); const h = r.findIndex(x => x.type === "stop" || x.type === "meal"); if (h > 0) r = r.slice(h - 1); if (r.length < 4) return 0; return crossCount(r[0], r.slice(1, -1), r[r.length - 1]); }); // the part the planner orders: from where the day's sights begin (after a bag drop) to the end point, without the evening dinner
 if (typeof window !== "undefined") window.__kairouteRoute = i => { bonusMemo = new Map(); mealMemo = new Map(); keptMemo = new Map(); eveMemo = new Map(); avoidMeals = new Set(); const pl = buildPlan(trip.days[i]); if (!pl || pl.error || !pl.items) return null;
   return pl.items.filter(x => x.place && x.type !== "travel").map(x => ({ type: x.type, name: x.place.name, lat: +x.place.lat, lng: +x.place.lng, time: x.time, min: x.place.minutes || 0, hours: x.place.hours || "", leg: x.leg ? (x.leg.how || x.leg.mode) : "" })); };
 if (typeof window !== "undefined") window.__kairouteQuality = () => { bonusMemo = new Map(); mealMemo = new Map(); keptMemo = new Map(); eveMemo = new Map(); avoidMeals = new Set(); return trip.days.map((d, i) => {
