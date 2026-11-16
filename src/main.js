@@ -556,15 +556,19 @@ function hav(a, b) { // straight-line km (the helper is made once, not on every 
   const h = Math.sin(dLa / 2) ** 2 + Math.cos(havR(a.lat)) * Math.cos(havR(b.lat)) * Math.sin(dLo / 2) ** 2;
   return 2 * 6371 * Math.asin(Math.sqrt(h));
 }
-const WALK_LIMIT = { low: 0.8, medium: 1.7, high: 3.2 }; // straight-line km; medium keeps each walk to about 30 minutes, as promised in setup
+const WALK_LIMIT = { low: 0.8, medium: 1.7, high: 3.2 }, WALK_EITHER = 4; // straight-line km; medium keeps each walk to about 30 minutes, as promised in setup
 const PACE = { relaxed: 1.2, moderate: 1, packed: 0.85 };
 function travel(a, b) {
   const d = hav(a, b);
   const lim = WALK_LIMIT[(trip.prefs && trip.prefs.walk) || "medium"];
   const speed = trip.prefs && trip.prefs.walk === "low" ? 3.6 : 4.5;
   if (d < 0.02) return { mode: "walk", how: "Walk", km: 0, min: 0 }; // the same place: no time
-  if (d <= lim) return { mode: "walk", how: "Walk", km: d * 1.3, min: Math.max(2, Math.round(d * 1.3 / speed * 60)) };
-  if (d <= 6) return rideLeg(a, b, roadGuess(d));
+  // Walk or ride is the traveler's choice on any leg from 600 m to 4 km (Richard, Nov 16: a 15-minute walk could be a
+  // 5-minute taxi, and a ride across town could be a walk): the leg offers both, and the one chosen is kept.
+  const walkMin = Math.max(2, Math.round(d * 1.3 / speed * 60)), either = d >= 0.6 && d <= WALK_EITHER, want = either && trip.legModes ? trip.legModes[pairKey(a, b)] : null;
+  if (d <= lim ? !want || want === "walk" : want === "walk") { const w = { mode: "walk", how: "Walk", km: d * 1.3, min: walkMin };
+    if (!either) return w; const r = roadGuess(d); return Object.assign(w, { key: pairKey(a, b), choice: "walk", road: r.min, choices: [{ id: "walk", label: "Walk", min: walkMin, kind: "walk" }, { id: "taxi", label: "Taxi or car", min: r.min, kind: "car" }] }); }
+  if (d <= 6) return rideLeg(a, b, roadGuess(d), false, either ? walkMin : 0);
   if (d <= 15) return rideLeg(a, b, roadGuess(d), b.backToShip);
   let leg = roadGuess(d);
   // A day trip's own note says how long the trip really takes ("1 hour on the Circumvesuviana train", "60-75 min"):
@@ -662,7 +666,7 @@ let nearGen = 0;
 function nearOnce(exact, a, b, kind) { const m = nearMemo.get(exact); if (m && m.g === nearGen) return m.v; const v = transitNear(a, b, kind); nearMemo.set(exact, { g: nearGen, v }); return v; }
 const nearMemo = new WeakMap();
 function transitFor(a, b) {
-  if (!a || !b || !isFinite(a.lat) || !isFinite(b.lat) || hav(a, b) < 4) return null;
+  if (!a || !b || !isFinite(a.lat) || !isFinite(b.lat) || hav(a, b) < 1.5) return null; // city rides too: a bus or metro across town is a real choice (Nov 16)
   const dow = planDow(), k = pairKey(a, b) + "|" + dayKind(dow), exact = transitMem[k] || transitMem[pairKey(a, b)], hit = exact && exact.opts && exact.opts.length ? exact : (exact ? nearOnce(exact, a, b, dayKind(dow)) : transitNear(a, b, dayKind(dow))) || exact; // an empty exact answer never hides a nearby one's lines
   if (transitSeen) transitSeen.push([k, pairKey(a, b), a, b, dayKind(dow)]); // the offline check lists every ride a plan looks up
   // Used meanwhile, and asked again when online: an answer from an older version (at once), one given while a source
@@ -817,14 +821,14 @@ function rideDetail(leg, start, endBy) {
   if (!leg.choices) return "";
   const o = leg.transit, ev = o ? `runs about every ${dur(o.every)}${o.everySrc === "timetable" ? " (from the timetable)" : o.everySrc === "map" ? "" : " (usual for this kind of line; check the timetable)"}` : "";
   const ride = o && o.steps && o.steps.length ? o.steps.map(esc).join("; then ") : o ? `${dur(o.ride)} ride${o.stops ? ` (${o.stops} stops)` : ""}` : "";
-  const how = o ? `${o.access.how === "walk" ? "Walk" : "Taxi"} ${dur(o.access.min)} to ${esc(o.from || "the " + (o.mode === "ferry" ? "pier" : "station"))}, ${ev}. ${ride}, then ${o.egress.how === "walk" ? "walk" : "taxi"} ${dur(o.egress.min)}${o.to && !(o.steps && o.steps.length) ? " from " + esc(o.to) : ""}.${o.operator ? " " + esc(o.operator) + "." : ""}${o.hours ? " Hours: " + esc(o.hours) + "." : ""}${o.fare ? " Fare: " + esc(o.fare) + "." : ""} Times include waiting and boarding.` : "By road, with time for traffic.";
+  const how = o ? `${o.access.how === "walk" ? "Walk" : "Taxi"} ${dur(o.access.min)} to ${esc(o.from || "the " + (o.mode === "ferry" ? "pier" : "station"))}, ${ev}. ${ride}, then ${o.egress.how === "walk" ? "walk" : "taxi"} ${dur(o.egress.min)}${o.to && !(o.steps && o.steps.length) ? " from " + esc(o.to) : ""}.${o.operator ? " " + esc(o.operator) + "." : ""}${o.hours ? " Hours: " + esc(o.hours) + "." : ""}${o.fare ? " Fare: " + esc(o.fare) + "." : ""} Times include waiting and boarding.` : leg.mode === "walk" ? "" : "By road, with time for traffic.";
   const fall = depLine(o, start, endBy, leg.lastMile, leg.slack) + (leg.slack ? ` Includes ${dur(leg.slack)} spare before the ship.` : "") + (leg.lastMile && o ? ` <b>If you miss it:</b> a taxi takes about ${dur(leg.road)}.` : "");
   const note = rideNotice && rideNotice.key === leg.key ? `<span class="ridenote">${rideNotice.text}${rideNotice.undo != null ? ` <button class="linkbtn" data-act="rideundo">Undo</button>` : ""}${rideNotice.force ? ` <button class="linkbtn" data-act="rideforce">${esc(rideNotice.forceText)}</button>` : ""}</span>` : "";
   // One tap per way to go, in the transport colors, each with its time (and fare when the timetable gives one).
   const chip = c => `${esc(c.label)} · ${dur(c.min)}${c.fare ? " · " + esc(c.fare) : ""}`;
   const pick = leg.choices.length > 1 ? `<div class="ridechips" role="group" aria-label="How to go">${leg.choices.map(c => `<button type="button" class="ridechip k-${c.kind}${c.id === leg.choice ? " on" : ""}" aria-pressed="${c.id === leg.choice}" data-ridekey="${esc(leg.key)}" data-rideval="${esc(c.id)}">${chip(c)}</button>`).join("")}</div>`
     : `<div class="ridechips"><span class="ridechip k-${leg.choices[0].kind} on">${chip(leg.choices[0])}</span></div>`;
-  return `<span class="sub ridesub">${how}${fall}</span>${note}${pick}`;
+  return `${how || fall ? `<span class="sub ridesub">${how}${fall}</span>` : ""}${note}${pick}`;
 }
 // One option for each way of going (the Athens airport ride came back as three metro rows): the quickest of each
 // mode, or one with fewer changes that is at most 10 min slower, or the one the traveler chose.
@@ -842,8 +846,11 @@ function oneEach(opts, want) {
 }
 if (typeof window !== "undefined") window.__kairouteOneEach = (opts, want) => oneEach(opts, want).map(o => o.label);
 // The ride between a and b: the chosen (or best) real line, or the road estimate as a taxi.
-function rideLeg(a, b, road, lastMile) {
-  let opts = transitFor(a, b); if (!opts || !opts.length) return road;
+function rideLeg(a, b, road, lastMile, walkMin) {
+  const walk = walkMin ? [{ id: "walk", label: "Walk", min: walkMin, kind: "walk" }] : [];
+  let opts = transitFor(a, b);
+  // No line found: the ride is a taxi, and says so (not "Taxi, bus or metro"); a short one can be walked instead.
+  if (!opts || !opts.length) return Object.assign({}, road, { how: road.how === "Taxi, bus or metro" ? "Taxi or car" : road.how, key: pairKey(a, b), choice: "taxi", road: road.min, lastMile, choices: [...walk, { id: "taxi", label: "Taxi or car", min: road.min, kind: "car" }] });
   // Leaving the ship for the first ride you go when the boat or train goes: with no timetable, plan on half the gap
   // between sailings plus boarding rather than a full gap (a full gap stays on every ride that must catch one later,
   // and on the ride back to the ship).
@@ -856,7 +863,7 @@ function rideLeg(a, b, road, lastMile) {
   // Public lines win unless a taxi saves a lot; when the day can't keep every sight that way, the quickest way wins (see buildPlan).
   const best = opts[0], auto = ridePref === "fast" ? (best.min <= taxi.min ? best : null) : best && !(taxi.min < best.min - 25 && taxi.min < best.min * 0.67) ? best : null;
   const o = want === "taxi" ? null : picked || auto;
-  const base = { choices: [...opts.map(x => ({ id: rideId(x), label: x.label, min: x.min, kind: rideKind(x), fare: x.fare || "" })), { id: "taxi", label: "Taxi or car", min: road.min, kind: "car" }], key: pairKey(a, b), road: road.min };
+  const base = { choices: [...opts.map(x => ({ id: rideId(x), label: x.label, min: x.min, kind: rideKind(x), fare: x.fare || "" })), { id: "taxi", label: "Taxi or car", min: road.min, kind: "car" }, ...walk], key: pairKey(a, b), road: road.min };
   if (!o) return Object.assign(taxi, base, { lastMile });
   return Object.assign({ mode: "ride", how: o.label, km: o.km + o.access.km + o.egress.km, min: o.min, transit: o, choice: rideId(o), lastMile }, base);
 }
@@ -1136,12 +1143,25 @@ function fixedStop(p, label, minutes) { return Object.assign({}, p, { id: "fx-" 
 const lunchIn = (from, hours) => { const end = from + hours * 60, L = MEALS[0]; return from < L.to - 30 && end > L.from + 45 ? Math.max(end, Math.min(end + L.len, MEALS[1].from)) : end; }; // never pushed into dinner time
 // Where a start point (hotel area, port, airport, station) goes once the map lookup has answered: k its kind, site a
 // sight of the same name, r the lookup's answer, mid the middle of the city's sights.
+// The cruise terminals and airports Kairoute's own guides already know, kept in the app (so offline too): when the
+// map lookup can't place a port, the same port in a built-in guide (same town word, e.g. "Civitavecchia", within
+// reach of the city) gives its real spot. Live Rome day, Nov 16: "Civitavecchia Port" from a written guide wasn't
+// found by the lookup and the day stayed empty although the app knows exactly where that terminal is.
+let gateList = null; if (typeof window !== "undefined") window.__kairouteKnownGate = (k, name, mid) => [knownGate(k, { name }, mid, 150), (gateList || []).length];
+function knownGate(k, p, mid, lim) {
+  if (!gateList) { gateList = []; try { for (const [c] of (typeof BUILTIN_CITIES === "undefined" ? [] : BUILTIN_CITIES)) for (const kk of ["cruise", "airport"]) ((c.starts || {})[kk] || []).forEach(g => { if (isFinite(+g.lat) && isFinite(+g.lng)) gateList.push({ k: kk, name: g.name, lat: +g.lat, lng: +g.lng }); }); } catch (e) {} }
+  const GENERIC = /^(port|porto|cruise|terminal|terminals|ship|ships|harbou?r|pier|the|of|de|di|del|international|airport|aeroporto|aeropuerto|station)$/;
+  const words = n => keyOf(n || "").split(/[^a-z0-9]+/).filter(w => w.length > 3 && !GENERIC.test(w));
+  const mine = words(p.name); if (!mine.length) return null;
+  return gateList.find(g => g.k === k && words(g.name).some(w => mine.includes(w)) && (!mid || hav(g, mid) <= lim)) || null;
+}
 function placeStart(k, p, site, r, mid) {
   const gate = k === "airport" || k === "cruise", lim = gate ? 150 : 15, moved = /Location approximate: city centre\./.test(p.note || "");
   const at = { lat: numV(p.lat), lng: numV(p.lng) };
   if (moved) p.note = String(p.note).replace(/\s*Location approximate: city centre\./, "").trim();
   if (site && !gate) { p.lat = numV(site.lat); p.lng = numV(site.lng); }
   else if (r && r.real && r.lat != null && hav(r, mid) <= lim) { p.lat = r.lat; p.lng = r.lng; delete p.unknown; }
+  else if (gate && knownGate(k, p, mid, lim)) { const g = knownGate(k, p, mid, lim); p.lat = g.lat; p.lng = g.lng; delete p.unknown; }
   else if (gate) { if (moved || !isFinite(at.lat) || hav(at, mid) > lim) p.unknown = true; }
   else if (site) { p.lat = numV(site.lat); p.lng = numV(site.lng); }
   else if (hav(at, mid) > lim) { p.lat = mid.lat; p.lng = mid.lng; p.note = ((p.note || "") + " Location approximate: city centre.").trim(); }
@@ -1157,6 +1177,9 @@ const unsurePoint = P => !!P && (P.unknown || /Location approximate: city centre
 function dayWindow(d, city) {
   const L = lodgingFor(d, city), P = dayPoint(d, city);
   const w = { head: [], tail: [], start: 0, endBy: 0, notes: [], notesEnd: [], buffer: 0 };
+  if (unsurePoint(P) && P.unknown) { // a port already marked unknown in a saved guide: the app's own known terminals first
+    const k = d.type === "port" || d.mode === "ship" ? "cruise" : /airport/i.test(P.name || "") || d.mode === "flight" ? "airport" : "cruise", ss = (city.sites || []).filter(x => isFinite(+x.lat)), mid = ss.length ? { lat: ss.map(x => +x.lat).sort((a, b) => a - b)[ss.length >> 1], lng: ss.map(x => +x.lng).sort((a, b) => a - b)[ss.length >> 1] } : null, g = knownGate(k, P, mid, 150);
+    if (g) { P.lat = g.lat; P.lng = g.lng; delete P.unknown; } }
   if (unsurePoint(P) && !throughTo(d) && d.type !== "land") return { error: `We couldn't find exactly where ${P.name} is, so this day isn't planned on a guess (every ride time and the time to head back depend on it). It's being looked up again; you can also pick another ${d.type === "port" || d.type === "embark" || d.mode === "ship" ? "cruise terminal" : "arrival point"} in the day's settings.`, unsure: true };
   if (throughTo(d)) return { error: "This day's plan is on the next page, with your " + (throughTo(d).type === "embark" ? "boarding" : "departure") + ".", through: true };
   if (d.type === "land") {
@@ -3730,6 +3753,7 @@ async function saveStops(sites, onStep, reserve) {
   return { done, made, total: sites.length, stopped: false };
 }
 // Quality check for every day of a trip (used by the automated planner test).
+if (typeof window !== "undefined") window.__kairouteLegs = i => { const pl = buildPlan(trip.days[i]); if (!pl || pl.error || !pl.items) return null; return pl.items.filter(x => x.type === "travel").map(x => ({ mode: x.leg.mode, how: x.leg.how, km: x.leg.km, min: x.leg.min, choices: (x.leg.choices || []).map(c => c.label + " " + c.min) })); };
 if (typeof window !== "undefined") window.__kairouteCrossings = () => trip.days.map((d, i) => { let r = window.__kairouteRoute(i); if (!r) return 0; r = r.filter(x => x.type !== "evening"); const h = r.findIndex(x => x.type === "stop" || x.type === "meal"); if (h > 0) r = r.slice(h - 1); if (r.length < 4) return 0; return crossCount(r[0], r.slice(1, -1), r[r.length - 1]); }); // the part the planner orders: from where the day's sights begin (after a bag drop) to the end point, without the evening dinner
 if (typeof window !== "undefined") window.__kairouteRoute = i => { bonusMemo = new Map(); mealMemo = new Map(); keptMemo = new Map(); eveMemo = new Map(); avoidMeals = new Set(); const pl = buildPlan(trip.days[i]); if (!pl || pl.error || !pl.items) return null;
   return pl.items.filter(x => x.place && x.type !== "travel").map(x => ({ type: x.type, name: x.place.name, lat: +x.place.lat, lng: +x.place.lng, time: x.time, min: x.place.minutes || 0, hours: x.place.hours || "", leg: x.leg ? (x.leg.how || x.leg.mode) : "" })); };
