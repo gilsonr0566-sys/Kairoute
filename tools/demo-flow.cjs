@@ -194,7 +194,11 @@ async function partA(b) {
     const aboard = (await S()).days[d.i].stayAboard;
     const needs = d.type !== "sea" && !aboard && d.type !== "departure";
     log(`     day ${d.i + 1} ${d.date} ${d.dest}: ${s.stops.length} stops [${s.stops.join("; ")}]${s.optional.length ? ", optional: " + s.optional.join("; ") : ""}, ${s.meals.length} meals, rides: ${s.rides.map(r => r.chosen).join(" / ") || "none to choose"}`);
-    if (needs) ok(s.stops.length > 0, `day ${d.i + 1} ${d.dest} (${d.date}, ${d.type}) has stops on its Day plan`, d.type === "embark");
+    // A boarding day is a paid day too: an empty one fails the gate (Nov 16, "The embark is blank again").
+    if (needs) ok(s.stops.length > 0, `day ${d.i + 1} ${d.dest} (${d.date}, ${d.type}) has stops on its Day plan`);
+    // A sea day shows its own page (getting ready for the next ports, life aboard), never an empty card.
+    if (d.type === "sea") { const v = await p.evaluate(() => { const g = document.querySelector(".voygrid"); return { grid: !!g, len: g ? g.innerText.trim().length : 0, empty: !!document.querySelector(".seacard") }; });
+      ok(v.grid && v.len > 150 && !v.empty, `day ${d.i + 1} sea day (${d.date}) has its sea-day page, not an empty one (${v.len} characters)`); }
     if (/something went wrong|undefined|NaN|\[object/i.test(s.text)) ok(false, `day ${d.i + 1} ${d.dest}: broken text on the Day plan: ` + (s.text.match(/.{0,60}(something went wrong|undefined|NaN|\[object).{0,60}/i) || [""])[0]);
     if (d.type === "port") {
       const pinned = await p.evaluate(() => (document.querySelector(".dayhead") || {}).innerText || "");
