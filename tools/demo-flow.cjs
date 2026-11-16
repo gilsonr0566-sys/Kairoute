@@ -214,7 +214,7 @@ async function partA(b) {
     if (d.type === "sea" || !d.city || doneCity.has(d.city)) continue; doneCity.add(d.city);
     await timed(p, "open Change stops", go("sites", d.i), 2500);
     const shown = await p.evaluate(() => [...document.querySelectorAll("[data-card]")].map(e => ((e.querySelector(".name") || {}).textContent || "").trim()));
-    const g = guides[d.dest] || {}; const inGuide = (g.sites || []).map(x => x.replace(/ \[quick\]$/, "")).concat(g.farther || []);
+    const g = guides[d.dest] || {}; const inGuide = g.shown || (g.sites || []).map(x => x.replace(/ \[quick\]$/, "")).concat(g.farther || []); // as the list prints them (English only, Nov 16)
     const missing = inGuide.filter(n => !shown.some(x => x === n));
     ok(!missing.length, `Change stops for ${d.dest} offers every sight in its guide (${shown.length} shown${missing.length ? "; missing: " + missing.join(", ") : ""})`);
     const all = shown.join(" | ");

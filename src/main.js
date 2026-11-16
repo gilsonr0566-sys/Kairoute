@@ -6133,7 +6133,7 @@ function upgradeThin(d, city) {
   generateCity(d, true).then(ok => { upgrading = null; if (!ok) again(); if (ok && (view === "plan" || view === "guide")) render(); }).catch(() => { upgrading = null; again(); });
 }
 if (typeof window !== "undefined") window.__kairouteUpgrading = () => upgrading;
-if (typeof window !== "undefined") window.__kairouteSights = () => { ensureBuiltins(); const out = {}; trip.days.forEach(d => { const c = cityFor(d); if (!c || out[d.destination]) return; out[d.destination] = { builtin: !!c.builtin, sites: (c.sites || []).map(x => x.name + (x.quick ? " [quick]" : "")), farther: (c.farther || []).map(x => x.name) }; }); return out; };
+if (typeof window !== "undefined") window.__kairouteSights = () => { ensureBuiltins(); const out = {}; trip.days.forEach(d => { const c = cityFor(d); if (!c || out[d.destination]) return; out[d.destination] = { builtin: !!c.builtin, sites: (c.sites || []).map(x => x.name + (x.quick ? " [quick]" : "")), farther: (c.farther || []).map(x => x.name), shown: allSites(c).map(showName) }; }); return out; }; // shown: names as the sights list prints them (English only)
 if (typeof window !== "undefined") window.__kairouteThin = () => { ensureBuiltins(); return trip.days.map((d, i) => { const c = cityFor(d); return c ? i + " " + d.destination + ": " + (c.sites || []).filter(x => !x.quick).length + (c.builtin ? " builtin" : "") : null; }).filter(Boolean).join("\n"); };
 // The schedule says plainly when you get to each place and when you leave it.
 function tcell(it) {
