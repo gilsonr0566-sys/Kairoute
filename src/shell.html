@@ -256,7 +256,7 @@ button.mk { cursor: pointer; }
 .tl.rin-ship { --rin: var(--t-ship); } .tl.rout-ship { --rout: var(--t-ship); } .k-ship { --lc: var(--t-ship); }
 .tl.leg.k-ship .rail::before { background: repeating-linear-gradient(var(--lc) 0 14px, transparent 14px 18px); }
 /* Drag to reorder the stops (Richard, Nov 16): a handle on each stop, the stop follows the finger, a line shows where it lands */
-.tl[data-stop] .what { position: relative; padding-right: 48px; }
+.tl[data-stop] .what, .tl[data-meal] .what { position: relative; padding-right: 48px; }
 .draghandle { position: absolute; top: 4px; right: 0; width: 44px; height: 44px; display: grid; place-items: center; border: 1px solid var(--line); border-radius: 8px; background: var(--card); color: var(--muted); cursor: grab; touch-action: none; padding: 0; }
 .draghandle:hover, .draghandle:focus-visible { color: var(--route); border-color: var(--route); }
 .gripico { width: 22px; height: 22px; flex: none; }

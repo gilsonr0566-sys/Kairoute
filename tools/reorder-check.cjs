@@ -46,6 +46,22 @@ const URL0 = LIVE ? ARG : 'file://' + FILE;
     // 4. "Use Kairoute's best order" goes back to the app's own order
     await p.click('[data-act="orderreset"]'); await frame();
     if ((await ids()).join() !== start.join() || await p.evaluate(i => window.__kairouteOrder.get(i), D.i)) fail(`${size}: best order did not come back`); else ok(`${size}: "Use Kairoute's best order" puts the app's order back`);
+    // 4b. Lunch moves with the route by itself; one the traveler drags stays where they put it (Richard: "would you move a lunch automatically")
+    const mealRow = () => p.evaluate(() => { const rows = [...document.querySelectorAll('.timeline .tl[data-stop], .timeline .tl[data-meal]')]; const mi = rows.findIndex(r => r.dataset.meal); return mi < 0 ? null : { after: mi ? rows[mi - 1].dataset.stop || null : '^', name: rows[mi].querySelector('.nm').textContent }; });
+    const m0 = await mealRow();
+    if (!m0) fail(`${size}: no lunch row with a handle`);
+    else {
+      await p.focus('.tl[data-meal] .draghandle'); await p.keyboard.press('ArrowUp'); await frame();
+      const pin = await p.evaluate(i => window.__kairouteOrder.meals(i), D.i), m1 = await mealRow(), lbl = pin && Object.keys(pin)[0];
+      const okPin = pin && m1 && m1.after === pin[lbl] && m1.after !== m0.after;
+      // reorder the stops: a dragged lunch keeps its place after the same stop
+      const cur = await ids(); await p.evaluate(([i, q]) => window.__kairouteOrder.set(i, q), [D.i, cur.slice().reverse()]); await frame();
+      const m2 = await mealRow();
+      if (!okPin || !m2 || (pin[lbl] !== '^' && m2.after !== pin[lbl])) fail(`${size}: dragged lunch: before ${JSON.stringify(m0)}, pin ${JSON.stringify(pin)}, after move ${JSON.stringify(m1)}, after reorder ${JSON.stringify(m2)}`);
+      else ok(`${size}: lunch dragged earlier stays after the stop it was put after, even when the stops are reordered (${m1.name})`);
+      await p.click('[data-act="orderreset"]'); await frame();
+      if (await p.evaluate(i => window.__kairouteOrder.meals(i), D.i)) fail(`${size}: best order kept the lunch pin`);
+    }
     // 5. An order that costs a picked stop asks first; the time back to the ship never gives
     const sel0 = (await truth()).sel.slice().sort().join();
     let found = null;
