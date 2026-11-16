@@ -286,6 +286,9 @@ const log = (suite, trip, ok, what) => { results.push({ suite, trip, ok, what })
       await p.evaluate(w => window.__kairouteSiteSet(0, w, 'late'), W); await p.evaluate(() => window.__kairouteAt(0, 'plan')); await p.waitForTimeout(300);
       const sh2 = await p.evaluate(() => window.__kairoutePicker(0).picked);
       const okS = mark[0] < sh0.length && mark[1] === 'app picks' && sh2.some(n => /^Pompeii/.test(n));
+      // Nov 16, live: the shared guide replacing the built-in one (and a sight the app adds) made the list read as the traveler's.
+      const keep = await p.evaluate(() => window.__kairouteSeedKeep(0));
+      if (JSON.stringify(keep) !== JSON.stringify(['app picks', 'app picks', 'app picks', true])) own2.push('[a new guide or an app-added sight made the list the traveler\'s: ' + JSON.stringify(keep) + ']');
       if (!okS) own2.push('[after the app took a pick off: ' + sh0.join(', ') + ' -> ' + sh1.join(', ') + ' (' + mark.join(', ') + ') -> ' + sh2.join(', ') + ']');
       const okO = okS && JSON.stringify(own) === JSON.stringify(own2) && JSON.stringify(old1) === JSON.stringify(old2);
       log('New trip', 'new-trips', okL && okO, 'Sources arriving after the picks: ' + (okL ? 'Pompeii leads once known (' + v.join(', ') + ')' : 'before ' + before.join(', ') + ' / after ' + v.join(', ')) + (okO ? '; a list the traveler made is left alone' : '; the traveler\'s list was changed: ' + own.join(', ') + ' -> ' + own2.join(', '))); }

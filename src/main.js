@@ -276,7 +276,7 @@ function spreadPicks(t) {
     const k = d.cityKey || keyOf(d.destination); if (!d.selected || !k) return;
     seen[k] = seen[k] || new Set();
     const keep = d.selected.filter(id => !seen[k].has(id));
-    if (keep.length < d.selected.length) { d.selected = keep; d.respread = true; }
+    if (keep.length < d.selected.length) { const was = selKey(d); d.selected = keep; readyKeep(d, was); d.respread = true; }
     keep.forEach(id => seen[k].add(id));
   });
 }
@@ -2393,7 +2393,7 @@ ${P().access !== "none" ? "- The travelers need: " + ACCESS.find(a => a[0] === P
     // is kept, and every pick is carried over to the same sight in the new guide.
     if (prev) carryGuide(prev, c);
     cities[key] = c;
-    trip.days.forEach(x => { if (keyOf(x.destination) === keyOf(label) && !x.event === !d.event) { x.cityKey = key; x.pointIdx = 0; if (prev && x.selected) x.selected = remapPicks(x, prev, c); if (!x.selected) { x.selected = defaultSelection(c, trip.style, x); fitTrim(x); } } });
+    trip.days.forEach(x => { if (keyOf(x.destination) === keyOf(label) && !x.event === !d.event) { x.cityKey = key; x.pointIdx = 0; if (prev && x.selected) carryPicks(x, prev, c); if (!x.selected) { x.selected = defaultSelection(c, trip.style, x); fitTrim(x); } } });
     save();
     stopTicker();
     if (!quiet) { busy = null; view = "plan"; render(); toTop(); }
@@ -4205,6 +4205,14 @@ if (typeof window !== "undefined") {
   window.__kairouteCarryCheck = () => { const city = cityFor(day()); if (!city) return null; const prev = JSON.parse(JSON.stringify(city)), c = JSON.parse(JSON.stringify(city)); const gone = c.sites.splice(0, 2).concat((c.farther || []).splice(0, 1)); carryGuide(prev, c); return { gone: gone.map(x => x.name), back: gone.filter(x => allSites(c).some(y => samePlace(x, y))).map(x => x.name), dup: allSites(c).length - allSites(prev).length, lost: allSites(prev).filter(x => !allSites(c).some(y => y.id === x.id || y.id === x.id + "-k")).map(x => x.name + (isFinite(x.lat) ? "" : " (no map spot)")) }; };
   window.__kairouteFind = name => { const n = allSites(cityFor(day())).length; addPlaces(day(), name); return { before: n, after: allSites(cityFor(day())).length }; };
 }
+// A new guide for the city carries every pick to the same sight; the app's own list stays the app's (Nov 16: on the
+// live site the shared guide replaced the built-in one, the list read as the traveler's, and Pompeii never led Naples).
+function carryPicks(x, prev, c) { const was = selKey(x); x.selected = remapPicks(x, prev, c); readyKeep(x, was); }
+if (typeof window !== "undefined") window.__kairouteSeedKeep = i => { const d = trip.days[i], c = cityFor(d), out = [];
+  const why = () => (window.__kairouteLeadWhy(i) || {}).seedSig; out.push(why());
+  const spare = allSites(c).find(s => !(d.selected || []).includes(s.id) && !s.far && fitsWith(d, [s.id])); if (spare) addPick(d, spare.id, false); out.push(why());
+  const nc = JSON.parse(JSON.stringify(c)); [...(nc.sites || []), ...(nc.farther || [])].forEach(s => { s.id = "n-" + s.id; }); carryPicks(d, c, nc); out.push(why(), (d.selected || []).every(id => /^n-/.test(id)));
+  return out; };
 function remapPicks(x, prev, c) {
   const old = allSites(prev), now = allSites(c), out = [];
   (x.selected || []).forEach(id => { const o = old.find(s => s.id === id); const n = now.find(s => s.id === id && (!o || samePlace(o, s))) || (o && now.find(s => samePlace(o, s))); if (n && !out.includes(n.id)) { out.push(n.id); rememberPick(x, n); } });
