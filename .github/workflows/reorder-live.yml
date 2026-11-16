@@ -1,6 +1,7 @@
-name: Reorder live check
+name: Day plan live check
 # Drag to reorder the day's stops on the published site (phone and tablet): handles, touch drag, arrow keys, the
-# "Put back / Keep new order" question, the ship margin and a day marked ready. On demand, after a publish.
+# "Put back / Keep new order" question, the ship margin and a day marked ready; and picking the day's hours from the
+# time tile (hours-check). On demand, after a publish.
 on:
   workflow_dispatch:
 permissions:
@@ -15,3 +16,5 @@ jobs:
         with:
           node-version: 22
       - run: npm i playwright@1 && npx playwright install chromium && node tools/reorder-check.cjs https://gilsonr0566-sys.github.io/Kairoute/
+      - if: always()
+        run: node tools/hours-check.cjs https://gilsonr0566-sys.github.io/Kairoute/

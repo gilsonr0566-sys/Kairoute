@@ -1173,7 +1173,7 @@ function dayWindow(d, city) {
   if (d.type === "land") {
     if (!L) return { error: "Choose where you're staying in " + d.destination + "." };
     w.head = [L]; w.tail = d.returnToStart ? [L] : [];
-    w.start = toMin(d.startTime); w.endBy = Math.min(23 * 60 + 30, lunchIn(w.start, d.hours));
+    w.start = toMin(d.startTime); w.endBy = Math.min(23 * 60 + 30, lunchIn(w.start, d.hours)); w.sightFrom = w.start;
     w.startLabel = "Leave " + L.name; w.endLabel = "Back at " + L.name;
   } else if (d.type === "arrival") {
     if (!L) return { error: "Choose where you're staying in " + d.destination + "." };
@@ -1182,7 +1182,7 @@ function dayWindow(d, city) {
     w.start = toMin(d.time) + m.clear;
     w.head = [P, fixedStop(L, "Check in or drop bags at " + L.name, 20)];
     // "Hours to sightsee" start once you've dropped your bags: the ride in and check-in don't eat into them.
-    w.tail = [L]; w.endBy = Math.min(23 * 60, lunchIn(w.start + chainCost(w.head), d.hours));
+    w.sightFrom = w.start + chainCost(w.head); w.tail = [L]; w.endBy = Math.min(23 * 60, lunchIn(w.sightFrom, d.hours));
     w.startLabel = (d.mode === "ship" ? "Off the ship at " : "Out of ") + P.name;
     w.endLabel = "Back at " + L.name;
     w.notes.push(`${m.label} arrives ${d.time}. We allow ${dur(m.clear)} to get ${d.mode === "flight" ? "through passport control and baggage" : d.mode === "ship" ? "off the ship with your luggage" : d.mode === "train" ? "off the train" : "parked and on your way"}.`);
@@ -6329,7 +6329,7 @@ function legendHTML(plan) {
   <div class="plangrid"><div class="plantop">
   <div class="dayhead">${dayHeading(d)}${cdHTML || dayPin(d)}<button class="btn bigbtn tourbtn" data-act="tourstart"><span class="tb-long">▶ Start the tour</span><span class="tb-short">▶ Start tour</span></button></div>
   <div class="daysum n${2 + (walkTile ? 1 : 0) + (cdHTML ? 0 : 1)}" role="group" aria-label="Today at a glance">
-    <div><b>${fmt(plan.start)}–${fmt(plan.endBy)}</b><span>${d.type === "port" ? "ashore " + dur(plan.endBy - plan.start) : d.type === "embark" || d.type === "departure" ? dur(plan.endBy - plan.start) + " before you go" : L ? dur(d.hours * 60) + " sightseeing" : "free " + dur(plan.endBy - plan.start)}</span></div>
+    ${canLen && hoursLimits(d, plan) ? `<div class="hrscell">${hoursTileHTML(d, plan, dur(sightHours(d, plan) * 60) + " sightseeing")}</div>` : `<div><b>${fmt(plan.start)}–${fmt(plan.endBy)}</b><span>${d.type === "port" ? "ashore " + dur(plan.endBy - plan.start) : d.type === "embark" || d.type === "departure" ? dur(plan.endBy - plan.start) + " before you go" : "free " + dur(plan.endBy - plan.start)}</span></div>`}
     <div><b>${stopsN}${optN ? " + " + optN : ""}</b><span>${stopsN === 1 ? "pick" : "picks"}${optN ? " + optional" : ""}${plan.along.length && !optN ? ` · ${plan.along.length} on the way` : ""}</span></div>
     ${walkTile ? `<div><b>${distTxt(plan.walkKm)}</b><span>walking</span></div>` : ""}
     ${cdHTML ? "" : `<div><b>${fmt(plan.end)}</b><span>${d.type === "port" ? "back on board" : "finish"}</span></div>`}
@@ -6347,6 +6347,7 @@ function legendHTML(plan) {
       <button class="menuitem" role="menuitem" data-act="bookopen" data-meal="Dinner">🍽 ${(d.booked || {}).Dinner ? "Change my dinner reservation" : "I have a dinner reservation"}</button>
     </div></details>${wxChip}</div></div>
   </div>
+  ${canLen ? hoursEditHTML(d, plan) : ""}
   ${canLen ? `<div class="planbar">
     ${canLen ? `<div class="seg pace daylen" role="group" aria-label="How long to sightsee today">${DAY_LEN.map(([h, l, sub]) => `<button type="button" data-act="daylen" data-h="${h}" aria-pressed="${+d.hours === h}" title="${esc(l)}: ${esc(sub)} of sightseeing">${esc(l.replace(/ day$/, ""))} <small>${sub}</small></button>`).join("")}</div>` : ""}
   </div>` : ""}
@@ -6845,7 +6846,7 @@ document.addEventListener("click", e => {
       const n = suggestTour(day()), names = id => (allSites(city).find(x => x.id === id) || {}).name;
       const lines = days.map((o, i) => { const add = o.selected.filter(id => !before[i].includes(id)).map(names).filter(Boolean), rem = before[i].filter(id => !o.selected.includes(id)).map(names).filter(Boolean);
         return `${fmtDow(o.date)} ${fmtDate(o.date)}: ${o.selected.length} stops` + (add.length ? `, added ${add.join(", ")}` : "") + (rem.length ? `, moved or dropped ${rem.join(", ")}` : "") + (add.length || rem.length ? "" : ", already the best fit"); });
-      suggestMsg = n ? `Done: ${n} stops planned across ${days.length} day${days.length > 1 ? "s" : ""}. ` + lines.join(". ") + "." : "Nothing fit in the time you have. Try adding hours on the Trip tab.";
+      suggestMsg = n ? `Done: ${n} stops planned across ${days.length} day${days.length > 1 ? "s" : ""}. ` + lines.join(". ") + "." : "Nothing fit in the time you have. Try a longer day: tap the hours at the top of the Day plan.";
       save(); render();
       const b = document.getElementById("suggestNote"); if (b) b.scrollIntoView({ block: "center", behavior: "smooth" });
     }, 40);

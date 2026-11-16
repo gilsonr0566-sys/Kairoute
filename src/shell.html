@@ -609,6 +609,18 @@ main:has(#view.full) { padding: 0; }
 .daysum b { display: block; font-family: var(--font-display); font-size: 1.15rem; font-variant-numeric: tabular-nums; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .daysum span { display: block; color: var(--muted); font-size: 0.78rem; line-height: 1.25; }
 @media (max-width: 520px) { .daysum { grid-template-columns: repeat(2, minmax(0, 1fr)); } .daysum > div:nth-child(3) { border-left: 0; } .daysum > div:nth-child(n+3) { border-top: 1px solid var(--line); } }
+/* The hours tile opens the day's start and end time (dayhours.js). The whole cell is the button, at least 44 px tall. */
+.hrstile { display: block; width: 100%; min-height: 44px; padding: 0; margin: 0; background: none; border: 0; color: inherit; text-align: left; font: inherit; cursor: pointer; }
+.daysum > .hrscell:has(.hrstile:hover), .daysum > .hrscell:has(.hrstile[aria-expanded="true"]) { background: color-mix(in srgb, var(--route) 12%, transparent); }
+.hrstile:focus-visible { outline: 2px solid var(--route); outline-offset: 4px; border-radius: 4px; }
+.hrstile .hrspen { font-style: normal; color: var(--route); }
+.hrsedit.card { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 10px 16px; margin-top: 10px; padding: 12px 14px; }
+.hrsedit .field { margin: 0; display: flex; flex-direction: column; gap: 4px; min-width: 120px; }
+.hrsedit .field label, .hrsedit .lbl { font-size: .8rem; color: var(--muted); font-weight: 600; }
+.hrsedit input[type=time] { min-height: 44px; font-size: 1.05rem; padding: 6px 10px; }
+.hrsedit .hrsfix b { font-size: 1.15rem; min-height: 44px; display: flex; align-items: center; }
+.hrsedit small { color: var(--muted); font-size: .75rem; }
+.hrsedit .btn { min-height: 44px; }
 .lede.small { font-size: 0.88rem; margin: 0; }
 .planacts { display: grid; gap: 10px; margin: 2px 0; }
 .planacts .bigbtn { width: 100%; background: var(--meal); }
