@@ -46,7 +46,7 @@ function printDay(d, i) {
     if (it.type === "travel") return printLeg(it.leg, plan.endBy);
     if (it.type === "start") return row("pstart", "S", `<b>${esc(it.label)}</b>`);
     if (it.type === "end") return row("pend", it.place ? "E" : "✓", `<b>${esc(it.label)}</b>${d.type === "port" && d.allAboard ? `<div class="psub">All aboard ${esc(d.allAboard)}. The plan leaves a safety margin before it.</div>` : ""}`);
-    if (it.type === "fixed") return row("pfixed", "H", `<b>${esc(it.place.name)}</b>`);
+    if (it.type === "fixed") return row("pfixed", "H", `<b>${esc(it.place.name)}</b>${it.free ? `<div class="psub">Free time until ${fmt(it.time + it.free)}, then collect your bags.</div>` : ""}`);
     if (it.type === "meal" || it.type === "evening") {
       const r = it.place, lbl = it.meal.label, alts = (r.alts || []).map(a => a.name).filter(Boolean).slice(0, 2);
       const name = it.type === "evening" && !it.booked ? "Suggested dinner" : it.meal.quick && !r.booked ? "Quick " + lbl.toLowerCase() : lbl;

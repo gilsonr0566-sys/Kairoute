@@ -229,7 +229,7 @@ if (typeof window !== "undefined") window.__kairouteVoyageCheck = () => {
     const ds = parseDayLines("DAY|2027-07-15|Barcelona|arrival|ship|07:00||||||\nDAY|2027-07-15|Barcelona|departure|flight|17:00||||||");
     ok("Dates: off the ship and flying the same day keep the same date", ds.length === 2 && ds[0].date === ds[1].date, ds.map(x => x.date).join(" "));
     // 6. A day with no picks left is filled, but a day the traveler cleared stays clear.
-    trip = sampleTrip(); fresh(); const e2 = trip.days[emb]; e2.selected = []; e2.autoEmpty = false; fresh();
+    trip = sampleTrip(); fresh(); const e2 = trip.days[emb]; e2.selected = []; e2.autoEmpty = false; e2.cleared = true; fresh();
     ok("A boarding day the traveler cleared stays clear", !buildPlan(e2).items.some(x => x.type === "stop"));
     ok("Sample boarding day keeps something to do", pe && pe.items.some(x => x.type === "stop"));
     // 7. The boarding day's one leave-by time runs through the bag pickup and doesn't move with the stops.
@@ -257,6 +257,18 @@ if (typeof window !== "undefined") window.__kairouteVoyageCheck = () => {
     ok("Reading a boarding pass never guesses or saves by itself", !r8.found && r8.time === "12:30" && r9.time === "09:05" && /2027-07-05/.test(r9.msg) && /17:00/.test(r9.msg) && b8.boardTime === "12:30", r9.msg);
     b8.boardChecks = { passport: 1, tags: 1 };
     ok("What to have on you counts what's ticked", /2 of 9/.test(boardCard(b8, p8)));
+    // 9. A boarding day whose picks all stop fitting (a boarding time, real ride times) is never left blank: the app
+    // took them off, not the traveler, so the day still fills with what fits (Richard, Nov 16: "The embark is blank again").
+    trip = sampleTrip(); fresh(); const b9 = trip.days[emb]; trip.active = emb; b9.boardTime = "12:30"; b9.selected = []; delete b9.autoEmpty; delete b9.cleared; fresh();
+    const p9 = buildPlan(b9), st9 = p9.items.filter(x => x.type === "stop");
+    ok("Boarding day the app emptied is still planned with what fits, not blank", !p9.error && st9.length > 0 && p9.end <= p9.endBy, `${st9.length} stop(s): ${st9.map(x => x.place.name).join(", ")} · ends ${fmt(p9.end)} by ${fmt(p9.endBy)}`);
+    // The 15 min to collect the bags counts: a pick that would get there after the boarding time gives way (it ran 11:54 for 11:45).
+    const byz = allSites(cityFor(b9)).find(x => /byzantine/i.test(x.name)); b9.selected = byz ? [byz.id] : []; if (byz) markMine(b9, byz.id, true); b9.boardTime = "11:45"; fresh();
+    const q9 = buildPlan(b9);
+    ok("A boarding day never runs past the boarding time, bag pickup included", !!byz && !q9.error && q9.end <= q9.endBy, `ends ${fmt(q9.end)} by ${fmt(q9.endBy)}`);
+    // A morning too short for any sight shows free time and leaves at the Leave-by time, not "leave at 09:00, 1 h 52 min to spare".
+    b9.selected = []; b9.mine = []; fresh(); const r9p = buildPlan(b9), fr = r9p.items.find(x => x.type === "fixed" && x.free), html9 = renderPlan(b9);
+    ok("A short boarding morning shows free time, then leaves at the safe time", !!fr && r9p.end <= r9p.endBy && r9p.end >= r9p.endBy - 20 && /Free time until/.test(html9), `${fr ? "free " + fr.free + " min" : "no free time"} · at the terminal ${fmt(r9p.end)} for ${fmt(r9p.endBy)}`);
     // Every cruise trip, not one: boarding in Barcelona with a 13:00 boarding time.
     trip = sampleTrip(); trip.days = [newDay({ date: "2027-08-01", destination: "Barcelona", type: "land", startTime: "09:00", hours: 8, cityKey: "barcelona" }), newDay({ date: "2027-08-02", destination: "Barcelona", type: "embark", startTime: "09:00", allAboard: "17:30", boardTime: "13:00", cityKey: "barcelona" }), newDay({ date: "2027-08-03", destination: "At sea", type: "sea" })]; trip.active = 1; fresh();
     const bb = trip.days[1]; seedPicks(bb, cityFor(bb)); fresh(); const pb = buildPlan(bb);
