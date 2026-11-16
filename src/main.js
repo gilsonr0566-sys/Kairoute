@@ -4209,6 +4209,11 @@ function remapPicks(x, prev, c) {
   const old = allSites(prev), now = allSites(c), out = [];
   (x.selected || []).forEach(id => { const o = old.find(s => s.id === id); const n = now.find(s => s.id === id && (!o || samePlace(o, s))) || (o && now.find(s => samePlace(o, s))); if (n && !out.includes(n.id)) { out.push(n.id); rememberPick(x, n); } });
   if (x.anchor && !out.includes(x.anchor)) { const o = old.find(s => s.id === x.anchor), n = o && now.find(s => samePlace(o, s)); x.anchor = n ? n.id : null; }
+  // The order the traveler dragged the stops into follows the same places into the new guide (its sights can have new ids).
+  const mapIds = ids => { const r = []; ids.forEach(id => { const o = old.find(s => s.id === id), n = now.find(s => s.id === id && (!o || samePlace(o, s))) || (o && now.find(s => samePlace(o, s))); if (n && !r.includes(n.id)) r.push(n.id); }); return r; };
+  if (Array.isArray(x.order)) { const r = mapIds(x.order); if (r.length > 1) x.order = r; else delete x.order; }
+  if (x.pendingOrder && Array.isArray(x.pendingOrder.prev)) x.pendingOrder.prev = mapIds(x.pendingOrder.prev);
+  if (x.askReady && Array.isArray(x.askReady.order)) x.askReady.order = mapIds(x.askReady.order);
   return out;
 }
 // ---------- Rendering ----------

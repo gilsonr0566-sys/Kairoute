@@ -22,6 +22,9 @@ const URL0 = LIVE ? ARG : 'file://' + FILE;
     const truth = () => p.evaluate(i => { const t = window.__kairouteTruth(i); return { kept: t.keptNames, end: t.end, endBy: t.endBy, over: t.over, sel: t.selected }; }, D.i);
     const notes = () => p.evaluate(() => [...document.querySelectorAll('.asknote')].map(x => x.innerText.replace(/\s+/g, ' ')));
     await go();
+    // On the live site the city's shared guide can arrive in the first moments and replace the built-in one (new ids for
+    // the same places): start once the day's stops have stayed the same for a few seconds.
+    if (LIVE) { let last = '', same = 0; for (let t = 0; t < 240 && same < 4; t++) { await p.waitForTimeout(1000); await go(); const now = (await ids()).join(), up = await p.evaluate(() => window.__kairouteUpgrading && window.__kairouteUpgrading()); same = now === last && !up ? same + 1 : 0; last = now; } }
     // 1. A handle on every stop, big enough for a finger
     const hs = await p.evaluate(() => { const r = [...document.querySelectorAll('.timeline .tl[data-stop]')]; return { rows: r.length, handles: r.filter(x => x.querySelector('.draghandle')).length, small: [...document.querySelectorAll('.draghandle')].filter(x => { const b = x.getBoundingClientRect(); return b.width < 44 || b.height < 44; }).length }; });
     if (hs.rows < 3 || hs.handles !== hs.rows || hs.small) fail(`${size}: handles ${JSON.stringify(hs)}`); else ok(`${size}: a 44 px handle on each of the ${hs.rows} stops`);
