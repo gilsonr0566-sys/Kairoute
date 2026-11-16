@@ -1287,6 +1287,54 @@ body.psheet-on { overflow: hidden; }
 .shipcard .shipbtns .btn { min-height: 48px; justify-content: center; font-size: 1rem; }
 .shipcard input[type=time] { font-size: 1.6rem; padding: 8px 10px; width: 100%; box-sizing: border-box; }
 .shipcard .shiplater { justify-self: center; }
+
+/* Printable trip plan (src/features/print-plan.js): hidden on screen; when printing, only the plan shows, always light. */
+#printView { display: none; }
+@media print {
+  @page { margin: 14mm 12mm; }
+  html, body { background: #fff !important; color: #123C3A !important; height: auto !important; min-height: 0 !important; overflow: visible !important; position: static !important; }
+  body > *:not(#printView) { display: none !important; }
+  #printView { display: block !important; font-family: var(--font-body); font-size: 13pt; line-height: 1.4; color: #123C3A; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  #printView h1, #printView h2 { font-family: var(--font-display); margin: 0; line-height: 1.15; color: #123C3A; }
+  #printView .phead { display: flex; gap: 14px; align-items: center; border-bottom: 3px solid #F0643A; padding-bottom: 10px; margin-bottom: 6px; }
+  #printView .pbrand { font-weight: 800; color: #146B61; letter-spacing: .04em; text-transform: uppercase; font-size: 10pt; }
+  #printView h1 { font-size: 24pt; }
+  #printView .pspan { color: #56636C; font-size: 11pt; }
+  #printView .pday { break-before: page; padding-top: 4px; }
+  #printView .pday:first-of-type, #printView .pday.sea { break-before: auto; }
+  #printView .pday.sea { margin-top: 18px; }
+  #printView .pdhead { display: flex; gap: 12px; align-items: center; background: #E8F1EE; border-left: 6px solid #146B61; padding: 8px 12px; border-radius: 6px; margin: 12px 0 10px; break-after: avoid; }
+  #printView .pdnum { background: #146B61; color: #fff; font-weight: 800; padding: 4px 9px; border-radius: 6px; font-size: 11pt; white-space: nowrap; }
+  #printView h2 { font-size: 18pt; }
+  #printView .pddate { color: #56636C; font-size: 11pt; }
+  #printView .pkeys { display: flex; flex-wrap: wrap; gap: 8px; margin: 6px 0; }
+  #printView .pkeys div { border: 1.5px solid #D8DED8; border-radius: 6px; padding: 5px 10px; }
+  #printView .pkeys span { display: block; font-size: 9pt; color: #56636C; text-transform: uppercase; letter-spacing: .04em; }
+  #printView .pkeys strong { font-size: 14pt; }
+  #printView .pzone { font-size: 10pt; color: #56636C; margin: 4px 0 8px; }
+  #printView .ptable { width: 100%; border-collapse: collapse; }
+  #printView .ptable th { text-align: left; font-size: 9pt; text-transform: uppercase; letter-spacing: .04em; color: #56636C; border-bottom: 1.5px solid #D8DED8; padding: 4px 6px; }
+  #printView .ptable td { padding: 6px 6px; vertical-align: top; border-bottom: 1px solid #ECEFEC; }
+  #printView .ptable tr { break-inside: avoid; }
+  #printView .ptable th:nth-child(1), #printView .ptable th:nth-child(2) { width: 58px; }
+  #printView .pt { font-weight: 700; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  #printView .pmark { display: inline-block; min-width: 22px; height: 22px; line-height: 22px; text-align: center; border-radius: 6px; background: #146B61; color: #fff; font-size: 10pt; font-weight: 800; margin-right: 8px; }
+  #printView .pmeal .pmark { background: #D9532A; }
+  #printView .pstart .pmark, #printView .pend .pmark { background: #123C3A; }
+  #printView .pfixed .pmark { background: #A8325C; }
+  #printView .popt .pmark { background: #fff; color: #146B61; border: 1.5px solid #146B61; }
+  #printView .psub { color: #56636C; font-size: 11pt; margin-left: 30px; }
+  #printView .pbook { margin: 3px 0 0 30px; font-size: 11pt; color: #9A3B12; font-weight: 600; }
+  #printView .pleg td { font-size: 10.5pt; color: #3C4A52; padding: 3px 6px 3px 36px; border-bottom: 1px solid #ECEFEC; border-left: 0; }
+  #printView .pleg td:last-child { border-left: 4px solid #146B61; }
+  #printView .pleg.k-car td:last-child { border-left-color: #7B3FE4; }
+  #printView .pleg.k-bus td:last-child { border-left-color: #C2185B; }
+  #printView .pleg.k-train td:last-child { border-left-color: #1F6FD1; }
+  #printView .pleg.k-ferry td:last-child { border-left-color: #8F5D00; }
+  #printView .pleg td:first-child, #printView .pleg td:nth-child(2) { padding: 0; }
+  #printView .pnote { font-size: 11pt; color: #9A3B12; margin: 6px 0; }
+  #printView .pfoot { margin-top: 18px; border-top: 2px solid #D8DED8; padding-top: 8px; font-size: 10pt; color: #56636C; break-inside: avoid; }
+}
 </style>
 
 <header class="top">
