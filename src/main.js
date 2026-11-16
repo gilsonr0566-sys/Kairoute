@@ -1338,15 +1338,28 @@ function mealShut(r, label, iso) { const t = MEAL_CHECK[label] || MEAL_CHECK.Lun
 // No backtracking (Richard, Nov 16: Athens went 1 -> 6 north for lunch, then back south to 7, then across town and
 // back): a route whose legs cross each other doubles back on itself. Each crossing costs as much as an hour, so a
 // crowd or heat preference never wins over a clean loop, while opening hours, meals and the ship still do.
-const CROSS_COST = 60; let crossOn = true; // off only to check that a clean loop never costs a stop (buildPlanRaw)
+const CROSS_COST = 60; let crossOn = false; // on only for the last pass over a finished day (buildPlanForDay)
+// Speed: this runs inside every trial order the planner weighs (thousands per tap), so it reuses one buffer, keeps each
+// place's flat map position, and skips pairs of legs whose boxes don't overlap before doing any cross products.
+const crossXY = new WeakMap(), CXB = new Float64Array(128);
 function crossCount(O, seq, Z) {
-  const pts = [O, ...seq, Z].filter(p => p && isFinite(p.lat) && isFinite(p.lng)), P = [];
-  for (const p of pts) { const q = { x: p.lng * Math.cos(p.lat * Math.PI / 180), y: +p.lat }, l = P[P.length - 1]; if (!l || Math.abs(l.x - q.x) + Math.abs(l.y - q.y) > 2e-4) P.push(q); }
-  const cr = (a, b, c) => (b.x - a.x) * (c.y - a.y) - (b.y - a.y) * (c.x - a.x); let n = 0;
-  for (let i = 0; i < P.length - 3; i++) for (let j = i + 2; j < P.length - 1; j++) {
-    if (i === 0 && j === P.length - 2 && Math.abs(P[0].x - P[P.length - 1].x) + Math.abs(P[0].y - P[P.length - 1].y) < 2e-4) continue; // a loop back to where the day began
-    const A = P[i], B = P[i + 1], C = P[j], D = P[j + 1];
-    if (cr(A, B, C) * cr(A, B, D) < 0 && cr(C, D, A) * cr(C, D, B) < 0) n++;
+  let m = 0; const add = p => { if (!p || m >= 126) return; let q = crossXY.get(p); if (!q) { if (!isFinite(p.lat) || !isFinite(p.lng)) return; q = [p.lng * Math.cos(p.lat * Math.PI / 180), +p.lat]; crossXY.set(p, q); }
+    if (m && Math.abs(CXB[m - 2] - q[0]) + Math.abs(CXB[m - 1] - q[1]) <= 2e-4) return; CXB[m++] = q[0]; CXB[m++] = q[1]; };
+  add(O); for (let i = 0; i < seq.length; i++) add(seq[i]); add(Z);
+  const k = m / 2; if (k < 4) return 0;
+  const loop = Math.abs(CXB[0] - CXB[m - 2]) + Math.abs(CXB[1] - CXB[m - 1]) < 2e-4; let n = 0;
+  for (let i = 0; i < k - 3; i++) {
+    const ax = CXB[2 * i], ay = CXB[2 * i + 1], bx = CXB[2 * i + 2], by = CXB[2 * i + 3];
+    const x0 = Math.min(ax, bx), x1 = Math.max(ax, bx), y0 = Math.min(ay, by), y1 = Math.max(ay, by);
+    for (let j = i + 2; j < k - 1; j++) {
+      if (i === 0 && j === k - 2 && loop) continue; // a loop back to where the day began
+      const cx = CXB[2 * j], cy = CXB[2 * j + 1], dx = CXB[2 * j + 2], dy = CXB[2 * j + 3];
+      if (Math.max(cx, dx) < x0 || Math.min(cx, dx) > x1 || Math.max(cy, dy) < y0 || Math.min(cy, dy) > y1) continue;
+      const d1 = (bx - ax) * (cy - ay) - (by - ay) * (cx - ax), d2 = (bx - ax) * (dy - ay) - (by - ay) * (dx - ax);
+      if (d1 * d2 >= 0) continue;
+      const d3 = (dx - cx) * (ay - cy) - (dy - cy) * (ax - cx), d4 = (dx - cx) * (by - cy) - (dy - cy) * (bx - cx);
+      if (d3 * d4 < 0) n++;
+    }
   }
   return n;
 }
@@ -1737,11 +1750,6 @@ function buildPlanRaw(d) { const prev = planDate, pw = planWx; if (!planDepth) t
     if (pl && !pl.error && (pl.dropped || []).length && Object.keys(transitMem).length) {
       ridePref = "fast"; let p2; try { p2 = buildPlanFor(d); } finally { ridePref = "public"; }
       if (p2 && !p2.error && !p2.over && (p2.dropped || []).length < pl.dropped.length) { p2.fastRides = true; pl = p2; } }
-    // A clean loop is preferred, never at the price of a stop: when the day drops one, a plan that allows crossing
-    // paths and keeps more sights wins.
-    if (pl && !pl.error && ((pl.dropped || []).length || pl.over) && crossOn) {
-      crossOn = false; let p3; try { p3 = buildPlanFor(d); } finally { crossOn = true; }
-      if (p3 && !p3.error && !p3.over && ((p3.dropped || []).length < (pl.dropped || []).length || pl.over)) pl = p3; }
     return pl; } finally { planDate = prev; planWx = pw; planDepth--; } }
 function buildPlanFor(d) {
   const memo0 = mealPickMemo, own0 = ownOrd; mealPickMemo = { g: -1, m: new Map() }; // meal choices are remembered for this day's plan only
@@ -1995,6 +2003,12 @@ function buildPlanForDay(d) {
     }
     fill = { spare: Math.round(limit - simDay(seq, t0, O, ZZ, style).end), capped, mustLeft: pool.filter(x => x.mustSee && t0 + tmin(O, x) + (x.minutes || 0) + (ZZ ? tmin(x, ZZ) : 0) <= limit).map(x => x.id) }; // must-sees that could have fitted on their own
   }
+  // One loop, last: the stops the day keeps are settled above with the usual costs, then their order is polished once
+  // more with crossing paths counted (from the order found and from its reverse, so it is not stuck going the wrong way
+  // round). The loop is taken only when it is no later for any opening time and still ends
+  // in time, so it never costs a stop, a meal or the ship (and a plan weighs it once, not in every trial).
+  if (seq.length > 2 && !ownOrd && !mealPin) { const r0 = simDay(seq, t0, O, ZZ, style); crossOn = true; // a day the traveler put in order (or placed lunch on) keeps it
+    try { const q1 = polishDay(seq, t0, O, ZZ, style, city), q2 = polishDay(seq.slice().reverse(), t0, O, ZZ, style, city), c1 = simDay(q1, t0, O, ZZ, style), c2 = simDay(q2, t0, O, ZZ, style), q = c2.cost < c1.cost ? q2 : q1, r = c2.cost < c1.cost ? c2 : c1; if (r.late <= r0.late && r.end <= Math.max(r0.end, w.endBy - tailCost())) seq = q; } finally { crossOn = false; } }
   bonusMemo.set(d, bonus.map(x => x.id));
   keptMemo.set(d, seq.filter(x => !x.mealOf && !x.bonus && !x.along).map(x => x.id));
   // A sight that doesn't fit today but is also ticked on a later day here isn't lost: it's seen that day.
