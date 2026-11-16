@@ -901,13 +901,24 @@ function refillIfNeeded(d, city) {
 // Each day starts from the best sight still unseen and grows around it (nearby, high-value sights first),
 // checking the real planned day (route, meals, opening days) after every addition, so nothing is dropped
 // and no sight repeats across days.
-let suggestMsg = "";
+let suggestMsg = "", suggestFor = null;
+// "Suggest my tour" says what it did for the days of one city. The note shows only on those days, and only while their
+// picks are still the ones it reported: once anything changes them (a new guide, a pick, a re-plan), it would be out of
+// date and could contradict the plan on screen (Madrid, Nov 16: "Nothing fit" under a day with 2 picks).
+const citySig = c => trip.days.filter(o => cityFor(o) === c).map(o => (o.selected || []).join(",")).join("|");
+function suggestNow(d) {
+  const c = cityFor(d); if (!suggestMsg || !suggestFor || !c || suggestFor.c !== c || suggestFor.sig !== citySig(c)) return "";
+  return suggestMsg;
+}
 let movedNote = ""; // "Sorrento moved here from Mon Jul 12." after picking a sight planned on another day
 // A pick that doesn't fit the day never stays ticked (Richard, Nov 14). When a pick stops fitting (the day's
 // hours, rides or opening times changed), it comes off, and the list and the Day plan say why, with a one-tap
 // way to fit it back in (swap it for a stop, or see it on another day).
 function settlePicks(d) {
   if (!d || !Array.isArray(d.selected) || (!d.selected.length && !(d.bumped || []).length) || !cityFor(d) || busy || (typeof liveOn === "function" && liveOn(d))) return false;
+  // While the city's fuller guide is still being built, nothing comes off: the plan is drawn again with the new guide
+  // in a moment, and a pick dropped now (on the thin guide's data) would have to come back (Madrid, Nov 16).
+  if (guideLoading(d)) return false;
   let moved = false; const was = selKey(d);
   // Picks that came off when the day got shorter go back on by themselves once it is long enough again
   // (Light day, then Full day again: the same picks as before).
@@ -965,6 +976,7 @@ function cutNote(d) {
 }
 function bumpedNote(d) {
   if (d.pendingCut) return cutNote(d);
+  if (guideLoading(d)) return "";
   const city = cityFor(d), b0 = (d.bumped || []).filter(x => !(d.selected || []).includes(x.id) && allSites(city || {}).some(s => s.id === x.id));
   // Sights that went back to the day they were moved from: said plainly, with nothing to fix.
   const back = b0.filter(x => x.back), b = b0.filter(x => !x.back);
@@ -5736,7 +5748,7 @@ function renderSites(d) {
   </div>
   ${timeMeter(plan, d)}${plan && !plan.error ? laterEndBanner(d, plan) + elsewhereNote(plan) : ""}
   <div class="card suggest"><div><h3>Let your guide plan it</h3><p class="lede small">The best stops for ${nDays > 1 ? `all ${nDays} days` : "today"} in ${esc(city.city)}, fitted to your hours, pace and interests. Nothing repeats.</p></div>
-    ${suggestMsg ? `<p class="banner" id="suggestNote" role="status">${esc(suggestMsg)}</p>` : ""}${movedNote ? `<p class="banner ok" id="movedNote" role="status">${esc(movedNote)}</p>` : ""}<div class="actions"><button class="btn small" data-act="suggesttour">Suggest my tour</button><button class="btn ghost small" data-act="freshpicks">Fresh picks for this day only</button></div></div>
+    ${suggestNow(d) ? `<p class="banner" id="suggestNote" role="status">${esc(suggestNow(d))}</p>` : ""}${movedNote ? `<p class="banner ok" id="movedNote" role="status">${esc(movedNote)}</p>` : ""}<div class="actions"><button class="btn small" data-act="suggesttour">Suggest my tour</button><button class="btn ghost small" data-act="freshpicks">Fresh picks for this day only</button></div></div>
   ${city.ai ? `<p class="ai-note">Written by your AI guide from checked sources: every place is confirmed on the map, stories draw on Wikipedia and Wikivoyage (CC BY-SA), hours and access on OpenStreetMap contributors (ODbL). Check opening hours before you go.</p>` : city.builtin ? `<p class="ai-note">Kairoute guide. Hours and prices are typical: check before you go.</p>` : ""}${city.sites.some(x => x.srcOnly) ? `<p class="ai-note">More sights come from checked sources (Wikidata, Wikipedia, heritage registers); their short descriptions are from Wikivoyage (CC BY-SA). Each one's full story is written when you add it to a day.</p>` : ""}
   </div><div class="sitesmain pane" data-pane="sites">
   ${bumpedNote(d)}${pickbar}
@@ -6254,6 +6266,7 @@ const laterEndBanner = (d, plan) => (e => e ? `<div class="banner ok"><span>You 
 const THIN_SIGHTS = 10, upgradeTried = new Set();
 const isThin = c => !!(c && c.builtin && (c.sites || []).filter(x => !x.quick && !x.srcOnly).length < THIN_SIGHTS);
 let upgrading = null;
+const guideLoading = d => !!(upgrading && d && keyOf(upgrading) === keyOf(d.destination));
 function upgradeThin(d, city) {
   if (!isThin(city) || !aiReady() || busy || upgrading) return;
   const k = keyOf(d.destination); if (upgradeTried.has(k)) return; upgradeTried.add(k);
@@ -6263,6 +6276,8 @@ function upgradeThin(d, city) {
   generateCity(d, true).then(ok => { upgrading = null; if (!ok) again(); if (ok && (view === "plan" || view === "guide")) render(); }).catch(() => { upgrading = null; again(); });
 }
 if (typeof window !== "undefined") window.__kairouteUpgrading = () => upgrading;
+// Test hook: as if the fuller guide for a city were being built right now (null: done), to check nothing comes off meanwhile.
+if (typeof window !== "undefined") window.__kairouteGuideLoading = v => { upgrading = v || null; render(); return upgrading; };
 if (typeof window !== "undefined") window.__kairouteSights = () => { ensureBuiltins(); const out = {}; trip.days.forEach(d => { const c = cityFor(d); if (!c || out[d.destination]) return; out[d.destination] = { builtin: !!c.builtin, sites: (c.sites || []).map(x => x.name + (x.quick ? " [quick]" : "")), farther: (c.farther || []).map(x => x.name), shown: allSites(c).map(showName) }; }); return out; }; // shown: names as the sights list prints them (English only)
 if (typeof window !== "undefined") window.__kairouteThin = () => { ensureBuiltins(); return trip.days.map((d, i) => { const c = cityFor(d); return c ? i + " " + d.destination + ": " + (c.sites || []).filter(x => !x.quick).length + (c.builtin ? " builtin" : "") : null; }).filter(Boolean).join("\n"); };
 // The schedule says plainly when you get to each place and when you leave it.
@@ -6343,7 +6358,7 @@ ${partsList(s, it.time)}${stopLiveNotes(it, d)}</div></div>`;
     (e => e ? `<div class="banner ok"><span>Leave at <b>${e.start}</b> instead of ${esc(d.startTime)} and ${e.fits.length ? `you also fit <b>${e.fits.map(esc).join(", ")}</b>` : "the day fits"}, back by ${e.end}. Earlier also means cooler weather, less traffic and fewer crowds.</span><button class="btn small" data-act="earlystart" data-v="${e.start}" data-h="${e.hours}">Leave at ${e.start}</button></div>` : "")(earlierStart(d, plan)),
     laterEndBanner(d, plan), elsewhereNote(plan),
     upgrading && keyOf(upgrading) === keyOf(d.destination) ? `<p class="banner" role="status"><span class="spinner"></span> Building a fuller guide for ${esc(d.destination)} in the background. This plan updates by itself in about two minutes.</p>` : "",
-    suggestMsg ? `<p class="banner ok" id="suggestNote" role="status">${esc(suggestMsg)} <button class="linkbtn" data-act="suggestok">OK</button></p>` : ""
+    suggestNow(d) ? `<p class="banner ok" id="suggestNote" role="status">${esc(suggestNow(d))} <button class="linkbtn" data-act="suggestok">OK</button></p>` : ""
   ].filter(Boolean).join("");
   const preview = !isToday(d) && cdPreview == null;
   const wxt = weatherTool(d, plan), wxChip = /wxchip/.test(wxt) ? wxt : "";
@@ -6361,7 +6376,7 @@ function legendHTML(plan) {
   <div class="plangrid"><div class="plantop">
   <div class="dayhead">${dayHeading(d)}${cdHTML || dayPin(d)}<button class="btn bigbtn tourbtn" data-act="tourstart"><span class="tb-long">▶ Start the tour</span><span class="tb-short">▶ Start tour</span></button></div>
   <div class="daysum n${2 + (walkTile ? 1 : 0) + (cdHTML ? 0 : 1)}" role="group" aria-label="Today at a glance">
-    <div><b>${fmt(plan.start)}–${fmt(plan.endBy)}</b><span>${d.type === "port" ? "ashore " + dur(plan.endBy - plan.start) : d.type === "embark" || d.type === "departure" ? dur(plan.endBy - plan.start) + " before you go" : L ? dur(d.hours * 60) + " sightseeing" : "free " + dur(plan.endBy - plan.start)}</span></div>
+    <div><b>${fmt(plan.start)}–${fmt(plan.endBy)}</b><span>${d.type === "port" ? "ashore " + dur(plan.endBy - plan.start) : d.type === "embark" || d.type === "departure" ? dur(plan.endBy - plan.start) + " before you go" : L ? dur(Math.min(d.hours * 60, plan.endBy - plan.start)) + " sightseeing" : "free " + dur(plan.endBy - plan.start)}</span></div>
     <div><b>${stopsN}${optN ? " + " + optN : ""}</b><span>${stopsN === 1 ? "pick" : "picks"}${optN ? " + optional" : ""}${plan.along.length && !optN ? ` · ${plan.along.length} on the way` : ""}</span></div>
     ${walkTile ? `<div><b>${distTxt(plan.walkKm)}</b><span>walking</span></div>` : ""}
     ${cdHTML ? "" : `<div><b>${fmt(plan.end)}</b><span>${d.type === "port" ? "back on board" : "finish"}</span></div>`}
@@ -6877,7 +6892,14 @@ document.addEventListener("click", e => {
       const n = suggestTour(day()), names = id => (allSites(city).find(x => x.id === id) || {}).name;
       const lines = days.map((o, i) => { const add = o.selected.filter(id => !before[i].includes(id)).map(names).filter(Boolean), rem = before[i].filter(id => !o.selected.includes(id)).map(names).filter(Boolean);
         return `${fmtDow(o.date)} ${fmtDate(o.date)}: ${o.selected.length} stops` + (add.length ? `, added ${add.join(", ")}` : "") + (rem.length ? `, moved or dropped ${rem.join(", ")}` : "") + (add.length || rem.length ? "" : ", already the best fit"); });
-      suggestMsg = n ? `Done: ${n} stops planned across ${days.length} day${days.length > 1 ? "s" : ""}. ` + lines.join(". ") + "." : "Nothing fit in the time you have. Try adding hours on the Trip tab.";
+      // Nothing planned: the days keep the picks they had (an emptied city is never the answer), and the note says
+      // why in a way that matches what is on screen. While the city's guide is still loading, it says to try again then.
+      if (!n) days.forEach((o, i) => { o.selected = before[i]; forget0(o); });
+      const kept = days.reduce((a, o) => a + o.selected.length, 0), dname = day().destination;
+      suggestMsg = n ? `Done: ${n} stops planned across ${days.length} day${days.length > 1 ? "s" : ""}. ` + lines.join(". ") + "."
+        : guideLoading(day()) ? `The full guide for ${dname} is still loading, so your picks stay as they are. Try again in a couple of minutes.`
+        : kept ? `No better plan found for the time you have, so your picks stay as they are.` : "Nothing fit in the time you have. Try adding hours on the Trip tab.";
+      suggestFor = { c: city, sig: citySig(city) };
       save(); render();
       const b = document.getElementById("suggestNote"); if (b) b.scrollIntoView({ block: "center", behavior: "smooth" });
     }, 40);

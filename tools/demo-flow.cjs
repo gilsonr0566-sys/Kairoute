@@ -199,6 +199,12 @@ async function partA(b) {
     // A sea day shows its own page (getting ready for the next ports, life aboard), never an empty card.
     if (d.type === "sea") { const v = await p.evaluate(() => { const g = document.querySelector(".voygrid"); return { grid: !!g, len: g ? g.innerText.trim().length : 0, empty: !!document.querySelector(".seacard") }; });
       ok(v.grid && v.len > 150 && !v.empty, `day ${d.i + 1} sea day (${d.date}) has its sea-day page, not an empty one (${v.len} characters)`); }
+    // Madrid, Nov 16: no note may contradict the day's own summary: "Nothing fit" under a day with picks, a pick taken
+    // off while the city's guide is still loading, or more hours of sightseeing than the day's window holds.
+    { const c = await p.evaluate(() => { const sum = (document.querySelector(".daysum") || {}).innerText || "", m = /(\d\d):(\d\d)–(\d\d):(\d\d)\n(?:(\d+) h)?\s*(?:(\d+) min)? sightseeing/.exec(sum);
+        return { nothing: [...document.querySelectorAll(".banner")].some(b => /Nothing fit/i.test(b.innerText)), picks: +((/\n(\d+)\n(?:picks?)/.exec(sum) || [])[1] || 0),
+          bumpLoading: !!document.querySelector(".banner.bumped") && !!(window.__kairouteUpgrading && window.__kairouteUpgrading()), over: !!m && (+m[5] || 0) * 60 + (+m[6] || 0) > (+m[3] * 60 + +m[4]) - (+m[1] * 60 + +m[2]) }; });
+      ok(!(c.nothing && (c.picks || s.stops.length)) && !c.bumpLoading && !c.over, `day ${d.i + 1} ${d.dest}: notes agree with the day's summary` + (c.nothing && (c.picks || s.stops.length) ? ` ("Nothing fit" shown with ${c.picks || s.stops.length} picks)` : "") + (c.bumpLoading ? " (a pick taken off while the guide is loading)" : "") + (c.over ? " (more sightseeing hours than the day's window)" : "")); }
     if (/something went wrong|undefined|NaN|\[object/i.test(s.text)) ok(false, `day ${d.i + 1} ${d.dest}: broken text on the Day plan: ` + (s.text.match(/.{0,60}(something went wrong|undefined|NaN|\[object).{0,60}/i) || [""])[0]);
     if (d.type === "port") {
       const pinned = await p.evaluate(() => (document.querySelector(".dayhead") || {}).innerText || "");

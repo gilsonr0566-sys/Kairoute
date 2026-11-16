@@ -403,6 +403,25 @@ const log = (suite, trip, ok, what) => { results.push({ suite, trip, ok, what })
         if (straight >= 0.65 && straight <= 3.9 && l.mode !== 'flight') { either++; if (!(l.choices.some(c => /^Walk/.test(c)) && l.choices.some(c => /^Taxi/.test(c)))) short.push(x.d + ': ' + l.how + ' ' + l.min + ' min [' + l.choices.join(', ') + ']'); } }
       const okR2 = !miss.length && !short.length && rides > 10 && either > 10;
       log('Rides', 'rides', okR2, 'Every ride has its buttons, every 600 m to 4 km leg offers walk or taxi: ' + (okR2 ? rides + ' rides, ' + either + ' walk-or-taxi legs over the sample trip' : JSON.stringify({ rides, either, miss: miss.slice(0, 5), short: short.slice(0, 5) }))); }
+    // Madrid, Nov 16: while the city's fuller guide was still building, a pick came off ("no longer fits") and a stale
+    // "Nothing fit in the time you have" sat under a day with 2 picks. While the guide loads nothing comes off and no
+    // drop note shows; once it is in, a pick that really doesn't fit comes off with its note. The Suggest note shows only
+    // on its city's days while their picks are the ones it reported, and the day's hours never read longer than its window.
+    { const bq = await chromium.launch(), pq = await (await bq.newContext({ viewport: { width: 412, height: 900 } })).newPage(); await pq.route('**/*', r => /^file:/.test(r.request().url()) ? r.continue() : r.abort()); await pq.goto('file://' + FILE); await pq.evaluate(() => localStorage.setItem('kairoute.intro1', '1')); await pq.reload(); await pq.waitForTimeout(500);
+      const days = await pq.evaluate(() => window.__kairouteDays()), D = days.find(d => d.type === 'arrival' && d.city === 'madrid'), O = days.find(d => d.city === 'barcelona');
+      const go = async i => { await pq.evaluate(i => window.__kairouteGo('plan', i), i); await pq.waitForTimeout(300); };
+      const look = () => pq.evaluate(() => ({ sel: window.__kairouteSelCount(), bumped: !!document.querySelector('.banner.bumped'), sug: (document.getElementById('suggestNote') || {}).innerText || '', sum: (document.querySelector('.daysum') || {}).innerText || '' }));
+      const r = {}; await go(D.i); await pq.click('.daylen button[data-h="8"]'); await pq.waitForTimeout(300);
+      r.sum = (await look()).sum; const m = /(\d\d):(\d\d)–(\d\d):(\d\d)\n(?:(\d+) h)?\s*(?:(\d+) min)? sightseeing/.exec(r.sum);
+      r.label = !!m && (+m[5] || 0) * 60 + (+m[6] || 0) <= (+m[3] * 60 + +m[4]) - (+m[1] * 60 + +m[2]);
+      const first = await pq.evaluate(i => window.__kairouteTruth(i).selected[0], D.i); r.n0 = (await look()).sel;
+      await pq.evaluate(() => window.__kairouteGuideLoading('Madrid'));
+      await pq.evaluate(([i, id]) => window.__kairouteSiteSet(i, { [id]: { minutes: 900 } }), [D.i, first]); await go(D.i); r.loading = await look();
+      await pq.evaluate(() => window.__kairouteGuideLoading(null)); await go(D.i); r.after = await look();
+      await pq.evaluate(() => { const x = document.querySelector('.planmore'); if (x) x.open = true; }); await pq.click('[data-act="suggesttour"]'); await pq.waitForTimeout(1500); r.sug = (await look()).sug;
+      await go(O.i); r.other = (await look()).sug; await go(D.i); r.back = (await look()).sug; await bq.close();
+      const okM = r.label && r.n0 > 0 && r.loading.sel === r.n0 && !r.loading.bumped && r.after.sel === r.n0 - 1 && r.after.bumped && /Done|stay as they are/.test(r.sug) && !r.other && r.back === r.sug;
+      log('Plan', 'example', okM, 'Nothing comes off while a guide loads, Suggest note only on its own days, hours never longer than the window: ' + (okM ? `${r.n0} picks kept while loading, 1 off after with its note` : JSON.stringify(r))); }
     // Richard, Nov 16 ("why are there 3 different metro offered"): one choice per way of going: the quickest of each
     // mode, one with fewer changes when at most 10 min slower, and always the one the traveler chose.
     { const m = (l, min, mode) => ({ mode: mode || 'metro', label: l, rawLabel: l, min }), o = [m('Metro M3 + 2 changes', 40), m('Metro M3 + 1 change', 46), m('Metro M2 + 2 changes', 52), m('Suburban rail', 50, 'train'), m('Bus X95', 60, 'bus')];
