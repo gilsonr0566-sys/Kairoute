@@ -5445,22 +5445,23 @@ function toggleCard(el) {
   if (!was) el.classList.add("open"); openCard = was ? null : id;
 }
 // Keeps what's on screen in place across a redraw: the first card in view stays where it was.
+const cardShown = x => !!(x && x.offsetParent && !x.closest("details:not([open]), .picksfold:not(.open) .anchorlist")); // closed folds still lay out in Chrome
 let spotRef = null; // the card kept in place after the last tick, kept in place by later redraws too
 function viewSpot() {
-  const vis = x => x && x.offsetParent && x.getBoundingClientRect().top > 0 && x.getBoundingClientRect().top < innerHeight;
+  const vis = x => cardShown(x) && x.getBoundingClientRect().top > 0 && x.getBoundingClientRect().top < innerHeight;
   const r = spotRef && [...document.querySelectorAll(`#view .sitesmain [data-card="${CSS.escape(spotRef)}"]`)].find(vis);
-  const c = r || [...document.querySelectorAll("#view .sitesmain [data-card]")].find(x => x.offsetParent && x.getBoundingClientRect().top > 160);
+  const c = r || [...document.querySelectorAll("#view .sitesmain [data-card]")].find(x => cardShown(x) && x.getBoundingClientRect().top > 160);
   return c ? cardSpotOf(c.dataset.card, true) : () => {};
 }
 // Ticking keeps your place in the list: the card that followed the ticked one stays where it was on screen.
 function cardSpot(id) { return cardSpotOf(id, false); }
 function cardSpotOf(id, self) {
-  const el = [...document.querySelectorAll(`#view [data-card="${CSS.escape(id)}"]`)].find(x => x.offsetParent); if (!el) return () => {};
-  const cards = [...document.querySelectorAll("#view .sitesmain [data-card]")].filter(x => x.offsetParent), k = cards.indexOf(el);
+  const el = [...document.querySelectorAll(`#view [data-card="${CSS.escape(id)}"]`)].find(cardShown); if (!el) return () => {};
+  const cards = [...document.querySelectorAll("#view .sitesmain [data-card]")].filter(cardShown), k = cards.indexOf(el);
   const ref = self ? el : cards[k + 1] || cards[k - 1] || el, rid = ref.dataset.card, top = ref.getBoundingClientRect().top;
   if (!self) spotRef = rid;
   return () => {
-    const nx = [...document.querySelectorAll(`#view .sitesmain [data-card="${CSS.escape(rid)}"]`)].find(x => x.offsetParent); if (!nx) return;
+    const nx = [...document.querySelectorAll(`#view .sitesmain [data-card="${CSS.escape(rid)}"]`)].find(cardShown); if (!nx) return;
     const dy = nx.getBoundingClientRect().top - top; if (Math.abs(dy) < 1) return;
     const pane = document.querySelector("#view .sitesmain");
     if (pane && pane.scrollHeight > pane.clientHeight + 4 && getComputedStyle(pane).overflowY !== "visible") pane.scrollTop += dy; else window.scrollBy(0, dy);

@@ -48,7 +48,7 @@ const mins = t => { let m = 0; const h = /(\d+)\s*h/.exec(t), n = /(\d+)\s*min/.
     await toDay(i); await toSites();
     if ((await checked()).length) bad(i, 'picks came back after reload: ' + (await checked()).join(', '));
     // 3. Tick two sights
-    const names = await p.evaluate(() => { const out = []; for (const el of document.querySelectorAll('.sitelist input[data-site]:not(:checked)')) { if (!el.closest('.site').offsetParent) continue; out.push([el.dataset.site, el.closest('.site').querySelector('.name').innerText]); if (out.length === 2) break; } return out; });
+    const names = await p.evaluate(() => { const out = []; for (const el of document.querySelectorAll('.sitelist input[data-site]:not(:checked)')) { if (!el.closest('.site').offsetParent || el.closest('details:not([open])')) continue; /* a closed fold still lays out in Chrome */ out.push([el.dataset.site, el.closest('.site').querySelector('.name').innerText]); if (out.length === 2) break; } return out; });
     // A sight that won't fit stays unticked and opens the "won't fit" box (timing + what to change); close it.
     for (const [id] of names.slice()) {
       // After the first tick a sight that no longer fits loses its checkbox (shown, but can't be picked).
