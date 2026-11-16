@@ -342,12 +342,20 @@ const log = (suite, trip, ok, what) => { results.push({ suite, trip, ok, what })
       const a = await p.evaluate(([port, rome]) => window.__kairoutePlaceStart('cruise', port, null, { real: true, lat: 42.0935, lng: 11.7895 }, rome), [port, rome]);
       if (!(Math.abs(a.lat - 42.0935) < 0.01) || a.unknown) bad.push('found port 60+ km out was not used: ' + JSON.stringify(a));
       const b2 = await p.evaluate(([port, rome]) => window.__kairoutePlaceStart('cruise', Object.assign({}, port, { lat: rome.lat, lng: rome.lng, note: 'Main cruise terminal. Location approximate: city centre.' }), null, null, rome), [port, rome]);
-      if (!b2.unknown || /approximate/.test(b2.note)) bad.push('a port an old guide moved to the centre is still trusted: ' + JSON.stringify(b2));
+      if (b2.unknown || /approximate/.test(b2.note) || Math.abs(b2.lat - 42.095) > 0.01) bad.push('a port an old guide moved to the centre was not put back at the terminal the app knows: ' + JSON.stringify(b2));
+      const b3 = await p.evaluate(([port, rome]) => window.__kairoutePlaceStart('cruise', Object.assign({}, port, { name: 'Atlantis Harbour', lat: rome.lat, lng: rome.lng, note: 'Main cruise terminal. Location approximate: city centre.' }), null, null, rome), [port, rome]);
+      if (!b3.unknown || /approximate/.test(b3.note)) bad.push('a port nobody knows, moved to the centre by an old guide, is still trusted: ' + JSON.stringify(b3));
       const c2 = await p.evaluate(([port, rome]) => window.__kairoutePlaceStart('cruise', port, null, null, rome), [port, rome]);
       if (Math.abs(c2.lat - rome.lat) < 0.05) bad.push('the port was moved to the city centre');
       const days = await p.evaluate(() => window.__kairouteDays()), pi = days.findIndex(x => x.type === 'port' && x.city);
-      const pt = pi >= 0 ? await p.evaluate(i => window.__kairoutePortTest(i, { unknown: true }), pi) : { error: null };
+      const pt = pi >= 0 ? await p.evaluate(i => window.__kairoutePortTest(i, { unknown: true, name: 'Atlantis Harbour', lat: 0, lng: 0 }), pi) : { error: null };
       if (!pt.unsure) bad.push('a day was planned from a port in an unknown spot: ' + JSON.stringify(pt));
+      // Live Rome day, Nov 16: "Civitavecchia Port" the lookup couldn't place left the day empty, although the app's
+      // own guides know that terminal. Every port a built-in guide knows resolves, offline too.
+      const bq = await chromium.launch(), pq = await (await bq.newContext()).newPage(); await pq.route('**/*', r => /^file:/.test(r.request().url()) ? r.continue() : r.abort()); await pq.goto('file://' + FILE); await pq.evaluate(() => localStorage.setItem('kairoute.intro1', '1')); await pq.reload(); await pq.waitForTimeout(500);
+      const ri = (await pq.evaluate(() => window.__kairouteDays())).findIndex(x => x.type === 'port' && /Rome|Civitavecchia/.test(x.dest));
+      const pk = ri >= 0 ? await pq.evaluate(i => window.__kairoutePortTest(i, { unknown: true, name: 'Civitavecchia Port', lat: 41.9, lng: 12.49 }), ri) : { error: 'no Rome day' }; await bq.close();
+      if (pk.error || pk.unsure) bad.push('a known cruise terminal under another name left the day unplanned: ' + JSON.stringify(pk));
       const h = await p.evaluate(() => [window.__kairouteHours('00:00-00:00'), window.__kairouteHours('Mo-Su 00:00-24:00'), window.__kairouteHours('24/7'), window.__kairouteHours('Mo-Su 09:00-19:00')]);
       if (h[0] || h[1] || h[2] || !h[3]) bad.push('round-the-clock map hours read as real hours: ' + JSON.stringify(h));
       log('Port days', 'ports', !bad.length, 'Ports in another town: ' + (bad.length ? bad.join('; ') : 'Civitavecchia used where the map has it (70 km from Rome), never moved to the centre, a port in an unknown spot stops the plan, 00:00-00:00 hours are unknown')); }
@@ -374,6 +382,46 @@ const log = (suite, trip, ok, what) => { results.push({ suite, trip, ok, what })
       const r = await px.evaluate(re => { const all0 = window.__kairouteCrossings(), d = window.__kairouteDays().find(x => x.date === '2027-07-03'); window.__kairouteDay(d.i, re, { hours: 11, startTime: '08:30', fillTime: false }); const rt = window.__kairouteRoute(d.i); const all = window.__kairouteCrossings(); return { order: rt.map(x => x.name.split(' ')[0]), n: all[d.i], total: all0.reduce((a, b) => a + b, 0) }; }, RE); await bx.close();
       const okX = r.n === 0 && r.order.length >= 10 && r.total <= 10;
       log('Planner', 'planner', okX, 'Each day is one loop, no crossing legs: ' + (okX ? r.order.join(' > ') + ' (sample trip: ' + r.total + ' crossings, all forced by hours)' : JSON.stringify(r))); }
+    // Richard, Nov 16: "this is to fix the app and not the specific tours". 36 days of random picks (6 to 10 sights) in
+    // Athens, Barcelona and Madrid: the routes stay one loop (2 crossings in all when this was written, each a few
+    // hundred metres where an opening time or lunch decides; more than 4 fails).
+    { const bq = await chromium.launch(), pq = await (await bq.newContext()).newPage(); await pq.route('**/*', r => /^file:/.test(r.request().url()) ? r.continue() : r.abort()); await pq.goto('file://' + FILE); await pq.evaluate(() => localStorage.setItem('kairoute.intro1', '1')); await pq.reload(); await pq.waitForTimeout(800);
+      const rb = await pq.evaluate(() => { let seed = 7; const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647; const days = window.__kairouteDays(); const out = { cross: 0, days: 0, bad: [] };
+        for (const date of ['2027-07-01', '2027-07-15', '2027-07-19']) { const d = days.find(x => x.date === date); if (!d) continue; const all = window.__kairouteDay(d.i, '^$'); const ids = Array.isArray(all) ? all.map(x => x.split(' ')[0]) : [];
+          for (let t = 0; t < 12; t++) { const pick = ids.slice().sort(() => rnd() - 0.5).slice(0, 6 + Math.floor(rnd() * 5)); const o = window.__kairouteDay(d.i, pick, { hours: 10, startTime: '08:30', fillTime: false }); if (!o || o.error) continue; const c = window.__kairouteCrossings()[d.i]; out.cross += c; out.days++; if (c) out.bad.push(d.dest + ' ' + t + ': ' + c); } }
+        return out; }); await bq.close();
+      const okRB = rb.days >= 30 && rb.cross <= 4;
+      log('Planner', 'planner', okRB, 'Random days in three cities stay one loop: ' + (okRB ? rb.days + ' days, ' + rb.cross + ' crossings' : JSON.stringify(rb))); }
+    // Richard, Nov 16: "The metro, taxi, ferry, bus selector is not working on every day". Every ride on every day of
+    // the sample trip shows its buttons (a single one says which way it is), and every leg from 600 m to 4 km offers
+    // walking or a taxi.
+    { const bq = await chromium.launch(), pq = await (await bq.newContext()).newPage(); await pq.route('**/*', r => /^file:/.test(r.request().url()) ? r.continue() : r.abort()); await pq.goto('file://' + FILE); await pq.evaluate(() => localStorage.setItem('kairoute.intro1', '1')); await pq.reload(); await pq.waitForTimeout(500);
+      const lg = await pq.evaluate(() => window.__kairouteDays().map(d => ({ d: d.date + ' ' + d.dest, legs: window.__kairouteLegs(d.i) || [] }))); await bq.close();
+      const miss = [], short = []; let rides = 0, either = 0;
+      for (const x of lg) for (const l of x.legs) { const straight = l.km / 1.3;
+        if (l.mode !== 'walk') { rides++; if (!l.choices.length) miss.push(x.d + ': ' + l.how); }
+        if (straight >= 0.65 && straight <= 3.9 && l.mode !== 'flight') { either++; if (!(l.choices.some(c => /^Walk/.test(c)) && l.choices.some(c => /^Taxi/.test(c)))) short.push(x.d + ': ' + l.how + ' ' + l.min + ' min [' + l.choices.join(', ') + ']'); } }
+      const okR2 = !miss.length && !short.length && rides > 10 && either > 10;
+      log('Rides', 'rides', okR2, 'Every ride has its buttons, every 600 m to 4 km leg offers walk or taxi: ' + (okR2 ? rides + ' rides, ' + either + ' walk-or-taxi legs over the sample trip' : JSON.stringify({ rides, either, miss: miss.slice(0, 5), short: short.slice(0, 5) }))); }
+    // Madrid, Nov 16: while the city's fuller guide was still building, a pick came off ("no longer fits") and a stale
+    // "Nothing fit in the time you have" sat under a day with 2 picks. While the guide loads nothing comes off and no
+    // drop note shows; once it is in, a pick that really doesn't fit comes off with its note. The Suggest note shows only
+    // on its city's days while their picks are the ones it reported, and the day's hours never read longer than its window.
+    { const bq = await chromium.launch(), pq = await (await bq.newContext({ viewport: { width: 412, height: 900 } })).newPage(); await pq.route('**/*', r => /^file:/.test(r.request().url()) ? r.continue() : r.abort()); await pq.goto('file://' + FILE); await pq.evaluate(() => localStorage.setItem('kairoute.intro1', '1')); await pq.reload(); await pq.waitForTimeout(500);
+      const days = await pq.evaluate(() => window.__kairouteDays()), D = days.find(d => d.type === 'arrival' && d.city === 'madrid'), O = days.find(d => d.city === 'barcelona');
+      const go = async i => { await pq.evaluate(i => window.__kairouteGo('plan', i), i); await pq.waitForTimeout(300); };
+      const look = () => pq.evaluate(() => ({ sel: window.__kairouteSelCount(), bumped: !!document.querySelector('.banner.bumped'), sug: (document.getElementById('suggestNote') || {}).innerText || '', sum: (document.querySelector('.daysum') || {}).innerText || '' }));
+      const r = {}; await go(D.i); await pq.click('.daylen button[data-h="8"]'); await pq.waitForTimeout(300);
+      r.sum = (await look()).sum; const m = /(\d\d):(\d\d)–(\d\d):(\d\d)\n(?:(\d+) h)?\s*(?:(\d+) min)? sightseeing/.exec(r.sum);
+      r.label = !!m && (+m[5] || 0) * 60 + (+m[6] || 0) <= (+m[3] * 60 + +m[4]) - (+m[1] * 60 + +m[2]);
+      const first = await pq.evaluate(i => window.__kairouteTruth(i).selected[0], D.i); r.n0 = (await look()).sel;
+      await pq.evaluate(() => window.__kairouteGuideLoading('Madrid'));
+      await pq.evaluate(([i, id]) => window.__kairouteSiteSet(i, { [id]: { minutes: 900 } }), [D.i, first]); await go(D.i); r.loading = await look();
+      await pq.evaluate(() => window.__kairouteGuideLoading(null)); await go(D.i); r.after = await look();
+      await pq.evaluate(() => { const x = document.querySelector('.planmore'); if (x) x.open = true; }); await pq.click('[data-act="suggesttour"]'); await pq.waitForTimeout(1500); r.sug = (await look()).sug;
+      await go(O.i); r.other = (await look()).sug; await go(D.i); r.back = (await look()).sug; await bq.close();
+      const okM = r.label && r.n0 > 0 && r.loading.sel === r.n0 && !r.loading.bumped && r.after.sel === r.n0 - 1 && r.after.bumped && /Done|stay as they are/.test(r.sug) && !r.other && r.back === r.sug;
+      log('Plan', 'example', okM, 'Nothing comes off while a guide loads, Suggest note only on its own days, hours never longer than the window: ' + (okM ? `${r.n0} picks kept while loading, 1 off after with its note` : JSON.stringify(r))); }
     // Richard, Nov 16 ("why are there 3 different metro offered"): one choice per way of going: the quickest of each
     // mode, one with fewer changes when at most 10 min slower, and always the one the traveler chose.
     { const m = (l, min, mode) => ({ mode: mode || 'metro', label: l, rawLabel: l, min }), o = [m('Metro M3 + 2 changes', 40), m('Metro M3 + 1 change', 46), m('Metro M2 + 2 changes', 52), m('Suburban rail', 50, 'train'), m('Bus X95', 60, 'bus')];
