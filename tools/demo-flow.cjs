@@ -84,6 +84,8 @@ async function timed(p, label, fn, settle = 4000) {
 }
 const go = (v, i) => `(() => { const t = performance.now(); window.__kairouteGo(${JSON.stringify(v)}, ${i}); return performance.now() - t; })()`;
 // What the traveler sees on the Day plan: numbered stops, optional stops, meals, rides and their menus.
+// Taps the ride chip with this text on the ride with this key (one tap per way to go, Nov 16).
+const rideTap = (p, key, text) => p.evaluate(([k, t]) => { const b = [...document.querySelectorAll("[data-ridekey]")].find(x => x.dataset.ridekey === k && x.textContent.trim() === t); if (!b) throw new Error("no ride chip " + t); b.click(); }, [key, text]);
 const seen = p => p.evaluate(() => {
   const rows = [...document.querySelectorAll(".tl")];
   const nm = r => ((r.querySelector(".nm") || {}).innerText || "").trim();
@@ -91,7 +93,7 @@ const seen = p => p.evaluate(() => {
     stops: rows.filter(r => { const d = r.querySelector(".rail .dot"); return d && d.className.trim() === "dot"; }).map(nm),
     optional: rows.filter(r => r.classList.contains("optional")).map(nm),
     meals: rows.filter(r => r.querySelector(".dot.meal")).map(nm),
-    rides: [...document.querySelectorAll("select[data-ride]")].map(s => ({ key: s.dataset.ride, chosen: s.options[s.selectedIndex] ? s.options[s.selectedIndex].textContent.trim() : "", opts: [...s.options].map(o => o.textContent.trim()) })),
+    rides: [...document.querySelectorAll(".ridechips")].filter(g => g.querySelector("[data-ridekey]")).map(g => { const bs = [...g.querySelectorAll("[data-ridekey]")], on = bs.find(b => b.classList.contains("on")); return { key: bs[0].dataset.ridekey, chosen: on ? on.textContent.trim() : "", opts: bs.map(b => b.textContent.trim()) }; }),
     text: (document.querySelector("main") || document.body).innerText.slice(0, 4000)
   };
 });
@@ -267,7 +269,7 @@ async function partA(b) {
     if (fr) {
       const opt = fr.opts.find(o => /ferry|hydrofoil|boat/i.test(o));
       await p.evaluate(() => { window.__lt = []; });
-      await p.selectOption(`select[data-ride="${fr.key}"]`, { label: opt }).catch(e => log("     select failed: " + e.message));
+      await rideTap(p, fr.key, opt).catch(e => log("     select failed: " + e.message));
       await p.waitForTimeout(4000); const s2 = await seen(p);
       ok(s2.stops.length >= s.stops.length && (!sorr || s2.stops.some(x => /sorrento/i.test(x))), `choosing "${opt}" keeps every stop (${s.stops.length} -> ${s2.stops.length}: ${s2.stops.join("; ")})`);
       ok(s2.rides.some(r => r.opts.some(o => /ferry|hydrofoil|boat/i.test(o))), "the ferry is still offered after choosing it");
@@ -281,9 +283,9 @@ async function partA(b) {
     if (d === nap || !plans[d.i] || !plans[d.i].rides.length) continue;
     await p.evaluate(go("plan", d.i)); await p.waitForTimeout(2500); const s = await seen(p); const r = s.rides[0]; if (!r || r.opts.length < 2) continue;
     const other = r.opts.find(o => o !== r.chosen);
-    await p.selectOption(`select[data-ride="${r.key}"]`, { label: other }).catch(() => {}); await p.waitForTimeout(3000); const s2 = await seen(p);
+    await rideTap(p, r.key, other).catch(() => {}); await p.waitForTimeout(3000); const s2 = await seen(p);
     ok(s2.stops.length === s.stops.length, `day ${d.i + 1} ${d.dest}: changing a ride to "${other}" keeps the ${s.stops.length} stops (now ${s2.stops.length})`);
-    await p.selectOption(`select[data-ride="${r.key}"]`, { label: r.chosen }).catch(() => {}); await p.waitForTimeout(1500);
+    await rideTap(p, r.key, r.chosen).catch(() => {}); await p.waitForTimeout(1500);
   }
 
   // 4. Guide and Tour.
