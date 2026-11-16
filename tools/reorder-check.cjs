@@ -2,17 +2,19 @@
 // keys put the stops in a new order and the day is planned again in that order; an order that costs a stop the
 // traveler picked asks first ("Put back" / "Keep new order") and never gives up the time back to the ship; a day
 // marked ready asks before its order changes and only then loses its heart; "Use Kairoute's best order" goes back.
-// Usage: node tools/reorder-check.cjs [path/to/index.html]
+// Usage: node tools/reorder-check.cjs [path/to/index.html | https://… (the live site, with its real services)]
 const { chromium } = require('playwright'); const path = require('path');
-const FILE = path.resolve(process.argv[2] || path.join(__dirname, '..', 'index.html'));
+const ARG = process.argv[2] || '', LIVE = /^https?:/.test(ARG), FILE = LIVE ? '' : path.resolve(ARG || path.join(__dirname, '..', 'index.html'));
+const URL0 = LIVE ? ARG : 'file://' + FILE;
 (async () => {
   const b = await chromium.launch(); let fails = 0; const fail = m => { fails++; console.log('FAIL ' + m); }, ok = m => console.log('ok   ' + m);
   for (const [size, w, h] of [['phone', 412, 900], ['tablet', 1280, 800]]) {
     const ctx = await b.newContext({ viewport: { width: w, height: h }, hasTouch: true });
     await ctx.addInitScript(() => { try { localStorage.setItem('kairoute.intro1', '1'); } catch (e) {} });
     const p = await ctx.newPage(); p.on('pageerror', e => fail(`${size}: page error ${e.message}`));
-    await p.route('**/*', r => /^file:/.test(r.request().url()) ? r.continue() : r.abort());
-    await p.goto('file://' + FILE); await p.waitForFunction(() => window.__kairouteSettled && window.__kairouteSettled() && window.__kairouteOrder, null, { timeout: 30000 });
+    if (!LIVE) await p.route('**/*', r => /^file:/.test(r.request().url()) ? r.continue() : r.abort());
+    await p.goto(URL0); await p.waitForFunction(() => window.__kairouteSettled && window.__kairouteSettled() && window.__kairouteOrder, null, { timeout: LIVE ? 90000 : 30000 });
+    if (LIVE && size === 'phone') console.log('site build ' + await p.evaluate(() => { const m = /var B="([^"]+)"/.exec(document.documentElement.innerHTML); return m ? m[1] : '?'; }));
     const days = await p.evaluate(() => window.__kairouteDays()), D = days.find(d => d.type === 'port' && d.city);
     const frame = () => p.evaluate(() => new Promise(r => requestAnimationFrame(() => requestAnimationFrame(() => r(true)))));
     const go = async () => { await p.evaluate(i => window.__kairouteGo('plan', i), D.i); await frame(); };
