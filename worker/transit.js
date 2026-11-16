@@ -84,12 +84,21 @@ export async function timetableOptions(a, b, dow, date) {
   }
   return timetableAt(a, b, hh => dayFor(dow, a.lng, hh));
 }
+// Gaps in minutes between departures of one line, measured only between departures found by the same search (w), sorted.
+export function headways(deps) {
+  const by = new Map(); for (const d of deps) if (isFinite(d.t)) (by.get(d.w) || by.set(d.w, []).get(d.w)).push(d.t);
+  const out = []; for (const ts of by.values()) { ts.sort((x, y) => x - y); for (let i = 1; i < ts.length; i++) { const m = (ts[i] - ts[i - 1]) / 60000; if (m >= 3) out.push(m); } }
+  return out.sort((x, y) => x - y);
+}
 async function timetableAt(a, b, when) {
   // Morning, midday and late afternoon, so the plan knows the departures through the day (the last ones back included).
   const ask = hh => fetch(`https://api.transitous.org/api/v1/plan?fromPlace=${a.lat},${a.lng}&toPlace=${b.lat},${b.lng}&time=${when(hh)}&numItineraries=6`, { headers: UA, signal: AbortSignal.timeout(20000) }).then(r => r.ok ? r.json() : Promise.reject(new Error("timetable " + r.status)));
   const all = await Promise.allSettled([ask(8), ask(12), ask(16)]);
   if (!all.some(x => x.status === "fulfilled")) throw new Error("timetable busy");
-  const seen = new Set(), its = []; for (const x of all) if (x.status === "fulfilled") for (const it of x.value.itineraries || []) { const k = it.startTime + "|" + it.endTime; if (!seen.has(k)) { seen.add(k); its.push(it); } }
+  // Each itinerary remembers which of the three searches found it (w): how often a line runs is measured only between
+  // departures found by the same search. Two searches are hours apart, so the gap from the last morning departure to the
+  // first midday one is not the line's frequency (the Athens airport metro showed "every 4 h 12 min", Nov 16).
+  const seen = new Set(), its = []; all.forEach((x, w) => { if (x.status === "fulfilled") for (const it of x.value.itineraries || []) { const k = it.startTime + "|" + it.endTime; if (!seen.has(k)) { seen.add(k); its.push(Object.assign(it, { __w: w })); } } });
   const groups = new Map();
   for (const it of its) {
     const legs = it.legs || [], ride = legs.filter(l => l.mode !== "WALK"); if (!ride.length) continue;
@@ -99,8 +108,10 @@ async function timetableAt(a, b, when) {
   const out = [];
   for (const g of groups.values()) {
     const durs = g.map(x => x.it.duration / 60).sort((x, y) => x - y), typ = durs[Math.floor(durs.length / 2)];
-    const starts = g.map(x => Date.parse(x.main.startTime)).sort((x, y) => x - y), gaps = starts.slice(1).map((t, i) => (t - starts[i]) / 60000).filter(x => x >= 3);
-    const every = gaps.length ? Math.round(gaps.sort((x, y) => x - y)[Math.floor(gaps.length / 2)]) : null, ev = every || 30;
+    const gaps = headways(g.map(x => ({ w: x.it.__w, t: Date.parse(x.main.startTime) })));
+    // A frequency is stated only from at least two gaps (three departures of the same line in one search); with fewer the
+    // plan still waits cautiously (half a 30-min gap, at most 15 min) but the screen says nothing about how often it runs.
+    const every = gaps.length ? Math.round(gaps[Math.floor(gaps.length / 2)]) : null, ev = every || 30;
     const x = g[0], m = x.main, kind = TMODE[m.mode] || "Train", wait = Math.round(Math.min(ev * 0.5, 15) + 3);
     // Departure times of the first ride (local), and how long from walking off to arriving, for each.
     const first = r => r.ride[0], deps = g.map(r => ({ t: localMin(first(r).startTime, (first(r).from || {}).tz, a.lng), lead: Math.round((Date.parse(first(r).startTime) - Date.parse(r.it.startTime)) / 60000), dur: Math.round(r.it.duration / 60) })).filter(d => d.t != null).sort((p, q) => p.t - q.t);
@@ -110,7 +121,7 @@ async function timetableAt(a, b, when) {
     const steps = x.ride.map(l => `${nm(l)}: ${l.from && l.from.name} to ${l.to && l.to.name}, ${Math.round(l.duration / 60)} min`);
     const km = path.length > 1 ? lineLen(path) : hav(a, b) * 1.3;
     out.push({ mode: kind.toLowerCase(), kind, label: nm(m) + (x.ride.length > 1 ? ` + ${x.ride.length - 1} change${x.ride.length > 2 ? "s" : ""}` : ""), operator: "", from: (x.ride[0].from || {}).name || "", to: (x.ride[x.ride.length - 1].to || {}).name || "",
-      ride: Math.round(typ - walkA - walkB), wait, every: ev, everySrc: every ? "timetable" : "usual", access: { how: "walk", min: walkA, km: +(walkA * 4.5 / 60).toFixed(2) }, egress: { how: "walk", min: walkB, km: +(walkB * 4.5 / 60).toFixed(2) },
+      ride: Math.round(typ - walkA - walkB), wait, every: ev, everySrc: every && gaps.length >= 2 ? "timetable" : "none", everyN: gaps.length, access: { how: "walk", min: walkA, km: +(walkA * 4.5 / 60).toFixed(2) }, egress: { how: "walk", min: walkB, km: +(walkB * 4.5 / 60).toFixed(2) },
       min: Math.round(typ + wait), km: +km.toFixed(1), stops: x.ride.reduce((n, l) => n + ((l.intermediateStops || []).length), 0), hours: "", fare: "", steps, deps: deps.slice(0, 30), checked: new Date().toISOString().slice(0, 10),
       path: thin(path.length > 1 ? path : [a, b], 160).map(p => [+p.lng.toFixed(5), +p.lat.toFixed(5)]), fromPt: [+a.lng, +a.lat], toPt: [+b.lng, +b.lat], src: "Transitous timetables (" + (m.agencyName || "operator") + ")" });
   }
@@ -123,10 +134,14 @@ async function timetableAt(a, b, when) {
 // The quickest n rides, always with the quickest ferry among them: a ferry is often slower door to door than a few
 // train variants, but it is a different way to go (and the one travelers ask for), so a list of quicker trains never
 // pushes it out (the ferry to Sorrento appeared and then vanished, Nov 14).
+// The same goes for every way of going: the quickest ride of each kind (metro, train, bus, ferry...) is kept first, and
+// only then quicker variants of a kind already in. Four metro variants used to push the airport express bus out of the
+// Athens airport ride (Nov 16).
 export function topRides(list, n) {
-  const s = list.slice().sort((x, y) => x.min - y.min), top = s.slice(0, n), f = s.find(o => o.mode === "ferry");
-  if (f && !top.includes(f)) { let i = top.length - 1; while (i >= 0 && top[i].mode === "ferry") i--; if (i >= 0) top.splice(i, 1); top.push(f); }
-  return top;
+  const s = list.slice().sort((x, y) => x.min - y.min), top = [], kinds = new Set();
+  for (const o of [...s.filter(o => o.mode === "ferry").slice(0, 1), ...s]) if (top.length < n && !kinds.has(o.mode)) { kinds.add(o.mode); top.push(o); }
+  for (const o of s) if (top.length < n && !top.includes(o)) top.push(o);
+  return top.sort((x, y) => x.min - y.min);
 }
 // Timetable rides plus what the map adds. A map ferry is left out only when the timetables already have a ferry about
 // as quick (within 15 min): a timetable that knows only a slow ferry (one that goes round by Capri) must not hide a
