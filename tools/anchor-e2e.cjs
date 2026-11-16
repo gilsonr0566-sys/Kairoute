@@ -21,7 +21,7 @@ const FILE = path.resolve(process.argv[2] || path.join(__dirname, '..', 'index.h
       for (let w = 0; w < 60 && await p.evaluate(() => window.__kairouteFitPending()); w++) await p.waitForTimeout(100);
       const fitBad = await p.evaluate(() => { const out = []; const cards = [...document.querySelectorAll('.sitesmain > .sitelist:not(.anchorlist) [data-card]')]; for (const c of cards.slice(0, 6).concat(cards.filter(x => x.classList.contains('nofitcard')).slice(0, 3))) { const id = c.dataset.card, box = !!c.querySelector('input[data-site]'), ex = window.__kairouteFitExact(id); if (box && !ex && c.querySelector('.tag.fit')) out.push(id + ' says it fits but does not'); if (!box && ex) out.push(id + ' fits but cannot be ticked'); } return out; });
       if (fitBad.length) bad(i, 'fit marks wrong: ' + fitBad.join('; '));
-      if (!(await p.evaluate(() => [...document.querySelectorAll('.sitesmain .listlbl')].some(x => /left today|today is full/.test(x.innerText)) || !document.querySelector('.sitesmain .listlbl')))) bad(i, 'time left is not shown above the sights');
+      if (!(await p.evaluate(() => { if (!document.querySelector('.sitesmain .sitelist')) return true; const b = document.querySelector('.sitesmain .pickbar .pbleft'); return !!b && /left to fill|day is full/i.test(b.innerText) && getComputedStyle(b.closest('.pickbar')).position === 'sticky'; }))) bad(i, 'the pinned time-left bar is missing above the sights');
       // Pick the last visible unticked sight in the main list (the one farthest down the page).
       const id = await p.evaluate(() => { const xs = [...document.querySelectorAll('.sitesmain > .sitelist input[data-site]:not(:checked)')].filter(e => e.closest('.site').offsetParent); const x = xs[xs.length - 1]; return x ? x.dataset.site : null; });
       // Every other day, try to add a sight that doesn't fit the way any add path does (finding a place,
@@ -29,7 +29,11 @@ const FILE = path.resolve(process.argv[2] || path.join(__dirname, '..', 'index.h
       const nofit = i % 2 ? await p.evaluate(() => { const c = document.querySelector('.sitesmain .nofitcard'); return c ? c.dataset.card : null; }) : null;
       const pickId = nofit || id; if (!pickId) continue; tested++;
       if (nofit) { const added = await p.evaluate(id => window.__kairouteTryAdd(id), nofit); await p.waitForTimeout(400); if (added) bad(i, `${nofit} was added through the add gate although it doesn't fit`); if (!(await p.evaluate(() => !!document.querySelector('.fitbox')))) bad(i, `refusing ${nofit} didn't explain why`); }
-      else await p.evaluate(id => document.querySelector(`input[data-site="${id}"]`).click(), id);
+      // Picking never jumps the list (Richard, Nov 16): the card after the ticked one stays where it was on screen.
+      let jump = null;
+      if (!nofit) { const nx = await p.evaluate(id => { document.querySelector(`[data-card="${id}"]`).scrollIntoView({ block: 'center' }); const cs = [...document.querySelectorAll('.sitesmain [data-card]')].filter(x => x.offsetParent), k = cs.findIndex(x => x.dataset.card === id), n = cs[k + 1] || cs[k - 1]; return n ? { id: n.dataset.card, top: n.getBoundingClientRect().top, h: cs[k].getBoundingClientRect().height } : null; }, id);
+        await p.evaluate(id => document.querySelector(`input[data-site="${id}"]`).click(), id);
+        if (nx) { await p.waitForTimeout(900); jump = await p.evaluate(nx => { const n = [...document.querySelectorAll(`.sitesmain [data-card="${nx.id}"]`)].find(x => x.offsetParent); const pane = document.querySelector('.sitesmain'), atEnd = (pane.scrollHeight > pane.clientHeight + 4 && getComputedStyle(pane).overflowY !== 'visible') ? pane.scrollTop >= pane.scrollHeight - pane.clientHeight - 2 : scrollY >= document.documentElement.scrollHeight - innerHeight - 2; return n && !atEnd ? Math.round(n.getBoundingClientRect().top - nx.top) : null; }, nx); /* at the very end of the list the page can only close up */ if (jump != null && Math.abs(jump) <= nx.h + 24) jump = null; } } /* at most the picked card's own slot closes up */
       await p.waitForTimeout(900);
       // Doesn't fit: the box opens, the sight stays unticked, timing is shown; untick the suggested picks until it fits, then Add.
       // A sight closed that day gets its own box (an open day or an open sight, never the time fixes).
@@ -57,10 +61,12 @@ const FILE = path.resolve(process.argv[2] || path.join(__dirname, '..', 'index.h
         await p.evaluate(() => { const el = [...document.querySelectorAll('[data-goto="sites"]')].find(e => e.offsetParent); if (el) el.click(); }); await p.waitForTimeout(250);
         continue;
       }
+      if (jump != null && Math.abs(jump) > 6 && !(await p.evaluate(() => !!document.querySelector('.fitbox')))) bad(i, `the list moved ${jump}px when a sight was picked`);
+      await p.evaluate(() => { const f = document.querySelector('.picksfold:not(.open) [data-act="picksfold"]'); if (f) f.click(); }); await p.waitForTimeout(100); // open Your picks
       const r = await p.evaluate(id => {
         const first = document.querySelector('.sitesmain .site'), anc = document.querySelectorAll('.site.anchor');
-        const main = [...document.querySelectorAll('.sitesmain > .sitelist:not(.anchorlist)')][0];
-        const ds = main ? [...main.querySelectorAll('.tag.near')].map(t => { const m = /([\d.]+)\s*(m|km|ft|mi)\b/.exec(t.innerText); return /Next to/.test(t.innerText) ? 0 : m ? +m[1] * ({ m: 0.001, km: 1, ft: 0.0003048, mi: 1.609 })[m[2]] : NaN; }) : [];
+        const main = [...document.querySelectorAll('.sitesmain > .sitelist:not(.anchorlist):not(.sched)')][0];
+        const ds = main ? [...main.querySelectorAll('.l2')].map(t => { const m = /([\d.]+)\s*(m|km|ft|mi)\b/.exec(t.innerText); return /Next to/.test(t.innerText) ? 0 : m ? +m[1] * ({ m: 0.001, km: 1, ft: 0.0003048, mi: 1.609 })[m[2]] : NaN; }) : [];
         const ids = [...document.querySelectorAll('input[data-site]')].map(x => x.dataset.site);
         const pane = document.querySelector('.sitesmain'), top = first.getBoundingClientRect().top;
         return { firstId: first.querySelector('input').dataset.site, nAnc: anc.length, ds, dup: ids.length - new Set(ids).size, top, h: innerHeight, scrolled: pane.scrollTop };
@@ -78,7 +84,6 @@ const FILE = path.resolve(process.argv[2] || path.join(__dirname, '..', 'index.h
       if (r.firstId !== id || r.nAnc !== 1) bad(i, `picked sight not on top as anchor (${r.firstId} vs ${id})`);
       if (r.dup) bad(i, `${r.dup} sight(s) shown twice`);
       for (let k = 1; k < r.ds.length; k++) if (!(r.ds[k] + 0.06 >= r.ds[k - 1])) { bad(i, `not closest-first: ${r.ds.join(', ')}`); break; }
-      if (r.top < 0 || r.top > r.h * 0.75) bad(i, `anchor not scrolled into view (top ${Math.round(r.top)})`);
       if (SHOTS && i < 2) { require('fs').mkdirSync(SHOTS, { recursive: true }); await p.screenshot({ path: path.join(SHOTS, `${tag}-day${i + 1}.png`) }); }
       // Suggest my tour keeps the anchor on this day.
       if (i === 0) { await p.evaluate(() => document.querySelector('[data-act="suggesttour"]').click()); await p.waitForTimeout(2500);

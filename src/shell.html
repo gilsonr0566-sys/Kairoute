@@ -106,6 +106,25 @@ main .wrap { padding-block: 20px 64px; display: grid; gap: 18px; }
 .schedline { display: flex; align-items: center; gap: 12px; margin: 22px 0 6px; font-weight: 700; font-size: .85rem; letter-spacing: .04em; text-transform: uppercase; color: var(--muted); }
 .schedline::before, .schedline::after { content: ""; flex: 1; border-top: 2px solid var(--line, #ccc); }
 .site.nofitcard [data-act="fitask"] { margin-top: 8px; }
+/* Sights list (Nov 16): three-line cards that open on tap, pinned time-left bar, folded picks */
+.site .nrow { display: flex; gap: 8px; align-items: baseline; justify-content: space-between; min-width: 0; }
+.site .nrow .name { min-width: 0; overflow-wrap: anywhere; }
+.site .fitbadge { flex: none; white-space: nowrap; }
+.site .fitbadge.pending { visibility: hidden; }
+button.tag.fitbadge { cursor: pointer; font: inherit; font-size: 0.74rem; font-weight: 700; }
+.site .l2 { color: var(--muted); font-size: 0.86rem; }
+.site .cdet { display: none; gap: 6px; margin-top: 4px; }
+.site.open .cdet { display: grid; }
+.site.open { border-color: var(--ink); }
+.site.nofitcard .cdet .sum { -webkit-line-clamp: unset; display: block; }
+.tag.int.mine { background: var(--route-soft); color: var(--route); border-color: transparent; }
+.pickbar { position: sticky; top: var(--toph, 0px); z-index: 4; background: var(--paper); padding: 8px 0 10px; border-bottom: 1px solid var(--line); display: grid; gap: 6px; }
+.pickbar .pbrow { display: flex; justify-content: space-between; gap: 8px; flex-wrap: wrap; font-size: .92rem; }
+.pickbar .pbleft { font-weight: 700; color: var(--route); }
+.picksfold .anchorlist { display: none; margin-top: 10px; }
+.picksfold.open .anchorlist { display: grid; }
+.foldrow { width: 100%; display: flex; justify-content: space-between; align-items: center; gap: 8px; padding: 12px 14px; border: 1px solid var(--route); border-radius: 8px; background: color-mix(in srgb, var(--route-soft) 55%, var(--card)); color: var(--ink); font: inherit; font-weight: 700; cursor: pointer; min-height: 48px; }
+.foldrow .foldhint { color: var(--route); font-size: .9rem; }
 .eyebrow { font-size: 0.75rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); font-weight: 700; }
 
 .field { display: grid; gap: 6px; min-width: 0; }

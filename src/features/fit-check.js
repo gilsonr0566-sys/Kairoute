@@ -277,7 +277,8 @@ function fitRefine() {
   // Speed: these checks run between taps, never in their way. Each round does at most about 10 ms of checks (always
   // at least one), stops early when the traveler is touching the screen, then lets the browser respond first.
   const t0 = performance.now(), pend = () => { try { return !!(navigator.scheduling && navigator.scheduling.isInputPending && navigator.scheduling.isInputPending()); } catch (e) { return false; } };
-  while (fitQueue.length) {
+  const back = viewSpot(); // cards redrawn above keep what's on screen in place
+  try { while (fitQueue.length) {
     if (performance.now() - t0 > 10 || (performance.now() > t0 && pend())) break;
     const id = fitQueue.shift();
     if (fitMemo.res.has(id)) continue;
@@ -285,8 +286,10 @@ function fitRefine() {
     const ok = s && fitNever(ctx.plan, d, s) ? false : fitsAll(fitTrial(d, [...d.selected, id], null, true)); fitMemo.res.set(id, ok);
     const el = document.querySelector(`#view [data-card="${CSS.escape(id)}"]`);
     if (el && s && !d.selected.includes(id)) el.outerHTML = siteCard(s, d, ctx.plan, ctx.near);
-  }
-  if (fitQueue.length) fitTimer = setTimeout(fitRefine, 16);
+  } } finally { back(); }
+  if (fitQueue.length) { fitTimer = setTimeout(fitRefine, 16); return; }
+  // All checked: a sight found not to fit moves down to "Won't fit today", without moving what's on screen.
+  if (document.querySelector("#view .sitesmain > .sitelist:not(.wontlist):not(.sched):not(.anchorlist) .nofitcard")) { const back = viewSpot(); renderKeep(); back(); }
 }
 if (typeof window !== "undefined") window.__kairouteFitPending = () => fitQueue.length;
 if (typeof window !== "undefined") window.__kairouteFitExact = id => { const d = day(); return fitsAll(fitTrial(d, [...d.selected, id], null, true)); };
