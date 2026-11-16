@@ -27,6 +27,24 @@ const EMPTY = /(^|[\s·:(])(None|null|undefined|NaN)([\s·.,)]|$)/m;
     if (ath) { await p.evaluate(i => window.__kairouteAt(i, 'sites'), ath.i); await p.waitForTimeout(250);
       const what = await p.evaluate(() => { const c = document.querySelector('#view [data-card="acropolis"]'); return c ? c.innerText : ''; });
       if (!/Erechtheion/.test(what)) { fails++; console.log(`FAIL ${tag}: a part with an English name doesn't show it (${JSON.stringify(what.slice(0, 200))})`); } }
+    // Interest labels (Richard, Nov 16: Bernabéu had none; parks said "Nature" though he never chose it): every card
+    // has a label; a label naming a setup interest is always one the traveler chose, highlighted. Run with the
+    // sample trip's interests and again with only History chosen (most cards then fall back to what they are).
+    const SETUP = { history: 'History', art: 'Art & museums', architecture: 'Architecture', food: 'Food & markets', views: 'Views & nature', churches: 'Churches & faith', bible: 'Bible sites', shopping: 'Shopping', beaches: 'Beaches', kids: 'Kid-friendly' };
+    const ints0 = (await p.evaluate(() => window.__kairoutePrefs({}))).interests || [];
+    for (const ints of [ints0, ['history']]) {
+      await p.evaluate(x => window.__kairoutePrefs({ interests: x }), ints); let cards = 0, bare = [], wrong = [];
+      for (const d of days) {
+        await p.evaluate(i => window.__kairouteAt(i, 'sites'), d.i); await p.waitForTimeout(200);
+        const r = await p.evaluate(() => [...document.querySelectorAll('#view [data-card]')].map(c => ({ n: (c.querySelector('.name') || {}).textContent, l: [...c.querySelectorAll('.tags.ints .tag')].map(t => ({ t: t.textContent.trim(), mine: t.classList.contains('mine') })) })));
+        cards += r.length;
+        for (const c of r) { if (!c.l.length || c.l.some(x => !x.t)) bare.push(`${d.dest}: ${c.n}`);
+          for (const x of c.l) { const k = Object.keys(SETUP).find(k => SETUP[k] === x.t); if ((k && !ints.includes(k)) || (k && !x.mine) || (!k && x.mine)) wrong.push(`${d.dest}: ${c.n} "${x.t}"`); } }
+      }
+      if (bare.length) { fails++; console.log(`FAIL ${tag} [${ints}]: ${bare.length} of ${cards} cards have no interest label: ${bare.slice(0, 5).join('; ')}`); }
+      if (wrong.length) { fails++; console.log(`FAIL ${tag} [${ints}]: label names an interest not chosen (or isn't marked): ${wrong.slice(0, 5).join('; ')}`); }
+      if (!cards) { fails++; console.log(`FAIL ${tag}: no sight cards found`); }
+    }
     if (errs.length) { fails++; console.log(`FAIL ${tag}: page errors: ${errs.join(' | ')}`); }
     await p.close();
   }
