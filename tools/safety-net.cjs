@@ -22,7 +22,7 @@ const TRIPS = [
     days: [day({ date: '2027-05-20', destination: 'Barcelona', cityKey: 'barcelona', type: 'arrival', mode: 'train', time: '09:40', hours: 6 })] } } },
   { key: 'short-ports', label: 'A cruise with short port stops (4 hours ashore)', patch: d => d.type === 'port' ? { portArrive: '10:00', allAboard: '14:30' } : {} },
   { key: 'rainy', label: 'Rainy days (indoor swaps)', patch: d => ({ rain: true }) },
-  { key: 'empty', label: 'Days with nothing picked', patch: d => ({ selected: [] }) }
+  { key: 'empty', label: 'Days with nothing picked', patch: d => ({ selected: [], cleared: true }) }
 ];
 const results = []; let fails = 0;
 const log = (suite, trip, ok, what) => { results.push({ suite, trip, ok, what }); if (!ok) { fails++; console.log(`FAIL [${trip}] ${what}`); } };
