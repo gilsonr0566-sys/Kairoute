@@ -39,7 +39,7 @@ function srcSummary(x, cat, area) {
   const t = String(x.en || "").replace(/\s+/g, " ").trim();
   if (t.length > 25) { const ss = t.match(/[^.!?]+[.!?]+(\s|$)/g) || [t]; let out = ""; for (const s of ss) { if ((out + s).length > 230 && out) break; out += s; } return out.trim().slice(0, 260); }
   const kind = cat === "Sight" ? "sight" : cat.toLowerCase();
-  return `${x.unesco ? "A World Heritage " : x.heritage ? "A listed historic " : "A "}${kind} in ${area}${x.local && x.local !== x.name ? ` (${x.local})` : ""}, named by ${x.src.length} independent sources.`;
+  return `${x.unesco ? "A World Heritage " : x.heritage ? "A listed historic " : "A "}${kind} in ${area}, named by ${x.src.length} independent sources.`;
 }
 const srcVisitable = x => x && x.lat != null && (x.src || []).some(t => /Wikivoyage|heritage|UNESCO/.test(t));
 // The quality bar (Richard: "not full for the sake of quantity, quality is the key"): a place joins the list only

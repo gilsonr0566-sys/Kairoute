@@ -233,7 +233,7 @@ async function partA(b) {
     const before = (await S()).days[ed.i].picks, selOf = i => p.evaluate(i => { const T = window.__kairouteTruth(i); return (T.selected || []).join(", "); }, ed.i), sel0 = await selOf();
     const pk0 = (await S()).days.map(x => x.picks);
     await p.evaluate(() => { window.__lt = []; }); const tc = Date.now();
-    await p.locator(`label[for="s-${pick.id}"]`).first().click();
+    await p.locator(`#s-${pick.id}`).first().click({ force: true });
     await p.waitForTimeout(1500); const clickMs = Date.now() - tc, lt = await p.evaluate(() => Math.round(Math.max(0, ...window.__lt)));
     ok(lt < FREEZE_MS, `ticking a sight responds without freezing (longest block ${lt} ms, ${clickMs} ms)`);
     const after = (await S()).days[ed.i].picks;
@@ -248,7 +248,7 @@ async function partA(b) {
       const dropped = await p.evaluate(i => { const t = window.__kairouteTruth(i); return t && t.dropped ? t.dropped.map(x => x.name || x) : []; }, ed.i).catch(() => []);
       ok(inPlan || dropped.length > 0, `"${pick.name}" shows on the Day plan (or the plan says what didn't fit)`);
       await p.evaluate(go("sites", ed.i)); await p.waitForTimeout(1500);
-      await p.locator(`label[for="s-${pick.id}"]`).first().click().catch(() => {}); await p.waitForTimeout(1000);
+      await p.locator(`#s-${pick.id}`).first().click({ force: true }).catch(() => {}); await p.waitForTimeout(1000);
       ok((await S()).days[ed.i].picks === before, "unticking it removes it again");
     } else await p.evaluate(() => { const b = document.querySelector(".fitbox [data-act=fitcancel], .fitbox .btn.ghost"); if (b) b.click(); });
     // A pick that moved here from another day (one sight, one day) changed that day too: later checks compare with the trip as it is now.

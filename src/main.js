@@ -2155,8 +2155,8 @@ function normSite(s, i, extra) {
     category: String(s.category || ""), summary: String(s.summary || ""), guide: String(s.guide || ""),
     lookFor: Array.isArray(s.lookFor) ? s.lookFor.map(String).slice(0, 4) : [], photoTip: String(s.photoTip || ""), picks: normPicks(s.picks),
     travel: s.travel ? String(s.travel) : "",
-    hours: String(s.hours || ""), closed: String(s.closed || ""), tickets: String(s.tickets || ""), crowds: String(s.crowds || ""),
-    cost: Math.max(0, num(s.cost) || 0), indoor: !!s.indoor, access: String(s.access || ""),
+    hours: txt(s.hours), closed: txt(s.closed), tickets: txt(s.tickets), crowds: txt(s.crowds),
+    cost: Math.max(0, num(s.cost) || 0), indoor: !!s.indoor, access: txt(s.access),
     travelerTip: String(s.travelerTip || ""), priceNote: String(s.priceNote || ""), web: /^https?:\/\//.test(s.web || "") ? String(s.web) : "", sources: Array.isArray(s.sources) ? s.sources.map(String).slice(0, 5) : []
   };
 }
@@ -2898,13 +2898,13 @@ function queueExtras(plan) {
 // What a big stop holds, for the Change stops card: each part can be unticked.
 function partsPick(s) {
   if (!s.parts || s.parts.length < 2) return "";
-  return `<div class="partpick"><span class="eyebrow">What's here</span>${s.parts.map((p, k) => { const on = !(s.partsOff || []).includes(k); return `<label class="partchk"><input type="checkbox" data-part="${esc(s.id)}:${k}" ${on ? "checked" : ""}><span>${esc(p.name)} <small>${dur(p.minutes)}</small>${p.local ? `<small class="local">${esc(p.local)}</small>` : ""}</span></label>`; }).join("")}</div>`;
+  return `<div class="partpick"><span class="eyebrow">What's here</span>${s.parts.map((p, k) => { const on = !(s.partsOff || []).includes(k); return `<label class="partchk"><input type="checkbox" data-part="${esc(s.id)}:${k}" ${on ? "checked" : ""}><span>${esc(showName(p) || "Part " + (k + 1))} <small>${dur(p.minutes)}</small></span></label>`; }).join("")}</div>`;
 }
 // The parts in order, for the Day plan and the Guide.
 function partsList(s, start, withPlay) {
   if (!s.parts || s.parts.length < 2) return s.show && s.show.what ? `<div class="sub show">⏱ ${esc(showLine(s, start))}</div>` : "";
   const pp = partPlan(s, start == null ? 9 * 60 : start);
-  return `${s.show && s.show.what ? `<div class="sub show">⏱ ${esc(showLine(s, start))}</div>` : ""}<ol class="parts">${pp.list.map((x, i) => `<li><b>${esc(x.p.name)}</b>${start != null ? ` <small>${fmt(x.time)}${x.wait ? " · wait " + dur(x.wait) + " for the show" : ""}</small>` : ""}${withPlay ? `${i && x.p.cue ? `<span class="cue">${esc(x.p.cue)}</span>` : ""}${x.p.stand ? `<span class="cue"><b>Stand here:</b> ${esc(x.p.stand)}</span>` : ""}<span class="pguide">${esc(unitText(x.p.guide))}</span>${x.p.lookFor ? `<span class="cue">Look for: ${esc(x.p.lookFor)}</span>` : ""}<button class="btn ghost small" data-play="part:${esc(s.id)}:${x.k}" data-label="▶ Play">▶ Play</button>` : ""}</li>`).join("")}</ol>`;
+  return `${s.show && s.show.what ? `<div class="sub show">⏱ ${esc(showLine(s, start))}</div>` : ""}<ol class="parts">${pp.list.map((x, i) => `<li><b>${esc(showName(x.p) || "Part " + (i + 1))}</b>${start != null ? ` <small>${fmt(x.time)}${x.wait ? " · wait " + dur(x.wait) + " for the show" : ""}</small>` : ""}${withPlay ? `${i && x.p.cue ? `<span class="cue">${esc(x.p.cue)}</span>` : ""}${x.p.stand ? `<span class="cue"><b>Stand here:</b> ${esc(x.p.stand)}</span>` : ""}<span class="pguide">${esc(unitText(x.p.guide))}</span>${x.p.lookFor ? `<span class="cue">Look for: ${esc(x.p.lookFor)}</span>` : ""}<button class="btn ghost small" data-play="part:${esc(s.id)}:${x.k}" data-label="▶ Play">▶ Play</button>` : ""}</li>`).join("")}</ol>`;
 }
 function partSpeech(s, k, first) {
   const p = s.parts[k]; if (!p) return "";
@@ -2966,7 +2966,7 @@ function srcLabel(city, d) {
 // How much a sight's fame protects it: 1 for an ordinary sight, up to 3 for a World Heritage site that
 // half the world's Wikipedias write about.
 const fameW = s => travW(s) * (1 + (s && s.unesco ? 0.8 : s && s.heritage ? 0.3 : 0) + Math.min(1.2, ((s && s.fame) || 0) / 80) + Math.min(0.6, Math.max(0, ((s && s.src && s.src.length) || 0) - 1) * 0.15));
-const srcNote = s => s && s.src && s.src.length ? `<p class="srcnote">Named by ${s.src.length} source${s.src.length > 1 ? "s" : ""}: ${esc(s.src.join(", "))}${s.local && s.local !== s.name ? ` · Local name: ${esc(s.local)}` : ""}</p>` : "";
+const srcNote = s => s && s.src && s.src.length ? `<p class="srcnote">Named by ${s.src.length} source${s.src.length > 1 ? "s" : ""}: ${esc(s.src.join(", "))}</p>` : "";
 const unescoTag = s => s && s.unesco ? `<span class="tag unesco">UNESCO World Heritage</span>` : "";
 // The AI sometimes returns {"name": …} where a plain name was asked for.
 const nameStr = x => typeof x === "string" ? x.trim() : x && typeof x.name === "string" ? x.name.trim() : "";
@@ -5406,48 +5406,92 @@ function nearSort(xs, refs) {
   const km = x => nearKm(x, refs);
   return xs.map((x, i) => [x, km(x), i]).sort((a, b) => a[1] - b[1] || a[2] - b[2]).map(a => a[0]);
 }
+// Text a source left empty never shows as "None", "null" or a bare dash (Richard, Nov 16: hours "· None").
+const blankish = v => v == null || /^\s*(none|null|undefined|n\/?a|nan|false|-|–)?\s*$/i.test(String(v));
+const txt = v => blankish(v) ? "" : String(v).trim();
+// English only on screen (Richard, Nov 16: "12 minΕρέχθειο", "Local name: Ερέχθειο"): a name in another script
+// shows its English name when it has one, otherwise only its Latin-script part; the local name is never printed.
+const latinOnly = n => String(n || "").replace(/[^\u0000-ɏḀ-ỿ‐-‧€°]+/g, " ").replace(/\(\s*\)|\[\s*\]/g, " ").replace(/\s{2,}/g, " ").replace(/^[\s,·:;\-–/]+|[\s,·:;\-–/(]+$/g, "").trim();
+const showName = x => { const n = String((x && x.name) || ""); if (!nonLatin(n)) return n; if (x && x.en && !nonLatin(x.en)) return String(x.en); return latinOnly(n); };
+// Interest labels on a sight, from what the sources say it is (its category) and its name; never guessed.
+const SITE_TAGS = [["History", /histor|ancient|ruin|archaeolog|castle|fortress|\bfort\b|palace|monument|memorial|roman|medieval|acropol|agora|temple|theat(er|re)|heritage|old town|city walls|tomb|citadel|stadium|forum|canal/i],
+  ["Faith", null], ["Shopping", /shop|market|bazaar|\bmall\b|boutique|flea/i], ["Food", /\bfood|market|restaurant|taverna|\bcaf[eé]|wine|tapas|bakery|gastronom/i],
+  ["Art", /museum|\bart\b|\barts\b|gallery|painting|sculpt|mosaic/i], ["Nature", /\bpark\b|garden|nature|beach|gorge|mountain|island|lake|forest|volcan|\bcave|coast|\bbay\b|canal/i],
+  ["Views", /\bview|lookout|panoram|\bhill\b|summit|\bmount\b|tower|terrace|belvedere|observ|promenade/i]];
+const siteTags = s => { const t = (s.category || "") + " " + (s.name || ""); return SITE_TAGS.filter(([k, re]) => k === "Faith" ? isReligious(s) || bibleSite(s) : re.test(t)).map(x => x[0]); };
+const INT_TAG = { history: ["History"], architecture: ["History"], art: ["Art"], food: ["Food"], views: ["Views", "Nature"], churches: ["Faith"], bible: ["Faith"], shopping: ["Shopping"], beaches: ["Nature"], kids: ["Nature"] };
+const myTags = () => new Set((P().interests || []).flatMap(k => INT_TAG[k] || []));
+// A truly famous sight (must-see, World Heritage, or among the city's best known by the sources) always stays in
+// the main list, whatever the traveler's interests.
+function famousTrue(s, city) { if (s.mustSee || s.unesco) return true; const f = [...((city && city.sites) || [])].map(x => x.fame || 0).sort((a, b) => b - a), bar = Math.max(25, 0.3 * (f[4] || f[f.length - 1] || 0)); return (s.fame || 0) >= bar; }
+let openCard = null, picksOpen = false;
+// One card per sight, collapsed to three lines: tick, name and what it does to the day; time, price and how far;
+// interest labels. A tap opens the rest (one card at a time).
 function siteCard(s, d, plan, nr) {
-  const on = (d.selected || []).includes(s.id), anc = nr && nr.anc;
-  const isAnc = anc && s === anc;
+  const city = cityFor(d), on = (d.selected || []).includes(s.id), anc = nr && nr.anc, isAnc = anc && s === anc;
   let near = null, nearTo = null;
   if (nr && !on && nr.refs.length && isFinite(s.lat) && isFinite(s.lng)) for (const r of nr.refs) { const k = hav(r, s); if (near == null || k < near) { near = k; nearTo = r; } }
   const other = plannedElsewhere(d)[s.id];
-  // Not picked yet: does it still fit today? Sights that fit say what they add; sights that don't stay in view
-  // but can't be ticked (no checkbox), so a day can never be over its time.
-  let fit = "", fs;
+  let badge = "", fs;
   if (!on && plan && !plan.error) {
-    fs = siteFits(d, s, plan); const c = fitCostOf(plan, s);
-    fit = fs === false ? `<span class="tag nofit">Needs ${dur(c.min)} · ${c.spare >= 5 ? dur(c.spare) + " left today" : "no time left today"}</span>`
-      : fs === true ? `<span class="tag fit">Fits · adds ${dur(c.min)}</span>` : "";
-  }
-  if (fs === false) return `<div class="site nofitcard" data-card="${esc(s.id)}" aria-disabled="true">
-    <span class="nobox" aria-hidden="true"></span>
-    <div class="body"><div class="name">${esc(s.name)}</div><div class="tags">${fit}${other ? `<span class="tag seen">${esc(schedWhen(other))}</span>` : ""}${near != null ? `<span class="tag near">${near < 0.05 ? "Next to " + esc(nearTo.name) : esc(distTxt(near, true)) + " from " + esc(nearTo.name)}</span>` : ""}${s.mustSee ? `<span class="tag must">Must-see</span>` : ""}<span class="tag">${dur(s.minutes)} there</span></div>
-    <p class="sum">${esc(unitText(s.summary))}</p><button type="button" class="btn ghost small" data-act="fitask" data-id="${esc(s.id)}">Ways to fit it in</button></div></div>`;
-  return `<label class="site ${on ? "on" : ""}${isAnc ? " anchor" : ""}" for="s-${esc(s.id)}" data-card="${esc(s.id)}">
-    <input type="checkbox" id="s-${esc(s.id)}" data-site="${esc(s.id)}" ${on ? "checked" : ""}>
-    <div class="body">
-      <div class="name">${esc(s.name)}</div>
-      <div class="tags">
-        ${on ? pickStatus(s, plan) : near != null ? `<span class="tag near">${near < 0.05 ? "Next to " + esc(nearTo.name) : esc(distTxt(near, true)) + " from " + esc(nearTo.name)}</span>` : ""}
-        ${!on && plan && (plan.bonus || []).some(x => x.id === s.id) ? `<span class="tag bonus">On your plan as an optional stop</span>` : ""}
-        ${other ? (ex => `<span class="tag seen">${!on ? esc(schedWhen(other)) : ex && ex.earlier ? "Seen " + esc(fmtDow(ex.on.date)) + " " + esc(fmtDate(ex.on.date)) + " · not repeated" : ex && ex.later ? "No room today · seen " + esc(fmtDow(ex.on.date)) + " " + esc(fmtDate(ex.on.date)) : "Today · not repeated " + esc(fmtDow(other.date)) + " " + esc(fmtDate(other.date))}</span>`)(((plan && plan.elsewhere) || []).find(x => x.s.id === s.id)) : ""}
-        ${s.mustSee ? `<span class="tag must">Must-see</span>` : ""}${unescoTag(s)}
-        ${sightKind(s, cityFor(d)) === "local" ? `<span class="tag local">Local favorite</span>` : `<span class="tag">Famous sight</span>`}
-        <span class="tag">${dur(s.minutes)} there</span>
-        ${fit}
-        ${s.cost ? `<span class="tag">${esc((cityFor(d).basics || {}).symbol || "€")}${s.cost}</span>` : `<span class="tag">Free</span>`}
-        ${s.indoor ? `<span class="tag">Indoors</span>` : ""}
-        ${closedOn(s, d.date) ? `<span class="tag nofit">${esc(s.closed)}</span>` : ""}
-      </div>
+    fs = nr && nr.fs && nr.fs.get(s.id) !== undefined ? nr.fs.get(s.id) : siteFits(d, s, plan); const c = fitCostOf(plan, s);
+    badge = fs === false ? `<button type="button" class="tag nofit fitbadge" data-act="fitask" data-id="${esc(s.id)}" title="Ways to fit it in">Needs ${dur(c.min)}</button>`
+      : fs === true ? `<span class="tag fit fitbadge">+${dur(c.min)}</span>` : `<span class="tag fitbadge pending" aria-hidden="true">+${dur(c.min)}</span>`; // same space while it's checked, so nothing moves
+  } else if (on) badge = pickStatus(s, plan).replace('class="tag ', 'class="tag fitbadge ');
+  const sym = ((city && city.basics) || {}).symbol || "€", nm = showName(s) || s.name;
+  const l2 = [dur(s.minutes), s.cost ? sym + s.cost : "Free", s.far ? "Day trip" : "", near != null ? (near < 0.05 ? "Next to " + showName(nearTo) : distTxt(near, true) + " from " + showName(nearTo)) : ""].filter(Boolean).map(esc).join(" · ");
+  const mine = nr && nr.my ? nr.my : myTags(), tags = siteTags(s);
+  const l3 = tags.length ? `<div class="tags ints">${tags.map(t => `<span class="tag int${mine.has(t) ? " mine" : ""}">${t}</span>`).join("")}</div>` : "";
+  const ex = ((plan && plan.elsewhere) || []).find(x => x.s.id === s.id);
+  const seen = other ? `<span class="tag seen">${!on ? esc(schedWhen(other)) : ex && ex.earlier ? "Seen " + esc(fmtDow(ex.on.date)) + " " + esc(fmtDate(ex.on.date)) + " · not repeated" : ex && ex.later ? "No room today · seen " + esc(fmtDow(ex.on.date)) + " " + esc(fmtDate(ex.on.date)) : "Today · not repeated " + esc(fmtDow(other.date)) + " " + esc(fmtDate(other.date))}</span>` : "";
+  const hrs = txt(s.hours) ? txt(hoursText(s.hours)) : "", cl = txt(s.closed);
+  const det = `<div class="cdet">
       <p class="sum">${esc(unitText(s.summary))}</p>
-      ${twinNote(s, cityFor(d))}${partsPick(s)}${s.show && s.show.what ? `<p class="travelnote">⏱ ${esc(showLine(s))}</p>` : ""}${nextDoor(s, cityFor(d))}
-      ${srcNote(s)}
-      ${s.far && s.travel ? `<p class="travelnote">Getting there: ${esc(unitText(s.travel))}</p>` : ""}
-      ${s.hours ? `<p class="travelnote">${esc(hoursText(s.hours))}${s.closed ? " · " + esc(s.closed) : ""}</p>` : ""}
-      ${P().access !== "none" && s.access ? `<p class="travelnote"><b>Access:</b> ${esc(s.access)}</p>` : ""}
-    </div>
+      <div class="tags">${s.mustSee ? `<span class="tag must">Must-see</span>` : ""}${unescoTag(s)}${sightKind(s, city) === "local" ? `<span class="tag local">Local favorite</span>` : `<span class="tag">Famous sight</span>`}${!on && plan && (plan.bonus || []).some(x => x.id === s.id) ? `<span class="tag bonus">On your plan as an optional stop</span>` : ""}${s.indoor ? `<span class="tag">Indoors</span>` : ""}${closedOn(s, d.date) && cl ? `<span class="tag nofit">${esc(cl)}</span>` : ""}</div>
+      ${twinNote(s, city)}${partsPick(s)}${s.show && s.show.what ? `<p class="travelnote">⏱ ${esc(showLine(s))}</p>` : ""}${nextDoor(s, city)}
+      ${s.far && txt(s.travel) ? `<p class="travelnote">Getting there: ${esc(unitText(s.travel))}</p>` : ""}
+      ${hrs ? `<p class="travelnote">${esc(hrs)}${cl ? " · " + esc(cl) : ""}</p>` : ""}
+      ${P().access !== "none" && txt(s.access) ? `<p class="travelnote"><b>Access:</b> ${esc(s.access)}</p>` : ""}
+      ${srcNote(s)}${fs === false ? `<button type="button" class="btn ghost small" data-act="fitask" data-id="${esc(s.id)}">Ways to fit it in</button>` : ""}
+    </div>`;
+  const open = openCard === s.id ? " open" : "";
+  const head = `<div class="nrow"><div class="name">${esc(nm)}</div>${badge}</div><div class="l2">${l2}</div>${seen && !on ? `<div class="tags">${seen}</div>` : ""}${l3}`;
+  if (fs === false) return `<div class="site nofitcard${open}" data-card="${esc(s.id)}" aria-disabled="true">
+    <span class="nobox" aria-hidden="true"></span>
+    <div class="body">${head}${det}</div></div>`;
+  return `<label class="site ${on ? "on" : ""}${isAnc ? " anchor" : ""}${open}" for="s-${esc(s.id)}" data-card="${esc(s.id)}">
+    <input type="checkbox" id="s-${esc(s.id)}" data-site="${esc(s.id)}" ${on ? "checked" : ""} aria-label="Pick ${esc(nm)}">
+    <div class="body">${head}${on && seen ? `<div class="tags">${seen}</div>` : ""}${det}</div>
   </label>`;
+}
+// Tapping a card (anywhere but its tick box or a button) opens it and closes the one open before.
+function toggleCard(el) {
+  const id = el.dataset.card, was = el.classList.contains("open");
+  document.querySelectorAll("#view .site.open").forEach(x => x.classList.remove("open"));
+  if (!was) el.classList.add("open"); openCard = was ? null : id;
+}
+// Keeps what's on screen in place across a redraw: the first card in view stays where it was.
+const cardShown = x => !!(x && x.offsetParent && !x.closest("details:not([open]), .picksfold:not(.open) .anchorlist")); // closed folds still lay out in Chrome
+let spotRef = null; // the card kept in place after the last tick, kept in place by later redraws too
+function viewSpot() {
+  const vis = x => cardShown(x) && x.getBoundingClientRect().top > 0 && x.getBoundingClientRect().top < innerHeight;
+  const r = spotRef && [...document.querySelectorAll(`#view .sitesmain [data-card="${CSS.escape(spotRef)}"]`)].find(vis);
+  const c = r || [...document.querySelectorAll("#view .sitesmain [data-card]")].find(x => cardShown(x) && x.getBoundingClientRect().top > 160);
+  return c ? cardSpotOf(c.dataset.card, true) : () => {};
+}
+// Ticking keeps your place in the list: the card that followed the ticked one stays where it was on screen.
+function cardSpot(id) { return cardSpotOf(id, false); }
+function cardSpotOf(id, self) {
+  const el = [...document.querySelectorAll(`#view [data-card="${CSS.escape(id)}"]`)].find(cardShown); if (!el) return () => {};
+  const cards = [...document.querySelectorAll("#view .sitesmain [data-card]")].filter(cardShown), k = cards.indexOf(el);
+  const ref = self ? el : cards[k + 1] || cards[k - 1] || el, rid = ref.dataset.card, top = ref.getBoundingClientRect().top;
+  if (!self) spotRef = rid;
+  return () => {
+    const nx = [...document.querySelectorAll(`#view .sitesmain [data-card="${CSS.escape(rid)}"]`)].find(cardShown); if (!nx) return;
+    const dy = nx.getBoundingClientRect().top - top; if (Math.abs(dy) < 1) return;
+    const pane = document.querySelector("#view .sitesmain");
+    if (pane && pane.scrollHeight > pane.clientHeight + 4 && getComputedStyle(pane).overflowY !== "visible") pane.scrollTop += dy; else window.scrollBy(0, dy);
+  };
 }
 // Separate stops a few steps apart (a square and the clock on it) say so, so neither looks missing.
 function nextDoor(s, city) { if (!city || s.far || !isFinite(s.lat)) return ""; const n = (city.sites || []).filter(x => x !== s && !x.quick && isFinite(x.lat) && hav(x, s) <= 0.15).slice(0, 3); return n.length ? `<p class="travelnote">Right next to: ${n.map(x => esc(x.name)).join(", ")} (${n.length > 1 ? "their own stops" : "its own stop"})</p>` : ""; }
@@ -5524,13 +5568,25 @@ function renderSites(d) {
   // Sights already planned on another day go to the bottom, below an "Already scheduled" line, in trip order
   // (Richard, Nov 14), so what's still free for today sits on top.
   const elsew = plannedElsewhere(d), sch = x => !!elsew[x.id];
-  const mainL = byNear(main.filter(x => !on(x) && !sch(x))), farL = byNear(far.filter(x => !on(x) && !sch(x))), quickL = byNear(quick.filter(x => !on(x) && !sch(x)));
+  // List order (Richard, Nov 16): your picks (one folded row), what fits your day, what won't fit today (dimmed),
+  // then a folded "More nearby" for sights matching none of your interests (truly famous sights stay in the main
+  // list) and the quick stops; sights planned on other days at the very bottom.
+  const my = myTags(), fsMap = new Map(), fsOf = x => { if (!fsMap.has(x.id)) fsMap.set(x.id, plan && !plan.error ? siteFits(d, x, plan) : null); return fsMap.get(x.id); };
+  const pass = x => f === "all" || (f === "must" ? x.mustSee : sightKind(x, city) === f);
+  const free = [...main.filter(x => !x.quick), ...far.filter(pass), ...quick.filter(pass)].filter(x => !on(x) && !sch(x));
+  const nearbyOnly = x => x.quick || (my.size > 0 && !famousTrue(x, city) && !siteTags(x).some(t => my.has(t)));
+  const mainFree = free.filter(x => !nearbyOnly(x)), moreFree = free.filter(nearbyOnly);
+  const fitL = byNear(mainFree.filter(x => fsOf(x) !== false)), wontL = byNear(mainFree.filter(x => fsOf(x) === false));
+  const moreL = [...byNear(moreFree.filter(x => fsOf(x) !== false)), ...byNear(moreFree.filter(x => fsOf(x) === false))];
   const schedL = [...main, ...far, ...quick].filter(x => !on(x) && sch(x)).sort((a, b) => trip.days.indexOf(elsew[a.id]) - trip.days.indexOf(elsew[b.id]) || a.name.localeCompare(b.name));
-  const near = { refs, anc }; sitesCtx = { d, plan, near };
-  const leftTxt = (mm => mm ? ` · <b>${mm.left >= 5 ? dur(mm.left) + " left today" : "today is full"}</b>` : "")(plan && !plan.error ? timeLeft(plan, d) : null);
+  const near = { refs, anc, fs: fsMap, my }; sitesCtx = { d, plan, near };
+  const tl = plan && !plan.error ? timeLeft(plan, d) : null, availM = plan && !plan.error ? Math.max(1, plan.endBy - plan.start) : 0;
+  const leftTxt = tl ? ` · <b>${tl.left >= 5 ? dur(tl.left) + " left today" : "today is full"}</b>` : "";
+  const pickbar = tl ? `<div class="pickbar" role="status" aria-live="polite"><div class="pbrow"><b>Day ${trip.days.indexOf(d) + 1} · ${esc(fmtDow(d.date))} ${esc(fmtDate(d.date))}</b><span class="pbleft">${tl.left >= 5 ? dur(tl.left) + " left to fill" : "Your day is full"}</span></div><div class="mbar"><i style="width:${Math.min(100, Math.max(0, Math.round((availM - tl.left) / availM * 100)))}%"></i></div></div>` : "";
   const n = d.selected.length;
   const avail = plan && !plan.error ? dur(plan.endBy - plan.start) : "";
   const nDays = trip.days.filter(o => cityFor(o) === city).length;
+  setTimeout(() => { const h = document.querySelector("header.top"); document.documentElement.style.setProperty("--toph", (h && getComputedStyle(h).position === "sticky" ? h.offsetHeight : 0) + "px"); }); // the time-left bar pins under the header
   return `${pageHead(d, plan, "")}<div class="sitesgrid"><div class="sitesside pane" data-pane="side">
   <div class="filters seg" role="group" aria-label="Filter">
     ${[["all", "All"], ["must", "Must-sees"], ["touristy", "Famous"], ["local", "Local favorites"]].map(([k, l]) => `<button type="button" data-filter="${k}" aria-pressed="${f === k}">${l}</button>`).join("")}
@@ -5540,16 +5596,15 @@ function renderSites(d) {
     ${suggestMsg ? `<p class="banner" id="suggestNote" role="status">${esc(suggestMsg)}</p>` : ""}${movedNote ? `<p class="banner ok" id="movedNote" role="status">${esc(movedNote)}</p>` : ""}<div class="actions"><button class="btn small" data-act="suggesttour">Suggest my tour</button><button class="btn ghost small" data-act="freshpicks">Fresh picks for this day only</button></div></div>
   ${city.ai ? `<p class="ai-note">Written by your AI guide from checked sources: every place is confirmed on the map, stories draw on Wikipedia and Wikivoyage (CC BY-SA), hours and access on OpenStreetMap contributors (ODbL). Check opening hours before you go.</p>` : city.builtin ? `<p class="ai-note">Kairoute guide. Hours and prices are typical: check before you go.</p>` : ""}${city.sites.some(x => x.srcOnly) ? `<p class="ai-note">More sights come from checked sources (Wikidata, Wikipedia, heritage registers); their short descriptions are from Wikivoyage (CC BY-SA). Each one's full story is written when you add it to a day.</p>` : ""}
   </div><div class="sitesmain pane" data-pane="sites">
-  ${bumpedNote(d)}
-  ${picked.length ? `<p class="listlbl">Your picks (${picked.length}), newest first${leftTxt}</p>
-  <div class="sitelist anchorlist">${picked.map(s => siteCard(s, d, plan, near)).join("")}</div>` : ""}
-  ${mainL.length ? `<p class="listlbl">${picked.length ? "More to see, closest to your picks first" : "Sights to pick from" + leftTxt}</p><div class="sitelist">${mainL.map(s => siteCard(s, d, plan, near)).join("")}</div>` : ""}
-  ${farL.length ? `<div><h3>Worth the trip</h3><p class="lede">Day trips and sights farther out, checked against your time today.</p></div>
-  <div class="sitelist">${farL.map(s => siteCard(s, d, plan, near)).join("")}</div>` : ""}
+  ${bumpedNote(d)}${pickbar}
+  ${picked.length ? `<div class="picksfold${picksOpen ? " open" : ""}"><button type="button" class="foldrow" data-act="picksfold" aria-expanded="${picksOpen}"><span>Your picks (${picked.length})</span><span class="foldhint">${picksOpen ? "Hide" : "Show"}</span></button>
+  <div class="sitelist anchorlist">${picked.map(s => siteCard(s, d, plan, near)).join("")}</div></div>` : ""}
+  ${fitL.length ? `<p class="listlbl">Fits your day (${fitL.length})${picked.length ? "" : leftTxt}</p><div class="sitelist">${fitL.map(s => siteCard(s, d, plan, near)).join("")}</div>` : `<p class="listlbl">Nothing else fits today${leftTxt}</p>`}
+  ${wontL.length ? `<p class="listlbl">Won't fit today (${wontL.length})</p><div class="sitelist wontlist">${wontL.map(s => siteCard(s, d, plan, near)).join("")}</div>` : ""}
+  ${moreL.length ? `<details class="more nearby"><summary>More nearby (${moreL.length})</summary><p class="lede small" style="margin:8px 0">${my.size ? "Sights outside your interests, and" : "Quick stops:"} small stops your route adds when it passes them. Tick one to plan it.</p>
+  <div class="sitelist">${moreL.map(s => siteCard(s, d, plan, near)).join("")}</div></details>` : ""}
   ${errBlock()}
   ${addPlaceCard(d)}
-  ${quickL.length ? `<details class="more"><summary>Quick stops (${quickL.length})</summary><p class="lede" style="margin:8px 0">Added automatically when your route passes them. Tick one to make it a planned stop.</p>
-  <div class="sitelist">${quickL.map(s => siteCard(s, d, plan, near)).join("")}</div></details>` : ""}
   ${schedL.length ? `<div class="schedline" role="separator"><span>Already scheduled on other days (${schedL.length})</span></div>
   <p class="lede small">Tick one to move it to today; it comes off its other day.</p><div class="sitelist sched">${schedL.map(s => siteCard(s, d, plan, near)).join("")}</div>` : ""}
   <div class="stickybar"><span class="count">${n} site${n === 1 ? "" : "s"} picked${plan && !plan.error && (plan.bonus || []).length ? ` · ${plan.bonus.length} optional on your plan` : ""}</span><button class="btn" data-act="toplan">See my day plan</button></div></div></div>`;
@@ -6248,7 +6303,7 @@ ${quietOn(s) ? `<p class="banner quiet" role="note">🤫 <span><b>Quiet place.</
       ${s.photoTip || s.travelerTip || s.hours || s.tickets || s.crowds || s.priceNote || s.web || (s.sources && s.sources.length) ? `<details class="more scmore"><summary>Hours, tickets and photo tips</summary><div class="scmorein">
       ${s.photoTip || s.travelerTip ? `<div class="tipsgrid">${s.photoTip ? `<p class="phototip"><b>Photo spot</b> ${esc(s.photoTip)} <a href="${photos}" target="_blank" rel="noopener">See photos</a></p>` : ""}${s.travelerTip ? `<p class="phototip"><b>From travelers</b> ${esc(unitText(s.travelerTip))}</p>` : ""}</div>` : ""}
       ${s.hours || s.tickets || s.crowds || s.priceNote || s.web ? `<div class="before"><span class="eyebrow">Before you go</span>
-        ${s.hours ? `<div><b>Hours</b><span>${esc(hoursText(s.hours))}${s.closed ? " · " + esc(s.closed) : ""}</span></div>` : ""}
+        ${txt(s.hours) && txt(hoursText(s.hours)) ? `<div><b>Hours</b><span>${esc(hoursText(s.hours))}${txt(s.closed) ? " · " + esc(s.closed) : ""}</span></div>` : ""}
         ${s.priceNote ? `<div><b>Price</b><span>${esc(s.priceNote)}</span></div>` : ""}
         ${s.tickets ? `<div><b>Tickets</b><span>${esc(s.tickets)}</span></div>` : ""}
         ${s.crowds ? `<div><b>Crowds</b><span>${esc(s.crowds)}</span></div>` : ""}
@@ -6530,6 +6585,14 @@ function readForm() {
 function edited() { trip.sample = false; }
 // Open a trip on today's day when the trip is under way.
 function jumpToToday(t) { const i = t.days.findIndex(x => isToday(x)); if (i >= 0) t.active = i; }
+// Sights list: "Your picks" opens and folds in place; a tap on a card opens it (one at a time), the tick box picks.
+document.addEventListener("click", e => {
+  const b = e.target.closest && e.target.closest('[data-act="picksfold"]');
+  if (b) { picksOpen = !picksOpen; const f = b.closest(".picksfold"); if (f) { f.classList.toggle("open", picksOpen); b.setAttribute("aria-expanded", String(picksOpen)); const h = b.querySelector(".foldhint"); if (h) h.textContent = picksOpen ? "Hide" : "Show"; } e.stopImmediatePropagation(); return; }
+  const c = e.target.closest && e.target.closest("#view .site[data-card]");
+  if (!c || e.target.closest("input, button, a, select, .partpick")) return;
+  e.preventDefault(); toggleCard(c);
+});
 document.addEventListener("click", e => {
   const t = e.target.closest("button, a"); if (!t) return;
   if (t.dataset.view) { if (view === "trip") readForm(); view = t.dataset.view; aiError = ""; save(); renderKeep(); toTop(); return; }
@@ -6754,9 +6817,9 @@ document.addEventListener("change", e => {
     d.selected = d.selected || []; movedNote = "";
     if (t.checked && !addPick(d, id, true)) { t.checked = false; return; }
     delete d.autoEmpty; d.ownList = true; // the traveler's first tick or untick makes the list theirs
-    if (t.checked) { d.anchor = id; anchorJump = true; }
+    if (t.checked) d.anchor = id;
     else { d.selected = d.selected.filter(x => x !== id); markMine(d, id, false); if (d.anchor === id) d.anchor = null; }
-    save(); renderKeep(); if (anchorJump) jumpToAnchor(); return; // every change here is in the trip, which keys the plans
+    const back = cardSpot(id); save(); renderKeep(); back(); return; // the list never jumps (Richard, Nov 16); every change here is in the trip, which keys the plans
   }
   if (t.dataset && t.dataset.part) {
     const [sid, k] = t.dataset.part.split(":"), s = allSites(cityFor(day())).find(x => x.id === sid); if (!s || !s.parts) return;
