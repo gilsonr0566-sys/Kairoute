@@ -365,6 +365,15 @@ const log = (suite, trip, ok, what) => { results.push({ suite, trip, ok, what })
       const txt = r.label + ' | ' + r.steps.join('; then ');
       const okR = r.label === 'Metro M3 + 1 change' && r.steps.length === 2 && /Venizelos to Syntagma, 34 min/.test(txt) && !/[\u0370-\u03ff]|S\.A\./.test(txt) && r.rawLabel === 'Metro M3 (Urban Rail Transport S.A.) + 2 changes';
       log('Rides', 'rides', okR, 'Ride directions are readable: ' + (okR ? txt : JSON.stringify(r))); }
+    // Richard, Nov 16 (Jul 3 Athens map): the route went to the centre, north for lunch, back south, then across town
+    // and back. A day is one loop with no legs crossing; on the sample trip crossings are left only where opening
+    // hours or a stop that would otherwise drop force them (35 before the fix, 5 to 7 after: this may only go down).
+    { const RE = '^Philopappos|^Ancient Agora|^Roman Agora|Kapnikarea|Lycabettus|National Archaeological|Byzantine and|^Syntagma';
+      const bx = await chromium.launch(), px = await (await bx.newContext()).newPage(); await px.route('**/*', r => /^file:/.test(r.request().url()) ? r.continue() : r.abort());
+      await px.goto('file://' + FILE); await px.evaluate(() => localStorage.setItem('kairoute.intro1', '1')); await px.reload(); await px.waitForTimeout(500);
+      const r = await px.evaluate(re => { const all0 = window.__kairouteCrossings(), d = window.__kairouteDays().find(x => x.date === '2027-07-03'); window.__kairouteDay(d.i, re, { hours: 11, startTime: '08:30', fillTime: false }); const rt = window.__kairouteRoute(d.i); const all = window.__kairouteCrossings(); return { order: rt.map(x => x.name.split(' ')[0]), n: all[d.i], total: all0.reduce((a, b) => a + b, 0) }; }, RE); await bx.close();
+      const okX = r.n === 0 && r.order.length >= 10 && r.total <= 8;
+      log('Planner', 'planner', okX, 'Each day is one loop, no crossing legs: ' + (okX ? r.order.join(' > ') + ' (sample trip: ' + r.total + ' crossings, all forced by hours)' : JSON.stringify(r))); }
     // Richard, Nov 16 ("why are there 3 different metro offered"): one choice per way of going: the quickest of each
     // mode, one with fewer changes when at most 10 min slower, and always the one the traveler chose.
     { const m = (l, min, mode) => ({ mode: mode || 'metro', label: l, rawLabel: l, min }), o = [m('Metro M3 + 2 changes', 40), m('Metro M3 + 1 change', 46), m('Metro M2 + 2 changes', 52), m('Suburban rail', 50, 'train'), m('Bus X95', 60, 'bus')];

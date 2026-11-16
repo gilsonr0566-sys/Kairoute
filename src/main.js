@@ -1335,6 +1335,21 @@ const MEAL_CHECK = { Lunch: [750, 810], Dinner: [1170, 1230] }; // 12:30 and 13:
 const hoursOf = r => (r && (r.hours || ((/Hours listed: (.*?)\. Check/.exec(r.why || "") || [])[1]))) || "";
 // "closed" only when the listed hours say it's shut at both usual times for that meal on the plan's date.
 function mealShut(r, label, iso) { const t = MEAL_CHECK[label] || MEAL_CHECK.Lunch, h = hoursOf(r); if (!h || r.booked) return false; return t.every(m => ohState(h, iso || planDate, m) === "closed"); }
+// No backtracking (Richard, Nov 16: Athens went 1 -> 6 north for lunch, then back south to 7, then across town and
+// back): a route whose legs cross each other doubles back on itself. Each crossing costs as much as an hour, so a
+// crowd or heat preference never wins over a clean loop, while opening hours, meals and the ship still do.
+const CROSS_COST = 60; let crossOn = true; // off only to check that a clean loop never costs a stop (buildPlanRaw)
+function crossCount(O, seq, Z) {
+  const pts = [O, ...seq, Z].filter(p => p && isFinite(p.lat) && isFinite(p.lng)), P = [];
+  for (const p of pts) { const q = { x: p.lng * Math.cos(p.lat * Math.PI / 180), y: +p.lat }, l = P[P.length - 1]; if (!l || Math.abs(l.x - q.x) + Math.abs(l.y - q.y) > 2e-4) P.push(q); }
+  const cr = (a, b, c) => (b.x - a.x) * (c.y - a.y) - (b.y - a.y) * (c.x - a.x); let n = 0;
+  for (let i = 0; i < P.length - 3; i++) for (let j = i + 2; j < P.length - 1; j++) {
+    if (i === 0 && j === P.length - 2 && Math.abs(P[0].x - P[P.length - 1].x) + Math.abs(P[0].y - P[P.length - 1].y) < 2e-4) continue; // a loop back to where the day began
+    const A = P[i], B = P[i + 1], C = P[j], D = P[j + 1];
+    if (cr(A, B, C) * cr(A, B, D) < 0 && cr(C, D, A) * cr(C, D, B) < 0) n++;
+  }
+  return n;
+}
 function simDay(seq, t0, O, Z, style) {
   let clock = t0, prev = O, cost = 0, seenDinner = false, late = 0; // late: stops reached after their last sensible entry
   const been = [];
@@ -1376,6 +1391,7 @@ function simDay(seq, t0, O, Z, style) {
     prev = p;
   }
   if (Z) { clock += tmin(prev, Z); cost += hav(prev, Z) * 0.4; }
+  if (crossOn) cost += crossCount(O, seq, Z) * CROSS_COST;
   return { cost: clock - t0 + cost, end: clock, late };
 }
 // Polish a whole sequence (meals included): move any one item to any other place, reverse any stretch,
@@ -1721,6 +1737,11 @@ function buildPlanRaw(d) { const prev = planDate, pw = planWx; if (!planDepth) t
     if (pl && !pl.error && (pl.dropped || []).length && Object.keys(transitMem).length) {
       ridePref = "fast"; let p2; try { p2 = buildPlanFor(d); } finally { ridePref = "public"; }
       if (p2 && !p2.error && !p2.over && (p2.dropped || []).length < pl.dropped.length) { p2.fastRides = true; pl = p2; } }
+    // A clean loop is preferred, never at the price of a stop: when the day drops one, a plan that allows crossing
+    // paths and keeps more sights wins.
+    if (pl && !pl.error && ((pl.dropped || []).length || pl.over) && crossOn) {
+      crossOn = false; let p3; try { p3 = buildPlanFor(d); } finally { crossOn = true; }
+      if (p3 && !p3.error && !p3.over && ((p3.dropped || []).length < (pl.dropped || []).length || pl.over)) pl = p3; }
     return pl; } finally { planDate = prev; planWx = pw; planDepth--; } }
 function buildPlanFor(d) {
   const memo0 = mealPickMemo, own0 = ownOrd; mealPickMemo = { g: -1, m: new Map() }; // meal choices are remembered for this day's plan only
@@ -3682,6 +3703,9 @@ async function saveStops(sites, onStep, reserve) {
   return { done, made, total: sites.length, stopped: false };
 }
 // Quality check for every day of a trip (used by the automated planner test).
+if (typeof window !== "undefined") window.__kairouteCrossings = () => trip.days.map((d, i) => { const r = window.__kairouteRoute(i); if (!r || r.length < 4) return 0; return crossCount(r[0], r.slice(1, -1), r[r.length - 1]); });
+if (typeof window !== "undefined") window.__kairouteRoute = i => { bonusMemo = new Map(); mealMemo = new Map(); keptMemo = new Map(); eveMemo = new Map(); avoidMeals = new Set(); const pl = buildPlan(trip.days[i]); if (!pl || pl.error || !pl.items) return null;
+  return pl.items.filter(x => x.place && x.type !== "travel").map(x => ({ type: x.type, name: x.place.name, lat: +x.place.lat, lng: +x.place.lng, time: x.time, min: x.place.minutes || 0, hours: x.place.hours || "", leg: x.leg ? (x.leg.how || x.leg.mode) : "" })); };
 if (typeof window !== "undefined") window.__kairouteQuality = () => { bonusMemo = new Map(); mealMemo = new Map(); keptMemo = new Map(); eveMemo = new Map(); avoidMeals = new Set(); return trip.days.map((d, i) => {
   const pl = buildPlan(d); if (!pl || pl.error || !pl.items) return { i, date: d.date, dest: d.destination, skip: pl && pl.error ? pl.error : "no guide" };
   const its = pl.items, issues = [], pts = its.filter(x => x.place && x.type !== "travel" && x.type !== "evening");
