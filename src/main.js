@@ -881,6 +881,12 @@ function settlePicks(d) {
   if (p0 && !p0.error && (d.bumped || []).some(b => b.w != null && win(p0) > b.w)) {
     for (const b of d.bumped.slice()) if (!b.back && b.w != null && win(p0) > b.w && !plannedElsewhere(d)[b.id] && addPick(d, b.id, false)) { forget0(d); moved = true; }
   }
+  // The traveler shortened the day (hours or start time): nothing comes off without their say. The picks that would
+  // drop are named with "Shorten anyway" / "Keep my hours"; picks taken off are remembered and come back when the
+  // day is long enough again (above). Times the app sets (ship, flight, train) still apply at once: safety first.
+  const tk = timeKey(d), p1 = buildPlan(d), out1 = p1 && !p1.error ? (p1.dropped || []).filter(x => d.selected.includes(x.id)) : [];
+  if (!out1.length || !d.timeSnap || d.timeSnap.key === tk) delete d.pendingCut;
+  else if (!d.cutOk) { d.pendingCut = { names: out1.map(x => x.name), prev: d.timeSnap.vals }; return moved; }
   for (let g = 0; g < 6; g++) {
     const p = buildPlan(d); if (!p || p.error) break;
     const out = (p.dropped || []).filter(x => d.selected.includes(x.id));
@@ -899,13 +905,22 @@ function settlePicks(d) {
     if (addPick(o, b.id, false)) { markMine(o, b.id, true); forget0(o); b.back = from; moved = true; }
   }
   if (d.movedIn) for (const id of Object.keys(d.movedIn)) if (!d.selected.includes(id)) delete d.movedIn[id];
+  if (!d.timeSnap || d.timeSnap.key !== tk) { d.timeSnap = { key: tk, vals: { hours: d.hours, startTime: d.startTime } }; moved = moved || !!d.cutOk; }
+  delete d.cutOk;
   if (moved) { readyKeep(d, was); save(); }
   return moved;
 }
 if (typeof window !== "undefined") { window.__kairouteSetHours = h => { const d = day(); d.hours = h; render(); }; window.__kairouteSelCount = () => (day().selected || []).length;
   // Puts a pick on the day past the gate, the way an older version or a change of hours could leave one.
   window.__kairouteForcePick = id => { const d = day(); d.selected = [...(d.selected || []), id]; render(); return (d.selected || []).includes(id); }; }
+const timeKey = d => [d.hours, d.startTime].join("|");
+function cutNote(d) {
+  const c = d.pendingCut; if (!c || !c.names || !c.names.length) return "";
+  return `<div class="banner warn cutask" role="alert"><span>With the shorter day, ${c.names.length === 1 ? `<b>${esc(c.names[0])}</b> no longer fits` : `these no longer fit: <b>${c.names.map(esc).join(", ")}</b>`}. Shorten the day and take ${c.names.length === 1 ? "it" : "them"} off your picks?</span>
+    <span class="actions"><button type="button" class="btn small" data-act="cutkeep">Keep my hours</button><button type="button" class="btn small ghost" data-act="cutok">Shorten anyway</button></span></div>`;
+}
 function bumpedNote(d) {
+  if (d.pendingCut) return cutNote(d);
   const city = cityFor(d), b0 = (d.bumped || []).filter(x => !(d.selected || []).includes(x.id) && allSites(city || {}).some(s => s.id === x.id));
   // Sights that went back to the day they were moved from: said plainly, with nothing to fix.
   const back = b0.filter(x => x.back), b = b0.filter(x => !x.back);
@@ -6479,7 +6494,7 @@ document.addEventListener("click", e => {
   if (t.dataset.goto) { view = t.dataset.goto; renderKeep(); toTop(); return; }
   if (t.dataset.act === "savekey") { const k = ((document.getElementById("aikey") || {}).value || "").trim(); if (k) { try { localStorage.setItem(KEY_STORE, k); } catch (e) {} sample = webSample; } render(); return; }
   if (t.dataset.act === "clearkey") { try { localStorage.removeItem(KEY_STORE); } catch (e) {} if (!(cl && cl.use)) sample = freeAI ? freeSample : null; render(); return; }
-  if (t.dataset.hrs) { readForm(); day().hours = +t.dataset.hrs; day().selected = null; edited(); save(); render(); return; }
+  if (t.dataset.hrs) { readForm(); const d = day(); d.hours = +t.dataset.hrs; if (!d.ownList && !(d.mine || []).length) d.selected = null; edited(); save(); render(); return; } // the traveler's own picks stay (a shorter day asks first)
   if (t.dataset.mode) { readForm(); day().mode = t.dataset.mode; day().pointIdx = 0; edited(); save(); render(); return; }
   if (t.dataset.style) { readForm(); trip.style = t.dataset.style; save(); render(); return; }
   if (t.dataset.chg) { const el = document.getElementById("chgText"); if (el) { el.value = t.dataset.chg; changeText = t.dataset.chg; el.focus(); } return; }
@@ -6521,6 +6536,8 @@ document.addEventListener("click", e => {
   if (t.dataset.act === "coachreplay") { coachStep = 0; view = "lobby"; render(); return; }
   if (t.dataset.act === "bonusadd") { const d = day(); if (!addPick(d, t.dataset.id, true)) return; d.selected = [...new Set([...(d.selected || []), t.dataset.id])]; d.skipBonus = (d.skipBonus || []).filter(x => x !== t.dataset.id); save(); render(); return; }
   if (t.dataset.act === "bonusskip") { const d = day(); d.skipBonus = [...new Set([...(d.skipBonus || []), t.dataset.id])]; save(); render(); return; }
+  if (t.dataset.act === "cutok") { const d = day(); d.cutOk = true; delete d.pendingCut; save(); render(); return; }
+  if (t.dataset.act === "cutkeep") { const d = day(), c = d.pendingCut; if (c && c.prev) { d.hours = c.prev.hours; d.startTime = c.prev.startTime; } delete d.pendingCut; forget0(d); save(); render(); return; }
   if (t.dataset.act === "daylen") { const d = day(); d.hours = +t.dataset.h; save(); render(); return; } // keeps the traveler's picks
   if (t.dataset.act === "lateend") { const d = day(); d.hours = +t.dataset.h; save(); render(); return; }
   if (t.dataset.act === "earlystart") { const d = day(); d.startTime = t.dataset.v; d.hours = +t.dataset.h; save(); render(); return; }

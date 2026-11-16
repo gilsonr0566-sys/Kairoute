@@ -298,6 +298,24 @@ const log = (suite, trip, ok, what) => { results.push({ suite, trip, ok, what })
         window.__kairouteDay(0, [...ids, ...town]); const t = window.__kairouteTruth(0); return { ids, town, stops: t.stopNames, picks: t.picks, sel: t.selected, dropped: t.dropped, elsewhere: t.elsewhere, closed: t.closedSel, out: t.outranked, unw: t.unwanted }; });
       const okM = /Sorrento/.test(r.stops.join()) && /Pompeii/.test(r.stops.join());
       log('Fit', 'fit', okM, 'The traveler\'s own picks outrank stops the app added: ' + (okM ? 'Sorrento and Pompeii stay (' + r.stops.join(', ') + ')' : JSON.stringify(r))); }
+    // Richard, Nov 16: he shortened a day's hours by accident and many picks silently dropped. A shorter day (hours or
+    // start) names what would drop and asks; "Keep my hours" puts the hours back, "Shorten anyway" takes them off and
+    // they come back when the day is long enough again.
+    { const days = await p.evaluate(() => window.__kairouteDays()), li = days.findIndex(x => x.type === 'land' && x.city);
+      const r = li < 0 ? { skip: true } : await p.evaluate(async i => {
+        const wait = () => new Promise(r => setTimeout(r, 150)), sel = () => window.__kairouteState().days[i].picks;
+        window.__kairouteAt(i, 'plan'); await wait(); window.__kairouteSetHours(8); await wait(); window.__kairouteAt(i, 'plan'); await wait();
+        const n0 = sel(); window.__kairouteSetHours(1); await wait(); window.__kairouteAt(i, 'plan'); await wait();
+        const ask = document.querySelector('.cutask'), n1 = sel(), names = ask ? ask.innerText : '';
+        if (ask) ask.querySelector('[data-act=cutkeep]').click(); await wait();
+        const keptHours = window.__kairouteState().days[i] && document.querySelectorAll('.cutask').length === 0, n2 = sel();
+        window.__kairouteSetHours(1); await wait(); window.__kairouteAt(i, 'plan'); await wait();
+        const b = document.querySelector('.cutask [data-act=cutok]'); if (b) b.click(); await wait(); window.__kairouteAt(i, 'plan'); await wait();
+        const n3 = sel(); window.__kairouteSetHours(8); await wait(); window.__kairouteAt(i, 'plan'); await wait(); const n4 = sel();
+        return { n0, n1, n2, n3, n4, names: names.slice(0, 160), keptHours };
+      }, li);
+      const okC = r.skip || (r.n0 >= 2 && r.n1 === r.n0 && /no longer fit/.test(r.names) && r.keptHours && r.n2 === r.n0 && r.n3 < r.n0 && r.n4 === r.n0);
+      log('Fit', 'fit', okC, 'A shorter day asks before picks drop: ' + (okC ? 'picks stay until "Shorten anyway"; "Keep my hours" keeps them; a longer day brings them back (' + r.n0 + ' -> ' + r.n3 + ' -> ' + r.n4 + ')' : JSON.stringify(r))); }
     // Live sights review, Nov 14 (Richard: "Corinth canal isn't showing anymore"): a loose source match gave the Corinth
     // Canal Ancient Corinth's id, and the duplicates check made them one place. Ids come only from sure matches, and a
     // guide saved with such a fold gets the place back.
