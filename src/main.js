@@ -131,7 +131,13 @@ const INTEREST_WORDS = { history: ["history", "roman", "medieval", "ancient", "w
 // count as history, not worship. With "Religious sites: Skip them" on a trip, these leave suggestions, except a
 // must-see landmark that happens to be religious (e.g. the Sagrada Família) stays as a normal sight.
 const RELIGIOUS_RE = /\b(church|cathedral|duomo|cattedrale|catedral|chiesa|iglesia|[eé]glise|kirche|basilica|monaster|chapel|shrine|mosque|synagogue|abbey|convent|sanctuary|pilgrim|religious|holy|parish|agios|agia|panagia|san |santa |saint|st\.? )/i;
-const isReligious = x => !!x && RELIGIOUS_RE.test((x.category || "") + " " + (x.name || "")) && !/ancient|ruin|archaeolog/i.test((x.category || "") + " " + (x.name || ""));
+// A saint's name alone (San, Santa, Saint, Agios...) is also a street, a town or a shop's name: it counts only when
+// the sources don't say the place is something else (Chocolatería San Ginés is a food stop; Agios Nikolaos a town).
+const WORSHIP_RE = /\b(church|cathedral|duomo|cattedrale|catedral|chiesa|iglesia|[eé]glise|kirche|basilica|monaster|chapel|shrine|mosque|synagogue|abbey|convent|sanctuary|pilgrim|religious|holy|parish)/i;
+const NOT_WORSHIP_KIND = /food|caf[eé]|restaurant|taverna|\bbar\b|chocolat|bakery|shop|market|museum|gallery|\bpark\b|garden|square|plaza|piazza|street|beach|island|village|\btown\b|district|neighbo|quarter|palace|castle|fort|stadium|hotel|harbou?r|port\b|bridge|viewpoint|hill|station/i;
+const isReligious = x => { if (!x) return false; const c = x.category || "", t = c + " " + (x.name || "");
+  if (/ancient|ruin|archaeolog/i.test(t) || !RELIGIOUS_RE.test(t)) return false;
+  return WORSHIP_RE.test(t) || !NOT_WORSHIP_KIND.test(c); };
 const skipReligious = () => P().religious === "off";
 // The "Churches & faith" interest: off once the traveler turns it off (noChurches), or when they chose
 // interests and it isn't one of them. Then churches leave the app's own picks and the day's fill too; a famous
@@ -5507,14 +5513,26 @@ const txt = v => blankish(v) ? "" : String(v).trim();
 // shows its English name when it has one, otherwise only its Latin-script part; the local name is never printed.
 const latinOnly = n => String(n || "").replace(/[^\u0000-ɏḀ-ỿ‐-‧€°]+/g, " ").replace(/\(\s*\)|\[\s*\]/g, " ").replace(/\s{2,}/g, " ").replace(/^[\s,·:;\-–/]+|[\s,·:;\-–/(]+$/g, "").trim();
 const showName = x => { const n = String((x && x.name) || ""); if (!nonLatin(n)) return n; if (x && x.en && !nonLatin(x.en)) return String(x.en); return latinOnly(n); };
-// Interest labels on a sight, from what the sources say it is (its category) and its name; never guessed.
-const SITE_TAGS = [["History", /histor|ancient|ruin|archaeolog|castle|fortress|\bfort\b|palace|monument|memorial|roman|medieval|acropol|agora|temple|theat(er|re)|heritage|old town|city walls|tomb|citadel|stadium|forum|canal/i],
-  ["Faith", null], ["Shopping", /shop|market|bazaar|\bmall\b|boutique|flea/i], ["Food", /\bfood|market|restaurant|taverna|\bcaf[eé]|wine|tapas|bakery|gastronom/i],
-  ["Art", /museum|\bart\b|\barts\b|gallery|painting|sculpt|mosaic/i], ["Nature", /\bpark\b|garden|nature|beach|gorge|mountain|island|lake|forest|volcan|\bcave|coast|\bbay\b|canal/i],
-  ["Views", /\bview|lookout|panoram|\bhill\b|summit|\bmount\b|tower|terrace|belvedere|observ|promenade/i]];
-const siteTags = s => { const t = (s.category || "") + " " + (s.name || ""); return SITE_TAGS.filter(([k, re]) => k === "Faith" ? isReligious(s) || bibleSite(s) : re.test(t)).map(x => x[0]); };
-const INT_TAG = { history: ["History"], architecture: ["History"], art: ["Art"], food: ["Food"], views: ["Views", "Nature"], churches: ["Faith"], bible: ["Faith"], shopping: ["Shopping"], beaches: ["Nature"], kids: ["Nature"] };
-const myTags = () => new Set((P().interests || []).flatMap(k => INT_TAG[k] || []));
+// Interest labels on a sight (Richard, Nov 16): the trip setup's own interests (same names as the setup), matched
+// from what the sources say the sight is (its category) and its name; never guessed.
+const SITE_INT = { history: /histor|ancient|ruin|archaeolog|castle|fortress|\bfort\b|palace|monument|memorial|roman|medieval|acropol|agora|temple|theat(er|re)|heritage|old town|city walls|tomb|citadel|forum|byzantin|venetian|ottoman/i,
+  art: /museum|\bart\b|\barts\b|gallery|painting|sculpt|mosaic|fresco/i,
+  architecture: /architect|palace|castle|cathedral|basilica|monastery|tower|bridge|building|\bhouse\b|casa |mansion|villa\b|square|plaza|piazza|stadium|arena|opera|concert hall|fa[cç]ade|gaud[ií]|modernis|\bgate\b|fountain|aqueduct/i,
+  food: /\bfood|market|restaurant|taverna|\bcaf[eé]|wine|tapas|bakery|gastronom/i,
+  views: /\bview|lookout|panoram|\bhill\b|summit|\bmount\b|terrace|belvedere|observ|promenade|\bpark\b|garden|nature|gorge|mountain|island|lake|forest|volcan|\bcave|coast|\bbay\b|waterfront|harbou?r|canal/i,
+  shopping: /shop|market|bazaar|\bmall\b|boutique|\bflea/i, beaches: /beach/i,
+  kids: /\bzoo\b|aquarium|amusement|theme park|playground|children|\btoy|science (museum|cent)|stadium/i };
+const siteInts = s => { const t = (s.category || "") + " " + (s.name || ""); return INTERESTS.map(x => x[0]).filter(k => k === "churches" ? isReligious(s) : k === "bible" ? bibleSite(s) : SITE_INT[k].test(t)); };
+const INT_LABEL = Object.fromEntries(INTERESTS);
+const myTags = () => new Set(P().interests || []);
+// What a card shows: the traveler's own interests the sight matches, highlighted. When it matches none of them
+// (a famous sight, or one under More nearby), one plain label saying what it is, from the sources: its category,
+// else Famous sight / Local favorite. Every card has a label; none names an interest the traveler didn't choose.
+const KIND_SKIP = /^(sight|landmark|day trip|half-day|walk|history|architecture|playback|attraction|place)$/i;
+const cardLabels = (s, city, mine) => { const my = (mine || myTags()), hit = siteInts(s).filter(k => my.has(k));
+  if (hit.length) return hit.map(k => ({ t: INT_LABEL[k], mine: true }));
+  const c = latinOnly(txt(s.category) || "").replace(/\s+/g, " ").trim();
+  return [{ t: c && c.length <= 24 && !KIND_SKIP.test(c) ? c[0].toUpperCase() + c.slice(1) : sightKind(s, city) === "local" ? "Local favorite" : "Famous sight", mine: false }]; };
 // A truly famous sight (must-see, World Heritage, or among the city's best known by the sources) always stays in
 // the main list, whatever the traveler's interests.
 function famousTrue(s, city) { if (s.mustSee || s.unesco) return true; const f = [...((city && city.sites) || [])].map(x => x.fame || 0).sort((a, b) => b - a), bar = Math.max(25, 0.3 * (f[4] || f[f.length - 1] || 0)); return (s.fame || 0) >= bar; }
@@ -5534,8 +5552,7 @@ function siteCard(s, d, plan, nr) {
   } else if (on) badge = pickStatus(s, plan).replace('class="tag ', 'class="tag fitbadge ');
   const sym = ((city && city.basics) || {}).symbol || "€", nm = showName(s) || s.name;
   const l2 = [dur(s.minutes), s.cost ? sym + s.cost : "Free", s.far ? "Day trip" : "", near != null ? (near < 0.05 ? "Next to " + showName(nearTo) : distTxt(near, true) + " from " + showName(nearTo)) : ""].filter(Boolean).map(esc).join(" · ");
-  const mine = nr && nr.my ? nr.my : myTags(), tags = siteTags(s);
-  const l3 = tags.length ? `<div class="tags ints">${tags.map(t => `<span class="tag int${mine.has(t) ? " mine" : ""}">${t}</span>`).join("")}</div>` : "";
+  const l3 = `<div class="tags ints">${cardLabels(s, city, nr && nr.my).map(x => `<span class="tag int${x.mine ? " mine" : " kind"}">${esc(x.t)}</span>`).join("")}</div>`;
   const ex = ((plan && plan.elsewhere) || []).find(x => x.s.id === s.id);
   const seen = other ? `<span class="tag seen">${!on ? esc(schedWhen(other)) : ex && ex.earlier ? "Seen " + esc(fmtDow(ex.on.date)) + " " + esc(fmtDate(ex.on.date)) + " · not repeated" : ex && ex.later ? "No room today · seen " + esc(fmtDow(ex.on.date)) + " " + esc(fmtDate(ex.on.date)) : "Today · not repeated " + esc(fmtDow(other.date)) + " " + esc(fmtDate(other.date))}</span>` : "";
   const hrs = txt(s.hours) ? txt(hoursText(s.hours)) : "", cl = txt(s.closed);
@@ -5668,7 +5685,7 @@ function renderSites(d) {
   const my = myTags(), fsMap = new Map(), fsOf = x => { if (!fsMap.has(x.id)) fsMap.set(x.id, plan && !plan.error ? siteFits(d, x, plan) : null); return fsMap.get(x.id); };
   const pass = x => f === "all" || (f === "must" ? x.mustSee : sightKind(x, city) === f);
   const free = [...main.filter(x => !x.quick), ...far.filter(pass), ...quick.filter(pass)].filter(x => !on(x) && !sch(x));
-  const nearbyOnly = x => x.quick || (my.size > 0 && !famousTrue(x, city) && !siteTags(x).some(t => my.has(t)));
+  const nearbyOnly = x => x.quick || (my.size > 0 && !famousTrue(x, city) && !siteInts(x).some(k => my.has(k)));
   const mainFree = free.filter(x => !nearbyOnly(x)), moreFree = free.filter(nearbyOnly);
   const fitL = byNear(mainFree.filter(x => fsOf(x) !== false)), wontL = byNear(mainFree.filter(x => fsOf(x) === false));
   const moreL = [...byNear(moreFree.filter(x => fsOf(x) !== false)), ...byNear(moreFree.filter(x => fsOf(x) === false))];
