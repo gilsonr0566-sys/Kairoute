@@ -7,7 +7,8 @@
 // Pronunciations for the voice only: the screen shows the real spelling.
 const SAY = [[/\borloj\b/gi, "orloy"], [/Mikuláš of Kadaň/g, "Mikulash of Kadan"], [/Jan Šindel/g, "Yan Shindel"], [/Šindel/g, "Shindel"],
   [/Hanuš/g, "Hanush"], [/Jan Růže/g, "Yan Roozheh"], [/Zdeněk Horský/g, "Zdenyek Horskee"], [/Vojtěch Sucharda/g, "Voytyekh Sookharda"],
-  [/Josef Mánes/g, "Yosef Mahness"], [/Mánes/g, "Mahness"], [/Alois Jirásek/g, "Alois Yirahsek"], [/Jan Hus\b/g, "Yan Hooss"], [/\bHus\b/g, "Hooss"], [/Týn/g, "Teen"]];
+  [/Josef Mánes/g, "Yosef Mahness"], [/Mánes/g, "Mahness"], [/Alois Jirásek/g, "Alois Yirahsek"], [/Jan Hus\b/g, "Yan Hooss"], [/\bHus\b/g, "Hooss"], [/Týn/g, "Teen"],
+  [/Agios Titos/g, "Ah-yos Tee-tos"], [/Nikephoros Phokas/g, "Nikiforos Fokas"], [/Chandax/g, "Handax"], [/Athanasios Moussis/g, "Athanasios Moussees"], [/Gortyn/g, "Gortin"]];
 const sayText = t => SAY.reduce((a, [re, to]) => a.replace(re, to), String(t));
 var STOP_SCRIPTS = [{ // var: cityFor can run while main.js is still starting, before this file has run
   id: "prague-clock", v: 1, title: "Prague Astronomical Clock", where: "Old Town Square, Prague",
@@ -126,6 +127,76 @@ var STOP_SCRIPTS = [{ // var: cityFor can run while main.js is still starting, b
       ]
     }
   ]
+}, {
+  id: "heraklion-titus", v: 1, title: "Church of Saint Titus", where: "Agios Titos Square, Heraklion, Crete", allStand: true,
+  city: /\b(heraklion|iraklio|iraklion)\b/i, site: /\b(saint|st\.?|agios) tit(us|os)\b/i,
+  parts: [
+    {
+      "name": "Arrival: the square",
+      "minutes": 2,
+      "stand": "In Agios Titos Square, under the big plane tree, facing the church. The Venetian Loggia is the arcaded building just behind you.",
+      "paras": [
+        "Here we are. Find a bit of shade under this big plane tree and look at the church in front of you. This is the Church of Saint Titus, Agios Titos, as the people of Heraklion call it.",
+        "It doesn't look like a typical Greek church, does it? No big domed bell tower, a rather formal stone front. Hold on to that thought, because the building itself is going to tell us a story about who has ruled this city over the last thousand years.",
+        "But first, the man it's named for. Because this isn't a church to a distant legend. It's named for a real person who appears in the pages of the New Testament, a man the Apostle Paul trusted with some of his hardest jobs. And part of him is inside."
+      ]
+    },
+    {
+      "name": "Who was Titus?",
+      "minutes": 3,
+      "stand": "Still in the square, facing the church front.",
+      "paras": [
+        "So, who was Titus? He was a Greek, not a Jew, which mattered a great deal in the earliest years of the church. Paul took him along to Jerusalem to meet the leaders there. And in his letter to the Galatians, Paul makes a point of it: \"But neither Titus, who was with me, being a Greek, was compelled to be circumcised.\" In other words, Titus was living proof that a Greek could follow Christ without first becoming Jewish.",
+        "Paul used him as his troubleshooter. When the church in Corinth was in turmoil, it was Titus who carried Paul's difficult letter there, and Titus who came back with good news. Paul was so relieved he wrote, \"God, that comforteth those that are cast down, comforted us by the coming of Titus.\" That's Second Corinthians, chapter seven.",
+        "And then Paul gave him Crete."
+      ]
+    },
+    {
+      "name": "Paul, Crete and a letter",
+      "minutes": 3,
+      "stand": "Facing the church. You can sit on the steps or a bench while you listen.",
+      "paras": [
+        "Paul himself knew this coast. In the Book of Acts, chapter twenty-seven, Paul is a prisoner on a ship bound for Rome. Storms push them along the south side of Crete, to a harbor called Fair Havens. Paul warns them to stay for the winter. They don't listen, sail on, and end up shipwrecked on Malta.",
+        "Later, Paul left Titus here with a job to do, and wrote him a letter about it. That letter is the Book of Titus, in your Bible today. It opens like this: \"For this cause left I thee in Crete, that thou shouldest set in order the things that are wanting, and ordain elders in every city.\" So Titus was the man organizing the first churches on this island.",
+        "And here's a line locals still smile about. In chapter one, Paul quotes one of the Cretans' own poets: \"The Cretians are alway liars.\" Tradition says the poet was Epimenides, a Cretan from about six hundred years before Paul. The people of Heraklion know the verse well. They'll tell you it's the one Bible verse they're happy to argue with.",
+        "Early church tradition says Titus became the first bishop of Crete, and that he died here as an old man, at Gortyn in the south of the island. The New Testament itself doesn't record his death, so that part comes to us from tradition."
+      ]
+    },
+    {
+      "name": "A church that changed hands",
+      "minutes": 4,
+      "stand": "Step back a little so you can see the whole front of the church.",
+      "paras": [
+        "Now, back to the building, and why it looks the way it does.",
+        "In the year 961 the Byzantine general Nikephoros Phokas took Crete back from Arab rule, and a new cathedral to Titus was built in this city, then called Chandax. Most accounts date the first church here to that time.",
+        "Then the Venetians arrived. They ruled Crete for more than four centuries and called this city Candia. They rebuilt the church as a grand three-aisled basilica, opened in 1446. A fire destroyed it in the sixteenth century, and they rebuilt it again in 1557.",
+        "In 1669, after one of the longest sieges in history, Candia fell to the Ottoman Turks. As they left, the Venetians took the most precious relic of this church with them: the skull of Saint Titus. The church itself became a mosque.",
+        "Then nature had its say. A great earthquake in 1856 almost completely destroyed the building. What you're looking at now was begun in 1869, as a mosque, designed by the architect Athanasios Moussis. That's why it has this formal, square look rather than the shape of a Byzantine church. There was once a tall minaret beside it.",
+        "In the 1920s, after the exchange of populations between Greece and Turkey, the minaret came down, and in 1925 the building was dedicated again as an Orthodox church. Byzantine, Venetian, Ottoman, and Greek again. One plot of ground, four worlds."
+      ]
+    },
+    {
+      "name": "The relic that came home",
+      "minutes": 4,
+      "stand": "Inside the church, if it's open. Shoulders and knees covered, voices low. The silver reliquary is kept inside.",
+      "paras": [
+        "Let's step inside. Remember, this is a working church: cover shoulders and knees, keep your voice low, and check the signs before taking photos.",
+        "Look for the silver reliquary. It holds the skull of Saint Titus. Remember, the Venetians took it away in 1669. It stayed in Venice for almost three hundred years.",
+        "Then, after talks that lasted years, the city of Venice gave it back. On the fifteenth of May 1966, the relic arrived at Heraklion's harbor, the same harbor where your ship docked this morning, and crowds turned out to carry it home to this church.",
+        "Whatever your own faith, take a moment here. People come to this spot to pray, to light a candle, to give thanks. Titus is the patron saint of Crete, and his feast day, on the twenty-fifth of August, is one of the biggest days of the year in this city."
+      ]
+    },
+    {
+      "name": "Closing",
+      "minutes": 2,
+      "stand": "Back outside in the square, under the plane tree.",
+      "paras": [
+        "So think about it for a moment. Two thousand years ago, a tentmaker from Tarsus wrote a short letter to a Greek friend he'd left on this island, telling him to set things in order. That letter is still read aloud in churches all over the world, every week.",
+        "And the church named for that friend was burned, shaken to the ground, turned into a mosque, rebuilt, and given back. His relic was carried away and, three centuries later, carried home.",
+        "Empires came and went across this square. The faith Titus was sent here to plant outlasted every one of them. Some things, it turns out, find their way home."
+      ]
+    }
+  ]
 }];
 // The script that belongs to a stop, if any.
 const scriptFor = (s, city) => s && city && STOP_SCRIPTS.find(sc => sc.city.test(city.city || "") && sc.site.test(s.name + " " + (s.local || "")));
@@ -137,7 +208,7 @@ function scriptStops(city) {
     const sc = scriptFor(s, city); if (!sc || s.scriptV === sc.id + sc.v) continue;
     s.parts = sc.parts.map(p => ({ name: p.name, spot: true, local: "", lat: s.lat, lng: s.lng, minutes: p.minutes, stand: p.stand, next: "", guide: p.paras.join("\n\n"), lookFor: "" }));
     s.partsOff = []; s.intro = ""; s.wrap = ""; s.extrasV = 99; s.scriptV = sc.id + sc.v;
-    s.show = Object.assign({ part: null }, sc.show);
+    if (sc.show) s.show = Object.assign({ part: null }, sc.show);
   }
 }
 const scriptAudio = (sc, k, i) => `audio/${sc.id}/p${k}-${i}.mp3`;
@@ -192,9 +263,9 @@ function scriptDemo() {
 #scriptdemo .state{display:block;color:var(--muted,#56636C);font-size:.9rem;margin-top:4px;min-height:1.2em}</style>
 <div class="sd"><div class="sdtop"><span class="eyebrow">${esc(sc.where)}</span><button class="btn ghost small" data-sdclose>✕ Close</button></div>
 <h2>${esc(sc.title)}</h2><p class="lede">${sc.parts.length} short parts, told by Aurora. Play it all, or tap any part to hear just that one.</p>
-<p class="sub show">⏱ ${esc(sc.show.what)}: every hour, 9 AM to 11 PM. Start part 1 about 10 minutes before the hour.</p>
+${sc.show ? `<p class="sub show">⏱ ${esc(sc.show.what)}: every hour, 9 AM to 11 PM. Start part 1 about 10 minutes before the hour.</p>` : ""}
 <div class="audio"><button class="btn bigplay" data-sp="${sdId(sc, "all")}" data-label="▶ Play the whole stop">▶ Play the whole stop</button><span class="state" aria-live="polite"></span></div>
-<ol class="parts">${sc.parts.map((p, k) => `<li><b>${esc(p.name)}</b> <small>${p.minutes} min</small>${p.stand ? `<span class="cue"><b>${k ? "Look at" : "Stand here"}:</b> ${esc(p.stand)}</span>` : ""}
+<ol class="parts">${sc.parts.map((p, k) => `<li><b>${esc(p.name)}</b> <small>${p.minutes} min</small>${p.stand ? `<span class="cue"><b>${k && !sc.allStand ? "Look at" : "Stand here"}:</b> ${esc(p.stand)}</span>` : ""}
 <div class="audio"><button class="btn ghost small" data-sp="${sdId(sc, k)}" data-label="▶ Play part ${k + 1}">▶ Play part ${k + 1}</button><span class="state" aria-live="polite"></span></div>
 <details><summary>Read the words</summary>${p.paras.map(t => `<p>${esc(t)}</p>`).join("")}</details></li>`).join("")}</ol></div>`;
   document.body.appendChild(el);

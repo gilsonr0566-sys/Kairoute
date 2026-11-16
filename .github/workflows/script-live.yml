@@ -1,5 +1,10 @@
 name: Stop script live check
-on: workflow_dispatch
+on:
+  workflow_dispatch:
+    inputs:
+      stop:
+        description: Stop script id
+        default: prague-clock
 permissions:
   contents: read
 jobs:
@@ -11,4 +16,4 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-      - run: npm i --no-save playwright@1 && npx playwright install --with-deps chromium && node tools/script-live.cjs
+      - run: npm i --no-save playwright@1 && npx playwright install --with-deps chromium && node tools/script-live.cjs "" "${{ inputs.stop }}"
