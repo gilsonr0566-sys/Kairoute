@@ -1224,16 +1224,32 @@ function routeCost(order, O, Z) {
 // each of its stops to its place. Routing and polishing keep those stops in that order; meals, quick sights on the
 // way and stops added later still go wherever they fit best. If the order costs a stop (it would close first, or the
 // day would run past a ship, train or flight time), the stop drops, never the safety margin.
-let ownOrd = null;
+// A meal the traveler dragged (mealPin: label -> the stop it comes right after, "^" = before the first stop) stays
+// there; the place to eat is then chosen near that point of the route (polishDay's meal swaps).
+let ownOrd = null, mealPin = null;
 const ownKey = x => !!(x && !x.mealOf && ownOrd && ownOrd.has(x.id));
+const pinAt = (q, label) => { const at = mealPin[label]; if (at === "^") return 0; const i = q.findIndex(x => !x.mealOf && x.id === at); return i < 0 ? -1 : i + 1; };
 function keepOwn(q) {
-  if (!ownOrd) return q;
-  const slots = [], items = []; q.forEach((x, i) => { if (ownKey(x)) { slots.push(i); items.push(x); } });
-  if (items.length < 2) return q;
-  items.sort((a, b) => ownOrd.get(a.id) - ownOrd.get(b.id));
-  const out = q.slice(); slots.forEach((at, k) => { out[at] = items[k]; }); return out;
+  let out = q;
+  if (ownOrd) {
+    const slots = [], items = []; q.forEach((x, i) => { if (ownKey(x)) { slots.push(i); items.push(x); } });
+    if (items.length > 1) { items.sort((a, b) => ownOrd.get(a.id) - ownOrd.get(b.id)); out = q.slice(); slots.forEach((at, k) => { out[at] = items[k]; }); }
+  }
+  if (mealPin) for (const label of Object.keys(mealPin)) {
+    const mi = out.findIndex(x => x.mealOf && x.mealOf.label === label && !x.mealOf.booked); if (mi < 0) continue;
+    const rest = out.slice(); const [m] = rest.splice(mi, 1); const at = pinAt(rest, label); if (at < 0) continue;
+    rest.splice(at, 0, m); out = rest;
+  }
+  return out;
 }
-function ownOk(q) { if (!ownOrd) return true; let last = -1; for (const x of q) if (ownKey(x)) { const v = ownOrd.get(x.id); if (v < last) return false; last = v; } return true; }
+function ownOk(q) {
+  if (ownOrd) { let last = -1; for (const x of q) if (ownKey(x)) { const v = ownOrd.get(x.id); if (v < last) return false; last = v; } }
+  if (mealPin) for (const label of Object.keys(mealPin)) {
+    const mi = q.findIndex(x => x.mealOf && x.mealOf.label === label && !x.mealOf.booked); if (mi < 0) continue;
+    const rest = q.slice(); rest.splice(mi, 1); const at = pinAt(rest, label); if (at >= 0 && at !== mi) return false;
+  }
+  return true;
+}
 function optimize(nodes, O, Z) { return keepOwn(optimizeFree(nodes, O, Z)); }
 function optimizeFree(nodes, O, Z) {
   const rest = nodes.slice(), order = [];
@@ -1708,8 +1724,9 @@ function buildPlanRaw(d) { const prev = planDate, pw = planWx; if (!planDepth) t
     return pl; } finally { planDate = prev; planWx = pw; planDepth--; } }
 function buildPlanFor(d) {
   const memo0 = mealPickMemo, own0 = ownOrd; mealPickMemo = { g: -1, m: new Map() }; // meal choices are remembered for this day's plan only
-  ownOrd = d && Array.isArray(d.order) && d.order.length > 1 ? new Map(d.order.map((id, i) => [id, i])) : null;
-  try { return buildPlanForDay(d); } finally { mealPickMemo = memo0; ownOrd = own0; }
+  const pin0 = mealPin; ownOrd = d && Array.isArray(d.order) && d.order.length > 1 ? new Map(d.order.map((id, i) => [id, i])) : null;
+  mealPin = d && d.mealAt && Object.keys(d.mealAt).length ? d.mealAt : null;
+  try { return buildPlanForDay(d); } finally { mealPickMemo = memo0; ownOrd = own0; mealPin = pin0; }
 }
 function buildPlanForDay(d) {
   const city = cityFor(d); if (!city) return null;
@@ -4220,6 +4237,7 @@ function remapPicks(x, prev, c) {
   // The order the traveler dragged the stops into follows the same places into the new guide (its sights can have new ids).
   const mapIds = ids => { const r = []; ids.forEach(id => { const o = old.find(s => s.id === id), n = now.find(s => s.id === id && (!o || samePlace(o, s))) || (o && now.find(s => samePlace(o, s))); if (n && !r.includes(n.id)) r.push(n.id); }); return r; };
   if (Array.isArray(x.order)) { const r = mapIds(x.order); if (r.length > 1) x.order = r; else delete x.order; }
+  if (x.mealAt) for (const k of Object.keys(x.mealAt)) { if (x.mealAt[k] === "^") continue; const r = mapIds([x.mealAt[k]]); if (r.length) x.mealAt[k] = r[0]; else delete x.mealAt[k]; }
   if (x.pendingOrder && Array.isArray(x.pendingOrder.prev)) x.pendingOrder.prev = mapIds(x.pendingOrder.prev);
   if (x.askReady && Array.isArray(x.askReady.order)) x.askReady.order = mapIds(x.askReady.order);
   return out;
@@ -6160,8 +6178,8 @@ function renderPlan(d) {
     }
     if (it.type === "fixed") return `<div class="${cls}">${tcell(it)}<div class="rail"><div class="dot fixed">H</div></div><div class="what"><div class="nm">${esc(it.place.name)}</div><div class="sub">${dur(it.place.minutes)}</div></div></div>`;
     if (it.type === "meal") {
-      const r = it.place, lbl = it.meal.label;
-      return `<div class="${cls}">${tcell(it)}<div class="rail"><div class="dot meal">${lbl[0]}</div></div><div class="what">
+      const r = it.place, lbl = it.meal.label, mv = canDrag && !r.booked && !it.meal.booked;
+      return `<div class="${cls}"${mv ? ` data-meal="${esc(lbl)}"` : ""}>${tcell(it)}<div class="rail"><div class="dot meal">${lbl[0]}</div></div><div class="what">${mv ? dragHandle({ id: "meal:" + lbl, name: lbl }) : ""}
         <div class="nm">${it.meal.quick && !r.booked ? "Quick " + lbl.toLowerCase() : lbl}: ${esc(r.name)}</div><div class="sub">${[r.booked ? "Your reservation" : "", r.cuisine, r.price, r.generic || r.booked ? "" : r.kind === "local" ? "Local spot" : "Popular with visitors", dur(it.meal.len)].filter(Boolean).map(esc).join(" · ")}</div>
         ${mealFacts(r)}${r.booked ? bookedLinks(lbl) : mealMore(r, city, lbl)}</div></div>`;
     }

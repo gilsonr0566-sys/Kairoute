@@ -8,9 +8,9 @@
 const gripSVG = `<svg class="gripico" viewBox="0 0 24 24" aria-hidden="true"><g fill="currentColor"><circle cx="9" cy="6" r="1.7"/><circle cx="15" cy="6" r="1.7"/><circle cx="9" cy="12" r="1.7"/><circle cx="15" cy="12" r="1.7"/><circle cx="9" cy="18" r="1.7"/><circle cx="15" cy="18" r="1.7"/></g></svg>`;
 const dragHandle = s => `<button type="button" class="draghandle" data-drag="${esc(s.id)}" aria-label="Move ${esc(s.name)}: drag, or use the up and down arrow keys" title="Drag to change the order">${gripSVG}</button>`;
 function orderLine(d) {
-  return Array.isArray(d.order) && d.order.length > 1
-    ? `<p class="ordline">You set the order of the stops; the times follow it. <button type="button" class="linkbtn" data-act="orderreset">Use Kairoute's best order</button></p>`
-    : `<p class="ordline hint">${gripSVG}<span>Drag a stop by its handle to change the order.</span></p>`;
+  return (Array.isArray(d.order) && d.order.length > 1) || (d.mealAt && Object.keys(d.mealAt).length)
+    ? `<p class="ordline">You set the order${d.mealAt && Object.keys(d.mealAt).length ? " and where you eat" : " of the stops"}; the times follow it. <button type="button" class="linkbtn" data-act="orderreset">Use Kairoute's best order</button></p>`
+    : `<p class="ordline hint">${gripSVG}<span>Drag a stop or lunch by its handle to change the order. Lunch moves with your route by itself.</span></p>`;
 }
 const pickedOut = (d, pl) => pl && !pl.error ? (pl.dropped || []).filter(x => (d.selected || []).includes(x.id)).map(x => x.name) : [];
 // The heads-up notice (shared with the shorter-day question: askNote).
@@ -25,31 +25,44 @@ function orderNote(d, plan) {
   return askNote("orderask", `In this order, ${namesHTML(names)} no longer ${one ? "fits" : "fit"} ${why}, or would be closed by the time you get there. Put the stops back the way they were, or keep the new order without ${one ? "it" : "them"}?`,
     ["orderback", "Put back"], ["orderkeep", "Keep new order"]);
 }
-// ids: the new order of the day's stops, or null for Kairoute's own order.
-function reorderStops(d, ids) {
+// ids: the new order of the day's stops, or null for Kairoute's own order. meals: where the traveler put each meal
+// ({ Lunch: stop id it follows, or "^" before the first stop }); left out, the meals stay as they are.
+function reorderStops(d, ids, meals) {
   if (!d) return;
-  if (d.ready && readyState(d)) { d.askReady = { order: ids }; save(); render(); return; }
-  const lost0 = pickedOut(d, buildPlan(d)), prev = Array.isArray(d.order) ? d.order.slice() : null;
+  if (meals === undefined) meals = d.mealAt || null;
+  if (d.ready && readyState(d)) { d.askReady = { order: ids, meals }; save(); render(); return; }
+  const lost0 = pickedOut(d, buildPlan(d)), prev = Array.isArray(d.order) ? d.order.slice() : null, prevMeals = d.mealAt ? Object.assign({}, d.mealAt) : null;
   if (ids && ids.length > 1) d.order = ids.slice(); else delete d.order;
+  if (meals && Object.keys(meals).length) d.mealAt = Object.assign({}, meals); else delete d.mealAt;
   delete d.pendingOrder;
   const lost = pickedOut(d, buildPlan(d)).filter(n => !lost0.includes(n));
-  if (lost.length) d.pendingOrder = { prev, names: lost };
+  if (lost.length) d.pendingOrder = { prev, prevMeals, names: lost };
   save(); render();
 }
 const stopIds = () => [...document.querySelectorAll(".timeline .tl[data-stop]")].map(r => r.dataset.stop);
-// Keyboard: the arrow keys move the focused stop one place, and focus stays on it.
+// Where a meal lands: right after the stop before it ("^" when it comes before every stop).
+const mealSpot = (label, at) => { const ids = stopIds(); return Object.assign({}, day().mealAt || {}, { [label]: at === 0 ? "^" : ids[at - 1] }); };
+// Keyboard: the arrow keys move the focused stop (or meal) one place, and focus stays on it.
 function moveBy(id, by) {
-  const ids = stopIds(), i = ids.indexOf(id), j = i + by; if (i < 0 || j < 0 || j >= ids.length) return;
-  ids.splice(j, 0, ids.splice(i, 1)[0]); reorderStops(day(), ids);
+  if (id.startsWith("meal:")) {
+    const label = id.slice(5), rows = [...document.querySelectorAll(".timeline .tl[data-stop], .timeline .tl[data-meal]")];
+    const mi = rows.findIndex(r => r.dataset.meal === label); if (mi < 0) return;
+    const before = rows.slice(0, mi).filter(r => r.dataset.stop).length, at = before + by;
+    if (at < 0 || at > stopIds().length) return;
+    reorderStops(day(), Array.isArray(day().order) ? day().order : null, mealSpot(label, at));
+  } else {
+    const ids = stopIds(), i = ids.indexOf(id), j = i + by; if (i < 0 || j < 0 || j >= ids.length) return;
+    ids.splice(j, 0, ids.splice(i, 1)[0]); reorderStops(day(), ids);
+  }
   requestAnimationFrame(() => { const h = document.querySelector(`.draghandle[data-drag="${CSS.escape(id)}"]`); if (h) h.focus(); });
 }
 // Finger or mouse: the stop follows the pointer; a line shows where it will land; the list scrolls near the edges.
 let dragSt = null;
 function dragStart(e, h) {
-  const row = h.closest(".tl[data-stop]"); if (!row || dragSt) return;
+  const row = h.closest(".tl[data-stop], .tl[data-meal]"); if (!row || dragSt) return;
   e.preventDefault(); try { h.setPointerCapture(e.pointerId); } catch (x) {}
   const sc = row.closest(".pane") || null;
-  dragSt = { id: row.dataset.stop, row, h, y0: e.clientY, s0: sc ? sc.scrollTop : window.scrollY, sc, to: null, y: e.clientY, raf: 0 };
+  dragSt = { id: row.dataset.stop, meal: row.dataset.meal || null, row, h, y0: e.clientY, s0: sc ? sc.scrollTop : window.scrollY, sc, to: null, y: e.clientY, raf: 0 };
   row.classList.add("dragging"); document.body.classList.add("dragging-on");
 }
 function dragTarget() {
@@ -77,6 +90,8 @@ function dragEnd(cancel) {
   st.row.classList.remove("dragging"); st.row.style.transform = ""; document.body.classList.remove("dragging-on");
   document.querySelectorAll(".tl.dropat, .tl.dropend").forEach(r => r.classList.remove("dropat", "dropend"));
   if (cancel || st.to == null) return;
+  if (st.meal) { const was = [...document.querySelectorAll(".timeline .tl[data-stop], .timeline .tl[data-meal]")], mi = was.indexOf(st.row), now = was.slice(0, mi).filter(r => r.dataset.stop).length;
+    if (st.to !== now) reorderStops(day(), Array.isArray(day().order) ? day().order : null, mealSpot(st.meal, st.to)); return; }
   const ids = stopIds(), i = ids.indexOf(st.id); if (i < 0) return;
   const rest = ids.filter(x => x !== st.id); rest.splice(st.to, 0, st.id);
   if (rest.join("|") !== ids.join("|")) reorderStops(day(), rest);
@@ -94,11 +109,11 @@ if (typeof document !== "undefined") {
   document.addEventListener("click", e => {
     const t = e.target.closest && e.target.closest("[data-act]"); if (!t) return;
     const act = t.dataset.act, d = day(); if (!d) return;
-    if (act === "orderreset") reorderStops(d, null);
+    if (act === "orderreset") reorderStops(d, null, null);
     else if (act === "orderkeep") { delete d.pendingOrder; d.orderOk = true; save(); render(); } // what no longer fits comes off the picks, with the usual note to fit it back in
-    else if (act === "orderback") { const p = d.pendingOrder; if (p && p.prev && p.prev.length > 1) d.order = p.prev; else delete d.order; delete d.pendingOrder; save(); render(); }
+    else if (act === "orderback") { const p = d.pendingOrder; if (p && p.prev && p.prev.length > 1) d.order = p.prev; else delete d.order; if (p && p.prevMeals) d.mealAt = p.prevMeals; else delete d.mealAt; delete d.pendingOrder; save(); render(); }
     else if (act === "readyorderno") { delete d.askReady; save(); render(); }
-    else if (act === "readyorderyes") { const a = d.askReady; delete d.askReady; delete d.ready; reorderStops(d, a ? a.order : null); readyCheckAll(); }
+    else if (act === "readyorderyes") { const a = d.askReady; delete d.askReady; delete d.ready; reorderStops(d, a ? a.order : null, a ? a.meals || null : null); readyCheckAll(); }
   });
 }
-if (typeof window !== "undefined") window.__kairouteOrder = { ids: stopIds, set: (i, ids) => { trip.active = i; reorderStops(trip.days[i], ids); }, get: i => trip.days[i].order || null, pending: i => trip.days[i].pendingOrder || null };
+if (typeof window !== "undefined") window.__kairouteOrder = { meals: i => trip.days[i].mealAt || null, ids: stopIds, set: (i, ids) => { trip.active = i; reorderStops(trip.days[i], ids); }, get: i => trip.days[i].order || null, pending: i => trip.days[i].pendingOrder || null };
