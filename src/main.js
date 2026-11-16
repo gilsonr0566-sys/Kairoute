@@ -2071,8 +2071,12 @@ function buildPlanForDay(d) {
   // One loop, last: the stops the day keeps are settled above with the usual costs, then their order is polished once
   // more with crossing paths counted, from several starting orders (loopSeeds). The loop is taken only when it is no later for any opening time and still ends
   // in time, so it never costs a stop, a meal or the ship (and a plan weighs it once, not in every trial).
-  if (seq.length > 2 && !ownOrd && !mealPin) { const r0 = simDay(seq, t0, O, ZZ, style); crossOn = true; // a day the traveler put in order (or placed lunch on) keeps it
-    try { let q = null, r = null; for (const s0 of loopSeeds(seq, O, ZZ)) { const qi = polishDay(s0, t0, O, ZZ, style, city), ri = simDay(qi, t0, O, ZZ, style); if (ri.late <= r0.late && ri.end <= Math.max(r0.end, w.endBy - tailCost()) && (!r || ri.cost < r.cost)) { q = qi; r = ri; } } if (q) seq = q; } finally { crossOn = false; } }
+  // A route that already crosses nowhere is the loop: the pass is skipped (it would only redo the same search). Otherwise
+  // the starting orders are weighed as they are and only the current one and the best other one are polished, so a
+  // tick stays quick on a slow tablet (Nov 16 demo gate: a 1.7 s freeze with all four polished).
+  if (seq.length > 2 && !ownOrd && !mealPin && crossCount(O, seq, ZZ)) { const r0 = simDay(seq, t0, O, ZZ, style); crossOn = true; // a day the traveler put in order (or placed lunch on) keeps it
+    try { let q = null, r = null; const sd = loopSeeds(seq, O, ZZ), rest = sd.slice(1).map(x => [x, simDay(x, t0, O, ZZ, style).cost]).sort((a, b) => a[1] - b[1]);
+      for (const s0 of [sd[0]].concat(rest.length ? [rest[0][0]] : [])) { const qi = polishDay(s0, t0, O, ZZ, style, city), ri = simDay(qi, t0, O, ZZ, style); if (ri.late <= r0.late && ri.end <= Math.max(r0.end, w.endBy - tailCost()) && (!r || ri.cost < r.cost)) { q = qi; r = ri; } } if (q) seq = q; } finally { crossOn = false; } }
   bonusMemo.set(d, bonus.map(x => x.id));
   keptMemo.set(d, seq.filter(x => !x.mealOf && !x.bonus && !x.along).map(x => x.id));
   // A sight that doesn't fit today but is also ticked on a later day here isn't lost: it's seen that day.
