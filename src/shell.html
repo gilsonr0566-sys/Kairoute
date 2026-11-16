@@ -255,6 +255,19 @@ button.mk { cursor: pointer; }
 .tl.leg.k-flight .rail::before { background: repeating-linear-gradient(var(--lc) 0 10px, transparent 10px 14px); }
 .tl.rin-ship { --rin: var(--t-ship); } .tl.rout-ship { --rout: var(--t-ship); } .k-ship { --lc: var(--t-ship); }
 .tl.leg.k-ship .rail::before { background: repeating-linear-gradient(var(--lc) 0 14px, transparent 14px 18px); }
+/* Drag to reorder the stops (Richard, Nov 16): a handle on each stop, the stop follows the finger, a line shows where it lands */
+.tl[data-stop] .what { position: relative; padding-right: 48px; }
+.draghandle { position: absolute; top: 4px; right: 0; width: 44px; height: 44px; display: grid; place-items: center; border: 1px solid var(--line); border-radius: 8px; background: var(--card); color: var(--muted); cursor: grab; touch-action: none; padding: 0; }
+.draghandle:hover, .draghandle:focus-visible { color: var(--route); border-color: var(--route); }
+.gripico { width: 22px; height: 22px; flex: none; }
+.tl.dragging { position: relative; z-index: 30; background: var(--card); box-shadow: 0 8px 24px rgba(0,0,0,.22); border-radius: 10px; opacity: .96; }
+.tl.dragging .draghandle { cursor: grabbing; color: var(--route); border-color: var(--route); }
+body.dragging-on { user-select: none; -webkit-user-select: none; }
+.tl.dropat { box-shadow: 0 -4px 0 var(--route); } .tl.dropend { box-shadow: 0 4px 0 var(--route); }
+.ordline { display: flex; align-items: center; flex-wrap: wrap; gap: 6px; font-size: .88rem; color: var(--muted); margin: 0 0 8px; }
+.ordline.hint .gripico { width: 18px; height: 18px; }
+.ordline .linkbtn { font-size: .88rem; }
+@media (prefers-reduced-motion: reduce) { .tl.dragging { box-shadow: none; outline: 2px solid var(--route); } }
 .tl.first .rail::before { top: 18px; }
 .tl.last .rail::before { bottom: calc(100% - 22px); }
 .tl.leg .rail::before { width: 4px; left: 13px; }
