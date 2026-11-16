@@ -1057,7 +1057,11 @@ function defaultSelection(city, style, d) {
   let lead = null;
   if (d && (d.type === "port" || d.type === "land")) {
     const far = (city.farther || []).filter(x => !taken[x.id] && religiousOk(x) && !shut(x) && (x.mustSee || x.unesco || fameW(x) > 1));
-    const best = far.sort((a, b) => fameW(b) - fameW(a) || (b.fame || 0) - (a.fame || 0) || (b.mustSee ? 1 : 0) - (a.mustSee ? 1 : 0))[0];
+    far.sort((a, b) => fameW(b) - fameW(a) || (b.fame || 0) - (a.fame || 0) || (b.mustSee ? 1 : 0) - (a.mustSee ? 1 : 0));
+    // On a port day the lead is the best-known trip that is short from the ship: the most famous far place overall can be
+    // too far (live Naples, Nov 16: Mount Vesuvius, 1 h 45 each way, outranked Pompeii, so no day trip led at all).
+    const nearShip = x => { if (d.type !== "port") return true; try { return leadMin(dayPoint(d, city), x) <= 75; } catch (e) { return false; } };
+    const best = far.slice(0, 6).find(nearShip) || null;
     const top = Math.max(1, ...s.filter(x => x.mustSee || x.unesco).map(x => fameW(x)));
     // fameW tops out for the best-known places (Pompeii and Naples' UNESCO old town both reach it), so the raw count of
     // Wikipedias writing about each also decides: a day trip written about in at least 80% as many is as famous.
@@ -1065,8 +1069,7 @@ function defaultSelection(city, style, d) {
     let fits = false; if (best) { try { fits = fitsAll(fitTrial(d, [best.id])); } catch (e) {} }
     // On a port day the leading day trip is a short trip from the ship (Pompeii from Naples, about an hour), never an
     // island across the sea or a town an hour and a half away (Naxos from Santorini): those stay in the list to choose.
-    let near = true; if (best && d.type === "port") { try { near = leadMin(dayPoint(d, city), best) <= 75; } catch (e) { near = false; } }
-    if (best && fits && near && (fameW(best) >= top || ((best.fame || 0) > 0 && (best.fame || 0) >= topSl * 0.8))) lead = best.id;
+    if (best && fits && (fameW(best) >= top || ((best.fame || 0) > 0 && (best.fame || 0) >= topSl * 0.8))) lead = best.id;
   }
   let sel = [...new Set([...(lead ? [lead] : []), ...carried, ...picks, ...extra])];
   // When another day later in the trip is in the same city, give this day only what fits its hours
@@ -1091,8 +1094,10 @@ function defaultSelection(city, style, d) {
 
 // Live check: why a port or city day does or doesn't start with its top day trip.
 // Test: the lead pick of day i with one more day trip in its guide (taken out again after).
-if (typeof window !== "undefined") window.__kairouteLeadTest = (i, extra) => { const d = trip.days[i], city = cityFor(d); if (!city) return null; const P = dayPoint(d, city); const x = normSite(Object.assign({ minutes: 120, category: "Island", lat: P.lat + (extra.dlat || 0), lng: P.lng }, extra), 0); Object.assign(x, { far: true, fame: extra.fame || 0, mustSee: !!extra.mustSee, unesco: !!extra.unesco, src: extra.src || x.src || [] }); city.farther = city.farther || []; city.farther.push(x); forget0(d);
-  try { const ds = defaultSelection(city, trip.style, d); return { lead: ds.lead || null, id: x.id, type: d.type }; } finally { city.farther = city.farther.filter(y => y !== x); forget0(d); } };
+if (typeof window !== "undefined") window.__kairouteLeadTest = (i, extra) => { const d = trip.days[i], city = cityFor(d); if (!city) return null; const P = dayPoint(d, city);
+  const xs = (Array.isArray(extra) ? extra : [extra]).map(e => { const x = normSite(Object.assign({ minutes: 120, category: "Island", lat: P.lat + (e.dlat || 0), lng: P.lng }, e), 0); return Object.assign(x, { far: true, fame: e.fame || 0, mustSee: !!e.mustSee, unesco: !!e.unesco, src: e.src || x.src || [] }); });
+  city.farther = city.farther || []; city.farther.push(...xs); forget0(d);
+  try { const ds = defaultSelection(city, trip.style, d); return { lead: ds.lead || null, id: xs[0].id, ids: xs.map(x => x.id), type: d.type }; } finally { city.farther = city.farther.filter(y => !xs.includes(y)); forget0(d); } };
 if (typeof window !== "undefined") window.__kairouteLeadWhy = i => { const d = trip.days[i], city = cityFor(d); if (!city) return null; const taken = plannedElsewhere(d);
   const far = (city.farther || []).map(x => ({ name: x.name, w: +fameW(x).toFixed(2), sl: x.fame || 0, must: !!x.mustSee, unesco: !!x.unesco, oneWay: (() => { try { return leadMin(dayPoint(d, city), x); } catch (e) { return null; } })(), taken: !!taken[x.id], closed: (() => { try { return closedForDay(x, d, dayWindow(d, city)); } catch (e) { return null; } })(), fits: (() => { try { return fitsAll(fitTrial(d, [x.id])); } catch (e) { return "err " + e.message; } })() }));
   const town = city.sites.filter(x => !x.quick && (x.mustSee || x.unesco)).map(x => ({ name: x.name, w: +fameW(x).toFixed(2), sl: x.fame || 0 }));
