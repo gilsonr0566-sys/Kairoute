@@ -820,8 +820,27 @@ function rideDetail(leg, start, endBy) {
   const how = o ? `${o.access.how === "walk" ? "Walk" : "Taxi"} ${dur(o.access.min)} to ${esc(o.from || "the " + (o.mode === "ferry" ? "pier" : "station"))}, ${ev}. ${ride}, then ${o.egress.how === "walk" ? "walk" : "taxi"} ${dur(o.egress.min)}${o.to && !(o.steps && o.steps.length) ? " from " + esc(o.to) : ""}.${o.operator ? " " + esc(o.operator) + "." : ""}${o.hours ? " Hours: " + esc(o.hours) + "." : ""}${o.fare ? " Fare: " + esc(o.fare) + "." : ""} Times include waiting and boarding.` : "By road, with time for traffic.";
   const fall = depLine(o, start, endBy, leg.lastMile, leg.slack) + (leg.slack ? ` Includes ${dur(leg.slack)} spare before the ship.` : "") + (leg.lastMile && o ? ` <b>If you miss it:</b> a taxi takes about ${dur(leg.road)}.` : "");
   const note = rideNotice && rideNotice.key === leg.key ? `<span class="ridenote">${rideNotice.text}${rideNotice.undo != null ? ` <button class="linkbtn" data-act="rideundo">Undo</button>` : ""}${rideNotice.force ? ` <button class="linkbtn" data-act="rideforce">${esc(rideNotice.forceText)}</button>` : ""}</span>` : "";
-  return `<span class="sub ridesub">${how}${fall}</span>${note}<label class="ridepick"><span>Ride</span><select data-ride="${esc(leg.key)}">${leg.choices.map(c => `<option value="${esc(c.id)}" ${c.id === leg.choice ? "selected" : ""}>${esc(c.label)} · ${dur(c.min)}</option>`).join("")}</select></label>`;
+  // One tap per way to go, in the transport colors, each with its time (and fare when the timetable gives one).
+  const chip = c => `${esc(c.label)} · ${dur(c.min)}${c.fare ? " · " + esc(c.fare) : ""}`;
+  const pick = leg.choices.length > 1 ? `<div class="ridechips" role="group" aria-label="How to go">${leg.choices.map(c => `<button type="button" class="ridechip k-${c.kind}${c.id === leg.choice ? " on" : ""}" aria-pressed="${c.id === leg.choice}" data-ridekey="${esc(leg.key)}" data-rideval="${esc(c.id)}">${chip(c)}</button>`).join("")}</div>`
+    : `<div class="ridechips"><span class="ridechip k-${leg.choices[0].kind} on">${chip(leg.choices[0])}</span></div>`;
+  return `<span class="sub ridesub">${how}${fall}</span>${note}${pick}`;
 }
+// One option for each way of going (the Athens airport ride came back as three metro rows): the quickest of each
+// mode, or one with fewer changes that is at most 10 min slower, or the one the traveler chose.
+const rideChanges = o => o.steps && o.steps.length ? o.steps.length - 1 : +((/\+\s*(\d+)\s+change/.exec(o.label || "") || [0, 0])[1]);
+const rideKind = o => ({ ferry: "ferry", bus: "bus", trolleybus: "bus" }[o.mode] || "train");
+function oneEach(opts, want) {
+  const out = [], at = new Map();
+  for (const o of opts) {
+    const m = o.mode || "ride", i = at.get(m);
+    if (i == null) { at.set(m, out.length); out.push(o); continue; }
+    const r = out[i]; if (rideId(r) === want) continue;
+    if (rideId(o) === want || (rideChanges(o) < rideChanges(r) && o.min <= r.min + 10)) out[i] = o;
+  }
+  return out.sort((x, y) => x.min - y.min);
+}
+if (typeof window !== "undefined") window.__kairouteOneEach = (opts, want) => oneEach(opts, want).map(o => o.label);
 // The ride between a and b: the chosen (or best) real line, or the road estimate as a taxi.
 function rideLeg(a, b, road, lastMile) {
   let opts = transitFor(a, b); if (!opts || !opts.length) return road;
@@ -830,12 +849,14 @@ function rideLeg(a, b, road, lastMile) {
   // and on the ride back to the ship).
   if (a.leaveWhenReady && !lastMile) opts = opts.map(o => { if (!o.noTimetable) return o; const w2 = Math.min(o.wait, Math.round(o.every / 2) + 10); return w2 < o.wait ? Object.assign({}, o, { wait: w2, min: o.min - (o.wait - w2), timedStart: true }) : o; }).sort((x, y) => x.min - y.min);
   const taxi = Object.assign({}, road, { how: "Taxi or car", choice: "taxi" });
-  const want = trip.legModes && trip.legModes[pairKey(a, b)], picked = want === "taxi" ? null : opts.find(o => rideId(o) === want);
+  const want = trip.legModes && trip.legModes[pairKey(a, b)];
+  opts = oneEach(opts, want);
+  const picked = want === "taxi" ? null : opts.find(o => rideId(o) === want);
   // Public lines win unless a taxi saves a lot (over 25 min and a third of the time): they're cheaper and run on time.
   // Public lines win unless a taxi saves a lot; when the day can't keep every sight that way, the quickest way wins (see buildPlan).
   const best = opts[0], auto = ridePref === "fast" ? (best.min <= taxi.min ? best : null) : best && !(taxi.min < best.min - 25 && taxi.min < best.min * 0.67) ? best : null;
   const o = want === "taxi" ? null : picked || auto;
-  const base = { choices: [...opts.map(x => ({ id: rideId(x), label: x.label, min: x.min })), { id: "taxi", label: "Taxi or car", min: road.min }], key: pairKey(a, b), road: road.min };
+  const base = { choices: [...opts.map(x => ({ id: rideId(x), label: x.label, min: x.min, kind: rideKind(x), fare: x.fare || "" })), { id: "taxi", label: "Taxi or car", min: road.min, kind: "car" }], key: pairKey(a, b), road: road.min };
   if (!o) return Object.assign(taxi, base, { lastMile });
   return Object.assign({ mode: "ride", how: o.label, km: o.km + o.access.km + o.egress.km, min: o.min, transit: o, choice: rideId(o), lastMile }, base);
 }
@@ -6528,6 +6549,7 @@ document.addEventListener("click", e => {
   if (t.dataset.playAns) { const pa = allSites(cityFor(day())).find(x => x.id === t.dataset.playAns); if (pa && quietOn(pa) && speakingId !== "ans:" + t.dataset.playAns && Date.now() > earbudsOkUntil) { if (!window.confirm("Quiet place: earbuds in?")) return; earbudsOkUntil = Date.now() + 45 * 60000; }
     const a = answers[t.dataset.playAns]; if (a && a.text) speakText("ans:" + t.dataset.playAns, a.text); renderGuideOnly(); return; }
   if (t.dataset.act === "asknoticeok") { askNotice = ""; render(); return; }
+  if (t.dataset.ridekey) { if (!t.classList.contains("on")) switchRide(t.dataset.ridekey, t.dataset.rideval); const y = window.scrollY; render(); window.scrollTo(0, y); return; }
   if (t.dataset.act === "rideforce" && rideNotice && rideNotice.force) { switchRide(rideNotice.key, rideNotice.force, true); const y = window.scrollY; render(); window.scrollTo(0, y); return; }
   if (t.dataset.act === "ridechangeok") { const d = day(); if (d) { delete d.rideChange; save(); } const y = window.scrollY; render(); window.scrollTo(0, y); return; }
   if (t.dataset.act === "rideundo" && rideNotice) { if (rideNotice.undo === "") delete trip.legModes[rideNotice.key]; else trip.legModes[rideNotice.key] = rideNotice.undo; rideNotice = null; save(); const y = window.scrollY; render(); window.scrollTo(0, y); return; }
@@ -6699,7 +6721,6 @@ document.addEventListener("click", e => {
 });
 document.addEventListener("change", e => {
   const t = e.target;
-  if (t.dataset && t.dataset.ride) { switchRide(t.dataset.ride, t.value); const y = window.scrollY; render(); window.scrollTo(0, y); return; }
   if (t.dataset && t.dataset.site) {
     const d = day(), id = t.dataset.site;
     d.selected = d.selected || []; movedNote = "";

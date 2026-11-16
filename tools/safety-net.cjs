@@ -362,6 +362,12 @@ const log = (suite, trip, ok, what) => { results.push({ suite, trip, ok, what })
       const txt = r.label + ' | ' + r.steps.join('; then ');
       const okR = r.label === 'Metro M3 + 1 change' && r.steps.length === 2 && /Venizelos to Syntagma, 34 min/.test(txt) && !/[\u0370-\u03ff]|S\.A\./.test(txt) && r.rawLabel === 'Metro M3 (Urban Rail Transport S.A.) + 2 changes';
       log('Rides', 'rides', okR, 'Ride directions are readable: ' + (okR ? txt : JSON.stringify(r))); }
+    // Richard, Nov 16 ("why are there 3 different metro offered"): one choice per way of going: the quickest of each
+    // mode, one with fewer changes when at most 10 min slower, and always the one the traveler chose.
+    { const m = (l, min, mode) => ({ mode: mode || 'metro', label: l, rawLabel: l, min }), o = [m('Metro M3 + 2 changes', 40), m('Metro M3 + 1 change', 46), m('Metro M2 + 2 changes', 52), m('Suburban rail', 50, 'train'), m('Bus X95', 60, 'bus')];
+      const a = await p.evaluate(x => window.__kairouteOneEach(x, null), o), b = await p.evaluate(x => window.__kairouteOneEach(x, 'metro|Metro M2 + 2 changes'), o);
+      const okE = JSON.stringify(a) === JSON.stringify(['Metro M3 + 1 change', 'Suburban rail', 'Bus X95']) && JSON.stringify(b) === JSON.stringify(['Suburban rail', 'Metro M2 + 2 changes', 'Bus X95']);
+      log('Rides', 'rides', okE, 'One choice per way of going: ' + (okE ? a.join(', ') : JSON.stringify([a, b]))); }
     // Live audit, Nov 14: Santorini's port day led with Naxos (an island 80 km across the sea), and day trips written in
     // without how to get there were timed as a drive. On a port day only a short trip from the ship leads the day.
     { const days = await p.evaluate(() => window.__kairouteDays()), pi = days.findIndex(x => x.type === 'port' && x.city);
@@ -538,7 +544,7 @@ const log = (suite, trip, ok, what) => { results.push({ suite, trip, ok, what })
     const pairs = JSON.parse(fs.readFileSync(path.join(__dirname, 'fixtures', 'naples-transit.json'), 'utf8'));
     const i = await p.evaluate(pr => { window.__kairouteTransitSet(pr); const d = window.__kairouteDays().find(x => /Naples/.test(x.dest)); window.__kairouteDay(d.i, 'Pompeii|^Sorrento'); window.__kairouteAt(d.i, 'plan'); return d.i; }, pairs);
     await p.waitForTimeout(300);
-    const legs = await p.$$eval('.tl.leg.ridecho', els => els.map(e => ({ t: e.innerText, sel: e.querySelector('select[data-ride]') ? [...e.querySelector('select[data-ride]').options].map(o => o.text) : [] })));
+    const legs = await p.$$eval('.tl.leg.ridecho', els => els.map(e => ({ t: e.innerText, sel: [...e.querySelectorAll('.ridechip')].map(o => o.textContent) })));
     if (legs.length < 3) bad.push(`${legs.length} rides with a choice, expected 3`);
     if (!legs[0] || !/Ferry/.test(legs[0].t) || !/Molo Beverello/.test(legs[0].t)) bad.push('the first ride is not the ferry from Molo Beverello: ' + (legs[0] || {}).t);
     if (!legs.slice(1).some(l => /Circumvesuviana/.test(l.t) && /Pompei Scavi/.test(l.t))) bad.push('no Circumvesuviana ride via Pompei Scavi');
@@ -554,7 +560,7 @@ const log = (suite, trip, ok, what) => { results.push({ suite, trip, ok, what })
     if (pathLegs < 2) bad.push(`map draws ${pathLegs} rides along the line's path, expected 3`);
     await p.screenshot({ path: path.join(OUT, 'rides-naples.jpg'), type: 'jpeg', quality: 60 }); shots.push({ f: 'rides-naples.jpg', cap: 'Day plan: real ferry and train rides, each with a choice' });
     // Switch the first ride to a taxi: the plan follows.
-    await p.evaluate(() => { const s = document.querySelector('.tl.leg.ridecho select[data-ride]'); s.value = 'taxi'; s.dispatchEvent(new Event('change', { bubbles: true })); }); await p.waitForTimeout(300);
+    await p.evaluate(() => document.querySelector('.tl.leg.ridecho [data-rideval="taxi"]').click()); await p.waitForTimeout(300);
     const first = await p.$eval('.tl.leg.ridecho', e => e.innerText).catch(() => '');
     if (!/^Taxi or car/m.test(first.trim())) bad.push('switching to a taxi did not change the ride: ' + first.slice(0, 80));
     const q2 = await p.evaluate(() => window.__kairouteQuality().find(x => /Naples/.test(x.dest)));
