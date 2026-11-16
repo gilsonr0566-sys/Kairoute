@@ -181,7 +181,10 @@ const FILE = path.resolve(process.argv[2] || path.join(__dirname, '..', 'index.h
   // A written guide saved on the device (Naples with Amalfi but no Sorrento) never hides a built-in sight.
   { const ctx = await b.newContext(); const p = await ctx.newPage();
     await p.route('**/*', r => /^file:/.test(r.request().url()) ? r.continue() : r.abort());
-    await p.goto('file://' + FILE); await p.evaluate(() => localStorage.setItem('kairoute.intro1', '1')); await p.reload(); await p.waitForTimeout(500);
+    await p.goto('file://' + FILE); await p.evaluate(() => localStorage.setItem('kairoute.intro1', '1')); await p.reload();
+    // The app saves its guides while it settles after opening; the saved guide is written only once it has, so the
+    // app can't write over it (it did, now and then, when the write came first).
+    await p.waitForFunction(() => window.__kairouteSettled && window.__kairouteSettled(), null, { timeout: 30000 });
     const want = await p.evaluate(() => { const [raw, keys] = BUILTIN_CITIES.find(([c]) => /Naples/.test(c.city)); const g = JSON.parse(JSON.stringify(raw)); g.farther = (g.farther || []).filter(x => !/Sorrento/.test(x.name)); g.sites = (g.sites || []).filter(x => !/Sorrento/.test(x.name)); g.farther.push({ id: 'amalfi-w', name: 'Amalfi', lat: 40.634, lng: 14.602, minutes: 120, far: true, category: 'Day trip', summary: 'Cliffside town.' }); const out = {}; keys.forEach(k => out[k] = g); localStorage.setItem('wayside.cities', JSON.stringify(out)); return [...(raw.sites || []), ...(raw.farther || [])].map(x => x.name); });
     await p.reload(); await p.waitForTimeout(500); await p.getByText('Continue trip').click().catch(() => {}); await p.waitForTimeout(300);
     // The saved guide is merged with the built-in one as the app starts; give it up to 5 s to settle.
