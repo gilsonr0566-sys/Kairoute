@@ -149,6 +149,7 @@ const religiousOk = x => !isReligious(x) || x.mustSee || (!skipReligious() && (!
 function dropUnwanted() {
   let n = 0;
   trip.days.forEach(d => { const c = cityFor(d); if (!c || !Array.isArray(d.selected) || !d.selected.length) return;
+    if (d.ready && d.ready.lock) return; // a hearted day is locked: only a time change can change it
     const mine = new Set(d.mine || []), by = new Map(allSites(c).map(x => [x.id, x]));
     const keep = d.selected.filter(id => { const x = by.get(id); return !x || mine.has(id) || religiousOk(x); });
     if (keep.length < d.selected.length) { const was = selKey(d); n += d.selected.length - keep.length; d.selected = keep; readyKeep(d, was); if (d.anchor && !keep.includes(d.anchor)) d.anchor = null; } });
@@ -1829,6 +1830,7 @@ function buildPlanFor(d) {
 function buildPlanForDay(d) {
   const city = cityFor(d); if (!city) return null;
   const w = dayWindow(d, city); if (w.error) return w;
+  const lockT = lockTimes(d, city, w), w0start = w.start; // the day's times as set, before any live re-plan (the heart's lock)
   liveWindow(d, w); // running late: the day re-planned from where you are now
   const style = trip.style || "mix";
   const O = w.head[w.head.length - 1], Z = w.tail[0] || null;
@@ -1939,6 +1941,8 @@ function buildPlanForDay(d) {
   const withMeals = q => { const bare = q.filter(x => !x.mealOf); return placeMeals(bare, needMeals(bare), t0, O, ZZ, style, city); };
   const savedAvoid = avoidMeals, av = new Set(), myIdx = trip.days.indexOf(d);
   trip.days.slice(0, Math.max(0, myIdx)).forEach(o => { if (cityFor(o) !== city) return; if (!mealMemo.has(o)) { try { buildPlan(o); } catch (e) {} } (mealMemo.get(o) || []).forEach(n => av.add(n)); });
+  // A hearted day keeps its places to eat, so no other day takes them (no place is planned twice).
+  trip.days.forEach(o => { if (o === d || !o.ready || !o.ready.lock || !Array.isArray(o.ready.lock.seq) || cityFor(o) !== city) return; o.ready.lock.seq.forEach(x => { if (x.meal && x.node && !x.node.generic && !x.bk) av.add(keyOf(x.node.name)); }); if (o.ready.lock.eve) av.add(o.ready.lock.eve); });
   avoidMeals = av;
   const fitDay = () => {
   const dropped = dropped0.slice(); let seq = withMeals(order);
@@ -2021,17 +2025,25 @@ function buildPlanForDay(d) {
   // All or something: when the picks don't all fit, keep as many as possible, must-sees and famous sights
   // first, and try a quick meal before giving up a sight. Only what's truly left over is flagged.
   const worth = r => { const mine = new Set(d.mine || []); return r.seq.filter(x => !x.mealOf).reduce((a, x) => a + (x.mustSee ? 3 : 1) * (mine.has(x.id) ? 2 : 1) * fameW(x) * Math.max(20, x.minutes || 0), 0); };
-  let fitted = fitDay();
-  if (fitted.dropped.length && !d.rain) { quickMeals = true; const q = fitDay(); if (worth(q) > worth(fitted) + 1) fitted = q; else quickMeals = false; }
+  // A day marked ready is locked (Richard, Nov 16: "The heart locks things down barring a time change"): the stops,
+  // their order, the optional stops and the places to eat are the ones the traveler hearted, replayed as they were.
+  // Only a change to the day's times (ship, train or flight time, the day's hours, the hotel), or the hearted plan no
+  // longer being safe (a stop now closed, rides slow enough to miss the ship), lets the planner change it; then the
+  // plan says why (lockBroken) and the heart turns to an outline until the traveler taps it again.
+  const lk = lockReplay(d, city, w, lockT, w0start, { t0, O, ZZ, style, mult, live, tailCost, chosen, inDay, liveAte, seenOn });
+  const locked = !!(lk && lk.seq), lockBroken = lk && lk.why ? lk.why : null;
+  let fitted = locked ? { seq: lk.seq, dropped: lk.dropped } : fitDay();
+  if (!locked && fitted.dropped.length && !d.rain) { quickMeals = true; const q = fitDay(); if (worth(q) > worth(fitted) + 1) fitted = q; else quickMeals = false; }
+  if (locked) { along.length = 0; along.push(...lk.along); }
   let seq = fitted.seq; const dropped = fitted.dropped;
   // Spare time: add the best nearby sights that still fit, with a 15-minute cushion (they show as bonus stops)
-  const bonus = [];
+  const bonus = locked ? lk.bonus.slice() : [];
   // A day the traveler cleared on purpose (unticked everything) stays free: no bonus stops are pushed onto it.
   // Filling the day: must-sees first, then the best sights for this traveler (fame, their interests, their style),
   // each only where it fits on the route without doubling back and before the day's hard end (a port day's safe
   // time back to the ship). What's left is recorded for the safety net.
   let fill = null;
-  if (d.fillTime !== false && !d.rain && !clearedByYou(d)) {
+  if (!locked && d.fillTime !== false && !d.rain && !clearedByYou(d)) {
     const ints = interestWords(), likes = c => ints.reduce((a, w) => a + ((c.category + " " + c.summary).toLowerCase().includes(w) ? 1 : 0), 0);
     const taken = new Set([...Object.keys(plannedElsewhere(d)), ...leavingReserve(d, city)]);
     // A day marked ready keeps the optional stops it had; other days leave those alone.
@@ -2083,7 +2095,7 @@ function buildPlanForDay(d) {
   // A route that already crosses nowhere is the loop: the pass is skipped (it would only redo the same search). Otherwise
   // the starting orders are weighed as they are and only the current one and the best other one are polished, so a
   // tick stays quick on a slow tablet (Nov 16 demo gate: a 1.7 s freeze with all four polished).
-  if (seq.length > 2 && !ownOrd && !mealPin && crossCount(O, seq, ZZ)) { const r0 = simDay(seq, t0, O, ZZ, style); crossOn = true; // a day the traveler put in order (or placed lunch on) keeps it
+  if (!locked && seq.length > 2 && !ownOrd && !mealPin && crossCount(O, seq, ZZ)) { const r0 = simDay(seq, t0, O, ZZ, style); crossOn = true; // a day the traveler put in order (or placed lunch on) keeps it
     try { let q = null, r = null; const sd = loopSeeds(seq, O, ZZ), rest = sd.slice(1).map(x => [x, simDay(x, t0, O, ZZ, style).cost]).sort((a, b) => a[1] - b[1]);
       for (const s0 of [sd[0]].concat(rest.length ? [rest[0][0]] : [])) { const qi = polishDay(s0, t0, O, ZZ, style, city), ri = simDay(qi, t0, O, ZZ, style); if (ri.late <= r0.late && ri.end <= Math.max(r0.end, w.endBy - tailCost()) && (!r || ri.cost < r.cost)) { q = qi; r = ri; } } if (q) seq = q; } finally { crossOn = false; } }
   bonusMemo.set(d, bonus.map(x => x.id));
@@ -2139,7 +2151,8 @@ function buildPlanForDay(d) {
     const pool = (city.restaurants || []).filter(r => !r.generic && !r.crowdDrop && !mealShut(r, "Dinner") && hav(r, endAt) <= 0.8 && !avoidMeals.has(keyOf(r.name)) && !today.has(keyOf(r.name)));
     if (pool.length) {
       const sc = r => (r.crowdTop ? 4 : 0) + (r.top ? 2 : 0) + (r.recommended ? 2 : 0) + (trip.style && trip.style !== "mix" && r.kind === trip.style ? 1.5 : 0) - hav(r, endAt) * 3;
-      const main = pool.slice().sort((a, b) => sc(b) - sc(a))[0], alts = mealAlternatives(main, seq.concat(meals.map(m => Object.assign({}, m, { mealOf: MEALS[0] }))), city);
+      const kept = locked && lk.eve ? pool.find(r => keyOf(r.name) === lk.eve) : null; // a hearted day keeps its dinner place
+      const main = kept || pool.slice().sort((a, b) => sc(b) - sc(a))[0], alts = mealAlternatives(main, seq.concat(meals.map(m => Object.assign({}, m, { mealOf: MEALS[0] }))), city);
       const leg = travel(endAt, main);
       evening.push({ type: "evening", meal: MEALS[1], place: Object.assign({}, main, { alts }), time: Math.max(MEALS[1].from, clock + 30), leg, near: endAt.name });
     }
@@ -2149,7 +2162,9 @@ function buildPlanForDay(d) {
   avoidMeals = savedAvoid;
   const walkKm = items.filter(i => i.type === "travel" && i.leg.mode === "walk").reduce((a, i) => a + i.leg.km, 0);
   const stops = items.filter(i => i.type === "stop");
-  return { city, w, items, stops, dropped, elsewhere, quickMeals, along, bonus, fill, meals, evening, swaps, closedToday, start: w.start, endBy: w.endBy, end: clock, walkKm, over: clock > w.endBy + (hardEnd(d) ? 0 : 5), tight: budget < fixed + 45 };
+  const eve0 = evening.find(e => !e.booked && e.place); if (locked) quickMeals = lk.quick;
+  const lock = { t: lockT, seq: lockSeqOut(seq), late: simDay(seq, t0, O, ZZ, style).late, quick: !!quickMeals, eve: eve0 ? keyOf(eve0.place.name) : "" };
+  return { city, w, items, stops, dropped, elsewhere, quickMeals, along, bonus, fill, meals, evening, swaps, closedToday, lock, locked, lockBroken, start: w.start, endBy: w.endBy, end: clock, walkKm, over: clock > w.endBy + (hardEnd(d) ? 0 : 5), tight: budget < fixed + 45 };
 }
 
 // ---------- AI ----------

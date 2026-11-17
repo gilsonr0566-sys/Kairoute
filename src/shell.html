@@ -69,6 +69,9 @@ header.top { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; b
 .dayname .heartbtn.ok { color: #D9532A; } .dayname .heartbtn.changed { color: var(--warn); }
 .dheart, .itrow .dheart, .daychip .dheart { display: inline-flex; margin-left: 6px; color: #D9532A; vertical-align: -0.1em; } .dheart.changed, .itrow .dheart.changed { color: var(--warn); }
 .daychip[aria-pressed="true"] .dheart { color: #FFB27A; }
+.dayname .heartbtn.pulse .heartico { animation: heartpulse 0.7s ease-in-out 3; }
+@keyframes heartpulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.35); } }
+@media (prefers-reduced-motion: reduce) { .dayname .heartbtn.pulse .heartico { animation: none; } }
 .dcready { display: inline-flex; align-items: center; gap: 2px; margin-left: 6px; color: #D9532A; }
 .readyline { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin: 4px 0 10px; font-size: 0.95rem; } .readyline .dheart { margin: 0; font-size: 1.2rem; color: var(--muted); } .readyline .dheart.ok { color: #D9532A; }
 @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .dayname .heartbtn.ok, :root:not([data-theme="light"]) .itrow .dheart, :root:not([data-theme="light"]) .dheart, :root:not([data-theme="light"]) .dcready, :root:not([data-theme="light"]) .readyline .dheart.ok { color: #FF9A6B; } }
