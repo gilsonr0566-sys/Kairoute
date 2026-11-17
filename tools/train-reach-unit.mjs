@@ -9,9 +9,9 @@ const syntagma = P(37.9755, 23.7348), canal = P(37.9353, 22.9878), ancient = P(3
 const ST = [[1, "Athens", 38.0034, 23.7207], [2, "Ano Liosia", 38.0700, 23.6900], [3, "Megara", 37.9950, 23.3500], [4, "Isthmos", 37.9195, 22.9937], [5, "Corinth", 37.9246, 22.9277], [6, "Kiato", 38.0100, 22.7500]];
 const MT = [[11, "Syntagma", 37.9755, 23.7348], [12, "Larissa Station", 38.0040, 23.7210], [13, "Sepolia", 38.0130, 23.7140]]; // a metro line, for the "never stretched" check
 const node = ([id, name, lat, lon]) => ({ type: "node", id, lat, lon, tags: { name, railway: "station" } });
-const rel = (id, route, name, list) => ({ type: "relation", id, tags: { type: "route", route, name, "public_transport:version": "1" },
+const rel = (id, route, name, list, en) => ({ type: "relation", id, tags: Object.assign({ type: "route", route, name, "public_transport:version": "1" }, en ? { "name:en": en } : {}),
   members: list.map(([ref, , lat, lon]) => ({ type: "node", ref, role: "stop", lat, lon })).concat([{ type: "way", ref: id * 10, role: "", geometry: list.map(([, , lat, lon]) => ({ lat, lon })) }]) });
-const TRAIN = rel(100, "train", "Proastiakos Athens - Kiato", ST), METRO = rel(200, "subway", "Metro 2", MT);
+const TRAIN = rel(100, "train", "Προαστιακός A4: Πειραιά → Κιάτο", ST, "Train A4: Piraeus → Kiato"), METRO = rel(200, "subway", "Metro 2", MT);
 const within = (p, m, list) => list.filter(([, , lat, lon]) => Math.hypot((lat - p.lat) * 111, (lon - p.lng) * 88) * 1000 <= m);
 // A stand-in for the map servers: answers the line question from what is "mapped" within the radii the query asks.
 let asked = [];
@@ -35,6 +35,7 @@ ok(trainReach(syntagma, P(37.9715, 23.7257)) === 2500, "city rides keep the usua
   ok(!!t, "Athens centre to the Corinth Canal: the train is offered although Athens station is 3 km away");
   ok(t && t.from === "Athens" && t.to === "Isthmos", `boards at Athens, gets off at the station by the canal (${t && t.from} > ${t && t.to})`);
   ok(t && t.access.how === "taxi" && t.access.min >= 10, `the taxi to Athens station is counted (${t && t.access.how} ${t && t.access.min} min)`);
+  ok(t && t.label === "Train A4: Piraeus → Kiato", `the line's English name, said once (${t && t.label})`);
   ok(t && t.ride >= 60, `cautious ride time with no timetable (${t && t.ride} min, ${t && t.km} km)`);
   ok(t && t.wait >= 30, `no timetable: waits a full usual gap (${t && t.wait} min)`);
   ok(!(r || []).some(o => o.mode === "subway"), "the metro is never stretched to a far ride");

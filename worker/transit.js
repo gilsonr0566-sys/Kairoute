@@ -271,7 +271,7 @@ async function buildOpts(el, fWays, a, b) {
     let ride = dur && total > 0 ? dur * Math.min(1, km / total) : km / v * 60 + between * perStop;
     ride = Math.max(ride, km / (v * 1.6) * 60); // never quicker than the line could run
     const every = mins(t.interval), nmA = (stopTag.get(sa.s.id) || {}).name, nmB = (stopTag.get(sb.s.id) || {}).name;
-    opts.push(mk({ mode, ref: t.ref || "", name: t.name || "", operator: t.operator || t.network || "", from: nmA || t.from || "", to: nmB || t.to || "", fromPt: sa.s, toPt: sb.s, km, ride, every, hours: t.opening_hours || "", seasonal: t.seasonal || "", fare: t.charge || t.fee || "", stops: between, path, a, b, osm: "r" + r.id }));
+    opts.push(mk({ mode, ref: t.ref || "", name: t["name:en"] || t.name || "", operator: t.operator || t.network || "", from: nmA || t.from || "", to: nmB || t.to || "", fromPt: sa.s, toPt: sb.s, km, ride, every, hours: t.opening_hours || "", seasonal: t.seasonal || "", fare: t.charge || t.fee || "", stops: between, path, a, b, osm: "r" + r.id }));
   }
   // Ferries are often mapped as one way from pier to pier rather than as a route relation.
   for (const w of el.filter(e => e.type === "way" && e.tags && e.tags.route === "ferry")) {
@@ -353,7 +353,7 @@ function mk(o) {
   // gap between services (at most an hour), plus boarding. Ferries board early.
   const wait = Math.round(Math.min(ev, 60) + (o.mode === "ferry" ? 10 : 3));
   const ride = Math.round(o.ride);
-  const label = [NAME[o.mode], o.ref && !(o.name || "").includes(o.ref) ? o.ref : "", o.name].filter(Boolean).join(" ").replace(/\s+/g, " ").slice(0, 80);
+  const label = [NAME[o.mode], o.ref && !(o.name || "").includes(o.ref) ? o.ref : "", o.name].filter(Boolean).join(" ").replace(/\s+/g, " ").replace(/^(\w+) \1\b/i, "$1").slice(0, 80); // "Train Train A4" (an English line name that starts with its kind) reads "Train A4"
   return { mode: o.mode, kind: NAME[o.mode], label, operator: o.operator.slice(0, 60), from: o.from.slice(0, 60), to: o.to.slice(0, 60), ride, wait, every: ev, everySrc: every ? "map" : "usual", access: acc, egress: egr,
     min: acc.min + wait + ride + egr.min, km: +o.km.toFixed(1), stops: o.stops, hours: String(o.hours).slice(0, 80), months: runMonths(o.hours, o.seasonal), fare: String(o.fare).slice(0, 40),
     path: thin(o.path.length >= 2 ? o.path : [o.fromPt, o.toPt], 120).map(p => [+p.lng.toFixed(5), +p.lat.toFixed(5)]),

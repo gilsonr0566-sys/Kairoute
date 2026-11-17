@@ -638,7 +638,8 @@ try { ["kairoute.transit", "kairoute.transit2"].forEach(k => localStorage.remove
 // trip earlier never keep showing an old ride (Richard's Naples day kept "Train or car" with no ferry).
 // 5: answers are looked up for the trip's own date (a summer ferry isn't on a November timetable), asked again once.
 // 6: frequencies only from gaps inside one search, and the quickest ride of each kind kept (the airport bus).
-const TRANSIT_V = 6;
+// 7: trains between towns whose stations are a taxi away (Athens to Corinth), asked again once.
+const TRANSIT_V = 7;
 const transitMem = (() => { try { return JSON.parse(localStorage.getItem(TRANSIT_KEY) || "{}"); } catch (e) { return {}; } })();
 let transitSeen = null, transitRetry = 0;
 const transitFail = new Map(), transitQ = new Map(), transitPins = new Set(); let transitTimer = 0, transitBusy = false; // pins: rides of the trip being kept for offline
