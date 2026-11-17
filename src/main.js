@@ -2094,8 +2094,13 @@ function buildPlanForDay(d) {
     trip.days.slice(0, trip.days.indexOf(d)).forEach(o => { if (cityFor(o) !== city) return; if (!bonusMemo.has(o)) { try { buildPlan(o); } catch (e) {} } (bonusMemo.get(o) || []).forEach(id => taken.add(id)); });
     const inSeq = new Set(seq.filter(x => !x.mealOf).flatMap(x => x.foldOf ? x.foldOf.map(y => y.id) : [x.id])), skip = new Set((d.selected || []).concat(dropped.map(x => x.id)));
     // An optional stop the app adds on its own must come with its story: a sight listed from the sources whose story
-    // isn't written yet is offered in the sights list, never slipped into the day as an extra.
-    const pool = (city.sites || []).concat(city.farther || []).filter(x => !x.quick && !(x.srcOnly && !x.guide) && religiousOk(x) && !inSeq.has(x.id) && !skip.has(x.id) && !taken.has(x.id) && !(d.skipBonus || []).includes(x.id) && !areaCovered(x, seq) && !closedForDay(x, d, w) && (!d.rain || x.indoor) && (!keepBonus || keepBonus.has(x.id)))
+    // isn't written yet is offered in the sights list, never slipped into the day as an extra. A guide built with no AI
+    // (no-ai-guide.js) has no written stories at all: there each sight's own travel-guide description is its story, so
+    // the sights travelers recommend (a travel-guide listing, or World Heritage) fill a day's spare time like any other,
+    // so a day in such a city no longer ends at lunch with hours free. A famous building no guide recommends (a
+    // university, an office) is still only offered in the sights list.
+    const recd = x => x.unesco || (x.src || []).some(t => /Wikivoyage/.test(t));
+    const pool = (city.sites || []).concat(city.farther || []).filter(x => !x.quick && !(x.srcOnly && !x.guide && !(city.srcGuide && recd(x))) && religiousOk(x) && !inSeq.has(x.id) && !skip.has(x.id) && !taken.has(x.id) && !(d.skipBonus || []).includes(x.id) && !areaCovered(x, seq) && !closedForDay(x, d, w) && (!d.rain || x.indoor) && (!keepBonus || keepBonus.has(x.id)))
       .map(x => Object.assign({}, x, { minutes: Math.max(stopFloor(x), Math.round(x.minutes * mult / 5) * 5 || x.minutes), bonus: true }, live(x)));
     const limit = w.endBy - 15 - tailCost(), leaving = d.type === "embark" || d.type === "departure";
     let capped = false;
@@ -2869,7 +2874,7 @@ function farGaps(city, src) {
 async function fillFarther(city, src) {
   const k = keyOf(city.city); if (farFilling[k] || city.farFillV === FARFILL_V) return;
   if ((city.farther || []).some(farUntimed)) { city.farther = city.farther.filter(x => !farUntimed(x)); keepFills(city); }
-  if (!aiReady()) return;
+  if (!aiReady()) { if (freeAI) farNoAI(city, src); return; }
   const cands = farGaps(city, src); if (!cands.length) { city.farFillV = FARFILL_V; return; }
   farFilling[k] = true;
   const prompt = `You are an expert tour guide writing data for a self-guided tour app in ${city.city}${city.country ? ", " + city.country : ""}. These real places are within a day trip of ${city.city} and the guide doesn't have them yet. Keep ONLY the ones a visitor staying in ${city.city} or arriving on a cruise ship would genuinely go to as a day trip (a famous site, a scenic town, an island a short ferry ride away, a natural wonder). Leave out places more than about 90 minutes away one way by the usual way there, and islands with only a few long ferry sailings. Leave out suburbs and ordinary towns, regions and provinces, island groups, companies and anything else that isn't a place to visit. Keep each name exactly as given.
