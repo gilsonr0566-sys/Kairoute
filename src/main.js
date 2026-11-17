@@ -1764,7 +1764,7 @@ let planStore = { sig: "", at: 0, map: new Map(), old: null, oldAt: 0 }, renderN
 const citiesSig = () => { let n = 0; for (const k in cities) { const c = cities[k]; n += 1 + ((c && c.sites) || []).length * 7 + ((c && c.farther) || []).length * 13 + ((c && c.restaurants) || []).length * 3; } return n; };
 function planKey(d) {
   const i = trip.days.indexOf(d), a = trip.active;
-  let t; try { trip.active = 0; t = JSON.stringify(trip); } finally { trip.active = a; } // which day is on screen never changes a plan
+  const sp = trip.spent; let t; try { trip.active = 0; trip.spent = undefined; t = JSON.stringify(trip); } finally { trip.active = a; trip.spent = sp; } // which day is on screen, and what was spent, never change a plan
   return t + "|" + i + "|" + (i < 0 ? JSON.stringify(d) : "") + "|" + ridePref + "|" + skipEvening + "|" + [...avoidMeals].join(",") + "|" + (Object.keys(transitMem).length ? 1 : 0) + "|" + seenSig(); // the answers themselves are checked per plan (dayFp)
 }
 // What a day's plan was made from, as a short fingerprint: its city's guide (sights, places to eat, marks from the
@@ -2349,7 +2349,7 @@ function cleanCity(c, dest) {
     sites: (c.sites || []).filter(okLL).map((s, i) => site(s, i)),
     farther: (c.farther || []).filter(okLL).map((s, i) => Object.assign(site(s, i, "-far"), { far: true })),
     basics: c.basics ? {
-      currency: String(c.basics.currency || ""), symbol: String(c.basics.symbol || ""), language: String(c.basics.language || ""), langCode: String(c.basics.langCode || ""),
+      currency: String(c.basics.currency || ""), symbol: String(c.basics.symbol || ""), prices: /^[A-Z]{3}$/.test(String(c.basics.prices || "")) ? c.basics.prices : "", language: String(c.basics.language || ""), langCode: String(c.basics.langCode || ""),
       tipping: String(c.basics.tipping || ""), safety: String(c.basics.safety || ""), emergency: String(c.basics.emergency || ""), plugs: String(c.basics.plugs || ""), water: String(c.basics.water || ""),
       phrases: (c.basics.phrases || []).filter(p => p && p.local).slice(0, 10).map(p => ({ local: String(p.local), say: String(p.say || ""), meaning: String(p.meaning || ""), lang: String(p.lang || c.basics.langCode || "") }))
     } : null,
@@ -4921,6 +4921,7 @@ function renderSettings(sec) {
     <div class="field"><span class="lbl">Quiet places</span>${seg("quiet", [["auto", "Automatic"], ["always", "Always quiet"], ["off", "Off"]]).replace('data-v="auto" aria-pressed="false"', appSet.quiet && appSet.quiet !== "auto" ? 'data-v="auto" aria-pressed="false"' : 'data-v="auto" aria-pressed="true"')}<span class="hint">In churches, monasteries and museums the guide shows text first and only plays audio once you confirm your earbuds are in.</span></div>
     <div class="field"><span class="lbl">Partner offers (demo)</span>${seg("partners", [["on", "Show"], ["off", "Hide"]]).replace('data-v="on" aria-pressed="false"', appSet.partners === "off" ? 'data-v="on" aria-pressed="false"' : 'data-v="on" aria-pressed="true"')}<span class="hint">A sample of how partner offers like mobile data for your trip will look. Nothing is sold.</span></div>
     <div class="field"><span class="lbl">Distances</span>${seg("units", [["mi", "Miles"], ["km", "Kilometers"]]).replace(/aria-pressed="(true|false)"/g, "").replace(/data-v="(mi|km)"/g, (m, k) => m + ' aria-pressed="' + ((k === "mi") === useMiles()) + '"')}</div>
+    ${homeCurField()}
   </div>
 `,
     voice: () => `
@@ -5163,51 +5164,11 @@ function planBudget(plan) {
     const next = plan.items[i + 1]; if (next && next.place && next.place.far) return;
     move += it.leg.km <= 8 ? 2.5 * party : Math.round(4 + it.leg.km * 1.4);
   });
-  const sym = (city.basics && city.basics.symbol) || "€";
-  return { entry: Math.round(entry), food: Math.round(food), move: Math.round(move), total: Math.round(entry + food + move), sym, party };
+  const sym = priceSym(city);
+  return { entry: Math.round(entry), food: Math.round(food), move: Math.round(move), total: Math.round(entry + food + move), sym, party, cur: curOf(city) };
 }
 const money = (sym, n) => sym + n.toLocaleString("en-US");
-function budgetCard(plan) {
-  const b = planBudget(plan);
-  return `<div class="card"><div><span class="eyebrow">Today's budget estimate · ${b.party} ${b.party === 1 ? "person" : "people"}</span></div>
-    <div class="summary">
-      <div class="stat"><b>${money(b.sym, b.entry)}</b><span>tickets</span></div>
-      <div class="stat"><b>${money(b.sym, b.food)}</b><span>food</span></div>
-      <div class="stat"><b>${money(b.sym, b.move)}</b><span>getting around</span></div>
-      <div class="stat"><b>${money(b.sym, b.total)}</b><span>total</span></div>
-    </div><p class="footnote">Rough figures from typical prices. Change the number of people in Settings.</p></div>`;
-}
-// The Trip screen's budget adds up every day's plan. Plans already made are used at once; any day not yet planned is
-// worked out one at a time in quiet moments afterwards and the total filled in then, so opening the Trip screen never
-// waits for twenty days of planning. full: plan every day now (tools and tests).
-let budgetTimer = 0, budgetSteps = 0;
-function tripBudget(full) {
-  const by = {}; let days = 0, missing = 0, todo = 0;
-  trip.days.forEach(d => {
-    if (noShore(d)) return;
-    const city = cityFor(d); if (!city) { missing++; return; }
-    let plan = d.selected ? planPeek(d) : null;
-    if (!plan && !full) { todo++; return; }
-    if (!plan) { refillIfNeeded(d, city); if (!d.selected) seedPicks(d, city); plan = buildPlan(d); }
-    if (!plan || plan.error) return;
-    const b = planBudget(plan); by[b.sym] = (by[b.sym] || 0) + b.total; days++;
-  });
-  if (todo && !budgetTimer && budgetSteps < 3 * trip.days.length) budgetTimer = setTimeout(budgetStep, 300); // capped, in case answers keep arriving
-  return { by, days, missing, todo };
-}
-function budgetHtml() {
-  const tb = tripBudget(), parts = Object.entries(tb.by).map(([k, v]) => money(k, v)).join(" + ");
-  return `<details class="card more tripbudget"><summary>Trip budget: ${tb.todo ? "adding up your days…" : parts || "-"} <span class="lede" style="font-weight:400">for ${P().party} people</span></summary>
-          <p class="footnote">Tickets, food and getting around for the ${tb.days} planned day${tb.days === 1 ? "" : "s"}${tb.missing ? `. ${tb.missing} day${tb.missing === 1 ? "" : "s"} still need a guide` : ""}. Flights, the cruise and hotels aren't included.</p></details>`;
-}
-function budgetStep() {
-  budgetTimer = 0; const box = document.querySelector("#view .tripbudget"); if (!box || view !== "trip") { budgetSteps = 0; return; }
-  budgetSteps++;
-  if (Date.now() - lastTouch < 600) { budgetTimer = setTimeout(budgetStep, 400); return; }
-  const d = trip.days.find(x => !noShore(x) && cityFor(x) && !(x.selected && planPeek(x)));
-  if (d) { const city = cityFor(d); try { refillIfNeeded(d, city); if (!d.selected) { seedPicks(d, city); save(); } buildPlan(d); } catch (e) {} }
-  const open = box.open; box.outerHTML = budgetHtml(); const nb = document.querySelector("#view .tripbudget"); if (nb) nb.open = open;
-}
+// budgetCard, the trip's spending (tripBudget, budgetHtml) and the home currency: src/features/money.js
 function basicsCard(city) {
   const b = city.basics; if (!b) return "";
   return `<div class="card"><div><span class="eyebrow">Local basics</span></div>
@@ -5267,6 +5228,7 @@ function renderJournal() {
     ${entries.length ? "" : `<p class="lede small">A one-minute video and a PDF photo book of your trip, made on this device from your photos, notes and stars.</p>`}
     ${memCard()}
     ${gxBookCard()}${gxBadgeShelf()}
+    ${canMake ? budgetHtml() : ""}
     ${entries.length ? `<div class="sitelist">${entries.map(j => `<div class="card"><div><div class="eyebrow">${esc(fmtDate(j.date))} · ${esc(j.city || "")}</div><h3>${esc(j.name || "")}</h3></div>
       ${j.meal ? `<span class="eyebrow">Meal</span>` : ""}${j.rating ? `<div class="stars static">${"★".repeat(j.rating)}<span style="opacity:.25">${"★".repeat(5 - j.rating)}</span></div>` : ""}
       ${j.note ? `<p>${esc(j.note)}</p>` : ""}
@@ -5539,7 +5501,6 @@ function renderTrip(d) {
       ${aiReady() && missing ? `<button class="btn ghost small" data-act="genall" ${busy ? "disabled" : ""}>${missing === 1 ? `Build the guide for ${esc(missingNames[0])}` : missing <= 3 ? `Build the guides for ${esc(missingNames.join(" and "))}` : `Build the guides for all ${missing} places`}</button>` : ""}
       <div class="itin">${itinerary()}</div>
       <div class="actions"><button class="btn ghost small" data-act="addday">+ Add a day</button><button class="btn ghost small" data-act="addport">+ Add a port day</button><button class="btn ghost small" data-act="printtrip">🖨 Print or save as PDF</button></div>
-      ${budgetHtml()}
       <details class="card more">
         <summary>Share or rebuild the trip</summary>
         <div class="actions"><button class="btn ghost small" data-act="copytrip">Copy itinerary</button></div>
@@ -5703,7 +5664,7 @@ function siteCard(s, d, plan, nr) {
     badge = fs === false ? `<button type="button" class="tag nofit fitbadge" data-act="fitask" data-id="${esc(s.id)}" title="Ways to fit it in">Needs ${dur(c.min)}</button>`
       : fs === true ? `<span class="tag fit fitbadge">+${dur(c.min)}</span>` : `<span class="tag fitbadge pending" aria-hidden="true">+${dur(c.min)}</span>`; // same space while it's checked, so nothing moves
   } else if (on) badge = pickStatus(s, plan).replace('class="tag ', 'class="tag fitbadge ');
-  const sym = ((city && city.basics) || {}).symbol || "€", nm = showName(s) || s.name;
+  const sym = priceSym(city), nm = showName(s) || s.name;
   const l2 = [dur(s.minutes), s.cost ? sym + s.cost : "Free", s.far ? "Day trip" : "", near != null ? (near < 0.05 ? "Next to " + showName(nearTo) : distTxt(near, true) + " from " + showName(nearTo)) : ""].filter(Boolean).map(esc).join(" · ");
   const l3 = `<div class="tags ints">${cardLabels(s, city, nr && nr.my).map(x => `<span class="tag int${x.mine ? " mine" : " kind"}">${esc(x.t)}</span>`).join("")}</div>`;
   const ex = ((plan && plan.elsewhere) || []).find(x => x.s.id === s.id);
@@ -6521,7 +6482,7 @@ function legendHTML(plan) {
   ${aiReady() || askState.pending.length ? `<details class="more askfold"><summary>Ask your guide about today</summary>${askBlock(null, "Ask about today: what to wear, where to get water, how to get tickets…")}</details>` : ""}
   <details class="more goodtoknow"><summary>Getting around, costs and local words</summary>
   ${gettingAround(city, plan)}
-  ${budgetCard(plan)}
+  ${budgetCard(plan, d)}
   ${basicsCard(city)}
   <p class="footnote">Times are estimates using a relaxed walking pace and typical taxi times. Check opening hours and book timed tickets for the big sights.</p>
   </details>
@@ -7119,6 +7080,7 @@ document.addEventListener("change", e => {
   if (t.id === "cdWhere") { cdWhere = t.value; tickCountdown(); return; }
   if (t.id === "cdAgentIn") { const d = day(); if (d) { d.portAgent = t.value.trim().slice(0, 40); save(); render(); } return; }
   if (t.id === "p-lang") { trip.prefs = P(); trip.prefs.lang = t.value; save(); render(); return; }
+  if (t.id === "p-homecur") { appSet.homecur = t.value; saveAppSet(); render(); return; }
   if (t.id === "p-party") { trip.prefs = P(); trip.prefs.party = Math.max(1, Math.min(20, +t.value || 2)); save(); render(); return; }
   if (t.dataset && t.dataset.note) { jUpdate(t.dataset.note, j => { j.note = t.value; }); return; }
   if (t.dataset && t.dataset.photo && t.files && t.files[0]) {
