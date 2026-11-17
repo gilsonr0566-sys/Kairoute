@@ -1,0 +1,62 @@
+// AI spend check (hourly): Cloudflare's real Workers AI numbers for the account, this month, by day and model.
+// - Sends today's real total to the Kairoute helper (/realuse), a second guard behind its own count.
+// - Works out this month's paid AI (each day past the free 10,000 neurons, $0.011 per 1,000).
+// - Opens a GitHub issue for Richard (GitHub emails him) when this month's paid AI reaches 80% of the $5 cap,
+//   and whenever AI runs while the master switch is off. One issue per reason per month (or day).
+import { appendFileSync } from "node:fs";
+const T = process.env.CLOUDFLARE_API_TOKEN, H = { authorization: "Bearer " + T, "content-type": "application/json" };
+const CAP_USD = 5, WARN = 0.8, FREE = 10000, USD_PER_1000 = 0.011, HELPER = "https://kairoute-ai.rickgilson.workers.dev";
+const acc = await (await fetch("https://api.cloudflare.com/client/v4/accounts", { headers: H })).json();
+const id = acc.result && acc.result[0] && acc.result[0].id;
+if (!id) { console.log("No Cloudflare account visible: " + JSON.stringify(acc.errors || [])); process.exit(1); }
+const now = new Date(), month = now.toISOString().slice(0, 7), today = now.toISOString().slice(0, 10);
+const query = `{ viewer { accounts(filter: { accountTag: "${id}" }) { aiInferenceAdaptiveGroups(limit: 1000, filter: { date_geq: "${month}-01" }, orderBy: [date_ASC]) { sum { totalNeurons } dimensions { date modelId } } } } }`;
+const r = await (await fetch("https://api.cloudflare.com/client/v4/graphql", { method: "POST", headers: H, body: JSON.stringify({ query }) })).json();
+if (r.errors) { console.log("Analytics error: " + JSON.stringify(r.errors.map(e => e.message))); process.exit(1); }
+const rows = r.data.viewer.accounts[0].aiInferenceAdaptiveGroups, days = {};
+for (const x of rows) {
+  const d = x.dimensions.date; days[d] = days[d] || { total: 0, models: {} };
+  days[d].total += x.sum.totalNeurons; days[d].models[x.dimensions.modelId] = Math.round(x.sum.totalNeurons);
+}
+const fmt = n => Math.round(n).toLocaleString("en-US");
+let paidN = 0; const lines = [];
+for (const [d, v] of Object.entries(days)) {
+  const over = Math.max(0, v.total - FREE); paidN += over;
+  lines.push(`| ${d} | ${fmt(v.total)} | ${fmt(over)} | ${Object.entries(v.models).map(([m, n]) => m.replace("@cf/", "") + " " + fmt(n)).join(", ")} |`);
+}
+const usd = paidN / 1000 * USD_PER_1000, todayN = Math.round((days[today] || { total: 0 }).total);
+// Plan fees on the account, for the report (read-only; the token may not be allowed to see them).
+let plans = "not readable with this token";
+try {
+  const s = await (await fetch(`https://api.cloudflare.com/client/v4/accounts/${id}/subscriptions`, { headers: H })).json();
+  if (s.success) plans = (s.result || []).map(x => `${(x.rate_plan && x.rate_plan.public_name) || (x.product && x.product.name) || "plan"} $${x.price ?? "?"}/${x.frequency || "month"}`).join("; ") || "none";
+} catch (e) {}
+let st = {}; try { st = await (await fetch(HELPER + "/status")).json(); } catch (e) {}
+const report = [`## AI spend check, ${now.toISOString().slice(0, 16).replace("T", " ")} UTC`, "",
+  `- Master AI switch on the helper: **${st.on ? "ON" : "OFF"}**`,
+  `- Today so far (whole account, real): **${fmt(todayN)} neurons** (free: 10,000 a day)`,
+  `- Paid AI this month (real, whole account): **$${usd.toFixed(2)}** of the $${CAP_USD} cap (${Math.round(usd / CAP_USD * 100)}%)`,
+  `- Cloudflare plans on the account: ${plans}`, "",
+  "| Day (UTC) | Neurons | Paid neurons | By model |", "|---|---|---|---|", ...lines].join("\n");
+console.log(report);
+if (process.env.GITHUB_STEP_SUMMARY) appendFileSync(process.env.GITHUB_STEP_SUMMARY, report + "\n");
+// Second guard: the helper stops AI once the account's real total for today nears the free 10,000.
+if (process.env.REC_KEY) {
+  try {
+    const p = await fetch(HELPER + "/realuse", { method: "POST", headers: { "content-type": "application/json", "x-kairoute-rec": process.env.REC_KEY }, body: JSON.stringify({ date: today, neurons: todayN }) });
+    console.log("Sent today's real count to the helper: " + p.status);
+  } catch (e) { console.log("Couldn't reach the helper: " + e.message); }
+}
+// Warnings to Richard as GitHub issues (GitHub emails the repository owner).
+const GH = process.env.GITHUB_TOKEN, REPO = process.env.GITHUB_REPOSITORY;
+async function warn(title) {
+  if (!GH || !REPO) return console.log("WARN " + title);
+  const gh = { authorization: "Bearer " + GH, accept: "application/vnd.github+json" };
+  const seen = await (await fetch(`https://api.github.com/repos/${REPO}/issues?state=all&labels=ai-spend&per_page=50`, { headers: gh })).json();
+  if (Array.isArray(seen) && seen.some(i => i.title === title)) return console.log("Already warned: " + title);
+  const c = await fetch(`https://api.github.com/repos/${REPO}/issues`, { method: "POST", headers: gh, body: JSON.stringify({ title, body: report, labels: ["ai-spend"], assignees: ["gilsonr0566-sys"] }) });
+  console.log("Warning issue: " + c.status);
+}
+// Kairoute counts 0 while the switch is off; Richard's other apps use 2-12 a day, so more than 50 means something ran.
+if (st.on === false && todayN > 50) await warn(`AI ran while switched off (${today})`);
+if (usd >= CAP_USD * WARN) await warn(`Kairoute AI spend reached ${usd >= CAP_USD ? 100 : 80}% of the $${CAP_USD} cap (${month})`);
