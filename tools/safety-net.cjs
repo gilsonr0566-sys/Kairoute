@@ -404,6 +404,20 @@ const log = (suite, trip, ok, what) => { results.push({ suite, trip, ok, what })
         if (straight >= 0.65 && straight <= 3.9 && l.mode !== 'flight') { either++; if (!(l.choices.some(c => /^Walk/.test(c)) && l.choices.some(c => /^Taxi/.test(c)))) short.push(x.d + ': ' + l.how + ' ' + l.min + ' min [' + l.choices.join(', ') + ']'); } }
       const okR2 = !miss.length && !short.length && rides > 10 && either > 10;
       log('Rides', 'rides', okR2, 'Every ride has its buttons, every 600 m to 4 km leg offers walk or taxi: ' + (okR2 ? rides + ' rides, ' + either + ' walk-or-taxi legs over the sample trip' : JSON.stringify({ rides, either, miss: miss.slice(0, 5), short: short.slice(0, 5) }))); }
+    // One day per sight, no place twice (Nov 17: Madrid Jul 18 kept Jul 19's picks as optional stops from a remembered
+    // plan, and the Jul 18 dinner was Jul 20's sight). Every day is shown once (so its plan is remembered), then in each
+    // city no sight is a stop on two days, no place to eat is used twice, and no sight of one day is another day's meal.
+    { const bq = await chromium.launch(), pq = await (await bq.newContext()).newPage(); await pq.route('**/*', r => /^file:/.test(r.request().url()) ? r.continue() : r.abort()); await pq.goto('file://' + FILE); await pq.evaluate(() => localStorage.setItem('kairoute.intro1', '1')); await pq.reload(); await pq.waitForTimeout(800);
+      await pq.getByText('Continue trip').click(); await pq.waitForTimeout(1500);
+      const dup = await pq.evaluate(() => { const seen = {}, out = []; const days = window.__kairouteDays();
+        days.forEach(d => window.__kairouteAt(d.i, 'plan'));
+        for (const d of days) { if (!d.city) continue; for (const x of (window.__kairouteRoute(d.i) || [])) {
+          if (!['stop', 'meal', 'evening'].includes(x.type) || /^(breakfast|lunch|dinner|snack) near /i.test(x.name)) continue;
+          const k = d.city + '|' + x.name.toLowerCase(), was = seen[k];
+          if (was && was.i !== d.i) out.push(`${x.name}: ${was.date} (${was.t}) and ${d.date} (${x.type})`); else if (!was) seen[k] = { i: d.i, date: d.date, t: x.type }; } }
+        return out; });
+      await bq.close();
+      log('Plan', 'example', !dup.length, 'One day per sight, no place to eat twice, in every city of the trip: ' + (dup.length ? dup.slice(0, 6).join('; ') : 'yes')); }
     // Nov 17 demo gate: a pick naming a kept fill (a famous place written in online, saved on the device) was left out
     // of the day on a page opened fresh, until the city's sources answered. The kept fills now come back as soon as the
     // city is used: a second page with the same storage plans that pick right away, internet or not.
