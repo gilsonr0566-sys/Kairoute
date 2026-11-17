@@ -13,7 +13,7 @@ const DEF = [
   ["Civitavecchia port > Rome St Peter's", "42.0930,11.7870>41.9022,12.4539"]
 ];
 // TRACE=1: print every request to the map servers and timetables (host, answer, time), to see which one is busy.
-if (process.env.TRACE) { const f0 = globalThis.fetch; globalThis.fetch = async (u, o) => { const t0 = Date.now(), h = String(u).split("/")[2], q = String((o && o.body) || "").slice(0, 70);
+if (process.env.TRACE) { const f0 = globalThis.fetch; globalThis.fetch = async (u, o) => { const t0 = Date.now(), h = String(u).split("/")[2], q = String((o && o.body) || "").slice(0, 70); if (q) console.log(`  [${h}] asking ${decodeURIComponent(q)}`);
   try { const r = await f0(u, o); let more = "";
     if (q && r.ok) { try { const d = await r.clone().json(), n = {}; for (const e of d.elements || []) n[e.type] = (n[e.type] || 0) + 1; more = ` -> ${JSON.stringify(n)}${d.remark ? " REMARK " + String(d.remark).slice(0, 90) : ""}`; } catch (e) {} }
     console.log(`  [${h}] ${r.status} ${Date.now() - t0} ms ${q ? decodeURIComponent(q) : ""}${more}`); return r; } catch (e) { console.log(`  [${h}] ${e.name} ${Date.now() - t0} ms ${q ? decodeURIComponent(q) : ""}`); throw e; } }; }
