@@ -8,6 +8,9 @@ on:
       date:
         description: "trip date YYYY-MM-DD for timetables (empty = the next weekday)"
         default: ""
+      map_ms:
+        description: "ms each map server is given (empty = 15000, as the helper)"
+        default: ""
       trace:
         description: "1 = print every map and timetable request"
         default: ""
@@ -29,6 +32,7 @@ jobs:
           PAIRS: ${{ inputs.pairs }}
           DATE: ${{ inputs.date }}
           TRACE: ${{ inputs.trace }}
+          MAP_MS: ${{ inputs.map_ms }}
         run: node tools/transit-probe.mjs || true
       - env:
           FERRY: ${{ inputs.ferry }}

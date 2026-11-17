@@ -1,7 +1,8 @@
 // Prints the real public transport OpenStreetMap knows between pairs of points (no AI used), the same way the
 // worker's /transit finds it. Usage: node tools/transit-probe.mjs  (PAIRS="lat,lng>lat,lng;..." to choose)
 // Always exits 0: it only reports what the map holds.
-import { allOptions } from "../worker/transit.js";
+import { allOptions, setMapWait } from "../worker/transit.js";
+if (process.env.MAP_MS) setMapWait(+process.env.MAP_MS); // give the free map servers longer when they are busy
 const DEF = [
   ["Naples cruise terminal > Sorrento", "40.8380,14.2550>40.6263,14.3757"],
   ["Sorrento > Pompeii", "40.6263,14.3757>40.7490,14.4848"],

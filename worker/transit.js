@@ -45,7 +45,9 @@ const nearestIdx = (pts, p) => { let bi = -1, bd = Infinity; pts.forEach((q, i) 
 // Keep at most n points of a line for the map.
 const thin = (pts, n) => { if (pts.length <= n) return pts; const step = (pts.length - 1) / (n - 1); return Array.from({ length: n }, (_, i) => pts[Math.round(i * step)]); };
 
-async function overpass(q, ms = 15000) {
+// How long one map server is given before the next is tried (a background refill or a probe may give longer).
+let MAP_MS = 15000; export const setMapWait = ms => { MAP_MS = ms; };
+async function overpass(q, ms = MAP_MS) {
   const why = [];
   for (const ep of OVERPASS) {
     try {
