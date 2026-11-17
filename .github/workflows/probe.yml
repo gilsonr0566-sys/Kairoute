@@ -15,6 +15,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-      - env:
-          CITIES: ${{ inputs.cities }}
-        run: node tools/probe.mjs
+      - run: |
+          npm i --no-save playwright@1 && npx playwright install --with-deps chromium
+          curl -sS https://gilsonr0566-sys.github.io/Kairoute/ -o live.html && node tools/area-check.cjs live.html
+          node tools/area-live.cjs
