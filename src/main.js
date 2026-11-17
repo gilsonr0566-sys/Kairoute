@@ -5800,7 +5800,7 @@ function startOf(d, city) {
 // "Included", never as a pick of its own. Nested ones go to the outermost. Same answer every time for the same data.
 // What Wikidata says each sight is part of (P361) or stands in (P276), kept on the device so the list is the same
 // offline. Asked once per sight through the helper's /facts.
-const PART_STORE = "kairoute.partof1";
+const PART_STORE = "kairoute.partof2";
 let partMem = (() => { try { return JSON.parse(localStorage.getItem(PART_STORE) || "{}") || {}; } catch (e) { return {}; } })(), partV = 0;
 const partAsked = {};
 async function partScan(city) {
@@ -5810,7 +5810,7 @@ async function partScan(city) {
     const ids = need.slice(i, i + 20); let got = null;
     try { const r = await fetch(`${freeAI.url}/facts`, { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ ids }) }); if (r.ok) got = (await r.json()).facts || {}; } catch (e) {}
     if (!got) return;
-    for (const id of ids) { const f = got[id]; if (f && Array.isArray(f.partOf)) partMem[id] = [...f.partOf, ...(f.at || [])]; } // an older helper's answer (no partOf) is asked again later
+    for (const id of ids) { const f = got[id]; if (f && Array.isArray(f.partOf)) partMem[id] = { p: f.partOf, at: f.at || [] }; } // an older helper's answer (no partOf) is asked again later
   }
   if (need.some(id => id in partMem)) { try { localStorage.setItem(PART_STORE, JSON.stringify(partMem)); } catch (e) {} partV++; }
 }
@@ -5830,7 +5830,11 @@ function nestMap(city) {
   const par = new Map();
   for (const M of all) {
     if (!isFinite(M.lat)) continue;
-    const wdIn = (M, A) => !!(M.wd && A.wd && M.wd !== A.wd && (partMem[M.wd] || []).includes(A.wd) && hav(M, A) < 1.5);
+    // Inside means inside its grounds (Richard, Nov 17: Mars Hill is its own site, just below the Acropolis, free and
+    // outside the fence). Wikidata's "located in" (P276) counts; its looser "part of" (P361) only for a sight standing
+    // right at the main one (a clock in its cathedral's tower), never one a short walk away.
+    const pm = w => { const v = partMem[w]; return Array.isArray(v) ? { p: v, at: [] } : v || { p: [], at: [] }; };
+    const wdIn = (M, A) => !!(M.wd && A.wd && M.wd !== A.wd && ((pm(M.wd).at.includes(A.wd) && hav(M, A) < 1.5) || (pm(M.wd).p.includes(A.wd) && hav(M, A) < 0.15)));
     const inside = (M, A) => partOf(M, A) || wdIn(M, A) || (typeof inArea === "function" && inArea(M, A) && !DISTRICT.test((A.category || "") + " " + A.name));
     const hosts = all.filter(A => A !== M && A.id !== M.id && !A.quick && inside(M, A) && !(inside(A, M) && !big(A, M)));
     if (hosts.length) par.set(M.id, hosts.sort((x, y) => (y.minutes || 0) - (x.minutes || 0) || String(x.id).localeCompare(String(y.id)))[0]);
