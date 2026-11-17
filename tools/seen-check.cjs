@@ -41,9 +41,15 @@ const FILE = path.resolve(process.argv[2] || path.join(__dirname, '..', 'index.h
     if (off.plan !== online[d.i].plan) fail(`day ${d.i + 1} ${d.dest}: offline plan differs\n  online:  ${online[d.i].plan}\n  offline: ${off.plan}`);
     else if (off.shown !== online[d.i].shown) fail(`day ${d.i + 1} ${d.dest}: the Day plan shows different stops offline\n  online:  ${online[d.i].shown}\n  offline: ${off.shown}`);
   }
-  // Back online, the same timetables are planned with afresh: at least one day must change, or nothing was tested.
+  // Back online, the shown plans still hold (Nov 17: a plan once shown stays, online too).
   await ctx.setOffline(false); await p.waitForTimeout(300);
+  for (const d of all) if (online[d.i] && (await plan(d.i)) !== online[d.i].plan) fail(`day ${d.i + 1} ${d.dest}: back online the shown plan changed\n  was: ${online[d.i].plan}\n  now: ${await plan(d.i)}`);
+  // With the remembered plans forgotten, the same timetables are planned with afresh: at least one day must change,
+  // or nothing was tested. Then the plans are remembered again as they were shown.
+  const kept = await p.evaluate(() => JSON.stringify(window.__kairouteSeen.all()));
+  await p.evaluate(() => window.__kairouteSeen.clear());
   for (const d of all) if (online[d.i] && (await plan(d.i)) !== online[d.i].plan) changed++;
+  await p.evaluate(k => { const m = JSON.parse(k), st = window.__kairouteSeen.all(); for (const x in st) delete st[x]; Object.assign(st, m); window.__kairouteSeen.bump(); }, kept);
   await ctx.setOffline(true); await p.waitForTimeout(300);
   if (!changed) fail(`the timetables changed no plan on ${days} days, so this check proved nothing`);
   // A traveler's own change offline still re-plans: clearing a day's sights must clear its plan.
