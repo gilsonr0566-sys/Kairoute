@@ -54,6 +54,13 @@ const RATES = { day: '2026-11-17', rates: { USD: 1, EUR: 0.862, TRY: 42.3, GBP: 
     errs.length ? bad('page errors' + tag + ': ' + errs.slice(0, 3).join(' | ')) : ok('no page errors' + tag);
     await ctx.close();
   }
+  // The rate sources answer a page on the live site's address (they must allow other sites to read them). Only
+  // reported: no internet here must never stop a publish, and the app falls back to the next source.
+  try {
+    const p = await (await b.newContext()).newPage(); await p.goto('https://gilsonr0566-sys.github.io/Kairoute/version.txt', { timeout: 15000 });
+    const r = await p.evaluate(async () => { const out = []; for (const u of ['https://open.er-api.com/v6/latest/USD', 'https://api.frankfurter.app/latest?from=USD']) { try { const j = await (await fetch(u)).json(); out.push(u.split('/')[2] + ': ' + (j.rates && j.rates.EUR ? 'EUR ' + j.rates.EUR + ' on ' + (j.date || j.time_last_update_utc) : 'no rates')); } catch (e) { out.push(u.split('/')[2] + ': ' + e.message); } } return out; });
+    console.log('rate sources from the live site: ' + r.join('; '));
+  } catch (e) { console.log('rate sources not checked (no internet here)'); }
   await b.close();
   console.log(fails ? `Money check: ${fails} problem(s)` : 'Money check passed'); process.exit(fails ? 1 : 0);
 })();
