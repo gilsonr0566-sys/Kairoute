@@ -58,6 +58,7 @@ jobs:
           node tools/offline-sights.cjs
           node tools/later-check.cjs
           node tools/area-check.cjs
+          node tools/offlog-check.cjs
       - name: Demo flow gate (Richard's Greece trip on this build, real internet; a failure stops the update going live)
         run: |
           python3 -m http.server 8765 >/dev/null 2>&1 &

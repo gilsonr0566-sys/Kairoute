@@ -180,6 +180,16 @@ async function partA(b) {
   const days = await p.evaluate(() => window.__kairouteDays());
   log("Days: " + days.map(d => `${d.i}:${d.date} ${d.type} ${d.dest}${d.city ? "" : " (no guide yet)"}`).join(" | "));
   ok(days.length >= 15, `the trip has its ${days.length} days`);
+  // Hearted days keep their stops while guides and sources arrive (Nov 17: the hearted Jul 1 Athens day lost the
+  // Acropolis, "no longer in the guide", when a second copy of it folded in under another id). The Athens days that
+  // plan the Acropolis are hearted now, before the city's guide and sources load, and checked once they have.
+  const hearted = [];
+  const tickDay = (days.find(x => x.type === "land") || {}).i; // the Change stops tick below uses this day: left unhearted
+  for (const d of days.filter(x => /athens/i.test(x.dest || "") && x.type !== "sea" && x.i !== tickDay)) {
+    const has = await p.evaluate(i => { try { return /acropolis/i.test(window.__kairouteReady.shape(i)); } catch (e) { return false; } }, d.i);
+    if (has) { await p.evaluate(i => window.__kairouteReady.mark(i), d.i); hearted.push(d); }
+  }
+  log(`     hearted before the guides load: ${hearted.map(d => d.date + " " + d.dest).join(", ") || "none (no Athens day plans the Acropolis yet)"}`);
   // Wait for city guides that are not on this device yet (they come from the shared cache).
   t0 = Date.now();
   for (;;) { const miss = await p.evaluate(() => window.__kairouteDays().filter(d => d.type !== "sea" && !d.city).map(d => d.dest)); if (!miss.length || Date.now() - t0 > 600000) { ok(!miss.length, "every place has its city guide" + (miss.length ? " (missing after 10 min: " + [...new Set(miss)].join(", ") + ")" : ` (${sec(t0)} s)`)); break; } await p.waitForTimeout(5000); }
@@ -347,6 +357,11 @@ async function partA(b) {
   }
 
   // 6. Offline: one tap downloads the trip; with no internet the app and every Day plan come back the same.
+  for (const d of hearted) {
+    const r = await p.evaluate(i => ({ st: window.__kairouteReady.state(i), why: (window.__kairouteReady.plan(i) || {}).why || "", shape: window.__kairouteReady.shape(i) }), d.i);
+    ok(/acropolis/i.test(r.shape), `hearted ${d.date} ${d.dest} still plans the Acropolis once the guides loaded: ${r.shape}`);
+    ok(!/no longer in the guide/i.test(r.why), `hearted ${d.date} ${d.dest}: no stop lost as "no longer in the guide" (${r.st}${r.why ? ", " + r.why : ""})`);
+  }
   if (GATE) { ok(!errs.length, `tablet: no page errors (${errs.slice(0, 3).join(" / ")})`); await ctx.close(); return; }
   await p.evaluate(go("trip", 0)); await p.waitForTimeout(2000);
   const dl = p.locator('#offCard [data-act="offdl"]').first();

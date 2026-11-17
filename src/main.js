@@ -157,7 +157,7 @@ function dropUnwanted() {
     if (d.ready && d.ready.lock) return; // a hearted day is locked: only a time change can change it
     const mine = new Set(d.mine || []), by = new Map(allSites(c).map(x => [x.id, x]));
     const keep = d.selected.filter(id => { const x = by.get(id); return !x || mine.has(id) || religiousOk(x); });
-    if (keep.length < d.selected.length) { const was = selKey(d); n += d.selected.length - keep.length; d.selected = keep; readyKeep(d, was); if (d.anchor && !keep.includes(d.anchor)) d.anchor = null; } });
+    if (keep.length < d.selected.length) { const was = selKey(d); n += d.selected.length - keep.length; d.selected.filter(id => !keep.includes(id)).forEach(id => offNote(d, by.get(id) || { id }, "Doesn't match the interests you chose", "interest")); d.selected = keep; readyKeep(d, was); if (d.anchor && !keep.includes(d.anchor)) d.anchor = null; } });
   bonusMemo = new Map(); mealMemo = new Map(); keptMemo = new Map(); eveMemo = new Map();
   return n;
 }
@@ -955,6 +955,7 @@ function settlePicks(d) {
     const gone = new Set(out.map(x => x.id));
     d.bumped = (d.bumped || []).filter(b => !gone.has(b.id)).concat(out.map(x => ({ id: x.id, name: x.name, w: win(p) })));
     laterAdd(d, out); // a booked city keeps them in "If you come back"
+    out.forEach(x => offNote(d, x, p.lockBroken ? `Your locked plan had to change: ${p.lockBroken}` : shutOn(d, x) ? "Closed that day" : "No longer fits this day's time", shutOn(d, x) ? "closed" : "fit"));
     d.selected = d.selected.filter(id => !gone.has(id));
     if (gone.has(d.anchor)) d.anchor = d.selected[d.selected.length - 1] || null;
     forget0(d); moved = true;
@@ -4360,7 +4361,11 @@ if (typeof window !== "undefined") window.__kairouteDedupeLog = () => dedupeLog.
 function dedupeSites(c) {
   if (!c) return 0;
   const was = placeCity; placeCity = c.city ? new Set(placeWords0(String(c.city).split(",")[0]).filter(t => t.length > 2)) : null;
-  try { return dedupeSites0(c); } finally { placeCity = was; }
+  let n = 0; try { n = dedupeSites0(c); } finally { placeCity = was; }
+  // A pick, a heart's lock or an area visit that named a sight folded away now names the sight that stayed (taken-off.js).
+  if (n && c.folds && c.folds.length) { try { foldRemap(c, c.folds); } catch (e) {} }
+  delete c.folds;
+  return n;
 }
 function dedupeSites0(c) {
   let n = 0;
@@ -4380,6 +4385,7 @@ function dedupeSites0(c) {
     else { big.lookFor = [...new Set([...(big.lookFor || []), small.name])].slice(0, 6); big.alias = [...new Set([...(big.alias || []), small.id])]; }
     // A copy of what was folded is kept, so a fold the rules later tell apart can be undone (undoMerges).
     { const copy = Object.assign({}, small); delete copy.merged; big.merged = (big.merged || []).filter(x => x.id !== copy.id).concat([copy]); }
+    if (small.id != null && small.id !== big.id) (c.folds = c.folds || []).push({ from: small.id, to: big.id, name: small.name, into: big.name, rel: r });
     gone.add(small); n++;
   }
   if (n) { c.sites = (c.sites || []).filter(x => !gone.has(x)); c.farther = (c.farther || []).filter(x => !gone.has(x)); }
@@ -6454,7 +6460,7 @@ ${partsList(s, it.time)}${stopLiveNotes(it, d)}</div></div>`;
     (b => b ? `<div class="livecard">${b}</div>` : "")(liveBanner(d, plan)),
     rideChangeBanner(d),
     plan.over ? `<div class="banner warn" role="alert">This plan runs ${dur(plan.end - plan.endBy)} past ${fmt(plan.endBy)}. Remove a stop with Change stops, or change the times.</div>` : "",
-    closedBanner(d, plan), liveOn(d) ? "" : bumpedNote(d),
+    closedBanner(d, plan), liveOn(d) ? "" : bumpedNote(d), liveOn(d) ? "" : offListHTML(d),
     dropNow.length && !liveOn(d) ? `<div class="banner warn dropped"><span>Didn't fit today: <b>${dropNow.map(s => esc(s.name)).join(", ")}</b>. Your picks are over today's time.${estShip(d) ? ` The ship times here are estimated; your booking's real times may leave room.` : ""}</span>${estShip(d) && aiReady() ? `<button type="button" class="btn small ghost" data-act="shiptimes">Add ship times</button>` : ""}<button type="button" class="btn small" data-act="fitfix">Make it fit</button></div>` : "",
     (tc => tc ? `<div class="banner warn" role="alert">This day has ${dur(tc.ride)} of travel for ${dur(tc.see)} at the sights. Consider fewer far-apart stops, more hours, or splitting it over two days.</div>` : "")(travelCheck(plan)),
     plan.endBy - plan.start < 90 ? `<div class="banner warn">There isn't much time today, so keep it close: a coffee and one nearby sight at most.</div>` : "",
