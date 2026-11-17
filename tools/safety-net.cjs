@@ -415,9 +415,10 @@ const log = (suite, trip, ok, what) => { results.push({ suite, trip, ok, what })
           if (!['stop', 'meal', 'evening'].includes(x.type) || /^(breakfast|lunch|dinner|snack) near /i.test(x.name)) continue;
           const k = d.city + '|' + x.name.toLowerCase(), was = seen[k];
           if (was && was.i !== d.i) out.push(`${x.name}: ${was.date} (${was.t}) and ${d.date} (${x.type})`); else if (!was) seen[k] = { i: d.i, date: d.date, t: x.type }; } }
-        return out; });
+        const per = {}; days.forEach(d => { if (d.city) per[d.city] = (per[d.city] || 0) + 1; });
+        out.cities = Object.entries(per).filter(([, n]) => n > 1).map(([c, n]) => c + ' ' + n + ' days'); return { out, cities: out.cities }; });
       await bq.close();
-      log('Plan', 'example', !dup.length, 'One day per sight, no place to eat twice, in every city of the trip: ' + (dup.length ? dup.slice(0, 6).join('; ') : 'yes')); }
+      log('Plan', 'example', !dup.out.length, 'One day per sight, no place to eat twice, in every city of the trip: ' + (dup.out.length ? dup.out.slice(0, 6).join('; ') : 'yes, checked ' + dup.cities.join(', '))); }
     // Nov 17 demo gate: a pick naming a kept fill (a famous place written in online, saved on the device) was left out
     // of the day on a page opened fresh, until the city's sources answered. The kept fills now come back as soon as the
     // city is used: a second page with the same storage plans that pick right away, internet or not.
