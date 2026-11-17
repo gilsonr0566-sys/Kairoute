@@ -2,12 +2,8 @@
 // planner (Transitous) knows between two stations on a date. Only reports; always exits 0.
 const UA = { "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124 Safari/537.36", "accept-language": "en-US,en;q=0.9", accept: "text/html" };
 const urls = (process.env.URLS || [
-  "https://www.thetrainline.com/en/train-times/barcelona-to-madrid", "https://www.thetrainline.com/en/train-times/paris-to-lyon", "https://www.thetrainline.com/en/train-times/rome-to-florence",
-  "https://www.thetrainline.com/en/train-times/naples-to-rome", "https://www.thetrainline.com/en/train-times/athens-to-thessaloniki", "https://www.thetrainline.com/en/train-times/lisbon-to-porto",
-  "https://www.thetrainline.com/en/train-times/london-to-edinburgh", "https://www.thetrainline.com/en/train-times/munich-to-vienna", "https://www.thetrainline.com/en/train-times/prague-to-vienna",
-  "https://www.thetrainline.com/en/train-times/barcelona-to-nowhere-town", "https://www.thetrainline.com/en/train-times/new-york-to-washington", "https://www.thetrainline.com/en/train-times/venice-to-florence",
-  "https://www.ferryhopper.com/en/ferries/piraeus/mykonos", "https://www.ferryhopper.com/en/piraeus-mykonos-ferry", "https://www.ferryhopper.com/en/ferry-routes/piraeus-mykonos", "https://www.ferryhopper.com/en/",
-  "https://www.directferries.com/piraeus_mykonos_ferry.htm", "https://www.directferries.co.uk/piraeus_mykonos_ferry.htm", "https://www.amtrak.com/home.html", "https://www.trainline.com/"].join(" ")).split(/\s+/);
+  "https://www.rome2rio.com/map/Athens/Thessaloniki", "https://www.rome2rio.com/map/New-York/Washington", "https://www.rome2rio.com/map/Piraeus/Mykonos", "https://www.rome2rio.com/map/Barcelona/Madrid",
+  "https://www.rome2rio.com/s/Athens/Thessaloniki", "https://www.thetrainline.com/en/train-times/seville-to-madrid", "https://www.thetrainline.com/en/train-times/florence-to-rome"].join(" ")).split(/\s+/);
 for (const u of urls) {
   try { const r = await fetch(u, { headers: UA, redirect: "follow", signal: AbortSignal.timeout(20000) }); const t = await r.text();
     const title = (/<title[^>]*>([^<]*)/i.exec(t) || [])[1] || ""; console.log(`${r.status} ${u} -> ${r.url} | ${title.trim().slice(0, 120)}`);
