@@ -186,8 +186,11 @@ if (typeof window !== "undefined") {
     const bench = (fix.bench || []).map(n => ({ n, hit: has(n) ? has(n).name : "" }));
     const twins = all.map(s => ({ s: s.name, note: twinNote(s, c).replace(/<[^>]+>/g, "") })).filter(x => x.note);
     const noSrc = all.filter(s => s.srcOnly && !(s.src && s.src.length)).map(s => s.name);
+    // Names still in the local language: a lesser sight from the sources whose name says what it is in Italian,
+    // Spanish, French or Portuguese ("Palazzo Zanca") must be shown in English (famous names keep theirs).
+    const foreign = all.filter(s => s.srcOnly && (s.fame || 0) < EN_FAME && EN_FOREIGN.test(s.name)).map(s => s.name + (enNameOf(s.name, s.category, s.local) ? " (rules know it)" : ""));
     const why = fix.why ? fix.sources.stops.filter(x => srcVisitable(x) && (x.src || []).length >= 2).map(x => { const h = base0.find(y => sameSight(x, y) || placeRel(x, y) || placeRel(y, x)); return x.name + " -> " + (allSites(c).some(y => y.name === x.name) ? "added" : h ? (sameSight(x, h) ? "same-name " : "rel " + (placeRel(x, h) || placeRel(h, x)) + " ") + h.name : "?"); }) : [];
-    return { added, gone, why, label: lbl, before, after: { main: c.sites.filter(x => !x.quick).length, quick: c.sites.filter(x => x.quick).length, far: (c.farther || []).length }, min, dup, bench, twins, noSrc,
+    return { added, gone, why, label: lbl, before, after: { main: c.sites.filter(x => !x.quick).length, quick: c.sites.filter(x => x.quick).length, far: (c.farther || []).length }, min, dup, bench, twins, noSrc, foreign,
       far: (c.farther || []).map(x => x.name), names: c.sites.filter(x => !x.quick).map(x => x.name) };
   };
 }

@@ -61,7 +61,7 @@ enHead("arco", "Arch", "post");
 enHead("casa", "House", "post");
 enHead("orto", "Garden", "post");
 // Describing words, which English puts before the place word ("Museo Archeologico Nazionale": National Archaeological Museum).
-const EN_ADJ = { real: "Royal", reale: "Royal", regio: "Royal", regia: "Royal", royal: "Royal", ex: "Former", antiguo: "Old", antigua: "Old", vecchio: "Old", vecchia: "Old",
+const EN_ADJ = { real: "Royal", reale: "Royal", regio: "Royal", regia: "Royal", ex: "Former", antiguo: "Old", antigua: "Old", antico: "Ancient", antica: "Ancient", antichi: "Ancient", antiche: "Ancient", vecchio: "Old", vecchia: "Old",
   nuovo: "New", nuova: "New", nuevo: "New", nueva: "New", monumentale: "Monumental", monumental: "Monumental", regionale: "Regional", nazionale: "National", nacional: "National",
   civico: "Civic", civica: "Civic", archeologico: "Archaeological", arqueológico: "Archaeological", archéologique: "Archaeological", botanico: "Botanical", botánico: "Botanical",
   comunale: "Municipal", municipal: "Municipal", municipale: "Municipal", diocesano: "Diocesan", diocesana: "Diocesan", interdisciplinare: "Interdisciplinary",
@@ -75,7 +75,7 @@ const EN_WORD = { cultura: "Culture", culture: "Culture", lettera: "the Letter",
   angeli: "the Angels", ángeles: "the Angels", anges: "the Angels", santi: "the Saints", martiri: "the Martyrs", mártires: "the Martyrs", vergine: "the Virgin", virgen: "the Virgin",
   rosario: "the Rosary", lavoro: "Labour", indipendenza: "Independence", independencia: "Independence", libertà: "Freedom", libertad: "Freedom", liberté: "Freedom",
   cattedrale: "the Cathedral", duomo: "the Cathedral", catedral: "the Cathedral", porto: "the Port", puerto: "the Port", port: "the Port", mercanti: "the Merchants", mercaderes: "the Merchants",
-  re: "the King", rey: "the King", roi: "the King", regina: "the Queen", reina: "the Queen", reine: "the Queen", catalani: "the Catalans", catalanes: "the Catalans" };
+  re: "the King", rey: "the King", roi: "the King", regina: "the Queen", reina: "the Queen", reine: "the Queen", catalani: "the Catalans", catalanes: "the Catalans", cancelleria: "the Chancellery", cancillería: "the Chancellery" };
 // "of" words: those that carry "the" and those that don't.
 const EN_OF_THE = /^(del|dello|della|dell'|dei|degli|delle|de la|de las|de los|du|des|de l'|do|da|dos|das|dels|de les)$/i;
 const EN_OF = /^(di|d'|de)$/i;
@@ -85,14 +85,19 @@ const EN_WORSHIP = /\b(church|chapel|basilica|cathedral|shrine|abbey|monastery|c
 // "Dell'Immacolata" is "dell'" + "Immacolata": the apostrophe words split off so they read as one word each.
 const enWords = s => String(s).replace(/\b([dDlL]|[dD]ell|[aA]ll|[sS]ant|[nN]ell|[sS]ull)'\s*/g, "$1' ").split(/\s+/).filter(Boolean);
 const enCap = w => w.replace(/^\p{Ll}/u, c => c.toUpperCase());
+// Place words in the local language that the safety net looks for in names shown to the traveler.
+const EN_ENGLISH = /\b(church|park|palace|museum|gardens?|square|tower|gallery|cathedral|chapel|bridge|gate|house|castle|lift|elevator|street|market|monastery|convent|cemetery|fountains?|theatre|theater|zoo|aquarium|centre|center|hill|lake|beach|station|library|hall|pavilion|stadium|abbey|shrine|temple|walls?|baths|arch|column|statue|monument|memorial|tomb|mausoleum|forum|villa)\b/i;
+const EN_FOREIGN = /(^|\s)(palazzo|chiesa|fontana|fontane|forte|torre|galleria|santuario|sacrario|cittadella|cattedrale|castello|museo|giardino|iglesia|palacio|capilla|fuente|museu|igreja|palácio|église|musée|fontaine|chapelle)(\s|$)/i;
 // The English rendering of one name, or "" when it is already English or can't be rendered fully.
-function enNameOf(name, cat) {
+function enNameOf(name, cat, local) {
   const raw = String(name || "").trim(); if (!raw || nonLatin(raw)) return "";
   const m = /^(.*?)(\s*\([^)]*\)|,\s*[^,]+)?$/.exec(raw), tail = (m && m[2]) || "";
   let base = ((m && m[1]) || raw).trim().replace(/\s*-\s*/g, "-").replace(/["“”«»]/g, "");
   let phrased = false;
   for (const [re, en] of EN_PHRASE) if (re.test(base)) { base = base.replace(re, en); phrased = true; }
   let w = enWords(base);
+  // Already English ("Royal Basilica of Saint Francis the Great", "Casa de Campo Park"): left as it is.
+  if (!phrased && (EN_ENGLISH.test(raw) || /(^|\s)(of|the|and)(\s|$)/i.test(raw))) return "";
   // Lead words: "Ex Chiesa", "Real Cittadella".
   const pre = []; while (w.length > 1 && EN_ADJ[w[0].toLowerCase()] && !EN_HEAD[w[0].toLowerCase()]) pre.push(EN_ADJ[w.shift().toLowerCase()]);
   let head = EN_HEAD[w[0] && w[0].toLowerCase()];
@@ -111,7 +116,17 @@ function enNameOf(name, cat) {
     else if (EN_OF.test(rest[0])) { lead = "of"; rest = rest.slice(1); }
     if (!rest.length) return null;
     // One common word: "della Cultura" is "of Culture", "della Lettera" "of the Letter".
-    if (lead && rest.length === 1 && EN_WORD[rest[0].toLowerCase()] != null && EN_WORD[rest[0].toLowerCase()]) return "of " + EN_WORD[rest[0].toLowerCase()];
+    if (lead && rest.length === 1 && EN_WORD[rest[0].toLowerCase()]) return "of " + EN_WORD[rest[0].toLowerCase()];
+    // A thing and its describing words: "d'Arte Moderna e Contemporanea" is "of Modern and Contemporary Art".
+    if (lead && EN_WORD[rest[0].toLowerCase()] && rest[1] && EN_ADJ[rest[1].toLowerCase()]) {
+      const adj = []; let k = 1;
+      while (k < rest.length && (EN_ADJ[rest[k].toLowerCase()] || (/^(e|y|et|i|and)$/i.test(rest[k]) && rest[k + 1] && EN_ADJ[rest[k + 1].toLowerCase()]))) { if (EN_ADJ[rest[k].toLowerCase()]) adj.push(EN_ADJ[rest[k].toLowerCase()]); k++; }
+      const more = k < rest.length ? ofPart(rest.slice(k)) : "";
+      if (more === null || (more && !more.startsWith("of "))) return null;
+      return "of " + adj.join(" and ") + " " + EN_WORD[rest[0].toLowerCase()].replace(/^the /, "") + (more ? " " + more : "");
+    }
+    // A describing word or a common word of the local language left in what follows "of": not fully English.
+    if (lead && rest.some(t => !EN_SMALL.test(t) && (EN_ADJ[t.toLowerCase()] || EN_WORD[t.toLowerCase()]))) return null;
     // "of the" + a capitalized word: a thing in the local language ("de la Música", "de las Flores") unless it is
     // one the rules put into English ("del Holy Saviour"); left as it is.
     if (lead === "of the" && rest.some(t => !EN_SMALL.test(t) && !EN_WORD[t.toLowerCase()] && !EN_KNOWN.has(t.toLowerCase()))) return null;
@@ -142,9 +157,10 @@ function enNameOf(name, cat) {
     if (i > 0) { const r = ofPart(w.slice(i)); if (r === null) return ""; en = w.slice(0, i).join(" ") + " " + (r.startsWith("of ") ? r : r.trim()); }
     else if (w.some(t => /^\p{Ll}/u.test(t) && !EN_SMALL.test(t))) return "";
     else en = w.join(" ");
-    if (/church|cathedral|basilica|chapel|shrine/i.test(cat || "") && !EN_WORSHIP.test(en)) en = (EN_SAINT.test(w[0]) ? en + " Church" : "Church of the " + en);
-  } else if (/church|cathedral|basilica|chapel|shrine/i.test(cat || "") && EN_SAINT.test(w[0] || "") && !EN_WORSHIP.test(raw)) {
-    // A church known by its saint alone ("Santa Maria Alemanna", "Sant'Eustochia") says what it is in English.
+    if (/church|cathedral|basilica|chapel|shrine/i.test(cat || "") && EN_WORSHIP.test(local || "") && !EN_WORSHIP.test(en)) en = (EN_SAINT.test(w[0]) ? en + " Church" : "Church of the " + en);
+  } else if (/church|cathedral|basilica|chapel|shrine/i.test(cat || "") && EN_SAINT.test(w[0] || "") && !EN_WORSHIP.test(raw) && EN_WORSHIP.test(local || "")) {
+    // A church known by its saint alone ("Santa Maria Alemanna", "Sant'Eustochia") says what it is in English, when
+    // its local name says it is a church (the "Santa Justa Lift" is a lift).
     en = w.join(" ").replace(/' /g, "'") + " Church";
   } else return "";
   en = enCap(en.replace(/\s+/g, " ").replace(/' /g, "'").trim()) + tail;
@@ -153,7 +169,7 @@ function enNameOf(name, cat) {
 // A sight from the sources gets its English name; its local name is kept for the signs. Famous places keep theirs.
 function enSight(x, cat) {
   if (!x || !x.name || (x.sl || 0) >= EN_FAME) return null;
-  const en = enNameOf(x.name, cat); if (!en) return null;
+  const en = enNameOf(x.name, cat, x.local); if (!en) return null;
   return { name: en, local: x.local && !nonLatin(x.local) ? x.local : x.name };
 }
 // The local name in small text under an English one, when it helps (another spelling the traveler will see on signs).
@@ -162,4 +178,4 @@ function localLine(s) {
   if (!l || nonLatin(l) || keyOf(l) === keyOf(s.name) || keyOf(l) === keyOf(showName(s))) return "";
   return `<p class="localname">Local name: ${esc(l)}</p>`;
 }
-if (typeof window !== "undefined") window.__kairouteEnName = (n, cat, sl) => { const r = enSight({ name: n, sl: sl || 0 }, cat); return r ? r.name : n; };
+if (typeof window !== "undefined") window.__kairouteEnName = (n, cat, sl, local) => { const r = enSight({ name: n, sl: sl || 0, local }, cat); return r ? r.name : n; };

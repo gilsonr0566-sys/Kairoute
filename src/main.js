@@ -146,6 +146,8 @@ const WORSHIP_RE = /\b(church|cathedral|duomo|cattedrale|catedral|chiesa|iglesia
 const NOT_WORSHIP_KIND = /food|caf[eé]|restaurant|taverna|\bbar\b|chocolat|bakery|shop|market|museum|gallery|\bpark\b|garden|square|plaza|piazza|street|beach|island|village|\btown\b|district|neighbo|quarter|palace|castle|fort|stadium|hotel|harbou?r|port\b|bridge|viewpoint|hill|station/i;
 const isReligious = x => { if (!x) return false; const c = x.category || "", t = c + " " + (x.name || "");
   if (/ancient|ruin|archaeolog/i.test(t) || !RELIGIOUS_RE.test(t)) return false;
+  // "Holy" in a fort's or palace's name (Fort of the Holy Saviour) doesn't make it a place of worship.
+  if (NOT_WORSHIP_KIND.test(c) && !WORSHIP_RE.test(t.replace(/\bholy\b/gi, " "))) return false;
   return WORSHIP_RE.test(t) || !NOT_WORSHIP_KIND.test(c); };
 const skipReligious = () => P().religious === "off";
 // The "Churches & faith" interest: off once the traveler turns it off (noChurches), or when they chose
@@ -2775,7 +2777,8 @@ function fameMark(city, src) {
   // Fills first, then the sources' sights: the same order online and offline, so the list comes out the same.
   restoreFills(city, fillsMem[keyOf(city.city)]);
   for (const s of [...(city.sites || []), ...(city.farther || [])]) {
-    const hit = srcStop(src, s.name, s) || ((src.far || []).find(x => nameMatch(s.name, x.name) || nameMatch(x.name, s.name)) && Object.assign({ src: ["Wikidata (Wikipedia in many languages)"] }, (src.far || []).find(x => nameMatch(s.name, x.name) || nameMatch(x.name, s.name))));
+    const nm0 = s.srcName || s.name;   // the name the guide gave it, before it was put into English
+    const hit = srcStop(src, nm0, s) || ((src.far || []).find(x => nameMatch(s.name, x.name) || nameMatch(x.name, s.name)) && Object.assign({ src: ["Wikidata (Wikipedia in many languages)"] }, (src.far || []).find(x => nameMatch(s.name, x.name) || nameMatch(x.name, s.name))));
     if (hit) { s.fame = hit.sl || 0; s.unesco = !!hit.unesco; s.heritage = !!hit.heritage; s.src = hit.src || []; if (hit.web && !s.web) s.web = hit.web; 
       // The sources' id and local name say "this is the same place" to the duplicates check, so they are only taken
       // from a hit that is surely this sight: the names match both ways, or the source's spot is right here. A loose
@@ -2784,8 +2787,11 @@ function fameMark(city, src) {
       // "Sure" is the duplicates check's own test on the names and spots alone (no ids): "Natural History Museum of
       // Crete" is not the "Historical Museum of Crete", and a museum 200 m away is another museum.
       const bare = x => ({ name: x.name || "", lat: x.lat, lng: x.lng, category: x.category || x.kind || "" });
-      const sure = placeRel(bare(s), bare(hit)) === "same";
-      if (sure) { if (hit.local) s.local = hit.local; if (hit.wd) s.wd = hit.wd; } else { delete s.local; delete s.wd; } }
+      const sure = placeRel(Object.assign(bare(s), { name: nm0 }), bare(hit)) === "same";
+      if (sure) { if (hit.local) s.local = hit.local; if (hit.wd) s.wd = hit.wd; } else { delete s.local; delete s.wd; }
+      // A lesser sight the guide named in the local language ("Santissima Annunziata dei Catalani") is shown in English.
+      const en = sure && !s.srcName && (hit.sl || 0) < EN_FAME && enNameOf(s.name, s.category, s.local || hit.local);
+      if (en) { s.srcName = s.name; s.local = s.local || s.name; s.name = en; } }
   }
   famousRepair(city, src);
   sourceSights(city, src);
