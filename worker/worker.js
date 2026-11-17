@@ -1,5 +1,6 @@
 import { extras, Group } from "./extras.js";
 import { allOptions, ferriesNear, keptFerries, ferryKey, topRides } from "./transit.js";
+import { departures } from "./departures.js";
 export { Group };
 // Kairoute AI helper. The website sends a prompt (and optional photos); this Worker asks Workers AI
 // and streams the answer back. Usage is counted from real token counts. On the free plan it stays inside
@@ -443,6 +444,31 @@ export default {
       const p = { lat: +url.searchParams.get("lat"), lng: +url.searchParams.get("lng") }; if (!isFinite(p.lat) || !isFinite(p.lng)) return Response.json({ error: "Bad request" }, { status: 400, headers: h });
       const k = ferryKey(p), kept = await env.USAGE.get("fp1:" + k, "json"), listed = !!(await env.USAGE.get("fq:" + k));
       return Response.json({ key: k, kept: !!kept, listed, schedule: await env.USAGE.get("fqrun", "json"), courses: kept ? [...new Set(kept.ways.map(w => w.tags.name || w.tags.ref || "").filter(Boolean))] : [], routes: kept ? kept.rels.length : 0 }, { headers: h });
+    }
+    // /departures?a=lat,lng&b=lat,lng&date=YYYY-MM-DD&mode=train|ferry: every train (or ferry) between two stations
+    // that day, from the published timetables (departures.js), for the "Book train" card. Kept 3 days per route and
+    // date (a busy or empty answer 6 hours), shared by every traveler.
+    if (url.pathname === "/departures") {
+      const pt = v => { const n = String(v || "").split(",").map(Number); return n.length === 2 && n.every(isFinite) && Math.abs(n[0]) <= 90 && Math.abs(n[1]) <= 180 ? { lat: n[0], lng: n[1] } : null; };
+      const a = pt(url.searchParams.get("a")), b = pt(url.searchParams.get("b")), date = url.searchParams.get("date") || "", mode = url.searchParams.get("mode") === "ferry" ? "ferry" : "train";
+      if (!a || !b || (date && !/^\d{4}-\d{2}-\d{2}$/.test(date))) return Response.json({ error: "Bad request" }, { status: 400, headers: h });
+      const key = "dp1:" + mode + ":" + [a.lat, a.lng, b.lat, b.lng].map(n => n.toFixed(3)).join(",") + ":" + date;
+      const hit = await env.USAGE.get(key, "json"); if (hit) return Response.json(hit, { headers: h });
+      try { const r = await departures(a, b, date, mode); ctx.waitUntil(env.USAGE.put(key, JSON.stringify(r), { expirationTtl: r.deps.length ? 3 * 86400 : 6 * 3600 }).catch(() => {})); return Response.json(r, { headers: h }); }
+      catch (e) { return Response.json({ error: "busy" }, { status: 503, headers: h }); }
+    }
+    // /bookcheck?from=<town slug>&to=<town slug>: does Trainline have a page for this route? "ok" (it opens),
+    // "missing" (no such page: the card then opens a site that covers every route) or "unknown" (couldn't tell).
+    // Kept 30 days per route.
+    if (url.pathname === "/bookcheck") {
+      const sl = v => /^[a-z0-9]+(-[a-z0-9]+)*$/.test(v || "") && v.length <= 60 ? v : null, f = sl(url.searchParams.get("from")), t = sl(url.searchParams.get("to"));
+      if (!f || !t) return Response.json({ error: "Bad request" }, { status: 400, headers: h });
+      const key = "bk1:" + f + ":" + t, hit = await env.USAGE.get(key); if (hit) return Response.json({ trainline: hit }, { headers: h });
+      let st = "unknown";
+      try { const r = await fetch(`https://www.thetrainline.com/en/train-times/${f}-to-${t}`, { headers: { "user-agent": "Mozilla/5.0 (compatible; Kairoute/1.0; travel guide)", accept: "text/html", "accept-language": "en" }, redirect: "follow", signal: AbortSignal.timeout(12000) });
+        st = r.status === 200 ? "ok" : r.status === 404 || r.status === 410 ? "missing" : "unknown"; } catch (e) {}
+      if (st !== "unknown") ctx.waitUntil(env.USAGE.put(key, st, { expirationTtl: 30 * 86400 }).catch(() => {}));
+      return Response.json({ trainline: st }, { headers: h });
     }
     if (url.pathname === "/transit" && req.method === "POST") {
       let b; try { b = await req.json(); } catch (e) { return Response.json({ error: "Bad request" }, { status: 400, headers: h }); }

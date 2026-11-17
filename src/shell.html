@@ -1206,6 +1206,18 @@ details.morefold:not([open]) { padding-bottom: 0 !important; }
 }
 /* Offline: "Ready for offline" card (Trip screen, Settings) and the one-line banner on the Day plan and Guide */
 /* Partner offer (demo): mobile data for the trip. Card on the Trip screen + a sheet over the page. */
+/* Book the train or ferry between cities (book-ride.js): at the end of a leaving day's plan. */
+.bookride { margin-top: 10px; padding: 12px 12px; border: 1px solid var(--line); border-left: 4px solid var(--lc, var(--t-train)); border-radius: 10px; background: var(--card); display: grid; gap: 8px; max-width: 560px; }
+.bookride.k-ferry { --lc: var(--t-ferry); }
+.bookride .brhead { display: flex; gap: 10px; align-items: flex-start; } .bookride .brhead b { display: block; font-size: 1.02rem; } .bookride .brhead span { color: var(--muted); font-size: .9rem; }
+.bookride .brico { font-size: 1.4rem; line-height: 1; }
+.bookride .brlbl { font-weight: 700; font-size: .78rem; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+.bookride .brtimes { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; }
+.bookride .brtimes li { display: grid; grid-template-columns: auto auto 1fr; gap: 2px 10px; align-items: baseline; padding: 5px 6px; border-radius: 6px; font-size: .93rem; font-variant-numeric: tabular-nums; }
+.bookride .brtimes li .brdur { color: var(--muted); white-space: nowrap; } .bookride .brtimes li .brarr { white-space: nowrap; } .bookride .brtimes li em { grid-column: 1 / -1; }
+.bookride .brtimes li.mine { background: color-mix(in srgb, var(--lc) 14%, transparent); } .bookride .brtimes li em { font-style: normal; font-weight: 700; font-size: .8rem; color: var(--lc); }
+.bookride .brsrc, .bookride .brsmall, .bookride .brnote { font-size: .82rem; margin: 0; }
+.bookride .brbook { justify-self: start; background: var(--lc); border-color: var(--lc); color: var(--card); text-decoration: none; min-height: 44px; display: inline-flex; align-items: center; gap: 6px; }
 .esimcard { gap: 8px; border-left: 4px solid var(--route); }
 .esimcard.ok .offico { background: var(--route); color: var(--card); }
 .esimtag { display: flex; gap: 6px; align-items: center; font-size: .85rem; color: var(--muted); flex-wrap: wrap; }
