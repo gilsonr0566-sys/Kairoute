@@ -26,19 +26,21 @@ for (const [d, v] of Object.entries(days)) {
 }
 // Workers Paid includes, per month: 10M requests, 10M KV reads, 1M KV writes, 1M lists, 1M removals. Past those it
 // bills ($0.30 per M requests, $0.50 per M reads, $5 per M writes, lists or removals). Month so far, and its pace.
-const q2 = `{ viewer { accounts(filter: { accountTag: "${id}" }) { kvOperationsAdaptiveGroups(limit: 1000, filter: { date_geq: "${month}-01" }) { sum { requests } dimensions { actionType } } workersInvocationsAdaptive(limit: 1000, filter: { date_geq: "${month}-01" }) { sum { requests } dimensions { scriptName } } } } }`;
+const q2 = `{ viewer { accounts(filter: { accountTag: "${id}" }) { kvOperationsAdaptiveGroups(limit: 2000, filter: { date_geq: "${month}-01" }) { sum { requests } dimensions { actionType date } } workersInvocationsAdaptive(limit: 2000, filter: { date_geq: "${month}-01" }) { sum { requests } dimensions { scriptName date } } } } }`;
 const r2 = await (await fetch("https://api.cloudflare.com/client/v4/graphql", { method: "POST", headers: H, body: JSON.stringify({ query: q2 }) })).json();
-const use = { requests: 0, kairouteRequests: 0 };
+const use = { requests: 0, kairouteRequests: 0 }, recent = {}, y1 = new Date(now - 86400e3).toISOString().slice(0, 10), y2 = new Date(now - 2 * 86400e3).toISOString().slice(0, 10);
+const addRecent = (k, d, n) => { if (d === y1 || d === y2) recent[k] = (recent[k] || 0) + n; };
 if (!r2.errors) {
   const A = r2.data.viewer.accounts[0];
-  for (const x of A.kvOperationsAdaptiveGroups) use[x.dimensions.actionType] = (use[x.dimensions.actionType] || 0) + x.sum.requests;
-  for (const x of A.workersInvocationsAdaptive) { use.requests += x.sum.requests; if (x.dimensions.scriptName === "kairoute-ai") use.kairouteRequests += x.sum.requests; }
+  for (const x of A.kvOperationsAdaptiveGroups) { use[x.dimensions.actionType] = (use[x.dimensions.actionType] || 0) + x.sum.requests; addRecent(x.dimensions.actionType, x.dimensions.date, x.sum.requests); }
+  for (const x of A.workersInvocationsAdaptive) { use.requests += x.sum.requests; addRecent("requests", x.dimensions.date, x.sum.requests); if (x.dimensions.scriptName === "kairoute-ai") use.kairouteRequests += x.sum.requests; }
 }
 const dim = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth() + 1, 0)).getUTCDate(), elapsed = now.getUTCDate() - 1 + (now.getUTCHours() + 1) / 24;
 const INCL = [["requests", "Worker requests (all apps)", 10e6, 0.30], ["read", "KV reads", 10e6, 0.50], ["write", "KV writes", 1e6, 5], ["list", "KV lists", 1e6, 5], ["delete", "KV removals", 1e6, 5]];
 let otherUsd = 0, projUsd = 0; const useLines = [];
 for (const [k, label, inc, per] of INCL) {
-  const v = use[k] || 0, proj = v / elapsed * dim;
+  // Pace: the busier of the month so far and the last two full days, so a busy week isn't hidden by quiet early days.
+  const v = use[k] || 0, proj = v + Math.max(v / elapsed, (recent[k] || 0) / 2) * Math.max(0, dim - elapsed);
   otherUsd += Math.max(0, v - inc) / 1e6 * per; projUsd += Math.max(0, proj - inc) / 1e6 * per;
   useLines.push(`| ${label} | ${fmt(v)} | ${fmt(proj)} | ${fmt(inc)} |`);
 }
