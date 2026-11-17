@@ -12,7 +12,7 @@ const OUT = path.join(__dirname, '..', 'checks', 'book'); fs.mkdirSync(OUT, { re
     const p = await ctx.newPage(), errs = []; p.on('pageerror', e => errs.push(e.message));
     // No AI (Richard, Nov 17: none without his consent): the helper is reached only for timetables and the booking-page
     // check; every other helper call (guides, scripts, voice, photo reading) is refused before it leaves the browser.
-    await ctx.route(/workers\.dev\//, r => /\/(departures|bookcheck)\?/.test(r.request().url()) ? r.continue() : r.fulfill({ status: 503, json: { error: 'off in this check' } }));
+    await ctx.route(/workers\.dev\//, r => /\/(departures|bookcheck)\?|\/transit$/.test(r.request().url()) ? r.continue() : r.fulfill({ status: 503, json: { error: 'off in this check' } }));
     await p.goto(URL, { waitUntil: 'load', timeout: 60000 }); await p.waitForTimeout(3000);
     if (!(await p.evaluate(() => !!window.__kairouteBook))) { bad(name + ': live build has no Book train yet'); await ctx.close(); continue; }
     const days = await p.evaluate(() => window.__kairouteDays()), i = days.find(d => d.type === 'departure' && /Barcelona/.test(d.dest)).i;
@@ -26,6 +26,17 @@ const OUT = path.join(__dirname, '..', 'checks', 'book'); fs.mkdirSync(OUT, { re
     await el.screenshot({ path: path.join(OUT, name + '-card.png') });
     await p.evaluate(() => { const e = document.querySelector('#view .bookride'); e.scrollIntoView({ block: 'center' }); }); await p.waitForTimeout(400);
     await p.screenshot({ path: path.join(OUT, name + '-screen.png') });
+    // The Athens day with the Corinth Canal: its ride there (the train whose stations are a taxi away, Nov 17).
+    for (const d of days.filter(d => /Athens/.test(d.dest))) {
+      await p.evaluate(i => window.__kairouteAt(i, 'plan'), d.i); await p.waitForTimeout(1500);
+      if (!(await p.evaluate(() => /Corinth/.test(document.querySelector('#view').innerText)))) continue;
+      let r = null; for (let k = 0; k < 90 && !(r && /Train/.test(r)); k++) { await p.waitForTimeout(1000); r = await p.evaluate(() => { const ch = [...document.querySelectorAll('#view .ridechips')].find(e => /Corinth/.test((e.closest('.row, li, div.leg, section') || e.parentElement).innerText)); return ch ? ch.innerText.replace(/\s+/g, ' ') : null; }); }
+      console.log(name + ' Corinth ride: ' + r);
+      r && /Train/.test(r) ? ok(name + ': train offered to Corinth') : bad(name + ': no train chip to Corinth: ' + r);
+      await p.evaluate(() => { const ch = [...document.querySelectorAll('#view .ridechips')].find(e => /Corinth/.test((e.closest('.row, li, div.leg, section') || e.parentElement).innerText)); if (ch) ch.scrollIntoView({ block: 'center' }); }); await p.waitForTimeout(500);
+      await p.screenshot({ path: path.join(OUT, name + '-corinth.png') });
+      break;
+    }
     errs.length ? bad(name + ': page errors: ' + errs.slice(0, 3).join(' | ')) : ok(name + ': no page errors');
     if (name === 'tablet') {
       const helper = await p.evaluate(async () => { const u = JSON.parse(await (await fetch('ai.json')).text()).url, out = [];
@@ -37,5 +48,10 @@ const OUT = path.join(__dirname, '..', 'checks', 'book'); fs.mkdirSync(OUT, { re
     }
     await ctx.close();
   }
+  // PRINT=1: the pictures as text in the log (JPEG), for a reader who can read the log but not download the artifact.
+  if (process.env.PRINT) { const { chromium: c2 } = require('playwright'); for (const f of fs.readdirSync(OUT).filter(f => f.endsWith('.png'))) {
+    const b2 = await c2.launch(), pg = await b2.newPage(); await pg.setContent(`<img src="data:image/png;base64,${fs.readFileSync(path.join(OUT, f)).toString('base64')}">`);
+    const im = await pg.$('img'), j = await im.screenshot({ type: 'jpeg', quality: 80 }); await b2.close();
+    console.log(`IMG ${f.replace('.png', '.jpg')} ${j.toString('base64')}`); } }
   await b.close(); console.log(fails ? `Book live check: ${fails} problem(s)` : 'Book live check passed'); process.exit(fails ? 1 : 0);
 })();
