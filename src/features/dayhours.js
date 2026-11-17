@@ -57,6 +57,7 @@ function setDayHours(d, startStr, endStr) {
   if (!isFinite(e)) e = plan.endBy;
   e = Math.max(s + 60, Math.min(lim.maxEnd, e));
   const h = Math.max(HRS_MIN, hoursBetween(s, e));
+  snapTimes(d);
   if (!lim.startFixed) d.startTime = fmt(s);
   d.hours = h;
   return true;
