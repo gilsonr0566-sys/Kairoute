@@ -143,7 +143,10 @@ const CITY_ATHENS = {
     { mode: "Metro", tip: "Clean and fast. Line 1 links Piraeus to Monastiraki; line 3 runs to the airport. Buy a 24-hour ticket." },
     { mode: "Taxi", tip: "Yellow taxis are cheap; use the FreeNow or Uber app. Airport to center has a fixed fare." },
     { mode: "From Piraeus", tip: "Taxi to the Acropolis is 30–40 minutes. Or walk 15 minutes to Piraeus metro station and take line 1 to Monastiraki." }
-  ]
+  ],
+  // How to pay on public rides, shown under every metro, bus or train ride in this city (OASA: contactless bank cards
+  // and phones are accepted at metro gates and on buses, the airport metro and X95 included).
+  ridePay: "Pay by tapping a contactless bank card or phone at the metro gate or on the bus, airport rides included. Each traveler taps their own card."
 };
 
 const CITY_HERAKLION = {

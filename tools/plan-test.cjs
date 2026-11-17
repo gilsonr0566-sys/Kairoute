@@ -64,5 +64,21 @@ const FILE = path.resolve(process.argv[2] || path.join(__dirname, '..', 'index.h
     await p.close(); }
   console.log(`\nTime meter checked ${meters} times (every day as planned, and again with every stop unticked).`);
   console.log(`\n${days} days planned: ${fails} with problems, ${warns} travel-heavy warnings.`);
+  // Stop times (Nov 16): a stop's time covers its guide at 150 words a minute plus a look around, and at a timed show
+  // the plan arrives 10 min before the next show when none falls during the visit (waiting at most 30 min).
+  { const p = await b.newPage(); await p.route('**/*', r => /^file:/.test(r.request().url()) ? r.continue() : r.abort());
+    await p.goto('file://' + FILE); await p.waitForTimeout(600);
+    const r = await p.evaluate(() => { const T = window.__kairouteStopTime, sh = { every: 60, first: '09:00', last: '23:00' }, words = n => Array(n).fill('word').join(' ');
+      return { long: T.stopFloor({ minutes: 10, guide: words(1500) }), quick: T.stopFloor({ minutes: 10, quick: true, guide: words(100) }), parts: T.stopFloor({ minutes: 10, parts: [{ guide: words(300) }, { guide: words(300) }, { guide: words(300) }], partsOff: [2] }),
+        during: T.showWait({ show: sh, minutes: 33 }, 10 * 60 + 30), before: T.showWait({ show: sh, minutes: 20 }, 10 * 60 + 25), far: T.showWait({ show: sh, minutes: 20 }, 10 * 60 + 5), short: T.short() }; });
+    const chk = (c, m) => { console.log((c ? 'ok   ' : 'FAIL ') + m); if (!c) fails++; };
+    console.log('\n== Stop times');
+    chk(r.long === 20, `a 1,500-word guide gets 20 min (10 min to say it + 10 to look around): ${r.long}`);
+    chk(r.quick === 10, `a quick sight with a short guide gets 10 min: ${r.quick}`);
+    chk(r.parts === 15, `only the ticked parts count, plus a minute between parts: ${r.parts}`);
+    chk(r.during === 0, `a show during the visit needs no wait: ${r.during}`);
+    chk(r.before === 25, `no show during a 20-min visit from 10:25: wait to arrive 10:50 for the 11:00 show: ${r.before}`);
+    chk(r.far === 0, `a 45-min wait for the next show isn't made: ${r.far}`);
+    console.log(`stops whose guide time raised their planned time: ${r.short.length ? r.short.join('; ') : 'none'}`); await p.close(); }
   await b.close(); process.exit(fails ? 1 : 0);
 })();

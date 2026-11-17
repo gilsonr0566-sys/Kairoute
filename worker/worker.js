@@ -435,7 +435,7 @@ export default {
     }
     // /transit (POST {pairs:[{a:[lat,lng], b:[lat,lng]}]}): the mapped train, metro, tram, bus and ferry lines
     // between each pair of points, with stops, the real path and a cautious time (see transit.js). Each pair is
-    // looked up once and kept (see keep below), so every traveler on the same trip shares it. Keys are tr4: since ferries come from their own
+    // looked up once and kept (see keep below), so every traveler on the same trip shares it. Keys are tr5: (tr4 answers had frequencies measured across searches hours apart, and could leave out the airport bus); before that tr4: since ferries come from their own
     // long-kept lookup at each end (answers from before that are not reused).
     // /ferries?lat=&lng=: what the helper keeps about ferries near a point (for the live checks): kept or still
     // waiting for the schedule, and the ferry courses' names.
@@ -455,7 +455,7 @@ export default {
         // The trip's date (when the page gives it) picks the timetable; answers are kept per month, since a summer
         // ferry runs in July and not in November.
         const date = typeof pr.date === "string" && /^\d{4}-\d{2}-\d{2}$/.test(pr.date) ? pr.date : null;
-        const key = "tr4:" + kind + ":" + [...pr.a, ...pr.b].map(n => n.toFixed(3)).join(",") + (date ? ":m" + +date.slice(5, 7) : "");
+        const key = "tr5:" + kind + ":" + [...pr.a, ...pr.b].map(n => n.toFixed(3)).join(",") + (date ? ":m" + +date.slice(5, 7) : "");
         // A full answer is kept 14 days (timetables change); one where a source was busy only 1 day. When the map answered
         // after the reply went out, its full answer replaces the partial one. A partial answer met again after 10 minutes
         // is looked up afresh in the background (once per 10 minutes), so a busy map server never hides a ferry for a day.

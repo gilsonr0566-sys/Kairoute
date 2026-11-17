@@ -13,7 +13,7 @@ function printLeg(leg, endBy) {
     const parts = [];
     if (o.from) parts.push(`${o.access && o.access.how === "walk" ? "walk" : "taxi"} ${dur((o.access && o.access.min) || 0)} to ${esc(o.from)}`);
     if (o.steps && o.steps.length) parts.push(o.steps.map(esc).join("; then ")); else if (o.to) parts.push(`ride to ${esc(o.to)}`);
-    if (o.every) parts.push(`runs about every ${dur(o.every)}`);
+    if (knownEvery(o)) parts.push(`runs about every ${dur(o.every)}`);
     if (parts.length) t += `: ${parts.join(", ")}`;
     if (leg.lastMile) t += `. If you miss it, a taxi takes about ${dur(leg.road || leg.min)}`;
   }
