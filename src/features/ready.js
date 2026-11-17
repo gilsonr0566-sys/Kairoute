@@ -134,7 +134,7 @@ function lockTimes(d, city, w) {
   const thru = throughFrom(d), L = lodgingFor(d, city);
   return { type: d.type || "", mode: d.mode || "", start: d.startTime || "", hours: d.hours == null ? "" : String(d.hours), time: d.time || "",
     arrive: d.portArrive || "", aboard: d.allAboard || "", tender: !!d.tender, board: d.boardTime || "", thru: (thru && thru.time) || "",
-    back: !!d.returnToStart, bags: !!d.noBags, stay: (L && L.name) || "", book: JSON.stringify(d.booked || {}),
+    back: !!d.returnToStart, bags: !!d.noBags, stay: (L && L.name) || "", lodge: JSON.stringify(trip.lodging[cityKeyFor(d) || keyOf(d.destination)] || {}), book: JSON.stringify(d.booked || {}),
     set: [!!d.rain, !!d.alongWay, d.fillTime !== false, trip.style || "mix", (trip.prefs && trip.prefs.pace) || "moderate"].join("|"),
     endBy: d.type === "arrival" ? null : Math.round(w.endBy) }; // an arrival day's end depends on the ride in, which isn't a time the traveler set
 }
@@ -142,7 +142,7 @@ function lockTimes(d, city, w) {
 function lockSeqOut(seq) {
   return seq.map(x => {
     if (x.mealOf) { const n = Object.assign({}, x); delete n.mealOf; delete n.alts; return { meal: x.mealOf.label, q: x.mealOf.quick ? 1 : 0, bk: x.mealOf.booked ? 1 : 0, node: n }; }
-    return Object.assign({ id: x.id, n: x.name, min: x.minutes || 0, sf: x.shortFrom || 0, b: x.bonus ? 1 : 0, a: x.along ? 1 : 0 }, x.foldOf ? { inc: x.foldOf.map(y => y.id) } : {});
+    return Object.assign({ id: x.id, n: x.name, la: isFinite(x.lat) ? +(+x.lat).toFixed(5) : undefined, lo: isFinite(x.lng) ? +(+x.lng).toFixed(5) : undefined, min: x.minutes || 0, sf: x.shortFrom || 0, b: x.bonus ? 1 : 0, a: x.along ? 1 : 0 }, x.foldOf ? { inc: x.foldOf.map(y => y.id), incn: x.foldOf.map(y => y.name), incp: x.foldOf.map(y => isFinite(y.lat) ? [+(+y.lat).toFixed(5), +(+y.lng).toFixed(5)] : null) } : {});
   });
 }
 // What changed in the day's times, in a few plain words.
@@ -156,7 +156,10 @@ function lockTimeWhy(a, b, d) {
   if (a.thru !== b.thru) return `your arrival time is now ${b.thru || "not set"}`;
   if (a.start !== b.start) return `the day now starts at ${b.start || "a time not set"}`;
   if (a.hours !== b.hours) return "you changed the day's hours";
-  if (a.stay !== b.stay) return "your hotel changed";
+  // The hotel the traveler chose (lodge). The place it names can move when the guide's list of hotel areas is fetched
+  // again; that is not the traveler's change, and the plan's rides start from wherever it is now. Plans kept before
+  // this was recorded compare the hotel's name.
+  if (a.lodge != null && b.lodge != null ? a.lodge !== b.lodge : a.stay !== b.stay) return "your hotel changed";
   if (a.book !== b.book) return "your table booking changed";
   if (a.type !== b.type || a.mode !== b.mode) return "the day's travel changed";
   if (a.endBy !== b.endBy) return `the time to be back is now ${fmt(b.endBy)}`;
@@ -174,7 +177,13 @@ function lockReplay(d, city, w, lockT, w0start, k) {
   // A sight folded into another (two names for one place, or a part of a bigger place) is found under the one that
   // stayed: its old id is kept among that sight's aliases. The Acropolis left a hearted Athens day this way (Nov 17).
   (city.sites || []).concat(city.farther || []).forEach(s => { for (const a of (s && s.alias) || []) if (a != null && !by.has(a)) by.set(a, s); });
-  const seq = [], bonus = [], along = []; let quick = false;
+  // A guide fetched again can give the same sight a new id with no merge behind it (a fresh guide or sources): the
+  // sight is then found by its name, when exactly one sight in the guide has that name.
+  const byName = new Map(), twice = new Set(); (city.sites || []).concat(city.farther || []).forEach(s => { if (!s || !s.name) return; const nk = keyOf(s.name); if (byName.has(nk) && byName.get(nk) !== s) twice.add(nk); else byName.set(nk, s); });
+  // Last, the same place under another name (another source's spelling or language): the app's own test of one place.
+  const all = (city.sites || []).concat(city.farther || []);
+  const find = (id, n, ll) => by.get(id) || (n && !twice.has(keyOf(n)) ? byName.get(keyOf(n)) : null) || (n ? all.find(s => s && samePlace({ name: n, lat: ll ? ll[0] : NaN, lng: ll ? ll[1] : NaN }, s)) || null : null);
+  const seq = [], bonus = [], along = [], skipped = []; let quick = false;
   for (const x of L.seq) {
     if (x.meal) {
       if (k.liveAte && k.liveAte(d, x.meal)) continue;
@@ -187,13 +196,13 @@ function lockReplay(d, city, w, lockT, w0start, k) {
       continue;
     }
     // An area visit (area-visit.js): the same visit again, from the same picks, at the hearted length.
-    if (x.inc) { const inc = [...new Set(x.inc.map(i => (by.get(i) || {}).id || i))];
+    if (x.inc) { const inc = [...new Set(x.inc.map((i, j) => (find(i, (x.incn || [])[j], (x.incp || [])[j]) || {}).id || i))];
       const v = (k.chosen || []).find(c => c.foldOf && c.foldOf.length === inc.length && c.foldOf.every(y => inc.includes(y.id)));
       if (!v) return { why: `${x.n || "a visit"} has changed` };
       const n = Object.assign({}, v, { minutes: x.min || v.minutes }); if (x.sf) n.shortFrom = x.sf; seq.push(n); continue; }
-    const s = by.get(x.id); if (liveDone(d, x.id) || (s && liveDone(d, s.id))) continue;
+    const s = find(x.id, x.n, x.la != null ? [x.la, x.lo] : null); if (liveDone(d, x.id) || (s && liveDone(d, s.id))) continue;
     // A shown plan (soft): an optional stop that is gone or now planned on another day is left out; a pick never is.
-    if (k.soft && (x.b || x.a) && (!s || (k.seenOn && k.seenOn[s.id]) || closedForDay(s, d, w))) continue;
+    if (k.soft && (x.b || x.a) && (!s || (k.seenOn && k.seenOn[s.id]) || closedForDay(s, d, w))) { const why = !s ? "not in the guide" : k.seenOn && k.seenOn[s.id] ? "now part of " + s.name + " on another day" : "closed that day"; skipped.push({ n: x.n, why }); if (typeof seenBreakLog === "function") seenBreakLog(d, `optional ${x.n} left out: ${why}`); continue; }
     if (!s) return { why: `${x.n || "a stop"} is no longer in the guide` };
     if (closedForDay(s, d, w)) return { why: `${s.name} is closed that day` };
     if (k.seenOn && k.seenOn[s.id]) return { why: `${s.name} is now planned on ${dayName(k.seenOn[s.id]) || "an earlier day"}` };
@@ -207,5 +216,5 @@ function lockReplay(d, city, w, lockT, w0start, k) {
   if (r.late > (L.late || 0)) { let who = ""; for (let i = 1; i <= seq.length && !who; i++) if (simDay(seq.slice(0, i), k.t0, k.O, k.ZZ, k.style).late > (L.late || 0)) who = seq[i - 1].name;
     return { why: `you'd now reach ${who || "a stop"} after it closes` }; }
   const inSeq = new Set(seq.filter(x => !x.mealOf).flatMap(x => x.foldOf ? [x.id].concat(x.foldOf.map(y => y.id)) : [x.id]));
-  return { seq, dropped: k.chosen.filter(s => !inSeq.has(s.id)), bonus, along, quick, eve: L.eve || "" };
+  return { seq, dropped: k.chosen.filter(s => !inSeq.has(s.id)), bonus, along, quick, eve: L.eve || "", skipped };
 }

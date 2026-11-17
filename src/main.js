@@ -869,8 +869,9 @@ if (typeof window !== "undefined") window.__kairouteOneEach = (opts, want) => on
 function rideLeg(a, b, road, lastMile, walkMin) {
   const walk = walkMin ? [{ id: "walk", label: "Walk", min: walkMin, kind: "walk" }] : [];
   let opts = transitFor(a, b);
-  // No line found: the ride is a taxi, and says so (not "Taxi, bus or metro"); a short one can be walked instead.
-  if (!opts || !opts.length) return Object.assign({}, road, { how: road.how === "Taxi, bus or metro" ? "Taxi or car" : road.how, key: pairKey(a, b), choice: "taxi", road: road.min, lastMile, choices: [...walk, { id: "taxi", label: "Taxi or car", min: road.min, kind: "car" }] });
+  // No line found: the ride is a taxi, and says so (not "Taxi, bus or metro", not "Train or car": the label never names
+  // a way to go that has no button, Richard Nov 17); a short one can be walked instead.
+  if (!opts || !opts.length) return Object.assign({}, road, { how: "Taxi or car", key: pairKey(a, b), choice: "taxi", road: road.min, lastMile, choices: [...walk, { id: "taxi", label: "Taxi or car", min: road.min, kind: "car" }] });
   // Leaving the ship for the first ride you go when the boat or train goes: with no timetable, plan on half the gap
   // between sailings plus boarding rather than a full gap (a full gap stays on every ride that must catch one later,
   // and on the ride back to the ship).
@@ -2054,7 +2055,7 @@ function buildPlanForDay(d) {
   // or sources arriving later never move or drop its stops. When that plan no longer holds (the traveler changed the
   // day, or a safety limit), the day is planned as usual. Optional stops that are gone are just left out (soft).
   let seenUsed = false, seenBroke = "";
-  if (!lk) { const sv = seenFor(d); if (sv) { const dd = Object.create(d); dd.ready = { sel: selKey(d), lock: sv.lock }; const r = lockReplay(dd, city, w, lockT, w0start, Object.assign({ soft: true }, lkArgs)); if (r && r.seq) { lk = r; seenUsed = true; } else if (r && r.why) seenBroke = r.why; } }
+  if (!lk) { const sv = seenFor(d); if (sv) { const dd = Object.create(d); dd.ready = { sel: selKey(d), lock: sv.lock }; const r = lockReplay(dd, city, w, lockT, w0start, Object.assign({ soft: true }, lkArgs)); if (r && r.seq) { lk = r; seenUsed = true; } else if (r && r.why) { seenBroke = r.why; seenBreakLog(d, r.why); } } }
   const locked = !!(lk && lk.seq), lockBroken = lk && lk.why ? lk.why : null;
   let fitted = locked ? { seq: lk.seq, dropped: lk.dropped } : fitDay();
   if (!locked && fitted.dropped.length && !d.rain) { quickMeals = true; const q = fitDay(); if (worth(q) > worth(fitted) + 1) fitted = q; else quickMeals = false; }
@@ -2192,7 +2193,7 @@ function buildPlanForDay(d) {
   const eve0 = evening.find(e => !e.booked && e.place); if (locked) quickMeals = lk.quick;
   const lock = { t: lockT, seq: lockSeqOut(seq), late: simDay(seq, t0, O, ZZ, style).late, quick: !!quickMeals, eve: eve0 ? keyOf(eve0.place.name) : "" };
   const folded = [...new Set(seq.filter(x => x.foldOf).flatMap(x => x.foldOf.map(y => y.id)))]; // picks shown inside an area visit
-  return { city, w, items, stops, dropped, folded, elsewhere, quickMeals, along, bonus, fill, meals, evening, swaps, closedToday, lock, locked: locked && !seenUsed, seen: seenUsed, seenBroke, lockBroken, start: w.start, endBy: w.endBy, end: clock, walkKm, over: clock > w.endBy + (hardEnd(d) ? 0 : 5), tight: budget < fixed + 45 };
+  return { city, w, items, stops, dropped, folded, elsewhere, quickMeals, along, bonus, fill, meals, evening, swaps, closedToday, lock, locked: locked && !seenUsed, seen: seenUsed, seenBroke, seenSkipped: seenUsed ? lk.skipped || [] : [], lockBroken, start: w.start, endBy: w.endBy, end: clock, walkKm, over: clock > w.endBy + (hardEnd(d) ? 0 : 5), tight: budget < fixed + 45 };
 }
 
 // ---------- AI ----------
