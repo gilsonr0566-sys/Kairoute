@@ -170,6 +170,9 @@ function lockReplay(d, city, w, lockT, w0start, k) {
   if (R.sel != null && R.sel !== selKey(d)) return null; // the traveler changed the day's sights: theirs to heart again
   const tw = lockTimeWhy(L.t, lockT, d); if (tw) return { why: tw };
   const by = new Map(); (city.sites || []).concat(city.farther || []).forEach(s => { if (s && s.id != null && !by.has(s.id)) by.set(s.id, s); });
+  // A sight folded into another (two names for one place, or a part of a bigger place) is found under the one that
+  // stayed: its old id is kept among that sight's aliases. The Acropolis left a hearted Athens day this way (Nov 17).
+  (city.sites || []).concat(city.farther || []).forEach(s => { for (const a of (s && s.alias) || []) if (a != null && !by.has(a)) by.set(a, s); });
   const seq = [], bonus = [], along = []; let quick = false;
   for (const x of L.seq) {
     if (x.meal) {
@@ -183,11 +186,11 @@ function lockReplay(d, city, w, lockT, w0start, k) {
       continue;
     }
     // An area visit (area-visit.js): the same visit again, from the same picks, at the hearted length.
-    if (x.inc) { const v = (k.chosen || []).find(c => c.foldOf && c.foldOf.length === x.inc.length && c.foldOf.every(y => x.inc.includes(y.id)));
+    if (x.inc) { const inc = [...new Set(x.inc.map(i => (by.get(i) || {}).id || i))];
+      const v = (k.chosen || []).find(c => c.foldOf && c.foldOf.length === inc.length && c.foldOf.every(y => inc.includes(y.id)));
       if (!v) return { why: `${x.n || "a visit"} has changed` };
       const n = Object.assign({}, v, { minutes: x.min || v.minutes }); if (x.sf) n.shortFrom = x.sf; seq.push(n); continue; }
-    if (liveDone(d, x.id)) continue;
-    const s = by.get(x.id); if (!s) return { why: `${x.n || "a stop"} is no longer in the guide` };
+    const s = by.get(x.id); if (liveDone(d, x.id) || (s && liveDone(d, s.id))) continue; if (!s) return { why: `${x.n || "a stop"} is no longer in the guide` };
     if (closedForDay(s, d, w)) return { why: `${s.name} is closed that day` };
     if (k.seenOn && k.seenOn[s.id]) return { why: `${s.name} is now planned on ${dayName(k.seenOn[s.id]) || "an earlier day"}` };
     const n = Object.assign({}, s, { minutes: x.min || s.minutes }, k.live(s));

@@ -107,6 +107,14 @@ main .wrap { padding-block: 20px 64px; display: grid; gap: 18px; }
 .banner { background: var(--route-soft); border-radius: var(--r); padding: 12px 14px; font-size: 0.92rem; display: flex; gap: 10px; align-items: flex-start; }
 .banner.warn { background: var(--meal-soft); }
 .banner.bumped { flex-wrap: wrap; } .banner.bumped .actions { display: flex; flex-wrap: wrap; gap: 8px; }
+.offlog { border: 1px solid var(--line); border-radius: var(--r); background: var(--card); padding: 0 14px; }
+.offlog > summary { cursor: pointer; list-style: none; display: flex; align-items: center; justify-content: space-between; gap: 10px; min-height: 48px; font-weight: 700; }
+.offlog > summary::-webkit-details-marker { display: none; }
+.offlog > summary::after { content: "▾"; color: var(--muted); margin-left: 6px; } .offlog[open] > summary::after { content: "▴"; }
+.offlog > summary b { margin-left: auto; background: var(--meal-soft); border-radius: 999px; padding: 0 9px; font-size: 0.85rem; }
+.offlog ul { list-style: none; margin: 0; padding: 0; } .offlog li { display: flex; align-items: center; gap: 10px; padding: 10px 0; border-top: 1px solid var(--line); }
+.offlog .offwhat { flex: 1; min-width: 0; display: flex; flex-direction: column; } .offlog .offwhat span { font-size: 0.9rem; } .offlog .offwhat small { color: var(--muted); font-size: 0.78rem; }
+.offlog .offin { color: var(--muted); font-size: 0.85rem; white-space: nowrap; } .offlog .offclear { margin: 4px 0 12px; }
 .schedline { display: flex; align-items: center; gap: 12px; margin: 22px 0 6px; font-weight: 700; font-size: .85rem; letter-spacing: .04em; text-transform: uppercase; color: var(--muted); }
 .schedline::before, .schedline::after { content: ""; flex: 1; border-top: 2px solid var(--line, #ccc); }
 .site.nofitcard [data-act="fitask"] { margin-top: 8px; }
