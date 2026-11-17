@@ -1,0 +1,32 @@
+{
+ "prague-clock": {
+  "fp": "ebc89137f99a788d95d8",
+  "v": 1,
+  "title": "Prague Astronomical Clock",
+  "locked": "2026-11-15",
+  "chars": 11465,
+  "note": "Recorded with Richard's go before locks existed; research kept with the project tour scripts."
+ },
+ "heraklion-titus": {
+  "fp": "82000390f348455f0bfb",
+  "v": 1,
+  "title": "Church of Saint Titus",
+  "locked": "2026-11-16",
+  "chars": 5431,
+  "note": "Recorded with Richard's go before locks existed; research kept with the project tour scripts."
+ },
+ "athens-acropolis": {
+  "fp": "0174f5b429f05432ab4e",
+  "v": 1,
+  "title": "The Acropolis and the Parthenon",
+  "locked": "2026-11-17",
+  "chars": 7973
+ },
+ "ancient-corinth": {
+  "fp": "5b0785cfe0291677e976",
+  "v": 1,
+  "title": "Ancient Corinth",
+  "locked": "2026-11-17",
+  "chars": 5632
+ }
+}

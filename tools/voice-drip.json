@@ -1,0 +1,5 @@
+{
+ "pause": ["2026-11-18", "2026-11-19", "2026-11-20"],
+ "pauseWhy": "Demo week: freeze Thu Nov 19 and the demo Fri Nov 20 keep the full AI allowance (the Nov 18 run would land at the freeze).",
+ "maxParasPerRun": 30
+}

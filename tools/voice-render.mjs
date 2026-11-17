@@ -3,8 +3,8 @@
 // Only paragraphs whose words changed are recorded again (audio/<id>/manifest.json keeps a hash of each).
 // Records through Kairoute's AI helper (/speak with the recorder key, which is derived from CLOUDFLARE_API_TOKEN
 // and set on the helper by the "Publish website" workflow), paid from the monthly extra. Cost: about 2.7 neurons a character (11,400 characters ≈ 31,000 neurons ≈ $0.35).
-// Usage: node tools/voice-render.mjs [--dry]
-import fs from "node:fs"; import vm from "node:vm"; import crypto from "node:crypto";
+// Only LOCKED scripts are recorded (audio/locks.json). Usage: node tools/voice-render.mjs [--dry]
+import fs from "node:fs"; import vm from "node:vm"; import crypto from "node:crypto"; import { isLocked } from "./scripts-lib.mjs";
 const dry = process.argv.includes("--dry");
 const code = fs.readFileSync("src/features/stop-scripts.js", "utf8");
 const noop = () => {}, ctx = vm.createContext({ partSpeech: noop, speakText: noop, speakSite: noop, updateAudioUI: noop });
@@ -14,6 +14,8 @@ const KEY = T ? crypto.createHash("sha256").update(T).digest("hex").slice(0, 40)
 if (!dry && !T) { console.error("No CLOUDFLARE_API_TOKEN"); process.exit(1); }
 let made = 0, kept = 0, chars = 0, failed = 0;
 for (const sc of S) {
+  // Never pay to voice a draft (Richard, Nov 17): only scripts locked with tools/script-lock.mjs, words unchanged since.
+  if (!isLocked(sc)) { console.log(`${sc.id}: not locked (a draft, or edited since it was locked), not recorded`); continue; }
   const dir = `audio/${sc.id}`; fs.mkdirSync(dir, { recursive: true });
   const mf = `${dir}/manifest.json`, old = fs.existsSync(mf) ? JSON.parse(fs.readFileSync(mf, "utf8")) : {}, now = {};
   for (const [k, p] of sc.parts.entries()) for (const [i, para] of p.paras.entries()) {

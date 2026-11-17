@@ -62,6 +62,38 @@ async function limits(env) {
   return { DAILY_NEURONS: daily, VOICE_DAILY: daily, LAB_LEFT: Math.max(0, Math.min(LAB_DAILY - labToday, left)) };
 }
 
+// ---------- Slow voicing of hearted stops ----------
+// Free first: today's free share may be spent down to DRIP_FREE_KEEP (kept for anyone using the app late in the day).
+// Paid: at most DRIP_PAID neurons a month (~$1), and none once the month's paid extra reaches DRIP_ROOM (~$2 of the
+// $5 ceiling), so normal use of the app always has at least ~$3 of room.
+const DRIP_FREE_KEEP = 1000, DRIP_PAID = 90000, DRIP_ROOM = 180000;
+async function dripRoom(env, cost) {
+  const u = await used(env), freeLeft = FREE_DAILY - DRIP_FREE_KEEP - u;
+  const extra = +(await env.USAGE.get("x:" + month())) || 0, st = (await env.USAGE.get("dv:" + month(), "json")) || {};
+  const paid = Math.max(0, cost - Math.max(0, freeLeft));
+  if (!paid) return { ok: true, paid: 0 };
+  if ((st.paid || 0) + paid > DRIP_PAID) return { ok: false, why: "monthly drip money used" };
+  if (extra + paid > DRIP_ROOM) return { ok: false, why: "month's AI spend too high for the drip" };
+  return { ok: true, paid };
+}
+async function dripCount(env, cost, paid, chars) {
+  const k = "dv:" + month(), st = (await env.USAGE.get(k, "json")) || {};
+  st.paras = (st.paras || 0) + 1; st.chars = (st.chars || 0) + chars; st.neurons = +((st.neurons || 0) + cost).toFixed(1); st.paid = +((st.paid || 0) + paid).toFixed(1);
+  await env.USAGE.put(k, JSON.stringify(st), { expirationTtl: 400 * 86400 });
+}
+// Stops on days a traveler has hearted (the app reports them): the only stops the drip may voice. Names only.
+async function wantPut(env, b) {
+  const list = (Array.isArray(b.stops) ? b.stops : []).slice(0, 200); let n = 0;
+  for (const x of list) {
+    const city = String(x && x.city || "").slice(0, 80).trim(), name = String(x && x.name || "").slice(0, 120).trim(), date = /^\d{4}-\d{2}-\d{2}$/.test(x && x.date) ? x.date : "";
+    if (!city || !name) continue;
+    const k = "vw:" + (await sha(city.toLowerCase() + "|" + name.toLowerCase())).slice(0, 24), old = (await env.USAGE.get(k, "json")) || {};
+    const v = { city, name, date: old.date && (!date || old.date < date) ? old.date : date, at: new Date().toISOString().slice(0, 10) };
+    if (old.city !== v.city || old.date !== v.date || old.at !== v.at) { await env.USAGE.put(k, JSON.stringify(v), { expirationTtl: 400 * 86400 }); n++; }
+  }
+  return n;
+}
+
 // Places whose ferries couldn't be looked up while every free map server was busy (fq: keys, see ferriesNear in
 // transit.js) are asked again on the helper's schedule, a few at a time with long waits, so a ferry is never hidden
 // for long. A place still unanswered stays listed (for 14 days) and is tried again next time.
@@ -94,6 +126,22 @@ export default {
         voice: { today: Math.round(voiceToday), freeDaily: FREE_VOICE, paidOn: env.VOICE_PAID === "1" }, lab: { today: Math.round(labToday), daily: LAB_DAILY },
         google: { today: gDay, month: gMonth, cap: 900, free: 1000, usdEach: 0.035, keyOn: !!env.GPLACES_KEY },
         history: days.map((x, i) => ({ date: x, neurons: Math.round(hist[i]) })) }, { headers: { ...h, "cache-control": "no-store" } });
+    }
+    // Hearted stops: POST from the app (names of the stops on a hearted day), GET for the drip (recorder key only).
+    if (url.pathname === "/voicewant") {
+      if (req.method === "POST") {
+        if (origin && !ALLOWED.some(r => r.test(origin))) return Response.json({ error: "Not allowed" }, { status: 403, headers: h });
+        const ip = req.headers.get("cf-connecting-ip") || "?", lk = "vwl:" + ip + ":" + today(), ln = +(await env.USAGE.get(lk)) || 0;
+        if (ln >= 60) return Response.json({ error: "Too many" }, { status: 429, headers: h });
+        let b; try { b = await req.json(); } catch (e) { return Response.json({ error: "Bad request" }, { status: 400, headers: h }); }
+        const n = await wantPut(env, b); ctx.waitUntil(env.USAGE.put(lk, String(ln + 1), { expirationTtl: 2 * 86400 }));
+        return Response.json({ ok: true, saved: n }, { headers: h });
+      }
+      if (!env.REC_KEY || req.headers.get("x-kairoute-rec") !== env.REC_KEY) return Response.json({ error: "Not allowed" }, { status: 403, headers: h });
+      const out = []; let cur;
+      do { const l = await env.USAGE.list({ prefix: "vw:", cursor: cur, limit: 1000 }); for (const k of l.keys) { const v = await env.USAGE.get(k.name, "json"); if (v) out.push(v); } cur = l.list_complete ? null : l.cursor; } while (cur);
+      const mo = url.searchParams.get("month") || month(), drip = (await env.USAGE.get("dv:" + mo, "json")) || {};
+      return Response.json({ stops: out, drip, month: mo, freeLeftToday: Math.max(0, Math.round(FREE_DAILY - DRIP_FREE_KEEP - (await used(env)))), monthExtraUsed: Math.round(+(await env.USAGE.get("x:" + month())) || 0), dripPaidCap: DRIP_PAID, dripRoom: DRIP_ROOM }, { headers: { ...h, "cache-control": "no-store" } });
     }
     if (url.pathname === "/status") { const u = await used(env); const vu = +(await env.USAGE.get("v:" + today())) || 0; return Response.json({ ok: true, model: MODEL, usedToday: Math.round(u), budget: DAILY_NEURONS, left: Math.max(0, Math.floor(DAILY_NEURONS - u)), voiceLeft: Math.max(0, Math.floor(Math.min(VOICE_DAILY - vu, VOICE_TOTAL - u))), labLeft: Math.floor(LAB_LEFT), monthExtraUsed: Math.round(+(await env.USAGE.get("x:" + month())) || 0), monthExtraCap: MONTH_EXTRA, labToday: Math.round(+(await env.USAGE.get("t:" + today())) || 0) }, { headers: h }); }
     // Real places from OpenStreetMap, so the app never sends anyone to a place the AI made up.
@@ -652,6 +700,20 @@ Written text:
       // "Record stop scripts" workflow with the recorder key. They are paid from the monthly extra (counted like the
       // voice lab), never from travelers' daily allowance, and stop at the monthly ceiling.
       const rec = !!env.REC_KEY && req.headers.get("x-kairoute-rec") === env.REC_KEY;
+      // The slow drip (workflow "Voice hearted stops slowly", Richard Nov 17): locked scripts of hearted stops, a few
+      // paragraphs a night. It spends what is left of today's free allowance first, then at most DRIP_PAID a month
+      // from the paid extra, and never once the month's extra passes DRIP_ROOM (so travelers keep most of the $5).
+      if (rec && req.headers.get("x-kairoute-drip") === "1") {
+        const d = await dripRoom(env, cost);
+        if (!d.ok) return Response.json({ error: "drip budget reached", why: d.why }, { status: 429, headers: h });
+        let audio;
+        try { const r = await env.AI.run(vm.id, { text, speaker, encoding: "mp3" }, { returnRawResponse: true }); if (!r.ok) throw new Error("tts " + r.status); audio = await r.arrayBuffer(); }
+        catch (e) { return Response.json({ error: "The voice service is busy." }, { status: 502, headers: h }); }
+        if (!audio || audio.byteLength < 1000) return Response.json({ error: "No audio" }, { status: 502, headers: h });
+        await addUse(env, cost, false); await dripCount(env, cost, d.paid, text.length);
+        ctx.waitUntil(env.USAGE.put(key, audio, { expirationTtl: 365 * 86400 }));
+        return new Response(audio, { headers: { ...h, "content-type": "audio/mpeg", "x-drip-paid": String(Math.round(d.paid)) } });
+      }
       const recLeft = rec ? Math.max(0, MONTH_EXTRA - (+(await env.USAGE.get("x:" + month())) || 0)) : 0;
       if (rec ? cost > recLeft : lab ? cost > LAB_LEFT : (vUsed + cost > VOICE_DAILY || u + cost > VOICE_TOTAL)) return Response.json({ error: "voice allowance used up" }, { status: 429, headers: h });
       let audio;

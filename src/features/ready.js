@@ -101,10 +101,28 @@ function readyTripLine() {
   const c = readyCount(); if (!c.of) return "";
   return `<div class="readyline"><span class="dheart ${c.done === c.of ? "ok" : ""}">${heartSVG(c.done === c.of)}</span><span><b>${c.done} of ${c.of}</b> days ready</span>${c.done === c.of ? `<button class="linkbtn" data-act="celebrate">See your trip summary</button>` : ""}</div>`;
 }
+// Hearted stops are voiced ahead, slowly, in Kairoute's recorded voice (Richard, Nov 17: "Only start working on the ones
+// I hearted"). The app tells the helper the names of the stops on each hearted day (city, stop, date: nothing about
+// the traveler); the nightly drip voices only those, and only once their script is locked (tools/voice-drip.mjs).
+// Sent once per change, never from automated test browsers.
+function readyReport() {
+  try {
+    if (!freeAI || !freeAI.url || (typeof navigator !== "undefined" && (navigator.webdriver || navigator.onLine === false))) return;
+    const stops = [];
+    for (const d of trip.days || []) { if (!d.ready || readyState(d) !== "ok") continue; const c = cityFor(d); if (!c) continue; (d.ready.names || []).forEach(name => stops.push({ city: c.city, name, date: d.date || "" })); }
+    if (!stops.length) return;
+    const sig = stops.map(x => x.city + "|" + x.name + "|" + x.date).sort().join("~"), K = "kairoute.vwsent";
+    let sent = {}; try { sent = JSON.parse(localStorage.getItem(K) || "{}") || {}; } catch (e) {}
+    if (sent[trip.id] === sig) return;
+    fetch(freeAI.url + "/voicewant", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ stops: stops.slice(0, 200) }) })
+      .then(r => { if (r.ok) { sent[trip.id] = sig; try { localStorage.setItem(K, JSON.stringify(sent)); } catch (e) {} } }).catch(() => {});
+  } catch (e) {}
+}
+if (typeof setTimeout !== "undefined" && typeof window !== "undefined") setTimeout(async () => { try { await helperKnown(); } catch (e) {} readyReport(); }, 9000);
 if (typeof document !== "undefined") document.addEventListener("click", e => {
   const t = e.target.closest && e.target.closest("[data-act]"); if (!t) return;
   const act = t.dataset.act;
-  if (act === "dayready") { const d = day(); if (!d) return; if (readyState(d) === "ok") delete d.ready; else readyMark(d); save(); render(); readyCheckAll(); }
+  if (act === "dayready") { const d = day(); if (!d) return; if (readyState(d) === "ok") delete d.ready; else readyMark(d); save(); render(); readyCheckAll(); setTimeout(readyReport, 1500); }
   else if (act === "celebrate") celebrate();
   else if (act === "celclose") celebrateClose();
   else if (act === "celoffdl") { celebrateClose(); view = "trip"; render(); setTimeout(() => { const b = document.querySelector('[data-act="offdl"]'); if (b && !b.disabled) b.click(); }, 50); }
