@@ -288,7 +288,7 @@ function spreadPicks(t) {
     const k = d.cityKey || keyOf(d.destination); if (!d.selected || !k) return;
     seen[k] = seen[k] || new Set();
     const keep = d.selected.filter(id => !seen[k].has(id));
-    if (keep.length < d.selected.length) { const was = selKey(d); d.selected = keep; readyKeep(d, was); d.respread = true; }
+    if (keep.length < d.selected.length) { const was = selKey(d); d.selected.filter(id => !keep.includes(id)).forEach(id => { try { offNote(d, { id, name: (d.pickNames || {})[id] || id }, "Already planned on another day", "fit"); } catch (e) {} }); d.selected = keep; readyKeep(d, was); d.respread = true; }
     keep.forEach(id => seen[k].add(id));
   });
 }
@@ -2047,9 +2047,11 @@ function buildPlanForDay(d) {
   // plan says why (lockBroken) and the heart turns to an outline until the traveler taps it again.
   const lkArgs = { t0, O, ZZ, style, mult, live, tailCost, chosen, inDay, liveAte, seenOn };
   let lk = lockReplay(d, city, w, lockT, w0start, lkArgs);
-  // No internet: a day not hearted replays the plan last shown for it online (seen-plan.js), so it never comes out
-  // different offline. When that plan no longer holds (a change, a safety limit), the day is planned as usual.
-  if (!lk) { const sv = seenFor(d); if (sv) { const dd = Object.create(d); dd.ready = { sel: sv.sel, lock: sv.lock }; const r = lockReplay(dd, city, w, lockT, w0start, lkArgs); if (r && r.seq) lk = r; } }
+  // A day not hearted replays the plan last shown for it (seen-plan.js), online or offline, so rides, places to eat
+  // or sources arriving later never move or drop its stops. When that plan no longer holds (the traveler changed the
+  // day, or a safety limit), the day is planned as usual. Optional stops that are gone are just left out (soft).
+  let seenUsed = false;
+  if (!lk) { const sv = seenFor(d); if (sv) { const dd = Object.create(d); dd.ready = { sel: selKey(d), lock: sv.lock }; const r = lockReplay(dd, city, w, lockT, w0start, Object.assign({ soft: true }, lkArgs)); if (r && r.seq) { lk = r; seenUsed = true; } } }
   const locked = !!(lk && lk.seq), lockBroken = lk && lk.why ? lk.why : null;
   let fitted = locked ? { seq: lk.seq, dropped: lk.dropped } : fitDay();
   if (!locked && fitted.dropped.length && !d.rain) { quickMeals = true; const q = fitDay(); if (worth(q) > worth(fitted) + 1) fitted = q; else quickMeals = false; }
@@ -2187,7 +2189,7 @@ function buildPlanForDay(d) {
   const eve0 = evening.find(e => !e.booked && e.place); if (locked) quickMeals = lk.quick;
   const lock = { t: lockT, seq: lockSeqOut(seq), late: simDay(seq, t0, O, ZZ, style).late, quick: !!quickMeals, eve: eve0 ? keyOf(eve0.place.name) : "" };
   const folded = [...new Set(seq.filter(x => x.foldOf).flatMap(x => x.foldOf.map(y => y.id)))]; // picks shown inside an area visit
-  return { city, w, items, stops, dropped, folded, elsewhere, quickMeals, along, bonus, fill, meals, evening, swaps, closedToday, lock, locked, lockBroken, start: w.start, endBy: w.endBy, end: clock, walkKm, over: clock > w.endBy + (hardEnd(d) ? 0 : 5), tight: budget < fixed + 45 };
+  return { city, w, items, stops, dropped, folded, elsewhere, quickMeals, along, bonus, fill, meals, evening, swaps, closedToday, lock, locked: locked && !seenUsed, seen: seenUsed, lockBroken, start: w.start, endBy: w.endBy, end: clock, walkKm, over: clock > w.endBy + (hardEnd(d) ? 0 : 5), tight: budget < fixed + 45 };
 }
 
 // ---------- AI ----------
@@ -4434,7 +4436,9 @@ async function restoreSplits() {
 function carryGuide(prev, c) {
   const have = allSites(c);
   const ids = new Set(have.map(x => x.id));
-  const keep = (list, into) => (list || []).forEach(x => { if (!x || have.some(y => samePlace(x, y))) return; const k = Object.assign({}, x); if (ids.has(k.id)) k.id = k.id + "-k"; ids.add(k.id); into.push(k); have.push(k); });
+  // A kept sight whose id the new guide already uses gets a new id; the old one stays among its aliases, so picks,
+  // hearted plans and shown plans that name it still find it.
+  const keep = (list, into) => (list || []).forEach(x => { if (!x || have.some(y => samePlace(x, y))) return; const k = Object.assign({}, x); if (ids.has(k.id)) { k.alias = [...new Set([...(k.alias || []), k.id])]; k.id = k.id + "-k"; } ids.add(k.id); into.push(k); have.push(k); });
   c.farther = c.farther || [];
   keep(prev.sites, c.sites); keep(prev.farther, c.farther);
   dedupeSites(c);
@@ -4454,10 +4458,15 @@ if (typeof window !== "undefined") window.__kairouteSeedKeep = i => { const d = 
   return out; };
 function remapPicks(x, prev, c) {
   const old = allSites(prev), now = allSites(c), out = [];
-  (x.selected || []).forEach(id => { const o = old.find(s => s.id === id); const n = now.find(s => s.id === id && (!o || samePlace(o, s))) || (o && now.find(s => samePlace(o, s))); if (n && !out.includes(n.id)) { out.push(n.id); rememberPick(x, n); } });
+  // The same place in the new guide: by id, by place, or (merged into a bigger sight or renamed) by its old id among
+  // the aliases. A pick never just vanishes: one the new guide can't place stays as it was, with a note.
+  const find = (id, o) => now.find(s => s.id === id && (!o || samePlace(o, s))) || (o && now.find(s => samePlace(o, s))) || now.find(s => (s.alias || []).includes(id));
+  (x.selected || []).forEach(id => { const o = old.find(s => s.id === id); const n = find(id, o);
+    if (n) { if (!out.includes(n.id)) { out.push(n.id); rememberPick(x, n); } }
+    else if (!out.includes(id)) { out.push(id); if (typeof offNote === "function") offNote(x, o || { id }, "The new city guide doesn't have it", "gone"); } });
   if (x.anchor && !out.includes(x.anchor)) { const o = old.find(s => s.id === x.anchor), n = o && now.find(s => samePlace(o, s)); x.anchor = n ? n.id : null; }
   // The order the traveler dragged the stops into follows the same places into the new guide (its sights can have new ids).
-  const mapIds = ids => { const r = []; ids.forEach(id => { const o = old.find(s => s.id === id), n = now.find(s => s.id === id && (!o || samePlace(o, s))) || (o && now.find(s => samePlace(o, s))); if (n && !r.includes(n.id)) r.push(n.id); }); return r; };
+  const mapIds = ids => { const r = []; ids.forEach(id => { const o = old.find(s => s.id === id), n = find(id, o); if (n && !r.includes(n.id)) r.push(n.id); }); return r; };
   if (Array.isArray(x.order)) { const r = mapIds(x.order); if (r.length > 1) x.order = r; else delete x.order; }
   if (x.mealAt) for (const k of Object.keys(x.mealAt)) { if (x.mealAt[k] === "^") continue; const r = mapIds([x.mealAt[k]]); if (r.length) x.mealAt[k] = r[0]; else delete x.mealAt[k]; }
   if (x.pendingOrder && Array.isArray(x.pendingOrder.prev)) x.pendingOrder.prev = mapIds(x.pendingOrder.prev);

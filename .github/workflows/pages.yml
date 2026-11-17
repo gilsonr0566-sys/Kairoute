@@ -64,6 +64,7 @@ jobs:
           python3 -m http.server 8765 >/dev/null 2>&1 &
           sleep 1
           URL=http://localhost:8765/ PARTS=A GATE=1 node tools/demo-flow.cjs
+          URL=http://localhost:8765/ node tools/steady-check.cjs
           cat checks/demo/report.md >> "$GITHUB_STEP_SUMMARY" || true
       - name: Street map check (no network needed)
         run: MOCK=1 node tools/map-e2e.cjs

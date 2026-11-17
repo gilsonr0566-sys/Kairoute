@@ -190,7 +190,10 @@ function lockReplay(d, city, w, lockT, w0start, k) {
       const v = (k.chosen || []).find(c => c.foldOf && c.foldOf.length === inc.length && c.foldOf.every(y => inc.includes(y.id)));
       if (!v) return { why: `${x.n || "a visit"} has changed` };
       const n = Object.assign({}, v, { minutes: x.min || v.minutes }); if (x.sf) n.shortFrom = x.sf; seq.push(n); continue; }
-    const s = by.get(x.id); if (liveDone(d, x.id) || (s && liveDone(d, s.id))) continue; if (!s) return { why: `${x.n || "a stop"} is no longer in the guide` };
+    const s = by.get(x.id); if (liveDone(d, x.id) || (s && liveDone(d, s.id))) continue;
+    // A shown plan (soft): an optional stop that is gone or now planned on another day is left out; a pick never is.
+    if (k.soft && (x.b || x.a) && (!s || (k.seenOn && k.seenOn[s.id]) || closedForDay(s, d, w))) continue;
+    if (!s) return { why: `${x.n || "a stop"} is no longer in the guide` };
     if (closedForDay(s, d, w)) return { why: `${s.name} is closed that day` };
     if (k.seenOn && k.seenOn[s.id]) return { why: `${s.name} is now planned on ${dayName(k.seenOn[s.id]) || "an earlier day"}` };
     const n = Object.assign({}, s, { minutes: x.min || s.minutes }, k.live(s));
