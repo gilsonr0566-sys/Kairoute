@@ -41,10 +41,12 @@ const report = [`## AI spend check, ${now.toISOString().slice(0, 16).replace("T"
 console.log(report);
 if (process.env.GITHUB_STEP_SUMMARY) appendFileSync(process.env.GITHUB_STEP_SUMMARY, report + "\n");
 // Second guard: the helper stops AI once the account's real total for today nears the free 10,000.
+let prev = null;
 if (process.env.REC_KEY) {
   try {
     const p = await fetch(HELPER + "/realuse", { method: "POST", headers: { "content-type": "application/json", "x-kairoute-rec": process.env.REC_KEY }, body: JSON.stringify({ date: today, neurons: todayN }) });
-    console.log("Sent today's real count to the helper: " + p.status);
+    const pj = await p.json().catch(() => ({})); if (pj.ok && pj.on === false) prev = +pj.prev || 0;
+    console.log("Sent today's real count to the helper: " + p.status + " (last hour's: " + (pj.prev ?? "?") + ")");
   } catch (e) { console.log("Couldn't reach the helper: " + e.message); }
 }
 // Warnings to Richard as GitHub issues (GitHub emails the repository owner).
@@ -57,6 +59,7 @@ async function warn(title) {
   const c = await fetch(`https://api.github.com/repos/${REPO}/issues`, { method: "POST", headers: gh, body: JSON.stringify({ title, body: report, labels: ["ai-spend"], assignees: ["gilsonr0566-sys"] }) });
   console.log("Warning issue: " + c.status);
 }
-// Kairoute counts 0 while the switch is off; Richard's other apps use 2-12 a day, so more than 50 means something ran.
-if (st.on === false && todayN > 50) await warn(`AI ran while switched off (${today})`);
+// While the switch is off, today's real total should not grow (Richard's other apps use 2-12 a day): more than 50
+// since the last hourly check means something ran.
+if (st.on === false && prev !== null && prev > 0 && todayN - prev > 50) await warn(`AI ran while switched off (${today})`);
 if (usd >= CAP_USD * WARN) await warn(`Kairoute AI spend reached ${usd >= CAP_USD ? 100 : 80}% of the $${CAP_USD} cap (${month})`);
