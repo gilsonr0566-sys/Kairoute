@@ -83,7 +83,7 @@ const voiceLive = env => aiOn(env) && !minimal(env) && env.VOICE_LIVE === "1";
 // app falls back to its own guides and the phone's voice.
 const aiOn = env => env.AI_ON === "1";
 // Memory of kept answers (see the fetch handler). Only these content prefixes; everything else reads the store.
-const MEMO_KEYS = /^(tr5|fp1|rt1|ns1|fx2|bz1|g|fm6|wd|xw1|xn1|xf1|wx1|wv1|bk1|s3):/, MEMO_MS = 600000, MEMO = new Map();
+const MEMO_KEYS = /^(tr6|fp1|rt1|ns1|fx2|bz1|g|fm6|wd|xw1|xn1|xf1|wx1|wv1|bk1|s3):/, MEMO_MS = 600000, MEMO = new Map();
 let memoChars = 0; // kept under ~30 MB of the Worker's 128 MB memory
 function memoStore(kv) {
   if (!kv || kv.__memo) return kv;
@@ -495,7 +495,7 @@ export default {
     }
     // /transit (POST {pairs:[{a:[lat,lng], b:[lat,lng]}]}): the mapped train, metro, tram, bus and ferry lines
     // between each pair of points, with stops, the real path and a cautious time (see transit.js). Each pair is
-    // looked up once and kept (see keep below), so every traveler on the same trip shares it. Keys are tr5: (tr4 answers had frequencies measured across searches hours apart, and could leave out the airport bus); before that tr4: since ferries come from their own
+    // looked up once and kept (see keep below), so every traveler on the same trip shares it. Keys are tr6: (tr5 answers had no train whose stations are a taxi away, Athens to Corinth); tr5 before that (tr4 answers had frequencies measured across searches hours apart, and could leave out the airport bus); before that tr4: since ferries come from their own
     // long-kept lookup at each end (answers from before that are not reused).
     // /ferries?lat=&lng=: what the helper keeps about ferries near a point (for the live checks): kept or still
     // waiting for the schedule, and the ferry courses' names.
@@ -540,7 +540,7 @@ export default {
         // The trip's date (when the page gives it) picks the timetable; answers are kept per month, since a summer
         // ferry runs in July and not in November.
         const date = typeof pr.date === "string" && /^\d{4}-\d{2}-\d{2}$/.test(pr.date) ? pr.date : null;
-        const key = "tr5:" + kind + ":" + [...pr.a, ...pr.b].map(n => n.toFixed(3)).join(",") + (date ? ":m" + +date.slice(5, 7) : "");
+        const key = "tr6:" + kind + ":" + [...pr.a, ...pr.b].map(n => n.toFixed(3)).join(",") + (date ? ":m" + +date.slice(5, 7) : "");
         // A full answer is kept 14 days (timetables change); one where a source was busy only 1 day. When the map answered
         // after the reply went out, its full answer replaces the partial one. A partial answer met again after 10 minutes
         // is looked up afresh in the background (once per 10 minutes), so a busy map server never hides a ferry for a day.

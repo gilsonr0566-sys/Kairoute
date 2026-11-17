@@ -10,6 +10,9 @@ const OUT = path.join(__dirname, '..', 'checks', 'book'); fs.mkdirSync(OUT, { re
     const ctx = await b.newContext({ viewport: { width: w, height: h }, deviceScaleFactor: 2, locale: 'en-US', hasTouch: name === 'phone', isMobile: name === 'phone' });
     await ctx.addInitScript(() => { try { localStorage.setItem('kairoute.intro1', '1'); } catch (e) {} });
     const p = await ctx.newPage(), errs = []; p.on('pageerror', e => errs.push(e.message));
+    // No AI (Richard, Nov 17: none without his consent): the helper is reached only for timetables and the booking-page
+    // check; every other helper call (guides, scripts, voice, photo reading) is refused before it leaves the browser.
+    await ctx.route(/workers\.dev\//, r => /\/(departures|bookcheck)\?/.test(r.request().url()) ? r.continue() : r.fulfill({ status: 503, json: { error: 'off in this check' } }));
     await p.goto(URL, { waitUntil: 'load', timeout: 60000 }); await p.waitForTimeout(3000);
     if (!(await p.evaluate(() => !!window.__kairouteBook))) { bad(name + ': live build has no Book train yet'); await ctx.close(); continue; }
     const days = await p.evaluate(() => window.__kairouteDays()), i = days.find(d => d.type === 'departure' && /Barcelona/.test(d.dest)).i;

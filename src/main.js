@@ -97,7 +97,7 @@ async function freeSample(prompt, opts = {}) {
 }
 async function refreshFreeAI() {
   if (!freeAI) return;
-  try { const st = await (await fetch(freeAI.url + "/status", { cache: "no-store" })).json(); freeAI.left = st.left; freeAI.budget = st.budget; freeAI.mode = st.mode; } catch (e) {}
+  try { const st = await (await fetch(freeAI.url + "/status", { cache: "no-store" })).json(); freeAI.left = st.left; freeAI.budget = st.budget; freeAI.mode = st.mode; freeAI.on = st.on !== false; } catch (e) {}
 }
 async function findFreeAI() {
   if (cl && cl.use) return;
@@ -642,7 +642,8 @@ try { ["kairoute.transit", "kairoute.transit2"].forEach(k => localStorage.remove
 // trip earlier never keep showing an old ride (Richard's Naples day kept "Train or car" with no ferry).
 // 5: answers are looked up for the trip's own date (a summer ferry isn't on a November timetable), asked again once.
 // 6: frequencies only from gaps inside one search, and the quickest ride of each kind kept (the airport bus).
-const TRANSIT_V = 6;
+// 7: trains between towns whose stations are a taxi away (Athens to Corinth), asked again once.
+const TRANSIT_V = 7;
 const transitMem = (() => { try { return JSON.parse(localStorage.getItem(TRANSIT_KEY) || "{}"); } catch (e) { return {}; } })();
 let transitSeen = null, transitRetry = 0;
 const transitFail = new Map(), transitQ = new Map(), transitPins = new Set(); let transitTimer = 0, transitBusy = false; // pins: rides of the trip being kept for offline
@@ -2215,7 +2216,10 @@ function buildPlanForDay(d) {
 }
 
 // ---------- AI ----------
-const aiReady = () => !!sample;
+// The AI writer can be switched off on the helper (Richard, Nov 17: no AI without his consent). Then the app knows
+// it is off and asks it for nothing: every AI button is hidden and every background AI step is skipped. The helper's
+// free lookups (sources, maps, saved guides, routes) still work, so trips are still built and planned without it.
+const aiReady = () => !!sample && !(sample === freeSample && freeAI && freeAI.on === false);
 // "Change my trip": say what changed or show the new booking, and the AI rewrites the days.
 let changeImgs = [], changeText = "";
 // A cruise whose port times the traveler didn't give: the times shown are an estimate until they add their cruise
@@ -2225,7 +2229,7 @@ function shipTimesBanner() {
   const est = trip.days.filter(x => (x.type === "port" || x.type === "embark") && x.estimated && !noShore(x));
   if (!est.length) return "";
   const ship = trip.ship && trip.ship.name ? esc(trip.ship.name) : "your ship";
-  return `<div class="banner warn shiptimes"><span><b>Ship times are estimated.</b> Add a photo of ${ship}'s itinerary from your booking or cruise app, or type the times, and I'll use the exact arrival and all-aboard times for ${est.length === 1 ? esc(placeLabel(est[0]) || est[0].destination) : est.length + " port days"}.</span>${aiReady() ? `<button class="btn small" data-act="shiptimes">Add ship times</button>` : ""}</div>`;
+  return `<div class="banner warn shiptimes"><span><b>Ship times are estimated.</b> ${aiReady() ? "" : `Tap ${est.length === 1 ? "that port day" : "each port day"} below and type the arrival and all-aboard times from your cruise booking.`}${!aiReady() ? "" : `Add a photo of ${ship}'s itinerary from your booking or cruise app, or type the times, and I'll use the exact arrival and all-aboard times for ${est.length === 1 ? esc(placeLabel(est[0]) || est[0].destination) : est.length + " port days"}.`}</span>${aiReady() ? `<button class="btn small" data-act="shiptimes">Add ship times</button>` : ""}</div>`;
 }
 function changeCard() {
   if (!aiReady()) return "";
@@ -2498,7 +2502,7 @@ function placeFromSources(r, ask) {
   return st;
 }
 // Test hook: a stand-in helper (map lookups answered by the test) with the AI allowance used up, or an AI answer.
-if (typeof window !== "undefined") window.__kairouteMockHelper = (url, aiText) => { freeAI = { url }; sample = aiText == null ? async () => { throw new Error("The free AI allowance for today is used up."); } : async () => ({ text: aiText }); render(); return true; };
+if (typeof window !== "undefined") window.__kairouteMockHelper = (url, aiText, off) => { if (off) { freeAI = { url, on: false }; sample = freeSample; render(); return true; } freeAI = { url }; sample = aiText == null ? async () => { throw new Error("The free AI allowance for today is used up."); } : async () => ({ text: aiText }); render(); return true; };
 let addNote = ""; // what the "Don't see a place you want?" box did, shown in that box
 function useKnown(d, s) {
   aiError = "";
@@ -2522,8 +2526,19 @@ function aiErrorText(e, what) {
     what + " didn't come through. Try again.";
 }
 let progressTicker = 0; const stopTicker = () => clearInterval(progressTicker);
+// A finished guide goes on every day spent in that place, and each day gets its starting picks.
+function installGuide(d, c) {
+  const label = d.destination, key = keyOf(label) + (d.event ? "|" + keyOf(d.event) : "");
+  const prev = cities[key] || cityFor(d);
+  // A new guide never makes a sight vanish: any sight the previous guide had that the new one lacks (by name)
+  // is kept, and every pick is carried over to the same sight in the new guide.
+  if (prev) carryGuide(prev, c);
+  cities[key] = c;
+  trip.days.forEach(x => { if (keyOf(x.destination) === keyOf(label) && !x.event === !d.event) { x.cityKey = key; x.pointIdx = 0; if (prev && x.selected) carryPicks(x, prev, c); if (!x.selected) { x.selected = defaultSelection(c, trip.style, x); fitTrim(x); } } });
+  save();
+}
 async function generateCity(d, quiet) {
-  if (!aiReady()) return false;
+  if (!aiReady()) return freeAI ? guideNoAI(d, quiet) : false;
   const label = d.destination;
   // Show the build on the day plan, which has the progress bar (the tour screen is for walking a finished guide).
   if (!quiet) { if (view === "tour") view = "plan"; busy = { text: "Asking your guide about " + label + "…" }; aiError = ""; render(); toTop(); }
@@ -2589,14 +2604,7 @@ ${P().access !== "none" ? "- The travelers need: " + ACCESS.find(a => a[0] === P
     // Never swap a built-in guide for a thinner one (and don't save it for others): keep what the traveler has.
     if (builtinNow && c.sites.length <= (builtinNow.sites || []).length) throw new Error("not fuller");
     if (fresh) keepGuide(d, raw);
-    const key = keyOf(label) + (d.event ? "|" + keyOf(d.event) : "");
-    const prev = cities[key] || cityFor(d);
-    // A new guide never makes a sight vanish: any sight the previous guide had that the new one lacks (by name)
-    // is kept, and every pick is carried over to the same sight in the new guide.
-    if (prev) carryGuide(prev, c);
-    cities[key] = c;
-    trip.days.forEach(x => { if (keyOf(x.destination) === keyOf(label) && !x.event === !d.event) { x.cityKey = key; x.pointIdx = 0; if (prev && x.selected) carryPicks(x, prev, c); if (!x.selected) { x.selected = defaultSelection(c, trip.style, x); fitTrim(x); } } });
-    save();
+    installGuide(d, c);
     stopTicker();
     if (!quiet) { busy = null; view = "plan"; render(); toTop(); }
     return true;
@@ -2784,7 +2792,7 @@ function famousRepair(city, src) {
   g.hidden.forEach(s => { s.quick = false; if (s.minutes < 20) s.minutes = 30; });
   for (const s of city.sites || []) { const x = g.top.find(y => sameSight(y, s)); if (x && (x.sl || 0) >= g.bar && !s.mustSee) { s.mustSee = true; tickOnOneDay(city, s); } }
   city.famousMissing = g.missing.map(x => x.name);
-  if (g.missing.length && !famousFilling[keyOf(city.city)] && typeof sample === "function" && sample) fillFamous(city, g.missing.slice(0, 4), g.bar);
+  if (g.missing.length && !famousFilling[keyOf(city.city)] && aiReady()) fillFamous(city, g.missing.slice(0, 4), g.bar);
   else fillFarther(city, src);
 }
 // A port's top day trip (Pompeii from Naples) is only known to be top once the sources say how famous it is, and they
@@ -2861,7 +2869,7 @@ function farGaps(city, src) {
 async function fillFarther(city, src) {
   const k = keyOf(city.city); if (farFilling[k] || city.farFillV === FARFILL_V) return;
   if ((city.farther || []).some(farUntimed)) { city.farther = city.farther.filter(x => !farUntimed(x)); keepFills(city); }
-  if (typeof sample !== "function" || !sample) return;
+  if (!aiReady()) return;
   const cands = farGaps(city, src); if (!cands.length) { city.farFillV = FARFILL_V; return; }
   farFilling[k] = true;
   const prompt = `You are an expert tour guide writing data for a self-guided tour app in ${city.city}${city.country ? ", " + city.country : ""}. These real places are within a day trip of ${city.city} and the guide doesn't have them yet. Keep ONLY the ones a visitor staying in ${city.city} or arriving on a cruise ship would genuinely go to as a day trip (a famous site, a scenic town, an island a short ferry ride away, a natural wonder). Leave out places more than about 90 minutes away one way by the usual way there, and islands with only a few long ferry sailings. Leave out suburbs and ordinary towns, regions and provinces, island groups, companies and anything else that isn't a place to visit. Keep each name exactly as given.
@@ -3140,7 +3148,7 @@ Return ONLY JSON {"intro":"...","wrap":"..."}. "intro": 50 to 90 words said wher
 // Every stop on today's plan that deserves a walk-through gets one: areas, big stops and the best-known stops.
 const walkWorthy = (s, city) => !s.along && !s.quick && (AREA_CAT.test(s.category + " " + s.name) || s.mustSee || s.unesco || bigStop(s, city) || (s.minutes || 0) >= 40);
 function queueExtras(plan) {
-  if (extrasBusy || !plan || plan.error || typeof sample !== "function" || !sample) return;
+  if (extrasBusy || !plan || plan.error || !aiReady()) return;
   const city = plan.city, todo = plan.items.filter(i => i.type === "stop" && !(i.place.extrasV >= EXTRAS_V) && !extrasAsked[keyOf(city.city) + "|" + i.place.id] && walkWorthy(i.place, city)).map(i => city.sites.find(x => x.id === i.place.id) || i.place);
   if (!todo.length) return;
   extrasBusy = true;
@@ -3393,7 +3401,7 @@ const EATS_V = 4;
 // returns that isn't on the list is ignored.
 async function rankEats(raw, label) {
   const list = (raw.restaurants || []).filter(r => r.onMap);
-  if (!sample || list.length < 3) return;
+  if (!aiReady() || list.length < 3) return;
   const lines = list.map((r, i) => `${i + 1}. ${r.name}${r.cuisine && r.cuisine !== "Restaurant" ? " (" + r.cuisine + ")" : ""}${r.recommended ? " [recommended on Wikivoyage]" : ""}`).join("\n");
   const prompt = `You are a well-travelled local food guide for ${label}. Below are real places to eat near the sights, numbered. Using what you know about each place's reputation, return ONLY JSON {"eats":[{"n":number,"cuisine":"Seafood, Tex-Mex, Thai, Café, BBQ...","style":"local favorite" | "classic" | "casual" | "upscale" | "quick bite","price":"$" | "$$" | "$$$","top":true|false}]} for every place you can describe. "top": true only for about the 10 places locals and visitors rate best, and only when you actually know the place. If you don't know a place, give only its likely cuisine from the name and top false. Never add places that aren't on the list.\n\n${lines}`;
   try {
@@ -3502,21 +3510,31 @@ function keepGuide(d, raw) {
   try { fetch(freeAI.url + "/guide", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ k: guideCacheKey(d), guide: raw }) }).catch(() => {}); } catch (e) {}
 }
 async function buildAllGuides() {
-  if (!aiReady()) return;
+  if (!aiReady() && !freeAI) return;
   const todo = [];
   trip.days.forEach(d => { if (!noShore(d) && !cityFor(d) && d.destination && !todo.some(x => keyOf(x.destination) === keyOf(d.destination))) todo.push(d); });
-  aiError = "";
+  aiError = ""; const missed = [];
   for (let i = 0; i < todo.length; i++) {
     busy = { prefix: `${i + 1} of ${todo.length}: `, text: `${i + 1} of ${todo.length}: starting ${todo[i].destination}…` }; render();
     const ok = await generateCity(todo[i], true);
-    if (!ok) { aiError = "Stopped at " + todo[i].destination + ". Tap Build again to carry on."; break; }
+    if (!ok && aiReady()) { aiError = "Stopped at " + todo[i].destination + ". Tap Build again to carry on."; break; }
+    if (!ok) missed.push(todo[i].destination);
   }
+  // Without the AI writer each place is built from its sources on its own: one that can't be found doesn't stop the rest.
+  if (missed.length) aiError = `I couldn't find ${missed.join(" and ")} in the travel guides and maps. Check the spelling on the day (for example "Kotor, Montenegro"), then tap Build again.`;
   busy = null; render();
 }
 async function geocodeLodging(d) {
   const k = cityKeyFor(d) || keyOf(d.destination);
   const L = trip.lodging[k];
-  if (!aiReady() || !L || !L.name) return;
+  if (!L || !L.name) return;
+  if (!aiReady()) { // no AI: the map's own search finds the hotel by name
+    if (!freeAI) return;
+    busy = { text: "Finding " + L.name + "…" }; render();
+    const h = await findHotelNoAI(L.name, d); busy = null;
+    if (h) { L.ll = { lat: h.lat, lng: h.lng }; L.name = h.name; save(); } else aiError = "Couldn't find that place on the map. Try the hotel's full name, or add the street.";
+    render(); return;
+  }
   busy = { text: "Finding " + L.name + "…" }; render();
   try {
     const { text } = await sample(`Give the coordinates of "${L.name}" in or near ${d.destination}. Reply ONLY with JSON {"name": string, "lat": number, "lng": number}.`, { modelTier: "quick" });
@@ -4971,7 +4989,7 @@ function renderSettings(sec) {
     sync: () => syncCard(),
     group: () => groupCard(),
     ai: () => `
-  <div class="card"><h3>AI guide</h3><p class="lede">${sample === freeSample ? `On, using Kairoute's free test AI. It builds guides for any city, finds your hotel, reads itinerary photos and answers questions.${freeAI && freeAI.budget ? ` About ${Math.round(100 * (freeAI.left || 0) / freeAI.budget)}% of today's free allowance is left; it resets every evening at 6 pm Central (7 pm in summer).` : ""}` : aiReady() ? "On. Kairoute uses Claude to build city guides, find your hotel, read itinerary photos and answer your questions." : "Off right now. The built-in cities still work fully."}</p>
+  <div class="card"><h3>AI guide</h3><p class="lede">${sample === freeSample && !aiReady() ? "Off for now. You can still build any trip step by step, and every city gets a guide and day plans from travel guides, encyclopedias and maps. Spoken stories, itinerary photos and questions to the guide come back when the AI guide is turned on again." : sample === freeSample ? `On, using Kairoute's free test AI. It builds guides for any city, finds your hotel, reads itinerary photos and answers questions.${freeAI && freeAI.budget ? ` About ${Math.round(100 * (freeAI.left || 0) / freeAI.budget)}% of today's free allowance is left; it resets every evening at 6 pm Central (7 pm in summer).` : ""}` : aiReady() ? "On. Kairoute uses Claude to build city guides, find your hotel, read itinerary photos and answer your questions." : "Off right now. The built-in cities still work fully."}</p>
     ${cl && cl.use ? "" : `<details class="more" ${getKey() ? "open" : ""}><summary>Advanced: use your own Anthropic key</summary><div class="field" style="margin-top:10px"><label for="aikey">Anthropic API key</label><div class="ask"><input type="password" id="aikey" autocomplete="off" placeholder="${getKey() ? "Saved on this device" : "sk-ant-…"}"><button type="button" class="btn small" data-act="savekey">Save</button>${getKey() ? `<button type="button" class="btn ghost small" data-act="clearkey">Remove</button>` : ""}</div><span class="hint">Stored only on this device and sent only to Anthropic. Get one at console.anthropic.com under API keys. Usage on your key is billed to you by Anthropic.</span></div></details>`}</div>`,
     offline: () => offSettings(),
     data: () => `
@@ -5139,7 +5157,14 @@ function renderWizard() {
   const steps = ["Your trip", "How you explore", "Last details"];
   const head = `<div><div class="eyebrow">${w.step === 0 ? "New trip" : "Personalize · " + w.step + " of 2: " + steps[w.step]}</div></div>`;
   let body = "";
-  if (w.step === 0) body = `
+  // Step by step is the way every trip can be made, with or without the AI guide; with it on, a description or a
+  // photo of the itinerary is an optional shortcut.
+  const words = ready && w.mode === "words";
+  if (w.step === 0 && !words) body = `${ready ? wizModeSeg(w) : ""}${tsHTML(w)}
+    <details class="more"><summary>Add more details (optional)</summary>
+    <div class="field"><label for="w-name">Name this trip</label><input type="text" id="w-name" value="${esc(w.name)}" placeholder="e.g. Mediterranean 2027"></div></details>
+    <p class="lede">Kairoute picks good defaults for pace, walking and voice, and you can change any of them later.</p>`;
+  if (w.step === 0 && words) body = `${wizModeSeg(w)}
     <div class="field"><label for="w-text">Tell us in your own words</label>
       <textarea id="w-text" placeholder="Flying into Athens on May 3 and staying 4 days. Then a cruise from Athens to 9 ports, ending in Barcelona, where we stay 3 days. Train to Madrid for 2 days and fly home from Madrid at 4 pm.">${esc(w.text)}</textarea>
       <span class="hint">Include dates, flights and trains, the cruise and its ports if you know them, and how long you stay in each place. Your guide fills in what's missing and you can change anything after.</span></div>
@@ -5167,18 +5192,20 @@ function renderWizard() {
     <div class="row2"><div class="field"><label for="w-party">How many people?</label><input type="number" id="w-party" min="1" max="20" value="${w.party}"></div>
       <div class="field"><label for="w-lang">Guide language</label><select id="w-lang">${LANGS.map(([n]) => `<option ${w.lang === n ? "selected" : ""}>${n}</option>`).join("")}</select></div></div>
     <div class="field"><label for="w-trav">Anything else about the travelers? (optional)</label><input type="text" id="w-trav" value="${esc(w.travelers)}" placeholder="e.g. one uses a cane; kids aged 8 and 11"></div>
-    ${ready ? "" : `<div class="banner warn">Building the trip uses the AI guide. Turn on the AI guide in Settings to turn it on.</div>`}`;
+    ${ready || wizSteps() ? "" : `<div class="banner warn">Building the trip uses the AI guide. Turn on the AI guide in Settings to turn it on.</div>`}`;
   return `${head}<div><h2>${["Where are you going?", "How do you like to explore?", "A few last details"][w.step]}</h2></div>
     ${busyBlock()}${errBlock()}
     <form class="card" id="wizForm" autocomplete="off">${body}
       <div class="actions">${w.step > 0 ? `<button type="button" class="btn ghost" data-act="wizback">Back</button>` : `<button type="button" class="btn ghost" data-act="wizcancel">Cancel</button>`}
       ${w.step === 0 ? `<button type="button" class="btn ghost" data-act="wizmore">Personalize first</button>` : ""}
       ${w.step === 1 ? `<button type="submit" class="btn ghost" data-next="1">Next</button>` : ""}
-      <button type="submit" class="btn" ${ready && !busy ? "" : "disabled"}>Build my trip</button></div>
+      <button type="submit" class="btn" ${(ready || wizSteps()) && !busy ? "" : "disabled"}>Build my trip</button></div>
     </form>`;
 }
+const wizModeSeg = w => `<div class="field"><span class="lbl">How would you like to add your trip?</span><div class="seg" role="group" aria-label="How to add your trip"><button type="button" data-ts="mode" data-v="steps" aria-pressed="${w.mode !== "words"}">Step by step</button><button type="button" data-ts="mode" data-v="words" aria-pressed="${w.mode === "words"}">Describe it or snap a photo</button></div></div>`;
+const wizSteps = () => !!wiz && !(aiReady() && wiz.mode === "words");
 function readWiz() {
-  if (!wiz) return; const g = id => document.getElementById(id);
+  if (!wiz) return; const g = id => document.getElementById(id); tsRead();
   if (g("w-text")) wiz.text = g("w-text").value;
   if (g("w-name")) wiz.name = g("w-name").value.trim();
   if (g("w-hotels")) wiz.hotels = g("w-hotels").value;
@@ -5533,7 +5560,7 @@ function renderTrip(d) {
       ${readyTripLine()}
       ${offCard()}
       ${esimCard()}
-      ${aiReady() && missing ? `<button class="btn ghost small" data-act="genall" ${busy ? "disabled" : ""}>${missing === 1 ? `Build the guide for ${esc(missingNames[0])}` : missing <= 3 ? `Build the guides for ${esc(missingNames.join(" and "))}` : `Build the guides for all ${missing} places`}</button>` : ""}
+      ${(aiReady() || freeAI) && missing ? `<button class="btn ghost small" data-act="genall" ${busy ? "disabled" : ""}>${missing === 1 ? `Build the guide for ${esc(missingNames[0])}` : missing <= 3 ? `Build the guides for ${esc(missingNames.join(" and "))}` : `Build the guides for all ${missing} places`}</button>` : ""}
       <div class="itin">${itinerary()}</div>
       <div class="actions"><button class="btn ghost small" data-act="addday">+ Add a day</button><button class="btn ghost small" data-act="addport">+ Add a port day</button><button class="btn ghost small" data-act="printtrip">🖨 Print or save as PDF</button></div>
       <details class="card more">
@@ -5570,11 +5597,11 @@ function renderTrip(d) {
         </div>
         ${needsLodging ? `<div class="field"><label for="f-lodging">Where you're staying in ${esc(d.destination || "this city")}</label>
           <select id="f-lodging">${opts(hotels, L.idx)}<option value="custom" ${L.idx === "custom" ? "selected" : ""}>My hotel or rental…</option></select>
-          ${L.idx === "custom" ? `<div class="ask"><input type="text" id="f-lname" value="${esc(L.name || "")}" placeholder="Hotel name or address"><button type="button" class="btn small" data-act="geo" ${aiReady() ? "" : "disabled"}>Find it</button></div>
-          <span class="hint">${L.ll ? "Found on the map: " + esc(L.name) : aiReady() ? "Type the name and tap Find it." : "Pick an area for now, or turn on the AI guide in Settings to find your exact hotel."}</span>` : `<span class="hint">Used for every day you're in ${esc(d.destination || "this city")}.</span>`}
+          ${L.idx === "custom" ? `<div class="ask"><input type="text" id="f-lname" value="${esc(L.name || "")}" placeholder="Hotel name or address"><button type="button" class="btn small" data-act="geo" ${aiReady() || freeAI ? "" : "disabled"}>Find it</button></div>
+          <span class="hint">${L.ll ? "Found on the map: " + esc(L.name) : aiReady() || freeAI ? "Type the name and tap Find it." : "Pick an area for now. Finding your exact hotel needs the internet."}</span>` : `<span class="hint">Used for every day you're in ${esc(d.destination || "this city")}.</span>`}
         </div>` : ""}
         <details class="more dayopts" ${d.event ? "open" : ""}><summary>More options for this day</summary>
-        ${t === "port" ? `<label class="check"><input type="checkbox" id="f-aboard" ${d.aboard ? "checked" : ""}><span>Staying on board this day (not going ashore)</span></label>` : ""}
+        ${t === "port" ? `<label class="check"><input type="checkbox" id="f-stayaboard" ${d.aboard ? "checked" : ""}><span>Staying on board this day (not going ashore)</span></label>` : ""}
         ${t === "port" && !d.aboard ? `<label class="check"><input type="checkbox" id="f-tender" ${d.tender ? "checked" : ""}><span>Tender port (small boats take you ashore)</span></label>` : ""}
         ${t === "land" ? `<label class="check"><input type="checkbox" id="f-return" ${d.returnToStart ? "checked" : ""}><span>Finish back at the hotel</span></label>` : ""}
         <div class="field"><label for="f-event">Event (optional)</label><input type="text" id="f-event" value="${esc(d.event)}" placeholder="e.g. a ball game, a festival, a concert"></div>
@@ -5587,7 +5614,7 @@ function renderTrip(d) {
         <div class="actions"><button class="btn ghost small" type="button" data-act="delday">Remove this day</button></div>
         </details>`}
         <div class="actions">
-          ${t === "sea" ? `<button class="btn ghost" type="button" data-act="delday">Remove this day</button>` : `<button class="btn" type="submit" ${busy ? "disabled" : ""}>${city ? "See the day plan" : aiReady() ? "Build the guide" : "Save"}</button>`}
+          ${t === "sea" ? `<button class="btn ghost" type="button" data-act="delday">Remove this day</button>` : `<button class="btn" type="submit" ${busy ? "disabled" : ""}>${city ? "See the day plan" : aiReady() || freeAI ? "Build the guide" : "Save"}</button>`}
           <span class="hint">Changes save as you go.</span>
         </div>
       </form>
@@ -6906,9 +6933,12 @@ function readForm() {
     d.selected = null; d.pointIdx = 0;
   }
   d.date = v("f-date") || d.date;
+  // Times the traveler types in are their real ones (from the booking): the day is no longer an estimate.
+  const was = [d.time, d.portArrive, d.allAboard].join("|");
   if (g("f-time")) d.time = v("f-time");
   if (g("f-parr")) d.portArrive = v("f-parr");
-  if (g("f-aboard")) d.allAboard = v("f-aboard");
+  if (g("f-aboard") && g("f-aboard").type === "time") d.allAboard = v("f-aboard");
+  if (d.estimated && [d.time, d.portArrive, d.allAboard].join("|") !== was) delete d.estimated;
   if (g("f-start")) d.startTime = v("f-start") || "09:00";
   if (g("f-hours")) d.hours = Math.max(1, Math.min(14, parseFloat(v("f-hours")) || 8));
   if (g("f-point")) d.pointIdx = +v("f-point");
@@ -7043,8 +7073,8 @@ document.addEventListener("click", e => {
     speakLines("voice-sample", [`Hi, I'm ${g[1]}. Let's walk over to the old harbor together. Look up, just there, see that worn stone lion above the gate? It has been watching ships come and go for almost six hundred years.`], null);
     setTimeout(render, 300); return;
   }
-  if (act === "newtrip") { wiz = { step: 0, text: "", name: "", style: trip.style || "mix", interests: [], pace: "moderate", walk: "medium", hotels: "", travelers: "", access: "none", party: 2, lang: "English", voice: "buttery", cruiseLine: "", ship: "" }; view = "wizard"; aiError = ""; render(); return; }
-  if (act === "wizmore") { readWiz(); if (!wiz.text.trim() && !(wiz.images || []).length) { aiError = "Describe your trip first, even roughly."; render(); return; } aiError = ""; wiz.step = 1; render(); toTop(); return; }
+  if (act === "newtrip") { wiz = { step: 0, mode: "steps", legs: [tsStay()], text: "", name: "", style: trip.style || "mix", interests: [], pace: "moderate", walk: "medium", hotels: "", travelers: "", access: "none", party: 2, lang: "English", voice: "buttery", cruiseLine: "", ship: "" }; view = "wizard"; aiError = ""; render(); return; }
+  if (act === "wizmore") { readWiz(); if (wizSteps()) { tsFill(wiz.legs); const err = tsCheck(wiz.legs); if (err) { aiError = err; render(); toTop(); return; } } else if (!wiz.text.trim() && !(wiz.images || []).length) { aiError = "Describe your trip first, even roughly."; render(); return; } aiError = ""; wiz.step = 1; render(); toTop(); return; }
   if (act === "wizback") { readWiz(); wiz.step--; render(); return; }
   if (act === "wizcancel") { wiz = null; view = "lobby"; render(); toTop(); return; }
   if (act === "opentrip") { save(); const x = library.find(y => y.id === t.dataset.id); if (x) { trip = x.trip; if (!trip.prefs) trip.prefs = defaultPrefs(); jumpToToday(trip); view = trip.tour && trip.tour.dayId === day().id && cityFor(day()) ? "tour" : "plan"; save(); render(); toTop(); } return; }
@@ -7203,7 +7233,7 @@ document.addEventListener("change", e => {
     return;
   }
   if (t.id === "f-type") { readForm(); const d = day(); d.type = t.value; d.pointIdx = 0; if (d.type === "departure" && d.mode === "ship") d.mode = "flight"; d.selected = null; edited(); save(); render(); return; }
-  if (t.id === "f-aboard") { setAboard(day(), t.checked); render(); return; }
+  if (t.id === "f-stayaboard") { setAboard(day(), t.checked); render(); return; }
   if (["f-point", "f-return", "f-along", "f-fill", "f-lodging", "f-tender", "f-date"].includes(t.id)) { readForm(); edited(); save(); render(); return; }
   if (t.closest && t.closest("#dayForm")) { readForm(); edited(); save(); }
 });
@@ -7215,12 +7245,13 @@ document.addEventListener("submit", e => {
     const d = day();
     if (!d.destination) { aiError = "Type a city first."; render(); return; }
     if (cityFor(d)) { view = "plan"; aiError = ""; render(); toTop(); }
-    else if (aiReady()) generateCity(d);
+    else if (aiReady() || freeAI) generateCity(d);
     else { render(); }
     return;
   }
   if (f.id === "wizForm") {
     readWiz();
+    if (wizSteps()) { if (e.submitter && e.submitter.dataset.next) { aiError = ""; wiz.step++; render(); toTop(); return; } tsBuild(); return; }
     if (wiz.step === 0 && !wiz.text.trim() && !(wiz.images || []).length) { aiError = "Describe your trip first, even roughly."; render(); return; }
     aiError = "";
     if (e.submitter && e.submitter.dataset.next) { wiz.step++; render(); toTop(); return; }

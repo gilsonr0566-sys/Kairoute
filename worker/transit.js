@@ -8,6 +8,12 @@
 const OVERPASS = ["https://overpass-api.de/api/interpreter", "https://overpass.private.coffee/api/interpreter", "https://overpass.kumi.systems/api/interpreter", "https://maps.mail.ru/osm/tools/overpass/api/interpreter"];
 const UA = { "user-agent": "Kairoute/1.0 (travel guide; https://gilsonr0566-sys.github.io/Kairoute/)" };
 const R_STOP = 2500, R_FERRY = 1500; // how far from each end a station or pier may be (a walk or a short taxi)
+// A train between towns far apart is a real way to go even when its stations are beyond a short walk at either end
+// (Athens to Corinth: Athens station is 3 km from the centre, Corinth station 5 km from Ancient Corinth): the traveler
+// takes a taxi to and from them, and that taxi is counted in the time. So for rides of 20 km and more, train stations
+// are looked for up to 12% of the distance away (at most 10 km), and the taxis at both ends together may be at most a
+// third of the way. Only trains: a metro or tram line is a city ride, and a city ride is never stretched like this.
+export const trainReach = (a, b) => { const km = hav(a, b); return km >= 20 ? Math.min(10000, Math.max(R_STOP, Math.round(km * 120))) : R_STOP; };
 // Cautious running speeds (km/h) and the time lost at each stop between, by kind of line.
 const SPEED = { train: [55, 0.8], light_rail: [45, 0.7], subway: [33, 0.5], monorail: [30, 0.5], tram: [17, 0.4], bus: [24, 0.5], trolleybus: [20, 0.4], ferry: [28, 0] };
 // How often a line usually runs (minutes) when mappers didn't record it: kept on the cautious side.
@@ -39,7 +45,9 @@ const nearestIdx = (pts, p) => { let bi = -1, bd = Infinity; pts.forEach((q, i) 
 // Keep at most n points of a line for the map.
 const thin = (pts, n) => { if (pts.length <= n) return pts; const step = (pts.length - 1) / (n - 1); return Array.from({ length: n }, (_, i) => pts[Math.round(i * step)]); };
 
-async function overpass(q, ms = 15000) {
+// How long one map server is given before the next is tried (a background refill or a probe may give longer).
+let MAP_MS = 15000; export const setMapWait = ms => { MAP_MS = ms; };
+async function overpass(q, ms = MAP_MS) {
   const why = [];
   for (const ep of OVERPASS) {
     try {
@@ -202,8 +210,12 @@ export async function transitOptions(a, b, store) {
   // first which lines stop near both ends, then the path of the few that do.
   const stops = (P, set) => `(node(around:${R_STOP},${P})[railway~"^(station|halt|stop)$"];node(around:${R_STOP},${P})[public_transport=stop_position][~"^(train|light_rail|subway|monorail|ferry)$"~"^yes$"];node(around:${R_STOP},${P})[amenity=ferry_terminal];)->.${set};`;
   const RT = `[type=route][route~"^(train|light_rail|subway|monorail)$"]`;
-  const q1 = `[out:json][timeout:20];${stops(A, "sa")}${stops(B, "sb")}rel(bn.sa)${RT}->.ra;rel(bn.sb)${RT}->.rb;rel.ra.rb;out ids;
-.sa out tags;.sb out tags;`;
+  // Far rides also ask for the train stations farther out (trainReach), and of those only train lines count.
+  const RW = trainReach(a, b), TR = `[type=route][route=train]`;
+  const wide = (P, set) => RW > R_STOP ? `(node(around:${RW},${P})[railway~"^(station|halt|stop)$"][station!=subway][station!=light_rail];node(around:${RW},${P})[public_transport=stop_position][train=yes];)->.${set};` : "";
+  const rels = (n, w, out) => RW > R_STOP ? `(rel(bn.${n})${RT};rel(bn.${w})${TR};)->.${out};` : `rel(bn.${n})${RT}->.${out};`;
+  const q1 = `[out:json][timeout:25];${stops(A, "sa")}${stops(B, "sb")}${wide(A, "wa")}${wide(B, "wb")}${rels("sa", "wa", "ra")}${rels("sb", "wb", "rb")}rel.ra.rb;out ids;
+.sa out tags;.sb out tags;${RW > R_STOP ? ".wa out tags;.wb out tags;" : ""}`;
   const railP = (async () => { const d1 = await overpass(q1);
     const ids = [...new Set((d1.elements || []).filter(e => e.type === "relation").map(e => e.id))].slice(0, 8);
     const d2 = ids.length ? await overpass(`[out:json][timeout:25];rel(id:${ids.join(",")});out geom;`) : { elements: [] };
@@ -215,7 +227,8 @@ export async function transitOptions(a, b, store) {
     el = el.concat(fa.rels.filter(r => inB(fb.rels, r.id)), fa.ways.filter(w => inB(fb.ways, w.id)), fa.piers, fb.piers);
     fWays = fa.ways.concat(fb.ways.filter(w => !inB(fa.ways, w.id))); }
   const res = await buildOpts(el, fWays, a, b);
-  if (rail.status === "rejected" || fer.status === "rejected") res.partial = true; // one source was busy: asked again soon
+  if (rail.status === "rejected" || fer.status === "rejected") { res.partial = true; // one source was busy: asked again soon
+    res.why = [rail, fer].filter(x => x.status === "rejected").map(x => String(x.reason && (x.reason.stack || x.reason.message) || x.reason).slice(0, 300)); }
   return res;
 }
 // Ferries between two points from the kept answers alone (no map servers asked): what the helper adds to a saved
@@ -244,8 +257,10 @@ async function buildOpts(el, fWays, a, b) {
     const pool = stopsM.some(s => !s.plat) ? stopsM.filter(s => !s.plat) : stopsM;
     if (pool.length < 2 && mode === "ferry") { const f = ferryByCourse(t, chain(ways), a, b, stopTag, "r" + r.id); if (f) opts.push(f); continue; }
     if (pool.length < 2) continue;
-    const near = p => { let best = null; pool.forEach((s, k) => { const km = hav(s, p); if (km * 1000 <= R_STOP && (!best || km < best.km)) best = { s, k, km }; }); return best; };
+    const reach = mode === "train" ? trainReach(a, b) : R_STOP;
+    const near = p => { let best = null; pool.forEach((s, k) => { const km = hav(s, p); if (km * 1000 <= reach && (!best || km < best.km)) best = { s, k, km }; }); return best; };
     const sa = near(a), sb = near(b); if (!sa || !sb || sa.k === sb.k) continue;
+    if ((sa.km > R_STOP / 1000 || sb.km > R_STOP / 1000) && sa.km + sb.km > hav(a, b) / 3) continue; // the taxis would be most of the trip
     if (sa.k > sb.k && /^2/.test(t["public_transport:version"] || "2") && mode !== "ferry") continue; // a one-way route: the other direction's relation covers this trip
     const between = Math.abs(sb.k - sa.k) - 1;
     const line = chain(ways);
@@ -256,7 +271,7 @@ async function buildOpts(el, fWays, a, b) {
     let ride = dur && total > 0 ? dur * Math.min(1, km / total) : km / v * 60 + between * perStop;
     ride = Math.max(ride, km / (v * 1.6) * 60); // never quicker than the line could run
     const every = mins(t.interval), nmA = (stopTag.get(sa.s.id) || {}).name, nmB = (stopTag.get(sb.s.id) || {}).name;
-    opts.push(mk({ mode, ref: t.ref || "", name: t.name || "", operator: t.operator || t.network || "", from: nmA || t.from || "", to: nmB || t.to || "", fromPt: sa.s, toPt: sb.s, km, ride, every, hours: t.opening_hours || "", seasonal: t.seasonal || "", fare: t.charge || t.fee || "", stops: between, path, a, b, osm: "r" + r.id }));
+    opts.push(mk({ mode, ref: t.ref || "", name: t["name:en"] || t.name || "", operator: t.operator || t.network || "", from: nmA || t.from || "", to: nmB || t.to || "", fromPt: sa.s, toPt: sb.s, km, ride, every, hours: t.opening_hours || "", seasonal: t.seasonal || "", fare: t.charge || t.fee || "", stops: between, path, a, b, osm: "r" + r.id }));
   }
   // Ferries are often mapped as one way from pier to pier rather than as a route relation.
   for (const w of el.filter(e => e.type === "way" && e.tags && e.tags.route === "ferry")) {
@@ -338,7 +353,7 @@ function mk(o) {
   // gap between services (at most an hour), plus boarding. Ferries board early.
   const wait = Math.round(Math.min(ev, 60) + (o.mode === "ferry" ? 10 : 3));
   const ride = Math.round(o.ride);
-  const label = [NAME[o.mode], o.ref && !(o.name || "").includes(o.ref) ? o.ref : "", o.name].filter(Boolean).join(" ").replace(/\s+/g, " ").slice(0, 80);
+  const label = [NAME[o.mode], o.ref && !(o.name || "").includes(o.ref) ? o.ref : "", o.name].filter(Boolean).join(" ").replace(/\s+/g, " ").replace(/^(\w+) \1\b/i, "$1").slice(0, 80); // "Train Train A4" (an English line name that starts with its kind) reads "Train A4"
   return { mode: o.mode, kind: NAME[o.mode], label, operator: o.operator.slice(0, 60), from: o.from.slice(0, 60), to: o.to.slice(0, 60), ride, wait, every: ev, everySrc: every ? "map" : "usual", access: acc, egress: egr,
     min: acc.min + wait + ride + egr.min, km: +o.km.toFixed(1), stops: o.stops, hours: String(o.hours).slice(0, 80), months: runMonths(o.hours, o.seasonal), fare: String(o.fare).slice(0, 40),
     path: thin(o.path.length >= 2 ? o.path : [o.fromPt, o.toPt], 120).map(p => [+p.lng.toFixed(5), +p.lat.toFixed(5)]),
