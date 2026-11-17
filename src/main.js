@@ -891,7 +891,10 @@ function allSites(city) { return [...(city.sites || []), ...(city.farther || [])
 // Sights already planned on another day in the same city, by site id -> that day.
 function plannedElsewhere(d) {
   const c = cityFor(d), out = {}; if (!c) return out;
-  trip.days.forEach(o => { if (o !== d && cityFor(o) === c && o.selected && !throughTo(o)) o.selected.forEach(id => { if (!out[id]) out[id] = o; }); }); // a through-arrival's plan is on its leaving day
+  // By the sight as the guide has it now: a pick saved under an id the guide has since changed (a fuller guide came
+  // in) is found by its saved name, as its own day's plan finds it, so that day still counts as having it (Nov 17
+  // gate: the hearted Jun 30 Acropolis showed as free on Jul 1, and ticking it there took it off the locked day).
+  trip.days.forEach(o => { if (o !== d && cityFor(o) === c && o.selected && !throughTo(o)) pickedSites(o, c).forEach(s => { if (!out[s.id]) out[s.id] = o; }); }); // a through-arrival's plan is on its leaving day
   return out;
 }
 // Sights that didn't fit on an earlier day in the same city carry over to the next one.
