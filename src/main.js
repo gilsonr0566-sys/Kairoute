@@ -5828,11 +5828,31 @@ function startOf(d, city) {
 // A sight that stands inside a bigger one of the same guide: inside its map area, or named as one of its parts
 // (the Parthenon in the Acropolis, the Sistine Chapel in the Vatican Museums). It is shown in the bigger one's card as
 // "Included", never as a pick of its own. Nested ones go to the outermost. Same answer every time for the same data.
+// What Wikidata says each sight is part of (P361) or stands in (P276), kept on the device so the list is the same
+// offline. Asked once per sight through the helper's /facts.
+const PART_STORE = "kairoute.partof1";
+let partMem = (() => { try { return JSON.parse(localStorage.getItem(PART_STORE) || "{}") || {}; } catch (e) { return {}; } })(), partV = 0;
+const partAsked = {};
+async function partScan(city) {
+  const k = keyOf(city.city); if (!freeAI || (partAsked[k] && Date.now() - partAsked[k] < 600000)) return; partAsked[k] = Date.now();
+  const need = [...new Set(allSites(city).map(x => x.wd).filter(w => w && !(w in partMem)))].slice(0, 120);
+  for (let i = 0; i < need.length; i += 20) {
+    const ids = need.slice(i, i + 20); let got = null;
+    try { const r = await fetch(`${freeAI.url}/facts`, { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ ids }) }); if (r.ok) got = (await r.json()).facts || {}; } catch (e) {}
+    if (!got) return;
+    for (const id of ids) { const f = got[id]; if (f && Array.isArray(f.partOf)) partMem[id] = [...f.partOf, ...(f.at || [])]; } // an older helper's answer (no partOf) is asked again later
+  }
+  if (need.some(id => id in partMem)) { try { localStorage.setItem(PART_STORE, JSON.stringify(partMem)); } catch (e) {} partV++; }
+}
+if (typeof window !== "undefined") window.__kairoutePartSet = m => { Object.assign(partMem, m); partV++; }; // checks: Wikidata's answers
 const nestMemo = new WeakMap();
 function nestMap(city) {
-  const all = allSites(city), sig = all.length + "|" + (city.areaV || 0) + "|" + all.map(x => x.id).join(",");
+  const all = allSites(city), sig = all.length + "|" + (city.areaV || 0) + "|" + partV + "|" + all.map(x => x.id).join(",");
   const m = nestMemo.get(city); if (m && m.sig === sig) return m;
-  const same = (n, M) => n && ((nameMatch(n, M.name) && nameMatch(M.name, n)) || (M.local && nameMatch(n, M.local) && nameMatch(M.local, n))); // the same name both ways, never "Acropolis" for the Acropolis Museum
+  // The same name both ways, never "Acropolis" for the Acropolis Museum; the city's own name tells nothing apart
+  // ("Royal Palace" is the Royal Palace of Naples).
+  const cw = new Set(keyOf(city.city || "").split(" ").filter(w => w.length > 2)), nc = t => keyOf(String(t || "")).split(" ").filter(w => !cw.has(w)).join(" ") || keyOf(String(t || ""));
+  const same = (n, M) => n && ((nameMatch(nc(n), nc(M.name)) && nameMatch(nc(M.name), nc(n))) || (M.local && nameMatch(n, M.local) && nameMatch(M.local, n)));
   // Named as one of its parts, or one half of a name that joins places ("Colosseum and Roman Forum" holds the Roman Forum).
   const halves = A => { const n = String(showName(A) || "").replace(/\s*\(.*?\)\s*/g, " "); return /\s(and|&)\s/i.test(n) ? n.split(/\s+(?:and|&)\s+(?:the\s+)?/i).map(x => x.trim()).filter(x => x.length > 3) : []; };
   const partOf = (M, A) => ((A.parts || []).length > 1 && A.parts.some(p => [p.name, p.en].some(n => same(n, M)))) || (halves(A).some(h => same(h, M)) && !halves(M).length && hav(A, M) < 1.5);
@@ -5840,7 +5860,9 @@ function nestMap(city) {
   const par = new Map();
   for (const M of all) {
     if (!isFinite(M.lat)) continue;
-    const hosts = all.filter(A => A !== M && A.id !== M.id && !A.quick && (partOf(M, A) || (typeof inArea === "function" && inArea(M, A))) && !(partOf(A, M) || (typeof inArea === "function" && inArea(A, M) && !big(A, M))));
+    const wdIn = (M, A) => !!(M.wd && A.wd && M.wd !== A.wd && (partMem[M.wd] || []).includes(A.wd) && hav(M, A) < 1.5);
+    const inside = (M, A) => partOf(M, A) || wdIn(M, A) || (typeof inArea === "function" && inArea(M, A) && !DISTRICT.test((A.category || "") + " " + A.name));
+    const hosts = all.filter(A => A !== M && A.id !== M.id && !A.quick && inside(M, A) && !(inside(A, M) && !big(A, M)));
     if (hosts.length) par.set(M.id, hosts.sort((x, y) => (y.minutes || 0) - (x.minutes || 0) || String(x.id).localeCompare(String(y.id)))[0]);
   }
   const top = x => { let t = x, k = 0; while (par.has(t.id) && k++ < 5) t = par.get(t.id); return t; };
@@ -5848,9 +5870,14 @@ function nestMap(city) {
   for (const [id, A] of par) { const T = top(A); if (T.id === id) continue; out.par.set(id, T); const M = all.find(x => x.id === id); if (!out.kids.has(T.id)) out.kids.set(T.id, []); out.kids.get(T.id).push(M); }
   nestMemo.set(city, out); return out;
 }
-const parentOf = (x, city) => city ? nestMap(city).par.get(x.id) || null : null;
-const kidsOf = (x, city) => city ? nestMap(city).kids.get(x.id) || [] : [];
-if (typeof window !== "undefined") window.__kairoutePickerNest = i => { const c = cityFor(trip.days[i]); if (!c) return null; const m = nestMap(c); return [...m.kids].map(([id, ks]) => ({ parent: (allSites(c).find(x => x.id === id) || {}).name, kids: ks.map(k => k.name) })); };
+// A whole quarter (old town, historic centre) holds many sights people pick one by one: on the Day plan they fold
+// into its walk when both are planned (area-visit.js); in the list they stay their own cards.
+const DISTRICT = /old town|historic (centre|center|district)|quarter|district|neighbo|\bbarrio|\blanes\b|city centre|downtown|centro storico|altstadt/i;
+// The list uses the nesting as it was when the page opened (pickFrozen.nest), so it never changes under the traveler.
+const nestNow = city => (pickFrozen && pickFrozen.nest && pickFrozen.city === city ? pickFrozen.nest : nestMap(city));
+const parentOf = (x, city) => city ? nestNow(city).par.get(x.id) || null : null;
+const kidsOf = (x, city) => city ? nestNow(city).kids.get(x.id) || [] : [];
+if (typeof window !== "undefined") window.__kairoutePickerNest = i => { const c = cityFor(trip.days[i]); if (!c) return null; const m = nestMap(c); const all = allSites(c); return { withWd: all.filter(x => x.wd).length, n: all.length, partKnown: all.filter(x => x.wd && x.wd in partMem).length, nest: [...m.kids].map(([id, ks]) => ({ parent: (all.find(x => x.id === id) || {}).name, kids: ks.map(k => k.name) })) }; };
 function renderSites(d) {
   const city = cityFor(d);
   if (!city) return `${dayHeading(d)}${busyBlock()}${errBlock()}${needsCity(d)}`;
@@ -5875,15 +5902,13 @@ function renderSites(d) {
   const pass = x => f === "all" || (f === "must" ? x.mustSee : sightKind(x, city) === f);
   const laterIds = new Set(cityBooked(city) ? laterList(city).map(x => x.id) : []); // shown once, in "If you come back"
   const nearbyOnly = x => x.quick || (my.size > 0 && !famousTrue(x, city) && !siteInts(x).some(k => my.has(k)));
-  const kept = pickFrozen && pickFrozen.key === frozenKey(d, city) ? pickFrozen.sec : null; // a sight already in the list stays in its place (one that stops fitting this visit too)
+  partScan(city);
+  if (!pickFrozen || pickFrozen.key !== frozenKey(d, city)) pickFrozen = { key: frozenKey(d, city), sec: new Map(), ord: new Map(), n: 0, city, nest: nestMap(city), fresh: true };
+  const kept = pickFrozen.fresh ? null : pickFrozen.sec; pickFrozen.fresh = false; // a sight already in the list stays in its place (one that stops fitting this visit too)
   const all = allSites(city).filter(x => (!laterIds.has(x.id) || (kept && kept.has(x.id))) && !parentOf(x, city) && (pass(x) || on(x)));
   const st = startOf(d, city), dist = x => st && isFinite(x.lat) && isFinite(x.lng) ? hav(st, x) : 1e9;
   const full = (() => { if (!plan || plan.error) return false; const m = meterCalc(plan, d); return !!(m && (m.over || m.dropped.length)); })();
   const secOf = x => on(x) ? "picks" : sch(x) ? "sched" : nearbyOnly(x) ? "more" : plan && !plan.error && (full || fitNever(plan, d, x)) ? "wont" : x.mustSee ? "must" : "main";
-  const fk = frozenKey(d, city);
-  if (!pickFrozen || pickFrozen.key !== fk) {
-    pickFrozen = { key: fk, sec: new Map(), ord: new Map(), n: 0 };
-  }
   // Sights planned on other days go by day, in date order (then nearest first), fixed like the rest.
   const place = x => { const sc = secOf(x); pickFrozen.sec.set(x.id, sc); pickFrozen.ord.set(x.id, (sc === "sched" ? 1e6 * (trip.days.indexOf(elsew[x.id]) + 1) : 0) + pickFrozen.n++); };
   for (const x of all.slice().sort((x, y) => dist(x) - dist(y) || String(showName(x)).localeCompare(String(showName(y))) || String(x.id).localeCompare(String(y.id)))) if (!pickFrozen.sec.has(x.id)) place(x); // a sight that arrives later joins the end of its section

@@ -71,6 +71,13 @@ const { chromium } = require('playwright'); const path = require('path');
     ok(!nest.kids.length, `${tag}: sights inside a bigger one still have their own card: ${nest.kids.join(', ')}`);
     ok(/Sistine Chapel/.test(nest.vat || '') && /Piazza San Pietro/.test(nest.vat || ''), `${tag}: Vatican City doesn't show what it includes (${nest.vat})`);
     ok(nest.col == null || /Roman Forum/.test(nest.col), `${tag}: "Colosseum and Roman Forum" doesn't include the Roman Forum (${nest.col})`);
+    // Wikidata says the clock is part of the cathedral: the clock is shown in the cathedral's card.
+    await p.evaluate(R => { window.__kairouteArea.addSites(R, [
+      { id: 'zz-cath', name: 'Kairoute Test Cathedral', category: 'cathedral', lat: 41.8986, lng: 12.4769, minutes: 40, wd: 'Q900001', summary: 'x', guide: 'x' },
+      { id: 'zz-clock', name: 'Kairoute Test Clock', category: 'clock', lat: 41.8987, lng: 12.4771, minutes: 15, wd: 'Q900002', summary: 'x', guide: 'x' }]); window.__kairoutePartSet({ Q900002: ['Q900001'] }); }, R);
+    await open(R);
+    const wdn = await p.evaluate(() => ({ clock: !!document.querySelector('.sitesmain [data-card="zz-clock"]'), incl: ((document.querySelector('.sitesmain [data-card="zz-cath"] .incl') || {}).textContent || '') }));
+    ok(!wdn.clock && /Kairoute Test Clock/.test(wdn.incl), `${tag}: a sight Wikidata places inside another isn't shown in it (${JSON.stringify(wdn)})`);
     // A sight inside picked on its own (an older trip) shows its bigger one ticked; unticking it takes both off.
     await p.evaluate(R => { const s = window.__kairouteTruth(R).selected || []; window.__kairouteEdit(R, { selected: s.concat(['sistine']), mine: s.concat(['sistine']) }); }, R); await open(R);
     ok(await p.evaluate(() => !!document.querySelector('input[data-site="vatican-city"]:checked')), `${tag}: Vatican City isn't shown ticked when the Sistine Chapel is picked`);
