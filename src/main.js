@@ -1419,6 +1419,7 @@ function mealShut(r, label, iso) { const t = MEAL_CHECK[label] || MEAL_CHECK.Lun
 // No backtracking (Richard, Nov 16: Athens went 1 -> 6 north for lunch, then back south to 7, then across town and
 // back): a route whose legs cross each other doubles back on itself. Each crossing costs as much as an hour, so a
 // crowd or heat preference never wins over a clean loop, while opening hours, meals and the ship still do.
+let prefOff = false; // the route alone, without crowds, heat or weather: to measure what those preferences cost in travel (buildPlanForDay)
 const CROSS_COST = 60; let crossOn = false; // on only for the last pass over a finished day (buildPlanForDay)
 // Speed: this runs inside every trial order the planner weighs (thousands per tap), so it reuses one buffer, keeps each
 // place's flat map position, and skips pairs of legs whose boxes don't overlap before doing any cross products.
@@ -1486,7 +1487,7 @@ function simDay(seq, t0, O, Z, style) {
       // Opening hours: wait for it to open, and never arrive after the last entry. Then weather and rush hours.
       if (p.oh) { const f = ohFit(p.oh, clock, p.minutes); if (f.wait) { cost += f.wait * 0.6; clock += f.wait; } if (f.late) { cost += 300 + f.late * 10; late++; } }
       { const sw = showWait(p, clock); if (sw) { cost += sw * 0.6; clock += sw; } } // a timed show: be there 10 min early
-      cost += visitPenalty(p, clock, p.minutes || 0) + climateHeat(p, clock, p.minutes || 0);
+      if (!prefOff) cost += visitPenalty(p, clock, p.minutes || 0) + climateHeat(p, clock, p.minutes || 0);
       // Port days: a stop a long ride from the ship is seen early, so a late train or traffic jam on the way back
       // can never cost the ship. The farther it is and the later it would be, the more it costs.
       if (Z && (Z.backToShip || Z.deadline)) { const back = tmin(p, Z); if (back >= 30) cost += back * (clock - t0) / 60; }
@@ -1795,6 +1796,11 @@ function dayFp(d, rides) {
 // A kept plan still matches what it was made from.
 const planStat = { hit: 0, kept: 0, stale: 0, built: 0, changed: 0 }; // how plans were served (speed checks read it)
 const planOk = (e, d) => e.dg === dataGen || (e.fp === dayFp(d, e.rides) ? ((e.dg = dataGen), planStat.kept++, true) : (planStat.changed++, false));
+// Test hook (safety net): each city day planned afresh, with the riding its order takes, the riding of the best order by
+// route alone, and what crowds, heat or the forecast were allowed to add (was: the preferred order before the cap).
+if (typeof window !== "undefined") window.__kairouteRouteX = () => { try { window.__kairouteSeen.clear(); } catch (e) {} return trip.days.map((d, i) => { if (noShore(d) || !cityFor(d)) return null; bonusMemo = new Map(); mealMemo = new Map(); keptMemo = new Map(); eveMemo = new Map(); avoidMeals = new Set(); let p = null; try { p = buildPlan(d); } catch (e) {} const st = (p && !p.error ? p.stops || [] : []).filter(x => x.place && !x.place.mealOf && isFinite(x.place.lat)).map(x => x.place), O = p && p.w ? p.w.head[p.w.head.length - 1] : null, Z = p && p.w ? p.w.tail[0] || null : null, rideOf = q => { let c = 0, pv = O; for (const x of q) { c += tmin(pv, x); pv = x; } return Math.round(c + (Z ? tmin(pv, Z) : 0)); };
+    const pure = O && st.length > 1 ? { stopsRide: rideOf(st), pureBest: rideOf(optimizeFree(st, O, Z)) } : {};
+    return p && !p.error ? Object.assign(pure, { i, date: d.date, city: d.destination, stops: (p.stops || []).filter(x => x.place && !x.place.mealOf).map(x => x.place.name) }, p.routeX || {}) : null; }).filter(Boolean); };
 if (typeof window !== "undefined") window.__kairoutePlanStat = () => Object.assign({ renders: renderNo, dataGen }, planStat);
 // The store, emptied when anything that shapes plans has changed since it was filled. Returns the current signature.
 function planFresh() {
@@ -2094,8 +2100,13 @@ function buildPlanForDay(d) {
     trip.days.slice(0, trip.days.indexOf(d)).forEach(o => { if (cityFor(o) !== city) return; if (!bonusMemo.has(o)) { try { buildPlan(o); } catch (e) {} } (bonusMemo.get(o) || []).forEach(id => taken.add(id)); });
     const inSeq = new Set(seq.filter(x => !x.mealOf).flatMap(x => x.foldOf ? x.foldOf.map(y => y.id) : [x.id])), skip = new Set((d.selected || []).concat(dropped.map(x => x.id)));
     // An optional stop the app adds on its own must come with its story: a sight listed from the sources whose story
-    // isn't written yet is offered in the sights list, never slipped into the day as an extra.
-    const pool = (city.sites || []).concat(city.farther || []).filter(x => !x.quick && !(x.srcOnly && !x.guide) && religiousOk(x) && !inSeq.has(x.id) && !skip.has(x.id) && !taken.has(x.id) && !(d.skipBonus || []).includes(x.id) && !areaCovered(x, seq) && !closedForDay(x, d, w) && (!d.rain || x.indoor) && (!keepBonus || keepBonus.has(x.id)))
+    // isn't written yet is offered in the sights list, never slipped into the day as an extra. A guide built with no AI
+    // (no-ai-guide.js) has no written stories at all: there each sight's own travel-guide description is its story, so
+    // the sights travelers recommend (a travel-guide listing, or World Heritage) fill a day's spare time like any other,
+    // so a day in such a city no longer ends at lunch with hours free. A famous building no guide recommends (a
+    // university, an office) is still only offered in the sights list.
+    const recd = x => x.unesco || (x.src || []).some(t => /Wikivoyage/.test(t));
+    const pool = (city.sites || []).concat(city.farther || []).filter(x => !x.quick && !(x.srcOnly && !x.guide && !(city.srcGuide && recd(x))) && religiousOk(x) && !inSeq.has(x.id) && !skip.has(x.id) && !taken.has(x.id) && !(d.skipBonus || []).includes(x.id) && !areaCovered(x, seq) && !closedForDay(x, d, w) && (!d.rain || x.indoor) && (!keepBonus || keepBonus.has(x.id)))
       .map(x => Object.assign({}, x, { minutes: Math.max(stopFloor(x), Math.round(x.minutes * mult / 5) * 5 || x.minutes), bonus: true }, live(x)));
     const limit = w.endBy - 15 - tailCost(), leaving = d.type === "embark" || d.type === "departure";
     let capped = false;
@@ -2140,6 +2151,26 @@ function buildPlanForDay(d) {
   if (!locked && seq.length > 2 && !ownOrd && !mealPin && crossCount(O, seq, ZZ)) { const r0 = simDay(seq, t0, O, ZZ, style); crossOn = true; // a day the traveler put in order (or placed lunch on) keeps it
     try { let q = null, r = null; const sd = loopSeeds(seq, O, ZZ), rest = sd.slice(1).map(x => [x, simDay(x, t0, O, ZZ, style).cost]).sort((a, b) => a[1] - b[1]);
       for (const s0 of [sd[0]].concat(rest.length ? [rest[0][0]] : [])) { const qi = polishDay(s0, t0, O, ZZ, style, city), ri = simDay(qi, t0, O, ZZ, style); if (ri.late <= r0.late && ri.end <= Math.max(r0.end, w.endBy - tailCost()) && (!r || ri.cost < r.cost)) { q = qi; r = ri; } } if (q) seq = q; } finally { crossOn = false; } }
+  // The route comes first (Richard, Nov 17: "I just want there to be some logic to the order. I've seen some where it
+  // took me across town, only to back and continue ... help them fit in without killing them"). Crowds, the midday heat
+  // and the forecast still choose between orders that ride about the same, but they never add more than a little
+  // riding: the day is also ordered by the route alone, and when the preferred order rides more than 15 minutes (or a
+  // fifth) longer than that, the route alone is kept, and the plan says what it chose. A forecast (rain, a heat wave) may
+  // ask a little more: 30 minutes or a third. Never at the cost of an opening time or the ship.
+  let routeX = null;
+  if (!locked && !ownOrd && !mealPin && seq.filter(x => !x.mealOf).length > 1) {
+    const ride = q => { let c = 0, pv = O; for (const x of q) { c += tmin(pv, x); pv = x; } return Math.round(c + (ZZ ? tmin(pv, ZZ) : 0)); };
+    let qR = null, rR = null, r1 = null;
+    // Only a day whose order the preferences touch at all is weighed again (one more polish, so a tick stays quick).
+    const rOn = simDay(seq, t0, O, ZZ, style).cost; prefOff = true;
+    try { r1 = simDay(seq, t0, O, ZZ, style); crossOn = true; if (r1.cost + 0.5 < rOn) { qR = polishDay(seq, t0, O, ZZ, style, city); rR = simDay(qR, t0, O, ZZ, style); } else { qR = seq; rR = r1; } } finally { prefOff = false; crossOn = false; }
+    const lim = w.endBy - tailCost(), now = ride(seq), best = ride(qR), cap = planWx ? Math.max(30, best / 3) : Math.max(15, best / 5);
+    routeX = { ride: now, was: now, best, cap: Math.round(cap) };
+    if (now - best > cap && rR.late <= r1.late && rR.end <= Math.max(r1.end, lim)) {
+      seq = qR; routeX.kept = true; routeX.ride = best;
+      w.notes.push(`Stops are in route order. Visiting at ${planWx ? "the times the forecast suggests" : "cooler or quieter times"} would add ${dur(now - best)} of travel.`);
+    }
+  }
   bonusMemo.set(d, bonus.map(x => x.id));
   // What later days see of this one: its stops (picks and visits), and apart from them the quick sights on the way
   // (.along), so a later day doesn't show the same quick sight again.
@@ -2212,7 +2243,7 @@ function buildPlanForDay(d) {
   const eve0 = evening.find(e => !e.booked && e.place); if (locked) quickMeals = lk.quick;
   const lock = { t: lockT, seq: lockSeqOut(seq), late: simDay(seq, t0, O, ZZ, style).late, quick: !!quickMeals, eve: eve0 ? keyOf(eve0.place.name) : "" };
   const folded = [...new Set(seq.filter(x => x.foldOf).flatMap(x => x.foldOf.map(y => y.id)))]; // picks shown inside an area visit
-  return { city, w, items, stops, dropped, folded, elsewhere, quickMeals, along, bonus, fill, meals, evening, swaps, closedToday, lock, locked: locked && !seenUsed, seen: seenUsed, seenBroke, seenSkipped: seenUsed ? lk.skipped || [] : [], lockBroken, start: w.start, endBy: w.endBy, end: clock, walkKm, over: clock > w.endBy + (hardEnd(d) ? 0 : 5), tight: budget < fixed + 45 };
+  return { city, w, items, stops, dropped, folded, elsewhere, quickMeals, along, bonus, fill, meals, evening, swaps, closedToday, lock, locked: locked && !seenUsed, seen: seenUsed, seenBroke, seenSkipped: seenUsed ? lk.skipped || [] : [], lockBroken, routeX, start: w.start, endBy: w.endBy, end: clock, walkKm, over: clock > w.endBy + (hardEnd(d) ? 0 : 5), tight: budget < fixed + 45 };
 }
 
 // ---------- AI ----------
@@ -2869,7 +2900,7 @@ function farGaps(city, src) {
 async function fillFarther(city, src) {
   const k = keyOf(city.city); if (farFilling[k] || city.farFillV === FARFILL_V) return;
   if ((city.farther || []).some(farUntimed)) { city.farther = city.farther.filter(x => !farUntimed(x)); keepFills(city); }
-  if (!aiReady()) return;
+  if (!aiReady()) { if (freeAI) farNoAI(city, src); return; }
   const cands = farGaps(city, src); if (!cands.length) { city.farFillV = FARFILL_V; return; }
   farFilling[k] = true;
   const prompt = `You are an expert tour guide writing data for a self-guided tour app in ${city.city}${city.country ? ", " + city.country : ""}. These real places are within a day trip of ${city.city} and the guide doesn't have them yet. Keep ONLY the ones a visitor staying in ${city.city} or arriving on a cruise ship would genuinely go to as a day trip (a famous site, a scenic town, an island a short ferry ride away, a natural wonder). Leave out places more than about 90 minutes away one way by the usual way there, and islands with only a few long ferry sailings. Leave out suburbs and ordinary towns, regions and provinces, island groups, companies and anything else that isn't a place to visit. Keep each name exactly as given.
@@ -4636,7 +4667,9 @@ if (typeof window !== "undefined") { const touched = () => { lastTouch = Date.no
   ["pointerdown", "touchstart", "touchmove", "wheel", "keydown", "click"].forEach(t => window.addEventListener(t, touched, { capture: true, passive: true }));
   // While a finger or the mouse button is down, a redraw would swap the button under it and the tap would be lost.
   window.addEventListener("pointerdown", () => { pressing = true; }, { capture: true, passive: true });
-  ["pointerup", "pointercancel"].forEach(t => window.addEventListener(t, () => { pressing = false; lastTouch = Date.now(); }, { capture: true, passive: true })); }
+  // A click also means the finger is up: a release the page never hears (the button under it redrawn away, a tap
+  // the browser turned into a click on its own) must not leave every redraw and the offline check waiting forever.
+  ["pointerup", "pointercancel", "click"].forEach(t => window.addEventListener(t, () => { pressing = false; lastTouch = Date.now(); }, { capture: true, passive: true })); }
 // While answers keep streaming in (the first minute of a trip asks hundreds of things), redraws are spaced at least
 // ~0.9 s apart, so the screen is never redrawn back to back.
 function dataRender(keep) { drKeep = drKeep && !!keep; if (!drTimer) drTimer = setTimeout(drRun, Math.max(120, 900 - (Date.now() - drLast))); }
