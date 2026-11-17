@@ -115,8 +115,9 @@ export default {
       if (!env.REC_KEY || req.headers.get("x-kairoute-rec") !== env.REC_KEY) return Response.json({ error: "Not allowed" }, { status: 403, headers: h });
       let b; try { b = await req.json(); } catch (e) { return Response.json({ error: "Bad request" }, { status: 400, headers: h }); }
       if (b.date !== today() || !(+b.neurons >= 0)) return Response.json({ error: "Bad request" }, { status: 400, headers: h });
+      const prev = +(await env.USAGE.get("r:" + today())) || 0;
       await env.USAGE.put("r:" + today(), String(Math.round(+b.neurons)), { expirationTtl: 3 * 86400 });
-      return Response.json({ ok: true, used: Math.round(await used(env)) }, { headers: h });
+      return Response.json({ ok: true, prev, on: aiOn(env), used: Math.round(await used(env)) }, { headers: h });
     }
     if (url.pathname === "/status") { const u = await used(env), { DAILY_NEURONS } = await lim(), t = +(await env.USAGE.get("t:" + today())) || 0, left = Math.max(0, Math.floor(DAILY_NEURONS - u)); return Response.json({ ok: true, on: aiOn(env), model: MODEL, usedToday: Math.round(u), budget: Math.round(DAILY_NEURONS), left, voiceLeft: voiceLive(env) ? left : 0, labLeft: aiOn(env) ? Math.max(0, Math.floor(TEST_DAILY - t)) : 0, monthExtraUsed: Math.round(+(await env.USAGE.get("x:" + month())) || 0), monthExtraCap: (await lim()).MONTH_EXTRA, labToday: Math.round(t) }, { headers: h }); }
     // Real places from OpenStreetMap, so the app never sends anyone to a place the AI made up.
