@@ -1,7 +1,7 @@
 // Prints the real public transport OpenStreetMap knows between pairs of points (no AI used), the same way the
 // worker's /transit finds it. Usage: node tools/transit-probe.mjs  (PAIRS="lat,lng>lat,lng;..." to choose)
 // Always exits 0: it only reports what the map holds.
-import { allOptions, setMapWait } from "../worker/transit.js";
+import { allOptions, setMapWait, transitOptions } from "../worker/transit.js";
 if (process.env.MAP_MS) setMapWait(+process.env.MAP_MS); // give the free map servers longer when they are busy
 const DEF = [
   ["Naples cruise terminal > Sorrento", "40.8380,14.2550>40.6263,14.3757"],
@@ -25,6 +25,7 @@ for (const [name, p] of pairs) {
     const t0 = Date.now(), r0 = await allOptions(a, b, process.env.DATE ? new Date(process.env.DATE + "T12:00:00Z").getUTCDay() : 1, 90000, undefined, process.env.DATE || undefined), r = r0.late ? (await r0.late) || r0 : r0, o = r.opts;
     console.log(`\n== ${name} (${o.length} options, ${Date.now() - t0} ms${r.partial ? ", PARTIAL (a source was busy)" : ""})`);
     for (const x of o) console.log(`  ${x.min} min total: ${x.label}${x.forDate ? ' [timetable for ' + x.forDate + ']' : ''}${x.months ? ' [months ' + x.months.join(',') + ']' : ''}${x.operator ? " (" + x.operator + ")" : ""} | ${x.access.how} ${x.access.min} min to ${x.from || "?"} | wait ${x.wait} (every ${x.every} min, ${x.everySrc}) | ride ${x.ride} min, ${x.km} km, ${x.stops} stops | ${x.egress.how} ${x.egress.min} min from ${x.to || "?"} | path ${x.path.length} pts${x.hours ? " | hours " + x.hours : ""}${x.fare ? " | fare " + x.fare : ""} | ${x.src}${x.steps ? "\n      " + x.steps.join("\n      ") : ""}`);
+    if (process.env.TRACE && r.partial) { const d = await transitOptions(a, b).catch(e => ({ why: [e.message] })); console.log(`  map alone: ${(d.length ?? 0)} options${d.why ? ", busy: " + d.why.join(" | ") : ""}`); for (const x of Array.isArray(d) ? d : []) console.log(`    ${x.label}: ${x.from} > ${x.to}, ${x.min} min`); }
   } catch (e) { console.log(`\n== ${name}: ${e.message} ${(e.why || []).join("; ")}`); }
   await new Promise(r => setTimeout(r, 3000));
 }

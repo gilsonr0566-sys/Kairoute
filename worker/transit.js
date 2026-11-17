@@ -227,7 +227,8 @@ export async function transitOptions(a, b, store) {
     el = el.concat(fa.rels.filter(r => inB(fb.rels, r.id)), fa.ways.filter(w => inB(fb.ways, w.id)), fa.piers, fb.piers);
     fWays = fa.ways.concat(fb.ways.filter(w => !inB(fa.ways, w.id))); }
   const res = await buildOpts(el, fWays, a, b);
-  if (rail.status === "rejected" || fer.status === "rejected") res.partial = true; // one source was busy: asked again soon
+  if (rail.status === "rejected" || fer.status === "rejected") { res.partial = true; // one source was busy: asked again soon
+    res.why = [rail, fer].filter(x => x.status === "rejected").map(x => String(x.reason && (x.reason.stack || x.reason.message) || x.reason).slice(0, 300)); }
   return res;
 }
 // Ferries between two points from the kept answers alone (no map servers asked): what the helper adds to a saved
