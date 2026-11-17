@@ -524,7 +524,9 @@ const log = (suite, trip, ok, what) => { results.push({ suite, trip, ok, what })
       await p.evaluate(id => document.querySelector(`input[data-part="${id}:2"]`).click(), sp.id); await p.waitForTimeout(150);
       const stillPicked = await p.evaluate(id => document.querySelector(`input[data-site="${id}"]`).checked, sp.id);
       if (!stillPicked) bad.push('unticking a part unticked the whole stop');
-      await p.evaluate(i => window.__kairouteAt(i, 'plan'), D.i); await p.waitForTimeout(150);
+      // The redraw after a tick can land a moment later on a slow runner: wait for it (up to 3 s) rather than a fixed pause.
+      await p.evaluate(i => window.__kairouteAt(i, 'plan'), D.i);
+      await p.waitForFunction(nm => { const tl = [...document.querySelectorAll('.tl')].find(e => e.querySelector('.nm') && e.querySelector('.nm').innerText === nm); return tl && tl.querySelectorAll('ol.parts li').length === 2; }, sp.name, { timeout: 3000 }).catch(() => {});
       const after = await p.evaluate(nm => { const tl = [...document.querySelectorAll('.tl')].find(e => e.querySelector('.nm') && e.querySelector('.nm').innerText === nm); return tl ? tl.querySelectorAll('ol.parts li').length : -1; }, sp.name);
       if (after !== 2) bad.push(`after unticking a part the Day plan lists ${after} parts, not 2`);
       // Voice tour
