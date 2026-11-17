@@ -78,7 +78,10 @@ function sourceSights(city, src) {
   srcDone.set(city, src);
   const centre = srcCentre(city, src); if (!centre) return 0;
   const area = String(src.area || city.city).replace(/\s*\(.*\)/, "");
-  const all = allSites(city), mainN = () => (city.sites || []).filter(x => !x.quick).length, quickN = () => (city.sites || []).filter(x => x.quick).length;
+  // The caps count the written guide and the sources' own sights, never the famous places written in (famousFix): those
+  // come back from the device before this runs offline but arrive after it online, and must not change what's added.
+  const own = () => (city.sites || []).filter(x => !x.famousFix);
+  const all = allSites(city), mainN = () => own().filter(x => !x.quick).length, quickN = () => own().filter(x => x.quick).length;
   const score = x => (x.sl || 0) + 8 * (x.src || []).length + (x.unesco ? 30 : x.heritage ? 5 : 0) + ((x.src || []).some(t => /Wikivoyage/.test(t)) ? 10 : 0); // travelers recommend it
   const cands = src.stops.filter(x => srcWorthy(x) && (x.src || []).length >= 2 && x.name && keyOf(x.name) !== keyOf(area) && hav(x, centre) <= SRC_R)
     .sort((a, b) => score(b) - score(a));
@@ -97,7 +100,7 @@ function sourceSights(city, src) {
     // Variety: one kind of place (churches, museums, palaces) never fills the list; the next best of another kind
     // (a famous staircase, a hill with a view, the catacombs) gets the room.
     const kind = srcKind(x.name, x.local)[1], cap = SRC_KIND_CAP[kind];
-    if (cap && (city.sites || []).filter(s => !s.quick && srcKind(s.name, s.local)[1] === kind).length >= cap) continue;
+    if (cap && own().filter(s => !s.quick && srcKind(s.name, s.local)[1] === kind).length >= cap) continue;
     city.sites.push(make(x, {})); n++;
   }
   if (n) { try { console.info(`Kairoute added ${n} sights from the sources for ${city.city}`); } catch (e) {} }

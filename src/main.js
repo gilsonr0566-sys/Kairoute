@@ -109,7 +109,12 @@ async function findFreeAI() {
     } catch (e) {}
   }
 }
-setTimeout(findFreeAI, 0);
+// Anything that asks the helper at start-up (a city's sources and fame list) waits for its address first: asked
+// before it was known, a city was marked from a thin fallback for the whole visit and its full sources were never
+// fetched or kept for offline (Camp Nou and the Bernabéu went missing with no internet, Nov 16).
+let freeAIReady = null;
+setTimeout(() => { freeAIReady = findFreeAI(); }, 0);
+async function helperKnown() { if (freeAI || navigator.onLine === false) return; for (let i = 0; i < 20 && !freeAIReady; i++) await new Promise(r => setTimeout(r, 10)); if (freeAIReady) await Promise.race([freeAIReady, new Promise(r => setTimeout(r, 5000))]); }
 // Inside the Android app, native plugins give us device voices and keep the screen awake on tour.
 const NATIVE = (window.Capacitor && window.Capacitor.Plugins) || {};
 const nativeTTS = NATIVE.TextToSpeech || null, keepAwake = NATIVE.KeepAwake || null;
@@ -949,6 +954,7 @@ function settlePicks(d) {
     if (!out.length) break;
     const gone = new Set(out.map(x => x.id));
     d.bumped = (d.bumped || []).filter(b => !gone.has(b.id)).concat(out.map(x => ({ id: x.id, name: x.name, w: win(p) })));
+    laterAdd(d, out); // a booked city keeps them in "If you come back"
     d.selected = d.selected.filter(id => !gone.has(id));
     if (gone.has(d.anchor)) d.anchor = d.selected[d.selected.length - 1] || null;
     forget0(d); moved = true;
@@ -2664,6 +2670,7 @@ const famousCache = {};
 async function srcKept(key, label, ok) { if (!label) return null; const j = await kv.get(key + keyOf(label)); return ok(j) ? j : null; }
 async function famousFor(label) {
   if (!label) return null; if (famousCache[label]) return famousCache[label];
+  await helperKnown();
   if (freeAI && navigator.onLine !== false) try { const r = await fetch(freeAI.url + "/famous?city=" + encodeURIComponent(label)); if (r.ok) { const j = await r.json(); if (j && Array.isArray(j.main)) { kv.set("fam:" + keyOf(label), j); return (famousCache[label] = j); } } } catch (e) {}
   const kept = await srcKept("fam:", label, j => j && Array.isArray(j.main));
   return kept ? (famousCache[label] = kept) : null;
@@ -2676,6 +2683,7 @@ async function famousFor(label) {
 const sourcesCache = {};
 async function sourcesFor(label) {
   if (!label) return null; if (sourcesCache[label]) return sourcesCache[label];
+  await helperKnown();
   if (freeAI && navigator.onLine !== false) try { const r = await fetch(freeAI.url + "/sources?city=" + encodeURIComponent(label)); if (r.ok) { const j = await r.json(); if (j && Array.isArray(j.stops)) { kv.set("src:" + keyOf(label), j); return (sourcesCache[label] = j); } } } catch (e) {}
   const kept = await srcKept("src:", label, j => j && Array.isArray(j.stops));
   return kept ? (sourcesCache[label] = kept) : null;
@@ -2684,6 +2692,8 @@ const srcStop = (src, name, ll) => src && (src.stops || []).find(x => nameMatch(
   (ll && x.lat != null && isFinite(numV(ll.lat)) && Math.abs(x.lat - numV(ll.lat)) < 0.0015 && Math.abs(x.lng - numV(ll.lng)) < 0.002 && nameMatch(x.name.split(" ").slice(0, 2).join(" "), name)));
 const fameAsked = {};
 function fameMark(city, src) {
+  // Fills first, then the sources' sights: the same order online and offline, so the list comes out the same.
+  restoreFills(city, fillsMem[keyOf(city.city)]);
   for (const s of [...(city.sites || []), ...(city.farther || [])]) {
     const hit = srcStop(src, s.name, s) || ((src.far || []).find(x => nameMatch(s.name, x.name) || nameMatch(x.name, s.name)) && Object.assign({ src: ["Wikidata (Wikipedia in many languages)"] }, (src.far || []).find(x => nameMatch(s.name, x.name) || nameMatch(x.name, s.name))));
     if (hit) { s.fame = hit.sl || 0; s.unesco = !!hit.unesco; s.heritage = !!hit.heritage; s.src = hit.src || []; if (hit.web && !s.web) s.web = hit.web; 
@@ -2768,7 +2778,10 @@ function tickOnOneDay(city, s) {
 // online start paid to write them again. They come back, with the same id the day's picks use, before the
 // sources are checked, so the check finds them present.
 const FILL_KEY = "fill:";
-function keepFills(city) { try { kv.set(FILL_KEY + keyOf(city.city), [...(city.sites || []), ...(city.farther || [])].filter(s => s.famousFix)); } catch (e) {} }
+// The kept fills are also held in memory, so every copy of a city's guide gets them back (a built-in guide and the
+// fuller one that replaces it), whatever order the guide, its sources and the fills arrive in.
+const fillsMem = {};
+function keepFills(city) { try { const l = [...(city.sites || []), ...(city.farther || [])].filter(s => s.famousFix); fillsMem[keyOf(city.city)] = l.map(x => Object.assign({}, x)); kv.set(FILL_KEY + keyOf(city.city), l); } catch (e) {} }
 function restoreFills(city, list) {
   if (!Array.isArray(list)) return 0; let n = 0;
   for (const st of list) if (st && st.name && st.id && !farUntimed(st) && !allSites(city).some(s => s.id === st.id || sameSight(st, s))) { (st.far ? (city.farther = city.farther || []) : city.sites).push(Object.assign({}, st)); n++; }
@@ -3114,7 +3127,8 @@ function fameFor(d, city) {
     // If the sources step can't answer, the fame list alone still protects the famous sights.
     if (!src) { const fam = await famousFor(lbl); if (fam) src = { stops: fam.main.map(x => Object.assign({ src: ["Wikidata (Wikipedia in many languages)"] }, x)), far: fam.far, eats: [] }; }
     if (!src) { delete fameAsked[k]; return; }
-    restoreFills(city, await kv.get(FILL_KEY + k));
+    if (!fillsMem[k]) { const fl = await kv.get(FILL_KEY + k); if (Array.isArray(fl)) fillsMem[k] = fl; }
+    restoreFills(city, fillsMem[k]);
     fameAsked[k] = src; fameMarkOnce(city, src);
     if (view === "plan" || view === "guide") dataRender();
   }).catch(() => { delete fameAsked[k]; }).finally(() => { delete fameWait[k]; }));
@@ -5784,7 +5798,8 @@ function renderSites(d) {
   // list) and the quick stops; sights planned on other days at the very bottom.
   const my = myTags(), fsMap = new Map(), fsOf = x => { if (!fsMap.has(x.id)) fsMap.set(x.id, plan && !plan.error ? siteFits(d, x, plan) : null); return fsMap.get(x.id); };
   const pass = x => f === "all" || (f === "must" ? x.mustSee : sightKind(x, city) === f);
-  const free = [...main.filter(x => !x.quick), ...far.filter(pass), ...quick.filter(pass)].filter(x => !on(x) && !sch(x));
+  const laterIds = new Set(cityBooked(city) ? laterList(city).map(x => x.id) : []); // shown once, in "If you come back"
+  const free = [...main.filter(x => !x.quick), ...far.filter(pass), ...quick.filter(pass)].filter(x => !on(x) && !sch(x) && !laterIds.has(x.id));
   const nearbyOnly = x => x.quick || (my.size > 0 && !famousTrue(x, city) && !siteInts(x).some(k => my.has(k)));
   const mainFree = free.filter(x => !nearbyOnly(x)), moreFree = free.filter(nearbyOnly);
   const fitL = byNear(mainFree.filter(x => fsOf(x) !== false)), wontL = byNear(mainFree.filter(x => fsOf(x) === false));
@@ -5803,7 +5818,7 @@ function renderSites(d) {
     ${[["all", "All"], ["must", "Must-sees"], ["touristy", "Famous"], ["local", "Local favorites"]].map(([k, l]) => `<button type="button" data-filter="${k}" aria-pressed="${f === k}">${l}</button>`).join("")}
   </div>
   ${timeMeter(plan, d)}${plan && !plan.error ? laterEndBanner(d, plan) + elsewhereNote(plan) : ""}
-  <div class="card suggest"><div><h3>Let your guide plan it</h3><p class="lede small">The best stops for ${nDays > 1 ? `all ${nDays} days` : "today"} in ${esc(city.city)}, fitted to your hours, pace and interests. Nothing repeats.</p></div>
+  <div class="card suggest"><div><h3>Let your guide plan it</h3><p class="lede small">The best stops for ${nDays > 1 ? `all ${nDays} days` : "today"} in ${esc(city.city)}, fitted to your hours, pace and interests. Nothing repeats.</p>${picksDaysHint(city)}</div>
     ${suggestNow(d) ? `<p class="banner" id="suggestNote" role="status">${esc(suggestNow(d))}</p>` : ""}${movedNote ? `<p class="banner ok" id="movedNote" role="status">${esc(movedNote)}</p>` : ""}<div class="actions"><button class="btn small" data-act="suggesttour">Suggest my tour</button><button class="btn ghost small" data-act="freshpicks">Fresh picks for this day only</button></div></div>
   ${city.ai ? `<p class="ai-note">Written by your AI guide from checked sources: every place is confirmed on the map, stories draw on Wikipedia and Wikivoyage (CC BY-SA), hours and access on OpenStreetMap contributors (ODbL). Check opening hours before you go.</p>` : city.builtin ? `<p class="ai-note">Kairoute guide. Hours and prices are typical: check before you go.</p>` : ""}${city.sites.some(x => x.srcOnly) ? `<p class="ai-note">More sights come from checked sources (Wikidata, Wikipedia, heritage registers); their short descriptions are from Wikivoyage (CC BY-SA). Each one's full story is written when you add it to a day.</p>` : ""}
   </div><div class="sitesmain pane" data-pane="sites">
@@ -5816,6 +5831,7 @@ function renderSites(d) {
   <div class="sitelist">${moreL.map(s => siteCard(s, d, plan, near)).join("")}</div></details>` : ""}
   ${errBlock()}
   ${addPlaceCard(d)}
+  ${laterBlock(city, d, plan, near)}
   ${schedL.length ? `<div class="schedline" role="separator"><span>Already scheduled on other days (${schedL.length})</span></div>
   <p class="lede small">Tick one to move it to today; it comes off its other day.</p><div class="sitelist sched">${schedL.map(s => siteCard(s, d, plan, near)).join("")}</div>` : ""}
   <div class="stickybar"><span class="count">${n} site${n === 1 ? "" : "s"} picked${plan && !plan.error && (plan.bonus || []).length ? ` · ${plan.bonus.length} optional on your plan` : ""}</span><button class="btn" data-act="toplan">See my day plan</button></div></div></div>`;
