@@ -403,6 +403,19 @@ const log = (suite, trip, ok, what) => { results.push({ suite, trip, ok, what })
         if (straight >= 0.65 && straight <= 3.9 && l.mode !== 'flight') { either++; if (!(l.choices.some(c => /^Walk/.test(c)) && l.choices.some(c => /^Taxi/.test(c)))) short.push(x.d + ': ' + l.how + ' ' + l.min + ' min [' + l.choices.join(', ') + ']'); } }
       const okR2 = !miss.length && !short.length && rides > 10 && either > 10;
       log('Rides', 'rides', okR2, 'Every ride has its buttons, every 600 m to 4 km leg offers walk or taxi: ' + (okR2 ? rides + ' rides, ' + either + ' walk-or-taxi legs over the sample trip' : JSON.stringify({ rides, either, miss: miss.slice(0, 5), short: short.slice(0, 5) }))); }
+    // Nov 17 demo gate: a pick naming a kept fill (a famous place written in online, saved on the device) was left out
+    // of the day on a page opened fresh, until the city's sources answered. The kept fills now come back as soon as the
+    // city is used: a second page with the same storage plans that pick right away, internet or not.
+    { const bq = await chromium.launch(), cq = await bq.newContext(); await cq.route('**/*', r => /^file:/.test(r.request().url()) ? r.continue() : r.abort());
+      const pa = await cq.newPage(); await pa.goto('file://' + FILE); await pa.evaluate(() => localStorage.setItem('kairoute.intro1', '1')); await pa.reload(); await pa.waitForTimeout(800);
+      const di = await pa.evaluate(() => window.__kairouteDays().find(d => d.city === 'athens' && d.type === 'land').i);
+      const fill = { id: 'safety-fill-place', name: 'Safety Net Fill Place', lat: 37.9861, lng: 23.7262, minutes: 30, category: 'Square', summary: 'Test place.', kind: 'touristy', famousFix: true, fame: 50 };
+      await pa.evaluate(f => new Promise(res => { const r = indexedDB.open('kairoute-audio', 1); r.onupgradeneeded = () => r.result.createObjectStore('kv'); r.onsuccess = () => { const t = r.result.transaction('kv', 'readwrite'); t.objectStore('kv').put([f], 'fill:athens'); t.oncomplete = () => res(true); }; }), fill);
+      await pa.evaluate(([i, id]) => window.__kairouteEdit(i, { selected: [id], seedSig: '' }), [di, fill.id]); await pa.waitForTimeout(300); await pa.close();
+      const pb = await cq.newPage(); await pb.goto('file://' + FILE); await pb.waitForFunction(() => window.__kairouteSettled && window.__kairouteSettled(), null, { timeout: 30000 }).catch(() => {}); await pb.waitForTimeout(1500);
+      const r = await pb.evaluate(i => ({ sel: window.__kairouteTruth(i).selected, names: (window.__kairouteRoute(i) || []).filter(x => x.type === 'stop').map(x => x.name) }), di); await bq.close();
+      const okF = r.sel.includes(fill.id) && r.names.includes(fill.name);
+      log('Plan', 'example', okF, 'A pick naming a kept fill is planned on a page opened fresh: ' + (okF ? 'yes' : JSON.stringify(r))); }
     // Madrid, Nov 16: while the city's fuller guide was still building, a pick came off ("no longer fits") and a stale
     // "Nothing fit in the time you have" sat under a day with 2 picks. While the guide loads nothing comes off and no
     // drop note shows; once it is in, a pick that really doesn't fit comes off with its note. The Suggest note shows only
