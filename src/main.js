@@ -869,8 +869,9 @@ if (typeof window !== "undefined") window.__kairouteOneEach = (opts, want) => on
 function rideLeg(a, b, road, lastMile, walkMin) {
   const walk = walkMin ? [{ id: "walk", label: "Walk", min: walkMin, kind: "walk" }] : [];
   let opts = transitFor(a, b);
-  // No line found: the ride is a taxi, and says so (not "Taxi, bus or metro"); a short one can be walked instead.
-  if (!opts || !opts.length) return Object.assign({}, road, { how: road.how === "Taxi, bus or metro" ? "Taxi or car" : road.how, key: pairKey(a, b), choice: "taxi", road: road.min, lastMile, choices: [...walk, { id: "taxi", label: "Taxi or car", min: road.min, kind: "car" }] });
+  // No line found: the ride is a taxi, and says so (not "Taxi, bus or metro", not "Train or car": the label never names
+  // a way to go that has no button, Richard Nov 17); a short one can be walked instead.
+  if (!opts || !opts.length) return Object.assign({}, road, { how: "Taxi or car", key: pairKey(a, b), choice: "taxi", road: road.min, lastMile, choices: [...walk, { id: "taxi", label: "Taxi or car", min: road.min, kind: "car" }] });
   // Leaving the ship for the first ride you go when the boat or train goes: with no timetable, plan on half the gap
   // between sailings plus boarding rather than a full gap (a full gap stays on every ride that must catch one later,
   // and on the ride back to the ship).
@@ -891,7 +892,10 @@ function allSites(city) { return [...(city.sites || []), ...(city.farther || [])
 // Sights already planned on another day in the same city, by site id -> that day.
 function plannedElsewhere(d) {
   const c = cityFor(d), out = {}; if (!c) return out;
-  trip.days.forEach(o => { if (o !== d && cityFor(o) === c && o.selected && !throughTo(o)) o.selected.forEach(id => { if (!out[id]) out[id] = o; }); }); // a through-arrival's plan is on its leaving day
+  // By the sight as the guide has it now: a pick saved under an id the guide has since changed (a fuller guide came
+  // in) is found by its saved name, as its own day's plan finds it, so that day still counts as having it (Nov 17
+  // gate: the hearted Jun 30 Acropolis showed as free on Jul 1, and ticking it there took it off the locked day).
+  trip.days.forEach(o => { if (o !== d && cityFor(o) === c && o.selected && !throughTo(o)) pickedSites(o, c).forEach(s => { if (!out[s.id]) out[s.id] = o; }); }); // a through-arrival's plan is on its leaving day
   return out;
 }
 // Sights that didn't fit on an earlier day in the same city carry over to the next one.
@@ -2051,7 +2055,7 @@ function buildPlanForDay(d) {
   // or sources arriving later never move or drop its stops. When that plan no longer holds (the traveler changed the
   // day, or a safety limit), the day is planned as usual. Optional stops that are gone are just left out (soft).
   let seenUsed = false, seenBroke = "";
-  if (!lk) { const sv = seenFor(d); if (sv) { const dd = Object.create(d); dd.ready = { sel: selKey(d), lock: sv.lock }; const r = lockReplay(dd, city, w, lockT, w0start, Object.assign({ soft: true }, lkArgs)); if (r && r.seq) { lk = r; seenUsed = true; } else if (r && r.why) seenBroke = r.why; } }
+  if (!lk) { const sv = seenFor(d); if (sv) { const dd = Object.create(d); dd.ready = { sel: selKey(d), lock: sv.lock }; const r = lockReplay(dd, city, w, lockT, w0start, Object.assign({ soft: true }, lkArgs)); if (r && r.seq) { lk = r; seenUsed = true; } else if (r && r.why) { seenBroke = r.why; seenBreakLog(d, r.why); } } }
   const locked = !!(lk && lk.seq), lockBroken = lk && lk.why ? lk.why : null;
   let fitted = locked ? { seq: lk.seq, dropped: lk.dropped } : fitDay();
   if (!locked && fitted.dropped.length && !d.rain) { quickMeals = true; const q = fitDay(); if (worth(q) > worth(fitted) + 1) fitted = q; else quickMeals = false; }
@@ -2189,7 +2193,7 @@ function buildPlanForDay(d) {
   const eve0 = evening.find(e => !e.booked && e.place); if (locked) quickMeals = lk.quick;
   const lock = { t: lockT, seq: lockSeqOut(seq), late: simDay(seq, t0, O, ZZ, style).late, quick: !!quickMeals, eve: eve0 ? keyOf(eve0.place.name) : "" };
   const folded = [...new Set(seq.filter(x => x.foldOf).flatMap(x => x.foldOf.map(y => y.id)))]; // picks shown inside an area visit
-  return { city, w, items, stops, dropped, folded, elsewhere, quickMeals, along, bonus, fill, meals, evening, swaps, closedToday, lock, locked: locked && !seenUsed, seen: seenUsed, seenBroke, lockBroken, start: w.start, endBy: w.endBy, end: clock, walkKm, over: clock > w.endBy + (hardEnd(d) ? 0 : 5), tight: budget < fixed + 45 };
+  return { city, w, items, stops, dropped, folded, elsewhere, quickMeals, along, bonus, fill, meals, evening, swaps, closedToday, lock, locked: locked && !seenUsed, seen: seenUsed, seenBroke, seenSkipped: seenUsed ? lk.skipped || [] : [], lockBroken, start: w.start, endBy: w.endBy, end: clock, walkKm, over: clock > w.endBy + (hardEnd(d) ? 0 : 5), tight: budget < fixed + 45 };
 }
 
 // ---------- AI ----------
@@ -5800,7 +5804,7 @@ function startOf(d, city) {
 // "Included", never as a pick of its own. Nested ones go to the outermost. Same answer every time for the same data.
 // What Wikidata says each sight is part of (P361) or stands in (P276), kept on the device so the list is the same
 // offline. Asked once per sight through the helper's /facts.
-const PART_STORE = "kairoute.partof1";
+const PART_STORE = "kairoute.partof2";
 let partMem = (() => { try { return JSON.parse(localStorage.getItem(PART_STORE) || "{}") || {}; } catch (e) { return {}; } })(), partV = 0;
 const partAsked = {};
 async function partScan(city) {
@@ -5810,7 +5814,7 @@ async function partScan(city) {
     const ids = need.slice(i, i + 20); let got = null;
     try { const r = await fetch(`${freeAI.url}/facts`, { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ ids }) }); if (r.ok) got = (await r.json()).facts || {}; } catch (e) {}
     if (!got) return;
-    for (const id of ids) { const f = got[id]; if (f && Array.isArray(f.partOf)) partMem[id] = [...f.partOf, ...(f.at || [])]; } // an older helper's answer (no partOf) is asked again later
+    for (const id of ids) { const f = got[id]; if (f && Array.isArray(f.partOf)) partMem[id] = { p: f.partOf, at: f.at || [] }; } // an older helper's answer (no partOf) is asked again later
   }
   if (need.some(id => id in partMem)) { try { localStorage.setItem(PART_STORE, JSON.stringify(partMem)); } catch (e) {} partV++; }
 }
@@ -5830,7 +5834,11 @@ function nestMap(city) {
   const par = new Map();
   for (const M of all) {
     if (!isFinite(M.lat)) continue;
-    const wdIn = (M, A) => !!(M.wd && A.wd && M.wd !== A.wd && (partMem[M.wd] || []).includes(A.wd) && hav(M, A) < 1.5);
+    // Inside means inside its grounds (Richard, Nov 17: Mars Hill is its own site, just below the Acropolis, free and
+    // outside the fence). Wikidata's "located in" (P276) counts; its looser "part of" (P361) only for a sight standing
+    // right at the main one (a clock in its cathedral's tower), never one a short walk away.
+    const pm = w => { const v = partMem[w]; return Array.isArray(v) ? { p: v, at: [] } : v || { p: [], at: [] }; };
+    const wdIn = (M, A) => !!(M.wd && A.wd && M.wd !== A.wd && ((pm(M.wd).at.includes(A.wd) && hav(M, A) < 1.5) || (pm(M.wd).p.includes(A.wd) && hav(M, A) < 0.15)));
     const inside = (M, A) => partOf(M, A) || wdIn(M, A) || (typeof inArea === "function" && inArea(M, A) && !DISTRICT.test((A.category || "") + " " + A.name));
     const hosts = all.filter(A => A !== M && A.id !== M.id && !A.quick && inside(M, A) && !(inside(A, M) && !big(A, M)));
     if (hosts.length) par.set(M.id, hosts.sort((x, y) => (y.minutes || 0) - (x.minutes || 0) || String(x.id).localeCompare(String(y.id)))[0]);

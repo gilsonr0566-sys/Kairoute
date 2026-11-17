@@ -74,10 +74,30 @@ const { chromium } = require('playwright'); const path = require('path');
     // Wikidata says the clock is part of the cathedral: the clock is shown in the cathedral's card.
     await p.evaluate(R => { window.__kairouteArea.addSites(R, [
       { id: 'zz-cath', name: 'Kairoute Test Cathedral', category: 'cathedral', lat: 41.8986, lng: 12.4769, minutes: 40, wd: 'Q900001', summary: 'x', guide: 'x' },
-      { id: 'zz-clock', name: 'Kairoute Test Clock', category: 'clock', lat: 41.8987, lng: 12.4771, minutes: 15, wd: 'Q900002', summary: 'x', guide: 'x' }]); window.__kairoutePartSet({ Q900002: ['Q900001'] }); }, R);
+      { id: 'zz-clock', name: 'Kairoute Test Clock', category: 'clock', lat: 41.8987, lng: 12.4771, minutes: 15, wd: 'Q900002', summary: 'x', guide: 'x' }]); window.__kairoutePartSet({ Q900002: { p: ['Q900001'], at: [] } }); }, R);
     await open(R);
     const wdn = await p.evaluate(() => ({ clock: !!document.querySelector('.sitesmain [data-card="zz-clock"]'), incl: ((document.querySelector('.sitesmain [data-card="zz-cath"] .incl') || {}).textContent || '') }));
     ok(!wdn.clock && /Kairoute Test Clock/.test(wdn.incl), `${tag}: a sight Wikidata places inside another isn't shown in it (${JSON.stringify(wdn)})`);
+    // Mars Hill (Richard, Nov 17): just below the Acropolis but outside its fence, its own site. Wikidata's loose "part of"
+    // for a sight a short walk away never nests it; neither does being next to it.
+    const ath2 = days.find(d => /athens/i.test(d.dest)).i;
+    await p.evaluate(i => { window.__kairouteArea.addSites(i, [
+      { id: 'zz-acro', name: 'Kairoute Test Acropolis', category: 'ancient site', lat: 37.9715, lng: 23.7267, minutes: 120, wd: 'Q900011', summary: 'x', guide: 'x' },
+      { id: 'zz-hill', name: 'Kairoute Test Hill', category: 'hill', lat: 37.9724, lng: 23.7235, minutes: 25, wd: 'Q900012', summary: 'x', guide: 'x' }]); window.__kairoutePartSet({ Q900012: { p: ['Q900011'], at: [] } }); }, ath2);
+    await open(ath2);
+    ok(await p.evaluate(() => !!document.querySelector('.sitesmain [data-card="zz-hill"]')), `${tag}: a site a short walk from a bigger one (Mars Hill and the Acropolis) was folded into it`);
+    // A pick saved under an id the guide has since changed (a fuller guide came in) still counts on its own day: on
+    // another day in that city it is under "Already scheduled", not offered as free (Nov 17 gate: ticking the hearted
+    // Jun 30 Acropolis on Jul 1 took it off the locked day).
+    const athD = days.filter(d => /athens/i.test(d.dest)).map(d => d.i);
+    if (ok(athD.length >= 2, `${tag}: the sample trip has two Athens days`)) {
+      const [A, B] = athD;
+      await p.evaluate(A => { const s = (window.__kairouteTruth(A).selected || []).filter(x => x !== 'zz-acro'); window.__kairouteEdit(A, { selected: s.concat(['zz-acro-old']), mine: s.concat(['zz-acro-old']), pickNames: { 'zz-acro-old': 'Kairoute Test Acropolis' } }); }, A);
+      await p.evaluate(B => { const s = (window.__kairouteTruth(B).selected || []).filter(x => x !== 'zz-acro'); window.__kairouteEdit(B, { selected: s, mine: s }); }, B);
+      await p.evaluate(() => { window.__kairouteGo && window.__kairouteGo('plan', 0); }); await open(B);
+      const where = await p.evaluate(() => { const c = document.querySelector('.sitesmain [data-card="zz-acro"]'); return c ? (c.closest('.sitelist.sched') ? 'sched' : (c.closest('.sitelist, details') || {}).className || '?') : 'none'; });
+      ok(where === 'sched', `${tag}: a pick saved under an older id on day ${A + 1} is offered as free on day ${B + 1} (${where})`);
+    }
     // A sight inside picked on its own (an older trip) shows its bigger one ticked; unticking it takes both off.
     await p.evaluate(R => { const s = window.__kairouteTruth(R).selected || []; window.__kairouteEdit(R, { selected: s.concat(['sistine']), mine: s.concat(['sistine']) }); }, R); await open(R);
     ok(await p.evaluate(() => !!document.querySelector('input[data-site="vatican-city"]:checked')), `${tag}: Vatican City isn't shown ticked when the Sistine Chapel is picked`);
