@@ -176,7 +176,7 @@ function helper(r, calls) {
     }
     const t0 = await p.evaluate(() => window.__kairouteTruth(0)); if (t0.error || !(t0.stopNames || []).length) bad(`${tag}: Paris arrival day: ${t0.error || 'no stops'}`);
     const hotel = await p.evaluate(() => { const k = Object.keys(JSON.parse(localStorage.getItem('wayside.trip2')).lodging || {}); return JSON.parse(localStorage.getItem('wayside.trip2')).lodging[k.find(x => /paris/.test(x))] || null; });
-    if (!hotel || !hotel.ll || !new RegExp(HOTEL.split(' ').pop(), 'i').test(hotel.name)) bad(`${tag}: the hotel typed wasn't found on the map: ${JSON.stringify(hotel)}`); else ok(`${tag}: hotel found on the map`);
+    if (!hotel || !hotel.ll || !new RegExp(HOTEL.split(' ').pop().normalize('NFD').replace(/[\u0300-\u036f]/g, ''), 'i').test(String(hotel.name).normalize('NFD').replace(/[\u0300-\u036f]/g, ''))) bad(`${tag}: the hotel typed wasn't found on the map: ${JSON.stringify(hotel)}`); else ok(`${tag}: hotel found on the map`);
     await p.evaluate(() => window.__kairouteAt(1, 'plan')); await p.waitForTimeout(800);
     const shown = await p.evaluate(() => [...document.querySelectorAll('.tl .nm')].length);
     if (!shown) bad(`${tag}: the Paris day plan screen shows no stops`);
