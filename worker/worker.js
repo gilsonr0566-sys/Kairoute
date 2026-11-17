@@ -72,6 +72,25 @@ const voiceLive = env => aiOn(env) && env.VOICE_LIVE === "1";
 // only with Richard's own go-ahead. While off, cached guides, cached scripts and saved recordings still answer, and the
 // app falls back to its own guides and the phone's voice.
 const aiOn = env => env.AI_ON === "1";
+// Memory of kept answers (see the fetch handler). Only these content prefixes; everything else reads the store.
+const MEMO_KEYS = /^(tr5|fp1|rt1|ns1|fx2|bz1|g|fm6|wd|xw1|xn1|xf1|wx1|wv1|bk1|s3):/, MEMO_MS = 600000, MEMO = new Map();
+let memoChars = 0; // kept under ~30 MB of the Worker's 128 MB memory
+function memoStore(kv) {
+  if (!kv || kv.__memo) return kv;
+  return { __memo: true,
+    get: async (k, t) => {
+      // Kept as text and read afresh each time, so a caller changing an answer never changes the remembered copy.
+      const type = typeof t === "string" ? t : t && t.type;
+      if (!MEMO_KEYS.test(k) || (type && type !== "text" && type !== "json")) return kv.get(k, t);
+      const m = MEMO.get(k); let s = m && Date.now() - m.at < MEMO_MS ? m.v : undefined;
+      if (s === undefined) { s = await kv.get(k); if (s != null && s.length < 200000) { if (MEMO.size > 3000 || memoChars > 15e6) { MEMO.clear(); memoChars = 0; } memoChars += s.length; MEMO.set(k, { v: s, at: Date.now() }); } }
+      if (s == null) return null;
+      return type === "json" ? JSON.parse(s) : s;
+    },
+    put: (k, v, o) => { MEMO.delete(k); return kv.put(k, v, o); },
+    delete: k => { MEMO.delete(k); return kv.delete(k); },
+    list: o => kv.list(o), getWithMetadata: (k, t) => kv.getWithMetadata(k, t) };
+}
 
 // Places whose ferries couldn't be looked up while every free map server was busy (fq: keys, see ferriesNear in
 // transit.js) are asked again on the helper's schedule, a few at a time with long waits, so a ferry is never hidden
@@ -96,6 +115,10 @@ export default {
     const lab = req.headers.get("x-kairoute-lab") === "1", test = lab || url.searchParams.get("auto") === "1";
     let lp = null; const lim = () => lp || (lp = limits(env, test));
     if (!aiOn(env)) env = { ...env, AI: { run: async () => { throw new Error("AI is switched off"); } } };
+    // Kept answers (rides, ferries, routes, guides, places) are remembered in this Worker's own memory for 10 minutes,
+    // so the same page asking again (test runs ask the same trip many times) costs no storage read. Counters and
+    // travelers' own data are never remembered here.
+    env = { ...env, USAGE: memoStore(env.USAGE) };
     // Guide extras (viewpoints, restrooms, local know-how, kids' stories, city primers, theme links, film locations, group tours): see extras.js.
     if (url.pathname.startsWith("/x/")) return extras(req, env, ctx, url, h, { origin, ALLOWED, MODEL, IN_RATE, OUT_RATE, DAILY_NEURONS: (await lim()).DAILY_NEURONS, used, addUse: (e, n) => addUse(e, n, test), sha });
     // /usage: the numbers behind the owner's "Usage & cost" page. Counts only, nothing about travelers.
