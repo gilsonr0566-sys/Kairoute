@@ -1,0 +1,29 @@
+name: Heart lock live check
+# The heart on the published site (phone and tablet): hearting a day locks it (new guide data and re-rated places to
+# eat leave it as it was), a ship time change breaks the lock with a note, an outline heart and a pulse, and one tap
+# locks it again. Runs tools/ready-check.cjs on the live page itself. On demand, after a publish.
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Take the live page
+        run: |
+          curl -sSf "https://gilsonr0566-sys.github.io/Kairoute/?nocache=$(date +%s)" -o index.html
+          if grep -q kairoute-placeholder index.html; then echo "The live site shows the updating placeholder"; exit 1; fi
+          grep -q "lockReplay" index.html || { echo "The live page has no heart lock"; exit 1; }
+          curl -sS "https://gilsonr0566-sys.github.io/Kairoute/version.txt"
+      - run: npm i playwright@1 && npx playwright install chromium
+      - name: Phone
+        run: W=412 H=860 node tools/ready-check.cjs index.html
+      - name: Tablet
+        if: always()
+        run: W=1280 H=800 node tools/ready-check.cjs index.html

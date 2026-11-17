@@ -14,7 +14,8 @@ const FILE = path.resolve(process.argv[2] || path.join(__dirname, '..', 'index.h
     fs.readFile(name, (e, buf) => { if (e) { r.writeHead(404); r.end(); return; } r.writeHead(200, { 'content-type': /\.html$/.test(name) ? 'text/html' : /\.js$/.test(name) ? 'text/javascript' : /\.json$/.test(name) ? 'application/json' : 'application/octet-stream' }); r.end(buf); }); });
   await new Promise(r => srv.listen(0, '127.0.0.1', r)); const BASE = `http://127.0.0.1:${srv.address().port}/`, URL0 = BASE + path.basename(FILE);
   const b = await chromium.launch(); let fails = 0; const fail = m => { fails++; console.log('FAIL ' + m); }, ok = m => console.log('ok   ' + m);
-  const ctx = await b.newContext({ viewport: { width: 412, height: 860 }, hasTouch: true });
+  const W = +process.env.W || 412, H = +process.env.H || 860; console.log(`screen ${W}x${H}`);
+  const ctx = await b.newContext({ viewport: { width: W, height: H }, hasTouch: true });
   await ctx.addInitScript(() => { try { localStorage.setItem('kairoute.intro1', '1'); } catch (e) {} });
   const p = await ctx.newPage(); p.on('pageerror', e => fail('page error ' + e.message));
   await p.route('**/*', r => r.request().url().startsWith(BASE) && !/\/sw\.js|version\.txt|ai\.json/.test(r.request().url()) ? r.continue() : r.abort());
