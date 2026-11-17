@@ -320,7 +320,9 @@ async function partA(b) {
       if (s.stops.length !== plans[d.i].stops.length) { // say what differs, so a failure can be traced from the log alone
         const why = await q.evaluate(i => { try { const t = window.__kairouteTruth(i); return { kept: t.keptNames, dropped: t.dropped, sel: t.selected, end: t.end, endBy: t.endBy, over: t.over }; } catch (e) { return String(e); } }, d.i);
         log(`     tablet showed [${plans[d.i].stops.join("; ")}], ${size} shows [${s.stops.join("; ")}]; ${size} meals [${s.meals.join("; ")}]; plan ${JSON.stringify(why)}`);
-        log(`     ${size} text: ${s.text.replace(/\s+/g, " ").slice(0, 1500)}`);
+        const rowsOf = pg => pg.evaluate(i => { window.__kairouteGo("plan", i); const t = window.__kairouteTruth(i); return { rows: [...document.querySelectorAll(".timeline .tl")].map(r => ((r.querySelector(".time") || {}).innerText || "").replace(/\s+/g, " ").trim() + " " + ((r.querySelector(".nm") || {}).innerText || (r.querySelector(".what") || {}).innerText || "").replace(/\s+/g, " ").trim().slice(0, 50)).join(" | "), dropped: t.dropped, elsewhere: t.elsewhere, kept: t.keptNames }; }, d.i);
+        log(`     tablet now: ${JSON.stringify(await rowsOf(p)).slice(0, 2500)}`);
+        log(`     ${size} now: ${JSON.stringify(await rowsOf(q)).slice(0, 2500)}`);
       }
       const wide = await q.evaluate(() => document.documentElement.scrollWidth - innerWidth);
       ok(wide <= 2, `${size}: day ${d.i + 1} fits the screen width (${wide}px too wide)`);
