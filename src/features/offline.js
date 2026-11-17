@@ -64,6 +64,7 @@ function offSpoken(d, plan) {
   plan.items.forEach(it => {
     if (it.type !== "stop") return;
     const s = allSites(city).find(x => x.id === it.place.id) || it.place;
+    if (s.scriptV) return; // a hand-written stop plays its own recordings (offScriptFiles), never a fresh AI recording
     if (s.guide) out.push(toLines(siteLines(s)));
     if (s.parts && partsOn(s).length >= 2) {
       const on = partsOn(s); s.parts.forEach((p, k) => { if (on.includes(p)) out.push(offParas(partSpeech(s, k, false))); });
@@ -74,6 +75,24 @@ function offSpoken(d, plan) {
   out.push(offParas(introText(d, plan)));
   const steps = tourSteps(plan); for (let i = 1; i < steps.length; i++) out.push(offParas(walkText(steps[i], steps[i + 1])));
   return out.filter(x => x.length);
+}
+// Hand-written stops (stop-scripts.js) on the day: their recorded paragraphs, which the website serves and the
+// service worker keeps. A paragraph not recorded yet is read by the device voice, so only recorded ones are listed.
+async function offScriptFiles(d, plan, fromCache) {
+  const urls = [], seen = new Set();
+  for (const it of plan.items) {
+    if (it.type !== "stop") continue;
+    const s = allSites(plan.city).find(x => x.id === it.place.id) || it.place, sc = s.scriptV && STOP_SCRIPTS.find(x => s.scriptV === x.id + x.v);
+    if (!sc || seen.has(sc.id)) continue; seen.add(sc.id);
+    const mu = new URL(`audio/${sc.id}/manifest.json`, location.href).href; let man = null;
+    try { const r = fromCache ? await caches.match(mu) : await fetch(mu, { cache: "no-cache" }); man = r && r.ok ? await r.json() : null; } catch (e) {}
+    if (!man) { if (fromCache) urls.push(mu); continue; }
+    sc.parts.forEach((p, k) => p.paras.forEach((x, i) => { if (man[`p${k}-${i}`]) urls.push(new URL(scriptAudio(sc, k, i), location.href).href); }));
+  }
+  return urls;
+}
+async function offScriptsSaved(d, plan) {
+  try { for (const u of await offScriptFiles(d, plan, true)) if (!(await caches.match(u))) return false; return true; } catch (e) { return false; }
 }
 // A piece is saved when its script and every recorded line are on the device (the same keys playback uses).
 async function offStorySaved(lines) {
@@ -124,7 +143,8 @@ async function offCheckDay(d, base, mem) {
   else put("map", false, "the street map");
   // Stories: recorded in the natural voice, or read by a voice that is on the device itself.
   const spoken = offSpoken(d, plan); let rec = 0; if (offNatural()) for (const l of spoken) if (await offStorySaved(l)) rec++;
-  const left = spoken.length - rec, dev = offDeviceVoice();
+  const scriptsOk = await offScriptsSaved(d, plan); // hand-written stops' recordings
+  const left = spoken.length - rec + (scriptsOk ? 0 : 1), dev = offDeviceVoice();
   put("audio", !left || dev, left === 1 ? "1 piece of the guide's audio" : left + " pieces of the guide's audio");
   if (left && dev && offNatural()) out.notes.push(`Some of the guide's audio will be read by your device's own voice.`);
   out.rec = rec; out.stories = spoken.length;
@@ -256,6 +276,9 @@ async function offDownload() {
         if (!(await offRecord(x.l, k === 1 || k % 10 === 0))) { stoppedVoice = true; break; }
       }
     }
+    // 6b. Hand-written stops' recordings (made once for every traveler, served by the website): saved on the device.
+    if (!offRun.stop) for (const d of days) { const { plan } = offPlan(d); if (!plan) continue;
+      for (const u of await offScriptFiles(d, plan, false)) { if (offRun.stop) break; try { const r = await fetch(u); if (r.ok) await r.arrayBuffer(); } catch (e) {} } }
     // 7. Time zones the Day plan thread looks up, and anything else the app keeps, then check the device itself.
     step(99, "Checking everything is on this device");
     try { await fetch(new URL("index.html", location.href).href, { cache: "no-cache" }); await Promise.all(OFF_APP_FILES.slice(1).concat("ai.json").map(u => fetch(new URL(u, location.href).href).then(r => r.ok && r.arrayBuffer()).catch(() => {}))); } catch (e) {}
