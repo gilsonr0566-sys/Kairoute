@@ -327,6 +327,9 @@ async function partA(b) {
       // Day plan says): compare once it has settled, the same as the tablet page did.
       for (let t = 0; t < 120; t++) { if (await q.evaluate(() => (!window.__kairouteSettled || window.__kairouteSettled()) && !(window.__kairouteUpgrading && window.__kairouteUpgrading())).catch(() => true)) break; await q.waitForTimeout(1000); }
       await q.evaluate(go("plan", d.i)); await q.waitForTimeout(800); const s = await seen(q);
+      // Compared with the tablet page as it is now: its own plan can have moved on since it was first read (rides and
+      // the fuller guide arrive over the run), and both pages share the same trip.
+      await p.evaluate(go("plan", d.i)); await p.waitForTimeout(800); plans[d.i] = Object.assign({}, plans[d.i], { stops: (await seen(p)).stops });
       ok(s.stops.length === plans[d.i].stops.length, `${size}: day ${d.i + 1} ${d.dest} shows the same ${plans[d.i].stops.length} stops (${s.stops.length})`);
       if (s.stops.length !== plans[d.i].stops.length) { // say what differs, so a failure can be traced from the log alone
         const why = await q.evaluate(i => { try { const t = window.__kairouteTruth(i); return { kept: t.keptNames, dropped: t.dropped, sel: t.selected, end: t.end, endBy: t.endBy, over: t.over }; } catch (e) { return String(e); } }, d.i);
