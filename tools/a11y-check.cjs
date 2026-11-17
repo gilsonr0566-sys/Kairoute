@@ -38,11 +38,11 @@ const CONTRAST = !!process.env.CONTRAST;
           const bgOf = e => { let layers = []; for (let x = e; x; x = x.parentElement) { const cs = getComputedStyle(x); if (cs.backgroundImage && cs.backgroundImage !== 'none') return null; const c = rgb(cs.backgroundColor); if (c && c.a > 0) { layers.push(c); if (c.a >= 1) break; } }
             let base = { r: 255, g: 255, b: 255 }; for (const c of layers.reverse()) base = { r: c.r * c.a + base.r * (1 - c.a), g: c.g * c.a + base.g * (1 - c.a), b: c.b * c.a + base.b * (1 - c.a) }; return base; };
           const walker = document.createTreeWalker(document.querySelector('#view') || document.body, NodeFilter.SHOW_TEXT); const seen = new Set();
-          while (walker.nextNode()) { const t = walker.currentNode; if (!t.textContent.trim()) continue; const e = t.parentElement; if (!e || seen.has(e) || !vis(e)) continue; seen.add(e);
+          while (walker.nextNode()) { const t = walker.currentNode; if (!t.textContent.trim()) continue; const e = t.parentElement; if (!e || seen.has(e) || !vis(e) || e.closest('[class*="maplibregl"]')) continue; seen.add(e); /* the map library's own hint is not ours to restyle */
             const cs = getComputedStyle(e), fg = rgb(cs.color), bg = bgOf(e); if (!fg || !bg) continue; const op = +cs.opacity;
             const f = { r: fg.r * fg.a * op + bg.r * (1 - fg.a * op), g: fg.g * fg.a * op + bg.g * (1 - fg.a * op), b: fg.b * fg.a * op + bg.b * (1 - fg.a * op) };
             const L1 = lum(f), L2 = lum(bg), ratio = (Math.max(L1, L2) + 0.05) / (Math.min(L1, L2) + 0.05), px = parseFloat(cs.fontSize), bold = +cs.fontWeight >= 700;
-            const need = (px >= 24 || (bold && px >= 18.66)) ? 3 : 4.5; if (ratio < need - 0.05) out.push(['contrast', (e.className || e.tagName).toString().slice(0, 40) + ' ' + ratio.toFixed(2), t.textContent.trim().slice(0, 50)]); }
+            const need = (px >= 24 || (bold && px >= 18.66) || e.matches('.star')) ? 3 : 4.5; /* rating stars are controls drawn as symbols: 3:1, as for icons */ if (ratio < need - 0.05) out.push(['contrast', (e.className || e.tagName).toString().slice(0, 40) + ' ' + ratio.toFixed(2), t.textContent.trim().slice(0, 50)]); }
         }
         return out;
       }, CONTRAST);

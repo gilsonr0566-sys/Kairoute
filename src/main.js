@@ -5347,7 +5347,7 @@ function memWrap(c, text, x, y, maxW, lh, maxLines) {
   lines.forEach((l, i) => c.fillText(l, x, y + i * lh)); return lines.length * lh;
 }
 function memDraw(c, s, t, dur, idx, logos, font) {
-  const W = MEM_W, H = MEM_H, ink = "#123C3A", meal = "#D9532A";
+  const W = MEM_W, H = MEM_H, ink = "#123C3A", meal = "#B9431E";
   c.save(); c.textBaseline = "alphabetic"; c.textAlign = "left";
   if (s.img) {
     const z = 1 + 0.09 * (t / dur), iw = s.img.naturalWidth || s.img.width, ih = s.img.naturalHeight || s.img.height, sc = Math.max(W / iw, H / ih) * z;

@@ -303,7 +303,7 @@ function weatherBanner(d, plan) {
 // Styles for the live features, kept with them (squared corners, the app's colors).
 if (typeof document !== "undefined") document.head.insertAdjacentHTML("beforeend", `<style id="live-css">
 .tl .sub.liveinfo { color: var(--muted); font-size: .86rem; margin-top: 2px; }
-.tl .sub.liveinfo small { opacity: .8; }
+.tl .sub.liveinfo small { font-size: .85em; }
 .tl .sub.livewarn { color: var(--warn); font-weight: 700; font-size: .86rem; margin-top: 2px; }
 .badge.book { color: var(--must); background: var(--must-soft); margin-right: 4px; }
 .wxchip { display: inline-flex; align-items: center; gap: 4px; padding: 4px 10px; border: 1px solid var(--line); border-radius: 6px; font-size: .86rem; font-weight: 700; color: var(--ink); background: var(--card); white-space: nowrap; }
