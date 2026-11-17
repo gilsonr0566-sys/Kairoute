@@ -484,7 +484,11 @@ async function buildNew(b, label, text, photo) {
   const b = await chromium.launch({ args: ["--use-gl=swiftshader", "--enable-unsafe-swiftshader", "--ignore-gpu-blocklist"] });
   try { if (PARTS.includes("A")) await partA(b); } catch (e) { ok(false, "Part A stopped: " + e.message.split("\n")[0]); }
   try { if (/[AD]/.test(PARTS)) await boardingDay(b); } catch (e) { ok(false, "Boarding day check stopped: " + e.message.split("\n")[0]); }
-  if (PARTS.includes("B")) {
+  // Part B writes new trips with the AI (it costs AI). Richard, Nov 17: no AI use without his consent, so it runs only
+  // while the helper's AI switch is on; otherwise it is skipped and says so.
+  let aiOnNow = false; try { aiOnNow = !!(await (await fetch("https://kairoute-ai.rickgilson.workers.dev/status", { signal: AbortSignal.timeout(15000) })).json()).on; } catch (e) {}
+  if (PARTS.includes("B") && !aiOnNow) log("\n=== Part B skipped: the AI is switched off (Richard's rule: no AI use without his consent) ===");
+  if (PARTS.includes("B") && aiOnNow) {
     log("\n=== Part B: building the trip from words, then from the itinerary photo ===");
     try { await buildNew(b, "typed", TEXT, null); } catch (e) { ok(false, "typed trip stopped: " + e.message.split("\n")[0]); }
     try { await buildNew(b, "photo", "Flying into Athens June 30, 2027 for 4 nights, then this cruise.", PHOTO); } catch (e) { ok(false, "photo trip stopped: " + e.message.split("\n")[0]); }
