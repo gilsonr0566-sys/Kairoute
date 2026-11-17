@@ -1779,23 +1779,6 @@ function dayFp(d, rides) {
 }
 // A kept plan still matches what it was made from.
 const planStat = { hit: 0, kept: 0, stale: 0, built: 0, changed: 0 }; // how plans were served (speed checks read it)
-// A day's meals depend on the other days in its city (no place twice: lunches and dinners other days already eat at
-// are left out). What a build read of the other days is kept with its plan (deps), and a kept plan is reused only while
-// those days still eat where they did: otherwise a day could show a dinner chosen against another day's old lunch,
-// and the same trip planned twice (on screen, then again with no internet) came out different.
-let depLog = null; const depChecking = new Set();
-function memoOf(m, o) { const v = m.get(o); if (depLog) depLog.push([m, o, (v || []).join("\u0001")]); return v; }
-function depsOk(e, d) {
-  if (!e.deps || !e.deps.length || depChecking.has(d)) return true;
-  depChecking.add(d);
-  try {
-    for (const [m, o, v] of e.deps) {
-      if (!m.has(o)) { try { buildPlan(o); } catch (x) {} }
-      if ((m.get(o) || []).join("\u0001") !== v) { planStat.changed++; return false; }
-    }
-    return true;
-  } finally { depChecking.delete(d); }
-}
 const planOk = (e, d) => e.dg === dataGen || (e.fp === dayFp(d, e.rides) ? ((e.dg = dataGen), planStat.kept++, true) : (planStat.changed++, false));
 if (typeof window !== "undefined") window.__kairoutePlanStat = () => Object.assign({ renders: renderNo, dataGen }, planStat);
 // The store, emptied when anything that shapes plans has changed since it was filled. Returns the current signature.
@@ -1819,22 +1802,22 @@ function buildPlan(d) {
     for (const [m, v] of [[keptMemo, e.kept], [mealMemo, e.meal], [bonusMemo, e.bonus], [eveMemo, e.eve]]) { if (v === undefined) m.delete(d); else m.set(d, v); }
     if (transitSeen) transitSeen.push(...e.rides); // the offline check still learns every ride the plan uses
     return e.plan; };
-  const hit = planStore.map.get(k); if (hit && hit.d === d && planOk(hit, d) && depsOk(hit, d)) { planStat.hit++; return restore(hit); }
+  const hit = planStore.map.get(k); if (hit && hit.d === d && planOk(hit, d)) { planStat.hit++; return restore(hit); }
   // A tap shows the last plan: when the traveler only moves to another day or screen (renderKeep) and the trip itself
   // is unchanged, a plan made moments ago, before some answer from the internet arrived, is shown at once; the fresh
   // plan follows in the next quiet moment (one redraw). Never for any change the traveler made: the key holds the whole
   // trip, so a changed pick, time or ride never matches.
   const was = hit && hit.d === d ? hit : planStore.old && planStore.old.get(k);
   if (was && was.d === d) {
-    if (was !== hit && planOk(was, d) && depsOk(was, d)) { planStore.map.set(k, was); return restore(was); } // made before, and nothing it used has changed
+    if (was !== hit && planOk(was, d)) { planStore.map.set(k, was); return restore(was); } // made before, and nothing it used has changed
     if (planKeep && (was.shown == null || was.shown === renderNo)) { if (was.shown == null) { was.shown = renderNo; dataRender(true); } planStat.stale++; return restore(was); }
   }
   // The rides the build looks up are kept with the plan, so a reused plan names them too.
-  planStat.built++; const outer = transitSeen, outerDeps = depLog; transitSeen = []; depLog = []; let plan, rides, deps;
-  try { plan = buildPlanRaw(d); } finally { rides = transitSeen; transitSeen = outer; if (outer) outer.push(...rides); deps = depLog; depLog = outerDeps; }
+  planStat.built++; const outer = transitSeen; transitSeen = []; let plan, rides;
+  try { plan = buildPlanRaw(d); } finally { rides = transitSeen; transitSeen = outer; if (outer) outer.push(...rides); }
   const st = planStore;
   // Kept only when nothing moved during the build itself.
-  if (st === planStore && planGen + "|" + todayISO() + "|" + citiesSig() === sig && planKey(d) === k) st.map.set(k, { d, plan, rides, dg: dataGen, fp: dayFp(d, rides), kept: keptMemo.get(d), meal: mealMemo.get(d), bonus: bonusMemo.get(d), eve: eveMemo.get(d), deps });
+  if (st === planStore && planGen + "|" + todayISO() + "|" + citiesSig() === sig && planKey(d) === k) st.map.set(k, { d, plan, rides, dg: dataGen, fp: dayFp(d, rides), kept: keptMemo.get(d), meal: mealMemo.get(d), bonus: bonusMemo.get(d), eve: eveMemo.get(d) });
   return plan;
 }
 function buildPlanRaw(d) { const prev = planDate, pw = planWx; if (!planDepth) tminEpoch++; planDepth++; planDate = d && d.date; planWx = d && cityFor(d) ? wxFor(d, cityFor(d)) : null; try { let pl = buildPlanFor(d);
@@ -1963,7 +1946,7 @@ function buildPlanForDay(d) {
   const needMeals = q => q.some(x => !x.mealOf) || inDay.length ? mealSet().filter(m => !liveAte(d, m.label) && !books.some(b => b.label === m.label) && t0 < m.to - 30 && m.from + m.len + 15 <= dayEnd).concat(inDay).sort((a, b) => a.from - b.from) : [];
   const withMeals = q => { const bare = q.filter(x => !x.mealOf); return placeMeals(bare, needMeals(bare), t0, O, ZZ, style, city); };
   const savedAvoid = avoidMeals, av = new Set(), myIdx = trip.days.indexOf(d);
-  trip.days.slice(0, Math.max(0, myIdx)).forEach(o => { if (cityFor(o) !== city) return; if (!mealMemo.has(o) || !eveMemo.has(o)) { try { buildPlan(o); } catch (e) {} } (memoOf(mealMemo, o) || []).forEach(n => av.add(n)); (memoOf(eveMemo, o) || []).slice(0, 1).forEach(n => av.add(n)); }); // an earlier evening's own dinner place, not its alternatives (those stay free for lunch)
+  trip.days.slice(0, Math.max(0, myIdx)).forEach(o => { if (cityFor(o) !== city) return; if (!mealMemo.has(o) || !eveMemo.has(o)) { try { buildPlan(o); } catch (e) {} } (mealMemo.get(o) || []).forEach(n => av.add(n)); (eveMemo.get(o) || []).slice(0, 1).forEach(n => av.add(n)); }); // an earlier evening's own dinner place, not its alternatives (those stay free for lunch)
   // A hearted day keeps its places to eat, so no other day takes them (no place is planned twice).
   trip.days.forEach(o => { if (o === d || !o.ready || !o.ready.lock || !Array.isArray(o.ready.lock.seq) || cityFor(o) !== city) return; o.ready.lock.seq.forEach(x => { if (x.meal && x.node && !x.node.generic && !x.bk) av.add(keyOf(x.node.name)); }); if (o.ready.lock.eve) av.add(o.ready.lock.eve); });
   avoidMeals = av;
@@ -2168,7 +2151,7 @@ function buildPlanForDay(d) {
     // day's plan never depends on which days happened to be planned first (it did: a later day planned while this one
     // was half-built took a different day trip, and the first day's dinner came and went with it).
     const today = new Set(meals.flatMap(m => [m].concat(m.alts || [])).map(m => keyOf(m.name)));
-    trip.days.forEach((o, k) => { if (k < myIdx && cityFor(o) === city) { if (!mealMemo.has(o) || !eveMemo.has(o)) { try { buildPlan(o); } catch (e) {} } (memoOf(mealMemo, o) || []).forEach(n => today.add(n)); (memoOf(eveMemo, o) || []).forEach(n => today.add(n)); } });
+    trip.days.forEach((o, k) => { if (k < myIdx && cityFor(o) === city) { if (!mealMemo.has(o) || !eveMemo.has(o)) { try { buildPlan(o); } catch (e) {} } (mealMemo.get(o) || []).forEach(n => today.add(n)); (eveMemo.get(o) || []).forEach(n => today.add(n)); } });
     const pool = (city.restaurants || []).filter(r => !r.generic && !r.crowdDrop && !mealShut(r, "Dinner") && hav(r, endAt) <= 0.8 && !avoidMeals.has(keyOf(r.name)) && !today.has(keyOf(r.name)));
     if (pool.length) {
       const sc = r => (r.crowdTop ? 4 : 0) + (r.top ? 2 : 0) + (r.recommended ? 2 : 0) + (trip.style && trip.style !== "mix" && r.kind === trip.style ? 1.5 : 0) - hav(r, endAt) * 3;
@@ -6371,7 +6354,7 @@ if (typeof window !== "undefined") window.__kairouteThin = () => { ensureBuiltin
 function tcell(it) {
   const len = it.type === "meal" || it.type === "evening" ? (it.meal && it.meal.len) || 0 : it.type === "stop" || it.type === "fixed" ? (it.place && it.place.minutes) || 0 : 0;
   const arr = it.type === "start" ? null : it.time, lv = it.type === "end" || it.type === "evening" ? null : it.type === "start" ? it.time : it.time + len;
-  return `<div class="time">${arr != null ? `<span class="ta">Arrive</span>${fmt(arr)}` : ""}${lv != null && (arr == null || len >= 5) ? `<span class="ta">Leave</span>${fmt(lv)}` : ""}</div>`;
+  return `<div class="time">${arr != null ? `<span class="ta">Arrive</span><span class="tt ar">${fmt(arr)}</span>` : ""}${lv != null && (arr == null || len >= 5) ? `<span class="ta">Leave</span><span class="tt lv">${fmt(lv)}</span>` : ""}</div>`;
 }
 function renderPlan(d) {
   const city = cityFor(d);
@@ -6502,7 +6485,7 @@ function legendHTML(plan) {
   <p class="footnote">Times are estimates using a relaxed walking pace and typical taxi times. Check opening hours and book timed tickets for the big sights.</p>
   </details>
   </details>
-  </div><div class="right pane" data-pane="sched">${heads ? `<div class="heads" role="region" aria-label="Heads-up for today">${heads}</div>` : ""}${bookFormHTML(d)}<div class="card">${zoneNote(d)}${canDrag ? orderLine(d) : ""}<div class="timeline">${rows}</div></div></div></div>`;
+  </div><div class="right pane" data-pane="sched">${heads ? `<div class="heads" role="region" aria-label="Heads-up for today">${heads}</div>` : ""}${bookFormHTML(d)}<div class="card">${zoneNote(d)}${canDrag ? orderLine(d) : ""}<div class="timeline${canDrag && tlCompact() ? " compact" : ""}">${rows}</div></div></div></div>`;
 }
 // A restaurant's at-a-glance facts on the Day plan: badges and the Google rating. Why it was chosen, the two
 // alternatives and the traveler rating sit in a fold below.
