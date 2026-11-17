@@ -54,9 +54,9 @@ function picksDaysHint(city) {
   return `<p class="lede small daysfit" role="note">Your picks fit best in ${txt}.</p>`;
 }
 // The folded "If you come back" list on Change stops (each sight can still be ticked for today).
-function laterBlock(city, d, plan, near) {
+function laterBlock(city, d, plan, near, skip) {
   if (!city || !cityBooked(city)) return "";
-  const l = laterList(city); if (!l.length) return "";
+  const l = laterList(city).filter(s => !(skip && skip.has(s.id))); if (!l.length) return ""; // one shown in place in the list above stays there (Nov 17)
   return `<details class="more comeback"><summary>If you come back (${l.length})</summary><p class="lede small" style="margin:8px 0">Picks that didn't fit this visit. Tick one to try it today.</p>
   <div class="sitelist">${l.map(s => siteCard(s, d, plan, near)).join("")}</div></details>`;
 }
