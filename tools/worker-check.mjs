@@ -4,7 +4,7 @@
 // used up the AI is not called; CORS never names another website. Run: node tools/worker-check.mjs
 import worker from '../worker/worker.js';
 let fails = 0, checks = 0; const ok = (c, m) => { checks++; if (!c) { fails++; console.log('FAIL ' + m); } };
-const mk = (seed = {}, on = true) => { const m = new Map(Object.entries(seed)); const s = { AI_ON: on ? '1' : '0', writes: 0, ai: 0, net: 0,
+const mk = (seed = {}, on = true) => { const m = new Map(Object.entries(seed)); const s = { AI_ON: on ? '1' : '0', AI_MODE: 'full', writes: 0, ai: 0, net: 0,
   USAGE: { get: async (k, t) => { const v = m.get(k); return v == null ? null : t === 'json' ? JSON.parse(v) : v; }, put: async (k, v) => { s.writes++; m.set(k, v); }, delete: async k => { s.writes++; m.delete(k); }, list: async () => ({ keys: [] }) },
   AI: { run: async () => { s.ai++; return { response: '{"ok":1}', usage: { prompt_tokens: 10, completion_tokens: 10 } }; } } }; return s; };
 globalThis.fetch = async () => { cur.net++; throw new Error('no internet in this check'); };
@@ -48,5 +48,26 @@ for (const [p, body, hd] of [['/sample', { prompt: 'hello' }], ['/script', { tex
 { const d = new Date().toISOString().slice(0, 10); const env = mk({ ['t:' + d]: '1500' }); const r = await call(env, '/sample?auto=1', { origin: 'https://gilsonr0566-sys.github.io', body: { prompt: 'hello' } }); ok(r.status === 429 && env.ai === 0, `/sample from a test past its share: ${r.status}`); }
 // Cloudflare's real count is a second guard.
 { const d = new Date().toISOString().slice(0, 10); const env = mk({ ['r:' + d]: '9700' }); const r = await call(env, '/sample', { origin: 'https://gilsonr0566-sys.github.io', body: { prompt: 'hello' } }); ok(r.status === 429 && env.ai === 0, `/sample past Cloudflare's real count: ${r.status}`); }
+// MINIMAL AI (the mode the helper runs in when switched on): only the trip and guide jobs reach the AI, inside
+// 3,000 a day; everything else is refused before the AI; a kept answer is never paid for twice.
+const ORI = 'https://gilsonr0566-sys.github.io', D0 = new Date().toISOString().slice(0, 10);
+const mn = seed => { const e = mk(seed); e.AI_MODE = 'minimal'; return e; };
+for (const job of ['trip', 'guide']) { const env = mn(); const r = await call(env, '/sample', { origin: ORI, body: { prompt: 'hello ' + job, purpose: job } }); ok(r.status === 200 && env.ai === 1, `minimal: the ${job} job should run: ${r.status}, ai ${env.ai}`); }
+for (const job of [undefined, '', 'walk', 'extras', 'ask', 'translate', 'boarding', 'lookup', 'rank']) { const env = mn(); const r = await call(env, '/sample', { origin: ORI, body: { prompt: 'hello', purpose: job } }); ok(r.status === 403 && env.ai === 0, `minimal: job "${job}" reached the AI (${r.status}, ai ${env.ai})`); }
+for (const [p, body, hd] of [['/identify', { image: 'data:image/png;base64,AA', cands: [{ name: 'A' }, { name: 'B' }] }], ['/script', { text: 'A long enough stop text. '.repeat(20) }], ['/speak', { text: 'Hello there.' }], ['/x/primer', { city: 'Athens' }], ['/sample', { prompt: 'hello', purpose: 'trip' }, { 'x-kairoute-lab': '1' }], ['/sample?auto=1', { prompt: 'hello', purpose: 'guide' }]]) {
+  const env = mn(); cur = env; pend = []; let r;
+  try { r = await worker.fetch(new Request('https://helper.test' + p, { method: 'POST', headers: { 'content-type': 'application/json', Origin: ORI, ...(hd || {}) }, body: JSON.stringify(body) }), env, ctx); } catch (e) { r = { status: 'crash' }; }
+  await Promise.all(pend); ok(env.ai === 0 && r.status !== 'crash', `minimal: ${p}${hd ? ' (test)' : ''} reached the AI (${r.status})`); }
+// The hard cap stops calls: walk the day's count up with real calls until the helper refuses, and check it never runs past 3,000.
+{ const env = mn(); env.AI.run = async () => { env.ai++; return { response: 'ok', usage: { prompt_tokens: 20000, completion_tokens: 2000 } }; };
+  let runs = 0, refused = null; for (let i = 0; i < 40 && !refused; i++) { const r = await call(env, '/sample', { origin: ORI, body: { prompt: 'trip ask ' + i, purpose: 'trip' } }); if (r.status === 200) runs++; else refused = r.status; }
+  const st = await (await call(env, '/status', { method: 'GET', origin: ORI })).json();
+  ok(refused === 429 && runs > 3 && env.ai === runs, `minimal cap: refused ${refused} after ${runs} runs (ai ${env.ai})`);
+  ok(st.usedToday <= 3000 && st.left < 500 && st.mode === 'minimal' && st.budget === 3000, `minimal cap: day ended at ${st.usedToday} of budget ${st.budget}, left ${st.left}, mode ${st.mode}`);
+  const before = env.ai, r2 = await call(env, '/sample', { origin: ORI, body: { prompt: 'trip ask 0', purpose: 'trip' } }), j2 = await r2.json();
+  ok(r2.status === 200 && j2.kept === true && env.ai === before, `minimal: a kept answer should be served free even with the cap reached (${r2.status}, ai ${env.ai - before})`); }
+{ const env = mn({ ['n:' + D0]: '2999' }); const r = await call(env, '/sample', { origin: ORI, body: { prompt: 'x'.repeat(4000), purpose: 'trip' } }); ok(r.status === 429 && env.ai === 0, `minimal: at 2,999 used, a new ask must be refused: ${r.status}`); }
+{ const env = mn({ ['r:' + D0]: '3700' }); const r = await call(env, '/sample', { origin: ORI, body: { prompt: 'hello', purpose: 'trip' } }); ok(r.status === 429 && env.ai === 0, `minimal: Cloudflare's real count 3,700 must stop the AI: ${r.status}`); }
+{ const env = mn(); await call(env, '/sample', { origin: ORI, body: { prompt: 'same', purpose: 'guide' } }); await call(env, '/sample', { origin: ORI, body: { prompt: 'same', purpose: 'guide' } }); ok(env.ai === 1, `minimal: the same ask was paid for ${env.ai} times`); }
 console.log(fails ? `Helper security check: ${fails} of ${checks} failed` : `Helper security check passed (${checks} checks)`);
 process.exit(fails ? 1 : 0);

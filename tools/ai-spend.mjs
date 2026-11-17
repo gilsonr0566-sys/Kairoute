@@ -53,7 +53,7 @@ try {
 } catch (e) {}
 let st = {}; try { st = await (await fetch(HELPER + "/status")).json(); } catch (e) {}
 const report = [`## AI spend check, ${now.toISOString().slice(0, 16).replace("T", " ")} UTC`, "",
-  `- Master AI switch on the helper: **${st.on ? "ON" : "OFF"}**`,
+  `- Master AI switch on the helper: **${st.on ? "ON (" + (st.mode || "?") + ", " + (st.budget ?? "?") + " a day)" : "OFF"}**`,
   `- Today so far (whole account, real): **${fmt(todayN)} neurons** (free: 10,000 a day)`,
   `- Paid AI this month (real, whole account): **$${usd.toFixed(2)}** of the $${CAP_USD} cap (${Math.round(usd / CAP_USD * 100)}%)`,
   `- Cloudflare plans on the account: ${plans}`,
@@ -84,5 +84,7 @@ async function warn(title) {
 // While the switch is off, today's real total should not grow (Richard's other apps use 2-12 a day): more than 50
 // since the last hourly check means something ran.
 if (st.on === false && prev !== null && prev > 0 && todayN - prev > 50) await warn(`AI ran while switched off (${today})`);
+// Minimal AI runs inside 3,000 a day by the helper's own count; Cloudflare's real count has run up to ~40% higher.
+if (st.on && st.mode === "minimal" && todayN > 4500) await warn(`Kairoute AI passed its minimal daily limit (${today})`);
 if (projUsd > 0) await warn(`Cloudflare requests or storage heading past the plan's included amounts (${month})`);
 if (usd >= CAP_USD * WARN) await warn(`Kairoute AI spend reached ${usd >= CAP_USD ? 100 : 80}% of the $${CAP_USD} cap (${month})`);
