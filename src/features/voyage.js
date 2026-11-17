@@ -273,6 +273,16 @@ if (typeof window !== "undefined") window.__kairouteVoyageCheck = () => {
     trip = sampleTrip(); trip.days = [newDay({ date: "2027-08-01", destination: "Barcelona", type: "land", startTime: "09:00", hours: 8, cityKey: "barcelona" }), newDay({ date: "2027-08-02", destination: "Barcelona", type: "embark", startTime: "09:00", allAboard: "17:30", boardTime: "13:00", cityKey: "barcelona" }), newDay({ date: "2027-08-03", destination: "At sea", type: "sea" })]; trip.active = 1; fresh();
     const bb = trip.days[1]; seedPicks(bb, cityFor(bb)); fresh(); const pb = buildPlan(bb);
     ok("Boarding in Barcelona at 13:00: there on time, nearby sights only, no far day trips", pb && !pb.error && pb.endBy === toMin("13:00") && pb.end <= pb.endBy && pb.items.filter(x => x.type === "stop").every(x => nearLeaving(x.place, pb.w) && !x.place.far), pb && pb.items ? pb.items.filter(x => x.type === "stop").map(x => x.place.name).join(", ") + " · end " + fmt(pb.end) : String(pb && pb.error));
+    // 10. Flying in the day the ship sails, with a connection (the January Bahamas test trip, here in Barcelona so it
+    // runs offline): lands 11:25, all aboard 15:30. Too tight to sightsee safely: straight from the airport to the ship,
+    // no stops, no meal, no bag storage, and the day says plainly that a late flight is how ships are missed.
+    const fly = (land, aa) => { trip = sampleTrip(); trip.days = [newDay({ date: "2027-01-11", destination: "Barcelona", type: "arrival", mode: "flight", time: land, cityKey: "barcelona" }), newDay({ date: "2027-01-11", destination: "Barcelona", type: "embark", allAboard: aa, cityKey: "barcelona" }), newDay({ date: "2027-01-12", destination: "At sea", type: "sea" })]; trip.active = 1; const e = trip.days[1]; seedPicks(e, cityFor(e)); fresh(); return buildPlan(e); };
+    const f1 = fly("11:25", "15:30");
+    ok("Fly in and board the same day, tight: straight to the ship, nothing else planned", f1 && !f1.error && f1.w.straight && !f1.items.some(x => x.type === "stop" || x.type === "meal") && !f1.items.some(x => x.place && /bags/i.test(x.place.name)) && f1.end <= f1.endBy, f1 && f1.items ? f1.items.map(x => x.type + (x.place ? ":" + x.place.name : "")).join(" > ") + " · " + fmt(f1.end) + " by " + fmt(f1.endBy) : f1 && f1.error);
+    ok("Fly in and board the same day: says a late flight can mean missing the ship", f1 && f1.w && f1.w.notes.some(t => /late or missed flight/.test(t) && /won't wait/.test(t)));
+    ok("Fly in and board the same day: the trip list shows the flight under the cruise, not a stay", (() => { const h = itinerary(); return /legsep">Cruise/.test(h) && !/Stay in Barcelona/.test(h); })());
+    const f2 = fly("07:00", "17:30");
+    ok("Fly in early and board the same day: sights fit, with the same warning", f2 && !f2.error && !f2.w.straight && f2.items.some(x => x.type === "stop") && f2.end <= f2.endBy && f2.w.notes.some(t => /late or missed flight/.test(t)), f2 && f2.items ? f2.items.filter(x => x.type === "stop").map(x => x.place.name).join(", ") : f2 && f2.error);
   } catch (e) { ok("checks ran", false, String(e && e.stack || e)); }
   finally { trip = keep; view = keepView; voySel = null; fresh(); render(); }
   return res;

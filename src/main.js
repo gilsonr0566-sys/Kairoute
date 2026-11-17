@@ -129,6 +129,9 @@ const DAY_TYPES = [
   { key: "port", label: "Cruise port day", short: "In port", icon: "⚓" },
   { key: "sea", label: "Day at sea", short: "At sea", icon: "〰" }
 ];
+// Flying in the day the ship sails: under this many minutes free between the airport and the "be at the terminal
+// by" time, the day goes straight to the ship (no sightseeing); see dayWindow.
+const STRAIGHT_MIN = 180;
 const MODES = { flight: { label: "Flight", list: "airport", clear: 75, need: 180, word: "airport" }, train: { label: "Train", list: "station", clear: 15, need: 30, word: "station" }, ship: { label: "Ship", list: "cruise", clear: 60, need: 60, word: "port" }, ferry: { label: "Ferry", list: "cruise", clear: 20, need: 40, word: "ferry terminal" }, car: { label: "Car or bus", list: "hotel", clear: 10, need: 20, word: "starting point" } };
 const INTERESTS = [["history", "History"], ["art", "Art & museums"], ["architecture", "Architecture"], ["food", "Food & markets"], ["views", "Views & nature"], ["churches", "Churches & faith"], ["bible", "Bible sites"], ["shopping", "Shopping"], ["beaches", "Beaches"], ["kids", "Kid-friendly"]];
 const INTEREST_WORDS = { history: ["history", "roman", "medieval", "ancient", "war", "castle", "ruins"], art: ["museum", "art", "picasso", "painting", "gallery"], architecture: ["architecture", "gaudí", "gaudi", "house", "façade", "building", "palace"], food: ["market", "food", "tapas"], views: ["view", "park", "hill", "garden", "nature"], churches: ["church", "basilica", "cathedral", "monastery", "chapel", "shrine", "madonna", "synagogue", "mosque", "temple"], bible: ["paul", "apostle", "bible", "biblical", "christian", "saint", "basilica", "church", "cathedral", "monastery"], shopping: ["shop", "market", "street"], beaches: ["beach", "sea"], kids: ["park", "beach", "amusement", "zoo"] };
@@ -1276,6 +1279,17 @@ function dayWindow(d, city) {
       if (!d.noBags) w.notes.push("Most hotels keep your bags for the day after check-out: ask at the desk.");
     }
     w.endLabel = ship ? "Boarding at " + P.name : "At " + P.name;
+    // Flying in on the day the ship sails (Richard's brother's Bahamas cruise, Jan 2027: a connecting flight lands
+    // 11:25, all aboard 15:30). A late or missed flight is the commonest way to miss a ship, and the ship doesn't wait,
+    // so the day says so plainly; and when less than 3 hours would be left for sightseeing (bags, rides and the
+    // "be there by" taken out), there is no sightseeing at all: straight from the airport to the ship.
+    if (ship && thru && thru.mode === "flight") {
+      const free = w.endBy - w.start - chainCost(w.head) - chainCost(w.tail);
+      if (free < STRAIGHT_MIN) { w.straight = true; w.head = [w.head[0]]; w.tail = [end]; w.sightFrom = w.start; }
+      w.notes.push(w.straight
+        ? `You fly in the day the ship sails, so today goes straight from the airport to the ship: there isn't enough time for sightseeing with a safe margin. A late or missed flight is the most common way travelers miss a ship, and the ship won't wait. Keep your airline's and cruise line's phone numbers handy, and if a delay is announced, call the cruise line at once.`
+        : `You fly in the day the ship sails. A late or missed flight is the most common way travelers miss a ship, and the ship won't wait: if your flight is delayed, skip the sightseeing and go straight to the port.`);
+    }
     if (ship) w.notesEnd.push(...boardNotes(d, w));
     else w.notesEnd.push(`${m.label} leaves ${d.time}: be at the ${m.word} by ${fmt(w.endBy)}, ${dur(m.need)} early${d.mode === "flight" ? " for an international flight" : ""}.`);
   } else if (d.type === "port") {
@@ -1853,7 +1867,7 @@ function buildPlanForDay(d) {
   const budget = w.endBy - w.start;
   const fixed = chainCost(w.head) + chainCost(w.tail) + (Z && w.tail.length ? 0 : 0);
   const mult = PACE[(trip.prefs && trip.prefs.pace) || "moderate"];
-  let chosen = allSites(city).filter(s => (d.selected || []).includes(s.id) && !liveDone(d, s.id));
+  let chosen = w.straight ? [] : allSites(city).filter(s => (d.selected || []).includes(s.id) && !liveDone(d, s.id));
   // One sight, one day. A sight ticked on more than one day in this city belongs to the earliest day whose
   // plan keeps it; later days leave it out. If the earlier day can't fit it, it falls to the later day.
   const myDay = trip.days.indexOf(d), seenOn = {}, elsewhere = [];
@@ -2068,7 +2082,7 @@ function buildPlanForDay(d) {
   // each only where it fits on the route without doubling back and before the day's hard end (a port day's safe
   // time back to the ship). What's left is recorded for the safety net.
   let fill = null;
-  if (!locked && d.fillTime !== false && !d.rain && !clearedByYou(d)) {
+  if (!locked && !w.straight && d.fillTime !== false && !d.rain && !clearedByYou(d)) {
     const ints = interestWords(), likes = c => ints.reduce((a, w) => a + ((c.category + " " + c.summary).toLowerCase().includes(w) ? 1 : 0), 0);
     const taken = new Set([...Object.keys(plannedElsewhere(d)), ...leavingReserve(d, city)]);
     // A day marked ready keeps the optional stops it had; other days leave those alone.
@@ -5479,7 +5493,9 @@ function dayMeta(x) {
 function itinerary() {
   let lastCity = null, out = "";
   trip.days.forEach((x, i) => {
-    const group = x.type === "port" || x.type === "sea" || (x.type === "embark") ? "Cruise" : x.destination;
+    // Flying in and boarding the same day: the arrival is part of the cruise, not a stay ("Stay in Miami" read as a
+    // night in Miami on the Bahamas fly-and-board day).
+    const tt = throughTo(x), group = x.type === "port" || x.type === "sea" || x.type === "embark" || (tt && tt.type === "embark") ? "Cruise" : x.destination;
     if (group !== lastCity) { out += `<div class="legsep">${esc(group === "Cruise" ? "Cruise" : "Stay in " + mainPlace(x))}</div>`; lastCity = group; }
     const built = x.type === "sea" || !!cityFor(x);
     out += `<button class="itrow ${i === trip.active ? "active" : ""}" data-day="${i}">
