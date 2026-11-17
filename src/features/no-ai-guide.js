@@ -51,6 +51,8 @@ async function sourceGuide(d) {
   Object.assign(c, { sites: tmp.sites, farther: [], ai: false, srcGuide: SRCG_V, grounded: true, startsOk: STARTS_V, area: label, eatsV: raw.eatsV || 0, verified: raw.verified || 0 });
   // cleanCity drops a start's "unknown" mark: put it back, so a day is never planned from a guessed port or airport.
   for (const k of Object.keys(starts)) (starts[k] || []).forEach((p, i) => { if (p.unknown && c.starts[k][i]) c.starts[k][i].unknown = true; });
+  // The day trips travelers suggest, where a real line gets there, are part of the guide from the start.
+  try { await farNoAI(c, src, true); } catch (e) {}
   return c;
 }
 // The airport, main station and cruise port, looked up by name on the map and the encyclopedia. A gateway port
@@ -95,7 +97,46 @@ async function findHotelNoAI(name, d) {
     return hit ? { name: hit.name || name, lat: +hit.lat, lng: +hit.lng, addr: hit.addr || "" } : null;
   } catch (e) { return null; }
 }
+// Day trips with no AI (Nov 17): the places travelers suggest for a day out in the city's travel guide (Wikivoyage
+// "Go next" / "Day trips", from the helper's /sources), each offered only when a real public transport line or ferry
+// gets there within 2 hours, with a service at least every 2 hours. The ride found names the trip's "Getting
+// there" ("Train from Madrid Chamartín, about 35 min one way"); the planner then times it from the day's own start
+// like any other stop. A place with no such line (an island with a few sailings, a village only reached by car) is
+// left out, never guessed. The traveler's own line from the guide is its description. Up to 4, once per guide, and
+// only for a guide with no day trips of its own.
+const FARNOAI_V = 1, farNoAIBusy = {};
+async function farNoAI(city, src, quiet) {
+  const k = keyOf(city.city); if (!freeAI || farNoAIBusy[k] || city.farNoAIV === FARNOAI_V || !src || !Array.isArray(src.next) || !src.next.length) return;
+  // A guide that already has its own day trips (a built-in or written guide) keeps them as they are.
+  if ((city.farther || []).some(x => !x.noAI)) return;
+  const centre = srcCentre(city, src); if (!centre) return;
+  const all = allSites(city), have = y => all.some(s => sameSight(y, s) || (s.merged || []).some(m => sameSight(y, m)));
+  const cands = src.next.filter(y => y && y.name && isFinite(y.lat) && y.km >= 8 && y.km <= 120 && !have(y) && keyOf(y.name) !== keyOf(city.city)).slice(0, 8);
+  if (!cands.length) { city.farNoAIV = FARNOAI_V; return; }
+  farNoAIBusy[k] = true;
+  try {
+    const r = await fetch(freeAI.url + "/transit", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ pairs: cands.map(y => ({ a: [+centre.lat, +centre.lng], b: [+y.lat, +y.lng], dow: 3 })) }) });
+    if (!r.ok) return; const j = await r.json(), res = (j && j.results) || [];
+    let added = 0; city.farther = city.farther || [];
+    cands.forEach((y, i) => {
+      if (added >= 4) return;
+      const opts = ((res[i] && res[i].opts) || []).filter(o => o && isFinite(o.min) && o.min > 0 && o.min <= 120 && (!o.every || o.every <= 120) && o.kind);
+      if (!opts.length) return;
+      const o = opts.sort((a, b) => a.min - b.min)[0], mins = Math.round(o.min / 5) * 5 || o.min;
+      const travel = `${o.kind} from ${o.from || city.city}, about ${mins} min one way`;
+      const note = String(y.note || "").replace(new RegExp("^" + y.name.replace(/[.*+?^${}()|[\]\\]/g, "\\$&") + "\\s*[-–—:,]?\\s*", "i"), "").trim();
+      const st = normSite({ id: keyOf(y.name).replace(/ /g, "-") + "-far", name: y.name, lat: y.lat, lng: y.lng, minutes: 180, kind: "touristy", far: true, category: "Day trip", travel,
+        summary: note.length > 20 ? note : `A day out that travelers suggest from ${city.city}.` }, 0);
+      Object.assign(st, { far: true, fame: y.sl || 0, unesco: !!y.unesco, heritage: !!y.heritage, src: ["Wikivoyage (English)"], wd: y.wd, famousFix: true, noAI: true });
+      city.farther.push(st); added++;
+    });
+    city.farNoAIV = FARNOAI_V;
+    if (added) { keepFills(city); try { console.info("Kairoute added " + added + " day trips from the travel guide for " + city.city); } catch (e) {} if (quiet) return; save(); if (["plan", "sites", "guide"].includes(view)) { const y = window.scrollY; render(); window.scrollTo(0, y); } }
+  } catch (e) {} finally { farNoAIBusy[k] = false; }
+}
 if (typeof window !== "undefined") {
+  window.__kairouteFarNoAI = farNoAI;
   // Test hook: build a city's guide from its sources alone (as with the AI switched off) for day i.
   window.__kairouteSourceGuide = async i => { const d = trip.days[i]; const c = await sourceGuide(d); return c ? { city: c.city, main: c.sites.filter(x => !x.quick).length, quick: c.sites.filter(x => x.quick).length, must: c.sites.filter(x => x.mustSee).map(x => x.name), eats: c.restaurants.length, starts: Object.fromEntries(Object.entries(c.starts).map(([k, v]) => [k, v.map(p => p.name + (p.unknown ? " (unknown)" : ""))])) } : null; };
 }
+if (typeof window !== "undefined") window.__kairouteCityOf = i => { const d = trip.days[i]; return d ? cityFor(d) || null : null; };
