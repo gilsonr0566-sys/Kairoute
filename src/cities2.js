@@ -112,6 +112,7 @@ const CITY_KUSADASI = {
   city: "Kusadasi", country: "Turkey",
   basics: {
     currency: "Turkish lira (euros widely accepted)", symbol: "₺", language: "Turkish", langCode: "tr",
+    prices: "EUR", // the sights here sell and list their tickets in euros, so this guide's prices are in euros
     tipping: "About 10% in restaurants. Round up for drivers.",
     safety: "Safe. Shopkeepers can be persistent; a polite 'no thank you' works.",
     emergency: "112", plugs: "Type C/F, 230 V", water: "Drink bottled water.",
