@@ -495,7 +495,7 @@ function looseKey(dest) {
   return Object.keys(cities).filter(k => !k.includes("|") && k.length > 2).sort((a, b) => b.length - a.length).find(k => dk.includes(" " + k + " ")) || null;
 }
 const cityKeyFor = d => d.cityKey && cities[d.cityKey] ? d.cityKey : (cities[keyOf(d.destination)] ? keyOf(d.destination) : looseKey(d.destination));
-const cityFor = d => { const k = cityKeyFor(d), c = k ? cities[k] : null; if (c && typeof scriptStops === "function") scriptStops(c); return c; }; // a stop with a hand-written script gets it (stop-scripts.js)
+const cityFor = d => { const k = cityKeyFor(d), c = k ? cities[k] : null; if (c && typeof scriptStops === "function") scriptStops(c); if (c && typeof fillsEarly === "function") fillsEarly(c); return c; }; // a stop with a hand-written script gets it (stop-scripts.js)
 // A port day the traveler spends on the ship ("Staying on board", set in the trip setup or on the day) is planned
 // like a day at sea: no shore plan, no countdown or ship-time alerts, no tour day (pricing counts tourDay only).
 // A day ashore from a ship whose times the traveler hasn't given yet (planned on estimated times).
@@ -2789,6 +2789,23 @@ const FILL_KEY = "fill:";
 // fuller one that replaces it), whatever order the guide, its sources and the fills arrive in.
 const fillsMem = {};
 function keepFills(city) { try { const l = [...(city.sites || []), ...(city.farther || [])].filter(s => s.famousFix); fillsMem[keyOf(city.city)] = l.map(x => Object.assign({}, x)); kv.set(FILL_KEY + keyOf(city.city), l); } catch (e) {} }
+// The kept fills come back as soon as a city is first used, from the device, not only once its sources have answered
+// (that waits for the helper's address and the internet). A saved pick can name a fill (the Acropolis, written in
+// online), so a page opened fresh, or with no internet, planned that day without it until the sources came (Nov 17
+// demo gate: day 1 Athens showed 1 stop of 2 on a second screen).
+var fillPending = 0; // var: read by cityFor, which can run before this part of the file has (then it waits for the next call)
+function fillsEarly(c) {
+  try { fillsMem; } catch (e) { return; }
+  const asked = fillsEarly.asked || (fillsEarly.asked = new WeakSet());
+  if (asked.has(c) || !c.city) return; asked.add(c); const k = keyOf(c.city);
+  if (fillsMem[k]) { restoreFills(c, fillsMem[k]); return; }
+  fillPending++;
+  kv.get(FILL_KEY + k).then(fl => {
+    if (Array.isArray(fl) && !fillsMem[k]) fillsMem[k] = fl;
+    let n = 0; for (const x of new Set(Object.values(cities))) if (x && x.city && keyOf(x.city) === k) n += restoreFills(x, fillsMem[k]);
+    if (n) dataRender();
+  }).catch(() => {}).finally(() => { fillPending--; });
+}
 function restoreFills(city, list) {
   if (!Array.isArray(list)) return 0; let n = 0;
   for (const st of list) if (st && st.name && st.id && !farUntimed(st) && !allSites(city).some(s => s.id === st.id || sameSight(st, s))) { (st.far ? (city.farther = city.farther || []) : city.sites).push(Object.assign({}, st)); n++; }
@@ -3920,7 +3937,7 @@ if (typeof window !== "undefined") window.__kairouteSyncCheck = () => {
 if (typeof window !== "undefined") {
   window.__kairouteAt = (i, v) => { trip.active = i; view = v || "plan"; render(); toTop(); return true; };
   window.__kairouteEdit = (i, patch) => { if (i === "all") trip.days.forEach(d => Object.assign(d, typeof patch === "function" ? patch(d) : patch)); else Object.assign(trip.days[i], patch); save(); render(); return true; };
-  window.__kairouteSettled = () => !seedTimer && !seedNext(); // background seeding of other days is done
+  window.__kairouteSettled = () => !seedTimer && !fillPending && !seedNext(); // background seeding of other days is done
   window.__kairouteDays = () => trip.days.map((d, i) => ({ i, date: d.date, type: d.type, dest: d.destination, city: cityFor(d) ? keyOf(cityFor(d).city) : "" }));
   window.__kairouteTruth = i => { bonusMemo = new Map(); mealMemo = new Map(); keptMemo = new Map(); eveMemo = new Map(); avoidMeals = new Set(); const d = trip.days[i], city = cityFor(d); if (!city) return { none: true }; refillIfNeeded(d, city); if (!d.selected) seedPicks(d, city); const pl = buildPlan(d); if (!pl || pl.error) return { error: pl ? pl.error : "none" };
     const sites = new Map([...(city.sites || []), ...(city.farther || [])].map(x => [x.id, x])), eats = new Set((city.restaurants || []).map(r => keyOf(r.name)));
