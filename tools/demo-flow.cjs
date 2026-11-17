@@ -315,7 +315,11 @@ async function partA(b) {
     const q = await ctx.newPage(); await q.setViewportSize(SIZES[size]); const e2 = watch(q, size);
     await open(q); const cont = q.locator('[data-act="continue"]').first(); if (await cont.isVisible().catch(() => false)) await cont.click();
     for (const d of [first, ed, nap].filter(Boolean)) {
-      await timed(q, `open Day plan (${size})`, go("plan", d.i), 5000); const s = await seen(q);
+      await timed(q, `open Day plan (${size})`, go("plan", d.i), 5000);
+      // A page opened fresh may still be loading a city's fuller guide (picks named by it show once it is in, as the
+      // Day plan says): compare once it has settled, the same as the tablet page did.
+      for (let t = 0; t < 120; t++) { if (await q.evaluate(() => (!window.__kairouteSettled || window.__kairouteSettled()) && !(window.__kairouteUpgrading && window.__kairouteUpgrading())).catch(() => true)) break; await q.waitForTimeout(1000); }
+      await q.evaluate(go("plan", d.i)); await q.waitForTimeout(800); const s = await seen(q);
       ok(s.stops.length === plans[d.i].stops.length, `${size}: day ${d.i + 1} ${d.dest} shows the same ${plans[d.i].stops.length} stops (${s.stops.length})`);
       if (s.stops.length !== plans[d.i].stops.length) { // say what differs, so a failure can be traced from the log alone
         const why = await q.evaluate(i => { try { const t = window.__kairouteTruth(i); return { kept: t.keptNames, dropped: t.dropped, sel: t.selected, end: t.end, endBy: t.endBy, over: t.over }; } catch (e) { return String(e); } }, d.i);
