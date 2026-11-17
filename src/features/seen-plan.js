@@ -64,7 +64,9 @@ function seenKeep(d, plan) {
   if (!seenSettled(d)) return;
   const st = seenStore(), k = seenId(d), v = { sel: selKey(d), ctx: seenCtx(d), lock: plan.lock }, j = JSON.stringify(v);
   if (st[k] && JSON.stringify(st[k]) === j) return;
-  st[k] = v; seenGen++; clearTimeout(seenKeep.t);
+  // The plan cache isn't cleared: the plan kept is the one just shown, and replaying it gives the same plan, so
+  // remembering it never makes the day plan again (typing what was spent never re-plans: money-check).
+  st[k] = v; clearTimeout(seenKeep.t);
   seenKeep.t = setTimeout(() => { try { localStorage.setItem("kairoute.seen." + seenStore.id, JSON.stringify(seenStore())); } catch (e) {} }, 400);
 }
 function seenAfterRender() {
@@ -74,6 +76,11 @@ if (typeof window !== "undefined") window.__kairouteSeen = { get: i => seenStore
   // Test hooks (plan-steady check): forget every remembered plan; remember every day's plan now, as the download does.
   bump: () => { seenGen++; }, clear: () => { seenStore.m = {}; seenGen++; try { localStorage.removeItem("kairoute.seen." + trip.id); } catch (e) {} },
   keepAll: () => { let n = 0; for (const d of trip.days) { try { if (noShore(d) || !cityFor(d)) continue; seenKeep(d, buildPlan(d)); if (seenStore()[seenId(d)]) n++; } catch (e) {} } return n; } };
+// Why a remembered plan isn't replayed now (test reports): none kept, picks or settings changed, or what forced it.
+function seenWhy(d, p) {
+  const s = seenStore()[seenId(d)]; if (!s) return "no plan remembered"; if (p && p.seen) return "";
+  if (!seenFor(d)) return s.ctx !== seenCtx(d) ? "day settings changed" : "picks changed"; return (p && p.seenBroke) || "";
+}
 // Test hooks (tools/steady-check.cjs): every pick is on the day's plan (a stop, inside an area visit, or named as left
 // out), and whether the app is still fetching rides or a guide.
 if (typeof window !== "undefined") {
@@ -83,6 +90,6 @@ if (typeof window !== "undefined") {
     // gone: picks from before (was) that are no longer on the day under any of their ids, with no note saying why.
     const sel = new Set((d.selected || []).map(id => m.get(id) || id)), off = new Set((d.offLog || []).map(o => o.id));
     const gone = (was || []).filter(id => !sel.has(m.get(id) || id) && !off.has(id));
-    return { sel: (d.selected || []).slice(), gone, seen: !!(p && p.seen), missing: p && !p.error ? (d.selected || []).filter(id => !has(id)) : [] }; };
+    return { sel: (d.selected || []).slice(), gone, seen: !!(p && p.seen), why: seenWhy(d, p), missing: p && !p.error ? (d.selected || []).filter(id => !has(id)) : [] }; };
   window.__kairouteSteadyBusy = () => { try { return transitQ.size > 0 || transitBusy || fillPending > 0 || trip.days.some(d => guideLoading(d)); } catch (e) { return false; } };
 }
