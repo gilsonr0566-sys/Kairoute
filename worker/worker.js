@@ -907,10 +907,47 @@ async function voyagePages(host, title, UA) {
   const esc = top.title.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), subs = [...new Set([...top.wt.matchAll(new RegExp("\\[\\[" + esc + "/([^|\\]#]+)", "g"))].map(m => top.title + "/" + m[1].trim()))].slice(0, 14);
   const more = (await Promise.all(subs.map(get))).filter(Boolean);
   const listings = [top, ...more].flatMap(p => parseListings(p.wt));
-  return { pages: 1 + more.length, title: top.title, listings };
+  return { pages: 1 + more.length, title: top.title, listings, next: voyageNext(top.wt) };
+}
+// The places travelers suggest for a day out: the links in a Wikivoyage page's "Go next" and "Day trips" sections,
+// each with the traveler's own line about it ("Toledo: the old capital, 30 min by high-speed train").
+function voyageNext(wt) {
+  const out = [], seen = new Set(), hr = /^(=+)\s*([^=].*?)\s*\1\s*$/gm, heads = []; let m;
+  while ((m = hr.exec(wt))) heads.push({ at: m.index, end: m.index + m[0].length, lvl: m[1].length, name: m[2] });
+  const clean = t => String(t || "").replace(/\{\{[^{}]*\}\}/g, "").replace(/\[\[(?:[^|\]]*\|)?([^\]]*)\]\]/g, "$1").replace(/\[https?:\/\/\S+\s([^\]]*)\]/g, "$1").replace(/'{2,}/g, "").replace(/<[^>]+>/g, "").replace(/\s+/g, " ").trim();
+  heads.forEach((h, i) => {
+    if (!/go next|day trips?|excursions|nearby/i.test(h.name)) return;
+    let stop = wt.length; for (let k = i + 1; k < heads.length; k++) if (heads[k].lvl <= h.lvl) { stop = heads[k].at; break; }
+    for (const line of wt.slice(h.end, stop).split("\n")) {
+      if (!/^[*#]/.test(line.trim())) continue;
+      // The first link on a bullet is the place it is about; one marked with a {{marker}} is read the same way.
+      const lk = /\[\[([^|\]#]+)(?:\|[^\]]*)?\]\]/.exec(line), mk = /\{\{\s*marker[^}]*\|\s*name\s*=\s*\[\[([^|\]#]+)/i.exec(line);
+      const t = ((mk && mk[1]) || (lk && lk[1]) || "").trim();
+      if (!t || t.includes("/") || /^(file|image|category|wikipedia|w|wikt|commons):/i.test(t) || seen.has(t.toLowerCase())) continue;
+      const said = line.replace(/\{\{\s*marker[^{}]*?\|\s*name\s*=\s*(\[\[[^\]]*\]\]|[^|}]*)[^{}]*\}\}/gi, "$1").replace(/^[*#:\s]+/, "");
+      seen.add(t.toLowerCase()); out.push({ title: t, note: clean(said).slice(0, 260) });
+      if (out.length >= 30) return;
+    }
+  });
+  return out;
+}
+// Where each suggested day out is (its Wikivoyage page's own position) and its Wikidata id.
+async function voyageNextPlaces(next, center, UA) {
+  if (!next || !next.length) return [];
+  const kmOf = (a, b) => Math.hypot((a.lat - b.lat) * 111, (a.lng - b.lng) * 111 * Math.cos(b.lat * Math.PI / 180));
+  let j = null;
+  try { const r = await fetch("https://en.wikivoyage.org/w/api.php?action=query&format=json&formatversion=2&redirects=1&prop=coordinates|pageprops&ppprop=wikibase_item&titles=" + encodeURIComponent(next.map(x => x.title).slice(0, 30).join("|")), { headers: UA, signal: AbortSignal.timeout(12000) }); if (r.ok) j = await r.json(); } catch (e) {}
+  const pages = (j && j.query && j.query.pages) || [], redir = new Map(((j && j.query && j.query.redirects) || []).map(x => [x.from, x.to])), norm = new Map(((j && j.query && j.query.normalized) || []).map(x => [x.from, x.to]));
+  const out = [];
+  next.forEach((x, i) => {
+    const t0 = norm.get(x.title) || x.title, t = redir.get(t0) || t0, p = pages.find(q => q.title === t);
+    const c = p && p.coordinates && p.coordinates[0]; if (!c || p.missing) return;
+    out.push({ name: t.replace(/\s*\(.*?\)\s*$/, ""), wd: (p.pageprops && p.pageprops.wikibase_item) || undefined, lat: +(+c.lat).toFixed(5), lng: +(+c.lon).toFixed(5), km: +kmOf({ lat: c.lat, lng: c.lon }, center).toFixed(1), rank: i, note: x.note });
+  });
+  return out;
 }
 async function sourcesData(label, env, ctx) {
-  const key = "sr4:" + (await sha(label.toLowerCase())), hit = await env.USAGE.get(key); if (hit) return JSON.parse(hit);
+  const key = "sr5:" + (await sha(label.toLowerCase())), hit = await env.USAGE.get(key); if (hit) return JSON.parse(hit);
   const UA = { "user-agent": "Kairoute/1.0 (travel guide; https://gilsonr0566-sys.github.io/Kairoute/)" };
   const getJ = async (u, ms, opt) => { for (let t = 0; t < 2; t++) { try { const r = await fetch(u, Object.assign({ headers: { ...UA, accept: "application/json" }, signal: AbortSignal.timeout(ms || 20000) }, opt || {})); if (r.ok) return await r.json(); } catch (e) {} } return null; };
   const T = {}, t0 = Date.now(), lap = k => { T[k] = Date.now() - t0; };
@@ -981,7 +1018,10 @@ async function sourcesData(label, env, ctx) {
     { name: S.fame, n: fam.main.length }, { name: S.enVoy, n: enV.listings.length, pages: enV.pages },
     { name: S.lcVoy, n: lcV.listings.length, pages: lcV.pages, none: !localVoy }, { name: S.localWiki, n: stops.filter(x => x.src.includes(S.localWiki)).length, none: !lang },
 { name: "Heritage registers and UNESCO", n: stops.filter(x => x.unesco || x.heritage).length }];
-  const res = { area, lang, langName: LN, center, sources, stops, eats: eats.slice(0, 150), far: fam.far, ms: T };
+  // Day outs travelers suggest (Wikivoyage "Go next" / "Day trips"), with how famous each is where the fame list has it.
+  const next = (await voyageNextPlaces(enV.next, center, UA)).map(x => { const f = (fam.far || []).find(y => (x.wd && y.wd === x.wd) || fold(y.name) === fold(x.name)); return f ? Object.assign(x, { sl: f.sl || 0, unesco: !!f.unesco, heritage: !!f.heritage }) : x; });
+  lap("next");
+  const res = { area, lang, langName: LN, center, sources, stops, eats: eats.slice(0, 150), far: fam.far, next, ms: T };
   // Keep a full answer for 30 days; an answer missing a source that failed is kept only a day.
   ctx.waitUntil(env.USAGE.put(key, JSON.stringify(res), { expirationTtl: (enV.pages && fam.main.length ? 30 : 1) * 86400 }));
   return res;

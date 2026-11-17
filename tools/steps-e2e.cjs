@@ -39,12 +39,21 @@ const RULES = [
       { k: 'stay', place: 'Rome', date: '2027-05-01', nights: 3 }, { k: 'stay', place: 'Florence', date: '2027-05-02', nights: 2 }], err: /before the stop before it ends/ }
 ];
 const MOCK = 'https://mock.test';
+const PARIS_NEXT = [
+  { name: 'Versailles', wd: 'Q621', lat: 48.8049, lng: 2.1204, km: 17.1, rank: 0, sl: 140, note: "Versailles — the Sun King's palace and gardens, an easy RER ride away." },
+  { name: 'Barbizon', wd: 'Q213585', lat: 48.4447, lng: 2.6036, km: 49, rank: 1, sl: 40, note: 'Barbizon: the painters\' village on the edge of the forest of Fontainebleau.' },
+  { name: 'Mont-Saint-Michel', wd: 'Q180374', lat: 48.636, lng: -1.5115, km: 290, rank: 2, sl: 120, note: 'Mont-Saint-Michel: the abbey on a tidal island.' }];
 function helper(r, calls) {
   const u = new URL(r.request().url()), j = o => r.fulfill({ contentType: 'application/json', body: JSON.stringify(o) });
   calls.push(u.pathname);
   if (u.pathname === '/status') return j({ ok: true, on: false, left: 0, budget: 0 });
   if (u.pathname === '/sample') return r.fulfill({ status: 429, contentType: 'application/json', body: JSON.stringify({ error: 'The AI guide writer is switched off for now.' }) });
-  if (u.pathname === '/sources') return /paris/i.test(u.searchParams.get('city')) ? j(PARIS.sources) : r.fulfill({ status: 404, body: '{}' });
+  if (u.pathname === '/sources') return /paris/i.test(u.searchParams.get('city')) ? j(Object.assign({}, PARIS.sources, { next: PARIS_NEXT })) : r.fulfill({ status: 404, body: '{}' });
+  // Day trips: a train to Versailles; nothing public to Barbizon (so it is never offered); Mont-Saint-Michel is too far.
+  if (u.pathname === '/transit') { const b = JSON.parse(r.request().postData() || '{}');
+    return j({ results: (b.pairs || []).map(q => Math.abs(q.b[0] - 48.8049) < 0.01 && Math.abs(q.b[1] - 2.1204) < 0.01
+      ? { opts: [{ mode: 'train', kind: 'Train', label: 'RER C', operator: 'SNCF', from: 'Saint-Michel Notre-Dame', to: 'Versailles Château Rive Gauche', ride: 38, wait: 8, every: 15, everySrc: 'timetable', access: { how: 'walk', min: 6, km: 0.4 }, egress: { how: 'walk', min: 10, km: 0.8 }, min: 62, km: 20, stops: 9, src: 'test copy' }] }
+      : { opts: [] }) }); }
   if (u.pathname === '/famous') return /paris/i.test(u.searchParams.get('city')) ? j(PARIS.famous) : r.fulfill({ status: 404, body: '{}' });
   if (u.pathname === '/ground') { const b = JSON.parse(r.request().postData() || '{}'), names = b.names || [];
     return j({ results: names.map(n => /paris airport|paris international airport/i.test(n) ? { wiki: [{ title: 'Charles de Gaulle Airport', lat: 49.0097, lng: 2.5479 }], map: [], answered: true }
@@ -72,7 +81,7 @@ function helper(r, calls) {
     await p.close(); }
   // 2. The screens.
   for (const [W, H, tag] of [[412, 915, 'phone'], [1280, 800, 'tablet']]) {
-    const p = await b.newPage({ viewport: { width: W, height: H } }); const errs = [], calls = []; p.on('pageerror', e => errs.push(e.message));
+    const p = await b.newPage({ viewport: { width: W, height: H } }); const errs = [], calls = []; p.on('pageerror', e => errs.push(e.message)); if (process.env.DEBUG) p.on('console', m => { if (/Kairoute|transit|far/i.test(m.text())) console.log('CON', m.text().slice(0, 200)); });
     if (LIVE) {
       p.on('request', q => { try { const u = new URL(q.url()); if (/workers\.dev$/.test(u.hostname)) calls.push(u.pathname); } catch (e) {} });
       await p.addInitScript(() => { try { localStorage.setItem('kairoute.intro1', '1'); } catch (e) {} });
@@ -133,6 +142,21 @@ function helper(r, calls) {
     for (const i of [1, 2]) {
       const t = await p.evaluate(i => window.__kairouteTruth(i), i);
       if (t.error || !(t.stopNames || []).length) bad(`${tag}: Paris day ${i + 1} plan: ${t.error || 'no stops'}`); else ok(`${tag}: Paris day ${i + 1}: ${t.stopNames.length} stops (${t.stopNames.slice(0, 4).join(', ')}…)`);
+      if (process.env.DEBUG) console.log('     ', JSON.stringify({ stops: t.stopNames, times: t.times, end: t.end, endBy: t.endBy, fill: t.fill, dropped: t.dropped, hours: t.hours }));
+    }
+    // Rules for any city with no AI: a full day is filled (no afternoon left empty), a place visitors can't go into
+    // is never a sight, and a day trip is offered only where a real line gets there (with its ride named).
+    if (!LIVE) for (const i of [1, 2]) { const t = await p.evaluate(i => window.__kairouteTruth(i), i);
+      if (t.fill && t.fill.spare > 120) bad(`${tag}: Paris day ${i + 1} ends with ${t.fill.spare} min free (at ${Math.floor(t.end / 60)}:${String(t.end % 60).padStart(2, '0')})`); else ok(`${tag}: Paris day ${i + 1} is full (${t.stopNames.length} stops, ${t.fill ? t.fill.spare : 0} min spare)`); }
+    const g = await p.evaluate(() => { const c = window.__kairouteCityOf(1); return c ? { sites: (c.sites || []).map(x => x.name), far: (c.farther || []).map(x => ({ n: x.name, t: x.travel })) } : null; });
+    if (process.env.DEBUG) console.log('DBG', JSON.stringify(await p.evaluate(() => { const c = window.__kairouteCityOf(1); return { v: c.farNoAIV, ffv: c.farFillV, city: c.city, srcG: c.srcGuide }; })));
+    if (!g) bad(`${tag}: no Paris guide to check`);
+    else {
+      if (g.sites.some(n => /lys[ée]e Palace|Meudon Observatory/i.test(n))) bad(`${tag}: a place closed to visitors is a sight: ${g.sites.filter(n => /lys[ée]e|Meudon/.test(n)).join(', ')}`); else ok(`${tag}: places closed to visitors are left out`);
+      if (!LIVE) { const v = g.far.find(x => /Versailles/.test(x.n));
+        if (!v || !/Train from Saint-Michel Notre-Dame, about \d+ min one way/.test(v.t)) bad(`${tag}: Versailles day trip missing or untimed: ${JSON.stringify(g.far)}`); else ok(`${tag}: day trip with no AI: ${v.n} (${v.t})`);
+        if (g.far.some(x => /Barbizon|Mont-Saint-Michel/.test(x.n))) bad(`${tag}: a day trip with no line or too far was offered: ${JSON.stringify(g.far)}`); else ok(`${tag}: no day trip offered without a real line, or too far`); }
+      else console.log(`note ${tag}: day trips ${JSON.stringify(g.far)}`);
     }
     const t0 = await p.evaluate(() => window.__kairouteTruth(0)); if (t0.error || !(t0.stopNames || []).length) bad(`${tag}: Paris arrival day: ${t0.error || 'no stops'}`);
     const hotel = await p.evaluate(() => { const k = Object.keys(JSON.parse(localStorage.getItem('wayside.trip2')).lodging || {}); return JSON.parse(localStorage.getItem('wayside.trip2')).lodging[k.find(x => /paris/.test(x))] || null; });
