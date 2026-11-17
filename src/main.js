@@ -146,6 +146,8 @@ const WORSHIP_RE = /\b(church|cathedral|duomo|cattedrale|catedral|chiesa|iglesia
 const NOT_WORSHIP_KIND = /food|caf[eé]|restaurant|taverna|\bbar\b|chocolat|bakery|shop|market|museum|gallery|\bpark\b|garden|square|plaza|piazza|street|beach|island|village|\btown\b|district|neighbo|quarter|palace|castle|fort|stadium|hotel|harbou?r|port\b|bridge|viewpoint|hill|station/i;
 const isReligious = x => { if (!x) return false; const c = x.category || "", t = c + " " + (x.name || "");
   if (/ancient|ruin|archaeolog/i.test(t) || !RELIGIOUS_RE.test(t)) return false;
+  // "Holy" in a fort's or palace's name (Fort of the Holy Saviour) doesn't make it a place of worship.
+  if (NOT_WORSHIP_KIND.test(c) && !WORSHIP_RE.test(t.replace(/\bholy\b/gi, " "))) return false;
   return WORSHIP_RE.test(t) || !NOT_WORSHIP_KIND.test(c); };
 const skipReligious = () => P().religious === "off";
 // The "Churches & faith" interest: off once the traveler turns it off (noChurches), or when they chose
@@ -2775,7 +2777,8 @@ function fameMark(city, src) {
   // Fills first, then the sources' sights: the same order online and offline, so the list comes out the same.
   restoreFills(city, fillsMem[keyOf(city.city)]);
   for (const s of [...(city.sites || []), ...(city.farther || [])]) {
-    const hit = srcStop(src, s.name, s) || ((src.far || []).find(x => nameMatch(s.name, x.name) || nameMatch(x.name, s.name)) && Object.assign({ src: ["Wikidata (Wikipedia in many languages)"] }, (src.far || []).find(x => nameMatch(s.name, x.name) || nameMatch(x.name, s.name))));
+    const nm0 = s.srcName || s.name;   // the name the guide gave it, before it was put into English
+    const hit = srcStop(src, nm0, s) || ((src.far || []).find(x => nameMatch(s.name, x.name) || nameMatch(x.name, s.name)) && Object.assign({ src: ["Wikidata (Wikipedia in many languages)"] }, (src.far || []).find(x => nameMatch(s.name, x.name) || nameMatch(x.name, s.name))));
     if (hit) { s.fame = hit.sl || 0; s.unesco = !!hit.unesco; s.heritage = !!hit.heritage; s.src = hit.src || []; if (hit.web && !s.web) s.web = hit.web; 
       // The sources' id and local name say "this is the same place" to the duplicates check, so they are only taken
       // from a hit that is surely this sight: the names match both ways, or the source's spot is right here. A loose
@@ -2784,8 +2787,11 @@ function fameMark(city, src) {
       // "Sure" is the duplicates check's own test on the names and spots alone (no ids): "Natural History Museum of
       // Crete" is not the "Historical Museum of Crete", and a museum 200 m away is another museum.
       const bare = x => ({ name: x.name || "", lat: x.lat, lng: x.lng, category: x.category || x.kind || "" });
-      const sure = placeRel(bare(s), bare(hit)) === "same";
-      if (sure) { if (hit.local) s.local = hit.local; if (hit.wd) s.wd = hit.wd; } else { delete s.local; delete s.wd; } }
+      const sure = placeRel(Object.assign(bare(s), { name: nm0 }), bare(hit)) === "same";
+      if (sure) { if (hit.local) s.local = hit.local; if (hit.wd) s.wd = hit.wd; } else { delete s.local; delete s.wd; }
+      // A lesser sight the guide named in the local language ("Santissima Annunziata dei Catalani") is shown in English.
+      const en = sure && !s.srcName && (hit.sl || 0) < EN_FAME && enNameOf(s.name, s.category, s.local || hit.local);
+      if (en) { s.srcName = s.name; s.local = s.local || s.name; s.name = en; } }
   }
   famousRepair(city, src);
   sourceSights(city, src);
@@ -5767,7 +5773,7 @@ function siteCard(s, d, plan, nr) {
   const seen = other ? `<span class="tag seen">${!on ? esc(schedWhen(other)) : ex && ex.earlier ? "Seen " + esc(fmtDow(ex.on.date)) + " " + esc(fmtDate(ex.on.date)) + " · not repeated" : ex && ex.later ? "No room today · seen " + esc(fmtDow(ex.on.date)) + " " + esc(fmtDate(ex.on.date)) : "Today · not repeated " + esc(fmtDow(other.date)) + " " + esc(fmtDate(other.date))}</span>` : "";
   const hrs = txt(s.hours) ? txt(hoursText(s.hours)) : "", cl = txt(s.closed);
   const det = `<div class="cdet">
-      <p class="sum">${esc(unitText(s.summary))}</p>
+      <p class="sum">${esc(unitText(s.summary))}</p>${localLine(s)}
       <div class="tags">${s.mustSee ? `<span class="tag must">Must-see</span>` : ""}${unescoTag(s)}${sightKind(s, city) === "local" ? `<span class="tag local">Local favorite</span>` : `<span class="tag">Famous sight</span>`}${!on && plan && (plan.bonus || []).some(x => x.id === s.id) ? `<span class="tag bonus">On your plan as an optional stop</span>` : ""}${s.indoor ? `<span class="tag">Indoors</span>` : ""}${closedOn(s, d.date) && cl ? `<span class="tag nofit">${esc(cl)}</span>` : ""}</div>
       ${twinNote(s, city)}${partsPick(s)}${s.show && s.show.what ? `<p class="travelnote">⏱ ${esc(showLine(s))}</p>` : ""}${nextDoor(s, city)}
       ${s.far && txt(s.travel) ? `<p class="travelnote">Getting there: ${esc(unitText(s.travel))}</p>` : ""}
@@ -6691,7 +6697,7 @@ function stopCard(s, num, city, at) {
   const photos = `https://commons.wikimedia.org/w/index.php?search=${encodeURIComponent(s.name + " " + city.city)}&title=Special:MediaSearch&type=image`;
   return `<article class="stopcard" id="stop-${esc(s.id)}">
     <div class="stopbody"><div class="scmain">
-      <div class="head stophead"><span class="stopnum">${s.along ? "•" : num || (s.bonus ? "+" : "•")}</span><div><h3>${esc(s.name)}</h3><p class="stopmeta">${[s.category ? String(s.category).replace(/^\w/, c => c.toUpperCase()) : (s.along ? "On the way" : ""), s.minutes ? dur(s.minutes) : "", s.mustSee ? "Must-see" : "", s.unesco ? "UNESCO World Heritage" : ""].filter(Boolean).map(esc).join(" · ")}</p></div></div>
+      <div class="head stophead"><span class="stopnum">${s.along ? "•" : num || (s.bonus ? "+" : "•")}</span><div><h3>${esc(s.name)}</h3><p class="stopmeta">${[s.category ? String(s.category).replace(/^\w/, c => c.toUpperCase()) : (s.along ? "On the way" : ""), s.minutes ? dur(s.minutes) : "", s.mustSee ? "Must-see" : "", s.unesco ? "UNESCO World Heritage" : ""].filter(Boolean).map(esc).join(" · ")}</p>${localLine(s)}</div></div>
       <p class="lede">${esc(unitText(s.summary))}</p>
       ${s.parts && s.parts.length >= 2 ? `<div class="field partsbox"><span class="eyebrow">What's here, in walking order</span>${partsList(s, at, true)}</div>` : partsList(s, at)}
 ${quietOn(s) ? `<p class="banner quiet" role="note">🤫 <span><b>Quiet place.</b> Read the story below. Audio plays only after you confirm your earbuds are in.</span></p>` : ""}<div class="audio"><button class="btn" data-play="${esc(s.id)}" data-label="${quietOn(s) ? "🎧 Play with earbuds" : "▶ Play audio guide"}">${quietOn(s) ? "🎧 Play with earbuds" : "▶ Play audio guide"}</button><span class="state" aria-live="polite"></span></div>
@@ -6854,7 +6860,7 @@ function renderTour(d) {
       <div class="actions tourmain">${pk + 1 < pp.length ? `<button class="btn bigbtn" data-act="tourpart">Next part: ${esc(pp[pk + 1].p.name)}</button>` : `<button class="btn bigbtn" data-act="tournext">${nxt ? "Next: " + esc(stepName(nxt)) : "Finish"}</button>`}</div>
     </div>`;
     else body = `<div class="tourcard">
-      <div class="tcmain"><div class="stophead"><span class="stopnum big">${s.along ? "•" : stopNo}</span><div><h2 class="tourtitle">${esc(s.name)}</h2><p class="stopmeta">${esc(String(s.category || "").replace(/^\w/, c => c.toUpperCase()))}</p></div></div>
+      <div class="tcmain"><div class="stophead"><span class="stopnum big">${s.along ? "•" : stopNo}</span><div><h2 class="tourtitle">${esc(s.name)}</h2><p class="stopmeta">${esc(String(s.category || "").replace(/^\w/, c => c.toUpperCase()))}</p>${localLine(s)}</div></div>
       ${walkWorthy(s, city) && !(s.extrasV >= EXTRAS_V) && extrasAsked[keyOf(city.city) + "|" + s.id] ? `<p class="ai-note"><span class="spinner"></span> Your guide is planning the walk-through, point by point. The story below plays meanwhile.</p>` : ""}
       <p class="timeleft" id="tourLeft"></p>
 ${quietOn(s) ? `<p class="banner quiet" role="note">🤫 <span><b>Quiet place.</b> The story is below to read. Audio plays only after you confirm your earbuds are in.</span></p>` : ""}

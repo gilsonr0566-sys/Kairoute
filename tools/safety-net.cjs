@@ -590,6 +590,20 @@ const log = (suite, trip, ok, what) => { results.push({ suite, trip, ok, what })
     log('Famous sights', 'famous', !bad.length, bad.length ? 'Big stop on the screens: ' + bad.join('; ') : 'Big stop on the screens: Day plan lists the parts, each part tickable, the tour plays one part at a time');
     log('Famous sights', 'famous', !errs.length, errs.length ? 'page errors: ' + [...new Set(errs)].join(' | ') : 'no page errors');
     await b3.close(); }
+  // Sight names in English (Richard, Nov 17, Messina: "is that all foreign language"): a lesser sight the sources
+  // know only by its local name is shown in English by fixed rules, never half translated; famous names, names already
+  // in English and a lift named after a saint are left alone.
+  { const b6 = await chromium.launch(); const p = await b6.newPage(); await p.route('**/*', r => /^file:/.test(r.request().url()) ? r.continue() : r.abort());
+    await p.goto('file://' + FILE); await p.waitForTimeout(300);
+    const cases = [['Palazzo Zanca', '', '', 3, 'Zanca Palace'], ['Quattro Fontane', '', '', 3, 'Four Fountains'], ['Real Cittadella', '', '', 3, 'Royal Citadel'], ['Forte del Santissimo Salvatore', 'Palace', '', 3, 'Fort of the Holy Saviour'],
+      ['Madonna della Lettera', 'Sight', '', 3, 'Our Lady of the Letter'], ['Palazzo della cultura', '', '', 3, 'Palace of Culture'], ['Galleria Nazionale d\'Arte Moderna e Contemporanea', '', '', 3, 'National Gallery of Modern and Contemporary Art'],
+      ['Santa Maria Alemanna', 'Church', 'Chiesa di Santa Maria Alemanna', 3, 'Santa Maria Alemanna Church'], ['Iglesia de San Ginés', 'Church', '', 3, 'Church of San Ginés'], ['Torre Marmora', '', '', 3, 'Marmora Tower'],
+      ['Santa Justa Lift', 'Church', 'Elevador de Santa Justa', 3, 'Santa Justa Lift'], ['Casa de Campo Park', '', '', 3, 'Casa de Campo Park'], ['Royal Basilica of Saint Francis the Great', 'Church', '', 3, 'Royal Basilica of Saint Francis the Great'],
+      ['Palau de la Música Catalana', '', '', 3, 'Palau de la Música Catalana'], ['Ponte Vecchio', '', '', 60, 'Ponte Vecchio'], ['Gran Vía', '', '', 3, 'Gran Vía'], ['Forte Gonzaga', '', '', 3, 'Fort Gonzaga']];
+    const got = await p.evaluate(cs => cs.map(([n, c, l, sl]) => window.__kairouteEnName(n, c, sl, l)), cases).catch(e => cases.map(() => 'ERROR ' + e.message));
+    const bad = cases.map((c, i) => [c[0], c[4], got[i]]).filter(([, want, g]) => want !== g);
+    log('English names', 'rules', !bad.length, bad.length ? bad.map(([n, w, g]) => `${n}: "${g}", expected "${w}"`).join('; ') : `${cases.length} names: local names put into English, famous and English names left alone`);
+    await b6.close(); }
   // Sights coverage: with real snapshots of each city's sources (tools/fixtures/src-*.json, no network, no AI), every
   // big city offers at least 30 worthwhile sights (smaller ones most of what their sources know), nothing twice, every added
   // sight carries its sources, a gateway port is planned for the city it serves, look-alike names are told apart, and
@@ -607,6 +621,8 @@ const log = (suite, trip, ok, what) => { results.push({ suite, trip, ok, what })
       const tot = r.after.main + r.after.quick, hits = r.bench.filter(x => x.hit).length;
       log('Sights coverage', key, r.after.main >= r.min, `${fix.destination}: ${r.before.main} written sights before, ${r.after.main} sights + ${r.after.quick} quick stops + ${r.after.far} day trips now (needs at least ${r.min} sights for a city its size)`);
       log('Sights coverage', key, !r.dup.length, r.dup.length ? 'same place twice: ' + r.dup.slice(0, 5).join('; ') : 'no place listed twice');
+      { const missed = (r.foreign || []).filter(n => /rules know it/.test(n));
+        log('Sights coverage', key, !missed.length, missed.length ? 'shown in the local language though the rules put it into English: ' + missed.join(', ') : `sight names in English${(r.foreign || []).length ? ' (left in the local language, no English rendering: ' + r.foreign.join(', ') + ')' : ''}`); }
       log('Sights coverage', key, !r.noSrc.length, r.noSrc.length ? 'added without sources: ' + r.noSrc.join(', ') : 'every added sight names its sources');
       if (bl.area) log('Sights coverage', key, new RegExp(bl.area, 'i').test(r.label) || new RegExp(bl.area, 'i').test(fix.sources.area), `sources asked for "${r.label}" (area ${fix.sources.area}); the day is spent in ${bl.area}`);
       if (r.bench.length) log('Sights coverage', key, hits >= Math.ceil(r.bench.length * (bl.share || 0.5)), `benchmark: ${hits} of ${r.bench.length} places a free chatbot names are on the list${r.bench.filter(x => !x.hit).length ? ' (not yet: ' + r.bench.filter(x => !x.hit).map(x => x.n).join(', ') + ')' : ''}`);

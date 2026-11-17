@@ -85,6 +85,8 @@ const srcDone = new WeakMap();
 function sourceSights(city, src) {
   if (!city || !src || !Array.isArray(src.stops) || srcDone.get(city) === src) return 0;
   srcDone.set(city, src);
+  // Sights a saved guide got from the sources before names were put into English get theirs now.
+  for (const s of allSites(city)) if (s.srcOnly && !s.enN) { const en = enSight({ name: s.name, local: s.local, sl: s.fame }, s.category); if (en) Object.assign(s, en); s.enN = 1; }
   const centre = srcCentre(city, src); if (!centre) return 0;
   const area = String(src.area || city.city).replace(/\s*\(.*\)/, "");
   // The caps count the written guide and the sources' own sights, never the famous places written in (famousFix): those
@@ -99,6 +101,7 @@ function sourceSights(city, src) {
     const [, cat, min] = srcKind(x.name, x.local), q = !extra.far && srcQuick(x.name, x.local);
     const st = normSite({ id: "src-" + (x.wd || keyOf(x.name).replace(/ /g, "-")), name: x.name, lat: x.lat, lng: x.lng, minutes: q ? 10 : min, category: cat, summary: srcSummary(x, cat, area), web: x.web, kind: "touristy", quick: q }, 0);
     Object.assign(st, { srcOnly: true, fame: x.sl || 0, unesco: !!x.unesco, heritage: !!x.heritage, src: x.src || [], local: x.local, wd: x.wd }, extra);
+    const en = enSight(x, cat); if (en) Object.assign(st, en); st.enN = 1;   // "Palazzo Zanca" is shown as "Zanca Palace", its local name beneath
     const w = srcWritten[srcWKey(city, st)]; if (w) Object.assign(st, w);
     return st;
   };
@@ -183,8 +186,11 @@ if (typeof window !== "undefined") {
     const bench = (fix.bench || []).map(n => ({ n, hit: has(n) ? has(n).name : "" }));
     const twins = all.map(s => ({ s: s.name, note: twinNote(s, c).replace(/<[^>]+>/g, "") })).filter(x => x.note);
     const noSrc = all.filter(s => s.srcOnly && !(s.src && s.src.length)).map(s => s.name);
+    // Names still in the local language: a lesser sight from the sources whose name says what it is in Italian,
+    // Spanish, French or Portuguese ("Palazzo Zanca") must be shown in English (famous names keep theirs).
+    const foreign = all.filter(s => s.srcOnly && (s.fame || 0) < EN_FAME && EN_FOREIGN.test(s.name)).map(s => s.name + (enNameOf(s.name, s.category, s.local) ? " (rules know it)" : ""));
     const why = fix.why ? fix.sources.stops.filter(x => srcVisitable(x) && (x.src || []).length >= 2).map(x => { const h = base0.find(y => sameSight(x, y) || placeRel(x, y) || placeRel(y, x)); return x.name + " -> " + (allSites(c).some(y => y.name === x.name) ? "added" : h ? (sameSight(x, h) ? "same-name " : "rel " + (placeRel(x, h) || placeRel(h, x)) + " ") + h.name : "?"); }) : [];
-    return { added, gone, why, label: lbl, before, after: { main: c.sites.filter(x => !x.quick).length, quick: c.sites.filter(x => x.quick).length, far: (c.farther || []).length }, min, dup, bench, twins, noSrc,
+    return { added, gone, why, label: lbl, before, after: { main: c.sites.filter(x => !x.quick).length, quick: c.sites.filter(x => x.quick).length, far: (c.farther || []).length }, min, dup, bench, twins, noSrc, foreign,
       far: (c.farther || []).map(x => x.name), names: c.sites.filter(x => !x.quick).map(x => x.name) };
   };
 }
