@@ -976,6 +976,11 @@ if (typeof window !== "undefined") { window.__kairouteSetHours = h => { const d 
   // Puts a pick on the day past the gate, the way an older version or a change of hours could leave one.
   window.__kairouteForcePick = id => { const d = day(); d.selected = [...(d.selected || []), id]; render(); return (d.selected || []).includes(id); }; }
 const timeKey = d => [d.hours, d.startTime].join("|");
+// The traveler is about to change the day's times: the times on screen now are what "Keep my hours" goes back to.
+// settlePicks keeps this snapshot too, but it skips its pass while a fuller guide is still loading, so a start moved
+// in that moment was missed and "Keep my hours" put back older times. While the question is open, the times from
+// before it stay the ones to go back to.
+function snapTimes(d) { if (d && !d.pendingCut) d.timeSnap = { key: timeKey(d), vals: { hours: d.hours, startTime: d.startTime } }; }
 // One notice for every change of the traveler's that would take something off the day (a shorter day, a new order of
 // stops, changing a day marked ready): it says what and why, and offers to undo (first, the safe choice) or go ahead.
 // back and ahead are [data-act, label].
@@ -6906,7 +6911,7 @@ document.addEventListener("click", e => {
   if (t.dataset.act === "bonusskip") { const d = day(); d.skipBonus = [...new Set([...(d.skipBonus || []), t.dataset.id])]; save(); render(); return; }
   if (t.dataset.act === "cutok") { const d = day(); d.cutOk = true; delete d.pendingCut; save(); render(); return; }
   if (t.dataset.act === "cutkeep") { const d = day(), c = d.pendingCut; if (c && c.prev) { d.hours = c.prev.hours; d.startTime = c.prev.startTime; } delete d.pendingCut; forget0(d); save(); render(); return; }
-  if (t.dataset.act === "daylen") { const d = day(); d.hours = +t.dataset.h; save(); render(); return; } // keeps the traveler's picks
+  if (t.dataset.act === "daylen") { const d = day(); snapTimes(d); d.hours = +t.dataset.h; save(); render(); return; } // keeps the traveler's picks
   if (t.dataset.act === "lateend") { const d = day(); d.hours = +t.dataset.h; save(); render(); return; }
   if (t.dataset.act === "earlystart") { const d = day(); d.startTime = t.dataset.v; d.hours = +t.dataset.h; save(); render(); return; }
   if (t.dataset.act === "suggestok") { suggestMsg = ""; render(); return; }
