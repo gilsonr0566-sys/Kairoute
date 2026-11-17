@@ -428,7 +428,9 @@ const log = (suite, trip, ok, what) => { results.push({ suite, trip, ok, what })
       r.sum = (await look()).sum; const m = /(\d\d):(\d\d)–(\d\d):(\d\d)\n(?:(\d+) h)?\s*(?:(\d+) min)? sightseeing/.exec(r.sum);
       r.label = !!m && (+m[5] || 0) * 60 + (+m[6] || 0) <= (+m[3] * 60 + +m[4]) - (+m[1] * 60 + +m[2]);
       const first = await pq.evaluate(i => window.__kairouteTruth(i).selected[0], D.i); r.n0 = (await look()).sel;
-      await pq.evaluate(() => window.__kairouteGuideLoading('Madrid'));
+      // The guide starts loading before this day's plan was remembered as shown (a remembered plan is replayed as it
+      // was, whatever arrives: tools/steady-check.cjs), so the new visit length below is planned with.
+      await pq.evaluate(() => { window.__kairouteSeen.clear(); window.__kairouteGuideLoading('Madrid'); });
       await pq.evaluate(([i, id]) => window.__kairouteSiteSet(i, { [id]: { minutes: 900 } }), [D.i, first]); await go(D.i); r.loading = await look();
       await pq.evaluate(() => window.__kairouteGuideLoading(null)); await go(D.i); r.after = await look();
       await pq.evaluate(() => { const x = document.querySelector('.planmore'); if (x) x.open = true; }); await pq.click('[data-act="suggesttour"]'); await pq.waitForTimeout(1500); r.sug = (await look()).sug;
