@@ -30,10 +30,10 @@ const OUT = path.join(__dirname, '..', 'checks', 'book'); fs.mkdirSync(OUT, { re
     for (const d of days.filter(d => /Athens/.test(d.dest))) {
       await p.evaluate(i => window.__kairouteAt(i, 'plan'), d.i); await p.waitForTimeout(1500);
       if (!(await p.evaluate(() => /Corinth/.test(document.querySelector('#view').innerText)))) continue;
-      let r = null; for (let k = 0; k < 90 && !(r && /Train/.test(r)); k++) { await p.waitForTimeout(1000); r = await p.evaluate(() => { const ch = [...document.querySelectorAll('#view .ridechips')].find(e => /Corinth/.test((e.closest('.row, li, div.leg, section') || e.parentElement).innerText)); return ch ? ch.innerText.replace(/\s+/g, ' ') : null; }); }
+      let r = null; for (let k = 0; k < 90 && !(r && /Train/.test(r)); k++) { await p.waitForTimeout(1000); r = await p.evaluate(() => { const ch = [...document.querySelectorAll('#view .ridechips')].find(e => /Train/.test(e.innerText)); return ch ? ch.innerText.replace(/\s+/g, ' ') : null; }); }
       console.log(name + ' Corinth ride: ' + r);
       r && /Train/.test(r) ? ok(name + ': train offered to Corinth') : bad(name + ': no train chip to Corinth: ' + r);
-      await p.evaluate(() => { const ch = [...document.querySelectorAll('#view .ridechips')].find(e => /Corinth/.test((e.closest('.row, li, div.leg, section') || e.parentElement).innerText)); if (ch) ch.scrollIntoView({ block: 'center' }); }); await p.waitForTimeout(500);
+      await p.evaluate(() => { const ch = [...document.querySelectorAll('#view .ridechips')].find(e => /Train/.test(e.innerText)); if (ch) ch.scrollIntoView({ block: 'center' }); }); await p.waitForTimeout(500);
       await p.screenshot({ path: path.join(OUT, name + '-corinth.png') });
       break;
     }
