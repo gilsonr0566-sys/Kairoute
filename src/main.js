@@ -154,6 +154,7 @@ const religiousOk = x => !isReligious(x) || x.mustSee || (!skipReligious() && (!
 function dropUnwanted() {
   let n = 0;
   trip.days.forEach(d => { const c = cityFor(d); if (!c || !Array.isArray(d.selected) || !d.selected.length) return;
+    if (d.ready && d.ready.lock) return; // a hearted day is locked: only a time change can change it
     const mine = new Set(d.mine || []), by = new Map(allSites(c).map(x => [x.id, x]));
     const keep = d.selected.filter(id => { const x = by.get(id); return !x || mine.has(id) || religiousOk(x); });
     if (keep.length < d.selected.length) { const was = selKey(d); n += d.selected.length - keep.length; d.selected = keep; readyKeep(d, was); if (d.anchor && !keep.includes(d.anchor)) d.anchor = null; } });
@@ -636,7 +637,8 @@ try { ["kairoute.transit", "kairoute.transit2"].forEach(k => localStorage.remove
 // had their own lookup, or an empty answer kept as final) is used only until a fresh one arrives: phones that planned a
 // trip earlier never keep showing an old ride (Richard's Naples day kept "Train or car" with no ferry).
 // 5: answers are looked up for the trip's own date (a summer ferry isn't on a November timetable), asked again once.
-const TRANSIT_V = 5;
+// 6: frequencies only from gaps inside one search, and the quickest ride of each kind kept (the airport bus).
+const TRANSIT_V = 6;
 const transitMem = (() => { try { return JSON.parse(localStorage.getItem(TRANSIT_KEY) || "{}"); } catch (e) { return {}; } })();
 let transitSeen = null, transitRetry = 0;
 const transitFail = new Map(), transitQ = new Map(), transitPins = new Set(); let transitTimer = 0, transitBusy = false; // pins: rides of the trip being kept for offline
@@ -814,6 +816,10 @@ if (typeof window !== "undefined") window.__kairouteRideSwitch = (i, key, val, f
 // one that still gets you there in time.
 // Departures that still get the traveler there by endBy, with the ride's own cushion for delays (the same rule on
 // the timeline and in the live countdown, so both always name the same last safe departure).
+// How often a line runs, only when it is known: from the timetable (three departures of the same line in one search)
+// or from the line's own mapped interval. A guess ("usual for this kind of line") or a gap measured across searches
+// hours apart (the Athens airport metro "every 4 h 12 min", Nov 16) is never shown: the plan still waits cautiously.
+const knownEvery = o => o && o.every > 0 && o.every <= 240 && (o.everySrc === "map" || (o.everySrc === "timetable" && o.everyN >= 2)) ? o.every : 0;
 const safeDeps = (o, endBy, slack) => (o && o.deps || []).filter(d => d.t - d.lead + d.dur + (slack || 0) <= endBy);
 function depLine(o, start, endBy, back, slack) {
   if (!o) return "";
@@ -824,15 +830,18 @@ function depLine(o, start, endBy, back, slack) {
   const when = off && seen ? ` (no signal: timetable last checked ${fmtDate(seen)})` : o.checked ? ` (timetable checked ${fmtDate(o.checked)}${later}; Kairoute checks it again the day before and the morning of)` : "";
   if (!o.deps || !o.deps.length) return o.noTimetable ? ` No published timetable found for this ${o.kind.toLowerCase()}: planned with a full gap between departures. Check the ${o.kind.toLowerCase()} timetable before you go.` : "";
   const at = start + o.access.min, nx = isFinite(start) ? o.deps.find(d => d.t >= at) : null;
-  let t = nx ? ` Next departure about ${fmt(nx.t)}${when}.` : ` Departures about every ${dur(o.every)}${when}.`;
+  const ev = knownEvery(o);
+  let t = nx ? ` Next departure about ${fmt(nx.t)}${when}.` : ev ? ` Departures about every ${dur(ev)}${when}.` : "";
   if (back && isFinite(endBy)) { const ok = safeDeps(o, endBy, slack); if (ok.length) t += ` <b>Last safe departure back: ${fmt(ok[ok.length - 1].t)}.</b>`; }
   return t;
 }
+// How to pay on a public ride, from the city's guide (only where the guide says so; nothing is assumed for other cities).
+const payNote = o => { if (!o || o.mode === "ferry") return ""; let c = null; try { c = cityFor(day()); } catch (e) {} return c && c.ridePay ? " " + esc(c.ridePay) : ""; };
 function rideDetail(leg, start, endBy) {
   if (!leg.choices) return "";
-  const o = leg.transit, ev = o ? `runs about every ${dur(o.every)}${o.everySrc === "timetable" ? " (from the timetable)" : o.everySrc === "map" ? "" : " (usual for this kind of line; check the timetable)"}` : "";
+  const o = leg.transit, ev = knownEvery(o) ? `, runs about every ${dur(o.every)}${o.everySrc === "timetable" ? " (from the timetable)" : ""}` : "";
   const ride = o && o.steps && o.steps.length ? o.steps.map(esc).join("; then ") : o ? `${dur(o.ride)} ride${o.stops ? ` (${o.stops} stops)` : ""}` : "";
-  const how = o ? `${o.access.how === "walk" ? "Walk" : "Taxi"} ${dur(o.access.min)} to ${esc(o.from || "the " + (o.mode === "ferry" ? "pier" : "station"))}, ${ev}. ${ride}, then ${o.egress.how === "walk" ? "walk" : "taxi"} ${dur(o.egress.min)}${o.to && !(o.steps && o.steps.length) ? " from " + esc(o.to) : ""}.${o.operator ? " " + esc(o.operator) + "." : ""}${o.hours ? " Hours: " + esc(o.hours) + "." : ""}${o.fare ? " Fare: " + esc(o.fare) + "." : ""} Times include waiting and boarding.` : leg.mode === "walk" ? "" : "By road, with time for traffic.";
+  const how = o ? `${o.access.how === "walk" ? "Walk" : "Taxi"} ${dur(o.access.min)} to ${esc(o.from || "the " + (o.mode === "ferry" ? "pier" : "station"))}${ev}. ${ride}, then ${o.egress.how === "walk" ? "walk" : "taxi"} ${dur(o.egress.min)}${o.to && !(o.steps && o.steps.length) ? " from " + esc(o.to) : ""}.${o.operator ? " " + esc(o.operator) + "." : ""}${o.hours ? " Hours: " + esc(o.hours) + "." : ""}${o.fare ? " Fare: " + esc(o.fare) + "." : ""} Times include waiting and boarding.${payNote(o)}` : leg.mode === "walk" ? "" : "By road, with time for traffic.";
   const fall = depLine(o, start, endBy, leg.lastMile, leg.slack) + (leg.slack ? ` Includes ${dur(leg.slack)} spare before the ship.` : "") + (leg.lastMile && o ? ` <b>If you miss it:</b> a taxi takes about ${dur(leg.road)}.` : "");
   const note = rideNotice && rideNotice.key === leg.key ? `<span class="ridenote">${rideNotice.text}${rideNotice.undo != null ? ` <button class="linkbtn" data-act="rideundo">Undo</button>` : ""}${rideNotice.force ? ` <button class="linkbtn" data-act="rideforce">${esc(rideNotice.forceText)}</button>` : ""}</span>` : "";
   // One tap per way to go, in the transport colors, each with its time (and fare when the timetable gives one).
@@ -1461,6 +1470,7 @@ function simDay(seq, t0, O, Z, style) {
     } else {
       // Opening hours: wait for it to open, and never arrive after the last entry. Then weather and rush hours.
       if (p.oh) { const f = ohFit(p.oh, clock, p.minutes); if (f.wait) { cost += f.wait * 0.6; clock += f.wait; } if (f.late) { cost += 300 + f.late * 10; late++; } }
+      { const sw = showWait(p, clock); if (sw) { cost += sw * 0.6; clock += sw; } } // a timed show: be there 10 min early
       cost += visitPenalty(p, clock, p.minutes || 0) + climateHeat(p, clock, p.minutes || 0);
       // Port days: a stop a long ride from the ship is seen early, so a late train or traffic jam on the way back
       // can never cost the ship. The farther it is and the later it would be, the more it costs.
@@ -1826,6 +1836,7 @@ function buildPlanFor(d) {
 function buildPlanForDay(d) {
   const city = cityFor(d); if (!city) return null;
   const w = dayWindow(d, city); if (w.error) return w;
+  const lockT = lockTimes(d, city, w), w0start = w.start; // the day's times as set, before any live re-plan (the heart's lock)
   liveWindow(d, w); // running late: the day re-planned from where you are now
   const style = trip.style || "mix";
   const O = w.head[w.head.length - 1], Z = w.tail[0] || null;
@@ -1859,7 +1870,7 @@ function buildPlanForDay(d) {
     });
   }
   const ck = keyOf(city.city), live = s => ({ _ck: ck, oh: siteWindow(s, d.date), cw: crowdWindows(Object.assign({ _city: ck }, s), d.date) });
-  chosen = chosen.map(s => Object.assign({}, s, { minutes: Math.round(s.minutes * mult / 5) * 5 || s.minutes }, live(s)));
+  chosen = chosen.map(s => Object.assign({}, s, { minutes: Math.max(stopFloor(s), Math.round(s.minutes * mult / 5) * 5 || s.minutes) }, live(s)));
   const mealsExpected = MEALS.filter(m => w.start < m.to - 30 && w.endBy > m.from + 45).reduce((a, m) => a + m.len, 0);
   let order = optimize(chosen, O, Z);
   const total = o => fixed + routeCost(o, O, Z) + o.reduce((a, s) => a + s.minutes, 0) + mealsExpected;
@@ -1867,7 +1878,7 @@ function buildPlanForDay(d) {
   // Long visits give a little before a pick is given up: a 3-hour town or ruin can be seen well in 2 h 15, and
   // seeing both of the day's big sights beats seeing one at full length (Pompeii and Sorrento from Naples).
   { const over = total(order) - budget, long = order.filter(s => s.minutes >= 120);
-    const room = s => s.minutes - Math.max(90, Math.round(s.minutes * 0.7 / 5) * 5), can = long.reduce((a, s) => a + room(s), 0);
+    const room = s => s.minutes - Math.max(90, stopFloor(s), Math.round(s.minutes * 0.7 / 5) * 5), can = long.reduce((a, s) => a + room(s), 0);
     if (over > 0 && can > 0) { const f = Math.min(1, (over + 10) / can);
       order = order.map(s => long.includes(s) ? Object.assign({}, s, { minutes: s.minutes - Math.round(room(s) * f / 5) * 5, shortFrom: s.minutes }) : s); } }
   while (order.length && total(order) > budget) {
@@ -1936,6 +1947,8 @@ function buildPlanForDay(d) {
   const withMeals = q => { const bare = q.filter(x => !x.mealOf); return placeMeals(bare, needMeals(bare), t0, O, ZZ, style, city); };
   const savedAvoid = avoidMeals, av = new Set(), myIdx = trip.days.indexOf(d);
   trip.days.slice(0, Math.max(0, myIdx)).forEach(o => { if (cityFor(o) !== city) return; if (!mealMemo.has(o)) { try { buildPlan(o); } catch (e) {} } (mealMemo.get(o) || []).forEach(n => av.add(n)); });
+  // A hearted day keeps its places to eat, so no other day takes them (no place is planned twice).
+  trip.days.forEach(o => { if (o === d || !o.ready || !o.ready.lock || !Array.isArray(o.ready.lock.seq) || cityFor(o) !== city) return; o.ready.lock.seq.forEach(x => { if (x.meal && x.node && !x.node.generic && !x.bk) av.add(keyOf(x.node.name)); }); if (o.ready.lock.eve) av.add(o.ready.lock.eve); });
   avoidMeals = av;
   const fitDay = () => {
   const dropped = dropped0.slice(); let seq = withMeals(order);
@@ -1966,7 +1979,7 @@ function buildPlanForDay(d) {
         seq = got.q; dropped.push(got.c); continue;
       }
       // First, long visits give 15 minutes each (down to 70% of the guide's time, never under 1 h 30).
-      const floor = x => Math.max(90, Math.round((x.shortFrom || x.minutes) * 0.7 / 5) * 5);
+      const floor = x => Math.max(90, stopFloor(x), Math.round((x.shortFrom || x.minutes) * 0.7 / 5) * 5);
       if (bare.some(x => x.minutes >= 120 && x.minutes - 15 >= floor(x))) {
         seq = seq.map(x => !x.mealOf && x.minutes >= 120 && x.minutes - 15 >= floor(x) ? Object.assign({}, x, { minutes: x.minutes - 15, shortFrom: x.shortFrom || x.minutes }) : x);
         seq = polishDay(seq, t0, O, ZZ, style, city); guard--; continue;
@@ -2018,17 +2031,25 @@ function buildPlanForDay(d) {
   // All or something: when the picks don't all fit, keep as many as possible, must-sees and famous sights
   // first, and try a quick meal before giving up a sight. Only what's truly left over is flagged.
   const worth = r => { const mine = new Set(d.mine || []); return r.seq.filter(x => !x.mealOf).reduce((a, x) => a + (x.mustSee ? 3 : 1) * (mine.has(x.id) ? 2 : 1) * fameW(x) * Math.max(20, x.minutes || 0), 0); };
-  let fitted = fitDay();
-  if (fitted.dropped.length && !d.rain) { quickMeals = true; const q = fitDay(); if (worth(q) > worth(fitted) + 1) fitted = q; else quickMeals = false; }
+  // A day marked ready is locked (Richard, Nov 16: "The heart locks things down barring a time change"): the stops,
+  // their order, the optional stops and the places to eat are the ones the traveler hearted, replayed as they were.
+  // Only a change to the day's times (ship, train or flight time, the day's hours, the hotel), or the hearted plan no
+  // longer being safe (a stop now closed, rides slow enough to miss the ship), lets the planner change it; then the
+  // plan says why (lockBroken) and the heart turns to an outline until the traveler taps it again.
+  const lk = lockReplay(d, city, w, lockT, w0start, { t0, O, ZZ, style, mult, live, tailCost, chosen, inDay, liveAte, seenOn });
+  const locked = !!(lk && lk.seq), lockBroken = lk && lk.why ? lk.why : null;
+  let fitted = locked ? { seq: lk.seq, dropped: lk.dropped } : fitDay();
+  if (!locked && fitted.dropped.length && !d.rain) { quickMeals = true; const q = fitDay(); if (worth(q) > worth(fitted) + 1) fitted = q; else quickMeals = false; }
+  if (locked) { along.length = 0; along.push(...lk.along); }
   let seq = fitted.seq; const dropped = fitted.dropped;
   // Spare time: add the best nearby sights that still fit, with a 15-minute cushion (they show as bonus stops)
-  const bonus = [];
+  const bonus = locked ? lk.bonus.slice() : [];
   // A day the traveler cleared on purpose (unticked everything) stays free: no bonus stops are pushed onto it.
   // Filling the day: must-sees first, then the best sights for this traveler (fame, their interests, their style),
   // each only where it fits on the route without doubling back and before the day's hard end (a port day's safe
   // time back to the ship). What's left is recorded for the safety net.
   let fill = null;
-  if (d.fillTime !== false && !d.rain && !clearedByYou(d)) {
+  if (!locked && d.fillTime !== false && !d.rain && !clearedByYou(d)) {
     const ints = interestWords(), likes = c => ints.reduce((a, w) => a + ((c.category + " " + c.summary).toLowerCase().includes(w) ? 1 : 0), 0);
     const taken = new Set([...Object.keys(plannedElsewhere(d)), ...leavingReserve(d, city)]);
     // A day marked ready keeps the optional stops it had; other days leave those alone.
@@ -2039,7 +2060,7 @@ function buildPlanForDay(d) {
     // An optional stop the app adds on its own must come with its story: a sight listed from the sources whose story
     // isn't written yet is offered in the sights list, never slipped into the day as an extra.
     const pool = (city.sites || []).concat(city.farther || []).filter(x => !x.quick && !(x.srcOnly && !x.guide) && religiousOk(x) && !inSeq.has(x.id) && !skip.has(x.id) && !taken.has(x.id) && !(d.skipBonus || []).includes(x.id) && !closedForDay(x, d, w) && (!d.rain || x.indoor) && (!keepBonus || keepBonus.has(x.id)))
-      .map(x => Object.assign({}, x, { minutes: Math.round(x.minutes * mult / 5) * 5 || x.minutes, bonus: true }, live(x)));
+      .map(x => Object.assign({}, x, { minutes: Math.max(stopFloor(x), Math.round(x.minutes * mult / 5) * 5 || x.minutes), bonus: true }, live(x)));
     const limit = w.endBy - 15 - tailCost(), leaving = d.type === "embark" || d.type === "departure";
     let capped = false;
     for (let n = 0; pool.length; n++) {
@@ -2080,7 +2101,7 @@ function buildPlanForDay(d) {
   // A route that already crosses nowhere is the loop: the pass is skipped (it would only redo the same search). Otherwise
   // the starting orders are weighed as they are and only the current one and the best other one are polished, so a
   // tick stays quick on a slow tablet (Nov 16 demo gate: a 1.7 s freeze with all four polished).
-  if (seq.length > 2 && !ownOrd && !mealPin && crossCount(O, seq, ZZ)) { const r0 = simDay(seq, t0, O, ZZ, style); crossOn = true; // a day the traveler put in order (or placed lunch on) keeps it
+  if (!locked && seq.length > 2 && !ownOrd && !mealPin && crossCount(O, seq, ZZ)) { const r0 = simDay(seq, t0, O, ZZ, style); crossOn = true; // a day the traveler put in order (or placed lunch on) keeps it
     try { let q = null, r = null; const sd = loopSeeds(seq, O, ZZ), rest = sd.slice(1).map(x => [x, simDay(x, t0, O, ZZ, style).cost]).sort((a, b) => a[1] - b[1]);
       for (const s0 of [sd[0]].concat(rest.length ? [rest[0][0]] : [])) { const qi = polishDay(s0, t0, O, ZZ, style, city), ri = simDay(qi, t0, O, ZZ, style); if (ri.late <= r0.late && ri.end <= Math.max(r0.end, w.endBy - tailCost()) && (!r || ri.cost < r.cost)) { q = qi; r = ri; } } if (q) seq = q; } finally { crossOn = false; } }
   bonusMemo.set(d, bonus.map(x => x.id));
@@ -2094,7 +2115,8 @@ function buildPlanForDay(d) {
     const leg = travel(prev, p);
     items.push({ type: "travel", leg, time: clock }); clock += leg.min;
     const f = type === "stop" && p.oh ? ohFit(p.oh, clock, p.minutes) : null; if (f && f.wait) clock += f.wait;
-    items.push(Object.assign({ type, place: p, time: clock }, f && (f.wait || f.late) ? { wait: f.wait, ohLate: f.late, opens: f.open, closes: f.close } : {}, extra || {})); clock += p.minutes || 0; prev = p;
+    const sw = type === "stop" ? showWait(p, clock) : 0; clock += sw;
+    items.push(Object.assign({ type, place: p, time: clock }, f && (f.wait || f.late) ? { wait: f.wait, ohLate: f.late, opens: f.open, closes: f.close } : {}, sw ? { showWait: sw } : {}, extra || {})); clock += p.minutes || 0; prev = p;
   };
   w.head.slice(1).forEach(p => go(p, "fixed"));
   const meals = [];
@@ -2135,7 +2157,8 @@ function buildPlanForDay(d) {
     const pool = (city.restaurants || []).filter(r => !r.generic && !r.crowdDrop && !mealShut(r, "Dinner") && hav(r, endAt) <= 0.8 && !avoidMeals.has(keyOf(r.name)) && !today.has(keyOf(r.name)));
     if (pool.length) {
       const sc = r => (r.crowdTop ? 4 : 0) + (r.top ? 2 : 0) + (r.recommended ? 2 : 0) + (trip.style && trip.style !== "mix" && r.kind === trip.style ? 1.5 : 0) - hav(r, endAt) * 3;
-      const main = pool.slice().sort((a, b) => sc(b) - sc(a))[0], alts = mealAlternatives(main, seq.concat(meals.map(m => Object.assign({}, m, { mealOf: MEALS[0] }))), city);
+      const kept = locked && lk.eve ? pool.find(r => keyOf(r.name) === lk.eve) : null; // a hearted day keeps its dinner place
+      const main = kept || pool.slice().sort((a, b) => sc(b) - sc(a))[0], alts = mealAlternatives(main, seq.concat(meals.map(m => Object.assign({}, m, { mealOf: MEALS[0] }))), city);
       const leg = travel(endAt, main);
       evening.push({ type: "evening", meal: MEALS[1], place: Object.assign({}, main, { alts }), time: Math.max(MEALS[1].from, clock + 30), leg, near: endAt.name });
     }
@@ -2145,7 +2168,9 @@ function buildPlanForDay(d) {
   avoidMeals = savedAvoid;
   const walkKm = items.filter(i => i.type === "travel" && i.leg.mode === "walk").reduce((a, i) => a + i.leg.km, 0);
   const stops = items.filter(i => i.type === "stop");
-  return { city, w, items, stops, dropped, elsewhere, quickMeals, along, bonus, fill, meals, evening, swaps, closedToday, start: w.start, endBy: w.endBy, end: clock, walkKm, over: clock > w.endBy + (hardEnd(d) ? 0 : 5), tight: budget < fixed + 45 };
+  const eve0 = evening.find(e => !e.booked && e.place); if (locked) quickMeals = lk.quick;
+  const lock = { t: lockT, seq: lockSeqOut(seq), late: simDay(seq, t0, O, ZZ, style).late, quick: !!quickMeals, eve: eve0 ? keyOf(eve0.place.name) : "" };
+  return { city, w, items, stops, dropped, elsewhere, quickMeals, along, bonus, fill, meals, evening, swaps, closedToday, lock, locked, lockBroken, start: w.start, endBy: w.endBy, end: clock, walkKm, over: clock > w.endBy + (hardEnd(d) ? 0 : 5), tight: budget < fixed + 45 };
 }
 
 // ---------- AI ----------
@@ -2864,6 +2889,31 @@ function nextShow(sh, t) {
   const n = t <= a ? a : a + Math.ceil((t - a) / sh.every) * sh.every;
   return n <= b ? n : null;
 }
+// A timed show (a clock's hourly procession, the changing of the guard): when no show falls during the visit, the
+// plan waits so the traveler arrives 10 min before the next one, if that is at most 30 min away (a longer wait would
+// cost the day more than the show is worth, and the stop then says when the next one is). Nov 16.
+const SHOW_EARLY = 10, SHOW_MAX_WAIT = 30;
+function showWait(p, t) {
+  const sh = p && p.show; if (!sh || !(sh.every > 0) || !isFinite(t)) return 0;
+  const n1 = nextShow(sh, t); if (n1 != null && n1 + 2 <= t + (p.minutes || 0)) return 0; // a show during the visit
+  const n = nextShow(sh, t + SHOW_EARLY); if (n == null) return 0;
+  const w = n - SHOW_EARLY - t; return w > 0 && w <= SHOW_MAX_WAIT ? w : 0;
+}
+// A stop's planned time is never shorter than its guide takes to say plus time to look around (Nov 16): the spoken
+// words (intro, the parts that are ticked, or the guide, and the wrap) at a guide's 150 words a minute, plus 5 min to
+// look around at a quick sight or 10 at any other, and 1 min to move between parts. Rounded up to 5 min.
+const TALK_WPM = 150;
+const wordsIn = t => (String(t || "").match(/\S+/g) || []).length;
+function talkMin(s) {
+  if (!s) return 0; const on = s.parts && s.parts.length ? s.parts.filter((p, k) => !(s.partsOff || []).includes(k)) : null;
+  return (wordsIn(s.intro) + wordsIn(s.wrap) + (on ? on.reduce((a, p) => a + wordsIn(p.guide), 0) : wordsIn(s.guide))) / TALK_WPM;
+}
+function stopFloor(s) {
+  if (!s || s.mealOf) return 0; const n = s.parts && s.parts.length ? s.parts.filter((p, k) => !(s.partsOff || []).includes(k)).length : 0;
+  const t = talkMin(s); if (!t) return 0;
+  return Math.ceil((t + (s.quick ? 5 : 10) + Math.max(0, n - 1)) / 5) * 5;
+}
+if (typeof window !== "undefined") window.__kairouteStopTime = { stopFloor, showWait, talkMin, short: () => { const out = []; for (const k in cities) { const c = cityFor({ destination: k }) || cities[k]; for (const s of allSites(c)) { const f = stopFloor(s); if (f > s.minutes) out.push(`${c.city}: ${s.name} ${s.minutes} -> ${f} min`); } } return [...new Set(out)]; } };
 const showWhen = sh => sh && sh.every > 0 ? (sh.every === 60 ? "every hour" : "every " + dur(sh.every)) + (sh.first && sh.last ? `, ${fmt(hhmm(sh.first))} to ${fmt(hhmm(sh.last))}` : "") : "";
 // The parts in walking order with a time for each. A part with a timed show is moved to meet the show when it
 // falls during the visit; otherwise it says when the next one is.
@@ -2883,7 +2933,7 @@ function showLine(s, start) {
   const sh = s.show; if (!sh || !sh.what) return "";
   if (!(sh.every > 0)) return `${sh.what}${sh.note ? " · " + sh.note : ""}`;
   const n = start != null ? nextShow(sh, start) : null;
-  return `${sh.what}: ${showWhen(sh)}${n != null ? (n < start + s.minutes ? ` · catch the ${fmt(n)} show during your visit` : ` · next one ${fmt(n)}, after your planned visit`) : ""}`;
+  return `${sh.what}: ${showWhen(sh)}${n != null ? (n < start + s.minutes ? (n - start >= SHOW_EARLY ? ` · be in place by ${fmt(n - SHOW_EARLY)} for the ${fmt(n)} show` : ` · catch the ${fmt(n)} show during your visit`) : ` · next one ${fmt(n)}, after your planned visit`) : ""}`;
 }
 const extrasAsked = {}, nearCache = {};
 let extrasBusy = false;
@@ -3820,6 +3870,8 @@ if (typeof window !== "undefined") window.__kairouteQuality = () => { bonusMemo 
   its.forEach(x => { if ((x.type === "meal" || x.type === "evening") && !x.place.booked) [x.place].concat(x.place.alts || []).forEach(r => { if (gBad(gOf(r))) issues.push("offers poorly rated " + r.name); }); });
   its.forEach(x => { if ((x.type === "meal" || x.type === "evening") && !x.place.booked && !x.place.generic && mealShut(x.place, (x.meal && x.meal.label) || "Dinner", d.date)) issues.push("offers " + x.place.name + " when its listed hours say it is closed"); });
   its.forEach(x => { if (x.type === "evening" && !x.booked && x.leg && x.leg.km > 1.2) issues.push("suggested dinner " + distTxt(x.leg.km) + " from where the day ends"); });
+  // A stop is long enough for its guide plus a look around; at a timed show the traveler is in place 10 min early.
+  its.forEach(x => { if (x.type !== "stop" || x.place.along) return; const fl = stopFloor(x.place); if ((x.place.minutes || 0) < fl) issues.push(`${x.place.name} gets ${dur(x.place.minutes || 0)}, its guide and a look around take ${dur(fl)}`); });
   for (let k = 0; k < pts.length; k++) for (let j = k + 2; j < pts.length; j++) if (hav(pts[j - 1], pts[j]) > 20 && hav(pts[k], pts[j]) < 10 && !(pts[k].type === "start" && pts[j].type === "end") && k !== j - 1) { issues.push("backtrack to " + pts[j].name + " area"); break; }
   its.forEach((x, k) => { if (x.type !== "meal" || x.place.booked) return; const pv = its.slice(0, k).reverse().find(y => y.place && y.type !== "travel"), nx = its.slice(k + 1).find(y => y.place && y.type !== "travel"); if (pv && nx) { const extra = tmin(pv.place, x.place) + tmin(x.place, nx.place) - tmin(pv.place, nx.place); if (extra > 25) issues.push(x.meal.label + " detour " + Math.round(extra) + " min (" + x.place.name + ")"); } });
   const names = its.filter(x => (x.type === "meal" || x.type === "evening") && !x.place.generic && !x.place.booked).map(x => keyOf(x.place.name));

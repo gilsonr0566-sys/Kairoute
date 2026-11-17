@@ -55,7 +55,7 @@ ok(!(await ferryChain(ship, { lat: 38.12, lng: 13.36 }, ways)).length, "no chang
   const worker = (await import("../worker/worker.js")).default, kv = new Map();
   const env = { USAGE: { get: async (k, t) => { const v = kv.get(k); return v == null ? null : t === "json" ? JSON.parse(v) : v; }, put: async (k, v) => { kv.set(k, v); }, delete: async k => { kv.delete(k); }, list: async ({ prefix }) => ({ keys: [...kv.keys()].filter(k => k.startsWith(prefix)).map(name => ({ name })) }) } };
   const ctx = { waitUntil: () => {} }, a = [40.852, 14.26], b = [40.6263, 14.3757];
-  kv.set("tr4:wk:" + [...a, ...b].map(n => n.toFixed(3)).join(","), JSON.stringify({ opts: [{ mode: "train", label: "Train 1 (Eav) + 1 change", min: 112 }], partial: false, t: Date.now() }));
+  kv.set("tr5:wk:" + [...a, ...b].map(n => n.toFixed(3)).join(","), JSON.stringify({ opts: [{ mode: "train", label: "Train 1 (Eav) + 1 change", min: 112 }], partial: false, t: Date.now() }));
   const ask = async () => (await (await worker.fetch(new Request("https://x/transit", { method: "POST", body: JSON.stringify({ pairs: [{ a, b, dow: 3 }] }) }), env, ctx)).json()).results[0];
   const r1 = await ask();
   ok(r1.partial === true && !r1.opts.some(o => o.mode === "ferry"), "ferries at an end not known yet: the saved answer is sent as partial (asked again soon)");
@@ -83,4 +83,23 @@ ok(!(await ferryChain(ship, { lat: 38.12, lng: 13.36 }, ways)).length, "no chang
 { const slow = { mode: "ferry", label: "Ferry via Capri", min: 210 }, quick = { mode: "ferry", label: "Ferry Napoli - Amalfi", min: 120 }, train = { mode: "train", label: "Train", min: 150 };
   ok(mergeRides([slow, train], [quick]).includes(quick), "a slow timetable ferry never hides a much quicker map ferry");
   ok(!mergeRides([{ ...quick, min: 125 }, train], [quick]).includes(quick), "a timetable ferry about as quick replaces the map's estimate"); }
+// How often a line runs is measured only inside one search (the Athens airport metro showed "every 4 h 12 min": the
+// gap from the last morning departure to the first midday one), and is stated only from three departures.
+{ const realFetch = globalThis.fetch; const at = (h, m) => `2027-06-30T${String(h).padStart(2, "0")}:${String(m).padStart(2, "0")}:00Z`;
+  const it = (h, m, mode, ref, dur) => ({ startTime: at(h, m), endTime: at(h, m + dur), duration: dur * 60, legs: [{ mode, startTime: at(h, m), duration: dur * 60, routeShortName: ref, agencyName: "OASA", from: { name: "Airport", tz: "Europe/Athens" }, to: { name: "Syntagma" } }] });
+  globalThis.fetch = async u => { const t = new URL(u).searchParams.get("time"), h = +t.slice(11, 13);
+    // each search (8:00, 12:00, 16:00): two metro departures 30 min apart, one suburban train, three X95 buses 20 min apart
+    const its = [it(h, 0, "SUBWAY", "3", 40), it(h, 30, "SUBWAY", "3", 40), it(h, 10, "SUBURBAN", "A1", 50), it(h, 2, "BUS", "X95", 65), it(h, 22, "BUS", "X95", 65), it(h, 42, "BUS", "X95", 65)];
+    return { ok: true, json: async () => ({ itineraries: its }) }; };
+  const r = await timetableOptions({ lat: 37.9364, lng: 23.9445 }, { lat: 37.9755, lng: 23.7348 }, 3, "2027-06-30");
+  const metro = r.find(o => o.mode === "metro"), bus = r.find(o => o.mode === "bus"), train = r.find(o => o.mode === "train");
+  ok(metro && metro.every === 30, `no gap spans two searches hours apart (metro: every ${metro && metro.every})`);
+  ok(train && train.everySrc === "none", `a line seen once per search never claims a frequency (train: ${train && train.everySrc})`);
+  ok(bus && bus.every === 20 && bus.everySrc === "timetable" && bus.everyN >= 2, `three departures in one search give the real frequency (bus: every ${bus && bus.every}, ${bus && bus.everySrc})`);
+  globalThis.fetch = realFetch;
+  const m = n => ({ mode: "metro", label: "Metro 3 v" + n, min: 45 + n }), x95 = { mode: "bus", label: "Bus X95", min: 70 };
+  const top = topRides([m(1), m(2), m(3), m(4), x95], 4);
+  ok(top.includes(x95), "the quickest ride of each kind stays: four metro variants never push the airport bus out");
+  const f = { mode: "ferry", label: "Ferry", min: 200 }, many = topRides([m(1), x95, { mode: "train", label: "Train", min: 50 }, { mode: "tram", label: "Tram", min: 60 }, f], 3);
+  ok(many.includes(f), "a ferry still always stays when there are more kinds than room"); }
 console.log(bad ? `${bad} ferry check(s) failed` : "ferry checks passed"); process.exit(bad ? 1 : 0);

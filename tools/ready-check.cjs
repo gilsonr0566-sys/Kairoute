@@ -50,14 +50,34 @@ const FILE = path.resolve(process.argv[2] || path.join(__dirname, '..', 'index.h
     await go('sites', other.i); const tourBtn = p.locator('[data-act="suggesttour"]').first(), btn = await tourBtn.count(); if (btn) { await tourBtn.click(); await frame(); }
     const after = await p.evaluate(i => window.__kairouteTruth(i).selected.join(), A.i), st = await p.evaluate(i => window.__kairouteReady.state(i), A.i);
     if (!btn) fail('no Suggest my tour button to test with'); else if (before !== after || st !== 'ok') fail(`Suggest my tour changed a hearted day: ${before} -> ${after} (${st})`); else ok(`Suggest my tour for ${other.dest} leaves the hearted day's sights as they were`); }
+  // 3b. The lock (Richard, Nov 16: "The heart locks things down barring a time change"): background changes leave the
+  // hearted day exactly as it was: same stops in the same order, same optional stops, same places to eat. Here the
+  // guide gains a must-see next to the day's first stop, the places to eat are re-ordered and lose their best-rated
+  // flags, and the planner is told the data changed. An unhearted copy of the day takes the new must-see (so the test
+  // is real); the hearted day doesn't.
+  await go('plan', D.i);
+  const shape = i => p.evaluate(i => window.__kairouteReady.shape(i), i);
+  const before3 = await shape(D.i);
+  const bg = await p.evaluate(i => window.__kairouteReady.newData(i), D.i);
+  await go('plan', D.i);
+  const after3 = await shape(D.i), st3 = await p.evaluate(i => window.__kairouteReady.state(i), D.i);
+  if (!bg) console.log('note the unhearted copy did not take the new must-see (day full); the lock is still compared');
+  if (before3 !== after3 || st3 !== 'ok') fail(`background changes moved a hearted day (${st3}):\n  was ${before3}\n  now ${after3}`);
+  else ok(`hearted day stays locked through new guide data and new restaurant ratings${bg ? ' (an unhearted copy took the new must-see)' : ''}: ${after3}`);
   // 4. A change the traveler didn't make (the ship leaves early): it goes in, with a note, and the heart turns to an outline
   await go('plan', D.i);
   const picks = await p.evaluate(i => window.__kairouteTruth(i).picks.length, D.i);
   await p.evaluate(i => { const d = window.__kairouteDays()[i]; window.__kairouteTime.set(i, { allAboard: '11:00' }); }, D.i); await go('plan', D.i);
-  const s4 = await R(() => ({ st: document.querySelector('.heartbtn').className, banner: [...document.querySelectorAll('.banner')].map(x => x.innerText).find(t => /marked this day ready/.test(t)) || '', chip: !!document.querySelector('.daychip[aria-pressed="true"] .dheart.changed') }));
+  const s4 = await R(() => ({ st: document.querySelector('.heartbtn').className, banner: [...document.querySelectorAll('.banner')].map(x => x.innerText).find(t => /locked day changed|marked this day ready/.test(t)) || '', chip: !!document.querySelector('.daychip[aria-pressed="true"] .dheart.changed') }));
+  const safe4 = await p.evaluate(i => { const pl = window.__kairouteReady.plan(i); return !!(pl && !pl.over); }, D.i);
   if (picks < 2) fail('test day has too few sights to show a change');
+  else if (!/all aboard is now 11:00/.test(s4.banner)) fail(`the note doesn't say what time changed: "${s4.banner}"`);
+  else if (!/pulse/.test(s4.st)) fail(`the heart didn't pulse when the lock was broken: "${s4.st}"`);
+  else if (!safe4) fail('after the ship time moved, the re-planned day runs past the time back to the ship');
   else if (!/changed/.test(s4.st) || !s4.banner || !s4.chip) fail(`after the ship time moved: heart "${s4.st}", note "${s4.banner}", outline on the day ${s4.chip}`); else ok('a change the app had to make (ship leaves earlier) shows a note and turns the heart to an outline: ' + s4.banner.split('.')[0]);
   await p.click('.banner [data-act="dayready"]'); await pressed('true');
+  const relock = await p.evaluate(i => { const pl = window.__kairouteReady.plan(i); return !!(pl && pl.lock && pl.lock.aboard === '11:00' && pl.locked); }, D.i);
+  if (!relock) fail('one tap did not lock the new plan for the new ship time'); else ok('one tap locks the new plan for the new ship time');
   if (await p.evaluate(i => window.__kairouteReady.state(i), D.i) !== 'ok') fail('Confirm did not mark the day ready again'); else ok('Confirm marks it ready again');
   // 5. The traveler's own change clears the heart, with no warning
   await p.evaluate(i => { const T = window.__kairouteTruth(i); window.__kairouteDay(i, T.selected.slice(1)); }, D.i); await go('plan', D.i);
