@@ -236,7 +236,7 @@ async function offDownload() {
     }
     // 2. Stop details (big stops split into parts) before anything is recorded, so the stories match. After the plans,
     //    rides and maps (the trip works offline without them), a few stops at a time.
-    if (!offRun.stop && typeof sample === "function" && sample) {
+    if (!offRun.stop && aiReady()) {
       const todo = [], had = new Set(); let k = 0;
       for (const d of days) { const { plan } = offPlan(d); if (!plan) continue;
         plan.items.filter(i => i.type === "stop" && !(i.place.extrasV >= EXTRAS_V) && !extrasAsked[keyOf(plan.city.city) + "|" + i.place.id] && walkWorthy(i.place, plan.city))

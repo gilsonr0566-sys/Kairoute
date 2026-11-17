@@ -20,6 +20,15 @@ const REAL_STOP = 9700;
 // small share of the same total, so a busy day of test runs can never use the travelers' allowance.
 const TEST_DAILY = 1500;
 const FREE_DAILY = KAI_DAILY, LAB_DAILY = TEST_DAILY;
+// MINIMAL AI (Richard, Nov 17 2026: "The AI wrap needs the minimal amount needed. We will use all the fancy stuff
+// when the app is ready"). Unless AI_MODE = "full" in wrangler.toml, the AI does only the jobs nothing else can do:
+//   trip  - read a traveler's own words or booking photo into days (no fixed format to read it any other way);
+//   guide - write a city's stop narration from the real places and facts the app found (made once per city, kept).
+// Everything else (walk-throughs, extras, Q&A, translation, photo "what am I looking at", lookups, ranking, voice,
+// recorder, drip, tests) is refused before the AI is reached. One hard total of MIN_DAILY a day, well under the free
+// 10,000, and every answer is kept (sp1:) so the same ask is never paid for twice.
+const MIN_DAILY = 3000, MIN_JOBS = new Set(["trip", "guide"]);
+const minimal = env => env.AI_MODE !== "full";
 const IN_RATE = 9091 / 1e6, OUT_RATE = 27273 / 1e6;
 const ALLOWED = [/^https:\/\/gilsonr0566-sys\.github\.io$/, /^https?:\/\/localhost(:\d+)?$/, /^capacitor:\/\/localhost$/, /^https?:\/\/127\.0\.0\.1(:\d+)?$/, /\.claudeusercontent\.com$/, /^https:\/\/claude\.ai$/];
 // Natural guide voice (Deepgram Aura 1): about 1,364 neurons per 1,000 characters. Each stop's audio
@@ -57,7 +66,8 @@ async function addUse(env, n, test) {
 async function limits(env, test) {
   const cap = Math.max(0, +env.MONTH_EXTRA_NEURONS || 0), u = await used(env);
   if (!aiOn(env)) return { DAILY_NEURONS: 0, MONTH_EXTRA: 0 };
-  let daily = KAI_DAILY;
+  let daily = minimal(env) ? MIN_DAILY : KAI_DAILY;
+  if (minimal(env)) return { DAILY_NEURONS: test ? 0 : daily, MONTH_EXTRA: 0 };
   if (cap) { const left = Math.max(0, cap - (+(await env.USAGE.get("x:" + month())) || 0)), d = new Date(), dim = new Date(Date.UTC(d.getUTCFullYear(), d.getUTCMonth() + 1, 0)).getUTCDate();
     daily += Math.max(0, Math.min(left, (left + Math.max(0, u - KAI_DAILY)) / (dim - d.getUTCDate() + 1))); }
   if (test) { const t = +(await env.USAGE.get("t:" + today())) || 0; daily = Math.min(daily, u + Math.max(0, TEST_DAILY - t)); }
@@ -66,7 +76,7 @@ async function limits(env, test) {
 // Live voice for travelers (Richard, Nov 17: no paid voice for now): off unless VOICE_LIVE = "1". Saved recordings
 // still play for everyone; a line not yet recorded is read by the phone's own voice. Only the recorder key (the
 // "Record stop scripts" workflow and the slow voice drip) makes new recordings, inside the same daily total.
-const voiceLive = env => aiOn(env) && env.VOICE_LIVE === "1";
+const voiceLive = env => aiOn(env) && !minimal(env) && env.VOICE_LIVE === "1";
 // MASTER SWITCH (Richard, Nov 17 2026: "Turn it totally off and do not use any without my consent."): no Workers AI
 // call of any kind (text, voice, photos, tests, recorder, drip) unless AI_ON = "1" in wrangler.toml, which is set
 // only with Richard's own go-ahead. While off, cached guides, cached scripts and saved recordings still answer, and the
@@ -115,6 +125,9 @@ export default {
     const lab = req.headers.get("x-kairoute-lab") === "1", test = lab || url.searchParams.get("auto") === "1";
     let lp = null; const lim = () => lp || (lp = limits(env, test));
     if (!aiOn(env)) env = { ...env, AI: { run: async () => { throw new Error("AI is switched off"); } } };
+    // Minimal AI: only /sample (and there only the trip and guide jobs) may reach the AI. Photos, extras, scripts,
+    // voice, the recorder and the drip all get a stand-in that refuses.
+    else if (minimal(env) && url.pathname !== "/sample") env = { ...env, AI: { run: async () => { throw new Error("Not in minimal AI"); } } };
     // Kept answers (rides, ferries, routes, guides, places) are remembered in this Worker's own memory for 10 minutes,
     // so the same page asking again (test runs ask the same trip many times) costs no storage read. Counters and
     // travelers' own data are never remembered here.
@@ -142,7 +155,7 @@ export default {
       await env.USAGE.put("r:" + today(), String(Math.round(+b.neurons)), { expirationTtl: 3 * 86400 });
       return Response.json({ ok: true, prev, on: aiOn(env), used: Math.round(await used(env)) }, { headers: h });
     }
-    if (url.pathname === "/status") { const u = await used(env), { DAILY_NEURONS } = await lim(), t = +(await env.USAGE.get("t:" + today())) || 0, left = Math.max(0, Math.floor(DAILY_NEURONS - u)); return Response.json({ ok: true, on: aiOn(env), model: MODEL, usedToday: Math.round(u), budget: Math.round(DAILY_NEURONS), left, voiceLeft: voiceLive(env) ? left : 0, labLeft: aiOn(env) ? Math.max(0, Math.floor(TEST_DAILY - t)) : 0, monthExtraUsed: Math.round(+(await env.USAGE.get("x:" + month())) || 0), monthExtraCap: (await lim()).MONTH_EXTRA, labToday: Math.round(t) }, { headers: h }); }
+    if (url.pathname === "/status") { const u = await used(env), { DAILY_NEURONS } = await lim(), t = +(await env.USAGE.get("t:" + today())) || 0, left = Math.max(0, Math.floor(DAILY_NEURONS - u)); return Response.json({ ok: true, on: aiOn(env), mode: aiOn(env) ? (minimal(env) ? "minimal" : "full") : "off", jobs: aiOn(env) && minimal(env) ? [...MIN_JOBS] : undefined, model: MODEL, usedToday: Math.round(u), budget: Math.round(DAILY_NEURONS), left, voiceLeft: voiceLive(env) ? left : 0, labLeft: aiOn(env) ? Math.max(0, Math.floor(TEST_DAILY - t)) : 0, monthExtraUsed: Math.round(+(await env.USAGE.get("x:" + month())) || 0), monthExtraCap: (await lim()).MONTH_EXTRA, labToday: Math.round(t) }, { headers: h }); }
     // Real places from OpenStreetMap, so the app never sends anyone to a place the AI made up.
     // /places: restaurants and cafés around given points. /verify: finds each named sight on the map.
     if (url.pathname === "/places" && req.method === "POST") {
@@ -726,7 +739,7 @@ Written text:
       // New recordings: only the recorder key (hand-written, locked stop scripts) or, when Richard turns it on, live
       // voice for travelers. Both inside the one daily total; nothing past it.
       const rec = !!env.REC_KEY && req.headers.get("x-kairoute-rec") === env.REC_KEY;
-      if (!(rec ? aiOn(env) : voiceLive(env) && !test) || (await used(env)) + cost > (await lim()).DAILY_NEURONS) return Response.json({ error: "voice allowance used up" }, { status: 429, headers: h });
+      if (!(rec ? aiOn(env) && !minimal(env) : voiceLive(env) && !test) || (await used(env)) + cost > (await lim()).DAILY_NEURONS) return Response.json({ error: "voice allowance used up" }, { status: 429, headers: h });
       const vUsed = +(await env.USAGE.get(vk)) || 0;
       let audio;
       try { const r = await env.AI.run(vm.id, { text, speaker, encoding: "mp3" }, { returnRawResponse: true }); if (!r.ok) throw new Error("tts " + r.status); audio = await r.arrayBuffer(); }
@@ -767,6 +780,11 @@ Written text:
     const images = (Array.isArray(body.images) ? body.images : []).filter(x => typeof x === "string" && x.startsWith("data:image/")).slice(0, 4);
     if (!prompt) return Response.json({ error: "Empty prompt" }, { status: 400, headers: h });
 
+    // Kept answers: the same ask (same job, size, prompt and photos) is answered from the store, never paid twice.
+    const job = String(body.purpose || ""), ck = "sp1:" + (await sha(JSON.stringify([job, tier, prompt, images])));
+    const kept = await env.USAGE.get(ck);
+    if (kept) { try { const k = JSON.parse(kept); return Response.json({ ...k, kept: true }, { headers: { ...h, "cache-control": "no-store" } }); } catch (e) {} }
+    if (aiOn(env) && minimal(env) && !MIN_JOBS.has(job)) return Response.json({ error: "Kairoute is saving its AI for building trips and guides for now.", minimal: true }, { status: 403, headers: h });
     const inTok = Math.ceil(prompt.length / 4) + images.length * 1200;
     const u = await used(env);
     if (u + inTok * IN_RATE + 500 > (await lim()).DAILY_NEURONS) return Response.json({ error: aiOn(env) ? "The AI allowance for today is used up. It resets at 6 pm Central time (7 pm in summer)." : "The AI guide writer is switched off for now." }, { status: 429, headers: h });
@@ -785,7 +803,7 @@ Written text:
     const finish = (ch && ch.finish_reason) || null;
     const u2 = (out && out.usage) || {};
     const pin = +u2.prompt_tokens || inTok, pout = +u2.completion_tokens || Math.ceil(text.length / 3);
-    ctx.waitUntil(addUse(env, pin * IN_RATE + pout * OUT_RATE, test));
+    ctx.waitUntil(Promise.all([addUse(env, pin * IN_RATE + pout * OUT_RATE, test), text.trim() && finish !== "length" ? env.USAGE.put(ck, JSON.stringify({ text, finish }), { expirationTtl: 60 * 86400 }) : null]));
     return Response.json({ text, finish, usage: { in: pin, out: pout } }, { headers: { ...h, "cache-control": "no-store" } });
   }
 };

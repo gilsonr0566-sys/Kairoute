@@ -424,6 +424,8 @@ async function buildNew(b, label, text, photo) {
   const ready = await p.waitForFunction(() => window.__kairouteAiReady && window.__kairouteAiReady(), null, { timeout: 90000 }).then(() => true).catch(() => false);
   if (!ok(ready, `${label}: the AI guide is on, so a new trip can be built`)) { await ctx.close(); return null; }
   await p.locator('[data-act="newtrip"]').first().click(); await p.waitForTimeout(800);
+  // Step by step is the first way to add a trip; the description / photo is the AI shortcut beside it.
+  const words = p.locator('[data-ts="mode"][data-v="words"]'); if (await words.count()) { await words.first().click(); await p.waitForTimeout(300); }
   await p.fill("#w-text", text);
   if (photo) await p.setInputFiles("#w-img", photo), await p.waitForTimeout(1500);
   await shot(p, `B-${label}-wizard`);
