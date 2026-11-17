@@ -221,6 +221,24 @@ input[type=text], input[type=date], input[type=time], input[type=number], select
 .stat { background: var(--card); border: 1px solid var(--line); border-radius: 8px; padding: 10px 12px; }
 .stat b { display: block; font-family: var(--font-display); font-size: 1.35rem; font-variant-numeric: tabular-nums; }
 .stat span { color: var(--muted); font-size: 0.8rem; }
+/* Money (src/features/money.js): tap a cost block to keep what was spent; home-currency figures beside the local ones */
+.stat.spendstat { text-align: left; font: inherit; color: inherit; cursor: pointer; display: flex; flex-direction: column; gap: 2px; min-height: 44px; }
+.stat.spendstat:hover, .stat.spendstat.open { border-color: var(--route); }
+.stat.spendstat.spent { border-color: var(--route); border-width: 2px; padding: 9px 11px; }
+.stat .fx { display: block; color: var(--ink, inherit); font-size: 0.85rem; font-weight: 600; font-variant-numeric: tabular-nums; }
+.stat .spendhint { display: block; color: var(--muted); font-size: 0.72rem; }
+.spendedit { margin-top: 10px; }
+.spendedit label { display: block; font-size: 0.85rem; margin-bottom: 6px; }
+.spendedit input { font-size: 1.15rem; font-variant-numeric: tabular-nums; }
+.fxnote { color: var(--muted); }
+.sptable { display: grid; gap: 0; margin-top: 8px; }
+.sprow { display: grid; grid-template-columns: minmax(0, 1fr) auto 4.6em auto; gap: 8px; padding: 5px 0; border-bottom: 1px solid var(--line); align-items: baseline; font-variant-numeric: tabular-nums; }
+.sprow .spamt { text-align: right; font-weight: 600; }
+.sprow .sptag { color: var(--muted); font-size: 0.75rem; }
+.sprow .fx { text-align: right; color: var(--muted); min-width: 4.2em; white-space: nowrap; }
+.sprow.spent .sptag { color: var(--route); font-weight: 600; }
+.sprow.todo { color: var(--muted); }
+.tripbudget .spacts { margin-top: 10px; }
 .mapbox { background: var(--card); border: 1px solid var(--line); border-radius: var(--r); overflow: hidden; }
 .mapbox svg { display: block; width: 100%; height: auto; }
 /* Real street map (MapLibre). The route diagram underneath shows until the map has loaded. */
@@ -1390,6 +1408,19 @@ body.psheet-on { overflow: hidden; }
   #printView .pkeys strong { font-size: 14pt; }
   #printView .pzone { font-size: 10pt; color: #56636C; margin: 4px 0 8px; }
   #printView .ptable { width: 100%; border-collapse: collapse; }
+  #printView .pspkeys { display: grid; grid-template-columns: repeat(3, 1fr); }
+  #printView .pspkeys em { display: block; font-style: normal; font-size: 9.5pt; color: #56636C; }
+  #printView .pspend { width: 100%; border-collapse: collapse; margin-top: 10px; font-variant-numeric: tabular-nums; font-size: 11pt; }
+  #printView .pspend th { text-align: right; font-size: 8.5pt; text-transform: uppercase; letter-spacing: .04em; color: #56636C; border-bottom: 1.5px solid #D8DED8; padding: 4px 6px; }
+  #printView .pspend th:nth-child(-n+2), #printView .pspend td:nth-child(-n+2) { text-align: left; }
+  #printView .pspend td { text-align: right; padding: 5px 6px; border-bottom: 1px solid #ECEFEC; white-space: nowrap; }
+  #printView .pspend tr { break-inside: avoid; }
+  #printView .pspend .pest { color: #56636C; }
+  #printView .pspend .pest i { font-size: 8pt; margin-left: 3px; }
+  #printView .pspend .pspent, #printView .pspentkey { font-weight: 800; color: #146B61; }
+  #printView .pspend .ptot { font-weight: 700; }
+  #printView .pspend .phome { font-weight: 700; color: #B9431E; }
+  #printView .pspend tfoot td { border-top: 2px solid #123C3A; border-bottom: 0; font-weight: 800; padding-top: 7px; }
   #printView .ptable th { text-align: left; font-size: 9pt; text-transform: uppercase; letter-spacing: .04em; color: #56636C; border-bottom: 1.5px solid #D8DED8; padding: 4px 6px; }
   #printView .ptable td { padding: 6px 6px; vertical-align: top; border-bottom: 1px solid #ECEFEC; }
   #printView .ptable tr { break-inside: avoid; }

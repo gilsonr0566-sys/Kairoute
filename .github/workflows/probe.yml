@@ -9,12 +9,15 @@ permissions:
 jobs:
   run:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-      - env:
-          CITIES: ${{ inputs.cities }}
-        run: node tools/probe.mjs
+      - name: Install browser
+        timeout-minutes: 8
+        run: npm i --no-save playwright@1 && npx playwright install --with-deps chromium
+      - name: Locked days and Taken off this day, on the live app file
+        timeout-minutes: 4
+        run: curl -sS https://gilsonr0566-sys.github.io/Kairoute/ -o live.html && grep -c "foldRemap" live.html && node tools/offlog-check.cjs live.html && node tools/area-check.cjs live.html
