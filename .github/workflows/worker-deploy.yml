@@ -31,3 +31,18 @@ jobs:
           sleep 15
           curl -s https://kairoute-ai.rickgilson.workers.dev/status | tee status.json; echo
           if grep -q '^AI_ON = "1"' worker/wrangler.toml; then grep -q '"on":true' status.json; else grep -q '"on":false' status.json; fi
+      - name: Live minimal-AI guards refuse before the AI (costs nothing)
+        run: |
+          H=https://kairoute-ai.rickgilson.workers.dev
+          if ! grep -q '^AI_MODE = "minimal"' worker/wrangler.toml; then echo "Not in minimal mode"; exit 0; fi
+          if grep -q '^AI_ON = "1"' worker/wrangler.toml; then
+            grep -q '"mode":"minimal"' status.json && grep -q '"budget":3000' status.json || { echo "FAIL live helper is not in minimal mode with a 3,000 cap"; exit 1; }
+          fi
+          # A job outside the minimal list, a test request and a photo ask: each must be refused, never run.
+          s1=$(curl -s -o /dev/null -w '%{http_code}' -X POST $H/sample -H 'content-type: application/json' -d '{"prompt":"Say hi in five words, live guard check '"$RANDOM"'","purpose":"walk","tier":"quick"}')
+          s2=$(curl -s -o /dev/null -w '%{http_code}' -X POST $H/sample -H 'content-type: application/json' -H 'x-kairoute-lab: 1' -d '{"prompt":"Say hi in five words, live guard check '"$RANDOM"'","purpose":"trip","tier":"quick"}')
+          s3=$(curl -s -o /dev/null -w '%{http_code}' -X POST $H/speak -H 'content-type: application/json' -d '{"text":"Hello there, live guard check."}')
+          echo "other job: $s1, test request: $s2, new voice line: $s3"
+          [ "$s1" = 403 ] || grep -q '^AI_ON = "0"' worker/wrangler.toml || { echo FAIL; exit 1; }
+          [ "$s2" != 200 ] && [ "$s3" != 200 ] || { echo "FAIL a guard let a call through"; exit 1; }
+          curl -s $H/status; echo

@@ -60,9 +60,13 @@ if (!(cl && cl.use) && getKey()) sample = webSample;
 // Free test AI: Kairoute's own Cloudflare Worker in front of Workers AI. The site finds it through ai.json.
 let freeAI = null; // { url, left, budget }
 const blobURL = b => new Promise((res, rej) => { const r = new FileReader(); r.onload = () => res(String(r.result)); r.onerror = rej; r.readAsDataURL(b); });
+// Minimal AI (the helper's mode while Kairoute is being proven): only building a trip from the traveler's words or
+// photo ("trip") and writing a city's guide ("guide") use the AI. Other asks are not sent at all; the app carries on
+// with its own text and the phone's voice.
 async function freeSample(prompt, opts = {}) {
+  if (freeAI && freeAI.mode === "minimal" && !["trip", "guide"].includes(opts.purpose)) throw new Error("Kairoute is saving its AI for building trips and guides for now.");
   const images = []; for (const b of opts.images || []) images.push(await blobURL(b));
-  const resp = await fetch(freeAI.url + "/sample", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ prompt, images, tier: opts.modelTier || "default" }) });
+  const resp = await fetch(freeAI.url + "/sample", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ prompt, images, tier: opts.modelTier || "default", purpose: opts.purpose || "" }) });
   if (!resp.ok) { let m = "The AI guide is busy. Try again in a minute."; try { m = (await resp.json()).error || m; } catch (e) {} throw new Error(m); }
   let text = "", stop = null;
   if (/json/.test(resp.headers.get("content-type") || "")) {
@@ -93,7 +97,7 @@ async function freeSample(prompt, opts = {}) {
 }
 async function refreshFreeAI() {
   if (!freeAI) return;
-  try { const st = await (await fetch(freeAI.url + "/status", { cache: "no-store" })).json(); freeAI.left = st.left; freeAI.budget = st.budget; } catch (e) {}
+  try { const st = await (await fetch(freeAI.url + "/status", { cache: "no-store" })).json(); freeAI.left = st.left; freeAI.budget = st.budget; freeAI.mode = st.mode; } catch (e) {}
 }
 async function findFreeAI() {
   if (cl && cl.use) return;
@@ -2240,7 +2244,7 @@ async function changeTrip() {
   const lines = trip.days.map(d => ["DAY", d.date, d.destination, d.type, d.mode, d.time, d.portArrive, d.allAboard, d.tender ? "yes" : "no", "", d.estimated ? "yes" : "no"].join("|")).join("\n");
   try {
     const imgs = changeImgs.map(x => x.blob);
-    const r = await sample(`Here is a traveler's trip, one day per line (DAY|date YYYY-MM-DD|destination|type|mode|time HH:MM|portArrive|allAboard|tender yes/no|lodging|estimated yes/no):\n${lines}\n\n${tx ? `What changed, in their words: "${tx}"\n` : ""}${imgs.length ? "Photos of their new or updated booking are attached; copy their dates, places and times exactly.\n" : ""}Apply the change and write the complete updated trip in the same DAY line format. A day whose times the traveler gives here or the photos show gets estimated no. Keep every day that isn't affected exactly as it is. Types: arrival, land, embark, port, sea, departure. Modes: flight, train, ship, car. On a travel day between two cities make a departure and an arrival with the same date. Only DAY lines.`, { modelTier: "complex", ...(imgs.length ? { images: imgs } : {}) });
+    const r = await sample(`Here is a traveler's trip, one day per line (DAY|date YYYY-MM-DD|destination|type|mode|time HH:MM|portArrive|allAboard|tender yes/no|lodging|estimated yes/no):\n${lines}\n\n${tx ? `What changed, in their words: "${tx}"\n` : ""}${imgs.length ? "Photos of their new or updated booking are attached; copy their dates, places and times exactly.\n" : ""}Apply the change and write the complete updated trip in the same DAY line format. A day whose times the traveler gives here or the photos show gets estimated no. Keep every day that isn't affected exactly as it is. Types: arrival, land, embark, port, sea, departure. Modes: flight, train, ship, car. On a travel day between two cities make a departure and an arrival with the same date. Only DAY lines.`, { modelTier: "complex", purpose: "trip", ...(imgs.length ? { images: imgs } : {}) });
     const days = parseDayLines(r.text || "");
     if (!days.length || r.truncated) throw new Error("short");
     const old = {}; trip.days.forEach(d => { old[d.date + "|" + keyOf(d.destination) + "|" + d.type] = d; });
@@ -2270,7 +2274,7 @@ async function fixStops() {
   busy = { text: "Adding the missing stops…" }; aiError = ""; render();
   const lines = trip.days.map(d => ["DAY", d.date, d.destination, d.type, d.mode, d.time, d.portArrive, d.allAboard, d.tender ? "yes" : "no", "", d.estimated ? "yes" : "no"].join("|")).join("\n");
   try {
-    const r = await sample(`A traveler's trip itinerary is missing stops. ${m.miss.length ? "Missing places: " + m.miss.join(", ") + ". " : ""}${m.short ? `They said the cruise has ${m.expected} ports but the list has ${m.ports}. ` : ""}${trip.sourceText ? `Their own description:\n"""${trip.sourceText}"""\n` : ""}Current itinerary, one day per line (DAY|date|destination|type|mode|time|portArrive|allAboard|tender|lodging|estimated):\n${lines}\n\nWrite the complete corrected itinerary in the same DAY line format, keeping every existing day and its details, inserting the missing stops in the right order and shifting later dates only if needed. Types: arrival, land, embark, port, sea, departure. Modes: flight, train, ship, car. Only DAY lines.`, { modelTier: "complex" });
+    const r = await sample(`A traveler's trip itinerary is missing stops. ${m.miss.length ? "Missing places: " + m.miss.join(", ") + ". " : ""}${m.short ? `They said the cruise has ${m.expected} ports but the list has ${m.ports}. ` : ""}${trip.sourceText ? `Their own description:\n"""${trip.sourceText}"""\n` : ""}Current itinerary, one day per line (DAY|date|destination|type|mode|time|portArrive|allAboard|tender|lodging|estimated):\n${lines}\n\nWrite the complete corrected itinerary in the same DAY line format, keeping every existing day and its details, inserting the missing stops in the right order and shifting later dates only if needed. Types: arrival, land, embark, port, sea, departure. Modes: flight, train, ship, car. Only DAY lines.`, { modelTier: "complex", purpose: "trip" });
     const days = parseDayLines(r.text || "");
     if (days.length < trip.days.length || r.truncated) throw new Error("short");
     const old = {}; trip.days.forEach(d => { old[d.date + "|" + keyOf(d.destination)] = d; });
@@ -2568,7 +2572,7 @@ ${P().access !== "none" ? "- The travelers need: " + ACCESS.find(a => a[0] === P
     // A saved guide no fuller than the built-in one is no upgrade: build a new one instead.
     const builtinNow = cityFor(d) && cityFor(d).builtin ? cityFor(d) : null;
     if (raw && builtinNow && (raw.sites || []).length <= (builtinNow.sites || []).length) { raw = null; fresh = true; }
-    if (!raw) raw = sample === freeSample ? await cityInParts(prompt, show, label) : parseJSON((await sample(prompt, { modelTier: "default", onText: ({ text }) => show(text.length / 260, "Writing the stories", 90) })).text);
+    if (!raw) raw = sample === freeSample ? await cityInParts(prompt, show, label) : parseJSON((await sample(prompt, { modelTier: "default", purpose: "guide", onText: ({ text }) => show(text.length / 260, "Writing the stories", 90) })).text);
     if (raw) {
       const before = JSON.stringify([raw.verified, raw.grounded, (raw.restaurants || []).length, raw.startsOk, raw.eatsV]);
       show(90, "Finding real restaurants on the map", 99);
@@ -3272,7 +3276,7 @@ async function cityInParts(prompt, show, label) {
     let last = null;
     for (let tries = 0; tries < 3; tries++) {
       let r;
-      try { r = await sample((detail ? detailPrompt : prompt) + "\n\n" + extra + tail, { modelTier: tier, onText }); }
+      try { r = await sample((detail ? detailPrompt : prompt) + "\n\n" + extra + tail, { modelTier: tier, purpose: "guide", onText }); }
       catch (e) { if (/allowance|used up/i.test(e.message || "")) throw e; last = e; continue; }
       let j = null; try { j = parseJSON(r.text || ""); } catch (e) { last = e; }
       if (ok(j) && guideInLang(j, lang)) return j;
@@ -3554,13 +3558,13 @@ Rules:
   try {
     const say = t => { if (busy) { busy.text = t; updateBusy(); } };
     const lineCount = t => (t.match(/^DAY\|/gm) || []).length;
-    let r = await sample(prompt, { modelTier: "complex", ...(imgs ? { images: imgs } : {}), onText: ({ text }) => say("Laying out your days… " + lineCount(text) + " so far") });
+    let r = await sample(prompt, { modelTier: "complex", purpose: "trip", ...(imgs ? { images: imgs } : {}), onText: ({ text }) => say("Laying out your days… " + lineCount(text) + " so far") });
     let out = r.text || "";
     // Long trips can run past one answer: keep asking for the rest until it's complete.
     for (let k = 0; k < 4 && r.truncated; k++) {
       const lines = out.split("\n").filter(l => /^DAY\|/.test(l)); const last = lines[lines.length - 1] || "";
       out = lines.slice(0, -1).join("\n") + "\n" + (out.match(/^STOPS:.*$/m) || [""])[0];
-      r = await sample(prompt + `\n\nYou already wrote these days:\n${lines.slice(0, -1).join("\n")}\nContinue with the next day after them (redo this one if incomplete: ${last}). Write only DAY lines.`, { modelTier: "complex", ...(imgs ? { images: imgs } : {}), onText: ({ text }) => say("Laying out your days… " + (lines.length - 1 + lineCount(text)) + " so far") });
+      r = await sample(prompt + `\n\nYou already wrote these days:\n${lines.slice(0, -1).join("\n")}\nContinue with the next day after them (redo this one if incomplete: ${last}). Write only DAY lines.`, { modelTier: "complex", purpose: "trip", ...(imgs ? { images: imgs } : {}), onText: ({ text }) => say("Laying out your days… " + (lines.length - 1 + lineCount(text)) + " so far") });
       out += "\n" + (r.text || "");
     }
     let days = parseDayLines(out);
@@ -3576,7 +3580,7 @@ Rules:
     const shortOf = () => want && ports + 1 < want;
     if (days.length && (miss.length || shortOf())) {
       say("Double-checking every stop…");
-      const fix = await sample(prompt + `\n\nA first draft missed ${miss.length ? "these stops: " + miss.join(", ") : ""}${miss.length && want ? " and " : ""}${want && ports < want ? `ports (it had ${ports}, the traveler said ${want})` : ""}. Here is the draft:\n${out.split("\n").filter(l => /^DAY\|/.test(l)).join("\n")}\nWrite the complete corrected list: the STOPS line, then every DAY line for the whole trip.`, { modelTier: "complex", ...(imgs ? { images: imgs } : {}) });
+      const fix = await sample(prompt + `\n\nA first draft missed ${miss.length ? "these stops: " + miss.join(", ") : ""}${miss.length && want ? " and " : ""}${want && ports < want ? `ports (it had ${ports}, the traveler said ${want})` : ""}. Here is the draft:\n${out.split("\n").filter(l => /^DAY\|/.test(l)).join("\n")}\nWrite the complete corrected list: the STOPS line, then every DAY line for the whole trip.`, { modelTier: "complex", purpose: "trip", ...(imgs ? { images: imgs } : {}) });
       const fixed = parseDayLines(fix.text || "");
       if (fixed.length >= days.length && !fix.truncated) { days = fixed; miss = missingNames(); ports = days.filter(x => x.type === "port").length; }
     }
