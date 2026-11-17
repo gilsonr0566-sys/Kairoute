@@ -68,7 +68,7 @@ function helper(r, calls) {
   const b = await chromium.launch();
   // 1. The rules.
   { const p = await b.newPage(); if (!LIVE) await p.route('**/*', r => /^file:/.test(r.request().url()) ? r.continue() : r.abort());
-    if (LIVE) { for (let k = 0; k < 50; k++) { await p.goto(LIVE + '?t=' + Date.now()); await p.waitForTimeout(3000); if (await p.evaluate(() => !!window.__kairouteTripSteps)) break; console.log('waiting for the new version to publish…'); await p.waitForTimeout(27000); } }
+    if (LIVE) { for (let k = 0; k < 110; k++) { await p.goto(LIVE + '?t=' + Date.now()); await p.waitForTimeout(3000); if (await p.evaluate(() => !!window.__kairouteTripSteps)) break; console.log('waiting for the new version to publish…'); await p.waitForTimeout(27000); } }
     else { await p.goto('file://' + FILE); await p.waitForTimeout(300); }
     for (const t of RULES) {
       const got = await p.evaluate(l => window.__kairouteTripSteps(l), t.legs);
@@ -85,7 +85,8 @@ function helper(r, calls) {
     if (LIVE) {
       p.on('request', q => { try { const u = new URL(q.url()); if (/workers\.dev$/.test(u.hostname)) calls.push(u.pathname); } catch (e) {} });
       await p.addInitScript(() => { try { localStorage.setItem('kairoute.intro1', '1'); } catch (e) {} });
-      for (let k = 0; k < 50; k++) { await p.goto(LIVE + '?t=' + Date.now()); await p.waitForTimeout(3000); if (await p.evaluate(() => !!window.__kairouteTripSteps)) break; console.log('waiting for the new version to publish…'); await p.waitForTimeout(27000); }
+      for (let k = 0; k < 110; k++) { await p.goto(LIVE + '?t=' + Date.now()); await p.waitForTimeout(3000); if (await p.evaluate(() => !!window.__kairouteTripSteps)) break; console.log('waiting for the new version to publish…'); await p.waitForTimeout(27000); }
+      if (!(await p.evaluate(() => !!window.__kairouteTripSteps))) { bad(`${tag}: the live site never got the step-by-step version`); await p.close(); continue; }
       await p.waitForFunction(() => window.__kairouteState && document.querySelector('[data-act="newtrip"]'), null, { timeout: 60000 });
       await p.waitForTimeout(4000); // the helper's status (AI on or off) arrives
     } else {
