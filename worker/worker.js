@@ -523,19 +523,21 @@ export default {
       let b; try { b = await req.json(); } catch (e) { return Response.json({ error: "Bad request" }, { status: 400, headers: h }); }
       const ids = [...new Set((Array.isArray(b.ids) ? b.ids : []).map(String).filter(x => /^Q\d+$/.test(x)))].slice(0, 20);
       const UA = { "user-agent": "Kairoute/1.0 (travel guide; https://gilsonr0566-sys.github.io/Kairoute/)" }, facts = {}, todo = [];
-      for (const id of ids) { const hit = await env.USAGE.get("fx1:" + id, "json"); if (hit) facts[id] = hit; else todo.push(id); }
+      for (const id of ids) { const hit = await env.USAGE.get("fx2:" + id, "json"); if (hit) facts[id] = hit; else todo.push(id); }
       if (todo.length) try {
         const w = await (await fetch("https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&props=sitelinks|descriptions|claims&languages=en&sitefilter=enwiki&ids=" + todo.join("|"), { headers: UA, signal: AbortSignal.timeout(10000) })).json();
         const titles = {};
         for (const id of todo) { const e = (w.entities || {})[id]; if (!e || e.missing !== undefined) continue;
           const types = ((e.claims || {}).P31 || []).map(c => c.mainsnak && c.mainsnak.datavalue && c.mainsnak.datavalue.value && c.mainsnak.datavalue.value.id).filter(Boolean).slice(0, 6);
-          facts[id] = { what: ((e.descriptions || {}).en || {}).value || "", types, text: "" };
+          // What it's part of (P361) and where it stands (P276): the Sistine Chapel in the Vatican Museums, a clock in its cathedral.
+          const ref = p => ((e.claims || {})[p] || []).map(c => c.mainsnak && c.mainsnak.datavalue && c.mainsnak.datavalue.value && c.mainsnak.datavalue.value.id).filter(Boolean).slice(0, 6);
+          facts[id] = { what: ((e.descriptions || {}).en || {}).value || "", types, text: "", partOf: ref("P361"), at: ref("P276") };
           const sl = e.sitelinks || {}; if (sl.enwiki) titles[sl.enwiki.title] = id; }
         const tl = Object.keys(titles);
         if (tl.length) { const x = await (await fetch("https://en.wikipedia.org/w/api.php?action=query&format=json&prop=extracts&exintro=1&explaintext=1&exchars=700&exlimit=20&redirects=1&titles=" + encodeURIComponent(tl.join("|")), { headers: UA, signal: AbortSignal.timeout(10000) })).json();
           const back = {}; for (const r of ((x.query || {}).normalized || []).concat((x.query || {}).redirects || [])) back[r.to] = back[r.from] || r.from;
           for (const pg of Object.values((x.query || {}).pages || {})) { const id = titles[pg.title] || titles[back[pg.title]]; if (id && facts[id]) facts[id].text = (pg.extract || "").replace(/\s+/g, " ").trim(); } }
-        for (const id of todo) if (facts[id]) ctx.waitUntil(env.USAGE.put("fx1:" + id, JSON.stringify(facts[id]), { expirationTtl: 90 * 86400 }));
+        for (const id of todo) if (facts[id]) ctx.waitUntil(env.USAGE.put("fx2:" + id, JSON.stringify(facts[id]), { expirationTtl: 90 * 86400 }));
       } catch (e) {}
       return Response.json({ facts }, { headers: h });
     }

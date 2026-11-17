@@ -289,8 +289,7 @@ function fitRefine() {
     if (el && s && !d.selected.includes(id)) el.outerHTML = siteCard(s, d, ctx.plan, ctx.near);
   } } finally { back(); }
   if (fitQueue.length) { fitTimer = setTimeout(fitRefine, 16); return; }
-  // All checked: a sight found not to fit moves down to "Won't fit today", without moving what's on screen.
-  if (document.querySelector("#view .sitesmain > .sitelist:not(.wontlist):not(.sched):not(.anchorlist) .nofitcard")) { const back = viewSpot(); renderKeep(); back(); }
+  // All checked. A sight found not to fit stays where it is, greyed (the list never moves by itself, Richard Nov 17).
 }
 if (typeof window !== "undefined") window.__kairouteFitPending = () => fitQueue.length;
 if (typeof window !== "undefined") window.__kairouteFitExact = id => { const d = day(); return fitsAll(fitTrial(d, [...d.selected, id], null, true)); };

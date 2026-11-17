@@ -53,6 +53,7 @@ jobs:
           node tools/anchor-e2e.cjs
           node tools/addplace-e2e.cjs
           node tools/text-check.cjs
+          node tools/picker-check.cjs
           node tools/extras-check.cjs index.html checks/extras
           node tools/offline-e2e.cjs
           node tools/offline-sights.cjs
