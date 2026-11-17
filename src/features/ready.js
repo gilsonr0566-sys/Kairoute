@@ -192,6 +192,9 @@ function lockReplay(d, city, w, lockT, w0start, k) {
       if (x.bk) { const b = k.inDay.find(b => b.label === x.meal); if (!b) return { why: "your table booking changed" }; m = b; node = b.node; }
       if (x.q) quick = true;
       const cur = !x.bk && node && !node.generic ? (city.restaurants || []).find(r => keyOf(r.name) === keyOf(node.name)) : null;
+      // A shown plan's place to eat that another day now has (or a sight picked on another day): planned again, so no
+      // place is planned twice.
+      if (k.soft && !x.bk && node && !node.generic && k.avoid && k.avoid.has(keyOf(node.name))) return { why: `${node.name} is now planned on another day` };
       seq.push(Object.assign({}, cur || node, { mealOf: m }));
       continue;
     }
@@ -202,7 +205,7 @@ function lockReplay(d, city, w, lockT, w0start, k) {
       const n = Object.assign({}, v, { minutes: x.min || v.minutes }); if (x.sf) n.shortFrom = x.sf; seq.push(n); continue; }
     const s = find(x.id, x.n, x.la != null ? [x.la, x.lo] : null); if (liveDone(d, x.id) || (s && liveDone(d, s.id))) continue;
     // A shown plan (soft): an optional stop that is gone or now planned on another day is left out; a pick never is.
-    if (k.soft && (x.b || x.a) && (!s || (k.seenOn && k.seenOn[s.id]) || closedForDay(s, d, w))) { const why = !s ? "not in the guide" : k.seenOn && k.seenOn[s.id] ? "now part of " + s.name + " on another day" : "closed that day"; skipped.push({ n: x.n, why }); if (typeof seenBreakLog === "function") seenBreakLog(d, `optional ${x.n} left out: ${why}`); continue; }
+    if (k.soft && (x.b || x.a) && (!s || (k.seenOn && k.seenOn[s.id]) || (k.otherDays && k.otherDays[s.id]) || (x.a && k.alongBefore && k.alongBefore.has(s.id)) || closedForDay(s, d, w))) { const why = !s ? "not in the guide" : k.seenOn && k.seenOn[s.id] ? (keyOf(s.name) === keyOf(x.n || "") ? "planned on another day" : "now part of " + s.name + " on another day") : k.otherDays && k.otherDays[s.id] ? "picked on another day" : closedForDay(s, d, w) ? "closed that day" : "already on the way another day"; skipped.push({ n: x.n, why }); if (typeof seenBreakLog === "function") seenBreakLog(d, `optional ${x.n} left out: ${why}`); continue; }
     if (!s) return { why: `${x.n || "a stop"} is no longer in the guide` };
     if (closedForDay(s, d, w)) return { why: `${s.name} is closed that day` };
     if (k.seenOn && k.seenOn[s.id]) return { why: `${s.name} is now planned on ${dayName(k.seenOn[s.id]) || "an earlier day"}` };

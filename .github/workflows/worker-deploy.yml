@@ -1,0 +1,33 @@
+name: Deploy AI helper
+# Puts a change to the AI helper (worker/) live at once, without waiting for the website's checks, so a spend
+# switch or limit takes effect within a minute. "Publish website" deploys the same code again after its checks.
+on:
+  push:
+    branches: [main]
+    paths: ["worker/**"]
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: worker-deploy
+  cancel-in-progress: false
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Helper security and spend checks (offline)
+        run: node tools/worker-check.mjs
+      - name: Deploy
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        run: cd worker && npx -y wrangler@4 deploy
+      - name: The live helper's AI switch matches wrangler.toml
+        run: |
+          sleep 15
+          curl -s https://kairoute-ai.rickgilson.workers.dev/status | tee status.json; echo
+          if grep -q '^AI_ON = "1"' worker/wrangler.toml; then grep -q '"on":true' status.json; else grep -q '"on":false' status.json; fi
