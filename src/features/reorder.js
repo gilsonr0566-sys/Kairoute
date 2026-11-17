@@ -7,10 +7,20 @@
 // A day marked ready asks first; changing it takes the heart off. "Use Kairoute's best order" goes back to the app's.
 const gripSVG = `<svg class="gripico" viewBox="0 0 24 24" aria-hidden="true"><g fill="currentColor"><circle cx="9" cy="6" r="1.7"/><circle cx="15" cy="6" r="1.7"/><circle cx="9" cy="12" r="1.7"/><circle cx="15" cy="12" r="1.7"/><circle cx="9" cy="18" r="1.7"/><circle cx="15" cy="18" r="1.7"/></g></svg>`;
 const dragHandle = s => `<button type="button" class="draghandle" data-drag="${esc(s.id)}" aria-label="Move ${esc(s.name)}: drag, or use the up and down arrow keys" title="Drag to change the order">${gripSVG}</button>`;
+// Full details or Compact (Richard, Nov 17: "It's hard to drag the stops when it's fully open"). Compact shows each
+// row's name, time and length, and the rides as one short line, with the drag handles; Full details shows everything
+// and no handles. The choice is the viewer's own and is remembered on the device.
+const TLVIEW_KEY = "kairoute.tlview";
+let tlViewMem = null;
+function tlCompact() { if (tlViewMem == null) { try { tlViewMem = localStorage.getItem(TLVIEW_KEY) === "compact"; } catch (e) { tlViewMem = false; } } return tlViewMem; }
+function setTlCompact(on) { tlViewMem = !!on; try { localStorage.setItem(TLVIEW_KEY, on ? "compact" : "full"); } catch (e) {} }
 function orderLine(d) {
-  return (Array.isArray(d.order) && d.order.length > 1) || (d.mealAt && Object.keys(d.mealAt).length)
+  const c = tlCompact(), own = (Array.isArray(d.order) && d.order.length > 1) || (d.mealAt && Object.keys(d.mealAt).length);
+  const seg = `<div class="seg tlview" role="group" aria-label="How much of the day to show"><button type="button" data-act="tlview" data-v="full" aria-pressed="${!c}">Full details</button><button type="button" data-act="tlview" data-v="compact" aria-pressed="${c}">${gripSVG}Compact</button></div>`;
+  const line = own
     ? `<p class="ordline">You set the order${d.mealAt && Object.keys(d.mealAt).length ? " and where you eat" : " of the stops"}; the times follow it. <button type="button" class="linkbtn" data-act="orderreset">Use Kairoute's best order</button></p>`
-    : `<p class="ordline hint">${gripSVG}<span>Drag a stop or lunch by its handle to change the order. Lunch moves with your route by itself.</span></p>`;
+    : c ? `<p class="ordline hint"><span>Drag a stop or lunch by its handle to change the order. Lunch moves with your route by itself.</span></p>` : "";
+  return seg + line;
 }
 const pickedOut = (d, pl) => pl && !pl.error ? (pl.dropped || []).filter(x => (d.selected || []).includes(x.id)).map(x => x.name) : [];
 // The heads-up notice (shared with the shorter-day question: askNote).
@@ -109,6 +119,11 @@ if (typeof document !== "undefined") {
   document.addEventListener("click", e => {
     const t = e.target.closest && e.target.closest("[data-act]"); if (!t) return;
     const act = t.dataset.act, d = day(); if (!d) return;
+    if (act === "tlview") { // the switch stays where it was on screen, so the day doesn't jump away from the finger
+      const y0 = t.getBoundingClientRect().top; setTlCompact(t.dataset.v === "compact"); render();
+      const b = document.querySelector(`.tlview [data-v="${t.dataset.v}"]`); if (b) { window.scrollBy(0, b.getBoundingClientRect().top - y0); b.focus({ preventScroll: true }); }
+      return;
+    }
     if (act === "orderreset") reorderStops(d, null, null);
     else if (act === "orderkeep") { delete d.pendingOrder; d.orderOk = true; save(); render(); } // what no longer fits comes off the picks, with the usual note to fit it back in
     else if (act === "orderback") { const p = d.pendingOrder; if (p && p.prev && p.prev.length > 1) d.order = p.prev; else delete d.order; if (p && p.prevMeals) d.mealAt = p.prevMeals; else delete d.mealAt; delete d.pendingOrder; save(); render(); }
