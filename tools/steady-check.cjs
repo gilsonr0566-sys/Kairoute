@@ -48,7 +48,7 @@ function compare(a, b, how) {
   for (const i of Object.keys(a)) {
     const x = a[i], y = b[i];
     if (!y) { fail(`${how}: day ${+i + 1} ${x.dest} has no plan`); n++; continue; }
-    if (x.plan !== y.plan) { fail(`${how}: day ${+i + 1} ${x.dest} plan changed\n  was: ${x.plan}\n  now: ${y.plan}`); n++; }
+    if (x.plan !== y.plan) { fail(`${how}: day ${+i + 1} ${x.dest} plan changed (${y.picks.seen ? "replayed" : "planned afresh"}${y.picks.why ? ": " + y.picks.why : ""})\n  was: ${x.plan}\n  now: ${y.plan}`); n++; }
     const gone = y.picks.gone;
     if (gone.length) { fail(`${how}: day ${+i + 1} ${x.dest}: picks taken off without a note: ${gone.join(", ")}`); n++; }
     if (y.picks.missing.length) { fail(`${how}: day ${+i + 1} ${x.dest}: picks not on the day and not explained: ${y.picks.missing.join(", ")}`); n++; }
