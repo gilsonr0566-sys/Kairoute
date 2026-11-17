@@ -250,8 +250,13 @@ async function partA(b) {
   // 2. Change stops: tick a sight, see it on the Day plan, untick it.
   const ed = days.find(d => d.type === "land") || first;
   await timed(p, "open Change stops", go("sites", ed.i), 3000); await shot(p, "A2-change-stops-tablet");
-  const pick = await p.evaluate(() => { const all = [...document.querySelectorAll("label.site:not(.on) input[data-site]")], el = all.find(x => !x.closest(".sched")) || all[0]; /* a free sight first: one scheduled on another day moves (and changes that day) */ if (!el) return null; const name = ((el.closest("label").querySelector(".name, h3, b") || {}).innerText || "").trim(); return { id: el.dataset.site, name }; });
+  // A free sight first. When the day is full (every unpicked sight greyed as won't fit), one planned on another day,
+  // never on a hearted day: ticking it there moves it off that day, which is the traveler's own change and would undo
+  // the hearted-day check below (Nov 17 gate: Jul 1 was full, the tick moved the hearted Jun 30 Acropolis).
+  const heartedNo = hearted.map(d => d.i + 1);
+  const pick = await p.evaluate(hn => { const all = [...document.querySelectorAll("label.site:not(.on) input[data-site]")], onHearted = x => { const t = ((x.closest("label").querySelector(".tag.seen") || {}).innerText || ""); const m = /Day (\d+)/.exec(t); return !!m && hn.includes(+m[1]); }, el = all.find(x => !x.closest(".sched")) || all.find(x => !onHearted(x)); if (!el) return null; const name = ((el.closest("label").querySelector(".name, h3, b") || {}).innerText || "").trim(); return { id: el.dataset.site, name }; }, heartedNo);
   if (ok(!!pick, `Change stops lists sights to add on day ${ed.i + 1}`)) {
+    log(`     tick diag: ${JSON.stringify(await p.evaluate(([id, i]) => { const el = document.getElementById("s-" + id), lab = el && el.closest("label"), list = lab && lab.closest(".sitelist, .mustlist, details, .wontlist"); const D = window.__kairouteDays(); const sel = D.filter(x => x.dest === D[i].dest).map(x => { let s = []; try { s = (window.__kairouteTruth(x.i).selected || []); } catch (e) {} return x.i + ":" + s.join(","); }); let ew = null; try { ew = window.__kairouteTruth(i).elsewhere; } catch (e) {} return { id, cls: lab && lab.className, sec: list && list.className, tag: lab && ((lab.querySelector(".tag.seen") || {}).innerText || ""), sel, ew: ew && JSON.stringify(ew).slice(0, 600) }; }, [pick.id, ed.i]))}`);
     const before = (await S()).days[ed.i].picks, selOf = i => p.evaluate(i => { const T = window.__kairouteTruth(i); return (T.selected || []).join(", "); }, ed.i), sel0 = await selOf();
     const pk0 = (await S()).days.map(x => x.picks);
     await p.evaluate(() => { window.__lt = []; }); const tc = Date.now();
