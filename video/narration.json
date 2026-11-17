@@ -1,0 +1,77 @@
+[
+ {
+  "id": "s01",
+  "title": "Hook",
+  "text": "Every traveler knows the feeling. You finally reach somewhere amazing, and you spend half the day staring at a map, guessing what's worth seeing, and paying for tours you don't really need. Kairoute changes that. It's a personal guide, right beside you, for any trip you take."
+ },
+ {
+  "id": "s02",
+  "title": "Plan in plain words",
+  "text": "Planning starts in plain words. Tell Kairoute about your trip, the way you'd tell a friend. A long weekend in Prague. A week in Rome. Flights, trains, hotels, or a cruise. You can even snap a photo of your itinerary. Kairoute reads it and builds every day of the trip, on the right dates, in the right cities."
+ },
+ {
+  "id": "s03",
+  "title": "One trip, every kind of travel",
+  "text": "Here's a real three-week trip. Four days in Athens. An eleven-night Mediterranean cruise. Then Barcelona, and on to Madrid by train. One trip, three kinds of travel, all in one place. Each day knows how you arrive, where you're staying, and how many hours you want to sightsee. A light day, a half day, or a full day. You choose."
+ },
+ {
+  "id": "s04",
+  "title": "A real plan for every day",
+  "text": "Open any day, and you get a real plan. Kairoute picks the sights, then puts them in the best order. Far places first. Walks kept short. Breaks and meals at the right time, at real, well-rated restaurants along your route, never the same one twice. It checks opening hours, so you don't arrive at a closed door. The timeline shows when to arrive and when to leave each stop, and the map draws your whole day."
+ },
+ {
+  "id": "s05",
+  "title": "Your interests, your picks",
+  "text": "Want something different? Tap Change stops. Every sight is labeled, and the things you care about, like history, faith, art or food, stand out. Sights that fit your day come first. The ones that won't fit are dimmed, so you never build an impossible day. Kairoute even suggests how many days a city deserves. Pick what you love, and the plan rebuilds in a moment."
+ },
+ {
+  "id": "s06",
+  "title": "Drag, heart, lock",
+  "text": "Prefer your own order? Drag a stop to where you want it. Switch to the compact view to see the whole day at a glance. And when a day is just right, tap the heart. Mark day ready locks it in place: the same stops, the same order, the same places to eat. Nothing moves unless you move it."
+ },
+ {
+  "id": "s07",
+  "title": "Getting around",
+  "text": "Getting around is built in. Every leg of the day has ride buttons. Walk, bus, metro, train, ferry, or taxi. Tap one, and the times update. Directions are short, clear, and in plain English, with local times for wherever you are."
+ },
+ {
+  "id": "s08",
+  "title": "Made for cruise port days",
+  "text": "Now, here's where Kairoute really shines. Cruises. Port days are short, and the ship won't wait. So Kairoute plans every port day around your all aboard time. Far stops go first. Ride times are cautious, with a buffer built in. And one clock says it all. Leave by. Head back at that time, and you have room to spare. Your ship time stays pinned at the top, wherever you are in the app. Thinking about the ship's own excursion? Type in its price, and Kairoute shows what you keep in your pocket by seeing the same port on your own."
+ },
+ {
+  "id": "s09",
+  "title": "Boarding day and sea days",
+  "text": "Boarding day? Kairoute asks for your boarding time, fits in a little sightseeing near the port, gets you to the terminal early, keeps a checklist of what to carry, and adds reminders to your calendar. And sea days aren't wasted. Kairoute turns them into a head start on the ports ahead. The story of your next stop, what to look for, a few local words, money and manners, and a quick spoken briefing."
+ },
+ {
+  "id": "s10",
+  "title": "Your guide at every stop",
+  "text": "Then comes the best part. When you reach a stop, Kairoute becomes your guide. It tells you where to stand, what to look at, and the story behind it, in a warm, natural voice. Here's a taste, from the astronomical clock in Prague."
+ },
+ {
+  "id": "s11",
+  "title": "Guide clip",
+  "clip": "audio/prague-clock/p0-0.mp3"
+ },
+ {
+  "id": "s12",
+  "title": "Guide value",
+  "text": "That's a private tour guide's experience, without the private tour price. And you go at your own pace."
+ },
+ {
+  "id": "s13",
+  "title": "Offline and print",
+  "text": "Kairoute works offline, too. Download your trip on Wi-Fi, before the ship sails or the plane takes off, and your plans and guides go with you. Prefer paper? Print the whole trip, or just one day, as a clean PDF."
+ },
+ {
+  "id": "s14",
+  "title": "Tablet and phone",
+  "text": "It's designed for the tablet, and it fits your phone just as well. Start planning on one, pick up on the other. And the journal keeps the memories of every day, your notes and favorite stops, so you can relive the trip when you get home."
+ },
+ {
+  "id": "s15",
+  "title": "Close",
+  "text": "Kairoute saves you time, saves you money on tours, and helps you see more of every place you visit. A city break, a rail journey, a road trip, or a cruise. Your vacation, your way. Kairoute. A trip to remember."
+ }
+]
