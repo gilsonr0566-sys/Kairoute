@@ -30,10 +30,10 @@ for (const [name, p] of pairs) {
 // (which member types and roles), to see why a line isn't matched.
 if (process.env.RAILDUMP) for (const p of process.env.RAILDUMP.split(";")) {
   const q = `[out:json][timeout:60];(node(around:3000,${p})[railway~"^(station|halt|stop)$"];node(around:3000,${p})[public_transport=stop_position];way(around:3000,${p})[railway=platform];)->.s;.s out tags 20;rel(bn.s)[type=route];out tags;rel(bw.s)[type=route];out tags;`;
-  for (const ep of ["https://overpass-api.de/api/interpreter", "https://maps.mail.ru/osm/tools/overpass/api/interpreter", "https://overpass.private.coffee/api/interpreter"]) {
-    try { const r = await fetch(ep, { method: "POST", body: "data=" + encodeURIComponent(q), headers: { "content-type": "application/x-www-form-urlencoded" }, signal: AbortSignal.timeout(90000) }); if (!r.ok) { console.log(`  ${ep.split("/")[2]} ${r.status}`); continue; }
+  for (const ep of ["https://overpass-api.de/api/interpreter", "https://maps.mail.ru/osm/tools/overpass/api/interpreter", "https://overpass.private.coffee/api/interpreter", "https://overpass.kumi.systems/api/interpreter"]) {
+    try { const r = await fetch(ep, { method: "POST", body: "data=" + encodeURIComponent(q), headers: { "content-type": "application/x-www-form-urlencoded", accept: "application/json", "user-agent": "Kairoute/1.0 (travel guide; https://gilsonr0566-sys.github.io/Kairoute/)" }, signal: AbortSignal.timeout(90000) }); if (!r.ok) { console.log(`  ${ep.split("/")[2]} ${r.status}`); continue; }
       const d = await r.json(); console.log(`\n== rail near ${p} (${ep.split("/")[2]})${d.remark ? " REMARK " + d.remark.slice(0, 80) : ""}`);
       for (const e of d.elements || []) console.log(`  ${e.type}/${e.id} ${JSON.stringify(e.tags || {}).slice(0, 230)}`);
-      break; } catch (e) { console.log(`  ${ep.split("/")[2]} ${e.name}`); }
+      if ((d.elements || []).length) break; } catch (e) { console.log(`  ${ep.split("/")[2]} ${e.name}`); }
   }
 }
