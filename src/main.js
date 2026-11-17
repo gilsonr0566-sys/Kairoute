@@ -1764,7 +1764,7 @@ const citiesSig = () => { let n = 0; for (const k in cities) { const c = cities[
 function planKey(d) {
   const i = trip.days.indexOf(d), a = trip.active;
   let t; try { trip.active = 0; t = JSON.stringify(trip); } finally { trip.active = a; } // which day is on screen never changes a plan
-  return t + "|" + i + "|" + (i < 0 ? JSON.stringify(d) : "") + "|" + ridePref + "|" + skipEvening + "|" + [...avoidMeals].join(",") + "|" + (Object.keys(transitMem).length ? 1 : 0); // the answers themselves are checked per plan (dayFp)
+  return t + "|" + i + "|" + (i < 0 ? JSON.stringify(d) : "") + "|" + ridePref + "|" + skipEvening + "|" + [...avoidMeals].join(",") + "|" + (Object.keys(transitMem).length ? 1 : 0) + "|" + seenSig(); // the answers themselves are checked per plan (dayFp)
 }
 // What a day's plan was made from, as a short fingerprint: its city's guide (sights, places to eat, marks from the
 // sources and ratings, all kept on the city), the ratings on file for its places to eat, the day's weather and the
@@ -2044,7 +2044,11 @@ function buildPlanForDay(d) {
   // Only a change to the day's times (ship, train or flight time, the day's hours, the hotel), or the hearted plan no
   // longer being safe (a stop now closed, rides slow enough to miss the ship), lets the planner change it; then the
   // plan says why (lockBroken) and the heart turns to an outline until the traveler taps it again.
-  const lk = lockReplay(d, city, w, lockT, w0start, { t0, O, ZZ, style, mult, live, tailCost, chosen, inDay, liveAte, seenOn });
+  const lkArgs = { t0, O, ZZ, style, mult, live, tailCost, chosen, inDay, liveAte, seenOn };
+  let lk = lockReplay(d, city, w, lockT, w0start, lkArgs);
+  // No internet: a day not hearted replays the plan last shown for it online (seen-plan.js), so it never comes out
+  // different offline. When that plan no longer holds (a change, a safety limit), the day is planned as usual.
+  if (!lk) { const sv = seenFor(d); if (sv) { const dd = Object.create(d); dd.ready = { sel: sv.sel, lock: sv.lock }; const r = lockReplay(dd, city, w, lockT, w0start, lkArgs); if (r && r.seq) lk = r; } }
   const locked = !!(lk && lk.seq), lockBroken = lk && lk.why ? lk.why : null;
   let fitted = locked ? { seq: lk.seq, dropped: lk.dropped } : fitDay();
   if (!locked && fitted.dropped.length && !d.rain) { quickMeals = true; const q = fitDay(); if (worth(q) > worth(fitted) + 1) fitted = q; else quickMeals = false; }
@@ -4627,7 +4631,7 @@ function render() {
     paneMemo.same = paneMemo.key === pkey; paneMemo.key = pkey; }
   { const old = document.querySelector(".coach"); if (old) old.remove(); const ch = coachHTML(); if (ch) document.body.insertAdjacentHTML("beforeend", ch); }
   if (askNotice && !FULL_VIEWS[view]) { const v = document.getElementById("view"); if (v) v.insertAdjacentHTML("afterbegin", `<p class="banner ok" role="status">${esc(askNotice)} <button class="linkbtn" data-act="asknoticeok">OK</button></p>`); }
-  mountMaps(); liveAfterRender(); offAfterRender();
+  mountMaps(); liveAfterRender(); offAfterRender(); seenAfterRender();
   if (openMenus.length && paneMemo.same) document.querySelectorAll("#view details.moremenu").forEach(el => { if (openMenus.includes(menuKey(el))) { el.open = true; try { placeMenu(el); } catch (e) {} } });
   if (openFolds.size) document.querySelectorAll("#view details").forEach(el => { const sm = el.querySelector("summary"); if (sm && openFolds.has(view + "|" + sm.textContent.trim())) el.open = true; });
   // A re-render of the same screen (live updates, sync, data arriving) never moves what you're looking at:
@@ -5347,7 +5351,7 @@ function memWrap(c, text, x, y, maxW, lh, maxLines) {
   lines.forEach((l, i) => c.fillText(l, x, y + i * lh)); return lines.length * lh;
 }
 function memDraw(c, s, t, dur, idx, logos, font) {
-  const W = MEM_W, H = MEM_H, ink = "#123C3A", meal = "#D9532A";
+  const W = MEM_W, H = MEM_H, ink = "#123C3A", meal = "#B9431E";
   c.save(); c.textBaseline = "alphabetic"; c.textAlign = "left";
   if (s.img) {
     const z = 1 + 0.09 * (t / dur), iw = s.img.naturalWidth || s.img.width, ih = s.img.naturalHeight || s.img.height, sc = Math.max(W / iw, H / ih) * z;
