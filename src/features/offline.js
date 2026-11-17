@@ -86,7 +86,7 @@ async function offScriptFiles(d, plan, fromCache) {
     if (!sc || seen.has(sc.id)) continue; seen.add(sc.id);
     const mu = new URL(`audio/${sc.id}/manifest.json`, location.href).href; let man = null;
     try { const r = fromCache ? await caches.match(mu) : await fetch(mu, { cache: "no-cache" }); man = r && r.ok ? await r.json() : null; } catch (e) {}
-    if (!man) { if (fromCache) urls.push(mu); continue; }
+    if (!man) continue; // nothing recorded yet (or not known on this device): the device voice reads it
     sc.parts.forEach((p, k) => p.paras.forEach((x, i) => { if (man[`p${k}-${i}`]) urls.push(new URL(scriptAudio(sc, k, i), location.href).href); }));
   }
   return urls;

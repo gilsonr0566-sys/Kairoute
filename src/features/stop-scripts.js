@@ -8,7 +8,8 @@
 const SAY = [[/\borloj\b/gi, "orloy"], [/Mikuláš of Kadaň/g, "Mikulash of Kadan"], [/Jan Šindel/g, "Yan Shindel"], [/Šindel/g, "Shindel"],
   [/Hanuš/g, "Hanush"], [/Jan Růže/g, "Yan Roozheh"], [/Zdeněk Horský/g, "Zdenyek Horskee"], [/Vojtěch Sucharda/g, "Voytyekh Sookharda"],
   [/Josef Mánes/g, "Yosef Mahness"], [/Mánes/g, "Mahness"], [/Alois Jirásek/g, "Alois Yirahsek"], [/Jan Hus\b/g, "Yan Hooss"], [/\bHus\b/g, "Hooss"], [/Týn/g, "Teen"],
-  [/Agios Titos/g, "Ah-yos Tee-tos"], [/Nikephoros Phokas/g, "Nikiforos Fokas"], [/Chandax/g, "Handax"], [/Athanasios Moussis/g, "Athanasios Moussees"], [/Gortyn/g, "Gortin"]];
+  [/Agios Titos/g, "Ah-yos Tee-tos"], [/Nikephoros Phokas/g, "Nikiforos Fokas"], [/Chandax/g, "Handax"], [/Athanasios Moussis/g, "Athanasios Moussees"], [/Gortyn/g, "Gortin"],
+  [/Propylaia/g, "Propy-lay-ah"], [/Erechtheion/g, "Erek-thee-on"], [/Mnesikles/g, "Mnee-sih-kleez"], [/Iktinos/g, "Ik-tee-nos"], [/Kallikrates/g, "Kal-lick-ra-teez"], [/Pheidias/g, "Fye-dee-as"], [/Pentelikon/g, "Pen-tell-ih-kon"], [/Panagia Atheniotissa/g, "Panah-yee-ah Athee-nee-oh-tissa"], [/Peirene/g, "Pie-ree-nee"], [/Lechaion/g, "Leh-kay-on"], [/\bbema\b/g, "beema"], [/Achaea/g, "Ah-kee-ah"]];
 const sayText = t => SAY.reduce((a, [re, to]) => a.replace(re, to), String(t));
 var STOP_SCRIPTS = [{ // var: cityFor can run while main.js is still starting, before this file has run
   id: "prague-clock", v: 1, title: "Prague Astronomical Clock", where: "Old Town Square, Prague",
@@ -194,6 +195,177 @@ var STOP_SCRIPTS = [{ // var: cityFor can run while main.js is still starting, b
         "So think about it for a moment. Two thousand years ago, a tentmaker from Tarsus wrote a short letter to a Greek friend he'd left on this island, telling him to set things in order. That letter is still read aloud in churches all over the world, every week.",
         "And the church named for that friend was burned, shaken to the ground, turned into a mosque, rebuilt, and given back. His relic was carried away and, three centuries later, carried home.",
         "Empires came and went across this square. The faith Titus was sent here to plant outlasted every one of them. Some things, it turns out, find their way home."
+      ]
+    }
+  ]
+}, {
+  id: "athens-acropolis", v: 1, title: "The Acropolis and the Parthenon", where: "Acropolis, Athens",
+  city: /\b(athens|athina|athen)\b/i, site: /^(the )?(acropolis|parthenon)\b(?!\s*(museum|promenade))/i,
+  parts: [
+    {
+      "name": "Arrival: where to stand",
+      "minutes": 3,
+      "stand": "Just past the ticket gate at the west entrance, before the marble steps begin. Step to the side of the path, out of the stream of people, where you can look up at the big gateway of columns ahead and the small temple on its bastion to the right.",
+      "paras": [
+        "Here we are, at the foot of the most famous hill in Europe. Acropolis just means the high city, and for thousands of years this rock was the heart of Athens: its fortress, its treasury and, above all, its holy ground.",
+        "Everything you're about to see up top was built in one burst of confidence in the four hundreds BC. In 480 BC the Persian army had captured Athens and burned the temples on this hill. A generation later, under the statesman Pericles, the Athenians rebuilt it all, bigger and finer than before.",
+        "Two practical things before we climb. The marble on this hill has been polished by millions of feet, and it's slippery, even when it's dry. Take the steps slowly and hold the rail where there is one. And there's almost no shade up there, so have a sip of water now and keep your hat on.",
+        "Right. Let's walk up through the front door of the ancient city."
+      ]
+    },
+    {
+      "name": "The gateway and the little temple of Victory",
+      "minutes": 4,
+      "stand": "the gateway of columns, the Propylaia, and the small temple on the bastion to your right.",
+      "paras": [
+        "This great gateway is the Propylaia. It was designed by the architect Mnesikles and built from 437 to 432 BC. Every procession in honour of Athena came through here, the way you're coming through now.",
+        "Here's something most people walk straight past. The Propylaia was never finished. If you look closely at some of the outer walls, you can still see knobs of stone left sticking out, the lifting bosses that builders used to haul and set the blocks. Normally they were chiselled off at the end. Here, the work simply stopped in 432 BC, and nobody's sure exactly why. Cost, war, arguments about the sacred ground, maybe all three.",
+        "Now look to your right, at the little temple perched on its own bastion. That's the Temple of Athena Nike, Athena of Victory, by the architect Kallikrates, finished around 420 BC. It's small, but it stands right at the edge, so anyone coming up the hill saw victory first.",
+        "It's often wrapped in scaffolding or closed. Restoring this hill never really stops. Let's go on through the gateway."
+      ]
+    },
+    {
+      "name": "The Parthenon: a building with no straight lines",
+      "minutes": 5,
+      "stand": "On the open rock just past the gateway, a little to the left, where you see the west end of the Parthenon at an angle.",
+      "paras": [
+        "And there it is. The Parthenon, the temple of Athena Parthenos, Athena the Maiden, patron of this city.",
+        "It went up fast. The building was raised between 447 and 438 BC, and its sculptures were finished by about 432. The architects were Iktinos and Kallikrates, and the great sculptor Pheidias oversaw all the carving. The marble is Pentelic marble, quarried on Mount Pentelikon, the mountain you can see on the skyline to the northeast on a clear day.",
+        "Now here's the secret of this building. It looks perfectly straight, but almost nothing in it is. The platform the columns stand on rises gently towards the middle, about ten centimetres over seventy metres, so it doesn't look as if it sags. The columns swell very slightly as they rise, and they lean a little inward.",
+        "Crouch down at the corner of the platform, if the ropes allow, and sight along the edge. You may just catch that gentle curve. The builders bent the stone so that your eye would see it straight. Two and a half thousand years later, it still works on us."
+      ]
+    },
+    {
+      "name": "What stood inside",
+      "minutes": 4,
+      "stand": "the long side of the Parthenon, looking at the gap between the columns.",
+      "paras": [
+        "Picture this building whole. Inside stood a colossal statue of Athena by Pheidias, made of gold and ivory. The historian Thucydides records that it carried forty talents of pure gold, and the Athenians thought of that gold as a reserve the city could draw on if it ever had to. The statue itself is long gone. We know it only from smaller ancient copies.",
+        "Up under the roof ran a carved frieze of a great procession of riders, musicians and people bringing offerings to the goddess. The sculptures at the west end showed Athena and Poseidon competing to be the patron of the city.",
+        "Many of those sculptures are no longer here. In the early 1800s, agents of the British ambassador, Lord Elgin, took down a large share of them and shipped them to England. They're in the British Museum today, and Greece has asked for many years for them to come home.",
+        "What survives here in Athens is kept in the Acropolis Museum, at the foot of this hill. If you're going there, look for the frieze laid out at the same height and in the same order as it ran around this building."
+      ]
+    },
+    {
+      "name": "The Parthenon's other lives",
+      "minutes": 4,
+      "stand": "the middle of the Parthenon's long side, where the columns are missing.",
+      "paras": [
+        "Here's a part of the story most visitors never hear. The Parthenon wasn't a pagan temple for most of its life.",
+        "By the end of the five hundreds AD it had become a Christian church, dedicated to the Virgin Mary. Later it was known as the church of the Panagia Atheniotissa, Our Lady of Athens, and for a time it was the city's cathedral. Christians worshipped under this roof for close to nine hundred years.",
+        "Then the rulers changed. Crusader lords held Athens from 1204, and the Ottomans took the city in the 1450s. Within a few decades the building had been turned into a mosque.",
+        "Now look at this gap in the middle. On the twenty-sixth of September 1687, a Venetian army under Francesco Morosini was bombarding the hill. The Ottoman garrison was storing gunpowder inside the Parthenon. A shell hit, the powder exploded, and the middle of the building was blown apart. What you're looking at is the scar of that one afternoon.",
+        "The cranes and the scaffolding you see belong to Greece's restoration team, working here since 1975, putting back fallen marble block by block, and filling gaps with new marble from the same mountain. That's the lighter stone."
+      ]
+    },
+    {
+      "name": "The Erechtheion and the Maidens",
+      "minutes": 4,
+      "stand": "Across the rock to the north side, facing the porch held up by six statues of young women.",
+      "paras": [
+        "Now walk across to this smaller, stranger temple. It's the Erechtheion, built in the last decades of the four hundreds BC. It sits on uneven ground, so it has levels and porches on different sides, and it held some of the oldest, holiest places on the hill.",
+        "And here are the Maidens, the Caryatids. Six young women carrying the roof on their heads, as calmly as if they were carrying water jars. The figures you see are copies. The originals were moved indoors to protect them. Five are in the Acropolis Museum, and the sixth was taken to London with Lord Elgin's collection.",
+        "This is also where the Athenians placed their founding legend. As the story goes, Athena and Poseidon competed for the city. Poseidon struck the rock with his trident and brought up salt water. Athena gave an olive tree. The people chose the olive, and the city took her name.",
+        "It's a legend, not history, but the Athenians took it seriously. The precinct beside this temple held the sacred olive of Athena, and marks in the rock under the north porch were pointed to as the strike of Poseidon's trident. Look for the olive tree growing beside the temple today. It was planted in modern times, standing in for the one in the story."
+      ]
+    },
+    {
+      "name": "The view, and the hill where Paul spoke",
+      "minutes": 3,
+      "stand": "At the railing on the northwest edge of the rock, looking down towards the bare rocky hill just below the entrance.",
+      "paras": [
+        "Come to the edge here and look down. That low, bare, rocky hill just below the entrance, the one with people standing on top, is the Areopagus. In English Bibles it's called Mars' hill.",
+        "In the first century AD, the apostle Paul stood there and spoke to the people of Athens. The book of Acts, chapter seventeen, records his opening words in the King James Version: \"Ye men of Athens, I perceive that in all things ye are too superstitious. For as I passed by, and beheld your devotions, I found an altar with this inscription, TO THE UNKNOWN GOD.\"",
+        "Think of what he could see while he spoke. He would have been looking up at this hill, at the Parthenon, gleaming and complete, with its golden goddess inside. And he told them that the God who made the world doesn't live in temples made with hands.",
+        "For a photo, step back from the rail and catch the Parthenon at an angle from its western corner. You get the depth of the columns and that gentle curve all in one frame."
+      ]
+    },
+    {
+      "name": "Closing",
+      "minutes": 2,
+      "stand": "Back on the path down, before the gateway.",
+      "paras": [
+        "Before you head down, take one last look back at the Parthenon.",
+        "It's been a temple, a treasury, a church of the Virgin Mary, a cathedral, a mosque and a gunpowder store. It's been blown apart, carried off in pieces, and patiently put back together by people who will never see the job finished.",
+        "The people who built it thought they were building for their goddess. The people who prayed in it for close to nine hundred years thought it belonged to Christ. Every generation has found something worth saving in it. And now, for a few minutes, it was yours.",
+        "Take the steps down slowly. Mars' hill, where Paul spoke, is just a few minutes' walk below the entrance."
+      ]
+    }
+  ]
+}, {
+  id: "ancient-corinth", v: 1, title: "Ancient Corinth", where: "Ancient Corinth, Peloponnese",
+  city: /\b(athens|athina|athen|corinth|korinthos|korinth)\b/i, site: /^(ancient|old|archaia) corinth\b/i,
+  parts: [
+    {
+      "name": "Arrival: where to stand",
+      "minutes": 3,
+      "stand": "On the low hill beside the Temple of Apollo, the seven tall stone columns, just inside the site. Face the columns, with the wide open ruins of the Roman forum below you and the huge rock of Acrocorinth rising behind.",
+      "paras": [
+        "Here we are in Ancient Corinth. Look up first, at that enormous rock behind the town. That's Acrocorinth, the citadel of Corinth, and people held it as a fortress for well over two thousand years.",
+        "Corinth sat on the narrow neck of land between mainland Greece and the Peloponnese, with a port on each sea, and that made it one of the richest cities in the Greek world.",
+        "But the Corinth Saint Paul walked into wasn't that old Greek city. In 146 BC a Roman army under Lucius Mummius captured it and burned it. For about a century it lay mostly empty. Then, in 44 BC, Julius Caesar refounded it as a Roman colony, and it became the capital of the Roman province of Achaea.",
+        "So the ruins below you are mostly a Roman city: busy, mixed, ambitious and new. Paul came to this city to preach, and stayed a year and a half. Let's start with the oldest thing still standing."
+      ]
+    },
+    {
+      "name": "The Temple of Apollo",
+      "minutes": 3,
+      "stand": "the seven columns of the Temple of Apollo.",
+      "paras": [
+        "These seven columns belong to the Temple of Apollo, a Doric temple built around 540 BC. They're older than the Parthenon in Athens by about a century.",
+        "Look closely at one column. No drums stacked on top of each other, the way most Greek columns are built. Each one is a single piece of limestone, carved from one block. There were once thirty-eight of them all the way round. Earthquakes brought down the rest.",
+        "This temple was here when Mummius burned the city, and it was still here when the Romans rebuilt around it. When Paul walked past, it was already about six hundred years old. Now let's go down into the forum, where the real story of this place happened."
+      ]
+    },
+    {
+      "name": "The forum and the judgment seat",
+      "minutes": 5,
+      "stand": "In the middle of the forum, in front of the raised stone platform in the row of shops along the south side.",
+      "paras": [
+        "This big open space was the forum, the market and civic centre of Roman Corinth. Shops, offices and temples ran all round it.",
+        "And this raised stone platform in the middle of the south side is the bema, the speaker's platform where Roman officials sat in judgment. Excavators identified it as the judgment seat in the book of Acts. Nothing written on it says so, but it is the right kind of platform in the right place, and most scholars accept that this is very likely the spot.",
+        "Here's what happened, from Acts, chapter eighteen. Paul's opponents brought him before the Roman governor, the proconsul Gallio, and accused him of persuading people to worship God against the law. Before Paul could even answer, Gallio cut them off. In the King James Version he says: \"If it were a matter of wrong or wicked lewdness, O ye Jews, reason would that I should bear with you: But if it be a question of words and names, and of your law, look ye to it; for I will be no judge of such matters.\" And he drove them from the judgment seat.",
+        "Then, the text says, the crowd seized Sosthenes, the chief ruler of the synagogue, and beat him in front of the judgment seat, \"and Gallio cared for none of those things.\" Stand here a moment. You're standing where that scene very probably played out."
+      ]
+    },
+    {
+      "name": "The date carved in stone",
+      "minutes": 3,
+      "stand": "Still at the platform, looking out over the forum.",
+      "paras": [
+        "Here's why this little scene matters so much to historians. That governor, Gallio, is named in a letter from the Emperor Claudius, carved in stone and found at Delphi, across the gulf from here. The letter dates to about AD 52.",
+        "That means Gallio's time here can be pinned down to around AD 51 to 52, and so can Paul's stay in Corinth. It's one of the firmest dates we have anywhere in Paul's life. Much of the timeline of his journeys is worked out from this one meeting in this one forum.",
+        "And Acts tells us how Paul lived while he was here. He met a Jewish couple, Aquila and Priscilla, newly arrived from Rome, and because they shared a trade, he stayed with them and worked. They were tentmakers. Paul stayed in Corinth \"a year and six months, teaching the word of God among them.\""
+      ]
+    },
+    {
+      "name": "Peirene fountain",
+      "minutes": 3,
+      "stand": "At the Peirene fountain, the arched fountain house on the east side of the old Lechaion Road, at the north edge of the forum.",
+      "paras": [
+        "Walk with me to the north edge of the forum. That paved road running north is the Lechaion Road, which led down to Corinth's port on the Gulf of Corinth.",
+        "And this deep, arched fountain house is Peirene, the most famous spring in Corinth. Water has fed it since long before the Romans. What you see today was rebuilt and decorated in the second century AD by the wealthy Athenian benefactor Herodes Atticus.",
+        "This was the water supply of the city. Whoever came to draw water here in Paul's day, the slaves, the shopkeepers, the craftsmen, these were exactly the kind of people his letters were written to."
+      ]
+    },
+    {
+      "name": "The name in the pavement",
+      "minutes": 3,
+      "stand": "Near the theatre, at the paved square with the Latin inscription in the stone, if it is open to visitors.",
+      "paras": [
+        "Near the old theatre there's a paved square with a short Latin inscription set in the stone. It says, more or less: Erastus, in return for his aedileship, laid this pavement at his own expense. An aedile was a city official in charge of public works.",
+        "Now, in his letter to the Romans, written from Corinth, Paul sends greetings from \"Erastus the chamberlain of the city.\" Is that the same man? Some scholars think so, and the pavement dates from around the right time. Others point out that the titles don't quite match, and Erastus was a common name.",
+        "So the honest answer is: possibly. But it's a thrilling possibility, a name from the New Testament, carved by his own order, still lying in the ground."
+      ]
+    },
+    {
+      "name": "Closing: the letter to this city",
+      "minutes": 3,
+      "stand": "Back by the Temple of Apollo, looking down over the forum.",
+      "paras": [
+        "Before you go, look out over the forum one more time. This city was rich, crowded and divided, and Paul's letters to the church here are full of their quarrels.",
+        "And yet it was to these people, in this city, that he wrote the words now read at weddings all over the world. In the King James Version: \"Charity suffereth long, and is kind; charity envieth not; charity vaunteth not itself, is not puffed up.\" And at the end: \"And now abideth faith, hope, charity, these three; but the greatest of these is charity.\"",
+        "He didn't write that to a perfect church. He wrote it to the people who argued in this market, drew water at that fountain and stood in this crowd. Two thousand years later, the temples are broken columns. The words are still going."
       ]
     }
   ]
