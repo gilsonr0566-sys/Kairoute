@@ -79,6 +79,21 @@ function helper(r, calls) {
       if (diff.length) bad(`${t.name}:\n   ${diff.join('\n   ')}`); else ok(t.name);
     }
     await p.close(); }
+  // 1b. A boarding time typed and then redrawn over (an answer from the internet arriving before Save) is still saved
+  // (Nov 17: the demo gate's typed 12:30 was lost to a redraw, and the day planned to all-aboard instead).
+  if (!LIVE) { const p = await b.newPage({ viewport: { width: 1280, height: 800 } });
+    await p.route('**/*', r => /^file:/.test(r.request().url()) ? r.continue() : r.abort());
+    await p.goto('file://' + FILE); await p.evaluate(() => localStorage.setItem('kairoute.intro1', '1')); await p.reload(); await p.waitForTimeout(600);
+    const s = p.locator('[data-act="loadsample"]').first(); if (await s.isVisible().catch(() => false)) await s.click(); await p.waitForTimeout(1200);
+    const d = (await p.evaluate(() => window.__kairouteDays())).find(x => x.type === 'embark');
+    if (!d) bad('boarding: the sample trip has no boarding day');
+    else { await p.evaluate(i => window.__kairouteGo('plan', i), d.i); await p.waitForTimeout(1200);
+      await p.locator('#bc-time').fill('12:30');
+      await p.evaluate(i => { window.__kairouteGo('trip', i); window.__kairouteGo('plan', i); }, d.i); await p.waitForTimeout(300);
+      await p.locator('[data-act="boardsave"]').first().click(); await p.waitForTimeout(1000);
+      const saved = await p.evaluate(i => JSON.parse(localStorage.getItem('wayside.trip2')).days[i].boardTime, d.i);
+      if (saved !== '12:30') bad(`boarding: a typed time redrawn over before Save was lost (saved ${saved})`); else ok('boarding: a typed time survives a redraw before Save (12:30 saved)'); }
+    await p.close(); }
   // 2. The screens.
   for (const [W, H, tag] of [[412, 915, 'phone'], [1280, 800, 'tablet']]) {
     const p = await b.newPage({ viewport: { width: W, height: H } }); const errs = [], calls = []; p.on('pageerror', e => errs.push(e.message)); if (process.env.DEBUG) p.on('console', m => { if (/Kairoute|transit|far/i.test(m.text())) console.log('CON', m.text().slice(0, 200)); });
