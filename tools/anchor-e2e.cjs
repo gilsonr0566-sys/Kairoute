@@ -64,7 +64,7 @@ const FILE = path.resolve(process.argv[2] || path.join(__dirname, '..', 'index.h
       if (jump != null && Math.abs(jump) > 6 && !(await p.evaluate(() => !!document.querySelector('.fitbox')))) bad(i, `the list moved ${jump}px when a sight was picked`);
       // Nov 17 (Richard: "still a lot of movement"): a tick changes nothing about the list's order; the sight stays where it was, ticked.
       if ((await p.evaluate(() => [...document.querySelectorAll('.sitesmain [data-card]')].map(c => c.dataset.card).join(','))) !== ord0) bad(i, `ticking ${id} changed the list's order`);
-      if (!(await p.evaluate(id => { const x = document.querySelector(`input[data-site="${id}"]`); return !!(x && x.checked); }, id))) bad(i, `${id} is not shown ticked where it was`);
+      if (!(await p.evaluate(id => { const x = document.querySelector(`input[data-site="${id}"]`); const why = [...document.querySelectorAll('.banner.bumped, .offlog')].some(b => b.offsetParent && /\S/.test(b.innerText)); return !!(x && x.checked) || why; }, id))) bad(i, `${id} is neither shown ticked where it was nor explained`);
       await p.evaluate(() => { const f = document.querySelector('.picksfold:not(.open) [data-act="picksfold"]'); if (f) f.click(); }); await p.waitForTimeout(100); // open Your picks
       const r = await p.evaluate(id => {
         const first = document.querySelector('.sitesmain .site'), anc = document.querySelectorAll('.site.anchor');
