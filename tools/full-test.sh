@@ -3,9 +3,10 @@
 # failure once alone (a pass alone = the busy machine, not a bug) and writes test-results/full/summary.json + DONE.
 # Usage: bash tools/full-test.sh            (all)      ONLY="plan-test safety-net" bash tools/full-test.sh  (some)
 # Run detached for a long pass:  nohup bash tools/full-test.sh > /tmp/full.log 2>&1 &   then wait for test-results/full/DONE
+# Not here (needs a real device): tour-audio.cjs (headless browsers have no speech voices).
 # Never publishes, never commits. Built index.html / version.txt are put back to the placeholder at the end.
 cd "$(dirname "$0")/.."
-OUT=test-results/full; mkdir -p "$OUT"; find "$OUT" -mindepth 1 -delete; mkdir -p "$OUT/logs"  # outside checks/: the safety net clears checks/
+OUT=test-results/full; [ -n "$ONLY" ] && OUT=test-results/only; mkdir -p "$OUT"; find "$OUT" -mindepth 1 -delete; mkdir -p "$OUT/logs"  # outside checks/: the safety net clears checks/
 T0=$(date +%s); LIMIT=${LIMIT:-1500}   # seconds per test file
 # name | category | command   (categories: functional data security compat ux; "-half" = suggestion-only, counts at half weight)
 TESTS=$(cat <<'LIST'
@@ -33,7 +34,6 @@ hours-check|functional|node tools/hours-check.cjs
 anchor-e2e|functional|node tools/anchor-e2e.cjs
 addplace-e2e|functional|node tools/addplace-e2e.cjs
 map-e2e|functional|env MOCK=1 node tools/map-e2e.cjs
-tour-audio|functional|node tools/tour-audio.cjs http://localhost:8765/
 nav-check|compat|node tools/nav-check.cjs
 layout-check|compat|node tools/layout-check.cjs
 offline-e2e|compat|node tools/offline-e2e.cjs
@@ -46,6 +46,10 @@ contrast-check|ux-half|env CONTRAST=1 node tools/a11y-check.cjs
 LIST
 )
 sh build.sh
+# The storybook PDF check needs jsPDF; test machines without the CDN get the same version from npm (kept in test-results/cache).
+mkdir -p test-results/cache; JS=test-results/cache/jspdf.umd.min.js
+if [ ! -s "$JS" ]; then ( cd test-results/cache && npm pack -q jspdf@2.5.1 >/dev/null 2>&1 && tar xzf jspdf-2.5.1.tgz -O package/dist/jspdf.umd.min.js > jspdf.umd.min.js ); fi
+[ -s "$JS" ] && export JSPDF_FILE="$PWD/$JS"
 python3 -m http.server 8765 >/dev/null 2>&1 & SRV=$!; sleep 1
 run() { # name cmd -> exit code, log in $OUT/logs/name[.again].log
   local s=$(date +%s); timeout "$LIMIT" bash -c "$2" > "$OUT/logs/$1$3.log" 2>&1; local rc=$?
