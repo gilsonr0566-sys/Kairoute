@@ -1,11 +1,11 @@
 #!/bin/bash
 # Full test pass: one command runs every check Kairoute has that works on a test machine, then re-runs each
-# failure once alone (a pass alone = the busy machine, not a bug) and writes checks/full/summary.json + DONE.
+# failure once alone (a pass alone = the busy machine, not a bug) and writes test-results/full/summary.json + DONE.
 # Usage: bash tools/full-test.sh            (all)      ONLY="plan-test safety-net" bash tools/full-test.sh  (some)
-# Run detached for a long pass:  nohup bash tools/full-test.sh > /tmp/full.log 2>&1 &   then wait for checks/full/DONE
+# Run detached for a long pass:  nohup bash tools/full-test.sh > /tmp/full.log 2>&1 &   then wait for test-results/full/DONE
 # Never publishes, never commits. Built index.html / version.txt are put back to the placeholder at the end.
 cd "$(dirname "$0")/.."
-OUT=checks/full; rm -rf "$OUT"; mkdir -p "$OUT/logs"
+OUT=test-results/full; mkdir -p "$OUT"; find "$OUT" -mindepth 1 -delete; mkdir -p "$OUT/logs"  # outside checks/: the safety net clears checks/
 T0=$(date +%s); LIMIT=${LIMIT:-1500}   # seconds per test file
 # name | category | command   (categories: functional data security compat ux; "-half" = suggestion-only, counts at half weight)
 TESTS=$(cat <<'LIST'
