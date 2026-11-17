@@ -1857,8 +1857,12 @@ function buildPlanForDay(d) {
   // One sight, one day. A sight ticked on more than one day in this city belongs to the earliest day whose
   // plan keeps it; later days leave it out. If the earlier day can't fit it, it falls to the later day.
   const myDay = trip.days.indexOf(d), seenOn = {}, elsewhere = [];
+  // Sights picked on any other day of the trip: never shown here too, as a quick sight on the way, an optional stop kept
+  // from a shown plan, or a place to eat (one day per sight, no place twice: Madrid Jul 18 had Jul 19's picks, Nov 17).
+  const otherDays = plannedElsewhere(d), alongBefore = new Set();
   trip.days.slice(0, Math.max(0, myDay)).forEach(o => { if (cityFor(o) !== city || !(o.selected || []).length) return; if (!keptMemo.has(o)) { try { buildPlan(o); } catch (e) {} } (keptMemo.get(o) || []).forEach(id => { if (!seenOn[id]) seenOn[id] = o; }); });
   chosen = chosen.filter(s => { if (!seenOn[s.id]) return true; elsewhere.push({ s, on: seenOn[s.id], earlier: true }); return false; });
+  trip.days.slice(0, Math.max(0, myDay)).forEach(o => { if (cityFor(o) === city) ((keptMemo.get(o) || {}).along || []).forEach(id => alongBefore.add(id)); }); // (earlier days are planned by now)
   // Closed today (by its listed hours or closed days): not planned today. Ticked on a later day here, it's seen
   // then; otherwise the Day plan offers to move it to a day of the trip here when it's open.
   const closedToday = [];
@@ -1917,7 +1921,7 @@ function buildPlanForDay(d) {
   const along = [];
   if (d.alongWay && order.length) { // quick sights along the way only on a day with stops to walk between
     const used = new Set(order.map(s => s.id));
-    const quick = (city.sites || []).filter(s => s.quick && !used.has(s.id) && religiousOk(s));
+    const quick = (city.sites || []).filter(s => s.quick && !used.has(s.id) && !otherDays[s.id] && !seenOn[s.id] && !alongBefore.has(s.id) && religiousOk(s));
     let slack = budget - total(order);
     const pts = [O, ...order, ...(Z ? [Z] : [])];
     const inserts = [];
@@ -1958,10 +1962,18 @@ function buildPlanForDay(d) {
   const mealSet = () => quickMeals ? MEALS.map(m => Object.assign({}, m, { len: QUICK_MEAL[m.label] || m.len, quick: true })) : MEALS;
   const needMeals = q => q.some(x => !x.mealOf) || inDay.length ? mealSet().filter(m => !liveAte(d, m.label) && !books.some(b => b.label === m.label) && t0 < m.to - 30 && m.from + m.len + 15 <= dayEnd).concat(inDay).sort((a, b) => a.from - b.from) : [];
   const withMeals = q => { const bare = q.filter(x => !x.mealOf); return placeMeals(bare, needMeals(bare), t0, O, ZZ, style, city); };
-  const savedAvoid = avoidMeals, av = new Set(), myIdx = trip.days.indexOf(d);
-  trip.days.slice(0, Math.max(0, myIdx)).forEach(o => { if (cityFor(o) !== city) return; if (!mealMemo.has(o) || !eveMemo.has(o)) { try { buildPlan(o); } catch (e) {} } (mealMemo.get(o) || []).forEach(n => av.add(n)); (eveMemo.get(o) || []).slice(0, 1).forEach(n => av.add(n)); }); // an earlier evening's own dinner place, not its alternatives (those stay free for lunch)
+  const savedAvoid = avoidMeals, av = new Set(), avMain = new Set(), myIdx = trip.days.indexOf(d);
+  trip.days.slice(0, Math.max(0, myIdx)).forEach(o => { if (cityFor(o) !== city) return; if (!mealMemo.has(o) || !eveMemo.has(o)) { try { buildPlan(o); } catch (e) {} } (mealMemo.get(o) || []).forEach(n => av.add(n)); (eveMemo.get(o) || []).slice(0, 1).forEach(n => { av.add(n); avMain.add(n); }); ((mealMemo.get(o) || {}).main || []).forEach(n => avMain.add(n)); }); // an earlier evening's own dinner place, not its alternatives (those stay free for lunch)
   // A hearted day keeps its places to eat, so no other day takes them (no place is planned twice).
-  trip.days.forEach(o => { if (o === d || !o.ready || !o.ready.lock || !Array.isArray(o.ready.lock.seq) || cityFor(o) !== city) return; o.ready.lock.seq.forEach(x => { if (x.meal && x.node && !x.node.generic && !x.bk) av.add(keyOf(x.node.name)); }); if (o.ready.lock.eve) av.add(o.ready.lock.eve); });
+  trip.days.forEach(o => { if (o === d || !o.ready || !o.ready.lock || !Array.isArray(o.ready.lock.seq) || cityFor(o) !== city) return; o.ready.lock.seq.forEach(x => { if (x.meal && x.node && !x.node.generic && !x.bk) { av.add(keyOf(x.node.name)); avMain.add(keyOf(x.node.name)); } }); if (o.ready.lock.eve) { av.add(o.ready.lock.eve); avMain.add(o.ready.lock.eve); } });
+  // A plan the traveler has seen keeps its places to eat (seen-plan.js), so a place chosen afresh on any other day
+  // leaves them out: an earlier day's dinner chosen again (its own place now closed or not rated yet) would otherwise
+  // take a later day's lunch, and that day's plan would change with it.
+  const claimed = new Set(); try { const st = seenStore(); trip.days.forEach(o => { const e = o !== d && cityFor(o) === city && st[seenId(o)]; if (!e || !e.lock || !Array.isArray(e.lock.seq)) return; e.lock.seq.forEach(x => { if (x.meal && x.node && !x.node.generic && !x.bk) claimed.add(keyOf(x.node.name)); }); if (e.lock.eve) claimed.add(e.lock.eve); }); } catch (e) {}
+  claimed.forEach(n => av.add(n));
+  for (const id of Object.keys(otherDays)) { const x = allSites(city).find(y => y.id === id); if (x && x.name) { av.add(keyOf(x.name)); avMain.add(keyOf(x.name)); } } // a sight picked on another day is not today's place to eat
+  // A remembered plan keeps its place to eat unless another day now eats there (its lunch or dinner itself, not one of
+  // its alternatives, which change as ratings arrive and would otherwise unsettle every later day).
   avoidMeals = av;
   const fitDay = () => {
   const dropped = dropped0.slice(); let seq = withMeals(order);
@@ -2049,7 +2061,7 @@ function buildPlanForDay(d) {
   // Only a change to the day's times (ship, train or flight time, the day's hours, the hotel), or the hearted plan no
   // longer being safe (a stop now closed, rides slow enough to miss the ship), lets the planner change it; then the
   // plan says why (lockBroken) and the heart turns to an outline until the traveler taps it again.
-  const lkArgs = { t0, O, ZZ, style, mult, live, tailCost, chosen, inDay, liveAte, seenOn };
+  const lkArgs = { t0, O, ZZ, style, mult, live, tailCost, chosen, inDay, liveAte, seenOn, otherDays, alongBefore, avoid: avMain };
   let lk = lockReplay(d, city, w, lockT, w0start, lkArgs);
   // A day not hearted replays the plan last shown for it (seen-plan.js), online or offline, so rides, places to eat
   // or sources arriving later never move or drop its stops. When that plan no longer holds (the traveler changed the
@@ -2124,7 +2136,9 @@ function buildPlanForDay(d) {
     try { let q = null, r = null; const sd = loopSeeds(seq, O, ZZ), rest = sd.slice(1).map(x => [x, simDay(x, t0, O, ZZ, style).cost]).sort((a, b) => a[1] - b[1]);
       for (const s0 of [sd[0]].concat(rest.length ? [rest[0][0]] : [])) { const qi = polishDay(s0, t0, O, ZZ, style, city), ri = simDay(qi, t0, O, ZZ, style); if (ri.late <= r0.late && ri.end <= Math.max(r0.end, w.endBy - tailCost()) && (!r || ri.cost < r.cost)) { q = qi; r = ri; } } if (q) seq = q; } finally { crossOn = false; } }
   bonusMemo.set(d, bonus.map(x => x.id));
-  keptMemo.set(d, seq.filter(x => !x.mealOf && !x.bonus && !x.along).flatMap(x => x.foldOf ? x.foldOf.map(y => y.id) : [x.id]));
+  // What later days see of this one: its stops (picks and visits), and apart from them the quick sights on the way
+  // (.along), so a later day doesn't show the same quick sight again.
+  keptMemo.set(d, Object.assign(seq.filter(x => !x.mealOf && !x.bonus && !x.along).flatMap(x => x.foldOf ? x.foldOf.map(y => y.id) : [x.id]), { along: seq.filter(x => x.along).map(x => x.id) }));
   // A sight that doesn't fit today but is also ticked on a later day here isn't lost: it's seen that day.
   for (const x of dropped.slice()) { const o = trip.days.slice(myDay + 1).find(o => cityFor(o) === city && (o.selected || []).includes(x.id)); if (o) { dropped.splice(dropped.indexOf(x), 1); elsewhere.push({ s: x, on: o, later: true }); } }
   // Timeline
@@ -2165,7 +2179,7 @@ function buildPlanForDay(d) {
   if (!w.tail.length) items.push({ type: "end", place: null, time: clock, label: "Day done" });
   // The evening: a table the traveler booked for after the day's sightseeing, or else (on days that end in town)
   // a suggested dinner: a real place a short walk from where the day finishes, with two different alternatives.
-  mealMemo.set(d, meals.flatMap(m => [m].concat(m.alts || [])).filter(m => !m.generic).map(m => keyOf(m.name)));
+  mealMemo.set(d, Object.assign(meals.flatMap(m => [m].concat(m.alts || [])).filter(m => !m.generic).map(m => keyOf(m.name)), { main: meals.filter(m => !m.generic).map(m => keyOf(m.name)) }));
   const evening = [], endAt = (w.tail.length ? w.tail[w.tail.length - 1] : prev) || null;
   lateBooks.forEach(m => { const leg = endAt ? travel(endAt, m.node) : null; evening.push({ type: "evening", meal: m, place: Object.assign({}, m.node), time: Math.max(m.from, clock + (leg ? leg.min : 0)), leg, booked: true, late: m.from < clock + (leg ? leg.min : 0) - 5 }); });
   const hasDinner = seq.some(x => x.mealOf && x.mealOf.label === "Dinner") || books.some(b => b.label === "Dinner");
@@ -5602,9 +5616,11 @@ function pickStatus(s, plan) {
 function pickedSites(d, city) {
   const all = allSites(city), out = [];
   (d.selected || []).forEach((id, k) => {
-    let s = all.find(x => x.id === id);
+    let s = all.find(x => x.id === id) || all.find(x => (x.alias || []).includes(id)); // a sight merged into another keeps its old id as an alias
     const nm = d.pickNames && d.pickNames[id];
-    if (!s && nm) { s = all.find(x => nameMatch(nm, x.name) || nameMatch(x.name, nm)); if (s) { d.selected[k] = s.id; d.pickNames[s.id] = s.name; if (d.anchor === id) d.anchor = s.id; } }
+    // Found by its saved name: the pick moves to the sight's id now, and the old id stays on the sight as an alias,
+    // so a plan remembered with the old id (seen-plan.js) and every other lookup still find the same sight.
+    if (!s && nm) { s = all.find(x => nameMatch(nm, x.name) || nameMatch(x.name, nm)); if (s) { d.selected[k] = s.id; d.pickNames[s.id] = s.name; if (d.anchor === id) d.anchor = s.id; if (!(s.alias || []).includes(id)) s.alias = [...(s.alias || []), id]; } }
     if (s && !out.includes(s)) out.push(s);
   });
   return out;

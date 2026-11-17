@@ -91,6 +91,9 @@ async function compare(a, b, how) {
       await new Promise(z => setTimeout(z, Math.min(r.t || 100, 2000)));
       rt.fulfill({ status: r.s, headers: { "content-type": r.ct || "application/json", "access-control-allow-origin": "*" }, body: Buffer.from(r.b, "base64") }).catch(() => {}); });
     log(`     replaying ${rows.length} recorded internet answers`); }
+  // No AI, ever (Richard, Nov 17: "Turn it totally off and do not use any without my consent"): the app never finds
+  // the AI helper here, so no guide is written or voiced during this check. A recording (REPLAY) is not an AI call.
+  await ctx.route(u => /\/ai\.json$/.test(u.pathname) || /workers\.dev$/.test(u.host), rt => rt.abort());
   // 0. First visit: every day's plan is shown once.
   let p = await ctx.newPage(); p.on("pageerror", e => errs.push(e.message));
   await open(p); const s0 = await settled(p);
