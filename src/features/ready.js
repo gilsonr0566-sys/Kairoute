@@ -141,7 +141,7 @@ function lockTimes(d, city, w) {
 function lockSeqOut(seq) {
   return seq.map(x => {
     if (x.mealOf) { const n = Object.assign({}, x); delete n.mealOf; delete n.alts; return { meal: x.mealOf.label, q: x.mealOf.quick ? 1 : 0, bk: x.mealOf.booked ? 1 : 0, node: n }; }
-    return { id: x.id, n: x.name, min: x.minutes || 0, sf: x.shortFrom || 0, b: x.bonus ? 1 : 0, a: x.along ? 1 : 0 };
+    return Object.assign({ id: x.id, n: x.name, min: x.minutes || 0, sf: x.shortFrom || 0, b: x.bonus ? 1 : 0, a: x.along ? 1 : 0 }, x.foldOf ? { inc: x.foldOf.map(y => y.id) } : {});
   });
 }
 // What changed in the day's times, in a few plain words.
@@ -182,6 +182,10 @@ function lockReplay(d, city, w, lockT, w0start, k) {
       seq.push(Object.assign({}, cur || node, { mealOf: m }));
       continue;
     }
+    // An area visit (area-visit.js): the same visit again, from the same picks, at the hearted length.
+    if (x.inc) { const v = (k.chosen || []).find(c => c.foldOf && c.foldOf.length === x.inc.length && c.foldOf.every(y => x.inc.includes(y.id)));
+      if (!v) return { why: `${x.n || "a visit"} has changed` };
+      const n = Object.assign({}, v, { minutes: x.min || v.minutes }); if (x.sf) n.shortFrom = x.sf; seq.push(n); continue; }
     if (liveDone(d, x.id)) continue;
     const s = by.get(x.id); if (!s) return { why: `${x.n || "a stop"} is no longer in the guide` };
     if (closedForDay(s, d, w)) return { why: `${s.name} is closed that day` };
@@ -195,6 +199,6 @@ function lockReplay(d, city, w, lockT, w0start, k) {
   if (r.end > lim + (hardEnd(d) ? 0 : 5)) return { why: behind ? "you're running behind, and the day as hearted would run past " + fmt(lim) : `rides now take longer, and the day as hearted would run past ${fmt(lim)}` };
   if (r.late > (L.late || 0)) { let who = ""; for (let i = 1; i <= seq.length && !who; i++) if (simDay(seq.slice(0, i), k.t0, k.O, k.ZZ, k.style).late > (L.late || 0)) who = seq[i - 1].name;
     return { why: `you'd now reach ${who || "a stop"} after it closes` }; }
-  const inSeq = new Set(seq.filter(x => !x.mealOf).map(x => x.id));
+  const inSeq = new Set(seq.filter(x => !x.mealOf).flatMap(x => x.foldOf ? [x.id].concat(x.foldOf.map(y => y.id)) : [x.id]));
   return { seq, dropped: k.chosen.filter(s => !inSeq.has(s.id)), bonus, along, quick, eve: L.eve || "" };
 }

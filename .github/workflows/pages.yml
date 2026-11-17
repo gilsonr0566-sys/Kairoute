@@ -57,6 +57,7 @@ jobs:
           node tools/offline-e2e.cjs
           node tools/offline-sights.cjs
           node tools/later-check.cjs
+          node tools/area-check.cjs
       - name: Demo flow gate (Richard's Greece trip on this build, real internet; a failure stops the update going live)
         run: |
           python3 -m http.server 8765 >/dev/null 2>&1 &
@@ -91,6 +92,10 @@ jobs:
           url=$(grep -oE 'https://[a-z0-9.-]+\.workers\.dev' deploy.log | head -1)
           if [ -n "$url" ]; then printf '{"url":"%s"}\n' "$url" > ../ai.json; cat ../ai.json; fi
       - name: Build the Android app
+        # A website update never waits on the Android build: when Gradle can't download its libraries (Nov 17: guava,
+        # kotlin-stdlib and jsr305 from Maven Central), the site still publishes, with the app file from the live site.
+        id: android
+        continue-on-error: true
         run: |
           sh build.sh
           cd app && npm ci && npm run sync
@@ -99,7 +104,8 @@ jobs:
         run: |
           mkdir _site && cp -r index.html usage.html version.txt .nojekyll manifest.webmanifest sw.js icons lib checks _site/
           if [ -d audio ]; then cp -r audio _site/; fi # recorded stop scripts (src/features/stop-scripts.js)
-          cp app/android/app/build/outputs/apk/debug/app-debug.apk _site/Kairoute.apk
+          if [ -f app/android/app/build/outputs/apk/debug/app-debug.apk ]; then cp app/android/app/build/outputs/apk/debug/app-debug.apk _site/Kairoute.apk
+          else echo "Android build failed: keeping the app file from the live site"; curl -sfL -o _site/Kairoute.apk "https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/Kairoute.apk" || rm -f _site/Kairoute.apk; fi
           if [ -f ai.json ]; then cp ai.json _site/; fi
       - name: Wait for GitHub's own branch copy to finish first
         # GitHub also publishes the repository as-is on every push (index.html there is only a placeholder).

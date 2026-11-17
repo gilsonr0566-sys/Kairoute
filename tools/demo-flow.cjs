@@ -243,6 +243,10 @@ async function partA(b) {
     const before = (await S()).days[ed.i].picks, selOf = i => p.evaluate(i => { const T = window.__kairouteTruth(i); return (T.selected || []).join(", "); }, ed.i), sel0 = await selOf();
     const pk0 = (await S()).days.map(x => x.picks);
     await p.evaluate(() => { window.__lt = []; }); const tc = Date.now();
+    // Centred first: the pinned time-left bar sits over the top of the list, and a click at a covered row's centre
+    // lands on the bar instead (Nov 17 gate: the tick did nothing).
+    await p.evaluate(id => { const el = document.getElementById("s-" + id); if (el) (el.closest("label") || el).scrollIntoView({ block: "center" }); }, pick.id); await p.waitForTimeout(200);
+    await p.evaluate(() => { window.__lt = []; });
     await p.locator(`#s-${pick.id}`).first().click({ force: true });
     await p.waitForTimeout(1500); const clickMs = Date.now() - tc, lt = await p.evaluate(() => Math.round(Math.max(0, ...window.__lt)));
     ok(lt < FREEZE_MS, `ticking a sight responds without freezing (longest block ${lt} ms, ${clickMs} ms)`);
@@ -258,6 +262,9 @@ async function partA(b) {
       const dropped = await p.evaluate(i => { const t = window.__kairouteTruth(i); return t && t.dropped ? t.dropped.map(x => x.name || x) : []; }, ed.i).catch(() => []);
       ok(inPlan || dropped.length > 0, `"${pick.name}" shows on the Day plan (or the plan says what didn't fit)`);
       await p.evaluate(go("sites", ed.i)); await p.waitForTimeout(1500);
+      // A ticked sight moves up into "Your picks", which can be folded: open it and centre the row before the tap.
+      await p.evaluate(() => { const f = document.querySelector(".picksfold:not(.open) [data-act=picksfold]"); if (f) f.click(); }); await p.waitForTimeout(300);
+      await p.evaluate(id => { const el = document.getElementById("s-" + id); if (el) (el.closest("label") || el).scrollIntoView({ block: "center" }); }, pick.id); await p.waitForTimeout(200);
       await p.locator(`#s-${pick.id}`).first().click({ force: true }).catch(() => {}); await p.waitForTimeout(1000);
       ok((await S()).days[ed.i].picks === before, "unticking it removes it again");
     } else await p.evaluate(() => { const b = document.querySelector(".fitbox [data-act=fitcancel], .fitbox .btn.ghost"); if (b) b.click(); });
@@ -320,6 +327,9 @@ async function partA(b) {
       // Day plan says): compare once it has settled, the same as the tablet page did.
       for (let t = 0; t < 120; t++) { if (await q.evaluate(() => (!window.__kairouteSettled || window.__kairouteSettled()) && !(window.__kairouteUpgrading && window.__kairouteUpgrading())).catch(() => true)) break; await q.waitForTimeout(1000); }
       await q.evaluate(go("plan", d.i)); await q.waitForTimeout(800); const s = await seen(q);
+      // Compared with the tablet page as it is now: its own plan can have moved on since it was first read (rides and
+      // the fuller guide arrive over the run), and both pages share the same trip.
+      await p.evaluate(go("plan", d.i)); await p.waitForTimeout(800); plans[d.i] = Object.assign({}, plans[d.i], { stops: (await seen(p)).stops });
       ok(s.stops.length === plans[d.i].stops.length, `${size}: day ${d.i + 1} ${d.dest} shows the same ${plans[d.i].stops.length} stops (${s.stops.length})`);
       if (s.stops.length !== plans[d.i].stops.length) { // say what differs, so a failure can be traced from the log alone
         const why = await q.evaluate(i => { try { const t = window.__kairouteTruth(i); return { kept: t.keptNames, dropped: t.dropped, sel: t.selected, end: t.end, endBy: t.endBy, over: t.over }; } catch (e) { return String(e); } }, d.i);
