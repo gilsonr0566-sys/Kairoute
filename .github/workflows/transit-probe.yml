@@ -8,6 +8,9 @@ on:
       date:
         description: "trip date YYYY-MM-DD for timetables (empty = the next weekday)"
         default: ""
+      trace:
+        description: "1 = print every map and timetable request"
+        default: ""
       ferry:
         description: "lat,lng>lat,lng for the ferry probe (empty = Naples terminal > Amalfi)"
         default: ""
@@ -25,6 +28,7 @@ jobs:
       - env:
           PAIRS: ${{ inputs.pairs }}
           DATE: ${{ inputs.date }}
+          TRACE: ${{ inputs.trace }}
         run: node tools/transit-probe.mjs || true
       - env:
           FERRY: ${{ inputs.ferry }}
