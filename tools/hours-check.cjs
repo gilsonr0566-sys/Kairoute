@@ -41,6 +41,14 @@ const URL0 = LIVE ? ARG : 'file://' + FILE;
     // a later start, same end: shorter
     await setT('hrsEnd', '19:00'); await setT('hrsStart', '11:00'); const g3 = await get();
     if (g3.start !== '11:00' || g3.end !== '19:00') fail(`${size}: later start: ${JSON.stringify(g3)}`); else ok(`${size}: a later start keeps the end (${g3.start}–${g3.end})`);
+    // On a full day (the live site's real rides) the later start already costs a pick, so it asks first; "Keep my
+    // hours" then puts back the hours from before it, and those are the hours the next question goes back to.
+    let base = g3;
+    if (await p.evaluate(() => !!document.querySelector('.cutask'))) {
+      await p.click('[data-act="cutkeep"]'); await frame(); base = await get();
+      if (base.start !== g0.start || base.end !== '19:00') fail(`${size}: later start asked; Keep my hours gave ${JSON.stringify(base)}`); else ok(`${size}: on a full day the later start asks first, and "Keep my hours" puts back ${base.start}–${base.end}`);
+      if (!(await p.evaluate(() => !!document.getElementById('hrsEnd')))) await p.click('.hrstile');
+    }
     // much shorter: picks would drop, so it asks first
     const n0 = await sel(Ld.i);
     await setT('hrsEnd', '12:15'); await frame();
@@ -49,7 +57,7 @@ const URL0 = LIVE ? ARG : 'file://' + FILE;
     else {
       if (await sel(Ld.i) !== n0) fail(`${size}: picks dropped before the answer`); else ok(`${size}: a shorter day asks first: ${ask.replace(/\s+/g, ' ').slice(0, 120)}`);
       await p.click('[data-act="cutkeep"]'); await frame(); const g4 = await get();
-      if (g4.start !== '11:00' || g4.end !== '19:00' || await sel(Ld.i) !== n0) fail(`${size}: Keep my hours: ${JSON.stringify(g4)}`); else ok(`${size}: "Keep my hours" puts the hours back, picks kept`);
+      if (g4.start !== base.start || g4.end !== base.end || await sel(Ld.i) !== n0) fail(`${size}: Keep my hours: ${JSON.stringify(g4)}`); else ok(`${size}: "Keep my hours" puts the hours back, picks kept`);
       if (!(await p.evaluate(() => !!document.getElementById('hrsEnd')))) await p.click('.hrstile');
       await setT('hrsEnd', '12:15'); await p.click('[data-act="cutok"]'); await frame();
       const n5 = await sel(Ld.i), t5 = await p.evaluate(i => window.__kairouteTruth(i), Ld.i);
