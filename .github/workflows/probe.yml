@@ -15,7 +15,12 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-      - run: |
-          npm i --no-save playwright@1 && npx playwright install --with-deps chromium
-          curl -sS https://gilsonr0566-sys.github.io/Kairoute/ -o live.html && node tools/area-check.cjs live.html
-          node tools/area-live.cjs
+      - name: Install browser
+        timeout-minutes: 8
+        run: npm i --no-save playwright@1 && npx playwright install --with-deps chromium
+      - name: Area check on the live app file
+        timeout-minutes: 4
+        run: curl -sS https://gilsonr0566-sys.github.io/Kairoute/ -o live.html && grep -c "kairoute.areas1" live.html && node tools/area-check.cjs live.html
+      - name: Real map boundaries (Overpass)
+        timeout-minutes: 6
+        run: node tools/area-live.cjs
