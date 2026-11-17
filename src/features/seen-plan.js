@@ -36,14 +36,25 @@ function seenIds(d) {
   for (const s of allSites(c)) for (const a of (s && s.alias) || []) if (a != null && !m.has(a)) m.set(a, s.id);
   return m;
 }
-function seenCanon(m, sel) { return [...new Set(String(sel || "").split("|").filter(Boolean).map(id => (m && m.get(id)) || id))].sort().join("|"); }
+function seenCanon(m, sel, nameOf) { return [...new Set(String(sel || "").split("|").filter(Boolean).map(id => (m && m.get(id)) || (nameOf && nameOf(id)) || id))].sort().join("|"); }
+// An id the guide no longer knows (a guide fetched again or a fuller one, no merge behind it): the same place in the
+// guide now, by the app's own test of one place (samePlace: name, spelling, spot). What each id was comes from the
+// remembered plan (name and spot) and the day's own record of what each pick was called.
+function seenByName(d, s) {
+  const c = cityFor(d); if (!c) return () => null; const was = {};
+  for (const x of (s.lock && s.lock.seq) || []) { if (x.id != null && x.n) was[x.id] = { name: x.n, lat: x.la != null ? x.la : NaN, lng: x.lo != null ? x.lo : NaN };
+    (x.inc || []).forEach((i, j) => { const n = (x.incn || [])[j], ll = (x.incp || [])[j]; if (n) was[i] = { name: n, lat: ll ? ll[0] : NaN, lng: ll ? ll[1] : NaN }; }); }
+  for (const [id, n] of Object.entries(d.pickNames || {})) if (!was[id] && n) was[id] = { name: n, lat: NaN, lng: NaN };
+  const sites = allSites(c), memo = {};
+  return id => { if (id in memo) return memo[id]; const w = was[id]; const hit = w ? sites.find(x => x && samePlace(w, x)) : null; return (memo[id] = hit ? hit.id : null); };
+}
 // The plan to replay for this day, while the day's sights and settings are the ones it was shown with. Not while the
 // planner weighs another way to plan the day (fast rides, no evening).
 function seenFor(d) {
   if (!d || (d.ready && d.ready.lock) || ridePref !== "public" || skipEvening) return null;
   const s = seenStore()[seenId(d)]; if (!s || !s.lock || !Array.isArray(s.lock.seq)) return null;
-  if (s.ctx != null && s.ctx !== seenCtx(d)) return null;
-  if (s.sel !== selKey(d)) { const m = seenIds(d); if (seenCanon(m, s.sel) !== seenCanon(m, selKey(d))) return null; }
+  if (s.ctx != null && s.ctx !== seenCtx(d)) { seenBreakLog(d, "settings: " + seenDiff(s.ctx, seenCtx(d))); return null; }
+  if (s.sel !== selKey(d)) { const m = seenIds(d), a = seenCanon(m, s.sel, seenByName(d, s)), b = seenCanon(m, selKey(d)); if (a !== b) { seenBreakLog(d, "picks: " + a + " -> " + b); return null; } }
   return s;
 }
 // Part of the plan cache's key, so a replayed plan is never mixed up with a fresh one.
@@ -56,6 +67,10 @@ function seenSettled(d) {
   try { busy = (typeof guideLoading === "function" && guideLoading(d)) || fillPending > 0 || transitQ.size > 0 || transitBusy; } catch (e) {}
   return !busy || Date.now() - first[k] > 15000;
 }
+// The last few times a remembered plan couldn't be replayed, and why (test reports, never shown).
+const seenBreaks = [];
+function seenDiff(a, b) { let i = 0; while (i < a.length && a[i] === b[i]) i++; return a.slice(Math.max(0, i - 40), i + 60) + " => " + b.slice(Math.max(0, i - 40), i + 60); }
+function seenBreakLog(d, why) { const k = seenId(d) + ": " + why; if (seenBreaks[seenBreaks.length - 1] !== k) { seenBreaks.push(k); if (seenBreaks.length > 400) seenBreaks.shift(); } }
 const seenNo = {}; // why a day's shown plan wasn't remembered last time (test reports)
 function seenKeep(d, plan) {
   if (seenOffline() || !d || !plan || plan.error || !plan.lock || !Array.isArray(plan.lock.seq) || (d.ready && d.ready.lock)) return;
@@ -66,17 +81,20 @@ function seenKeep(d, plan) {
   delete seenNo[seenId(d)];
   const st = seenStore(), k = seenId(d), v = { sel: selKey(d), ctx: seenCtx(d), lock: plan.lock }, j = JSON.stringify(v);
   if (st[k] && JSON.stringify(st[k]) === j) return;
+  if (st[k]) seenBreakLog(d, "a new plan remembered (" + (st[k].sel !== v.sel ? "picks" : st[k].ctx !== v.ctx ? "settings" : "same picks and settings") + ")");
   // The plan cache isn't cleared: the plan kept is the one just shown, and replaying it gives the same plan, so
   // remembering it never makes the day plan again (typing what was spent never re-plans: money-check).
-  st[k] = v; clearTimeout(seenKeep.t);
-  seenKeep.t = setTimeout(() => { try { localStorage.setItem("kairoute.seen." + seenStore.id, JSON.stringify(seenStore())); } catch (e) {} }, 400);
+  // Written at once (a plan is remembered about once per day shown): a page closed or a trip switched a moment later
+  // must not lose it, and it is written under the trip it belongs to.
+  if (!st[k]) seenBreakLog(d, "first plan remembered for this day (store has " + Object.keys(st).length + " days, trip " + seenStore.id + ")");
+  st[k] = v; try { localStorage.setItem("kairoute.seen." + seenStore.id, JSON.stringify(st)); } catch (e) { seenBreakLog(d, "couldn't save: " + e.name + " " + JSON.stringify(st).length + " chars"); }
 }
 function seenAfterRender() {
   try { if (!["plan", "sites", "guide", "tour"].includes(view)) return; const d = day(); if (!d || noShore(d) || !cityFor(d)) return; seenKeep(d, buildPlan(d)); } catch (e) {}
 }
 if (typeof window !== "undefined") window.__kairouteSeen = { get: i => seenStore()[seenId(trip.days[i])] || null, all: () => seenStore(),
   // Test hooks (plan-steady check): forget every remembered plan; remember every day's plan now, as the download does.
-  bump: () => { seenGen++; }, clear: () => { seenStore.m = {}; seenGen++; try { localStorage.removeItem("kairoute.seen." + trip.id); } catch (e) {} },
+  breaks: () => seenBreaks.slice(), bump: () => { seenGen++; }, clear: () => { seenStore.m = {}; seenGen++; try { localStorage.removeItem("kairoute.seen." + trip.id); } catch (e) {} },
   keepAll: () => { let n = 0; for (const d of trip.days) { try { if (noShore(d) || !cityFor(d)) continue; seenKeep(d, buildPlan(d)); if (seenStore()[seenId(d)]) n++; } catch (e) {} } return n; } };
 // Why a remembered plan isn't replayed now (test reports): none kept, picks or settings changed, or what forced it.
 function seenWhy(d, p) {
@@ -91,8 +109,9 @@ if (typeof window !== "undefined") {
     const m = seenIds(d) || new Map(), has = id => on.has(id) || on.has(m.get(id));
     // gone: picks from before (was) that are no longer on the day under any of their ids, with no note saying why.
     const sel = new Set((d.selected || []).map(id => m.get(id) || id)), off = new Set((d.offLog || []).map(o => o.id));
-    const gone = (was || []).filter(id => !sel.has(m.get(id) || id) && !off.has(id));
+    const byPlace = seenByName(d, seenStore()[seenId(d)] || {}), now = id => m.get(id) || byPlace(id) || id;
+    const gone = (was || []).filter(id => !sel.has(now(id)) && !off.has(id));
     const st = seenStore()[seenId(d)];
-    return { sel: (d.selected || []).slice(), gone, seen: !!(p && p.seen), why: seenWhy(d, p), kept: st && st.lock ? st.lock.seq.map(x => x.meal ? "meal:" + ((x.node || {}).name || "") : (x.b ? "+" : "") + (x.n || x.id)).join(" > ") : "", skip: seenNo[seenId(d)] || "", missing: p && !p.error ? (d.selected || []).filter(id => !has(id)) : [] }; };
+    return { sel: (d.selected || []).slice(), gone, skipped: p && p.seenSkipped ? p.seenSkipped : [], seen: !!(p && p.seen), why: seenWhy(d, p), kept: st && st.lock ? st.lock.seq.map(x => x.meal ? "meal:" + ((x.node || {}).name || "") : (x.b ? "+" : "") + (x.n || x.id)).join(" > ") : "", skip: seenNo[seenId(d)] || "", missing: p && !p.error ? (d.selected || []).filter(id => !has(id)) : [] }; };
   window.__kairouteSteadyBusy = () => { try { return transitQ.size > 0 || transitBusy || fillPending > 0 || trip.days.some(d => guideLoading(d)); } catch (e) { return false; } };
 }
