@@ -4,7 +4,7 @@
 // used up the AI is not called; CORS never names another website. Run: node tools/worker-check.mjs
 import worker from '../worker/worker.js';
 let fails = 0, checks = 0; const ok = (c, m) => { checks++; if (!c) { fails++; console.log('FAIL ' + m); } };
-const mk = (seed = {}) => { const m = new Map(Object.entries(seed)); const s = { writes: 0, ai: 0, net: 0,
+const mk = (seed = {}, on = true) => { const m = new Map(Object.entries(seed)); const s = { AI_ON: on ? '1' : '0', writes: 0, ai: 0, net: 0,
   USAGE: { get: async (k, t) => { const v = m.get(k); return v == null ? null : t === 'json' ? JSON.parse(v) : v; }, put: async (k, v) => { s.writes++; m.set(k, v); }, delete: async k => { s.writes++; m.delete(k); }, list: async () => ({ keys: [] }) },
   AI: { run: async () => { s.ai++; return { response: '{"ok":1}', usage: { prompt_tokens: 10, completion_tokens: 10 } }; } } }; return s; };
 globalThis.fetch = async () => { cur.net++; throw new Error('no internet in this check'); };
@@ -27,7 +27,7 @@ for (const p of ['/sample', '/places', '/sync', '/speak', '/identify', '/guide',
   const r = await call(env, p, { origin: 'https://gilsonr0566-sys.github.io', body: '{not json' }); ok(r.status !== 'crash' && r.status < 500, `${p}: a broken request gave ${r.status} ${r.err || ''}`); ok(env.ai === 0, `${p}: a broken request reached the AI`); }
 { const env = mk(); const r = await call(env, '/sample', { origin: 'https://gilsonr0566-sys.github.io', body: { prompt: '' } }); ok(r.status === 400 && env.ai === 0, `/sample empty prompt: ${r.status}`); }
 // Allowance used up: no AI call, a clear 429.
-{ const d = new Date().toISOString().slice(0, 10); const env = mk({ ['n:' + d]: '8499' });
+{ const d = new Date().toISOString().slice(0, 10); const env = mk({ ['n:' + d]: '8999' });
   const r = await call(env, '/sample', { origin: 'https://gilsonr0566-sys.github.io', body: { prompt: 'x'.repeat(4000) } }); ok(r.status === 429 && env.ai === 0, `/sample with the allowance used up: status ${r.status}, AI calls ${env.ai}`); }
 // A normal request works and is counted.
 { const env = mk(); const r = await call(env, '/sample', { origin: 'https://gilsonr0566-sys.github.io', body: { prompt: 'hello' } }); ok(r.status === 200 && env.ai === 1 && env.writes > 0, `/sample normal request: status ${r.status}, AI ${env.ai}, counted ${env.writes > 0}`); }
@@ -36,5 +36,17 @@ for (const p of ['/sample', '/places', '/sync', '/speak', '/identify', '/guide',
   await call(env, '/sample', { origin: 'https://gilsonr0566-sys.github.io', body: { prompt: 'y'.repeat(200000), images: ['javascript:alert(1)', ...Array(6).fill('data:image/png;base64,AA')] } });
   const c = seen && seen.messages[0].content, txt = Array.isArray(c) ? c.find(x => x.type === 'text').text : c, imgs = Array.isArray(c) ? c.filter(x => x.type === 'image_url') : [];
   ok(txt && txt.length <= 60000, `/sample passed a ${txt && txt.length}-character prompt to the AI`); ok(imgs.length <= 4 && imgs.every(x => x.image_url.url.startsWith('data:image/')), `/sample passed ${imgs.length} photos or a non-image`); }
+// Master switch off (Richard, Nov 17): no path ever reaches the AI, tests and the recorder included.
+for (const [p, body, hd] of [['/sample', { prompt: 'hello' }], ['/script', { text: 'A long enough stop text. '.repeat(20) }], ['/speak', { text: 'Hello there.' }], ['/speak', { text: 'Hello there.' }, { 'x-kairoute-lab': '1' }], ['/voiceplan', { texts: ['Hello there.'] }], ['/x/primer', { city: 'Athens' }]]) {
+  const env = mk({}, false); cur = env; pend = []; let r;
+  try { r = await worker.fetch(new Request('https://helper.test' + p, { method: 'POST', headers: { 'content-type': 'application/json', Origin: 'https://gilsonr0566-sys.github.io', ...(hd || {}) }, body: JSON.stringify(body) }), env, ctx); } catch (e) { r = { status: 'crash' }; }
+  await Promise.all(pend); ok(env.ai === 0 && r.status !== 'crash', `AI switched off: ${p} reached the AI (${r.status})`);
+  if (p === '/voiceplan') ok(r.status === 200 && (await r.json()).ok === false, '/voiceplan with the AI off must say the phone voice reads'); }
+// Live voice off (the default): a traveler's new line is not recorded, a saved one still plays.
+{ const env = mk(); const r = await call(env, '/speak', { origin: 'https://gilsonr0566-sys.github.io', body: { text: 'Hello there.' } }); ok(r.status === 429 && env.ai === 0, `/speak with live voice off: ${r.status}, ai ${env.ai}`); }
+// Tests have their own small share: once used, no AI even with the day's total left.
+{ const d = new Date().toISOString().slice(0, 10); const env = mk({ ['t:' + d]: '1500' }); const r = await call(env, '/sample?auto=1', { origin: 'https://gilsonr0566-sys.github.io', body: { prompt: 'hello' } }); ok(r.status === 429 && env.ai === 0, `/sample from a test past its share: ${r.status}`); }
+// Cloudflare's real count is a second guard.
+{ const d = new Date().toISOString().slice(0, 10); const env = mk({ ['r:' + d]: '9700' }); const r = await call(env, '/sample', { origin: 'https://gilsonr0566-sys.github.io', body: { prompt: 'hello' } }); ok(r.status === 429 && env.ai === 0, `/sample past Cloudflare's real count: ${r.status}`); }
 console.log(fails ? `Helper security check: ${fails} of ${checks} failed` : `Helper security check passed (${checks} checks)`);
 process.exit(fails ? 1 : 0);
