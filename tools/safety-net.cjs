@@ -419,6 +419,15 @@ const log = (suite, trip, ok, what) => { results.push({ suite, trip, ok, what })
         out.cities = Object.entries(per).filter(([, n]) => n > 1).map(([c, n]) => c + ' ' + n + ' days'); return { out, cities: out.cities }; });
       await bq.close();
       log('Plan', 'example', !dup.out.length, 'One day per sight, no place to eat twice, in every city of the trip: ' + (dup.out.length ? dup.out.slice(0, 6).join('; ') : 'yes, checked ' + dup.cities.join(', '))); }
+    // The route comes first (Richard, Nov 17: "I've seen some where it took me across town, only to back and continue ...
+    // help them fit in without killing them"). Every city day of the trip, planned afresh: crowds, the midday heat or the
+    // forecast may choose between orders that ride about the same, never one that rides more than 15 min (or a fifth)
+    // longer than the best order by route alone (30 min or a third for a forecast).
+    { const bq = await chromium.launch(), pq = await (await bq.newContext()).newPage(); await pq.route('**/*', r => /^file:/.test(r.request().url()) ? r.continue() : r.abort()); await pq.goto('file://' + FILE); await pq.evaluate(() => localStorage.setItem('kairoute.intro1', '1')); await pq.reload(); await pq.waitForTimeout(800);
+      await pq.getByText('Continue trip').click(); await pq.waitForTimeout(1500);
+      const rx = await pq.evaluate(() => window.__kairouteRouteX()); await bq.close();
+      const days = rx.filter(x => x.best != null), bad = days.filter(x => x.ride - x.best > x.cap), kept = days.filter(x => x.kept), cities = [...new Set(days.map(x => x.city))];
+      log('Planner', 'planner', days.length >= 10 && !bad.length, 'No going across town and back: every day rides at most a little more than its best route (' + days.length + ' days in ' + cities.length + ' places: ' + cities.join(', ') + '): ' + (bad.length ? bad.map(x => `${x.date} ${x.city} rides ${x.ride} min, best ${x.best}`).join('; ') : 'yes' + (kept.length ? '; route order kept over crowds or heat on ' + kept.map(x => `${x.date} ${x.city} (${x.was} -> ${x.ride} min)`).join(', ') : ''))); }
     // Nov 17 demo gate: a pick naming a kept fill (a famous place written in online, saved on the device) was left out
     // of the day on a page opened fresh, until the city's sources answered. The kept fills now come back as soon as the
     // city is used: a second page with the same storage plans that pick right away, internet or not.
