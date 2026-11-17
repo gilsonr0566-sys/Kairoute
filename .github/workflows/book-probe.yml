@@ -17,3 +17,5 @@ jobs:
         with:
           node-version: 22
       - run: node tools/book-probe.mjs || true
+        env:
+          SKIP_TT: "1"
