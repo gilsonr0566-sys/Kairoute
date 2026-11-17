@@ -630,14 +630,13 @@ main:has(#view.full) { padding: 0; }
 .seg.tlview button { flex: 1 1 0; min-height: 44px; display: inline-flex; align-items: center; justify-content: center; gap: 6px; }
 .seg.tlview .gripico { width: 18px; height: 18px; }
 .timeline:not(.compact) .draghandle { display: none; }
-.timeline.compact .tl:not(.leg) .what > :not(.nm):not(.draghandle):not(.sub), .timeline.compact .tl .what .sub ~ .sub { display: none; }
-.timeline.compact .tl .what .sub { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.timeline.compact .tl.leg .ridechips { display: none; }
-.timeline.compact .tl .what { padding: 5px 0 6px; }
-.timeline.compact .tl .time { padding-top: 8px; }
-.timeline.compact .tl.leg .what { padding: 0 0 1px; font-size: 0.8rem; }
-.timeline.compact .tl.leg .legico { width: 16px; height: 16px; }
-.timeline.compact .time .ta, .timeline.compact .time .ar ~ .lv { display: none; }
+.timeline.compact .tl.leg, .timeline.compact .tl .time, .timeline.compact .tl .what > :not(.nm):not(.draghandle) { display: none; }
+.timeline.compact .tl { grid-template-columns: 30px 1fr; border-bottom: 1px solid var(--line); }
+.timeline.compact .tl .what { display: flex; align-items: center; gap: 8px; padding: 2px 0; min-height: 48px; }
+.timeline.compact .tl .what .nm { order: 0; flex: 1 1 auto; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; text-align: left; }
+.timeline.compact .tl .what .draghandle { order: 1; flex: none; position: static; }
+.timeline.compact .tl .rail { align-items: center; }
+.timeline.compact .tl .rail .dot { margin-top: 0; }
 .lede.small { font-size: 0.88rem; margin: 0; }
 .planacts { display: grid; gap: 10px; margin: 2px 0; }
 .planacts .bigbtn { width: 100%; background: var(--meal); }
