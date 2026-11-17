@@ -36,6 +36,7 @@ function offPlan(d) {
   offForget(); refillIfNeeded(d, city); if (!d.selected) seedPicks(d, city);
   transitSeen = []; let plan = null;
   try { plan = buildPlan(d); } catch (e) { plan = null; }
+  seenKeep(d, plan); // what this day shows now is what it shows offline (seen-plan.js)
   const seen = transitSeen; transitSeen = null; offForget();
   // The rides the day actually takes. While planning, the app also weighs rides between many other pairs of places;
   // offline it weighs them with whatever is kept on the device (every answer is kept as it arrives), so the plan comes

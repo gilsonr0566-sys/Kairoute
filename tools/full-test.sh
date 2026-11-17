@@ -37,6 +37,7 @@ map-e2e|functional|env MOCK=1 node tools/map-e2e.cjs
 nav-check|compat|node tools/nav-check.cjs
 layout-check|compat|node tools/layout-check.cjs
 offline-e2e|compat|node tools/offline-e2e.cjs
+seen-check|compat|node tools/seen-check.cjs
 perf-check|compat|node tools/perf-check.cjs . --json checks/speed.json
 freeze-probe|compat|node tools/freeze-probe.cjs . --cpu 4 --device phone --replay tools/fixtures/net-live.json.gz --gate --max-freeze 3000
 pill-check|ux|node tools/pill-check.cjs
