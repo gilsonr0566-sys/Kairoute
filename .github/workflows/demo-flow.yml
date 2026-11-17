@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
     inputs:
       parts:
-        description: "A = the Sun Princess trip, B = building a new trip"
+        description: "A = the Sun Princess trip, B = building a new trip, S = shown plans stay (reload, offline, data refresh)"
         default: "AB"
       site:
         description: "live = the published site, branch = this branch's build before publishing"
@@ -39,6 +39,10 @@ jobs:
         run: node tools/demo-flow.cjs
         env:
           PARTS: ${{ github.event.inputs.parts || 'AB' }}
+      - name: Shown plans stay the same (reload, offline, data refresh) on the site
+        if: ${{ always() && (contains(github.event.inputs.parts || 'AB', 'S') || contains(github.event.inputs.parts || 'AB', 'A')) }}
+        shell: bash
+        run: mkdir -p checks/demo && node tools/steady-check.cjs | tee checks/demo/steady.txt; exit ${PIPESTATUS[0]}
       - name: Report
         if: always()
         run: cat checks/demo/report.md >> "$GITHUB_STEP_SUMMARY" || true

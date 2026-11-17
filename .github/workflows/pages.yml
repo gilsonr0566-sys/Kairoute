@@ -60,11 +60,13 @@ jobs:
           node tools/later-check.cjs
           node tools/area-check.cjs
           node tools/offlog-check.cjs
+          node tools/money-check.cjs
       - name: Demo flow gate (Richard's Greece trip on this build, real internet; a failure stops the update going live)
         run: |
           python3 -m http.server 8765 >/dev/null 2>&1 &
           sleep 1
           URL=http://localhost:8765/ PARTS=A GATE=1 node tools/demo-flow.cjs
+          URL=http://localhost:8765/ node tools/steady-check.cjs
           cat checks/demo/report.md >> "$GITHUB_STEP_SUMMARY" || true
       - name: Street map check (no network needed)
         run: MOCK=1 node tools/map-e2e.cjs
@@ -109,6 +111,9 @@ jobs:
           if [ -f app/android/app/build/outputs/apk/debug/app-debug.apk ]; then cp app/android/app/build/outputs/apk/debug/app-debug.apk _site/Kairoute.apk
           else echo "Android build failed: keeping the app file from the live site"; curl -sfL -o _site/Kairoute.apk "https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/Kairoute.apk" || rm -f _site/Kairoute.apk; fi
           if [ -f ai.json ]; then cp ai.json _site/; fi
+          # Today's exchange rates, published with the site: the app's third source for home-currency figures
+          # (src/features/money.js). A failed fetch never stops a publish.
+          (curl -sfL -m 20 https://open.er-api.com/v6/latest/USD -o rates.json && jq -e '.rates.EUR' rates.json >/dev/null && cp rates.json _site/) || echo "No exchange rates today; the app uses its own sources."
       - name: Wait for GitHub's own branch copy to finish first
         # GitHub also publishes the repository as-is on every push (index.html there is only a placeholder).
         # That copy must never land after the real app, so wait until it is done before publishing.

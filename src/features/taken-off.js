@@ -51,6 +51,28 @@ function foldRemap(c, folds) {
   if (n) { try { planGen++; } catch (e) {} if (typeof readyLater === "function") readyLater(); }
   return n;
 }
+// A device that met the old bug (before foldRemap) still holds a hearted day whose lock names a sight's old id, and
+// may have had that pick taken off ("no longer in the guide"). On the next look at the day, the ids are mapped to the
+// sight that stayed (through its aliases) and a locked stop the bug took off goes back on, so the heart holds again
+// with no tap. If it truly no longer fits, the lock replay then says why and the pick comes off with that reason.
+const repairMemo = new WeakMap();
+function aliasRepair(d) {
+  const R = d && d.ready, L = R && R.lock; if (!L || !Array.isArray(L.seq)) return false;
+  let c = null; try { c = cityFor(d); } catch (e) {} if (!c) return false;
+  const g = (typeof dataGen !== "undefined" ? dataGen : 0) + ":" + (typeof planGen !== "undefined" ? planGen : 0) + ":" + allSites(c).length;
+  if (repairMemo.get(d) === g) return false; repairMemo.set(d, g);
+  const all = allSites(c), ids = new Set(all.map(x => x.id)), alias = new Map();
+  all.forEach(s => (s.alias || []).forEach(a => { if (a != null && !ids.has(a) && !alias.has(a)) alias.set(a, s); }));
+  if (!alias.size) return false;
+  const stored = [].concat(L.seq.filter(x => !x.meal).flatMap(x => [x.id].concat(x.inc || [])), d.selected || [], d.mine || [], (d.bumped || []).map(b => b.id), R.sig ? R.sig.split("|") : []);
+  const stale = [...new Set(stored.filter(id => !ids.has(id) && alias.has(id)))]; if (!stale.length) return false;
+  foldRemap(c, stale.map(id => ({ from: id, to: alias.get(id).id, name: alias.get(id).name, into: alias.get(id).name, rel: "same" })));
+  // Locked stops the bug took off come back (the traveler's optional stops come back with the lock replay itself).
+  const back = L.seq.filter(x => !x.meal && !x.b && !x.a && x.id != null && ids.has(x.id) && !(d.selected || []).includes(x.id)).map(x => x.id).filter(id => stale.includes(id) || stale.some(o => alias.get(o) && alias.get(o).id === id));
+  if (back.length) { const was = selKey(d); d.selected = [...(d.selected || []), ...back]; if (d.bumped) d.bumped = d.bumped.filter(b => !back.includes(b.id)); if (d.offLog) d.offLog = d.offLog.filter(o => !back.includes(o.id)); readyKeep(d, was); }
+  try { forget0(d); planGen++; } catch (e) {} if (typeof readyLater === "function") readyLater();
+  return true;
+}
 // Notes still worth showing: the sight isn't back on the day, and it is still in the guide.
 function offShown(d) {
   const c = cityFor(d); if (!c || !Array.isArray(d.offLog) || !d.offLog.length) return [];
@@ -77,6 +99,12 @@ if (typeof window !== "undefined") window.__kairouteOff = {
   log: i => (trip.days[i].offLog || []).slice(), shown: i => offShown(trip.days[i]).map(o => ({ n: o.n, why: o.why, k: o.k })),
   // A second copy of a picked sight arrives (as a city guide or the sources would bring it) and wins the fold, so the
   // kept sight carries the other id: the day, its heart and its lock must follow.
+  // A day as the old bug left it: hearted with the lock naming 'id', the sight then folded under another id with no
+  // remap, and the pick taken off with the old message.
+  oldBug: (i, id) => { const d = trip.days[i], c = cityFor(d), s = allSites(c).find(x => x.id === id); if (!s || !d.ready) return { error: "no sight or not hearted" };
+    const nid = id + "-kept"; s.alias = [...new Set([...(s.alias || []), id])]; s.id = nid;
+    d.selected = d.selected.filter(x => x !== id); d.bumped = (d.bumped || []).concat([{ id, name: s.name, w: 1e6 }]); d.ready.sel = selKey(d); planGen++; dataGen++;
+    return { nid }; },
   twin: (i, id, extra) => { const d = trip.days[i], c = cityFor(d), s = allSites(c).find(x => x.id === id); if (!s) return { error: "no " + id };
     const tw = Object.assign({}, s, { id: id + "-twin", builtin: false, guide: String(s.guide || "") + " ".repeat(400), merged: undefined, alias: undefined }, extra || {}); delete tw.merged; delete tw.alias;
     c.sites.push(tw); const n = dedupeSites(c); planGen++; dataGen++;

@@ -32,6 +32,14 @@ const { chromium } = require('playwright'); const path = require('path');
   ok(st.sel.includes(tw.kept[0].id), 'the pick follows the sight that stayed (' + tw.kept[0].id + ')');
   const txt0 = await p.evaluate(() => document.querySelector('#view').innerText);
   ok(!/no longer in the guide/i.test(txt0) && !/Your locked day changed/i.test(txt0), 'no "locked day changed" note');
+  // A device that met the old bug: the lock names the old id, the sight now has another, and the pick was taken off.
+  // On the next look the pick must be back and the heart hold, with no tap.
+  await p.evaluate(i => window.__kairouteReady.mark(i), A);
+  const ob = await p.evaluate(i => window.__kairouteOff.oldBug(i, window.__kairouteTruth(i).selected.find(x => /acropolis/.test(x))), A);
+  await p.evaluate(i => window.__kairouteAt(i, 'plan'), A); await p.waitForTimeout(400);
+  const rp = await p.evaluate(([i, nid]) => ({ state: window.__kairouteReady.state(i), sel: window.__kairouteTruth(i).selected, shape: window.__kairouteReady.shape(i), txt: document.querySelector('#view').innerText }), [A, ob.nid]);
+  ok(!ob.error && rp.sel.includes(ob.nid) && /Acropolis/.test(rp.shape), `a day the old bug took the Acropolis off gets it back by itself (${ob.error || rp.shape})`);
+  ok(rp.state === 'ok' && !/Your locked day changed|no longer in the guide/i.test(rp.txt), `and its heart holds with no note (state ${rp.state})`);
   // Taken off this day: unheart, cut the day's hours so a pick no longer fits, and the list says which and why.
   await p.evaluate(i => window.__kairouteReady.clear(i), A);
   await p.evaluate(i => { window.__kairouteEdit(i, { hours: 1.5, cutOk: true }); }, A); await p.evaluate(i => window.__kairouteAt(i, 'plan'), A); await p.waitForTimeout(600);
