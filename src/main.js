@@ -4618,7 +4618,9 @@ if (typeof window !== "undefined") { const touched = () => { lastTouch = Date.no
   ["pointerdown", "touchstart", "touchmove", "wheel", "keydown", "click"].forEach(t => window.addEventListener(t, touched, { capture: true, passive: true }));
   // While a finger or the mouse button is down, a redraw would swap the button under it and the tap would be lost.
   window.addEventListener("pointerdown", () => { pressing = true; }, { capture: true, passive: true });
-  ["pointerup", "pointercancel"].forEach(t => window.addEventListener(t, () => { pressing = false; lastTouch = Date.now(); }, { capture: true, passive: true })); }
+  // A click also means the finger is up: a release the page never hears (the button under it redrawn away, a tap
+  // the browser turned into a click on its own) must not leave every redraw and the offline check waiting forever.
+  ["pointerup", "pointercancel", "click"].forEach(t => window.addEventListener(t, () => { pressing = false; lastTouch = Date.now(); }, { capture: true, passive: true })); }
 // While answers keep streaming in (the first minute of a trip asks hundreds of things), redraws are spaced at least
 // ~0.9 s apart, so the screen is never redrawn back to back.
 function dataRender(keep) { drKeep = drKeep && !!keep; if (!drTimer) drTimer = setTimeout(drRun, Math.max(120, 900 - (Date.now() - drLast))); }
