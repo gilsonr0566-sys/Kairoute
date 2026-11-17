@@ -64,12 +64,12 @@ const TMODE = { RAIL: "Train", REGIONAL_RAIL: "Train", REGIONAL_FAST_RAIL: "Trai
 function decodePoly(str, prec) { const f = Math.pow(10, prec || 7), out = []; let i = 0, lat = 0, lng = 0;
   while (i < str.length) { for (const k of [0, 1]) { let sh = 0, r = 0, c; do { c = str.charCodeAt(i++) - 63; r |= (c & 31) << sh; sh += 5; } while (c >= 32 && i <= str.length); const d = r & 1 ? ~(r >> 1) : r >> 1; if (k) lng += d; else lat += d; } out.push({ lat: lat / f, lng: lng / f }); }
   return out; }
-function dayFor(dow, lng, hh) { // the next date (from 2 days ahead) with the same kind of day, at about hh:00 local time
+export function dayFor(dow, lng, hh) { // the next date (from 2 days ahead) with the same kind of day, at about hh:00 local time
   const kind = x => x === 0 ? 0 : x === 6 ? 6 : 1, want = kind(dow == null ? 3 : dow), d = new Date(Date.now() + 2 * 86400000);
   for (let k = 0; k < 8 && kind(d.getUTCDay()) !== want; k++) d.setUTCDate(d.getUTCDate() + 1);
   d.setUTCHours(hh - Math.round(lng / 15), 0, 0, 0); return d.toISOString().replace(/\.\d+Z$/, "Z"); }
 // Minutes after local midnight for a departure, in the stop's own time zone.
-function localMin(iso, tz, lng) {
+export function localMin(iso, tz, lng) {
   const t = new Date(iso); if (!isFinite(t)) return null;
   try { if (tz) { const p = new Intl.DateTimeFormat("en-GB", { timeZone: tz, hour: "2-digit", minute: "2-digit", hourCycle: "h23" }).formatToParts(t); const g = k => +(p.find(x => x.type === k) || {}).value; return g("hour") * 60 + g("minute"); } } catch (e) {}
   return ((t.getUTCHours() + Math.round(lng / 15)) * 60 + t.getUTCMinutes() + 1440) % 1440;

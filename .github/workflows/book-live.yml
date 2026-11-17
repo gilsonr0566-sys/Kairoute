@@ -1,0 +1,21 @@
+name: Book train live check
+# The Book train card on the published site with the real helper (phone and tablet); screenshots kept as an artifact.
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm i --no-save playwright@1 && npx playwright install --with-deps chromium && node tools/book-live.cjs
+      - if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: book-live
+          path: checks/book

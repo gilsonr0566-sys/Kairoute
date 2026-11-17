@@ -6489,7 +6489,7 @@ ${partsList(s, it.time)}${stopLiveNotes(it, d)}</div></div>`;
       return `<div class="${cls}">${tcell(it)}<div class="rail"><div class="dot start">${it.place ? "E" : "✓"}</div></div><div class="what"><div class="nm">${esc(it.label)}</div>
       <div class="sub">${d.type === "port" ? `All aboard ${esc(d.allAboard)}, so you have a 45-minute cushion${spare > 10 ? " plus " + dur(spare) + " spare" : ""}.` :
         spare > 10 ? dur(spare) + " to spare." : ""}</div>
-      ${(plan.w.notesEnd || []).map(t => `<div class="sub">${esc(t)}</div>`).join("")}</div></div>`;
+      ${(plan.w.notesEnd || []).map(t => `<div class="sub">${esc(t)}</div>`).join("")}${d.type === "departure" ? bookRideCard(d) : ""}</div></div>`;
     }
     return "";
   }).join("");
