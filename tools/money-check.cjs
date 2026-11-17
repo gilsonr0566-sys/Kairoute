@@ -6,17 +6,21 @@
 //  - the Journal's trip spending doesn't add up the same days as the Day plans, or the spending report fails,
 //  - no rates at all (offline, first start) breaks any of it.
 // Usage: node tools/money-check.cjs [path/to/index.html]
-const { chromium } = require('playwright'); const path = require('path');
+const { chromium } = require('playwright'); const path = require('path'), http = require('http'), fs = require('fs');
 const FILE = path.resolve(process.argv[2] || path.join(__dirname, '..', 'index.html'));
+// Served over http like the real site: a file:// page's storage can come back empty after a reload in a fresh test
+// browser, which is the test browser, not the app (the live check reloads on https and keeps every amount).
+const serve = () => new Promise(res => { const root = path.dirname(FILE); const s = http.createServer((q, r) => { let u = decodeURIComponent(q.url.split('?')[0]); if (u === '/') u = '/' + path.basename(FILE); fs.readFile(path.join(root, u), (e, d) => { if (e) { r.writeHead(404); return r.end(); } r.writeHead(200, { 'content-type': /\.html$/.test(u) ? 'text/html; charset=utf-8' : /\.js$/.test(u) ? 'text/javascript' : /\.json$/.test(u) ? 'application/json' : 'application/octet-stream' }); r.end(d); }); }); s.listen(0, '127.0.0.1', () => res(s)); });
 const RATES = { day: '2026-11-17', rates: { USD: 1, EUR: 0.862, TRY: 42.3, GBP: 0.76 } };
 (async () => {
+  const srv = await serve(), BASE = `http://127.0.0.1:${srv.address().port}/`;
   const b = await chromium.launch(); let fails = 0; const bad = m => { fails++; console.log('FAIL ' + m); }, ok = m => console.log('ok   ' + m);
   for (const withRates of [true, false]) {
     const ctx = await b.newContext({ viewport: { width: 1280, height: 800 }, locale: 'en-US' });
     await ctx.addInitScript(([r, w]) => { try { localStorage.setItem('kairoute.intro1', '1'); if (w && !sessionStorage.getItem('fxSet')) { sessionStorage.setItem('fxSet', '1'); localStorage.setItem('kairoute.fx1', JSON.stringify(Object.assign({ at: Date.now() }, r))); } } catch (e) {} }, [RATES, withRates]);
     const p = await ctx.newPage(); const errs = []; p.on('pageerror', e => errs.push(e.message));
-    await p.route('**/*', r => /^file:/.test(r.request().url()) ? r.continue() : r.abort());
-    await p.goto('file://' + FILE); await p.waitForTimeout(700);
+    await p.route('**/*', r => r.request().url().startsWith(BASE) && !/\/(ai|rates)\.json$|sw\.js$/.test(r.request().url()) ? r.continue() : r.abort());
+    await p.goto(BASE); await p.waitForTimeout(700);
     const tag = withRates ? '' : ' (no rates)';
     const cc = await p.evaluate(() => { const M = window.__kairouteMoney; return M.tripBudget().map(r => [r.city, r.cur, r.sym]); });
     const unknown = cc.filter(x => !x[1]); unknown.length ? bad('cities without a known currency' + tag + ': ' + unknown.map(x => x[0]).join(', ')) : ok('every day ashore has its currency' + tag);
@@ -61,6 +65,6 @@ const RATES = { day: '2026-11-17', rates: { USD: 1, EUR: 0.862, TRY: 42.3, GBP: 
     const r = await p.evaluate(async () => { const out = []; for (const u of ['https://open.er-api.com/v6/latest/USD', 'https://api.frankfurter.app/latest?from=USD']) { try { const j = await (await fetch(u)).json(); out.push(u.split('/')[2] + ': ' + (j.rates && j.rates.EUR ? 'EUR ' + j.rates.EUR + ' on ' + (j.date || j.time_last_update_utc) : 'no rates')); } catch (e) { out.push(u.split('/')[2] + ': ' + e.message); } } return out; });
     console.log('rate sources from the live site: ' + r.join('; '));
   } catch (e) { console.log('rate sources not checked (no internet here)'); }
-  await b.close();
+  await b.close(); srv.close();
   console.log(fails ? `Money check: ${fails} problem(s)` : 'Money check passed'); process.exit(fails ? 1 : 0);
 })();

@@ -4621,6 +4621,7 @@ let planKeep = false;
 function renderKeep() { const was = planKeep; planKeep = true; try { render(); } finally { planKeep = was; } }
 function render() {
   renderNo++; if (!planKeep) planGen++;
+  if (view !== "sites") pickFrozen = null; // coming back to the sights list sorts it afresh
   if (faithPrefsTidy()) save();
   if (tidyDests(trip)) save();
   if (restoreKeys.size) setTimeout(restoreSplits, 1500); // sights once folded by mistake come back from the saved guide
@@ -4660,6 +4661,7 @@ function render() {
 // are the same either way: earlier days in a city always choose first (see seedPicks).
 let seedTimer = 0;
 const seedNext = () => trip.days.find(o => !o.selected && !noShore(o) && cityFor(o));
+if (typeof window !== "undefined") window.__kairouteSeedDone = () => !seedNext(); // checks: every day has its starting picks
 function seedSoon() {
   if (seedTimer || !seedNext()) return;
   const idle = window.requestIdleCallback ? f => requestIdleCallback(f, { timeout: 2000 }) : f => setTimeout(f, 300);
@@ -5664,18 +5666,19 @@ let openCard = null, picksOpen = false;
 // One card per sight, collapsed to three lines: tick, name and what it does to the day; time, price and how far;
 // interest labels. A tap opens the rest (one card at a time).
 function siteCard(s, d, plan, nr) {
-  const city = cityFor(d), on = (d.selected || []).includes(s.id), anc = nr && nr.anc, isAnc = anc && s === anc;
-  let near = null, nearTo = null;
-  if (nr && !on && nr.refs.length && isFinite(s.lat) && isFinite(s.lng)) for (const r of nr.refs) { const k = hav(r, s); if (near == null || k < near) { near = k; nearTo = r; } }
+  const city = cityFor(d), sel = d.selected || [], kids = kidsOf(s, city), kidOn = kids.find(k => sel.includes(k.id)), on = sel.includes(s.id) || !!kidOn, anc = nr && nr.anc, isAnc = anc && s === anc;
+  // How far from where the day starts (the list's order), so the line never changes as you tick.
+  const st = nr && nr.st, near = st && isFinite(s.lat) && isFinite(s.lng) ? hav(st, s) : null, nearTo = st;
   const other = plannedElsewhere(d)[s.id];
   let badge = "", fs;
   if (!on && plan && !plan.error) {
     fs = nr && nr.fs && nr.fs.get(s.id) !== undefined ? nr.fs.get(s.id) : siteFits(d, s, plan); const c = fitCostOf(plan, s);
     badge = fs === false ? `<button type="button" class="tag nofit fitbadge" data-act="fitask" data-id="${esc(s.id)}" title="Ways to fit it in">Needs ${dur(c.min)}</button>`
       : fs === true ? `<span class="tag fit fitbadge">+${dur(c.min)}</span>` : `<span class="tag fitbadge pending" aria-hidden="true">+${dur(c.min)}</span>`; // same space while it's checked, so nothing moves
-  } else if (on) badge = pickStatus(s, plan).replace('class="tag ', 'class="tag fitbadge ');
+  } else if (on) badge = pickStatus(sel.includes(s.id) ? s : kidOn, plan).replace('class="tag ', 'class="tag fitbadge ');
   const sym = priceSym(city), nm = showName(s) || s.name;
-  const l2 = [dur(s.minutes), s.cost ? sym + s.cost : "Free", s.far ? "Day trip" : "", near != null ? (near < 0.05 ? "Next to " + showName(nearTo) : distTxt(near, true) + " from " + showName(nearTo)) : ""].filter(Boolean).map(esc).join(" · ");
+  const l2 = [dur(s.minutes), s.cost ? sym + s.cost : "Free", s.far ? "Day trip" : "", near != null ? (near < 0.05 ? "At " + nearTo.name : distTxt(near, true) + " from " + nearTo.name) : ""].filter(Boolean).map(esc).join(" · ");
+  const incl = kids.length ? `<div class="incl"><b>Included:</b> ${kids.map(k => esc(showName(k) || k.name)).join(" · ")}</div>` : "";
   const l3 = `<div class="tags ints">${cardLabels(s, city, nr && nr.my).map(x => `<span class="tag int${x.mine ? " mine" : " kind"}">${esc(x.t)}</span>`).join("")}</div>`;
   const ex = ((plan && plan.elsewhere) || []).find(x => x.s.id === s.id);
   const seen = other ? `<span class="tag seen">${!on ? esc(schedWhen(other)) : ex && ex.earlier ? "Seen " + esc(fmtDow(ex.on.date)) + " " + esc(fmtDate(ex.on.date)) + " · not repeated" : ex && ex.later ? "No room today · seen " + esc(fmtDow(ex.on.date)) + " " + esc(fmtDate(ex.on.date)) : "Today · not repeated " + esc(fmtDow(other.date)) + " " + esc(fmtDate(other.date))}</span>` : "";
@@ -5690,7 +5693,7 @@ function siteCard(s, d, plan, nr) {
       ${srcNote(s)}${fs === false ? `<button type="button" class="btn ghost small" data-act="fitask" data-id="${esc(s.id)}">Ways to fit it in</button>` : ""}
     </div>`;
   const open = openCard === s.id ? " open" : "";
-  const head = `<div class="nrow"><div class="name">${esc(nm)}</div>${badge}</div><div class="l2">${l2}</div>${seen && !on ? `<div class="tags">${seen}</div>` : ""}${l3}`;
+  const head = `<div class="nrow"><div class="name">${esc(nm)}</div>${badge}</div><div class="l2">${l2}</div>${incl}${seen && !on ? `<div class="tags">${seen}</div>` : ""}${l3}`;
   if (fs === false) return `<div class="site nofitcard${open}" data-card="${esc(s.id)}" aria-disabled="true">
     <span class="nobox" aria-hidden="true"></span>
     <div class="body">${head}${det}</div></div>`;
@@ -5781,6 +5784,75 @@ if (typeof window !== "undefined") window.__kairoutePicker = i => { const d = tr
 const d0 = plan => `${fmt(plan.start)} to ${fmt(plan.endBy)}`;
 // Which day a sight is already planned on, as the list shows it: "Day 3 · Fri Jul 2 · Corinth day".
 function schedWhen(o) { const i = trip.days.indexOf(o); return `Day ${i + 1} · ${fmtDow(o.date)} ${fmtDate(o.date)} · ${dayName(o)}`; }
+// ---------- The sights list's steady order (Richard, Nov 17) ----------
+let pickFrozen = null; // the list as set when the page opened: section and place of every sight
+const frozenKey = (d, city) => trip.days.indexOf(d) + "|" + keyOf(city.city) + "|" + siteFilter + "|" + prefsSig();
+// Where the day starts (hotel, port, station), for "nearest first".
+// Sightseeing starts after the last of the day's opening steps (the hotel after an airport arrival).
+function startOf(d, city) {
+  const w = dayWindowSafe(d, city); if (!w || w.error || !w.head || !w.head.length) return null;
+  const last = w.head[w.head.length - 1], L = lodgingFor(d, city), ok = x => x && isFinite(x.lat) && isFinite(x.lng);
+  if (!ok(last)) return null;
+  const label = ok(L) && hav(L, last) < 0.05 ? "your hotel" : /port|embark/.test(d.type) || last.leaveWhenReady ? "the ship" : showName(w.head[0]) || "your start";
+  return { lat: +last.lat, lng: +last.lng, name: label };
+}
+// A sight that stands inside a bigger one of the same guide: inside its map area, or named as one of its parts
+// (the Parthenon in the Acropolis, the Sistine Chapel in the Vatican Museums). It is shown in the bigger one's card as
+// "Included", never as a pick of its own. Nested ones go to the outermost. Same answer every time for the same data.
+// What Wikidata says each sight is part of (P361) or stands in (P276), kept on the device so the list is the same
+// offline. Asked once per sight through the helper's /facts.
+const PART_STORE = "kairoute.partof2";
+let partMem = (() => { try { return JSON.parse(localStorage.getItem(PART_STORE) || "{}") || {}; } catch (e) { return {}; } })(), partV = 0;
+const partAsked = {};
+async function partScan(city) {
+  const k = keyOf(city.city); if (!freeAI || (partAsked[k] && Date.now() - partAsked[k] < 600000)) return; partAsked[k] = Date.now();
+  const need = [...new Set(allSites(city).map(x => x.wd).filter(w => w && !(w in partMem)))].slice(0, 120);
+  for (let i = 0; i < need.length; i += 20) {
+    const ids = need.slice(i, i + 20); let got = null;
+    try { const r = await fetch(`${freeAI.url}/facts`, { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ ids }) }); if (r.ok) got = (await r.json()).facts || {}; } catch (e) {}
+    if (!got) return;
+    for (const id of ids) { const f = got[id]; if (f && Array.isArray(f.partOf)) partMem[id] = { p: f.partOf, at: f.at || [] }; } // an older helper's answer (no partOf) is asked again later
+  }
+  if (need.some(id => id in partMem)) { try { localStorage.setItem(PART_STORE, JSON.stringify(partMem)); } catch (e) {} partV++; }
+}
+if (typeof window !== "undefined") window.__kairoutePartSet = m => { Object.assign(partMem, m); partV++; }; // checks: Wikidata's answers
+const nestMemo = new WeakMap();
+function nestMap(city) {
+  const all = allSites(city), sig = all.length + "|" + (city.areaV || 0) + "|" + partV + "|" + all.map(x => x.id).join(",");
+  const m = nestMemo.get(city); if (m && m.sig === sig) return m;
+  // The same name both ways, never "Acropolis" for the Acropolis Museum; the city's own name tells nothing apart
+  // ("Royal Palace" is the Royal Palace of Naples).
+  const cw = new Set(keyOf(city.city || "").split(" ").filter(w => w.length > 2)), nc = t => keyOf(String(t || "")).split(" ").filter(w => !cw.has(w)).join(" ") || keyOf(String(t || ""));
+  const same = (n, M) => n && ((nameMatch(nc(n), nc(M.name)) && nameMatch(nc(M.name), nc(n))) || (M.local && nameMatch(n, M.local) && nameMatch(M.local, n)));
+  // Named as one of its parts, or one half of a name that joins places ("Colosseum and Roman Forum" holds the Roman Forum).
+  const halves = A => { const n = String(showName(A) || "").replace(/\s*\(.*?\)\s*/g, " "); return /\s(and|&)\s/i.test(n) ? n.split(/\s+(?:and|&)\s+(?:the\s+)?/i).map(x => x.trim()).filter(x => x.length > 3) : []; };
+  const partOf = (M, A) => ((A.parts || []).length > 1 && A.parts.some(p => [p.name, p.en].some(n => same(n, M)))) || (halves(A).some(h => same(h, M)) && !halves(M).length && hav(A, M) < 1.5);
+  const big = (A, M) => (A.minutes || 0) > (M.minutes || 0) || ((A.minutes || 0) === (M.minutes || 0) && String(A.id) < String(M.id));
+  const par = new Map();
+  for (const M of all) {
+    if (!isFinite(M.lat)) continue;
+    // Inside means inside its grounds (Richard, Nov 17: Mars Hill is its own site, just below the Acropolis, free and
+    // outside the fence). Wikidata's "located in" (P276) counts; its looser "part of" (P361) only for a sight standing
+    // right at the main one (a clock in its cathedral's tower), never one a short walk away.
+    const pm = w => { const v = partMem[w]; return Array.isArray(v) ? { p: v, at: [] } : v || { p: [], at: [] }; };
+    const wdIn = (M, A) => !!(M.wd && A.wd && M.wd !== A.wd && ((pm(M.wd).at.includes(A.wd) && hav(M, A) < 1.5) || (pm(M.wd).p.includes(A.wd) && hav(M, A) < 0.15)));
+    const inside = (M, A) => partOf(M, A) || wdIn(M, A) || (typeof inArea === "function" && inArea(M, A) && !DISTRICT.test((A.category || "") + " " + A.name));
+    const hosts = all.filter(A => A !== M && A.id !== M.id && !A.quick && inside(M, A) && !(inside(A, M) && !big(A, M)));
+    if (hosts.length) par.set(M.id, hosts.sort((x, y) => (y.minutes || 0) - (x.minutes || 0) || String(x.id).localeCompare(String(y.id)))[0]);
+  }
+  const top = x => { let t = x, k = 0; while (par.has(t.id) && k++ < 5) t = par.get(t.id); return t; };
+  const out = { sig, par: new Map(), kids: new Map() };
+  for (const [id, A] of par) { const T = top(A); if (T.id === id) continue; out.par.set(id, T); const M = all.find(x => x.id === id); if (!out.kids.has(T.id)) out.kids.set(T.id, []); out.kids.get(T.id).push(M); }
+  nestMemo.set(city, out); return out;
+}
+// A whole quarter (old town, historic centre) holds many sights people pick one by one: on the Day plan they fold
+// into its walk when both are planned (area-visit.js); in the list they stay their own cards.
+const DISTRICT = /old town|historic (centre|center|district)|quarter|district|neighbo|\bbarrio|\blanes\b|city centre|downtown|centro storico|altstadt/i;
+// The list uses the nesting as it was when the page opened (pickFrozen.nest), so it never changes under the traveler.
+const nestNow = city => (pickFrozen && pickFrozen.nest && pickFrozen.city === city ? pickFrozen.nest : nestMap(city));
+const parentOf = (x, city) => city ? nestNow(city).par.get(x.id) || null : null;
+const kidsOf = (x, city) => city ? nestNow(city).kids.get(x.id) || [] : [];
+if (typeof window !== "undefined") window.__kairoutePickerNest = i => { const c = cityFor(trip.days[i]); if (!c) return null; const m = nestMap(c); const all = allSites(c); return { withWd: all.filter(x => x.wd).length, n: all.length, partKnown: all.filter(x => x.wd && x.wd in partMem).length, nest: [...m.kids].map(([id, ks]) => ({ parent: (all.find(x => x.id === id) || {}).name, kids: ks.map(k => k.name) })) }; };
 function renderSites(d) {
   const city = cityFor(d);
   if (!city) return `${dayHeading(d)}${busyBlock()}${errBlock()}${needsCity(d)}`;
@@ -5792,30 +5864,33 @@ function renderSites(d) {
   const main = city.sites.filter(s => !s.quick && (f === "all" || (f === "must" ? s.mustSee : sightKind(s, city) === f)));
   const quick = city.sites.filter(s => s.quick);
   const far = (city.farther || []).slice();
-  // The traveler's picks always sit at the top: the one picked last first (the anchor), then the rest of the
-  // picks. Everything not picked follows, closest first: to the anchor, or with no anchor to the nearest pick.
-  // Picks keep a steady order, newest first (each new tick goes on top and nothing else moves). Every pick
-  // shows here whatever the filter, and wherever the sight sits in the guide (quick stops, day trips).
-  const anc = siteAnchor(d, city), on = x => d.selected.includes(x.id);
-  const picked = pickedSites(d, city).reverse();
-  const refs = picked.filter(x => isFinite(x.lat) && isFinite(x.lng));
-  const byNear = xs => refs.length ? nearSort(xs, refs) : xs;
-  // Sights already planned on another day go to the bottom, below an "Already scheduled" line, in trip order
-  // (Richard, Nov 14), so what's still free for today sits on top.
-  const elsew = plannedElsewhere(d), sch = x => !!elsew[x.id];
-  // List order (Richard, Nov 16): your picks (one folded row), what fits your day, what won't fit today (dimmed),
-  // then a folded "More nearby" for sights matching none of your interests (truly famous sights stay in the main
-  // list) and the quick stops; sights planned on other days at the very bottom.
+  // A steady list (Richard, Nov 17: "still a lot of movement ... this will confuse the heck out of the user"). The
+  // order and sections are set once when the page opens (or on "Sort again"), the same way every time for the same
+  // trip: your picks (folded), must-sees, the other sights, what can't fit today at all (dimmed), More nearby
+  // (outside your interests), sights planned on other days. In every section, nearest the day's start first, ties
+  // by name. A tick, an untick or a change in what fits updates the card where it is; nothing moves until the
+  // traveler sorts again or comes back to the page. A sight that arrives later (a fuller guide) joins the end of its
+  // section. Sights inside a bigger one (the Parthenon in the Acropolis) are shown in it as "Included", never apart.
+  const anc = siteAnchor(d, city), on = x => d.selected.includes(x.id) || kidsOf(x, city).some(k => d.selected.includes(k.id));
+  const elsew = plannedElsewhere(d), sch = x => !!elsew[x.id] && !d.selected.includes(x.id);
   const my = myTags(), fsMap = new Map(), fsOf = x => { if (!fsMap.has(x.id)) fsMap.set(x.id, plan && !plan.error ? siteFits(d, x, plan) : null); return fsMap.get(x.id); };
   const pass = x => f === "all" || (f === "must" ? x.mustSee : sightKind(x, city) === f);
   const laterIds = new Set(cityBooked(city) ? laterList(city).map(x => x.id) : []); // shown once, in "If you come back"
-  const free = [...main.filter(x => !x.quick), ...far.filter(pass), ...quick.filter(pass)].filter(x => !on(x) && !sch(x) && !laterIds.has(x.id));
   const nearbyOnly = x => x.quick || (my.size > 0 && !famousTrue(x, city) && !siteInts(x).some(k => my.has(k)));
-  const mainFree = free.filter(x => !nearbyOnly(x)), moreFree = free.filter(nearbyOnly);
-  const fitL = byNear(mainFree.filter(x => fsOf(x) !== false)), wontL = byNear(mainFree.filter(x => fsOf(x) === false));
-  const moreL = [...byNear(moreFree.filter(x => fsOf(x) !== false)), ...byNear(moreFree.filter(x => fsOf(x) === false))];
-  const schedL = [...main, ...far, ...quick].filter(x => !on(x) && sch(x)).sort((a, b) => trip.days.indexOf(elsew[a.id]) - trip.days.indexOf(elsew[b.id]) || a.name.localeCompare(b.name));
-  const near = { refs, anc, fs: fsMap, my }; sitesCtx = { d, plan, near };
+  partScan(city);
+  if (!pickFrozen || pickFrozen.key !== frozenKey(d, city)) pickFrozen = { key: frozenKey(d, city), sec: new Map(), ord: new Map(), n: 0, city, nest: nestMap(city), fresh: true };
+  const kept = pickFrozen.fresh ? null : pickFrozen.sec; pickFrozen.fresh = false; // a sight already in the list stays in its place (one that stops fitting this visit too)
+  const all = allSites(city).filter(x => (!laterIds.has(x.id) || (kept && kept.has(x.id))) && !parentOf(x, city) && (pass(x) || on(x)));
+  const st = startOf(d, city), dist = x => st && isFinite(x.lat) && isFinite(x.lng) ? hav(st, x) : 1e9;
+  const full = (() => { if (!plan || plan.error) return false; const m = meterCalc(plan, d); return !!(m && (m.over || m.dropped.length)); })();
+  const secOf = x => on(x) ? "picks" : sch(x) ? "sched" : nearbyOnly(x) ? "more" : plan && !plan.error && (full || fitNever(plan, d, x)) ? "wont" : x.mustSee ? "must" : "main";
+  // Sights planned on other days go by day, in date order (then nearest first), fixed like the rest.
+  const place = x => { const sc = secOf(x); pickFrozen.sec.set(x.id, sc); pickFrozen.ord.set(x.id, (sc === "sched" ? 1e6 * (trip.days.indexOf(elsew[x.id]) + 1) : 0) + pickFrozen.n++); };
+  for (const x of all.slice().sort((x, y) => dist(x) - dist(y) || String(showName(x)).localeCompare(String(showName(y))) || String(x.id).localeCompare(String(y.id)))) if (!pickFrozen.sec.has(x.id)) place(x); // a sight that arrives later joins the end of its section
+  const inSec = k => all.filter(x => pickFrozen.sec.get(x.id) === k).sort((x, y) => pickFrozen.ord.get(x.id) - pickFrozen.ord.get(y.id));
+  const picked = inSec("picks"), mustL = inSec("must"), fitL = inSec("main"), wontL = inSec("wont"), moreL = inSec("more");
+  const schedL = inSec("sched");
+  const refs = [], near = { refs, anc, fs: fsMap, my, st }; sitesCtx = { d, plan, near }; void fsOf;
   const tl = plan && !plan.error ? timeLeft(plan, d) : null, availM = plan && !plan.error ? Math.max(1, plan.endBy - plan.start) : 0;
   const leftTxt = tl ? ` · <b>${tl.left >= 5 ? dur(tl.left) + " left today" : "today is full"}</b>` : "";
   const pickbar = tl ? `<div class="pickbar" role="status" aria-live="polite"><div class="pbrow"><b>Day ${trip.days.indexOf(d) + 1} · ${esc(fmtDow(d.date))} ${esc(fmtDate(d.date))}</b><span class="pbleft">${tl.left >= 5 ? dur(tl.left) + " left to fill" : "Your day is full"}</span></div><div class="mbar"><i style="width:${Math.min(100, Math.max(0, Math.round((availM - tl.left) / availM * 100)))}%"></i></div></div>` : "";
@@ -5833,15 +5908,17 @@ function renderSites(d) {
   ${city.ai ? `<p class="ai-note">Written by your AI guide from checked sources: every place is confirmed on the map, stories draw on Wikipedia and Wikivoyage (CC BY-SA), hours and access on OpenStreetMap contributors (ODbL). Check opening hours before you go.</p>` : city.builtin ? `<p class="ai-note">Kairoute guide. Hours and prices are typical: check before you go.</p>` : ""}${city.sites.some(x => x.srcOnly) ? `<p class="ai-note">More sights come from checked sources (Wikidata, Wikipedia, heritage registers); their short descriptions are from Wikivoyage (CC BY-SA). Each one's full story is written when you add it to a day.</p>` : ""}
   </div><div class="sitesmain pane" data-pane="sites">
   ${bumpedNote(d)}${pickbar}
-  ${picked.length ? `<div class="picksfold${picksOpen ? " open" : ""}"><button type="button" class="foldrow" data-act="picksfold" aria-expanded="${picksOpen}"><span>Your picks (${picked.length})</span><span class="foldhint">${picksOpen ? "Hide" : "Show"}</span></button>
+  ${picked.length ? `<div class="picksfold${picksOpen ? " open" : ""}"><button type="button" class="foldrow" data-act="picksfold" aria-expanded="${picksOpen}"><span>Your picks (${picked.filter(on).length})</span><span class="foldhint">${picksOpen ? "Hide" : "Show"}</span></button>
   <div class="sitelist anchorlist">${picked.map(s => siteCard(s, d, plan, near)).join("")}</div></div>` : ""}
-  ${fitL.length ? `<p class="listlbl">Fits your day (${fitL.length})${picked.length ? "" : leftTxt}</p><div class="sitelist">${fitL.map(s => siteCard(s, d, plan, near)).join("")}</div>` : `<p class="listlbl">Nothing else fits today${leftTxt}</p>`}
+  <div class="sortrow"><p class="listlbl">${mustL.length || fitL.length ? (st ? `Nearest ${esc(st.name)} first` : "Your sights") : "Nothing else fits today"}${picked.length ? "" : leftTxt}</p><button type="button" class="btn ghost small" data-act="sortagain" title="Put your new picks on top and sort the list again">Sort again</button></div>
+  ${mustL.length ? `<p class="listlbl">Must-sees (${mustL.length})</p><div class="sitelist mustlist">${mustL.map(s => siteCard(s, d, plan, near)).join("")}</div>` : ""}
+  ${fitL.length ? `<p class="listlbl">${mustL.length ? "More sights" : "Sights"} (${fitL.length})</p><div class="sitelist">${fitL.map(s => siteCard(s, d, plan, near)).join("")}</div>` : ""}
   ${wontL.length ? `<p class="listlbl">Won't fit today (${wontL.length})</p><div class="sitelist wontlist">${wontL.map(s => siteCard(s, d, plan, near)).join("")}</div>` : ""}
   ${moreL.length ? `<details class="more nearby"><summary>More nearby (${moreL.length})</summary><p class="lede small" style="margin:8px 0">${my.size ? "Sights outside your interests, and" : "Quick stops:"} small stops your route adds when it passes them. Tick one to plan it.</p>
   <div class="sitelist">${moreL.map(s => siteCard(s, d, plan, near)).join("")}</div></details>` : ""}
   ${errBlock()}
   ${addPlaceCard(d)}
-  ${laterBlock(city, d, plan, near)}
+  ${laterBlock(city, d, plan, near, new Set(all.map(x => x.id)))}
   ${schedL.length ? `<div class="schedline" role="separator"><span>Already scheduled on other days (${schedL.length})</span></div>
   <p class="lede small">Tick one to move it to today; it comes off its other day.</p><div class="sitelist sched">${schedL.map(s => siteCard(s, d, plan, near)).join("")}</div>` : ""}
   <div class="stickybar"><span class="count">${n} site${n === 1 ? "" : "s"} picked${plan && !plan.error && (plan.bonus || []).length ? ` · ${plan.bonus.length} optional on your plan` : ""}</span><button class="btn" data-act="toplan">See my day plan</button></div></div></div>`;
@@ -6417,7 +6494,7 @@ ${partsList(s, it.time)}${stopLiveNotes(it, d)}</div></div>`;
       return `<div class="${cls}">${tcell(it)}<div class="rail"><div class="dot start">${it.place ? "E" : "✓"}</div></div><div class="what"><div class="nm">${esc(it.label)}</div>
       <div class="sub">${d.type === "port" ? `All aboard ${esc(d.allAboard)}, so you have a 45-minute cushion${spare > 10 ? " plus " + dur(spare) + " spare" : ""}.` :
         spare > 10 ? dur(spare) + " to spare." : ""}</div>
-      ${(plan.w.notesEnd || []).map(t => `<div class="sub">${esc(t)}</div>`).join("")}</div></div>`;
+      ${(plan.w.notesEnd || []).map(t => `<div class="sub">${esc(t)}</div>`).join("")}${d.type === "departure" ? bookRideCard(d) : ""}</div></div>`;
     }
     return "";
   }).join("");
@@ -6828,6 +6905,7 @@ function edited() { trip.sample = false; }
 function jumpToToday(t) { const i = t.days.findIndex(x => isToday(x)); if (i >= 0) t.active = i; }
 // Sights list: "Your picks" opens and folds in place; a tap on a card opens it (one at a time), the tick box picks.
 document.addEventListener("click", e => {
+  if (e.target.closest && e.target.closest('[data-act="sortagain"]')) { pickFrozen = null; render(); toTop(); e.stopImmediatePropagation(); return; } // the one tap that re-sorts the list
   const b = e.target.closest && e.target.closest('[data-act="picksfold"]');
   if (b) { picksOpen = !picksOpen; const f = b.closest(".picksfold"); if (f) { f.classList.toggle("open", picksOpen); b.setAttribute("aria-expanded", String(picksOpen)); const h = b.querySelector(".foldhint"); if (h) h.textContent = picksOpen ? "Hide" : "Show"; } e.stopImmediatePropagation(); return; }
   const c = e.target.closest && e.target.closest("#view .site[data-card]");
@@ -7066,7 +7144,7 @@ document.addEventListener("change", e => {
     if (t.checked && !addPick(d, id, true)) { t.checked = false; return; }
     delete d.autoEmpty; d.ownList = true; // the traveler's first tick or untick makes the list theirs
     if (t.checked) { d.anchor = id; delete d.cleared; }
-    else { d.selected = d.selected.filter(x => x !== id); markMine(d, id, false); if (d.anchor === id) d.anchor = null; if (!d.selected.length) d.cleared = true; } // unticking the last one: the day stays free
+    else { const ks = kidsOf({ id }, cityFor(d)).map(k => k.id); d.selected = d.selected.filter(x => x !== id && !ks.includes(x)); [id, ...ks].forEach(x => markMine(d, x, false)); if (d.anchor === id) d.anchor = null; if (!d.selected.length) d.cleared = true; } // a bigger sight comes off with what's inside it // unticking the last one: the day stays free
     const back = cardSpot(id); save(); renderKeep(); back(); return; // the list never jumps (Richard, Nov 16); every change here is in the trip, which keys the plans
   }
   if (t.dataset && t.dataset.part) {

@@ -234,9 +234,11 @@ async function partA(b) {
     if (d.type === "sea" || !d.city || doneCity.has(d.city)) continue; doneCity.add(d.city);
     await timed(p, "open Change stops", go("sites", d.i), 2500);
     const shown = await p.evaluate(() => [...document.querySelectorAll("[data-card]")].map(e => ((e.querySelector(".name") || {}).textContent || "").trim()));
+    /* a sight inside a bigger one is offered in that card's "Included" line (Richard, Nov 17), never as its own card */
+    const incl = await p.evaluate(() => [...document.querySelectorAll("[data-card] .incl")].flatMap(e => e.textContent.replace(/^\s*Included:\s*/, "").split(" · ").map(x => x.trim())));
     const g = guides[d.dest] || {}; const inGuide = g.shown || (g.sites || []).map(x => x.replace(/ \[quick\]$/, "")).concat(g.farther || []); // as the list prints them (English only, Nov 16)
-    const missing = inGuide.filter(n => !shown.some(x => x === n));
-    ok(!missing.length, `Change stops for ${d.dest} offers every sight in its guide (${shown.length} shown${missing.length ? "; missing: " + missing.join(", ") : ""})`);
+    const missing = inGuide.filter(n => !shown.some(x => x === n) && !incl.includes(n));
+    ok(!missing.length, `Change stops for ${d.dest} offers every sight in its guide (${shown.length} shown${incl.length ? ", " + incl.length + " included in a bigger one" : ""}${missing.length ? "; missing: " + missing.join(", ") : ""})`);
     const all = shown.join(" | ");
     for (const [city, hard, soft] of PICKER) if (city.test(d.dest)) {
       for (const re of hard) ok(re.test(all), `Change stops for ${d.dest} offers ${re.source.replace(/\\/g, "")}`);

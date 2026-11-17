@@ -30,7 +30,7 @@ const FILE = path.resolve(process.argv[2] || path.join(__dirname, '..', 'index.h
       const pickId = nofit || id; if (!pickId) continue; tested++;
       if (nofit) { const added = await p.evaluate(id => window.__kairouteTryAdd(id), nofit); await p.waitForTimeout(400); if (added) bad(i, `${nofit} was added through the add gate although it doesn't fit`); if (!(await p.evaluate(() => !!document.querySelector('.fitbox')))) bad(i, `refusing ${nofit} didn't explain why`); }
       // Picking never jumps the list (Richard, Nov 16): the card after the ticked one stays where it was on screen.
-      let jump = null;
+      let jump = null; const ord0 = await p.evaluate(() => [...document.querySelectorAll('.sitesmain [data-card]')].map(c => c.dataset.card).join(','));
       if (!nofit) { const nx = await p.evaluate(id => { document.querySelector(`[data-card="${id}"]`).scrollIntoView({ block: 'center' }); const cs = [...document.querySelectorAll('.sitesmain [data-card]')].filter(x => x.offsetParent), k = cs.findIndex(x => x.dataset.card === id), n = cs[k + 1] || cs[k - 1]; return n ? { id: n.dataset.card, top: n.getBoundingClientRect().top, h: cs[k].getBoundingClientRect().height } : null; }, id);
         await p.evaluate(id => document.querySelector(`input[data-site="${id}"]`).click(), id);
         if (nx) { await p.waitForTimeout(900); jump = await p.evaluate(nx => { const n = [...document.querySelectorAll(`.sitesmain [data-card="${nx.id}"]`)].find(x => x.offsetParent); const pane = document.querySelector('.sitesmain'), atEnd = (pane.scrollHeight > pane.clientHeight + 4 && getComputedStyle(pane).overflowY !== 'visible') ? pane.scrollTop >= pane.scrollHeight - pane.clientHeight - 2 : scrollY >= document.documentElement.scrollHeight - innerHeight - 2; return n && !atEnd ? Math.round(n.getBoundingClientRect().top - nx.top) : null; }, nx); /* at the very end of the list the page can only close up */ if (jump != null && Math.abs(jump) <= nx.h + 24) jump = null; } } /* at most the picked card's own slot closes up */
@@ -62,11 +62,14 @@ const FILE = path.resolve(process.argv[2] || path.join(__dirname, '..', 'index.h
         continue;
       }
       if (jump != null && Math.abs(jump) > 6 && !(await p.evaluate(() => !!document.querySelector('.fitbox')))) bad(i, `the list moved ${jump}px when a sight was picked`);
+      // Nov 17 (Richard: "still a lot of movement"): a tick changes nothing about the list's order; the sight stays where it was, ticked.
+      if ((await p.evaluate(() => [...document.querySelectorAll('.sitesmain [data-card]')].map(c => c.dataset.card).join(','))) !== ord0) bad(i, `ticking ${id} changed the list's order`);
+      if (!(await p.evaluate(id => { const x = document.querySelector(`input[data-site="${id}"]`); const why = [...document.querySelectorAll('.banner.bumped, .offlog')].some(b => b.offsetParent && /\S/.test(b.innerText)); return !!(x && x.checked) || why; }, id))) bad(i, `${id} is neither shown ticked where it was nor explained`);
       await p.evaluate(() => { const f = document.querySelector('.picksfold:not(.open) [data-act="picksfold"]'); if (f) f.click(); }); await p.waitForTimeout(100); // open Your picks
       const r = await p.evaluate(id => {
         const first = document.querySelector('.sitesmain .site'), anc = document.querySelectorAll('.site.anchor');
-        const main = [...document.querySelectorAll('.sitesmain > .sitelist:not(.anchorlist):not(.sched)')][0];
-        const ds = main ? [...main.querySelectorAll('.l2')].map(t => { const m = /([\d.]+)\s*(m|km|ft|mi)\b/.exec(t.innerText); return /Next to/.test(t.innerText) ? 0 : m ? +m[1] * ({ m: 0.001, km: 1, ft: 0.0003048, mi: 1.609 })[m[2]] : NaN; }) : [];
+        const lists = [...document.querySelectorAll('.sitesmain > .sitelist:not(.anchorlist):not(.sched)')];
+        const ds = lists.map(main => [...main.querySelectorAll('.l2')].map(t => { const m = /([\d.,]+)\s*(m|km|ft|mi)\b/.exec(t.innerText); return /\bAt /.test(t.innerText) ? 0 : m ? +m[1].replace(',', '') * ({ m: 0.001, km: 1, ft: 0.0003048, mi: 1.609 })[m[2]] : NaN; }));
         const ids = [...document.querySelectorAll('input[data-site]')].map(x => x.dataset.site);
         const pane = document.querySelector('.sitesmain'), top = first.getBoundingClientRect().top;
         return { firstId: first.querySelector('input').dataset.site, nAnc: anc.length, ds, dup: ids.length - new Set(ids).size, top, h: innerHeight, scrolled: pane.scrollTop };
@@ -81,20 +84,22 @@ const FILE = path.resolve(process.argv[2] || path.join(__dirname, '..', 'index.h
       // The list and the Day plan agree on every pick: on the plan <=> the card says so.
       const dis = await p.evaluate(i => { const t = window.__kairouteTruth(i), onPlan = new Set(t.picks || []); return (t.selected || []).filter(sid => { const c = document.querySelector(`.sitesmain input[data-site="${sid}"]`); const tag = c && c.closest('.site').querySelector('.tag.here'); return !!(tag && /On your plan|On the way/.test(tag.innerText)) !== onPlan.has(sid); }); }, i);
       if (dis.length) bad(i, `list and Day plan disagree about: ${dis.join(', ')}`);
-      if (r.firstId !== id || r.nAnc !== 1) bad(i, `picked sight not on top as anchor (${r.firstId} vs ${id})`);
       if (r.dup) bad(i, `${r.dup} sight(s) shown twice`);
-      for (let k = 1; k < r.ds.length; k++) if (!(r.ds[k] + 0.06 >= r.ds[k - 1])) { bad(i, `not closest-first: ${r.ds.join(', ')}`); break; }
+      for (const L of r.ds) for (let k = 1; k < L.length; k++) if (!(L[k] + 0.06 >= L[k - 1])) { bad(i, `a section isn't nearest-the-start first: ${L.join(', ')}`); break; }
       if (SHOTS && i < 2) { require('fs').mkdirSync(SHOTS, { recursive: true }); await p.screenshot({ path: path.join(SHOTS, `${tag}-day${i + 1}.png`) }); }
       // Suggest my tour keeps the anchor on this day.
       if (i === 0) { await p.evaluate(() => document.querySelector('[data-act="suggesttour"]').click()); await p.waitForTimeout(2500);
         const still = await p.evaluate(id => { const x = document.querySelector(`input[data-site="${id}"]`); return x && x.checked && !!x.closest('.site.anchor'); }, id);
         if (!still) console.log(`note ${tag} day 1: anchor came off in Suggest my tour (didn't fit the day)`); }
       // Untick -> back to the usual order.
+      const ordU = await p.evaluate(() => [...document.querySelectorAll('.sitesmain [data-card]')].map(c => c.dataset.card).join(','));
       await p.evaluate(id => { const x = document.querySelector(`input[data-site="${id}"]`); if (x && x.checked) x.click(); }, id); await p.waitForTimeout(300);
       if (await p.evaluate(() => document.querySelectorAll('.site.anchor').length)) bad(i, 'anchor stays after unticking');
-      // Picks always on top, with or without an anchor (folded lists aside).
-      const order = await p.evaluate(() => [...document.querySelectorAll('.sitesmain input[data-site]')].filter(x => !x.closest('details')).map(x => x.checked));
-      if (order.indexOf(false) >= 0 && order.lastIndexOf(true) > order.indexOf(false)) bad(i, 'a picked sight sits below an unpicked one');
+      // Unticking doesn't move anything either; "Sort again" puts the day's picks on top (in Your picks).
+      if (!(await p.evaluate(() => !!document.querySelector('.fitbox'))) && (await p.evaluate(() => [...document.querySelectorAll('.sitesmain [data-card]')].map(c => c.dataset.card).join(','))) !== ordU) bad(i, 'unticking changed the list\'s order');
+      await p.evaluate(() => { const b = document.querySelector('[data-act="sortagain"]'); if (b) b.click(); }); await p.waitForTimeout(300);
+      const order = await p.evaluate(() => [...document.querySelectorAll('.sitesmain input[data-site]')].map(x => ({ c: x.checked, fold: !!x.closest('.picksfold') })));
+      if (order.some(x => x.c && !x.fold)) bad(i, 'after "Sort again" a pick is not in Your picks');
     }
     // A pick that stops fitting (here: the day shortened to 2 hours) never stays ticked: it comes off, a note
     // says why with a way to fit it back in, and the count matches the plan (Richard, Nov 14: National Garden).
@@ -154,15 +159,14 @@ const FILE = path.resolve(process.argv[2] || path.join(__dirname, '..', 'index.h
     await p.evaluate(() => document.querySelector('.daychip[data-day="2"]').click()); await p.waitForTimeout(200);
     await p.evaluate(() => { const el = [...document.querySelectorAll('[data-goto="sites"]')].find(e => e.offsetParent); if (el) el.click(); }); await p.waitForTimeout(250);
     const seqTop = async () => p.evaluate(() => { const xs = [...document.querySelectorAll('.sitesmain input[data-site]')].filter(x => !x.closest('details')); const firstOff = xs.findIndex(x => !x.checked); return { picks: xs.slice(0, firstOff < 0 ? xs.length : firstOff).map(x => x.dataset.site), after: firstOff >= 0 && xs.slice(firstOff).some(x => x.checked), all: xs.map(x => (x.checked ? '*' : '') + x.dataset.site).join(' ') }; });
+    let seqOrd = null; void seqTop;
     for (const [act, sid] of [['tick', 'corinth-far'], ['tick', 'corinth-canal-far'], ['untick', 'corinth-far'], ['tick', 'corinth-far']]) {
       const has = await p.evaluate(sid => !!document.querySelector(`input[data-site="${sid}"]`), sid); if (!has) { console.log('note: no ' + sid + ' in this trip'); break; }
       await p.evaluate(sid => document.querySelector(`input[data-site="${sid}"]`).click(), sid); await p.waitForTimeout(600);
       if (await p.evaluate(() => !!document.querySelector('.fitbox'))) { await p.evaluate(() => document.querySelector('.fitbox [data-act="fitcancel"]').click()); continue; }
-      const t = await seqTop();
-      if (t.after) bad(2, `after ${act} ${sid}: a pick sits below an unpicked sight: ${t.all}`);
-      if (act === 'tick' && t.picks[0] !== sid) bad(2, `after ticking ${sid} it isn't first (${t.picks.join(', ')})`);
-      if (act === 'untick' && t.picks.includes(sid)) bad(2, `${sid} still in picks after unticking`);
-      if (act === 'untick' && t.picks[0] !== 'corinth-canal-far') bad(2, `unticking moved the other picks (${t.picks.join(', ')})`);
+      const o = await p.evaluate(() => [...document.querySelectorAll('.sitesmain [data-card]')].map(c => c.dataset.card).join(',')); if (!seqOrd) seqOrd = o; else if (o !== seqOrd) bad(2, `after ${act} ${sid} the list's order changed`);
+      const on = await p.evaluate(sid => (document.querySelector(`input[data-site="${sid}"]`) || {}).checked, sid);
+      if ((act === 'tick') !== !!on) bad(2, `after ${act} ${sid} its box shows ${on ? 'ticked' : 'unticked'}`);
     }
     // A guide refresh never loses sights; searching for a sight the guide has uses it (same gate), never a copy.
     const cg = await p.evaluate(() => window.__kairouteCarryCheck());
