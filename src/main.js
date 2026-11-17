@@ -1871,6 +1871,9 @@ function buildPlanForDay(d) {
   }
   const ck = keyOf(city.city), live = s => ({ _ck: ck, oh: siteWindow(s, d.date), cw: crowdWindows(Object.assign({ _city: ck }, s), d.date) });
   chosen = chosen.map(s => Object.assign({}, s, { minutes: Math.max(stopFloor(s), Math.round(s.minutes * mult / 5) * 5 || s.minutes) }, live(s)));
+  // An area and the picked sights inside it (Vatican City with St. Peter's and the Sistine Chapel) are one visit,
+  // never separate stops counted twice (area-visit.js).
+  chosen = foldAreas(chosen, d);
   const mealsExpected = MEALS.filter(m => w.start < m.to - 30 && w.endBy > m.from + 45).reduce((a, m) => a + m.len, 0);
   let order = optimize(chosen, O, Z);
   const total = o => fixed + routeCost(o, O, Z) + o.reduce((a, s) => a + s.minutes, 0) + mealsExpected;
@@ -2041,7 +2044,7 @@ function buildPlanForDay(d) {
   let fitted = locked ? { seq: lk.seq, dropped: lk.dropped } : fitDay();
   if (!locked && fitted.dropped.length && !d.rain) { quickMeals = true; const q = fitDay(); if (worth(q) > worth(fitted) + 1) fitted = q; else quickMeals = false; }
   if (locked) { along.length = 0; along.push(...lk.along); }
-  let seq = fitted.seq; const dropped = fitted.dropped;
+  let seq = fitted.seq; const dropped = fitted.dropped.flatMap(x => x.foldOf || [x]); // a visit that doesn't fit: its sights each show as left out
   // Spare time: add the best nearby sights that still fit, with a 15-minute cushion (they show as bonus stops)
   const bonus = locked ? lk.bonus.slice() : [];
   // A day the traveler cleared on purpose (unticked everything) stays free: no bonus stops are pushed onto it.
@@ -2056,10 +2059,10 @@ function buildPlanForDay(d) {
     trip.days.forEach(o => { if (o !== d && o.ready && cityFor(o) === city) (o.ready.bonus || []).forEach(id => taken.add(id)); });
     const keepBonus = d.ready && Array.isArray(d.ready.bonus) ? new Set(d.ready.bonus) : null;
     trip.days.slice(0, trip.days.indexOf(d)).forEach(o => { if (cityFor(o) !== city) return; if (!bonusMemo.has(o)) { try { buildPlan(o); } catch (e) {} } (bonusMemo.get(o) || []).forEach(id => taken.add(id)); });
-    const inSeq = new Set(seq.filter(x => !x.mealOf).map(x => x.id)), skip = new Set((d.selected || []).concat(dropped.map(x => x.id)));
+    const inSeq = new Set(seq.filter(x => !x.mealOf).flatMap(x => x.foldOf ? x.foldOf.map(y => y.id) : [x.id])), skip = new Set((d.selected || []).concat(dropped.map(x => x.id)));
     // An optional stop the app adds on its own must come with its story: a sight listed from the sources whose story
     // isn't written yet is offered in the sights list, never slipped into the day as an extra.
-    const pool = (city.sites || []).concat(city.farther || []).filter(x => !x.quick && !(x.srcOnly && !x.guide) && religiousOk(x) && !inSeq.has(x.id) && !skip.has(x.id) && !taken.has(x.id) && !(d.skipBonus || []).includes(x.id) && !closedForDay(x, d, w) && (!d.rain || x.indoor) && (!keepBonus || keepBonus.has(x.id)))
+    const pool = (city.sites || []).concat(city.farther || []).filter(x => !x.quick && !(x.srcOnly && !x.guide) && religiousOk(x) && !inSeq.has(x.id) && !skip.has(x.id) && !taken.has(x.id) && !(d.skipBonus || []).includes(x.id) && !areaCovered(x, seq) && !closedForDay(x, d, w) && (!d.rain || x.indoor) && (!keepBonus || keepBonus.has(x.id)))
       .map(x => Object.assign({}, x, { minutes: Math.max(stopFloor(x), Math.round(x.minutes * mult / 5) * 5 || x.minutes), bonus: true }, live(x)));
     const limit = w.endBy - 15 - tailCost(), leaving = d.type === "embark" || d.type === "departure";
     let capped = false;
@@ -2105,7 +2108,7 @@ function buildPlanForDay(d) {
     try { let q = null, r = null; const sd = loopSeeds(seq, O, ZZ), rest = sd.slice(1).map(x => [x, simDay(x, t0, O, ZZ, style).cost]).sort((a, b) => a[1] - b[1]);
       for (const s0 of [sd[0]].concat(rest.length ? [rest[0][0]] : [])) { const qi = polishDay(s0, t0, O, ZZ, style, city), ri = simDay(qi, t0, O, ZZ, style); if (ri.late <= r0.late && ri.end <= Math.max(r0.end, w.endBy - tailCost()) && (!r || ri.cost < r.cost)) { q = qi; r = ri; } } if (q) seq = q; } finally { crossOn = false; } }
   bonusMemo.set(d, bonus.map(x => x.id));
-  keptMemo.set(d, seq.filter(x => !x.mealOf && !x.bonus && !x.along).map(x => x.id));
+  keptMemo.set(d, seq.filter(x => !x.mealOf && !x.bonus && !x.along).flatMap(x => x.foldOf ? x.foldOf.map(y => y.id) : [x.id]));
   // A sight that doesn't fit today but is also ticked on a later day here isn't lost: it's seen that day.
   for (const x of dropped.slice()) { const o = trip.days.slice(myDay + 1).find(o => cityFor(o) === city && (o.selected || []).includes(x.id)); if (o) { dropped.splice(dropped.indexOf(x), 1); elsewhere.push({ s: x, on: o, later: true }); } }
   // Timeline
@@ -2114,13 +2117,18 @@ function buildPlanForDay(d) {
   const go = (p, type, extra) => {
     const leg = travel(prev, p);
     items.push({ type: "travel", leg, time: clock }); clock += leg.min;
-    const f = type === "stop" && p.oh ? ohFit(p.oh, clock, p.minutes) : null; if (f && f.wait) clock += f.wait;
-    const sw = type === "stop" ? showWait(p, clock) : 0; clock += sw;
+    // Inside an area visit the sights follow one another: the visit was fitted as one stop.
+    // A wait inside the visit (to open, or for a timed show) is taken only from the time the visit has spare.
+    const vb = extra && extra.area && extra.area.k > 0 ? extra.area.budget : null, fits = m => !vb || (m <= vb.left && ((vb.left -= m), true));
+    const f = type === "stop" && p.oh ? ohFit(p.oh, clock, p.minutes) : null; if (f && f.wait) { if (fits(f.wait)) clock += f.wait; else f.wait = 0; }
+    let sw = type === "stop" ? showWait(p, clock) : 0; if (sw && !fits(sw)) sw = 0; clock += sw;
     items.push(Object.assign({ type, place: p, time: clock }, f && (f.wait || f.late) ? { wait: f.wait, ohLate: f.late, opens: f.open, closes: f.close } : {}, sw ? { showWait: sw } : {}, extra || {})); clock += p.minutes || 0; prev = p;
   };
   w.head.slice(1).forEach(p => go(p, "fixed"));
   const meals = [];
   seq.forEach(s => {
+    if (s.inc) { const ps = areaParts(s), budget = { left: Math.max(0, s.minutes - ps.reduce((a, m) => a + (m.minutes || 0), 0) - (s.areaWalk || 0)) };
+      ps.forEach((m, k) => go(Object.assign({}, m, s.bonus ? { bonus: true } : {}), "stop", { area: { id: s.foldOf[0].id, name: s.foldOf[0].name, k, n: ps.length, minutes: s.minutes, budget } })); return; }
     if (!s.mealOf) { go(s, "stop"); return; }
     const leg = travel(prev, s); items.push({ type: "travel", leg, time: clock }); clock += leg.min;
     const at = Math.max(clock, s.mealOf.from), alts = mealAlternatives(s, seq, city);
@@ -2168,7 +2176,8 @@ function buildPlanForDay(d) {
   const stops = items.filter(i => i.type === "stop");
   const eve0 = evening.find(e => !e.booked && e.place); if (locked) quickMeals = lk.quick;
   const lock = { t: lockT, seq: lockSeqOut(seq), late: simDay(seq, t0, O, ZZ, style).late, quick: !!quickMeals, eve: eve0 ? keyOf(eve0.place.name) : "" };
-  return { city, w, items, stops, dropped, elsewhere, quickMeals, along, bonus, fill, meals, evening, swaps, closedToday, lock, locked, lockBroken, start: w.start, endBy: w.endBy, end: clock, walkKm, over: clock > w.endBy + (hardEnd(d) ? 0 : 5), tight: budget < fixed + 45 };
+  const folded = [...new Set(seq.filter(x => x.foldOf).flatMap(x => x.foldOf.map(y => y.id)))]; // picks shown inside an area visit
+  return { city, w, items, stops, dropped, folded, elsewhere, quickMeals, along, bonus, fill, meals, evening, swaps, closedToday, lock, locked, lockBroken, start: w.start, endBy: w.endBy, end: clock, walkKm, over: clock > w.endBy + (hardEnd(d) ? 0 : 5), tight: budget < fixed + 45 };
 }
 
 // ---------- AI ----------
@@ -3117,7 +3126,7 @@ function sightKind(s, city) {
 }
 function fameFor(d, city) {
   if (!city) return Promise.resolve();
-  const k = keyOf(city.city);
+  const k = keyOf(city.city); areaScan(city);
   if (fameAsked[k]) { if (fameAsked[k] !== true) fameMarkOnce(city, fameAsked[k]); return fameWait[k] || Promise.resolve(); }
   fameAsked[k] = true;
   const lbl = srcLabel(city, d);
@@ -3917,7 +3926,7 @@ if (typeof window !== "undefined") {
     const sites = new Map([...(city.sites || []), ...(city.farther || [])].map(x => [x.id, x])), eats = new Set((city.restaurants || []).map(r => keyOf(r.name)));
     const stops = pl.items.filter(x => x.type === "stop"), meals = pl.items.filter(x => x.type === "meal" || x.type === "evening");
     const pts = pl.items.filter(x => x.place && x.type !== "travel" && x.type !== "evening");
-    return { hours: d.hours, autoTitle: d.title ? null : dayAuto(d), place: mainPlace(d), destination: d.destination, stopNames: stops.map(x => x.place.name), keptNames: stops.filter(x => !x.place.bonus && !x.place.along).map(x => x.place.name), closedSel: (d.selected || []).map(id => sites.get(id)).filter(x => x && closedForDay(x, d, pl.w)).map(x => x.name), fill: pl.fill || null, rain: !!d.rain, fillOn: d.fillTime !== false, type: d.type, mustSees: (city.sites || []).filter(x => x.mustSee && !x.quick && religiousOk(x) && !siteClosed(x, d.date)).map(x => ({ id: x.id, minutes: x.minutes || 45 })), selected: (d.selected || []).slice(), picks: stops.filter(x => !x.place.bonus && !x.place.along).map(x => x.place.id), bonus: stops.filter(x => x.place.bonus).map(x => x.place.id), along: stops.filter(x => x.place.along).map(x => x.place.id),
+    return { hours: d.hours, autoTitle: d.title ? null : dayAuto(d), place: mainPlace(d), destination: d.destination, stopNames: stops.map(x => x.place.name), keptNames: stops.filter(x => !x.place.bonus && !x.place.along).map(x => x.place.name), closedSel: (d.selected || []).map(id => sites.get(id)).filter(x => x && closedForDay(x, d, pl.w)).map(x => x.name), fill: pl.fill || null, rain: !!d.rain, fillOn: d.fillTime !== false, type: d.type, mustSees: (city.sites || []).filter(x => x.mustSee && !x.quick && religiousOk(x) && !siteClosed(x, d.date)).map(x => ({ id: x.id, minutes: x.minutes || 45 })), selected: (d.selected || []).slice(), picks: [...new Set(stops.filter(x => !x.place.bonus && !x.place.along).map(x => x.place.id).concat((pl.folded || []).filter(id => (d.selected || []).includes(id))))], bonus: stops.filter(x => x.place.bonus).map(x => x.place.id), along: stops.filter(x => x.place.along).map(x => x.place.id),
       dropped: pl.dropped.map(x => x.id), elsewhere: (pl.elsewhere || []).map(x => x.s.id), over: pl.over, end: pl.end, endBy: pl.endBy, times: pl.items.filter(x => x.type !== "travel" && x.type !== "evening").map(x => x.time),
       unknownStops: stops.filter(x => !sites.has(x.place.id) && !(city.sites || []).some(y => y.name === x.place.name)).map(x => x.place.name),
       invented: meals.filter(x => !x.place.booked && !x.place.generic && !eats.has(keyOf(x.place.name))).map(x => x.place.name),
@@ -6389,7 +6398,7 @@ function renderPlan(d) {
         <div class="optacts"><button class="btn small" data-act="bonusadd" data-id="${esc(s.id)}">Add to my picks</button><button class="btn ghost small" data-act="bonusskip" data-id="${esc(s.id)}">Skip it</button></div></div></div>`;
       n++;
       return `<div class="${cls}" data-stop="${esc(s.id)}">${tcell(it)}<div class="rail"><div class="dot">${n}</div></div><div class="what">${canDrag ? dragHandle(s) : ""}
-        <button class="nm namebtn" data-open="${esc(s.id)}">${esc(s.name)}</button><div class="sub">${dur(s.minutes)} · ${cat(s)}${s.mustSee ? " · Must-see" : ""}${s.unesco ? " · UNESCO" : ""}${s.far && s.travel ? " · " + esc(unitText(s.travel)) : ""}</div>
+        ${it.area ? `<div class="areahd">${esc(areaHead(it))}</div>` : ""}<button class="nm namebtn" data-open="${esc(s.id)}">${esc(s.areaRest ? "The rest of " + s.name : s.name)}</button><div class="sub">${dur(s.minutes)} · ${cat(s)}${s.mustSee ? " · Must-see" : ""}${s.unesco ? " · UNESCO" : ""}${s.far && s.travel ? " · " + esc(unitText(s.travel)) : ""}</div>
 ${partsList(s, it.time)}${stopLiveNotes(it, d)}</div></div>`;
     }
     if (it.type === "evening") {
@@ -6409,7 +6418,7 @@ ${partsList(s, it.time)}${stopLiveNotes(it, d)}</div></div>`;
     }
     return "";
   }).join("");
-  const stopsN = plan.stops.filter(s => !s.place.along && !s.place.bonus).length, optN = plan.stops.filter(s => s.place.bonus).length;
+  const stopsN = new Set(plan.stops.filter(s => !s.place.along && !s.place.bonus).map(s => s.place.id).concat(plan.folded || [])).size /* a pick inside an area visit counts too */, optN = plan.stops.filter(s => s.place.bonus).length;
   const L = DAY_LEN.find(x => x[0] === +d.hours), canLen = d.type === "land" || d.type === "arrival";
   // Heads-up: everything that needs a decision today, in one place above the schedule, most urgent first.
   const askOut = new Set(d.pendingOrder && orderNote(d, plan) ? d.pendingOrder.names : []), dropNow = plan.dropped.filter(s => !askOut.has(s.name)); // the order question already names those

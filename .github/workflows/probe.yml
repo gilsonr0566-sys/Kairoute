@@ -17,4 +17,4 @@ jobs:
           node-version: 22
       - env:
           CITIES: ${{ inputs.cities }}
-        run: node tools/area-probe.mjs
+        run: node tools/probe.mjs
