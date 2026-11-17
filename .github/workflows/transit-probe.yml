@@ -11,6 +11,9 @@ on:
       map_ms:
         description: "ms each map server is given (empty = 15000, as the helper)"
         default: ""
+      raildump:
+        description: "lat,lng;... list the train routes near each point"
+        default: ""
       trace:
         description: "1 = print every map and timetable request"
         default: ""
@@ -33,6 +36,7 @@ jobs:
           DATE: ${{ inputs.date }}
           TRACE: ${{ inputs.trace }}
           MAP_MS: ${{ inputs.map_ms }}
+          RAILDUMP: ${{ inputs.raildump }}
         run: node tools/transit-probe.mjs || true
       - env:
           FERRY: ${{ inputs.ferry }}

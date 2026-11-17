@@ -26,3 +26,14 @@ for (const [name, p] of pairs) {
   } catch (e) { console.log(`\n== ${name}: ${e.message} ${(e.why || []).join("; ")}`); }
   await new Promise(r => setTimeout(r, 3000));
 }
+// RAILDUMP="lat,lng;...": the train route relations within 3 km of each point, with how their stops are mapped
+// (which member types and roles), to see why a line isn't matched.
+if (process.env.RAILDUMP) for (const p of process.env.RAILDUMP.split(";")) {
+  const q = `[out:json][timeout:60];(node(around:3000,${p})[railway~"^(station|halt|stop)$"];node(around:3000,${p})[public_transport=stop_position];way(around:3000,${p})[railway=platform];)->.s;.s out tags 20;rel(bn.s)[type=route];out tags;rel(bw.s)[type=route];out tags;`;
+  for (const ep of ["https://overpass-api.de/api/interpreter", "https://maps.mail.ru/osm/tools/overpass/api/interpreter", "https://overpass.private.coffee/api/interpreter"]) {
+    try { const r = await fetch(ep, { method: "POST", body: "data=" + encodeURIComponent(q), headers: { "content-type": "application/x-www-form-urlencoded" }, signal: AbortSignal.timeout(90000) }); if (!r.ok) { console.log(`  ${ep.split("/")[2]} ${r.status}`); continue; }
+      const d = await r.json(); console.log(`\n== rail near ${p} (${ep.split("/")[2]})${d.remark ? " REMARK " + d.remark.slice(0, 80) : ""}`);
+      for (const e of d.elements || []) console.log(`  ${e.type}/${e.id} ${JSON.stringify(e.tags || {}).slice(0, 230)}`);
+      break; } catch (e) { console.log(`  ${ep.split("/")[2]} ${e.name}`); }
+  }
+}
