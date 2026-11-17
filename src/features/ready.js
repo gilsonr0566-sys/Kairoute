@@ -21,6 +21,7 @@ function selKey(d) { return (Array.isArray(d.selected) ? d.selected.slice().sort
 function readyKeep(d, was) { if (!d) return; if (d.ready && d.ready.sel != null && d.ready.sel === was) d.ready.sel = selKey(d); if (d.seedSig && d.seedSig === was) d.seedSig = selKey(d); }
 function readyState(d) {
   if (!d || !d.ready) return "";
+  if (d.ready.lock) try { aliasRepair(d); } catch (e) {} // a day the old fold bug left with a stale id (taken-off.js)
   // The traveler changed the day's sights themselves: it's theirs to mark ready again (no warning needed).
   if (d.ready.sel != null && d.ready.sel !== selSig(d)) return "";
   if (noShore(d) || !cityFor(d)) return "ok";
