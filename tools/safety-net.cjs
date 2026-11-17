@@ -399,7 +399,8 @@ const log = (suite, trip, ok, what) => { results.push({ suite, trip, ok, what })
       const lg = await pq.evaluate(() => window.__kairouteDays().map(d => ({ d: d.date + ' ' + d.dest, legs: window.__kairouteLegs(d.i) || [] }))); await bq.close();
       const miss = [], short = []; let rides = 0, either = 0;
       for (const x of lg) for (const l of x.legs) { const straight = l.km / 1.3;
-        if (l.mode !== 'walk') { rides++; if (!l.choices.length) miss.push(x.d + ': ' + l.how); }
+        // The ride's label is always one of its buttons (Nov 17: "Train or car" over a lone "Taxi or car" button).
+        if (l.mode !== 'walk') { rides++; if (!l.choices.length || !l.choices.some(c => c.startsWith(l.how + ' '))) miss.push(x.d + ': ' + l.how + ' [' + l.choices.join(', ') + ']'); }
         if (straight >= 0.65 && straight <= 3.9 && l.mode !== 'flight') { either++; if (!(l.choices.some(c => /^Walk/.test(c)) && l.choices.some(c => /^Taxi/.test(c)))) short.push(x.d + ': ' + l.how + ' ' + l.min + ' min [' + l.choices.join(', ') + ']'); } }
       const okR2 = !miss.length && !short.length && rides > 10 && either > 10;
       log('Rides', 'rides', okR2, 'Every ride has its buttons, every 600 m to 4 km leg offers walk or taxi: ' + (okR2 ? rides + ' rides, ' + either + ' walk-or-taxi legs over the sample trip' : JSON.stringify({ rides, either, miss: miss.slice(0, 5), short: short.slice(0, 5) }))); }

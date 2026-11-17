@@ -48,7 +48,7 @@ function compare(a, b, how) {
   for (const i of Object.keys(a)) {
     const x = a[i], y = b[i];
     if (!y) { fail(`${how}: day ${+i + 1} ${x.dest} has no plan`); n++; continue; }
-    if (x.plan !== y.plan) { fail(`${how}: day ${+i + 1} ${x.dest} plan changed (${y.picks.seen ? "replayed" : "planned afresh"}${y.picks.why ? ": " + y.picks.why : ""})\n  was: ${x.plan}\n  now: ${y.plan}`); n++; }
+    if (x.plan !== y.plan) { fail(`${how}: day ${+i + 1} ${x.dest} plan changed (${y.picks.seen ? "replayed" : "planned afresh"}${y.picks.why ? ": " + y.picks.why : ""})\n  first visit: ${x.picks.seen ? "replayed" : "planned afresh"}${x.picks.why ? " (" + x.picks.why + ")" : ""}, remembered then: ${x.picks.kept}${x.picks.skip ? " [not kept: " + x.picks.skip + "]" : ""}\n  was: ${x.plan}\n  now: ${y.plan}`); n++; }
     const gone = y.picks.gone;
     if (gone.length) { fail(`${how}: day ${+i + 1} ${x.dest}: picks taken off without a note: ${gone.join(", ")}`); n++; }
     if (y.picks.missing.length) { fail(`${how}: day ${+i + 1} ${x.dest}: picks not on the day and not explained: ${y.picks.missing.join(", ")}`); n++; }
@@ -64,6 +64,7 @@ function compare(a, b, how) {
   let p = await ctx.newPage(); p.on("pageerror", e => errs.push(e.message));
   await open(p); const s0 = await settled(p);
   const kept = await p.evaluate(() => window.__kairouteSeen.keepAll());
+  { const s1 = await snap(p); for (const i of Object.keys(s0)) if (s1[i]) s0[i].picks = s1[i].picks; } // what was remembered, for the reports
   log(`     ${Object.keys(s0).length} city days shown, ${kept} plans remembered`);
   if (!Object.keys(s0).length) fail("the sample trip has no city days");
   for (const i of Object.keys(s0)) if (s0[i].picks.missing.length) fail(`first visit: day ${+i + 1} ${s0[i].dest}: picks not on the day and not explained: ${s0[i].picks.missing.join(", ")}`);

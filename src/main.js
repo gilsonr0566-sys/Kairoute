@@ -869,8 +869,9 @@ if (typeof window !== "undefined") window.__kairouteOneEach = (opts, want) => on
 function rideLeg(a, b, road, lastMile, walkMin) {
   const walk = walkMin ? [{ id: "walk", label: "Walk", min: walkMin, kind: "walk" }] : [];
   let opts = transitFor(a, b);
-  // No line found: the ride is a taxi, and says so (not "Taxi, bus or metro"); a short one can be walked instead.
-  if (!opts || !opts.length) return Object.assign({}, road, { how: road.how === "Taxi, bus or metro" ? "Taxi or car" : road.how, key: pairKey(a, b), choice: "taxi", road: road.min, lastMile, choices: [...walk, { id: "taxi", label: "Taxi or car", min: road.min, kind: "car" }] });
+  // No line found: the ride is a taxi, and says so (not "Taxi, bus or metro", not "Train or car": the label never names
+  // a way to go that has no button, Richard Nov 17); a short one can be walked instead.
+  if (!opts || !opts.length) return Object.assign({}, road, { how: "Taxi or car", key: pairKey(a, b), choice: "taxi", road: road.min, lastMile, choices: [...walk, { id: "taxi", label: "Taxi or car", min: road.min, kind: "car" }] });
   // Leaving the ship for the first ride you go when the boat or train goes: with no timetable, plan on half the gap
   // between sailings plus boarding rather than a full gap (a full gap stays on every ride that must catch one later,
   // and on the ride back to the ship).

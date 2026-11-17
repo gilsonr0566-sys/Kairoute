@@ -56,12 +56,14 @@ function seenSettled(d) {
   try { busy = (typeof guideLoading === "function" && guideLoading(d)) || fillPending > 0 || transitQ.size > 0 || transitBusy; } catch (e) {}
   return !busy || Date.now() - first[k] > 15000;
 }
+const seenNo = {}; // why a day's shown plan wasn't remembered last time (test reports)
 function seenKeep(d, plan) {
   if (seenOffline() || !d || !plan || plan.error || !plan.lock || !Array.isArray(plan.lock.seq) || (d.ready && d.ready.lock)) return;
   if (plan.seen || ridePref !== "public" || skipEvening) return; // already the remembered plan, or a trial of another way
   // Every pick must be in the guide: a plan made while a pick is still on its way is never the one kept.
-  const m = seenIds(d); if (!m || (d.selected || []).some(id => !m.has(id))) return;
-  if (!seenSettled(d)) return;
+  const m = seenIds(d); if (!m || (d.selected || []).some(id => !m.has(id))) { seenNo[seenId(d)] = "a pick not in the guide yet"; return; }
+  if (!seenSettled(d)) { seenNo[seenId(d)] = "data still arriving"; return; }
+  delete seenNo[seenId(d)];
   const st = seenStore(), k = seenId(d), v = { sel: selKey(d), ctx: seenCtx(d), lock: plan.lock }, j = JSON.stringify(v);
   if (st[k] && JSON.stringify(st[k]) === j) return;
   // The plan cache isn't cleared: the plan kept is the one just shown, and replaying it gives the same plan, so
@@ -90,6 +92,7 @@ if (typeof window !== "undefined") {
     // gone: picks from before (was) that are no longer on the day under any of their ids, with no note saying why.
     const sel = new Set((d.selected || []).map(id => m.get(id) || id)), off = new Set((d.offLog || []).map(o => o.id));
     const gone = (was || []).filter(id => !sel.has(m.get(id) || id) && !off.has(id));
-    return { sel: (d.selected || []).slice(), gone, seen: !!(p && p.seen), why: seenWhy(d, p), missing: p && !p.error ? (d.selected || []).filter(id => !has(id)) : [] }; };
+    const st = seenStore()[seenId(d)];
+    return { sel: (d.selected || []).slice(), gone, seen: !!(p && p.seen), why: seenWhy(d, p), kept: st && st.lock ? st.lock.seq.map(x => x.meal ? "meal:" + ((x.node || {}).name || "") : (x.b ? "+" : "") + (x.n || x.id)).join(" > ") : "", skip: seenNo[seenId(d)] || "", missing: p && !p.error ? (d.selected || []).filter(id => !has(id)) : [] }; };
   window.__kairouteSteadyBusy = () => { try { return transitQ.size > 0 || transitBusy || fillPending > 0 || trip.days.some(d => guideLoading(d)); } catch (e) { return false; } };
 }
