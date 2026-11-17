@@ -3,6 +3,8 @@
 // ticked, whether a second open gives the same list, and which sights stand inside another one (map areas, or named
 // as one of its parts). Screenshots of an Athens and a Rome day on phone and tablet. URL: the site to probe.
 const { chromium } = require("playwright"); const fs = require("fs");
+// Screenshots go into the log too (base64 JPEG in lines), for machines that can't download workflow files.
+async function shot(p, file) { const buf = await p.screenshot({ path: file, type: "jpeg", quality: 72 }); const b = buf.toString("base64"), name = file.split("/").pop(); for (let k = 0; k < b.length; k += 3000) console.log(`SHOT ${name} ${k / 3000} ${b.slice(k, k + 3000)}`); }
 const URL = process.env.URL || "https://gilsonr0566-sys.github.io/Kairoute/", OUT = process.env.OUT || "probe-shots";
 (async () => {
   fs.mkdirSync(OUT, { recursive: true }); const b = await chromium.launch();
@@ -25,7 +27,7 @@ const URL = process.env.URL || "https://gilsonr0566-sys.github.io/Kairoute/", OU
       if (tag === "phone") {
         console.log(`\nDAY ${d.i + 1} ${d.date} ${d.dest}: ${a.length} cards`);
         for (const s of ["picks", "main", "wont", "more", "sched"]) { const xs = a.filter(x => x.sec === s); if (xs.length) console.log(`  [${s}] ${xs.map(x => x.n + (x.on ? "*" : "")).join(" | ")}`); }
-        const nest = await p.evaluate(i => { const T = window.__kairoutePicker && window.__kairoutePicker.nest ? window.__kairoutePicker.nest(i) : null; if (T) return T;
+        const nest = await p.evaluate(i => { const T = window.__kairoutePickerNest ? window.__kairoutePickerNest(i) : null; if (T) return T;
           return null; }, d.i);
         if (nest) console.log("  NEST " + JSON.stringify(nest));
         // Tick the third free card and see what moved.
@@ -42,11 +44,11 @@ const URL = process.env.URL || "https://gilsonr0566-sys.github.io/Kairoute/", OU
         const c = await read(); const same = JSON.stringify(a.map(x => x.id + x.sec)) === JSON.stringify(c.map(x => x.id + x.sec));
         console.log(`  REOPEN ${same ? "same list" : "DIFFERENT list: " + c.map(x => x.n).filter((n, k) => !a[k] || a[k].n !== n).slice(0, 6).join("; ")}`);
       }
-      if (/athens|rome|madrid/i.test(d.dest) && !fs.existsSync(`${OUT}/${tag}-${d.city}.png`)) {
+      if (/athens|rome|madrid/i.test(d.dest) && !fs.existsSync(`${OUT}/${tag}-${d.city}.jpg`)) {
         await p.evaluate(() => { const m = document.querySelector(".sitesmain"); if (m) m.scrollTop = 0; scrollTo(0, 0); }); await p.waitForTimeout(400);
-        await p.screenshot({ path: `${OUT}/${tag}-${d.city}.png` });
+        await shot(p, `${OUT}/${tag}-${d.city}.jpg`);
         await p.evaluate(() => { const m = document.querySelector(".sitesmain"); if (m && m.scrollHeight > m.clientHeight) m.scrollTop = 700; else scrollTo(0, 900); }); await p.waitForTimeout(400);
-        await p.screenshot({ path: `${OUT}/${tag}-${d.city}-2.png` });
+        await shot(p, `${OUT}/${tag}-${d.city}-2.jpg`);
       }
     }
     await p.close();
