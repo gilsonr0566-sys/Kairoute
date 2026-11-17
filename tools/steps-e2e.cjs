@@ -1,0 +1,153 @@
+// Trip step by step, with the AI writer switched off (Richard, Nov 17: no AI, no paid service).
+// 1. The day rules: stop lists of every shape (city stays, a cruise between stays, flying in and boarding the same day,
+//    off the ship and flying home the same day, a one-night stop, sea days) make exactly the expected days.
+// 2. The real screens, phone and tablet: New trip -> step by step (no AI shortcut offered while it's off) -> a city
+//    with no built-in guide (Paris), a built-in one (Athens) and a cruise with two ports -> Build my trip. The trip has
+//    the right days and times; the Paris guide is built from its sources alone (snapshot in tools/fixtures) with no AI
+//    asked; its sightseeing days get real stops; the hotel typed is found on the map; nothing calls the AI.
+// Usage: node tools/steps-e2e.cjs [path/to/index.html]   (exit 1 on any FAIL)
+// LIVE: URL=https://gilsonr0566-sys.github.io/Kairoute/ node tools/steps-e2e.cjs  (the real helper and sources, AI as it is set)
+const { chromium } = require('playwright'); const path = require('path'); const fs = require('fs');
+const FILE = path.resolve(process.argv[2] || path.join(__dirname, '..', 'index.html'));
+const FIX = n => JSON.parse(fs.readFileSync(path.join(__dirname, 'fixtures', n), 'utf8'));
+const PARIS = FIX('src-paris.json');
+const LIVE = process.env.URL || '';
+const HOTEL = LIVE ? 'Hotel Lutetia' : 'Grand Test Hotel';
+let fails = 0; const bad = m => { fails++; console.log('FAIL ' + m); }, ok = m => console.log('ok   ' + m);
+const RULES = [
+  { name: 'Greece-shaped trip: 4 nights, cruise, 4 nights, train, 3 nights', legs: [
+      { k: 'stay', place: 'Athens', date: '2027-06-30', nights: 4, inBy: 'flight', inAt: '10:30' },
+      { k: 'cruise', board: 'Athens', date: '2027-07-04', aboard: '18:30', ship: 'Sun Princess', ports: [
+        { date: '2027-07-05', place: 'Heraklion', arrive: '07:00', aboard: '16:30' }, { date: '2027-07-07', place: 'Santorini', arrive: '07:00', aboard: '20:30', tender: true }],
+        end: 'Barcelona', endDate: '2027-07-09', off: '07:00' },
+      { k: 'stay', place: 'Barcelona', date: '2027-07-09', nights: 4 },
+      { k: 'stay', place: 'Madrid', date: '2027-07-13', nights: 3, inBy: 'train', leaveAt: '09:00', inAt: '11:45', homeBy: 'flight', homeAt: '16:00' }],
+    want: ['2027-06-30|arrival|Athens|flight|10:30||', '2027-07-01|land|Athens|flight|||', '2027-07-02|land|Athens|flight|||', '2027-07-03|land|Athens|flight|||',
+      '2027-07-04|embark|Athens|flight||18:30|', '2027-07-05|port|Heraklion|flight||07:00-16:30|', '2027-07-06|sea|At sea|flight|||', '2027-07-07|port|Santorini|flight||07:00-20:30|',
+      '2027-07-08|sea|At sea|flight|||', '2027-07-09|arrival|Barcelona|ship|07:00||', '2027-07-10|land|Barcelona|flight|||', '2027-07-11|land|Barcelona|flight|||', '2027-07-12|land|Barcelona|flight|||',
+      '2027-07-13|departure|Barcelona|train|09:00||', '2027-07-13|arrival|Madrid|train|11:45||', '2027-07-14|land|Madrid|flight|||', '2027-07-15|land|Madrid|flight|||', '2027-07-16|departure|Madrid|flight|16:00||'] },
+  { name: 'fly in and board the same day, off the ship and fly home the same day', legs: [
+      { k: 'cruise', board: 'Miami', date: '2027-01-11', aboard: '16:00', inBy: 'flight', inAt: '09:15', ports: [{ date: '2027-01-12', place: 'Nassau', arrive: '08:00', aboard: '17:00' }], end: 'Miami', endDate: '2027-01-14', off: '07:30', homeBy: 'flight', homeAt: '14:00' }],
+    want: ['2027-01-11|arrival|Miami|flight|09:15||', '2027-01-11|embark|Miami|flight||16:00|', '2027-01-12|port|Nassau|flight||08:00-17:00|', '2027-01-13|sea|At sea|flight|||',
+      '2027-01-14|arrival|Miami|ship|07:30||', '2027-01-14|departure|Miami|flight|14:00||'] },
+  { name: 'empty times are typical times marked estimated; one-night stop', legs: [
+      { k: 'stay', place: 'Lisbon', date: '2027-03-01', nights: 1, inBy: 'flight' }, { k: 'stay', place: 'Porto', date: '2027-03-02', nights: 2, inBy: 'train' }],
+    want: ['2027-03-01|arrival|Lisbon|flight|10:30||est', '2027-03-02|departure|Lisbon|train|12:00||est', '2027-03-02|arrival|Porto|train|11:00||est', '2027-03-03|land|Porto|flight|||', '2027-03-04|departure|Porto|flight|15:00||est'] },
+  { name: 'a port outside the cruise dates is caught', legs: [
+      { k: 'cruise', board: 'Rome', date: '2027-05-01', ports: [{ date: '2027-05-09', place: 'Naples' }], end: 'Rome', endDate: '2027-05-04' }], err: /outside the cruise/ },
+  { name: 'a stop that starts before the last one ends is caught', legs: [
+      { k: 'stay', place: 'Rome', date: '2027-05-01', nights: 3 }, { k: 'stay', place: 'Florence', date: '2027-05-02', nights: 2 }], err: /before the stop before it ends/ }
+];
+const MOCK = 'https://mock.test';
+function helper(r, calls) {
+  const u = new URL(r.request().url()), j = o => r.fulfill({ contentType: 'application/json', body: JSON.stringify(o) });
+  calls.push(u.pathname);
+  if (u.pathname === '/status') return j({ ok: true, on: false, left: 0, budget: 0 });
+  if (u.pathname === '/sample') return r.fulfill({ status: 429, contentType: 'application/json', body: JSON.stringify({ error: 'The AI guide writer is switched off for now.' }) });
+  if (u.pathname === '/sources') return /paris/i.test(u.searchParams.get('city')) ? j(PARIS.sources) : r.fulfill({ status: 404, body: '{}' });
+  if (u.pathname === '/famous') return /paris/i.test(u.searchParams.get('city')) ? j(PARIS.famous) : r.fulfill({ status: 404, body: '{}' });
+  if (u.pathname === '/ground') { const b = JSON.parse(r.request().postData() || '{}'), names = b.names || [];
+    return j({ results: names.map(n => /paris airport|paris international airport/i.test(n) ? { wiki: [{ title: 'Charles de Gaulle Airport', lat: 49.0097, lng: 2.5479 }], map: [], answered: true }
+      : /paris (railway|central) station/i.test(n) ? { wiki: [{ title: 'Gare du Nord', lat: 48.8809, lng: 2.3553 }], map: [], answered: true } : { wiki: [], map: [], answered: true }), center: { lat: 48.856, lng: 2.351 } }); }
+  if (u.pathname === '/places') { const b = JSON.parse(r.request().postData() || '{}');
+    return j({ places: (b.pts || []).slice(0, 10).flatMap((p, i) => [0, 1].map(k => ({ name: `Test Bistro ${i}-${k}`, lat: p.lat + 0.0012 * (k + 1), lng: p.lng + 0.001, amenity: 'restaurant', cuisine: 'french', tags: 5, hours: 'Mo-Su 12:00-22:00' }))) }); }
+  if (u.pathname === '/findplace') return j({ places: /grand test/i.test(u.searchParams.get('q')) ? [{ name: 'Grand Test Hotel', names: ['Grand Test Hotel'], lat: 48.8662, lng: 2.3236, kind: 'hotel', cat: 'tourism', addr: 'Rue de Test 1' }] : [] });
+  if (u.pathname === '/guide') return r.fulfill({ status: 404, body: '{}' });
+  return r.fulfill({ status: 404, body: '{}' });
+}
+(async () => {
+  const b = await chromium.launch();
+  // 1. The rules.
+  { const p = await b.newPage(); if (!LIVE) await p.route('**/*', r => /^file:/.test(r.request().url()) ? r.continue() : r.abort());
+    if (LIVE) { for (let k = 0; k < 50; k++) { await p.goto(LIVE + '?t=' + Date.now()); await p.waitForTimeout(3000); if (await p.evaluate(() => !!window.__kairouteTripSteps)) break; console.log('waiting for the new version to publish…'); await p.waitForTimeout(27000); } }
+    else { await p.goto('file://' + FILE); await p.waitForTimeout(300); }
+    for (const t of RULES) {
+      const got = await p.evaluate(l => window.__kairouteTripSteps(l), t.legs);
+      if (t.err) { if (got.err && t.err.test(got.err)) ok(t.name + ': ' + got.err); else bad(`${t.name}: expected an error, got ${JSON.stringify(got)}`); continue; }
+      if (got.err) { bad(`${t.name}: ${got.err}`); continue; }
+      const diff = t.want.map((w, i) => w === got.days[i] ? null : `#${i + 1} want ${w} got ${got.days[i]}`).filter(Boolean);
+      if (got.days.length !== t.want.length) diff.push(`${got.days.length} days, want ${t.want.length}`);
+      if (diff.length) bad(`${t.name}:\n   ${diff.join('\n   ')}`); else ok(t.name);
+    }
+    await p.close(); }
+  // 2. The screens.
+  for (const [W, H, tag] of [[412, 915, 'phone'], [1280, 800, 'tablet']]) {
+    const p = await b.newPage({ viewport: { width: W, height: H } }); const errs = [], calls = []; p.on('pageerror', e => errs.push(e.message));
+    if (LIVE) {
+      p.on('request', q => { try { const u = new URL(q.url()); if (/workers\.dev$/.test(u.hostname)) calls.push(u.pathname); } catch (e) {} });
+      await p.addInitScript(() => { try { localStorage.setItem('kairoute.intro1', '1'); } catch (e) {} });
+      for (let k = 0; k < 50; k++) { await p.goto(LIVE + '?t=' + Date.now()); await p.waitForTimeout(3000); if (await p.evaluate(() => !!window.__kairouteTripSteps)) break; console.log('waiting for the new version to publish…'); await p.waitForTimeout(27000); }
+      await p.waitForFunction(() => window.__kairouteState && document.querySelector('[data-act="newtrip"]'), null, { timeout: 60000 });
+      await p.waitForTimeout(4000); // the helper's status (AI on or off) arrives
+    } else {
+      await p.route('**/*', r => { const u = r.request().url(); if (u.startsWith(MOCK)) return helper(r, calls); return /^file:/.test(u) ? r.continue() : r.abort(); });
+      await p.goto('file://' + FILE); await p.evaluate(() => localStorage.setItem('kairoute.intro1', '1')); await p.reload(); await p.waitForTimeout(500);
+      await p.evaluate(m => window.__kairouteMockHelper(m, null, true), MOCK);
+    }
+    if (!LIVE && await p.evaluate(() => window.__kairouteAiReady())) bad(`${tag}: the app thinks the AI is on while the helper says it is off`);
+    await p.evaluate(() => document.querySelector('[data-act="newtrip"]').click()); await p.waitForTimeout(300);
+    const shortcut = await p.evaluate(() => !!document.querySelector('[data-ts="mode"][data-v="words"]') || !!document.getElementById('w-text'));
+    if (shortcut && LIVE && await p.evaluate(() => window.__kairouteAiReady())) await p.evaluate(() => document.querySelector('[data-ts="mode"][data-v="steps"]').click());
+    else if (shortcut) bad(`${tag}: the AI shortcut (describe / photo) is offered while the AI is off`);
+    const disabled = await p.evaluate(() => [...document.querySelectorAll('#wizForm button[type=submit]')].filter(x => /Build my trip/.test(x.innerText)).every(x => x.disabled));
+    if (disabled) bad(`${tag}: Build my trip is disabled with the AI off`);
+    const fill = async (sel, v) => { await p.fill(sel, v); await p.dispatchEvent(sel, 'change'); };
+    const tap = async (sel) => { await p.evaluate(s => { const el = document.querySelector(s); if (!el) throw new Error('no ' + s); el.click(); }, sel); await p.waitForTimeout(150); };
+    // Stop 1: Paris, 3 nights, flight in at 10:30, a hotel by name.
+    await fill('#ts-0-place', 'Paris'); await fill('#ts-0-date', '2027-05-03'); await fill('#ts-0-nights', '3'); await fill('#ts-0-inAt', '10:30'); await fill('#ts-0-hotel', HOTEL);
+    // Stop 2: Athens by flight, offered the day Paris ends.
+    await tap('[data-ts="addstay"]');
+    const d2 = await p.inputValue('#ts-1-date'); if (d2 !== '2027-05-06') bad(`${tag}: stop 2 offered ${d2}, not the day Paris ends (2027-05-06)`);
+    await fill('#ts-1-place', 'Athens'); await fill('#ts-1-nights', '2'); await tap('[data-ts="set"][data-i="1"][data-key="inBy"][data-v="flight"]'); await fill('#ts-1-leaveAt', '09:00'); await fill('#ts-1-inAt', '13:30');
+    // Stop 3: the cruise boards in Athens the day the stay ends; two ports, the second offered the next day.
+    await tap('[data-ts="addcruise"]');
+    const cb = await p.inputValue('#ts-2-board'), cd = await p.inputValue('#ts-2-date'), p0 = await p.inputValue('#ts-2-p0-date');
+    if (!/athens/i.test(cb) || cd !== '2027-05-08' || p0 !== '2027-05-09') bad(`${tag}: cruise offered ${cb} ${cd}, first port ${p0}`);
+    const joined = await p.evaluate(() => !document.getElementById('ts-2-inAt')); if (!joined) bad(`${tag}: boarding where the stay ends still asks how you get to the ship`);
+    await fill('#ts-2-aboard', '17:00'); await fill('#ts-2-p0-place', 'Santorini'); await fill('#ts-2-p0-arrive', '07:00'); await fill('#ts-2-p0-aboard', '20:30');
+    await p.check('[data-tsf="ts-2-p0-tender"]');
+    await tap('[data-ts="addport"][data-i="2"]');
+    const p1 = await p.inputValue('#ts-2-p1-date'); if (p1 !== '2027-05-10') bad(`${tag}: second port offered ${p1}`);
+    await fill('#ts-2-p1-place', 'Mykonos'); await fill('#ts-2-end', 'Athens'); await fill('#ts-2-endDate', '2027-05-12'); await fill('#ts-2-off', '07:30');
+    await tap('[data-ts="set"][data-i="2"][data-key="homeBy"][data-v="flight"]'); await fill('#ts-2-homeAt', '14:00');
+    const prev = await p.evaluate(() => (document.querySelector('#tsPrev summary') || {}).innerText || '');
+    if (!/10 days · 2 ports/.test(prev)) bad(`${tag}: the day list says "${prev}"`); else ok(`${tag}: day list "${prev}"`);
+    if (tag === 'phone' || process.env.SHOTS) await p.screenshot({ path: path.join(process.env.SHOTS || '/tmp', 'steps-form-' + tag + '.png'), fullPage: true });
+    await p.evaluate(() => [...document.querySelectorAll('#wizForm button[type=submit]')].find(x => /Build my trip/.test(x.innerText)).click());
+    await p.waitForTimeout(500);
+    const st0 = await p.evaluate(() => window.__kairouteState());
+    if (st0.view !== 'trip') bad(`${tag}: after Build my trip the view is ${st0.view} (${st0.err})`);
+    const want = ['2027-05-03 arrival Paris', '2027-05-04 land Paris', '2027-05-05 land Paris', '2027-05-06 departure Paris', '2027-05-06 arrival Athens', '2027-05-07 land Athens',
+      '2027-05-08 embark Athens', '2027-05-09 port Santorini', '2027-05-10 port Mykonos', '2027-05-11 sea At sea', '2027-05-12 arrival Athens', '2027-05-12 departure Athens'];
+    const got = st0.days.map(d => `${d.date} ${d.type} ${d.dest}`);
+    if (got.join('|') !== want.join('|')) bad(`${tag}: days\n   got  ${got.join(' | ')}\n   want ${want.join(' | ')}`); else ok(`${tag}: ${got.length} days in order`);
+    const san = st0.days.find(d => d.dest === 'Santorini'); if (!san || san.arrive !== '07:00' || san.aboard !== '20:30' || san.estimated) bad(`${tag}: Santorini times ${JSON.stringify(san)}`);
+    const myk = st0.days.find(d => d.dest === 'Mykonos'); if (!myk || !myk.estimated) bad(`${tag}: Mykonos had no times typed but is not marked estimated`);
+    // The guides: Paris from its sources (no AI), Athens built in.
+    await p.waitForFunction(() => { const s = window.__kairouteState(); return !s.busy && s.days.filter(d => /Paris/.test(d.dest)).every(d => d.guide); }, null, { timeout: LIVE ? 240000 : 30000 }).catch(() => {});
+    await p.waitForTimeout(LIVE ? 15000 : 1500);
+    const st = await p.evaluate(() => window.__kairouteState());
+    const noGuide = [...new Set(st.days.filter(d => d.type !== 'sea' && !d.guide).map(d => d.dest))];
+    // Santorini, Mykonos and Athens are built in; Paris comes from its sources. Nothing else may be missing.
+    if (noGuide.length) bad(`${tag}: no guide for ${noGuide.join(', ')} (${st.err})`); else ok(`${tag}: every place has a guide`);
+    for (const i of [1, 2]) {
+      const t = await p.evaluate(i => window.__kairouteTruth(i), i);
+      if (t.error || !(t.stopNames || []).length) bad(`${tag}: Paris day ${i + 1} plan: ${t.error || 'no stops'}`); else ok(`${tag}: Paris day ${i + 1}: ${t.stopNames.length} stops (${t.stopNames.slice(0, 4).join(', ')}…)`);
+    }
+    const t0 = await p.evaluate(() => window.__kairouteTruth(0)); if (t0.error || !(t0.stopNames || []).length) bad(`${tag}: Paris arrival day: ${t0.error || 'no stops'}`);
+    const hotel = await p.evaluate(() => { const k = Object.keys(JSON.parse(localStorage.getItem('wayside.trip2')).lodging || {}); return JSON.parse(localStorage.getItem('wayside.trip2')).lodging[k.find(x => /paris/.test(x))] || null; });
+    if (!hotel || !hotel.ll || !new RegExp(HOTEL.split(' ').pop(), 'i').test(hotel.name)) bad(`${tag}: the hotel typed wasn't found on the map: ${JSON.stringify(hotel)}`); else ok(`${tag}: hotel found on the map`);
+    await p.evaluate(() => window.__kairouteAt(1, 'plan')); await p.waitForTimeout(800);
+    const shown = await p.evaluate(() => [...document.querySelectorAll('.tl .nm')].length);
+    if (!shown) bad(`${tag}: the Paris day plan screen shows no stops`);
+    if (process.env.SHOTS) await p.screenshot({ path: path.join(process.env.SHOTS, 'steps-paris-plan-' + tag + '.png') });
+    const aiOn = await p.evaluate(() => window.__kairouteAiReady()); if (LIVE) console.log(`note ${tag}: AI guide is ${aiOn ? 'ON' : 'off'} on the live site`);
+    const aiCalls = aiOn ? [] : calls.filter(c => c === '/sample' || c === '/script' || c === '/speak');
+    if (aiCalls.length) bad(`${tag}: the AI was asked ${aiCalls.length} times while off (${[...new Set(aiCalls)].join(', ')})`); else ok(`${tag}: no AI asked (${calls.length} free lookups)`);
+    if (errs.length) bad(`${tag}: page errors: ${errs.slice(0, 3).join(' | ')}`);
+    await p.close();
+  }
+  await b.close();
+  console.log(fails ? `${fails} FAIL` : 'All step-by-step checks passed');
+  process.exit(fails ? 1 : 0);
+})();

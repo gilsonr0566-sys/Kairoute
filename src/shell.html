@@ -147,6 +147,12 @@ input[type=text], input[type=date], input[type=time], input[type=number], select
   width: 100%; border: 1px solid var(--line); background: var(--paper); border-radius: 6px; padding: 10px 12px; min-height: 44px;
 }
 .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+/* Trip step by step (trip-steps.js) */
+.tsleg { border: 1px solid var(--line); border-radius: var(--r, 14px); padding: 12px 14px; display: grid; gap: 10px; margin: 0 0 12px; background: var(--paper); }
+.tshead { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+.tsport { border-left: 3px solid var(--route); padding: 2px 0 2px 12px; display: grid; gap: 6px; }
+.tsrow { display: flex; justify-content: space-between; align-items: center; gap: 8px; flex-wrap: wrap; }
+.tsprev ul { margin: 8px 0 0; }
 @media (max-width: 460px) { .row2 { grid-template-columns: 1fr; } }
 .seg { display: flex; flex-wrap: wrap; gap: 6px; }
 .seg button { border: 1px solid var(--line); background: var(--paper); border-radius: 6px; padding: 8px 12px; cursor: pointer; display: inline-flex; gap: 6px; align-items: center; min-height: 42px; }
