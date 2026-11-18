@@ -352,6 +352,11 @@ async function partA(b) {
         const why = await q.evaluate(i => { try { const t = window.__kairouteTruth(i); return { kept: t.keptNames, dropped: t.dropped, sel: t.selected, end: t.end, endBy: t.endBy, over: t.over }; } catch (e) { return String(e); } }, d.i);
         log(`     tablet showed [${plans[d.i].stops.join("; ")}], ${size} shows [${s.stops.join("; ")}]; ${size} meals [${s.meals.join("; ")}]; plan ${JSON.stringify(why)}`);
         const rowsOf = pg => pg.evaluate(i => { window.__kairouteGo("plan", i); const t = window.__kairouteTruth(i); return { rows: [...document.querySelectorAll(".timeline .tl")].map(r => ((r.querySelector(".time") || {}).innerText || "").replace(/\s+/g, " ").trim() + " " + ((r.querySelector(".nm") || {}).innerText || (r.querySelector(".what") || {}).innerText || "").replace(/\s+/g, " ").trim().slice(0, 50)).join(" | "), dropped: t.dropped, elsewhere: t.elsewhere, kept: t.keptNames }; }, d.i);
+        const raw = pg => pg.evaluate(i => { try { return window.__kairouteDayRaw ? window.__kairouteDayRaw(i, "spacca|sansev|cathedral|duomo|historic|pompei") : null; } catch (e) { return String(e); } }, d.i);
+        log(`     tablet day raw: ${JSON.stringify(await raw(p)).slice(0, 3000)}`);
+        log(`     ${size} day raw: ${JSON.stringify(await raw(q)).slice(0, 3000)}`);
+        for (const [nm, pg] of [["tablet", p], [size, q]]) log(`     ${nm} seen breaks: ${JSON.stringify(await pg.evaluate(() => { try { return window.__kairouteSeen.breaks().slice(-12); } catch (e) { return String(e); } })).slice(0, 2500)}`);
+        log(`     ${size} settle log: ${JSON.stringify(await q.evaluate(() => window.__kairouteSettleLog ? window.__kairouteSettleLog() : null)).slice(0, 3000)}`);
         log(`     tablet now: ${JSON.stringify(await rowsOf(p)).slice(0, 2500)}`);
         log(`     ${size} now: ${JSON.stringify(await rowsOf(q)).slice(0, 2500)}`);
       }
@@ -403,6 +408,7 @@ async function partA(b) {
         log("     meals online: " + JSON.stringify(plans[d.i].meals) + "\n     meals offline: " + JSON.stringify(s2.meals));
         log("     inputs online: " + JSON.stringify(plans[d.i].inputs) + "\n     inputs offline: " + JSON.stringify(await p.evaluate(i => window.__kairouteInputs ? window.__kairouteInputs(i) : null, d.i).catch(() => null))); }
       if (s.stops.join("|") !== plans[d.i].stops.join("|")) log("     rides online: " + JSON.stringify(plans[d.i].legs).slice(0, 800) + "\n     rides offline: " + JSON.stringify(await p.evaluate(i => { try { return window.__kairouteRideLegs(i); } catch (e) { return String(e); } }, d.i)).slice(0, 800));
+      if (s.stops.join("|") !== plans[d.i].stops.join("|")) log("     offline settle log: " + JSON.stringify(await p.evaluate(() => window.__kairouteSettleLog ? window.__kairouteSettleLog() : null).catch(() => null)).slice(0, 2000));
       ok(s.stops.join("|") === plans[d.i].stops.join("|"), `offline: day ${d.i + 1} ${d.dest} has the same stops` + (s.stops.join("|") === plans[d.i].stops.join("|") ? "" : ` (online: ${plans[d.i].stops.join("; ")} | offline: ${s.stops.join("; ")})`));
       if (late) ok(false, `offline: day ${d.i + 1} ${d.dest} shows its plan straight away (it changed on screen a moment after opening)`, true);
     }

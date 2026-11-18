@@ -942,6 +942,7 @@ let movedNote = ""; // "Sorrento moved here from Mon Jul 12." after picking a si
 // A pick that doesn't fit the day never stays ticked (Richard, Nov 14). When a pick stops fitting (the day's
 // hours, rides or opening times changed), it comes off, and the list and the Day plan say why, with a one-tap
 // way to fit it back in (swap it for a stop, or see it on another day).
+const settleLog = []; if (typeof window !== "undefined") window.__kairouteSettleLog = () => settleLog; // test hook: why picks came off
 function settlePicks(d) {
   if (!d || !Array.isArray(d.selected) || (!d.selected.length && !(d.bumped || []).length) || !cityFor(d) || busy || (typeof liveOn === "function" && liveOn(d))) return false;
   // While the city's fuller guide is still being built, nothing comes off: the plan is drawn again with the new guide
@@ -967,6 +968,8 @@ function settlePicks(d) {
     const out = (p.dropped || []).filter(x => d.selected.includes(x.id));
     if (!out.length) break;
     const gone = new Set(out.map(x => x.id));
+    try { settleLog.push({ t: Date.now(), day: trip.days.indexOf(d), out: out.map(x => x.id), fast: !!p.fastRides, seen: !!p.seen, broke: p.seenBroke || "", fastTry: p.fastTry || null, breaks: (typeof seenBreaks !== "undefined" ? seenBreaks.filter(x => x.startsWith(seenId(d) + ":")).slice(-4) : null), over: p.over, endBy: p.endBy, start: p.start, q: transitQ.size, gl: guideLoading(d), dg: dataGen, pg: planGen,
+      rows: (p.items || []).map(i => i.type === "travel" ? (i.leg && i.leg.how) + " " + (i.leg && i.leg.min) : i.place ? (i.place.name || "").slice(0, 18) + " " + i.place.minutes : i.type).join(" | ") }); if (settleLog.length > 30) settleLog.shift(); } catch (e) {}
     d.bumped = (d.bumped || []).filter(b => !gone.has(b.id)).concat(out.map(x => ({ id: x.id, name: x.name, w: win(p) })));
     laterAdd(d, out); // a booked city keeps them in "If you come back"
     out.forEach(x => offNote(d, x, p.lockBroken ? `Your locked plan had to change: ${p.lockBroken}` : shutOn(d, x) ? "Closed that day" : "No longer fits this day's time", shutOn(d, x) ? "closed" : "fit"));
@@ -1862,7 +1865,8 @@ function buildPlanRaw(d) { const prev = planDate, pw = planWx; if (!planDepth) t
     // sight that the quickest rides would keep, the quickest rides are used.
     if (pl && !pl.error && (pl.dropped || []).length && Object.keys(transitMem).length) {
       ridePref = "fast"; let p2; try { p2 = buildPlanFor(d); } finally { ridePref = "public"; }
-      if (p2 && !p2.error && !p2.over && (p2.dropped || []).length < pl.dropped.length) { p2.fastRides = true; pl = p2; } }
+      if (p2 && !p2.error && !p2.over && (p2.dropped || []).length < pl.dropped.length) { p2.fastRides = true; pl = p2; }
+      else pl.fastTry = p2 && !p2.error ? { dropped: (p2.dropped || []).map(x => x.id), over: p2.over, seen: !!p2.seen, broke: p2.seenBroke || "" } : "error"; }
     return pl; } finally { planDate = prev; planWx = pw; planDepth--; } }
 function buildPlanFor(d) {
   const memo0 = mealPickMemo, own0 = ownOrd; mealPickMemo = { g: -1, m: new Map() }; // meal choices are remembered for this day's plan only

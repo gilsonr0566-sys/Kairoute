@@ -110,3 +110,10 @@ if (typeof window !== "undefined") window.__kairouteOff = {
     c.sites.push(tw); const n = dedupeSites(c); planGen++; dataGen++;
     return { n, kept: allSites(c).filter(x => x.id === id || x.id === tw.id).map(x => ({ id: x.id, name: x.name })) }; },
 };
+if (typeof window !== "undefined") {
+  // Test hook (demo flow diagnostics): a day's saved state and the guide's sights matching a pattern.
+  window.__kairouteDayRaw = (i, re) => { const d = trip.days[i]; let c = null; try { c = cityFor(d); } catch (e) {} const rx = re ? new RegExp(re, "i") : null;
+    return { selected: d.selected, mine: d.mine, ownList: d.ownList, seedSig: d.seedSig, offLog: d.offLog, bumped: d.bumped, movedIn: d.movedIn, ready: !!d.ready,
+      city: c ? { ai: c.ai, builtin: c.builtin, n: allSites(c).length, gv: c.gv } : null,
+      sites: c && rx ? allSites(c).filter(s => rx.test(s.name + " " + s.id + " " + (s.srcName || ""))).map(s => ({ id: s.id, name: s.name, srcName: s.srcName, alias: s.alias, mustSee: s.mustSee, quick: s.quick, minutes: s.minutes, visitMin: s.visitMin, guideMin: s.guideMin, partsOff: s.partsOff, parts: (s.parts || []).length, inside: s.inside || s.partOf || null, srcOnly: s.srcOnly })) : [] }; };
+}
