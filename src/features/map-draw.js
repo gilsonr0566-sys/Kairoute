@@ -211,7 +211,7 @@ if (typeof window !== "undefined") window.__kairouteRideShared = lines => rideSh
 // ---- 3. Place names a little brighter (Richard, Nov 18: dim on the dark map) ----
 // The map's own street and place names get a little more contrast in both themes, with a halo so they stay crisp,
 // while everything Kairoute draws (ride lines, arrows, stop markers, the location person) stays above them and bolder.
-const MAP_LABELS = { dark: { color: "#C8D2D7", halo: "#0B1418" }, light: { color: "#4B5660", halo: "#FFFFFF" } };
+const MAP_LABELS = { dark: { color: "#E1E8EB", halo: "#0B1418" }, light: { color: "#36414A", halo: "#FFFFFF" } };
 function mapLabelsBright(map, theme, on) {
   const want = MAP_LABELS[theme] || MAP_LABELS.light;
   if (!map._labelOrig) map._labelOrig = {};
@@ -223,7 +223,7 @@ function mapLabelsBright(map, theme, on) {
       // Water names keep their own colour (blue-grey on the sea), just with the stronger halo.
       if (on && !/water|ocean|sea|lake|river/i.test(l.id)) map.setPaintProperty(l.id, "text-color", want.color); else map.setPaintProperty(l.id, "text-color", o[0]);
       map.setPaintProperty(l.id, "text-halo-color", on ? want.halo : o[1]);
-      map.setPaintProperty(l.id, "text-halo-width", on ? 1.4 : o[2]);
+      map.setPaintProperty(l.id, "text-halo-width", on ? 1.6 : o[2]);
     } catch (e) {}
   });
 }
