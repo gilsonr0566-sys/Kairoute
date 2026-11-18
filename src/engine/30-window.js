@@ -63,6 +63,7 @@
       w.head = [Object.assign({}, P, { leaveWhenReady: true })]; w.tail = [Object.assign({}, P, { backToShip: true })];
     } else return E.fail("Unknown day type: " + d.type);
     if (!isFinite(w.start) || !isFinite(w.endBy)) return E.fail("Add the times for this day.");
+    w.sightTo = w.endBy - chain(w.tail, tr); // when sightseeing must stop, before the fixed steps at the end
     return w;
   };
 })(KEngine);

@@ -106,4 +106,27 @@ if (fs.existsSync(dir)) for (const f of fs.readdirSync(dir).filter(f => f.endsWi
     if (Math.abs(r.end - o.end) <= 1) same++; else ok(false, `${f} day ${i} ${d.type}: old order ends ${r.end} on the new clock, old engine says ${o.end}`); });
   ok(n > 0, f + ': no days to compare'); oks += same; console.log(`ok   ${s.name}: ${same} of ${n} timed days match the old engine to the minute`);
 }
+
+// ---- The whole trip (step 6 to 8): same plan whatever order the pieces arrive in, nothing used twice, every day safe.
+const shuffle = (a, seed) => { const b = a.slice(); let x = seed; for (let i = b.length - 1; i > 0; i--) { x = (x * 1103515245 + 12345) % 2147483648; const j = x % (i + 1); [b[i], b[j]] = [b[j], b[i]]; } return b; };
+const planKey = plans => JSON.stringify(plans.map(p => p && (p.error || p.items.map(x => x.t + ':' + (x.id || x.name || x.mode) + '@' + (x.at != null ? x.at : x.min)).join(','))));
+if (fs.existsSync(dir)) for (const f of fs.readdirSync(dir).filter(f => f.endsWith('.json'))) {
+  const s = JSON.parse(fs.readFileSync(path.join(dir, f))), plans = E.planTrip(s), base = planKey(plans);
+  let same = 0;
+  for (let k = 1; k <= 10; k++) {
+    const t = JSON.parse(JSON.stringify(s));
+    for (const c of Object.values(t.cities)) { c.sites = shuffle(c.sites || [], k * 7); c.farther = shuffle(c.farther || [], k * 11); c.restaurants = shuffle(c.restaurants || [], k * 13); }
+    // the guide's own order is a fact (best first), so it travels with each sight rather than with its place in the list
+    for (const c of Object.values(t.cities)) { const was = (s.cities[c.key] || Object.values(s.cities).find(x => x.name === c.name) || {}).sites || []; c.sites.sort((a, b) => was.findIndex(x => x.id === a.id) - was.findIndex(x => x.id === b.id)); }
+    t.days.forEach(d => { if (d.selected) d.selected = shuffle(d.selected, k * 17); });
+    if (planKey(E.planTrip(t)) === base) same++; else ok(false, `${f}: shuffle ${k} gives a different plan`);
+  }
+  const sights = new Map(), eats = new Map(); let unsafe = 0;
+  plans.forEach((p, i) => { if (!p || p.error) return; const w = E.dayWindow(s.days[i], E.makeTravel(s.prefs, s.legModes));
+    if (w.hard && p.end > w.endBy) unsafe++;
+    p.items.forEach(x => { if (x.t === 'stop') { if (x.late) unsafe++; const was = sights.get(String(x.id)); if (was != null && was !== i) ok(false, `${f}: ${x.name} planned on day ${was} and day ${i}`); sights.set(String(x.id), i); }
+      if ((x.t === 'meal' || x.t === 'evening') && x.name) { const k = x.name.toLowerCase(); const was = eats.get(k); if (was != null && was !== i) ok(false, `${f}: ${x.name} used on day ${was} and day ${i}`); eats.set(k, i); } }); });
+  ok(unsafe === 0, `${f}: ${unsafe} unsafe stops or late days`);
+  oks += same; console.log(`ok   ${s.name}: same plan in ${same} of 10 shuffles, nothing used twice, every day safe`);
+}
 console.log(`\n${oks} checks passed, ${fails} failed`); process.exit(fails ? 1 : 0);

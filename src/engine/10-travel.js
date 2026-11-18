@@ -22,14 +22,23 @@
     return m >= 10 && m <= 300 ? Math.round(m) : 0;
   }
   // A travel calculator for one trip's preferences. Pure and memoised per pair (the same pair always gives the same answer).
-  E.makeTravel = (prefs, legModes) => {
-    const walk = (prefs && prefs.walk) || "medium", lim = WALK_LIMIT[walk] || WALK_LIMIT.medium, speed = walk === "low" ? 3.6 : 4.5, modes = legModes || {}, memo = new Map();
+  // legs: pinned network times from the places database, keyed by pairKey (step change, Nov 18: decisions use real
+  // walking, road and ferry times, pinned so they stay steady; the straight-line estimate is only the fallback).
+  E.makeTravel = (prefs, legModes, legs) => {
+    const walk = (prefs && prefs.walk) || "medium", lim = WALK_LIMIT[walk] || WALK_LIMIT.medium, speed = walk === "low" ? 3.6 : 4.5, modes = legModes || {}, memo = new Map(), memoEnd = new Map();
     function estimate(a, b) {
       if (!a || !b || !isFinite(a.lat) || !isFinite(b.lat)) return { mode: "walk", how: "Walk", km: 0, min: 0, unknown: true };
-      const key = a.lat + "," + a.lng + "," + b.lat + "," + b.lng + (b.backToShip || b.deadline ? "!" : ""); const got = memo.get(key); if (got) return got;
-      const v = calc(a, b); memo.set(key, Object.freeze(v)); return v;
+      // Remembered by the four coordinates (numbers make fast keys), apart for legs that end at a deadline.
+      let m = (b.backToShip || b.deadline) ? memoEnd : memo;
+      for (const x of [a.lat, a.lng, b.lat]) { let n = m.get(x); if (!n) { n = new Map(); m.set(x, n); } m = n; }
+      const got = m.get(b.lng); if (got) return got;
+      const v = Object.freeze(calc(a, b)); m.set(b.lng, v); return v;
     }
     function calc(a, b) {
+      const pin = legs && legs[E.pairKey(a, b)];
+      if (pin && isFinite(pin.min)) { let leg = { mode: pin.mode || "ride", how: pin.how || "Ride", km: pin.km || 0, min: Math.round(pin.min), pinned: true };
+        if ((b.backToShip || b.deadline) && leg.min >= 30 && leg.mode !== "walk") { const sl = Math.max(15, Math.round(leg.min * 0.3 / 5) * 5); leg = Object.assign(leg, { min: leg.min + sl, slack: sl }); }
+        return leg; }
       const d = E.hav(a, b);
       if (d < 0.02) return { mode: "walk", how: "Walk", km: 0, min: 0 };
       const walkMin = Math.max(2, Math.round(d * 1.3 / speed * 60)), either = d >= 0.6 && d <= WALK_EITHER, want = either ? modes[E.pairKey(a, b)] : null;

@@ -1,0 +1,35 @@
+// Beta 2 engine, part 5: what a sight is worth to this traveler, and which sights a day may draw from (step 5).
+// One worth for every choice (which sights, which day, what to drop first), so the same sight never ranks differently
+// in two places. Worth comes from stable facts only: must-see, UNESCO, outside fame, travelers' recommendations, the
+// traveler's interests and style. Never from what happened to load first.
+(function (E) {
+  const has = (s, t) => E.has(s, t);
+  // fameN: 0..1 from whatever fame number the guide carries (built-in guides carry none that differs).
+  const fameN = s => { const f = +s.fame || 0; return f > 3 ? Math.min(1, f / 80) : f > 1.2 ? Math.min(1, (f - 1) / 2) : 0; };
+  E.worth = (s, prefs, style) => {
+    if (!s) return 0;
+    const interests = (prefs && prefs.interests) || [];
+    let w = 10;
+    if (s.mustSee || has(s, "must-see")) w += 100;
+    if (s.unesco || has(s, "unesco")) w += 20;
+    w += 30 * fameN(s);
+    if (s.recommended) w += 10;
+    if (style && style !== "mix" && s.kind === style) w += 12;
+    if (interests.some(k => has(s, "interest:" + k))) w += 25;
+    if (s.quick) w -= 25;
+    if (typeof s.rank === "number") w += Math.max(0, 20 - s.rank);   // the guide's own order, best first
+    return Math.max(1, Math.round(w * 10) / 10);
+  };
+  // Can this traveler visit it at all (their access needs and "skip religious sites"), and is it open today?
+  E.allowed = (s, prefs, siteDay, win) => {
+    if (!s || !isFinite(s.lat) || !isFinite(s.lng)) return false;
+    if (prefs && prefs.religious === "skip" && has(s, "religious") && !s.religiousOk) return false;
+    if (prefs && (prefs.access === "wheelchair" || prefs.access === "limited") && s.effort === "steep") return false;
+    if (s.closedForGood || s.visitable === false) return false;
+    if (siteDay && E.closedForDay(siteDay, win, s.minutes)) return false;
+    return true;
+  };
+  // A worth-ordered list with a fixed tie-break (by id), so the answer never depends on input order.
+  E.rank = (sites, prefs, style) => sites.map(s => ({ s, w: E.worth(s, prefs, style) }))
+    .sort((a, b) => b.w - a.w || E.byId(a.s, b.s)).map(x => Object.assign({}, x.s, { worth: x.w }));
+})(KEngine);
