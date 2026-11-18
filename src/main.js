@@ -4756,7 +4756,7 @@ function render() {
     paneMemo.same = paneMemo.key === pkey; paneMemo.key = pkey; }
   { const old = document.querySelector(".coach"); if (old) old.remove(); const ch = coachHTML(); if (ch) document.body.insertAdjacentHTML("beforeend", ch); }
   if (askNotice && !FULL_VIEWS[view]) { const v = document.getElementById("view"); if (v) v.insertAdjacentHTML("afterbegin", `<p class="banner ok" role="status">${esc(askNotice)} <button class="linkbtn" data-act="asknoticeok">OK</button></p>`); }
-  mountMaps(); liveAfterRender(); offAfterRender(); seenAfterRender();
+  mountMaps(); youAfterRender(); liveAfterRender(); offAfterRender(); seenAfterRender();
   if (openMenus.length && paneMemo.same) document.querySelectorAll("#view details.moremenu").forEach(el => { if (openMenus.includes(menuKey(el))) { el.open = true; try { placeMenu(el); } catch (e) {} } });
   if (openFolds.size) document.querySelectorAll("#view details").forEach(el => { const sm = el.querySelector("summary"); if (sm && openFolds.has(view + "|" + sm.textContent.trim())) el.open = true; });
   // A re-render of the same screen (live updates, sync, data arriving) never moves what you're looking at:
@@ -6190,35 +6190,8 @@ async function fetchRoutes(legs, then) {
   if (then) then();
 }
 function legLine(l) { if (l.path) return l.path; const c = routeMem.get(legKey(l)); return Array.isArray(c) ? c : [l.a, l.b]; }
-function routeGeo(data, active) {
-  return { type: "FeatureCollection", features: data.legs.map((l, i) => ({ type: "Feature", properties: { mode: l.mode, kind: l.kind || (l.mode === "foot" ? "walk" : "car"), on: active == null || active === i ? 1 : 0 }, geometry: { type: "LineString", coordinates: legLine(l) } })) };
-}
-function cssVar(n, el) { return getComputedStyle(el || document.documentElement).getPropertyValue(n).trim(); }
-function ensureMap(ml) {
-  const theme = mapDark() ? "dark" : "light";
-  if (kmap && kmapTheme === theme) return kmap;
-  if (kmap) { try { kmap.remove(); } catch (e) {} kmap = null; }
-  kmapReady = false; kmapTheme = theme; kmapKey = "";
-  if (!kmapEl) { kmapEl = document.createElement("div"); kmapEl.className = "kmap"; }
-  kmap = new ml.Map({ container: kmapEl, style: MAP_TILES[theme], center: [0, 20], zoom: 1.5, attributionControl: { compact: true }, transformRequest: u => /^https:\/\/tiles\.openfreemap\.org\//.test(u) ? { url: u.replace(/^https:/, "kcache:") } : { url: u }, cooperativeGestures: true, dragRotate: false, pitchWithRotate: false, maxPitch: 0, fadeDuration: 0 });
-  kmap.touchZoomRotate.disableRotation();
-  kmap.addControl(new ml.NavigationControl({ showCompass: false }), "top-right");
-  kmap.addControl(new ml.ScaleControl({ unit: useMiles() ? "imperial" : "metric", maxWidth: 90 }), "bottom-left");
-  kmap.on("load", () => {
-    const walk = cssVar("--route") || "#146B61";
-    kmap.addSource("route", { type: "geojson", data: { type: "FeatureCollection", features: [] } });
-    kmap.addLayer({ id: "route-case", type: "line", source: "route", layout: { "line-join": "round", "line-cap": "round" }, paint: { "line-color": theme === "dark" ? "#0B1716" : "#FFFFFF", "line-width": ["case", ["==", ["get", "on"], 1], 9, 6], "line-opacity": ["case", ["==", ["get", "on"], 1], 0.9, 0.4] } });
-    // One layer per kind of leg: its own colour and line pattern (line patterns are in line widths here).
-    for (const k of Object.keys(LEG_KINDS)) { const dash = LEG_KINDS[k].dash, w = k === "walk" ? [5, 3] : [4.5, 3];
-      kmap.addLayer({ id: "route-" + k, type: "line", source: "route", filter: ["==", ["get", "kind"], k], layout: { "line-join": "round", "line-cap": k === "walk" || k === "ferry" ? "round" : "butt" },
-        paint: Object.assign({ "line-color": cssVar("--t-" + k) || walk, "line-width": ["case", ["==", ["get", "on"], 1], w[0], w[1]], "line-opacity": ["case", ["==", ["get", "on"], 1], 1, 0.35] }, dash ? { "line-dasharray": dash.map(n => +(n / 3.5).toFixed(2)) } : {}) }); }
-    kmapReady = true; kmapEl.dataset.ready = "1";
-    mountMaps();
-    prefetchTripMaps();
-  });
-  kmap.on("error", e => { if (!kmapReady && e && e.error && /style|fetch|Failed/i.test(String(e.error.message || ""))) kmapEl.dataset.failed = "1"; });
-  return kmap;
-}
+// Drawing on the map (route lines, arrows, ride badges, markers, the traveler, place names) is one layer:
+// see features/map-draw.js.
 // After each render: put the live map in the slot the screen left for it, with this screen's route.
 let mapWait = false;
 function mountMaps() {
@@ -6242,53 +6215,6 @@ function mountMaps() {
   (window.maplibregl ? Promise.resolve(window.maplibregl) : loadMapLib()).then(ml => new Promise(r => {
     const go = () => { if (Date.now() - lastTouch < 600) return setTimeout(go, 300); typeof requestIdleCallback === "function" ? requestIdleCallback(() => r(ml), { timeout: 1500 }) : r(ml); };
     go(); })).then(ml => { mapWait = false; try { attach(ml); } catch (e) { kmapNoGo = true; } }).catch(() => { mapWait = false; kmapNoGo = true; }); // the diagram stays
-}
-function drawMapData() {
-  const ml = window.maplibregl, D = kmapData; if (!kmap || !kmapReady || !D || !ml) return;
-  const src = kmap.getSource("route"); if (!src) return;
-  src.setData(kmapGeo = routeGeo(D, D.active));
-  const redraw = () => { if (kmapData === D && kmap.getSource("route")) kmap.getSource("route").setData(kmapGeo = routeGeo(D, D.active)); };
-  fetchRoutes(D.legs, redraw).then(() => { if (D.legs.some(l => !routeMem.has(legKey(l)))) setTimeout(() => { if (kmapData === D) fetchRoutes(D.legs, redraw); }, 21000); });
-  const key = D.slot + "|" + D.key + "|" + (D.active == null ? "" : D.active);
-  if (key === kmapKey) { placeYou(); return; }
-  kmapKey = key;
-  kmapMarks.forEach(m => m.remove()); kmapMarks = [];
-  D.pts.forEach(p => {
-    const el = document.createElement(p.id && D.slot === "plan" ? "button" : "div");
-    el.className = "mk mk-" + p.kind + (D.focus && D.focus.includes(p.ll.join()) ? " on" : "");
-    el.textContent = p.lab; el.title = p.name; el.setAttribute("aria-label", p.name);
-    if (el.tagName === "BUTTON") { el.type = "button"; el.dataset.open = p.id; }
-    kmapMarks.push(new ml.Marker({ element: el }).setLngLat(p.ll).addTo(kmap));
-  });
-  placeYou();
-  fitMap(D);
-}
-function fitMap(D) {
-  const ml = window.maplibregl; if (!kmap || !ml) return;
-  const coords = [];
-  if (D.active != null && D.legs[D.active]) coords.push(...legLine(D.legs[D.active]));
-  else {
-    // Frame where the sightseeing happens. A far-off start or finish (an airport, a cruise port an hour away)
-    // stays in view only when it is near the sights; otherwise its ride leaves the edge of the map.
-    const core = D.pts.filter(p => p.kind !== "start" && p.kind !== "end"), use = core.length ? core : D.pts;
-    const c = { lng: use.reduce((a, p) => a + p.ll[0], 0) / use.length, lat: use.reduce((a, p) => a + p.ll[1], 0) / use.length };
-    const reach = Math.max(3, 1.5 * Math.max(...use.map(p => hav(c, { lng: p.ll[0], lat: p.ll[1] }))));
-    const keep = D.pts.filter(p => use.includes(p) || hav(c, { lng: p.ll[0], lat: p.ll[1] }) <= reach), at = new Set(keep.map(p => p.ll.join()));
-    keep.forEach(p => coords.push(p.ll));
-    D.legs.forEach(l => { if (at.has(l.a.join()) && at.has(l.b.join())) coords.push(...legLine(l)); });
-  }
-  if (D.you && geoPos) coords.push([geoPos.lng, geoPos.lat]);
-  if (!coords.length) return;
-  const b = coords.reduce((bb, c) => bb.extend(c), new ml.LngLatBounds(coords[0], coords[0]));
-  const w = kmapEl.clientWidth || 600, pad = Math.max(24, Math.min(60, Math.round(w / 10)));
-  kmap.fitBounds(b, { padding: pad, maxZoom: 16.5, duration: 0 });
-}
-// The traveler's blue dot (tour, and the day plan once Follow me is on).
-function placeYou() {
-  const ml = window.maplibregl; if (!kmap || !ml) return;
-  if (!geoPos || !kmapData) { if (kmapYou) { kmapYou.remove(); kmapYou = null; } return; }
-  if (!kmapYou) { const el = document.createElement("div"); el.className = "mk-you"; el.setAttribute("aria-label", "You are here"); kmapYou = new ml.Marker({ element: el }).setLngLat([geoPos.lng, geoPos.lat]).addTo(kmap); if (kmapData.you) fitMap(kmapData); }
-  else kmapYou.setLngLat([geoPos.lng, geoPos.lat]);
 }
 // The map slot a screen puts in its HTML. The diagram shows until the street map is ready on top of it.
 function mapSlot(plan, d, slot, opts) {
@@ -6835,7 +6761,7 @@ function tourMap(plan, d, prev, st) {
   let active = null;
   if (st && prev && prev.place && st.place) { const eq = (u, p) => Math.abs(u[0] - p.lng) < 1e-7 && Math.abs(u[1] - p.lat) < 1e-7; const i = data.legs.findIndex(l => eq(l.a, prev.place) && eq(l.b, st.place)); if (i >= 0) active = i; }
   const html = mapSlot(plan, d, "tour", { active, you: true, focus: st && st.place ? [[st.place.lng, st.place.lat].join()] : null });
-  return `<div class="mapbox tourmap">${html}<div class="maplegend"><span><i></i>Walk</span><span><i class="dash"></i>Taxi or transit</span><span class="you">● You</span></div></div>`;
+  return `<div class="mapbox tourmap">${html}<div class="maplegend"><span><i></i>Walk</span><span><i class="dash"></i>Taxi or transit</span><span class="you"><b class="you-key">${YOU_PERSON}</b>You</span></div></div>`;
 }
 function renderTour(d) {
   const city = cityFor(d);
