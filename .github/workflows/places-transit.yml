@@ -1,6 +1,7 @@
 name: Places public transport lines
 # Refreshes only the public transport lines (metro, light rail, tram, train) in the saved places files, from
-# OpenStreetMap. Free source, no AI, never publishes anything. Lines are printed back as PLACES lines for replay.
+# OpenStreetMap. Free source, no AI, never publishes anything. Lines are printed back as PLACES lines for replay
+# (gathered in tools/places/data after each run).
 on:
   workflow_dispatch:
   push:
