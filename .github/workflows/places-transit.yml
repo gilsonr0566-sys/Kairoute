@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
     inputs:
       refresh:
-        description: "Parts to refresh: transit, ports"
+        description: "Parts to refresh: transit, ports, see, lifts, hours"
         default: "transit,ports"
       only:
         description: "Only places whose key matches (blank: all)"

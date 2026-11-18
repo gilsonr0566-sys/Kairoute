@@ -1593,6 +1593,11 @@ function mealPickRaw(seq, O, Z, city, m, style) {
 // is passed off as checked.
 // Beta 2 only: the new engine says, in plain words, why the day looks as it does (a sight that didn't fit and the ways to
 // fit it in, a pick moved to an open day, a boat's timetable). Nothing in the normal build, whose plans carry no engine2.
+// Stops on the plan the traveler didn't pick: the guide added them (optional extras and stops on the way aside).
+function planAdded(plan, d) {
+  const sel = new Set((d.selected || []).map(String)); if (!sel.size || !plan || !plan.stops) return 0;
+  return plan.stops.filter(s => !s.place.along && !s.place.bonus && !sel.has(String(s.place.id))).length + (plan.bonus || []).length;
+}
 function engine2Card(plan) {
   const say = ((plan && plan.engine2 && plan.engine2.explain) || []).filter(Boolean);
   if (!say.length) return "";
@@ -6040,7 +6045,7 @@ function renderSites(d) {
   const refs = [], near = { refs, anc, fs: fsMap, my, st }; sitesCtx = { d, plan, near }; void fsOf;
   const tl = plan && !plan.error ? timeLeft(plan, d) : null, availM = plan && !plan.error ? Math.max(1, plan.endBy - plan.start) : 0;
   const leftTxt = tl ? ` · <b>${tl.left >= 5 ? dur(tl.left) + " left today" : "today is full"}</b>` : "";
-  const pickCount = `<b class="count">${d.selected.length} site${d.selected.length === 1 ? "" : "s"} picked${plan && !plan.error && (plan.bonus || []).length ? ` · ${plan.bonus.length} optional on your plan` : ""}</b>`;
+  const pickCount = `<b class="count">${d.selected.length} site${d.selected.length === 1 ? "" : "s"} picked${plan && !plan.error && planAdded(plan, d) ? ` · ${planAdded(plan, d)} added by your guide` : plan && !plan.error && (plan.bonus || []).length ? ` · ${plan.bonus.length} optional on your plan` : ""}</b>`;
   const pickbar = !tl ? `<div class="pickbar" role="status" aria-live="polite"><div class="pbrow">${pickCount}</div></div>` : `<div class="pickbar" role="status" aria-live="polite"><div class="pbrow">${pickCount}<span class="pbleft">${tl.left >= 5 ? dur(tl.left) + " left to fill" : "Your day is full"}</span></div><div class="mbar"><i style="width:${Math.min(100, Math.max(0, Math.round((availM - tl.left) / availM * 100)))}%"></i></div></div>`;
   const n = d.selected.length;
   const avail = plan && !plan.error ? dur(plan.endBy - plan.start) : "";
@@ -6572,7 +6577,11 @@ ${partsList(s, it.time)}${stopLiveNotes(it, d)}</div></div>`;
     }
     return "";
   }).join("");
-  const stopsN = new Set(plan.stops.filter(s => !s.place.along && !s.place.bonus).map(s => s.place.id).concat(plan.folded || [])).size /* a pick inside an area visit counts too */, optN = plan.stops.filter(s => s.place.bonus).length;
+  // Picks are what the traveler picked (a pick inside an area visit counts too); stops the guide added on its own are
+  // counted apart ("added"), so the Day plan and Change stops always give the same number of picks.
+  const sel = new Set((d.selected || []).map(String)), main = plan.stops.filter(s => !s.place.along && !s.place.bonus);
+  const added = main.filter(s => sel.size && !sel.has(String(s.place.id))).length;
+  const stopsN = new Set(main.filter(s => !sel.size || sel.has(String(s.place.id))).map(s => s.place.id).concat(plan.folded || [])).size, optN = plan.stops.filter(s => s.place.bonus).length + added;
   const L = DAY_LEN.find(x => x[0] === +d.hours), canLen = d.type === "land" || d.type === "arrival";
   // Heads-up: everything that needs a decision today, in one place above the schedule, most urgent first.
   const askOut = new Set(d.pendingOrder && orderNote(d, plan) ? d.pendingOrder.names : []), dropNow = plan.dropped.filter(s => !askOut.has(s.name)); // the order question already names those
@@ -6610,7 +6619,7 @@ function legendHTML(plan) {
   ${pageHead(d, plan, [], tourBtnHTML())}
   <div class="daysum n${2 + (walkTile ? 1 : 0) + (cdHTML ? 0 : 1)}" role="group" aria-label="Today at a glance">
     ${canLen && hoursLimits(d, plan) ? `<div class="hrscell">${hoursTileHTML(d, plan, dur(sightHours(d, plan) * 60) + " sightseeing")}</div>` : `<div><b>${fmt(plan.start)}–${fmt(plan.endBy)}</b><span>${d.type === "port" ? "ashore " + dur(plan.endBy - plan.start) : d.type === "embark" || d.type === "departure" ? dur(plan.endBy - plan.start) + " before you go" : "free " + dur(plan.endBy - plan.start)}</span></div>`}
-    <div><b>${stopsN}${optN ? " + " + optN : ""}</b><span>${stopsN === 1 ? "pick" : "picks"}${optN ? " + optional" : ""}${plan.along.length && !optN ? ` · ${plan.along.length} on the way` : ""}</span></div>
+    <div><b>${stopsN}${optN ? " + " + optN : ""}</b><span>${stopsN === 1 ? "pick" : "picks"}${optN ? (added ? " + added by your guide" : " + optional") : ""}${plan.along.length && !optN ? ` · ${plan.along.length} on the way` : ""}</span></div>
     ${walkTile ? `<div><b>${distTxt(plan.walkKm)}</b><span>walking</span></div>` : ""}
     ${cdHTML ? "" : `<div><b>${fmt(plan.end)}</b><span>${d.type === "port" ? "back on board" : "finish"}</span></div>`}
     <div class="daytools"><div class="toolrow"><button class="btn ghost small" data-goto="sites">Change stops</button>

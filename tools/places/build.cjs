@@ -111,6 +111,21 @@ async function liftsNear(centre, km) {
 
 // The travel guide's own "see" listings for the place itself (on the map, within 12 km of its centre), with how widely
 // known each is and UNESCO: a place whose saved guide is thin gets more to choose from.
+// Opening hours, fee and website from the map, matched by the Wikidata tag mappers put on each sight. Asked sight by
+// sight around its own spot (400 m), 20 at a time: one search around a whole spread-out city (Barcelona to Montserrat)
+// timed out and left every sight without hours. items: [{ id, q, lat, lng }]. Returns { id: { hours, fee, web, osm } }.
+async function mapFacts(items) {
+  const out = {}, ok = items.filter(x => x.q && isFinite(x.lat) && isFinite(x.lng));
+  for (let i = 0; i < ok.length; i += 20) {
+    const part = ok.slice(i, i + 20);
+    const els = await overpass(`[out:json][timeout:120];(${part.map(x => `nwr(around:400,${x.lat},${x.lng})["wikidata"="${x.q}"];`).join('')});out tags center;`);
+    for (const el of els || []) { const tg = el.tags || {}; for (const x of part.filter(y => y.q === tg.wikidata)) {
+      const f = out[x.id] = out[x.id] || {}; if (tg.opening_hours && !f.hours) f.hours = tg.opening_hours; if (tg.fee && !f.fee) f.fee = tg.fee;
+      const w = tg.website || tg['contact:website']; if (!f.web && /^https?:\/\//i.test(w || '')) f.web = w; if (!f.osm) f.osm = el.type + '/' + el.id; } }
+    await sleep(1500);
+  }
+  return out;
+}
 async function guideSights(title, centre) {
   const page = title ? await wvText(title) : null; if (!page) return [];
   // A big city's guide lists its sights on its district pages ("Dubai/Deira"): with fewer than 8 sights on the main page,
@@ -211,12 +226,9 @@ async function buildPlace(t) {
   for (const s of t.sites) { const q = qOfSite(s); if (q && all[q]) out.sites[s.id] = fact(all[q]); }
   // 2. OpenStreetMap hours and fees, matched by the Wikidata tag mappers put on the map.
   // Asked only around the place itself (a world-wide search times out on a busy map server).
-  const wq = qs, reach = Math.min(60000, 5000 + 1000 * Math.max(0, ...t.sites.filter(s => isFinite(s.lat)).map(s => hav(centre, s))));
-  if (wq.length) {
-    const els = await overpass(`[out:json][timeout:180];nwr(around:${Math.round(reach)},${centre.lat},${centre.lng})["wikidata"~"^(${wq.join('|')})$"];out tags center;`);
-    for (const el of els) { const tg = el.tags || {}; const id = t.sites.find(s => qOfSite(s) === tg.wikidata); if (!id) continue;
-      const f = out.sites[id.id] = out.sites[id.id] || {}; if (tg.opening_hours && !f.hours) f.hours = tg.opening_hours; if (tg.fee) f.fee = tg.fee; if (!f.web && /^https?:\/\//i.test(tg.website || tg['contact:website'] || '')) f.web = tg.website || tg['contact:website']; f.osm = el.type + '/' + el.id; }
-  }
+  { const items = t.sites.map(x => { const q = qOfSite(x), c = q && coord(all[q]); return { id: x.id, q, lat: isFinite(x.lat) ? x.lat : c && c.lat, lng: isFinite(x.lng) ? x.lng : c && c.lng }; });
+    const mf = await mapFacts(items);
+    for (const [id, f] of Object.entries(mf)) { const o = out.sites[id] = out.sites[id] || {}; if (f.hours && !o.hours) o.hours = f.hours; if (f.fee) o.fee = f.fee; if (f.web && !o.web) o.web = f.web; o.osm = f.osm; } }
   // 3. Towns a day away: Wikidata fame and UNESCO, Wikivoyage listing as a day trip, and their own sights and food & drink.
   const host = await wvText(baseName(t.name)); await sleep(300);
   if (host) { const goNext = links(section(host.text, /^(go next|day trips?|nearby|around)/i)); out.dayTrips = [...new Set(goNext)].slice(0, 40); out.wikivoyage = host.title; }
@@ -304,6 +316,15 @@ async function buildPlace(t) {
         console.log(`   ${fresh.transit.length} public transport lines${fresh.transit.length ? ' (' + [...new Set(fresh.transit.map(l => l.mode))].join(', ') + ')' : ''}`);
       }
       if (refresh.includes('see')) { fresh.guideSights = await guideSights(baseName(t.name), centre); console.log(`   ${fresh.guideSights.length} sights from the travel guide`); }
+      if (refresh.includes('hours') && fs.existsSync(path.join(OUT, t.key.replace(/[^a-z0-9]+/gi, '-').toLowerCase() + '.json'))) {
+        const saved = JSON.parse(fs.readFileSync(path.join(OUT, t.key.replace(/[^a-z0-9]+/gi, '-').toLowerCase() + '.json'))).sites || {};
+        const es = await entities([...new Set(Object.values(saved).map(x => x.wikidata).filter(Boolean))]);
+        const mf = await mapFacts(Object.entries(saved).map(([id, x]) => { const c = coord(es[x.wikidata]); return { id, q: x.wikidata, lat: c && c.lat, lng: c && c.lng }; }));
+        fresh.sites = {}; for (const [id, f] of Object.entries(mf)) fresh.sites[id] = Object.assign({}, saved[id], f, saved[id].hours ? { hours: saved[id].hours } : {});
+        // Official websites from Wikidata too (the Book tickets link starts there).
+        for (const [id, x] of Object.entries(saved)) { const w = officialWeb(es[x.wikidata]); if (w) { fresh.sites[id] = fresh.sites[id] || Object.assign({}, x); fresh.sites[id].web = w; } }
+        console.log(`   hours for ${Object.values(fresh.sites).filter(x => x.hours).length} of ${Object.keys(saved).length} sights`);
+      }
       if (refresh.includes('lifts')) { fresh.lifts = await liftsNear(centre, 15); console.log(`   ${fresh.lifts.length} cable cars or funiculars`); }
       if (refresh.includes('ports') && t.port && !t.hasPorts) {
         const r = await portPoints(t.port, centre, !!t.island); fresh.ports = r.ports; fresh.missing = r.missing; fresh.portQuery = Object.assign({}, t.port, { island: !!t.island });
