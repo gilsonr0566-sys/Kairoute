@@ -176,6 +176,32 @@ if (fs.existsSync(dir)) { let rides = 0, placed = 0;
     console.log(`ok   ${s.label || f}: ${offered} of ${legs} rides along a public transport line offer it`);
   } }
 
+// ---- Fitting a wanted stop in: lunch on the go and shorter visits come before giving up a sight, and every way offered
+// is checked (the time to be back never moves).
+{ const f = path.join(dir, 'sample-cruise.json');
+  if (fs.existsSync(f)) {
+    const s0 = JSON.parse(fs.readFileSync(f)), di = 5, base = E.planTrip(s0)[di];
+    const ids = base.items.filter(x => x.t === 'stop').map(x => String(x.id));
+    const tight = cut => { const s = JSON.parse(JSON.stringify(s0)); s.days[di].selected = ids; s.days[di].allAboard -= cut; return s; };
+    const p20 = E.planTrip(tight(20))[di], meal20 = p20.items.find(x => x.t === 'meal');
+    ok(ids.every(id => p20.items.some(x => x.t === 'stop' && String(x.id) === id)) && meal20 && meal20.min < 35,
+      `20 minutes less ashore: every pick kept, the lunch gets quicker instead (lunch ${meal20 && meal20.min} min)`);
+    const s90 = tight(90), p90 = E.planTrip(s90)[di], w = E.dayWindow(s90.days[di], E.makeTravel(s90.prefs, s90.legModes));
+    const lost = (p90.dropped || [])[0], ways = lost != null && (p90.waysToFit || {})[lost];
+    ok(!!(ways && ways.length), 'a pick that had to go comes with ways to fit it back in');
+    if (ways && ways.length) {
+      const firstDrop = ways.findIndex(o => o.kind === 'drop');
+      ok(firstDrop === -1 || ways.slice(0, firstDrop).length > 0 && ways.slice(firstDrop).every(o => o.kind === 'drop'), 'shorter visits are offered before skipping another sight');
+      ok((p90.explain || []).some(e => /To fit it in: spend \d+ minutes less at/.test(e)), 'the plan says the ways in plain words');
+      for (const o of ways.filter(o => o.kind === 'shorten')) {
+        const s = JSON.parse(JSON.stringify(s90)); const c = Object.values(s.cities).find(c => (c.sites || []).some(x => String(x.id) === String(o.id)));
+        c.sites.find(x => String(x.id) === String(o.id)).minutes = o.to;
+        const q = E.planTrip(s)[di];
+        ok(q.items.some(x => x.t === 'stop' && String(x.id) === String(lost)) && q.end <= w.endBy, `"${o.say}" really fits it in, back in time (end ${q.end}, back by ${w.endBy})`);
+      }
+    }
+  } }
+
 // ---- The whole trip (step 6 to 8): same plan whatever order the pieces arrive in, nothing used twice, every day safe.
 const shuffle = (a, seed) => { const b = a.slice(); let x = seed; for (let i = b.length - 1; i > 0; i--) { x = (x * 1103515245 + 12345) % 2147483648; const j = x % (i + 1); [b[i], b[j]] = [b[j], b[i]]; } return b; };
 const planKey = plans => JSON.stringify(plans.map(p => p && (p.error || p.items.map(x => x.t + ':' + (x.id || x.name || x.mode) + '@' + (x.at != null ? x.at : x.min)).join(','))));

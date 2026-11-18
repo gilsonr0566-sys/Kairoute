@@ -137,7 +137,12 @@
       }
       const fit = E.fitDay(d, win, picks, pool, ctx);
       fit.kept.forEach(s => { if (s.filled) autoIds.add(String(s.id)); });
-      if (!again) fit.dropped.forEach(x => { if (x.wish) explain.push(x.name + " " + x.why + "."); });
+      // A wanted stop the day had to give up (a pick, a finished guide, a must-see) comes with the ways to fit it back in.
+      const ways = {};
+      if (!again) fit.dropped.forEach(x => { if (!x.wish && !x.wanted) return;
+        const w = x.why === "didn't fit in the time" ? E.waysToFit(win, fit.kept, x.stop, ctx) : [];
+        if (w.length) ways[x.id] = w;
+        explain.push(x.name + " " + x.why + (w.length ? ". To fit it in: " + E.listWords(w.map(o => o.say), "or") : "") + "."); });
       fit.kept.forEach(s => { if (s.trimmed && !(again && again.kept.some(k => k.trimmed && String(k.id) === String(s.id)))) explain.push("A shorter visit to " + s.name + " (" + dur(s.minutes) + " instead of " + dur(s.trimmed) + ") so the rest of the day fits."); });
       const last = fit.seq.length ? fit.seq[fit.seq.length - 1] : win.head[0];
       const dinner = E.dinnerAfter(win, win.tail.length ? win.tail[win.tail.length - 1] : last, fit.r.end, ctx, new Set(fit.seq.filter(s => s.eatKey).map(s => s.eatKey)));
@@ -146,7 +151,8 @@
       const outStop = fit.kept.find(k => k.far), outTown = outStop && (outStop.town ? (city.farther || []).find(t => String(t.id) === String(outStop.town)) || { name: outStop.townName } : outStop);
       const eatThere = outTown && (outTown.foodDrink || []).slice().sort((a, b) => (b.special ? 1 : 0) - (a.special ? 1 : 0)).slice(0, 3).map(x => x.name);
       if (outTown && eatThere.length && !fit.noLunch) explain.push("In " + outTown.name + ", the travel guide suggests " + E.listWords(eatThere) + ".");
-      const lunchNote = fit.noLunch && outTown ? "Have lunch in " + outTown.name + (eatThere.length ? ": the travel guide suggests " + E.listWords(eatThere) + "." : ": its places to eat aren't in the guide yet.") : fit.noLunch ? (fit.noLunch === "time" ? (win.hard ? "Your picks fill the time ashore, so there's no room for lunch and still a safe margin to get back. Grab something quick, or drop a pick to make room." : "No time for a sit-down lunch on this plan: grab something quick on the way.") : "No place to eat along the way at lunchtime: bring food or eat at a stop's own café.") : null;
+      const longVisit = fit.kept.filter(k => (k.minutes || 0) >= 60 && !(k.far && E.has(k, "day-trip"))).sort((a, b) => b.minutes - a.minutes || E.byId(a, b))[0];
+      const lunchNote = fit.noLunch && outTown ? "Have lunch in " + outTown.name + (eatThere.length ? ": the travel guide suggests " + E.listWords(eatThere) + "." : ": its places to eat aren't in the guide yet.") : fit.noLunch ? (fit.noLunch === "time" ? (win.hard ? (fit.kept.some(k => k.wish) ? "Your picks fill" : "Today's stops fill") + " the time ashore, so there's no room for lunch and still a safe margin to get back. Grab lunch on the go between stops" + (longVisit ? ", or spend less time at " + String(longVisit.name).split(",")[0] + " to make room." : ".") : "No time for a sit-down lunch on this plan: grab lunch on the go between stops.") : "No place to eat along the way at lunchtime: bring food or eat at a stop's own café.") : null;
       // Never quietly sure: where the map gives hours for this place's sights but not for some of today's stops, say so.
       const hoursKnown = id => { const sd = siteDay(id); return !!(sd && (sd.closed || sd.allDay || (sd.oh && sd.oh.spans && sd.oh.spans.length))); };
       // Only for a stop you go into (a museum, church, palace...) or one the traveler picked: a square or a district has no door.
@@ -162,7 +168,7 @@
       fit.kept.forEach(s => { sightIds.push(String(s.id)); (groups.members.get(String(s.id)) || []).filter(m => !E.ownStop(byIdHere.get(String(m)), picked)).forEach(m => sightIds.push(String(m))); });
       const eatIds = fit.seq.filter(s => s.eatKey).map(s => s.eatKey).concat(dinner ? [dinner.eatKey] : []);
       sightIds.forEach(id => ledger.claimSight(id, i)); eatIds.forEach(k => ledger.claimEat(k, i));
-      plan.dropped = fit.dropped.map(x => x.id); plan.explain = explain.concat(lunchNote ? [lunchNote] : []);
+      plan.dropped = fit.dropped.map(x => x.id); if (Object.keys(ways).length) plan.waysToFit = ways; plan.explain = explain.concat(lunchNote ? [lunchNote] : []);
       return { plan, sightIds, eatIds, kept: fit.kept, autoIds: [...autoIds], explain, spare: win.endBy - fit.r.end, win };
     };
     const done = new Array(days.length).fill(null);
