@@ -183,7 +183,7 @@
       const eatThere = outTown && (outTown.foodDrink || []).slice().sort((a, b) => (b.special ? 1 : 0) - (a.special ? 1 : 0)).slice(0, 3).map(x => x.name);
       if (outTown && eatThere.length && !fit.noLunch) explain.push("In " + outTown.name + ", the travel guide suggests " + E.listWords(eatThere) + ".");
       const longVisit = fit.kept.filter(k => (k.minutes || 0) >= 60 && !(k.far && E.has(k, "day-trip"))).sort((a, b) => b.minutes - a.minutes || E.byId(a, b))[0];
-      const lunchNote = fit.noLunch && outTown ? "Have lunch in " + outTown.name + (eatThere.length ? ": the travel guide suggests " + E.listWords(eatThere) + "." : ": its places to eat aren't in the guide yet.") : fit.noLunch ? (fit.noLunch === "time" ? (win.hard ? (fit.kept.some(k => k.wish) ? "Your picks fill" : "Today's stops fill") + " the time ashore, so there's no room for lunch and still a safe margin to get back. Grab lunch on the go between stops" + (longVisit ? ", or spend less time at " + String(longVisit.name).split(",")[0] + " to make room." : ".") : "No time for a sit-down lunch on this plan: grab lunch on the go between stops.") : "No place to eat along the way at lunchtime: bring food or eat at a stop's own café.") : null;
+      const lunchNote = !fit.kept.length ? null : fit.noLunch && outTown ? "Have lunch in " + outTown.name + (eatThere.length ? ": the travel guide suggests " + E.listWords(eatThere) + "." : ": its places to eat aren't in the guide yet.") : fit.noLunch ? (fit.noLunch === "time" ? (win.hard ? (fit.kept.some(k => k.wish) ? "Your picks fill" : "Today's stops fill") + " the time ashore, so there's no room for lunch and still a safe margin to get back. Grab lunch on the go between stops" + (longVisit ? ", or spend less time at " + String(longVisit.name).split(",")[0] + " to make room." : ".") : "No time for a sit-down lunch on this plan: grab lunch on the go between stops.") : "No place to eat along the way at lunchtime: bring food or eat at a stop's own café.") : null;
       // Never quietly sure: where the map gives hours for this place's sights but not for some of today's stops, say so.
       const hoursKnown = id => { const sd = siteDay(id); return !!(sd && (sd.closed || sd.allDay || (sd.oh && sd.oh.spans && sd.oh.spans.length))); };
       // Only for a stop you go into (a museum, church, palace...) or one the traveler picked: a square or a district has no door.
@@ -234,15 +234,18 @@
       // traveler's own picks always stay). On a ship, train or plane day only by road, an hour at most each way, and only
       // when the day still ends 45 minutes before the time to be back: the app adds no boat there on its own (boats keep
       // their own timetable), it names it instead.
-      const from0 = was.win.head[was.win.head.length - 1];
-      const shortRoad = s => tr.min(from0, s) <= 60 && !E.byBoat(s.travelNote || "");
+      // How far a trip out is: from the nearest of the day's start and the stops it already has (Rome's sights from the
+      // Colosseum, not from the ship two hours away).
+      const from0 = was.win.head[was.win.head.length - 1], near = [from0].concat(was.kept.filter(k => isFinite(k.lat)));
+      const away = s => Math.min(...near.map(a => tr.min(a, s)));
+      const shortRoad = s => away(s) <= 60 && !E.byBoat(s.travelNote || "");
       // A boat trip the guide times (its crossing), kept only when the day still ends an hour before the time to be back.
       const boatOk = s => E.byBoat(s.travelNote || "") && tr.saidMin(s.travelNote) > 0 && tr.saidMin(s.travelNote) <= 90;
       const worthOf = r => r.kept.reduce((a, k) => a + (k.worth || 0), 0);
       const city = guides[d.city] || {}, far = E.rank((city.farther || []).map(s => Object.assign({}, s, { far: true })), prefs, style)
         .filter(s => !s.town && ledger.sightFree(s.id, i) && !wishDay.has(String(s.id)) && !(now || was).kept.some(k => k.far))
         // a quick look first: there and back plus the visit must fit in the day at all
-        .filter(s => 2 * tr.min(was.win.head[was.win.head.length - 1], s) + (s.minutes || 60) <= (was.win.sightTo || was.win.endBy) - (was.win.sightFrom || was.win.start))
+        .filter(s => 2 * away(s) + (s.minutes || 60) <= (was.win.sightTo || was.win.endBy) - (was.win.sightFrom || was.win.start))
         .filter(s => !was.win.hard || shortRoad(s) || boatOk(s)).slice(0, 3);
       const wished = was.kept.filter(k => !k.filled); // only what the app added to fill spare time may give way
       for (const f of far) {
@@ -271,6 +274,22 @@
       if (!left.length) return; p.leftOut = left.map(s => s.id);
       const names = left.slice(0, 4).map(s => s.name).concat(left.length > 4 ? [(left.length - 4) + " more"] : []);
       p.explain = (p.explain || []).concat(["Also worth seeing here, but not in today's time: " + E.listWords(names, "and") + "."]); });
+    // Never a silent gap of time either: an hour and a half or more left at the end of a day are named as free time,
+    // with the nearest trip out nobody took and why it wasn't added (it doesn't fit, or not with a safe margin).
+    const hm = m => { const h = Math.floor(m / 60), r = Math.round(m % 60); return (h ? h + " h" : "") + (h && r ? " " : "") + (r ? r + " min" : ""); };
+    out.forEach((p, i) => { if (!p || !p.items || p.safe || !isFinite(p.end) || !isFinite(p.endBy)) return;
+      const free = p.endBy - p.end, win = wins[i]; if (free < 90 || !win) return;
+      const said = (p.explain || []).join(" "); if (/free time|time left/i.test(said)) return;
+      const d = days[i], city = guides[d.city] || {}, from = win.head[win.head.length - 1];
+      const stops = p.items.filter(x => x.t === "stop" && isFinite(x.lat)), near = [from].concat(stops);
+      const away = s => Math.min(...near.map(a => tr.min(a, s)));
+      const far = (city.farther || []).filter(s => !s.town && isFinite(s.lat) && !plannedIds.has(String(s.id)) && !said.includes(s.name))
+        .map(s => ({ s, need: 2 * away(s) + (s.minutes || 60) })).sort((a, b) => a.need - b.need)[0];
+      if (!stops.length && !far) { p.explain = (p.explain || []).concat([`Nothing left to plan here: every sight in the guide for ${city.name || "this place"} is on your other day${(byCity.get(d.city) || []).length > 2 ? "s" : ""}. The day is yours until ${E.clock(p.endBy)}.`]); return; }
+      let why = "";
+      if (far) why = far.need > free ? ` ${far.s.name} needs about ${hm(far.need)} there and back with the visit, more than the time left.`
+        : win.hard ? ` ${far.s.name} needs about ${hm(far.need)} there and back with the visit: not added, to keep a safe margin before the ship.` : "";
+      p.explain = (p.explain || []).concat([`Free time: about ${hm(free)} left after the last stop, before ${win.hard ? "the time to be back" : "the day ends"} (${E.clock(p.endBy)}). Linger where you like.${why}`]); });
     // Each thing said once.
     out.forEach(p => { if (p && p.explain) p.explain = p.explain.filter((t, k, a) => a.indexOf(t) === k); });
     return out;
