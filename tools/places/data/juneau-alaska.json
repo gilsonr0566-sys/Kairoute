@@ -1,0 +1,212 @@
+{
+ "key": "juneau alaska",
+ "name": "Juneau, Alaska",
+ "built": "2026-11-18",
+ "sources": [
+  "Wikidata",
+  "OpenStreetMap",
+  "Wikivoyage"
+ ],
+ "sites": {
+  "src-q2095370": {
+   "wikidata": "Q2095370",
+   "editions": 14,
+   "types": [
+    "Q3284499"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "hours": "Mo-Fr 08:00-17:00",
+   "osm": "way/112909706"
+  },
+  "src-q421512": {
+   "wikidata": "Q421512",
+   "editions": 5,
+   "types": [
+    "Q16970"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "osm": "way/560443384"
+  },
+  "src-q20679861": {
+   "wikidata": "Q20679861",
+   "editions": 2,
+   "types": [
+    "Q41176"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": []
+  },
+  "src-q1426502": {
+   "wikidata": "Q1426502",
+   "editions": 3,
+   "types": [
+    "Q33506"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "hours": "Mo 13:00-16:30; Tu-Su 09:00-16:30",
+   "fee": "yes",
+   "osm": "way/112909707"
+  },
+  "src-q1263944": {
+   "wikidata": "Q1263944",
+   "editions": 3,
+   "types": [
+    "Q498002"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": []
+  },
+  "src-q30291923": {
+   "wikidata": "Q30291923",
+   "editions": 0,
+   "types": [
+    "Q163740",
+    "Q3152824"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "osm": "node/5759484104"
+  },
+  "src-juneau-arts-humanities-council": {
+   "wikidata": "Q29445",
+   "editions": 152,
+   "types": [
+    "Q1093829",
+    "Q3301053"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [
+    "Q84766558"
+   ],
+   "osm": "relation/2605281"
+  }
+ },
+ "towns": {},
+ "ports": [
+  {
+   "name": "Cruise Ship Pier",
+   "lat": 58.29764,
+   "lng": -134.40492,
+   "osm": "way/653326427",
+   "kind": "pier",
+   "cruise": true,
+   "d": 1.02
+  },
+  {
+   "name": "Cruise Ship Terminal- Dock D",
+   "lat": 58.29672,
+   "lng": -134.40101,
+   "osm": "way/435867334",
+   "kind": "terminal",
+   "cruise": true,
+   "d": 1.27
+  },
+  {
+   "name": "Cruise Ship Pier",
+   "lat": 58.29551,
+   "lng": -134.40163,
+   "osm": "way/653326429",
+   "kind": "pier",
+   "cruise": true,
+   "d": 1.3
+  },
+  {
+   "name": "Cruiseship Pier, Franklin Dock",
+   "lat": 58.29367,
+   "lng": -134.39715,
+   "osm": "node/4220729889",
+   "kind": "terminal",
+   "cruise": true,
+   "d": 1.63
+  },
+  {
+   "name": "Passenger Terminal",
+   "lat": 58.35928,
+   "lng": -134.5834,
+   "osm": "way/398665751",
+   "kind": "terminal",
+   "cruise": true,
+   "d": 11.47
+  },
+  {
+   "name": "Seaplane Dock",
+   "lat": 58.3003,
+   "lng": -134.42803,
+   "osm": "way/595293250",
+   "kind": "pier",
+   "cruise": false,
+   "d": 0.43
+  },
+  {
+   "name": "Coast Guard Wharf",
+   "lat": 58.29819,
+   "lng": -134.41284,
+   "osm": "way/891096273",
+   "kind": "pier",
+   "cruise": false,
+   "d": 0.58
+  },
+  {
+   "name": "Response Boat Pier",
+   "lat": 58.29869,
+   "lng": -134.41009,
+   "osm": "way/416466165",
+   "kind": "pier",
+   "cruise": false,
+   "d": 0.69
+  },
+  {
+   "name": "Juneau Steamship Terminal Light",
+   "lat": 58.29859,
+   "lng": -134.40631,
+   "osm": "node/13095048598",
+   "kind": "terminal",
+   "cruise": false,
+   "d": 0.9
+  },
+  {
+   "name": "Goldbelt Tram Base Terminal",
+   "lat": 58.2963,
+   "lng": -134.40071,
+   "osm": "node/2361149158",
+   "kind": "terminal",
+   "cruise": false,
+   "d": 1.3
+  },
+  {
+   "name": "Intermediate Vessel Float  IVF",
+   "lat": 58.29454,
+   "lng": -134.39903,
+   "osm": "way/891228440",
+   "kind": "pier",
+   "cruise": false,
+   "d": 1.48
+  },
+  {
+   "name": "Juneau Steamship Terminal Light",
+   "lat": 58.29388,
+   "lng": -134.39973,
+   "osm": "node/13095048597",
+   "kind": "terminal",
+   "cruise": false,
+   "d": 1.49
+  }
+ ],
+ "dayTrips": [],
+ "missing": [],
+ "centre": {
+  "lat": 58.300748750000004,
+  "lng": -134.40891375000004
+ },
+ "wikivoyage": "Juneau"
+}

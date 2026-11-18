@@ -1,0 +1,75 @@
+{
+ "key": "ponta delgada azores",
+ "name": "Ponta Delgada, Azores",
+ "built": "2026-11-18",
+ "sources": [
+  "Wikidata",
+  "OpenStreetMap",
+  "Wikivoyage"
+ ],
+ "sites": {
+  "src-q369631": {
+   "wikidata": "Q369631",
+   "editions": 12,
+   "types": [
+    "Q1131296"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "osm": "relation/7540327"
+  },
+  "src-q10283959": {
+   "wikidata": "Q10283959",
+   "editions": 2,
+   "types": [
+    "Q1785071",
+    "Q210272"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "osm": "relation/12757981"
+  },
+  "src-q28226113": {
+   "wikidata": "Q28226113",
+   "editions": 2,
+   "types": [
+    "Q25550691"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "osm": "way/171725358"
+  },
+  "src-carlos-machado-museum": {
+   "wikidata": "Q10333422",
+   "editions": 2,
+   "types": [
+    "Q33506"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "hours": "Apr-Sep: Tu-Su 10:00-17:30; Oct-Mar: 09:30-17:00",
+   "osm": "relation/16377275"
+  }
+ },
+ "towns": {},
+ "ports": [],
+ "dayTrips": [
+  "Furnas",
+  "Sete Cidades",
+  "São Miguel",
+  "Terceira",
+  "Angra do Heroísmo"
+ ],
+ "missing": [
+  "a mapped cruise terminal or pier"
+ ],
+ "centre": {
+  "lat": 37.7404,
+  "lng": -25.670994
+ },
+ "wikivoyage": "Ponta Delgada"
+}

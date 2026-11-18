@@ -1,0 +1,59 @@
+{
+ "key": "ketchikan alaska",
+ "name": "Ketchikan, Alaska",
+ "built": "2026-11-18",
+ "sources": [
+  "Wikidata",
+  "OpenStreetMap",
+  "Wikivoyage"
+ ],
+ "sites": {
+  "src-q18331580": {
+   "wikidata": "Q18331580",
+   "editions": 4,
+   "types": [
+    "Q15243209"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "osm": "node/4796211023"
+  },
+  "src-q3532720": {
+   "wikidata": "Q3532720",
+   "editions": 3,
+   "types": [
+    "Q207694"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "osm": "way/366338347"
+  },
+  "src-q16946986": {
+   "wikidata": "Q16946986",
+   "editions": 1,
+   "types": [
+    "Q18411786"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": []
+  }
+ },
+ "towns": {},
+ "ports": [],
+ "dayTrips": [
+  "Misty Fiords National Monument",
+  "Prince of Wales Island",
+  "Hollis"
+ ],
+ "missing": [
+  "a mapped cruise terminal or pier"
+ ],
+ "centre": {
+  "lat": 55.337744,
+  "lng": -131.63034
+ },
+ "wikivoyage": "Ketchikan"
+}

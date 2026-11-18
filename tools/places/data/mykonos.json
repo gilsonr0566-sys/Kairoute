@@ -1,0 +1,113 @@
+{
+ "key": "mykonos",
+ "name": "Mykonos",
+ "built": "2026-11-18",
+ "sources": [
+  "Wikidata",
+  "OpenStreetMap",
+  "Wikivoyage"
+ ],
+ "sites": {
+  "chora": {
+   "wikidata": "Q190210",
+   "editions": 71,
+   "types": [
+    "Q23442"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [
+    "Q171132"
+   ],
+   "osm": "relation/5222783"
+  },
+  "paraportiani": {
+   "wikidata": "Q3669454",
+   "editions": 8,
+   "types": [
+    "Q16970"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "osm": "way/623949364"
+  },
+  "src-q1472325": {
+   "wikidata": "Q1472325",
+   "editions": 8,
+   "types": [
+    "Q40080"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": []
+  },
+  "src-q4785417": {
+   "wikidata": "Q4785417",
+   "editions": 7,
+   "types": [
+    "Q3329412"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "osm": "node/1988490509"
+  },
+  "src-q15178241": {
+   "wikidata": "Q15178241",
+   "editions": 6,
+   "types": [
+    "Q1863818"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "osm": "way/736557080"
+  },
+  "src-q108650605": {
+   "wikidata": "Q108650605",
+   "editions": 1,
+   "types": [
+    "Q33506"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": []
+  }
+ },
+ "towns": {
+  "delos-far": {
+   "name": "Delos island",
+   "wikidata": "Q173148",
+   "editions": 80,
+   "unesco": true,
+   "dayTripListed": false,
+   "sights": [],
+   "foodDrink": [],
+   "unescoSites": [
+    "Delos",
+    "Delos"
+   ]
+  }
+ },
+ "ports": [],
+ "dayTrips": [
+  "Athens",
+  "Paros",
+  "Naxos",
+  "Ios",
+  "Santorini",
+  "Syros",
+  "Greek Islands",
+  "Delos",
+  "Tinos"
+ ],
+ "missing": [
+  "a mapped cruise terminal or pier"
+ ],
+ "centre": {
+  "lat": 37.4478625,
+  "lng": 25.33325625
+ },
+ "wikivoyage": "Mykonos"
+}

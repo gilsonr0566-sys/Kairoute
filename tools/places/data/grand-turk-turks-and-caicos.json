@@ -1,0 +1,48 @@
+{
+ "key": "grand turk turks and caicos",
+ "name": "Grand Turk, Turks and Caicos",
+ "built": "2026-11-18",
+ "sources": [
+  "Wikidata",
+  "OpenStreetMap",
+  "Wikivoyage"
+ ],
+ "sites": {
+  "src-q1473924": {
+   "wikidata": "Q1473924",
+   "editions": 26,
+   "types": [
+    "Q23442",
+    "Q2487479"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [
+    "Q1623251"
+   ],
+   "osm": "relation/7162587"
+  },
+  "src-turks-and-caicos-national-museum": {
+   "wikidata": "Q13525325",
+   "editions": 5,
+   "types": [
+    "Q17431399"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "osm": "way/410322609"
+  }
+ },
+ "towns": {},
+ "ports": [],
+ "dayTrips": [],
+ "missing": [
+  "a mapped cruise terminal or pier"
+ ],
+ "centre": {
+  "lat": 21.4663425,
+  "lng": -71.14564250000001
+ },
+ "wikivoyage": "Grand Turk"
+}
