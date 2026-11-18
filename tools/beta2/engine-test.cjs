@@ -196,6 +196,14 @@ if (fs.existsSync(dir)) for (const f of fs.readdirSync(dir).filter(f => f.endsWi
     p.items.forEach(x => { if (x.t === 'stop') { if (x.late) unsafe++; const was = sights.get(String(x.id)); if (was != null && was !== i) ok(false, `${f}: ${x.name} planned on day ${was} and day ${i}`); sights.set(String(x.id), i); }
       if ((x.t === 'meal' || x.t === 'evening') && x.name) { const k = x.name.toLowerCase(); const was = eats.get(k); if (was != null && was !== i) ok(false, `${f}: ${x.name} used on day ${was} and day ${i}`); eats.set(k, i); } }); });
   ok(unsafe === 0, `${f}: ${unsafe} unsafe stops or late days`);
+  // A sight with its own finished guide, a must-see, or the traveler's pick is never folded away into a visit next door.
+  const planned = new Set([...sights.keys()]); let kept = 0;
+  for (const c of Object.values(s.cities)) for (const g of (c.sites || []).filter(x => x.hasGuide || x.mustSee)) {
+    if (planned.has(String(g.id))) { kept++; continue; }
+    const gr = E.makeGroups(c.sites || []), holder = gr.groupOf.get(String(g.id));
+    const beside = holder != null && planned.has(String(holder));
+    if (beside) ok(false, `${f}: ${g.name} has its own guide or is a must-see, but was folded into the visit to the group around it`); }
+  if (f === 'sample-cruise.json') ok(plans.some(p => p && p.items && p.items.some(x => x.t === 'stop' && /Saint Titus/.test(x.name))), 'Heraklion: the Church of Saint Titus, a finished voiced tour, keeps its own stop');
   oks += same; console.log(`ok   ${s.name}: same plan in ${same} of 10 shuffles, nothing used twice, every day safe`);
 }
 console.log(`\n${oks} checks passed, ${fails} failed`); process.exit(fails ? 1 : 0);

@@ -50,6 +50,9 @@
     const r = E.walkDay([], win, tr.estimate, null);
     return Object.assign(shortForm(i, win, { seq: [], r }, new Set(), null), { safe: true, explain: ["Kept to the safe minimum: " + why.join("; ") + "."] });
   }
+  // A sight inside a group (a church on a square) is folded into the group's visit, unless it is worth a stop of its
+  // own: a finished guide or audio tour, a must-see, or the traveler's pick. Then it is always its own stop.
+  E.ownStop = (s, picked) => !!(s && (s.hasGuide || s.mustSee || E.has(s, "must-see") || (picked && picked.has(String(s.id)))));
   E.listWords = (xs, joiner) => xs.length < 2 ? xs.join("") : xs.slice(0, -1).join(", ") + " " + (joiner || "or") + " " + xs[xs.length - 1];
   E.planTrip = bucket => {
     const prefs = bucket.prefs || {}, style = bucket.style || "mix", tr = E.makeTravel(prefs, bucket.legModes, bucket.legs, bucket.transit), ledger = E.makeLedger();
@@ -65,7 +68,8 @@
     for (const [key, idx] of [...byCity].sort((a, b) => String(a[0]).localeCompare(String(b[0])))) {
       if (idx.length < 2) continue;
       const city = guides[key], ranked = E.rank((city.sites || []).map((s, k) => Object.assign({}, s, { rank: k })), prefs, style);
-      const groups = E.makeGroups(ranked), sights = ranked.filter(s => !s.far && E.allowed(s, prefs, null, null) && !groups.groupOf.has(String(s.id)));
+      const picked = new Set(idx.flatMap(i => (days[i].selected || []).map(String)));
+      const groups = E.makeGroups(ranked), sights = ranked.filter(s => !s.far && E.allowed(s, prefs, null, null) && (!groups.groupOf.has(String(s.id)) || E.ownStop(s, picked)));
       const byId = new Map(ranked.map(s => [String(s.id), s]));
       const farRanked = E.rank((city.farther || []).map(s => Object.assign({}, s, { far: true })), prefs, style).filter(s => E.allowed(s, prefs, null, null));
       const allById = new Map(E.rank((city.farther || []).map(s => Object.assign({}, s, { far: true })), prefs, style).concat(ranked).map(s => [String(s.id), s]));
@@ -102,8 +106,9 @@
       // day's area, unless that day is already planned and left it over.
       const doneDay = j => j == null || j === i || out[j] != null;
       ctx.mayAdd = id => ledger.sightFree(id, i) && doneDay(wishDay.get(String(id))) && doneDay(areaDay.get(d.city + "|" + id));
-      const groups = E.makeGroups(ranked), memberOfPicked = id => { const g = groups.groupOf.get(String(id)); return g != null; };
-      const pool = ranked.filter(s => E.allowed(s, prefs, siteDay(s.id), win) && !memberOfPicked(s.id));
+      const picked = new Set((d.selected || []).map(String));
+      const groups = E.makeGroups(ranked), folded = s => groups.groupOf.get(String(s.id)) != null && !E.ownStop(s, picked);
+      const pool = ranked.filter(s => E.allowed(s, prefs, siteDay(s.id), win) && !folded(s));
       const explain = [], wishes = [];
       let picks = null, autoIds;
       if (again) {
@@ -153,7 +158,8 @@
       const bad = guard(plan, win);
       if (bad.length) return { plan: safeDay(i, win, tr, bad) };
       const sightIds = [];
-      fit.kept.forEach(s => { sightIds.push(String(s.id)); (groups.members.get(String(s.id)) || []).forEach(m => sightIds.push(String(m))); });
+      const byIdHere = new Map(ranked.map(s => [String(s.id), s]));
+      fit.kept.forEach(s => { sightIds.push(String(s.id)); (groups.members.get(String(s.id)) || []).filter(m => !E.ownStop(byIdHere.get(String(m)), picked)).forEach(m => sightIds.push(String(m))); });
       const eatIds = fit.seq.filter(s => s.eatKey).map(s => s.eatKey).concat(dinner ? [dinner.eatKey] : []);
       sightIds.forEach(id => ledger.claimSight(id, i)); eatIds.forEach(k => ledger.claimEat(k, i));
       plan.dropped = fit.dropped.map(x => x.id); plan.explain = explain.concat(lunchNote ? [lunchNote] : []);
