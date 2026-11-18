@@ -5,7 +5,7 @@
 // and the planner reads the same ones, so a list and a plan never disagree about what a place is.
 (function (E) {
   E.TAGS = Object.freeze(["must-see", "unesco", "famous", "local-favorite", "religious", "bible", "open-air", "indoor", "inside-or-out",
-    "quick-stop", "day-trip", "book-ahead", "timed-show", "quiet-place", "free", "no-story-yet", "group", "site"]);
+    "quick-stop", "day-trip", "book-ahead", "timed-show", "quiet-place", "free", "price-unknown", "no-story-yet", "group", "site"]);
   E.INTEREST_KEYS = Object.freeze(["history", "art", "architecture", "food", "views", "churches", "bible", "shopping", "beaches", "kids"]);
   E.has = (s, tag) => !!s && Array.isArray(s.tags) && s.tags.includes(tag);
   // Adds group or site (step 3) to each sight's tags. Returns new objects; the bucket itself is never changed.

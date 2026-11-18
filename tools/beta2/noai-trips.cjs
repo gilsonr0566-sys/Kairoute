@@ -7,7 +7,9 @@ const FILE = path.resolve(process.argv[2] || path.join(__dirname, '..', '..', 'i
 const FIX = n => JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'fixtures', n), 'utf8'));
 const OUT = path.join(__dirname, 'snapshots'); fs.mkdirSync(OUT, { recursive: true });
 const MOCK = 'https://mock.test';
-const SRC = [{ re: /paris/i, f: FIX('src-paris.json') }, { re: /nassau/i, f: FIX('src-nassau.json'), dock: { re: /port of nassau|nassau cruise terminal|cruise/i, at: { title: 'Prince George Wharf', lat: 25.0793, lng: -77.3428 } } },
+// Older fixtures were saved before the helper sent a centre; add one from the stops.
+const withCenter = (o) => { if (o.center || !o.stops || !o.stops.length) return o; const v = (k) => o.stops.map((x) => +x[k]).filter(isFinite).sort((a, b) => a - b); const m = (a) => a[a.length >> 1]; return Object.assign({ center: { lat: m(v('lat')), lng: m(v('lng')) } }, o); };
+const SRC = [{ re: /paris/i, f: FIX('src-paris.json') }, { re: /prague|praha/i, f: FIX('prague-sources.json') }, { re: /nassau/i, f: FIX('src-nassau.json'), dock: { re: /port of nassau|nassau cruise terminal|cruise/i, at: { title: 'Prince George Wharf', lat: 25.0793, lng: -77.3428 } } },
   { re: /example cay/i, f: FIX('src-private-island.json'), dock: { re: /cruise|pier|port/i, at: { title: 'Example Cay pier', lat: 25.8180, lng: -77.9350 } } }];
 const prefs = { pace: 'moderate', walk: 'medium', interests: [], travelers: '', access: 'none', party: 2, lang: 'English' };
 let seq = 0; const day = o => Object.assign({ id: 'd' + (++seq), date: '2027-01-12', destination: '', type: 'land', mode: 'flight', time: '09:00', pointIdx: 0, startTime: '09:00', hours: 8, alongWay: true, returnToStart: true, selected: null }, o);
@@ -16,7 +18,7 @@ function helper(r) {
   const src = SRC.find(s => s.re.test(city));
   if (u.pathname === '/status') return j({ ok: true, on: false, left: 0, budget: 0 });
   if (u.pathname === '/sample') return r.fulfill({ status: 429, body: '{"error":"AI off"}' });
-  if (u.pathname === '/sources') return src ? j(src.f.sources) : r.fulfill({ status: 404, body: '{}' });
+  if (u.pathname === '/sources') return src ? j(withCenter(src.f.sources)) : r.fulfill({ status: 404, body: '{}' });
   if (u.pathname === '/famous') return src ? j(src.f.famous) : r.fulfill({ status: 404, body: '{}' });
   if (u.pathname === '/ground') { const b = JSON.parse(r.request().postData() || '{}');
     return j({ results: (b.names || []).map(n => { const s = SRC.find(x => x.dock && x.re.test(n) && x.dock.re.test(n)); return s ? { wiki: [s.dock.at], map: [], answered: true } : { wiki: [], map: [], answered: true }; }) }); }
@@ -27,13 +29,14 @@ function helper(r) {
 }
 const TRIPS = [
   { name: 'noai-city', label: 'No-AI guide: big city stay, 3 days', days: [day({ date: '2027-05-04', destination: 'Paris' }), day({ date: '2027-05-05', destination: 'Paris' }), day({ date: '2027-05-06', destination: 'Paris', hours: 4 })] },
+  { name: 'noai-prague', label: 'No-AI guide: Prague city stay, 2 days (old town and castle)', days: [day({ date: '2027-05-11', destination: 'Prague' }), day({ date: '2027-05-12', destination: 'Prague' })] },
   { name: 'noai-port', label: 'No-AI guide: small cruise port, full day and short call', days: [day({ date: '2027-01-11', destination: 'At sea', type: 'sea' }), day({ date: '2027-01-12', destination: 'Nassau, Bahamas', type: 'port', portArrive: '08:00', allAboard: '17:00' }),
       day({ date: '2027-01-13', destination: 'At sea', type: 'sea' }), day({ date: '2027-01-14', destination: 'Nassau, Bahamas', type: 'port', portArrive: '10:00', allAboard: '14:30' })] },
   { name: 'noai-island', label: "No-AI guide: a cruise line's private island", days: [day({ date: '2027-01-13', destination: 'At sea', type: 'sea' }), day({ date: '2027-01-14', destination: 'Example Cay', type: 'port', portArrive: '07:30', allAboard: '16:30' })] }
 ];
 (async () => {
   const b = await chromium.launch(); let bad = 0;
-  for (const t of TRIPS) {
+  for (const t of TRIPS.filter(t => !process.env.ONLY || process.env.ONLY.split(',').includes(t.name))) {
     const p = await b.newPage({ viewport: { width: 1280, height: 800 } }); const errs = []; p.on('pageerror', e => errs.push(e.message));
     await p.route('**/*', r => { const u = r.request().url(); if (u.startsWith(MOCK)) return helper(r); return /^file:/.test(u) ? r.continue() : r.abort(); });
     await p.goto('file://' + FILE);

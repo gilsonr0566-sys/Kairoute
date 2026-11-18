@@ -15,7 +15,7 @@ The 21 steps are now 11. Nothing was dropped: Richard's steps (resources, collec
 4. **Set each day's window.** Ship, boarding, flight and train safety times; same-day fly-in goes straight to the ship. *Closes #8. Rule #2.*
 5. **Suggest picks where the traveler hasn't chosen (new: the old engine did this, the list had missed it).** Sights grouped by area, one area per day where possible; a port day leads with the best-known sight within reach of the ship; hearted days untouched; cleared days stay empty.
 6. **Build each day, in date order, hearted days first.** One step with four parts that share one ledger:
-   a. claim the day's sights (a group with everything inside it; once per trip; a pick moves only through one "move sight" action);
+   a. claim the day's sights (a group with everything inside it; once per trip; a pick moves only through one "move sight" action). On a stay of two or more days in one city, the picks are first split into areas (whole groups, then places close together), and each day takes whole areas, so a day never crosses town and back (Prague dry run);
    b. order by route, with crowds, heat and forecast allowed only a capped nudge; a dragged order is kept;
    c. fit the day: hours, the hard end and meals together; shrink long visits, quicker lunch, rain-day indoor swap, then the least important stop gives way; a pick that doesn't fit goes to a later day that has it;
    d. fill spare time (never past the hard end, never on a cleared or hearted day).
@@ -72,6 +72,31 @@ New leaks. All five are general rules inside existing steps; none changes the pl
 4. **How the traveler gets to a day trip.** The Corinth legs use a road time (75 min), but by train it's about 3 hours door to door, and the day wouldn't fit. *New wish in step 2: how you're getting around (car, taxi or tour, or public transport). Step 7 plans with that choice; if unknown, public transport where a line exists, otherwise taxi, and step 9 says which was assumed.*
 5. **Lunch at a hilltop fortress.** "Lunch near Acrocorinth" is a generic meal where there are no restaurants. *Step 6c: a meal goes only where real places to eat are within walking distance; otherwise it's moved to the town before (Ancient Corinth), or the plan says to bring food.*
 
+### Dry run 3: Prague (Nov 18)
+Two land days in Prague (May 11 and 12, 2027) built with AI off from the saved free sources, through the 11 steps (Rome and Athens fixes in). Old engine baseline: both days planned, no safety faults (no ship or train that day).
+
+What held:
+- **Old Town Square is a group, the Astronomical Clock a site.** The sources list Old Town Square with the Clock, Old Town Hall, Týn Church, Jan Hus Memorial and St Nicholas, and Prague Castle with St Vitus, Golden Lane, St George's and the Old Royal Palace. The old guide builder folds a place into the nearest bigger one, so it threw away Old Town Square, St Vitus and six other members and showed Prague Castle as a single 50-minute stop. *Step 1 keeps every place, as a group with its members, and merges only on a shared id. Held.*
+- **The Old Town split across both days.** The old plan has Týn Church at 9:40 on day 1, "Old Town" at 4:40 that afternoon, and the Clock and Black Madonna house on day 2. *Step 6a claims the group once. Held.*
+- **Jewish Quarter shared ticket.** The Old-New Synagogue is on day 1, the Old Jewish Cemetery (same ticket) on day 2. *Athens shared-ticket rule. Held.*
+
+New leaks:
+1. **Not enough facts to find the groups.** The free sources' answer says nothing about what kind of place each one is, so the group finder found no groups on this trip. *Rule inside step 1: use Wikidata's "what it is" (square, district, castle complex) and "part of" facts. The helper already fetches both for free; the database stores them. If they're missing, the "not yet known" state applies.*
+2. **The days zigzag across town.** Day 1 goes Old Town, Wenceslas Square, Vyšehrad (south), Prague Castle (northwest), the Dancing House (south again), then back to the Old Town. Day 2 does Charles Bridge, the Lennon Wall and Petřín, right next to the Castle, without it. "Earliest day it fits" causes this on a multi-day stay. *This changes a step's rule (not the number of steps): step 6a splits a city stay into areas first, and each day takes whole areas.* Rome and Athens were single port days, so this didn't show before.
+3. **The Clock at 3:02 for 40 minutes.** The show is on the hour. *Rule inside step 6c: the timed-ticket slot rule covers timed shows too (arrive a few minutes before the hour).*
+4. **Lunch at 2:26.** The Castle pushed lunch late. *Rule inside step 6c: lunch stays inside a fixed window (11:30 to 2:00); a stop moves before lunch is pushed out.*
+5. **Every sight marked "free".** With no fee fact, the bucket tagged Prague Castle and the National Museum as free. That's confidently wrong. *Rule inside step 3: no fee fact means "price unknown", never "free". Fixed in the bucket now (a low-level piece, no planning).*
+6. **No centre, no guide.** One saved source answer had no city centre, and the guide builder quietly made no guide. *Rule inside step 3: a missing piece is listed by name, never a silent blank.*
+
+### Resources added in the dry runs (Nov 18)
+No new paid sources, and no new sources at all. Every fix uses a free source the app already reaches:
+- **Train timetables:** open timetables (Transitous) and OpenStreetMap rail lines, through the helper's ride lookup. Already in use.
+- **Outside fame list:** Wikidata (and Wikipedia language counts), through the helper's famous-places lookup. Already in use.
+- **Shared tickets and "part of" (groups):** Wikidata "part of" and "what it is", which the helper's facts lookup already fetches; Wikivoyage text names combined tickets. Existing sources, two facts now kept that weren't stored before. Where neither says, it's "not yet known", never guessed.
+- **Restaurant locations:** OpenStreetMap, through the helper's places lookup. Already in use.
+- **Heat check:** Open-Meteo forecast within 16 days; beyond that, a rule from month and latitude (no source needed). Already in use.
+- **Fees:** none added. Unknown stays "price unknown" (and the rule that fees are not included stays upfront).
+
 ### What we need to know about each site
 Already collected: where it is, visit length, opening hours and closed days, last entry, timed shows, book-ahead, indoor or outdoor, crowd times, cost, fame and sources, category, how to get there for day trips, closed to visitors.
 
@@ -117,7 +142,7 @@ Missing today, to be added to the database so the engine can decide how to handl
 | `groups.js` | Step 3: sorts every piece into a group or a site, from map boundaries and the square rule; a group's visit claims everything inside it. |
 | `tags.js` | Step 4: every piece's categories, and one sort and filter the screens and planner share. |
 | `ledger.js` | The trip-wide record of what's used: each sight and each restaurant claimed once. |
-| `assign.js` | Which picked sights go on which day: hearted days first (locked), then days in date order; a sight goes to the earliest day it fits. |
+| `assign.js` | Which picked sights go on which day: hearted days first (locked), then days in date order; on a stay of 2+ days in one city, picks are split into areas first and each day takes whole areas; then a sight goes to the earliest day it fits. |
 | `route.js` | Best route order for a day: exact for up to 9 stops, otherwise nearest-neighbour plus 2-opt, with a fixed tie-break (by id) so the answer never depends on input order. |
 | `fit.js` | All or something: shrink long visits, try quick meals, then drop by worth (traveler's pick > must-see > fame), protecting the day's main area. Then put back what truly fits. |
 | `nudge.js` | Crowds, midday heat and forecast choose between orders only within the capped extra riding (15 min or a fifth; forecast 30 min or a third). |

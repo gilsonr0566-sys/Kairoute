@@ -17,7 +17,8 @@ function sightTags(city, s) {
   out.push(isOpenAir(s) ? "open-air" : s.indoor ? "indoor" : "inside-or-out");
   if (s.quick) out.push("quick-stop"); if ((city.farther || []).includes(s) || s.far) out.push("day-trip");
   if (bookAhead(s)) out.push("book-ahead"); if (s.show) out.push("timed-show"); if (isQuietPlace(s)) out.push("quiet-place");
-  if (!s.cost) out.push("free"); if (s.srcOnly && !s.guide) out.push("no-story-yet");
+  if (s.cost === 0 || s.free === true || /^free/i.test(String(s.cost || ""))) out.push("free"); else if (s.cost == null) out.push("price-unknown");   // no fee fact is "unknown", never "free"
+  if (s.srcOnly && !s.guide) out.push("no-story-yet");
   return out;
 }
 function engineBucket(withOld) {
