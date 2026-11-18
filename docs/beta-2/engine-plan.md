@@ -6,7 +6,7 @@ Scope: the planning engine only (see "What Beta 2 changes, and what stays as is"
 
 How Beta 2 turns a trip into days. Each step only reads the steps before it, and the same trip always gives the same days.
 
-1. **Gather the facts once.** Every day's times and places (hotel, port, airport, station), each city's sights and restaurants, opening hours for each date, the forecast. The engine works only from this list and never looks anything up halfway.
+1. **Fill the trip bucket.** (Richard's idea: "have a bucket, get all the pieces.") Before any planning, one bucket collects every piece: each day's times and places (hotel, port, airport, station), each city's sights and restaurants, opening hours for each date, the forecast. The bucket says what's still missing. The engine plans only from a complete bucket and never looks anything up halfway.
 2. **Set each day's window.** When sightseeing can start and the hard end: all aboard minus 45 min on port days, the boarding time on boarding days, 3 h before a flight, 30 min before a train. Fixed steps (bags, the ride to the ship) come out first. A same-day fly-in with under 3 h left goes straight to the ship. Missing times stop that day with a clear message, never a guess.
 3. **Lock the hearted days.** Their sights, order and restaurants are claimed first, so no other day can take them.
 4. **Give each picked sight its day.** Days are handled in date order. A sight goes to the earliest day it's open and fits, and it's claimed once for the whole trip.
@@ -23,7 +23,7 @@ How Beta 2 turns a trip into days. Each step only reads the steps before it, and
 
 | File | Job |
 |---|---|
-| `facts.js` | Builds one frozen **snapshot** of everything a plan may use: the trip, each city's guide, ride answers, ratings, forecast, today's date. Ids are stable; names are display only. |
+| `bucket` (in the app: `src/features/zz-engine-bucket.js`) | Fills the **trip bucket**: one frozen collection of everything a plan may use: the trip, each city's guide, ride answers, ratings, forecast, today's date. Ids are stable; names are display only. |
 | `window.js` | The day's window: start, hard end, head and tail steps (bags, rides to the ship, train or plane), every safety time. Missing times return an error, never a guess. |
 | `travel.js` | Minutes between two places. Two answers: a **stable estimate** (distance, walking limit, guide's own ride note), used for choosing and ordering, and the **live time** (real ride answers), used only for the clock. |
 | `hours.js` | Opening hours, closed days, last entry. One check every stop passes. |
@@ -43,7 +43,7 @@ The engine files also load in Node, so its tests run in seconds without a browse
 
 ## 2. How it's proven (old vs new, same trips, same scorer)
 
-1. **Snapshots.** `tools/beta2/snapshot.cjs` opens the current app offline in a test browser and saves, for each test trip, the full snapshot and the old engine's plans. Trips: the sample Greece cruise, Corpus Christi, a Barcelona train arrival, short port stops, rainy days, empty days, and no-AI guides built from saved source data (Paris, Nassau, a private island, Naples, Messina).
+1. **Buckets.** `tools/beta2/snapshot.cjs` opens the current app offline in a test browser and saves, for each test trip, the full trip bucket and the old engine's plans. Trips: the sample Greece cruise, Corpus Christi, a Barcelona train arrival, short port stops, rainy days, empty days, and no-AI guides built from saved source data (Paris, Nassau, a private island, Naples, Messina).
 2. **One scorer** (`tools/beta2/score.cjs`) grades any plan, old or new, on: picks kept, must-sees kept, minutes riding, doubling back, closed or late stops, repeats across the trip, minutes of margin before every ship, train and flight, days ending late.
 3. **Pass bar for Beta 2:**
    - safety margin never smaller than Beta 1 on any day, and never under the rule (45 min port days, etc.);

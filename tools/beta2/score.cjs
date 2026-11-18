@@ -1,4 +1,4 @@
-// Beta 2: one scorer for any plan, old or new, in the short plan form (see engineOldPlans in src/features/zz-engine-facts.js).
+// Beta 2: one scorer for any plan, old or new, in the short plan form (see engineOldPlans in src/features/zz-engine-bucket.js).
 // score(facts, plans) -> { days: [...], total: {...}, fails: [...] }. Pure: no browser, no internet.
 const hav = (a, b) => { const R = x => x * Math.PI / 180, dLa = R(b.lat - a.lat), dLo = R(b.lng - a.lng);
   const h = Math.sin(dLa / 2) ** 2 + Math.cos(R(a.lat)) * Math.cos(R(b.lat)) * Math.sin(dLo / 2) ** 2; return 2 * 6371 * Math.asin(Math.sqrt(h)); };

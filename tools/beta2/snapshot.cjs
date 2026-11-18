@@ -22,8 +22,8 @@ const TRIPS = [
     await p.goto('file://' + FILE); await p.waitForTimeout(600);
     if (t.setup) { await p.evaluate(t.setup, t.arg); await p.reload(); await p.waitForTimeout(800); }
     if (t.after) await p.evaluate(t.after);
-    const snap = await p.evaluate(() => window.__kairouteFacts ? window.__kairouteFacts(true) : null);
-    if (!snap) { console.log('FAIL ' + t.name + ': facts hook missing'); bad++; await p.close(); continue; }
+    const snap = await p.evaluate(() => window.__kairouteBucket ? window.__kairouteBucket(true) : null);
+    if (!snap) { console.log('FAIL ' + t.name + ': bucket hook missing'); bad++; await p.close(); continue; }
     snap.name = t.name; snap.label = t.label;
     fs.writeFileSync(path.join(OUT, t.name + '.json'), JSON.stringify(snap));
     const days = snap.old.filter(x => !x.error).length;
