@@ -35,6 +35,7 @@ jobs:
       - name: Safety net (every screen agrees on every day of 6 sample trips; a failure stops the update going live)
         run: |
           sh build.sh
+          sh tools/test-helper.sh
           npm i --no-save playwright@1 && npx playwright install --with-deps chromium
           node tools/plan-test.cjs
           node tools/ferry-unit.mjs
@@ -84,6 +85,11 @@ jobs:
         with:
           name: safety-net-report
           path: checks
+      - name: Put the live helper's address back (the tests used a local stand-in; see tools/test-helper.sh)
+        if: always()
+        run: |
+          git checkout -- ai.json && grep -q '"url":"https://' ai.json && cat ai.json
+          grep "Test helper stand-in:" helper-proxy.log | tail -1 || true; pkill -f helper-proxy.mjs || true
       - name: Deploy the AI helper to Cloudflare (free Workers AI)
         continue-on-error: true
         run: |
@@ -113,7 +119,7 @@ jobs:
           if [ -d audio ]; then cp -r audio _site/; fi # recorded stop scripts (src/features/stop-scripts.js)
           if [ -f app/android/app/build/outputs/apk/debug/app-debug.apk ]; then cp app/android/app/build/outputs/apk/debug/app-debug.apk _site/Kairoute.apk
           else echo "Android build failed: keeping the app file from the live site"; curl -sfL -o _site/Kairoute.apk "https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/Kairoute.apk" || rm -f _site/Kairoute.apk; fi
-          if [ -f ai.json ]; then cp ai.json _site/; fi
+          if [ -f ai.json ]; then grep -q '"url":"https://' ai.json || git checkout -- ai.json; cp ai.json _site/; fi
           # Today's exchange rates, published with the site: the app's third source for home-currency figures
           # (src/features/money.js). A failed fetch never stops a publish.
           (curl -sfL -m 20 https://open.er-api.com/v6/latest/USD -o rates.json && jq -e '.rates.EUR' rates.json >/dev/null && cp rates.json _site/) || echo "No exchange rates today; the app uses its own sources."

@@ -20,7 +20,7 @@ jobs:
           node-version: 22
       - run: npm i playwright@1 && npx playwright install chromium
       - name: Map with stand-in tiles and routes (no network)
-        run: sh build.sh && MOCK=1 node tools/map-e2e.cjs
+        run: sh build.sh && sh tools/test-helper.sh && MOCK=1 node tools/map-e2e.cjs
       - name: Map with the real OpenFreeMap tiles and live routes
         env:
           STREETS: ${{ inputs.streets }}
