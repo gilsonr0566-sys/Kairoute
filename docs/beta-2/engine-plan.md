@@ -107,3 +107,21 @@ Every one of the 21 failures in the lessons doc was checked against the steps. T
 - **#6 swap bug:** the picks step moves a sight with one "move" action that takes it off its old day in the same step. No screen changes a day's picks any other way.
 - **#14 hand-written guides hiding gaps:** the yardstick gets no-AI test trips (guides built automatically from saved source data: a big city, a small port, a private island) before the planning steps are built.
 **Done the same evening:** three no-AI test trips are now in the yardstick (`tools/beta2/noai-trips.cjs`: a big city stay, a small cruise port with a full day and a short call, a private island), and **#9** has its test (a port with no sights gets a safe day ashore). Still partly covered: **#17** the bucket is read through a test hook until it becomes the plug-in point.
+
+## Other errors from the project, checked against the steps (Nov 18)
+
+Beyond the 21 in the lessons doc. Proposed additions to the engine steps are marked **add**.
+
+Engine (proposed additions):
+- **add to step 1:** wrong merges and duplicates (two museums merged into one, the same place twice under its local and English names). One entry per real place; entries merge only when they share a fixed id (Wikidata or map id), never on a loose name match.
+- **add to step 15:** bad ride data (a city metro shown as "every 4 h 12 min", three near-identical metro rows). Each ride kind gets sensible limits; data outside them says "check the timetable" instead of being shown as fact.
+- **add to step 17:** a rule change in the sources quietly changed an existing city's guide and plan (the small-port rule changed the Chania demo guide). When the database changes a day the traveler has already seen, the plan says what changed and why.
+- **add to step 19:** online and offline plans differed. The trip's bucket is kept on the device, so offline plans come from the same bucket.
+- **add to step 21:** freezes on the tablet. The new engine must plan a whole trip within a fixed time limit on a slowed-down test device.
+
+Rest of the app (not engine steps; already handled or parked):
+- No ship itinerary or flight-number lookup at trip entry (needs paid data; parked). The engine already plans on estimated times and says so.
+- AI overspend and the guide failing with AI off: the engine uses no AI; guides with AI off are built from free sources (steps 1 and 2).
+- Voice costs: voice is outside the engine; paid voice is off.
+- Publishes blocked by the demo check, and storage use over plan: publishing and helper work, not engine work. Beta 2 is tested on its own branch, and step 1 reduces storage reads.
+- Boarding time lost on redraw (#178): a screen bug, fixed in Beta 1; the engine only reads the saved trip.
