@@ -73,7 +73,7 @@ const SIZES = [['tablet', { width: 1280, height: 800 }, 1], ['phone', { width: 3
     await p.evaluate(() => { const t = document.querySelector('.tab[data-view="plan"]'); if (t) t.click(); });
     const t0 = Date.now(); while (Date.now() - t0 < 25000) { const m = await p.evaluate(() => window.__kairouteMap()); if (m.live && m.tiles) break; await p.waitForTimeout(300); }
     await p.waitForTimeout(1500);
-    const el = await p.$('#view .mapbox');
+    const el = p.locator('#view .mapbox').first(); // a locator finds the map again if the screen re-draws
     await p.evaluate(() => window.__kairouteLabels(false)); await p.waitForTimeout(800); await el.screenshot({ path: path.join(OUT, `labels-${scheme}-before.png`) });
     await p.evaluate(() => window.__kairouteLabels(true)); await p.waitForTimeout(800); await el.screenshot({ path: path.join(OUT, `labels-${scheme}-after.png`) });
     const lab = await p.evaluate(() => window.__kairouteLabels()); console.log(`place names (${scheme}): ${lab ? lab.length : 0} label layers; ` + (lab || []).slice(0, 4).join(', '));
