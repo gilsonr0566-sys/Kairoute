@@ -7,7 +7,7 @@ on:
     inputs:
       refresh:
         description: "Parts to refresh: transit, ports, see, lifts, hours"
-        default: "transit,ports"
+        default: "transit,ports"   # "full" builds each place in full (sights, towns, places to eat, ports, lines)
       only:
         description: "Only places whose key matches (blank: all)"
         default: ""
@@ -19,7 +19,7 @@ permissions:
 jobs:
   lines:
     runs-on: ubuntu-latest
-    timeout-minutes: 60
+    timeout-minutes: 150
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4

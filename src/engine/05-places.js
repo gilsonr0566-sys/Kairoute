@@ -57,6 +57,8 @@
         // With its sights listed one by one, the town itself is the walk through its centre.
         if (own.length >= 2) s.minutes = Math.min(s.minutes || 60, 60);
         s.foodDrink = (t.foodDrink || []).map(x => ({ name: x.name, lat: isFinite(x.lat) ? x.lat : null, lng: isFinite(x.lng) ? x.lng : null, kind: x.kind, note: x.content || "", special: E.foodSpecial(x) }));
+        // No place to eat in its travel guide: the restaurants and cafés on the map beside it (named as from the map).
+        if (!s.foodDrink.some(x => x.kind === "eat") && (t.mapEats || []).length) s.foodDrink = s.foodDrink.concat(t.mapEats.map(x => ({ name: x.name, lat: x.lat, lng: x.lng, kind: "eat", note: x.cuisine || "", special: false, fromMap: true })));
       }
       if (added.length) city.farther = (city.farther || []).concat(added);
       // Hours per day: a mapped opening time read for that day's date, where the day has no hours for the sight yet.

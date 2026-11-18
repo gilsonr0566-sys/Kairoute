@@ -246,6 +246,13 @@ async function buildPlace(t) {
       if (l.kind === 'see') { if (onMap && hav(s, l) <= 20) town.sights.push(l); }
       else if (l.kind === 'eat' || l.kind === 'drink' || l.kind === 'buy') { if (!onMap || hav(s, l) <= 20) town.foodDrink.push(l); }
     }
+    // A trip out whose travel guide names no place to eat (Pompeii's ruins, a monastery on a hill): the real restaurants
+    // and cafés on the map within a short walk of it, nearest first, marked as from the map (no review behind them).
+    if (isFinite(s.lat) && town.foodDrink.filter(x => x.kind === 'eat').length < 2) {
+      const els = await overpass(`[out:json][timeout:60];nwr(around:700,${s.lat},${s.lng})["amenity"~"^(restaurant|cafe)$"]["name"];out tags center;`); await sleep(300);
+      town.mapEats = els.map(el => { const q = pos(el), tg = el.tags || {}; return q && { name: tg['name:en'] || tg.name, lat: q.lat, lng: q.lng, kind: 'eat', amenity: tg.amenity, cuisine: tg.cuisine || '', osm: el.type + '/' + el.id }; })
+        .filter(x => x && x.name).sort((x, y) => hav(s, x) - hav(s, y)).slice(0, 8);
+    }
     // How widely known each of the town's sights is, and UNESCO (itself or as part of a listed site), from Wikidata.
     const lq = [...new Set(town.sights.map(x => x.wikidata).filter(q => /^Q\d+$/.test(q)))];
     if (lq.length) {
@@ -306,7 +313,7 @@ async function buildPlace(t) {
   for (const t of targets.values()) {
     if (only && !only.test(t.key)) continue;
     // REFRESH=transit,ports (TRANSIT_ONLY=1 means transit): refresh just those parts of each saved place, quickly.
-    const refresh = (process.env.REFRESH || (process.env.TRANSIT_ONLY ? 'transit' : '')).split(',').filter(Boolean);
+    const refresh = (process.env.REFRESH || (process.env.TRANSIT_ONLY ? 'transit' : '')).split(',').filter(x => x && x !== 'full'); // 'full': build the place in full
     if (refresh.length) {
       let centre = t.centre; if (!centre) { const f = await findQ(baseName(t.name), null, 1e9); if (f) centre = f.c; } if (!centre) continue;
       console.log(`\n== ${t.key} (${t.name})`);
