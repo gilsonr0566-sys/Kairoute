@@ -60,7 +60,8 @@ async function sourceGuide(d) {
 const SG_KIND = {
   airport: { re: /airport|aeroporto|aeropuerto|a[ée]roport|flughafen|lufthavn|luchthaven|havaliman|aerodrom|αερολιμ/i, map: /aerodrome|airport/, km: 60 },
   station: { re: /station|stazione|estaci[oó]n|gare\b|bahnhof|centraal|σταθμ|dworzec|n[aá]dra[zž]/i, map: /station|train/, km: 15 },
-  cruise: { re: /cruise|terminal|port of|harbou?r|\bport\b|porto|puerto|\bpier\b|quay|marina|λιμ[άα]ν/i, map: /harbou?r|ferry|pier|port|terminal|marina/, km: 30 }
+  // Many ships tie up at a "wharf", "dock" or "jetty" (Prince George Wharf, Nassau): those count as the cruise port too.
+  cruise: { re: /cruise|terminal|port of|harbou?r|\bport\b|porto|puerto|\bpier\b|quay|wharf|\bdocks?\b|jett(y|ies)|marina|λιμ[άα]ν/i, map: /harbou?r|ferry|pier|port|terminal|marina|wharf|dock|jetty/, km: 30 }
 };
 async function srcStarts(label, area, port, centre, d) {
   const gate = keyOf(port) !== keyOf(area);
