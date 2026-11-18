@@ -64,16 +64,28 @@
   // A day that could have lunch but lost it to the stops counts as worse than a slightly later end.
   const cost = c => penalty(c.r) + (c.noLunch === "time" ? 300 : 0);
   // Order the stops for travel, then try every single move for a better timed day (opening hours, lunch).
+  // The out-of-town stops sit together at the start or the end of the day.
+  const blockAtEnd = o => { const f = o.map(s => !!s.far), n = f.filter(Boolean).length; return f.slice(0, n).every(Boolean) || f.slice(o.length - n).every(Boolean); };
   // quick: skip the move-by-move repair (used to test a candidate; the day is repaired once it is chosen).
   function arrange(stops, win, ctx, quick) {
     const from = win.head[win.head.length - 1], to = win.tail.length ? win.tail[0] : null;
-    let order = E.bestOrder(stops, from, to, ctx.tr.min), cur = withLunch(order, win, ctx), pen = cost(cur);
+    let order = E.bestOrder(stops, from, to, ctx.tr.min);
+    // A trip out of town is one block, first or last in the day, never wedged between sights in town.
+    const far = stops.filter(s => s.far), near = stops.filter(s => !s.far);
+    if (far.length && near.length) {
+      const farFirst = E.bestOrder(far, from, null, ctx.tr.min), a = farFirst.concat(E.bestOrder(near, farFirst[farFirst.length - 1], to, ctx.tr.min));
+      const nearFirst = E.bestOrder(near, from, null, ctx.tr.min), b = nearFirst.concat(E.bestOrder(far, nearFirst[nearFirst.length - 1], to, ctx.tr.min));
+      const ca = withLunch(a, win, ctx), cb = withLunch(b, win, ctx);
+      order = cost(ca) <= cost(cb) ? a : b;
+    }
+    let cur = withLunch(order, win, ctx), pen = cost(cur);
     if (!quick && (cur.r.late || cur.r.over || cur.noLunch === "time")) {
       for (let pass = 0; pass < 2; pass++) {
         let better = false;
         for (let i = 0; i < order.length; i++) for (let j = 0; j < order.length; j++) {
           if (i === j || j === i - 1) continue; // moving to just before the previous is the same as moving that one after
           const o = order.slice(); const [x] = o.splice(i, 1); o.splice(j, 0, x);
+          if (far.length && near.length && !blockAtEnd(o)) continue;
           // Lunch only adds time, so an order already later or later at a last entry without lunch can't win.
           const bare = walk(o, win, ctx); if (bare.over > cur.r.over || bare.late > cur.r.late) continue;
           const c = withLunch(o, win, ctx), p = cost(c);
