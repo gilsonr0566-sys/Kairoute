@@ -27,15 +27,18 @@
   // The plan in the short form the scorer and the screens read (the same shape as the old engine's, for side by side).
   function shortForm(i, win, fit, autoIds, dinner) {
     const byId = new Map(fit.seq.map(s => [String(s.id), s])), items = [];
+    // Where each item is: a stop or meal of the day, the day's first or last point, or a fixed step at either end.
+    const fixedAt = id => win.head.concat(win.tail).find(p => p.fixed && p.id === id);
+    const whereIs = x => x.t === "fixed" ? fixedAt(x.id) : x.id != null ? byId.get(String(x.id)) : x.t === "start" ? win.head[0] : x.t === "end" ? win.tail[win.tail.length - 1] : null;
     for (const x of fit.r.items) {
       if (x.t === "ride") { items.push(Object.assign({ t: "ride", mode: x.mode, min: x.min, km: x.km }, x.options ? { how: x.how, options: x.options } : {})); continue; }
       // Each ride knows where it starts and ends (the map draws each one apart, out and back side by side).
-      const prev = items[items.length - 1], here = point(x.id != null ? byId.get(String(x.id)) : (x.t === "start" ? win.head[0] : x.t === "end" ? win.tail[win.tail.length - 1] : null));
+      const prev = items[items.length - 1], here = point(whereIs(x));
       if (prev && prev.t === "ride" && items.length >= 2) { const a = items[items.length - 2]; if (isFinite(a.lat) && isFinite(here.lat)) Object.assign(prev, { from: { lat: a.lat, lng: a.lng }, to: here }); }
       const src = x.id != null ? byId.get(String(x.id)) : null;
       const it = { t: x.t, id: x.t === "meal" ? null : x.id, name: x.name, at: x.at, min: x.min, bonus: x.t === "stop" && autoIds.has(String(x.id)), along: false, meal: x.meal || null, late: x.late || 0 };
       if (x.wait) it.wait = x.wait; if (x.chosen) it.chosen = true; if (x.pinned) it.pinned = true;
-      Object.assign(it, point(src || (x.t === "start" ? win.head[0] : x.t === "end" ? win.tail[win.tail.length - 1] : null)));
+      Object.assign(it, point(whereIs(x)));
       items.push(it);
     }
     if (dinner) items.push({ t: "evening", id: null, name: dinner.name, at: dinner.at, min: dinner.min, lat: dinner.lat, lng: dinner.lng, bonus: false, along: false, meal: "Dinner", late: 0, chosen: !!dinner.chosen });
@@ -205,13 +208,16 @@
         if (!(keepsAll(now) && now.kept.length > was.kept.length)) { undo(now); now = null; }
       }
       // A trip out to the best farther sight nobody has used, when it gives more than the sights it replaces (the
-      // traveler's own picks always stay). Never on a ship, train or plane day: the app adds no long ride on its own there.
+      // traveler's own picks always stay). On a ship, train or plane day only a short road ride (half an hour at most
+      // each way, never a boat on its own timetable): the app adds no long ride or boat there on its own.
+      const BOAT = /\b(boat|ferry|hydrofoil|catamaran)\b/i, from0 = was.win.head[was.win.head.length - 1];
+      const shortRoad = s => tr.min(from0, s) <= 30 && !BOAT.test(s.travelNote || "");
       const worthOf = r => r.kept.reduce((a, k) => a + (k.worth || 0), 0);
       const city = guides[d.city] || {}, far = E.rank((city.farther || []).map(s => Object.assign({}, s, { far: true })), prefs, style)
         .filter(s => !s.town && ledger.sightFree(s.id, i) && !wishDay.has(String(s.id)) && !(now || was).kept.some(k => k.far))
         // a quick look first: there and back plus the visit must fit in the day at all
         .filter(s => 2 * tr.min(was.win.head[was.win.head.length - 1], s) + (s.minutes || 60) <= (was.win.sightTo || was.win.endBy) - (was.win.sightFrom || was.win.start))
-        .slice(0, was.win.hard ? 0 : 3);
+        .filter(s => !was.win.hard || shortRoad(s)).slice(0, 3);
       const wished = was.kept.filter(k => !k.filled); // only what the app added to fill spare time may give way
       for (const f of far) {
         const cur = now || was;
@@ -225,6 +231,14 @@
       if (now) { done[i] = now; out[i] = now.plan; continue; }
       was.sightIds.forEach(id => ledger.claimSight(id, i)); was.eatIds.forEach(k => ledger.claimEat(k, i));
     }
+    // Never a silent gap: on a place seen one day only, the sights with their own finished tour or a must-see that no day
+    // could fit are named, so the traveler knows they were weighed, not missed.
+    const plannedIds = new Set(); out.forEach(p => p && p.items && p.items.forEach(x => { if (x.t === "stop") plannedIds.add(String(x.id)); }));
+    out.forEach((p, i) => { if (!p || !p.items || p.safe) return; const d = days[i], city = guides[d.city]; if (!city || (byCity.get(d.city) || []).length !== 1) return;
+      const said = (p.explain || []).join(" "), left = (city.sites || []).filter(s => E.ownStop(s) && !plannedIds.has(String(s.id)) && !said.includes(s.name));
+      if (!left.length) return; p.leftOut = left.map(s => s.id);
+      const names = left.slice(0, 4).map(s => s.name).concat(left.length > 4 ? [(left.length - 4) + " more"] : []);
+      p.explain = (p.explain || []).concat(["Also worth seeing here, but not in today's time: " + E.listWords(names, "and") + "."]); });
     return out;
   };
 })(KEngine);

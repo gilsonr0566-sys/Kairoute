@@ -30,6 +30,15 @@
         if (f.closedForGood && !f.hours) s.closedForGood = true;
         if (f.hours && !s.hours) s.hours = f.hours;
       }
+      // A thin guide (under 8 sights): the travel guide's own sights for the place join it, unless already there (same
+      // name, or within 150 m) or closed for good.
+      if ((city.sites || []).length < 8 && (P.guideSights || []).length) {
+        const key = n => String(n || "").toLowerCase().normalize("NFKD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-z0-9]+/g, " ").trim();
+        const more = P.guideSights.filter(x => !x.closedForGood && isFinite(x.lat) && !(city.sites || []).some(s => key(s.name) === key(x.name) || (isFinite(s.lat) && E.hav(s, x) <= 0.15)))
+          .map((x, n) => ({ id: "wv~" + (x.wikidata || key(x.name).replace(/ /g, "-")), name: x.name, lat: x.lat, lng: x.lng, minutes: /museum|museo|musée|museu|muzeum|galler/i.test(x.name) ? 60 : 30,
+            editions: x.editions || 0, unesco: !!x.unesco, tags: ["from-guide"], category: "Sight", fromGuide: true, blurb: x.note || "" })).filter((x, i, a) => a.findIndex(y => y.id === x.id) === i);
+        if (more.length) city.sites = (city.sites || []).concat(more);
+      }
       const added = [];
       for (const s of city.farther || []) {
         const t = P.towns && P.towns[s.id]; if (!t) continue;
