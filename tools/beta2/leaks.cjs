@@ -36,8 +36,8 @@ for (const f of fs.readdirSync(dir).filter(f => f.endsWith('.json')).sort()) {
       if (!lunch && x.at < 1050) add('mealTime', f, `day ${i}: dinner at ${E.clock(x.at)} (${x.name})`);
       const a = p.items.slice(0, k).reverse().find(y => isFinite(y.lat) && y.t !== 'ride'), b = p.items.slice(k + 1).find(y => isFinite(y.lat) && y.t !== 'ride');
       // (before a ride out of town the lunch is measured from the last stop in town: the ride out leaves from the city, so
-      // the meal costs at most the way from that stop to it)
-      const off = !b || E.hav(a || x, b) > 10 ? (a ? E.hav(a, x) : 0) : E.hav(a, x) + E.hav(x, b) - E.hav(a, b);
+      // the meal costs at most the way from that stop to it; eating where the ride out arrives is on the way too)
+      const off = !b || E.hav(a || x, b) > 10 ? (a ? (b ? Math.min(E.hav(a, x), E.hav(x, b)) : E.hav(a, x)) : 0) : E.hav(a, x) + E.hav(x, b) - E.hav(a, b);
       if (lunch && a && b && isFinite(x.lat) && off > 1.6) add('mealOff', f, `day ${i}: ${x.name} adds ${off.toFixed(1)} km between ${a.name} and ${b.name}`);
       if (x.name) { const was = eatDays.get(x.name); if (was != null && was !== i) add('mealAgain', f, `${x.name} on day ${was} and day ${i}`); else eatDays.set(x.name, i); } });
     // Path and transport: no long walk where a ride is offered; no taxi for a few steps.

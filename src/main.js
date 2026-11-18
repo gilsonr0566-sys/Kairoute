@@ -805,7 +805,9 @@ let rideNotice = null, ridePref = "public";
 // had, says how much longer the new ride is and which stop wouldn't fit, and offers, as the traveler's own choice, to
 // take it anyway and leave that stop out (with Undo). A ride the traveler chose stays chosen.
 function switchRide(key, val, force) {
-  const d = day(), names = pl => pl && !pl.error ? pl.items.filter(i => i.type === "stop").map(i => i.place.name) : [];
+  // Only the traveler's own stops count: an optional stop the app added to fill time gives way to the ride they pick
+  // (Nov 18, Naples: the train was refused because it "would leave out Umberto I Gallery", an optional stop).
+  const d = day(), names = pl => pl && !pl.error ? pl.items.filter(i => i.type === "stop" && !i.place.bonus).map(i => i.place.name) : [];
   trip.legModes = trip.legModes || {}; const was = trip.legModes[key];
   const back = () => { if (was == null) delete trip.legModes[key]; else trip.legModes[key] = was; };
   const before = buildPlan(d); trip.legModes[key] = val; const after = buildPlan(d);
@@ -6200,7 +6202,9 @@ function mapPlanData(plan, d) {
   plan.items.forEach(it => {
     if (it.type === "travel") { pending = it; return; }
     const p = it.place; if (!p || !isFinite(p.lat) || !isFinite(p.lng)) return;
-    if (last && pending) { const o = pending.leg.transit; legs.push({ mode: pending.leg.mode === "ride" ? "car" : "foot", kind: legKind(pending.leg), a: [last.lng, last.lat], b: [p.lng, p.lat], path: o && o.path && o.path.length > 1 ? [[last.lng, last.lat], ...o.path, [p.lng, p.lat]] : null }); }
+    if (last && pending) { const o = pending.leg.transit; const kind = legKind(pending.leg), a = [last.lng, last.lat], b = [p.lng, p.lat];
+      // A ferry crosses the water: drawn straight across, never along the coast road (Nov 18, Naples to Sorrento).
+      legs.push({ mode: pending.leg.mode === "ride" ? "car" : "foot", kind, a, b, path: o && o.path && o.path.length > 1 ? [a, ...o.path, b] : kind === "ferry" ? [a, b] : null }); }
     last = p; pending = null;
     const at = p.lat.toFixed(5) + "," + p.lng.toFixed(5);
     if (it.type === "start" || it.type === "end" || it.type === "fixed") {

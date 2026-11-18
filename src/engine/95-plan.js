@@ -168,7 +168,9 @@
       const own = g => (groups.members.get(String(g.id)) || []).map(m => byIdR.get(String(m))).filter(m => m && E.ownStop(m, picked));
       // A sight seen only from the water is never a stop the app adds on a ship, train or plane day (a boat tour is the
       // traveler's own pick); picked, it is reached by boat.
-      const pool = ranked.filter(s => E.allowed(s, prefs, siteDay(s.id), win) && !folded(s) && !(win.hard && E.waterOnly(s) && !picked.has(String(s.id))))
+      // An optional stop the traveler said "Skip it" to is never added to this day again (Nov 18: the button did nothing).
+      const skipped = new Set((d.skipBonus || []).map(String));
+      const pool = ranked.filter(s => E.allowed(s, prefs, siteDay(s.id), win) && !folded(s) && !(win.hard && E.waterOnly(s) && !picked.has(String(s.id))) && !(skipped.has(String(s.id)) && !picked.has(String(s.id))))
         .map(s => { const o = own(s); if (!o.length) return s; const left = Math.max(30, Math.round(((s.minutes || 60) - o.reduce((a, m) => a + (m.minutes || 30), 0)) / 5) * 5);
           return left < (s.minutes || 60) ? Object.assign({}, s, { minutes: left, walkOf: o.map(m => m.name) }) : s; });
       const explain = [], wishes = [];
