@@ -46,3 +46,24 @@ Picking the train and paying without leaving Kairoute needs:
 4. Tickets: e-tickets delivered into the app and by email, kept offline on the phone.
 5. Traveler details (names, passport for some routes), privacy policy and terms updates.
 6. Customer support for failed bookings, cancellations and strikes.
+
+# Booking sights' tickets (Book ahead)
+
+A stop whose ticket notes say to book ahead (timed entry, sells out, reservation required) gets a ticket row on the Day
+plan (`src/features/tickets.js`): **Book tickets ↗**, **Mark booked**, and "Entrance fee not included: you pay the site".
+The link comes from data, never a guess (`tixLink`):
+
+1. The operator's own ticket store, when the sight's official website (Wikidata P856, the map's website tag, or the
+   travel guide's listing) is on a known operator (`TIX_STORES`). Each store was seen linked from the operator's own
+   website on Nov 18 2026: Hellenic Heritage `tickets.hh.gr/en` (hh.gr: "the official platform of the Ministry of
+   Culture and ODAP"), Colosseum `ticketing.colosseo.it/en/`, Alhambra `tickets.alhambra-patronato.es/en/`, Sagrada
+   Família `sagradafamilia.org/en/tickets`, Uffizi `uffizi.it/en/tickets`. A new store joins only the same way.
+2. Greek state sites: every archaeological site in Greece and its state archaeological museums sell through Hellenic
+   Heritage (rule on country + what the sight is).
+3. The sight's official website (its Tickets page).
+4. Nothing on record: **Find official tickets** opens a web search, labelled as one, with a reseller warning.
+
+None of these stores takes a date in its address, so the row names the date to pick. No prices, no partner links.
+"Mark booked" is kept on the day (`d.tixDone`, synced with the trip), redraws only the row and never re-plans; the day's
+checks list only the stops not yet booked, and the printed plan shows the ticket address and "(booked)".
+Check: `tools/tix-check.cjs` (publish gate).

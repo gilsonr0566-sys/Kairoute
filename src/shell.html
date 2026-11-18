@@ -1229,6 +1229,16 @@ details.morefold:not([open]) { padding-bottom: 0 !important; }
 .bookride .brtimes li.mine { background: color-mix(in srgb, var(--lc) 14%, transparent); } .bookride .brtimes li em { font-style: normal; font-weight: 700; font-size: .8rem; color: var(--lc); }
 .bookride .brsrc, .bookride .brsmall, .bookride .brnote { font-size: .82rem; margin: 0; }
 .bookride .brbook { justify-self: start; background: var(--lc); border-color: var(--lc); color: var(--card); text-decoration: none; min-height: 44px; display: inline-flex; align-items: center; gap: 6px; }
+/* Book ahead: the ticket row under a stop (tickets.js). Route green, not orange: it is a tool, not the page's main action. */
+.tixrow { margin-top: 6px; display: grid; gap: 4px; max-width: 560px; }
+.tixrow .tixtop { display: flex; flex-wrap: wrap; gap: 6px 8px; align-items: center; }
+.tixrow .tixbook { padding: 6px 12px; min-height: 38px; font-size: .9rem; white-space: nowrap; }
+.tixrow .tixbook.find { background: transparent; color: var(--route); border: 1px solid var(--route); }
+.tixrow .tixdone { min-height: 38px; padding: 6px 12px; border: 1px solid var(--line); border-radius: 8px; background: var(--card); color: var(--ink); font: inherit; font-size: .9rem; font-weight: 700; cursor: pointer; white-space: nowrap; }
+.tixrow .tixdone::before { content: "☐ "; } .tixrow.done .tixdone::before { content: ""; }
+.tixrow.done .tixbook { background: transparent; color: var(--route); border: 1px solid var(--line); }
+.tixrow .badge.tixok { color: var(--route); background: var(--route-soft); }
+.tixrow .tixsmall { font-size: .82rem; margin: 0; }
 .esimcard { gap: 8px; border-left: 4px solid var(--route); }
 .esimcard.ok .offico { background: var(--route); color: var(--card); }
 .esimtag { display: flex; gap: 6px; align-items: center; font-size: .85rem; color: var(--muted); flex-wrap: wrap; }

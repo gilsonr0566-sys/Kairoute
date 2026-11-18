@@ -197,8 +197,8 @@ function moveClosed(id, to) {
   save(); render();
 }
 
-// Under each stop on the Day plan: one compact line with today's hours, a Book ahead tag, the rush hours and the
-// traveler rating. A stop you'd reach too late gets its own warning line. Ticket details live in the Guide.
+// Under each stop on the Day plan: one compact line with today's hours, the rush hours and the
+// traveler rating, then the ticket row for a book-ahead stop. A stop you'd reach too late gets its own warning line.
 function stopLiveNotes(it, d) {
   const s = it.place, out = [], bits = [];
   if (it.ohLate) out.push(`<div class="sub livewarn">⚠ Closes at ${fmt(it.closes)}${s.oh && s.oh.last != null ? ` (last entry ${fmt(s.oh.last)})` : ""}: you'd get there too late to see it properly. Move it earlier with Change stops, or start the day earlier.</div>`);
@@ -208,8 +208,8 @@ function stopLiveNotes(it, d) {
     bits.push(hit.length ? `<span class="livebusy">Usually busy ${esc(spanTxt(hit))}, expect a line</span>` : `Busiest ${esc(spanTxt(s.cw.busy))}, you miss the rush`);
   }
   const r = siteRating(s); if (r) bits.push(`★ ${r.avg.toFixed(1)} from ${r.n} Kairoute travelers`);
-  const book = bookAhead(s) ? `<i class="badge book" title="${esc(String(s.tickets || s.priceNote || "").slice(0, 200))}">Book ahead</i>` : "";
-  if (book || bits.length) out.push(`<div class="sub liveinfo">${book}${bits.join(" · ")}</div>`);
+  if (bits.length) out.push(`<div class="sub liveinfo">${bits.join(" · ")}</div>`);
+  out.push(tixRow(it, d));   // Book ahead: the ticket button and Booked tick (tickets.js)
   out.push(rateRow(it, d));
   return out.join("");
 }
@@ -218,7 +218,7 @@ function liveChecks(d, plan, add) {
   const known = st.filter(i => i.place.oh && i.place.oh.spans.length), late = st.filter(i => i.ohLate);
   if (late.length) add("warn", `Would arrive after the last entry: ${esc(late.map(i => i.place.name + " (closes " + fmt(i.closes) + ")").join(", "))}.`);
   else if (known.length) add("ok", `Open when you get there: ${known.length} of ${st.length} stops checked against today's opening hours.`);
-  const bk = st.filter(i => bookAhead(i.place)); if (bk.length) add("warn", `Book ahead (timed tickets can sell out): ${esc(bk.map(i => i.place.name).join(", "))}.`);
+  tixCheck(d, st, add);
   const cw = st.filter(i => i.place.cw && i.place.cw.busy.length);
   if (cw.length) { const busy = cw.filter(i => i.place.cw.busy.some(([a, b]) => overlap(i.time, i.time + (i.place.minutes || 0), a, b) > 10));
     add(busy.length ? "warn" : "ok", busy.length ? `In the usual rush at ${esc(busy.map(i => i.place.name).join(", "))}; the plan couldn't fit them at a quieter time.` : `Planned outside the usual rush at all ${cw.length} stops with crowd information.`); }
