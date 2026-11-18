@@ -303,7 +303,7 @@ Steps 5 to 9 are built on the Beta 2 branch (src/engine/50-worth, 55-areas, 60-r
 - Zero safety failures. Nothing worse than the old engine on the traveler's picks, must-sees, doubling back, or days planned.
 - Same plan in 10 of 10 shuffles of the incoming data, nothing used twice across a trip.
 - Slowest whole trip 0.14 s on the test machine.
-- Time to spare before a ship, train or plane: the new engine's tightest is 10 min beyond the built-in buffer (old: 0). Sights the app adds on its own never bring a ship, train or plane day closer than 15 min beyond the buffer; the old engine sometimes left 2 to 3 hours idle in port, which the new one uses for sights.
+- Time to spare before a ship, train or plane: the new engine's tightest is 9 min beyond the built-in buffer (old: 0). Sights the app adds on its own never bring a ship, train or plane day closer than 15 min beyond the buffer; the old engine sometimes left 2 to 3 hours idle in port, which the new one uses for sights.
 
 Rules added while building, all general: wishes stay on their own day; a stay of several days is split into areas; a day trip only when it gives more than the city sights it replaces; a trip out of town is one block at the start or end of the day; lunch only at a real place near the route, never making the day late or idle; a town visited for the day may shrink to half before a pick is dropped (and says so); leftovers and spare half-days are filled in a second pass.
 
