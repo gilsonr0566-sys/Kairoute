@@ -188,8 +188,16 @@
       if (unknownHours.length && (city.sites || []).some(s => hoursKnown(s.id)))
         explain.push("Opening hours for " + E.listWords(unknownHours.slice(0, 4).map(k => String(k.name).split(",")[0]).concat(unknownHours.length > 4 ? ["others"] : []), "and") + " aren't on the map yet: check before you go.");
       const plan = shortForm(i, win, fit, autoIds, dinner);
+      // A boat on its own timetable: the plan names the latest boat back that keeps the day as planned.
+      plan.items.forEach((x, k) => { if (x.t !== "ride" || x.mode !== "boat" || !plan.items[k - 1] || plan.items[k - 1].t !== "stop") return;
+        const from = plan.items[k - 1], next = plan.items[k + 1]; if (!next || !isFinite(next.at)) return;
+        explain.push("Boats keep their own timetable: take one back from " + from.name + " that lands you by " + E.clock(next.at) + (win.hard ? ", well before the time to be back at the ship (" + E.clock(win.endBy) + ")" : "") + "."); });
+      plan.explain = explain.slice();
       // A stop inside an area walked today says so: one walk, not separate trips.
       const keptIds = new Set(fit.kept.map(k => String(k.id)));
+      // A group's visit names what it includes (the sights folded into it), so nothing is hidden.
+      plan.items.forEach(x => { if (x.t !== "stop") return; const inc = (groups.members.get(String(x.id)) || []).map(m => byIdR.get(String(m))).filter(m => m && !E.ownStop(m, picked));
+        if (inc.length) { x.includes = inc.map(m => m.name); x.includesIds = inc.map(m => m.id); } });
       plan.items.forEach(x => { if (x.t !== "stop") return; const g = groups.groupOf.get(String(x.id)); if (g != null && keptIds.has(String(g))) x.within = (byIdR.get(String(g)) || {}).name; });
       const bad = guard(plan, win);
       if (bad.length) return { plan: safeDay(i, win, tr, bad) };
@@ -224,18 +232,20 @@
       // their own timetable), it names it instead.
       const BOAT = E.BOAT, from0 = was.win.head[was.win.head.length - 1];
       const shortRoad = s => tr.min(from0, s) <= 60 && !BOAT.test(s.travelNote || "");
+      // A boat trip the guide times (its crossing), kept only when the day still ends an hour before the time to be back.
+      const boatOk = s => BOAT.test(s.travelNote || "") && tr.saidMin(s.travelNote) > 0 && tr.saidMin(s.travelNote) <= 90;
       const worthOf = r => r.kept.reduce((a, k) => a + (k.worth || 0), 0);
       const city = guides[d.city] || {}, far = E.rank((city.farther || []).map(s => Object.assign({}, s, { far: true })), prefs, style)
         .filter(s => !s.town && ledger.sightFree(s.id, i) && !wishDay.has(String(s.id)) && !(now || was).kept.some(k => k.far))
         // a quick look first: there and back plus the visit must fit in the day at all
         .filter(s => 2 * tr.min(was.win.head[was.win.head.length - 1], s) + (s.minutes || 60) <= (was.win.sightTo || was.win.endBy) - (was.win.sightFrom || was.win.start))
-        .filter(s => !was.win.hard || shortRoad(s)).slice(0, 3);
+        .filter(s => !was.win.hard || shortRoad(s) || boatOk(s)).slice(0, 3);
       const wished = was.kept.filter(k => !k.filled); // only what the app added to fill spare time may give way
       for (const f of far) {
         const cur = now || was;
         if (now) undo(now);
         const r = planDay(i, Object.assign({}, was, { kept: wished, extra: f.id }));
-        const better = r.kept && (!was.win.hard || r.spare >= 45) && wished.every(w => r.kept.some(k => String(k.id) === String(w.id))) && r.kept.some(k => String(k.id) === String(f.id)) && worthOf(r) > worthOf(cur);
+        const better = r.kept && (!was.win.hard || r.spare >= (BOAT.test(f.travelNote || "") ? 60 : 45)) && wished.every(w => r.kept.some(k => String(k.id) === String(w.id))) && r.kept.some(k => String(k.id) === String(f.id)) && worthOf(r) > worthOf(cur);
         if (better) { now = r; continue; }
         undo(r);
         if (now) now.sightIds.forEach(id => ledger.claimSight(id, i)), now.eatIds.forEach(k => ledger.claimEat(k, i));

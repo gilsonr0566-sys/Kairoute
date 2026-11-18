@@ -15,7 +15,7 @@ const add = (k, f, msg) => leaks[k].push(`${f}: ${msg}`);
 for (const f of fs.readdirSync(dir).filter(f => f.endsWith('.json')).sort()) {
   const raw = JSON.parse(fs.readFileSync(path.join(dir, f))), s = PD ? E.applyPlaces(JSON.parse(JSON.stringify(raw)), places) : raw;
   const plans = E.planTrip(s), tr = E.makeTravel(s.prefs, s.legModes), lines = s.transit || [];
-  const planned = new Set(); plans.forEach(p => p && p.items && p.items.forEach(x => { if (x.t === 'stop') planned.add(String(x.id)); }));
+  const planned = new Set(); plans.forEach(p => p && p.items && p.items.forEach(x => { if (x.t === 'stop') { planned.add(String(x.id)); (x.includesIds || []).forEach(m => planned.add(String(m))); } }));
   const said = plans.map(p => (p && p.explain || []).join(' '));
   const walkMin = km => Math.max(1, Math.round(km * 1.3 / ((s.prefs || {}).walk === 'low' ? 3.6 : 4.5) * 60));
   plans.forEach((p, i) => {
