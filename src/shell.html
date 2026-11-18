@@ -255,7 +255,7 @@ input[type=text], input[type=date], input[type=time], input[type=number], select
 /* Real street map (MapLibre). The route diagram underneath shows until the map has loaded. */
 .mapslot { position: relative; }
 .mapslot .kmap { position: absolute; inset: 0; opacity: 0; pointer-events: none; transition: opacity .25s; }
-.mapslot.live { aspect-ratio: 8 / 5; min-height: 260px; }
+.mapslot.live { aspect-ratio: 8 / 5; min-height: 260px; width: 100%; } /* width first: on a phone, the minimum height must not push the map wider than its card */
 .mapslot.live > svg { visibility: hidden; position: absolute; inset: 0; height: 100%; }
 .mapslot.live .kmap { opacity: 1; pointer-events: auto; }
 .tourmap .mapslot.live { aspect-ratio: 16 / 9; min-height: 220px; }
@@ -270,6 +270,16 @@ button.mk { cursor: pointer; }
 .mk-hotel { background: var(--must); }
 .mk-along { width: 14px; height: 14px; border: 2px solid var(--card); background: var(--route); }
 .mk-bonus { border-style: dashed; color: var(--route); width: 24px; height: 24px; font-size: 15px; }
+/* Rides on the map: a badge with the ride's icon at its middle, in its own colour (features/ride-map.js). */
+.mk-ride { width: 22px; height: 22px; border-radius: 6px; display: grid; place-items: center; background: var(--lc, var(--t-car)); color: #fff; border: 2px solid var(--card); box-shadow: 0 1px 3px rgba(0,0,0,.35); pointer-events: none; }
+.mk-ride svg { width: 14px; height: 14px; display: block; }
+.mk-ride.k-car { --lc: var(--t-car); } .mk-ride.k-bus { --lc: var(--t-bus); } .mk-ride.k-train { --lc: var(--t-train); } .mk-ride.k-ferry { --lc: var(--t-ferry); } .mk-ride.k-flight { --lc: var(--t-flight); } .mk-ride.k-ship { --lc: var(--t-ship); } .mk-ride.k-walk { --lc: var(--t-walk); }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .mk-ride { color: #0E1418; } }
+:root[data-theme="dark"] .mk-ride { color: #0E1418; }
+/* The day's start and finish as what they are (cruise port, airport, station), with a short tag. */
+.mk.mk-endk { width: 30px; height: 30px; position: relative; overflow: visible; }
+.mk.mk-endk svg { width: 19px; height: 19px; display: block; }
+.mk-endlab { position: absolute; left: 34px; top: 50%; transform: translateY(-50%); white-space: nowrap; font: 700 11.5px/1 "Atkinson Hyperlegible", system-ui, sans-serif; background: var(--card); color: var(--ink); border: 1px solid var(--line); border-radius: 4px; padding: 3px 5px; box-shadow: 0 1px 3px rgba(0,0,0,.25); }
 /* You on the map: a small person in a blue badge, a soft beam for the way you're facing, a ring for how sure the phone is. */
 .mk-you { width: 0; height: 0; position: relative; pointer-events: none; z-index: 3; }
 .mk-you > span { position: absolute; left: 0; top: 0; }

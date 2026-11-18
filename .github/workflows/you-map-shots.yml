@@ -1,4 +1,4 @@
-name: You-on-the-map screens
+name: Map drawing screens (you, rides, place names)
 on:
   push:
     branches: ["claude/project-thread-14sgvm"]
@@ -16,15 +16,15 @@ jobs:
           node-version: 22
       - run: npm i playwright@1 && npx playwright install chromium
       - name: Check with stand-in tiles (no network)
-        run: sh build.sh && MOCK=1 node tools/you-map-check.cjs
+        run: sh build.sh && MOCK=1 node tools/you-map-check.cjs && MOCK=1 node tools/ride-map-check.cjs
       - name: Check with the real OpenFreeMap tiles
-        run: rm -f checks/you-*.png && JPG=1 node tools/you-map-check.cjs
+        run: rm -f checks/*.png && node tools/you-map-check.cjs && node tools/ride-map-check.cjs
       - name: Hand the screens back on this branch (images for the PR)
         if: github.event_name == 'workflow_dispatch'
         run: |
           git config user.name "github-actions"; git config user.email "github-actions@users.noreply.github.com"
-          mkdir -p reports/you-on-map && cp checks/you-*.png reports/you-on-map/
-          git add reports/you-on-map && git commit -qm "You-on-the-map screens (real map tiles)" && git push origin HEAD:${{ github.ref_name }}
+          mkdir -p reports/you-on-map && cp checks/you-*.png checks/rides-*.png checks/labels-*.png reports/you-on-map/
+          git add reports/you-on-map && git commit -qm "Map drawing screens (real map tiles)" && git push origin HEAD:${{ github.ref_name }}
       - if: always()
         uses: actions/upload-artifact@v4
         with:
