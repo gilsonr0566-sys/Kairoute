@@ -15,7 +15,12 @@ if (typeof window !== "undefined" && window.ENGINE2 && window.KEngine) (function
   function tripPlans() {
     const k = keyNow();
     if (memo.k === k && memo.plans) return memo;
+    // The plans depend only on what the engine is given (the bucket) and the ride answers known so far. Most changes
+    // to the trip or answers arriving (weather, a photo, the day being looked at) leave both as they were: then the
+    // plans stand and nothing is planned again. Only a real change of the engine's inputs replans.
     let bucket = engineBucket(false);
+    const ik = strHash(JSON.stringify(bucket)) + "|" + (typeof nearGen !== "undefined" ? nearGen : 0) + "|" + todayISO(); // the places files never change while the app runs
+    if (memo.ik === ik && memo.plans) { memo.k = k; return memo; }
     if (window.PLACES2) bucket = E.applyPlaces(bucket, window.PLACES2);
     // The app's own public transport answers for each ride (asked for any ride not known yet, as in the app).
     bucket.answers = (a, b) => { const r = transitFor(a, b); return r && r.map(o => ({ id: rideId(o), min: o.min, label: o.label, kind: rideKind(o) })); };
@@ -24,13 +29,17 @@ if (typeof window !== "undefined" && window.ENGINE2 && window.KEngine) (function
     // engine planned: its ticks become the engine's stops, so the picker, the counts and the plan always agree.
     let synced = false;
     trip.days.forEach((d, i) => {
-      const ep = plans[i]; if (!ep || ep.error || !Array.isArray(ep.items) || d.ready || !d.seedSig || d.seedSig !== seedSigOf(d)) return;
+      const ep = plans[i], fresh = !Array.isArray(d.selected);
+      if (!ep || ep.error || !Array.isArray(ep.items) || d.ready || (!fresh && (!d.seedSig || d.seedSig !== seedSigOf(d)))) return;
       const ids = ep.items.filter(x => x.t === "stop" && x.id != null).map(x => x.id);
-      if (ids.map(String).sort().join("|") === d.selected.map(String).sort().join("|")) return;
+      // A day not seeded yet is seeded here, from the engine's plan (the old planner's background seeding then has
+      // nothing left to do): the sights the traveler named become theirs, as seeding does.
+      if (fresh) { const c = cityFor(d); if (!c) return; const w = (typeof wantIds === "function" ? wantIds(d, c) : []); d.selected = []; w.forEach(id => markMine(d, id, true)); }
+      else if (ids.map(String).sort().join("|") === d.selected.map(String).sort().join("|")) return;
       d.selected = ids; d.seedSig = seedSigOf(d); d.autoEmpty = !ids.length; synced = true;
     });
     // The bucket is the same after the sync (a seeded day sends only the traveler's own picks), so the plans stand.
-    memo = { k: synced ? keyNow() : k, plans, bucket }; return memo;
+    memo = { k: synced ? keyNow() : k, ik, plans, bucket }; return memo;
   }
   window.__kairouteEngine2 = () => JSON.parse(JSON.stringify(tripPlans().plans));
   const MODE = { walk: "walk", ride: "ride", transit: "ride", boat: "ferry", lift: "ride" };

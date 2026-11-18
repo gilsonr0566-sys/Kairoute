@@ -22,6 +22,7 @@ function sightTags(city, s) {
   if (s.srcOnly && !s.guide) out.push("no-story-yet");
   return out;
 }
+const wishIds = (d, city) => { try { return city && typeof wantIds === "function" ? wantIds(d, city) : []; } catch (e) { return []; } };
 function engineBucket(withOld) {
   const n = v => (isFinite(+v) ? +v : null);
   const pt = p => p ? { id: p.id || null, name: p.name || "", lat: n(p.lat), lng: n(p.lng), unknown: !!p.unknown || (typeof unsurePoint === "function" && unsurePoint(p)) } : null;
@@ -56,7 +57,9 @@ function engineBucket(withOld) {
       lodging: pt(L), point: pt(P),
       // The traveler's picks only: a list the app seeded on its own (untouched since: seedSig still matches) is the app's
       // suggestion, not the traveler's wish, so the engine picks for itself and keeps only what they chose (mine).
-      selected: Array.isArray(d.selected) ? (d.seedSig && typeof seedSigOf === "function" && d.seedSig === seedSigOf(d) ? (d.mine || []).slice() : d.selected.slice()) : null, mine: (d.mine || []).slice(), order: Array.isArray(d.order) ? d.order.slice() : null,
+      // A day not seeded yet sends the sights the traveler named when making the trip (their wishes), as seeding would.
+      selected: Array.isArray(d.selected) ? (d.seedSig && typeof seedSigOf === "function" && d.seedSig === seedSigOf(d) ? (d.mine || []).slice() : d.selected.slice()) : wishIds(d, city),
+      mine: Array.isArray(d.selected) ? (d.mine || []).slice() : [...new Set((d.mine || []).concat(wishIds(d, city)))], order: Array.isArray(d.order) ? d.order.slice() : null,
       cleared: clearedByYou(d), rain: !!d.rain, alongWay: d.alongWay !== false, fillTime: d.fillTime !== false, skipBonus: (d.skipBonus || []).slice(),
       booked: bookedMeals(d, city || {}).map(m => ({ label: m.label, from: m.from, len: m.len, place: pt(m.node) })),
       locked: d.ready && d.ready.lock && Array.isArray(d.ready.lock.seq) ? { t: d.ready.lock.t, seq: d.ready.lock.seq.filter(x => !x.meal).map(x => x.id).filter(Boolean) } : null,

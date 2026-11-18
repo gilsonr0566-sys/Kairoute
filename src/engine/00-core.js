@@ -27,8 +27,12 @@ var KEngine = typeof KEngine !== "undefined" ? KEngine : {};
   const GRV = { "αυ": "a", "ευ": "e", "ηυ": "i" };
   const GR1 = { α: "a", β: "v", γ: "g", δ: "d", ε: "e", ζ: "z", η: "i", θ: "th", ι: "i", κ: "k", λ: "l", μ: "m", ν: "n", ξ: "x", ο: "o", π: "p", ρ: "r", σ: "s", ς: "s", τ: "t", υ: "y", φ: "f", χ: "ch", ψ: "ps", ω: "o" };
   const CY = { а: "a", б: "b", в: "v", г: "g", д: "d", е: "e", ё: "yo", ж: "zh", з: "z", и: "i", й: "y", к: "k", л: "l", м: "m", н: "n", о: "o", п: "p", р: "r", с: "s", т: "t", у: "u", ф: "f", х: "kh", ц: "ts", ч: "ch", ш: "sh", щ: "shch", ъ: "", ы: "y", ь: "", э: "e", ю: "yu", я: "ya", і: "i", ї: "yi", є: "ye", ґ: "g", ј: "j", љ: "lj", њ: "nj", ћ: "c", ђ: "dj", џ: "dz" };
+  const latinMemo = new Map();
   E.latin = name => {
     const s0 = String(name == null ? "" : name); if (!/[\u0370-\u03ff\u1f00-\u1fff\u0400-\u04ff]/.test(s0)) return s0;
+    const got = latinMemo.get(s0); if (got != null) return got; const r = latinOf(s0); if (latinMemo.size < 5000) latinMemo.set(s0, r); return r;
+  };
+  const latinOf = s0 => {
     const s = s0.normalize("NFD").replace(/[\u0300-\u036f]/g, "").normalize("NFC");
     let out = "";
     for (let k = 0; k < s.length;) {

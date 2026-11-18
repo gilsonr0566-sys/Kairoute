@@ -38,7 +38,7 @@
   // the time), the same rule the app uses: cheaper, and no traffic. The traveler's own choice always wins.
   E.publicWins = (pub, roadMin) => !(roadMin < pub - 25 && roadMin < pub * 0.67);
   E.makeTravel = (prefs, legModes, legs, lines, answers) => {
-    const walk = (prefs && prefs.walk) || "medium", lim = WALK_LIMIT[walk] || WALK_LIMIT.medium, speed = walk === "low" ? 3.6 : 4.5, modes = legModes || {}, memo = new Map(), memoEnd = new Map();
+    const walk = (prefs && prefs.walk) || "medium", lim = WALK_LIMIT[walk] || WALK_LIMIT.medium, speed = walk === "low" ? 3.6 : 4.5, modes = legModes || {}, memo = new Map(), memoEnd = new Map(), trains = (lines || []).filter(l => l.mode === "train");
     function estimate(a, b) {
       if (!a || !b || !isFinite(a.lat) || !isFinite(b.lat)) return { mode: "walk", how: "Walk", km: 0, min: 0, unknown: true };
       // The cable car (or funicular) between a landing and the town above: its own fixed step holds the time.
@@ -59,7 +59,7 @@
       // taken unless a taxi saves a lot (the app's rule, above). A ride to a ship, train
       // or plane keeps its extra time either way.
       if (d > 15) {
-        const t = E.transitOption(a, b, lines.filter(l => l.mode === "train"), km => Math.max(1, Math.round(km * 1.3 / speed * 60)), { km: 12, taxiMin: km => road(km).min });
+        const t = E.transitOption(a, b, trains, km => Math.max(1, Math.round(km * 1.3 / speed * 60)), { km: 12, taxiMin: km => road(km).min });
         if (!t) return leg;
         const sl = leg.slack || 0, tmin = t.min + sl, options = [{ mode: "transit", how: t.how, min: tmin }, { mode: "ride", how: leg.how, min: leg.min }];
         const want = modes[E.pairKey(a, b)];
