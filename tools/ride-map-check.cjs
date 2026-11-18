@@ -76,6 +76,8 @@ const SIZES = [['tablet', { width: 1280, height: 800 }, 1], ['phone', { width: 3
     const el = await p.$('#view .mapbox');
     await p.evaluate(() => window.__kairouteLabels(false)); await p.waitForTimeout(800); await el.screenshot({ path: path.join(OUT, `labels-${scheme}-before.png`) });
     await p.evaluate(() => window.__kairouteLabels(true)); await p.waitForTimeout(800); await el.screenshot({ path: path.join(OUT, `labels-${scheme}-after.png`) });
+    const lab = await p.evaluate(() => window.__kairouteLabels()); console.log(`place names (${scheme}): ${lab ? lab.length : 0} label layers; ` + (lab || []).slice(0, 4).join(', '));
+    if (lab && lab.length && !lab.some(x => /C8D2D7|4B5660/i.test(x))) bad(`${scheme}: the place names were not brightened`);
     await ctx.close();
   }
   await b.close(); srv.close();

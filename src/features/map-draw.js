@@ -227,7 +227,7 @@ function mapLabelsBright(map, theme, on) {
     } catch (e) {}
   });
 }
-if (typeof window !== "undefined") window.__kairouteLabels = on => { if (kmap && kmapReady) mapLabelsBright(kmap, kmapTheme, on); };
+if (typeof window !== "undefined") window.__kairouteLabels = on => { if (!kmap || !kmapReady) return null; if (on != null) mapLabelsBright(kmap, kmapTheme, on); return (kmap.getStyle().layers || []).filter(l => l.type === "symbol" && !/^route-/.test(l.id)).map(l => l.id + "=" + JSON.stringify(kmap.getPaintProperty(l.id, "text-color"))); };
 
 // ---- 4. You on the map (Richard, Nov 18: "a little person on the map that shows where our current location is") ----
 // Every street map (Day plan and Tour) shows the traveler as a small person, the way map apps do. A soft beam shows
