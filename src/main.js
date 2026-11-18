@@ -150,7 +150,7 @@ const NOT_WORSHIP_KIND = /food|caf[eé]|restaurant|taverna|\bbar\b|chocolat|bake
 const isReligious = x => { if (!x) return false; const c = x.category || "", t = c + " " + (x.name || "");
   if (/ancient|ruin|archaeolog/i.test(t) || !RELIGIOUS_RE.test(t)) return false;
   // "Holy" in a fort's or palace's name (Fort of the Holy Saviour) doesn't make it a place of worship.
-  if ((NOT_WORSHIP_KIND.test(c) || /^(fort|fortress|castle|palace|tower|citadel|gallery|museum|gate|bridge)\b/i.test(x.name || "")) && !WORSHIP_RE.test(t.replace(/\bholy\b/gi, " "))) return false;
+  if (NOT_WORSHIP_KIND.test(c) && !WORSHIP_RE.test(t.replace(/\bholy\b/gi, " "))) return false;
   return WORSHIP_RE.test(t) || !NOT_WORSHIP_KIND.test(c); };
 const skipReligious = () => P().religious === "off";
 // The "Churches & faith" interest: off once the traveler turns it off (noChurches), or when they chose
@@ -2418,7 +2418,7 @@ function cleanCity(c, dest) {
   const okLL = p => p && isFinite(num(p.lat)) && isFinite(num(p.lng)) && !!siteName(p.name);
   const site = normSite;
   const starts = {};
-  for (const k of ["cruise", "airport", "station", "hotel", "point"]) starts[k] = ((c.starts && c.starts[k]) || []).filter(okLL).map(p => ({ name: (k !== "hotel" && enNameOf(String(p.name))) || String(p.name), lat: num(p.lat), lng: num(p.lng), note: p.note ? String(p.note) : "" }));
+  for (const k of ["cruise", "airport", "station", "hotel", "point"]) starts[k] = ((c.starts && c.starts[k]) || []).filter(okLL).map(p => ({ name: String(p.name), lat: num(p.lat), lng: num(p.lng), note: p.note ? String(p.note) : "" }));
   return {
     city: String(c.city || dest), country: String(c.country || ""), ai: true, verified: c.verified || 0, grounded: !!c.grounded, gv: String(c.gv || ""), eatsV: +c.eatsV || 0, farFillV: +c.farFillV || 0, startsOk: c.startsOk === true ? 1 : +c.startsOk || 0, starts,
     sites: (c.sites || []).filter(okLL).map((s, i) => site(s, i)),
@@ -2813,11 +2813,10 @@ function fameMark(city, src) {
       // Crete" is not the "Historical Museum of Crete", and a museum 200 m away is another museum.
       const bare = x => ({ name: x.name || "", lat: x.lat, lng: x.lng, category: x.category || x.kind || "" });
       const sure = placeRel(Object.assign(bare(s), { name: nm0 }), bare(hit)) === "same";
-      if (sure) { if (hit.local) s.local = hit.local; if (hit.wd) s.wd = hit.wd; } else { delete s.wd; if (s.srcName) s.local = s.srcName; else delete s.local; }
-    }
-    // A lesser sight the guide named in the local language ("Chiesa di Montevergine", "Fontana Senatoria") is shown in
-    // English, its local name beneath. Famous ones (by the sources) keep the name English speakers know.
-    if (!s.srcName && (s.fame || 0) < EN_FAME) { const en = enNameOf(s.name, s.category, s.local); if (en) { s.srcName = s.name; s.local = s.local || s.name; s.name = en; } }
+      if (sure) { if (hit.local) s.local = hit.local; if (hit.wd) s.wd = hit.wd; } else { delete s.local; delete s.wd; }
+      // A lesser sight the guide named in the local language ("Santissima Annunziata dei Catalani") is shown in English.
+      const en = sure && !s.srcName && (hit.sl || 0) < EN_FAME && enNameOf(s.name, s.category, s.local || hit.local);
+      if (en) { s.srcName = s.name; s.local = s.local || s.name; s.name = en; } }
   }
   famousRepair(city, src);
   sourceSights(city, src);
