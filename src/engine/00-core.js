@@ -15,6 +15,11 @@ var KEngine = typeof KEngine !== "undefined" ? KEngine : {};
   // A fixed, input-order-free tie-break: by id, then name. Used wherever two choices are otherwise equal.
   E.byId = (a, b) => String(a.id || "").localeCompare(String(b.id || "")) || String(a.name || "").localeCompare(String(b.name || ""));
   E.TO_GO = 20;
+  // A lunch or dinner stop serves a meal: a place known for a treat (doughnuts, ice cream, pastries, chocolate, coffee)
+  // is a snack on the way, never the day's lunch or dinner. Read from what the guide says it serves, in any guide.
+  const TREAT = /\b(doughnuts?|donuts?|loukoumades|ice ?cream|gelat[oi]|dessert|pastr(y|ies)|patisserie|bakery|cakes?|chocolate|crepes?|waffles?|coffee|espresso|tea ?room|juice|smoothie|sweets?|confection|treat)\b/i;
+  const MEAL = /\b(taverna|restaurant|trattoria|osteria|bistro|brasserie|grill|meze|mezze|kitchen|dining|seafood|steak|pizza|pasta|tapas|lunch|dinner)\b/i;
+  E.mealPlace = r => { const said = r.cuisine ? String(r.cuisine) + " " + String(r.amenity || "") : [r.kind, r.amenity, r.why].filter(Boolean).join(" "); return !(TREAT.test(said) || /^(cafe|ice_cream|bakery|confectionery|pastry)$/i.test(String(r.amenity || r.kind || ""))) || MEAL.test(String(r.cuisine || "") + " " + String(r.amenity || "")); };
   E.PAD_MAX = 45; // longest ride each way for a trip out added to fill a day in town // lunch on the go: bought and eaten on the way, minutes
   E.MEALS = Object.freeze([
     Object.freeze({ label: "Lunch", from: 11 * 60 + 45, to: 14 * 60 + 30, len: 60, quick: 35 }),

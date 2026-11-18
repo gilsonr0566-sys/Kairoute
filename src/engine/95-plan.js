@@ -31,7 +31,7 @@
     const fixedAt = id => win.head.concat(win.tail).find(p => p.fixed && p.id === id);
     const whereIs = x => x.t === "fixed" ? fixedAt(x.id) : x.id != null ? byId.get(String(x.id)) : x.t === "start" ? win.head[0] : x.t === "end" ? win.tail[win.tail.length - 1] : null;
     for (const x of fit.r.items) {
-      if (x.t === "ride") { items.push(Object.assign({ t: "ride", mode: x.mode, min: x.min, km: x.km }, x.options ? { how: x.how, options: x.options } : x.mode === "boat" || x.mode === "lift" ? { how: x.how } : {})); continue; }
+      if (x.t === "ride") { items.push(Object.assign({ t: "ride", mode: x.mode, min: x.min, km: x.km }, x.how && x.mode !== "walk" ? { how: x.how } : {}, x.options ? { options: x.options } : {}, x.transitMode ? { transitMode: x.transitMode } : {})); continue; }
       // Each ride knows where it starts and ends (the map draws each one apart, out and back side by side).
       const prev = items[items.length - 1], here = point(whereIs(x));
       if (prev && prev.t === "ride" && items.length >= 2) { const a = items[items.length - 2]; if (isFinite(a.lat) && isFinite(here.lat)) Object.assign(prev, { from: { lat: a.lat, lng: a.lng }, to: here }); }
@@ -79,7 +79,7 @@
     return out;
   };
   E.planTrip = bucket => {
-    const prefs = bucket.prefs || {}, style = bucket.style || "mix", tr = E.makeTravel(prefs, bucket.legModes, bucket.legs, bucket.transit), ledger = E.makeLedger();
+    const prefs = bucket.prefs || {}, style = bucket.style || "mix", tr = E.makeTravel(prefs, bucket.legModes, bucket.legs, bucket.transit, bucket.answers), ledger = E.makeLedger();
     const guides = E.sortFar(bucket.cities || {}), days = bucket.days || [], out = new Array(days.length).fill(null);
     // Each day knows where its place's own sights are, so a gate far from all of them is caught (part 3).
     const spots = key => ((guides[key] || {}).sites || []).filter(s => isFinite(s.lat)).map(s => ({ lat: s.lat, lng: s.lng }));

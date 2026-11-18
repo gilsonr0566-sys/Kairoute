@@ -163,7 +163,8 @@ async function transitLines(centre, km) {
     if (stops.length < 2) continue;
     const key = t.route + '|' + (t.ref || t.name) + '|' + [stops[0].name, stops[stops.length - 1].name].sort().join('|');
     if (seen.has(key)) continue; seen.add(key);   // the same line mapped once each way
-    if (t.route === 'train' && hav(stops[0], stops[stops.length - 1]) > 60) continue;   // long-distance trains: not for getting around
+    // Trains reach day trips too (Athens to Corinth): kept, with only the stops within 150 km of the place.
+    if (t.route === 'train') { const keep = stops.filter(s => hav(centre, s) <= 150); if (keep.length < 2) continue; stops.splice(0, stops.length, ...keep); }
     lines.push({ mode: t.route, ref: t.ref || '', name: t['name:en'] || t.name || '', stops });
   }
   return lines;

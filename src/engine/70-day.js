@@ -22,7 +22,7 @@
     // Within one day the list of places to eat and the ledger don't change, so each point is worked out once.
     if (!ctx.eatMemo) {
       ctx.eatMemo = new Map();
-      ctx.eatList = ctx.eats.filter(r => isFinite(r.lat) && isFinite(r.lng) && !r.drop).map(r => {
+      ctx.eatList = ctx.eats.filter(r => isFinite(r.lat) && isFinite(r.lng) && !r.drop && E.mealPlace(r)).map(r => {
         const k = E.eatKey(r.name), f = ctx.eatFacts[k] || ctx.eatFacts[r.name && r.name.toLowerCase()] || {};
         return { r, k, f };
       });

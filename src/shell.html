@@ -704,7 +704,7 @@ main:has(#view.full) { padding: 0; }
 .timeline.compact .tl.leg, .timeline.compact .tl .time, .timeline.compact .tl .what > :not(.nm):not(.draghandle) { display: none; }
 .timeline.compact .tl { grid-template-columns: 30px 1fr; border-bottom: 1px solid var(--line); }
 .timeline.compact .tl .what { display: flex; align-items: center; gap: 8px; padding: 2px 0; min-height: 48px; }
-.timeline.compact .tl .what .nm { order: 0; flex: 1 1 auto; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; text-align: left; }
+.timeline.compact .tl .what .nm { order: 0; flex: 1 1 auto; min-width: 0; white-space: normal; overflow-wrap: anywhere; text-align: left; /* a stop name is never cut off */ }
 .timeline.compact .tl .what .draghandle { order: 1; flex: none; position: static; }
 .timeline.compact .tl .rail { align-items: center; }
 .timeline.compact .tl .rail .dot { margin-top: 0; }

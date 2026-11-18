@@ -219,6 +219,9 @@ function mapLabelsBright(map, theme, on) {
     if (l.type !== "symbol" || /^route-/.test(l.id) || !l.layout || !l.layout["text-field"]) return;
     if (!(l.id in map._labelOrig)) map._labelOrig[l.id] = ["text-color", "text-halo-color", "text-halo-width"].map(k => map.getPaintProperty(l.id, k));
     const o = map._labelOrig[l.id];
+    // Names in English letters only (the tiles otherwise show the local script under it: ΑΣΠΡΟΠΥΡΓΟΣ): the English
+    // name, else the name in Latin letters, else the name as mapped. House numbers and road numbers keep their own field.
+    try { if (!/housenumber|shield|ref/i.test(l.id)) map.setLayoutProperty(l.id, "text-field", ["coalesce", ["get", "name:en"], ["get", "name_en"], ["get", "name:latin"], ["get", "name"]]); } catch (e) {}
     try {
       // Water names keep their own colour (blue-grey on the sea), just with the stronger halo.
       if (on && !/water|ocean|sea|lake|river/i.test(l.id)) map.setPaintProperty(l.id, "text-color", want.color); else map.setPaintProperty(l.id, "text-color", o[0]);

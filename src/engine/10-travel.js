@@ -33,7 +33,11 @@
   // legs: pinned network times from the places database, keyed by pairKey (step change, Nov 18: decisions use real
   // walking, road and ferry times, pinned so they stay steady; the straight-line estimate is only the fallback).
   // lines: public transport lines from the places files (part 1b); every leg they serve offers them as a choice.
-  E.makeTravel = (prefs, legModes, legs, lines) => {
+  // answers(a, b): the app's own public transport answers for a ride, as the app keeps them (a timetable search per ride,
+  // [{ min, label, kind }]), or null. A known line is taken unless a taxi saves a lot (over 25 minutes and a third of
+  // the time), the same rule the app uses: cheaper, and no traffic. The traveler's own choice always wins.
+  E.publicWins = (pub, roadMin) => !(roadMin < pub - 25 && roadMin < pub * 0.67);
+  E.makeTravel = (prefs, legModes, legs, lines, answers) => {
     const walk = (prefs && prefs.walk) || "medium", lim = WALK_LIMIT[walk] || WALK_LIMIT.medium, speed = walk === "low" ? 3.6 : 4.5, modes = legModes || {}, memo = new Map(), memoEnd = new Map();
     function estimate(a, b) {
       if (!a || !b || !isFinite(a.lat) || !isFinite(b.lat)) return { mode: "walk", how: "Walk", km: 0, min: 0, unknown: true };
@@ -48,14 +52,35 @@
     }
     // The leg as planned, plus every way to make it (walk, public transport, taxi) so the traveler can choose.
     function calc(a, b) {
-      const leg = base(a, b), d = E.hav(a, b);
-      if (!lines || !lines.length || d < 0.6 || d > 15 || leg.pinned) return leg;
+      const leg0 = base(a, b), d = E.hav(a, b), leg = known(a, b, leg0, d);
+      if (leg !== leg0) return leg;
+      if (!lines || !lines.length || d < 0.6 || leg.pinned || leg.mode === "boat" || leg.mode === "lift") return leg;
+      // A day trip out of town: a train that serves both ends (a taxi from the station at either end) is offered, and
+      // taken unless a taxi saves a lot (the app's rule, above). A ride to a ship, train
+      // or plane keeps its extra time either way.
+      if (d > 15) {
+        const t = E.transitOption(a, b, lines.filter(l => l.mode === "train"), km => Math.max(1, Math.round(km * 1.3 / speed * 60)), { km: 12, taxiMin: km => road(km).min });
+        if (!t) return leg;
+        const sl = leg.slack || 0, tmin = t.min + sl, options = [{ mode: "transit", how: t.how, min: tmin }, { mode: "ride", how: leg.how, min: leg.min }];
+        const want = modes[E.pairKey(a, b)];
+        if (want === "ride" || want === "taxi" || (want !== "transit" && !E.publicWins(tmin, leg.min))) return Object.assign(leg, { options });
+        return { mode: "transit", transitMode: t.mode, how: t.how, km: leg.km, min: tmin, slack: sl || undefined, options };
+      }
       const walkMin = km => Math.max(1, Math.round(km * 1.3 / speed * 60)), onFoot = walkMin(d);
       const t = E.transitOption(a, b, lines, walkMin); if (!t || t.min >= onFoot) return leg;
       const taxi = road(d), want = modes[E.pairKey(a, b)];
       const options = [{ mode: "walk", how: "Walk", min: onFoot }, { mode: "transit", how: t.how, min: t.min }, { mode: "ride", how: taxi.how, min: taxi.min }];
-      if (want === "transit") return { mode: "transit", how: t.how, km: d * 1.3, min: t.min, either: true, options };
+      if (want === "transit") return { mode: "transit", transitMode: t.mode, how: t.how, km: d * 1.3, min: t.min, either: true, options };
       return Object.assign(leg, { options, either: true });
+    }
+    function known(a, b, leg, d) {
+      if (!answers || d < 1.5 || leg.pinned || leg.mode === "boat" || leg.mode === "lift" || leg.mode === "walk") return leg;
+      const got = (answers(a, b) || []).filter(o => o && isFinite(o.min)).sort((x, y) => x.min - y.min || String(x.label).localeCompare(String(y.label)));
+      if (!got.length) return leg;
+      const want = modes[E.pairKey(a, b)], o = got.find(x => x.id != null && x.id === want) || got[0], sl = leg.slack || 0, pub = o.min + sl;
+      const options = got.slice(0, 3).map(x => ({ mode: "transit", transitMode: x.kind, how: x.label, min: x.min + sl })).concat([{ mode: "ride", how: "Taxi or car", min: leg.min }]);
+      if (want === "taxi" || want === "ride" || (want !== "transit" && o.id !== want && !E.publicWins(pub, leg.min))) return Object.assign({}, leg, { how: "Taxi or car", options });
+      return { mode: "transit", transitMode: o.kind, how: o.label, km: leg.km, min: pub, slack: sl || undefined, options };
     }
     function base(a, b) {
       const pin = legs && legs[E.pairKey(a, b)];
@@ -80,7 +105,8 @@
       let leg = road(d); leg.either = either;
       if (d > 15) { // a day trip: the guide's own note on how long it takes wins over the estimate, plus getting to the station or pier
         const sa = saidMin(a.travelNote), sb = saidMin(b.travelNote), said = Math.max(sa, sb);
-        if (said && !(sa && sb)) leg = Object.assign(leg, { min: Math.max(leg.min, said + 15), said: true });
+        // and the ride says where its time comes from, so it matches the sight's own note ("Bus or car, 50-60 min").
+        if (said && !(sa && sb)) leg = Object.assign(leg, said + 15 >= leg.min ? { min: said + 15, said: true, how: leg.how + ": " + said + " min as the guide says, plus 15 to get going" } : { said: true });
       }
       // A long ride (over 15 km) to a ship, train or plane gets time for a late train or traffic: 30% more, at least 15 minutes.
       if (d > 15 && (b.backToShip || b.deadline) && leg.min >= 30) { const sl = Math.max(15, Math.round(leg.min * 0.3 / 5) * 5); leg = Object.assign(leg, { min: leg.min + sl, slack: sl }); }

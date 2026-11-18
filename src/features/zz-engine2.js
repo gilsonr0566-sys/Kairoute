@@ -9,10 +9,13 @@ if (typeof window !== "undefined" && window.ENGINE2 && window.KEngine) (function
   // The whole trip planned once per change (the traveler's trip, an answer arriving, the guides, the date).
   function tripPlans() {
     let t; const a = trip.active, sp = trip.spent; try { trip.active = 0; trip.spent = undefined; t = JSON.stringify(trip); } finally { trip.active = a; trip.spent = sp; }
-    const k = strHash(t) + "|" + dataGen + "|" + citiesSig() + "|" + todayISO();
+    // An answer arriving for a ride (a timetable search) replans, as it does in the app.
+    const k = strHash(t) + "|" + dataGen + "|" + (typeof nearGen !== "undefined" ? nearGen : 0) + "|" + citiesSig() + "|" + todayISO();
     if (memo.k === k && memo.plans) return memo;
     let bucket = engineBucket(false);
     if (window.PLACES2) bucket = E.applyPlaces(bucket, window.PLACES2);
+    // The app's own public transport answers for each ride (asked for any ride not known yet, as in the app).
+    bucket.answers = (a, b) => { const r = transitFor(a, b); return r && r.map(o => ({ id: rideId(o), min: o.min, label: o.label, kind: rideKind(o) })); };
     let plans; try { plans = E.planTrip(bucket); } catch (e) { console.warn("Beta 2 engine", e); plans = []; }
     memo = { k, plans, bucket }; return memo;
   }
@@ -31,6 +34,7 @@ if (typeof window !== "undefined" && window.ENGINE2 && window.KEngine) (function
         const leg = { mode: MODE[x.mode] || "ride", how: x.how || (x.mode === "walk" ? "Walk" : x.mode === "boat" ? "Boat" : x.mode === "lift" ? "Cable car" : "Taxi or car"), km: x.km || 0, min: x.min || 0 };
         // Drawn and labelled as what it is: a boat as a ferry, a cable car with the rail-like lines (never as a taxi).
         if (x.mode === "boat") leg.kind = "ferry"; else if (x.mode === "lift") leg.kind = "train";
+        else if (x.mode === "transit") leg.kind = ({ subway: "train", light_rail: "train", monorail: "train", tram: "train", train: "train", bus: "bus", ferry: "ferry" })[x.transitMode] || "train";
         if (x.options) leg.options = x.options; if (x.from) leg.from = x.from; if (x.to) leg.to = x.to;
         items.push({ type: "travel", leg, time: (items.length ? items[items.length - 1].time + (items[items.length - 1].dur || 0) : ep.start) }); return;
       }

@@ -22,6 +22,7 @@ ok(E.waterOnly({ access: 'Viewed from the water on a boat tour' }) && E.waterOnl
   if (far) { c1.sites = c1.sites.concat([Object.assign({}, far, { id: 'far-in-sites' })]); c1.farther = c1.farther.filter(x => x !== far);
     const p = E.planTrip(s1); p.forEach((x, i) => { if (!x || !x.items) return; const st = x.items.filter(y => y.t === 'stop'), here = st.some(y => y.id === 'far-in-sites');
       if (here) ok(st.every(y => y.id === 'far-in-sites' || E.hav(far, y) <= 20), `day ${i}: a sight 80 km out, listed among the city's sights, is planned as a day trip, not mixed into a day in town`); }); } }
+ok(!E.mealPlace({ cuisine: 'Honey doughnuts', why: 'Perfect afternoon treat.' }) && !E.mealPlace({ amenity: 'cafe' }) && E.mealPlace({ cuisine: 'Greek', why: 'Save room for dessert' }) && E.mealPlace({ amenity: 'restaurant', cuisine: 'coffee_shop;greek' }), 'lunch and dinner only at a place that serves a meal (a doughnut shop is a snack, not dinner)');
 // A port placed on the wrong island (a lookup gone astray) is never planned from; a guide written as a trip out from
 // that very port ("Rome from Civitavecchia") is far by design and is planned.
 { const fira = [{ lat: 36.416, lng: 25.432 }], wrong = { name: 'Athinios port', lat: 35.345, lng: 25.14 };

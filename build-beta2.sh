@@ -49,6 +49,11 @@ const fs = require("fs"); let h = fs.readFileSync("index.html", "utf8"); const p
 const at = h.indexOf("<script>"); if (at < 0) throw new Error("no script tag");
 h = h.slice(0, at) + "<script>\n" + pre.replace(/<\/script/gi, "<\\/script") + "\n</script>\n" + h.slice(at);
 h = h.replace("<meta name=\"apple-mobile-web-app-title\" content=\"Kairoute\">", "<meta name=\"apple-mobile-web-app-title\" content=\"Kairoute B2\">");
+// Beta 2 looks blue where the demo app is green: the same colours turned to a blue hue (same lightness and strength).
+// Walking keeps its green (each way of getting around has its own colour; the train is already blue).
+h = h.replace(/--t-walk: #146B61/g, "--t-walk: @@W1").replace(/--t-walk: #4CC2B0/g, "--t-walk: @@W2");
+for (const [a, b] of [["#146B61", "#143B6B"], ["#4CC2B0", "#4C81C2"], ["#DCEEEA", "#DCE4EE"], ["#143A36", "#14253A"], ["#123C3A", "#12253C"], ["#E8F1EE", "#E8ECF1"]]) h = h.split(a).join(b).split(a.toLowerCase()).join(b);
+h = h.replace(/@@W1/g, "#146B61").replace(/@@W2/g, "#4CC2B0");
 fs.writeFileSync("beta2-site/index.html", h);' "$PRE"
 rm -f "$PRE"
 cp version.txt beta2-site/
