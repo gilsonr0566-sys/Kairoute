@@ -5,7 +5,7 @@ on:
   workflow_dispatch:
   push:
     branches: ["claude/project-thread-xrdp7v"]
-    paths: ["tools/beta2/live-trip.cjs", ".github/workflows/beta2-live.yml", "tools/places/**"]
+    paths: ["tools/beta2/live-trip.cjs", ".github/workflows/beta2-live.yml", "tools/places/build.cjs"]
 permissions:
   contents: read
 jobs:

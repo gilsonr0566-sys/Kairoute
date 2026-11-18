@@ -30,6 +30,24 @@ const day = o => Object.assign({ type: 'land', mode: 'flight', startTime: '09:00
   const tr2 = E.makeTravel({ walk: 'medium' }, { [E.pairKey(a, b)]: 'taxi' }); ok(tr2.estimate(a, b).mode === 'ride', "traveler's chosen ride is used");
   ok(tr.saidMin('About 1 hour on the Circumvesuviana train') === 60 && tr.saidMin('60-75 min') === 75, "guide's ride notes are read"); }
 
+// ---- Public transport: offered beside walking and a taxi wherever a line serves both ends, in any city ----
+{ const line = (mode, ref, pts) => ({ mode, ref, stops: pts.map(([n, lat, lng]) => ({ name: n, lat, lng })) });
+  const L1 = line('subway', '1', [['North', 38.000, 23.730], ['Mid', 37.990, 23.730], ['Change', 37.980, 23.730], ['South', 37.970, 23.730]]);
+  const L2 = line('tram', 'T', [['Change', 37.980, 23.731], ['East', 37.980, 23.750], ['Far East', 37.980, 23.770]]);
+  const tt = E.makeTravel({ walk: 'medium' }, {}, null, [L1, L2]);
+  const a = { lat: 38.0005, lng: 23.7305 }, b = { lat: 37.9705, lng: 23.7305 }, c = { lat: 37.9805, lng: 23.7695 }, nowhere = { lat: 38.2, lng: 23.2 };
+  const ab = tt.estimate(a, b), opts = ab.options || [];
+  ok(opts.some(o => o.mode === 'transit' && /^Metro Line 1, North to South$/.test(o.how)), `a leg along a metro line offers it (got ${JSON.stringify(opts.map(o => o.how))})`);
+  ok(opts.some(o => o.mode === 'walk') && opts.some(o => o.mode === 'ride'), 'walking and a taxi are still offered beside it');
+  ok(ab.mode === E.makeTravel({ walk: 'medium' }, {}).estimate(a, b).mode && ab.min === E.makeTravel({ walk: 'medium' }, {}).estimate(a, b).min, 'offering it never changes the planned leg on its own');
+  const ac = tt.estimate(a, c); ok((ac.options || []).some(o => o.mode === 'transit' && /then Tram T to Far East/.test(o.how)), 'one change between lines is found');
+  const picked = E.makeTravel({ walk: 'medium' }, { [E.pairKey(a, b)]: 'transit' }, null, [L1, L2]).estimate(a, b);
+  ok(picked.mode === 'transit' && picked.min === opts.find(o => o.mode === 'transit').min, "the traveler's choice of the metro is planned with its own time");
+  ok(!tt.estimate(a, nowhere).options, 'no line near one end: no public transport offered');
+  ok(!tt.estimate(a, { lat: 38.0015, lng: 23.7305 }).options, 'a short walk offers no transport'); 
+  const r = E.walkDay([Object.assign({ id: 'x', minutes: 30 }, b)], { start: 540, endBy: 1080, head: [Object.assign({ name: 'Hotel' }, a)], tail: [Object.assign({ name: 'Hotel' }, a)] }, tt.estimate, null);
+  ok(r.items.filter(x => x.t === 'ride').every(x => (x.options || []).some(o => o.mode === 'transit')), 'the day plan carries the choices on each ride'); }
+
 // ---- Opening hours ----
 { const oh = { spans: [[540, 1020]], last: 960 };
   ok(E.hoursFit(oh, 500, 60).wait === 40, 'waits for opening'); ok(E.hoursFit(oh, 970, 60).late === 10, 'late after last entry');
@@ -112,6 +130,19 @@ if (fs.existsSync(dir)) for (const f of fs.readdirSync(dir).filter(f => f.endsWi
   if (!n && s.old.every(o => !o || o.error)) { console.log(`gap  ${s.name}: the old engine planned no day here either (${(s.old.find(o => o && o.error) || {}).error || 'no plan'})`); continue; }
   ok(n > 0 || liveDays > 0, f + ': no days to compare'); oks += same; console.log(`ok   ${s.name}: ${same} of ${n} timed days match the old engine to the minute${liveDays ? ` (${liveDays} left out: the old app used a live route time)` : ''}`);
 }
+
+// ---- Every city with public transport lines in its places file: each ride the day plan makes along a line offers it.
+{ const PD = path.join(__dirname, '..', 'places', 'data'), places = {};
+  if (fs.existsSync(PD)) for (const f of fs.readdirSync(PD).filter(f => f.endsWith('.json'))) { const p = JSON.parse(fs.readFileSync(path.join(PD, f))); places[p.key] = p; }
+  if (fs.existsSync(dir)) for (const f of fs.readdirSync(dir).filter(f => f.endsWith('.json'))) {
+    const s0 = JSON.parse(fs.readFileSync(path.join(dir, f))); if (!Object.keys(s0.cities || {}).some(k => (places[k] && places[k].transit || []).length)) continue;
+    const s = E.applyPlaces(s0, places), plans = E.planTrip(s), walkMin = km => Math.max(1, Math.round(km * 1.3 / (s.prefs && s.prefs.walk === 'low' ? 3.6 : 4.5) * 60));
+    let legs = 0, offered = 0;
+    plans.forEach(p => { if (!p || !p.items) return; p.items.forEach((x, k) => { if (x.t !== 'ride') return; const a = p.items[k - 1], b = p.items[k + 1]; if (!a || !b || !isFinite(a.lat) || !isFinite(b.lat)) return;
+      const d = E.hav(a, b); if (d < 0.6 || d > 15) return; const t = E.transitOption(a, b, s.transit, walkMin); if (!t || t.min >= walkMin(d)) return;
+      legs++; const has = (x.options || []).some(o => o.mode === 'transit'); if (has) offered++; else ok(false, `${f}: ${a.name} to ${b.name}: ${t.how} serves this leg but isn't offered`); }); });
+    console.log(`ok   ${s.label || f}: ${offered} of ${legs} rides along a public transport line offer it`);
+  } }
 
 // ---- The whole trip (step 6 to 8): same plan whatever order the pieces arrive in, nothing used twice, every day safe.
 const shuffle = (a, seed) => { const b = a.slice(); let x = seed; for (let i = b.length - 1; i > 0; i--) { x = (x * 1103515245 + 12345) % 2147483648; const j = x % (i + 1); [b[i], b[j]] = [b[j], b[i]]; } return b; };

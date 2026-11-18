@@ -9,7 +9,7 @@
     let clock = win.start, prev = O, late = 0, waits = 0, rideMin = 0;
     items.push({ t: "start", name: O && O.name, at: clock });
     const go = (p, type) => {
-      const leg = ride(prev, p); items.push({ t: "ride", mode: leg.mode, min: leg.min, km: Math.round((leg.km || 0) * 100) / 100 }); clock += leg.min; rideMin += leg.min;
+      const leg = ride(prev, p); items.push(Object.assign({ t: "ride", mode: leg.mode, min: leg.min, km: Math.round((leg.km || 0) * 100) / 100 }, leg.options ? { how: leg.how, options: leg.options } : {})); clock += leg.min; rideMin += leg.min;
       const it = { t: type, id: p.id || null, name: p.name, min: p.minutes || 0 };
       if (type === "stop") { const sd = siteDay ? siteDay(p.id) : null, f = E.hoursFit(sd && sd.oh, clock, p.minutes);
         if (f.wait) { clock += f.wait; waits += f.wait; it.wait = f.wait; } if (f.late > 0) { late++; it.late = f.late; }

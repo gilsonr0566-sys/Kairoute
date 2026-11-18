@@ -23,7 +23,7 @@
   function shortForm(i, win, fit, autoIds, dinner) {
     const byId = new Map(fit.seq.map(s => [String(s.id), s])), items = [];
     for (const x of fit.r.items) {
-      if (x.t === "ride") { items.push({ t: "ride", mode: x.mode, min: x.min, km: x.km }); continue; }
+      if (x.t === "ride") { items.push(Object.assign({ t: "ride", mode: x.mode, min: x.min, km: x.km }, x.options ? { how: x.how, options: x.options } : {})); continue; }
       const src = x.id != null ? byId.get(String(x.id)) : null;
       const it = { t: x.t, id: x.t === "meal" ? null : x.id, name: x.name, at: x.at, min: x.min, bonus: x.t === "stop" && autoIds.has(String(x.id)), along: false, meal: x.meal || null, late: x.late || 0 };
       if (x.wait) it.wait = x.wait;
@@ -47,7 +47,7 @@
   }
   E.listWords = (xs, joiner) => xs.length < 2 ? xs.join("") : xs.slice(0, -1).join(", ") + " " + (joiner || "or") + " " + xs[xs.length - 1];
   E.planTrip = bucket => {
-    const prefs = bucket.prefs || {}, style = bucket.style || "mix", tr = E.makeTravel(prefs, bucket.legModes, bucket.legs), ledger = E.makeLedger();
+    const prefs = bucket.prefs || {}, style = bucket.style || "mix", tr = E.makeTravel(prefs, bucket.legModes, bucket.legs, bucket.transit), ledger = E.makeLedger();
     const guides = bucket.cities || {}, days = bucket.days || [], out = new Array(days.length).fill(null);
     const order = days.map((d, i) => i).sort((a, b) => (days[b].locked ? 1 : 0) - (days[a].locked ? 1 : 0) || a - b);
     // A sight the traveler picked for a day is kept for that day: no other day adds it on its own.

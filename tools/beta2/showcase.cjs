@@ -17,7 +17,8 @@ function column(p, d, which) {
   if (!p || p.error) return `<div class="col ${which}"><h4>${which === 'old' ? 'Old engine' : 'New engine'}</h4><p class="none">${esc(p ? p.error : 'No plan')}</p></div>`;
   const rows = [];
   for (const x of p.items) {
-    if (x.t === 'ride') { if (x.min > 0) rows.push(`<li class="ride"><span class="t"></span><span>${x.mode === 'walk' ? 'Walk' : 'Ride'} ${x.min} min${x.km ? ' · ' + (+x.km).toFixed(1) + ' km' : ''}</span></li>`); continue; }
+    if (x.t === 'ride') { if (x.min > 0) { const alt = (x.options || []).filter(o => o.mode !== x.mode).map(o => `${esc(o.how)} ${o.min} min`).join(' · ');
+      rows.push(`<li class="ride"><span class="t"></span><span>${x.mode === 'walk' ? 'Walk' : x.mode === 'transit' ? esc(x.how) : 'Ride'} ${x.min} min${x.km ? ' · ' + (+x.km).toFixed(1) + ' km' : ''}${alt ? `<br><span class="alt">or ${alt}</span>` : ''}</span></li>`); } continue; }
     const kind = x.t === 'stop' ? (x.bonus ? 'stop added' : 'stop') : x.t;
     const label = x.t === 'meal' ? (x.min < 45 ? 'Quick lunch · ' : 'Lunch · ') + x.name : x.t === 'evening' ? 'Dinner idea · ' + x.name : x.name;
     const tag = x.t === 'stop' && x.bonus ? '<em>added by the app</em>' : x.t === 'stop' ? '<em>your pick</em>' : '';
@@ -80,7 +81,7 @@ h4 { margin:0; font-size:12px; text-transform:uppercase; letter-spacing:0.08em; 
 ol { list-style:none; margin:0; padding:0; display:grid; gap:2px; }
 li { display:grid; grid-template-columns:68px 1fr; gap:8px; font-size:14px; font-variant-numeric:tabular-nums; }
 li .t { color:var(--muted); font-size:13px; }
-li.ride { color:var(--muted); font-size:12px; } li.ride span:last-child { padding-left:10px; border-left:2px dotted var(--line); }
+li.ride { color:var(--muted); font-size:12px; } li.ride .alt { color:var(--green); } li.ride span:last-child { padding-left:10px; border-left:2px dotted var(--line); }
 li.start, li.end { font-weight:600; }
 li.meal span:last-child, li.evening span:last-child { color:var(--sun); }
 li small { color:var(--muted); }

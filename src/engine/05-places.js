@@ -20,6 +20,8 @@
     const guides = b.cities || {};
     for (const [key, city] of Object.entries(guides)) {
       const P = places && places[key]; if (!P) continue;
+      // Public transport lines mapped around the place: every leg they serve offers them (part 1b).
+      if ((P.transit || []).length) b.transit = (b.transit || []).concat(P.transit);
       for (const s of city.sites || []) {
         const f = P.sites && P.sites[s.id]; if (!f) continue;
         if (f.editions) s.editions = f.editions;

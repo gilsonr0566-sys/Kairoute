@@ -1,7 +1,23 @@
 {
-  "note": "Places a trip may visit that the free guide sources return nothing for, or facts the snapshots can't show (an island stop). Data only: the engine never reads place names.",
-  "places": [
-    { "key": "half moon cay bahamas", "name": "Half Moon Cay, Bahamas", "port": "Half Moon Cay", "island": true },
-    { "key": "perfect day at cococay bahamas", "island": true }
-  ]
+ "note": "Places a trip may visit that the free guide sources return nothing for, or facts the snapshots can't show (an island stop). Data only: the engine never reads place names.",
+ "places": [
+  {
+   "key": "half moon cay bahamas",
+   "name": "Half Moon Cay, Bahamas",
+   "port": "Half Moon Cay",
+   "island": true
+  },
+  {
+   "key": "perfect day at cococay bahamas",
+   "island": true
+  },
+  {
+   "key": "athens",
+   "name": "Athens, Greece",
+   "centre": {
+    "lat": 37.9755,
+    "lng": 23.7348
+   }
+  }
+ ]
 }

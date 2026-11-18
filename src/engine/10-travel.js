@@ -24,7 +24,8 @@
   // A travel calculator for one trip's preferences. Pure and memoised per pair (the same pair always gives the same answer).
   // legs: pinned network times from the places database, keyed by pairKey (step change, Nov 18: decisions use real
   // walking, road and ferry times, pinned so they stay steady; the straight-line estimate is only the fallback).
-  E.makeTravel = (prefs, legModes, legs) => {
+  // lines: public transport lines from the places files (part 1b); every leg they serve offers them as a choice.
+  E.makeTravel = (prefs, legModes, legs, lines) => {
     const walk = (prefs && prefs.walk) || "medium", lim = WALK_LIMIT[walk] || WALK_LIMIT.medium, speed = walk === "low" ? 3.6 : 4.5, modes = legModes || {}, memo = new Map(), memoEnd = new Map();
     function estimate(a, b) {
       if (!a || !b || !isFinite(a.lat) || !isFinite(b.lat)) return { mode: "walk", how: "Walk", km: 0, min: 0, unknown: true };
@@ -34,7 +35,18 @@
       const got = m.get(b.lng); if (got) return got;
       const v = Object.freeze(calc(a, b)); m.set(b.lng, v); return v;
     }
+    // The leg as planned, plus every way to make it (walk, public transport, taxi) so the traveler can choose.
     function calc(a, b) {
+      const leg = base(a, b), d = E.hav(a, b);
+      if (!lines || !lines.length || d < 0.6 || d > 15 || leg.pinned) return leg;
+      const walkMin = km => Math.max(1, Math.round(km * 1.3 / speed * 60)), onFoot = walkMin(d);
+      const t = E.transitOption(a, b, lines, walkMin); if (!t || t.min >= onFoot) return leg;
+      const taxi = road(d), want = modes[E.pairKey(a, b)];
+      const options = [{ mode: "walk", how: "Walk", min: onFoot }, { mode: "transit", how: t.how, min: t.min }, { mode: "ride", how: taxi.how, min: taxi.min }];
+      if (want === "transit") return { mode: "transit", how: t.how, km: d * 1.3, min: t.min, either: true, options };
+      return Object.assign(leg, { options, either: true });
+    }
+    function base(a, b) {
       const pin = legs && legs[E.pairKey(a, b)];
       if (pin && isFinite(pin.min)) { let leg = { mode: pin.mode || "ride", how: pin.how || "Ride", km: pin.km || 0, min: Math.round(pin.min), pinned: true };
         if ((b.backToShip || b.deadline) && leg.min >= 30 && leg.mode !== "walk") { const sl = Math.max(15, Math.round(leg.min * 0.3 / 5) * 5); leg = Object.assign(leg, { min: leg.min + sl, slack: sl }); }

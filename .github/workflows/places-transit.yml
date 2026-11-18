@@ -1,0 +1,23 @@
+name: Places public transport lines
+# Refreshes only the public transport lines (metro, light rail, tram, train) in the saved places files, from
+# OpenStreetMap. Free source, no AI, never publishes anything. Lines are printed back as PLACES lines for replay.
+on:
+  workflow_dispatch:
+  push:
+    branches: ["claude/project-thread-xrdp7v"]
+    paths: [".github/workflows/places-transit.yml", "tools/places/targets.json"]
+permissions:
+  contents: read
+jobs:
+  lines:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - env:
+          TRANSIT_ONLY: "1"
+          PLACES_EXTRA: "1"
+        run: node tools/places/build.cjs
