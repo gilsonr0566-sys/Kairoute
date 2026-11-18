@@ -10,6 +10,15 @@ const day = o => Object.assign({ type: 'land', mode: 'flight', startTime: '09:00
 // ---- Safety times (Rule #2) ----
 { const w = E.dayWindow(day({ type: 'port', portArrive: 480, allAboard: 1020 }), tr);
   ok(w.start === 510 && w.endBy === 975 && w.hard, `port day: ashore 30 min after docking, back 45 min before all aboard (got ${w.start}-${w.endBy})`); }
+ok(E.waterOnly({ access: 'Viewed from the water on a boat tour' }) && E.waterOnly({ access: 'Only by boat' }) && !E.waterOnly({ access: 'Walk up from the old port' }), 'a sight seen only from the water is read from its access note');
+// A port placed on the wrong island (a lookup gone astray) is never planned from; a guide written as a trip out from
+// that very port ("Rome from Civitavecchia") is far by design and is planned.
+{ const fira = [{ lat: 36.416, lng: 25.432 }], wrong = { name: 'Athinios port', lat: 35.345, lng: 25.14 };
+  const w = E.dayWindow(day({ type: 'port', portArrive: 480, allAboard: 1020, point: wrong, siteSpots: fira, placeName: 'santorini Santorini' }), tr);
+  ok(w.error && w.farGate, 'a port 120 km from every sight of the island is not planned from');
+  const rome = [{ lat: 41.89, lng: 12.49 }], civ = { name: 'Civitavecchia cruise port', lat: 42.095, lng: 11.79 };
+  const v = E.dayWindow(day({ type: 'port', portArrive: 480, allAboard: 1200, point: civ, siteSpots: rome, placeName: 'rome from civitavecchia Rome (from Civitavecchia)' }), tr);
+  ok(!v.error, 'a guide named for its port (Rome from Civitavecchia) is planned from that port'); }
 { const w = E.dayWindow(day({ type: 'port', portArrive: 480, allAboard: 1020, tender: true }), tr); ok(w.start === 540, 'tender port: an hour to get ashore'); }
 { const w = E.dayWindow(day({ type: 'embark', allAboard: 1020, boardAt: 780 }), tr); ok(w.endBy === 780, 'boarding day: at the terminal by the boarding time'); }
 { const w = E.dayWindow(day({ type: 'embark', allAboard: 1020, boardAt: 990 }), tr); ok(w.endBy === 960, 'boarding day: never later than an hour before all aboard'); }

@@ -2,14 +2,15 @@
 // A leak is any of: a public transport line serves a ride but isn't offered; a voiced, must-see or picked sight left
 // out without saying why, or left out when lunch on the go would have kept it; a sight the old engine planned that the
 // new one leaves out; a name shown in a non-Latin script (Greek, Cyrillic, Arabic, Hebrew, Asian); a ride without its
-// start, end or way of travel. Usage: PLACES_DIR=tools/places/data node tools/beta2/leaks.cjs [--list]
+// start, end or way of travel; a day planned from a port far from every sight; a sight seen only from the water reached
+// by land. Usage: PLACES_DIR=tools/places/data node tools/beta2/leaks.cjs [--list]
 // Exit 1 when any leak is found (CI can gate on it once the known ones are fixed).
 const fs = require('fs'), path = require('path'), E = require('./engine.cjs');
 const dir = path.join(__dirname, 'snapshots'), list = process.argv.includes('--list');
 const PD = process.env.PLACES_DIR, places = {};
 if (PD) for (const f of fs.readdirSync(PD).filter(f => f.endsWith('.json'))) { const p = JSON.parse(fs.readFileSync(path.join(PD, f))); places[p.key] = p; }
 const SCRIPT = /[Ͱ-Ͽἀ-῿Ѐ-ӿ֐-׿؀-ۿ฀-๿぀-ヿ㐀-鿿가-힯]/;
-const leaks = { transit: [], wanted: [], lostVsOld: [], thin: [], script: [], ride: [] };
+const leaks = { transit: [], wanted: [], lostVsOld: [], thin: [], script: [], ride: [], gate: [], water: [] };
 const swaps = [];
 const add = (k, f, msg) => leaks[k].push(`${f}: ${msg}`);
 for (const f of fs.readdirSync(dir).filter(f => f.endsWith('.json')).sort()) {
@@ -20,8 +21,17 @@ for (const f of fs.readdirSync(dir).filter(f => f.endsWith('.json')).sort()) {
   const walkMin = km => Math.max(1, Math.round(km * 1.3 / ((s.prefs || {}).walk === 'low' ? 3.6 : 4.5) * 60));
   plans.forEach((p, i) => {
     if (!p || !p.items) return; const d = s.days[i], city = s.cities[d.city] || {};
+    // A port or gate far from every sight of the place, planned anyway (a lookup put it on the wrong island).
+    { const P = d.point, spots = (city.sites || []).filter(x => isFinite(x.lat)), named = (d.city + ' ' + (city.name || '')).toLowerCase();
+      const words = String(P && P.name || '').toLowerCase().split(/[^a-z]+/).filter(x => x.length >= 4 && !/^(port|ports|cruise|terminal|pier|harbou?r|marina|station|central|airport|international|ferry)$/.test(x));
+      if (P && isFinite(P.lat) && spots.length && d.type !== 'land' && !words.some(x => named.includes(x))) { const km = Math.min(...spots.map(x => E.hav(P, x)));
+        if (km > 40) add('gate', f, `day ${i}: planned from ${P.name}, ${Math.round(km)} km from every sight`); } }
     p.items.forEach((x, k) => {
       if (x.name && SCRIPT.test(x.name)) add('script', f, `day ${i}: "${x.name}"`);
+      // A sight seen only from the water: reached by boat, never by land.
+      if (x.t === 'stop') { const st = (city.sites || []).find(y => String(y.id) === String(x.id));
+        if (st && E.waterOnly(st)) { const legs = [p.items[k - 1], p.items[k + 1]].filter(y => y && y.t === 'ride');
+          if (legs.some(y => y.mode !== 'boat')) add('water', f, `day ${i}: ${x.name} is seen from the water but is reached by ${legs.map(y => y.mode).join('/')}`); } }
       if (x.t !== 'ride') return;
       if (!x.mode || !x.from || !x.to || !isFinite(x.from.lat) || !isFinite(x.to.lat)) add('ride', f, `day ${i}: ride ${k} lacks ${!x.mode ? 'its way of travel' : 'its start or end'}`);
       const a = p.items[k - 1], b = p.items[k + 1];
@@ -47,7 +57,7 @@ for (const f of fs.readdirSync(dir).filter(f => f.endsWith('.json')).sort()) {
     if (!why && spare >= (x.min || 30) + 20) add('lostVsOld', f, `day ${i}: ${x.name} (${spare} min left unused, no reason given)`); else swaps.push(`${f}: day ${i}: ${x.name}${why ? ' (the plan says why)' : ' (day full, other sights chosen)'}`); } });
 }
 let total = 0;
-const label = { transit: 'public transport not offered', wanted: 'voiced, must-see or picked sight left out', lostVsOld: 'sight the old engine planned, left out', thin: 'thin day: 3 hours or more unused, nothing said', script: 'name in a non-Latin script', ride: 'ride without start, end or way of travel' };
+const label = { transit: 'public transport not offered', wanted: 'voiced, must-see or picked sight left out', lostVsOld: 'sight the old engine planned, left out', thin: 'thin day: 3 hours or more unused, nothing said', script: 'name in a non-Latin script', ride: 'ride without start, end or way of travel', gate: 'planned from a port or gate far from every sight', water: 'sight seen only from the water, reached by land' };
 for (const k of Object.keys(leaks)) { total += leaks[k].length; console.log(`${String(leaks[k].length).padStart(4)}  ${label[k]}`); if (list) leaks[k].forEach(m => console.log('      ' + m)); }
 console.log(`      (${swaps.length} sights the old engine planned were swapped for others on a full day, or left out with the reason said)`); if (list) swaps.forEach(m => console.log('        ' + m));
 console.log(`${String(total).padStart(4)}  leaks in all${PD ? ' (with the places files)' : ''}`);

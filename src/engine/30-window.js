@@ -11,6 +11,7 @@
   E.STRAIGHT_MIN = 180;      // flying in the day the ship sails: under 3 h free means straight to the ship
   E.TENDER_ASHORE = 60;      // getting ashore by tender boat; 30 by gangway
   E.BOARD_BEFORE = 60;       // at the terminal at least an hour before all aboard
+  E.GATE_KM = { flight: 80, other: 40 }; // farthest a port or station (airports lie farther out) may be from the nearest sight
   E.TENDER_BACK = 30;        // tender port: the boats back stop well before all aboard and queue, so back this much earlier
   // A landing below the town, reached by cable car or funicular (from the places files): the queue and ride up, and the
   // queue and ride down, which is far longer when every passenger heads back at once.
@@ -28,6 +29,14 @@
     if (d.noShore) return E.fail("At sea or staying aboard: no time ashore.", { noShore: true });
     if (d.through) return E.fail("This day's plan is on the next page, with your departure or boarding.", { through: true });
     const L = d.lodging, P = d.point, w = { head: [], tail: [], start: NaN, endBy: NaN, buffer: 0, hard: hardEnd(d.type), notes: [] };
+    // A port, station or airport far from every sight of the place (a port on another island, a gate grounded to the
+    // wrong town) is as good as unknown: never planned from it.
+    // A guide written as a trip out from that very place ("Rome from Civitavecchia") names it, and is far by design.
+    const GENERIC = /^(port|ports|cruise|terminal|terminals|pier|piers|harbou?r|marina|station|central|airport|international|ferry|new|old|the)$/;
+    const named = String(d.placeName || "").toLowerCase(), words = String(P && P.name || "").toLowerCase().normalize("NFKD").replace(/[\u0300-\u036f]/g, "").split(/[^a-z]+/).filter(x => x.length >= 4 && !GENERIC.test(x));
+    const servesFrom = words.some(x => named.normalize("NFKD").replace(/[\u0300-\u036f]/g, "").includes(x));
+    if (P && !P.unknown && !servesFrom && d.type !== "land" && isFinite(P.lat) && (d.siteSpots || []).length && Math.min(...d.siteSpots.map(x => E.hav(P, x))) > E.GATE_KM[d.mode === "flight" && d.type !== "port" && d.type !== "embark" ? "flight" : "other"])
+      return E.fail(`${P.name} is ${Math.round(Math.min(...d.siteSpots.map(x => E.hav(P, x))))} km from every sight here, so it can't be the right place. Check where you arrive or leave; this day isn't planned on a guess.`, { unsure: true, farGate: true });
     if (P && P.unknown && d.type !== "land" && !d.thru) return E.fail(`We couldn't find exactly where ${P.name} is, so this day isn't planned on a guess.`, { unsure: true });
     if (d.type === "land") {
       if (!L) return E.fail("Choose where you're staying.");

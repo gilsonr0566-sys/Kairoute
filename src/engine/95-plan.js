@@ -63,7 +63,9 @@
   E.planTrip = bucket => {
     const prefs = bucket.prefs || {}, style = bucket.style || "mix", tr = E.makeTravel(prefs, bucket.legModes, bucket.legs, bucket.transit), ledger = E.makeLedger();
     const guides = bucket.cities || {}, days = bucket.days || [], out = new Array(days.length).fill(null);
-    const wins = days.map(d => (d.noShore || d.type === "sea") ? null : E.dayWindow(d, tr));
+    // Each day knows where its place's own sights are, so a gate far from all of them is caught (part 3).
+    const spots = key => ((guides[key] || {}).sites || []).filter(s => isFinite(s.lat)).map(s => ({ lat: s.lat, lng: s.lng }));
+    const wins = days.map(d => (d.noShore || d.type === "sea") ? null : E.dayWindow(Object.assign({}, d, { siteSpots: spots(d.city), placeName: d.city + " " + ((guides[d.city] || {}).name || "") }), tr));
     // A pick closed on its own day moves to another day in the same place when it's open then (never onto or off a
     // day the traveler locked), and the plan says so.
     const sel = days.map(d => (d.selected || []).slice()), movedTo = new Map();
@@ -132,7 +134,9 @@
       // (its own time less theirs, never under half an hour), and its time goes to more sights.
       const byIdR = new Map(ranked.map(s => [String(s.id), s]));
       const own = g => (groups.members.get(String(g.id)) || []).map(m => byIdR.get(String(m))).filter(m => m && E.ownStop(m, picked));
-      const pool = ranked.filter(s => E.allowed(s, prefs, siteDay(s.id), win) && !folded(s))
+      // A sight seen only from the water is never a stop the app adds on a ship, train or plane day (a boat tour is the
+      // traveler's own pick); picked, it is reached by boat.
+      const pool = ranked.filter(s => E.allowed(s, prefs, siteDay(s.id), win) && !folded(s) && !(win.hard && E.waterOnly(s) && !picked.has(String(s.id))))
         .map(s => { const o = own(s); if (!o.length) return s; const left = Math.max(30, Math.round(((s.minutes || 60) - o.reduce((a, m) => a + (m.minutes || 30), 0)) / 5) * 5);
           return left < (s.minutes || 60) ? Object.assign({}, s, { minutes: left, walkOf: o.map(m => m.name) }) : s; });
       const explain = [], wishes = [];
