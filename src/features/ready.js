@@ -134,7 +134,7 @@ function lockTimes(d, city, w) {
   const thru = throughFrom(d), L = lodgingFor(d, city);
   return { type: d.type || "", mode: d.mode || "", start: d.startTime || "", hours: d.hours == null ? "" : String(d.hours), time: d.time || "",
     arrive: d.portArrive || "", aboard: d.allAboard || "", tender: !!d.tender, board: d.boardTime || "", thru: (thru && thru.time) || "",
-    back: !!d.returnToStart, bags: !!d.noBags, stay: (L && L.name) || "", lodge: JSON.stringify(trip.lodging[cityKeyFor(d) || keyOf(d.destination)] || {}), book: JSON.stringify(d.booked || {}),
+    back: !!d.returnToStart, bags: !!d.noBags, stay: (L && L.name) || "", lodge: JSON.stringify(trip.lodging[cityKeyFor(d) || keyOf(d.destination)] || {}), book: JSON.stringify(d.booked || {}), meals: JSON.stringify(d.mealPrefs || {}),
     set: [!!d.rain, !!d.alongWay, d.fillTime !== false, trip.style || "mix", (trip.prefs && trip.prefs.pace) || "moderate"].join("|"),
     endBy: d.type === "arrival" ? null : Math.round(w.endBy) }; // an arrival day's end depends on the ride in, which isn't a time the traveler set
 }
@@ -161,6 +161,7 @@ function lockTimeWhy(a, b, d) {
   // this was recorded compare the hotel's name.
   if (a.lodge != null && b.lodge != null ? a.lodge !== b.lodge : a.stay !== b.stay) return "your hotel changed";
   if (a.book !== b.book) return "your table booking changed";
+  if ((a.meals || "{}") !== (b.meals || "{}")) return "you changed a meal"; // lunch or dinner moved, skipped or swapped (meal-change.js)
   if (a.type !== b.type || a.mode !== b.mode) return "the day's travel changed";
   if (a.endBy !== b.endBy) return `the time to be back is now ${fmt(b.endBy)}`;
   if (a.back !== b.back || a.bags !== b.bags || a.set !== b.set) return "you changed this day's settings";

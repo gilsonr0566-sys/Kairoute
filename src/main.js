@@ -1489,7 +1489,7 @@ function simDay(seq, t0, O, Z, style) {
       const m = p.mealOf;
       if (m.label === "Lunch" && seenDinner) cost += 500; if (m.label !== "Lunch") seenDinner = true;
       if (clock < m.from) { cost += (m.from - clock) * 0.6; clock = m.from; }
-      if (clock > m.to) cost += (clock - m.to) * (m.booked ? 60 : 6); // a table the traveler booked is never missed
+      if (clock > m.to) cost += (clock - m.to) * (m.booked || m.at ? 60 : 6); // a table the traveler booked (or a time they set for the meal) is never missed
       if (!p.generic && !p.booked && mealShut(p, m.label)) cost += 400; // its listed hours say it's shut for this meal today
       if (style !== "mix" && p.kind && p.kind !== style) cost += 8;
       if (p.recommended) cost -= 6; // recommended by travelers on Wikivoyage
@@ -1569,6 +1569,7 @@ const MEAL_TRY = 8;
 // Worked out once per set of stops in a day's plan (the planner asks again for every order it weighs).
 let mealPickMemo = { g: -1, m: new Map() };
 function mealPick(seq, O, Z, city, m, style) {
+  if (m.pick) return [m.pick]; // the place the traveler chose for this meal (meal-change.js) is the only choice
   const bare = seq.filter(x => !x.mealOf), key = m.label + "|" + (m.quick ? 1 : 0) + "|" + style + "|" + planDate + "|" + [...avoidMeals].join(",") + "|" + bare.map(x => (x.id || "") + "~" + x.name + "~" + x.lat + "," + x.lng).sort().join(",") + "|" + (O ? O.lat + "," + O.lng : "") + "|" + (Z ? Z.lat + "," + Z.lng : "");
   if (mealPickMemo.city !== city) { mealPickMemo.city = city; mealPickMemo.m = new Map(); }
   const got = mealPickMemo.m.get(key); if (got) return got;
@@ -1986,7 +1987,10 @@ function buildPlanForDay(d) {
   const inDay = books.filter(m => m.from >= t0 && m.from + m.len <= dayEnd), lateBooks = books.filter(m => !inDay.includes(m));
   // On a short day a quick meal (35-45 min) can make room for the sights the traveler picked.
   let quickMeals = false;
-  const mealSet = () => quickMeals ? MEALS.map(m => Object.assign({}, m, { len: QUICK_MEAL[m.label] || m.len, quick: true })) : MEALS;
+  // The traveler's own lunch and dinner (meal-change.js): a meal they skipped is left out, one set to a time is planned
+  // at that time, and a restaurant they chose is the one the plan uses (placed where it fits best in the route).
+  const ownMeals = dayMeals(d, city);
+  const mealSet = () => quickMeals ? ownMeals.map(m => Object.assign({}, m, { len: QUICK_MEAL[m.label] || m.len, quick: true })) : ownMeals;
   const needMeals = q => q.some(x => !x.mealOf) || inDay.length ? mealSet().filter(m => !liveAte(d, m.label) && !books.some(b => b.label === m.label) && t0 < m.to - 30 && m.from + m.len + 15 <= dayEnd).concat(inDay).sort((a, b) => a.from - b.from) : [];
   const withMeals = q => { const bare = q.filter(x => !x.mealOf); return placeMeals(bare, needMeals(bare), t0, O, ZZ, style, city); };
   const savedAvoid = avoidMeals, av = new Set(), avMain = new Set(), myIdx = trip.days.indexOf(d);
@@ -2235,7 +2239,12 @@ function buildPlanForDay(d) {
   const evening = [], endAt = (w.tail.length ? w.tail[w.tail.length - 1] : prev) || null;
   lateBooks.forEach(m => { const leg = endAt ? travel(endAt, m.node) : null; evening.push({ type: "evening", meal: m, place: Object.assign({}, m.node), time: Math.max(m.from, clock + (leg ? leg.min : 0)), leg, booked: true, late: m.from < clock + (leg ? leg.min : 0) - 5 }); });
   const hasDinner = seq.some(x => x.mealOf && x.mealOf.label === "Dinner") || books.some(b => b.label === "Dinner");
-  if (!hasDinner && !skipEvening && endAt && (d.type === "land" || d.type === "arrival") && clock < MEALS[1].to - 45) {
+  const dinOwn = ownMeals.find(m => m.label === "Dinner"); // undefined: the traveler skipped dinner today
+  if (!hasDinner && !skipEvening && endAt && dinOwn && dinOwn.pick && (d.type === "land" || d.type === "arrival")) {
+    // The dinner place the traveler chose, at their time (or the usual dinner time), after the day's sightseeing.
+    const leg = travel(endAt, dinOwn.pick);
+    evening.push({ type: "evening", meal: dinOwn, place: Object.assign({}, dinOwn.pick, { alts: [] }), time: Math.max(dinOwn.from, clock + (leg ? leg.min : 0)), leg, near: endAt.name, mine: true });
+  } else if (!hasDinner && !skipEvening && endAt && dinOwn && (d.type === "land" || d.type === "arrival") && clock < dinOwn.to - 45) {
     // No place twice in a city: tonight's dinner leaves out where earlier days eat (lunch and dinner), and later days'
     // lunches leave out tonight's dinner (see avoidMeals above). Each day depends only on the days before it, so a
     // day's plan never depends on which days happened to be planned first (it did: a later day planned while this one
@@ -2248,7 +2257,7 @@ function buildPlanForDay(d) {
       const kept = locked && lk.eve ? pool.find(r => keyOf(r.name) === lk.eve) : null; // a hearted day keeps its dinner place
       const main = kept || pool.slice().sort((a, b) => sc(b) - sc(a))[0], alts = mealAlternatives(main, seq.concat(meals.map(m => Object.assign({}, m, { mealOf: MEALS[0] }))), city);
       const leg = travel(endAt, main);
-      evening.push({ type: "evening", meal: MEALS[1], place: Object.assign({}, main, { alts }), time: Math.max(MEALS[1].from, clock + 30), leg, near: endAt.name });
+      evening.push({ type: "evening", meal: dinOwn, place: Object.assign({}, main, { alts }), time: Math.max(dinOwn.from, clock + 30), leg, near: endAt.name });
     }
   }
   evening.forEach(e => items.push(e));
@@ -6588,7 +6597,7 @@ function renderPlan(d) {
       const r = it.place, lbl = it.meal.label, mv = canDrag && !r.booked && !it.meal.booked;
       return `<div class="${cls}"${mv ? ` data-meal="${esc(lbl)}"` : ""}>${tcell(it)}<div class="rail"><div class="dot meal">${lbl[0]}</div></div><div class="what">${mv ? dragHandle({ id: "meal:" + lbl, name: lbl }) : ""}
         <div class="nm">${it.meal.quick && !r.booked ? "Quick " + lbl.toLowerCase() : lbl}: ${esc(r.name)}</div><div class="sub">${[r.booked ? "Your reservation" : "", r.cuisine, r.price, r.generic || r.booked ? "" : r.kind === "local" ? "Local spot" : "Popular with visitors", dur(it.meal.len)].filter(Boolean).map(esc).join(" · ")}</div>
-        ${mealFacts(r)}${r.booked ? bookedLinks(lbl) : mealMore(r, city, lbl)}</div></div>`;
+        ${mealFacts(r)}${r.booked ? bookedLinks(lbl) : mealChangeLink(lbl, r) + mealMore(r, city, lbl)}</div></div>`;
     }
     if (it.type === "stop") {
       const s = it.place;
@@ -6605,10 +6614,10 @@ ${partsList(s, it.time)}${stopLiveNotes(it, d)}</div></div>`;
     if (it.type === "evening") {
       const r = it.place, lbl = it.meal.label;
       return `<div class="tl evening">${tcell(it)}<div class="rail"><div class="dot meal">${lbl[0]}</div></div><div class="what">
-        <div class="nm">${it.booked ? lbl + ": " + esc(r.name) : "Suggested dinner: " + esc(r.name)}</div>
+        <div class="nm">${it.booked || it.mine ? lbl + ": " + esc(r.name) : "Suggested dinner: " + esc(r.name)}</div>
         <div class="sub">${[it.booked ? "Your reservation" : "", r.cuisine, r.price, it.leg ? (it.leg.km < 0.1 ? "next door" : dur(it.leg.min) + " " + (it.leg.mode === "walk" ? "walk" : "ride") + " from " + (it.near || "where you finish")) : ""].filter(Boolean).map(esc).join(" · ")}</div>
         ${it.late ? `<div class="banner warn">You'll reach it about ${dur(it.time - it.meal.from)} after your reservation. Remove a stop, or ask the restaurant for a later table.</div>` : ""}
-        ${it.booked ? bookedLinks(lbl) : mealFacts(r) + mealMore(r, city, lbl)}</div></div>`;
+        ${it.booked ? bookedLinks(lbl) : mealFacts(r) + mealChangeLink(lbl, r) + mealMore(r, city, lbl)}</div></div>`;
     }
     if (it.type === "end") {
       const spare = plan.endBy - plan.end;
@@ -6624,7 +6633,7 @@ ${partsList(s, it.time)}${stopLiveNotes(it, d)}</div></div>`;
   // Heads-up: everything that needs a decision today, in one place above the schedule, most urgent first.
   const askOut = new Set(d.pendingOrder && orderNote(d, plan) ? d.pendingOrder.names : []), dropNow = plan.dropped.filter(s => !askOut.has(s.name)); // the order question already names those
   const heads = [
-    orderNote(d, plan), readyBanner(d),
+    orderNote(d, plan), readyBanner(d), mealSkipNote(d),
     boardCard(d, plan), boardEve(d),
     (b => b ? `<div class="livecard">${b}</div>` : "")(liveBanner(d, plan)),
     rideChangeBanner(d),
@@ -6695,7 +6704,7 @@ function legendHTML(plan) {
   <p class="footnote">Times are estimates using a relaxed walking pace and typical taxi times. Check opening hours and book timed tickets for the big sights.</p>
   </details>
   </details>
-  </div><div class="right pane" data-pane="sched">${heads ? `<div class="heads" role="region" aria-label="Heads-up for today">${heads}</div>` : ""}${bookFormHTML(d)}<div class="card">${zoneNote(d)}${canDrag ? orderLine(d) : ""}<div class="timeline${canDrag && tlCompact() ? " compact" : ""}">${rows}</div></div></div></div>`;
+  </div><div class="right pane" data-pane="sched">${heads ? `<div class="heads" role="region" aria-label="Heads-up for today">${heads}</div>` : ""}${bookFormHTML(d)}${mealFormHTML(d, plan)}<div class="card">${zoneNote(d)}${canDrag ? orderLine(d) : ""}<div class="timeline${canDrag && tlCompact() ? " compact" : ""}">${rows}</div></div></div></div>`;
 }
 // A restaurant's at-a-glance facts on the Day plan: badges and the Google rating. Why it was chosen, the two
 // alternatives and the traveler rating sit in a fold below.
@@ -6705,9 +6714,10 @@ function mealFacts(r) {
   return b || g ? `<div class="sub mealfacts">${b}${g}</div>` : "";
 }
 function mealMore(r, city, lbl) {
-  const why = String(r.why || "").replace(/\s*\(Wikivoyage\)\s*$/, ""), alts = r.alts || [];
-  if (r.generic && !alts.length) return "";
-  return `<details class="more mealmore"><summary>${lbl === "Lunch" ? "Lunch" : lbl === "Dinner" ? "Dinner" : esc(lbl)}: why here${alts.length ? ` · ${alts.length} other choice${alts.length > 1 ? "s" : ""}` : ""}</summary><div class="mealbox">${why ? `<span>${esc(why)}</span>` : ""}${r.crowd ? `<span class="crowd">${esc(crowdLine(r))}</span>` : ""}${alts.length ? `<span class="alt"><b>Or try</b> ${alts.map(a => altRole(a) + esc(a.name) + (a.crowdTop ? " ★" : "") + gMini(a) + (a.cuisine && a.cuisine !== "Restaurant" ? ` <small>(${esc(a.cuisine)})</small>` : "")).join(" · ")}</span>` : ""}${r.generic ? "" : eatStars(r.name, city)}</div></details>`;
+  const why = String(r.why || "").replace(/\s*\(Wikivoyage\)\s*$/, "");
+  // The other places to eat are in the Change lunch card (meal-change.js), one tap each, so they aren't listed here too.
+  if (r.generic || (!why && !r.crowd)) return r.generic ? "" : `<details class="more mealmore"><summary>Rate ${esc(r.name)}</summary><div class="mealbox">${eatStars(r.name, city)}</div></details>`;
+  return `<details class="more mealmore"><summary>${lbl === "Lunch" ? "Lunch" : lbl === "Dinner" ? "Dinner" : esc(lbl)}: why here</summary><div class="mealbox">${why ? `<span>${esc(why)}</span>` : ""}${r.crowd ? `<span class="crowd">${esc(crowdLine(r))}</span>` : ""}${eatStars(r.name, city)}</div></details>`;
 }
 const bookedLinks = lbl => `<div class="sub"><button class="link" data-act="bookopen" data-meal="${lbl}">Change</button> · <button class="link" data-act="bookremove" data-meal="${lbl}">Remove my reservation</button></div>`;
 
