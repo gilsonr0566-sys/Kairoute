@@ -50,6 +50,14 @@ const DAY_PAGES = ['plan', 'sites', 'guide'];
         // 4. one main action at most
         const main = [...document.querySelectorAll('[data-act="tourstart"]')].filter(vis);
         if (main.length > 1) out.push(`${main.length} Start the tour buttons on screen`);
+        // 4b. the page's main action looks and sits the same on every page: one orange .mainbtn, last in the head's
+        //     action slot (top right), and every button in that slot the same height (docs/design-rules.md, section 4)
+        const mains = [...view.querySelectorAll('.mainbtn')].filter(vis);
+        if (mains.length > 1) out.push(`${mains.length} main action buttons on screen (want 1)`);
+        for (const m of mains) if (!m.parentElement.classList.contains('headacts') || m.parentElement.lastElementChild !== m) out.push(`main action "${m.innerText.trim().slice(0, 20)}" is not in the top-right of the page head`);
+        const acts = [...view.querySelectorAll('.headacts > .btn')].filter(vis), hs = new Set(acts.map(e => Math.round(e.getBoundingClientRect().height)));
+        if (hs.size > 1) out.push(`head buttons of different heights: ${acts.map(e => '"' + e.innerText.trim().slice(0, 16) + '" ' + Math.round(e.getBoundingClientRect().height) + 'px').join(', ')}`);
+        if (document.querySelector('.stickybar')) out.push('a floating action bar: the main action belongs in the page head');
         // 5. no title shown twice
         const titles = [...document.querySelectorAll('#view h2, #tripName')].filter(vis).map(e => (e.firstChild && e.firstChild.nodeType === 3 ? e.firstChild.textContent : e.innerText).trim()).filter(Boolean);
         const dup = titles.filter((t, i) => titles.indexOf(t) !== i);

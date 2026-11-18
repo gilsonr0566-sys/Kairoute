@@ -4880,8 +4880,14 @@ function dayHeading(d) {
 }
 // The one head every day page shares (Day plan, Change stops, Guide): the day's name on the left; on the right the
 // back-to-the-ship countdown on ship, train and flight days, then the page's actions (one main action at most).
-const tourBtnHTML = () => `<button class="btn bigbtn tourbtn" data-act="tourstart"><span class="tb-long">▶ Start the tour</span><span class="tb-short">▶ Start tour</span></button>`;
-function pageHead(d, plan, acts) { const cd = plan && !plan.error ? countdownCard(d, plan) : ""; return `<div class="dayhead pagehead">${dayHeading(d)}${cd || dayPin(d)}${acts ? `<div class="headacts">${acts}</div>` : ""}</div>`; }
+// Every page's main action is built here, so it looks the same everywhere: orange, in the page head's top-right slot,
+// one per page; phones show the short label (docs/design-rules.md, section 4).
+const mainBtnHTML = (act, long, short, cls = "") => `<button class="btn bigbtn mainbtn${cls ? " " + cls : ""}" data-act="${act}"><span class="tb-long">${long}</span><span class="tb-short">${short || long}</span></button>`;
+const tourBtnHTML = () => mainBtnHTML("tourstart", "▶ Start the tour", "▶ Start tour", "tourbtn");
+// The head's action slot, the one way every page (day pages, Journal, Tour, sea days) shows its buttons: the plain
+// tools first, the page's one main action last, so it is always top right. Empty slots leave nothing behind.
+const headActs = (tools, main) => { const h = [].concat(tools || []).filter(Boolean).join("") + (main || ""); return h ? `<div class="headacts">${h}</div>` : ""; };
+function pageHead(d, plan, tools, main) { const cd = plan && !plan.error ? countdownCard(d, plan) : ""; return `<div class="dayhead pagehead">${dayHeading(d)}${cd || dayPin(d)}${headActs(tools, main)}</div>`; }
 // The day and place stay on screen while the page scrolls (Richard, Nov 13: "lock the destination and date on the
 // top"). On ship, train and flight days they ride in the pinned countdown; on other days a slim bar of their own.
 const dayPinText = d => [fmtDow(d.date) + " " + fmtDate(d.date), d.type === "sea" ? "At sea" : mainPlace(d)].filter(Boolean).join(" · ");
@@ -5353,7 +5359,7 @@ function renderJournal() {
   // Same head as every page (docs/design-rules.md): trip facts, title, and the two things to make on the right.
   const canMake = trip.days.some(d => cityFor(d));
   return `<div class="dayhead pagehead"><div><div class="eyebrow">${esc(trip.name || tripName(trip))}</div><h2>Trip journal</h2></div>
-    ${canMake ? `<div class="headacts">${mem.busy || mem.url ? "" : `<button class="btn small" data-act="memmake">Make my memory video</button>`}${gxBook.busy ? "" : `<button class="btn ghost small" data-gx-book="1">Make my storybook</button>`}</div>` : ""}</div>
+    ${canMake ? headActs([gxBook.busy ? "" : `<button class="btn ghost small" data-gx-book="1">Make my storybook</button>`], mem.busy || mem.url ? "" : mainBtnHTML("memmake", "Make my memory video", "Memory video")) : ""}</div>
     ${entries.length ? "" : `<p class="lede small">A one-minute video and a PDF photo book of your trip, made on this device from your photos, notes and stars.</p>`}
     ${memCard()}
     ${gxBookCard()}${gxBadgeShelf()}
@@ -6014,12 +6020,13 @@ function renderSites(d) {
   const refs = [], near = { refs, anc, fs: fsMap, my, st }; sitesCtx = { d, plan, near }; void fsOf;
   const tl = plan && !plan.error ? timeLeft(plan, d) : null, availM = plan && !plan.error ? Math.max(1, plan.endBy - plan.start) : 0;
   const leftTxt = tl ? ` · <b>${tl.left >= 5 ? dur(tl.left) + " left today" : "today is full"}</b>` : "";
-  const pickbar = tl ? `<div class="pickbar" role="status" aria-live="polite"><div class="pbrow"><b>Day ${trip.days.indexOf(d) + 1} · ${esc(fmtDow(d.date))} ${esc(fmtDate(d.date))}</b><span class="pbleft">${tl.left >= 5 ? dur(tl.left) + " left to fill" : "Your day is full"}</span></div><div class="mbar"><i style="width:${Math.min(100, Math.max(0, Math.round((availM - tl.left) / availM * 100)))}%"></i></div></div>` : "";
+  const pickCount = `<b class="count">${d.selected.length} site${d.selected.length === 1 ? "" : "s"} picked${plan && !plan.error && (plan.bonus || []).length ? ` · ${plan.bonus.length} optional on your plan` : ""}</b>`;
+  const pickbar = !tl ? `<div class="pickbar" role="status" aria-live="polite"><div class="pbrow">${pickCount}</div></div>` : `<div class="pickbar" role="status" aria-live="polite"><div class="pbrow">${pickCount}<span class="pbleft">${tl.left >= 5 ? dur(tl.left) + " left to fill" : "Your day is full"}</span></div><div class="mbar"><i style="width:${Math.min(100, Math.max(0, Math.round((availM - tl.left) / availM * 100)))}%"></i></div></div>`;
   const n = d.selected.length;
   const avail = plan && !plan.error ? dur(plan.endBy - plan.start) : "";
   const nDays = trip.days.filter(o => cityFor(o) === city).length;
   setTimeout(() => { const h = document.querySelector("header.top"); document.documentElement.style.setProperty("--toph", (h && getComputedStyle(h).position === "sticky" ? h.offsetHeight : 0) + "px"); }); // the time-left bar pins under the header
-  return `${pageHead(d, plan, "")}<div class="sitesgrid"><div class="sitesside pane" data-pane="side">
+  return `${pageHead(d, plan, [], mainBtnHTML("toplan", "See my day plan", "See my plan"))}<div class="sitesgrid"><div class="sitesside pane" data-pane="side">
   <div class="filters seg" role="group" aria-label="Filter">
     ${[["all", "All"], ["must", "Must-sees"], ["touristy", "Famous"], ["local", "Local favorites"]].map(([k, l]) => `<button type="button" data-filter="${k}" aria-pressed="${f === k}">${l}</button>`).join("")}
   </div>
@@ -6042,7 +6049,7 @@ function renderSites(d) {
   ${laterBlock(city, d, plan, near, new Set(all.map(x => x.id)))}
   ${schedL.length ? `<div class="schedline" role="separator"><span>Already scheduled on other days (${schedL.length})</span></div>
   <p class="lede small">Tick one to move it to today; it comes off its other day.</p><div class="sitelist sched">${schedL.map(s => siteCard(s, d, plan, near)).join("")}</div>` : ""}
-  <div class="stickybar"><span class="count">${n} site${n === 1 ? "" : "s"} picked${plan && !plan.error && (plan.bonus || []).length ? ` · ${plan.bonus.length} optional on your plan` : ""}</span><button class="btn" data-act="toplan">See my day plan</button></div></div></div>`;
+  </div></div>`;
 }
 
 function mapSVG(plan) {
@@ -6654,7 +6661,7 @@ function legendHTML(plan) {
   const cdHTML = countdownCard(d, plan), walkTile = plan.walkKm >= 0.15; // under about 0.1 mi of walking says nothing
   return `
   <div class="plangrid"><div class="plantop">
-  <div class="dayhead">${dayHeading(d)}${cdHTML || dayPin(d)}<button class="btn bigbtn tourbtn" data-act="tourstart"><span class="tb-long">▶ Start the tour</span><span class="tb-short">▶ Start tour</span></button></div>
+  ${pageHead(d, plan, [], tourBtnHTML())}
   <div class="daysum n${2 + (walkTile ? 1 : 0) + (cdHTML ? 0 : 1)}" role="group" aria-label="Today at a glance">
     ${canLen && hoursLimits(d, plan) ? `<div class="hrscell">${hoursTileHTML(d, plan, dur(sightHours(d, plan) * 60) + " sightseeing")}</div>` : `<div><b>${fmt(plan.start)}–${fmt(plan.endBy)}</b><span>${d.type === "port" ? "ashore " + dur(plan.endBy - plan.start) : d.type === "embark" || d.type === "departure" ? dur(plan.endBy - plan.start) + " before you go" : "free " + dur(plan.endBy - plan.start)}</span></div>`}
     <div><b>${stopsN}${optN ? " + " + optN : ""}</b><span>${stopsN === 1 ? "pick" : "picks"}${optN ? " + optional" : ""}${plan.along.length && !optN ? ` · ${plan.along.length} on the way` : ""}</span></div>
@@ -6774,7 +6781,7 @@ function renderGuide(d) {
   const cards = cur ? stopCard(cur.s, cur.num, city, cur.t) + `<div class="stopnav">${navBtn(prv, "prev")}${navBtn(nxt, "next")}</div>` : "";
   const jumps = stops.map(x => `<button type="button" class="chip ${x === cur ? "on" : ""}" data-jump="${esc(x.s.id)}" aria-pressed="${x === cur}"><b>${x.num || (x.s.bonus ? "+" : "•")}</b> ${x.s.bonus ? "Optional: " : ""}${esc(x.s.name)}</button>`).join("");
   // Same head as the Day plan (docs/design-rules.md): day name, the ship countdown, one main action. The stop list is the picker.
-  return `${pageHead(d, plan, camBtnHTML() + tourBtnHTML())}
+  return `${pageHead(d, plan, [camBtnHTML()], tourBtnHTML())}
     <div class="guidegrid"><div class="guideside pane" data-pane="side">
     ${jumps ? `<nav class="jumps" aria-label="Jump to a stop">${jumps}</nav>` : ""}</div>
     <div class="guidemain pane" data-pane="stories">${cards ? `<div class="stoplist">${cards}</div>` : `<div class="card empty"><p>No stops planned for today.</p><button class="btn" data-goto="sites">Choose stops</button></div>`}</div></div>`;
@@ -6831,7 +6838,7 @@ function renderTour(d) {
   // train and flight days (the same one as on the Day plan), and the two small tools. Follow me sits just below.
   const head = `<div class="tourhead"><div class="tourwhere"><div class="eyebrow">Tour · ${esc(dayName(d))} · ${esc(fmtDate(d.date))}</div>
       <div class="tourbar"><i style="width:${pct}%"></i></div><div class="lede small">Step ${T.i + 1} of ${steps.length} · planned for ${fmt(st.time)}</div></div>
-    ${countdownCard(d, plan)}<div class="headacts">${camBtnHTML()}<button class="btn ghost small" data-act="tourexit">Exit tour</button></div></div>${followBar()}${groupBar()}`;
+    ${countdownCard(d, plan)}${headActs([camBtnHTML(), `<button class="btn ghost small" data-act="tourexit">Exit tour</button>`])}</div>${followBar()}${groupBar()}`;
   let body = "";
   if (T.phase === "walk" && st.type !== "start") {
     const nm = stepName(st);

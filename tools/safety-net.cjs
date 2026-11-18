@@ -97,7 +97,7 @@ const log = (suite, trip, ok, what) => { results.push({ suite, trip, ok, what })
         return { checked: [...document.querySelectorAll('input[data-site]:checked')].map(x => x.dataset.site),
           optional: cards.filter(c => c.querySelector('.tag.bonus')).map(c => c.querySelector('input').dataset.site),
           both: cards.filter(c => c.querySelector('.tag.must') && c.querySelector('.tag.local')).map(c => c.querySelector('.name').innerText),
-          count: ((document.querySelector('.stickybar .count') || {}).innerText || ''),
+          count: ((document.querySelector('.pickbar .count') || {}).innerText || ''),
           head: m ? m.querySelector('.mrow b').innerText : '', parts: m ? ((m.querySelector('.mparts:not(.mextra)') || {}).innerText || '') : '' };
       });
       const sel = new Set(t.selected);
