@@ -69,8 +69,10 @@ function engineBucket(withOld) {
       // The traveler's picks only: a list the app seeded on its own (untouched since: seedSig still matches) is the app's
       // suggestion, not the traveler's wish, so the engine picks for itself and keeps only what they chose (mine).
       // A day not seeded yet sends the sights the traveler named when making the trip (their wishes), as seeding would.
-      selected: Array.isArray(d.selected) ? (d.seedSig && typeof seedSigOf === "function" && d.seedSig === seedSigOf(d) ? (d.mine || []).slice() : d.selected.slice()) : wishIds(d, city),
+      selected: Array.isArray(d.selected) ? (!d.ownList && d.seedSig && typeof seedSigOf === "function" && d.seedSig === seedSigOf(d) ? (d.mine || []).slice() : d.selected.slice()) : wishIds(d, city),
       mine: Array.isArray(d.selected) ? (d.mine || []).slice() : [...new Set((d.mine || []).concat(wishIds(d, city)))], order: Array.isArray(d.order) ? d.order.slice() : null,
+      // The traveler's own list: they ticked or unticked something here (the app's seeding no longer stands).
+      own: !!d.ownList || clearedByYou(d) || (Array.isArray(d.selected) && !!d.seedSig && typeof seedSigOf === "function" && d.seedSig !== seedSigOf(d)),
       cleared: clearedByYou(d), rain: !!d.rain, alongWay: d.alongWay !== false, fillTime: d.fillTime !== false, skipBonus: (d.skipBonus || []).slice(),
       booked: bookedMeals(d, city || {}).map(m => ({ label: m.label, from: m.from, len: m.len, place: pt(m.node) })),
       locked: d.ready && d.ready.lock && Array.isArray(d.ready.lock.seq) ? { t: d.ready.lock.t, seq: d.ready.lock.seq.filter(x => !x.meal).map(x => x.id).filter(Boolean) } : null,

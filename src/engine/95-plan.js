@@ -25,7 +25,8 @@
   const dur = m => m >= 60 ? Math.floor(m / 60) + " h" + (m % 60 ? " " + (m % 60) + " min" : "") : m + " min";
   const point = p => p && isFinite(p.lat) ? { lat: p.lat, lng: p.lng } : {};
   // The plan in the short form the scorer and the screens read (the same shape as the old engine's, for side by side).
-  function shortForm(i, win, fit, autoIds, dinner) {
+  // own: a day of the traveler's own list, where everything the app adds is optional.
+  function shortForm(i, win, fit, autoIds, dinner, own) {
     const byId = new Map(fit.seq.map(s => [String(s.id), s])), items = [];
     // Where each item is: a stop or meal of the day, the day's first or last point, or a fixed step at either end.
     const fixedAt = id => win.head.concat(win.tail).find(p => p.fixed && p.id === id);
@@ -36,7 +37,7 @@
       const prev = items[items.length - 1], here = point(whereIs(x));
       if (prev && prev.t === "ride" && items.length >= 2) { const a = items[items.length - 2]; if (isFinite(a.lat) && isFinite(here.lat)) Object.assign(prev, { from: { lat: a.lat, lng: a.lng }, to: here }); }
       const src = x.id != null ? byId.get(String(x.id)) : null;
-      const it = { t: x.t, id: x.t === "meal" ? null : x.id, name: x.name, at: x.at, min: x.min, bonus: x.t === "stop" && autoIds.has(String(x.id)) && !(src && E.wantedStop(src)), along: false, meal: x.meal || null, late: x.late || 0 };
+      const it = { t: x.t, id: x.t === "meal" ? null : x.id, name: x.name, at: x.at, min: x.min, bonus: x.t === "stop" && autoIds.has(String(x.id)) && (own || !(src && E.wantedStop(src))), along: false, meal: x.meal || null, late: x.late || 0 };
       if (x.wait) it.wait = x.wait; if (x.chosen) it.chosen = true; if (x.pinned) it.pinned = true;
       Object.assign(it, point(whereIs(x)));
       items.push(it);
@@ -187,16 +188,20 @@
           if (!E.allowed(s, prefs, siteDay(s.id), win)) { explain.push(s.name + " is closed or can't be visited this day."); continue; }
           wishes.push(Object.assign({}, s, { wish: true }));
         }
-        const tripIds = !wishes.length && dayTrip.get(i);
+        // A day the traveler has made their own (they ticked or unticked its sights) is planned from their list only:
+        // the app never picks in their place there, and a list they emptied is a free day. Spare time may still take an
+        // optional stop (marked optional, never in the way of a pick), unless they cleared the day.
+        if (d.own) { picks = wishes; if (!wishes.length) explain.push(d.cleared ? "You cleared this day: nothing is planned. Pick any sight to plan it." : "Pick the sights you want and they're planned here."); }
+        const tripIds = !d.own && !wishes.length && dayTrip.get(i);
         if (tripIds) {
           picks = tripIds.map(id => pool.find(s => String(s.id) === id)).filter(Boolean);
           const place = picks.find(s => !s.town) || picks[0];
           if (picks.length) explain.push("A day trip to " + (place.townName || place.name) + ": the main sights of " + String(city.name || "this place").split(",")[0] + " fit on your other days.");
         }
-        if (!picks || !picks.length) picks = wishes.length ? wishes : autoPicks(pool, win, ctx);
+        if (!d.own && (!picks || !picks.length)) picks = wishes.length ? wishes : autoPicks(pool, win, ctx);
         autoIds = new Set(wishes.length ? [] : picks.map(s => String(s.id)));
       }
-      const fit = E.fitDay(d, win, picks, pool, ctx);
+      const fit = E.fitDay(d.cleared ? Object.assign({}, d, { fillTime: false }) : d, win, picks, pool, ctx);
       fit.kept.forEach(s => { if (s.filled) autoIds.add(String(s.id)); });
       // A wanted stop the day had to give up (a pick, a finished guide, a must-see) comes with the ways to fit it back in.
       const ways = {};
@@ -221,7 +226,7 @@
       const unknownHours = fit.kept.filter(k => !k.far && !E.has(k, "open-air") && (k.wish || BUILDING.test(k.name + " " + (k.category || ""))) && !hoursKnown(k.id));
       if (unknownHours.length && (city.sites || []).some(s => hoursKnown(s.id)))
         explain.push("Opening hours for " + E.listWords(unknownHours.slice(0, 4).map(k => String(k.name).split(",")[0]).concat(unknownHours.length > 4 ? ["others"] : []), "and") + " aren't on the map yet: check before you go.");
-      const plan = shortForm(i, win, fit, autoIds, dinner);
+      const plan = shortForm(i, win, fit, autoIds, dinner, !!d.own);
       // A boat on its own timetable: the plan names the latest boat back that keeps the day as planned.
       plan.items.forEach((x, k) => { if (x.t !== "ride" || x.mode !== "boat" || !plan.items[k - 1] || plan.items[k - 1].t !== "stop") return;
         const from = plan.items[k - 1], next = plan.items[k + 1]; if (!next || !isFinite(next.at)) return;
@@ -248,7 +253,7 @@
     // Second pass: a day with spare time takes sights no day used (an area's leftovers, a later day's surplus).
     for (const i of order) {
       const was = done[i], d = days[i];
-      if (!was.kept || was.win.straight || d.fillTime === false) continue;
+      if (!was.kept || was.win.straight || d.fillTime === false || d.cleared) continue;
       was.sightIds.forEach(id => ledger.release(id, i)); was.eatIds.forEach(k => ledger.releaseEat(k, i));
       const keepsAll = r => r.kept && was.kept.every(s => r.kept.some(k => String(k.id) === String(s.id)));
       const undo = r => { if (r.sightIds) { r.sightIds.forEach(id => ledger.release(id, i)); r.eatIds.forEach(k => ledger.releaseEat(k, i)); } };
@@ -309,7 +314,7 @@
       const said = (p.explain || []).join(" "), left = (city.sites || []).filter(s => E.ownStop(s) && !plannedIds.has(String(s.id)) && !said.includes(s.name));
       if (!left.length) return; p.leftOut = left.map(s => s.id);
       const names = left.slice(0, 4).map(s => s.name).concat(left.length > 4 ? [(left.length - 4) + " more"] : []);
-      p.explain = (p.explain || []).concat(["Also worth seeing here, but not in today's time: " + E.listWords(names, "and") + "."]); });
+      p.explain = (p.explain || []).concat([(d.own ? "Also worth seeing here, not on your list: " : "Also worth seeing here, but not in today's time: ") + E.listWords(names, "and") + "."]); });
     // Never a silent gap of time either: an hour and a half or more left at the end of a day are named as free time,
     // with the nearest trip out nobody took and why it wasn't added (it doesn't fit, or not with a safe margin).
     const hm = m => { const h = Math.floor(m / 60), r = Math.round(m % 60); return (h ? h + " h" : "") + (h && r ? " " : "") + (r ? r + " min" : ""); };
@@ -323,10 +328,11 @@
         .map(s => ({ s, need: 2 * away(s) + (s.minutes || 60) })).sort((a, b) => a.need - b.need), far = fars[0];
       if (!stops.length && !far) { p.explain = (p.explain || []).concat([`Nothing left to plan here: every sight in the guide for ${city.name || "this place"} is on your other day${(byCity.get(d.city) || []).length > 2 ? "s" : ""}. The day is yours until ${E.clock(p.endBy)}.`]); return; }
       let why = "";
-      if (far) why = far.need > free ? ` ${far.s.name} needs about ${hm(far.need)} there and back with the visit, more than the time left.`
+      // On a day the traveler made their own, the free time is theirs: no reasons why the app didn't add a trip out.
+      if (far && !d.own) why = far.need > free ? ` ${far.s.name} needs about ${hm(far.need)} there and back with the visit, more than the time left.`
         : win.hard ? ` ${far.s.name} needs about ${hm(far.need)} there and back with the visit: not added, to keep a safe margin before the ship.`
         : ` ${far.s.name} (about ${hm(far.need)} there and back with the visit) is a trip of its own: pick it for a day to plan it.`;
-      if (fars[1]) why += ` Also a trip of its own: ${fars[1].s.name}, about ${hm(fars[1].need)}.`;
+      if (fars[1] && !d.own) why += ` Also a trip of its own: ${fars[1].s.name}, about ${hm(fars[1].need)}.`;
       p.explain = (p.explain || []).concat([`Free time: about ${hm(free)} left after the last stop, before ${win.hard ? "the time to be back" : "the day ends"} (${E.clock(p.endBy)}). Linger where you like.${why}`]); });
     // Each thing said once.
     out.forEach(p => { if (p && p.explain) p.explain = p.explain.filter((t, k, a) => a.indexOf(t) === k); });

@@ -200,6 +200,17 @@ if (fs.existsSync(dir)) { let rides = 0, placed = 0;
 
 // ---- Fitting a wanted stop in: lunch on the go and shorter visits come before giving up a sight, and every way offered
 // is checked (the time to be back never moves).
+// ---- A day the traveler made their own is planned from their list only (Richard, Nov 18: Naples unticked to add
+// Pompeii, and the app filled the day with its own picks so nothing else "fit") ----
+{ const s0 = JSON.parse(fs.readFileSync(path.join(dir, 'sample-cruise.json'))), i = s0.days.findIndex(d => /napl/i.test(d.city));
+  const cleared = JSON.parse(JSON.stringify(s0)); Object.assign(cleared.days[i], { own: true, cleared: true, selected: [], mine: [] });
+  const pc = E.planTrip(cleared)[i];
+  ok(pc && pc.items && !pc.items.some(x => x.t === 'stop'), 'a day the traveler cleared stays free: no sights planned');
+  const one = JSON.parse(JSON.stringify(s0)); Object.assign(one.days[i], { own: true, selected: ['pompeii-far'], mine: ['pompeii-far'] });
+  const po = E.planTrip(one)[i], st = po && po.items ? po.items.filter(x => x.t === 'stop') : [];
+  ok(st.some(x => x.id === 'pompeii-far') && st.every(x => x.id === 'pompeii-far' || x.bonus), 'a day of the traveler\'s own: their pick is planned and anything the app adds is optional');
+  const own0 = JSON.parse(JSON.stringify(s0)); Object.assign(own0.days[i], { own: true, selected: [], mine: [] });
+  const p0 = E.planTrip(own0)[i]; ok(p0 && p0.items && p0.items.filter(x => x.t === 'stop').every(x => x.bonus), 'an emptied list of their own: anything planned is optional, never in the way of a pick'); }
 { const f = path.join(dir, 'sample-cruise.json');
   if (fs.existsSync(f)) {
     const s0 = JSON.parse(fs.readFileSync(f)), di = 5, base = E.planTrip(s0)[di];
