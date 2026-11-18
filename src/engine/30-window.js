@@ -64,6 +64,12 @@
     } else return E.fail("Unknown day type: " + d.type);
     if (!isFinite(w.start) || !isFinite(w.endBy)) return E.fail("Add the times for this day.");
     w.sightTo = w.endBy - chain(w.tail, tr); // when sightseeing must stop, before the fixed steps at the end
+    // A ship, train or plane the day's own steps can't reach from the planned start (bags, the ride): the day starts
+    // that much earlier, and says so. Never a plan that leaves after its own leave-by time.
+    if (d.type === "embark" || d.type === "departure") {
+      const bare = E.walkDay([], w, tr.estimate, null).end;
+      if (bare > w.endBy) { const early = bare - w.endBy; w.plannedStart = w.start; w.start -= early; if (isFinite(w.sightFrom)) w.sightFrom -= early; w.leaveEarly = early; w.notes.push("leaveEarly"); }
+    }
     return w;
   };
 })(KEngine);

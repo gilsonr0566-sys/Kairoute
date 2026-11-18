@@ -24,6 +24,10 @@ const day = o => Object.assign({ type: 'land', mode: 'flight', startTime: '09:00
 { const far = { lat: 38.2, lng: 23.0, name: 'Far' }, back = Object.assign({}, port, { backToShip: true });
   const a = tr.estimate(far, port), b = tr.estimate(far, back); ok(b.min > a.min && b.slack >= 15, 'long ride back to the ship gets at least 15 extra minutes'); }
 
+{ const w = E.dayWindow(day({ type: 'embark', allAboard: 1020, boardAt: 570, date: '2027-07-01' }), tr), r = E.walkDay([], w, tr.estimate, null);
+  ok(w.leaveEarly > 0 && r.end <= w.endBy && w.start < 540, `boarding sooner than the bags and the ride allow: the day starts earlier (start ${w.start}, end ${r.end}, board ${w.endBy})`); }
+{ const w = E.dayWindow(day({ type: 'embark', allAboard: 1020, boardAt: 780 }), tr); ok(!w.leaveEarly && w.start === 540, 'boarding with time to spare: the planned start stays'); }
+
 // ---- Travel estimate is stable and order-free ----
 { const a = { lat: 37.97, lng: 23.72 }, b = { lat: 37.975, lng: 23.73 };
   ok(tr.min(a, b) === tr.min(a, b) && tr.estimate(a, b).mode === 'walk', 'short hop is a walk, same answer every time');
@@ -127,7 +131,7 @@ if (fs.existsSync(dir)) for (const f of fs.readdirSync(dir).filter(f => f.endsWi
   const s = JSON.parse(fs.readFileSync(path.join(dir, f))), t2 = E.makeTravel(s.prefs, s.legModes); let n = 0;
   s.days.forEach((d, i) => { const o = s.old[i], w = E.dayWindow(d, t2); if (!o || o.error) { ok(!!w.error || !d.city, `${f} day ${i}: old engine had no plan (${o && o.error}) but the new window has none of its reasons`); return; }
     n++; ok(!w.error, `${f} day ${i}: new window error ${w.error}`); if (w.error) return;
-    ok(w.start === o.start && w.endBy === o.endBy, `${f} day ${i} ${d.type}: window ${w.start}-${w.endBy}, old ${o.start}-${o.endBy}`);
+    ok((w.plannedStart != null ? w.plannedStart : w.start) === o.start && w.endBy === o.endBy, `${f} day ${i} ${d.type}: window ${w.start}-${w.endBy}, old ${o.start}-${o.endBy}`);
     ok(!!w.straight === !!o.straight && w.head.length === o.head.length && w.tail.length === o.tail.length, `${f} day ${i}: fixed steps differ`); });
   console.log(`ok   ${s.name}: ${n} day windows compared with the old engine`);
 }

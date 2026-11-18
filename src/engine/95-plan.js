@@ -113,6 +113,7 @@
       }
       else {
         (bucket.placeNotes || []).filter(n => n.day === d.i || n.day === i).forEach(n => explain.push(n.note));
+        if (win.leaveEarly) explain.push("Leave by " + E.clock(win.start) + ", " + win.leaveEarly + " min before your planned start of " + E.clock(win.plannedStart) + ", to be " + (d.type === "embark" ? "at the cruise terminal" : "there") + " by " + E.clock(win.endBy) + ".");
         for (const id of d.selected || []) {
           const s = ranked.find(x => String(x.id) === String(id)); if (!s) continue;
           const on = ledger.sightDay(s.id);
