@@ -6744,7 +6744,7 @@ ${quietOn(s) ? `<p class="banner quiet" role="note">🤫 <span><b>Quiet place.</
       ${s.hours || s.tickets || s.crowds || s.priceNote || s.web ? `<div class="before"><span class="eyebrow">Before you go</span>
         ${txt(s.hours) && txt(hoursText(s.hours)) ? `<div><b>Hours</b><span>${esc(hoursText(s.hours))}${txt(s.closed) ? " · " + esc(s.closed) : ""}</span></div>` : ""}
         ${s.priceNote ? `<div><b>Price</b><span>${esc(s.priceNote)}</span></div>` : ""}
-        ${s.tickets ? `<div><b>Tickets</b><span>${esc(s.tickets)}</span></div>` : ""}
+        ${s.tickets ? `<div><b>Tickets</b><span>${esc(s.tickets)}${bookAhead(s) ? (L => L ? ` <a href="${esc(L.url)}" target="_blank" rel="noopener">${esc(L.label)} ↗</a>` : "")(tixFor(s, day())) : ""}</span></div>` : ""}
         ${s.crowds ? `<div><b>Crowds</b><span>${esc(s.crowds)}</span></div>` : ""}
         ${s.access && P().access !== "none" ? `<div><b>Access</b><span>${esc(s.access)}</span></div>` : ""}
         ${s.web ? `<div><b>Website</b><span><a href="${esc(s.web)}" target="_blank" rel="noopener">Official site ↗</a></span></div>` : ""}
@@ -7221,6 +7221,7 @@ document.addEventListener("click", e => {
   if (act === "closedmove") { moveClosed(t.dataset.id, +t.dataset.to); return; }
   if (act === "closedswap") { swapClosed(t.dataset.id, t.dataset.alt); return; }
   if (liveAct(act, t)) return;
+  if (tixAct(act, t)) return;
   if (shipClick(t)) return;
   if (act === "cdpreview") {
     if (cdPreview != null) { cdPreview = null; if (day().live && day().live.preview) day().live = null; render(); return; }

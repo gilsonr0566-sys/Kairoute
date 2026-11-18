@@ -57,7 +57,7 @@ function printDay(d, i) {
       const tag = s.along ? "On the way: " : s.bonus ? "Optional: " : "";
       const mark = s.along || s.bonus ? "+" : String(++k);
       const sub = [s.along ? "" : dur(s.minutes), s.mustSee ? "Must-see" : "", it.wait && it.opens != null ? `opens ${isFinite(it.opens) ? fmt(it.opens) : esc(it.opens)}` : ""].filter(Boolean).join(" · ");
-      return row(s.bonus || s.along ? "pstop popt" : "pstop", mark, `${it.area ? `<div class="psub"><b>${esc(areaHead(it))}</b></div>` : ""}<b>${esc(tag + (s.areaRest ? "The rest of " + s.name : s.name))}</b>${sub ? `<div class="psub">${sub}</div>` : ""}${bk ? `<div class="pbook">Book ahead: ${esc(bk)}</div>` : ""}`);
+      return row(s.bonus || s.along ? "pstop popt" : "pstop", mark, `${it.area ? `<div class="psub"><b>${esc(areaHead(it))}</b></div>` : ""}<b>${esc(tag + (s.areaRest ? "The rest of " + s.name : s.name))}</b>${sub ? `<div class="psub">${sub}</div>` : ""}${bk ? `<div class="pbook">Book ahead: ${esc(bk)}${(u => u ? ` Official tickets: ${esc(u)}` : "")(tixPrint(s, d))}${tixDone(d, s) ? " (booked)" : ""}</div>` : ""}`);
     }
     return "";
   }).join("");
