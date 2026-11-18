@@ -18,7 +18,7 @@ function selKey(d) { return (Array.isArray(d.selected) ? d.selected.slice().sort
 // with a note, not go quietly off. Every place the app edits d.selected on its own calls this with the key from before.
 // The same goes for the "these are still the app's own picks" mark (seedSig): a pick the app took off doesn't make the
 // list the traveler's, so a famous day trip found later can still lead the day (Pompeii on Naples, Nov 14).
-function readyKeep(d, was) { if (!d) return; if (d.ready && d.ready.sel != null && d.ready.sel === was) d.ready.sel = selKey(d); if (d.seedSig && d.seedSig === was) d.seedSig = selKey(d); }
+function readyKeep(d, was) { if (!d) return; if (d.ready && d.ready.sel != null && d.ready.sel === was) d.ready.sel = selKey(d); if (typeof d.seedSig === "string" && d.seedSig === was) d.seedSig = selKey(d); }
 function readyState(d) {
   if (!d || !d.ready) return "";
   if (d.ready.lock) try { aliasRepair(d); } catch (e) {} // a day the old fold bug left with a stale id (taken-off.js)

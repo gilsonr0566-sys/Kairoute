@@ -158,6 +158,18 @@ async function tapTimes(p) { const out = []; const n = await p.evaluate(() => wi
   const after = await p.evaluate(() => JSON.stringify(window.__kairouteEngine2().map(d => (d.items || []).filter(x => x.t === 'stop').map(x => x.id))));
   check('After a reload every day is planned the same', before === after, 'plans changed on reload');
 
+  // 3b. Picker and plan agree on every day (Nov 18, Madrid: a day the app seeded empty was filled by the engine while its
+  // picker showed nothing ticked, so the traveler could neither see nor untick what the plan had). Every stop the plan
+  // has for its own sake (not optional fill) is ticked in the day's list, or the list says the guide added it.
+  { const days = await p.evaluate(() => window.__kairouteDays()), bad = [];
+    for (let i = 0; i < days.length; i++) {
+      await p.evaluate(i => { window.__kairouteGo('day', i); window.__kairouteGo('sites'); }, i); await p.waitForTimeout(250);
+      const r = await p.evaluate(i => { const pl = window.__kairouteEngine2()[i] || {}, box = new Map([...document.querySelectorAll('input[data-site]')].map(x => [x.dataset.site, x.checked]));
+        const said = ((document.querySelector('.pickbar') || {}).innerText || '');
+        return { off: (pl.items || []).filter(x => x.t === 'stop' && !x.bonus && x.id != null && box.get(String(x.id)) === false).map(x => x.name), added: /added by your guide/.test(said) }; }, i);
+      if (r.off.length && !r.added) bad.push(`day ${i + 1} (${days[i].dest}): planned but not ticked: ${r.off.join(', ')}`); }
+    check('Every stop on a day plan is ticked in that day\'s list (or said to be added by the guide)', !bad.length, bad.slice(0, 4).join('; ')); }
+
   // 4. Speed: tapping between days, against the demo app on the same trip and the same slowed CPU.
   const b2t = await tapTimes(p);
   let demoMed = null; if (DEMO) { const s2 = await serve(DEMO); const d = await open(browser, s2.url); demoMed = median(await tapTimes(d.p)); await d.ctx.close(); s2.close(); }

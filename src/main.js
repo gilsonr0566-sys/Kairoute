@@ -1077,6 +1077,10 @@ function suggestTour(d0) {
 // emptied it, so a boarding day whose picks came off showed a blank plan ("The embark is blank again").
 const clearedByYou = d => !!d && Array.isArray(d.selected) && !d.selected.length && !!d.cleared;
 const seedSigOf = d => (Array.isArray(d.selected) ? d.selected.slice().sort() : []).join("|");
+// Still the app's own picks: the list the app seeded, untouched since. An empty seeded list ("" as its mark) counts too:
+// a day the app left empty (everything planned on other days) is still the app's to fill, never the traveler's choice
+// (Nov 18: a Madrid day seeded empty was planned by the engine while its picker showed nothing ticked).
+const appSeeded = d => !!d && Array.isArray(d.selected) && typeof d.seedSig === "string" && d.seedSig === seedSigOf(d);
 function seedPicks(d, city) {
   const i = trip.days.indexOf(d); let made = false;
   // A day that starts with no picks (everything is planned on other days) is not a day cleared on purpose: the
@@ -2901,7 +2905,7 @@ function leadLate(city) {
   if (trip.days.some(o => cityFor(o) === city && (o.ready || o.ownList || (o.mine || []).length))) return;
   for (const o of trip.days) {
     if (!Array.isArray(o.selected) || !o.selected.length || cityFor(o) !== city || (o.type !== "port" && o.type !== "land")) continue;
-    if (o.ready || o.ownList || (o.mine || []).length || (o.wants || []).length || noShore(o) || !o.seedSig || o.seedSig !== seedSigOf(o)) continue;
+    if (o.ready || o.ownList || (o.mine || []).length || (o.wants || []).length || noShore(o) || !appSeeded(o)) continue;
     let ds = null; try { ds = defaultSelection(city, trip.style, o); } catch (e) { continue; }
     if (!ds || !ds.lead || o.selected.includes(ds.lead)) continue;
     // A day that already has a day trip keeps it (Pompeii stays when Vesuvius is written in later).
