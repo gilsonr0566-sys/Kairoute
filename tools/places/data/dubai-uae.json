@@ -106,8 +106,290 @@
  ],
  "missing": [],
  "centre": {
-  "lat": 25.242512857142856,
-  "lng": 55.28926714285715
+  "lat": 25.2425,
+  "lng": 55.2893
  },
- "wikivoyage": "Dubai"
+ "wikivoyage": "Dubai",
+ "guideSights": [
+  {
+   "name": "Al Ahmadiya School and Heritage House",
+   "lat": 25.2684326,
+   "lng": 55.2949194,
+   "wikidata": "",
+   "note": "Built in 1912, Al Ahmadiya School was Dubai's first school and has now been nicely restored. It would be a stretch to call the exhibits of old reed pens and diplomas fascinating, but they've tried pretty hard, and if nothing else, the air-c"
+  },
+  {
+   "name": "Deira Clocktower",
+   "lat": 25.2586592,
+   "lng": 55.3264429,
+   "wikidata": "Q4346630",
+   "note": "A landmark of Deira and important as a monument built before the independence of UAE.",
+   "editions": 9,
+   "unesco": false
+  },
+  {
+   "name": "Dhow Wharfage",
+   "lat": 25.2566,
+   "lng": 55.3182,
+   "wikidata": "",
+   "note": "The dhows ply the Arabian Sea and the Indian Ocean, transporting goods between south and south-west Asia and east Africa."
+  },
+  {
+   "name": "Mamzar Park",
+   "lat": 25.32,
+   "lng": 55.35,
+   "wikidata": "",
+   "note": "You can swim at Al Mamzar Beach or stroll in the park. Though less popular than other Dubai parks, it has its share of Dubai's greenery. Monday & Wednesday for women only."
+  },
+  {
+   "name": "Dubai Municipality Museum",
+   "lat": 25.2679,
+   "lng": 55.2978,
+   "wikidata": "",
+   "note": ""
+  },
+  {
+   "name": "Women's Museum",
+   "lat": 25.2718,
+   "lng": 55.2987,
+   "wikidata": "",
+   "note": "Highlight the contribution of women to UAE's economy, culture and politic for the independence in the 1960s and since. Life of great women and daily life of Emirati people. An exhibit is also dedicated to the famous Emirati female poet Oush"
+  },
+  {
+   "name": "Gold Price Checking - Dubai Souq",
+   "lat": 25.2673,
+   "lng": 55.3043,
+   "wikidata": "",
+   "note": "Before purchasing gold in Dubai’s famous Gold Souk, it's always best to check the current live gold prices. Gold prices fluctuate daily due to global market trends. Visit [GoldRateUAE](https://goldrateuae.ae/) to get the latest price update"
+  },
+  {
+   "name": "Al Fahidi Historical Neighbourhood",
+   "lat": 25.264,
+   "lng": 55.3,
+   "wikidata": "Q2094764",
+   "note": "One of the last remaining pockets of Old Dubai, home to many reconstructed buildings in the traditional style. While information on the structures is slim here (see the museum in preference), the atmosphere is very evocative and there are p",
+   "editions": 12,
+   "unesco": false
+  },
+  {
+   "name": "Creek Park",
+   "lat": 25.2408,
+   "lng": 55.3259,
+   "wikidata": "Q21639483",
+   "note": "A great place to hang out in the evening when the park is visited by people of different nationalities, all looking for calm place to enjoy the time. It has all the facilities of a modern park and is one of the best parks in Dubai. The cabl",
+   "editions": 1,
+   "unesco": false
+  },
+  {
+   "name": "Dubai Dolphinarium",
+   "lat": 25.2346535,
+   "lng": 55.3267637,
+   "wikidata": "Q2116901",
+   "note": "The only indoor dolphinarium in the Middle East offers live shows of dolphins and seals. Swim with Dolphins is possible.",
+   "editions": 5,
+   "unesco": false,
+   "web": "http://www.dubaidolphinarium.ae"
+  },
+  {
+   "name": "Grand Mosque",
+   "lat": 25.26439,
+   "lng": 55.29694,
+   "wikidata": "Q5594813",
+   "note": "Its large minaret is the imposing feature of this large mosque. It is popular for being quite close to a Hindu temple and one can see followers of both Islam and Hinduism gathering at the same place for prayers.",
+   "editions": 16,
+   "unesco": false
+  },
+  {
+   "name": "Heritage Village",
+   "lat": 25.268,
+   "lng": 55.29,
+   "wikidata": "",
+   "note": "Home to the open museums of the Heritage and Diving Villages, and the houses of the late Sheikhs Saeed Al-Maktoum and Juma Al-Maktoum."
+  },
+  {
+   "name": "Iranian mosque",
+   "lat": 25.264,
+   "lng": 55.2946,
+   "wikidata": "Q20987838",
+   "note": "A very colourful and attractive tiled mosque; quite a contrast to the other much more plainly decorated mosques. Can be viewed from a carparking area off the north (creek) side of the street.",
+   "editions": 9,
+   "unesco": false
+  },
+  {
+   "name": "Sheikh Obaid bin Thani House",
+   "lat": 25.2686,
+   "lng": 55.29076,
+   "wikidata": "",
+   "note": "a historic building home to royal family members built in 1916 and now converted into a museum. It provides good glimpse to old infrastructure of Dubai."
+  },
+  {
+   "name": "Saeed Al Maktoum House",
+   "lat": 25.26818,
+   "lng": 55.29036,
+   "wikidata": "",
+   "note": "Another very historic building built in 1894 now converted into a museum and contains artefacts and images of the old town of Dubai. It was the residence of the Saeed bin Maktoum bin Hasher Al Maktoum, the former ruler of Dubai."
+  },
+  {
+   "name": "Crossroad of Civilization Museum",
+   "lat": 25.2675,
+   "lng": 55.2889,
+   "wikidata": "",
+   "note": "Museum includes a lot of artefacts and old books, including a Gutenberg Bible and a curtain of the door of Kaaba from 1543 AD."
+  },
+  {
+   "name": "Old Weapons Museum",
+   "lat": 25.2672,
+   "lng": 55.2893,
+   "wikidata": "",
+   "note": "Large collection of swords, daggers, riffles, from several centuries."
+  },
+  {
+   "name": "Zabeel Park",
+   "lat": 25.2355,
+   "lng": 55.2977,
+   "wikidata": "Q23583803",
+   "note": "The best and most popular park of town, it gives a remarkable glimpse of the desert and hot Dubai.",
+   "editions": 7,
+   "unesco": false
+  },
+  {
+   "name": "Dubai Frame",
+   "lat": 25.23553,
+   "lng": 55.30032,
+   "wikidata": "Q20386392",
+   "note": "Two towers of 150 m height connected by a 100-m² bridge, the Dubai Frame has a museum and gallery where you can see the growth of Dubai from a simple fishing village to the ultra-modern city it is today with the use of photos and advanced t",
+   "editions": 22,
+   "unesco": false,
+   "web": "https://www.thedubaiframe.com/"
+  },
+  {
+   "name": "Dinausaur Park & Glow Garden Park",
+   "lat": 25.2286,
+   "lng": 55.297,
+   "wikidata": "",
+   "note": ""
+  },
+  {
+   "name": "Burj Khalifa",
+   "lat": 25.197222,
+   "lng": 55.274167,
+   "wikidata": "Q12495",
+   "note": "At 828 m and 160 floors this is the world's tallest structure by a long shot, over 300 m taller than the previous contender in Taipei. The observation deck at the 124th floor is the second highest in the world after the Shanghai World Finan",
+   "editions": 140,
+   "unesco": false,
+   "web": "http://www.burjkhalifa.ae"
+  },
+  {
+   "name": "Dubai Fountain",
+   "lat": 25.195186,
+   "lng": 55.275061,
+   "wikidata": "Q2384491",
+   "note": "At 270m (900 ft) in length and sporting a jet that shoots water up to 150m (500 ft), it is the world's largest dancing fountain and one with a very enticing display - a definite must-see. It's most easily accessed via the Dubai Mall. There ",
+   "editions": 26,
+   "unesco": false
+  },
+  {
+   "name": "Jumeirah Beach",
+   "lat": 25.1647,
+   "lng": 55.2072,
+   "wikidata": "Q6310943",
+   "note": "Dubai is known for its great beaches and this one is the best. It's the most popular and busiest beach of the country. Expect to see swimmers in bikinis and ladies in abaya cloaks; this beach truly encapsulates the Westernisation of Dubai c",
+   "editions": 13,
+   "unesco": false
+  },
+  {
+   "name": "Jumeirah Mosque",
+   "lat": 25.233972,
+   "lng": 55.265503,
+   "wikidata": "Q2298717",
+   "note": "The largest mosque in the city, and a wonderful example of Islamic architecture. It was built in the medieval Fatimid tradition with the interior decorated with elaborate Arabic calligraphy. It is one of few mosques in the city open for vis",
+   "editions": 16,
+   "unesco": false,
+   "web": "https://www.jumeirahmosque.ae/"
+  },
+  {
+   "name": "Majlis Ghorfat Umm Al Sheif",
+   "lat": 25.18668,
+   "lng": 55.23077,
+   "wikidata": "Q16979318",
+   "note": "A restored traditional Emirati-style two story building used as a summer residence by Sheikh Rashid bin Saeed Al Maktoum, one of the founders of UAE, and father of the present ruler of Dubai.",
+   "editions": 3,
+   "unesco": false
+  },
+  {
+   "name": "Al Safa Park",
+   "lat": 25.1839,
+   "lng": 55.2453,
+   "wikidata": "Q2522355",
+   "note": "A beautiful planned park and one of the oldest parks in Dubai. It is a favourite for sports enthusiasts, and many visitors enjoy playing tennis, volleyball, and soccer. Children love playing games in the video arcade, or riding the Ferris w",
+   "editions": 8,
+   "unesco": false
+  },
+  {
+   "name": "Etihad Museum",
+   "lat": 25.241433,
+   "lng": 55.269331,
+   "wikidata": "Q28736367",
+   "note": "Museum about the construction of the Union of the Emirates, after the withdrawal of British forces. Open in 2017, it features exhibits about the seven fathers, and the constitution. The Union House, where the treaty was signed, can be visit",
+   "editions": 5,
+   "unesco": false,
+   "web": "https://etihadmuseum.dubaiculture.gov.ae/en/pages/default.aspx"
+  },
+  {
+   "name": "Dubai Aquarium and Underwater Zoo",
+   "lat": 25.1977,
+   "lng": 55.2788,
+   "wikidata": "",
+   "note": "Giant aquarium, {{m"
+  },
+  {
+   "name": "Museum of the Future",
+   "lat": 25.21912,
+   "lng": 55.2821,
+   "wikidata": "Q22948398",
+   "note": "Branded as a \"technology museum\" many visitors consider it more of an expensive art exhibition. The building is outstanding though and looks particularly impressive in the dark.",
+   "editions": 22,
+   "unesco": false,
+   "web": "https://museumofthefuture.ae/"
+  },
+  {
+   "name": "Jumeirah Archaeological Site",
+   "lat": 25.19679,
+   "lng": 55.2418,
+   "wikidata": "Q16892960",
+   "note": "",
+   "editions": 5,
+   "unesco": false
+  },
+  {
+   "name": "Jumeirah Fishing Harbor",
+   "lat": 25.211,
+   "lng": 55.244,
+   "wikidata": "",
+   "note": "A quiet place with some nice restaurants."
+  },
+  {
+   "name": "Emirates Towers",
+   "lat": 25.2175748,
+   "lng": 55.2830568,
+   "wikidata": "Q1332229",
+   "note": "The Emirates Towers complex contains the Emirates Office Tower and Jumeirah Emirates Towers Hotel. The two towers, which rise to 355 m (1,165 ft) and 309 m (1,014 ft), respectively, stand as the 23rd and 47th tallest buildings in the world.",
+   "editions": 21,
+   "unesco": false
+  },
+  {
+   "name": "Sky Views Dubai",
+   "lat": 25.20148,
+   "lng": 55.27065,
+   "wikidata": "",
+   "note": "This hotel building offers beautiful views toward Burj Khalifa from its 53rd floor observation deck. There is a 25-m glass floor walk and a ride on a glass slide included. For another dirham a walk along the edge of this building floor can "
+  },
+  {
+   "name": "Imagine",
+   "lat": 25.221,
+   "lng": 55.35,
+   "wikidata": "",
+   "note": "Plays two different big water, fire and light shows: ''Stardancer'' and ''A Child's Dream''. Have several world records."
+  }
+ ]
 }
