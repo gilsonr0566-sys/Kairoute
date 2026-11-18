@@ -4886,11 +4886,14 @@ function pageHead(d, plan, acts) { const cd = plan && !plan.error ? countdownCar
 // top"). On ship, train and flight days they ride in the pinned countdown; on other days a slim bar of their own.
 const dayPinText = d => [fmtDow(d.date) + " " + fmtDate(d.date), d.type === "sea" ? "At sea" : mainPlace(d)].filter(Boolean).join(" · ");
 const dayPin = d => `<div class="daypin" aria-hidden="true">${esc(dayPinText(d))}</div>`;
+// With the AI writer off, a place with no guide yet can still get one from its free sources (travel guides, maps,
+// the encyclopedia: guideNoAI), so the day offers to build it instead of a dead end that lists the built-in cities
+// (code health review, Nov 18: a port day with no guide had no way forward while the AI was off).
 function needsCity(d) {
-  const ready = aiReady();
+  const ready = aiReady() || !!freeAI;
   if (ready) return `<div class="card empty">
     <h3>No guide for ${esc(d.destination || "this day")} yet</h3>
-    <p>Your guide will research sights, places to eat, the cruise port, stations and day trips for ${esc(d.destination)}.</p>
+    <p>${aiReady() ? `Your guide will research sights, places to eat, the cruise port, stations and day trips for ${esc(d.destination)}.` : `Kairoute will build the guide for ${esc(d.destination)} from travel guides and maps: real sights, places to eat, the cruise port and stations.`}</p>
     <button class="btn" data-act="gen" ${busy ? "disabled" : ""}>Build the ${esc(d.destination)} guide</button>
   </div>`;
   const have = ["Barcelona"].concat(typeof BUILTIN_CITIES === "undefined" ? [] : BUILTIN_CITIES.map(([c]) => String(c.city).replace(/\s*\(.*\)/, "")));

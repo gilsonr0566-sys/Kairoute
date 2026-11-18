@@ -19,6 +19,7 @@ plan-test|data|node tools/plan-test.cjs
 ferry-unit|data|node tools/ferry-unit.mjs
 time-check|data|node tools/time-check.cjs
 ship-check|data|node tools/ship-check.cjs
+port-noai-check|data|node tools/port-noai-check.cjs
 voyage-check|data|node tools/voyage-check.cjs
 ride-check|data|node tools/ride-check.cjs
 extras-check|data|node tools/extras-check.cjs index.html checks/extras
