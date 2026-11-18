@@ -4630,8 +4630,11 @@ const openFolds = new Set();
 document.addEventListener("toggle", e => {
   const el = e.target; if (!el.matches || !el.matches("details") || el.classList.contains("moremenu")) return;
   const sm = el.querySelector("summary"); if (!sm) return;
-  const k = view + "|" + sm.textContent.trim(); if (el.open) openFolds.add(k); else openFolds.delete(k);
+  const k = foldKey(sm); if (el.open) openFolds.add(k); else openFolds.delete(k);
 }, true);
+// A fold is known by its title without its count ("More nearby (12)" is still "More nearby" after a tick makes it 11),
+// so ticking a sight inside one never closes it (Nov 18 phone test: the fold shut and the next tap missed).
+const foldKey = sm => view + "|" + sm.textContent.replace(/\(\d+\)|\d+/g, "").replace(/\s+/g, " ").trim();
 // The Day plan's More menu closes on any tap outside it, and after picking one of its items.
 document.addEventListener("click", e => {
   document.querySelectorAll("details.planmore[open]").forEach(m => { if (!m.contains(e.target) || e.target.closest(".menuitem:not(.toggle)")) m.open = false; });
@@ -4789,7 +4792,7 @@ function render() {
   if (askNotice && !FULL_VIEWS[view]) { const v = document.getElementById("view"); if (v) v.insertAdjacentHTML("afterbegin", `<p class="banner ok" role="status">${esc(askNotice)} <button class="linkbtn" data-act="asknoticeok">OK</button></p>`); }
   mountMaps(); youAfterRender(); liveAfterRender(); offAfterRender(); seenAfterRender();
   if (openMenus.length && paneMemo.same) document.querySelectorAll("#view details.moremenu").forEach(el => { if (openMenus.includes(menuKey(el))) { el.open = true; try { placeMenu(el); } catch (e) {} } });
-  if (openFolds.size) document.querySelectorAll("#view details").forEach(el => { const sm = el.querySelector("summary"); if (sm && openFolds.has(view + "|" + sm.textContent.trim())) el.open = true; });
+  if (openFolds.size) document.querySelectorAll("#view details").forEach(el => { const sm = el.querySelector("summary"); if (sm && openFolds.has(foldKey(sm))) el.open = true; });
   // A re-render of the same screen (live updates, sync, data arriving) never moves what you're looking at:
   // put every panel, and the page itself, back exactly where it was, after folds have reopened.
   if (paneMemo.same) { panes().forEach(el => { const y = pos[el.dataset.pane || "view"]; if (y) el.scrollTop = y; }); if (winY && Math.abs(window.scrollY - winY) > 1) window.scrollTo(0, winY); }

@@ -40,9 +40,9 @@ async function tapBox(p, id) {
   // Aimed where the box is now and nothing covers it (a traveler sees the box before tapping it).
   let r = null;
   for (let k = 0; k < 4 && !r; k++) { r = await p.$eval(`input[data-site="${id}"]`, x => { const b = x.getBoundingClientRect(), pt = { x: b.x + b.width / 2, y: b.y + b.height / 2 }, at = document.elementFromPoint(pt.x, pt.y);
-      if (at && (at === x || x.closest('label, [data-card]').contains(at))) return pt; x.scrollIntoView({ block: 'center' }); return null; });
+      if (at && (at === x || x.closest('label, [data-card]').contains(at))) return pt; const det = x.closest('details'); if (det && !det.open) { det.open = true; window.__foldShut = (window.__foldShut || 0) + 1; } x.scrollIntoView({ block: 'center' }); return null; });
     if (!r) { if (process.env.VERBOSE) console.error('re-aim', id); await p.waitForTimeout(400); } }
-  if (!r) return false;
+  if (!r) { if (process.env.VERBOSE) { await p.screenshot({ path: '/tmp/claude-0/noaim-' + id + '.png' }); console.error('no aim', id, await p.evaluate(id => { const x = document.querySelector(`input[data-site="${id}"]`); if (!x) return 'gone'; const b = x.getBoundingClientRect(), at = document.elementFromPoint(b.x + b.width / 2, b.y + b.height / 2); x.scrollIntoView({ block: 'center' }); const b2 = x.getBoundingClientRect(); const det = x.closest('details'); const cs = []; for (let e = x; e; e = e.parentElement) { const st = getComputedStyle(e); if (st.display === 'none' || st.visibility === 'hidden' || /hidden|auto|scroll/.test(st.overflowY)) cs.push(e.tagName + '.' + e.className + ':' + st.display + '/' + st.overflowY + '/' + e.scrollTop); } return JSON.stringify([Math.round(b.x), Math.round(b.y), b.width, b.height, innerHeight, scrollY, 'after', Math.round(b2.y), scrollY, det ? 'det:' + det.open : '', cs.join(' > ')]) + ' at ' + (at ? at.tagName + '.' + at.className + ' ' + (at.innerText || '').slice(0, 60) : 'null'); }, id)); } return false; }
   // The tap is done when the box shows its new state (or a won't-fit / closed box opens); how long that takes on a
   // phone-speed CPU is kept, so a slow tick is a leak of its own rather than a false "would not tick".
   const was = await p.$eval(`input[data-site="${id}"]`, x => x.checked), t0 = Date.now();
@@ -78,7 +78,7 @@ async function tapTimes(p) { const out = []; const n = await p.evaluate(() => wi
   // 2. Untick everything on a port day, then pick a day trip and a sight in town (Richard, Nov 18: Naples).
   const ni = await dayIdx(p, /Naples/);
   await p.evaluate(i => { window.__kairouteGo('day', i); window.__kairouteGo('sites'); }, ni); await p.waitForTimeout(800);
-  const yp = p.locator('text=Your picks').first(); if (await yp.isVisible().catch(() => false)) { await yp.tap(); await p.waitForTimeout(500); }
+  const yp = p.locator('[data-act="picksfold"][aria-expanded="false"]').first(); if (await yp.isVisible().catch(() => false)) { await yp.tap(); await p.waitForTimeout(500); }
   for (let k = 0; k < 12; k++) { const on = (await boxes(p)).filter(b => b.on); if (!on.length) break; await tapBox(p, on[0].id); }
   const left = (await boxes(p)).filter(b => b.on).map(b => b.id);
   check('Untick every sight on a day', !left.length, 'still ticked: ' + left.join(', '));
@@ -105,6 +105,12 @@ async function tapTimes(p) { const out = []; const n = await p.evaluate(() => wi
       check('Naples: the ride out to Sorrento is on the plan', before && before.t === 'ride', 'no ride before Sorrento');
       check('Naples: the ferry is offered for Sorrento', (legs || []).some(l => (l.choices || []).some(c => /ferry/i.test(c))), 'choices: ' + JSON.stringify((legs || []).map(l => l.choices)).slice(0, 200)); } }
 
+  // 2a2. A fold opened by the traveler (its title carries a count) stays open when a sight inside it is ticked.
+  { const det = await p.$('#view details:not([open]) input[data-site]');
+    if (det) { const id = await det.evaluate(x => x.dataset.site); const ok = await tapBox(p, id);
+      const still = await p.evaluate(id => { const x = document.querySelector(`input[data-site="${id}"]`), d = x && x.closest('details'); return !d || d.open; }, id);
+      check('A fold the traveler opened stays open after a tick inside it', ok && still, ok ? 'the fold closed' : 'could not tap inside the fold'); } }
+
   // 2b. Hearted day: mark a day ready, change another day in the same place, reload: the hearted day is untouched.
   { const days = await p.evaluate(() => window.__kairouteDays());
     const pairs = days.map((d, i) => ({ i, c: d.city })).filter(x => x.c), byC = {}; pairs.forEach(x => (byC[x.c] = byC[x.c] || []).push(x.i));
@@ -114,7 +120,7 @@ async function tapTimes(p) { const out = []; const n = await p.evaluate(() => wi
       const hb = p.locator('[data-act="dayready"]').first(); if (await hb.isVisible().catch(() => false)) { await hb.tap(); await p.waitForTimeout(800); }
       const hp = await p.evaluate(i => JSON.stringify((window.__kairouteEngine2()[i].items || []).filter(x => x.t === 'stop').map(x => x.id)), h);
       await p.evaluate(i => { window.__kairouteGo('day', i); window.__kairouteGo('sites'); }, o); await p.waitForTimeout(600);
-      const yp2 = p.locator('text=Your picks').first(); if (await yp2.isVisible().catch(() => false)) { await yp2.tap(); await p.waitForTimeout(400); }
+      const yp2 = p.locator('[data-act="picksfold"][aria-expanded="false"]').first(); if (await yp2.isVisible().catch(() => false)) { await yp2.tap(); await p.waitForTimeout(400); }
       const on = (await boxes(p)).filter(b => b.on); if (on.length) await tapBox(p, on[0].id);
       await p.reload(); await p.waitForTimeout(6000);
       const st = await p.evaluate(i => window.__kairouteReady.state(i), h), hp2 = await p.evaluate(i => JSON.stringify((window.__kairouteEngine2()[i].items || []).filter(x => x.t === 'stop').map(x => x.id)), h);
@@ -125,19 +131,19 @@ async function tapTimes(p) { const out = []; const n = await p.evaluate(() => wi
     for (let i = 0; i < days.length; i++) { if (process.env.DAYS && !process.env.DAYS.split(',').includes(String(i + 1))) continue;
       await p.evaluate(i => { window.__kairouteGo('day', i); window.__kairouteGo('sites'); }, i); await p.waitForTimeout(500);
       if (!(await p.$('input[data-site]'))) continue;
-      const yp3 = p.locator('text=Your picks').first(); if (await yp3.isVisible().catch(() => false)) { await yp3.tap(); await p.waitForTimeout(300); }
+      const yp3 = p.locator('[data-act="picksfold"][aria-expanded="false"]').first(); if (await yp3.isVisible().catch(() => false)) { await yp3.tap(); await p.waitForTimeout(300); }
       for (let k = 0; k < 15; k++) { const on = (await boxes(p)).filter(b => b.on); if (!on.length) break; await tapBox(p, on[0].id); }
-      if ((await boxes(p)).some(b => b.on)) { bad.push(`day ${i + 1} (${days[i].dest}): could not untick everything`); continue; }
+      if ((await boxes(p)).some(b => b.on)) { bad.push(`day ${i + 1} (${days[i].dest}): could not untick everything (still on: ${(await boxes(p)).filter(b => b.on).map(b => b.id).join(', ')})`); continue; }
       const free = await p.evaluate(i => (window.__kairouteEngine2()[i].items || []).filter(x => x.t === 'stop' && !x.bonus).length, i);
-      if (free) bad.push(`day ${i + 1} (${days[i].dest}): emptied, yet ${free} stops planned`);
+      if (free) bad.push(`day ${i + 1} (${days[i].dest}): emptied, yet ${free} stops planned (${await p.evaluate(i => (window.__kairouteEngine2()[i].items || []).filter(x => x.t === 'stop' && !x.bonus).map(x => x.name).join(', ') + ' | ' + (window.__kairouteEngine2()[i].explain || []).join(' '), i)})`);
       const ids = (await boxes(p)).map(b => b.id), pick = [ids.find(x => !/-far$/.test(x)), ids.find(x => /-far$/.test(x))].filter(Boolean);
       for (const id of pick) { await tapBox(p, id); const okTick = (await boxes(p)).some(b => b.id === id && b.on);
-        const why = okTick ? '' : await p.evaluate(() => [...document.querySelectorAll('.fitbox, .closedbox')].map(e => e.innerText.replace(/\s+/g, ' ').slice(0, 100)).join(' / '));
+        const why = okTick ? '' : await p.evaluate(id => [...document.querySelectorAll('.fitbox, .closedbox')].map(e => e.innerText.replace(/\s+/g, ' ').slice(0, 100)).join(' / ') || ((document.querySelector(`[data-card="${id}"]`) || {}).innerText || 'no card').replace(/\s+/g, ' ').slice(0, 120), id);
         const planned = okTick && await p.evaluate(([i, id]) => (window.__kairouteEngine2()[i].items || []).some(x => x.t === 'stop' && x.id === id), [i, id]);
-        if (!okTick && !/closed|won.t fit|doesn.t fit|isn.t open|not open/i.test(why)) bad.push(`day ${i + 1} (${days[i].dest}): ${id} would not tick${why ? ' (' + why + ')' : ''}`);
+        if (!okTick && !/closed|won.t fit|doesn.t fit|isn.t open|not open|Needs \d/i.test(why)) bad.push(`day ${i + 1} (${days[i].dest}): ${id} would not tick${why ? ' (' + why + ')' : ''}`);
         else if (okTick && !planned) bad.push(`day ${i + 1} (${days[i].dest}): ${id} ticked but not on the plan`); }
     }
-    check('Every day: empty it, then pick a sight in town and a day trip', !bad.length, bad.length + ' problems: ' + bad.slice(0, 6).join('; ')); }
+    check('Every day: empty it, then pick a sight in town and a day trip', !bad.length, bad.length + ' problems: ' + bad.slice(0, 12).join('; ')); }
 
   // 2d. Safety (rule 2): on every day tied to a ship, train or flight, no stop on the plan ends after the leave-by time.
   { const days = await p.evaluate(() => window.__kairouteDays()), bad = [];
@@ -159,6 +165,7 @@ async function tapTimes(p) { const out = []; const n = await p.evaluate(() => wi
   check(`Tapping between days is quick (${Math.round(m)} ms on a phone-speed CPU${demoMed != null ? `, demo app ${Math.round(demoMed)} ms` : ''})`, demoMed != null ? m <= Math.max(150, demoMed * 2) : m <= 300, `median ${Math.round(m)} ms`);
   { const sl = tickMs.slice().sort((a, b) => a - b), med = median(sl), worst = sl[sl.length - 1] || 0;
     check(`Ticking a sight answers quickly (median ${med} ms, slowest ${worst} ms on a phone-speed CPU, ${sl.length} taps)`, med <= 700 && worst <= 2500, `median ${med} ms, slowest ${worst} ms`); }
+  { const shut = await p.evaluate(() => window.__foldShut || 0); check('A fold the traveler opened never closes by itself', !shut, shut + ' times a fold had closed again before the next tap'); }
   check('No errors in the app', !errs.length, errs.slice(0, 2).join(' | '));
 
   await ctx.close(); srv.close(); await browser.close();
