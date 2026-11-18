@@ -6,18 +6,31 @@
 if (typeof window !== "undefined" && window.ENGINE2 && window.KEngine) (function () {
   const E = window.KEngine;
   let memo = { k: "", plans: null, bucket: null };
-  // The whole trip planned once per change (the traveler's trip, an answer arriving, the guides, the date).
-  function tripPlans() {
+  function keyNow() {
     let t; const a = trip.active, sp = trip.spent; try { trip.active = 0; trip.spent = undefined; t = JSON.stringify(trip); } finally { trip.active = a; trip.spent = sp; }
     // An answer arriving for a ride (a timetable search) replans, as it does in the app.
-    const k = strHash(t) + "|" + dataGen + "|" + (typeof nearGen !== "undefined" ? nearGen : 0) + "|" + citiesSig() + "|" + todayISO();
+    return strHash(t) + "|" + dataGen + "|" + (typeof nearGen !== "undefined" ? nearGen : 0) + "|" + citiesSig() + "|" + todayISO();
+  }
+  // The whole trip planned once per change (the traveler's trip, an answer arriving, the guides, the date).
+  function tripPlans() {
+    const k = keyNow();
     if (memo.k === k && memo.plans) return memo;
     let bucket = engineBucket(false);
     if (window.PLACES2) bucket = E.applyPlaces(bucket, window.PLACES2);
     // The app's own public transport answers for each ride (asked for any ride not known yet, as in the app).
     bucket.answers = (a, b) => { const r = transitFor(a, b); return r && r.map(o => ({ id: rideId(o), min: o.min, label: o.label, kind: rideKind(o) })); };
     let plans; try { plans = E.planTrip(bucket); } catch (e) { console.warn("Beta 2 engine", e); plans = []; }
-    memo = { k, plans, bucket }; return memo;
+    // A day still on the app's own seeding (the traveler hasn't ticked or unticked anything there) shows what the
+    // engine planned: its ticks become the engine's stops, so the picker, the counts and the plan always agree.
+    let synced = false;
+    trip.days.forEach((d, i) => {
+      const ep = plans[i]; if (!ep || ep.error || !Array.isArray(ep.items) || d.ready || !d.seedSig || d.seedSig !== seedSigOf(d)) return;
+      const ids = ep.items.filter(x => x.t === "stop" && x.id != null).map(x => x.id);
+      if (ids.map(String).sort().join("|") === d.selected.map(String).sort().join("|")) return;
+      d.selected = ids; d.seedSig = seedSigOf(d); d.autoEmpty = !ids.length; synced = true;
+    });
+    // The bucket is the same after the sync (a seeded day sends only the traveler's own picks), so the plans stand.
+    memo = { k: synced ? keyNow() : k, plans, bucket }; return memo;
   }
   window.__kairouteEngine2 = () => JSON.parse(JSON.stringify(tripPlans().plans));
   const MODE = { walk: "walk", ride: "ride", transit: "ride", boat: "ferry", lift: "ride" };
@@ -43,7 +56,8 @@ if (typeof window !== "undefined" && window.ENGINE2 && window.KEngine) (function
       if (x.t === "fixed") { items.push({ type: "fixed", place: at(x, x.name, { minutes: x.min, fixed: true }), time: x.at }); return; }
       if (x.t === "stop") {
         const s = byId.get(String(x.id)); const p = Object.assign({}, s || at(x), { minutes: x.min });
-        p.bonus = !!x.bonus; // the engine's own word: a stop it planned is part of the day, whatever the guide's listing says if (x.within) p.within = x.within; if (x.includes) p.includes = x.includes;
+        p.bonus = !!x.bonus; // the engine's own word: a stop it planned is part of the day, whatever the guide's listing says
+        if (x.within) p.within = x.within; if (x.includes) p.includes = x.includes;
         const it = Object.assign({ type: "stop", place: p, time: x.at }, x.wait ? { wait: x.wait } : {}, x.late ? { ohLate: x.late } : {});
         items.push(it); stops.push(it); return;
       }
@@ -63,6 +77,8 @@ if (typeof window !== "undefined" && window.ENGINE2 && window.KEngine) (function
       lockBroken: false, routeX: null, start: ep.start, endBy: ep.endBy, end: ep.end, walkKm, over: !!ep.over,
       engine2: { explain: ep.explain || [], waysToFit: ep.waysToFit || null, leftOut: ep.leftOut || [], safe: !!ep.safe } };
   }
+  // The engine chooses each untouched day's stops, so the old planner's late hand-out of a day trip stays off.
+  if (typeof leadLate === "function") leadLate = function () {};
   const oldDay = buildPlanForDay;
   buildPlanForDay = function (d) {
     const city = cityFor(d); if (!city) return null;

@@ -1594,8 +1594,14 @@ function mealPickRaw(seq, O, Z, city, m, style) {
 // Beta 2 only: the new engine says, in plain words, why the day looks as it does (a sight that didn't fit and the ways to
 // fit it in, a pick moved to an open day, a boat's timetable). Nothing in the normal build, whose plans carry no engine2.
 // Stops on the plan the traveler didn't pick: the guide added them (optional extras and stops on the way aside).
+// The traveler's picks on a plan: what they picked, and a rain swap standing in for a pick.
+function pickIds(plan, d) {
+  const sel = new Set((d.selected || []).map(String)); if (!sel.size) return sel;
+  for (const [a, b] of (plan && plan.swaps) || []) if (a && b && sel.has(String(a.id))) sel.add(String(b.id));
+  return sel;
+}
 function planAdded(plan, d) {
-  const sel = new Set((d.selected || []).map(String)); if (!sel.size || !plan || !plan.stops) return 0;
+  const sel = pickIds(plan, d); if (!sel.size || !plan || !plan.stops) return 0;
   return plan.stops.filter(s => !s.place.along && !s.place.bonus && !sel.has(String(s.place.id))).length + (plan.bonus || []).length;
 }
 function engine2Card(plan) {
@@ -6579,7 +6585,7 @@ ${partsList(s, it.time)}${stopLiveNotes(it, d)}</div></div>`;
   }).join("");
   // Picks are what the traveler picked (a pick inside an area visit counts too); stops the guide added on its own are
   // counted apart ("added"), so the Day plan and Change stops always give the same number of picks.
-  const sel = new Set((d.selected || []).map(String)), main = plan.stops.filter(s => !s.place.along && !s.place.bonus);
+  const sel = pickIds(plan, d), main = plan.stops.filter(s => !s.place.along && !s.place.bonus);
   const added = main.filter(s => sel.size && !sel.has(String(s.place.id))).length;
   const stopsN = new Set(main.filter(s => !sel.size || sel.has(String(s.place.id))).map(s => s.place.id).concat(plan.folded || [])).size, optN = plan.stops.filter(s => s.place.bonus).length + added;
   const L = DAY_LEN.find(x => x[0] === +d.hours), canLen = d.type === "land" || d.type === "arrival";

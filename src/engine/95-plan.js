@@ -174,7 +174,7 @@
       if (again) {
         picks = again.kept.slice(); autoIds = new Set(again.autoIds); explain.push(...again.explain);
         const extra = again.extra && pool.find(s => String(s.id) === String(again.extra));
-        if (extra) { picks.push(extra); autoIds.add(String(extra.id)); explain.push("With time to spare, a trip out to " + extra.name + "."); }
+        if (extra && !picks.some(k => String(k.id) === String(extra.id))) { picks.push(extra); autoIds.add(String(extra.id)); explain.push("With time to spare, a trip out to " + extra.name + "."); }
       }
       else {
         (bucket.placeNotes || []).filter(n => n.day === d.i || n.day === i).forEach(n => explain.push(n.note));
@@ -275,7 +275,7 @@
       const otherDayFar = (s, here) => (byCity.get(d.city) || []).some(j => j !== here && done[j] && done[j].kept.some(k => k.far && isFinite(k.lat) && E.hav(k, s) <= 15));
       const worthOf = r => r.kept.reduce((a, k) => a + (k.worth || 0), 0);
       const city = guides[d.city] || {}, far = E.rank((city.farther || []).map(s => Object.assign({}, s, { far: true })), prefs, style)
-        .filter(s => !s.town && ledger.sightFree(s.id, i) && !wishDay.has(String(s.id)) && (!(now || was).kept.some(k => k.far) || (now || was).kept.some(k => k.far && isFinite(k.lat) && E.hav(k, s) <= 15)))
+        .filter(s => !s.town && ledger.sightFree(s.id, i) && !wishDay.has(String(s.id)) && !was.kept.some(k => String(k.id) === String(s.id)) && (!(now || was).kept.some(k => k.far) || (now || was).kept.some(k => k.far && isFinite(k.lat) && E.hav(k, s) <= 15)))
         // a quick look first: there and back plus the visit must fit in the day at all
         .filter(s => 2 * away(s) + (s.minutes || 60) <= (was.win.sightTo || was.win.endBy) - (was.win.sightFrom || was.win.start))
         // A city day is padded only with a short trip out (45 minutes or less each way, like a metro ride to a basilica

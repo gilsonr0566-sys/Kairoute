@@ -26,6 +26,9 @@ for (const f of fs.readdirSync(dir).filter(f => f.endsWith('.json')).sort()) {
       const words = String(P && P.name || '').toLowerCase().split(/[^a-z]+/).filter(x => x.length >= 4 && !/^(port|ports|cruise|terminal|pier|harbou?r|marina|station|central|airport|international|ferry)$/.test(x));
       if (P && isFinite(P.lat) && spots.length && d.type !== 'land' && !words.some(x => named.includes(x))) { const km = Math.min(...spots.map(x => E.hav(P, x)));
         if (km > 40) add('gate', f, `day ${i}: planned from ${P.name}, ${Math.round(km)} km from every sight`); } }
+    // The same sight twice in one day.
+    { const ids = p.items.filter(x => x.t === 'stop' && x.id != null).map(x => String(x.id)); const twice = ids.filter((x, k) => ids.indexOf(x) !== k);
+      if (twice.length) add('twice', f, `day ${i}: ${[...new Set(twice)].join(', ')} planned twice`); }
     p.items.forEach((x, k) => {
       if (x.name && SCRIPT.test(x.name)) add('script', f, `day ${i}: "${x.name}"`);
       // A sight seen only from the water: reached by boat, never by land.
