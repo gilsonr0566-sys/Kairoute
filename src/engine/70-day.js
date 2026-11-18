@@ -96,7 +96,10 @@
     }
     return cur;
   }
-  const lowestFirst = (a, b) => (a.wish ? 1 : 0) - (b.wish ? 1 : 0) || (a.worth || 0) - (b.worth || 0) || E.byId(b, a);
+  // What gives way first: the app's own additions, then the traveler's picks in town, and last a day out of town the
+  // traveler picked (a trip out is the day's purpose; the sights in town can move to another day).
+  const keepRank = s => (s.wish ? 1 : 0) + (s.wish && s.far ? 1 : 0);
+  const lowestFirst = (a, b) => keepRank(a) - keepRank(b) || (a.worth || 0) - (b.worth || 0) || E.byId(b, a);
   // stops: the day's chosen sights (each with worth; wish = the traveler picked it). pool: other sights it may add.
   // Which stop to give up: among those whose loss makes the day fit, the one worth least; if no single loss is enough,
   // the one that gives back the most time for its worth (a far stop on its own goes before a cluster of near ones).
@@ -105,7 +108,7 @@
     const base = quick(keep).end;
     const scored = from.map(s => { const r = quick(keep.filter(k => k !== s)); return { s, fits: !r.over && !r.late, saved: Math.max(1, base - r.end) }; });
     const fixing = scored.filter(x => x.fits);
-    const list = why === "lunch" || !fixing.length ? scored.sort((a, b) => (a.s.wish ? 1 : 0) - (b.s.wish ? 1 : 0) || (a.s.worth || 1) / a.saved - (b.s.worth || 1) / b.saved || E.byId(a.s, b.s))
+    const list = why === "lunch" || !fixing.length ? scored.sort((a, b) => keepRank(a.s) - keepRank(b.s) || (a.s.worth || 1) / a.saved - (b.s.worth || 1) / b.saved || E.byId(a.s, b.s))
       : fixing.sort((a, b) => lowestFirst(a.s, b.s));
     return list[0].s;
   }
@@ -115,6 +118,14 @@
     const needsLunchRoom = () => cur.noLunch === "time" && keep.some(s => !s.wish);
     while ((cur.r.over || cur.r.late || needsLunchRoom()) && keep.length && guard++ < 40) {
       const why = cur.r.over ? "over" : cur.r.late ? "late" : "lunch";
+      // A town visited for the day has no fixed length: before giving up a pick, its time there shrinks (to half at most).
+      const least = s => Math.round((s.trimmed || s.minutes || 0) / 2 / 15) * 15;
+      const flex = why === "over" && keep.find(s => s.far && E.has(s, "day-trip") && (s.trimmed || s.minutes || 0) >= 90 && s.minutes > least(s));
+      if (flex) {
+        const was = flex.trimmed || flex.minutes, to = Math.max(least(flex), Math.ceil((flex.minutes - cur.r.over) / 15) * 15);
+        const t = Object.assign({}, flex, { minutes: Math.min(to, flex.minutes - 15), trimmed: was });
+        keep = keep.map(s => s === flex ? t : s); cur = arrange(keep, win, ctx); continue;
+      }
       const lateIds = new Set(cur.r.items.filter(x => x.late).map(x => String(x.id)));
       const pickFrom = why === "over" ? keep : why === "late" ? keep.filter(s => lateIds.has(String(s.id))) : keep.filter(s => !s.wish);
       const out = toDrop(keep, pickFrom.length ? pickFrom : keep, win, ctx, why);

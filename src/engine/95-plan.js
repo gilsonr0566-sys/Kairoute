@@ -17,6 +17,7 @@
     for (const { s } of near) { const cost = (s.minutes || 30) + 12; if (out.length && used + cost > budget) continue; out.push(s); used += cost; }
     return out;
   }
+  const dur = m => m >= 60 ? Math.floor(m / 60) + " h" + (m % 60 ? " " + (m % 60) + " min" : "") : m + " min";
   const point = p => p && isFinite(p.lat) ? { lat: p.lat, lng: p.lng } : {};
   // The plan in the short form the scorer and the screens read (the same shape as the old engine's, for side by side).
   function shortForm(i, win, fit, autoIds, dinner) {
@@ -120,9 +121,11 @@
       const fit = E.fitDay(d, win, picks, pool, ctx);
       fit.kept.forEach(s => { if (s.filled) autoIds.add(String(s.id)); });
       if (!again) fit.dropped.forEach(x => { if (x.wish) explain.push(x.name + " " + x.why + "."); });
+      fit.kept.forEach(s => { if (s.trimmed && !(again && again.kept.some(k => k.trimmed && String(k.id) === String(s.id)))) explain.push("A shorter visit to " + s.name + " (" + dur(s.minutes) + " instead of " + dur(s.trimmed) + ") so the rest of the day fits."); });
       const last = fit.seq.length ? fit.seq[fit.seq.length - 1] : win.head[0];
       const dinner = E.dinnerAfter(win, win.tail.length ? win.tail[win.tail.length - 1] : last, fit.r.end, ctx, new Set(fit.seq.filter(s => s.eatKey).map(s => s.eatKey)));
-      const lunchNote = fit.noLunch ? (fit.noLunch === "time" ? "No time for a sit-down lunch on this plan: grab something quick on the way." : "No place to eat along the way at lunchtime: bring food or eat at a stop's own café.") : null;
+      const outTown = fit.kept.find(k => k.far);
+      const lunchNote = fit.noLunch && outTown ? "Have lunch in " + outTown.name + ": its places to eat aren't in the guide yet." : fit.noLunch ? (fit.noLunch === "time" ? "No time for a sit-down lunch on this plan: grab something quick on the way." : "No place to eat along the way at lunchtime: bring food or eat at a stop's own café.") : null;
       const plan = shortForm(i, win, fit, autoIds, dinner);
       const bad = guard(plan, win);
       if (bad.length) return { plan: safeDay(i, win, tr, bad) };

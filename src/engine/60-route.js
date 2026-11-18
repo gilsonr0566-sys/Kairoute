@@ -1,20 +1,26 @@
 // Beta 2 engine, part 6b: the best order for a day's stops between where the day starts and where it must end.
-// Exact for up to 8 stops, otherwise nearest-neighbour then 2-opt, always with a fixed tie-break by id, so the same
+// Exact for up to 10 stops, otherwise nearest-neighbour then 2-opt, always with a fixed tie-break by id, so the same
 // stops give the same order whatever order they arrived in (lesson 1). cost(a, b) is the stable travel estimate.
 // An open path that ends at the ship or station puts far stops first and leaves the stop nearest the way back last.
 (function (E) {
   const pathCost = (seq, from, to, cost) => { let c = 0, p = from; for (const s of seq) { c += cost(p, s); p = s; } if (to) c += cost(p, to); return c; };
   E.pathCost = pathCost;
-  const key = seq => seq.map(s => String(s.id)).join("|");
+  // Exact best order by dynamic programming over subsets (fast up to 10 stops). Stops arrive sorted by id and every
+  // tie keeps the first found, so the same stops always give the same order.
   function exact(stops, from, to, cost) {
-    let best = null, bestC = Infinity, bestK = "";
-    const used = new Array(stops.length).fill(false), cur = [];
-    (function go(c, prev) {
-      if (c >= bestC + 1e-9 && cur.length < stops.length) return;
-      if (cur.length === stops.length) { const t = c + (to ? cost(prev, to) : 0), k = key(cur); if (t < bestC - 1e-9 || (Math.abs(t - bestC) < 1e-9 && k < bestK)) { bestC = t; best = cur.slice(); bestK = k; } return; }
-      for (let i = 0; i < stops.length; i++) if (!used[i]) { used[i] = true; cur.push(stops[i]); go(c + cost(prev, stops[i]), stops[i]); cur.pop(); used[i] = false; }
-    })(0, from);
-    return best || [];
+    const n = stops.length, full = (1 << n) - 1, d = stops.map(a => stops.map(b => cost(a, b)));
+    const best = new Float64Array((1 << n) * n).fill(Infinity), prev = new Int8Array((1 << n) * n).fill(-1);
+    for (let i = 0; i < n; i++) best[(1 << i) * n + i] = cost(from, stops[i]);
+    for (let m = 1; m <= full; m++) for (let i = 0; i < n; i++) {
+      const c = best[m * n + i]; if (!(m & (1 << i)) || c === Infinity) continue;
+      for (let j = 0; j < n; j++) { if (m & (1 << j)) continue; const mm = m | (1 << j), v = c + d[i][j];
+        if (v < best[mm * n + j] - 1e-9) { best[mm * n + j] = v; prev[mm * n + j] = i; } }
+    }
+    let last = -1, bc = Infinity;
+    for (let i = 0; i < n; i++) { const v = best[full * n + i] + (to ? cost(stops[i], to) : 0); if (v < bc - 1e-9) { bc = v; last = i; } }
+    const seq = []; let m = full;
+    while (last >= 0) { seq.push(stops[last]); const p = prev[m * n + last]; m &= ~(1 << last); last = p; }
+    return seq.reverse();
   }
   function heuristic(stops, from, to, cost) {
     const left = stops.slice().sort(E.byId), seq = []; let p = from;
@@ -38,7 +44,7 @@
     let m = memo.get(cost); if (!m) { m = new Map(); memo.set(cost, m); }
     const k = at(from) + ">" + at(to) + ">" + sorted.map(s => String(s.id) + "@" + at(s)).join("|"), got = m.get(k);
     if (got) { const byId = new Map(sorted.map(s => [String(s.id), s])); return got.map(id => byId.get(id)); }
-    const best = sorted.length <= 8 ? exact(sorted, from, to, cost) : heuristic(sorted, from, to, cost);
+    const best = sorted.length <= 10 ? exact(sorted, from, to, cost) : heuristic(sorted, from, to, cost);
     m.set(k, best.map(s => String(s.id)));
     return best;
   };
