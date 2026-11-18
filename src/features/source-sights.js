@@ -18,12 +18,12 @@ const SRC_MAX_MAIN = 45, SRC_MAX_QUICK = 12, SRC_R = 8;
 // (Bahamas test trip, Nov 17: "The guide for Nassau didn't come through"). Nothing is ever made up either way.
 const SRC_FEW = 6;
 function srcNeed(src, centre) {
-  const two = ((src && src.stops) || []).filter(x => srcWorthy(x) && (x.src || []).length >= 2 && x.lat != null && (!centre || hav(x, centre) <= SRC_R)).length;
+  const two = ((src && src.stops) || []).filter(x => (x.src || []).length >= 2 && x.lat != null && (!centre || hav(x, centre) <= SRC_R)).length;
   return two >= SRC_FEW ? 2 : 1;
 }
 // In a small place (srcNeed 1), a sight one real source names, with its position: a travel guide's listing, a place the
 // encyclopedia knows in several languages, or a tourist place on the map; still visitable, open and a real spot.
-const srcWorthyAt = need => need >= 2 ? srcWorthy : x => x && x.lat != null && !srcShut(x) && !srcNotSpot(x)
+const srcWorthyAt = need => need >= 2 ? srcWorthy : x => x && x.lat != null && /[A-Za-z]/.test(x.name || "") && !srcShut(x) && !srcNotSpot(x)
   && (srcVisitable(x) || (x.src || []).some(t => /OpenStreetMap/.test(t)) || (x.sl || 0) >= 15);
 // Entries that are not one place to visit: a whole city or country, a district, transport, institutions.
 const SRC_NEVER = /\b(city|district|business area|ministerios|rione|quartiere|municipality|province|region|metro|subway|railway|station|airport|line|radio|embassy|bank|ministry|school|hospital|programme|organization|organisation)\b/i;
