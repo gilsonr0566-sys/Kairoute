@@ -2,26 +2,40 @@
 
 Scope: the planning engine only (see "What Beta 2 changes, and what stays as is" in [lessons-from-the-old-engine.md](lessons-from-the-old-engine.md)). Every screen keeps calling `buildPlan(d)` and gets a plan in the same shape it gets today.
 
-## The engine's steps, in plain English
+## The engine's steps, in plain English (full list, for Richard's OK before more is built)
 
-How Beta 2 turns a trip into days. Each step only reads the steps before it, and the same trip always gives the same days.
+Each step reads only what the steps before it produced. Steps 9 to 15 run one day at a time, in date order; a day sees only the finished days before it and the locked days. **(new)** marks a step that wasn't in the list before.
 
-1. **Know our resources: the places database.** (Richard: "what are my resources to find the pieces. Have that data base that can grow as needed and does not have to be rebuilt, just amended.") One growing database of every place, port, terminal, opening hours, ride time and restaurant Kairoute has ever found for any traveler. Each entry is stored once and reused. A new find is added, a correction updates the entry, and nothing is ever rebuilt from scratch. Each entry records which source found it and when it was last checked. Behind it sits a fixed list of free sources that find new pieces (see "The places database" below).
-2. **Collect the pieces into the trip bucket.** (Richard: "have a bucket, get all the pieces", "then collect the pieces".) For this trip, the bucket is filled from the database first and goes to outside sources only for what's missing or out of date. Whatever the sources find is added to the database for the next traveler. The bucket says what's still missing, and planning runs only from a complete bucket. Nothing is looked up halfway through planning.
-3. **Sort the pieces into groups and sites.** (Richard: "Which piece is a group, and which is an individual site. Old Town Square is a group. Astronomical clock is a site.") A group is a place that holds other sights: a square, an old town or district, a castle, an archaeological site, a park, an island, a museum complex. A site is one thing to see with its own story. A site inside a group is still its own stop, with its own narration, during the group's visit. Membership comes from the map's own boundaries, and for an open square, the buildings facing onto it. It's stored in the places database, so it's decided once and never changes while you plan. A group and the sights inside it are claimed together on one day, so nothing "Included" is ever scheduled twice.
-4. **Label every piece with its categories.** (Richard: "add interest, must see, local favorite, and all the other categories so they can be sorted if they need to be displayed or not.") Every group and site carries its labels in the places database: the setup's interests (history, art and museums, architecture, food and markets, views and nature, churches and faith, Bible sites, shopping, beaches, kid-friendly), must-see, UNESCO, famous or local favorite, religious, open-air or indoor, quick stop, day trip, book ahead, timed show, quiet place, free, and group or site. The screens use these labels to decide what to show, and the planner reads the same ones, so a list and a plan never disagree.
-5. **Set each day's window.** When sightseeing can start and the hard end: all aboard minus 45 min on port days, the boarding time on boarding days, 3 h before a flight, 30 min before a train. Fixed steps (bags, the ride to the ship) come out first. A same-day fly-in with under 3 h left goes straight to the ship. Missing times stop that day with a clear message, never a guess.
-6. **Lock the hearted days.** Their sights, order and restaurants are claimed first, so no other day can take them.
-7. **Give each picked sight its day.** Days are handled in date order. A sight goes to the earliest day it's open and fits, and it's claimed once for the whole trip.
-8. **Order each day by route.** Shortest, easiest path from the start to the end point. Must-sees don't change the order.
-9. **Fit the day.** Check opening hours and the hard end. If it's too full: shorten long visits a little, try a quicker lunch, then let the least important stop go (the app's picks before the traveler's, a lone far-off stop before one in the day's main area). Then put back anything that truly fits.
-10. **Nudge for comfort, within a cap.** Crowds, heat and the forecast may swap the order only if that adds no more than 15 min of riding (30 with a real forecast).
-11. **Add meals.** Lunch and dinner near where you are, from real restaurants, never the same place twice in a trip. Booked tables stay at their time.
-12. **Fill spare time.** Optional stops and quick sights on the way, never past the hard end, never on a cleared or hearted day.
-13. **Write the timeline.** Real ride times set the clock. If a real ride time makes a stop late or unsafe, the plan flags it and says why, instead of quietly reshuffling the day.
+**Gather**
+1. **Know our resources: the places database.** Every place found for any traveler, stored once, amended and never rebuilt, with its source and when it was last checked. Free sources only. *Closes #10 names (fixed ids), #9 small places (one-source places kept), #19 spend.*
+2. **Collect the pieces into the trip bucket.** From the database first, outside sources only for what's missing; the bucket lists what's still missing, and nothing is looked up after this. *Closes #1 drift, #2 lookups mid-plan.*
+3. **Sort the pieces into groups and sites.** *Closes #4 repeats of "Included" sights.*
+4. **Label every piece with its categories.** *Lists and plans read one set of labels.*
+5. **(new) Check each piece for each date.** Visit length (never shorter than its story takes), opening hours and closed days for that date, last entry, timed shows, tickets to book ahead, indoor or outdoor, where the entrance is, step-free access, and the day's forecast. *Closes #13 closed sights, short visit times.*
+6. **(new) Read the traveler's wishes.** Picks, hearted days, cleared days, a dragged order, booked tables, ride choices, pace, walking, interests, religious sites on or off. Every change to picks comes through one "move sight" action. *Closes #6 swap bug, #7 typed times lost.*
 
+**Plan**
+7. **Set each day's window** (ship, boarding, flight and train cut-offs; same-day fly-in). *Closes #8; Rule #2.*
+8. **Lock the hearted days first.** Their sights, order and restaurants are claimed before anything else. *Replaces the heart-lock patch layer.*
+9. **Give each pick its day.** Earliest day it's open and fits; a group and everything inside it go together; claimed once. *Closes #3 order of planning, #4 repeats.*
+10. **Order each day by route.** Shortest, easiest path; a dragged order is kept; ties broken the same way every time. *Closes #1, #5 zig-zags.*
+11. **Fit the day.** Hours and the hard end; shrink long visits, quick lunch, then the least important stop gives way; put back what fits; a pick that doesn't fit moves to a later day that has it. On a rain day, an outdoor sight may swap for an indoor one **(new: was missing from the list)**. *Closes #12 short days, #13; Rule #2.*
+12. **Nudge for comfort, within a cap.** *Closes #5.*
+13. **Add meals.** Real places, never twice in a trip, booked tables pinned. *Closes #4.*
+14. **Fill spare time.** Never past the hard end, never on a cleared or hearted day; a leaving day keeps a few nearby sights for itself.
+15. **(new) Choose each ride.** One list of choices per leg (walk, taxi, train, ferry...), the same list the buttons show; real timetables only set the clock. *Closes #11 labels without buttons, #1.*
 
-_Steps 5 onward are being reviewed with Richard and may change._
+**Check and explain**
+16. **Write the timeline and check safety.** If a real ride time makes a stop late or unsafe, flag it and say why; never quietly reshuffle. Final ship, train and flight margin check. *Rule #2, #1.*
+17. **(new) Explain the plan.** What didn't fit and why, what moved to another day, what's closed today and which day it's open. Nothing ever disappears silently. *Replaces the "taken off this day" patch layer.*
+18. **(new) Running late.** During the day, re-plan from where the traveler is now, through the same steps 10 to 16 with a new start point and time. *Keeps the old running-late feature on the new engine.*
+
+**Plug in and prove**
+19. **(new) Keep one copy.** The plan is kept once, labelled by its bucket; same bucket, same plan. *Closes #21, replaces the shown-plan replay and renamed-id layers.*
+20. **Plug into the app and remove the five patch layers.** The screens get plans in the shape they use today. *Closes #17 test code in the app.*
+21. **Prove it.** Old vs new on all 9 test trips with one scorer; the same trip with pieces arriving in shuffled orders must give the same plan; safety margins never closer than Beta 1; existing publish checks pass. *Closes #14, #15.*
+
+**Outside the engine, by agreement:** #16 hidden errors and #18 the huge file in the screen code stay as they are for now; #7 was already fixed in Beta 1.
 
 ## The places database (step 1 in detail)
 
