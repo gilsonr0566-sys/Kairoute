@@ -89,6 +89,14 @@
     "lat": 40.4148,
     "lng": -3.702
    }
+  },
+  {
+   "key": "dubai uae",
+   "name": "Dubai, UAE",
+   "centre": {
+    "lat": 25.2425,
+    "lng": 55.2893
+   }
   }
  ]
 }
