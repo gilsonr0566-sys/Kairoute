@@ -1,0 +1,53 @@
+{
+ "key": "half moon cay bahamas",
+ "name": "Half Moon Cay, Bahamas",
+ "built": "2026-11-18",
+ "sources": [
+  "Wikidata",
+  "OpenStreetMap",
+  "Wikivoyage"
+ ],
+ "sites": {},
+ "towns": {},
+ "ports": [],
+ "dayTrips": [],
+ "missing": [
+  "travel guide page",
+  "a mapped cruise terminal or pier"
+ ],
+ "centre": {
+  "lat": 17.204722222222,
+  "lng": -87.536388888889
+ },
+ "mapPlaces": [
+  {
+   "name": "Half Moon Wall",
+   "lat": 17.2082863,
+   "lng": -87.5358197,
+   "kind": "attraction",
+   "hours": "",
+   "osm": "node/5484628122"
+  },
+  {
+   "name": "Half Moon Caye Natural Monument",
+   "lat": 17.190665,
+   "lng": -87.52248,
+   "kind": "nature_reserve",
+   "hours": "",
+   "osm": "way/1257173159"
+  },
+  {
+   "name": "Half Moon Caye Natural Monument",
+   "lat": 17.205481,
+   "lng": -87.5349929,
+   "kind": "nature_reserve",
+   "hours": "",
+   "osm": "relation/15068552"
+  }
+ ],
+ "portQuery": {
+  "name": "Half Moon Cay",
+  "known": false,
+  "island": true
+ }
+}

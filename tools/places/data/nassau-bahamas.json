@@ -91,5 +91,12 @@
   "lat": 25.076539999999998,
   "lng": -77.355365
  },
- "wikivoyage": "Nassau"
+ "wikivoyage": "Nassau",
+ "portQuery": {
+  "name": "Banana Bay Nassau's Port Shop",
+  "lat": 25.0782703,
+  "lng": -77.3430256,
+  "known": true,
+  "island": false
+ }
 }

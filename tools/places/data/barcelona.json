@@ -777,5 +777,12 @@
   "lat": 41.386577499999994,
   "lng": 2.165822692307692
  },
- "wikivoyage": "Barcelona"
+ "wikivoyage": "Barcelona",
+ "portQuery": {
+  "name": "Moll Adossat cruise terminals",
+  "lat": 41.353,
+  "lng": 2.17,
+  "known": true,
+  "island": false
+ }
 }

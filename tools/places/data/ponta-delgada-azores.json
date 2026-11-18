@@ -71,5 +71,12 @@
   "lat": 37.7404,
   "lng": -25.670994
  },
- "wikivoyage": "Ponta Delgada"
+ "wikivoyage": "Ponta Delgada",
+ "portQuery": {
+  "name": "Terminal de Carga Aérea",
+  "lat": 37.7426167,
+  "lng": -25.6947776,
+  "known": true,
+  "island": false
+ }
 }

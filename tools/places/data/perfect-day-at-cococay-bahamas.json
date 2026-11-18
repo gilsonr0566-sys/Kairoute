@@ -19,5 +19,12 @@
  "centre": {
   "lat": 25.818983333333335,
   "lng": -77.93618666666667
+ },
+ "portQuery": {
+  "name": "Cruise port of Perfect Day at CocoCay, Bahamas",
+  "lat": 25.81666667,
+  "lng": -77.93333333,
+  "known": false,
+  "island": true
  }
 }

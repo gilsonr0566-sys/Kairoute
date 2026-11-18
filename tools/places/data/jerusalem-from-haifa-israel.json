@@ -454,5 +454,12 @@
   "lat": 31.776602272727267,
   "lng": 35.21909272727274
  },
- "wikivoyage": "Jerusalem"
+ "wikivoyage": "Jerusalem",
+ "portQuery": {
+  "name": "Haifa Port",
+  "lat": 32.8193237,
+  "lng": 35.0361763,
+  "known": true,
+  "island": false
+ }
 }

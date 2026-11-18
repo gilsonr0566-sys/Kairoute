@@ -1,0 +1,375 @@
+{
+ "key": "paris from le havre france",
+ "name": "Paris (from Le Havre , France)",
+ "built": "2026-11-18",
+ "sources": [
+  "Wikidata",
+  "OpenStreetMap",
+  "Wikivoyage"
+ ],
+ "sites": {
+  "src-q1538826": {
+   "hours": "Tu-Th 10:00-18:00; Fr 10:00-21:00; Sa-Su 10:00-18:00",
+   "fee": "yes",
+   "osm": "node/247618453"
+  },
+  "src-q28924": {
+   "hours": "Tu-Su 09:45-20:30",
+   "fee": "yes",
+   "osm": "node/493870538"
+  },
+  "src-q138101": {
+   "hours": "Mo-Su 09:30-18:00",
+   "fee": "yes",
+   "osm": "node/910390736"
+  },
+  "src-q550": {
+   "osm": "relation/6759865"
+  },
+  "src-q1583780": {
+   "hours": "Mo-Su 10:00-20:00",
+   "osm": "relation/3075632"
+  },
+  "src-q1865480": {
+   "osm": "node/13411401985"
+  },
+  "src-q898629": {
+   "osm": "relation/11828765"
+  },
+  "src-q217925": {
+   "hours": "24/7",
+   "osm": "way/4208595"
+  },
+  "src-q730948": {
+   "hours": "Mar 01-Mar 30 08:00-18:30; Mar 31-Sep 30 07:30-20:00; Oct 01-Oct 26 08:00-18:30; Oct 27-Feb 28 08:00-17:30",
+   "osm": "way/4221369"
+  },
+  "src-q243": {
+   "hours": "09:30-23:45; Jun 21-Sep 02: 09:00-00:45; Jul 14,Jul 15 off",
+   "fee": "10-25€",
+   "osm": "way/5013364"
+  },
+  "src-q311": {
+   "hours": "Mo-Fr 08:00-17:30; Sa 08:30-17:30; Su 09:00-17:30",
+   "osm": "relation/11838120"
+  },
+  "src-q188856": {
+   "hours": "Mo-Su 10:00-18:00; Apr 1-Sep 30: Mo-Su 10:00-18:30; Jan 1,May 1,Dec 25: off",
+   "fee": "yes",
+   "osm": "way/16407465"
+  },
+  "src-q167863": {
+   "hours": "Tu-We, Fr-Su 10:30-19:00; Th 10:30-22:00",
+   "osm": "way/17954721"
+  },
+  "src-q1431547": {
+   "hours": "May 15-Nov 15: We-Su 10:00-18:00",
+   "fee": "yes",
+   "osm": "way/20326709"
+  },
+  "src-q860166": {
+   "hours": "Mo off; Tu-Fr 10:00-18:00; Sa-Su,PH 10:00-19:00",
+   "fee": "yes",
+   "osm": "way/22870791"
+  },
+  "src-q663673": {
+   "osm": "way/23032971"
+  },
+  "src-q28785": {
+   "hours": "06:00-22:30",
+   "osm": "way/23762981"
+  },
+  "src-q1338207": {
+   "hours": "Mo-Fr 09:30-19:00; Sa 10:00-19:00; Su 09:00-19:00",
+   "osm": "way/53762963"
+  },
+  "src-q1429394": {
+   "osm": "way/53770908"
+  },
+  "src-q818517": {
+   "hours": "Mo-Su 07:30-21:00",
+   "osm": "way/53820452"
+  },
+  "src-q330564": {
+   "hours": "Mo-Su 09:30-19:00",
+   "osm": "way/54180046"
+  },
+  "src-q187840": {
+   "hours": "10:00-17:00",
+   "osm": "way/54667456"
+  },
+  "src-q211034": {
+   "osm": "way/55285318"
+  },
+  "src-q178065": {
+   "hours": "closed",
+   "osm": "way/55503397"
+  },
+  "src-q457318": {
+   "hours": "Tu-Th, Sa-Su 09:30-20:00; Fr 09:30-22:30",
+   "fee": "yes",
+   "osm": "way/56185523"
+  },
+  "src-q23402": {
+   "hours": "Tu-Su 09:30-18:00; Th 09:30-21:45",
+   "fee": "yes",
+   "osm": "way/63178753"
+  },
+  "src-q193582": {
+   "osm": "way/175448742"
+  },
+  "src-q390418": {
+   "osm": "relation/11830053"
+  },
+  "src-q2981": {
+   "hours": "Mo,Tu,We,Fr 07:50-19:00; Th 07:50-22:00; Sa,Su 08:15-19:30",
+   "osm": "way/201611261"
+  },
+  "src-q64436": {
+   "hours": "Apr 02-Jan 31: Mo-Su 10:00-22:30; Apr 01,Sep 30: Mo-Su 10:00-23:00; Oct 01,Dec 31: Mo-Su 10:00-22:30; Jan 01,May 01,May 08,Jul 14,Nov 11,Dec 25: off",
+   "fee": "yes",
+   "osm": "way/226413508"
+  },
+  "src-q641548": {
+   "osm": "way/406229046"
+  },
+  "src-q189503": {
+   "osm": "relation/11827753"
+  },
+  "src-q392564": {
+   "hours": "Sa-Th 09:00-18:00",
+   "osm": "way/437812893"
+  },
+  "src-q640968": {
+   "hours": "Mo-Sa 10:00-19:00",
+   "osm": "relation/284089"
+  },
+  "src-q214654": {
+   "osm": "relation/572440"
+  },
+  "src-q329852": {
+   "osm": "relation/975955"
+  },
+  "src-q188977": {
+   "osm": "relation/1463538"
+  },
+  "src-q820892": {
+   "hours": "Tu-Su 10:00-18:00",
+   "fee": "no",
+   "osm": "relation/2778854"
+  },
+  "src-q1414059": {
+   "hours": "Oct-Apr 07:00-20:00; May-Aug 07:00-22:00; Sep 07:00-21:00",
+   "fee": "no",
+   "osm": "relation/2826933"
+  },
+  "src-q329948": {
+   "osm": "relation/3300400"
+  },
+  "src-q193193": {
+   "hours": "Jan-Mar 09:00-17:00; Apr-Sep 09:00-19:00; Oct-Dec 09:00-17:00",
+   "fee": "yes",
+   "osm": "relation/3344870"
+  },
+  "src-q272208": {
+   "hours": "Nov 06-Mar 15 Mo-Fr 08:00-17:30; Nov 06-Mar 15 Sa 08:30-17:30; Nov 06-Mar 15 PH Su 09:00-17:30; Mar 16-Nov 05 Mo-Fr 08:00-18:00; Mar 16-Nov 05 Sa 08:30-18:00; Mar 16-Nov 05 PH Su 09:00-18:00",
+   "osm": "relation/6911225"
+  },
+  "src-q19675": {
+   "hours": "Mo,Th,Sa-Su 09:00-18:00; Tu off; We,Fr 09:00-21:00; Jan 01,May 01,Dec 25 off",
+   "fee": "yes",
+   "osm": "relation/7515426"
+  },
+  "src-q271639": {
+   "osm": "relation/18047835"
+  }
+ },
+ "towns": {
+  "chantilly-far": {
+   "name": "Chantilly",
+   "wikidata": "Q126675",
+   "editions": 0,
+   "unesco": false,
+   "dayTripListed": true,
+   "sights": [
+    {
+     "kind": "see",
+     "name": "Ch&acirc;teau de Chantilly",
+     "lat": 49.193889,
+     "lng": 2.485833,
+     "hours": "",
+     "price": "",
+     "wikidata": "Q766938",
+     "content": "Not only are the château and its gardens beautiful, but the château is also an important museum of art. The combination of excellent paintings displayed in beautiful surroundings would be a sufficient reason to visit, but make sure to walk ",
+     "editions": 30,
+     "unesco": false
+    }
+   ],
+   "foodDrink": []
+  },
+  "chartres-far": {
+   "name": "Chartres",
+   "wikidata": "Q130272",
+   "editions": 0,
+   "unesco": true,
+   "dayTripListed": true,
+   "sights": [
+    {
+     "kind": "see",
+     "name": "Chartres Cathedral",
+     "lat": 48.447222,
+     "lng": 1.487778,
+     "hours": "",
+     "price": "",
+     "wikidata": "Q180274",
+     "content": "A UNESCO World Heritage site.",
+     "editions": 73,
+     "unesco": true
+    },
+    {
+     "kind": "see",
+     "name": "Maison Picassiette",
+     "lat": 48.442142,
+     "lng": 1.506968,
+     "hours": "",
+     "price": "",
+     "wikidata": "",
+     "content": ""
+    },
+    {
+     "kind": "see",
+     "name": "Musée du Vitrail",
+     "lat": 48.448293,
+     "lng": 1.486754,
+     "hours": "",
+     "price": "Full: €7, reduced €5.50",
+     "wikidata": "",
+     "content": "If you enjoyed the stained glass of the cathedral you might like to visit here, there is a permanent exhibition explaining the glass panels in the cathedral. Temporary exhibitions tend to be more artistic in nature."
+    }
+   ],
+   "foodDrink": [],
+   "unescoSites": [
+    "Notre-Dame de Chartres"
+   ]
+  },
+  "disneyland-paris-far": {
+   "name": "Disneyland Paris",
+   "wikidata": "Q206521",
+   "editions": 0,
+   "unesco": false,
+   "dayTripListed": true,
+   "sights": [],
+   "foodDrink": []
+  },
+  "fontainebleau-far": {
+   "name": "Fontainebleau",
+   "wikidata": null,
+   "editions": 0,
+   "unesco": true,
+   "dayTripListed": true,
+   "sights": [
+    {
+     "kind": "see",
+     "name": "Château de Fontainebleau",
+     "lat": 48.39704,
+     "lng": 2.69236,
+     "hours": "09:30-17:00 in winter; 09:30-18:00 in summer",
+     "price": "€17/adult, €15/reduced",
+     "wikidata": "Q201428",
+     "content": "This is one of the most beautiful chateaux in France. Its interior decorations are especially interesting as a fine example of the French Renaissance style. At the same time, its historical significance is hard to overestimate, since it was",
+     "editions": 56,
+     "unesco": true
+    },
+    {
+     "kind": "see",
+     "name": "Forêt de Fontainebleau",
+     "lat": 48.416667,
+     "lng": 2.666667,
+     "hours": "",
+     "price": "",
+     "wikidata": "",
+     "content": "An important forest area of 25,000 ha with an altitude ranging from 42 m to 144 m. Each year, millions of visitors come to walk (13 million in 2006). 40,000 years ago, nomadic populations were established near the forest. Around the year 10"
+    },
+    {
+     "kind": "see",
+     "name": "Musée d'art figuratif contemporain",
+     "lat": 48.404798647077776,
+     "lng": 2.687632884027811,
+     "hours": "",
+     "price": "",
+     "wikidata": "",
+     "content": ""
+    },
+    {
+     "kind": "see",
+     "name": "Musée des pompiers",
+     "lat": 48.4135397627169,
+     "lng": 2.7123249379949423,
+     "hours": "",
+     "price": "",
+     "wikidata": "",
+     "content": ""
+    },
+    {
+     "kind": "see",
+     "name": "Château de Vaux-le-Vicomte",
+     "lat": 48.56575517997392,
+     "lng": 2.7141457263629465,
+     "hours": "",
+     "price": "",
+     "wikidata": "Q739976",
+     "content": "Baroque French château, the prototype for the Château de Versailles.",
+     "editions": 41,
+     "unesco": false
+    }
+   ],
+   "foodDrink": [],
+   "unescoSites": [
+    "Palace of Fontainebleau"
+   ]
+  }
+ },
+ "ports": [],
+ "dayTrips": [
+  "Chantilly",
+  "Chartres",
+  "Gothic architecture",
+  "Disneyland Paris",
+  "Marne-la-Vallée",
+  "Fontainebleau",
+  "Rambouillet",
+  "Giverny",
+  "Lille",
+  "Loire Valley",
+  "Chambord",
+  "Blois",
+  "Orléans",
+  "Tours",
+  "Orient Express",
+  "Istanbul",
+  "tourist train",
+  "Saint-Denis (Île-de-France)",
+  "Versailles",
+  "Orly Airport",
+  "Lyon",
+  "Bordeaux",
+  "Rouen",
+  "Boulogne-Billancourt"
+ ],
+ "missing": [
+  "the port town",
+  "a mapped cruise terminal or pier"
+ ],
+ "centre": {
+  "lat": 48.85686369565216,
+  "lng": 2.340692608695652
+ },
+ "wikivoyage": "Paris",
+ "portQuery": {
+  "name": "Cruise port of Le Havre , France",
+  "lat": 48.856,
+  "lng": 2.351,
+  "known": false,
+  "island": false
+ }
+}

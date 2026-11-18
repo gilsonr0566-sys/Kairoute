@@ -55,5 +55,12 @@
   "lat": 55.337744,
   "lng": -131.63034
  },
- "wikivoyage": "Ketchikan"
+ "wikivoyage": "Ketchikan",
+ "portQuery": {
+  "name": "Ketchikan Harbor Seaplane Base",
+  "lat": 55.34444444,
+  "lng": -131.66333333,
+  "known": true,
+  "island": false
+ }
 }

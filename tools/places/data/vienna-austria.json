@@ -1,0 +1,1504 @@
+{
+ "key": "vienna austria",
+ "name": "Vienna, Austria",
+ "built": "2026-11-18",
+ "sources": [
+  "Wikidata",
+  "OpenStreetMap",
+  "Wikivoyage"
+ ],
+ "sites": {
+  "src-q131330": {
+   "wikidata": "Q131330",
+   "editions": 65,
+   "types": [
+    "Q751876",
+    "Q570116",
+    "Q33506",
+    "Q53536964"
+   ],
+   "unesco": true,
+   "closedForGood": false,
+   "partOf": [
+    "Q64596229"
+   ],
+   "hours": "Apr 1-Jun 30,Sep 1-Oct 31 08:00-17:30; Jul 1-Aug 31 08:00-18:30; Nov 1-Mar 31 08:00-17:00",
+   "osm": "relation/5183571",
+   "fee": "yes"
+  },
+  "src-q211818": {
+   "wikidata": "Q211818",
+   "editions": 62,
+   "types": [
+    "Q16560"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "fee": "no",
+   "osm": "way/546340540"
+  },
+  "src-q5943": {
+   "wikidata": "Q5943",
+   "editions": 60,
+   "types": [
+    "Q56242215",
+    "Q55876909",
+    "Q16966",
+    "Q570116",
+    "Q16970",
+    "Q2977"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "hours": "Mo-Sa 06:00-22:00; Su 07:00-22:00",
+   "fee": "yes",
+   "osm": "way/212496461"
+  },
+  "src-q95569": {
+   "wikidata": "Q95569",
+   "editions": 52,
+   "types": [
+    "Q207694",
+    "Q3152824",
+    "Q33506"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "hours": "Tu-We, Fr-Su 10:00-18:00; Th 10:00-21:00",
+   "fee": "yes",
+   "osm": "relation/4523037"
+  },
+  "src-q209937": {
+   "wikidata": "Q209937",
+   "editions": 55,
+   "types": [
+    "Q153562"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "osm": "way/8097595"
+  },
+  "src-q688704": {
+   "wikidata": "Q688704",
+   "editions": 43,
+   "types": [
+    "Q1970365",
+    "Q2668072",
+    "Q96888669"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "hours": "Th-Mo 09:00-18:30; We 09:00-21:00",
+   "fee": "yes",
+   "osm": "relation/11187"
+  },
+  "src-q408847": {
+   "wikidata": "Q408847",
+   "editions": 41,
+   "types": [
+    "Q16970"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "fee": "yes",
+   "osm": "way/8097149"
+  },
+  "src-q493126": {
+   "wikidata": "Q493126",
+   "editions": 36,
+   "types": [
+    "Q1498804",
+    "Q877290"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "osm": "way/134545546"
+  },
+  "src-q371908": {
+   "wikidata": "Q371908",
+   "editions": 47,
+   "types": [
+    "Q207694"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [
+    "Q105525743"
+   ],
+   "hours": "PH,Th,Sa-Tu 10:00-18:00; We,Fr 10:00-21:00",
+   "fee": "yes",
+   "osm": "node/60438337"
+  },
+  "src-q46242": {
+   "wikidata": "Q46242",
+   "editions": 55,
+   "types": [
+    "Q23413",
+    "Q751876",
+    "Q16560",
+    "Q481289",
+    "Q1200957",
+    "Q33506"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "hours": "24/7",
+   "osm": "relation/3898175"
+  },
+  "src-q254476": {
+   "wikidata": "Q254476",
+   "editions": 33,
+   "types": [
+    "Q1088552",
+    "Q693842",
+    "Q55876909"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "hours": "Tu-Fr 10:00-16:00; Sa 11:00-19:00; Su 09:00-13:00",
+   "osm": "way/9858714"
+  },
+  "src-q267329": {
+   "wikidata": "Q267329",
+   "editions": 50,
+   "types": [
+    "Q261023"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "osm": "relation/1990592"
+  },
+  "src-q240744": {
+   "wikidata": "Q240744",
+   "editions": 35,
+   "types": [
+    "Q39614"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "osm": "relation/1450360"
+  },
+  "src-q686720": {
+   "wikidata": "Q686720",
+   "editions": 34,
+   "types": [
+    "Q1060829"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "osm": "way/25577405"
+  },
+  "src-q185741": {
+   "wikidata": "Q185741",
+   "editions": 52,
+   "types": [
+    "Q1154710",
+    "Q483110"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "osm": "relation/37185"
+  },
+  "src-q374336": {
+   "wikidata": "Q374336",
+   "editions": 32,
+   "types": [
+    "Q24354"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "osm": "relation/1581063"
+  },
+  "src-q264752": {
+   "wikidata": "Q264752",
+   "editions": 36,
+   "types": [
+    "Q22698",
+    "Q338112"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "osm": "relation/1406382"
+  },
+  "src-q308720": {
+   "wikidata": "Q308720",
+   "editions": 43,
+   "types": [
+    "Q11812394",
+    "Q24354"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "osm": "way/8083399"
+  },
+  "src-q208208": {
+   "wikidata": "Q208208",
+   "editions": 50,
+   "types": [
+    "Q4502119",
+    "Q32880",
+    "Q968159",
+    "Q48204"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": []
+  },
+  "src-q686544": {
+   "wikidata": "Q686544",
+   "editions": 28,
+   "types": [
+    "Q1440300",
+    "Q925352",
+    "Q1068623"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "hours": "Mo-Su 10:00-24:00",
+   "fee": "yes",
+   "osm": "way/46965660"
+  },
+  "src-q478455": {
+   "wikidata": "Q478455",
+   "editions": 27,
+   "types": [
+    "Q62098611",
+    "Q24699794",
+    "Q207694"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "fee": "yes",
+   "osm": "way/328630899"
+  },
+  "src-q697527": {
+   "wikidata": "Q697527",
+   "editions": 27,
+   "types": [
+    "Q11315",
+    "Q1348006",
+    "Q962715",
+    "Q1200957",
+    "Q1329623",
+    "Q1060829"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [
+    "Q124630052"
+   ],
+   "osm": "relation/5827514"
+  },
+  "src-q689400": {
+   "wikidata": "Q689400",
+   "editions": 40,
+   "types": [
+    "Q875538",
+    "Q1371037"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "osm": "relation/33319"
+  },
+  "src-q700751": {
+   "wikidata": "Q700751",
+   "editions": 29,
+   "types": [
+    "Q142127987",
+    "Q787934"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "hours": "Mo-Su 09:00-17:00",
+   "fee": "yes",
+   "osm": "relation/4465113"
+  },
+  "src-q513211": {
+   "wikidata": "Q513211",
+   "editions": 24,
+   "types": [
+    "Q877290",
+    "Q12104567"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "osm": "relation/64435"
+  },
+  "src-q752283": {
+   "wikidata": "Q752283",
+   "editions": 37,
+   "types": [
+    "Q43501"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "hours": "Apr-Sep 09:00-18:30; Oct 09:00-17:30; Nov-Jan 09:00-16:30; Feb 09:00-17:00; Mar 09:00-17:30",
+   "fee": "yes",
+   "osm": "way/8079437"
+  },
+  "src-q702121": {
+   "wikidata": "Q702121",
+   "editions": 23,
+   "types": [
+    "Q7138926"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "osm": "relation/54286"
+  },
+  "src-q697578": {
+   "wikidata": "Q697578",
+   "editions": 22,
+   "types": [
+    "Q202570",
+    "Q2319498"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "osm": "way/97979333"
+  },
+  "src-q372676": {
+   "wikidata": "Q372676",
+   "editions": 21,
+   "types": [
+    "Q2398990",
+    "Q787934"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "hours": "Mo-Fr 09:00-18:00; Sa,Su,PH 10:00-18:00",
+   "fee": "yes",
+   "osm": "way/387303730"
+  },
+  "src-q693884": {
+   "wikidata": "Q693884",
+   "editions": 20,
+   "types": [
+    "Q16970"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "osm": "way/23329490"
+  },
+  "src-q441668": {
+   "wikidata": "Q441668",
+   "editions": 18,
+   "types": [
+    "Q16970"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [
+    "Q133842859"
+   ],
+   "hours": "Mar-Oct: Tu-Fr 10:00-17:00; Mar-Oct: Sa 14:00-17:00; Mar-Oct: Su 11:00-17:00; Mar-Oct: Mo off",
+   "fee": "yes",
+   "osm": "way/95595330"
+  },
+  "src-q80495": {
+   "wikidata": "Q80495",
+   "editions": 29,
+   "types": [
+    "Q11303"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "osm": "way/105310525"
+  },
+  "src-q177008": {
+   "wikidata": "Q177008",
+   "editions": 15,
+   "types": [
+    "Q575759"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "osm": "way/372701402"
+  },
+  "src-q689008": {
+   "wikidata": "Q689008",
+   "editions": 13,
+   "types": [
+    "Q16970"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "osm": "relation/11846800"
+  },
+  "src-q672361": {
+   "wikidata": "Q672361",
+   "editions": 12,
+   "types": [
+    "Q751876"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "osm": "way/28352659"
+  },
+  "src-q59435": {
+   "wikidata": "Q59435",
+   "editions": 25,
+   "types": [
+    "Q207694"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [
+    "Q699943"
+   ],
+   "hours": "We-Mo 10:00-18:00",
+   "fee": "yes",
+   "osm": "way/20411606"
+  },
+  "src-q672906": {
+   "wikidata": "Q672906",
+   "editions": 10,
+   "types": [
+    "Q16560"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "osm": "relation/1601383"
+  },
+  "src-q1466545": {
+   "wikidata": "Q1466545",
+   "editions": 10,
+   "types": [
+    "Q33506",
+    "Q2385804"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "fee": "yes",
+   "osm": "way/10615515"
+  },
+  "src-q264612": {
+   "wikidata": "Q264612",
+   "editions": 9,
+   "types": [
+    "Q16560",
+    "Q15848826"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "osm": "way/96257478"
+  },
+  "src-q19971400": {
+   "wikidata": "Q19971400",
+   "editions": 8,
+   "types": [
+    "Q22698"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "osm": "relation/7735480"
+  },
+  "src-q337357": {
+   "wikidata": "Q337357",
+   "editions": 7,
+   "types": [
+    "Q12511"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "osm": "relation/6689742",
+   "hours": "24/7"
+  },
+  "src-q1117261": {
+   "wikidata": "Q1117261",
+   "editions": 7,
+   "types": [
+    "Q39614",
+    "Q846659"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "hours": "Mo-Th 08:00-16:00; Fr 08:00-15:00; Sa-Su off",
+   "osm": "way/38358797"
+  },
+  "src-q695321": {
+   "wikidata": "Q695321",
+   "editions": 15,
+   "types": [
+    "Q39614"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "osm": "way/9760054"
+  },
+  "src-q143265": {
+   "wikidata": "Q143265",
+   "editions": 15,
+   "types": [
+    "Q12774"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "hours": "Nov-Feb 07:00-17:30; Mar 07:00-19:00; Apr,Aug-Sep 06:30-20:00; May-Jul 06:30-21:00; Oct 06:30-19:00",
+   "osm": "way/8044066"
+  },
+  "src-q689951": {
+   "wikidata": "Q689951",
+   "editions": 18,
+   "types": [
+    "Q207694"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [
+    "Q699943"
+   ],
+   "hours": "Tu-Su 10:00-18:00; Mo off",
+   "fee": "yes",
+   "osm": "way/8097556"
+  }
+ },
+ "towns": {
+  "krems-far": {
+   "name": "Krems",
+   "wikidata": "Q131266",
+   "editions": 68,
+   "unesco": false,
+   "dayTripListed": true,
+   "sights": [
+    {
+     "kind": "see",
+     "name": "Steiner Tor",
+     "lat": 48.409881,
+     "lng": 15.596559,
+     "hours": "",
+     "price": "",
+     "wikidata": "Q2340516",
+     "content": "One of the old city gates, dating from the 15th century.",
+     "editions": 5,
+     "unesco": false
+    },
+    {
+     "kind": "see",
+     "name": "Kunsthalle Krems",
+     "lat": 48.40462,
+     "lng": 15.587334,
+     "hours": "Summer: Tue-Sun and holidays 10:00-18:00; winter: Tue-Sun and holidays 10:00-17:00",
+     "price": "€10 (adults), €9 (concessions), free (children under 6)",
+     "wikidata": "Q1792410",
+     "content": "Hosts exhibits of art by regional as well as international artists.",
+     "editions": 3,
+     "unesco": false
+    },
+    {
+     "kind": "see",
+     "name": "Karikatur Museum Krems",
+     "lat": 48.404691,
+     "lng": 15.588279,
+     "hours": "Daily 10:00-17:00",
+     "price": "€10 (adults), €9 (concessions)",
+     "wikidata": "Q1483375",
+     "content": "A good knowledge of German is helpful in understanding some of the humor presented here.",
+     "editions": 2,
+     "unesco": false
+    },
+    {
+     "kind": "see",
+     "name": "Museumkrems",
+     "lat": 48.411329,
+     "lng": 15.597168,
+     "hours": "Apr-May Wed-Sun, holidays 11:00-18:00; Jun-Oct Daily 11:00-18:00; closed Nov-Mar",
+     "price": "€5 (adults), €4 (concessions), free (children/youth under 19)",
+     "wikidata": "Q1954788",
+     "content": "Has well-curated permanent exhibits illustrating the history of Krems and the wider region, and hosts temporary exhibits of contemporary art.",
+     "editions": 2,
+     "unesco": false
+    },
+    {
+     "kind": "see",
+     "name": "Gozzoburg",
+     "lat": 48.411909,
+     "lng": 15.602037,
+     "hours": "",
+     "price": "",
+     "wikidata": "Q1540600",
+     "content": "Built in the 13th century, this is one of the most significant medieval city buildings in Austria, and is now used for special exhibits. In 2006 and 2007 restoration work uncovered a remarkable set of 13th-century frescoes; along with the '",
+     "editions": 4,
+     "unesco": false
+    },
+    {
+     "kind": "see",
+     "name": "Jewish Cemetery Krems",
+     "lat": 48.417417,
+     "lng": 15.623876,
+     "hours": "",
+     "price": "",
+     "wikidata": "Q1716703",
+     "content": "Established in 1880 for the Jewish community of Krems, the cemetery was abandoned in 1936 and now is a memorial under the auspices of Vienna Israelite Community. Located on the grounds is a 42m-long metal memorial by Hans Kupelwieser, engra",
+     "editions": 2,
+     "unesco": false
+    },
+    {
+     "kind": "see",
+     "name": "Piaristenkirche",
+     "lat": 48.412621,
+     "lng": 15.599523,
+     "hours": "",
+     "price": "",
+     "wikidata": "Q2091898",
+     "content": "The oldest church in Krems. The earliest foundations date to the 13th century, while the current structure is from the late Gothic period of the early 16th century. The interior was remodeled during the Baroque era.",
+     "editions": 4,
+     "unesco": false
+    },
+    {
+     "kind": "see",
+     "name": "Burgruine Rehberg",
+     "lat": 48.43168,
+     "lng": 15.5845,
+     "hours": "Outer castle open 24 hrs, inner castle by prior arrangement only",
+     "price": "Free",
+     "wikidata": "Q19960786",
+     "content": "Established in the 12th century, the castle changed hands many times over the centuries before it was finally abandoned in the early 19th century.",
+     "editions": 2,
+     "unesco": false
+    },
+    {
+     "kind": "see",
+     "name": "Burgruine Senftenberg",
+     "lat": 48.4489,
+     "lng": 15.5658,
+     "hours": "",
+     "price": "Free",
+     "wikidata": "Q664922",
+     "content": "The castle is located few kilometers north of Krems. Built in the 12th century, the fortress was abandoned after the Thirty Years' War. Easily accessible by foot and offers a great view of the surrounding vineyards.",
+     "editions": 6,
+     "unesco": false
+    }
+   ],
+   "foodDrink": [
+    {
+     "kind": "eat",
+     "name": "Filmbar im Kesselhaus",
+     "lat": 48.40854,
+     "lng": 15.58715,
+     "hours": "Wed-Sat 11:00-24:00, Sun 10:00-23:00",
+     "price": "Midday set menu €7.50, mains €8-10",
+     "wikidata": "",
+     "content": "The student restaurant-bar is located by the cinema, and serves some vegetarian dishes along with regional classics. Reservations can be made by telephone or by email."
+    },
+    {
+     "kind": "eat",
+     "name": "Schwarze Kuchl",
+     "lat": 48.41132,
+     "lng": 15.60153,
+     "hours": "Mon-Fri 08:30-19:30, Sat 08:30-17:00",
+     "price": "Mains €8-12",
+     "wikidata": "",
+     "content": "Serves traditional regional cuisine, including some vegetarian dishes."
+    },
+    {
+     "kind": "drink",
+     "name": "Piano – das Bierlokal",
+     "lat": 48.40358,
+     "lng": 15.586144,
+     "hours": "Mon-Sat 17:00-02:00, Sun 17:00-24:00",
+     "price": "",
+     "wikidata": "",
+     "content": "Offers beer from Austria, Germany and Czech Republic with a focus on beer from the nearby Waldviertel."
+    },
+    {
+     "kind": "drink",
+     "name": "Winzer Krems",
+     "lat": 48.420408,
+     "lng": 15.618898,
+     "hours": "Wine shop: Mon-Fri 08:00-17:00, Sat 10:00-17:00, May-Oct also on Sun and holidays 10:00-16:00",
+     "price": "",
+     "wikidata": "",
+     "content": "Tour the winery, wine tasting."
+    }
+   ]
+  },
+  "baden-far": {
+   "name": "Baden",
+   "wikidata": "Q486450",
+   "editions": 68,
+   "unesco": false,
+   "dayTripListed": true,
+   "sights": [],
+   "foodDrink": []
+  },
+  "eisenstadt-far": {
+   "name": "Eisenstadt",
+   "wikidata": "Q126321",
+   "editions": 102,
+   "unesco": false,
+   "dayTripListed": true,
+   "sights": [],
+   "foodDrink": [
+    {
+     "kind": "buy",
+     "name": "Shopping Center Eisenstadt",
+     "lat": 47.835297,
+     "lng": 16.528152,
+     "hours": "Mon-Thu 09:00-18:30, Fri 09:00-19:00, Sat 09:00-18:00",
+     "price": "",
+     "wikidata": "",
+     "content": "Grocery market, clothes, cosmetics, hair dresser, books, travel agency."
+    },
+    {
+     "kind": "buy",
+     "name": "FMZ Haidäcker Park",
+     "lat": 47.826782,
+     "lng": 16.522133,
+     "hours": "Mon-Fri 09:00-18:30, Sat 09:00-18:00",
+     "price": "",
+     "wikidata": "",
+     "content": "Cosmetics, grocery market, books, sports, glasses, shoes."
+    },
+    {
+     "kind": "buy",
+     "name": "FMZ Rusterstraße",
+     "lat": 47.825376,
+     "lng": 16.530942,
+     "hours": "Mon-Fri 09:00-18:30, Sat 09:00-18:00",
+     "price": "",
+     "wikidata": "",
+     "content": "Cosmetics, sports, animals, books, school, shoes."
+    },
+    {
+     "kind": "eat",
+     "name": "mySchnitzel",
+     "lat": 47.8459463,
+     "lng": 16.5165248,
+     "hours": "",
+     "price": "",
+     "wikidata": "",
+     "content": ""
+    },
+    {
+     "kind": "eat",
+     "name": "City Grill",
+     "lat": 47.8460874,
+     "lng": 16.5260376,
+     "hours": "",
+     "price": "",
+     "wikidata": "",
+     "content": ""
+    },
+    {
+     "kind": "eat",
+     "name": "Benji's Star Kebap",
+     "lat": 47.8456261,
+     "lng": 16.5242579,
+     "hours": "",
+     "price": "",
+     "wikidata": "",
+     "content": ""
+    },
+    {
+     "kind": "eat",
+     "name": "Charly's Kebap Pizza",
+     "lat": 47.8455563,
+     "lng": 16.5239525,
+     "hours": "",
+     "price": "",
+     "wikidata": "",
+     "content": ""
+    },
+    {
+     "kind": "eat",
+     "name": "Pizzaboy Schlosstaverne",
+     "lat": 47.8450249,
+     "lng": 16.5203194,
+     "hours": "",
+     "price": "",
+     "wikidata": "",
+     "content": ""
+    },
+    {
+     "kind": "eat",
+     "name": "INTERSPAR-Restaurant",
+     "lat": 47.8269274,
+     "lng": 16.5220545,
+     "hours": "",
+     "price": "",
+     "wikidata": "",
+     "content": ""
+    },
+    {
+     "kind": "eat",
+     "name": "Café Restaurant Scheuhammer",
+     "lat": 47.8302668,
+     "lng": 16.5321111,
+     "hours": "",
+     "price": "",
+     "wikidata": "",
+     "content": ""
+    },
+    {
+     "kind": "eat",
+     "name": "Restaurant Ruckendorfer",
+     "lat": 47.8476055,
+     "lng": 16.5258237,
+     "hours": "",
+     "price": "",
+     "wikidata": "",
+     "content": ""
+    },
+    {
+     "kind": "eat",
+     "name": "FreuRaum",
+     "lat": 47.8457013,
+     "lng": 16.523414,
+     "hours": "",
+     "price": "",
+     "wikidata": "",
+     "content": ""
+    },
+    {
+     "kind": "eat",
+     "name": "Villa Antica Restaurant-Café",
+     "lat": 47.8439787,
+     "lng": 16.5211576,
+     "hours": "",
+     "price": "",
+     "wikidata": "",
+     "content": ""
+    },
+    {
+     "kind": "eat",
+     "name": "Henrici",
+     "lat": 47.8456871,
+     "lng": 16.5201629,
+     "hours": "",
+     "price": "",
+     "wikidata": "",
+     "content": ""
+    }
+   ]
+  },
+  "bratislava-far": {
+   "name": "Bratislava",
+   "wikidata": "Q1780",
+   "editions": 226,
+   "unesco": false,
+   "dayTripListed": true,
+   "sights": [
+    {
+     "kind": "see",
+     "name": "Bratislava Castle",
+     "lat": 48.142,
+     "lng": 17.1,
+     "hours": "Tue-Sun 10:00-18:00",
+     "price": "Adult €14",
+     "wikidata": "Q593311",
+     "content": "The castle contains a Museum of Bratislava History, and a baroque garden. There is also a restaurant open till after the actual castle tours into the night. The general precinct area immediately outside the castle, including the vantage poi",
+     "editions": 47,
+     "unesco": false
+    },
+    {
+     "kind": "see",
+     "name": "Red Crayfish Pharmacy Pharmacological Museum",
+     "lat": 48.14523,
+     "lng": 17.10666,
+     "hours": "10:00–18:00, closed Tuesdays",
+     "price": "",
+     "wikidata": "Q7303948",
+     "content": "",
+     "editions": 3,
+     "unesco": false
+    },
+    {
+     "kind": "see",
+     "name": "Slovak National Gallery (SNG)",
+     "lat": 48.14008,
+     "lng": 17.10858,
+     "hours": "",
+     "price": "",
+     "wikidata": "Q1744024",
+     "content": "For a taste of '''visual arts''', pay a visit to the National Gallery at the embankment between Starý most and Nový most with permanent collections of Slovak and European medieval art pieces, although the temporary exhibitions tend to be fa",
+     "editions": 22,
+     "unesco": false
+    },
+    {
+     "kind": "see",
+     "name": "Bratislava City Gallery (GMB)",
+     "lat": 48.144825,
+     "lng": 17.107822,
+     "hours": "",
+     "price": "",
+     "wikidata": "Q913415",
+     "content": "Bratislava City Gallery is also a good pick to see displays of historical fine arts, paintings and sculptures along with interesting temporary exhibitions.",
+     "editions": 10,
+     "unesco": false
+    },
+    {
+     "kind": "see",
+     "name": "Danubiana Meulensteen Art Museum",
+     "lat": 48.0341,
+     "lng": 17.2326,
+     "hours": "",
+     "price": "€12",
+     "wikidata": "Q1165115",
+     "content": "If you like modern art better, pay a visit to the Danubiana Art Museum on the southern edge of Bratislava. It is about 20km from the city center, so too far to walk. Take bus nr 90 from the National Theater, a taxi, or drive. It is located ",
+     "editions": 10,
+     "unesco": false
+    },
+    {
+     "kind": "see",
+     "name": "National Museum",
+     "lat": 48.14024,
+     "lng": 17.11395,
+     "hours": "",
+     "price": "",
+     "wikidata": "",
+     "content": "Permanent archaelogical collections."
+    },
+    {
+     "kind": "see",
+     "name": "Bratislava City Museum",
+     "lat": 48.14377,
+     "lng": 17.10875,
+     "hours": "",
+     "price": "",
+     "wikidata": "Q1512466",
+     "content": "",
+     "editions": 17,
+     "unesco": false
+    },
+    {
+     "kind": "see",
+     "name": "Natural Science Museum",
+     "lat": 48.14025,
+     "lng": 17.113,
+     "hours": "",
+     "price": "",
+     "wikidata": "",
+     "content": "Echoing the communist era, the natural science exhibitions have an interesting collection of artifacts and is slowly being transformed into a modern era exhibition."
+    },
+    {
+     "kind": "see",
+     "name": "Gerulata",
+     "lat": 48.0557,
+     "lng": 17.1494,
+     "hours": "Closed November to March",
+     "price": "€4",
+     "wikidata": "",
+     "content": "This is an ancient Roman military camp with archeological findings on display. If you're into all things Roman, you should also consider a visit to the nearby '''[http://www.carnuntum.at/de Carnuntum]''' which has a large archeological site"
+    },
+    {
+     "kind": "see",
+     "name": "Museum of Transport",
+     "lat": 48.156389,
+     "lng": 17.106111,
+     "hours": "Tue-Sun 10:00-17:00 (closed Mon)",
+     "price": "Adults €8, students and seniors 65-70 €4, children 3-6 and seniors 70+ €1, children under 3 free. Free entry on first Wednesday of each month",
+     "wikidata": "Q4958040",
+     "content": "With a display of historical vehicles (automobiles, farm vehicles, bicycles, firefighting vehicles, railway, model ships and model buses) in the first railway station in the city, very close to the current Main Railway Station. Free parking",
+     "editions": 5,
+     "unesco": false
+    },
+    {
+     "kind": "see",
+     "name": "Museum of City History",
+     "lat": 48.14369,
+     "lng": 17.10913,
+     "hours": "Tue-Fri 10:00–17:00, Sat Sun 11:00–18:00",
+     "price": "€8",
+     "wikidata": "",
+     "content": "Including the museums of history and music as well as the city dungeon and the exhibition on medieval justice."
+    },
+    {
+     "kind": "see",
+     "name": "Devín Castle",
+     "lat": 48.174,
+     "lng": 16.979,
+     "hours": "10:00–16:00, closed Mondays",
+     "price": "€8 April to October, €6 November to March",
+     "wikidata": "",
+     "content": "There has been a fortress on this site since Roman times. In the 19th and early 20th century it became a Slovak national symbol. During the Communist dictatorship, it was part of the border zone which prevented people from escaping the coun"
+    },
+    {
+     "kind": "see",
+     "name": "St. Martin's Cathedral",
+     "lat": 48.1421,
+     "lng": 17.1049,
+     "hours": "Nov-Mar: Mon-Sat 09:00-11:30, 13:00-16:00, Sun 13:30-16:00; Apr-Oct: Mon-Sat 09:00-11:30, 13:00-18:00, Sun 13:30-16:00",
+     "price": "Entrance €2",
+     "wikidata": "Q239560",
+     "content": "The largest and one of the oldest churches in Bratislava, situated below Bratislava Castle. The Gothic cathedral, formerly the coronation-church of several Hungarian kings, begun in 1204, and reconsecrated in 1445, was restored in 1861-80. ",
+     "editions": 33,
+     "unesco": false
+    },
+    {
+     "kind": "see",
+     "name": "Church of the Annunciation",
+     "lat": 48.14489,
+     "lng": 17.10836,
+     "hours": "",
+     "price": "",
+     "wikidata": "Q1450292",
+     "content": "",
+     "editions": 13,
+     "unesco": false
+    },
+    {
+     "kind": "see",
+     "name": "Church of the Holy Savior",
+     "lat": 48.143889,
+     "lng": 17.108611,
+     "hours": "",
+     "price": "",
+     "wikidata": "Q6188001",
+     "content": "",
+     "editions": 7,
+     "unesco": false
+    },
+    {
+     "kind": "see",
+     "name": "Church of St. Elisabeth",
+     "lat": 48.143389,
+     "lng": 17.116833,
+     "hours": "",
+     "price": "",
+     "wikidata": "Q579043",
+     "content": "Nicknamed the '''Blue Church''' (Modrý kostolík), this is a beautiful Jugendstil church finished in 1913.",
+     "editions": 25,
+     "unesco": false
+    },
+    {
+     "kind": "see",
+     "name": "Trinitarian Church of Bratislava",
+     "lat": 48.146111,
+     "lng": 17.106667,
+     "hours": "",
+     "price": "free",
+     "wikidata": "Q928414",
+     "content": "",
+     "editions": 11,
+     "unesco": false
+    },
+    {
+     "kind": "see",
+     "name": "Primate's Palace",
+     "lat": 48.143962,
+     "lng": 17.108674,
+     "hours": "",
+     "price": "",
+     "wikidata": "Q938516",
+     "content": "Now the seat of the Mayor of Bratislava.",
+     "editions": 16,
+     "unesco": false
+    },
+    {
+     "kind": "see",
+     "name": "Old Town Hall",
+     "lat": 48.14382,
+     "lng": 17.10958,
+     "hours": "",
+     "price": "€8",
+     "wikidata": "",
+     "content": "The Old Town Hall and Apponyi Palace is open to the public as a museum, with an exhibition of city history."
+    },
+    {
+     "kind": "see",
+     "name": "Grassalkovich Palace and gardens",
+     "lat": 48.1492,
+     "lng": 17.1078,
+     "hours": "",
+     "price": "",
+     "wikidata": "",
+     "content": "Also known as the '''Presidential Palace''' (Prezidentský palác) - a Rococo/late Baroque summer palace with a French garden, used as a seat of the President of Slovakia. In one of the garden's alleys you will see a row of trees planted by f"
+    },
+    {
+     "kind": "see",
+     "name": "Gallery Nedbalka",
+     "lat": 48.1441,
+     "lng": 17.1111,
+     "hours": "13:00–19:00, closed Mondays",
+     "price": "€8",
+     "wikidata": "",
+     "content": "Gallery of modern Slovak art from the late 19th century, in a building reminiscent of the New York Guggenheim."
+    },
+    {
+     "kind": "see",
+     "name": "Mirbach Palace",
+     "lat": 48.14491,
+     "lng": 17.10784,
+     "hours": "11:00–18:00, closed Mon",
+     "price": "€8. Free entry with Bratislava Card",
+     "wikidata": "Q752582",
+     "content": "Rococo Palace built 1768–1770. Today it hosts the Bratislava City Gallery.",
+     "editions": 8,
+     "unesco": false
+    },
+    {
+     "kind": "see",
+     "name": "Palffy Palace",
+     "lat": 48.1421,
+     "lng": 17.1073,
+     "hours": "11:00–18:00, closed Mon",
+     "price": "€8. Free entry with Bratislava Card",
+     "wikidata": "",
+     "content": "Rebuilt in the classical style in the 19th century by Count John Pálffy. Part of the Bratislava City Gallery."
+    },
+    {
+     "kind": "see",
+     "name": "Slovak Radio Building",
+     "lat": 48.154167,
+     "lng": 17.114167,
+     "hours": "",
+     "price": "",
+     "wikidata": "Q7541547",
+     "content": "Its main building is a peculiar 60-m-high reversed pyramid from the communist era and a landmark in sharp contrast with the building of the Slovak National Bank just across the street.",
+     "editions": 6,
+     "unesco": false
+    },
+    {
+     "kind": "see",
+     "name": "Slavín monument",
+     "lat": 48.15278,
+     "lng": 17.09988,
+     "hours": "",
+     "price": "",
+     "wikidata": "Q1553111",
+     "content": "On the top of the hill behind the castle, overlooking the entire city. This is a monument in memory of Soviet casualties in the liberation battle of Bratislava in World War II. It is the highest place in the city, and thus the best place fo",
+     "editions": 20,
+     "unesco": false
+    },
+    {
+     "kind": "see",
+     "name": "Roland Fountain",
+     "lat": 48.14335,
+     "lng": 17.10814,
+     "hours": "",
+     "price": "",
+     "wikidata": "Q4178866",
+     "content": "Built by stone cutter Andreas Luttringer and commissioned by Hungarian king Maximilian in 1527, this was the first fountain in Bratislava.",
+     "editions": 12,
+     "unesco": false
+    },
+    {
+     "kind": "see",
+     "name": "Michael's Gate with Tower",
+     "lat": 48.14513,
+     "lng": 17.10674,
+     "hours": "10:00–18:00, closed Tuesdays",
+     "price": "",
+     "wikidata": "Q1717975",
+     "content": "This 51-m-high tower above the gate with its green copper roof is one of the best known and the oldest buildings in Bratislava. It was built in the 14th century as one of the four gates to the city.",
+     "editions": 18,
+     "unesco": false
+    },
+    {
+     "kind": "see",
+     "name": "Laurin's Gate",
+     "lat": 48.143617,
+     "lng": 17.110872,
+     "hours": "",
+     "price": "",
+     "wikidata": "Q1870194",
+     "content": "",
+     "editions": 9,
+     "unesco": false
+    },
+    {
+     "kind": "see",
+     "name": "Chatam Sofer Mausoleum",
+     "lat": 48.14189,
+     "lng": 17.09188,
+     "hours": "",
+     "price": "",
+     "wikidata": "Q4180493",
+     "content": "",
+     "editions": 11,
+     "unesco": false
+    },
+    {
+     "kind": "see",
+     "name": "SNP Bridge",
+     "lat": 48.13686,
+     "lng": 17.10458,
+     "hours": "",
+     "price": "Entrance €6.50, but is free of charge if you eat in the restaurant",
+     "wikidata": "Q837291",
+     "content": "A bridge over the Danube river, with its flying saucer-shaped structure housing a restaurant called [http://bratislava-slovakia.eu/places/sightseeing/ufo-tower \"UFO\"]. There is an observation deck on its roof, open from 10:00-23:00 daily, o",
+     "editions": 36,
+     "unesco": false
+    },
+    {
+     "kind": "see",
+     "name": "Main Indoor Market",
+     "lat": 48.15745,
+     "lng": 17.1261,
+     "hours": "",
+     "price": "",
+     "wikidata": "",
+     "content": ""
+    }
+   ],
+   "foodDrink": [
+    {
+     "kind": "buy",
+     "name": "Aupark",
+     "lat": 48.13293,
+     "lng": 17.10766,
+     "hours": "",
+     "price": "",
+     "wikidata": "",
+     "content": ""
+    },
+    {
+     "kind": "buy",
+     "name": "Polus City Center",
+     "lat": 48.16856,
+     "lng": 17.13886,
+     "hours": "",
+     "price": "",
+     "wikidata": "",
+     "content": ""
+    },
+    {
+     "kind": "buy",
+     "name": "Avion",
+     "lat": 48.1658,
+     "lng": 17.1808,
+     "hours": "",
+     "price": "",
+     "wikidata": "",
+     "content": ""
+    },
+    {
+     "kind": "buy",
+     "name": "Shopping Palace",
+     "lat": 48.186,
+     "lng": 17.1785,
+     "hours": "",
+     "price": "",
+     "wikidata": "",
+     "content": ""
+    },
+    {
+     "kind": "buy",
+     "name": "Eurovea",
+     "lat": 48.14011,
+     "lng": 17.12403,
+     "hours": "",
+     "price": "",
+     "wikidata": "",
+     "content": ""
+    },
+    {
+     "kind": "buy",
+     "name": "Central",
+     "lat": 48.15715,
+     "lng": 17.12982,
+     "hours": "",
+     "price": "",
+     "wikidata": "",
+     "content": ""
+    },
+    {
+     "kind": "eat",
+     "name": "Góvinda reštaurácia",
+     "lat": 48.14711,
+     "lng": 17.11047,
+     "hours": "Mon-Fri 10:30-16:00",
+     "price": "",
+     "wikidata": "",
+     "content": "Hare Krishna-operated restaurant popular with vegans and very affordable."
+    },
+    {
+     "kind": "eat",
+     "name": "KGB Krčma Gurmánov Bratislavy",
+     "lat": 48.148,
+     "lng": 17.11167,
+     "hours": "Mon-Wed 11:00-00:00, Thu 11:00-01:00, Fri 11:00-02:00, Sat 16:00-02:00",
+     "price": "",
+     "wikidata": "",
+     "content": "Communism-themed pub with high-quality beers and affordable prices."
+    },
+    {
+     "kind": "eat",
+     "name": "U Sedliaka",
+     "lat": 48.1485642,
+     "lng": 17.1124898,
+     "hours": "",
+     "price": "",
+     "wikidata": "",
+     "content": "Good typical Slovak dishes and great background music. Nice atmosphere at affordable price."
+    },
+    {
+     "kind": "eat",
+     "name": "Olive Tree",
+     "lat": 48.1487318,
+     "lng": 17.1103387,
+     "hours": "",
+     "price": "",
+     "wikidata": "",
+     "content": "Good selection of Slovac cuisine"
+    },
+    {
+     "kind": "eat",
+     "name": "Divný Janko Reštaurácia",
+     "lat": 48.15088,
+     "lng": 17.10966,
+     "hours": "Mon-Thu 11:00-23:00, Fri-Sat 11:00-00:00, Sun 11:00-23:00",
+     "price": "",
+     "wikidata": "",
+     "content": "Slovak and international dishes in a nice, retro ambience, the only downside is that the staff can be rude."
+    },
+    {
+     "kind": "eat",
+     "name": "Slovak Pub",
+     "lat": 48.14844,
+     "lng": 17.11254,
+     "hours": "",
+     "price": "",
+     "wikidata": "",
+     "content": "For good and reasonably priced halušky, the unique Slovak national meal, visit the Slovak Pub on Obchodna. This is a traditional eatery with a nice ambience. Portion size leans towards the small side. Not wheelchair accessible."
+    },
+    {
+     "kind": "eat",
+     "name": "Flagship",
+     "lat": 48.14603,
+     "lng": 17.11014,
+     "hours": "",
+     "price": "",
+     "wikidata": "",
+     "content": "Slovak national cuisine including halušky, in a converted theatre. Lacklustre service. Same company as Slovak Pub, who also own brewery Kláštorný pivovar, and café Franz Xaver Messerschmidt next door."
+    },
+    {
+     "kind": "eat",
+     "name": "San Marten",
+     "lat": 48.14148,
+     "lng": 17.10569,
+     "hours": "",
+     "price": "",
+     "wikidata": "",
+     "content": "San Marten is an Italian restaurant with great food and excellent service at affordable prices."
+    },
+    {
+     "kind": "eat",
+     "name": "Bistro SOHO",
+     "lat": 48.14409,
+     "lng": 17.1117,
+     "hours": "Mon-S 10:00-22:00",
+     "price": "",
+     "wikidata": "",
+     "content": "Asian fusion cuisine."
+    },
+    {
+     "kind": "eat",
+     "name": "Mille Baci",
+     "lat": 48.14576,
+     "lng": 17.11036,
+     "hours": "",
+     "price": "",
+     "wikidata": "",
+     "content": "Italian restaurant specializing in dishes from Veneto."
+    },
+    {
+     "kind": "eat",
+     "name": "UFO",
+     "lat": 48.1368316,
+     "lng": 17.1046142,
+     "hours": "",
+     "price": "",
+     "wikidata": "",
+     "content": "You can get a nice view and can meet some local celebrities at the übercool and very expensive UFO restaurant and disco on top of Nový most bridge."
+    },
+    {
+     "kind": "eat",
+     "name": "ECK",
+     "lat": 48.1738,
+     "lng": 16.9951,
+     "hours": "Tue–Fri 18:00–22:00",
+     "price": "€150 for the tasting menu",
+     "wikidata": "",
+     "content": "Regarded as one of the best restaurants in Slovakia, bookings open two months in advance and sell out almost immediately."
+    }
+   ]
+  }
+ },
+ "ports": [],
+ "dayTrips": [
+  "Krems",
+  "Wachau",
+  "Baden (Austria)",
+  "St. Pölten",
+  "Lower Austria",
+  "Wiener Neustadt",
+  "Eisenstadt",
+  "Burgenland",
+  "Sopron",
+  "Hungary",
+  "Salzburg",
+  "Graz",
+  "Bratislava",
+  "Slovakia",
+  "Brno",
+  "Czech Republic",
+  "Prague",
+  "Innsbruck",
+  "Tyrol",
+  "Alps",
+  "Budapest",
+  "Danube",
+  "Slovenia",
+  "Maribor",
+  "Ljubljana",
+  "Julian Alps",
+  "Tolmin",
+  "Vintgar",
+  "Postojna",
+  "Piran",
+  "Bled",
+  "Melk",
+  "Neusiedl am See",
+  "Vienna International Airport",
+  "Tulln",
+  "Klosterneuburg",
+  "Passau",
+  "EuroVelo cycling routes"
+ ],
+ "missing": [],
+ "centre": {
+  "lat": 48.20513399999999,
+  "lng": 16.370664666666666
+ },
+ "wikivoyage": "Vienna"
+}

@@ -182,5 +182,12 @@
   "lat": 42.42762599999999,
   "lng": 18.768152666666666
  },
- "wikivoyage": "Kotor"
+ "wikivoyage": "Kotor",
+ "portQuery": {
+  "name": "Port of Kotor",
+  "lat": 42.4260692,
+  "lng": 18.7682195,
+  "known": true,
+  "island": false
+ }
 }

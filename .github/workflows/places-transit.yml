@@ -4,6 +4,10 @@ name: Places public transport lines
 # (gathered in tools/places/data after each run).
 on:
   workflow_dispatch:
+    inputs:
+      refresh:
+        description: "Parts to refresh: transit, ports"
+        default: "transit,ports"
   push:
     branches: ["claude/project-thread-xrdp7v"]
     paths: [".github/workflows/places-transit.yml", "tools/places/targets.json"]
@@ -19,6 +23,6 @@ jobs:
         with:
           node-version: 22
       - env:
-          TRANSIT_ONLY: "1"
+          REFRESH: ${{ inputs.refresh || 'transit,ports' }}
           PLACES_EXTRA: "1"
         run: node tools/places/build.cjs

@@ -144,9 +144,20 @@ function listings(text) {
   return out;
 }
 
+// Where the ship docks: the port town found by name (tried twice: the search is sometimes busy), then its mapped
+// cruise terminals and piers.
+async function portPoints(port, centre, island) {
+  let p = port.known && isFinite(port.lat) ? port : null;
+  for (let i = 0; !p && i < 2; i++) { const f = await findQ(baseName(port.name), centre, 400); if (f) p = f.c; else await sleep(3000); }
+  if (!p) return { ports: [], missing: ['the port town', 'a mapped cruise terminal or pier'] };
+  const ports = await cruisePoints(p, island);
+  return { ports, missing: ports.some(x => x.cruise) ? [] : ['a mapped cruise terminal or pier'] };
+}
+
 async function buildPlace(t) {
   console.log(`\n== ${t.key} (${t.name})`);
-  const out = { key: t.key, name: t.name, built: new Date().toISOString().slice(0, 10), sources: ['Wikidata', 'OpenStreetMap', 'Wikivoyage'], sites: {}, towns: {}, ports: [], dayTrips: [], missing: [] };
+  const out = { key: t.key, name: t.name, built: new Date().toISOString().slice(0, 10), sources: ['Wikidata', 'OpenStreetMap', 'Wikivoyage'], sites: {}, towns: {}, ports: [], dayTrips: [], missing: [],
+    portQuery: t.port ? Object.assign({}, t.port, { island: !!t.island }) : null };   // kept so a later refresh can look again
   // Centre: the guide's sights, else the place found by name.
   let centre = t.centre;
   if (!centre) { const f = await findQ(baseName(t.name), null, 1e9); if (f) centre = f.c; }
@@ -200,12 +211,7 @@ async function buildPlace(t) {
     out.towns[s.id] = town;
   }
   // 4. Ports: the real cruise terminals or piers near where the ship docks.
-  if (t.port) {
-    let p = t.port.known ? t.port : null;
-    if (!p) { const f = await findQ(baseName(t.port.name), centre, 400); if (f) p = f.c; }
-    if (p) out.ports = await cruisePoints(p, !!t.island); else out.missing.push('the port town');
-    if (!out.ports.some(x => x.cruise)) out.missing.push('a mapped cruise terminal or pier');
-  }
+  if (t.port) { const r = await portPoints(t.port, centre, !!t.island); out.ports = r.ports; out.missing.push(...r.missing); }
   // 4b. Public transport lines within reach of the sights.
   if (centre) {
     const spread = Math.max(3, ...t.sites.filter(s => isFinite(s.lat)).map(s => hav(centre, s)));
@@ -245,19 +251,27 @@ async function buildPlace(t) {
   }
   // Places already saved are targets too (a quick refresh needs only their centre).
   for (const f of fs.readdirSync(OUT).filter(f => f.endsWith('.json'))) { const p = JSON.parse(fs.readFileSync(path.join(OUT, f)));
-    if (!targets.has(p.key) && p.centre) targets.set(p.key, { key: p.key, name: p.name, centre: p.centre, sites: [], farther: [], port: null, saved: true }); }
+    if (!targets.has(p.key) && p.centre) targets.set(p.key, { key: p.key, name: p.name, centre: p.centre, sites: [], farther: [], port: p.portQuery || null, island: !!(p.portQuery && p.portQuery.island), saved: true, hasPorts: (p.ports || []).some(x => x.cruise) }); }
   const only = process.env.ONLY ? new RegExp(process.env.ONLY, 'i') : null;
   for (const t of targets.values()) {
     if (only && !only.test(t.key)) continue;
-    // TRANSIT_ONLY=1: refresh just the public transport lines of each place (fast, one map query per place).
-    if (process.env.TRANSIT_ONLY) {
+    // REFRESH=transit,ports (TRANSIT_ONLY=1 means transit): refresh just those parts of each saved place, quickly.
+    const refresh = (process.env.REFRESH || (process.env.TRANSIT_ONLY ? 'transit' : '')).split(',').filter(Boolean);
+    if (refresh.length) {
       let centre = t.centre; if (!centre) { const f = await findQ(baseName(t.name), null, 1e9); if (f) centre = f.c; } if (!centre) continue;
       console.log(`\n== ${t.key} (${t.name})`);
-      const spread = Math.max(3, ...t.sites.filter(s => isFinite(s.lat)).map(s => hav(centre, s)));
-      const lines = await transitLines(centre, Math.min(25, spread + 2));
-      console.log(`   ${lines.length} public transport lines${lines.length ? ' (' + [...new Set(lines.map(l => l.mode))].join(', ') + ')' : ''}`);
+      const fresh = { key: t.key, name: t.name, centre };
+      if (refresh.includes('transit')) {
+        const spread = Math.max(3, ...t.sites.filter(s => isFinite(s.lat)).map(s => hav(centre, s)));
+        fresh.transit = await transitLines(centre, Math.min(25, spread + 2));
+        console.log(`   ${fresh.transit.length} public transport lines${fresh.transit.length ? ' (' + [...new Set(fresh.transit.map(l => l.mode))].join(', ') + ')' : ''}`);
+      }
+      if (refresh.includes('ports') && t.port && !t.hasPorts) {
+        const r = await portPoints(t.port, centre, !!t.island); fresh.ports = r.ports; fresh.missing = r.missing; fresh.portQuery = Object.assign({}, t.port, { island: !!t.island });
+        console.log(`   ${r.ports.length} port points${r.missing.length ? ', missing: ' + r.missing.join(', ') : ''}`); r.ports.slice(0, 4).forEach(p => console.log(`   port ${p.name} (${p.kind}${p.cruise ? ', cruise' : ''}) ${p.d} km`));
+      }
       const file = t.key.replace(/[^a-z0-9]+/gi, '-').toLowerCase() + '.json', was = path.join(OUT, file);
-      const out = merge(fs.existsSync(was) ? JSON.parse(fs.readFileSync(was)) : { key: t.key, name: t.name, centre, sites: {}, towns: {}, ports: [], dayTrips: [], missing: [] }, { key: t.key, name: t.name, centre, transit: lines });
+      const out = merge(fs.existsSync(was) ? JSON.parse(fs.readFileSync(was)) : { key: t.key, name: t.name, centre, sites: {}, towns: {}, ports: [], dayTrips: [], missing: [] }, fresh);
       const body = JSON.stringify(out, null, 1); fs.writeFileSync(was, body);
       const z = zlib.gzipSync(body).toString('base64');
       console.log('PLACES-BEGIN ' + file); for (let i = 0; i < z.length; i += 4000) console.log('PLACES ' + z.slice(i, i + 4000)); console.log('PLACES-END');

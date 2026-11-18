@@ -1,0 +1,755 @@
+{
+ "key": "southampton england",
+ "name": "Southampton, England",
+ "built": "2026-11-18",
+ "sources": [
+  "Wikidata",
+  "OpenStreetMap",
+  "Wikivoyage"
+ ],
+ "sites": {},
+ "towns": {
+  "new-forest-far": {
+   "name": "New Forest",
+   "wikidata": "Q277755",
+   "editions": 0,
+   "unesco": false,
+   "dayTripListed": true,
+   "sights": [],
+   "foodDrink": []
+  },
+  "salisbury-far": {
+   "name": "Salisbury",
+   "wikidata": "Q160642",
+   "editions": 0,
+   "unesco": false,
+   "dayTripListed": true,
+   "sights": [],
+   "foodDrink": []
+  },
+  "winchester-far": {
+   "name": "Winchester",
+   "wikidata": "Q172157",
+   "editions": 0,
+   "unesco": false,
+   "dayTripListed": true,
+   "sights": [],
+   "foodDrink": []
+  },
+  "portsmouth-far": {
+   "name": "Portsmouth",
+   "wikidata": null,
+   "editions": 0,
+   "unesco": false,
+   "dayTripListed": true,
+   "sights": [
+    {
+     "kind": "see",
+     "name": "Portsmouth Historic Dockyard",
+     "lat": 50.8005,
+     "lng": -1.1095,
+     "hours": "",
+     "price": "£36 for a 1-day 1-attraction ticket, £51 for all attractions for 1-year",
+     "wikidata": "Q21030119",
+     "content": "A major naval heritage site within an active Royal Navy base, featuring historic warships including ''HMS Victory'' and ''HMS Warrior''. It also includes the National Museum of the Royal Navy and other museums, exhibitions and interactive a",
+     "editions": 3,
+     "unesco": false
+    },
+    {
+     "kind": "see",
+     "name": "Mary Rose Museum",
+     "lat": 50.8022,
+     "lng": -1.109,
+     "hours": "Apr-Oct 10:00-17:30, Nov-Mar 10:00-17:00",
+     "price": "£36 for a 1-day ticket, £51 for all dockyard attractions for 1-year",
+     "wikidata": "Q6780641",
+     "content": "The Mary Rose Museum houses the remains of Henry VIII’s flagship, which sank in 1545 and was raised in 1982 after more than 400 years underwater. The museum is built around the preserved hull, displayed in a climate-controlled environment a",
+     "editions": 6,
+     "unesco": false
+    },
+    {
+     "kind": "see",
+     "name": "Spinnaker Tower",
+     "lat": 50.7956,
+     "lng": -1.10857,
+     "hours": "10AM-6PM",
+     "price": "£19.50/adult, £15.50/child",
+     "wikidata": "Q541846",
+     "content": "This striking and highly visible £21-million landmark tower rises some 170 m above the redeveloping harbour of Portsmouth, symbolising the wind filling a spinnaker sail. Visitors can use the tower to view from 3 levels: at 100 m, 105 m and ",
+     "editions": 18,
+     "unesco": false
+    },
+    {
+     "kind": "see",
+     "name": "Southsea Castle",
+     "lat": 50.7781,
+     "lng": -1.0889,
+     "hours": "Apr-Oct Tue-Sun 10AM-5PM",
+     "price": "free",
+     "wikidata": "Q1743815",
+     "content": "Built in 1544, the castle was part of a series of fortifications constructed by Henry VIII around England's coasts to protect the country from invaders. Heavily modified due to being in use until the end of World War II. Contains a rather r",
+     "editions": 10,
+     "unesco": false
+    },
+    {
+     "kind": "see",
+     "name": "Southsea Model Village",
+     "lat": 50.781,
+     "lng": -1.0688,
+     "hours": "10:30-16:30, summer 10:30-18:30",
+     "price": "£7.5/adult, £7/senior, £6.5/child, £25/family",
+     "wikidata": "",
+     "content": "A 1/12 scale village"
+    },
+    {
+     "kind": "see",
+     "name": "Southsea Rose Garden",
+     "lat": 50.7811,
+     "lng": -1.0679,
+     "hours": "8AM-8PM",
+     "price": "free",
+     "wikidata": "Q15243099",
+     "content": "Inside the 19th-century Lumps Fort.",
+     "editions": 1,
+     "unesco": false
+    },
+    {
+     "kind": "see",
+     "name": "Ernest Smith Clock Tower",
+     "lat": 50.7895,
+     "lng": -1.09304,
+     "hours": "",
+     "price": "",
+     "wikidata": "",
+     "content": "A beautiful clock tower over a barbers."
+    },
+    {
+     "kind": "see",
+     "name": "Portsmouth Cathedral",
+     "lat": 50.7903,
+     "lng": -1.1042,
+     "hours": "",
+     "price": "free",
+     "wikidata": "Q1573962",
+     "content": "A Romanesque Anglican cathedral in the old town. Contains a piece of Lord Nelson's flag and the tomb of a unknown member of the crew of the Mary Rose.",
+     "editions": 12,
+     "unesco": false
+    },
+    {
+     "kind": "see",
+     "name": "St John's Catholic Cathedral",
+     "lat": 50.8003,
+     "lng": -1.0942,
+     "hours": "",
+     "price": "",
+     "wikidata": "",
+     "content": "A Catholic cathedral in the city centre."
+    },
+    {
+     "kind": "see",
+     "name": "Royal Garrison Church",
+     "lat": 50.789,
+     "lng": -1.104,
+     "hours": "Apr-Oct Fri-Sat 11AM-4PM, Sun 1-4PM",
+     "price": "free",
+     "wikidata": "Q17650348",
+     "content": "A partly roofless English Heritage property. Only occasionally open to the public.",
+     "editions": 4,
+     "unesco": false
+    },
+    {
+     "kind": "see",
+     "name": "Royal Marines Museum",
+     "lat": 50.7843,
+     "lng": -1.0536,
+     "hours": "Daily 10AM-5PM (except Dec 24-26)",
+     "price": "Adult £9",
+     "wikidata": "Q7374452",
+     "content": "Covers the history of the Royal Marines. The museum is in what was one of the most stately Officers' Messes in England, built in the 1860s with beautiful ceilings, huge paintings and a grand staircase.",
+     "editions": 4,
+     "unesco": false
+    },
+    {
+     "kind": "see",
+     "name": "Eastney Beam Engine House",
+     "lat": 50.788934,
+     "lng": -1.045662,
+     "hours": "open one day a month, check before visiting",
+     "price": "free",
+     "wikidata": "Q12056883",
+     "content": "Pair of compound beam engines built in 1887 to pump sewage.",
+     "editions": 2,
+     "unesco": false
+    },
+    {
+     "kind": "see",
+     "name": "The D-Day Story",
+     "lat": 50.7798,
+     "lng": -1.08933,
+     "hours": "Apr-Sept 10-17:30, Oct-Mar 10-17:00, closed 24-26 Dec",
+     "price": "£18.25/adult, £14.55/senior, £9.15/student, £45.5/family, discounted if purchased online",
+     "wikidata": "Q5203249",
+     "content": "Tells the story of Operation Overlord during the Normandy D-Day landings including the Overlord Embroidery. Has an original LCT (landing craft tank) used at D-Day that has been restored and accessed by visitors.",
+     "editions": 3,
+     "unesco": false
+    },
+    {
+     "kind": "see",
+     "name": "Blue Reef Aquarium",
+     "lat": 50.7801,
+     "lng": -1.0928,
+     "hours": "Daily except 25 Dec 10AM-6PM (Nov-Mar until 5PM)",
+     "price": "Adult £9.75",
+     "wikidata": "Q4929663",
+     "content": "Take an undersea safari at the aquarium on the seafront.",
+     "editions": 3,
+     "unesco": false
+    },
+    {
+     "kind": "see",
+     "name": "Charles Dickens Birthplace Museum",
+     "lat": 50.8071,
+     "lng": -1.0873,
+     "hours": "Daily from mid Apr-Dec 10AM-5:30PM",
+     "price": "",
+     "wikidata": "Q17528937",
+     "content": "The famous writer Charles Dickens was born in this modest house in 1812.",
+     "editions": 4,
+     "unesco": false
+    },
+    {
+     "kind": "see",
+     "name": "Cumberland House Natural History Museum",
+     "lat": 50.7821,
+     "lng": -1.0702,
+     "hours": "Tue-Sat 10AM-5PM",
+     "price": "Free",
+     "wikidata": "",
+     "content": "A fairly limited collection."
+    },
+    {
+     "kind": "see",
+     "name": "Portsmouth Museum and Art Gallery",
+     "lat": 50.791561,
+     "lng": -1.097727,
+     "hours": "summer 10AM-5PM, non-summer Tue-Sun 10AM-5PM",
+     "price": "free",
+     "wikidata": "Q19568980",
+     "content": "The Arthur Conan Doyle and Sherlock Holmes exhibition \"A Study in Sherlock\" is temporarily closed.",
+     "editions": 2,
+     "unesco": false
+    },
+    {
+     "kind": "see",
+     "name": "Portchester Castle",
+     "lat": 50.8374,
+     "lng": -1.1149,
+     "hours": "10AM-5PM",
+     "price": "£12.5/adult",
+     "wikidata": "Q732249",
+     "content": "About {{mi",
+     "editions": 18,
+     "unesco": false
+    },
+    {
+     "kind": "see",
+     "name": "Portsdown Hill",
+     "lat": 50.8582,
+     "lng": -1.1106,
+     "hours": "",
+     "price": "",
+     "wikidata": "Q7232403",
+     "content": "Offers amazing views across Portsmouth and the South Downs. Just to the rear (north) of Portsmouth, it is a world away with countryside walks and traditional pubs.",
+     "editions": 3,
+     "unesco": false
+    },
+    {
+     "kind": "see",
+     "name": "The Royal Armouries at Fort Nelson",
+     "lat": 50.8609,
+     "lng": -1.1388,
+     "hours": "",
+     "price": "free (£3 for car parking)",
+     "wikidata": "Q5471742",
+     "content": "Sits just on Portsdown Hill and is free of charge to visit.",
+     "editions": 2,
+     "unesco": false
+    }
+   ],
+   "foodDrink": [
+    {
+     "kind": "buy",
+     "name": "Portsmouth City Centre",
+     "lat": 50.801,
+     "lng": -1.09,
+     "hours": "",
+     "price": "",
+     "wikidata": "",
+     "content": "Usual high street names, but has Miss Selfridge, Topshop, H&M, New Look and Primark next to one another."
+    },
+    {
+     "kind": "buy",
+     "name": "Gunwharf Quays",
+     "lat": 50.7949,
+     "lng": -1.1058,
+     "hours": "",
+     "price": "",
+     "wikidata": "Q278073",
+     "content": "Outlet centre, with shops like M&S, Cadburys, Claire's, Gap. Some of the prices are cheaper than the high streets, but likewise some are similar or more expensive so shopping around is a good idea."
+    },
+    {
+     "kind": "buy",
+     "name": "Southsea Town Centre",
+     "lat": 50.78576,
+     "lng": -1.08842,
+     "hours": "",
+     "price": "",
+     "wikidata": "",
+     "content": "A variety of small specialist shops, boutiques, art shops, delis, home furnishings. Also Knight & Lee."
+    },
+    {
+     "kind": "buy",
+     "name": "Albert Road",
+     "lat": 50.7867,
+     "lng": -1.0766,
+     "hours": "",
+     "price": "",
+     "wikidata": "",
+     "content": "A good bet for smaller (independent) shops, second-hand goods and antiques."
+    },
+    {
+     "kind": "eat",
+     "name": "The Tenth Hole Tea Room",
+     "lat": 50.7822,
+     "lng": -1.0641,
+     "hours": "",
+     "price": "",
+     "wikidata": "",
+     "content": "Great for light lunch but the highlight is the amazing home-made cakes."
+    },
+    {
+     "kind": "eat",
+     "name": "Jenny's Restaurants",
+     "lat": 50.8022502,
+     "lng": -1.0885923,
+     "hours": "",
+     "price": "",
+     "wikidata": "",
+     "content": ""
+    },
+    {
+     "kind": "eat",
+     "name": "Ocean Fresh Fish & Chips",
+     "lat": 50.8103647,
+     "lng": -1.0786383,
+     "hours": "",
+     "price": "",
+     "wikidata": "",
+     "content": ""
+    },
+    {
+     "kind": "eat",
+     "name": "Nut Cafe Restaurant",
+     "lat": 50.8157118,
+     "lng": -1.0797276,
+     "hours": "",
+     "price": "",
+     "wikidata": "",
+     "content": ""
+    },
+    {
+     "kind": "eat",
+     "name": "North End Cafe",
+     "lat": 50.8165573,
+     "lng": -1.0795596,
+     "hours": "",
+     "price": "",
+     "wikidata": "",
+     "content": ""
+    },
+    {
+     "kind": "eat",
+     "name": "Britannia Fish and Chips",
+     "lat": 50.7985865,
+     "lng": -1.1068239,
+     "hours": "",
+     "price": "",
+     "wikidata": "",
+     "content": ""
+    },
+    {
+     "kind": "eat",
+     "name": "The Fratton",
+     "lat": 50.797316,
+     "lng": -1.0769294,
+     "hours": "",
+     "price": "",
+     "wikidata": "",
+     "content": ""
+    },
+    {
+     "kind": "eat",
+     "name": "abarbistro",
+     "lat": 50.7918,
+     "lng": -1.1047,
+     "hours": "",
+     "price": "",
+     "wikidata": "",
+     "content": "Old Portsmouth. Modern European cuisine. Also great but you can drop a lot of money in this place, which has great service!"
+    },
+    {
+     "kind": "eat",
+     "name": "The Beach Club",
+     "lat": 50.7834,
+     "lng": -1.0978,
+     "hours": "",
+     "price": "£15-25",
+     "wikidata": "",
+     "content": "A relatively new restaurant right on the pebbles, with the most amazing views of the Solent. Great for a cold glass of wine, stonebaked pizza and pasta."
+    },
+    {
+     "kind": "eat",
+     "name": "Panero Lounge",
+     "lat": 50.7859886,
+     "lng": -1.0884166,
+     "hours": "",
+     "price": "£10-20",
+     "wikidata": "",
+     "content": "British fare"
+    },
+    {
+     "kind": "eat",
+     "name": "Becketts Southsea",
+     "lat": 50.7889183,
+     "lng": -1.0964488,
+     "hours": "",
+     "price": "",
+     "wikidata": "",
+     "content": "British-inspired cuisine"
+    },
+    {
+     "kind": "eat",
+     "name": "The Chambers",
+     "lat": 50.7915897,
+     "lng": -1.0955791,
+     "hours": "",
+     "price": "",
+     "wikidata": "",
+     "content": ""
+    },
+    {
+     "kind": "drink",
+     "name": "Bold Forester",
+     "lat": 50.78684,
+     "lng": -1.07458,
+     "hours": "",
+     "price": "",
+     "wikidata": "",
+     "content": "Green King"
+    },
+    {
+     "kind": "drink",
+     "name": "Brewhouse & Kitchen",
+     "lat": 50.78833,
+     "lng": -1.0951,
+     "hours": "11AM-11PM",
+     "price": "",
+     "wikidata": "",
+     "content": ""
+    },
+    {
+     "kind": "drink",
+     "name": "The Deco",
+     "lat": 50.7893,
+     "lng": -1.0842,
+     "hours": "",
+     "price": "",
+     "wikidata": "",
+     "content": "Friendly rock and alternative, sometimes metal bar."
+    },
+    {
+     "kind": "drink",
+     "name": "Emporium Bar",
+     "lat": 50.78914,
+     "lng": -1.08291,
+     "hours": "11AM-",
+     "price": "",
+     "wikidata": "",
+     "content": ""
+    },
+    {
+     "kind": "drink",
+     "name": "Festing",
+     "lat": 50.78613,
+     "lng": -1.07014,
+     "hours": "noon-11PM",
+     "price": "",
+     "wikidata": "",
+     "content": "Green King"
+    },
+    {
+     "kind": "drink",
+     "name": "Hole in the Wall",
+     "lat": 50.7899,
+     "lng": -1.0932,
+     "hours": "",
+     "price": "",
+     "wikidata": "",
+     "content": "Small pub with a traditional feel and real ales."
+    },
+    {
+     "kind": "drink",
+     "name": "The Honest Politician",
+     "lat": 50.7904,
+     "lng": -1.0887,
+     "hours": "",
+     "price": "",
+     "wikidata": "",
+     "content": "A pub with pool tables and a relaxed atmosphere, and always a rocking soundtrack."
+    },
+    {
+     "kind": "drink",
+     "name": "The Kings",
+     "lat": 50.78765,
+     "lng": -1.0813,
+     "hours": "10AM-10PM",
+     "price": "",
+     "wikidata": "",
+     "content": ""
+    },
+    {
+     "kind": "drink",
+     "name": "The Phoenix",
+     "lat": 50.78627,
+     "lng": -1.08015,
+     "hours": "10AM-midnight",
+     "price": "",
+     "wikidata": "Q108801775",
+     "content": ""
+    },
+    {
+     "kind": "drink",
+     "name": "The Wine Vaults",
+     "lat": 50.7874,
+     "lng": -1.0811,
+     "hours": "noon-11PM",
+     "price": "",
+     "wikidata": "Q108801779",
+     "content": "Good cask ales and great atmosphere, arrive early if you want a seat."
+    },
+    {
+     "kind": "drink",
+     "name": "Meat and Barrel",
+     "lat": 50.78353,
+     "lng": -1.08895,
+     "hours": "noon-10PM",
+     "price": "",
+     "wikidata": "",
+     "content": "Meat majors on burgers, wings and ribs."
+    },
+    {
+     "kind": "drink",
+     "name": "Croxton's Kitchen & Tap House",
+     "lat": 50.78399,
+     "lng": -1.08898,
+     "hours": "T-Thu Noon-10PM, Fri Sat noon-11PM, S noon-9PM (Mon closed)",
+     "price": "",
+     "wikidata": "",
+     "content": "Interesting range of summery beer. Food includes: Bavett of beef, mussels."
+    },
+    {
+     "kind": "drink",
+     "name": "The Jolly Sailor",
+     "lat": 50.78165,
+     "lng": -1.08515,
+     "hours": "",
+     "price": "",
+     "wikidata": "",
+     "content": ""
+    },
+    {
+     "kind": "drink",
+     "name": "The Lord Palmerston",
+     "lat": 50.78423,
+     "lng": -1.089,
+     "hours": "8AM-midnight",
+     "price": "",
+     "wikidata": "Q88916082",
+     "content": "Wetherspoons."
+    },
+    {
+     "kind": "drink",
+     "name": "Shenanigans",
+     "lat": 50.78507,
+     "lng": -1.09052,
+     "hours": "",
+     "price": "",
+     "wikidata": "",
+     "content": "Irish pub doing breakfast and occasional music."
+    },
+    {
+     "kind": "drink",
+     "name": "The Southsea Village",
+     "lat": 50.78407,
+     "lng": -1.0887,
+     "hours": "",
+     "price": "",
+     "wikidata": "",
+     "content": ""
+    },
+    {
+     "kind": "drink",
+     "name": "Ship Anson",
+     "lat": 50.7985,
+     "lng": -1.10655,
+     "hours": "",
+     "price": "",
+     "wikidata": "Q108785377",
+     "content": "Green King overlooking the HMS Warrior."
+    },
+    {
+     "kind": "drink",
+     "name": "The Old Customs House",
+     "lat": 50.7951,
+     "lng": -1.1064,
+     "hours": "",
+     "price": "",
+     "wikidata": "Q26537919",
+     "content": "A traditional pub in a historic building, within a modern setting. Great ales and food."
+    },
+    {
+     "kind": "drink",
+     "name": "The Ship & Castle",
+     "lat": 50.79887,
+     "lng": -1.10693,
+     "hours": "",
+     "price": "",
+     "wikidata": "Q108785572",
+     "content": "In the ‘Devil’s Acre’ severing a carvery every day overlooking the HMS Warrior"
+    },
+    {
+     "kind": "drink",
+     "name": "The Fleet Portsmouth",
+     "lat": 50.79715,
+     "lng": -1.09328,
+     "hours": "10AM-11PM",
+     "price": "",
+     "wikidata": "",
+     "content": ""
+    },
+    {
+     "kind": "drink",
+     "name": "Park Tavern",
+     "lat": 50.8003,
+     "lng": -1.09171,
+     "hours": "",
+     "price": "",
+     "wikidata": "",
+     "content": ""
+    },
+    {
+     "kind": "drink",
+     "name": "The Bridge Tavern",
+     "lat": 50.79177,
+     "lng": -1.10605,
+     "hours": "noon-11PM",
+     "price": "",
+     "wikidata": "Q26666761",
+     "content": ""
+    },
+    {
+     "kind": "drink",
+     "name": "The Chambers",
+     "lat": 50.79159,
+     "lng": -1.09541,
+     "hours": "",
+     "price": "",
+     "wikidata": "",
+     "content": "A plush pub with a roof terrace."
+    },
+    {
+     "kind": "drink",
+     "name": "The Dolphin",
+     "lat": 50.78998,
+     "lng": -1.10378,
+     "hours": "10AM-11PM",
+     "price": "",
+     "wikidata": "",
+     "content": "Claims to be Portsmouth's oldest pub."
+    },
+    {
+     "kind": "drink",
+     "name": "The Pembroke",
+     "lat": 50.7898,
+     "lng": -1.10309,
+     "hours": "",
+     "price": "",
+     "wikidata": "",
+     "content": ""
+    },
+    {
+     "kind": "drink",
+     "name": "The Sally Port Inn",
+     "lat": 50.78995,
+     "lng": -1.10426,
+     "hours": "4-10PM (closed Mon T)",
+     "price": "",
+     "wikidata": "Q108789500",
+     "content": ""
+    },
+    {
+     "kind": "drink",
+     "name": "Spice Island Inn",
+     "lat": 50.7919,
+     "lng": -1.1091,
+     "hours": "",
+     "price": "",
+     "wikidata": "Q26666571",
+     "content": "Also has amazing views of the harbour in action and a good restaurant."
+    },
+    {
+     "kind": "drink",
+     "name": "The Still & West",
+     "lat": 50.7922,
+     "lng": -1.1094,
+     "hours": "",
+     "price": "",
+     "wikidata": "",
+     "content": "A pub with a good view of harbour entrance and restaurant upstairs."
+    },
+    {
+     "kind": "drink",
+     "name": "The Wellington",
+     "lat": 50.789426,
+     "lng": -1.105987,
+     "hours": "Mon-Thu Noon-10PM, Fri 11AM-11PM, Sat-Sun 9AM-10PM",
+     "price": "",
+     "wikidata": "Q108789594",
+     "content": "The oldest pub in Portsmouth, established in 1710."
+    }
+   ]
+  }
+ },
+ "ports": [],
+ "dayTrips": [
+  "New Forest",
+  "Salisbury (England)",
+  "Winchester (England)",
+  "Portsmouth",
+  "Bournemouth",
+  "Isle of Wight",
+  "Eastleigh",
+  "Cowes",
+  "London",
+  "Fareham",
+  "Lyndhurst",
+  "Bath",
+  "Hythe (Hampshire)"
+ ],
+ "missing": [],
+ "centre": {
+  "lat": 50.899846000000004,
+  "lng": -1.3998300000000001
+ },
+ "wikivoyage": "Southampton"
+}

@@ -1551,5 +1551,12 @@
   "lat": 53.554764468085104,
   "lng": 9.980863191489362
  },
- "wikivoyage": "Hamburg"
+ "wikivoyage": "Hamburg",
+ "portQuery": {
+  "name": "Cruise Center Altona",
+  "lat": 53.5436585,
+  "lng": 9.9370696,
+  "known": true,
+  "island": false
+ }
 }

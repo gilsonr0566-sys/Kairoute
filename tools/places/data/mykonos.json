@@ -109,5 +109,12 @@
   "lat": 37.4478625,
   "lng": 25.33325625
  },
- "wikivoyage": "Mykonos"
+ "wikivoyage": "Mykonos",
+ "portQuery": {
+  "name": "Mykonos new port (Tourlos)",
+  "lat": 37.46,
+  "lng": 25.326,
+  "known": true,
+  "island": false
+ }
 }

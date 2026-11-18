@@ -208,5 +208,12 @@
   "lat": 58.300748750000004,
   "lng": -134.40891375000004
  },
- "wikivoyage": "Juneau"
+ "wikivoyage": "Juneau",
+ "portQuery": {
+  "name": "Captain of the Port",
+  "lat": 58.3013304,
+  "lng": -134.4208528,
+  "known": true,
+  "island": false
+ }
 }

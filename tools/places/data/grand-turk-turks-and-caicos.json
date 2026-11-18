@@ -44,5 +44,12 @@
   "lat": 21.4663425,
   "lng": -71.14564250000001
  },
- "wikivoyage": "Grand Turk"
+ "wikivoyage": "Grand Turk",
+ "portQuery": {
+  "name": "Grand Turk Cruise Center Access Road",
+  "lat": 21.4296163,
+  "lng": -71.1435885,
+  "known": true,
+  "island": false
+ }
 }

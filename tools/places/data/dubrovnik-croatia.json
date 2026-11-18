@@ -176,5 +176,12 @@
   "lat": 42.64213428571428,
   "lng": 18.106524285714286
  },
- "wikivoyage": "Dubrovnik"
+ "wikivoyage": "Dubrovnik",
+ "portQuery": {
+  "name": "Port of Portoc",
+  "lat": 42.6256262,
+  "lng": 18.1228629,
+  "known": true,
+  "island": false
+ }
 }
