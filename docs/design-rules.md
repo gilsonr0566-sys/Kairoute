@@ -23,15 +23,27 @@ on every page, at tablet and phone sizes in both orientations, before anything i
 Every day page (Day plan, Change stops, Guide) opens with the same head, in this order, on one row:
 1. Small grey line: date · place · kind of day (`.eyebrow`).
 2. The page title (`h2`) with **✎ Rename** as a small link beside it, never a separate button.
-3. On the right: the back-to-the-ship countdown on ship, train and flight days, then the **one main action**
-   (Start the tour), in sunrise orange.
+3. On the right: the back-to-the-ship countdown on ship, train and flight days, then the page's actions, with the
+   **one main action** last, in sunrise orange (section 4).
 
 Trip-wide pages (Trip, Journal) use the same head: grey line with the trip facts, the title, ✎ Rename where
 it applies, and the main action on the right. They have no day strip, because they aren't about one day.
 
 ## 4. One main action, a few tools, the rest in a menu
-- One main action per screen, orange (`--meal`), top right on tablets, beside the title on phones. Never a
-  floating bar on top of content (exception: Change stops' "See my day plan" card, which Richard asked for).
+- **Action buttons are the same on every page** (Richard, Nov 18: "Keep the action buttons consistent").
+  - The page's **one main action** sits in the head's action slot (`.headacts`), **last, top right**, beside the
+    countdown when there is one. Built only with `mainBtnHTML(act, long, short)` in src/main.js, class `.mainbtn`:
+    sunrise orange (`--cta`), white text, 44px tall (42px on phones, where it shows its short label).
+    Today: Day plan and Guide **▶ Start the tour**, Change stops **See my day plan** ("See my plan" on phones),
+    Journal **Make my memory video**, sea days **▶ Hear the briefing**.
+  - Other buttons in the head (📷 What's this?, Make my storybook, Exit tour) are plain outlined buttons
+    (`.btn.ghost.small`), the same height as the main action, to its left.
+  - Never a floating action bar on top of content. On phones the bottom tab bar's **Day plan** is always one tap
+    away once the head scrolls off.
+  - The tour's own step button (Let's go / Next) is the one exception: it stays pinned at the bottom of the stop
+    card, because it moves the walk forward and must be within thumb reach.
+  - `tools/layout-check.cjs` fails a page with more than one main action, a main action outside the head's
+    top-right slot, head buttons of different heights, or a floating action bar.
 - A short row of tools under the head (Light / Half / Full, Change stops, More).
 - Less-used options go in a drop-down **More** menu, grouped with small headings (`details.moremenu`), or in a
   fold-out list (**More about today**, **More options for this day**). New features join a menu or a fold, never a
@@ -101,7 +113,7 @@ the line pattern carry the meaning for colour-blind travellers.
 ## Checklist for a new screen
 - [ ] Nothing is shown twice. No paragraph explains what the screen already shows.
 - [ ] Fits one tablet screen, sideways and upright; panels scroll on their own.
-- [ ] Same head as the other pages; one orange main action; less-used things in More or a fold.
+- [ ] Same head as the other pages; one orange main action from `mainBtnHTML`, top right; less-used things in More or a fold.
 - [ ] Countdown in the head on ship, train and flight days.
 - [ ] Nav bar unchanged; no sideways scrolling; no pills.
 - [ ] Rides use their own kind's colour, icon and line (section 9).

@@ -121,11 +121,11 @@ function renderSea(d) {
   if (!ahead.some(o => o.id === voySel) && voySel !== "recap") voySel = ahead[0] ? ahead[0].id : past.length ? "recap" : null;
   const sel = ahead.find(o => o.id === voySel) || null;
   const aboard = d.type === "port" ? `<div class="banner ok aboardcard" role="status"><span>⚓ Staying on board in ${esc(mainPlace(d) || "port")}: no shore plan and no ship-time alerts today.${aboardNote && aboardNote.day === d.id ? " " + esc(aboardNote.text) : ""}</span><button class="btn small" data-act="ashore">Go ashore after all</button></div>` : "";
-  const main = sel ? `<button class="btn bigbtn tourbtn" data-play="brief:${esc(sel.id)}" data-label="▶ Hear the ${esc(voyWho(sel))} briefing">${speakingId === "brief:" + sel.id ? "■ Stop audio" : "▶ Hear the " + esc(voyWho(sel)) + " briefing"}</button>` : "";
+  const main = sel ? `<button class="btn bigbtn mainbtn tourbtn" data-play="brief:${esc(sel.id)}" data-label="▶ Hear the ${esc(voyWho(sel))} briefing">${speakingId === "brief:" + sel.id ? "■ Stop audio" : "▶ Hear the " + esc(voyWho(sel)) + " briefing"}</button>` : "";
   const list = ahead.map(o => `<button type="button" class="chip ${o === sel ? "on" : ""}" data-voysel="${esc(o.id)}" aria-pressed="${o === sel}"><b>${esc(fmtDate(o.date))}</b> ${esc(dayName(o))}</button>`).join("")
     + (past.length ? `<button type="button" class="chip ${voySel === "recap" ? "on" : ""}" data-voysel="recap" aria-pressed="${voySel === "recap"}"><b>↺</b> Your trip so far</button>` : "");
   const body = sel ? voyPortPanel(sel) : voySel === "recap" ? voyRecapPanel(d) : `<div class="card empty"><p>No more stops ahead on this trip.</p><button class="btn" data-goto="journal">Open the journal</button></div>`;
-  return `${pageHead(d, null, main)}${aboard}
+  return `${pageHead(d, null, [], main)}${aboard}
     <div class="guidegrid voygrid"><div class="guideside pane" data-pane="side">${list ? `<div class="eyebrow">Get ready for your next ${ahead.length === 1 ? "stop" : "stops"}</div><nav class="jumps" aria-label="Coming up">${list}</nav>` : ""}</div>
     <div class="guidemain pane" data-pane="stories">${body}</div></div>`;
 }
