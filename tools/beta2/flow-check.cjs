@@ -37,7 +37,12 @@ async function tapBox(p, id) {
   // The list finishes marking what fits (cards settle) before the tap, as a traveler's eye would wait for it.
   await p.waitForFunction(() => !window.__kairouteFitPending || window.__kairouteFitPending() === 0, null, { timeout: 8000, polling: 100 }).catch(() => {});
   if (!(await p.$(`input[data-site="${id}"]`))) return false;
-  const r = await p.$eval(`input[data-site="${id}"]`, x => { const b = x.getBoundingClientRect(); return { x: b.x + b.width / 2, y: b.y + b.height / 2 }; });
+  // Aimed where the box is now and nothing covers it (a traveler sees the box before tapping it).
+  let r = null;
+  for (let k = 0; k < 4 && !r; k++) { r = await p.$eval(`input[data-site="${id}"]`, x => { const b = x.getBoundingClientRect(), pt = { x: b.x + b.width / 2, y: b.y + b.height / 2 }, at = document.elementFromPoint(pt.x, pt.y);
+      if (at && (at === x || x.closest('label, [data-card]').contains(at))) return pt; x.scrollIntoView({ block: 'center' }); return null; });
+    if (!r) { if (process.env.VERBOSE) console.error('re-aim', id); await p.waitForTimeout(400); } }
+  if (!r) return false;
   // The tap is done when the box shows its new state (or a won't-fit / closed box opens); how long that takes on a
   // phone-speed CPU is kept, so a slow tick is a leak of its own rather than a false "would not tick".
   const was = await p.$eval(`input[data-site="${id}"]`, x => x.checked), t0 = Date.now();

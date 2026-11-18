@@ -86,13 +86,14 @@
     const spots = key => ((guides[key] || {}).sites || []).filter(s => isFinite(s.lat)).map(s => ({ lat: s.lat, lng: s.lng }));
     const wins = days.map(d => (d.noShore || d.type === "sea") ? null : E.dayWindow(Object.assign({}, d, { siteSpots: spots(d.city), placeName: d.city + " " + ((guides[d.city] || {}).name || "") }), tr));
     // A pick closed on its own day moves to another day in the same place when it's open then (never onto or off a
-    // day the traveler locked), and the plan says so.
+    // day the traveler locked, nor onto a day they made their own: a list they set, or emptied, stays theirs), and the
+    // plan says so.
     const sel = days.map(d => (d.selected || []).slice()), movedTo = new Map();
     const findSite = (city, id) => city && ((city.sites || []).find(s => String(s.id) === String(id)) || (city.farther || []).find(s => String(s.id) === String(id)));
     const openOn = (s, j) => wins[j] && !wins[j].error && E.allowed(s, prefs, (days[j].sites || {})[s.id] || null, wins[j]);
     days.forEach((d, i) => { if (d.locked || !wins[i] || wins[i].error) return; const city = guides[d.city];
       for (const id of (d.selected || []).slice().sort()) { const s = findSite(city, id); if (!s || openOn(s, i)) continue;
-        const j = days.findIndex((e, k) => k !== i && e.city === d.city && !e.locked && openOn(s, k) && !sel[k].map(String).includes(String(id)));
+        const j = days.findIndex((e, k) => k !== i && e.city === d.city && !e.locked && !e.own && openOn(s, k) && !sel[k].map(String).includes(String(id)));
         if (j < 0) continue; sel[i] = sel[i].filter(x => String(x) !== String(id)); sel[j].push(id); movedTo.set(String(id), { from: i, to: j, name: s.name }); } });
     // A pick that stands inside an area picked for another day (the Erechtheion on the Acropolis) moves to that day: one
     // walk, not two trips. Never onto or off a locked day; the plan says so.
@@ -214,7 +215,10 @@
       const dinner = E.dinnerAfter(win, win.tail.length ? win.tail[win.tail.length - 1] : last, fit.r.end, ctx, new Set(fit.seq.filter(s => s.eatKey).map(s => s.eatKey)));
       // Out of town: the town itself (a sight inside it names its town), and what its travel guide lists to eat and drink,
       // tastings and local specialties first.
-      const outStop = fit.kept.find(k => k.far), outTown = outStop && (outStop.town ? (city.farther || []).find(t => String(t.id) === String(outStop.town)) || { name: outStop.townName } : outStop);
+      const outStop = fit.kept.find(k => k.far), townNear = s => (city.farther || []).filter(t => t !== s && !t.town && (t.foodDrink || []).length && isFinite(t.lat) && isFinite(s.lat) && E.hav(t, s) <= 3).sort((x, y) => E.hav(x, s) - E.hav(y, s) || E.byId(x, y))[0];
+      // A sight out of town is eaten near in its own town: the one it names, else the nearest town (3 km at most) whose
+      // travel guide lists places to eat (Pompeii's ruins and the town of Pompei beside them).
+      const outTown = outStop && (outStop.town ? (city.farther || []).find(t => String(t.id) === String(outStop.town)) || { name: outStop.townName } : (outStop.foodDrink || []).length ? outStop : townNear(outStop) || outStop);
       const eatThere = outTown && (outTown.foodDrink || []).slice().sort((a, b) => (b.special ? 1 : 0) - (a.special ? 1 : 0)).slice(0, 3).map(x => x.name);
       if (outTown && eatThere.length && !fit.noLunch) explain.push("In " + outTown.name + ", the travel guide suggests " + E.listWords(eatThere) + ".");
       const longVisit = fit.kept.filter(k => (k.minutes || 0) >= 60 && !(k.far && E.has(k, "day-trip"))).sort((a, b) => b.minutes - a.minutes || E.byId(a, b))[0];
