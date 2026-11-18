@@ -94,6 +94,22 @@ function helper(r, calls) {
       const saved = await p.evaluate(i => JSON.parse(localStorage.getItem('wayside.trip2')).days[i].boardTime, d.i);
       if (saved !== '12:30') bad(`boarding: a typed time redrawn over before Save was lost (saved ${saved})`); else ok('boarding: a typed time survives a redraw before Save (12:30 saved)'); }
     await p.close(); }
+  // 1c. A trip that starts with a cruise (Bahamas test trip, Nov 17): "+ Add a cruise" on the new form replaces the empty
+  // city stay it opens with, so the traveler isn't stopped by "Stop 1: type the city"; one typed into is kept.
+  if (!LIVE) { const p = await b.newPage({ viewport: { width: 412, height: 860 } });
+    await p.route('**/*', r => { const u = r.request().url(); if (u.startsWith(MOCK)) return helper(r, []); return /^file:/.test(u) ? r.continue() : r.abort(); });
+    await p.goto('file://' + FILE); await p.evaluate(() => localStorage.setItem('kairoute.intro1', '1')); await p.reload(); await p.waitForTimeout(500);
+    await p.evaluate(m => window.__kairouteMockHelper(m, null, true), MOCK);
+    await p.evaluate(() => document.querySelector('[data-act="newtrip"]').click()); await p.waitForTimeout(300);
+    await p.evaluate(() => document.querySelector('[data-ts="addcruise"]').click()); await p.waitForTimeout(300);
+    const legs = await p.evaluate(() => [...document.querySelectorAll('[data-leg]')].map(x => x.querySelector('.eyebrow').innerText));
+    if (legs.length !== 1 || !/cruise/i.test(legs[0])) bad(`cruise first: the form shows ${JSON.stringify(legs)}, not one cruise`); else ok('cruise first: + Add a cruise replaces the empty city stay');
+    await p.evaluate(() => document.querySelector('[data-ts="addstay"]').click()); await p.waitForTimeout(200);
+    await p.fill('#ts-1-place', 'Miami'); await p.dispatchEvent('#ts-1-place', 'change');
+    await p.evaluate(() => document.querySelector('[data-ts="addcruise"]').click()); await p.waitForTimeout(300);
+    const n = await p.evaluate(() => document.querySelectorAll('[data-leg]').length);
+    if (n !== 3) bad(`cruise first: a typed stop was dropped (${n} stops)`); else ok('cruise first: stops already typed are kept');
+    await p.close(); }
   // 2. The screens.
   for (const [W, H, tag] of [[412, 915, 'phone'], [1280, 800, 'tablet']]) {
     const p = await b.newPage({ viewport: { width: W, height: H } }); const errs = [], calls = []; p.on('pageerror', e => errs.push(e.message)); if (process.env.DEBUG) p.on('console', m => { if (/Kairoute|transit|far/i.test(m.text())) console.log('CON', m.text().slice(0, 200)); });
