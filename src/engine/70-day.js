@@ -28,7 +28,7 @@
     const key = meal + n + "@" + p.lat + "," + p.lng, got = ctx.eatMemo.get(key); if (got) return got;
     const out = [];
     for (const x of ctx.eatList) {
-      if (meal === "Lunch" ? x.f.lunchShut : x.f.dinnerShut) continue;
+      if (meal === "Lunch" ? x.f.lunchShut : x.f.dinnerShut || x.r.townLunch) continue;
       if (!ctx.ledger.eatFree(x.k, ctx.dayIdx)) continue;
       out.push({ r: x.r, k: x.k, d: E.hav(p, x.r) });
     }

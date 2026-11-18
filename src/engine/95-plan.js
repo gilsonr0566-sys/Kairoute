@@ -89,7 +89,10 @@
       const siteDay = id => (d.sites || {})[id] || null;
       const listed = (city.sites || []).map((s, k) => Object.assign({}, s, { rank: k })).concat((city.farther || []).map(s => Object.assign({}, s, { far: true })));
       const ranked = E.rank(listed, prefs, style);
-      const ctx = { tr, ledger, dayIdx: i, siteDay, eats: (city.restaurants || []).slice().sort((a, b) => E.eatKey(a.name).localeCompare(E.eatKey(b.name))), eatFacts: d.eats || {} };
+      // A town a day away whose travel guide names places to eat gets a lunch stop in its centre (the plan names the
+      // guide's suggestions); it is never a dinner idea.
+      const townLunch = (city.farther || []).filter(t => !t.town && (t.foodDrink || []).length && isFinite(t.lat)).map(t => ({ name: "Lunch in " + t.name, lat: t.lat, lng: t.lng, townLunch: t.id }));
+      const ctx = { tr, ledger, dayIdx: i, siteDay, eats: (city.restaurants || []).concat(townLunch).sort((a, b) => E.eatKey(a.name).localeCompare(E.eatKey(b.name))), eatFacts: d.eats || {} };
       // May this day add a sight on its own? Not one used on another day, picked for another day, or in another
       // day's area, unless that day is already planned and left it over.
       const doneDay = j => j == null || j === i || out[j] != null;
@@ -135,9 +138,11 @@
       const lunchNote = fit.noLunch && outTown ? "Have lunch in " + outTown.name + (eatThere.length ? ": the travel guide suggests " + E.listWords(eatThere) + "." : ": its places to eat aren't in the guide yet.") : fit.noLunch ? (fit.noLunch === "time" ? (win.hard ? "Your picks fill the time ashore, so there's no room for lunch and still a safe margin to get back. Grab something quick, or drop a pick to make room." : "No time for a sit-down lunch on this plan: grab something quick on the way.") : "No place to eat along the way at lunchtime: bring food or eat at a stop's own café.") : null;
       // Never quietly sure: where the map gives hours for this place's sights but not for some of today's stops, say so.
       const hoursKnown = id => { const sd = siteDay(id); return !!(sd && (sd.closed || sd.allDay || (sd.oh && sd.oh.spans && sd.oh.spans.length))); };
-      const unknownHours = fit.kept.filter(k => !k.far && !E.has(k, "open-air") && !hoursKnown(k.id));
+      // Only for a stop you go into (a museum, church, palace...) or one the traveler picked: a square or a district has no door.
+      const BUILDING = /museum|church|basilica|cathedral|chapel|mosque|synagogue|temple|monaster|abbey|palace|castle|fort|galler|parliament|knesset|tower|hall|house|library|aquarium|zoo/i;
+      const unknownHours = fit.kept.filter(k => !k.far && !E.has(k, "open-air") && (k.wish || BUILDING.test(k.name + " " + (k.category || ""))) && !hoursKnown(k.id));
       if (unknownHours.length && (city.sites || []).some(s => hoursKnown(s.id)))
-        explain.push("Opening hours for " + E.listWords(unknownHours.slice(0, 4).map(k => k.name).concat(unknownHours.length > 4 ? ["others"] : []), "and") + " aren't on the map yet: check before you go.");
+        explain.push("Opening hours for " + E.listWords(unknownHours.slice(0, 4).map(k => String(k.name).split(",")[0]).concat(unknownHours.length > 4 ? ["others"] : []), "and") + " aren't on the map yet: check before you go.");
       const plan = shortForm(i, win, fit, autoIds, dinner);
       const bad = guard(plan, win);
       if (bad.length) return { plan: safeDay(i, win, tr, bad) };
