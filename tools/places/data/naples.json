@@ -1,0 +1,4638 @@
+{
+ "key": "naples",
+ "name": "Naples",
+ "built": "2026-11-18",
+ "sources": [
+  "Wikidata",
+  "OpenStreetMap",
+  "Wikivoyage"
+ ],
+ "sites": {
+  "sansevero": {
+   "wikidata": "Q897839",
+   "editions": 21,
+   "types": [
+    "Q19899465",
+    "Q207694",
+    "Q614316",
+    "Q139671796"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "web": "http://www.museosansevero.it",
+   "hours": "We-Mo 09:00-19:00",
+   "fee": "yes",
+   "osm": "way/123977918"
+  },
+  "duomo-na": {
+   "wikidata": "Q256486",
+   "editions": 33,
+   "types": [
+    "Q56242215"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "web": "http://www.duomodinapoli.it/",
+   "osm": "way/122982019"
+  },
+  "plebiscito": {
+   "wikidata": "Q1047594",
+   "editions": 19,
+   "types": [
+    "Q174782"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "web": "",
+   "osm": "way/27182911"
+  },
+  "museonaz": {
+   "wikidata": "Q637248",
+   "editions": 39,
+   "types": [
+    "Q3329412",
+    "Q3867560",
+    "Q358",
+    "Q121076356",
+    "Q124830411"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "web": "https://www.museoarcheologiconapoli.it",
+   "hours": "We-Mo 09:00-19:30; Tu off",
+   "fee": "yes",
+   "osm": "relation/3824019"
+  }
+ },
+ "towns": {
+  "pompeii-far": {
+   "name": "Pompeii",
+   "wikidata": "Q43332",
+   "editions": 122,
+   "unesco": true,
+   "dayTripListed": true,
+   "sights": [
+    {
+     "kind": "see",
+     "name": "Amphitheatre",
+     "lat": 40.7515,
+     "lng": 14.4947,
+     "hours": "",
+     "price": "",
+     "wikidata": "Q2015116",
+     "content": "This is in the most easterly corner of the excavated area, near the Sarno Gate entrance. It was completed in 80 BC, measures 135 x 104 metres and could hold about 20,000 people. It is the earliest surviving permanent amphitheatre in Italy a",
+     "editions": 18,
+     "unesco": false
+    },
+    {
+     "kind": "see",
+     "name": "Great Palaestra",
+     "lat": 40.750722,
+     "lng": 14.493875,
+     "hours": "",
+     "price": "",
+     "wikidata": "Q3891745",
+     "content": "This occupies a large area opposite the Amphitheatre. The central area was used for sporting activities and there was a pool in the middle. On three sides are lengthy internal porticos or colonnades.",
+     "editions": 3,
+     "unesco": false
+    },
+    {
+     "kind": "see",
+     "name": "House of the Vettii",
+     "lat": 40.752,
+     "lng": 14.4847,
+     "hours": "",
+     "price": "",
+     "wikidata": "Q1590855",
+     "content": "This is believed to have been the home of two brothers who were freed slaves and became very affluent. It contains many frescoes. In the vestibule there is a striking fresco of a well-endowed ''Priapus'', God of Fertility and among the fres",
+     "editions": 16,
+     "unesco": false
+    },
+    {
+     "kind": "see",
+     "name": "House of the Faun",
+     "lat": 40.7513,
+     "lng": 14.4845,
+     "hours": "",
+     "price": "",
+     "wikidata": "Q1547308",
+     "content": "This is named after a statue of a dancing faun found on the site. It is considered to be an excellent example of the fusion of Italian and Greek architectural styles, and occupies an entire block.",
+     "editions": 19,
+     "unesco": false
+    },
+    {
+     "kind": "see",
+     "name": "Temple of Apollo",
+     "lat": 40.7492,
+     "lng": 14.4844,
+     "hours": "",
+     "price": "",
+     "wikidata": "Q2699249",
+     "content": "This is to the north of the Basilica on the western side of the Forum. It has the oldest remains discovered, with some, including Etruscan items, dating back to 575BC, although the layout we see now was later than that.",
+     "editions": 17,
+     "unesco": false
+    },
+    {
+     "kind": "see",
+     "name": "Lupanar",
+     "lat": 40.7503,
+     "lng": 14.4868,
+     "hours": "",
+     "price": "",
+     "wikidata": "Q157747",
+     "content": "An ancient brothel with pornographic frescoes over the entrance to each room, presumably indicating the services on offer. Even allowing for the smaller size of ancient Romans the beds seem rather small.",
+     "editions": 19,
+     "unesco": false
+    },
+    {
+     "kind": "see",
+     "name": "House of the Ancient Hunt",
+     "lat": 40.750928,
+     "lng": 14.485364,
+     "hours": "",
+     "price": "",
+     "wikidata": "",
+     "content": "Attractive, open-style house with many frescoes of hunting scenes."
+    },
+    {
+     "kind": "see",
+     "name": "House of the Tragic Poet",
+     "lat": 40.7508,
+     "lng": 14.4838,
+     "hours": "",
+     "price": "",
+     "wikidata": "",
+     "content": "This small atrium house is best known for the mosaic at the entrance depicting a chained dog, with the words ''Cave Canem'' or \"Beware of the Dog\"."
+    },
+    {
+     "kind": "see",
+     "name": "Villa dei Misteri",
+     "lat": 40.7537,
+     "lng": 14.4774,
+     "hours": "",
+     "price": "",
+     "wikidata": "Q1241298",
+     "content": "One of the \"suburban houses\", with curious frescoes, perhaps of women being initiated into the Cult of Dionysus. Contains one of the finest fresco cycles in Italy, as well as humorous ancient graffiti.",
+     "editions": 29,
+     "unesco": true
+    },
+    {
+     "kind": "see",
+     "name": "Shrine of the Virgin of the Rosary of Pompei",
+     "lat": 40.75,
+     "lng": 14.500556,
+     "hours": "",
+     "price": "",
+     "wikidata": "Q980745",
+     "content": "A church which is a place of pilgrimage for Roman Catholics. For others, it is not a must-see, but should you arrive or leave via the Pompei Santuario station on the Circumvesuviana, rather than Pompei Scavi, you may find it worth at least ",
+     "editions": 18,
+     "unesco": false
+    }
+   ],
+   "foodDrink": [],
+   "unescoSites": [
+    "Archaeological Areas of Pompei, Herculaneum and Torre Annunziata"
+   ],
+   "mapEats": [
+    {
+     "name": "Coffee Shop Vittoria",
+     "lat": 40.7473344,
+     "lng": 14.4848632,
+     "kind": "eat",
+     "amenity": "cafe",
+     "cuisine": "",
+     "osm": "node/9720927116"
+    },
+    {
+     "name": "Chalet Donna Lucia",
+     "lat": 40.7472397,
+     "lng": 14.4844518,
+     "kind": "eat",
+     "amenity": "cafe",
+     "cuisine": "",
+     "osm": "node/9720927114"
+    },
+    {
+     "name": "Little Paradise",
+     "lat": 40.7483634,
+     "lng": 14.4826636,
+     "kind": "eat",
+     "amenity": "restaurant",
+     "cuisine": "",
+     "osm": "node/6015692792"
+    },
+    {
+     "name": "Pompeï",
+     "lat": 40.7471047,
+     "lng": 14.4848653,
+     "kind": "eat",
+     "amenity": "restaurant",
+     "cuisine": "",
+     "osm": "node/7887239486"
+    },
+    {
+     "name": "Domus Pompeiana",
+     "lat": 40.7471857,
+     "lng": 14.483801,
+     "kind": "eat",
+     "amenity": "restaurant",
+     "cuisine": "",
+     "osm": "node/4085294291"
+    },
+    {
+     "name": "Suisse",
+     "lat": 40.7472018,
+     "lng": 14.4835916,
+     "kind": "eat",
+     "amenity": "restaurant",
+     "cuisine": "",
+     "osm": "node/9721007418"
+    },
+    {
+     "name": "Ristorante Pizzeria Pompei",
+     "lat": 40.7467416,
+     "lng": 14.4853689,
+     "kind": "eat",
+     "amenity": "restaurant",
+     "cuisine": "",
+     "osm": "node/5103605622"
+    },
+    {
+     "name": "Terazza Pompeiana",
+     "lat": 40.7466979,
+     "lng": 14.4848259,
+     "kind": "eat",
+     "amenity": "restaurant",
+     "cuisine": "",
+     "osm": "node/5103621521"
+    }
+   ]
+  },
+  "capri-far": {
+   "name": "Capri",
+   "wikidata": "Q173292",
+   "editions": 91,
+   "unesco": false,
+   "dayTripListed": true,
+   "sights": [],
+   "foodDrink": [],
+   "mapEats": [
+    {
+     "name": "Al Buco",
+     "lat": 40.5554794,
+     "lng": 14.2210185,
+     "kind": "eat",
+     "amenity": "restaurant",
+     "cuisine": "",
+     "osm": "node/5363412698"
+    },
+    {
+     "name": "2 Pini",
+     "lat": 40.5558628,
+     "lng": 14.221598,
+     "kind": "eat",
+     "amenity": "restaurant",
+     "cuisine": "",
+     "osm": "node/6691088386"
+    },
+    {
+     "name": "La Giara",
+     "lat": 40.5556173,
+     "lng": 14.2206025,
+     "kind": "eat",
+     "amenity": "restaurant",
+     "cuisine": "",
+     "osm": "node/5357262920"
+    },
+    {
+     "name": "Dal Presidente",
+     "lat": 40.5558397,
+     "lng": 14.2211263,
+     "kind": "eat",
+     "amenity": "restaurant",
+     "cuisine": "",
+     "osm": "node/5357262913"
+    },
+    {
+     "name": "Le Terrazze",
+     "lat": 40.5562494,
+     "lng": 14.2220606,
+     "kind": "eat",
+     "amenity": "restaurant",
+     "cuisine": "",
+     "osm": "way/655922831"
+    },
+    {
+     "name": "La Rondinella",
+     "lat": 40.552702,
+     "lng": 14.2179163,
+     "kind": "eat",
+     "amenity": "restaurant",
+     "cuisine": "italian",
+     "osm": "node/6695800985"
+    },
+    {
+     "name": "Aumm Aumm",
+     "lat": 40.5524289,
+     "lng": 14.2175346,
+     "kind": "eat",
+     "amenity": "restaurant",
+     "cuisine": "",
+     "osm": "node/5363374486"
+    },
+    {
+     "name": "Pasticceria Bar",
+     "lat": 40.5540653,
+     "lng": 14.2174345,
+     "kind": "eat",
+     "amenity": "cafe",
+     "cuisine": "",
+     "osm": "node/2466725248"
+    }
+   ]
+  },
+  "sorrento-far": {
+   "name": "Sorrento",
+   "wikidata": null,
+   "editions": 0,
+   "unesco": false,
+   "dayTripListed": true,
+   "sights": [
+    {
+     "kind": "see",
+     "name": "Small Port",
+     "lat": 40.62977,
+     "lng": 14.37518,
+     "hours": "",
+     "price": "",
+     "wikidata": "",
+     "content": "A pretty boat port"
+    },
+    {
+     "kind": "see",
+     "name": "puntacampanella",
+     "lat": 40.56921,
+     "lng": 14.32468,
+     "hours": "",
+     "price": "",
+     "wikidata": "Q722460",
+     "content": "The natural reserve.",
+     "editions": 9,
+     "unesco": false
+    },
+    {
+     "kind": "see",
+     "name": "Villa Pollio",
+     "lat": 40.634,
+     "lng": 14.35159,
+     "hours": "",
+     "price": "",
+     "wikidata": "",
+     "content": "Roman ruins in Capo di Sorrento"
+    },
+    {
+     "kind": "see",
+     "name": "Hotel Tramontano",
+     "lat": 40.6277,
+     "lng": 14.37208,
+     "hours": "",
+     "price": "",
+     "wikidata": "",
+     "content": "Place where Norwegian writer Henrik Ibsen lived while writing parts of Peer Gynt (1867) and Ghosts (1881)."
+    },
+    {
+     "kind": "see",
+     "name": "Archeological Museum of the Sorrentine Peninsula",
+     "lat": 40.63798,
+     "lng": 14.40209,
+     "hours": "Tue-Sun 10:00-18:30",
+     "price": "",
+     "wikidata": "Q16336782",
+     "content": "",
+     "editions": 2,
+     "unesco": false
+    },
+    {
+     "kind": "see",
+     "name": "Museum of the Inlaid Wood",
+     "lat": 40.62584,
+     "lng": 14.37039,
+     "hours": "",
+     "price": "",
+     "wikidata": "",
+     "content": "A collection of local applied arts. The collection includes furniture crafted through the 20th century, and modern design."
+    },
+    {
+     "kind": "see",
+     "name": "Duomo (Cathedral)",
+     "lat": 40.62524,
+     "lng": 14.37297,
+     "hours": "",
+     "price": "",
+     "wikidata": "Q2068666",
+     "content": "",
+     "editions": 10,
+     "unesco": false
+    },
+    {
+     "kind": "see",
+     "name": "Church of San Francesco",
+     "lat": 40.62777,
+     "lng": 14.3733,
+     "hours": "",
+     "price": "",
+     "wikidata": "Q111550322",
+     "content": "Its cloister dates from 1300. It is one of the most picturesque spots in town.",
+     "editions": 1,
+     "unesco": false
+    },
+    {
+     "kind": "see",
+     "name": "Basilica di Sant'Antonino",
+     "lat": 40.62715,
+     "lng": 14.37522,
+     "hours": "",
+     "price": "",
+     "wikidata": "Q17622423",
+     "content": "",
+     "editions": 4,
+     "unesco": false
+    },
+    {
+     "kind": "see",
+     "name": "Piazza Torquato Tasso",
+     "lat": 40.62628,
+     "lng": 14.37586,
+     "hours": "",
+     "price": "",
+     "wikidata": "Q2332531",
+     "content": "Sorrento's main piazza, connected to Piazza Lauro by Corso Italia. Walk a few meters up Viale Enrico Caruso to enjoy the view over the railing down to:",
+     "editions": 6,
+     "unesco": false
+    },
+    {
+     "kind": "see",
+     "name": "Via San Cesareo",
+     "lat": 40.62607,
+     "lng": 14.37364,
+     "hours": "",
+     "price": "",
+     "wikidata": "",
+     "content": "One of the oldest streets in town."
+    },
+    {
+     "kind": "see",
+     "name": "Sedil Dominova",
+     "lat": 40.62592,
+     "lng": 14.37335,
+     "hours": "",
+     "price": "",
+     "wikidata": "",
+     "content": "The former gathering place for Sorrento's high society, and now the headquarters of the Società di Mutuo Soccorso."
+    },
+    {
+     "kind": "see",
+     "name": "Villa Comunale",
+     "lat": 40.62814,
+     "lng": 14.37274,
+     "hours": "",
+     "price": "",
+     "wikidata": "",
+     "content": "Offers a beautiful view over the Sorrento coastline with Mount Vesuvius in the distance."
+    },
+    {
+     "kind": "see",
+     "name": "Piazza Vittoria",
+     "lat": 40.62725,
+     "lng": 14.37101,
+     "hours": "",
+     "price": "",
+     "wikidata": "",
+     "content": "Another beautiful scenic overlook."
+    }
+   ],
+   "foodDrink": [
+    {
+     "kind": "buy",
+     "name": "Enoteca l'Alambicco",
+     "lat": 40.62637,
+     "lng": 14.37499,
+     "hours": "",
+     "price": "",
+     "wikidata": "",
+     "content": "A wine and limoncello shop in the historical centre, offers free tastings."
+    },
+    {
+     "kind": "buy",
+     "name": "Iolanda moda e accessori",
+     "lat": 40.62629,
+     "lng": 14.37495,
+     "hours": "",
+     "price": "",
+     "wikidata": "",
+     "content": "A leather and fashion shop in historical centre, have large choice of bags, wallets, bijoux and shoes of brands like Valentino, Roccobarocco, and Cromnia."
+    },
+    {
+     "kind": "buy",
+     "name": "Notturno Intarsio",
+     "lat": 40.62364,
+     "lng": 14.3775,
+     "hours": "",
+     "price": "",
+     "wikidata": "",
+     "content": "Has the most beautiful inlaid woods. Tables, tea carts, pictures, music boxes. Notturno has been in business for hundreds of years and has the best woodworkers around. Take their tour to see how they make these beautiful pieces of art."
+    },
+    {
+     "kind": "eat",
+     "name": "Gelateria Davide",
+     "lat": 40.62697,
+     "lng": 14.37304,
+     "hours": "",
+     "price": "",
+     "wikidata": "",
+     "content": "One of the best ''gelaterias'' in the city, this little ice-cream parlour is famous for its gelato that incorporates fresh local flavours.  Don't miss the Profumi di Sorrento (with fresh local citrus fruits) or the Noci di Sorrento (with fr"
+    },
+    {
+     "kind": "eat",
+     "name": "O Parrucchiano Restaurant",
+     "lat": 40.62507,
+     "lng": 14.37172,
+     "hours": "12:00-15:30 & 19:00-22:30",
+     "price": "",
+     "wikidata": "",
+     "content": "Historical, traditional restaurant."
+    },
+    {
+     "kind": "eat",
+     "name": "Il Leone Rosso",
+     "lat": 40.62587,
+     "lng": 14.37861,
+     "hours": "",
+     "price": "",
+     "wikidata": "",
+     "content": "Il Leone Rosso is a small, cheap, and surprisingly delicious restaurant, known for catering to tour groups. Traditional ''limoncello'' is served after meals."
+    },
+    {
+     "kind": "eat",
+     "name": "Don Alfonso 1890 Restaurant",
+     "lat": 40.60802,
+     "lng": 14.37381,
+     "hours": "",
+     "price": "",
+     "wikidata": "",
+     "content": ""
+    },
+    {
+     "kind": "eat",
+     "name": "Pizzeria Da Franco",
+     "lat": 40.62667,
+     "lng": 14.38099,
+     "hours": "",
+     "price": "",
+     "wikidata": "",
+     "content": "€6 pizzas, hot sandwiches, beer, wine, limoncello."
+    },
+    {
+     "kind": "eat",
+     "name": "Di Leva",
+     "lat": 40.62748,
+     "lng": 14.36615,
+     "hours": "Daily 10:00-23:00",
+     "price": "",
+     "wikidata": "",
+     "content": "Run by five sisters, it has excellent seafood, especially the ''spaghetti alla frutti di mare''. And Sophia Lauren ate here in 2004."
+    },
+    {
+     "kind": "eat",
+     "name": "Taverna Azzurra",
+     "lat": 40.6273,
+     "lng": 14.36548,
+     "hours": "",
+     "price": "",
+     "wikidata": "",
+     "content": "Also very good."
+    }
+   ]
+  },
+  "pozzuoli-far": {
+   "name": "Pozzuoli (ancient Puteoli)",
+   "wikidata": "Q72425",
+   "editions": 87,
+   "unesco": false,
+   "dayTripListed": true,
+   "sights": [
+    {
+     "kind": "see",
+     "name": "Flavian Amphitheater",
+     "lat": 40.825869,
+     "lng": 14.125078,
+     "hours": "",
+     "price": "",
+     "wikidata": "Q662766",
+     "content": "The Flavian Amphitheatre in Pozzuoli is one of Italy’s largest Roman arenas, built in the 1st century CE to serve the busy port city of Puteoli. Its underground chambers, cages, and passageways are among the best preserved of any Roman amph",
+     "editions": 14,
+     "unesco": false
+    },
+    {
+     "kind": "see",
+     "name": "Macellum of Pozzuoli",
+     "lat": 40.826111,
+     "lng": 14.120556,
+     "hours": "",
+     "price": "",
+     "wikidata": "Q954158",
+     "content": "The Macellum of Pozzuoli is a major Roman market building (often misidentified as a temple due to its standing columns), reflecting the wealth of the ancient port city of Puteoli. Its remains show the commercial heart of Roman trade and eve",
+     "editions": 9,
+     "unesco": false
+    },
+    {
+     "kind": "see",
+     "name": "Rione Terra",
+     "lat": 40.820922,
+     "lng": 14.11985,
+     "hours": "",
+     "price": "",
+     "wikidata": "Q3936300",
+     "content": "Rione Terra is the historic heart of Pozzuoli, perched on a rocky promontory above the Bay of Naples. Continuously inhabited since Greek and Roman times, the district was evacuated in the 20th century due to volcanic movement, leaving it fr",
+     "editions": 2,
+     "unesco": false
+    },
+    {
+     "kind": "see",
+     "name": "Pozzuoli Cathedral",
+     "lat": 40.82145,
+     "lng": 14.12056,
+     "hours": "",
+     "price": "",
+     "wikidata": "Q1239998",
+     "content": "One of the most unusual churches in Italy, built directly over the remains of a Roman temple dedicated to Augustus. It blends ancient marble columns and classical structure with later Baroque and modern elements following restoration. Insid",
+     "editions": 8,
+     "unesco": false
+    },
+    {
+     "kind": "see",
+     "name": "Cumae",
+     "lat": 40.84861,
+     "lng": 14.05361,
+     "hours": "",
+     "price": "",
+     "wikidata": "Q243456",
+     "content": "The oldest Greek colony on mainland Italy, founded in the 8th century BCE, Cumae later became an important Roman town with strong religious and strategic significance. Its hilltop acropolis and the legendary Sibyl’s cave highlight its role ",
+     "editions": 49,
+     "unesco": false
+    }
+   ],
+   "foodDrink": [],
+   "mapEats": [
+    {
+     "name": "Caffè Sofia",
+     "lat": 40.8229253,
+     "lng": 14.1209322,
+     "kind": "eat",
+     "amenity": "cafe",
+     "cuisine": "",
+     "osm": "node/8311261555"
+    },
+    {
+     "name": "Il Barè",
+     "lat": 40.8225414,
+     "lng": 14.1206181,
+     "kind": "eat",
+     "amenity": "restaurant",
+     "cuisine": "",
+     "osm": "node/4339588594"
+    },
+    {
+     "name": "Pizzeria 150 grammi",
+     "lat": 40.8225444,
+     "lng": 14.1205845,
+     "kind": "eat",
+     "amenity": "restaurant",
+     "cuisine": "pizza",
+     "osm": "node/4339588600"
+    },
+    {
+     "name": "Morso",
+     "lat": 40.8225434,
+     "lng": 14.1205497,
+     "kind": "eat",
+     "amenity": "restaurant",
+     "cuisine": "",
+     "osm": "node/4339588596"
+    },
+    {
+     "name": "Il faro a ninella",
+     "lat": 40.8235047,
+     "lng": 14.1204394,
+     "kind": "eat",
+     "amenity": "restaurant",
+     "cuisine": "",
+     "osm": "node/12767934704"
+    },
+    {
+     "name": "Bubba Pub",
+     "lat": 40.8223693,
+     "lng": 14.1206563,
+     "kind": "eat",
+     "amenity": "restaurant",
+     "cuisine": "",
+     "osm": "node/4339586584"
+    },
+    {
+     "name": "50 Grani",
+     "lat": 40.8227177,
+     "lng": 14.1219229,
+     "kind": "eat",
+     "amenity": "restaurant",
+     "cuisine": "pizza",
+     "osm": "node/8311110410"
+    },
+    {
+     "name": "Teddy b.",
+     "lat": 40.8222704,
+     "lng": 14.1202994,
+     "kind": "eat",
+     "amenity": "restaurant",
+     "cuisine": "",
+     "osm": "node/4340283045"
+    }
+   ]
+  }
+ },
+ "ports": [
+  {
+   "name": "Naples Cruise Port",
+   "lat": 40.83819,
+   "lng": 14.26022,
+   "osm": "node/11938692071",
+   "kind": "ferry terminal",
+   "cruise": true,
+   "d": 0.44
+  },
+  {
+   "name": "Pier 10",
+   "lat": 40.83792,
+   "lng": 14.25521,
+   "osm": "node/10072475978",
+   "kind": "ferry terminal",
+   "cruise": false,
+   "d": 0.02
+  },
+  {
+   "name": "Pier 9",
+   "lat": 40.83775,
+   "lng": 14.25502,
+   "osm": "node/10072475980",
+   "kind": "ferry terminal",
+   "cruise": false,
+   "d": 0.03
+  },
+  {
+   "name": "Pier 8",
+   "lat": 40.83765,
+   "lng": 14.25495,
+   "osm": "node/10072475979",
+   "kind": "ferry terminal",
+   "cruise": false,
+   "d": 0.04
+  },
+  {
+   "name": "Pier 7",
+   "lat": 40.83755,
+   "lng": 14.25488,
+   "osm": "node/3597881702",
+   "kind": "ferry terminal",
+   "cruise": false,
+   "d": 0.05
+  },
+  {
+   "name": "Pier 11",
+   "lat": 40.83797,
+   "lng": 14.25556,
+   "osm": "node/5109521171",
+   "kind": "ferry terminal",
+   "cruise": false,
+   "d": 0.05
+  },
+  {
+   "name": "Pier 6",
+   "lat": 40.83745,
+   "lng": 14.25482,
+   "osm": "node/10072475981",
+   "kind": "ferry terminal",
+   "cruise": false,
+   "d": 0.06
+  },
+  {
+   "name": "Molo Beverello (Terminal Ascalfi)",
+   "lat": 40.83735,
+   "lng": 14.25475,
+   "osm": "node/286240671",
+   "kind": "ferry terminal",
+   "cruise": false,
+   "d": 0.08
+  },
+  {
+   "name": "Molo Angioino",
+   "lat": 40.83767,
+   "lng": 14.25729,
+   "osm": "node/11192965078",
+   "kind": "ferry terminal",
+   "cruise": false,
+   "d": 0.2
+  },
+  {
+   "name": "Porta di Massa",
+   "lat": 40.84288,
+   "lng": 14.26118,
+   "osm": "node/4822113914",
+   "kind": "ferry terminal",
+   "cruise": false,
+   "d": 0.75
+  },
+  {
+   "name": "Molo Mergelina",
+   "lat": 40.82885,
+   "lng": 14.22272,
+   "osm": "node/2213494370",
+   "kind": "ferry terminal",
+   "cruise": false,
+   "d": 2.9
+  },
+  {
+   "name": "Aeroporto Internazionale di Napoli Capodichino - Terminal 1",
+   "lat": 40.8779,
+   "lng": 14.28241,
+   "osm": "way/37906481",
+   "kind": "terminal",
+   "cruise": false,
+   "d": 5
+  }
+ ],
+ "dayTrips": [
+  "Rome",
+  "Pozzuoli",
+  "Herculaneum",
+  "UNESCO World Heritage list",
+  "Pompeii",
+  "Vesuvius",
+  "Caserta",
+  "Capri",
+  "Procida",
+  "San Leucio",
+  "Ischia",
+  "Sorrento",
+  "Amalfi",
+  "Positano",
+  "Paestum",
+  "Salerno",
+  "Milan",
+  "Florence",
+  "Canosa di Puglia",
+  "Avellino",
+  "Ariano Irpino",
+  "Reggio di Calabria"
+ ],
+ "missing": [],
+ "portQuery": {
+  "name": "Stazione Marittima (Naples cruise terminal)",
+  "lat": 40.838,
+  "lng": 14.255,
+  "known": true,
+  "island": false
+ },
+ "centre": {
+  "lat": 40.848079999999996,
+  "lng": 14.253740000000002
+ },
+ "wikivoyage": "Naples",
+ "guideSights": [
+  {
+   "name": "Cappella Sansevero",
+   "lat": 40.84928,
+   "lng": 14.25489,
+   "wikidata": "Q897839",
+   "note": "A chapel built in 1590, it contains sculptures and other works of art by some of the leading Italian artists of the 18th century, like the extraordinary ''Veiled Christ'' by Giuseppe Sanmartino. It also has a high scientific interest becaus",
+   "editions": 21,
+   "unesco": false,
+   "web": "http://www.museosansevero.it"
+  },
+  {
+   "name": "San Francesco di Paola",
+   "lat": 40.8353,
+   "lng": 14.2475,
+   "wikidata": "",
+   "note": ""
+  },
+  {
+   "name": "Gesù Nuovo",
+   "lat": 40.847622,
+   "lng": 14.251803,
+   "wikidata": "",
+   "note": ""
+  },
+  {
+   "name": "San Domenico Maggiore",
+   "lat": 40.848731,
+   "lng": 14.254407,
+   "wikidata": "Q897603",
+   "note": "One of the most prominent churches of Naples. This Gothic church (est. 1283) incorporates a smaller, original church built on this site in the 10th century, San Michele Arcangelo a Morfisa. The monastery annexed to the church has been the h",
+   "editions": 17,
+   "unesco": false
+  },
+  {
+   "name": "Santa Chiara",
+   "lat": 40.846611,
+   "lng": 14.252833,
+   "wikidata": "",
+   "note": ""
+  },
+  {
+   "name": "Naples Cathedral",
+   "lat": 40.85257,
+   "lng": 14.25951,
+   "wikidata": "",
+   "note": ""
+  },
+  {
+   "name": "San Gregorio Armeno",
+   "lat": 40.850175,
+   "lng": 14.257636,
+   "wikidata": "Q1255785",
+   "note": "The church was completed in 1640, in honor of Saint Gregory of Armenia and it represents, along with the adjacent monastery, one of the most relevant Baroque complexes in Naples. The interior is decorated with 52 frescoes by Luca Giordano, ",
+   "editions": 11,
+   "unesco": false
+  },
+  {
+   "name": "Santa Maria del Carmine Maggiore",
+   "lat": 40.8468,
+   "lng": 14.2676,
+   "wikidata": "Q717930",
+   "note": "One of Naples' main churches, related to important historical events of the city and its kingdom, such as Masaniello revolt and the executions happened during the five months existence of Parthenopean Republic (1799). The interior is a true",
+   "editions": 14,
+   "unesco": false,
+   "web": "http://www.santuariocarminemaggiore.it"
+  },
+  {
+   "name": "Castel dell'Ovo",
+   "lat": 40.828026,
+   "lng": 14.247798,
+   "wikidata": "Q645041",
+   "note": "The oldest castle of the city, located on the former island of ''Megaride'', now a peninsula, on the Gulf of Naples. The castle's name comes from a legend that the Roman poet Virgil (who had a reputation in medieval times as a great sorcere",
+   "editions": 28,
+   "unesco": false
+  },
+  {
+   "name": "Castel Nuovo",
+   "lat": 40.8383,
+   "lng": 14.2532,
+   "wikidata": "",
+   "note": ""
+  },
+  {
+   "name": "Castel Capuano",
+   "lat": 40.853269,
+   "lng": 14.264158,
+   "wikidata": "Q858940",
+   "note": "The second most ancient castle of Naples after Castel dell'Ovo, built in 12th century by the Normans over a necropolis for use as a royal palace. It was then used as a residence for distinguished visitors such as Francesco Petrarca, and als",
+   "editions": 18,
+   "unesco": false
+  },
+  {
+   "name": "Castel Sant'Elmo",
+   "lat": 40.8438,
+   "lng": 14.239,
+   "wikidata": "",
+   "note": ""
+  },
+  {
+   "name": "Certosa e Museo di San Martino",
+   "lat": 40.843333,
+   "lng": 14.24124,
+   "wikidata": "Q859732",
+   "note": "A former monastery complex, now a museum. It is the most visible landmark of the city, perched atop the Vomero hill that commands the gulf. A Carthusian monastery, it was finished and inaugurated under the rule of Queen Joan I in 1368. In 1",
+   "editions": 24,
+   "unesco": false,
+   "web": "http://museosanmartino.campaniabeniculturali.it/"
+  },
+  {
+   "name": "Villa Floridiana and Museo Nazionale della ceramica Duca di Martina",
+   "lat": 40.8394,
+   "lng": 14.23005,
+   "wikidata": "Q3868424",
+   "note": "A large, quiet park with beautiful panoramic views, surrounds a neoclassical villa which hosts a large ceramic collection from different parts of the world.",
+   "editions": 6,
+   "unesco": false,
+   "web": "https://www.beniculturali.it/luogo/museo-della-ceramica-duca-di-martina-in-villa-floridiana"
+  },
+  {
+   "name": "Villa Pignatelli",
+   "lat": 40.8349,
+   "lng": 14.2335,
+   "wikidata": "",
+   "note": ""
+  },
+  {
+   "name": "Posillipo",
+   "lat": 40.8102,
+   "lng": 14.2024,
+   "wikidata": "",
+   "note": ""
+  },
+  {
+   "name": "Galleria Umberto I",
+   "lat": 40.838441,
+   "lng": 14.249482,
+   "wikidata": "",
+   "note": ""
+  },
+  {
+   "name": "Napoli Sotteranea",
+   "lat": 40.85127,
+   "lng": 14.25671,
+   "wikidata": "",
+   "note": "Shows former stone quarries, used the city buildings, transformed later to water distribution network, garbage disposal pits and finally a war shelter. You will visit several larger and smaller areas connected by narrow paths - beware if yo"
+  },
+  {
+   "name": "Neapolis Sotterrata",
+   "lat": 40.85066,
+   "lng": 14.25767,
+   "wikidata": "",
+   "note": "Presents ruins of a former Roman market - shops and the like. In addition, entrance to the surrounding museum and chapels is included."
+  },
+  {
+   "name": "Napoli sotterranea",
+   "lat": 40.83689,
+   "lng": 14.24851,
+   "wikidata": "",
+   "note": "Shows the labyrinth of tunnels, tanks and cavities and takes about 1 hr."
+  },
+  {
+   "name": "Galleria Borbonica",
+   "lat": 40.8354,
+   "lng": 14.2463,
+   "wikidata": "Q4000489",
+   "note": "A tour of an old tunnel that connects the palace to military barracks, used as a bomb shelter in World War II.",
+   "editions": 7,
+   "unesco": false
+  },
+  {
+   "name": "Catacombe di San Gennaro",
+   "lat": 40.86418,
+   "lng": 14.247624,
+   "wikidata": "Q3663206",
+   "note": "An extensive, two floor catacombs area restored and maintained by a few dozen local-patriots. Misc. tombs, frescoes, mosaics, etc., are shown.",
+   "editions": 11,
+   "unesco": false,
+   "web": "https://www.catacombedinapoli.it/it"
+  },
+  {
+   "name": "Catacombe di San Gaudioso",
+   "lat": 40.8599,
+   "lng": 14.249,
+   "wikidata": "Q3663202",
+   "note": "A catacombe area where macabre ritual of \"draining\" was performed. A few remains of skulls in the walls, parts of skeletons and wall paintings are shown. Also the history of the \"upstairs\" church is shortly showcased.",
+   "editions": 7,
+   "unesco": false,
+   "web": "https://www.catacombedinapoli.it/it"
+  },
+  {
+   "name": "Tomb of Virgil",
+   "lat": 40.830083,
+   "lng": 14.217721,
+   "wikidata": "",
+   "note": ""
+  },
+  {
+   "name": "Porta Capuana",
+   "lat": 40.85433,
+   "lng": 14.26544,
+   "wikidata": "Q834089",
+   "note": "Ancient city gate built in 1484, during the Aragonese rule, it represents one of the few visible remains of the medieval walls of Naples. It consists of an arch of white marble decorated with various bas-reliefs, between two impressing cyli",
+   "editions": 13,
+   "unesco": false
+  },
+  {
+   "name": "Fontana del Gigante",
+   "lat": 40.82967,
+   "lng": 14.250081,
+   "wikidata": "Q1002734",
+   "note": "One of the most beautiful fountains of the city, made in the beginning of 17th century by Pietro Bernini, father of the more famous Gian Lorenzo. It was used to sit beside the Royal Palace, close to the statue of a giant. It was then moved ",
+   "editions": 10,
+   "unesco": false
+  },
+  {
+   "name": "Fontanelle Cemetery",
+   "lat": 40.858668,
+   "lng": 14.23874,
+   "wikidata": "",
+   "note": "These caves in the hillside of Materdei contain a vast ossuary. As of 3/2026 it is still closed for longer renovations. The opening has been delayed for years, so the current prediction of a possible re-opening in 2026 should be taken with "
+  },
+  {
+   "name": "Naples National Archeological Museum",
+   "lat": 40.853378,
+   "lng": 14.250486,
+   "wikidata": "",
+   "note": ""
+  },
+  {
+   "name": "Royal Palace and National Museum of Capodimonte",
+   "lat": 40.867006,
+   "lng": 14.250533,
+   "wikidata": "Q4115652",
+   "note": "Hosts paintings from the 13th to 18th centuries, including major works by Simone Martini, Raphael, Titian, Caravaggio, Masaccio, Sandro Botticelli, Lorenzo Lotto, Giovanni Bellini, Giorgio Vasari, El Greco, Jacob Philipp Hackert. It also ho",
+   "editions": 18,
+   "unesco": false,
+   "web": "http://www.museocapodimonte.beniculturali.it/"
+  },
+  {
+   "name": "Museum of Contemporary Art Donnaregina",
+   "lat": 40.855338,
+   "lng": 14.258655,
+   "wikidata": "",
+   "note": ""
+  },
+  {
+   "name": "Museo Civico Filangieri",
+   "lat": 40.84901,
+   "lng": 14.2607,
+   "wikidata": "Q3867775",
+   "note": "Large collection of artworks, coins, and books donated to the city by Prince Gaetano Filangieri.",
+   "editions": 4,
+   "unesco": false,
+   "web": "https://filangierimuseo.it/"
+  },
+  {
+   "name": "Complesso monumentale dei Girolamini",
+   "lat": 40.851884,
+   "lng": 14.25839,
+   "wikidata": "Q289414",
+   "note": "Ecclesiastic complex comprising a gallery of paintings, a cloister, a library of thousands of ancient manuscripts, and a baroque church.",
+   "editions": 13,
+   "unesco": false,
+   "web": "http://www.polomusealenapoli.beniculturali.it/museo_gi/museo_gi.html"
+  },
+  {
+   "name": "Palazzo delle Arti",
+   "lat": 40.8368,
+   "lng": 14.2369,
+   "wikidata": "",
+   "note": ""
+  },
+  {
+   "name": "National railway Museum of Pietrarsa",
+   "lat": 40.8217,
+   "lng": 14.3205,
+   "wikidata": "Q832707",
+   "note": "A museum housed in the ancient 19th century's Bourbon Factories, along the route of the first railway in Italy: the Napoli-Portici line. Here is possible to admire a large variety of rolling stock like steam locomotives and different period",
+   "editions": 6,
+   "unesco": false,
+   "web": "https://www.fondazionefs.it/content/fondazionefs/it/esplora-il-museo/visita-pietrarsa.html"
+  },
+  {
+   "name": "Museo Universitario delle Scienze e delle Arti",
+   "lat": 40.853523,
+   "lng": 14.255549,
+   "wikidata": "",
+   "note": ""
+  },
+  {
+   "name": "Royal Palace",
+   "lat": 40.83619,
+   "lng": 14.249565,
+   "wikidata": "",
+   "note": ""
+  },
+  {
+   "name": "Albergo dei Poveri",
+   "lat": 40.863465,
+   "lng": 14.26546,
+   "wikidata": "Q221640",
+   "note": "A former public hospital/almshouse. It was designed by the architect Ferdinando Fuga, and construction was started in 1751. It is five storeys tall and about 300 m long. It was popularly known as \"Palazzo Fuga\". King Charles III of the Hous",
+   "editions": 13,
+   "unesco": false
+  },
+  {
+   "name": "Palazzo dello Spagnolo",
+   "lat": 40.8568,
+   "lng": 14.2544,
+   "wikidata": "",
+   "note": ""
+  },
+  {
+   "name": "Palazzo Zevallos",
+   "lat": 40.8397,
+   "lng": 14.2486,
+   "wikidata": "",
+   "note": ""
+  },
+  {
+   "name": "Palazzo di Sangro di Casacalenda",
+   "lat": 40.848233,
+   "lng": 14.255015,
+   "wikidata": "Q608398",
+   "note": "3-stores palace built during the second half of 18th century by the architect Mario Gioffredo. The internal courtyard was designed by Luigi Vanvitelli and features a four-arch portico and Doric order lesenes.",
+   "editions": 9,
+   "unesco": false
+  },
+  {
+   "name": "Palazzo Mannajuolo",
+   "lat": 40.836544,
+   "lng": 14.240346,
+   "wikidata": "",
+   "note": ""
+  }
+ ],
+ "lifts": [
+  {
+   "name": "Mergellina Funicular",
+   "kind": "funicular",
+   "ends": [
+    {
+     "lat": 40.82573,
+     "lng": 14.21515
+    },
+    {
+     "lat": 40.82587,
+     "lng": 14.21308
+    }
+   ],
+   "osm": "way/132790644"
+  },
+  {
+   "name": "Mergellina Funicular",
+   "kind": "funicular",
+   "ends": [
+    {
+     "lat": 40.82635,
+     "lng": 14.21948
+    },
+    {
+     "lat": 40.82588,
+     "lng": 14.21669
+    }
+   ],
+   "osm": "way/132790646"
+  },
+  {
+   "name": "Central Funicular",
+   "kind": "funicular",
+   "ends": [
+    {
+     "lat": 40.83894,
+     "lng": 14.24769
+    },
+    {
+     "lat": 40.84062,
+     "lng": 14.24121
+    }
+   ],
+   "osm": "way/132904767"
+  },
+  {
+   "name": "Central Funicular",
+   "kind": "funicular",
+   "ends": [
+    {
+     "lat": 40.84139,
+     "lng": 14.23819
+    },
+    {
+     "lat": 40.84249,
+     "lng": 14.2337
+    }
+   ],
+   "osm": "way/161927891"
+  },
+  {
+   "name": "Montesanto Funicular",
+   "kind": "funicular",
+   "ends": [
+    {
+     "lat": 40.84553,
+     "lng": 14.24003
+    },
+    {
+     "lat": 40.84428,
+     "lng": 14.23618
+    }
+   ],
+   "osm": "way/270261738"
+  },
+  {
+   "name": "Montesanto Funicular",
+   "kind": "funicular",
+   "ends": [
+    {
+     "lat": 40.84715,
+     "lng": 14.24488
+    },
+    {
+     "lat": 40.84632,
+     "lng": 14.24246
+    }
+   ],
+   "osm": "way/270261739"
+  },
+  {
+   "name": "Chiaia Funicular",
+   "kind": "funicular",
+   "ends": [
+    {
+     "lat": 40.84042,
+     "lng": 14.23326
+    },
+    {
+     "lat": 40.84232,
+     "lng": 14.23202
+    }
+   ],
+   "osm": "way/29449184"
+  },
+  {
+   "name": "Montesanto Funicular",
+   "kind": "funicular",
+   "ends": [
+    {
+     "lat": 40.84596,
+     "lng": 14.24134
+    },
+    {
+     "lat": 40.84553,
+     "lng": 14.24003
+    }
+   ],
+   "osm": "way/959692888"
+  },
+  {
+   "name": "Montesanto Funicular",
+   "kind": "funicular",
+   "ends": [
+    {
+     "lat": 40.84596,
+     "lng": 14.24134
+    },
+    {
+     "lat": 40.84553,
+     "lng": 14.24003
+    }
+   ],
+   "osm": "way/959692889"
+  },
+  {
+   "name": "Central Funicular",
+   "kind": "funicular",
+   "ends": [
+    {
+     "lat": 40.84089,
+     "lng": 14.24017
+    },
+    {
+     "lat": 40.84127,
+     "lng": 14.23868
+    }
+   ],
+   "osm": "way/959699626"
+  },
+  {
+   "name": "Chiaia Funicular",
+   "kind": "funicular",
+   "ends": [
+    {
+     "lat": 40.83812,
+     "lng": 14.2347
+    },
+    {
+     "lat": 40.84003,
+     "lng": 14.2335
+    }
+   ],
+   "osm": "way/959703182"
+  }
+ ],
+ "transit": [
+  {
+   "mode": "subway",
+   "ref": "1",
+   "name": "Linea 1 (Piscinola → Centro Direzionale)",
+   "stops": [
+    {
+     "name": "Piscinola-Scampia",
+     "lat": 40.89292,
+     "lng": 14.23984
+    },
+    {
+     "name": "Chiaiano",
+     "lat": 40.8907,
+     "lng": 14.2235
+    },
+    {
+     "name": "Frullone",
+     "lat": 40.88076,
+     "lng": 14.2309
+    },
+    {
+     "name": "Colli Aminei",
+     "lat": 40.86978,
+     "lng": 14.22866
+    },
+    {
+     "name": "Policlinico",
+     "lat": 40.8652,
+     "lng": 14.22151
+    },
+    {
+     "name": "Rione Alto",
+     "lat": 40.86115,
+     "lng": 14.22042
+    },
+    {
+     "name": "Montedonzelli",
+     "lat": 40.85609,
+     "lng": 14.22503
+    },
+    {
+     "name": "Vanvitelli",
+     "lat": 40.84392,
+     "lng": 14.23177
+    },
+    {
+     "name": "Quattro Giornate",
+     "lat": 40.84637,
+     "lng": 14.22496
+    },
+    {
+     "name": "Salvator Rosa",
+     "lat": 40.85155,
+     "lng": 14.23676
+    },
+    {
+     "name": "Materdei",
+     "lat": 40.85516,
+     "lng": 14.24219
+    },
+    {
+     "name": "Museo",
+     "lat": 40.85339,
+     "lng": 14.25187
+    },
+    {
+     "name": "Dante",
+     "lat": 40.84893,
+     "lng": 14.25018
+    },
+    {
+     "name": "Toledo",
+     "lat": 40.84243,
+     "lng": 14.24894
+    },
+    {
+     "name": "Municipio",
+     "lat": 40.83974,
+     "lng": 14.25243
+    },
+    {
+     "name": "Università",
+     "lat": 40.84362,
+     "lng": 14.25546
+    },
+    {
+     "name": "Duomo",
+     "lat": 40.84765,
+     "lng": 14.26157
+    },
+    {
+     "name": "Garibaldi",
+     "lat": 40.85194,
+     "lng": 14.27003
+    },
+    {
+     "name": "Centro Direzionale",
+     "lat": 40.85805,
+     "lng": 14.2816
+    }
+   ]
+  },
+  {
+   "mode": "train",
+   "ref": "2",
+   "name": "Linea 2 (Pozzuoli Solfatara → San Giovanni-Barra)",
+   "stops": [
+    {
+     "name": "Pozzuoli Solfatara",
+     "lat": 40.82767,
+     "lng": 14.12602
+    },
+    {
+     "name": "Bagnoli-Agnano Terme",
+     "lat": 40.81944,
+     "lng": 14.16666
+    },
+    {
+     "name": "Cavalleggeri Aosta",
+     "lat": 40.81996,
+     "lng": 14.18769
+    },
+    {
+     "name": "Napoli Campi Flegrei",
+     "lat": 40.82237,
+     "lng": 14.19453
+    },
+    {
+     "name": "Napoli Piazza Leopardi",
+     "lat": 40.82408,
+     "lng": 14.19969
+    },
+    {
+     "name": "Napoli Mergellina",
+     "lat": 40.83158,
+     "lng": 14.21869
+    },
+    {
+     "name": "Napoli Piazza Amedeo",
+     "lat": 40.8385,
+     "lng": 14.23312
+    },
+    {
+     "name": "Napoli Montesanto",
+     "lat": 40.84761,
+     "lng": 14.2439
+    },
+    {
+     "name": "Napoli Piazza Cavour",
+     "lat": 40.85519,
+     "lng": 14.25457
+    },
+    {
+     "name": "Napoli Piazza Garibaldi",
+     "lat": 40.85249,
+     "lng": 14.27046
+    },
+    {
+     "name": "Napoli Gianturco",
+     "lat": 40.85391,
+     "lng": 14.2878
+    },
+    {
+     "name": "Napoli San Giovanni Barra",
+     "lat": 40.83315,
+     "lng": 14.30538
+    }
+   ]
+  },
+  {
+   "mode": "light_rail",
+   "ref": "7",
+   "name": "Linea 7 (Napoli Porta Nolana → San Giorgio a Cremano)",
+   "stops": [
+    {
+     "name": "Napoli Porta Nolana",
+     "lat": 40.84925,
+     "lng": 14.26929
+    },
+    {
+     "name": "Napoli Garibaldi",
+     "lat": 40.8511,
+     "lng": 14.27334
+    },
+    {
+     "name": "Napoli Centro Direzionale",
+     "lat": 40.85808,
+     "lng": 14.28184
+    },
+    {
+     "name": "Poggioreale",
+     "lat": 40.86656,
+     "lng": 14.29323
+    },
+    {
+     "name": "Botteghelle",
+     "lat": 40.87221,
+     "lng": 14.31559
+    },
+    {
+     "name": "Madonnelle",
+     "lat": 40.87109,
+     "lng": 14.33486
+    },
+    {
+     "name": "Argine Palasport",
+     "lat": 40.8624,
+     "lng": 14.33831
+    },
+    {
+     "name": "Villa Visconti",
+     "lat": 40.85549,
+     "lng": 14.33848
+    },
+    {
+     "name": "Vesuvio de Meis",
+     "lat": 40.85229,
+     "lng": 14.33906
+    },
+    {
+     "name": "Bartolo Longo",
+     "lat": 40.84716,
+     "lng": 14.33657
+    },
+    {
+     "name": "San Giorgio a Cremano",
+     "lat": 40.83398,
+     "lng": 14.33688
+    }
+   ]
+  },
+  {
+   "mode": "subway",
+   "ref": "6",
+   "name": "Linea 6 (Mostra → Municipio)",
+   "stops": [
+    {
+     "name": "Mostra",
+     "lat": 40.82434,
+     "lng": 14.19364
+    },
+    {
+     "name": "Augusto",
+     "lat": 40.82614,
+     "lng": 14.19834
+    },
+    {
+     "name": "Lala",
+     "lat": 40.82683,
+     "lng": 14.20456
+    },
+    {
+     "name": "Mergellina",
+     "lat": 40.83061,
+     "lng": 14.21736
+    },
+    {
+     "name": "Arco Mirelli - Repubblica",
+     "lat": 40.83256,
+     "lng": 14.22669
+    },
+    {
+     "name": "San Pasquale",
+     "lat": 40.83364,
+     "lng": 14.2347
+    },
+    {
+     "name": "Chiaia - Monte di Dio",
+     "lat": 40.83556,
+     "lng": 14.24502
+    },
+    {
+     "name": "Municipio",
+     "lat": 40.83945,
+     "lng": 14.2528
+    }
+   ]
+  },
+  {
+   "mode": "train",
+   "ref": "Napoli–Salerno",
+   "name": "Ferrovia Napoli–Salerno",
+   "stops": [
+    {
+     "name": "Santa Maria La Bruna",
+     "lat": 40.75524,
+     "lng": 14.4079
+    },
+    {
+     "name": "Torre del Greco",
+     "lat": 40.78754,
+     "lng": 14.36321
+    },
+    {
+     "name": "Portici-Ercolano",
+     "lat": 40.80988,
+     "lng": 14.33581
+    },
+    {
+     "name": "Pietrarsa-San Giorgio a Cremano",
+     "lat": 40.82205,
+     "lng": 14.32111
+    },
+    {
+     "name": "Napoli San Giovanni Barra",
+     "lat": 40.83312,
+     "lng": 14.30533
+    },
+    {
+     "name": "Napoli Galileo Ferraris",
+     "lat": 40.84767,
+     "lng": 14.29609
+    },
+    {
+     "name": "Napoli Gianturco",
+     "lat": 40.85389,
+     "lng": 14.2878
+    },
+    {
+     "name": "Torre Annunziata Città",
+     "lat": 40.75409,
+     "lng": 14.44857
+    },
+    {
+     "name": "Torre Annunziata Centrale",
+     "lat": 40.74707,
+     "lng": 14.46387
+    },
+    {
+     "name": "Pompei",
+     "lat": 40.7459,
+     "lng": 14.50124
+    },
+    {
+     "name": "Scafati",
+     "lat": 40.74601,
+     "lng": 14.52302
+    },
+    {
+     "name": "Angri",
+     "lat": 40.74636,
+     "lng": 14.57548
+    },
+    {
+     "name": "Pagani",
+     "lat": 40.74652,
+     "lng": 14.61702
+    },
+    {
+     "name": "Nocera Inferiore",
+     "lat": 40.74531,
+     "lng": 14.63589
+    },
+    {
+     "name": "Nocera Superiore",
+     "lat": 40.74259,
+     "lng": 14.67243
+    },
+    {
+     "name": "Duomo-Via Vernieri",
+     "lat": 40.6814,
+     "lng": 14.76235
+    },
+    {
+     "name": "Salerno",
+     "lat": 40.6755,
+     "lng": 14.77262
+    },
+    {
+     "name": "Vietri sul Mare-Amalfi",
+     "lat": 40.67415,
+     "lng": 14.72814
+    }
+   ]
+  },
+  {
+   "mode": "light_rail",
+   "ref": "13",
+   "name": "Linea 13 (Napoli Porta Nolana → Sorrento)",
+   "stops": [
+    {
+     "name": "Napoli Porta Nolana",
+     "lat": 40.84919,
+     "lng": 14.26938
+    },
+    {
+     "name": "Napoli Garibaldi",
+     "lat": 40.85101,
+     "lng": 14.27326
+    },
+    {
+     "name": "Via Gianturco",
+     "lat": 40.84601,
+     "lng": 14.28729
+    },
+    {
+     "name": "San Giovanni a Teduccio",
+     "lat": 40.84178,
+     "lng": 14.30022
+    },
+    {
+     "name": "Barra",
+     "lat": 40.84411,
+     "lng": 14.31421
+    },
+    {
+     "name": "Santa Maria del Pozzo",
+     "lat": 40.84021,
+     "lng": 14.32772
+    },
+    {
+     "name": "San Giorgio a Cremano",
+     "lat": 40.83301,
+     "lng": 14.33768
+    },
+    {
+     "name": "San Giorgio Cavalli di Bronzo",
+     "lat": 40.82875,
+     "lng": 14.34074
+    },
+    {
+     "name": "Portici Bellavista",
+     "lat": 40.82202,
+     "lng": 14.34346
+    },
+    {
+     "name": "Portici Via Libertà",
+     "lat": 40.81672,
+     "lng": 14.34635
+    },
+    {
+     "name": "Ercolano Scavi",
+     "lat": 40.80853,
+     "lng": 14.35548
+    },
+    {
+     "name": "Ercolano Miglio D'Oro",
+     "lat": 40.80206,
+     "lng": 14.36152
+    },
+    {
+     "name": "Torre del Greco",
+     "lat": 40.79342,
+     "lng": 14.36982
+    },
+    {
+     "name": "Via Sant'Antonio",
+     "lat": 40.78429,
+     "lng": 14.38425
+    },
+    {
+     "name": "Via del Monte",
+     "lat": 40.77797,
+     "lng": 14.39283
+    },
+    {
+     "name": "Via dei Monaci",
+     "lat": 40.77584,
+     "lng": 14.40008
+    },
+    {
+     "name": "Villa delle Ginestre",
+     "lat": 40.77225,
+     "lng": 14.40851
+    },
+    {
+     "name": "Leopardi",
+     "lat": 40.76614,
+     "lng": 14.41784
+    },
+    {
+     "name": "Via Viuli",
+     "lat": 40.7638,
+     "lng": 14.42795
+    },
+    {
+     "name": "Trecase",
+     "lat": 40.76192,
+     "lng": 14.43972
+    },
+    {
+     "name": "Torre Annunziata - Oplonti",
+     "lat": 40.75973,
+     "lng": 14.451
+    },
+    {
+     "name": "Villa Regina",
+     "lat": 40.75726,
+     "lng": 14.47029
+    },
+    {
+     "name": "Pompei Scavi - Villa dei Misteri",
+     "lat": 40.7488,
+     "lng": 14.48093
+    },
+    {
+     "name": "Moregine",
+     "lat": 40.73824,
+     "lng": 14.485
+    },
+    {
+     "name": "Pioppaino",
+     "lat": 40.71886,
+     "lng": 14.49176
+    },
+    {
+     "name": "Stabia Scavi",
+     "lat": 40.70389,
+     "lng": 14.49033
+    },
+    {
+     "name": "Castellammare di Stabia",
+     "lat": 40.6953,
+     "lng": 14.48374
+    },
+    {
+     "name": "Vico Equense",
+     "lat": 40.6628,
+     "lng": 14.42988
+    },
+    {
+     "name": "Seiano",
+     "lat": 40.65601,
+     "lng": 14.42686
+    },
+    {
+     "name": "Meta",
+     "lat": 40.6405,
+     "lng": 14.41623
+    },
+    {
+     "name": "Piano di Sorrento",
+     "lat": 40.63507,
+     "lng": 14.4104
+    },
+    {
+     "name": "Sant'Agnello",
+     "lat": 40.63111,
+     "lng": 14.39758
+    },
+    {
+     "name": "Sorrento",
+     "lat": 40.62563,
+     "lng": 14.37986
+    }
+   ]
+  },
+  {
+   "mode": "train",
+   "ref": "Napoli - Cassino",
+   "name": "Napoli - Cassino",
+   "stops": [
+    {
+     "name": "Teano",
+     "lat": 41.23186,
+     "lng": 14.07713
+    },
+    {
+     "name": "Riardo-Pietramelara",
+     "lat": 41.2652,
+     "lng": 14.1249
+    },
+    {
+     "name": "Tora-Presenzano",
+     "lat": 41.35889,
+     "lng": 14.04504
+    }
+   ]
+  },
+  {
+   "mode": "train",
+   "ref": "Napoli - Aversa - Formia - Roma",
+   "name": "Napoli - Aversa - Formia - Roma",
+   "stops": [
+    {
+     "name": "Napoli Centrale",
+     "lat": 40.85335,
+     "lng": 14.27323
+    },
+    {
+     "name": "Aversa",
+     "lat": 40.97325,
+     "lng": 14.21832
+    },
+    {
+     "name": "Formia-Gaeta",
+     "lat": 41.25885,
+     "lng": 13.60619
+    }
+   ]
+  },
+  {
+   "mode": "light_rail",
+   "ref": "14",
+   "name": "Linea 14 (Napoli Porta Nolana → Poggiomarino)",
+   "stops": [
+    {
+     "name": "Napoli Porta Nolana",
+     "lat": 40.84919,
+     "lng": 14.26938
+    },
+    {
+     "name": "Napoli Garibaldi",
+     "lat": 40.85101,
+     "lng": 14.27326
+    },
+    {
+     "name": "Via Gianturco",
+     "lat": 40.84601,
+     "lng": 14.28729
+    },
+    {
+     "name": "San Giovanni a Teduccio",
+     "lat": 40.84178,
+     "lng": 14.30022
+    },
+    {
+     "name": "Barra",
+     "lat": 40.84411,
+     "lng": 14.31421
+    },
+    {
+     "name": "Santa Maria del Pozzo",
+     "lat": 40.84021,
+     "lng": 14.32772
+    },
+    {
+     "name": "San Giorgio a Cremano",
+     "lat": 40.83301,
+     "lng": 14.33768
+    },
+    {
+     "name": "San Giorgio Cavalli di Bronzo",
+     "lat": 40.82875,
+     "lng": 14.34074
+    },
+    {
+     "name": "Portici Bellavista",
+     "lat": 40.82202,
+     "lng": 14.34346
+    },
+    {
+     "name": "Portici Via Libertà",
+     "lat": 40.81672,
+     "lng": 14.34635
+    },
+    {
+     "name": "Ercolano Scavi",
+     "lat": 40.80853,
+     "lng": 14.35548
+    },
+    {
+     "name": "Ercolano Miglio D'Oro",
+     "lat": 40.80206,
+     "lng": 14.36152
+    },
+    {
+     "name": "Torre del Greco",
+     "lat": 40.79342,
+     "lng": 14.36982
+    },
+    {
+     "name": "Via Sant'Antonio",
+     "lat": 40.78429,
+     "lng": 14.38425
+    },
+    {
+     "name": "Via del Monte",
+     "lat": 40.77797,
+     "lng": 14.39283
+    },
+    {
+     "name": "Via dei Monaci",
+     "lat": 40.77584,
+     "lng": 14.40008
+    },
+    {
+     "name": "Villa delle Ginestre",
+     "lat": 40.77225,
+     "lng": 14.40851
+    },
+    {
+     "name": "Leopardi",
+     "lat": 40.76614,
+     "lng": 14.41784
+    },
+    {
+     "name": "Via Viuli",
+     "lat": 40.7638,
+     "lng": 14.42795
+    },
+    {
+     "name": "Trecase",
+     "lat": 40.76192,
+     "lng": 14.43972
+    },
+    {
+     "name": "Torre Annunziata - Oplonti",
+     "lat": 40.75983,
+     "lng": 14.45103
+    },
+    {
+     "name": "Boscotrecase",
+     "lat": 40.76883,
+     "lng": 14.46122
+    },
+    {
+     "name": "Boscoreale",
+     "lat": 40.76991,
+     "lng": 14.47443
+    },
+    {
+     "name": "Pompei - Santuario",
+     "lat": 40.75124,
+     "lng": 14.50165
+    },
+    {
+     "name": "Scafati",
+     "lat": 40.75363,
+     "lng": 14.52418
+    },
+    {
+     "name": "San Pietro",
+     "lat": 40.76063,
+     "lng": 14.53433
+    },
+    {
+     "name": "Cangiani",
+     "lat": 40.78527,
+     "lng": 14.53765
+    },
+    {
+     "name": "Poggiomarino",
+     "lat": 40.80101,
+     "lng": 14.53979
+    }
+   ]
+  },
+  {
+   "mode": "light_rail",
+   "ref": "9",
+   "name": "Linea 9 (Napoli Porta Nolana → Baiano)",
+   "stops": [
+    {
+     "name": "Napoli Porta Nolana",
+     "lat": 40.84925,
+     "lng": 14.26929
+    },
+    {
+     "name": "Napoli Garibaldi",
+     "lat": 40.8511,
+     "lng": 14.27334
+    },
+    {
+     "name": "Napoli Centro Direzionale",
+     "lat": 40.85808,
+     "lng": 14.28184
+    },
+    {
+     "name": "Poggioreale",
+     "lat": 40.86656,
+     "lng": 14.29323
+    },
+    {
+     "name": "Botteghelle",
+     "lat": 40.87221,
+     "lng": 14.31559
+    },
+    {
+     "name": "Casoria Arpino-Volla",
+     "lat": 40.88781,
+     "lng": 14.32969
+    },
+    {
+     "name": "Salice",
+     "lat": 40.89947,
+     "lng": 14.33736
+    },
+    {
+     "name": "Casalnuovo",
+     "lat": 40.90785,
+     "lng": 14.34751
+    },
+    {
+     "name": "La Pigna",
+     "lat": 40.90895,
+     "lng": 14.35503
+    },
+    {
+     "name": "Talona",
+     "lat": 40.91024,
+     "lng": 14.36527
+    },
+    {
+     "name": "Parco Piemonte",
+     "lat": 40.91117,
+     "lng": 14.37278
+    },
+    {
+     "name": "Pratola Ponte",
+     "lat": 40.91348,
+     "lng": 14.38299
+    },
+    {
+     "name": "Pomigliano d’Arco",
+     "lat": 40.91474,
+     "lng": 14.39283
+    },
+    {
+     "name": "Castelcisterna",
+     "lat": 40.92044,
+     "lng": 14.41225
+    },
+    {
+     "name": "Brusciano",
+     "lat": 40.91719,
+     "lng": 14.4177
+    },
+    {
+     "name": "De Ruggiero",
+     "lat": 40.91672,
+     "lng": 14.42911
+    },
+    {
+     "name": "Vittorio Veneto",
+     "lat": 40.91942,
+     "lng": 14.44273
+    },
+    {
+     "name": "Marigliano",
+     "lat": 40.91695,
+     "lng": 14.45636
+    },
+    {
+     "name": "San Vitaliano",
+     "lat": 40.91844,
+     "lng": 14.47317
+    },
+    {
+     "name": "Scisciano",
+     "lat": 40.91257,
+     "lng": 14.48064
+    },
+    {
+     "name": "Saviano",
+     "lat": 40.91217,
+     "lng": 14.50932
+    },
+    {
+     "name": "Nola",
+     "lat": 40.9293,
+     "lng": 14.52675
+    },
+    {
+     "name": "Cimitile",
+     "lat": 40.93865,
+     "lng": 14.53051
+    },
+    {
+     "name": "Camposano",
+     "lat": 40.95221,
+     "lng": 14.53144
+    },
+    {
+     "name": "Cicciano",
+     "lat": 40.96064,
+     "lng": 14.54346
+    },
+    {
+     "name": "Roccarainola-Tufino",
+     "lat": 40.96637,
+     "lng": 14.55983
+    },
+    {
+     "name": "Sperone-Avella",
+     "lat": 40.95519,
+     "lng": 14.60256
+    },
+    {
+     "name": "Baiano",
+     "lat": 40.95288,
+     "lng": 14.61717
+    }
+   ]
+  },
+  {
+   "mode": "light_rail",
+   "ref": "9",
+   "name": "Linea 9 (Napoli Porta Nolana → Acerra)",
+   "stops": [
+    {
+     "name": "Napoli Porta Nolana",
+     "lat": 40.84925,
+     "lng": 14.26929
+    },
+    {
+     "name": "Napoli Garibaldi",
+     "lat": 40.8511,
+     "lng": 14.27334
+    },
+    {
+     "name": "Napoli Centro Direzionale",
+     "lat": 40.85808,
+     "lng": 14.28184
+    },
+    {
+     "name": "Poggioreale",
+     "lat": 40.86656,
+     "lng": 14.29323
+    },
+    {
+     "name": "Botteghelle",
+     "lat": 40.87221,
+     "lng": 14.31559
+    },
+    {
+     "name": "Casoria Arpino-Volla",
+     "lat": 40.88781,
+     "lng": 14.32969
+    },
+    {
+     "name": "Salice",
+     "lat": 40.89947,
+     "lng": 14.33736
+    },
+    {
+     "name": "Casalnuovo",
+     "lat": 40.90785,
+     "lng": 14.34751
+    },
+    {
+     "name": "La Pigna",
+     "lat": 40.90895,
+     "lng": 14.35503
+    },
+    {
+     "name": "Talona",
+     "lat": 40.91024,
+     "lng": 14.36527
+    },
+    {
+     "name": "Parco Piemonte",
+     "lat": 40.91117,
+     "lng": 14.37278
+    },
+    {
+     "name": "Pratola Ponte",
+     "lat": 40.91348,
+     "lng": 14.38299
+    },
+    {
+     "name": "Pomigliano d’Arco",
+     "lat": 40.91463,
+     "lng": 14.39287
+    },
+    {
+     "name": "Alfa Lancia 2",
+     "lat": 40.92581,
+     "lng": 14.40115
+    },
+    {
+     "name": "Alfa Lancia 4",
+     "lat": 40.93024,
+     "lng": 14.39997
+    },
+    {
+     "name": "Acerra",
+     "lat": 40.9474,
+     "lng": 14.38254
+    }
+   ]
+  },
+  {
+   "mode": "light_rail",
+   "ref": "12",
+   "name": "Linea 12 (Napoli Porta Nolana → Sarno)",
+   "stops": [
+    {
+     "name": "Napoli Porta Nolana",
+     "lat": 40.84919,
+     "lng": 14.26938
+    },
+    {
+     "name": "Napoli Garibaldi",
+     "lat": 40.85101,
+     "lng": 14.27326
+    },
+    {
+     "name": "Via Gianturco",
+     "lat": 40.84601,
+     "lng": 14.28729
+    },
+    {
+     "name": "San Giovanni a Teduccio",
+     "lat": 40.84178,
+     "lng": 14.30022
+    },
+    {
+     "name": "Barra",
+     "lat": 40.8442,
+     "lng": 14.31414
+    },
+    {
+     "name": "Officine Ponticelli",
+     "lat": 40.84767,
+     "lng": 14.3246
+    },
+    {
+     "name": "Ponticelli",
+     "lat": 40.85093,
+     "lng": 14.33333
+    },
+    {
+     "name": "Vesuvio de Meis",
+     "lat": 40.85171,
+     "lng": 14.33944
+    },
+    {
+     "name": "Cercola",
+     "lat": 40.85631,
+     "lng": 14.35545
+    },
+    {
+     "name": "Pollena Trocchia",
+     "lat": 40.8599,
+     "lng": 14.3798
+    },
+    {
+     "name": "Guindazzi",
+     "lat": 40.86211,
+     "lng": 14.38421
+    },
+    {
+     "name": "Madonna Dell'Arco",
+     "lat": 40.86735,
+     "lng": 14.38948
+    },
+    {
+     "name": "Sant'Anastasia",
+     "lat": 40.87008,
+     "lng": 14.40052
+    },
+    {
+     "name": "Villa Augustea",
+     "lat": 40.87335,
+     "lng": 14.42628
+    },
+    {
+     "name": "Somma",
+     "lat": 40.87403,
+     "lng": 14.43851
+    },
+    {
+     "name": "Rione Trieste",
+     "lat": 40.87027,
+     "lng": 14.46183
+    },
+    {
+     "name": "Ottaviano",
+     "lat": 40.85295,
+     "lng": 14.48079
+    },
+    {
+     "name": "San Leonardo",
+     "lat": 40.84302,
+     "lng": 14.49233
+    },
+    {
+     "name": "San Giuseppe",
+     "lat": 40.83757,
+     "lng": 14.50102
+    },
+    {
+     "name": "Casilli",
+     "lat": 40.82658,
+     "lng": 14.50037
+    },
+    {
+     "name": "Terzigno",
+     "lat": 40.8143,
+     "lng": 14.49728
+    },
+    {
+     "name": "Flocco",
+     "lat": 40.80358,
+     "lng": 14.53203
+    },
+    {
+     "name": "Poggiomarino",
+     "lat": 40.80097,
+     "lng": 14.54031
+    },
+    {
+     "name": "Striano",
+     "lat": 40.8119,
+     "lng": 14.57737
+    },
+    {
+     "name": "San Valentino Torio",
+     "lat": 40.79746,
+     "lng": 14.60037
+    },
+    {
+     "name": "Sarno",
+     "lat": 40.81216,
+     "lng": 14.61829
+    }
+   ]
+  },
+  {
+   "mode": "train",
+   "ref": "4",
+   "name": "Linea 4 (Montesanto → Torregaveta)",
+   "stops": [
+    {
+     "name": "Montesanto",
+     "lat": 40.84691,
+     "lng": 14.2453
+    },
+    {
+     "name": "Corso Vittorio Emanuele",
+     "lat": 40.83649,
+     "lng": 14.22112
+    },
+    {
+     "name": "Fuorigrotta",
+     "lat": 40.8279,
+     "lng": 14.2018
+    },
+    {
+     "name": "Mostra - Stadio Maradona",
+     "lat": 40.82456,
+     "lng": 14.19323
+    },
+    {
+     "name": "Edenlandia",
+     "lat": 40.82029,
+     "lng": 14.18349
+    },
+    {
+     "name": "Agnano",
+     "lat": 40.81767,
+     "lng": 14.17635
+    },
+    {
+     "name": "Bagnoli-Città della Scienza",
+     "lat": 40.81509,
+     "lng": 14.16679
+    },
+    {
+     "name": "Dazio",
+     "lat": 40.81724,
+     "lng": 14.16006
+    },
+    {
+     "name": "Gerolomini",
+     "lat": 40.82073,
+     "lng": 14.13522
+    },
+    {
+     "name": "Pozzuoli",
+     "lat": 40.82921,
+     "lng": 14.11793
+    },
+    {
+     "name": "Arco Felice",
+     "lat": 40.83283,
+     "lng": 14.10152
+    },
+    {
+     "name": "Lucrino",
+     "lat": 40.82923,
+     "lng": 14.08346
+    },
+    {
+     "name": "Baia",
+     "lat": 40.82115,
+     "lng": 14.07133
+    },
+    {
+     "name": "Fusaro",
+     "lat": 40.81855,
+     "lng": 14.06168
+    },
+    {
+     "name": "Torregaveta",
+     "lat": 40.81163,
+     "lng": 14.0453
+    }
+   ]
+  },
+  {
+   "mode": "train",
+   "ref": "5",
+   "name": "Linea 5 (Montesanto → Torregaveta)",
+   "stops": [
+    {
+     "name": "Montesanto",
+     "lat": 40.84707,
+     "lng": 14.2452
+    },
+    {
+     "name": "Piave",
+     "lat": 40.84294,
+     "lng": 14.20655
+    },
+    {
+     "name": "Soccavo",
+     "lat": 40.844,
+     "lng": 14.20048
+    },
+    {
+     "name": "Traiano",
+     "lat": 40.84509,
+     "lng": 14.19407
+    },
+    {
+     "name": "La Trencia",
+     "lat": 40.85405,
+     "lng": 14.17196
+    },
+    {
+     "name": "Pianura",
+     "lat": 40.85602,
+     "lng": 14.16244
+    },
+    {
+     "name": "Pisani",
+     "lat": 40.86528,
+     "lng": 14.14362
+    },
+    {
+     "name": "Quarto Centro",
+     "lat": 40.88023,
+     "lng": 14.14478
+    },
+    {
+     "name": "Quarto",
+     "lat": 40.88025,
+     "lng": 14.13633
+    },
+    {
+     "name": "Quarto Officina",
+     "lat": 40.87914,
+     "lng": 14.126
+    },
+    {
+     "name": "Grotta del Sole",
+     "lat": 40.87854,
+     "lng": 14.09467
+    },
+    {
+     "name": "Licola",
+     "lat": 40.87149,
+     "lng": 14.05889
+    },
+    {
+     "name": "Marina di Licola",
+     "lat": 40.86313,
+     "lng": 14.04804
+    },
+    {
+     "name": "Cuma",
+     "lat": 40.84914,
+     "lng": 14.04879
+    },
+    {
+     "name": "Lido Fusaro",
+     "lat": 40.8289,
+     "lng": 14.04979
+    },
+    {
+     "name": "Torregaveta",
+     "lat": 40.81173,
+     "lng": 14.04523
+    }
+   ]
+  },
+  {
+   "mode": "train",
+   "ref": "15",
+   "name": "Linea 15 (Napoli Centrale → Benevento)",
+   "stops": [
+    {
+     "name": "Napoli Centrale",
+     "lat": 40.85299,
+     "lng": 14.27329
+    },
+    {
+     "name": "Cancello",
+     "lat": 40.99418,
+     "lng": 14.41941
+    },
+    {
+     "name": "Santa Maria a Vico",
+     "lat": 41.0286,
+     "lng": 14.46264
+    },
+    {
+     "name": "Arpaia-Airola-Sant'Agata",
+     "lat": 41.03999,
+     "lng": 14.55502
+    },
+    {
+     "name": "Benevento Pontecorvo - Castelpoto",
+     "lat": 41.10879,
+     "lng": 14.74674
+    },
+    {
+     "name": "Benevento Rione Libertà",
+     "lat": 41.12518,
+     "lng": 14.76566
+    },
+    {
+     "name": "Benevento",
+     "lat": 41.14176,
+     "lng": 14.77012
+    }
+   ]
+  },
+  {
+   "mode": "train",
+   "ref": "16",
+   "name": "Linea 16 (Napoli Centrale → Piedimonte Matese)",
+   "stops": [
+    {
+     "name": "Napoli Centrale",
+     "lat": 40.85299,
+     "lng": 14.27329
+    },
+    {
+     "name": "Cancello",
+     "lat": 40.99438,
+     "lng": 14.4192
+    },
+    {
+     "name": "Maddaloni Inferiore",
+     "lat": 41.03593,
+     "lng": 14.38051
+    },
+    {
+     "name": "Caserta",
+     "lat": 41.06867,
+     "lng": 14.32822
+    },
+    {
+     "name": "Sant'Angelo in Formis",
+     "lat": 41.12059,
+     "lng": 14.2484
+    },
+    {
+     "name": "Triflisco",
+     "lat": 41.13537,
+     "lng": 14.25804
+    },
+    {
+     "name": "Pontelatone",
+     "lat": 41.14517,
+     "lng": 14.27365
+    },
+    {
+     "name": "Caiazzo",
+     "lat": 41.17979,
+     "lng": 14.36364
+    },
+    {
+     "name": "Dragoni",
+     "lat": 41.27097,
+     "lng": 14.31322
+    },
+    {
+     "name": "Alife",
+     "lat": 41.32371,
+     "lng": 14.33934
+    },
+    {
+     "name": "Piedimonte Matese",
+     "lat": 41.35091,
+     "lng": 14.36777
+    }
+   ]
+  },
+  {
+   "mode": "train",
+   "ref": "Frecciarossa",
+   "name": "Frecciarossa (Milano Centrale → Napoli Centrale)",
+   "stops": [
+    {
+     "name": "Napoli Centrale",
+     "lat": 40.85263,
+     "lng": 14.27335
+    },
+    {
+     "name": "Napoli Afragola",
+     "lat": 40.93138,
+     "lng": 14.33106
+    }
+   ]
+  },
+  {
+   "mode": "train",
+   "ref": "Frecciarossa",
+   "name": "Frecciarossa (Milano Centrale → Salerno)",
+   "stops": [
+    {
+     "name": "Napoli Afragola",
+     "lat": 40.93138,
+     "lng": 14.33106
+    },
+    {
+     "name": "Napoli Centrale",
+     "lat": 40.85263,
+     "lng": 14.27335
+    },
+    {
+     "name": "Salerno",
+     "lat": 40.67548,
+     "lng": 14.77258
+    }
+   ]
+  },
+  {
+   "mode": "train",
+   "ref": "Frecciarossa",
+   "name": "Frecciarossa (Napoli Centrale → Milano Centrale)",
+   "stops": [
+    {
+     "name": "Napoli Centrale",
+     "lat": 40.85259,
+     "lng": 14.27336
+    },
+    {
+     "name": "Napoli Afragola",
+     "lat": 40.93135,
+     "lng": 14.33121
+    }
+   ]
+  },
+  {
+   "mode": "train",
+   "ref": "Frecciarossa",
+   "name": "Frecciarossa (Salerno → Milano Centrale)",
+   "stops": [
+    {
+     "name": "Salerno",
+     "lat": 40.67544,
+     "lng": 14.77254
+    },
+    {
+     "name": "Napoli Centrale",
+     "lat": 40.85259,
+     "lng": 14.27336
+    },
+    {
+     "name": "Napoli Afragola",
+     "lat": 40.93135,
+     "lng": 14.33121
+    }
+   ]
+  },
+  {
+   "mode": "train",
+   "ref": "Frecciarossa",
+   "name": "Frecciarossa (Torino Porta Nuova → Napoli Centrale)",
+   "stops": [
+    {
+     "name": "Napoli Afragola",
+     "lat": 40.93138,
+     "lng": 14.33106
+    },
+    {
+     "name": "Napoli Centrale",
+     "lat": 40.85263,
+     "lng": 14.27335
+    }
+   ]
+  },
+  {
+   "mode": "tram",
+   "ref": "1",
+   "name": "Tram 1 (Stazione Marittima → Poggioreale)",
+   "stops": [
+    {
+     "name": "Via Colombo - Porto",
+     "lat": 40.83984,
+     "lng": 14.25543
+    },
+    {
+     "name": "Molo Piccolo",
+     "lat": 40.84166,
+     "lng": 14.2569
+    },
+    {
+     "name": "Marina / Capocci",
+     "lat": 40.84452,
+     "lng": 14.25975
+    },
+    {
+     "name": "Marina / Duomo",
+     "lat": 40.84579,
+     "lng": 14.26332
+    },
+    {
+     "name": "Mercato",
+     "lat": 40.84617,
+     "lng": 14.26762
+    },
+    {
+     "name": "Porta Nolana",
+     "lat": 40.84921,
+     "lng": 14.2687
+    },
+    {
+     "name": "Garibaldi",
+     "lat": 40.85188,
+     "lng": 14.26823
+    },
+    {
+     "name": "Principe Umberto",
+     "lat": 40.85404,
+     "lng": 14.26778
+    },
+    {
+     "name": "Casanova / Sapri",
+     "lat": 40.85579,
+     "lng": 14.26848
+    },
+    {
+     "name": "Casanova / Novara",
+     "lat": 40.85671,
+     "lng": 14.27038
+    },
+    {
+     "name": "Nazionale",
+     "lat": 40.8586,
+     "lng": 14.274
+    },
+    {
+     "name": "Poggioreale / Malta",
+     "lat": 40.85943,
+     "lng": 14.27601
+    },
+    {
+     "name": "Poggioreale / Biscardi",
+     "lat": 40.86166,
+     "lng": 14.28072
+    },
+    {
+     "name": "Poggioreale / Aulisio",
+     "lat": 40.86318,
+     "lng": 14.28383
+    },
+    {
+     "name": "Poggioreale / Caramanico",
+     "lat": 40.86492,
+     "lng": 14.28748
+    },
+    {
+     "name": "Poggioreale",
+     "lat": 40.86643,
+     "lng": 14.29065
+    }
+   ]
+  },
+  {
+   "mode": "tram",
+   "ref": "2",
+   "name": "Tram 2 (Poggioreale → San Giovanni a Teduccio)",
+   "stops": [
+    {
+     "name": "Poggioreale",
+     "lat": 40.86643,
+     "lng": 14.29065
+    },
+    {
+     "name": "Poggioreale / Caramanico",
+     "lat": 40.86533,
+     "lng": 14.28827
+    },
+    {
+     "name": "Poggioreale / Aulisio",
+     "lat": 40.86413,
+     "lng": 14.28574
+    },
+    {
+     "name": "Poggioreale / Biscardi",
+     "lat": 40.86203,
+     "lng": 14.2814
+    },
+    {
+     "name": "Poggioreale / Malta",
+     "lat": 40.85985,
+     "lng": 14.27682
+    },
+    {
+     "name": "Nazionale",
+     "lat": 40.85861,
+     "lng": 14.27382
+    },
+    {
+     "name": "Principe Umberto",
+     "lat": 40.85403,
+     "lng": 14.26774
+    },
+    {
+     "name": "Garibaldi",
+     "lat": 40.85254,
+     "lng": 14.26808
+    },
+    {
+     "name": "Porta Nolana",
+     "lat": 40.84895,
+     "lng": 14.2687
+    },
+    {
+     "name": "Vespucci / Fiumicello",
+     "lat": 40.84637,
+     "lng": 14.2705
+    },
+    {
+     "name": "Smaldone",
+     "lat": 40.84652,
+     "lng": 14.27281
+    },
+    {
+     "name": "Vespucci / Toscano",
+     "lat": 40.84667,
+     "lng": 14.27515
+    },
+    {
+     "name": "Vespucci / Lucci",
+     "lat": 40.84639,
+     "lng": 14.27835
+    },
+    {
+     "name": "Volta / Brin",
+     "lat": 40.84541,
+     "lng": 14.28066
+    },
+    {
+     "name": "Sant'Erasmo",
+     "lat": 40.84474,
+     "lng": 14.28218
+    },
+    {
+     "name": "Portici / Gianturco",
+     "lat": 40.84354,
+     "lng": 14.28477
+    },
+    {
+     "name": "Portici / Granilli",
+     "lat": 40.84224,
+     "lng": 14.28831
+    },
+    {
+     "name": "Granilli / Gigli",
+     "lat": 40.84025,
+     "lng": 14.29385
+    },
+    {
+     "name": "Teduccio / Protopisani",
+     "lat": 40.8358,
+     "lng": 14.30333
+    }
+   ]
+  },
+  {
+   "mode": "train",
+   "ref": "REG2377",
+   "name": "Roma Termini → Napoli Centrale",
+   "stops": [
+    {
+     "name": "Cisterna di Latina",
+     "lat": 41.58653,
+     "lng": 12.82759
+    },
+    {
+     "name": "Sezze Romano",
+     "lat": 41.49557,
+     "lng": 13.0384
+    },
+    {
+     "name": "Priverno-Fossanova",
+     "lat": 41.42169,
+     "lng": 13.18684
+    },
+    {
+     "name": "Monte San Biagio-Terracina Mare",
+     "lat": 41.34599,
+     "lng": 13.3471
+    },
+    {
+     "name": "Fondi-Sperlonga",
+     "lat": 41.33768,
+     "lng": 13.42493
+    },
+    {
+     "name": "Itri",
+     "lat": 41.27141,
+     "lng": 13.5455
+    },
+    {
+     "name": "Formia-Gaeta",
+     "lat": 41.25887,
+     "lng": 13.60617
+    },
+    {
+     "name": "Minturno-Scauri",
+     "lat": 41.25761,
+     "lng": 13.72085
+    },
+    {
+     "name": "Sessa Aurunca-Roccamonfina",
+     "lat": 41.19602,
+     "lng": 13.87567
+    },
+    {
+     "name": "Falciano-Mondragone-Carinola",
+     "lat": 41.12349,
+     "lng": 13.97187
+    },
+    {
+     "name": "Villa Literno",
+     "lat": 41.00529,
+     "lng": 14.06749
+    },
+    {
+     "name": "Albanova",
+     "lat": 40.99611,
+     "lng": 14.12867
+    },
+    {
+     "name": "San Marcellino-Frignano",
+     "lat": 40.99211,
+     "lng": 14.17197
+    },
+    {
+     "name": "Aversa",
+     "lat": 40.97327,
+     "lng": 14.21843
+    },
+    {
+     "name": "Sant'Antimo-Sant'Arpino",
+     "lat": 40.94905,
+     "lng": 14.24766
+    },
+    {
+     "name": "Frattamaggiore-Grumo",
+     "lat": 40.9398,
+     "lng": 14.26402
+    },
+    {
+     "name": "Casoria-Afragola",
+     "lat": 40.90774,
+     "lng": 14.29883
+    },
+    {
+     "name": "Napoli Centrale",
+     "lat": 40.85291,
+     "lng": 14.2733
+    }
+   ]
+  },
+  {
+   "mode": "tram",
+   "ref": "4",
+   "name": "Tram 4 (Stazione Marittima → San Giovanni a Teduccio)",
+   "stops": [
+    {
+     "name": "Via Colombo - Porto",
+     "lat": 40.83984,
+     "lng": 14.25543
+    },
+    {
+     "name": "Molo Piccolo",
+     "lat": 40.84166,
+     "lng": 14.2569
+    },
+    {
+     "name": "Marina / Capocci",
+     "lat": 40.84452,
+     "lng": 14.25975
+    },
+    {
+     "name": "Marina / Duomo",
+     "lat": 40.84579,
+     "lng": 14.26332
+    },
+    {
+     "name": "Mercato",
+     "lat": 40.84617,
+     "lng": 14.26762
+    },
+    {
+     "name": "Vespucci / Fiumicello",
+     "lat": 40.84637,
+     "lng": 14.2705
+    },
+    {
+     "name": "Smaldone",
+     "lat": 40.84652,
+     "lng": 14.27281
+    },
+    {
+     "name": "Vespucci / Toscano",
+     "lat": 40.84667,
+     "lng": 14.27515
+    },
+    {
+     "name": "Vespucci / Lucci",
+     "lat": 40.84639,
+     "lng": 14.27835
+    },
+    {
+     "name": "Volta / Brin",
+     "lat": 40.84541,
+     "lng": 14.28066
+    },
+    {
+     "name": "Sant'Erasmo",
+     "lat": 40.84474,
+     "lng": 14.28218
+    },
+    {
+     "name": "Portici / Gianturco",
+     "lat": 40.84354,
+     "lng": 14.28477
+    },
+    {
+     "name": "Portici / Granilli",
+     "lat": 40.84224,
+     "lng": 14.28831
+    },
+    {
+     "name": "Granilli / Gigli",
+     "lat": 40.84025,
+     "lng": 14.29385
+    },
+    {
+     "name": "Teduccio / Protopisani",
+     "lat": 40.8358,
+     "lng": 14.30333
+    }
+   ]
+  },
+  {
+   "mode": "tram",
+   "ref": "2",
+   "name": "Tram 2 (San Giovanni a Teduccio → Poggioreale)",
+   "stops": [
+    {
+     "name": "Teduccio / deposito",
+     "lat": 40.83427,
+     "lng": 14.30559
+    },
+    {
+     "name": "Teduccio / Protopisani",
+     "lat": 40.83578,
+     "lng": 14.30349
+    },
+    {
+     "name": "Teducci / Tartarone",
+     "lat": 40.83749,
+     "lng": 14.30097
+    },
+    {
+     "name": "Francesi / Pazzigno",
+     "lat": 40.83885,
+     "lng": 14.29811
+    },
+    {
+     "name": "Granilli / Gigli",
+     "lat": 40.84117,
+     "lng": 14.29127
+    },
+    {
+     "name": "Portici / Granilli",
+     "lat": 40.84239,
+     "lng": 14.28799
+    },
+    {
+     "name": "Portici / Gianturco",
+     "lat": 40.84356,
+     "lng": 14.28478
+    },
+    {
+     "name": "Sant'Erasmo",
+     "lat": 40.84476,
+     "lng": 14.2822
+    },
+    {
+     "name": "Volta / Brin",
+     "lat": 40.84565,
+     "lng": 14.28019
+    },
+    {
+     "name": "Vespucci / Lucci",
+     "lat": 40.84675,
+     "lng": 14.27688
+    },
+    {
+     "name": "Vespucci / Toscano",
+     "lat": 40.84667,
+     "lng": 14.27464
+    },
+    {
+     "name": "Smaldone",
+     "lat": 40.84652,
+     "lng": 14.27234
+    },
+    {
+     "name": "Vespucci / Fiumicello",
+     "lat": 40.84636,
+     "lng": 14.2699
+    },
+    {
+     "name": "Porta Nolana",
+     "lat": 40.84921,
+     "lng": 14.2687
+    },
+    {
+     "name": "Garibaldi",
+     "lat": 40.85188,
+     "lng": 14.26823
+    },
+    {
+     "name": "Principe Umberto",
+     "lat": 40.85404,
+     "lng": 14.26778
+    },
+    {
+     "name": "Casanova / Sapri",
+     "lat": 40.85579,
+     "lng": 14.26848
+    },
+    {
+     "name": "Casanova / Novara",
+     "lat": 40.85671,
+     "lng": 14.27038
+    },
+    {
+     "name": "Nazionale",
+     "lat": 40.8586,
+     "lng": 14.274
+    },
+    {
+     "name": "Poggioreale / Malta",
+     "lat": 40.85943,
+     "lng": 14.27601
+    },
+    {
+     "name": "Poggioreale / Biscardi",
+     "lat": 40.86166,
+     "lng": 14.28072
+    },
+    {
+     "name": "Poggioreale / Aulisio",
+     "lat": 40.86318,
+     "lng": 14.28383
+    },
+    {
+     "name": "Poggioreale / Caramanico",
+     "lat": 40.86492,
+     "lng": 14.28748
+    },
+    {
+     "name": "Poggioreale",
+     "lat": 40.86643,
+     "lng": 14.29065
+    }
+   ]
+  },
+  {
+   "mode": "tram",
+   "ref": "4",
+   "name": "Tram 4 (San Giovanni a Teduccio → Stazione Marittima)",
+   "stops": [
+    {
+     "name": "Teduccio / deposito",
+     "lat": 40.83427,
+     "lng": 14.30559
+    },
+    {
+     "name": "Teduccio / Protopisani",
+     "lat": 40.83578,
+     "lng": 14.30349
+    },
+    {
+     "name": "Teducci / Tartarone",
+     "lat": 40.83749,
+     "lng": 14.30097
+    },
+    {
+     "name": "Francesi / Pazzigno",
+     "lat": 40.83885,
+     "lng": 14.29811
+    },
+    {
+     "name": "Granilli / Gigli",
+     "lat": 40.84117,
+     "lng": 14.29127
+    },
+    {
+     "name": "Portici / Granilli",
+     "lat": 40.84239,
+     "lng": 14.28799
+    },
+    {
+     "name": "Portici / Gianturco",
+     "lat": 40.84356,
+     "lng": 14.28478
+    },
+    {
+     "name": "Sant'Erasmo",
+     "lat": 40.84476,
+     "lng": 14.2822
+    },
+    {
+     "name": "Volta / Brin",
+     "lat": 40.84565,
+     "lng": 14.28019
+    },
+    {
+     "name": "Vespucci / Lucci",
+     "lat": 40.84675,
+     "lng": 14.27688
+    },
+    {
+     "name": "Vespucci / Toscano",
+     "lat": 40.84667,
+     "lng": 14.27464
+    },
+    {
+     "name": "Vespucci / Fiumicello",
+     "lat": 40.84636,
+     "lng": 14.2699
+    },
+    {
+     "name": "Mercato",
+     "lat": 40.84619,
+     "lng": 14.26736
+    },
+    {
+     "name": "Marina / Duomo",
+     "lat": 40.84579,
+     "lng": 14.26311
+    },
+    {
+     "name": "Marina / Capocci",
+     "lat": 40.84445,
+     "lng": 14.25956
+    },
+    {
+     "name": "Marina / Porta di Massa",
+     "lat": 40.84361,
+     "lng": 14.25841
+    },
+    {
+     "name": "Molo Piccolo",
+     "lat": 40.84156,
+     "lng": 14.25677
+    },
+    {
+     "name": "Via Colombo - Porto",
+     "lat": 40.83984,
+     "lng": 14.25543
+    }
+   ]
+  },
+  {
+   "mode": "tram",
+   "ref": "2BR",
+   "name": "Tram 2BR: Teduccio → Piazza Nazionale",
+   "stops": [
+    {
+     "name": "Teduccio / deposito",
+     "lat": 40.83427,
+     "lng": 14.30559
+    },
+    {
+     "name": "Teduccio / Protopisani",
+     "lat": 40.83578,
+     "lng": 14.30349
+    },
+    {
+     "name": "Teducci / Tartarone",
+     "lat": 40.83749,
+     "lng": 14.30097
+    },
+    {
+     "name": "Francesi / Pazzigno",
+     "lat": 40.83885,
+     "lng": 14.29811
+    },
+    {
+     "name": "Granilli / Gigli",
+     "lat": 40.84025,
+     "lng": 14.29385
+    },
+    {
+     "name": "Portici / Granilli",
+     "lat": 40.84239,
+     "lng": 14.28799
+    },
+    {
+     "name": "Portici / Gianturco",
+     "lat": 40.84356,
+     "lng": 14.28478
+    },
+    {
+     "name": "Sant'Erasmo",
+     "lat": 40.84476,
+     "lng": 14.2822
+    },
+    {
+     "name": "Volta / Brin",
+     "lat": 40.84565,
+     "lng": 14.28019
+    },
+    {
+     "name": "Vespucci / Lucci",
+     "lat": 40.84639,
+     "lng": 14.27835
+    },
+    {
+     "name": "Vespucci / Toscano",
+     "lat": 40.84667,
+     "lng": 14.27464
+    },
+    {
+     "name": "Smaldone",
+     "lat": 40.84652,
+     "lng": 14.27234
+    },
+    {
+     "name": "Vespucci / Fiumicello",
+     "lat": 40.84636,
+     "lng": 14.2699
+    },
+    {
+     "name": "Porta Nolana",
+     "lat": 40.84921,
+     "lng": 14.2687
+    },
+    {
+     "name": "Garibaldi",
+     "lat": 40.85188,
+     "lng": 14.26823
+    },
+    {
+     "name": "Principe Umberto",
+     "lat": 40.85404,
+     "lng": 14.26778
+    },
+    {
+     "name": "Casanova / Sapri",
+     "lat": 40.85579,
+     "lng": 14.26848
+    },
+    {
+     "name": "Casanova / Novara",
+     "lat": 40.85671,
+     "lng": 14.27038
+    },
+    {
+     "name": "Nazionale",
+     "lat": 40.85781,
+     "lng": 14.27383
+    }
+   ]
+  },
+  {
+   "mode": "train",
+   "ref": "7",
+   "name": "Linea 7 (Monte Sant'Angelo → Soccavo)",
+   "stops": [
+    {
+     "name": "Monte Sant'Angelo",
+     "lat": 40.8424,
+     "lng": 14.18533
+    },
+    {
+     "name": "Soccavo",
+     "lat": 40.84377,
+     "lng": 14.20089
+    }
+   ]
+  },
+  {
+   "mode": "train",
+   "ref": "Frecciarossa",
+   "name": "Frecciarossa",
+   "stops": [
+    {
+     "name": "Napoli Afragola",
+     "lat": 40.93138,
+     "lng": 14.33106
+    },
+    {
+     "name": "Napoli Centrale",
+     "lat": 40.85263,
+     "lng": 14.27335
+    }
+   ]
+  },
+  {
+   "mode": "train",
+   "ref": "",
+   "name": "Treno REG: Napoli Centrale => Cassino",
+   "stops": [
+    {
+     "name": "Napoli Centrale",
+     "lat": 40.85327,
+     "lng": 14.27324
+    },
+    {
+     "name": "Casalnuovo",
+     "lat": 40.91215,
+     "lng": 14.32805
+    },
+    {
+     "name": "Napoli Afragola",
+     "lat": 40.93129,
+     "lng": 14.33147
+    },
+    {
+     "name": "Acerra",
+     "lat": 40.94071,
+     "lng": 14.3919
+    },
+    {
+     "name": "Cancello",
+     "lat": 40.99425,
+     "lng": 14.41905
+    },
+    {
+     "name": "Maddaloni Inferiore",
+     "lat": 41.0359,
+     "lng": 14.38048
+    },
+    {
+     "name": "Caserta",
+     "lat": 41.06864,
+     "lng": 14.32821
+    },
+    {
+     "name": "Santa Maria Capua Vetere",
+     "lat": 41.07346,
+     "lng": 14.25406
+    },
+    {
+     "name": "Capua",
+     "lat": 41.10122,
+     "lng": 14.21031
+    },
+    {
+     "name": "Pignataro Maggiore",
+     "lat": 41.17381,
+     "lng": 14.16056
+    },
+    {
+     "name": "Sparanise",
+     "lat": 41.18567,
+     "lng": 14.09306
+    },
+    {
+     "name": "Teano",
+     "lat": 41.23188,
+     "lng": 14.07712
+    },
+    {
+     "name": "Riardo-Pietramelara",
+     "lat": 41.26518,
+     "lng": 14.12488
+    },
+    {
+     "name": "Vairano-Caianello",
+     "lat": 41.31743,
+     "lng": 14.10395
+    },
+    {
+     "name": "Tora-Presenzano",
+     "lat": 41.35889,
+     "lng": 14.04513
+    },
+    {
+     "name": "Mignano Monte Lungo",
+     "lat": 41.40755,
+     "lng": 13.98667
+    },
+    {
+     "name": "Rocca d'Evandro-San Vittore",
+     "lat": 41.43883,
+     "lng": 13.91072
+    },
+    {
+     "name": "Fontanarosa-Cervaro",
+     "lat": 41.44691,
+     "lng": 13.86389
+    },
+    {
+     "name": "Cassino",
+     "lat": 41.48423,
+     "lng": 13.83239
+    }
+   ]
+  },
+  {
+   "mode": "train",
+   "ref": "",
+   "name": "Treno REG: Cassino => Napoli Centrale",
+   "stops": [
+    {
+     "name": "Cassino",
+     "lat": 41.48423,
+     "lng": 13.83239
+    },
+    {
+     "name": "Fontanarosa-Cervaro",
+     "lat": 41.44695,
+     "lng": 13.8639
+    },
+    {
+     "name": "Rocca d'Evandro-San Vittore",
+     "lat": 41.43887,
+     "lng": 13.91072
+    },
+    {
+     "name": "Mignano Monte Lungo",
+     "lat": 41.40757,
+     "lng": 13.98672
+    },
+    {
+     "name": "Tora-Presenzano",
+     "lat": 41.35891,
+     "lng": 14.04512
+    },
+    {
+     "name": "Vairano-Caianello",
+     "lat": 41.31745,
+     "lng": 14.10404
+    },
+    {
+     "name": "Riardo-Pietramelara",
+     "lat": 41.26518,
+     "lng": 14.1249
+    },
+    {
+     "name": "Teano",
+     "lat": 41.23186,
+     "lng": 14.07716
+    },
+    {
+     "name": "Sparanise",
+     "lat": 41.18571,
+     "lng": 14.09307
+    },
+    {
+     "name": "Pignataro Maggiore",
+     "lat": 41.17383,
+     "lng": 14.16061
+    },
+    {
+     "name": "Capua",
+     "lat": 41.10129,
+     "lng": 14.21037
+    },
+    {
+     "name": "Santa Maria Capua Vetere",
+     "lat": 41.07354,
+     "lng": 14.25409
+    },
+    {
+     "name": "Caserta",
+     "lat": 41.06867,
+     "lng": 14.32822
+    },
+    {
+     "name": "Maddaloni Inferiore",
+     "lat": 41.03593,
+     "lng": 14.38051
+    },
+    {
+     "name": "Cancello",
+     "lat": 40.99438,
+     "lng": 14.4192
+    },
+    {
+     "name": "Acerra",
+     "lat": 40.9407,
+     "lng": 14.39196
+    },
+    {
+     "name": "Napoli Afragola",
+     "lat": 40.93126,
+     "lng": 14.33161
+    },
+    {
+     "name": "Casalnuovo",
+     "lat": 40.91215,
+     "lng": 14.32809
+    },
+    {
+     "name": "Napoli Centrale",
+     "lat": 40.8541,
+     "lng": 14.2753
+    }
+   ]
+  },
+  {
+   "mode": "train",
+   "ref": "",
+   "name": "Treno REG: Napoli Centrale => Benevento",
+   "stops": [
+    {
+     "name": "Napoli Centrale",
+     "lat": 40.85381,
+     "lng": 14.27535
+    },
+    {
+     "name": "Casoria-Afragola",
+     "lat": 40.9077,
+     "lng": 14.29873
+    },
+    {
+     "name": "Frattamaggiore-Grumo",
+     "lat": 40.94008,
+     "lng": 14.26337
+    },
+    {
+     "name": "Aversa",
+     "lat": 40.97327,
+     "lng": 14.21847
+    },
+    {
+     "name": "Marcianise",
+     "lat": 41.03597,
+     "lng": 14.2876
+    },
+    {
+     "name": "Recale",
+     "lat": 41.06241,
+     "lng": 14.30322
+    },
+    {
+     "name": "Caserta",
+     "lat": 41.06842,
+     "lng": 14.32819
+    },
+    {
+     "name": "Valle di Maddaloni",
+     "lat": 41.07584,
+     "lng": 14.41789
+    },
+    {
+     "name": "Dugenta-Frasso Telesino",
+     "lat": 41.1372,
+     "lng": 14.45942
+    },
+    {
+     "name": "Amorosi-Melizzano",
+     "lat": 41.19285,
+     "lng": 14.47934
+    },
+    {
+     "name": "Telese-Cerreto",
+     "lat": 41.21177,
+     "lng": 14.52594
+    },
+    {
+     "name": "Solopaca",
+     "lat": 41.21055,
+     "lng": 14.57138
+    },
+    {
+     "name": "Ponte-Casalduni",
+     "lat": 41.21421,
+     "lng": 14.69652
+    },
+    {
+     "name": "Benevento",
+     "lat": 41.14176,
+     "lng": 14.77012
+    }
+   ]
+  },
+  {
+   "mode": "train",
+   "ref": "",
+   "name": "Treno REG: Benevento => Napoli Centrale",
+   "stops": [
+    {
+     "name": "Benevento",
+     "lat": 41.14179,
+     "lng": 14.77014
+    },
+    {
+     "name": "Ponte-Casalduni",
+     "lat": 41.21421,
+     "lng": 14.69652
+    },
+    {
+     "name": "Solopaca",
+     "lat": 41.21057,
+     "lng": 14.57132
+    },
+    {
+     "name": "Telese-Cerreto",
+     "lat": 41.21172,
+     "lng": 14.52597
+    },
+    {
+     "name": "Amorosi-Melizzano",
+     "lat": 41.19287,
+     "lng": 14.47931
+    },
+    {
+     "name": "Dugenta-Frasso Telesino",
+     "lat": 41.13718,
+     "lng": 14.45949
+    },
+    {
+     "name": "Valle di Maddaloni",
+     "lat": 41.07582,
+     "lng": 14.41794
+    },
+    {
+     "name": "Caserta",
+     "lat": 41.06852,
+     "lng": 14.32819
+    },
+    {
+     "name": "Recale",
+     "lat": 41.06239,
+     "lng": 14.30326
+    },
+    {
+     "name": "Marcianise",
+     "lat": 41.03596,
+     "lng": 14.28765
+    },
+    {
+     "name": "Gricignano-Teverola",
+     "lat": 40.99872,
+     "lng": 14.24162
+    },
+    {
+     "name": "Aversa",
+     "lat": 40.97329,
+     "lng": 14.21857
+    },
+    {
+     "name": "Sant'Antimo-Sant'Arpino",
+     "lat": 40.94905,
+     "lng": 14.24766
+    },
+    {
+     "name": "Frattamaggiore-Grumo",
+     "lat": 40.9398,
+     "lng": 14.26402
+    },
+    {
+     "name": "Casoria-Afragola",
+     "lat": 40.90774,
+     "lng": 14.29883
+    },
+    {
+     "name": "Napoli Centrale",
+     "lat": 40.85335,
+     "lng": 14.27323
+    }
+   ]
+  },
+  {
+   "mode": "train",
+   "ref": "",
+   "name": "Treno MET: Napoli Campi Flegrei => Castellammare di Stabia",
+   "stops": [
+    {
+     "name": "Napoli Campi Flegrei",
+     "lat": 40.82223,
+     "lng": 14.19461
+    },
+    {
+     "name": "Napoli Piazza Leopardi",
+     "lat": 40.82408,
+     "lng": 14.19969
+    },
+    {
+     "name": "Napoli Mergellina",
+     "lat": 40.83158,
+     "lng": 14.21869
+    },
+    {
+     "name": "Napoli Piazza Amedeo",
+     "lat": 40.8385,
+     "lng": 14.23312
+    },
+    {
+     "name": "Napoli Montesanto",
+     "lat": 40.84761,
+     "lng": 14.2439
+    },
+    {
+     "name": "Napoli Piazza Cavour",
+     "lat": 40.85519,
+     "lng": 14.25457
+    },
+    {
+     "name": "Napoli Piazza Garibaldi",
+     "lat": 40.85249,
+     "lng": 14.27046
+    },
+    {
+     "name": "Napoli Gianturco",
+     "lat": 40.85391,
+     "lng": 14.2878
+    },
+    {
+     "name": "Napoli San Giovanni Barra",
+     "lat": 40.83318,
+     "lng": 14.30542
+    },
+    {
+     "name": "Pietrarsa-San Giorgio a Cremano",
+     "lat": 40.82206,
+     "lng": 14.32112
+    },
+    {
+     "name": "Portici-Ercolano",
+     "lat": 40.80989,
+     "lng": 14.33583
+    },
+    {
+     "name": "Torre del Greco",
+     "lat": 40.78755,
+     "lng": 14.36324
+    },
+    {
+     "name": "Santa Maria La Bruna",
+     "lat": 40.75527,
+     "lng": 14.40794
+    },
+    {
+     "name": "Torre Annunziata Città",
+     "lat": 40.75411,
+     "lng": 14.44858
+    },
+    {
+     "name": "Torre Annunziata Centrale",
+     "lat": 40.747,
+     "lng": 14.46384
+    },
+    {
+     "name": "Rovigliano",
+     "lat": 40.73409,
+     "lng": 14.47198
+    },
+    {
+     "name": "Castellammare di Stabia",
+     "lat": 40.70174,
+     "lng": 14.48384
+    }
+   ]
+  },
+  {
+   "mode": "train",
+   "ref": "",
+   "name": "Treno MET: Castellammare di Stabia => Napoli Campi Flegrei",
+   "stops": [
+    {
+     "name": "Castellammare di Stabia",
+     "lat": 40.70174,
+     "lng": 14.48384
+    },
+    {
+     "name": "Rovigliano",
+     "lat": 40.73409,
+     "lng": 14.47194
+    },
+    {
+     "name": "Torre Annunziata Centrale",
+     "lat": 40.74692,
+     "lng": 14.46381
+    },
+    {
+     "name": "Torre Annunziata Città",
+     "lat": 40.75408,
+     "lng": 14.44855
+    },
+    {
+     "name": "Santa Maria La Bruna",
+     "lat": 40.75521,
+     "lng": 14.40787
+    },
+    {
+     "name": "Torre del Greco",
+     "lat": 40.78753,
+     "lng": 14.36319
+    },
+    {
+     "name": "Portici-Ercolano",
+     "lat": 40.80988,
+     "lng": 14.33578
+    },
+    {
+     "name": "Pietrarsa-San Giorgio a Cremano",
+     "lat": 40.82204,
+     "lng": 14.32109
+    },
+    {
+     "name": "Napoli San Giovanni Barra",
+     "lat": 40.83298,
+     "lng": 14.30519
+    },
+    {
+     "name": "Napoli Gianturco",
+     "lat": 40.85387,
+     "lng": 14.2878
+    },
+    {
+     "name": "Napoli Piazza Garibaldi",
+     "lat": 40.85241,
+     "lng": 14.27048
+    },
+    {
+     "name": "Napoli Piazza Cavour",
+     "lat": 40.85516,
+     "lng": 14.25459
+    },
+    {
+     "name": "Napoli Montesanto",
+     "lat": 40.8476,
+     "lng": 14.24394
+    },
+    {
+     "name": "Napoli Piazza Amedeo",
+     "lat": 40.83846,
+     "lng": 14.23313
+    },
+    {
+     "name": "Napoli Mergellina",
+     "lat": 40.83157,
+     "lng": 14.21874
+    },
+    {
+     "name": "Napoli Piazza Leopardi",
+     "lat": 40.824,
+     "lng": 14.19972
+    },
+    {
+     "name": "Napoli Campi Flegrei",
+     "lat": 40.82201,
+     "lng": 14.19474
+    }
+   ]
+  },
+  {
+   "mode": "train",
+   "ref": "",
+   "name": "Treno MET: Caserta => Napoli Campi Flegrei",
+   "stops": [
+    {
+     "name": "Caserta",
+     "lat": 41.06852,
+     "lng": 14.32819
+    },
+    {
+     "name": "Maddaloni Inferiore",
+     "lat": 41.03593,
+     "lng": 14.38051
+    },
+    {
+     "name": "Cancello",
+     "lat": 40.99438,
+     "lng": 14.4192
+    },
+    {
+     "name": "Acerra",
+     "lat": 40.9407,
+     "lng": 14.39196
+    },
+    {
+     "name": "Napoli Afragola",
+     "lat": 40.93126,
+     "lng": 14.33161
+    },
+    {
+     "name": "Casalnuovo",
+     "lat": 40.91215,
+     "lng": 14.32809
+    },
+    {
+     "name": "Traccia",
+     "lat": 40.85834,
+     "lng": 14.29745
+    },
+    {
+     "name": "Napoli Gianturco",
+     "lat": 40.85378,
+     "lng": 14.28782
+    },
+    {
+     "name": "Napoli Piazza Garibaldi",
+     "lat": 40.85241,
+     "lng": 14.27048
+    },
+    {
+     "name": "Napoli Piazza Cavour",
+     "lat": 40.85516,
+     "lng": 14.25459
+    },
+    {
+     "name": "Napoli Montesanto",
+     "lat": 40.8476,
+     "lng": 14.24394
+    },
+    {
+     "name": "Napoli Piazza Amedeo",
+     "lat": 40.83846,
+     "lng": 14.23313
+    },
+    {
+     "name": "Napoli Mergellina",
+     "lat": 40.83157,
+     "lng": 14.21874
+    },
+    {
+     "name": "Napoli Piazza Leopardi",
+     "lat": 40.824,
+     "lng": 14.19972
+    },
+    {
+     "name": "Napoli Campi Flegrei",
+     "lat": 40.82226,
+     "lng": 14.1946
+    }
+   ]
+  },
+  {
+   "mode": "train",
+   "ref": "",
+   "name": "Treno MET: Napoli Campi Flegrei => Caserta",
+   "stops": [
+    {
+     "name": "Napoli Campi Flegrei",
+     "lat": 40.82201,
+     "lng": 14.19474
+    },
+    {
+     "name": "Napoli Piazza Leopardi",
+     "lat": 40.82408,
+     "lng": 14.19969
+    },
+    {
+     "name": "Napoli Mergellina",
+     "lat": 40.83158,
+     "lng": 14.21869
+    },
+    {
+     "name": "Napoli Piazza Amedeo",
+     "lat": 40.8385,
+     "lng": 14.23312
+    },
+    {
+     "name": "Napoli Montesanto",
+     "lat": 40.84761,
+     "lng": 14.2439
+    },
+    {
+     "name": "Napoli Piazza Cavour",
+     "lat": 40.85519,
+     "lng": 14.25457
+    },
+    {
+     "name": "Napoli Piazza Garibaldi",
+     "lat": 40.85249,
+     "lng": 14.27046
+    },
+    {
+     "name": "Napoli Gianturco",
+     "lat": 40.854,
+     "lng": 14.28778
+    },
+    {
+     "name": "Traccia",
+     "lat": 40.85834,
+     "lng": 14.29731
+    },
+    {
+     "name": "Casalnuovo",
+     "lat": 40.91215,
+     "lng": 14.32805
+    },
+    {
+     "name": "Napoli Afragola",
+     "lat": 40.93129,
+     "lng": 14.33147
+    },
+    {
+     "name": "Acerra",
+     "lat": 40.94071,
+     "lng": 14.3919
+    },
+    {
+     "name": "Cancello",
+     "lat": 40.99425,
+     "lng": 14.41905
+    },
+    {
+     "name": "Maddaloni Inferiore",
+     "lat": 41.0359,
+     "lng": 14.38048
+    },
+    {
+     "name": "Caserta",
+     "lat": 41.06845,
+     "lng": 14.32819
+    }
+   ]
+  },
+  {
+   "mode": "train",
+   "ref": "",
+   "name": "Treno IC: Taranto => Roma Termini",
+   "stops": [
+    {
+     "name": "Potenza Centrale",
+     "lat": 40.62945,
+     "lng": 15.80681
+    },
+    {
+     "name": "Bella Muro",
+     "lat": 40.70089,
+     "lng": 15.5429
+    },
+    {
+     "name": "Sicignano degli Alburni",
+     "lat": 40.60545,
+     "lng": 15.29088
+    },
+    {
+     "name": "Eboli",
+     "lat": 40.61108,
+     "lng": 15.05247
+    },
+    {
+     "name": "Battipaglia",
+     "lat": 40.6059,
+     "lng": 14.98286
+    },
+    {
+     "name": "Salerno",
+     "lat": 40.67544,
+     "lng": 14.77254
+    },
+    {
+     "name": "Napoli Centrale",
+     "lat": 40.85335,
+     "lng": 14.27323
+    },
+    {
+     "name": "Aversa",
+     "lat": 40.97325,
+     "lng": 14.21832
+    },
+    {
+     "name": "Formia-Gaeta",
+     "lat": 41.25885,
+     "lng": 13.60619
+    },
+    {
+     "name": "Latina",
+     "lat": 41.53819,
+     "lng": 12.9463
+    }
+   ]
+  },
+  {
+   "mode": "train",
+   "ref": "",
+   "name": "Treno IC: Roma Termini => Taranto",
+   "stops": [
+    {
+     "name": "Latina",
+     "lat": 41.53823,
+     "lng": 12.94632
+    },
+    {
+     "name": "Formia-Gaeta",
+     "lat": 41.25887,
+     "lng": 13.60617
+    },
+    {
+     "name": "Aversa",
+     "lat": 40.97327,
+     "lng": 14.21843
+    },
+    {
+     "name": "Napoli Centrale",
+     "lat": 40.85281,
+     "lng": 14.27332
+    },
+    {
+     "name": "Salerno",
+     "lat": 40.67553,
+     "lng": 14.77265
+    },
+    {
+     "name": "Battipaglia",
+     "lat": 40.60583,
+     "lng": 14.9828
+    },
+    {
+     "name": "Eboli",
+     "lat": 40.61108,
+     "lng": 15.05247
+    },
+    {
+     "name": "Sicignano degli Alburni",
+     "lat": 40.60545,
+     "lng": 15.29088
+    },
+    {
+     "name": "Bella Muro",
+     "lat": 40.70089,
+     "lng": 15.5429
+    },
+    {
+     "name": "Potenza Centrale",
+     "lat": 40.62945,
+     "lng": 15.80681
+    }
+   ]
+  },
+  {
+   "mode": "train",
+   "ref": "",
+   "name": "Treno REG: Sapri => Napoli Centrale",
+   "stops": [
+    {
+     "name": "Sapri",
+     "lat": 40.07806,
+     "lng": 15.62716
+    },
+    {
+     "name": "Policastro Bussentino",
+     "lat": 40.07645,
+     "lng": 15.52854
+    },
+    {
+     "name": "Torre Orsaia",
+     "lat": 40.09899,
+     "lng": 15.48117
+    },
+    {
+     "name": "Celle Bulgheria - Roccagloriosa",
+     "lat": 40.10292,
+     "lng": 15.39464
+    },
+    {
+     "name": "Centola-Palinuro-Marina di Camerota",
+     "lat": 40.09064,
+     "lng": 15.34672
+    },
+    {
+     "name": "Pisciotta-Palinuro",
+     "lat": 40.09136,
+     "lng": 15.24371
+    },
+    {
+     "name": "Ascea",
+     "lat": 40.14101,
+     "lng": 15.17249
+    },
+    {
+     "name": "Vallo della Lucania-Castelnuovo",
+     "lat": 40.22946,
+     "lng": 15.15811
+    },
+    {
+     "name": "Omignano-Salento",
+     "lat": 40.25253,
+     "lng": 15.1344
+    },
+    {
+     "name": "Agropoli-Castellabate",
+     "lat": 40.35162,
+     "lng": 15.00197
+    },
+    {
+     "name": "Paestum",
+     "lat": 40.42168,
+     "lng": 15.01486
+    },
+    {
+     "name": "Capaccio-Roccadaspide",
+     "lat": 40.4555,
+     "lng": 15.01339
+    },
+    {
+     "name": "Battipaglia",
+     "lat": 40.6058,
+     "lng": 14.98279
+    },
+    {
+     "name": "Montecorvino",
+     "lat": 40.61659,
+     "lng": 14.9471
+    },
+    {
+     "name": "Pontecagnano",
+     "lat": 40.64017,
+     "lng": 14.87284
+    },
+    {
+     "name": "Salerno",
+     "lat": 40.67544,
+     "lng": 14.77254
+    },
+    {
+     "name": "Napoli Centrale",
+     "lat": 40.85235,
+     "lng": 14.2734
+    }
+   ]
+  },
+  {
+   "mode": "train",
+   "ref": "",
+   "name": "Treno REG: Napoli Centrale => Sapri",
+   "stops": [
+    {
+     "name": "Napoli Centrale",
+     "lat": 40.85327,
+     "lng": 14.27324
+    },
+    {
+     "name": "Salerno",
+     "lat": 40.67548,
+     "lng": 14.77258
+    },
+    {
+     "name": "Pontecagnano",
+     "lat": 40.64021,
+     "lng": 14.87286
+    },
+    {
+     "name": "Montecorvino",
+     "lat": 40.61663,
+     "lng": 14.94712
+    },
+    {
+     "name": "Battipaglia",
+     "lat": 40.60583,
+     "lng": 14.9828
+    },
+    {
+     "name": "Capaccio-Roccadaspide",
+     "lat": 40.45551,
+     "lng": 15.0135
+    },
+    {
+     "name": "Paestum",
+     "lat": 40.42168,
+     "lng": 15.01491
+    },
+    {
+     "name": "Agropoli-Castellabate",
+     "lat": 40.35161,
+     "lng": 15.00208
+    },
+    {
+     "name": "Omignano-Salento",
+     "lat": 40.25256,
+     "lng": 15.13449
+    },
+    {
+     "name": "Vallo della Lucania-Castelnuovo",
+     "lat": 40.22951,
+     "lng": 15.1582
+    },
+    {
+     "name": "Ascea",
+     "lat": 40.14104,
+     "lng": 15.1726
+    },
+    {
+     "name": "Pisciotta-Palinuro",
+     "lat": 40.09146,
+     "lng": 15.24379
+    },
+    {
+     "name": "Centola-Palinuro-Marina di Camerota",
+     "lat": 40.09067,
+     "lng": 15.34674
+    },
+    {
+     "name": "Celle Bulgheria - Roccagloriosa",
+     "lat": 40.10301,
+     "lng": 15.3946
+    },
+    {
+     "name": "Torre Orsaia",
+     "lat": 40.09902,
+     "lng": 15.48119
+    },
+    {
+     "name": "Policastro Bussentino",
+     "lat": 40.07649,
+     "lng": 15.52852
+    },
+    {
+     "name": "Sapri",
+     "lat": 40.07801,
+     "lng": 15.62716
+    }
+   ]
+  }
+ ]
+}
