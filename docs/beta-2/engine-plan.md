@@ -35,6 +35,16 @@ The 21 steps are now 11. Nothing was dropped: Richard's steps (resources, collec
 4. **Typed times are checked.** All aboard after docking, boarding before all aboard, a flight or train time on the right day, nothing outside a sensible range, and ship time turned into port time. A time that fails is asked again, never planned around.
 5. **A bad find can't spread.** New finds go through the same bucket check before they enter the shared database, and safety-critical facts (where a port or terminal is, ship-related times) need a second source or a map match before other travelers get them.
 
+### Second review with the leak fixes in (Nov 18)
+No step merges or new steps. Three overlaps between the additions are settled, and one safeguard is added:
+- **Pinned version vs filling the bucket.** Step 2 fills a trip's bucket once. Newer data goes into the database, but the trip keeps its pinned version until the traveler chooses to refresh (safety changes always apply, leak 2). Refreshing is a wish like any other.
+- **Suggested picks stay put.** Once a day with the app's suggested picks has been shown, those picks are saved as that day's picks (marked as the app's). A change on one day can't reshuffle the suggestions on another; a day gets new suggestions only when the traveler asks.
+- **"What changed since you last looked" can't become the old replay layer.** The last shown plan is kept only to explain differences (step 9). The engine never reads it to plan.
+- **A traveler's own finds vs shared finds.** A new find that passes the bucket check is used in that traveler's trip at once; it reaches other travelers only after the stricter check in leak 5.
+- **Safeguard added: the engine always finishes.** Every search in the engine has a fixed limit, and the whole trip has a time limit. If either is reached, that day gets the safe day from leak 3 and the problem is logged.
+
+**Restaurant facts** to keep in the database alongside sites: where it is, hours for lunch and dinner, cuisine and price level, ratings (travelers' and Google's within the free allowance), closed for good or not, and how sure we are.
+
 ### What we need to know about each site
 Already collected: where it is, visit length, opening hours and closed days, last entry, timed shows, book-ahead, indoor or outdoor, crowd times, cost, fame and sources, category, how to get there for day trips, closed to visitors.
 
