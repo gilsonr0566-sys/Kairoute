@@ -297,3 +297,14 @@ Rest of the app (not engine steps; already handled or parked):
 - Voice costs: voice is outside the engine; paid voice is off.
 - Publishes blocked by the demo check, and storage use over plan: publishing and helper work, not engine work. Beta 2 is tested on its own branch, and step 1 reduces storage reads.
 - Boarding time lost on redraw (#178): a screen bug, fixed in Beta 1; the engine only reads the saved trip.
+
+## Build progress (Nov 18, morning)
+Steps 5 to 9 are built on the Beta 2 branch (src/engine/50-worth, 55-areas, 60-route, 70-day, 95-plan). Side by side with the old engine on all 34 saved trips (the 10 earlier test trips plus the 20 places and Hamburg, Nassau, CocoCay, replayed from the live run):
+- Zero safety failures. Nothing worse than the old engine on the traveler's picks, must-sees, doubling back, or days planned.
+- Same plan in 10 of 10 shuffles of the incoming data, nothing used twice across a trip.
+- Slowest whole trip 0.14 s on the test machine.
+- Time to spare before a ship, train or plane: the new engine's tightest is 10 min beyond the built-in buffer (old: 0). Sights the app adds on its own never bring a ship, train or plane day closer than 15 min beyond the buffer; the old engine sometimes left 2 to 3 hours idle in port, which the new one uses for sights.
+
+Rules added while building, all general: wishes stay on their own day; a stay of several days is split into areas; a day trip only when it gives more than the city sights it replaces; a trip out of town is one block at the start or end of the day; lunch only at a real place near the route, never making the day late or idle; a town visited for the day may shrink to half before a pick is dropped (and says so); leftovers and spare half-days are filled in a second pass.
+
+Still waiting on steps 1 and 2 (the places files and the facts they carry): Lübeck over Itzehoe (the free sources rank Itzehoe as more famous; needs UNESCO and travelers' day-trip evidence), food & drink places, Saturday closures in Jerusalem (Knesset, Temple Institute, Temple Mount visiting hours), Le Havre's port point, Half Moon Cay's guide, pinned walking/road/ferry times.
