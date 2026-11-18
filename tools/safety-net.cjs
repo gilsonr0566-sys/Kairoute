@@ -599,7 +599,10 @@ const log = (suite, trip, ok, what) => { results.push({ suite, trip, ok, what })
       ['Madonna della Lettera', 'Sight', '', 3, 'Our Lady of the Letter'], ['Palazzo della cultura', '', '', 3, 'Palace of Culture'], ['Galleria Nazionale d\'Arte Moderna e Contemporanea', '', '', 3, 'National Gallery of Modern and Contemporary Art'],
       ['Santa Maria Alemanna', 'Church', 'Chiesa di Santa Maria Alemanna', 3, 'Santa Maria Alemanna Church'], ['Iglesia de San Ginés', 'Church', '', 3, 'Church of San Ginés'], ['Torre Marmora', '', '', 3, 'Marmora Tower'],
       ['Santa Justa Lift', 'Church', 'Elevador de Santa Justa', 3, 'Santa Justa Lift'], ['Casa de Campo Park', '', '', 3, 'Casa de Campo Park'], ['Royal Basilica of Saint Francis the Great', 'Church', '', 3, 'Royal Basilica of Saint Francis the Great'],
-      ['Palau de la Música Catalana', '', '', 3, 'Palau de la Música Catalana'], ['Ponte Vecchio', '', '', 60, 'Ponte Vecchio'], ['Gran Vía', '', '', 3, 'Gran Vía'], ['Forte Gonzaga', '', '', 3, 'Fort Gonzaga']];
+      ['Palau de la Música Catalana', '', '', 3, 'Palau de la Música Catalana'], ['Ponte Vecchio', '', '', 60, 'Ponte Vecchio'], ['Gran Vía', '', '', 3, 'Gran Vía'], ['Forte Gonzaga', '', '', 3, 'Fort Gonzaga'],
+      ['Santuario della Madonna di Montalto', 'Church', '', 3, 'Shrine of Our Lady of Montalto'], ['Chiesa della Santissima Annunziata dei Catalani', 'Church', '', 3, 'Church of the Most Holy Annunciation of the Catalans'],
+      ['Chiesa di Santa Maria della Valle', 'Church', '', 3, 'Church of Santa Maria della Valle'], ['Chiesa di Montevergine', 'Church', '', 3, 'Church of Montevergine'], ['Porto di Messina', '', '', 0, 'Port of Messina'],
+      ['Chiesa di San Francesco all\'Immacolata', 'Church', '', 3, 'Church of San Francesco all\'Immacolata']];
     const got = await p.evaluate(cs => cs.map(([n, c, l, sl]) => window.__kairouteEnName(n, c, sl, l)), cases).catch(e => cases.map(() => 'ERROR ' + e.message));
     const bad = cases.map((c, i) => [c[0], c[4], got[i]]).filter(([, want, g]) => want !== g);
     log('English names', 'rules', !bad.length, bad.length ? bad.map(([n, w, g]) => `${n}: "${g}", expected "${w}"`).join('; ') : `${cases.length} names: local names put into English, famous and English names left alone`);
