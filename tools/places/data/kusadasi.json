@@ -1,0 +1,718 @@
+{
+ "key": "kusadasi",
+ "name": "Kusadasi",
+ "built": "2026-11-18",
+ "sources": [
+  "Wikidata",
+  "OpenStreetMap",
+  "Wikivoyage"
+ ],
+ "sites": {},
+ "towns": {},
+ "ports": [
+  {
+   "name": "H",
+   "lat": 37.86892,
+   "lng": 27.26304,
+   "osm": "way/1474183589",
+   "kind": "pier",
+   "cruise": false,
+   "d": 0.72
+  },
+  {
+   "name": "G",
+   "lat": 37.86917,
+   "lng": 27.26334,
+   "osm": "way/1474183588",
+   "kind": "pier",
+   "cruise": false,
+   "d": 0.73
+  },
+  {
+   "name": "F2",
+   "lat": 37.87022,
+   "lng": 27.26365,
+   "osm": "way/1474183587",
+   "kind": "pier",
+   "cruise": false,
+   "d": 0.83
+  },
+  {
+   "name": "I-2-4",
+   "lat": 37.87053,
+   "lng": 27.26328,
+   "osm": "way/1474183590",
+   "kind": "pier",
+   "cruise": false,
+   "d": 0.87
+  },
+  {
+   "name": "I",
+   "lat": 37.87084,
+   "lng": 27.26273,
+   "osm": "way/1474183583",
+   "kind": "pier",
+   "cruise": false,
+   "d": 0.92
+  },
+  {
+   "name": "I-1-3",
+   "lat": 37.87112,
+   "lng": 27.2633,
+   "osm": "way/1474183584",
+   "kind": "pier",
+   "cruise": false,
+   "d": 0.93
+  },
+  {
+   "name": "F1",
+   "lat": 37.87139,
+   "lng": 27.26369,
+   "osm": "way/1474183586",
+   "kind": "pier",
+   "cruise": false,
+   "d": 0.95
+  },
+  {
+   "name": "E",
+   "lat": 37.87229,
+   "lng": 27.26336,
+   "osm": "way/1474183585",
+   "kind": "pier",
+   "cruise": false,
+   "d": 1.05
+  },
+  {
+   "name": "Kuşadası",
+   "lat": 37.86374,
+   "lng": 27.25483,
+   "osm": "node/3467263559",
+   "kind": "ferry terminal",
+   "cruise": false,
+   "d": 1.06
+  },
+  {
+   "name": "A",
+   "lat": 37.87135,
+   "lng": 27.26042,
+   "osm": "way/1474183578",
+   "kind": "pier",
+   "cruise": false,
+   "d": 1.06
+  },
+  {
+   "name": "Kuşadası Limanı",
+   "lat": 37.86336,
+   "lng": 27.25457,
+   "osm": "way/116346468",
+   "kind": "pier",
+   "cruise": false,
+   "d": 1.08
+  },
+  {
+   "name": "J",
+   "lat": 37.87214,
+   "lng": 27.26191,
+   "osm": "way/1474143926",
+   "kind": "pier",
+   "cruise": false,
+   "d": 1.08
+  }
+ ],
+ "dayTrips": [
+  "Ephesus",
+  "Selçuk",
+  "Didim",
+  "Samos"
+ ],
+ "missing": [
+  "a mapped cruise terminal or pier"
+ ],
+ "portQuery": {
+  "name": "Kusadasi cruise port",
+  "known": false,
+  "island": false
+ },
+ "centre": {
+  "lat": 37.9232,
+  "lng": 27.331
+ },
+ "wikivoyage": "Kuşadası",
+ "guideSights": [],
+ "lifts": [],
+ "transit": [
+  {
+   "mode": "train",
+   "ref": "İZBAN",
+   "name": "İZBAN: Selçuk → Tepeköy",
+   "stops": [
+    {
+     "name": "Selçuk",
+     "lat": 37.95073,
+     "lng": 27.37303
+    },
+    {
+     "name": "Belevi",
+     "lat": 38.03143,
+     "lng": 27.43308
+    },
+    {
+     "name": "Sağlık",
+     "lat": 38.08497,
+     "lng": 27.4006
+    },
+    {
+     "name": "Tepeköy",
+     "lat": 38.14727,
+     "lng": 27.36146
+    }
+   ]
+  },
+  {
+   "mode": "train",
+   "ref": "",
+   "name": "Basmane-Denizli Bölgesel",
+   "stops": [
+    {
+     "name": "Basmane railway station",
+     "lat": 38.42245,
+     "lng": 27.1439
+    },
+    {
+     "name": "Gaziemir",
+     "lat": 38.32628,
+     "lng": 27.13997
+    },
+    {
+     "name": "Adnan Menderes Havalimanı",
+     "lat": 38.2913,
+     "lng": 27.14787
+    },
+    {
+     "name": "Cumaovası",
+     "lat": 38.26405,
+     "lng": 27.16299
+    },
+    {
+     "name": "Pancar",
+     "lat": 38.1975,
+     "lng": 27.23957
+    },
+    {
+     "name": "Torbalı",
+     "lat": 38.17002,
+     "lng": 27.34756
+    },
+    {
+     "name": "Tepeköy",
+     "lat": 38.14704,
+     "lng": 27.36153
+    },
+    {
+     "name": "Sağlık",
+     "lat": 38.08509,
+     "lng": 27.40049
+    },
+    {
+     "name": "Çamlık",
+     "lat": 37.87999,
+     "lng": 27.37792
+    },
+    {
+     "name": "Ortaklar",
+     "lat": 37.88636,
+     "lng": 27.50248
+    },
+    {
+     "name": "Germencik",
+     "lat": 37.87302,
+     "lng": 27.59576
+    },
+    {
+     "name": "İncirliova",
+     "lat": 37.85384,
+     "lng": 27.72505
+    },
+    {
+     "name": "Aydın",
+     "lat": 37.84829,
+     "lng": 27.84201
+    },
+    {
+     "name": "Umurlu",
+     "lat": 37.85277,
+     "lng": 27.95525
+    },
+    {
+     "name": "Köşk",
+     "lat": 37.85155,
+     "lng": 28.05148
+    },
+    {
+     "name": "Sultanhisar",
+     "lat": 37.88732,
+     "lng": 28.15573
+    },
+    {
+     "name": "İsabeyli",
+     "lat": 37.89514,
+     "lng": 28.26777
+    },
+    {
+     "name": "Nazilli",
+     "lat": 37.91406,
+     "lng": 28.32709
+    },
+    {
+     "name": "Kuyucak",
+     "lat": 37.90969,
+     "lng": 28.45948
+    },
+    {
+     "name": "Horsunlu",
+     "lat": 37.91479,
+     "lng": 28.59135
+    },
+    {
+     "name": "Buharkent",
+     "lat": 37.95266,
+     "lng": 28.73853
+    },
+    {
+     "name": "Sarayköy",
+     "lat": 37.91396,
+     "lng": 28.92597
+    },
+    {
+     "name": "Selçuk",
+     "lat": 37.95074,
+     "lng": 27.37312
+    }
+   ]
+  },
+  {
+   "mode": "train",
+   "ref": "",
+   "name": "Basmane-Nazilli Bölgesel",
+   "stops": [
+    {
+     "name": "Basmane railway station",
+     "lat": 38.42245,
+     "lng": 27.1439
+    },
+    {
+     "name": "Gaziemir",
+     "lat": 38.32628,
+     "lng": 27.13997
+    },
+    {
+     "name": "Adnan Menderes Havalimanı",
+     "lat": 38.2913,
+     "lng": 27.14787
+    },
+    {
+     "name": "Cumaovası",
+     "lat": 38.26405,
+     "lng": 27.16299
+    },
+    {
+     "name": "Pancar",
+     "lat": 38.1975,
+     "lng": 27.23957
+    },
+    {
+     "name": "Torbalı",
+     "lat": 38.17002,
+     "lng": 27.34756
+    },
+    {
+     "name": "Tepeköy",
+     "lat": 38.14704,
+     "lng": 27.36153
+    },
+    {
+     "name": "Sağlık",
+     "lat": 38.08509,
+     "lng": 27.40049
+    },
+    {
+     "name": "Çamlık",
+     "lat": 37.87999,
+     "lng": 27.37792
+    },
+    {
+     "name": "Ortaklar",
+     "lat": 37.88636,
+     "lng": 27.50248
+    },
+    {
+     "name": "Germencik",
+     "lat": 37.87302,
+     "lng": 27.59576
+    },
+    {
+     "name": "İncirliova",
+     "lat": 37.85384,
+     "lng": 27.72505
+    },
+    {
+     "name": "Aydın",
+     "lat": 37.84829,
+     "lng": 27.84201
+    },
+    {
+     "name": "Umurlu",
+     "lat": 37.85277,
+     "lng": 27.95525
+    },
+    {
+     "name": "Köşk",
+     "lat": 37.85155,
+     "lng": 28.05148
+    },
+    {
+     "name": "Sultanhisar",
+     "lat": 37.88732,
+     "lng": 28.15573
+    },
+    {
+     "name": "İsabeyli",
+     "lat": 37.89514,
+     "lng": 28.26777
+    },
+    {
+     "name": "Nazilli",
+     "lat": 37.91406,
+     "lng": 28.32709
+    },
+    {
+     "name": "Selçuk",
+     "lat": 37.95074,
+     "lng": 27.37312
+    }
+   ]
+  },
+  {
+   "mode": "train",
+   "ref": "",
+   "name": "Güller Ekspresi",
+   "stops": [
+    {
+     "name": "Basmane railway station",
+     "lat": 38.42245,
+     "lng": 27.1439
+    },
+    {
+     "name": "Gaziemir",
+     "lat": 38.32628,
+     "lng": 27.13997
+    },
+    {
+     "name": "Adnan Menderes Havalimanı",
+     "lat": 38.2913,
+     "lng": 27.14787
+    },
+    {
+     "name": "Cumaovası",
+     "lat": 38.26405,
+     "lng": 27.16299
+    },
+    {
+     "name": "Torbalı",
+     "lat": 38.17002,
+     "lng": 27.34756
+    },
+    {
+     "name": "Tepeköy",
+     "lat": 38.14704,
+     "lng": 27.36153
+    },
+    {
+     "name": "Sağlık",
+     "lat": 38.08509,
+     "lng": 27.40049
+    },
+    {
+     "name": "Çamlık",
+     "lat": 37.87999,
+     "lng": 27.37792
+    },
+    {
+     "name": "Ortaklar",
+     "lat": 37.88636,
+     "lng": 27.50248
+    },
+    {
+     "name": "Germencik",
+     "lat": 37.87302,
+     "lng": 27.59576
+    },
+    {
+     "name": "İncirliova",
+     "lat": 37.85384,
+     "lng": 27.72505
+    },
+    {
+     "name": "Aydın",
+     "lat": 37.84829,
+     "lng": 27.84201
+    },
+    {
+     "name": "Umurlu",
+     "lat": 37.85277,
+     "lng": 27.95525
+    },
+    {
+     "name": "Köşk",
+     "lat": 37.85155,
+     "lng": 28.05148
+    },
+    {
+     "name": "Sultanhisar",
+     "lat": 37.88732,
+     "lng": 28.15573
+    },
+    {
+     "name": "İsabeyli",
+     "lat": 37.89514,
+     "lng": 28.26777
+    },
+    {
+     "name": "Nazilli",
+     "lat": 37.91406,
+     "lng": 28.32709
+    },
+    {
+     "name": "Kuyucak",
+     "lat": 37.90969,
+     "lng": 28.45948
+    },
+    {
+     "name": "Horsunlu",
+     "lat": 37.91479,
+     "lng": 28.59135
+    },
+    {
+     "name": "Buharkent",
+     "lat": 37.95266,
+     "lng": 28.73853
+    },
+    {
+     "name": "Sarayköy",
+     "lat": 37.91396,
+     "lng": 28.92597
+    }
+   ]
+  },
+  {
+   "mode": "train",
+   "ref": "",
+   "name": "Göller Ekspresi",
+   "stops": [
+    {
+     "name": "Basmane railway station",
+     "lat": 38.42245,
+     "lng": 27.1439
+    },
+    {
+     "name": "Gaziemir",
+     "lat": 38.32628,
+     "lng": 27.13997
+    },
+    {
+     "name": "Adnan Menderes Havalimanı",
+     "lat": 38.2913,
+     "lng": 27.14787
+    },
+    {
+     "name": "Cumaovası",
+     "lat": 38.26405,
+     "lng": 27.16299
+    },
+    {
+     "name": "Torbalı",
+     "lat": 38.17002,
+     "lng": 27.34756
+    },
+    {
+     "name": "Tepeköy",
+     "lat": 38.14704,
+     "lng": 27.36153
+    },
+    {
+     "name": "Sağlık",
+     "lat": 38.08509,
+     "lng": 27.40049
+    },
+    {
+     "name": "Çamlık",
+     "lat": 37.87999,
+     "lng": 27.37792
+    },
+    {
+     "name": "Ortaklar",
+     "lat": 37.88636,
+     "lng": 27.50248
+    },
+    {
+     "name": "Germencik",
+     "lat": 37.87302,
+     "lng": 27.59576
+    },
+    {
+     "name": "İncirliova",
+     "lat": 37.85384,
+     "lng": 27.72505
+    },
+    {
+     "name": "Aydın",
+     "lat": 37.84829,
+     "lng": 27.84201
+    },
+    {
+     "name": "Umurlu",
+     "lat": 37.85277,
+     "lng": 27.95525
+    },
+    {
+     "name": "Köşk",
+     "lat": 37.85155,
+     "lng": 28.05148
+    },
+    {
+     "name": "Sultanhisar",
+     "lat": 37.88732,
+     "lng": 28.15573
+    },
+    {
+     "name": "İsabeyli",
+     "lat": 37.89514,
+     "lng": 28.26777
+    },
+    {
+     "name": "Nazilli",
+     "lat": 37.91406,
+     "lng": 28.32709
+    },
+    {
+     "name": "Kuyucak",
+     "lat": 37.90969,
+     "lng": 28.45948
+    },
+    {
+     "name": "Horsunlu",
+     "lat": 37.91479,
+     "lng": 28.59135
+    },
+    {
+     "name": "Buharkent",
+     "lat": 37.95266,
+     "lng": 28.73853
+    },
+    {
+     "name": "Sarayköy",
+     "lat": 37.91396,
+     "lng": 28.92597
+    }
+   ]
+  }
+ ],
+ "mapPlaces": [
+  {
+   "name": "Efes",
+   "lat": 37.9441255,
+   "lng": 27.3414147,
+   "kind": "cafe",
+   "hours": "",
+   "osm": "node/730469614"
+  },
+  {
+   "name": "Cafe Turko",
+   "lat": 37.9123424,
+   "lng": 27.3327859,
+   "kind": "checkpoint",
+   "hours": "",
+   "osm": "node/10027843144"
+  },
+  {
+   "name": "Icecream",
+   "lat": 37.944046,
+   "lng": 27.3414122,
+   "kind": "ice_cream",
+   "hours": "",
+   "osm": "node/10814199109"
+  },
+  {
+   "name": "Museum kahvesi",
+   "lat": 37.9433771,
+   "lng": 27.3414584,
+   "kind": "cafe",
+   "hours": "",
+   "osm": "node/10814251152"
+  },
+  {
+   "name": "Müze nin kahvesi",
+   "lat": 37.9387979,
+   "lng": 27.3411576,
+   "kind": "cafe",
+   "hours": "",
+   "osm": "node/10814347625"
+  },
+  {
+   "name": "View on Ephesus (free)",
+   "lat": 37.9350046,
+   "lng": 27.3434366,
+   "kind": "viewpoint",
+   "hours": "",
+   "osm": "node/13464070201"
+  },
+  {
+   "name": "Virgin Mary Nature Park",
+   "lat": 37.920501,
+   "lng": 27.3269785,
+   "kind": "nature_reserve",
+   "hours": "",
+   "osm": "way/158711259"
+  },
+  {
+   "name": "Cave of the Seven Sleepers",
+   "lat": 37.9437321,
+   "lng": 27.3536317,
+   "kind": "attraction",
+   "hours": "",
+   "osm": "way/183304721"
+  },
+  {
+   "name": "Ephesus",
+   "lat": 37.9409553,
+   "lng": 27.3425207,
+   "kind": "attraction",
+   "hours": "",
+   "osm": "way/244582409"
+  },
+  {
+   "name": "Wall of Lysimachus",
+   "lat": 37.9354098,
+   "lng": 27.3331837,
+   "kind": "attraction",
+   "hours": "",
+   "osm": "way/244588220"
+  },
+  {
+   "name": "Ephesus Experience Museum",
+   "lat": 37.9409109,
+   "lng": 27.3406529,
+   "kind": "museum",
+   "hours": "Mo-Fr 08:00-18:00",
+   "osm": "way/1411430425"
+  },
+  {
+   "name": "House of the Virgin Mary",
+   "lat": 37.9115369,
+   "lng": 27.3340136,
+   "kind": "attraction;museum",
+   "hours": "",
+   "osm": "way/1412797204"
+  }
+ ]
+}
