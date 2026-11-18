@@ -5,7 +5,7 @@ on:
   workflow_dispatch:
   push:
     branches: ["claude/project-thread-xrdp7v"]
-    paths: ["tools/beta2/live-trip.cjs", ".github/workflows/beta2-live.yml"]
+    paths: ["tools/beta2/live-trip.cjs", ".github/workflows/beta2-live.yml", "tools/places/**"]
 permissions:
   contents: read
 jobs:
@@ -29,6 +29,11 @@ jobs:
           HELPER_WAIT: "150000"
           GUIDE_WAIT: "480000"
         run: node tools/beta2/live-trip.cjs
+      - name: Places files from free sources (Wikidata, OpenStreetMap, Wikivoyage)
+        if: always()
+        env:
+          PLACES_EXTRA: ${{ matrix.batch == '5' && '1' || '' }}
+        run: node tools/places/build.cjs
       - name: New engine side by side on these places
         if: always()
         run: SHOW=1 node tools/beta2/compare.cjs '^(live|g[0-9])' || true
