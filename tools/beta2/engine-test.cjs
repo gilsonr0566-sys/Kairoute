@@ -131,7 +131,7 @@ if (fs.existsSync(dir)) for (const f of fs.readdirSync(dir).filter(f => f.endsWi
   const s = JSON.parse(fs.readFileSync(path.join(dir, f))), t2 = E.makeTravel(s.prefs, s.legModes); let n = 0;
   s.days.forEach((d, i) => { const o = s.old[i], w = E.dayWindow(d, t2); if (!o || o.error) { ok(!!w.error || !d.city, `${f} day ${i}: old engine had no plan (${o && o.error}) but the new window has none of its reasons`); return; }
     n++; ok(!w.error, `${f} day ${i}: new window error ${w.error}`); if (w.error) return;
-    ok((w.plannedStart != null ? w.plannedStart : w.start) === o.start && w.endBy === o.endBy, `${f} day ${i} ${d.type}: window ${w.start}-${w.endBy}, old ${o.start}-${o.endBy}`);
+    ok((w.plannedStart != null ? w.plannedStart : w.start) === o.start && w.endBy === o.endBy - (d.type === 'port' && d.tender ? E.TENDER_BACK : 0), `${f} day ${i} ${d.type}: window ${w.start}-${w.endBy}, old ${o.start}-${o.endBy}`);
     ok(!!w.straight === !!o.straight && w.head.length === o.head.length && w.tail.length === o.tail.length, `${f} day ${i}: fixed steps differ`); });
   console.log(`ok   ${s.name}: ${n} day windows compared with the old engine`);
 }

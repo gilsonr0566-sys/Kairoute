@@ -11,6 +11,10 @@
   E.STRAIGHT_MIN = 180;      // flying in the day the ship sails: under 3 h free means straight to the ship
   E.TENDER_ASHORE = 60;      // getting ashore by tender boat; 30 by gangway
   E.BOARD_BEFORE = 60;       // at the terminal at least an hour before all aboard
+  E.TENDER_BACK = 30;        // tender port: the boats back stop well before all aboard and queue, so back this much earlier
+  // A landing below the town, reached by cable car or funicular (from the places files): the queue and ride up, and the
+  // queue and ride down, which is far longer when every passenger heads back at once.
+  E.LIFT_UP = 20; E.LIFT_DOWN = 50;
   const hardEnd = t => t === "port" || t === "embark" || t === "departure";
   E.hardEnd = hardEnd;
   // "Hours to sightsee" are for seeing things: a lunch falling inside them is added on top, never pushed into dinner.
@@ -59,8 +63,15 @@
       }
     } else if (d.type === "port") {
       if (!P) return E.fail("Choose where the ship docks.");
-      w.start = d.portArrive + (d.tender ? E.TENDER_ASHORE : 30); w.endBy = d.allAboard - E.PORT_BUFFER; w.buffer = E.PORT_BUFFER;
+      w.start = d.portArrive + (d.tender ? E.TENDER_ASHORE : 30); w.buffer = E.PORT_BUFFER + (d.tender ? E.TENDER_BACK : 0); w.endBy = d.allAboard - w.buffer;
       w.head = [Object.assign({}, P, { leaveWhenReady: true })]; w.tail = [Object.assign({}, P, { backToShip: true })];
+      const lf = P.lift;
+      if (lf && lf.top && isFinite(lf.top.lat)) {
+        const via = { lat: P.lat, lng: P.lng, name: lf.name || "Cable car" }, top = { lat: lf.top.lat, lng: lf.top.lng, name: lf.topName || P.name };
+        w.head.push(Object.assign(fixed(top, (lf.kind === "funicular" ? "Funicular" : "Cable car") + " up (with the queue)", E.LIFT_UP), { viaLift: via }));
+        w.tail.unshift(Object.assign(fixed(top, (lf.kind === "funicular" ? "Funicular" : "Cable car") + " down (the queue is longest when ships leave)", E.LIFT_DOWN), { viaLift: via }));
+        w.lift = lf; w.notes.push("lift");
+      }
     } else return E.fail("Unknown day type: " + d.type);
     if (!isFinite(w.start) || !isFinite(w.endBy)) return E.fail("Add the times for this day.");
     w.sightTo = w.endBy - chain(w.tail, tr); // when sightseeing must stop, before the fixed steps at the end

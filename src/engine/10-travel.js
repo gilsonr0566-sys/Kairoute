@@ -29,6 +29,9 @@
     const walk = (prefs && prefs.walk) || "medium", lim = WALK_LIMIT[walk] || WALK_LIMIT.medium, speed = walk === "low" ? 3.6 : 4.5, modes = legModes || {}, memo = new Map(), memoEnd = new Map();
     function estimate(a, b) {
       if (!a || !b || !isFinite(a.lat) || !isFinite(b.lat)) return { mode: "walk", how: "Walk", km: 0, min: 0, unknown: true };
+      // The cable car (or funicular) between a landing and the town above: its own fixed step holds the time.
+      const lift = (p, q) => p.viaLift && E.hav(q, p.viaLift) < 0.05;
+      if (lift(a, b) || lift(b, a)) return { mode: "lift", how: (a.viaLift || b.viaLift).name || "Cable car", km: 0, min: 0 };
       // Remembered by the four coordinates (numbers make fast keys), apart for legs that end at a deadline.
       let m = (b.backToShip || b.deadline) ? memoEnd : memo;
       for (const x of [a.lat, a.lng, b.lat]) { let n = m.get(x); if (!n) { n = new Map(); m.set(x, n); } m = n; }

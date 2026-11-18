@@ -8,6 +8,9 @@ on:
       refresh:
         description: "Parts to refresh: transit, ports"
         default: "transit,ports"
+      only:
+        description: "Only places whose key matches (blank: all)"
+        default: ""
   push:
     branches: ["claude/project-thread-xrdp7v"]
     paths: [".github/workflows/places-transit.yml", "tools/places/targets.json"]
@@ -25,4 +28,5 @@ jobs:
       - env:
           REFRESH: ${{ inputs.refresh || 'transit,ports' }}
           PLACES_EXTRA: "1"
+          ONLY: ${{ inputs.only || '' }}
         run: node tools/places/build.cjs

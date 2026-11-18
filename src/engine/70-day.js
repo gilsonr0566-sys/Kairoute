@@ -147,8 +147,11 @@
     const base = quick(keep).end;
     const scored = from.map(s => { const r = quick(keep.filter(k => k !== s)); return { s, fits: !r.over && !r.late, saved: Math.max(1, base - r.end) }; });
     const fixing = scored.filter(x => x.fits);
-    const list = why === "lunch" || !fixing.length ? scored.sort((a, b) => keepRank(a.s) - keepRank(b.s) || (a.s.worth || 1) / a.saved - (b.s.worth || 1) / b.saved || E.byId(a.s, b.s))
+    // Over the time: the stop giving back the most time for its worth goes first (two lesser stops before one great
+    // one), wanted stops last; one that fixes the day alone wins a tie.
+    const list = why === "lunch" || why === "over" || !fixing.length ? scored.sort((a, b) => keepRank(a.s) - keepRank(b.s) || (a.s.worth || 1) / a.saved - (b.s.worth || 1) / b.saved || E.byId(a.s, b.s))
       : fixing.sort((a, b) => lowestFirst(a.s, b.s));
+    if (why === "over") list.sort((a, b) => keepRank(a.s) - keepRank(b.s) || (a.s.worth || 1) / a.saved - (b.s.worth || 1) / b.saved || (b.fits ? 1 : 0) - (a.fits ? 1 : 0) || E.byId(a.s, b.s));
     return list[0].s;
   }
   // Ways to fit in a stop that doesn't fit (the traveler adding one, or a wanted one the day had to give up), each one
@@ -156,10 +159,10 @@
   // stop (the fewest minutes that do it, in 5-minute steps, up to a third of the visit and never under 25 minutes), and
   // only then giving up another stop. [] when nothing makes it fit.
   E.waysToFit = (win, kept, add, ctx) => {
-    const fits = c => !c.r.over && !c.r.late && !(win.hard && c.r.end > win.endBy);
+    const fits = c => !c.r.over && !c.r.late && !(win.hard && win.endBy - c.r.end < E.FILL_MARGIN);
     const out = [], all = kept.concat([add]);
     const c0 = arrange(all, win, ctx);
-    if (fits(c0)) { const m = c0.seq.find(x => x.mealOf); return m && m.toGo ? [{ kind: "lunchToGo", say: "have lunch on the go" }] : [{ kind: "fits", say: "it fits as planned" }]; }
+    if (fits(c0)) { const m = c0.seq.find(x => x.mealOf); return m && m.toGo || c0.noLunch ? [{ kind: "lunchToGo", say: "have lunch on the go between stops instead of sitting down" }] : []; }
     // With a quick lunch on the go in every try below, so a shorter visit is only as short as it needs to be.
     for (const s of kept.filter(s => (s.minutes || 0) >= 45 && !(s.far && E.has(s, "day-trip"))).sort((a, b) => (a.worth || 0) - (b.worth || 0) || E.byId(a, b))) {
       const most = Math.min(Math.floor(s.minutes / 3 / 5) * 5, s.minutes - 25);
@@ -170,7 +173,8 @@
     }
     out.sort((a, b) => a.by - b.by || E.byId(a, b));
     const drops = [];
-    for (const s of kept.slice().sort(lowestFirst)) {
+    // Only a stop worth less than the one to fit in is offered to skip.
+    for (const s of kept.slice().sort(lowestFirst)) { if (keepRank(s) > keepRank(add) || (s.worth || 0) >= (add.worth || 0)) continue;
       const c = arrange(kept.filter(x => x !== s).concat([add]), win, ctx, true);
       if (fits(c)) drops.push({ kind: "drop", id: s.id, name: s.name, wanted: wanted(s), say: "skip " + String(s.name).split(",")[0] });
       if (drops.length >= 2) break;
@@ -201,6 +205,11 @@
       if (why === "lunch" && c.noLunch === "time") break; // giving it up wouldn't make room for lunch: keep it
       keep = next; cur = c;
       dropped.push({ id: out.id, name: out.name, wish: !!out.wish, wanted: wanted(out), stop: out, why: why === "late" ? "would arrive after its last entry" : "didn't fit in the time" });
+    }
+    // Room left after the drops: a stop given up earlier comes back when it now fits (wanted ones first, best first).
+    for (const x of dropped.slice().sort((a, b) => keepRank(b.stop) - keepRank(a.stop) || (b.stop.worth || 0) - (a.stop.worth || 0) || E.byId(a.stop, b.stop))) {
+      const next = keep.concat([x.stop]), c = arrange(next, win, ctx);
+      if (!c.r.over && !c.r.late && !(win.hard && win.endBy - c.r.end < E.FILL_MARGIN) && (c.noLunch !== "time" || cur.noLunch === "time" || wanted(x.stop))) { keep = next; cur = c; dropped = dropped.filter(y => y !== x); }
     }
     if (d.fillTime !== false && !win.straight) {
       // Spare time: the best unused sights, each worth its detour (worth minus a quarter of the minutes of riding out and back

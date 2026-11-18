@@ -96,6 +96,17 @@ async function cruisePoints(p, island) {
   }).filter(x => x && x.name).sort((a, b) => (b.cruise - a.cruise) || a.d - b.d).slice(0, 12);
 }
 
+// Cable cars, gondolas and funiculars around a place, each with its two ends: a landing below a town (a tender port
+// under cliffs) is reached by one, and the engine counts its queue and ride as fixed steps of the day.
+async function liftsNear(centre, km) {
+  const r = Math.round(km * 1000);
+  const els = await overpass(`[out:json][timeout:90];(way(around:${r},${centre.lat},${centre.lng})["aerialway"~"^(cable_car|gondola)$"];way(around:${r},${centre.lat},${centre.lng})["railway"="funicular"];);out tags geom;`);
+  return els.filter(e => e.geometry && e.geometry.length >= 2).map(e => { const t = e.tags || {}, g = e.geometry, a = g[0], b = g[g.length - 1];
+    return { name: t['name:en'] || t.name || (t.railway === 'funicular' ? 'Funicular' : 'Cable car'), kind: t.railway === 'funicular' ? 'funicular' : 'cable car',
+      ends: [{ lat: +a.lat.toFixed(5), lng: +a.lon.toFixed(5) }, { lat: +b.lat.toFixed(5), lng: +b.lon.toFixed(5) }], osm: 'way/' + e.id }; })
+    .filter(l => hav(l.ends[0], l.ends[1]) >= 0.1).sort((x, y) => x.osm.localeCompare(y.osm));
+}
+
 // Public transport lines around a place (metro, light rail, tram, monorail, suburban train), each with its stops in
 // order, so every leg they serve can offer them. Stops are the line's own stop or station nodes, merged by name.
 async function transitLines(centre, km) {
@@ -212,6 +223,8 @@ async function buildPlace(t) {
   }
   // 4. Ports: the real cruise terminals or piers near where the ship docks.
   if (t.port) { const r = await portPoints(t.port, centre, !!t.island); out.ports = r.ports; out.missing.push(...r.missing); }
+  // 4a. Cable cars and funiculars (a landing below the town).
+  out.lifts = await liftsNear(centre, 15);
   // 4b. Public transport lines within reach of the sights.
   if (centre) {
     const spread = Math.max(3, ...t.sites.filter(s => isFinite(s.lat)).map(s => hav(centre, s)));
@@ -266,6 +279,7 @@ async function buildPlace(t) {
         fresh.transit = await transitLines(centre, Math.min(25, spread + 2));
         console.log(`   ${fresh.transit.length} public transport lines${fresh.transit.length ? ' (' + [...new Set(fresh.transit.map(l => l.mode))].join(', ') + ')' : ''}`);
       }
+      if (refresh.includes('lifts')) { fresh.lifts = await liftsNear(centre, 15); console.log(`   ${fresh.lifts.length} cable cars or funiculars`); }
       if (refresh.includes('ports') && t.port && !t.hasPorts) {
         const r = await portPoints(t.port, centre, !!t.island); fresh.ports = r.ports; fresh.missing = r.missing; fresh.portQuery = Object.assign({}, t.port, { island: !!t.island });
         console.log(`   ${r.ports.length} port points${r.missing.length ? ', missing: ' + r.missing.join(', ') : ''}`); r.ports.slice(0, 4).forEach(p => console.log(`   port ${p.name} (${p.kind}${p.cruise ? ', cruise' : ''}) ${p.d} km`));

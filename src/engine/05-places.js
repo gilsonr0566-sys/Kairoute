@@ -59,6 +59,10 @@
           if (!oh) { if (/^(24\/7|(Mo-Su\s*)?00:00-(00|24):00)$/.test(String(s.hours).trim())) d.sites[s.id] = Object.assign({}, have || {}, { allDay: true, hoursFrom: "OpenStreetMap" }); continue; }
           d.sites[s.id] = Object.assign({}, have || {}, { closed: !oh.spans.length, oh: oh.spans.length ? oh : null, hoursFrom: "OpenStreetMap" });
         }
+        // A landing with a cable car or funicular starting beside it: the town is at the other end.
+        if (d.type === "port" && d.point && isFinite(d.point.lat) && !d.point.lift) for (const l of P.lifts || []) {
+          const k = (l.ends || []).findIndex(e => E.hav(e, d.point) <= 0.4); if (k < 0) continue;
+          d.point = Object.assign({}, d.point, { lift: { name: l.name, kind: l.kind, top: l.ends[1 - k] } }); break; }
         // Where the ship docks: a guessed point is replaced by a mapped cruise terminal or pier.
         if (d.point && d.point.unknown && (P.ports || []).some(p => p.cruise)) {
           const pts = (city.sites || []).filter(x => isFinite(x.lat));
