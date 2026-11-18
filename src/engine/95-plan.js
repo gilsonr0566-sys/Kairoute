@@ -36,7 +36,7 @@
       const prev = items[items.length - 1], here = point(whereIs(x));
       if (prev && prev.t === "ride" && items.length >= 2) { const a = items[items.length - 2]; if (isFinite(a.lat) && isFinite(here.lat)) Object.assign(prev, { from: { lat: a.lat, lng: a.lng }, to: here }); }
       const src = x.id != null ? byId.get(String(x.id)) : null;
-      const it = { t: x.t, id: x.t === "meal" ? null : x.id, name: x.name, at: x.at, min: x.min, bonus: x.t === "stop" && autoIds.has(String(x.id)), along: false, meal: x.meal || null, late: x.late || 0 };
+      const it = { t: x.t, id: x.t === "meal" ? null : x.id, name: x.name, at: x.at, min: x.min, bonus: x.t === "stop" && autoIds.has(String(x.id)) && !(src && E.wantedStop(src)), along: false, meal: x.meal || null, late: x.late || 0 };
       if (x.wait) it.wait = x.wait; if (x.chosen) it.chosen = true; if (x.pinned) it.pinned = true;
       Object.assign(it, point(whereIs(x)));
       items.push(it);
@@ -271,6 +271,8 @@
       if (!left.length) return; p.leftOut = left.map(s => s.id);
       const names = left.slice(0, 4).map(s => s.name).concat(left.length > 4 ? [(left.length - 4) + " more"] : []);
       p.explain = (p.explain || []).concat(["Also worth seeing here, but not in today's time: " + E.listWords(names, "and") + "."]); });
+    // Each thing said once.
+    out.forEach(p => { if (p && p.explain) p.explain = p.explain.filter((t, k, a) => a.indexOf(t) === k); });
     return out;
   };
 })(KEngine);

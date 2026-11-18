@@ -29,6 +29,8 @@ if (typeof window !== "undefined" && window.ENGINE2 && window.KEngine) (function
     ep.items.forEach((x, k) => {
       if (x.t === "ride") {
         const leg = { mode: MODE[x.mode] || "ride", how: x.how || (x.mode === "walk" ? "Walk" : x.mode === "boat" ? "Boat" : x.mode === "lift" ? "Cable car" : "Taxi or car"), km: x.km || 0, min: x.min || 0 };
+        // Drawn and labelled as what it is: a boat as a ferry, a cable car with the rail-like lines (never as a taxi).
+        if (x.mode === "boat") leg.kind = "ferry"; else if (x.mode === "lift") leg.kind = "train";
         if (x.options) leg.options = x.options; if (x.from) leg.from = x.from; if (x.to) leg.to = x.to;
         items.push({ type: "travel", leg, time: (items.length ? items[items.length - 1].time + (items[items.length - 1].dur || 0) : ep.start) }); return;
       }
@@ -37,7 +39,7 @@ if (typeof window !== "undefined" && window.ENGINE2 && window.KEngine) (function
       if (x.t === "fixed") { items.push({ type: "fixed", place: at(x, x.name, { minutes: x.min, fixed: true }), time: x.at }); return; }
       if (x.t === "stop") {
         const s = byId.get(String(x.id)); const p = Object.assign({}, s || at(x), { minutes: x.min });
-        if (x.bonus) p.bonus = true; if (x.within) p.within = x.within; if (x.includes) p.includes = x.includes;
+        p.bonus = !!x.bonus; // the engine's own word: a stop it planned is part of the day, whatever the guide's listing says if (x.within) p.within = x.within; if (x.includes) p.includes = x.includes;
         const it = Object.assign({ type: "stop", place: p, time: x.at }, x.wait ? { wait: x.wait } : {}, x.late ? { ohLate: x.late } : {});
         items.push(it); stops.push(it); return;
       }

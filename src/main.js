@@ -1590,6 +1590,13 @@ function mealPickRaw(seq, O, Z, city, m, style) {
 // ---- What this day's plan was checked against ----
 // Every plan shows which checks passed and, just as plainly, what couldn't be confirmed, so nothing missing
 // is passed off as checked.
+// Beta 2 only: the new engine says, in plain words, why the day looks as it does (a sight that didn't fit and the ways to
+// fit it in, a pick moved to an open day, a boat's timetable). Nothing in the normal build, whose plans carry no engine2.
+function engine2Card(plan) {
+  const say = ((plan && plan.engine2 && plan.engine2.explain) || []).filter(Boolean);
+  if (!say.length) return "";
+  return `<details class="card foldlist engine2why" open><summary>About today's plan</summary><ul>${say.map(t => `<li>${esc(t)}</li>`).join("")}</ul></details>`;
+}
 function checksCard(d, city, plan) {
   if (!plan || !plan.items) return "";
   const rows = [], add = (st, t) => rows.push(`<li class="ck ${st}"><span>${st === "ok" ? "✓" : st === "warn" ? "!" : "?"}</span>${t}</li>`);
@@ -6676,6 +6683,7 @@ function legendHTML(plan) {
   ${canLen ? `<div class="planbar">
     ${canLen ? `<div class="seg pace daylen" role="group" aria-label="How long to sightsee today">${DAY_LEN.map(([h, l, sub]) => `<button type="button" data-act="daylen" data-h="${h}" aria-pressed="${+d.hours === h}" title="${esc(l)}: ${esc(sub)} of sightseeing">${esc(l.replace(/ day$/, ""))} <small>${sub}</small></button>`).join("")}</div>` : ""}
   </div>` : ""}
+  ${engine2Card(plan)}
   </div><div class="left pane" data-pane="map">
   <div class="mapbox">${mapSlot(plan, d, "plan")}
     <div class="maplegend">${legendHTML(plan)}</div>
