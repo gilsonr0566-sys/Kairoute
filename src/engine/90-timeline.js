@@ -14,7 +14,7 @@
       if (type === "stop") { const sd = siteDay ? siteDay(p.id) : null, f = E.hoursFit(sd && sd.oh, clock, p.minutes);
         if (f.wait) { clock += f.wait; waits += f.wait; it.wait = f.wait; } if (f.late > 0) { late++; it.late = f.late; }
         if (p.bonus) it.bonus = true; if (p.along) it.along = true; }
-      if (type === "meal") { const m = p.mealOf; if (clock < m.from) { waits += m.from - clock; clock = m.from; } it.meal = m.label; it.min = p.len || m.len; if (m.booked) it.booked = true; if (clock > m.to) it.lateMeal = clock - m.to; }
+      if (type === "meal") { const m = p.mealOf; if (clock < m.from) { waits += m.from - clock; clock = m.from; } it.meal = m.label; it.min = p.len || m.len; if (m.booked) it.booked = true; if (m.pinned) it.pinned = true; if (p.chosen) it.chosen = true; if (clock > m.to) it.lateMeal = clock - m.to; }
       it.at = clock; items.push(it); clock += it.min; prev = p;
     };
     win.head.slice(1).forEach(p => go(p, "fixed"));

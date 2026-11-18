@@ -48,6 +48,27 @@ const day = o => Object.assign({ type: 'land', mode: 'flight', startTime: '09:00
   const r = E.walkDay([Object.assign({ id: 'x', minutes: 30 }, b)], { start: 540, endBy: 1080, head: [Object.assign({ name: 'Hotel' }, a)], tail: [Object.assign({ name: 'Hotel' }, a)] }, tt.estimate, null);
   ok(r.items.filter(x => x.t === 'ride').every(x => (x.options || []).some(o => o.mode === 'transit')), 'the day plan carries the choices on each ride'); }
 
+// ---- The traveler's meal choices (d.mealPrefs): skip, a set time, a chosen place ----
+{ const s0 = JSON.parse(fs.readFileSync(path.join(dir, 'noai-prague.json'))), di = s0.days.findIndex(d => d.type !== 'sea');
+  const run = prefs => { const s = JSON.parse(JSON.stringify(s0)); s.days[di].mealPrefs = prefs; return E.planTrip(s)[di]; };
+  const base = run(undefined), lunch0 = base.items.find(x => x.t === 'meal');
+  ok(!!lunch0, 'the test day has a lunch to change');
+  const sk = run({ Lunch: { skip: true } });
+  ok(!sk.items.some(x => x.t === 'meal') && !(sk.explain || []).some(e => /lunch/i.test(e)), 'lunch skipped: no lunch and no lunch note');
+  const sights = p => p.items.filter(x => x.t === 'stop').reduce((a, x) => a + x.min, 0);
+  ok(sights(sk) >= sights(base), 'a skipped lunch gives its time to sightseeing, never takes any');
+  const at = run({ Lunch: { at: '13:30' } }), m = at.items.find(x => x.t === 'meal');
+  ok(m && m.at >= 810 && m.at <= 820 && m.pinned, `lunch at a set time starts then (got ${m && m.at})`);
+  const c0 = s0.cities[s0.days[di].city], other = (c0.restaurants || []).find(r => lunch0 && r.name !== lunch0.name && isFinite(r.lat));
+  if (other) { const pk = run({ Lunch: { pick: { name: other.name, lat: other.lat, lng: other.lng } } }), pm = pk.items.find(x => x.t === 'meal');
+    ok(pm && pm.name === other.name && pm.chosen, `the chosen lunch place is the one used (got ${pm && pm.name})`);
+    const all = E.planTrip(Object.assign(JSON.parse(JSON.stringify(s0)), { days: s0.days.map((d, k) => k === di ? Object.assign({}, d, { mealPrefs: { Lunch: { pick: { name: other.name, lat: other.lat, lng: other.lng } } } }) : d) }));
+    ok(all.filter((p, k) => k !== di && p && p.items).every(p => !p.items.some(x => (x.t === 'meal' || x.t === 'evening') && x.name === other.name)), 'no other day takes the chosen place'); }
+  const dsk = run({ Dinner: { skip: true } }); ok(!dsk.items.some(x => x.t === 'evening'), 'dinner skipped: no dinner idea');
+  if (other) { const dp = run({ Dinner: { pick: { name: other.name, lat: other.lat, lng: other.lng }, at: '19:30' } }), ev = dp.items.find(x => x.t === 'evening');
+    ok(ev && ev.name === other.name && ev.at >= 1170 && ev.chosen, `the chosen dinner place at its set time (got ${ev && ev.name} ${ev && ev.at})`); }
+  ok(JSON.stringify(run({})) === JSON.stringify(base), 'no meal choices: the same plan as before'); }
+
 // ---- Opening hours ----
 { const oh = { spans: [[540, 1020]], last: 960 };
   ok(E.hoursFit(oh, 500, 60).wait === 40, 'waits for opening'); ok(E.hoursFit(oh, 970, 60).late === 10, 'late after last entry');

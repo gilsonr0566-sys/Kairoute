@@ -10,7 +10,9 @@
   function autoPicks(pool, win, ctx) {
     const free = pool.filter(s => !s.far && !s.quick && ctx.mayAdd(s.id));
     if (!free.length) return [];
-    const anchor = free[0], budget = (win.endBy - (win.sightFrom || win.start) - (lunchWanted(win) ? E.MEALS[0].len : 0)) * 0.75;
+    // A skipped lunch gives its time to sightseeing.
+    const lunch = lunchWanted(win) && !(ctx.mealPrefs && ctx.mealPrefs.Lunch && ctx.mealPrefs.Lunch.skip);
+    const anchor = free[0], budget = (win.endBy - (win.sightFrom || win.start) - (lunch ? E.MEALS[0].len : 0)) * 0.75;
     const near = free.filter(s => E.hav(anchor, s) <= AREA_KM).map(s => ({ s, v: (s.worth || 0) - 20 * E.hav(anchor, s) }))
       .sort((a, b) => b.v - a.v || E.byId(a.s, b.s));
     const out = []; let used = 0;
@@ -26,11 +28,11 @@
       if (x.t === "ride") { items.push(Object.assign({ t: "ride", mode: x.mode, min: x.min, km: x.km }, x.options ? { how: x.how, options: x.options } : {})); continue; }
       const src = x.id != null ? byId.get(String(x.id)) : null;
       const it = { t: x.t, id: x.t === "meal" ? null : x.id, name: x.name, at: x.at, min: x.min, bonus: x.t === "stop" && autoIds.has(String(x.id)), along: false, meal: x.meal || null, late: x.late || 0 };
-      if (x.wait) it.wait = x.wait;
+      if (x.wait) it.wait = x.wait; if (x.chosen) it.chosen = true; if (x.pinned) it.pinned = true;
       Object.assign(it, point(src || (x.t === "start" ? win.head[0] : x.t === "end" ? win.tail[win.tail.length - 1] : null)));
       items.push(it);
     }
-    if (dinner) items.push({ t: "evening", id: null, name: dinner.name, at: dinner.at, min: dinner.min, lat: dinner.lat, lng: dinner.lng, bonus: false, along: false, meal: "Dinner", late: 0 });
+    if (dinner) items.push({ t: "evening", id: null, name: dinner.name, at: dinner.at, min: dinner.min, lat: dinner.lat, lng: dinner.lng, bonus: false, along: false, meal: "Dinner", late: 0, chosen: !!dinner.chosen });
     return { i, start: win.start, endBy: win.endBy, end: fit.r.end, over: fit.r.over > 0, straight: !!win.straight,
       head: win.head.map(x => ({ name: x.name, fixed: !!x.fixed, minutes: x.fixed ? x.minutes : 0 })), tail: win.tail.map(x => ({ name: x.name, fixed: !!x.fixed, minutes: x.fixed ? x.minutes : 0 })), items };
   }
@@ -92,7 +94,7 @@
       // A town a day away whose travel guide names places to eat gets a lunch stop in its centre (the plan names the
       // guide's suggestions); it is never a dinner idea.
       const townLunch = (city.farther || []).filter(t => !t.town && (t.foodDrink || []).length && isFinite(t.lat)).map(t => ({ name: "Lunch in " + t.name, lat: t.lat, lng: t.lng, townLunch: t.id }));
-      const ctx = { tr, ledger, dayIdx: i, siteDay, eats: (city.restaurants || []).concat(townLunch).sort((a, b) => E.eatKey(a.name).localeCompare(E.eatKey(b.name))), eatFacts: d.eats || {} };
+      const ctx = { tr, ledger, dayIdx: i, siteDay, eats: (city.restaurants || []).concat(townLunch).sort((a, b) => E.eatKey(a.name).localeCompare(E.eatKey(b.name))), eatFacts: d.eats || {}, mealPrefs: d.mealPrefs || {} };
       // May this day add a sight on its own? Not one used on another day, picked for another day, or in another
       // day's area, unless that day is already planned and left it over.
       const doneDay = j => j == null || j === i || out[j] != null;
