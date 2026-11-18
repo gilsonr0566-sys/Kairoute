@@ -88,6 +88,21 @@ New leaks:
 5. **Every sight marked "free".** With no fee fact, the bucket tagged Prague Castle and the National Museum as free. That's confidently wrong. *Rule inside step 3: no fee fact means "price unknown", never "free". Fixed in the bucket now (a low-level piece, no planning).*
 6. **No centre, no guide.** One saved source answer had no city centre, and the guide builder quietly made no guide. *Rule inside step 3: a missing piece is listed by name, never a silent blank.*
 
+### Dry run 4: Naples cruise call (Nov 18)
+The sample trip's Naples day (Mon Jul 12 2027: ashore 7:30, all aboard 18:30, back at the terminal by 17:45), through the 11 steps with every Rome, Athens and Prague rule in. Hard case: Pompeii by the Circumvesuviana train. Old engine baseline: no safety fault (back 17:34, 11 minutes inside the buffer), but it didn't pick Pompeii.
+
+Pompeii by train (worked with the saved timetable test copy): the quick estimate says 54 minutes each way, while the timetable door to door (taxi to Porta Nolana, train, walk) says 74. From the estimate the plan would leave Pompeii at 16:35, miss the 16:30 train, catch the 17:00 one and reach the terminal at 18:06: 21 minutes past the buffer, 24 before all aboard. *Held: the Rome rules (plan with the slower of estimate and timetable, last safe train) put the traveler on the 16:30, back 17:36. Far stop first and the Athens heat rule put Pompeii at opening (9:00) in the morning.*
+
+Also held: the old plan visits the historic centre at 7:51, rides out to Pozzuoli, then comes back to the Archaeological Museum and Sansevero, a few minutes from where it started (Prague area rule and group claim); Sansevero's timed tickets (Rome timed-ticket slots); nothing open at 7:51 (the "best time of day" site fact).
+
+New leaks, all rules inside existing steps:
+1. **One missed train must not mean a missed ship.** Here the 45-minute buffer happens to absorb one missed train because they run every 30 minutes. With hourly trains it wouldn't. *Step 7: on a ship, train or flight day, the planned return leaves at least one later departure that still makes it back before all aboard; if not, the plan leaves on an earlier one.*
+2. **A ferry with no real timetable.** The Sorrento and Capri ferries have only a usual frequency, and an island has no road back. *Step 7: on a ship day a return with no timetable is planned with the full gap as the wait; a return with no other way back (an island ferry) needs a real timetable or a ship-day warning and isn't suggested by default.*
+3. **Open-air but gated.** Pozzuoli's amphitheatre has no hours on record, and the Rome rule treats open-air as always open, but it's a fenced, ticketed site. *Step 3: an open-air site with a ticket or gate and unknown hours is planned within usual daytime hours (9:00 to an hour before dusk) and labelled "hours not confirmed".*
+4. **Strike days.** Italian transport strikes are announced in advance; on a strike day the Circumvesuviana may not run. *Step 2 per-date facts: service closures include announced strikes; the day then plans by taxi or tour if the traveler goes that way, or keeps Pompeii off a ship day.*
+
+Resource: one new free candidate, the Italian government's public transport strike calendar, for leak 4. Nothing paid. Other countries rely on the timetables' own service changes until a free source is found.
+
 ### Resources added in the dry runs (Nov 18)
 No new paid sources, and no new sources at all. Every fix uses a free source the app already reaches:
 - **Train timetables:** open timetables (Transitous) and OpenStreetMap rail lines, through the helper's ride lookup. Already in use.
@@ -95,6 +110,7 @@ No new paid sources, and no new sources at all. Every fix uses a free source the
 - **Shared tickets and "part of" (groups):** Wikidata "part of" and "what it is", which the helper's facts lookup already fetches; Wikivoyage text names combined tickets. Existing sources, two facts now kept that weren't stored before. Where neither says, it's "not yet known", never guessed.
 - **Restaurant locations:** OpenStreetMap, through the helper's places lookup. Already in use.
 - **Heat check:** Open-Meteo forecast within 16 days; beyond that, a rule from month and latitude (no source needed). Already in use.
+- **Strike days (Naples run):** the Italian government's public strike calendar, free. The only new candidate source so far.
 - **Fees:** none added. Unknown stays "price unknown" (and the rule that fees are not included stays upfront).
 
 ### What we need to know about each site
