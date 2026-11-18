@@ -32,7 +32,7 @@
     for (const x of ctx.eatList) {
       if (meal === "Lunch" ? x.f.lunchShut : x.f.dinnerShut || x.r.townLunch) continue;
       if (!ctx.ledger.eatFree(x.k, ctx.dayIdx)) continue;
-      out.push({ r: x.r, k: x.k, d: E.hav(p, x.r) });
+      out.push({ r: x.r, k: x.k, d: E.hav(p, x.r) + (x.r.fromMap ? 0.4 : 0) }); // a guide place to eat first, a map one when it is nearer the way
     }
     out.sort((a, b) => a.d - b.d || a.k.localeCompare(b.k));
     const res = out.slice(0, n).filter(x => x.d <= 1.5);
@@ -65,12 +65,18 @@
     const before = dep.map((t, k) => t < L.from - 75 ? k : -1).filter(k => k >= 0).pop(), after = dep.findIndex(t => t > L.to);
     if (before != null) gaps.push(before); if (after >= 0) gaps.push(after);
     for (const k of [...new Set(gaps)].sort((a, b) => a - b)) {
-      for (const e of my.pick ? [my.pick] : eatsNear(pts[k], ctx, "Lunch", 3)) for (const len of [L.len, L.quick, E.TO_GO]) {
+      // Lunch where the traveler is or along the way (Nov 18, Corpus Christi: North Beach, back over the bridge for lunch,
+      // then over the bridge again): places to eat near the stop before, near the stop after and halfway between; each
+      // costs what it takes them out of their way, so the one on the path wins over a slightly nearer one behind them.
+      const a = pts[k], b = order[k] || null, mid = b && isFinite(b.lat) ? { lat: (a.lat + b.lat) / 2, lng: (a.lng + b.lng) / 2 } : null;
+      const cands = my.pick ? [my.pick] : [...new Map([a, b, mid].filter(q => q && isFinite(q.lat)).flatMap(q => eatsNear(q, ctx, "Lunch", 3)).map(e => [e.k, e])).values()];
+      for (const e of cands) for (const len of [L.len, L.quick, E.TO_GO]) {
         // A sit-down lunch, a quicker one when the day is tight, or lunch on the go (bought and eaten walking on) when
         // only that keeps every stop: each a small cost, so the fuller lunch wins whenever it fits.
         const toGo = len === E.TO_GO;
-        const meal = { id: "eat:" + e.k, eatKey: e.k, name: e.r.name, lat: e.r.lat, lng: e.r.lng, mealOf: L, len, quick: len < L.len, toGo, chosen: !!my.pick };
-        const seq = order.slice(0, k).concat([meal], order.slice(k)), r = walk(seq, win, ctx), pen = penalty(r) + (toGo ? 60 : len < L.len ? 20 : 0);
+        const meal = { id: "eat:" + e.k, eatKey: e.k, name: e.r.name, lat: e.r.lat, lng: e.r.lng, mealOf: L, len, quick: len < L.len, toGo, chosen: !!my.pick, fromMap: !!e.r.fromMap };
+        const off = b && isFinite(b.lat) ? E.hav(a, e.r) + E.hav(e.r, b) - E.hav(a, b) : E.hav(a, e.r);
+        const seq = order.slice(0, k).concat([meal], order.slice(k)), r = walk(seq, win, ctx), pen = penalty(r) + (toGo ? 60 : len < L.len ? 20 : 0) + off * 8 + (e.r.fromMap ? 3 : 0);
         // On a ship, train or plane day lunch is something the app adds, so it keeps the same margin as any added sight.
         if (win.hard && !r.over && win.endBy - r.end < E.FILL_MARGIN) { tight = true; continue; }
         if (!best || pen < best.pen - 1e-9) best = { seq, r, pen };

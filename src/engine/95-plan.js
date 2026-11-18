@@ -233,6 +233,7 @@
       const unknownHours = fit.kept.filter(k => !k.far && !E.has(k, "open-air") && (k.wish || BUILDING.test(k.name + " " + (k.category || ""))) && !hoursKnown(k.id));
       if (unknownHours.length && (city.sites || []).some(s => hoursKnown(s.id)))
         explain.push("Opening hours for " + E.listWords(unknownHours.slice(0, 4).map(k => String(k.name).split(",")[0]).concat(unknownHours.length > 4 ? ["others"] : []), "and") + " aren't on the map yet: check before you go.");
+      { const m = (fit.seq || []).find(x => x.mealOf && x.fromMap); if (m) explain.push("Lunch at " + m.name + " is a place to eat on the map beside your stops (the guide names none on your way): check reviews before you go."); }
       const plan = shortForm(i, win, fit, autoIds, dinner, !!d.own);
       // A boat on its own timetable: the plan names the latest boat back that keeps the day as planned.
       plan.items.forEach((x, k) => { if (x.t !== "ride" || x.mode !== "boat" || !plan.items[k - 1] || plan.items[k - 1].t !== "stop") return;

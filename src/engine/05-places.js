@@ -41,6 +41,11 @@
             editions: x.editions || 0, unesco: !!x.unesco, tags: ["from-guide"], category: "Sight", fromGuide: true, blurb: x.note || "" }, x.web ? { web: x.web } : {})).filter((x, i, a) => a.findIndex(y => y.id === x.id) === i);
         if (more.length) city.sites = (city.sites || []).concat(more);
       }
+      // Restaurants and cafés on the map beside the place's sights: lunch where the traveler is, never a detour back to the
+      // few the guide names (Nov 18, Corpus Christi). Kept apart as from the map (no review behind them).
+      if ((P.cityEats || []).length) { const have = new Set((city.restaurants || []).map(r => E.eatKey(r.name)));
+        city.restaurants = (city.restaurants || []).concat(P.cityEats.filter(x => x.name && isFinite(x.lat) && isFinite(x.lng) && !have.has(E.eatKey(x.name)))
+          .map(x => ({ id: "map~" + E.eatKey(x.name).replace(/ /g, "-"), name: x.name, lat: x.lat, lng: x.lng,  kind: x.amenity || "restaurant", amenity: x.amenity || "restaurant", cuisine: x.cuisine || "", fromMap: true }))); }
       const added = [];
       for (const s of city.farther || []) {
         const t = P.towns && P.towns[s.id]; if (!t) continue;

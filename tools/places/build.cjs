@@ -126,6 +126,20 @@ async function mapFacts(items) {
   }
   return out;
 }
+// Restaurants on the map beside the place's own sights (within 350 m of any), nearest first, up to 6 per sight: lunch
+// where the traveler is, never a detour back to the few places the guide names (Nov 18, Corpus Christi). Asked 15
+// sights at a time so a spread-out city never times out.
+async function cityEats(sites) {
+  const pts = sites.filter(s => isFinite(s.lat) && isFinite(s.lng) && !s.far), out = new Map();
+  for (let i = 0; i < pts.length; i += 15) {
+    const part = pts.slice(i, i + 15);
+    const els = await overpass(`[out:json][timeout:90];(${part.map(s => `nwr(around:350,${s.lat},${s.lng})["amenity"="restaurant"]["name"];`).join('')});out tags center;`);
+    const got = els.map(el => { const q = pos(el), tg = el.tags || {}; return q && { name: tg['name:en'] || tg.name, lat: q.lat, lng: q.lng, amenity: tg.amenity, cuisine: tg.cuisine || '', hours: tg.opening_hours || '', osm: el.type + '/' + el.id }; }).filter(x => x && x.name);
+    for (const s of part) got.filter(x => hav(s, x) <= 0.35).sort((x, y) => hav(s, x) - hav(s, y)).slice(0, 6).forEach(x => out.set(x.osm, x));
+    await sleep(1500);
+  }
+  return [...out.values()];
+}
 async function guideSights(title, centre) {
   const page = title ? await wvText(title) : null; if (!page) return [];
   // A big city's guide lists its sights on its district pages ("Dubai/Deira"): with fewer than 8 sights on the main page,
@@ -267,6 +281,7 @@ async function buildPlace(t) {
   if (t.port) { const r = await portPoints(t.port, centre, !!t.island); out.ports = r.ports; out.missing.push(...r.missing); }
   // 3b. The guide's own sights for the place itself.
   if (host) out.guideSights = await guideSights(host.title, centre);
+  out.cityEats = await cityEats(t.sites); console.log(`   ${out.cityEats.length} restaurants on the map beside the sights`);
   // 4a. Cable cars and funiculars (a landing below the town).
   out.lifts = await liftsNear(centre, 15);
   // 4b. Public transport lines within reach of the sights.
@@ -338,6 +353,7 @@ async function buildPlace(t) {
         for (const [id, x] of Object.entries(saved)) { const w = officialWeb(es[x.wikidata]); if (w) { fresh.sites[id] = fresh.sites[id] || Object.assign({}, x); fresh.sites[id].web = w; } }
         console.log(`   hours for ${Object.values(fresh.sites).filter(x => x.hours).length} of ${Object.keys(saved).length} sights`);
       }
+      if (refresh.includes('eats') && t.sites.length) { fresh.cityEats = await cityEats(t.sites); console.log(`   ${fresh.cityEats.length} restaurants on the map beside the sights`); }
       if (refresh.includes('lifts')) { fresh.lifts = await liftsNear(centre, 15); console.log(`   ${fresh.lifts.length} cable cars or funiculars`); }
       if (refresh.includes('ports') && t.port && !t.hasPorts) {
         const r = await portPoints(t.port, centre, !!t.island); fresh.ports = r.ports; fresh.missing = r.missing; fresh.portQuery = Object.assign({}, t.port, { island: !!t.island });

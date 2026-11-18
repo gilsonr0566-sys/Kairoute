@@ -8,6 +8,8 @@
 //   cleared   an emptied day plans nothing
 //   rideFrom  a ride between two trips out is never timed from either one's "getting there" note (the note is from town)
 //   ways      a ride out to a sight offers every way its note names, each with the note's own time
+//   lunchWay  lunch is where the traveler is or along the way: never out and back off the path (Nov 18, Corpus Christi:
+//             North Beach, back over the bridge for lunch, then over the bridge again)
 //   lunch     a day out of town at lunchtime names a place to eat there (a data gap when the guide has none: listed apart)
 //   tickets   a planned book-ahead sight has its own official website for tickets (a data gap when missing: listed apart)
 // Usage: PLACES_DIR=tools/places/data node tools/beta2/scenarios.cjs [--list]
@@ -15,9 +17,9 @@ const fs = require('fs'), path = require('path'), E = require('./engine.cjs');
 const dir = path.join(__dirname, 'snapshots'), list = process.argv.includes('--list');
 const PD = process.env.PLACES_DIR, places = {};
 if (PD) for (const f of fs.readdirSync(PD).filter(f => f.endsWith('.json'))) { const p = JSON.parse(fs.readFileSync(path.join(PD, f))); places[p.key] = p; }
-const out = { safe: [], picked: [], cleared: [], rideFrom: [], ways: [], lunch: [], tickets: [] }, gaps = { lunch: [], tickets: [] };
+const out = { safe: [], picked: [], cleared: [], rideFrom: [], ways: [], lunchWay: [], lunch: [], tickets: [] }, gaps = { lunch: [], tickets: [] };
 const label = { safe: 'stop or ride past the time to be back', picked: 'pick neither planned nor explained', cleared: 'emptied day still planned',
-  rideFrom: "ride between two trips out timed from a sight's own note", ways: "way to a sight its note names, not offered", lunch: 'lunch out of town not named', tickets: 'book-ahead sight without its official website' };
+  rideFrom: "ride between two trips out timed from a sight's own note", ways: "way to a sight its note names, not offered", lunchWay: 'lunch off the way (out and back)', lunch: 'lunch out of town not named', tickets: 'book-ahead sight without its official website' };
 let variants = 0;
 const seen = new Set(), add = (k, msg) => { if (seen.has(k + msg)) return; seen.add(k + msg); out[k].push(msg); };
 for (const f of fs.readdirSync(dir).filter(f => f.endsWith('.json')).sort()) {
@@ -58,6 +60,12 @@ for (const f of fs.readdirSync(dir).filter(f => f.endsWith('.json')).sort()) {
         const one = noteOf(sa) && !noteOf(sb) && inTown(b) ? sa : noteOf(sb) && !noteOf(sa) && inTown(a) ? sb : null;
         if (one && E.hav(a, b) > 15) for (const w of E.noteWays(one.travelNote).filter(w => w.said && w.id !== 'taxi'))
           if (!(x.options || []).some(o => o.id === w.id && o.min >= w.said)) add('ways', `${tag}: ${a.name} to ${b.name}: ${w.how} (${w.said} min) not offered`); });
+      // lunch on the way: from the place before lunch to the one after, lunch adds at most 1 km of going out of the way (a tenth of
+      // the hop on a long ride back from a trip out)
+      p.items.forEach((x, k) => { if (x.t !== 'meal' || !isFinite(x.lat)) return;
+        const pts = p.items.filter(y => isFinite(y.lat) && y.t !== 'ride'), j = pts.indexOf(x), a = pts[j - 1], b = pts[j + 1]; if (!a || !b) return;
+        const off = E.hav(a, x) + E.hav(x, b) - E.hav(a, b);
+        if (off > Math.max(1.0, 0.1 * E.hav(a, b))) add('lunchWay', `${tag}: ${a.name} > ${x.name} > ${b.name}: ${off.toFixed(1)} km out of the way`); });
       // lunch out of town
       if (/places to eat aren't in the guide yet/.test(said)) gaps.lunch.push(`${tag}: ${said.match(/Have lunch in ([^:]+)/) ? said.match(/Have lunch in ([^:]+)/)[1] : ''}`);
       // tickets
