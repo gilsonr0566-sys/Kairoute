@@ -2,40 +2,45 @@
 
 Scope: the planning engine only (see "What Beta 2 changes, and what stays as is" in [lessons-from-the-old-engine.md](lessons-from-the-old-engine.md)). Every screen keeps calling `buildPlan(d)` and gets a plan in the same shape it gets today.
 
-## The engine's steps, in plain English (full list, for Richard's OK before more is built)
+## The engine's steps (revised Nov 18 after Richard's "rethink it before you build", for his OK)
 
-Each step reads only what the steps before it produced. Steps 9 to 15 run one day at a time, in date order; a day sees only the finished days before it and the locked days. **(new)** marks a step that wasn't in the list before.
+The 21 steps are now 11. Nothing was dropped: Richard's steps (resources, collect, groups and sites, categories) all live in steps 1 and 2, and steps that did one job between them are merged so no two steps can disagree. The engine itself is steps 4 to 9: **trip bucket in, plan out**. It reads nothing else.
 
-**Gather**
-1. **Know our resources: the places database.** Every place found for any traveler, stored once, amended and never rebuilt, with its source and when it was last checked. Free sources only. *Closes #10 names (fixed ids), #9 small places (one-source places kept), #19 spend.*
-2. **Collect the pieces into the trip bucket.** From the database first, outside sources only for what's missing; the bucket lists what's still missing, and nothing is looked up after this. *Closes #1 drift, #2 lookups mid-plan.*
-3. **Sort the pieces into groups and sites.** *Closes #4 repeats of "Included" sights.*
-4. **Label every piece with its categories.** *Lists and plans read one set of labels.*
-5. **(new) Check each piece for each date.** Visit length (never shorter than its story takes), opening hours and closed days for that date, last entry, timed shows, tickets to book ahead, indoor or outdoor, where the entrance is, step-free access, and the day's forecast. *Closes #13 closed sights, short visit times.*
-6. **(new) Read the traveler's wishes.** Picks, hearted days, cleared days, a dragged order, booked tables, ride choices, pace, walking, interests, religious sites on or off. Every change to picks comes through one "move sight" action. *Closes #6 swap bug, #7 typed times lost.*
+**Gather (before the engine runs)**
+1. **Places database: describe each place once.** Fixed id; group or site, and what's inside a group; categories; the place's lasting facts (see "What we need to know about each site" below). Every fact keeps its source, how sure we are, and when it was checked. Amended, never rebuilt; places merge only when they share a fixed id. *Richard's steps 1, 3 and 4. Closes #4, #9, #10, wrong merges.*
+2. **Fill the trip bucket.** This trip's places from the database (free outside sources only for what's missing or out of date, and finds go back into the database); the facts for each date (hours that day, seasonal hours, closures for services, crowds, forecast); the trip's days and times; and the traveler's wishes (picks, hearts, cleared days, dragged order, booked tables, ride choices, pace, walking, interests, and, during the day, where they are now). Kept on the device for offline. *Richard's step 2. Closes #1, #2, #7, offline differences.*
+3. **Check the bucket (safeguard, new).** Every piece is checked before the engine sees it: places where they should be, times in order (docking before all aboard, dates in sequence, ship time turned into port time), visit lengths and hours that make sense, ride data within sensible limits. A bad piece is held out with its reason; a missing piece is listed; an estimated value is marked as estimated. *Closes bad ride data, "never confidently wrong".*
 
-**Plan**
-7. **Set each day's window** (ship, boarding, flight and train cut-offs; same-day fly-in). *Closes #8; Rule #2.*
-8. **Lock the hearted days first.** Their sights, order and restaurants are claimed before anything else. *Replaces the heart-lock patch layer.*
-9. **Give each pick its day.** Earliest day it's open and fits; a group and everything inside it go together; claimed once. *Closes #3 order of planning, #4 repeats.*
-10. **Order each day by route.** Shortest, easiest path; a dragged order is kept; ties broken the same way every time. *Closes #1, #5 zig-zags.*
-11. **Fit the day.** Hours and the hard end; shrink long visits, quick lunch, then the least important stop gives way; put back what fits; a pick that doesn't fit moves to a later day that has it. On a rain day, an outdoor sight may swap for an indoor one **(new: was missing from the list)**. *Closes #12 short days, #13; Rule #2.*
-12. **Nudge for comfort, within a cap.** *Closes #5.*
-13. **Add meals.** Real places, never twice in a trip, booked tables pinned. *Closes #4.*
-14. **Fill spare time.** Never past the hard end, never on a cleared or hearted day; a leaving day keeps a few nearby sights for itself.
-15. **(new) Choose each ride.** One list of choices per leg (walk, taxi, train, ferry...), the same list the buttons show; real timetables only set the clock. *Closes #11 labels without buttons, #1.*
-
-**Check and explain**
-16. **Write the timeline and check safety.** If a real ride time makes a stop late or unsafe, flag it and say why; never quietly reshuffle. Final ship, train and flight margin check. *Rule #2, #1.*
-17. **(new) Explain the plan.** What didn't fit and why, what moved to another day, what's closed today and which day it's open. Nothing ever disappears silently. *Replaces the "taken off this day" patch layer.*
-18. **(new) Running late.** During the day, re-plan from where the traveler is now, through the same steps 10 to 16 with a new start point and time. *Keeps the old running-late feature on the new engine.*
+**Plan (the engine)**
+4. **Set each day's window.** Ship, boarding, flight and train safety times; same-day fly-in goes straight to the ship. *Closes #8. Rule #2.*
+5. **Suggest picks where the traveler hasn't chosen (new: the old engine did this, the list had missed it).** Sights grouped by area, one area per day where possible; a port day leads with the best-known sight within reach of the ship; hearted days untouched; cleared days stay empty.
+6. **Build each day, in date order, hearted days first.** One step with four parts that share one ledger:
+   a. claim the day's sights (a group with everything inside it; once per trip; a pick moves only through one "move sight" action);
+   b. order by route, with crowds, heat and forecast allowed only a capped nudge; a dragged order is kept;
+   c. fit the day: hours, the hard end and meals together; shrink long visits, quicker lunch, rain-day indoor swap, then the least important stop gives way; a pick that doesn't fit goes to a later day that has it;
+   d. fill spare time (never past the hard end, never on a cleared or hearted day).
+   *Closes #3, #4, #5, #6, #12, #13.*
+7. **Write the timeline.** The traveler's ride choices and real timetables set the clock, with one list of ride choices per leg (the same list the buttons show), and a taxi fallback that still makes the ship. A late stop is flagged, never quietly reshuffled. *Closes #1, #11. Rule #2.*
+8. **Final guard (safeguard).** Every rule is checked on the finished plan: nothing past the hard end, nothing closed or after last entry, nothing repeated, every ship, train and flight margin kept, no stop at an unknown place. A failure is reported loudly. It is never patched over.
+9. **Explain the plan.** What didn't fit and why, what moved to another day, what's closed today and when it's open, what changed since the traveler last looked and why, and which facts are estimated. *Closes silent drops; replaces the "taken off" layer.*
 
 **Plug in and prove**
-19. **(new) Keep one copy.** The plan is kept once, labelled by its bucket; same bucket, same plan. *Closes #21, replaces the shown-plan replay and renamed-id layers.*
-20. **Plug into the app and remove the five patch layers.** The screens get plans in the shape they use today. *Closes #17 test code in the app.*
-21. **Prove it.** Old vs new on all 9 test trips with one scorer; the same trip with pieces arriving in shuffled orders must give the same plan; safety margins never closer than Beta 1; existing publish checks pass. *Closes #14, #15.*
+10. **Plug into the app.** One copy of each plan, labelled by its bucket; the five patch layers removed; screens unchanged. Running late is the same engine with a new start point and time, not a separate feature. *Closes #17, #21.*
+11. **Prove it.** Old vs new on all 9 test trips with one scorer; the same bucket with pieces in shuffled order gives the same plan; safety margins never closer than Beta 1; a whole trip planned within a time limit on a slowed-down test device; existing publish checks pass. *Closes #14, #15, tablet freezes.*
 
-**Outside the engine, by agreement:** #16 hidden errors and #18 the huge file in the screen code stay as they are for now; #7 was already fixed in Beta 1.
+### What we need to know about each site
+Already collected: where it is, visit length, opening hours and closed days, last entry, timed shows, book-ahead, indoor or outdoor, crowd times, cost, fame and sources, category, how to get there for day trips, closed to visitors.
+
+Missing today, to be added to the database so the engine can decide how to handle a site instead of guessing:
+- **Entrance point** (big sites are entered at one gate, not at their middle) and exit if different
+- **Minimum and typical visit length** (today there is one number)
+- **Timed-entry tickets** (needs a slot) vs walk-in, and **security or queue time** at busy sites
+- **Seasonal hours** (summer and winter) and **closures for religious services**
+- **Effort:** steps, steep climb, uneven ground (for pace, step-free access and the heat)
+- **Shade or exposure** (an open ruin at midday), and **best time of day** (sunset viewpoints, morning light)
+- **Outside-only** (seen from the street, not entered)
+- **Dress code** (shoulders and knees covered) as a note to the traveler
+- **How sure we are** of each fact, and when it was last checked
 
 ## The places database (step 1 in detail)
 
@@ -101,14 +106,14 @@ The engine files also load in Node, so its tests run in seconds without a browse
 4. Adapter: plug the engine into the app on the Beta 2 branch, remove the five steady-plan layers, run the existing gate (safety net, demo flow, steadiness, speed) against it.
 5. Hand Richard a Beta 2 test link once it beats the old engine on every trip.
 
-## Holes checked against the steps (Nov 18)
+## Holes checked against the steps (Nov 18, numbering from the earlier 21-step list)
 
 Every one of the 21 failures in the lessons doc was checked against the steps. Two had no step and are now part of the plan:
 - **#6 swap bug:** the picks step moves a sight with one "move" action that takes it off its old day in the same step. No screen changes a day's picks any other way.
 - **#14 hand-written guides hiding gaps:** the yardstick gets no-AI test trips (guides built automatically from saved source data: a big city, a small port, a private island) before the planning steps are built.
 **Done the same evening:** three no-AI test trips are now in the yardstick (`tools/beta2/noai-trips.cjs`: a big city stay, a small cruise port with a full day and a short call, a private island), and **#9** has its test (a port with no sights gets a safe day ashore). Still partly covered: **#17** the bucket is read through a test hook until it becomes the plug-in point.
 
-## Other errors from the project, checked against the steps (Nov 18)
+## Other errors from the project, checked against the steps (Nov 18, numbering from the earlier 21-step list; all now folded into the 11 steps)
 
 Beyond the 21 in the lessons doc. Proposed additions to the engine steps are marked **add**.
 
