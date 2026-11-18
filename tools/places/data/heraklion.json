@@ -1,0 +1,2731 @@
+{
+ "key": "heraklion",
+ "name": "Heraklion",
+ "built": "2026-11-18",
+ "sources": [
+  "Wikidata",
+  "OpenStreetMap",
+  "Wikivoyage"
+ ],
+ "sites": {},
+ "towns": {},
+ "ports": [
+  {
+   "name": "Worldchampion Jet  &  Champions League Jet 1",
+   "lat": 35.342,
+   "lng": 25.14112,
+   "osm": "node/267668226",
+   "kind": "ferry terminal",
+   "cruise": false,
+   "d": 0.63
+  },
+  {
+   "name": "Heraklion",
+   "lat": 35.34243,
+   "lng": 25.14232,
+   "osm": "node/1187906885",
+   "kind": "ferry terminal",
+   "cruise": false,
+   "d": 0.75
+  },
+  {
+   "name": "Heraklion",
+   "lat": 35.34253,
+   "lng": 25.14351,
+   "osm": "node/1187906551",
+   "kind": "ferry terminal",
+   "cruise": false,
+   "d": 0.86
+  },
+  {
+   "name": "Ηράκλειο",
+   "lat": 35.3427,
+   "lng": 25.14444,
+   "osm": "node/1187907064",
+   "kind": "ferry terminal",
+   "cruise": false,
+   "d": 0.95
+  }
+ ],
+ "dayTrips": [
+  "Rethymno",
+  "Chania",
+  "Agios Nikolaos",
+  "Samaria Gorge",
+  "Spinalonga",
+  "Anogia",
+  "Bali (Crete)",
+  "Chersonissos",
+  "Sitia"
+ ],
+ "missing": [
+  "a mapped cruise terminal or pier",
+  "public transport lines on the map"
+ ],
+ "portQuery": {
+  "name": "Heraklion cruise port",
+  "known": false,
+  "island": false
+ },
+ "centre": {
+  "lat": 35.3336,
+  "lng": 25.1388
+ },
+ "wikivoyage": "Heraklion",
+ "guideSights": [
+  {
+   "kind": "listing",
+   "name": "Bus station",
+   "lat": 35.33914,
+   "lng": 25.14137,
+   "hours": "",
+   "price": "",
+   "wikidata": "",
+   "content": ""
+  },
+  {
+   "kind": "see",
+   "name": "Heraklion Archaeological Museum",
+   "lat": 35.33915,
+   "lng": 25.13741,
+   "hours": "25 Apr – 31 Oct: daily 08:00-20:00; 1 Nov – 30 Apr: Mon 10:00-17:00, Tue-Sun 09:00-16:00",
+   "price": "€12 full, €6 concessions; combined with Knossos (valid for 3 days) €20",
+   "wikidata": "Q636972",
+   "content": "Houses the most important and representative finds from Minoan civilisation and excavations across the island of Crete. Highlights include statues of the Snake Goddess, the Bull-Leaping Fresco, the Phaistos Disk, and Minoan seals and jewell"
+  },
+  {
+   "kind": "see",
+   "name": "Palace of Knossos",
+   "lat": 35.298056,
+   "lng": 25.163056,
+   "hours": "Daily, summer 08:00-18:00, winter 08:00-15:00",
+   "price": "Full €15, concessions €8",
+   "wikidata": "Q173527",
+   "content": "If you see just one ruin on Crete, see Knossos (in Greek it’s Κνωσός, stress is on the second syllable). The site is fairly compact, and much of it is accessible with restricted mobility. But 30 minutes will do it. It is one of six Minoan P"
+  },
+  {
+   "kind": "see",
+   "name": "Koules",
+   "lat": 35.344639,
+   "lng": 25.13685,
+   "hours": "Daily 08:00-20:00, limited hours during off season",
+   "price": "€4 full, €2 concession",
+   "wikidata": "Q603920",
+   "content": "Koules (Greek: Κούλες) was built by the Venetians in the 16th C. From the parapet, enjoy the view towards Dia Islet, where Jacques Cousteau found many sunken remains of Cretan sea trade."
+  },
+  {
+   "kind": "see",
+   "name": "Fortifications of Heraklion",
+   "lat": 35.332707,
+   "lng": 25.130661,
+   "hours": "",
+   "price": "",
+   "wikidata": "Q20127741",
+   "content": "The Fortifications of Heraklion are among the most impressive Venetian defensive works in the Mediterranean, encircling the old city of Heraklion. Built between the 15th and 17th centuries, their massive walls and bastions helped the city w"
+  },
+  {
+   "kind": "see",
+   "name": "Historical Museum of Crete",
+   "lat": 35.341806,
+   "lng": 25.131167,
+   "hours": "summer (Apr–Oct) Mon,Wed–Fr 10:00-17:00, Sat-Sun 11:00-17:00; winter (Nov–Mar) Mon–Fr 09:00-15:30, Sat-Sun 10:00-16:00",
+   "price": "€7.50 full, €4.50 concession, children 12 and under: free",
+   "wikidata": "Q4204518",
+   "content": "Covers the story of Crete from the Byzantine era to the present day. It includes material on World War II and the German occupation, which was displayed in the “Museum of the Battle for Crete and National Resistance” until it closed."
+  },
+  {
+   "kind": "see",
+   "name": "Loggia",
+   "lat": 35.33983,
+   "lng": 25.134002,
+   "hours": "",
+   "price": "",
+   "wikidata": "Q14175781",
+   "content": "An elegant city meeting place, built in 1628."
+  },
+  {
+   "kind": "see",
+   "name": "Morosini Fountain",
+   "lat": 35.3391,
+   "lng": 25.1331,
+   "hours": "",
+   "price": "",
+   "wikidata": "Q6555912",
+   "content": ""
+  },
+  {
+   "kind": "see",
+   "name": "St Minas Cathedral",
+   "lat": 35.337634,
+   "lng": 25.130903,
+   "hours": "",
+   "price": "",
+   "wikidata": "Q2942217",
+   "content": "(Greek: Άγιος Μηνάς)"
+  },
+  {
+   "kind": "see",
+   "name": "St Titus Church",
+   "lat": 35.3401,
+   "lng": 25.13465,
+   "hours": "",
+   "price": "",
+   "wikidata": "Q4426010",
+   "content": "(Greek: Άγιος Τίτος) Known for housing the skull of St. Titus."
+  },
+  {
+   "kind": "see",
+   "name": "St Catherine of the Sinaites Church",
+   "lat": 35.33808,
+   "lng": 25.13134,
+   "hours": "Mon-Sat 09:30-19:30; Sun 10:00-19:30",
+   "price": "",
+   "wikidata": "Q4505145",
+   "content": "(Greek: Αγία Αικατερίνη Σιναϊτών)."
+  },
+  {
+   "kind": "see",
+   "name": "St Mark's Basilica",
+   "lat": 35.3392,
+   "lng": 25.13369,
+   "hours": "",
+   "price": "",
+   "wikidata": "Q4425986",
+   "content": "(Greek: Βασιλική Αγίου Μάρκου)."
+  },
+  {
+   "kind": "see",
+   "name": "Dominican Church of St Peter",
+   "lat": 35.34244,
+   "lng": 25.131791,
+   "hours": "",
+   "price": "",
+   "wikidata": "Q38285052",
+   "content": "(Greek: Άγιος Πέτρος Δομηνικανών)."
+  },
+  {
+   "kind": "see",
+   "name": "Natural History Museum of Crete",
+   "lat": 35.34181,
+   "lng": 25.12668,
+   "hours": "9:00-15:00 weekdays, 10:00-18:00 weekends",
+   "price": "€7.50, concession €4.50",
+   "wikidata": "Q6980521",
+   "content": "The Natural History Museum of Crete shows the natural environment of the Eastern Mediterranean area with a special emphasis on Greece and Crete."
+  },
+  {
+   "kind": "listing",
+   "name": "University of Crete",
+   "lat": 35.307,
+   "lng": 25.082,
+   "hours": "",
+   "price": "",
+   "wikidata": "Q2302473",
+   "content": "The leading higher education institution on the island of Crete. The University was established in 1973 and operates under the supervision of the State. The seat of the University is in Rethymno, with Heraklion hosting the School of Science"
+  },
+  {
+   "kind": "eat",
+   "name": "O Kafenes tou Kagiampi",
+   "lat": 35.3361438,
+   "lng": 25.1313983,
+   "hours": "",
+   "price": "",
+   "wikidata": "",
+   "content": "Old fashioned tavern with traditional Greek dishes."
+  },
+  {
+   "kind": "eat",
+   "name": "Kafeneio O Ntokos",
+   "lat": 35.3367857,
+   "lng": 25.1330488,
+   "hours": "",
+   "price": "",
+   "wikidata": "",
+   "content": "Tiny place next to the fish market with delicious mezedes to accompany your beer or raki."
+  },
+  {
+   "kind": "eat",
+   "name": "Umami Homemade Organic & Vegan Restaurant",
+   "lat": 35.3395749,
+   "lng": 25.1349448,
+   "hours": "",
+   "price": "",
+   "wikidata": "",
+   "content": ""
+  },
+  {
+   "kind": "eat",
+   "name": "Cooking with love",
+   "lat": 35.3407045,
+   "lng": 25.1343661,
+   "hours": "",
+   "price": "",
+   "wikidata": "",
+   "content": ""
+  },
+  {
+   "kind": "eat",
+   "name": "Hovoli",
+   "lat": 35.3377408,
+   "lng": 25.1354447,
+   "hours": "",
+   "price": "",
+   "wikidata": "",
+   "content": ""
+  },
+  {
+   "kind": "eat",
+   "name": "Μαγειρείον Μελομπερδέματα (κ. Ελένη)",
+   "lat": 35.3379205,
+   "lng": 25.1290594,
+   "hours": "",
+   "price": "",
+   "wikidata": "",
+   "content": ""
+  },
+  {
+   "kind": "eat",
+   "name": "Orgy Hungarian Restaurant",
+   "lat": 35.3401471,
+   "lng": 25.1352023,
+   "hours": "",
+   "price": "",
+   "wikidata": "",
+   "content": ""
+  },
+  {
+   "kind": "eat",
+   "name": "Kafeneio O Lakkos",
+   "lat": 35.3349272,
+   "lng": 25.1300719,
+   "hours": "",
+   "price": "",
+   "wikidata": "",
+   "content": "Lost in a maze of small streets where different street artists have decorated the walls of the houses, Lakkos is particularly nice in the summer."
+  },
+  {
+   "kind": "eat",
+   "name": "Pagopiion",
+   "lat": 35.3403194,
+   "lng": 25.134569,
+   "hours": "",
+   "price": "",
+   "wikidata": "",
+   "content": "(Ice-Factory)– A \"quirky\" restaurant and cafe/bar, at St Titus square, by the church. You can sit outside and enjoy the setting, or you might be tempted by the dramatic decor to sit inside. The food is excellent, and the menu different and "
+  },
+  {
+   "kind": "eat",
+   "name": "Ippokampos",
+   "lat": 35.3428992,
+   "lng": 25.1337586,
+   "hours": "",
+   "price": "",
+   "wikidata": "",
+   "content": "Seafood and fish tavern by the sea side, popular with the locals."
+  },
+  {
+   "kind": "eat",
+   "name": "Herbs' Garden",
+   "lat": 35.341679,
+   "lng": 25.136539,
+   "hours": "",
+   "price": "",
+   "wikidata": "",
+   "content": "The name has been inspired from the traditional Cretan herbs. Offers a spectacular view of Heraklion's Venetian fortress and Cretan Sea. Opens from early afternoon and serves fresh fish and salads accompanied by local aperitifs and a variet"
+  },
+  {
+   "kind": "eat",
+   "name": "Epsilon Restaurant",
+   "lat": 35.3368869,
+   "lng": 25.136307,
+   "hours": "",
+   "price": "",
+   "wikidata": "",
+   "content": ""
+  },
+  {
+   "kind": "eat",
+   "name": "7 Thalases",
+   "lat": 35.3426873,
+   "lng": 25.1572866,
+   "hours": "",
+   "price": "",
+   "wikidata": "",
+   "content": ""
+  },
+  {
+   "kind": "listing",
+   "name": "Luggage Storage Heraklion City Center",
+   "lat": 35.33782,
+   "lng": 25.13035,
+   "hours": "Monday–Friday 09:00–21:00, Saturday 09:00–20:00, Sunday 10:00–20:00",
+   "price": "Per bag per day: €3 backpack, €4 cabin/medium suitcase, €5 large suitcase; 10% less when booked online, 25% less for 3 days or more",
+   "wikidata": "",
+   "content": "Staffed left-luggage shop in the city centre. Takes backpacks and suitcases of any size, for a few hours or several days; bags are returned against a booking reference. Walk-ins accepted, or book online. Advance booking is required on Monda"
+  }
+ ],
+ "lifts": [],
+ "transit": [],
+ "mapPlaces": [
+  {
+   "name": "Heraklion Archaeological Museum",
+   "lat": 35.3391377,
+   "lng": 25.1374187,
+   "kind": "museum",
+   "hours": "Apr-Oct: 08:00-20:00; Nov-Mar: 08:00-15:00",
+   "osm": "node/250686961"
+  },
+  {
+   "name": "Καγιαμπής",
+   "lat": 35.3361121,
+   "lng": 25.1313278,
+   "kind": "restaurant",
+   "hours": "",
+   "osm": "node/669418180"
+  },
+  {
+   "name": "Νότιο Σέλας",
+   "lat": 35.3398183,
+   "lng": 25.1354265,
+   "kind": "restaurant",
+   "hours": "Mo-Su 10:00-03:00",
+   "osm": "node/1057068138"
+  },
+  {
+   "name": "Το Κουκούτσι",
+   "lat": 35.3351993,
+   "lng": 25.1335772,
+   "kind": "cafe",
+   "hours": "",
+   "osm": "node/2245394426"
+  },
+  {
+   "name": "Παραδοσιακό",
+   "lat": 35.3392229,
+   "lng": 25.1319383,
+   "kind": "restaurant",
+   "hours": "",
+   "osm": "node/2325325270"
+  },
+  {
+   "name": "Yasouvlaki",
+   "lat": 35.3405747,
+   "lng": 25.1198135,
+   "kind": "restaurant",
+   "hours": "",
+   "osm": "node/2325438960"
+  },
+  {
+   "name": "Ευκάλυπτος",
+   "lat": 35.3312904,
+   "lng": 25.1298895,
+   "kind": "cafe",
+   "hours": "",
+   "osm": "node/2373084057"
+  },
+  {
+   "name": "Avant Garde",
+   "lat": 35.3407368,
+   "lng": 25.1329215,
+   "kind": "cafe",
+   "hours": "",
+   "osm": "node/2488236529"
+  },
+  {
+   "name": "Route 66",
+   "lat": 35.3401032,
+   "lng": 25.1314709,
+   "kind": "bar",
+   "hours": "",
+   "osm": "node/2488236532"
+  },
+  {
+   "name": "Ουτοπία",
+   "lat": 35.3401232,
+   "lng": 25.1312875,
+   "kind": "cafe",
+   "hours": "",
+   "osm": "node/2488236534"
+  },
+  {
+   "name": "Blow Up",
+   "lat": 35.3396485,
+   "lng": 25.1311115,
+   "kind": "bar",
+   "hours": "",
+   "osm": "node/2488236542"
+  },
+  {
+   "name": "Guernica",
+   "lat": 35.3397261,
+   "lng": 25.1308131,
+   "kind": "bar",
+   "hours": "",
+   "osm": "node/2488236546"
+  },
+  {
+   "name": "Επί Χάνδακος",
+   "lat": 35.3400564,
+   "lng": 25.1313966,
+   "kind": "cafe",
+   "hours": "",
+   "osm": "node/2488236549"
+  },
+  {
+   "name": "Wasabi multi asian",
+   "lat": 35.3387673,
+   "lng": 25.140259,
+   "kind": "restaurant",
+   "hours": "",
+   "osm": "node/2522457901"
+  },
+  {
+   "name": "Ουζερί του Τερζάκη",
+   "lat": 35.3417997,
+   "lng": 25.1340955,
+   "kind": "restaurant",
+   "hours": "",
+   "osm": "node/2749917348"
+  },
+  {
+   "name": "Λακούβα",
+   "lat": 35.3422338,
+   "lng": 25.1337257,
+   "kind": "restaurant",
+   "hours": "",
+   "osm": "node/2751863566"
+  },
+  {
+   "name": "Veneto",
+   "lat": 35.3415331,
+   "lng": 25.135824,
+   "kind": "restaurant",
+   "hours": "",
+   "osm": "node/2751874528"
+  },
+  {
+   "name": "Πλάνη",
+   "lat": 35.3413977,
+   "lng": 25.1364794,
+   "kind": "restaurant",
+   "hours": "Mo-Su,PH 19:30-24:00",
+   "osm": "node/2751882341"
+  },
+  {
+   "name": "Το Γρανάζι",
+   "lat": 35.3355209,
+   "lng": 25.1309111,
+   "kind": "cafe",
+   "hours": "",
+   "osm": "node/2865409942"
+  },
+  {
+   "name": "Fix",
+   "lat": 35.3396764,
+   "lng": 25.1358084,
+   "kind": "bar",
+   "hours": "",
+   "osm": "node/2870206329"
+  },
+  {
+   "name": "Λίγο κρασί, Λίγο Θάλασσα",
+   "lat": 35.3426532,
+   "lng": 25.1343446,
+   "kind": "restaurant",
+   "hours": "Mo-Su 09:00-01:00",
+   "osm": "node/2960171391"
+  },
+  {
+   "name": "Central Park",
+   "lat": 35.3401838,
+   "lng": 25.1337018,
+   "kind": "restaurant",
+   "hours": "Mo-Su 08:00-23:30",
+   "osm": "node/2997998433"
+  },
+  {
+   "name": "Cafe Neo",
+   "lat": 35.339449,
+   "lng": 25.125025,
+   "kind": "cafe",
+   "hours": "",
+   "osm": "node/3004149118"
+  },
+  {
+   "name": "cofferight",
+   "lat": 35.335334,
+   "lng": 25.1578306,
+   "kind": "cafe",
+   "hours": "",
+   "osm": "node/3442552860"
+  },
+  {
+   "name": "Storoloi",
+   "lat": 35.3388622,
+   "lng": 25.1330734,
+   "kind": "ice_cream",
+   "hours": "",
+   "osm": "node/3611958745"
+  },
+  {
+   "name": "Chillbox",
+   "lat": 35.3391197,
+   "lng": 25.1334372,
+   "kind": "ice_cream",
+   "hours": "",
+   "osm": "node/3611958747"
+  },
+  {
+   "name": "Coffee Island",
+   "lat": 35.3382323,
+   "lng": 25.1297617,
+   "kind": "cafe",
+   "hours": "Mo-Sa 06:00-22:00",
+   "osm": "node/3612306388"
+  },
+  {
+   "name": "news cafe",
+   "lat": 35.339761,
+   "lng": 25.1329962,
+   "kind": "cafe",
+   "hours": "",
+   "osm": "node/3612931440"
+  },
+  {
+   "name": "Largo Café",
+   "lat": 35.3394805,
+   "lng": 25.1337193,
+   "kind": "cafe",
+   "hours": "",
+   "osm": "node/3612931441"
+  },
+  {
+   "name": "Gordian Knot",
+   "lat": 35.3394385,
+   "lng": 25.1334725,
+   "kind": "restaurant",
+   "hours": "",
+   "osm": "node/3612931442"
+  },
+  {
+   "name": "Anchorage",
+   "lat": 35.3407503,
+   "lng": 25.134601,
+   "kind": "restaurant",
+   "hours": "",
+   "osm": "node/3612931443"
+  },
+  {
+   "name": "Kosmich",
+   "lat": 35.3393272,
+   "lng": 25.1329295,
+   "kind": "cafe",
+   "hours": "",
+   "osm": "node/3612931446"
+  },
+  {
+   "name": "Metro",
+   "lat": 35.3335708,
+   "lng": 25.1356846,
+   "kind": "restaurant",
+   "hours": "Mo-Su 12:00-05:00",
+   "osm": "node/3613007732"
+  },
+  {
+   "name": "Stone",
+   "lat": 35.3387952,
+   "lng": 25.1352202,
+   "kind": "bar",
+   "hours": "",
+   "osm": "node/3617501659"
+  },
+  {
+   "name": "Οντάς",
+   "lat": 35.3390763,
+   "lng": 25.1354835,
+   "kind": "restaurant",
+   "hours": "",
+   "osm": "node/3617501665"
+  },
+  {
+   "name": "Gorgones kai Magkes",
+   "lat": 35.3429733,
+   "lng": 25.1332344,
+   "kind": "restaurant",
+   "hours": "",
+   "osm": "node/3619569900"
+  },
+  {
+   "name": "ΠΕΤΡΟΥΛΙΟΣ",
+   "lat": 35.3358021,
+   "lng": 25.1238135,
+   "kind": "restaurant",
+   "hours": "",
+   "osm": "node/3627400021"
+  },
+  {
+   "name": "Café de May",
+   "lat": 35.3280874,
+   "lng": 25.1430151,
+   "kind": "cafe",
+   "hours": "",
+   "osm": "node/3688231720"
+  },
+  {
+   "name": "Γιουσουρο",
+   "lat": 35.3430275,
+   "lng": 25.1570823,
+   "kind": "restaurant",
+   "hours": "12:00 - 24:30",
+   "osm": "node/3713231149"
+  },
+  {
+   "name": "Herbs´Garden",
+   "lat": 35.3417347,
+   "lng": 25.1366522,
+   "kind": "restaurant",
+   "hours": "",
+   "osm": "node/3741483464"
+  },
+  {
+   "name": "I Agora 1866",
+   "lat": 35.3379385,
+   "lng": 25.133253,
+   "kind": "restaurant",
+   "hours": "",
+   "osm": "node/3741483465"
+  },
+  {
+   "name": "Ippokampos",
+   "lat": 35.3427989,
+   "lng": 25.1337614,
+   "kind": "restaurant",
+   "hours": "",
+   "osm": "node/3741483466"
+  },
+  {
+   "name": "Σιγά Σιγά",
+   "lat": 35.3404461,
+   "lng": 25.1325207,
+   "kind": "restaurant",
+   "hours": "",
+   "osm": "node/3741483477"
+  },
+  {
+   "name": "Καστελλα",
+   "lat": 35.3429914,
+   "lng": 25.1335853,
+   "kind": "restaurant",
+   "hours": "",
+   "osm": "node/3750398026"
+  },
+  {
+   "name": "Πεσκέσι",
+   "lat": 35.340165,
+   "lng": 25.1324977,
+   "kind": "restaurant",
+   "hours": "Mo-Su 13:00-02:00",
+   "osm": "node/3750401172"
+  },
+  {
+   "name": "La Brasserie",
+   "lat": 35.3386665,
+   "lng": 25.1356315,
+   "kind": "cafe",
+   "hours": "",
+   "osm": "node/3750404725"
+  },
+  {
+   "name": "Amalia's Kitchen",
+   "lat": 35.3405213,
+   "lng": 25.1335936,
+   "kind": "restaurant",
+   "hours": "",
+   "osm": "node/3757765700"
+  },
+  {
+   "name": "Champion",
+   "lat": 35.3252759,
+   "lng": 25.1390124,
+   "kind": "restaurant",
+   "hours": "",
+   "osm": "node/3926250760"
+  },
+  {
+   "name": "I Avli tou Defkaliona",
+   "lat": 35.3416667,
+   "lng": 25.1310471,
+   "kind": "restaurant",
+   "hours": "",
+   "osm": "node/4031734516"
+  },
+  {
+   "name": "Arismari & Varsamo",
+   "lat": 35.3417295,
+   "lng": 25.1313983,
+   "kind": "restaurant",
+   "hours": "",
+   "osm": "node/4194667710"
+  },
+  {
+   "name": "Ο Πίπης",
+   "lat": 35.3364846,
+   "lng": 25.1440601,
+   "kind": "restaurant",
+   "hours": "",
+   "osm": "node/4224200992"
+  },
+  {
+   "name": "Corretto",
+   "lat": 35.3151958,
+   "lng": 25.1481004,
+   "kind": "cafe",
+   "hours": "",
+   "osm": "node/4234085588"
+  },
+  {
+   "name": "Enetiko",
+   "lat": 35.3393619,
+   "lng": 25.1328448,
+   "kind": "cafe",
+   "hours": "",
+   "osm": "node/4255980690"
+  },
+  {
+   "name": "Starbucks",
+   "lat": 35.3391717,
+   "lng": 25.1342324,
+   "kind": "cafe",
+   "hours": "Mo-Fr 09:00-22:00, Sa 08:30-22:30, Su 23:00-21:00",
+   "osm": "node/4256131389"
+  },
+  {
+   "name": "The IIO Café",
+   "lat": 35.3375174,
+   "lng": 25.1631547,
+   "kind": "cafe",
+   "hours": "",
+   "osm": "node/4294811499"
+  },
+  {
+   "name": "ΚΟΜΒΟΣ 120",
+   "lat": 35.3373141,
+   "lng": 25.1645986,
+   "kind": "cafe",
+   "hours": "",
+   "osm": "node/4294836995"
+  },
+  {
+   "name": "Οι τρεις Μουριές",
+   "lat": 35.3378957,
+   "lng": 25.1615547,
+   "kind": "restaurant",
+   "hours": "",
+   "osm": "node/4294837396"
+  },
+  {
+   "name": "Ο Πετρος",
+   "lat": 35.3363502,
+   "lng": 25.1594419,
+   "kind": "cafe",
+   "hours": "",
+   "osm": "node/4294838091"
+  },
+  {
+   "name": "Adipodas",
+   "lat": 35.3388288,
+   "lng": 25.1354831,
+   "kind": "restaurant",
+   "hours": "Mo-Su 12:00-01:00",
+   "osm": "node/4303213989"
+  },
+  {
+   "name": "Κιρκόρ",
+   "lat": 35.3390074,
+   "lng": 25.1330127,
+   "kind": "cafe",
+   "hours": "",
+   "osm": "node/4305067964"
+  },
+  {
+   "name": "Gelato.it",
+   "lat": 35.3384627,
+   "lng": 25.1359777,
+   "kind": "ice_cream",
+   "hours": "",
+   "osm": "node/4363729921"
+  },
+  {
+   "name": "Envy",
+   "lat": 35.3408872,
+   "lng": 25.1191631,
+   "kind": "cafe",
+   "hours": "",
+   "osm": "node/4363729944"
+  },
+  {
+   "name": "Kanatelias",
+   "lat": 35.3373232,
+   "lng": 25.1338359,
+   "kind": "restaurant",
+   "hours": "",
+   "osm": "node/4363729956"
+  },
+  {
+   "name": "Τα ψάρια",
+   "lat": 35.3424295,
+   "lng": 25.1346338,
+   "kind": "restaurant",
+   "hours": "",
+   "osm": "node/4363730100"
+  },
+  {
+   "name": "Αντώνης",
+   "lat": 35.3325967,
+   "lng": 25.1212397,
+   "kind": "restaurant",
+   "hours": "",
+   "osm": "node/4366272401"
+  },
+  {
+   "name": "Starbucks",
+   "lat": 35.3415892,
+   "lng": 25.1342672,
+   "kind": "cafe",
+   "hours": "",
+   "osm": "node/4387028690"
+  },
+  {
+   "name": "cafe rinokeros",
+   "lat": 35.3371406,
+   "lng": 25.1317399,
+   "kind": "cafe",
+   "hours": "Mo-Sa",
+   "osm": "node/4393033894"
+  },
+  {
+   "name": "Bake & Brew 32",
+   "lat": 35.3368014,
+   "lng": 25.1340226,
+   "kind": "cafe",
+   "hours": "",
+   "osm": "node/4396178389"
+  },
+  {
+   "name": "New China",
+   "lat": 35.3409363,
+   "lng": 25.1300402,
+   "kind": "restaurant",
+   "hours": "",
+   "osm": "node/4416215068"
+  },
+  {
+   "name": "Coffee Spot",
+   "lat": 35.3424292,
+   "lng": 25.1330296,
+   "kind": "cafe",
+   "hours": "",
+   "osm": "node/4416223725"
+  },
+  {
+   "name": "4all",
+   "lat": 35.34164,
+   "lng": 25.1304479,
+   "kind": "cafe",
+   "hours": "",
+   "osm": "node/4416223832"
+  },
+  {
+   "name": "Θέλω καφέ",
+   "lat": 35.3223968,
+   "lng": 25.1497967,
+   "kind": "cafe",
+   "hours": "",
+   "osm": "node/4428872505"
+  },
+  {
+   "name": "Platakis",
+   "lat": 35.3312092,
+   "lng": 25.1445285,
+   "kind": "cafe",
+   "hours": "Mo-Su 06:00-23:00",
+   "osm": "node/4473542492"
+  },
+  {
+   "name": "Swing Thing",
+   "lat": 35.3399526,
+   "lng": 25.1337667,
+   "kind": "cafe",
+   "hours": "",
+   "osm": "node/4575852295"
+  },
+  {
+   "name": "mavros katis",
+   "lat": 35.3380615,
+   "lng": 25.1294919,
+   "kind": "cafe",
+   "hours": "Mo-Sa 09:00-03:00",
+   "osm": "node/4592700589"
+  },
+  {
+   "name": "The Whistler",
+   "lat": 35.3399812,
+   "lng": 25.1350672,
+   "kind": "bar",
+   "hours": "",
+   "osm": "node/4616379689"
+  },
+  {
+   "name": "Krasas",
+   "lat": 35.3399994,
+   "lng": 25.1600764,
+   "kind": "restaurant",
+   "hours": "",
+   "osm": "node/4750844839"
+  },
+  {
+   "name": "Mikel",
+   "lat": 35.3287074,
+   "lng": 25.1376651,
+   "kind": "cafe",
+   "hours": "",
+   "osm": "node/4750904214"
+  },
+  {
+   "name": "Silfio Cafe Pizza",
+   "lat": 35.3307946,
+   "lng": 25.1384569,
+   "kind": "cafe",
+   "hours": "",
+   "osm": "node/4874628071"
+  },
+  {
+   "name": "Minos",
+   "lat": 35.3383514,
+   "lng": 25.1356608,
+   "kind": "restaurant",
+   "hours": "",
+   "osm": "node/4933013823"
+  },
+  {
+   "name": "7 Salasses",
+   "lat": 35.3426982,
+   "lng": 25.1571973,
+   "kind": "restaurant",
+   "hours": "",
+   "osm": "node/4984596925"
+  },
+  {
+   "name": "To kafedaki",
+   "lat": 35.3286698,
+   "lng": 25.1375952,
+   "kind": "internet_cafe",
+   "hours": "24/7",
+   "osm": "node/4990458021"
+  },
+  {
+   "name": "Ο Γέρο Πλάτανος",
+   "lat": 35.3399001,
+   "lng": 25.1343568,
+   "kind": "cafe",
+   "hours": "",
+   "osm": "node/5032278921"
+  },
+  {
+   "name": "Davinci",
+   "lat": 35.3400154,
+   "lng": 25.1338124,
+   "kind": "ice_cream",
+   "hours": "",
+   "osm": "node/5114115921"
+  },
+  {
+   "name": "neon",
+   "lat": 35.3391597,
+   "lng": 25.1531229,
+   "kind": "cafe",
+   "hours": "",
+   "osm": "node/5161486021"
+  },
+  {
+   "name": "Pukuvu",
+   "lat": 35.336788,
+   "lng": 25.1324388,
+   "kind": "cafe",
+   "hours": "Tu-Sa 10:00-01:00",
+   "osm": "node/5180326422"
+  },
+  {
+   "name": "Dômes",
+   "lat": 35.3401395,
+   "lng": 25.1339204,
+   "kind": "restaurant",
+   "hours": "",
+   "osm": "node/5196389527"
+  },
+  {
+   "name": "Donuts & Coffee",
+   "lat": 35.3399909,
+   "lng": 25.1340714,
+   "kind": "cafe",
+   "hours": "",
+   "osm": "node/5196389529"
+  },
+  {
+   "name": "Ουζερί",
+   "lat": 35.342729,
+   "lng": 25.1342232,
+   "kind": "restaurant",
+   "hours": "",
+   "osm": "node/5239255111"
+  },
+  {
+   "name": "Phyllo Sophies",
+   "lat": 35.3389562,
+   "lng": 25.1330846,
+   "kind": "cafe",
+   "hours": "",
+   "osm": "node/5251704945"
+  },
+  {
+   "name": "ΣΙΕΛ Cafe",
+   "lat": 35.3406142,
+   "lng": 25.1200666,
+   "kind": "cafe",
+   "hours": "",
+   "osm": "node/5304417977"
+  },
+  {
+   "name": "Starbucks",
+   "lat": 35.3405396,
+   "lng": 25.1196609,
+   "kind": "cafe",
+   "hours": "",
+   "osm": "node/5304417978"
+  },
+  {
+   "name": "Flocafe",
+   "lat": 35.3405135,
+   "lng": 25.1195428,
+   "kind": "cafe",
+   "hours": "",
+   "osm": "node/5304417980"
+  },
+  {
+   "name": "Goody's",
+   "lat": 35.3404515,
+   "lng": 25.1192516,
+   "kind": "restaurant",
+   "hours": "",
+   "osm": "node/5304417981"
+  },
+  {
+   "name": "Pastarella",
+   "lat": 35.3404928,
+   "lng": 25.1194415,
+   "kind": "restaurant",
+   "hours": "",
+   "osm": "node/5304417982"
+  },
+  {
+   "name": "Yankee's",
+   "lat": 35.3404774,
+   "lng": 25.1193688,
+   "kind": "restaurant",
+   "hours": "",
+   "osm": "node/5304417983"
+  },
+  {
+   "name": "Sports Cafe",
+   "lat": 35.3402891,
+   "lng": 25.1192942,
+   "kind": "cafe",
+   "hours": "",
+   "osm": "node/5304421470"
+  },
+  {
+   "name": "Ταράτσα",
+   "lat": 35.3386546,
+   "lng": 25.1365107,
+   "kind": "cafe",
+   "hours": "",
+   "osm": "node/5304448490"
+  },
+  {
+   "name": "Pagopoieion",
+   "lat": 35.340382,
+   "lng": 25.134514,
+   "kind": "restaurant",
+   "hours": "",
+   "osm": "node/5323736664"
+  },
+  {
+   "name": "Dish Bar Party",
+   "lat": 35.340305,
+   "lng": 25.1347059,
+   "kind": "bar",
+   "hours": "",
+   "osm": "node/5323737430"
+  },
+  {
+   "name": "Καφεποιείο",
+   "lat": 35.3226275,
+   "lng": 25.1502411,
+   "kind": "cafe",
+   "hours": "",
+   "osm": "node/5479637224"
+  },
+  {
+   "name": "Chagiati",
+   "lat": 35.3410925,
+   "lng": 25.1328878,
+   "kind": "restaurant",
+   "hours": "Mo-Sa 18:00-24:00",
+   "osm": "node/5624470822"
+  },
+  {
+   "name": "Corner",
+   "lat": 35.3396332,
+   "lng": 25.1334425,
+   "kind": "restaurant",
+   "hours": "",
+   "osm": "node/5630012322"
+  },
+  {
+   "name": "ML Espresso Bar",
+   "lat": 35.3375422,
+   "lng": 25.1357742,
+   "kind": "cafe",
+   "hours": "Mo-Su 07:00-23:00",
+   "osm": "node/5630046421"
+  },
+  {
+   "name": "Πάλαι Ποτέ",
+   "lat": 35.3401707,
+   "lng": 25.1321162,
+   "kind": "restaurant",
+   "hours": "",
+   "osm": "node/5661659649"
+  },
+  {
+   "name": "IPPOKAMPOS",
+   "lat": 35.3429969,
+   "lng": 25.1336945,
+   "kind": "restaurant",
+   "hours": "12:30-23:30",
+   "osm": "node/5673351921"
+  },
+  {
+   "name": "Via Pastarella",
+   "lat": 35.339715,
+   "lng": 25.1328342,
+   "kind": "restaurant",
+   "hours": "",
+   "osm": "node/5795530875"
+  },
+  {
+   "name": "Paralia",
+   "lat": 35.3429848,
+   "lng": 25.1334487,
+   "kind": "restaurant",
+   "hours": "Mo-Su 12:00-00:00",
+   "osm": "node/5818548653"
+  },
+  {
+   "name": "Samaria Delizioso",
+   "lat": 35.3394936,
+   "lng": 25.132787,
+   "kind": "cafe",
+   "hours": "Mo-Su 07:00-00:45",
+   "osm": "node/5860783201"
+  },
+  {
+   "name": "Cooking with love",
+   "lat": 35.3407411,
+   "lng": 25.1344796,
+   "kind": "restaurant",
+   "hours": "",
+   "osm": "node/5860802286"
+  },
+  {
+   "name": "Coffee Berry",
+   "lat": 35.3208084,
+   "lng": 25.1431088,
+   "kind": "cafe",
+   "hours": "",
+   "osm": "node/5863235592"
+  },
+  {
+   "name": "Red Corner",
+   "lat": 35.3222083,
+   "lng": 25.1426458,
+   "kind": "restaurant",
+   "hours": "",
+   "osm": "node/5863235593"
+  },
+  {
+   "name": "Koto Neon",
+   "lat": 35.3313597,
+   "lng": 25.1380583,
+   "kind": "restaurant",
+   "hours": "",
+   "osm": "node/5863235599"
+  },
+  {
+   "name": "Kiriakos Restaurant",
+   "lat": 35.3331689,
+   "lng": 25.1387655,
+   "kind": "restaurant",
+   "hours": "",
+   "osm": "node/5863235600"
+  },
+  {
+   "name": "Veranda",
+   "lat": 35.3390485,
+   "lng": 25.1329577,
+   "kind": "restaurant",
+   "hours": "",
+   "osm": "node/5873218501"
+  },
+  {
+   "name": "Melba Salt & Sugar",
+   "lat": 35.3392746,
+   "lng": 25.1331626,
+   "kind": "ice_cream",
+   "hours": "",
+   "osm": "node/5873218573"
+  },
+  {
+   "name": "Baltas",
+   "lat": 35.3392849,
+   "lng": 25.1330741,
+   "kind": "restaurant",
+   "hours": "",
+   "osm": "node/5873218578"
+  },
+  {
+   "name": "Square 18",
+   "lat": 35.3393833,
+   "lng": 25.1334603,
+   "kind": "cafe",
+   "hours": "",
+   "osm": "node/5875369560"
+  },
+  {
+   "name": "Chocolat",
+   "lat": 35.3393737,
+   "lng": 25.1336001,
+   "kind": "ice_cream",
+   "hours": "",
+   "osm": "node/5875369573"
+  },
+  {
+   "name": "Gellissimo",
+   "lat": 35.3395012,
+   "lng": 25.1337989,
+   "kind": "ice_cream",
+   "hours": "",
+   "osm": "node/5875369574"
+  },
+  {
+   "name": "Caffe Gioia",
+   "lat": 35.3397004,
+   "lng": 25.1345256,
+   "kind": "cafe",
+   "hours": "",
+   "osm": "node/5875369729"
+  },
+  {
+   "name": "Nett & Gut!!",
+   "lat": 35.341798,
+   "lng": 25.1325747,
+   "kind": "restaurant",
+   "hours": "",
+   "osm": "node/5882908885"
+  },
+  {
+   "name": "Opus",
+   "lat": 35.340101,
+   "lng": 25.1324586,
+   "kind": "bar",
+   "hours": "",
+   "osm": "node/5884810090"
+  },
+  {
+   "name": "Natur elia",
+   "lat": 35.3424806,
+   "lng": 25.1346443,
+   "kind": "cafe",
+   "hours": "",
+   "osm": "node/5909994968"
+  },
+  {
+   "name": "Τράτα",
+   "lat": 35.3423811,
+   "lng": 25.1346219,
+   "kind": "restaurant",
+   "hours": "",
+   "osm": "node/5909994969"
+  },
+  {
+   "name": "Erganos",
+   "lat": 35.3323714,
+   "lng": 25.133697,
+   "kind": "restaurant",
+   "hours": "We-Mo 13:00-00:00",
+   "osm": "node/5912275085"
+  },
+  {
+   "name": "Koukouvagia",
+   "lat": 35.3391776,
+   "lng": 25.1351747,
+   "kind": "restaurant",
+   "hours": "Mo-Su 12:00-00:00",
+   "osm": "node/5923927086"
+  },
+  {
+   "name": "Βουρβουλάδικο",
+   "lat": 35.3352273,
+   "lng": 25.1298161,
+   "kind": "restaurant",
+   "hours": "",
+   "osm": "node/5958555985"
+  },
+  {
+   "name": "Εφτά Μπαλτάδες",
+   "lat": 35.3403959,
+   "lng": 25.1360728,
+   "kind": "restaurant",
+   "hours": "",
+   "osm": "node/5979701885"
+  },
+  {
+   "name": "Βαβελ",
+   "lat": 35.3400367,
+   "lng": 25.1307788,
+   "kind": "bar",
+   "hours": "",
+   "osm": "node/5979950885"
+  },
+  {
+   "name": "Δανδαλη",
+   "lat": 35.336785,
+   "lng": 25.1334588,
+   "kind": "cafe",
+   "hours": "",
+   "osm": "node/5981237588"
+  },
+  {
+   "name": "Think Tank",
+   "lat": 35.3394607,
+   "lng": 25.1352139,
+   "kind": "cafe",
+   "hours": "",
+   "osm": "node/6005673729"
+  },
+  {
+   "name": "Fish Tavern",
+   "lat": 35.342344,
+   "lng": 25.1344119,
+   "kind": "restaurant",
+   "hours": "",
+   "osm": "node/6017941704"
+  },
+  {
+   "name": "Dark Tales",
+   "lat": 35.3393485,
+   "lng": 25.1312804,
+   "kind": "bar",
+   "hours": "",
+   "osm": "node/6298322325"
+  },
+  {
+   "name": "Το Ροβύθι",
+   "lat": 35.3397692,
+   "lng": 25.1352254,
+   "kind": "restaurant",
+   "hours": "Mo 10:00-21:00; Tu-Su 10:00-23:45; Dec 24,Dec 31 10:00-17:00; Jan 01-02,Aug 15-16,Nov 17,Dec 25-26 off",
+   "osm": "node/6507013786"
+  },
+  {
+   "name": "Diem",
+   "lat": 35.3363874,
+   "lng": 25.1316941,
+   "kind": "cafe",
+   "hours": "",
+   "osm": "node/6545277676"
+  },
+  {
+   "name": "Bethlehem Gate",
+   "lat": 35.3336198,
+   "lng": 25.1288476,
+   "kind": "viewpoint",
+   "hours": "",
+   "osm": "node/6614689001"
+  },
+  {
+   "name": "Venetian City wall",
+   "lat": 35.3334124,
+   "lng": 25.1333948,
+   "kind": "viewpoint",
+   "hours": "",
+   "osm": "node/6614745698"
+  },
+  {
+   "name": "jesus Gate",
+   "lat": 35.3344358,
+   "lng": 25.1348102,
+   "kind": "viewpoint",
+   "hours": "",
+   "osm": "node/6614745699"
+  },
+  {
+   "name": "Giannēēs",
+   "lat": 35.3370292,
+   "lng": 25.1607861,
+   "kind": "restaurant",
+   "hours": "",
+   "osm": "node/6616236987"
+  },
+  {
+   "name": "Black Drop",
+   "lat": 35.3370943,
+   "lng": 25.1312472,
+   "kind": "cafe",
+   "hours": "",
+   "osm": "node/6653250796"
+  },
+  {
+   "name": "La brasserie",
+   "lat": 35.3389864,
+   "lng": 25.1350398,
+   "kind": "bar",
+   "hours": "",
+   "osm": "node/6653254288"
+  },
+  {
+   "name": "Veranda",
+   "lat": 35.3389229,
+   "lng": 25.1329926,
+   "kind": "restaurant",
+   "hours": "",
+   "osm": "node/6655726288"
+  },
+  {
+   "name": "Central",
+   "lat": 35.3398424,
+   "lng": 25.1335616,
+   "kind": "restaurant",
+   "hours": "Mo-Su 08:00-01:00",
+   "osm": "node/6724324696"
+  },
+  {
+   "name": "Καπηλειό",
+   "lat": 35.3352997,
+   "lng": 25.1393257,
+   "kind": "restaurant",
+   "hours": "",
+   "osm": "node/6883364178"
+  },
+  {
+   "name": "Chopsticks - Tastes of Asia",
+   "lat": 35.3343321,
+   "lng": 25.1399624,
+   "kind": "restaurant",
+   "hours": "",
+   "osm": "node/6883382356"
+  },
+  {
+   "name": "Αθάλη",
+   "lat": 35.3369386,
+   "lng": 25.1329353,
+   "kind": "restaurant",
+   "hours": "",
+   "osm": "node/6883418851"
+  },
+  {
+   "name": "Gaststätte",
+   "lat": 35.3393586,
+   "lng": 25.134547,
+   "kind": "restaurant",
+   "hours": "",
+   "osm": "node/6918959053"
+  },
+  {
+   "name": "Hacienda",
+   "lat": 35.338874,
+   "lng": 25.1558387,
+   "kind": "restaurant",
+   "hours": "",
+   "osm": "node/6952658765"
+  },
+  {
+   "name": "Ναυτίλος",
+   "lat": 35.3386273,
+   "lng": 25.1591642,
+   "kind": "restaurant",
+   "hours": "",
+   "osm": "node/6952659347"
+  },
+  {
+   "name": "Ο ΚΑΒΟΥΡΑΣ",
+   "lat": 35.3387126,
+   "lng": 25.1584078,
+   "kind": "restaurant",
+   "hours": "",
+   "osm": "node/6952660874"
+  },
+  {
+   "name": "Σπιτικό",
+   "lat": 35.338677,
+   "lng": 25.1407706,
+   "kind": "restaurant",
+   "hours": "",
+   "osm": "node/7135955111"
+  },
+  {
+   "name": "krispy",
+   "lat": 35.3390337,
+   "lng": 25.1413566,
+   "kind": "restaurant",
+   "hours": "",
+   "osm": "node/7151509208"
+  },
+  {
+   "name": "everest",
+   "lat": 35.3389808,
+   "lng": 25.1411557,
+   "kind": "cafe",
+   "hours": "",
+   "osm": "node/7151509209"
+  },
+  {
+   "name": "Heraklion Museum of Ancient Greek Technology Kostas Kotsanas",
+   "lat": 35.3414109,
+   "lng": 25.1355895,
+   "kind": "museum",
+   "hours": "Mo-Fr 09:00-15:00; Sa, Su 10:00-17:00",
+   "osm": "node/7184485060"
+  },
+  {
+   "name": "Βρανάς",
+   "lat": 35.3368132,
+   "lng": 25.1330095,
+   "kind": "restaurant",
+   "hours": "",
+   "osm": "node/7198406285"
+  },
+  {
+   "name": "Lakkos",
+   "lat": 35.3349567,
+   "lng": 25.1300889,
+   "kind": "restaurant",
+   "hours": "",
+   "osm": "node/7266307453"
+  },
+  {
+   "name": "Ο Πόντιος",
+   "lat": 35.3420113,
+   "lng": 25.1313054,
+   "kind": "cafe",
+   "hours": "",
+   "osm": "node/7473008684"
+  },
+  {
+   "name": "cybercut",
+   "lat": 35.3401418,
+   "lng": 25.1314119,
+   "kind": "internet_cafe",
+   "hours": "",
+   "osm": "node/7637600923"
+  },
+  {
+   "name": "1866",
+   "lat": 35.336567,
+   "lng": 25.1337393,
+   "kind": "cafe",
+   "hours": "",
+   "osm": "node/7834953468"
+  },
+  {
+   "name": "CasaStreat",
+   "lat": 35.3352005,
+   "lng": 25.1572133,
+   "kind": "restaurant",
+   "hours": "",
+   "osm": "node/8072384376"
+  },
+  {
+   "name": "Umami",
+   "lat": 35.3396957,
+   "lng": 25.1350523,
+   "kind": "restaurant",
+   "hours": "",
+   "osm": "node/9017471617"
+  },
+  {
+   "name": "626",
+   "lat": 35.3398153,
+   "lng": 25.1360033,
+   "kind": "cafe",
+   "hours": "",
+   "osm": "node/9019171823"
+  },
+  {
+   "name": "Ο Χοχλιός",
+   "lat": 35.3384896,
+   "lng": 25.128559,
+   "kind": "cafe",
+   "hours": "Mo,We 09:00-16:00; Tu,Th,Fr 09:00-21:00; Sa 10:00-15:00",
+   "osm": "node/9133215704"
+  },
+  {
+   "name": "Merastri",
+   "lat": 35.3327783,
+   "lng": 25.1361623,
+   "kind": "restaurant",
+   "hours": "Mo-Su 18:00-23:45",
+   "osm": "node/9174696017"
+  },
+  {
+   "name": "La Piazza Cafe",
+   "lat": 35.3365944,
+   "lng": 25.123514,
+   "kind": "cafe",
+   "hours": "",
+   "osm": "node/9224869022"
+  },
+  {
+   "name": "Freelancers Spot",
+   "lat": 35.3384239,
+   "lng": 25.1419461,
+   "kind": "park",
+   "hours": "",
+   "osm": "node/9593064858"
+  },
+  {
+   "name": "Αγία Αικατερίνη",
+   "lat": 35.3380906,
+   "lng": 25.1313607,
+   "kind": "museum",
+   "hours": "",
+   "osm": "node/9604493106"
+  },
+  {
+   "name": "Macoo Eatery",
+   "lat": 35.3401098,
+   "lng": 25.1352969,
+   "kind": "restaurant",
+   "hours": "",
+   "osm": "node/9610510117"
+  },
+  {
+   "name": "The Home",
+   "lat": 35.3392569,
+   "lng": 25.1345158,
+   "kind": "restaurant",
+   "hours": "",
+   "osm": "node/9610677717"
+  },
+  {
+   "name": "Κοσμιρί",
+   "lat": 35.339969,
+   "lng": 25.1320592,
+   "kind": "restaurant",
+   "hours": "",
+   "osm": "node/9610686817"
+  },
+  {
+   "name": "Smart Coffee",
+   "lat": 35.3345587,
+   "lng": 25.1342936,
+   "kind": "cafe",
+   "hours": "",
+   "osm": "node/9668165228"
+  },
+  {
+   "name": "Parasties",
+   "lat": 35.3413384,
+   "lng": 25.1300959,
+   "kind": "restaurant",
+   "hours": "",
+   "osm": "node/9738628617"
+  },
+  {
+   "name": "Petousis Taverna",
+   "lat": 35.3401523,
+   "lng": 25.1322048,
+   "kind": "restaurant",
+   "hours": "12:00-24:00",
+   "osm": "node/9828049417"
+  },
+  {
+   "name": "GeniusBar",
+   "lat": 35.3158565,
+   "lng": 25.147684,
+   "kind": "cafe",
+   "hours": "",
+   "osm": "node/9837126179"
+  },
+  {
+   "name": "Hbapdia",
+   "lat": 35.3430985,
+   "lng": 25.1377634,
+   "kind": "restaurant",
+   "hours": "",
+   "osm": "node/9932428408"
+  },
+  {
+   "name": "Κεραμος",
+   "lat": 35.3371252,
+   "lng": 25.1310366,
+   "kind": "ice_cream",
+   "hours": "Mo,We 08:30-16:00; Tu,Th,Fr 08:30-14:00,17:00-21:00; Sa 09:00-16:00",
+   "osm": "node/9963400055"
+  },
+  {
+   "name": "Καγιαbee",
+   "lat": 35.338512,
+   "lng": 25.1314511,
+   "kind": "restaurant",
+   "hours": "",
+   "osm": "node/9963400056"
+  },
+  {
+   "name": "Giko",
+   "lat": 35.3369417,
+   "lng": 25.1312268,
+   "kind": "cafe",
+   "hours": "",
+   "osm": "node/9963400057"
+  },
+  {
+   "name": "Kai Fei",
+   "lat": 35.3369259,
+   "lng": 25.1309262,
+   "kind": "cafe",
+   "hours": "",
+   "osm": "node/9963400058"
+  },
+  {
+   "name": "Firi Firi",
+   "lat": 35.3385208,
+   "lng": 25.1315642,
+   "kind": "restaurant",
+   "hours": "",
+   "osm": "node/9963400059"
+  },
+  {
+   "name": "Koto",
+   "lat": 35.3382633,
+   "lng": 25.1320024,
+   "kind": "restaurant",
+   "hours": "",
+   "osm": "node/9986825849"
+  },
+  {
+   "name": "ann - taste of art",
+   "lat": 35.3374389,
+   "lng": 25.1224665,
+   "kind": "cafe",
+   "hours": "",
+   "osm": "node/10004298794"
+  },
+  {
+   "name": "CHOCO coffee",
+   "lat": 35.3376331,
+   "lng": 25.1215007,
+   "kind": "cafe",
+   "hours": "",
+   "osm": "node/10004329844"
+  },
+  {
+   "name": "Veneziano Cafe",
+   "lat": 35.3391156,
+   "lng": 25.1306673,
+   "kind": "cafe",
+   "hours": "",
+   "osm": "node/10090064436"
+  },
+  {
+   "name": "Bar Paki",
+   "lat": 35.3383713,
+   "lng": 25.1319618,
+   "kind": "restaurant",
+   "hours": "",
+   "osm": "node/10090069222"
+  },
+  {
+   "name": "Χάνδακος 1",
+   "lat": 35.3393926,
+   "lng": 25.1324735,
+   "kind": "cafe",
+   "hours": "",
+   "osm": "node/10159770185"
+  },
+  {
+   "name": "ΜΕΖΕΔΟΝΩΛΕΙΟ ΔΑΣΚΑΛΑΚΗΣ",
+   "lat": 35.3318153,
+   "lng": 25.1260865,
+   "kind": "restaurant",
+   "hours": "",
+   "osm": "node/10926961036"
+  },
+  {
+   "name": "Fast Vegan Food",
+   "lat": 35.3389888,
+   "lng": 25.1359047,
+   "kind": "restaurant",
+   "hours": "Mo-Sa 12:30-22:00; Su 14:00-22:00",
+   "osm": "node/11002845764"
+  },
+  {
+   "name": "Hub",
+   "lat": 35.3394061,
+   "lng": 25.1327544,
+   "kind": "bar",
+   "hours": "",
+   "osm": "node/11062507105"
+  },
+  {
+   "name": "Il Pazzo",
+   "lat": 35.3408975,
+   "lng": 25.132872,
+   "kind": "restaurant",
+   "hours": "",
+   "osm": "node/11064825720"
+  },
+  {
+   "name": "Το μαηειρον της Ελπιδος",
+   "lat": 35.3357388,
+   "lng": 25.1349423,
+   "kind": "restaurant",
+   "hours": "",
+   "osm": "node/11073503468"
+  },
+  {
+   "name": "Kostis Espresso",
+   "lat": 35.3391501,
+   "lng": 25.1557558,
+   "kind": "cafe",
+   "hours": "",
+   "osm": "node/11091608805"
+  },
+  {
+   "name": "President",
+   "lat": 35.3385663,
+   "lng": 25.1593674,
+   "kind": "cafe",
+   "hours": "",
+   "osm": "node/11091609805"
+  },
+  {
+   "name": "Peskesi",
+   "lat": 35.3403679,
+   "lng": 25.1325399,
+   "kind": "restaurant",
+   "hours": "",
+   "osm": "node/11161620305"
+  },
+  {
+   "name": "Vardis Taverna annex",
+   "lat": 35.3393149,
+   "lng": 25.1460264,
+   "kind": "restaurant",
+   "hours": "",
+   "osm": "node/11162425311"
+  },
+  {
+   "name": "My baccara",
+   "lat": 35.3390615,
+   "lng": 25.1345058,
+   "kind": "cafe",
+   "hours": "",
+   "osm": "node/11162474905"
+  },
+  {
+   "name": "Nori",
+   "lat": 35.3389088,
+   "lng": 25.1350004,
+   "kind": "restaurant",
+   "hours": "",
+   "osm": "node/11162475006"
+  },
+  {
+   "name": "RAM Rulers",
+   "lat": 35.33977,
+   "lng": 25.1378226,
+   "kind": "museum",
+   "hours": "\"by appointment\"",
+   "osm": "node/11196816224"
+  },
+  {
+   "name": "Hacienda",
+   "lat": 35.3379644,
+   "lng": 25.1304692,
+   "kind": "restaurant",
+   "hours": "",
+   "osm": "node/11233214943"
+  },
+  {
+   "name": "I Avli",
+   "lat": 35.3368236,
+   "lng": 25.1349882,
+   "kind": "restaurant",
+   "hours": "",
+   "osm": "node/11240845810"
+  },
+  {
+   "name": "Kafeneio O Tempelis",
+   "lat": 35.3393281,
+   "lng": 25.1345741,
+   "kind": "restaurant",
+   "hours": "Mo-Su 12:00-03:00",
+   "osm": "node/11909660469"
+  },
+  {
+   "name": "Ο ΓΙΑΚΟΥΜΗΣ",
+   "lat": 35.3380015,
+   "lng": 25.1336018,
+   "kind": "restaurant",
+   "hours": "",
+   "osm": "node/11909844069"
+  },
+  {
+   "name": "Solo Gelato",
+   "lat": 35.3409092,
+   "lng": 25.1348941,
+   "kind": "ice_cream",
+   "hours": "",
+   "osm": "node/11916138669"
+  },
+  {
+   "name": "Steam",
+   "lat": 35.3387108,
+   "lng": 25.1450703,
+   "kind": "cafe",
+   "hours": "",
+   "osm": "node/11919501451"
+  },
+  {
+   "name": "the edition",
+   "lat": 35.3393264,
+   "lng": 25.1333557,
+   "kind": "cafe",
+   "hours": "",
+   "osm": "node/12153488801"
+  },
+  {
+   "name": "Triaina",
+   "lat": 35.3407528,
+   "lng": 25.1298346,
+   "kind": "restaurant",
+   "hours": "Mo off; Tu-Su 13:00-01:00",
+   "osm": "node/12155038735"
+  },
+  {
+   "name": "dikastiria",
+   "lat": 35.338073,
+   "lng": 25.1341572,
+   "kind": "internet_cafe",
+   "hours": "",
+   "osm": "node/12198626292"
+  },
+  {
+   "name": "daskalogianni N",
+   "lat": 35.3378839,
+   "lng": 25.1346198,
+   "kind": "internet_cafe",
+   "hours": "",
+   "osm": "node/12198626293"
+  },
+  {
+   "name": "daskalogianni E",
+   "lat": 35.3377902,
+   "lng": 25.1346682,
+   "kind": "internet_cafe",
+   "hours": "",
+   "osm": "node/12198626294"
+  },
+  {
+   "name": "daskalogianni koziri",
+   "lat": 35.3376442,
+   "lng": 25.1346414,
+   "kind": "internet_cafe",
+   "hours": "",
+   "osm": "node/12198626295"
+  },
+  {
+   "name": "A Little Wine A Little Sea",
+   "lat": 35.342806,
+   "lng": 25.1342076,
+   "kind": "restaurant",
+   "hours": "",
+   "osm": "node/12237742901"
+  },
+  {
+   "name": "Παπουτσωμένος Ντάκος",
+   "lat": 35.3373561,
+   "lng": 25.1326654,
+   "kind": "cafe",
+   "hours": "",
+   "osm": "node/12343236796"
+  },
+  {
+   "name": "Frankly",
+   "lat": 35.3378878,
+   "lng": 25.1312328,
+   "kind": "cafe",
+   "hours": "Mo-Su 08:00-23:30",
+   "osm": "node/12364730901"
+  },
+  {
+   "name": "Tiny Rebels",
+   "lat": 35.3398608,
+   "lng": 25.1317161,
+   "kind": "cafe",
+   "hours": "Mo, We 08:30-17:00; Tu, Th-Fr 08:30-20:00; Sa 09:00-18:00",
+   "osm": "node/12438469777"
+  },
+  {
+   "name": "Lola",
+   "lat": 35.3398486,
+   "lng": 25.1320345,
+   "kind": "restaurant",
+   "hours": "",
+   "osm": "node/12750370571"
+  },
+  {
+   "name": "mploum",
+   "lat": 35.3418253,
+   "lng": 25.1344696,
+   "kind": "ice_cream",
+   "hours": "",
+   "osm": "node/12768087802"
+  },
+  {
+   "name": "Donald Restaurant",
+   "lat": 35.3391421,
+   "lng": 25.1557936,
+   "kind": "restaurant",
+   "hours": "Mo-Su 10:00-22:00",
+   "osm": "node/12912206379"
+  },
+  {
+   "name": "σπείρα",
+   "lat": 35.3382834,
+   "lng": 25.1307026,
+   "kind": "cafe",
+   "hours": "",
+   "osm": "node/13092418975"
+  },
+  {
+   "name": "da Bari Napoli Pizzeria",
+   "lat": 35.3312955,
+   "lng": 25.1346231,
+   "kind": "restaurant",
+   "hours": "Tu-Sa 14:00-00:00; Su 13:00-00:00",
+   "osm": "node/13118650301"
+  },
+  {
+   "name": "Peperoni Pizza & Pasta",
+   "lat": 35.3297329,
+   "lng": 25.1346414,
+   "kind": "restaurant",
+   "hours": "Tu-Sa 16:00-00:00; Su 09:00-00:00",
+   "osm": "node/13118663901"
+  },
+  {
+   "name": "Fabrica Espresso Bar & Food",
+   "lat": 35.3425265,
+   "lng": 25.1334549,
+   "kind": "cafe",
+   "hours": "Mo-Fr 06:30-23:00; Sa 06:30-22:00; Su 07:30-22:00",
+   "osm": "node/13243434401"
+  },
+  {
+   "name": "Petousis Tavern",
+   "lat": 35.3401892,
+   "lng": 25.13215,
+   "kind": "restaurant",
+   "hours": "Mo-Su 12:00-00:00",
+   "osm": "node/13551346601"
+  },
+  {
+   "name": "Old Olive Tree (planted ca. 480 years ago /2020.)",
+   "lat": 35.3411515,
+   "lng": 25.1395958,
+   "kind": "attraction",
+   "hours": "",
+   "osm": "node/13607390303"
+  },
+  {
+   "name": "Vardis Taverna",
+   "lat": 35.3392587,
+   "lng": 25.1457784,
+   "kind": "restaurant",
+   "hours": "We 17:00-23:30; Th 17:00-01:00; Fr-Sa 13:30-01:00; Su 13:30-23:00",
+   "osm": "node/13613656601"
+  },
+  {
+   "name": "Giannis Canteen (Καντίνα Γιάννης)",
+   "lat": 35.3370437,
+   "lng": 25.1605592,
+   "kind": "restaurant",
+   "hours": "Mo-Sa 09:30-18:30",
+   "osm": "node/13613991401"
+  },
+  {
+   "name": "Μουσείο",
+   "lat": 35.3336099,
+   "lng": 25.1315835,
+   "kind": "museum",
+   "hours": "",
+   "osm": "node/13666940104"
+  },
+  {
+   "name": "JASMINE",
+   "lat": 35.3213307,
+   "lng": 25.1429118,
+   "kind": "cafe",
+   "hours": "",
+   "osm": "node/13733124254"
+  },
+  {
+   "name": "Chapter 03",
+   "lat": 35.3158453,
+   "lng": 25.1470788,
+   "kind": "cafe",
+   "hours": "Mo-Su 08:00-00:00",
+   "osm": "node/13788728204"
+  },
+  {
+   "name": "ΠAΓΩTO ΓIANNAΡAKΗ",
+   "lat": 35.3403526,
+   "lng": 25.1510612,
+   "kind": "ice_cream",
+   "hours": "Mo-Su 10:00-22:00; We off",
+   "osm": "node/13793981403"
+  },
+  {
+   "name": "Homy Café",
+   "lat": 35.33822,
+   "lng": 25.130876,
+   "kind": "cafe",
+   "hours": "",
+   "osm": "node/14030788601"
+  },
+  {
+   "name": "Mavrokostas",
+   "lat": 35.3355664,
+   "lng": 25.1189671,
+   "kind": "restaurant",
+   "hours": "",
+   "osm": "node/14089520038"
+  },
+  {
+   "name": "Taverna Germaniki",
+   "lat": 35.3311387,
+   "lng": 25.1346653,
+   "kind": "restaurant",
+   "hours": "",
+   "osm": "node/14156657526"
+  },
+  {
+   "name": "Man with daisy flower (Street Art on the wall)",
+   "lat": 35.3415593,
+   "lng": 25.1359485,
+   "kind": "attraction",
+   "hours": "",
+   "osm": "node/14156658402"
+  },
+  {
+   "name": "Hari's creperie",
+   "lat": 35.3386659,
+   "lng": 25.1366617,
+   "kind": "cafe",
+   "hours": "",
+   "osm": "node/14180193836"
+  },
+  {
+   "name": "Hermes",
+   "lat": 35.3376353,
+   "lng": 25.1274873,
+   "kind": "cafe",
+   "hours": "06:00-22:00",
+   "osm": "node/14205614957"
+  },
+  {
+   "name": "Kouzeineri. The Meat Lounge.",
+   "lat": 35.3403966,
+   "lng": 25.1354546,
+   "kind": "restaurant",
+   "hours": "",
+   "osm": "node/14208456244"
+  },
+  {
+   "name": "Latte All Day",
+   "lat": 35.3359665,
+   "lng": 25.1390601,
+   "kind": "cafe",
+   "hours": "",
+   "osm": "node/14218546529"
+  },
+  {
+   "name": "Mandalenakis Kitchen",
+   "lat": 35.33754,
+   "lng": 25.1264315,
+   "kind": "restaurant",
+   "hours": "",
+   "osm": "node/14219325222"
+  },
+  {
+   "name": "Hovoli",
+   "lat": 35.3376305,
+   "lng": 25.1355478,
+   "kind": "restaurant",
+   "hours": "Mo-Su 10:00-01:00",
+   "osm": "node/14242638757"
+  },
+  {
+   "name": "Bloom Hub",
+   "lat": 35.3404659,
+   "lng": 25.1300178,
+   "kind": "ice_cream",
+   "hours": "",
+   "osm": "node/14245709801"
+  },
+  {
+   "name": "origine",
+   "lat": 35.3377157,
+   "lng": 25.1330983,
+   "kind": "restaurant",
+   "hours": "",
+   "osm": "node/14270817684"
+  },
+  {
+   "name": "Coffee Island",
+   "lat": 35.3384387,
+   "lng": 25.1577694,
+   "kind": "cafe",
+   "hours": "",
+   "osm": "node/14314990834"
+  },
+  {
+   "name": "fillo-fillo",
+   "lat": 35.3392918,
+   "lng": 25.1323867,
+   "kind": "cafe",
+   "hours": "",
+   "osm": "node/14315211799"
+  },
+  {
+   "name": "Ταβερνα Γιακουμις",
+   "lat": 35.3378983,
+   "lng": 25.1335639,
+   "kind": "restaurant",
+   "hours": "",
+   "osm": "node/14359292603"
+  },
+  {
+   "name": "El Greco Park",
+   "lat": 35.3401587,
+   "lng": 25.1332362,
+   "kind": "park",
+   "hours": "",
+   "osm": "way/25613079"
+  },
+  {
+   "name": "Georgiadi Park",
+   "lat": 35.3357576,
+   "lng": 25.1381604,
+   "kind": "park",
+   "hours": "",
+   "osm": "way/26705938"
+  },
+  {
+   "name": "Marina Cafe",
+   "lat": 35.3428794,
+   "lng": 25.1370411,
+   "kind": "cafe",
+   "hours": "",
+   "osm": "way/26711526"
+  },
+  {
+   "name": "Christian Art Museum",
+   "lat": 35.3381029,
+   "lng": 25.1313042,
+   "kind": "museum",
+   "hours": "Mo-Sa 09:30-19:30; Su 10:00-19:30",
+   "osm": "way/61430581"
+  },
+  {
+   "name": "parko to mapkomae",
+   "lat": 35.3358538,
+   "lng": 25.1379482,
+   "kind": "cafe",
+   "hours": "",
+   "osm": "way/65639541"
+  },
+  {
+   "name": "Ζυμβρακάκηδων",
+   "lat": 35.2899699,
+   "lng": 25.130814,
+   "kind": "attraction",
+   "hours": "",
+   "osm": "way/80262164"
+  },
+  {
+   "name": "Natural History Museum of Crete",
+   "lat": 35.3419073,
+   "lng": 25.1267103,
+   "kind": "museum",
+   "hours": "",
+   "osm": "way/211917529"
+  },
+  {
+   "name": "Net C@fé",
+   "lat": 35.3409894,
+   "lng": 25.1277618,
+   "kind": "cafe",
+   "hours": "",
+   "osm": "way/211917530"
+  },
+  {
+   "name": "Πάρκο Κυκλοφοριακής Αγωγής",
+   "lat": 35.3441427,
+   "lng": 25.168485,
+   "kind": "park",
+   "hours": "",
+   "osm": "way/224345298"
+  },
+  {
+   "name": "Πλατεία Νικαίας",
+   "lat": 35.3274812,
+   "lng": 25.1280333,
+   "kind": "park",
+   "hours": "",
+   "osm": "way/231372690"
+  },
+  {
+   "name": "Πλατεία Σινάνη",
+   "lat": 35.3193376,
+   "lng": 25.1327754,
+   "kind": "park",
+   "hours": "",
+   "osm": "way/246805895"
+  },
+  {
+   "name": "11ης Οκτωβρίου",
+   "lat": 35.3244542,
+   "lng": 25.1323254,
+   "kind": "park",
+   "hours": "",
+   "osm": "way/247495381"
+  },
+  {
+   "name": "Πάρκο 626",
+   "lat": 35.3395928,
+   "lng": 25.1360352,
+   "kind": "park",
+   "hours": "",
+   "osm": "way/283108780"
+  },
+  {
+   "name": "Mare",
+   "lat": 35.3423039,
+   "lng": 25.1302228,
+   "kind": "restaurant",
+   "hours": "Mo-Su 08:00-00:30",
+   "osm": "way/303809257"
+  },
+  {
+   "name": "Venetian Loggia",
+   "lat": 35.3398247,
+   "lng": 25.1341769,
+   "kind": "attraction",
+   "hours": "",
+   "osm": "way/305679006"
+  },
+  {
+   "name": "Venetian Arsenals",
+   "lat": 35.3421538,
+   "lng": 25.136966,
+   "kind": "attraction",
+   "hours": "",
+   "osm": "way/305679023"
+  },
+  {
+   "name": "KTEL Park",
+   "lat": 35.3414123,
+   "lng": 25.1382211,
+   "kind": "park",
+   "hours": "",
+   "osm": "way/305680481"
+  },
+  {
+   "name": "Historical Museum of Crete",
+   "lat": 35.3418364,
+   "lng": 25.1309384,
+   "kind": "museum",
+   "hours": "Mo-Sa 09:00-17:00",
+   "osm": "way/350392018"
+  },
+  {
+   "name": "Πάρκο τάφου Καζαντζάκη",
+   "lat": 35.3327095,
+   "lng": 25.1307096,
+   "kind": "park",
+   "hours": "",
+   "osm": "way/351746559"
+  },
+  {
+   "name": "Church of Saint George of the Armenians",
+   "lat": 35.3382566,
+   "lng": 25.127933,
+   "kind": "attraction",
+   "hours": "",
+   "osm": "way/354313521"
+  },
+  {
+   "name": "πάρκο Βαρδαξή",
+   "lat": 35.3426068,
+   "lng": 25.1568897,
+   "kind": "park",
+   "hours": "",
+   "osm": "way/367398105"
+  },
+  {
+   "name": "Venetian Harbour",
+   "lat": 35.3433702,
+   "lng": 25.1358559,
+   "kind": "attraction",
+   "hours": "",
+   "osm": "way/377197118"
+  },
+  {
+   "name": "Parko Katsampa",
+   "lat": 35.336928,
+   "lng": 25.1546165,
+   "kind": "park",
+   "hours": "",
+   "osm": "way/389746783"
+  },
+  {
+   "name": "Πάρκο Μικράς Ασίας",
+   "lat": 35.309889,
+   "lng": 25.1506702,
+   "kind": "park",
+   "hours": "",
+   "osm": "way/423062754"
+  },
+  {
+   "name": "Κήπος των Γεύσεων",
+   "lat": 35.3330628,
+   "lng": 25.1356806,
+   "kind": "restaurant",
+   "hours": "",
+   "osm": "way/437023664"
+  },
+  {
+   "name": "Πάρκο Φιλοθέης",
+   "lat": 35.3248628,
+   "lng": 25.1540333,
+   "kind": "park",
+   "hours": "",
+   "osm": "way/445461907"
+  },
+  {
+   "name": "Agios Ioannis Park",
+   "lat": 35.3152346,
+   "lng": 25.152076,
+   "kind": "park",
+   "hours": "",
+   "osm": "way/445711453"
+  },
+  {
+   "name": "Venetian Shipyards",
+   "lat": 35.3421104,
+   "lng": 25.1352089,
+   "kind": "attraction",
+   "hours": "",
+   "osm": "way/541862122"
+  },
+  {
+   "name": "Icarus Park",
+   "lat": 35.3387953,
+   "lng": 25.1386604,
+   "kind": "park",
+   "hours": "",
+   "osm": "way/594123608"
+  },
+  {
+   "name": "Analipsi Park",
+   "lat": 35.3369862,
+   "lng": 25.1401816,
+   "kind": "park",
+   "hours": "",
+   "osm": "way/601139195"
+  },
+  {
+   "name": "Oasis",
+   "lat": 35.3331777,
+   "lng": 25.1346272,
+   "kind": "park",
+   "hours": "",
+   "osm": "way/608235116"
+  },
+  {
+   "name": "Scouts Park",
+   "lat": 35.3359673,
+   "lng": 25.1370725,
+   "kind": "park",
+   "hours": "",
+   "osm": "way/623072969"
+  },
+  {
+   "name": "Πλατεία Δασκαλογιάννη",
+   "lat": 35.3377706,
+   "lng": 25.1352505,
+   "kind": "park",
+   "hours": "",
+   "osm": "way/623080679"
+  },
+  {
+   "name": "Χάλαβρο open bar",
+   "lat": 35.3389798,
+   "lng": 25.1352682,
+   "kind": "bar",
+   "hours": "",
+   "osm": "way/623080680"
+  },
+  {
+   "name": "Manos Xatzidakis Park",
+   "lat": 35.3335488,
+   "lng": 25.134039,
+   "kind": "park",
+   "hours": "",
+   "osm": "way/623080681"
+  },
+  {
+   "name": "Old Zoo area",
+   "lat": 35.3318042,
+   "lng": 25.1312877,
+   "kind": "park",
+   "hours": "",
+   "osm": "way/623080682"
+  },
+  {
+   "name": "Romanos Square",
+   "lat": 35.3347739,
+   "lng": 25.1331898,
+   "kind": "park",
+   "hours": "",
+   "osm": "way/623103536"
+  },
+  {
+   "name": "Πάρκο Εθνικής Αντιστάσεως",
+   "lat": 35.3376702,
+   "lng": 25.1421589,
+   "kind": "park",
+   "hours": "",
+   "osm": "way/742448630"
+  },
+  {
+   "name": "Πάρκο Πολιτιστικού Συλλόγου",
+   "lat": 35.3118772,
+   "lng": 25.1558321,
+   "kind": "park",
+   "hours": "",
+   "osm": "way/747059849"
+  },
+  {
+   "name": "Πάρκο Κεράμου",
+   "lat": 35.341112,
+   "lng": 25.1555262,
+   "kind": "park",
+   "hours": "",
+   "osm": "way/747059850"
+  },
+  {
+   "name": "Manolis Rasoulis park",
+   "lat": 35.3387018,
+   "lng": 25.1152991,
+   "kind": "park",
+   "hours": "",
+   "osm": "way/838505983"
+  },
+  {
+   "name": "Karavolas Park",
+   "lat": 35.3390848,
+   "lng": 25.1124654,
+   "kind": "park",
+   "hours": "",
+   "osm": "way/838505984"
+  },
+  {
+   "name": "Park 62",
+   "lat": 35.3339349,
+   "lng": 25.1158187,
+   "kind": "park",
+   "hours": "",
+   "osm": "way/838505985"
+  },
+  {
+   "name": "Yuri Gagarin park",
+   "lat": 35.3405534,
+   "lng": 25.1147242,
+   "kind": "park",
+   "hours": "",
+   "osm": "way/838682552"
+  },
+  {
+   "name": "Πάρκο Μπαντουβά",
+   "lat": 35.333987,
+   "lng": 25.1274028,
+   "kind": "park",
+   "hours": "",
+   "osm": "way/1043596602"
+  },
+  {
+   "name": "Πλατεία Παναγούλη Αλεξ.",
+   "lat": 35.3228126,
+   "lng": 25.1421771,
+   "kind": "park",
+   "hours": "",
+   "osm": "way/1051888816"
+  },
+  {
+   "name": "Avli Project Heraklion",
+   "lat": 35.3418344,
+   "lng": 25.1388426,
+   "kind": "restaurant",
+   "hours": "Mo-Su 09:00-00:04",
+   "osm": "way/1314359638"
+  },
+  {
+   "name": "Koules",
+   "lat": 35.344575,
+   "lng": 25.1369302,
+   "kind": "attraction",
+   "hours": "",
+   "osm": "relation/5251038"
+  },
+  {
+   "name": "Πάρκο Ξενία",
+   "lat": 35.3422453,
+   "lng": 25.1308386,
+   "kind": "park",
+   "hours": "",
+   "osm": "relation/8395901"
+  },
+  {
+   "name": "Kornarou Square",
+   "lat": 35.3364019,
+   "lng": 25.1335033,
+   "kind": "attraction",
+   "hours": "",
+   "osm": "relation/16565344"
+  }
+ ]
+}
