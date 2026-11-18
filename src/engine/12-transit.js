@@ -29,8 +29,23 @@
   // lines: [{ mode, ref, name, stops: [{ name, lat, lng }] in order }]. walkMin(km) -> minutes on foot.
   // far: a day trip out of town ({ km, taxiMin(km) }): the far end may be a taxi ride from its station (Ancient Corinth
   // from Corinth station), trains run about hourly (half an hour's wait counted), and the option says so.
+  // The same lines (the places files load once; each plan gathers them into a new list) give the same answer for the
+  // same two points, so answers are kept with the set of lines, not with one plan: a tick on the Sights list replans
+  // the trip without measuring every metro ride again.
+  const lineId = new WeakMap(), setOf = new WeakMap(), sets = new Map(); let nextLine = 1;
+  const linesSet = lines => { let k = setOf.get(lines); if (k) return k;
+    const key = lines.map(l => { let n = lineId.get(l); if (!n) lineId.set(l, n = nextLine++); return n; }).join(",");
+    k = sets.get(key); if (!k) { if (sets.size > 50) sets.clear(); sets.set(key, k = { key, lines, answers: new Map() }); }
+    setOf.set(lines, k); return k; };
+  E.linesKey = lines => linesSet(lines).key;
   E.transitOption = (a, b, lines, walkMin, far) => {
     if (!lines || !lines.length || !a || !b || !isFinite(a.lat) || !isFinite(b.lat)) return null;
+    const set = linesSet(lines), key = walkMin(10) + "|" + (far ? far.km + ":" + far.taxiMin(10) : "") + "|" + a.lat + "," + a.lng + "|" + b.lat + "," + b.lng;
+    if (set.answers.has(key)) return set.answers.get(key);
+    if (set.answers.size > 100000) set.answers.clear();
+    const got = findOption(a, b, set.lines, walkMin, far); set.answers.set(key, got && Object.freeze(got)); return got;
+  };
+  const findOption = (a, b, lines, walkMin, far) => {
     const near = (p, km) => { const g = gridOf(lines), out = [], la = Math.floor(p.lat / CELL), lo = Math.floor(p.lng / CELL);
       const sLa = Math.ceil(km / (111 * CELL)) , sLo = Math.ceil(km / (111 * CELL * Math.max(0.2, Math.cos(p.lat * Math.PI / 180))));
       for (let x = la - sLa; x <= la + sLa; x++) for (let y = lo - sLo; y <= lo + sLo; y++) { const c = g.get(x + "," + y); if (!c) continue;

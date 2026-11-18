@@ -34,9 +34,18 @@ async function tapBox(p, id) {
   // A sight in a folded section (More nearby) is opened first, as a traveler would.
   await p.$eval(`input[data-site="${id}"]`, x => { const det = x.closest('details'); if (det && !det.open) det.open = true; x.scrollIntoView({ block: 'center' }); });
   await p.waitForTimeout(300);
+  // The list finishes marking what fits (cards settle) before the tap, as a traveler's eye would wait for it.
+  await p.waitForFunction(() => !window.__kairouteFitPending || window.__kairouteFitPending() === 0, null, { timeout: 8000, polling: 100 }).catch(() => {});
+  if (!(await p.$(`input[data-site="${id}"]`))) return false;
   const r = await p.$eval(`input[data-site="${id}"]`, x => { const b = x.getBoundingClientRect(); return { x: b.x + b.width / 2, y: b.y + b.height / 2 }; });
-  await p.touchscreen.tap(r.x, r.y); await p.waitForTimeout(1200); return true;
+  // The tap is done when the box shows its new state (or a won't-fit / closed box opens); how long that takes on a
+  // phone-speed CPU is kept, so a slow tick is a leak of its own rather than a false "would not tick".
+  const was = await p.$eval(`input[data-site="${id}"]`, x => x.checked), t0 = Date.now();
+  await p.touchscreen.tap(r.x, r.y);
+  await p.waitForFunction(([id, was]) => { const x = document.querySelector(`input[data-site="${id}"]`); return (x && x.checked !== was) || document.querySelector('.fitbox, .closedbox'); }, [id, was], { timeout: 8000, polling: 50 }).catch(() => {});
+  tickMs.push(Date.now() - t0); if (process.env.VERBOSE) console.error('tap', id, was ? 'off' : 'on', Date.now() - t0, 'ms'); await p.waitForTimeout(150); return true;
 }
+const tickMs = [];
 const median = a => { const s = a.slice().sort((x, y) => x - y); return s.length ? s[Math.floor(s.length / 2)] : 0; };
 async function tapTimes(p) { const out = []; const n = await p.evaluate(() => window.__kairouteDays().length);
   for (let k = 0; k < 8; k++) { const i = (k * 3) % n; out.push(await p.evaluate(i => { const t = performance.now(); window.__kairouteGo('day', i); return performance.now() - t; }, i)); await p.waitForTimeout(400); }
@@ -82,6 +91,56 @@ async function tapTimes(p) { const out = []; const n = await p.evaluate(() => wi
   const planP = await p.evaluate(i => window.__kairouteEngine2()[i], ni);
   check('The picks are on the day plan', [far, town].filter(Boolean).every(id => (planP.items || []).some(x => x.t === 'stop' && x.id === id)), 'plan has: ' + (planP.items || []).filter(x => x.t === 'stop').map(x => x.id).join(', '));
 
+  // 2a. Richard's Naples day, Nov 18: Sorrento and Pompeii picked. Getting out to Sorrento is a ride of its own with every
+  // way the guide names as a choice (the ferry among them); no stop runs past the leave-by time back to the ship.
+  { const sor = all.find(id => /sorrento/.test(id)); if (sor) { await tapBox(p, sor);
+      if (process.env.VERBOSE) console.error('sorrento card', await p.evaluate(id => { const c = document.querySelector(`[data-card="${id}"]`); return (c ? c.className + ' ' + c.innerText.replace(/\s+/g, ' ').slice(0, 160) : 'no card') + ' | box: ' + [...document.querySelectorAll('.fitbox, .closedbox')].map(e => e.innerText.replace(/\s+/g, ' ').slice(0, 300)).join(' / '); }, sor));
+      const legs = await p.evaluate(i => window.__kairouteLegs(i), ni), plan = await p.evaluate(i => window.__kairouteEngine2()[i], ni);
+      const k = (plan.items || []).findIndex(x => x.t === 'stop' && x.id === sor), before = k > 0 ? plan.items[k - 1] : null;
+      check('Naples: the ride out to Sorrento is on the plan', before && before.t === 'ride', 'no ride before Sorrento');
+      check('Naples: the ferry is offered for Sorrento', (legs || []).some(l => (l.choices || []).some(c => /ferry/i.test(c))), 'choices: ' + JSON.stringify((legs || []).map(l => l.choices)).slice(0, 200)); } }
+
+  // 2b. Hearted day: mark a day ready, change another day in the same place, reload: the hearted day is untouched.
+  { const days = await p.evaluate(() => window.__kairouteDays());
+    const pairs = days.map((d, i) => ({ i, c: d.city })).filter(x => x.c), byC = {}; pairs.forEach(x => (byC[x.c] = byC[x.c] || []).push(x.i));
+    const two = Object.values(byC).find(a => a.length >= 2);
+    if (two) { const [h, o] = two;
+      await p.evaluate(i => { window.__kairouteGo('day', i); window.__kairouteGo('plan'); }, h); await p.waitForTimeout(600);
+      const hb = p.locator('[data-act="dayready"]').first(); if (await hb.isVisible().catch(() => false)) { await hb.tap(); await p.waitForTimeout(800); }
+      const hp = await p.evaluate(i => JSON.stringify((window.__kairouteEngine2()[i].items || []).filter(x => x.t === 'stop').map(x => x.id)), h);
+      await p.evaluate(i => { window.__kairouteGo('day', i); window.__kairouteGo('sites'); }, o); await p.waitForTimeout(600);
+      const yp2 = p.locator('text=Your picks').first(); if (await yp2.isVisible().catch(() => false)) { await yp2.tap(); await p.waitForTimeout(400); }
+      const on = (await boxes(p)).filter(b => b.on); if (on.length) await tapBox(p, on[0].id);
+      await p.reload(); await p.waitForTimeout(6000);
+      const st = await p.evaluate(i => window.__kairouteReady.state(i), h), hp2 = await p.evaluate(i => JSON.stringify((window.__kairouteEngine2()[i].items || []).filter(x => x.t === 'stop').map(x => x.id)), h);
+      check(`A hearted day stays as it was after changes on another day and a reload (day ${h + 1})`, st === 'ok' && hp === hp2, `heart: ${st}; stops ${hp} -> ${hp2}`); } }
+
+  // 2c. Every day of the trip: empty it, then pick one sight in town and one day trip; both stay and are planned.
+  if (process.env.FULL) { const days = await p.evaluate(() => window.__kairouteDays()); const bad = [];
+    for (let i = 0; i < days.length; i++) { if (process.env.DAYS && !process.env.DAYS.split(',').includes(String(i + 1))) continue;
+      await p.evaluate(i => { window.__kairouteGo('day', i); window.__kairouteGo('sites'); }, i); await p.waitForTimeout(500);
+      if (!(await p.$('input[data-site]'))) continue;
+      const yp3 = p.locator('text=Your picks').first(); if (await yp3.isVisible().catch(() => false)) { await yp3.tap(); await p.waitForTimeout(300); }
+      for (let k = 0; k < 15; k++) { const on = (await boxes(p)).filter(b => b.on); if (!on.length) break; await tapBox(p, on[0].id); }
+      if ((await boxes(p)).some(b => b.on)) { bad.push(`day ${i + 1} (${days[i].dest}): could not untick everything`); continue; }
+      const free = await p.evaluate(i => (window.__kairouteEngine2()[i].items || []).filter(x => x.t === 'stop' && !x.bonus).length, i);
+      if (free) bad.push(`day ${i + 1} (${days[i].dest}): emptied, yet ${free} stops planned`);
+      const ids = (await boxes(p)).map(b => b.id), pick = [ids.find(x => !/-far$/.test(x)), ids.find(x => /-far$/.test(x))].filter(Boolean);
+      for (const id of pick) { await tapBox(p, id); const okTick = (await boxes(p)).some(b => b.id === id && b.on);
+        const why = okTick ? '' : await p.evaluate(() => [...document.querySelectorAll('.fitbox, .closedbox')].map(e => e.innerText.replace(/\s+/g, ' ').slice(0, 100)).join(' / '));
+        const planned = okTick && await p.evaluate(([i, id]) => (window.__kairouteEngine2()[i].items || []).some(x => x.t === 'stop' && x.id === id), [i, id]);
+        if (!okTick && !/closed|won.t fit|doesn.t fit|isn.t open|not open/i.test(why)) bad.push(`day ${i + 1} (${days[i].dest}): ${id} would not tick${why ? ' (' + why + ')' : ''}`);
+        else if (okTick && !planned) bad.push(`day ${i + 1} (${days[i].dest}): ${id} ticked but not on the plan`); }
+    }
+    check('Every day: empty it, then pick a sight in town and a day trip', !bad.length, bad.length + ' problems: ' + bad.slice(0, 6).join('; ')); }
+
+  // 2d. Safety (rule 2): on every day tied to a ship, train or flight, no stop on the plan ends after the leave-by time.
+  { const days = await p.evaluate(() => window.__kairouteDays()), bad = [];
+    for (let i = 0; i < days.length; i++) { if (!/port|embark|departure/.test(days[i].type || '')) continue;
+      const r = await p.evaluate(i => { const a = window.__kairouteLiveTest.alarm(i), pl = window.__kairouteLiveTest.plan(i); return a && pl ? { lb: a.leaveBy, from: a.from, late: pl.stops.filter(s => s.t + s.len > a.leaveBy + 0.5).map(s => s.name + ' to ' + Math.round(s.t + s.len)) } : null; }, i);
+      if (r && r.late.length) bad.push(`day ${i + 1} (${days[i].dest}): leave by ${r.lb} from ${r.from}, but ${r.late.join(', ')}`); }
+    check('No stop runs past the leave-by time on a ship, train or flight day', !bad.length, bad.slice(0, 3).join('; ')); }
+
   // 3. Reload: the trip comes back as it was (the traveler's Naples list kept), and every other day is planned the same.
   const before = await p.evaluate(() => JSON.stringify(window.__kairouteEngine2().map(d => (d.items || []).filter(x => x.t === 'stop').map(x => x.id))));
   await p.reload(); await p.waitForTimeout(6000);
@@ -93,6 +152,8 @@ async function tapTimes(p) { const out = []; const n = await p.evaluate(() => wi
   let demoMed = null; if (DEMO) { const s2 = await serve(DEMO); const d = await open(browser, s2.url); demoMed = median(await tapTimes(d.p)); await d.ctx.close(); s2.close(); }
   const m = median(b2t);
   check(`Tapping between days is quick (${Math.round(m)} ms on a phone-speed CPU${demoMed != null ? `, demo app ${Math.round(demoMed)} ms` : ''})`, demoMed != null ? m <= Math.max(150, demoMed * 2) : m <= 300, `median ${Math.round(m)} ms`);
+  { const sl = tickMs.slice().sort((a, b) => a - b), med = median(sl), worst = sl[sl.length - 1] || 0;
+    check(`Ticking a sight answers quickly (median ${med} ms, slowest ${worst} ms on a phone-speed CPU, ${sl.length} taps)`, med <= 700 && worst <= 2500, `median ${med} ms, slowest ${worst} ms`); }
   check('No errors in the app', !errs.length, errs.slice(0, 2).join(' | '));
 
   await ctx.close(); srv.close(); await browser.close();

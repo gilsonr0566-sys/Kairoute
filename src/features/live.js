@@ -421,18 +421,16 @@ function alarmState(d, plan, opt) {
   let viaMin = 0; if (via) T.forEach((p, k) => { viaMin += (p.fixed ? p.minutes || 0 : 0) + (T[k + 1] ? legTo(p, T[k + 1]).min : 0); });
   const target = via || point;
   let leg = target ? legTo(from, target) : null;
-  // Before the day: named from the place the plan really leaves from, its last stop or meal (Richard's Rome PDF, Nov 17:
-  // "Leave by 18:16 from Pantheon" while the day ended at Vatican City). The time itself stays the one that is safe from
-  // the farthest place the traveler picked (the slowest way back), so it doesn't move when optional stops come and go or
-  // the route is reordered (Richard, Nov 13: the same day showed 15:57, then 18:16 a minute later). From the last stop
-  // it is then early, never late. On the day, GPS takes over.
+  // Before the day: from the place the plan really leaves last (its last stop or meal), with the plan's own ride back
+  // (the same ride, time and spare minutes the plan uses). The leave-by time and the plan are then one and the same: no
+  // stop on the plan runs past it, by construction (Richard's Naples screen, Nov 18: "Leave by 15:20" while Pompeii ran
+  // to 16:01, because the time was taken from the farthest pick of the day, Sorrento, which the plan had already left).
+  // A street route measured later that is slower than the plan's ride makes it earlier, never later.
   let worst = null;
-  if (target && src === "plan" && now == null) { const picked = items.filter(i => i.type === "stop" && !i.place.bonus && !i.place.along);
-    // Meals count only when they go with the traveler's own picks (with no picks the meal is an optional extra too).
-    const places = picked.length ? items.filter(i => i.type === "meal" || picked.includes(i)) : [];
-    places.forEach(i => { const l = legTo(i.place, target); if (!worst || l.min > worst.min) worst = l; });
-    const last = places[places.length - 1];
-    if (last && last.place && isFinite(last.place.lat)) { from = last.place; leg = legTo(from, target); } }
+  if (target && src === "plan" && now == null) { const its = plan.items; let j = -1; its.forEach((it, k) => { if (it.type === "stop" || it.type === "meal") j = k; });
+    if (j >= 0 && its[j].place && isFinite(its[j].place.lat)) { from = its[j].place; let m = 0, how = "";
+      for (let k = j + 1; k < its.length; k++) { const it = its[k]; if (it.type === "travel") { m += it.leg.min || 0; how = how || it.leg.how || ""; } else if (it.type === "fixed" || it.type === "end") break; }
+      const lt = legTo(from, target); leg = /street route/.test(lt.src || "") && lt.min > m ? lt : { min: m, how: how || lt.how, transit: lt.transit, src: "the day plan's own ride back" }; } }
   // One return time, the same before and on the day: the latest safe time back (the plan's cushion before all aboard),
   // never the plan's own finish, which moves whenever stops are added or removed. On the day it counts down from
   // wherever the traveler really is.

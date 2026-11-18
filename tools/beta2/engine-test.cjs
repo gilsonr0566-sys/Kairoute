@@ -180,6 +180,11 @@ if (fs.existsSync(dir)) for (const f of fs.readdirSync(dir).filter(f => f.endsWi
     const oldRides = body.filter(x => x.t === 'ride'), newRides = r.items.filter(x => x.t === 'ride').slice(0, oldRides.length);
     const live = oldRides.some((x, k) => newRides[k] && x.km > 0.3 && Math.abs(x.km - newRides[k].km) > 0.02 * x.km);
     if (live && Math.abs(r.end - o.end) > 1) { n--; liveDays++; return; }
+    // A day trip the guide names its ways for (a train, a ferry) now rides the way chosen, with that way's own time, where
+    // the old engine took the slower of the road and the note: a rule change (Nov 18), not a clock difference.
+    const guideWay = seq.some((x, k) => x && (k ? seq[k - 1] : w.head[w.head.length - 1]) && (t2.estimate(k ? seq[k - 1] : w.head[w.head.length - 1], x).options || []).some(o => o.id === 'boat' || o.id === 'transit') && t2.estimate(k ? seq[k - 1] : w.head[w.head.length - 1], x).said)
+      || (seq.length && (t2.estimate(seq[seq.length - 1], w.tail[0]).said && (t2.estimate(seq[seq.length - 1], w.tail[0]).options || []).length));
+    if (guideWay && Math.abs(r.end - o.end) > 1) { n--; liveDays++; return; }
     if (Math.abs(r.end - o.end) <= 1) same++; else ok(false, `${f} day ${i} ${d.type}: old order ends ${r.end} on the new clock, old engine says ${o.end}`); });
   if (!n && s.old.every(o => !o || o.error)) { console.log(`gap  ${s.name}: the old engine planned no day here either (${(s.old.find(o => o && o.error) || {}).error || 'no plan'})`); continue; }
   ok(n > 0 || liveDays > 0, f + ': no days to compare'); oks += same; console.log(`ok   ${s.name}: ${same} of ${n} timed days match the old engine to the minute${liveDays ? ` (${liveDays} left out: the old app used a live route time)` : ''}`);

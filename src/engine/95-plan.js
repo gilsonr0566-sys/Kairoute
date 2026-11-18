@@ -32,7 +32,7 @@
     const fixedAt = id => win.head.concat(win.tail).find(p => p.fixed && p.id === id);
     const whereIs = x => x.t === "fixed" ? fixedAt(x.id) : x.id != null ? byId.get(String(x.id)) : x.t === "start" ? win.head[0] : x.t === "end" ? win.tail[win.tail.length - 1] : null;
     for (const x of fit.r.items) {
-      if (x.t === "ride") { items.push(Object.assign({ t: "ride", mode: x.mode, min: x.min, km: x.km }, x.how && x.mode !== "walk" ? { how: x.how } : {}, x.options ? { options: x.options } : {}, x.transitMode ? { transitMode: x.transitMode } : {})); continue; }
+      if (x.t === "ride") { items.push(Object.assign({ t: "ride", mode: x.mode, min: x.min, km: x.km }, x.how && x.mode !== "walk" ? { how: x.how } : {}, x.options ? { options: x.options } : {}, x.transitMode ? { transitMode: x.transitMode } : {}, x.choice ? { choice: x.choice } : {})); continue; }
       // Each ride knows where it starts and ends (the map draws each one apart, out and back side by side).
       const prev = items[items.length - 1], here = point(whereIs(x));
       if (prev && prev.t === "ride" && items.length >= 2) { const a = items[items.length - 2]; if (isFinite(a.lat) && isFinite(here.lat)) Object.assign(prev, { from: { lat: a.lat, lng: a.lng }, to: here }); }
@@ -79,7 +79,7 @@
     }
     return out;
   };
-  E.planTrip = bucket => {
+  const planAll = bucket => {
     const prefs = bucket.prefs || {}, style = bucket.style || "mix", tr = E.makeTravel(prefs, bucket.legModes, bucket.legs, bucket.transit, bucket.answers), ledger = E.makeLedger();
     const guides = E.sortFar(bucket.cities || {}), days = bucket.days || [], out = new Array(days.length).fill(null);
     // Each day knows where its place's own sights are, so a gate far from all of them is caught (part 3).
@@ -178,7 +178,7 @@
         if (extra && !picks.some(k => String(k.id) === String(extra.id))) { picks.push(extra); autoIds.add(String(extra.id)); explain.push("With time to spare, a trip out to " + extra.name + "."); }
       }
       else {
-        (bucket.placeNotes || []).filter(n => n.day === d.i || n.day === i).forEach(n => explain.push(n.note));
+        (bucket.placeNotes || []).filter(n => n.day === (d.i != null ? d.i : i)).forEach(n => explain.push(n.note));
         if (win.leaveEarly) explain.push("Leave by " + E.clock(win.start) + ", " + win.leaveEarly + " min before your planned start of " + E.clock(win.plannedStart) + ", to be " + (d.type === "embark" ? "at the cruise terminal" : "there") + " by " + E.clock(win.endBy) + ".");
         for (const [id, m] of movedTo) if (m.from === i) explain.push(m.inside ? m.name + " is inside " + m.inside + ", so it's planned with it on " + dayWord(m.to) + "." : m.name + " is closed on " + dayWord(i) + ", so it's planned on " + dayWord(m.to) + ".");
         for (const id of sel[i]) {
@@ -336,6 +336,41 @@
       p.explain = (p.explain || []).concat([`Free time: about ${hm(free)} left after the last stop, before ${win.hard ? "the time to be back" : "the day ends"} (${E.clock(p.endBy)}). Linger where you like.${why}`]); });
     // Each thing said once.
     out.forEach(p => { if (p && p.explain) p.explain = p.explain.filter((t, k, a) => a.indexOf(t) === k); });
+    return out;
+  };
+  // The whole trip, place by place. Days in different places share nothing (a sight, a place to eat and a day trip
+  // belong to one place; places that share a sight, like two ports with the same day trip, are planned together), so
+  // each place's days are planned on their own and kept: a change on one day replans only the days of its place, and
+  // checking whether a sight fits (the Sights list asks for every sight after every tick) replans one place, not the
+  // whole trip. Kept plans are reused only when everything they were made from is the same, ride answers included.
+  const kept = new Map(), KEEP = 30;
+  E.planTrip = bucket => {
+    const days = bucket.days || [], cities = bucket.cities || {}, out = new Array(days.length).fill(null);
+    const ids = key => { const c = cities[key] || {}; return (c.sites || []).concat(c.farther || []).map(x => String(x.id)); };
+    // Places joined when they share a sight.
+    const keys = [...new Set(days.map(d => d.city))], root = new Map(keys.map(k => [k, k])), owner = new Map();
+    const top = k => { while (root.get(k) !== k) k = root.get(k); return k; };
+    keys.sort((a, b) => String(a).localeCompare(String(b))).forEach(k => ids(k).forEach(id => { const o = owner.get(id); if (o == null) owner.set(id, k); else { const a = top(o), b = top(k); if (a !== b) root.set(b, a); } }));
+    const groups = new Map(); days.forEach((d, i) => { const g = top(d.city); if (!groups.has(g)) groups.set(g, []); groups.get(g).push(i); });
+    const lines = bucket.transit && bucket.transit.length ? E.linesKey(bucket.transit) : "";
+    for (const idx of groups.values()) {
+      const gk = [...new Set(idx.map(i => days[i].city))], sub = {};
+      for (const k in bucket) if (k !== "days" && k !== "cities" && k !== "answers" && k !== "transit" && k !== "placeNotes") sub[k] = bucket[k];
+      sub.days = idx.map(i => days[i].i != null ? days[i] : Object.assign({}, days[i], { i }));
+      sub.cities = {}; gk.forEach(k => { if (cities[k]) sub.cities[k] = cities[k]; });
+      sub.placeNotes = (bucket.placeNotes || []).filter(n => idx.some(i => n.day === (days[i].i != null ? days[i].i : i)));
+      const sig = JSON.stringify(sub) + "|" + lines;
+      let got = kept.get(sig);
+      if (got && got.asked.every(([a, b, was]) => JSON.stringify(bucket.answers ? bucket.answers(a, b) : null) === was)) { kept.delete(sig); kept.set(sig, got); }
+      else {
+        const asked = [];
+        if (bucket.answers) sub.answers = (a, b) => { const r = bucket.answers(a, b); asked.push([a, b, JSON.stringify(r)]); return r; };
+        if (bucket.transit) sub.transit = bucket.transit;
+        const plans = planAll(sub); plans.forEach((p, k) => { if (p) p.i = idx[k]; });
+        got = { plans, asked }; kept.set(sig, got); if (kept.size > KEEP) kept.delete(kept.keys().next().value);
+      }
+      idx.forEach((i, k) => { out[i] = got.plans[k]; });
+    }
     return out;
   };
 })(KEngine);

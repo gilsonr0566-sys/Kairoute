@@ -73,6 +73,13 @@ if (typeof window !== "undefined" && window.ENGINE2 && window.KEngine) (function
         if (x.mode === "boat") leg.kind = "ferry"; else if (x.mode === "lift") leg.kind = "train";
         else if (x.mode === "transit") leg.kind = ({ subway: "train", light_rail: "train", monorail: "train", tram: "train", train: "train", bus: "bus", ferry: "ferry" })[x.transitMode] || "train";
         if (x.options) leg.options = x.options; if (x.from) leg.from = x.from; if (x.to) leg.to = x.to;
+        // Every way the engine weighed for this ride is a choice on the plan (the ride chips): a tap saves it as the
+        // traveler's own choice for this ride, and the engine plans with it.
+        if (x.from && x.to && x.options && x.options.length > 1) {
+          const kindOf = o => o.mode === "walk" ? "walk" : o.mode === "boat" ? "ferry" : o.mode === "ride" ? "car" : o.kind === "bus" ? "bus" : "train";
+          leg.key = E.pairKey(x.from, x.to); leg.choice = x.choice || (x.mode === "walk" ? "walk" : x.mode === "ride" ? "taxi" : x.mode === "boat" ? "boat" : "transit");
+          leg.choices = x.options.map(o => ({ id: o.id || (o.mode === "ride" ? "taxi" : o.mode), label: o.how, min: o.min, kind: kindOf(o) }));
+        }
         items.push({ type: "travel", leg, time: (items.length ? items[items.length - 1].time + (items[items.length - 1].dur || 0) : ep.start) }); return;
       }
       if (x.t === "start") { items.push({ type: "start", place: Object.assign({}, w.head[0] || at(x)), time: x.at, label: w.startLabel }); return; }
@@ -96,7 +103,7 @@ if (typeof window !== "undefined" && window.ENGINE2 && window.KEngine) (function
     items.forEach((it, k) => { if (it.type !== "travel") return; const p = items[k - 1]; if (p) it.time = p.time + (p.type === "meal" ? p.meal.len : p.place && p.place.minutes || 0); });
     const dropped = (ep.dropped || []).map(id => byId.get(String(id))).filter(Boolean);
     const walkKm = items.filter(i => i.type === "travel" && i.leg.mode === "walk").reduce((a, i) => a + (i.leg.km || 0), 0);
-    return { city, w: Object.assign({}, w, { start: ep.start, endBy: ep.endBy }), items, stops, dropped, folded: [], elsewhere: [], quickMeals: false, along: [], bonus: [], fill: [],
+    return { city, w: Object.assign({}, w, { start: ep.start, endBy: ep.endBy }), items, stops, dropped, folded: [], elsewhere: [], quickMeals: false, along: [], bonus: stops.filter(s => s.place.bonus).map(s => s.place), fill: [],
       meals, evening, swaps: [], closedToday: [], lock: { t: null, seq: stops.map(s => s.place.id), late: 0, quick: false, eve: "" }, locked: false, seen: false, seenBroke: false, seenSkipped: [],
       lockBroken: false, routeX: null, start: ep.start, endBy: ep.endBy, end: ep.end, walkKm, over: !!ep.over,
       engine2: { explain: ep.explain || [], waysToFit: ep.waysToFit || null, leftOut: ep.leftOut || [], safe: !!ep.safe } };
