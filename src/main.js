@@ -6777,7 +6777,29 @@ function renderGuide(d) {
   return `${pageHead(d, plan, camBtnHTML() + tourBtnHTML())}
     <div class="guidegrid"><div class="guideside pane" data-pane="side">
     ${jumps ? `<nav class="jumps" aria-label="Jump to a stop">${jumps}</nav>` : ""}</div>
-    <div class="guidemain pane" data-pane="stories">${cards ? `<div class="stoplist">${cards}</div>` : `<div class="card empty"><p>No stops planned for today.</p><button class="btn" data-goto="sites">Choose stops</button></div>`}</div></div>`;
+    <div class="guidemain pane" data-pane="stories">${cards ? `<div class="stoplist">${cards}</div>` : guideNoStops(d, plan)}</div></div>`;
+}
+// A day with no sights in it (a boarding morning too short for one, a flight day) was a blank Guide with only
+// "No stops planned for today" (Richard, Nov 18: "Embarkation day still has a blank screen"). The day still has
+// its own steps, so the Guide walks through them: leave the hotel, collect the bags, the ride, and what to expect
+// at the terminal, station or airport, with the same times and notes as the Day plan. On a day that ends at a
+// ship, train or flight, "Choose stops" isn't offered as the main action: there may be no time for one.
+function guideNoStops(d, plan) {
+  const steps = plan.items.filter(it => it.type === "start" || it.type === "fixed" || (it.type === "end" && it.place));
+  const leaving = steps.some(it => it.type === "end") && (plan.w.notesEnd || []).length;
+  if (!leaving) return `<div class="card empty"><p>No stops planned for today.</p><button class="btn" data-goto="sites">Choose stops</button></div>`;
+  const legBefore = it => { const k = plan.items.indexOf(it), pv = plan.items[k - 1]; return pv && pv.type === "travel" && pv.leg.km >= 0.1 ? pv.leg : null; };
+  const row = it => {
+    const leg = legBefore(it), nm = it.type === "fixed" && it.free ? `Free time until ${fmt(it.time + it.free)}` : it.type === "start" || it.type === "end" ? it.label : it.place.name;
+    const notes = it.type === "start" ? (plan.w.notes || []) /* not the hotel's "walk to the old town" note: no sight fits today */ : it.type === "end" ? plan.w.notesEnd
+      : it.free ? [`Breakfast, coffee or a last walk nearby. Then ${it.place.name.replace(/^C/, "c")} (${dur(it.bags)}).`] : [dur(it.place.minutes)]; // the Day plan's own lines
+    return `<div class="card guidestep">${leg ? `<p class="tourleg ${leg.mode} k-${legKind(leg)}">${legIcon(legKind(leg))}<span>${esc(leg.how)} · ${dur(leg.min)} · ${distTxt(leg.km)}</span></p>` : ""}
+      <div class="eyebrow">${it.type === "start" ? "Leave " : "Arrive "}${fmt(it.time)}</div><h3>${esc(nm)}</h3>
+      ${notes.filter(Boolean).map(t => `<p class="sub">${esc(t)}</p>`).join("")}</div>`;
+  };
+  return `<div class="stoplist"><div class="card"><p>No sights fit in today before you go, so here is how the day runs.</p>
+    <div class="actions"><button class="btn ghost small" data-goto="plan">Open the day plan</button><button class="btn ghost small" data-goto="sites">Choose stops</button></div></div>
+    ${steps.map(row).join("")}</div>`;
 }
 // ---------- Tour mode ----------
 function tourSteps(plan) {
@@ -6849,7 +6871,7 @@ function renderTour(d) {
       </div></div>`;
   } else if (st.type === "start") {
     body = `<div class="tourcard"><div class="eyebrow">Good morning</div><h2 class="tourtitle">${esc(st.label)}</h2>
-      <p class="lede">Today: ${stopsOnly.length} stops${plan.meals.length ? ", " + plan.meals.map(m => esc(m.name)).join(" and ") + " to eat" : ""}, about ${distTxt(plan.walkKm)} on foot. ${d.type === "port" ? "I'll keep an eye on the time so you're back aboard early." : "I'll keep you on time."}</p>
+      <p class="lede">${!stopsOnly.length && (plan.w.notesEnd || []).length ? "No sights fit in today before you go: I'll take you through each step and keep you on time." : `Today: ${stopsOnly.length} stop${stopsOnly.length === 1 ? "" : "s"}${plan.meals.length ? ", " + plan.meals.map(m => esc(m.name)).join(" and ") + " to eat" : ""}, about ${distTxt(plan.walkKm)} on foot. ${d.type === "port" ? "I'll keep an eye on the time so you're back aboard early." : "I'll keep you on time."}`}</p>
       ${tourMap(plan, d, null, null)}
       <ol class="tourlist">${stopsOnly.map(x => `<li>${fmt(x.time)} · ${esc(x.place.name)}</li>`).join("")}</ol>
       <div class="audio"><button class="btn ghost" data-play="intro:${d.id}" data-label="▶ Hear today's plan">▶ Hear today's plan</button><span class="state" aria-live="polite"></span></div>
@@ -6857,7 +6879,7 @@ function renderTour(d) {
   } else if (st.type === "end") {
     const rated = steps.filter(x => x.type === "stop" && ((trip.journal || {})[jKey(x.place)] || {}).rating).length;
     body = `<div class="tourcard"><div class="eyebrow">That's the day</div><h2 class="tourtitle">${esc(st.label)}</h2>
-      <p class="lede">You saw ${stopsOnly.length} stops. ${rated ? "You rated " + rated + " of them." : "Rate them in your journal while it's fresh."}</p>
+      <p class="lede">${stopsOnly.length ? `You saw ${stopsOnly.length} stop${stopsOnly.length > 1 ? "s" : ""}. ${rated ? "You rated " + rated + " of them." : "Rate them in your journal while it's fresh."}` : (plan.w.notesEnd || []).map(esc).join(" ")}</p>
       <div class="actions tourmain"><button class="btn" data-goto="journal">${trip.days[trip.active + 1] ? "Open the journal" : "Make my memory video"}</button>${trip.days[trip.active + 1] ? `<button class="btn ghost" data-act="tourtomorrow">Next day: ${esc(trip.days[trip.active + 1].destination)}</button>` : ""}</div></div>`;
   } else if (st.type === "meal") {
     const r = st.place;
