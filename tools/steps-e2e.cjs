@@ -94,6 +94,28 @@ function helper(r, calls) {
       const saved = await p.evaluate(i => JSON.parse(localStorage.getItem('wayside.trip2')).days[i].boardTime, d.i);
       if (saved !== '12:30') bad(`boarding: a typed time redrawn over before Save was lost (saved ${saved})`); else ok('boarding: a typed time survives a redraw before Save (12:30 saved)'); }
     await p.close(); }
+  // 1b2. A boarding morning too short for any sight (boarding 10:00) still has a Guide and a tour that walk through the
+  // day: hotel, bags, the ride, what to expect at the terminal (Nov 18: "Embarkation day still has a blank screen";
+  // the Guide said only "No stops planned for today" and the tour jumped to "You saw 0 stops").
+  if (!LIVE) { const p = await b.newPage({ viewport: { width: 800, height: 1280 } }); const errs = []; p.on('pageerror', e => errs.push(e.message));
+    await p.route('**/*', r => /^file:/.test(r.request().url()) ? r.continue() : r.abort());
+    await p.goto('file://' + FILE); await p.evaluate(() => localStorage.setItem('kairoute.intro1', '1')); await p.reload(); await p.waitForTimeout(600);
+    const s = p.locator('[data-act="loadsample"]').first(); if (await s.isVisible().catch(() => false)) await s.click(); await p.waitForTimeout(1200);
+    const d = (await p.evaluate(() => window.__kairouteDays())).find(x => x.type === 'embark');
+    if (d) { await p.evaluate(i => window.__kairouteGo('plan', i), d.i); await p.waitForTimeout(1000);
+      if (!(await p.locator('#bc-time').isVisible().catch(() => false))) { await p.locator('[data-act="boardchange"]').first().click(); await p.waitForTimeout(500); }
+      await p.locator('#bc-time').fill('10:00'); await p.locator('[data-act="boardsave"]').first().click(); await p.waitForTimeout(1000);
+      await p.evaluate(i => window.__kairouteGo('guide', i), d.i); await p.waitForTimeout(800);
+      const g = await p.evaluate(() => document.getElementById('view').innerText);
+      if (/No stops planned/.test(g) || !/terminal/i.test(g) || !/bags/i.test(g)) bad(`boarding 10:00: the Guide doesn't walk through the day: ${JSON.stringify(g.replace(/\s+/g, ' ').slice(0, 200))}`);
+      else ok('boarding 10:00: the Guide walks through the hotel, bags and terminal');
+      await p.locator('[data-act="tourstart"]').first().click(); await p.waitForTimeout(600);
+      for (let k = 0; k < 8 && await p.locator('[data-act="tournext"],[data-act="tourhere"]').count(); k++) { await p.locator('[data-act="tournext"],[data-act="tourhere"]').first().click(); await p.waitForTimeout(300); }
+      const e = await p.evaluate(() => document.getElementById('view').innerText);
+      if (/saw 0 stops/i.test(e) || !/terminal/i.test(e)) bad(`boarding 10:00: the tour ends without the terminal notes: ${JSON.stringify(e.replace(/\s+/g, ' ').slice(0, 200))}`);
+      else ok('boarding 10:00: the tour ends with what to expect at the terminal');
+      if (errs.length) bad('boarding 10:00: page errors ' + errs.slice(0, 3).join(' / ')); }
+    await p.close(); }
   // 1c. A trip that starts with a cruise (Bahamas test trip, Nov 17): "+ Add a cruise" on the new form replaces the empty
   // city stay it opens with, so the traveler isn't stopped by "Stop 1: type the city"; one typed into is kept.
   if (!LIVE) { const p = await b.newPage({ viewport: { width: 412, height: 860 } });
