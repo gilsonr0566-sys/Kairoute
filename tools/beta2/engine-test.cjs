@@ -222,7 +222,7 @@ if (fs.existsSync(dir)) { let rides = 0, placed = 0;
 { let boats = 0; for (const f of fs.readdirSync(dir).filter(f => f.endsWith('.json'))) { const s = JSON.parse(fs.readFileSync(path.join(dir, f))), ps = E.planTrip(s);
     ps.forEach((p, i) => p && p.items && p.items.forEach((x, k) => { if (x.t !== 'ride') return; const a = p.items[k - 1], b = p.items[k + 1], c = s.cities[s.days[i].city] || {};
       const site = it => it && it.id != null && [...(c.sites || []), ...(c.farther || [])].find(y => String(y.id) === String(it.id));
-      const boatEnd = [site(a), site(b)].filter(y => y && E.BOAT.test(y.travelNote || ''));
+      const boatEnd = [site(a), site(b)].filter(y => y && E.byBoat(y.travelNote));
       if (boatEnd.length === 1) { boats++; ok(x.mode === 'boat', `${f} day ${i}: the ride to or from ${boatEnd[0].name} crosses water but is planned as ${x.mode}`); } })); }
   console.log(`ok   ${boats} rides across water, every one by boat`); }
 

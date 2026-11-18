@@ -7,6 +7,10 @@
 (function (E) {
   E.PIER_MIN = 15; // at the pier: buying a ticket, boarding, and the wait for the next sailing
   E.BOAT = /\b(boat|boats|ferry|ferries|hydrofoil|catamaran|water ?bus|vaporetto)\b/i;
+  // Reached only by water: the note names a boat and no way by land (a note offering a train, bus, car or walk too is a
+  // place on the mainland). "Water taxi" is a boat, not a taxi.
+  const LAND = /\b(train|rail|metro|tram|bus|coach|car|road|drive|taxi|cab|walk|hike|bridge|causeway)\b/i;
+  E.byBoat = note => { const n = String(note || "").replace(/water ?taxi/gi, "boat"); return E.BOAT.test(n) && !LAND.test(n); };
   const WALK_LIMIT = { low: 0.8, medium: 1.7, high: 3.2 }, WALK_EITHER = 4;
   // By road (taxi, car or bus) for d km as the crow flies: town streets, regional roads, then highway.
   function road(d) {
@@ -61,7 +65,7 @@
       // Across water: a place the guide says is reached by boat is always reached by boat (never a taxi or a walk), on
       // the boat's own timetable: the crossing the guide names, plus 20 minutes for the pier and the wait for a sailing.
       // To a ship, train or plane it gets the same extra time as any long ride.
-      const byBoat = p => E.BOAT.test(p.travelNote || "");
+      const byBoat = p => E.byBoat(p.travelNote);
       if (byBoat(a) !== byBoat(b) && d > 1) {
         const note = byBoat(a) ? a.travelNote : b.travelNote, said = saidMin(note) || Math.round(d / 25 * 60) + 10;
         const how = /high.?speed|fast ferry|hydrofoil|catamaran/i.test(note) ? "Fast ferry" : /ferry/i.test(note) ? "Ferry" : "Boat";

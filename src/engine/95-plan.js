@@ -230,10 +230,10 @@
       // traveler's own picks always stay). On a ship, train or plane day only by road, an hour at most each way, and only
       // when the day still ends 45 minutes before the time to be back: the app adds no boat there on its own (boats keep
       // their own timetable), it names it instead.
-      const BOAT = E.BOAT, from0 = was.win.head[was.win.head.length - 1];
-      const shortRoad = s => tr.min(from0, s) <= 60 && !BOAT.test(s.travelNote || "");
+      const from0 = was.win.head[was.win.head.length - 1];
+      const shortRoad = s => tr.min(from0, s) <= 60 && !E.byBoat(s.travelNote || "");
       // A boat trip the guide times (its crossing), kept only when the day still ends an hour before the time to be back.
-      const boatOk = s => BOAT.test(s.travelNote || "") && tr.saidMin(s.travelNote) > 0 && tr.saidMin(s.travelNote) <= 90;
+      const boatOk = s => E.byBoat(s.travelNote || "") && tr.saidMin(s.travelNote) > 0 && tr.saidMin(s.travelNote) <= 90;
       const worthOf = r => r.kept.reduce((a, k) => a + (k.worth || 0), 0);
       const city = guides[d.city] || {}, far = E.rank((city.farther || []).map(s => Object.assign({}, s, { far: true })), prefs, style)
         .filter(s => !s.town && ledger.sightFree(s.id, i) && !wishDay.has(String(s.id)) && !(now || was).kept.some(k => k.far))
@@ -245,7 +245,7 @@
         const cur = now || was;
         if (now) undo(now);
         const r = planDay(i, Object.assign({}, was, { kept: wished, extra: f.id }));
-        const better = r.kept && (!was.win.hard || r.spare >= (BOAT.test(f.travelNote || "") ? 60 : 45)) && wished.every(w => r.kept.some(k => String(k.id) === String(w.id))) && r.kept.some(k => String(k.id) === String(f.id)) && worthOf(r) > worthOf(cur);
+        const better = r.kept && (!was.win.hard || r.spare >= (E.byBoat(f.travelNote || "") ? 60 : 45)) && wished.every(w => r.kept.some(k => String(k.id) === String(w.id))) && r.kept.some(k => String(k.id) === String(f.id)) && worthOf(r) > worthOf(cur);
         if (better) { now = r; continue; }
         undo(r);
         if (now) now.sightIds.forEach(id => ledger.claimSight(id, i)), now.eatIds.forEach(k => ledger.claimEat(k, i));
@@ -254,7 +254,7 @@
       // Time left on a ship day and a trip out by boat the guide names: say so, with the time to be back on shore.
       if (was.win.hard && d.type === "port" && was.plan && was.plan.items) {
         const boat = E.rank((city.farther || []).map(s => Object.assign({}, s, { far: true })), prefs, style)
-          .find(s => !s.town && BOAT.test(s.travelNote || "") && ledger.sightFree(s.id, i) && 2 * (tr.saidMin(s.travelNote) || 60) + (s.minutes || 60) + 60 <= was.spare);
+          .find(s => !s.town && E.byBoat(s.travelNote || "") && ledger.sightFree(s.id, i) && 2 * (tr.saidMin(s.travelNote) || 60) + (s.minutes || 60) + 60 <= was.spare);
         if (boat) was.plan.explain = (was.plan.explain || []).concat(["Time left for " + boat.name + (boat.travelNote ? " (" + String(boat.travelNote).replace(/[.\s]+$/, "") + ")" : "") + ": not added on its own, since boats keep their own timetable. If you go, take a boat back that lands you by " + E.clock(was.win.endBy - 30) + "."]);
       }
       was.sightIds.forEach(id => ledger.claimSight(id, i)); was.eatIds.forEach(k => ledger.claimEat(k, i));
