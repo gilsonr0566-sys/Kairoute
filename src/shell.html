@@ -270,7 +270,20 @@ button.mk { cursor: pointer; }
 .mk-hotel { background: var(--must); }
 .mk-along { width: 14px; height: 14px; border: 2px solid var(--card); background: var(--route); }
 .mk-bonus { border-style: dashed; color: var(--route); width: 24px; height: 24px; font-size: 15px; }
-.mk-you { width: 18px; height: 18px; border-radius: 50%; background: #1A73E8; border: 3px solid #fff; box-shadow: 0 0 0 6px rgba(26,115,232,.25), 0 1px 4px rgba(0,0,0,.4); }
+/* You on the map: a small person in a blue badge, a soft beam for the way you're facing, a ring for how sure the phone is. */
+.mk-you { width: 0; height: 0; position: relative; pointer-events: none; z-index: 3; }
+.mk-you > span { position: absolute; left: 0; top: 0; }
+.you-pin { width: 30px; height: 30px; margin: -15px 0 0 -15px; border-radius: 50%; background: #1A73E8; color: #fff; border: 3px solid #fff; box-sizing: border-box; display: grid; place-items: center; box-shadow: 0 0 0 5px rgba(26,115,232,.22), 0 2px 6px rgba(0,0,0,.45); }
+.you-pin svg { width: 19px; height: 19px; display: block; }
+.you-beam { width: 84px; height: 78px; transform-origin: 50% 100%; transform: translate(-50%, -100%); background: radial-gradient(ellipse 50% 100% at 50% 100%, rgba(26,115,232,.7), rgba(26,115,232,0) 100%); clip-path: polygon(50% 100%, 10% 0, 90% 0); transition: transform .15s linear; }
+.you-acc { border-radius: 50%; transform: translate(-50%, -50%); background: rgba(26,115,232,.12); border: 1.5px solid rgba(26,115,232,.45); box-sizing: border-box; }
+.mk-you.stale .you-pin { background: #7A8691; box-shadow: 0 0 0 5px rgba(122,134,145,.22), 0 2px 6px rgba(0,0,0,.4); }
+.mk-you.stale .you-acc { background: rgba(122,134,145,.12); border-color: rgba(122,134,145,.45); }
+.kmap .you-ctrl { border-radius: 8px; }
+.kmap .you-ctrl .you-btn { width: 36px; height: 36px; display: grid; place-items: center; color: #1A73E8; background: #fff; border-radius: 8px; }
+.kmap .you-ctrl .you-btn svg { width: 22px; height: 22px; }
+.kmap .you-note { position: absolute; left: 8px; right: 8px; bottom: 30px; z-index: 4; background: var(--card); color: var(--ink); border: 1px solid var(--line); border-radius: 8px; padding: 8px 10px; font-size: .88rem; line-height: 1.3; box-shadow: 0 2px 8px rgba(0,0,0,.25); }
+.kmap .you-note[hidden] { display: none; }
 .maplegend .you { color: #1A73E8; }
 @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .maplegend .you { color: #6AA6FF; } }
 :root[data-theme="dark"] .maplegend .you { color: #6AA6FF; }

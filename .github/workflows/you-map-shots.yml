@@ -1,0 +1,33 @@
+name: You-on-the-map screens
+on:
+  push:
+    branches: ["claude/project-thread-14sgvm"]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  shots:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm i playwright@1 && npx playwright install chromium
+      - name: Check with stand-in tiles (no network)
+        run: sh build.sh && MOCK=1 node tools/you-map-check.cjs
+      - name: Check with the real OpenFreeMap tiles
+        run: rm -f checks/you-*.png && node tools/you-map-check.cjs
+      - name: Print screens
+        if: always()
+        run: |
+          for f in checks/you-*.png; do
+            convert "$f" -resize '1280x1280>' -quality 72 /tmp/s.jpg
+            echo "=====BEGIN $(basename "$f" .png)"; base64 -w 0 /tmp/s.jpg; echo; echo "=====END"
+          done
+      - if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: you-map-screens
+          path: checks/

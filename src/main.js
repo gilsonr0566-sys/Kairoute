@@ -4756,7 +4756,7 @@ function render() {
     paneMemo.same = paneMemo.key === pkey; paneMemo.key = pkey; }
   { const old = document.querySelector(".coach"); if (old) old.remove(); const ch = coachHTML(); if (ch) document.body.insertAdjacentHTML("beforeend", ch); }
   if (askNotice && !FULL_VIEWS[view]) { const v = document.getElementById("view"); if (v) v.insertAdjacentHTML("afterbegin", `<p class="banner ok" role="status">${esc(askNotice)} <button class="linkbtn" data-act="asknoticeok">OK</button></p>`); }
-  mountMaps(); liveAfterRender(); offAfterRender(); seenAfterRender();
+  mountMaps(); youAfterRender(); liveAfterRender(); offAfterRender(); seenAfterRender();
   if (openMenus.length && paneMemo.same) document.querySelectorAll("#view details.moremenu").forEach(el => { if (openMenus.includes(menuKey(el))) { el.open = true; try { placeMenu(el); } catch (e) {} } });
   if (openFolds.size) document.querySelectorAll("#view details").forEach(el => { const sm = el.querySelector("summary"); if (sm && openFolds.has(view + "|" + sm.textContent.trim())) el.open = true; });
   // A re-render of the same screen (live updates, sync, data arriving) never moves what you're looking at:
@@ -6203,6 +6203,7 @@ function ensureMap(ml) {
   kmap = new ml.Map({ container: kmapEl, style: MAP_TILES[theme], center: [0, 20], zoom: 1.5, attributionControl: { compact: true }, transformRequest: u => /^https:\/\/tiles\.openfreemap\.org\//.test(u) ? { url: u.replace(/^https:/, "kcache:") } : { url: u }, cooperativeGestures: true, dragRotate: false, pitchWithRotate: false, maxPitch: 0, fadeDuration: 0 });
   kmap.touchZoomRotate.disableRotation();
   kmap.addControl(new ml.NavigationControl({ showCompass: false }), "top-right");
+  kmap.addControl(youControl(), "top-right");
   kmap.addControl(new ml.ScaleControl({ unit: useMiles() ? "imperial" : "metric", maxWidth: 90 }), "bottom-left");
   kmap.on("load", () => {
     const walk = cssVar("--route") || "#146B61";
@@ -6283,13 +6284,8 @@ function fitMap(D) {
   const w = kmapEl.clientWidth || 600, pad = Math.max(24, Math.min(60, Math.round(w / 10)));
   kmap.fitBounds(b, { padding: pad, maxZoom: 16.5, duration: 0 });
 }
-// The traveler's blue dot (tour, and the day plan once Follow me is on).
-function placeYou() {
-  const ml = window.maplibregl; if (!kmap || !ml) return;
-  if (!geoPos || !kmapData) { if (kmapYou) { kmapYou.remove(); kmapYou = null; } return; }
-  if (!kmapYou) { const el = document.createElement("div"); el.className = "mk-you"; el.setAttribute("aria-label", "You are here"); kmapYou = new ml.Marker({ element: el }).setLngLat([geoPos.lng, geoPos.lat]).addTo(kmap); if (kmapData.you) fitMap(kmapData); }
-  else kmapYou.setLngLat([geoPos.lng, geoPos.lat]);
-}
+// The traveler on the map: a small person with the way they're facing (see features/you-on-map.js).
+function placeYou() { youPlace(); }
 // The map slot a screen puts in its HTML. The diagram shows until the street map is ready on top of it.
 function mapSlot(plan, d, slot, opts) {
   const data = mapPlanData(plan, d);
