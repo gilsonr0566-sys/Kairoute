@@ -961,9 +961,12 @@ async function voyageNextPlaces(next, center, UA) {
 }
 // Named tourist places from OpenStreetMap within 3 km. Three map services, each with a short time limit, because
 // any one of them is often busy: Photon's map search, then Overpass, then Nominatim (one ask a second, as its rules say).
-const MAP_SIGHT = { tourism: /^(attraction|viewpoint|museum|theme_park|zoo|aquarium|gallery)$/, leisure: /^(water_park|beach_resort|nature_reserve)$/, natural: /^beach$/, man_made: /^lighthouse$/, historic: /./ };
+const MAP_SIGHT = { tourism: /^(attraction|viewpoint|museum|theme_park|zoo|aquarium|gallery)$/, leisure: /^(water_park|beach_resort|nature_reserve)$/, natural: /^(beach|bay)$/, man_made: /^lighthouse$/, historic: /./ };
 async function mapSights(c, UA) {
-  const out = [], put = (name, lat, lng, k, v, t) => { if (!name || !isFinite(lat) || !isFinite(lng) || out.some(x => sameName(x.name, name))) return; out.push({ name, lat: +(+lat).toFixed(5), lng: +(+lng).toFixed(5), kind: k + ":" + v, historic: k === "historic", web: (t && (t.website || t["contact:website"])) || undefined }); };
+  const out = [], put = (name, lat, lng, k, v, t) => { if (!name || !isFinite(lat) || !isFinite(lng) || out.some(x => sameName(x.name, name))) return;
+    // A bay counts only as a lagoon to swim in; a grave, memorial or roadside stone only when the encyclopedia knows it.
+    if (k === "natural" && v === "bay" && !/lagoon/i.test(name)) return;
+    if ((k === "historic" && /^(memorial|tomb|grave|boundary_stone|milestone|wayside_cross|wayside_shrine)$/.test(v || "") || /grave|tomb|cemetery/i.test(name)) && !(t && t.wikidata)) return; out.push({ name, lat: +(+lat).toFixed(5), lng: +(+lng).toFixed(5), kind: k + ":" + v, historic: k === "historic", web: (t && (t.website || t["contact:website"])) || undefined }); };
   await Promise.all(["tourism", "natural:beach", "leisure:water_park", "leisure:beach_resort", "man_made:lighthouse", "historic"].map(async tag => {
     try { const r = await fetch(`https://photon.komoot.io/reverse?lat=${c.lat}&lon=${c.lng}&radius=3&limit=20&lang=en&osm_tag=${tag}`, { headers: UA, signal: AbortSignal.timeout(6000) });
       if (r.ok) for (const f of (await r.json()).features || []) { const p = f.properties || {}, k = p.osm_key, v = p.osm_value; if (k && MAP_SIGHT[k] && MAP_SIGHT[k].test(v || "")) put(p.name, f.geometry.coordinates[1], f.geometry.coordinates[0], k, v); } } catch (e) {}
@@ -975,11 +978,11 @@ async function mapSights(c, UA) {
     try { const r = await fetch(ep, { method: "POST", signal: AbortSignal.timeout(9000), body: "data=" + encodeURIComponent(q), headers: { ...UA, "content-type": "application/x-www-form-urlencoded", accept: "application/json" } });
       if (!r.ok) continue; const j = await r.json();
       for (const e of j.elements || []) { const t = e.tags || {}, k = Object.keys(MAP_SIGHT).find(k => t[k] && MAP_SIGHT[k].test(t[k])); if (k) put(t["name:en"] || t.name, e.lat ?? (e.center && e.center.lat), e.lon ?? (e.center && e.center.lon), k, t[k], t); }
-      if (out.length) return out.slice(0, 30);
+      if (out.length >= 3) return out.slice(0, 30); break;
     } catch (e) {}
   }
   const d = 3 / 111, e = d / Math.cos(c.lat * Math.PI / 180), box = `${c.lng - e},${c.lat + d},${c.lng + e},${c.lat - d}`;
-  for (const w of ["beach", "attraction", "water park", "viewpoint", "lighthouse", "museum"]) {
+  for (const w of ["beach", "attraction", "water park", "lagoon", "viewpoint", "lighthouse", "museum"]) {
     try { const r = await fetch(`https://nominatim.openstreetmap.org/search?format=jsonv2&bounded=1&limit=20&extratags=1&viewbox=${box}&q=${encodeURIComponent(w)}`, { headers: { ...UA, "accept-language": "en" }, signal: AbortSignal.timeout(7000) });
       if (r.ok) for (const f of await r.json()) { const k = f.category, v = f.type; if (f.name && MAP_SIGHT[k] && MAP_SIGHT[k].test(v || "")) put(f.name, +f.lat, +f.lon, k, v, f.extratags); } } catch (e2) {}
     await new Promise(res => setTimeout(res, 1100));
@@ -987,7 +990,7 @@ async function mapSights(c, UA) {
   return out.slice(0, 30);
 }
 async function sourcesData(label, env, ctx) {
-  const key = "sr7:" + (await sha(label.toLowerCase())), hit = await env.USAGE.get(key); if (hit) return JSON.parse(hit);
+  const key = "sr8:" + (await sha(label.toLowerCase())), hit = await env.USAGE.get(key); if (hit) return JSON.parse(hit);
   const UA = { "user-agent": "Kairoute/1.0 (travel guide; https://gilsonr0566-sys.github.io/Kairoute/)" };
   const getJ = async (u, ms, opt) => { for (let t = 0; t < 2; t++) { try { const r = await fetch(u, Object.assign({ headers: { ...UA, accept: "application/json" }, signal: AbortSignal.timeout(ms || 20000) }, opt || {})); if (r.ok) return await r.json(); } catch (e) {} } return null; };
   const T = {}, t0 = Date.now(), lap = k => { T[k] = Date.now() - t0; };
