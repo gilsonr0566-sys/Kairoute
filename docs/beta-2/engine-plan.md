@@ -92,4 +92,4 @@ The engine files also load in Node, so its tests run in seconds without a browse
 Every one of the 21 failures in the lessons doc was checked against the steps. Two had no step and are now part of the plan:
 - **#6 swap bug:** the picks step moves a sight with one "move" action that takes it off its old day in the same step. No screen changes a day's picks any other way.
 - **#14 hand-written guides hiding gaps:** the yardstick gets no-AI test trips (guides built automatically from saved source data: a big city, a small port, a private island) before the planning steps are built.
-Two are only partly covered and have a named test still to write: **#9** a port with no sights still gets a safe day ashore; **#17** the bucket is read through a test hook until it becomes the plug-in point.
+**Done the same evening:** three no-AI test trips are now in the yardstick (`tools/beta2/noai-trips.cjs`: a big city stay, a small cruise port with a full day and a short call, a private island), and **#9** has its test (a port with no sights gets a safe day ashore). Still partly covered: **#17** the bucket is read through a test hook until it becomes the plug-in point.

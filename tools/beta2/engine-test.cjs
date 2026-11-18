@@ -37,6 +37,10 @@ const day = o => Object.assign({ type: 'land', mode: 'flight', startTime: '09:00
   ok(E.closedForDay({ oh: { spans: [[1200, 1320]] } }, { start: 510, endBy: 975 }, 60), 'open only outside the window counts as closed'); }
 
 
+// ---- A port with nothing to see still gets a safe day (lesson #9) ----
+{ const w = E.dayWindow(day({ type: 'port', portArrive: 480, allAboard: 1020 }), tr), r = E.walkDay([], w, tr.estimate, () => null);
+  ok(!w.error && r.end <= w.endBy && !r.over && r.items[0].t === 'start' && r.items[r.items.length - 1].t === 'end', 'a port with no sights: ashore and back at the ship in time, no error'); }
+
 // ---- Groups and sites (step 3) ----
 { // Richard's example: an old town square is a group, the famous clock on it is a site. Real map data, general rule.
   const j = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'fixtures', 'prague-sources.json'))), all = new Map();
