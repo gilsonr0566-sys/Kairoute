@@ -302,6 +302,11 @@ async function buildPlace(t) {
         port: portDay ? { name: portDay.point.name, lat: portDay.point.lat, lng: portDay.point.lng, known: !portDay.point.unknown } : null });
     }
   }
+  // On GitHub the trips are not in the repo: the places' public sights come from guides.json (export-guides.cjs).
+  { const gf = path.join(__dirname, 'guides.json'); if (fs.existsSync(gf)) for (const [key, c] of Object.entries(JSON.parse(fs.readFileSync(gf)).places || {})) {
+    if (targets.has(key)) continue; const pts = c.sites || [];
+    const centre = pts.length ? { lat: pts.reduce((a, x) => a + x.lat, 0) / pts.length, lng: pts.reduce((a, x) => a + x.lng, 0) / pts.length } : null;
+    targets.set(key, { key, name: c.name, centre, sites: c.sites || [], farther: (c.farther || []).map(x => Object.assign({}, x)), port: c.port || null }); } }
   if (fs.existsSync(TARGETS)) for (const t of JSON.parse(fs.readFileSync(TARGETS)).places || []) {
     if (targets.has(t.key)) { if (t.island) targets.get(t.key).island = true; continue; }
     if (t.name && process.env.PLACES_EXTRA) targets.set(t.key, Object.assign({ sites: [], farther: [], centre: null }, t, { port: t.port ? { name: t.port, known: false } : null }));
