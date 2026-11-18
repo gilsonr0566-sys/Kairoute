@@ -45,6 +45,21 @@ No step merges or new steps. Three overlaps between the additions are settled, a
 
 **Restaurant facts** to keep in the database alongside sites: where it is, hours for lunch and dinner, cuisine and price level, ratings (travelers' and Google's within the free allowance), closed for good or not, and how sure we are.
 
+### Dry run: a Rome day from the cruise port (Nov 18)
+The sample trip's Jul 13, 2027 call (docked 07:00, all aboard 20:30, Rome about 60 km from the ship), walked through the 11 steps with the pieces already built and the old engine's plan for comparison.
+
+What held: the window came out 07:30 to 19:45 (30 min ashore, back 45 min before all aboard), exactly as the old engine; no sight is closed that Tuesday; the old plan is back at the ship at 18:13 with 92 min to spare.
+
+Leaks found, and how each is closed:
+1. **Thin guide.** Rome's built-in guide has 6 sights and no Vatican Museums or Sistine Chapel. *Step 3 checks every bucket against the outside fame list for the area and lists famous places that are missing; a guide is never trusted just because it exists.*
+2. **Group membership unknown.** No map-area answer had arrived, so St Peter's was not known to be inside Vatican City and would have been treated as a plain site (the double count Richard saw on Nov 17). *Membership is a fact with a "not yet known" state. Step 3 lists it as missing, and step 9 says so; the engine never guesses.*
+3. **A group disguised as a site.** "Colosseum and Roman Forum" is one entry. *Step 1 splits a combined entry into a group (the archaeological park) and its sites (Colosseum, Roman Forum, Palatine Hill), noting a shared ticket.*
+4. **Unknown hours treated as no limit.** The Colosseum has no hours in the bucket. *Open-air places (a fountain, a square) are marked "always open" on purpose; anything else with unknown hours is listed by step 3, planned only within typical daytime hours, and step 9 says "hours not confirmed, check before you go".*
+5. **Measured from the wrong place.** St Paul Outside the Walls was labelled a day trip because distance was measured from the ship, though it's in Rome. *Each day has a base area (where the sightseeing happens) separate from where it starts. Labels that depend on distance (day trip, near, within reach) are worked out per day in step 2, not stored as lasting categories.*
+6. **The port-day order rule wasn't written into a step.** *Step 6b: on a port day the last stop is the one nearest the way back (here, Rome's station for the train to the port), and far stops come first.*
+7. **The ride to and from the ship.** The plan used a road estimate (69 min); in reality it's a train plus getting to the stations, and the last safe train decides the day. *Ride timetables found when the bucket was filled are pinned with it, so step 6 plans with the slower of the estimate and the pinned timetable; step 7 adds the last safe train and a timed taxi fallback. Because the timetable is pinned, this no longer makes plans drift.*
+8. **Timed tickets.** The Colosseum needs a booked time slot. *Step 6c plans it at a time and step 9 tells the traveler to book that slot; once booked, the slot is a wish held like a booked table.*
+
 ### What we need to know about each site
 Already collected: where it is, visit length, opening hours and closed days, last entry, timed shows, book-ahead, indoor or outdoor, crowd times, cost, fame and sources, category, how to get there for day trips, closed to visitors.
 
