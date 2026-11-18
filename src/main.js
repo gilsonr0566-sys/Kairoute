@@ -589,8 +589,8 @@ function travel(a, b) {
   const walkMin = Math.max(2, Math.round(d * 1.3 / speed * 60)), either = d >= 0.6 && d <= WALK_EITHER, want = either && trip.legModes ? trip.legModes[pairKey(a, b)] : null;
   if (d <= lim ? !want || want === "walk" : want === "walk") { const w = { mode: "walk", how: "Walk", km: d * 1.3, min: walkMin };
     if (!either) return w; const r = roadGuess(d); return Object.assign(w, { key: pairKey(a, b), choice: "walk", road: r.min, choices: [{ id: "walk", label: "Walk", min: walkMin, kind: "walk" }, { id: "taxi", label: "Taxi or car", min: r.min, kind: "car" }] }); }
-  if (d <= 6) return rideLeg(a, b, roadGuess(d), false, either ? walkMin : 0);
-  if (d <= 15) return rideLeg(a, b, roadGuess(d), b.backToShip);
+  if (d <= 6) return boatLeg(a, b, rideLeg(a, b, roadGuess(d), false, either ? walkMin : 0));
+  if (d <= 15) return boatLeg(a, b, rideLeg(a, b, roadGuess(d), b.backToShip));
   let leg = roadGuess(d);
   // A day trip's own note says how long the trip really takes ("1 hour on the Circumvesuviana train", "60-75 min"):
   // the slowest time it names, plus getting to the station or pier, wins over the estimate.
@@ -598,8 +598,26 @@ function travel(a, b) {
   if (said && !(saidMin(a) && saidMin(b))) leg = Object.assign(leg, { min: Math.max(leg.min, said + 15), said: true });
   leg = rideLeg(a, b, leg, b.backToShip);
   // A long ride back to the ship gets time for a late train or traffic: missing the ship is not an option.
+  leg = boatLeg(a, b, leg);
   if ((b.backToShip || b.deadline) && leg.min >= 30) { const sl = Math.max(15, Math.round(leg.min * 0.3 / 5) * 5); leg = Object.assign(leg, { min: leg.min + sl, slack: sl }); }
   return leg;
+}
+// A place reached by boat (an island: Delos from Mykonos, Nov 18 "It has it as a taxi") is never shown as a taxi ride.
+// When no real ferry line was found, a place whose own travel note says it's reached by boat or ferry gets a boat leg:
+// the slowest time the note names plus getting to the pier and a wait for the boat, never less than the road guess.
+const BOAT_NOTE = /\b(boats?|ferry|ferries|water ?taxis?|caiques?|hydrofoils?|catamarans?)\b/i;
+const LAND_NOTE = /\b(train|rail|metro|tram|bus|coach|car|road|drive|driving|taxi|cab|walk|hike|bridge|causeway)\b/i;
+// Only a place the note says is reached by boat alone (an island): "40 minutes by ferry, or 1 hour on the train" (Sorrento)
+// can be reached by land, and the usual ride options stay.
+const byBoat = p => !!(p && typeof p.travel === "string" && BOAT_NOTE.test(p.travel) && !LAND_NOTE.test(p.travel.replace(/water ?taxis?/gi, "")));
+function boatLeg(a, b, leg) {
+  if (!leg || leg.mode === "walk" || !(byBoat(a) || byBoat(b))) return leg;
+  if (leg.transit && leg.transit.mode === "ferry" && leg.transit.checked) return leg; // a ferry with a real timetable says when it sails
+  // A ferry line mapped with no timetable was timed with a full gap between sailings plus getting to the pier (Delos
+  // showed 1 h 27 min for a 30 to 45 min crossing, and lost to a taxi that can't cross the sea): the guide's own crossing
+  // time is used instead, and a road or bus option is never offered to an island.
+  const said = Math.max(saidMin(a), saidMin(b)), min = Math.max(leg.min, (said || 30) + 15); // the crossing the note names (its slowest) plus 15 min to reach the pier and board
+  return Object.assign({}, leg, { how: "Boat", kind: "ferry", boat: true, min, said: !!said, choice: "boat", choices: [{ id: "boat", label: "Boat", min, kind: "ferry" }] });
 }
 // By road (taxi, car or bus), as the crow flies d km. 15-40 km: regional roads around bays and through towns
 // (Naples to Sorrento is 26 km as the crow flies but about 50 km of coast road); farther: highway (Athens to
@@ -851,7 +869,7 @@ function rideDetail(leg, start, endBy) {
   if (!leg.choices) return "";
   const o = leg.transit, ev = knownEvery(o) ? `, runs about every ${dur(o.every)}${o.everySrc === "timetable" ? " (from the timetable)" : ""}` : "";
   const ride = o && o.steps && o.steps.length ? o.steps.map(esc).join("; then ") : o ? `${dur(o.ride)} ride${o.stops ? ` (${o.stops} stops)` : ""}` : "";
-  const how = o ? `${o.access.how === "walk" ? "Walk" : "Taxi"} ${dur(o.access.min)} to ${esc(o.from || "the " + (o.mode === "ferry" ? "pier" : "station"))}${ev}. ${ride}, then ${o.egress.how === "walk" ? "walk" : "taxi"} ${dur(o.egress.min)}${o.to && !(o.steps && o.steps.length) ? " from " + esc(o.to) : ""}.${o.operator ? " " + esc(o.operator) + "." : ""}${o.hours ? " Hours: " + esc(o.hours) + "." : ""}${o.fare ? " Fare: " + esc(o.fare) + "." : ""} Times include waiting and boarding.${payNote(o)}` : leg.mode === "walk" ? "" : "By road, with time for traffic.";
+  const how = o ? `${o.access.how === "walk" ? "Walk" : "Taxi"} ${dur(o.access.min)} to ${esc(o.from || "the " + (o.mode === "ferry" ? "pier" : "station"))}${ev}. ${ride}, then ${o.egress.how === "walk" ? "walk" : "taxi"} ${dur(o.egress.min)}${o.to && !(o.steps && o.steps.length) ? " from " + esc(o.to) : ""}.${o.operator ? " " + esc(o.operator) + "." : ""}${o.hours ? " Hours: " + esc(o.hours) + "." : ""}${o.fare ? " Fare: " + esc(o.fare) + "." : ""} Times include waiting and boarding.${payNote(o)}` : leg.mode === "walk" ? "" : leg.boat ? "The crossing plus 15 min to reach the pier and board. Boats run on a timetable, so you may wait for the next one: check the times at the pier, and above all the last boat back." : "By road, with time for traffic.";
   const fall = depLine(o, start, endBy, leg.lastMile, leg.slack) + (leg.slack ? ` Includes ${dur(leg.slack)} spare before the ship.` : "") + (leg.lastMile && o ? ` <b>If you miss it:</b> a taxi takes about ${dur(leg.road)}.` : "");
   const note = rideNotice && rideNotice.key === leg.key ? `<span class="ridenote">${rideNotice.text}${rideNotice.undo != null ? ` <button class="linkbtn" data-act="rideundo">Undo</button>` : ""}${rideNotice.force ? ` <button class="linkbtn" data-act="rideforce">${esc(rideNotice.forceText)}</button>` : ""}</span>` : "";
   // One tap per way to go, in the transport colors, each with its time (and fare when the timetable gives one).
@@ -1555,9 +1573,9 @@ function mealSpots(seq, O, Z, city) {
   // Any stop with no known place to eat a short walk away (often a day trip out of town) also offers
   // "Lunch near <stop>", so the plan never travels back to town just to eat.
   const bare = seq.filter(x => !x.mealOf && !(city.restaurants || []).some(r => !r.crowdDrop && hav(r, x) <= 0.6));
-  const gen = bare.map(x => ({ name: "Lunch near " + x.name, lat: x.lat, lng: x.lng, generic: true, kind: "local", cuisine: "Your pick", price: "", why: "Choose any café or taverna around here, or bring a picnic. A good sign is a place full of locals." }));
+  const gen = bare.map(x => ({ name: "Lunch near " + x.name, lat: x.lat, lng: x.lng, ...(byBoat(x) ? { travel: x.travel } : {}) /* an island's boat goes with its lunch (only then: a "1 hour by train" note would time every ride from the lunch) */, generic: true, kind: "local", cuisine: "Your pick", price: "", why: "Choose any café or taverna around here, or bring a picnic. A good sign is a place full of locals." }));
   // Every place near here is already another day's meal: "Lunch near <stop>" rather than the same restaurant twice.
-  if (!fresh.length && !gen.length && near.length) { const a = seq.find(x => !x.mealOf) || O; if (a) gen.push({ name: "Lunch near " + a.name, lat: a.lat, lng: a.lng, generic: true, kind: "local", cuisine: "Your pick", price: "", why: "You've eaten at the guide's places around here on other days: try somewhere new nearby, a café or taverna full of locals." }); }
+  if (!fresh.length && !gen.length && near.length) { const a = seq.find(x => !x.mealOf) || O; if (a) gen.push({ name: "Lunch near " + a.name, lat: a.lat, lng: a.lng, ...(byBoat(a) ? { travel: a.travel } : {}), generic: true, kind: "local", cuisine: "Your pick", price: "", why: "You've eaten at the guide's places around here on other days: try somewhere new nearby, a café or taverna full of locals." }); }
   return (fresh.length ? fresh : []).concat(gen); // never repeat another day's restaurant
 }
 // The places worth trying for one meal: with real map data a big city has hundreds of places to eat near the
