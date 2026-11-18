@@ -223,8 +223,6 @@ input[type=text], input[type=date], input[type=time], input[type=number], select
 .tag.fit { background: var(--route-soft); color: var(--route); border-color: transparent; }
 .tag.nofit { background: var(--meal-soft); color: var(--warn); border-color: transparent; }
 .travelnote { font-size: 0.85rem; color: var(--muted); }
-.stickybar { position: sticky; bottom: 0; padding-block: 12px calc(12px + env(safe-area-inset-bottom, 0px)); background: linear-gradient(to top, var(--paper) 70%, transparent); display: flex; gap: 10px; align-items: center; justify-content: space-between; flex-wrap: wrap; }
-.stickybar .count { font-weight: 700; }
 
 /* Plan */
 .summary { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
@@ -681,14 +679,12 @@ main:has(#view.full) { padding: 0; }
 .timeline.compact .tl .rail { align-items: center; }
 .timeline.compact .tl .rail .dot { margin-top: 0; }
 .lede.small { font-size: 0.88rem; margin: 0; }
-.planacts { display: grid; gap: 10px; margin: 2px 0; }
-.planacts .bigbtn { width: 100%; background: var(--cta); }
 .toolrow { display: flex; flex-wrap: wrap; gap: 8px; }
 .toolrow .btn { flex: 1 1 auto; }
+@media (min-width: 900px) { .toolrow .btn { flex: 0 0 auto; } }
 .btn.toggle { gap: 8px; cursor: pointer; }
 .btn.toggle input { width: 18px; height: 18px; margin: 0; accent-color: var(--route); }
 .btn.toggle:has(input:checked) { background: var(--route-soft); border-color: var(--route); color: var(--route); }
-@media (min-width: 900px) { .planacts { grid-template-columns: minmax(260px, 1fr) auto; align-items: center; } .toolrow .btn { flex: 0 0 auto; } }
 .badges { display: flex; flex-wrap: wrap; gap: 6px; }
 .badge { font-style: normal; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.02em; text-transform: uppercase; color: var(--meal); background: var(--card); border-radius: 4px; padding: 2px 8px; }
 .badge.kpick { background: linear-gradient(135deg, #f2b33d, var(--meal)); color: #fff; box-shadow: 0 1px 4px rgba(0,0,0,.18); }
@@ -857,7 +853,6 @@ details.story:not([open]) > summary::before { content: "▸ "; }
   html.appview .daysum > div { padding: 7px 12px; }
   html.appview .daysum b { font-size: 1.05rem; }
   html.appview .bigbtn { min-height: 46px; padding: 10px 20px; font-size: 1.05rem; }
-  html.appview .planacts { gap: 8px; margin: 0; }
   html.appview .toolrow { gap: 6px; }
   html.appview .toolrow > * { flex: none; white-space: nowrap; }
 
@@ -882,7 +877,6 @@ details.story:not([open]) > summary::before { content: "▸ "; }
   html.appview .sitesside .meter { position: static; box-shadow: none; }
   html.appview .sitesmain { gap: 12px; padding-bottom: 0; container-type: inline-size; }
   html.appview .sitesmain .sitelist { grid-template-columns: repeat(auto-fill, minmax(min(100%, 270px), 1fr)); }
-  html.appview .stickybar { margin-top: -4px; }
 
   /* Trip: day list and day form side by side, each scrolling */
   html.appview .tripgrid { gap: 16px; }
@@ -1003,7 +997,6 @@ html.setview .top .wrap > :not(.tabs) { display: none; }
 @media (min-width: 641px) { html.setview:not(.railnav) .tabs { display: none; } }
 /* ---- Phones: compact header, bottom tab bar, swipeable days, tighter type ---- */
 .tab svg { display: none; }
-.mcta { display: none; }
 html, body { overflow-x: hidden; }
 @media (max-width: 640px) {
   .top .wrap { padding-block: 8px 0; gap: 6px; }
@@ -1034,13 +1027,9 @@ html, body { overflow-x: hidden; }
   .daysum > div:nth-child(n+2) { border-left: 1px solid var(--line) !important; }
   .daysum b { font-size: .92rem !important; white-space: normal !important; overflow-wrap: anywhere; line-height: 1.2; }
   .daysum span { font-size: .7rem !important; }
-  .planacts .bigbtn { display: none; }
   .toolrow { display: flex !important; flex-wrap: nowrap !important; overflow-x: auto; gap: 8px; scrollbar-width: none; padding-bottom: 2px; }
   .toolrow > * { flex: none; white-space: nowrap; }
-  .mcta { display: block; position: fixed; left: 12px; right: 12px; bottom: calc(66px + env(safe-area-inset-bottom, 0px)); z-index: 19; }
-  .mcta .btn { width: 100%; min-height: 50px; font-size: 1.05rem; box-shadow: 0 6px 18px rgba(0,0,0,.25); background: var(--cta); border-color: var(--cta); color: #fff; }
   .tl .time { font-size: .85rem; }
-  body.touring-on .mcta, header.top.touring ~ main .mcta { display: none; }
 }
 /* First-run walkthrough */
 .coach { position: fixed; inset: 0; z-index: 50; background: rgba(8,14,16,.72); display: grid; place-items: center; padding: 16px; }
@@ -1097,8 +1086,6 @@ html, body { overflow-x: hidden; }
    the More menu, alerts together above the schedule, and the details of each stop and meal folded. ---- */
 .dayhead { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
 .dayhead > div:first-child { min-width: 0; }
-.dayhead .tourbtn .tb-short { display: none; }
-.dayhead .tourbtn { flex: none; width: auto; min-height: 44px; padding: 8px 18px; background: var(--cta); border-color: var(--cta); color: #fff; }
 .planbar { display: flex; flex-wrap: wrap; gap: 8px 10px; align-items: center; justify-content: space-between; }
 .planbar .seg.daylen { margin: 0; gap: 4px; flex-wrap: nowrap; }
 .planbar .seg.daylen button { min-height: 36px; padding: 5px 10px; }
@@ -1138,9 +1125,6 @@ details.mealmore .mealbox { margin-top: 6px; }
 }
 @media (max-width: 640px) {
   .dayhead { align-items: center; }
-  .dayhead .tourbtn { min-height: 42px; padding: 6px 12px; font-size: .95rem; } /* phones: Start the tour stays at the top, beside the day's name */
-  .dayhead .tourbtn .tb-long { display: none; }
-  .dayhead .tourbtn .tb-short { display: inline; }
   .planbar { gap: 8px; }
   .planbar .seg.daylen { width: 100%; }
   .planbar .seg.daylen button { flex: 1 1 0; justify-content: center; }
@@ -1151,15 +1135,20 @@ details.mealmore .mealbox { margin-top: 6px; }
   .countdown .cdbig { font-size: 1.8rem; }
 }
 
-/* Change stops: "See my day plan" floats, so it's one tap away however far down the list you are (Nov 13) */
-.stickybar { position: fixed; z-index: 25; right: max(16px, env(safe-area-inset-right, 0px)); bottom: calc(16px + env(safe-area-inset-bottom, 0px)); left: auto; padding: 8px 8px 8px 16px; margin: 0;
-  background: var(--card); border: 1px solid var(--line); border-radius: 10px; box-shadow: 0 8px 24px rgba(0,0,0,.18); flex-wrap: nowrap; gap: 14px; max-width: calc(100vw - 32px); }
-.stickybar .count { font-size: .9rem; white-space: nowrap; }
-.stickybar .btn { min-height: 46px; padding: 8px 20px; white-space: nowrap; }
-html.appview .sitesmain { padding-bottom: 90px; }
+/* Action buttons, the same on every page (Richard, Nov 18: "keep the action buttons consistent"). The page's one main
+   action (Start the tour, See my day plan, Make my memory video) sits in the head's top-right slot: orange, 44px tall
+   (42px on phones, with its short label). Other buttons in the head are plain outlined buttons of the same height. */
+.mainbtn { flex: none; width: auto; min-height: 44px; padding: 8px 18px; font-size: 1.05rem; background: var(--cta); border-color: var(--cta); color: #fff; white-space: nowrap; }
+.mainbtn .tb-short { display: none; }
+.headacts > .btn:not(.mainbtn) { min-height: 44px; padding: 8px 14px; font-size: .95rem; white-space: nowrap; }
+html.appview .headacts .mainbtn { min-height: 44px; padding: 8px 18px; font-size: 1.05rem; }
+.pickbar .count { font-weight: 700; }
 @media (max-width: 640px) {
-  .stickybar { left: 12px; right: 12px; bottom: calc(68px + env(safe-area-inset-bottom, 0px)); justify-content: space-between; }
-  .stickybar .count { font-size: .85rem; white-space: normal; line-height: 1.2; }
+  .mainbtn, html.appview .headacts .mainbtn { min-height: 42px; padding: 6px 12px; font-size: .95rem; }
+  .headacts > .btn:not(.mainbtn) { min-height: 42px; padding: 6px 12px; font-size: .9rem; }
+  .mainbtn .tb-long { display: none; }
+  .mainbtn .tb-short { display: inline; }
+  .pagehead .headacts:has(> .mainbtn:only-child) { flex: none; } /* the countdown keeps the rest of the line */
 }
 /* Day plan's More menu: grouped */
 .menugroup { padding: 8px 12px 2px; font-size: .72rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
@@ -1304,7 +1293,6 @@ body.psheet-on { overflow: hidden; }
 .pagehead > div:first-child { min-width: 0; flex: 1 1 auto; }
 .pagehead .dayname { margin: 0; }
 .headacts { display: flex; gap: 8px; align-items: center; flex: none; margin-left: auto; }
-.headacts .btn.small { min-height: 40px; }
 #view > .pagehead { margin-bottom: 2px; }
 /* folds are easy to tap: every fold title is at least 36px tall */
 #view details:not(.moremenu):not(.cdchip) > summary { padding-block: 8px; }
@@ -1329,7 +1317,6 @@ body.psheet-on { overflow: hidden; }
   .pagehead .cdchip { flex: 1 1 auto; min-width: 0; }
   .pagehead .cdchip > summary { justify-content: center; }
   .headacts { flex: 1 1 auto; flex-wrap: wrap; justify-content: flex-end; }
-  .headacts .tourbtn { min-height: 42px; }
   .tourcard { padding: 16px; }
   .tourcard .tourmain { margin: 0 -16px -16px; padding: 10px 16px calc(10px + env(safe-area-inset-bottom, 0px)); }
   .tourhead .headacts { width: 100%; }

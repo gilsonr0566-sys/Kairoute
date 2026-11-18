@@ -22,7 +22,7 @@ const NAMES = (process.env.NAMES || "Roman Agora|Corinth Canal|Hadrian's Library
       // and sights planned on other days sit under the "Already scheduled" line naming their day.
       for (const di of [0, 1, 2, 3, 4]) {
         await p.evaluate(i => window.__kairouteAt(i, "sites"), di); await p.waitForTimeout(1200);
-        const st = await p.evaluate(() => { const cards = [...document.querySelectorAll(".sitesmain [data-card]")].filter(c => !c.closest("details")); const ticked = cards.filter(c => c.querySelector("input:checked")); const inS = c => !!c.closest(".sitelist.sched"); const f = cards.findIndex(inS); const sb = document.querySelector(".stickybar .count");
+        const st = await p.evaluate(() => { const cards = [...document.querySelectorAll(".sitesmain [data-card]")].filter(c => !c.closest("details")); const ticked = cards.filter(c => c.querySelector("input:checked")); const inS = c => !!c.closest(".sitelist.sched"); const f = cards.findIndex(inS); const sb = document.querySelector(".pickbar .count");
           return { day: (document.querySelector("h1, .dayhead h2, h2") || {}).innerText, ticked: ticked.length, count: sb ? parseInt(sb.innerText, 10) : -1, offPlan: ticked.filter(c => /doesn't fit|not on today/.test(c.innerText)).map(c => c.querySelector(".name").innerText), sched: cards.filter(inS).length, line: !!document.querySelector(".schedline"), mixed: f >= 0 && cards.slice(f).some(c => !inS(c)), noDay: cards.filter(inS).filter(c => !/Day \d+ · /.test(c.innerText)).length }; });
         console.log(`${tag} day ${di + 1} list: ${JSON.stringify(st)}`);
         ok(!st.offPlan.length, `${tag} day ${di + 1}: no ticked pick off the plan${st.offPlan.length ? " (" + st.offPlan.join(", ") + ")" : ""}`);

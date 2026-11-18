@@ -116,7 +116,7 @@ const FILE = path.resolve(process.argv[2] || path.join(__dirname, '..', 'index.h
       // A long sight that can't fit forced onto the short day (Richard's National Garden case) comes straight off.
       const big = await p.evaluate(() => { const c = [...document.querySelectorAll('.sitesmain .nofitcard')][0]; return c ? c.dataset.card : null; });
       if (big) { const kept = await p.evaluate(id => window.__kairouteForcePick(id), big); await p.waitForTimeout(300); if (kept) bad(2, `${big} stayed picked though it doesn't fit`); }
-      const st = await p.evaluate(() => { const ticked = [...document.querySelectorAll('.sitesmain input[data-site]:checked')]; const sb = document.querySelector('.stickybar .count'); return { n: ticked.length, nofit: ticked.filter(x => /doesn't fit|not on today/.test(x.closest('.site').innerText)).map(x => x.dataset.site), count: sb ? parseInt(sb.innerText, 10) : -1, note: !!document.querySelector('.banner.bumped'), sel: window.__kairouteSelCount() }; });
+      const st = await p.evaluate(() => { const ticked = [...document.querySelectorAll('.sitesmain input[data-site]:checked')]; const sb = document.querySelector('.pickbar .count'); return { n: ticked.length, nofit: ticked.filter(x => /doesn't fit|not on today/.test(x.closest('.site').innerText)).map(x => x.dataset.site), count: sb ? parseInt(sb.innerText, 10) : -1, note: !!document.querySelector('.banner.bumped'), sel: window.__kairouteSelCount() }; });
       if (st.nofit.length) bad(0, `picks stay ticked though they don't fit: ${st.nofit.join(', ')}`);
       if (st.count !== st.n) bad(0, `count says ${st.count} picked, ${st.n} ticked`);
       if ((before > st.sel || big) && !st.note) bad(0, 'picks came off without saying why');
