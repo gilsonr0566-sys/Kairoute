@@ -26,6 +26,9 @@
     const byId = new Map(fit.seq.map(s => [String(s.id), s])), items = [];
     for (const x of fit.r.items) {
       if (x.t === "ride") { items.push(Object.assign({ t: "ride", mode: x.mode, min: x.min, km: x.km }, x.options ? { how: x.how, options: x.options } : {})); continue; }
+      // Each ride knows where it starts and ends (the map draws each one apart, out and back side by side).
+      const prev = items[items.length - 1], here = point(x.id != null ? byId.get(String(x.id)) : (x.t === "start" ? win.head[0] : x.t === "end" ? win.tail[win.tail.length - 1] : null));
+      if (prev && prev.t === "ride" && items.length >= 2) { const a = items[items.length - 2]; if (isFinite(a.lat) && isFinite(here.lat)) Object.assign(prev, { from: { lat: a.lat, lng: a.lng }, to: here }); }
       const src = x.id != null ? byId.get(String(x.id)) : null;
       const it = { t: x.t, id: x.t === "meal" ? null : x.id, name: x.name, at: x.at, min: x.min, bonus: x.t === "stop" && autoIds.has(String(x.id)), along: false, meal: x.meal || null, late: x.late || 0 };
       if (x.wait) it.wait = x.wait; if (x.chosen) it.chosen = true; if (x.pinned) it.pinned = true;

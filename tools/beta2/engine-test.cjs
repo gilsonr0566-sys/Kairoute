@@ -152,6 +152,13 @@ if (fs.existsSync(dir)) for (const f of fs.readdirSync(dir).filter(f => f.endsWi
   ok(n > 0 || liveDays > 0, f + ': no days to compare'); oks += same; console.log(`ok   ${s.name}: ${same} of ${n} timed days match the old engine to the minute${liveDays ? ` (${liveDays} left out: the old app used a live route time)` : ''}`);
 }
 
+// ---- Every ride in a plan says where it starts and ends (the map draws each ride on its own) ----
+if (fs.existsSync(dir)) { let rides = 0, placed = 0;
+  for (const f of fs.readdirSync(dir).filter(f => f.endsWith('.json'))) E.planTrip(JSON.parse(fs.readFileSync(path.join(dir, f)))).forEach(p => (p && p.items || []).forEach((x, k) => {
+    if (x.t !== 'ride') return; const a = p.items[k - 1], b = p.items[k + 1]; if (!a || !b || !isFinite(a.lat) || !isFinite(b.lat)) return; rides++;
+    if (x.from && x.to && x.from.lat === a.lat && x.to.lng === b.lng) placed++; else ok(false, `${f} day ${p.i}: ride ${a.name} to ${b.name} has no start and end`); }));
+  console.log(`ok   ${placed} of ${rides} rides carry their start and end points`); }
+
 // ---- Every city with public transport lines in its places file: each ride the day plan makes along a line offers it.
 { const PD = path.join(__dirname, '..', 'places', 'data'), places = {};
   if (fs.existsSync(PD)) for (const f of fs.readdirSync(PD).filter(f => f.endsWith('.json'))) { const p = JSON.parse(fs.readFileSync(path.join(PD, f))); places[p.key] = p; }
