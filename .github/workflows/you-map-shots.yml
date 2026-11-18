@@ -18,13 +18,12 @@ jobs:
       - name: Check with stand-in tiles (no network)
         run: sh build.sh && MOCK=1 node tools/you-map-check.cjs
       - name: Check with the real OpenFreeMap tiles
-        run: rm -f checks/you-*.png && node tools/you-map-check.cjs
+        run: rm -f checks/you-*.png && JPG=1 node tools/you-map-check.cjs
       - name: Print screens
         if: always()
         run: |
-          for f in checks/you-*.png; do
-            convert "$f" -resize '1280x1280>' -quality 72 /tmp/s.jpg
-            echo "=====BEGIN $(basename "$f" .png)"; base64 -w 0 /tmp/s.jpg; echo; echo "=====END"
+          for f in checks/you-*.jpg; do
+            echo "=====BEGIN $(basename "$f" .jpg)"; base64 -w 0 "$f"; echo; echo "=====END"
           done
       - if: always()
         uses: actions/upload-artifact@v4

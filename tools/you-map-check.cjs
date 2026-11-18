@@ -46,7 +46,7 @@ async function openDay(p) {
 const Y = p => p.evaluate(() => window.__kairouteYou());
 const waitFor = async (p, fn, ms = 20000) => { const t0 = Date.now(); let v; while (Date.now() - t0 < ms) { v = await fn(); if (v) return v; await p.waitForTimeout(250); } return v; };
 const compass = (p, alpha) => p.evaluate(a => { const e = new Event('deviceorientationabsolute'); Object.assign(e, { alpha: a, beta: 0, gamma: 0, absolute: true }); window.dispatchEvent(e); }, alpha);
-const mapShot = async (p, name) => { const el = await p.$('#view .mapslot.live'); if (el) { await el.scrollIntoViewIfNeeded(); await p.waitForTimeout(400); } await p.screenshot({ path: path.join(OUT, name) }); };
+const mapShot = async (p, name) => { const el = await p.$('#view .mapslot.live'); if (el) { await el.scrollIntoViewIfNeeded(); await p.waitForTimeout(400); } await p.screenshot({ path: path.join(OUT, name) }); if (process.env.JPG) await p.screenshot({ path: path.join(OUT, name.replace(/\.png$/, '.jpg')), type: 'jpeg', quality: 60, scale: 'css' }); };
 let base;
 (async () => {
   await new Promise(r => srv.listen(0, r)); base = `http://localhost:${srv.address().port}/`;
