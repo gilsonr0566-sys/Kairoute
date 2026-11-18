@@ -47,6 +47,8 @@ const coord = e => { const c = claim(e, 'P625')[0]; return c ? { lat: c.latitude
 const WHS = 'Q9259';
 // Closed for good: an end date or closure date stated plainly. One with a qualifier ("as a museum", "of this part")
 // is about a former use, not the place (a building that stopped being a museum is still open), so it doesn't count.
+// The official website (Wikidata P856), https preferred: where the Book tickets link starts (never a made-up address).
+const officialWeb = e => { const w = claim(e, 'P856').filter(u => typeof u === 'string' && /^https?:\/\//i.test(u)); return w.find(u => /^https:/i.test(u)) || w[0] || ''; };
 const shut = e => ['P576', 'P3999'].some(p => ((e && e.claims && e.claims[p]) || []).some(c => c.rank !== 'deprecated' && !Object.keys(c.qualifiers || {}).length));
 // The item a name stands for near a point: of the matches within km, the most widely known (most language editions),
 // so a town is not mistaken for a street or building named after it. A name with extra words ("X old town",
@@ -116,7 +118,7 @@ async function guideSights(title, centre) {
   const qs = [...new Set(out.map(x => x.wikidata).filter(Boolean))];
   if (qs.length) { const e = await entities(qs), lp = new Set(); Object.values(e).forEach(x => ids(x, 'P361').forEach(q => lp.add(q))); const lpe = lp.size ? await entities([...lp]) : {};
     for (const x of out) { const k = e[x.wikidata]; if (!k) continue; x.editions = Object.keys(k.sitelinks || {}).length;
-      x.unesco = ids(k, 'P1435').includes(WHS) || ids(k, 'P361').some(q => ids(lpe[q], 'P1435').includes(WHS)); if (shut(k)) x.closedForGood = true; } }
+      x.unesco = ids(k, 'P1435').includes(WHS) || ids(k, 'P361').some(q => ids(lpe[q], 'P1435').includes(WHS)); if (shut(k)) x.closedForGood = true; const w = officialWeb(k); if (w) x.web = w; } }
   return out;
 }
 
@@ -198,7 +200,7 @@ async function buildPlace(t) {
   const partE = parts.size ? await entities([...parts]) : {};
   const fact = e => ({ wikidata: e.id, editions: Object.keys(e.sitelinks || {}).length, types: ids(e, 'P31'),
     unesco: ids(e, 'P1435').includes(WHS) || ids(e, 'P361').some(q => ids(partE[q], 'P1435').includes(WHS)),
-    closedForGood: shut(e), partOf: ids(e, 'P361') });
+    closedForGood: shut(e), partOf: ids(e, 'P361'), web: officialWeb(e) });
   for (const s of t.sites) { const q = qOfSite(s); if (q && all[q]) out.sites[s.id] = fact(all[q]); }
   // 2. OpenStreetMap hours and fees, matched by the Wikidata tag mappers put on the map.
   // Asked only around the place itself (a world-wide search times out on a busy map server).
@@ -206,7 +208,7 @@ async function buildPlace(t) {
   if (wq.length) {
     const els = await overpass(`[out:json][timeout:180];nwr(around:${Math.round(reach)},${centre.lat},${centre.lng})["wikidata"~"^(${wq.join('|')})$"];out tags center;`);
     for (const el of els) { const tg = el.tags || {}; const id = t.sites.find(s => qOfSite(s) === tg.wikidata); if (!id) continue;
-      const f = out.sites[id.id] = out.sites[id.id] || {}; if (tg.opening_hours && !f.hours) f.hours = tg.opening_hours; if (tg.fee) f.fee = tg.fee; f.osm = el.type + '/' + el.id; }
+      const f = out.sites[id.id] = out.sites[id.id] || {}; if (tg.opening_hours && !f.hours) f.hours = tg.opening_hours; if (tg.fee) f.fee = tg.fee; if (!f.web && /^https?:\/\//i.test(tg.website || tg['contact:website'] || '')) f.web = tg.website || tg['contact:website']; f.osm = el.type + '/' + el.id; }
   }
   // 3. Towns a day away: Wikidata fame and UNESCO, Wikivoyage listing as a day trip, and their own sights and food & drink.
   const host = await wvText(baseName(t.name)); await sleep(300);
