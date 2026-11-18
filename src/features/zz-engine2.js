@@ -3,8 +3,8 @@
 // its trip bucket (zz-engine-bucket.js), the new engine plans the whole trip from it at once (KEngine.planTrip), and
 // each day's plan is handed to the screens in the shape they already read, so every screen shows the new engine's
 // plan. In the normal build none of this runs.
-if (typeof ENGINE2 !== "undefined" && ENGINE2 && typeof KEngine !== "undefined") (function () {
-  const E = KEngine;
+if (typeof window !== "undefined" && window.ENGINE2 && window.KEngine) (function () {
+  const E = window.KEngine;
   let memo = { k: "", plans: null, bucket: null };
   // The whole trip planned once per change (the traveler's trip, an answer arriving, the guides, the date).
   function tripPlans() {
@@ -12,7 +12,7 @@ if (typeof ENGINE2 !== "undefined" && ENGINE2 && typeof KEngine !== "undefined")
     const k = strHash(t) + "|" + dataGen + "|" + citiesSig() + "|" + todayISO();
     if (memo.k === k && memo.plans) return memo;
     let bucket = engineBucket(false);
-    if (typeof PLACES2 !== "undefined") bucket = E.applyPlaces(bucket, PLACES2);
+    if (window.PLACES2) bucket = E.applyPlaces(bucket, window.PLACES2);
     let plans; try { plans = E.planTrip(bucket); } catch (e) { console.warn("Beta 2 engine", e); plans = []; }
     memo = { k, plans, bucket }; return memo;
   }
