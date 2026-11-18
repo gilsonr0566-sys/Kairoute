@@ -31,7 +31,7 @@
     const fixedAt = id => win.head.concat(win.tail).find(p => p.fixed && p.id === id);
     const whereIs = x => x.t === "fixed" ? fixedAt(x.id) : x.id != null ? byId.get(String(x.id)) : x.t === "start" ? win.head[0] : x.t === "end" ? win.tail[win.tail.length - 1] : null;
     for (const x of fit.r.items) {
-      if (x.t === "ride") { items.push(Object.assign({ t: "ride", mode: x.mode, min: x.min, km: x.km }, x.options ? { how: x.how, options: x.options } : {})); continue; }
+      if (x.t === "ride") { items.push(Object.assign({ t: "ride", mode: x.mode, min: x.min, km: x.km }, x.options ? { how: x.how, options: x.options } : x.mode === "boat" || x.mode === "lift" ? { how: x.how } : {})); continue; }
       // Each ride knows where it starts and ends (the map draws each one apart, out and back side by side).
       const prev = items[items.length - 1], here = point(whereIs(x));
       if (prev && prev.t === "ride" && items.length >= 2) { const a = items[items.length - 2]; if (isFinite(a.lat) && isFinite(here.lat)) Object.assign(prev, { from: { lat: a.lat, lng: a.lng }, to: here }); }
@@ -104,6 +104,8 @@
       if (outing) { dayTrip.set(outing.day, outing.ids); outing.ids.forEach(id => areaDay.set(key + "|" + id, outing.day)); }
       const split = E.splitAreas(stay.filter(x => !outing || x.i !== outing.day), sights);
       split.forEach((v, k) => areaDay.set(key + "|" + k, v));
+      // A sight with its own tour inside an area goes on the day that area is walked: one walk, not two trips.
+      for (const [m, g] of groups.groupOf) if (areaDay.has(key + "|" + g) && E.ownStop(byId.get(String(m)), picked)) areaDay.set(key + "|" + m, areaDay.get(key + "|" + g));
     }
     // Plan one day. again: the day's stops from the first pass, now free to fill from any sight still unused.
     const planDay = (i, again) => {
@@ -126,7 +128,13 @@
       ctx.mayAdd = id => ledger.sightFree(id, i) && doneDay(wishDay.get(String(id))) && doneDay(areaDay.get(d.city + "|" + id));
       const picked = new Set(sel[i].map(String));
       const groups = E.makeGroups(ranked), folded = s => groups.groupOf.get(String(s.id)) != null && !E.ownStop(s, picked);
-      const pool = ranked.filter(s => E.allowed(s, prefs, siteDay(s.id), win) && !folded(s));
+      // An area walk whose sights with their own tour are stops of their own: the walk keeps only the time between them
+      // (its own time less theirs, never under half an hour), and its time goes to more sights.
+      const byIdR = new Map(ranked.map(s => [String(s.id), s]));
+      const own = g => (groups.members.get(String(g.id)) || []).map(m => byIdR.get(String(m))).filter(m => m && E.ownStop(m, picked));
+      const pool = ranked.filter(s => E.allowed(s, prefs, siteDay(s.id), win) && !folded(s))
+        .map(s => { const o = own(s); if (!o.length) return s; const left = Math.max(30, Math.round(((s.minutes || 60) - o.reduce((a, m) => a + (m.minutes || 30), 0)) / 5) * 5);
+          return left < (s.minutes || 60) ? Object.assign({}, s, { minutes: left, walkOf: o.map(m => m.name) }) : s; });
       const explain = [], wishes = [];
       let picks = null, autoIds;
       if (again) {
@@ -139,7 +147,7 @@
         if (win.leaveEarly) explain.push("Leave by " + E.clock(win.start) + ", " + win.leaveEarly + " min before your planned start of " + E.clock(win.plannedStart) + ", to be " + (d.type === "embark" ? "at the cruise terminal" : "there") + " by " + E.clock(win.endBy) + ".");
         for (const [id, m] of movedTo) if (m.from === i) explain.push(m.name + " is closed on " + dayWord(i) + ", so it's planned on " + dayWord(m.to) + ".");
         for (const id of sel[i]) {
-          const s = ranked.find(x => String(x.id) === String(id)); if (!s) continue;
+          const s = pool.find(x => String(x.id) === String(id)) || ranked.find(x => String(x.id) === String(id)); if (!s) continue;
           const on = ledger.sightDay(s.id);
           if (on != null && on !== i) { explain.push(s.name + " is planned on another day."); continue; }
           if (!E.allowed(s, prefs, siteDay(s.id), win)) { explain.push(s.name + " is closed or can't be visited this day."); continue; }
@@ -180,6 +188,9 @@
       if (unknownHours.length && (city.sites || []).some(s => hoursKnown(s.id)))
         explain.push("Opening hours for " + E.listWords(unknownHours.slice(0, 4).map(k => String(k.name).split(",")[0]).concat(unknownHours.length > 4 ? ["others"] : []), "and") + " aren't on the map yet: check before you go.");
       const plan = shortForm(i, win, fit, autoIds, dinner);
+      // A stop inside an area walked today says so: one walk, not separate trips.
+      const keptIds = new Set(fit.kept.map(k => String(k.id)));
+      plan.items.forEach(x => { if (x.t !== "stop") return; const g = groups.groupOf.get(String(x.id)); if (g != null && keptIds.has(String(g))) x.within = (byIdR.get(String(g)) || {}).name; });
       const bad = guard(plan, win);
       if (bad.length) return { plan: safeDay(i, win, tr, bad) };
       const sightIds = [];
@@ -208,10 +219,11 @@
         if (!(keepsAll(now) && now.kept.length > was.kept.length)) { undo(now); now = null; }
       }
       // A trip out to the best farther sight nobody has used, when it gives more than the sights it replaces (the
-      // traveler's own picks always stay). On a ship, train or plane day only a short road ride (half an hour at most
-      // each way, never a boat on its own timetable): the app adds no long ride or boat there on its own.
-      const BOAT = /\b(boat|ferry|hydrofoil|catamaran)\b/i, from0 = was.win.head[was.win.head.length - 1];
-      const shortRoad = s => tr.min(from0, s) <= 30 && !BOAT.test(s.travelNote || "");
+      // traveler's own picks always stay). On a ship, train or plane day only by road, an hour at most each way, and only
+      // when the day still ends 45 minutes before the time to be back: the app adds no boat there on its own (boats keep
+      // their own timetable), it names it instead.
+      const BOAT = E.BOAT, from0 = was.win.head[was.win.head.length - 1];
+      const shortRoad = s => tr.min(from0, s) <= 60 && !BOAT.test(s.travelNote || "");
       const worthOf = r => r.kept.reduce((a, k) => a + (k.worth || 0), 0);
       const city = guides[d.city] || {}, far = E.rank((city.farther || []).map(s => Object.assign({}, s, { far: true })), prefs, style)
         .filter(s => !s.town && ledger.sightFree(s.id, i) && !wishDay.has(String(s.id)) && !(now || was).kept.some(k => k.far))
@@ -223,12 +235,18 @@
         const cur = now || was;
         if (now) undo(now);
         const r = planDay(i, Object.assign({}, was, { kept: wished, extra: f.id }));
-        const better = r.kept && wished.every(w => r.kept.some(k => String(k.id) === String(w.id))) && r.kept.some(k => String(k.id) === String(f.id)) && worthOf(r) > worthOf(cur);
+        const better = r.kept && (!was.win.hard || r.spare >= 45) && wished.every(w => r.kept.some(k => String(k.id) === String(w.id))) && r.kept.some(k => String(k.id) === String(f.id)) && worthOf(r) > worthOf(cur);
         if (better) { now = r; continue; }
         undo(r);
         if (now) now.sightIds.forEach(id => ledger.claimSight(id, i)), now.eatIds.forEach(k => ledger.claimEat(k, i));
       }
       if (now) { done[i] = now; out[i] = now.plan; continue; }
+      // Time left on a ship day and a trip out by boat the guide names: say so, with the time to be back on shore.
+      if (was.win.hard && d.type === "port" && was.plan && was.plan.items) {
+        const boat = E.rank((city.farther || []).map(s => Object.assign({}, s, { far: true })), prefs, style)
+          .find(s => !s.town && BOAT.test(s.travelNote || "") && ledger.sightFree(s.id, i) && 2 * (tr.saidMin(s.travelNote) || 60) + (s.minutes || 60) + 60 <= was.spare);
+        if (boat) was.plan.explain = (was.plan.explain || []).concat(["Time left for " + boat.name + (boat.travelNote ? " (" + String(boat.travelNote).replace(/[.\s]+$/, "") + ")" : "") + ": not added on its own, since boats keep their own timetable. If you go, take a boat back that lands you by " + E.clock(was.win.endBy - 30) + "."]);
+      }
       was.sightIds.forEach(id => ledger.claimSight(id, i)); was.eatIds.forEach(k => ledger.claimEat(k, i));
     }
     // Never a silent gap: on a place seen one day only, the sights with their own finished tour or a must-see that no day

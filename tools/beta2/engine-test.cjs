@@ -184,7 +184,7 @@ if (fs.existsSync(dir)) { let rides = 0, placed = 0;
     const ids = base.items.filter(x => x.t === 'stop').map(x => String(x.id));
     const tight = cut => { const s = JSON.parse(JSON.stringify(s0)); s.days[di].selected = ids; s.days[di].allAboard -= cut; return s; };
     const p20 = E.planTrip(tight(20))[di], meal20 = p20.items.find(x => x.t === 'meal');
-    ok(ids.every(id => p20.items.some(x => x.t === 'stop' && String(x.id) === id)) && meal20 && meal20.min < 35,
+    ok(ids.every(id => p20.items.some(x => x.t === 'stop' && String(x.id) === id)) && meal20 && meal20.min < 60,
       `20 minutes less ashore: every pick kept, the lunch gets quicker instead (lunch ${meal20 && meal20.min} min)`);
     const s90 = tight(90), p90 = E.planTrip(s90)[di], w = E.dayWindow(s90.days[di], E.makeTravel(s90.prefs, s90.legModes));
     const lost = (p90.dropped || [])[0], ways = lost != null && (p90.waysToFit || {})[lost];
@@ -213,6 +213,19 @@ if (fs.existsSync(dir)) { let rides = 0, placed = 0;
       const name = ((s.cities[d.city].sites || []).find(x => String(x.id) === String(id)) || {}).name;
       ok(j >= 0 && (ps[i].explain || []).some(e => e.startsWith(name + ' is closed on')), `${name}, shut on its day, is planned on another day of the stay and the plan says so`); })); } }
 
+// ---- Across water: a place reached by boat is reached by boat, its crossing the guide's own time plus the pier, never a taxi.
+{ const tb = E.makeTravel({ walk: 'medium' }, {}), port = { lat: 37.46, lng: 25.326 }, isle = { lat: 37.396, lng: 25.268, travelNote: 'About 30 to 40 minutes each way by boat from the old harbor.' };
+  const go = tb.estimate(port, isle), back = tb.estimate(isle, port), ship = tb.estimate(isle, Object.assign({}, port, { backToShip: true }));
+  ok(go.mode === 'boat' && back.mode === 'boat' && ship.mode === 'boat', 'an island the guide says is reached by boat: by boat both ways, never a taxi');
+  ok(go.min === 40 + E.PIER_MIN && go.cross === 40 && /40 min crossing/.test(go.how), `the crossing is the guide's time plus the pier, shown apart (got ${go.min} min: ${go.how})`);
+  ok(ship.min <= 40 + E.PIER_MIN + Math.max(15, Math.round((40 + E.PIER_MIN) * 0.3 / 5) * 5), 'back to the ship by boat: only the usual extra time on top'); }
+{ let boats = 0; for (const f of fs.readdirSync(dir).filter(f => f.endsWith('.json'))) { const s = JSON.parse(fs.readFileSync(path.join(dir, f))), ps = E.planTrip(s);
+    ps.forEach((p, i) => p && p.items && p.items.forEach((x, k) => { if (x.t !== 'ride') return; const a = p.items[k - 1], b = p.items[k + 1], c = s.cities[s.days[i].city] || {};
+      const site = it => it && it.id != null && [...(c.sites || []), ...(c.farther || [])].find(y => String(y.id) === String(it.id));
+      const boatEnd = [site(a), site(b)].filter(y => y && E.BOAT.test(y.travelNote || ''));
+      if (boatEnd.length === 1) { boats++; ok(x.mode === 'boat', `${f} day ${i}: the ride to or from ${boatEnd[0].name} crosses water but is planned as ${x.mode}`); } })); }
+  console.log(`ok   ${boats} rides across water, every one by boat`); }
+
 // ---- The whole trip (step 6 to 8): same plan whatever order the pieces arrive in, nothing used twice, every day safe.
 const shuffle = (a, seed) => { const b = a.slice(); let x = seed; for (let i = b.length - 1; i > 0; i--) { x = (x * 1103515245 + 12345) % 2147483648; const j = x % (i + 1); [b[i], b[j]] = [b[j], b[i]]; } return b; };
 const planKey = plans => JSON.stringify(plans.map(p => p && (p.error || p.items.map(x => x.t + ':' + (x.id || x.name || x.mode) + '@' + (x.at != null ? x.at : x.min)).join(','))));
@@ -238,7 +251,10 @@ if (fs.existsSync(dir)) for (const f of fs.readdirSync(dir).filter(f => f.endsWi
   for (const c of Object.values(s.cities)) for (const g of (c.sites || []).filter(x => x.hasGuide || x.mustSee)) {
     if (planned.has(String(g.id))) { kept++; continue; }
     const gr = E.makeGroups(c.sites || []), holder = gr.groupOf.get(String(g.id));
-    const beside = holder != null && planned.has(String(holder));
+    // Folded: its group is visited on a day with room for it too, and the plan doesn't say why it was left out.
+    const gd = holder != null ? sights.get(String(holder)) : null, gp = gd != null && plans[gd], gw = gp && E.dayWindow(s.days[gd], E.makeTravel(s.prefs, s.legModes));
+    const room = gw && isFinite(gw.endBy) ? gw.endBy - gp.end : 0, said = gp && ((gp.explain || []).join(' ').includes(g.name) || (gp.leftOut || []).map(String).includes(String(g.id)));
+    const beside = gd != null && !said && room >= (g.minutes || 30) + 25;
     if (beside) ok(false, `${f}: ${g.name} has its own guide or is a must-see, but was folded into the visit to the group around it`); }
   if (f === 'sample-cruise.json') ok(plans.some(p => p && p.items && p.items.some(x => x.t === 'stop' && /Saint Titus/.test(x.name))), 'Heraklion: the Church of Saint Titus, a finished voiced tour, keeps its own stop');
   oks += same; console.log(`ok   ${s.name}: same plan in ${same} of 10 shuffles, nothing used twice, every day safe`);

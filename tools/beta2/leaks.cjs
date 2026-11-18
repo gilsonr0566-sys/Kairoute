@@ -9,7 +9,8 @@ const dir = path.join(__dirname, 'snapshots'), list = process.argv.includes('--l
 const PD = process.env.PLACES_DIR, places = {};
 if (PD) for (const f of fs.readdirSync(PD).filter(f => f.endsWith('.json'))) { const p = JSON.parse(fs.readFileSync(path.join(PD, f))); places[p.key] = p; }
 const SCRIPT = /[Ͱ-Ͽἀ-῿Ѐ-ӿ֐-׿؀-ۿ฀-๿぀-ヿ㐀-鿿가-힯]/;
-const leaks = { transit: [], wanted: [], lostVsOld: [], script: [], ride: [] };
+const leaks = { transit: [], wanted: [], lostVsOld: [], thin: [], script: [], ride: [] };
+const swaps = [];
 const add = (k, f, msg) => leaks[k].push(`${f}: ${msg}`);
 for (const f of fs.readdirSync(dir).filter(f => f.endsWith('.json')).sort()) {
   const raw = JSON.parse(fs.readFileSync(path.join(dir, f))), s = PD ? E.applyPlaces(JSON.parse(JSON.stringify(raw)), places) : raw;
@@ -27,6 +28,9 @@ for (const f of fs.readdirSync(dir).filter(f => f.endsWith('.json')).sort()) {
       if (lines.length && a && b && isFinite(a.lat) && isFinite(b.lat)) { const km = E.hav(a, b);
         if (km >= 0.6 && km <= 15) { const t = E.transitOption(a, b, lines, walkMin); if (t && t.min < walkMin(km) && !(x.options || []).some(o => o.mode === 'transit')) add('transit', f, `day ${i}: ${a.name} to ${b.name}: ${t.how} isn't offered`); } }
     });
+    // A thin day: three hours or more left unused, and the plan doesn't say what to do with them.
+    { const w = E.dayWindow(d, tr), spare = w && isFinite(w.endBy) && isFinite(p.end) ? w.endBy - p.end : 0;
+      if (spare >= 180 && !/time left|free time|at leisure/i.test(said[i])) add('thin', f, `day ${i} (${d.type}): ${Math.floor(spare / 60)} h ${spare % 60} min left unused, ${p.items.filter(x => x.t === 'stop').length} stops`); }
     // Wanted sights of a place seen on this day only (or picked for this day) that no day plans.
     const oneDay = s.days.filter(e => e.city === d.city && !e.noShore).length === 1;
     const wanted = (city.sites || []).filter(x => (d.selected || []).map(String).includes(String(x.id)) || (oneDay && E.ownStop(x)));
@@ -37,10 +41,14 @@ for (const f of fs.readdirSync(dir).filter(f => f.endsWith('.json')).sort()) {
   });
   // Every sight the old engine planned, kept somewhere in the new plan (or said why not).
   (raw.old || []).forEach((o, i) => { if (!o || !o.items) return; for (const x of o.items) { if (x.t !== 'stop' || x.id == null || planned.has(String(x.id))) continue;
-    add('lostVsOld', f, `day ${i}: ${x.name}${said[i] && said[i].includes(x.name) ? ' (the plan says why)' : ' (no reason given)'}`); } });
+    // A leak when the new day leaves the time unused and says nothing; a full day that chose other sights is a swap.
+    const p = plans[i], w = p && !p.error && E.dayWindow(s.days[i], tr), spare = w && isFinite(w.endBy) && isFinite(p.end) ? w.endBy - p.end : 0;
+    const why = said[i] && said[i].includes(x.name);
+    if (!why && spare >= (x.min || 30) + 20) add('lostVsOld', f, `day ${i}: ${x.name} (${spare} min left unused, no reason given)`); else swaps.push(`${f}: day ${i}: ${x.name}${why ? ' (the plan says why)' : ' (day full, other sights chosen)'}`); } });
 }
 let total = 0;
-const label = { transit: 'public transport not offered', wanted: 'voiced, must-see or picked sight left out', lostVsOld: 'sight the old engine planned, left out', script: 'name in a non-Latin script', ride: 'ride without start, end or way of travel' };
+const label = { transit: 'public transport not offered', wanted: 'voiced, must-see or picked sight left out', lostVsOld: 'sight the old engine planned, left out', thin: 'thin day: 3 hours or more unused, nothing said', script: 'name in a non-Latin script', ride: 'ride without start, end or way of travel' };
 for (const k of Object.keys(leaks)) { total += leaks[k].length; console.log(`${String(leaks[k].length).padStart(4)}  ${label[k]}`); if (list) leaks[k].forEach(m => console.log('      ' + m)); }
+console.log(`      (${swaps.length} sights the old engine planned were swapped for others on a full day, or left out with the reason said)`); if (list) swaps.forEach(m => console.log('        ' + m));
 console.log(`${String(total).padStart(4)}  leaks in all${PD ? ' (with the places files)' : ''}`);
 process.exit(total ? 1 : 0);

@@ -218,8 +218,8 @@
       const detour = s => 2 * Math.min(ctx.tr.min(start, s), ...keep.map(k => ctx.tr.min(k, s)));
       const farOk = s => keep.some(k => k.far && E.hav(k, s) <= 2.5); // the rest of a day-trip town, never a day in the city
       // A listing within a few steps of a stop already planned is the same place under another name, or part of it.
-      const cands = pool.filter(s => !keep.some(k => String(k.id) === String(s.id) || E.hav(k, s) < 0.08) && (!s.far || farOk(s)) && (ctx.mayAdd ? ctx.mayAdd(s.id) : ctx.ledger.sightFree(s.id, ctx.dayIdx)))
-        .map(s => ({ s, v: (s.worth || 0) - 0.25 * detour(s) })).filter(x => x.v > 0).sort((a, b) => b.v - a.v || E.byId(a.s, b.s));
+      const cands = pool.filter(s => !keep.some(k => String(k.id) === String(s.id) || (E.hav(k, s) < 0.08 && !wanted(s))) && (!s.far || farOk(s)) && (ctx.mayAdd ? ctx.mayAdd(s.id) : ctx.ledger.sightFree(s.id, ctx.dayIdx)))
+        .map(s => { const dt = detour(s); return { s, v: wanted(s) && dt <= 10 ? Math.max(1, s.worth || 0) : (s.worth || 0) - 0.25 * dt }; }) // a voiced sight a few steps off the walk is always worth it.filter(x => x.v > 0).sort((a, b) => b.v - a.v || E.byId(a.s, b.s));
       const room = win.hard ? E.FILL_MARGIN : 0;
       let tries = 0;
       for (const { s } of cands) {

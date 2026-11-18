@@ -6,11 +6,14 @@
 // Membership comes from two general rules, never from a list of places:
 //  1. the map's own boundaries: the sight stands inside the group's mapped area (kept in the places database as `in`);
 //  2. an open square or plaza has no walls, so the buildings that face onto it belong to it: a sight within a short walk
-//     of the square's centre (SQUARE_REACH) is a member.
+//     of the square's centre (SQUARE_REACH) is a member. An old town or district with no mapped boundary is the same:
+//     its point is its heart, so a sight within OLD_TOWN_REACH of it is part of its walk.
 // Nested groups (a chapel inside a museum inside a city-state) go to the innermost group, and that group sits inside
 // the outer one. Each sight belongs to at most one group, so "Included" sights are never scheduled twice.
 (function (E) {
   E.SQUARE_REACH = 0.15; // km from a square's centre: the buildings around the square, not the streets beyond
+  E.OLD_TOWN_REACH = 0.3; // km from an old town's or district's point, when the map gives no boundary for it
+  const OLD_TOWN = /\b(old town|old city|historic (?:centre|center|quarter)|quarter|district|neighbou?rhood|lanes|chora|medina|altstadt|centro storico)\b/i;
   const SQUARE = /\b(square|plaza|piazza|platz|plaça|praça|plein|námestie|náměstí|rynek|trg|meydanı|agora)\b/i;
   const AREA = /\b(square|plaza|piazza|platz|old town|old city|historic (?:centre|center|quarter)|quarter|district|neighbou?rhood|castle|citadel|fortress|kremlin|alcazar|alcázar|archaeological (?:site|park)|ruins|excavations|palace complex|city-state|park|gardens?|island|cay|museum complex|monastery complex|campus|cemetery)\b/i;
   const text = s => (s.category || "") + " " + (s.name || "");
@@ -25,12 +28,16 @@
     for (const s of list) for (const g of s.in || []) if (byId.has(String(g))) add(s.id, g);                 // rule 1: map boundaries
     for (const g of list) if (E.isSquare(g) && !g.far) for (const s of list)                                // rule 2: around a square
       if (s !== g && !s.far && !E.isSquare(s) && E.hav(s, g) <= E.SQUARE_REACH && !(g.in || []).includes(s.id)) add(s.id, g.id);
+    for (const g of list) if (OLD_TOWN.test(text(g)) && !E.isSquare(g) && !g.far && !list.some(s => (s.in || []).map(String).includes(String(g.id)))) for (const s of list)
+      if (s !== g && !s.far && !OLD_TOWN.test(text(s)) && !(holders.get(String(s.id)) || new Set()).size && E.hav(s, g) <= E.OLD_TOWN_REACH && !(g.in || []).includes(s.id)) add(s.id, g.id);
     // A group never sits inside its own member (two places that each "contain" the other are both plain sites).
     for (const [m, gs] of holders) for (const g of [...gs]) if (holders.has(g) && holders.get(g).has(m)) { gs.delete(g); holders.get(g).delete(m); }
     // Innermost holder: the one that is itself inside the others.
     const groupOf = new Map();
     for (const [m, gs] of holders) { if (!gs.size) continue;
-      const inner = [...gs].filter(g => ![...gs].some(h => h !== g && holders.has(h) && holders.get(h).has(g))).sort()[0] || [...gs].sort()[0];
+      // Of holders that don't sit in one another, the nearest (the square a church faces, not the district around it).
+      const m0 = byId.get(m), near = (a, b) => (m0 ? E.hav(m0, byId.get(a)) - E.hav(m0, byId.get(b)) : 0) || a.localeCompare(b);
+      const inner = [...gs].filter(g => ![...gs].some(h => h !== g && holders.has(h) && holders.get(h).has(g))).sort(near)[0] || [...gs].sort(near)[0];
       groupOf.set(m, inner); }
     const members = new Map(), kind = new Map();
     for (const [m, g] of groupOf) { if (!members.has(g)) members.set(g, []); members.get(g).push(m); }

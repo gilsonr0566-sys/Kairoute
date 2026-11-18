@@ -5,6 +5,8 @@
 //    answers arrive, so the plan's shape never does.
 //  - live times (real timetables) only set the clock in the timeline (part 9), and can only flag a stop, not reorder.
 (function (E) {
+  E.PIER_MIN = 15; // at the pier: buying a ticket, boarding, and the wait for the next sailing
+  E.BOAT = /\b(boat|boats|ferry|ferries|hydrofoil|catamaran|water ?bus|vaporetto)\b/i;
   const WALK_LIMIT = { low: 0.8, medium: 1.7, high: 3.2 }, WALK_EITHER = 4;
   // By road (taxi, car or bus) for d km as the crow flies: town streets, regional roads, then highway.
   function road(d) {
@@ -56,6 +58,17 @@
         return leg; }
       const d = E.hav(a, b);
       if (d < 0.02) return { mode: "walk", how: "Walk", km: 0, min: 0 };
+      // Across water: a place the guide says is reached by boat is always reached by boat (never a taxi or a walk), on
+      // the boat's own timetable: the crossing the guide names, plus 20 minutes for the pier and the wait for a sailing.
+      // To a ship, train or plane it gets the same extra time as any long ride.
+      const byBoat = p => E.BOAT.test(p.travelNote || "");
+      if (byBoat(a) !== byBoat(b) && d > 1) {
+        const note = byBoat(a) ? a.travelNote : b.travelNote, said = saidMin(note) || Math.round(d / 25 * 60) + 10;
+        const how = /high.?speed|fast ferry|hydrofoil|catamaran/i.test(note) ? "Fast ferry" : /ferry/i.test(note) ? "Ferry" : "Boat";
+        let leg = { mode: "boat", how: how + ", " + said + " min crossing, plus " + E.PIER_MIN + " min at the pier for the next sailing", km: d, min: said + E.PIER_MIN, cross: said, pier: E.PIER_MIN, timetable: true };
+        if (b.backToShip || b.deadline) { const sl = Math.max(15, Math.round(leg.min * 0.3 / 5) * 5); leg = Object.assign(leg, { min: leg.min + sl, slack: sl }); }
+        return leg;
+      }
       const walkMin = Math.max(2, Math.round(d * 1.3 / speed * 60)), either = d >= 0.6 && d <= WALK_EITHER, want = either ? modes[E.pairKey(a, b)] : null;
       if (d <= lim ? !want || want === "walk" : want === "walk") return { mode: "walk", how: "Walk", km: d * 1.3, min: walkMin, either };
       let leg = road(d); leg.either = either;
