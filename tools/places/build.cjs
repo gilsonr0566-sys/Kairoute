@@ -156,7 +156,7 @@ async function transitLines(centre, km) {
     for (const m of rel.members || []) {
       if (m.type !== 'node' || !/^(stop|stop_entry_only|stop_exit_only|platform|)$/.test(m.role || '')) continue;
       const n = nodes.get(m.ref); if (!n || !n.tags || !n.tags.name) continue;
-      const name = n.tags['name:en'] || n.tags.name;
+      const name = n.tags['name:en'] || n.tags.int_name || n.tags['name:el-Latn'] || n.tags['name:latin'] || n.tags.name;
       if (stops.length && stops.some(s => s.name === name)) continue;
       stops.push({ name, lat: +n.lat.toFixed(5), lng: +n.lon.toFixed(5) });
     }

@@ -36,6 +36,7 @@ for (const f of fs.readdirSync(dir).filter(f => f.endsWith('.json')).sort()) {
         if (st && E.waterOnly(st)) { const legs = [p.items[k - 1], p.items[k + 1]].filter(y => y && y.t === 'ride');
           if (legs.some(y => y.mode !== 'boat')) add('water', f, `day ${i}: ${x.name} is seen from the water but is reached by ${legs.map(y => y.mode).join('/')}`); } }
       if (x.t !== 'ride') return;
+      [x.how].concat((x.options || []).map(o => o.how)).filter(h => h && SCRIPT.test(h)).forEach(h => add('script', f, `day ${i}: ride "${h}"`));
       if (!x.mode || !x.from || !x.to || !isFinite(x.from.lat) || !isFinite(x.to.lat)) add('ride', f, `day ${i}: ride ${k} lacks ${!x.mode ? 'its way of travel' : 'its start or end'}`);
       const a = p.items[k - 1], b = p.items[k + 1];
       if (lines.length && a && b && isFinite(a.lat) && isFinite(b.lat)) { const km = E.hav(a, b);

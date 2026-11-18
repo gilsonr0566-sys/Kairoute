@@ -78,9 +78,9 @@
       const got = (answers(a, b) || []).filter(o => o && isFinite(o.min)).sort((x, y) => x.min - y.min || String(x.label).localeCompare(String(y.label)));
       if (!got.length) return leg;
       const want = modes[E.pairKey(a, b)], o = got.find(x => x.id != null && x.id === want) || got[0], sl = leg.slack || 0, pub = o.min + sl;
-      const options = got.slice(0, 3).map(x => ({ mode: "transit", transitMode: x.kind, how: x.label, min: x.min + sl })).concat([{ mode: "ride", how: "Taxi or car", min: leg.min }]);
+      const options = got.slice(0, 3).map(x => ({ mode: "transit", transitMode: x.kind, how: E.latin(x.label), min: x.min + sl })).concat([{ mode: "ride", how: "Taxi or car", min: leg.min }]);
       if (want === "taxi" || want === "ride" || (want !== "transit" && o.id !== want && !E.publicWins(pub, leg.min))) return Object.assign({}, leg, { how: "Taxi or car", options });
-      return { mode: "transit", transitMode: o.kind, how: o.label, km: leg.km, min: pub, slack: sl || undefined, options };
+      return { mode: "transit", transitMode: o.kind, how: E.latin(o.label), km: leg.km, min: pub, slack: sl || undefined, options };
     }
     function base(a, b) {
       const pin = legs && legs[E.pairKey(a, b)];

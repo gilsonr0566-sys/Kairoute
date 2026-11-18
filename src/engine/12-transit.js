@@ -8,10 +8,18 @@
   const LABEL = { subway: "Metro", light_rail: "Light rail", monorail: "Monorail", tram: "Tram", train: "Train" };
   const ACCESS_KM = 0.8, CHANGE_MIN = 6, SAME_STOP_KM = 0.25;
   const norm = s => String(s || "").toLowerCase().normalize("NFKD").replace(/[̀-ͯ]/g, "").replace(/[^a-z0-9]+/g, " ").trim();
-  E.transitLabel = l => (LABEL[l.mode] || "Train") + (l.ref ? " " + (/^\d+$/.test(l.ref) ? "Line " + l.ref : l.ref) : "");
+  E.transitLabel = l => (LABEL[l.mode] || "Train") + (l.ref ? " " + (/^\d+$/.test(l.ref) ? "Line " + l.ref : E.latin(l.ref)) : "");
   // Minutes riding a line from stop index i to j (along the line's own stop order).
-  const ride = (l, i, j) => { let km = 0; const [a, b] = i < j ? [i, j] : [j, i]; for (let k = a; k < b; k++) km += E.hav(l.stops[k], l.stops[k + 1]);
-    return Math.round(km / (SPEED[l.mode] || 25) * 60 + 0.5 * (b - a)); };
+  // Worked out once per line and kept with it: the distance along the line to each stop, and the stops where it meets
+  // each other line (same name, or within a short walk). A long train or a city of many lines stays quick to plan.
+  const cumOf = new WeakMap(), meetOf = new WeakMap();
+  const cum = l => { let c = cumOf.get(l); if (c) return c; c = [0]; for (let k = 1; k < l.stops.length; k++) c.push(c[k - 1] + E.hav(l.stops[k - 1], l.stops[k])); cumOf.set(l, c); return c; };
+  const meets = (L, M) => { let m = meetOf.get(L); if (!m) { m = new Map(); meetOf.set(L, m); } let r = m.get(M); if (r) return r; r = [];
+    const nm = M.stops.map(y => norm(y.name));
+    for (let i = 0; i < L.stops.length; i++) { const x = L.stops[i], nx = norm(x.name); for (let j = 0; j < M.stops.length; j++) if (nx === nm[j] || E.hav(x, M.stops[j]) <= SAME_STOP_KM) r.push([i, j]); }
+    m.set(M, r); return r; };
+  const ride = (l, i, j) => { const c = cum(l), [a, b] = i < j ? [i, j] : [j, i];
+    return Math.round((c[b] - c[a]) / (SPEED[l.mode] || 25) * 60 + 0.5 * (b - a)); };
   // lines: [{ mode, ref, name, stops: [{ name, lat, lng }] in order }]. walkMin(km) -> minutes on foot.
   // far: a day trip out of town ({ km, taxiMin(km) }): the far end may be a taxi ride from its station (Ancient Corinth
   // from Corinth station), trains run about hourly (half an hour's wait counted), and the option says so.
@@ -28,15 +36,15 @@
       if (f.li === t.li) {
         if (f.si === t.si) continue;
         const min = endMin(f.d) + wait(L.mode) + ride(L, f.si, t.si) + endMin(t.d);
-        consider({ min, mode: L.mode, how: (f.d > ACCESS_KM ? "Taxi " + endMin(f.d) + " min to " + L.stops[f.si].name + ", then " : "") + E.transitLabel(L) + ", " + L.stops[f.si].name + " to " + M.stops[t.si].name + endWord(t.d), legs: 1 });
+        consider({ min, mode: L.mode, how: (f.d > ACCESS_KM ? "Taxi " + endMin(f.d) + " min to " + E.latin(L.stops[f.si].name) + ", then " : "") + E.transitLabel(L) + ", " + E.latin(L.stops[f.si].name) + " to " + E.latin(M.stops[t.si].name) + endWord(t.d), legs: 1 });
         continue;
       }
       // One change: a stop of the first line that is (or stands beside) a stop of the second.
-      for (let i = 0; i < L.stops.length; i++) for (let j = 0; j < M.stops.length; j++) {
-        const x = L.stops[i], y = M.stops[j];
-        if (i === f.si || j === t.si || !(norm(x.name) === norm(y.name) || E.hav(x, y) <= SAME_STOP_KM)) continue;
+      for (const [i, j] of meets(L, M)) {
+        const x = L.stops[i];
+        if (i === f.si || j === t.si) continue;
         const min = endMin(f.d) + wait(L.mode) + ride(L, f.si, i) + CHANGE_MIN + wait(M.mode) + ride(M, j, t.si) + endMin(t.d);
-        consider({ min, mode: L.mode, how: (f.d > ACCESS_KM ? "Taxi " + endMin(f.d) + " min to " + L.stops[f.si].name + ", then " : "") + E.transitLabel(L) + " to " + x.name + ", then " + E.transitLabel(M) + " to " + M.stops[t.si].name + endWord(t.d), legs: 2 });
+        consider({ min, mode: L.mode, how: (f.d > ACCESS_KM ? "Taxi " + endMin(f.d) + " min to " + E.latin(L.stops[f.si].name) + ", then " : "") + E.transitLabel(L) + " to " + E.latin(x.name) + ", then " + E.transitLabel(M) + " to " + E.latin(M.stops[t.si].name) + endWord(t.d), legs: 2 });
       }
     }
     return best;
