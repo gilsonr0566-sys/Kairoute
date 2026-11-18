@@ -35,6 +35,28 @@ const day = o => Object.assign({ type: 'land', mode: 'flight', startTime: '09:00
   ok(E.closedForDay({ closed: true }, { start: 0, endBy: 1440 }), 'closed date is closed');
   ok(E.closedForDay({ oh: { spans: [[1200, 1320]] } }, { start: 510, endBy: 975 }, 60), 'open only outside the window counts as closed'); }
 
+
+// ---- Groups and sites (step 3) ----
+{ // Richard's example: an old town square is a group, the famous clock on it is a site. Real map data, general rule.
+  const j = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'fixtures', 'prague-sources.json'))), all = new Map();
+  const walk = o => { if (Array.isArray(o)) o.forEach(walk); else if (o && typeof o === 'object') { if (o.name && isFinite(o.lat)) { const id = o.wd || o.name; if (!all.has(id)) all.set(id, { id, name: o.name, lat: +o.lat, lng: +o.lng, category: o.category || '' }); } else Object.values(o).forEach(walk); } };
+  walk(j); const sites = [...all.values()], G = E.makeGroups(sites), id = n => (sites.find(x => x.name === n) || {}).id;
+  ok(G.kind.get(id('Old Town Square')) === 'group', 'old town square is a group');
+  ok(G.kind.get(id('Prague Astronomical Clock')) === 'site', 'the astronomical clock is a site');
+  for (const n of ['Prague Astronomical Clock', 'Church of Our Lady before Týn', 'Old Town Hall', 'Church of Saint Nicholas', 'Jan Hus Memorial'])
+    ok(G.groupOf.get(id(n)) === id('Old Town Square'), n + ' is inside the square');
+  ok(G.groupOf.get(id('House of the Black Madonna')) !== id('Old Town Square'), 'a building 300 m away is not part of the square');
+  const shuffled = E.makeGroups(sites.slice().reverse()); ok(JSON.stringify([...shuffled.groupOf].sort()) === JSON.stringify([...G.groupOf].sort()), 'groups come out the same whatever order the pieces arrive in');
+  const L = E.makeLedger(); ok(E.claimVisit(L, G, id('Old Town Square'), 3) && !L.sightFree(id('Prague Astronomical Clock'), 5), 'a group visit claims its sights for that day only (never scheduled twice)');
+}
+{ // Nesting from the map's boundaries: chapel inside museum inside a walled state; a mutual match folds nothing.
+  const S = [{ id: 'state', name: 'Walled State', category: 'City-state', lat: 41.9029, lng: 12.4534 }, { id: 'museum', name: 'Museums', category: 'Museum complex', lat: 41.9065, lng: 12.4536, in: ['state'] },
+    { id: 'chapel', name: 'Chapel', category: 'Chapel', lat: 41.9030, lng: 12.4545, in: ['museum', 'state'] }, { id: 'a', name: 'Harbour', lat: 1, lng: 1, in: ['b'] }, { id: 'b', name: 'Aquarium', lat: 1, lng: 1.001, in: ['a'] }];
+  const G = E.makeGroups(S); ok(G.groupOf.get('chapel') === 'museum' && G.groupOf.get('museum') === 'state' && G.top('chapel') === 'state', 'nested groups: innermost holds it, outermost visit includes it');
+  ok(G.within('state').sort().join() === 'chapel,museum', 'a group visit includes every level inside it');
+  ok(G.kind.get('a') === 'site' && G.kind.get('b') === 'site', 'two places that each contain the other are both sites');
+}
+
 // ---- Against the old engine: every day's window on the saved test trips ----
 const dir = path.join(__dirname, 'snapshots');
 if (fs.existsSync(dir)) for (const f of fs.readdirSync(dir).filter(f => f.endsWith('.json'))) {

@@ -15,7 +15,8 @@ function engineBucket(withOld) {
     kind: s.kind || "", category: s.category || "", fame: fameW(s), unesco: !!s.unesco,
     religiousOk: religiousOk(s), srcOnly: !!s.srcOnly, hasGuide: !!s.guide, recommended: !!(s.unesco || (s.src || []).some(t => /Wikivoyage/.test(t))),
     likes: ints.reduce((a, w) => a + (((s.category || "") + " " + (s.summary || "")).toLowerCase().includes(w) ? 1 : 0), 0),
-    travelNote: typeof s.travel === "string" ? s.travel : "", inside: s.inside || s.partOf || null, show: s.show || null
+    travelNote: typeof s.travel === "string" ? s.travel : "", show: s.show || null,
+    in: typeof inArea === "function" ? allSites(city).filter(a => a !== s && inArea(s, a)).map(a => a.id) : [] // the map areas it stands in (groups, step 3)
   });
   trip.days.forEach((d, i) => {
     const city = cityFor(d), ck = city ? keyOf(city.city) : null;
