@@ -78,5 +78,46 @@
   "lng": -25.6947776,
   "known": true,
   "island": false
- }
+ },
+ "guideSights": [
+  {
+   "name": "Carlos Machado Museum",
+   "lat": 37.7433,
+   "lng": -25.6675,
+   "wikidata": "",
+   "note": "It portrays the scientific mentality of the 19th century. Most of the information is by naturalists of the second half of the 19th century after the publication of Darwin’s ''Theory of Evolution'' and the Oceanographic expeditions."
+  },
+  {
+   "name": "Town Hall",
+   "lat": 37.7391,
+   "lng": -25.6691,
+   "wikidata": "Q28226113",
+   "note": "Built in the 17th century, rebuilt in the 20th century.",
+   "editions": 2,
+   "unesco": false
+  },
+  {
+   "name": "Forte São Bras",
+   "lat": 37.73624,
+   "lng": -25.67267,
+   "wikidata": "Q10283959",
+   "note": "A 16th-century fort that was in use until World War II. You can walk on the ramparts, explore the tunnels, and view a variety of old military equipment in the military museum.",
+   "editions": 2,
+   "unesco": false
+  },
+  {
+   "name": "Parish Church of São Sebastiao",
+   "lat": 37.74011,
+   "lng": -25.66823,
+   "wikidata": "",
+   "note": ""
+  },
+  {
+   "name": "Church of São Jose",
+   "lat": 37.7375,
+   "lng": -25.674,
+   "wikidata": "",
+   "note": "Plain white and brown on the outside, but colorful on the inside."
+  }
+ ]
 }

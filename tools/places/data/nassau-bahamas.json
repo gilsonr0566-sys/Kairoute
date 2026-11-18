@@ -98,5 +98,52 @@
   "lng": -77.3430256,
   "known": true,
   "island": false
- }
+ },
+ "guideSights": [
+  {
+   "name": "Ardastra Gardens, Zoo & Conservation Center",
+   "lat": 25.0759,
+   "lng": -77.3617,
+   "wikidata": "Q4025978",
+   "note": "Visit the Bahamas' only zoo. See the marching flamingo shows. Let the parakeets land on you as you feed them.",
+   "editions": 5,
+   "unesco": false
+  },
+  {
+   "name": "National Art Gallery of the Bahamas",
+   "lat": 25.0754,
+   "lng": -77.3473,
+   "wikidata": "Q2912593",
+   "note": "Opened in 2003, this showcases Bahamian art from the precolonial era to the present. The quality of art is rather uneven to say the least, but the renovated building &mdash; once the residence of the Chief Justice &mdash; is a sight in itse",
+   "editions": 5,
+   "unesco": false
+  },
+  {
+   "name": "Pirates of Nassau Museum",
+   "lat": 25.077391,
+   "lng": -77.34458,
+   "wikidata": "Q67142794",
+   "note": "Recreations of a pirate town, a pirate ship and a pirate battle, with a few real artifacts mixed in. Cheesy, but fun. Try to catch a guided tour.",
+   "editions": 1,
+   "unesco": false
+  },
+  {
+   "name": "Fort Fincastle",
+   "lat": 25.073611,
+   "lng": -77.338611,
+   "wikidata": "Q5471144",
+   "note": "A small fort built in 1793 which overlooks the city of Nassau from a small hill south of town. Several cannons are on display. Tours are conducted daily 8AM-3PM.",
+   "editions": 4,
+   "unesco": false
+  },
+  {
+   "name": "Cable Beach",
+   "lat": 25.073611,
+   "lng": -77.406667,
+   "wikidata": "Q21713748",
+   "note": "",
+   "editions": 5,
+   "unesco": false
+  }
+ ]
 }

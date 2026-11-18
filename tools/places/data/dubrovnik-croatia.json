@@ -183,5 +183,140 @@
   "lng": 18.1228629,
   "known": true,
   "island": false
- }
+ },
+ "guideSights": [
+  {
+   "name": "Pile Gate",
+   "lat": 42.641761,
+   "lng": 18.106854,
+   "wikidata": "Q3509061",
+   "note": "A convenient starting place for a stroll through the Old Town.",
+   "editions": 10,
+   "unesco": false
+  },
+  {
+   "name": "Big Onofrio's Fountain",
+   "lat": 42.641528,
+   "lng": 18.107222,
+   "wikidata": "Q2624621",
+   "note": "In the western (Pile) entrance of the old town, The fountain stairs are nowadays a favourite meeting place for local youth and where both the tourists and pigeons take rest and refresh themselves with cool water.",
+   "editions": 15,
+   "unesco": false
+  },
+  {
+   "name": "Roland's Column",
+   "lat": 42.641,
+   "lng": 18.1103,
+   "wikidata": "Q3442751",
+   "note": "A slender stone flag staff of the legendary knight. Also known as Orlando's Column. Ever since its foundation in 1950, the Dubrovnik Summer Festival is opened by raising a flag carrying the city's motto ''Libertus'' on Orlando's staff.",
+   "editions": 10,
+   "unesco": false
+  },
+  {
+   "name": "Bell Tower",
+   "lat": 42.640992,
+   "lng": 18.1107,
+   "wikidata": "Q3509014",
+   "note": "On top of the tower are the famous 'Zelenci' (The Green Ones), bronze statues which strike the gigantic bell every hour. They have been replaced with copies and the originals are in the atrium of the Sponza Palace.",
+   "editions": 12,
+   "unesco": false
+  },
+  {
+   "name": "Sponza Palace",
+   "lat": 42.6411,
+   "lng": 18.1106,
+   "wikidata": "Q2986276",
+   "note": "Gothic Renaissance palace, one of the few buildings that has maintained its form from before the catastrophic 1667 earthquake. Hosts historic archives. Memorial room of defenders.",
+   "editions": 21,
+   "unesco": false
+  },
+  {
+   "name": "Rector's Palace",
+   "lat": 42.640278,
+   "lng": 18.110833,
+   "wikidata": "Q2497590",
+   "note": "The former palace of the Major Council houses a museum dedicated to the city's history.",
+   "editions": 27,
+   "unesco": false
+  },
+  {
+   "name": "Fort Lovrijenac",
+   "lat": 42.640731,
+   "lng": 18.104412,
+   "wikidata": "Q3396134",
+   "note": "The monumental fort rises above 37 m high rock. It was an essential fortification for defence of the city from both ground and sea attacks. In order to prevent mutiny by the commander of the fortress, the walls facing the city are only 60&n",
+   "editions": 20,
+   "unesco": false
+  },
+  {
+   "name": "Franciscan Monastery",
+   "lat": 42.6418,
+   "lng": 18.1078,
+   "wikidata": "Q3509032",
+   "note": "This beautiful monastery with Baroque Church, houses a Romanesque cloister and the third oldest pharmacy in the world.",
+   "editions": 21,
+   "unesco": false
+  },
+  {
+   "name": "Cathedral of the Assumption of the Virgin Mary",
+   "lat": 42.64,
+   "lng": 18.110833,
+   "wikidata": "Q584428",
+   "note": "This impressive building is in the Poljana Marin Držić. Supposedly, the original church was built with money donated by Richard the Lionhearted who survived shipwreck on his way home from the Third Crusade. The current Roman Baroque cathedr",
+   "editions": 26,
+   "unesco": true
+  },
+  {
+   "name": "Church of Saint Blaise",
+   "lat": 42.640556,
+   "lng": 18.110278,
+   "wikidata": "Q2986286",
+   "note": "Baroque Church dedicated to the city's patron saint.",
+   "editions": 17,
+   "unesco": false
+  },
+  {
+   "name": "Church of St. Ignatius and the Jesuit College",
+   "lat": 42.639503,
+   "lng": 18.109356,
+   "wikidata": "Q682758",
+   "note": "Ornate Jesuit church, approached via a romantic baroque staircase modelled on the Spanish Steps in Rome (1738). Built between 1667 and 1725 by architect Ignazzio Pozzo, and like most Jesuit churches of the period was modelled on the Gesù in",
+   "editions": 10,
+   "unesco": false
+  },
+  {
+   "name": "Dominican Monastery",
+   "lat": 42.641583,
+   "lng": 18.111439,
+   "wikidata": "Q3509039",
+   "note": "This is an exceptionally valuable historic complex, which, besides its religious purpose, also represents the important artistic treasury of ancient Dubrovnik.",
+   "editions": 8,
+   "unesco": false
+  },
+  {
+   "name": "Synagogue and Jewish Museum",
+   "lat": 42.650556,
+   "lng": 18.091389,
+   "wikidata": "Q2750095",
+   "note": "This synagogue built by Sephardic Jews is supposed to be the second-oldest still in use synagogue in Europe today. A permanent Jewish community here was founded at the end of the 15th century following the expulsions from Portugal and Spain",
+   "editions": 18,
+   "unesco": true
+  },
+  {
+   "name": "Maritime Museum",
+   "lat": 42.6398,
+   "lng": 18.1122,
+   "wikidata": "Q12640048",
+   "note": "Considering how vital sailing and shipbuilding were to the growth of the Dubrovnik Republic, this is one of the city’s most important museums.",
+   "editions": 6,
+   "unesco": false
+  },
+  {
+   "name": "War Photo Limited",
+   "lat": 42.6416,
+   "lng": 18.1087,
+   "wikidata": "",
+   "note": "An exhibition centre of war and conflict photography. Exhibits change during the season. Stunning images by world-renowned photo journalists."
+  }
+ ]
 }

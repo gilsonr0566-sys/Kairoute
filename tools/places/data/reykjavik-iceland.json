@@ -377,5 +377,210 @@
   "lat": 64.14528374999999,
   "lng": -21.915974375
  },
- "wikivoyage": "Reykjavík"
+ "wikivoyage": "Reykjavík",
+ "guideSights": [
+  {
+   "name": "Tjörnin",
+   "lat": 64.1445,
+   "lng": -21.9422,
+   "wikidata": "Q945753",
+   "note": "A small lake in the centre of the city where young and old often gather to feed the ducks. The Icelandic name, Tjörnin, literally means \"The Pond\". Tjörnin is mostly surrounded by a park called Hljómskálagarðurinn (Music Pavilion Park) whic",
+   "editions": 33,
+   "unesco": false
+  },
+  {
+   "name": "Austurvöllur",
+   "lat": 64.14717,
+   "lng": -21.93971,
+   "wikidata": "Q783980",
+   "note": "A small park (or square, depending on definitions) in the heart of Reykjavík. It's many locals' favorite place to spend sunny days, either at one of the cafés lining the north of the square or simply having a picnic on the grass. The parlia",
+   "editions": 9,
+   "unesco": false
+  },
+  {
+   "name": "Klambratún",
+   "lat": 64.137,
+   "lng": -21.9134,
+   "wikidata": "Q27016265",
+   "note": "Klambratún is a park just east of the city centre on an area which remained farmland while the city was built up around it. The area was later converted into one of the largest public parks in the city and often hosts various events. One of",
+   "editions": 5,
+   "unesco": false
+  },
+  {
+   "name": "Reykjavík Botanical Gardens",
+   "lat": 64.1408,
+   "lng": -21.8694,
+   "wikidata": "Q894659",
+   "note": "The Reykjavík Botanical Gardens are not large, but they're nice for a short stroll and a good place to see some of the plants that grow in Iceland.",
+   "editions": 13,
+   "unesco": false
+  },
+  {
+   "name": "Viðey",
+   "lat": 64.1651,
+   "lng": -21.8523,
+   "wikidata": "Q116492",
+   "note": "Viðey is a large island in Kollafjörður, the fjord to the north of Reykjavík. It used to be inhabited, and in the early 20th century it had a small fishing village. Nobody lives there anymore apart from the birds, but it's a popular way to ",
+   "editions": 28,
+   "unesco": false
+  },
+  {
+   "name": "Grótta",
+   "lat": 64.1643,
+   "lng": -22.0218,
+   "wikidata": "Q3118633",
+   "note": "At the far western end of the peninsula on which Reykjavík sits there is a small island. This island, called Grótta, is connected to the mainland on low tides and open to the public most of the year (closed May 1-Jul 15). Just make sure you",
+   "editions": 10,
+   "unesco": false
+  },
+  {
+   "name": "Alþingi",
+   "lat": 64.146667,
+   "lng": -21.940278,
+   "wikidata": "Q451045",
+   "note": "On the southern edge of Austurvöllur is a small building of hewn stone, but don't let its size fool you. This is the building of the Icelandic parliament, known as Alþingi. The institution has in fact long since outgrown the building which ",
+   "editions": 22,
+   "unesco": false
+  },
+  {
+   "name": "Reykjavík Cathedral",
+   "lat": 64.140556,
+   "lng": -21.935833,
+   "wikidata": "Q1270853",
+   "note": "The church beside the parliament is Reykjavík Cathedral, the mother church of the Church of Iceland, the country's national church and part of the Lutheran denomination. Similarly deceptive in size, it has been beautifully renovated both in",
+   "editions": 18,
+   "unesco": false
+  },
+  {
+   "name": "City Hall",
+   "lat": 64.1461,
+   "lng": -21.94218,
+   "wikidata": "Q196471",
+   "note": "One of the best examples of late 20th-century architecture in Iceland, built into Tjörnin (The Pond). On the ground floor, which is open to the public, there is a large relief map of the whole country as well as a café and an exhibition hal",
+   "editions": 13,
+   "unesco": false
+  },
+  {
+   "name": "Hallgrímskirkja",
+   "lat": 64.141944,
+   "lng": -21.9275,
+   "wikidata": "Q271466",
+   "note": "This can't miss attraction towers over the city on top of a hill. In front is a statue of Leif Ericsson (Leifur Eiríksson in Icelandic), the Norse explorer who sailed to North America in the 10th century. The United States gave this statue ",
+   "editions": 43,
+   "unesco": false
+  },
+  {
+   "name": "Harpa",
+   "lat": 64.1504,
+   "lng": -21.9327,
+   "wikidata": "Q1783706",
+   "note": "Harpa is a new concert hall and conference centre at the heart of Reykjavík. It is the home of the Icelandic Symphony Orchestra and regularly host to other acts as well.",
+   "editions": 21,
+   "unesco": false
+  },
+  {
+   "name": "Perlan",
+   "lat": 64.1292,
+   "lng": -21.9189,
+   "wikidata": "Q1367886",
+   "note": "An iconic building on top of a wooded hill called Öskjuhlíð, to the southeast of the city centre. Perlan is built on top of five hot water storage tanks and offers fantastic views of the entire city from a viewing platform open to the publi",
+   "editions": 21,
+   "unesco": false
+  },
+  {
+   "name": "Imagine Peace Tower",
+   "lat": 64.16328,
+   "lng": -21.8593,
+   "wikidata": "Q116484",
+   "note": "Yoko Ono's memorial to John Lennon, projecting a \"tower of light\" into the air that can be seen from around Reykjavík. The tower is turned on October 9-December 8, December 21–28, December 31 and March 21–28.",
+   "editions": 23,
+   "unesco": false
+  },
+  {
+   "name": "Christ the King Cathedral",
+   "lat": 64.1475,
+   "lng": -21.948889,
+   "wikidata": "Q794242",
+   "note": "The Catholic cathedral of Iceland.",
+   "editions": 21,
+   "unesco": false
+  },
+  {
+   "name": "National Gallery of Iceland",
+   "lat": 64.14411,
+   "lng": -21.93921,
+   "wikidata": "Q3480309",
+   "note": "The National Gallery of Iceland is a national museum and the main emphasis of the collection is on 20th and 21st century Icelandic art, but international art is featured as well. The museum owns the most valuable collection of works by Icel",
+   "editions": 15,
+   "unesco": false
+  },
+  {
+   "name": "Reykjavík Art Museum - Hafnarhús",
+   "lat": 64.14913,
+   "lng": -21.94086,
+   "wikidata": "Q3358410",
+   "note": "By the old harbour in Reykjavík, Hafnarhúsið hosts a rotating exhibitions of the work of Icelandic artist Erró and temporary exhibitions often showcase other local artists.",
+   "editions": 15,
+   "unesco": false
+  },
+  {
+   "name": "Reykjavík Art Museum - Kjarvalsstaðir",
+   "lat": 64.13788,
+   "lng": -21.91349,
+   "wikidata": "",
+   "note": "It is safe to say that Jóhannes Kjarval (1885-1972) is the single biggest name in Icelandic painting. Kjarvalsstaðir hosts a collection of his work, as well as hosting other temporary exhibitions."
+  },
+  {
+   "name": "Reykjavik Museum of Photography",
+   "lat": 64.14946,
+   "lng": -21.94139,
+   "wikidata": "Q16420866",
+   "note": "A very small museum with a nice library and reading room where you can find some older (but good) books about photography and current and past issues of photography magazines. It also has a huge collection of Icelandic photographs.",
+   "editions": 6,
+   "unesco": false
+  },
+  {
+   "name": "National Museum of Iceland",
+   "lat": 64.14194,
+   "lng": -21.94805,
+   "wikidata": "Q626963",
+   "note": "This museum, by the University of Iceland campus, takes the visitor through the history of a nation from settlement to today. Includes a café and a museum shop.",
+   "editions": 25,
+   "unesco": false
+  },
+  {
+   "name": "Reykjavík City Museum",
+   "lat": 64.1184,
+   "lng": -21.8185,
+   "wikidata": "Q3481984",
+   "note": "In the suburb of Árbær, and frequently called Árbæjarsafn (Árbær museum), this open air museum contains both the old farm of Árbær and many buildings from central Reykjavík that were moved there to make way for construction. The result is a",
+   "editions": 11,
+   "unesco": false
+  },
+  {
+   "name": "871±2",
+   "lat": 64.14735,
+   "lng": -21.942814,
+   "wikidata": "Q7319496",
+   "note": "Run by the Reykjavík City Museum, this exhibition in central Reykjavík was built around the oldest archaeological ruins in Iceland. As the name indicates, these ruins date to around the year 870. This interactive exhibitions brings you the ",
+   "editions": 6,
+   "unesco": false
+  },
+  {
+   "name": "The House of Collections",
+   "lat": 64.1473,
+   "lng": -21.93216,
+   "wikidata": "",
+   "note": "The House of Collections, built in 1906, has housed all the major Icelandic collections at some point. It houses the semi-permanent exhibition Resistance which is an interdisciplinary exhibition that bridges the gap between visual arts and "
+  },
+  {
+   "name": "Icelandic Punk Museum",
+   "lat": 64.147095,
+   "lng": -21.93608,
+   "wikidata": "Q123416199",
+   "note": "A small museum devoted to the history of punk music in Iceland, located in a former underground public toilet facility. In the final room you can listen to Icelandic punk music through headphones, and there are guitars and leather jackets t",
+   "editions": 1,
+   "unesco": false
+  }
+ ]
 }

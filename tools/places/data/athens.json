@@ -1,0 +1,435 @@
+{
+ "key": "athens",
+ "name": "Athens, Greece",
+ "centre": {
+  "lat": 37.9755,
+  "lng": 23.7348
+ },
+ "sites": {},
+ "towns": {},
+ "ports": [],
+ "dayTrips": [],
+ "missing": [],
+ "guideSights": [
+  {
+   "name": "Acropolis of Athens",
+   "lat": 37.97145,
+   "lng": 23.72377,
+   "wikidata": "Q131013",
+   "note": "It was the ancient fortified town of Athens, dating back to the Late Bronze Age. It is now a UNESCO World Heritage Site for its historic role and the many iconic buildings of the Greek Classical age, among them the Parthenon, the Erectheion",
+   "editions": 97,
+   "unesco": true
+  },
+  {
+   "name": "Theatre of Dionysus",
+   "lat": 37.97067,
+   "lng": 23.72764,
+   "wikidata": "Q1227044",
+   "note": "Classical Athens' main theatre, the first theatre ever built. Many of the great Greek plays were performed here for the first time. According to Plato's ''Symposium'', it could hold an audience of 19,000 spectators. Aristophanes' ''The Clou",
+   "editions": 34,
+   "unesco": false
+  },
+  {
+   "name": "Odeon of Herodes Atticus",
+   "lat": 37.9709,
+   "lng": 23.72457,
+   "wikidata": "Q1328165",
+   "note": "This theatre, built in 161 CE, is still used for concerts and plays. The stone backdrop is still preserved to a remarkable height of 3 stories, because it was incorporated into a later fortification on the site.",
+   "editions": 34,
+   "unesco": false
+  },
+  {
+   "name": "Pnyx",
+   "lat": 37.971667,
+   "lng": 23.719444,
+   "wikidata": "",
+   "note": ""
+  },
+  {
+   "name": "Ancient Agora",
+   "lat": 37.9751,
+   "lng": 23.7224,
+   "wikidata": "Q395367",
+   "note": "The site of the ancient city centre is a green space with a beautiful view of the Acropolis.  It was built as a multipurpose area, then evolved into a religious area over time.  The Ancient Agora was eventually abandoned and then large part",
+   "editions": 34,
+   "unesco": false
+  },
+  {
+   "name": "Temple of Hephaestus",
+   "lat": 37.9757,
+   "lng": 23.7215,
+   "wikidata": "Q756824",
+   "note": "The best preserved ancient Greek temple, 5th century BCE.",
+   "editions": 38,
+   "unesco": false
+  },
+  {
+   "name": "Stoa of Attalus",
+   "lat": 37.9752,
+   "lng": 23.7242,
+   "wikidata": "Q1263335",
+   "note": "This building was reconstructed in the 1950s from its original foundations, incorporating as much of the original structure and materials as possible, with limestone quarried from Piraeus and roof tiles made of clay from Attica. It is used ",
+   "editions": 27,
+   "unesco": false
+  },
+  {
+   "name": "Church of the Holy Apostles",
+   "lat": 37.974,
+   "lng": 23.7239,
+   "wikidata": "Q2615369",
+   "note": "From the 11th century, one of the oldest churches in Athens.",
+   "editions": 19,
+   "unesco": false,
+   "closedForGood": true
+  },
+  {
+   "name": "Roman Agora",
+   "lat": 37.9743,
+   "lng": 23.7265,
+   "wikidata": "Q1435551",
+   "note": "This area became the main marketplace of the city after the Ancient Agora to the west became primarily a religious facility under Roman rule.  It houses the Tower of the Winds, an eight-sided tower with a different wind deity on each side, ",
+   "editions": 19,
+   "unesco": false
+  },
+  {
+   "name": "Kerameikos",
+   "lat": 37.97859,
+   "lng": 23.71811,
+   "wikidata": "Q630974",
+   "note": "The site of the ancient cemetery of Athens. It also houses the Dipylon Gate, where the Panathenaic procession would begin. Its museum showcasing many of the grave stele and other archaeological items found on the grounds. The site has more ",
+   "editions": 29,
+   "unesco": false
+  },
+  {
+   "name": "Temple of Olympian Zeus",
+   "lat": 37.9695,
+   "lng": 23.7331,
+   "wikidata": "Q1123019",
+   "note": "Only the ruins remain today. The column that has fallen and can still be seen in pieces was brought down during a thunderstorm about a century ago.",
+   "editions": 38,
+   "unesco": false
+  },
+  {
+   "name": "The Lyceum",
+   "lat": 37.974075,
+   "lng": 23.743503,
+   "wikidata": "Q1160664",
+   "note": "An ancient temple here hosted lectures by Socrates, Plato, and Aristotle, and early meetings of the Athenian Assembly. Aristotle made the temple the home of his school, the Lyceum. It hosted the world's first zoo and botanical garden, as we",
+   "editions": 43,
+   "unesco": false,
+   "closedForGood": true
+  },
+  {
+   "name": "Plato's Academy",
+   "lat": 37.992359,
+   "lng": 23.708059,
+   "wikidata": "Q193093",
+   "note": "This house of study was founded by the famous philosopher Plato. His equally famous follower Aristotle studied here for 20 years before leaving to found a school of his own. The site is an outdoor free park where you can see the excavated r",
+   "editions": 69,
+   "unesco": false,
+   "closedForGood": true
+  },
+  {
+   "name": "Hadrian's Reservoir",
+   "lat": 37.979044111132616,
+   "lng": 23.741593526570966,
+   "wikidata": "",
+   "note": "Now the base of a summertime outdoor cinema, you can view the remains of the reservoir that was the terminus of an aqueduct that transported water for Roman-era Athenians from Parnitha to the base of Mount Lycabettus. You can only peer thro"
+  },
+  {
+   "name": "Panathinaiko Stadium",
+   "lat": 37.96835,
+   "lng": 23.74111,
+   "wikidata": "Q208811",
+   "note": "The stadium that housed the first modern day Olympic Games of 1896. Earlier versions of the stadium date as far back as 330 BCE. It's an enormous, white, marble stadium, with a horseshoe configuration.",
+   "editions": 47,
+   "unesco": false
+  },
+  {
+   "name": "Lycabettus Hill",
+   "lat": 37.982,
+   "lng": 23.7434,
+   "wikidata": "Q1357713",
+   "note": "A 200m hill bordering the Kolonaki district. You can reach the top by walking (the path starts 15 minutes from Evangelismos metro stop, and will take 30 minutes to walk up the winding, but paved and not steep, path) or by a funicular railwa",
+   "editions": 38,
+   "unesco": false
+  },
+  {
+   "name": "Olympic Stadium",
+   "lat": 38.036129,
+   "lng": 23.785403,
+   "wikidata": "Q189663",
+   "note": "",
+   "editions": 52,
+   "unesco": false
+  },
+  {
+   "name": "National Theatre",
+   "lat": 37.98479,
+   "lng": 23.72532,
+   "wikidata": "Q583039",
+   "note": "A low but imposing building erected between 1882 and 1890 by architect Ernst Ziller in the eclectic style of that age, commissioned by King George I.",
+   "editions": 11,
+   "unesco": false
+  },
+  {
+   "name": "Syntagma Square",
+   "lat": 37.97555,
+   "lng": 23.73484,
+   "wikidata": "Q1137997",
+   "note": "Check out the Parliament building and the newly restored Grande Bretagne Hotel.",
+   "editions": 34,
+   "unesco": false
+  },
+  {
+   "name": "Hellenic Parliament Building",
+   "lat": 37.97529,
+   "lng": 23.73707,
+   "wikidata": "",
+   "note": "This building is on the eastern side of the square. It was the former royal palace before Greece became a republic.  At its base, facing the square, is the Tomb of the Unknown Soldier."
+  },
+  {
+   "name": "Tomb of the Unknown Soldier",
+   "lat": 37.97553,
+   "lng": 23.73641,
+   "wikidata": "Q3531128",
+   "note": "Catch the changing of the guards in front of the Tomb of the Unknown Soldier in front of Parliament every hour on the hour.  The guards are a fascinating sight; they wear distinctive uniforms with pleated kilts and leather clogs with pom-po",
+   "editions": 8,
+   "unesco": false
+  },
+  {
+   "name": "Daphni Monastery",
+   "lat": 38.01298,
+   "lng": 23.63593,
+   "wikidata": "Q500444",
+   "note": "An 11th-century Byzantine monastery and UNESCO World Heritage site. Damaged by an earthquake in 1999, but has now been fully restored.",
+   "editions": 45,
+   "unesco": true
+  },
+  {
+   "name": "Kaisariani Monastery and Gardens",
+   "lat": 37.960833,
+   "lng": 23.798333,
+   "wikidata": "Q1168003",
+   "note": "A nice escape from the city in the foothills of Mount Hymettus. Walking trails. There's a functional monastery one can walk in, and several ruined chapels or basilicas up on the walks.",
+   "editions": 11,
+   "unesco": false
+  },
+  {
+   "name": "National Archaeological Museum of Athens",
+   "lat": 37.9891,
+   "lng": 23.73276,
+   "wikidata": "Q637187",
+   "note": "This is the largest and most popular of Athens' many museums, and is usually very crowded. Its vast collection includes treasures unearthed from Mycenae by Heinrich Schliemann; a staggering array of sculpture including the earliest known Gr",
+   "editions": 41,
+   "unesco": false
+  },
+  {
+   "name": "Kanellopoulos Museum",
+   "lat": 37.973,
+   "lng": 23.72596,
+   "wikidata": "Q4306141",
+   "note": "A small but excellent museum displays artifacts from Mycenean Greece on, and includes some wonderful Persian artifacts.",
+   "editions": 9,
+   "unesco": false
+  },
+  {
+   "name": "Benaki Museum of Greek Culture",
+   "lat": 37.97602,
+   "lng": 23.74038,
+   "wikidata": "Q816669",
+   "note": "Visit the beautiful Neoclassical main building which houses collections of Greek art, from ancient times through the Byzantine period and the modern state. Open late and for free on Thursday evenings. The museum shop is a good place to buy ",
+   "editions": 27,
+   "unesco": false
+  },
+  {
+   "name": "Museum of Cycladic Art",
+   "lat": 37.9757,
+   "lng": 23.74227,
+   "wikidata": "Q1230253",
+   "note": "Holds the second largest collection of Cypriot antiquities in the world outside Cyprus, after the Metropolitan Museum in New York. Some of the most popular exhibits include the Cycladic figurines, the idols from Early Bronze Age Cyclades, w",
+   "editions": 21,
+   "unesco": false
+  },
+  {
+   "name": "National Gallery",
+   "lat": 37.97563,
+   "lng": 23.74938,
+   "wikidata": "Q1167467",
+   "note": "It's one of Greece's main art institutions and features paintings and works of art from some of Greece's and Europe's best from the 19th and 20th centuries. Emphasis is given to popular Greek contemporary artists including Giannis Tsarouchi",
+   "editions": 19,
+   "unesco": false
+  },
+  {
+   "name": "Benaki Museum of Islamic Art",
+   "lat": 37.97924,
+   "lng": 23.72023,
+   "wikidata": "",
+   "note": "An excellent collection which anyone interested in Islamic art will want to see. The museum was opened in 2004 as a branch of the Benaki, but is in a different part of town in two connected buildings."
+  },
+  {
+   "name": "Museum of Greek Folk Art",
+   "lat": 37.972533,
+   "lng": 23.732308,
+   "wikidata": "Q4306259",
+   "note": "An excellent museum of its type. Too often neglected by visitors to Athens, even though it is in the heavily touristed Plaka neighbourhood. Displays include artefacts, tools, primitive painting, folk pottery and interior decor. It is partic",
+   "editions": 9,
+   "unesco": false
+  },
+  {
+   "name": "Athens Municipal Art Gallery",
+   "lat": 37.98088,
+   "lng": 23.72144,
+   "wikidata": "Q1576793",
+   "note": "Paintings of Greek painters of the first half of the 20th century are displayed.",
+   "editions": 6,
+   "unesco": false
+  },
+  {
+   "name": "Vorres Museum",
+   "lat": 37.95264,
+   "lng": 23.8476,
+   "wikidata": "Q7941879",
+   "note": "A museum of folk and contemporary art. Its grounds cover 320,000 m<sup>2</sup> (80 acres) including several buildings, gardens and courtyards. Its collection includes over 6,000 pieces covering 4,000 years of Greek history and art. The muse",
+   "editions": 4,
+   "unesco": false
+  },
+  {
+   "name": "National Historical Museum",
+   "lat": 37.9775,
+   "lng": 23.732778,
+   "wikidata": "Q822101",
+   "note": "In the old parliament building, this museum contains a large collection of historic documents such as the first constitution of Greece, furniture, equipment from the revolution. If you are lucky you may see the old session room.",
+   "editions": 20,
+   "unesco": false
+  },
+  {
+   "name": "Numismatic Museum",
+   "lat": 37.9778,
+   "lng": 23.7354,
+   "wikidata": "Q658339",
+   "note": "The building of the museum is one of the most beautiful in Athens, and was built by Ernst Ziller and was used as the residence in Athens of Schliemann. The collection contains thousands of ancient coins and ancient Greek, Roman, Byzantine, ",
+   "editions": 20,
+   "unesco": false
+  },
+  {
+   "name": "Museum of Greek Popular Musical Instruments",
+   "lat": 37.97447,
+   "lng": 23.72751,
+   "wikidata": "Q4306254",
+   "note": "Includes exhibits of traditional Greek musical instruments, with recordings of most of them.",
+   "editions": 7,
+   "unesco": false
+  },
+  {
+   "name": "National War Museum",
+   "lat": 37.97539,
+   "lng": 23.74534,
+   "wikidata": "Q1788831",
+   "note": "The National War Museum is the only significant surviving public project of the military dictatorship which ruled Greece 1967 - 1974. The museum's displays are old fashioned and biased towards the more successful periods of Greek military h",
+   "editions": 19,
+   "unesco": false
+  },
+  {
+   "name": "Park of Maritime Tradition",
+   "lat": 37.93369,
+   "lng": 23.6849,
+   "wikidata": "",
+   "note": "Including the historical warships Georgios Averof, Velos and a replica of an ancient trireme."
+  },
+  {
+   "name": "City of Athens Technopolis",
+   "lat": 37.978139,
+   "lng": 23.714111,
+   "wikidata": "Q174552",
+   "note": "An industrial museum of incomparable architecture. The centre has assisted in the upgrading of a historic Athens district.",
+   "editions": 6,
+   "unesco": false
+  },
+  {
+   "name": "Spathario Museum",
+   "lat": 38.053176,
+   "lng": 23.812165,
+   "wikidata": "Q7574011",
+   "note": "The first and unique museum of shadow theatre in the world, dedicated to the famous Greek shadow theatre character \"Karagiozis\".",
+   "editions": 3,
+   "unesco": false
+  },
+  {
+   "name": "Cultural Centre Hellenic Cosmos",
+   "lat": 37.9626148,
+   "lng": 23.6887172,
+   "wikidata": "",
+   "note": ""
+  },
+  {
+   "name": "Hellenic Motor Museum",
+   "lat": 37.991435,
+   "lng": 23.72991,
+   "wikidata": "Q1163632",
+   "note": "",
+   "editions": 6,
+   "unesco": false
+  },
+  {
+   "name": "Michael Cacoyannis Foundation cultural center",
+   "lat": 37.967475,
+   "lng": 23.696648,
+   "wikidata": "",
+   "note": ""
+  },
+  {
+   "name": "Planetary Evgenidio Foundation",
+   "lat": 37.9398247,
+   "lng": 23.6963433,
+   "wikidata": "",
+   "note": ""
+  },
+  {
+   "name": "Onassis Cultural centre",
+   "lat": 37.9579477,
+   "lng": 23.7193069,
+   "wikidata": "",
+   "note": ""
+  },
+  {
+   "name": "Epigraphical Museum",
+   "lat": 37.988303,
+   "lng": 23.731321,
+   "wikidata": "Q2732854",
+   "note": "",
+   "editions": 10,
+   "unesco": false
+  },
+  {
+   "name": "National Museum of Contemporary Art",
+   "lat": 37.9630089,
+   "lng": 23.7253329,
+   "wikidata": "",
+   "note": ""
+  },
+  {
+   "name": "Digital Museum Plato",
+   "lat": 37.9944535,
+   "lng": 23.7073032,
+   "wikidata": "",
+   "note": ""
+  },
+  {
+   "name": "Museum of Mineralogy and Petrology",
+   "lat": 37.9666472,
+   "lng": 23.7843246,
+   "wikidata": "",
+   "note": ""
+  },
+  {
+   "name": "Gounaropoulos Museum",
+   "lat": 37.975,
+   "lng": 23.761528,
+   "wikidata": "Q5588347",
+   "note": "",
+   "editions": 3,
+   "unesco": false
+  }
+ ]
+}

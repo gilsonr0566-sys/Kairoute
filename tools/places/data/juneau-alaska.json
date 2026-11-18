@@ -215,5 +215,91 @@
   "lng": -134.4208528,
   "known": true,
   "island": false
- }
+ },
+ "guideSights": [
+  {
+   "name": "Alaska State Museum",
+   "lat": 58.300253,
+   "lng": -134.415284,
+   "wikidata": "Q1426502",
+   "note": "One of Alaska's best exhibits covering the breadth of the state's history, native cultures, wildlife, industry, and art. Approximately a ten-minute walk from the cruise ship terminal.",
+   "editions": 3,
+   "unesco": false
+  },
+  {
+   "name": "Saint Nicholas Russian Orthodox Church",
+   "lat": 58.303221,
+   "lng": -134.408976,
+   "wikidata": "Q421512",
+   "note": "Tiny ornate octagonal structure that was built by the Tlingits in 1893. When the Russians were still in Sitka 50 years earlier, Father Ivan Veniaminov of the Russian Orthodox Church translated the Bible into Tlingit. Thus this building beca",
+   "editions": 5,
+   "unesco": false
+  },
+  {
+   "name": "Alaska State Capitol",
+   "lat": 58.302194,
+   "lng": -134.410472,
+   "wikidata": "Q2095370",
+   "note": "Completed in 1931 as the territorial capitol, this building does not have the typical imposing architecture of a state capitol. This capitol building, remodeled in 2006, houses the State Legislature, the Governor, and the Lieutenant Governo",
+   "editions": 14,
+   "unesco": false
+  },
+  {
+   "name": "Upside-Down Forest",
+   "lat": 58.359959,
+   "lng": -134.548316,
+   "wikidata": "",
+   "note": "A \"forest\" of tree stumps, turned upside-down, planted in the ground, and seeded with lots of colorful flowers."
+  },
+  {
+   "name": "Gold Belt Tram",
+   "lat": 58.2968,
+   "lng": -134.401,
+   "wikidata": "Q1263944",
+   "note": "There is a tram that runs from the docks in downtown Juneau up Mount Roberts, one of the peaks overlooking the city. At the top is the Mount Roberts Nature Center which features a captive eagle (not as impressive as seeing them from a dista",
+   "editions": 3,
+   "unesco": false
+  },
+  {
+   "name": "Alaskan Brewing Company Brewery Tour",
+   "lat": 58.299751,
+   "lng": -134.4043,
+   "wikidata": "",
+   "note": "If you head down to the Alaskan Brewing Company headquarters in Lemon Creek, they will give you a tasting of their great beer. A good way to end a day of hiking. To get there, jump on the bus and ask the driver which stop to get off at. Wal"
+  },
+  {
+   "name": "Juneau Arts & Humanities Council",
+   "lat": 58.299833,
+   "lng": -134.41356,
+   "wikidata": "",
+   "note": "Built in 1959 as the National Guard Armory, this building was retired in 2004, and lay empty for several years, until the City and Borough of Juneau Assembly, under Mayor Bruce Botelho, turned the facility over to the Juneau Arts & Humaniti"
+  },
+  {
+   "name": "Juneau-Douglas City Museum",
+   "lat": 58.3036,
+   "lng": -134.411,
+   "wikidata": "Q18386259",
+   "note": "",
+   "editions": 2,
+   "unesco": false
+  },
+  {
+   "name": "Sealaska Heritage Institute",
+   "lat": 58.300341,
+   "lng": -134.406325,
+   "wikidata": "Q30291923",
+   "note": "",
+   "editions": 0,
+   "unesco": false
+  },
+  {
+   "name": "Wickersham State Historic Site",
+   "lat": 58.303611,
+   "lng": -134.411389,
+   "wikidata": "Q20679861",
+   "note": "",
+   "editions": 2,
+   "unesco": false
+  }
+ ]
 }

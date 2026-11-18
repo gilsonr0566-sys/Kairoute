@@ -62,5 +62,53 @@
   "lng": -131.66333333,
   "known": true,
   "island": false
- }
+ },
+ "guideSights": [
+  {
+   "name": "Tongass Historical Museum",
+   "lat": 55.34251,
+   "lng": -131.64357,
+   "wikidata": "",
+   "note": "Visit the historical exhibits."
+  },
+  {
+   "name": "Southeast Alaska Discovery Center",
+   "lat": 55.3406,
+   "lng": -131.644,
+   "wikidata": "Q16946986",
+   "note": "See the rainforest interpretive exhibits.",
+   "editions": 1,
+   "unesco": false
+  },
+  {
+   "name": "Saxman Totem Park",
+   "lat": 55.3197,
+   "lng": -131.595,
+   "wikidata": "",
+   "note": ""
+  },
+  {
+   "name": "Totem Heritage Center",
+   "lat": 55.3426,
+   "lng": -131.634,
+   "wikidata": "Q3532720",
+   "note": "",
+   "editions": 3,
+   "unesco": false
+  },
+  {
+   "name": "Tribal Fish Hatchery",
+   "lat": 55.34331,
+   "lng": -131.63513,
+   "wikidata": "",
+   "note": ""
+  },
+  {
+   "name": "Alaska Rainforest Sanctuary",
+   "lat": 55.32591,
+   "lng": -131.52664,
+   "wikidata": "",
+   "note": "While Alaska is probably one of the last places people would associate with the term \"rainforest\", the large amount of rainfall over this {{acre"
+  }
+ ]
 }

@@ -189,5 +189,57 @@
   "lng": 18.7682195,
   "known": true,
   "island": false
- }
+ },
+ "guideSights": [
+  {
+   "name": "St Tryphon's Cathedral",
+   "lat": 42.4241,
+   "lng": 18.7719,
+   "wikidata": "Q966429",
+   "note": "It was built in the 11th century, and reconstructed after earthquakes. Romanesque-Gothic architecture. Chapel holds the remains of St. Tryphon, the patron saint of Kotor.",
+   "editions": 23,
+   "unesco": false
+  },
+  {
+   "name": "St Nicolas Church",
+   "lat": 42.42575,
+   "lng": 18.770889,
+   "wikidata": "Q26696607",
+   "note": "The biggest Orthodox church in the Old Town.",
+   "editions": 6,
+   "unesco": false
+  },
+  {
+   "name": "Maritime Museum",
+   "lat": 42.4252,
+   "lng": 18.771361,
+   "wikidata": "Q16677924",
+   "note": "3 floors of photographs, uniforms, weapons, paintings, and model ships.",
+   "editions": 4,
+   "unesco": false
+  },
+  {
+   "name": "Castle of San Giovanni",
+   "lat": 42.422117,
+   "lng": 18.774816,
+   "wikidata": "",
+   "note": "Ruins of a castle at the top of the trail running along the fortifications of the town. Offers panoramic views of the walled town with the Bay of Kotor in the background."
+  },
+  {
+   "name": "Church of Our Lady of Remedy",
+   "lat": 42.424286,
+   "lng": 18.773204,
+   "wikidata": "Q4981066",
+   "note": "Church on the slopes of the mountain overlooking Kotor. Built in the 16th century by plague survivors to honor the Holy Mother. Accessed by climbing the trail up the fortifications from the old town.",
+   "editions": 7,
+   "unesco": false
+  },
+  {
+   "name": "Aquarium Boka",
+   "lat": 42.43616,
+   "lng": 18.76429,
+   "wikidata": "",
+   "note": "Small aquarium featuring entirely local marine species. Panel descriptions are in both Montenegrin and English."
+  }
+ ]
 }

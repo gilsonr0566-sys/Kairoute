@@ -18,6 +18,77 @@
     "lat": 37.9755,
     "lng": 23.7348
    }
+  },
+  {
+   "key": "heraklion",
+   "name": "Heraklion",
+   "centre": {
+    "lat": 35.3336,
+    "lng": 25.1388
+   },
+   "port": "Heraklion cruise port"
+  },
+  {
+   "key": "kusadasi",
+   "name": "Kusadasi",
+   "centre": {
+    "lat": 37.9232,
+    "lng": 27.331
+   },
+   "port": "Kusadasi cruise port"
+  },
+  {
+   "key": "santorini",
+   "name": "Santorini",
+   "centre": {
+    "lat": 36.4059,
+    "lng": 25.4183
+   },
+   "port": "Fira old port (tender landing)"
+  },
+  {
+   "key": "chania",
+   "name": "Chania",
+   "centre": {
+    "lat": 35.5169,
+    "lng": 24.0183
+   },
+   "port": "Souda Bay cruise port"
+  },
+  {
+   "key": "messina",
+   "name": "Messina",
+   "centre": {
+    "lat": 38.1997,
+    "lng": 15.5563
+   },
+   "port": "Messina cruise terminal"
+  },
+  {
+   "key": "naples",
+   "name": "Naples",
+   "centre": {
+    "lat": 40.8481,
+    "lng": 14.2537
+   },
+   "port": "Stazione Marittima (Naples cruise terminal)"
+  },
+  {
+   "key": "rome from civitavecchia",
+   "name": "Rome (from Civitavecchia)",
+   "centre": {
+    "lat": 41.8982,
+    "lng": 12.4759
+   },
+   "port": "Civitavecchia cruise port"
+  },
+  {
+   "key": "madrid",
+   "name": "Madrid",
+   "centre": {
+    "lat": 40.4148,
+    "lng": -3.702
+   }
   }
  ]
 }
