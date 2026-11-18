@@ -16,7 +16,10 @@
     "Q133747929"
    ],
    "unesco": true,
-   "closedForGood": false
+   "closedForGood": false,
+   "hours": "Nov-Feb: Mo-Sa 09:00-18:00, Su 10:30-18:00; Mar-Oct: Mo-Fr 09:00-19:00, Sa 09:00-18:00, Su 10:30-19:00; Apr-Sep: Mo-Fr 09:00-20:00, Sa 09:00-18:00, Su 10:30-20:00; Dec 25,Dec 26,Jan 01,Jan 06 09:00-14:00; PH off",
+   "web": "https://sagradafamilia.org/",
+   "osm": "relation/9194723"
   },
   "parkguell": {
    "wikidata": "Q212867",
@@ -29,7 +32,11 @@
    "closedForGood": false,
    "partOf": [
     "Q921745"
-   ]
+   ],
+   "hours": "Jan 01-Mar 24,Oct 28-Dec 31: 08:30-18:15; Mar 25-Apr 29: 08:00-20:30; Apr 30-Aug 26: 08:00-21:30",
+   "fee": "yes",
+   "web": "https://parkguell.barcelona/ca",
+   "osm": "way/66713401"
   },
   "batllo": {
    "wikidata": "Q461371",
@@ -41,7 +48,10 @@
    "closedForGood": false,
    "partOf": [
     "Q3042289"
-   ]
+   ],
+   "hours": "Mo-Su 09:00-21:00",
+   "web": "https://www.casabatllo.es/ca/",
+   "osm": "relation/9427554"
   },
   "pedrera": {
    "wikidata": "Q207870",
@@ -54,7 +64,10 @@
    "partOf": [
     "Q55065239",
     "Q921745"
-   ]
+   ],
+   "osm": "node/6096999610",
+   "hours": "Mar 01-Nov 04: 09:00-20:30,21:00-23:00; Nov 05-Feb 28: 09:00-18:30,19:00-21:00",
+   "web": "https://www.lapedrera.com/ca/"
   },
   "rambla": {
    "wikidata": "Q850593",
@@ -64,7 +77,8 @@
     "Q66626342",
     "Q29518746"
    ],
-   "closedForGood": false
+   "closedForGood": false,
+   "osm": "way/11680101"
   },
   "picasso": {
    "wikidata": "Q1050032",
@@ -73,7 +87,11 @@
     "Q33506",
     "Q207694"
    ],
-   "closedForGood": false
+   "closedForGood": false,
+   "hours": "Jan 1, May 1, Jun 24, Dec 25 off; Tu, We, Su 09:00-20:00; Th-Sa 09:00-21:00",
+   "fee": "yes",
+   "web": "https://museupicassobcn.cat",
+   "osm": "way/188938001"
   },
   "palau": {
    "wikidata": "Q327940",
@@ -86,7 +104,10 @@
    "partOf": [
     "Q16248724",
     "Q64955212"
-   ]
+   ],
+   "hours": "Mo-Su 09:00-15:30",
+   "web": "https://www.palaumusica.cat/",
+   "osm": "way/377216661"
   },
   "santpau": {
    "wikidata": "Q507282",
@@ -100,7 +121,11 @@
    "partOf": [
     "Q16248724",
     "Q64955212"
-   ]
+   ],
+   "osm": "way/265391701",
+   "hours": "PH,Su 10:00-14:30; Nov-Mar: Mo-Sa 10:00-16:30; Apr-Oct: Mo-Sa 10:00-18:30; Jan 01,Jan 06,Dec 25: off",
+   "fee": "yes",
+   "web": "https://www.santpaubarcelona.org/"
   },
   "gracia": {
    "wikidata": "Q852697",
@@ -109,7 +134,9 @@
     "Q790344",
     "Q130261443"
    ],
-   "closedForGood": false
+   "closedForGood": false,
+   "web": "https://ajuntament.barcelona.cat/gracia/ca",
+   "osm": "node/10921904365"
   },
   "santantoni": {
    "wikidata": "Q3753734",
@@ -117,7 +144,10 @@
    "types": [
     "Q2080521"
    ],
-   "closedForGood": false
+   "closedForGood": false,
+   "hours": "Mo-Sa 08:00-20:00",
+   "osm": "way/249401797",
+   "web": "https://www.mercatdesantantoni.com/cat/index.html"
   },
   "ciutadella": {
    "wikidata": "Q301135",
@@ -126,7 +156,10 @@
     "Q22746",
     "Q14946335"
    ],
-   "closedForGood": false
+   "closedForGood": false,
+   "hours": "Mo-Su,PH 10:00-22:30",
+   "web": "https://www.barcelona.cat/ca/que-pots-fer-a-bcn/parcs-i-jardins/parc-de-la-ciutadella-92086011921",
+   "osm": "relation/271463"
   },
   "barceloneta": {
    "wikidata": "Q591874",
@@ -135,7 +168,10 @@
     "Q928830",
     "Q22808403"
    ],
-   "closedForGood": false
+   "closedForGood": false,
+   "osm": "node/462256384",
+   "hours": "Mo-Th 05:00-24:00; Fr 05:00-02:00; Sa 05:00-24:00; Su 00:00-24:00; Jun 23 05:00-24:00; Jun 24 00:00-24:00; Sep 23 05:00-24:00; Sep 24 00:00-24:00; Dec 31 05:00-24:00; Jan 01 00:00-24:00; Dec 24 05:00-23:00",
+   "web": "https://www.tmb.cat/ca/barcelona/metro/-/lineametro/estacion/422"
   },
   "montjuic": {
    "wikidata": "Q2500125",
@@ -147,7 +183,11 @@
     "Q5003624",
     "Q40357"
    ],
-   "closedForGood": false
+   "closedForGood": false,
+   "hours": "Nov 01-Feb 28 10:00-18:00; Mar 01-Oct 31 10:00-20:00; Dec 25,Jan 01 off; PH off",
+   "fee": "yes",
+   "web": "http://www.bcn.cat/castelldemontjuic/",
+   "osm": "relation/19658818"
   },
   "mnac": {
    "wikidata": "Q861252",
@@ -156,7 +196,11 @@
     "Q207694",
     "Q17431399"
    ],
-   "closedForGood": false
+   "closedForGood": false,
+   "hours": "Tu-Sa 10:00-18:00; Su 10:00-15:00; May-Sep: Tu-Sa 10:00-20:00; PH off",
+   "fee": "yes",
+   "web": "https://www.museunacional.cat/ca",
+   "osm": "node/14075577293"
   },
   "born": {
    "wikidata": "Q18695772",
@@ -166,7 +210,11 @@
     "Q43229",
     "Q33506"
    ],
-   "closedForGood": false
+   "closedForGood": false,
+   "hours": "Mar-Oct Tu-Su 10:00-20:00; Nov-Feb Tu-Sa 10:00-19:00, Su 10:00-20:00; Dec 26 10:00-14:30; Jan 01,May 01,Jun 24,Dec 25 off; PH off",
+   "fee": "no",
+   "web": "https://elbornculturaimemoria.barcelona.cat/",
+   "osm": "node/14022328893"
   },
   "placareial": {
    "wikidata": "Q1519964",
@@ -175,7 +223,8 @@
     "Q28793904",
     "Q1497375"
    ],
-   "closedForGood": false
+   "closedForGood": false,
+   "osm": "way/541071062"
   },
   "amatller": {
    "wikidata": "Q506814",
@@ -187,7 +236,9 @@
    "closedForGood": false,
    "partOf": [
     "Q3042289"
-   ]
+   ],
+   "osm": "relation/9427552",
+   "web": "https://www.amatller.org/"
   },
   "arc": {
    "wikidata": "Q631075",
@@ -195,7 +246,8 @@
    "types": [
     "Q143912"
    ],
-   "closedForGood": false
+   "closedForGood": false,
+   "osm": "way/377875377"
   },
   "colom": {
    "wikidata": "Q2288815",
@@ -207,7 +259,9 @@
    "closedForGood": false,
    "partOf": [
     "Q15945449"
-   ]
+   ],
+   "web": "https://thisisbarcelona.com/ca/tickets/monumento-mirador-colom",
+   "osm": "way/126451774"
   },
   "catalunya": {
    "wikidata": "Q822881",
@@ -216,7 +270,8 @@
     "Q174782",
     "Q2298537"
    ],
-   "closedForGood": false
+   "closedForGood": false,
+   "osm": "way/8380812"
   },
   "palauguell": {
    "wikidata": "Q597051",
@@ -229,7 +284,11 @@
    "partOf": [
     "Q921745",
     "Q16248724"
-   ]
+   ],
+   "hours": "Apr-Oct: 10:00-20:00; Nov-Mar: 10:00-17:30",
+   "fee": "yes",
+   "web": "https://inici.palauguell.cat/ca",
+   "osm": "way/166565579"
   },
   "src-q159848": {
    "wikidata": "Q159848",
@@ -237,7 +296,9 @@
    "types": [
     "Q1154710"
    ],
-   "closedForGood": false
+   "closedForGood": false,
+   "osm": "way/34607291",
+   "web": "https://www.fcbarcelona.com/en/club/facilities/camp-nou/"
   },
   "src-q336246": {
    "wikidata": "Q336246",
@@ -248,7 +309,9 @@
    "closedForGood": false,
    "partOf": [
     "Q2814960"
-   ]
+   ],
+   "osm": "way/44213122",
+   "web": "http://torregloriesbcn.com/"
   },
   "src-q17155": {
    "wikidata": "Q17155",
@@ -260,7 +323,10 @@
    "closedForGood": false,
    "partOf": [
     "Q98690521"
-   ]
+   ],
+   "hours": "Mo-Fr 09:30-18:30; Sa 09:30-17:15; Su,PH 14:00-17:00",
+   "web": "https://catedralbcn.org/",
+   "osm": "relation/3298476"
   },
   "src-q746333": {
    "wikidata": "Q746333",
@@ -273,7 +339,11 @@
    "partOf": [
     "Q921745",
     "Q16248724"
-   ]
+   ],
+   "hours": "PH,Mo-Su 10:00-20:00; Dec 25,Jan 01,Jan 06: off",
+   "fee": "yes",
+   "web": "https://casavicens.org/es/",
+   "osm": "way/132514125"
   },
   "src-q275715": {
    "wikidata": "Q275715",
@@ -281,7 +351,9 @@
    "types": [
     "Q589481"
    ],
-   "closedForGood": false
+   "closedForGood": false,
+   "web": "https://estadiolimpic.barcelona/",
+   "osm": "way/35764760"
   },
   "src-q861252": {
    "wikidata": "Q861252",
@@ -290,7 +362,11 @@
     "Q207694",
     "Q17431399"
    ],
-   "closedForGood": false
+   "closedForGood": false,
+   "hours": "Tu-Sa 10:00-18:00; Su 10:00-15:00; May-Sep: Tu-Sa 10:00-20:00; PH off",
+   "fee": "yes",
+   "web": "https://www.museunacional.cat/ca",
+   "osm": "node/14075577293"
   },
   "src-q1067140": {
    "wikidata": "Q1067140",
@@ -300,7 +376,11 @@
     "Q2385804",
     "Q117531692"
    ],
-   "closedForGood": false
+   "closedForGood": false,
+   "hours": "Mo,We-Fr 11:00-19:30; Sa 10:00-20:00; Su,PH 10:00-15:00",
+   "fee": "yes",
+   "web": "https://www.macba.cat/ca",
+   "osm": "way/36930946"
   },
   "src-q867072": {
    "wikidata": "Q867072",
@@ -312,7 +392,8 @@
     "Q33506",
     "Q207694"
    ],
-   "closedForGood": false
+   "closedForGood": false,
+   "web": "https://www.fmirobcn.org/"
   },
   "src-q1147977": {
    "wikidata": "Q1147977",
@@ -320,7 +401,10 @@
    "types": [
     "Q11166728"
    ],
-   "closedForGood": false
+   "closedForGood": false,
+   "fee": "yes",
+   "web": "http://www.torredecollserola.com/",
+   "osm": "relation/20725097"
   },
   "src-q807915": {
    "wikidata": "Q807915",
@@ -331,7 +415,11 @@
    "closedForGood": true,
    "partOf": [
     "Q283454"
-   ]
+   ],
+   "hours": "Mar-Oct 10:00-20:00; Nov-Feb 10:00-18:00; Dec 25 off",
+   "fee": "yes",
+   "web": "https://miesbcn.com/ca/el-pavello",
+   "osm": "way/67917935"
   },
   "src-q2330791": {
    "wikidata": "Q2330791",
@@ -342,7 +430,9 @@
    "closedForGood": false,
    "partOf": [
     "Q3042289"
-   ]
+   ],
+   "web": "http://www.casalleomorera.com/en/",
+   "osm": "way/679019157"
   },
   "src-q616238": {
    "wikidata": "Q616238",
@@ -351,7 +441,11 @@
     "Q17000324",
     "Q33506"
    ],
-   "closedForGood": false
+   "closedForGood": false,
+   "hours": "09:00-19:00; Dec 25,Jan 01 off",
+   "fee": "yes",
+   "web": "https://www.fcbarcelona.com/en/tickets/camp-nou-experience",
+   "osm": "node/5337055959"
   },
   "src-q1062480": {
    "wikidata": "Q1062480",
@@ -362,7 +456,11 @@
    "closedForGood": false,
    "partOf": [
     "Q283454"
-   ]
+   ],
+   "hours": "Mo 10:00-20:00; Tu-Su,PH 10:00-24:00; Jan 07-Feb 05 Tu-Th 10:00-20:00; Dec 25 10:00-14:00; Dec 26 10:00-24:00; Jan 01 13:00-24:00; Jan 06 10:00-20:00",
+   "fee": "yes",
+   "web": "https://www.poble-espanyol.com",
+   "osm": "way/40547571"
   },
   "src-q2447148": {
    "wikidata": "Q2447148",
@@ -370,7 +468,11 @@
    "types": [
     "Q207694"
    ],
-   "closedForGood": false
+   "closedForGood": false,
+   "hours": "Tu-Sa 10:00-19:00; Su 10:00-15:00; Jan 1 off; Jan 6 off; Dec 25 off; Dec 26 off",
+   "fee": "yes",
+   "web": "https://www.museutapies.org",
+   "osm": "node/1962723905"
   },
   "src-q2013874": {
    "wikidata": "Q2013874",
@@ -378,7 +480,8 @@
    "types": [
     "Q174782"
    ],
-   "closedForGood": false
+   "closedForGood": false,
+   "osm": "way/4787707"
   },
   "src-q1519964": {
    "wikidata": "Q1519964",
@@ -387,7 +490,8 @@
     "Q28793904",
     "Q1497375"
    ],
-   "closedForGood": false
+   "closedForGood": false,
+   "osm": "way/541071062"
   },
   "src-q1200948": {
    "wikidata": "Q1200948",
@@ -395,7 +499,11 @@
    "types": [
     "Q2281788"
    ],
-   "closedForGood": false
+   "closedForGood": false,
+   "hours": "Mo-Fr 10:00-19:00; Sa,Su,PH 10:00-20:00; Jul 01-Sep 06 10:00-21:00; Sep 07-Oct 31,Dec 25-Jan 02,Jan 06,Jan 07,Mar 30,Mar 31,Apr 01-Jun 30 10:00-20:00",
+   "fee": "yes",
+   "web": "http://www.aquariumbcn.com",
+   "osm": "way/646565236"
   },
   "src-q1286354": {
    "wikidata": "Q1286354",
@@ -407,7 +515,11 @@
    "partOf": [
     "Q83618265",
     "Q11955273"
-   ]
+   ],
+   "hours": "Mo-Su,PH 10:00-20:00; Dec 24,Dec 31 10:00-15:00; Dec 25,Dec 26,Jan 01,Jan 06 off",
+   "fee": "yes",
+   "web": "https://www.mmb.cat/",
+   "osm": "node/14080861534"
   },
   "src-q1321526": {
    "wikidata": "Q1321526",
@@ -415,7 +527,9 @@
    "types": [
     "Q44613"
    ],
-   "closedForGood": false
+   "closedForGood": false,
+   "web": "https://www.monestirpedralbes.barcelona",
+   "osm": "relation/9036251"
   },
   "src-q1968399": {
    "wikidata": "Q1968399",
@@ -423,7 +537,11 @@
    "types": [
     "Q2087181"
    ],
-   "closedForGood": false
+   "closedForGood": false,
+   "hours": "Oct-Mar: 10:00-18:00; Apr-Sep: 09:00-20:00; Jan 01,Jan 06,Dec 25,Dec 26: 10:00-14:00",
+   "fee": "yes",
+   "osm": "way/126856515",
+   "web": "https://www.casamuseugaudi.org/"
   },
   "src-q595553": {
    "wikidata": "Q595553",
@@ -432,7 +550,10 @@
     "Q41176",
     "Q811979"
    ],
-   "closedForGood": false
+   "closedForGood": false,
+   "hours": "10:00-16:00",
+   "web": "https://meet.barcelona.cat/ca/descobreix-barcelona/districtes/les-corts/pavellos-de-la-finca-guell",
+   "osm": "way/643959778"
   },
   "src-q11682430": {
    "wikidata": "Q11682430",
@@ -440,7 +561,9 @@
    "types": [
     "Q33506"
    ],
-   "closedForGood": false
+   "closedForGood": false,
+   "web": "https://hashmuseum.com/es/",
+   "osm": "node/2136227451"
   },
   "src-q2605209": {
    "wikidata": "Q2605209",
@@ -451,7 +574,11 @@
    "closedForGood": false,
    "partOf": [
     "Q9046889"
-   ]
+   ],
+   "hours": "Nov-Mar: 10:00-18:00; Apr-May,Sep-Oct: 10:00-19:00; Jun-Aug: 10:00-20:00; Dec 25,Jan 01,May 01,Jun 24 off; PH off",
+   "fee": "yes",
+   "web": "http://museuciencies.cat/es/",
+   "osm": "way/61892111"
   },
   "src-q2101038": {
    "wikidata": "Q2101038",
@@ -459,7 +586,8 @@
    "types": [
     "Q44613"
    ],
-   "closedForGood": false
+   "closedForGood": false,
+   "osm": "relation/166399"
   },
   "src-q1167101": {
    "wikidata": "Q1167101",
@@ -469,7 +597,9 @@
     "Q866623",
     "Q123705"
    ],
-   "closedForGood": false
+   "closedForGood": false,
+   "web": "https://ajuntament.barcelona.cat/santmarti/ca/el-districte-i-els-seus-barris/la-vila-olimpica-del-poblenou",
+   "osm": "node/1711578889"
   },
   "src-q5668717": {
    "wikidata": "Q5668717",
@@ -477,7 +607,10 @@
    "types": [
     "Q39614"
    ],
-   "closedForGood": false
+   "closedForGood": false,
+   "hours": "Mo-Su 08:00-18:00",
+   "web": "https://www.cbsa.cat/cementiris/cementiri-poblenou/",
+   "osm": "way/22689683"
   },
   "src-q6062641": {
    "wikidata": "Q6062641",
@@ -485,7 +618,8 @@
    "types": [
     "Q22698"
    ],
-   "closedForGood": false
+   "closedForGood": false,
+   "osm": "relation/9811351"
   }
  },
  "towns": {
@@ -784,5 +918,5025 @@
   "lng": 2.17,
   "known": true,
   "island": false
- }
+ },
+ "transit": [
+  {
+   "mode": "subway",
+   "ref": "L3",
+   "name": "L3: Trinitat Nova => Zona Universitària",
+   "stops": [
+    {
+     "name": "Trinitat Nova",
+     "lat": 41.4494,
+     "lng": 2.18458
+    },
+    {
+     "name": "Roquetes",
+     "lat": 41.44739,
+     "lng": 2.17568
+    },
+    {
+     "name": "Canyelles",
+     "lat": 41.44178,
+     "lng": 2.16634
+    },
+    {
+     "name": "Valldaura",
+     "lat": 41.43807,
+     "lng": 2.15692
+    },
+    {
+     "name": "Mundet",
+     "lat": 41.43559,
+     "lng": 2.14837
+    },
+    {
+     "name": "Montbau",
+     "lat": 41.4306,
+     "lng": 2.14503
+    },
+    {
+     "name": "Vall d’Hebron | Sant Genís",
+     "lat": 41.4248,
+     "lng": 2.14232
+    },
+    {
+     "name": "Penitents",
+     "lat": 41.4179,
+     "lng": 2.14101
+    },
+    {
+     "name": "Vallcarca",
+     "lat": 41.4119,
+     "lng": 2.14449
+    },
+    {
+     "name": "Lesseps",
+     "lat": 41.40555,
+     "lng": 2.15056
+    },
+    {
+     "name": "Fontana",
+     "lat": 41.40204,
+     "lng": 2.15298
+    },
+    {
+     "name": "Diagonal",
+     "lat": 41.39594,
+     "lng": 2.15995
+    },
+    {
+     "name": "Passeig de Gràcia",
+     "lat": 41.39159,
+     "lng": 2.16534
+    },
+    {
+     "name": "Catalunya",
+     "lat": 41.38616,
+     "lng": 2.17008
+    },
+    {
+     "name": "Liceu",
+     "lat": 41.38139,
+     "lng": 2.17306
+    },
+    {
+     "name": "Drassanes",
+     "lat": 41.37668,
+     "lng": 2.17576
+    },
+    {
+     "name": "Paral·lel",
+     "lat": 41.37491,
+     "lng": 2.16925
+    },
+    {
+     "name": "El Poble-sec",
+     "lat": 41.375,
+     "lng": 2.16058
+    },
+    {
+     "name": "Espanya",
+     "lat": 41.37503,
+     "lng": 2.15152
+    },
+    {
+     "name": "Tarragona",
+     "lat": 41.37849,
+     "lng": 2.14535
+    },
+    {
+     "name": "Sants Estació",
+     "lat": 41.38146,
+     "lng": 2.1412
+    },
+    {
+     "name": "Plaça del Centre",
+     "lat": 41.38196,
+     "lng": 2.13588
+    },
+    {
+     "name": "les Corts",
+     "lat": 41.38414,
+     "lng": 2.1309
+    },
+    {
+     "name": "Maria Cristina",
+     "lat": 41.38795,
+     "lng": 2.12622
+    },
+    {
+     "name": "Palau Reial",
+     "lat": 41.38583,
+     "lng": 2.11785
+    },
+    {
+     "name": "Zona Universitària",
+     "lat": 41.38419,
+     "lng": 2.11138
+    }
+   ]
+  },
+  {
+   "mode": "subway",
+   "ref": "L4",
+   "name": "L4: La Pau => Trinitat Nova",
+   "stops": [
+    {
+     "name": "La Pau",
+     "lat": 41.42362,
+     "lng": 2.2053
+    },
+    {
+     "name": "Besòs",
+     "lat": 41.42043,
+     "lng": 2.20963
+    },
+    {
+     "name": "Besòs Mar",
+     "lat": 41.41506,
+     "lng": 2.2161
+    },
+    {
+     "name": "El Maresme | Fòrum",
+     "lat": 41.41179,
+     "lng": 2.21666
+    },
+    {
+     "name": "Selva de Mar",
+     "lat": 41.40807,
+     "lng": 2.20917
+    },
+    {
+     "name": "Poblenou",
+     "lat": 41.40373,
+     "lng": 2.20335
+    },
+    {
+     "name": "Llacuna",
+     "lat": 41.3994,
+     "lng": 2.19763
+    },
+    {
+     "name": "Bogatell",
+     "lat": 41.3952,
+     "lng": 2.19209
+    },
+    {
+     "name": "Ciutadella | Vila Olímpica",
+     "lat": 41.38668,
+     "lng": 2.19295
+    },
+    {
+     "name": "Barceloneta",
+     "lat": 41.38207,
+     "lng": 2.18542
+    },
+    {
+     "name": "Jaume I",
+     "lat": 41.38403,
+     "lng": 2.17868
+    },
+    {
+     "name": "Urquinaona",
+     "lat": 41.38806,
+     "lng": 2.17333
+    },
+    {
+     "name": "Passeig de Gràcia",
+     "lat": 41.38998,
+     "lng": 2.16796
+    },
+    {
+     "name": "Girona",
+     "lat": 41.39501,
+     "lng": 2.17096
+    },
+    {
+     "name": "Verdaguer",
+     "lat": 41.40046,
+     "lng": 2.16796
+    },
+    {
+     "name": "Joanic",
+     "lat": 41.40636,
+     "lng": 2.16322
+    },
+    {
+     "name": "Alfons X",
+     "lat": 41.41209,
+     "lng": 2.16552
+    },
+    {
+     "name": "Guinardó | Hospital de Sant Pau",
+     "lat": 41.41608,
+     "lng": 2.17409
+    },
+    {
+     "name": "Maragall",
+     "lat": 41.42309,
+     "lng": 2.17741
+    },
+    {
+     "name": "Llucmajor",
+     "lat": 41.437,
+     "lng": 2.17338
+    },
+    {
+     "name": "Via Júlia",
+     "lat": 41.44376,
+     "lng": 2.17858
+    },
+    {
+     "name": "Trinitat Nova",
+     "lat": 41.44916,
+     "lng": 2.18247
+    }
+   ]
+  },
+  {
+   "mode": "subway",
+   "ref": "L2",
+   "name": "L2: Paral·lel => Badalona Pompeu Fabra",
+   "stops": [
+    {
+     "name": "Paral·lel",
+     "lat": 41.37498,
+     "lng": 2.16925
+    },
+    {
+     "name": "Sant Antoni",
+     "lat": 41.37979,
+     "lng": 2.16322
+    },
+    {
+     "name": "Universitat",
+     "lat": 41.38473,
+     "lng": 2.16386
+    },
+    {
+     "name": "Passeig de Gràcia",
+     "lat": 41.38951,
+     "lng": 2.16812
+    },
+    {
+     "name": "Tetuan",
+     "lat": 41.39489,
+     "lng": 2.1755
+    },
+    {
+     "name": "Monumental",
+     "lat": 41.40044,
+     "lng": 2.17976
+    },
+    {
+     "name": "Sagrada Família",
+     "lat": 41.40399,
+     "lng": 2.17512
+    },
+    {
+     "name": "Encants",
+     "lat": 41.40707,
+     "lng": 2.18258
+    },
+    {
+     "name": "El Clot",
+     "lat": 41.41026,
+     "lng": 2.18672
+    },
+    {
+     "name": "Bac de Roda",
+     "lat": 41.41485,
+     "lng": 2.19515
+    },
+    {
+     "name": "Sant Martí",
+     "lat": 41.41903,
+     "lng": 2.20078
+    },
+    {
+     "name": "La Pau",
+     "lat": 41.42394,
+     "lng": 2.20568
+    },
+    {
+     "name": "Verneda",
+     "lat": 41.42987,
+     "lng": 2.20981
+    },
+    {
+     "name": "Artigues | Sant Adrià",
+     "lat": 41.4337,
+     "lng": 2.21758
+    },
+    {
+     "name": "Sant Roc",
+     "lat": 41.43529,
+     "lng": 2.22784
+    },
+    {
+     "name": "Gorg",
+     "lat": 41.44045,
+     "lng": 2.23376
+    },
+    {
+     "name": "Pep Ventura",
+     "lat": 41.44391,
+     "lng": 2.23804
+    },
+    {
+     "name": "Badalona Pompeu Fabra",
+     "lat": 41.44894,
+     "lng": 2.24425
+    }
+   ]
+  },
+  {
+   "mode": "subway",
+   "ref": "L1",
+   "name": "L1: Hospital de Bellvitge => Fondo",
+   "stops": [
+    {
+     "name": "Hospital de Bellvitge",
+     "lat": 41.34463,
+     "lng": 2.10722
+    },
+    {
+     "name": "Bellvitge Rambla Marina",
+     "lat": 41.35097,
+     "lng": 2.11095
+    },
+    {
+     "name": "Avinguda Carrilet",
+     "lat": 41.35892,
+     "lng": 2.1025
+    },
+    {
+     "name": "Rambla Just Oliveras",
+     "lat": 41.36402,
+     "lng": 2.09984
+    },
+    {
+     "name": "Can Serra",
+     "lat": 41.36768,
+     "lng": 2.10276
+    },
+    {
+     "name": "Florida",
+     "lat": 41.3683,
+     "lng": 2.10983
+    },
+    {
+     "name": "Torrassa",
+     "lat": 41.36838,
+     "lng": 2.11663
+    },
+    {
+     "name": "Santa Eulàlia",
+     "lat": 41.36877,
+     "lng": 2.12858
+    },
+    {
+     "name": "Mercat Nou",
+     "lat": 41.37344,
+     "lng": 2.13399
+    },
+    {
+     "name": "Plaça de Sants",
+     "lat": 41.37536,
+     "lng": 2.13822
+    },
+    {
+     "name": "Hostafrancs",
+     "lat": 41.37523,
+     "lng": 2.14367
+    },
+    {
+     "name": "Espanya",
+     "lat": 41.37552,
+     "lng": 2.14948
+    },
+    {
+     "name": "Rocafort",
+     "lat": 41.3792,
+     "lng": 2.15456
+    },
+    {
+     "name": "Urgell",
+     "lat": 41.38248,
+     "lng": 2.15891
+    },
+    {
+     "name": "Universitat",
+     "lat": 41.38569,
+     "lng": 2.16411
+    },
+    {
+     "name": "Catalunya",
+     "lat": 41.38757,
+     "lng": 2.1695
+    },
+    {
+     "name": "Urquinaona",
+     "lat": 41.38959,
+     "lng": 2.17462
+    },
+    {
+     "name": "Arc de Triomf",
+     "lat": 41.3921,
+     "lng": 2.18094
+    },
+    {
+     "name": "Marina",
+     "lat": 41.39491,
+     "lng": 2.18624
+    },
+    {
+     "name": "Glòries",
+     "lat": 41.40221,
+     "lng": 2.18755
+    },
+    {
+     "name": "El Clot",
+     "lat": 41.41018,
+     "lng": 2.18695
+    },
+    {
+     "name": "Navas",
+     "lat": 41.41605,
+     "lng": 2.18696
+    },
+    {
+     "name": "La Sagrera",
+     "lat": 41.42262,
+     "lng": 2.18704
+    },
+    {
+     "name": "Fabra i Puig",
+     "lat": 41.42974,
+     "lng": 2.18369
+    },
+    {
+     "name": "Sant Andreu",
+     "lat": 41.43663,
+     "lng": 2.19117
+    },
+    {
+     "name": "Torras i Bages",
+     "lat": 41.44313,
+     "lng": 2.1908
+    },
+    {
+     "name": "Trinitat Vella",
+     "lat": 41.4487,
+     "lng": 2.19369
+    },
+    {
+     "name": "Baró de Viver",
+     "lat": 41.44993,
+     "lng": 2.19952
+    },
+    {
+     "name": "Santa Coloma",
+     "lat": 41.45105,
+     "lng": 2.20794
+    },
+    {
+     "name": "Fondo",
+     "lat": 41.45157,
+     "lng": 2.2184
+    }
+   ]
+  },
+  {
+   "mode": "subway",
+   "ref": "L8",
+   "name": "L8: Barcelona-Plaça Espanya => Molí Nou | Ciutat Cooperativa",
+   "stops": [
+    {
+     "name": "Barcelona-Plaça Espanya",
+     "lat": 41.3745,
+     "lng": 2.1484
+    },
+    {
+     "name": "Magòria-La Campana",
+     "lat": 41.36755,
+     "lng": 2.13887
+    },
+    {
+     "name": "Ildefons Cerdà",
+     "lat": 41.3608,
+     "lng": 2.12975
+    },
+    {
+     "name": "Europa | Fira",
+     "lat": 41.35723,
+     "lng": 2.12505
+    },
+    {
+     "name": "Gornal",
+     "lat": 41.35501,
+     "lng": 2.11713
+    },
+    {
+     "name": "Sant Josep",
+     "lat": 41.36088,
+     "lng": 2.11038
+    },
+    {
+     "name": "Avinguda Carrilet",
+     "lat": 41.35794,
+     "lng": 2.1029
+    },
+    {
+     "name": "Almeda",
+     "lat": 41.35305,
+     "lng": 2.08451
+    },
+    {
+     "name": "Cornellà-Riera",
+     "lat": 41.35149,
+     "lng": 2.07066
+    },
+    {
+     "name": "Sant Boi",
+     "lat": 41.34844,
+     "lng": 2.04309
+    },
+    {
+     "name": "Molí Nou | Ciutat Cooperativa",
+     "lat": 41.35754,
+     "lng": 2.03534
+    }
+   ]
+  },
+  {
+   "mode": "subway",
+   "ref": "L5",
+   "name": "L5: Cornellà Centre => Vall d'Hebron",
+   "stops": [
+    {
+     "name": "Cornellà Centre",
+     "lat": 41.35728,
+     "lng": 2.07058
+    },
+    {
+     "name": "Gavarra",
+     "lat": 41.35796,
+     "lng": 2.07923
+    },
+    {
+     "name": "Sant Ildefons",
+     "lat": 41.36334,
+     "lng": 2.08434
+    },
+    {
+     "name": "Can Boixeres",
+     "lat": 41.36655,
+     "lng": 2.0915
+    },
+    {
+     "name": "Can Vidalet",
+     "lat": 41.37173,
+     "lng": 2.09977
+    },
+    {
+     "name": "Pubilla Cases",
+     "lat": 41.37379,
+     "lng": 2.10708
+    },
+    {
+     "name": "Ernest Lluch",
+     "lat": 41.37588,
+     "lng": 2.11204
+    },
+    {
+     "name": "Collblanc",
+     "lat": 41.37574,
+     "lng": 2.11886
+    },
+    {
+     "name": "Badal",
+     "lat": 41.37557,
+     "lng": 2.12734
+    },
+    {
+     "name": "Plaça de Sants",
+     "lat": 41.37573,
+     "lng": 2.1352
+    },
+    {
+     "name": "Sants Estació",
+     "lat": 41.37991,
+     "lng": 2.14035
+    },
+    {
+     "name": "Entença",
+     "lat": 41.38434,
+     "lng": 2.14547
+    },
+    {
+     "name": "Hospital Clínic",
+     "lat": 41.3886,
+     "lng": 2.15109
+    },
+    {
+     "name": "Diagonal",
+     "lat": 41.39446,
+     "lng": 2.15888
+    },
+    {
+     "name": "Verdaguer",
+     "lat": 41.39882,
+     "lng": 2.16693
+    },
+    {
+     "name": "Sagrada Família",
+     "lat": 41.40402,
+     "lng": 2.17389
+    },
+    {
+     "name": "Sant Pau | Dos de Maig",
+     "lat": 41.4107,
+     "lng": 2.17597
+    },
+    {
+     "name": "Camp de l'Arpa",
+     "lat": 41.41468,
+     "lng": 2.18101
+    },
+    {
+     "name": "La Sagrera",
+     "lat": 41.42128,
+     "lng": 2.18662
+    },
+    {
+     "name": "Congrés | Indians",
+     "lat": 41.42343,
+     "lng": 2.18128
+    },
+    {
+     "name": "Maragall",
+     "lat": 41.42503,
+     "lng": 2.17655
+    },
+    {
+     "name": "Virrei Amat",
+     "lat": 41.42967,
+     "lng": 2.17496
+    },
+    {
+     "name": "Vilapicina",
+     "lat": 41.43046,
+     "lng": 2.16818
+    },
+    {
+     "name": "Horta",
+     "lat": 41.42973,
+     "lng": 2.16026
+    },
+    {
+     "name": "el Carmel",
+     "lat": 41.4244,
+     "lng": 2.15509
+    },
+    {
+     "name": "El Coll | La Teixonera",
+     "lat": 41.42168,
+     "lng": 2.1494
+    },
+    {
+     "name": "Vall d’Hebron | Sant Genís",
+     "lat": 41.42502,
+     "lng": 2.14257
+    }
+   ]
+  },
+  {
+   "mode": "subway",
+   "ref": "L6",
+   "name": "L6: Barcelona-Plaça Catalunya => Sarrià",
+   "stops": [
+    {
+     "name": "Barcelona-Plaça Catalunya",
+     "lat": 41.38574,
+     "lng": 2.16838
+    },
+    {
+     "name": "Provença",
+     "lat": 41.39289,
+     "lng": 2.15799
+    },
+    {
+     "name": "Gràcia",
+     "lat": 41.39923,
+     "lng": 2.15252
+    },
+    {
+     "name": "Sant Gervasi",
+     "lat": 41.40109,
+     "lng": 2.1471
+    },
+    {
+     "name": "Muntaner",
+     "lat": 41.39869,
+     "lng": 2.14279
+    },
+    {
+     "name": "La Bonanova",
+     "lat": 41.39781,
+     "lng": 2.13615
+    },
+    {
+     "name": "Les Tres Torres",
+     "lat": 41.3978,
+     "lng": 2.13086
+    },
+    {
+     "name": "Sarrià",
+     "lat": 41.3986,
+     "lng": 2.1257
+    }
+   ]
+  },
+  {
+   "mode": "subway",
+   "ref": "L7",
+   "name": "L7: Barcelona-Plaça Catalunya → Avinguda Tibidabo",
+   "stops": [
+    {
+     "name": "Barcelona-Plaça Catalunya",
+     "lat": 41.38593,
+     "lng": 2.16841
+    },
+    {
+     "name": "Provença",
+     "lat": 41.39289,
+     "lng": 2.15799
+    },
+    {
+     "name": "Gràcia",
+     "lat": 41.3994,
+     "lng": 2.15253
+    },
+    {
+     "name": "Plaça Molina",
+     "lat": 41.40135,
+     "lng": 2.14745
+    },
+    {
+     "name": "Pàdua",
+     "lat": 41.40333,
+     "lng": 2.14306
+    },
+    {
+     "name": "El Putxet",
+     "lat": 41.40581,
+     "lng": 2.13916
+    },
+    {
+     "name": "Avinguda Tibidabo",
+     "lat": 41.4094,
+     "lng": 2.1373
+    }
+   ]
+  },
+  {
+   "mode": "train",
+   "ref": "R1",
+   "name": "R1: Molins de Rei => Maçanet-Massanes",
+   "stops": [
+    {
+     "name": "Molins de Rei",
+     "lat": 41.40996,
+     "lng": 2.02085
+    },
+    {
+     "name": "Sant Feliu de Llobregat",
+     "lat": 41.38405,
+     "lng": 2.04672
+    },
+    {
+     "name": "Sant Joan Despí",
+     "lat": 41.36858,
+     "lng": 2.06032
+    },
+    {
+     "name": "Cornellà",
+     "lat": 41.35758,
+     "lng": 2.07055
+    },
+    {
+     "name": "l'Hospitalet de Llobregat",
+     "lat": 41.36425,
+     "lng": 2.10068
+    },
+    {
+     "name": "Barcelona - Sants",
+     "lat": 41.37906,
+     "lng": 2.14038
+    },
+    {
+     "name": "Barcelona-Plaça de Catalunya",
+     "lat": 41.38754,
+     "lng": 2.16932
+    },
+    {
+     "name": "Barcelona-Arc de Triomf",
+     "lat": 41.39227,
+     "lng": 2.18104
+    },
+    {
+     "name": "Barcelona-El Clot",
+     "lat": 41.4103,
+     "lng": 2.18937
+    },
+    {
+     "name": "Sant Adrià de Besòs",
+     "lat": 41.42435,
+     "lng": 2.2306
+    },
+    {
+     "name": "Badalona",
+     "lat": 41.44572,
+     "lng": 2.24915
+    },
+    {
+     "name": "Montgat",
+     "lat": 41.4629,
+     "lng": 2.27223
+    },
+    {
+     "name": "Montgat Nord",
+     "lat": 41.46874,
+     "lng": 2.28689
+    },
+    {
+     "name": "el Masnou",
+     "lat": 41.47691,
+     "lng": 2.31051
+    },
+    {
+     "name": "Ocata",
+     "lat": 41.479,
+     "lng": 2.31981
+    },
+    {
+     "name": "Premià de Mar",
+     "lat": 41.4876,
+     "lng": 2.35497
+    },
+    {
+     "name": "Vilassar de Mar",
+     "lat": 41.50045,
+     "lng": 2.38978
+    },
+    {
+     "name": "Cabrera de Mar - Vilassar de Mar",
+     "lat": 41.50674,
+     "lng": 2.40175
+    },
+    {
+     "name": "Mataró",
+     "lat": 41.53285,
+     "lng": 2.44517
+    },
+    {
+     "name": "Sant Andreu de Llavaneres",
+     "lat": 41.55544,
+     "lng": 2.49849
+    },
+    {
+     "name": "Caldes d'Estrac",
+     "lat": 41.56855,
+     "lng": 2.52637
+    },
+    {
+     "name": "Arenys de Mar",
+     "lat": 41.57748,
+     "lng": 2.54952
+    },
+    {
+     "name": "Canet de Mar",
+     "lat": 41.58645,
+     "lng": 2.58125
+    },
+    {
+     "name": "Sant Pol de Mar",
+     "lat": 41.60161,
+     "lng": 2.62465
+    },
+    {
+     "name": "Calella",
+     "lat": 41.61458,
+     "lng": 2.66606
+    },
+    {
+     "name": "Pineda de Mar",
+     "lat": 41.62246,
+     "lng": 2.69424
+    },
+    {
+     "name": "Santa Susanna",
+     "lat": 41.63015,
+     "lng": 2.71659
+    },
+    {
+     "name": "Malgrat de Mar",
+     "lat": 41.64159,
+     "lng": 2.74162
+    },
+    {
+     "name": "Blanes",
+     "lat": 41.67343,
+     "lng": 2.76906
+    },
+    {
+     "name": "Tordera",
+     "lat": 41.70702,
+     "lng": 2.71947
+    },
+    {
+     "name": "Maçanet Massanes",
+     "lat": 41.77245,
+     "lng": 2.67359
+    }
+   ]
+  },
+  {
+   "mode": "train",
+   "ref": "R2",
+   "name": "R2: Castelldefels => Granollers Centre",
+   "stops": [
+    {
+     "name": "Castelldefels",
+     "lat": 41.27876,
+     "lng": 1.97939
+    },
+    {
+     "name": "Gavà",
+     "lat": 41.30328,
+     "lng": 2.01088
+    },
+    {
+     "name": "Viladecans",
+     "lat": 41.30929,
+     "lng": 2.02748
+    },
+    {
+     "name": "el Prat de Llobregat",
+     "lat": 41.33108,
+     "lng": 2.0899
+    },
+    {
+     "name": "Bellvitge | Gornal",
+     "lat": 41.35276,
+     "lng": 2.11531
+    },
+    {
+     "name": "Barcelona - Sants",
+     "lat": 41.3788,
+     "lng": 2.14067
+    },
+    {
+     "name": "Barcelona-Passeig de Gràcia",
+     "lat": 41.39253,
+     "lng": 2.16539
+    },
+    {
+     "name": "Barcelona-El Clot",
+     "lat": 41.41044,
+     "lng": 2.18919
+    },
+    {
+     "name": "Barcelona-Sant Andreu",
+     "lat": 41.43625,
+     "lng": 2.19405
+    },
+    {
+     "name": "Montcada i Reixac",
+     "lat": 41.48401,
+     "lng": 2.18827
+    },
+    {
+     "name": "la Llagosta",
+     "lat": 41.51068,
+     "lng": 2.20009
+    },
+    {
+     "name": "Mollet-Sant Fost",
+     "lat": 41.53334,
+     "lng": 2.21769
+    },
+    {
+     "name": "Montmeló",
+     "lat": 41.54979,
+     "lng": 2.24571
+    },
+    {
+     "name": "Granollers Centre",
+     "lat": 41.59945,
+     "lng": 2.2916
+    }
+   ]
+  },
+  {
+   "mode": "train",
+   "ref": "R4",
+   "name": "R4: Sant Vicenç de Calders => Manresa",
+   "stops": [
+    {
+     "name": "Sant Vicenç de Calders",
+     "lat": 41.18601,
+     "lng": 1.52509
+    },
+    {
+     "name": "el Vendrell",
+     "lat": 41.22092,
+     "lng": 1.53809
+    },
+    {
+     "name": "l'Arboç",
+     "lat": 41.27352,
+     "lng": 1.60034
+    },
+    {
+     "name": "els Monjos",
+     "lat": 41.31454,
+     "lng": 1.66003
+    },
+    {
+     "name": "Vilafranca del Penedès",
+     "lat": 41.34444,
+     "lng": 1.70329
+    },
+    {
+     "name": "la Granada",
+     "lat": 41.37093,
+     "lng": 1.72529
+    },
+    {
+     "name": "Lavern-Subirats",
+     "lat": 41.39576,
+     "lng": 1.76809
+    },
+    {
+     "name": "Sant Sadurní d'Anoia",
+     "lat": 41.42036,
+     "lng": 1.79493
+    },
+    {
+     "name": "Gelida",
+     "lat": 41.44859,
+     "lng": 1.86537
+    },
+    {
+     "name": "Martorell Central",
+     "lat": 41.47905,
+     "lng": 1.92661
+    },
+    {
+     "name": "Castellbisbal",
+     "lat": 41.47323,
+     "lng": 1.96762
+    },
+    {
+     "name": "el Papiol",
+     "lat": 41.43531,
+     "lng": 2.00243
+    },
+    {
+     "name": "Molins de Rei",
+     "lat": 41.40996,
+     "lng": 2.02085
+    },
+    {
+     "name": "Sant Feliu de Llobregat",
+     "lat": 41.38405,
+     "lng": 2.04672
+    },
+    {
+     "name": "Sant Joan Despí",
+     "lat": 41.36858,
+     "lng": 2.06032
+    },
+    {
+     "name": "Cornellà",
+     "lat": 41.35758,
+     "lng": 2.07055
+    },
+    {
+     "name": "l'Hospitalet de Llobregat",
+     "lat": 41.36425,
+     "lng": 2.10068
+    },
+    {
+     "name": "Barcelona - Sants",
+     "lat": 41.37906,
+     "lng": 2.14038
+    },
+    {
+     "name": "Barcelona-Plaça de Catalunya",
+     "lat": 41.38754,
+     "lng": 2.16932
+    },
+    {
+     "name": "Barcelona-Arc de Triomf",
+     "lat": 41.39227,
+     "lng": 2.18104
+    },
+    {
+     "name": "Barcelona-La Sagrera-Meridiana",
+     "lat": 41.42297,
+     "lng": 2.18686
+    },
+    {
+     "name": "Barcelona-Fabra i Puig",
+     "lat": 41.43072,
+     "lng": 2.18314
+    },
+    {
+     "name": "Barcelona-Torre Baró | Vallbona",
+     "lat": 41.46163,
+     "lng": 2.1805
+    },
+    {
+     "name": "Montcada Bifurcació",
+     "lat": 41.47097,
+     "lng": 2.18051
+    },
+    {
+     "name": "Montcada i Reixac-Manresa",
+     "lat": 41.484,
+     "lng": 2.18553
+    },
+    {
+     "name": "Montcada i Reixac - Santa Maria",
+     "lat": 41.48127,
+     "lng": 2.16716
+    },
+    {
+     "name": "Cerdanyola del Vallès",
+     "lat": 41.49265,
+     "lng": 2.14763
+    },
+    {
+     "name": "Barberà del Vallès",
+     "lat": 41.51351,
+     "lng": 2.11836
+    },
+    {
+     "name": "Sabadell Sud",
+     "lat": 41.52875,
+     "lng": 2.10516
+    },
+    {
+     "name": "Sabadell Centre",
+     "lat": 41.54647,
+     "lng": 2.11589
+    },
+    {
+     "name": "Sabadell Nord",
+     "lat": 41.56186,
+     "lng": 2.09652
+    },
+    {
+     "name": "Terrassa Est",
+     "lat": 41.56747,
+     "lng": 2.03972
+    },
+    {
+     "name": "Terrassa Estació del Nord (ADIF)",
+     "lat": 41.5701,
+     "lng": 2.01434
+    },
+    {
+     "name": "Sant Miquel de Gonteres",
+     "lat": 41.5691,
+     "lng": 1.97405
+    },
+    {
+     "name": "Viladecavalls",
+     "lat": 41.56391,
+     "lng": 1.9571
+    },
+    {
+     "name": "Vacarisses - Torreblanca",
+     "lat": 41.58693,
+     "lng": 1.91698
+    },
+    {
+     "name": "Vacarisses",
+     "lat": 41.60188,
+     "lng": 1.89395
+    },
+    {
+     "name": "Castellbell i el Vilar - Monistrol de Montserrat",
+     "lat": 41.62863,
+     "lng": 1.86907
+    },
+    {
+     "name": "Sant Vicenç de Castellet",
+     "lat": 41.66868,
+     "lng": 1.86255
+    },
+    {
+     "name": "Manresa",
+     "lat": 41.72028,
+     "lng": 1.82649
+    }
+   ]
+  },
+  {
+   "mode": "train",
+   "ref": "R2S",
+   "name": "R2S: Sant Vicenç de Calders => Barcelona-Estació de França",
+   "stops": [
+    {
+     "name": "Sant Vicenç de Calders",
+     "lat": 41.18592,
+     "lng": 1.52511
+    },
+    {
+     "name": "Calafell",
+     "lat": 41.18945,
+     "lng": 1.57511
+    },
+    {
+     "name": "Segur de Calafell",
+     "lat": 41.19239,
+     "lng": 1.60642
+    },
+    {
+     "name": "Cunit",
+     "lat": 41.19475,
+     "lng": 1.63173
+    },
+    {
+     "name": "Cubelles",
+     "lat": 41.20412,
+     "lng": 1.67604
+    },
+    {
+     "name": "Vilanova i la Geltrú",
+     "lat": 41.21997,
+     "lng": 1.73126
+    },
+    {
+     "name": "Sitges",
+     "lat": 41.23921,
+     "lng": 1.80958
+    },
+    {
+     "name": "Garraf",
+     "lat": 41.25417,
+     "lng": 1.90242
+    },
+    {
+     "name": "Platja de Castelldefels",
+     "lat": 41.26704,
+     "lng": 1.95713
+    },
+    {
+     "name": "Castelldefels",
+     "lat": 41.27876,
+     "lng": 1.97939
+    },
+    {
+     "name": "Gavà",
+     "lat": 41.30328,
+     "lng": 2.01088
+    },
+    {
+     "name": "Viladecans",
+     "lat": 41.30929,
+     "lng": 2.02748
+    },
+    {
+     "name": "el Prat de Llobregat",
+     "lat": 41.33108,
+     "lng": 2.0899
+    },
+    {
+     "name": "Bellvitge | Gornal",
+     "lat": 41.35276,
+     "lng": 2.11531
+    },
+    {
+     "name": "Barcelona - Sants",
+     "lat": 41.3788,
+     "lng": 2.14067
+    },
+    {
+     "name": "Barcelona-Passeig de Gràcia",
+     "lat": 41.39253,
+     "lng": 2.16539
+    },
+    {
+     "name": "Barcelona-Estació de França",
+     "lat": 41.384,
+     "lng": 2.18545
+    }
+   ]
+  },
+  {
+   "mode": "train",
+   "ref": "R2N",
+   "name": "R2N: Maçanet-Massanes => Aeroport",
+   "stops": [
+    {
+     "name": "Maçanet Massanes",
+     "lat": 41.77246,
+     "lng": 2.67332
+    },
+    {
+     "name": "Hostalric",
+     "lat": 41.74791,
+     "lng": 2.63159
+    },
+    {
+     "name": "Riells i Viabrea - Breda",
+     "lat": 41.72654,
+     "lng": 2.56884
+    },
+    {
+     "name": "Gualba",
+     "lat": 41.71802,
+     "lng": 2.53897
+    },
+    {
+     "name": "Sant Celoni",
+     "lat": 41.68569,
+     "lng": 2.49086
+    },
+    {
+     "name": "Palautordera",
+     "lat": 41.67176,
+     "lng": 2.45435
+    },
+    {
+     "name": "Llinars del Vallès",
+     "lat": 41.6379,
+     "lng": 2.40454
+    },
+    {
+     "name": "Cardedeu",
+     "lat": 41.63643,
+     "lng": 2.35623
+    },
+    {
+     "name": "les Franqueses - Granollers Nord",
+     "lat": 41.61732,
+     "lng": 2.29443
+    },
+    {
+     "name": "Granollers Centre",
+     "lat": 41.59946,
+     "lng": 2.29155
+    },
+    {
+     "name": "Montmeló",
+     "lat": 41.54985,
+     "lng": 2.24565
+    },
+    {
+     "name": "Mollet-Sant Fost",
+     "lat": 41.53335,
+     "lng": 2.21765
+    },
+    {
+     "name": "la Llagosta",
+     "lat": 41.51071,
+     "lng": 2.20003
+    },
+    {
+     "name": "Montcada i Reixac",
+     "lat": 41.48402,
+     "lng": 2.18822
+    },
+    {
+     "name": "Barcelona-Sant Andreu",
+     "lat": 41.43624,
+     "lng": 2.19382
+    },
+    {
+     "name": "Barcelona-El Clot",
+     "lat": 41.40919,
+     "lng": 2.18731
+    },
+    {
+     "name": "Barcelona-Passeig de Gràcia",
+     "lat": 41.39256,
+     "lng": 2.16536
+    },
+    {
+     "name": "Barcelona - Sants",
+     "lat": 41.37883,
+     "lng": 2.14062
+    },
+    {
+     "name": "Bellvitge | Gornal",
+     "lat": 41.35276,
+     "lng": 2.11519
+    },
+    {
+     "name": "el Prat de Llobregat",
+     "lat": 41.33052,
+     "lng": 2.0879
+    },
+    {
+     "name": "Aeroport",
+     "lat": 41.30422,
+     "lng": 2.07329
+    }
+   ]
+  },
+  {
+   "mode": "train",
+   "ref": "AVE",
+   "name": "Tren AVE: Madrid Puerta de Atocha -> Catalayud -> Zaragoza-Delicias -> Lleida-Pirineus -> Camp de Tarragona -> Barcelona-Sants",
+   "stops": [
+    {
+     "name": "Lleida-Pirineus",
+     "lat": 41.62091,
+     "lng": 0.63294
+    },
+    {
+     "name": "Camp de Tarragona",
+     "lat": 41.19174,
+     "lng": 1.27245
+    },
+    {
+     "name": "Barcelona - Sants",
+     "lat": 41.37993,
+     "lng": 2.14102
+    }
+   ]
+  },
+  {
+   "mode": "train",
+   "ref": "S2",
+   "name": "S2: Barcelona-Plaça Catalunya => Sabadell Parc del Nord",
+   "stops": [
+    {
+     "name": "Barcelona-Plaça Catalunya",
+     "lat": 41.38567,
+     "lng": 2.16837
+    },
+    {
+     "name": "Provença",
+     "lat": 41.39289,
+     "lng": 2.15799
+    },
+    {
+     "name": "Gràcia",
+     "lat": 41.39923,
+     "lng": 2.15252
+    },
+    {
+     "name": "Sant Gervasi",
+     "lat": 41.40109,
+     "lng": 2.1471
+    },
+    {
+     "name": "Muntaner",
+     "lat": 41.39869,
+     "lng": 2.14279
+    },
+    {
+     "name": "La Bonanova",
+     "lat": 41.39781,
+     "lng": 2.13615
+    },
+    {
+     "name": "Les Tres Torres",
+     "lat": 41.3978,
+     "lng": 2.13086
+    },
+    {
+     "name": "Sarrià",
+     "lat": 41.3986,
+     "lng": 2.1257
+    },
+    {
+     "name": "Peu del Funicular",
+     "lat": 41.40908,
+     "lng": 2.11138
+    },
+    {
+     "name": "Baixador de Vallvidrera",
+     "lat": 41.42034,
+     "lng": 2.09664
+    },
+    {
+     "name": "Les Planes",
+     "lat": 41.42751,
+     "lng": 2.09171
+    },
+    {
+     "name": "La Floresta",
+     "lat": 41.44509,
+     "lng": 2.07338
+    },
+    {
+     "name": "Valldoreix",
+     "lat": 41.45825,
+     "lng": 2.06844
+    },
+    {
+     "name": "Sant Cugat Centre",
+     "lat": 41.46816,
+     "lng": 2.07826
+    },
+    {
+     "name": "Volpelleres",
+     "lat": 41.48155,
+     "lng": 2.07276
+    },
+    {
+     "name": "Sant Joan",
+     "lat": 41.49033,
+     "lng": 2.07691
+    },
+    {
+     "name": "Bellaterra",
+     "lat": 41.50072,
+     "lng": 2.09051
+    },
+    {
+     "name": "Universitat Autònoma",
+     "lat": 41.50322,
+     "lng": 2.10304
+    },
+    {
+     "name": "Sant Quirze",
+     "lat": 41.5302,
+     "lng": 2.08893
+    },
+    {
+     "name": "Can Feu | Gràcia",
+     "lat": 41.54248,
+     "lng": 2.10059
+    },
+    {
+     "name": "Sabadell Plaça Major",
+     "lat": 41.5478,
+     "lng": 2.10879
+    },
+    {
+     "name": "La Creu Alta",
+     "lat": 41.55534,
+     "lng": 2.09993
+    },
+    {
+     "name": "Sabadell Nord",
+     "lat": 41.56173,
+     "lng": 2.09659
+    },
+    {
+     "name": "Sabadell Parc del Nord",
+     "lat": 41.57118,
+     "lng": 2.08979
+    }
+   ]
+  },
+  {
+   "mode": "train",
+   "ref": "R16",
+   "name": "R16: Barcelona-Estació de França => Tortosa",
+   "stops": [
+    {
+     "name": "Barcelona-Estació de França",
+     "lat": 41.38396,
+     "lng": 2.18543
+    },
+    {
+     "name": "Barcelona-Passeig de Gràcia",
+     "lat": 41.39256,
+     "lng": 2.16536
+    },
+    {
+     "name": "Barcelona - Sants",
+     "lat": 41.37883,
+     "lng": 2.14062
+    },
+    {
+     "name": "Vilanova i la Geltrú",
+     "lat": 41.22,
+     "lng": 1.73124
+    },
+    {
+     "name": "Sant Vicenç de Calders",
+     "lat": 41.18595,
+     "lng": 1.5251
+    },
+    {
+     "name": "Torredembarra",
+     "lat": 41.14274,
+     "lng": 1.40574
+    },
+    {
+     "name": "Altafulla - Tamarit",
+     "lat": 41.13656,
+     "lng": 1.37332
+    },
+    {
+     "name": "Tarragona",
+     "lat": 41.11147,
+     "lng": 1.25346
+    },
+    {
+     "name": "Vila-seca",
+     "lat": 41.11285,
+     "lng": 1.15069
+    },
+    {
+     "name": "Cambrils",
+     "lat": 41.08109,
+     "lng": 1.045
+    },
+    {
+     "name": "l'Hospitalet de l'Infant",
+     "lat": 40.99985,
+     "lng": 0.91247
+    },
+    {
+     "name": "l'Ametlla de Mar",
+     "lat": 40.88611,
+     "lng": 0.8006
+    },
+    {
+     "name": "L'Ampolla - Perelló - Deltebre",
+     "lat": 40.81193,
+     "lng": 0.70832
+    },
+    {
+     "name": "Camarles - Deltebre",
+     "lat": 40.77517,
+     "lng": 0.67114
+    },
+    {
+     "name": "L'Aldea - Amposta - Tortosa",
+     "lat": 40.75385,
+     "lng": 0.61416
+    }
+   ]
+  },
+  {
+   "mode": "train",
+   "ref": "S1",
+   "name": "S1: Terrassa Nacions Unides => Barcelona-Plaça Catalunya",
+   "stops": [
+    {
+     "name": "Terrassa Nacions Unides",
+     "lat": 41.58034,
+     "lng": 2.01331
+    },
+    {
+     "name": "Terrassa Estació del Nord (FGC)",
+     "lat": 41.57036,
+     "lng": 2.01626
+    },
+    {
+     "name": "Vallparadís Universitat",
+     "lat": 41.56333,
+     "lng": 2.01901
+    },
+    {
+     "name": "Terrassa Rambla",
+     "lat": 41.56004,
+     "lng": 2.00752
+    },
+    {
+     "name": "Les Fonts",
+     "lat": 41.52873,
+     "lng": 2.03341
+    },
+    {
+     "name": "Rubí Centre",
+     "lat": 41.4861,
+     "lng": 2.03167
+    },
+    {
+     "name": "Hospital General",
+     "lat": 41.47623,
+     "lng": 2.04637
+    },
+    {
+     "name": "Mira-sol",
+     "lat": 41.46918,
+     "lng": 2.06192
+    },
+    {
+     "name": "Sant Cugat Centre",
+     "lat": 41.46755,
+     "lng": 2.07823
+    },
+    {
+     "name": "Valldoreix",
+     "lat": 41.45772,
+     "lng": 2.06831
+    },
+    {
+     "name": "La Floresta",
+     "lat": 41.44468,
+     "lng": 2.07308
+    },
+    {
+     "name": "Les Planes",
+     "lat": 41.42676,
+     "lng": 2.09187
+    },
+    {
+     "name": "Baixador de Vallvidrera",
+     "lat": 41.41981,
+     "lng": 2.09723
+    },
+    {
+     "name": "Peu del Funicular",
+     "lat": 41.40906,
+     "lng": 2.11135
+    },
+    {
+     "name": "Sarrià",
+     "lat": 41.39851,
+     "lng": 2.12559
+    },
+    {
+     "name": "Les Tres Torres",
+     "lat": 41.39775,
+     "lng": 2.13086
+    },
+    {
+     "name": "La Bonanova",
+     "lat": 41.39776,
+     "lng": 2.13616
+    },
+    {
+     "name": "Muntaner",
+     "lat": 41.39865,
+     "lng": 2.14283
+    },
+    {
+     "name": "Sant Gervasi",
+     "lat": 41.40105,
+     "lng": 2.14712
+    },
+    {
+     "name": "Gràcia",
+     "lat": 41.39921,
+     "lng": 2.15249
+    },
+    {
+     "name": "Provença",
+     "lat": 41.39287,
+     "lng": 2.15796
+    },
+    {
+     "name": "Barcelona-Plaça Catalunya",
+     "lat": 41.38567,
+     "lng": 2.16837
+    }
+   ]
+  },
+  {
+   "mode": "train",
+   "ref": "R14",
+   "name": "R14: Barcelona-Estació de França => Lleida-Pirineus",
+   "stops": [
+    {
+     "name": "Barcelona-Estació de França",
+     "lat": 41.38396,
+     "lng": 2.18543
+    },
+    {
+     "name": "Barcelona-Passeig de Gràcia",
+     "lat": 41.39256,
+     "lng": 2.16536
+    },
+    {
+     "name": "Barcelona - Sants",
+     "lat": 41.37883,
+     "lng": 2.14062
+    },
+    {
+     "name": "Sant Vicenç de Calders",
+     "lat": 41.18595,
+     "lng": 1.5251
+    },
+    {
+     "name": "Torredembarra",
+     "lat": 41.14274,
+     "lng": 1.40574
+    },
+    {
+     "name": "Altafulla - Tamarit",
+     "lat": 41.13656,
+     "lng": 1.37332
+    },
+    {
+     "name": "Tarragona",
+     "lat": 41.11147,
+     "lng": 1.25346
+    },
+    {
+     "name": "Vila-seca",
+     "lat": 41.11285,
+     "lng": 1.15069
+    },
+    {
+     "name": "Reus",
+     "lat": 41.16068,
+     "lng": 1.10002
+    },
+    {
+     "name": "la Selva del Camp",
+     "lat": 41.21174,
+     "lng": 1.14422
+    },
+    {
+     "name": "Alcover",
+     "lat": 41.26158,
+     "lng": 1.1743
+    },
+    {
+     "name": "la Plana - Picamoixons",
+     "lat": 41.30615,
+     "lng": 1.19466
+    },
+    {
+     "name": "la Riba",
+     "lat": 41.31838,
+     "lng": 1.18143
+    },
+    {
+     "name": "Vilaverd",
+     "lat": 41.33779,
+     "lng": 1.17643
+    },
+    {
+     "name": "Montblanc",
+     "lat": 41.37667,
+     "lng": 1.16568
+    },
+    {
+     "name": "l'Espluga de Francolí",
+     "lat": 41.4004,
+     "lng": 1.10344
+    },
+    {
+     "name": "Vimbodí",
+     "lat": 41.40283,
+     "lng": 1.04603
+    },
+    {
+     "name": "Vinaixa",
+     "lat": 41.42511,
+     "lng": 0.97015
+    },
+    {
+     "name": "la Floresta",
+     "lat": 41.50409,
+     "lng": 0.92433
+    },
+    {
+     "name": "les Borges Blanques",
+     "lat": 41.52146,
+     "lng": 0.87811
+    },
+    {
+     "name": "Juneda",
+     "lat": 41.54384,
+     "lng": 0.82544
+    },
+    {
+     "name": "Puigverd de Lleida - Artesa de Lleida",
+     "lat": 41.55385,
+     "lng": 0.73336
+    },
+    {
+     "name": "Lleida-Pirineus",
+     "lat": 41.62114,
+     "lng": 0.6331
+    }
+   ]
+  },
+  {
+   "mode": "subway",
+   "ref": "L10N",
+   "name": "L10N: La Sagrera => Gorg",
+   "stops": [
+    {
+     "name": "La Sagrera",
+     "lat": 41.42041,
+     "lng": 2.18682
+    },
+    {
+     "name": "Onze de Setembre",
+     "lat": 41.42971,
+     "lng": 2.19349
+    },
+    {
+     "name": "Bon Pastor",
+     "lat": 41.43607,
+     "lng": 2.20482
+    },
+    {
+     "name": "Llefià",
+     "lat": 41.44146,
+     "lng": 2.21742
+    },
+    {
+     "name": "la Salut",
+     "lat": 41.4427,
+     "lng": 2.22467
+    },
+    {
+     "name": "Gorg",
+     "lat": 41.44045,
+     "lng": 2.23372
+    }
+   ]
+  },
+  {
+   "mode": "subway",
+   "ref": "L9N",
+   "name": "L9N: La Sagrera => Can Zam",
+   "stops": [
+    {
+     "name": "La Sagrera",
+     "lat": 41.42041,
+     "lng": 2.18682
+    },
+    {
+     "name": "Onze de Setembre",
+     "lat": 41.42971,
+     "lng": 2.19349
+    },
+    {
+     "name": "Bon Pastor",
+     "lat": 41.43607,
+     "lng": 2.20482
+    },
+    {
+     "name": "Can Peixauet",
+     "lat": 41.44453,
+     "lng": 2.2104
+    },
+    {
+     "name": "Santa Rosa",
+     "lat": 41.44674,
+     "lng": 2.21576
+    },
+    {
+     "name": "Fondo",
+     "lat": 41.45178,
+     "lng": 2.21865
+    },
+    {
+     "name": "Església Major",
+     "lat": 41.4548,
+     "lng": 2.21234
+    },
+    {
+     "name": "Singuerlín",
+     "lat": 41.45943,
+     "lng": 2.20544
+    },
+    {
+     "name": "Can Zam",
+     "lat": 41.4577,
+     "lng": 2.19846
+    }
+   ]
+  },
+  {
+   "mode": "train",
+   "ref": "S3",
+   "name": "S3: Barcelona-Plaça Espanya => Can Ros",
+   "stops": [
+    {
+     "name": "Barcelona-Plaça Espanya",
+     "lat": 41.3745,
+     "lng": 2.1484
+    },
+    {
+     "name": "Magòria-La Campana",
+     "lat": 41.36755,
+     "lng": 2.13887
+    },
+    {
+     "name": "Ildefons Cerdà",
+     "lat": 41.3608,
+     "lng": 2.12975
+    },
+    {
+     "name": "Europa | Fira",
+     "lat": 41.35723,
+     "lng": 2.12505
+    },
+    {
+     "name": "Gornal",
+     "lat": 41.35501,
+     "lng": 2.11713
+    },
+    {
+     "name": "Sant Josep",
+     "lat": 41.36088,
+     "lng": 2.11038
+    },
+    {
+     "name": "Avinguda Carrilet",
+     "lat": 41.35794,
+     "lng": 2.1029
+    },
+    {
+     "name": "Almeda",
+     "lat": 41.35305,
+     "lng": 2.08451
+    },
+    {
+     "name": "Cornellà-Riera",
+     "lat": 41.35149,
+     "lng": 2.07066
+    },
+    {
+     "name": "Sant Boi",
+     "lat": 41.34844,
+     "lng": 2.04309
+    },
+    {
+     "name": "Molí Nou | Ciutat Cooperativa",
+     "lat": 41.35754,
+     "lng": 2.03534
+    },
+    {
+     "name": "Colònia Güell",
+     "lat": 41.36426,
+     "lng": 2.03149
+    },
+    {
+     "name": "Santa Coloma de Cervelló",
+     "lat": 41.37066,
+     "lng": 2.02351
+    },
+    {
+     "name": "Sant Vicenç dels Horts",
+     "lat": 41.38808,
+     "lng": 2.01241
+    },
+    {
+     "name": "Can Ros",
+     "lat": 41.39936,
+     "lng": 2.00498
+    }
+   ]
+  },
+  {
+   "mode": "train",
+   "ref": "R16",
+   "name": "R16: Ulldecona-Alcanar-La Sénia => Barcelona-Estació de França",
+   "stops": [
+    {
+     "name": "L'Aldea - Amposta - Tortosa",
+     "lat": 40.75367,
+     "lng": 0.6143
+    },
+    {
+     "name": "Camarles - Deltebre",
+     "lat": 40.77515,
+     "lng": 0.67116
+    },
+    {
+     "name": "L'Ampolla - Perelló - Deltebre",
+     "lat": 40.81191,
+     "lng": 0.70836
+    },
+    {
+     "name": "l'Ametlla de Mar",
+     "lat": 40.88608,
+     "lng": 0.80071
+    },
+    {
+     "name": "l'Hospitalet de l'Infant",
+     "lat": 40.99978,
+     "lng": 0.91263
+    },
+    {
+     "name": "Cambrils",
+     "lat": 41.08098,
+     "lng": 1.04505
+    },
+    {
+     "name": "Vila-seca",
+     "lat": 41.11282,
+     "lng": 1.15067
+    },
+    {
+     "name": "Tarragona",
+     "lat": 41.11144,
+     "lng": 1.2535
+    },
+    {
+     "name": "Altafulla - Tamarit",
+     "lat": 41.13652,
+     "lng": 1.37333
+    },
+    {
+     "name": "Torredembarra",
+     "lat": 41.14267,
+     "lng": 1.40577
+    },
+    {
+     "name": "Sant Vicenç de Calders",
+     "lat": 41.18592,
+     "lng": 1.52511
+    },
+    {
+     "name": "Vilanova i la Geltrú",
+     "lat": 41.21997,
+     "lng": 1.73126
+    },
+    {
+     "name": "Barcelona - Sants",
+     "lat": 41.3788,
+     "lng": 2.14067
+    },
+    {
+     "name": "Barcelona-Passeig de Gràcia",
+     "lat": 41.39253,
+     "lng": 2.16539
+    },
+    {
+     "name": "Barcelona-Estació de França",
+     "lat": 41.384,
+     "lng": 2.18545
+    }
+   ]
+  },
+  {
+   "mode": "train",
+   "ref": "R15",
+   "name": "R15: Riba-roja d’Ebre => Barcelona-Estació de França",
+   "stops": [
+    {
+     "name": "Riba-roja d'Ebre",
+     "lat": 41.24853,
+     "lng": 0.48087
+    },
+    {
+     "name": "Flix",
+     "lat": 41.22953,
+     "lng": 0.54056
+    },
+    {
+     "name": "Ascó",
+     "lat": 41.1824,
+     "lng": 0.56923
+    },
+    {
+     "name": "Móra la Nova",
+     "lat": 41.10646,
+     "lng": 0.65358
+    },
+    {
+     "name": "Capçanes",
+     "lat": 41.10212,
+     "lng": 0.78035
+    },
+    {
+     "name": "Marçà - Falset",
+     "lat": 41.13109,
+     "lng": 0.81041
+    },
+    {
+     "name": "Pradell",
+     "lat": 41.13313,
+     "lng": 0.85862
+    },
+    {
+     "name": "Desaigües - l'Argentera",
+     "lat": 41.14371,
+     "lng": 0.92082
+    },
+    {
+     "name": "Riudecanyes - Botarell",
+     "lat": 41.1402,
+     "lng": 0.9757
+    },
+    {
+     "name": "les Borges del Camp",
+     "lat": 41.16626,
+     "lng": 1.02212
+    },
+    {
+     "name": "Reus",
+     "lat": 41.16066,
+     "lng": 1.10005
+    },
+    {
+     "name": "Vila-seca",
+     "lat": 41.11282,
+     "lng": 1.15067
+    },
+    {
+     "name": "Tarragona",
+     "lat": 41.11144,
+     "lng": 1.2535
+    },
+    {
+     "name": "Altafulla - Tamarit",
+     "lat": 41.13652,
+     "lng": 1.37333
+    },
+    {
+     "name": "Torredembarra",
+     "lat": 41.14267,
+     "lng": 1.40577
+    },
+    {
+     "name": "Sant Vicenç de Calders",
+     "lat": 41.18592,
+     "lng": 1.52511
+    },
+    {
+     "name": "Vilanova i la Geltrú",
+     "lat": 41.21997,
+     "lng": 1.73126
+    },
+    {
+     "name": "Barcelona - Sants",
+     "lat": 41.3788,
+     "lng": 2.14067
+    },
+    {
+     "name": "Barcelona-Passeig de Gràcia",
+     "lat": 41.39253,
+     "lng": 2.16539
+    },
+    {
+     "name": "Barcelona-Estació de França",
+     "lat": 41.384,
+     "lng": 2.18545
+    }
+   ]
+  },
+  {
+   "mode": "tram",
+   "ref": "T4",
+   "name": "T4: Verdaguer => Estació de Sant Adrià",
+   "stops": [
+    {
+     "name": "Verdaguer",
+     "lat": 41.39848,
+     "lng": 2.16746
+    },
+    {
+     "name": "Sicília",
+     "lat": 41.40016,
+     "lng": 2.17417
+    },
+    {
+     "name": "Monumental",
+     "lat": 41.40186,
+     "lng": 2.18115
+    },
+    {
+     "name": "Glòries",
+     "lat": 41.40262,
+     "lng": 2.18738
+    },
+    {
+     "name": "Ca l'Aranyó",
+     "lat": 41.40436,
+     "lng": 2.19151
+    },
+    {
+     "name": "Pere IV",
+     "lat": 41.40606,
+     "lng": 2.19824
+    },
+    {
+     "name": "Fluvià",
+     "lat": 41.40773,
+     "lng": 2.20494
+    },
+    {
+     "name": "Selva de Mar",
+     "lat": 41.40911,
+     "lng": 2.21046
+    },
+    {
+     "name": "El Maresme",
+     "lat": 41.41046,
+     "lng": 2.21565
+    },
+    {
+     "name": "Fòrum",
+     "lat": 41.41182,
+     "lng": 2.21989
+    },
+    {
+     "name": "Campus Diagonal-Besòs",
+     "lat": 41.41523,
+     "lng": 2.22297
+    },
+    {
+     "name": "Port Fòrum",
+     "lat": 41.41887,
+     "lng": 2.22618
+    },
+    {
+     "name": "Estació de Sant Adrià",
+     "lat": 41.42394,
+     "lng": 2.23058
+    }
+   ]
+  },
+  {
+   "mode": "tram",
+   "ref": "T5",
+   "name": "T5: Ciutadella | Vila Olímpica => Gorg",
+   "stops": [
+    {
+     "name": "Ciutadella | Vila Olímpica",
+     "lat": 41.38764,
+     "lng": 2.19192
+    },
+    {
+     "name": "Wellington | UPF",
+     "lat": 41.39016,
+     "lng": 2.18858
+    },
+    {
+     "name": "Marina",
+     "lat": 41.39406,
+     "lng": 2.18694
+    },
+    {
+     "name": "Auditori | Teatre Nacional",
+     "lat": 41.39755,
+     "lng": 2.1869
+    },
+    {
+     "name": "Glòries",
+     "lat": 41.40258,
+     "lng": 2.18744
+    },
+    {
+     "name": "Can Jaumandreu",
+     "lat": 41.40809,
+     "lng": 2.19365
+    },
+    {
+     "name": "Espronceda",
+     "lat": 41.41135,
+     "lng": 2.19793
+    },
+    {
+     "name": "Sant Martí de Provençals",
+     "lat": 41.41646,
+     "lng": 2.20476
+    },
+    {
+     "name": "Besòs",
+     "lat": 41.4201,
+     "lng": 2.20961
+    },
+    {
+     "name": "Alfons el Magnànim",
+     "lat": 41.41717,
+     "lng": 2.21354
+    },
+    {
+     "name": "Parc del Besòs",
+     "lat": 41.41941,
+     "lng": 2.21767
+    },
+    {
+     "name": "La Catalana",
+     "lat": 41.42263,
+     "lng": 2.22198
+    },
+    {
+     "name": "Sant Joan Baptista",
+     "lat": 41.42744,
+     "lng": 2.22544
+    },
+    {
+     "name": "Encants de Sant Adrià",
+     "lat": 41.43053,
+     "lng": 2.22275
+    },
+    {
+     "name": "Sant Roc",
+     "lat": 41.43493,
+     "lng": 2.22762
+    },
+    {
+     "name": "Gorg",
+     "lat": 41.43995,
+     "lng": 2.23325
+    }
+   ]
+  },
+  {
+   "mode": "tram",
+   "ref": "T6",
+   "name": "T6: Estació de Sant Adrià => Ciutadella | Vila Olímpica",
+   "stops": [
+    {
+     "name": "Estació de Sant Adrià",
+     "lat": 41.42397,
+     "lng": 2.23051
+    },
+    {
+     "name": "Port Fòrum",
+     "lat": 41.41888,
+     "lng": 2.22615
+    },
+    {
+     "name": "La Mina",
+     "lat": 41.41842,
+     "lng": 2.22107
+    },
+    {
+     "name": "Parc del Besòs",
+     "lat": 41.41944,
+     "lng": 2.21761
+    },
+    {
+     "name": "Alfons el Magnànim",
+     "lat": 41.41719,
+     "lng": 2.21359
+    },
+    {
+     "name": "Besòs",
+     "lat": 41.42011,
+     "lng": 2.20958
+    },
+    {
+     "name": "Sant Martí de Provençals",
+     "lat": 41.4165,
+     "lng": 2.20474
+    },
+    {
+     "name": "Espronceda",
+     "lat": 41.41138,
+     "lng": 2.19792
+    },
+    {
+     "name": "Can Jaumandreu",
+     "lat": 41.40812,
+     "lng": 2.19357
+    },
+    {
+     "name": "Glòries",
+     "lat": 41.40259,
+     "lng": 2.18728
+    },
+    {
+     "name": "Auditori | Teatre Nacional",
+     "lat": 41.39755,
+     "lng": 2.18686
+    },
+    {
+     "name": "Marina",
+     "lat": 41.39406,
+     "lng": 2.1869
+    },
+    {
+     "name": "Wellington | UPF",
+     "lat": 41.39014,
+     "lng": 2.18856
+    },
+    {
+     "name": "Ciutadella | Vila Olímpica",
+     "lat": 41.38762,
+     "lng": 2.19189
+    }
+   ]
+  },
+  {
+   "mode": "tram",
+   "ref": "T1",
+   "name": "T1: Bon Viatge => Francesc Macià",
+   "stops": [
+    {
+     "name": "Bon Viatge",
+     "lat": 41.36456,
+     "lng": 2.05875
+    },
+    {
+     "name": "Fontsanta | Fatjó",
+     "lat": 41.36031,
+     "lng": 2.0622
+    },
+    {
+     "name": "Les Aigües",
+     "lat": 41.35665,
+     "lng": 2.06605
+    },
+    {
+     "name": "Cornellà Centre",
+     "lat": 41.35767,
+     "lng": 2.07021
+    },
+    {
+     "name": "Ignasi Iglésias",
+     "lat": 41.36124,
+     "lng": 2.07269
+    },
+    {
+     "name": "El Pedró",
+     "lat": 41.36532,
+     "lng": 2.0767
+    },
+    {
+     "name": "Montesa",
+     "lat": 41.36964,
+     "lng": 2.08095
+    },
+    {
+     "name": "La Sardana",
+     "lat": 41.37277,
+     "lng": 2.08401
+    },
+    {
+     "name": "Pont d'Esplugues",
+     "lat": 41.37683,
+     "lng": 2.08864
+    },
+    {
+     "name": "Can Clota",
+     "lat": 41.37694,
+     "lng": 2.09353
+    },
+    {
+     "name": "Ca n'Oliveres",
+     "lat": 41.37659,
+     "lng": 2.09842
+    },
+    {
+     "name": "Can Rigal",
+     "lat": 41.37606,
+     "lng": 2.10594
+    },
+    {
+     "name": "Ernest Lluch",
+     "lat": 41.37668,
+     "lng": 2.11089
+    },
+    {
+     "name": "Avinguda de Xile",
+     "lat": 41.38073,
+     "lng": 2.11487
+    },
+    {
+     "name": "Zona Universitària",
+     "lat": 41.38427,
+     "lng": 2.11445
+    },
+    {
+     "name": "Palau Reial",
+     "lat": 41.38591,
+     "lng": 2.11847
+    },
+    {
+     "name": "Pius XII",
+     "lat": 41.38671,
+     "lng": 2.12161
+    },
+    {
+     "name": "Maria Cristina",
+     "lat": 41.38795,
+     "lng": 2.12651
+    },
+    {
+     "name": "Numància",
+     "lat": 41.38934,
+     "lng": 2.13197
+    },
+    {
+     "name": "L'Illa",
+     "lat": 41.3905,
+     "lng": 2.13653
+    },
+    {
+     "name": "Francesc Macià",
+     "lat": 41.39218,
+     "lng": 2.14321
+    }
+   ]
+  },
+  {
+   "mode": "tram",
+   "ref": "T2",
+   "name": "T2: Francesc Macià => Llevant | Les Planes",
+   "stops": [
+    {
+     "name": "Francesc Macià",
+     "lat": 41.39224,
+     "lng": 2.14318
+    },
+    {
+     "name": "L'Illa",
+     "lat": 41.39052,
+     "lng": 2.13652
+    },
+    {
+     "name": "Numància",
+     "lat": 41.38936,
+     "lng": 2.13196
+    },
+    {
+     "name": "Maria Cristina",
+     "lat": 41.38798,
+     "lng": 2.1265
+    },
+    {
+     "name": "Pius XII",
+     "lat": 41.38673,
+     "lng": 2.1216
+    },
+    {
+     "name": "Palau Reial",
+     "lat": 41.38594,
+     "lng": 2.11846
+    },
+    {
+     "name": "Zona Universitària",
+     "lat": 41.38426,
+     "lng": 2.11441
+    },
+    {
+     "name": "Avinguda de Xile",
+     "lat": 41.38076,
+     "lng": 2.1148
+    },
+    {
+     "name": "Ernest Lluch",
+     "lat": 41.37669,
+     "lng": 2.11077
+    },
+    {
+     "name": "Can Rigal",
+     "lat": 41.3761,
+     "lng": 2.10594
+    },
+    {
+     "name": "Ca n'Oliveres",
+     "lat": 41.37662,
+     "lng": 2.09842
+    },
+    {
+     "name": "Can Clota",
+     "lat": 41.37697,
+     "lng": 2.09353
+    },
+    {
+     "name": "Pont d'Esplugues",
+     "lat": 41.37686,
+     "lng": 2.08861
+    },
+    {
+     "name": "La Sardana",
+     "lat": 41.37279,
+     "lng": 2.08398
+    },
+    {
+     "name": "Montesa",
+     "lat": 41.36966,
+     "lng": 2.08091
+    },
+    {
+     "name": "El Pedró",
+     "lat": 41.36534,
+     "lng": 2.07666
+    },
+    {
+     "name": "Ignasi Iglésias",
+     "lat": 41.36126,
+     "lng": 2.07266
+    },
+    {
+     "name": "Cornellà Centre",
+     "lat": 41.35769,
+     "lng": 2.07018
+    },
+    {
+     "name": "Les Aigües",
+     "lat": 41.35667,
+     "lng": 2.06609
+    },
+    {
+     "name": "Fontsanta | Fatjó",
+     "lat": 41.36033,
+     "lng": 2.06224
+    },
+    {
+     "name": "Bon Viatge",
+     "lat": 41.3647,
+     "lng": 2.05891
+    },
+    {
+     "name": "La Fontsanta",
+     "lat": 41.36777,
+     "lng": 2.06296
+    },
+    {
+     "name": "Centre Miquel Martí i Pol",
+     "lat": 41.36862,
+     "lng": 2.0712
+    },
+    {
+     "name": "Llevant - Les Planes",
+     "lat": 41.37102,
+     "lng": 2.07619
+    }
+   ]
+  },
+  {
+   "mode": "tram",
+   "ref": "T3",
+   "name": "T3: Francesc Macià => Sant Feliu | Consell Comarcal",
+   "stops": [
+    {
+     "name": "Francesc Macià",
+     "lat": 41.39224,
+     "lng": 2.14318
+    },
+    {
+     "name": "L'Illa",
+     "lat": 41.39052,
+     "lng": 2.13652
+    },
+    {
+     "name": "Numància",
+     "lat": 41.38936,
+     "lng": 2.13196
+    },
+    {
+     "name": "Maria Cristina",
+     "lat": 41.38798,
+     "lng": 2.1265
+    },
+    {
+     "name": "Pius XII",
+     "lat": 41.38673,
+     "lng": 2.1216
+    },
+    {
+     "name": "Palau Reial",
+     "lat": 41.38594,
+     "lng": 2.11846
+    },
+    {
+     "name": "Zona Universitària",
+     "lat": 41.38426,
+     "lng": 2.11441
+    },
+    {
+     "name": "Avinguda de Xile",
+     "lat": 41.38076,
+     "lng": 2.1148
+    },
+    {
+     "name": "Ernest Lluch",
+     "lat": 41.37669,
+     "lng": 2.11077
+    },
+    {
+     "name": "Can Rigal",
+     "lat": 41.3761,
+     "lng": 2.10594
+    },
+    {
+     "name": "Ca n'Oliveres",
+     "lat": 41.37662,
+     "lng": 2.09842
+    },
+    {
+     "name": "Can Clota",
+     "lat": 41.37697,
+     "lng": 2.09353
+    },
+    {
+     "name": "Pont d'Esplugues",
+     "lat": 41.37686,
+     "lng": 2.08861
+    },
+    {
+     "name": "La Sardana",
+     "lat": 41.37279,
+     "lng": 2.08398
+    },
+    {
+     "name": "Montesa",
+     "lat": 41.36966,
+     "lng": 2.08091
+    },
+    {
+     "name": "Hospital Sant Joan Despí | TV3",
+     "lat": 41.37239,
+     "lng": 2.07571
+    },
+    {
+     "name": "Rambla de Sant Just",
+     "lat": 41.37886,
+     "lng": 2.07505
+    },
+    {
+     "name": "Walden",
+     "lat": 41.37974,
+     "lng": 2.0669
+    },
+    {
+     "name": "Torreblanca",
+     "lat": 41.37978,
+     "lng": 2.06081
+    },
+    {
+     "name": "Sant Feliu | Consell Comarcal",
+     "lat": 41.37937,
+     "lng": 2.05335
+    }
+   ]
+  },
+  {
+   "mode": "train",
+   "ref": "S8",
+   "name": "S8: Barcelona-Plaça Espanya => Martorell Enllaç",
+   "stops": [
+    {
+     "name": "Barcelona-Plaça Espanya",
+     "lat": 41.37437,
+     "lng": 2.14847
+    },
+    {
+     "name": "Magòria-La Campana",
+     "lat": 41.36755,
+     "lng": 2.13887
+    },
+    {
+     "name": "Ildefons Cerdà",
+     "lat": 41.3608,
+     "lng": 2.12975
+    },
+    {
+     "name": "Europa | Fira",
+     "lat": 41.35723,
+     "lng": 2.12505
+    },
+    {
+     "name": "Gornal",
+     "lat": 41.35501,
+     "lng": 2.11713
+    },
+    {
+     "name": "Sant Josep",
+     "lat": 41.36088,
+     "lng": 2.11038
+    },
+    {
+     "name": "Avinguda Carrilet",
+     "lat": 41.35794,
+     "lng": 2.1029
+    },
+    {
+     "name": "Almeda",
+     "lat": 41.35305,
+     "lng": 2.08451
+    },
+    {
+     "name": "Cornellà-Riera",
+     "lat": 41.35149,
+     "lng": 2.07066
+    },
+    {
+     "name": "Sant Boi",
+     "lat": 41.34844,
+     "lng": 2.04309
+    },
+    {
+     "name": "Molí Nou | Ciutat Cooperativa",
+     "lat": 41.35754,
+     "lng": 2.03534
+    },
+    {
+     "name": "Colònia Güell",
+     "lat": 41.36426,
+     "lng": 2.03149
+    },
+    {
+     "name": "Santa Coloma de Cervelló",
+     "lat": 41.37066,
+     "lng": 2.02351
+    },
+    {
+     "name": "Sant Vicenç dels Horts",
+     "lat": 41.38808,
+     "lng": 2.01241
+    },
+    {
+     "name": "Can Ros",
+     "lat": 41.39936,
+     "lng": 2.00498
+    },
+    {
+     "name": "Quatre Camins",
+     "lat": 41.40686,
+     "lng": 2.00156
+    },
+    {
+     "name": "Pallejà",
+     "lat": 41.42077,
+     "lng": 1.99562
+    },
+    {
+     "name": "Sant Andreu de la Barca",
+     "lat": 41.44683,
+     "lng": 1.97314
+    },
+    {
+     "name": "el Palau",
+     "lat": 41.45569,
+     "lng": 1.96261
+    },
+    {
+     "name": "Martorell - Vila | Castellbisbal",
+     "lat": 41.47643,
+     "lng": 1.93918
+    },
+    {
+     "name": "Martorell - Central",
+     "lat": 41.47941,
+     "lng": 1.92574
+    },
+    {
+     "name": "Martorell Enllaç",
+     "lat": 41.48392,
+     "lng": 1.91884
+    }
+   ]
+  },
+  {
+   "mode": "train",
+   "ref": "S4",
+   "name": "S4: Olesa de Montserrat => Barcelona-Plaça Espanya",
+   "stops": [
+    {
+     "name": "Olesa de Montserrat",
+     "lat": 41.54118,
+     "lng": 1.88831
+    },
+    {
+     "name": "Abrera",
+     "lat": 41.52257,
+     "lng": 1.9068
+    },
+    {
+     "name": "Martorell Enllaç",
+     "lat": 41.48387,
+     "lng": 1.91876
+    },
+    {
+     "name": "Martorell - Central",
+     "lat": 41.47931,
+     "lng": 1.92577
+    },
+    {
+     "name": "Martorell - Vila | Castellbisbal",
+     "lat": 41.47644,
+     "lng": 1.93913
+    },
+    {
+     "name": "el Palau",
+     "lat": 41.45566,
+     "lng": 1.96258
+    },
+    {
+     "name": "Sant Andreu de la Barca",
+     "lat": 41.44681,
+     "lng": 1.9731
+    },
+    {
+     "name": "Pallejà",
+     "lat": 41.42077,
+     "lng": 1.99554
+    },
+    {
+     "name": "Quatre Camins",
+     "lat": 41.40626,
+     "lng": 2.00165
+    },
+    {
+     "name": "Can Ros",
+     "lat": 41.39932,
+     "lng": 2.0049
+    },
+    {
+     "name": "Sant Vicenç dels Horts",
+     "lat": 41.38807,
+     "lng": 2.01238
+    },
+    {
+     "name": "Santa Coloma de Cervelló",
+     "lat": 41.37064,
+     "lng": 2.02347
+    },
+    {
+     "name": "Colònia Güell",
+     "lat": 41.36354,
+     "lng": 2.03209
+    },
+    {
+     "name": "Molí Nou | Ciutat Cooperativa",
+     "lat": 41.35751,
+     "lng": 2.03522
+    },
+    {
+     "name": "Sant Boi",
+     "lat": 41.34841,
+     "lng": 2.04307
+    },
+    {
+     "name": "Cornellà-Riera",
+     "lat": 41.35146,
+     "lng": 2.07066
+    },
+    {
+     "name": "Almeda",
+     "lat": 41.35302,
+     "lng": 2.08452
+    },
+    {
+     "name": "Avinguda Carrilet",
+     "lat": 41.35791,
+     "lng": 2.10292
+    },
+    {
+     "name": "Sant Josep",
+     "lat": 41.36083,
+     "lng": 2.11041
+    },
+    {
+     "name": "Gornal",
+     "lat": 41.35498,
+     "lng": 2.11709
+    },
+    {
+     "name": "Europa | Fira",
+     "lat": 41.35719,
+     "lng": 2.1251
+    },
+    {
+     "name": "Ildefons Cerdà",
+     "lat": 41.36077,
+     "lng": 2.12979
+    },
+    {
+     "name": "Magòria-La Campana",
+     "lat": 41.36748,
+     "lng": 2.13894
+    },
+    {
+     "name": "Barcelona-Plaça Espanya",
+     "lat": 41.37432,
+     "lng": 2.14857
+    }
+   ]
+  },
+  {
+   "mode": "train",
+   "ref": "R6",
+   "name": "R6: Barcelona-Plaça Espanya => Igualada",
+   "stops": [
+    {
+     "name": "Barcelona-Plaça Espanya",
+     "lat": 41.37437,
+     "lng": 2.14847
+    },
+    {
+     "name": "Magòria-La Campana",
+     "lat": 41.36755,
+     "lng": 2.13887
+    },
+    {
+     "name": "Ildefons Cerdà",
+     "lat": 41.3608,
+     "lng": 2.12975
+    },
+    {
+     "name": "Europa | Fira",
+     "lat": 41.35723,
+     "lng": 2.12505
+    },
+    {
+     "name": "Gornal",
+     "lat": 41.35501,
+     "lng": 2.11713
+    },
+    {
+     "name": "Sant Josep",
+     "lat": 41.36088,
+     "lng": 2.11038
+    },
+    {
+     "name": "Avinguda Carrilet",
+     "lat": 41.35794,
+     "lng": 2.1029
+    },
+    {
+     "name": "Almeda",
+     "lat": 41.35305,
+     "lng": 2.08451
+    },
+    {
+     "name": "Cornellà-Riera",
+     "lat": 41.35149,
+     "lng": 2.07066
+    },
+    {
+     "name": "Sant Boi",
+     "lat": 41.34844,
+     "lng": 2.04309
+    },
+    {
+     "name": "Molí Nou | Ciutat Cooperativa",
+     "lat": 41.35754,
+     "lng": 2.03534
+    },
+    {
+     "name": "Santa Coloma de Cervelló",
+     "lat": 41.37066,
+     "lng": 2.02351
+    },
+    {
+     "name": "Sant Vicenç dels Horts",
+     "lat": 41.38808,
+     "lng": 2.01241
+    },
+    {
+     "name": "Can Ros",
+     "lat": 41.39936,
+     "lng": 2.00498
+    },
+    {
+     "name": "Quatre Camins",
+     "lat": 41.40686,
+     "lng": 2.00156
+    },
+    {
+     "name": "Pallejà",
+     "lat": 41.42077,
+     "lng": 1.99562
+    },
+    {
+     "name": "Sant Andreu de la Barca",
+     "lat": 41.44683,
+     "lng": 1.97314
+    },
+    {
+     "name": "el Palau",
+     "lat": 41.45569,
+     "lng": 1.96261
+    },
+    {
+     "name": "Martorell - Central",
+     "lat": 41.47941,
+     "lng": 1.92574
+    },
+    {
+     "name": "Martorell Enllaç",
+     "lat": 41.48392,
+     "lng": 1.91884
+    },
+    {
+     "name": "Sant Esteve Sesrovires",
+     "lat": 41.49771,
+     "lng": 1.87255
+    },
+    {
+     "name": "la Beguda",
+     "lat": 41.50178,
+     "lng": 1.83865
+    },
+    {
+     "name": "Can Parellada",
+     "lat": 41.50224,
+     "lng": 1.83077
+    },
+    {
+     "name": "Masquefa",
+     "lat": 41.50301,
+     "lng": 1.81239
+    },
+    {
+     "name": "Piera",
+     "lat": 41.52597,
+     "lng": 1.75446
+    },
+    {
+     "name": "Vallbona d'Anoia",
+     "lat": 41.52034,
+     "lng": 1.70851
+    },
+    {
+     "name": "Capellades",
+     "lat": 41.52157,
+     "lng": 1.69547
+    },
+    {
+     "name": "la Pobla de Claramunt",
+     "lat": 41.55464,
+     "lng": 1.67794
+    },
+    {
+     "name": "Vilanova del Camí",
+     "lat": 41.5735,
+     "lng": 1.64162
+    },
+    {
+     "name": "Igualada",
+     "lat": 41.57792,
+     "lng": 1.63014
+    }
+   ]
+  },
+  {
+   "mode": "train",
+   "ref": "R60",
+   "name": "R60: Barcelona-Plaça Espanya => Igualada",
+   "stops": [
+    {
+     "name": "Barcelona-Plaça Espanya",
+     "lat": 41.37437,
+     "lng": 2.14847
+    },
+    {
+     "name": "Ildefons Cerdà",
+     "lat": 41.3608,
+     "lng": 2.12975
+    },
+    {
+     "name": "Europa | Fira",
+     "lat": 41.35723,
+     "lng": 2.12505
+    },
+    {
+     "name": "Gornal",
+     "lat": 41.35501,
+     "lng": 2.11713
+    },
+    {
+     "name": "Sant Josep",
+     "lat": 41.36088,
+     "lng": 2.11038
+    },
+    {
+     "name": "Avinguda Carrilet",
+     "lat": 41.35794,
+     "lng": 2.1029
+    },
+    {
+     "name": "Almeda",
+     "lat": 41.35305,
+     "lng": 2.08451
+    },
+    {
+     "name": "Cornellà-Riera",
+     "lat": 41.35149,
+     "lng": 2.07066
+    },
+    {
+     "name": "Sant Boi",
+     "lat": 41.34844,
+     "lng": 2.04309
+    },
+    {
+     "name": "Santa Coloma de Cervelló",
+     "lat": 41.37066,
+     "lng": 2.02351
+    },
+    {
+     "name": "Sant Vicenç dels Horts",
+     "lat": 41.38808,
+     "lng": 2.01241
+    },
+    {
+     "name": "Sant Andreu de la Barca",
+     "lat": 41.44683,
+     "lng": 1.97314
+    },
+    {
+     "name": "Martorell - Central",
+     "lat": 41.47941,
+     "lng": 1.92574
+    },
+    {
+     "name": "Sant Esteve Sesrovires",
+     "lat": 41.49771,
+     "lng": 1.87255
+    },
+    {
+     "name": "Masquefa",
+     "lat": 41.50301,
+     "lng": 1.81239
+    },
+    {
+     "name": "Piera",
+     "lat": 41.52597,
+     "lng": 1.75446
+    },
+    {
+     "name": "Vallbona d'Anoia",
+     "lat": 41.52027,
+     "lng": 1.709
+    },
+    {
+     "name": "Capellades",
+     "lat": 41.52157,
+     "lng": 1.69547
+    },
+    {
+     "name": "la Pobla de Claramunt",
+     "lat": 41.55464,
+     "lng": 1.67794
+    },
+    {
+     "name": "Vilanova del Camí",
+     "lat": 41.5735,
+     "lng": 1.64162
+    },
+    {
+     "name": "Igualada",
+     "lat": 41.57792,
+     "lng": 1.63014
+    }
+   ]
+  },
+  {
+   "mode": "train",
+   "ref": "R5",
+   "name": "R5: Barcelona-Plaça Espanya => Manresa Baixador",
+   "stops": [
+    {
+     "name": "Barcelona-Plaça Espanya",
+     "lat": 41.37437,
+     "lng": 2.14847
+    },
+    {
+     "name": "Magòria-La Campana",
+     "lat": 41.36755,
+     "lng": 2.13887
+    },
+    {
+     "name": "Ildefons Cerdà",
+     "lat": 41.3608,
+     "lng": 2.12975
+    },
+    {
+     "name": "Europa | Fira",
+     "lat": 41.35723,
+     "lng": 2.12505
+    },
+    {
+     "name": "Gornal",
+     "lat": 41.35501,
+     "lng": 2.11713
+    },
+    {
+     "name": "Sant Josep",
+     "lat": 41.36088,
+     "lng": 2.11038
+    },
+    {
+     "name": "Avinguda Carrilet",
+     "lat": 41.35794,
+     "lng": 2.1029
+    },
+    {
+     "name": "Almeda",
+     "lat": 41.35305,
+     "lng": 2.08451
+    },
+    {
+     "name": "Cornellà-Riera",
+     "lat": 41.35149,
+     "lng": 2.07066
+    },
+    {
+     "name": "Sant Boi",
+     "lat": 41.34844,
+     "lng": 2.04309
+    },
+    {
+     "name": "Molí Nou | Ciutat Cooperativa",
+     "lat": 41.35754,
+     "lng": 2.03534
+    },
+    {
+     "name": "Sant Vicenç dels Horts",
+     "lat": 41.38808,
+     "lng": 2.01241
+    },
+    {
+     "name": "Can Ros",
+     "lat": 41.39936,
+     "lng": 2.00498
+    },
+    {
+     "name": "Quatre Camins",
+     "lat": 41.40686,
+     "lng": 2.00156
+    },
+    {
+     "name": "Pallejà",
+     "lat": 41.42077,
+     "lng": 1.99562
+    },
+    {
+     "name": "Sant Andreu de la Barca",
+     "lat": 41.44683,
+     "lng": 1.97314
+    },
+    {
+     "name": "el Palau",
+     "lat": 41.45569,
+     "lng": 1.96261
+    },
+    {
+     "name": "Martorell - Central",
+     "lat": 41.47941,
+     "lng": 1.92574
+    },
+    {
+     "name": "Martorell Enllaç",
+     "lat": 41.48392,
+     "lng": 1.91884
+    },
+    {
+     "name": "Abrera",
+     "lat": 41.52257,
+     "lng": 1.90686
+    },
+    {
+     "name": "Olesa de Montserrat",
+     "lat": 41.54121,
+     "lng": 1.88835
+    },
+    {
+     "name": "Aeri de Montserrat",
+     "lat": 41.59112,
+     "lng": 1.85336
+    },
+    {
+     "name": "Monistrol de Montserrat",
+     "lat": 41.60908,
+     "lng": 1.85029
+    },
+    {
+     "name": "Castellbell i el Vilar",
+     "lat": 41.64054,
+     "lng": 1.85482
+    },
+    {
+     "name": "Sant Vicenç | Castellgalí",
+     "lat": 41.66789,
+     "lng": 1.8596
+    },
+    {
+     "name": "Manresa-Viladordis",
+     "lat": 41.72467,
+     "lng": 1.83405
+    },
+    {
+     "name": "Manresa Alta",
+     "lat": 41.73222,
+     "lng": 1.83306
+    },
+    {
+     "name": "Manresa Baixador",
+     "lat": 41.73147,
+     "lng": 1.82792
+    }
+   ]
+  },
+  {
+   "mode": "train",
+   "ref": "R50",
+   "name": "R50: Barcelona-Plaça Espanya => Manresa Baixador",
+   "stops": [
+    {
+     "name": "Barcelona-Plaça Espanya",
+     "lat": 41.37437,
+     "lng": 2.14847
+    },
+    {
+     "name": "Ildefons Cerdà",
+     "lat": 41.3608,
+     "lng": 2.12975
+    },
+    {
+     "name": "Europa | Fira",
+     "lat": 41.35723,
+     "lng": 2.12505
+    },
+    {
+     "name": "Gornal",
+     "lat": 41.35501,
+     "lng": 2.11713
+    },
+    {
+     "name": "Sant Josep",
+     "lat": 41.36088,
+     "lng": 2.11038
+    },
+    {
+     "name": "Avinguda Carrilet",
+     "lat": 41.35794,
+     "lng": 2.1029
+    },
+    {
+     "name": "Almeda",
+     "lat": 41.35305,
+     "lng": 2.08451
+    },
+    {
+     "name": "Cornellà-Riera",
+     "lat": 41.35149,
+     "lng": 2.07066
+    },
+    {
+     "name": "Sant Boi",
+     "lat": 41.34844,
+     "lng": 2.04309
+    },
+    {
+     "name": "Sant Vicenç dels Horts",
+     "lat": 41.38808,
+     "lng": 2.01241
+    },
+    {
+     "name": "Pallejà",
+     "lat": 41.42077,
+     "lng": 1.99562
+    },
+    {
+     "name": "Sant Andreu de la Barca",
+     "lat": 41.44683,
+     "lng": 1.97314
+    },
+    {
+     "name": "Martorell - Central",
+     "lat": 41.47941,
+     "lng": 1.92574
+    },
+    {
+     "name": "Abrera",
+     "lat": 41.52257,
+     "lng": 1.90686
+    },
+    {
+     "name": "Olesa de Montserrat",
+     "lat": 41.54121,
+     "lng": 1.88835
+    },
+    {
+     "name": "Monistrol de Montserrat",
+     "lat": 41.60908,
+     "lng": 1.85029
+    },
+    {
+     "name": "Sant Vicenç | Castellgalí",
+     "lat": 41.66789,
+     "lng": 1.8596
+    },
+    {
+     "name": "Manresa-Viladordis",
+     "lat": 41.72467,
+     "lng": 1.83405
+    },
+    {
+     "name": "Manresa Alta",
+     "lat": 41.73222,
+     "lng": 1.83306
+    },
+    {
+     "name": "Manresa Baixador",
+     "lat": 41.73147,
+     "lng": 1.82792
+    }
+   ]
+  },
+  {
+   "mode": "train",
+   "ref": "RG1",
+   "name": "RG1: l'Hospitalet de Llobregat => Portbou",
+   "stops": [
+    {
+     "name": "l'Hospitalet de Llobregat",
+     "lat": 41.36425,
+     "lng": 2.10068
+    },
+    {
+     "name": "Barcelona - Sants",
+     "lat": 41.37906,
+     "lng": 2.14038
+    },
+    {
+     "name": "Barcelona-Plaça de Catalunya",
+     "lat": 41.38754,
+     "lng": 2.16932
+    },
+    {
+     "name": "Barcelona-Arc de Triomf",
+     "lat": 41.39227,
+     "lng": 2.18104
+    },
+    {
+     "name": "Barcelona-El Clot",
+     "lat": 41.4103,
+     "lng": 2.18937
+    },
+    {
+     "name": "Sant Adrià de Besòs",
+     "lat": 41.42435,
+     "lng": 2.2306
+    },
+    {
+     "name": "Badalona",
+     "lat": 41.44572,
+     "lng": 2.24915
+    },
+    {
+     "name": "Montgat",
+     "lat": 41.4629,
+     "lng": 2.27223
+    },
+    {
+     "name": "Montgat Nord",
+     "lat": 41.46874,
+     "lng": 2.28689
+    },
+    {
+     "name": "el Masnou",
+     "lat": 41.47691,
+     "lng": 2.31051
+    },
+    {
+     "name": "Ocata",
+     "lat": 41.479,
+     "lng": 2.31981
+    },
+    {
+     "name": "Premià de Mar",
+     "lat": 41.4876,
+     "lng": 2.35497
+    },
+    {
+     "name": "Vilassar de Mar",
+     "lat": 41.50045,
+     "lng": 2.38978
+    },
+    {
+     "name": "Cabrera de Mar - Vilassar de Mar",
+     "lat": 41.50674,
+     "lng": 2.40175
+    },
+    {
+     "name": "Mataró",
+     "lat": 41.53285,
+     "lng": 2.44517
+    },
+    {
+     "name": "Sant Andreu de Llavaneres",
+     "lat": 41.55544,
+     "lng": 2.49849
+    },
+    {
+     "name": "Caldes d'Estrac",
+     "lat": 41.56855,
+     "lng": 2.52637
+    },
+    {
+     "name": "Arenys de Mar",
+     "lat": 41.57748,
+     "lng": 2.54952
+    },
+    {
+     "name": "Canet de Mar",
+     "lat": 41.58645,
+     "lng": 2.58125
+    },
+    {
+     "name": "Sant Pol de Mar",
+     "lat": 41.60161,
+     "lng": 2.62465
+    },
+    {
+     "name": "Calella",
+     "lat": 41.61458,
+     "lng": 2.66606
+    },
+    {
+     "name": "Pineda de Mar",
+     "lat": 41.62246,
+     "lng": 2.69424
+    },
+    {
+     "name": "Santa Susanna",
+     "lat": 41.63015,
+     "lng": 2.71659
+    },
+    {
+     "name": "Malgrat de Mar",
+     "lat": 41.64159,
+     "lng": 2.74162
+    },
+    {
+     "name": "Blanes",
+     "lat": 41.67343,
+     "lng": 2.76906
+    },
+    {
+     "name": "Tordera",
+     "lat": 41.70702,
+     "lng": 2.71947
+    },
+    {
+     "name": "Maçanet Massanes",
+     "lat": 41.77245,
+     "lng": 2.67359
+    },
+    {
+     "name": "Sils",
+     "lat": 41.80748,
+     "lng": 2.74508
+    },
+    {
+     "name": "Caldes de Malavella",
+     "lat": 41.84118,
+     "lng": 2.80062
+    },
+    {
+     "name": "Riudellots de la Selva",
+     "lat": 41.89623,
+     "lng": 2.81178
+    },
+    {
+     "name": "Fornells de la Selva",
+     "lat": 41.93493,
+     "lng": 2.80949
+    },
+    {
+     "name": "Girona",
+     "lat": 41.97901,
+     "lng": 2.8166
+    },
+    {
+     "name": "Celrà",
+     "lat": 42.02731,
+     "lng": 2.87492
+    },
+    {
+     "name": "Bordils - Juià",
+     "lat": 42.03696,
+     "lng": 2.91531
+    },
+    {
+     "name": "Flaçà",
+     "lat": 42.04751,
+     "lng": 2.95723
+    },
+    {
+     "name": "Sant Jordi Desvalls",
+     "lat": 42.06831,
+     "lng": 2.96479
+    },
+    {
+     "name": "Camallera",
+     "lat": 42.12213,
+     "lng": 2.96556
+    },
+    {
+     "name": "Sant Miquel de Fluvià",
+     "lat": 42.17211,
+     "lng": 2.9894
+    },
+    {
+     "name": "Vilamalla",
+     "lat": 42.21635,
+     "lng": 2.97807
+    },
+    {
+     "name": "Figueres",
+     "lat": 42.26515,
+     "lng": 2.96899
+    },
+    {
+     "name": "Vilajuïga",
+     "lat": 42.32505,
+     "lng": 3.08614
+    },
+    {
+     "name": "Llançà",
+     "lat": 42.36682,
+     "lng": 3.14893
+    },
+    {
+     "name": "Colera",
+     "lat": 42.40689,
+     "lng": 3.15451
+    },
+    {
+     "name": "Portbou",
+     "lat": 42.42473,
+     "lng": 3.15785
+    }
+   ]
+  },
+  {
+   "mode": "subway",
+   "ref": "L9S",
+   "name": "L9S: Aeroport T1 => Zona Universitària",
+   "stops": [
+    {
+     "name": "Aeroport T1",
+     "lat": 41.28833,
+     "lng": 2.07097
+    },
+    {
+     "name": "Aeroport T2",
+     "lat": 41.30381,
+     "lng": 2.07313
+    },
+    {
+     "name": "Mas Blau",
+     "lat": 41.31131,
+     "lng": 2.07345
+    },
+    {
+     "name": "Parc Nou",
+     "lat": 41.31668,
+     "lng": 2.0874
+    },
+    {
+     "name": "Cèntric",
+     "lat": 41.32184,
+     "lng": 2.0936
+    },
+    {
+     "name": "el Prat Estació",
+     "lat": 41.33168,
+     "lng": 2.09015
+    },
+    {
+     "name": "Les Moreres",
+     "lat": 41.329,
+     "lng": 2.10313
+    },
+    {
+     "name": "Mercabarna",
+     "lat": 41.33354,
+     "lng": 2.11129
+    },
+    {
+     "name": "Parc Logístic",
+     "lat": 41.34181,
+     "lng": 2.12805
+    },
+    {
+     "name": "Fira",
+     "lat": 41.35187,
+     "lng": 2.13062
+    },
+    {
+     "name": "Europa | Fira",
+     "lat": 41.35753,
+     "lng": 2.12605
+    },
+    {
+     "name": "Can Tries - Gornal",
+     "lat": 41.36089,
+     "lng": 2.11814
+    },
+    {
+     "name": "Torrassa",
+     "lat": 41.368,
+     "lng": 2.11564
+    },
+    {
+     "name": "Collblanc",
+     "lat": 41.3758,
+     "lng": 2.11842
+    },
+    {
+     "name": "Zona Universitària",
+     "lat": 41.38393,
+     "lng": 2.11148
+    }
+   ]
+  },
+  {
+   "mode": "train",
+   "ref": "R11",
+   "name": "R11: Barcelona-Sants => Portbou",
+   "stops": [
+    {
+     "name": "Barcelona - Sants",
+     "lat": 41.3788,
+     "lng": 2.14067
+    },
+    {
+     "name": "Barcelona-Passeig de Gràcia",
+     "lat": 41.39253,
+     "lng": 2.16539
+    },
+    {
+     "name": "Barcelona-El Clot",
+     "lat": 41.41044,
+     "lng": 2.18919
+    },
+    {
+     "name": "Barcelona-Sant Andreu",
+     "lat": 41.43625,
+     "lng": 2.19405
+    },
+    {
+     "name": "Granollers Centre",
+     "lat": 41.59945,
+     "lng": 2.2916
+    },
+    {
+     "name": "Sant Celoni",
+     "lat": 41.68567,
+     "lng": 2.4909
+    },
+    {
+     "name": "Gualba",
+     "lat": 41.71799,
+     "lng": 2.539
+    },
+    {
+     "name": "Riells i Viabrea - Breda",
+     "lat": 41.72651,
+     "lng": 2.56886
+    },
+    {
+     "name": "Hostalric",
+     "lat": 41.74787,
+     "lng": 2.6316
+    },
+    {
+     "name": "Maçanet Massanes",
+     "lat": 41.77245,
+     "lng": 2.67337
+    },
+    {
+     "name": "Sils",
+     "lat": 41.80748,
+     "lng": 2.74508
+    },
+    {
+     "name": "Caldes de Malavella",
+     "lat": 41.84118,
+     "lng": 2.80062
+    },
+    {
+     "name": "Riudellots de la Selva",
+     "lat": 41.89623,
+     "lng": 2.81178
+    },
+    {
+     "name": "Fornells de la Selva",
+     "lat": 41.93493,
+     "lng": 2.80949
+    },
+    {
+     "name": "Girona",
+     "lat": 41.97901,
+     "lng": 2.8166
+    },
+    {
+     "name": "Celrà",
+     "lat": 42.02731,
+     "lng": 2.87492
+    },
+    {
+     "name": "Bordils - Juià",
+     "lat": 42.03696,
+     "lng": 2.91531
+    },
+    {
+     "name": "Flaçà",
+     "lat": 42.04751,
+     "lng": 2.95723
+    },
+    {
+     "name": "Sant Jordi Desvalls",
+     "lat": 42.06831,
+     "lng": 2.96479
+    },
+    {
+     "name": "Camallera",
+     "lat": 42.12213,
+     "lng": 2.96556
+    },
+    {
+     "name": "Sant Miquel de Fluvià",
+     "lat": 42.17211,
+     "lng": 2.9894
+    },
+    {
+     "name": "Vilamalla",
+     "lat": 42.21635,
+     "lng": 2.97807
+    },
+    {
+     "name": "Figueres",
+     "lat": 42.26515,
+     "lng": 2.96899
+    },
+    {
+     "name": "Vilajuïga",
+     "lat": 42.32505,
+     "lng": 3.08614
+    },
+    {
+     "name": "Llançà",
+     "lat": 42.36682,
+     "lng": 3.14893
+    },
+    {
+     "name": "Colera",
+     "lat": 42.40689,
+     "lng": 3.15451
+    },
+    {
+     "name": "Portbou",
+     "lat": 42.42473,
+     "lng": 3.15785
+    }
+   ]
+  },
+  {
+   "mode": "train",
+   "ref": "R13",
+   "name": "R13: Barcelona-Estació de França => Lleida-Pirineus",
+   "stops": [
+    {
+     "name": "Barcelona-Estació de França",
+     "lat": 41.38396,
+     "lng": 2.18543
+    },
+    {
+     "name": "Barcelona-Passeig de Gràcia",
+     "lat": 41.39256,
+     "lng": 2.16536
+    },
+    {
+     "name": "Barcelona - Sants",
+     "lat": 41.37883,
+     "lng": 2.14062
+    },
+    {
+     "name": "Sant Vicenç de Calders",
+     "lat": 41.18601,
+     "lng": 1.52509
+    },
+    {
+     "name": "Roda de Mar",
+     "lat": 41.18636,
+     "lng": 1.45496
+    },
+    {
+     "name": "Salomó",
+     "lat": 41.22339,
+     "lng": 1.37647
+    },
+    {
+     "name": "Vilabella",
+     "lat": 41.23945,
+     "lng": 1.31742
+    },
+    {
+     "name": "Nulles - Bràfim",
+     "lat": 41.25024,
+     "lng": 1.29741
+    },
+    {
+     "name": "Valls",
+     "lat": 41.28972,
+     "lng": 1.25886
+    },
+    {
+     "name": "la Plana - Picamoixons",
+     "lat": 41.30609,
+     "lng": 1.19533
+    },
+    {
+     "name": "la Riba",
+     "lat": 41.31838,
+     "lng": 1.18143
+    },
+    {
+     "name": "Vilaverd",
+     "lat": 41.33779,
+     "lng": 1.17643
+    },
+    {
+     "name": "Montblanc",
+     "lat": 41.37667,
+     "lng": 1.16568
+    },
+    {
+     "name": "l'Espluga de Francolí",
+     "lat": 41.4004,
+     "lng": 1.10344
+    },
+    {
+     "name": "Vimbodí",
+     "lat": 41.40283,
+     "lng": 1.04603
+    },
+    {
+     "name": "Vinaixa",
+     "lat": 41.42511,
+     "lng": 0.97015
+    },
+    {
+     "name": "la Floresta",
+     "lat": 41.50409,
+     "lng": 0.92433
+    },
+    {
+     "name": "les Borges Blanques",
+     "lat": 41.52146,
+     "lng": 0.87811
+    },
+    {
+     "name": "Juneda",
+     "lat": 41.54384,
+     "lng": 0.82544
+    },
+    {
+     "name": "Puigverd de Lleida - Artesa de Lleida",
+     "lat": 41.55385,
+     "lng": 0.73336
+    },
+    {
+     "name": "Lleida-Pirineus",
+     "lat": 41.62114,
+     "lng": 0.6331
+    }
+   ]
+  },
+  {
+   "mode": "subway",
+   "ref": "L12",
+   "name": "L12: Reina Elisenda => Sarrià",
+   "stops": [
+    {
+     "name": "Reina Elisenda",
+     "lat": 41.39877,
+     "lng": 2.11906
+    },
+    {
+     "name": "Sarrià",
+     "lat": 41.39847,
+     "lng": 2.12554
+    }
+   ]
+  },
+  {
+   "mode": "train",
+   "ref": "Alvia 00664",
+   "name": "Alvia 00664 Barcelona-Sants → Gijón",
+   "stops": [
+    {
+     "name": "Barcelona - Sants",
+     "lat": 41.38008,
+     "lng": 2.1409
+    },
+    {
+     "name": "Camp de Tarragona",
+     "lat": 41.19197,
+     "lng": 1.27255
+    },
+    {
+     "name": "Lleida-Pirineus",
+     "lat": 41.62091,
+     "lng": 0.63294
+    }
+   ]
+  },
+  {
+   "mode": "train",
+   "ref": "Alvia 00661",
+   "name": "Alvia 00661 Gijón → Barcelona-Sants",
+   "stops": [
+    {
+     "name": "Lleida-Pirineus",
+     "lat": 41.62091,
+     "lng": 0.63294
+    },
+    {
+     "name": "Camp de Tarragona",
+     "lat": 41.19174,
+     "lng": 1.27245
+    },
+    {
+     "name": "Barcelona - Sants",
+     "lat": 41.38005,
+     "lng": 2.14096
+    }
+   ]
+  },
+  {
+   "mode": "train",
+   "ref": "Alvia 00626",
+   "name": "Alvia 00626 Barcelona-Sants → A Coruña",
+   "stops": [
+    {
+     "name": "Barcelona - Sants",
+     "lat": 41.38008,
+     "lng": 2.1409
+    },
+    {
+     "name": "Camp de Tarragona",
+     "lat": 41.19197,
+     "lng": 1.27255
+    },
+    {
+     "name": "Lleida-Pirineus",
+     "lat": 41.62091,
+     "lng": 0.63294
+    }
+   ]
+  },
+  {
+   "mode": "train",
+   "ref": "Alvia 00621",
+   "name": "Alvia 00621 Vigo-Guixar → Barcelona-Sants",
+   "stops": [
+    {
+     "name": "Lleida-Pirineus",
+     "lat": 41.62091,
+     "lng": 0.63294
+    },
+    {
+     "name": "Camp de Tarragona",
+     "lat": 41.19174,
+     "lng": 1.27245
+    },
+    {
+     "name": "Barcelona - Sants",
+     "lat": 41.38005,
+     "lng": 2.14096
+    }
+   ]
+  },
+  {
+   "mode": "train",
+   "ref": "",
+   "name": "Alvia 00537: Irun -> Barcelona Sants",
+   "stops": [
+    {
+     "name": "Lleida-Pirineus",
+     "lat": 41.62073,
+     "lng": 0.63304
+    },
+    {
+     "name": "Camp de Tarragona",
+     "lat": 41.19217,
+     "lng": 1.27357
+    },
+    {
+     "name": "Barcelona - Sants",
+     "lat": 41.37901,
+     "lng": 2.14
+    }
+   ]
+  },
+  {
+   "mode": "train",
+   "ref": "",
+   "name": "Alvia 00534: Barcelona Sants -> Irun",
+   "stops": [
+    {
+     "name": "Barcelona - Sants",
+     "lat": 41.37901,
+     "lng": 2.14
+    },
+    {
+     "name": "Camp de Tarragona",
+     "lat": 41.19217,
+     "lng": 1.27357
+    },
+    {
+     "name": "Lleida-Pirineus",
+     "lat": 41.62073,
+     "lng": 0.63304
+    }
+   ]
+  },
+  {
+   "mode": "train",
+   "ref": "",
+   "name": "Alvia 00533: Irun -> Barcelona Sants",
+   "stops": [
+    {
+     "name": "Lleida-Pirineus",
+     "lat": 41.62073,
+     "lng": 0.63304
+    },
+    {
+     "name": "Camp de Tarragona",
+     "lat": 41.19217,
+     "lng": 1.27357
+    },
+    {
+     "name": "Barcelona - Sants",
+     "lat": 41.37901,
+     "lng": 2.14
+    }
+   ]
+  },
+  {
+   "mode": "train",
+   "ref": "",
+   "name": "Alvia 00530: Barcelona Sants -> Irun",
+   "stops": [
+    {
+     "name": "Barcelona - Sants",
+     "lat": 41.38008,
+     "lng": 2.1409
+    },
+    {
+     "name": "Camp de Tarragona",
+     "lat": 41.19197,
+     "lng": 1.27255
+    },
+    {
+     "name": "Lleida-Pirineus",
+     "lat": 41.62091,
+     "lng": 0.63294
+    }
+   ]
+  },
+  {
+   "mode": "train",
+   "ref": "",
+   "name": "Intercity 00562: Barcelona Sants -> Pamplona / Iruña",
+   "stops": [
+    {
+     "name": "Barcelona - Sants",
+     "lat": 41.37901,
+     "lng": 2.14
+    },
+    {
+     "name": "Camp de Tarragona",
+     "lat": 41.19217,
+     "lng": 1.27357
+    },
+    {
+     "name": "Lleida-Pirineus",
+     "lat": 41.62073,
+     "lng": 0.63304
+    }
+   ]
+  },
+  {
+   "mode": "train",
+   "ref": "",
+   "name": "Intercity 00635: Pamplona / Iruña -> Barcelona Sants",
+   "stops": [
+    {
+     "name": "Lleida-Pirineus",
+     "lat": 41.62073,
+     "lng": 0.63304
+    },
+    {
+     "name": "Camp de Tarragona",
+     "lat": 41.19217,
+     "lng": 1.27357
+    },
+    {
+     "name": "Barcelona - Sants",
+     "lat": 41.37901,
+     "lng": 2.14
+    }
+   ]
+  },
+  {
+   "mode": "train",
+   "ref": "S9",
+   "name": "S9: Quatre Camins => Barcelona-Plaça Espanya",
+   "stops": [
+    {
+     "name": "Quatre Camins",
+     "lat": 41.40626,
+     "lng": 2.00165
+    },
+    {
+     "name": "Can Ros",
+     "lat": 41.39932,
+     "lng": 2.0049
+    },
+    {
+     "name": "Sant Vicenç dels Horts",
+     "lat": 41.38807,
+     "lng": 2.01238
+    },
+    {
+     "name": "Santa Coloma de Cervelló",
+     "lat": 41.37064,
+     "lng": 2.02347
+    },
+    {
+     "name": "Colònia Güell",
+     "lat": 41.36354,
+     "lng": 2.03209
+    },
+    {
+     "name": "Molí Nou | Ciutat Cooperativa",
+     "lat": 41.35751,
+     "lng": 2.03522
+    },
+    {
+     "name": "Sant Boi",
+     "lat": 41.34841,
+     "lng": 2.04307
+    },
+    {
+     "name": "Cornellà-Riera",
+     "lat": 41.35146,
+     "lng": 2.07066
+    },
+    {
+     "name": "Almeda",
+     "lat": 41.35302,
+     "lng": 2.08452
+    },
+    {
+     "name": "Avinguda Carrilet",
+     "lat": 41.35791,
+     "lng": 2.10292
+    },
+    {
+     "name": "Sant Josep",
+     "lat": 41.36083,
+     "lng": 2.11041
+    },
+    {
+     "name": "Gornal",
+     "lat": 41.35498,
+     "lng": 2.11709
+    },
+    {
+     "name": "Europa | Fira",
+     "lat": 41.35719,
+     "lng": 2.1251
+    },
+    {
+     "name": "Ildefons Cerdà",
+     "lat": 41.36077,
+     "lng": 2.12979
+    },
+    {
+     "name": "Magòria-La Campana",
+     "lat": 41.36748,
+     "lng": 2.13894
+    },
+    {
+     "name": "Barcelona-Plaça Espanya",
+     "lat": 41.37446,
+     "lng": 2.14844
+    }
+   ]
+  },
+  {
+   "mode": "subway",
+   "ref": "L10S",
+   "name": "L10S: Collblanc => ZAL | Riu Vell",
+   "stops": [
+    {
+     "name": "Collblanc",
+     "lat": 41.37581,
+     "lng": 2.11837
+    },
+    {
+     "name": "Torrassa",
+     "lat": 41.36801,
+     "lng": 2.11558
+    },
+    {
+     "name": "Can Tries - Gornal",
+     "lat": 41.36084,
+     "lng": 2.11813
+    },
+    {
+     "name": "Provençana",
+     "lat": 41.36136,
+     "lng": 2.12429
+    },
+    {
+     "name": "Ciutat de la Justícia",
+     "lat": 41.36325,
+     "lng": 2.13333
+    },
+    {
+     "name": "Foneria",
+     "lat": 41.36048,
+     "lng": 2.13871
+    },
+    {
+     "name": "Foc",
+     "lat": 41.35583,
+     "lng": 2.14211
+    },
+    {
+     "name": "Zona Franca",
+     "lat": 41.34302,
+     "lng": 2.14491
+    },
+    {
+     "name": "Port Comercial | la Factoria",
+     "lat": 41.33597,
+     "lng": 2.14058
+    },
+    {
+     "name": "Ecoparc",
+     "lat": 41.33021,
+     "lng": 2.13702
+    },
+    {
+     "name": "ZAL | Riu Vell",
+     "lat": 41.32377,
+     "lng": 2.13305
+    }
+   ]
+  },
+  {
+   "mode": "train",
+   "ref": "R17",
+   "name": "R17: Barcelona-Estació de França => Salou-Port Aventura",
+   "stops": [
+    {
+     "name": "Barcelona-Estació de França",
+     "lat": 41.38396,
+     "lng": 2.18543
+    },
+    {
+     "name": "Barcelona-Passeig de Gràcia",
+     "lat": 41.39256,
+     "lng": 2.16536
+    },
+    {
+     "name": "Barcelona - Sants",
+     "lat": 41.37883,
+     "lng": 2.14062
+    },
+    {
+     "name": "Vilanova i la Geltrú",
+     "lat": 41.22,
+     "lng": 1.73124
+    },
+    {
+     "name": "Sant Vicenç de Calders",
+     "lat": 41.18595,
+     "lng": 1.5251
+    },
+    {
+     "name": "Torredembarra",
+     "lat": 41.14274,
+     "lng": 1.40574
+    },
+    {
+     "name": "Altafulla - Tamarit",
+     "lat": 41.13656,
+     "lng": 1.37332
+    },
+    {
+     "name": "Tarragona",
+     "lat": 41.11137,
+     "lng": 1.25358
+    },
+    {
+     "name": "Salou-Port Aventura",
+     "lat": 41.08808,
+     "lng": 1.14572
+    }
+   ]
+  },
+  {
+   "mode": "train",
+   "ref": "34",
+   "name": "34: Zaragoza-Delicias => Barcelona-Estació de França",
+   "stops": [
+    {
+     "name": "Riba-roja d'Ebre",
+     "lat": 41.24858,
+     "lng": 0.48083
+    },
+    {
+     "name": "Flix",
+     "lat": 41.22953,
+     "lng": 0.54056
+    },
+    {
+     "name": "Ascó",
+     "lat": 41.1824,
+     "lng": 0.56923
+    },
+    {
+     "name": "Móra la Nova",
+     "lat": 41.10646,
+     "lng": 0.65358
+    },
+    {
+     "name": "Capçanes",
+     "lat": 41.10212,
+     "lng": 0.78035
+    },
+    {
+     "name": "Marçà - Falset",
+     "lat": 41.13109,
+     "lng": 0.81041
+    },
+    {
+     "name": "Pradell",
+     "lat": 41.13313,
+     "lng": 0.85862
+    },
+    {
+     "name": "Riudecanyes - Botarell",
+     "lat": 41.1402,
+     "lng": 0.9757
+    },
+    {
+     "name": "les Borges del Camp",
+     "lat": 41.16626,
+     "lng": 1.02212
+    },
+    {
+     "name": "Reus",
+     "lat": 41.16066,
+     "lng": 1.10005
+    },
+    {
+     "name": "Vila-seca",
+     "lat": 41.11282,
+     "lng": 1.15067
+    },
+    {
+     "name": "Tarragona",
+     "lat": 41.11144,
+     "lng": 1.2535
+    },
+    {
+     "name": "Altafulla - Tamarit",
+     "lat": 41.13652,
+     "lng": 1.37333
+    },
+    {
+     "name": "Torredembarra",
+     "lat": 41.14267,
+     "lng": 1.40577
+    },
+    {
+     "name": "Sant Vicenç de Calders",
+     "lat": 41.18592,
+     "lng": 1.52511
+    },
+    {
+     "name": "Vilanova i la Geltrú",
+     "lat": 41.21997,
+     "lng": 1.73126
+    },
+    {
+     "name": "Barcelona - Sants",
+     "lat": 41.3788,
+     "lng": 2.14067
+    },
+    {
+     "name": "Barcelona-Passeig de Gràcia",
+     "lat": 41.39253,
+     "lng": 2.16539
+    },
+    {
+     "name": "Barcelona-Estació de França",
+     "lat": 41.384,
+     "lng": 2.18545
+    }
+   ]
+  },
+  {
+   "mode": "train",
+   "ref": "9736",
+   "name": "Renfe-SNCF 9736 : Barcelona-Sants → Lyon-Part-Dieu",
+   "stops": [
+    {
+     "name": "Barcelona - Sants",
+     "lat": 41.37993,
+     "lng": 2.14102
+    },
+    {
+     "name": "Girona",
+     "lat": 41.97909,
+     "lng": 2.81582
+    },
+    {
+     "name": "Figueres - Vilafant",
+     "lat": 42.26466,
+     "lng": 2.94283
+    }
+   ]
+  },
+  {
+   "mode": "train",
+   "ref": "9743",
+   "name": "Renfe-SNCF 9743 : Lyon-Part-Dieu → Barcelone-Sants",
+   "stops": [
+    {
+     "name": "Figueres - Vilafant",
+     "lat": 42.2646,
+     "lng": 2.9426
+    },
+    {
+     "name": "Girona",
+     "lat": 41.9791,
+     "lng": 2.81577
+    },
+    {
+     "name": "Barcelona - Sants",
+     "lat": 41.38005,
+     "lng": 2.14096
+    }
+   ]
+  },
+  {
+   "mode": "train",
+   "ref": "9704",
+   "name": "Renfe-SNCF 9704 : Barcelona-Sants → Paris-Gare de Lyon",
+   "stops": [
+    {
+     "name": "Barcelona - Sants",
+     "lat": 41.37993,
+     "lng": 2.14102
+    },
+    {
+     "name": "Girona",
+     "lat": 41.97909,
+     "lng": 2.81582
+    },
+    {
+     "name": "Figueres - Vilafant",
+     "lat": 42.26466,
+     "lng": 2.94283
+    }
+   ]
+  },
+  {
+   "mode": "train",
+   "ref": "9713",
+   "name": "Renfe-SNCF 9713 : Paris-Gare de Lyon → Barcelone-Sants",
+   "stops": [
+    {
+     "name": "Figueres - Vilafant",
+     "lat": 42.2646,
+     "lng": 2.9426
+    },
+    {
+     "name": "Girona",
+     "lat": 41.9791,
+     "lng": 2.81577
+    },
+    {
+     "name": "Barcelona - Sants",
+     "lat": 41.38005,
+     "lng": 2.14096
+    }
+   ]
+  },
+  {
+   "mode": "train",
+   "ref": "AVE",
+   "name": "Tren AVE: Barcelona-Sants -> Camp de Tarragona -> Lleida-Pirineus -> Zaragoza-Delicias -> Catalayud -> Madrid Puerta de Atocha",
+   "stops": [
+    {
+     "name": "Barcelona - Sants",
+     "lat": 41.38005,
+     "lng": 2.14096
+    },
+    {
+     "name": "Camp de Tarragona",
+     "lat": 41.19197,
+     "lng": 1.27255
+    },
+    {
+     "name": "Lleida-Pirineus",
+     "lat": 41.62091,
+     "lng": 0.63294
+    }
+   ]
+  },
+  {
+   "mode": "train",
+   "ref": "Ouigo",
+   "name": "Train Ouigo: Madrid-Puerta de Atocha → Zaragoza-Delicias → Camp de Tarragona → Barcelona-Sants",
+   "stops": [
+    {
+     "name": "Camp de Tarragona",
+     "lat": 41.19174,
+     "lng": 1.27245
+    },
+    {
+     "name": "Barcelona - Sants",
+     "lat": 41.37924,
+     "lng": 2.14023
+    }
+   ]
+  },
+  {
+   "mode": "tram",
+   "ref": "T6",
+   "name": "T6: Glòries => Ciutadella | Vila Olímpica",
+   "stops": [
+    {
+     "name": "Glòries",
+     "lat": 41.40259,
+     "lng": 2.18728
+    },
+    {
+     "name": "Auditori | Teatre Nacional",
+     "lat": 41.39755,
+     "lng": 2.18686
+    },
+    {
+     "name": "Marina",
+     "lat": 41.39406,
+     "lng": 2.1869
+    },
+    {
+     "name": "Wellington | UPF",
+     "lat": 41.39014,
+     "lng": 2.18856
+    },
+    {
+     "name": "Ciutadella | Vila Olímpica",
+     "lat": 41.38762,
+     "lng": 2.19189
+    }
+   ]
+  },
+  {
+   "mode": "tram",
+   "ref": "T6",
+   "name": "T6: Estació de Sant Adrià => Sant Martí de Provençals",
+   "stops": [
+    {
+     "name": "Estació de Sant Adrià",
+     "lat": 41.42397,
+     "lng": 2.23051
+    },
+    {
+     "name": "Port Fòrum",
+     "lat": 41.41888,
+     "lng": 2.22615
+    },
+    {
+     "name": "La Mina",
+     "lat": 41.41842,
+     "lng": 2.22107
+    },
+    {
+     "name": "Parc del Besòs",
+     "lat": 41.41944,
+     "lng": 2.21761
+    },
+    {
+     "name": "Alfons el Magnànim",
+     "lat": 41.41719,
+     "lng": 2.21359
+    },
+    {
+     "name": "Besòs",
+     "lat": 41.42011,
+     "lng": 2.20958
+    },
+    {
+     "name": "Sant Martí de Provençals",
+     "lat": 41.4165,
+     "lng": 2.20474
+    }
+   ]
+  },
+  {
+   "mode": "tram",
+   "ref": "T5",
+   "name": "T5: Sant Martí de Provençals => Gorg",
+   "stops": [
+    {
+     "name": "Sant Martí de Provençals",
+     "lat": 41.41646,
+     "lng": 2.20476
+    },
+    {
+     "name": "Besòs",
+     "lat": 41.4201,
+     "lng": 2.20961
+    },
+    {
+     "name": "Alfons el Magnànim",
+     "lat": 41.41717,
+     "lng": 2.21354
+    },
+    {
+     "name": "Parc del Besòs",
+     "lat": 41.41941,
+     "lng": 2.21767
+    },
+    {
+     "name": "La Catalana",
+     "lat": 41.42263,
+     "lng": 2.22198
+    },
+    {
+     "name": "Sant Joan Baptista",
+     "lat": 41.42744,
+     "lng": 2.22544
+    },
+    {
+     "name": "Encants de Sant Adrià",
+     "lat": 41.43053,
+     "lng": 2.22275
+    },
+    {
+     "name": "Sant Roc",
+     "lat": 41.43493,
+     "lng": 2.22762
+    },
+    {
+     "name": "Gorg",
+     "lat": 41.43995,
+     "lng": 2.23325
+    }
+   ]
+  },
+  {
+   "mode": "tram",
+   "ref": "T5",
+   "name": "T5: Ciutadella | Vila Olímpica => Glòries",
+   "stops": [
+    {
+     "name": "Ciutadella | Vila Olímpica",
+     "lat": 41.38764,
+     "lng": 2.19192
+    },
+    {
+     "name": "Wellington | UPF",
+     "lat": 41.39016,
+     "lng": 2.18858
+    },
+    {
+     "name": "Marina",
+     "lat": 41.39406,
+     "lng": 2.18694
+    },
+    {
+     "name": "Auditori | Teatre Nacional",
+     "lat": 41.39755,
+     "lng": 2.1869
+    },
+    {
+     "name": "Glòries",
+     "lat": 41.40258,
+     "lng": 2.18744
+    }
+   ]
+  }
+ ]
 }
