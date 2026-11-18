@@ -193,6 +193,9 @@ document.addEventListener("click", e => {
   e.preventDefault(); tsRead(); if (!wiz.legs) wiz.legs = [tsStay()];
   const a = b.dataset.ts, i = +b.dataset.i, L = wiz.legs;
   if (a === "mode") { wiz.mode = b.dataset.v; aiError = ""; }
+  // A trip that starts with a cruise: the empty city stay the form opens with is replaced, not left as a "Stop 1: type
+  // the city" the traveler has to find and remove (Bahamas test trip, Nov 17).
+  if (a === "addcruise" && L.length === 1 && L[0].k === "stay" && !bareName(L[0].place) && !L[0].date && !bareName(L[0].hotel)) L.splice(0, 1);
   if (a === "addstay" || a === "addcruise") { tsFill(L); L.push(tsNext(a === "addcruise" ? "cruise" : "stay", L)); }
   if (a === "del" && L.length > 1) L.splice(i, 1);
   if (a === "set" && L[i]) L[i][b.dataset.key] = b.dataset.v;

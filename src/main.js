@@ -2584,8 +2584,19 @@ function installGuide(d, c) {
   trip.days.forEach(x => { if (keyOf(x.destination) === keyOf(label) && !x.event === !d.event) { x.cityKey = key; x.pointIdx = 0; if (prev && x.selected) carryPicks(x, prev, c); if (!x.selected) { x.selected = defaultSelection(c, trip.style, x); fitTrim(x); } } });
   save();
 }
+// A guide for a place: the AI writer when it's on; when it's off, or when it can't answer (the day's allowance used up,
+// a busy server, a job the minimal mode doesn't run), the guide is built from the place's free sources instead, so a
+// trip never stops at "Stopped at Miami" while the travel guides and maps can still give a real plan (Bahamas test
+// trip, Nov 17: every guide stopped at the first city the evening the allowance ran out).
 async function generateCity(d, quiet) {
   if (!aiReady()) return freeAI ? guideNoAI(d, quiet) : false;
+  const ok = await generateCityAI(d, quiet);
+  if (ok || !freeAI || cityFor(d)) return ok;
+  const keepErr = aiError, ok2 = await guideNoAI(d, quiet);
+  aiError = ok2 ? "" : keepErr;
+  return ok2;
+}
+async function generateCityAI(d, quiet) {
   const label = d.destination;
   // Show the build on the day plan, which has the progress bar (the tour screen is for walking a finished guide).
   if (!quiet) { if (view === "tour") view = "plan"; busy = { text: "Asking your guide about " + label + "…" }; aiError = ""; render(); toTop(); }
