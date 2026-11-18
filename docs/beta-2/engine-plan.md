@@ -60,6 +60,18 @@ Leaks found, and how each is closed:
 7. **The ride to and from the ship.** The plan used a road estimate (69 min); in reality it's a train plus getting to the stations, and the last safe train decides the day. *Ride timetables found when the bucket was filled are pinned with it, so step 6 plans with the slower of the estimate and the pinned timetable; step 7 adds the last safe train and a timed taxi fallback. Because the timetable is pinned, this no longer makes plans drift.*
 8. **Timed tickets.** The Colosseum needs a booked time slot. *Step 6c plans it at a time and step 9 tells the traveler to book that slot; once booked, the slot is a wish held like a booked table.*
 
+### Dry run 2: Athens (Nov 18)
+Three sample-trip days through the 11 steps (with the Rome fixes in): the arrival day (Jun 30, flight lands 10:30), a Corinth day trip (Jul 3, 10 hours) and the boarding day at Piraeus (Jul 4, all aboard 18:30).
+
+What held: all three windows match the old engine (arrival: sightseeing from 11:45 after passport control, the ride in and check-in; boarding day: at the terminal by 17:30 at the latest, bags collected on the way; Corinth: back by 19:00). Route order on the Corinth day is sensible (Canal on the way out, Ancient Corinth, Acrocorinth, back). No closed sights.
+
+New leaks. All five are general rules inside existing steps; none changes the plan's shape.
+1. **The same ticketed site on two days.** The Theatre of Dionysus (inside the Acropolis site, same ticket) is planned on Jun 30 and the Acropolis again on Jul 4. *Step 1: membership and shared tickets are site facts; with them, step 6a claims the group once (the Rome "not yet known" rule covers missing data).*
+2. **Boarding day with no boarding time.** The plan uses the latest safe time (an hour before all aboard). *Step 3 lists the boarding time as missing and the plan says it's using the latest safe time; the typed-time check asks for it.*
+3. **Midday heat on an open ruin in July.** The Acropolis is planned 10:45 to 12:45, though going there first costs no extra riding. *Step 6b: between orders that ride the same, the one that keeps exposed sites out of the midday heat wins (uses the "shade or exposure" site fact).*
+4. **How the traveler gets to a day trip.** The Corinth legs use a road time (75 min), but by train it's about 3 hours door to door, and the day wouldn't fit. *New wish in step 2: how you're getting around (car, taxi or tour, or public transport). Step 7 plans with that choice; if unknown, public transport where a line exists, otherwise taxi, and step 9 says which was assumed.*
+5. **Lunch at a hilltop fortress.** "Lunch near Acrocorinth" is a generic meal where there are no restaurants. *Step 6c: a meal goes only where real places to eat are within walking distance; otherwise it's moved to the town before (Ancient Corinth), or the plan says to bring food.*
+
 ### What we need to know about each site
 Already collected: where it is, visit length, opening hours and closed days, last entry, timed shows, book-ahead, indoor or outdoor, crowd times, cost, fame and sources, category, how to get there for day trips, closed to visitors.
 
