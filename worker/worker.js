@@ -83,7 +83,7 @@ const voiceLive = env => aiOn(env) && !minimal(env) && env.VOICE_LIVE === "1";
 // app falls back to its own guides and the phone's voice.
 const aiOn = env => env.AI_ON === "1";
 // Memory of kept answers (see the fetch handler). Only these content prefixes; everything else reads the store.
-const MEMO_KEYS = /^(tr6|fp1|rt1|ns1|fx2|bz1|g|fm6|wd|xw1|xn1|xf1|wx1|wv1|bk1|s3):/, MEMO_MS = 600000, MEMO = new Map();
+const MEMO_KEYS = /^(tr6|fp1|rt1|ns1|ns2|fx2|bz1|g|fm6|fm8|sr8|gr5|gq1|ev1|dp1|p2|kh4|gc2|nv1|fq|sp1|wd|xw1|xn1|xf1|wx1|wv1|bk1|s3):/, MEMO_MS = 600000, MEMO = new Map();
 let memoChars = 0; // kept under ~30 MB of the Worker's 128 MB memory
 function memoStore(kv) {
   if (!kv || kv.__memo) return kv;
@@ -305,7 +305,7 @@ export default {
       if (!env.GPLACES_KEY) { todo.forEach(([x]) => out[x.name] = { state: "nokey" }); return Response.json({ ratings: out }, { headers: h }); }
       // Rating lookups use Google's "Enterprise" Text Search, which is free for 1,000 calls a month: stay under
       // that with 900 a month (up to 150 in one day, so a whole new trip can be rated at once). Every answer is kept 30 days, so each restaurant is looked up about once a month.
-      const dk = "gqd:" + today(), mk = "gqm:" + month(); let usedToday = +(await env.USAGE.get(dk)) || 0, usedMonth = +(await env.USAGE.get(mk)) || 0; const CAP = 150, MCAP = 900;
+      const dk = "gqd:" + today(), mk = "gqm:" + month(); let usedToday = +(await env.USAGE.get(dk)) || 0, usedMonth = +(await env.USAGE.get(mk)) || 0; const used0 = usedToday, CAP = 150, MCAP = 900;
       const norm = t => String(t || "").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/[^a-z0-9Ͱ-ϿЀ-ӿ]+/g, " ").trim();
       const near = (a, c) => Math.hypot((a.lat - c.latitude) * 111000, (a.lng - c.longitude) * 111000 * Math.cos(a.lat * Math.PI / 180));
       for (const [x, k] of todo) {
@@ -322,7 +322,8 @@ export default {
         } catch (e) {}
         if (res) { out[x.name] = res; ctx.waitUntil(env.USAGE.put(k, JSON.stringify(res), { expirationTtl: 30 * 86400 })); } else out[x.name] = { state: "later" };
       }
-      ctx.waitUntil(env.USAGE.put(dk, String(usedToday), { expirationTtl: 3 * 86400 })); ctx.waitUntil(env.USAGE.put(mk, String(usedMonth), { expirationTtl: 40 * 86400 }));
+      // The two counters are written only when this request looked something up (they were 2 writes on every call).
+      if (usedToday !== used0) { ctx.waitUntil(env.USAGE.put(dk, String(usedToday), { expirationTtl: 3 * 86400 })); ctx.waitUntil(env.USAGE.put(mk, String(usedMonth), { expirationTtl: 40 * 86400 })); }
       return Response.json({ ratings: out }, { headers: h });
     }
     // /famous?city=: the best-known places in and around a city, ranked by how many Wikipedia languages write
