@@ -1,7 +1,7 @@
 name: Places public transport lines
 # Refreshes only the public transport lines (metro, light rail, tram, train) in the saved places files, from
-# OpenStreetMap. Free source, no AI, never publishes anything. Lines are printed back as PLACES lines for replay
-# (gathered in tools/places/data after each run).
+# OpenStreetMap. Free source, no AI, never publishes anything. The refreshed places files are saved back to this
+# branch (tools/places/data only, marked [skip ci]), merged with what was there so no fact found before is lost.
 on:
   workflow_dispatch:
     inputs:
@@ -15,7 +15,7 @@ on:
     branches: ["claude/project-thread-xrdp7v"]
     paths: [".github/workflows/places-transit.yml", "tools/places/targets.json"]
 permissions:
-  contents: read
+  contents: write
 jobs:
   lines:
     runs-on: ubuntu-latest
@@ -30,3 +30,11 @@ jobs:
           PLACES_EXTRA: "1"
           ONLY: ${{ inputs.only || '' }}
         run: node tools/places/build.cjs
+      - name: Save the places files to the branch
+        run: |
+          git config user.name "Kairoute places"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add tools/places/data
+          git diff --cached --quiet && exit 0
+          git commit -m "Places: refreshed ${{ inputs.refresh || 'transit,ports' }}${{ inputs.only && format(' for {0}', inputs.only) || '' }} [skip ci]"
+          for n in 1 2 3; do git pull --rebase origin "${GITHUB_REF_NAME}" && git push origin "HEAD:${GITHUB_REF_NAME}" && exit 0; sleep 5; done; exit 1
