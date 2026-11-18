@@ -12,7 +12,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Build the app (the repository's index.html is only a placeholder)
-        run: sh build.sh
+        run: sh build.sh && sh tools/test-helper.sh
       - uses: actions/setup-node@v4
         with:
           node-version: 22
