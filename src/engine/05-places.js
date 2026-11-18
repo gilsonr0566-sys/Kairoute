@@ -73,7 +73,9 @@
         // A landing with a cable car or funicular starting beside it: the town is at the other end.
         if (d.type === "port" && d.point && isFinite(d.point.lat) && !d.point.lift) for (const l of P.lifts || []) {
           const k = (l.ends || []).findIndex(e => E.hav(e, d.point) <= 0.4); if (k < 0) continue;
-          d.point = Object.assign({}, d.point, { lift: { name: l.name, kind: l.kind, top: l.ends[1 - k] } }); break; }
+          // A name known only in another script ("Τελεφερίκ", which just means cable car) is shown as what it is.
+          const kindName = l.kind ? l.kind[0].toUpperCase() + l.kind.slice(1) : "Cable car", nm = !l.name || E.latin(l.name) !== l.name ? kindName : l.name;
+          d.point = Object.assign({}, d.point, { lift: { name: nm, kind: l.kind, top: l.ends[1 - k] } }); break; }
         // Where the ship docks: a guessed point is replaced by a mapped cruise terminal or pier.
         if (d.point && d.point.unknown && (P.ports || []).some(p => p.cruise)) {
           const pts = (city.sites || []).filter(x => isFinite(x.lat));
