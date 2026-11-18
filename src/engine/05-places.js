@@ -9,6 +9,11 @@
 //    terminals and no word on which one, the plan uses the one farthest from the sights (never short of time getting back)
 //    and says so.
 (function (E) {
+  const TOWN_KM = 3;
+  // A food or drink place worth going out of the way for: a tasting, a local specialty, a café known for one thing.
+  // Read from the travel guide's own words for the place, in any of a few languages.
+  const SPECIAL = /tasting|winer|wine|vineyard|weingut|vino|brewer|brauerei|beer|distill|marzipan|chocolat|praline|ice ?cream|gelat|\beis|patisser|bakery|bäckerei|konditorei|roast|coffee|cheese|fromag|market|specialt|local|traditional|famous|historic/i;
+  E.foodSpecial = x => SPECIAL.test(String(x.name || "") + " " + String(x.content || x.note || ""));
   const copy = x => JSON.parse(JSON.stringify(x));
   E.applyPlaces = (bucket, places) => {
     const b = copy(bucket), notes = b.placeNotes = [];
@@ -19,17 +24,27 @@
         const f = P.sites && P.sites[s.id]; if (!f) continue;
         if (f.editions) s.editions = f.editions;
         if (f.unesco) s.unesco = true;
-        if (f.closedForGood) s.closedForGood = true;
+        // Closed for good only when the map shows no opening hours: hours mapped today mean people go in.
+        if (f.closedForGood && !f.hours) s.closedForGood = true;
         if (f.hours && !s.hours) s.hours = f.hours;
       }
+      const added = [];
       for (const s of city.farther || []) {
         const t = P.towns && P.towns[s.id]; if (!t) continue;
         if (t.editions) s.editions = t.editions;
         if (t.unesco) s.unesco = true;
         if (t.dayTripListed) s.dayTripListed = true;
-        s.townSights = (t.sights || []).map(x => ({ name: x.name, lat: x.lat, lng: x.lng, hours: x.hours || "" }));
-        s.foodDrink = (t.foodDrink || []).map(x => ({ name: x.name, lat: x.lat, lng: x.lng, kind: x.kind, note: x.content || "" }));
+        // The town's own sights (travel guide "see" listings on the map, within a walk of the town) become stops of
+        // their own, so a day there is planned sight by sight and weighed by what the town really offers.
+        const own = (t.sights || []).filter(x => (x.kind || "see") === "see" && isFinite(x.lat) && isFinite(x.lng) && E.hav(s, x) <= TOWN_KM);
+        s.townSights = own.map(x => ({ name: x.name, lat: x.lat, lng: x.lng }));
+        own.forEach((x, n) => added.push({ id: s.id + "~" + (x.wikidata || n), name: x.name, lat: x.lat, lng: x.lng, minutes: 30, far: true, town: s.id,
+          townName: s.name, editions: x.editions || 0, unesco: !!x.unesco, tags: ["in-town"], category: "Sight" }));
+        // With its sights listed one by one, the town itself is the walk through its centre.
+        if (own.length >= 2) s.minutes = Math.min(s.minutes || 60, 60);
+        s.foodDrink = (t.foodDrink || []).map(x => ({ name: x.name, lat: isFinite(x.lat) ? x.lat : null, lng: isFinite(x.lng) ? x.lng : null, kind: x.kind, note: x.content || "", special: E.foodSpecial(x) }));
       }
+      if (added.length) city.farther = (city.farther || []).concat(added);
       // Hours per day: a mapped opening time read for that day's date, where the day has no hours for the sight yet.
       for (const d of b.days || []) {
         if (d.city !== key || !d.date) continue;

@@ -53,7 +53,9 @@
     const day = open.slice().sort((a, b) => b.free - a.free || b.i - a.i)[0];
     const lost = fill(best, all) - fill(best, all - share(day));
     let top = null;
-    for (const f of far.slice().sort((a, b) => (b.worth || 0) - (a.worth || 0) || E.byId(a, b))) {
+    // A day out goes to a place (a town, a big site), never to one sight inside a town: that town's sights come along
+    // in its group.
+    for (const f of far.filter(s => !s.town).sort((a, b) => (b.worth || 0) - (a.worth || 0) || E.byId(a, b))) {
       const group = far.filter(s => s === f || E.hav(f, s) <= near).sort((a, b) => (b.worth || 0) - (a.worth || 0) || E.byId(a, b));
       const room = day.free * 0.85 - 2 * ride(f);
       if (room < (f.minutes || 60)) continue;

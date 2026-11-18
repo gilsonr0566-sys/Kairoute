@@ -114,7 +114,8 @@
         const tripIds = !wishes.length && dayTrip.get(i);
         if (tripIds) {
           picks = tripIds.map(id => pool.find(s => String(s.id) === id)).filter(Boolean);
-          if (picks.length) explain.push("A day trip to " + picks[0].name + ": the main sights in town fit on your other days.");
+          const place = picks.find(s => !s.town) || picks[0];
+          if (picks.length) explain.push("A day trip to " + place.name + ": the main sights in town fit on your other days.");
         }
         if (!picks || !picks.length) picks = wishes.length ? wishes : autoPicks(pool, win, ctx);
         autoIds = new Set(wishes.length ? [] : picks.map(s => String(s.id)));
@@ -158,7 +159,7 @@
       // traveler's own picks always stay). Never on a ship, train or plane day: the app adds no long ride on its own there.
       const worthOf = r => r.kept.reduce((a, k) => a + (k.worth || 0), 0);
       const city = guides[d.city] || {}, far = E.rank((city.farther || []).map(s => Object.assign({}, s, { far: true })), prefs, style)
-        .filter(s => ledger.sightFree(s.id, i) && !wishDay.has(String(s.id)) && !(now || was).kept.some(k => k.far))
+        .filter(s => !s.town && ledger.sightFree(s.id, i) && !wishDay.has(String(s.id)) && !(now || was).kept.some(k => k.far))
         // a quick look first: there and back plus the visit must fit in the day at all
         .filter(s => 2 * tr.min(was.win.head[was.win.head.length - 1], s) + (s.minutes || 60) <= (was.win.sightTo || was.win.endBy) - (was.win.sightFrom || was.win.start))
         .slice(0, was.win.hard ? 0 : 3);

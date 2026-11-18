@@ -15,10 +15,10 @@ const TARGETS = process.argv[3] || path.join(__dirname, 'targets.json');
 const OUT = path.join(__dirname, 'data'); fs.mkdirSync(OUT, { recursive: true });
 const UA = 'KairouteBeta/0.1 (trip planner test build; places facts)';
 const sleep = ms => new Promise(r => setTimeout(r, ms));
-async function get(url, opt = {}, tries = 4) {
+async function get(url, opt = {}, tries = 4, wait = 60000) {
   for (let i = 0; i < tries; i++) {
     try {
-      const ctl = new AbortController(), t = setTimeout(() => ctl.abort(), 60000);
+      const ctl = new AbortController(), t = setTimeout(() => ctl.abort(), wait);
       const r = await fetch(url, Object.assign({ headers: { 'User-Agent': UA, Accept: 'application/json' }, signal: ctl.signal }, opt)); clearTimeout(t);
       if (r.status === 429 || r.status >= 500) { await sleep(3000 * (i + 1)); continue; }
       if (!r.ok) return null;
@@ -45,12 +45,27 @@ const claim = (e, p) => ((e && e.claims && e.claims[p]) || []).map(c => c.mainsn
 const ids = (e, p) => claim(e, p).map(v => v.id).filter(Boolean);
 const coord = e => { const c = claim(e, 'P625')[0]; return c ? { lat: c.latitude, lng: c.longitude } : null; };
 const WHS = 'Q9259';
+// Closed for good: an end date or closure date stated plainly. One with a qualifier ("as a museum", "of this part")
+// is about a former use, not the place (a building that stopped being a museum is still open), so it doesn't count.
+const shut = e => ['P576', 'P3999'].some(p => ((e && e.claims && e.claims[p]) || []).some(c => c.rank !== 'deprecated' && !Object.keys(c.qualifiers || {}).length));
+// The item a name stands for near a point: of the matches within km, the most widely known (most language editions),
+// so a town is not mistaken for a street or building named after it. A name with extra words ("X old town",
+// "X monastery") is tried again without its last word when nothing matches.
 async function findQ(name, near, km) {
-  const j = await get(`${WD}&action=wbsearchentities&language=en&type=item&limit=7&search=${encodeURIComponent(name)}`);
-  const hits = ((j && j.search) || []).map(x => x.id); if (!hits.length) return null;
-  const es = await entities(hits); let best = null;
-  for (const q of hits) { const c = coord(es[q]); if (!c) continue; const d = near ? hav(near, c) : 0; if (d <= km && (!best || d < best.d)) best = { q, d, c }; }
-  return best;
+  const words = String(name).split(/\s+/).filter(Boolean);
+  for (let n = words.length; n >= 1; n--) {
+    const j = await get(`${WD}&action=wbsearchentities&language=en&type=item&limit=7&search=${encodeURIComponent(words.slice(0, n).join(' '))}`);
+    const hits = ((j && j.search) || []).map(x => x.id);
+    if (hits.length) {
+      const es = await entities(hits); let best = null;
+      for (const q of hits) { const c = coord(es[q]); if (!c) continue; const d = near ? hav(near, c) : 0, ed = Object.keys(es[q].sitelinks || {}).length;
+        if (d <= km && (!best || ed > best.ed || (ed === best.ed && d < best.d))) best = { q, d, c, ed }; }
+      if (best) return best;
+    }
+    if (n <= 1 || words.slice(0, n - 1).join(' ').length < 4) break;
+    await sleep(200);
+  }
+  return null;
 }
 async function whsNear(p, km) {
   const q = `SELECT ?w ?wLabel WHERE { SERVICE wikibase:around { ?w wdt:P625 ?loc. bd:serviceParam wikibase:center "Point(${p.lng} ${p.lat})"^^geo:wktLiteral. bd:serviceParam wikibase:radius "${km}". } ?w wdt:P1435 wd:${WHS}. SERVICE wikibase:label { bd:serviceParam wikibase:language "en". } }`;
@@ -59,9 +74,12 @@ async function whsNear(p, km) {
 }
 
 // ---- OpenStreetMap
-const OVERPASS = ['https://overpass-api.de/api/interpreter', 'https://overpass.kumi.systems/api/interpreter'];
+// Map queries are slow when busy: each mirror gets a long wait and a second try before the next one is asked.
+const OVERPASS = ['https://overpass-api.de/api/interpreter', 'https://overpass.kumi.systems/api/interpreter', 'https://overpass.private.coffee/api/interpreter'];
 async function overpass(ql) {
-  for (const u of OVERPASS) { const j = await get(u, { method: 'POST', body: 'data=' + encodeURIComponent(ql), headers: { 'User-Agent': UA, 'Content-Type': 'application/x-www-form-urlencoded' } }, 2); if (j) return j.elements || []; }
+  for (let round = 0; round < 2; round++)
+    for (const u of OVERPASS) { const j = await get(u, { method: 'POST', body: 'data=' + encodeURIComponent(ql), headers: { 'User-Agent': UA, 'Content-Type': 'application/x-www-form-urlencoded' } }, 1, 200000); if (j) return j.elements || []; await sleep(5000); }
+  console.log('   map lookup gave nothing after every try');
   return [];
 }
 const pos = el => el.lat != null ? { lat: el.lat, lng: el.lon } : el.center ? { lat: el.center.lat, lng: el.center.lon } : null;
@@ -92,8 +110,8 @@ function listings(text) {
   for (const m of text.matchAll(/\{\{\s*(see|do|eat|drink|buy|listing|sleep)\s*\|([\s\S]*?)\}\}/gi)) {
     const kind = m[1].toLowerCase(); if (kind === 'sleep') continue;
     const f = {}; for (const part of m[2].split(/\n?\s*\|\s*/)) { const k = /^(\w[\w-]*)\s*=\s*([\s\S]*)$/.exec(part.trim()); if (k) f[k[1].toLowerCase()] = k[2].trim(); }
-    const lat = parseFloat(f.lat), lng = parseFloat(f.long || f.lon || f.lng); if (!f.name || !isFinite(lat) || !isFinite(lng)) continue;
-    out.push({ kind, name: f.name.replace(/\[\[|\]\]|'''?/g, ''), lat, lng, hours: f.hours || '', price: f.price || '', wikidata: f.wikidata || '', content: (f.content || '').replace(/\[\[(?:[^\]|]*\|)?([^\]]*)\]\]/g, '$1').slice(0, 240) });
+    const lat = parseFloat(f.lat), lng = parseFloat(f.long || f.lon || f.lng); if (!f.name) continue;
+    out.push({ kind, name: f.name.replace(/\[\[|\]\]|'''?/g, ''), lat: isFinite(lat) ? lat : null, lng: isFinite(lng) ? lng : null, hours: f.hours || '', price: f.price || '', wikidata: f.wikidata || '', content: (f.content || '').replace(/\[\[(?:[^\]|]*\|)?([^\]]*)\]\]/g, '$1').slice(0, 240) });
   }
   return out;
 }
@@ -107,20 +125,24 @@ async function buildPlace(t) {
   if (!centre) { out.missing.push('where this place is'); return out; }
   out.centre = centre;
   // 1. Wikidata facts for every sight that names its item, and for the towns a day away (found by name near them).
-  const qs = [...new Set(t.sites.map(s => qOf(s.id)).filter(Boolean))];
+  // A sight whose id names no item is looked up by its name within a kilometre of where it is.
+  for (const s of t.sites) { if (qOf(s.id) || !s.name || !isFinite(s.lat)) continue; const f = await findQ(s.name, s, 1); if (f) s.q = f.q; await sleep(200); }
+  const qOfSite = s => qOf(s.id) || s.q || null;
+  const qs = [...new Set(t.sites.map(qOfSite).filter(Boolean))];
   for (const s of t.farther) { const f = await findQ(s.name, s, 15); if (f) s.q = f.q; await sleep(200); }
   const all = await entities([...new Set(qs.concat(t.farther.map(s => s.q).filter(Boolean)))]);
   const parts = new Set(); Object.values(all).forEach(e => ids(e, 'P361').forEach(q => parts.add(q)));
   const partE = parts.size ? await entities([...parts]) : {};
   const fact = e => ({ wikidata: e.id, editions: Object.keys(e.sitelinks || {}).length, types: ids(e, 'P31'),
     unesco: ids(e, 'P1435').includes(WHS) || ids(e, 'P361').some(q => ids(partE[q], 'P1435').includes(WHS)),
-    closedForGood: claim(e, 'P576').length > 0 || claim(e, 'P3999').length > 0, partOf: ids(e, 'P361') });
-  for (const s of t.sites) { const q = qOf(s.id); if (q && all[q]) out.sites[s.id] = fact(all[q]); }
+    closedForGood: shut(e), partOf: ids(e, 'P361') });
+  for (const s of t.sites) { const q = qOfSite(s); if (q && all[q]) out.sites[s.id] = fact(all[q]); }
   // 2. OpenStreetMap hours and fees, matched by the Wikidata tag mappers put on the map.
-  const wq = qs.concat(t.farther.map(s => s.q).filter(Boolean));
+  // Asked only around the place itself (a world-wide search times out on a busy map server).
+  const wq = qs, reach = Math.min(60000, 5000 + 1000 * Math.max(0, ...t.sites.filter(s => isFinite(s.lat)).map(s => hav(centre, s))));
   if (wq.length) {
-    const els = await overpass(`[out:json][timeout:120];nwr["wikidata"~"^(${wq.join('|')})$"];out tags center;`);
-    for (const el of els) { const tg = el.tags || {}; const id = t.sites.find(s => qOf(s.id) === tg.wikidata); if (!id) continue;
+    const els = await overpass(`[out:json][timeout:180];nwr(around:${Math.round(reach)},${centre.lat},${centre.lng})["wikidata"~"^(${wq.join('|')})$"];out tags center;`);
+    for (const el of els) { const tg = el.tags || {}; const id = t.sites.find(s => qOfSite(s) === tg.wikidata); if (!id) continue;
       const f = out.sites[id.id] = out.sites[id.id] || {}; if (tg.opening_hours && !f.hours) f.hours = tg.opening_hours; if (tg.fee) f.fee = tg.fee; f.osm = el.type + '/' + el.id; }
   }
   // 3. Towns a day away: Wikidata fame and UNESCO, Wikivoyage listing as a day trip, and their own sights and food & drink.
@@ -132,7 +154,21 @@ async function buildPlace(t) {
     town.dayTripListed = out.dayTrips.some(x => baseName(x).toLowerCase() === baseName(s.name).toLowerCase());
     const w = await whsNear(s, 3); town.unesco = w.length > 0; if (w.length) town.unescoSites = w.map(x => x.name); await sleep(300);
     const page = await wvText(baseName(s.name)); await sleep(300);
-    if (page) for (const l of listings(page.text)) { if (hav(s, l) > 20) continue; (l.kind === 'see' || l.kind === 'do' ? town.sights : town.foodDrink).push(l); }
+    // Sights: the guide's "see" listings on the map near the town. Food & drink: its eat, drink and buy listings, kept
+    // even without a map point (the guide still names them for the town).
+    if (page) for (const l of listings(page.text)) {
+      const onMap = isFinite(l.lat) && isFinite(l.lng);
+      if (l.kind === 'see') { if (onMap && hav(s, l) <= 20) town.sights.push(l); }
+      else if (l.kind === 'eat' || l.kind === 'drink' || l.kind === 'buy') { if (!onMap || hav(s, l) <= 20) town.foodDrink.push(l); }
+    }
+    // How widely known each of the town's sights is, and UNESCO (itself or as part of a listed site), from Wikidata.
+    const lq = [...new Set(town.sights.map(x => x.wikidata).filter(q => /^Q\d+$/.test(q)))];
+    if (lq.length) {
+      const le = await entities(lq), lp = new Set(); Object.values(le).forEach(e => ids(e, 'P361').forEach(q => lp.add(q)));
+      const lpe = lp.size ? await entities([...lp]) : {};
+      for (const x of town.sights) { const e = le[x.wikidata]; if (!e) continue; x.editions = Object.keys(e.sitelinks || {}).length;
+        x.unesco = ids(e, 'P1435').includes(WHS) || ids(e, 'P361').some(q => ids(lpe[q], 'P1435').includes(WHS)); }
+    }
     out.towns[s.id] = town;
   }
   // 4. Ports: the real cruise terminals or piers near where the ship docks.
