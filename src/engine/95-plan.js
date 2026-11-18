@@ -60,9 +60,27 @@
   // own: a finished guide or audio tour, a must-see, or the traveler's pick. Then it is always its own stop.
   E.ownStop = (s, picked) => !!(s && (s.hasGuide || s.mustSee || E.has(s, "must-see") || (picked && picked.has(String(s.id)))));
   E.listWords = (xs, joiner) => xs.length < 2 ? xs.join("") : xs.slice(0, -1).join(", ") + " " + (joiner || "or") + " " + xs[xs.length - 1];
+  // Which list a sight came in on (a guide's sights or its trips out) doesn't decide how it's planned; where it is does.
+  // A sight more than FAR_KM from the heart of the place's sights (their median point) is a trip out, with its own ride,
+  // planned as a day trip or named as one, never mixed into a day in town. Pure: returns new guides.
+  E.FAR_KM = 20;
+  E.sortFar = guides => {
+    const out = {};
+    for (const [k, g] of Object.entries(guides)) {
+      const pts = (g.sites || []).filter(s => isFinite(s.lat) && isFinite(s.lng));
+      if (pts.length < 4) { out[k] = g; continue; }
+      const med = a => { const b = a.slice().sort((x, y) => x - y); return b[Math.floor(b.length / 2)]; };
+      const heart = { lat: med(pts.map(s => s.lat)), lng: med(pts.map(s => s.lng)) };
+      const away = (g.sites || []).filter(s => isFinite(s.lat) && E.hav(heart, s) > E.FAR_KM);
+      if (!away.length) { out[k] = g; continue; }
+      const ids = new Set(away.map(s => String(s.id)));
+      out[k] = Object.assign({}, g, { sites: g.sites.filter(s => !ids.has(String(s.id))), farther: (g.farther || []).concat(away.map(s => Object.assign({}, s, { far: true }))) });
+    }
+    return out;
+  };
   E.planTrip = bucket => {
     const prefs = bucket.prefs || {}, style = bucket.style || "mix", tr = E.makeTravel(prefs, bucket.legModes, bucket.legs, bucket.transit), ledger = E.makeLedger();
-    const guides = bucket.cities || {}, days = bucket.days || [], out = new Array(days.length).fill(null);
+    const guides = E.sortFar(bucket.cities || {}), days = bucket.days || [], out = new Array(days.length).fill(null);
     // Each day knows where its place's own sights are, so a gate far from all of them is caught (part 3).
     const spots = key => ((guides[key] || {}).sites || []).filter(s => isFinite(s.lat)).map(s => ({ lat: s.lat, lng: s.lng }));
     const wins = days.map(d => (d.noShore || d.type === "sea") ? null : E.dayWindow(Object.assign({}, d, { siteSpots: spots(d.city), placeName: d.city + " " + ((guides[d.city] || {}).name || "") }), tr));
@@ -75,6 +93,16 @@
       for (const id of (d.selected || []).slice().sort()) { const s = findSite(city, id); if (!s || openOn(s, i)) continue;
         const j = days.findIndex((e, k) => k !== i && e.city === d.city && !e.locked && openOn(s, k) && !sel[k].map(String).includes(String(id)));
         if (j < 0) continue; sel[i] = sel[i].filter(x => String(x) !== String(id)); sel[j].push(id); movedTo.set(String(id), { from: i, to: j, name: s.name }); } });
+    // A pick that stands inside an area picked for another day (the Erechtheion on the Acropolis) moves to that day: one
+    // walk, not two trips. Never onto or off a locked day; the plan says so.
+    days.forEach((d, i) => { if (d.locked || !wins[i] || wins[i].error) return; const city = guides[d.city]; if (!city) return;
+      const g = E.makeGroups((city.sites || []).concat((city.farther || []).map(x => Object.assign({}, x, { far: true }))));
+      for (const id of sel[i].slice().sort()) { const h = g.groupOf.get(String(id)); if (h == null || sel[i].map(String).includes(String(h))) continue;
+        const j = days.findIndex((e, k) => k !== i && e.city === d.city && !e.locked && sel[k].map(String).includes(String(h)) && wins[k] && !wins[k].error);
+        if (j < 0) continue;
+        const s = findSite(city, id), hs = findSite(city, h); if (!s || !hs || !openOn(s, j)) continue;
+        sel[i] = sel[i].filter(x => String(x) !== String(id)); if (!sel[j].map(String).includes(String(id))) sel[j].push(id);
+        movedTo.set(String(id), { from: i, to: j, name: s.name, inside: hs.name }); } });
     const WEEKDAY = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
     const dayWord = j => { const t = Date.parse(String(days[j].date || "") + "T12:00:00Z"); return isFinite(t) ? WEEKDAY[new Date(t).getUTCDay()] : "another day"; };
     const order = days.map((d, i) => i).sort((a, b) => (days[b].locked ? 1 : 0) - (days[a].locked ? 1 : 0) || a - b);
@@ -107,7 +135,9 @@
       const split = E.splitAreas(stay.filter(x => !outing || x.i !== outing.day), sights);
       split.forEach((v, k) => areaDay.set(key + "|" + k, v));
       // A sight with its own tour inside an area goes on the day that area is walked: one walk, not two trips.
-      for (const [m, g] of groups.groupOf) if (areaDay.has(key + "|" + g) && E.ownStop(byId.get(String(m)), picked)) areaDay.set(key + "|" + m, areaDay.get(key + "|" + g));
+      // The area's day is the day it was picked for, or the day its area walk falls on.
+      for (const [m, g] of groups.groupOf) { const gd = wishDay.has(String(g)) ? wishDay.get(String(g)) : areaDay.get(key + "|" + g);
+        if (gd != null && !wishDay.has(String(m)) && E.ownStop(byId.get(String(m)), picked)) areaDay.set(key + "|" + m, gd); }
     }
     // Plan one day. again: the day's stops from the first pass, now free to fill from any sight still unused.
     const planDay = (i, again) => {
@@ -149,7 +179,7 @@
       else {
         (bucket.placeNotes || []).filter(n => n.day === d.i || n.day === i).forEach(n => explain.push(n.note));
         if (win.leaveEarly) explain.push("Leave by " + E.clock(win.start) + ", " + win.leaveEarly + " min before your planned start of " + E.clock(win.plannedStart) + ", to be " + (d.type === "embark" ? "at the cruise terminal" : "there") + " by " + E.clock(win.endBy) + ".");
-        for (const [id, m] of movedTo) if (m.from === i) explain.push(m.name + " is closed on " + dayWord(i) + ", so it's planned on " + dayWord(m.to) + ".");
+        for (const [id, m] of movedTo) if (m.from === i) explain.push(m.inside ? m.name + " is inside " + m.inside + ", so it's planned with it on " + dayWord(m.to) + "." : m.name + " is closed on " + dayWord(i) + ", so it's planned on " + dayWord(m.to) + ".");
         for (const id of sel[i]) {
           const s = pool.find(x => String(x.id) === String(id)) || ranked.find(x => String(x.id) === String(id)); if (!s) continue;
           const on = ledger.sightDay(s.id);
@@ -241,11 +271,17 @@
       const shortRoad = s => away(s) <= 60 && !E.byBoat(s.travelNote || "");
       // A boat trip the guide times (its crossing), kept only when the day still ends an hour before the time to be back.
       const boatOk = s => E.byBoat(s.travelNote || "") && tr.saidMin(s.travelNote) > 0 && tr.saidMin(s.travelNote) <= 90;
+      // Trips out already planned on the stay's other days.
+      const otherDayFar = (s, here) => (byCity.get(d.city) || []).some(j => j !== here && done[j] && done[j].kept.some(k => k.far && isFinite(k.lat) && E.hav(k, s) <= 15));
       const worthOf = r => r.kept.reduce((a, k) => a + (k.worth || 0), 0);
       const city = guides[d.city] || {}, far = E.rank((city.farther || []).map(s => Object.assign({}, s, { far: true })), prefs, style)
-        .filter(s => !s.town && ledger.sightFree(s.id, i) && !wishDay.has(String(s.id)) && !(now || was).kept.some(k => k.far))
+        .filter(s => !s.town && ledger.sightFree(s.id, i) && !wishDay.has(String(s.id)) && (!(now || was).kept.some(k => k.far) || (now || was).kept.some(k => k.far && isFinite(k.lat) && E.hav(k, s) <= 15)))
         // a quick look first: there and back plus the visit must fit in the day at all
         .filter(s => 2 * away(s) + (s.minutes || 60) <= (was.win.sightTo || was.win.endBy) - (was.win.sightFrom || was.win.start))
+        // A city day is padded only with a short trip out (45 minutes or less each way, like a metro ride to a basilica
+        // across town). A longer one is a day trip: it gets a day of its own or is named as free time, never tacked
+        // onto a full day in town. Nor a sight beside a trip out planned on another day (it belongs to that day).
+        .filter(s => away(s) <= E.PAD_MAX && !otherDayFar(s, i))
         .filter(s => !was.win.hard || shortRoad(s) || boatOk(s)).slice(0, 3);
       const wished = was.kept.filter(k => !k.filled); // only what the app added to fill spare time may give way
       for (const f of far) {
@@ -283,12 +319,14 @@
       const d = days[i], city = guides[d.city] || {}, from = win.head[win.head.length - 1];
       const stops = p.items.filter(x => x.t === "stop" && isFinite(x.lat)), near = [from].concat(stops);
       const away = s => Math.min(...near.map(a => tr.min(a, s)));
-      const far = (city.farther || []).filter(s => !s.town && isFinite(s.lat) && !plannedIds.has(String(s.id)) && !said.includes(s.name))
-        .map(s => ({ s, need: 2 * away(s) + (s.minutes || 60) })).sort((a, b) => a.need - b.need)[0];
+      const fars = (city.farther || []).filter(s => !s.town && isFinite(s.lat) && !plannedIds.has(String(s.id)) && !said.includes(s.name))
+        .map(s => ({ s, need: 2 * away(s) + (s.minutes || 60) })).sort((a, b) => a.need - b.need), far = fars[0];
       if (!stops.length && !far) { p.explain = (p.explain || []).concat([`Nothing left to plan here: every sight in the guide for ${city.name || "this place"} is on your other day${(byCity.get(d.city) || []).length > 2 ? "s" : ""}. The day is yours until ${E.clock(p.endBy)}.`]); return; }
       let why = "";
       if (far) why = far.need > free ? ` ${far.s.name} needs about ${hm(far.need)} there and back with the visit, more than the time left.`
-        : win.hard ? ` ${far.s.name} needs about ${hm(far.need)} there and back with the visit: not added, to keep a safe margin before the ship.` : "";
+        : win.hard ? ` ${far.s.name} needs about ${hm(far.need)} there and back with the visit: not added, to keep a safe margin before the ship.`
+        : ` ${far.s.name} (about ${hm(far.need)} there and back with the visit) is a trip of its own: pick it for a day to plan it.`;
+      if (fars[1]) why += ` Also a trip of its own: ${fars[1].s.name}, about ${hm(fars[1].need)}.`;
       p.explain = (p.explain || []).concat([`Free time: about ${hm(free)} left after the last stop, before ${win.hard ? "the time to be back" : "the day ends"} (${E.clock(p.endBy)}). Linger where you like.${why}`]); });
     // Each thing said once.
     out.forEach(p => { if (p && p.explain) p.explain = p.explain.filter((t, k, a) => a.indexOf(t) === k); });

@@ -11,6 +11,17 @@ const day = o => Object.assign({ type: 'land', mode: 'flight', startTime: '09:00
 { const w = E.dayWindow(day({ type: 'port', portArrive: 480, allAboard: 1020 }), tr);
   ok(w.start === 510 && w.endBy === 975 && w.hard, `port day: ashore 30 min after docking, back 45 min before all aboard (got ${w.start}-${w.endBy})`); }
 ok(E.waterOnly({ access: 'Viewed from the water on a boat tour' }) && E.waterOnly({ access: 'Only by boat' }) && !E.waterOnly({ access: 'Walk up from the old port' }), 'a sight seen only from the water is read from its access note');
+// A pick inside an area picked for another day moves to the area's day (one walk), and the plan says so; a sight far
+// from the heart of the place is a trip out, never a stop of a day in town.
+{ const s0 = JSON.parse(fs.readFileSync(path.join(dir, 'athens-booked.json'))), c = s0.cities.athens;
+  const plaka = c.sites.find(x => /Plaka/.test(x.name)), cath = c.sites.find(x => /Athens Cathedral/.test(x.name));
+  if (plaka && cath) { s0.days[1].selected = [plaka.id]; s0.days[2].selected = [cath.id];
+    const p = E.planTrip(s0), on = (i, id) => p[i] && p[i].items && p[i].items.some(x => x.t === 'stop' && String(x.id) === String(id));
+    ok(on(1, cath.id) && !on(2, cath.id) && (p[2].explain || []).some(t => /inside Plaka/.test(t)), 'a pick inside an area picked for another day is planned with the area, and the plan says why'); }
+  const s1 = JSON.parse(fs.readFileSync(path.join(dir, 'athens-booked.json'))), c1 = s1.cities.athens, far = c1.farther.find(x => /Ancient Corinth/.test(x.name));
+  if (far) { c1.sites = c1.sites.concat([Object.assign({}, far, { id: 'far-in-sites' })]); c1.farther = c1.farther.filter(x => x !== far);
+    const p = E.planTrip(s1); p.forEach((x, i) => { if (!x || !x.items) return; const st = x.items.filter(y => y.t === 'stop'), here = st.some(y => y.id === 'far-in-sites');
+      if (here) ok(st.every(y => y.id === 'far-in-sites' || E.hav(far, y) <= 20), `day ${i}: a sight 80 km out, listed among the city's sights, is planned as a day trip, not mixed into a day in town`); }); } }
 // A port placed on the wrong island (a lookup gone astray) is never planned from; a guide written as a trip out from
 // that very port ("Rome from Civitavecchia") is far by design and is planned.
 { const fira = [{ lat: 36.416, lng: 25.432 }], wrong = { name: 'Athinios port', lat: 35.345, lng: 25.14 };

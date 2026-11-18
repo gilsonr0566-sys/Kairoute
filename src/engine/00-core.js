@@ -14,7 +14,8 @@ var KEngine = typeof KEngine !== "undefined" ? KEngine : {};
   E.pairKey = (a, b) => pk(a) + "," + pk(b);
   // A fixed, input-order-free tie-break: by id, then name. Used wherever two choices are otherwise equal.
   E.byId = (a, b) => String(a.id || "").localeCompare(String(b.id || "")) || String(a.name || "").localeCompare(String(b.name || ""));
-  E.TO_GO = 20; // lunch on the go: bought and eaten on the way, minutes
+  E.TO_GO = 20;
+  E.PAD_MAX = 45; // longest ride each way for a trip out added to fill a day in town // lunch on the go: bought and eaten on the way, minutes
   E.MEALS = Object.freeze([
     Object.freeze({ label: "Lunch", from: 11 * 60 + 45, to: 14 * 60 + 30, len: 60, quick: 35 }),
     Object.freeze({ label: "Dinner", from: 18 * 60 + 30, to: 21 * 60, len: 75, quick: 45 })
