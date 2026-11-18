@@ -52,7 +52,8 @@
     return { skip: !!p.skip, meal, pick };
   };
   // Best place for lunch in an ordered day: each gap, each of the nearest places to eat; the lowest penalty wins.
-  function withLunch(order, win, ctx) {
+  // quick: a rough check while trying a candidate stop (the nearest place to eat only); the chosen day gets the full search.
+  function withLunch(order, win, ctx, quick) {
     const plain = walk(order, win, ctx), my = E.mealPlan(ctx, "Lunch"), L = my.meal;
     if (my.skip || !lunchWanted(win) || (!ctx.eats.length && !my.pick)) return { seq: order, r: plain };
     let best = null, tight = false;
@@ -69,13 +70,16 @@
       // then over the bridge again): places to eat near the stop before, near the stop after and halfway between; each
       // costs what it takes them out of their way, so the one on the path wins over a slightly nearer one behind them.
       const a = pts[k], b = order[k] || null, mid = b && isFinite(b.lat) ? { lat: (a.lat + b.lat) / 2, lng: (a.lng + b.lng) / 2 } : null;
-      const cands = my.pick ? [my.pick] : [...new Map([a, b, mid].filter(q => q && isFinite(q.lat)).flatMap(q => eatsNear(q, ctx, "Lunch", 3)).map(e => [e.k, e])).values()];
+      const offOf = e => b && isFinite(b.lat) ? E.hav(a, e.r) + E.hav(e.r, b) - E.hav(a, b) : E.hav(a, e.r);
+      // The three least out of the way (each one is timed in full below, so only the likely winners are tried).
+      const cands = my.pick ? [my.pick] : [...new Map((quick ? [a] : [a, b, mid]).filter(q => q && isFinite(q.lat)).flatMap(q => eatsNear(q, ctx, "Lunch", 3)).map(e => [e.k, e])).values()]
+        .sort((x, y) => offOf(x) + (x.r.fromMap ? 0.3 : 0) - offOf(y) - (y.r.fromMap ? 0.3 : 0) || x.k.localeCompare(y.k)).slice(0, quick ? 1 : 3);
       for (const e of cands) for (const len of [L.len, L.quick, E.TO_GO]) {
         // A sit-down lunch, a quicker one when the day is tight, or lunch on the go (bought and eaten walking on) when
         // only that keeps every stop: each a small cost, so the fuller lunch wins whenever it fits.
         const toGo = len === E.TO_GO;
         const meal = { id: "eat:" + e.k, eatKey: e.k, name: e.r.name, lat: e.r.lat, lng: e.r.lng, mealOf: L, len, quick: len < L.len, toGo, chosen: !!my.pick, fromMap: !!e.r.fromMap };
-        const off = b && isFinite(b.lat) ? E.hav(a, e.r) + E.hav(e.r, b) - E.hav(a, b) : E.hav(a, e.r);
+        const off = my.pick ? 0 : offOf(e);
         const seq = order.slice(0, k).concat([meal], order.slice(k)), r = walk(seq, win, ctx), pen = penalty(r) + (toGo ? 60 : len < L.len ? 20 : 0) + off * 1.5 + (e.r.fromMap ? 0.5 : 0); // a km out of the way weighs like half an hour more riding
         // On a ship, train or plane day lunch is something the app adds, so it keeps the same margin as any added sight.
         if (win.hard && !r.over && win.endBy - r.end < E.FILL_MARGIN) { tight = true; continue; }
@@ -101,10 +105,10 @@
     if (far.length && near.length) {
       const farFirst = E.bestOrder(far, from, null, ctx.tr.min), a = farFirst.concat(E.bestOrder(near, farFirst[farFirst.length - 1], to, ctx.tr.min));
       const nearFirst = E.bestOrder(near, from, null, ctx.tr.min), b = nearFirst.concat(E.bestOrder(far, nearFirst[nearFirst.length - 1], to, ctx.tr.min));
-      const ca = withLunch(a, win, ctx), cb = withLunch(b, win, ctx);
+      const ca = withLunch(a, win, ctx, quick), cb = withLunch(b, win, ctx, quick);
       order = cost(ca) <= cost(cb) ? a : b;
     }
-    let cur = withLunch(order, win, ctx), pen = cost(cur);
+    let cur = withLunch(order, win, ctx, quick), pen = cost(cur);
     if (!quick && (cur.r.late || cur.r.over || cur.noLunch === "time")) {
       for (let pass = 0; pass < 2; pass++) {
         let better = false;
@@ -227,7 +231,7 @@
       const cands = pool.filter(s => !keep.some(k => String(k.id) === String(s.id) || (E.hav(k, s) < 0.08 && !wanted(s))) && (!s.far || farOk(s)) && (ctx.mayAdd ? ctx.mayAdd(s.id) : ctx.ledger.sightFree(s.id, ctx.dayIdx)))
         .map(s => { const dt = detour(s); return { s, v: wanted(s) && dt <= 10 ? Math.max(1, s.worth || 0) : (s.worth || 0) - 0.25 * dt }; }) // a voiced sight a few steps off the walk is always worth it.filter(x => x.v > 0).sort((a, b) => b.v - a.v || E.byId(a.s, b.s));
       const room = win.hard ? E.FILL_MARGIN : 0;
-      let tries = 0;
+      let tries = 0, added = false;
       for (const { s } of cands) {
         if (tries >= 25) break;
         const add = Object.assign({}, s, { filled: true }), next = keep.concat([add]);
@@ -237,9 +241,10 @@
         let c = arrange(next, win, ctx, true);
         const fits = x => !x.r.over && !x.r.late && win.endBy - x.r.end >= room && (x.noLunch !== "time" || cur.noLunch === "time");
         if (!fits(c) && tries <= 2) c = arrange(next, win, ctx); // the first two also get the full repair
-        if (fits(c)) { keep = next; cur = c; }
+        if (fits(c)) { keep = next; cur = c; added = true; }
       }
-      if (cur.noLunch || cur.r.late) cur = arrange(keep, win, ctx);
+      // The day as filled gets the full lunch search and repair, kept when it is no worse for time.
+      if (added || cur.noLunch || cur.r.late) { const full = arrange(keep, win, ctx); if (full.r.over <= cur.r.over && full.r.late <= cur.r.late && (!win.hard || win.endBy - full.r.end >= room || win.endBy - full.r.end >= win.endBy - cur.r.end)) cur = full; }
     }
     return { seq: cur.seq, r: cur.r, kept: keep, dropped, noLunch: lunchWanted(win) ? cur.noLunch || null : null };
   };

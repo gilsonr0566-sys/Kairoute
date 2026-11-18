@@ -6007,6 +6007,8 @@ function nestMap(city) {
     const pm = w => { const v = partMem[w]; return Array.isArray(v) ? { p: v, at: [] } : v || { p: [], at: [] }; };
     const wdIn = (M, A) => !!(M.wd && A.wd && M.wd !== A.wd && ((pm(M.wd).at.includes(A.wd) && hav(M, A) < 1.5) || (pm(M.wd).p.includes(A.wd) && hav(M, A) < 0.15)));
     const inside = (M, A) => partOf(M, A) || wdIn(M, A) || (typeof inArea === "function" && inArea(M, A) && !DISTRICT.test((A.category || "") + " " + A.name));
+    // A sight of a town out of the city (from the places files) sits inside that town's own card.
+    if (M.town) { const T = all.find(A => A.id === M.town); if (T) { par.set(M.id, T); continue; } }
     const hosts = all.filter(A => A !== M && A.id !== M.id && !A.quick && inside(M, A) && !(inside(A, M) && !big(A, M)));
     if (hosts.length) par.set(M.id, hosts.sort((x, y) => (y.minutes || 0) - (x.minutes || 0) || String(x.id).localeCompare(String(y.id)))[0]);
   }
@@ -6063,7 +6065,9 @@ function renderSites(d) {
   const refs = [], near = { refs, anc, fs: fsMap, my, st }; sitesCtx = { d, plan, near }; void fsOf;
   const tl = plan && !plan.error ? timeLeft(plan, d) : null, availM = plan && !plan.error ? Math.max(1, plan.endBy - plan.start) : 0;
   const leftTxt = tl ? ` · <b>${tl.left >= 5 ? dur(tl.left) + " left today" : "today is full"}</b>` : "";
-  const pickCount = `<b class="count">${d.selected.length} site${d.selected.length === 1 ? "" : "s"} picked${plan && !plan.error && planAdded(plan, d) ? ` · ${planAdded(plan, d)} added by your guide` : plan && !plan.error && (plan.bonus || []).length ? ` · ${plan.bonus.length} optional on your plan` : ""}</b>`;
+  // Counted as the list shows them: a sight inside a bigger one (a town's own sights) counts with it.
+  const nPicked = new Set(d.selected.map(id => { const x = allSites(city).find(s => s.id === id), t = x && parentOf(x, city); return String(t ? t.id : id); })).size;
+  const pickCount = `<b class="count">${nPicked} site${nPicked === 1 ? "" : "s"} picked${plan && !plan.error && planAdded(plan, d) ? ` · ${planAdded(plan, d)} added by your guide` : plan && !plan.error && (plan.bonus || []).length ? ` · ${plan.bonus.length} optional on your plan` : ""}</b>`;
   const pickbar = !tl ? `<div class="pickbar" role="status" aria-live="polite"><div class="pbrow">${pickCount}</div></div>` : `<div class="pickbar" role="status" aria-live="polite"><div class="pbrow">${pickCount}<span class="pbleft">${tl.left >= 5 ? dur(tl.left) + " left to fill" : "Your day is full"}</span></div><div class="mbar"><i style="width:${Math.min(100, Math.max(0, Math.round((availM - tl.left) / availM * 100)))}%"></i></div></div>`;
   const n = d.selected.length;
   const avail = plan && !plan.error ? dur(plan.endBy - plan.start) : "";

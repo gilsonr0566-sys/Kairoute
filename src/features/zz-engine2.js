@@ -20,6 +20,20 @@ if (typeof window !== "undefined" && window.ENGINE2 && window.KEngine) (function
   // The whole trip planned once per change (the traveler's trip, an answer arriving, the guides, the date).
   const stat = { calls: 0, keyMs: 0, bucketMs: 0, checkMs: 0, used: 0, planned: 0 };
   window.__kairouteEngine2Stat = () => Object.assign({}, stat, { used: memo.used ? memo.used.size : 0 });
+  // Every sight the engine may plan is one the traveler can see and tick: the sights the places files add (the travel
+  // guide's own listings, a day-trip town's sights) join the app's guide once, as the engine sees them (Nov 18: Naples
+  // gained 30 sights the engine planned while the list never showed them, so an emptied day could not be emptied).
+  function guideFromPlaces(bucket) {
+    const seenC = new Set();
+    trip.days.forEach(d => { const city = cityFor(d); if (!city || seenC.has(city)) return; seenC.add(city);
+      const bc = bucket.cities && bucket.cities[keyOf(city.city)]; if (!bc) return;
+      const have = new Set(allSites(city).map(x => String(x.id)));
+      const app = (s, far) => Object.assign({ id: s.id, name: s.name, lat: s.lat, lng: s.lng, minutes: s.minutes || 30, category: s.category || "Sight", summary: s.blurb || "",
+        mustSee: false, quick: false, unesco: !!s.unesco, fromPlaces: true }, far ? { far: true, town: s.town, townName: s.townName, travel: s.travelNote || "" } : {}, s.web ? { web: s.web } : {});
+      const addS = (bc.sites || []).filter(s => !have.has(String(s.id)) && isFinite(s.lat)), addF = (bc.farther || []).filter(s => !have.has(String(s.id)) && isFinite(s.lat));
+      if (addS.length) city.sites = (city.sites || []).concat(addS.map(s => app(s, false)));
+      if (addF.length) city.farther = (city.farther || []).concat(addF.map(s => app(s, true))); });
+  }
   function tripPlans() {
     stat.calls++; let t0 = performance.now();
     const k = keyNow(); stat.keyMs += performance.now() - t0;
@@ -35,7 +49,7 @@ if (typeof window !== "undefined" && window.ENGINE2 && window.KEngine) (function
     const same = memo.ik === ik && memo.plans && [...memo.used.values()].every(u => answerSig(u.a, u.b) === u.sig); stat.checkMs += performance.now() - t0;
     if (same) { memo.k = k; return memo; }
     stat.planned++;
-    if (window.PLACES2) bucket = E.applyPlaces(bucket, window.PLACES2);
+    if (window.PLACES2) { bucket = E.applyPlaces(bucket, window.PLACES2); guideFromPlaces(bucket); }
     // The app's own public transport answers for each ride (asked for any ride not known yet, as in the app).
     const used = new Map();
     bucket.answers = (a, b) => { const r = answerOf(a, b); used.set(a.lat + "," + a.lng + ">" + b.lat + "," + b.lng, { a, b, sig: JSON.stringify(r) }); return r; };

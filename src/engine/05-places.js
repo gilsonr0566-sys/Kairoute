@@ -32,13 +32,17 @@
         // The official website, where the sight's own tickets are sold (the Book tickets link starts from it).
         if (f.web && !s.web) s.web = f.web;
       }
-      // A thin guide (under 8 sights): the travel guide's own sights for the place join it, unless already there (same
+      // A thin guide (under 8 sights): the travel guide's own best-known sights for the place join it, unless already there (same
       // name, or within 150 m) or closed for good.
       if ((city.sites || []).length < 8 && (P.guideSights || []).length) {
         const key = n => String(n || "").toLowerCase().normalize("NFKD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-z0-9]+/g, " ").trim();
         const more = P.guideSights.filter(x => !x.closedForGood && isFinite(x.lat) && !(city.sites || []).some(s => key(s.name) === key(x.name) || (isFinite(s.lat) && E.hav(s, x) <= 0.15)))
           .map((x, n) => Object.assign({ id: "wv~" + (x.wikidata || key(x.name).replace(/ /g, "-")), name: x.name, lat: x.lat, lng: x.lng, minutes: /museum|museo|musée|museu|muzeum|galler/i.test(x.name) ? 60 : 30,
             editions: x.editions || 0, unesco: !!x.unesco, tags: ["from-guide"], category: "Sight", fromGuide: true, blurb: x.note || "" }, x.web ? { web: x.web } : {})).filter((x, i, a) => a.findIndex(y => y.id === x.id) === i);
+        // Filled up to 30 sights, the best known first (a guide page can list 170: too many to choose from on a phone,
+        // and slow to plan).
+        more.sort((x, y) => (y.unesco ? 1 : 0) - (x.unesco ? 1 : 0) || (y.editions || 0) - (x.editions || 0) || x.id.localeCompare(y.id));
+        more.length = Math.min(more.length, Math.max(0, 30 - (city.sites || []).length));
         if (more.length) city.sites = (city.sites || []).concat(more);
       }
       // Restaurants and cafés on the map beside the place's sights: lunch where the traveler is, never a detour back to the
