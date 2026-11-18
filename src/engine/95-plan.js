@@ -57,31 +57,43 @@
   E.planTrip = bucket => {
     const prefs = bucket.prefs || {}, style = bucket.style || "mix", tr = E.makeTravel(prefs, bucket.legModes, bucket.legs, bucket.transit), ledger = E.makeLedger();
     const guides = bucket.cities || {}, days = bucket.days || [], out = new Array(days.length).fill(null);
+    const wins = days.map(d => (d.noShore || d.type === "sea") ? null : E.dayWindow(d, tr));
+    // A pick closed on its own day moves to another day in the same place when it's open then (never onto or off a
+    // day the traveler locked), and the plan says so.
+    const sel = days.map(d => (d.selected || []).slice()), movedTo = new Map();
+    const findSite = (city, id) => city && ((city.sites || []).find(s => String(s.id) === String(id)) || (city.farther || []).find(s => String(s.id) === String(id)));
+    const openOn = (s, j) => wins[j] && !wins[j].error && E.allowed(s, prefs, (days[j].sites || {})[s.id] || null, wins[j]);
+    days.forEach((d, i) => { if (d.locked || !wins[i] || wins[i].error) return; const city = guides[d.city];
+      for (const id of (d.selected || []).slice().sort()) { const s = findSite(city, id); if (!s || openOn(s, i)) continue;
+        const j = days.findIndex((e, k) => k !== i && e.city === d.city && !e.locked && openOn(s, k) && !sel[k].map(String).includes(String(id)));
+        if (j < 0) continue; sel[i] = sel[i].filter(x => String(x) !== String(id)); sel[j].push(id); movedTo.set(String(id), { from: i, to: j, name: s.name }); } });
+    const WEEKDAY = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+    const dayWord = j => { const t = Date.parse(String(days[j].date || "") + "T12:00:00Z"); return isFinite(t) ? WEEKDAY[new Date(t).getUTCDay()] : "another day"; };
     const order = days.map((d, i) => i).sort((a, b) => (days[b].locked ? 1 : 0) - (days[a].locked ? 1 : 0) || a - b);
     // A sight the traveler picked for a day is kept for that day: no other day adds it on its own.
     const wishDay = new Map();
-    for (const i of order) for (const id of days[i].selected || []) if (!wishDay.has(String(id))) wishDay.set(String(id), i);
+    for (const i of order) for (const id of sel[i]) if (!wishDay.has(String(id))) wishDay.set(String(id), i);
     // Step 6a: a stay of several days in one place is split into areas, one per day.
-    const areaDay = new Map(), dayTrip = new Map(), wins = days.map(d => (d.noShore || d.type === "sea") ? null : E.dayWindow(d, tr));
+    const areaDay = new Map(), dayTrip = new Map();
     const byCity = new Map();
     days.forEach((d, i) => { const w = wins[i]; if (!w || w.error || w.straight || !guides[d.city]) return; if (!byCity.has(d.city)) byCity.set(d.city, []); byCity.get(d.city).push(i); });
     for (const [key, idx] of [...byCity].sort((a, b) => String(a[0]).localeCompare(String(b[0])))) {
       if (idx.length < 2) continue;
       const city = guides[key], ranked = E.rank((city.sites || []).map((s, k) => Object.assign({}, s, { rank: k })), prefs, style);
-      const picked = new Set(idx.flatMap(i => (days[i].selected || []).map(String)));
+      const picked = new Set(idx.flatMap(i => sel[i].map(String)));
       const groups = E.makeGroups(ranked), sights = ranked.filter(s => !s.far && E.allowed(s, prefs, null, null) && (!groups.groupOf.has(String(s.id)) || E.ownStop(s, picked)));
       const byId = new Map(ranked.map(s => [String(s.id), s]));
       const farRanked = E.rank((city.farther || []).map(s => Object.assign({}, s, { far: true })), prefs, style).filter(s => E.allowed(s, prefs, null, null));
       const allById = new Map(E.rank((city.farther || []).map(s => Object.assign({}, s, { far: true })), prefs, style).concat(ranked).map(s => [String(s.id), s]));
       // A day trip the traveler picked takes its own time (there and back, and the visit) out of that day's share.
       const stay = idx.map(i => {
-        const own = (days[i].selected || []).filter(id => wishDay.get(String(id)) === i).map(id => allById.get(String(id))).filter(s => s && isFinite(s.lat));
+        const own = sel[i].filter(id => wishDay.get(String(id)) === i).map(id => allById.get(String(id))).filter(s => s && isFinite(s.lat));
         const away = own.filter(s => s.far).reduce((a, s) => a + (s.minutes || 60) + 2 * tr.min(wins[i].head[wins[i].head.length - 1], s), 0);
         return { i, free: (isFinite(wins[i].sightTo) ? wins[i].sightTo : wins[i].endBy) - (wins[i].sightFrom || wins[i].start) - away, wishes: own.filter(s => !s.far), picked: own.length };
       });
       const home = wins[idx[0]].head[wins[idx[0]].head.length - 1];
       // The traveler already picked a day out of town on this stay: the app adds no other on its own.
-      const pickedFar = idx.some(i => (days[i].selected || []).some(id => { const s = allById.get(String(id)); return s && s.far; }));
+      const pickedFar = idx.some(i => sel[i].some(id => { const s = allById.get(String(id)); return s && s.far; }));
       const outing = pickedFar ? null : E.pickDayTrip(stay.map(x => Object.assign({}, x, { wishes: x.picked ? [1] : [] })), sights, farRanked.filter(s => !wishDay.has(String(s.id))), s => tr.min(home, s), AREA_KM);
       if (outing) { dayTrip.set(outing.day, outing.ids); outing.ids.forEach(id => areaDay.set(key + "|" + id, outing.day)); }
       const split = E.splitAreas(stay.filter(x => !outing || x.i !== outing.day), sights);
@@ -106,7 +118,7 @@
       // day's area, unless that day is already planned and left it over.
       const doneDay = j => j == null || j === i || out[j] != null;
       ctx.mayAdd = id => ledger.sightFree(id, i) && doneDay(wishDay.get(String(id))) && doneDay(areaDay.get(d.city + "|" + id));
-      const picked = new Set((d.selected || []).map(String));
+      const picked = new Set(sel[i].map(String));
       const groups = E.makeGroups(ranked), folded = s => groups.groupOf.get(String(s.id)) != null && !E.ownStop(s, picked);
       const pool = ranked.filter(s => E.allowed(s, prefs, siteDay(s.id), win) && !folded(s));
       const explain = [], wishes = [];
@@ -119,7 +131,8 @@
       else {
         (bucket.placeNotes || []).filter(n => n.day === d.i || n.day === i).forEach(n => explain.push(n.note));
         if (win.leaveEarly) explain.push("Leave by " + E.clock(win.start) + ", " + win.leaveEarly + " min before your planned start of " + E.clock(win.plannedStart) + ", to be " + (d.type === "embark" ? "at the cruise terminal" : "there") + " by " + E.clock(win.endBy) + ".");
-        for (const id of d.selected || []) {
+        for (const [id, m] of movedTo) if (m.from === i) explain.push(m.name + " is closed on " + dayWord(i) + ", so it's planned on " + dayWord(m.to) + ".");
+        for (const id of sel[i]) {
           const s = ranked.find(x => String(x.id) === String(id)); if (!s) continue;
           const on = ledger.sightDay(s.id);
           if (on != null && on !== i) { explain.push(s.name + " is planned on another day."); continue; }

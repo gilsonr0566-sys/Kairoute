@@ -10,15 +10,19 @@ function lateBy(oh, t, len) { // minutes past the last sensible arrival (the lis
 }
 function score(facts, plans) {
   const days = [], fails = [], seenStop = new Map(), seenMeal = new Map();
+  // A pick counts as kept when the stay plans it on any of its days (a pick closed on its own day may move to another).
+  const keptIn = new Map(); plans.forEach((p, i) => { if (!p || p.error) return; const c = facts.days[i].city; if (!keptIn.has(c)) keptIn.set(c, new Set());
+    p.items.forEach(x => { if (x.t === 'stop' && !x.bonus && !x.along) keptIn.get(c).add(x.id); }); });
   plans.forEach((p, i) => {
     const d = facts.days[i]; if (!p || p.error) { days.push({ i, skip: p ? p.error : 'none' }); return; }
     const city = facts.cities[d.city] || { sites: [], farther: [] }, byId = new Map([...city.sites, ...city.farther].map(s => [s.id, s]));
     const stops = p.items.filter(x => x.t === 'stop'), meals = p.items.filter(x => x.t === 'meal' || x.t === 'evening');
     const rides = p.items.filter(x => x.t === 'ride'), picks = new Set(d.selected || []);
     const r = { i, date: d.date, type: d.type, city: d.city, stops: stops.length, picks: picks.size, picksKept: 0, mustKept: 0, sightMin: 0, rideMin: 0, backtrack: 0, closed: [], late: [], margin: null, over: 0 };
+    r.picksKept = [...picks].filter(id => keptIn.get(d.city).has(id)).length;
     const been = [];
     stops.forEach(s => {
-      const f = byId.get(s.id); if (picks.has(s.id) && !s.bonus && !s.along) r.picksKept++;
+      const f = byId.get(s.id);
       if (f && f.mustSee) r.mustKept++; r.sightMin += s.min || 0;
       const sf = d.sites[s.id]; if (sf && sf.closed) r.closed.push(s.id);
       if (sf && sf.oh && !s.along) { const l = lateBy(sf.oh, s.at, s.min); if (l > 0) r.late.push(s.id + ' +' + Math.round(l)); }

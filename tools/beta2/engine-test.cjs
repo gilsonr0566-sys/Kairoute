@@ -202,6 +202,17 @@ if (fs.existsSync(dir)) { let rides = 0, placed = 0;
     }
   } }
 
+// ---- A pick closed on its own day moves to another day of the same stay when it's open then, and the plan says so.
+{ const f = path.join(dir, 'g02-vienna.json'), PD = path.join(__dirname, '..', 'places', 'data'), places = {};
+  if (fs.existsSync(f) && fs.existsSync(PD)) {
+    for (const g of fs.readdirSync(PD).filter(g => g.endsWith('.json'))) { const p = JSON.parse(fs.readFileSync(path.join(PD, g))); places[p.key] = p; }
+    const s = E.applyPlaces(JSON.parse(fs.readFileSync(f)), places), ps = E.planTrip(s);
+    s.days.forEach((d, i) => (d.selected || []).forEach(id => { const sd = (d.sites || {})[id];
+      if (!sd || !(sd.closed || (sd.oh && sd.oh.spans && !sd.oh.spans.length)) || d.locked) return; // only picks the map says are shut that day
+      const j = ps.findIndex((p, k) => k !== i && p && p.items && p.items.some(x => x.t === 'stop' && String(x.id) === String(id)));
+      const name = ((s.cities[d.city].sites || []).find(x => String(x.id) === String(id)) || {}).name;
+      ok(j >= 0 && (ps[i].explain || []).some(e => e.startsWith(name + ' is closed on')), `${name}, shut on its day, is planned on another day of the stay and the plan says so`); })); } }
+
 // ---- The whole trip (step 6 to 8): same plan whatever order the pieces arrive in, nothing used twice, every day safe.
 const shuffle = (a, seed) => { const b = a.slice(); let x = seed; for (let i = b.length - 1; i > 0; i--) { x = (x * 1103515245 + 12345) % 2147483648; const j = x % (i + 1); [b[i], b[j]] = [b[j], b[i]]; } return b; };
 const planKey = plans => JSON.stringify(plans.map(p => p && (p.error || p.items.map(x => x.t + ':' + (x.id || x.name || x.mode) + '@' + (x.at != null ? x.at : x.min)).join(','))));
