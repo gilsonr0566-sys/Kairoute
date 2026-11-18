@@ -103,6 +103,58 @@ New leaks, all rules inside existing steps:
 
 Resource: one new free candidate, the Italian government's public transport strike calendar, for leak 4. Nothing paid. Other countries rely on the timetables' own service changes until a free source is found.
 
+### Dry runs 5 to 7: Hamburg, Nassau, CocoCay, live (Nov 18)
+Built from scratch with AI off on GitHub (workflow "Beta 2 live dry run", tools/beta2/live-trip.cjs). Only the helper's free lookups ran; every AI, voice, Google-rating and sync call was refused in the test. Trips: Hamburg 2-day stay (Tue/Wed May 2027), Hamburg cruise call on a Sunday, Nassau cruise call, CocoCay private island. The real source answers are saved in tools/fixtures/live/ so these trips can be rerun offline.
+
+What the app found on its own: Hamburg 47 sights, 4 day trips, 60 real restaurants; Nassau 6 sights, 18 restaurants; CocoCay 3 spots, 4 places to eat. Old engine: no safety faults (Hamburg port back 16:55 for 17:15; Nassau 16:04 for 16:15). CocoCay: the old engine refused to plan because it couldn't find the pier, which is safe but leaves the traveler with nothing.
+
+Held (rules already in the plan): districts and areas planned as 40 to 90 minute stops (St. Pauli as a "museum", Paradise Island), no groups found (Speicherstadt holds Miniatur Wunderland and the Maritime Museum; Prague rule: Wikidata "what it is" and "part of"); zigzag days (Prague area rule); the stadium filed as a park and visited for 40 minutes (Prague rule: kind from Wikidata); "Lunch near Itzehoe" (Athens meal rule); a shop used as Nassau's port point (second source for ports); helper ride lookups timing out 12 times in Nassau (the engine never waits on the network; taxi fallback).
+
+New leaks, all rules inside existing steps:
+1. **Wrong interest tags from loose word matches.** The Reeperbahn (red-light district) and St. Pauli were tagged "Bible"; a church and a monument were tagged "beaches". *Step 1: interests come from what a place is (Wikidata type, map tags), not from words in its name or text; adult nightlife areas get their own tag and are never offered for faith or family interests.*
+2. **A small town as a day trip.** Itzehoe (nothing to see) was picked over Lübeck (UNESCO) because towns have many Wikipedia languages; the ride out was 115 minutes and back 59. *Step 1 and 5: a day trip needs travelers' evidence (Wikivoyage day-trip listing, UNESCO or listed sights there), not town fame; step 7: the same leg uses the same ride basis both ways.*
+3. **Closed for good, still offered.** The Islamic Centre Hamburg was closed by the authorities in 2024 but is in the list. *Step 1: Wikidata closing dates and map "disused" tags mark a place closed for good.*
+4. **No opening hours at all.** None of Hamburg's 47 sights had hours, so Sunday, Monday and evening closures can't be checked. *Step 2: per-date hours from OpenStreetMap opening hours (already fetched by the helper for restaurants); where none, the Rome unknown-hours rule and the Naples gated rule apply.*
+5. **Which cruise terminal.** Hamburg has three (Altona, Steinwerder, HafenCity); the app picked Altona without saying so, and Steinwerder is across the river. *Step 3: when a port has more than one terminal and the booking doesn't say, the terminal is listed as missing and the plan uses the one farthest from the sights until it's known (ship safety).*
+6. **Private island with no known pier.** The map lookup for "Perfect Day at CocoCay" finds nothing (its map name is Little Stirrup Cay). *Step 1: places carry their other names. Step 4: when everything ashore is within a short walk and no rides are needed, the day is planned from the spots' own cluster with extra buffer and a "pier not confirmed" label, instead of no plan.*
+7. **"Free" on everything.** The app stores an unknown fee as 0, so the Prague fix still showed "free". *Fixed in the bucket: only an explicit "free" counts; CocoCay's paid waterpark now shows "price unknown".*
+8. **Sunday-only events.** Hamburg's Fish Market (Sundays 5:00 to 9:30) suits an early Sunday port call. *Step 2 per-date facts include weekly events from the map's opening hours.*
+
+Resources: none new. All fixes use Wikidata, OpenStreetMap and Wikivoyage, which the helper already reaches for free.
+
+### Test gate before plugging in (Richard, Nov 18: "more testing before we drop the engine in")
+Step 10 (plug in) does not start until the built engine passes all of this, AI off, side by side with the old engine on the same saved real source data (captured live like the Hamburg run, then rerun offline so results repeat):
+
+The 20 trips:
+1. Rome, 3-day land stay
+2. Paris, 3-day stay including a Tuesday (Louvre closed)
+3. Prague, 2-day stay
+4. Hamburg, 2-day stay (never tuned)
+5. Lisbon, 2-day stay (never tuned; hills and trams)
+6. Athens, arrival day by flight and boarding day at Piraeus
+7. Civitavecchia to Rome, cruise call (train to the city)
+8. Naples, cruise call with Pompeii by train
+9. Naples, the same call on an announced strike day
+10. Hamburg, Sunday cruise call (three terminals)
+11. Kotor, tender port
+12. Dubrovnik, cruise call (never tuned; walled town, cable car)
+13. Barcelona, Sunday cruise call
+14. Kusadasi, cruise call with Ephesus (far stop, shared tickets)
+15. Chania, cruise call from Souda (the Chania lesson)
+16. Nassau, full day and short call
+17. CocoCay, private island
+18. Copenhagen, cruise call on a public holiday (never tuned)
+19. Corinth day trip from Athens by public transport
+20. Running late: the Naples and Athens boarding days replayed at 45 minutes late
+
+Pass rule (every point, every trip):
+- **Zero safety failures:** no stop after the back-by time, never less than the fixed buffer before all aboard, train or flight time, the last safe train always kept, no plan on a guessed port or terminal.
+- **Never worse than the old engine:** not worse on any safety measure, closed stops, repeats or lateness, and not worse on the overall score (sights kept, must-sees kept, riding, backtracking).
+- **Same plan every time:** 10 runs with the data arriving in shuffled order give identical plans.
+- **Explains itself:** every dropped or moved sight and every estimated fact is labelled.
+- **Fast enough:** each trip plans within the time limit on a slowed phone.
+Any failure: fix it as a general rule, then rerun all 20.
+
 ### Resources added in the dry runs (Nov 18)
 No new paid sources, and no new sources at all. Every fix uses a free source the app already reaches:
 - **Train timetables:** open timetables (Transitous) and OpenStreetMap rail lines, through the helper's ride lookup. Already in use.
