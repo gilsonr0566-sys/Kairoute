@@ -6,16 +6,38 @@ Scope: the planning engine only (see "What Beta 2 changes, and what stays as is"
 
 How Beta 2 turns a trip into days. Each step only reads the steps before it, and the same trip always gives the same days.
 
-1. **Fill the trip bucket.** (Richard's idea: "have a bucket, get all the pieces.") Before any planning, one bucket collects every piece: each day's times and places (hotel, port, airport, station), each city's sights and restaurants, opening hours for each date, the forecast. The bucket says what's still missing. The engine plans only from a complete bucket and never looks anything up halfway.
-2. **Set each day's window.** When sightseeing can start and the hard end: all aboard minus 45 min on port days, the boarding time on boarding days, 3 h before a flight, 30 min before a train. Fixed steps (bags, the ride to the ship) come out first. A same-day fly-in with under 3 h left goes straight to the ship. Missing times stop that day with a clear message, never a guess.
-3. **Lock the hearted days.** Their sights, order and restaurants are claimed first, so no other day can take them.
-4. **Give each picked sight its day.** Days are handled in date order. A sight goes to the earliest day it's open and fits, and it's claimed once for the whole trip.
-5. **Order each day by route.** Shortest, easiest path from the start to the end point. Must-sees don't change the order.
-6. **Fit the day.** Check opening hours and the hard end. If it's too full: shorten long visits a little, try a quicker lunch, then let the least important stop go (the app's picks before the traveler's, a lone far-off stop before one in the day's main area). Then put back anything that truly fits.
-7. **Nudge for comfort, within a cap.** Crowds, heat and the forecast may swap the order only if that adds no more than 15 min of riding (30 with a real forecast).
-8. **Add meals.** Lunch and dinner near where you are, from real restaurants, never the same place twice in a trip. Booked tables stay at their time.
-9. **Fill spare time.** Optional stops and quick sights on the way, never past the hard end, never on a cleared or hearted day.
-10. **Write the timeline.** Real ride times set the clock. If a real ride time makes a stop late or unsafe, the plan flags it and says why, instead of quietly reshuffling the day.
+1. **Know our resources: the places database.** (Richard: "what are my resources to find the pieces. Have that data base that can grow as needed and does not have to be rebuilt, just amended.") One growing database of every place, port, terminal, opening hours, ride time and restaurant Kairoute has ever found for any traveler. Each entry is stored once and reused. A new find is added, a correction updates the entry, and nothing is ever rebuilt from scratch. Each entry records which source found it and when it was last checked. Behind it sits a fixed list of free sources that find new pieces (see "The places database" below).
+2. **Collect the pieces into the trip bucket.** (Richard: "have a bucket, get all the pieces", "then collect the pieces".) For this trip, the bucket is filled from the database first and goes to outside sources only for what's missing or out of date. Whatever the sources find is added to the database for the next traveler. The bucket says what's still missing, and planning runs only from a complete bucket. Nothing is looked up halfway through planning.
+3. **Set each day's window.** When sightseeing can start and the hard end: all aboard minus 45 min on port days, the boarding time on boarding days, 3 h before a flight, 30 min before a train. Fixed steps (bags, the ride to the ship) come out first. A same-day fly-in with under 3 h left goes straight to the ship. Missing times stop that day with a clear message, never a guess.
+4. **Lock the hearted days.** Their sights, order and restaurants are claimed first, so no other day can take them.
+5. **Give each picked sight its day.** Days are handled in date order. A sight goes to the earliest day it's open and fits, and it's claimed once for the whole trip.
+6. **Order each day by route.** Shortest, easiest path from the start to the end point. Must-sees don't change the order.
+7. **Fit the day.** Check opening hours and the hard end. If it's too full: shorten long visits a little, try a quicker lunch, then let the least important stop go (the app's picks before the traveler's, a lone far-off stop before one in the day's main area). Then put back anything that truly fits.
+8. **Nudge for comfort, within a cap.** Crowds, heat and the forecast may swap the order only if that adds no more than 15 min of riding (30 with a real forecast).
+9. **Add meals.** Lunch and dinner near where you are, from real restaurants, never the same place twice in a trip. Booked tables stay at their time.
+10. **Fill spare time.** Optional stops and quick sights on the way, never past the hard end, never on a cleared or hearted day.
+11. **Write the timeline.** Real ride times set the clock. If a real ride time makes a stop late or unsafe, the plan flags it and says why, instead of quietly reshuffling the day.
+
+
+_Steps 3 onward are being reviewed with Richard and may change._
+
+## The places database (step 1 in detail)
+
+**What it holds.** One entry per real place: sights, restaurants, hotel areas, cruise terminals, airports, stations, and the ride times between places. Each entry is keyed by a stable id (Wikidata id or OpenStreetMap id where there is one), never by name, so a renamed or translated place stays the same entry.
+
+**Every entry carries:** the facts (where it is, hours, length of visit, fame, closed to the public or not), which source said so, when it was found, and when it was last checked. Facts that change go stale on a timetable: opening hours and restaurants are re-checked after about 30 days, ride timetables per season, a famous sight's location never.
+
+**Amended, never rebuilt.** A new find is added. A better source updates just that fact and keeps the history. A place that turns out not to exist, or to be closed for good, is marked, not deleted, so it can never sneak back in from another source.
+
+**Free sources that find new pieces (all already in use, no new costs):**
+- Sights and fame: Wikivoyage (English and local), Wikidata, Wikipedia, UNESCO (through Wikidata)
+- Map places, hours, restaurants, ports and stations: OpenStreetMap (through Photon, Overpass and Nominatim)
+- Rides: open timetables (Transitous) and OpenStreetMap train, ferry, metro and bus lines; street routes from the free routers
+- Weather: Open-Meteo
+- Ratings: Kairoute travelers' own ratings, and Google ratings inside the free monthly allowance (900 a month, already capped)
+- Ship times: the traveler's own booking (no paid cruise data)
+
+**Where it's stored, at no cost.** The database lives as plain data files, one per city, in the Kairoute repository, published with the app on GitHub Pages. That costs nothing, keeps a full history of every change, and phones can keep a city's file for offline use. New finds from the helper are folded in by a scheduled job. This also reads far less from Cloudflare storage, which was trending over the plan's included amount. No new paid service is used. Only public places go in it, never anything about a traveler (names, bookings, their own trips stay on their device).
 
 ## 1. Shape of the new engine
 
