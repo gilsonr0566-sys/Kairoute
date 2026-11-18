@@ -86,3 +86,10 @@ The engine files also load in Node, so its tests run in seconds without a browse
 3. Side-by-side report: old vs new on every test trip, kept in `reports/beta2/`.
 4. Adapter: plug the engine into the app on the Beta 2 branch, remove the five steady-plan layers, run the existing gate (safety net, demo flow, steadiness, speed) against it.
 5. Hand Richard a Beta 2 test link once it beats the old engine on every trip.
+
+## Holes checked against the steps (Nov 18)
+
+Every one of the 21 failures in the lessons doc was checked against the steps. Two had no step and are now part of the plan:
+- **#6 swap bug:** the picks step moves a sight with one "move" action that takes it off its old day in the same step. No screen changes a day's picks any other way.
+- **#14 hand-written guides hiding gaps:** the yardstick gets no-AI test trips (guides built automatically from saved source data: a big city, a small port, a private island) before the planning steps are built.
+Two are only partly covered and have a named test still to write: **#9** a port with no sights still gets a safe day ashore; **#17** the bucket is read through a test hook until it becomes the plug-in point.
