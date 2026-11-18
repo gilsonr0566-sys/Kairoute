@@ -180,6 +180,13 @@ function enNameOf(name, cat, local) {
   en += tail;
   return keyOf(en) === keyOf(raw) ? "" : en;
 }
+// A name with its local spelling in brackets in another script ("Etz Hayyim Synagogue [Συναγωγή Ετζ Χαγίμ]", the
+// way the guide writer is shown the sources, Chania, Nov 18) shows the English name; the local one is kept apart.
+function splitLocalName(s) {
+  const m = s && /^(.*\S)\s*[\[(]([^\[\]()]+)[\])]\s*$/.exec(String(s.name || ""));
+  if (m && nonLatin(m[2]) && !nonLatin(m[1])) { s.local = s.local || m[2].trim(); s.name = m[1].trim(); }
+  return s;
+}
 // A sight from the sources gets its English name; its local name is kept for the signs. Famous places keep theirs.
 function enSight(x, cat) {
   if (!x || !x.name || (x.sl || 0) >= EN_FAME) return null;
@@ -192,4 +199,5 @@ function localLine(s) {
   if (!l || nonLatin(l) || keyOf(l) === keyOf(s.name) || keyOf(l) === keyOf(showName(s))) return "";
   return `<p class="localname">Local name: ${esc(l)}</p>`;
 }
+if (typeof window !== "undefined") window.__kairouteSplitLocal = n => { const s = splitLocalName({ name: n }); return [s.name, s.local || ""]; };
 if (typeof window !== "undefined") window.__kairouteEnName = (n, cat, sl, local) => { const r = enSight({ name: n, sl: sl || 0, local }, cat); return r ? r.name : n; };

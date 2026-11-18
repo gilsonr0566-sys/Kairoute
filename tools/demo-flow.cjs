@@ -322,6 +322,16 @@ async function partA(b) {
     await rideTap(p, r.key, r.chosen).catch(() => {}); await p.waitForTimeout(1500);
   }
 
+  // Every Day plan reads in English letters: sight names, ride lines and stops (Santorini ferries and a Chania
+  // synagogue showed in Greek, Nov 18). Rides arrive over the run, so this looks once they have had time.
+  for (const d of days) {
+    if (!plans[d.i]) continue;
+    await p.evaluate(go("plan", d.i)); await p.waitForTimeout(2500);
+    const odd = await p.evaluate(() => [...new Set(((document.querySelector(".timeline") || {}).innerText || "").split("\n").filter(l => /[\u0370-\u03FF\u1F00-\u1FFF\u0400-\u04FF]/.test(l)))].slice(0, 5));
+    ok(!odd.length, `day ${d.i + 1} ${d.dest}: the Day plan reads in English letters` + (odd.length ? ` (${odd.join(" / ").slice(0, 300)})` : ""));
+    if (/santorini|chania/i.test(d.dest)) await shot(p, `A3c-${d.dest.toLowerCase()}-plan-tablet`);
+  }
+
   // 4. Guide and Tour.
   for (const v of ["guide", "tour", "trip", "journal"]) {
     await timed(p, "open " + v, go(v, first.i), 3000);
