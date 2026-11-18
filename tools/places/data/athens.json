@@ -1,14 +1,321 @@
 {
  "key": "athens",
- "name": "Athens, Greece",
+ "name": "Athens",
  "centre": {
-  "lat": 37.9755,
-  "lng": 23.7348
+  "lat": 37.9739,
+  "lng": 23.72992105263158
  },
  "sites": {},
- "towns": {},
+ "towns": {
+  "corinth-far": {
+   "name": "Ancient Corinth",
+   "wikidata": "Q1363688",
+   "sights": [],
+   "foodDrink": [],
+   "mapEats": [
+    {
+     "name": "Tavernakigamprou",
+     "lat": 37.9067817,
+     "lng": 22.8802202,
+     "kind": "eat",
+     "amenity": "restaurant",
+     "cuisine": "",
+     "osm": "node/9769352617"
+    },
+    {
+     "name": "Orestis Cafe",
+     "lat": 37.9068324,
+     "lng": 22.879947,
+     "kind": "eat",
+     "amenity": "cafe",
+     "cuisine": "",
+     "osm": "node/2330585210"
+    },
+    {
+     "name": "Taverna tou Gambrou",
+     "lat": 37.9067949,
+     "lng": 22.88042,
+     "kind": "eat",
+     "amenity": "restaurant",
+     "cuisine": "greek",
+     "osm": "node/2330585929"
+    },
+    {
+     "name": "Aigli",
+     "lat": 37.9068972,
+     "lng": 22.8802711,
+     "kind": "eat",
+     "amenity": "restaurant",
+     "cuisine": "",
+     "osm": "node/9769352621"
+    },
+    {
+     "name": "Marinos",
+     "lat": 37.9071462,
+     "lng": 22.8805991,
+     "kind": "eat",
+     "amenity": "restaurant",
+     "cuisine": "greek",
+     "osm": "node/2330575174"
+    },
+    {
+     "name": "Tassos Hotel and Taverna",
+     "lat": 37.9075547,
+     "lng": 22.8820282,
+     "kind": "eat",
+     "amenity": "restaurant",
+     "cuisine": "greek",
+     "osm": "node/2330591094"
+    }
+   ]
+  },
+  "sounion-far": {
+   "name": "Temple of Poseidon at Sounion",
+   "wikidata": "Q21705206",
+   "sights": [],
+   "foodDrink": [],
+   "mapEats": [
+    {
+     "name": "Naos Cafe Restaurant",
+     "lat": 37.6505374,
+     "lng": 24.026695,
+     "kind": "eat",
+     "amenity": "restaurant",
+     "cuisine": "",
+     "osm": "way/142781373"
+    },
+    {
+     "name": "Ακρογιάλι",
+     "lat": 37.654933,
+     "lng": 24.0243518,
+     "kind": "eat",
+     "amenity": "restaurant",
+     "cuisine": "fish;greek;mediterranean",
+     "osm": "node/3763599604"
+    },
+    {
+     "name": "Ilias",
+     "lat": 37.6551916,
+     "lng": 24.0240322,
+     "kind": "eat",
+     "amenity": "restaurant",
+     "cuisine": "fish;greek;mediterranean",
+     "osm": "way/521593662"
+    }
+   ]
+  },
+  "delphi-far": {
+   "name": "Delphi",
+   "wikidata": "Q75459",
+   "unesco": true,
+   "dayTripListed": true,
+   "sights": [
+    {
+     "kind": "see",
+     "name": "Museum",
+     "lat": 38.48024,
+     "lng": 22.49969,
+     "hours": "08:00 - 15:00 (summer 20:00)",
+     "price": "Adult €6, child €3",
+     "wikidata": "Q636928",
+     "content": "Delphi is all about the hellenic culture and the remaining ruins. The downside are the opening hours of the Sanctuaries. Only during the summer heat, the place is open until 20:00. Better arrive early or stay the night before in a place nea",
+     "editions": 15,
+     "unesco": false
+    },
+    {
+     "kind": "see",
+     "name": "Ancient Theater",
+     "lat": 38.48255,
+     "lng": 22.50046,
+     "hours": "",
+     "price": "",
+     "wikidata": "Q10378966",
+     "content": "",
+     "editions": 9,
+     "unesco": false
+    },
+    {
+     "kind": "see",
+     "name": "Temple of Apollo",
+     "lat": 38.48229,
+     "lng": 22.50118,
+     "hours": "",
+     "price": "",
+     "wikidata": "Q10751359",
+     "content": "",
+     "editions": 25,
+     "unesco": false
+    },
+    {
+     "kind": "see",
+     "name": "Delphi Stadium",
+     "lat": 38.48246,
+     "lng": 22.49766,
+     "hours": "",
+     "price": "",
+     "wikidata": "Q21705214",
+     "content": "",
+     "editions": 8,
+     "unesco": false
+    },
+    {
+     "kind": "see",
+     "name": "Sanctuary of Athena with the Tholos",
+     "lat": 38.48015,
+     "lng": 22.50791,
+     "hours": "",
+     "price": "Free",
+     "wikidata": "Q19753400",
+     "content": "",
+     "editions": 9,
+     "unesco": false
+    }
+   ],
+   "foodDrink": [
+    {
+     "kind": "drink",
+     "name": "Astra Cafe & Restaurant",
+     "lat": 38.47962,
+     "lng": 22.4911,
+     "hours": "07:00-00:00",
+     "price": "",
+     "wikidata": "",
+     "content": "Coffees, fine wine, beers and  cocktails, along with Mediterranean & Greek cuisine, in a beautiful place with a nice view."
+    }
+   ],
+   "unescoSites": [
+    "archaeological Site of Delphi"
+   ],
+   "mapEats": [
+    {
+     "name": "Coffee Tourism",
+     "lat": 38.4804379,
+     "lng": 22.5000311,
+     "kind": "eat",
+     "amenity": "cafe",
+     "cuisine": "",
+     "osm": "node/5111421413"
+    },
+    {
+     "name": "Ydria",
+     "lat": 38.4780604,
+     "lng": 22.4973074,
+     "kind": "eat",
+     "amenity": "restaurant",
+     "cuisine": "pizza",
+     "osm": "way/1044250473"
+    },
+    {
+     "name": "Εν δελφοις",
+     "lat": 38.47819,
+     "lng": 22.496808,
+     "kind": "eat",
+     "amenity": "restaurant",
+     "cuisine": "",
+     "osm": "node/9604149469"
+    },
+    {
+     "name": "Διονύσης",
+     "lat": 38.4787033,
+     "lng": 22.4956106,
+     "kind": "eat",
+     "amenity": "restaurant",
+     "cuisine": "Souvlaki;Gyros;Pita",
+     "osm": "way/1044250468"
+    },
+    {
+     "name": "Δίον",
+     "lat": 38.4787475,
+     "lng": 22.4955093,
+     "kind": "eat",
+     "amenity": "restaurant",
+     "cuisine": "greek",
+     "osm": "way/1044250467"
+    },
+    {
+     "name": "Δελφικόν",
+     "lat": 38.4781453,
+     "lng": 22.4959635,
+     "kind": "eat",
+     "amenity": "restaurant",
+     "cuisine": "",
+     "osm": "way/1044250408"
+    },
+    {
+     "name": "Μελοπωλείο",
+     "lat": 38.4783284,
+     "lng": 22.4955957,
+     "kind": "eat",
+     "amenity": "cafe",
+     "cuisine": "",
+     "osm": "node/9604180352"
+    },
+    {
+     "name": "Phileo",
+     "lat": 38.4782222,
+     "lng": 22.4955448,
+     "kind": "eat",
+     "amenity": "cafe",
+     "cuisine": "",
+     "osm": "node/13871508320"
+    }
+   ]
+  },
+  "corinth-canal-far": {
+   "name": "Corinth Canal",
+   "wikidata": "Q182873",
+   "sights": [],
+   "foodDrink": []
+  },
+  "acrocorinth-far": {
+   "name": "Acrocorinth",
+   "wikidata": "Q420810",
+   "sights": [],
+   "foodDrink": [],
+   "mapEats": [
+    {
+     "name": "Castro",
+     "lat": 37.8895334,
+     "lng": 22.8681029,
+     "kind": "eat",
+     "amenity": "cafe",
+     "cuisine": "greek",
+     "osm": "node/2334442832"
+    }
+   ]
+  }
+ },
  "ports": [],
- "dayTrips": [],
+ "dayTrips": [
+  "Piraeus",
+  "Rafina",
+  "Italy",
+  "Egypt",
+  "Turkey",
+  "Israel",
+  "Cyprus",
+  "Hydra",
+  "Aegina",
+  "Poros",
+  "Spetses",
+  "Kea",
+  "Evvia",
+  "Chalcis",
+  "Kymi",
+  "Skyros",
+  "Paros",
+  "Naxos",
+  "Ios",
+  "Santorini",
+  "Sounio",
+  "Corinth",
+  "Epidaurus",
+  "Olympia (Greece)",
+  "Delphi",
+  "Mycenae",
+  "Peloponnese",
+  "Nafplion"
+ ],
  "missing": [],
  "guideSights": [
   {
@@ -143,7 +450,8 @@
    "wikidata": "Q208811",
    "note": "The stadium that housed the first modern day Olympic Games of 1896. Earlier versions of the stadium date as far back as 330 BCE. It's an enormous, white, marble stadium, with a horseshoe configuration.",
    "editions": 47,
-   "unesco": false
+   "unesco": false,
+   "web": "http://www.panathenaicstadium.gr/"
   },
   {
    "name": "Lycabettus Hill",
@@ -152,7 +460,8 @@
    "wikidata": "Q1357713",
    "note": "A 200m hill bordering the Kolonaki district. You can reach the top by walking (the path starts 15 minutes from Evangelismos metro stop, and will take 30 minutes to walk up the winding, but paved and not steep, path) or by a funicular railwa",
    "editions": 38,
-   "unesco": false
+   "unesco": false,
+   "web": "http://www.lycabettushill.com"
   },
   {
    "name": "Olympic Stadium",
@@ -161,7 +470,8 @@
    "wikidata": "Q189663",
    "note": "",
    "editions": 52,
-   "unesco": false
+   "unesco": false,
+   "web": "http://www.oaka.com.gr"
   },
   {
    "name": "National Theatre",
@@ -204,7 +514,8 @@
    "wikidata": "Q500444",
    "note": "An 11th-century Byzantine monastery and UNESCO World Heritage site. Damaged by an earthquake in 1999, but has now been fully restored.",
    "editions": 45,
-   "unesco": true
+   "unesco": true,
+   "web": "http://odysseus.culture.gr/h/2/eh255.jsp?obj_id=1514"
   },
   {
    "name": "Kaisariani Monastery and Gardens",
@@ -222,7 +533,8 @@
    "wikidata": "Q637187",
    "note": "This is the largest and most popular of Athens' many museums, and is usually very crowded. Its vast collection includes treasures unearthed from Mycenae by Heinrich Schliemann; a staggering array of sculpture including the earliest known Gr",
    "editions": 41,
-   "unesco": false
+   "unesco": false,
+   "web": "https://www.namuseum.gr/"
   },
   {
    "name": "Kanellopoulos Museum",
@@ -231,7 +543,8 @@
    "wikidata": "Q4306141",
    "note": "A small but excellent museum displays artifacts from Mycenean Greece on, and includes some wonderful Persian artifacts.",
    "editions": 9,
-   "unesco": false
+   "unesco": false,
+   "web": "https://pacf.gr/en/"
   },
   {
    "name": "Benaki Museum of Greek Culture",
@@ -240,7 +553,8 @@
    "wikidata": "Q816669",
    "note": "Visit the beautiful Neoclassical main building which houses collections of Greek art, from ancient times through the Byzantine period and the modern state. Open late and for free on Thursday evenings. The museum shop is a good place to buy ",
    "editions": 27,
-   "unesco": false
+   "unesco": false,
+   "web": "https://www.benaki.org/index.php?lang=en"
   },
   {
    "name": "Museum of Cycladic Art",
@@ -249,7 +563,8 @@
    "wikidata": "Q1230253",
    "note": "Holds the second largest collection of Cypriot antiquities in the world outside Cyprus, after the Metropolitan Museum in New York. Some of the most popular exhibits include the Cycladic figurines, the idols from Early Bronze Age Cyclades, w",
    "editions": 21,
-   "unesco": false
+   "unesco": false,
+   "web": "http://www.cycladic.gr/en"
   },
   {
    "name": "National Gallery",
@@ -258,7 +573,8 @@
    "wikidata": "Q1167467",
    "note": "It's one of Greece's main art institutions and features paintings and works of art from some of Greece's and Europe's best from the 19th and 20th centuries. Emphasis is given to popular Greek contemporary artists including Giannis Tsarouchi",
    "editions": 19,
-   "unesco": false
+   "unesco": false,
+   "web": "http://www.nationalgallery.gr"
   },
   {
    "name": "Benaki Museum of Islamic Art",
@@ -274,7 +590,8 @@
    "wikidata": "Q4306259",
    "note": "An excellent museum of its type. Too often neglected by visitors to Athens, even though it is in the heavily touristed Plaka neighbourhood. Displays include artefacts, tools, primitive painting, folk pottery and interior decor. It is partic",
    "editions": 9,
-   "unesco": false
+   "unesco": false,
+   "web": "http://www.mnep.gr/"
   },
   {
    "name": "Athens Municipal Art Gallery",
@@ -292,7 +609,8 @@
    "wikidata": "Q7941879",
    "note": "A museum of folk and contemporary art. Its grounds cover 320,000 m<sup>2</sup> (80 acres) including several buildings, gardens and courtyards. Its collection includes over 6,000 pieces covering 4,000 years of Greek history and art. The muse",
    "editions": 4,
-   "unesco": false
+   "unesco": false,
+   "web": "http://www.vorresmuseum.gr/"
   },
   {
    "name": "National Historical Museum",
@@ -301,7 +619,8 @@
    "wikidata": "Q822101",
    "note": "In the old parliament building, this museum contains a large collection of historic documents such as the first constitution of Greece, furniture, equipment from the revolution. If you are lucky you may see the old session room.",
    "editions": 20,
-   "unesco": false
+   "unesco": false,
+   "web": "http://www.nhmuseum.gr/"
   },
   {
    "name": "Numismatic Museum",
@@ -310,7 +629,8 @@
    "wikidata": "Q658339",
    "note": "The building of the museum is one of the most beautiful in Athens, and was built by Ernst Ziller and was used as the residence in Athens of Schliemann. The collection contains thousands of ancient coins and ancient Greek, Roman, Byzantine, ",
    "editions": 20,
-   "unesco": false
+   "unesco": false,
+   "web": "http://www.nummus.gr/"
   },
   {
    "name": "Museum of Greek Popular Musical Instruments",
@@ -328,7 +648,8 @@
    "wikidata": "Q1788831",
    "note": "The National War Museum is the only significant surviving public project of the military dictatorship which ruled Greece 1967 - 1974. The museum's displays are old fashioned and biased towards the more successful periods of Greek military h",
    "editions": 19,
-   "unesco": false
+   "unesco": false,
+   "web": "http://www.warmuseum.gr/"
   },
   {
    "name": "Park of Maritime Tradition",
@@ -344,7 +665,8 @@
    "wikidata": "Q174552",
    "note": "An industrial museum of incomparable architecture. The centre has assisted in the upgrading of a historic Athens district.",
    "editions": 6,
-   "unesco": false
+   "unesco": false,
+   "web": "https://www.athens-technopolis.gr/"
   },
   {
    "name": "Spathario Museum",
@@ -353,7 +675,8 @@
    "wikidata": "Q7574011",
    "note": "The first and unique museum of shadow theatre in the world, dedicated to the famous Greek shadow theatre character \"Karagiozis\".",
    "editions": 3,
-   "unesco": false
+   "unesco": false,
+   "web": "http://www.karagiozismuseum.gr"
   },
   {
    "name": "Cultural Centre Hellenic Cosmos",
@@ -369,7 +692,8 @@
    "wikidata": "Q1163632",
    "note": "",
    "editions": 6,
-   "unesco": false
+   "unesco": false,
+   "web": "https://www.hellenicmotormuseum.gr/"
   },
   {
    "name": "Michael Cacoyannis Foundation cultural center",
@@ -399,7 +723,8 @@
    "wikidata": "Q2732854",
    "note": "",
    "editions": 10,
-   "unesco": false
+   "unesco": false,
+   "web": "https://epigraphicmuseum.gr/"
   },
   {
    "name": "National Museum of Contemporary Art",
@@ -539,7 +864,7 @@
      "lng": 23.78379
     },
     {
-     "name": "Νεραντζιώτισσα",
+     "name": "Nerantziotissa",
      "lat": 38.04553,
      "lng": 23.79342
     },
@@ -566,7 +891,7 @@
    "name": "Metro Μ3: Dimotiko Theatro → Airport",
    "stops": [
     {
-     "name": "Δημοτικό Θέατρο",
+     "name": "Dimotiko Theatro",
      "lat": 37.94292,
      "lng": 23.64759
     },
@@ -576,12 +901,12 @@
      "lng": 23.64233
     },
     {
-     "name": "Μανιάτικα",
+     "name": "Maniatika",
      "lat": 37.96006,
      "lng": 23.63979
     },
     {
-     "name": "Νίκαια",
+     "name": "Nikaia",
      "lat": 37.96608,
      "lng": 23.64784
     },
@@ -676,12 +1001,12 @@
      "lng": 23.82076
     },
     {
-     "name": "Δουκίσσης Πλακεντίας",
+     "name": "Doukissis Plakentias",
      "lat": 38.02398,
      "lng": 23.83256
     },
     {
-     "name": "Παλλήνη",
+     "name": "Pallini",
      "lat": 38.00458,
      "lng": 23.86995
     },
@@ -691,12 +1016,12 @@
      "lng": 23.87007
     },
     {
-     "name": "Κορωπί",
+     "name": "Koropi",
      "lat": 37.91254,
      "lng": 23.89608
     },
     {
-     "name": "Αεροδρόμιο",
+     "name": "Athens Airport (AIA)",
      "lat": 37.93688,
      "lng": 23.94473
     }
@@ -778,7 +1103,7 @@
      "lng": 23.7214
     },
     {
-     "name": "Σταθμός Λαρίσης",
+     "name": "Stathmos Larisis",
      "lat": 37.99228,
      "lng": 23.72074
     },
@@ -815,7 +1140,7 @@
    "name": "Metro Μ3: Dimotiko Theatro → Doukissis Plakentias",
    "stops": [
     {
-     "name": "Δημοτικό Θέατρο",
+     "name": "Dimotiko Theatro",
      "lat": 37.94292,
      "lng": 23.64759
     },
@@ -825,12 +1150,12 @@
      "lng": 23.64233
     },
     {
-     "name": "Μανιάτικα",
+     "name": "Maniatika",
      "lat": 37.96006,
      "lng": 23.63979
     },
     {
-     "name": "Νίκαια",
+     "name": "Nikaia",
      "lat": 37.96608,
      "lng": 23.64784
     },
@@ -925,7 +1250,7 @@
      "lng": 23.82076
     },
     {
-     "name": "Δουκίσσης Πλακεντίας",
+     "name": "Doukissis Plakentias",
      "lat": 38.02398,
      "lng": 23.83256
     }
@@ -987,7 +1312,7 @@
      "lng": 23.71387
     },
     {
-     "name": "Αγίας Φωτεινής-Πλατεία",
+     "name": "Aghias Fotinis-Platia",
      "lat": 37.94672,
      "lng": 23.71512
     },
@@ -1039,29 +1364,29 @@
    "name": "Train IC: Athens → Thessaloniki",
    "stops": [
     {
-     "name": "Αθήνα",
+     "name": "Athina",
      "lat": 37.99314,
      "lng": 23.72024
     },
     {
-     "name": "Οινόη",
+     "name": "Oinoi",
      "lat": 38.32171,
      "lng": 23.6098
     },
     {
-     "name": "Θήβα",
+     "name": "Thiva",
      "lat": 38.32968,
      "lng": 23.3183
     },
     {
-     "name": "Λιβαδειά",
+     "name": "Livadia",
      "lat": 38.47119,
      "lng": 22.92691
     },
     {
-     "name": "Τιθορέα",
-     "lat": 38.60823,
-     "lng": 22.71789
+     "name": "Tithorea",
+     "lat": 38.60824,
+     "lng": 22.7179
     }
    ]
   },
@@ -1076,67 +1401,67 @@
      "lng": 23.58618
     },
     {
-     "name": "Αυλίδα",
+     "name": "Avlida",
      "lat": 38.40446,
      "lng": 23.60334
     },
     {
-     "name": "Καλοχώρι-Παντείχι",
+     "name": "Kalochori-Pantichi",
      "lat": 38.38931,
      "lng": 23.59316
     },
     {
-     "name": "Άγιος Γεώργιος",
+     "name": "Agios Georgios",
      "lat": 38.35489,
      "lng": 23.60741
     },
     {
-     "name": "Δήλεσι",
+     "name": "Dilesi",
      "lat": 38.33764,
      "lng": 23.60945
     },
     {
-     "name": "Οινόη",
+     "name": "Oinoi",
      "lat": 38.32158,
      "lng": 23.60981
     },
     {
-     "name": "Οινόφυτα",
+     "name": "Oinofyta",
      "lat": 38.30695,
      "lng": 23.63383
     },
     {
-     "name": "Άγιος Θωμάς",
+     "name": "Agios Thomas",
      "lat": 38.28166,
      "lng": 23.66718
     },
     {
-     "name": "Αυλώνας",
+     "name": "Avlonas",
      "lat": 38.25046,
      "lng": 23.69555
     },
     {
-     "name": "Σφενδάλη",
-     "lat": 38.23538,
-     "lng": 23.78441
+     "name": "Sfendali",
+     "lat": 38.23537,
+     "lng": 23.78442
     },
     {
-     "name": "Αφίδνες",
+     "name": "Afidnes",
      "lat": 38.18642,
      "lng": 23.84474
     },
     {
-     "name": "Άγιος Στέφανος",
+     "name": "Agios Stefanos",
      "lat": 38.14039,
      "lng": 23.85914
     },
     {
-     "name": "Δεκέλεια",
+     "name": "Dekelia",
      "lat": 38.09979,
      "lng": 23.78008
     },
     {
-     "name": "Αχαρνές",
+     "name": "Acharnes",
      "lat": 38.08026,
      "lng": 23.74289
     },
@@ -1146,12 +1471,12 @@
      "lng": 23.73768
     },
     {
-     "name": "Άγιοι Ανάργυροι",
+     "name": "Agioi Anargyroi",
      "lat": 38.02114,
      "lng": 23.71838
     },
     {
-     "name": "Αθήνα",
+     "name": "Athina",
      "lat": 37.99317,
      "lng": 23.72004
     }
@@ -1168,77 +1493,77 @@
      "lng": 23.64342
     },
     {
-     "name": "Λεύκα",
+     "name": "Lefka",
      "lat": 37.95558,
      "lng": 23.65412
     },
     {
-     "name": "Ρέντης",
+     "name": "Rentis",
      "lat": 37.96226,
      "lng": 23.66831
     },
     {
-     "name": "Ταύρος",
+     "name": "Tavros",
      "lat": 37.96894,
      "lng": 23.69422
     },
     {
-     "name": "Ρουφ",
+     "name": "Rouf",
      "lat": 37.9736,
      "lng": 23.70401
     },
     {
-     "name": "Αθήνα",
+     "name": "Athina",
      "lat": 37.99313,
      "lng": 23.72028
     },
     {
-     "name": "Άγιοι Ανάργυροι",
+     "name": "Agioi Anargyroi",
      "lat": 38.02246,
      "lng": 23.71865
     },
     {
-     "name": "Πύργος Βασιλίσσης",
+     "name": "Pyrgos Vasilissis",
      "lat": 38.04004,
      "lng": 23.72768
     },
     {
-     "name": "Κάτω Αχαρναί",
+     "name": "Kato Acharnai",
      "lat": 38.05473,
      "lng": 23.73281
     },
     {
-     "name": "Μεταμόρφωση",
+     "name": "Metamorfosi",
      "lat": 38.06007,
      "lng": 23.75621
     },
     {
-     "name": "Ηράκλειο",
+     "name": "Iraklio",
      "lat": 38.05678,
      "lng": 23.77209
     },
     {
-     "name": "Νερατζιώτισσα",
+     "name": "Neratziotissa",
      "lat": 38.04477,
      "lng": 23.79411
     },
     {
-     "name": "Κηφισίας",
+     "name": "Kifisias",
      "lat": 38.04192,
      "lng": 23.80407
     },
     {
-     "name": "Πεντέλης",
+     "name": "Pentelis",
      "lat": 38.03288,
      "lng": 23.82258
     },
     {
-     "name": "Δουκίσσης Πλακεντίας",
+     "name": "Doukissis Plakentias",
      "lat": 38.0247,
      "lng": 23.83387
     },
     {
-     "name": "Παλλήνη",
+     "name": "Pallini",
      "lat": 38.00549,
      "lng": 23.86964
     },
@@ -1265,12 +1590,12 @@
    "name": "Train A4: Kiato → Piraeus",
    "stops": [
     {
-     "name": "Κιάτο",
+     "name": "Kiato",
      "lat": 38.01392,
      "lng": 22.73468
     },
     {
-     "name": "Ζευγολατιό",
+     "name": "Zevgolatio",
      "lat": 37.92554,
      "lng": 22.80666
     },
@@ -1280,82 +1605,82 @@
      "lng": 22.9324
     },
     {
-     "name": "Άγιοι Θεοδώροι",
+     "name": "Agioi Theodoroi",
      "lat": 37.93314,
      "lng": 23.13708
     },
     {
-     "name": "Κινέτα",
+     "name": "Kineta",
      "lat": 37.96541,
      "lng": 23.20106
     },
     {
-     "name": "Μέγαρα",
+     "name": "Megara",
      "lat": 37.9909,
      "lng": 23.36112
     },
     {
-     "name": "Νέα Πέραμος",
+     "name": "Nea Peramos",
      "lat": 38.01389,
      "lng": 23.41575
     },
     {
-     "name": "Μαγούλα",
+     "name": "Magoula",
      "lat": 38.07406,
      "lng": 23.52988
     },
     {
-     "name": "Ασπρόπυργος",
+     "name": "Aspropyrgos",
      "lat": 38.08107,
      "lng": 23.60429
     },
     {
-     "name": "Άνω Λιόσια",
+     "name": "Ano Liosia",
      "lat": 38.07069,
      "lng": 23.70999
     },
     {
-     "name": "Ζεφύρι",
+     "name": "Zefyri",
      "lat": 38.06966,
      "lng": 23.71756
     },
     {
-     "name": "Κάτω Αχαρναί",
+     "name": "Kato Acharnai",
      "lat": 38.05352,
      "lng": 23.73244
     },
     {
-     "name": "Πύργος Βασιλίσσης",
+     "name": "Pyrgos Vasilissis",
      "lat": 38.0391,
      "lng": 23.72714
     },
     {
-     "name": "Άγιοι Ανάργυροι",
+     "name": "Agioi Anargyroi",
      "lat": 38.02114,
      "lng": 23.71838
     },
     {
-     "name": "Αθήνα",
+     "name": "Athina",
      "lat": 37.99317,
      "lng": 23.72004
     },
     {
-     "name": "Ρουφ",
+     "name": "Rouf",
      "lat": 37.97366,
      "lng": 23.70392
     },
     {
-     "name": "Ταύρος",
+     "name": "Tavros",
      "lat": 37.96864,
      "lng": 23.69267
     },
     {
-     "name": "Ρέντης",
+     "name": "Rentis",
      "lat": 37.96238,
      "lng": 23.66828
     },
     {
-     "name": "Λεύκα",
+     "name": "Lefka",
      "lat": 37.95514,
      "lng": 23.65368
     },
@@ -1372,41 +1697,49 @@
    "name": "Train IC: Athens → Kalambaka",
    "stops": [
     {
-     "name": "Αθήνα",
+     "name": "Athina",
      "lat": 37.99314,
      "lng": 23.72024
     },
     {
-     "name": "Οινόη",
+     "name": "Oinoi",
      "lat": 38.32171,
      "lng": 23.6098
     },
     {
-     "name": "Θήβα",
+     "name": "Thiva",
      "lat": 38.32968,
      "lng": 23.3183
     },
     {
-     "name": "Αλίαρτος",
+     "name": "Aliartos",
      "lat": 38.37949,
      "lng": 23.11096
     },
     {
-     "name": "Λιβαδειά",
+     "name": "Livadia",
      "lat": 38.47119,
      "lng": 22.92691
     },
     {
-     "name": "Τιθορέα",
-     "lat": 38.60823,
-     "lng": 22.71789
+     "name": "Tithorea",
+     "lat": 38.60824,
+     "lng": 22.7179
     },
     {
-     "name": "Μώλος",
+     "name": "Molos",
      "lat": 38.81281,
      "lng": 22.65592
     }
    ]
   }
- ]
+ ],
+ "built": "2026-11-18",
+ "sources": [
+  "Wikidata",
+  "OpenStreetMap",
+  "Wikivoyage"
+ ],
+ "portQuery": null,
+ "wikivoyage": "Athens"
 }

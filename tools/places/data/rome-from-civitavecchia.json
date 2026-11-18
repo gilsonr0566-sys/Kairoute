@@ -1,0 +1,7642 @@
+{
+ "key": "rome from civitavecchia",
+ "name": "Rome (from Civitavecchia)",
+ "built": "2026-11-18",
+ "sources": [
+  "Wikidata",
+  "OpenStreetMap",
+  "Wikivoyage"
+ ],
+ "sites": {
+  "vatican": {
+   "wikidata": "Q12512",
+   "editions": 133,
+   "types": [
+    "Q124936",
+    "Q2713379",
+    "Q2319498",
+    "Q317557",
+    "Q15487029"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [
+    "Q2166566"
+   ],
+   "web": "https://www.basilicasanpietro.va/",
+   "hours": "07:00-19:10",
+   "osm": "way/244159210"
+  },
+  "colosseum": {
+   "wikidata": "Q10285",
+   "editions": 148,
+   "types": [
+    "Q7362268",
+    "Q839954",
+    "Q483110",
+    "Q112132548",
+    "Q3867560",
+    "Q112132522",
+    "Q124830411",
+    "Q133444874"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [
+    "Q108436146"
+   ],
+   "web": "https://colosseo.it/area/colosseo/",
+   "hours": "Mar 30-Sep 30: 08:30-19:15; Oct 01-Oct 25: 08:30-18:30; Oct 26-Feb 28: 08:30-16:30; Jan 01 off; Dec 25 off",
+   "fee": "yes",
+   "osm": "relation/1834818"
+  },
+  "pantheon": {
+   "wikidata": "Q99309",
+   "editions": 81,
+   "types": [
+    "Q867143",
+    "Q21752084",
+    "Q120560",
+    "Q96376684",
+    "Q14752696",
+    "Q92755865",
+    "Q3867560",
+    "Q112132548",
+    "Q112132522",
+    "Q124830411"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "web": "https://pantheonroma.org/",
+   "hours": "Mo-Sa 08:30-19:15; Su 09:00-17:45",
+   "fee": "yes",
+   "osm": "relation/3374342"
+  },
+  "navona": {
+   "wikidata": "Q463400",
+   "editions": 47,
+   "types": [
+    "Q174782"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "web": "",
+   "osm": "way/4247138"
+  }
+ },
+ "towns": {
+  "stpaulwalls-far": {
+   "name": "Basilica of Saint Paul Outside the Walls",
+   "wikidata": "Q231699",
+   "editions": 58,
+   "unesco": false,
+   "dayTripListed": false,
+   "sights": [],
+   "foodDrink": [],
+   "mapEats": [
+    {
+     "name": "Bar tabacchi Pappagone",
+     "lat": 41.8590347,
+     "lng": 12.478038,
+     "kind": "eat",
+     "amenity": "cafe",
+     "cuisine": "",
+     "osm": "node/1710679140"
+    },
+    {
+     "name": "Saulo Roma",
+     "lat": 41.8590518,
+     "lng": 12.4782982,
+     "kind": "eat",
+     "amenity": "restaurant",
+     "cuisine": "regional",
+     "osm": "node/5821356353"
+    },
+    {
+     "name": "Gli Sfizi dei Vizi",
+     "lat": 41.8604637,
+     "lng": 12.4786637,
+     "kind": "eat",
+     "amenity": "restaurant",
+     "cuisine": "pizza",
+     "osm": "node/3105337400"
+    },
+    {
+     "name": "Trattoria Zampagna",
+     "lat": 41.8606718,
+     "lng": 12.4787066,
+     "kind": "eat",
+     "amenity": "restaurant",
+     "cuisine": "regional",
+     "osm": "node/419132597"
+    },
+    {
+     "name": "Meli Caffè",
+     "lat": 41.8564592,
+     "lng": 12.4791855,
+     "kind": "eat",
+     "amenity": "cafe",
+     "cuisine": "",
+     "osm": "node/8003429296"
+    },
+    {
+     "name": "Bar San Paolo",
+     "lat": 41.8562238,
+     "lng": 12.4787828,
+     "kind": "eat",
+     "amenity": "cafe",
+     "cuisine": "",
+     "osm": "node/2104115311"
+    },
+    {
+     "name": "Desideri & caffè",
+     "lat": 41.8561135,
+     "lng": 12.4787614,
+     "kind": "eat",
+     "amenity": "cafe",
+     "cuisine": "",
+     "osm": "node/2109265212"
+    },
+    {
+     "name": "La Motoretta",
+     "lat": 41.8593101,
+     "lng": 12.4808877,
+     "kind": "eat",
+     "amenity": "restaurant",
+     "cuisine": "italian",
+     "osm": "node/2687693642"
+    }
+   ]
+  }
+ },
+ "ports": [
+  {
+   "name": "Rome Cruise Port Terminal",
+   "lat": 42.09586,
+   "lng": 11.78867,
+   "osm": "node/11938558217",
+   "kind": "ferry terminal",
+   "cruise": true,
+   "d": 0.15
+  },
+  {
+   "name": "Hotel Smart Cruise",
+   "lat": 42.09754,
+   "lng": 11.78994,
+   "osm": "way/460820646",
+   "kind": "terminal",
+   "cruise": true,
+   "d": 0.28
+  },
+  {
+   "name": "Roma Cruise Terminal",
+   "lat": 42.10405,
+   "lng": 11.77488,
+   "osm": "way/553243137",
+   "kind": "ferry terminal",
+   "cruise": true,
+   "d": 1.6
+  },
+  {
+   "name": "Molo di Lazzaretto",
+   "lat": 42.09327,
+   "lng": 11.78647,
+   "osm": "way/38554216",
+   "kind": "pier",
+   "cruise": false,
+   "d": 0.35
+  },
+  {
+   "name": "Molo di Lazzaretto",
+   "lat": 42.09295,
+   "lng": 11.78623,
+   "osm": "way/1189147754",
+   "kind": "pier",
+   "cruise": false,
+   "d": 0.39
+  },
+  {
+   "name": "Civitavecchia",
+   "lat": 42.09907,
+   "lng": 11.78254,
+   "osm": "node/456381084",
+   "kind": "ferry terminal",
+   "cruise": false,
+   "d": 0.76
+  },
+  {
+   "name": "pier 12",
+   "lat": 42.09376,
+   "lng": 11.78047,
+   "osm": "node/3716898173",
+   "kind": "pier",
+   "cruise": false,
+   "d": 0.8
+  },
+  {
+   "name": "terminal Amerigo Vespucci",
+   "lat": 42.09537,
+   "lng": 11.77797,
+   "osm": "way/149907494",
+   "kind": "terminal",
+   "cruise": false,
+   "d": 0.99
+  },
+  {
+   "name": "Pier 13 South",
+   "lat": 42.09849,
+   "lng": 11.77454,
+   "osm": "way/245336388",
+   "kind": "pier",
+   "cruise": false,
+   "d": 1.33
+  }
+ ],
+ "dayTrips": [
+  "Metropolitan Rome",
+  "Cerveteri",
+  "Frascati",
+  "Castelli Romani",
+  "Castel Gandolfo",
+  "Ostia",
+  "Tivoli",
+  "Anzio",
+  "Monte Cassino",
+  "Canterano",
+  "Civitavecchia",
+  "Sardinia",
+  "Corsica",
+  "Sicily",
+  "Spain",
+  "France",
+  "Africa",
+  "Viterbo (province)",
+  "Tarquinia",
+  "Vulci",
+  "Viterbo",
+  "Campania",
+  "Naples",
+  "Capri",
+  "Ischia",
+  "Procida",
+  "Pompeii",
+  "Egypt",
+  "Georgia (country)",
+  "Israel",
+  "Armenia",
+  "Jordan",
+  "Morocco",
+  "Leonardo da Vinci-Fiumicino Airport",
+  "Pescara"
+ ],
+ "missing": [],
+ "portQuery": {
+  "name": "Civitavecchia cruise port",
+  "lat": 42.095,
+  "lng": 11.79,
+  "known": true,
+  "island": false
+ },
+ "centre": {
+  "lat": 41.89822,
+  "lng": 12.47588
+ },
+ "wikivoyage": "Rome",
+ "guideSights": [
+  {
+   "name": "St. Peter's Basilica",
+   "lat": 41.902222,
+   "lng": 12.453333,
+   "wikidata": "Q12512",
+   "note": "The centre of the Catholic world, this magnificent basilica with its Michelangelo-designed dome has an awe-inspiring interior. This place is huge, but everything is in such proportion that the scale escapes you. However, contrary to popular",
+   "editions": 133,
+   "unesco": false,
+   "web": "https://www.basilicasanpietro.va/"
+  },
+  {
+   "name": "St. Peter's Square",
+   "lat": 41.902222,
+   "lng": 12.457265,
+   "wikidata": "Q83425",
+   "note": "Most of the ''Piazza di San Pietro'' is actually an oval. There is a small, almost rectangular section immediately in front of the St Peter's and an opening to the Via della Conciliazione opposite the basilica.",
+   "editions": 66,
+   "unesco": false
+  },
+  {
+   "name": "The Vatican Museum",
+   "lat": 41.90655,
+   "lng": 12.45363,
+   "wikidata": "Q182955",
+   "note": "One of the greatest art galleries in the world, the museum is most famous for its spiral staircase, the Raphael Rooms and the exquisitely decorated Sistine Chapel famous for Michelangelo's frescoes.",
+   "editions": 65,
+   "unesco": false,
+   "web": "http://www.museivaticani.va"
+  },
+  {
+   "name": "Castel Sant'Angelo",
+   "lat": 41.903064,
+   "lng": 12.466355,
+   "wikidata": "Q486382",
+   "note": "Perhaps the most fascinating building in Rome. The core of the structure began life as the mausoleum of Emperor Hadrian, built between 135 and 139 AD. Subsequent strongholds built on top of the mausoleum were in turn incorporated into a res",
+   "editions": 58,
+   "unesco": false,
+   "web": "http://www.castelsantangelo.beniculturali.it/"
+  },
+  {
+   "name": "Passetto di Borgo",
+   "lat": 41.903333,
+   "lng": 12.461667,
+   "wikidata": "Q1329589",
+   "note": "Pope Nicholas III connected Castel Sant'Angelo to St. Peter's by a covered fortified corridor called the Passetto di Borgo. This proved useful for Pope Clement VII during the Sack of Rome (1527). You can still see much of the Passetto by wa",
+   "editions": 23,
+   "unesco": false
+  },
+  {
+   "name": "Palazzo di Giustizia",
+   "lat": 41.904097,
+   "lng": 12.470447,
+   "wikidata": "Q2047650",
+   "note": "Wandering around the shopping and residential district of ''Prati'', close to the Vatican, you may notice rather a lot of lawyers' nameplates outside buildings. This is also Rome's legal district because of the proximity of the ''Palazzo di",
+   "editions": 14,
+   "unesco": false
+  },
+  {
+   "name": "Ponte Sant'Angelo",
+   "lat": 41.901803,
+   "lng": 12.46645,
+   "wikidata": "Q870476",
+   "note": "This is a footbridge connecting Castel Sant'Angelo with the other side of the Tiber. It is a Roman bridge completed in 134 AD by Hadrian, to give access to his newly constructed mausoleum. Pilgrims used this bridge to reach St Peter's Basil",
+   "editions": 37,
+   "unesco": false
+  },
+  {
+   "name": "Villa Doria Pamphili",
+   "lat": 41.887769,
+   "lng": 12.450558,
+   "wikidata": "Q774654",
+   "note": "A large villa and 180-ha park that is a major recreation area for Romans, and a popular spot for joggers. One unusual feature of the grounds is the colony of coypus (swamp beavers) around the lake. Natives of South America these ones are de",
+   "editions": 17,
+   "unesco": false,
+   "web": "http://www.villapamphili.it"
+  },
+  {
+   "name": "Olympic Stadium",
+   "lat": 41.933872,
+   "lng": 12.454714,
+   "wikidata": "Q159884",
+   "note": "The stadium is on the west bank of River Tiber, about three km directly north of the Vatican. It is part of a sports complex that was built for the 1960 Olympic Games, including the Olympic swimming pool and the tennis complex where the ann",
+   "editions": 73,
+   "unesco": false,
+   "web": "https://www.sportesalute.eu/stadioolimpicotour.html"
+  },
+  {
+   "name": "Santa Passera",
+   "lat": 41.858597,
+   "lng": 12.460197,
+   "wikidata": "Q3674186",
+   "note": "This church can be an interesting deviation if you are passing through its neighbourhood. It is believed to be the grave of the Saints Ciro and Giovanni, killed during the time of the Emperor Diocletian. The original name was ''Abba Cyrus''",
+   "editions": 6,
+   "unesco": false
+  },
+  {
+   "name": "Museum of the Walls",
+   "lat": 41.8734,
+   "lng": 12.5014,
+   "wikidata": "Q3868150",
+   "note": "Porta San Sebastiano is a gate in the amazingly well-preserved Aurelian Walls. Inside and upstairs is a museum dedicated to the construction of the walls and their recent restoration. You can take a walk along the top of the walls. At the m",
+   "editions": 6,
+   "unesco": false,
+   "web": "http://www.museodellemuraroma.it/"
+  },
+  {
+   "name": "Tomb of Priscilla",
+   "lat": 41.8665,
+   "lng": 12.5031,
+   "wikidata": "Q3955654",
+   "note": "A 1st-century tomb surrounded by two farmhouses from the Middle Ages, one of which used to be a cheese store. Rather hidden behind a high wall, the tomb is rarely open to the public. You might be lucky on a Sunday: on the third Sunday of ev",
+   "editions": 6,
+   "unesco": false
+  },
+  {
+   "name": "The Catacombs of San Callisto",
+   "lat": 41.858878,
+   "lng": 12.511058,
+   "wikidata": "Q1027069",
+   "note": "Although started in the 2nd century, San Callisto has had many more recent burials, including 16 popes. The burial arcades are almost 20 km long.",
+   "editions": 25,
+   "unesco": false
+  },
+  {
+   "name": "The Catacombs of San Domitilla",
+   "lat": 41.858914,
+   "lng": 12.505528,
+   "wikidata": "Q287041",
+   "note": "The Catacombs of Domitilla are considered to be the best preserved of all Roman catacombs. They are the only ones still to contain bones. Domitilla also has a subterranean basilica, much of which was reconstructed in 1870.",
+   "editions": 17,
+   "unesco": false,
+   "web": "http://www.domitilla.info/idx.htm?var1=docs/fr01.htm"
+  },
+  {
+   "name": "Basilica and catacombs of San Sebastiano",
+   "lat": 41.855556,
+   "lng": 12.515556,
+   "wikidata": "Q658051",
+   "note": "The first basilica was constructed in the 4th century and dedicated to San Sebastian, a martyr of the 3rd century. Sebastian's remains were transferred to St. Peter's in 826, prior to a Saracen assault when the church was destroyed. The cur",
+   "editions": 27,
+   "unesco": false,
+   "web": "http://www.sansebastianofuorilemura.org/"
+  },
+  {
+   "name": "Fosse Ardeatine",
+   "lat": 41.856667,
+   "lng": 12.510278,
+   "wikidata": "Q638761",
+   "note": "This was the site of the slaughter in 1944 of 335 Italians, including many Jews from the Ghetto, in retaliation for a Partisan attack on German troops in Rome. The caves where the massacre took place are now a National Monument and Memorial",
+   "editions": 22,
+   "unesco": false
+  },
+  {
+   "name": "Jewish Catacombs",
+   "lat": 41.8568,
+   "lng": 12.5185,
+   "wikidata": "Q3663214",
+   "note": "These are underneath a property known as Vigna Randanini. The catacombs are much smaller than the Christian catacombs and much less easy to visit. Groups are limited to twelve people at any one time and you need to take your own lighting!",
+   "editions": 5,
+   "unesco": false
+  },
+  {
+   "name": "Caffarella Park",
+   "lat": 41.8642,
+   "lng": 12.5158,
+   "wikidata": "Q3649575",
+   "note": "Caffarella Park covers an area of 339 ha and is part of the larger Appia Antica park. It contains both a working farm and numerous Roman ruins, some quite well preserved and is a great place for a stroll or cycle away from Rome’s traffic.",
+   "editions": 6,
+   "unesco": false,
+   "web": "https://www.caffarella.it"
+  },
+  {
+   "name": "Circus of Maxentius",
+   "lat": 41.854722,
+   "lng": 12.522453,
+   "wikidata": "Q1457351",
+   "note": "This well-preserved Roman circus was built at the beginning of the fourth century. It was part of an imperial villa built by Maxentius and the complex also contains the Mausoleum of his son, Romolo.",
+   "editions": 16,
+   "unesco": false
+  },
+  {
+   "name": "Tomb of Cecilia Metella",
+   "lat": 41.852222,
+   "lng": 12.520833,
+   "wikidata": "Q1540920",
+   "note": "The mausoleum of Cecilia Metella, who died in 69 BC, is the best preserved monument on the Appian Way and dominates the surroundings. In the Middle Ages it was transformed into a fortress and battlements were added. At that time there was c",
+   "editions": 23,
+   "unesco": false,
+   "web": "https://www.parcoarcheologicoappiaantica.it/"
+  },
+  {
+   "name": "Capo di Bove",
+   "lat": 41.848412,
+   "lng": 12.524027,
+   "wikidata": "Q2205213",
+   "note": "This archaeological site displays the thermal baths of the villa of the wealthy Herod Atticus. Also in the complex is a restored villa, until 2002 a private residence, that has an exterior completely covered with pieces from Roman ruins, in",
+   "editions": 6,
+   "unesco": false,
+   "web": "https://www.parcoarcheologicoappiaantica.it/"
+  },
+  {
+   "name": "Villa dei Quintilii",
+   "lat": 41.830278,
+   "lng": 12.551111,
+   "wikidata": "Q1235515",
+   "note": "This impressive villa covers 23 hectares. It can be accessed from the Via Appia Nuova (Bus 118) or through Via Appia Antica 251. Parts can be seen from the Appian Way at around the 5th mile just after No 251. The villa was built by Maximus ",
+   "editions": 14,
+   "unesco": false,
+   "web": "https://www.parcoarcheologicoappiaantica.it/"
+  },
+  {
+   "name": "Casal Rotondo",
+   "lat": 41.821,
+   "lng": 12.556,
+   "wikidata": "Q3661405",
+   "note": "Casal Rotondo is the biggest mausoleum on the Appian Way, at about the sixth mile. It now incorporates a small private villa, originally a farmhouse. It is not known for whom it was built. The wall of fragments next to it, constructed by Lu",
+   "editions": 11,
+   "unesco": false
+  },
+  {
+   "name": "Parco degli Acquedotti (Aqueduct Park)",
+   "lat": 41.847,
+   "lng": 12.562,
+   "wikidata": "Q3895477",
+   "note": "This pleasant park contains very well-preserved ruins of two aqueducts and some of the original surface of the Roman Via Latina. Gets crowded on Sundays but almost empty the rest of the week during term time. Good place for joggers.",
+   "editions": 12,
+   "unesco": false,
+   "web": "http://www.parcoappiaantica.it/"
+  },
+  {
+   "name": "Abbey of the three fountains (Abazzia delle tre fontane)",
+   "lat": 41.834444,
+   "lng": 12.483333,
+   "wikidata": "Q114436",
+   "note": "A truly quiet oasis close to the hustle and bustle of EUR. There are three churches in this complex and the doors are open all day, unlike city churches. The monks produce a range of products such as liqueurs, chocolate and honey, as well a",
+   "editions": 18,
+   "unesco": false,
+   "closedForGood": true,
+   "web": "http://www.abbaziatrefontane.it"
+  },
+  {
+   "name": "L. Pigorini National Museum of Prehistory and Ethnography",
+   "lat": 41.832222,
+   "lng": 12.471389,
+   "wikidata": "Q304735",
+   "note": "An ethnographic collection of around 60,000 pieces from European indigenous cultures. Documents evolution from the Palaeolithic age to the Iron Age.",
+   "editions": 9,
+   "unesco": false,
+   "web": "https://museocivilta.beniculturali.it/museo-pigorini/"
+  },
+  {
+   "name": "Museo della Civilta Romana (Museum of Rome's Civilization)",
+   "lat": 41.831944,
+   "lng": 12.478056,
+   "wikidata": "Q1275123",
+   "note": "Perhaps most famous for a large model of imperial Rome, but also has a large display of various aspects of ancient Rome, using plaster casts, models and reconstructions of works found in museums throughout the world.",
+   "editions": 18,
+   "unesco": false,
+   "closedForGood": true,
+   "web": "http://www.museociviltaromana.it/"
+  },
+  {
+   "name": "Rome's Planetarium",
+   "lat": 41.83121,
+   "lng": 12.4775,
+   "wikidata": "Q3906240",
+   "note": "Regular shows plus an excellent astronomical museum.",
+   "editions": 3,
+   "unesco": false,
+   "web": "https://www.planetarioroma.it/"
+  },
+  {
+   "name": "Square Colosseum",
+   "lat": 41.836684,
+   "lng": 12.465309,
+   "wikidata": "Q1283476",
+   "note": "Constructed around the 1940s as the centrepiece of the EUR, but unused for a long time. It was restored before 2015 when the luxury fashion label Fendi moved in.",
+   "editions": 15,
+   "unesco": false,
+   "web": "http://www.eurspa.it/it/asset-property/patrimonio/edifici-storici/palazzo-civilta-italiana"
+  },
+  {
+   "name": "San Paolo fuori le Mura",
+   "lat": 41.858611,
+   "lng": 12.477222,
+   "wikidata": "Q231699",
+   "note": "Also known as St Paul Outside the Walls. This is on the outskirts of Rome in an otherwise drab modern neighborhood. The enormous basilica is a faithful reconstruction, finished in 1854, of the ancient basilica which burned down in 1823. Par",
+   "editions": 58,
+   "unesco": true,
+   "web": "http://www.vatican.va/various/basiliche/san_paolo/index_en.html"
+  },
+  {
+   "name": "Santa Passera",
+   "lat": 41.858597,
+   "lng": 12.460197,
+   "wikidata": "Q3674186",
+   "note": "This church can be an interesting deviation if you are passing through its neighbourhood. It is believed to be the grave of the Saints Ciro and Giovanni, killed during the time of the Emperor Diocletian. The original name was ''Abba Cyrus''",
+   "editions": 6,
+   "unesco": false
+  },
+  {
+   "name": "Centrale Montemartini Museum",
+   "lat": 41.8668,
+   "lng": 12.47809,
+   "wikidata": "Q1054090",
+   "note": "This delightful museum provides an interesting juxtaposition between the buildings and equipment of Rome's first electricity generating plant and the exhibits, which are mainly from excavations of Roman sites. A combined ticket with the mus",
+   "editions": 7,
+   "unesco": false,
+   "web": "http://www.centralemontemartini.org"
+  },
+  {
+   "name": "Jubilee Church",
+   "lat": 41.8825,
+   "lng": 12.585556,
+   "wikidata": "Q1226760",
+   "note": "A modern church designed by the world-famous architect Richard Meier. Completed in 2003 and built as a project to socially revive the surrounding Tor Tre Teste area.",
+   "editions": 19,
+   "unesco": false,
+   "web": "https://www.facebook.com/profile.php?id=100064419080643"
+  },
+  {
+   "name": "Trevi Fountain",
+   "lat": 41.900875,
+   "lng": 12.483167,
+   "wikidata": "Q185382",
+   "note": "Completed in 1762 to a design by Nicola Salvi, this spectacular Baroque fountain features a mythological sculptural composition of Neptune, god of the sea, flanked by two Tritons: one Triton labours to control a violent sea-horse, the other",
+   "editions": 68,
+   "unesco": false,
+   "web": "http://www.trevifountain.net/"
+  },
+  {
+   "name": "Via Veneto",
+   "lat": 41.907978,
+   "lng": 12.489413,
+   "wikidata": "Q921585",
+   "note": "It was immortalised in 1960 by the ''Federico Fellini'' film ''La Dolce Vita''. It is also the location of the US Embassy, in the massive Palazzo Margherita. Via Veneto went into a period of decline in the 1980s but has returned to populari",
+   "editions": 23,
+   "unesco": false
+  },
+  {
+   "name": "Servian walls",
+   "lat": 41.901667,
+   "lng": 12.501667,
+   "wikidata": "Q281330",
+   "note": "Remains of the first city walls, built in the early 4th century BC and attributed to king Servius Tullius.",
+   "editions": 37,
+   "unesco": false
+  },
+  {
+   "name": "Capuchin Monastery",
+   "lat": 41.904639,
+   "lng": 12.488667,
+   "wikidata": "Q546141",
+   "note": "Built after 1631, the crypt of the church contains a macabre display - a series of chapels decorated with the bones of 3700 dead friars. The bones are glued to the walls and ceilings in bizarre and striking decorations.",
+   "editions": 18,
+   "unesco": false,
+   "web": "http://www.cappucciniviaveneto.it/"
+  },
+  {
+   "name": "Le Quattro Fontane",
+   "lat": 41.901962,
+   "lng": 12.490736,
+   "wikidata": "Q1217302",
+   "note": "Four fountains from the time of Pope Sixtus V when much of Rome was redeveloped. A reclining deity is the theme of each sculpture. This is a busy intersection and if you don't look twice you may miss these exquisite examples of Roman mythol",
+   "editions": 18,
+   "unesco": false
+  },
+  {
+   "name": "Palazzo Massimo",
+   "lat": 41.901537,
+   "lng": 12.498062,
+   "wikidata": "Q3890451",
+   "note": "A magnificent collection of ancient Roman sculptures, mosaics and wall paintings, including the famous paintings from the Imperial-era villa discovered under the Villa Farnesina, as well as the dining room from the Empress Livia's villa at ",
+   "editions": 12,
+   "unesco": false,
+   "web": "https://museonazionaleromano.beniculturali.it/palazzo-massimo/"
+  },
+  {
+   "name": "Palazzo Barberini",
+   "lat": 41.903611,
+   "lng": 12.490278,
+   "wikidata": "Q1136614",
+   "note": "This remarkable building, designed partly by Bernini, houses the National Gallery of Ancient Art, and includes some famous paintings by Filippo Lippi and Caravaggio, as well as Raphael's \"La Fornarina\".",
+   "editions": 34,
+   "unesco": false,
+   "web": "https://www.barberinicorsini.org/"
+  },
+  {
+   "name": "Piazza Barberini",
+   "lat": 41.90361,
+   "lng": 12.48833,
+   "wikidata": "Q947037",
+   "note": "With Bernini's famous Triton Fountain. Via Veneto starts here too.",
+   "editions": 27,
+   "unesco": false
+  },
+  {
+   "name": "Palazzo del Quirinale",
+   "lat": 41.9,
+   "lng": 12.486903,
+   "wikidata": "Q223079",
+   "note": "Home of the President of the Italian Republic, and the Quirinal Gardens. Built in 1573 as a papal summer residence, and has since also served as the residence for the pope and later for the king of Italy.",
+   "editions": 53,
+   "unesco": false,
+   "web": "http://www.quirinale.it/"
+  },
+  {
+   "name": "San Carlo alle Quattro Fontane",
+   "lat": 41.901781,
+   "lng": 12.490747,
+   "wikidata": "Q867329",
+   "note": "A very small and beautiful church, the first design commission of Francesco Borromini.",
+   "editions": 36,
+   "unesco": false,
+   "web": "https://www.sancarlino.es/"
+  },
+  {
+   "name": "Santa Maria degli Angeli",
+   "lat": 41.903056,
+   "lng": 12.496944,
+   "wikidata": "Q569253",
+   "note": "This church was built inside the former baths of Diocletian. Very light and airy inside. Note the unusual art on the outside doors. Around solar noon check out the sun's image on Francesco Bianchini's meridian line inside.",
+   "editions": 33,
+   "unesco": false,
+   "web": "http://www.santamariadegliangeliroma.it"
+  },
+  {
+   "name": "Santa Maria della Vittoria",
+   "lat": 41.904722,
+   "lng": 12.494167,
+   "wikidata": "Q863593",
+   "note": "Now invaded by readers of Dan Brown's ''Angels and Demons'', this is an interesting Baroque church containing Bernini's \"Ecstasy of St. Teresa\". Either side of this chapel are characters in what can best be described as theatre boxes. These",
+   "editions": 36,
+   "unesco": false,
+   "web": "https://www.carmelitanicentroitalia.it/dove-siamo/conventi-della-provincia/s-maria-della-vittoria-roma"
+  },
+  {
+   "name": "St Paul's Within the Walls",
+   "lat": 41.9011,
+   "lng": 12.4942,
+   "wikidata": "Q3585375",
+   "note": "More modern than most Roman churches: it was not started until 1873. This is Rome’s Episcopalian church. Some very interesting artwork, particularly the mosaics by Edward Burne-Jones of the Pre-Raphaelite school.",
+   "editions": 10,
+   "unesco": false,
+   "web": "http://www.stpaulsrome.it/"
+  },
+  {
+   "name": "British Embassy",
+   "lat": 41.90823,
+   "lng": 12.50126,
+   "wikidata": "Q18712931",
+   "note": "At the northern end of Via XX Settembre next to the '''Porta Pia''' designed by Michaelangelo. The previous embassy had been destroyed by a terrorist bomb in 1946 and was eventually replaced by this world-renowned modern design by Sir Basil",
+   "editions": 6,
+   "unesco": false,
+   "web": "https://www.gov.uk/government/world/organisations/british-embassy-rome/"
+  },
+  {
+   "name": "Palazzo Colonna",
+   "lat": 41.897636,
+   "lng": 12.484214,
+   "wikidata": "Q1971299",
+   "note": "One of the most splendid (still private) Baroque grand palaces in Rome.",
+   "editions": 21,
+   "unesco": false,
+   "web": "https://www.galleriacolonna.it/"
+  },
+  {
+   "name": "The Pantheon",
+   "lat": 41.898561,
+   "lng": 12.47685,
+   "wikidata": "Q99309",
+   "note": "It was built in 27 BCE, by Augustus' right hand man Marcus Agrippa, and later remodeled by the Emperor Hadrian (AD 125-128). This ancient temple was built as a temple to all the gods of the Roman state but has served as a Christian church s",
+   "editions": 81,
+   "unesco": false,
+   "web": "https://pantheonroma.org/"
+  },
+  {
+   "name": "Largo di Torre Argentina",
+   "lat": 41.89528,
+   "lng": 12.47694,
+   "wikidata": "Q1541068",
+   "note": "Not, as commonly believed, named after the country but after the city of Strasbourg (''Argentoratum'' in Latin), from which came a courtesan of Pope Alexander VI who lived nearby. Four Roman Republican-era temples, Pompey's theater and a Ro",
+   "editions": 21,
+   "unesco": false
+  },
+  {
+   "name": "Temple of Hadrian",
+   "lat": 41.9,
+   "lng": 12.479444,
+   "wikidata": "Q431062",
+   "note": "The temple of the Emperor Hadrian was consecrated in 145 AD by Emperor Antoninus Pius. The remains of the antique temple were incorporated into a new building that served as the Papal Customs House. It was finished around 1690 and today acc",
+   "editions": 22,
+   "unesco": false
+  },
+  {
+   "name": "Sant'Andrea della Valle",
+   "lat": 41.896464,
+   "lng": 12.474339,
+   "wikidata": "Q1631593",
+   "note": "Minor basilica in 17th-century baroque style with good art inside. In a smaller Italian city, this might be a prime attraction, but in Rome, with its abundance of great churches, this is merely a pleasant church of secondary interest to vis",
+   "editions": 28,
+   "unesco": false,
+   "web": "https://santandrea.teatinos.org/"
+  },
+  {
+   "name": "Sant'Ivo alla Sapienza",
+   "lat": 41.898221,
+   "lng": 12.474734,
+   "wikidata": "Q1324617",
+   "note": "This little church is hard to find but well worth the extra effort although it is often closed when you get there. One of Borromini's masterpieces. It is located only a block from Piazza Navona, but not usually visible from the street, as y",
+   "editions": 26,
+   "unesco": false,
+   "web": "http://www.vicariatusurbis.org/Ente.asp?ID=950"
+  },
+  {
+   "name": "Santa Maria sopra Minerva",
+   "lat": 41.898056,
+   "lng": 12.478333,
+   "wikidata": "Q823685",
+   "note": "This church is literally right next to the Pantheon. It is one of Rome's only Gothic churches, and well worth looking inside, although its plain square façade makes it look inconspicuous from outside. Excellent stained glass windows.",
+   "editions": 36,
+   "unesco": false,
+   "web": "https://www.santamariasopraminerva.it"
+  },
+  {
+   "name": "San Luigi dei Francesi",
+   "lat": 41.899583,
+   "lng": 12.474667,
+   "wikidata": "Q638283",
+   "note": "This church is roughly halfway between Piazza Navona and the Pantheon. It is most notable for a side chapel which contains three Caravaggio masterworks: \"The Calling of St. Matthew\", \"St. Matthew and the Angel\" and \"Martyrdom of St. Matthew",
+   "editions": 35,
+   "unesco": false,
+   "web": "http://www.saintlouis-rome.net"
+  },
+  {
+   "name": "Sant'Ignazio",
+   "lat": 41.899,
+   "lng": 12.479778,
+   "wikidata": "Q1465674",
+   "note": "Between the Pantheon and Via del Corso. A stunning example of Baroque art. The ceiling frescoes are especially fine, including a trompe l'oeil dome by the master Andrea Pozzo.",
+   "editions": 30,
+   "unesco": false,
+   "web": "http://santignazio.gesuiti.it/"
+  },
+  {
+   "name": "Sant'Agnese in Agone",
+   "lat": 41.898889,
+   "lng": 12.4725,
+   "wikidata": "Q1192577",
+   "note": "By Borromini, reputed to be on the spot where St. Agnes was martyred in the 4th century AD. This lovely basilica church is small with an almost circular interior. It is undergoing rehabilitation and the facade and dome are hidden in scaffol",
+   "editions": 28,
+   "unesco": false,
+   "web": "https://www.santagneseinagone.org/"
+  },
+  {
+   "name": "Santa Maria dell'Anima",
+   "lat": 41.900056,
+   "lng": 12.471611,
+   "wikidata": "Q2140145",
+   "note": "Contains the tomb of Pope Adrian VI, the last non-Italian pope before Pope John Paul II.",
+   "editions": 19,
+   "unesco": false,
+   "web": "http://www.santa-maria-anima.it"
+  },
+  {
+   "name": "Santa Maria della Pace",
+   "lat": 41.899889,
+   "lng": 12.471639,
+   "wikidata": "Q1514683",
+   "note": "The church was built by order of Pope Sixtus VI (della Rovere). The campanile was erected in 1504 by Bramante and the church has frescoes of the four sibyls by Raphael in its interior.",
+   "editions": 26,
+   "unesco": false
+  },
+  {
+   "name": "Campo de' Fiori",
+   "lat": 41.8956,
+   "lng": 12.47217,
+   "wikidata": "Q28303",
+   "note": "If it is sunny, you'll catch a few young people and older gentlemen sitting at the base of a statue in the middle of the open space. The statue is a brooding, hooded Giordano Bruno—an excommunicated Dominican monk and one of the earliest co",
+   "editions": 36,
+   "unesco": false
+  },
+  {
+   "name": "Piazza Navona",
+   "lat": 41.898889,
+   "lng": 12.473056,
+   "wikidata": "Q463400",
+   "note": "The pride of Baroque Rome, was established towards the end of the 15th century, and preserves the shape of the ancient Stadium of Domitian. The buildings surrounding the square stand where the spectators once sat, watching the spectacle of ",
+   "editions": 47,
+   "unesco": false
+  },
+  {
+   "name": "Piazza Colonna",
+   "lat": 41.901056,
+   "lng": 12.479917,
+   "wikidata": "Q63785",
+   "note": "Where the building of the Italian Government, Palazzo Chigi is situated. Also there is a marvelous carved column—hence the name—dating back to Imperial Rome.",
+   "editions": 26,
+   "unesco": false
+  },
+  {
+   "name": "Piazza della Minerva",
+   "lat": 41.89806,
+   "lng": 12.4775,
+   "wikidata": "Q2518575",
+   "note": "A small piazza just behind the Pantheon. The centerpiece is a statue of an elephant by Bernini with an ancient obelisk on its back.",
+   "editions": 14,
+   "unesco": false
+  },
+  {
+   "name": "Piazza di Sant'Ignazio",
+   "lat": 41.89931,
+   "lng": 12.47965,
+   "wikidata": "Q1120890",
+   "note": "Small and attractive piazza tucked away in a neighborhood near Pantheon.",
+   "editions": 5,
+   "unesco": false
+  },
+  {
+   "name": "Piazza di Monte Citorio",
+   "lat": 41.900833,
+   "lng": 12.478611,
+   "wikidata": "Q2579746",
+   "note": "Where you can find the building of the House of Representatives.",
+   "editions": 11,
+   "unesco": false
+  },
+  {
+   "name": "Piazza di Pasquino",
+   "lat": 41.89795,
+   "lng": 12.47214,
+   "wikidata": "Q57710200",
+   "note": "Small piazza about 20 m (65 ft) from Piazza Navona, behind the Brazilian Embassy. There is a statue named \"Pasquino\", according to a legend named after a tailor who used to work nearby and had a reputation for complaining. The statue has be",
+   "editions": 1,
+   "unesco": false
+  },
+  {
+   "name": "Via Giulia",
+   "lat": 41.89417,
+   "lng": 12.47007,
+   "wikidata": "Q782187",
+   "note": "An example of urban planning that goes back to Pope Julius II, who, in 1508, envisioned it as a street that would connect all major government buildings. It is around a kilometer long and is in a straight line, an unusual feature for the ti",
+   "editions": 16,
+   "unesco": false
+  },
+  {
+   "name": "Via de Coronari",
+   "lat": 41.9008,
+   "lng": 12.4696,
+   "wikidata": "Q1032187",
+   "note": "In the Middle Ages pilgrims on their way to St. Peter's had to pass through the Via dei Coronari in order to cross the Tiber at Ponte St. Angelo. The street got its name from the people who sold rosaries to the pilgrims. It follows the anci",
+   "editions": 11,
+   "unesco": false
+  },
+  {
+   "name": "The Ghetto",
+   "lat": 41.8924,
+   "lng": 12.4775,
+   "wikidata": "Q527647",
+   "note": "The Ghetto lies between the island in the River Tiber and the Theatre of Marcellus and includes Rome’s synagogue. It was established in 1555 as a result of a Papal Bull by Pope Paul IV that required all Jews to live in the area, considered ",
+   "editions": 21,
+   "unesco": false
+  },
+  {
+   "name": "Palazzo della Cancelleria",
+   "lat": 41.896687,
+   "lng": 12.471521,
+   "wikidata": "Q2031943",
+   "note": "This remarkable building served as the site of the Apostolic Chancellery, or offices of the Pope, for centuries, and now houses a Vatican court. Tucked behind the facade is also the Basilica of San Lorenzo in Damaso, an ancient Roman house ",
+   "editions": 22,
+   "unesco": true
+  },
+  {
+   "name": "Palazzo Farnese",
+   "lat": 41.894722,
+   "lng": 12.470833,
+   "wikidata": "Q848386",
+   "note": "Since 1871 this has been the French Embassy. This 16th-century palace contains an important fresco cycle by Annibale Carracci and houses a library of collections by the French school in Rome, particularly on Roman archaeology. Note the two ",
+   "editions": 38,
+   "unesco": false
+  },
+  {
+   "name": "Palazzo della Sapienza",
+   "lat": 41.89817,
+   "lng": 12.47455,
+   "wikidata": "Q3891484",
+   "note": "This building housed the University of Rome from the middle of the 15th century until 1935. The splendid interior courtyard was created by Giacomo della Porta. The inside church of Sant'Ivo (see above) is one of the masterpieces of the arch",
+   "editions": 3,
+   "unesco": false
+  },
+  {
+   "name": "Palazzo Altemps",
+   "lat": 41.901337,
+   "lng": 12.472968,
+   "wikidata": "Q1094986",
+   "note": "Simple and elegant lines make up this building, whose construction began in 1480 for Count Girolamo Riario, nephew of Papa Sisto IV, and was taken up by architect Martino Longhi for the new owner, Cardinal Marco Sittico Altemps. Today it ho",
+   "editions": 15,
+   "unesco": false,
+   "web": "https://museonazionaleromano.beniculturali.it/palazzo-altemps/"
+  },
+  {
+   "name": "Palazzo Taverna",
+   "lat": 41.89976,
+   "lng": 12.4687,
+   "wikidata": "Q20088659",
+   "note": "The building is in one of the most hidden corners of the city center among Piazza Navona and Castel Sant'Angelo. It served as residence for the Orsini family. Nowadays it is private property and one can only glance at the courtyard and the ",
+   "editions": 6,
+   "unesco": false
+  },
+  {
+   "name": "Palazzo Crivelli",
+   "lat": 41.89792,
+   "lng": 12.46719,
+   "wikidata": "",
+   "note": "This building also known as the Doll House was built in the 16th century. It is unique for the quantity and quality of the decorations—lions' heads, satyrs and disfigured heads that adorn the facade attributed to the sculptor Giulio Mazzoni"
+  },
+  {
+   "name": "Palazzo Spada",
+   "lat": 41.893889,
+   "lng": 12.471667,
+   "wikidata": "Q1058475",
+   "note": "This building was erected in the 16th century for Cardinal Girolamo Capodiferro. One century later it was acquired by another powerful Cardinal, Bernardino Spada, and was restored by Borromini, who created the forced perspective optical ill",
+   "editions": 18,
+   "unesco": false
+  },
+  {
+   "name": "Palazzo Madama",
+   "lat": 41.899192,
+   "lng": 12.474278,
+   "wikidata": "Q1755046",
+   "note": "This palace of the 16th century was erected by the famous Medici family. It was the residence of Cardinals Giovanni and Giuliano Medici, later Pope Leo X. and Clement VII. Catherine de Medici, Pope Clement VII's niece lived here until her m",
+   "editions": 20,
+   "unesco": false
+  },
+  {
+   "name": "Palazzo Massimo alle Colonne",
+   "lat": 41.896667,
+   "lng": 12.473611,
+   "wikidata": "Q1521924",
+   "note": "The palace was built by the architect Baldassare Peruzzi on behalf of the Massimo family. The former palace was destroyed during the pillage of Rome in 1527. The Massimo family can be traced back to Quintus Fabius Maximus who defeated Hanni",
+   "editions": 14,
+   "unesco": false
+  },
+  {
+   "name": "Palazzo del Collegio Romano",
+   "lat": 41.89807,
+   "lng": 12.48027,
+   "wikidata": "Q2157592",
+   "note": "The Collegio Romano was a college of the Jesuit order. Many popes, cardinals and bishops were educated here. Since 1870 it has been a secular (non-monastic) school. The coat of arms on the doorway is that of Pope Gregory XIII (1572–1585). T",
+   "editions": 12,
+   "unesco": false
+  },
+  {
+   "name": "Hosteria dell'Orso",
+   "lat": 41.90197,
+   "lng": 12.47233,
+   "wikidata": "",
+   "note": "A historical inn where reputedly the Italian poet Dante Aligheri and French travellers of the 16th century, including the poets François Rabelais and Michel de Montaigne, stayed."
+  },
+  {
+   "name": "Fontana dei Quattro Fiumi",
+   "lat": 41.898953,
+   "lng": 12.473075,
+   "wikidata": "Q655470",
+   "note": "By Bernini, in the very centre of Piazza Navona. Incorporates an Egyptian obelisk and symbolises four of the world's great rivers (the Ganges, the Nile, the Danube and the Plata), representing the four continents known at the time.",
+   "editions": 36,
+   "unesco": false
+  },
+  {
+   "name": "Fontana del Moro",
+   "lat": 41.898141,
+   "lng": 12.473146,
+   "wikidata": "Q1435824",
+   "note": "At the southern end of the Piazza, designed by Bernini but the main statue of the Moor was done by Giacomo della Porta and the other statues are 19th-century copies of the originals.",
+   "editions": 14,
+   "unesco": false
+  },
+  {
+   "name": "Fontana del Nettuno",
+   "lat": 41.899803,
+   "lng": 12.473,
+   "wikidata": "Q1759793",
+   "note": "A 19th-century addition to the square, made to balance the Fontana del Moro.",
+   "editions": 14,
+   "unesco": false
+  },
+  {
+   "name": "Fontanella del Facchino",
+   "lat": 41.898303,
+   "lng": 12.481378,
+   "wikidata": "Q3968656",
+   "note": "Like Pasquino, the Facchino is one of the so-called \"speaking figures\" which are peculiar to Rome. He is looking out of the Banco di Roma building. The man depicted is holding a barrel in his hands and is carrying water. It is sometimes sai",
+   "editions": 11,
+   "unesco": false
+  },
+  {
+   "name": "Fontana delle Tartarughe",
+   "lat": 41.893806,
+   "lng": 12.4775,
+   "wikidata": "Q936296",
+   "note": "A pleasant fountain in an out-of-the-way square. It was originally meant to have four dolphins rather than turtles but the dolphins proved to be too large for the water pressure so the turtles were added as an afterthought.",
+   "editions": 20,
+   "unesco": false
+  },
+  {
+   "name": "Museo Napoleonico",
+   "lat": 41.901842,
+   "lng": 12.471967,
+   "wikidata": "Q15141205",
+   "note": "The museum is dedicated to Napoleon Bonaparte and his family. After Napoleon's death in 1821 the Pope gave permission to his family to settle down in Rome. His sister married Prince Camillo Borghese.",
+   "editions": 5,
+   "unesco": false,
+   "web": "http://www.museonapoleonico.it"
+  },
+  {
+   "name": "Column of Marcus Aurelius",
+   "lat": 41.900833,
+   "lng": 12.479861,
+   "wikidata": "Q265384",
+   "note": "",
+   "editions": 39,
+   "unesco": false
+  },
+  {
+   "name": "Obelisco di Montecitorio",
+   "lat": 41.9006,
+   "lng": 12.4787,
+   "wikidata": "Q740755",
+   "note": "An ancient Egyptian obelisk brought to Rome in 10 BC.",
+   "editions": 14,
+   "unesco": false
+  },
+  {
+   "name": "Santa Maria Minerva Obelisk",
+   "lat": 41.89797,
+   "lng": 12.47753,
+   "wikidata": "Q826635",
+   "note": "One of Bernini's masterpieces, an obelisk on the back of an elephant.",
+   "editions": 16,
+   "unesco": false
+  },
+  {
+   "name": "Colosseum",
+   "lat": 41.89059,
+   "lng": 12.49156,
+   "wikidata": "Q10285",
+   "note": "Known properly as the Flavian Amphitheatre, this most famous of Roman landmarks takes its name from the giant statue of the emperor Nero that once stood near this location. The amphitheatre was capable of seating 50,000 spectators for anima",
+   "editions": 148,
+   "unesco": false,
+   "web": "https://colosseo.it/area/colosseo/"
+  },
+  {
+   "name": "Palatine Hill",
+   "lat": 41.888333,
+   "lng": 12.486944,
+   "wikidata": "Q200642",
+   "note": "Contains the ruins of several large villas that belonged to wealthy Roman families. You can buy a combined ticket for the Palatine Hill, the Roman Forum and the Colosseum here, avoiding the long lines at the Colosseum. While the Imperial an",
+   "editions": 63,
+   "unesco": false
+  },
+  {
+   "name": "The Roman Forum",
+   "lat": 41.8922,
+   "lng": 12.4852,
+   "wikidata": "Q180212",
+   "note": "If stones could talk: these hallowed ruins were the most powerful seat of government in the world. To stand in the political, legal and religious centre of the whole Roman Empire brings shivers down one's spine. It is the best way of imagin",
+   "editions": 72,
+   "unesco": false,
+   "web": "https://parcocolosseo.it/area/foro-romano/"
+  },
+  {
+   "name": "Temple of Antoninus Pius and Faustina",
+   "lat": 41.892139,
+   "lng": 12.486689,
+   "wikidata": "Q752555",
+   "note": "Built in 141 AD and dedicated to the Empress Faustina; after her husband emperor Antoninus Pius died in 161 AD the temple was rededicated to the couple.",
+   "editions": 33,
+   "unesco": false
+  },
+  {
+   "name": "Basilica Aemilia",
+   "lat": 41.89261,
+   "lng": 12.48616,
+   "wikidata": "Q522924",
+   "note": "Completed in 179 BC.",
+   "editions": 29,
+   "unesco": false,
+   "closedForGood": true
+  },
+  {
+   "name": "Temple of Divine Julius Caesar",
+   "lat": 41.892036,
+   "lng": 12.486092,
+   "wikidata": "Q1133288",
+   "note": "Finished in 29 BC, marks the spot of Caesar's spontaneous cremation and Mark Antony's funeral speech, made famous by Shakespeare in his play ''Julius Caesar'' (\"Friends, Romans, Countrymen, lend me your ears ...\").",
+   "editions": 31,
+   "unesco": false
+  },
+  {
+   "name": "Arch of Titus",
+   "lat": 41.890717,
+   "lng": 12.488585,
+   "wikidata": "Q723887",
+   "note": "Built in 81 AD by the emperor Domitianus in dedication to his brother Titus, who died earlier that year and reigned as emperor from 79-81, overseeing the opening of the Colosseum in 80 and the eruption of Mt Vesuvius the previous year.",
+   "editions": 43,
+   "unesco": false,
+   "web": "https://parcocolosseo.it/mirabilia/arco-di-tito/"
+  },
+  {
+   "name": "Tabularium",
+   "lat": 41.892778,
+   "lng": 12.483611,
+   "wikidata": "Q568342",
+   "note": "The remains of the ancient Roman archives, where Cicero and Seneca did research. Visible from the Forum and accessible through the Capitoline Museum.",
+   "editions": 34,
+   "unesco": false
+  },
+  {
+   "name": "Arch of Constantine",
+   "lat": 41.88977,
+   "lng": 12.49066,
+   "wikidata": "Q5786",
+   "note": "Located a short walk west of the Colosseum, this well-preserved monumental arch was erected (soon after 315) to commemorate the victory of Constantine, the first Christian emperor, over his rival Maxentius at the Battle of the Milvian Bridg",
+   "editions": 49,
+   "unesco": false,
+   "web": "https://www.colosseo.beniculturali.it"
+  },
+  {
+   "name": "Piazza del Campidoglio",
+   "lat": 41.893275,
+   "lng": 12.483061,
+   "wikidata": "Q34921",
+   "note": "On top of the Capitoline hill. The piazza was designed by Michelangelo. The Capitoline Museum is housed in the palaces flanking the piazza. You can walk behind the Palazzo Senatorio, where Rome's government meets, to a wonderful '''viewpoin",
+   "editions": 22,
+   "unesco": false
+  },
+  {
+   "name": "Piazza Venezia",
+   "lat": 41.896,
+   "lng": 12.48244,
+   "wikidata": "Q874832",
+   "note": "More of an enormous traffic circle than a piazza, but a good central location. The centerpiece is the enormous Vittorio Emanuele Monument (aka the Wedding Cake or the Typewriter) with the Capitoline hill next door. Mussolini used to harangu",
+   "editions": 38,
+   "unesco": false
+  },
+  {
+   "name": "Vittorio Emanuele Monument",
+   "lat": 41.89501,
+   "lng": 12.48289,
+   "wikidata": "Q506234",
+   "note": "Built in honour of Victor Emmanuel, the first king of a unified Italy, this vast structure may appear to be solid white marble but actually contains many rooms inside. There are two permanent museums, one on Italian Reunification and one on",
+   "editions": 43,
+   "unesco": false,
+   "web": "https://vive.cultura.gov.it/it/"
+  },
+  {
+   "name": "Colle Oppio",
+   "lat": 41.8921,
+   "lng": 12.4963,
+   "wikidata": "Q1036262",
+   "note": "This is the attractive park on the hillside directly west of the Colosseum. Visible ruins in the area come from the '''Baths of Trajan'''. These baths were built on the top of the ruins of '''Domus Aurea''' - the Golden House of Nero (the C",
+   "editions": 17,
+   "unesco": false
+  },
+  {
+   "name": "Trajan's Markets",
+   "lat": 41.895611,
+   "lng": 12.486194,
+   "wikidata": "Q478642",
+   "note": "On the other side of the Via dei Fori Imperiali to the Roman Forum. Well-preserved market area that doubled as a way of stopping the Quirinal Hill from collapsing. Below in the Forum is Trajan's Column, built in 113 with reliefs depicting t",
+   "editions": 29,
+   "unesco": false,
+   "web": "http://www.mercatiditraiano.it/"
+  },
+  {
+   "name": "Mamertine Prison",
+   "lat": 41.893333,
+   "lng": 12.484444,
+   "wikidata": "Q1035634",
+   "note": "Romans and leaders of Rome's defeated enemies were imprisoned here where they either died of starvation or strangulation. According to legend, St. Peter was also imprisoned here.",
+   "editions": 25,
+   "unesco": false,
+   "web": "http://musei.beniculturali.it/musei?mid=857&nome=carcere-mamertino"
+  },
+  {
+   "name": "Theatre of Marcellus",
+   "lat": 41.89199,
+   "lng": 12.47974,
+   "wikidata": "Q659138",
+   "note": "Unusual ancient Roman theatre with apartments built on top.",
+   "editions": 36,
+   "unesco": false
+  },
+  {
+   "name": "San Clemente",
+   "lat": 41.889444,
+   "lng": 12.4975,
+   "wikidata": "Q385910",
+   "note": "A great little cathedral to visit, lovingly looked after by Irish Dominicans. There is an excavated older church below the medieval church you enter and a Mithraeum (temple to Mithras, whose cult was very popular with Roman soldiers from th",
+   "editions": 28,
+   "unesco": false,
+   "web": "http://www.basilicasanclemente.com/"
+  },
+  {
+   "name": "Santo Stefano Rotondo",
+   "lat": 41.884522,
+   "lng": 12.496761,
+   "wikidata": "Q919456",
+   "note": "Unusual and fascinating round church dedicated to St. Stephen. It is the national church of Hungary in Rome. Dating from the 5th century this is believed to be the largest round church in the world. Charles Dickens described its wall painti",
+   "editions": 24,
+   "unesco": false,
+   "web": "http://www.vicariatusurbis.org/Ente.asp?ID=955"
+  },
+  {
+   "name": "San Pietro in Vincoli",
+   "lat": 41.893872,
+   "lng": 12.493069,
+   "wikidata": "Q542070",
+   "note": "The chains that allegedly held St. Peter are displayed in a case before the altar. More importantly, contains the impressive statue of Moses by Michelangelo. It's close to the Colosseum, but a little hard to find. Take the steps opposite th",
+   "editions": 42,
+   "unesco": false,
+   "web": "http://www.lateranensi.org/sanpietroinvincoli/"
+  },
+  {
+   "name": "Santa Maria in Aracoeli",
+   "lat": 41.89398,
+   "lng": 12.48279,
+   "wikidata": "Q318660",
+   "note": "Ballroom-like church which crowns part of the Capitoline Hill. Don't be fooled by the plain stone exterior.",
+   "editions": 36,
+   "unesco": false
+  },
+  {
+   "name": "Chiesa del Gesù",
+   "lat": 41.895833,
+   "lng": 12.479722,
+   "wikidata": "Q719794",
+   "note": "This is one of the two main Jesuit churches in Rome, the other being the nearby Sant'Ignazio. The interior is Mannerist art on steroids. Simply astounding.",
+   "editions": 42,
+   "unesco": false,
+   "web": "http://www.chiesadelgesu.org/"
+  },
+  {
+   "name": "San Nicola in Carcere",
+   "lat": 41.891111,
+   "lng": 12.48,
+   "wikidata": "Q2145580",
+   "note": "Church built on the site of three Roman pagan temples, which can be explored underground for a small fee paid at a desk near the church entrance.",
+   "editions": 20,
+   "unesco": false,
+   "web": "http://www.vicariatusurbis.org/?page_id=188&ID=835"
+  },
+  {
+   "name": "Basilica dei Santi Giovanni e Paolo al Celio",
+   "lat": 41.88648,
+   "lng": 12.49202,
+   "wikidata": "Q1586946",
+   "note": "According to the legendary passio, two brothers, John and Paul, who were officials at the imperial court, suffered martyrdom in 362 in their home on the Caelian hill, during the reign of emperor Flavius Claudius Julianus. This basilica dedi",
+   "editions": 22,
+   "unesco": false,
+   "web": "https://www.basilicassgiovanniepaolo.it/"
+  },
+  {
+   "name": "Santa Prassede",
+   "lat": 41.896111,
+   "lng": 12.498611,
+   "wikidata": "Q733890",
+   "note": "Fantastic Byzantine mosaics and some other interesting artwork. Not to be missed. 30 minutes are sufficient for a relaxed visit.",
+   "editions": 27,
+   "unesco": false,
+   "web": "https://santaprassede.wordpress.com/"
+  },
+  {
+   "name": "Santa Pudenziana",
+   "lat": 41.898611,
+   "lng": 12.495556,
+   "wikidata": "Q1526417",
+   "note": "A very ancient church named after a saint who was in 1969 removed from the Roman Catholic calendar of saints for the lack of details of her life. But the church retains the name and is well worth visiting for an excellent 4th-century mosaic",
+   "editions": 23,
+   "unesco": false,
+   "web": "http://www.stpudenziana.org/"
+  },
+  {
+   "name": "Musei Capitolini",
+   "lat": 41.893056,
+   "lng": 12.4825,
+   "wikidata": "Q333906",
+   "note": "The two museums are on opposite sides of the Piazza del Campidoglio, It is recommended to [http://www.ticketclic.it book tickets online]",
+   "editions": 46,
+   "unesco": false,
+   "web": "https://www.museicapitolini.org/"
+  },
+  {
+   "name": "Museo Capitolino",
+   "lat": 41.893594,
+   "lng": 12.483164,
+   "wikidata": "Q283153",
+   "note": "Built in the 17th century to a design based on an architectural sketch by Michelangelo. Highlights include the ancient Colossus of Constantine statue (the Colosseum was probably named for another giant statue, the Colossus of Nero which sto",
+   "editions": 16,
+   "unesco": false,
+   "web": "http://www.museicapitolini.org/sede/piazza_e_palazzi/palazzo_nuovo"
+  },
+  {
+   "name": "Palazzo dei Conservatori",
+   "lat": 41.892997,
+   "lng": 12.482811,
+   "wikidata": "Q64103",
+   "note": "Also based on a Michelangelo architectural plan, this compact gallery is well endowed in classical sculpture and paintings. Highlights include the small 1st-century-BC bronze ''Lo Spinario'', a Greek statue of a little boy picking a thorn f",
+   "editions": 21,
+   "unesco": false
+  },
+  {
+   "name": "National Museum of the Palazzo di Venezia",
+   "lat": 41.896183,
+   "lng": 12.481567,
+   "wikidata": "Q1954305",
+   "note": "In the very heart of the city center, the building was for centuries ago the seat of the Venice embassy. Today it houses a museum and art galleries.",
+   "editions": 8,
+   "unesco": false,
+   "closedForGood": true,
+   "web": "http://museopalazzovenezia.beniculturali.it/"
+  },
+  {
+   "name": "Palazzo Doria Pamphilj",
+   "lat": 41.897669,
+   "lng": 12.481145,
+   "wikidata": "Q1203458",
+   "note": "Good collection of Renaissance and Baroque art, including by Velasquez, Titian, Raphael, and Bernini, all owned by the Doria Pamphilj family. Excellent audio guides really bring the paintings to life.",
+   "editions": 26,
+   "unesco": false,
+   "web": "https://www.doriapamphilj.it/roma/"
+  },
+  {
+   "name": "Ara Pacis",
+   "lat": 41.906389,
+   "lng": 12.475556,
+   "wikidata": "Q623612",
+   "note": "Ara Pacis is an altar to peace commissioned by the Roman Senate on 4 July 13 BC to honor the triumphal return from Hispania and Gaul of Augustus. It is universally recognised as a masterpiece. Following discovery of this work under a buildi",
+   "editions": 41,
+   "unesco": false
+  },
+  {
+   "name": "Mausoleo di Augusto",
+   "lat": 41.90611,
+   "lng": 12.47639,
+   "wikidata": "Q770847",
+   "note": "This is a large tomb built by the Roman Emperor Augustus in 28 BC in the form of a stone ring covered by an earth mound. A brick wall, 87 m in diameter, carried an earth mound covered with cypresses. On top of the hill stood a bronze monume",
+   "editions": 40,
+   "unesco": false,
+   "web": "http://www.mausoleodiaugusto.it"
+  },
+  {
+   "name": "Catacombe di Priscilla",
+   "lat": 41.9297,
+   "lng": 12.5087,
+   "wikidata": "Q2462868",
+   "note": "Underground burial place of an ancient Roman family and of seven early popes.",
+   "editions": 18,
+   "unesco": false
+  },
+  {
+   "name": "Santa Maria del Popolo",
+   "lat": 41.911389,
+   "lng": 12.476389,
+   "wikidata": "Q869513",
+   "note": "This is a treasure-trove of art. There are a couple of paintings by ''Caravaggio'': \"The Crucifixion of Saint Peter\" and \"The Conversion of Saint Paul\" (in a dim alcove to the left of the altar, both at right angles to the viewer, with a ma",
+   "editions": 35,
+   "unesco": false,
+   "web": "https://santamariadelpopoloroma.it/"
+  },
+  {
+   "name": "Santissima Trinità dei Monti",
+   "lat": 41.906389,
+   "lng": 12.483611,
+   "wikidata": "Q1229008",
+   "note": "Baroque church more noted for its position at the top of the Spanish Steps than it is for the church. Backdrop for numerous movies including Audrey Hepburn and Gregory Peck in ''Roman Holiday''.",
+   "editions": 32,
+   "unesco": false,
+   "web": "https://trinitadeimonti.net/it/casa/"
+  },
+  {
+   "name": "Moschea di Roma",
+   "lat": 41.934722,
+   "lng": 12.495,
+   "wikidata": "Q1789776",
+   "note": "The Rome Mosque, which was inaugurated in 1995, is the biggest in Europe. The inside of the 30,000 m² structure has a large prayer hall that uses tri-stemmed columns that imitate the features of trees.",
+   "editions": 33,
+   "unesco": false
+  },
+  {
+   "name": "Santa Costanza",
+   "lat": 41.922601,
+   "lng": 12.517398,
+   "wikidata": "Q831361",
+   "note": "This church was built by the Emperor Constantine (272-337) as a mausoleum for his daughters Constantina and Helena. It was part of a much larger cemetery complex, parts of which can still be seen. The mausoleum was consecrated as a church a",
+   "editions": 26,
+   "unesco": false,
+   "web": "http://www.santagnese.org/mausoleo.htm"
+  },
+  {
+   "name": "Sant' Agnese fuori le Mura",
+   "lat": 41.922917,
+   "lng": 12.518878,
+   "wikidata": "Q1636696",
+   "note": "This church was built next to the mausoleum of Santa Costanza in the 7th century and is on top of catacombs. It is very unusual in that the floor level is at the level of the catacomb floor, and the street entrance is at the level of the se",
+   "editions": 24,
+   "unesco": false,
+   "web": "https://www.santagnese.net/"
+  },
+  {
+   "name": "Catacombs of St Agnese",
+   "lat": 41.922778,
+   "lng": 12.518611,
+   "wikidata": "Q3663182",
+   "note": "Small catacombs that contained the remains of Saint Agnes",
+   "editions": 11,
+   "unesco": false
+  },
+  {
+   "name": "Piazza del Popolo",
+   "lat": 41.910714,
+   "lng": 12.476317,
+   "wikidata": "Q824997",
+   "note": "This is the largest square in Rome. It sometimes hosts pop concerts and is the focal point for Rome's New Year's Eve celebrations. The twin churches ''Santa Maria dei Miracoli'' (1681) and ''Santa Maria in Montesanto'' (1679) used to provid",
+   "editions": 39,
+   "unesco": false
+  },
+  {
+   "name": "Quartiere Coppedè (part of the neighborhood of ‘Trieste’)",
+   "lat": 41.918773,
+   "lng": 12.500961,
+   "wikidata": "Q3927173",
+   "note": "With its strange Liberty- style buildings with influence from the ''Art Nouveau'' of the 1920s this small bunch of blocks is one of the most interesting, and less known, landmarks of the city. A must see.",
+   "editions": 7,
+   "unesco": false
+  },
+  {
+   "name": "The Spanish Steps",
+   "lat": 41.90611,
+   "lng": 12.48278,
+   "wikidata": "Q848072",
+   "note": "A truly monumental stairway of 135 steps (similar to climbing eight flights of stairs), built with French funds between 1721 and 1725 in order to link the Bourbon Spanish embassy to the Holy See (still located in the piazza below), with the",
+   "editions": 40,
+   "unesco": false
+  },
+  {
+   "name": "Piazza di Spagna",
+   "lat": 41.90595,
+   "lng": 12.482058,
+   "wikidata": "Q15124814",
+   "note": "The Piazza di Spagna (Spanish Square) is the most famous square in Rome. For a very long time it was the meeting point of all foreigners coming to Rome. In the 17th century it was the residence of the Spanish Ambassador to the Holy See. The",
+   "editions": 40,
+   "unesco": false
+  },
+  {
+   "name": "Ponte Milvio",
+   "lat": 41.935556,
+   "lng": 12.466944,
+   "wikidata": "Q1127325",
+   "note": "The first pedestrian-only bridge was built here in 206 BC and marks the passage of the Roman Via Flaminia over the Tiber. In 115 BC, the original bridge was demolished and rebuilt. It has been restored and remodelled several times since. In",
+   "editions": 36,
+   "unesco": false
+  },
+  {
+   "name": "Villa Medici",
+   "lat": 41.90827,
+   "lng": 12.48252,
+   "wikidata": "Q1362663",
+   "note": "The villa was erected by order of Cardinal Ricci di Montepulciano in 1544. It was acquired by Cardinal Fernando di Medici in 1576. Since 1803 it is the French Academy in Rome. The academy was created in 1666 by the French King Louis XIV in ",
+   "editions": 35,
+   "unesco": false,
+   "web": "http://www.villamedici.it/"
+  },
+  {
+   "name": "Villa Albani-Torlonia",
+   "lat": 41.9153,
+   "lng": 12.5,
+   "wikidata": "Q4011749",
+   "note": "A magnificent patrician house with beautiful gardens. It was built by order of Cardinal Alessando Albani in 1743-1763 in order to accommodate his collection of art. The collection was taken care of by the Winkelmann, adviser and friend of t",
+   "editions": 10,
+   "unesco": false
+  },
+  {
+   "name": "Villa Ada",
+   "lat": 41.932039,
+   "lng": 12.501497,
+   "wikidata": "Q2000387",
+   "note": "Beautiful park, the 2nd largest in Rome (after [[Rome/Trastevere#Villa Doria Pamphili",
+   "editions": 16,
+   "unesco": false,
+   "web": "https://www.sovraintendenzaroma.it/i_luoghi/ville_e_parchi_storici/ville_dei_nobili/villa_ada_savoia"
+  },
+  {
+   "name": "Borghese Gardens",
+   "lat": 41.91349,
+   "lng": 12.48639,
+   "wikidata": "",
+   "note": "The extensive Borghese Gardens are a pleasant place to stroll. Inside this area you will find one of the world's great museums, Rome's Zoo, a pond where you can rent a rowing boat and the Piazza di Siena, which hosts an annual show jumping "
+  },
+  {
+   "name": "Pincio",
+   "lat": 41.91125,
+   "lng": 12.47872,
+   "wikidata": "",
+   "note": "The Pincio Park is near Piazza del Popolo. It was designed in the 19th century by Giuseppe Valadier, who also designed the Piazza del Popolo. Formlerly the Casina Valadier was an elegant restaurant. Gandhi, Mussolini, Richard Strauss and th"
+  },
+  {
+   "name": "Monte Mario",
+   "lat": 41.925,
+   "lng": 12.451667,
+   "wikidata": "Q692719",
+   "note": "The highest hill in Rome at 139 m, with sweeping views of the Vatican and Rome across the Tiber.",
+   "editions": 21,
+   "unesco": false
+  },
+  {
+   "name": "Pinciana/Museo Borghese stop",
+   "lat": 41.913974,
+   "lng": 12.49373,
+   "wikidata": "",
+   "note": ""
+  },
+  {
+   "name": "Villa Giulia National Gallery",
+   "lat": 41.918333,
+   "lng": 12.477778,
+   "wikidata": "Q964499",
+   "note": "The most extensive collection of Etruscan art and artifacts anywhere. Fantastic collection and well worth the admission charge. A difficult museum to find, but a lovely display in a beautiful villa setting.",
+   "editions": 17,
+   "unesco": false,
+   "web": "https://www.museoetru.it/"
+  },
+  {
+   "name": "Galleria Nazionale d'Arte Moderna (GNAM)",
+   "lat": 41.916944,
+   "lng": 12.481944,
+   "wikidata": "Q1492387",
+   "note": "An underrated way to see fantastic art made after the Renaissance. Mainly Italian artists, notably De Chirico, but Cézanne, Degas, Kandinsky, Man Ray, Modigliani, Monet, Pollock and Van Gogh are also represented.",
+   "editions": 28,
+   "unesco": false,
+   "web": "https://gnamc.cultura.gov.it/"
+  },
+  {
+   "name": "MAXXI",
+   "lat": 41.92807,
+   "lng": 12.46648,
+   "wikidata": "Q1881229",
+   "note": "Brand new museum designed to celebrate the art and architecture of the 21st century.",
+   "editions": 25,
+   "unesco": false,
+   "web": "http://www.fondazionemaxxi.it"
+  },
+  {
+   "name": "MACRO",
+   "lat": 41.912825,
+   "lng": 12.502217,
+   "wikidata": "Q2669644",
+   "note": "Rome's museum of contemporary art, housed in a former industrial complex. Rotating exhibitions, each one usually lasting about 4 months. The MACRO Testaccio exhibition space is located in [[Rome/Aventino-Testaccio",
+   "editions": 16,
+   "unesco": false,
+   "web": "https://www.museomacro.it/"
+  },
+  {
+   "name": "Keats-Shelley Memorial House",
+   "lat": 41.905756,
+   "lng": 12.482614,
+   "wikidata": "Q1133966",
+   "note": "The house in which the famous English poet John Keats succumbed to consumption, now preserved as a memorial to his life and that of his friend Shelley, both of whom are buried in Rome's Protestant Cemetery (see [[Rome/Aventino-Testaccio#Tes",
+   "editions": 8,
+   "unesco": false,
+   "web": "http://www.keats-shelley-house.org/"
+  },
+  {
+   "name": "Goethe's House",
+   "lat": 41.90901,
+   "lng": 12.477192,
+   "wikidata": "Q959650",
+   "note": "",
+   "editions": 8,
+   "unesco": false,
+   "web": "http://www.casadigoethe.it"
+  },
+  {
+   "name": "Museo delle Paste Alimentari",
+   "lat": 41.91848,
+   "lng": 12.47284,
+   "wikidata": "Q3868428",
+   "note": "A museum devoted to pasta, Italy's premier gift to world cuisine.",
+   "editions": 2,
+   "unesco": false,
+   "web": "https://www.fondazionevincenzoagnesi.it/storia-del-museo/"
+  },
+  {
+   "name": "Bioparco",
+   "lat": 41.917472,
+   "lng": 12.485194,
+   "wikidata": "Q864639",
+   "note": "The renamed Rome Zoo, one of the oldest in Europe, founded in 1911. On the edge of the Borghese Gardens, a short, well-signposted walk from the Gallery. They try hard, but San Diego this isn't. If you are a regular zoo-goer you will be disa",
+   "editions": 14,
+   "unesco": false,
+   "web": "http://www.bioparco.it"
+  },
+  {
+   "name": "Piazza del Popolo Obelisk",
+   "lat": 41.9107,
+   "lng": 12.47635,
+   "wikidata": "Q568194",
+   "note": "According to an inscription ''Emperor Augustus'' dedicated the obelisk to the sun in the 11th year of his consulate (10BC), after he had annexed Egypt to Rome. The obelisk is 24 m high. It was erected in Heliopolis in Egypt and was dedicate",
+   "editions": 16,
+   "unesco": false
+  },
+  {
+   "name": "Statue of Goethe",
+   "lat": 41.911544,
+   "lng": 12.486336,
+   "wikidata": "Q1534099",
+   "note": "",
+   "editions": 4,
+   "unesco": false
+  },
+  {
+   "name": "San Crisogono",
+   "lat": 41.8891,
+   "lng": 12.473732,
+   "wikidata": "Q1631638",
+   "note": "Underneath the beautiful baroque church (with repurposed ancient Roman columns) there is a surprisingly large crypt, where ancient Roman ruins can be viewed. You can also see beautiful early Christian frescoes. Entry is €3 per person, payab",
+   "editions": 22,
+   "unesco": false,
+   "web": "http://www.diocesidiroma.it/phpenti/ente/?ID=4"
+  },
+  {
+   "name": "Ponte Sisto",
+   "lat": 41.892336,
+   "lng": 12.470794,
+   "wikidata": "Q586329",
+   "note": "''Pope Sixtus IV della Rovere'' (1471-1481) gave order to replace the old Roman bridge by a new one. It was Pope Sixtus IV who also ordered the Sistine Chapel and the Opsedale di Santo Spirito to be built. So he ran out of money. He levied ",
+   "editions": 22,
+   "unesco": false
+  },
+  {
+   "name": "Santa Maria in Trastevere",
+   "lat": 41.889444,
+   "lng": 12.469722,
+   "wikidata": "Q1137391",
+   "note": "One of the oldest churches in the city. The nave is lined with a mismatched collection of columns taken from ancient Roman buildings. The apse is covered in gold mosaics from the 13th century, arguably the finest mosaics in the city. Impres",
+   "editions": 33,
+   "unesco": false,
+   "web": "https://www.santamariaintrastevere.it/"
+  },
+  {
+   "name": "Santa Cecilia in Trastevere",
+   "lat": 41.887556,
+   "lng": 12.475892,
+   "wikidata": "Q1479873",
+   "note": "Very ornately done and beautiful inside, but don't expect any information in English. All information panels are only in Italian. It's still a beautiful site though even if you don't read Italian. According to tradition St.Cecily suffered a",
+   "editions": 29,
+   "unesco": false,
+   "web": "http://www.vicariatusurbis.org/?page_id=188&ID=860"
+  },
+  {
+   "name": "San Francesco a Ripa",
+   "lat": 41.885127,
+   "lng": 12.473186,
+   "wikidata": "Q571088",
+   "note": "Named after St. Francis of Assisi, who stayed nearby. Inside the Paluzzi-Albertoni chapel is one of Bernini’s masterpieces, the statue of the Blessed Ludovica Albertoni. The column in front of the church comes from the ruins of Veii (see Ro",
+   "editions": 19,
+   "unesco": false,
+   "web": "http://www.sanfrancescoaripa.com/"
+  },
+  {
+   "name": "Villa Farnesina",
+   "lat": 41.893611,
+   "lng": 12.4675,
+   "wikidata": "Q1126723",
+   "note": "Delightful Renaissance house that was built by a rich banker from Siena, ''Agostino Chigi''. In 1577 it was bought by the Farnese family and has since been known as Villa Farnesina. At one time there were plans by Michelangelo to build a br",
+   "editions": 35,
+   "unesco": false,
+   "web": "http://www.villafarnesina.it"
+  },
+  {
+   "name": "National Gallery of Ancient Art",
+   "lat": 41.893328,
+   "lng": 12.466586,
+   "wikidata": "Q2266081",
+   "note": "housed in the baroque palace Corsini where Christina, Queen of Sweden settled down in the last years of her life",
+   "editions": 28,
+   "unesco": false,
+   "web": "https://www.barberinicorsini.org/"
+  },
+  {
+   "name": "Orto Botanico dell'Università di Roma \"La Sapienza\"",
+   "lat": 41.892296,
+   "lng": 12.465853,
+   "wikidata": "Q1072277",
+   "note": "This garden was established in 1883. It has over 3,500 species of plants and includes a \"Scent-and-Touch\" garden for those who are visually impaired.",
+   "editions": 8,
+   "unesco": false,
+   "web": "https://web.uniroma1.it/ortobotanico/"
+  },
+  {
+   "name": "Museum of Rome in Trastevere",
+   "lat": 41.88986,
+   "lng": 12.46897,
+   "wikidata": "Q3868182",
+   "note": "Permanent collection features paintings and drawings of Rome between the 18th and 20th centuries together with a fascinating black and white photo exhibition of Rome from 1950-80. Also offers rotating exhibitions, usually of the work of pho",
+   "editions": 6,
+   "unesco": false,
+   "web": "http://www.museodiromaintrastevere.it/"
+  },
+  {
+   "name": "Villa Sciarra",
+   "lat": 41.8835,
+   "lng": 12.4649,
+   "wikidata": "Q14479150",
+   "note": "A lovely, if somewhat run-down park (parts of it are blocked due to the poor state of the roads) with statues and a great view on the city.",
+   "editions": 6,
+   "unesco": false
+  },
+  {
+   "name": "Il Gianicolo",
+   "lat": 41.891667,
+   "lng": 12.461111,
+   "wikidata": "Q303001",
+   "note": "This is not, contrary to popular belief, one of the original seven hills that Rome was founded on. It is the second highest after Monte Mario, though, and offers incredible panoramic views of the city as long as the authorities remember to ",
+   "editions": 32,
+   "unesco": false
+  },
+  {
+   "name": "San Pietro in Montorio",
+   "lat": 41.88848,
+   "lng": 12.46652,
+   "wikidata": "Q1258576",
+   "note": "This church, which was commissioned by Ferdinand and Isabella of Spain, marks the point where, according to tradition, St. Peter was crucified. Particularly interesting for Irish visitors as it contains the graves of three Gaelic Chiefs who",
+   "editions": 28,
+   "unesco": false,
+   "web": "http://www.sanpietroinmontorio.it/home.html"
+  },
+  {
+   "name": "The Tempietto",
+   "lat": 41.88868,
+   "lng": 12.46641,
+   "wikidata": "Q12960184",
+   "note": "Designed by Bramante to mark the spot of St. Peter's martyrdom, this delightful miniature building is considered a masterpiece of Renaissance architecture. Open to the public.",
+   "editions": 23,
+   "unesco": false,
+   "web": "http://www.sanpietroinmontorio.it"
+  },
+  {
+   "name": "Fontana dell'Acqua Paola",
+   "lat": 41.88875,
+   "lng": 12.464167,
+   "wikidata": "Q1435809",
+   "note": "This massive early 17th-century Baroque fountain was built to celebrate the re-opening of an old Roman aqueduct. Water played an important role in this area in Roman times as the grain was milled here using water mills.",
+   "editions": 16,
+   "unesco": false
+  },
+  {
+   "name": "Manfredi Lighthouse",
+   "lat": 41.893805,
+   "lng": 12.460813,
+   "wikidata": "Q28375369",
+   "note": "Strange to see a lighthouse on top of a hill. This was built in 1911 and was a gift to the city from Italians living in Argentina. From here you can continue down the hill, past Rome's largest and Italy's most important children's hospital,",
+   "editions": 5,
+   "unesco": false
+  },
+  {
+   "name": "Parco Savello",
+   "lat": 41.8851,
+   "lng": 12.4804,
+   "wikidata": "Q3763895",
+   "note": "Parco Savello is the name of the grounds and orange grove next to the ''Santa Sabina'' church at the top of the Aventino and also where you have one of the best views of the city. Families gather here to sit under the dozens of orange trees",
+   "editions": 7,
+   "unesco": false
+  },
+  {
+   "name": "Basilica of Santa Sabina",
+   "lat": 41.884444,
+   "lng": 12.479722,
+   "wikidata": "Q592244",
+   "note": "A 5th-century basilica, simply and attractively decorated. The wooden door, of which 18 carved panels of scenes from the Bible survive, is believed to date from the church's construction.",
+   "editions": 35,
+   "unesco": false,
+   "web": "https://basilicasantasabina.it/"
+  },
+  {
+   "name": "Keyhole View",
+   "lat": 41.88289,
+   "lng": 12.47839,
+   "wikidata": "",
+   "note": "The most popular thing on the Aventino hill is to take a peek through the keyhole that lets you look through three countries (the third is the Sovereign Military Order of Malta, which owns the building that the keyhole belongs to) and see S"
+  },
+  {
+   "name": "Santa Maria in Cosmedin",
+   "lat": 41.888056,
+   "lng": 12.481667,
+   "wikidata": "Q609293",
+   "note": "A medieval church dating from the 6th century and home to the '''Bocca della Verità''' (Mouth of Truth). The Bocca della Verità at the entrance to the church is thought to be a 1st-century manhole cover. It is believed that if you put your ",
+   "editions": 29,
+   "unesco": false,
+   "web": "http://www.vicariatusurbis.org/?page_id=188&ID=889"
+  },
+  {
+   "name": "Piazza Bocca della Verità",
+   "lat": 41.888936,
+   "lng": 12.481453,
+   "wikidata": "Q3902429",
+   "note": "In addition to Santa Maria in Cosmedin there is a lot to be seen around this piazza. Opposite the church is the round temple dedicated to Hercules Invictus (the Unconquered Hercules), and not far from that the rectangular Fortuna Virilis, b",
+   "editions": 7,
+   "unesco": false
+  },
+  {
+   "name": "Circus Maximus",
+   "lat": 41.8859,
+   "lng": 12.4857,
+   "wikidata": "Q207808",
+   "note": "The contours of the ancient stadium, built in the 6th century BC, are still visible in what is now a park in the shadow of the Palatine. Circus Maximus was primarily devoted to chariot races and was used for this purpose until around 550 AD",
+   "editions": 52,
+   "unesco": false,
+   "web": "http://www.sovraintendenzaroma.it/i_luoghi/roma_antica/monumenti/circo_massimo"
+  },
+  {
+   "name": "Rose Garden",
+   "lat": 41.88538,
+   "lng": 12.48342,
+   "wikidata": "Q1072271",
+   "note": "A relaxing place to sit and recover from the exertions of sightseeing. Permanent collection plus annual competition.",
+   "editions": 5,
+   "unesco": false
+  },
+  {
+   "name": "FAO",
+   "lat": 41.882732,
+   "lng": 12.488563,
+   "wikidata": "Q3890078",
+   "note": "The enormous building at the southeast end of the Circus Maximus is the headquarters of the UN Food and Agriculture Organization (FAO). From its roof are undoubtedly the best views of Rome, but you will need to know someone who works there ",
+   "editions": 6,
+   "unesco": false
+  },
+  {
+   "name": "The Celio",
+   "lat": 41.883587,
+   "lng": 12.494992,
+   "wikidata": "Q216104",
+   "note": "The Celian Hill is one of the seven hills of Rome. You immediately see the church of San Gregorio Magno. On this site monks were trained before setting off as missionaries to England at the end of the 6th century. Further up the hill is San",
+   "editions": 45,
+   "unesco": false
+  },
+  {
+   "name": "Terme di Caracalla",
+   "lat": 41.88044,
+   "lng": 12.49236,
+   "wikidata": "Q502098",
+   "note": "Inaugurated in 217 AD and used until the 6th century. The baths were big enough for 1600 bathers at a time. Impressive and well-preserved. Used for operas in summer months (see [http://www.operaroma.it/en Opera di Roma] for details) and was",
+   "editions": 43,
+   "unesco": false
+  },
+  {
+   "name": "San Saba",
+   "lat": 41.878639,
+   "lng": 12.485542,
+   "wikidata": "Q1729714",
+   "note": "In the 8th and 9th century, San Saba was one of the most prestigious monasteries of Rome. The church has been built up over many centuries and contains a variety of architectural styles. Worth a look are the floor mosaics and some interesti",
+   "editions": 17,
+   "unesco": false,
+   "web": "http://sansaba.gesuiti.it"
+  },
+  {
+   "name": "Servian Wall",
+   "lat": 41.88041,
+   "lng": 12.48276,
+   "wikidata": "Q281330",
+   "note": "The Servian Wall was the first wall around Rome, built around the 3rd Century BC. This well-preserved section gives a good opportunity to see the construction methods used at that time, involving the use of blocks of tufa rock.",
+   "editions": 37,
+   "unesco": false
+  },
+  {
+   "name": "Roman Houses",
+   "lat": 41.8864,
+   "lng": 12.492,
+   "wikidata": "Q3661653",
+   "note": "Early Roman houses dating back to the 1st century, believed to be homes of early Christians. Well-preserved frescoes and a small museum.",
+   "editions": 4,
+   "unesco": false,
+   "web": "https://www.coopculture.it/it/poi/case-romane-del-celio/"
+  },
+  {
+   "name": "Sant'Anselmo all'Aventino",
+   "lat": 41.882083,
+   "lng": 12.477917,
+   "wikidata": "Q2223864",
+   "note": "Home of the Abbot Primate of the Benedictine Confederation and Benedictine monks studying in Rome. Visit the monastic produce shop and listen to the best Gregorian chant in Rome during Vespers (19:15 each evening).",
+   "editions": 13,
+   "unesco": false,
+   "web": "https://www.collegiosantanselmo.com/chiesa/"
+  },
+  {
+   "name": "Isola Tiberina",
+   "lat": 41.890833,
+   "lng": 12.477222,
+   "wikidata": "Q545404",
+   "note": "This is the island in the middle of the Tiber River (Il Fiume Tevere) that separates Central Rome and Trastevere. It boasts both a major hospital, called Fatebenefratelli, and a small synagogue that was secretly used in the Second World War",
+   "editions": 35,
+   "unesco": false,
+   "web": "https://www.isolatiberina.org"
+  },
+  {
+   "name": "Porta Capena",
+   "lat": 41.88392,
+   "lng": 12.4905,
+   "wikidata": "Q1632777",
+   "note": "The western end of the ancient Via Appia road connecting Rome to Brindisi in the heel of Italy, and as such the third world heritage site in Rome together with the Old Center and the Vatican. As such it's an important historical location, e",
+   "editions": 21,
+   "unesco": false
+  },
+  {
+   "name": "Porta San Paolo",
+   "lat": 41.8767,
+   "lng": 12.4815,
+   "wikidata": "Q1636207",
+   "note": "Next door to the Pyramid, this fine gate in the Aurelian Wall is named after St. Paul as the Via Ostiense leads to the basilica of St. Paul's Outside the Walls (see Rome/South).",
+   "editions": 21,
+   "unesco": false
+  },
+  {
+   "name": "Protestant (or non-Catholic) Cemetery",
+   "lat": 41.876397,
+   "lng": 12.479944,
+   "wikidata": "Q1187723",
+   "note": "Behind the pyramid, entered by the Via Caio Cestio, is the Protestant Cemetery where the poet John Keats was buried in 1821 and Percy Bysshe Shelley's ashes were also buried after his drowning in 1822. Richard Dana, author of ''Two Years be",
+   "editions": 20,
+   "unesco": false,
+   "web": "http://www.cemeteryrome.it/"
+  },
+  {
+   "name": "Railway and tramcar museum",
+   "lat": 41.8752,
+   "lng": 12.481,
+   "wikidata": "Q1311837",
+   "note": "Small collection of railway carriages and related stuff. Really just for those with special interest in the topic. Entrance through the station if the main entrance is closed.",
+   "editions": 9,
+   "unesco": false,
+   "web": "https://www.atac.roma.it/media/atacikon/polo-museale"
+  },
+  {
+   "name": "Santa Maria Maggiore",
+   "lat": 41.8975,
+   "lng": 12.498611,
+   "wikidata": "Q186282",
+   "note": "Built in the 9th century, this ancient basilica crowns the top of the Esquiline Hill. Tons of gold decorate the interior together with impressive mosaics (particularly when the floodlights are turned on), and there is a museum on the premis",
+   "editions": 58,
+   "unesco": false,
+   "web": "https://www.basilicasantamariamaggiore.va/it.html"
+  },
+  {
+   "name": "San Giovanni in Laterano",
+   "lat": 41.885906,
+   "lng": 12.506156,
+   "wikidata": "Q84090",
+   "note": "This is the cathedral church of Rome and first of the major basilicas. It's also the Pope's (as Bishop of Rome) Church. As such it ranks above all other churches in the Roman Catholic Church, even above St. Peter's. Be sure to check out the",
+   "editions": 63,
+   "unesco": true,
+   "web": "https://www.basilicasangiovanni.va/"
+  },
+  {
+   "name": "Santa Croce in Gerusalemme",
+   "lat": 41.887778,
+   "lng": 12.516389,
+   "wikidata": "Q685940",
+   "note": "It was constructed to hold relics of the Passion of Jesus. They include two thorns of his crown, part of a nail and three small wooden pieces of the Cross. The authenticity of these relics is much disputed, however.",
+   "editions": 35,
+   "unesco": false,
+   "web": "http://www.santacroceroma.it/"
+  },
+  {
+   "name": "National Museum of Musical Instruments",
+   "lat": 41.8889,
+   "lng": 12.5147,
+   "wikidata": "Q954216",
+   "note": "Next door to Santa Croce. A collection of around 3000 pieces, although only a third of these are displayed.",
+   "editions": 6,
+   "unesco": false
+  },
+  {
+   "name": "Museo della Liberazione",
+   "lat": 41.888521,
+   "lng": 12.506449,
+   "wikidata": "Q3868477",
+   "note": "This small museum records the liberation of Rome from German occupation during the Second World War. During the occupation the building was used as a prison. Stair lifts and chair lifts available for wheelchair users (call ahead).",
+   "editions": 9,
+   "unesco": false,
+   "web": "http://www.viatasso.eu/"
+  },
+  {
+   "name": "Porta Maggiore",
+   "lat": 41.891457,
+   "lng": 12.515242,
+   "wikidata": "Q751318",
+   "note": "Impressive gate built by Claudius in AD 52 and formed by the arches of two aqueducts. It was subsequently incorporated into the Aurelian walls. Nearby is the \"Baker's tomb\", erected for himself and his wife by a freed slave who became a ric",
+   "editions": 27,
+   "unesco": false
+  },
+  {
+   "name": "Villa Torlonia",
+   "lat": 41.9137,
+   "lng": 12.5116,
+   "wikidata": "",
+   "note": "A magnificent patrician house with beautiful gardens. Construction of this villa began in 1806. Mussolini rented it from the Torlonia family for one lira a year to use as his state residence from 1925 onwards. It was abandoned after 1945 an"
+  },
+  {
+   "name": "Casina delle Civette",
+   "lat": 41.9142,
+   "lng": 12.513,
+   "wikidata": "Q3867590",
+   "note": "This strange-looking, but delightful, building has undergone several transformations since its original construction as a rustic hideaway from the main villa in the park. It underwent a significant redesign in the early 1900s and again in 1",
+   "editions": 3,
+   "unesco": false,
+   "web": "http://www.museivillatorlonia.it/casina_delle_civette"
+  },
+  {
+   "name": "Basilica di San Lorenzo fuori le Mura",
+   "lat": 41.9025,
+   "lng": 12.520556,
+   "wikidata": "Q738214",
+   "note": "Houses the tomb of St Lawrence. This basilica dates back to the 3rd century, when the area was already well populated. Surrounding it is Rome's cemetery, the Cimitero del Verano. San Lorenzo was damaged by Allied bombs in 1943 and the facad",
+   "editions": 37,
+   "unesco": false,
+   "web": "https://www.basilicasanlorenzofuorilemura.it/"
+  },
+  {
+   "name": "Ara Pacis",
+   "lat": 41.906389,
+   "lng": 12.475556,
+   "wikidata": "Q623612",
+   "note": "Ara Pacis is an altar to peace commissioned by the Roman Senate on 4 July 13 BC to honor the triumphal return from Hispania and Gaul of Augustus. It is universally recognised as a masterpiece. Following discovery of this work under a buildi",
+   "editions": 41,
+   "unesco": false
+  },
+  {
+   "name": "Mausoleo di Augusto",
+   "lat": 41.90611,
+   "lng": 12.47639,
+   "wikidata": "Q770847",
+   "note": "This is a large tomb built by the Roman Emperor Augustus in 28 BC in the form of a stone ring covered by an earth mound. A brick wall, 87 m in diameter, carried an earth mound covered with cypresses. On top of the hill stood a bronze monume",
+   "editions": 40,
+   "unesco": false,
+   "web": "http://www.mausoleodiaugusto.it"
+  },
+  {
+   "name": "Catacombe di Priscilla",
+   "lat": 41.9297,
+   "lng": 12.5087,
+   "wikidata": "Q2462868",
+   "note": "Underground burial place of an ancient Roman family and of seven early popes.",
+   "editions": 18,
+   "unesco": false
+  },
+  {
+   "name": "Santa Maria del Popolo",
+   "lat": 41.911389,
+   "lng": 12.476389,
+   "wikidata": "Q869513",
+   "note": "This is a treasure-trove of art. There are a couple of paintings by ''Caravaggio'': \"The Crucifixion of Saint Peter\" and \"The Conversion of Saint Paul\" (in a dim alcove to the left of the altar, both at right angles to the viewer, with a ma",
+   "editions": 35,
+   "unesco": false,
+   "web": "https://santamariadelpopoloroma.it/"
+  },
+  {
+   "name": "Santissima Trinità dei Monti",
+   "lat": 41.906389,
+   "lng": 12.483611,
+   "wikidata": "Q1229008",
+   "note": "Baroque church more noted for its position at the top of the Spanish Steps than it is for the church. Backdrop for numerous movies including Audrey Hepburn and Gregory Peck in ''Roman Holiday''.",
+   "editions": 32,
+   "unesco": false,
+   "web": "https://trinitadeimonti.net/it/casa/"
+  },
+  {
+   "name": "Moschea di Roma",
+   "lat": 41.934722,
+   "lng": 12.495,
+   "wikidata": "Q1789776",
+   "note": "The Rome Mosque, which was inaugurated in 1995, is the biggest in Europe. The inside of the 30,000 m² structure has a large prayer hall that uses tri-stemmed columns that imitate the features of trees.",
+   "editions": 33,
+   "unesco": false
+  },
+  {
+   "name": "Santa Costanza",
+   "lat": 41.922601,
+   "lng": 12.517398,
+   "wikidata": "Q831361",
+   "note": "This church was built by the Emperor Constantine (272-337) as a mausoleum for his daughters Constantina and Helena. It was part of a much larger cemetery complex, parts of which can still be seen. The mausoleum was consecrated as a church a",
+   "editions": 26,
+   "unesco": false,
+   "web": "http://www.santagnese.org/mausoleo.htm"
+  },
+  {
+   "name": "Sant' Agnese fuori le Mura",
+   "lat": 41.922917,
+   "lng": 12.518878,
+   "wikidata": "Q1636696",
+   "note": "This church was built next to the mausoleum of Santa Costanza in the 7th century and is on top of catacombs. It is very unusual in that the floor level is at the level of the catacomb floor, and the street entrance is at the level of the se",
+   "editions": 24,
+   "unesco": false,
+   "web": "https://www.santagnese.net/"
+  },
+  {
+   "name": "Catacombs of St Agnese",
+   "lat": 41.922778,
+   "lng": 12.518611,
+   "wikidata": "Q3663182",
+   "note": "Small catacombs that contained the remains of Saint Agnes",
+   "editions": 11,
+   "unesco": false
+  },
+  {
+   "name": "Piazza del Popolo",
+   "lat": 41.910714,
+   "lng": 12.476317,
+   "wikidata": "Q824997",
+   "note": "This is the largest square in Rome. It sometimes hosts pop concerts and is the focal point for Rome's New Year's Eve celebrations. The twin churches ''Santa Maria dei Miracoli'' (1681) and ''Santa Maria in Montesanto'' (1679) used to provid",
+   "editions": 39,
+   "unesco": false
+  },
+  {
+   "name": "Quartiere Coppedè (part of the neighborhood of ‘Trieste’)",
+   "lat": 41.918773,
+   "lng": 12.500961,
+   "wikidata": "Q3927173",
+   "note": "With its strange Liberty- style buildings with influence from the ''Art Nouveau'' of the 1920s this small bunch of blocks is one of the most interesting, and less known, landmarks of the city. A must see.",
+   "editions": 7,
+   "unesco": false
+  },
+  {
+   "name": "The Spanish Steps",
+   "lat": 41.90611,
+   "lng": 12.48278,
+   "wikidata": "Q848072",
+   "note": "A truly monumental stairway of 135 steps (similar to climbing eight flights of stairs), built with French funds between 1721 and 1725 in order to link the Bourbon Spanish embassy to the Holy See (still located in the piazza below), with the",
+   "editions": 40,
+   "unesco": false
+  },
+  {
+   "name": "Piazza di Spagna",
+   "lat": 41.90595,
+   "lng": 12.482058,
+   "wikidata": "Q15124814",
+   "note": "The Piazza di Spagna (Spanish Square) is the most famous square in Rome. For a very long time it was the meeting point of all foreigners coming to Rome. In the 17th century it was the residence of the Spanish Ambassador to the Holy See. The",
+   "editions": 40,
+   "unesco": false
+  },
+  {
+   "name": "Ponte Milvio",
+   "lat": 41.935556,
+   "lng": 12.466944,
+   "wikidata": "Q1127325",
+   "note": "The first pedestrian-only bridge was built here in 206 BC and marks the passage of the Roman Via Flaminia over the Tiber. In 115 BC, the original bridge was demolished and rebuilt. It has been restored and remodelled several times since. In",
+   "editions": 36,
+   "unesco": false
+  },
+  {
+   "name": "Villa Medici",
+   "lat": 41.90827,
+   "lng": 12.48252,
+   "wikidata": "Q1362663",
+   "note": "The villa was erected by order of Cardinal Ricci di Montepulciano in 1544. It was acquired by Cardinal Fernando di Medici in 1576. Since 1803 it is the French Academy in Rome. The academy was created in 1666 by the French King Louis XIV in ",
+   "editions": 35,
+   "unesco": false,
+   "web": "http://www.villamedici.it/"
+  },
+  {
+   "name": "Villa Albani-Torlonia",
+   "lat": 41.9153,
+   "lng": 12.5,
+   "wikidata": "Q4011749",
+   "note": "A magnificent patrician house with beautiful gardens. It was built by order of Cardinal Alessando Albani in 1743-1763 in order to accommodate his collection of art. The collection was taken care of by the Winkelmann, adviser and friend of t",
+   "editions": 10,
+   "unesco": false
+  },
+  {
+   "name": "Villa Ada",
+   "lat": 41.932039,
+   "lng": 12.501497,
+   "wikidata": "Q2000387",
+   "note": "Beautiful park, the 2nd largest in Rome (after [[Rome/Trastevere#Villa Doria Pamphili",
+   "editions": 16,
+   "unesco": false,
+   "web": "https://www.sovraintendenzaroma.it/i_luoghi/ville_e_parchi_storici/ville_dei_nobili/villa_ada_savoia"
+  },
+  {
+   "name": "Borghese Gardens",
+   "lat": 41.91349,
+   "lng": 12.48639,
+   "wikidata": "",
+   "note": "The extensive Borghese Gardens are a pleasant place to stroll. Inside this area you will find one of the world's great museums, Rome's Zoo, a pond where you can rent a rowing boat and the Piazza di Siena, which hosts an annual show jumping "
+  },
+  {
+   "name": "Pincio",
+   "lat": 41.91125,
+   "lng": 12.47872,
+   "wikidata": "",
+   "note": "The Pincio Park is near Piazza del Popolo. It was designed in the 19th century by Giuseppe Valadier, who also designed the Piazza del Popolo. Formlerly the Casina Valadier was an elegant restaurant. Gandhi, Mussolini, Richard Strauss and th"
+  },
+  {
+   "name": "Monte Mario",
+   "lat": 41.925,
+   "lng": 12.451667,
+   "wikidata": "Q692719",
+   "note": "The highest hill in Rome at 139 m, with sweeping views of the Vatican and Rome across the Tiber.",
+   "editions": 21,
+   "unesco": false
+  },
+  {
+   "name": "Pinciana/Museo Borghese stop",
+   "lat": 41.913974,
+   "lng": 12.49373,
+   "wikidata": "",
+   "note": ""
+  },
+  {
+   "name": "Villa Giulia National Gallery",
+   "lat": 41.918333,
+   "lng": 12.477778,
+   "wikidata": "Q964499",
+   "note": "The most extensive collection of Etruscan art and artifacts anywhere. Fantastic collection and well worth the admission charge. A difficult museum to find, but a lovely display in a beautiful villa setting.",
+   "editions": 17,
+   "unesco": false,
+   "web": "https://www.museoetru.it/"
+  },
+  {
+   "name": "Galleria Nazionale d'Arte Moderna (GNAM)",
+   "lat": 41.916944,
+   "lng": 12.481944,
+   "wikidata": "Q1492387",
+   "note": "An underrated way to see fantastic art made after the Renaissance. Mainly Italian artists, notably De Chirico, but Cézanne, Degas, Kandinsky, Man Ray, Modigliani, Monet, Pollock and Van Gogh are also represented.",
+   "editions": 28,
+   "unesco": false,
+   "web": "https://gnamc.cultura.gov.it/"
+  },
+  {
+   "name": "MAXXI",
+   "lat": 41.92807,
+   "lng": 12.46648,
+   "wikidata": "Q1881229",
+   "note": "Brand new museum designed to celebrate the art and architecture of the 21st century.",
+   "editions": 25,
+   "unesco": false,
+   "web": "http://www.fondazionemaxxi.it"
+  },
+  {
+   "name": "MACRO",
+   "lat": 41.912825,
+   "lng": 12.502217,
+   "wikidata": "Q2669644",
+   "note": "Rome's museum of contemporary art, housed in a former industrial complex. Rotating exhibitions, each one usually lasting about 4 months. The MACRO Testaccio exhibition space is located in [[Rome/Aventino-Testaccio",
+   "editions": 16,
+   "unesco": false,
+   "web": "https://www.museomacro.it/"
+  },
+  {
+   "name": "Keats-Shelley Memorial House",
+   "lat": 41.905756,
+   "lng": 12.482614,
+   "wikidata": "Q1133966",
+   "note": "The house in which the famous English poet John Keats succumbed to consumption, now preserved as a memorial to his life and that of his friend Shelley, both of whom are buried in Rome's Protestant Cemetery (see [[Rome/Aventino-Testaccio#Tes",
+   "editions": 8,
+   "unesco": false,
+   "web": "http://www.keats-shelley-house.org/"
+  },
+  {
+   "name": "Goethe's House",
+   "lat": 41.90901,
+   "lng": 12.477192,
+   "wikidata": "Q959650",
+   "note": "",
+   "editions": 8,
+   "unesco": false,
+   "web": "http://www.casadigoethe.it"
+  },
+  {
+   "name": "Museo delle Paste Alimentari",
+   "lat": 41.91848,
+   "lng": 12.47284,
+   "wikidata": "Q3868428",
+   "note": "A museum devoted to pasta, Italy's premier gift to world cuisine.",
+   "editions": 2,
+   "unesco": false,
+   "web": "https://www.fondazionevincenzoagnesi.it/storia-del-museo/"
+  },
+  {
+   "name": "Bioparco",
+   "lat": 41.917472,
+   "lng": 12.485194,
+   "wikidata": "Q864639",
+   "note": "The renamed Rome Zoo, one of the oldest in Europe, founded in 1911. On the edge of the Borghese Gardens, a short, well-signposted walk from the Gallery. They try hard, but San Diego this isn't. If you are a regular zoo-goer you will be disa",
+   "editions": 14,
+   "unesco": false,
+   "web": "http://www.bioparco.it"
+  },
+  {
+   "name": "Piazza del Popolo Obelisk",
+   "lat": 41.9107,
+   "lng": 12.47635,
+   "wikidata": "Q568194",
+   "note": "According to an inscription ''Emperor Augustus'' dedicated the obelisk to the sun in the 11th year of his consulate (10BC), after he had annexed Egypt to Rome. The obelisk is 24 m high. It was erected in Heliopolis in Egypt and was dedicate",
+   "editions": 16,
+   "unesco": false
+  },
+  {
+   "name": "Statue of Goethe",
+   "lat": 41.911544,
+   "lng": 12.486336,
+   "wikidata": "Q1534099",
+   "note": "",
+   "editions": 4,
+   "unesco": false
+  }
+ ],
+ "lifts": [],
+ "transit": [
+  {
+   "mode": "train",
+   "ref": "FL3",
+   "name": "FL3 (Viterbo Porta Fiorentina => Roma Tiburtina)",
+   "stops": [
+    {
+     "name": "Viterbo Porta Fiorentina",
+     "lat": 42.4253,
+     "lng": 12.10612
+    },
+    {
+     "name": "Viterbo Porta Romana",
+     "lat": 42.41197,
+     "lng": 12.11052
+    },
+    {
+     "name": "Tre Croci",
+     "lat": 42.33151,
+     "lng": 12.08618
+    },
+    {
+     "name": "Vetralla",
+     "lat": 42.3046,
+     "lng": 12.08914
+    },
+    {
+     "name": "Capranica-Sutri",
+     "lat": 42.24522,
+     "lng": 12.15721
+    },
+    {
+     "name": "Oriolo",
+     "lat": 42.16687,
+     "lng": 12.13848
+    },
+    {
+     "name": "Manziana-Canale Monterano",
+     "lat": 42.12826,
+     "lng": 12.13494
+    },
+    {
+     "name": "Bracciano",
+     "lat": 42.10368,
+     "lng": 12.17302
+    },
+    {
+     "name": "Anguillara",
+     "lat": 42.0671,
+     "lng": 12.29333
+    },
+    {
+     "name": "Cesano di Roma",
+     "lat": 42.06192,
+     "lng": 12.32653
+    },
+    {
+     "name": "Olgiata",
+     "lat": 42.01464,
+     "lng": 12.36376
+    },
+    {
+     "name": "La Storta",
+     "lat": 42.00286,
+     "lng": 12.38071
+    },
+    {
+     "name": "La Giustiniana",
+     "lat": 41.9853,
+     "lng": 12.40332
+    },
+    {
+     "name": "Ipogeo degli Ottavi",
+     "lat": 41.96875,
+     "lng": 12.40888
+    },
+    {
+     "name": "Ottavia",
+     "lat": 41.96037,
+     "lng": 12.41016
+    },
+    {
+     "name": "Roma San Filippo Neri",
+     "lat": 41.94672,
+     "lng": 12.41633
+    },
+    {
+     "name": "Roma Monte Mario",
+     "lat": 41.93907,
+     "lng": 12.42176
+    },
+    {
+     "name": "Gemelli",
+     "lat": 41.92783,
+     "lng": 12.42742
+    },
+    {
+     "name": "Roma Balduina",
+     "lat": 41.92007,
+     "lng": 12.43663
+    },
+    {
+     "name": "Appiano",
+     "lat": 41.91301,
+     "lng": 12.43905
+    },
+    {
+     "name": "Valle Aurelia",
+     "lat": 41.90299,
+     "lng": 12.44216
+    },
+    {
+     "name": "Roma San Pietro",
+     "lat": 41.89612,
+     "lng": 12.45455
+    },
+    {
+     "name": "Quattro Venti",
+     "lat": 41.87905,
+     "lng": 12.45875
+    },
+    {
+     "name": "Roma Trastevere",
+     "lat": 41.87229,
+     "lng": 12.46608
+    },
+    {
+     "name": "Roma Ostiense",
+     "lat": 41.87208,
+     "lng": 12.48485
+    },
+    {
+     "name": "Roma Tuscolana",
+     "lat": 41.87924,
+     "lng": 12.52351
+    },
+    {
+     "name": "Roma Tiburtina",
+     "lat": 41.91064,
+     "lng": 12.53093
+    }
+   ]
+  },
+  {
+   "mode": "train",
+   "ref": "FL5",
+   "name": "Treno FL5: Roma Termini → Civitavecchia",
+   "stops": [
+    {
+     "name": "Roma Termini",
+     "lat": 41.89741,
+     "lng": 12.50623
+    },
+    {
+     "name": "Roma Tuscolana",
+     "lat": 41.87934,
+     "lng": 12.52342
+    },
+    {
+     "name": "Roma Ostiense",
+     "lat": 41.87247,
+     "lng": 12.48496
+    },
+    {
+     "name": "Roma Trastevere",
+     "lat": 41.87239,
+     "lng": 12.46606
+    },
+    {
+     "name": "Roma San Pietro",
+     "lat": 41.896,
+     "lng": 12.45436
+    },
+    {
+     "name": "Roma Aurelia",
+     "lat": 41.883,
+     "lng": 12.39425
+    },
+    {
+     "name": "Maccarese - Fregene",
+     "lat": 41.87899,
+     "lng": 12.23735
+    },
+    {
+     "name": "Torre in Pietra - Palidoro",
+     "lat": 41.92424,
+     "lng": 12.18339
+    },
+    {
+     "name": "Ladispoli - Cerveteri",
+     "lat": 41.95329,
+     "lng": 12.08197
+    },
+    {
+     "name": "Marina di Cerveteri",
+     "lat": 41.97921,
+     "lng": 12.04783
+    },
+    {
+     "name": "Santa Severa",
+     "lat": 42.02069,
+     "lng": 11.96899
+    },
+    {
+     "name": "Santa Marinella",
+     "lat": 42.03592,
+     "lng": 11.86306
+    },
+    {
+     "name": "Civitavecchia",
+     "lat": 42.08814,
+     "lng": 11.7985
+    }
+   ]
+  },
+  {
+   "mode": "train",
+   "ref": "FL1",
+   "name": "Treno FL1: Fiumicino Aeroporto → Orte",
+   "stops": [
+    {
+     "name": "Fiumicino Aeroporto",
+     "lat": 41.7934,
+     "lng": 12.25194
+    },
+    {
+     "name": "Parco Leonardo",
+     "lat": 41.79982,
+     "lng": 12.29618
+    },
+    {
+     "name": "Fiera di Roma",
+     "lat": 41.81002,
+     "lng": 12.31913
+    },
+    {
+     "name": "Ponte Galeria",
+     "lat": 41.8184,
+     "lng": 12.34454
+    },
+    {
+     "name": "Muratella",
+     "lat": 41.82479,
+     "lng": 12.40865
+    },
+    {
+     "name": "Magliana",
+     "lat": 41.83434,
+     "lng": 12.43112
+    },
+    {
+     "name": "Villa Bonelli",
+     "lat": 41.84786,
+     "lng": 12.45509
+    },
+    {
+     "name": "Roma Trastevere",
+     "lat": 41.87225,
+     "lng": 12.46608
+    },
+    {
+     "name": "Roma Ostiense",
+     "lat": 41.87197,
+     "lng": 12.48482
+    },
+    {
+     "name": "Roma Tuscolana",
+     "lat": 41.87924,
+     "lng": 12.52351
+    },
+    {
+     "name": "Roma Tiburtina",
+     "lat": 41.91051,
+     "lng": 12.53079
+    },
+    {
+     "name": "Roma Nomentana",
+     "lat": 41.93269,
+     "lng": 12.52327
+    },
+    {
+     "name": "Nuovo Salario",
+     "lat": 41.95543,
+     "lng": 12.51029
+    },
+    {
+     "name": "Fidene",
+     "lat": 41.97918,
+     "lng": 12.50846
+    },
+    {
+     "name": "Settebagni",
+     "lat": 42.00627,
+     "lng": 12.52016
+    },
+    {
+     "name": "Piana bella Di Montelibretti",
+     "lat": 42.10345,
+     "lng": 12.63238
+    },
+    {
+     "name": "Fara Sabina-Montelibretti",
+     "lat": 42.15569,
+     "lng": 12.64834
+    },
+    {
+     "name": "Poggio Mirteto",
+     "lat": 42.24218,
+     "lng": 12.63305
+    },
+    {
+     "name": "Gavignano Sabino",
+     "lat": 42.27309,
+     "lng": 12.60793
+    },
+    {
+     "name": "Stimigliano",
+     "lat": 42.28983,
+     "lng": 12.56865
+    },
+    {
+     "name": "Collevecchio-Poggio Sommavilla",
+     "lat": 42.29753,
+     "lng": 12.52293
+    },
+    {
+     "name": "Civita Castellana-Magliano",
+     "lat": 42.34654,
+     "lng": 12.45386
+    },
+    {
+     "name": "Gallese Teverina",
+     "lat": 42.38086,
+     "lng": 12.43978
+    },
+    {
+     "name": "Orte",
+     "lat": 42.43759,
+     "lng": 12.40893
+    }
+   ]
+  },
+  {
+   "mode": "subway",
+   "ref": "B",
+   "name": "Metro B (Laurentina)",
+   "stops": [
+    {
+     "name": "Rebibbia",
+     "lat": 41.92565,
+     "lng": 12.57281
+    },
+    {
+     "name": "Ponte Mammolo",
+     "lat": 41.9208,
+     "lng": 12.56513
+    },
+    {
+     "name": "Santa Maria del Soccorso",
+     "lat": 41.91553,
+     "lng": 12.56059
+    },
+    {
+     "name": "Pietralata",
+     "lat": 41.91471,
+     "lng": 12.55518
+    },
+    {
+     "name": "Monti Tiburtini",
+     "lat": 41.91575,
+     "lng": 12.54789
+    },
+    {
+     "name": "Quintiliani",
+     "lat": 41.91585,
+     "lng": 12.53838
+    },
+    {
+     "name": "Tiburtina FS",
+     "lat": 41.91076,
+     "lng": 12.53035
+    },
+    {
+     "name": "Bologna",
+     "lat": 41.91354,
+     "lng": 12.52055
+    },
+    {
+     "name": "Policlinico",
+     "lat": 41.90884,
+     "lng": 12.51208
+    },
+    {
+     "name": "Castro Pretorio",
+     "lat": 41.90645,
+     "lng": 12.50689
+    },
+    {
+     "name": "Termini",
+     "lat": 41.90138,
+     "lng": 12.50048
+    },
+    {
+     "name": "Cavour",
+     "lat": 41.89497,
+     "lng": 12.49353
+    },
+    {
+     "name": "Colosseo",
+     "lat": 41.89167,
+     "lng": 12.4917
+    },
+    {
+     "name": "Circo Massimo",
+     "lat": 41.88339,
+     "lng": 12.4881
+    },
+    {
+     "name": "Piramide",
+     "lat": 41.87488,
+     "lng": 12.48248
+    },
+    {
+     "name": "Garbatella",
+     "lat": 41.86633,
+     "lng": 12.48309
+    },
+    {
+     "name": "Basilica San Paolo",
+     "lat": 41.85591,
+     "lng": 12.4783
+    },
+    {
+     "name": "Marconi",
+     "lat": 41.84937,
+     "lng": 12.47566
+    },
+    {
+     "name": "EUR Magliana",
+     "lat": 41.8395,
+     "lng": 12.46338
+    },
+    {
+     "name": "EUR Palasport",
+     "lat": 41.83003,
+     "lng": 12.46672
+    },
+    {
+     "name": "EUR Fermi",
+     "lat": 41.82886,
+     "lng": 12.47087
+    },
+    {
+     "name": "Laurentina",
+     "lat": 41.82706,
+     "lng": 12.48131
+    }
+   ]
+  },
+  {
+   "mode": "subway",
+   "ref": "A",
+   "name": "Metro A (Anagnina)",
+   "stops": [
+    {
+     "name": "Battistini",
+     "lat": 41.90622,
+     "lng": 12.41516
+    },
+    {
+     "name": "Cornelia",
+     "lat": 41.90055,
+     "lng": 12.42649
+    },
+    {
+     "name": "Baldo degli Ubaldi",
+     "lat": 41.89906,
+     "lng": 12.43357
+    },
+    {
+     "name": "Valle Aurelia",
+     "lat": 41.90292,
+     "lng": 12.44135
+    },
+    {
+     "name": "Cipro",
+     "lat": 41.90741,
+     "lng": 12.44767
+    },
+    {
+     "name": "Ottaviano",
+     "lat": 41.90953,
+     "lng": 12.45844
+    },
+    {
+     "name": "Lepanto",
+     "lat": 41.91145,
+     "lng": 12.46612
+    },
+    {
+     "name": "Flaminio",
+     "lat": 41.91258,
+     "lng": 12.47778
+    },
+    {
+     "name": "Spagna",
+     "lat": 41.90679,
+     "lng": 12.4846
+    },
+    {
+     "name": "Barberini",
+     "lat": 41.90386,
+     "lng": 12.48869
+    },
+    {
+     "name": "Repubblica",
+     "lat": 41.90286,
+     "lng": 12.49606
+    },
+    {
+     "name": "Termini",
+     "lat": 41.9017,
+     "lng": 12.5008
+    },
+    {
+     "name": "Vittorio Emanuele",
+     "lat": 41.89463,
+     "lng": 12.50458
+    },
+    {
+     "name": "Manzoni",
+     "lat": 41.8902,
+     "lng": 12.50687
+    },
+    {
+     "name": "San Giovanni",
+     "lat": 41.88535,
+     "lng": 12.50997
+    },
+    {
+     "name": "Re di Roma",
+     "lat": 41.88193,
+     "lng": 12.51412
+    },
+    {
+     "name": "Ponte Lungo",
+     "lat": 41.87788,
+     "lng": 12.51901
+    },
+    {
+     "name": "Furio Camillo",
+     "lat": 41.87478,
+     "lng": 12.52309
+    },
+    {
+     "name": "Colli Albani",
+     "lat": 41.86954,
+     "lng": 12.5299
+    },
+    {
+     "name": "Arco di Travertino",
+     "lat": 41.86612,
+     "lng": 12.53584
+    },
+    {
+     "name": "Porta Furba/Quadraro",
+     "lat": 41.86386,
+     "lng": 12.54823
+    },
+    {
+     "name": "Numidio Quadrato",
+     "lat": 41.86218,
+     "lng": 12.55266
+    },
+    {
+     "name": "Lucio Sestio",
+     "lat": 41.85982,
+     "lng": 12.55718
+    },
+    {
+     "name": "Giulio Agricola",
+     "lat": 41.85668,
+     "lng": 12.56268
+    },
+    {
+     "name": "Subaugusta",
+     "lat": 41.85391,
+     "lng": 12.56775
+    },
+    {
+     "name": "Cinecittà",
+     "lat": 41.84931,
+     "lng": 12.57444
+    },
+    {
+     "name": "Anagnina",
+     "lat": 41.84283,
+     "lng": 12.58613
+    }
+   ]
+  },
+  {
+   "mode": "subway",
+   "ref": "Metromare",
+   "name": "Metromare (Cristoforo Colombo)",
+   "stops": [
+    {
+     "name": "Porta San Paolo",
+     "lat": 41.87526,
+     "lng": 12.48175
+    },
+    {
+     "name": "Basilica San Paolo",
+     "lat": 41.85591,
+     "lng": 12.47812
+    },
+    {
+     "name": "EUR Magliana",
+     "lat": 41.83957,
+     "lng": 12.46323
+    },
+    {
+     "name": "Tor di Valle",
+     "lat": 41.81952,
+     "lng": 12.43676
+    },
+    {
+     "name": "Vitinia",
+     "lat": 41.79532,
+     "lng": 12.40388
+    },
+    {
+     "name": "Casal Bernocchi-Centro Giano",
+     "lat": 41.7894,
+     "lng": 12.37746
+    },
+    {
+     "name": "Acilia",
+     "lat": 41.78349,
+     "lng": 12.3608
+    },
+    {
+     "name": "Acilia Sud - Dragona",
+     "lat": 41.77605,
+     "lng": 12.34206
+    },
+    {
+     "name": "Ostia Antica",
+     "lat": 41.75634,
+     "lng": 12.30225
+    },
+    {
+     "name": "Lido Nord",
+     "lat": 41.74029,
+     "lng": 12.2845
+    },
+    {
+     "name": "Lido Centro",
+     "lat": 41.73329,
+     "lng": 12.28415
+    },
+    {
+     "name": "Stella Polare",
+     "lat": 41.72721,
+     "lng": 12.29532
+    },
+    {
+     "name": "Castel Fusano",
+     "lat": 41.72054,
+     "lng": 12.30892
+    },
+    {
+     "name": "Cristoforo Colombo",
+     "lat": 41.71454,
+     "lng": 12.32207
+    }
+   ]
+  },
+  {
+   "mode": "tram",
+   "ref": "8",
+   "name": "8 (Venezia)",
+   "stops": [
+    {
+     "name": "Casaletto",
+     "lat": 41.87739,
+     "lng": 12.4403
+    },
+    {
+     "name": "Gianicolense/Colli Portuensi",
+     "lat": 41.87719,
+     "lng": 12.44227
+    },
+    {
+     "name": "S. Giovanni di Dio",
+     "lat": 41.87462,
+     "lng": 12.44669
+    },
+    {
+     "name": "Gianicolense/Ravizza",
+     "lat": 41.87149,
+     "lng": 12.44993
+    },
+    {
+     "name": "Gianicolense/San Camillo (H)",
+     "lat": 41.87051,
+     "lng": 12.45509
+    },
+    {
+     "name": "Gianicolense/Ponte Bianco",
+     "lat": 41.87208,
+     "lng": 12.46002
+    },
+    {
+     "name": "Staz.ne Trastevere",
+     "lat": 41.87337,
+     "lng": 12.4654
+    },
+    {
+     "name": "Trastevere/Pascarella",
+     "lat": 41.8765,
+     "lng": 12.46576
+    },
+    {
+     "name": "Ippolito Nievo",
+     "lat": 41.8806,
+     "lng": 12.46711
+    },
+    {
+     "name": "Trastevere/Bernard. da Feltre",
+     "lat": 41.88319,
+     "lng": 12.46913
+    },
+    {
+     "name": "Trastevere/Min. P. Istruzione",
+     "lat": 41.88482,
+     "lng": 12.47053
+    },
+    {
+     "name": "Trastevere/Mastai",
+     "lat": 41.88751,
+     "lng": 12.47285
+    },
+    {
+     "name": "Belli",
+     "lat": 41.89014,
+     "lng": 12.47432
+    },
+    {
+     "name": "Arenula/Min. G. Giustizia",
+     "lat": 41.89249,
+     "lng": 12.47486
+    },
+    {
+     "name": "Arenula/Cairoli",
+     "lat": 41.89374,
+     "lng": 12.47572
+    },
+    {
+     "name": "Venezia",
+     "lat": 41.89521,
+     "lng": 12.48099
+    }
+   ]
+  },
+  {
+   "mode": "tram",
+   "ref": "14",
+   "name": "14 (Togliatti)",
+   "stops": [
+    {
+     "name": "Termini (MA-MB-FS)",
+     "lat": 41.90049,
+     "lng": 12.50019
+    },
+    {
+     "name": "Farini",
+     "lat": 41.89826,
+     "lng": 12.49953
+    },
+    {
+     "name": "P.za Vittorio Emanuele (MA)",
+     "lat": 41.89528,
+     "lng": 12.50452
+    },
+    {
+     "name": "Principe Eugenio/Manzoni",
+     "lat": 41.89331,
+     "lng": 12.50935
+    },
+    {
+     "name": "P.za di Porta Maggiore",
+     "lat": 41.89147,
+     "lng": 12.51443
+    },
+    {
+     "name": "Labicano/Porta Maggiore",
+     "lat": 41.89147,
+     "lng": 12.51558
+    },
+    {
+     "name": "Prenestina/Caballini",
+     "lat": 41.8914,
+     "lng": 12.52004
+    },
+    {
+     "name": "Prenestina/Officine ATAC",
+     "lat": 41.89107,
+     "lng": 12.5252
+    },
+    {
+     "name": "P.le Prenestino",
+     "lat": 41.89133,
+     "lng": 12.52774
+    },
+    {
+     "name": "Prenestina/Giovenale",
+     "lat": 41.89202,
+     "lng": 12.53165
+    },
+    {
+     "name": "Prenestina/Giussano",
+     "lat": 41.89232,
+     "lng": 12.53457
+    },
+    {
+     "name": "Prenestina/Gattamelata",
+     "lat": 41.89241,
+     "lng": 12.53656
+    },
+    {
+     "name": "L.go Preneste",
+     "lat": 41.89242,
+     "lng": 12.54007
+    },
+    {
+     "name": "Prenestina/Acqua Bullicante",
+     "lat": 41.89275,
+     "lng": 12.54248
+    },
+    {
+     "name": "Prenestina/Telese",
+     "lat": 41.89335,
+     "lng": 12.54737
+    },
+    {
+     "name": "Prenestina/Irpinia",
+     "lat": 41.89385,
+     "lng": 12.55147
+    },
+    {
+     "name": "Prenestina/Olevano Romano",
+     "lat": 41.89433,
+     "lng": 12.5555
+    },
+    {
+     "name": "Prenestina/Tor de' Schiavi",
+     "lat": 41.89488,
+     "lng": 12.55961
+    },
+    {
+     "name": "Prenestina/Cocconi",
+     "lat": 41.89494,
+     "lng": 12.56356
+    },
+    {
+     "name": "Prenestina/Valente",
+     "lat": 41.89503,
+     "lng": 12.56709
+    },
+    {
+     "name": "Prenestina/Larici",
+     "lat": 41.89498,
+     "lng": 12.57403
+    }
+   ]
+  },
+  {
+   "mode": "tram",
+   "ref": "5",
+   "name": "5 (Gerani)",
+   "stops": [
+    {
+     "name": "Termini (MA-MB-FS)",
+     "lat": 41.90049,
+     "lng": 12.50019
+    },
+    {
+     "name": "Farini",
+     "lat": 41.89826,
+     "lng": 12.49953
+    },
+    {
+     "name": "P.za Vittorio Emanuele (MA)",
+     "lat": 41.89528,
+     "lng": 12.50452
+    },
+    {
+     "name": "Principe Eugenio/Manzoni",
+     "lat": 41.89331,
+     "lng": 12.50935
+    },
+    {
+     "name": "P.za di Porta Maggiore",
+     "lat": 41.89147,
+     "lng": 12.51443
+    },
+    {
+     "name": "Labicano/Porta Maggiore",
+     "lat": 41.89147,
+     "lng": 12.51558
+    },
+    {
+     "name": "Prenestina/Caballini",
+     "lat": 41.8914,
+     "lng": 12.52004
+    },
+    {
+     "name": "Prenestina/Officine ATAC",
+     "lat": 41.89107,
+     "lng": 12.5252
+    },
+    {
+     "name": "P.le Prenestino",
+     "lat": 41.89133,
+     "lng": 12.52774
+    },
+    {
+     "name": "Prenestina/Giovenale",
+     "lat": 41.89202,
+     "lng": 12.53165
+    },
+    {
+     "name": "Prenestina/Giussano",
+     "lat": 41.89232,
+     "lng": 12.53457
+    },
+    {
+     "name": "Prenestina/Gattamelata",
+     "lat": 41.89241,
+     "lng": 12.53656
+    },
+    {
+     "name": "L.go Preneste",
+     "lat": 41.89242,
+     "lng": 12.54007
+    },
+    {
+     "name": "Prenestina/Acqua Bullicante",
+     "lat": 41.89275,
+     "lng": 12.54248
+    },
+    {
+     "name": "Prenestina/Telese",
+     "lat": 41.89335,
+     "lng": 12.54737
+    },
+    {
+     "name": "Prenestina/Irpinia",
+     "lat": 41.89385,
+     "lng": 12.55147
+    },
+    {
+     "name": "Prenestina/Olevano Romano",
+     "lat": 41.89433,
+     "lng": 12.5555
+    },
+    {
+     "name": "Prenestina/Tor de' Schiavi",
+     "lat": 41.89488,
+     "lng": 12.55961
+    },
+    {
+     "name": "Bresadola",
+     "lat": 41.89334,
+     "lng": 12.5612
+    },
+    {
+     "name": "Delpino",
+     "lat": 41.89123,
+     "lng": 12.56354
+    },
+    {
+     "name": "Castani/Gelsi",
+     "lat": 41.88875,
+     "lng": 12.56525
+    },
+    {
+     "name": "Castani/Faggi",
+     "lat": 41.88463,
+     "lng": 12.56685
+    },
+    {
+     "name": "Frassini",
+     "lat": 41.88494,
+     "lng": 12.56825
+    },
+    {
+     "name": "Gerani",
+     "lat": 41.88583,
+     "lng": 12.56688
+    }
+   ]
+  },
+  {
+   "mode": "tram",
+   "ref": "19",
+   "name": "19 (Risorgimento/San Pietro)",
+   "stops": [
+    {
+     "name": "Gerani",
+     "lat": 41.88583,
+     "lng": 12.56688
+    },
+    {
+     "name": "Castani/Gelsi",
+     "lat": 41.88836,
+     "lng": 12.56543
+    },
+    {
+     "name": "Parlatore",
+     "lat": 41.89093,
+     "lng": 12.56451
+    },
+    {
+     "name": "Bresadola",
+     "lat": 41.89286,
+     "lng": 12.56141
+    },
+    {
+     "name": "Prenestina/Tor de' Schiavi",
+     "lat": 41.89473,
+     "lng": 12.55816
+    },
+    {
+     "name": "Prenestina/Olevano Romano",
+     "lat": 41.89434,
+     "lng": 12.55549
+    },
+    {
+     "name": "Prenestina/Irpinia",
+     "lat": 41.89386,
+     "lng": 12.55147
+    },
+    {
+     "name": "Prenestina/Acqua Bullicante",
+     "lat": 41.89278,
+     "lng": 12.54246
+    },
+    {
+     "name": "Prenestina/Conti",
+     "lat": 41.8924,
+     "lng": 12.53981
+    },
+    {
+     "name": "Prenestina/Gattamelata",
+     "lat": 41.89244,
+     "lng": 12.53655
+    },
+    {
+     "name": "Prenestina/Officine ATAC",
+     "lat": 41.89109,
+     "lng": 12.52519
+    },
+    {
+     "name": "Prenestina/Caballini",
+     "lat": 41.89132,
+     "lng": 12.52127
+    },
+    {
+     "name": "Scalo S. Lorenzo/Sardi",
+     "lat": 41.89557,
+     "lng": 12.5182
+    },
+    {
+     "name": "Reti",
+     "lat": 41.89907,
+     "lng": 12.51809
+    },
+    {
+     "name": "Policlinico (H)",
+     "lat": 41.90739,
+     "lng": 12.51359
+    },
+    {
+     "name": "Aldrovandi",
+     "lat": 41.91882,
+     "lng": 12.4855
+    },
+    {
+     "name": "Belle Arti",
+     "lat": 41.91846,
+     "lng": 12.47305
+    },
+    {
+     "name": "Ministero Marina",
+     "lat": 41.91553,
+     "lng": 12.47427
+    },
+    {
+     "name": "Risorgimento/S. Pietro",
+     "lat": 41.90608,
+     "lng": 12.45833
+    },
+    {
+     "name": "P.za Cinque Giornate",
+     "lat": 41.91371,
+     "lng": 12.46807
+    },
+    {
+     "name": "Milizie/Angelico",
+     "lat": 41.91133,
+     "lng": 12.4586
+    },
+    {
+     "name": "Milizie/Distretto Militare",
+     "lat": 41.91201,
+     "lng": 12.46136
+    }
+   ]
+  },
+  {
+   "mode": "train",
+   "ref": "FL2",
+   "name": "Treno FL2: Tivoli → Roma Tiburtina",
+   "stops": [
+    {
+     "name": "Tivoli",
+     "lat": 41.96188,
+     "lng": 12.80502
+    },
+    {
+     "name": "Marcellina-Palombara",
+     "lat": 41.99962,
+     "lng": 12.79136
+    },
+    {
+     "name": "Guidonia-Montecelio",
+     "lat": 41.97799,
+     "lng": 12.72227
+    },
+    {
+     "name": "Tivoli Terme",
+     "lat": 41.94965,
+     "lng": 12.72115
+    },
+    {
+     "name": "Lunghezza",
+     "lat": 41.92391,
+     "lng": 12.66759
+    },
+    {
+     "name": "Ponte di Nona",
+     "lat": 41.91878,
+     "lng": 12.65431
+    },
+    {
+     "name": "La Rustica U.I.R.",
+     "lat": 41.91249,
+     "lng": 12.62182
+    },
+    {
+     "name": "La Rustica Città",
+     "lat": 41.91015,
+     "lng": 12.60962
+    },
+    {
+     "name": "Tor Sapienza",
+     "lat": 41.90584,
+     "lng": 12.58778
+    },
+    {
+     "name": "Palmiro Togliatti",
+     "lat": 41.9033,
+     "lng": 12.57421
+    },
+    {
+     "name": "Serenissima",
+     "lat": 41.89995,
+     "lng": 12.55787
+    },
+    {
+     "name": "Roma Prenestina",
+     "lat": 41.89781,
+     "lng": 12.54603
+    },
+    {
+     "name": "Roma Tiburtina",
+     "lat": 41.91158,
+     "lng": 12.53186
+    }
+   ]
+  },
+  {
+   "mode": "light_rail",
+   "ref": "Roma Viterbo (Urbana)",
+   "name": "Roma Viterbo (Urbana) (Montebello)",
+   "stops": [
+    {
+     "name": "Flaminio",
+     "lat": 41.91335,
+     "lng": 12.47664
+    },
+    {
+     "name": "Euclide",
+     "lat": 41.92655,
+     "lng": 12.48131
+    },
+    {
+     "name": "Acqua Acetosa",
+     "lat": 41.93162,
+     "lng": 12.48724
+    },
+    {
+     "name": "Campi Sportivi",
+     "lat": 41.93381,
+     "lng": 12.49249
+    },
+    {
+     "name": "Monte Antenne",
+     "lat": 41.93907,
+     "lng": 12.49635
+    },
+    {
+     "name": "Tor di Quinto",
+     "lat": 41.95032,
+     "lng": 12.49001
+    },
+    {
+     "name": "Due Ponti",
+     "lat": 41.9582,
+     "lng": 12.48673
+    },
+    {
+     "name": "Grottarossa",
+     "lat": 41.96575,
+     "lng": 12.4905
+    },
+    {
+     "name": "Saxa Rubra",
+     "lat": 41.97426,
+     "lng": 12.49303
+    },
+    {
+     "name": "Centro RAI",
+     "lat": 41.98066,
+     "lng": 12.49366
+    },
+    {
+     "name": "Labaro",
+     "lat": 41.98815,
+     "lng": 12.49448
+    },
+    {
+     "name": "La Celsa",
+     "lat": 41.99648,
+     "lng": 12.49687
+    },
+    {
+     "name": "Prima Porta",
+     "lat": 41.99933,
+     "lng": 12.49496
+    },
+    {
+     "name": "La Giustiniana",
+     "lat": 42.00136,
+     "lng": 12.48943
+    },
+    {
+     "name": "Montebello",
+     "lat": 42.01109,
+     "lng": 12.48905
+    }
+   ]
+  },
+  {
+   "mode": "train",
+   "ref": "LEX",
+   "name": "Leonardo Express (Fiumicino Aeroporto)",
+   "stops": [
+    {
+     "name": "Roma Termini",
+     "lat": 41.90002,
+     "lng": 12.50207
+    },
+    {
+     "name": "Fiumicino Aeroporto",
+     "lat": 41.7934,
+     "lng": 12.25194
+    }
+   ]
+  },
+  {
+   "mode": "tram",
+   "ref": "2",
+   "name": "2 (Flaminio (MA))",
+   "stops": [
+    {
+     "name": "Mancini",
+     "lat": 41.9307,
+     "lng": 12.46485
+    },
+    {
+     "name": "Carracci",
+     "lat": 41.92993,
+     "lng": 12.46796
+    },
+    {
+     "name": "Apollodoro",
+     "lat": 41.92886,
+     "lng": 12.46893
+    },
+    {
+     "name": "Flaminia/Fracassini",
+     "lat": 41.92401,
+     "lng": 12.47091
+    },
+    {
+     "name": "Flaminia/Belle Arti",
+     "lat": 41.92063,
+     "lng": 12.47229
+    },
+    {
+     "name": "Belle Arti",
+     "lat": 41.91846,
+     "lng": 12.47305
+    },
+    {
+     "name": "Ministero Marina",
+     "lat": 41.91553,
+     "lng": 12.47427
+    },
+    {
+     "name": "Flaminio (MA)",
+     "lat": 41.91233,
+     "lng": 12.47564
+    }
+   ]
+  },
+  {
+   "mode": "train",
+   "ref": "FL4",
+   "name": "FL4 (Frascati)",
+   "stops": [
+    {
+     "name": "Roma Termini",
+     "lat": 41.90038,
+     "lng": 12.50245
+    },
+    {
+     "name": "Capannelle",
+     "lat": 41.83076,
+     "lng": 12.56883
+    },
+    {
+     "name": "Ciampino",
+     "lat": 41.80427,
+     "lng": 12.59949
+    },
+    {
+     "name": "Frascati",
+     "lat": 41.80696,
+     "lng": 12.67797
+    }
+   ]
+  },
+  {
+   "mode": "subway",
+   "ref": "C",
+   "name": "Metro C (Monte Compatri - Pantano → Colosseo)",
+   "stops": [
+    {
+     "name": "Monte Compatri - Pantano",
+     "lat": 41.86569,
+     "lng": 12.70766
+    },
+    {
+     "name": "Graniti",
+     "lat": 41.8657,
+     "lng": 12.69819
+    },
+    {
+     "name": "Finocchio",
+     "lat": 41.86551,
+     "lng": 12.6878
+    },
+    {
+     "name": "Bolognetta",
+     "lat": 41.86508,
+     "lng": 12.6807
+    },
+    {
+     "name": "Borghesiana",
+     "lat": 41.86471,
+     "lng": 12.6671
+    },
+    {
+     "name": "Due Leoni - Fontana Candida",
+     "lat": 41.86493,
+     "lng": 12.65826
+    },
+    {
+     "name": "Grotte Celoni",
+     "lat": 41.86288,
+     "lng": 12.64652
+    },
+    {
+     "name": "Torre Gaia",
+     "lat": 41.86417,
+     "lng": 12.63557
+    },
+    {
+     "name": "Torre Angela",
+     "lat": 41.86435,
+     "lng": 12.62574
+    },
+    {
+     "name": "Torrenova",
+     "lat": 41.86333,
+     "lng": 12.61685
+    },
+    {
+     "name": "Giardinetti",
+     "lat": 41.86436,
+     "lng": 12.61004
+    },
+    {
+     "name": "Torre Maura",
+     "lat": 41.86666,
+     "lng": 12.59719
+    },
+    {
+     "name": "Torre Spaccata",
+     "lat": 41.86882,
+     "lng": 12.58715
+    },
+    {
+     "name": "Alessandrino",
+     "lat": 41.87156,
+     "lng": 12.57851
+    },
+    {
+     "name": "Parco di Centocelle",
+     "lat": 41.87475,
+     "lng": 12.5682
+    },
+    {
+     "name": "Mirti",
+     "lat": 41.8812,
+     "lng": 12.56666
+    },
+    {
+     "name": "Gardenie",
+     "lat": 41.88625,
+     "lng": 12.56219
+    },
+    {
+     "name": "Teano",
+     "lat": 41.88907,
+     "lng": 12.55147
+    },
+    {
+     "name": "Malatesta",
+     "lat": 41.88744,
+     "lng": 12.54048
+    },
+    {
+     "name": "Pigneto",
+     "lat": 41.88848,
+     "lng": 12.52818
+    },
+    {
+     "name": "Lodi",
+     "lat": 41.88686,
+     "lng": 12.51837
+    },
+    {
+     "name": "San Giovanni",
+     "lat": 41.88561,
+     "lng": 12.51033
+    },
+    {
+     "name": "Porta Metronia",
+     "lat": 41.88285,
+     "lng": 12.50266
+    },
+    {
+     "name": "Colosseo – Fori Imperiali",
+     "lat": 41.89171,
+     "lng": 12.49029
+    }
+   ]
+  },
+  {
+   "mode": "train",
+   "ref": "FL6",
+   "name": "Treno FL6: Roma Termini → Cassino",
+   "stops": [
+    {
+     "name": "Roma Termini",
+     "lat": 41.90038,
+     "lng": 12.50245
+    },
+    {
+     "name": "Rome",
+     "lat": 41.90058,
+     "lng": 12.50253
+    },
+    {
+     "name": "Ciampino",
+     "lat": 41.80437,
+     "lng": 12.59955
+    },
+    {
+     "name": "Tor Vergata",
+     "lat": 41.8261,
+     "lng": 12.66986
+    },
+    {
+     "name": "Colle Mattia",
+     "lat": 41.83273,
+     "lng": 12.7284
+    },
+    {
+     "name": "Colonna Galleria",
+     "lat": 41.83854,
+     "lng": 12.75605
+    },
+    {
+     "name": "Zagarolo",
+     "lat": 41.8218,
+     "lng": 12.82694
+    },
+    {
+     "name": "Labico",
+     "lat": 41.78308,
+     "lng": 12.88973
+    },
+    {
+     "name": "Valmontone",
+     "lat": 41.77429,
+     "lng": 12.92372
+    },
+    {
+     "name": "Colleferro-Segni-Paliano",
+     "lat": 41.74013,
+     "lng": 13.00298
+    },
+    {
+     "name": "Anagni-Fiuggi",
+     "lat": 41.71036,
+     "lng": 13.09603
+    },
+    {
+     "name": "Sgurgola",
+     "lat": 41.68712,
+     "lng": 13.14577
+    },
+    {
+     "name": "Frosinone",
+     "lat": 41.6254,
+     "lng": 13.32864
+    },
+    {
+     "name": "Ceccano",
+     "lat": 41.57359,
+     "lng": 13.33631
+    },
+    {
+     "name": "Castro-Pofi-Vallecorsa",
+     "lat": 41.53296,
+     "lng": 13.41077
+    },
+    {
+     "name": "Ceprano-Falvaterra",
+     "lat": 41.52391,
+     "lng": 13.52325
+    },
+    {
+     "name": "Isoletta-San Giovanni Incarico",
+     "lat": 41.5279,
+     "lng": 13.5473
+    },
+    {
+     "name": "Roccasecca",
+     "lat": 41.52637,
+     "lng": 13.64589
+    },
+    {
+     "name": "Piedimonte-Villa Santa Lucia-Aquino",
+     "lat": 41.49566,
+     "lng": 13.73123
+    },
+    {
+     "name": "Cassino",
+     "lat": 41.48426,
+     "lng": 13.83238
+    }
+   ]
+  },
+  {
+   "mode": "train",
+   "ref": "FL7",
+   "name": "Treno FL7: Roma Termini → Minturno-Scauri",
+   "stops": [
+    {
+     "name": "Rome",
+     "lat": 41.90058,
+     "lng": 12.50253
+    },
+    {
+     "name": "Torricola",
+     "lat": 41.80948,
+     "lng": 12.55768
+    },
+    {
+     "name": "Pomezia-Santa Palomba",
+     "lat": 41.70608,
+     "lng": 12.57355
+    },
+    {
+     "name": "Campoleone",
+     "lat": 41.64223,
+     "lng": 12.64847
+    },
+    {
+     "name": "Cisterna di Latina",
+     "lat": 41.58642,
+     "lng": 12.82754
+    },
+    {
+     "name": "Latina",
+     "lat": 41.53819,
+     "lng": 12.9463
+    },
+    {
+     "name": "Sezze Romano",
+     "lat": 41.49546,
+     "lng": 13.03844
+    },
+    {
+     "name": "Monte San Biagio-Terracina Mare",
+     "lat": 41.34595,
+     "lng": 13.34729
+    },
+    {
+     "name": "Fondi-Sperlonga",
+     "lat": 41.3376,
+     "lng": 13.42491
+    },
+    {
+     "name": "Itri",
+     "lat": 41.27135,
+     "lng": 13.54539
+    },
+    {
+     "name": "Formia-Gaeta",
+     "lat": 41.25885,
+     "lng": 13.60619
+    },
+    {
+     "name": "Minturno-Scauri",
+     "lat": 41.25761,
+     "lng": 13.72085
+    }
+   ]
+  },
+  {
+   "mode": "train",
+   "ref": "FL8",
+   "name": "Treno FL8: Roma Termin → Nettuno",
+   "stops": [
+    {
+     "name": "Roma Termini",
+     "lat": 41.9005,
+     "lng": 12.50257
+    },
+    {
+     "name": "Rome",
+     "lat": 41.90058,
+     "lng": 12.50253
+    },
+    {
+     "name": "Torricola",
+     "lat": 41.80949,
+     "lng": 12.55774
+    },
+    {
+     "name": "Pomezia-Santa Palomba",
+     "lat": 41.7061,
+     "lng": 12.57361
+    },
+    {
+     "name": "Campoleone",
+     "lat": 41.64214,
+     "lng": 12.6484
+    },
+    {
+     "name": "Aprilia",
+     "lat": 41.59237,
+     "lng": 12.63917
+    },
+    {
+     "name": "Campo di Carne",
+     "lat": 41.55212,
+     "lng": 12.63516
+    },
+    {
+     "name": "Padiglione",
+     "lat": 41.51338,
+     "lng": 12.62945
+    },
+    {
+     "name": "Lido di Lavinio",
+     "lat": 41.50059,
+     "lng": 12.62594
+    },
+    {
+     "name": "Villa Claudia",
+     "lat": 41.4845,
+     "lng": 12.61716
+    },
+    {
+     "name": "Marechiaro",
+     "lat": 41.47268,
+     "lng": 12.61294
+    },
+    {
+     "name": "Anzio Colonia",
+     "lat": 41.46167,
+     "lng": 12.61598
+    },
+    {
+     "name": "Anzio",
+     "lat": 41.45219,
+     "lng": 12.62923
+    },
+    {
+     "name": "Nettuno",
+     "lat": 41.45958,
+     "lng": 12.66206
+    }
+   ]
+  },
+  {
+   "mode": "tram",
+   "ref": "19",
+   "name": "19 (Gerani)",
+   "stops": [
+    {
+     "name": "Risorgimento/S. Pietro",
+     "lat": 41.90605,
+     "lng": 12.45832
+    },
+    {
+     "name": "Ministero Marina",
+     "lat": 41.91568,
+     "lng": 12.47425
+    },
+    {
+     "name": "Belle Arti",
+     "lat": 41.91896,
+     "lng": 12.47415
+    },
+    {
+     "name": "Museo Etrusco Villa Giulia",
+     "lat": 41.91871,
+     "lng": 12.47678
+    },
+    {
+     "name": "Aldrovandi",
+     "lat": 41.91817,
+     "lng": 12.48452
+    },
+    {
+     "name": "Università La Sapienza",
+     "lat": 41.9041,
+     "lng": 12.51766
+    },
+    {
+     "name": "Reti",
+     "lat": 41.89894,
+     "lng": 12.51808
+    },
+    {
+     "name": "Scalo S. Lorenzo/Talamo",
+     "lat": 41.8939,
+     "lng": 12.51665
+    },
+    {
+     "name": "Scalo S. Lorenzo",
+     "lat": 41.8931,
+     "lng": 12.51595
+    },
+    {
+     "name": "P.za di Porta Maggiore",
+     "lat": 41.89156,
+     "lng": 12.5147
+    },
+    {
+     "name": "Labicano/Porta Maggiore",
+     "lat": 41.89147,
+     "lng": 12.51558
+    },
+    {
+     "name": "Prenestina/Caballini",
+     "lat": 41.8914,
+     "lng": 12.52004
+    },
+    {
+     "name": "Prenestina/Officine ATAC",
+     "lat": 41.89107,
+     "lng": 12.5252
+    },
+    {
+     "name": "Prenestina/Gattamelata",
+     "lat": 41.89241,
+     "lng": 12.53656
+    },
+    {
+     "name": "L.go Preneste",
+     "lat": 41.89242,
+     "lng": 12.54007
+    },
+    {
+     "name": "Prenestina/Acqua Bullicante",
+     "lat": 41.89275,
+     "lng": 12.54248
+    },
+    {
+     "name": "Prenestina/Irpinia",
+     "lat": 41.89385,
+     "lng": 12.55147
+    },
+    {
+     "name": "Prenestina/Olevano Romano",
+     "lat": 41.89433,
+     "lng": 12.5555
+    },
+    {
+     "name": "Prenestina/Tor de' Schiavi",
+     "lat": 41.89488,
+     "lng": 12.55961
+    },
+    {
+     "name": "Bresadola",
+     "lat": 41.89334,
+     "lng": 12.5612
+    },
+    {
+     "name": "Delpino",
+     "lat": 41.89123,
+     "lng": 12.56354
+    },
+    {
+     "name": "Castani/Gelsi",
+     "lat": 41.88875,
+     "lng": 12.56525
+    },
+    {
+     "name": "Castani/Faggi",
+     "lat": 41.88463,
+     "lng": 12.56685
+    },
+    {
+     "name": "Frassini",
+     "lat": 41.88494,
+     "lng": 12.56825
+    },
+    {
+     "name": "Castani/Gardenie",
+     "lat": 41.88628,
+     "lng": 12.56613
+    },
+    {
+     "name": "Gerani",
+     "lat": 41.88583,
+     "lng": 12.56688
+    },
+    {
+     "name": "P.za Cinque Giornate",
+     "lat": 41.91396,
+     "lng": 12.46904
+    }
+   ]
+  },
+  {
+   "mode": "train",
+   "ref": "Roma Viterbo (Extraurbana)",
+   "name": "Roma Viterbo (Extraurbana) (Catalano)",
+   "stops": [
+    {
+     "name": "Flaminio",
+     "lat": 41.91337,
+     "lng": 12.47655
+    },
+    {
+     "name": "Euclide",
+     "lat": 41.92655,
+     "lng": 12.48131
+    },
+    {
+     "name": "Acqua Acetosa",
+     "lat": 41.93162,
+     "lng": 12.48724
+    },
+    {
+     "name": "Saxa Rubra",
+     "lat": 41.97426,
+     "lng": 12.49303
+    },
+    {
+     "name": "Prima Porta",
+     "lat": 41.99933,
+     "lng": 12.49496
+    },
+    {
+     "name": "Montebello",
+     "lat": 42.01105,
+     "lng": 12.4889
+    },
+    {
+     "name": "Castelnuovo di Porto",
+     "lat": 42.12975,
+     "lng": 12.49515
+    },
+    {
+     "name": "Morlupo - Capena",
+     "lat": 42.14338,
+     "lng": 12.49077
+    },
+    {
+     "name": "Magliano Romano",
+     "lat": 42.14805,
+     "lng": 12.47872
+    },
+    {
+     "name": "Morolo",
+     "lat": 42.17493,
+     "lng": 12.47217
+    },
+    {
+     "name": "Rignano Flaminio",
+     "lat": 42.21076,
+     "lng": 12.47901
+    },
+    {
+     "name": "Sant'Oreste",
+     "lat": 42.22505,
+     "lng": 12.49021
+    },
+    {
+     "name": "Pian Paradiso",
+     "lat": 42.26305,
+     "lng": 12.45712
+    },
+    {
+     "name": "Ponzano",
+     "lat": 42.28637,
+     "lng": 12.44543
+    },
+    {
+     "name": "Civita Castellana",
+     "lat": 42.29157,
+     "lng": 12.41333
+    },
+    {
+     "name": "Catalano",
+     "lat": 42.29585,
+     "lng": 12.40355
+    }
+   ]
+  },
+  {
+   "mode": "train",
+   "ref": "FL4",
+   "name": "FL4 (Roma Termini)",
+   "stops": [
+    {
+     "name": "Villetta",
+     "lat": 41.73887,
+     "lng": 12.64944
+    },
+    {
+     "name": "Castel Gandolfo",
+     "lat": 41.7469,
+     "lng": 12.65224
+    },
+    {
+     "name": "Marino Laziale",
+     "lat": 41.76897,
+     "lng": 12.65596
+    },
+    {
+     "name": "Pantanella",
+     "lat": 41.77991,
+     "lng": 12.63399
+    },
+    {
+     "name": "Sassone",
+     "lat": 41.78356,
+     "lng": 12.62603
+    },
+    {
+     "name": "Acqua Acetosa",
+     "lat": 41.79408,
+     "lng": 12.61666
+    },
+    {
+     "name": "Ciampino",
+     "lat": 41.80425,
+     "lng": 12.59951
+    },
+    {
+     "name": "Capannelle",
+     "lat": 41.83076,
+     "lng": 12.56883
+    },
+    {
+     "name": "Rome",
+     "lat": 41.90058,
+     "lng": 12.50253
+    }
+   ]
+  },
+  {
+   "mode": "train",
+   "ref": "FL4",
+   "name": "FL4 (Velletri)",
+   "stops": [
+    {
+     "name": "Rome",
+     "lat": 41.90058,
+     "lng": 12.50253
+    },
+    {
+     "name": "Capannelle",
+     "lat": 41.83076,
+     "lng": 12.56883
+    },
+    {
+     "name": "Ciampino",
+     "lat": 41.80425,
+     "lng": 12.59951
+    },
+    {
+     "name": "Casabianca",
+     "lat": 41.78845,
+     "lng": 12.60423
+    },
+    {
+     "name": "Santa Maria delle Mole",
+     "lat": 41.77428,
+     "lng": 12.6062
+    },
+    {
+     "name": "Pavona",
+     "lat": 41.72513,
+     "lng": 12.61002
+    },
+    {
+     "name": "Cancelliera",
+     "lat": 41.71102,
+     "lng": 12.62163
+    },
+    {
+     "name": "Cecchina",
+     "lat": 41.69276,
+     "lng": 12.64962
+    },
+    {
+     "name": "Lanuvio",
+     "lat": 41.67391,
+     "lng": 12.68969
+    },
+    {
+     "name": "San Gennaro",
+     "lat": 41.67461,
+     "lng": 12.72641
+    },
+    {
+     "name": "Sant'Eurosia",
+     "lat": 41.67505,
+     "lng": 12.75159
+    },
+    {
+     "name": "Velletri",
+     "lat": 41.68242,
+     "lng": 12.78087
+    }
+   ]
+  },
+  {
+   "mode": "train",
+   "ref": "FL5",
+   "name": "Treno FL5: Civitavecchia → Roma Termini",
+   "stops": [
+    {
+     "name": "Civitavecchia",
+     "lat": 42.0882,
+     "lng": 11.79855
+    },
+    {
+     "name": "Santa Marinella",
+     "lat": 42.03599,
+     "lng": 11.86311
+    },
+    {
+     "name": "Santa Severa",
+     "lat": 42.02072,
+     "lng": 11.96901
+    },
+    {
+     "name": "Marina di Cerveteri",
+     "lat": 41.97923,
+     "lng": 12.04785
+    },
+    {
+     "name": "Ladispoli - Cerveteri",
+     "lat": 41.95317,
+     "lng": 12.08178
+    },
+    {
+     "name": "Torre in Pietra - Palidoro",
+     "lat": 41.92427,
+     "lng": 12.18334
+    },
+    {
+     "name": "Maccarese - Fregene",
+     "lat": 41.87899,
+     "lng": 12.23735
+    },
+    {
+     "name": "Roma San Pietro",
+     "lat": 41.89607,
+     "lng": 12.45447
+    },
+    {
+     "name": "Rome",
+     "lat": 41.90058,
+     "lng": 12.50253
+    },
+    {
+     "name": "Roma Tuscolana",
+     "lat": 41.87926,
+     "lng": 12.52364
+    },
+    {
+     "name": "Roma Trastevere",
+     "lat": 41.87242,
+     "lng": 12.46606
+    },
+    {
+     "name": "Roma Aurelia",
+     "lat": 41.88304,
+     "lng": 12.39423
+    }
+   ]
+  },
+  {
+   "mode": "train",
+   "ref": "Napoli - Aversa - Formia - Roma",
+   "name": "Napoli - Aversa - Formia - Roma",
+   "stops": [
+    {
+     "name": "Formia-Gaeta",
+     "lat": 41.25885,
+     "lng": 13.60619
+    },
+    {
+     "name": "Roma Termini",
+     "lat": 41.90047,
+     "lng": 12.50254
+    }
+   ]
+  },
+  {
+   "mode": "tram",
+   "ref": "3",
+   "name": "3 (Valle Giulia)",
+   "stops": [
+    {
+     "name": "Reti",
+     "lat": 41.89907,
+     "lng": 12.51809
+    },
+    {
+     "name": "Aldrovandi",
+     "lat": 41.91882,
+     "lng": 12.4855
+    },
+    {
+     "name": "Valle Giulia",
+     "lat": 41.91699,
+     "lng": 12.48029
+    },
+    {
+     "name": "Staz.ne Trastevere (FS)",
+     "lat": 41.87314,
+     "lng": 12.4663
+    },
+    {
+     "name": "Trastevere/Pascarella",
+     "lat": 41.8765,
+     "lng": 12.46576
+    },
+    {
+     "name": "Ippolito Nievo",
+     "lat": 41.8806,
+     "lng": 12.46711
+    },
+    {
+     "name": "Trastevere/Bernard. da Feltre",
+     "lat": 41.88319,
+     "lng": 12.46913
+    },
+    {
+     "name": "Trastevere/Min. P. Istruzione",
+     "lat": 41.88482,
+     "lng": 12.47053
+    },
+    {
+     "name": "Induno",
+     "lat": 41.88507,
+     "lng": 12.47157
+    },
+    {
+     "name": "Porta Portese",
+     "lat": 41.88405,
+     "lng": 12.47419
+    },
+    {
+     "name": "Marmorata/Vanvitelli",
+     "lat": 41.88092,
+     "lng": 12.47754
+    },
+    {
+     "name": "Marmorata/Galvani",
+     "lat": 41.87896,
+     "lng": 12.47892
+    },
+    {
+     "name": "Porta S. Paolo",
+     "lat": 41.87721,
+     "lng": 12.48143
+    },
+    {
+     "name": "Albania",
+     "lat": 41.88041,
+     "lng": 12.48408
+    },
+    {
+     "name": "Aventino/Circo Massimo",
+     "lat": 41.88327,
+     "lng": 12.48773
+    },
+    {
+     "name": "Parco Celio",
+     "lat": 41.88809,
+     "lng": 12.49143
+    },
+    {
+     "name": "Colosseo",
+     "lat": 41.8899,
+     "lng": 12.49412
+    },
+    {
+     "name": "Labicana",
+     "lat": 41.88985,
+     "lng": 12.49804
+    },
+    {
+     "name": "Manzoni/Merulana",
+     "lat": 41.8896,
+     "lng": 12.50406
+    },
+    {
+     "name": "Manzoni (MA)",
+     "lat": 41.89024,
+     "lng": 12.50612
+    },
+    {
+     "name": "Porta S. Giovanni/Carlo Felice",
+     "lat": 41.88668,
+     "lng": 12.50924
+    },
+    {
+     "name": "P.za S. Croce in Gerusalemme",
+     "lat": 41.88914,
+     "lng": 12.51512
+    },
+    {
+     "name": "Labicano/Porta Maggiore",
+     "lat": 41.89147,
+     "lng": 12.51558
+    },
+    {
+     "name": "Scalo S. Lorenzo",
+     "lat": 41.8931,
+     "lng": 12.51601
+    },
+    {
+     "name": "Scalo S. Lorenzo/Talamo",
+     "lat": 41.89393,
+     "lng": 12.51674
+    },
+    {
+     "name": "Scalo S. Lorenzo/Sardi",
+     "lat": 41.89557,
+     "lng": 12.5182
+    },
+    {
+     "name": "Scalo S. Lorenzo/Ausoni",
+     "lat": 41.89716,
+     "lng": 12.51951
+    },
+    {
+     "name": "Verano/De Lollis",
+     "lat": 41.9016,
+     "lng": 12.51857
+    },
+    {
+     "name": "Verano",
+     "lat": 41.90225,
+     "lng": 12.51908
+    },
+    {
+     "name": "Università La Sapienza",
+     "lat": 41.90439,
+     "lng": 12.51735
+    },
+    {
+     "name": "Regina Elena/V.le Università",
+     "lat": 41.90544,
+     "lng": 12.51602
+    },
+    {
+     "name": "Policlinico (H)",
+     "lat": 41.90739,
+     "lng": 12.51359
+    },
+    {
+     "name": "V.le Regina Margherita/Morgagni",
+     "lat": 41.90957,
+     "lng": 12.51088
+    },
+    {
+     "name": "Regina Margherita/Galeno",
+     "lat": 41.91106,
+     "lng": 12.50901
+    },
+    {
+     "name": "V.le Regina Margherita/Nomentana",
+     "lat": 41.91268,
+     "lng": 12.507
+    },
+    {
+     "name": "V.le Regina Margherita/Nizza",
+     "lat": 41.91449,
+     "lng": 12.50475
+    },
+    {
+     "name": "Buenos Aires",
+     "lat": 41.91797,
+     "lng": 12.5004
+    },
+    {
+     "name": "Liegi/Bellini",
+     "lat": 41.92044,
+     "lng": 12.49733
+    },
+    {
+     "name": "Liegi/Ungheria",
+     "lat": 41.92173,
+     "lng": 12.49451
+    },
+    {
+     "name": "Rossini",
+     "lat": 41.92103,
+     "lng": 12.49214
+    },
+    {
+     "name": "Bioparco",
+     "lat": 41.91927,
+     "lng": 12.49058
+    },
+    {
+     "name": "Galleria Arte Moderna",
+     "lat": 41.91668,
+     "lng": 12.48154
+    }
+   ]
+  },
+  {
+   "mode": "train",
+   "ref": "FL6",
+   "name": "Treno FL6: Cassino → Roma Termini",
+   "stops": [
+    {
+     "name": "Cassino",
+     "lat": 41.48426,
+     "lng": 13.83238
+    },
+    {
+     "name": "Piedimonte-Villa Santa Lucia-Aquino",
+     "lat": 41.49566,
+     "lng": 13.73123
+    },
+    {
+     "name": "Roccasecca",
+     "lat": 41.52637,
+     "lng": 13.64589
+    },
+    {
+     "name": "Isoletta-San Giovanni Incarico",
+     "lat": 41.5279,
+     "lng": 13.5473
+    },
+    {
+     "name": "Ceprano-Falvaterra",
+     "lat": 41.52391,
+     "lng": 13.52325
+    },
+    {
+     "name": "Castro-Pofi-Vallecorsa",
+     "lat": 41.53296,
+     "lng": 13.41077
+    },
+    {
+     "name": "Ceccano",
+     "lat": 41.57359,
+     "lng": 13.33631
+    },
+    {
+     "name": "Frosinone",
+     "lat": 41.6254,
+     "lng": 13.32864
+    },
+    {
+     "name": "Ferentino-Supino",
+     "lat": 41.65623,
+     "lng": 13.24709
+    },
+    {
+     "name": "Morolo",
+     "lat": 41.66698,
+     "lng": 13.19489
+    },
+    {
+     "name": "Sgurgola",
+     "lat": 41.68712,
+     "lng": 13.14577
+    },
+    {
+     "name": "Anagni-Fiuggi",
+     "lat": 41.71036,
+     "lng": 13.09603
+    },
+    {
+     "name": "Colleferro-Segni-Paliano",
+     "lat": 41.74013,
+     "lng": 13.00298
+    },
+    {
+     "name": "Valmontone",
+     "lat": 41.77429,
+     "lng": 12.92372
+    },
+    {
+     "name": "Labico",
+     "lat": 41.78308,
+     "lng": 12.88973
+    },
+    {
+     "name": "Zagarolo",
+     "lat": 41.8218,
+     "lng": 12.82694
+    },
+    {
+     "name": "Colonna Galleria",
+     "lat": 41.83854,
+     "lng": 12.75605
+    },
+    {
+     "name": "Colle Mattia",
+     "lat": 41.83273,
+     "lng": 12.7284
+    },
+    {
+     "name": "Tor Vergata",
+     "lat": 41.8261,
+     "lng": 12.66986
+    },
+    {
+     "name": "Ciampino",
+     "lat": 41.80434,
+     "lng": 12.59953
+    },
+    {
+     "name": "Roma Termini",
+     "lat": 41.90038,
+     "lng": 12.50245
+    },
+    {
+     "name": "Rome",
+     "lat": 41.90058,
+     "lng": 12.50253
+    }
+   ]
+  },
+  {
+   "mode": "train",
+   "ref": "FL7",
+   "name": "Treno FL7: Minturno-Scauri → Roma Termini",
+   "stops": [
+    {
+     "name": "Minturno-Scauri",
+     "lat": 41.25753,
+     "lng": 13.72084
+    },
+    {
+     "name": "Formia-Gaeta",
+     "lat": 41.25885,
+     "lng": 13.60619
+    },
+    {
+     "name": "Itri",
+     "lat": 41.27135,
+     "lng": 13.54539
+    },
+    {
+     "name": "Fondi-Sperlonga",
+     "lat": 41.3376,
+     "lng": 13.42491
+    },
+    {
+     "name": "Monte San Biagio-Terracina Mare",
+     "lat": 41.34595,
+     "lng": 13.34729
+    },
+    {
+     "name": "Priverno-Fossanova",
+     "lat": 41.42163,
+     "lng": 13.18679
+    },
+    {
+     "name": "Sezze Romano",
+     "lat": 41.49546,
+     "lng": 13.03844
+    },
+    {
+     "name": "Latina",
+     "lat": 41.53819,
+     "lng": 12.9463
+    },
+    {
+     "name": "Cisterna di Latina",
+     "lat": 41.58642,
+     "lng": 12.82754
+    },
+    {
+     "name": "Campoleone",
+     "lat": 41.64223,
+     "lng": 12.64847
+    },
+    {
+     "name": "Pomezia-Santa Palomba",
+     "lat": 41.70608,
+     "lng": 12.57355
+    },
+    {
+     "name": "Torricola",
+     "lat": 41.80948,
+     "lng": 12.55768
+    },
+    {
+     "name": "Roma Termini",
+     "lat": 41.90047,
+     "lng": 12.50254
+    }
+   ]
+  },
+  {
+   "mode": "train",
+   "ref": "FL8",
+   "name": "Treno FL8: Nettuno => Roma Termini",
+   "stops": [
+    {
+     "name": "Nettuno",
+     "lat": 41.45958,
+     "lng": 12.66206
+    },
+    {
+     "name": "Anzio",
+     "lat": 41.45219,
+     "lng": 12.62923
+    },
+    {
+     "name": "Anzio Colonia",
+     "lat": 41.46167,
+     "lng": 12.61598
+    },
+    {
+     "name": "Marechiaro",
+     "lat": 41.47268,
+     "lng": 12.61294
+    },
+    {
+     "name": "Villa Claudia",
+     "lat": 41.4845,
+     "lng": 12.61716
+    },
+    {
+     "name": "Lido di Lavinio",
+     "lat": 41.50059,
+     "lng": 12.62594
+    },
+    {
+     "name": "Padiglione",
+     "lat": 41.51338,
+     "lng": 12.62945
+    },
+    {
+     "name": "Campo di Carne",
+     "lat": 41.55212,
+     "lng": 12.63516
+    },
+    {
+     "name": "Aprilia",
+     "lat": 41.59237,
+     "lng": 12.63917
+    },
+    {
+     "name": "Campoleone",
+     "lat": 41.64214,
+     "lng": 12.6484
+    },
+    {
+     "name": "Pomezia-Santa Palomba",
+     "lat": 41.7061,
+     "lng": 12.57361
+    },
+    {
+     "name": "Torricola",
+     "lat": 41.80949,
+     "lng": 12.55774
+    },
+    {
+     "name": "Roma Termini",
+     "lat": 41.9005,
+     "lng": 12.50257
+    },
+    {
+     "name": "Rome",
+     "lat": 41.90058,
+     "lng": 12.50253
+    }
+   ]
+  },
+  {
+   "mode": "train",
+   "ref": "FL3",
+   "name": "FL3 (Bracciano => Roma Ostiense)",
+   "stops": [
+    {
+     "name": "Bracciano",
+     "lat": 42.10365,
+     "lng": 12.17293
+    },
+    {
+     "name": "Vigna di Valle",
+     "lat": 42.07686,
+     "lng": 12.21071
+    },
+    {
+     "name": "Anguillara",
+     "lat": 42.0671,
+     "lng": 12.29333
+    },
+    {
+     "name": "Cesano di Roma",
+     "lat": 42.06194,
+     "lng": 12.32656
+    },
+    {
+     "name": "Olgiata",
+     "lat": 42.01464,
+     "lng": 12.36376
+    },
+    {
+     "name": "La Storta",
+     "lat": 42.00286,
+     "lng": 12.38071
+    },
+    {
+     "name": "La Giustiniana",
+     "lat": 41.9853,
+     "lng": 12.40332
+    },
+    {
+     "name": "Ipogeo degli Ottavi",
+     "lat": 41.96875,
+     "lng": 12.40888
+    },
+    {
+     "name": "Ottavia",
+     "lat": 41.96037,
+     "lng": 12.41016
+    },
+    {
+     "name": "Roma San Filippo Neri",
+     "lat": 41.94672,
+     "lng": 12.41633
+    },
+    {
+     "name": "Roma Monte Mario",
+     "lat": 41.93907,
+     "lng": 12.42176
+    },
+    {
+     "name": "Gemelli",
+     "lat": 41.92783,
+     "lng": 12.42742
+    },
+    {
+     "name": "Appiano",
+     "lat": 41.91301,
+     "lng": 12.43905
+    },
+    {
+     "name": "Valle Aurelia",
+     "lat": 41.90299,
+     "lng": 12.44216
+    },
+    {
+     "name": "Quattro Venti",
+     "lat": 41.87905,
+     "lng": 12.45875
+    },
+    {
+     "name": "Roma Trastevere",
+     "lat": 41.87229,
+     "lng": 12.46608
+    }
+   ]
+  },
+  {
+   "mode": "train",
+   "ref": "FL3",
+   "name": "FL3 (Cesano di Roma => Roma Ostiense)",
+   "stops": [
+    {
+     "name": "Cesano di Roma",
+     "lat": 42.06186,
+     "lng": 12.32644
+    },
+    {
+     "name": "Olgiata",
+     "lat": 42.01464,
+     "lng": 12.36376
+    },
+    {
+     "name": "La Storta",
+     "lat": 42.00286,
+     "lng": 12.38071
+    },
+    {
+     "name": "La Giustiniana",
+     "lat": 41.9853,
+     "lng": 12.40332
+    },
+    {
+     "name": "Ipogeo degli Ottavi",
+     "lat": 41.96875,
+     "lng": 12.40888
+    },
+    {
+     "name": "Ottavia",
+     "lat": 41.96037,
+     "lng": 12.41016
+    },
+    {
+     "name": "Roma San Filippo Neri",
+     "lat": 41.94672,
+     "lng": 12.41633
+    },
+    {
+     "name": "Roma Monte Mario",
+     "lat": 41.93907,
+     "lng": 12.42176
+    },
+    {
+     "name": "Gemelli",
+     "lat": 41.92783,
+     "lng": 12.42742
+    },
+    {
+     "name": "Appiano",
+     "lat": 41.91301,
+     "lng": 12.43905
+    },
+    {
+     "name": "Valle Aurelia",
+     "lat": 41.90299,
+     "lng": 12.44216
+    },
+    {
+     "name": "Roma San Pietro",
+     "lat": 41.89612,
+     "lng": 12.45455
+    },
+    {
+     "name": "Quattro Venti",
+     "lat": 41.87905,
+     "lng": 12.45875
+    },
+    {
+     "name": "Roma Trastevere",
+     "lat": 41.87229,
+     "lng": 12.46608
+    },
+    {
+     "name": "Roma Ostiense",
+     "lat": 41.87211,
+     "lng": 12.48486
+    }
+   ]
+  },
+  {
+   "mode": "train",
+   "ref": "FL3",
+   "name": "FL3 (Roma Ostiense => Bracciano)",
+   "stops": [
+    {
+     "name": "Roma Ostiense",
+     "lat": 41.87186,
+     "lng": 12.48479
+    },
+    {
+     "name": "Roma Trastevere",
+     "lat": 41.87211,
+     "lng": 12.46609
+    },
+    {
+     "name": "Quattro Venti",
+     "lat": 41.87942,
+     "lng": 12.45857
+    },
+    {
+     "name": "Roma San Pietro",
+     "lat": 41.89607,
+     "lng": 12.45447
+    },
+    {
+     "name": "Valle Aurelia",
+     "lat": 41.90296,
+     "lng": 12.44212
+    },
+    {
+     "name": "Appiano",
+     "lat": 41.91306,
+     "lng": 12.43901
+    },
+    {
+     "name": "Roma Balduina",
+     "lat": 41.92007,
+     "lng": 12.4366
+    },
+    {
+     "name": "Gemelli",
+     "lat": 41.92779,
+     "lng": 12.42742
+    },
+    {
+     "name": "Roma Monte Mario",
+     "lat": 41.93905,
+     "lng": 12.42173
+    },
+    {
+     "name": "Roma San Filippo Neri",
+     "lat": 41.9467,
+     "lng": 12.4163
+    },
+    {
+     "name": "Ottavia",
+     "lat": 41.96034,
+     "lng": 12.41016
+    },
+    {
+     "name": "Ipogeo degli Ottavi",
+     "lat": 41.96875,
+     "lng": 12.40883
+    },
+    {
+     "name": "La Giustiniana",
+     "lat": 41.98529,
+     "lng": 12.40328
+    },
+    {
+     "name": "La Storta",
+     "lat": 42.00285,
+     "lng": 12.38067
+    },
+    {
+     "name": "Olgiata",
+     "lat": 42.01462,
+     "lng": 12.36373
+    },
+    {
+     "name": "Cesano di Roma",
+     "lat": 42.06192,
+     "lng": 12.32653
+    },
+    {
+     "name": "Anguillara",
+     "lat": 42.0671,
+     "lng": 12.29333
+    },
+    {
+     "name": "Vigna di Valle",
+     "lat": 42.07686,
+     "lng": 12.21071
+    },
+    {
+     "name": "Bracciano",
+     "lat": 42.10365,
+     "lng": 12.17293
+    }
+   ]
+  },
+  {
+   "mode": "train",
+   "ref": "FL3",
+   "name": "FL3 (Roma Tiburtina => Cesano di Roma)",
+   "stops": [
+    {
+     "name": "Roma Tiburtina",
+     "lat": 41.91067,
+     "lng": 12.53096
+    },
+    {
+     "name": "Roma Ostiense",
+     "lat": 41.87186,
+     "lng": 12.48479
+    },
+    {
+     "name": "Quattro Venti",
+     "lat": 41.87942,
+     "lng": 12.45857
+    },
+    {
+     "name": "Roma San Pietro",
+     "lat": 41.89607,
+     "lng": 12.45447
+    },
+    {
+     "name": "Valle Aurelia",
+     "lat": 41.90296,
+     "lng": 12.44212
+    },
+    {
+     "name": "Appiano",
+     "lat": 41.91306,
+     "lng": 12.43901
+    },
+    {
+     "name": "Roma Balduina",
+     "lat": 41.92007,
+     "lng": 12.4366
+    },
+    {
+     "name": "Gemelli",
+     "lat": 41.92779,
+     "lng": 12.42742
+    },
+    {
+     "name": "Roma Monte Mario",
+     "lat": 41.93905,
+     "lng": 12.42173
+    },
+    {
+     "name": "Roma San Filippo Neri",
+     "lat": 41.9467,
+     "lng": 12.4163
+    },
+    {
+     "name": "Ottavia",
+     "lat": 41.96034,
+     "lng": 12.41016
+    },
+    {
+     "name": "Ipogeo degli Ottavi",
+     "lat": 41.96875,
+     "lng": 12.40883
+    },
+    {
+     "name": "La Giustiniana",
+     "lat": 41.98529,
+     "lng": 12.40328
+    },
+    {
+     "name": "La Storta",
+     "lat": 42.00285,
+     "lng": 12.38067
+    },
+    {
+     "name": "Olgiata",
+     "lat": 42.01462,
+     "lng": 12.36373
+    },
+    {
+     "name": "Cesano di Roma",
+     "lat": 42.06186,
+     "lng": 12.32644
+    },
+    {
+     "name": "Roma Tuscolana",
+     "lat": 41.87926,
+     "lng": 12.52364
+    }
+   ]
+  },
+  {
+   "mode": "subway",
+   "ref": "B",
+   "name": "Metro B (Laurentina)",
+   "stops": [
+    {
+     "name": "Jonio",
+     "lat": 41.94688,
+     "lng": 12.52763
+    },
+    {
+     "name": "Conca d'Oro",
+     "lat": 41.93976,
+     "lng": 12.52818
+    },
+    {
+     "name": "Libia",
+     "lat": 41.93176,
+     "lng": 12.51931
+    },
+    {
+     "name": "Sant'Agnese/Annibaliano",
+     "lat": 41.92387,
+     "lng": 12.51597
+    },
+    {
+     "name": "Bologna",
+     "lat": 41.91354,
+     "lng": 12.52055
+    },
+    {
+     "name": "Policlinico",
+     "lat": 41.90884,
+     "lng": 12.51208
+    },
+    {
+     "name": "Castro Pretorio",
+     "lat": 41.90645,
+     "lng": 12.50689
+    },
+    {
+     "name": "Termini",
+     "lat": 41.90138,
+     "lng": 12.50048
+    },
+    {
+     "name": "Cavour",
+     "lat": 41.89497,
+     "lng": 12.49353
+    },
+    {
+     "name": "Colosseo",
+     "lat": 41.89167,
+     "lng": 12.4917
+    },
+    {
+     "name": "Circo Massimo",
+     "lat": 41.88339,
+     "lng": 12.4881
+    },
+    {
+     "name": "Piramide",
+     "lat": 41.87488,
+     "lng": 12.48248
+    },
+    {
+     "name": "Garbatella",
+     "lat": 41.86633,
+     "lng": 12.48309
+    },
+    {
+     "name": "Basilica San Paolo",
+     "lat": 41.85591,
+     "lng": 12.4783
+    },
+    {
+     "name": "Marconi",
+     "lat": 41.84937,
+     "lng": 12.47566
+    },
+    {
+     "name": "EUR Magliana",
+     "lat": 41.8395,
+     "lng": 12.46338
+    },
+    {
+     "name": "EUR Palasport",
+     "lat": 41.83003,
+     "lng": 12.46672
+    },
+    {
+     "name": "EUR Fermi",
+     "lat": 41.82886,
+     "lng": 12.47087
+    },
+    {
+     "name": "Laurentina",
+     "lat": 41.82706,
+     "lng": 12.48131
+    }
+   ]
+  },
+  {
+   "mode": "train",
+   "ref": ".italo",
+   "name": ".italo (Milano Porta Garibaldi → Napoli Centrale)",
+   "stops": [
+    {
+     "name": "Roma Termini",
+     "lat": 41.90092,
+     "lng": 12.50302
+    },
+    {
+     "name": "Roma Tiburtina",
+     "lat": 41.9112,
+     "lng": 12.53147
+    }
+   ]
+  },
+  {
+   "mode": "train",
+   "ref": ".italo",
+   "name": ".italo (Napoli Centrale → Milano Porta Garibaldi)",
+   "stops": [
+    {
+     "name": "Roma Termini",
+     "lat": 41.90095,
+     "lng": 12.50305
+    },
+    {
+     "name": "Roma Tiburtina",
+     "lat": 41.91109,
+     "lng": 12.53138
+    }
+   ]
+  },
+  {
+   "mode": "train",
+   "ref": "Frecciarossa",
+   "name": "Frecciarossa (Milano Centrale → Napoli Centrale)",
+   "stops": [
+    {
+     "name": "Roma Tiburtina",
+     "lat": 41.9112,
+     "lng": 12.53147
+    },
+    {
+     "name": "Roma Termini",
+     "lat": 41.90092,
+     "lng": 12.50302
+    }
+   ]
+  },
+  {
+   "mode": "train",
+   "ref": "Frecciarossa",
+   "name": "Frecciarossa (Milano Centrale → Salerno)",
+   "stops": [
+    {
+     "name": "Roma Termini",
+     "lat": 41.90084,
+     "lng": 12.50293
+    },
+    {
+     "name": "Roma Tiburtina",
+     "lat": 41.9112,
+     "lng": 12.53147
+    }
+   ]
+  },
+  {
+   "mode": "train",
+   "ref": "Frecciarossa",
+   "name": "Frecciarossa (Napoli Centrale → Milano Centrale)",
+   "stops": [
+    {
+     "name": "Roma Termini",
+     "lat": 41.90095,
+     "lng": 12.50305
+    },
+    {
+     "name": "Roma Tiburtina",
+     "lat": 41.91109,
+     "lng": 12.53138
+    }
+   ]
+  },
+  {
+   "mode": "train",
+   "ref": "Frecciarossa",
+   "name": "Frecciarossa (Napoli Centrale → Torino Porta Nuova)",
+   "stops": [
+    {
+     "name": "Roma Termini",
+     "lat": 41.90081,
+     "lng": 12.5029
+    },
+    {
+     "name": "Roma Tiburtina",
+     "lat": 41.91109,
+     "lng": 12.53138
+    }
+   ]
+  },
+  {
+   "mode": "train",
+   "ref": "Frecciarossa",
+   "name": "Frecciarossa (Salerno → Milano Centrale)",
+   "stops": [
+    {
+     "name": "Roma Tiburtina",
+     "lat": 41.91109,
+     "lng": 12.53138
+    },
+    {
+     "name": "Roma Termini",
+     "lat": 41.90072,
+     "lng": 12.50281
+    }
+   ]
+  },
+  {
+   "mode": "train",
+   "ref": "Frecciarossa",
+   "name": "Frecciarossa (Torino Porta Nuova → Napoli Centrale)",
+   "stops": [
+    {
+     "name": "Roma Termini",
+     "lat": 41.90084,
+     "lng": 12.50293
+    },
+    {
+     "name": "Roma Tiburtina",
+     "lat": 41.9112,
+     "lng": 12.53147
+    }
+   ]
+  },
+  {
+   "mode": "train",
+   "ref": "FL1",
+   "name": "Treno FL1: Fara Sabina-Montelibretti → Fiumicino Aeroporto",
+   "stops": [
+    {
+     "name": "Fara Sabina-Montelibretti",
+     "lat": 42.15569,
+     "lng": 12.64846
+    },
+    {
+     "name": "Piana bella Di Montelibretti",
+     "lat": 42.10344,
+     "lng": 12.63242
+    },
+    {
+     "name": "Fidene",
+     "lat": 41.97918,
+     "lng": 12.5085
+    },
+    {
+     "name": "Nuovo Salario",
+     "lat": 41.95543,
+     "lng": 12.51033
+    },
+    {
+     "name": "Roma Nomentana",
+     "lat": 41.93271,
+     "lng": 12.52329
+    },
+    {
+     "name": "Roma Tiburtina",
+     "lat": 41.91067,
+     "lng": 12.53096
+    },
+    {
+     "name": "Roma Tuscolana",
+     "lat": 41.87919,
+     "lng": 12.5236
+    },
+    {
+     "name": "Roma Ostiense",
+     "lat": 41.87194,
+     "lng": 12.48481
+    },
+    {
+     "name": "Roma Trastevere",
+     "lat": 41.87215,
+     "lng": 12.46608
+    },
+    {
+     "name": "Villa Bonelli",
+     "lat": 41.848,
+     "lng": 12.45515
+    },
+    {
+     "name": "Magliana",
+     "lat": 41.83425,
+     "lng": 12.43108
+    },
+    {
+     "name": "Ponte Galeria",
+     "lat": 41.8183,
+     "lng": 12.34452
+    },
+    {
+     "name": "Fiera di Roma",
+     "lat": 41.81,
+     "lng": 12.31914
+    },
+    {
+     "name": "Parco Leonardo",
+     "lat": 41.79979,
+     "lng": 12.2962
+    },
+    {
+     "name": "Fiumicino Aeroporto",
+     "lat": 41.7934,
+     "lng": 12.25194
+    }
+   ]
+  },
+  {
+   "mode": "train",
+   "ref": "FL1",
+   "name": "Treno FL1: Fiumicino Aeroporto → Poggio Mirteto",
+   "stops": [
+    {
+     "name": "Fiumicino Aeroporto",
+     "lat": 41.7934,
+     "lng": 12.25194
+    },
+    {
+     "name": "Parco Leonardo",
+     "lat": 41.79982,
+     "lng": 12.29618
+    },
+    {
+     "name": "Fiera di Roma",
+     "lat": 41.81002,
+     "lng": 12.31913
+    },
+    {
+     "name": "Ponte Galeria",
+     "lat": 41.8184,
+     "lng": 12.34454
+    },
+    {
+     "name": "Muratella",
+     "lat": 41.82479,
+     "lng": 12.40865
+    },
+    {
+     "name": "Magliana",
+     "lat": 41.83434,
+     "lng": 12.43112
+    },
+    {
+     "name": "Villa Bonelli",
+     "lat": 41.84786,
+     "lng": 12.45509
+    },
+    {
+     "name": "Roma Trastevere",
+     "lat": 41.87225,
+     "lng": 12.46608
+    },
+    {
+     "name": "Roma Ostiense",
+     "lat": 41.87197,
+     "lng": 12.48482
+    },
+    {
+     "name": "Roma Tuscolana",
+     "lat": 41.87924,
+     "lng": 12.52351
+    },
+    {
+     "name": "Roma Tiburtina",
+     "lat": 41.91051,
+     "lng": 12.53079
+    },
+    {
+     "name": "Nuovo Salario",
+     "lat": 41.95543,
+     "lng": 12.51029
+    },
+    {
+     "name": "Fidene",
+     "lat": 41.97918,
+     "lng": 12.50846
+    },
+    {
+     "name": "Settebagni",
+     "lat": 42.00627,
+     "lng": 12.52016
+    },
+    {
+     "name": "Piana bella Di Montelibretti",
+     "lat": 42.10345,
+     "lng": 12.63238
+    },
+    {
+     "name": "Fara Sabina-Montelibretti",
+     "lat": 42.15569,
+     "lng": 12.64834
+    },
+    {
+     "name": "Poggio Mirteto",
+     "lat": 42.24217,
+     "lng": 12.63315
+    }
+   ]
+  },
+  {
+   "mode": "train",
+   "ref": "Frecciabianca",
+   "name": "Frecciabianca (Roma Termini → Genova Piazza Principe)",
+   "stops": [
+    {
+     "name": "Roma Termini",
+     "lat": 41.90016,
+     "lng": 12.50221
+    },
+    {
+     "name": "Rome",
+     "lat": 41.90058,
+     "lng": 12.50253
+    },
+    {
+     "name": "Civitavecchia",
+     "lat": 42.08814,
+     "lng": 11.7985
+    },
+    {
+     "name": "Grosseto",
+     "lat": 42.76732,
+     "lng": 11.10675
+    }
+   ]
+  },
+  {
+   "mode": "train",
+   "ref": "Frecciabianca",
+   "name": "Frecciabianca (Genova Piazza Principe → Roma Termini)",
+   "stops": [
+    {
+     "name": "Civitavecchia",
+     "lat": 42.08804,
+     "lng": 11.79843
+    },
+    {
+     "name": "Rome",
+     "lat": 41.90058,
+     "lng": 12.50253
+    },
+    {
+     "name": "Grosseto",
+     "lat": 42.76732,
+     "lng": 11.10675
+    }
+   ]
+  },
+  {
+   "mode": "train",
+   "ref": "FL2",
+   "name": "Treno FL2: Avezzano → Roma Tiburtina",
+   "stops": [
+    {
+     "name": "Avezzano",
+     "lat": 42.03961,
+     "lng": 13.42653
+    },
+    {
+     "name": "Scurcola Marsicana",
+     "lat": 42.05312,
+     "lng": 13.34433
+    },
+    {
+     "name": "Villa San Sebastiano",
+     "lat": 42.04934,
+     "lng": 13.30819
+    },
+    {
+     "name": "Tagliacozzo",
+     "lat": 42.07066,
+     "lng": 13.25567
+    },
+    {
+     "name": "Sante Marie",
+     "lat": 42.09702,
+     "lng": 13.21696
+    },
+    {
+     "name": "Colli di Monte Bove",
+     "lat": 42.09711,
+     "lng": 13.15057
+    },
+    {
+     "name": "Carsoli",
+     "lat": 42.09563,
+     "lng": 13.08018
+    },
+    {
+     "name": "Oricola-Pereto",
+     "lat": 42.06783,
+     "lng": 13.04424
+    },
+    {
+     "name": "Arsoli",
+     "lat": 42.04584,
+     "lng": 13.01308
+    },
+    {
+     "name": "Roviano",
+     "lat": 42.02648,
+     "lng": 12.99121
+    },
+    {
+     "name": "Valle dell'Aniene-Mandela-Sambuci",
+     "lat": 42.01619,
+     "lng": 12.92196
+    },
+    {
+     "name": "Castel Madama",
+     "lat": 41.98838,
+     "lng": 12.86494
+    },
+    {
+     "name": "Tivoli",
+     "lat": 41.96188,
+     "lng": 12.80502
+    },
+    {
+     "name": "Marcellina-Palombara",
+     "lat": 41.99962,
+     "lng": 12.79136
+    },
+    {
+     "name": "Tivoli Terme",
+     "lat": 41.94965,
+     "lng": 12.72115
+    },
+    {
+     "name": "Lunghezza",
+     "lat": 41.92391,
+     "lng": 12.66759
+    },
+    {
+     "name": "La Rustica U.I.R.",
+     "lat": 41.91249,
+     "lng": 12.62182
+    },
+    {
+     "name": "La Rustica Città",
+     "lat": 41.91015,
+     "lng": 12.60962
+    },
+    {
+     "name": "Palmiro Togliatti",
+     "lat": 41.90332,
+     "lng": 12.5742
+    },
+    {
+     "name": "Serenissima",
+     "lat": 41.89995,
+     "lng": 12.55787
+    },
+    {
+     "name": "Roma Prenestina",
+     "lat": 41.89781,
+     "lng": 12.54603
+    },
+    {
+     "name": "Roma Tiburtina",
+     "lat": 41.91158,
+     "lng": 12.53186
+    }
+   ]
+  },
+  {
+   "mode": "train",
+   "ref": "FL2",
+   "name": "Treno FL2: Tivoli Terme → Val d'Ala",
+   "stops": [
+    {
+     "name": "Tivoli Terme",
+     "lat": 41.94954,
+     "lng": 12.72114
+    },
+    {
+     "name": "Lunghezza",
+     "lat": 41.92391,
+     "lng": 12.66759
+    },
+    {
+     "name": "Ponte di Nona",
+     "lat": 41.91878,
+     "lng": 12.65431
+    },
+    {
+     "name": "Salone",
+     "lat": 41.91509,
+     "lng": 12.63604
+    },
+    {
+     "name": "La Rustica U.I.R.",
+     "lat": 41.91249,
+     "lng": 12.62182
+    },
+    {
+     "name": "La Rustica Città",
+     "lat": 41.91015,
+     "lng": 12.60962
+    },
+    {
+     "name": "Tor Sapienza",
+     "lat": 41.90584,
+     "lng": 12.58778
+    },
+    {
+     "name": "Palmiro Togliatti",
+     "lat": 41.9033,
+     "lng": 12.57421
+    },
+    {
+     "name": "Serenissima",
+     "lat": 41.89995,
+     "lng": 12.55787
+    },
+    {
+     "name": "Roma Prenestina",
+     "lat": 41.89781,
+     "lng": 12.54603
+    },
+    {
+     "name": "Roma Tiburtina",
+     "lat": 41.91158,
+     "lng": 12.53186
+    },
+    {
+     "name": "Val d'Ala",
+     "lat": 41.94139,
+     "lng": 12.51741
+    }
+   ]
+  },
+  {
+   "mode": "train",
+   "ref": "FL7",
+   "name": "Treno FL7: Roma Termini → Terracina",
+   "stops": [
+    {
+     "name": "Rome",
+     "lat": 41.90058,
+     "lng": 12.50253
+    },
+    {
+     "name": "Torricola",
+     "lat": 41.80949,
+     "lng": 12.55774
+    },
+    {
+     "name": "Pomezia-Santa Palomba",
+     "lat": 41.7061,
+     "lng": 12.57361
+    },
+    {
+     "name": "Campoleone",
+     "lat": 41.64231,
+     "lng": 12.64854
+    },
+    {
+     "name": "Cisterna di Latina",
+     "lat": 41.58653,
+     "lng": 12.82759
+    }
+   ]
+  },
+  {
+   "mode": "train",
+   "ref": "FL6",
+   "name": "",
+   "stops": [
+    {
+     "name": "Rome",
+     "lat": 41.90058,
+     "lng": 12.50253
+    },
+    {
+     "name": "Ciampino",
+     "lat": 41.80425,
+     "lng": 12.59951
+    },
+    {
+     "name": "Tor Vergata",
+     "lat": 41.82611,
+     "lng": 12.66989
+    },
+    {
+     "name": "Colle Mattia",
+     "lat": 41.83273,
+     "lng": 12.7284
+    },
+    {
+     "name": "Colonna Galleria",
+     "lat": 41.83854,
+     "lng": 12.75605
+    },
+    {
+     "name": "Zagarolo",
+     "lat": 41.8218,
+     "lng": 12.82694
+    },
+    {
+     "name": "Labico",
+     "lat": 41.78308,
+     "lng": 12.88973
+    },
+    {
+     "name": "Valmontone",
+     "lat": 41.77429,
+     "lng": 12.92372
+    },
+    {
+     "name": "Colleferro-Segni-Paliano",
+     "lat": 41.74013,
+     "lng": 13.00298
+    },
+    {
+     "name": "Anagni-Fiuggi",
+     "lat": 41.71041,
+     "lng": 13.09602
+    },
+    {
+     "name": "Sgurgola",
+     "lat": 41.68712,
+     "lng": 13.14577
+    },
+    {
+     "name": "Frosinone",
+     "lat": 41.62529,
+     "lng": 13.32864
+    }
+   ]
+  },
+  {
+   "mode": "train",
+   "ref": "21981",
+   "name": "Regionale 21981 (Roma Tiburtina → Colleferro - Segni - Paliano)",
+   "stops": [
+    {
+     "name": "Roma Tiburtina",
+     "lat": 41.91119,
+     "lng": 12.53156
+    },
+    {
+     "name": "Ciampino",
+     "lat": 41.80425,
+     "lng": 12.59951
+    },
+    {
+     "name": "Colle Mattia",
+     "lat": 41.83273,
+     "lng": 12.7284
+    },
+    {
+     "name": "Zagarolo",
+     "lat": 41.8218,
+     "lng": 12.82694
+    },
+    {
+     "name": "Valmontone",
+     "lat": 41.77429,
+     "lng": 12.92372
+    },
+    {
+     "name": "Colleferro-Segni-Paliano",
+     "lat": 41.74013,
+     "lng": 13.00298
+    }
+   ]
+  },
+  {
+   "mode": "train",
+   "ref": "21989",
+   "name": "Regionale 21989 (Roma Tuscolana → Colleferro - Segni - Paliano)",
+   "stops": [
+    {
+     "name": "Ciampino",
+     "lat": 41.80425,
+     "lng": 12.59951
+    },
+    {
+     "name": "Tor Vergata",
+     "lat": 41.82611,
+     "lng": 12.66989
+    },
+    {
+     "name": "Colle Mattia",
+     "lat": 41.83273,
+     "lng": 12.7284
+    },
+    {
+     "name": "Colonna Galleria",
+     "lat": 41.83854,
+     "lng": 12.75605
+    },
+    {
+     "name": "Zagarolo",
+     "lat": 41.8218,
+     "lng": 12.82694
+    },
+    {
+     "name": "Labico",
+     "lat": 41.78308,
+     "lng": 12.88973
+    },
+    {
+     "name": "Valmontone",
+     "lat": 41.77429,
+     "lng": 12.92372
+    },
+    {
+     "name": "Colleferro-Segni-Paliano",
+     "lat": 41.74013,
+     "lng": 13.00298
+    },
+    {
+     "name": "Roma Tuscolana",
+     "lat": 41.87926,
+     "lng": 12.52364
+    }
+   ]
+  },
+  {
+   "mode": "train",
+   "ref": "34372",
+   "name": "Treno: Regionale Veloce 34372 Cassino → Roma Tiburtina",
+   "stops": [
+    {
+     "name": "Cassino",
+     "lat": 41.48426,
+     "lng": 13.83238
+    },
+    {
+     "name": "Piedimonte-Villa Santa Lucia-Aquino",
+     "lat": 41.49566,
+     "lng": 13.73123
+    },
+    {
+     "name": "Roccasecca",
+     "lat": 41.52637,
+     "lng": 13.64589
+    },
+    {
+     "name": "Isoletta-San Giovanni Incarico",
+     "lat": 41.52781,
+     "lng": 13.54736
+    },
+    {
+     "name": "Ceprano-Falvaterra",
+     "lat": 41.52391,
+     "lng": 13.52325
+    },
+    {
+     "name": "Castro-Pofi-Vallecorsa",
+     "lat": 41.53296,
+     "lng": 13.41077
+    },
+    {
+     "name": "Ceccano",
+     "lat": 41.57359,
+     "lng": 13.33631
+    },
+    {
+     "name": "Frosinone",
+     "lat": 41.62529,
+     "lng": 13.32864
+    },
+    {
+     "name": "Colleferro-Segni-Paliano",
+     "lat": 41.74013,
+     "lng": 13.00298
+    },
+    {
+     "name": "Zagarolo",
+     "lat": 41.8218,
+     "lng": 12.82694
+    },
+    {
+     "name": "Roma Tiburtina",
+     "lat": 41.91119,
+     "lng": 12.53156
+    }
+   ]
+  },
+  {
+   "mode": "subway",
+   "ref": "",
+   "name": "Metro D",
+   "stops": [
+    {
+     "name": "Ojetti",
+     "lat": 41.95061,
+     "lng": 12.55807
+    },
+    {
+     "name": "Talenti",
+     "lat": 41.94368,
+     "lng": 12.54651
+    },
+    {
+     "name": "Adriatico",
+     "lat": 41.94454,
+     "lng": 12.53508
+    },
+    {
+     "name": "Jonio",
+     "lat": 41.94599,
+     "lng": 12.52639
+    },
+    {
+     "name": "Villa Chigi",
+     "lat": 41.93367,
+     "lng": 12.51427
+    },
+    {
+     "name": "Nemorense",
+     "lat": 41.92566,
+     "lng": 12.50933
+    },
+    {
+     "name": "Buenos Aires",
+     "lat": 41.91798,
+     "lng": 12.50001
+    },
+    {
+     "name": "Fiume",
+     "lat": 41.91027,
+     "lng": 12.49798
+    },
+    {
+     "name": "Barberini",
+     "lat": 41.90348,
+     "lng": 12.48825
+    },
+    {
+     "name": "Venezia",
+     "lat": 41.89548,
+     "lng": 12.48228
+    },
+    {
+     "name": "Trastevere FS",
+     "lat": 41.87305,
+     "lng": 12.46621
+    },
+    {
+     "name": "Magliana Nuova",
+     "lat": 41.84655,
+     "lng": 12.45977
+    },
+    {
+     "name": "Agricoltura",
+     "lat": 41.83668,
+     "lng": 12.47145
+    },
+    {
+     "name": "La Loggia",
+     "lat": 41.85584,
+     "lng": 12.44633
+    },
+    {
+     "name": "Nomentana GRA",
+     "lat": 41.9564,
+     "lng": 12.56934
+    }
+   ]
+  },
+  {
+   "mode": "train",
+   "ref": "FL3",
+   "name": "FL3 (Roma Ostiense => Viterbo Porta Fiorentina)",
+   "stops": [
+    {
+     "name": "Roma Trastevere",
+     "lat": 41.87211,
+     "lng": 12.46609
+    },
+    {
+     "name": "Quattro Venti",
+     "lat": 41.87942,
+     "lng": 12.45857
+    },
+    {
+     "name": "Roma San Pietro",
+     "lat": 41.89607,
+     "lng": 12.45447
+    },
+    {
+     "name": "Valle Aurelia",
+     "lat": 41.90296,
+     "lng": 12.44212
+    },
+    {
+     "name": "La Storta",
+     "lat": 42.00285,
+     "lng": 12.38067
+    },
+    {
+     "name": "Cesano di Roma",
+     "lat": 42.06192,
+     "lng": 12.32653
+    },
+    {
+     "name": "Anguillara",
+     "lat": 42.0671,
+     "lng": 12.29333
+    },
+    {
+     "name": "Bracciano",
+     "lat": 42.10368,
+     "lng": 12.17302
+    },
+    {
+     "name": "Manziana-Canale Monterano",
+     "lat": 42.12826,
+     "lng": 12.13494
+    },
+    {
+     "name": "Oriolo",
+     "lat": 42.16687,
+     "lng": 12.13848
+    },
+    {
+     "name": "Capranica-Sutri",
+     "lat": 42.24522,
+     "lng": 12.15721
+    },
+    {
+     "name": "Vetralla",
+     "lat": 42.3046,
+     "lng": 12.08914
+    },
+    {
+     "name": "Viterbo Porta Romana",
+     "lat": 42.41197,
+     "lng": 12.11052
+    },
+    {
+     "name": "Viterbo Porta Fiorentina",
+     "lat": 42.42532,
+     "lng": 12.10619
+    }
+   ]
+  },
+  {
+   "mode": "train",
+   "ref": "FL3",
+   "name": "FL3 (Viterbo Porta Fiorentina => Roma Ostiense)",
+   "stops": [
+    {
+     "name": "Viterbo Porta Fiorentina",
+     "lat": 42.42532,
+     "lng": 12.10619
+    },
+    {
+     "name": "Viterbo Porta Romana",
+     "lat": 42.41197,
+     "lng": 12.11052
+    },
+    {
+     "name": "Vetralla",
+     "lat": 42.3046,
+     "lng": 12.08914
+    },
+    {
+     "name": "Capranica-Sutri",
+     "lat": 42.24522,
+     "lng": 12.15721
+    },
+    {
+     "name": "Oriolo",
+     "lat": 42.16687,
+     "lng": 12.13848
+    },
+    {
+     "name": "Manziana-Canale Monterano",
+     "lat": 42.12826,
+     "lng": 12.13494
+    },
+    {
+     "name": "Bracciano",
+     "lat": 42.10369,
+     "lng": 12.17306
+    },
+    {
+     "name": "Anguillara",
+     "lat": 42.0671,
+     "lng": 12.29333
+    },
+    {
+     "name": "Cesano di Roma",
+     "lat": 42.06194,
+     "lng": 12.32656
+    },
+    {
+     "name": "La Storta",
+     "lat": 42.00286,
+     "lng": 12.38071
+    },
+    {
+     "name": "Valle Aurelia",
+     "lat": 41.90299,
+     "lng": 12.44216
+    },
+    {
+     "name": "Roma San Pietro",
+     "lat": 41.89612,
+     "lng": 12.45455
+    },
+    {
+     "name": "Quattro Venti",
+     "lat": 41.87905,
+     "lng": 12.45875
+    },
+    {
+     "name": "Roma Trastevere",
+     "lat": 41.87229,
+     "lng": 12.46608
+    },
+    {
+     "name": "Roma Ostiense",
+     "lat": 41.87211,
+     "lng": 12.48486
+    }
+   ]
+  },
+  {
+   "mode": "train",
+   "ref": "FL3",
+   "name": "Treno FL3: Cesano di Roma → Roma Tiburtina",
+   "stops": [
+    {
+     "name": "Cesano di Roma",
+     "lat": 42.06186,
+     "lng": 12.32644
+    },
+    {
+     "name": "Olgiata",
+     "lat": 42.01464,
+     "lng": 12.36376
+    },
+    {
+     "name": "La Storta",
+     "lat": 42.00286,
+     "lng": 12.38071
+    },
+    {
+     "name": "La Giustiniana",
+     "lat": 41.9853,
+     "lng": 12.40332
+    },
+    {
+     "name": "Ipogeo degli Ottavi",
+     "lat": 41.96875,
+     "lng": 12.40888
+    },
+    {
+     "name": "Ottavia",
+     "lat": 41.96037,
+     "lng": 12.41016
+    },
+    {
+     "name": "Roma San Filippo Neri",
+     "lat": 41.94672,
+     "lng": 12.41633
+    },
+    {
+     "name": "Roma Monte Mario",
+     "lat": 41.93907,
+     "lng": 12.42176
+    },
+    {
+     "name": "Gemelli",
+     "lat": 41.92783,
+     "lng": 12.42742
+    },
+    {
+     "name": "Roma Balduina",
+     "lat": 41.92007,
+     "lng": 12.43663
+    },
+    {
+     "name": "Appiano",
+     "lat": 41.91301,
+     "lng": 12.43905
+    },
+    {
+     "name": "Valle Aurelia",
+     "lat": 41.90299,
+     "lng": 12.44216
+    },
+    {
+     "name": "Roma San Pietro",
+     "lat": 41.89612,
+     "lng": 12.45455
+    },
+    {
+     "name": "Quattro Venti",
+     "lat": 41.87905,
+     "lng": 12.45875
+    },
+    {
+     "name": "Roma Trastevere",
+     "lat": 41.87229,
+     "lng": 12.46608
+    },
+    {
+     "name": "Roma Tuscolana",
+     "lat": 41.87924,
+     "lng": 12.52351
+    },
+    {
+     "name": "Roma Tiburtina",
+     "lat": 41.91051,
+     "lng": 12.53079
+    }
+   ]
+  },
+  {
+   "mode": "tram",
+   "ref": "8",
+   "name": "8 prolungato (Casaletto)",
+   "stops": [
+    {
+     "name": "P.za di Porta Maggiore",
+     "lat": 41.89156,
+     "lng": 12.5147
+    },
+    {
+     "name": "Carlo Felice",
+     "lat": 41.88777,
+     "lng": 12.51317
+    },
+    {
+     "name": "Porta S. Giovanni/Carlo Felice",
+     "lat": 41.88669,
+     "lng": 12.50917
+    },
+    {
+     "name": "Manzoni (MA)",
+     "lat": 41.89027,
+     "lng": 12.5061
+    },
+    {
+     "name": "Labicana/Merulana",
+     "lat": 41.88927,
+     "lng": 12.50292
+    },
+    {
+     "name": "Labicana",
+     "lat": 41.88974,
+     "lng": 12.49876
+    },
+    {
+     "name": "Colosseo/Salvi N.",
+     "lat": 41.88981,
+     "lng": 12.49404
+    },
+    {
+     "name": "Parco Celio",
+     "lat": 41.88752,
+     "lng": 12.49118
+    },
+    {
+     "name": "Aventino/Circo Massimo (MB)",
+     "lat": 41.88329,
+     "lng": 12.4877
+    },
+    {
+     "name": "Aventino/Albania",
+     "lat": 41.88094,
+     "lng": 12.48471
+    },
+    {
+     "name": "Porta S. Paolo",
+     "lat": 41.87723,
+     "lng": 12.48141
+    },
+    {
+     "name": "Marmorata/Galvani",
+     "lat": 41.87897,
+     "lng": 12.47896
+    },
+    {
+     "name": "Marmorata/Vanvitelli",
+     "lat": 41.88093,
+     "lng": 12.47758
+    },
+    {
+     "name": "Emporio",
+     "lat": 41.88275,
+     "lng": 12.47602
+    },
+    {
+     "name": "Porta Portese",
+     "lat": 41.88399,
+     "lng": 12.47444
+    },
+    {
+     "name": "Trastevere/Min. P. Istruzione",
+     "lat": 41.88483,
+     "lng": 12.4705
+    },
+    {
+     "name": "Trastevere/Bernard. da Feltre",
+     "lat": 41.88314,
+     "lng": 12.46904
+    },
+    {
+     "name": "Ippolito Nievo",
+     "lat": 41.8806,
+     "lng": 12.46709
+    },
+    {
+     "name": "Trastevere/Pascarella",
+     "lat": 41.87712,
+     "lng": 12.46567
+    },
+    {
+     "name": "Staz.ne Trastevere",
+     "lat": 41.87335,
+     "lng": 12.46532
+    },
+    {
+     "name": "Gianicolense/Ponte Bianco",
+     "lat": 41.8719,
+     "lng": 12.45979
+    },
+    {
+     "name": "Gianicolense/San Camillo (H)",
+     "lat": 41.87051,
+     "lng": 12.45495
+    },
+    {
+     "name": "Gianicolense/Ravizza",
+     "lat": 41.87161,
+     "lng": 12.44992
+    },
+    {
+     "name": "S. Giovanni di Dio",
+     "lat": 41.87479,
+     "lng": 12.44651
+    },
+    {
+     "name": "Gianicolense/Colli Portuensi",
+     "lat": 41.87725,
+     "lng": 12.44212
+    },
+    {
+     "name": "Casaletto",
+     "lat": 41.87755,
+     "lng": 12.44028
+    }
+   ]
+  },
+  {
+   "mode": "tram",
+   "ref": "8",
+   "name": "8 prolungato (Labicano/Porta Maggiore)",
+   "stops": [
+    {
+     "name": "Casaletto",
+     "lat": 41.87739,
+     "lng": 12.4403
+    },
+    {
+     "name": "Gianicolense/Colli Portuensi",
+     "lat": 41.87719,
+     "lng": 12.44227
+    },
+    {
+     "name": "S. Giovanni di Dio",
+     "lat": 41.87462,
+     "lng": 12.44669
+    },
+    {
+     "name": "Gianicolense/Ravizza",
+     "lat": 41.87149,
+     "lng": 12.44993
+    },
+    {
+     "name": "Gianicolense/San Camillo (H)",
+     "lat": 41.87051,
+     "lng": 12.45509
+    },
+    {
+     "name": "Gianicolense/Ponte Bianco",
+     "lat": 41.87208,
+     "lng": 12.46002
+    },
+    {
+     "name": "Staz.ne Trastevere",
+     "lat": 41.87337,
+     "lng": 12.4654
+    },
+    {
+     "name": "Trastevere/Pascarella",
+     "lat": 41.8765,
+     "lng": 12.46576
+    },
+    {
+     "name": "Ippolito Nievo",
+     "lat": 41.8806,
+     "lng": 12.46711
+    },
+    {
+     "name": "Trastevere/Bernard. da Feltre",
+     "lat": 41.88319,
+     "lng": 12.46913
+    },
+    {
+     "name": "Trastevere/Min. P. Istruzione",
+     "lat": 41.88482,
+     "lng": 12.47053
+    },
+    {
+     "name": "Induno",
+     "lat": 41.88507,
+     "lng": 12.47157
+    },
+    {
+     "name": "Porta Portese",
+     "lat": 41.88405,
+     "lng": 12.47419
+    },
+    {
+     "name": "Marmorata/Vanvitelli",
+     "lat": 41.88092,
+     "lng": 12.47754
+    },
+    {
+     "name": "Marmorata/Galvani",
+     "lat": 41.87896,
+     "lng": 12.47892
+    },
+    {
+     "name": "Porta S. Paolo",
+     "lat": 41.87721,
+     "lng": 12.48143
+    },
+    {
+     "name": "Albania",
+     "lat": 41.88041,
+     "lng": 12.48408
+    },
+    {
+     "name": "Aventino/Circo Massimo",
+     "lat": 41.88327,
+     "lng": 12.48773
+    },
+    {
+     "name": "Parco Celio",
+     "lat": 41.88809,
+     "lng": 12.49143
+    },
+    {
+     "name": "Colosseo",
+     "lat": 41.8899,
+     "lng": 12.49412
+    },
+    {
+     "name": "Labicana",
+     "lat": 41.88985,
+     "lng": 12.49804
+    },
+    {
+     "name": "Manzoni/Merulana",
+     "lat": 41.8896,
+     "lng": 12.50406
+    },
+    {
+     "name": "Manzoni (MA)",
+     "lat": 41.89024,
+     "lng": 12.50612
+    },
+    {
+     "name": "Porta S. Giovanni/Carlo Felice",
+     "lat": 41.88668,
+     "lng": 12.50924
+    },
+    {
+     "name": "P.za S. Croce in Gerusalemme",
+     "lat": 41.88914,
+     "lng": 12.51512
+    },
+    {
+     "name": "Labicano/Porta Maggiore",
+     "lat": 41.89147,
+     "lng": 12.51558
+    }
+   ]
+  },
+  {
+   "mode": "train",
+   "ref": "FL3",
+   "name": "FL3 (Vigna Clara => Roma Ostiense)",
+   "stops": [
+    {
+     "name": "Vigna Clara",
+     "lat": 41.94935,
+     "lng": 12.47145
+    },
+    {
+     "name": "Valle Aurelia",
+     "lat": 41.90299,
+     "lng": 12.44216
+    },
+    {
+     "name": "Roma San Pietro",
+     "lat": 41.89614,
+     "lng": 12.45458
+    },
+    {
+     "name": "Quattro Venti",
+     "lat": 41.87905,
+     "lng": 12.45875
+    },
+    {
+     "name": "Roma Trastevere",
+     "lat": 41.87229,
+     "lng": 12.46608
+    },
+    {
+     "name": "Roma Ostiense",
+     "lat": 41.87211,
+     "lng": 12.48486
+    }
+   ]
+  },
+  {
+   "mode": "tram",
+   "ref": "3",
+   "name": "3 (Staz.ne Trastevere (FS))",
+   "stops": [
+    {
+     "name": "Valle Giulia",
+     "lat": 41.91699,
+     "lng": 12.48029
+    },
+    {
+     "name": "Aldrovandi",
+     "lat": 41.91817,
+     "lng": 12.48452
+    },
+    {
+     "name": "Reti",
+     "lat": 41.89894,
+     "lng": 12.51808
+    },
+    {
+     "name": "Emporio",
+     "lat": 41.88276,
+     "lng": 12.47604
+    },
+    {
+     "name": "Porta Portese",
+     "lat": 41.88399,
+     "lng": 12.47446
+    },
+    {
+     "name": "Galleria Arte Moderna",
+     "lat": 41.91677,
+     "lng": 12.48114
+    },
+    {
+     "name": "Bioparco",
+     "lat": 41.91931,
+     "lng": 12.4907
+    },
+    {
+     "name": "Rossini",
+     "lat": 41.92045,
+     "lng": 12.4916
+    },
+    {
+     "name": "Liegi/Ungheria",
+     "lat": 41.92189,
+     "lng": 12.49396
+    },
+    {
+     "name": "Liegi/Bellini",
+     "lat": 41.92069,
+     "lng": 12.49698
+    },
+    {
+     "name": "Buenos Aires",
+     "lat": 41.91796,
+     "lng": 12.50037
+    },
+    {
+     "name": "V.le Regina Margherita/Nizza",
+     "lat": 41.91487,
+     "lng": 12.50422
+    },
+    {
+     "name": "V.le Regina Margherita/Nomentana",
+     "lat": 41.91266,
+     "lng": 12.50697
+    },
+    {
+     "name": "Regina Margherita/Galeno",
+     "lat": 41.91105,
+     "lng": 12.50899
+    },
+    {
+     "name": "V.le Regina Margherita/Morgagni",
+     "lat": 41.91009,
+     "lng": 12.51017
+    },
+    {
+     "name": "Policlinico (H)",
+     "lat": 41.90761,
+     "lng": 12.51326
+    },
+    {
+     "name": "Regina Elena/V.le Università",
+     "lat": 41.90588,
+     "lng": 12.51542
+    },
+    {
+     "name": "Verano",
+     "lat": 41.90227,
+     "lng": 12.51904
+    },
+    {
+     "name": "Verano/De Lollis",
+     "lat": 41.90161,
+     "lng": 12.51854
+    },
+    {
+     "name": "Scalo S. Lorenzo/Ausoni",
+     "lat": 41.89699,
+     "lng": 12.51932
+    },
+    {
+     "name": "Scalo S. Lorenzo/Sardi",
+     "lat": 41.89545,
+     "lng": 12.51805
+    },
+    {
+     "name": "Scalo S. Lorenzo/Talamo",
+     "lat": 41.8939,
+     "lng": 12.51665
+    },
+    {
+     "name": "Scalo S. Lorenzo",
+     "lat": 41.8931,
+     "lng": 12.51595
+    },
+    {
+     "name": "P.za di Porta Maggiore",
+     "lat": 41.89156,
+     "lng": 12.5147
+    },
+    {
+     "name": "Carlo Felice",
+     "lat": 41.88777,
+     "lng": 12.51317
+    },
+    {
+     "name": "Porta S. Giovanni/Carlo Felice",
+     "lat": 41.88669,
+     "lng": 12.50917
+    },
+    {
+     "name": "Manzoni (MA)",
+     "lat": 41.89027,
+     "lng": 12.5061
+    },
+    {
+     "name": "Labicana/Merulana",
+     "lat": 41.88927,
+     "lng": 12.50292
+    },
+    {
+     "name": "Labicana",
+     "lat": 41.88974,
+     "lng": 12.49876
+    },
+    {
+     "name": "Colosseo/Salvi N.",
+     "lat": 41.88981,
+     "lng": 12.49404
+    },
+    {
+     "name": "Parco Celio",
+     "lat": 41.88752,
+     "lng": 12.49118
+    },
+    {
+     "name": "Aventino/Circo Massimo (MB)",
+     "lat": 41.88329,
+     "lng": 12.4877
+    },
+    {
+     "name": "Aventino/Albania",
+     "lat": 41.88094,
+     "lng": 12.48471
+    },
+    {
+     "name": "Porta S. Paolo",
+     "lat": 41.87723,
+     "lng": 12.48141
+    },
+    {
+     "name": "Marmorata/Galvani",
+     "lat": 41.87897,
+     "lng": 12.47896
+    },
+    {
+     "name": "Marmorata/Vanvitelli",
+     "lat": 41.88093,
+     "lng": 12.47758
+    },
+    {
+     "name": "Trastevere/Min. P. Istruzione",
+     "lat": 41.88483,
+     "lng": 12.4705
+    },
+    {
+     "name": "Trastevere/Bernard. da Feltre",
+     "lat": 41.88314,
+     "lng": 12.46904
+    },
+    {
+     "name": "Ippolito Nievo",
+     "lat": 41.8806,
+     "lng": 12.46709
+    },
+    {
+     "name": "Trastevere/Pascarella",
+     "lat": 41.87712,
+     "lng": 12.46567
+    },
+    {
+     "name": "Staz.ne Trastevere (FS)",
+     "lat": 41.87314,
+     "lng": 12.4663
+    }
+   ]
+  },
+  {
+   "mode": "train",
+   "ref": "REG2377",
+   "name": "Roma Termini → Napoli Centrale",
+   "stops": [
+    {
+     "name": "Roma Termini",
+     "lat": 41.9005,
+     "lng": 12.50257
+    },
+    {
+     "name": "Rome",
+     "lat": 41.90058,
+     "lng": 12.50253
+    },
+    {
+     "name": "Campoleone",
+     "lat": 41.64223,
+     "lng": 12.64847
+    },
+    {
+     "name": "Cisterna di Latina",
+     "lat": 41.58653,
+     "lng": 12.82759
+    },
+    {
+     "name": "Sezze Romano",
+     "lat": 41.49557,
+     "lng": 13.0384
+    },
+    {
+     "name": "Priverno-Fossanova",
+     "lat": 41.42169,
+     "lng": 13.18684
+    },
+    {
+     "name": "Monte San Biagio-Terracina Mare",
+     "lat": 41.34599,
+     "lng": 13.3471
+    },
+    {
+     "name": "Fondi-Sperlonga",
+     "lat": 41.33768,
+     "lng": 13.42493
+    },
+    {
+     "name": "Itri",
+     "lat": 41.27141,
+     "lng": 13.5455
+    },
+    {
+     "name": "Formia-Gaeta",
+     "lat": 41.25887,
+     "lng": 13.60617
+    },
+    {
+     "name": "Minturno-Scauri",
+     "lat": 41.25761,
+     "lng": 13.72085
+    },
+    {
+     "name": "Sessa Aurunca-Roccamonfina",
+     "lat": 41.19602,
+     "lng": 13.87567
+    }
+   ]
+  },
+  {
+   "mode": "train",
+   "ref": "Frecciarossa",
+   "name": "Frecciarossa: Venezia => Roma",
+   "stops": [
+    {
+     "name": "Roma Termini",
+     "lat": 41.90092,
+     "lng": 12.50302
+    },
+    {
+     "name": "Roma Tiburtina",
+     "lat": 41.9112,
+     "lng": 12.53147
+    }
+   ]
+  },
+  {
+   "mode": "train",
+   "ref": "Frecciarossa",
+   "name": "Frecciarossa: Roma => Venezia",
+   "stops": [
+    {
+     "name": "Roma Termini",
+     "lat": 41.90095,
+     "lng": 12.50305
+    },
+    {
+     "name": "Roma Tiburtina",
+     "lat": 41.91109,
+     "lng": 12.53138
+    }
+   ]
+  },
+  {
+   "mode": "train",
+   "ref": "Roma Viterbo (Extraurbana)",
+   "name": "Roma Viterbo (Extraurbana) (Flaminio)",
+   "stops": [
+    {
+     "name": "Sant'Oreste",
+     "lat": 42.22505,
+     "lng": 12.49021
+    },
+    {
+     "name": "Rignano Flaminio",
+     "lat": 42.21076,
+     "lng": 12.47901
+    },
+    {
+     "name": "Morolo",
+     "lat": 42.17493,
+     "lng": 12.47217
+    },
+    {
+     "name": "Magliano Romano",
+     "lat": 42.14805,
+     "lng": 12.47872
+    },
+    {
+     "name": "Morlupo - Capena",
+     "lat": 42.14338,
+     "lng": 12.49077
+    },
+    {
+     "name": "Castelnuovo di Porto",
+     "lat": 42.12975,
+     "lng": 12.49515
+    },
+    {
+     "name": "Montebello",
+     "lat": 42.01106,
+     "lng": 12.48894
+    },
+    {
+     "name": "Prima Porta",
+     "lat": 41.9997,
+     "lng": 12.49429
+    },
+    {
+     "name": "Saxa Rubra",
+     "lat": 41.97424,
+     "lng": 12.49306
+    },
+    {
+     "name": "Acqua Acetosa",
+     "lat": 41.93158,
+     "lng": 12.48725
+    },
+    {
+     "name": "Euclide",
+     "lat": 41.92657,
+     "lng": 12.48134
+    },
+    {
+     "name": "Flaminio",
+     "lat": 41.91337,
+     "lng": 12.47655
+    }
+   ]
+  },
+  {
+   "mode": "train",
+   "ref": "Frecciarossa",
+   "name": "Frecciarossa",
+   "stops": [
+    {
+     "name": "Roma Tiburtina",
+     "lat": 41.9112,
+     "lng": 12.53147
+    },
+    {
+     "name": "Roma Termini",
+     "lat": 41.90084,
+     "lng": 12.50293
+    }
+   ]
+  },
+  {
+   "mode": "train",
+   "ref": "",
+   "name": "Treno RV: Roma Termini => Perugia",
+   "stops": [
+    {
+     "name": "Roma Termini",
+     "lat": 41.90118,
+     "lng": 12.50329
+    },
+    {
+     "name": "Roma Tiburtina",
+     "lat": 41.91087,
+     "lng": 12.53116
+    },
+    {
+     "name": "Orte",
+     "lat": 42.43759,
+     "lng": 12.40893
+    },
+    {
+     "name": "Nera Montoro",
+     "lat": 42.49795,
+     "lng": 12.47655
+    },
+    {
+     "name": "Narni-Amelia",
+     "lat": 42.53145,
+     "lng": 12.51973
+    },
+    {
+     "name": "Terni",
+     "lat": 42.5707,
+     "lng": 12.65146
+    },
+    {
+     "name": "Spoleto",
+     "lat": 42.74807,
+     "lng": 12.73639
+    },
+    {
+     "name": "Trevi",
+     "lat": 42.87626,
+     "lng": 12.73369
+    },
+    {
+     "name": "Foligno",
+     "lat": 42.95437,
+     "lng": 12.7111
+    },
+    {
+     "name": "Spello",
+     "lat": 42.98442,
+     "lng": 12.66889
+    },
+    {
+     "name": "Assisi",
+     "lat": 43.059,
+     "lng": 12.58525
+    },
+    {
+     "name": "Bastia",
+     "lat": 43.07161,
+     "lng": 12.54679
+    },
+    {
+     "name": "Perugia Ponte San Giovanni",
+     "lat": 43.09181,
+     "lng": 12.43821
+    },
+    {
+     "name": "Perugia",
+     "lat": 43.10387,
+     "lng": 12.3756
+    }
+   ]
+  },
+  {
+   "mode": "train",
+   "ref": "",
+   "name": "Treno RV: Perugia => Roma Termini",
+   "stops": [
+    {
+     "name": "Perugia",
+     "lat": 43.10387,
+     "lng": 12.3756
+    },
+    {
+     "name": "Perugia Ponte San Giovanni",
+     "lat": 43.09177,
+     "lng": 12.43822
+    },
+    {
+     "name": "Bastia",
+     "lat": 43.07165,
+     "lng": 12.54682
+    },
+    {
+     "name": "Assisi",
+     "lat": 43.059,
+     "lng": 12.58525
+    },
+    {
+     "name": "Spello",
+     "lat": 42.98442,
+     "lng": 12.66889
+    },
+    {
+     "name": "Foligno",
+     "lat": 42.95437,
+     "lng": 12.71116
+    },
+    {
+     "name": "Trevi",
+     "lat": 42.87627,
+     "lng": 12.73375
+    },
+    {
+     "name": "Spoleto",
+     "lat": 42.74807,
+     "lng": 12.73639
+    },
+    {
+     "name": "Baiano di Spoleto",
+     "lat": 42.72624,
+     "lng": 12.6636
+    },
+    {
+     "name": "Terni",
+     "lat": 42.57062,
+     "lng": 12.65148
+    },
+    {
+     "name": "Narni-Amelia",
+     "lat": 42.53144,
+     "lng": 12.51977
+    },
+    {
+     "name": "Nera Montoro",
+     "lat": 42.49792,
+     "lng": 12.47658
+    },
+    {
+     "name": "Orte",
+     "lat": 42.4376,
+     "lng": 12.40904
+    },
+    {
+     "name": "Roma Tiburtina",
+     "lat": 41.91096,
+     "lng": 12.53125
+    },
+    {
+     "name": "Roma Termini",
+     "lat": 41.90115,
+     "lng": 12.50326
+    }
+   ]
+  },
+  {
+   "mode": "train",
+   "ref": "",
+   "name": "Treno IC: Taranto => Roma Termini",
+   "stops": [
+    {
+     "name": "Formia-Gaeta",
+     "lat": 41.25885,
+     "lng": 13.60619
+    },
+    {
+     "name": "Latina",
+     "lat": 41.53819,
+     "lng": 12.9463
+    },
+    {
+     "name": "Roma Termini",
+     "lat": 41.90047,
+     "lng": 12.50254
+    }
+   ]
+  },
+  {
+   "mode": "train",
+   "ref": "",
+   "name": "Treno IC: Roma Termini => Taranto",
+   "stops": [
+    {
+     "name": "Roma Termini",
+     "lat": 41.9005,
+     "lng": 12.50257
+    },
+    {
+     "name": "Latina",
+     "lat": 41.53823,
+     "lng": 12.94632
+    },
+    {
+     "name": "Formia-Gaeta",
+     "lat": 41.25887,
+     "lng": 13.60617
+    }
+   ]
+  },
+  {
+   "mode": "train",
+   "ref": "",
+   "name": "Treno IC: Bari Centrale => Roma Termini",
+   "stops": [
+    {
+     "name": "Vairano-Caianello",
+     "lat": 41.31743,
+     "lng": 14.10395
+    },
+    {
+     "name": "Cassino",
+     "lat": 41.48426,
+     "lng": 13.83238
+    },
+    {
+     "name": "Frosinone",
+     "lat": 41.62529,
+     "lng": 13.32864
+    },
+    {
+     "name": "Roma Termini",
+     "lat": 41.90024,
+     "lng": 12.50231
+    }
+   ]
+  },
+  {
+   "mode": "train",
+   "ref": "",
+   "name": "Treno IC: Roma Termini => Bari Centrale",
+   "stops": [
+    {
+     "name": "Roma Termini",
+     "lat": 41.90036,
+     "lng": 12.50243
+    },
+    {
+     "name": "Frosinone",
+     "lat": 41.6254,
+     "lng": 13.32864
+    },
+    {
+     "name": "Cassino",
+     "lat": 41.48436,
+     "lng": 13.83234
+    },
+    {
+     "name": "Vairano-Caianello",
+     "lat": 41.31745,
+     "lng": 14.10404
+    }
+   ]
+  }
+ ]
+}
