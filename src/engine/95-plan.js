@@ -125,7 +125,7 @@
       const last = fit.seq.length ? fit.seq[fit.seq.length - 1] : win.head[0];
       const dinner = E.dinnerAfter(win, win.tail.length ? win.tail[win.tail.length - 1] : last, fit.r.end, ctx, new Set(fit.seq.filter(s => s.eatKey).map(s => s.eatKey)));
       const outTown = fit.kept.find(k => k.far);
-      const lunchNote = fit.noLunch && outTown ? "Have lunch in " + outTown.name + ": its places to eat aren't in the guide yet." : fit.noLunch ? (fit.noLunch === "time" ? "No time for a sit-down lunch on this plan: grab something quick on the way." : "No place to eat along the way at lunchtime: bring food or eat at a stop's own café.") : null;
+      const lunchNote = fit.noLunch && outTown ? "Have lunch in " + outTown.name + ": its places to eat aren't in the guide yet." : fit.noLunch ? (fit.noLunch === "time" ? (win.hard ? "Your picks fill the time ashore, so there's no room for lunch and still a safe margin to get back. Grab something quick, or drop a pick to make room." : "No time for a sit-down lunch on this plan: grab something quick on the way.") : "No place to eat along the way at lunchtime: bring food or eat at a stop's own café.") : null;
       const plan = shortForm(i, win, fit, autoIds, dinner);
       const bad = guard(plan, win);
       if (bad.length) return { plan: safeDay(i, win, tr, bad) };
