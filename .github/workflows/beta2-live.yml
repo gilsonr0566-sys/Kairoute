@@ -10,8 +10,12 @@ permissions:
   contents: read
 jobs:
   run:
+    strategy:
+      fail-fast: false
+      matrix:
+        batch: ["1", "2", "3", "4"]
     runs-on: ubuntu-latest
-    timeout-minutes: 25
+    timeout-minutes: 40
     steps:
       - uses: actions/checkout@v4
       - name: Build the app
@@ -20,4 +24,6 @@ jobs:
         with:
           node-version: 22
       - run: npm i --no-save playwright@1 && npx playwright install --with-deps chromium
-      - run: node tools/beta2/live-trip.cjs
+      - env:
+          BATCH: ${{ matrix.batch }}
+        run: node tools/beta2/live-trip.cjs

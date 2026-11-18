@@ -125,27 +125,28 @@ Resources: none new. All fixes use Wikidata, OpenStreetMap and Wikivoyage, which
 ### Test gate before plugging in (Richard, Nov 18: "more testing before we drop the engine in")
 Step 10 (plug in) does not start until the built engine passes all of this, AI off, side by side with the old engine on the same saved real source data (captured live like the Hamburg run, then rerun offline so results repeat):
 
-The 20 trips:
-1. Rome, 3-day land stay
-2. Paris, 3-day stay including a Tuesday (Louvre closed)
-3. Prague, 2-day stay
-4. Hamburg, 2-day stay (never tuned)
-5. Lisbon, 2-day stay (never tuned; hills and trams)
-6. Athens, arrival day by flight and boarding day at Piraeus
-7. Civitavecchia to Rome, cruise call (train to the city)
-8. Naples, cruise call with Pompeii by train
-9. Naples, the same call on an announced strike day
-10. Hamburg, Sunday cruise call (three terminals)
-11. Kotor, tender port
-12. Dubrovnik, cruise call (never tuned; walled town, cable car)
-13. Barcelona, Sunday cruise call
-14. Kusadasi, cruise call with Ephesus (far stop, shared tickets)
-15. Chania, cruise call from Souda (the Chania lesson)
-16. Nassau, full day and short call
-17. CocoCay, private island
-18. Copenhagen, cruise call on a public holiday (never tuned)
-19. Corinth day trip from Athens by public transport
-20. Running late: the Naples and Athens boarding days replayed at 45 minutes late
+The 20 places (approved by Richard Nov 18; each tests something specific; trips defined in tools/beta2/live-trip.cjs, batches 1 to 4):
+1. Istanbul, Thu+Fri stay: ferries across two continents, mosque prayer closures
+2. Vienna, Mon+Tue stay: groups inside groups, Monday closures
+3. Lisbon, Mon+Tue stay: hills, trams, walking effort
+4. Barcelona, Sunday cruise call: timed tickets
+5. Edinburgh, August stay: hilltop castle, festival crowds
+6. Kyoto, April stay: non-Latin names, early temple closings, spread-out sites
+7. Le Havre for Paris, cruise call: long train, tight ship timing
+8. Southampton: fly in, board next day
+9. Kotor, July tender call: fortress climb, heat
+10. Dubrovnik, July call: timed walls, crowds
+11. Juneau, cruise call: no roads out, tours
+12. Ketchikan, short call: tiny town, rain
+13. Grand Turk, cruise call: almost no data
+14. Mykonos, tender call into the evening: tiny streets
+15. Ponta Delgada, cruise call: thin island data
+16. Half Moon Cay: a second private island
+17. Jerusalem from Haifa, Saturday call: Sabbath closures
+18. Reykjavik, January stay: day trips, winter dark
+19. Venice, Sat+Sun stay: no cars, water buses, date-based entry fee
+20. Dubai, July stay: extreme heat, big distances
+Also kept in the yardstick: the 9 earlier test trips (6 sample-trip snapshots, Paris, Prague, Nassau, island) and the live Hamburg, Nassau and CocoCay runs.
 
 Pass rule (every point, every trip):
 - **Zero safety failures:** no stop after the back-by time, never less than the fixed buffer before all aboard, train or flight time, the last safe train always kept, no plan on a guessed port or terminal.
