@@ -28,6 +28,13 @@ The 21 steps are now 11. Nothing was dropped: Richard's steps (resources, collec
 10. **Plug into the app.** One copy of each plan, labelled by its bucket; the five patch layers removed; screens unchanged. Running late is the same engine with a new start point and time, not a separate feature. *Closes #17, #21.*
 11. **Prove it.** Old vs new on all 9 test trips with one scorer; the same bucket with pieces in shuffled order gives the same plan; safety margins never closer than Beta 1; a whole trip planned within a time limit on a slowed-down test device; existing publish checks pass. *Closes #14, #15, tablet freezes.*
 
+### Leaks closed (Nov 18, before Richard's OK)
+1. **Screens only send wishes.** A screen can only add a wish to the bucket (a pick, a heart, a moved sight, a ride choice, a typed time). It never changes a plan directly. The plan is always re-made by the engine from the bucket.
+2. **Each trip keeps the database version it was planned with.** A newer version is used only when the traveler chooses to refresh. One exception: a safety change (a place now closed, a port moved, a ship time corrected) always applies at once, and the plan says what changed and why. The same pinned version is shared between the traveler's devices, and a new engine release is treated the same way.
+3. **If the final guard fails, the traveler gets a safe day, never a broken plan.** On a port, boarding or leaving day that is just the time ashore and back at the ship, station or airport on time; on other days a free day. Either way the plan says what went wrong, and the failure is logged for us to fix in the engine.
+4. **Typed times are checked.** All aboard after docking, boarding before all aboard, a flight or train time on the right day, nothing outside a sensible range, and ship time turned into port time. A time that fails is asked again, never planned around.
+5. **A bad find can't spread.** New finds go through the same bucket check before they enter the shared database, and safety-critical facts (where a port or terminal is, ship-related times) need a second source or a map match before other travelers get them.
+
 ### What we need to know about each site
 Already collected: where it is, visit length, opening hours and closed days, last entry, timed shows, book-ahead, indoor or outdoor, crowd times, cost, fame and sources, category, how to get there for day trips, closed to visitors.
 
