@@ -13,7 +13,6 @@ const EN_FAME = 30;
 const EN_PHRASE = [
   [/\bquattro fontane\b/i, "Four Fountains"], [/\bsantissima annunziata\b/i, "Most Holy Annunciation"], [/\bsantissimo salvatore\b/i, "Holy Saviour"],
   [/\bsanti(ssima|sima) trinit[àa]d?(?=\s|$|[,)])/i, "Holy Trinity"], [/\bsant[ií]simo sacramento\b/i, "Blessed Sacrament"], [/\bsantissimo sacramento\b/i, "Blessed Sacrament"],
-  [/\b(porto di|puerto de|porto de|port de)\b/i, "Port of"], [/\bstazione marittima\b/i, "Cruise Terminal"], [/\bestaci[oó]n mar[ií]tima\b/i, "Cruise Terminal"], [/\bgare maritime\b/i, "Cruise Terminal"],
   [/\bmonte di piet[àa](?=\s|$|[,)])/i, "Mount of Piety"], [/\bmonte de piedad\b/i, "Mount of Piety"], [/\bcristo re\b/i, "Christ the King"], [/\bcristo rey\b/i, "Christ the King"], [/\bsacro cuore\b/i, "Sacred Heart"], [/\bsagrado coraz[oó]n\b/i, "Sacred Heart"],
   [/\bsagrado cora[çc][ãa]o\b/i, "Sacred Heart"], [/\b(madonna|nostra signora|nuestra se[ñn]ora|nossa senhora|mare de d[ée]u)\b/i, "Our Lady"],
   [/\b(santa|sainte|santa) croce\b/i, "Holy Cross"], [/\bsanta cruz\b/i, "Holy Cross"], [/\bspirito santo\b/i, "Holy Spirit"], [/\besp[ií]ritu santo\b/i, "Holy Spirit"]
@@ -76,7 +75,7 @@ const EN_WORD = { cultura: "Culture", culture: "Culture", lettera: "the Letter",
   angeli: "the Angels", ángeles: "the Angels", anges: "the Angels", santi: "the Saints", martiri: "the Martyrs", mártires: "the Martyrs", vergine: "the Virgin", virgen: "the Virgin",
   rosario: "the Rosary", lavoro: "Labour", indipendenza: "Independence", independencia: "Independence", libertà: "Freedom", libertad: "Freedom", liberté: "Freedom",
   cattedrale: "the Cathedral", duomo: "the Cathedral", catedral: "the Cathedral", porto: "the Port", puerto: "the Port", port: "the Port", mercanti: "the Merchants", mercaderes: "the Merchants",
-  re: "the King", rey: "the King", roi: "the King", regina: "the Queen", reina: "the Queen", reine: "the Queen", catalani: "the Catalans", catalanes: "the Catalans", cancelleria: "the Chancellery", cancillería: "the Chancellery", nettuno: "Neptune", neptuno: "Neptune", orione: "Orion", ercole: "Hercules", hércules: "Hercules", nereidi: "the Nereids", tritone: "Triton", tritoni: "the Tritons" };
+  re: "the King", rey: "the King", roi: "the King", regina: "the Queen", reina: "the Queen", reine: "the Queen", catalani: "the Catalans", catalanes: "the Catalans", cancelleria: "the Chancellery", cancillería: "the Chancellery" };
 // "of" words: those that carry "the" and those that don't.
 const EN_OF_THE = /^(del|dello|della|dell'|dei|degli|delle|de la|de las|de los|du|des|de l'|do|da|dos|das|dels|de les)$/i;
 const EN_OF = /^(di|d'|de)$/i;
@@ -116,16 +115,6 @@ function enNameOf(name, cat, local) {
     else if (EN_OF_THE.test(rest[0])) { lead = "of the"; rest = rest.slice(1); }
     else if (EN_OF.test(rest[0])) { lead = "of"; rest = rest.slice(1); }
     if (!rest.length) return null;
-    // "della Our Lady di Montalto", "della Most Holy Annunciation dei Catalani": each "of" part on its own.
-    const inner = rest.findIndex((t, j) => j > 0 && (EN_OF.test(t) || EN_OF_THE.test(t)));
-    if (lead && inner > 0 && !EN_SAINT.test(rest[0])) {   // "di Santa Maria della Valle" is one saint's name
-      const a = ofObj(lead, rest.slice(0, inner)), b = ofPart(rest.slice(inner));
-      if (a === null || b === null || (b && !b.startsWith("of "))) return null;
-      return a + (b ? " " + b : "");
-    }
-    return ofObj(lead, rest);
-  };
-  const ofObj = (lead, rest) => {
     // One common word: "della Cultura" is "of Culture", "della Lettera" "of the Letter".
     if (lead && rest.length === 1 && EN_WORD[rest[0].toLowerCase()]) return "of " + EN_WORD[rest[0].toLowerCase()];
     // A thing and its describing words: "d'Arte Moderna e Contemporanea" is "of Modern and Contemporary Art".
@@ -137,14 +126,14 @@ function enNameOf(name, cat, local) {
       return "of " + adj.join(" and ") + " " + EN_WORD[rest[0].toLowerCase()].replace(/^the /, "") + (more ? " " + more : "");
     }
     // A describing word or a common word of the local language left in what follows "of": not fully English.
-    if (lead && rest.length > 1 && (EN_ADJ[rest[0].toLowerCase()] || EN_WORD[rest[0].toLowerCase()])) return null;
+    if (lead && rest.some(t => !EN_SMALL.test(t) && (EN_ADJ[t.toLowerCase()] || EN_WORD[t.toLowerCase()]))) return null;
     // "of the" + a capitalized word: a thing in the local language ("de la Música", "de las Flores") unless it is
     // one the rules put into English ("del Holy Saviour"); left as it is.
     if (lead === "of the" && rest.some(t => !EN_SMALL.test(t) && !EN_WORD[t.toLowerCase()] && !EN_KNOWN.has(t.toLowerCase()))) return null;
     // Any other common word left in the name: not fully English, so leave the name as it is.
     if (rest.some(t => /^\p{Ll}/u.test(t) && !EN_SMALL.test(t) && !EN_WORD[t.toLowerCase()])) return null;
     const out = rest.map(t => EN_WORD[t.toLowerCase()] && /^\p{Ll}/u.test(t) ? EN_WORD[t.toLowerCase()].replace(/^the /, "") : t).join(" ").replace(/' /g, "'");
-    if (lead) return (/^Our /.test(out) ? "of" : lead) + " " + out;   // "of Our Lady", never "of the Our Lady"
+    if (lead) return lead + " " + out;
     if (EN_SAINT.test(rest[0])) return "of " + out;
     // "Pietro Castelli dell'Università": a proper name, then "of" something.
     const i = rest.findIndex((t, k) => k > 0 && (EN_OF.test(t) || EN_OF_THE.test(t)));
@@ -159,7 +148,6 @@ function enNameOf(name, cat, local) {
     if (r === null) return "";
     if (r && typeof r === "object") en = r.name + " " + what + " " + r.of;
     else if (!r) en = what;
-    else if (r.startsWith("of ") && head[1] === "post" && EN_SAINT.test(r.split(" ")[1] || "") && !/ of /.test(r.slice(3))) en = r.slice(3) + " " + what;   // "Mercat de Sant Antoni": Sant Antoni Market
     else if (r.startsWith("of ")) en = what + " " + r;
     else if (head[1] === "pre") en = (/^(Fort|Fortress|Castle|Tower)$/.test(head[0]) ? what + r : what + " of" + r);
     else en = r.trim() + " " + what;
@@ -175,9 +163,7 @@ function enNameOf(name, cat, local) {
     // its local name says it is a church (the "Santa Justa Lift" is a lift).
     en = w.join(" ").replace(/' /g, "'") + " Church";
   } else return "";
-  en = enCap(en.replace(/\s+/g, " ").replace(/' /g, "'").trim());
-  if (tail && keyOf(tail).includes(keyOf(en))) return "";   // "Stazione Marittima (Naples cruise terminal)" already says it
-  en += tail;
+  en = enCap(en.replace(/\s+/g, " ").replace(/' /g, "'").trim()) + tail;
   return keyOf(en) === keyOf(raw) ? "" : en;
 }
 // A sight from the sources gets its English name; its local name is kept for the signs. Famous places keep theirs.
