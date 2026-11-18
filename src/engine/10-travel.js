@@ -67,10 +67,15 @@
         return { mode: "transit", transitMode: t.mode, how: t.how, km: leg.km, min: tmin, slack: sl || undefined, options };
       }
       const walkMin = km => Math.max(1, Math.round(km * 1.3 / speed * 60)), onFoot = walkMin(d);
-      const t = E.transitOption(a, b, lines, walkMin); if (!t || t.min >= onFoot) return leg;
+      // A leg short enough to walk offers the line only when it is quicker than walking; a leg too far to walk weighs it
+      // against the taxi instead (an uphill walk from the station can make it slower than the whole walk, never than a taxi).
+      const t = E.transitOption(a, b, lines, walkMin); if (!t || (leg.mode !== "ride" && t.min >= onFoot)) return leg;
       const taxi = road(d), want = modes[E.pairKey(a, b)];
       const options = [{ mode: "walk", how: "Walk", min: onFoot }, { mode: "transit", how: t.how, min: t.min }, { mode: "ride", how: taxi.how, min: taxi.min }];
-      if (want === "transit") return { mode: "transit", transitMode: t.mode, how: t.how, km: d * 1.3, min: t.min, either: true, options };
+      // Too far to walk: public transport is taken unless a taxi saves a lot (the same rule as everywhere: cheaper, no
+      // traffic); the traveler's own choice always wins.
+      const tooFar = leg.mode === "ride" && want !== "ride" && want !== "taxi" && want !== "walk" && E.publicWins(t.min, taxi.min);
+      if (want === "transit" || tooFar) return { mode: "transit", transitMode: t.mode, how: t.how, km: d * 1.3, min: t.min, either: true, options };
       return Object.assign(leg, { options, either: true });
     }
     function known(a, b, leg, d) {

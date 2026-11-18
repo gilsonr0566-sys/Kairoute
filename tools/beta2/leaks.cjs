@@ -10,7 +10,7 @@ const dir = path.join(__dirname, 'snapshots'), list = process.argv.includes('--l
 const PD = process.env.PLACES_DIR, places = {};
 if (PD) for (const f of fs.readdirSync(PD).filter(f => f.endsWith('.json'))) { const p = JSON.parse(fs.readFileSync(path.join(PD, f))); places[p.key] = p; }
 const SCRIPT = /[Ͱ-Ͽἀ-῿Ѐ-ӿ֐-׿؀-ۿ฀-๿぀-ヿ㐀-鿿가-힯]/;
-const leaks = { transit: [], wanted: [], lostVsOld: [], thin: [], script: [], ride: [], gate: [], water: [] };
+const leaks = { transit: [], wanted: [], lostVsOld: [], thin: [], script: [], ride: [], gate: [], water: [], twice: [], cross: [], mealTime: [], mealOff: [], mealAgain: [], longWalk: [], shortRide: [] };
 const swaps = [];
 const add = (k, f, msg) => leaks[k].push(`${f}: ${msg}`);
 for (const f of fs.readdirSync(dir).filter(f => f.endsWith('.json')).sort()) {
@@ -19,8 +19,30 @@ for (const f of fs.readdirSync(dir).filter(f => f.endsWith('.json')).sort()) {
   const planned = new Set(); plans.forEach(p => p && p.items && p.items.forEach(x => { if (x.t === 'stop') { planned.add(String(x.id)); (x.includesIds || []).forEach(m => planned.add(String(m))); } }));
   const said = plans.map(p => (p && p.explain || []).join(' '));
   const walkMin = km => Math.max(1, Math.round(km * 1.3 / ((s.prefs || {}).walk === 'low' ? 3.6 : 4.5) * 60));
+  const eatDays = new Map();
   plans.forEach((p, i) => {
     if (!p || !p.items) return; const d = s.days[i], city = s.cities[d.city] || {};
+    // Organizer: the day's stops in an order that doesn't waste travel. Compared with the best order for the same stops
+    // between the same start and end, the plan may spend extra time only for a reason (opening hours, lunch, a trip out
+    // kept as one block); more than 20 minutes extra is a leak.
+    { const w = E.dayWindow(d, tr); const st = p.items.filter(x => x.t === 'stop' && isFinite(x.lat));
+      if (w && !w.error && st.length >= 3) { const from = w.head[w.head.length - 1], to = w.tail.length ? w.tail[0] : null;
+        const best = E.bestOrder(st.slice().sort(E.byId), from, to, tr.min), cost = seq => E.pathCost(seq, from, to, tr.min);
+        const extra = Math.round(cost(st) - cost(best));
+        if (extra > 20 && !st.some(x => x.far)) add('cross', f, `day ${i}: ${extra} min more travel than the best order (${st.map(x => x.name).join(' > ')}; best: ${best.map(x => x.name).join(' > ')})`); } }
+    // Restaurants: lunch between 11:30 and 15:00, dinner from 17:30; a meal stop near the way; a place not repeated.
+    p.items.forEach((x, k) => { if (x.t !== 'meal' && x.t !== 'evening') return; const lunch = (x.meal || 'Lunch') === 'Lunch' && x.t === 'meal';
+      if (lunch && (x.at < 690 || x.at > 930)) add('mealTime', f, `day ${i}: lunch at ${E.clock(x.at)} (${x.name})`);
+      if (!lunch && x.at < 1050) add('mealTime', f, `day ${i}: dinner at ${E.clock(x.at)} (${x.name})`);
+      const a = p.items.slice(0, k).reverse().find(y => isFinite(y.lat) && y.t !== 'ride'), b = p.items.slice(k + 1).find(y => isFinite(y.lat) && y.t !== 'ride');
+      // (before a ride out of town the lunch is measured from the last stop in town)
+      const off = !b || E.hav(a || x, b) > 10 ? (a ? E.hav(a, x) * 2 : 0) : E.hav(a, x) + E.hav(x, b) - E.hav(a, b);
+      if (lunch && a && b && isFinite(x.lat) && off > 1.6) add('mealOff', f, `day ${i}: ${x.name} adds ${off.toFixed(1)} km between ${a.name} and ${b.name}`);
+      if (x.name) { const was = eatDays.get(x.name); if (was != null && was !== i) add('mealAgain', f, `${x.name} on day ${was} and day ${i}`); else eatDays.set(x.name, i); } });
+    // Path and transport: no long walk where a ride is offered; no taxi for a few steps.
+    p.items.forEach((x, k) => { if (x.t !== 'ride') return; const a = p.items[k - 1], b = p.items[k + 1]; if (!a || !b || !isFinite(a.lat) || !isFinite(b.lat)) return; const km = E.hav(a, b);
+      if (x.mode === 'walk' && km > 2.5 && (x.options || []).some(o => o.mode !== 'walk')) add('longWalk', f, `day ${i}: ${km.toFixed(1)} km on foot, ${a.name} to ${b.name}`);
+      if (x.mode === 'ride' && km < 0.6 && !b.backToShip && !/ship|port|terminal|pier|station|airport/i.test(b.name + ' ' + a.name)) add('shortRide', f, `day ${i}: taxi for ${Math.round(km * 1000)} m, ${a.name} to ${b.name}`); });
     // A port or gate far from every sight of the place, planned anyway (a lookup put it on the wrong island).
     { const P = d.point, spots = (city.sites || []).filter(x => isFinite(x.lat)), named = (d.city + ' ' + (city.name || '')).toLowerCase();
       const words = String(P && P.name || '').toLowerCase().split(/[^a-z]+/).filter(x => x.length >= 4 && !/^(port|ports|cruise|terminal|pier|harbou?r|marina|station|central|airport|international|ferry)$/.test(x));
@@ -44,7 +66,7 @@ for (const f of fs.readdirSync(dir).filter(f => f.endsWith('.json')).sort()) {
     });
     // A thin day: three hours or more left unused, and the plan doesn't say what to do with them.
     { const w = E.dayWindow(d, tr), spare = w && isFinite(w.endBy) && isFinite(p.end) ? w.endBy - p.end : 0;
-      if (spare >= 180 && !/time left|free time|at leisure/i.test(said[i])) add('thin', f, `day ${i} (${d.type}): ${Math.floor(spare / 60)} h ${spare % 60} min left unused, ${p.items.filter(x => x.t === 'stop').length} stops`); }
+      if (spare >= 180 && !/time left|free time|at leisure|day is yours/i.test(said[i])) add('thin', f, `day ${i} (${d.type}): ${Math.floor(spare / 60)} h ${spare % 60} min left unused, ${p.items.filter(x => x.t === 'stop').length} stops`); }
     // Wanted sights of a place seen on this day only (or picked for this day) that no day plans.
     const oneDay = s.days.filter(e => e.city === d.city && !e.noShore).length === 1;
     const wanted = (city.sites || []).filter(x => (d.selected || []).map(String).includes(String(x.id)) || (oneDay && E.ownStop(x)));
@@ -61,7 +83,7 @@ for (const f of fs.readdirSync(dir).filter(f => f.endsWith('.json')).sort()) {
     if (!why && spare >= (x.min || 30) + 20) add('lostVsOld', f, `day ${i}: ${x.name} (${spare} min left unused, no reason given)`); else swaps.push(`${f}: day ${i}: ${x.name}${why ? ' (the plan says why)' : ' (day full, other sights chosen)'}`); } });
 }
 let total = 0;
-const label = { transit: 'public transport not offered', wanted: 'voiced, must-see or picked sight left out', lostVsOld: 'sight the old engine planned, left out', thin: 'thin day: 3 hours or more unused, nothing said', script: 'name in a non-Latin script', ride: 'ride without start, end or way of travel', gate: 'planned from a port or gate far from every sight', water: 'sight seen only from the water, reached by land' };
+const label = { twice: 'same sight twice in a day', cross: 'stops in an order that wastes 20+ min of travel', mealTime: 'lunch or dinner at an odd hour', mealOff: 'meal stop far off the way', mealAgain: 'same restaurant on two days', longWalk: 'long walk (over 2.5 km) where a ride is offered', shortRide: 'taxi for a short hop (under 600 m)', transit: 'public transport not offered', wanted: 'voiced, must-see or picked sight left out', lostVsOld: 'sight the old engine planned, left out', thin: 'thin day: 3 hours or more unused, nothing said', script: 'name in a non-Latin script', ride: 'ride without start, end or way of travel', gate: 'planned from a port or gate far from every sight', water: 'sight seen only from the water, reached by land' };
 for (const k of Object.keys(leaks)) { total += leaks[k].length; console.log(`${String(leaks[k].length).padStart(4)}  ${label[k]}`); if (list) leaks[k].forEach(m => console.log('      ' + m)); }
 console.log(`      (${swaps.length} sights the old engine planned were swapped for others on a full day, or left out with the reason said)`); if (list) swaps.forEach(m => console.log('        ' + m));
 console.log(`${String(total).padStart(4)}  leaks in all${PD ? ' (with the places files)' : ''}`);

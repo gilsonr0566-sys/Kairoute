@@ -65,7 +65,14 @@ ok(E.latin('Ζευγολατιό') === 'Zevgolatio' && E.latin('Ευαγγελι
   const ab = tt.estimate(a, b), opts = ab.options || [];
   ok(opts.some(o => o.mode === 'transit' && /^Metro Line 1, North to South$/.test(o.how)), `a leg along a metro line offers it (got ${JSON.stringify(opts.map(o => o.how))})`);
   ok(opts.some(o => o.mode === 'walk') && opts.some(o => o.mode === 'ride'), 'walking and a taxi are still offered beside it');
-  ok(ab.mode === E.makeTravel({ walk: 'medium' }, {}).estimate(a, b).mode && ab.min === E.makeTravel({ walk: 'medium' }, {}).estimate(a, b).min, 'offering it never changes the planned leg on its own');
+  { const plain = E.makeTravel({ walk: 'medium' }, {}).estimate(a, b), t = opts.find(o => o.mode === 'transit');
+    ok(plain.mode === 'walk' ? ab.mode === 'walk' : (E.publicWins(t.min, plain.min) ? ab.mode === 'transit' : ab.mode === plain.mode),
+      `too far to walk: the line is taken unless a taxi saves a lot; a walkable leg stays a walk (got ${ab.mode}, plain ${plain.mode} ${plain.min}, line ${t.min})`); }
+  // Too far to walk, and the station a long walk from the far end (so the line is slower than walking all the way):
+  // the line is still offered beside the taxi, never dropped.
+  { const L3 = line('tram', '3', [['Top', 38.100, 23.700], ['Hill', 38.200, 23.680], ['Bottom', 38.100, 23.660]]), t3 = E.makeTravel({ walk: 'low' }, {}, null, [L3]);
+    const p = { lat: 38.1003, lng: 23.7003 }, q = { lat: 38.1065, lng: 23.660 }, e = t3.estimate(p, q);
+    ok(e.mode !== 'walk' && (e.options || []).some(o => o.mode === 'transit'), `a ride leg offers the line even when walking all the way would be as quick (got ${e.mode} ${JSON.stringify((e.options || []).map(o => o.mode + o.min))})`); }
   const ac = tt.estimate(a, c); ok((ac.options || []).some(o => o.mode === 'transit' && /then Tram T to Far East/.test(o.how)), 'one change between lines is found');
   const picked = E.makeTravel({ walk: 'medium' }, { [E.pairKey(a, b)]: 'transit' }, null, [L1, L2]).estimate(a, b);
   ok(picked.mode === 'transit' && picked.min === opts.find(o => o.mode === 'transit').min, "the traveler's choice of the metro is planned with its own time");
