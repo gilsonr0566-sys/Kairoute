@@ -4,6 +4,26 @@ Kairoute Beta 1 (the demo copy, frozen for Fri Nov 20, 2026) was built in 8 days
 
 Sources: the full commit history, the project's notes from every thread, and a read-through of the current engine (`src/main.js` and `src/features/`).
 
+## What Beta 2 changes, and what stays as is
+
+Beta 2 is **not** a rebuild of the whole app. Only the engine is rewritten: the planning core that decides which sights go on which day, groups them, puts them in order and times the day, plus the five "keep the plan steady" layers that grew around it. The new engine plugs into the app exactly where the old one sat, so everything the traveler sees keeps working.
+
+**Rewritten (the engine):**
+- Choosing which picked sights go on which day (one day per sight, all or something)
+- Grouping and ordering a day's stops (route first, capped nudges for crowds, heat and weather)
+- Fitting the day: opening hours, visit lengths, what gives way when time runs out
+- Placing meals and optional stops, with no repeats across the trip
+- The day's timeline, including every ship, train and flight safety time
+- The steady-plan layers (shown-plan replay, heart-lock replay, taken-off list, late day-trip re-giving, renamed-id following), replaced by a planner that gives the same answer every time
+
+**Stays as is (plugged into the new engine):**
+- Every screen: Day plan, Change stops, Guide, Tour, Trip, Journal, settings, phone and tablet layouts
+- City guides and how they're built (with or without AI), stories, voice and audio tour
+- Maps, ride lookups (trains, ferries, metro, taxi), ride chooser buttons
+- Trip entry (step by step, typed or photo), sync between devices, offline download
+- Print/PDF, money and spending, booking trains, the heart button itself, ship countdown and alarms
+- The publish gate and its checks (the engine gets its own fast checks on top)
+
 ---
 
 ## Part 1. What worked (carry into Beta 2 unchanged)
@@ -95,7 +115,7 @@ Each item: what went wrong, why it happened, and the rule Beta 2 follows from da
 ### 7. Boarding time lost on redraw
 - **What went wrong:** A boarding time the traveler typed was lost if the screen redrew before Save (#178).
 - **Why:** The screen kept typed values in the page itself, and redraws rebuilt the page.
-- **Beta 2 rule:** **Typed trip facts are saved the moment they're typed,** never held only on screen. (A screen rule, written down here so the new screens follow it.)
+- **Beta 2 rule:** Already fixed in Beta 1 (#178), and the screens stay as they are. For the engine: **the engine reads trip facts only from the saved trip,** never from what happens to be on screen, so a redraw can never change a plan.
 
 ### 8. Same-day fly-in planned sightseeing
 - **What went wrong:** A trip flying into Miami at 11:25 for a 15:30 all aboard got a sightseeing plan.
@@ -135,7 +155,7 @@ Each item: what went wrong, why it happened, and the rule Beta 2 follows from da
 ### 15. Publishing jammed
 - **What went wrong:** From Nov 17 6 PM to Nov 18, about 10 merges stacked up and none went live (#183 to #193 cancelled or failed).
 - **Why:** Changes were merged faster than the 40-minute gate could check them, and several checks failed on timing races, not real bugs.
-- **Beta 2 rule:** **The engine is tested on its own in seconds** (no browser, no internet), so most checks run fast. Browser checks wait for real state, never fixed delays. Beta 2 publishes to its own test address, not the live site.
+- **Beta 2 rule:** **The engine is tested on its own in seconds** (no browser, no internet), so most checks run fast. Browser checks wait for real state, never fixed delays. Beta 2 is tested on its own branch and never touches the live site until it has proven itself.
 
 ### 16. Errors swallowed silently
 - **What went wrong:** About 200 places in the code catch an error and do nothing, so failures vanish instead of showing up.
@@ -149,7 +169,7 @@ Each item: what went wrong, why it happened, and the rule Beta 2 follows from da
 
 ### 18. One huge file
 - **What went wrong:** `main.js` is 726 KB in one file, with planning, screens, voice, rides and storage mixed together.
-- **Beta 2 rule:** **The engine is its own small files, one job each:** day window and safety times, choosing sights for each day, route order, fitting, meals, timeline. None of them touch the screen.
+- **Beta 2 rule:** The rest of the app stays where it is for now (splitting it is separate, later work). **The engine is its own small files, one job each:** day window and safety times, choosing sights for each day, route order, fitting, meals, timeline. None of them touch the screen.
 
 ### 19. AI overspend
 - **What went wrong:** About $4.22 of AI was charged Nov 11-17, mostly from testing. The app's own counter undercounted the real bill by about 38%.
