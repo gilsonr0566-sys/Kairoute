@@ -17,7 +17,7 @@ async function helper(r) {
   calls[u.pathname] = (calls[u.pathname] || 0) + 1;
   for (let i = 0; i < 3; i++) {
     try {
-      const res = await fetch(REAL + u.pathname + u.search, { method: req.method(), headers: { 'content-type': 'application/json', origin: 'https://gilsonr0566-sys.github.io' }, body: req.method() === 'POST' ? req.postData() : undefined, signal: AbortSignal.timeout(45000) });
+      const res = await fetch(REAL + u.pathname + u.search, { method: req.method(), headers: { 'content-type': 'application/json', origin: 'https://gilsonr0566-sys.github.io' }, body: req.method() === 'POST' ? req.postData() : undefined, signal: AbortSignal.timeout(+process.env.HELPER_WAIT || 45000) });
       const body = await res.text();
       if (res.ok) { if (/^\/(sources|famous|transit|ground)$/.test(u.pathname)) (raw[u.pathname] = raw[u.pathname] || []).push({ q: u.search, post: req.postData() || null, body: JSON.parse(body) }); return r.fulfill({ status: 200, contentType: 'application/json', body }); }
       if (res.status < 500) return r.fulfill({ status: res.status, contentType: 'application/json', body });
@@ -38,13 +38,13 @@ const TRIPS = [
   { name: 'live-nassau', batch: 0, label: 'Nassau: cruise call', days: [sea('2027-01-11'), port('2027-01-12', 'Nassau, Bahamas', '08:00', '17:00')] },
   { name: 'live-cococay', batch: 0, label: "CocoCay: cruise line's private island", days: [sea('2027-01-13'), port('2027-01-14', 'Perfect Day at CocoCay, Bahamas', '07:00', '17:00')] },
   { name: 'g01-istanbul', batch: 1, label: 'Istanbul: Thu+Fri stay (ferries, two continents, Friday prayers)', days: stay(['2027-05-13', '2027-05-14'], 'Istanbul, Turkey') },
-  { name: 'g02-vienna', batch: 1, label: 'Vienna: Mon+Tue stay (groups inside groups, Monday closures)', days: stay(['2027-05-10', '2027-05-11'], 'Vienna, Austria') },
+  { name: 'g02-vienna', batch: 5, label: 'Vienna: Mon+Tue stay (groups inside groups, Monday closures)', days: stay(['2027-05-10', '2027-05-11'], 'Vienna, Austria') },
   { name: 'g03-lisbon', batch: 1, label: 'Lisbon: Mon+Tue stay (hills, trams, walking effort)', days: stay(['2027-05-10', '2027-05-11'], 'Lisbon, Portugal') },
   { name: 'g04-barcelona', batch: 1, label: 'Barcelona: Sunday cruise call (timed tickets)', days: [sea('2027-05-15'), port('2027-05-16', 'Barcelona, Spain', '08:00', '18:00')] },
-  { name: 'g05-edinburgh', batch: 1, label: 'Edinburgh: August stay (hilltop castle, festival crowds)', days: stay(['2027-08-10', '2027-08-11'], 'Edinburgh, Scotland') },
+  { name: 'g05-edinburgh', batch: 5, label: 'Edinburgh: August stay (hilltop castle, festival crowds)', days: stay(['2027-08-10', '2027-08-11'], 'Edinburgh, Scotland') },
   { name: 'g06-kyoto', batch: 2, label: 'Kyoto: April stay (non-Latin names, early temple closing, spread out)', days: stay(['2027-04-06', '2027-04-07'], 'Kyoto, Japan') },
-  { name: 'g07-lehavre', batch: 2, label: 'Le Havre for Paris: Saturday call (long train, tight ship time)', days: [sea('2027-06-11'), port('2027-06-12', 'Le Havre (Paris), France', '07:00', '19:00')] },
-  { name: 'g08-southampton', batch: 2, label: 'Southampton: fly in, board next day', days: [day({ date: '2027-05-20', destination: 'Southampton, England', type: 'arrival', mode: 'flight', time: '13:00', hours: 5 }), day({ date: '2027-05-21', destination: 'Southampton, England', type: 'embark', startTime: '09:00', allAboard: '16:00' })] },
+  { name: 'g07-lehavre', batch: 5, label: 'Le Havre for Paris: Saturday call (long train, tight ship time)', days: [sea('2027-06-11'), port('2027-06-12', 'Le Havre (Paris), France', '07:00', '19:00')] },
+  { name: 'g08-southampton', batch: 5, label: 'Southampton: fly in, board next day', days: [day({ date: '2027-05-20', destination: 'Southampton, England', type: 'arrival', mode: 'flight', time: '13:00', hours: 5 }), day({ date: '2027-05-21', destination: 'Southampton, England', type: 'embark', startTime: '09:00', allAboard: '16:00' })] },
   { name: 'g09-kotor', batch: 2, label: 'Kotor: July tender call (fortress climb, heat)', days: [sea('2027-07-07'), port('2027-07-08', 'Kotor, Montenegro', '08:00', '17:00', { tender: true })] },
   { name: 'g10-dubrovnik', batch: 2, label: 'Dubrovnik: July call (timed walls, crowds)', days: [sea('2027-07-08'), port('2027-07-09', 'Dubrovnik, Croatia', '08:00', '18:00')] },
   { name: 'g11-juneau', batch: 3, label: 'Juneau: June call (no roads out, tours)', days: [sea('2027-06-14'), port('2027-06-15', 'Juneau, Alaska', '07:00', '20:00')] },
@@ -52,7 +52,7 @@ const TRIPS = [
   { name: 'g13-grandturk', batch: 3, label: 'Grand Turk: call (almost no data)', days: [sea('2027-02-09'), port('2027-02-10', 'Grand Turk, Turks and Caicos', '08:00', '17:00')] },
   { name: 'g14-mykonos', batch: 3, label: 'Mykonos: tender call into the evening (tiny streets)', days: [sea('2027-07-01'), port('2027-07-02', 'Mykonos, Greece', '10:00', '23:00', { tender: true })] },
   { name: 'g15-pontadelgada', batch: 3, label: 'Ponta Delgada: call (thin island data)', days: [sea('2027-04-19'), port('2027-04-20', 'Ponta Delgada, Azores', '08:00', '17:00')] },
-  { name: 'g16-halfmooncay', batch: 4, label: 'Half Moon Cay: second private island (tender)', days: [sea('2027-02-11'), port('2027-02-12', 'Half Moon Cay, Bahamas', '08:00', '16:00', { tender: true })] },
+  { name: 'g16-halfmooncay', batch: 5, label: 'Half Moon Cay: second private island (tender)', days: [sea('2027-02-11'), port('2027-02-12', 'Half Moon Cay, Bahamas', '08:00', '16:00', { tender: true })] },
   { name: 'g17-haifa', batch: 4, label: 'Jerusalem from Haifa: Saturday call (Sabbath closures)', days: [sea('2027-05-14'), port('2027-05-15', 'Haifa (Jerusalem), Israel', '06:00', '20:00')] },
   { name: 'g18-reykjavik', batch: 4, label: 'Reykjavik: January stay (day trips, winter dark)', days: stay(['2027-01-19', '2027-01-20'], 'Reykjavik, Iceland') },
   { name: 'g19-venice', batch: 4, label: 'Venice: Sat+Sun stay (no cars, water buses, entry-fee days)', days: stay(['2027-05-15', '2027-05-16'], 'Venice, Italy') },
@@ -73,7 +73,7 @@ const hm = m => m == null ? '--:--' : String(Math.floor(m / 60)).padStart(2, '0'
     await p.evaluate(i => window.__kairouteAt(i, 'plan'), first); await p.waitForTimeout(300);
     const btn = p.locator('[data-act="gen"]').first();
     if (await btn.isVisible().catch(() => false)) await btn.click();
-    await p.waitForFunction(i => { const s = window.__kairouteState(); return !s.busy && !!window.__kairouteCityOf(i); }, first, { timeout: 150000 }).catch(() => console.log('  (timed out waiting for the guide)'));
+    await p.waitForFunction(i => { const s = window.__kairouteState(); return !s.busy && !!window.__kairouteCityOf(i); }, first, { timeout: +process.env.GUIDE_WAIT || 150000 }).catch(() => console.log('  (timed out waiting for the guide)'));
     await p.waitForTimeout(8000);
     const snap = await p.evaluate(() => window.__kairouteBucket(true)); snap.name = t.name; snap.label = t.label;
     fs.writeFileSync(path.join(OUT, t.name + '.json'), JSON.stringify(snap));
