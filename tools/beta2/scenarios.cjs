@@ -63,7 +63,7 @@ for (const f of fs.readdirSync(dir).filter(f => f.endsWith('.json')).sort()) {
       // lunch on the way: from the place before lunch to the one after, lunch adds at most 1 km of going out of the way (a tenth of
       // the hop on a long ride back from a trip out)
       p.items.forEach((x, k) => { if (x.t !== 'meal' || !isFinite(x.lat)) return;
-        const pts = p.items.filter(y => isFinite(y.lat) && y.t !== 'ride'), j = pts.indexOf(x), a = pts[j - 1], b = pts[j + 1]; if (!a || !b) return;
+        const pts = p.items.filter(y => isFinite(y.lat) && y.t !== 'ride'), j = pts.indexOf(x), a = pts[j - 1], b = pts[j + 1]; if (!a || !b || (a.t !== 'stop' && b.t !== 'stop')) return; // lunch alone is the outing
         const off = E.hav(a, x) + E.hav(x, b) - E.hav(a, b);
         if (off > Math.max(1.0, 0.1 * E.hav(a, b))) add('lunchWay', `${tag}: ${a.name} > ${x.name} > ${b.name}: ${off.toFixed(1)} km out of the way`); });
       // lunch out of town
