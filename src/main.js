@@ -606,7 +606,10 @@ function travel(a, b) {
 // When no real ferry line was found, a place whose own travel note says it's reached by boat or ferry gets a boat leg:
 // the slowest time the note names plus getting to the pier and a wait for the boat, never less than the road guess.
 const BOAT_NOTE = /\b(boats?|ferry|ferries|water ?taxis?|caiques?|hydrofoils?|catamarans?)\b/i;
-const byBoat = p => !!(p && typeof p.travel === "string" && BOAT_NOTE.test(p.travel));
+const LAND_NOTE = /\b(train|rail|metro|tram|bus|coach|car|road|drive|driving|taxi|cab|walk|hike|bridge|causeway)\b/i;
+// Only a place the note says is reached by boat alone (an island): "40 minutes by ferry, or 1 hour on the train" (Sorrento)
+// can be reached by land, and the usual ride options stay.
+const byBoat = p => !!(p && typeof p.travel === "string" && BOAT_NOTE.test(p.travel) && !LAND_NOTE.test(p.travel.replace(/water ?taxis?/gi, "")));
 function boatLeg(a, b, leg) {
   if (!leg || leg.mode === "walk" || !(byBoat(a) || byBoat(b))) return leg;
   if (leg.transit && leg.transit.mode === "ferry" && leg.transit.checked) return leg; // a ferry with a real timetable says when it sails
@@ -1570,9 +1573,9 @@ function mealSpots(seq, O, Z, city) {
   // Any stop with no known place to eat a short walk away (often a day trip out of town) also offers
   // "Lunch near <stop>", so the plan never travels back to town just to eat.
   const bare = seq.filter(x => !x.mealOf && !(city.restaurants || []).some(r => !r.crowdDrop && hav(r, x) <= 0.6));
-  const gen = bare.map(x => ({ name: "Lunch near " + x.name, lat: x.lat, lng: x.lng, travel: x.travel || "" /* an island's boat goes with its lunch */, generic: true, kind: "local", cuisine: "Your pick", price: "", why: "Choose any café or taverna around here, or bring a picnic. A good sign is a place full of locals." }));
+  const gen = bare.map(x => ({ name: "Lunch near " + x.name, lat: x.lat, lng: x.lng, ...(byBoat(x) ? { travel: x.travel } : {}) /* an island's boat goes with its lunch (only then: a "1 hour by train" note would time every ride from the lunch) */, generic: true, kind: "local", cuisine: "Your pick", price: "", why: "Choose any café or taverna around here, or bring a picnic. A good sign is a place full of locals." }));
   // Every place near here is already another day's meal: "Lunch near <stop>" rather than the same restaurant twice.
-  if (!fresh.length && !gen.length && near.length) { const a = seq.find(x => !x.mealOf) || O; if (a) gen.push({ name: "Lunch near " + a.name, lat: a.lat, lng: a.lng, travel: a.travel || "", generic: true, kind: "local", cuisine: "Your pick", price: "", why: "You've eaten at the guide's places around here on other days: try somewhere new nearby, a café or taverna full of locals." }); }
+  if (!fresh.length && !gen.length && near.length) { const a = seq.find(x => !x.mealOf) || O; if (a) gen.push({ name: "Lunch near " + a.name, lat: a.lat, lng: a.lng, ...(byBoat(a) ? { travel: a.travel } : {}), generic: true, kind: "local", cuisine: "Your pick", price: "", why: "You've eaten at the guide's places around here on other days: try somewhere new nearby, a café or taverna full of locals." }); }
   return (fresh.length ? fresh : []).concat(gen); // never repeat another day's restaurant
 }
 // The places worth trying for one meal: with real map data a big city has hundreds of places to eat near the
