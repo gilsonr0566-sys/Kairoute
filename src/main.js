@@ -6809,7 +6809,7 @@ function tourMap(plan, d, prev, st) {
   let active = null;
   if (st && prev && prev.place && st.place) { const eq = (u, p) => Math.abs(u[0] - p.lng) < 1e-7 && Math.abs(u[1] - p.lat) < 1e-7; const i = data.legs.findIndex(l => eq(l.a, prev.place) && eq(l.b, st.place)); if (i >= 0) active = i; }
   const html = mapSlot(plan, d, "tour", { active, you: true, focus: st && st.place ? [[st.place.lng, st.place.lat].join()] : null });
-  return `<div class="mapbox tourmap">${html}<div class="maplegend"><span><i></i>Walk</span><span><i class="dash"></i>Taxi or transit</span><span class="you">● You</span></div></div>`;
+  return `<div class="mapbox tourmap">${html}<div class="maplegend"><span><i></i>Walk</span><span><i class="dash"></i>Taxi or transit</span><span class="you"><b class="you-key">${YOU_PERSON}</b>You</span></div></div>`;
 }
 function renderTour(d) {
   const city = cityFor(d);

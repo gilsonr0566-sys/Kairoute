@@ -284,7 +284,9 @@ button.mk { cursor: pointer; }
 .kmap .you-ctrl .you-btn svg { width: 22px; height: 22px; }
 .kmap .you-note { position: absolute; left: 8px; right: 8px; bottom: 30px; z-index: 4; background: var(--card); color: var(--ink); border: 1px solid var(--line); border-radius: 8px; padding: 8px 10px; font-size: .88rem; line-height: 1.3; box-shadow: 0 2px 8px rgba(0,0,0,.25); }
 .kmap .you-note[hidden] { display: none; }
-.maplegend .you { color: #1A73E8; }
+.maplegend .you { color: #1A73E8; display: inline-flex; align-items: center; gap: 5px; font-weight: 600; }
+.maplegend .you-key { width: 18px; height: 18px; border-radius: 50%; background: #1A73E8; color: #fff; display: inline-grid; place-items: center; box-shadow: 0 0 0 2px #fff; }
+.maplegend .you-key svg { width: 12px; height: 12px; }
 @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .maplegend .you { color: #6AA6FF; } }
 :root[data-theme="dark"] .maplegend .you { color: #6AA6FF; }
 .maplegend { display: flex; gap: 14px; flex-wrap: wrap; padding: 10px 14px; border-top: 1px solid var(--line); font-size: 0.82rem; color: var(--muted); }
