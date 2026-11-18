@@ -40,6 +40,7 @@ jobs:
           node tools/ferry-unit.mjs
           node tools/train-reach-unit.mjs
           node tools/safety-net.cjs
+          node tools/swap-check.cjs
           node tools/nav-check.cjs
           node tools/pill-check.cjs
           node tools/menu-check.cjs

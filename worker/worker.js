@@ -991,7 +991,7 @@ async function mapSights(c, UA) {
   return out.slice(0, 30);
 }
 async function sourcesData(label, env, ctx) {
-  const key = "sr8:" + (await sha(label.toLowerCase())), hit = await env.USAGE.get(key); if (hit) return JSON.parse(hit);
+  const key = "sr9:" + (await sha(label.toLowerCase())), hit = await env.USAGE.get(key); if (hit) return JSON.parse(hit);
   const UA = { "user-agent": "Kairoute/1.0 (travel guide; https://gilsonr0566-sys.github.io/Kairoute/)" };
   const getJ = async (u, ms, opt) => { for (let t = 0; t < 2; t++) { try { const r = await fetch(u, Object.assign({ headers: { ...UA, accept: "application/json" }, signal: AbortSignal.timeout(ms || 20000) }, opt || {})); if (r.ok) return await r.json(); } catch (e) {} } return null; };
   const T = {}, t0 = Date.now(), lap = k => { T[k] = Date.now() - t0; };
@@ -1054,7 +1054,7 @@ async function sourcesData(label, env, ctx) {
   // A small place the guidebooks and the encyclopedia barely cover (a small island, a cruise line's private island,
   // a resort port): add the named tourist places the map knows nearby (beaches, attractions, water parks,
   // viewpoints, lighthouses, historic spots), each marked as coming from OpenStreetMap.
-  if (stops.filter(x => x.lat != null && x.src.some(t => t === S.enVoy || t === S.lcVoy)).length < 6) {
+  if (stops.filter(x => x.lat != null).length < 6) {
     const osm = await mapSights(center, UA); lap("map");
     for (const o of osm) if (!stops.some(x => sameName(o.name, x.name) || (x.lat != null && kmOf(o, x) < 0.08)) && fold(o.name) !== fold(area))
       stops.push({ name: o.name, lat: o.lat, lng: o.lng, sl: 0, unesco: false, heritage: !!o.historic, web: o.web, src: ["OpenStreetMap"], kind: o.kind });
