@@ -65,16 +65,23 @@ const SG_KIND = {
 };
 async function srcStarts(label, area, port, centre, d) {
   const gate = keyOf(port) !== keyOf(area);
-  const ask = { airport: [area + " airport", area + " international airport"], station: [area + " railway station", area + " central station"], cruise: ["Port of " + port, port + " cruise terminal"] };
+  const ask = { airport: [area + " airport", area + " international airport"], station: [area + " railway station", area + " central station"], cruise: ["Port of " + port, port + " cruise terminal", "Cruise pier"] };
   const names = [...ask.airport, ...ask.station, ...ask.cruise];
   let res = null;
-  try { const r = await fetch(freeAI.url + "/ground", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ city: label, names: names.slice(0, 8) }) }); if (r.ok) { const j = await r.json(); if (Array.isArray(j.results)) res = j.results; } } catch (e) {}
+  try { const r = await fetch(freeAI.url + "/ground", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ city: label, names: names.slice(0, 8), center: centre && isFinite(centre.lat) ? { lat: centre.lat, lng: centre.lng } : undefined }) }); if (r.ok) { const j = await r.json(); if (Array.isArray(j.results)) res = j.results; } } catch (e) {}
   const found = k => {
     const K = SG_KIND[k], lim = k === "cruise" && gate ? 150 : K.km, cands = [];
     names.forEach((n, i) => { if (!ask[k].includes(n)) return; const x = (res && res[i]) || {};
-      (x.wiki || []).forEach(w => { if (w.lat != null && K.re.test(w.title || "")) cands.push({ name: w.title, lat: +w.lat, lng: +w.lng }); });
-      (x.map || []).forEach(m => { if (isFinite(m.lat) && (K.re.test(m.name || "") || K.map.test(m.kind || ""))) cands.push({ name: m.name || n, lat: +m.lat, lng: +m.lng }); }); });
-    const near = cands.filter(p => p.name && hav(p, centre) <= lim);
+      (x.wiki || []).forEach(w => { if (w.lat != null && K.re.test(w.title || "")) cands.push({ name: w.title, lat: +w.lat, lng: +w.lng, any: n === "Cruise pier" }); });
+      (x.map || []).forEach(m => { if (isFinite(m.lat) && (K.re.test(m.name || "") || K.map.test(m.kind || ""))) cands.push({ name: m.name || n, lat: +m.lat, lng: +m.lng, any: n === "Cruise pier", fit: (K.map.test(m.kind || "") ? 2 : 0) + (k === "cruise" && /cruise|terminal|wharf|pier/i.test(m.name || "") ? 2 : 0) }); }); });
+    // The plain "Cruise pier" search (asked last) only counts a place that names itself a cruise pier: a private island
+    // or small port whose pier has no "Port of ..." name (Nov 18: CocoCay's pier is mapped as "Royal Caribbean Cruise
+    // Pier"), never a nearby fishing or ferry pier.
+    for (let i = cands.length - 1; i >= 0; i--) if (cands[i].any && !/cruise/i.test(cands[i].name)) cands.splice(i, 1);
+    const inReach = cands.filter(p => p.name && hav(p, centre) <= lim);
+    // A real terminal on the map ("Prince George Wharf Cruise Ship Terminal", a dock) before a shop or a bank that only
+    // has "port" in its name (Nov 18, Nassau: "Banana Bay Nassau's Port Shop" was taken for the cruise port).
+    const near = inReach.filter(p => !p.any).sort((a, b) => (a.fit === 0 ? 1 : 0) - (b.fit === 0 ? 1 : 0)).concat(inReach.filter(p => p.any).sort((a, b) => hav(a, centre) - hav(b, centre))); // the closest cruise pier, not a neighbour island's
     if (k === "cruise" && gate) near.sort((a, b) => (nameMatch(port, b.name) ? 0 : 1) - (nameMatch(port, a.name) ? 0 : 1));
     return near[0] || null;
   };
@@ -88,6 +95,7 @@ async function srcStarts(label, area, port, centre, d) {
   starts.point.push({ name: "Central " + area, lat: centre.lat, lng: centre.lng, note: "" });
   return starts;
 }
+if (typeof window !== "undefined") window.__kairouteSrcStarts = (label, centre) => srcStarts(label, label, label, centre, null);
 // The traveler's own hotel, found on the map by name (OpenStreetMap through the helper), with no AI.
 async function findHotelNoAI(name, d) {
   if (!freeAI || !name) return null;
