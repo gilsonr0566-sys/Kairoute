@@ -122,7 +122,9 @@ export default {
     if (req.method === "OPTIONS") return new Response(null, { headers: h });
     const url = new URL(req.url);
     // Limits are read only by the calls that run AI (a KV read on every ride or map request added up to millions a day).
-    const lab = req.headers.get("x-kairoute-lab") === "1", test = lab || url.searchParams.get("auto") === "1";
+    // Test traffic: the lab header, ?auto=1, a test browser on this computer (localhost; the phone app is capacitor://),
+    // or any headless browser (Playwright, the demo flow on the live site). Real travelers are never any of these.
+    const lab = req.headers.get("x-kairoute-lab") === "1", test = lab || url.searchParams.get("auto") === "1" || /^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/.test(origin || "") || /Headless/i.test(req.headers.get("user-agent") || "");
     let lp = null; const lim = () => lp || (lp = limits(env, test));
     if (!aiOn(env)) env = { ...env, AI: { run: async () => { throw new Error("AI is switched off"); } } };
     // Minimal AI: only /sample (and there only the trip and guide jobs) may reach the AI. Photos, extras, scripts,
@@ -155,7 +157,7 @@ export default {
       await env.USAGE.put("r:" + today(), String(Math.round(+b.neurons)), { expirationTtl: 3 * 86400 });
       return Response.json({ ok: true, prev, on: aiOn(env), used: Math.round(await used(env)) }, { headers: h });
     }
-    if (url.pathname === "/status") { const u = await used(env), { DAILY_NEURONS } = await lim(), t = +(await env.USAGE.get("t:" + today())) || 0, left = Math.max(0, Math.floor(DAILY_NEURONS - u)); return Response.json({ ok: true, on: aiOn(env), mode: aiOn(env) ? (minimal(env) ? "minimal" : "full") : "off", jobs: aiOn(env) && minimal(env) ? [...MIN_JOBS] : undefined, model: MODEL, usedToday: Math.round(u), budget: Math.round(DAILY_NEURONS), left, voiceLeft: voiceLive(env) ? left : 0, labLeft: aiOn(env) ? Math.max(0, Math.floor(TEST_DAILY - t)) : 0, monthExtraUsed: Math.round(+(await env.USAGE.get("x:" + month())) || 0), monthExtraCap: (await lim()).MONTH_EXTRA, labToday: Math.round(t) }, { headers: h }); }
+    if (url.pathname === "/status") { const u = await used(env), { DAILY_NEURONS } = await lim(), t = +(await env.USAGE.get("t:" + today())) || 0, left = Math.max(0, Math.floor(DAILY_NEURONS - u)); return Response.json({ ok: true, on: aiOn(env), mode: aiOn(env) ? (minimal(env) ? "minimal" : "full") : "off", jobs: aiOn(env) && minimal(env) ? [...MIN_JOBS] : undefined, model: MODEL, usedToday: Math.round(u), budget: Math.round(DAILY_NEURONS), left, voiceLeft: voiceLive(env) ? left : 0, labLeft: aiOn(env) && !minimal(env) ? Math.max(0, Math.floor(TEST_DAILY - t)) : 0, monthExtraUsed: Math.round(+(await env.USAGE.get("x:" + month())) || 0), monthExtraCap: (await lim()).MONTH_EXTRA, labToday: Math.round(t) }, { headers: h }); }
     // Real places from OpenStreetMap, so the app never sends anyone to a place the AI made up.
     // /places: restaurants and cafés around given points. /verify: finds each named sight on the map.
     if (url.pathname === "/places" && req.method === "POST") {

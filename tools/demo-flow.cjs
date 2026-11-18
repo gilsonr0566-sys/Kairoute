@@ -488,8 +488,9 @@ async function buildNew(b, label, text, photo) {
   try { if (/[AD]/.test(PARTS)) await boardingDay(b); } catch (e) { ok(false, "Boarding day check stopped: " + e.message.split("\n")[0]); }
   // Part B writes new trips with the AI (it costs AI). Richard, Nov 17: no AI use without his consent, so it runs only
   // while the helper's AI switch is on; otherwise it is skipped and says so.
-  let aiOnNow = false; try { aiOnNow = !!(await (await fetch("https://kairoute-ai.rickgilson.workers.dev/status", { signal: AbortSignal.timeout(15000) })).json()).on; } catch (e) {}
-  if (PARTS.includes("B") && !aiOnNow) log("\n=== Part B skipped: the AI is switched off (Richard's rule: no AI use without his consent) ===");
+  let aiOnNow = false; try { const st = await (await fetch("https://kairoute-ai.rickgilson.workers.dev/status", { signal: AbortSignal.timeout(15000) })).json(); aiOnNow = !!st.on && st.mode === "full"; } catch (e) {}
+  // Tests never spend AI (Richard, Nov 17): Part B builds trips with the AI, so it runs only when the helper is in full mode.
+  if (PARTS.includes("B") && !aiOnNow) log("\n=== Part B skipped: the AI is off or in minimal mode, where tests never use it (Richard's rule) ===");
   if (PARTS.includes("B") && aiOnNow) {
     log("\n=== Part B: building the trip from words, then from the itinerary photo ===");
     try { await buildNew(b, "typed", TEXT, null); } catch (e) { ok(false, "typed trip stopped: " + e.message.split("\n")[0]); }
