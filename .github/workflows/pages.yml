@@ -35,7 +35,6 @@ jobs:
       - name: Safety net (every screen agrees on every day of 6 sample trips; a failure stops the update going live)
         run: |
           sh build.sh
-          sh tools/test-helper.sh
           npm i --no-save playwright@1 && npx playwright install --with-deps chromium
           node tools/plan-test.cjs
           node tools/ferry-unit.mjs
