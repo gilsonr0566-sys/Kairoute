@@ -156,7 +156,8 @@ if (typeof document !== "undefined") {
     if (a === "boardcal") { boardCalendar(d); return; }
     if (a === "boardchange") { boardEdit = { id: d.id, time: d.boardTime || "", term: d.terminal || "" }; render(); return; }
     if (a === "boardcancel") { boardEdit = null; render(); return; }
-    const tv = (document.getElementById("bc-time") || {}).value || "", term = ((document.getElementById("bc-term") || {}).value || "").trim().slice(0, 60);
+    const ed = boardEdit && boardEdit.id === d.id ? boardEdit : null;
+    const tv = (document.getElementById("bc-time") || {}).value || (ed && ed.time) || "", term = ((document.getElementById("bc-term") || {}).value || (ed && ed.term) || "").trim().slice(0, 60);
     if (!BOARD_HM.test(tv)) { boardEdit = { id: d.id, time: tv, term, msg: "Type your boarding time, for example 12:30." }; render(); return; }
     const was = d.boardTime;
     d.boardTime = tv.padStart(5, "0"); if (term) d.terminal = term; else delete d.terminal;
@@ -165,8 +166,18 @@ if (typeof document !== "undefined") {
     if (was !== d.boardTime && !(d.mine || []).length) { d.selected = null; delete d.autoEmpty; }
     boardEdit = null; edited(); save(); render();
   }, true);
+  // What the traveler types is kept as they type: a redraw while they type (a ride or a source arriving from the
+  // internet) draws the card again with their time and terminal still in it, so Save never finds an empty box and
+  // the boarding time is never silently left unsaved.
+  document.addEventListener("input", e => {
+    const t = e.target; if (!t || (t.id !== "bc-time" && t.id !== "bc-term")) return;
+    const d = day(); if (!d) return;
+    if (!boardEdit || boardEdit.id !== d.id) boardEdit = { id: d.id, time: d.boardTime || "", term: d.terminal || "" };
+    if (t.id === "bc-time") boardEdit.time = t.value; else boardEdit.term = t.value;
+  }, true);
   document.addEventListener("change", e => {
     const t = e.target; if (!t || !t.dataset) return;
+    if (t.id === "bc-time" || t.id === "bc-term") { const d = day(); if (d) { if (!boardEdit || boardEdit.id !== d.id) boardEdit = { id: d.id, time: d.boardTime || "", term: d.terminal || "" }; if (t.id === "bc-time") boardEdit.time = t.value; else boardEdit.term = t.value; } return; }
     if (t.dataset.boardCheck) { const d = day(); d.boardChecks = d.boardChecks || {}; if (t.checked) d.boardChecks[t.dataset.boardCheck] = 1; else delete d.boardChecks[t.dataset.boardCheck]; save(); render(); return; }
     if (t.dataset.boardPhoto && t.files && t.files[0]) boardPhoto(day(), t.files[0]);
   });

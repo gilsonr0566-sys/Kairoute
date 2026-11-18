@@ -3,18 +3,32 @@ import { allOptions, ferriesNear, keptFerries, ferryKey, topRides } from "./tran
 import { departures } from "./departures.js";
 export { Group };
 // Kairoute AI helper. The website sends a prompt (and optional photos); this Worker asks Workers AI
-// and streams the answer back. Usage is counted from real token counts. On the free plan it stays inside
-// Cloudflare's free allowance; on Workers Paid a monthly ceiling (about $5 extra) is the hard stop.
+// and answers. Usage is counted from real token counts.
 const MODEL = "@cf/google/gemma-4-26b-a4b-it";
 // Gemma 4 26B costs about 9,091 neurons per million input tokens and 27,273 per million output tokens.
-// The free allowance is 10,000 neurons a day; we stop at 9,700 (usage is counted from the real token counts, so this stays inside it).
-const FREE_DAILY = 8500; // leaves 1,500 of the account-wide 10,000 for Richard's other app (light use)
-// On Cloudflare's Workers Paid plan (set PAID = "1" in wrangler.toml), Kairoute may go past the free share,
-// up to a monthly ceiling: 450,000 extra neurons is about $5, so the plan plus extras stays near $10 a month.
-// The monthly ceiling is the real guard. Each day may use up to 3x its fair share of what is left this month,
-// so a busy travel day has plenty, and the share shrinks by itself if earlier days ran heavy.
-// Test tools (header x-kairoute-lab: 1) have their own small daily pool and never use travelers' allowance.
-const MONTH_EXTRA = 450000, DAY_SHARE_X = 3, LAB_DAILY = 30000;
+// SPEND RULE (Richard, Nov 17 2026): Kairoute's AI stays inside Cloudflare's free 10,000 neurons a day; nothing
+// is paid. Everything that runs AI (travelers, the recorder, the voice drip, tests) shares one hard daily total,
+// KAI_DAILY, counted here per call. Cloudflare's own count (sent in every hour by the "AI spend check" workflow,
+// /realuse) is a second guard: once the account's real total for the day reaches REAL_STOP, no new AI runs until
+// the reset (midnight UTC = 6 pm Central in winter). Paid extras only if MONTH_EXTRA_NEURONS is set above 0
+// in wrangler.toml, and then never past it in a month. Before Nov 17 the 8,500 was only the free share and the
+// Worker let each day spend up to 3x its share of a ~$5 monthly extra, plus a 30,000 a day test pool: that is
+// how days of 18,000 to 98,000 happened.
+const KAI_DAILY = 9000; // of the account-wide 10,000; the rest is for Richard's other apps (Life Lattice: 2-12 a day)
+const REAL_STOP = 9700;
+// Tests (x-kairoute-lab header, or ?auto=1 on the address for test tools) get a
+// small share of the same total, so a busy day of test runs can never use the travelers' allowance.
+const TEST_DAILY = 1500;
+const FREE_DAILY = KAI_DAILY, LAB_DAILY = TEST_DAILY;
+// MINIMAL AI (Richard, Nov 17 2026: "The AI wrap needs the minimal amount needed. We will use all the fancy stuff
+// when the app is ready"). Unless AI_MODE = "full" in wrangler.toml, the AI does only the jobs nothing else can do:
+//   trip  - read a traveler's own words or booking photo into days (no fixed format to read it any other way);
+//   guide - write a city's stop narration from the real places and facts the app found (made once per city, kept).
+// Everything else (walk-throughs, extras, Q&A, translation, photo "what am I looking at", lookups, ranking, voice,
+// recorder, drip, tests) is refused before the AI is reached. One hard total of MIN_DAILY a day, well under the free
+// 10,000, and every answer is kept (sp1:) so the same ask is never paid for twice.
+const MIN_DAILY = 3000, MIN_JOBS = new Set(["trip", "guide"]);
+const minimal = env => env.AI_MODE !== "full";
 const IN_RATE = 9091 / 1e6, OUT_RATE = 27273 / 1e6;
 const ALLOWED = [/^https:\/\/gilsonr0566-sys\.github\.io$/, /^https?:\/\/localhost(:\d+)?$/, /^capacitor:\/\/localhost$/, /^https?:\/\/127\.0\.0\.1(:\d+)?$/, /\.claudeusercontent\.com$/, /^https:\/\/claude\.ai$/];
 // Natural guide voice (Deepgram Aura 1): about 1,364 neurons per 1,000 characters. Each stop's audio
@@ -33,34 +47,59 @@ function cors(origin) {
   return { "Access-Control-Allow-Origin": ok ? origin : "https://gilsonr0566-sys.github.io", "Access-Control-Allow-Methods": "POST, GET, OPTIONS", "Access-Control-Allow-Headers": "content-type", "Vary": "Origin" };
 }
 const today = () => new Date().toISOString().slice(0, 10);
-async function used(env) { return +(await env.USAGE.get("n:" + today())) || 0; }
+// Today's use: our own count, or Cloudflare's real count for the account when that is higher.
+async function used(env) { const [n, r] = await Promise.all([env.USAGE.get("n:" + today()), env.USAGE.get("r:" + today())]); return Math.max(+n || 0, +r ? +r + KAI_DAILY - REAL_STOP : 0); }
 const month = () => new Date().toISOString().slice(0, 7);
-async function addUse(env, n, lab) {
+async function addUse(env, n, test) {
   // Running totals for the owner's Usage & cost page: everything this month, and each day (kept 40 days).
   const tm = "nm:" + month(), td = "nd:" + today(); const [a, b2] = await Promise.all([env.USAGE.get(tm), env.USAGE.get(td)]);
   await Promise.all([env.USAGE.put(tm, String(+((+a || 0) + n).toFixed(1)), { expirationTtl: 40 * 86400 }), env.USAGE.put(td, String(+((+b2 || 0) + n).toFixed(1)), { expirationTtl: 40 * 86400 })]);
-  if (lab) {
-    const tk = "t:" + today(), mk = "x:" + month(); const t = +(await env.USAGE.get(tk)) || 0, m = +(await env.USAGE.get(mk)) || 0;
-    await env.USAGE.put(tk, String(+(t + n).toFixed(1)), { expirationTtl: 3 * 86400 });
-    await env.USAGE.put(mk, String(+(m + n).toFixed(1)), { expirationTtl: 40 * 86400 }); return;
-  }
+  // Every call counts in today's one total, tests included; tests also in their own share.
   const k = "n:" + today(); const cur = +(await env.USAGE.get(k)) || 0, nxt = cur + n;
   await env.USAGE.put(k, String(+nxt.toFixed(3)), { expirationTtl: 3 * 86400 });
-  const extra = Math.max(0, nxt - FREE_DAILY) - Math.max(0, cur - FREE_DAILY);
+  if (test) { const tk = "t:" + today(); const t = +(await env.USAGE.get(tk)) || 0; await env.USAGE.put(tk, String(+(t + n).toFixed(1)), { expirationTtl: 3 * 86400 }); }
+  const extra = Math.max(0, nxt - KAI_DAILY) - Math.max(0, cur - KAI_DAILY);
   if (extra > 0) { const mk = "x:" + month(); const m = +(await env.USAGE.get(mk)) || 0; await env.USAGE.put(mk, String(+(m + extra).toFixed(1)), { expirationTtl: 40 * 86400 }); }
 }
-async function limits(env) {
-  if (env.PAID !== "1") return { DAILY_NEURONS: FREE_DAILY, VOICE_DAILY: FREE_VOICE, LAB_LEFT: 0 };
-  const monthUsed = +(await env.USAGE.get("x:" + month())) || 0, left = Math.max(0, MONTH_EXTRA - monthUsed);
-  const u = await used(env), todayExtra = Math.max(0, u - FREE_DAILY), labToday = +(await env.USAGE.get("t:" + today())) || 0;
-  const d = new Date(), dim = new Date(Date.UTC(d.getUTCFullYear(), d.getUTCMonth() + 1, 0)).getUTCDate(), daysLeft = dim - d.getUTCDate() + 1;
-  // share is based on what was left when today began (today's own use and lab use added back), but never past the monthly ceiling
-  const share = Math.min(left + todayExtra, (left + todayExtra + labToday) / daysLeft * DAY_SHARE_X);
-  const daily = FREE_DAILY + share;
-  // Paid voice is paused (Richard, Nov 11: no paid audio until the guide content is locked down). New voice
-  // recordings then stay inside the free daily allowance; set VOICE_PAID = "1" to turn paid voice back on.
-  if (env.VOICE_PAID !== "1") return { DAILY_NEURONS: daily, VOICE_DAILY: Math.min(daily, FREE_VOICE), VOICE_TOTAL: FREE_DAILY, LAB_LEFT: 0 };
-  return { DAILY_NEURONS: daily, VOICE_DAILY: daily, LAB_LEFT: Math.max(0, Math.min(LAB_DAILY - labToday, left)) };
+// The day's hard total for this request. Paid extras (only when MONTH_EXTRA_NEURONS > 0) are spread evenly over the
+// month's remaining days. A test request's total is cut to what is left of the test share.
+async function limits(env, test) {
+  const cap = Math.max(0, +env.MONTH_EXTRA_NEURONS || 0), u = await used(env);
+  if (!aiOn(env)) return { DAILY_NEURONS: 0, MONTH_EXTRA: 0 };
+  let daily = minimal(env) ? MIN_DAILY : KAI_DAILY;
+  if (minimal(env)) return { DAILY_NEURONS: test ? 0 : daily, MONTH_EXTRA: 0 };
+  if (cap) { const left = Math.max(0, cap - (+(await env.USAGE.get("x:" + month())) || 0)), d = new Date(), dim = new Date(Date.UTC(d.getUTCFullYear(), d.getUTCMonth() + 1, 0)).getUTCDate();
+    daily += Math.max(0, Math.min(left, (left + Math.max(0, u - KAI_DAILY)) / (dim - d.getUTCDate() + 1))); }
+  if (test) { const t = +(await env.USAGE.get("t:" + today())) || 0; daily = Math.min(daily, u + Math.max(0, TEST_DAILY - t)); }
+  return { DAILY_NEURONS: daily, MONTH_EXTRA: cap };
+}
+// Live voice for travelers (Richard, Nov 17: no paid voice for now): off unless VOICE_LIVE = "1". Saved recordings
+// still play for everyone; a line not yet recorded is read by the phone's own voice. Only the recorder key (the
+// "Record stop scripts" workflow and the slow voice drip) makes new recordings, inside the same daily total.
+const voiceLive = env => aiOn(env) && !minimal(env) && env.VOICE_LIVE === "1";
+// MASTER SWITCH (Richard, Nov 17 2026: "Turn it totally off and do not use any without my consent."): no Workers AI
+// call of any kind (text, voice, photos, tests, recorder, drip) unless AI_ON = "1" in wrangler.toml, which is set
+// only with Richard's own go-ahead. While off, cached guides, cached scripts and saved recordings still answer, and the
+// app falls back to its own guides and the phone's voice.
+const aiOn = env => env.AI_ON === "1";
+// Memory of kept answers (see the fetch handler). Only these content prefixes; everything else reads the store.
+const MEMO_KEYS = /^(tr6|fp1|rt1|ns1|fx2|bz1|g|fm6|wd|xw1|xn1|xf1|wx1|wv1|bk1|s3):/, MEMO_MS = 600000, MEMO = new Map();
+let memoChars = 0; // kept under ~30 MB of the Worker's 128 MB memory
+function memoStore(kv) {
+  if (!kv || kv.__memo) return kv;
+  return { __memo: true,
+    get: async (k, t) => {
+      // Kept as text and read afresh each time, so a caller changing an answer never changes the remembered copy.
+      const type = typeof t === "string" ? t : t && t.type;
+      if (!MEMO_KEYS.test(k) || (type && type !== "text" && type !== "json")) return kv.get(k, t);
+      const m = MEMO.get(k); let s = m && Date.now() - m.at < MEMO_MS ? m.v : undefined;
+      if (s === undefined) { s = await kv.get(k); if (s != null && s.length < 200000) { if (MEMO.size > 3000 || memoChars > 15e6) { MEMO.clear(); memoChars = 0; } memoChars += s.length; MEMO.set(k, { v: s, at: Date.now() }); } }
+      if (s == null) return null;
+      return type === "json" ? JSON.parse(s) : s;
+    },
+    put: (k, v, o) => { MEMO.delete(k); return kv.put(k, v, o); },
+    delete: k => { MEMO.delete(k); return kv.delete(k); },
+    list: o => kv.list(o), getWithMetadata: (k, t) => kv.getWithMetadata(k, t) };
 }
 
 // Places whose ferries couldn't be looked up while every free map server was busy (fq: keys, see ferriesNear in
@@ -82,21 +121,43 @@ export default {
     const origin = req.headers.get("Origin") || "", h = cors(origin);
     if (req.method === "OPTIONS") return new Response(null, { headers: h });
     const url = new URL(req.url);
-    const { DAILY_NEURONS, VOICE_DAILY, LAB_LEFT, VOICE_TOTAL = DAILY_NEURONS } = await limits(env), lab = req.headers.get("x-kairoute-lab") === "1";
+    // Limits are read only by the calls that run AI (a KV read on every ride or map request added up to millions a day).
+    // Test traffic: the lab header, ?auto=1, a test browser on this computer (localhost; the phone app is capacitor://),
+    // or any headless browser (Playwright, the demo flow on the live site). Real travelers are never any of these.
+    const lab = req.headers.get("x-kairoute-lab") === "1", test = lab || url.searchParams.get("auto") === "1" || /^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/.test(origin || "") || /Headless/i.test(req.headers.get("user-agent") || "");
+    let lp = null; const lim = () => lp || (lp = limits(env, test));
+    if (!aiOn(env)) env = { ...env, AI: { run: async () => { throw new Error("AI is switched off"); } } };
+    // Minimal AI: only /sample (and there only the trip and guide jobs) may reach the AI. Photos, extras, scripts,
+    // voice, the recorder and the drip all get a stand-in that refuses.
+    else if (minimal(env) && url.pathname !== "/sample") env = { ...env, AI: { run: async () => { throw new Error("Not in minimal AI"); } } };
+    // Kept answers (rides, ferries, routes, guides, places) are remembered in this Worker's own memory for 10 minutes,
+    // so the same page asking again (test runs ask the same trip many times) costs no storage read. Counters and
+    // travelers' own data are never remembered here.
+    env = { ...env, USAGE: memoStore(env.USAGE) };
     // Guide extras (viewpoints, restrooms, local know-how, kids' stories, city primers, theme links, film locations, group tours): see extras.js.
-    if (url.pathname.startsWith("/x/")) return extras(req, env, ctx, url, h, { origin, ALLOWED, MODEL, IN_RATE, OUT_RATE, DAILY_NEURONS, used, addUse, sha });
+    if (url.pathname.startsWith("/x/")) return extras(req, env, ctx, url, h, { origin, ALLOWED, MODEL, IN_RATE, OUT_RATE, DAILY_NEURONS: (await lim()).DAILY_NEURONS, used, addUse: (e, n) => addUse(e, n, test), sha });
     // /usage: the numbers behind the owner's "Usage & cost" page. Counts only, nothing about travelers.
     if (url.pathname === "/usage") {
       const g = k => env.USAGE.get(k).then(v => +v || 0), d0 = new Date(), days = [];
       for (let i = 13; i >= 0; i--) { const x = new Date(d0.getTime() - i * 86400000).toISOString().slice(0, 10); days.push(x); }
       const [aiToday, aiMonth, extraMonth, labToday, voiceToday, gDay, gMonth, ...hist] = await Promise.all([used(env), g("nm:" + month()), g("x:" + month()), g("t:" + today()), g("v:" + today()), g("gqd:" + today()), g("gqm:" + month()), ...days.map(x => g("nd:" + x))]);
       return Response.json({ at: new Date().toISOString(), month: month(), paid: env.PAID === "1",
-        ai: { today: Math.round(aiToday), freeShare: FREE_DAILY, limitToday: Math.round(DAILY_NEURONS), month: Math.round(aiMonth), extraMonth: Math.round(extraMonth), extraCap: MONTH_EXTRA, usdPer1000: 0.011 },
-        voice: { today: Math.round(voiceToday), freeDaily: FREE_VOICE, paidOn: env.VOICE_PAID === "1" }, lab: { today: Math.round(labToday), daily: LAB_DAILY },
+        ai: { today: Math.round(aiToday), freeShare: FREE_DAILY, limitToday: Math.round((await lim()).DAILY_NEURONS), month: Math.round(aiMonth), extraMonth: Math.round(extraMonth), extraCap: (await lim()).MONTH_EXTRA, usdPer1000: 0.011, on: aiOn(env), real: Math.round(+(await env.USAGE.get("r:" + today())) || 0) },
+        voice: { today: Math.round(voiceToday), freeDaily: 0, paidOn: voiceLive(env) }, lab: { today: Math.round(labToday), daily: LAB_DAILY },
         google: { today: gDay, month: gMonth, cap: 900, free: 1000, usdEach: 0.035, keyOn: !!env.GPLACES_KEY },
         history: days.map((x, i) => ({ date: x, neurons: Math.round(hist[i]) })) }, { headers: { ...h, "cache-control": "no-store" } });
     }
-    if (url.pathname === "/status") { const u = await used(env); const vu = +(await env.USAGE.get("v:" + today())) || 0; return Response.json({ ok: true, model: MODEL, usedToday: Math.round(u), budget: DAILY_NEURONS, left: Math.max(0, Math.floor(DAILY_NEURONS - u)), voiceLeft: Math.max(0, Math.floor(Math.min(VOICE_DAILY - vu, VOICE_TOTAL - u))), labLeft: Math.floor(LAB_LEFT), monthExtraUsed: Math.round(+(await env.USAGE.get("x:" + month())) || 0), monthExtraCap: MONTH_EXTRA, labToday: Math.round(+(await env.USAGE.get("t:" + today())) || 0) }, { headers: h }); }
+    // /realuse: Cloudflare's real neuron count for the account today (from the hourly "AI spend check" workflow,
+    // recorder key only). used() takes the higher of it and our own count.
+    if (url.pathname === "/realuse" && req.method === "POST") {
+      if (!env.REC_KEY || req.headers.get("x-kairoute-rec") !== env.REC_KEY) return Response.json({ error: "Not allowed" }, { status: 403, headers: h });
+      let b; try { b = await req.json(); } catch (e) { return Response.json({ error: "Bad request" }, { status: 400, headers: h }); }
+      if (b.date !== today() || !(+b.neurons >= 0)) return Response.json({ error: "Bad request" }, { status: 400, headers: h });
+      const prev = +(await env.USAGE.get("r:" + today())) || 0;
+      await env.USAGE.put("r:" + today(), String(Math.round(+b.neurons)), { expirationTtl: 3 * 86400 });
+      return Response.json({ ok: true, prev, on: aiOn(env), used: Math.round(await used(env)) }, { headers: h });
+    }
+    if (url.pathname === "/status") { const u = await used(env), { DAILY_NEURONS } = await lim(), t = +(await env.USAGE.get("t:" + today())) || 0, left = Math.max(0, Math.floor(DAILY_NEURONS - u)); return Response.json({ ok: true, on: aiOn(env), mode: aiOn(env) ? (minimal(env) ? "minimal" : "full") : "off", jobs: aiOn(env) && minimal(env) ? [...MIN_JOBS] : undefined, model: MODEL, usedToday: Math.round(u), budget: Math.round(DAILY_NEURONS), left, voiceLeft: voiceLive(env) ? left : 0, labLeft: aiOn(env) && !minimal(env) ? Math.max(0, Math.floor(TEST_DAILY - t)) : 0, monthExtraUsed: Math.round(+(await env.USAGE.get("x:" + month())) || 0), monthExtraCap: (await lim()).MONTH_EXTRA, labToday: Math.round(t) }, { headers: h }); }
     // Real places from OpenStreetMap, so the app never sends anyone to a place the AI made up.
     // /places: restaurants and cafés around given points. /verify: finds each named sight on the map.
     if (url.pathname === "/places" && req.method === "POST") {
@@ -436,7 +497,7 @@ export default {
     }
     // /transit (POST {pairs:[{a:[lat,lng], b:[lat,lng]}]}): the mapped train, metro, tram, bus and ferry lines
     // between each pair of points, with stops, the real path and a cautious time (see transit.js). Each pair is
-    // looked up once and kept (see keep below), so every traveler on the same trip shares it. Keys are tr5: (tr4 answers had frequencies measured across searches hours apart, and could leave out the airport bus); before that tr4: since ferries come from their own
+    // looked up once and kept (see keep below), so every traveler on the same trip shares it. Keys are tr6: (tr5 answers had no train whose stations are a taxi away, Athens to Corinth); tr5 before that (tr4 answers had frequencies measured across searches hours apart, and could leave out the airport bus); before that tr4: since ferries come from their own
     // long-kept lookup at each end (answers from before that are not reused).
     // /ferries?lat=&lng=: what the helper keeps about ferries near a point (for the live checks): kept or still
     // waiting for the schedule, and the ferry courses' names.
@@ -481,7 +542,7 @@ export default {
         // The trip's date (when the page gives it) picks the timetable; answers are kept per month, since a summer
         // ferry runs in July and not in November.
         const date = typeof pr.date === "string" && /^\d{4}-\d{2}-\d{2}$/.test(pr.date) ? pr.date : null;
-        const key = "tr5:" + kind + ":" + [...pr.a, ...pr.b].map(n => n.toFixed(3)).join(",") + (date ? ":m" + +date.slice(5, 7) : "");
+        const key = "tr6:" + kind + ":" + [...pr.a, ...pr.b].map(n => n.toFixed(3)).join(",") + (date ? ":m" + +date.slice(5, 7) : "");
         // A full answer is kept 14 days (timetables change); one where a source was busy only 1 day. When the map answered
         // after the reply went out, its full answer replaces the partial one. A partial answer met again after 10 minutes
         // is looked up afresh in the background (once per 10 minutes), so a busy map server never hides a ferry for a day.
@@ -632,7 +693,8 @@ export default {
       const text = String(b.text || "").slice(0, 2400).trim(); if (!text) return Response.json({ error: "Empty" }, { status: 400, headers: h });
       const key = "s3:" + (await sha(text)), hit = await env.USAGE.get(key);
       if (hit) return new Response(hit, { headers: { ...h, "content-type": "application/json" } });
-      if ((await used(env)) + 60 > DAILY_NEURONS) return Response.json({ error: "allowance used up" }, { status: 429, headers: h });
+      // The spoken script only feeds the natural voice: with live voice off, only saved scripts are given.
+      if (!voiceLive(env) || (await used(env)) + 60 > (await lim()).DAILY_NEURONS) return Response.json({ error: "allowance used up" }, { status: 429, headers: h });
       const prompt = `You are a warm, lively professional tour guide speaking to your small group as you stand at the place. Rewrite the written text below into what you would actually SAY out loud.
 Rules:
 - Keep every fact, name, date and number exactly; add no new facts.
@@ -649,7 +711,7 @@ Written text:
       const ch = out && out.choices && out.choices[0];
       const raw = typeof (out && out.response) === "string" ? out.response : (ch && ch.message && ch.message.content) || "";
       let parts = []; try { const j = JSON.parse(raw.slice(raw.indexOf("{"), raw.lastIndexOf("}") + 1)); parts = (j.parts || []).map(String).map(x => x.trim()).filter(Boolean).slice(0, 200); } catch (e) {}
-      const u2 = (out && out.usage) || {}; ctx.waitUntil(addUse(env, (+u2.prompt_tokens || prompt.length / 4) * IN_RATE + (+u2.completion_tokens || raw.length / 3) * OUT_RATE));
+      const u2 = (out && out.usage) || {}; ctx.waitUntil(addUse(env, (+u2.prompt_tokens || prompt.length / 4) * IN_RATE + (+u2.completion_tokens || raw.length / 3) * OUT_RATE, test));
       const total = parts.join(" ").length;
       if (parts.length < 2 || total < text.length * 0.5 || total > text.length * 1.6) return Response.json({ error: "No script" }, { status: 502, headers: h });
       const body = JSON.stringify({ parts });
@@ -663,8 +725,9 @@ Written text:
       const { m, vm, sp: speaker } = voiceChoice(b), texts = (Array.isArray(b.texts) ? b.texts : []).map(t => String(t || "").slice(0, 2000).trim()).filter(Boolean).slice(0, 200);
       let cost = 0;
       for (const t of texts) { const k = "a:" + (m === "aura-1" ? "" : m + ":") + speaker + ":" + (await sha(t)); const l = await env.USAGE.list({ prefix: k, limit: 1 }); if (!l.keys.length) cost += t.length * vm.rate; }
-      const vUsed = +(await env.USAGE.get("v:" + today())) || 0, u = await used(env);
-      return Response.json({ ok: vUsed + cost <= VOICE_DAILY && u + cost <= VOICE_TOTAL, cost: Math.round(cost) }, { headers: h });
+      // Every line already recorded: the natural voice reads the stop. Otherwise, with live voice off, the phone's voice does.
+      const ok = cost === 0 || (voiceLive(env) && (await used(env)) + cost <= (await lim()).DAILY_NEURONS);
+      return Response.json({ ok, cost: Math.round(cost) }, { headers: h });
     }
     if (url.pathname === "/speak" && req.method === "POST") {
       if (origin && !ALLOWED.some(r => r.test(origin))) return Response.json({ error: "Not allowed" }, { status: 403, headers: h });
@@ -675,18 +738,16 @@ Written text:
       const hit = await env.USAGE.get(key, "arrayBuffer");
       if (hit) return new Response(hit, { headers: { ...h, "content-type": "audio/mpeg", "x-cached": "1", "cache-control": "public, max-age=31536000" } });
       const cost = text.length * vm.rate, vk = "v:" + today();
-      const vUsed = +(await env.USAGE.get(vk)) || 0, u = await used(env);
-      // Hand-written stop scripts (tools/voice-render.mjs, Richard's go on Nov 15) are recorded once, ahead, by the
-      // "Record stop scripts" workflow with the recorder key. They are paid from the monthly extra (counted like the
-      // voice lab), never from travelers' daily allowance, and stop at the monthly ceiling.
+      // New recordings: only the recorder key (hand-written, locked stop scripts) or, when Richard turns it on, live
+      // voice for travelers. Both inside the one daily total; nothing past it.
       const rec = !!env.REC_KEY && req.headers.get("x-kairoute-rec") === env.REC_KEY;
-      const recLeft = rec ? Math.max(0, MONTH_EXTRA - (+(await env.USAGE.get("x:" + month())) || 0)) : 0;
-      if (rec ? cost > recLeft : lab ? cost > LAB_LEFT : (vUsed + cost > VOICE_DAILY || u + cost > VOICE_TOTAL)) return Response.json({ error: "voice allowance used up" }, { status: 429, headers: h });
+      if (!(rec ? aiOn(env) && !minimal(env) : voiceLive(env) && !test) || (await used(env)) + cost > (await lim()).DAILY_NEURONS) return Response.json({ error: "voice allowance used up" }, { status: 429, headers: h });
+      const vUsed = +(await env.USAGE.get(vk)) || 0;
       let audio;
       try { const r = await env.AI.run(vm.id, { text, speaker, encoding: "mp3" }, { returnRawResponse: true }); if (!r.ok) throw new Error("tts " + r.status); audio = await r.arrayBuffer(); }
       catch (e) { return Response.json({ error: "The voice service is busy." }, { status: 502, headers: h }); }
       if (!audio || audio.byteLength < 1000) return Response.json({ error: "No audio" }, { status: 502, headers: h });
-      ctx.waitUntil(Promise.all([addUse(env, cost, lab || rec), lab || rec ? null : env.USAGE.put(vk, String(+(vUsed + cost).toFixed(1)), { expirationTtl: 3 * 86400 }), env.USAGE.put(key, audio, { expirationTtl: 365 * 86400 })]));
+      ctx.waitUntil(Promise.all([addUse(env, cost, test), rec ? null : env.USAGE.put(vk, String(+(vUsed + cost).toFixed(1)), { expirationTtl: 3 * 86400 }), env.USAGE.put(key, audio, { expirationTtl: 365 * 86400 })]));
       return new Response(audio, { headers: { ...h, "content-type": "audio/mpeg", "cache-control": "public, max-age=31536000" } });
     }
     // /identify: "What am I looking at?" A photo plus the real places around the traveler (the guide's stops and
@@ -701,14 +762,14 @@ Written text:
       const dev = String(b.dev || ""); if (!img || !cands.length || !/^[a-f0-9]{16,40}$/.test(dev)) return Response.json({ error: "Bad request" }, { status: 400, headers: h });
       const ik = "id:" + dev + ":" + today(), n = +(await env.USAGE.get(ik)) || 0;
       if (n >= 40 && !lab) return Response.json({ error: "That's the limit for photo look-ups today." }, { status: 429, headers: h });
-      const u = await used(env); if (u + 60 > DAILY_NEURONS) return Response.json({ error: "The AI allowance for today is used up." }, { status: 429, headers: h });
+      const u = await used(env); if (u + 60 > (await lim()).DAILY_NEURONS) return Response.json({ error: "The AI allowance for today is used up." }, { status: 429, headers: h });
       const prompt = `A traveler took this photo standing where they are now. These are the only real places near them, with how far away each is:\n${cands.map(c => `${c.n}. ${c.name}${c.kind ? " (" + c.kind + ")" : ""}, ${c.m} m away`).join("\n")}\n\nWhich numbered place is the main subject of the photo? Use what you see (architecture, shape, signs, statues, columns, domes) and prefer nearer places when it's unclear. If none of them is clearly what the photo shows, answer 0. Reply only with JSON: {"n": number, "sure": "high"|"medium"|"low", "seen": "a few words on what is in the photo"}`;
       let out;
       try { out = await env.AI.run(MODEL, { messages: [{ role: "user", content: [{ type: "image_url", image_url: { url: img } }, { type: "text", text: prompt }] }], max_tokens: 120, temperature: 0.1, chat_template_kwargs: { enable_thinking: false } }); }
       catch (e) { return Response.json({ error: "The AI service is busy. Try again in a minute." }, { status: 502, headers: h }); }
       const ch = out && out.choices && out.choices[0], text = typeof (out && out.response) === "string" ? out.response : (ch && ch.message && ch.message.content) || "";
       const u2 = (out && out.usage) || {}, pin = +u2.prompt_tokens || 1500, pout = +u2.completion_tokens || 40;
-      ctx.waitUntil(Promise.all([addUse(env, pin * IN_RATE + pout * OUT_RATE, lab), env.USAGE.put(ik, String(n + 1), { expirationTtl: 2 * 86400 })]));
+      ctx.waitUntil(Promise.all([addUse(env, pin * IN_RATE + pout * OUT_RATE, test), env.USAGE.put(ik, String(n + 1), { expirationTtl: 2 * 86400 })]));
       let j = null; try { j = JSON.parse((/\{[\s\S]*\}/.exec(text) || ["{}"])[0]); } catch (e) {}
       const pick = j && Number.isInteger(+j.n) && +j.n >= 1 && +j.n <= cands.length ? +j.n : 0;
       return Response.json({ n: pick, sure: j && /^(high|medium|low)$/.test(j.sure) ? j.sure : "low", seen: j && typeof j.seen === "string" ? j.seen.slice(0, 160) : "" }, { headers: { ...h, "cache-control": "no-store" } });
@@ -721,9 +782,14 @@ Written text:
     const images = (Array.isArray(body.images) ? body.images : []).filter(x => typeof x === "string" && x.startsWith("data:image/")).slice(0, 4);
     if (!prompt) return Response.json({ error: "Empty prompt" }, { status: 400, headers: h });
 
+    // Kept answers: the same ask (same job, size, prompt and photos) is answered from the store, never paid twice.
+    const job = String(body.purpose || ""), ck = "sp1:" + (await sha(JSON.stringify([job, tier, prompt, images])));
+    const kept = await env.USAGE.get(ck);
+    if (kept) { try { const k = JSON.parse(kept); return Response.json({ ...k, kept: true }, { headers: { ...h, "cache-control": "no-store" } }); } catch (e) {} }
+    if (aiOn(env) && minimal(env) && !MIN_JOBS.has(job)) return Response.json({ error: "Kairoute is saving its AI for building trips and guides for now.", minimal: true }, { status: 403, headers: h });
     const inTok = Math.ceil(prompt.length / 4) + images.length * 1200;
     const u = await used(env);
-    if (u + inTok * IN_RATE + 500 > DAILY_NEURONS) return Response.json({ error: "The free AI allowance for today is used up. It resets at 6 pm Central time (7 pm in summer)." }, { status: 429, headers: h });
+    if (u + inTok * IN_RATE + 500 > (await lim()).DAILY_NEURONS) return Response.json({ error: aiOn(env) ? "The AI allowance for today is used up. It resets at 6 pm Central time (7 pm in summer)." : "The AI guide writer is switched off for now." }, { status: 429, headers: h });
 
     const content = images.length ? [...images.map(d => ({ type: "image_url", image_url: { url: d } })), { type: "text", text: prompt }] : prompt;
     // No streaming: the free plan allows only a few milliseconds of Worker CPU per request, and
@@ -739,7 +805,7 @@ Written text:
     const finish = (ch && ch.finish_reason) || null;
     const u2 = (out && out.usage) || {};
     const pin = +u2.prompt_tokens || inTok, pout = +u2.completion_tokens || Math.ceil(text.length / 3);
-    ctx.waitUntil(addUse(env, pin * IN_RATE + pout * OUT_RATE));
+    ctx.waitUntil(Promise.all([addUse(env, pin * IN_RATE + pout * OUT_RATE, test), text.trim() && finish !== "length" ? env.USAGE.put(ck, JSON.stringify({ text, finish }), { expirationTtl: 60 * 86400 }) : null]));
     return Response.json({ text, finish, usage: { in: pin, out: pout } }, { headers: { ...h, "cache-control": "no-store" } });
   }
 };
@@ -843,10 +909,47 @@ async function voyagePages(host, title, UA) {
   const esc = top.title.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), subs = [...new Set([...top.wt.matchAll(new RegExp("\\[\\[" + esc + "/([^|\\]#]+)", "g"))].map(m => top.title + "/" + m[1].trim()))].slice(0, 14);
   const more = (await Promise.all(subs.map(get))).filter(Boolean);
   const listings = [top, ...more].flatMap(p => parseListings(p.wt));
-  return { pages: 1 + more.length, title: top.title, listings };
+  return { pages: 1 + more.length, title: top.title, listings, next: voyageNext(top.wt) };
+}
+// The places travelers suggest for a day out: the links in a Wikivoyage page's "Go next" and "Day trips" sections,
+// each with the traveler's own line about it ("Toledo: the old capital, 30 min by high-speed train").
+function voyageNext(wt) {
+  const out = [], seen = new Set(), hr = /^(=+)\s*([^=].*?)\s*\1\s*$/gm, heads = []; let m;
+  while ((m = hr.exec(wt))) heads.push({ at: m.index, end: m.index + m[0].length, lvl: m[1].length, name: m[2] });
+  const clean = t => String(t || "").replace(/\{\{[^{}]*\}\}/g, "").replace(/\[\[(?:[^|\]]*\|)?([^\]]*)\]\]/g, "$1").replace(/\[https?:\/\/\S+\s([^\]]*)\]/g, "$1").replace(/'{2,}/g, "").replace(/<[^>]+>/g, "").replace(/\s+/g, " ").trim();
+  heads.forEach((h, i) => {
+    if (!/go next|day trips?|excursions|nearby/i.test(h.name)) return;
+    let stop = wt.length; for (let k = i + 1; k < heads.length; k++) if (heads[k].lvl <= h.lvl) { stop = heads[k].at; break; }
+    for (const line of wt.slice(h.end, stop).split("\n")) {
+      if (!/^[*#]/.test(line.trim())) continue;
+      // The first link on a bullet is the place it is about; one marked with a {{marker}} is read the same way.
+      const lk = /\[\[([^|\]#]+)(?:\|[^\]]*)?\]\]/.exec(line), mk = /\{\{\s*marker[^}]*\|\s*name\s*=\s*\[\[([^|\]#]+)/i.exec(line);
+      const t = ((mk && mk[1]) || (lk && lk[1]) || "").trim();
+      if (!t || t.includes("/") || /^(file|image|category|wikipedia|w|wikt|commons):/i.test(t) || seen.has(t.toLowerCase())) continue;
+      const said = line.replace(/\{\{\s*marker[^{}]*?\|\s*name\s*=\s*(\[\[[^\]]*\]\]|[^|}]*)[^{}]*\}\}/gi, "$1").replace(/^[*#:\s]+/, "");
+      seen.add(t.toLowerCase()); out.push({ title: t, note: clean(said).slice(0, 260) });
+      if (out.length >= 30) return;
+    }
+  });
+  return out;
+}
+// Where each suggested day out is (its Wikivoyage page's own position) and its Wikidata id.
+async function voyageNextPlaces(next, center, UA) {
+  if (!next || !next.length) return [];
+  const kmOf = (a, b) => Math.hypot((a.lat - b.lat) * 111, (a.lng - b.lng) * 111 * Math.cos(b.lat * Math.PI / 180));
+  let j = null;
+  try { const r = await fetch("https://en.wikivoyage.org/w/api.php?action=query&format=json&formatversion=2&redirects=1&prop=coordinates|pageprops&ppprop=wikibase_item&titles=" + encodeURIComponent(next.map(x => x.title).slice(0, 30).join("|")), { headers: UA, signal: AbortSignal.timeout(12000) }); if (r.ok) j = await r.json(); } catch (e) {}
+  const pages = (j && j.query && j.query.pages) || [], redir = new Map(((j && j.query && j.query.redirects) || []).map(x => [x.from, x.to])), norm = new Map(((j && j.query && j.query.normalized) || []).map(x => [x.from, x.to]));
+  const out = [];
+  next.forEach((x, i) => {
+    const t0 = norm.get(x.title) || x.title, t = redir.get(t0) || t0, p = pages.find(q => q.title === t);
+    const c = p && p.coordinates && p.coordinates[0]; if (!c || p.missing) return;
+    out.push({ name: t.replace(/\s*\(.*?\)\s*$/, ""), wd: (p.pageprops && p.pageprops.wikibase_item) || undefined, lat: +(+c.lat).toFixed(5), lng: +(+c.lon).toFixed(5), km: +kmOf({ lat: c.lat, lng: c.lon }, center).toFixed(1), rank: i, note: x.note });
+  });
+  return out;
 }
 async function sourcesData(label, env, ctx) {
-  const key = "sr4:" + (await sha(label.toLowerCase())), hit = await env.USAGE.get(key); if (hit) return JSON.parse(hit);
+  const key = "sr5:" + (await sha(label.toLowerCase())), hit = await env.USAGE.get(key); if (hit) return JSON.parse(hit);
   const UA = { "user-agent": "Kairoute/1.0 (travel guide; https://gilsonr0566-sys.github.io/Kairoute/)" };
   const getJ = async (u, ms, opt) => { for (let t = 0; t < 2; t++) { try { const r = await fetch(u, Object.assign({ headers: { ...UA, accept: "application/json" }, signal: AbortSignal.timeout(ms || 20000) }, opt || {})); if (r.ok) return await r.json(); } catch (e) {} } return null; };
   const T = {}, t0 = Date.now(), lap = k => { T[k] = Date.now() - t0; };
@@ -917,7 +1020,10 @@ async function sourcesData(label, env, ctx) {
     { name: S.fame, n: fam.main.length }, { name: S.enVoy, n: enV.listings.length, pages: enV.pages },
     { name: S.lcVoy, n: lcV.listings.length, pages: lcV.pages, none: !localVoy }, { name: S.localWiki, n: stops.filter(x => x.src.includes(S.localWiki)).length, none: !lang },
 { name: "Heritage registers and UNESCO", n: stops.filter(x => x.unesco || x.heritage).length }];
-  const res = { area, lang, langName: LN, center, sources, stops, eats: eats.slice(0, 150), far: fam.far, ms: T };
+  // Day outs travelers suggest (Wikivoyage "Go next" / "Day trips"), with how famous each is where the fame list has it.
+  const next = (await voyageNextPlaces(enV.next, center, UA)).map(x => { const f = (fam.far || []).find(y => (x.wd && y.wd === x.wd) || fold(y.name) === fold(x.name)); return f ? Object.assign(x, { sl: f.sl || 0, unesco: !!f.unesco, heritage: !!f.heritage }) : x; });
+  lap("next");
+  const res = { area, lang, langName: LN, center, sources, stops, eats: eats.slice(0, 150), far: fam.far, next, ms: T };
   // Keep a full answer for 30 days; an answer missing a source that failed is kept only a day.
   ctx.waitUntil(env.USAGE.put(key, JSON.stringify(res), { expirationTtl: (enV.pages && fam.main.length ? 30 : 1) * 86400 }));
   return res;

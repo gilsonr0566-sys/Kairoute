@@ -424,6 +424,8 @@ async function buildNew(b, label, text, photo) {
   const ready = await p.waitForFunction(() => window.__kairouteAiReady && window.__kairouteAiReady(), null, { timeout: 90000 }).then(() => true).catch(() => false);
   if (!ok(ready, `${label}: the AI guide is on, so a new trip can be built`)) { await ctx.close(); return null; }
   await p.locator('[data-act="newtrip"]').first().click(); await p.waitForTimeout(800);
+  // Step by step is the first way to add a trip; the description / photo is the AI shortcut beside it.
+  const words = p.locator('[data-ts="mode"][data-v="words"]'); if (await words.count()) { await words.first().click(); await p.waitForTimeout(300); }
   await p.fill("#w-text", text);
   if (photo) await p.setInputFiles("#w-img", photo), await p.waitForTimeout(1500);
   await shot(p, `B-${label}-wizard`);
@@ -484,7 +486,12 @@ async function buildNew(b, label, text, photo) {
   const b = await chromium.launch({ args: ["--use-gl=swiftshader", "--enable-unsafe-swiftshader", "--ignore-gpu-blocklist"] });
   try { if (PARTS.includes("A")) await partA(b); } catch (e) { ok(false, "Part A stopped: " + e.message.split("\n")[0]); }
   try { if (/[AD]/.test(PARTS)) await boardingDay(b); } catch (e) { ok(false, "Boarding day check stopped: " + e.message.split("\n")[0]); }
-  if (PARTS.includes("B")) {
+  // Part B writes new trips with the AI (it costs AI). Richard, Nov 17: no AI use without his consent, so it runs only
+  // while the helper's AI switch is on; otherwise it is skipped and says so.
+  let aiOnNow = false; try { const st = await (await fetch("https://kairoute-ai.rickgilson.workers.dev/status", { signal: AbortSignal.timeout(15000) })).json(); aiOnNow = !!st.on && st.mode === "full"; } catch (e) {}
+  // Tests never spend AI (Richard, Nov 17): Part B builds trips with the AI, so it runs only when the helper is in full mode.
+  if (PARTS.includes("B") && !aiOnNow) log("\n=== Part B skipped: the AI is off or in minimal mode, where tests never use it (Richard's rule) ===");
+  if (PARTS.includes("B") && aiOnNow) {
     log("\n=== Part B: building the trip from words, then from the itinerary photo ===");
     try { await buildNew(b, "typed", TEXT, null); } catch (e) { ok(false, "typed trip stopped: " + e.message.split("\n")[0]); }
     try { await buildNew(b, "photo", "Flying into Athens June 30, 2027 for 4 nights, then this cruise.", PHOTO); } catch (e) { ok(false, "photo trip stopped: " + e.message.split("\n")[0]); }

@@ -38,6 +38,7 @@ jobs:
           npm i --no-save playwright@1 && npx playwright install --with-deps chromium
           node tools/plan-test.cjs
           node tools/ferry-unit.mjs
+          node tools/train-reach-unit.mjs
           node tools/safety-net.cjs
           node tools/nav-check.cjs
           node tools/pill-check.cjs
@@ -62,6 +63,7 @@ jobs:
           node tools/offlog-check.cjs
           node tools/money-check.cjs
           node tools/book-check.cjs
+          node tools/steps-e2e.cjs
       - name: Demo flow gate (Richard's Greece trip on this build, real internet; a failure stops the update going live)
         run: |
           python3 -m http.server 8765 >/dev/null 2>&1 &

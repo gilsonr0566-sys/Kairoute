@@ -404,6 +404,30 @@ const log = (suite, trip, ok, what) => { results.push({ suite, trip, ok, what })
         if (straight >= 0.65 && straight <= 3.9 && l.mode !== 'flight') { either++; if (!(l.choices.some(c => /^Walk/.test(c)) && l.choices.some(c => /^Taxi/.test(c)))) short.push(x.d + ': ' + l.how + ' ' + l.min + ' min [' + l.choices.join(', ') + ']'); } }
       const okR2 = !miss.length && !short.length && rides > 10 && either > 10;
       log('Rides', 'rides', okR2, 'Every ride has its buttons, every 600 m to 4 km leg offers walk or taxi: ' + (okR2 ? rides + ' rides, ' + either + ' walk-or-taxi legs over the sample trip' : JSON.stringify({ rides, either, miss: miss.slice(0, 5), short: short.slice(0, 5) }))); }
+    // One day per sight, no place twice (Nov 17: Madrid Jul 18 kept Jul 19's picks as optional stops from a remembered
+    // plan, and the Jul 18 dinner was Jul 20's sight). Every day is shown once (so its plan is remembered), then in each
+    // city no sight is a stop on two days, no place to eat is used twice, and no sight of one day is another day's meal.
+    { const bq = await chromium.launch(), pq = await (await bq.newContext()).newPage(); await pq.route('**/*', r => /^file:/.test(r.request().url()) ? r.continue() : r.abort()); await pq.goto('file://' + FILE); await pq.evaluate(() => localStorage.setItem('kairoute.intro1', '1')); await pq.reload(); await pq.waitForTimeout(800);
+      await pq.getByText('Continue trip').click(); await pq.waitForTimeout(1500);
+      const dup = await pq.evaluate(() => { const seen = {}, out = []; const days = window.__kairouteDays();
+        days.forEach(d => window.__kairouteAt(d.i, 'plan'));
+        for (const d of days) { if (!d.city) continue; for (const x of (window.__kairouteRoute(d.i) || [])) {
+          if (!['stop', 'meal', 'evening'].includes(x.type) || /^(breakfast|lunch|dinner|snack) near /i.test(x.name)) continue;
+          const k = d.city + '|' + x.name.toLowerCase(), was = seen[k];
+          if (was && was.i !== d.i) out.push(`${x.name}: ${was.date} (${was.t}) and ${d.date} (${x.type})`); else if (!was) seen[k] = { i: d.i, date: d.date, t: x.type }; } }
+        const per = {}; days.forEach(d => { if (d.city) per[d.city] = (per[d.city] || 0) + 1; });
+        out.cities = Object.entries(per).filter(([, n]) => n > 1).map(([c, n]) => c + ' ' + n + ' days'); return { out, cities: out.cities }; });
+      await bq.close();
+      log('Plan', 'example', !dup.out.length, 'One day per sight, no place to eat twice, in every city of the trip: ' + (dup.out.length ? dup.out.slice(0, 6).join('; ') : 'yes, checked ' + dup.cities.join(', '))); }
+    // The route comes first (Richard, Nov 17: "I've seen some where it took me across town, only to back and continue ...
+    // help them fit in without killing them"). Every city day of the trip, planned afresh: crowds, the midday heat or the
+    // forecast may choose between orders that ride about the same, never one that rides more than 15 min (or a fifth)
+    // longer than the best order by route alone (30 min or a third for a forecast).
+    { const bq = await chromium.launch(), pq = await (await bq.newContext()).newPage(); await pq.route('**/*', r => /^file:/.test(r.request().url()) ? r.continue() : r.abort()); await pq.goto('file://' + FILE); await pq.evaluate(() => localStorage.setItem('kairoute.intro1', '1')); await pq.reload(); await pq.waitForTimeout(800);
+      await pq.getByText('Continue trip').click(); await pq.waitForTimeout(1500);
+      const rx = await pq.evaluate(() => window.__kairouteRouteX()); await bq.close();
+      const days = rx.filter(x => x.best != null), bad = days.filter(x => x.ride - x.best > x.cap), kept = days.filter(x => x.kept), cities = [...new Set(days.map(x => x.city))];
+      log('Planner', 'planner', days.length >= 10 && !bad.length, 'No going across town and back: every day rides at most a little more than its best route (' + days.length + ' days in ' + cities.length + ' places: ' + cities.join(', ') + '): ' + (bad.length ? bad.map(x => `${x.date} ${x.city} rides ${x.ride} min, best ${x.best}`).join('; ') : 'yes' + (kept.length ? '; route order kept over crowds or heat on ' + kept.map(x => `${x.date} ${x.city} (${x.was} -> ${x.ride} min)`).join(', ') : ''))); }
     // Nov 17 demo gate: a pick naming a kept fill (a famous place written in online, saved on the device) was left out
     // of the day on a page opened fresh, until the city's sources answered. The kept fills now come back as soon as the
     // city is used: a second page with the same storage plans that pick right away, internet or not.
@@ -566,6 +590,23 @@ const log = (suite, trip, ok, what) => { results.push({ suite, trip, ok, what })
     log('Famous sights', 'famous', !bad.length, bad.length ? 'Big stop on the screens: ' + bad.join('; ') : 'Big stop on the screens: Day plan lists the parts, each part tickable, the tour plays one part at a time');
     log('Famous sights', 'famous', !errs.length, errs.length ? 'page errors: ' + [...new Set(errs)].join(' | ') : 'no page errors');
     await b3.close(); }
+  // Sight names in English (Richard, Nov 17, Messina: "is that all foreign language"): a lesser sight the sources
+  // know only by its local name is shown in English by fixed rules, never half translated; famous names, names already
+  // in English and a lift named after a saint are left alone.
+  { const b6 = await chromium.launch(); const p = await b6.newPage(); await p.route('**/*', r => /^file:/.test(r.request().url()) ? r.continue() : r.abort());
+    await p.goto('file://' + FILE); await p.waitForTimeout(300);
+    const cases = [['Palazzo Zanca', '', '', 3, 'Zanca Palace'], ['Quattro Fontane', '', '', 3, 'Four Fountains'], ['Real Cittadella', '', '', 3, 'Royal Citadel'], ['Forte del Santissimo Salvatore', 'Palace', '', 3, 'Fort of the Holy Saviour'],
+      ['Madonna della Lettera', 'Sight', '', 3, 'Our Lady of the Letter'], ['Palazzo della cultura', '', '', 3, 'Palace of Culture'], ['Galleria Nazionale d\'Arte Moderna e Contemporanea', '', '', 3, 'National Gallery of Modern and Contemporary Art'],
+      ['Santa Maria Alemanna', 'Church', 'Chiesa di Santa Maria Alemanna', 3, 'Santa Maria Alemanna Church'], ['Iglesia de San Ginés', 'Church', '', 3, 'Church of San Ginés'], ['Torre Marmora', '', '', 3, 'Marmora Tower'],
+      ['Santa Justa Lift', 'Church', 'Elevador de Santa Justa', 3, 'Santa Justa Lift'], ['Casa de Campo Park', '', '', 3, 'Casa de Campo Park'], ['Royal Basilica of Saint Francis the Great', 'Church', '', 3, 'Royal Basilica of Saint Francis the Great'],
+      ['Palau de la Música Catalana', '', '', 3, 'Palau de la Música Catalana'], ['Ponte Vecchio', '', '', 60, 'Ponte Vecchio'], ['Gran Vía', '', '', 3, 'Gran Vía'], ['Forte Gonzaga', '', '', 3, 'Fort Gonzaga'],
+      ['Santuario della Madonna di Montalto', 'Church', '', 3, 'Shrine of Our Lady of Montalto'], ['Chiesa della Santissima Annunziata dei Catalani', 'Church', '', 3, 'Church of the Most Holy Annunciation of the Catalans'],
+      ['Chiesa di Santa Maria della Valle', 'Church', '', 3, 'Church of Santa Maria della Valle'], ['Chiesa di Montevergine', 'Church', '', 3, 'Church of Montevergine'], ['Porto di Messina', '', '', 0, 'Port of Messina'],
+      ['Chiesa di San Francesco all\'Immacolata', 'Church', '', 3, 'Church of San Francesco all\'Immacolata']];
+    const got = await p.evaluate(cs => cs.map(([n, c, l, sl]) => window.__kairouteEnName(n, c, sl, l)), cases).catch(e => cases.map(() => 'ERROR ' + e.message));
+    const bad = cases.map((c, i) => [c[0], c[4], got[i]]).filter(([, want, g]) => want !== g);
+    log('English names', 'rules', !bad.length, bad.length ? bad.map(([n, w, g]) => `${n}: "${g}", expected "${w}"`).join('; ') : `${cases.length} names: local names put into English, famous and English names left alone`);
+    await b6.close(); }
   // Sights coverage: with real snapshots of each city's sources (tools/fixtures/src-*.json, no network, no AI), every
   // big city offers at least 30 worthwhile sights (smaller ones most of what their sources know), nothing twice, every added
   // sight carries its sources, a gateway port is planned for the city it serves, look-alike names are told apart, and
@@ -583,6 +624,8 @@ const log = (suite, trip, ok, what) => { results.push({ suite, trip, ok, what })
       const tot = r.after.main + r.after.quick, hits = r.bench.filter(x => x.hit).length;
       log('Sights coverage', key, r.after.main >= r.min, `${fix.destination}: ${r.before.main} written sights before, ${r.after.main} sights + ${r.after.quick} quick stops + ${r.after.far} day trips now (needs at least ${r.min} sights for a city its size)`);
       log('Sights coverage', key, !r.dup.length, r.dup.length ? 'same place twice: ' + r.dup.slice(0, 5).join('; ') : 'no place listed twice');
+      { const missed = (r.foreign || []).filter(n => /rules know it/.test(n));
+        log('Sights coverage', key, !missed.length, missed.length ? 'shown in the local language though the rules put it into English: ' + missed.join(', ') : `sight names in English${(r.foreign || []).length ? ' (left in the local language, no English rendering: ' + r.foreign.join(', ') + ')' : ''}`); }
       log('Sights coverage', key, !r.noSrc.length, r.noSrc.length ? 'added without sources: ' + r.noSrc.join(', ') : 'every added sight names its sources');
       if (bl.area) log('Sights coverage', key, new RegExp(bl.area, 'i').test(r.label) || new RegExp(bl.area, 'i').test(fix.sources.area), `sources asked for "${r.label}" (area ${fix.sources.area}); the day is spent in ${bl.area}`);
       if (r.bench.length) log('Sights coverage', key, hits >= Math.ceil(r.bench.length * (bl.share || 0.5)), `benchmark: ${hits} of ${r.bench.length} places a free chatbot names are on the list${r.bench.filter(x => !x.hit).length ? ' (not yet: ' + r.bench.filter(x => !x.hit).map(x => x.n).join(', ') + ')' : ''}`);

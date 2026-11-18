@@ -1,0 +1,19 @@
+name: Trip step by step (live)
+# Builds a trip step by step on the LIVE site with the real helper and sources, at phone and tablet size, and checks
+# every place gets a guide and day plans, with no AI asked while it is switched off. Free lookups only.
+# On demand only (each run makes a few dozen free helper lookups).
+on:
+  workflow_dispatch:
+jobs:
+  live:
+    runs-on: ubuntu-latest
+    timeout-minutes: 75
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 20 }
+      - run: npm i --no-save playwright@1 && npx playwright install --with-deps chromium
+      - run: set -o pipefail; mkdir -p checks/steps && URL=https://gilsonr0566-sys.github.io/Kairoute/ SHOTS=checks/steps node tools/steps-e2e.cjs | tee checks/steps/report.txt
+      - if: always()
+        uses: actions/upload-artifact@v4
+        with: { name: steps-live, path: checks/steps }
