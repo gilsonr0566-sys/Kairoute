@@ -113,7 +113,14 @@ async function liftsNear(centre, km) {
 // known each is and UNESCO: a place whose saved guide is thin gets more to choose from.
 async function guideSights(title, centre) {
   const page = title ? await wvText(title) : null; if (!page) return [];
-  const out = listings(page.text).filter(l => l.kind === 'see' && isFinite(l.lat) && isFinite(l.lng) && hav(centre, l) <= 12)
+  // A big city's guide lists its sights on its district pages ("Dubai/Deira"): with fewer than 8 sights on the main page,
+  // the districts it links to are read too (up to 12).
+  let text = page.text;
+  if (listings(text).filter(l => l.kind === 'see').length < 8) {
+    const subs = [...new Set([...text.matchAll(/\[\[\s*([^\]|#]+?\/[^\]|#]+?)\s*(?:\|[^\]]*)?\]\]/g)].map(m => m[1].trim()).filter(t => t.toLowerCase().startsWith(page.title.toLowerCase() + '/')))].slice(0, 12);
+    for (const t of subs) { const sp = await wvText(t); await sleep(300); if (sp) text += '\n' + sp.text; }
+  }
+  const out = listings(text).filter(l => l.kind === 'see' && isFinite(l.lat) && isFinite(l.lng) && hav(centre, l) <= 12)
     .map(l => ({ name: l.name, lat: l.lat, lng: l.lng, wikidata: /^Q\d+$/.test(l.wikidata) ? l.wikidata : '', note: l.content || '' }));
   const qs = [...new Set(out.map(x => x.wikidata).filter(Boolean))];
   if (qs.length) { const e = await entities(qs), lp = new Set(); Object.values(e).forEach(x => ids(x, 'P361').forEach(q => lp.add(q))); const lpe = lp.size ? await entities([...lp]) : {};
