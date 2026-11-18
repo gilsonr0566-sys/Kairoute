@@ -56,6 +56,13 @@ function helper(r, calls) {
       : { opts: [] }) }); }
   if (u.pathname === '/famous') return /paris/i.test(u.searchParams.get('city')) ? j(PARIS.famous) : r.fulfill({ status: 404, body: '{}' });
   if (u.pathname === '/ground') { const b = JSON.parse(r.request().postData() || '{}'), names = b.names || [];
+    if (/example harbour town/i.test(b.city || '')) return j({ center: null, results: names.map(n => /^Port of/.test(n) ? { wiki: [], answered: true, map: [{ name: "Example Harbour Town's Port Shop", kind: 'yes', lat: 25.0783, lng: -77.3430 }] }
+      : /cruise terminal/.test(n) ? { wiki: [], answered: true, map: [{ name: 'Example Wharf Cruise Ship Terminal', kind: 'dock', lat: 25.0812, lng: -77.3375 }] } : { wiki: [], map: [], answered: true }) });
+    if (/example cay/i.test(b.city || '')) { const near = !/far/i.test(b.city);
+      return j({ center: null, results: names.map(n => n === 'Cruise pier' && b.center ? { wiki: [], answered: true, map: [
+        { name: 'Fishing Pier', kind: 'pier', lat: 25.8180, lng: -77.9340 },
+        ...(near ? [{ name: 'Neighbour Island Cruise Pier', kind: 'pier', lat: 25.8300, lng: -77.9000 }, { name: 'Example Cay Cruise Pier', kind: 'pier', lat: 25.8232, lng: -77.9365 }] : [])] }
+        : { wiki: [], map: [], answered: true }) }); }
     return j({ results: names.map(n => /paris airport|paris international airport/i.test(n) ? { wiki: [{ title: 'Charles de Gaulle Airport', lat: 49.0097, lng: 2.5479 }], map: [], answered: true }
       : /paris (railway|central) station/i.test(n) ? { wiki: [{ title: 'Gare du Nord', lat: 48.8809, lng: 2.3553 }], map: [], answered: true } : { wiki: [], map: [], answered: true }), center: { lat: 48.856, lng: 2.351 } }); }
   if (u.pathname === '/places') { const b = JSON.parse(r.request().postData() || '{}');
@@ -109,6 +116,15 @@ function helper(r, calls) {
     await p.evaluate(() => document.querySelector('[data-ts="addcruise"]').click()); await p.waitForTimeout(300);
     const n = await p.evaluate(() => document.querySelectorAll('[data-leg]').length);
     if (n !== 3) bad(`cruise first: a typed stop was dropped (${n} stops)`); else ok('cruise first: stops already typed are kept');
+    // A private island or small port whose pier has no "Port of ..." name: the closest place that calls itself a cruise
+    // pier is the ship's spot (never a fishing pier, never a neighbour island's); with none, the port stays unknown
+    // and the day isn't planned on a guess (Nov 18, CocoCay).
+    const pier = await p.evaluate(() => window.__kairouteSrcStarts('Example Cay', { lat: 25.8167, lng: -77.9333 }).then(s => s.cruise[0]));
+    if (!pier || pier.name !== 'Example Cay Cruise Pier' || pier.unknown) bad(`small port: the cruise pier wasn't found: ${JSON.stringify(pier)}`); else ok('small port: the ship docks at the closest cruise pier on the map');
+    const wharf = await p.evaluate(() => window.__kairouteSrcStarts('Example Harbour Town', { lat: 25.0782, lng: -77.3438 }).then(s => s.cruise[0]));
+    if (!wharf || wharf.name !== 'Example Wharf Cruise Ship Terminal') bad(`port: a shop with "port" in its name was taken for the cruise terminal: ${JSON.stringify(wharf)}`); else ok('port: the real cruise terminal wins over a shop named "Port Shop"');
+    const none = await p.evaluate(() => window.__kairouteSrcStarts('Example Cay far', { lat: 25.8167, lng: -77.9333 }).then(s => s.cruise[0]));
+    if (!none || !none.unknown) bad(`small port: a fishing pier was taken for the cruise pier: ${JSON.stringify(none)}`); else ok('small port: a pier not named for cruises is never the ship\'s spot');
     await p.close(); }
   // 2. The screens.
   for (const [W, H, tag] of [[412, 915, 'phone'], [1280, 800, 'tablet']]) {
