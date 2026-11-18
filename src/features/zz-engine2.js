@@ -11,19 +11,34 @@ if (typeof window !== "undefined" && window.ENGINE2 && window.KEngine) (function
     // An answer arriving for a ride (a timetable search) replans, as it does in the app.
     return strHash(t) + "|" + dataGen + "|" + (typeof nearGen !== "undefined" ? nearGen : 0) + "|" + citiesSig() + "|" + todayISO();
   }
+  // The engine weighs many possible rides: it reads the answers known so far without asking for each one. The rides
+  // it keeps are asked for when their day is shown (below), as the app does for its plans; an answer that arrives for
+  // one of them changes what the plans used, so they are made again with it.
+  const answerOf = (a, b) => { let r; transitPeek = true; try { r = transitFor(a, b); } finally { transitPeek = false; } return r && r.map(o => ({ id: rideId(o), min: o.min, label: o.label, kind: rideKind(o) })); };
+  const askRides = ep => { (ep && ep.items || []).forEach(x => { if (x.t === "ride" && x.from && x.to && x.mode !== "walk" && x.mode !== "boat" && x.mode !== "lift") { try { transitFor(x.from, x.to); } catch (e) {} } }); };
+  const answerSig = (a, b) => JSON.stringify(answerOf(a, b));
   // The whole trip planned once per change (the traveler's trip, an answer arriving, the guides, the date).
+  const stat = { calls: 0, keyMs: 0, bucketMs: 0, checkMs: 0, used: 0, planned: 0 };
+  window.__kairouteEngine2Stat = () => Object.assign({}, stat, { used: memo.used ? memo.used.size : 0 });
   function tripPlans() {
-    const k = keyNow();
+    stat.calls++; let t0 = performance.now();
+    const k = keyNow(); stat.keyMs += performance.now() - t0;
     if (memo.k === k && memo.plans) return memo;
     // The plans depend only on what the engine is given (the bucket) and the ride answers known so far. Most changes
     // to the trip or answers arriving (weather, a photo, the day being looked at) leave both as they were: then the
     // plans stand and nothing is planned again. Only a real change of the engine's inputs replans.
-    let bucket = engineBucket(false);
-    const ik = strHash(JSON.stringify(bucket)) + "|" + (typeof nearGen !== "undefined" ? nearGen : 0) + "|" + todayISO(); // the places files never change while the app runs
-    if (memo.ik === ik && memo.plans) { memo.k = k; return memo; }
+    t0 = performance.now(); let bucket = engineBucket(false);
+    const ik = strHash(JSON.stringify(bucket)) + "|" + todayISO(); // the places files never change while the app runs
+    // A ride answer arriving replans only when it is an answer the plans used and it changed (answers for rides the
+    // plans never take, arriving all the time while the traveler looks around, change nothing).
+    stat.bucketMs += performance.now() - t0; t0 = performance.now();
+    const same = memo.ik === ik && memo.plans && [...memo.used.values()].every(u => answerSig(u.a, u.b) === u.sig); stat.checkMs += performance.now() - t0;
+    if (same) { memo.k = k; return memo; }
+    stat.planned++;
     if (window.PLACES2) bucket = E.applyPlaces(bucket, window.PLACES2);
     // The app's own public transport answers for each ride (asked for any ride not known yet, as in the app).
-    bucket.answers = (a, b) => { const r = transitFor(a, b); return r && r.map(o => ({ id: rideId(o), min: o.min, label: o.label, kind: rideKind(o) })); };
+    const used = new Map();
+    bucket.answers = (a, b) => { const r = answerOf(a, b); used.set(a.lat + "," + a.lng + ">" + b.lat + "," + b.lng, { a, b, sig: JSON.stringify(r) }); return r; };
     let plans; try { plans = E.planTrip(bucket); } catch (e) { console.warn("Beta 2 engine", e); plans = []; }
     // A day still on the app's own seeding (the traveler hasn't ticked or unticked anything there) shows what the
     // engine planned: its ticks become the engine's stops, so the picker, the counts and the plan always agree.
@@ -39,7 +54,7 @@ if (typeof window !== "undefined" && window.ENGINE2 && window.KEngine) (function
       d.selected = ids; d.seedSig = seedSigOf(d); d.autoEmpty = !ids.length; synced = true;
     });
     // The bucket is the same after the sync (a seeded day sends only the traveler's own picks), so the plans stand.
-    memo = { k: synced ? keyNow() : k, ik, plans, bucket }; return memo;
+    memo = { k: synced ? keyNow() : k, ik, used, plans, bucket }; return memo;
   }
   window.__kairouteEngine2 = () => JSON.parse(JSON.stringify(tripPlans().plans));
   const MODE = { walk: "walk", ride: "ride", transit: "ride", boat: "ferry", lift: "ride" };
@@ -92,6 +107,6 @@ if (typeof window !== "undefined" && window.ENGINE2 && window.KEngine) (function
   buildPlanForDay = function (d) {
     const city = cityFor(d); if (!city) return null;
     const i = trip.days.indexOf(d); if (i < 0) return oldDay(d); // a day outside the trip (a preview): the old planner
-    try { return toApp(d, city, tripPlans().plans[i]); } catch (e) { console.warn("Beta 2 day", e); return oldDay(d); }
+    try { const ep = tripPlans().plans[i]; askRides(ep); return toApp(d, city, ep); } catch (e) { console.warn("Beta 2 day", e); return oldDay(d); }
   };
 })();

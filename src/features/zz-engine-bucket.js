@@ -23,6 +23,12 @@ function sightTags(city, s) {
   return out;
 }
 const wishIds = (d, city) => { try { return city && typeof wantIds === "function" ? wantIds(d, city) : []; } catch (e) { return []; } };
+const bucketCityMemo = new Map();
+function cityMemoOf(city, ck, ints) {
+  const sig = strHash(JSON.stringify(city)) + "|" + ints.join(",") + "|" + JSON.stringify(P());
+  let m = bucketCityMemo.get(ck); if (!m || m.sig !== sig) { m = { sig, sites: null, farther: null, dates: new Map() }; bucketCityMemo.set(ck, m); }
+  return m;
+}
 function engineBucket(withOld) {
   const n = v => (isFinite(+v) ? +v : null);
   const pt = p => p ? { id: p.id || null, name: p.name || "", lat: n(p.lat), lng: n(p.lng), unknown: !!p.unknown || (typeof unsurePoint === "function" && unsurePoint(p)) } : null;
@@ -41,9 +47,14 @@ function engineBucket(withOld) {
   });
   trip.days.forEach((d, i) => {
     const city = cityFor(d), ck = city ? keyOf(city.city) : null;
+    // A guide's sight facts, and each date's opening hours, crowds and closed days, depend only on the guide itself
+    // (its sights' and places' own fields), the traveler's interests and preferences: worked out once per guide as it
+    // stands and kept until the guide changes, never again on every answer arriving.
+    const cm = city ? cityMemoOf(city, ck, ints) : null;
     if (city && !cityOut[ck]) {
+      if (!cm.sites) { cm.sites = (city.sites || []).map(s => siteFacts(city, s)); cm.farther = (city.farther || []).map(s => Object.assign(siteFacts(city, s), { far: true })); }
       cityOut[ck] = { key: ck, name: city.city, srcGuide: !!city.srcGuide,
-        sites: (city.sites || []).map(s => siteFacts(city, s)), farther: (city.farther || []).map(s => Object.assign(siteFacts(city, s), { far: true })),
+        sites: cm.sites, farther: cm.farther,
         restaurants: (city.restaurants || []).filter(r => isFinite(+r.lat)).map(r => ({ id: keyOf(r.name), name: r.name, lat: +r.lat, lng: +r.lng, kind: r.kind || "", cuisine: r.cuisine || "",
           recommended: !!r.recommended, bothGuides: !!r.bothGuides, top: !!r.top, crowdTop: !!r.crowdTop, good: gGood(r.g || gOf(r)), drop: !!r.crowdDrop || gBad(r.g || gOf(r)) })) };
     }
@@ -65,9 +76,13 @@ function engineBucket(withOld) {
       locked: d.ready && d.ready.lock && Array.isArray(d.ready.lock.seq) ? { t: d.ready.lock.t, seq: d.ready.lock.seq.filter(x => !x.meal).map(x => x.id).filter(Boolean) } : null,
       wx: city ? wxFor(d, city) : null, sites: {}, eats: {} };
     if (city && d.date) {
-      allSites(city).forEach(s => { const oh = siteWindow(s, d.date), cw = crowdWindows(Object.assign({ _city: ck }, s), d.date);
-        facts.sites[s.id] = { closed: siteClosed(s, d.date), oh: oh ? { spans: oh.spans, last: oh.last != null ? oh.last : null } : null, busy: cw ? cw.busy : null }; });
-      (city.restaurants || []).forEach(r => { facts.eats[keyOf(r.name)] = { lunchShut: mealShut(r, "Lunch", d.date), dinnerShut: mealShut(r, "Dinner", d.date) }; });
+      let on = cm.dates.get(d.date);
+      if (!on) { on = { sites: {}, eats: {} };
+        allSites(city).forEach(s => { const oh = siteWindow(s, d.date), cw = crowdWindows(Object.assign({ _city: ck }, s), d.date);
+          on.sites[s.id] = { closed: siteClosed(s, d.date), oh: oh ? { spans: oh.spans, last: oh.last != null ? oh.last : null } : null, busy: cw ? cw.busy : null }; });
+        (city.restaurants || []).forEach(r => { on.eats[keyOf(r.name)] = { lunchShut: mealShut(r, "Lunch", d.date), dinnerShut: mealShut(r, "Dinner", d.date) }; });
+        cm.dates.set(d.date, on); }
+      facts.sites = on.sites; facts.eats = on.eats;
     }
     // What's still missing from the bucket for this day. Planning a day waits until its bucket is complete (or says
     // plainly what it planned without), so a plan is never made from half the pieces and then changed as the rest arrive.

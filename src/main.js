@@ -688,6 +688,7 @@ function transitNear(a, b, kind) {
 let nearGen = 0;
 function nearOnce(exact, a, b, kind) { const m = nearMemo.get(exact); if (m && m.g === nearGen) return m.v; const v = transitNear(a, b, kind); nearMemo.set(exact, { g: nearGen, v }); return v; }
 const nearMemo = new WeakMap();
+let transitPeek = false;
 function transitFor(a, b) {
   if (!a || !b || !isFinite(a.lat) || !isFinite(b.lat) || hav(a, b) < 1.5) return null; // city rides too: a bus or metro across town is a real choice (Nov 16)
   const dow = planDow(), k = pairKey(a, b) + "|" + dayKind(dow), exact = transitMem[k] || transitMem[pairKey(a, b)], hit = exact && exact.opts && exact.opts.length ? exact : (exact ? nearOnce(exact, a, b, dayKind(dow)) : transitNear(a, b, dayKind(dow))) || exact; // an empty exact answer never hides a nearby one's lines
@@ -696,6 +697,8 @@ function transitFor(a, b) {
   // was busy or an empty one (after 10 minutes), or a nearby trip's answer (the exact ride is asked). With no internet
   // whatever is kept is simply used.
   if (hit && !transitDue(exact, hit)) return hit.opts.filter(runsThen).map(tidyRide);
+  // A look without asking: a planner weighing many possible rides reads what is known and asks only for the rides it keeps.
+  if (transitPeek) return hit ? hit.opts.filter(runsThen).map(tidyRide) : null;
   if (typeof freeAI !== "undefined" && freeAI && !transitQ.has(k) && !(transitFail.get(k) > Date.now() - 120000)) { transitQ.set(k, { a: [+a.lat, +a.lng], b: [+b.lat, +b.lng], dow, date: typeof planDate !== "undefined" && planDate ? planDate : undefined, pri: typeof trip !== "undefined" && trip.days && trip.days[trip.active] && typeof planDate !== "undefined" && trip.days[trip.active].date === planDate }); clearTimeout(transitTimer); transitTimer = setTimeout(askTransit, 300); }
   return hit ? hit.opts.filter(runsThen).map(tidyRide) : null;
 }
