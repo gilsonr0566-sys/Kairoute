@@ -1,0 +1,186 @@
+{
+ "key": "kotor montenegro",
+ "name": "Kotor, Montenegro",
+ "built": "2026-11-18",
+ "sources": [
+  "Wikidata",
+  "OpenStreetMap",
+  "Wikivoyage"
+ ],
+ "sites": {
+  "src-q966429": {
+   "wikidata": "Q966429",
+   "editions": 23,
+   "types": [
+    "Q2977"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "osm": "way/165389709"
+  },
+  "src-q12907852": {
+   "wikidata": "Q12907852",
+   "editions": 21,
+   "types": [
+    "Q57821",
+    "Q41176",
+    "Q4989906"
+   ],
+   "unesco": true,
+   "closedForGood": false,
+   "partOf": [
+    "Q3511938",
+    "Q32797097"
+   ]
+  },
+  "src-q1008132": {
+   "wikidata": "Q1008132",
+   "editions": 26,
+   "types": [
+    "Q486972"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "osm": "node/705026141"
+  },
+  "src-q2158623": {
+   "wikidata": "Q2158623",
+   "editions": 22,
+   "types": [
+    "Q486972"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "osm": "node/705225047"
+  },
+  "src-q2548973": {
+   "wikidata": "Q2548973",
+   "editions": 22,
+   "types": [
+    "Q486972"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "osm": "node/421706430"
+  },
+  "src-q3432448": {
+   "wikidata": "Q3432448",
+   "editions": 20,
+   "types": [
+    "Q486972"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "osm": "node/2260119602"
+  },
+  "src-q2518380": {
+   "wikidata": "Q2518380",
+   "editions": 18,
+   "types": [
+    "Q532"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "osm": "node/2026761099"
+  },
+  "src-q1288177": {
+   "wikidata": "Q1288177",
+   "editions": 17,
+   "types": [
+    "Q46169",
+    "Q473972"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "fee": "yes",
+   "osm": "relation/13997675"
+  },
+  "src-q4981066": {
+   "wikidata": "Q4981066",
+   "editions": 7,
+   "types": [
+    "Q16970"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "osm": "way/207434563"
+  },
+  "src-q3044092": {
+   "wikidata": "Q3044092",
+   "editions": 16,
+   "types": [
+    "Q486972"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "osm": "node/8561631885"
+  },
+  "src-q26696607": {
+   "wikidata": "Q26696607",
+   "editions": 6,
+   "types": [
+    "Q2031836"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "fee": "no",
+   "osm": "way/197926361"
+  },
+  "src-q3047561": {
+   "wikidata": "Q3047561",
+   "editions": 15,
+   "types": [
+    "Q532"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "osm": "node/2260119598"
+  },
+  "src-q16677924": {
+   "wikidata": "Q16677924",
+   "editions": 4,
+   "types": [
+    "Q1863818"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "hours": "Mo-Fr 08:00-18:00; Sa,Su,PH 09:00-18:00",
+   "fee": "yes",
+   "osm": "node/3503321474"
+  }
+ },
+ "towns": {},
+ "ports": [],
+ "dayTrips": [
+  "Prčanj",
+  "Budva",
+  "Bar",
+  "Tivat",
+  "Herceg Novi",
+  "Cetinje",
+  "Lovćen National Park",
+  "Perast",
+  "Risan",
+  "Podgorica"
+ ],
+ "missing": [
+  "a mapped cruise terminal or pier"
+ ],
+ "centre": {
+  "lat": 42.42762599999999,
+  "lng": 18.768152666666666
+ },
+ "wikivoyage": "Kotor"
+}

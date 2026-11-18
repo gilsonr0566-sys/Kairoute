@@ -1,0 +1,833 @@
+{
+ "key": "kyoto japan",
+ "name": "Kyoto, Japan",
+ "built": "2026-11-18",
+ "sources": [
+  "Wikidata",
+  "OpenStreetMap",
+  "Wikivoyage"
+ ],
+ "sites": {
+  "src-q221716": {
+   "wikidata": "Q221716",
+   "editions": 77,
+   "types": [
+    "Q5393308"
+   ],
+   "unesco": true,
+   "closedForGood": false,
+   "partOf": [
+    "Q874027",
+    "Q750721",
+    "Q11555252",
+    "Q10380674",
+    "Q10444949"
+   ],
+   "hours": "Mo-Su 06:00-18:00",
+   "fee": "yes",
+   "osm": "way/336641107"
+  },
+  "src-q270983": {
+   "wikidata": "Q270983",
+   "editions": 57,
+   "types": [
+    "Q15835",
+    "Q5393308"
+   ],
+   "unesco": true,
+   "closedForGood": false,
+   "partOf": [
+    "Q874027",
+    "Q10444949"
+   ],
+   "hours": "Mo-Su 09:00-17:00",
+   "fee": "yes",
+   "osm": "way/98115917"
+  },
+  "src-q874027": {
+   "wikidata": "Q874027",
+   "editions": 41,
+   "types": [
+    "Q210272",
+    "Q18247357"
+   ],
+   "unesco": true,
+   "closedForGood": false,
+   "partOf": [],
+   "osm": "relation/8252871"
+  },
+  "src-q714828": {
+   "wikidata": "Q714828",
+   "editions": 41,
+   "types": [
+    "Q514480",
+    "Q11438310",
+    "Q134917286",
+    "Q845945",
+    "Q135009132",
+    "Q135419779"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [
+    "Q215320",
+    "Q10444949",
+    "Q11467693"
+   ],
+   "osm": "way/96291583",
+   "fee": "no"
+  },
+  "src-q257473": {
+   "wikidata": "Q257473",
+   "editions": 33,
+   "types": [
+    "Q15835",
+    "Q5393308"
+   ],
+   "unesco": true,
+   "closedForGood": false,
+   "partOf": [
+    "Q874027",
+    "Q10444949"
+   ],
+   "osm": "way/105817561"
+  },
+  "src-q587371": {
+   "wikidata": "Q587371",
+   "editions": 32,
+   "types": [
+    "Q5393308"
+   ],
+   "unesco": true,
+   "closedForGood": false,
+   "partOf": [
+    "Q874027"
+   ],
+   "hours": "Mo-Su 08:00-17:00",
+   "osm": "way/98103477"
+  },
+  "src-q1046403": {
+   "wikidata": "Q1046403",
+   "editions": 30,
+   "types": [
+    "Q5393308",
+    "Q11452101"
+   ],
+   "unesco": true,
+   "closedForGood": false,
+   "partOf": [
+    "Q874027",
+    "Q10437732",
+    "Q11627440",
+    "Q10380674",
+    "Q11374875",
+    "Q10560192",
+    "Q10444949",
+    "Q30932906"
+   ],
+   "hours": "Mo-Su 05:00-17:00",
+   "fee": "yes",
+   "osm": "way/359896810"
+  },
+  "src-q1013399": {
+   "wikidata": "Q1013399",
+   "editions": 29,
+   "types": [
+    "Q92026",
+    "Q11482300"
+   ],
+   "unesco": true,
+   "closedForGood": false,
+   "partOf": [
+    "Q874027",
+    "Q1139439"
+   ],
+   "hours": "Mo-Su 08:45-17:00",
+   "osm": "way/57111281"
+  },
+  "src-q385141": {
+   "wikidata": "Q385141",
+   "editions": 27,
+   "types": [
+    "Q120680118",
+    "Q175288",
+    "Q845945"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [
+    "Q10444949"
+   ],
+   "hours": "Mar 15-Sep 30 Mo-Su 06:00-18:00; Oct 01-Oct 31 Mo-Su 06:00-17:30; Nov 01-Feb 14 Mo-Su 06:00-17:00; Feb 15-Mar 14 Mo-Su 06:00-17:30",
+   "fee": "no",
+   "osm": "way/619903245"
+  },
+  "src-q147286": {
+   "wikidata": "Q147286",
+   "editions": 25,
+   "types": [
+    "Q17431399"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "fee": "yes",
+   "osm": "way/31843043"
+  },
+  "src-q1202871": {
+   "wikidata": "Q1202871",
+   "editions": 25,
+   "types": [
+    "Q5393308",
+    "Q114233444",
+    "Q10901138"
+   ],
+   "unesco": true,
+   "closedForGood": false,
+   "partOf": [
+    "Q874027",
+    "Q10437732",
+    "Q11374875",
+    "Q11638581",
+    "Q10444949",
+    "Q10312216"
+   ],
+   "hours": "Mar-Nov Mo-Su 09:00-17:00; Dec-Feb Mo-Su 09:00-16:30",
+   "fee": "yes",
+   "osm": "way/98103060"
+  },
+  "src-q692714": {
+   "wikidata": "Q692714",
+   "editions": 23,
+   "types": [
+    "Q125324170",
+    "Q118304363",
+    "Q845945",
+    "Q11588442"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [
+    "Q215320",
+    "Q10444949"
+   ],
+   "hours": "24/7",
+   "fee": "no",
+   "osm": "way/328903218"
+  },
+  "src-q2166743": {
+   "wikidata": "Q2166743",
+   "editions": 23,
+   "types": [
+    "Q5393308",
+    "Q2385804"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [
+    "Q8193432"
+   ],
+   "hours": "Mo-Su 08:30-16:30",
+   "osm": "way/768987591"
+  },
+  "src-q701620": {
+   "wikidata": "Q701620",
+   "editions": 22,
+   "types": [
+    "Q845945",
+    "Q134917286",
+    "Q135009157",
+    "Q135419779",
+    "Q135100459",
+    "Q137640533"
+   ],
+   "unesco": true,
+   "closedForGood": false,
+   "partOf": [
+    "Q874027",
+    "Q215320",
+    "Q10444949",
+    "Q1306606",
+    "Q11467693"
+   ],
+   "hours": "Mo-Su 05:30-18:00",
+   "fee": "no",
+   "osm": "way/98106488"
+  },
+  "src-q1089767": {
+   "wikidata": "Q1089767",
+   "editions": 22,
+   "types": [
+    "Q5393308",
+    "Q10901138"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [
+    "Q8193432"
+   ],
+   "hours": "Mar-Nov Mo-Su 08:40-17:00; Dec-Feb Mo-Su 08:40-16:30; Dec 28-Dec 31 off",
+   "osm": "way/352013907"
+  },
+  "src-q653319": {
+   "wikidata": "Q653319",
+   "editions": 21,
+   "types": [
+    "Q5393308",
+    "Q17051413"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [
+    "Q10380674",
+    "Q10943054"
+   ],
+   "hours": "Apr 01-Nov 15 Mo-Su 08:30-17:00; Nov 16-Mar 31 Mo-Su 09:00-16:00",
+   "fee": "yes",
+   "osm": "way/31842037"
+  },
+  "src-q873645": {
+   "wikidata": "Q873645",
+   "editions": 20,
+   "types": [
+    "Q5393308"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [
+    "Q11555252"
+   ],
+   "hours": "Mo-Su 09:00-16:00",
+   "osm": "way/456122965"
+  },
+  "src-q901256": {
+   "wikidata": "Q901256",
+   "editions": 20,
+   "types": [
+    "Q5393308",
+    "Q10901138"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "osm": "way/969457939"
+  },
+  "src-q1202239": {
+   "wikidata": "Q1202239",
+   "editions": 33,
+   "types": [
+    "Q11489051",
+    "Q53536964",
+    "Q134962447"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "hours": "Mo-Su 09:00-21:00",
+   "fee": "yes",
+   "osm": "way/554879249"
+  },
+  "src-q662176": {
+   "wikidata": "Q662176",
+   "editions": 19,
+   "types": [
+    "Q798838",
+    "Q118304363",
+    "Q845945",
+    "Q135022918",
+    "Q135009132",
+    "Q135022904",
+    "Q135419779"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [
+    "Q215320",
+    "Q17209329",
+    "Q18054963",
+    "Q11507109",
+    "Q10444949"
+   ],
+   "hours": "Mo-Su 07:00-17:00",
+   "fee": "no",
+   "osm": "way/432120699"
+  },
+  "src-q376288": {
+   "wikidata": "Q376288",
+   "editions": 17,
+   "types": [
+    "Q5393308",
+    "Q10901138"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "osm": "way/558026803"
+  },
+  "src-q1146038": {
+   "wikidata": "Q1146038",
+   "editions": 17,
+   "types": [
+    "Q5393308"
+   ],
+   "unesco": true,
+   "closedForGood": false,
+   "partOf": [
+    "Q874027"
+   ],
+   "hours": "Mo-Su 05:30-17:00",
+   "fee": "no",
+   "osm": "way/372460724"
+  },
+  "src-q783923": {
+   "wikidata": "Q783923",
+   "editions": 16,
+   "types": [
+    "Q11341528"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "hours": "Th-Mo 10:00-17:00; We off",
+   "fee": "yes",
+   "osm": "way/314446153"
+  },
+  "src-q2702064": {
+   "wikidata": "Q2702064",
+   "editions": 15,
+   "types": [
+    "Q5393308"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "hours": "Mo-Su 09:00-17:30",
+   "fee": "yes",
+   "osm": "way/759391880"
+  },
+  "src-q713177": {
+   "wikidata": "Q713177",
+   "editions": 14,
+   "types": [
+    "Q845945",
+    "Q118469772",
+    "Q125316983"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [
+    "Q215320",
+    "Q10444949"
+   ],
+   "fee": "no",
+   "osm": "way/369017538"
+  },
+  "src-q1060966": {
+   "wikidata": "Q1060966",
+   "editions": 13,
+   "types": [
+    "Q5393308",
+    "Q17218816",
+    "Q10901138",
+    "Q134962447"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [
+    "Q10437732",
+    "Q10380674",
+    "Q11374875",
+    "Q10444949"
+   ],
+   "osm": "way/878535619"
+  },
+  "src-q1201304": {
+   "wikidata": "Q1201304",
+   "editions": 21,
+   "types": [
+    "Q1440300"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "hours": "Mo-Su 10:00-21:00",
+   "fee": "yes",
+   "osm": "relation/5333011"
+  },
+  "src-q1440954": {
+   "wikidata": "Q1440954",
+   "editions": 13,
+   "types": [
+    "Q5393308"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [
+    "Q8193432"
+   ],
+   "hours": "Mo-Su 10:00-17:00",
+   "fee": "yes",
+   "osm": "way/760889100"
+  },
+  "src-q1060771": {
+   "wikidata": "Q1060771",
+   "editions": 10,
+   "types": [
+    "Q5393308"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [
+    "Q750721",
+    "Q10560192",
+    "Q10380674",
+    "Q10444949"
+   ],
+   "hours": "Mo-Su 08:00-17:00",
+   "osm": "node/4107702310"
+  },
+  "src-q3330657": {
+   "wikidata": "Q3330657",
+   "editions": 10,
+   "types": [
+    "Q207694"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "osm": "way/302283151"
+  },
+  "src-q1108695": {
+   "wikidata": "Q1108695",
+   "editions": 10,
+   "types": [
+    "Q22746"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [
+    "Q11506126"
+   ],
+   "osm": "way/54170783"
+  },
+  "src-q11555353": {
+   "wikidata": "Q11555353",
+   "editions": 10,
+   "types": [
+    "Q5393308",
+    "Q11372713"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [
+    "Q11374875"
+   ],
+   "osm": "way/371717423"
+  },
+  "src-q738971": {
+   "wikidata": "Q738971",
+   "editions": 10,
+   "types": [
+    "Q845945",
+    "Q134917286",
+    "Q135009132"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [
+    "Q215320",
+    "Q10444949",
+    "Q11467693"
+   ],
+   "hours": "Mo-Su 06:00-17:00",
+   "fee": "no",
+   "osm": "way/98106492"
+  },
+  "src-q377386": {
+   "wikidata": "Q377386",
+   "editions": 9,
+   "types": [
+    "Q5393308",
+    "Q114233444",
+    "Q11489051"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [
+    "Q11638581",
+    "Q10444949"
+   ],
+   "hours": "Mo-Su 09:00-17:00",
+   "fee": "yes",
+   "osm": "way/456124860"
+  },
+  "src-q3028486": {
+   "wikidata": "Q3028486",
+   "editions": 8,
+   "types": [
+    "Q5773747",
+    "Q3694",
+    "Q5393308"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "osm": "way/503289189"
+  },
+  "src-q500955": {
+   "wikidata": "Q500955",
+   "editions": 6,
+   "types": [
+    "Q845945"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "osm": "way/1376744520"
+  },
+  "src-q11658945": {
+   "wikidata": "Q11658945",
+   "editions": 4,
+   "types": [
+    "Q5393308"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "hours": "Mo-Su 09:00-17:00",
+   "fee": "yes",
+   "osm": "way/1272459717"
+  },
+  "src-q11666843": {
+   "wikidata": "Q11666843",
+   "editions": 3,
+   "types": [
+    "Q5393308"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "hours": "Mo-Su 09:00-16:00",
+   "osm": "node/1422972915"
+  },
+  "src-q11630696": {
+   "wikidata": "Q11630696",
+   "editions": 2,
+   "types": [
+    "Q11498448",
+    "Q33506"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "hours": "Tu-Su 10:00-16:00",
+   "osm": "way/259136406"
+  }
+ },
+ "towns": {
+  "uji-far": {
+   "name": "Uji",
+   "wikidata": "Q326956",
+   "editions": 60,
+   "unesco": false,
+   "dayTripListed": true,
+   "sights": [
+    {
+     "kind": "see",
+     "name": "Byōdō-in Temple",
+     "lat": 34.889444,
+     "lng": 135.807778,
+     "hours": "Mar-Nov: daily 08:30-17:30, Dec-Feb: daily 09:00-16:30",
+     "price": "Entrance to the temple grounds and museum is ¥600. Those who wish to enter the Phoenix Hall must pay an additional ¥300",
+     "wikidata": "Q61094",
+     "content": "The Byōdō-in was built by Fujiwara Yorimichi, the Chief Adviser to the Emperor, in 1053. It was built as a rural villa owned by his father. Yorimichi built the temple in response to the prevalent fear that a dark age was about to dawn, and ",
+     "editions": 37,
+     "unesco": true
+    },
+    {
+     "kind": "see",
+     "name": "Ujigami Shrine",
+     "lat": 34.892067,
+     "lng": 135.811439,
+     "hours": "",
+     "price": "Free",
+     "wikidata": "Q583589",
+     "content": "This modest little shrine is another one of Uji's historic monuments recognized as a [[UNESCO",
+     "editions": 20,
+     "unesco": true
+    },
+    {
+     "kind": "see",
+     "name": "Uji Shrine",
+     "lat": 34.891047,
+     "lng": 135.8107,
+     "hours": "",
+     "price": "Free",
+     "wikidata": "Q12742788",
+     "content": "The Uji shrine and the Ujigami shrine next door used to be part of the same complex, then known as Rikyukamisha. An interesting feature is the rabbit sculpture, which is said to have prevented the deity from getting lost.",
+     "editions": 7
+    },
+    {
+     "kind": "see",
+     "name": "Kōshō-ji Temple",
+     "lat": 34.8901,
+     "lng": 135.813,
+     "hours": "",
+     "price": "",
+     "wikidata": "Q11613456",
+     "content": "A Zen temple that features a long, justly-famous tree-covered approach from the river. It's a lovely walk in the autumn. Kosho-ji is a working temple, so while visitors can walk the grounds, the temple buildings themselves are frequently in",
+     "editions": 5
+    },
+    {
+     "kind": "see",
+     "name": "Mimuroto-ji Temple",
+     "lat": 34.900478,
+     "lng": 135.819194,
+     "hours": "",
+     "price": "Entrance is ¥500",
+     "wikidata": "Q11355140",
+     "content": "One of the settings of the Tale of Genji, as well as the 10th temple along the Saigoku 33 Kannon Temple Pilgrimage Route. This temple will be of high interest to those who love flowers and gardens. Around the temple, lotus flowers have been",
+     "editions": 5
+    },
+    {
+     "kind": "see",
+     "name": "Mampuku-ji Temple",
+     "lat": 34.913889,
+     "lng": 135.8075,
+     "hours": "",
+     "price": "",
+     "wikidata": "Q576318",
+     "content": "This is the head temple of the Japanese Ōbaku Zen sect, which is considered to be more Chinese than the other two sects (Rinzai and Soto). You can see the Chinese influences in the architecture, as the roofs were built in the Ming Dynasty s",
+     "editions": 14
+    },
+    {
+     "kind": "see",
+     "name": "Nintendo Museum",
+     "lat": 34.8927,
+     "lng": 135.784,
+     "hours": "Daily except Tuesdays 10:00 - 18:00",
+     "price": "¥3300 for adult(18+),  ¥2200 for youth(12-17),¥1100 for children(6-11),free for preschooler(0-5)",
+     "wikidata": "Q123124346",
+     "content": "This video game giant converted their old plant into a museum for the company. Has many historical items in their collection, and interactive experiences for Nintendo products.",
+     "editions": 13
+    },
+    {
+     "kind": "see",
+     "name": "Amagase Dam",
+     "lat": 34.880833,
+     "lng": 135.828056,
+     "hours": "",
+     "price": "",
+     "wikidata": "Q4739121",
+     "content": "This dam is south of the city. A scenic walkway leads there from Uji either shore of the river and the dam itself offers nice views.",
+     "editions": 5
+    }
+   ],
+   "foodDrink": [
+    {
+     "kind": "drink",
+     "name": "Nakamura Tokichi Honten",
+     "lat": 34.891,
+     "lng": 135.806,
+     "hours": "Daily 10:00-17:00",
+     "price": "",
+     "wikidata": "",
+     "content": "Green tea and maccha desserts. This cafe is located at the river front. There is another bigger cafe and shop near the JR rail station."
+    }
+   ]
+  },
+  "koka-far": {
+   "name": "Koka",
+   "wikidata": "Q847584",
+   "editions": 38,
+   "unesco": false,
+   "dayTripListed": true,
+   "sights": [
+    {
+     "kind": "see",
+     "name": "Ninja Village",
+     "lat": 34.919667,
+     "lng": 136.207417,
+     "hours": "09:00-17:00, closed Mondays and Dec 27-Jan 1",
+     "price": "¥1000 adults, ¥800 children ages 13-18, ¥700 ages 6-12, ¥500 ages 3-6",
+     "wikidata": "Q11577976",
+     "content": "Similar to the once hidden ninja villages that existed in the area, the Koka Ninja Village exhibits a number of transplanted ninja estates. With a plethora of contraptions and a throwing star training room, this is the place to go for a han",
+     "editions": 3
+    },
+    {
+     "kind": "see",
+     "name": "Koka Ninja House",
+     "lat": 34.918444,
+     "lng": 136.167361,
+     "hours": "09:00-16:30, closed Dec 27-Jan 1",
+     "price": "¥600 adults, ¥300 children ages 6-12",
+     "wikidata": "Q11577998",
+     "content": "This estate was built over 300 years ago for the famous ninja leader Mochizuki Izumonokami. From the outside, this estate looks the same as the other homes in the area, however the inside clandestinely reveals the characteristics of a ninja",
+     "editions": 3
+    },
+    {
+     "kind": "see",
+     "name": "Minakuchi Castle",
+     "lat": 34.970446,
+     "lng": 136.164583,
+     "hours": "",
+     "price": "",
+     "wikidata": "Q2969895",
+     "content": "Minakuchi Castle was built in 1634 as a way-station for Tokugawa Iemitsu in his travels between Tokyo and Kyoto. The current reconstruction dates from 1991. Minakuchi Castle can be accessed by the Omi Tetsudo Line, a five minute walk from M",
+     "editions": 5
+    },
+    {
+     "kind": "see",
+     "name": "Miho Museum",
+     "lat": 34.915922,
+     "lng": 136.015822,
+     "hours": "Open from 10:00-17:00 daily except Monday; the museum is normally closed from mid-December to mid-March, as well as parts of June/July and August/Sept, so check the calendar first.",
+     "price": "¥1000, audio guide ¥500",
+     "wikidata": "Q1268542",
+     "content": "The Miho Museum, located in the heart of Shigaraki, is one of Kōka City's true gems. Exhibits in the expansive museum change every several months and generally include art and artifacts from the Silk Road area. The design of the museum is j",
+     "editions": 17
+    }
+   ],
+   "foodDrink": []
+  },
+  "osaka-far": {
+   "name": "Osaka",
+   "wikidata": "Q35765",
+   "editions": 197,
+   "unesco": false,
+   "dayTripListed": true,
+   "sights": [],
+   "foodDrink": []
+  }
+ },
+ "ports": [],
+ "dayTrips": [
+  "Uji",
+  "Lake Biwa",
+  "Mount Hiei",
+  "Otsu",
+  "Koka",
+  "Nara",
+  "Osaka",
+  "Amanohashidate",
+  "Japan's Top 3",
+  "Matsushima",
+  "Miyagi prefecture",
+  "Miyajima",
+  "Hiroshima prefecture",
+  "Himeji",
+  "Sekigahara",
+  "Nagoya",
+  "Maibara",
+  "Tottori",
+  "Toyooka",
+  "Kobe",
+  "Ibaraki (Osaka)"
+ ],
+ "missing": [],
+ "centre": {
+  "lat": 35.009670512820506,
+  "lng": 135.76542358974356
+ },
+ "wikivoyage": "Kyoto"
+}

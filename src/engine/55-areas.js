@@ -51,7 +51,9 @@
     const best = city.slice().sort((a, b) => (b.worth || 0) - (a.worth || 0) || E.byId(a, b));
     const share = d => Math.max(0, d.free) * 0.75, all = days.reduce((a, d) => a + share(d), 0);
     const day = open.slice().sort((a, b) => b.free - a.free || b.i - a.i)[0];
-    const lost = fill(best, all) - fill(best, all - share(day));
+    // A new place is worth more than more of the same: once the stay still keeps two full days in the city, the city
+    // sights a day out would cost count for half.
+    const lost = (fill(best, all) - fill(best, all - share(day))) * (days.length >= 3 ? 0.5 : 1);
     let top = null;
     // A day out goes to a place (a town, a big site), never to one sight inside a town: that town's sights come along
     // in its group.
@@ -59,7 +61,9 @@
       const group = far.filter(s => s === f || E.hav(f, s) <= near).sort((a, b) => (b.worth || 0) - (a.worth || 0) || E.byId(a, b));
       const room = day.free * 0.85 - 2 * ride(f);
       if (room < (f.minutes || 60)) continue;
-      const gain = fill(group, room);
+      // A day out includes eating there: each place the guide names for a tasting or local specialty adds to it (up to 3).
+      const food = Math.min(3, (f.foodDrink || []).filter(x => x.special).length) * 10;
+      const gain = fill(group, room) + food;
       if (!top || gain > top.gain) top = { gain, group };
     }
     if (!top || top.gain <= lost) return null;

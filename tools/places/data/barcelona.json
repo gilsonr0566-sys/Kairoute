@@ -1,0 +1,781 @@
+{
+ "key": "barcelona",
+ "name": "Barcelona",
+ "built": "2026-11-18",
+ "sources": [
+  "Wikidata",
+  "OpenStreetMap",
+  "Wikivoyage"
+ ],
+ "sites": {
+  "sagrada": {
+   "wikidata": "Q48435",
+   "editions": 110,
+   "types": [
+    "Q120560",
+    "Q133747929"
+   ],
+   "unesco": true,
+   "closedForGood": false
+  },
+  "parkguell": {
+   "wikidata": "Q212867",
+   "editions": 55,
+   "types": [
+    "Q1759852",
+    "Q22698"
+   ],
+   "unesco": true,
+   "closedForGood": false,
+   "partOf": [
+    "Q921745"
+   ]
+  },
+  "batllo": {
+   "wikidata": "Q461371",
+   "editions": 51,
+   "types": [
+    "Q1498804",
+    "Q11755880"
+   ],
+   "closedForGood": false,
+   "partOf": [
+    "Q3042289"
+   ]
+  },
+  "pedrera": {
+   "wikidata": "Q207870",
+   "editions": 52,
+   "types": [
+    "Q1498804"
+   ],
+   "unesco": true,
+   "closedForGood": false,
+   "partOf": [
+    "Q55065239",
+    "Q921745"
+   ]
+  },
+  "rambla": {
+   "wikidata": "Q850593",
+   "editions": 39,
+   "types": [
+    "Q79007",
+    "Q66626342",
+    "Q29518746"
+   ],
+   "closedForGood": false
+  },
+  "picasso": {
+   "wikidata": "Q1050032",
+   "editions": 30,
+   "types": [
+    "Q33506",
+    "Q207694"
+   ],
+   "closedForGood": false
+  },
+  "palau": {
+   "wikidata": "Q327940",
+   "editions": 44,
+   "types": [
+    "Q1060829"
+   ],
+   "unesco": true,
+   "closedForGood": false,
+   "partOf": [
+    "Q16248724",
+    "Q64955212"
+   ]
+  },
+  "santpau": {
+   "wikidata": "Q507282",
+   "editions": 37,
+   "types": [
+    "Q64578911",
+    "Q39364723"
+   ],
+   "unesco": true,
+   "closedForGood": false,
+   "partOf": [
+    "Q16248724",
+    "Q64955212"
+   ]
+  },
+  "gracia": {
+   "wikidata": "Q852697",
+   "editions": 36,
+   "types": [
+    "Q790344",
+    "Q130261443"
+   ],
+   "closedForGood": false
+  },
+  "santantoni": {
+   "wikidata": "Q3753734",
+   "editions": 6,
+   "types": [
+    "Q2080521"
+   ],
+   "closedForGood": false
+  },
+  "ciutadella": {
+   "wikidata": "Q301135",
+   "editions": 25,
+   "types": [
+    "Q22746",
+    "Q14946335"
+   ],
+   "closedForGood": false
+  },
+  "barceloneta": {
+   "wikidata": "Q591874",
+   "editions": 17,
+   "types": [
+    "Q928830",
+    "Q22808403"
+   ],
+   "closedForGood": false
+  },
+  "montjuic": {
+   "wikidata": "Q2500125",
+   "editions": 17,
+   "types": [
+    "Q23413",
+    "Q907116",
+    "Q2772772",
+    "Q5003624",
+    "Q40357"
+   ],
+   "closedForGood": false
+  },
+  "mnac": {
+   "wikidata": "Q861252",
+   "editions": 31,
+   "types": [
+    "Q207694",
+    "Q17431399"
+   ],
+   "closedForGood": false
+  },
+  "born": {
+   "wikidata": "Q18695772",
+   "editions": 4,
+   "types": [
+    "Q1329623",
+    "Q43229",
+    "Q33506"
+   ],
+   "closedForGood": false
+  },
+  "placareial": {
+   "wikidata": "Q1519964",
+   "editions": 17,
+   "types": [
+    "Q28793904",
+    "Q1497375"
+   ],
+   "closedForGood": false
+  },
+  "amatller": {
+   "wikidata": "Q506814",
+   "editions": 21,
+   "types": [
+    "Q11755880",
+    "Q358"
+   ],
+   "closedForGood": false,
+   "partOf": [
+    "Q3042289"
+   ]
+  },
+  "arc": {
+   "wikidata": "Q631075",
+   "editions": 28,
+   "types": [
+    "Q143912"
+   ],
+   "closedForGood": false
+  },
+  "colom": {
+   "wikidata": "Q2288815",
+   "editions": 24,
+   "types": [
+    "Q4989906",
+    "Q2293362"
+   ],
+   "closedForGood": false,
+   "partOf": [
+    "Q15945449"
+   ]
+  },
+  "catalunya": {
+   "wikidata": "Q822881",
+   "editions": 37,
+   "types": [
+    "Q174782",
+    "Q2298537"
+   ],
+   "closedForGood": false
+  },
+  "palauguell": {
+   "wikidata": "Q597051",
+   "editions": 33,
+   "types": [
+    "Q16560"
+   ],
+   "unesco": true,
+   "closedForGood": false,
+   "partOf": [
+    "Q921745",
+    "Q16248724"
+   ]
+  },
+  "src-q159848": {
+   "wikidata": "Q159848",
+   "editions": 89,
+   "types": [
+    "Q1154710"
+   ],
+   "closedForGood": false
+  },
+  "src-q336246": {
+   "wikidata": "Q336246",
+   "editions": 40,
+   "types": [
+    "Q11303"
+   ],
+   "closedForGood": false,
+   "partOf": [
+    "Q2814960"
+   ]
+  },
+  "src-q17155": {
+   "wikidata": "Q17155",
+   "editions": 44,
+   "types": [
+    "Q56242215",
+    "Q120560"
+   ],
+   "closedForGood": false,
+   "partOf": [
+    "Q98690521"
+   ]
+  },
+  "src-q746333": {
+   "wikidata": "Q746333",
+   "editions": 33,
+   "types": [
+    "Q2087181"
+   ],
+   "unesco": true,
+   "closedForGood": false,
+   "partOf": [
+    "Q921745",
+    "Q16248724"
+   ]
+  },
+  "src-q275715": {
+   "wikidata": "Q275715",
+   "editions": 41,
+   "types": [
+    "Q589481"
+   ],
+   "closedForGood": false
+  },
+  "src-q861252": {
+   "wikidata": "Q861252",
+   "editions": 31,
+   "types": [
+    "Q207694",
+    "Q17431399"
+   ],
+   "closedForGood": false
+  },
+  "src-q1067140": {
+   "wikidata": "Q1067140",
+   "editions": 27,
+   "types": [
+    "Q207694",
+    "Q2385804",
+    "Q117531692"
+   ],
+   "closedForGood": false
+  },
+  "src-q867072": {
+   "wikidata": "Q867072",
+   "editions": 30,
+   "types": [
+    "Q3196771",
+    "Q1792630",
+    "Q18127",
+    "Q33506",
+    "Q207694"
+   ],
+   "closedForGood": false
+  },
+  "src-q1147977": {
+   "wikidata": "Q1147977",
+   "editions": 23,
+   "types": [
+    "Q11166728"
+   ],
+   "closedForGood": false
+  },
+  "src-q807915": {
+   "wikidata": "Q807915",
+   "editions": 30,
+   "types": [
+    "Q276173"
+   ],
+   "closedForGood": true,
+   "partOf": [
+    "Q283454"
+   ]
+  },
+  "src-q2330791": {
+   "wikidata": "Q2330791",
+   "editions": 17,
+   "types": [
+    "Q11755880"
+   ],
+   "closedForGood": false,
+   "partOf": [
+    "Q3042289"
+   ]
+  },
+  "src-q616238": {
+   "wikidata": "Q616238",
+   "editions": 27,
+   "types": [
+    "Q17000324",
+    "Q33506"
+   ],
+   "closedForGood": false
+  },
+  "src-q1062480": {
+   "wikidata": "Q1062480",
+   "editions": 20,
+   "types": [
+    "Q1497375"
+   ],
+   "closedForGood": false,
+   "partOf": [
+    "Q283454"
+   ]
+  },
+  "src-q2447148": {
+   "wikidata": "Q2447148",
+   "editions": 10,
+   "types": [
+    "Q207694"
+   ],
+   "closedForGood": false
+  },
+  "src-q2013874": {
+   "wikidata": "Q2013874",
+   "editions": 23,
+   "types": [
+    "Q174782"
+   ],
+   "closedForGood": false
+  },
+  "src-q1519964": {
+   "wikidata": "Q1519964",
+   "editions": 17,
+   "types": [
+    "Q28793904",
+    "Q1497375"
+   ],
+   "closedForGood": false
+  },
+  "src-q1200948": {
+   "wikidata": "Q1200948",
+   "editions": 21,
+   "types": [
+    "Q2281788"
+   ],
+   "closedForGood": false
+  },
+  "src-q1286354": {
+   "wikidata": "Q1286354",
+   "editions": 16,
+   "types": [
+    "Q1863818"
+   ],
+   "closedForGood": false,
+   "partOf": [
+    "Q83618265",
+    "Q11955273"
+   ]
+  },
+  "src-q1321526": {
+   "wikidata": "Q1321526",
+   "editions": 16,
+   "types": [
+    "Q44613"
+   ],
+   "closedForGood": false
+  },
+  "src-q1968399": {
+   "wikidata": "Q1968399",
+   "editions": 15,
+   "types": [
+    "Q2087181"
+   ],
+   "closedForGood": false
+  },
+  "src-q595553": {
+   "wikidata": "Q595553",
+   "editions": 12,
+   "types": [
+    "Q41176",
+    "Q811979"
+   ],
+   "closedForGood": false
+  },
+  "src-q11682430": {
+   "wikidata": "Q11682430",
+   "editions": 11,
+   "types": [
+    "Q33506"
+   ],
+   "closedForGood": false
+  },
+  "src-q2605209": {
+   "wikidata": "Q2605209",
+   "editions": 11,
+   "types": [
+    "Q167346"
+   ],
+   "closedForGood": false,
+   "partOf": [
+    "Q9046889"
+   ]
+  },
+  "src-q2101038": {
+   "wikidata": "Q2101038",
+   "editions": 10,
+   "types": [
+    "Q44613"
+   ],
+   "closedForGood": false
+  },
+  "src-q1167101": {
+   "wikidata": "Q1167101",
+   "editions": 10,
+   "types": [
+    "Q75135432",
+    "Q866623",
+    "Q123705"
+   ],
+   "closedForGood": false
+  },
+  "src-q5668717": {
+   "wikidata": "Q5668717",
+   "editions": 8,
+   "types": [
+    "Q39614"
+   ],
+   "closedForGood": false
+  },
+  "src-q6062641": {
+   "wikidata": "Q6062641",
+   "editions": 7,
+   "types": [
+    "Q22698"
+   ],
+   "closedForGood": false
+  }
+ },
+ "towns": {
+  "montserrat": {
+   "name": "Montserrat monastery",
+   "wikidata": null,
+   "editions": 0,
+   "unesco": false,
+   "dayTripListed": false,
+   "sights": [],
+   "foodDrink": []
+  },
+  "sitges": {
+   "name": "Sitges",
+   "wikidata": "Q15551",
+   "editions": 62,
+   "unesco": false,
+   "dayTripListed": true,
+   "sights": [
+    {
+     "kind": "see",
+     "name": "Maricel Museum",
+     "lat": 41.23491,
+     "lng": 1.81219944,
+     "hours": "as Cau Ferrat Museum",
+     "price": "",
+     "wikidata": "",
+     "content": ""
+    },
+    {
+     "kind": "see",
+     "name": "Contemporary Art Gallery",
+     "lat": 41.2353828,
+     "lng": 1.811984252,
+     "hours": "Sat Sun 10:00-14:00",
+     "price": "see website, combined tickets available.",
+     "wikidata": "",
+     "content": "one of the most important contemporary art collections in Catalonia."
+    }
+   ],
+   "foodDrink": [
+    {
+     "kind": "eat",
+     "name": "Restaurant El Superpollastre",
+     "lat": 41.2366947,
+     "lng": 1.8078481,
+     "hours": "",
+     "price": "",
+     "wikidata": "",
+     "content": ""
+    },
+    {
+     "kind": "eat",
+     "name": "Sol y Sombra",
+     "lat": 41.2363226,
+     "lng": 1.8065962,
+     "hours": "",
+     "price": "",
+     "wikidata": "",
+     "content": ""
+    },
+    {
+     "kind": "eat",
+     "name": "La Pizza del Pecat",
+     "lat": 41.2365271,
+     "lng": 1.8066233,
+     "hours": "",
+     "price": "",
+     "wikidata": "",
+     "content": ""
+    },
+    {
+     "kind": "eat",
+     "name": "Döner Kebab",
+     "lat": 41.2400159,
+     "lng": 1.8103741,
+     "hours": "",
+     "price": "",
+     "wikidata": "",
+     "content": ""
+    },
+    {
+     "kind": "eat",
+     "name": "Creperia Sol del Roc",
+     "lat": 41.2347854,
+     "lng": 1.8072138,
+     "hours": "Daily 12:30–16:00,19:30–23:30",
+     "price": "",
+     "wikidata": "",
+     "content": "Offering savory and sweet crepes."
+    },
+    {
+     "kind": "eat",
+     "name": "Guria Taberna",
+     "lat": 41.2352856,
+     "lng": 1.8087094,
+     "hours": "Daily 09:30–23:30",
+     "price": "",
+     "wikidata": "",
+     "content": "International"
+    },
+    {
+     "kind": "eat",
+     "name": "Eguzki Lizarran",
+     "lat": 41.2364046,
+     "lng": 1.809103,
+     "hours": "",
+     "price": "",
+     "wikidata": "",
+     "content": ""
+    },
+    {
+     "kind": "eat",
+     "name": "Komokieras",
+     "lat": 41.2372466,
+     "lng": 1.8067256,
+     "hours": "",
+     "price": "",
+     "wikidata": "",
+     "content": ""
+    },
+    {
+     "kind": "eat",
+     "name": "Restaurant El Pou",
+     "lat": 41.2372396,
+     "lng": 1.8074645,
+     "hours": "",
+     "price": "",
+     "wikidata": "",
+     "content": ""
+    },
+    {
+     "kind": "eat",
+     "name": "Restaurante Clarés",
+     "lat": 41.2379123,
+     "lng": 1.8117524,
+     "hours": "",
+     "price": "",
+     "wikidata": "",
+     "content": ""
+    },
+    {
+     "kind": "eat",
+     "name": "La Salseta",
+     "lat": 41.2355559,
+     "lng": 1.8091543,
+     "hours": "",
+     "price": "",
+     "wikidata": "",
+     "content": ""
+    },
+    {
+     "kind": "eat",
+     "name": "Can Martí",
+     "lat": 41.2351207,
+     "lng": 1.8063628,
+     "hours": "",
+     "price": "",
+     "wikidata": "",
+     "content": ""
+    },
+    {
+     "kind": "eat",
+     "name": "Fragata",
+     "lat": 41.2348436,
+     "lng": 1.8110859,
+     "hours": "",
+     "price": "",
+     "wikidata": "",
+     "content": "Paseig de la Ribera (under the old church). One of the best fine dining restaurants in Sitges with wonderful harbour views and stunning food. Inspired by the local fish and seafood but delivered with a style and flair that sets it apart."
+    },
+    {
+     "kind": "eat",
+     "name": "Maricel",
+     "lat": 41.235041,
+     "lng": 1.8103845,
+     "hours": "",
+     "price": "",
+     "wikidata": "",
+     "content": ""
+    },
+    {
+     "kind": "eat",
+     "name": "El Castell",
+     "lat": 41.2355055,
+     "lng": 1.8101441,
+     "hours": "",
+     "price": "",
+     "wikidata": "",
+     "content": ""
+    },
+    {
+     "kind": "eat",
+     "name": "Los Vikingos",
+     "lat": 41.23586,
+     "lng": 1.8067,
+     "hours": "Mon–Wed 13:00–00:30; Fri 13:00–01:00; Sat 11:00–01:30; Sun 11:00–00:30",
+     "price": "",
+     "wikidata": "",
+     "content": ""
+    },
+    {
+     "kind": "drink",
+     "name": "The Dutchess",
+     "lat": 41.23545,
+     "lng": 1.81102,
+     "hours": "",
+     "price": "",
+     "wikidata": "",
+     "content": ""
+    },
+    {
+     "kind": "drink",
+     "name": "Moreno",
+     "lat": 41.23576,
+     "lng": 1.81089,
+     "hours": "10:00–02:00",
+     "price": "",
+     "wikidata": "",
+     "content": "Mediterranean bar with tapas."
+    },
+    {
+     "kind": "drink",
+     "name": "Chiringuito Odín",
+     "lat": 41.26298,
+     "lng": 1.93735,
+     "hours": "Daily 10:00–00:00",
+     "price": "",
+     "wikidata": "",
+     "content": "Beach bar. Open only from May to October."
+    },
+    {
+     "kind": "drink",
+     "name": "BOYS BAR Sitges",
+     "lat": 41.2357,
+     "lng": 1.80676,
+     "hours": "24 hours",
+     "price": "",
+     "wikidata": "",
+     "content": ""
+    }
+   ]
+  },
+  "girona": {
+   "name": "Girona old town",
+   "wikidata": "Q7038",
+   "editions": 104,
+   "unesco": false,
+   "dayTripListed": false,
+   "sights": [],
+   "foodDrink": []
+  },
+  "tibidabo": {
+   "name": "Tibidabo",
+   "wikidata": "Q658271",
+   "editions": 31,
+   "unesco": false,
+   "dayTripListed": false,
+   "sights": [],
+   "foodDrink": []
+  }
+ },
+ "ports": [],
+ "dayTrips": [
+  "Canet de Mar",
+  "Catalonia",
+  "Colònia Güell",
+  "Montserrat (Spain)",
+  "Costa Brava",
+  "Figueres",
+  "Girona",
+  "Montseny Natural Park",
+  "Parc del Garraf",
+  "Pyrenees",
+  "Sant Cugat del Vallès",
+  "Sitges",
+  "Castelldefels",
+  "Tarragona",
+  "Nature parks in Barcelona province",
+  "Sant Feliu de Llobregat",
+  "Catalan Way of St. James",
+  "Girona Pyrenees",
+  "Terrassa"
+ ],
+ "missing": [
+  "a mapped cruise terminal or pier"
+ ],
+ "centre": {
+  "lat": 41.386577499999994,
+  "lng": 2.165822692307692
+ },
+ "wikivoyage": "Barcelona"
+}

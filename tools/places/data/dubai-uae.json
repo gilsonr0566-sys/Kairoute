@@ -1,0 +1,113 @@
+{
+ "key": "dubai uae",
+ "name": "Dubai, UAE",
+ "built": "2026-11-18",
+ "sources": [
+  "Wikidata",
+  "OpenStreetMap",
+  "Wikivoyage"
+ ],
+ "sites": {
+  "src-q2125281": {
+   "wikidata": "Q2125281",
+   "editions": 26,
+   "types": [
+    "Q17431399"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": []
+  },
+  "src-q20386392": {
+   "wikidata": "Q20386392",
+   "editions": 22,
+   "types": [
+    "Q838948",
+    "Q811979"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "hours": "Mo-Su 10:00-19:00",
+   "fee": "yes",
+   "osm": "way/386649647"
+  },
+  "src-q22948398": {
+   "wikidata": "Q22948398",
+   "editions": 22,
+   "types": [
+    "Q33506",
+    "Q811979"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "osm": "way/1054289435",
+   "hours": "Mo-Su 10:00-21:30"
+  },
+  "src-q1332229": {
+   "wikidata": "Q1332229",
+   "editions": 21,
+   "types": [
+    "Q1497364"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": []
+  },
+  "src-q2298717": {
+   "wikidata": "Q2298717",
+   "editions": 16,
+   "types": [
+    "Q32815"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": []
+  },
+  "src-q5594813": {
+   "wikidata": "Q5594813",
+   "editions": 16,
+   "types": [
+    "Q32815"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "osm": "relation/7214752"
+  },
+  "src-q2094764": {
+   "wikidata": "Q2094764",
+   "editions": 12,
+   "types": [
+    "Q33506"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "osm": "way/542042595"
+  }
+ },
+ "towns": {},
+ "ports": [],
+ "dayTrips": [
+  "United Arab Emirates",
+  "Abu Dhabi",
+  "Al Ain",
+  "Sharjah",
+  "Umm al Quwain",
+  "Oman",
+  "Hatta",
+  "Iran",
+  "Kish Island",
+  "Musandam Peninsula",
+  "Ajman",
+  "Jebel Ali"
+ ],
+ "missing": [],
+ "centre": {
+  "lat": 25.242512857142856,
+  "lng": 55.28926714285715
+ },
+ "wikivoyage": "Dubai"
+}

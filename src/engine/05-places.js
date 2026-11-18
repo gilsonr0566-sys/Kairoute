@@ -12,7 +12,7 @@
   const TOWN_KM = 3;
   // A food or drink place worth going out of the way for: a tasting, a local specialty, a café known for one thing.
   // Read from the travel guide's own words for the place, in any of a few languages.
-  const SPECIAL = /tasting|winer|wine|vineyard|weingut|vino|brewer|brauerei|beer|distill|marzipan|chocolat|praline|ice ?cream|gelat|\beis|patisser|bakery|bäckerei|konditorei|roast|coffee|cheese|fromag|market|specialt|local|traditional|famous|historic/i;
+  const SPECIAL = /tasting|winer|wine|vineyard|weingut|vino|brewer|brauerei|beer|distill|marzipan|chocolat|praline|ice ?cream|gelat|\beis|patisser|bakery|bäckerei|konditorei|roast|coffee|cheese|fromag|specialt|historic/i;
   E.foodSpecial = x => SPECIAL.test(String(x.name || "") + " " + String(x.content || x.note || ""));
   const copy = x => JSON.parse(JSON.stringify(x));
   E.applyPlaces = (bucket, places) => {
@@ -38,8 +38,9 @@
         // their own, so a day there is planned sight by sight and weighed by what the town really offers.
         const own = (t.sights || []).filter(x => (x.kind || "see") === "see" && isFinite(x.lat) && isFinite(x.lng) && E.hav(s, x) <= TOWN_KM);
         s.townSights = own.map(x => ({ name: x.name, lat: x.lat, lng: x.lng }));
-        own.forEach((x, n) => added.push({ id: s.id + "~" + (x.wikidata || n), name: x.name, lat: x.lat, lng: x.lng, minutes: 30, far: true, town: s.id,
-          townName: s.name, editions: x.editions || 0, unesco: !!x.unesco, tags: ["in-town"], category: "Sight" }));
+        // A museum gets an hour, anything else half an hour; getting there takes what the town's own ride note says.
+        own.forEach((x, n) => added.push({ id: s.id + "~" + (x.wikidata || n), name: x.name, lat: x.lat, lng: x.lng, minutes: /museum|museo|musée|museu|muzeum|galler/i.test(x.name) ? 60 : 30,
+          far: true, town: s.id, townName: s.name, travelNote: s.travelNote || "", editions: x.editions || 0, unesco: !!x.unesco, tags: ["in-town"], category: "Sight" }));
         // With its sights listed one by one, the town itself is the walk through its centre.
         if (own.length >= 2) s.minutes = Math.min(s.minutes || 60, 60);
         s.foodDrink = (t.foodDrink || []).map(x => ({ name: x.name, lat: isFinite(x.lat) ? x.lat : null, lng: isFinite(x.lng) ? x.lng : null, kind: x.kind, note: x.content || "", special: E.foodSpecial(x) }));
@@ -52,7 +53,8 @@
         for (const s of city.sites || []) {
           if (!s.hours) continue;
           const have = d.sites[s.id]; if (have && (have.closed || (have.oh && have.oh.spans && have.oh.spans.length))) continue;
-          const oh = E.ohSpans(s.hours, d.date); if (!oh) continue;
+          const oh = E.ohSpans(s.hours, d.date);
+          if (!oh) { if (/^(24\/7|(Mo-Su\s*)?00:00-(00|24):00)$/.test(String(s.hours).trim())) d.sites[s.id] = Object.assign({}, have || {}, { allDay: true, hoursFrom: "OpenStreetMap" }); continue; }
           d.sites[s.id] = Object.assign({}, have || {}, { closed: !oh.spans.length, oh: oh.spans.length ? oh : null, hoursFrom: "OpenStreetMap" });
         }
         // Where the ship docks: a guessed point is replaced by a mapped cruise terminal or pier.

@@ -1,0 +1,23 @@
+{
+ "key": "perfect day at cococay bahamas",
+ "name": "Perfect Day at CocoCay, Bahamas",
+ "built": "2026-11-18",
+ "sources": [
+  "Wikidata",
+  "OpenStreetMap",
+  "Wikivoyage"
+ ],
+ "sites": {},
+ "towns": {},
+ "ports": [],
+ "dayTrips": [],
+ "missing": [
+  "travel guide page",
+  "the port town",
+  "a mapped cruise terminal or pier"
+ ],
+ "centre": {
+  "lat": 25.818983333333335,
+  "lng": -77.93618666666667
+ }
+}

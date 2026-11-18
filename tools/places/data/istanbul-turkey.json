@@ -1,0 +1,550 @@
+{
+ "key": "istanbul turkey",
+ "name": "Istanbul, Turkey",
+ "built": "2026-11-18",
+ "sources": [
+  "Wikidata",
+  "OpenStreetMap",
+  "Wikivoyage"
+ ],
+ "sites": {
+  "src-q12506": {
+   "wikidata": "Q12506",
+   "editions": 152,
+   "types": [
+    "Q120560",
+    "Q32815",
+    "Q33506",
+    "Q96371632",
+    "Q96440023",
+    "Q32815",
+    "Q33506",
+    "Q811979",
+    "Q35112127",
+    "Q16970",
+    "Q97588309"
+   ],
+   "unesco": true,
+   "closedForGood": false,
+   "partOf": [
+    "Q5773394"
+   ],
+   "hours": "Mo-Su 09:00-19:30",
+   "osm": "way/109862851"
+  },
+  "src-q80541": {
+   "wikidata": "Q80541",
+   "editions": 89,
+   "types": [
+    "Q32815",
+    "Q35112127"
+   ],
+   "unesco": true,
+   "closedForGood": false,
+   "partOf": [
+    "Q5773394"
+   ],
+   "hours": "Mo-Su 08:30-12:15, 14:00-16:45, 17:45-18:30",
+   "osm": "relation/18055570"
+  },
+  "src-q178643": {
+   "wikidata": "Q178643",
+   "editions": 69,
+   "types": [
+    "Q32815",
+    "Q35112127"
+   ],
+   "unesco": true,
+   "closedForGood": false,
+   "partOf": [
+    "Q5773394"
+   ],
+   "osm": "relation/1564032"
+  },
+  "src-q170495": {
+   "wikidata": "Q170495",
+   "editions": 79,
+   "types": [
+    "Q16560",
+    "Q12377751",
+    "Q33506"
+   ],
+   "unesco": true,
+   "closedForGood": false,
+   "partOf": [
+    "Q5773394"
+   ],
+   "hours": "Mo, We-Su 09:00-18:00",
+   "fee": "yes",
+   "osm": "way/335415778"
+  },
+  "src-q211004": {
+   "wikidata": "Q211004",
+   "editions": 70,
+   "types": [
+    "Q44301618"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [
+    "Q35032"
+   ],
+   "osm": "way/203286412"
+  },
+  "src-q849489": {
+   "wikidata": "Q849489",
+   "editions": 45,
+   "types": [
+    "Q16970",
+    "Q32815",
+    "Q33506",
+    "Q32815"
+   ],
+   "unesco": true,
+   "closedForGood": false,
+   "partOf": [
+    "Q5773394"
+   ],
+   "hours": "09:00-18:00",
+   "osm": "relation/7614527"
+  },
+  "src-q91274": {
+   "wikidata": "Q91274",
+   "editions": 58,
+   "types": [
+    "Q12518",
+    "Q33506"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [
+    "Q64735573"
+   ],
+   "hours": "09:00-20:30",
+   "fee": "yes",
+   "osm": "way/23236783"
+  },
+  "src-q274141": {
+   "wikidata": "Q274141",
+   "editions": 54,
+   "types": [
+    "Q16560"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "osm": "way/24826707"
+  },
+  "src-q1572472": {
+   "wikidata": "Q1572472",
+   "editions": 33,
+   "types": [
+    "Q71974",
+    "Q1454820",
+    "Q32815",
+    "Q35112127"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "osm": "relation/4567928"
+  },
+  "src-q848397": {
+   "wikidata": "Q848397",
+   "editions": 45,
+   "types": [
+    "Q39715",
+    "Q2319498",
+    "Q11707",
+    "Q4989906"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "osm": "relation/4429796"
+  },
+  "src-q197094": {
+   "wikidata": "Q197094",
+   "editions": 31,
+   "types": [
+    "Q16970",
+    "Q32815",
+    "Q44613",
+    "Q180370"
+   ],
+   "unesco": true,
+   "closedForGood": false,
+   "partOf": [
+    "Q5773394"
+   ],
+   "osm": "way/137519649"
+  },
+  "src-q1420984": {
+   "wikidata": "Q1420984",
+   "editions": 31,
+   "types": [
+    "Q32815",
+    "Q33506",
+    "Q334383"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "osm": "way/136456159"
+  },
+  "src-q1430090": {
+   "wikidata": "Q1430090",
+   "editions": 30,
+   "types": [
+    "Q32815",
+    "Q35112127"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "osm": "relation/18161438"
+  },
+  "src-q216511": {
+   "wikidata": "Q216511",
+   "editions": 41,
+   "types": [
+    "Q16560",
+    "Q93429857"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "hours": "Mo-Su 09:00-19:00",
+   "osm": "node/11006008339"
+  },
+  "src-q911734": {
+   "wikidata": "Q911734",
+   "editions": 34,
+   "types": [
+    "Q16560"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "osm": "node/4477143891"
+  },
+  "src-q756189": {
+   "wikidata": "Q756189",
+   "editions": 38,
+   "types": [
+    "Q32815",
+    "Q35112127"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "osm": "relation/1661399"
+  },
+  "src-q636978": {
+   "wikidata": "Q636978",
+   "editions": 37,
+   "types": [
+    "Q3329412",
+    "Q17431399"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "hours": "09:00-21:00",
+   "fee": "yes",
+   "osm": "way/335374188"
+  },
+  "src-q952924": {
+   "wikidata": "Q952924",
+   "editions": 34,
+   "types": [
+    "Q13218676",
+    "Q2434238"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "osm": "way/23276526"
+  },
+  "src-q1137511": {
+   "wikidata": "Q1137511",
+   "editions": 33,
+   "types": [
+    "Q1454820",
+    "Q32815",
+    "Q35112127"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "osm": "way/175518494"
+  },
+  "src-q1551419": {
+   "wikidata": "Q1551419",
+   "editions": 32,
+   "types": [
+    "Q1701174"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": []
+  },
+  "src-q1758501": {
+   "wikidata": "Q1758501",
+   "editions": 23,
+   "types": [
+    "Q32815"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "osm": "way/110314231"
+  },
+  "src-q794349": {
+   "wikidata": "Q794349",
+   "editions": 34,
+   "types": [
+    "Q16560",
+    "Q1081138"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [
+    "Q122451255"
+   ],
+   "hours": "Tu-Su 09:00-18:00",
+   "osm": "way/61736367"
+  },
+  "src-q2249546": {
+   "wikidata": "Q2249546",
+   "editions": 31,
+   "types": [
+    "Q17051044"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "osm": "relation/9335689"
+  },
+  "src-q1247287": {
+   "wikidata": "Q1247287",
+   "editions": 28,
+   "types": [
+    "Q1930585"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "osm": "way/1153684927"
+  },
+  "src-q632795": {
+   "wikidata": "Q632795",
+   "editions": 27,
+   "types": [
+    "Q57831"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "osm": "way/1035943038"
+  },
+  "src-q15961492": {
+   "wikidata": "Q15961492",
+   "editions": 27,
+   "types": [
+    "Q33506",
+    "Q614316"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "hours": "Tu-Su 10:00-18:00",
+   "fee": "yes",
+   "osm": "way/247442912"
+  },
+  "src-q2797197": {
+   "wikidata": "Q2797197",
+   "editions": 13,
+   "types": [
+    "Q207694",
+    "Q209465"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "osm": "way/397789973"
+  },
+  "src-q1472490": {
+   "wikidata": "Q1472490",
+   "editions": 24,
+   "types": [
+    "Q16560"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "hours": "Tu-Su 09:00-17:00",
+   "osm": "relation/21597522"
+  },
+  "src-q1662392": {
+   "wikidata": "Q1662392",
+   "editions": 24,
+   "types": [
+    "Q207694",
+    "Q614316"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [
+    "Q108286287"
+   ],
+   "hours": "Tu-Su 10:00-19:00, Su 12:00-18:00",
+   "fee": "yes",
+   "osm": "way/112676117"
+  },
+  "src-q1463961": {
+   "wikidata": "Q1463961",
+   "editions": 24,
+   "types": [
+    "Q207694",
+    "Q1007870"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "hours": "Tu-Th, Sa-Su 10:00-18:00; Fr 10:00-20:00",
+   "fee": "yes",
+   "osm": "node/5640069827"
+  },
+  "src-q1085952": {
+   "wikidata": "Q1085952",
+   "editions": 21,
+   "types": [
+    "Q974968"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "hours": "Mo-Su 09:00-19:00",
+   "osm": "way/1041976901"
+  },
+  "src-q251601": {
+   "wikidata": "Q251601",
+   "editions": 20,
+   "types": [
+    "Q123705"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "osm": "node/269491733"
+  },
+  "src-q3150393": {
+   "wikidata": "Q3150393",
+   "editions": 19,
+   "types": [
+    "Q93429857"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "hours": "Mo-Su 09:00-18:00",
+   "fee": "yes",
+   "osm": "way/1154702450"
+  },
+  "src-q1059699": {
+   "wikidata": "Q1059699",
+   "editions": 17,
+   "types": [
+    "Q24699794",
+    "Q96376777",
+    "Q1307560",
+    "Q33506"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "hours": "10:00-16:00; Fr 10:00-13:00; Su 10:00-14:00",
+   "osm": "node/5506396363"
+  },
+  "src-q285236": {
+   "wikidata": "Q285236",
+   "editions": 16,
+   "types": [
+    "Q1930585",
+    "Q1640824"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "osm": "node/3236233297"
+  },
+  "src-q2330055": {
+   "wikidata": "Q2330055",
+   "editions": 15,
+   "types": [
+    "Q16560",
+    "Q35112127",
+    "Q522124"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "osm": "way/312484207"
+  },
+  "src-q551616": {
+   "wikidata": "Q551616",
+   "editions": 15,
+   "types": [
+    "Q153562",
+    "Q41253",
+    "Q1329623"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "osm": "way/491935728"
+  }
+ },
+ "towns": {},
+ "ports": [],
+ "dayTrips": [
+  "Eastern Thrace",
+  "Edirne",
+  "Kıyıköy",
+  "Vize",
+  "Sofia",
+  "Bucharest",
+  "Via Egnatia",
+  "Rome",
+  "Marmara Islands",
+  "Bursa",
+  "Uludağ",
+  "İznik",
+  "Izmir",
+  "Gallipoli",
+  "Çanakkale",
+  "Troy (Turkey)",
+  "Bergama",
+  "Bozcaada",
+  "Istanbul to Izmir",
+  "Ankara",
+  "Cappadocia",
+  "Kahta",
+  "Kars",
+  "Silk Road",
+  "On the trail of Marco Polo",
+  "From Istanbul to Cairo",
+  "Istanbul to New Delhi over land",
+  "Istanbul Airport",
+  "Sabiha Gökçen International Airport",
+  "Adapazarı",
+  "Gebze"
+ ],
+ "missing": [],
+ "centre": {
+  "lat": 41.0234254054054,
+  "lng": 28.97302243243243
+ },
+ "wikivoyage": "Istanbul"
+}

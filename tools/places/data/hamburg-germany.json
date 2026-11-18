@@ -1,0 +1,1555 @@
+{
+ "key": "hamburg germany",
+ "name": "Hamburg, Germany",
+ "built": "2026-11-18",
+ "sources": [
+  "Wikidata",
+  "OpenStreetMap",
+  "Wikivoyage"
+ ],
+ "sites": {
+  "src-q1561": {
+   "osm": "relation/28931",
+   "wikidata": "Q1561",
+   "editions": 26,
+   "types": [
+    "Q15830667",
+    "Q1851368"
+   ],
+   "closedForGood": false
+  },
+  "src-q1153": {
+   "osm": "relation/180540",
+   "wikidata": "Q1153",
+   "editions": 15,
+   "types": [
+    "Q15830667"
+   ],
+   "closedForGood": false
+  },
+  "src-q264222": {
+   "osm": "node/319681423",
+   "wikidata": "Q264222",
+   "editions": 5,
+   "types": [
+    "Q24354",
+    "Q41253"
+   ],
+   "closedForGood": false
+  },
+  "src-q1300206": {
+   "osm": "node/331755707",
+   "wikidata": "Q1300206",
+   "editions": 8,
+   "types": [
+    "Q4989906"
+   ],
+   "closedForGood": false
+  },
+  "src-q1721556": {
+   "osm": "node/1889018124",
+   "wikidata": "Q1721556",
+   "editions": 4,
+   "types": [
+    "Q4989906",
+    "Q1721546",
+    "Q659396"
+   ],
+   "closedForGood": false
+  },
+  "src-q16886704": {
+   "hours": "Tu-Su 10:00-18:00",
+   "fee": "yes",
+   "osm": "node/1650071826",
+   "wikidata": "Q16886704",
+   "editions": 4,
+   "types": [
+    "Q787934"
+   ],
+   "closedForGood": false
+  },
+  "src-q648375": {
+   "osm": "way/32783586",
+   "wikidata": "Q648375",
+   "editions": 11,
+   "types": [
+    "Q11166728"
+   ],
+   "closedForGood": false
+  },
+  "src-q661881": {
+   "osm": "node/4417808181",
+   "wikidata": "Q661881",
+   "editions": 41,
+   "types": [
+    "Q39947311",
+    "Q1497375"
+   ],
+   "unesco": true,
+   "closedForGood": false,
+   "partOf": [
+    "Q20644172"
+   ]
+  },
+  "src-q542783": {
+   "osm": "relation/918679",
+   "wikidata": "Q542783",
+   "editions": 35,
+   "types": [
+    "Q1021645"
+   ],
+   "unesco": true,
+   "closedForGood": false,
+   "partOf": [
+    "Q20644172"
+   ]
+  },
+  "src-q425622": {
+   "hours": "May-Sep Mo-Su 10:00-18:00; Oct-Apr Mo-Su 10:00-17:00",
+   "fee": "yes",
+   "osm": "way/380562777",
+   "wikidata": "Q425622",
+   "editions": 31,
+   "types": [
+    "Q16970",
+    "Q1885014"
+   ],
+   "closedForGood": true
+  },
+  "src-q685524": {
+   "hours": "Mo-Su 07:00-01:00",
+   "osm": "node/10946039386",
+   "wikidata": "Q685524",
+   "editions": 30,
+   "types": [
+    "Q763501",
+    "Q974968",
+    "Q125566279"
+   ],
+   "closedForGood": false
+  },
+  "src-q684932": {
+   "hours": "\"gemäß Veranstaltungsprogramm\"",
+   "osm": "way/10413828",
+   "wikidata": "Q684932",
+   "editions": 16,
+   "types": [
+    "Q24354",
+    "Q56827005",
+    "Q13691604"
+   ],
+   "closedForGood": false
+  },
+  "src-q150933": {
+   "osm": "way/19617443",
+   "wikidata": "Q150933",
+   "editions": 54,
+   "types": [
+    "Q1154710",
+    "Q483110"
+   ],
+   "closedForGood": false
+  },
+  "src-q204712": {
+   "osm": "way/19742735",
+   "wikidata": "Q204712",
+   "editions": 4,
+   "types": [
+    "Q37654",
+    "Q11691318",
+    "Q18674739"
+   ],
+   "closedForGood": false
+  },
+  "src-q674472": {
+   "osm": "way/22731336",
+   "wikidata": "Q674472",
+   "editions": 27,
+   "types": [
+    "Q16970"
+   ],
+   "closedForGood": false
+  },
+  "src-q1183156": {
+   "hours": "Tu-Su 11:00-18:00",
+   "fee": "yes",
+   "osm": "way/23191265",
+   "wikidata": "Q1183156",
+   "editions": 10,
+   "types": [
+    "Q207694",
+    "Q1497375",
+    "Q26944969",
+    "Q1329623"
+   ],
+   "closedForGood": false
+  },
+  "src-q2472": {
+   "hours": "24/7",
+   "osm": "way/23734712",
+   "wikidata": "Q2472",
+   "editions": 12,
+   "types": [
+    "Q22746"
+   ],
+   "closedForGood": false
+  },
+  "src-q673223": {
+   "osm": "way/24981342",
+   "wikidata": "Q673223",
+   "editions": 41,
+   "types": [
+    "Q1060829",
+    "Q27686",
+    "Q39919471"
+   ],
+   "closedForGood": false
+  },
+  "src-q937608": {
+   "hours": "Mo-Su,PH 10:00-18:00",
+   "fee": "yes",
+   "osm": "way/25337154",
+   "wikidata": "Q937608",
+   "editions": 11,
+   "types": [
+    "Q1863818"
+   ],
+   "closedForGood": false
+  },
+  "src-q450777": {
+   "osm": "way/27302907",
+   "wikidata": "Q450777",
+   "editions": 10,
+   "types": [
+    "Q24354"
+   ],
+   "closedForGood": false
+  },
+  "src-q1082972": {
+   "osm": "way/32889604",
+   "wikidata": "Q1082972",
+   "editions": 2,
+   "types": [
+    "Q16970"
+   ],
+   "closedForGood": false
+  },
+  "src-q126971": {
+   "hours": "Mo,We-Fr 10:00-17:00; Sa,Su 10:00-18:00; Tu off",
+   "fee": "yes",
+   "osm": "way/33836835",
+   "wikidata": "Q126971",
+   "editions": 9,
+   "types": [
+    "Q33506"
+   ],
+   "closedForGood": false
+  },
+  "src-q535443": {
+   "hours": "Mo-Fr 10:00-18:00; Sa 10:00-17:00; Su 09:00-20:00; PH open",
+   "osm": "way/34322749",
+   "wikidata": "Q535443",
+   "editions": 18,
+   "types": [
+    "Q1573033",
+    "Q16970"
+   ],
+   "closedForGood": false
+  },
+  "src-q665171": {
+   "hours": "off \"Sanierung bis Ende 2028\"",
+   "fee": "yes",
+   "osm": "way/34766557",
+   "wikidata": "Q665171",
+   "editions": 17,
+   "types": [
+    "Q16735822",
+    "Q41176"
+   ],
+   "closedForGood": false
+  },
+  "src-q2323379": {
+   "osm": "way/34869135",
+   "wikidata": "Q2323379",
+   "editions": 3,
+   "types": [
+    "Q1589502",
+    "Q11691318"
+   ],
+   "closedForGood": false
+  },
+  "src-q668264": {
+   "hours": "closed",
+   "osm": "way/37229036",
+   "wikidata": "Q668264",
+   "editions": 21,
+   "types": [
+    "Q32815"
+   ],
+   "closedForGood": true
+  },
+  "src-q1586687": {
+   "osm": "way/39859677",
+   "wikidata": "Q1586687",
+   "editions": 2,
+   "types": [
+    "Q41176"
+   ],
+   "closedForGood": false
+  },
+  "src-q896052": {
+   "hours": "Tu,We,Fr-Su 10:00-18:00; Mo off; Th 10:00-21:00",
+   "fee": "yes",
+   "osm": "way/42864381",
+   "wikidata": "Q896052",
+   "editions": 16,
+   "types": [
+    "Q207694",
+    "Q24699794"
+   ],
+   "closedForGood": false
+  },
+  "src-q1746647": {
+   "osm": "way/44710431",
+   "wikidata": "Q1746647",
+   "editions": 3,
+   "types": [
+    "Q317557"
+   ],
+   "closedForGood": true
+  },
+  "src-q460264": {
+   "hours": "24/7",
+   "osm": "relation/12750875",
+   "wikidata": "Q460264",
+   "editions": 12,
+   "types": [
+    "Q2354973",
+    "Q11129889"
+   ],
+   "closedForGood": false
+  },
+  "src-q2043377": {
+   "osm": "way/83289976",
+   "wikidata": "Q2043377",
+   "editions": 3,
+   "types": [
+    "Q16970"
+   ],
+   "closedForGood": false
+  },
+  "src-q858079": {
+   "hours": "Mo-Su 10:00-18:00",
+   "fee": "yes",
+   "osm": "way/137318607",
+   "wikidata": "Q858079",
+   "editions": 10,
+   "types": [
+    "Q1752434",
+    "Q130326199"
+   ],
+   "closedForGood": false
+  },
+  "src-q169542": {
+   "hours": "Tu-We 10:00-18:00; Th 10:00-21:00; Fr-Su 10:00-18:00",
+   "fee": "yes",
+   "osm": "way/142944355",
+   "wikidata": "Q169542",
+   "editions": 34,
+   "types": [
+    "Q207694",
+    "Q2668072"
+   ],
+   "closedForGood": false
+  },
+  "src-q564532": {
+   "osm": "way/142944360",
+   "wikidata": "Q564532",
+   "editions": 15,
+   "types": [
+    "Q16970"
+   ],
+   "closedForGood": true
+  },
+  "src-q502326": {
+   "hours": "Jan-Feb: 09:00-16:30; Mar-Jun: 09:00-18:00; Jul-Aug: 09:00-19:00; Sep 1-Oct 25: 09:00-18:00; Oct 26-Dec 31: 09:00-16:30; Dec 24,Dec 31 09:00-13:00",
+   "fee": "yes",
+   "osm": "way/148874791",
+   "wikidata": "Q502326",
+   "editions": 27,
+   "types": [
+    "Q43501",
+    "Q2281788",
+    "Q13226383"
+   ],
+   "closedForGood": false
+  },
+  "src-q882620": {
+   "hours": "Mo-Sa 09:00-20:00; Su 11:00-20:00",
+   "fee": "9€",
+   "osm": "way/171034128",
+   "wikidata": "Q882620",
+   "editions": 10,
+   "types": [
+    "Q575727",
+    "Q130326199",
+    "Q4818021"
+   ],
+   "closedForGood": false
+  },
+  "src-q1308438": {
+   "osm": "way/362705817",
+   "wikidata": "Q1308438",
+   "editions": 2,
+   "types": [
+    "Q16970"
+   ],
+   "closedForGood": false
+  },
+  "src-q573491": {
+   "osm": "way/362942071",
+   "wikidata": "Q573491",
+   "editions": 16,
+   "types": [
+    "Q2977"
+   ],
+   "closedForGood": false
+  },
+  "src-q616790": {
+   "osm": "way/363239302",
+   "wikidata": "Q616790",
+   "editions": 19,
+   "types": [
+    "Q1573033",
+    "Q317557"
+   ],
+   "closedForGood": false
+  },
+  "src-q1868756": {
+   "osm": "way/370478529",
+   "wikidata": "Q1868756",
+   "editions": 2,
+   "types": [
+    "Q1210334",
+    "Q537127"
+   ],
+   "closedForGood": false
+  },
+  "src-q3392985": {
+   "osm": "relation/51218",
+   "wikidata": "Q3392985",
+   "editions": 14,
+   "types": [
+    "Q131681"
+   ],
+   "closedForGood": false
+  },
+  "src-q1556": {
+   "osm": "relation/296012",
+   "wikidata": "Q1556",
+   "editions": 37,
+   "types": [
+    "Q15830667"
+   ],
+   "closedForGood": false
+  },
+  "src-q25089266": {
+   "osm": "relation/1714787",
+   "wikidata": "Q25089266",
+   "editions": 5,
+   "types": [
+    "Q22746",
+    "Q22698"
+   ],
+   "closedForGood": false
+  },
+  "src-q494440": {
+   "osm": "relation/8103463",
+   "wikidata": "Q494440",
+   "editions": 18,
+   "types": [
+    "Q22698"
+   ],
+   "closedForGood": false
+  },
+  "src-q3964": {
+   "wikidata": "Q3964",
+   "editions": 35,
+   "types": [
+    "Q15310171"
+   ],
+   "closedForGood": false
+  },
+  "src-q3976": {
+   "wikidata": "Q3976",
+   "editions": 31,
+   "types": [
+    "Q79007"
+   ],
+   "closedForGood": false
+  },
+  "src-q3238460": {
+   "wikidata": "Q3238460",
+   "editions": 17,
+   "types": [
+    "Q131681",
+    "Q187223"
+   ],
+   "closedForGood": false
+  }
+ },
+ "towns": {
+  "bremen-far": {
+   "name": "Bremen",
+   "wikidata": "Q24879",
+   "editions": 164,
+   "unesco": true,
+   "dayTripListed": true,
+   "sights": [
+    {
+     "kind": "see",
+     "name": "Rathaus",
+     "lat": 53.0759,
+     "lng": 8.8076,
+     "hours": "Mon–Sat 11:00, 12:00, 15:00, 16:00; Sun 11:00, 12:00",
+     "price": "€6.50",
+     "wikidata": "Q19479",
+     "content": "This is one of the finest in Europe and has been included on the UNESCO World Heritage List. Building work started in 1410 and it is seen as an important display of the wealth and freedom of the city.",
+     "editions": 37,
+     "unesco": true
+    },
+    {
+     "kind": "see",
+     "name": "Roland",
+     "lat": 53.07591,
+     "lng": 8.80733,
+     "hours": "24/7",
+     "price": "Free",
+     "wikidata": "Q19665",
+     "content": "This statue on the main square, in front of the town hall, is of the Knight Roland, subject of the Medieval epic, the Song of Roland, who was a protector of trade. He appears in many European cities, especially those involved in the Hanseat",
+     "editions": 34,
+     "unesco": true
+    },
+    {
+     "kind": "see",
+     "name": "Dom St. Petri",
+     "lat": 53.075278,
+     "lng": 8.808889,
+     "hours": "Mon–Fri 10:00–17:00, Sat 10:00–14:00, Sun 14:00–17:00 (Check website for tower hours)",
+     "price": "Free entry to cathedral; Tower and Museum: €3–5",
+     "wikidata": "Q695038",
+     "content": "Over 1,200 years old, its huge towered façade dominates the main square. The interior is also impressive, with some fine painted details on the ceilings. The cathedral was damaged by fire and lightning in the 17th century and also seriously",
+     "editions": 23
+    },
+    {
+     "kind": "see",
+     "name": "Böttcherstraße",
+     "lat": 53.075,
+     "lng": 8.80556,
+     "hours": "24/7",
+     "price": "Free",
+     "wikidata": "Q531367",
+     "content": "An incredible ''Jugendstil'' (Art Nouveau) street that runs from the main square towards the river. There are many fine façades and courtyards all with large amounts of design detail. There is an impressive Glockenspiel that chimes at regul",
+     "editions": 9
+    },
+    {
+     "kind": "see",
+     "name": "Wallanlagen",
+     "lat": 53.07988,
+     "lng": 8.80592,
+     "hours": "24/7",
+     "price": "Free",
+     "wikidata": "",
+     "content": "Built on the site of the former city fortifications, this star-shaped park is the oldest public garden in Germany. It features scenic walking paths, colorful flowerbeds, and the historic \"Am Wall\" windmill."
+    },
+    {
+     "kind": "see",
+     "name": "Schnoor",
+     "lat": 53.0728,
+     "lng": 8.80972,
+     "hours": "24/7",
+     "price": "Free",
+     "wikidata": "Q538341",
+     "content": "Bremen's oldest district, characterized by narrow lanes and timber-framed houses dating back to the 15th and 16th centuries. Once a quarter for fishermen and craftsmen, it now hosts numerous galleries, cafés, and small handicraft shops.",
+     "editions": 11
+    },
+    {
+     "kind": "see",
+     "name": "Überseemuseum",
+     "lat": 53.0833,
+     "lng": 8.8106,
+     "hours": "Tue-Fri 09:00-18:00, Sat Sun 10:00-18:00",
+     "price": "Children €2.50, adults €7.50",
+     "wikidata": "Q333527",
+     "content": "",
+     "editions": 7
+    },
+    {
+     "kind": "see",
+     "name": "Focke Museum",
+     "lat": 53.09152,
+     "lng": 8.86421,
+     "hours": "Tue 10:00-21:00, Wed-Sat 10:00-17:00, Sun 10:00-18:00",
+     "price": "permanent exhibition €6, children €2, and special exhibition €8, children €4",
+     "wikidata": "Q1434990",
+     "content": "A good overview of the history of Bremen City with a wide range of collections.",
+     "editions": 4
+    },
+    {
+     "kind": "see",
+     "name": "Universum Science Center",
+     "lat": 53.106389,
+     "lng": 8.844722,
+     "hours": "Mon-Fri 09:00 - 18:00, Sat Sun 10:00 - 18:00",
+     "price": "Adults €16, children €11, family card €40",
+     "wikidata": "Q882811",
+     "content": "Science museum with plenty of interactive exhibits such as an earthquake simulator. The main building is a huge steel shell designed by the Bremen architect Thomas Klumpp.",
+     "editions": 7
+    },
+    {
+     "kind": "see",
+     "name": "Hafenmuseum Speicher XI",
+     "lat": 53.0965,
+     "lng": 8.77147,
+     "hours": "Tue-Sun 11:00 - 18:00",
+     "price": "€5",
+     "wikidata": "Q1567953",
+     "content": "Housed in a former cotton warehouse. Models of ships used during the past.",
+     "editions": 2
+    },
+    {
+     "kind": "see",
+     "name": "Wuseum",
+     "lat": 53.0671,
+     "lng": 8.8384,
+     "hours": "",
+     "price": "{{EUR",
+     "wikidata": "",
+     "content": ""
+    },
+    {
+     "kind": "see",
+     "name": "Kunsthalle",
+     "lat": 53.07284,
+     "lng": 8.81355,
+     "hours": "Tue 10:00 - 21:00, Wed-Sun 10:00 - 17:00",
+     "price": "Free entry for children, adults €9",
+     "wikidata": "Q693591",
+     "content": "",
+     "editions": 20
+    },
+    {
+     "kind": "see",
+     "name": "Gerhard-Marcks-Haus",
+     "lat": 53.07277,
+     "lng": 8.81472,
+     "hours": "Tue-Sun 10:00-18:00, Thu -21:00",
+     "price": "",
+     "wikidata": "Q1511196",
+     "content": "The contemporary art museum shows the work of [[w:Gerhard Marcks",
+     "editions": 4
+    },
+    {
+     "kind": "see",
+     "name": "Wilhelm-Wagenfeld-Haus",
+     "lat": 53.07298,
+     "lng": 8.81485,
+     "hours": "Tue 15:00 - 21:00, Wed-Sun 10:00 - 18:00",
+     "price": "€5",
+     "wikidata": "Q2571567",
+     "content": "Founded as a design museum but also used for exhibitions in modern art. The museum is named after [[w:Wilhelm Wagenfeld",
+     "editions": 3
+    },
+    {
+     "kind": "see",
+     "name": "Weserburg",
+     "lat": 53.0764,
+     "lng": 8.79889,
+     "hours": "Tue-Sun 11:00 - 18:00",
+     "price": "€9, children under 18 €5",
+     "wikidata": "Q2563859",
+     "content": "Modern art museum located on the Teerhof peninsula.",
+     "editions": 5
+    }
+   ],
+   "foodDrink": [
+    {
+     "kind": "eat",
+     "name": "Bratwurstglöck",
+     "lat": 53.0766047,
+     "lng": 8.8070132,
+     "hours": "",
+     "price": "",
+     "wikidata": "",
+     "content": "Grilled sausages"
+    },
+    {
+     "kind": "eat",
+     "name": "Muchos más",
+     "lat": 53.0792055,
+     "lng": 8.807497,
+     "hours": "",
+     "price": "",
+     "wikidata": "",
+     "content": "Spanish cuisine"
+    },
+    {
+     "kind": "eat",
+     "name": "Kiefert Imbiss",
+     "lat": 53.0764593,
+     "lng": 8.8071694,
+     "hours": "",
+     "price": "",
+     "wikidata": "",
+     "content": "Grilled sausages"
+    },
+    {
+     "kind": "eat",
+     "name": "Kismet",
+     "lat": 53.078669,
+     "lng": 8.8088099,
+     "hours": "",
+     "price": "",
+     "wikidata": "",
+     "content": "A Turkish restaurant"
+    },
+    {
+     "kind": "eat",
+     "name": "Asia Bistro 68 Bremen",
+     "lat": 53.0781088,
+     "lng": 8.804444,
+     "hours": "",
+     "price": "",
+     "wikidata": "",
+     "content": ""
+    },
+    {
+     "kind": "eat",
+     "name": "Crêpes Suzette",
+     "lat": 53.0798288,
+     "lng": 8.8117721,
+     "hours": "",
+     "price": "",
+     "wikidata": "",
+     "content": ""
+    },
+    {
+     "kind": "eat",
+     "name": "BeatzBurger",
+     "lat": 53.080133,
+     "lng": 8.8132148,
+     "hours": "",
+     "price": "",
+     "wikidata": "",
+     "content": ""
+    },
+    {
+     "kind": "eat",
+     "name": "Mersin Tantuni & Grillhaus",
+     "lat": 53.0809792,
+     "lng": 8.810376,
+     "hours": "",
+     "price": "",
+     "wikidata": "",
+     "content": "A Turkish eatery"
+    },
+    {
+     "kind": "eat",
+     "name": "Pyramide",
+     "lat": 53.0796425,
+     "lng": 8.8155292,
+     "hours": "",
+     "price": "",
+     "wikidata": "",
+     "content": "Spanish and Syrian dishes"
+    },
+    {
+     "kind": "eat",
+     "name": "Bremer Ratskeller",
+     "lat": 53.07605,
+     "lng": 8.80744,
+     "hours": "11:00-00:00",
+     "price": "€10-20 (Aug 2017).",
+     "wikidata": "Q884013",
+     "content": "Stunning classic wine cellar located in the basement of the historic city hall. Has stored and sold German wines since 1405. Large menu includes regional specialties and has English translations."
+    },
+    {
+     "kind": "eat",
+     "name": "Gasthof zum Kaiser Friedrich",
+     "lat": 53.073561,
+     "lng": 8.808857,
+     "hours": "Mon-Sat",
+     "price": "",
+     "wikidata": "",
+     "content": "Slightly smoked cut of pork with cabbage and mashed potatoes (Braunkohlteller)"
+    },
+    {
+     "kind": "eat",
+     "name": "Das Kleine Lokal",
+     "lat": 53.0765606,
+     "lng": 8.8260414,
+     "hours": "",
+     "price": "",
+     "wikidata": "",
+     "content": ""
+    }
+   ],
+   "unescoSites": [
+    "Town Hall of Bremen",
+    "Town Hall and Roland on the Marketplace of Bremen"
+   ]
+  },
+  "buxtehude-far": {
+   "name": "Buxtehude",
+   "wikidata": "Q14868",
+   "editions": 53,
+   "unesco": false,
+   "dayTripListed": true,
+   "sights": [
+    {
+     "kind": "see",
+     "name": "St. Petri church",
+     "lat": 53.477128,
+     "lng": 9.700825,
+     "hours": "",
+     "price": "",
+     "wikidata": "Q52366584",
+     "content": "",
+     "editions": 2
+    },
+    {
+     "kind": "see",
+     "name": "City hall",
+     "lat": 53.47669,
+     "lng": 9.70038,
+     "hours": "",
+     "price": "",
+     "wikidata": "",
+     "content": ""
+    },
+    {
+     "kind": "see",
+     "name": "Buxtehude Museum für Regionalgeschichte und Kunst",
+     "lat": 53.4768,
+     "lng": 9.70171,
+     "hours": "",
+     "price": "",
+     "wikidata": "Q1954671",
+     "content": "",
+     "editions": 2
+    }
+   ],
+   "foodDrink": [
+    {
+     "kind": "eat",
+     "name": "Amadeus",
+     "lat": 53.476147,
+     "lng": 9.700009,
+     "hours": "Mon-Thu 11:30-24:00, Fri Sat 11:30-01:00, Sun 12:00-23:00",
+     "price": "",
+     "wikidata": "",
+     "content": "A lot of dishes are made in a stone oven. So you get here pizza, steak and burger."
+    },
+    {
+     "kind": "eat",
+     "name": "Hase & Igel",
+     "lat": 53.47058,
+     "lng": 9.69047,
+     "hours": "Mon-Fri 06:00-18:00, Sat 7:00-13:00",
+     "price": "",
+     "wikidata": "",
+     "content": ""
+    },
+    {
+     "kind": "eat",
+     "name": "Hase & Igel",
+     "lat": 53.47573,
+     "lng": 9.69858,
+     "hours": "Mon-Fri 07:00-18:00, Sat 07:00-18:00",
+     "price": "",
+     "wikidata": "",
+     "content": ""
+    },
+    {
+     "kind": "eat",
+     "name": "Hase & Igel",
+     "lat": 53.47754,
+     "lng": 9.70713,
+     "hours": "Mon-Fri 05:30-18:00, Sat 07:00-12:30, Sun 07:00-11:00",
+     "price": "",
+     "wikidata": "",
+     "content": ""
+    },
+    {
+     "kind": "eat",
+     "name": "Great Plains Steakhouse",
+     "lat": 53.46997,
+     "lng": 9.68894,
+     "hours": "Tue-Fri 12:00-15:00 and 17:30-22:00, Sat Sun 17:30-22:00",
+     "price": "",
+     "wikidata": "",
+     "content": "Steakhouse. Make your salad as you wish at the salad bar and choose from their own made bread."
+    },
+    {
+     "kind": "eat",
+     "name": "Fidelio - Bistro & Restaurant",
+     "lat": 53.47169,
+     "lng": 9.69087,
+     "hours": "Mon-Tue 11:30-22:30, Fri Sat 11:30-24:00, Sun 11:30-22:00",
+     "price": "",
+     "wikidata": "",
+     "content": "You can find here schnitzel, burgers, pizza and pasta."
+    },
+    {
+     "kind": "eat",
+     "name": "Süße Sünde",
+     "lat": 53.47764,
+     "lng": 9.69925,
+     "hours": "daily 08:30-18:00 except on holidays",
+     "price": "",
+     "wikidata": "",
+     "content": "Frozen Yoghurt, Waffles, Pancakes and Cakes."
+    }
+   ]
+  },
+  "itzehoe-far": {
+   "name": "Itzehoe",
+   "wikidata": "Q16073",
+   "editions": 0,
+   "unesco": false,
+   "dayTripListed": true,
+   "sights": [
+    {
+     "kind": "see",
+     "name": "Germanengrab",
+     "lat": 53.93,
+     "lng": 9.51608,
+     "hours": "",
+     "price": "",
+     "wikidata": "Q1514083",
+     "content": "",
+     "editions": 2
+    },
+    {
+     "kind": "see",
+     "name": "Kloster Itzehoe",
+     "lat": 53.923839,
+     "lng": 9.51919,
+     "hours": "",
+     "price": "",
+     "wikidata": "Q1775395",
+     "content": "",
+     "editions": 5
+    },
+    {
+     "kind": "see",
+     "name": "Nagelsche Fachwerkhäuser",
+     "lat": 53.924515,
+     "lng": 9.521954,
+     "hours": "",
+     "price": "",
+     "wikidata": "Q19324436",
+     "content": "Brick and timber houses built in 1659",
+     "editions": 2
+    },
+    {
+     "kind": "see",
+     "name": "Stadtkirche St. Laurentii",
+     "lat": 53.9235,
+     "lng": 9.51822,
+     "hours": "",
+     "price": "",
+     "wikidata": "Q2327446",
+     "content": "",
+     "editions": 3
+    },
+    {
+     "kind": "see",
+     "name": "St.-Jürgen-Kapelle",
+     "lat": 53.925,
+     "lng": 9.5241,
+     "hours": "",
+     "price": "",
+     "wikidata": "Q2316309",
+     "content": "",
+     "editions": 2
+    }
+   ],
+   "foodDrink": [
+    {
+     "kind": "buy",
+     "name": "Holstein Center",
+     "lat": 53.925518,
+     "lng": 9.516661,
+     "hours": "Mon-Fri 09:00-19:00, Sat 09:00-18:00",
+     "price": "",
+     "wikidata": "",
+     "content": "A shopping center"
+    },
+    {
+     "kind": "eat",
+     "name": "Restaurant Himmel+Erde",
+     "lat": 53.923023,
+     "lng": 9.518173,
+     "hours": "",
+     "price": "",
+     "wikidata": "",
+     "content": ""
+    },
+    {
+     "kind": "eat",
+     "name": "Ristorante La Grappa",
+     "lat": 53.925835,
+     "lng": 9.514181,
+     "hours": "Mon-Sat 17ː30-22ː00, Sun closed",
+     "price": "",
+     "wikidata": "",
+     "content": "Italian restaurant serving soups, salads, pizza and pasta. Value not only to tradition, but also fresh culinary ideas"
+    },
+    {
+     "kind": "eat",
+     "name": "Sabai Jai",
+     "lat": 53.924019,
+     "lng": 9.510742,
+     "hours": "Mon-Sat noon-15ː00 and 17ː00-22ː00, Sun noon-22ː00, Tue closed",
+     "price": "",
+     "wikidata": "",
+     "content": "Traditional Thai restaurant"
+    }
+   ]
+  },
+  "lubeck-far": {
+   "name": "Lübeck",
+   "wikidata": "Q2843",
+   "editions": 136,
+   "unesco": true,
+   "dayTripListed": true,
+   "sights": [
+    {
+     "kind": "see",
+     "name": "St. Marien",
+     "lat": 53.8677,
+     "lng": 10.685,
+     "hours": "Mon-Sat 10:00-17:00 Sun 13:00-17:00; The church will be closed for renovation work from 2 November 2026 until expected May 2027",
+     "price": "",
+     "wikidata": "Q695065",
+     "content": "The largest church in Lübeck, and a key example of brick Gothic architecture. Built between 1277 and 1351, it features the highest brick vault in the world.",
+     "editions": 29
+    },
+    {
+     "kind": "see",
+     "name": "The Dom",
+     "lat": 53.8608,
+     "lng": 10.6858,
+     "hours": "May-Sep Mon-Sat 10:00-18:00 Sun 11:30-16:00 Oct-Apr 10:00-16:00",
+     "price": "",
+     "wikidata": "Q3916007",
+     "content": "Founded in 1173 by Henry the Lion, this is one of the oldest monuments in Lübeck and the first large brick church built on the Baltic coast. Initially constructed as a Romanesque basilica and later converted into a Gothic hall church, it is",
+     "editions": 24
+    },
+    {
+     "kind": "see",
+     "name": "St. Petri",
+     "lat": 53.8658,
+     "lng": 10.6833,
+     "hours": "11:00-16:00",
+     "price": "",
+     "wikidata": "Q896458",
+     "content": "Its tower platform (which can be reached by an elevator) offers a great view over the city, and if weather conditions allow it you can even see Travemünde (17&nbsp;km to the north-east).",
+     "editions": 13
+    },
+    {
+     "kind": "see",
+     "name": "St. Jakobi",
+     "lat": 53.8709,
+     "lng": 10.689,
+     "hours": "Core hours 10:00-15:00 (varies by season)",
+     "price": "",
+     "wikidata": "Q375042",
+     "content": "This 14th-century seafarers' church survived World War II intact, preserving its original historic interior. It is known for its historic pipe organs and a memorial chapel dedicated to the lost sailing ship ''Pamir''.",
+     "editions": 12
+    },
+    {
+     "kind": "see",
+     "name": "St. Aegidien",
+     "lat": 53.8639,
+     "lng": 10.6898,
+     "hours": "Tue-Sat 10:00-16:00",
+     "price": "",
+     "wikidata": "Q316973",
+     "content": "The smallest of Lübeck's five medieval parish churches was spared from destruction in World War II. Its interior combines medieval frescoes with a carved 1587 Renaissance singers' gallery and a prominent Baroque altar.",
+     "editions": 6
+    },
+    {
+     "kind": "see",
+     "name": "St. Katharinen",
+     "lat": 53.869167,
+     "lng": 10.689444,
+     "hours": "",
+     "price": "",
+     "wikidata": "Q317388",
+     "content": "This early 14th-century former Franciscan monastery church is the only surviving conventual church in Lübeck's Old Town. Today operating as a museum, it features an elevated choir built over a double-nave crypt and exterior sculptures by Er",
+     "editions": 8
+    },
+    {
+     "kind": "see",
+     "name": "Holstentor",
+     "lat": 53.8662,
+     "lng": 10.6797,
+     "hours": "",
+     "price": "",
+     "wikidata": "Q321229",
+     "content": "Being featured on the pre-reunification 50-mark banknote, this gate is easily the most recognised landmark of Lübeck in Germany. The gate nowadays hosts a museum.",
+     "editions": 31,
+     "unesco": true
+    },
+    {
+     "kind": "see",
+     "name": "Burgtor",
+     "lat": 53.874,
+     "lng": 10.6911,
+     "hours": "",
+     "price": "",
+     "wikidata": "Q538276",
+     "content": "",
+     "editions": 12
+    },
+    {
+     "kind": "see",
+     "name": "Heiligen-Geist-Hospital",
+     "lat": 53.8713,
+     "lng": 10.6898,
+     "hours": "",
+     "price": "",
+     "wikidata": "Q317608",
+     "content": "",
+     "editions": 12
+    },
+    {
+     "kind": "see",
+     "name": "Behnhaus/Drägerhaus",
+     "lat": 53.8701,
+     "lng": 10.6896,
+     "hours": "",
+     "price": "",
+     "wikidata": "Q814533",
+     "content": "A Classicist burgher house that now hosts an art museum.",
+     "editions": 3
+    },
+    {
+     "kind": "see",
+     "name": "Rathaus",
+     "lat": 53.867,
+     "lng": 10.6855,
+     "hours": "",
+     "price": "",
+     "wikidata": "Q538453",
+     "content": "Its architecture is a stylistic potpourri reaching back to the 12th century. It is still the seat of the city administration and not a museum, so you can't have a look inside on your own. But there are guided tours every hour or so where th",
+     "editions": 13,
+     "unesco": true
+    },
+    {
+     "kind": "see",
+     "name": "Willy Brandt House",
+     "lat": 53.8697,
+     "lng": 10.6894,
+     "hours": "",
+     "price": "free",
+     "wikidata": "Q2581800",
+     "content": "Dedicated to the former chancellor (1969-1974) and leader of the Social Democratic Party who was born in Lübeck in 1912.",
+     "editions": 3
+    },
+    {
+     "kind": "see",
+     "name": "Haus der Kaufmannschaft",
+     "lat": 53.8708,
+     "lng": 10.6881,
+     "hours": "",
+     "price": "",
+     "wikidata": "Q2713736",
+     "content": "A building built by the wealthy merchants.",
+     "editions": 2
+    },
+    {
+     "kind": "see",
+     "name": "Museumsquartier St. Annen",
+     "lat": 53.862778,
+     "lng": 10.689167,
+     "hours": "",
+     "price": "",
+     "wikidata": "Q18674699",
+     "content": "",
+     "editions": 9
+    },
+    {
+     "kind": "see",
+     "name": "Buddenbrookhaus",
+     "lat": 53.8683,
+     "lng": 10.6858,
+     "hours": "",
+     "price": "",
+     "wikidata": "Q315187",
+     "content": "Dedicated to the brothers Thomas and Heinrich Mann, who spent their youth there. It contains many of their works. Closed until 2023.",
+     "editions": 7
+    },
+    {
+     "kind": "see",
+     "name": "Günter-Grass-Haus",
+     "lat": 53.8694,
+     "lng": 10.69,
+     "hours": "",
+     "price": "",
+     "wikidata": "Q1560511",
+     "content": "Dedicated to the author (born in Gdańsk) who spent most of his life in Lübeck until his death in 2015 and who received the Nobel Prize for Literature in 1999.",
+     "editions": 5
+    },
+    {
+     "kind": "see",
+     "name": "Museumshafen",
+     "lat": 53.872,
+     "lng": 10.6818,
+     "hours": "",
+     "price": "",
+     "wikidata": "Q1954827",
+     "content": "It features some old-fashioned ships, among them a rebuilt Hanseatic ''kraweel'' (\"Lisa von Lübeck\") — more so in winter, because many of these ships are still in use during summer.",
+     "editions": 3
+    },
+    {
+     "kind": "see",
+     "name": "European Hansemuseum",
+     "lat": 53.8736,
+     "lng": 10.689,
+     "hours": "10:00-18:00 daily",
+     "price": "€16 for adults in main exhibition, reduced price €10, free for children (under 18), university students",
+     "wikidata": "Q14545643",
+     "content": "Opened in 2015, this is perhaps the \"crown jewel\" among Lübeck's historical museums as it gives an in-depth look into Lübeck's over 800 years of history and how Lübeck shaped the Hanseatic League and how the ''Hanse'' in turn shaped Lübeck.",
+     "editions": 10
+    },
+    {
+     "kind": "see",
+     "name": "Industriemuseum Geschichtswerkstatt Herrenwyk",
+     "lat": 53.9036,
+     "lng": 10.8047,
+     "hours": "Fri 14:00-17:00, Sat Sun 10:00-17:00",
+     "price": "",
+     "wikidata": "Q1662094",
+     "content": "Dedicated to the [[Industrial tourism",
+     "editions": 2
+    },
+    {
+     "kind": "see",
+     "name": "Grenz-Dokumentationsstätte Lübeck-Schlutup",
+     "lat": 53.8842,
+     "lng": 10.8053,
+     "hours": "",
+     "price": "",
+     "wikidata": "Q1545709",
+     "content": "As Lübeck's eastern border was co-extensive with the border between West (FRG) and East Germany (GDR) during the [[Cold War Europe",
+     "editions": 2
+    },
+    {
+     "kind": "see",
+     "name": "Theaterfigurenmuseum Lübeck",
+     "lat": 53.865764,
+     "lng": 10.682247,
+     "hours": "Closed for renovations until 2022",
+     "price": "",
+     "wikidata": "Q463403",
+     "content": "A museum dedicated to all kinds of theatre puppets.",
+     "editions": 9
+    },
+    {
+     "kind": "see",
+     "name": "Museum für Natur und Umwelt Lübeck",
+     "lat": 53.860556,
+     "lng": 10.686944,
+     "hours": "Tue-Fri 09:00-17:00, Sat Sun 10:00-17:00 (closed Mon)",
+     "price": "",
+     "wikidata": "Q1360933",
+     "content": "A natural history museum featuring, among other things, an entire sperm whale skeleton taken from an unlucky whale that died in a beaching incident.",
+     "editions": 3
+    }
+   ],
+   "foodDrink": [
+    {
+     "kind": "eat",
+     "name": "My hummus",
+     "lat": 53.869625,
+     "lng": 10.682448,
+     "hours": "",
+     "price": "",
+     "wikidata": "",
+     "content": "Vegetarian cuisine."
+    },
+    {
+     "kind": "eat",
+     "name": "Kartoffelspeicher",
+     "lat": 53.865862,
+     "lng": 10.681294,
+     "hours": "Mon-Sat 11ː00-20ː00, Sun closed",
+     "price": "",
+     "wikidata": "",
+     "content": "Restaurant specializing in potato dishes."
+    },
+    {
+     "kind": "eat",
+     "name": "Restaurant Alte Schmiede",
+     "lat": 53.864173,
+     "lng": 10.685791,
+     "hours": "",
+     "price": "",
+     "wikidata": "",
+     "content": ""
+    },
+    {
+     "kind": "eat",
+     "name": "Bei Ulla",
+     "lat": 53.863838,
+     "lng": 10.686184,
+     "hours": "Mon-Sat noon-22ː00, Sun closed",
+     "price": "",
+     "wikidata": "",
+     "content": "German cuisine. The restaurant has been in existence since 1967. Homemade dishes."
+    },
+    {
+     "kind": "eat",
+     "name": "Café Erdapfel",
+     "lat": 53.866929,
+     "lng": 10.684528,
+     "hours": "",
+     "price": "",
+     "wikidata": "",
+     "content": ""
+    },
+    {
+     "kind": "eat",
+     "name": "Das Flammkuchenhaus",
+     "lat": 53.867104,
+     "lng": 10.686647,
+     "hours": "Mon-Sat noon-19ː00, Sun closed",
+     "price": "",
+     "wikidata": "",
+     "content": "An Alsace restaurant."
+    },
+    {
+     "kind": "eat",
+     "name": "La Vigna",
+     "lat": 53.865667,
+     "lng": 10.689752,
+     "hours": "Mon-Sat noon-23ː00, Sun closed",
+     "price": "",
+     "wikidata": "",
+     "content": "It is a small Italian café in the middle of the old town of Lübeck."
+    },
+    {
+     "kind": "eat",
+     "name": "Taste",
+     "lat": 53.86626,
+     "lng": 10.68249,
+     "hours": "Mon-Fri 08:00-19:00, Sat 08:30-19:00, Sun 09:00-17:00",
+     "price": "",
+     "wikidata": "",
+     "content": "Bagels, fresh juices, soups and other tasty things with many vegetarian options"
+    },
+    {
+     "kind": "eat",
+     "name": "Marae",
+     "lat": 53.8718,
+     "lng": 10.6853,
+     "hours": "Tue-Fri 12:00-20:00, Sat 10:00-19:00, closed Sun & Mon",
+     "price": "",
+     "wikidata": "",
+     "content": "Vegan restaurant with homemade lemonade and raw cakes."
+    },
+    {
+     "kind": "eat",
+     "name": "Kartoffel-Keller",
+     "lat": 53.8712162,
+     "lng": 10.6901176,
+     "hours": "Mon-Thu 11:30-23:00, Fri Sat 11:30-23:30, Sun 11:30-22:00",
+     "price": "",
+     "wikidata": "",
+     "content": ""
+    },
+    {
+     "kind": "eat",
+     "name": "Ratskeller zu Lübeck",
+     "lat": 53.86696,
+     "lng": 10.6854,
+     "hours": "Daily 12:00-22:00",
+     "price": "",
+     "wikidata": "",
+     "content": ""
+    },
+    {
+     "kind": "eat",
+     "name": "Restaurant Korfu",
+     "lat": 53.86384,
+     "lng": 10.68479,
+     "hours": "",
+     "price": "",
+     "wikidata": "",
+     "content": "Greek food."
+    },
+    {
+     "kind": "eat",
+     "name": "Neue Rösterei",
+     "lat": 53.86543,
+     "lng": 10.6884,
+     "hours": "Tue–Sat 09:30–24:00, Sun 09:30–18:00",
+     "price": "",
+     "wikidata": "",
+     "content": "They roast their own coffee."
+    },
+    {
+     "kind": "eat",
+     "name": "NUI to go – Sushibar",
+     "lat": 53.86541,
+     "lng": 10.691028,
+     "hours": "",
+     "price": "",
+     "wikidata": "",
+     "content": "A sushi place also offering Thai food."
+    },
+    {
+     "kind": "eat",
+     "name": "Schabbelhaus",
+     "lat": 53.868735,
+     "lng": 10.681946,
+     "hours": "",
+     "price": "",
+     "wikidata": "",
+     "content": ""
+    },
+    {
+     "kind": "eat",
+     "name": "Schiffergesellschaft",
+     "lat": 53.8711,
+     "lng": 10.6882,
+     "hours": "",
+     "price": "",
+     "wikidata": "Q2234995",
+     "content": "Excellent food in historic building. Good friendly service (a lot of staff). Many rooms, but if you want a seat in the main hall a reservation is recommended. Prices are a little higher than some but well worth it for the quality of the foo"
+    },
+    {
+     "kind": "eat",
+     "name": "Wullenwever",
+     "lat": 53.8695577,
+     "lng": 10.6821973,
+     "hours": "",
+     "price": "",
+     "wikidata": "",
+     "content": ""
+    },
+    {
+     "kind": "eat",
+     "name": "Die Zimberei",
+     "lat": 53.87057,
+     "lng": 10.68967,
+     "hours": "",
+     "price": "",
+     "wikidata": "",
+     "content": ""
+    },
+    {
+     "kind": "drink",
+     "name": "Treibsand",
+     "lat": 53.869882,
+     "lng": 10.676625,
+     "hours": "",
+     "price": "",
+     "wikidata": "",
+     "content": "A music venue run by volunteers of a leftish/alternative bend. Prices are moderate as they only charge enough to cover costs."
+    },
+    {
+     "kind": "drink",
+     "name": "Cafe Brazil",
+     "lat": 53.869844,
+     "lng": 10.677176,
+     "hours": "",
+     "price": "",
+     "wikidata": "",
+     "content": "Run by volunteers of a leftish/alternative bent."
+    },
+    {
+     "kind": "drink",
+     "name": "VeB",
+     "lat": 53.869906,
+     "lng": 10.677195,
+     "hours": "",
+     "price": "",
+     "wikidata": "",
+     "content": ""
+    },
+    {
+     "kind": "drink",
+     "name": "A1 Musikpark",
+     "lat": 53.878099,
+     "lng": 10.668314,
+     "hours": "",
+     "price": "",
+     "wikidata": "",
+     "content": ""
+    },
+    {
+     "kind": "drink",
+     "name": "Hüx",
+     "lat": 53.864704,
+     "lng": 10.694588,
+     "hours": "",
+     "price": "",
+     "wikidata": "",
+     "content": ""
+    },
+    {
+     "kind": "drink",
+     "name": "Eishaus",
+     "lat": 53.846105,
+     "lng": 10.667802,
+     "hours": "",
+     "price": "",
+     "wikidata": "",
+     "content": ""
+    }
+   ],
+   "unescoSites": [
+    "Hanseatic City of Lübeck"
+   ]
+  }
+ },
+ "ports": [],
+ "dayTrips": [
+  "freighter travel",
+  "Bremen",
+  "hanseatic city",
+  "Buxtehude",
+  "Helgoland",
+  "Itzehoe",
+  "Kiel",
+  "Lübeck",
+  "Lüneburg",
+  "Travemünde",
+  "Stade",
+  "Ahrensburg",
+  "Sankt Peter-Ording",
+  "Groningen",
+  "Buchholz in der Nordheide",
+  "Rügen",
+  "Aalborg",
+  "Neumünster",
+  "Munich",
+  "Hannover",
+  "Frankfurt",
+  "Frankfurt Airport",
+  "Leipzig",
+  "Berlin"
+ ],
+ "missing": [
+  "a mapped cruise terminal or pier"
+ ],
+ "centre": {
+  "lat": 53.554764468085104,
+  "lng": 9.980863191489362
+ },
+ "wikivoyage": "Hamburg"
+}

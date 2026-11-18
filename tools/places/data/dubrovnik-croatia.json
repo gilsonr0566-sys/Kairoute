@@ -1,0 +1,180 @@
+{
+ "key": "dubrovnik croatia",
+ "name": "Dubrovnik, Croatia",
+ "built": "2026-11-18",
+ "sources": [
+  "Wikidata",
+  "OpenStreetMap",
+  "Wikivoyage"
+ ],
+ "sites": {
+  "src-q2497590": {
+   "wikidata": "Q2497590",
+   "editions": 27,
+   "types": [
+    "Q33506",
+    "Q41176"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "hours": "Mo-Su 09:00-18:00",
+   "osm": "relation/5861269"
+  },
+  "src-q2986276": {
+   "wikidata": "Q2986276",
+   "editions": 21,
+   "types": [
+    "Q16560"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "hours": "24/7",
+   "osm": "relation/2301265"
+  },
+  "src-q3396134": {
+   "wikidata": "Q3396134",
+   "editions": 20,
+   "types": [
+    "Q57831"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "fee": "yes",
+   "osm": "way/165354386"
+  },
+  "src-q2986286": {
+   "wikidata": "Q2986286",
+   "editions": 17,
+   "types": [
+    "Q16970"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "osm": "way/1297393787"
+  },
+  "src-q584428": {
+   "wikidata": "Q584428",
+   "editions": 26,
+   "types": [
+    "Q2977",
+    "Q16970"
+   ],
+   "unesco": true,
+   "closedForGood": false,
+   "partOf": [
+    "Q910661"
+   ],
+   "osm": "way/737699509"
+  },
+  "src-q3509032": {
+   "wikidata": "Q3509032",
+   "editions": 21,
+   "types": [
+    "Q16970",
+    "Q44613"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "osm": "way/843131885"
+  },
+  "src-q2750095": {
+   "wikidata": "Q2750095",
+   "editions": 18,
+   "types": [
+    "Q34627"
+   ],
+   "unesco": true,
+   "closedForGood": false,
+   "partOf": [
+    "Q910661"
+   ]
+  }
+ },
+ "towns": {
+  "cavtat-far": {
+   "name": "Cavtat",
+   "wikidata": "Q221350",
+   "editions": 36,
+   "unesco": false,
+   "dayTripListed": true,
+   "sights": [
+    {
+     "kind": "see",
+     "name": "Bukovac House Museum",
+     "lat": 42.58314,
+     "lng": 18.21693,
+     "hours": "",
+     "price": "",
+     "wikidata": "",
+     "content": ""
+    },
+    {
+     "kind": "see",
+     "name": "Mausoleum of the Račić family",
+     "lat": 42.584652,
+     "lng": 18.21382,
+     "hours": "",
+     "price": "",
+     "wikidata": "",
+     "content": "built on the top of the hill with good views"
+    }
+   ],
+   "foodDrink": [
+    {
+     "kind": "eat",
+     "name": "Restaurant By the way",
+     "lat": 42.57828,
+     "lng": 18.22036,
+     "hours": "7AM-11PM",
+     "price": "€10-15",
+     "wikidata": "",
+     "content": "Pizza and a good view"
+    },
+    {
+     "kind": "eat",
+     "name": "Konavoski Dvori",
+     "lat": 42.53803,
+     "lng": 18.37855,
+     "hours": "",
+     "price": "",
+     "wikidata": "",
+     "content": "A magical setting, dining next to a waterfall"
+    }
+   ]
+  }
+ },
+ "ports": [],
+ "dayTrips": [
+  "Cavtat",
+  "Trsteno",
+  "Ston",
+  "Mljet",
+  "Makarska",
+  "Split",
+  "Zagreb",
+  "Bosnia and Herzegovina",
+  "Neum",
+  "Herzegovina",
+  "Međugorje",
+  "Mostar",
+  "Sarajevo",
+  "Montenegro",
+  "Herceg Novi",
+  "Kotor",
+  "Budva",
+  "Pescara"
+ ],
+ "missing": [
+  "a mapped cruise terminal or pier"
+ ],
+ "centre": {
+  "lat": 42.64213428571428,
+  "lng": 18.106524285714286
+ },
+ "wikivoyage": "Dubrovnik"
+}

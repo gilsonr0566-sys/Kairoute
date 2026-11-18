@@ -1,0 +1,688 @@
+{
+ "key": "lisbon portugal",
+ "name": "Lisbon, Portugal",
+ "built": "2026-11-18",
+ "sources": [
+  "Wikidata",
+  "OpenStreetMap",
+  "Wikivoyage"
+ ],
+ "sites": {
+  "src-q272781": {
+   "wikidata": "Q272781",
+   "editions": 53,
+   "types": [
+    "Q44613",
+    "Q210272"
+   ],
+   "unesco": true,
+   "closedForGood": false,
+   "partOf": [
+    "Q15229898"
+   ],
+   "osm": "relation/11318514",
+   "hours": "Oct-Apr 10:00-17:30; May-Sep 10:00-18:30; Mo off; Jan 1 off; May 1 off; Dec 25 off",
+   "fee": "yes"
+  },
+  "src-q215003": {
+   "wikidata": "Q215003",
+   "editions": 57,
+   "types": [
+    "Q1785071",
+    "Q81917",
+    "Q210272",
+    "Q811165",
+    "Q570116"
+   ],
+   "unesco": true,
+   "closedForGood": false,
+   "partOf": [
+    "Q15229898"
+   ],
+   "hours": "Oct-Apr: Tu-Su 10:00-17:30; May-Sep: Tu-Su 10:00-18:30",
+   "fee": "yes",
+   "osm": "way/24341353"
+  },
+  "src-q721152": {
+   "wikidata": "Q721152",
+   "editions": 34,
+   "types": [
+    "Q6636777",
+    "Q110848334",
+    "Q210272",
+    "Q12570",
+    "Q1243306"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "osm": "relation/18334918"
+  },
+  "src-q432290": {
+   "wikidata": "Q432290",
+   "editions": 32,
+   "types": [
+    "Q56242215",
+    "Q210272"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "hours": "Mo-Sa 09:30-19:00",
+   "osm": "relation/19372558"
+  },
+  "src-q999002": {
+   "wikidata": "Q999002",
+   "editions": 32,
+   "types": [
+    "Q174782",
+    "Q210272"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "osm": "way/677181958"
+  },
+  "src-q636780": {
+   "wikidata": "Q636780",
+   "editions": 31,
+   "types": [
+    "Q23413",
+    "Q210272"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [
+    "Q54953743"
+   ],
+   "hours": "Mo-Su 09:00-21:00",
+   "fee": "yes",
+   "osm": "way/1382432568"
+  },
+  "src-q168001": {
+   "wikidata": "Q168001",
+   "editions": 26,
+   "types": [
+    "Q132911",
+    "Q210272"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "osm": "way/1387008000",
+   "fee": "yes"
+  },
+  "src-q212459": {
+   "wikidata": "Q212459",
+   "editions": 26,
+   "types": [
+    "Q207694",
+    "Q17431399",
+    "Q210272"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "hours": "Tu-Su 10:00-18:00",
+   "osm": "way/98656587"
+  },
+  "src-q1133712": {
+   "wikidata": "Q1133712",
+   "editions": 32,
+   "types": [
+    "Q4989906",
+    "Q210272"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "fee": "yes",
+   "osm": "way/152327819"
+  },
+  "src-q1601019": {
+   "wikidata": "Q1601019",
+   "editions": 23,
+   "types": [
+    "Q16970",
+    "Q162875",
+    "Q210272"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "hours": "Tu-Su 10:00-18:00",
+   "osm": "way/9253917"
+  },
+  "src-q1464499": {
+   "wikidata": "Q1464499",
+   "editions": 21,
+   "types": [
+    "Q16560",
+    "Q44613",
+    "Q1220959",
+    "Q210272"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "osm": "relation/6456903"
+  },
+  "src-q623228": {
+   "wikidata": "Q623228",
+   "editions": 19,
+   "types": [
+    "Q474",
+    "Q210272",
+    "Q1569871"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "hours": "Tu-Su 10:00-18:00; PH off",
+   "fee": "yes",
+   "osm": "relation/6314267"
+  },
+  "src-q1776168": {
+   "wikidata": "Q1776168",
+   "editions": 19,
+   "types": [
+    "Q44613",
+    "Q16970",
+    "Q33506",
+    "Q210272"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "osm": "relation/3310877"
+  },
+  "src-q2657972": {
+   "wikidata": "Q2657972",
+   "editions": 18,
+   "types": [
+    "Q1088552",
+    "Q210272",
+    "Q120560",
+    "Q317557"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "hours": "Mo-Su 09:00-11:30, 15:00-16:00",
+   "osm": "way/96359439"
+  },
+  "src-q1470414": {
+   "wikidata": "Q1470414",
+   "editions": 18,
+   "types": [
+    "Q9134984",
+    "Q210272",
+    "Q15823107",
+    "Q1701174"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "osm": "relation/7524055"
+  },
+  "src-q211262": {
+   "wikidata": "Q211262",
+   "editions": 26,
+   "types": [
+    "Q24699794",
+    "Q33506",
+    "Q207694"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [
+    "Q3052794"
+   ],
+   "hours": "We-Mo 10:00-18:00",
+   "osm": "relation/17036063"
+  },
+  "src-q652806": {
+   "wikidata": "Q652806",
+   "editions": 17,
+   "types": [
+    "Q2281788",
+    "Q210272"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "fee": "yes",
+   "osm": "relation/3084517",
+   "hours": "Mo-Su 10:00-18:00"
+  },
+  "src-q1549270": {
+   "wikidata": "Q1549270",
+   "editions": 18,
+   "types": [
+    "Q174782"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "osm": "way/1317749306"
+  },
+  "src-q220063": {
+   "wikidata": "Q220063",
+   "editions": 13,
+   "types": [
+    "Q43501",
+    "Q210272"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [
+    "Q104063278"
+   ],
+   "hours": "10:00-20:00",
+   "osm": "way/30104081"
+  },
+  "src-q2313815": {
+   "wikidata": "Q2313815",
+   "editions": 17,
+   "types": [
+    "Q33506"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "hours": "closed",
+   "fee": "yes",
+   "osm": "way/1451054092"
+  },
+  "src-q1659559": {
+   "wikidata": "Q1659559",
+   "editions": 12,
+   "types": [
+    "Q207694",
+    "Q2516357",
+    "Q41176"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "hours": "Tu-Su 10:00-18:00; Jan 01,May 01,Dec 25; easter off",
+   "fee": "yes",
+   "osm": "relation/5363219"
+  },
+  "src-q976850": {
+   "wikidata": "Q976850",
+   "editions": 10,
+   "types": [
+    "Q39614",
+    "Q210272"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "hours": "Oct-Apr 09:00-17:00; May-Sep 09:00-18:00",
+   "osm": "relation/9345270"
+  },
+  "src-q943407": {
+   "wikidata": "Q943407",
+   "editions": 9,
+   "types": [
+    "Q167346",
+    "Q210272"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "hours": "09:00-20:00; Oct 01-Mar 31: 09:00-17:00",
+   "fee": "yes",
+   "osm": "way/40705510"
+  },
+  "src-q5116936": {
+   "wikidata": "Q5116936",
+   "editions": 7,
+   "types": [
+    "Q16970",
+    "Q210272"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "hours": "Mo-Fr 09:15-17:00; Su 10:00-13:00",
+   "osm": "way/96319788"
+  },
+  "src-q10306236": {
+   "wikidata": "Q10306236",
+   "editions": 7,
+   "types": [
+    "Q22746",
+    "Q210272"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "hours": "Mo-Su 07:00-24:00",
+   "osm": "way/23697561"
+  },
+  "src-q1954392": {
+   "wikidata": "Q1954392",
+   "editions": 4,
+   "types": [
+    "Q33506",
+    "Q41176"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "hours": "Tu-Su 10:00-18:00; Dec 24, Dec 31 10:00-14:00; Jan 01,May 01,Dec 25 off",
+   "osm": "relation/1396217"
+  },
+  "src-q10343917": {
+   "wikidata": "Q10343917",
+   "editions": 3,
+   "types": [
+    "Q16560",
+    "Q210272"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "osm": "way/96299647"
+  },
+  "src-q10346955": {
+   "wikidata": "Q10346955",
+   "editions": 3,
+   "types": [
+    "Q41176",
+    "Q210272",
+    "Q33506",
+    "Q3499307"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "hours": "Mo-Fr 10:00-18:00; PH,Sa,Su 11:00-19:00",
+   "osm": "relation/3232954"
+  },
+  "src-q959567": {
+   "wikidata": "Q959567",
+   "editions": 15,
+   "types": [
+    "Q174782"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "osm": "way/1340657685"
+  },
+  "src-q2034183": {
+   "wikidata": "Q2034183",
+   "editions": 15,
+   "types": [
+    "Q22698"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [
+    "Q113303779"
+   ],
+   "osm": "relation/13137361"
+  }
+ },
+ "towns": {
+  "mafra-far": {
+   "name": "Mafra",
+   "wikidata": "Q986419",
+   "editions": 50,
+   "unesco": true,
+   "dayTripListed": true,
+   "sights": [
+    {
+     "kind": "see",
+     "name": "Convento de Mafra",
+     "lat": 38.93667,
+     "lng": -9.32639,
+     "hours": "",
+     "price": "8€",
+     "wikidata": "Q599223",
+     "content": "The National Palace of Mafra is probably the most striking Baroque monuments to be found in Portugal, its construction symbolizes the Absolutist rule of D. João V. The palace has some 1,200 rooms of which the most impressive is the Library,",
+     "editions": 31,
+     "unesco": true
+    },
+    {
+     "kind": "see",
+     "name": "Basilica of Our Lady and St. Anthony",
+     "lat": 38.9372,
+     "lng": -9.328,
+     "hours": "09:30-13:00, 14:00-17:30",
+     "price": "Free",
+     "wikidata": "Q16268486",
+     "content": "Built according to a plan by Johann Friedrich Ludwig . This basilica has a set of 6 identical organs, unique in the world ( 11,444 pipes ) and a carillon of 92 bells spread over two towers, the north chime being the work of the Liège founde",
+     "editions": 4
+    }
+   ],
+   "foodDrink": [
+    {
+     "kind": "eat",
+     "name": "Churrasqueira Povoense",
+     "lat": 38.9316,
+     "lng": -9.2057,
+     "hours": "Daily 12:00–22:00",
+     "price": "Budget",
+     "wikidata": "",
+     "content": "Grilled pork, beef, lamb, and cod."
+    }
+   ],
+   "unescoSites": [
+    "Palace of Mafra",
+    "Royal Building of Mafra"
+   ]
+  },
+  "ericeira-far": {
+   "name": "Ericeira",
+   "wikidata": "Q1351868",
+   "editions": 26,
+   "unesco": false,
+   "dayTripListed": true,
+   "sights": [
+    {
+     "kind": "see",
+     "name": "Parque de Santa Marta",
+     "lat": 38.9616,
+     "lng": -9.4189,
+     "hours": "",
+     "price": "",
+     "wikidata": "",
+     "content": "Park with gardens and space for active and passive recreation."
+    }
+   ],
+   "foodDrink": [
+    {
+     "kind": "eat",
+     "name": "Tasca da Boa Viagem",
+     "lat": 38.962,
+     "lng": -9.4189,
+     "hours": "Mon–Wed Fri 18:30–22:30, Sat Sun 12:30–15:00 & 18:30–22:30",
+     "price": "{{EUR",
+     "wikidata": "",
+     "content": ""
+    }
+   ]
+  },
+  "sintra-far": {
+   "name": "Sintra",
+   "wikidata": "Q190187",
+   "editions": 74,
+   "unesco": false,
+   "dayTripListed": true,
+   "sights": [
+    {
+     "kind": "see",
+     "name": "Pena National Palace",
+     "lat": 38.7878,
+     "lng": -9.39055,
+     "hours": "",
+     "price": "Adult €20, youth or senior €18, child (<6) free, family (2 adults, 2 youth) €65",
+     "wikidata": "Q69513",
+     "content": "Beautiful example of pseudo-Moorish Romantic architecture. You can walk there from Sintra in about an hour (uphill!) or catch a bus. You can see a good collection of furniture and the royal apartments. Tickets are sold on a timed basis. Arr",
+     "editions": 41,
+     "unesco": true
+    },
+    {
+     "kind": "see",
+     "name": "Moorish Castle",
+     "lat": 38.79258,
+     "lng": -9.38934,
+     "hours": "",
+     "price": "Adult €12, youth or senior €10, child (<6) free, family (2 adults, 2 youth) €33",
+     "wikidata": "Q1049008",
+     "content": "One of the highlights of Sintra not to be missed. Ruins of a castle built by the Moors from the 10th century onwards. Apparently, when Cascais was under the rule of Sintra, a huge fire would be lit here annually to remind the people of Casc",
+     "editions": 22,
+     "unesco": true
+    },
+    {
+     "kind": "see",
+     "name": "Sintra National Palace",
+     "lat": 38.797667,
+     "lng": -9.390667,
+     "hours": "",
+     "price": "Adult €13, youth or senior €10, child (<6) free, family (2 adults, 2 youth) €35",
+     "wikidata": "Q532399",
+     "content": "The summer estate of the Portuguese royal family from the middle ages until the 1910 republican revolution. Built in several steps, the oldest standing parts is a chapel built by King Dinis I during the 14th century. Around 1400 King John I",
+     "editions": 26,
+     "unesco": true
+    },
+    {
+     "kind": "see",
+     "name": "Quintinha de Monserrate",
+     "lat": 38.794206,
+     "lng": -9.420628,
+     "hours": "",
+     "price": "Adult €12, youth or senior €10, child (<6) free, family (2 adults, 2 youth) €33",
+     "wikidata": "Q3175595",
+     "content": "An old estate with a farmyard, giving you an opportunity to learn about traditional local farming. The estate was transformed into its current form by 19th-century British industrialist Francis Cook and his architect James Knowles Jr, and s",
+     "editions": 16,
+     "unesco": true
+    },
+    {
+     "kind": "see",
+     "name": "Convento dos Capuchos",
+     "lat": 38.784373,
+     "lng": -9.438192,
+     "hours": "",
+     "price": "Adult €11, youth or senior €9, child (<6) free, family (2 adults, 2 youth) €29",
+     "wikidata": "Q1129421",
+     "content": "A secluded abbey where monks used to live in close contact with nature. Immersed in a wood, its crude and harsh style points out the importance of spirituality according to these friars and their strict Christian values. It has no electric ",
+     "editions": 11,
+     "unesco": true
+    },
+    {
+     "kind": "see",
+     "name": "Quinta da Regaleira",
+     "lat": 38.7964,
+     "lng": -9.396,
+     "hours": "Daily 10:00-18:30 (last admission at 18:00)",
+     "price": "Adult €12, youth or senior €7, child (<6) free, family (2 adults, 2 youth) €32",
+     "wikidata": "Q2630165",
+     "content": "Regaleira Palace is part of the built heritage included in UNESCO's world heritage list as 'Sintra cultural landscape'. Its origins date back to 1697, when the property was bought by José Leite, but it was only by the late 19th century that",
+     "editions": 22,
+     "unesco": true
+    },
+    {
+     "kind": "see",
+     "name": "Cabo da Roca",
+     "lat": 38.7833,
+     "lng": -9.5,
+     "hours": "",
+     "price": "",
+     "wikidata": "Q169175",
+     "content": "A cape at the western coast which is the westernmost point of the European continent. If you feel like spending you can get a certificate of your presence at the westernmost point of continental Europe.",
+     "editions": 55
+    }
+   ],
+   "foodDrink": [
+    {
+     "kind": "eat",
+     "name": "Cyntia",
+     "lat": 38.7995,
+     "lng": -9.3857,
+     "hours": "",
+     "price": "",
+     "wikidata": "",
+     "content": "Next to the bus and rail stations on the downside of Sintra, there is this small but fine restaurant where you can taste a marvelous codfish (''Bacalhau à brás'' or ''Bacalhau à grelha''). They are very kind and friendly and don't hesitate "
+    },
+    {
+     "kind": "eat",
+     "name": "Dom Pipas",
+     "lat": 38.7996,
+     "lng": -9.3841,
+     "hours": "Tue–Sun 12:00–15:00 & 19:00–22:00, closed Mon",
+     "price": "",
+     "wikidata": "",
+     "content": "Delicious local dishes at decent prices. Features daily specials, fish, meat, and other Portuguese traditional fare."
+    },
+    {
+     "kind": "eat",
+     "name": "Lab by Sergi Arola",
+     "lat": 38.7619,
+     "lng": -9.3977,
+     "hours": "Wed–Sat 19:30–22:30, closed Sun–Tue",
+     "price": "{{EUR",
+     "wikidata": "",
+     "content": ""
+    },
+    {
+     "kind": "eat",
+     "name": "Midori",
+     "lat": 38.7614,
+     "lng": -9.3968,
+     "hours": "Tue–Sat 19:00–22:30, closed Sun Mon",
+     "price": "{{EUR",
+     "wikidata": "",
+     "content": ""
+    },
+    {
+     "kind": "drink",
+     "name": "Adega Regional de Colares",
+     "lat": 38.8058,
+     "lng": -9.4498,
+     "hours": "Mon–Fri 09:00–13:00 & 14:00–18:00, Sat 09:00–13:00, Sun closed",
+     "price": "",
+     "wikidata": "",
+     "content": "A tasting of these fine wines can be organised in advance for a minimum of 10 people."
+    }
+   ]
+  }
+ },
+ "ports": [],
+ "dayTrips": [
+  "Fátima",
+  "Nazaré",
+  "Tomar",
+  "Óbidos",
+  "Mafra",
+  "Ericeira",
+  "Sintra",
+  "UNESCO World Heritage site",
+  "Praia das Maçãs",
+  "Paço de Arcos",
+  "Cascais",
+  "Almada",
+  "Cacilhas",
+  "Pragal",
+  "Costa da Caparica",
+  "Setúbal",
+  "Palmela",
+  "Sesimbra",
+  "Azeitão",
+  "Vila Nogueira de Azeitão",
+  "Tróia",
+  "Porto",
+  "Coimbra",
+  "Faro"
+ ],
+ "missing": [],
+ "centre": {
+  "lat": 38.716243,
+  "lng": -9.151091999999998
+ },
+ "wikivoyage": "Lisbon"
+}

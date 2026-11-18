@@ -9,7 +9,7 @@
 // No AI, no paid service. Runs on GitHub (beta2-live.yml) where the internet is open. Usage:
 //   node tools/places/build.cjs [snapshots dir] [targets.json]
 // Each file is printed as PLACES lines (gzip + base64) so it can be read back from the run's log.
-const fs = require('fs'), path = require('path'), zlib = require('zlib');
+const fs = require('fs'), path = require('path'), zlib = require('zlib'), { merge } = require('./merge.cjs');
 const SNAP = process.argv[2] || path.join(__dirname, '..', 'beta2', 'snapshots');
 const TARGETS = process.argv[3] || path.join(__dirname, 'targets.json');
 const OUT = path.join(__dirname, 'data'); fs.mkdirSync(OUT, { recursive: true });
@@ -78,7 +78,10 @@ async function whsNear(p, km) {
 const OVERPASS = ['https://overpass-api.de/api/interpreter', 'https://overpass.kumi.systems/api/interpreter', 'https://overpass.private.coffee/api/interpreter'];
 async function overpass(ql) {
   for (let round = 0; round < 2; round++)
-    for (const u of OVERPASS) { const j = await get(u, { method: 'POST', body: 'data=' + encodeURIComponent(ql), headers: { 'User-Agent': UA, 'Content-Type': 'application/x-www-form-urlencoded' } }, 1, 200000); if (j) return j.elements || []; await sleep(5000); }
+    for (const u of OVERPASS) { const j = await get(u, { method: 'POST', body: 'data=' + encodeURIComponent(ql), headers: { 'User-Agent': UA, 'Content-Type': 'application/x-www-form-urlencoded' } }, 1, 200000);
+      // A server that ran out of time says so in a remark and sends no elements: that is a failed try, not "nothing here".
+      if (j && !(j.remark && /runtime error|timed out|out of memory/i.test(j.remark))) return j.elements || [];
+      if (j) console.log('   map server:', String(j.remark).slice(0, 120)); await sleep(5000); }
   console.log('   map lookup gave nothing after every try');
   return [];
 }
@@ -86,7 +89,7 @@ const pos = el => el.lat != null ? { lat: el.lat, lng: el.lon } : el.center ? { 
 const CRUISE = /cruise|croisi|crocier|crucer|kreuzfahrt|cruzeir|kruvaz|terminal de passag|passenger terminal|passagier/i;
 async function cruisePoints(p, island) {
   const r = island ? 4000 : 12000;
-  const els = await overpass(`[out:json][timeout:90];(nwr(around:${r},${p.lat},${p.lng})["amenity"="ferry_terminal"];nwr(around:${r},${p.lat},${p.lng})["name"~"cruise|croisi|crocier|crucer|kreuzfahrt|cruzeir|terminal",i];nwr(around:${r},${p.lat},${p.lng})["man_made"="pier"]["name"];);out tags center;`);
+  const els = await overpass(`[out:json][timeout:90];(nwr(around:${r},${p.lat},${p.lng})["amenity"="ferry_terminal"];nwr(around:${r},${p.lat},${p.lng})["building"]["name"~"cruise|croisi|crocier|crucer|kreuzfahrt|cruzeir|terminal",i];nwr(around:${r},${p.lat},${p.lng})["landuse"="harbour"]["name"];nwr(around:${r},${p.lat},${p.lng})["man_made"="pier"]["name"];);out tags center;`);
   return els.map(el => { const t = el.tags || {}, q = pos(el); if (!q) return null; const name = t['name:en'] || t.name || '';
     const cruise = CRUISE.test(name) || /cruise/i.test(t.ferry || '') || t.cruise === 'yes';
     return { name, lat: +q.lat.toFixed(5), lng: +q.lng.toFixed(5), osm: el.type + '/' + el.id, kind: t.amenity === 'ferry_terminal' ? 'ferry terminal' : t.man_made === 'pier' ? 'pier' : 'terminal', cruise, d: +hav(p, q).toFixed(2) };
@@ -212,7 +215,9 @@ async function buildPlace(t) {
   for (const t of targets.values()) {
     if (only && !only.test(t.key)) continue;
     let out; try { out = await buildPlace(t); } catch (e) { console.log('   FAILED', e.stack); continue; }
-    const file = t.key.replace(/[^a-z0-9]+/gi, '-').toLowerCase() + '.json', body = JSON.stringify(out, null, 1);
+    const file = t.key.replace(/[^a-z0-9]+/gi, '-').toLowerCase() + '.json', was = path.join(OUT, file);
+    if (fs.existsSync(was)) out = merge(JSON.parse(fs.readFileSync(was)), out);   // never lose a fact found before
+    const body = JSON.stringify(out, null, 1);
     fs.writeFileSync(path.join(OUT, file), body);
     const z = zlib.gzipSync(body).toString('base64');
     console.log('PLACES-BEGIN ' + file); for (let i = 0; i < z.length; i += 4000) console.log('PLACES ' + z.slice(i, i + 4000)); console.log('PLACES-END');

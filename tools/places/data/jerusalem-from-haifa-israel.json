@@ -1,0 +1,458 @@
+{
+ "key": "jerusalem from haifa israel",
+ "name": "Jerusalem (from Haifa , Israel)",
+ "built": "2026-11-18",
+ "sources": [
+  "Wikidata",
+  "OpenStreetMap",
+  "Wikivoyage"
+ ],
+ "sites": {
+  "src-q172077": {
+   "wikidata": "Q172077",
+   "editions": 87,
+   "types": [
+    "Q12493",
+    "Q32815"
+   ],
+   "unesco": true,
+   "closedForGood": false,
+   "partOf": [
+    "Q121610806"
+   ],
+   "osm": "way/4709536"
+  },
+  "src-q12192963": {
+   "wikidata": "Q12192963",
+   "editions": 103,
+   "types": [
+    "Q32815",
+    "Q1454820",
+    "Q45990",
+    "Q4588528"
+   ],
+   "unesco": true,
+   "closedForGood": false,
+   "partOf": [
+    "Q121610806"
+   ],
+   "osm": "way/280309331"
+  },
+  "src-q134821": {
+   "wikidata": "Q134821",
+   "editions": 84,
+   "types": [
+    "Q42948",
+    "Q839954",
+    "Q4588528"
+   ],
+   "unesco": true,
+   "closedForGood": false,
+   "partOf": [
+    "Q121610806",
+    "Q193163",
+    "Q2918723"
+   ],
+   "hours": "24/7",
+   "osm": "way/817206833"
+  },
+  "src-q133396": {
+   "wikidata": "Q133396",
+   "editions": 92,
+   "types": [
+    "Q37002670"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": []
+  },
+  "src-q46815": {
+   "wikidata": "Q46815",
+   "editions": 90,
+   "types": [
+    "Q207694",
+    "Q17431399",
+    "Q163740"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "hours": "Mo,We-Th,Su,PH 10:00-17:00; Tu 16:00-21:00; Fr 10:00-14:00; Sa 10:30-16:00",
+   "fee": "yes",
+   "osm": "way/44307909"
+  },
+  "src-q187702": {
+   "wikidata": "Q187702",
+   "editions": 76,
+   "types": [
+    "Q120560",
+    "Q15487029",
+    "Q2977",
+    "Q16970",
+    "Q29553",
+    "Q358",
+    "Q811165"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "osm": "way/1022672085"
+  },
+  "src-q2909160": {
+   "wikidata": "Q2909160",
+   "editions": 76,
+   "types": [
+    "Q33506",
+    "Q163740"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": []
+  },
+  "src-q126130": {
+   "wikidata": "Q126130",
+   "editions": 64,
+   "types": [
+    "Q3329412",
+    "Q163740"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "hours": "Mo-Su 09:30-17:30; We 09:30-21:30; Fr,Sa 10:00-14:00",
+   "fee": "yes",
+   "osm": "way/216674312"
+  },
+  "src-q156591": {
+   "wikidata": "Q156591",
+   "editions": 63,
+   "types": [
+    "Q31855",
+    "Q166118",
+    "Q2945282",
+    "Q5003624",
+    "Q7247847",
+    "Q2085381",
+    "Q33506",
+    "Q16735822",
+    "Q699386"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "osm": "way/73989602"
+  },
+  "src-q206161": {
+   "wikidata": "Q206161",
+   "editions": 49,
+   "types": [
+    "Q8502",
+    "Q39614"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "osm": "way/244544996"
+  },
+  "src-q558093": {
+   "wikidata": "Q558093",
+   "editions": 47,
+   "types": [
+    "Q39816",
+    "Q846659"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "osm": "way/4709523"
+  },
+  "src-q632602": {
+   "wikidata": "Q632602",
+   "editions": 49,
+   "types": [
+    "Q44301618"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [
+    "Q35032",
+    "Q7970362"
+   ],
+   "osm": "way/290810608"
+  },
+  "src-q1177765": {
+   "wikidata": "Q1177765",
+   "editions": 34,
+   "types": [
+    "Q88291",
+    "Q33506"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "hours": "09:00-16:00; Fr 09:00-14:00",
+   "osm": "relation/136164"
+  },
+  "src-q333594": {
+   "wikidata": "Q333594",
+   "editions": 28,
+   "types": [
+    "Q2031836"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "hours": "Tu,Th 10:00-12:00",
+   "osm": "way/280347366"
+  },
+  "src-q1430185": {
+   "wikidata": "Q1430185",
+   "editions": 23,
+   "types": [
+    "Q33506",
+    "Q3329412"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "hours": "Mo,We,Th,Su 10:00-15:00; Sa 10:00-14:00; Tu,Fr,PH -1 day off",
+   "osm": "relation/5582006"
+  },
+  "src-q1238436": {
+   "wikidata": "Q1238436",
+   "editions": 22,
+   "types": [
+    "Q1088552"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "osm": "way/280345343"
+  },
+  "src-q1936208": {
+   "wikidata": "Q1936208",
+   "editions": 18,
+   "types": [
+    "Q16917",
+    "Q123705",
+    "Q64578911",
+    "Q180370"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "osm": "way/620317519"
+  },
+  "src-q1499131": {
+   "wikidata": "Q1499131",
+   "editions": 18,
+   "types": [
+    "Q1088552"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "osm": "way/744674450"
+  },
+  "src-q1245538": {
+   "wikidata": "Q1245538",
+   "editions": 18,
+   "types": [
+    "Q160742"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "osm": "relation/3925223"
+  },
+  "src-q1861408": {
+   "wikidata": "Q1861408",
+   "editions": 18,
+   "types": [
+    "Q16970",
+    "Q43229"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "hours": "08:00-17:00",
+   "fee": "yes",
+   "osm": "way/376137590"
+  },
+  "src-q2599091": {
+   "wikidata": "Q2599091",
+   "editions": 18,
+   "types": [
+    "Q486972",
+    "Q12232785",
+    "Q532",
+    "Q22674925"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "osm": "node/8244013111"
+  },
+  "src-q830746": {
+   "wikidata": "Q830746",
+   "editions": 18,
+   "types": [
+    "Q1088552"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "osm": "way/254157058"
+  }
+ },
+ "towns": {
+  "abu-ghosh-far": {
+   "name": "Abu Ghosh",
+   "wikidata": "Q335023",
+   "editions": 27,
+   "unesco": false,
+   "dayTripListed": false,
+   "sights": [
+    {
+     "kind": "see",
+     "name": "Church of Our Lady of the Covenant",
+     "lat": 31.80735,
+     "lng": 35.10247,
+     "hours": "Mon–Sat 08:30–11:30, and 14:30-17:00",
+     "price": "Free",
+     "wikidata": "",
+     "content": "Located at the north-west part of the village of Abu Ghosh. The church is located at the summit of Tel Kiryat Ye'arim. The site is identified with the biblical Kiryat Ye'arim, where the [[:w:Ark of Covenant"
+    },
+    {
+     "kind": "see",
+     "name": "The Benedictine monastery in Abu Ghosh",
+     "lat": 31.807428,
+     "lng": 35.107386,
+     "hours": "",
+     "price": "",
+     "wikidata": "",
+     "content": "It is best known for the Crusader church that contains remains of a 12th-century frescoes. The church was built over a spring. Abu Ghosh's main mosque is adjacent to the monastery."
+    }
+   ],
+   "foodDrink": []
+  },
+  "tel-aviv-far": {
+   "name": "Tel Aviv",
+   "wikidata": "Q33935",
+   "editions": 191,
+   "unesco": true,
+   "dayTripListed": true,
+   "sights": [],
+   "foodDrink": [
+    {
+     "kind": "listing",
+     "name": "Tel Aviv University",
+     "lat": 32.113889,
+     "lng": 34.804167,
+     "hours": "",
+     "price": "",
+     "wikidata": "Q319239",
+     "content": "The largest proper university in Israel (the Open University, though larger, is for distance learning and does not grant doctorates), situated in Ramat Aviv."
+    },
+    {
+     "kind": "listing",
+     "name": "Tel Aviv-Jaffa Academic College",
+     "lat": 32.04783,
+     "lng": 34.76072,
+     "hours": "",
+     "price": "",
+     "wikidata": "Q6975176",
+     "content": "A smaller college in Tel Aviv"
+    },
+    {
+     "kind": "listing",
+     "name": "Afeka",
+     "lat": 32.11484,
+     "lng": 34.81736,
+     "hours": "",
+     "price": "",
+     "wikidata": "Q2904100",
+     "content": "Tel Aviv Academic College of Engineering"
+    },
+    {
+     "kind": "listing",
+     "name": "Ulpan Bayit",
+     "lat": 32.05748,
+     "lng": 34.77132,
+     "hours": "Su-Th 9AM-9PM",
+     "price": "",
+     "wikidata": "Q141624839",
+     "content": "Private Hebrew language school (ulpan) in the Florentin neighbourhood, founded in 2013. Intensive, morning and evening Hebrew courses at all levels for<br /> newcomers and visitors, plus online classes."
+    },
+    {
+     "kind": "listing",
+     "name": "HaAmbatia",
+     "lat": 32.05748,
+     "lng": 34.77132,
+     "hours": "",
+     "price": "",
+     "wikidata": "Q141631174",
+     "content": "Language and culture school teaching spoken Arabic, French, German, Italian and Spanish in small groups. Classes are aimed at Hebrew speakers."
+    },
+    {
+     "kind": "listing",
+     "name": "Angola",
+     "lat": 32.065813,
+     "lng": 34.771209,
+     "hours": "",
+     "price": "",
+     "wikidata": "Q106301182",
+     "content": ""
+    },
+    {
+     "kind": "listing",
+     "name": "Australia",
+     "lat": 32.06176,
+     "lng": 34.7706,
+     "hours": "Mon-Thu 08:00-12:30 and 13:00-16:00, Fri 08:00-13:00",
+     "price": "",
+     "wikidata": "Q105839616",
+     "content": ""
+    },
+    {
+     "kind": "listing",
+     "name": "United States",
+     "lat": 32.076667,
+     "lng": 34.766667,
+     "hours": "",
+     "price": "",
+     "wikidata": "Q53444085",
+     "content": "This is considered to be a branch office, as the U.S. maintains its official embassy to Israel in Jerusalem."
+    }
+   ],
+   "unescoSites": [
+    "White City"
+   ]
+  }
+ },
+ "ports": [],
+ "dayTrips": [
+  "Abu Gosh",
+  "Bethlehem",
+  "Ramallah",
+  "Nablus",
+  "Jericho",
+  "Dead Sea (Israel and the West Bank)",
+  "Tel Aviv",
+  "Jordan",
+  "Palestinian territories",
+  "Ben Gurion airport",
+  "Ma'ale Adumim",
+  "Lod",
+  "Modiin",
+  "Ramla"
+ ],
+ "missing": [
+  "a mapped cruise terminal or pier"
+ ],
+ "centre": {
+  "lat": 31.776602272727267,
+  "lng": 35.21909272727274
+ },
+ "wikivoyage": "Jerusalem"
+}

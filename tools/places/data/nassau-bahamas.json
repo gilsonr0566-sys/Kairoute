@@ -1,0 +1,95 @@
+{
+ "key": "nassau bahamas",
+ "name": "Nassau, Bahamas",
+ "built": "2026-11-18",
+ "sources": [
+  "Wikidata",
+  "OpenStreetMap",
+  "Wikivoyage"
+ ],
+ "sites": {
+  "src-q3181503": {
+   "wikidata": "Q3181503",
+   "editions": 20,
+   "types": [
+    "Q23442"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [
+    "Q778"
+   ],
+   "osm": "way/32897843"
+  },
+  "src-q4025978": {
+   "wikidata": "Q4025978",
+   "editions": 5,
+   "types": [
+    "Q43501"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "osm": "way/304215080"
+  },
+  "src-q2912593": {
+   "wikidata": "Q2912593",
+   "editions": 5,
+   "types": [
+    "Q207694",
+    "Q17431399"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "osm": "way/431326255"
+  },
+  "src-q21713748": {
+   "wikidata": "Q21713748",
+   "editions": 5,
+   "types": [
+    "Q40080",
+    "Q486972"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "osm": "way/368706886"
+  },
+  "src-q5471144": {
+   "wikidata": "Q5471144",
+   "editions": 4,
+   "types": [
+    "Q811430"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "osm": "way/191813517"
+  },
+  "src-q67142794": {
+   "wikidata": "Q67142794",
+   "editions": 1,
+   "types": [
+    "Q33506"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "osm": "way/444246703"
+  }
+ },
+ "towns": {},
+ "ports": [],
+ "dayTrips": [
+  "Paradise Island"
+ ],
+ "missing": [
+  "a mapped cruise terminal or pier"
+ ],
+ "centre": {
+  "lat": 25.076539999999998,
+  "lng": -77.355365
+ },
+ "wikivoyage": "Nassau"
+}

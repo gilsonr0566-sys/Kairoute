@@ -1,0 +1,794 @@
+{
+ "key": "venice italy",
+ "name": "Venice, Italy",
+ "built": "2026-11-18",
+ "sources": [
+  "Wikidata",
+  "OpenStreetMap",
+  "Wikivoyage"
+ ],
+ "sites": {
+  "src-q172988": {
+   "wikidata": "Q172988",
+   "editions": 65,
+   "types": [
+    "Q2977",
+    "Q120560"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "hours": "Oct 29-Apr 15,Apr 16-Oct 27 Mo-Sa 09:30-17:00; Oct 29-Apr 15 Su 14:00-16:30; Apr 16-Oct 27 Su 14:00-17:00",
+   "fee": "yes",
+   "osm": "way/138800932"
+  },
+  "src-q189883": {
+   "wikidata": "Q189883",
+   "editions": 60,
+   "types": [
+    "Q16560",
+    "Q207694",
+    "Q124830213"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "hours": "Apr 01-Oct 31 08:30-19:00; Nov 01-Mar 31 08:30-17:30",
+   "fee": "yes",
+   "osm": "way/138803915"
+  },
+  "src-q52531": {
+   "wikidata": "Q52531",
+   "editions": 46,
+   "types": [
+    "Q693842",
+    "Q120560",
+    "Q24028042"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "osm": "way/138801509"
+  },
+  "src-q338330": {
+   "wikidata": "Q338330",
+   "editions": 42,
+   "types": [
+    "Q207694",
+    "Q24699794",
+    "Q3867560",
+    "Q97662266",
+    "Q121076356",
+    "Q124830411"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "hours": "Tu-Su 08:15-19:15; Mo 8:15-14:00",
+   "osm": "node/895805118"
+  },
+  "src-q224961": {
+   "wikidata": "Q224961",
+   "editions": 32,
+   "types": [
+    "Q317557",
+    "Q120560"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "hours": "Mo-Sa 09:00-18:00; Su 13:00-18:00",
+   "fee": "yes",
+   "osm": "way/138841819"
+  },
+  "src-q52505": {
+   "wikidata": "Q52505",
+   "editions": 52,
+   "types": [
+    "Q3397526",
+    "Q158438",
+    "Q1068842",
+    "Q1825472",
+    "Q3397551",
+    "Q132775089"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "osm": "relation/2289364"
+  },
+  "src-q713558": {
+   "wikidata": "Q713558",
+   "editions": 29,
+   "types": [
+    "Q16970",
+    "Q120560"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [
+    "Q3320338"
+   ],
+   "hours": "Mo-Su 07:00-18:00",
+   "osm": "way/138804537"
+  },
+  "src-q155225": {
+   "wikidata": "Q155225",
+   "editions": 28,
+   "types": [
+    "Q120560",
+    "Q317557",
+    "Q16970"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "hours": "Mo-Sa 09:00-18:00; Su 12:00-18:00",
+   "osm": "way/153483298"
+  },
+  "src-q756807": {
+   "wikidata": "Q756807",
+   "editions": 27,
+   "types": [
+    "Q16560",
+    "Q33506"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "osm": "relation/2382783"
+  },
+  "src-q830807": {
+   "wikidata": "Q830807",
+   "editions": 32,
+   "types": [
+    "Q693842"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "osm": "way/154856677"
+  },
+  "src-q649030": {
+   "wikidata": "Q649030",
+   "editions": 27,
+   "types": [
+    "Q23442",
+    "Q123705"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [
+    "Q106595369"
+   ],
+   "osm": "node/13195470201"
+  },
+  "src-q794876": {
+   "wikidata": "Q794876",
+   "editions": 27,
+   "types": [
+    "Q16970"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "hours": "Mo-Sa 10:00-12:00, 16:00-18:00; Su 16:00-18:00",
+   "osm": "way/162035005"
+  },
+  "src-q1470912": {
+   "wikidata": "Q1470912",
+   "editions": 22,
+   "types": [
+    "Q207694",
+    "Q16735822",
+    "Q124830213"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "hours": "10:00-19:00; Nov-Mar 10:00-17:00",
+   "fee": "yes",
+   "osm": "node/4121738102"
+  },
+  "src-q907964": {
+   "wikidata": "Q907964",
+   "editions": 25,
+   "types": [
+    "Q33506",
+    "Q15848826"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "osm": "way/173619525"
+  },
+  "src-q945981": {
+   "wikidata": "Q945981",
+   "editions": 20,
+   "types": [
+    "Q2577114",
+    "Q120560"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "hours": "Mo-Sa 10:30-17:00",
+   "osm": "way/138800730"
+  },
+  "src-q533680": {
+   "wikidata": "Q533680",
+   "editions": 24,
+   "types": [
+    "Q16970"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "hours": "Mo-Sa 10:30-16:30",
+   "osm": "way/138800840"
+  },
+  "src-q1049033": {
+   "wikidata": "Q1049033",
+   "editions": 24,
+   "types": [
+    "Q207694",
+    "Q97662266",
+    "Q614316"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [
+    "Q2047620"
+   ],
+   "hours": "We-Mo 10:00-18:00, Tu,Dec 25 off",
+   "fee": "yes",
+   "osm": "node/5366368715"
+  },
+  "src-q15961396": {
+   "wikidata": "Q15961396",
+   "editions": 8,
+   "types": [
+    "Q17431399",
+    "Q3329412",
+    "Q3867560",
+    "Q124830411"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": []
+  },
+  "src-q2324776": {
+   "wikidata": "Q2324776",
+   "editions": 7,
+   "types": [
+    "Q17620767",
+    "Q20672229"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": []
+  },
+  "src-q861436": {
+   "wikidata": "Q861436",
+   "editions": 20,
+   "types": [
+    "Q16970"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "hours": "Mo-Sa 10:30-17:00",
+   "osm": "way/142378731"
+  },
+  "src-q946542": {
+   "wikidata": "Q946542",
+   "editions": 20,
+   "types": [
+    "Q16970"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "osm": "way/138804531"
+  },
+  "src-q922677": {
+   "wikidata": "Q922677",
+   "editions": 20,
+   "types": [
+    "Q16970"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "osm": "way/138800508"
+  },
+  "src-q473237": {
+   "wikidata": "Q473237",
+   "editions": 19,
+   "types": [
+    "Q659396"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "osm": "way/555645445"
+  },
+  "src-q2931413": {
+   "wikidata": "Q2931413",
+   "editions": 19,
+   "types": [
+    "Q207694"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "osm": "relation/2317795"
+  },
+  "src-q3940563": {
+   "wikidata": "Q3940563",
+   "editions": 4,
+   "types": [
+    "Q1007870",
+    "Q97662266",
+    "Q2087181",
+    "Q166118",
+    "Q124830213"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": []
+  }
+ },
+ "towns": {
+  "venice-burano-far": {
+   "name": "Venice/Burano",
+   "wikidata": null,
+   "editions": 0,
+   "unesco": false,
+   "dayTripListed": false,
+   "sights": [
+    {
+     "kind": "see",
+     "name": "Lace Museum",
+     "lat": 45.4847,
+     "lng": 12.4187,
+     "hours": "Apr-Oct: Tue-Sun 10:00-18:00; Nov-Mar: Tue-Sun 10:00-17:00; ticket office closes 30 min earlier; closed Mon, Dec 25, Jan 1, May 1 closed",
+     "price": "Adults €5, reduced €3.50",
+     "wikidata": "",
+     "content": "There is a small lace museum called Museo del Merletto. Opinions on it vary from \"not much to see\" to \"I didn't think I was interested in lace, but I spent 90 minutes in there\".  A MUVE museum."
+    }
+   ],
+   "foodDrink": [
+    {
+     "kind": "eat",
+     "name": "Trattoria da Romano",
+     "lat": 45.48519,
+     "lng": 12.41806,
+     "hours": "",
+     "price": "",
+     "wikidata": "",
+     "content": "Famous people, including royalty, visited the place. The walls are covered with their photo's."
+    }
+   ]
+  },
+  "mestre-far": {
+   "name": "Mestre",
+   "wikidata": "Q541405",
+   "editions": 40,
+   "unesco": false,
+   "dayTripListed": true,
+   "sights": [
+    {
+     "kind": "see",
+     "name": "Duomo di Mestre",
+     "lat": 45.493,
+     "lng": 12.240556,
+     "hours": "",
+     "price": "",
+     "wikidata": "Q3716364",
+     "content": "",
+     "editions": 3
+    },
+    {
+     "kind": "see",
+     "name": "Piazza Ferretto",
+     "lat": 45.4938,
+     "lng": 12.2412,
+     "hours": "",
+     "price": "",
+     "wikidata": "",
+     "content": "A typically Italian piazza, with a modern water feature at the center and lots of different eateries with outside seating. It is also full of top end designer stores."
+    },
+    {
+     "kind": "see",
+     "name": "Parco San Giuliano",
+     "lat": 45.4733,
+     "lng": 12.2766,
+     "hours": "",
+     "price": "",
+     "wikidata": "",
+     "content": "A local park worth visiting. It is often used for outdoor concerts in the summer. It also has a remarkable and unique view of Venice lagoon as it borders the Ponte della Liberta, which joins the Venetian islands with the mainland."
+    },
+    {
+     "kind": "see",
+     "name": "Parco Bissuola",
+     "lat": 45.4992,
+     "lng": 12.2619,
+     "hours": "",
+     "price": "",
+     "wikidata": "",
+     "content": "Another local park worth visiting. It offers good sport facilities and an outdoor pool."
+    }
+   ],
+   "foodDrink": [
+    {
+     "kind": "eat",
+     "name": "Trattoria Da Terzo",
+     "lat": 45.4910557,
+     "lng": 12.2414189,
+     "hours": "",
+     "price": "",
+     "wikidata": "",
+     "content": ""
+    },
+    {
+     "kind": "eat",
+     "name": "Gustagrill",
+     "lat": 45.4959919,
+     "lng": 12.2444779,
+     "hours": "",
+     "price": "",
+     "wikidata": "",
+     "content": ""
+    },
+    {
+     "kind": "eat",
+     "name": "Pizzeria ERAORA",
+     "lat": 45.4909746,
+     "lng": 12.2448739,
+     "hours": "",
+     "price": "",
+     "wikidata": "",
+     "content": ""
+    },
+    {
+     "kind": "eat",
+     "name": "Da Marilù",
+     "lat": 45.4895768,
+     "lng": 12.2446731,
+     "hours": "",
+     "price": "",
+     "wikidata": "",
+     "content": ""
+    },
+    {
+     "kind": "eat",
+     "name": "Gerusalemme",
+     "lat": 45.4917434,
+     "lng": 12.2371237,
+     "hours": "",
+     "price": "",
+     "wikidata": "",
+     "content": "A kebab shop"
+    },
+    {
+     "kind": "eat",
+     "name": "Italiana Caffè Venezia",
+     "lat": 45.4907767,
+     "lng": 12.2408083,
+     "hours": "",
+     "price": "",
+     "wikidata": "",
+     "content": ""
+    },
+    {
+     "kind": "eat",
+     "name": "La Tana di Oberix",
+     "lat": 45.4832087,
+     "lng": 12.2300591,
+     "hours": "",
+     "price": "",
+     "wikidata": "",
+     "content": ""
+    },
+    {
+     "kind": "eat",
+     "name": "Da Michele Pizza e Ristò",
+     "lat": 45.4822254,
+     "lng": 12.2356216,
+     "hours": "",
+     "price": "",
+     "wikidata": "",
+     "content": ""
+    },
+    {
+     "kind": "eat",
+     "name": "Trattoria Dalmazia",
+     "lat": 45.4824147,
+     "lng": 12.2375236,
+     "hours": "",
+     "price": "",
+     "wikidata": "",
+     "content": "Down home cooking"
+    },
+    {
+     "kind": "eat",
+     "name": "PASTA & PIZZA e non solo",
+     "lat": 45.4824654,
+     "lng": 12.2361943,
+     "hours": "",
+     "price": "",
+     "wikidata": "",
+     "content": ""
+    },
+    {
+     "kind": "eat",
+     "name": "Ristorante Bar Piccolo",
+     "lat": 45.4784851,
+     "lng": 12.2283478,
+     "hours": "",
+     "price": "",
+     "wikidata": "",
+     "content": ""
+    },
+    {
+     "kind": "eat",
+     "name": "Brothers Fast Food & Namaste Indian Restaurant",
+     "lat": 45.4821476,
+     "lng": 12.2347865,
+     "hours": "",
+     "price": "",
+     "wikidata": "",
+     "content": "Indian"
+    },
+    {
+     "kind": "eat",
+     "name": "Ristorante Orientale",
+     "lat": 45.4844753,
+     "lng": 12.2330071,
+     "hours": "",
+     "price": "",
+     "wikidata": "",
+     "content": "Chinese"
+    },
+    {
+     "kind": "eat",
+     "name": "Pizza 2020 Kebab",
+     "lat": 45.4833507,
+     "lng": 12.236198,
+     "hours": "",
+     "price": "",
+     "wikidata": "",
+     "content": ""
+    },
+    {
+     "kind": "eat",
+     "name": "Dining Room Marghera",
+     "lat": 45.4791772,
+     "lng": 12.2333759,
+     "hours": "",
+     "price": "",
+     "wikidata": "",
+     "content": ""
+    },
+    {
+     "kind": "eat",
+     "name": "Cicchetteria Ristorante Casa Fortuna",
+     "lat": 45.4945569,
+     "lng": 12.2408432,
+     "hours": "",
+     "price": "",
+     "wikidata": "",
+     "content": "A seafood restaurant"
+    },
+    {
+     "kind": "eat",
+     "name": "Ristorante Pizzeria \"Al Fapanni 30\"",
+     "lat": 45.4945475,
+     "lng": 12.2448176,
+     "hours": "",
+     "price": "",
+     "wikidata": "",
+     "content": ""
+    },
+    {
+     "kind": "eat",
+     "name": "Ostaria da Mariano",
+     "lat": 45.4967195,
+     "lng": 12.2463092,
+     "hours": "",
+     "price": "",
+     "wikidata": "",
+     "content": "Venetian cuisine"
+    },
+    {
+     "kind": "eat",
+     "name": "Aki Restaurant",
+     "lat": 45.48145,
+     "lng": 12.241416,
+     "hours": "",
+     "price": "",
+     "wikidata": "",
+     "content": "Japanese cuisine."
+    },
+    {
+     "kind": "eat",
+     "name": "Restaurant Taverneta A La Scuea",
+     "lat": 45.498148,
+     "lng": 12.240666,
+     "hours": "",
+     "price": "",
+     "wikidata": "",
+     "content": "A seafood restaurant."
+    },
+    {
+     "kind": "eat",
+     "name": "Pasticceria Serenissima",
+     "lat": 45.4857,
+     "lng": 12.2156,
+     "hours": "",
+     "price": "",
+     "wikidata": "",
+     "content": "A 30-year-old patisserie. Specialities: Hazelnut cakes, ice creams and Easter eggs."
+    }
+   ]
+  },
+  "venice-torcello-far": {
+   "name": "Venice/Torcello",
+   "wikidata": null,
+   "editions": 0,
+   "unesco": false,
+   "dayTripListed": false,
+   "sights": [
+    {
+     "kind": "see",
+     "name": "Archaeological Museum",
+     "lat": 45.49851,
+     "lng": 12.41826,
+     "hours": "Nov-Feb: 10:00-17:00; Mar-Oct: 10:30-17:30",
+     "price": "€3..0, reduced €1.50",
+     "wikidata": "Q17199095",
+     "content": "Collection of Greek and Roman finds, archaeological finds from the estuary from Paleo-Veneto and Etruscan periods.",
+     "editions": 6
+    },
+    {
+     "kind": "see",
+     "name": "Chiesa di Santa Fosca",
+     "lat": 45.49815,
+     "lng": 12.41875,
+     "hours": "",
+     "price": "",
+     "wikidata": "Q3585411",
+     "content": "Has the form of a Greek cross, which is surrounded by a semi-octagonal porticus.",
+     "editions": 5
+    }
+   ],
+   "foodDrink": [
+    {
+     "kind": "eat",
+     "name": "Ristorante al Trono di Attila",
+     "lat": 45.4967,
+     "lng": 12.41565,
+     "hours": "Lunch daily; May-Sep:  evenings Fri Sat  and by reservation (min. 8/10 people)",
+     "price": "",
+     "wikidata": "",
+     "content": ""
+    }
+   ]
+  },
+  "padua-far": {
+   "name": "Padua",
+   "wikidata": "Q617",
+   "editions": 135,
+   "unesco": true,
+   "dayTripListed": true,
+   "sights": [
+    {
+     "kind": "see",
+     "name": "Saint Anthony's cathedral",
+     "lat": 45.401364,
+     "lng": 11.880069,
+     "hours": "Every day, 6.20 - 19.00 (DST 19.45)",
+     "price": "Free entrance",
+     "wikidata": "Q810139",
+     "content": "Saint Anthony's Basilica is the best-known tourist site in Padova - millions of pilgrims visit every year. Built immediately after \"The Saint's\" death in the 1200s, it houses his tomb and notable relics. The statues and crucifix on the main",
+     "editions": 38
+    },
+    {
+     "kind": "see",
+     "name": "Scrovegni Chapel",
+     "lat": 45.411667,
+     "lng": 11.879444,
+     "hours": "Every day, 9.00-19.00",
+     "price": "€14 full price, €5 student price (''including Eremitani Civic Museum and Contemporary Art Museum'')",
+     "wikidata": "Q963954",
+     "content": "The Chapel is in the north of the city center, not far from the bus and train stations. The walls and ceilings are covered in frescos by Giotto, completed in 1303-1305. The chapel has been well preserved and the art is very impressive. Some",
+     "editions": 38
+    },
+    {
+     "kind": "see",
+     "name": "Astronomic Observatory",
+     "lat": 45.401972,
+     "lng": 11.868415,
+     "hours": "Sat-Sun 11.00-16.00 (18.00 May-Oct)",
+     "price": "",
+     "wikidata": "Q3966414",
+     "content": "Although the observatory was built after Galileo's time in Padua, you'll learn a lot about his significance for the research in Padua. You reach the top of the tower after a lecture of about one hour and can enjoy the view. ''Tickets at the",
+     "editions": 9
+    },
+    {
+     "kind": "see",
+     "name": "Palazzo della Ragione",
+     "lat": 45.407222,
+     "lng": 11.875278,
+     "hours": "",
+     "price": "",
+     "wikidata": "Q2517428",
+     "content": "The large building located between Piazza della Frutta and Piazza delle Erbe. Its ground floor hosts small market shops. The upper floor is a single large hall housing artwork and occasional exhibitions.",
+     "editions": 17
+    },
+    {
+     "kind": "see",
+     "name": "Palazzo del Bo'",
+     "lat": 45.40684,
+     "lng": 11.87754,
+     "hours": "",
+     "price": "",
+     "wikidata": "Q3360829",
+     "content": "",
+     "editions": 11
+    },
+    {
+     "kind": "see",
+     "name": "Botanic Garden",
+     "lat": 45.398889,
+     "lng": 11.880556,
+     "hours": "",
+     "price": "",
+     "wikidata": "Q598892",
+     "content": "The world's oldest still operating botanic garden, operated by the University of Padua, and on the UNESCO World Heritage list since 1997. It is not large, but is subtly laid out to swallow groups of people and give the impression of solitud",
+     "editions": 40,
+     "unesco": true
+    },
+    {
+     "kind": "see",
+     "name": "Eremitani Civic Museum",
+     "lat": 45.41096,
+     "lng": 11.88001,
+     "hours": "",
+     "price": "",
+     "wikidata": "Q3867519",
+     "content": "The museum is divided into an archeological section and a picture gallery, which has a very important collection with Tizian, Tintoretto, Giotto and Bellini among other important painters.",
+     "editions": 5
+    }
+   ],
+   "foodDrink": [],
+   "unescoSites": [
+    "Padova botanical garden",
+    "Padua's fourteenth-century fresco cycles"
+   ]
+  }
+ },
+ "ports": [],
+ "dayTrips": [
+  "Metropolitan Venice",
+  "Burano",
+  "Lido",
+  "Mestre",
+  "Murano",
+  "San Lazzaro",
+  "Torcello",
+  "Lake Garda",
+  "Po Delta",
+  "Eraclea",
+  "Jesolo",
+  "Padua",
+  "Cortina d'Ampezzo"
+ ],
+ "missing": [],
+ "centre": {
+  "lat": 45.4359028,
+  "lng": 12.336459999999999
+ },
+ "wikivoyage": "Venice"
+}

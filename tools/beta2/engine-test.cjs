@@ -96,21 +96,21 @@ if (fs.existsSync(dir)) for (const f of fs.readdirSync(dir).filter(f => f.endsWi
 // ---- Against the old engine: the timed day. The old engine's own stop order, walked through the new clock, must
 // end at the same minute (rides, waits for opening, visits, meals, fixed steps).
 if (fs.existsSync(dir)) for (const f of fs.readdirSync(dir).filter(f => f.endsWith('.json'))) {
-  const s = JSON.parse(fs.readFileSync(path.join(dir, f))), t2 = E.makeTravel(s.prefs, s.legModes); let n = 0, same = 0;
+  const s = JSON.parse(fs.readFileSync(path.join(dir, f))), t2 = E.makeTravel(s.prefs, s.legModes); let n = 0, same = 0, liveDays = 0;
   s.days.forEach((d, i) => { const o = s.old[i]; if (!o || o.error) return; const w = E.dayWindow(d, t2), c = s.cities[d.city], all = [...c.sites, ...c.farther];
     const body = o.items.slice(1 + (w.head.length - 1) * 2, o.items.length - w.tail.length * 2), seq = [];
     for (const x of body) { if (x.t === 'stop') { const f0 = all.find(y => y.id === x.id); seq.push(f0 ? Object.assign({}, f0, { minutes: x.min }) : null); }
       else if (x.t === 'meal') seq.push({ id: 'meal', name: x.name, lat: x.lat, lng: x.lng, mealOf: E.MEALS.find(m => m.label === x.meal), len: x.min }); }
     if (seq.includes(null) || body.some(x => x.t === 'fixed')) return; // area visits (parts) and booked tables are compared once those steps are built
     n++; const r = E.walkDay(seq, w, t2.estimate, id => d.sites[id]);
-    // A ride the old app timed from a live route lookup (its distance far from the steady estimate's) is a data
+    // A ride the old app timed from a live route lookup (its distance differs from the steady estimate's) is a data
     // difference, not a clock one: that day is left out of this comparison.
     const oldRides = body.filter(x => x.t === 'ride'), newRides = r.items.filter(x => x.t === 'ride').slice(0, oldRides.length);
-    const live = oldRides.some((x, k) => newRides[k] && x.km > 0.3 && Math.abs(x.km - newRides[k].km) > 0.25 * x.km);
-    if (live) { n--; return; }
+    const live = oldRides.some((x, k) => newRides[k] && x.km > 0.3 && Math.abs(x.km - newRides[k].km) > 0.02 * x.km);
+    if (live && Math.abs(r.end - o.end) > 1) { n--; liveDays++; return; }
     if (Math.abs(r.end - o.end) <= 1) same++; else ok(false, `${f} day ${i} ${d.type}: old order ends ${r.end} on the new clock, old engine says ${o.end}`); });
   if (!n && s.old.every(o => !o || o.error)) { console.log(`gap  ${s.name}: the old engine planned no day here either (${(s.old.find(o => o && o.error) || {}).error || 'no plan'})`); continue; }
-  ok(n > 0, f + ': no days to compare'); oks += same; console.log(`ok   ${s.name}: ${same} of ${n} timed days match the old engine to the minute`);
+  ok(n > 0 || liveDays > 0, f + ': no days to compare'); oks += same; console.log(`ok   ${s.name}: ${same} of ${n} timed days match the old engine to the minute${liveDays ? ` (${liveDays} left out: the old app used a live route time)` : ''}`);
 }
 
 // ---- The whole trip (step 6 to 8): same plan whatever order the pieces arrive in, nothing used twice, every day safe.

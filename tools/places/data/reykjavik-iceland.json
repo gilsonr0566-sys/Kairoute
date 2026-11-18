@@ -1,0 +1,381 @@
+{
+ "key": "reykjavik iceland",
+ "name": "Reykjavik, Iceland",
+ "built": "2026-11-18",
+ "sources": [
+  "Wikidata",
+  "OpenStreetMap",
+  "Wikivoyage"
+ ],
+ "sites": {
+  "src-q271466": {
+   "wikidata": "Q271466",
+   "editions": 43,
+   "types": [
+    "Q16970"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "hours": "Mo-Su 09:00-20:00",
+   "osm": "relation/6184378"
+  },
+  "src-q177174": {
+   "wikidata": "Q177174",
+   "editions": 41,
+   "types": [
+    "Q33506"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "hours": "10:00-19:00",
+   "fee": "yes",
+   "osm": "node/1511563888"
+  },
+  "src-q945753": {
+   "wikidata": "Q945753",
+   "editions": 33,
+   "types": [
+    "Q23397"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "osm": "relation/5820121"
+  },
+  "src-q116492": {
+   "wikidata": "Q116492",
+   "editions": 28,
+   "types": [
+    "Q23442"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "osm": "relation/8385552"
+  },
+  "src-q626963": {
+   "wikidata": "Q626963",
+   "editions": 25,
+   "types": [
+    "Q17431399"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "hours": "Mo-Su 10:00-17:00",
+   "osm": "relation/6180675"
+  },
+  "src-q116484": {
+   "wikidata": "Q116484",
+   "editions": 23,
+   "types": [
+    "Q5003624"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "osm": "node/1672263371"
+  },
+  "src-q451045": {
+   "wikidata": "Q451045",
+   "editions": 22,
+   "types": [
+    "Q7138926"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "osm": "way/110885345"
+  },
+  "src-q794242": {
+   "wikidata": "Q794242",
+   "editions": 21,
+   "types": [
+    "Q56242215",
+    "Q120560",
+    "Q136387176"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "osm": "way/93894747"
+  },
+  "src-q1367886": {
+   "wikidata": "Q1367886",
+   "editions": 21,
+   "types": [
+    "Q811979"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "hours": "09:00-21:00",
+   "osm": "way/25795245"
+  },
+  "src-q1783706": {
+   "wikidata": "Q1783706",
+   "editions": 21,
+   "types": [
+    "Q1060829"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "osm": "way/108335182"
+  },
+  "src-q1270853": {
+   "wikidata": "Q1270853",
+   "editions": 18,
+   "types": [
+    "Q56242235"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "osm": "way/87377712"
+  },
+  "src-q3358410": {
+   "wikidata": "Q3358410",
+   "editions": 15,
+   "types": [
+    "Q207694"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "hours": "Mo-We 10:00-17:00; Th 10:00-22:00; Fr-Su 10:00-17:00",
+   "fee": "yes",
+   "osm": "node/688998258"
+  },
+  "src-q3480309": {
+   "wikidata": "Q3480309",
+   "editions": 15,
+   "types": [
+    "Q17431399"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "hours": "Mo-Su 10:00-17:00",
+   "osm": "node/688998282"
+  },
+  "src-q196471": {
+   "wikidata": "Q196471",
+   "editions": 13,
+   "types": [
+    "Q543654"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "hours": "Mo-Fr 08:00-18:00; Sa 10:00-18:00; Su 12:00-18:00",
+   "osm": "way/89811581"
+  },
+  "src-q894659": {
+   "wikidata": "Q894659",
+   "editions": 13,
+   "types": [
+    "Q167346"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "fee": "no",
+   "osm": "relation/4663715"
+  },
+  "src-q3481984": {
+   "wikidata": "Q3481984",
+   "editions": 11,
+   "types": [
+    "Q33506"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "hours": "Jun-Aug 10:00-17:00, Sep-May 13:00-17:00; Jan 1 off; easter -2 days off; easter off; Dec 25 off",
+   "fee": "yes",
+   "osm": "way/26992692"
+  }
+ },
+ "towns": {
+  "hafnarfjor-ur-far": {
+   "name": "Hafnarfjörður",
+   "wikidata": "Q103725",
+   "editions": 86,
+   "unesco": false,
+   "dayTripListed": true,
+   "sights": [
+    {
+     "kind": "see",
+     "name": "Hafnarborg",
+     "lat": 64.0678342,
+     "lng": -21.957975,
+     "hours": "Fri-Mon Wed 12:00-17:00, Thu 12:00-21:00",
+     "price": "Free",
+     "wikidata": "",
+     "content": "An art gallery and venue run by the town."
+    },
+    {
+     "kind": "see",
+     "name": "Hafnarfjörður Museum",
+     "lat": 64.0678455,
+     "lng": -21.9656998,
+     "hours": "Variable opening hours (different houses are open at different times)",
+     "price": "",
+     "wikidata": "",
+     "content": "A collection of old houses in the centre of town, some of them have simply been renovated and demonstrate their original use, others contain different exhibitions relating to the history of Hafnarfjörður."
+    },
+    {
+     "kind": "see",
+     "name": "Hafnarfjarðarkirkja",
+     "lat": 64.0666484,
+     "lng": -21.9568138,
+     "hours": "",
+     "price": "",
+     "wikidata": "",
+     "content": "The oldest church in town. It was consecrated in 1914."
+    },
+    {
+     "kind": "see",
+     "name": "Sankti Jósefskirkja",
+     "lat": 64.060939,
+     "lng": -21.957589,
+     "hours": "",
+     "price": "",
+     "wikidata": "",
+     "content": "Founded in 1926, it is one of the few Roman Catholic churches located in Iceland."
+    },
+    {
+     "kind": "see",
+     "name": "Karmelklaustrið í Hafnarfirði",
+     "lat": 64.062083,
+     "lng": -21.953463,
+     "hours": "",
+     "price": "",
+     "wikidata": "",
+     "content": "the only Catholic monastery located in Iceland."
+    },
+    {
+     "kind": "see",
+     "name": "Safnaðarheimili Fríkirkjunnar í Hafnarfirði",
+     "lat": 64.069317,
+     "lng": -21.958326,
+     "hours": "",
+     "price": "",
+     "wikidata": "",
+     "content": "a Protestant church built in 1913."
+    },
+    {
+     "kind": "see",
+     "name": "Hellisgerði",
+     "lat": 64.071428,
+     "lng": -21.962957,
+     "hours": "",
+     "price": "",
+     "wikidata": "",
+     "content": "A small public park with lava rocks. Some people believe that elves and trolls live there."
+    },
+    {
+     "kind": "see",
+     "name": "Víðistaðatún",
+     "lat": 64.074721,
+     "lng": -21.967456,
+     "hours": "",
+     "price": "",
+     "wikidata": "",
+     "content": "A park well-known for its sculptures created by artists from Iceland and elsewhere."
+    },
+    {
+     "kind": "see",
+     "name": "Viti",
+     "lat": 64.068894,
+     "lng": -21.954021,
+     "hours": "",
+     "price": "",
+     "wikidata": "",
+     "content": "A lighthouse built around 1900, sometimes considered a symbol of Hafnarfjörður itself."
+    }
+   ],
+   "foodDrink": [
+    {
+     "kind": "eat",
+     "name": "Tilveran",
+     "lat": 64.069169,
+     "lng": -21.9603527,
+     "hours": "Variable opening hours",
+     "price": "Meals in the range of 1,000 to 5,000 kr",
+     "wikidata": "",
+     "content": "Restaurant in downtown Hafnarfjörður with seafood, pizza, and meat."
+    },
+    {
+     "kind": "eat",
+     "name": "Viking village",
+     "lat": 64.06518,
+     "lng": -21.9571553,
+     "hours": "Variable opening hours",
+     "price": "",
+     "wikidata": "",
+     "content": "Restaurant with traditional Icelandic food, meat, and fish."
+    },
+    {
+     "kind": "eat",
+     "name": "Súfistinn",
+     "lat": 64.0697094,
+     "lng": -21.9598219,
+     "hours": "Variable opening hours",
+     "price": "Meals in the range between 1,000 to 2,000 kr",
+     "wikidata": "",
+     "content": "Café."
+    },
+    {
+     "kind": "drink",
+     "name": "Norðurbakkinn",
+     "lat": 64.069601,
+     "lng": -21.961961,
+     "hours": "",
+     "price": "",
+     "wikidata": "",
+     "content": "Coffee shop stocked with many books."
+    }
+   ]
+  }
+ },
+ "ports": [],
+ "dayTrips": [
+  "Þingvellir National Park",
+  "UNESCO World Heritage List",
+  "South Iceland",
+  "Hafnarfjörður",
+  "Blue Lagoon",
+  "Route 1-Ring Road",
+  "London",
+  "Paris",
+  "Glasgow",
+  "Oslo",
+  "Stockholm",
+  "Copenhagen",
+  "Amsterdam",
+  "Frankfurt",
+  "Washington, D.C.",
+  "Boston",
+  "Orlando",
+  "New York City",
+  "Minneapolis",
+  "San Francisco",
+  "Seattle",
+  "Akureyri",
+  "Borgarnes",
+  "Egilsstaðir",
+  "Hveragerði",
+  "Keflavík International Airport",
+  "Keflavík"
+ ],
+ "missing": [],
+ "centre": {
+  "lat": 64.14528374999999,
+  "lng": -21.915974375
+ },
+ "wikivoyage": "Reykjavík"
+}
