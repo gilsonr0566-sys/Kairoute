@@ -65,6 +65,7 @@ jobs:
           node tools/money-check.cjs
           node tools/book-check.cjs
           node tools/tix-check.cjs
+          node tools/meal-check.cjs
           node tools/steps-e2e.cjs
           node tools/port-noai-check.cjs
       - name: Demo flow gate (Richard's Greece trip on this build, real internet; a failure stops the update going live)
