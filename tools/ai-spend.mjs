@@ -63,6 +63,18 @@ const report = [`## AI spend check, ${now.toISOString().slice(0, 16).replace("T"
   "| Day (UTC) | Neurons | Paid neurons | By model |", "|---|---|---|---|", ...lines].join("\n");
 console.log(report);
 if (process.env.GITHUB_STEP_SUMMARY) appendFileSync(process.env.GITHUB_STEP_SUMMARY, report + "\n");
+// Last 36 hours by hour, to match busy storage hours with test runs.
+try {
+  const since = new Date(now - 36 * 3600e3).toISOString().slice(0, 13) + ":00:00Z";
+  const q3 = `{ viewer { accounts(filter: { accountTag: "${id}" }) { kvOperationsAdaptiveGroups(limit: 2000, filter: { datetimeHour_geq: "${since}" }) { sum { requests } dimensions { actionType datetimeHour } } workersInvocationsAdaptive(limit: 2000, filter: { datetimeHour_geq: "${since}", scriptName: "kairoute-ai" }) { sum { requests } dimensions { datetimeHour } } } } }`;
+  const r3 = await (await fetch("https://api.cloudflare.com/client/v4/graphql", { method: "POST", headers: H, body: JSON.stringify({ query: q3 }) })).json();
+  if (r3.errors) throw new Error(JSON.stringify(r3.errors).slice(0, 300));
+  const A3 = r3.data.viewer.accounts[0], hr = {};
+  for (const x of A3.kvOperationsAdaptiveGroups) { const h = hr[x.dimensions.datetimeHour] = hr[x.dimensions.datetimeHour] || {}; h[x.dimensions.actionType] = (h[x.dimensions.actionType] || 0) + x.sum.requests; }
+  for (const x of A3.workersInvocationsAdaptive) { const h = hr[x.dimensions.datetimeHour] = hr[x.dimensions.datetimeHour] || {}; h.kai = (h.kai || 0) + x.sum.requests; }
+  const t3 = ["", "| Hour (UTC) | Helper requests | KV reads | KV writes |", "|---|---|---|---|", ...Object.keys(hr).sort().map(k => `| ${k.slice(5, 13).replace("T", " ")}h | ${fmt(hr[k].kai || 0)} | ${fmt(hr[k].read || 0)} | ${fmt(hr[k].write || 0)} |`)].join("\n");
+  console.log(t3); if (process.env.GITHUB_STEP_SUMMARY) appendFileSync(process.env.GITHUB_STEP_SUMMARY, t3 + "\n");
+} catch (e) { console.log("Hourly table unavailable: " + e.message); }
 // Second guard: the helper stops AI once the account's real total for today nears the free 10,000.
 let prev = null;
 if (process.env.REC_KEY) {
