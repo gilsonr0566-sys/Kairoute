@@ -116,6 +116,23 @@ function helper(r, calls) {
       else ok('boarding 10:00: the tour ends with what to expect at the terminal');
       if (errs.length) bad('boarding 10:00: page errors ' + errs.slice(0, 3).join(' / ')); }
     await p.close(); }
+  // 1b3. An island reached by boat is never a taxi ride (Nov 18, Mykonos: "It has it as a taxi" to Delos): with no ferry
+  // line found, a place whose own travel note names a boat or ferry gets a Boat leg, there and back.
+  if (!LIVE) { const p = await b.newPage({ viewport: { width: 1280, height: 800 } });
+    await p.route('**/*', r => /^file:/.test(r.request().url()) ? r.continue() : r.abort());
+    await p.goto('file://' + FILE); await p.evaluate(() => localStorage.setItem('kairoute.intro1', '1')); await p.reload(); await p.waitForTimeout(600);
+    const s = p.locator('[data-act="loadsample"]').first(); if (await s.isVisible().catch(() => false)) await s.click(); await p.waitForTimeout(1200);
+    const d = (await p.evaluate(() => window.__kairouteDays())).find(x => /Mykonos/.test(x.dest));
+    if (d) { await p.evaluate(i => window.__kairouteAt(i, 'sites'), d.i); await p.waitForTimeout(800);
+      await p.evaluate(() => window.__kairouteTryAdd('delos')); await p.waitForTimeout(300);
+      const legs = await p.evaluate(i => { const pl = window.__kairouteDay ? null : null; return window.__kairouteLegs(i); }, d.i) || [];
+      const boats = legs.filter(l => l.how === 'Boat').length, taxi = await p.evaluate(i => { window.__kairouteAt(i, 'plan'); return null; }, d.i);
+      await p.waitForTimeout(800); const t = await p.evaluate(() => document.getElementById('view').innerText);
+      const delos = /Delos/.test(t);
+      if (!delos) bad('Delos: not on the Mykonos plan to check');
+      else if (boats < 2 || /By road[^\n]*\n[^\n]*Delos/.test(t)) bad(`Delos: the ride there and back isn't by boat (${JSON.stringify(legs.map(l => l.how))})`);
+      else ok(`Delos: by boat there and back (${legs.filter(l => l.how === 'Boat').map(l => l.min + ' min').join(', ')}), never a taxi`); }
+    await p.close(); }
   // 1c. A trip that starts with a cruise (Bahamas test trip, Nov 17): "+ Add a cruise" on the new form replaces the empty
   // city stay it opens with, so the traveler isn't stopped by "Stop 1: type the city"; one typed into is kept.
   if (!LIVE) { const p = await b.newPage({ viewport: { width: 412, height: 860 } });
