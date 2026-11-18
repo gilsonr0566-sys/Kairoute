@@ -5,7 +5,7 @@ on:
   workflow_dispatch:
   push:
     branches: ["claude/project-thread-xrdp7v"]
-    paths: ["tools/beta2/live-trip.cjs"]
+    paths: ["tools/beta2/live-trip.cjs", ".github/workflows/beta2-live.yml"]
 permissions:
   contents: read
 jobs:
@@ -29,3 +29,10 @@ jobs:
           HELPER_WAIT: "150000"
           GUIDE_WAIT: "480000"
         run: node tools/beta2/live-trip.cjs
+      - name: New engine side by side on these places
+        if: always()
+        run: SHOW=1 node tools/beta2/compare.cjs '^(live|g[0-9])' || true
+      - name: Print the saved trips (so they can be replayed without the helper)
+        if: always()
+        run: |
+          node -e "const fs=require('fs'),z=require('zlib'),d='tools/beta2/snapshots';for(const f of fs.readdirSync(d).filter(f=>/^(live|g[0-9])/.test(f))){const b=z.gzipSync(fs.readFileSync(d+'/'+f)).toString('base64');console.log('SNAP-BEGIN '+f);for(let i=0;i<b.length;i+=4000)console.log('SNAP '+b.slice(i,i+4000));console.log('SNAP-END')}"

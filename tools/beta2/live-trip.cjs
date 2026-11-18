@@ -33,7 +33,7 @@ const port = (date, destination, arrive, aboard, extra) => day(Object.assign({ d
 const stay = (dates, destination) => dates.map(date => day({ date, destination }));
 // The build-gate yardstick (Richard, Nov 18): 20 places, each testing something specific, plus the first live runs.
 const TRIPS = [
-  { name: 'live-hamburg-stay', batch: 0, label: 'Hamburg: 2-day land stay (Tue, Wed)', days: stay(['2027-05-11', '2027-05-12'], 'Hamburg, Germany') },
+  { name: 'live-hamburg-stay', batch: 0, label: 'Hamburg: 3-day land stay (Tue to Thu)', days: stay(['2027-05-11', '2027-05-12', '2027-05-13'], 'Hamburg, Germany') },
   { name: 'live-hamburg-port', batch: 0, label: 'Hamburg: cruise call on a Sunday', days: [sea('2027-05-15'), port('2027-05-16', 'Hamburg, Germany', '08:00', '18:00')] },
   { name: 'live-nassau', batch: 0, label: 'Nassau: cruise call', days: [sea('2027-01-11'), port('2027-01-12', 'Nassau, Bahamas', '08:00', '17:00')] },
   { name: 'live-cococay', batch: 0, label: "CocoCay: cruise line's private island", days: [sea('2027-01-13'), port('2027-01-14', 'Perfect Day at CocoCay, Bahamas', '07:00', '17:00')] },
