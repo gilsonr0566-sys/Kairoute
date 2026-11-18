@@ -1,0 +1,72 @@
+{
+ "key": "chania",
+ "name": "Chania",
+ "built": "2026-11-18",
+ "sources": [
+  "Wikidata",
+  "OpenStreetMap",
+  "Wikivoyage"
+ ],
+ "sites": {},
+ "towns": {
+  "balos-far": {
+   "name": "Balos lagoon",
+   "wikidata": "Q805498",
+   "editions": 9,
+   "unesco": false,
+   "dayTripListed": false,
+   "sights": [],
+   "foodDrink": [],
+   "mapEats": []
+  },
+  "souda-far": {
+   "name": "Souda Bay War Cemetery",
+   "wikidata": "Q22919952",
+   "editions": 5,
+   "unesco": false,
+   "dayTripListed": false,
+   "sights": [],
+   "foodDrink": [],
+   "mapEats": [
+    {
+     "name": "cafe kafe",
+     "lat": 35.48796,
+     "lng": 24.0738486,
+     "kind": "eat",
+     "amenity": "cafe",
+     "cuisine": "greek",
+     "osm": "node/1668526339"
+    },
+    {
+     "name": "Coffee Spot",
+     "lat": 35.4888388,
+     "lng": 24.0741479,
+     "kind": "eat",
+     "amenity": "cafe",
+     "cuisine": "",
+     "osm": "node/13451916001"
+    }
+   ]
+  }
+ },
+ "ports": [],
+ "dayTrips": [],
+ "missing": [
+  "travel guide page",
+  "a mapped cruise terminal or pier",
+  "public transport lines on the map"
+ ],
+ "portQuery": {
+  "name": "Souda Bay cruise port",
+  "lat": 35.4885,
+  "lng": 24.0745,
+  "known": true,
+  "island": false
+ },
+ "centre": {
+  "lat": 35.51688,
+  "lng": 24.0183
+ },
+ "lifts": [],
+ "transit": []
+}

@@ -1,0 +1,306 @@
+{
+ "key": "heraklion",
+ "name": "Heraklion",
+ "built": "2026-11-18",
+ "sources": [
+  "Wikidata",
+  "OpenStreetMap",
+  "Wikivoyage"
+ ],
+ "sites": {
+  "knossos": {
+   "wikidata": "Q9054457",
+   "editions": 5,
+   "types": [
+    "Q16560",
+    "Q839954"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [
+    "Q173527"
+   ],
+   "web": ""
+  },
+  "heramuseum": {
+   "wikidata": "Q636972",
+   "editions": 21,
+   "types": [
+    "Q3329412"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "web": "http://heraklionmuseum.gr/",
+   "hours": "Apr-Oct: 08:00-20:00; Nov-Mar: 08:00-15:00",
+   "fee": "yes",
+   "osm": "node/250686961"
+  },
+  "lions": {
+   "wikidata": "Q6555912",
+   "editions": 3,
+   "types": [
+    "Q174782"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "web": "",
+   "osm": "relation/12119943"
+  },
+  "minas": {
+   "wikidata": "Q2942217",
+   "editions": 21,
+   "types": [
+    "Q56242225"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "web": "",
+   "osm": "way/175344883"
+  }
+ },
+ "towns": {
+  "phaistos-far": {
+   "name": "Phaistos palace",
+   "wikidata": "Q249707",
+   "editions": 38,
+   "unesco": false,
+   "dayTripListed": false,
+   "sights": [],
+   "foodDrink": [],
+   "mapEats": [
+    {
+     "name": "Ξενία Φαιστός",
+     "lat": 35.0518947,
+     "lng": 24.8134283,
+     "kind": "eat",
+     "amenity": "cafe",
+     "cuisine": "",
+     "osm": "node/2390298101"
+    },
+    {
+     "name": "Taverna Lamb House",
+     "lat": 35.0469417,
+     "lng": 24.8104809,
+     "kind": "eat",
+     "amenity": "restaurant",
+     "cuisine": "greek",
+     "osm": "way/660261469"
+    },
+    {
+     "name": "Taverna Agios Ioannis",
+     "lat": 35.0464381,
+     "lng": 24.8108192,
+     "kind": "eat",
+     "amenity": "restaurant",
+     "cuisine": "greek",
+     "osm": "way/660261468"
+    }
+   ]
+  },
+  "fairhavens-far": {
+   "name": "Kali Limenes (Fair Havens)",
+   "wikidata": null,
+   "editions": 0,
+   "unesco": false,
+   "dayTripListed": false,
+   "sights": [],
+   "foodDrink": [],
+   "mapEats": []
+  }
+ },
+ "ports": [
+  {
+   "name": "Heraklion",
+   "lat": 35.34253,
+   "lng": 25.14351,
+   "osm": "node/1187906551",
+   "kind": "ferry terminal",
+   "cruise": false,
+   "d": 0.17
+  },
+  {
+   "name": "Heraklion",
+   "lat": 35.34243,
+   "lng": 25.14232,
+   "osm": "node/1187906885",
+   "kind": "ferry terminal",
+   "cruise": false,
+   "d": 0.18
+  },
+  {
+   "name": "Ηράκλειο",
+   "lat": 35.3427,
+   "lng": 25.14444,
+   "osm": "node/1187907064",
+   "kind": "ferry terminal",
+   "cruise": false,
+   "d": 0.2
+  },
+  {
+   "name": "Worldchampion Jet  &  Champions League Jet 1",
+   "lat": 35.342,
+   "lng": 25.14112,
+   "osm": "node/267668226",
+   "kind": "ferry terminal",
+   "cruise": false,
+   "d": 0.28
+  }
+ ],
+ "dayTrips": [
+  "Rethymno",
+  "Chania",
+  "Agios Nikolaos",
+  "Samaria Gorge",
+  "Spinalonga",
+  "Anogia",
+  "Bali (Crete)",
+  "Chersonissos",
+  "Sitia"
+ ],
+ "missing": [
+  "a mapped cruise terminal or pier",
+  "public transport lines on the map"
+ ],
+ "portQuery": {
+  "name": "Heraklion cruise port",
+  "lat": 35.344,
+  "lng": 25.143,
+  "known": true,
+  "island": false
+ },
+ "centre": {
+  "lat": 35.333557142857146,
+  "lng": 25.138785714285717
+ },
+ "wikivoyage": "Heraklion",
+ "guideSights": [
+  {
+   "name": "Heraklion Archaeological Museum",
+   "lat": 35.33915,
+   "lng": 25.13741,
+   "wikidata": "Q636972",
+   "note": "Houses the most important and representative finds from Minoan civilisation and excavations across the island of Crete. Highlights include statues of the Snake Goddess, the Bull-Leaping Fresco, the Phaistos Disk, and Minoan seals and jewell",
+   "editions": 21,
+   "unesco": false,
+   "web": "http://heraklionmuseum.gr/"
+  },
+  {
+   "name": "Palace of Knossos",
+   "lat": 35.298056,
+   "lng": 25.163056,
+   "wikidata": "Q173527",
+   "note": "If you see just one ruin on Crete, see Knossos (in Greek it’s Κνωσός, stress is on the second syllable). The site is fairly compact, and much of it is accessible with restricted mobility. But 30 minutes will do it. It is one of six Minoan P",
+   "editions": 71,
+   "unesco": true
+  },
+  {
+   "name": "Koules",
+   "lat": 35.344639,
+   "lng": 25.13685,
+   "wikidata": "Q603920",
+   "note": "Koules (Greek: Κούλες) was built by the Venetians in the 16th C. From the parapet, enjoy the view towards Dia Islet, where Jacques Cousteau found many sunken remains of Cretan sea trade.",
+   "editions": 20,
+   "unesco": false,
+   "web": "https://www.heraklion.gr/en/ourplace/koule/koule.html"
+  },
+  {
+   "name": "Fortifications of Heraklion",
+   "lat": 35.332707,
+   "lng": 25.130661,
+   "wikidata": "Q20127741",
+   "note": "The Fortifications of Heraklion are among the most impressive Venetian defensive works in the Mediterranean, encircling the old city of Heraklion. Built between the 15th and 17th centuries, their massive walls and bastions helped the city w",
+   "editions": 10,
+   "unesco": false
+  },
+  {
+   "name": "Historical Museum of Crete",
+   "lat": 35.341806,
+   "lng": 25.131167,
+   "wikidata": "Q4204518",
+   "note": "Covers the story of Crete from the Byzantine era to the present day. It includes material on World War II and the German occupation, which was displayed in the “Museum of the Battle for Crete and National Resistance” until it closed.",
+   "editions": 12,
+   "unesco": false,
+   "web": "https://www.historical-museum.gr/"
+  },
+  {
+   "name": "Loggia",
+   "lat": 35.33983,
+   "lng": 25.134002,
+   "wikidata": "Q14175781",
+   "note": "An elegant city meeting place, built in 1628.",
+   "editions": 3,
+   "unesco": false
+  },
+  {
+   "name": "Morosini Fountain",
+   "lat": 35.3391,
+   "lng": 25.1331,
+   "wikidata": "Q6555912",
+   "note": "",
+   "editions": 3,
+   "unesco": false
+  },
+  {
+   "name": "St Minas Cathedral",
+   "lat": 35.337634,
+   "lng": 25.130903,
+   "wikidata": "Q2942217",
+   "note": "(Greek: Άγιος Μηνάς)",
+   "editions": 21,
+   "unesco": false
+  },
+  {
+   "name": "St Titus Church",
+   "lat": 35.3401,
+   "lng": 25.13465,
+   "wikidata": "Q4426010",
+   "note": "(Greek: Άγιος Τίτος) Known for housing the skull of St. Titus.",
+   "editions": 13,
+   "unesco": false,
+   "web": "http://agiostitos.gr}}"
+  },
+  {
+   "name": "St Catherine of the Sinaites Church",
+   "lat": 35.33808,
+   "lng": 25.13134,
+   "wikidata": "Q4505145",
+   "note": "(Greek: Αγία Αικατερίνη Σιναϊτών).",
+   "editions": 4,
+   "unesco": false
+  },
+  {
+   "name": "St Mark's Basilica",
+   "lat": 35.3392,
+   "lng": 25.13369,
+   "wikidata": "Q4425986",
+   "note": "(Greek: Βασιλική Αγίου Μάρκου).",
+   "editions": 8,
+   "unesco": false,
+   "web": "http://www.heraklionvisualarts.gr"
+  },
+  {
+   "name": "Dominican Church of St Peter",
+   "lat": 35.34244,
+   "lng": 25.131791,
+   "wikidata": "Q38285052",
+   "note": "(Greek: Άγιος Πέτρος Δομηνικανών).",
+   "editions": 4,
+   "unesco": false
+  },
+  {
+   "name": "Natural History Museum of Crete",
+   "lat": 35.34181,
+   "lng": 25.12668,
+   "wikidata": "Q6980521",
+   "note": "The Natural History Museum of Crete shows the natural environment of the Eastern Mediterranean area with a special emphasis on Greece and Crete.",
+   "editions": 9,
+   "unesco": false,
+   "web": "http://www.nhmc.uoc.gr"
+  }
+ ],
+ "lifts": [],
+ "transit": []
+}
