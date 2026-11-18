@@ -10,6 +10,21 @@
 // are asked for the city the day is really spent in.
 const SRC_KIND_CAP = { Church: 12, Museum: 12, Palace: 8 };
 const SRC_MAX_MAIN = 45, SRC_MAX_QUICK = 12, SRC_R = 8;
+// How many sources must agree on a place. Two, normally (a place is trusted because independent sources name it). A
+// small place has too few for that: Nassau's travel guide names Fort Fincastle and Parliament House, but where English
+// is the local language there is no second, local-language guide to agree, and a small island has only the map. There,
+// with fewer than SRC_FEW places two sources agree on, one real source with the place's position is enough (a travel
+// guide's listing, the encyclopedia, or the map), so a port day still gets real stops instead of no guide at all
+// (Bahamas test trip, Nov 17: "The guide for Nassau didn't come through"). Nothing is ever made up either way.
+const SRC_FEW = 6;
+function srcNeed(src, centre) {
+  const two = ((src && src.stops) || []).filter(x => srcWorthy(x) && (x.src || []).length >= 2 && x.lat != null && (!centre || hav(x, centre) <= SRC_R)).length;
+  return two >= SRC_FEW ? 2 : 1;
+}
+// In a small place (srcNeed 1), a sight one real source names, with its position: a travel guide's listing, a place the
+// encyclopedia knows in several languages, or a tourist place on the map; still visitable, open and a real spot.
+const srcWorthyAt = need => need >= 2 ? srcWorthy : x => x && x.lat != null && !srcShut(x) && !srcNotSpot(x)
+  && (srcVisitable(x) || (x.src || []).some(t => /OpenStreetMap/.test(t)) || (x.sl || 0) >= 15);
 // Entries that are not one place to visit: a whole city or country, a district, transport, institutions.
 const SRC_NEVER = /\b(city|district|business area|ministerios|rione|quartiere|municipality|province|region|metro|subway|railway|station|airport|line|radio|embassy|bank|ministry|school|hospital|programme|organization|organisation)\b/i;
 const SRC_UNLESS_LISTED = /\b(stadium|stadio|estadio|university|universit[àa]|academy|parliament)\b/i; // a listed monument (Panathenaic Stadium) is a sight
@@ -94,7 +109,9 @@ function sourceSights(city, src) {
   const own = () => (city.sites || []).filter(x => !x.famousFix);
   const all = allSites(city), mainN = () => own().filter(x => !x.quick).length, quickN = () => own().filter(x => x.quick).length;
   const score = x => (x.sl || 0) + 8 * (x.src || []).length + (x.unesco ? 30 : x.heritage ? 5 : 0) + ((x.src || []).some(t => /Wikivoyage/.test(t)) ? 10 : 0); // travelers recommend it
-  const cands = src.stops.filter(x => srcWorthy(x) && (x.src || []).length >= 2 && x.name && keyOf(x.name) !== keyOf(area) && hav(x, centre) <= SRC_R)
+  const need = srcNeed(src, centre);
+  const worthy = srcWorthyAt(need);
+  const cands = src.stops.filter(x => worthy(x) && (x.src || []).length >= need && x.lat != null && x.name && keyOf(x.name) !== keyOf(area) && hav(x, centre) <= SRC_R)
     .sort((a, b) => score(b) - score(a));
   let n = 0;
   const make = (x, extra) => {
@@ -122,7 +139,9 @@ function sourceSights(city, src) {
 // (Rome, Paris, Athens, Barcelona, Madrid) at least 30 worthwhile ones, a smaller one most of what its sources know.
 function srcCoverageMin(src, centre) {
   const area = String((src && src.area) || ""), seen = [];
-  for (const x of ((src && src.stops) || []).filter(x => srcWorthy(x) && (x.src || []).length >= 2 && (!centre || hav(x, centre) <= SRC_R)).sort((a, b) => (b.sl || 0) - (a.sl || 0)))
+  const need = srcNeed(src, centre);
+  const worthy = srcWorthyAt(need);
+  for (const x of ((src && src.stops) || []).filter(x => worthy(x) && (x.src || []).length >= need && (!centre || hav(x, centre) <= SRC_R)).sort((a, b) => (b.sl || 0) - (a.sl || 0)))
     if (!srcHas(seen, x, area, src)) seen.push(x);   // one place counted once, with its parts (the Erechtheion is the Acropolis)
   return seen.length >= 50 ? 30 : Math.floor(seen.length * 0.6);
 }
