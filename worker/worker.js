@@ -812,7 +812,7 @@ Written text:
 
 // The best-known places in and around a city (see /famous).
 async function famousData(label, env, ctx) {
-  const key = "fm7:" + (await sha(label.toLowerCase())), hit = await env.USAGE.get(key); if (hit) return JSON.parse(hit);
+  const key = "fm8:" + (await sha(label.toLowerCase())), hit = await env.USAGE.get(key); if (hit) return JSON.parse(hit);
   const UA = { "user-agent": "Kairoute/1.0 (travel guide; https://gilsonr0566-sys.github.io/Kairoute/)" };
   const getJ = async (u, ms) => { for (let t = 0; t < 2; t++) { try { const r = await fetch(u, { headers: { ...UA, accept: "application/sparql-results+json" }, signal: AbortSignal.timeout(ms || 25000) }); if (r.ok) return await r.json(); } catch (e) {} } return null; };
   const centerOf = async name => {
@@ -822,12 +822,12 @@ async function famousData(label, env, ctx) {
     if (f) return { lat: f.geometry.coordinates[1], lng: f.geometry.coordinates[0] };
     // Small or private islands and resort ports (a cruise line's island) are often no town on the map: the
     // encyclopedia's best match for the name, when its title or opening words name the place, gives the spot.
-    const w = await getJ("https://en.wikipedia.org/w/api.php?action=query&format=json&redirects=1&generator=search&gsrlimit=3&prop=coordinates|extracts&exintro=1&explaintext=1&exlimit=3&exchars=600&gsrsearch=" + encodeURIComponent(name), 9000);
+    const w = await getJ("https://en.wikipedia.org/w/api.php?action=query&format=json&redirects=1&generator=search&gsrlimit=3&prop=coordinates|extracts|pageprops&ppprop=wikibase_item&exintro=1&explaintext=1&exlimit=3&exchars=600&gsrsearch=" + encodeURIComponent(name), 9000);
     const words = t => fold(t).split(" ").filter(x => x.length >= 4 && !STOPW.has(x)), want = words(name.split(",")[0]);
     const pages = Object.values((w && w.query && w.query.pages) || {}).sort((a, b) => a.index - b.index);
     for (const pg of pages) { const co = pg.coordinates && pg.coordinates[0]; if (!co) continue;
       const tw = words(pg.title), ex = fold(pg.extract || "");
-      if (want.some(x => tw.includes(x)) || (want.length && want.every(x => ex.includes(x)))) return { lat: co.lat, lng: co.lon }; }
+      if (want.some(x => tw.includes(x)) || (want.length && want.every(x => ex.includes(x)))) return { lat: co.lat, lng: co.lon, wd: (pg.pageprops && pg.pageprops.wikibase_item) || undefined }; }
     return null;
   };
   // Not sights: cities and municipalities, stations, airports, schools, hospitals, regions, seas, government bodies.
@@ -848,6 +848,8 @@ async function famousData(label, env, ctx) {
   const port = label.replace(/\s*\(.*?\)\s*/g, " ").trim(), inBr = ((/\(([^)]*)\)/.exec(label) || [])[1] || "").split(",").map(x => x.trim()).filter(Boolean);
   let area = port, center = await centerOf(port);
   if (!center) return { error: "Unknown place", status: 404 };
+  // The place itself (the island the encyclopedia found for the name) is where the day is spent, not a sight in it.
+  const selfId = center.wd; center = { lat: center.lat, lng: center.lng };
   let main = await famous(center, 6, 8, NOT_SIGHT, 60, 20000);
   if (!main) return { error: "Busy", status: 503 };
   const fame = list => (list || []).slice(0, 5).reduce((a, x) => a + x.sl, 0);
@@ -857,7 +859,7 @@ async function famousData(label, env, ctx) {
   const farRaw = (await famous(center, 80, 25, NOT_TOWN, 120, 200000)) || [];
   const mainIds = new Set(main.map(x => x.wd)), lc = s => s.toLowerCase();
   const far = farRaw.filter(x => x.km > 6 && !mainIds.has(x.wd) && lc(x.name) !== lc(area) && lc(x.name) !== lc(port)).slice(0, 25);
-  main = main.filter(x => lc(x.name) !== lc(area) && lc(x.name) !== lc(port)).slice(0, 45);
+  main = main.filter(x => lc(x.name) !== lc(area) && lc(x.name) !== lc(port) && !(selfId && x.wd === selfId)).slice(0, 45);
   // Heritage status (UNESCO World Heritage, or a national heritage register) for every place found.
   const hids = [...main, ...far].map(x => x.wd);
   if (hids.length) { const hj = await getJ("https://query.wikidata.org/sparql?format=json&query=" + encodeURIComponent(`SELECT ?item (MAX(IF(?h = wd:Q9259, 1, 0)) AS ?un) WHERE { VALUES ?item { ${hids.map(x => "wd:" + x).join(" ")} } ?item wdt:P1435 ?h } GROUP BY ?item`), 25000);
@@ -957,27 +959,35 @@ async function voyageNextPlaces(next, center, UA) {
   });
   return out;
 }
-// Named tourist places from OpenStreetMap within 3 km: Overpass first, Photon's map search if Overpass is busy.
-const MAP_SIGHT = { tourism: /^(attraction|viewpoint|museum|theme_park|zoo|aquarium|gallery)$/, leisure: /^(water_park|beach_resort|nature_reserve|park)$/, natural: /^beach$/, man_made: /^lighthouse$/, historic: /./ };
+// Named tourist places from OpenStreetMap within 3 km. Three map services, each with a short time limit, because
+// any one of them is often busy: Photon's map search, then Overpass, then Nominatim (one ask a second, as its rules say).
+const MAP_SIGHT = { tourism: /^(attraction|viewpoint|museum|theme_park|zoo|aquarium|gallery)$/, leisure: /^(water_park|beach_resort|nature_reserve)$/, natural: /^beach$/, man_made: /^lighthouse$/, historic: /./ };
 async function mapSights(c, UA) {
   const out = [], put = (name, lat, lng, k, v, t) => { if (!name || !isFinite(lat) || !isFinite(lng) || out.some(x => sameName(x.name, name))) return; out.push({ name, lat: +(+lat).toFixed(5), lng: +(+lng).toFixed(5), kind: k + ":" + v, historic: k === "historic", web: (t && (t.website || t["contact:website"])) || undefined }); };
+  await Promise.all(["tourism", "natural:beach", "leisure:water_park", "leisure:beach_resort", "man_made:lighthouse", "historic"].map(async tag => {
+    try { const r = await fetch(`https://photon.komoot.io/reverse?lat=${c.lat}&lon=${c.lng}&radius=3&limit=20&lang=en&osm_tag=${tag}`, { headers: UA, signal: AbortSignal.timeout(6000) });
+      if (r.ok) for (const f of (await r.json()).features || []) { const p = f.properties || {}, k = p.osm_key, v = p.osm_value; if (k && MAP_SIGHT[k] && MAP_SIGHT[k].test(v || "")) put(p.name, f.geometry.coordinates[1], f.geometry.coordinates[0], k, v); } } catch (e) {}
+  }));
+  if (out.length >= 3) return out.slice(0, 30);
   const A = `(around:3000,${c.lat},${c.lng})["name"]`;
-  const q = `[out:json][timeout:20];(nwr${A}["tourism"~"^(attraction|viewpoint|museum|theme_park|zoo|aquarium|gallery)$"];nwr${A}["leisure"~"^(water_park|beach_resort|nature_reserve)$"];nwr${A}["natural"="beach"];nwr${A}["man_made"="lighthouse"];nwr${A}["historic"];);out center tags 80;`;
-  for (const ep of ["https://overpass-api.de/api/interpreter", "https://overpass.private.coffee/api/interpreter", "https://maps.mail.ru/osm/tools/overpass/api/interpreter"]) {
-    try { const r = await fetch(ep, { method: "POST", signal: AbortSignal.timeout(15000), body: "data=" + encodeURIComponent(q), headers: { ...UA, "content-type": "application/x-www-form-urlencoded", accept: "application/json" } });
+  const q = `[out:json][timeout:10];(nwr${A}["tourism"~"^(attraction|viewpoint|museum|theme_park|zoo|aquarium|gallery)$"];nwr${A}["leisure"~"^(water_park|beach_resort|nature_reserve)$"];nwr${A}["natural"="beach"];nwr${A}["man_made"="lighthouse"];nwr${A}["historic"];);out center tags 80;`;
+  for (const ep of ["https://overpass-api.de/api/interpreter", "https://overpass.private.coffee/api/interpreter"]) {
+    try { const r = await fetch(ep, { method: "POST", signal: AbortSignal.timeout(9000), body: "data=" + encodeURIComponent(q), headers: { ...UA, "content-type": "application/x-www-form-urlencoded", accept: "application/json" } });
       if (!r.ok) continue; const j = await r.json();
       for (const e of j.elements || []) { const t = e.tags || {}, k = Object.keys(MAP_SIGHT).find(k => t[k] && MAP_SIGHT[k].test(t[k])); if (k) put(t["name:en"] || t.name, e.lat ?? (e.center && e.center.lat), e.lon ?? (e.center && e.center.lon), k, t[k], t); }
-      return out.slice(0, 30);
+      if (out.length) return out.slice(0, 30);
     } catch (e) {}
   }
-  for (const tag of ["tourism", "natural:beach", "leisure:water_park", "leisure:beach_resort", "man_made:lighthouse", "historic"]) {
-    try { const r = await fetch(`https://photon.komoot.io/reverse?lat=${c.lat}&lon=${c.lng}&radius=3&limit=20&lang=en&osm_tag=${tag}`, { headers: UA, signal: AbortSignal.timeout(8000) });
-      if (r.ok) for (const f of (await r.json()).features || []) { const p = f.properties || {}, k = p.osm_key, v = p.osm_value; if (k && MAP_SIGHT[k] && MAP_SIGHT[k].test(v || "")) put(p.name, f.geometry.coordinates[1], f.geometry.coordinates[0], k, v); } } catch (e) {}
+  const d = 3 / 111, e = d / Math.cos(c.lat * Math.PI / 180), box = `${c.lng - e},${c.lat + d},${c.lng + e},${c.lat - d}`;
+  for (const w of ["beach", "attraction", "water park", "viewpoint", "lighthouse", "museum"]) {
+    try { const r = await fetch(`https://nominatim.openstreetmap.org/search?format=jsonv2&bounded=1&limit=20&extratags=1&viewbox=${box}&q=${encodeURIComponent(w)}`, { headers: { ...UA, "accept-language": "en" }, signal: AbortSignal.timeout(7000) });
+      if (r.ok) for (const f of await r.json()) { const k = f.category, v = f.type; if (f.name && MAP_SIGHT[k] && MAP_SIGHT[k].test(v || "")) put(f.name, +f.lat, +f.lon, k, v, f.extratags); } } catch (e2) {}
+    await new Promise(res => setTimeout(res, 1100));
   }
   return out.slice(0, 30);
 }
 async function sourcesData(label, env, ctx) {
-  const key = "sr6:" + (await sha(label.toLowerCase())), hit = await env.USAGE.get(key); if (hit) return JSON.parse(hit);
+  const key = "sr7:" + (await sha(label.toLowerCase())), hit = await env.USAGE.get(key); if (hit) return JSON.parse(hit);
   const UA = { "user-agent": "Kairoute/1.0 (travel guide; https://gilsonr0566-sys.github.io/Kairoute/)" };
   const getJ = async (u, ms, opt) => { for (let t = 0; t < 2; t++) { try { const r = await fetch(u, Object.assign({ headers: { ...UA, accept: "application/json" }, signal: AbortSignal.timeout(ms || 20000) }, opt || {})); if (r.ok) return await r.json(); } catch (e) {} } return null; };
   const T = {}, t0 = Date.now(), lap = k => { T[k] = Date.now() - t0; };
