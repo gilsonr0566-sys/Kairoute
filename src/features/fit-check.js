@@ -197,9 +197,19 @@ function otherDays(label) {
   const F = fitState; if (!F.others.length) return "";
   return `<div class="fitmore"><p class="lbl">${esc(label)}</p><div class="actions">${F.others.map(o => `<button type="button" class="btn ${F.dayFirst ? "" : "ghost "}small" data-act="fitday" data-fitday="${trip.days.indexOf(o)}">Add it to ${esc(fmtDow(o.date))} ${esc(fmtDate(o.date))}</button>`).join("")}</div></div>`;
 }
+// One sight, one day: a sight that comes onto this day through the won't-fit box (a swap, a new time, another day)
+// comes off the day it was planned on, as a plain tick does (addPick). Left on both, a fresh page plans it on
+// whichever day it reaches first, so the same trip showed different stops on a second screen (Nov 18 gate).
+function takeFromOtherDay(d, id) {
+  const from = id && plannedElsewhere(d)[id]; if (!from) return;
+  from.selected = from.selected.filter(x => x !== id); markMine(from, id, false); if (from.anchor === id) from.anchor = null;
+  const c = cityFor(d), sx = c && allSites(c).find(x => x.id === id);
+  movedNote = (sx ? sx.name : "That sight") + " moved here from " + fmtDow(from.date) + " " + fmtDate(from.date) + "."; d.movedIn = { ...(d.movedIn || {}), [id]: from.date };
+}
 function fitApply(t) {
   const F = fitState; if (!F) return;
-  const d = F.d; d.selected = [...d.selected.filter(i => !F.drop.has(i)), ...(F.id ? [F.id] : [])];
+  const d = F.d; if (F.id) takeFromOtherDay(d, F.id); d.selected = [...d.selected.filter(i => !F.drop.has(i)), ...(F.id ? [F.id] : [])];
+  if (F.id || F.drop.size) { d.ownList = true; delete d.autoEmpty; delete d.cleared; } // a swap is the traveler's own change, as a tick is
   if (t) { if (t.hours != null) d.hours = t.hours; if (t.startTime) d.startTime = t.startTime; }
   if (F.s) { d.anchor = F.id; rememberPick(d, F.s); markMine(d, F.id, true); }
   fitState = null; fitShow(); save(); render(); if (F.s) jumpToAnchor();
@@ -207,6 +217,7 @@ function fitApply(t) {
 function fitDay(o) {
   const id = fitState && fitState.id; fitState = null; fitShow(); if (!o || !id) return;
   const c = cityFor(o); if (!o.selected && c) seedPicks(o, c);
+  if (!(o.selected || []).includes(id)) takeFromOtherDay(o, id);
   if (addPick(o, id, false)) { o.anchor = id; markMine(o, id, true); trip.active = trip.days.indexOf(o); save(); render(); jumpToAnchor(); }
 }
 function fitMove(v) {

@@ -2863,6 +2863,10 @@ function famousRepair(city, src) {
 // the same as if the sources had been there from the start; the trim then keeps it.
 function leadLate(city) {
   if (typeof trip === "undefined" || !trip || !trip.days) return;
+  // Once the traveler has changed any day in this city (ticked, unticked, swapped, hearted), the app no longer hands
+  // out a day trip on its own: one they swapped off a day would come back on another, and only on a page opened after
+  // the sources arrived, so two screens of the same trip showed different days (Nov 18 gate, Ancient Corinth).
+  if (trip.days.some(o => cityFor(o) === city && (o.ready || o.ownList || (o.mine || []).length))) return;
   for (const o of trip.days) {
     if (!Array.isArray(o.selected) || !o.selected.length || cityFor(o) !== city || (o.type !== "port" && o.type !== "land")) continue;
     if (o.ready || o.ownList || (o.mine || []).length || (o.wants || []).length || noShore(o) || !o.seedSig || o.seedSig !== seedSigOf(o)) continue;
