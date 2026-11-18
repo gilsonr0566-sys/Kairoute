@@ -9,18 +9,19 @@ How Beta 2 turns a trip into days. Each step only reads the steps before it, and
 1. **Know our resources: the places database.** (Richard: "what are my resources to find the pieces. Have that data base that can grow as needed and does not have to be rebuilt, just amended.") One growing database of every place, port, terminal, opening hours, ride time and restaurant Kairoute has ever found for any traveler. Each entry is stored once and reused. A new find is added, a correction updates the entry, and nothing is ever rebuilt from scratch. Each entry records which source found it and when it was last checked. Behind it sits a fixed list of free sources that find new pieces (see "The places database" below).
 2. **Collect the pieces into the trip bucket.** (Richard: "have a bucket, get all the pieces", "then collect the pieces".) For this trip, the bucket is filled from the database first and goes to outside sources only for what's missing or out of date. Whatever the sources find is added to the database for the next traveler. The bucket says what's still missing, and planning runs only from a complete bucket. Nothing is looked up halfway through planning.
 3. **Sort the pieces into groups and sites.** (Richard: "Which piece is a group, and which is an individual site. Old Town Square is a group. Astronomical clock is a site.") A group is a place that holds other sights: a square, an old town or district, a castle, an archaeological site, a park, an island, a museum complex. A site is one thing to see with its own story. A site inside a group is still its own stop, with its own narration, during the group's visit. Membership comes from the map's own boundaries, and for an open square, the buildings facing onto it. It's stored in the places database, so it's decided once and never changes while you plan. A group and the sights inside it are claimed together on one day, so nothing "Included" is ever scheduled twice.
-4. **Set each day's window.** When sightseeing can start and the hard end: all aboard minus 45 min on port days, the boarding time on boarding days, 3 h before a flight, 30 min before a train. Fixed steps (bags, the ride to the ship) come out first. A same-day fly-in with under 3 h left goes straight to the ship. Missing times stop that day with a clear message, never a guess.
-5. **Lock the hearted days.** Their sights, order and restaurants are claimed first, so no other day can take them.
-6. **Give each picked sight its day.** Days are handled in date order. A sight goes to the earliest day it's open and fits, and it's claimed once for the whole trip.
-7. **Order each day by route.** Shortest, easiest path from the start to the end point. Must-sees don't change the order.
-8. **Fit the day.** Check opening hours and the hard end. If it's too full: shorten long visits a little, try a quicker lunch, then let the least important stop go (the app's picks before the traveler's, a lone far-off stop before one in the day's main area). Then put back anything that truly fits.
-9. **Nudge for comfort, within a cap.** Crowds, heat and the forecast may swap the order only if that adds no more than 15 min of riding (30 with a real forecast).
-10. **Add meals.** Lunch and dinner near where you are, from real restaurants, never the same place twice in a trip. Booked tables stay at their time.
-11. **Fill spare time.** Optional stops and quick sights on the way, never past the hard end, never on a cleared or hearted day.
-12. **Write the timeline.** Real ride times set the clock. If a real ride time makes a stop late or unsafe, the plan flags it and says why, instead of quietly reshuffling the day.
+4. **Label every piece with its categories.** (Richard: "add interest, must see, local favorite, and all the other categories so they can be sorted if they need to be displayed or not.") Every group and site carries its labels in the places database: the setup's interests (history, art and museums, architecture, food and markets, views and nature, churches and faith, Bible sites, shopping, beaches, kid-friendly), must-see, UNESCO, famous or local favorite, religious, open-air or indoor, quick stop, day trip, book ahead, timed show, quiet place, free, and group or site. The screens use these labels to decide what to show, and the planner reads the same ones, so a list and a plan never disagree.
+5. **Set each day's window.** When sightseeing can start and the hard end: all aboard minus 45 min on port days, the boarding time on boarding days, 3 h before a flight, 30 min before a train. Fixed steps (bags, the ride to the ship) come out first. A same-day fly-in with under 3 h left goes straight to the ship. Missing times stop that day with a clear message, never a guess.
+6. **Lock the hearted days.** Their sights, order and restaurants are claimed first, so no other day can take them.
+7. **Give each picked sight its day.** Days are handled in date order. A sight goes to the earliest day it's open and fits, and it's claimed once for the whole trip.
+8. **Order each day by route.** Shortest, easiest path from the start to the end point. Must-sees don't change the order.
+9. **Fit the day.** Check opening hours and the hard end. If it's too full: shorten long visits a little, try a quicker lunch, then let the least important stop go (the app's picks before the traveler's, a lone far-off stop before one in the day's main area). Then put back anything that truly fits.
+10. **Nudge for comfort, within a cap.** Crowds, heat and the forecast may swap the order only if that adds no more than 15 min of riding (30 with a real forecast).
+11. **Add meals.** Lunch and dinner near where you are, from real restaurants, never the same place twice in a trip. Booked tables stay at their time.
+12. **Fill spare time.** Optional stops and quick sights on the way, never past the hard end, never on a cleared or hearted day.
+13. **Write the timeline.** Real ride times set the clock. If a real ride time makes a stop late or unsafe, the plan flags it and says why, instead of quietly reshuffling the day.
 
 
-_Steps 4 onward are being reviewed with Richard and may change._
+_Steps 5 onward are being reviewed with Richard and may change._
 
 ## The places database (step 1 in detail)
 
@@ -51,6 +52,7 @@ _Steps 4 onward are being reviewed with Richard and may change._
 | `travel.js` | Minutes between two places. Two answers: a **stable estimate** (distance, walking limit, guide's own ride note), used for choosing and ordering, and the **live time** (real ride answers), used only for the clock. |
 | `hours.js` | Opening hours, closed days, last entry. One check every stop passes. |
 | `groups.js` | Step 3: sorts every piece into a group or a site, from map boundaries and the square rule; a group's visit claims everything inside it. |
+| `tags.js` | Step 4: every piece's categories, and one sort and filter the screens and planner share. |
 | `ledger.js` | The trip-wide record of what's used: each sight and each restaurant claimed once. |
 | `assign.js` | Which picked sights go on which day: hearted days first (locked), then days in date order; a sight goes to the earliest day it fits. |
 | `route.js` | Best route order for a day: exact for up to 9 stops, otherwise nearest-neighbour plus 2-opt, with a fixed tie-break (by id) so the answer never depends on input order. |

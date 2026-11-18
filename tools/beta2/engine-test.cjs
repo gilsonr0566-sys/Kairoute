@@ -2,6 +2,7 @@
 // Pure Node, no browser, no internet, no AI. Usage: node tools/beta2/engine-test.cjs
 const E = require('./engine.cjs'), fs = require('fs'), path = require('path');
 let fails = 0, oks = 0; const ok = (c, msg) => { if (c) oks++; else { fails++; console.log('FAIL ' + msg); } };
+const dir = path.join(__dirname, 'snapshots');
 const tr = E.makeTravel({ walk: 'medium' }, {});
 const port = { name: 'Port', lat: 37.94, lng: 23.64 }, hotel = { name: 'Hotel', lat: 37.97, lng: 23.73 }, air = { name: 'Airport', lat: 37.94, lng: 23.94 };
 const day = o => Object.assign({ type: 'land', mode: 'flight', startTime: '09:00', hours: 8, returnToStart: true, lodging: hotel, point: port }, o);
@@ -57,8 +58,28 @@ const day = o => Object.assign({ type: 'land', mode: 'flight', startTime: '09:00
   ok(G.kind.get('a') === 'site' && G.kind.get('b') === 'site', 'two places that each contain the other are both sites');
 }
 
+// ---- Categories (step 4) ----
+{ const S = [{ id: 'm', name: 'Big Ruins', fame: 3, tags: ['must-see', 'famous', 'interest:history', 'open-air'] }, { id: 'c', name: 'Small Church', fame: 1, tags: ['local-favorite', 'religious', 'interest:churches'] },
+    { id: 'g', name: 'Gallery', fame: 2, tags: ['famous', 'interest:art', 'indoor'] }];
+  const ids = l => l.map(x => x.id).join();
+  ok(ids(E.filterSights(S, {})) === 'm,g,c', 'sorted must-sees first, then by fame');
+  ok(ids(E.filterSights(S, { show: 'local' })) === 'c', 'local favorites filter');
+  ok(ids(E.filterSights(S, { interests: ['art'] })) === 'm,g', "interests filter keeps must-sees and the traveler's interests");
+  ok(ids(E.filterSights(S, { skip: ['religious'] })) === 'm,g', 'religious sites off');
+  ok(ids(E.filterSights(S.slice().reverse(), {})) === ids(E.filterSights(S, {})), 'same order whatever order they arrive in'); }
+if (fs.existsSync(dir)) for (const f of fs.readdirSync(dir).filter(f => f.endsWith('.json'))) {
+  const s = JSON.parse(fs.readFileSync(path.join(dir, f))); let n = 0;
+  for (const c of Object.values(s.cities)) { const all = [...c.sites, ...c.farther], G = E.makeGroups(all), T = E.tagGroups(all, G);
+    T.forEach(x => { n++; const t = x.tags || [];
+      ok(t.includes('famous') !== t.includes('local-favorite'), `${f} ${x.name}: exactly one of famous / local favorite`);
+      ok(t.includes('must-see') === !!x.mustSee, `${f} ${x.name}: must-see tag matches`);
+      ok(t.includes('group') !== t.includes('site'), `${f} ${x.name}: exactly one of group / site`);
+      ok(t.filter(k => k.startsWith('interest:')).every(k => E.INTEREST_KEYS.includes(k.slice(9))), `${f} ${x.name}: unknown interest`); }); }
+  console.log(`ok   ${s.name}: ${n} sights carry their categories`);
+}
+
 // ---- Against the old engine: every day's window on the saved test trips ----
-const dir = path.join(__dirname, 'snapshots');
+
 if (fs.existsSync(dir)) for (const f of fs.readdirSync(dir).filter(f => f.endsWith('.json'))) {
   const s = JSON.parse(fs.readFileSync(path.join(dir, f))), t2 = E.makeTravel(s.prefs, s.legModes); let n = 0;
   s.days.forEach((d, i) => { const o = s.old[i], w = E.dayWindow(d, t2); if (!o || o.error) { ok(!!w.error || !d.city, `${f} day ${i}: old engine had no plan (${o && o.error}) but the new window has none of its reasons`); return; }

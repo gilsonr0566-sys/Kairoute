@@ -4,6 +4,22 @@
 // that day (opening hours, closed, crowds, ratings), and the forecast. The new engine (src/engine/) plans from this
 // alone: it never reads the app's state, storage or the internet. Places are identified by id; names are display only.
 // engineBucket(withOld) also returns the old planner's plans in a short form, so the two can be compared side by side.
+// Step 4 (Richard, Nov 18: "add interest, must see, local favorite, and all the other categories so they can be
+// sorted if they need to be displayed or not"): every label a sight carries, from the same rules the screens use, so
+// the Sights list, filters and the planner all read one set of tags. Interests use the setup's own list (INTERESTS).
+function sightTags(city, s) {
+  const t = ((s.category || "") + " " + (s.summary || "") + " " + (s.name || "")).toLowerCase(), out = [];
+  INTERESTS.forEach(([k]) => { if ((INTEREST_WORDS[k] || []).some(w => t.includes(w))) out.push("interest:" + k); });
+  if (s.mustSee) out.push("must-see");
+  if (s.unesco) out.push("unesco");
+  out.push(sightKind(s, city) === "local" ? "local-favorite" : "famous");
+  if (isReligious(s)) out.push("religious"); if (bibleSite(s)) out.push("bible");
+  out.push(isOpenAir(s) ? "open-air" : s.indoor ? "indoor" : "inside-or-out");
+  if (s.quick) out.push("quick-stop"); if ((city.farther || []).includes(s) || s.far) out.push("day-trip");
+  if (bookAhead(s)) out.push("book-ahead"); if (s.show) out.push("timed-show"); if (isQuietPlace(s)) out.push("quiet-place");
+  if (!s.cost) out.push("free"); if (s.srcOnly && !s.guide) out.push("no-story-yet");
+  return out;
+}
 function engineBucket(withOld) {
   const n = v => (isFinite(+v) ? +v : null);
   const pt = p => p ? { id: p.id || null, name: p.name || "", lat: n(p.lat), lng: n(p.lng), unknown: !!p.unknown || (typeof unsurePoint === "function" && unsurePoint(p)) } : null;
@@ -16,6 +32,7 @@ function engineBucket(withOld) {
     religiousOk: religiousOk(s), srcOnly: !!s.srcOnly, hasGuide: !!s.guide, recommended: !!(s.unesco || (s.src || []).some(t => /Wikivoyage/.test(t))),
     likes: ints.reduce((a, w) => a + (((s.category || "") + " " + (s.summary || "")).toLowerCase().includes(w) ? 1 : 0), 0),
     travelNote: typeof s.travel === "string" ? s.travel : "", show: s.show || null,
+    tags: sightTags(city, s), // step 4: every label the app sorts and shows by (same rules as the screens)
     in: typeof inArea === "function" ? allSites(city).filter(a => a !== s && inArea(s, a)).map(a => a.id) : [] // the map areas it stands in (groups, step 3)
   });
   trip.days.forEach((d, i) => {
