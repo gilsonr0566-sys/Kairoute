@@ -5,7 +5,10 @@
 // Runs on GitHub Actions (beta2-live.yml). Usage: ONLY=live-hamburg-stay node tools/beta2/live-trip.cjs [built index.html]
 const { chromium } = require('playwright'); const path = require('path'); const fs = require('fs'); const zlib = require('zlib');
 const FILE = path.resolve(process.argv[2] || path.join(__dirname, '..', '..', 'index.html'));
-const REAL = 'https://kairoute-ai.rickgilson.workers.dev', MOCK = 'https://mock.test';
+// The helper address: the CI test stand-in when tools/test-helper.sh pointed ai.json at it (repeat asks then never
+// reach the live helper), else the live helper itself.
+const AIJ = (() => { try { return JSON.parse(require('fs').readFileSync(require('path').join(__dirname, '..', '..', 'ai.json'), 'utf8')).url || ''; } catch (e) { return ''; } })();
+const REAL = /^http:\/\/localhost:\d+\/workers\.dev$/.test(AIJ) ? AIJ : 'https://kairoute-ai.rickgilson.workers.dev', MOCK = 'https://mock.test';
 const PASS = new Set(['/sources', '/famous', '/ground', '/places', '/transit', '/route', '/departures', '/ferries', '/weather', '/facts', '/osm', '/findplace', '/nearsights', '/verify', '/bookcheck', '/voyage']);
 const K = require('./engine.cjs'); const E = K.KEngine || K;
 const OUT = path.join(__dirname, 'snapshots'); fs.mkdirSync(OUT, { recursive: true });

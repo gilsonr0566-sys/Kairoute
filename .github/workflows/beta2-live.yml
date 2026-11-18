@@ -5,7 +5,7 @@ on:
   workflow_dispatch:
   push:
     branches: ["claude/project-thread-xrdp7v"]
-    paths: ["tools/beta2/live-trip.cjs", ".github/workflows/beta2-live.yml", "tools/places/build.cjs"]
+    paths: ["tools/beta2/live-trip.cjs"]
 permissions:
   contents: read
 jobs:
@@ -18,8 +18,14 @@ jobs:
     timeout-minutes: 60
     steps:
       - uses: actions/checkout@v4
-      - name: Build the app
-        run: sh build.sh
+      - name: Bring back the test stand-in's kept answers (fewer asks to the live helper)
+        uses: actions/cache/restore@v4
+        with:
+          path: .helper-memo
+          key: helper-memo-${{ github.workflow }}-${{ matrix.batch }}-${{ github.run_id }}
+          restore-keys: helper-memo-${{ github.workflow }}-${{ matrix.batch }}-
+      - name: Build the app, with the helper stand-in (repeat asks never reach the live helper)
+        run: sh build.sh && sh tools/test-helper.sh
       - uses: actions/setup-node@v4
         with:
           node-version: 22
@@ -41,3 +47,12 @@ jobs:
         if: always()
         run: |
           node -e "const fs=require('fs'),z=require('zlib'),d='tools/beta2/snapshots';for(const f of fs.readdirSync(d).filter(f=>/^(live|g[0-9])/.test(f))){const b=z.gzipSync(fs.readFileSync(d+'/'+f)).toString('base64');console.log('SNAP-BEGIN '+f);for(let i=0;i<b.length;i+=4000)console.log('SNAP '+b.slice(i,i+4000));console.log('SNAP-END')}"
+      - name: Stop the test stand-in (writes what it kept)
+        if: always()
+        run: sh tools/test-helper.sh stop
+      - name: Keep the stand-in's answers for the next run
+        if: always()
+        uses: actions/cache/save@v4
+        with:
+          path: .helper-memo
+          key: helper-memo-${{ github.workflow }}-${{ matrix.batch }}-${{ github.run_id }}
