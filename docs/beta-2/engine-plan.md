@@ -155,7 +155,15 @@ Pass rule (every point, every trip):
 - **Explains itself:** every dropped or moved sight and every estimated fact is labelled.
 - **Fast enough:** each trip plans within the time limit on a slowed phone.
 - **Expected outcomes reached on their own:** tools/beta2/yardstick-expect.json lists results the general rules must produce, never hard-coded (first one: from Hamburg, Lübeck is suggested as a day trip ahead of Itzehoe).
-Any failure: fix it as a general rule, then rerun all 20.
+More tests in the gate (Richard, Nov 18: "anything else we can be doing to test this process before the rebuild"), same pass rule:
+21. **Traveler variety, same city:** family with young kids, step-free or limited walking, slow versus packed pace, faith-focused. Each plan must fit that traveler (no climbs for step-free, nightlife never for faith or family).
+22. **Edits after the first plan:** move a sight, drag the order, heart a day, run 45 minutes late, change the ship time. Plans stay steady and safe, with no repeats; only what the edit touches changes, and the explain step says what changed.
+23. **Full-length real trips:** the 21-day Greece trip (about 89 stops) and the Bahamas Jan 11 to 15 trip, checked for drift and repeats across days, and for speed.
+24. **Human review:** readable day plans for Hamburg with Lübeck, Prague and Athens, for Richard to judge whether he'd actually do them.
+25. **Bad input on purpose:** wrong times, a misspelled city, all aboard before docking, a date in the past, overlapping days. Every one is caught and asked about, never planned around.
+26. **Broken or missing data on purpose:** a source answer that's empty, late, cut off or contradictory (two different port spots, hours that close before they open). The plan stays safe and says what's missing.
+27. **Phone conditions:** offline with only the saved city files, a changed time zone and a daylight-saving date, a slowed device. Same plan, same safety.
+Any failure: fix it as a general rule, then rerun the whole gate.
 
 ### Resources added in the dry runs (Nov 18)
 No new paid sources, and no new sources at all. Every fix uses a free source the app already reaches:
