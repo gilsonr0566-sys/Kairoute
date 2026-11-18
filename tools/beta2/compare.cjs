@@ -2,11 +2,15 @@
 // the same scorer. Usage: node tools/beta2/compare.cjs [name-filter]. Exit 1 if the new engine has a safety failure.
 const fs = require('fs'), path = require('path'), E = require('./engine.cjs'), { score } = require('./score.cjs');
 const dir = path.join(__dirname, 'snapshots'), only = process.argv[2] ? new RegExp(process.argv[2]) : null;
-let unsafe = 0, notWorse = 0; const rows = [];
+let unsafe = 0, notWorse = 0;
+// PLACES_DIR=<folder of places files>: fold them into each trip first (step 2), as the app will.
+const PD = process.env.PLACES_DIR, places = {};
+if (PD) for (const f of fs.readdirSync(PD).filter(f => f.endsWith('.json'))) { const p = JSON.parse(fs.readFileSync(path.join(PD, f))); places[p.key] = p; }
+const withPlaces = s => PD ? E.applyPlaces(s, places) : s; const rows = [];
 for (const f of fs.readdirSync(dir).filter(f => f.endsWith('.json')).sort()) {
   const s = JSON.parse(fs.readFileSync(path.join(dir, f))); if (only && !only.test(f)) continue;
   let plans; const t0 = Date.now();
-  try { plans = E.planTrip(s); } catch (e) { console.log(`\n== ${s.label || f}: NEW ENGINE CRASHED ${e.stack}`); unsafe++; continue; }
+  try { plans = E.planTrip(withPlaces(s)); } catch (e) { console.log(`\n== ${s.label || f}: NEW ENGINE CRASHED ${e.stack}`); unsafe++; continue; }
   const ms = Date.now() - t0, o = score(s, s.old || []), n = score(s, plans);
   const safety = n.fails.filter(x => /ends .* late|closed stop|last entry|repeated/.test(x));
   unsafe += safety.length;

@@ -5,7 +5,8 @@
 (function (E) {
   const has = (s, t) => E.has(s, t);
   // fameN: 0..1 from whatever fame number the guide carries (built-in guides carry none that differs).
-  const fameN = s => { const f = +s.fame || 0; return f > 3 ? Math.min(1, f / 80) : f > 1.2 ? Math.min(1, (f - 1) / 2) : 0; };
+  // Language editions on Wikidata (from the places files) are the steadiest measure: 10 editions 0.45, 60 0.8, 150+ 1.
+  const fameN = s => { if (+s.editions > 0) return Math.min(1, Math.log10(+s.editions) / 2.2); const f = +s.fame || 0; return f > 3 ? Math.min(1, f / 80) : f > 1.2 ? Math.min(1, (f - 1) / 2) : 0; };
   E.worth = (s, prefs, style) => {
     if (!s) return 0;
     const interests = (prefs && prefs.interests) || [];
@@ -14,6 +15,7 @@
     if (s.unesco || has(s, "unesco")) w += 20;
     w += 30 * fameN(s);
     if (s.recommended) w += 10;
+    if (s.far && s.dayTripListed) w += 25;   // travelers' guides send people there for the day
     if (style && style !== "mix" && s.kind === style) w += 12;
     if (interests.some(k => has(s, "interest:" + k))) w += 25;
     if (s.quick) w -= 25;
