@@ -13,7 +13,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        batch: ["5"]
+        batch: ["0", "1", "2", "3", "4", "5"]
     runs-on: ubuntu-latest
     timeout-minutes: 60
     steps:
