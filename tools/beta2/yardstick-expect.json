@@ -1,0 +1,6 @@
+{
+  "note": "Expected outcomes the built engine must reach ON ITS OWN through general rules (never hard-coded in the engine; no place names in engine code). Checked by the build gate against each trip's plan and suggested picks.",
+  "live-hamburg-stay": [
+    { "check": "day-trip-ranked-above", "better": "Lübeck", "worse": "Itzehoe", "why": "Day trips need travelers' evidence (Wikivoyage day-trip listing, UNESCO, listed sights), not town fame (Hamburg dry run, Nov 18)." }
+  ]
+}

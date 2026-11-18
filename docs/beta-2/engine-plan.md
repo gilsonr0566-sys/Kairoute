@@ -154,6 +154,7 @@ Pass rule (every point, every trip):
 - **Same plan every time:** 10 runs with the data arriving in shuffled order give identical plans.
 - **Explains itself:** every dropped or moved sight and every estimated fact is labelled.
 - **Fast enough:** each trip plans within the time limit on a slowed phone.
+- **Expected outcomes reached on their own:** tools/beta2/yardstick-expect.json lists results the general rules must produce, never hard-coded (first one: from Hamburg, Lübeck is suggested as a day trip ahead of Itzehoe).
 Any failure: fix it as a general rule, then rerun all 20.
 
 ### Resources added in the dry runs (Nov 18)
