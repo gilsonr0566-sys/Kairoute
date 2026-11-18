@@ -1,0 +1,23 @@
+name: Beta 2 live dry run
+# Beta 2 dry runs on places the app was never tuned for: the app runs with AI off against the real helper's free
+# lookups only (tools/beta2/live-trip.cjs). Never publishes anything.
+on:
+  workflow_dispatch:
+  push:
+    branches: ["claude/project-thread-xrdp7v"]
+    paths: ["tools/beta2/live-trip.cjs"]
+permissions:
+  contents: read
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build the app
+        run: sh build.sh
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm i --no-save playwright@1 && npx playwright install --with-deps chromium
+      - run: node tools/beta2/live-trip.cjs
