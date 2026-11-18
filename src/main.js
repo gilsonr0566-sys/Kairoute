@@ -2439,8 +2439,8 @@ function cleanCity(c, dest) {
   for (const k of ["cruise", "airport", "station", "hotel", "point"]) starts[k] = ((c.starts && c.starts[k]) || []).filter(okLL).map(p => ({ name: (k !== "hotel" && enNameOf(String(p.name))) || String(p.name), lat: num(p.lat), lng: num(p.lng), note: p.note ? String(p.note) : "" }));
   return {
     city: String(c.city || dest), country: String(c.country || ""), ai: true, verified: c.verified || 0, grounded: !!c.grounded, gv: String(c.gv || ""), eatsV: +c.eatsV || 0, farFillV: +c.farFillV || 0, startsOk: c.startsOk === true ? 1 : +c.startsOk || 0, starts,
-    sites: (c.sites || []).filter(okLL).map((s, i) => site(s, i)),
-    farther: (c.farther || []).filter(okLL).map((s, i) => Object.assign(site(s, i, "-far"), { far: true })),
+    sites: (c.sites || []).filter(okLL).map((s, i) => splitLocalName(site(s, i))),
+    farther: (c.farther || []).filter(okLL).map((s, i) => splitLocalName(Object.assign(site(s, i, "-far"), { far: true }))),
     basics: c.basics ? {
       currency: String(c.basics.currency || ""), symbol: String(c.basics.symbol || ""), prices: /^[A-Z]{3}$/.test(String(c.basics.prices || "")) ? c.basics.prices : "", language: String(c.basics.language || ""), langCode: String(c.basics.langCode || ""),
       tipping: String(c.basics.tipping || ""), safety: String(c.basics.safety || ""), emergency: String(c.basics.emergency || ""), plugs: String(c.basics.plugs || ""), water: String(c.basics.water || ""),
@@ -2820,6 +2820,7 @@ function fameMark(city, src) {
   // Fills first, then the sources' sights: the same order online and offline, so the list comes out the same.
   restoreFills(city, fillsMem[keyOf(city.city)]);
   for (const s of [...(city.sites || []), ...(city.farther || [])]) {
+    splitLocalName(s);   // a guide saved before the rule
     const nm0 = s.srcName || s.name;   // the name the guide gave it, before it was put into English
     const hit = srcStop(src, nm0, s) || ((src.far || []).find(x => nameMatch(s.name, x.name) || nameMatch(x.name, s.name)) && Object.assign({ src: ["Wikidata (Wikipedia in many languages)"] }, (src.far || []).find(x => nameMatch(s.name, x.name) || nameMatch(x.name, s.name))));
     if (hit) { s.fame = hit.sl || 0; s.unesco = !!hit.unesco; s.heritage = !!hit.heritage; s.src = hit.src || []; if (hit.web && !s.web) s.web = hit.web; 
