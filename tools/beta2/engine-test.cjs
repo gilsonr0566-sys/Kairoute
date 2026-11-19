@@ -562,4 +562,37 @@ ok(E.readable('Café Ñandú') && E.readable("Joe's Bar & Grill") && !E.readable
       }
       if (why.length) { bad++; if (bad <= 8) ok(false, `${f} day ${i + 1}: ${x.how || x.mode} (${d.toFixed(1)} km): ${why.join('; ')}`); } })); }
   ok(rides > 300 && !bad, `never fewer ways than the demo: ${rides} rides on all test trips, ${bad} short`); }
+// ---- Nov 19 fold: ONE lunch rule, ONE "fits the day" test, and the traveler's order with its cost said.
+{ const PD = path.join(__dirname, '..', 'places', 'data'), places = {}; if (fs.existsSync(PD)) for (const g of fs.readdirSync(PD).filter(g => g.endsWith('.json'))) { const q = JSON.parse(fs.readFileSync(path.join(PD, g))); places[q.key] = q; }
+  const cf = path.join(dir, 'corinth-day.json');
+  if (fs.existsSync(cf)) { const b0 = E.applyPlaces(JSON.parse(fs.readFileSync(cf)), places), i = 3;
+    const withDay = patch => Object.assign({}, b0, { days: b0.days.map((d, j) => j === i ? Object.assign({}, d, patch) : d) });
+    const ids = ['corinth-far', 'corinth-canal-far', 'acrocorinth-far'], perms = [];
+    const perm = (a, pre) => { if (!a.length) return perms.push(pre); a.forEach((x, k) => perm(a.filter((_, j) => j !== k), pre.concat(x))); }; perm(ids, []);
+    // Richard, Nov 19: "Well, it didn't put a lunch" / "Even if its a short 20 30 minute lunch, it needs to be notated".
+    const noLunch = [null].concat(perms).filter(o => { const p = E.planTrip(withDay(o ? { order: o } : {}))[i]; return !p.items.some(x => x.t === 'meal' && x.meal === 'Lunch'); });
+    ok(!noLunch.length, `the Corinth day gets a timed lunch in the app's order and every dragged order (missing in ${noLunch.map(o => o ? o.join('>') : 'the app\'s order').join(', ')})`);
+    // A dragged order that rides far more than the app's says so; the app's own order never does.
+    const zig = E.planTrip(withDay({ order: ['corinth-far', 'corinth-canal-far', 'acrocorinth-far'] }))[i], app = E.planTrip(b0)[i];
+    ok(zig.orderExtra >= 15 && !app.orderExtra, `a dragged order back and forth across Corinth says how much more travel it costs (got ${zig.orderExtra}; the app's order ${app.orderExtra})`);
+    // Adding a sight in town to the full Corinth day: it fits only by ending later, never by quietly cutting Ancient Corinth or lunch.
+    const before = app.items.filter(x => x.t === 'stop' || x.t === 'meal').map(x => x.name + ':' + x.min).join(',');
+    ok(app.suggest.every(x => { const q = E.planTrip(withDay({ selected: b0.days[i].selected.concat(x.id) }))[i];
+      return app.items.filter(y => y.t === 'stop' || (y.t === 'meal' && y.meal === 'Lunch')).every(y => q.items.some(z => z.name === y.name && z.min >= y.min)); }), `every sight offered for the free time fits without shortening a visit or lunch (${before})`);
+  }
+  // Lunch inside a long visit takes the walk there and back out of the visit too: the day never ends later for it.
+  { let n = 0, bad = 0;
+    for (const f of fs.readdirSync(dir).filter(f => f.endsWith('.json'))) { const s = E.applyPlaces(JSON.parse(fs.readFileSync(path.join(dir, f))), places); let pl; try { pl = E.planTrip(s); } catch (e) { continue; }
+      pl.forEach((p, i) => { if (!p || !p.items || p.safe) return;
+        // ONE test of "fits": a day with no time for lunch offers nothing more for its free time.
+        if (p.noLunch === 'time' && (p.suggest || []).length) { bad++; if (bad <= 3) ok(false, `${f} day ${i + 1}: no time for lunch, yet ${p.suggest.length} sights offered as fitting`); }
+        if (p.items.some(x => x.lunchIn)) n++; }); }
+    ok(!bad, `a day without time for lunch offers no sights as fitting (${n} days with lunch inside a long visit)`); }
+  // A day out from early afternoon (an airport arrival) still gets lunch; a short morning out doesn't need one.
+  const w = (from, to) => ({ start: from, sightFrom: from, endBy: to, sightTo: to });
+  ok(E.lunchWanted(w(13 * 60 + 40, 18 * 60)) && E.lunchWanted(w(9 * 60, 17 * 60)) && !E.lunchWanted(w(9 * 60, 11 * 60 + 30)) && !E.lunchWanted(w(15 * 60, 19 * 60)),
+    'lunch is wanted on any day out over lunchtime for two hours or more, an afternoon from 13:40 included');
+  // A minute riding weighs at least as much as a minute waiting: the planner never buys a little less waiting with a long crossing.
+  { const r = { over: 0, late: 0, mealPen: 0, end: 600 }; ok(E.dayCost(Object.assign({ waits: 0, rideMin: 60 }, r)) >= E.dayCost(Object.assign({ waits: 60, rideMin: 0 }, r)), 'an hour more riding never costs less than an hour of waiting'); }
+}
 console.log(`\n${oks} checks passed, ${fails} failed`); process.exit(fails ? 1 : 0);

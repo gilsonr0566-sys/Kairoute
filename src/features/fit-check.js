@@ -16,7 +16,8 @@ function fitTrial(d, sel, t, fast) {
   try { const p = buildPlan(d), m = meterCalc(p, d); return { p, m }; }
   finally { Object.assign(d, keep); if (keep.fillTime === undefined) delete d.fillTime; forget0(d); }
 }
-const fitsAll = r => !!(r && r.m && !r.m.over && !r.m.dropped.length && !((r.p && r.p.closedToday) || []).length); // a pick the day can't visit (closed) never "fits"
+// The same test as the planner's (E.roomFor): a day left with no time for lunch has no room for this sight either.
+const fitsAll = r => !!(r && r.m && !r.m.over && !r.m.dropped.length && !((r.p && r.p.closedToday) || []).length && !(r.p && r.p.noLunch === "time")); // a pick the day can't visit (closed) never "fits"
 // Only a hotel day's times are the traveler's to change; arrival, departure, boarding and port days are set
 // by the flight, train or ship.
 const timesFixed = d => d.type !== "land";
@@ -43,7 +44,27 @@ function timeOptions(d, sel) {
 // place by name, a must-see found later, a day's starting picks): a stop is added only if the day, with it,
 // still fits. With ask, a stop that doesn't fit opens the box; without, it is simply not added.
 function fitAsk(d, id) { return fitOpen(d, id); }
-function fitsWith(d, ids) { return fitsAll(fitTrial(d, [...new Set([...(d.selected || []), ...ids])])); }
+// Fits as the day stands: nothing already on the day gets shorter to make room (a visit cut, lunch made quick), Nov 19:
+// Philopappos showed "+1 h 3 min" on the Corinth day, and adding it took 37 minutes from Ancient Corinth and half of lunch.
+// Shorter visits and a quicker lunch are offered by name under "Ways to fit it in", never done quietly.
+function keepsDay(p, base) {
+  if (!p || !base || p.error || base.error) return true;
+  const stopsOf = x => x.items.filter(i => i.type === "stop"), mealsOf = x => x.items.filter(i => i.type === "meal");
+  const own = z => (z.place.minutes || 0) + (z.place.lunchCut || 0); // a visit with lunch inside counts with that lunch
+  return stopsOf(base).every(x => { const y = stopsOf(p).find(z => z.place.id === x.place.id); return !y || own(y) >= own(x); })
+    && mealsOf(base).every(x => { const y = mealsOf(p).find(z => z.meal.label === x.meal.label); return y && y.meal.len >= x.meal.len; });
+}
+// What the planner would shorten to fit a sight in, said by name: [{ name, from, to }] for each visit or meal made shorter.
+function shortened(p, base) {
+  if (!p || !base || p.error || base.error) return [];
+  const out = [];
+  base.items.filter(i => i.type === "stop").forEach(x => { const y = p.items.find(z => z.type === "stop" && z.place.id === x.place.id); if (y && (y.place.minutes || 0) < (x.place.minutes || 0)) out.push({ name: x.place.name, from: x.place.minutes, to: y.place.minutes }); });
+  base.items.filter(i => i.type === "meal").forEach(x => { const y = p.items.find(z => z.type === "meal" && z.meal.label === x.meal.label); if (!y) out.push({ name: x.meal.label.toLowerCase(), from: x.meal.len, to: 0 }); else if (y.meal.len < x.meal.len) out.push({ name: x.meal.label.toLowerCase(), from: x.meal.len, to: y.meal.len }); });
+  return out;
+}
+// And the sight is planned on this day (not moved by the planner to the day its area is walked, or left out).
+const onPlan = (p, id) => !!(p && !p.error && p.items.some(x => x.type === "stop" && (x.place.id === id || (x.place.includes || []).some(k => (k.id || k) === id) || x.place.within === id)));
+function fitsWith(d, ids, base) { const r = fitTrial(d, [...new Set([...(d.selected || []), ...ids])]); return fitsAll(r) && keepsDay(r.p, base) && ids.every(id => onPlan(r.p, id)); }
 const shutOn = (d, x) => { const c = cityFor(d); let w = null; try { w = c ? dayWindow(d, c) : null; } catch (e) {} return closedForDay(x, d, w); };
 function addPick(d, id, ask) {
   const city = cityFor(d); if (!city) return false;
@@ -57,8 +78,11 @@ function addPick(d, id, ask) {
   // The won't-fit box measures the day as if the sight came here (before it goes back to its own day), and exactly
   // as the day will be once it is added: the traveler's own picks weigh more in the plan, so the trial counts this
   // one as theirs too. Otherwise the trial and the real plan can disagree, and a pick that "fit" is taken off again.
+  // The day as it stands, to see that nothing on it gets shorter (planned on a copy of the picks: planning the live day
+  // here can bump picks off it).
+  const base0 = ask ? fitTrial(d, (d.selected || []).slice()).p : null;
   const mine0 = (d.mine || []).slice(); if (ask) markMine(d, id, true);
-  if (!fitsWith(d, [id])) { if (ask) fitOpen(d, id); d.mine = mine0; if (from) { from.selected = back.sel; from.mine = back.mine; from.anchor = back.anchor; } return false; }
+  if (!fitsWith(d, [id], base0)) { if (ask) fitOpen(d, id); d.mine = mine0; if (from) { from.selected = back.sel; from.mine = back.mine; from.anchor = back.anchor; } return false; }
   const was = selKey(d); d.selected = [...d.selected, id]; if (!ask && typeof d.seedSig === "string" && d.seedSig === was) d.seedSig = selKey(d); // a sight the app adds keeps the list the app's (a hearted day's mark is left alone)
   delete d.autoEmpty; delete d.cleared; if (d.bumped) d.bumped = d.bumped.filter(b => b.id !== id); rememberPick(d, sx);
   if (from) { movedNote = (sx ? sx.name : "That sight") + " moved here from " + fmtDow(from.date) + " " + fmtDate(from.date) + "."; d.movedIn = { ...(d.movedIn || {}), [id]: from.date }; } // remembered so it can go back if it stops fitting here
@@ -87,7 +111,7 @@ function fitOpen(d, id) {
   const s = id ? allSites(city).find(x => x.id === id) : null; if (id && !s) return true;
   const sel0 = (d.selected || []).slice(), target = id ? [...sel0, id] : sel0;
   const base = fitTrial(d, sel0); if (!base.m) return true;
-  const full = fitTrial(d, target); if (!full.m || fitsAll(full)) return true;
+  const full = fitTrial(d, target); if (!full.m || (fitsAll(full) && keepsDay(full.p, base.p) && (!id || onPlan(full.p, id)))) return true;
   let need = 0;
   if (s) { try { need = stopCost(base.p, s).min; } catch (e) {} if (!(need > 0)) need = Math.max(5, full.m.used - base.m.used); }
   const picks = allSites(city).filter(x => sel0.includes(x.id));
@@ -115,11 +139,13 @@ function fitOpen(d, id) {
   for (const r of byVal.filter(r => r.alone)) { const f = swapSet([r.x.id]); if (f) { f.must = r.x.mustSee; fixes.push(f); } if (fixes.length >= 2) break; }
   // Two picks at most: a bigger swap rebuilds the day, and another day or new times serve better.
   if (!fixes.length && canRoom) { const ids = []; for (const r of byVal.slice(0, 2)) { ids.push(r.x.id); const f = swapSet(ids); if (f) { f.must = ids.some(i => (picks.find(x => x.id === i) || {}).mustSee); fixes.push(f); break; } } }
+  // The planner's own way: the sight goes in and a visit or lunch gets shorter, each change named (never done quietly).
+  if (s && fitsAll(full)) { const cut = shortened(full.p, base.p); if (cut.length) fixes.push({ kind: "shorter", cut, end: endOf(full) }); }
   times.forEach(t => fixes.push(Object.assign({}, t, { how: t.kind, kind: "time" })));
   others.forEach(o => fixes.push({ kind: "day", o }));
   moves.forEach(v => fixes.push({ kind: "move", x: v.x, o: v.o }));
   // A swap that costs a must-see comes after other ways (a new time or another day), never first.
-  const rank = f => f.kind === "swap" ? (f.must ? 3 : 0) : f.kind === "time" ? 1 : 2;
+  const rank = f => f.kind === "shorter" ? -1 : f.kind === "swap" ? (f.must ? 3 : 0) : f.kind === "time" ? 1 : 2;
   fixes.sort((a, b) => rank(a) - rank(b));
   fitState = { fixes, d, id, s, need, never, others, moves, dayFirst, canRoom, base: base.m, rows, sugg, drop: new Set(), times };
   fitShow(); return false;
@@ -165,15 +191,18 @@ function fitHTML() {
   if (!ok && F.s) { const wo = fitTrial(d, sel.filter(i => i !== F.id)); let nd = F.need; try { if (wo.p && !wo.p.error) nd = stopCost(wo.p, F.s).min; } catch (e) {} if (wo.m) used = wo.m.used + nd; }
   const avail = m ? m.avail : F.base.avail, over = Math.max(0, used - avail), pct = Math.min(100, Math.round(used / avail * 100));
   const when = d.type === "port" ? "your time ashore" : "today";
-  const title = F.s ? `${esc(F.s.name)} doesn't fit ${when} yet` : `Your picks don't all fit ${when}`;
+  // It fits only if something on the day gets shorter: said as such, with each change named (Nov 19, Richard).
+  const cutFix = F.s && ok && !F.drop.size ? F.fixes.find(f => f.kind === "shorter") : null;
+  const cutWords = cutFix ? cutFix.cut.map(c => c.to ? `${esc(c.name)} is ${dur(c.to)} instead of ${dur(c.from)}` : `there's no ${esc(c.name.toLowerCase())}`).join(" and ") : "";
+  const title = cutFix ? `${esc(F.s.name)} fits only if something gets shorter` : F.s ? `${esc(F.s.name)} doesn't fit ${when} yet` : `Your picks don't all fit ${when}`;
   return `<h3 id="fitTitle">${title}</h3>
     <div class="meter ${ok ? "" : "full"}" role="status" aria-live="polite">
       <div class="mrow"><b>${dur(Math.min(used, 24 * 60))} of ${dur(avail)}</b><span>${fmt(m ? m.start : F.base.start)} to ${fmt(m ? m.endBy : F.base.endBy)}</span></div>
       <div class="mbar"><i style="width:${pct}%"></i></div>
       ${F.s ? `<p class="mparts">${esc(F.s.name)} needs about ${dur(F.need)} with getting there and back on your route.${freed ? ` Unticked so far frees about ${dur(freed)}.` : ""}</p>` : freed ? `<p class="mparts">Unticked so far frees about ${dur(freed)}.</p>` : ""}
-      <p>${ok ? `<b>It fits now</b>${avail - used >= 5 ? `, with ${dur(avail - used)} to spare` : ""}.` : `<b>${over ? dur(over) + " over" : "Doesn't fit the route and opening hours"}.</b> ${fitNext(F)}`}</p>
+      <p>${cutFix ? `<b>It fits if ${cutWords}.</b> Pick a way below, or keep your day as is.` : ok ? `<b>It fits now</b>${avail - used >= 5 ? `, with ${dur(avail - used)} to spare` : ""}.` : `<b>${over ? dur(over) + " over" : "Doesn't fit the route and opening hours"}.</b> ${fitNext(F)}`}</p>
     </div>
-    ${timesFixed(d) ? `<p class="fitwhy">${fixedWhy(d, !!F.s)}</p>` : ""}
+    ${timesFixed(d) && !cutFix ? `<p class="fitwhy">${fixedWhy(d, !!F.s)}</p>` : ""}
     ${F.fixes.length ? `<div class="fitfixes"><p class="lbl">${F.s ? "Ways to fit it in, one tap" : "Ways to make it fit, one tap"}</p>${F.fixes.map((f, k) => `<button type="button" class="btn ${k ? "ghost " : ""}fixbtn" data-act="fitfixgo" data-k="${k}">${fixLabel(F, f)}</button>`).join("")}</div>`
       : `<p class="mparts"><b>${F.s ? "There's no way to fit it into this day." : "Untick picks below until it fits."}</b></p>`}
     ${F.rows.length ? `<details class="fitown"${F.drop.size ? " open" : ""}><summary>Or choose what to untick yourself</summary><div class="fitlist">${F.rows.map(x => `<label class="fitrow"><input type="checkbox" data-fitdrop="${esc(x.x.id)}" ${F.drop.has(x.x.id) ? "" : "checked"}><span class="nm">${esc(x.x.name)}</span><span class="tags">${x.x.mustSee ? `<span class="tag must">Must-see</span>` : ""}<span class="tag">Frees ${x.frees >= 5 ? "about " + dur(x.frees) : "little time"}</span></span></label>`).join("")}</div></details>` : ""}
@@ -185,6 +214,7 @@ function fixLabel(F, f) {
   const at = f.end != null ? ` · ${endWord(d)} ${fmt(f.end)}` : "";
   if (f.kind === "swap") return F.s ? `Swap ${f.drop.map(nm).join(" and ")} for ${esc(F.s.name)}${at}` : `Leave out ${f.drop.map(nm).join(" and ")}${at}`;
   if (f.kind === "time") return `${f.how === "earlier" ? `Start at ${esc(f.startTime)} instead of ${esc(d.startTime)}` : `Finish at ${fmt(f.end)} instead of ${fmt(F.base.endBy)}`}${F.s ? ", and add it" : ", and keep every pick"}`;
+  if (f.kind === "shorter") return `Add it, with ${f.cut.map(c => c.to ? `${esc(c.name)} ${dur(c.to)} instead of ${dur(c.from)}` : `no ${esc(c.name.toLowerCase())}`).join(" and ")}${at}`;
   if (f.kind === "day") return `Add it to ${esc(fmtDow(f.o.date))} ${esc(fmtDate(f.o.date))} instead`;
   if (f.kind === "move") return `Move ${esc(f.x.name)} to ${esc(fmtDow(f.o.date))} ${esc(fmtDate(f.o.date))}`;
   return "";
@@ -244,6 +274,7 @@ document.addEventListener("click", e => {
   else if (t.dataset.act === "fitadd" && !t.disabled) fitApply();
   else if (t.dataset.act === "fitfixgo") { const f = fitState.fixes[+t.dataset.k]; if (!f) return;
     if (f.kind === "swap") { fitState.drop = new Set(f.drop); fitApply(); }
+    else if (f.kind === "shorter") fitApply();
     else if (f.kind === "time") fitApply(f);
     else if (f.kind === "day") { t.dataset.act = "fitday"; t.dataset.fitday = trip.days.indexOf(f.o); fitDay(f.o); }
     else if (f.kind === "move") fitMove(f); }
@@ -258,14 +289,14 @@ document.addEventListener("keydown", e => { if (e.key === "Escape" && fitState) 
 // (route, travel, meals, opening hours)? The answers are kept until anything about the day changes, so the
 // list recalculates after every tick or untick. A sight clearly too long for the time left is known at once;
 // the rest are checked in small batches right after the list draws, and their cards update in place.
-let sitesCtx = null, fitMemo = { key: "", res: new Map() }, fitQueue = [], fitTimer = 0;
+let sitesCtx = null, fitMemo = { key: "", res: new Map(), add: new Map() }, fitQueue = [], fitTimer = 0;
 const fitKey = d => { try { return JSON.stringify([trip.days.indexOf(d), d, trip.lodging, trip.prefs, trip.style]); } catch (e) { return String(Math.random()); } };
-function fitCostOf(plan, s) { try { const c = stopCost(plan, s); return { min: c.min, spare: Math.max(0, c.spare) }; } catch (e) { return { min: s.minutes || 45, spare: 0 }; } }
+function fitCostOf(plan, s) { if (fitMemo.add.has(s.id)) return { min: fitMemo.add.get(s.id), spare: 0, exact: true }; try { const c = stopCost(plan, s); return { min: c.min, spare: Math.max(0, c.spare) }; } catch (e) { return { min: s.minutes || 45, spare: 0 }; } }
 function timeLeft(plan, d) { const m = meterCalc(plan, d); return m ? { left: Math.max(0, m.avail - m.used), m } : null; }
 function siteFits(d, s, plan) {
-  const k = fitKey(d); if (fitMemo.key !== k) { fitMemo = { key: k, res: new Map() }; fitQueue = []; }
+  const k = fitKey(d); if (fitMemo.key !== k) { fitMemo = { key: k, res: new Map(), add: new Map() }; fitQueue = []; }
   if (fitMemo.res.has(s.id)) return fitMemo.res.get(s.id);
-  const m = meterCalc(plan, d); if (m && (m.over || m.dropped.length)) { fitMemo.res.set(s.id, false); return false; } // already full: nothing more fits
+  const m = meterCalc(plan, d); if (m && (m.over || m.dropped.length || (plan && plan.noLunch === "time"))) { fitMemo.res.set(s.id, false); return false; } // already full (or no time for lunch): nothing more fits
   if (!fitQueue.includes(s.id)) fitQueue.push(s.id);
   clearTimeout(fitTimer); fitTimer = setTimeout(fitRefine, 30);
   return undefined;
@@ -295,7 +326,12 @@ function fitRefine() {
     const id = fitQueue.shift();
     if (fitMemo.res.has(id)) continue;
     const s = allSites(city).find(x => x.id === id);
-    const ok = s && fitNever(ctx.plan, d, s) ? false : fitsAll(fitTrial(d, [...d.selected, id], null, true)); fitMemo.res.set(id, ok);
+    // The same full-day plan decides both the mark and its number: "+24 min" is how much later the day really ends.
+    let ok = false; if (s && !fitNever(ctx.plan, d, s)) {
+      // A sight planned on another day is tried as a pick moves it: off that day, onto this one (as addPick does).
+      const from = plannedElsewhere(d)[id], fromSel = from && from.selected; if (from) from.selected = fromSel.filter(x => x !== id);
+      let r; try { r = fitTrial(d, [...d.selected, id], null, true); } finally { if (from) from.selected = fromSel; } ok = fitsAll(r) && keepsDay(r.p, ctx.plan) && onPlan(r.p, id); if (ok && r.p && ctx.plan && !ctx.plan.error) fitMemo.add.set(id, Math.max(0, Math.round(r.p.end - ctx.plan.end))); }
+    fitMemo.res.set(id, ok);
     const el = document.querySelector(`#view [data-card="${CSS.escape(id)}"]`);
     if (el && s && !d.selected.includes(id)) el.outerHTML = siteCard(s, d, ctx.plan, ctx.near);
   } } finally { back(); }

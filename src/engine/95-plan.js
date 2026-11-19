@@ -59,13 +59,14 @@
       // ticked). Nothing is optional (Nov 18, Richard).
       const it = { t: x.t, id: x.t === "meal" ? null : x.id, name: x.name, at: x.at, min: x.min, bonus: false, along: false, meal: x.meal || null, late: x.late || 0 };
       if (x.wait) it.wait = x.wait; if (x.chosen) it.chosen = true; if (x.pinned) it.pinned = true;
+      if (src && src.lunchCut) it.lunchCut = src.lunchCut; // lunch is inside this visit: the visit gave it these minutes
       Object.assign(it, point(whereIs(x)));
       items.push(it);
     }
     if (dinner) items.push({ t: "evening", id: null, name: dinner.name, at: dinner.at, min: dinner.min, lat: dinner.lat, lng: dinner.lng, bonus: false, along: false, meal: "Dinner", late: 0, chosen: !!dinner.chosen });
     return { i, start: win.start, endBy: win.endBy, end: fit.r.end, over: fit.r.over > 0, straight: !!win.straight,
       head: win.head.map(x => ({ name: x.name, fixed: !!x.fixed, minutes: x.fixed ? x.minutes : 0 })), tail: win.tail.map(x => ({ name: x.name, fixed: !!x.fixed, minutes: x.fixed ? x.minutes : 0 })), items,
-      suggest: (fit.suggest || []).slice() };
+      suggest: (fit.suggest || []).slice(), noLunch: fit.noLunch || null, orderExtra: fit.orderExtra || 0 };
   }
   // Step 8: the final guard. Any broken safety rule turns the day into a safe day that says why.
   function guard(plan, win) {
@@ -347,7 +348,7 @@
         .filter(s => !was.win.hard || shortRoad(s) || boatOk(s)).slice(0, 3);
       // Spare time is the traveler's: a trip out that would fit is named for them to add, never added on its own
       // (Nov 18, Richard: "Just let them select to fill the spots").
-      if (was.plan && was.plan.suggest) for (const f of far) if (was.spare >= 2 * away(f) + (f.minutes || 60) + (was.win.hard ? 45 : 0) && !was.plan.suggest.some(x => String(x.id) === String(f.id)))
+      if (was.plan && was.plan.suggest && was.plan.noLunch !== "time") for (const f of far) if (was.spare >= 2 * away(f) + (f.minutes || 60) + (was.win.hard ? 45 : 0) && !was.plan.suggest.some(x => String(x.id) === String(f.id)))
         was.plan.suggest.push({ id: f.id, name: f.name, minutes: f.minutes || 60, far: true, rideMin: Math.round(away(f)), must: !!(f.mustSee || E.has(f, "must-see")), voiced: !!f.hasGuide });
       // must-sees and voiced tours first, each marked (a stable sort keeps the rest in the order found)
       if (was.plan && was.plan.suggest) was.plan.suggest.sort((a, b) => (b.must || b.voiced ? 1 : 0) - (a.must || a.voiced ? 1 : 0));

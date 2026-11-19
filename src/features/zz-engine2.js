@@ -121,6 +121,7 @@ if (typeof window !== "undefined" && window.ENGINE2 && window.KEngine) (function
       if (x.t === "stop") {
         const s = byId.get(String(x.id)); const p = Object.assign({}, s || at(x), { minutes: x.min });
         p.bonus = !!x.bonus; // the engine's own word: a stop it planned is part of the day, whatever the guide's listing says
+        if (x.lunchCut) p.lunchCut = x.lunchCut; // lunch is inside this visit
         if (x.within) p.within = x.within; if (x.includes) p.includes = x.includes;
         const it = Object.assign({ type: "stop", place: p, time: x.at }, x.wait ? { wait: x.wait } : {}, x.late ? { ohLate: x.late } : {});
         items.push(it); stops.push(it); return;
@@ -136,7 +137,7 @@ if (typeof window !== "undefined" && window.ENGINE2 && window.KEngine) (function
     items.forEach((it, k) => { if (it.type !== "travel") return; const p = items[k - 1]; if (p) it.time = p.time + (p.type === "travel" ? p.leg.min : p.type === "meal" ? p.meal.len : p.place && p.place.minutes || 0); });
     const dropped = (ep.dropped || []).map(id => byId.get(String(id))).filter(Boolean);
     const walkKm = items.filter(i => i.type === "travel" && i.leg.mode === "walk").reduce((a, i) => a + (i.leg.km || 0), 0);
-    return { city, w: Object.assign({}, w, { start: ep.start, endBy: ep.endBy }), items, stops, dropped, folded: [], elsewhere: [], quickMeals: false, along: [], bonus: stops.filter(s => s.place.bonus).map(s => s.place), fill: [], suggest: (ep.suggest || []).map(x => { const p = byId.get(String(x.id)); return p ? { place: p, minutes: x.minutes, far: x.far, rideMin: x.rideMin, must: !!x.must, voiced: !!x.voiced } : null; }).filter(Boolean),
+    return { city, w: Object.assign({}, w, { start: ep.start, endBy: ep.endBy }), items, stops, dropped, folded: [], elsewhere: [], quickMeals: false, along: [], bonus: stops.filter(s => s.place.bonus).map(s => s.place), fill: [], noLunch: ep.noLunch || null, orderExtra: ep.orderExtra || 0, suggest: (ep.suggest || []).map(x => { const p = byId.get(String(x.id)); return p ? { place: p, minutes: x.minutes, far: x.far, rideMin: x.rideMin, must: !!x.must, voiced: !!x.voiced } : null; }).filter(Boolean),
       meals, evening, swaps: [], closedToday: [], lock: { t: null, seq: stops.map(s => s.place.id), late: 0, quick: false, eve: "" }, locked: false, seen: false, seenBroke: false, seenSkipped: [],
       lockBroken: false, routeX: null, start: ep.start, endBy: ep.endBy, end: ep.end, walkKm, over: !!ep.over,
       engine2: { explain: ep.explain || [], waysToFit: ep.waysToFit || null, leftOut: ep.leftOut || [], safe: !!ep.safe } };

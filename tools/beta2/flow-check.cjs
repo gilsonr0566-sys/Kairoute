@@ -181,12 +181,25 @@ async function tapTimes(p) { const out = []; const n = await p.evaluate(() => wi
   // drive on land"): a ferry runs from a pier (never from a church in town) to a pier or the island itself, the way to
   // the pier is drawn on its own, and no ride by road or on foot goes to a place reached only by boat. A road route
   // joins a stop only where the stop is beside the street (no straight line over the harbour to a terminal on its pier).
-  { const setPicks = async want => { for (let k = 0; k < 30; k++) { const st = await boxes(p), w = st.find(x => x.on !== want.includes(x.id)); if (!w) return true; if (!(await tapBox(p, w.id))) return false; } return false; };
+  // A pick that fits only with something else shorter opens the box that names it (Nov 19, Richard: no quiet cuts); the
+  // traveler taps "Add it, with ..." as Richard would.
+  { const setPicks = async want => { for (let k = 0; k < 30; k++) { const st = await boxes(p), w = st.find(x => x.on !== want.includes(x.id));
+        // A wanted sight with no tick (it fits only if something changes) is added through its pop-up, as Richard asked.
+        let miss = !w ? want.find(id => !st.some(x => x.id === id)) : null; if (!w && !miss) return true;
+        if (w) { if (await tapBox(p, w.id)) { const fix = p.locator('.fitbox .fixbtn', { hasText: 'Add it, with' }).first(); if (await fix.isVisible().catch(() => false)) { await fix.evaluate(e => e.click()); await p.waitForTimeout(400); } continue; }
+          if (want.includes(w.id) && !w.on) miss = w.id; else return false; }
+        if (miss) {
+          await p.waitForFunction(() => !window.__kairouteFitPending || window.__kairouteFitPending() === 0, null, { timeout: 15000, polling: 100 }).catch(() => {});
+          const ask = p.locator(`[data-act="fitask"][data-id="${miss}"]`).first(); if (!(await ask.isVisible().catch(() => false))) { await p.$eval(`[data-card="${miss}"]`, x => { const det = x.closest('details'); if (det && !det.open) det.open = true; x.scrollIntoView({ block: 'center' }); }).catch(() => {}); }
+          if (!(await ask.isVisible().catch(() => false))) { if (process.env.VERBOSE2) console.error('NOASK', miss, await p.evaluate(id => { const c = document.querySelector(`[data-card="${id}"]`); return c ? c.className + ' ' + c.innerText.replace(/\s+/g, ' ').slice(0, 200) : 'no card'; }, miss)); return false; } await ask.evaluate(e => e.click()); await p.waitForTimeout(600);
+          const fix = p.locator('.fitbox .fixbtn', { hasText: 'Add it, with' }).first(); if (!(await fix.isVisible().catch(() => false))) { const t = await p.evaluate(() => (document.querySelector('.fitbox') || {}).innerText || ''); if (/doesn't fit/.test(t)) { await p.evaluate(() => { const c = document.querySelector('.fitbox [data-act="fitcancel"]'); if (c) c.click(); }); return 'nofit'; } if (process.env.VERBOSE2) console.error('BOX', miss, await p.evaluate(() => [...document.querySelectorAll('.fitbox')].map(e => e.innerText.replace(/\s+/g, ' ').slice(0, 600)).join(' / '))); return false; }
+          await fix.evaluate(e => e.click()); await p.waitForTimeout(600); continue; }
+      } return false; };
     const isle = all.find(id => /capri/.test(id)), inland = all.find(id => /duomo/.test(id)) || town, inl = all.find(id => /pompeii/.test(id));
-    const bad = []; let ferries = 0;
+    const bad = []; let ferries = 0, skipped = 0; // a set that doesn't fit the day (the pop-up says so) is not tried
     for (const set of [[inland, isle], [isle, inl], [inland, isle, inl]].map(x => x.filter(Boolean)).filter(x => x.includes(isle))) {
       await p.evaluate(i => { window.__kairouteGo('day', i); window.__kairouteGo('sites'); }, ni); await p.waitForTimeout(500);
-      if (!(await setPicks(set))) { bad.push(`could not pick ${set.join(' + ')}`); continue; }
+      const got = await setPicks(set); if (got === 'nofit') { skipped++; continue; } if (!got) { bad.push(`could not pick ${set.join(' + ')}`); continue; }
       await p.evaluate(i => { window.__kairouteGo('day', i); window.__kairouteGo('plan'); }, ni); await p.waitForTimeout(800);
       const r = await p.evaluate(() => { const R = Math.PI / 180, km = (a, b) => { const x = Math.sin((b[1] - a[1]) * R / 2) ** 2 + Math.cos(a[1] * R) * Math.cos(b[1] * R) * Math.sin((b[0] - a[0]) * R / 2) ** 2; return 12742 * Math.asin(Math.sqrt(x)); };
         const piers = window.__kairoutePiers().map(q => [q.lng, q.lat]), d = window.__kairouteEngine2()[window.__kairouteDays().findIndex(x => /Naples/.test(x.dest))];
@@ -310,7 +323,30 @@ async function tapTimes(p) { const out = []; const n = await p.evaluate(() => wi
       if (r.off.length && !r.added) bad.push(`day ${i + 1} (${days[i].dest}): planned but not ticked: ${r.off.join(', ')}`); }
     check('Every stop on a day plan is ticked in that day\'s list (or said to be added by the guide)', !bad.length, bad.slice(0, 4).join('; ')); }
 
-  // 4. Speed: tapping between days, against the demo app on the same trip and the same slowed CPU.
+  // 3c. ONE "fits" test (Nov 19, Richard: "It doesnt have time to give me lunch but when you go into the selector, it gives
+  // me a bunch of stuff I can add"). A sight with a plain tick in the list really fits: ticked, it is on the plan, and
+  // nothing already on the day got shorter (no visit cut, lunch not made quicker or lost).
+  { const bad = []; let tried = 0; const days = await p.evaluate(() => window.__kairouteDays());
+    const idxs = days.map((d, i) => i).filter(i => /Athens|Naples/.test(days[i].dest)).slice(0, 4);
+    for (const i of idxs) {
+      await p.evaluate(i => { window.__kairouteGo('day', i); window.__kairouteGo('sites'); }, i); await p.waitForTimeout(400);
+      await p.waitForFunction(() => !window.__kairouteFitPending || window.__kairouteFitPending() === 0, null, { timeout: 15000, polling: 200 }).catch(() => {});
+      const ids = await p.evaluate(() => [...document.querySelectorAll('label.site')].filter(l => l.querySelector('.tag.fit') && !l.querySelector('input:checked')).map(l => l.dataset.card).slice(0, 2));
+      for (const id of ids) { tried++;
+        const before = await p.evaluate(i => window.__kairouteEngine2()[i], i);
+        await tapBox(p, id); const ok = (await boxes(p)).some(b => b.id === id && b.on);
+        const after = await p.evaluate(i => window.__kairouteEngine2()[i], i);
+        const own = x => (x.min || 0) + (x.lunchCut || 0), stops = pl => (pl.items || []).filter(x => x.t === 'stop'), lunch = pl => (pl.items || []).find(x => x.t === 'meal' && x.meal === 'Lunch');
+        const why = [];
+        if (!ok) why.push('the tick was refused');
+        else if (!stops(after).some(x => String(x.id) === String(id))) why.push('not on the plan');
+        for (const x of stops(before)) { const y = stops(after).find(z => String(z.id) === String(x.id)); if (!y) why.push(x.name + ' dropped'); else if (own(y) < own(x)) why.push(`${x.name} ${own(x)} -> ${own(y)} min`); }
+        if (lunch(before) && (!lunch(after) || lunch(after).min < lunch(before).min)) why.push('lunch ' + lunch(before).min + ' -> ' + (lunch(after) ? lunch(after).min : 'none') + ' min');
+        if (why.length && process.env.VERBOSE2) console.error('3C', id, JSON.stringify((after.explain || []).join(' | ')).slice(0, 600));
+        if (why.length) bad.push(`day ${i + 1} (${days[i].dest}), ${id}: ${why.join('; ')}`);
+        if (ok) await tapBox(p, id); else await p.evaluate(() => { const c = document.querySelector('.fitbox [data-act="fitcancel"]'); if (c) c.click(); }); } }
+    check(`A sight with a plain tick really fits: on the plan, nothing else shorter, lunch kept (${tried} tried)`, tried > 0 && !bad.length, tried ? bad.slice(0, 3).join(' | ') : 'no sight with a tick to try'); }
+
   const b2t = await tapTimes(p);
   let demoMed = null; if (DEMO) { const s2 = await serve(DEMO); const d = await open(browser, s2.url); demoMed = median(await tapTimes(d.p)); await d.ctx.close(); s2.close(); }
   const m = median(b2t);

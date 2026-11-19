@@ -4,6 +4,9 @@
 //   - a traveler who walks little, and one who walks a lot
 //   - the day's stops in three dragged orders (reversed, rotated, odd-then-even)
 //   - a land day starting two hours later
+//   - the planner's own order against every single move of one stop: no day crosses back and forth (Nov 19, Richard's
+//     Corinth day went 1 east, 2 west, 3 east, 4 west) when another order keeps every stop, lunch and the finish time
+//     and rides 20 minutes (and a fifth) less
 // Each plan is checked for the core rules: nothing past the time to be back (and the day back in time), no ride of no
 // time between places apart, no NaN time, no stop reached after its last entry, no meal when the place is shut, lunch
 // on a day over lunchtime or said why not, every pick planned or said why not, a dragged order kept, no engine error.
@@ -14,7 +17,10 @@ const places = {}; if (fs.existsSync(PD)) for (const f of fs.readdirSync(PD).fil
 const out = {}, add = (k, m) => { (out[k] = out[k] || new Set()).add(m); };
 const label = { error: 'engine error', past: 'past the time to be back', zero: 'ride of no time between places apart', nan: 'time not a number',
   late: 'stop reached after its last entry', shut: 'meal when the place is shut', lunch: 'no lunch over lunchtime, nothing said',
-  pick: 'pick left out, nothing said', order: 'dragged order not kept', guess: 'guessed ride on a ship day' };
+  pick: 'pick left out, nothing said', order: 'dragged order not kept', guess: 'guessed ride on a ship day',
+  zigzag: 'order crosses back and forth when a better one keeps everything' };
+const rideMin = p => p.items.filter(x => x.t === 'ride').reduce((a, x) => a + (x.min || 0), 0);
+const hasLunch = p => p.items.some(x => (x.t === 'meal' && x.meal === 'Lunch') || x.lunchIn);
 let plans = 0;
 const check = (tag, s, i, p, want) => {
   plans++; const d = s.days[i]; if (!p) return; if (p.error) return; if (!p.items) return;
@@ -48,6 +54,16 @@ for (const f of fs.readdirSync(dir).filter(f => f.endsWith('.json')).sort()) {
   base.days.forEach((d, i) => {
     if (d.noShore || d.type === 'sea' || !first[i] || !first[i].items) return;
     const ids = first[i].items.filter(x => x.t === 'stop').map(x => String(x.id));
+    // The planner's order: each single move of one stop, planned as the traveler's own order.
+    if (ids.length >= 3 && !d.order) { const p0 = first[i], r0 = rideMin(p0); let best = null;
+      for (let a = 0; a < ids.length; a++) for (let b = 0; b < ids.length; b++) { if (a === b || b === a - 1) continue;
+        const o = ids.slice(); o.splice(b, 0, o.splice(a, 1)[0]);
+        const s = Object.assign({}, base, { days: base.days.map((e, j) => j === i ? Object.assign({}, e, { order: o }) : e) });
+        let q; try { q = E.planTrip(s)[i]; } catch (e) { continue; } if (!q || !q.items || q.safe) continue;
+        const qs = q.items.filter(x => x.t === 'stop').map(x => String(x.id));
+        if (qs.slice().sort().join() !== ids.slice().sort().join() || q.items.some(x => x.late) || q.end > p0.end + 1 || (hasLunch(p0) && !hasLunch(q))) continue;
+        const r = rideMin(q); if (!best || r < best.r) best = { r, o }; }
+      if (best && r0 - best.r >= Math.max(20, r0 / 5)) add('zigzag', `${f} day ${i + 1} (${d.city}): ${ids.join('>')} rides ${r0} min, ${best.o.join('>')} ${best.r} min`); }
     const vars = [];
     if (d.type === 'port' && isFinite(d.allAboard)) {
       vars.push(['all aboard 90 min earlier', { allAboard: d.allAboard - 90 }], ['all aboard 180 min earlier', { allAboard: d.allAboard - 180 }]);

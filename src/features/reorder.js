@@ -14,11 +14,11 @@ const TLVIEW_KEY = "kairoute.tlview";
 let tlViewMem = null;
 function tlCompact() { if (tlViewMem == null) { try { tlViewMem = localStorage.getItem(TLVIEW_KEY) === "compact"; } catch (e) { tlViewMem = false; } } return tlViewMem; }
 function setTlCompact(on) { tlViewMem = !!on; try { localStorage.setItem(TLVIEW_KEY, on ? "compact" : "full"); } catch (e) {} }
-function orderLine(d) {
+function orderLine(d, plan) {
   const c = tlCompact(), own = (Array.isArray(d.order) && d.order.length > 1) || (d.mealAt && Object.keys(d.mealAt).length);
   const seg = `<div class="seg tlview" role="group" aria-label="How much of the day to show"><button type="button" data-act="tlview" data-v="full" aria-pressed="${!c}">Full details</button><button type="button" data-act="tlview" data-v="compact" aria-pressed="${c}">${gripSVG}Compact</button></div>`;
   const line = own
-    ? `<p class="ordline">You set the order${d.mealAt && Object.keys(d.mealAt).length ? " and where you eat" : " of the stops"}; the times follow it. <button type="button" class="linkbtn" data-act="orderreset">Use Kairoute's best order</button></p>`
+    ? `<p class="ordline">You set the order${d.mealAt && Object.keys(d.mealAt).length ? " and where you eat" : " of the stops"}; the times follow it.${plan && plan.orderExtra > 0 ? ` <b>This order adds about ${dur(plan.orderExtra)} of travel.</b>` : ""} <button type="button" class="linkbtn" data-act="orderreset">Use Kairoute's best order</button></p>`
     : c ? `<p class="ordline hint"><span>Drag a stop or lunch by its handle to change the order. Lunch moves with your route by itself.</span></p>` : "";
   return seg + line;
 }
