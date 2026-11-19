@@ -157,7 +157,10 @@
     const groundOf = (g, pierName, to) => Object.assign({ mode: g.mode, how: g.how, min: g.min, km: g.km || 0, pierName }, g.transitMode ? { transitMode: g.transitMode } : {}, g.slack ? { slack: g.slack } : {}, to ? { to } : {});
     function pierLeg(a, b, boatEnd) {
       const land = boatEnd === b ? a : b; if (!pierList.length || !land || land.viaLift || boatEnd.viaLift) return null;
-      const lp = nearestPier(land, E.PIER_KM), bp = nearestPier(boatEnd, E.PIER_ISLAND);
+      // The pier the guide's note names ("by fast ferry from Molo Beverello") is the one, when it is mapped nearby.
+      const said = String(boatEnd.travelNote || "").toLowerCase(), base = n => String(n || "").replace(/\s*\(.*?\)\s*/g, " ").trim().toLowerCase();
+      const named = pierList.filter(q => base(q.name).length >= 5 && said.includes(base(q.name)) && E.hav(land, q) <= E.PIER_KM).sort((x, y) => E.hav(land, x) - E.hav(land, y))[0];
+      const lp = named ? { q: named, d: E.hav(land, named) } : nearestPier(land, E.PIER_KM), bp = nearestPier(boatEnd, E.PIER_ISLAND);
       const useL = lp && lp.d >= E.PIER_AT, useB = bp && bp.d >= E.PIER_AT && (!lp || E.hav(lp.q, bp.q) > 1);
       if (!useL && !useB) return null;
       const L = useL ? { lat: lp.q.lat, lng: lp.q.lng } : null, B = useB ? { lat: bp.q.lat, lng: bp.q.lng } : null;

@@ -316,6 +316,10 @@ if (fs.existsSync(dir)) { let rides = 0, placed = 0;
       const k = (p.items || []).findIndex(x => x.t === 'ride' && x.mode === 'boat'), before = p.items[k - 1];
       ok(k > 0 && before.t === 'ride' && before.pierName && before.to && E.hav(before.to, p.items[k].from) < 0.01, 'Naples: the cathedral, then a walk or ride to the ferry pier, then the boat from the pier');
       check('sample-cruise.json (cathedral and Capri)', s, [].concat(new Array(ni).fill(null), [p])); } }
+  // The pier the guide's note names is the one taken, when it is mapped (not merely the nearest pier).
+  { const t = E.makeTravel({}, null, null, [], null, [{ name: 'Near Pier', lat: 40.8429, lng: 14.2612 }, { name: 'Named Quay (Terminal)', lat: 40.8374, lng: 14.2548 }]);
+    const e = t.estimate({ lat: 40.8525, lng: 14.2597 }, { lat: 40.5532, lng: 14.2222, travelNote: 'About 50 minutes by fast ferry from Named Quay.' });
+    ok(e.parts && e.parts[0].pierName === 'Named Quay (Terminal)' && /from Named Quay/.test(e.how), `the boat leaves from the pier the guide names (got ${e.parts && e.parts[0].pierName})`); }
   console.log(`ok   every ride the kind it is drawn as: ${boats} boat rides, ${piered} rides to or from a pier`); }
 
 // ---- The whole trip (step 6 to 8): same plan whatever order the pieces arrive in, nothing used twice, every day safe.
