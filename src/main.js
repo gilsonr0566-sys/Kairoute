@@ -1191,14 +1191,22 @@ function pointList(city, listKey) { return (city && city.starts && city.starts[l
 function lodgingFor(d, city) {
   const k = cityKeyFor(d) || keyOf(d.destination);
   const L = trip.lodging[k] || { idx: 0 };
-  if (L.idx === "custom") return L.ll ? { name: L.name, lat: L.ll.lat, lng: L.ll.lng } : null;
+  const real = v => v !== null && v !== "" && isFinite(+v) && +v !== 0;
+  if (L.idx === "custom" && L.ll && real(L.ll.lat) && real(L.ll.lng)) return { name: String(L.name || "").trim() || "Your hotel", lat: +L.ll.lat, lng: +L.ll.lng };
   const list = pointList(city, "hotel");
-  const hit = list[L.idx] || list[0];
-  if (hit) return hit;
+  // A hotel typed in (or brought in with a trip) that the map hasn't placed yet never blanks the day (Richard's
+  // boarding day, Nov 19: "Choose where you're staying" and nothing else). The day starts from the guide's first
+  // hotel area or the city centre, marked approx, and says so, until the hotel's spot is known.
+  const wanted = L.idx === "custom" ? String(L.name || "").trim() : "";
+  const mark = p => L.idx === "custom" && p ? Object.assign({}, p, { approx: true, wanted }) : p;
+  const hit = L.idx === "custom" ? list[0] : (list[L.idx] || list[0]);
+  if (hit) return mark(hit);
   // A guide with no hotel areas listed: start from the city center rather than stopping the day plan.
   const c = pointList(city, "point")[0] || (city && city.sites && city.sites[0]);
-  return c ? { name: "Hotel near " + c.name, lat: c.lat, lng: c.lng } : null;
+  return c ? mark({ name: "Hotel near " + c.name, lat: c.lat, lng: c.lng }) : null;
 }
+// The day's note when the hotel isn't placed on the map yet (see lodgingFor).
+const approxStayNote = L => L && L.approx ? `We couldn't place ${L.wanted || "your hotel"} on the map yet, so today's plan uses ${L.name} as your hotel. Ride times from your real hotel may differ: add its street address under Trip to make them exact.` : null;
 function dayPoint(d, city) {
   const listKey = d.type === "port" || d.type === "embark" ? "cruise" : MODES[d.mode].list;
   const list = pointList(city, listKey);
@@ -1253,6 +1261,7 @@ const unsurePoint = P => !!P && (P.unknown || /Location approximate: city centre
 function dayWindow(d, city) {
   const L = lodgingFor(d, city), P = dayPoint(d, city);
   const w = { head: [], tail: [], start: 0, endBy: 0, notes: [], notesEnd: [], buffer: 0 };
+  if (approxStayNote(L) && !throughFrom(d)) w.notes.push(approxStayNote(L));
   if (unsurePoint(P) && P.unknown) { // a port already marked unknown in a saved guide: the app's own known terminals first
     const k = d.type === "port" || d.mode === "ship" ? "cruise" : /airport/i.test(P.name || "") || d.mode === "flight" ? "airport" : "cruise", ss = (city.sites || []).filter(x => isFinite(+x.lat)), mid = ss.length ? { lat: ss.map(x => +x.lat).sort((a, b) => a - b)[ss.length >> 1], lng: ss.map(x => +x.lng).sort((a, b) => a - b)[ss.length >> 1] } : null, g = knownGate(k, P, mid, 150);
     if (g) { P.lat = g.lat; P.lng = g.lng; delete P.unknown; } }
