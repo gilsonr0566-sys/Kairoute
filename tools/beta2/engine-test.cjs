@@ -425,7 +425,7 @@ if (fs.existsSync(dir)) for (const f of fs.readdirSync(dir).filter(f => f.endsWi
 // home was offered, he picked it, the day went back and forth across Corinth and then said there was no train). On every
 // day of every test trip, with timetable answers, each other way offered on a ride is picked in turn: the stops keep their
 // order, and no ride says the way picked isn't known.
-{ let tried = 0, moved = 0, lostN = 0;
+{ let tried = 0, moved = 0, lostN = 0, notTaken = 0;
   const fake = (a, b) => { const d = E.hav(a, b); return d < 1.5 ? [] : [{ id: 'rail|T7', min: Math.round(d * 1.4 + 25), label: 'Train T7', mode: 'rail', steps: ['Train T7'], access: { how: 'walk', min: 5 }, egress: { how: 'walk', min: 5 } }]; };
   for (const f of fs.readdirSync(dir).filter(f => f.endsWith('.json'))) { const s0 = JSON.parse(fs.readFileSync(path.join(dir, f))); s0.answers = fake; const base = E.planTrip(s0);
     base.forEach((p, i) => { if (!p || !p.items) return; const order = p.items.filter(x => x.t === 'stop').map(x => x.id).join('>');
@@ -436,14 +436,22 @@ if (fs.existsSync(dir)) for (const f of fs.readdirSync(dir).filter(f => f.endsWi
         const common = x => x.split('>').filter(id => order.split('>').includes(id) && o2.split('>').includes(id)).join('>'); // a faster or slower way can change which stops fit; never their order
         const sameSet = order.split('>').sort().join() === o2.split('>').sort().join(); // with other stops the best route is another route
         if (sameSet && o2 !== order) { moved++; if (moved <= 3) ok(false, `${f} day ${i + 1}: picking ${o.how} moved the stops: ${order} -> ${o2}`); }
-        const l = q.items.find(x => x.t === 'ride' && x.lost); if (l) { lostN++; if (lostN <= 3) ok(false, `${f} day ${i + 1}: picking ${o.how} on one ride made another say "${l.lost} not known"`); } } }); }
-  ok(tried > 30 && !moved && !lostN, `a ride choice never moves the stops or turns into "not known" (${tried} choices tried)`); }
+        const l = q.items.find(x => x.t === 'ride' && x.lost); if (l) { lostN++; if (lostN <= 3) ok(false, `${f} day ${i + 1}: picking ${o.how} on one ride made another say "${l.lost} not known"`); }
+        // and the way picked is the way planned (Nov 19: the train picked was planned as a taxi, with no word why)
+        const same = q.items.find(x => x.t === 'ride' && x.from && x.to && E.pairKey(x.from, x.to) === E.pairKey(r.from, r.to));
+        if (sameSet && same && same.choice !== o.id && !same.lost) { notTaken++; if (notTaken <= 3) ok(false, `${f} day ${i + 1}: picked ${o.how}, the plan took ${same.how}`); } } }); }
+  ok(tried > 30 && !moved && !lostN && !notTaken, `a ride choice is the way planned, never moves the stops or turns into "not known" (${tried} choices tried)`); }
 // The ride home from Acrocorinth by train, picked: the stops stay, the train is the ride home, nothing says "no train".
 { const s = JSON.parse(fs.readFileSync(path.join(dir, 'corinth-day.json'))), i = 3, hotel = { lat: 37.9725, lng: 23.73 }, acro = s.cities.athens.farther.find(x => x.id === 'acrocorinth-far');
   s.answers = (a, b) => (E.hav(a, acro) < 0.3 && E.hav(b, hotel) < 0.3) || (E.hav(b, acro) < 0.3 && E.hav(a, hotel) < 0.3) ? [{ id: 'rail|P', min: 160, label: 'Train P', mode: 'rail', steps: ['Train P'] }] : [];
   const before = E.planTrip(s)[i].items.filter(x => x.t === 'stop').map(x => x.id).join('>');
   s.legModes = Object.assign({}, s.legModes, { [E.pairKey(acro, hotel)]: 'train' }); const p = E.planTrip(s)[i];
   ok(p.items.filter(x => x.t === 'stop').map(x => x.id).join('>') === before && p.items.some(x => x.t === 'ride' && x.kind === 'train') && !p.items.some(x => x.lost), 'the train home from Acrocorinth, picked: same stops, the train is the ride, nothing says "no train"'); }
+// ---- Early at a place to eat (Nov 19: lunch 1.7 km out of the way on an island day, to save five minutes before the kitchen
+// opened): the first quarter hour early at lunch is no idle wait, so a place on the way is never passed over to avoid it.
+{ const L = E.MEALS[0], o = { lat: 0, lng: 0, name: 'A' }, win = { start: L.from - 20, endBy: 18 * 60, head: [o], tail: [] }, tr = () => ({ min: 0, mode: 'walk', kind: 'walk', how: 'Walk' });
+  const at = early => E.walkDay([{ id: 'eat:x', name: 'X', lat: 0, lng: 0, mealOf: L, len: 60 }], Object.assign({}, win, { start: L.from - early }), tr, null).waits;
+  ok(at(10) === 0 && at(15) === 0 && at(25) === 10, `lunch: up to 15 min early is seated, not waiting (10 early: ${at(10)}, 25 early: ${at(25)})`); }
 // ---- The traveler's own order holds (Nov 19, Richard: "drag to reorder is not allowing you to drop it where you want it":
 // the engine planned its own order whatever was dragged). On every day of every test trip with three stops or more, the
 // stops dragged into reverse order are planned in that order (a stop that no longer fits may drop), and lunch dragged

@@ -3,6 +3,7 @@
 // order gives, including any stop reached after its last entry and whether the day ends in time. Used both to check a
 // candidate order (with stable estimates) and to write the shown plan (with live ride times when given).
 (function (E) {
+  E.MEAL_SEATED = 15; // minutes early at a place to eat that are no idle wait
   // seq: stops and meals in order. win: the day's window. ride(a, b) -> leg { min, mode }. siteDay(id) -> today's hours facts.
   // from: { r, k } resumes from an earlier walk r of the same day whose first k stops match seq (lunch tried in each
   // gap re-walks only from that gap on); the answer is the same as walking seq from the start.
@@ -17,7 +18,9 @@
       if (type === "stop") { const sd = siteDay ? siteDay(p.id) : null, f = E.hoursFit(sd && sd.oh, clock, p.minutes);
         if (f.wait) { clock += f.wait; waits += f.wait; it.wait = f.wait; } if (f.late > 0) { late++; it.late = f.late; }
         if (p.bonus) it.bonus = true; if (p.along) it.along = true; }
-      if (type === "meal") { const m = p.mealOf; if (clock < m.from) { waits += m.from - clock; clock = m.from; } it.meal = m.label; it.min = p.len || m.len; if (m.booked) it.booked = true; if (m.pinned) it.pinned = true; if (p.chosen) it.chosen = true; if (p.toGo) it.toGo = true; if (p.fromMap) it.fromMap = true; if (clock > m.to) it.lateMeal = clock - m.to; }
+      // Early at a place to eat: seated with a drink and the menu, the first quarter hour is no idle wait (Nov 19: lunch
+      // 1.7 km out of the way, to save five minutes before the kitchen opened). Longer is still a wait.
+      if (type === "meal") { const m = p.mealOf; if (clock < m.from) { waits += Math.max(0, m.from - clock - E.MEAL_SEATED); clock = m.from; } it.meal = m.label; it.min = p.len || m.len; if (m.booked) it.booked = true; if (m.pinned) it.pinned = true; if (p.chosen) it.chosen = true; if (p.toGo) it.toGo = true; if (p.fromMap) it.fromMap = true; if (clock > m.to) it.lateMeal = clock - m.to; }
       it.at = clock; items.push(it); clock += it.min; prev = p;
     };
     const keep = () => states.push({ clock, prev, late, waits, rideMin, n: items.length });

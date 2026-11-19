@@ -156,7 +156,9 @@
     if (ctx.ownOrder) return ownOrder(stops, win, ctx);
     const pt = ctx.tr.plainTr && ctx.tr.plainTr();
     if (!pt) return arrangeBy(stops, win, ctx, quick);
-    const pctx = Object.assign({}, ctx, { tr: pt }), got = arrangeBy(stops, win, pctx, quick);
+    // Its own lunch memo: a day timed by the plain rides is never reused as the day timed by the traveler's choices (Nov 19:
+    // the train picked for a day trip was planned as a taxi, with no word why, when the plain day was worked out first).
+    const pctx = Object.assign({}, ctx, { tr: pt, lunchMemo: ctx.plainLunchMemo || (ctx.plainLunchMemo = new WeakMap()) }), got = arrangeBy(stops, win, pctx, quick);
     const byId = new Map(stops.map(s => [String(s.id), s]));
     return withLunch(got.seq.filter(x => !x.mealOf).map(x => byId.get(String(x.id)) || x), win, ctx, quick);
   }

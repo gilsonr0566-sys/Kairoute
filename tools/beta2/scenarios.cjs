@@ -19,7 +19,7 @@ const fs = require('fs'), path = require('path'), E = require('./engine.cjs');
 const dir = path.join(__dirname, 'snapshots'), list = process.argv.includes('--list');
 const PD = process.env.PLACES_DIR, places = {};
 if (PD) for (const f of fs.readdirSync(PD).filter(f => f.endsWith('.json'))) { const p = JSON.parse(fs.readFileSync(path.join(PD, f))); places[p.key] = p; }
-const out = { safe: [], picked: [], cleared: [], rideFrom: [], ways: [], rideChoice: [], lunchWay: [], lunch: [], tickets: [] }, gaps = { lunch: [], tickets: [] };
+const out = { safe: [], picked: [], cleared: [], rideFrom: [], ways: [], rideChoice: [], lunchWay: [], lunch: [], tickets: [] }, gaps = { lunch: [], tickets: [], lunchWay: [] };
 const label = { safe: 'stop or ride past the time to be back', picked: 'pick neither planned nor explained', cleared: 'emptied day still planned',
   rideFrom: "ride between two trips out timed from a sight's own note", ways: "way the guide names, neither offered nor said unknown", lunchWay: 'lunch off the way (out and back)', rideChoice: 'a picked ride not taken', lunch: 'lunch out of town not named', tickets: 'book-ahead sight without its official website' };
 let variants = 0;
@@ -36,7 +36,7 @@ for (const f of fs.readdirSync(dir).filter(f => f.endsWith('.json')).sort()) {
     for (const pick of sets) {
       variants++;
       const s = Object.assign({}, base, { days: base.days.map((e, j) => j === i ? Object.assign({}, e, { selected: pick.slice(), mine: pick.slice(), own: true, cleared: !pick.length }) : e) });
-      let p; try { p = E.planTrip(s)[i]; } catch (e) { add('safe', `${f} day ${i} [${pick}]: engine error ${e.message}`); continue; }
+      let p, all = []; try { all = E.planTrip(s); p = all[i]; } catch (e) { add('safe', `${f} day ${i} [${pick}]: engine error ${e.message}`); continue; }
       const tag = `${f} day ${i} (${d.city}) [${pick.join(', ') || 'emptied'}]`;
       if (!p || p.error || !p.items) continue;
       const st = p.items.filter(x => x.t === 'stop'), said = (p.explain || []).join(' ');
@@ -79,7 +79,14 @@ for (const f of fs.readdirSync(dir).filter(f => f.endsWith('.json')).sort()) {
       p.items.forEach((x, k) => { if (x.t !== 'meal' || !isFinite(x.lat)) return;
         const pts = p.items.filter(y => isFinite(y.lat) && y.t !== 'ride'), j = pts.indexOf(x), a = pts[j - 1], b = pts[j + 1]; if (!a || !b || (a.t !== 'stop' && b.t !== 'stop')) return; // lunch alone is the outing
         const off = E.hav(a, x) + E.hav(x, b) - E.hav(a, b);
-        if (off > Math.max(1.0, 0.1 * E.hav(a, b))) add('lunchWay', `${tag}: ${a.name} > ${x.name} > ${b.name}: ${off.toFixed(1)} km out of the way`); });
+        if (off <= Math.max(1.0, 0.1 * E.hav(a, b))) return;
+        // A leak when a place to eat less out of the way (by 400 m or more) was free: open for lunch on the map or in the
+        // guide, and not the meal of another day. Else it is the nearest the data has: a data gap, listed.
+        const used = new Set(all.flatMap(q => !q || !q.items ? [] : q.items.filter(y => (y.t === 'meal' || y.t === 'evening') && y !== x).map(y => E.eatKey(y.name))));
+        const offOf = r => E.hav(a, r) + E.hav(r, b) - E.hav(a, b);
+        const better = (city.restaurants || []).filter(r => isFinite(r.lat) && E.mealPlace(r) && !used.has(E.eatKey(r.name)) && !((d.eats || {})[E.eatKey(r.name)] || {}).lunchShut && offOf(r) <= off - 0.4).sort((r, q) => offOf(r) - offOf(q))[0];
+        if (better) add('lunchWay', `${tag}: ${a.name} > ${x.name} > ${b.name}: ${off.toFixed(1)} km out of the way (${better.name} was ${offOf(better).toFixed(1)} km)`);
+        else gaps.lunchWay.push(`${tag}: ${x.name}, ${off.toFixed(1)} km out of the way, is the nearest place to eat known`); });
       // lunch out of town
       if (/places to eat aren't in the guide yet/.test(said)) gaps.lunch.push(`${tag}: ${said.match(/Have lunch in ([^:]+)/) ? said.match(/Have lunch in ([^:]+)/)[1] : ''}`);
       // tickets
