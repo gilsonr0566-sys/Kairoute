@@ -23,7 +23,7 @@
   // The kinds of public transport a guide's note names ("by train and shuttle bus" -> train, bus). Read only to say
   // when the data has no such ride; the note never makes a ride itself.
   E.noteKinds = note => { const n = String(note || "").replace(/cable ?cars?|funiculars?|rack railway/gi, ""), out = [];
-    if (/\b(train|trains|rail|railway|circumvesuviana)\b/i.test(n)) out.push("train"); if (/\b(metro|subway|underground)\b/i.test(n)) out.push("metro");
+    if (/\b(train|trains|rail|railway)\b/i.test(n)) out.push("train"); if (/\b(metro|subway|underground)\b/i.test(n)) out.push("metro");
     if (/\b(tram|trams)\b/i.test(n)) out.push("tram"); if (/\b(bus|buses|coach|shuttle)\b/i.test(n)) out.push("bus"); if (E.BOAT.test(n.replace(/water ?taxi/gi, "boat"))) out.push("ferry"); return out; };
   const WALK_LIMIT = { low: 0.8, medium: 1.7, high: 3.2 }, WALK_EITHER = 4;
   // By road (taxi or car) for d km as the crow flies: town streets, regional roads, then highway.
@@ -40,7 +40,7 @@
     return m >= 10 && m <= 300 ? Math.round(m) : 0;
   }
   // The public way wins unless a taxi saves a great deal: over 40 minutes and over 40% of the ride (Nov 18, Richard:
-  // the Circumvesuviana from Sorrento to Pompeii, 1 h 13, lost to a 46-minute taxi; he wants the trains).
+  // a local train of 1 h 13 lost to a 46-minute taxi; he wants the trains).
   E.publicWins = (pub, roadMin) => !(roadMin < pub - 40 && roadMin < pub * 0.6);
   // Every pier a boat may leave from: the ferry piers mapped for each place, and the port of a day the ship docks or sails
   // (a ship's port is on the water). [{ name, lat, lng }]
@@ -70,7 +70,7 @@
     const walk = (prefs && prefs.walk) || "medium", lim = WALK_LIMIT[walk] || WALK_LIMIT.medium, speed = walk === "low" ? 3.6 : 4.5, modes = legModes || {}, memo = new Map(), memoEnd = new Map();
     const walkMinOf = km => Math.max(1, Math.round(km * 1.3 / speed * 60));
     // The traveler's ride choice belongs to the two places, whichever way the day goes between them (Nov 18: the train
-    // picked from Sorrento to Pompeii was lost when the day ran Pompeii first). A choice also holds for any two points
+    // picked between two trips out was lost when the day ran them the other way round). A choice also holds for any two points
     // each within a short walk (1.5 km, or a fifth of the ride) of its two places, on a ride over 5 km; one made the
     // same way round wins, then the closest.
     const chosenPairs = Object.keys(modes).map(k => { const v = k.split(",").map(Number); return v.length === 4 && v.every(isFinite) ? { a: { lat: v[0], lng: v[1] }, b: { lat: v[2], lng: v[3] }, m: modes[k] } : null; }).filter(Boolean);
@@ -78,7 +78,7 @@
       if (!chosenPairs.length || !a || !b || E.hav(a, b) < 5) return undefined;
       const tol = Math.max(1.5, E.hav(a, b) / 5), pickOf = dist => { let best = null, bestD = Infinity; for (const p of chosenPairs) { const d = dist(p); if (d <= tol && d < bestD) { best = p; bestD = d; } } return best; };
       const best = pickOf(p => Math.max(E.hav(p.a, a), E.hav(p.b, b))) || pickOf(p => Math.max(E.hav(p.a, b), E.hav(p.b, a)));
-      return best ? best.m : undefined; };
+      return best ? { near: best.m } : undefined; };
     function estimate(a, b) {
       if (!a || !b || !isFinite(a.lat) || !isFinite(b.lat)) return { mode: "walk", kind: "walk", how: "Walk", km: 0, min: 0, unknown: true };
       // The cable car (or funicular) between a landing and the town above: its own fixed step holds the time.
@@ -91,7 +91,7 @@
       const v = Object.freeze(calc(a, b)); m.set(b.lng, v); return v;
     }
     // The timetable answers for a ride, one per kind: the quickest, or one with fewer changes at most 10 minutes slower,
-    // or the very row the traveler chose (Nov 18, Athens airport: three rows of the same metro ride).
+    // or the very row the traveler chose (Nov 18, an airport ride: three rows of the same metro ride).
     function answered(a, b, d, want) {
       if (!answers || d < 1.5) return [];
       const got = (answers(a, b) || []).filter(o => o && isFinite(o.min)).slice().sort((x, y) => x.min - y.min || String(x.label).localeCompare(String(y.label)));
@@ -131,7 +131,12 @@
     function calc(a, b) {
       const d = E.hav(a, b);
       if (d < 0.02) return { mode: "walk", kind: "walk", how: "Walk", km: 0, min: 0 };
-      const pin = legs && legs[E.pairKey(a, b)], pinned = pin && isFinite(pin.min) ? pin : null, wantRaw = modeOf(a, b);
+      // A choice made for this very ride, or one made for a ride next door (the same trip out from another hotel or stop
+      // nearby): that one is used only when this ride offers the same way, and never reported as lost (Nov 19, Richard's
+      // Jul 2: the train he picked for the ride home was carried to the ride out, which has no known train, and the app
+      // said "no train").
+      const got = modeOf(a, b), nearOnly = got && typeof got === "object", wantRaw = nearOnly ? got.near : got;
+      const pin = legs && legs[E.pairKey(a, b)], pinned = pin && isFinite(pin.min) ? pin : null;
       const isle = p => E.byBoat(p.travelNote) || E.waterOnly(p), note = noteFor(a, b);
       // The traveler's choice, as a kind (a row of a timetable answer picked earlier counts as its kind).
       const want = wantRaw == null ? null : OLD_CHOICE[wantRaw] || wantRaw;
@@ -175,7 +180,7 @@
       const pubs = opts.filter(o => o.kind !== "walk" && o.kind !== "taxi").sort((x, y) => x.min - y.min || x.kind.localeCompare(y.kind));
       const ansPick = wantRaw != null ? opts.find(o => o.ans && String(o.ans.id) === String(wantRaw)) : null;
       let pick = ansPick || (want === "transit" ? pubs.find(o => o.kind !== "ferry") : want != null ? byKind(want) : null), lost = null;
-      if (want != null && !pick) lost = want;
+      if (want != null && !pick && !nearOnly) lost = want;
       if (!pick) { const w = byKind("walk"), t = byKind("taxi");
         pick = w && d <= lim ? w : pubs.length && (!t || E.publicWins(pubs[0].min, t.min)) ? pubs[0] : t || pubs[0] || w || opts[0]; }
       // A way the guide names that the data doesn't have: said plainly, never planned as if it were known.
@@ -199,7 +204,11 @@
     // another way round, the ride was no longer made, and the choice was refused).
     let plain = null;
     const orderMin = (a, b) => { if (!chosenPairs.length && !Object.keys(modes).length) return min(a, b); if (!plain) plain = E.makeTravel(prefs, null, legs, lines, answers, piers); return plain.min(a, b); };
-    return { estimate, min, orderMin, road: d => Object.assign({ mode: "ride", kind: "taxi", how: "Taxi or car" }, road(d)), saidMin, chosen: (a, b) => modeOf(a, b) != null };
+    // The same calculator without the traveler's ride choices: the day's order is decided with it, so a ride choice changes
+    // the clock, never which place comes first (Nov 19, Richard's Jul 2: picking the train home sent the day back and
+    // forth across a town, and the ride he had picked was no longer the ride home).
+    const plainTr = () => { if (!chosenPairs.length && !Object.keys(modes).length) return null; if (!plain) plain = E.makeTravel(prefs, null, legs, lines, answers, piers); return plain; };
+    return { estimate, min, orderMin, plainTr, road: d => Object.assign({ mode: "ride", kind: "taxi", how: "Taxi or car" }, road(d)), saidMin, chosen: (a, b) => modeOf(a, b) != null };
   };
   // The ride as the plan lists it: every fact the screens need, from the one ride record.
   E.rideItem = (leg, extra) => Object.assign({ t: "ride", mode: leg.mode, kind: leg.kind || (leg.mode === "walk" ? "walk" : "taxi"), min: leg.min, km: Math.round((leg.km || 0) * 100) / 100 },

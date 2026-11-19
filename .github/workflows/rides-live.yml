@@ -1,6 +1,16 @@
 name: Rides live check
 on:
   workflow_dispatch:
+    inputs:
+      ask:
+        description: "lat,lng>lat,lng;... (empty = the Naples rides)"
+        default: ""
+      dow:
+        description: "day of week 0-6"
+        default: "3"
+      date:
+        description: "trip date YYYY-MM-DD"
+        default: ""
 permissions:
   contents: read
 jobs:
@@ -12,4 +22,8 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-      - run: node tools/rides-live.mjs || true
+      - env:
+          ASK: ${{ inputs.ask }}
+          DOW: ${{ inputs.dow }}
+          DATE: ${{ inputs.date }}
+        run: node tools/rides-live.mjs || true

@@ -409,6 +409,43 @@ if (fs.existsSync(dir)) for (const f of fs.readdirSync(dir).filter(f => f.endsWi
   const ans = () => [{ id: 'rail|A4', min: 105, label: 'Train A4', mode: 'rail', steps: ['Metro M1 to Athina', 'Train A4, Athina to Korinthos', 'Taxi 15 min from Korinthos'], access: { how: 'walk', min: 8 }, egress: { how: 'taxi', min: 15 } }];
   const on = E.makeTravel({}, {}, null, [A4], ans).estimate(plaka, acro);
   ok(on.kind === 'train' && on.how === 'Train A4' && on.steps.length === 3 && on.options.find(o => o.kind === 'taxi').how === 'Taxi or car', 'with the timetable\'s answer (as the demo has it): the train, its steps, the taxi beside it'); }
+// ---- A ride choice changes the clock, never the order, and never turns into "not known" (Nov 19, Richard's Jul 2: the train
+// home was offered, he picked it, the day went back and forth across Corinth and then said there was no train). On every
+// day of every test trip, with timetable answers, each other way offered on a ride is picked in turn: the stops keep their
+// order, and no ride says the way picked isn't known.
+{ let tried = 0, moved = 0, lostN = 0;
+  const fake = (a, b) => { const d = E.hav(a, b); return d < 1.5 ? [] : [{ id: 'rail|T7', min: Math.round(d * 1.4 + 25), label: 'Train T7', mode: 'rail', steps: ['Train T7'], access: { how: 'walk', min: 5 }, egress: { how: 'walk', min: 5 } }]; };
+  for (const f of fs.readdirSync(dir).filter(f => f.endsWith('.json'))) { const s0 = JSON.parse(fs.readFileSync(path.join(dir, f))); s0.answers = fake; const base = E.planTrip(s0);
+    base.forEach((p, i) => { if (!p || !p.items) return; const order = p.items.filter(x => x.t === 'stop').map(x => x.id).join('>');
+      const r = p.items.find(x => x.t === 'ride' && x.from && x.to && (x.options || []).length > 1); if (!r) return;
+      for (const o of r.options.filter(o => o.id !== r.choice && o.kind !== 'walk')) { tried++;
+        const s = Object.assign({}, s0, { legModes: Object.assign({}, s0.legModes || {}, { [E.pairKey(r.from, r.to)]: o.id }) }), q = E.planTrip(s)[i];
+        if (!q || !q.items) continue; const o2 = q.items.filter(x => x.t === 'stop').map(x => x.id).join('>');
+        const common = x => x.split('>').filter(id => order.split('>').includes(id) && o2.split('>').includes(id)).join('>'); // a faster or slower way can change which stops fit; never their order
+        const sameSet = order.split('>').sort().join() === o2.split('>').sort().join(); // with other stops the best route is another route
+        if (sameSet && o2 !== order) { moved++; if (moved <= 3) ok(false, `${f} day ${i + 1}: picking ${o.how} moved the stops: ${order} -> ${o2}`); }
+        const l = q.items.find(x => x.t === 'ride' && x.lost); if (l) { lostN++; if (lostN <= 3) ok(false, `${f} day ${i + 1}: picking ${o.how} on one ride made another say "${l.lost} not known"`); } } }); }
+  ok(tried > 30 && !moved && !lostN, `a ride choice never moves the stops or turns into "not known" (${tried} choices tried)`); }
+// The ride home from Acrocorinth by train, picked: the stops stay, the train is the ride home, nothing says "no train".
+{ const s = JSON.parse(fs.readFileSync(path.join(dir, 'corinth-day.json'))), i = 3, hotel = { lat: 37.9725, lng: 23.73 }, acro = s.cities.athens.farther.find(x => x.id === 'acrocorinth-far');
+  s.answers = (a, b) => (E.hav(a, acro) < 0.3 && E.hav(b, hotel) < 0.3) || (E.hav(b, acro) < 0.3 && E.hav(a, hotel) < 0.3) ? [{ id: 'rail|P', min: 160, label: 'Train P', mode: 'rail', steps: ['Train P'] }] : [];
+  const before = E.planTrip(s)[i].items.filter(x => x.t === 'stop').map(x => x.id).join('>');
+  s.legModes = Object.assign({}, s.legModes, { [E.pairKey(acro, hotel)]: 'train' }); const p = E.planTrip(s)[i];
+  ok(p.items.filter(x => x.t === 'stop').map(x => x.id).join('>') === before && p.items.some(x => x.t === 'ride' && x.kind === 'train') && !p.items.some(x => x.lost), 'the train home from Acrocorinth, picked: same stops, the train is the ride, nothing says "no train"'); }
+// ---- The traveler's own order holds (Nov 19, Richard: "drag to reorder is not allowing you to drop it where you want it":
+// the engine planned its own order whatever was dragged). On every day of every test trip with three stops or more, the
+// stops dragged into reverse order are planned in that order (a stop that no longer fits may drop), and lunch dragged
+// after the second stop is eaten there.
+{ let days = 0, wrong = 0, lunchWrong = 0;
+  for (const f of fs.readdirSync(dir).filter(f => f.endsWith('.json'))) { const s0 = JSON.parse(fs.readFileSync(path.join(dir, f))), base = E.planTrip(s0);
+    base.forEach((p, i) => { if (!p || !p.items || s0.days[i].locked) return; const ids = p.items.filter(x => x.t === 'stop').map(x => String(x.id)); if (ids.length < 3) return; days++;
+      const want = ids.slice().reverse(), s = JSON.parse(JSON.stringify(s0)); Object.assign(s.days[i], { selected: ids.slice(), mine: ids.slice(), own: true, order: want, mealAt: { Lunch: want[1] } });
+      const q = E.planTrip(s)[i]; if (!q || !q.items) return; const got = q.items.filter(x => x.t === 'stop').map(x => String(x.id));
+      if (got.join('>') !== want.filter(id => got.includes(id)).join('>')) { wrong++; if (wrong <= 3) ok(false, `${f} day ${i + 1}: dragged ${want.join('>')}, planned ${got.join('>')}`); }
+      const lunch = q.items.findIndex(x => x.t === 'meal' && x.meal === 'Lunch'), prev = lunch > 0 ? q.items.slice(0, lunch).reverse().find(x => x.t !== 'ride') : null;
+      const w1 = q.items.find(x => x.t === 'stop' && String(x.id) === want[1]), ends = w1 ? w1.at + w1.min : -1; // a place at lunchtime (11 to 2:30), not one left at 10 am
+      if (lunch > 0 && w1 && ends >= 660 && ends <= 870 && !q.items[lunch].inside && !(prev && String(prev.id) === want[1])) { lunchWrong++; if (lunchWrong <= 3) ok(false, `${f} day ${i + 1}: lunch dragged after the second stop is planned elsewhere`); } }); }
+  ok(days > 20 && !wrong && !lunchWrong, `the traveler's dragged order and lunch place hold (${days} days)`); }
 // ---- Never fewer ways than the demo (Nov 18 night, the ride rewrite's gate). The demo app offers, for every ride, a walk
 // when it is short, each kind of public transport its timetable answers give, and a taxi. With the same answers for
 // every ride of every test trip, each ride of Beta 2 offers every kind the demo would (or is reached only by water);

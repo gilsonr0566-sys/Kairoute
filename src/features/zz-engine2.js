@@ -16,7 +16,20 @@ if (typeof window !== "undefined" && window.ENGINE2 && window.KEngine) (function
   // one of them changes what the plans used, so they are made again with it.
   // The timetable answers as they are: the engine keeps one per kind of ride (part 1) and carries the chosen one's
   // steps, departures and line on the ride itself.
-  const peek = (a, b) => { let r; transitPeek = true; try { r = transitFor(a, b); } finally { transitPeek = false; } return r; };
+  // The whole trip is planned at once, so the answers read never depend on which day happens to be on screen (Nov 19,
+  // Richard's Jul 2: the Athens to Corinth train was kept under Friday's timetable and read under another day's, so it
+  // vanished, and the train he then picked "wasn't known"). Each ride reads the answer kept for the trip's own dates,
+  // in date order, the first one found (a Friday ride on a Friday's timetable when the trip has one).
+  // One date for each kind of timetable day (weekday, Saturday, Sunday) in the trip, earliest first: three looks at most.
+  const tripDates = () => { const seen = new Map(); for (const dt of (trip.days || []).map(d => d.date).filter(Boolean).sort()) { const t = Date.parse(dt + "T12:00:00Z"); if (!isFinite(t)) continue; const k = dayKind(new Date(t).getUTCDay()); if (!seen.has(k)) seen.set(k, dt); } return [...seen.values()]; };
+  // Asked for thousands of rides on every replan: each pair's answer is kept until an answer arrives (nearGen) or the
+  // trip's dates change.
+  let peekMemo = new Map(), peekGen = "";
+  const peek = (a, b) => { const g = nearGen + "|" + (trip.days || []).length + "|" + ((trip.days || [])[0] || {}).date; if (g !== peekGen) { peekGen = g; peekMemo = new Map(); }
+    const k = a.lat + "," + a.lng + ">" + b.lat + "," + b.lng; if (peekMemo.has(k)) return peekMemo.get(k);
+    const was = planDate; let r = null; transitPeek = true;
+    try { for (const dt of tripDates().concat([null])) { planDate = dt; r = transitFor(a, b); if (r && r.length) break; } } finally { transitPeek = false; planDate = was; }
+    if (peekMemo.size > 50000) peekMemo.clear(); peekMemo.set(k, r); return r; };
   const answerOf = (a, b) => { const r = peek(a, b); return r && r.map(o => Object.assign({}, o, { id: rideId(o), kind: rideKind(o) })); };
   const askRides = ep => { (ep && ep.items || []).forEach(x => { if (x.t === "ride" && x.from && x.to && x.mode !== "walk" && x.mode !== "boat" && x.mode !== "lift") { try { transitFor(x.from, x.to); } catch (e) {} } }); };
   const answerSig = (a, b) => JSON.stringify((peek(a, b) || []).map(o => [rideId(o), o.min, o.label]));

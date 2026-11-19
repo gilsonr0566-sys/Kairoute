@@ -75,6 +75,8 @@
     for (let k = 0; k <= order.length; k++) if (dep[k] >= L.from - 75 && dep[k] <= L.to) gaps.push(k);
     const before = dep.map((t, k) => t < L.from - 75 ? k : -1).filter(k => k >= 0).pop(), after = dep.findIndex(t => t > L.to);
     if (before != null) gaps.push(before); if (after >= 0) gaps.push(after);
+    // Lunch where the traveler put it on the Day plan (after a stop, or "^" before the first), when that stop is on the day.
+    if (ctx.lunchAt != null && !my.pick) { const k = ctx.lunchAt === "^" ? 0 : order.findIndex(s => String(s.id) === ctx.lunchAt) + 1; if (k >= 0 && (ctx.lunchAt === "^" || k > 0)) gaps.splice(0, gaps.length, k); }
     for (const k of [...new Set(gaps)].sort((a, b) => a - b)) {
       // Lunch where the traveler is or along the way (Nov 18, Corpus Christi: North Beach, back over the bridge for lunch,
       // then over the bridge again): places to eat near the stop before, near the stop after and halfway between; each
@@ -138,7 +140,27 @@
   // The out-of-town stops sit together at the start or the end of the day.
   const blockAtEnd = o => { const f = o.map(s => !!s.far), n = f.filter(Boolean).length; return f.slice(0, n).every(Boolean) || f.slice(o.length - n).every(Boolean); };
   // quick: skip the move-by-move repair (used to test a candidate; the day is repaired once it is chosen).
+  // The order of the stops is decided with the usual ride times (no ride choices), then timed with the traveler's choices.
+  // The traveler's own order (dragged on the Day plan) holds as they set it (Nov 19, Richard: "drag to reorder is not
+  // allowing you to drop it where you want it": the app kept planning its own order). A stop not in their list (added
+  // since) goes where it adds the least riding. If their order doesn't fit, a stop drops, never the time back.
+  function ownOrder(stops, win, ctx) {
+    const ids = ctx.ownOrder, at = id => ids.indexOf(String(id)), from = win.head[win.head.length - 1], to = win.tail.length ? win.tail[0] : null;
+    const order = stops.filter(s => at(s.id) >= 0).sort((a, b) => at(a.id) - at(b.id));
+    for (const s of stops.filter(s => at(s.id) < 0).sort(E.byId)) { let bk = order.length, bc = Infinity;
+      for (let k = 0; k <= order.length; k++) { const p = k ? order[k - 1] : from, q = order[k] || to; const c = ctx.tr.min(p, s) + (q ? ctx.tr.min(s, q) - ctx.tr.min(p, q) : 0); if (c < bc - 1e-9) { bc = c; bk = k; } }
+      order.splice(bk, 0, s); }
+    return withLunch(order, win, ctx);
+  }
   function arrange(stops, win, ctx, quick) {
+    if (ctx.ownOrder) return ownOrder(stops, win, ctx);
+    const pt = ctx.tr.plainTr && ctx.tr.plainTr();
+    if (!pt) return arrangeBy(stops, win, ctx, quick);
+    const pctx = Object.assign({}, ctx, { tr: pt }), got = arrangeBy(stops, win, pctx, quick);
+    const byId = new Map(stops.map(s => [String(s.id), s]));
+    return withLunch(got.seq.filter(x => !x.mealOf).map(x => byId.get(String(x.id)) || x), win, ctx, quick);
+  }
+  function arrangeBy(stops, win, ctx, quick) {
     const from = win.head[win.head.length - 1], to = win.tail.length ? win.tail[0] : null;
     const om = ctx.tr.orderMin || ctx.tr.min; let order = E.bestOrder(stops, from, to, om);
     // A trip out of town is one block, first or last in the day, never wedged between sights in town.
@@ -234,6 +256,8 @@
   };
   // stops: the day's chosen sights (each with worth; wish = the traveler picked it). pool: other sights it may add.
   E.fitDay = (d, win, stops, pool, ctx) => {
+    ctx.ownOrder = Array.isArray(d.order) && d.order.length > 1 ? d.order.map(String) : null;
+    ctx.lunchAt = d.mealAt && d.mealAt.Lunch != null ? String(d.mealAt.Lunch) : null;
     let keep = stops.slice(), dropped = [], cur = arrange(keep, win, ctx), guard = 0;
     const needsLunchRoom = () => cur.noLunch === "time" && keep.some(s => !s.wish);
     while ((cur.r.over || cur.r.late || needsLunchRoom()) && keep.length && guard++ < 40) {

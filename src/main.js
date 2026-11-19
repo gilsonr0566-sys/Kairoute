@@ -4288,7 +4288,7 @@ if (typeof window !== "undefined") window.__kairouteRunsThen = (iso, months) => 
 if (typeof window !== "undefined") window.__kairouteEmptyRides = i => { const c = cityFor(trip.days[i]), all = allSites(c); let n = 0; const kd = dayKind(planDow());
   for (const x of all) for (const y of all) if (x !== y && isFinite(x.lat) && isFinite(y.lat) && hav(x, y) >= 4) { const k = pairKey(x, y) + "|" + kd; if (!transitMem[k]) { transitMem[k] = { opts: [], t: Date.now(), v: TRANSIT_V }; n++; } }
   nearGen++; return n; };
-if (typeof window !== "undefined") window.__kairouteTransitSet = pairs => { nearGen++; (pairs || []).forEach(x => { transitMem[pairKey(x.a, x.b)] = { opts: x.opts, t: Date.now(), v: TRANSIT_V }; }); return Object.keys(transitMem).length; };
+if (typeof window !== "undefined") window.__kairouteTransitSet = pairs => { nearGen++; (pairs || []).forEach(x => { transitMem[pairKey(x.a, x.b) + (x.kd ? "|" + x.kd : "")] = { opts: x.opts, t: Date.now(), v: TRANSIT_V }; }); return Object.keys(transitMem).length; };
 if (typeof window !== "undefined") window.__kairouteMapLegs = () => { const d = day(), pl = buildPlan(d); return pl && !pl.error ? mapPlanData(pl, d).legs : []; };
 // Test hook: try to add, on day i, a sight that is closed that day (the first one found): it must not be added and the
 // box must say it's closed and offer an open day or an open sight instead.

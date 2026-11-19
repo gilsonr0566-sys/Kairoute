@@ -134,7 +134,13 @@ async function tapTimes(p) { const out = []; const n = await p.evaluate(() => wi
         // Real answers come as several runs of the same line (Nov 18, Athens airport: three M3 rows): one choice per way of
         // going is shown, and the planned ride gives its steps (walk to the stop, the line, the walk at the end).
         const ans = (min, label, extra) => Object.assign({ mode: 'rail', label, min, ride: min - 15, km: 10, access: { how: 'walk', min: 5, km: 0.3 }, egress: { how: 'walk', min: 8, km: 0.5 }, from: 'Central Station', to: 'Far Station', steps: ['Train 4: Central Station to Far Station, ' + (min - 15) + ' min'], every: 30, everySrc: 'timetable' }, extra || {});
-        await p.evaluate(ls => window.__kairouteTransitSet(ls.flatMap(l => [[l.a, l.b], [l.b, l.a]].map(([a, b]) => ({ a, b, opts: l.opts })))), legs.map(l => Object.assign({}, l, { opts: [ans(Math.max(20, l.min - 3), 'Train 4 + 1 change'), ans(Math.max(20, l.min - 3) + 3, 'Train 4 + 1 change'), ans(Math.max(20, l.min - 3) + 5, 'Train 4')] })));
+        // Kept as the app keeps a real answer: under the timetable day of the Naples day's own date (weekday, Saturday or
+        // Sunday). Nov 19, Richard's Jul 2: an answer kept under Friday vanished when the trip was planned while another
+        // day was on screen, and the train he had picked was then "not known".
+        const days0 = await p.evaluate(() => window.__kairouteDays()), kdOf = dt => { const w = new Date(dt + 'T12:00:00Z').getUTCDay(); return w === 0 ? 'su' : w === 6 ? 'sa' : 'wk'; };
+        const nkd = kdOf(days0[ni].date), other = days0.findIndex(d => d.date && kdOf(d.date) !== nkd);
+        await p.evaluate(([ls, kd]) => window.__kairouteTransitSet(ls.flatMap(l => [[l.a, l.b], [l.b, l.a]].map(([a, b]) => ({ a, b, kd, opts: l.opts })))), [legs.map(l => Object.assign({}, l, { opts: [ans(Math.max(20, l.min - 3), 'Train 4 + 1 change'), ans(Math.max(20, l.min - 3) + 3, 'Train 4 + 1 change'), ans(Math.max(20, l.min - 3) + 5, 'Train 4')] })), nkd]);
+        if (other >= 0) { await p.evaluate(i => { window.__kairouteGo('day', i); window.__kairouteGo('plan'); }, other); await p.waitForTimeout(800); }
         await p.evaluate(i => { window.__kairouteGo('sites'); window.__kairouteGo('day', i); window.__kairouteGo('plan'); }, ni); await p.waitForTimeout(800);
         if (process.env.VERBOSE) console.error('rides with answers', JSON.stringify(await p.evaluate(i => (window.__kairouteEngine2()[i].items || []).filter(x => x.t === 'ride' && x.mode !== 'walk').map(x => [x.how, x.kind, x.min, x.slack, (x.options || []).map(o => o.id + ':' + o.how + ':' + o.min)]), ni)));
         const named = await p.evaluate(i => (window.__kairouteLegs(i) || []).filter(l => l.mode !== 'ride' && /^Taxi/.test(l.how || '')).length, ni);
@@ -260,6 +266,31 @@ async function tapTimes(p) { const out = []; const n = await p.evaluate(() => wi
       const r = await p.evaluate(i => { const a = window.__kairouteLiveTest.alarm(i), pl = window.__kairouteLiveTest.plan(i); return a && pl ? { lb: a.leaveBy, from: a.from, late: pl.stops.filter(s => s.t + s.len > a.leaveBy + 0.5).map(s => s.name + ' to ' + Math.round(s.t + s.len)) } : null; }, i);
       if (r && r.late.length) bad.push(`day ${i + 1} (${days[i].dest}): leave by ${r.lb} from ${r.from}, but ${r.late.join(', ')}`); }
     check('No stop runs past the leave-by time on a ship, train or flight day', !bad.length, bad.slice(0, 3).join('; ')); }
+
+  // 2c. Drag to reorder (Nov 19, Richard: "drag to reorder is not allowing you to drop it where you want it"): on the first
+  // day with three stops or more, in Compact view, the third stop is dragged by its handle above the first; it is then the
+  // first stop of the plan, and the plan keeps the order dropped.
+  { const nd = await p.evaluate(() => window.__kairouteDays().length); let di = -1;
+    for (let i = 0; i < nd && di < 0; i++) { const st = await p.evaluate(i => (window.__kairouteEngine2()[i].items || []).filter(x => x.t === 'stop').length, i); if (st >= 3) di = i; }
+    await p.evaluate(i => { window.__kairouteGo('day', i); window.__kairouteGo('plan'); }, di); await p.waitForTimeout(800);
+    const cbtn = await p.$('[data-act="tlview"][data-v="compact"]'); if (cbtn) { await cbtn.evaluate(b => b.click()); await p.waitForTimeout(800); }
+    const before = await p.$$eval('.timeline .tl[data-stop]', xs => xs.map(x => x.dataset.stop));
+    const hs = await p.$$('.timeline .draghandle[data-drag]'); let moved = null; const dragInfo = {};
+    if (before.length >= 3 && hs.length >= 3) {
+      // The third stop is dragged above the first (both on screen, as a finger can reach them).
+      const last = await p.$(`.timeline .draghandle[data-drag="${before[2]}"]`), first = await p.$(`.timeline .tl[data-stop="${before[0]}"]`);
+      await first.evaluate(x => x.scrollIntoView({ block: 'center' })); await p.waitForTimeout(300);
+      const hb = await last.boundingBox(), fb = await first.boundingBox();
+      if (hb && fb) { await p.mouse.move(hb.x + hb.width / 2, hb.y + hb.height / 2); await p.mouse.down(); dragInfo.on = await p.evaluate(() => document.body.classList.contains('dragging-on')); dragInfo.hit = await p.evaluate(([x, y]) => { const e = document.elementFromPoint(x, y); return e ? (e.closest('.draghandle') ? 'handle' : e.className) : 'none'; }, [hb.x + hb.width / 2, hb.y + hb.height / 2]);
+        for (let k = 1; k <= 12; k++) { await p.mouse.move(hb.x + hb.width / 2, hb.y + hb.height / 2 + (fb.y + 4 - hb.y - hb.height / 2) * k / 12); await p.waitForTimeout(40); }
+        await p.mouse.up(); await p.waitForTimeout(1200);
+        // A day marked ready asks first (its heart comes off): the traveler says yes.
+        const yes = await p.$('[data-act="readyorderyes"]'); if (yes) { dragInfo.asked = true; await yes.evaluate(b => b.click()); await p.waitForTimeout(1200); }
+        moved = await p.$$eval('.timeline .tl[data-stop]', xs => xs.map(x => x.dataset.stop)); dragInfo.order = await p.evaluate(i => window.__kairouteOrder.get(i), di); dragInfo.ask = await p.evaluate(() => [...document.querySelectorAll('.orderask, .readyask')].map(e => e.innerText.slice(0, 80)).join(' / ')); dragInfo.hb = hb; dragInfo.fb = fb; } }
+    check('Drag to reorder: the stop dragged to the top is planned first, and the order holds', moved && moved[0] === before[2],
+      `day ${di + 1}: before ${before.join('>')}, after ${(moved || []).join('>') || 'no drag possible'} ${JSON.stringify(dragInfo)}`);
+    const back = await p.$('[data-act="orderreset"]'); if (back) { await back.evaluate(b => b.click()); await p.waitForTimeout(600); }
+    const fbtn = await p.$('[data-act="tlview"][data-v="full"]'); if (fbtn) { await fbtn.evaluate(b => b.click()); await p.waitForTimeout(400); } }
 
   // 3. Reload: the trip comes back as it was (the traveler's Naples list kept), and every other day is planned the same.
   const before = await p.evaluate(() => JSON.stringify(window.__kairouteEngine2().map(d => (d.items || []).filter(x => x.t === 'stop').map(x => x.id))));

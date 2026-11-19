@@ -3,6 +3,15 @@
 const U = "https://kairoute-ai.rickgilson.workers.dev";
 const P = { ship: [40.8387, 14.2546], sorrento: [40.6263, 14.3757], pompeii: [40.749, 14.4848], cathedral: [40.852, 14.26] };
 const pairs = [["ship", "sorrento"], ["sorrento", "pompeii"], ["pompeii", "ship"], ["cathedral", "sorrento"]];
+// ASK="lat,lng>lat,lng;..." with DOW (0-6) and DATE: only those rides, as the app asks for a trip's own day.
+if (process.env.ASK) { for (const pr of process.env.ASK.split(";")) { const [a, b] = pr.split(">").map(x => x.split(",").map(Number)); const t0 = Date.now();
+  try { const r = await fetch(U + "/transit", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ pairs: [{ a, b, dow: +(process.env.DOW || 3), date: process.env.DATE || undefined }] }), signal: AbortSignal.timeout(120000) });
+    const j = await r.json().catch(() => null), res = j && j.results && j.results[0];
+    console.log(`\n== ${pr}: HTTP ${r.status} in ${((Date.now() - t0) / 1000).toFixed(1)} s${res && res.partial ? " (partial: a source was busy)" : ""}`);
+    (res && res.opts || []).forEach(o => console.log(`   ${o.mode} · ${o.label} · ${o.min} min · access ${JSON.stringify(o.access)} · egress ${JSON.stringify(o.egress)} · from ${o.from} to ${o.to}`));
+    if (!(res && (res.opts || []).length)) console.log("   no options " + JSON.stringify(res || j).slice(0, 300));
+  } catch (e) { console.log(`\n== ${pr}: failed: ${e.message}`); } }
+  process.exit(0); }
 for (const [x, y] of pairs) {
   const t0 = Date.now();
   try {

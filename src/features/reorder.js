@@ -94,8 +94,13 @@ function dragPaint() {
   if (v) { if (st.sc) st.sc.scrollTop += v; else window.scrollBy(0, v); st.raf = requestAnimationFrame(dragPaint); }
 }
 function dragMove(e) { const st = dragSt; if (!st) return; e.preventDefault(); st.y = e.clientY; if (!st.raf) st.raf = requestAnimationFrame(dragPaint); }
-function dragEnd(cancel) {
-  const st = dragSt; if (!st) return; dragSt = null;
+// The drop lands where the finger is let go (Nov 19, Richard: "not allowing you to drop it where you want it"): the spot
+// is worked out again from the last finger position at the moment of release, not left to the next screen paint (on a
+// busy phone the finger is often lifted before that paint, and the stop landed where it was a moment earlier, or nowhere).
+function dragEnd(cancel, e) {
+  const st = dragSt; if (!st) return;
+  if (!cancel) { if (e && isFinite(e.clientY)) st.y = e.clientY; dragTarget(); }
+  dragSt = null;
   if (st.raf) cancelAnimationFrame(st.raf);
   st.row.classList.remove("dragging"); st.row.style.transform = ""; document.body.classList.remove("dragging-on");
   document.querySelectorAll(".tl.dropat, .tl.dropend").forEach(r => r.classList.remove("dropat", "dropend"));
@@ -109,7 +114,7 @@ function dragEnd(cancel) {
 if (typeof document !== "undefined") {
   document.addEventListener("pointerdown", e => { const h = e.target.closest && e.target.closest(".draghandle"); if (h && (e.button === 0 || e.pointerType !== "mouse")) dragStart(e, h); });
   document.addEventListener("pointermove", dragMove, { passive: false });
-  document.addEventListener("pointerup", () => dragEnd(false));
+  document.addEventListener("pointerup", e => dragEnd(false, e));
   document.addEventListener("pointercancel", () => dragEnd(true));
   document.addEventListener("keydown", e => {
     if (dragSt && e.key === "Escape") { dragEnd(true); return; }
