@@ -447,6 +447,25 @@ if (fs.existsSync(dir)) for (const f of fs.readdirSync(dir).filter(f => f.endsWi
   const before = E.planTrip(s)[i].items.filter(x => x.t === 'stop').map(x => x.id).join('>');
   s.legModes = Object.assign({}, s.legModes, { [E.pairKey(acro, hotel)]: 'train' }); const p = E.planTrip(s)[i];
   ok(p.items.filter(x => x.t === 'stop').map(x => x.id).join('>') === before && p.items.some(x => x.t === 'ride' && x.kind === 'train') && !p.items.some(x => x.lost), 'the train home from Acrocorinth, picked: same stops, the train is the ride, nothing says "no train"'); }
+// ---- The ride back from a far sight keeps the guide's time for it (Nov 19: back from a lagoon the guide puts 1 h 30 min
+// away, timed as a 55 min taxi to lunch in the town by the port, whose note said "5 minutes by taxi"). With the places
+// files, on every planned day and on each far sight picked alone: a ride from a far sight to a point within 5 km of where
+// the day starts takes at least the guide's time.
+{ const PD = path.join(__dirname, '..', 'places', 'data'), places = {}; let n = 0, bad = 0;
+  if (fs.existsSync(PD)) for (const g of fs.readdirSync(PD).filter(g => g.endsWith('.json'))) { const q = JSON.parse(fs.readFileSync(path.join(PD, g))); places[q.key] = q; }
+  const tr0 = E.makeTravel({}, {});
+  const look = (f, i, p, d) => { if (!p || !p.items) return; const o = p.items[0], c = p.items.find(x => x.t === 'start') || o;
+    const start = (d && d.startAt) || null; const home = p.items.filter(x => isFinite(x.lat))[0] || null;
+    p.items.forEach((x, k) => { if (x.t !== 'ride' || !x.from || !x.to) return; const a = p.items[k - 1]; if (!a || a.t !== 'stop') return;
+      const src = d.src.find(y => String(y.id) === String(a.id)); const said = src && src.travelNote ? tr0.saidMin(src.travelNote) : 0;
+      if (!said || !home || E.hav(x.to, home) > 5 || E.hav(x.from, home) < 15) return; n++;
+      if (x.min < said) { bad++; if (bad <= 3) ok(false, `${f} day ${i + 1}: back from ${a.name} in ${x.min} min; the guide says ${said}`); } }); };
+  for (const f of fs.readdirSync(dir).filter(f => f.endsWith('.json'))) { const s0 = E.applyPlaces(JSON.parse(fs.readFileSync(path.join(dir, f))), places);
+    s0.days.forEach((d, i) => { const city = s0.cities[d.city]; if (!city || d.noShore || d.type === 'sea') return; const src = (city.farther || []);
+      for (const far of src.filter(t => !t.town && t.travelNote).slice(0, 4)) {
+        const s = Object.assign({}, s0, { days: s0.days.map((e, j) => j === i ? Object.assign({}, e, { selected: [far.id], mine: [far.id], own: true }) : e) });
+        let p; try { p = E.planTrip(s)[i]; } catch (e) { continue; } look(f, i, p, { src }); } }); }
+  ok(n > 20 && !bad, `the ride back from a far sight keeps the guide's time for it (${n} rides back checked)`); }
 // ---- Early at a place to eat (Nov 19: lunch 1.7 km out of the way on an island day, to save five minutes before the kitchen
 // opened): the first quarter hour early at lunch is no idle wait, so a place on the way is never passed over to avoid it.
 { const L = E.MEALS[0], o = { lat: 0, lng: 0, name: 'A' }, win = { start: L.from - 20, endBy: 18 * 60, head: [o], tail: [] }, tr = () => ({ min: 0, mode: 'walk', kind: 'walk', how: 'Walk' });
