@@ -65,7 +65,11 @@
     const modeOf = (a, b) => { const k = modes[E.pairKey(a, b)]; if (k != null) return k; const r = modes[E.pairKey(b, a)]; if (r != null) return r;
       if (!chosenPairs.length || !a || !b || E.hav(a, b) < 5) return undefined;
       // (each end within 1.5 km, or a fifth of the ride: the ride out to a town 80 km away and its sights around it is the same from any hotel in the city)
-      const tol = Math.max(1.5, E.hav(a, b) / 5), c = chosenPairs.find(p => (E.hav(p.a, a) <= tol && E.hav(p.b, b) <= tol) || (E.hav(p.a, b) <= tol && E.hav(p.b, a) <= tol)); return c ? c.m : undefined; };
+      // When several choices are near enough, one made the same way round wins, then the closest (the ferry picked out to
+      // a town never decides the ride back from it, when the traveler chose that ride too).
+      const tol = Math.max(1.5, E.hav(a, b) / 5), pickOf = dist => { let best = null, bestD = Infinity; for (const p of chosenPairs) { const d = dist(p); if (d <= tol && d < bestD) { best = p; bestD = d; } } return best; };
+      const best = pickOf(p => Math.max(E.hav(p.a, a), E.hav(p.b, b))) || pickOf(p => Math.max(E.hav(p.a, b), E.hav(p.b, a)));
+      return best ? best.m : undefined; };
     function estimate(a, b) {
       if (!a || !b || !isFinite(a.lat) || !isFinite(b.lat)) return { mode: "walk", how: "Walk", km: 0, min: 0, unknown: true };
       // The cable car (or funicular) between a landing and the town above: its own fixed step holds the time.
@@ -165,6 +169,11 @@
       return leg;
     }
     const min = (a, b) => (a && b ? estimate(a, b).min : 0);
-    return { estimate, min, road, saidMin, chosen: (a, b) => modeOf(a, b) != null };
+    // The order of the day is worked out with the usual ride times, never with the way the traveler picked: a slower
+    // train they choose changes the clock, not which place comes first (Nov 18, Naples: picking the train made the day
+    // run another way round, the ride was no longer made, and the choice was refused).
+    let plain = null;
+    const orderMin = (a, b) => { if (!chosenPairs.length && !Object.keys(modes).length) return min(a, b); if (!plain) plain = E.makeTravel(prefs, null, legs, lines, answers); return plain.min(a, b); };
+    return { estimate, min, orderMin, road, saidMin, chosen: (a, b) => modeOf(a, b) != null };
   };
 })(KEngine);

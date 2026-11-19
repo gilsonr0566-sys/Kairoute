@@ -112,28 +112,34 @@ async function tapTimes(p) { const out = []; const n = await p.evaluate(() => wi
       check('Naples: the ride out to Sorrento is on the plan', before && before.t === 'ride', 'no ride before Sorrento');
       check('Naples: the ferry is offered for Sorrento', (legs || []).some(l => (l.choices || []).some(c => /ferry/i.test(c))), 'choices: ' + JSON.stringify((legs || []).map(l => l.choices)).slice(0, 200)); } }
 
-  // 2a1. Every ride choice on the Naples day plan (Sorrento picked, with Pompeii) can be tapped and is taken, unless it
-  // would cost one of the traveler's own stops or the ship: an optional stop the app added never blocks a ride the
-  // traveler picks (Nov 18: the train was refused because it "would leave out Umberto I Gallery", an optional stop).
-  { const pom = all.find(id => /pompeii/.test(id)); if (pom && !(await boxes(p)).some(b => b.id === pom && b.on)) await tapBox(p, pom);
-    await p.evaluate(i => { window.__kairouteGo('day', i); window.__kairouteGo('plan'); }, ni); await p.waitForTimeout(1200);
-    const chips = await p.$$eval('[data-ridekey]:not(.on)', xs => xs.map(x => ({ key: x.dataset.ridekey, val: x.dataset.rideval, label: x.innerText.replace(/\s+/g, ' ').trim() })));
+  // 2a1. Every ride choice on the Naples day plan can be tapped and is taken, in any order, for several sets of picks
+  // (a trip out alone, two trips out, a trip out with sights in town), unless it would cost one of the traveler's own
+  // stops (the app then offers to take it anyway) or the ship. Nov 18: the train was refused for an optional stop; the
+  // ferry back couldn't be picked once the train was taken out; a ride picked out decided the ride picked back.
+  { const setPicks = async want => { for (let k = 0; k < 30; k++) { const st = await boxes(p), w = st.find(x => x.on !== want.includes(x.id)); if (!w) return true;
+        if (!(await tapBox(p, w.id))) return false; if (await p.$('.fitbox, .closedbox')) { const ok = (await boxes(p)).some(x => x.id === w.id && x.on === want.includes(x.id)); if (!ok) return false; } } return false; };
+    const pick = re => all.find(id => re.test(id));
+    const sets = [[pick(/pompeii/)], [pick(/sorrento/)], [pick(/sorrento/), town], [pick(/pompeii/), pick(/sorrento/)]].map(x => x.filter(Boolean)).filter(x => x.length);
     const bad = []; let tapped = 0;
-    for (const c of chips.slice(0, 8)) {
-      const sel = `[data-ridekey="${c.key}"][data-rideval="${c.val}"]`; if (!(await p.$(sel + ':not(.on)'))) continue;
-      const opt = await p.evaluate(i => (window.__kairouteEngine2()[i].items || []).filter(x => x.t === 'stop' && x.bonus).map(x => x.name), ni);
-      if (!(await tapSel(p, sel))) { bad.push(`could not tap "${c.label}"`); continue; } tapped++;
-      // Taken: that way is now the ride between the same two places (the day may now run it from a stop nearby).
-      const on = await p.evaluate(([key, val]) => { const kp = key.split(',').map(Number), d = (a, b) => { const R = Math.PI / 180, x = Math.sin((b[0] - a[0]) * R / 2) ** 2 + Math.cos(a[0] * R) * Math.cos(b[0] * R) * Math.sin((b[1] - a[1]) * R / 2) ** 2; return 12742 * Math.asin(Math.sqrt(x)); };
-        const tol = Math.max(1.5, d([kp[0], kp[1]], [kp[2], kp[3]]) / 5);
-        return [...document.querySelectorAll(`[data-rideval="${val}"].on`)].some(x => { const q = x.dataset.ridekey.split(',').map(Number); return (d([q[0], q[1]], [kp[0], kp[1]]) <= tol && d([q[2], q[3]], [kp[2], kp[3]]) <= tol) || (d([q[0], q[1]], [kp[2], kp[3]]) <= tol && d([q[2], q[3]], [kp[0], kp[1]]) <= tol); }); }, [c.key, c.val]), note = await p.evaluate(() => [...document.querySelectorAll('.ridenote')].map(e => e.innerText).join(' '));
-      if (!on && opt.some(n => note.includes(n)) && !/too late|after .* ship/i.test(note)) bad.push(`"${c.label}" refused for an optional stop: ${note.slice(0, 140)}`);
-      if (!on && !note) bad.push(`"${c.label}" did nothing`);
-      // Not taken is right only when it would be too late for the ship, or it would cost a pick (the app then offers it).
-      const canForce = !!(await p.$('[data-act="rideforce"]'));
-      if (!on && note && !canForce && !/too late|after .* ship/i.test(note)) bad.push(`"${c.label}" not taken: ${note.slice(0, 140)}`);
+    for (const set of sets) {
+      await p.evaluate(i => { window.__kairouteGo('day', i); window.__kairouteGo('sites'); }, ni); await p.waitForTimeout(500);
+      if (!(await setPicks(set))) { bad.push(`could not pick ${set.join(' + ')}`); continue; }
+      await p.evaluate(i => { window.__kairouteGo('day', i); window.__kairouteGo('plan'); }, ni); await p.waitForTimeout(800);
+      const first = await p.$$eval('[data-ridekey]', xs => xs.map(x => ({ key: x.dataset.ridekey, val: x.dataset.rideval })));
+      // Each choice, then each again in reverse order (so a later pick on one ride meets an earlier pick on another).
+      const seq = first.concat(first.slice().reverse()).slice(0, 14);
+      for (const c of seq) {
+        const sel = `[data-ridekey="${c.key}"][data-rideval="${c.val}"]`; if (!(await p.$(sel)) || (await p.$(sel + '.on'))) continue;
+        if (!(await tapSel(p, sel))) { bad.push(`${set.join('+')}: could not tap ${c.val}`); continue; } tapped++;
+        const on = !!(await p.$(sel + '.on')) || await p.evaluate(([key, val]) => { const kp = key.split(',').map(Number), d = (a, b) => { const R = Math.PI / 180, x = Math.sin((b[0] - a[0]) * R / 2) ** 2 + Math.cos(a[0] * R) * Math.cos(b[0] * R) * Math.sin((b[1] - a[1]) * R / 2) ** 2; return 12742 * Math.asin(Math.sqrt(x)); };
+          const tol = Math.max(1.5, d([kp[0], kp[1]], [kp[2], kp[3]]) / 5);
+          return [...document.querySelectorAll(`[data-rideval="${val}"].on`)].some(x => { const q = x.dataset.ridekey.split(',').map(Number); return d([q[0], q[1]], [kp[0], kp[1]]) <= tol && d([q[2], q[3]], [kp[2], kp[3]]) <= tol; }); }, [c.key, c.val]);
+        const note = await p.evaluate(() => [...document.querySelectorAll('.ridenote, .notice, [data-ridenotice]')].map(e => e.innerText).join(' ').replace(/\s+/g, ' '));
+        const canForce = !!(await p.$('[data-act="rideforce"]'));
+        if (!on && !canForce && !/too late|after .* ship/i.test(note)) bad.push(`${set.join('+')}: ${c.val} not taken${note ? ': ' + note.slice(0, 120) : ' (nothing said)'}`);
+      }
     }
-    check(`Naples: every ride choice picked is taken (${tapped} tapped), unless it costs a pick or the ship`, tapped > 0 && !bad.length, tapped ? bad.slice(0, 3).join('; ') : 'no ride choices on the plan'); }
+    check(`Naples: every ride choice is taken, in any order, for ${sets.length} sets of picks (${tapped} taps), unless it costs a pick or the ship`, tapped > 0 && !bad.length, tapped ? bad.slice(0, 3).join('; ') : 'no ride choices on the plan'); }
 
   // 2a1a. A ferry is drawn straight across the water, never along the road (Nov 18, Naples to Sorrento on the coast road).
   { await p.evaluate(i => { window.__kairouteGo('day', i); window.__kairouteGo('plan'); }, ni); await p.waitForTimeout(600);
@@ -141,16 +147,23 @@ async function tapTimes(p) { const out = []; const n = await p.evaluate(() => wi
     const bad = ls.filter(l => l.kind === 'ferry' && (l.road || l.n > 2));
     check('Every ferry on the map crosses the water (drawn straight, not along a road)', !bad.length, bad.length + ' ferry legs follow a road'); }
 
-  // 2a1b. "Skip it" on an optional stop takes it off the day and it stays off after a reload.
-  { const days = await p.evaluate(() => window.__kairouteDays()); let done = null;
-    for (let i = 0; i < days.length && !done; i++) {
+  // 2a1b. Free time is the traveler's (Nov 18, Richard: "I wouldn't do the suggested options. Just let them select to
+  // fill the spots."): no day plan has a stop the app put there on its own; a day with free time offers sights that
+  // would fit, and "Add" puts one on the plan as a pick that stays after a reload.
+  { const days = await p.evaluate(() => window.__kairouteDays()), extra = []; let done = null;
+    for (let i = 0; i < days.length; i++) {
+      const it = await p.evaluate(i => (window.__kairouteEngine2()[i] || {}).items || [], i);
+      const opt = it.filter(x => x.t === 'stop' && x.bonus); if (opt.length) extra.push(`day ${i + 1}: ${opt.map(x => x.name).join(', ')}`);
+      if (done) continue;
       await p.evaluate(i => { window.__kairouteGo('day', i); window.__kairouteGo('plan'); }, i); await p.waitForTimeout(400);
-      const id = await p.$eval('[data-act="bonusskip"]', x => x.dataset.id).catch(() => null); if (!id) continue;
-      const ok = await tapSel(p, `[data-act="bonusskip"][data-id="${id}"]`);
-      const has = () => p.evaluate(([i, id]) => (window.__kairouteEngine2()[i].items || []).some(x => x.t === 'stop' && String(x.id) === String(id)), [i, id]);
-      const gone = ok && !(await has()); await p.reload(); await p.waitForTimeout(6000);
-      done = { i, id, ok, gone, after: !(await has()) }; }
-    check('"Skip it" takes an optional stop off the day, and it stays off after a reload', !done || (done.ok && done.gone && done.after), done ? `day ${done.i + 1} ${done.id}: ${!done.ok ? 'could not tap' : !done.gone ? 'still on the plan' : 'back after a reload'}` : ''); }
+      if (await p.$('.tl.optional')) extra.push(`day ${i + 1}: an "Optional:" stop shows`);
+      const id = await p.$eval('.freetime [data-act="bonusadd"]', x => x.dataset.id).catch(() => null); if (!id) continue;
+      const ok = await tapSel(p, `.freetime [data-act="bonusadd"][data-id="${id}"]`);
+      const has = () => p.evaluate(([i, id]) => (window.__kairouteEngine2()[i].items || []).some(x => x.t === 'stop' && String(x.id) === String(id) && !x.bonus), [i, id]);
+      const now = ok && await has(); await p.reload(); await p.waitForTimeout(6000);
+      done = { i, id, ok, now, after: await has() }; }
+    check('No day plan has a sight the app added on its own', !extra.length, extra.slice(0, 3).join('; '));
+    check('Free time offers sights that fit, and "Add" puts one on the plan as a pick that stays after a reload', !!done && done.ok && done.now && done.after, !done ? 'no day offered a sight in its free time' : `day ${done.i + 1} ${done.id}: ${!done.ok ? 'could not tap' : !done.now ? 'not on the plan' : 'gone after a reload'}`); }
 
   // 2a2. A fold opened by the traveler (its title carries a count) stays open when a sight inside it is ticked.
   { const det = await p.$('#view details:not([open]) input[data-site]');

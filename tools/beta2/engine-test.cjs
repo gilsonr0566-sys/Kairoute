@@ -11,6 +11,11 @@ const day = o => Object.assign({ type: 'land', mode: 'flight', startTime: '09:00
 { const w = E.dayWindow(day({ type: 'port', portArrive: 480, allAboard: 1020 }), tr);
   ok(w.start === 510 && w.endBy === 975 && w.hard, `port day: ashore 30 min after docking, back 45 min before all aboard (got ${w.start}-${w.endBy})`); }
 ok(E.waterOnly({ access: 'Viewed from the water on a boat tour' }) && E.waterOnly({ access: 'Only by boat' }) && !E.waterOnly({ access: 'Walk up from the old port' }), 'a sight seen only from the water is read from its access note');
+{ // A ride picked one way doesn't overrule the ride the traveler picked back (Nov 18: the ferry out to Sorrento decided the
+  // ride back to a sight in the city, so the train picked for it did nothing).
+  const port = { lat: 40.838, lng: 14.255 }, town = { lat: 40.626, lng: 14.376, travelNote: 'Ferry from the port, 40 min; or the Circumvesuviana train, 60 min.' }, sight = { lat: 40.849, lng: 14.255 }, near = { lat: 40.836, lng: 14.249 };
+  const tr = E.makeTravel({}, { [E.pairKey(port, town)]: 'boat', [E.pairKey(town, sight)]: 'transit' });
+  ok(tr.estimate(port, town).choice === 'boat' && tr.estimate(town, sight).choice === 'transit' && tr.estimate(town, near).choice === 'transit', 'out by ferry and back by train, as picked, also from a stop next door'); }
 ok(E.publicWins(73, 46) && E.publicWins(100, 50) === false, 'a train an hour and a quarter long wins over a 46-minute taxi; a taxi saving 50 minutes of a 100-minute ride wins (Nov 18, Sorrento to Pompeii)');
 // A pick inside an area picked for another day moves to the area's day (one walk), and the plan says so; a sight far
 // from the heart of the place is a trip out, never a stop of a day in town.
@@ -299,9 +304,15 @@ if (fs.existsSync(dir)) for (const f of fs.readdirSync(dir).filter(f => f.endsWi
     const gr = E.makeGroups(c.sites || []), holder = gr.groupOf.get(String(g.id));
     // Folded: its group is visited on a day with room for it too, and the plan doesn't say why it was left out.
     const gd = holder != null ? sights.get(String(holder)) : null, gp = gd != null && plans[gd], gw = gp && E.dayWindow(s.days[gd], E.makeTravel(s.prefs, s.legModes));
-    const room = gw && isFinite(gw.endBy) ? gw.endBy - gp.end : 0, said = gp && ((gp.explain || []).join(' ').includes(g.name) || (gp.leftOut || []).map(String).includes(String(g.id)));
+    const room = gw && isFinite(gw.endBy) ? gw.endBy - gp.end : 0, said = gp && ((gp.explain || []).join(' ').includes(g.name) || (gp.leftOut || []).map(String).includes(String(g.id)) || (gp.suggest || []).some(x => String(x.id) === String(g.id))); // offered in the free time counts (the traveler fills it)
     const beside = gd != null && !said && room >= (g.minutes || 30) + 25;
     if (beside) ok(false, `${f}: ${g.name} has its own guide or is a must-see, but was folded into the visit to the group around it`); }
+  // Free time is the traveler's (Nov 18, Richard): the app never puts a sight on a day on its own; what would fit is
+  // offered beside the plan, never on it.
+  plans.forEach((p, i) => { if (!p || !p.items) return; const extra = p.items.filter(x => x.t === 'stop' && x.bonus);
+    ok(!extra.length, `${f}: day ${i + 1} has sights the app added on its own: ${extra.map(x => x.name).join(', ')}`);
+    const on = new Set(p.items.filter(x => x.t === 'stop').map(x => String(x.id)));
+    ok(!(p.suggest || []).some(x => on.has(String(x.id))), `${f}: day ${i + 1} offers a sight already on the plan`); });
   if (f === 'sample-cruise.json') ok(plans.some(p => p && p.items && p.items.some(x => x.t === 'stop' && /Saint Titus/.test(x.name))), 'Heraklion: the Church of Saint Titus, a finished voiced tour, keeps its own stop');
   oks += same; console.log(`ok   ${s.name}: same plan in ${same} of 10 shuffles, nothing used twice, every day safe`);
 }

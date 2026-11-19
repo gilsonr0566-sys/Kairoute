@@ -814,12 +814,16 @@ function switchRide(key, val, force) {
   // The ride between the same two places, whichever way the day now runs and even from a stop next door (the lunch
   // place, a sight beside it): the engine applies the choice to it (Nov 18, Sorrento and Pompeii).
   const kp = String(key).split(",").map(Number), tol = kp.length === 4 ? Math.max(1.5, hav({ lat: kp[0], lng: kp[1] }, { lat: kp[2], lng: kp[3] }) / 5) : 1.5, near2 = (x, i) => x && isFinite(x.lat) && hav({ lat: kp[i], lng: kp[i + 1] }, x) <= tol;
-  const sameRide = l => l && (l.key === key || (kp.length === 4 && l.from && l.to && ((near2(l.from, 0) && near2(l.to, 2)) || (near2(l.from, 2) && near2(l.to, 0)))));
-  const choice = c => { const leg = after.items.concat(before.items).find(i => i.type === "travel" && sameRide(i.leg)); return leg && leg.leg.choices.find(x => x.id === c); };
+  // Out and back between the same two places are two rides: the one tapped is found by its own key first, then the same
+  // way round from nearby, and only then the other way round (Nov 18: the ferry back couldn't be picked once the train
+  // was taken out, because the check found the ride out).
+  const fwd = l => l && kp.length === 4 && l.from && l.to && near2(l.from, 0) && near2(l.to, 2), rev = l => l && kp.length === 4 && l.from && l.to && near2(l.from, 2) && near2(l.to, 0);
+  const findRide = items => { const ts = items.filter(i => i.type === "travel"); return ts.find(i => i.leg.key === key) || ts.find(i => fwd(i.leg)) || ts.find(i => rev(i.leg)); };
+  const choice = c => { const leg = findRide(after.items) || findRide(before.items); return leg && (leg.leg.choices || []).find(x => x.id === c); };
   const label = c => { const ch = choice(c); return ch ? ch.label : "that ride"; };
-  const cur = before.items.find(i => i.type === "travel" && sameRide(i.leg)), nowId = cur ? cur.leg.choice : was;
+  const cur = findRide(before.items), nowId = cur ? cur.leg.choice : was;
   if (after.error || after.over) { back(); rideNotice = { key, text: `${esc(label(val))} would get you back after ${fmt(after.endBy || 0)}, too late for the ship, so the plan keeps the ride it had.` }; }
-  else { const lost = names(before).filter(n => !names(after).includes(n)), used = after.items.find(i => i.type === "travel" && sameRide(i.leg));
+  else { const lost = names(before).filter(n => !names(after).includes(n)), used = findRide(after.items);
     // With the new ride the day may work better in another order that no longer makes this ride at all: then the
     // choice would do nothing (and vanish from the menu), so the plan keeps the ride it had and says so.
     if (!lost.length && !(used && used.leg.choice === val)) { back(); rideNotice = { key, text: `With ${esc(label(val))} the day works better in another order that doesn't make this ride, so the plan keeps ${esc(label(nowId))}.` }; }
@@ -6598,8 +6602,16 @@ ${partsList(s, it.time)}${stopLiveNotes(it, d)}</div></div>`;
     }
     if (it.type === "end") {
       const spare = plan.endBy - plan.end;
-      return `<div class="${cls}">${tcell(it)}<div class="rail"><div class="dot start">${it.place ? "E" : "✓"}</div></div><div class="what"><div class="nm">${esc(it.label)}</div>
-      <div class="sub">${d.type === "port" ? `All aboard ${esc(d.allAboard)}, so you have a 45-minute cushion${spare > 10 ? " plus " + dur(spare) + " spare" : ""}.` :
+      // Free time is the traveler's: the app adds nothing on its own, it names nearby sights that would still fit
+      // (Nov 18, Richard: "I wouldn't do the suggested options. Just let them select to fill the spots").
+      const sug = (plan.suggest || []).filter(x => x.place && !(d.selected || []).includes(x.place.id));
+      const free = spare >= 30 || sug.length ? `<div class="tl freetime"><div class="time"></div><div class="rail"><div class="dot bonusdot">+</div></div><div class="what"><div class="nm">Free time: ${dur(spare)}</div>
+        <div class="sub">${sug.length ? "Yours to spend as you like. These would still fit if you want one more stop:" : "Yours to spend as you like."}</div>
+        ${sug.length ? `<div class="optacts">${sug.map(x => `<button class="btn small" data-act="bonusadd" data-id="${esc(x.place.id)}">Add ${esc(x.place.name)} (${dur(x.minutes)}${x.far && x.rideMin ? ", " + dur(x.rideMin) + " each way" : ""})</button>`).join("")}</div>` : ""}</div></div>` : "";
+      // Back at the ship said plainly: the time back, how long before all aboard, and the rule behind it.
+      const early = d.type === "port" && d.allAboard ? plan.endBy - plan.end + (plan.w.buffer || 45) : NaN;
+      return free + `<div class="${cls}">${tcell(it)}<div class="rail"><div class="dot start">${it.place ? "E" : "✓"}</div></div><div class="what"><div class="nm">${esc(it.label)}</div>
+      <div class="sub">${d.type === "port" ? (isFinite(early) ? `Back ${dur(early)} before all aboard (${esc(d.allAboard)}). Kairoute always plans you back at least ${dur(plan.w.buffer || 45)} early.` : `All aboard ${esc(d.allAboard)}.`) :
         spare > 10 ? dur(spare) + " to spare." : ""}</div>
       ${(plan.w.notesEnd || []).map(t => `<div class="sub">${esc(t)}</div>`).join("")}${d.type === "departure" ? bookRideCard(d) : ""}</div></div>`;
     }

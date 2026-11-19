@@ -8,8 +8,8 @@
   E.eatKey = name => String(name || "").toLowerCase().normalize("NFKD").replace(/[̀-ͯ]/g, "").replace(/[^a-z0-9]+/g, " ").trim();
   // Penalty of a timed day: running past the end is worst, then stops reached after their last entry, then a late lunch.
   const penalty = r => r.over * 1000 + r.late * 500 + (r.mealPen || 0) * 4 + r.waits * 0.5 + r.end * 0.01 + r.rideMin * 0.05;
-  function walk(seq, win, ctx) {
-    const r = E.walkDay(seq, win, ctx.tr.estimate, ctx.siteDay);
+  function walk(seq, win, ctx, from) {
+    const r = E.walkDay(seq, win, ctx.tr.estimate, ctx.siteDay, from);
     r.lateMeal = r.items.reduce((a, x) => a + (x.lateMeal || 0), 0);
     // A meal at a time the traveler set is held like a booked table: being late for it costs ten times as much.
     r.mealPen = r.items.reduce((a, x) => a + (x.lateMeal || 0) * (x.pinned ? 10 : 1), 0);
@@ -93,7 +93,7 @@
         const toGo = len === E.TO_GO;
         const meal = { id: "eat:" + e.k, eatKey: e.k, name: e.r.name, lat: e.r.lat, lng: e.r.lng, mealOf: L, len, quick: len < L.len, toGo, chosen: !!my.pick, fromMap: !!e.r.fromMap };
         const off = my.pick ? 0 : offOf(e);
-        const seq = order.slice(0, k).concat([meal], order.slice(k)), r = walk(seq, win, ctx), pen = penalty(r) + (toGo ? 60 : len < L.len ? 20 : 0) + off * 1.5 + (e.r.fromMap ? 0.5 : 0); // a km out of the way weighs like half an hour more riding
+        const seq = order.slice(0, k).concat([meal], order.slice(k)), r = walk(seq, win, ctx, { r: plain, k }), pen = penalty(r) + (toGo ? 60 : len < L.len ? 20 : 0) + off * 1.5 + (e.r.fromMap ? 0.5 : 0); // a km out of the way weighs like half an hour more riding
         // On a ship, train or plane day lunch is something the app adds, so it keeps the same margin as any added sight.
         if (win.hard && !r.over && win.endBy - r.end < E.FILL_MARGIN) { tight = true; continue; }
         if (len === L.len && !r.over && !r.late) fullFits = true;
@@ -113,12 +113,12 @@
   // quick: skip the move-by-move repair (used to test a candidate; the day is repaired once it is chosen).
   function arrange(stops, win, ctx, quick) {
     const from = win.head[win.head.length - 1], to = win.tail.length ? win.tail[0] : null;
-    let order = E.bestOrder(stops, from, to, ctx.tr.min);
+    const om = ctx.tr.orderMin || ctx.tr.min; let order = E.bestOrder(stops, from, to, om);
     // A trip out of town is one block, first or last in the day, never wedged between sights in town.
     const far = stops.filter(s => s.far), near = stops.filter(s => !s.far);
     if (far.length && near.length) {
-      const farFirst = E.bestOrder(far, from, null, ctx.tr.min), a = farFirst.concat(E.bestOrder(near, farFirst[farFirst.length - 1], to, ctx.tr.min));
-      const nearFirst = E.bestOrder(near, from, null, ctx.tr.min), b = nearFirst.concat(E.bestOrder(far, nearFirst[nearFirst.length - 1], to, ctx.tr.min));
+      const farFirst = E.bestOrder(far, from, null, om), a = farFirst.concat(E.bestOrder(near, farFirst[farFirst.length - 1], to, om));
+      const nearFirst = E.bestOrder(near, from, null, om), b = nearFirst.concat(E.bestOrder(far, nearFirst[nearFirst.length - 1], to, om));
       const ca = withLunch(a, win, ctx, quick), cb = withLunch(b, win, ctx, quick);
       order = cost(ca) <= cost(cb) ? a : b;
     }
@@ -235,32 +235,32 @@
       const next = keep.concat([x.stop]), c = arrange(next, win, ctx);
       if (!c.r.over && !c.r.late && !(win.hard && win.endBy - c.r.end < E.FILL_MARGIN) && (c.noLunch !== "time" || cur.noLunch === "time" || wanted(x.stop))) { keep = next; cur = c; dropped = dropped.filter(y => y !== x); }
     }
+    // Spare time is the traveler's (Nov 18, Richard: "I wouldn't do the suggested options. Just let them select to fill
+    // the spots."): the app never adds a sight on its own. It names the best unused sights nearby that would still fit,
+    // each checked with the day as it is, for the traveler to add if they like. The day itself is only their picks.
+    const suggest = [];
     if (d.fillTime !== false && !win.straight) {
-      // Spare time: the best unused sights, each worth its detour (worth minus a quarter of the minutes of riding out and back
-      // from the nearest stop), added while the day still fits. Cheap check first, then the full timed day.
       const start = win.head[win.head.length - 1];
       const detour = s => 2 * Math.min(ctx.tr.min(start, s), ...keep.map(k => ctx.tr.min(k, s)));
       const farOk = s => keep.some(k => k.far && E.hav(k, s) <= 2.5); // the rest of a day-trip town, never a day in the city
       // A listing within a few steps of a stop already planned is the same place under another name, or part of it.
       const cands = pool.filter(s => !keep.some(k => String(k.id) === String(s.id) || (E.hav(k, s) < 0.08 && !wanted(s))) && (!s.far || farOk(s)) && (ctx.mayAdd ? ctx.mayAdd(s.id) : ctx.ledger.sightFree(s.id, ctx.dayIdx)))
-        .map(s => { const dt = detour(s); return { s, v: wanted(s) && dt <= 10 ? Math.max(1, s.worth || 0) : (s.worth || 0) - 0.25 * dt }; }) // a voiced sight a few steps off the walk is always worth it.filter(x => x.v > 0).sort((a, b) => b.v - a.v || E.byId(a.s, b.s));
+        .map(s => { const dt = detour(s), near = wanted(s) && dt <= 10; return { s, near, v: near ? Math.max(1, s.worth || 0) : (s.worth || 0) - 0.25 * dt }; })
+        // a must-see or a finished voiced tour a few steps off the day's walk is offered first
+        .filter(x => x.v > 0).sort((a, b) => (b.near - a.near) || b.v - a.v || E.byId(a.s, b.s));
       const room = win.hard ? E.FILL_MARGIN : 0;
-      let tries = 0, added = false;
+      let tries = 0;
       for (const { s } of cands) {
-        if (tries >= 25) break;
-        const add = Object.assign({}, s, { filled: true }), next = keep.concat([add]);
+        if (tries >= 12 || suggest.length >= 4) break;
+        const next = keep.concat([s]);
         const rough = E.walkDay(E.bestOrder(next, start, win.tail.length ? win.tail[0] : null, ctx.tr.min), win, ctx.tr.estimate, ctx.siteDay);
-        if (rough.over || win.endBy - rough.end < room) continue;
+        if (rough.over || rough.late || win.endBy - rough.end < room) continue;
         tries++;
-        let c = arrange(next, win, ctx, true);
-        const fits = x => !x.r.over && !x.r.late && win.endBy - x.r.end >= room && (x.noLunch !== "time" || cur.noLunch === "time");
-        if (!fits(c) && tries <= 2) c = arrange(next, win, ctx); // the first two also get the full repair
-        if (fits(c)) { keep = next; cur = c; added = true; }
+        const c = arrange(next, win, ctx, true);
+        if (!c.r.over && !c.r.late && win.endBy - c.r.end >= room && (c.noLunch !== "time" || cur.noLunch === "time")) suggest.push({ id: s.id, name: s.name, minutes: s.minutes || 0, far: !!s.far });
       }
-      // The day as filled gets the full lunch search and repair, kept when it is no worse for time.
-      if (added || cur.noLunch || cur.r.late) { const full = arrange(keep, win, ctx); if (full.r.over <= cur.r.over && full.r.late <= cur.r.late && (!win.hard || win.endBy - full.r.end >= room || win.endBy - full.r.end >= win.endBy - cur.r.end)) cur = full; }
     }
-    return { seq: cur.seq, r: cur.r, kept: keep, dropped, noLunch: lunchWanted(win) ? cur.noLunch || null : null };
+    return { seq: cur.seq, r: cur.r, kept: keep, dropped, suggest, noLunch: lunchWanted(win) ? cur.noLunch || null : null };
   };
   // A dinner suggestion after a land day: the nearest open place to eat not used on another day.
   // The traveler's dinner choice wins: skipped means none; a chosen place is used at its set time (or 6:30 pm), never

@@ -37,14 +37,17 @@
       const prev = items[items.length - 1], here = point(whereIs(x));
       if (prev && prev.t === "ride" && items.length >= 2) { const a = items[items.length - 2]; if (isFinite(a.lat) && isFinite(here.lat)) Object.assign(prev, { from: { lat: a.lat, lng: a.lng }, to: here }); }
       const src = x.id != null ? byId.get(String(x.id)) : null;
-      const it = { t: x.t, id: x.t === "meal" ? null : x.id, name: x.name, at: x.at, min: x.min, bonus: x.t === "stop" && autoIds.has(String(x.id)) && (own || !(src && E.wantedStop(src))), along: false, meal: x.meal || null, late: x.late || 0 };
+      // Every stop on a plan is a pick: the traveler's, or the app's starting picks on a day they haven't touched (shown
+      // ticked). Nothing is optional (Nov 18, Richard).
+      const it = { t: x.t, id: x.t === "meal" ? null : x.id, name: x.name, at: x.at, min: x.min, bonus: false, along: false, meal: x.meal || null, late: x.late || 0 };
       if (x.wait) it.wait = x.wait; if (x.chosen) it.chosen = true; if (x.pinned) it.pinned = true;
       Object.assign(it, point(whereIs(x)));
       items.push(it);
     }
     if (dinner) items.push({ t: "evening", id: null, name: dinner.name, at: dinner.at, min: dinner.min, lat: dinner.lat, lng: dinner.lng, bonus: false, along: false, meal: "Dinner", late: 0, chosen: !!dinner.chosen });
     return { i, start: win.start, endBy: win.endBy, end: fit.r.end, over: fit.r.over > 0, straight: !!win.straight,
-      head: win.head.map(x => ({ name: x.name, fixed: !!x.fixed, minutes: x.fixed ? x.minutes : 0 })), tail: win.tail.map(x => ({ name: x.name, fixed: !!x.fixed, minutes: x.fixed ? x.minutes : 0 })), items };
+      head: win.head.map(x => ({ name: x.name, fixed: !!x.fixed, minutes: x.fixed ? x.minutes : 0 })), tail: win.tail.map(x => ({ name: x.name, fixed: !!x.fixed, minutes: x.fixed ? x.minutes : 0 })), items,
+      suggest: (fit.suggest || []).slice() };
   }
   // Step 8: the final guard. Any broken safety rule turns the day into a safe day that says why.
   function guard(plan, win) {
@@ -298,16 +301,10 @@
         // onto a full day in town. Nor a sight beside a trip out planned on another day (it belongs to that day).
         .filter(s => away(s) <= E.PAD_MAX && !otherDayFar(s, i))
         .filter(s => !was.win.hard || shortRoad(s) || boatOk(s)).slice(0, 3);
-      const wished = was.kept.filter(k => !k.filled); // only what the app added to fill spare time may give way
-      for (const f of far) {
-        const cur = now || was;
-        if (now) undo(now);
-        const r = planDay(i, Object.assign({}, was, { kept: wished, extra: f.id }));
-        const better = r.kept && (!was.win.hard || r.spare >= (E.byBoat(f.travelNote || "") ? 60 : 45)) && wished.every(w => r.kept.some(k => String(k.id) === String(w.id))) && r.kept.some(k => String(k.id) === String(f.id)) && worthOf(r) > worthOf(cur);
-        if (better) { now = r; continue; }
-        undo(r);
-        if (now) now.sightIds.forEach(id => ledger.claimSight(id, i)), now.eatIds.forEach(k => ledger.claimEat(k, i));
-      }
+      // Spare time is the traveler's: a trip out that would fit is named for them to add, never added on its own
+      // (Nov 18, Richard: "Just let them select to fill the spots").
+      if (was.plan && was.plan.suggest) for (const f of far) if (was.spare >= 2 * away(f) + (f.minutes || 60) + (was.win.hard ? 45 : 0) && !was.plan.suggest.some(x => String(x.id) === String(f.id)))
+        was.plan.suggest.push({ id: f.id, name: f.name, minutes: f.minutes || 60, far: true, rideMin: Math.round(away(f)) });
       if (now) { done[i] = now; out[i] = now.plan; continue; }
       // Time left on a ship day and a trip out by boat the guide names: say so, with the time to be back on shore.
       if (was.win.hard && d.type === "port" && was.plan && was.plan.items) {
