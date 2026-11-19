@@ -503,8 +503,17 @@ if (fs.existsSync(dir)) for (const f of fs.readdirSync(dir).filter(f => f.endsWi
 { let marked = 0, silent = 0; for (const f of fs.readdirSync(dir).filter(f => f.endsWith('.json'))) { const s = JSON.parse(fs.readFileSync(path.join(dir, f)));
     E.planTrip(s).forEach((p, i) => { if (!p || !p.items || p.safe) return; const d = s.days[i], c = s.cities[d.city] || {};
       for (const x of p.items.filter(x => x.t === 'stop' && !x.bonus)) { const sx = (c.sites || []).find(y => String(y.id) === String(x.id)); if (!sx) continue; const sd = (d.sites || {})[x.id];
-        if (E.hasEntrance(sx) && !(sd && sd.oh && sd.oh.spans && sd.oh.spans.length)) { if (x.hoursUnknown && (p.explain || []).some(t => /Opening hours aren't known/.test(t))) marked++; else silent++; } } }); }
+        if (E.hasEntrance(sx) && !(sd && sd.oh && sd.oh.spans && sd.oh.spans.length)) { if (x.hoursUnknown && (p.explain || []).some(t => /Opening hours aren't known|Opening hours for .* aren't on the map yet/.test(t))) marked++; else silent++; } } }); }
   ok(marked > 0 && !silent, `unknown opening hours are said, never read as open (${marked} stops marked, ${silent} silent)`); }
+ok(E.readable('Café Ñandú') && E.readable("Joe's Bar & Grill") && !E.readable('נתי- מזנון המשק') && !E.readable('東京'), 'a place to eat named only in another script is not readable');
+{ const s = E.applyPlaces({ cities: { x: { name: 'X', sites: [{ id: 'a', name: 'A', lat: 1, lng: 1 }], restaurants: [] } }, days: [] }, { x: { key: 'x', cityEats: [{ name: 'נתי- מזנון המשק', lat: 1, lng: 1 }, { name: 'Good Cafe', lat: 1, lng: 1 }] } });
+  ok(s.cities.x.restaurants.length === 1 && s.cities.x.restaurants[0].name === 'Good Cafe', 'map places to eat named only in another script are left out'); }
+// The order repair takes the best single move, not the first that helps (Nov 19: a sight beside the first stop was sent
+// across town and back to fix a late museum, when swapping the two museums fixed it with less riding).
+{ const PD = path.join(__dirname, '..', 'places', 'data'), places = {}; if (fs.existsSync(PD)) for (const g of fs.readdirSync(PD).filter(g => g.endsWith('.json'))) { const q = JSON.parse(fs.readFileSync(path.join(PD, g))); places[q.key] = q; }
+  const s = E.applyPlaces(JSON.parse(fs.readFileSync(path.join(dir, 'g17-haifa.json'))), places), p = E.planTrip(s)[1], ids = p.items.filter(x => x.t === 'stop').map(x => x.name);
+  const old = ['Dome of the Rock', 'Al-Aqsa Mosque', 'Western Wall'].map(n => ids.indexOf(n)), museum = Math.min(...['Israel Museum', 'Bible Lands Museum'].map(n => ids.indexOf(n)).filter(k => k >= 0));
+  ok(old.every(k => k >= 0 && k < museum), `the Old City sights together before the museums across town (got ${ids.join(' > ')})`); }
 // Road times from the map: two trips out across a gulf are timed by the road, not the straight line.
 { const PD = path.join(__dirname, '..', 'places', 'data'), places = {}; if (fs.existsSync(PD)) for (const g of fs.readdirSync(PD).filter(g => g.endsWith('.json'))) { const q = JSON.parse(fs.readFileSync(path.join(PD, g))); places[q.key] = q; }
   const s = E.applyPlaces(JSON.parse(fs.readFileSync(path.join(dir, 'athens-booked.json'))), places), far = id => s.cities.athens.farther.find(x => x.id === id);

@@ -15,6 +15,9 @@
   const SPECIAL = /tasting|winer|wine|vineyard|weingut|vino|brewer|brauerei|beer|distill|marzipan|chocolat|praline|ice ?cream|gelat|\beis|patisser|bakery|bäckerei|konditorei|roast|coffee|cheese|fromag|specialt|historic/i;
   E.foodSpecial = x => SPECIAL.test(String(x.name || "") + " " + String(x.content || x.note || ""));
   const copy = x => JSON.parse(JSON.stringify(x));
+  // A name a traveler reading English can read: Latin letters (accents too), digits and punctuation. A place to eat on the
+  // map named only in another script is left out: no one can find it by a name they can't read (Nov 19, a Hebrew name).
+  E.readable = name => !!name && !/[^\u0000-\u024F\u1E00-\u1EFF\u2000-\u206F\u20A0-\u20CF\s]/.test(String(name));
   E.applyPlaces = (bucket, places) => {
     const b = copy(bucket), notes = b.placeNotes = [];
     const guides = b.cities || {};
@@ -57,7 +60,7 @@
       // Restaurants and cafés on the map beside the place's sights: lunch where the traveler is, never a detour back to the
       // few the guide names (Nov 18, Corpus Christi). Kept apart as from the map (no review behind them).
       if ((P.cityEats || []).length) { const have = new Set((city.restaurants || []).map(r => E.eatKey(r.name)));
-        city.restaurants = (city.restaurants || []).concat(P.cityEats.filter(x => x.name && isFinite(x.lat) && isFinite(x.lng) && !have.has(E.eatKey(x.name)))
+        city.restaurants = (city.restaurants || []).concat(P.cityEats.filter(x => x.name && E.readable(E.latin(x.name) || x.name) && isFinite(x.lat) && isFinite(x.lng) && !have.has(E.eatKey(x.name)))
           .map(x => ({ id: "map~" + E.eatKey(x.name).replace(/ /g, "-"), name: E.latin(x.name) || x.name, lat: x.lat, lng: x.lng,  kind: x.amenity || "restaurant", amenity: x.amenity || "restaurant", cuisine: x.cuisine || "", fromMap: true }))); }
       const added = [];
       for (const s of city.farther || []) {
@@ -76,7 +79,7 @@
         if (own.length >= 2) s.minutes = Math.min(s.minutes || 60, 60);
         s.foodDrink = (t.foodDrink || []).map(x => ({ name: E.latin(x.name) || x.name, lat: isFinite(x.lat) ? x.lat : null, lng: isFinite(x.lng) ? x.lng : null, kind: x.kind, note: x.content || "", special: E.foodSpecial(x) }));
         // No place to eat in its travel guide: the restaurants and cafés on the map beside it (named as from the map).
-        if (!s.foodDrink.some(x => x.kind === "eat") && (t.mapEats || []).length) s.foodDrink = s.foodDrink.concat(t.mapEats.map(x => ({ name: E.latin(x.name) || x.name, lat: x.lat, lng: x.lng, kind: "eat", note: x.cuisine || "", special: false, fromMap: true })));
+        if (!s.foodDrink.some(x => x.kind === "eat") && (t.mapEats || []).length) s.foodDrink = s.foodDrink.concat(t.mapEats.filter(x => x.name && E.readable(E.latin(x.name) || x.name)).map(x => ({ name: E.latin(x.name) || x.name, lat: x.lat, lng: x.lng, kind: "eat", note: x.cuisine || "", special: false, fromMap: true })));
       }
       if (added.length) city.farther = (city.farther || []).concat(added);
       // Hours per day: a mapped opening time read for that day's date, where the day has no hours for the sight yet.

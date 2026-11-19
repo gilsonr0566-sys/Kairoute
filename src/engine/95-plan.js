@@ -301,7 +301,7 @@
       // town) whose hours aren't known for the date is marked, and the plan says to check.
       const noHours = plan.items.filter(x => x.t === "stop" && !x.bonus && (() => { const sx = byIdR.get(String(x.id)), sd = siteDay(x.id); return sx && !sx.far && E.hasEntrance(sx) && !(sd && sd.oh && sd.oh.spans && sd.oh.spans.length); })());
       noHours.forEach(x => { x.hoursUnknown = true; });
-      if (noHours.length) explain.push("Opening hours aren't known for " + E.listWords(noHours.slice(0, 3).map(x => x.name), "and") + (noHours.length > 3 ? " and " + (noHours.length - 3) + " more" : "") + " on this date: check before you go.");
+      if (noHours.length && !explain.some(t => /^Opening hours for .* aren't on the map yet/.test(t))) explain.push("Opening hours aren't known for " + E.listWords(noHours.slice(0, 3).map(x => x.name), "and") + (noHours.length > 3 ? " and " + (noHours.length - 3) + " more" : "") + " on this date: check before you go.");
       plan.dropped = fit.dropped.map(x => x.id); if (Object.keys(ways).length) plan.waysToFit = ways; plan.explain = explain.concat(lunchNote ? [lunchNote] : []);
       return { plan, sightIds, eatIds, kept: fit.kept, autoIds: [...autoIds], explain, spare: win.endBy - fit.r.end, win };
     };

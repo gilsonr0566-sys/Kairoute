@@ -22,7 +22,7 @@
     // Within one day the list of places to eat and the ledger don't change, so each point is worked out once.
     if (!ctx.eatMemo) {
       ctx.eatMemo = new Map();
-      ctx.eatList = ctx.eats.filter(r => isFinite(r.lat) && isFinite(r.lng) && !r.drop && E.mealPlace(r)).map(r => {
+      ctx.eatList = ctx.eats.filter(r => isFinite(r.lat) && isFinite(r.lng) && !r.drop && E.mealPlace(r) && E.readable(E.latin(r.name) || r.name)).map(r => { // only a name the traveler can read
         const k = E.eatKey(r.name), f = ctx.eatFacts[k] || ctx.eatFacts[r.name && r.name.toLowerCase()] || {};
         return { r, k, f };
       });
@@ -180,8 +180,10 @@
     }
     let cur = withLunch(order, win, ctx, quick), pen = cost(cur);
     if (!quick && (cur.r.late || cur.r.over || cur.noLunch === "time")) {
-      for (let pass = 0; pass < 2; pass++) {
-        let better = false;
+      // Each pass tries every single move from the same order and takes the best one (Nov 19: the first move that fixed a
+      // late museum was taken, a sight beside the first stop sent across town and back, when swapping two museums was better).
+      for (let pass = 0; pass < 3; pass++) {
+        let best = null;
         for (let i = 0; i < order.length; i++) for (let j = 0; j < order.length; j++) {
           if (i === j || j === i - 1) continue; // moving to just before the previous is the same as moving that one after
           const o = order.slice(); const [x] = o.splice(i, 1); o.splice(j, 0, x);
@@ -189,9 +191,10 @@
           // Lunch only adds time, so an order already later or later at a last entry without lunch can't win.
           const bare = walk(o, win, ctx); if (bare.over > cur.r.over || bare.late > cur.r.late) continue;
           const c = withLunch(o, win, ctx), p = cost(c);
-          if (p < pen - 1e-6) { order = o; cur = c; pen = p; better = true; }
+          if (p < pen - 1e-6 && (!best || p < best.p - 1e-6)) best = { o, c, p };
         }
-        if (!better) break;
+        if (!best) break;
+        order = best.o; cur = best.c; pen = best.p;
       }
     }
     return cur;
