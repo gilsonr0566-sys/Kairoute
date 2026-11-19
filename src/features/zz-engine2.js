@@ -71,6 +71,9 @@ if (typeof window !== "undefined" && window.ENGINE2 && window.KEngine) (function
     memo = { k: synced ? keyNow() : k, ik, used, plans, bucket }; return memo;
   }
   window.__kairouteEngine2 = () => JSON.parse(JSON.stringify(tripPlans().plans));
+  // For the phone test: every pier a boat may leave from, and whether a place is reached only by boat.
+  window.__kairoutePiers = () => E.piersOf(tripPlans().bucket || {});
+  window.__kairouteBoatPlace = id => { const b = tripPlans().bucket || {}; for (const c of Object.values(b.cities || {})) { const x = [...(c.sites || []), ...(c.farther || [])].find(y => String(y.id) === String(id)); if (x) return E.byBoat(x.travelNote) || E.waterOnly(x); } return false; };
   const MODE = { walk: "walk", ride: "ride", transit: "ride", boat: "ferry", lift: "ride" };
   const byName = (list, name) => (list || []).find(r => r && r.name === name);
   function toApp(d, city, ep) {
@@ -84,6 +87,8 @@ if (typeof window !== "undefined" && window.ENGINE2 && window.KEngine) (function
       if (x.t === "ride") {
         const leg = { mode: MODE[x.mode] || "ride", how: x.how || (x.mode === "walk" ? "Walk" : x.mode === "boat" ? "Boat" : x.mode === "lift" ? "Cable car" : "Taxi or car"), km: x.km || 0, min: x.min || 0 };
         // Drawn and labelled as what it is: a boat as a ferry, a cable car with the rail-like lines (never as a taxi).
+        // The way to a ferry pier, or from it, says so (the boat leaves from the pier, not from the last sight).
+        if (x.pierName && x.mode !== "boat") { leg.how += (ep.items[k + 1] && ep.items[k + 1].t === "ride" ? " to the ferry at " : " from the ferry at ") + x.pierName; leg.pier = x.pierName; }
         if (x.mode === "boat") leg.kind = "ferry"; else if (x.mode === "lift") leg.kind = "train";
         else if (x.mode === "transit") leg.kind = ({ subway: "train", light_rail: "train", monorail: "train", tram: "train", train: "train", bus: "bus", ferry: "ferry" })[x.transitMode] || "train";
         if (x.options) leg.options = x.options; if (x.from) leg.from = x.from; if (x.to) leg.to = x.to;
@@ -91,7 +96,7 @@ if (typeof window !== "undefined" && window.ENGINE2 && window.KEngine) (function
         // traveler's own choice for this ride, and the engine plans with it.
         if (x.from && x.to && x.options && x.options.length > 1) {
           const kindOf = o => o.mode === "walk" ? "walk" : o.mode === "boat" ? "ferry" : o.mode === "ride" ? "car" : o.kind === "bus" ? "bus" : "train";
-          leg.key = E.pairKey(x.from, x.to); leg.choice = x.choice || (x.mode === "walk" ? "walk" : x.mode === "ride" ? "taxi" : x.mode === "boat" ? "boat" : "transit");
+          leg.key = E.pairKey(x.pairFrom || x.from, x.pairTo || x.to); leg.choice = x.choice || (x.mode === "walk" ? "walk" : x.mode === "ride" ? "taxi" : x.mode === "boat" ? "boat" : "transit");
           leg.choices = x.options.map(o => ({ id: o.id || (o.mode === "ride" ? "taxi" : o.mode), label: o.how, min: o.min, kind: kindOf(o) }));
         }
         items.push({ type: "travel", leg, time: (items.length ? items[items.length - 1].time + (items[items.length - 1].dur || 0) : ep.start) }); return;
@@ -114,7 +119,7 @@ if (typeof window !== "undefined" && window.ENGINE2 && window.KEngine) (function
       }
     });
     // The rides' clock: each starts where the item before it ends.
-    items.forEach((it, k) => { if (it.type !== "travel") return; const p = items[k - 1]; if (p) it.time = p.time + (p.type === "meal" ? p.meal.len : p.place && p.place.minutes || 0); });
+    items.forEach((it, k) => { if (it.type !== "travel") return; const p = items[k - 1]; if (p) it.time = p.time + (p.type === "travel" ? p.leg.min : p.type === "meal" ? p.meal.len : p.place && p.place.minutes || 0); });
     const dropped = (ep.dropped || []).map(id => byId.get(String(id))).filter(Boolean);
     const walkKm = items.filter(i => i.type === "travel" && i.leg.mode === "walk").reduce((a, i) => a + (i.leg.km || 0), 0);
     return { city, w: Object.assign({}, w, { start: ep.start, endBy: ep.endBy }), items, stops, dropped, folded: [], elsewhere: [], quickMeals: false, along: [], bonus: stops.filter(s => s.place.bonus).map(s => s.place), fill: [], suggest: (ep.suggest || []).map(x => { const p = byId.get(String(x.id)); return p ? { place: p, minutes: x.minutes, far: x.far, rideMin: x.rideMin } : null; }).filter(Boolean),

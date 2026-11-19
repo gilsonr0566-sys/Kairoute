@@ -198,6 +198,11 @@ if (fs.existsSync(dir)) for (const f of fs.readdirSync(dir).filter(f => f.endsWi
     const guideWay = seq.some((x, k) => x && (k ? seq[k - 1] : w.head[w.head.length - 1]) && (t2.estimate(k ? seq[k - 1] : w.head[w.head.length - 1], x).options || []).some(o => o.id === 'boat' || o.id === 'transit') && t2.estimate(k ? seq[k - 1] : w.head[w.head.length - 1], x).said)
       || (seq.length && (t2.estimate(seq[seq.length - 1], w.tail[0]).said && (t2.estimate(seq[seq.length - 1], w.tail[0]).options || []).length));
     if (guideWay && Math.abs(r.end - o.end) > 1) { n--; liveDays++; return; }
+    // A ride of half an hour or more to a ship, train or plane gets time for traffic at any distance now, where the old
+    // engine gave it only past 15 km (Nov 18, a rule change for safety): that extra time is not a clock difference.
+    const pts = [...w.head, ...seq.filter(x => !x.mealOf || isFinite(x.lat)), ...w.tail];
+    const ruleSlack = pts.slice(1).reduce((t, b, k) => t + ((b.deadline || b.backToShip) && E.hav(pts[k], b) <= 15 ? (t2.estimate(pts[k], b).slack || 0) : 0), 0);
+    if (ruleSlack && Math.abs(r.end - ruleSlack - o.end) <= 1) { same++; return; }
     if (Math.abs(r.end - o.end) <= 1) same++; else ok(false, `${f} day ${i} ${d.type}: old order ends ${r.end} on the new clock, old engine says ${o.end}`); });
   if (!n && s.old.every(o => !o || o.error)) { console.log(`gap  ${s.name}: the old engine planned no day here either (${(s.old.find(o => o && o.error) || {}).error || 'no plan'})`); continue; }
   ok(n > 0 || liveDays > 0, f + ': no days to compare'); oks += same; console.log(`ok   ${s.name}: ${same} of ${n} timed days match the old engine to the minute${liveDays ? ` (${liveDays} left out: the old app used a live route time)` : ''}`);
@@ -280,9 +285,38 @@ if (fs.existsSync(dir)) { let rides = 0, placed = 0;
 { let boats = 0; for (const f of fs.readdirSync(dir).filter(f => f.endsWith('.json'))) { const s = JSON.parse(fs.readFileSync(path.join(dir, f))), ps = E.planTrip(s);
     ps.forEach((p, i) => p && p.items && p.items.forEach((x, k) => { if (x.t !== 'ride') return; const a = p.items[k - 1], b = p.items[k + 1], c = s.cities[s.days[i].city] || {};
       const site = it => it && it.id != null && [...(c.sites || []), ...(c.farther || [])].find(y => String(y.id) === String(it.id));
-      const boatEnd = [site(a), site(b)].filter(y => y && E.byBoat(y.travelNote));
+      const boatEnd = x.pierName && x.mode !== 'boat' ? [] : [site(a), site(b)].filter(y => y && E.byBoat(y.travelNote)); // the walk or ride to a pier is on land
       if (boatEnd.length === 1) { boats++; ok(x.mode === 'boat', `${f} day ${i}: the ride to or from ${boatEnd[0].name} crosses water but is planned as ${x.mode}`); } })); }
   console.log(`ok   ${boats} rides across water, every one by boat`); }
+
+// ---- Every ride is the kind it is drawn as (Nov 18, Richard: "floating cars and ferries that drive on land"): a boat
+// runs pier to pier (or to a place reached only by boat, or from where no pier is mapped), never from a sight inland; a
+// ride by road or rail never crosses to a place reached only by boat. Every trip, with the places files (the piers).
+{ const PD = path.join(__dirname, '..', 'places', 'data'), places = {}; let boats = 0, piered = 0;
+  if (fs.existsSync(PD)) for (const g of fs.readdirSync(PD).filter(g => g.endsWith('.json'))) { const p = JSON.parse(fs.readFileSync(path.join(PD, g))); places[p.key] = p; }
+  const check = (f, s, plans) => {
+  // Every ride is the kind it is drawn as (Nov 18, Richard: "floating cars and ferries that drive on land"): a boat runs
+  // pier to pier (or to a place reached only by boat, or from where no pier is mapped), never from a sight inland; a
+  // ride by road or rail never crosses to a place reached only by boat.
+    { const piers = E.piersOf(s), placeAt = new Map();
+    for (const c of Object.values(s.cities)) for (const x of [...(c.sites || []), ...(c.farther || [])]) if (isFinite(x.lat)) placeAt.set(x.lat.toFixed(5) + ',' + x.lng.toFixed(5), x);
+    const boatPlace = q => { const x = q && placeAt.get(q.lat.toFixed(5) + ',' + q.lng.toFixed(5)); return !!x && (E.byBoat(x.travelNote) || E.waterOnly(x)); };
+    const near = (q, km) => piers.some(p => E.hav(p, q) <= km);
+    plans.forEach((p, i) => { if (!p || !p.items) return; p.items.forEach(x => { if (x.t !== 'ride' || !x.from || !x.to || x.mode === 'lift') return; if (x.mode === 'boat') boats++; if (x.pierName) piered++;
+      if (x.mode === 'boat') { for (const q of [x.from, x.to]) ok(near(q, E.PIER_AT) || boatPlace(q) || !near(q, E.PIER_KM),
+          `${f}: day ${i + 1} a boat ride starts or ends away from the water (${q.lat},${q.lng}), not at a pier`); }
+      else if (x.mode !== 'walk' || E.hav(x.from, x.to) > 1) { const A = boatPlace(x.from), B = boatPlace(x.to);
+        ok(A === B || near(A ? x.to : x.from, E.PIER_ISLAND), `${f}: day ${i + 1} a ${x.mode} ride crosses to a place reached only by boat`); } }); }); }
+  };
+  for (const f of fs.readdirSync(dir).filter(f => f.endsWith('.json'))) { const s = E.applyPlaces(JSON.parse(fs.readFileSync(path.join(dir, f))), places); check(f, s, E.planTrip(s)); }
+  // Naples, the cathedral and Capri picked (Richard's map, Nov 18): the walk to the ferry pier, then the boat from it.
+  const nf = path.join(dir, 'sample-cruise.json');
+  if (fs.existsSync(nf)) { const s = E.applyPlaces(JSON.parse(fs.readFileSync(nf)), places), ni = s.days.findIndex(d => /naples/i.test(d.city));
+    if (ni >= 0) { s.days[ni].selected = ['duomo-na', 'capri-far']; s.days[ni].own = true; const p = E.planTrip(s)[ni], rides = (p.items || []).filter(x => x.t === 'ride');
+      const k = (p.items || []).findIndex(x => x.t === 'ride' && x.mode === 'boat'), before = p.items[k - 1];
+      ok(k > 0 && before.t === 'ride' && before.pierName && before.to && E.hav(before.to, p.items[k].from) < 0.01, 'Naples: the cathedral, then a walk or ride to the ferry pier, then the boat from the pier');
+      check('sample-cruise.json (cathedral and Capri)', s, [].concat(new Array(ni).fill(null), [p])); } }
+  console.log(`ok   every ride the kind it is drawn as: ${boats} boat rides, ${piered} rides to or from a pier`); }
 
 // ---- The whole trip (step 6 to 8): same plan whatever order the pieces arrive in, nothing used twice, every day safe.
 const shuffle = (a, seed) => { const b = a.slice(); let x = seed; for (let i = b.length - 1; i > 0; i--) { x = (x * 1103515245 + 12345) % 2147483648; const j = x % (i + 1); [b[i], b[j]] = [b[j], b[i]]; } return b; };

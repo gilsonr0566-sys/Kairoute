@@ -156,6 +156,31 @@ async function tapTimes(p) { const out = []; const n = await p.evaluate(() => wi
     const bad = ls.filter(l => l.kind === 'ferry' && (l.road || l.n > 2));
     check('Every ferry on the map crosses the water (drawn straight, not along a road)', !bad.length, bad.length + ' ferry legs follow a road'); }
 
+  // 2a1c. Every line on the map is the kind of ride it is (Nov 18, Richard's Naples map: "floating cars and ferries that
+  // drive on land"): a ferry runs from a pier (never from a church in town) to a pier or the island itself, the way to
+  // the pier is drawn on its own, and no ride by road or on foot goes to a place reached only by boat. A road route
+  // joins a stop only where the stop is beside the street (no straight line over the harbour to a terminal on its pier).
+  { const setPicks = async want => { for (let k = 0; k < 30; k++) { const st = await boxes(p), w = st.find(x => x.on !== want.includes(x.id)); if (!w) return true; if (!(await tapBox(p, w.id))) return false; } return false; };
+    const isle = all.find(id => /capri/.test(id)), inland = all.find(id => /duomo/.test(id)) || town, inl = all.find(id => /pompeii/.test(id));
+    const bad = []; let ferries = 0;
+    for (const set of [[inland, isle], [isle, inl], [inland, isle, inl]].map(x => x.filter(Boolean)).filter(x => x.includes(isle))) {
+      await p.evaluate(i => { window.__kairouteGo('day', i); window.__kairouteGo('sites'); }, ni); await p.waitForTimeout(500);
+      if (!(await setPicks(set))) { bad.push(`could not pick ${set.join(' + ')}`); continue; }
+      await p.evaluate(i => { window.__kairouteGo('day', i); window.__kairouteGo('plan'); }, ni); await p.waitForTimeout(800);
+      const r = await p.evaluate(() => { const R = Math.PI / 180, km = (a, b) => { const x = Math.sin((b[1] - a[1]) * R / 2) ** 2 + Math.cos(a[1] * R) * Math.cos(b[1] * R) * Math.sin((b[0] - a[0]) * R / 2) ** 2; return 12742 * Math.asin(Math.sqrt(x)); };
+        const piers = window.__kairoutePiers().map(q => [q.lng, q.lat]), d = window.__kairouteEngine2()[window.__kairouteDays().findIndex(x => /Naples/.test(x.dest))];
+        const boatAt = (d.items || []).filter(x => x.t === 'stop' && window.__kairouteBoatPlace(x.id)).map(x => [x.lng, x.lat]);
+        const atPier = q => piers.some(pq => km(pq, q) <= 0.3), atIsle = q => boatAt.some(b => km(b, q) <= 0.05), onIsle = q => boatAt.some(b => km(b, q) <= 5);
+        return window.__kairouteMapLegs().map(l => ({ kind: l.kind, a: l.a, b: l.b, ok: l.kind === 'ferry' ? (atPier(l.a) || atIsle(l.a)) && (atPier(l.b) || atIsle(l.b)) : !(atIsle(l.a) && !onIsle(l.b)) && !(atIsle(l.b) && !onIsle(l.a)) })); });
+      ferries += r.filter(l => l.kind === 'ferry').length;
+      r.filter(l => !l.ok).forEach(l => bad.push(`${set.join('+')}: a ${l.kind} line from ${l.a.map(n => n.toFixed(4))} to ${l.b.map(n => n.toFixed(4))}`));
+      const tl = await p.$$eval('.tl', xs => xs.map(x => x.innerText.replace(/\s+/g, ' ')).join(' | '));
+      if (set.length === 2 && set.includes(inland) && !/to the ferry at/i.test(tl)) bad.push(`${set.join('+')}: the day plan doesn't show the way to the ferry pier (${tl.slice(0, 300)})`); }
+    // A road route ending on the street 300 m from a terminal out on its pier: drawn to the street, not over the water.
+    const road = await p.evaluate(() => window.__kairouteRoadEnds({ mode: 'car', a: [14.2600, 40.8500], b: [14.2550, 40.8380] }, [[14.2601, 40.8501], [14.2580, 40.8440], [14.2560, 40.8410]]));
+    if (road.length !== 4 || road[road.length - 1][1] !== 40.8410) bad.push('a road line was joined over the water to a stop 300 m from the street');
+    check(`Every line on the Naples map is its kind of ride: ferries pier to pier (${ferries} drawn), nothing on land goes to the island, roads don't cross the harbour`, ferries > 0 && !bad.length, bad.slice(0, 3).join('; ') || 'no ferry drawn'); }
+
   // 2a1b. Free time is the traveler's (Nov 18, Richard: "I wouldn't do the suggested options. Just let them select to
   // fill the spots."): no day plan has a stop the app put there on its own; a day with free time offers sights that
   // would fit, and "Add" puts one on the plan as a pick that stays after a reload.

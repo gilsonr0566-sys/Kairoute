@@ -32,10 +32,28 @@
     const fixedAt = id => win.head.concat(win.tail).find(p => p.fixed && p.id === id);
     const whereIs = x => x.t === "fixed" ? fixedAt(x.id) : x.id != null ? byId.get(String(x.id)) : x.t === "start" ? win.head[0] : x.t === "end" ? win.tail[win.tail.length - 1] : null;
     for (const x of fit.r.items) {
-      if (x.t === "ride") { items.push(Object.assign({ t: "ride", mode: x.mode, min: x.min, km: x.km }, x.how && x.mode !== "walk" ? { how: x.how } : {}, x.options ? { options: x.options } : {}, x.transitMode ? { transitMode: x.transitMode } : {}, x.choice ? { choice: x.choice } : {})); continue; }
-      // Each ride knows where it starts and ends (the map draws each one apart, out and back side by side).
-      const prev = items[items.length - 1], here = point(whereIs(x));
-      if (prev && prev.t === "ride" && items.length >= 2) { const a = items[items.length - 2]; if (isFinite(a.lat) && isFinite(here.lat)) Object.assign(prev, { from: { lat: a.lat, lng: a.lng }, to: here }); }
+      if (x.t === "ride") {
+        const ride = Object.assign({ t: "ride", mode: x.mode, min: x.min, km: x.km }, x.how && x.mode !== "walk" ? { how: x.how } : {}, x.options ? { options: x.options } : {}, x.transitMode ? { transitMode: x.transitMode } : {}, x.choice ? { choice: x.choice } : {});
+        if (!x.parts) { items.push(ride); continue; }
+        // A boat between piers: the way to the pier and from it are rides of their own, around the boat. The traveler's
+        // choice of ways stays on the boat, for the whole ride between the two places.
+        const ground = x.parts.filter(g => !g.boat).reduce((t, g) => t + g.min, 0);
+        x.parts.forEach(g => { const r = g.boat ? Object.assign(ride, { min: x.min - ground, whole: true }, g.from ? { pierName: g.from } : {})
+            : Object.assign({ t: "ride", mode: g.mode, min: g.min, km: Math.round((g.km || 0) * 100) / 100, pierName: g.pierName }, g.how && g.mode !== "walk" ? { how: g.how } : {}, g.transitMode ? { transitMode: g.transitMode } : {});
+          if (g.to) r.to = { lat: g.to.lat, lng: g.to.lng }; items.push(r); });
+        continue;
+      }
+      // Each ride knows where it starts and ends (the map draws each one apart, out and back side by side). Two rides in
+      // a row (to the pier, then the boat) meet at the pier; the ride with the traveler's choices keeps the whole ride's
+      // two ends for that choice.
+      const here = point(whereIs(x));
+      let k = items.length; while (k > 0 && items[k - 1].t === "ride") k--;
+      const a = items[k - 1], run = items.slice(k);
+      if (run.length && a && isFinite(a.lat) && isFinite(here.lat)) {
+        const A = { lat: a.lat, lng: a.lng };
+        run.forEach((r, j) => { r.from = j === 0 ? A : run[j - 1].to; if (!r.to || j === run.length - 1) r.to = j === run.length - 1 ? here : r.to;
+          if (r.whole) { r.whole = undefined; delete r.whole; if (run.length > 1) Object.assign(r, { pairFrom: A, pairTo: here }); } });
+      }
       const src = x.id != null ? byId.get(String(x.id)) : null;
       // Every stop on a plan is a pick: the traveler's, or the app's starting picks on a day they haven't touched (shown
       // ticked). Nothing is optional (Nov 18, Richard).
@@ -83,7 +101,7 @@
     return out;
   };
   const planAll = bucket => {
-    const prefs = bucket.prefs || {}, style = bucket.style || "mix", tr = E.makeTravel(prefs, bucket.legModes, bucket.legs, bucket.transit, bucket.answers), ledger = E.makeLedger();
+    const prefs = bucket.prefs || {}, style = bucket.style || "mix", tr = E.makeTravel(prefs, bucket.legModes, bucket.legs, bucket.transit, bucket.answers, E.piersOf(bucket)), ledger = E.makeLedger();
     const guides = E.sortFar(bucket.cities || {}), days = bucket.days || [], out = new Array(days.length).fill(null);
     // Each day knows where its place's own sights are, so a gate far from all of them is caught (part 3).
     const spots = key => ((guides[key] || {}).sites || []).filter(s => isFinite(s.lat)).map(s => ({ lat: s.lat, lng: s.lng }));

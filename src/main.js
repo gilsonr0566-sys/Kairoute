@@ -6217,15 +6217,18 @@ function loadMapLib() {
 }
 // Everything the map shows for one plan: the points in order and the legs between them.
 function mapPlanData(plan, d) {
-  const pts = [], legs = []; let n = 0, last = null, pending = null;
-  const seen = new Set();
+  const pts = [], legs = []; let n = 0, last = null, pending = [];
+  const seen = new Set(), ll = q => q && isFinite(q.lat) && isFinite(q.lng) ? [q.lng, q.lat] : null;
   plan.items.forEach(it => {
-    if (it.type === "travel") { pending = it; return; }
+    if (it.type === "travel") { pending.push(it); return; }
     const p = it.place; if (!p || !isFinite(p.lat) || !isFinite(p.lng)) return;
-    if (last && pending) { const o = pending.leg.transit; const kind = legKind(pending.leg), a = [last.lng, last.lat], b = [p.lng, p.lat];
+    // Each ride from where it starts to where it ends: rides in a row (to the ferry pier, then the boat) meet at the pier,
+    // so the boat is drawn pier to pier and the way to the pier on the streets (Nov 18, Naples).
+    if (last) pending.forEach((t, j) => { const o = t.leg.transit, kind = legKind(t.leg);
+      const a = (j > 0 && ll(pending[j - 1].leg.to)) || ll(t.leg.from) || [last.lng, last.lat], b = (j < pending.length - 1 && ll(t.leg.to)) || (j === pending.length - 1 ? [p.lng, p.lat] : ll(t.leg.to)) || [p.lng, p.lat];
       // A ferry crosses the water: drawn straight across, never along the coast road (Nov 18, Naples to Sorrento).
-      legs.push({ mode: pending.leg.mode === "ride" ? "car" : "foot", kind, a, b, path: o && o.path && o.path.length > 1 ? [a, ...o.path, b] : kind === "ferry" ? [a, b] : null }); }
-    last = p; pending = null;
+      legs.push({ mode: t.leg.mode === "ride" ? "car" : "foot", kind, a, b, path: o && o.path && o.path.length > 1 ? [a, ...o.path, b] : kind === "ferry" ? [a, b] : null }); });
+    last = p; pending = [];
     const at = p.lat.toFixed(5) + "," + p.lng.toFixed(5);
     if (it.type === "start" || it.type === "end" || it.type === "fixed") {
       if (seen.has(at)) return; seen.add(at);
@@ -6261,7 +6264,16 @@ async function fetchRoutes(legs, then) {
   } catch (e) {} finally { need.forEach(l => { const k = legKey(l); routeAsk.delete(k); if (!routeMem.has(k)) routeFail.set(k, Date.now()); }); }
   if (then) then();
 }
-function legLine(l) { if (l.path) return l.path; const c = routeMem.get(legKey(l)); return Array.isArray(c) ? c : [l.a, l.b]; }
+// A street route joins the stop only where the stop is beside the street: a cruise terminal out on its pier, or a
+// place across the harbour from the nearest road, is never joined by a straight line over the water (Nov 18, Naples:
+// "floating cars"). The last steps from the street (on foot, along the pier) are the stop's own.
+const ROAD_JOIN_KM = 0.12;
+function roadEnds(l, c) { const d = (p, q) => hav({ lat: p[1], lng: p[0] }, { lat: q[1], lng: q[0] });
+  if (l.mode !== "car") return [l.a, ...c, l.b];
+  return [...(d(l.a, c[0]) <= ROAD_JOIN_KM ? [l.a] : []), ...c, ...(d(l.b, c[c.length - 1]) <= ROAD_JOIN_KM ? [l.b] : [])]; }
+if (typeof window !== "undefined") window.__kairouteRoadEnds = roadEnds;
+function legLine(l) { if (l.path) return l.path; const c = routeMem.get(legKey(l)); if (!Array.isArray(c)) return [l.a, l.b]; if (l.mode !== "car" || c.length < 4) return c;
+  return roadEnds(l, c.slice(1, -1)); } // the saved route runs stop, streets, stop: the streets joined to each stop only where it is beside them
 // Drawing on the map (route lines, arrows, ride badges, markers, the traveler, place names) is one layer:
 // see features/map-draw.js.
 // After each render: put the live map in the slot the screen left for it, with this screen's route.
@@ -6586,7 +6598,7 @@ function renderPlan(d) {
     const cls = `tl ${idx === 0 ? "first" : ""} ${idx === plan.items.length - 1 || it.type === "end" ? "last" : ""} ${rideIn ? "rin rin-" + rideIn : ""} ${rideOut ? "rout rout-" + rideOut : ""}`;
     if (it.type === "start") return `<div class="${cls}">${tcell(it)}<div class="rail"><div class="dot start">S</div></div><div class="what"><div class="nm">${esc(it.label)}</div>${it.place.note ? `<div class="sub">${esc(it.place.note)}</div>` : ""}${plan.w.notes.map(t => `<div class="sub">${esc(t)}</div>`).join("")}</div></div>`;
     if (it.type === "travel") {
-      const m = it.leg.mode, k = legKind(it.leg), freeHere = !freeShown && freeCard && nx && nx.type === "end" ? (freeShown = true, freeCard) : "";
+      const m = it.leg.mode, k = legKind(it.leg), freeHere = !freeShown && freeCard && !(pv && pv.type === "travel") && (() => { let j = idx; while (plan.items[j] && plan.items[j].type === "travel") j++; return plan.items[j] && plan.items[j].type === "end"; })() ? (freeShown = true, freeCard) : ""; // before the first of the rides back (to the pier, then the boat)
       return freeHere + `<div class="tl leg ${m} k-${k}${it.leg.choices ? " ridecho" : ""}" data-kind="${k}"><div class="time"></div><div class="rail"></div><div class="what">${legIcon(k)}<span>${it.leg.km < 0.1 ? "Next door" : `<b>${esc(it.leg.how)}</b> · ${dur(it.leg.min)} · ${distTxt(it.leg.km)}`}${rideDetail(it.leg, it.time, plan.w && plan.w.endBy)}</span></div></div>`;
     }
     if (it.type === "fixed") return `<div class="${cls}">${tcell(it)}<div class="rail"><div class="dot fixed">H</div></div><div class="what">${it.free ? `<div class="nm">Free time until ${fmt(it.time + it.free)}</div><div class="sub">Breakfast, coffee or a last walk nearby. Then ${esc(it.place.name.replace(/^C/, "c"))} (${dur(it.bags)}).</div>` : `<div class="nm">${esc(it.place.name)}</div><div class="sub">${dur(it.place.minutes)}</div>`}</div></div>`;

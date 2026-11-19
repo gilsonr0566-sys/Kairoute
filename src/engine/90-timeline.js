@@ -12,7 +12,7 @@
     let clock = win.start, prev = O, late = 0, waits = 0, rideMin = 0;
     if (st) ({ clock, prev, late, waits, rideMin } = st); else items.push({ t: "start", name: O && O.name, at: clock });
     const go = (p, type) => {
-      const leg = ride(prev, p); items.push(Object.assign({ t: "ride", mode: leg.mode, min: leg.min, km: Math.round((leg.km || 0) * 100) / 100 }, leg.how && leg.mode !== "walk" ? { how: leg.how } : {}, leg.options ? { options: leg.options } : {}, leg.transitMode ? { transitMode: leg.transitMode } : {}, leg.choice ? { choice: leg.choice } : {})); clock += leg.min; rideMin += leg.min;
+      const leg = ride(prev, p); items.push(Object.assign({ t: "ride", mode: leg.mode, min: leg.min, km: Math.round((leg.km || 0) * 100) / 100 }, leg.how && leg.mode !== "walk" ? { how: leg.how } : {}, leg.options ? { options: leg.options } : {}, leg.transitMode ? { transitMode: leg.transitMode } : {}, leg.choice ? { choice: leg.choice } : {}, leg.parts ? { parts: leg.parts } : {})); clock += leg.min; rideMin += leg.min;
       const it = { t: type, id: p.id || null, name: p.name, min: p.minutes || 0 };
       if (type === "stop") { const sd = siteDay ? siteDay(p.id) : null, f = E.hoursFit(sd && sd.oh, clock, p.minutes);
         if (f.wait) { clock += f.wait; waits += f.wait; it.wait = f.wait; } if (f.late > 0) { late++; it.late = f.late; }

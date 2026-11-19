@@ -22,6 +22,10 @@
       const P = places && places[key]; if (!P) continue;
       // Public transport lines mapped around the place: every leg they serve offers them (part 1b).
       if ((P.transit || []).length) b.transit = (b.transit || []).concat(P.transit);
+      // Ferry piers as mapped: a boat leaves from a pier and lands at one, never from a church in the old town (Nov 18,
+      // Naples: the ferry to Capri was drawn from the cathedral, across the streets).
+      const piers = (P.ports || []).filter(x => !x.cruise && /ferry|pier/i.test(String(x.kind || ""))).concat(P.piers || []).filter(x => isFinite(x.lat) && isFinite(x.lng));
+      if (piers.length) b.piers = (b.piers || []).concat(piers.map(x => ({ name: E.latin(x.name) || "the ferry pier", lat: x.lat, lng: x.lng })));
       for (const s of city.sites || []) {
         const f = P.sites && P.sites[s.id]; if (!f) continue;
         if (f.editions) s.editions = f.editions;
@@ -49,7 +53,7 @@
       // few the guide names (Nov 18, Corpus Christi). Kept apart as from the map (no review behind them).
       if ((P.cityEats || []).length) { const have = new Set((city.restaurants || []).map(r => E.eatKey(r.name)));
         city.restaurants = (city.restaurants || []).concat(P.cityEats.filter(x => x.name && isFinite(x.lat) && isFinite(x.lng) && !have.has(E.eatKey(x.name)))
-          .map(x => ({ id: "map~" + E.eatKey(x.name).replace(/ /g, "-"), name: x.name, lat: x.lat, lng: x.lng,  kind: x.amenity || "restaurant", amenity: x.amenity || "restaurant", cuisine: x.cuisine || "", fromMap: true }))); }
+          .map(x => ({ id: "map~" + E.eatKey(x.name).replace(/ /g, "-"), name: E.latin(x.name) || x.name, lat: x.lat, lng: x.lng,  kind: x.amenity || "restaurant", amenity: x.amenity || "restaurant", cuisine: x.cuisine || "", fromMap: true }))); }
       const added = [];
       for (const s of city.farther || []) {
         const t = P.towns && P.towns[s.id]; if (!t) continue;
@@ -65,9 +69,9 @@
           far: true, town: s.id, townName: s.name, travelNote: s.travelNote || "", editions: x.editions || 0, unesco: !!x.unesco, tags: ["in-town"], category: "Sight" }));
         // With its sights listed one by one, the town itself is the walk through its centre.
         if (own.length >= 2) s.minutes = Math.min(s.minutes || 60, 60);
-        s.foodDrink = (t.foodDrink || []).map(x => ({ name: x.name, lat: isFinite(x.lat) ? x.lat : null, lng: isFinite(x.lng) ? x.lng : null, kind: x.kind, note: x.content || "", special: E.foodSpecial(x) }));
+        s.foodDrink = (t.foodDrink || []).map(x => ({ name: E.latin(x.name) || x.name, lat: isFinite(x.lat) ? x.lat : null, lng: isFinite(x.lng) ? x.lng : null, kind: x.kind, note: x.content || "", special: E.foodSpecial(x) }));
         // No place to eat in its travel guide: the restaurants and cafés on the map beside it (named as from the map).
-        if (!s.foodDrink.some(x => x.kind === "eat") && (t.mapEats || []).length) s.foodDrink = s.foodDrink.concat(t.mapEats.map(x => ({ name: x.name, lat: x.lat, lng: x.lng, kind: "eat", note: x.cuisine || "", special: false, fromMap: true })));
+        if (!s.foodDrink.some(x => x.kind === "eat") && (t.mapEats || []).length) s.foodDrink = s.foodDrink.concat(t.mapEats.map(x => ({ name: E.latin(x.name) || x.name, lat: x.lat, lng: x.lng, kind: "eat", note: x.cuisine || "", special: false, fromMap: true })));
       }
       if (added.length) city.farther = (city.farther || []).concat(added);
       // Hours per day: a mapped opening time read for that day's date, where the day has no hours for the sight yet.
