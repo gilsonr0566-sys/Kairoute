@@ -20,7 +20,11 @@
         if (p.bonus) it.bonus = true; if (p.along) it.along = true; }
       // Early at a place to eat: seated with a drink and the menu, the first quarter hour is no idle wait (Nov 19: lunch
       // 1.7 km out of the way, to save five minutes before the kitchen opened). Longer is still a wait.
-      if (type === "meal") { const m = p.mealOf; if (clock < m.from) { waits += Math.max(0, m.from - clock - E.MEAL_SEATED); clock = m.from; } it.meal = m.label; it.min = p.len || m.len; if (m.booked) it.booked = true; if (m.pinned) it.pinned = true; if (p.chosen) it.chosen = true; if (p.toGo) it.toGo = true; if (p.fromMap) it.fromMap = true; if (clock > m.to) it.lateMeal = clock - m.to; }
+      if (type === "meal") { const m = p.mealOf; if (clock < m.from) { waits += Math.max(0, m.from - clock - E.MEAL_SEATED); clock = m.from; }
+        // The place's own lunch hours that day, when listed: wait for it to open, and a meal running past its closing counts
+        // as late as the minutes it runs over (Nov 19 review: lunch was planned when the restaurant was shut).
+        if (p.open && p.open.length) { const len = p.len || m.len, sp = p.open.find(([a, b]) => clock < b) || null;
+          if (!sp) { it.shut = true; it.lateMeal = (it.lateMeal || 0) + len; } else { if (clock < sp[0]) { waits += Math.max(0, sp[0] - clock - E.MEAL_SEATED); clock = sp[0]; } if (clock + len > sp[1]) { it.shut = true; it.lateMeal = (it.lateMeal || 0) + clock + len - sp[1]; } } } it.meal = m.label; it.min = p.len || m.len; if (m.booked) it.booked = true; if (m.pinned) it.pinned = true; if (p.chosen) it.chosen = true; if (p.toGo) it.toGo = true; if (p.fromMap) it.fromMap = true; if (clock > m.to) it.lateMeal = (it.lateMeal || 0) + clock - m.to; }
       it.at = clock; items.push(it); clock += it.min; prev = p;
     };
     const keep = () => states.push({ clock, prev, late, waits, rideMin, n: items.length });

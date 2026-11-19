@@ -53,6 +53,8 @@
   // How each kind of ride is made, drawn and shown: mode is what the timeline and the map read (walk, ride = by road,
   // transit = on rails or a bus, boat), and every kind has its own icon in the app.
   E.RIDE_KINDS = Object.freeze(["walk", "metro", "tram", "train", "bus", "ferry", "taxi"]);
+  E.hasPos = p => !!p && p.lat != null && p.lng != null && p.lat !== "" && p.lng !== "" && isFinite(p.lat) && isFinite(p.lng);
+  E.UNKNOWN_RIDE = 45; // minutes for a ride to or from a place not on the map: a guess, said as one
   E.modeOfKind = k => k === "walk" ? "walk" : k === "taxi" ? "ride" : k === "ferry" ? "boat" : "transit";
   // A choice saved before the kinds were named (the app kept "transit", "boat", "ride" or a timetable row's own id).
   const OLD_CHOICE = { ride: "taxi", boat: "ferry" };
@@ -86,7 +88,10 @@
       for (const l of roadLegs) { const g = Math.max(E.hav(l.a, a), E.hav(l.b, b)); if (g <= tol && g < bd) { bd = g; best = l; } }
       return best && Object.assign({}, best, { min: best.min + Math.round((E.hav(best.a, a) + E.hav(best.b, b)) * 1.3 / 25 * 60) }); };
     function estimate(a, b) {
-      if (!a || !b || !isFinite(a.lat) || !isFinite(b.lat)) return { mode: "walk", kind: "walk", how: "Walk", km: 0, min: 0, unknown: true };
+      // A place with no position on the map is never a ride of no time (a 0-minute walk made a day look as if it fit): the
+      // ride is a taxi of E.UNKNOWN_RIDE minutes, said to be a guess (Nov 19 review).
+      if (!E.hasPos(a) || !E.hasPos(b)) return { mode: "ride", kind: "taxi", how: "Taxi or car", km: null, min: E.UNKNOWN_RIDE, unknown: true, guess: true,
+        note: "One end of this ride isn't on the map, so its time is a guess: check how to get there before you go." };
       // The cable car (or funicular) between a landing and the town above: its own fixed step holds the time.
       const lift = (p, q) => p.viaLift && E.hav(q, p.viaLift) < 0.05;
       if (lift(a, b) || lift(b, a)) return { mode: "lift", kind: "train", how: (a.viaLift || b.viaLift).name || "Cable car", km: 0, min: 0 };
@@ -157,8 +162,8 @@
           const hn = holder.travelNote || "", cross = saidMin(hn) || Math.round(d / 25 * 60) + 10, pl = pierLeg(a, b, holder);
           const word = /high.?speed|fast ferry|hydrofoil|catamaran/i.test(hn) ? "Fast ferry" : /ferry/i.test(hn) ? "Ferry" : "Boat";
           const fromTo = pl && pl.parts.find(x => x.boat), how = word + (fromTo && fromTo.from ? " from " + fromTo.from : "") + (fromTo && fromTo.at ? " to " + fromTo.at : "");
-          opts.push(Object.assign({ id: "ferry", kind: "ferry", how, min: cross + E.PIER_MIN + (pl ? pl.min : 0), km: d, cross, pier: E.PIER_MIN, timetable: true,
-            steps: [word + (fromTo && fromTo.from ? " from " + fromTo.from : "") + ", about " + cross + " min crossing", "Allow " + E.PIER_MIN + " min at the pier for the ticket and the next sailing"] }, pl ? { parts: pl.parts } : {}));
+          opts.push(Object.assign({ id: "ferry", kind: "ferry", how, min: cross + E.PIER_MIN + (pl ? pl.min : 0), km: d, cross, pier: E.PIER_MIN, source: saidMin(hn) ? "guide" : "estimate",
+            steps: [word + (fromTo && fromTo.from ? " from " + fromTo.from : "") + ", about " + cross + " min crossing", "Allow " + E.PIER_MIN + " min at the pier for the ticket and the next sailing", "No sailing times are known here: check the timetable at the pier"] }, pl ? { parts: pl.parts } : {}));
         }
       } else {
         // On foot: any ride up to 4 km may be walked.
@@ -174,7 +179,7 @@
         // The guide's own time for the ride (a winding road it knows) is the floor, never the label.
         if (d >= 0.6 || !opts.length) {
           const r = pinned && pinned.mode !== "walk" && pinned.mode !== "boat" ? { km: pinned.km || d * 1.3, min: Math.round(pinned.min) } : road(d), said = d > 5 ? saidMin(note) : 0;
-          opts.push({ id: "taxi", kind: "taxi", how: "Taxi or car", min: Math.max(r.min, said), km: r.km, steps: [] });
+          opts.push({ id: "taxi", kind: "taxi", how: "Taxi or car", min: Math.max(r.min, said), km: r.km, steps: [], source: said > r.min ? "guide" : pinned && pinned.road ? "roads" : "estimate" });
         }
       }
       // Time for the ship, a train or a plane, in one place for every way: a ride of half an hour or more to it gets 30%
@@ -191,14 +196,20 @@
         pick = w && d <= lim ? w : pubs.length && (!t || E.publicWins(pubs[0].min, t.min)) ? pubs[0] : t || pubs[0] || w || opts[0]; }
       // A way the guide names that the data doesn't have: said plainly, never planned as if it were known.
       const missing = d > 5 && note ? E.noteKinds(note).filter(k => !opts.some(o => o.kind === k || (k === "train" && (o.kind === "metro" || o.kind === "tram")))) : [];
+      // Where each way's time comes from (Nov 19 review: an estimate must never read as a timetable): the timetable, a line
+      // on the map (no timetable), the map's roads, the guide's words, or an estimate from the distance.
+      for (const o of opts) if (!o.source) o.source = o.ans ? "timetable" : o.mapped ? "map" : "estimate";
       const notes = [];
       if (note && d > 5) notes.push("The guide says: " + note.trim().replace(/\s+/g, " "));
       if (missing.length) notes.push("The guide names " + missing.map(k => k === "ferry" ? "a ferry" : "a " + k).join(" and ") + ", but no timetable for it is known here, so this ride is planned " + (pick.kind === "taxi" ? "by taxi" : "as " + pick.how) + ": check at the " + (missing.includes("ferry") && missing.length === 1 ? "pier" : "station") + " or with your hotel.");
-      const options = opts.map(o => Object.assign({ id: o.id, kind: o.kind, mode: E.modeOfKind(o.kind), how: o.how, min: o.min, steps: o.steps || [] },
+      // The ride back to a ship, train or plane on a time no timetable confirms: said, with the extra time already in it.
+      if ((b.backToShip || b.deadline) && pick.kind !== "walk" && pick.source !== "timetable" && pick.min >= 30)
+        notes.push("No timetable or live traffic confirms this ride's time: it is an estimate with " + (pick.slack || 0) + " min extra for the " + (b.backToShip ? "ship" : "connection") + ". Leave by the time shown, never later.");
+      const options = opts.map(o => Object.assign({ id: o.id, kind: o.kind, mode: E.modeOfKind(o.kind), how: o.how, min: o.min, steps: o.steps || [], source: o.source },
         o.ans ? { ans: o.ans } : {}, o.parts ? { parts: o.parts, cross: o.cross } : {}, o.slack ? { slack: o.slack } : {}, o.transitMode ? { transitMode: o.transitMode } : {}));
       const leg = Object.assign({ mode: E.modeOfKind(pick.kind), kind: pick.kind, how: pick.how, km: pick.km || d, min: pick.min, steps: pick.steps || [], choice: pick.id, options },
         pick.kind !== "walk" && pick.kind !== "taxi" && pick.kind !== "ferry" ? { transitMode: pick.transitMode || (pick.ans && pick.ans.mode) || pick.kind } : {},
-        pick.kind === "ferry" ? { cross: pick.cross, pier: pick.pier || E.PIER_MIN, timetable: true } : {},
+        pick.kind === "ferry" ? { cross: pick.cross, pier: pick.pier || E.PIER_MIN, timetable: pick.source === "timetable" } : {}, { source: pick.source },
         pick.parts ? { parts: pick.parts } : {}, pick.ans ? { ans: pick.ans } : {}, pick.slack ? { slack: pick.slack } : {}, pinned ? { pinned: true } : {},
         notes.length ? { note: notes.join(" ") } : {}, lost ? { lost } : {});
       if (options.length < 2) delete leg.options;
@@ -220,5 +231,5 @@
   E.rideItem = (leg, extra) => Object.assign({ t: "ride", mode: leg.mode, kind: leg.kind || (leg.mode === "walk" ? "walk" : "taxi"), min: leg.min, km: Math.round((leg.km || 0) * 100) / 100 },
     leg.how && leg.mode !== "walk" ? { how: leg.how } : {}, leg.options ? { options: leg.options } : {}, leg.transitMode ? { transitMode: leg.transitMode } : {},
     leg.choice ? { choice: leg.choice } : {}, leg.steps && leg.steps.length ? { steps: leg.steps } : {}, leg.ans ? { ans: leg.ans } : {}, leg.note ? { note: leg.note } : {},
-    leg.lost ? { lost: leg.lost } : {}, leg.slack ? { slack: leg.slack } : {}, leg.pierName ? { pierName: leg.pierName } : {}, extra || {});
+    leg.lost ? { lost: leg.lost } : {}, leg.source ? { source: leg.source } : {}, leg.guess ? { guess: true } : {}, leg.slack ? { slack: leg.slack } : {}, leg.pierName ? { pierName: leg.pierName } : {}, extra || {});
 })(KEngine);

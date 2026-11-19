@@ -47,6 +47,10 @@
     let pick = null;
     if (p.pick && isFinite(p.pick.lat) && isFinite(p.pick.lng)) {
       const k = E.eatKey(p.pick.name), guide = (ctx.eats || []).find(r => E.eatKey(r.name) === k && E.hav(r, p.pick) <= 0.2);
+      // A place the traveler chose that doesn't serve this meal that day (its listed hours): not planned there, and the plan
+      // says why (Nov 19 review: a chosen restaurant skipped every check).
+      const f = (ctx.eatFacts || {})[k] || {};
+      if (label === "Lunch" ? f.lunchShut : f.dinnerShut) return { skip: !!p.skip, meal, pick: null, pickShut: p.pick.name || "The place you chose" };
       pick = { r: guide || p.pick, k, d: 0 };
     }
     return { skip: !!p.skip, meal, pick };
@@ -94,7 +98,8 @@
         // A sit-down lunch, a quicker one when the day is tight, or lunch on the go (bought and eaten walking on) when
         // only that keeps every stop: each a small cost, so the fuller lunch wins whenever it fits.
         const toGo = len === E.TO_GO;
-        const meal = { id: "eat:" + e.k, eatKey: e.k, name: e.r.name, lat: e.r.lat, lng: e.r.lng, mealOf: L, len, quick: len < L.len, toGo, chosen: !!my.pick, fromMap: !!e.r.fromMap, travelNote: e.r.travelNote || "" };
+        const open = ((ctx.eatFacts || {})[e.k] || {}).lunchOpen; // when the place serves lunch that day, if its hours are listed
+        const meal = { id: "eat:" + e.k, eatKey: e.k, name: e.r.name, lat: e.r.lat, lng: e.r.lng, mealOf: L, len, quick: len < L.len, toGo, chosen: !!my.pick, fromMap: !!e.r.fromMap, travelNote: e.r.travelNote || "", open: toGo ? null : open || null };
         const off = my.pick ? 0 : offOf(e);
         const seq = order.slice(0, k).concat([meal], order.slice(k)), r = walk(seq, win, ctx, { r: plain, k }), pen = penalty(r) + (toGo ? 60 : len < L.len ? 20 : 0) + off * 1.5 + (e.r.fromMap ? 0.5 : 0); // a km out of the way weighs like half an hour more riding
         // On a ship, train or plane day lunch is something the app adds, so it keeps the same margin as any added sight.
@@ -106,7 +111,7 @@
     // Lunch never makes the day run late or reach a stop after its last entry: then the day goes without (and says so).
     // Nor does it mean sitting idle waiting for the kitchen to open (lunch first, then a long ride out of town).
     // A wait for the kitchen after the last stop is free time anyway (back early, lunch before the ride home).
-    const okOf = c => c && c.r.lateMeal < 90 && c.r.over <= plain.over && c.r.late <= plain.late && (c.k === order.length || c.r.waits - plain.waits <= 45) && !(win.hard && !c.r.over && win.endBy - c.r.end < E.FILL_MARGIN);
+    const okOf = c => c && c.r.lateMeal < 90 && !c.r.items.some(x => x.shut) && c.r.over <= plain.over && c.r.late <= plain.late && (c.k === order.length || c.r.waits - plain.waits <= 45) && !(win.hard && !c.r.over && win.endBy - c.r.end < E.FILL_MARGIN);
     if (okOf(best)) return { seq: best.seq, r: best.r };
     // No room for lunch between the stops: a long visit over lunchtime (a town, an island, a big site) has lunch in it,
     // there, taken out of the visit's own time (Nov 18, Richard: "No lunch" on his trip: four hours on an island over
@@ -218,7 +223,9 @@
   // Which stop to give up: among those whose loss makes the day fit, the one worth least; if no single loss is enough,
   // the one that gives back the most time for its worth (a far stop on its own goes before a cluster of near ones).
   function toDrop(keep, from, win, ctx, why) {
-    const quick = seq => { const o = E.bestOrder(seq, win.head[win.head.length - 1], win.tail.length ? win.tail[0] : null, ctx.tr.min); return E.walkDay(o, win, ctx.tr.estimate, ctx.siteDay); };
+    // Each loss is judged on the day as it would really be planned (the same arrange as the final day, lunch included, in its
+    // quick form), never on a simpler schedule that could pick a different stop to give up (Nov 19 review).
+    const quick = seq => arrange(seq, win, ctx, true).r;
     const base = quick(keep).end;
     const scored = from.map(s => { const r = quick(keep.filter(k => k !== s)); return { s, fits: !r.over && !r.late, saved: Math.max(1, base - r.end) }; });
     const fixing = scored.filter(x => x.fits);

@@ -23,9 +23,9 @@
       // Public transport lines mapped around the place: every leg they serve offers them (part 1b).
       if ((P.transit || []).length) b.transit = (b.transit || []).concat(P.transit);
       // Road times by car on the map's roads between the place, its port and its trips out: a taxi takes them, with a
-      // fifth more for traffic and 10 minutes to get going (part 1 holds them for any two points near their ends).
+      // seventh more for traffic and 10 minutes to get going (part 1 holds them for any two points near their ends).
       for (const r of P.roads || []) if (r && r.a && r.b && isFinite(r.min)) { b.legs = b.legs || {};
-        const leg = { mode: "ride", road: true, min: Math.round(r.min * 1.2 + 10), km: r.km || null, a: r.a, b: r.b };
+        const leg = { mode: "ride", road: true, min: Math.round(r.min * 1.15 + 10), km: r.km || null, a: r.a, b: r.b };
         const k = E.pairKey(r.a, r.b); if (!b.legs[k]) b.legs[k] = leg; }
       // Ferry piers as mapped: a boat leaves from a pier and lands at one, never from a church in the old town (Nov 18,
       // a ferry to an island was drawn from a cathedral, across the streets).

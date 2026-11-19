@@ -344,7 +344,7 @@ if (fs.existsSync(dir)) { let rides = 0, placed = 0;
       const c = s.cities[d.city] || {}; if (!(c.restaurants || []).length && !(c.farther || []).some(t => (t.foodDrink || []).length)) return; // no place to eat known at all
       days++; const m = p.items.find(x => x.t === 'meal' && x.meal === 'Lunch');
       // None only when the plan says why, plainly (no time left before the ship; no place to eat known out there).
-      if (!m && !(p.explain || []).some(t => /no room for lunch|no place to eat|places to eat aren't in the guide/i.test(t))) noLunch.push(`${f} day ${i + 1}`); else if (!m) said++; else if (/^Lunch in /.test(m.name) && (c.farther || []).some(t => ('Lunch in ' + t.name) === m.name && (t.foodDrink || []).some(x => x.kind === 'eat' && isFinite(x.lat) && E.hav(x, t) <= 3))) noLunch.push(`${f} day ${i + 1}: "${m.name}" names no place`); });
+      if (!m && !(p.explain || []).some(t => /no room for lunch|no time for a sit-down lunch|no place to eat|places to eat aren't in the guide/i.test(t))) noLunch.push(`${f} day ${i + 1}`); else if (!m) said++; else if (/^Lunch in /.test(m.name) && (c.farther || []).some(t => ('Lunch in ' + t.name) === m.name && (t.foodDrink || []).some(x => x.kind === 'eat' && isFinite(x.lat) && E.hav(x, t) <= 3))) noLunch.push(`${f} day ${i + 1}: "${m.name}" names no place`); });
     for (const f of fs.readdirSync(dir).filter(f => f.endsWith('.json'))) { const s = E.applyPlaces(JSON.parse(fs.readFileSync(path.join(dir, f))), places); lunchCheck(f, s, E.planTrip(s)); }
     if (fs.existsSync(nf)) for (const picks of [['capri-far', 'pompeii-far'], ['capri-far'], ['duomo-na', 'capri-far', 'pompeii-far'], ['pompeii-far'], ['sorrento-far', 'pompeii-far']]) {
       const s = E.applyPlaces(JSON.parse(fs.readFileSync(nf)), places), ni = s.days.findIndex(d => /naples/i.test(d.city)); if (ni < 0) continue;
@@ -466,6 +466,50 @@ if (fs.existsSync(dir)) for (const f of fs.readdirSync(dir).filter(f => f.endsWi
         const s = Object.assign({}, s0, { days: s0.days.map((e, j) => j === i ? Object.assign({}, e, { selected: [far.id], mine: [far.id], own: true }) : e) });
         let p; try { p = E.planTrip(s)[i]; } catch (e) { continue; } look(f, i, p, { src }); } }); }
   ok(n > 20 && !bad, `the ride back from a far sight keeps the guide's time for it (${n} rides back checked)`); }
+// ---- Nov 19 outside review, each true finding a rule and a test.
+{ const tr = E.makeTravel({}, {}), at = { lat: 38, lng: 23.7 };
+  // A place with no map position: never a ride of no time; a taxi guess, said as one.
+  for (const q of [{ lat: NaN, lng: NaN }, {}, { lat: null, lng: null }, { lat: 38.1 }]) { const e = tr.estimate(at, q), e2 = tr.estimate(q, at);
+    ok(e.min >= 30 && e2.min >= 30 && e.guess && /guess/.test(e.note || ''), `a ride to a place not on the map is a stated guess, never 0 min (got ${e.min} min, ${e.how})`); }
+  // The whole visit fits before closing; entry by the last entry when listed.
+  const oh = { spans: [[9 * 60, 17 * 60]], last: null };
+  ok(E.hoursFit(oh, 16 * 60 + 15, 120).late > 0 && !E.hoursFit(oh, 15 * 60, 120).late && !E.hoursFit(oh, 16 * 60 + 30, 30).late, 'a 2-hour visit is late when started 45 min before closing; on time when it all fits');
+  ok(E.hoursFit({ spans: [[9 * 60, 17 * 60]], last: 16 * 60 }, 16 * 60 + 10, 20).late > 0, 'entry after the last entry is late, even for a short visit');
+  // A ferry the data has no timetable for: never marked as timetabled, and says to check the sailings.
+  const isle = { lat: 40.5532, lng: 14.2222, travelNote: 'About 50 minutes by fast ferry.', boatOnly: true }, f = tr.estimate({ lat: 40.8525, lng: 14.2597 }, isle);
+  ok(f.kind === 'ferry' && (!f.timetable && f.source !== 'timetable' && (f.steps || []).some(x => /No sailing times are known/.test(x))), `a ferry without a timetable says so (got ${f.kind} ${f.source} ${(f.steps || []).join(' / ')})`);
+  // Every way says where its time comes from; the ride back to the ship on an estimate says so.
+  const ship = { lat: 38.3, lng: 23.9, backToShip: true }, r = tr.estimate(at, ship);
+  ok((r.options || [r]).every(o => ['timetable', 'map', 'roads', 'guide', 'estimate'].includes(o.source)) && /estimate/.test(r.note || ''), `the ride back to the ship says it is an estimate (got ${r.source}: ${r.note || 'no note'})`); }
+// Lunch at a time the place serves it (its listed hours that day); a chosen place shut that day is said, not planned.
+{ const L = E.MEALS[0], o = { lat: 0, lng: 0, name: 'A' }, tr = () => ({ min: 0, mode: 'walk', kind: 'walk', how: 'Walk' });
+  const day = (start, open) => E.walkDay([{ id: 'eat:x', name: 'X', lat: 0, lng: 0, mealOf: L, len: 60, open }], { start, endBy: 18 * 60, head: [o], tail: [] }, tr, null);
+  const a = day(12 * 60, [[13 * 60, 15 * 60]]), m = a.items.find(x => x.t === 'meal');
+  ok(m.at === 13 * 60 && !m.shut, `lunch waits for the place to open (at ${E.clock(m.at)})`);
+  const b = day(12 * 60 + 30, [[11 * 60, 13 * 60]]), mb = b.items.find(x => x.t === 'meal');
+  ok(mb.shut && mb.lateMeal >= 30, 'a lunch running past the place\'s closing is marked shut and late');
+  const ctx = { mealPrefs: { Lunch: { pick: { name: 'Shut Taverna', lat: 1, lng: 1 } } }, eatFacts: { [E.eatKey('Shut Taverna')]: { lunchShut: true } }, eats: [] };
+  const mp = E.mealPlan(ctx, 'Lunch'); ok(!mp.pick && mp.pickShut === 'Shut Taverna', 'a chosen lunch place shut that day is not planned, and named'); }
+// The final check reads the plan itself: a ride of no time between places apart, a guessed ride on a ship day, or a ride
+// back with no extra time each make the day unsafe; and every planned ship day passes it.
+{ const win = { hard: true, endBy: 17 * 60 }, A = { lat: 38, lng: 23.7 }, B = { lat: 38.05, lng: 23.75 };
+  const plan = x => ({ end: 16 * 60, items: [{ t: 'start', name: 'Port' }, Object.assign({ t: 'ride', mode: 'ride', from: A, to: B }, x), { t: 'end', name: 'Port' }] });
+  ok(E.guardPlan(plan({ min: 0 }), win).length && E.guardPlan(plan({ min: 40, guess: true, slack: 15 }), win).length && E.guardPlan(plan({ min: 40 }), win).length && !E.guardPlan(plan({ min: 40, slack: 15 }), win).length,
+    'the final check catches a ride of no time, a guessed ride and a ride back with no extra time on a ship day');
+  let shipDays = 0, safe = 0; for (const f of fs.readdirSync(dir).filter(f => f.endsWith('.json'))) { const s = JSON.parse(fs.readFileSync(path.join(dir, f))); E.planTrip(s).forEach((p, i) => { if (p && p.items && s.days[i].type === 'port') { shipDays++; if (p.safe) safe++; } }); }
+  ok(shipDays > 10 && safe <= 2, `ship days still planned in full under the final check (${shipDays - safe} of ${shipDays})`); }
+// Unknown opening hours are never read as open: a stop with an entrance whose hours aren't known for the date is marked,
+// and the day says to check.
+{ let marked = 0, silent = 0; for (const f of fs.readdirSync(dir).filter(f => f.endsWith('.json'))) { const s = JSON.parse(fs.readFileSync(path.join(dir, f)));
+    E.planTrip(s).forEach((p, i) => { if (!p || !p.items || p.safe) return; const d = s.days[i], c = s.cities[d.city] || {};
+      for (const x of p.items.filter(x => x.t === 'stop' && !x.bonus)) { const sx = (c.sites || []).find(y => String(y.id) === String(x.id)); if (!sx) continue; const sd = (d.sites || {})[x.id];
+        if (E.hasEntrance(sx) && !(sd && sd.oh && sd.oh.spans && sd.oh.spans.length)) { if (x.hoursUnknown && (p.explain || []).some(t => /Opening hours aren't known/.test(t))) marked++; else silent++; } } }); }
+  ok(marked > 0 && !silent, `unknown opening hours are said, never read as open (${marked} stops marked, ${silent} silent)`); }
+// Road times from the map: two trips out across a gulf are timed by the road, not the straight line.
+{ const PD = path.join(__dirname, '..', 'places', 'data'), places = {}; if (fs.existsSync(PD)) for (const g of fs.readdirSync(PD).filter(g => g.endsWith('.json'))) { const q = JSON.parse(fs.readFileSync(path.join(PD, g))); places[q.key] = q; }
+  const s = E.applyPlaces(JSON.parse(fs.readFileSync(path.join(dir, 'athens-booked.json'))), places), far = id => s.cities.athens.farther.find(x => x.id === id);
+  const tr = E.makeTravel(s.prefs, s.legModes, s.legs, s.transit, null, E.piersOf(s)), e = tr.estimate(far('corinth-far'), far('delphi-far'));
+  ok(e.min >= 180 && e.source === 'roads', `Ancient Corinth to Delphi by the map's roads, round the gulf (got ${e.min} min, ${e.source})`); }
 // ---- Early at a place to eat (Nov 19: lunch 1.7 km out of the way on an island day, to save five minutes before the kitchen
 // opened): the first quarter hour early at lunch is no idle wait, so a place on the way is never passed over to avoid it.
 { const L = E.MEALS[0], o = { lat: 0, lng: 0, name: 'A' }, win = { start: L.from - 20, endBy: 18 * 60, head: [o], tail: [] }, tr = () => ({ min: 0, mode: 'walk', kind: 'walk', how: 'Walk' });
