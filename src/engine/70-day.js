@@ -107,7 +107,7 @@
     const okOf = c => c && c.r.lateMeal < 90 && c.r.over <= plain.over && c.r.late <= plain.late && (c.k === order.length || c.r.waits - plain.waits <= 45) && !(win.hard && !c.r.over && win.endBy - c.r.end < E.FILL_MARGIN);
     if (okOf(best)) return { seq: best.seq, r: best.r };
     // No room for lunch between the stops: a long visit over lunchtime (a town, an island, a big site) has lunch in it,
-    // there, taken out of the visit's own time (Nov 18, Richard: "No lunch in Naples trip": four hours on Capri over
+    // there, taken out of the visit's own time (Nov 18, Richard: "No lunch" on his trip: four hours on an island over
     // midday and no lunch, because nothing could be added to a full day). The visit is that much shorter; the day isn't longer.
     {
       let inside = null;
@@ -275,7 +275,10 @@
         .map(s => { const dt = detour(s), near = wanted(s) && dt <= 10; return { s, near, v: near ? Math.max(1, s.worth || 0) : (s.worth || 0) - 0.25 * dt }; })
         // a must-see or a finished voiced tour a few steps off the day's walk is offered first
         // (any that would fit is worth naming: the traveler decides, so a lesser one is offered when nothing better fits)
-        .sort((a, b) => (b.near - a.near) || b.v - a.v || E.byId(a.s, b.s));
+        // Must-sees first of all (Nov 18: Richard missed the Little Metropolis and Monastiraki; within his rule that the
+        // app adds nothing on its own, a must-see that fits is the first thing offered, marked as one).
+        .map(x => Object.assign(x, { must: x.s.mustSee || E.has(x.s, "must-see") || x.s.hasGuide ? 1 : 0 }))
+        .sort((a, b) => (b.must - a.must) || (b.near - a.near) || b.v - a.v || E.byId(a.s, b.s));
       const room = win.hard ? E.FILL_MARGIN : 0;
       let tries = 0;
       for (const { s } of cands) {
@@ -287,7 +290,7 @@
         const fitsDay = x => !x.r.over && !x.r.late && win.endBy - x.r.end >= room && (x.noLunch !== "time" || cur.noLunch === "time");
         let c = arrange(next, win, ctx, true);
         if (!fitsDay(c) && tries <= 4) c = arrange(next, win, ctx); // the first few also get the full repair
-        if (!c.r.over && !c.r.late && win.endBy - c.r.end >= room && (c.noLunch !== "time" || cur.noLunch === "time")) suggest.push({ id: s.id, name: s.name, minutes: s.minutes || 0, far: !!s.far });
+        if (!c.r.over && !c.r.late && win.endBy - c.r.end >= room && (c.noLunch !== "time" || cur.noLunch === "time")) suggest.push({ id: s.id, name: s.name, minutes: s.minutes || 0, far: !!s.far, must: !!(s.mustSee || E.has(s, "must-see")), voiced: !!s.hasGuide });
       }
     }
     return { seq: cur.seq, r: cur.r, kept: keep, dropped, suggest, noLunch: lunchWanted(win) ? cur.noLunch || null : null };

@@ -144,8 +144,8 @@
       if (taxiLeg && !E.publicWins(best.min, taxiOpt.min)) return asTaxi();
       return best.t === "a" ? asAnswer(best.x) : asOwn(best.x);
     }
-    // A boat leaves from a pier and lands at one (Nov 18, Naples: the ferry to Capri left from the cathedral and ran
-    // across the streets, and on to Pompeii, inland, by ferry). Between a place reached by boat and anywhere else, the
+    // A boat leaves from a pier and lands at one (Nov 18, Richard's map: the ferry to an island left from a cathedral and ran
+    // across the streets, and on to an inland ruin by ferry). Between a place reached by boat and anywhere else, the
     // boat runs from the mapped pier nearest the other end to the mapped pier nearest the boat's place, and the way to or
     // from each pier (a walk, a train, a taxi) is a ride of its own, on the plan and on the map. boatEnd: the end the boat
     // goes to or comes from (the place whose note names it). Returns { parts, min } (the rides before and after the boat,

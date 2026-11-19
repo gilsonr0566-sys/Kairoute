@@ -175,8 +175,8 @@
       const ranked = E.rank(listed, prefs, style);
       // A town a day away whose travel guide names places to eat gets a lunch stop in its centre (the plan names the
       // guide's suggestions); it is never a dinner idea.
-      // Its places to eat that are on the map are planned by name, where they are (Nov 18, Richard's Naples day: "Lunch in
-      // Capri", with no place named); a town whose guide gives none a spot keeps a lunch stop in its centre.
+      // Its places to eat that are on the map are planned by name, where they are (Nov 18, Richard's day on an island: "Lunch in
+      // <town>", with no place named); a town whose guide gives none a spot keeps a lunch stop in its centre.
       const townLunch = (city.farther || []).filter(t => !t.town && (t.foodDrink || []).length && isFinite(t.lat)).flatMap(t => {
         const real = t.foodDrink.filter(x => x.kind === "eat" && isFinite(x.lat) && isFinite(x.lng) && E.hav(x, t) <= 3);
         return real.length ? real.map(x => ({ name: x.name, lat: x.lat, lng: x.lng, kind: "restaurant", amenity: "restaurant", fromMap: !!x.fromMap, inTown: t.id, travelNote: t.travelNote || "" }))
@@ -327,7 +327,9 @@
       // Spare time is the traveler's: a trip out that would fit is named for them to add, never added on its own
       // (Nov 18, Richard: "Just let them select to fill the spots").
       if (was.plan && was.plan.suggest) for (const f of far) if (was.spare >= 2 * away(f) + (f.minutes || 60) + (was.win.hard ? 45 : 0) && !was.plan.suggest.some(x => String(x.id) === String(f.id)))
-        was.plan.suggest.push({ id: f.id, name: f.name, minutes: f.minutes || 60, far: true, rideMin: Math.round(away(f)) });
+        was.plan.suggest.push({ id: f.id, name: f.name, minutes: f.minutes || 60, far: true, rideMin: Math.round(away(f)), must: !!(f.mustSee || E.has(f, "must-see")), voiced: !!f.hasGuide });
+      // must-sees and voiced tours first, each marked (a stable sort keeps the rest in the order found)
+      if (was.plan && was.plan.suggest) was.plan.suggest.sort((a, b) => (b.must || b.voiced ? 1 : 0) - (a.must || a.voiced ? 1 : 0));
       if (now) { done[i] = now; out[i] = now.plan; continue; }
       // Time left on a ship day and a trip out by boat the guide names: say so, with the time to be back on shore.
       if (was.win.hard && d.type === "port" && was.plan && was.plan.items) {

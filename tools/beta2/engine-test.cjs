@@ -376,7 +376,13 @@ if (fs.existsSync(dir)) for (const f of fs.readdirSync(dir).filter(f => f.endsWi
   plans.forEach((p, i) => { if (!p || !p.items) return; const extra = p.items.filter(x => x.t === 'stop' && x.bonus);
     ok(!extra.length, `${f}: day ${i + 1} has sights the app added on its own: ${extra.map(x => x.name).join(', ')}`);
     const on = new Set(p.items.filter(x => x.t === 'stop').map(x => String(x.id)));
-    ok(!(p.suggest || []).some(x => on.has(String(x.id))), `${f}: day ${i + 1} offers a sight already on the plan`); });
+    ok(!(p.suggest || []).some(x => on.has(String(x.id))), `${f}: day ${i + 1} offers a sight already on the plan`);
+    // Must-sees and finished voiced tours that fit the free time come first and say so (Nov 19: Richard missed two).
+    const byId = new Map(); for (const c of Object.values(s.cities)) for (const g of (c.sites || []).concat(c.farther || [])) byId.set(String(g.id), g);
+    const sg = p.suggest || []; let seenPlain = false;
+    sg.forEach(x => { const g = byId.get(String(x.id)); if (!g) return; const star = !!(g.mustSee || (g.tags || []).includes('must-see') || g.hasGuide);
+      ok(star === !!(x.must || x.voiced), `${f}: day ${i + 1} offers ${x.name} without marking it a must-see or voiced tour`);
+      if (star && seenPlain) ok(false, `${f}: day ${i + 1} lists ${x.name} (must-see or voiced tour) after a plain sight`); if (!star) seenPlain = true; }); });
   if (f === 'sample-cruise.json') ok(plans.some(p => p && p.items && p.items.some(x => x.t === 'stop' && /Saint Titus/.test(x.name))), 'Heraklion: the Church of Saint Titus, a finished voiced tour, keeps its own stop');
   oks += same; console.log(`ok   ${s.name}: same plan in ${same} of 10 shuffles, nothing used twice, every day safe`);
 }

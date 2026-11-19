@@ -129,10 +129,17 @@ async function tapTimes(p) { const out = []; const n = await p.evaluate(() => wi
       if (!(await setPicks(set))) { bad.push(`could not pick ${set.join(' + ')}`); continue; }
       await p.evaluate(i => { window.__kairouteGo('day', i); window.__kairouteGo('plan'); }, ni); await p.waitForTimeout(800);
       if (withAns) { const legs = await p.evaluate(i => (window.__kairouteEngine2()[i].items || []).filter(x => x.t === 'ride' && x.from && x.to && x.mode !== 'walk').map(x => ({ a: x.from, b: x.to, min: x.min })), ni);
-        await p.evaluate(ls => window.__kairouteTransitSet(ls.flatMap(l => [[l.a, l.b], [l.b, l.a]].map(([a, b]) => ({ a, b, opts: [{ mode: 'rail', label: 'Train 4 + 1 change', min: Math.round(l.min * 1.5) + 5 }] })))), legs);
+        // Real answers come as several runs of the same line (Nov 18, Athens airport: three M3 rows): one choice per way of
+        // going is shown, and the planned ride gives its steps (walk to the stop, the line, the walk at the end).
+        const ans = (min, label, extra) => Object.assign({ mode: 'rail', label, min, ride: min - 15, km: 10, access: { how: 'walk', min: 5, km: 0.3 }, egress: { how: 'walk', min: 8, km: 0.5 }, from: 'Central Station', to: 'Far Station', steps: ['Train 4: Central Station to Far Station, ' + (min - 15) + ' min'], every: 30, everySrc: 'timetable' }, extra || {});
+        await p.evaluate(ls => window.__kairouteTransitSet(ls.flatMap(l => [[l.a, l.b], [l.b, l.a]].map(([a, b]) => ({ a, b, opts: l.opts })))), legs.map(l => Object.assign({}, l, { opts: [ans(Math.max(20, l.min - 3), 'Train 4 + 1 change'), ans(Math.max(20, l.min - 3) + 3, 'Train 4 + 1 change'), ans(Math.max(20, l.min - 3) + 5, 'Train 4')] })));
         await p.evaluate(i => { window.__kairouteGo('sites'); window.__kairouteGo('day', i); window.__kairouteGo('plan'); }, ni); await p.waitForTimeout(800);
         const named = await p.evaluate(i => (window.__kairouteLegs(i) || []).filter(l => l.mode !== 'ride' && /^Taxi/.test(l.how || '')).length, ni);
-        if (named) bad.push(`${set.join('+')} with timetable answers: ${named} ride(s) called "Taxi or car" that aren't a taxi`); }
+        if (named) bad.push(`${set.join('+')} with timetable answers: ${named} ride(s) called "Taxi or car" that aren't a taxi`);
+        const dup = await p.$$eval('.ridechips', xs => xs.filter(x => [...x.querySelectorAll('.ridechip')].filter(c => /^Train 4/.test(c.innerText)).length > 1).length);
+        if (dup) bad.push(`${set.join('+')} with timetable answers: ${dup} ride(s) offer the same train more than once`);
+        const steps = await p.$$eval('.tl.leg', xs => xs.filter(x => /Train 4/.test(x.querySelector('b') ? x.querySelector('b').innerText : '')).map(x => /Walk 5 min to Central Station/.test(x.innerText)));
+        if (!steps.length || steps.some(v => !v)) bad.push(`${set.join('+')} with timetable answers: a planned train ride without its steps (walk to the station, the line, the walk at the end)`); }
       const first = await p.$$eval('[data-ridekey]', xs => xs.map(x => ({ key: x.dataset.ridekey, val: x.dataset.rideval })));
       // Each choice, then each again in reverse order (so a later pick on one ride meets an earlier pick on another).
       const seq = first.concat(first.slice().reverse()).slice(0, 14);

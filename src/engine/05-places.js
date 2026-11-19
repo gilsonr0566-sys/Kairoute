@@ -23,7 +23,7 @@
       // Public transport lines mapped around the place: every leg they serve offers them (part 1b).
       if ((P.transit || []).length) b.transit = (b.transit || []).concat(P.transit);
       // Ferry piers as mapped: a boat leaves from a pier and lands at one, never from a church in the old town (Nov 18,
-      // Naples: the ferry to Capri was drawn from the cathedral, across the streets).
+      // a ferry to an island was drawn from a cathedral, across the streets).
       const piers = (P.ports || []).filter(x => !x.cruise && /ferry|pier/i.test(String(x.kind || ""))).concat(P.piers || []).filter(x => isFinite(x.lat) && isFinite(x.lng));
       if (piers.length) b.piers = (b.piers || []).concat(piers.map(x => ({ name: E.latin(x.name) || "the ferry pier", lat: x.lat, lng: x.lng })));
       for (const s of city.sites || []) {

@@ -14,7 +14,10 @@ if (typeof window !== "undefined" && window.ENGINE2 && window.KEngine) (function
   // The engine weighs many possible rides: it reads the answers known so far without asking for each one. The rides
   // it keeps are asked for when their day is shown (below), as the app does for its plans; an answer that arrives for
   // one of them changes what the plans used, so they are made again with it.
-  const answerOf = (a, b) => { let r; transitPeek = true; try { r = transitFor(a, b); } finally { transitPeek = false; } return r && r.map(o => ({ id: rideId(o), min: o.min, label: o.label, kind: rideKind(o) })); };
+  // One answer per way of going, as the old app showed (Nov 18, Athens airport: three metro rows that were the same M3
+  // ride); the one the traveler chose is kept.
+  const peek = (a, b) => { let r; transitPeek = true; try { r = transitFor(a, b); } finally { transitPeek = false; } return r && r.length ? oneEach(r, trip.legModes && (trip.legModes[pairKey(a, b)] || trip.legModes[pairKey(b, a)])) : r; };
+  const answerOf = (a, b) => { const r = peek(a, b); return r && r.map(o => ({ id: rideId(o), min: o.min, label: o.label, kind: rideKind(o) })); };
   const askRides = ep => { (ep && ep.items || []).forEach(x => { if (x.t === "ride" && x.from && x.to && x.mode !== "walk" && x.mode !== "boat" && x.mode !== "lift") { try { transitFor(x.from, x.to); } catch (e) {} } }); };
   const answerSig = (a, b) => JSON.stringify(answerOf(a, b));
   // The whole trip planned once per change (the traveler's trip, an answer arriving, the guides, the date).
@@ -92,6 +95,9 @@ if (typeof window !== "undefined" && window.ENGINE2 && window.KEngine) (function
         if (x.mode === "boat") leg.kind = "ferry"; else if (x.mode === "lift") leg.kind = "train";
         else if (x.mode === "transit") leg.kind = ({ subway: "train", light_rail: "train", monorail: "train", tram: "train", train: "train", bus: "bus", ferry: "ferry" })[x.transitMode] || "train";
         if (x.options) leg.options = x.options; if (x.from) leg.from = x.from; if (x.to) leg.to = x.to;
+        // A ride on a timetable answer carries the answer itself: the walk to the stop, how often it runs, each line and
+        // change, the walk at the end and the next departure, as the old app showed (never only "time includes the wait").
+        if (x.mode === "transit" && x.from && x.to) { const o = (peek(x.from, x.to) || []).find(y => rideId(y) === x.choice || y.label === x.how); if (o) leg.transit = o; }
         // Every way the engine weighed for this ride is a choice on the plan (the ride chips): a tap saves it as the
         // traveler's own choice for this ride, and the engine plans with it.
         if (x.from && x.to && x.options && x.options.length > 1) {
@@ -122,7 +128,7 @@ if (typeof window !== "undefined" && window.ENGINE2 && window.KEngine) (function
     items.forEach((it, k) => { if (it.type !== "travel") return; const p = items[k - 1]; if (p) it.time = p.time + (p.type === "travel" ? p.leg.min : p.type === "meal" ? p.meal.len : p.place && p.place.minutes || 0); });
     const dropped = (ep.dropped || []).map(id => byId.get(String(id))).filter(Boolean);
     const walkKm = items.filter(i => i.type === "travel" && i.leg.mode === "walk").reduce((a, i) => a + (i.leg.km || 0), 0);
-    return { city, w: Object.assign({}, w, { start: ep.start, endBy: ep.endBy }), items, stops, dropped, folded: [], elsewhere: [], quickMeals: false, along: [], bonus: stops.filter(s => s.place.bonus).map(s => s.place), fill: [], suggest: (ep.suggest || []).map(x => { const p = byId.get(String(x.id)); return p ? { place: p, minutes: x.minutes, far: x.far, rideMin: x.rideMin } : null; }).filter(Boolean),
+    return { city, w: Object.assign({}, w, { start: ep.start, endBy: ep.endBy }), items, stops, dropped, folded: [], elsewhere: [], quickMeals: false, along: [], bonus: stops.filter(s => s.place.bonus).map(s => s.place), fill: [], suggest: (ep.suggest || []).map(x => { const p = byId.get(String(x.id)); return p ? { place: p, minutes: x.minutes, far: x.far, rideMin: x.rideMin, must: !!x.must, voiced: !!x.voiced } : null; }).filter(Boolean),
       meals, evening, swaps: [], closedToday: [], lock: { t: null, seq: stops.map(s => s.place.id), late: 0, quick: false, eve: "" }, locked: false, seen: false, seenBroke: false, seenSkipped: [],
       lockBroken: false, routeX: null, start: ep.start, endBy: ep.endBy, end: ep.end, walkKm, over: !!ep.over,
       engine2: { explain: ep.explain || [], waysToFit: ep.waysToFit || null, leftOut: ep.leftOut || [], safe: !!ep.safe } };
