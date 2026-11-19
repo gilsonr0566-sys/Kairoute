@@ -31,6 +31,17 @@ const hav = (a, b) => { const R = 6371, r = x => x * Math.PI / 180, dl = r(b.lat
 const baseName = s => String(s || '').replace(/^cruise port of\s+/i, '').replace(/\s*\(.*?\)\s*/g, ' ').split(',')[0].trim();
 const qOf = id => { const m = /(?:^|-)q(\d+)$/i.exec(String(id)); return m ? 'Q' + m[1] : null; };
 
+// ---- Road times (OSRM's free demo router on OpenStreetMap roads: one table request per place). Pairs 10 km apart or
+// more as the crow flies, both ways: { a, b, min, km } with the car's own time (no traffic, no stops).
+async function roadsBetween(pts) {
+  if (pts.length < 2) return [];
+  const j = await get('https://router.project-osrm.org/table/v1/driving/' + pts.map(p => (+p.lng).toFixed(5) + ',' + (+p.lat).toFixed(5)).join(';') + '?annotations=duration,distance', {}, 4, 90000);
+  if (!j || j.code !== 'Ok' || !j.durations) { console.log('   road times: no answer'); return []; }
+  const out = [];
+  pts.forEach((a, i) => pts.forEach((b, k) => { const s = j.durations[i] && j.durations[i][k], m = j.distances && j.distances[i] && j.distances[i][k];
+    if (i === k || !isFinite(s) || s == null || hav(a, b) < 10) return; out.push({ a: { lat: +a.lat, lng: +a.lng }, b: { lat: +b.lat, lng: +b.lng }, min: Math.round(s / 60), km: isFinite(m) ? Math.round(m / 100) / 10 : null }); }));
+  return out;
+}
 // ---- Wikidata
 const WD = 'https://www.wikidata.org/w/api.php?format=json&origin=*';
 async function entities(qs) {
@@ -374,6 +385,12 @@ async function buildPlace(t) {
         for (const f of (t.farther || []).filter(x => isFinite(x.lat))) if (!pts.some(p => hav(p, f) < 3)) pts.push({ lat: f.lat, lng: f.lng, km: 5 });
         fresh.piers = await piersNear(pts); console.log(`   ${fresh.piers.length} ferry piers (around the place and ${pts.length - 1} towns a day away)`);
       }
+      // Road times by car between the place, its port and its trips out, from the free OSRM router on OpenStreetMap's roads
+      // (Nov 19: two trips out across a gulf were timed by the straight line, 79 min for a road of 2 h 20).
+      if (refresh.includes('roads')) { const saved = (() => { try { return JSON.parse(fs.readFileSync(path.join(OUT, t.key.replace(/[^a-z0-9]+/gi, '-').toLowerCase() + '.json'))); } catch (e) { return {}; } })();
+        const pts = [{ name: 'centre', lat: centre.lat, lng: centre.lng }].concat((saved.ports || []).filter(p => p.cruise || p.kind).slice(0, 2).map(p => ({ name: p.name, lat: p.lat, lng: p.lng })), (t.farther || []).filter(x => isFinite(x.lat) && hav(centre, x) <= 250).map(x => ({ name: x.id, lat: x.lat, lng: x.lng })))
+          .filter((x, k, a) => isFinite(x.lat) && a.findIndex(y => hav(x, y) < 0.5) === k).slice(0, 40);
+        fresh.roads = await roadsBetween(pts); console.log(`   ${fresh.roads.length} road times between ${pts.length} points`); }
       if (refresh.includes('lifts')) { fresh.lifts = await liftsNear(centre, 15); console.log(`   ${fresh.lifts.length} cable cars or funiculars`); }
       if (refresh.includes('ports') && t.port && !t.hasPorts) {
         const r = await portPoints(t.port, centre, !!t.island); fresh.ports = r.ports; fresh.missing = r.missing; fresh.portQuery = Object.assign({}, t.port, { island: !!t.island });

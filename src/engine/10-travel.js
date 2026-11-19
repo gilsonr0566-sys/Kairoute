@@ -79,6 +79,12 @@
       const tol = Math.max(1.5, E.hav(a, b) / 5), pickOf = dist => { let best = null, bestD = Infinity; for (const p of chosenPairs) { const d = dist(p); if (d <= tol && d < bestD) { best = p; bestD = d; } } return best; };
       const best = pickOf(p => Math.max(E.hav(p.a, a), E.hav(p.b, b))) || pickOf(p => Math.max(E.hav(p.a, b), E.hav(p.b, a)));
       return best ? { near: best.m } : undefined; };
+    // A road time from the map (the places files) holds for any two points each within a short ride of its two ends
+    // (2 km, or a fifteenth of the ride), the ends' gaps added at town speed; the closest pair wins.
+    const roadLegs = legs ? Object.values(legs).filter(l => l && l.road && l.a && l.b) : [];
+    const roadNear = (a, b, d) => { if (!roadLegs.length || d < 10) return null; const tol = Math.max(2, d / 15); let best = null, bd = Infinity;
+      for (const l of roadLegs) { const g = Math.max(E.hav(l.a, a), E.hav(l.b, b)); if (g <= tol && g < bd) { bd = g; best = l; } }
+      return best && Object.assign({}, best, { min: best.min + Math.round((E.hav(best.a, a) + E.hav(best.b, b)) * 1.3 / 25 * 60) }); };
     function estimate(a, b) {
       if (!a || !b || !isFinite(a.lat) || !isFinite(b.lat)) return { mode: "walk", kind: "walk", how: "Walk", km: 0, min: 0, unknown: true };
       // The cable car (or funicular) between a landing and the town above: its own fixed step holds the time.
@@ -136,7 +142,7 @@
       // Jul 2: the train he picked for the ride home was carried to the ride out, which has no known train, and the app
       // said "no train").
       const got = modeOf(a, b), nearOnly = got && typeof got === "object", wantRaw = nearOnly ? got.near : got;
-      const pin = legs && legs[E.pairKey(a, b)], pinned = pin && isFinite(pin.min) ? pin : null;
+      const pin = (legs && legs[E.pairKey(a, b)]) || roadNear(a, b, d), pinned = pin && isFinite(pin.min) ? pin : null;
       const isle = p => E.byBoat(p.travelNote) || E.waterOnly(p), note = noteFor(a, b);
       // The traveler's choice, as a kind (a row of a timetable answer picked earlier counts as its kind).
       const want = wantRaw == null ? null : OLD_CHOICE[wantRaw] || wantRaw;
