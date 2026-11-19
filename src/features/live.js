@@ -79,12 +79,16 @@ function siteClosed(s, iso) {
 // Closed for a day's visit: closed that date, or open only at hours outside the day's time here (a port day's time
 // ashore, a hotel day's sightseeing hours), with less than half an hour of overlap. Every way a sight gets onto a
 // day checks this, so the app never plans or picks a sight for a day it can't be visited.
+// One rule (Nov 19 fold): the engine's E.closedForDay decides, from the same facts the engine plans with (closed that
+// date; the open spans), so the list, the pop-up and the plan never disagree on whether a sight can be visited.
 function closedForDay(s, d, w) {
   if (!s || !d || !d.date) return false;
-  if (siteClosed(s, d.date)) return true;
-  const sw = siteWindow(s, d.date); if (!sw || !sw.spans || !sw.spans.length || !w || w.error || !(w.endBy > w.start)) return false;
+  const f = { closed: siteClosed(s, d.date), oh: siteWindow(s, d.date) }, win = w && !w.error ? w : null;
+  if (typeof KEngine !== "undefined" && KEngine.closedForDay) return KEngine.closedForDay(f, win, s.minutes);
+  if (f.closed) return true;
+  const sw = f.oh; if (!sw || !sw.spans || !sw.spans.length || !win || !(win.endBy > win.start)) return false;
   const need = Math.min(30, s.minutes || 30);
-  return !sw.spans.some(([a, b]) => Math.min(b, w.endBy) - Math.max(a, w.start) >= need);
+  return !sw.spans.some(([a, b]) => Math.min(b, win.endBy) - Math.max(a, win.start) >= need);
 }
 function closedForDayWhy(s, d, w) {
   if (siteClosed(s, d.date)) return closedWhy(s, d.date);
