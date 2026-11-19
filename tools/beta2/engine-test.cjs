@@ -594,5 +594,24 @@ ok(E.readable('Café Ñandú') && E.readable("Joe's Bar & Grill") && !E.readable
     'lunch is wanted on any day out over lunchtime for two hours or more, an afternoon from 13:40 included');
   // A minute riding weighs at least as much as a minute waiting: the planner never buys a little less waiting with a long crossing.
   { const r = { over: 0, late: 0, mealPen: 0, end: 600 }; ok(E.dayCost(Object.assign({ waits: 0, rideMin: 60 }, r)) >= E.dayCost(Object.assign({ waits: 60, rideMin: 0 }, r)), 'an hour more riding never costs less than an hour of waiting'); }
+  // A timetable's boat (exact or borrowed from the ride next door) is still a boat from pier to pier: the way to the pier
+  // is a ride of its own, and the whole ride is never shorter than that way plus the time at the pier.
+  { const land = { lat: 40.850, lng: 14.258 }, pier = { name: 'Main Pier', lat: 40.838, lng: 14.255 }, isle = { lat: 40.550, lng: 14.240, travelNote: 'Ferry from the main pier, 50 min.' };
+    const ans = () => [{ id: 'ferry|x', mode: 'ferry', min: 55, label: 'Ferry', steps: ['Ferry: Main Pier to Isle, 50 min'] }];
+    for (const [a, b] of [[land, isle], [isle, land]]) { const r = E.makeTravel({}, {}, null, null, ans, [pier]).estimate(a, b), g = (r.parts || []).filter(x => !x.boat);
+      ok(r.kind === 'ferry' && g.length === 1 && /(to|from) the ferry at Main Pier/.test(E.rideItem(g[0]).how) && r.min >= g[0].min + E.PIER_MIN, `a timetable ferry ${a === land ? 'out' : 'back'} shows the way to the pier as its own ride, named as the way to the ferry even on foot (got ${r.min} min, parts ${(r.parts || []).map(x => x.boat ? 'boat' : x.how).join(' / ')})`); } }
+  // ONE "close enough" rule for every answer borrowed from a ride next door (Nov 19 fold): a choice, a road time and a
+  // timetable answer all use E.nearRide, and a borrowed time is never shorter than reaching the known ride's ends and
+  // riding it (safe by construction for the ship).
+  { const A = { lat: 37.97, lng: 23.73 }, B = { lat: 38.25, lng: 23.73 }, d = E.hav(A, B);
+    ok(E.nearTol(1) === 0.6 && E.nearTol(200) === 5 && Math.abs(E.nearTol(d) - d / 10) < 1e-9, 'close enough: a tenth of the ride, 600 m to 5 km');
+    const leg = { road: true, a: A, b: B, min: 40, km: 36 }, legs = { [E.pairKey(A, B)]: leg };
+    let worse = 0, used = 0;
+    for (let k = 0; k < 60; k++) { const off = (k % 12) * 0.0025, a = { lat: A.lat + off, lng: A.lng - off / 2 }, b = { lat: B.lat - off / 3, lng: B.lng + off };
+      const r = E.makeTravel({}, { [E.pairKey(A, B)]: 'taxi' }, legs).estimate(a, b), n = E.nearRide(a, b, [leg], l => [l.a, l.b]);
+      if (n) { used++; const floor = 40 + E.gapMin(E.hav(a, A), true) + E.gapMin(E.hav(b, B), true); if (r.min < floor) worse++; if (r.kind !== 'taxi') worse++; }
+      else if (r.pinned) worse++; }
+    ok(used > 10 && !worse, `a borrowed road time is never shorter than reaching the known ride's ends and riding it, and a choice is borrowed by the same rule (${used} borrowed, ${worse} wrong)`);
+    ok(E.gapMin(0.5) > E.gapMin(0.5, true) && E.gapMin(2) >= 5 && E.gapMin(0) === 0, 'the gap to a borrowed public ride is walked (a taxi beyond a walk); to a road time it is driven'); }
 }
 console.log(`\n${oks} checks passed, ${fails} failed`); process.exit(fails ? 1 : 0);

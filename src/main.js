@@ -665,30 +665,44 @@ const planDow = () => { const k = typeof planDate !== "undefined" ? planDate : n
 const dayKind = dow => dow === 0 ? "su" : dow === 6 ? "sa" : "wk";
 // Seasonal lines (a summer ferry) are offered only in the months they run, against the plan's own date.
 const runsThen = o => { if (!o || !Array.isArray(o.months) || !o.months.length) return true; const t = typeof planDate !== "undefined" && planDate ? Date.parse(planDate + "T12:00:00Z") : NaN; return !isFinite(t) || o.months.includes(new Date(t).getUTCMonth() + 1); };
-// A saved timetable for nearly the same trip (both ends within about 600 m), so a day re-planned from where the
-// traveler stands (GPS) still knows the trains, with no signal.
+// A saved timetable for a trip close enough to this one, by the engine's one "close enough" rule (KEngine.nearRide:
+// each end within a tenth of the ride, 600 m at least), so a day re-planned from where the traveler stands (GPS) still
+// knows the trains, with no signal. The borrowed answer's times get the time to reach its ends added (transitFor).
 let nearList = null;
 // Speed: a plan asks this for every pair of places with no answer of its own, thousands of times; scanning every kept
 // answer each time took ~19 s of a phone's time over one visit with a full trip's rides kept. The kept answers are
-// filed by the start's latitude (a 0.006-degree band, the same 600 m the match allows), and each pair's result is
-// remembered until the kept answers change.
-const NEAR_BAND = 0.006, nearHits = new Map();
+// filed by the start's latitude (0.006-degree bands, about 600 m), and each pair's result is remembered until the kept
+// answers change.
+const NEAR_BAND = 0.006, nearHits = new Map(), nearFrom = new WeakMap();
+const nearTolKm = d => typeof KEngine !== "undefined" && KEngine.nearTol ? KEngine.nearTol(d) : 0.6;
 function transitNear(a, b, kind) {
   // The kept answers with lines, read once per change (not split apart on every lookup).
   if (!nearList || nearList.g !== nearGen) { const l = new Map(); for (const k in transitMem) { const [ks, kd] = k.split("|"), m = transitMem[k]; if (!(m.opts || []).length) continue; const n = ks.split(",").map(Number); if (n.length !== 4) continue; const x = { kd, m, A: { lat: n[0], lng: n[1] }, B: { lat: n[2], lng: n[3] } }, band = Math.floor(n[0] / NEAR_BAND); if (!l.has(band)) l.set(band, []); l.get(band).push(x); } nearList = { g: nearGen, l }; nearHits.clear(); }
   const al = +a.lat, bl = +b.lat, hk = al + "," + a.lng + "," + bl + "," + b.lng + "|" + kind;
   if (nearHits.has(hk)) return nearHits.get(hk);
-  let best = null, bd = 0.6; const band = Math.floor(al / NEAR_BAND);
-  for (let j = band - 1; j <= band + 1; j++) for (const x of nearList.l.get(j) || []) { if (x.kd && x.kd !== kind) continue; if (Math.abs(x.A.lat - al) > 0.006 || Math.abs(x.B.lat - bl) > 0.006) continue; const e = Math.max(hav(a, x.A), hav(b, x.B)); if (e < bd) { bd = e; best = x.m; } }
+  const tol = nearTolKm(hav(a, b)), dLat = tol / 111, band = Math.floor(al / NEAR_BAND), span = Math.ceil(dLat / NEAR_BAND), cand = [];
+  for (let j = band - span; j <= band + span; j++) for (const x of nearList.l.get(j) || []) { if (x.kd && x.kd !== kind) continue; if (Math.abs(x.A.lat - al) > dLat || Math.abs(x.B.lat - bl) > dLat) continue; cand.push(x); }
+  let n = null;
+  if (typeof KEngine !== "undefined" && KEngine.nearRide) n = KEngine.nearRide(a, b, cand, x => [x.A, x.B]);
+  else for (const x of cand) { const off = Math.max(hav(a, x.A), hav(b, x.B)); if (off <= tol && (!n || off < n.off)) n = { x, A: x.A, B: x.B, off }; }
+  const best = n ? n.x.m : null; if (n) nearFrom.set(n.x.m, { A: n.A, B: n.B });
   if (nearHits.size > 20000) nearHits.clear();
   nearHits.set(hk, best); return best;
 }
+// The minutes to reach a borrowed answer's own ends from this ride's ends (on foot, or by taxi beyond a walk).
+const nearGapMin = (a, b, m) => { const f = nearFrom.get(m); if (!f) return 0; return typeof KEngine !== "undefined" && KEngine.gapMin ? KEngine.gapMin(hav(a, f.A)) + KEngine.gapMin(hav(b, f.B)) : Math.ceil((hav(a, f.A) + hav(b, f.B)) * 1.3 / 4 * 60); };
 // Speed: a nearby answer for an empty one is looked for once per change to the kept answers, not on every one of the
 // hundreds of thousands of ride lookups a plan makes (looking every time froze Change stops, Nov 14).
 let nearGen = 0;
 function nearOnce(exact, a, b, kind) { const m = nearMemo.get(exact); if (m && m.g === nearGen) return m.v; const v = transitNear(a, b, kind); nearMemo.set(exact, { g: nearGen, v }); return v; }
 const nearMemo = new WeakMap();
 let transitPeek = false;
+// A borrowed answer (a ride close enough, not this very one) takes the time to reach its own ends, said as its first
+// and last step: never a shorter time than going to those ends and riding from there.
+function borrowGap(a, b, hit, exact, opts) { if (hit === exact) return opts; const f = nearFrom.get(hit), g = f ? nearGapMin(a, b, hit) : 0; if (!g) return opts;
+  return opts.map(o => Object.assign({}, o, { min: o.min + g, nearGap: g, steps: ["Allow " + g + " min to reach this route's start and finish from your stops"].concat(o.steps || []) })); }
+// A nearby ride's kept answer, its times with the gap added (kept with a partial new answer for this ride).
+function nearWithGap(a, b, kind) { const m = transitNear(a, b, kind); return m ? { opts: borrowGap(a, b, m, null, m.opts || []) } : null; }
 function transitFor(a, b) {
   if (!a || !b || !isFinite(a.lat) || !isFinite(b.lat) || hav(a, b) < 1.5) return null; // city rides too: a bus or metro across town is a real choice (Nov 16)
   const dow = planDow(), k = pairKey(a, b) + "|" + dayKind(dow), exact = transitMem[k] || transitMem[pairKey(a, b)], hit = exact && exact.opts && exact.opts.length ? exact : (exact ? nearOnce(exact, a, b, dayKind(dow)) : transitNear(a, b, dayKind(dow))) || exact; // an empty exact answer never hides a nearby one's lines
@@ -696,11 +710,11 @@ function transitFor(a, b) {
   // Used meanwhile, and asked again when online: an answer from an older version (at once), one given while a source
   // was busy or an empty one (after 10 minutes), or a nearby trip's answer (the exact ride is asked). With no internet
   // whatever is kept is simply used.
-  if (hit && !transitDue(exact, hit)) return hit.opts.filter(runsThen).map(tidyRide);
+  if (hit && !transitDue(exact, hit)) return borrowGap(a, b, hit, exact, hit.opts.filter(runsThen).map(tidyRide));
   // A look without asking: a planner weighing many possible rides reads what is known and asks only for the rides it keeps.
-  if (transitPeek) return hit ? hit.opts.filter(runsThen).map(tidyRide) : null;
+  if (transitPeek) return hit ? borrowGap(a, b, hit, exact, hit.opts.filter(runsThen).map(tidyRide)) : null;
   if (typeof freeAI !== "undefined" && freeAI && !transitQ.has(k) && !(transitFail.get(k) > Date.now() - 120000)) { transitQ.set(k, { a: [+a.lat, +a.lng], b: [+b.lat, +b.lng], dow, date: typeof planDate !== "undefined" && planDate ? planDate : undefined, pri: typeof trip !== "undefined" && trip.days && trip.days[trip.active] && typeof planDate !== "undefined" && trip.days[trip.active].date === planDate }); clearTimeout(transitTimer); transitTimer = setTimeout(askTransit, 300); }
-  return hit ? hit.opts.filter(runsThen).map(tidyRide) : null;
+  return hit ? borrowGap(a, b, hit, exact, hit.opts.filter(runsThen).map(tidyRide)) : null;
 }
 function transitDue(exact, hit) {
   if (typeof navigator !== "undefined" && navigator.onLine === false) return false;
@@ -718,7 +732,7 @@ async function askTransit() {
   const one = async part => {
     let got = 0;
     try { const r = await fetch(freeAI.url + "/transit", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ pairs: part.map(x => ({ a: x[1].a, b: x[1].b, dow: x[1].dow, date: x[1].date })) }) }); if (!r.ok) throw new Error("transit " + r.status);
-      const j = await r.json(); part.forEach(([k, q], i) => { const res = (j.results || [])[i]; if (res && Array.isArray(res.opts)) { transitMem[k] = transitMerge(res, transitMem[k] || transitNear({ lat: q.a[0], lng: q.a[1] }, { lat: q.b[0], lng: q.b[1] }, k.split("|")[1])); nearGen++; got++; } else transitFail.set(k, Date.now()); });
+      const j = await r.json(); part.forEach(([k, q], i) => { const res = (j.results || [])[i]; if (res && Array.isArray(res.opts)) { transitMem[k] = transitMerge(res, transitMem[k] || nearWithGap({ lat: q.a[0], lng: q.a[1] }, { lat: q.b[0], lng: q.b[1] }, k.split("|")[1])); nearGen++; got++; } else transitFail.set(k, Date.now()); });
     } catch (e) { part.forEach(([k]) => transitFail.set(k, Date.now())); }
     // A ride the helper couldn't answer is asked again by itself once the 2-minute pause is over (the page is redrawn,
     // which asks again), instead of showing the road estimate until the traveler happens to touch something.

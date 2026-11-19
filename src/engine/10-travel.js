@@ -68,25 +68,33 @@
   // lines: public transport lines from the places files (part 1b).
   // answers(a, b): the app's own timetable answers for a ride ([{ id, min, label, mode, steps, access, egress, ... }]),
   // or null. piers: every pier a boat may use.
+  // "Close enough" to a ride already known, ONE rule for every answer borrowed from a ride next door (Nov 19 fold: the
+  // traveler's ride choice, a road time from the map and a timetable answer each had their own distance, 1.5 km, 2 km
+  // and 600 m): each end within a tenth of the ride of the known ride's ends (600 m at least, 5 km at most); the nearest
+  // one wins. A borrowed TIME adds the time to reach the known ride's ends, the same way the ride goes (by road for a
+  // road time; on foot, or by taxi beyond a walk, for public transport), so it is never shorter than going to those ends
+  // and riding from there: safe by construction, however far within the limit the ends are.
+  E.nearTol = d => Math.max(0.6, Math.min(5, d / 10));
+  E.gapMin = (km, byRoad) => !(km >= 0.02) ? 0 : byRoad ? Math.round(km * 1.3 / 25 * 60) : km <= 0.8 ? Math.ceil(km * 1.3 / 4 * 60) : Math.round(5 + km * 1.3 / 25 * 60);
+  // list: the known rides; endsOf(x) -> [A, B]. Returns { x, A, B, off } for the nearest known ride the same way round,
+  // or null. off: the farther end's distance.
+  E.nearRide = (a, b, list, endsOf) => { if (!list || !list.length || !E.hasPos(a) || !E.hasPos(b)) return null; const tol = E.nearTol(E.hav(a, b)); let best = null;
+    for (const x of list) { const e = endsOf(x); if (!e || !e[0] || !e[1]) continue; const off = Math.max(E.hav(e[0], a), E.hav(e[1], b)); if (off <= tol && (!best || off < best.off)) best = { x, A: e[0], B: e[1], off }; }
+    return best; };
+  E.nearGap = (a, b, n, byRoad) => n ? E.gapMin(E.hav(a, n.A), byRoad) + E.gapMin(E.hav(b, n.B), byRoad) : 0;
   E.makeTravel = (prefs, legModes, legs, lines, answers, piers) => {
     const walk = (prefs && prefs.walk) || "medium", lim = WALK_LIMIT[walk] || WALK_LIMIT.medium, speed = walk === "low" ? 3.6 : 4.5, modes = legModes || {}, memo = new Map(), memoEnd = new Map();
     const walkMinOf = km => Math.max(1, Math.round(km * 1.3 / speed * 60));
     // The traveler's ride choice belongs to the two places, whichever way the day goes between them (Nov 18: the train
-    // picked between two trips out was lost when the day ran them the other way round). A choice also holds for any two points
-    // each within a short walk (1.5 km, or a fifth of the ride) of its two places, on a ride over 5 km; one made the
-    // same way round wins, then the closest.
+    // picked between two trips out was lost when the day ran them the other way round). A choice also holds for a ride close
+    // enough to it (E.nearRide); one made the same way round wins, then the closest.
     const chosenPairs = Object.keys(modes).map(k => { const v = k.split(",").map(Number); return v.length === 4 && v.every(isFinite) ? { a: { lat: v[0], lng: v[1] }, b: { lat: v[2], lng: v[3] }, m: modes[k] } : null; }).filter(Boolean);
     const modeOf = (a, b) => { const k = modes[E.pairKey(a, b)]; if (k != null) return k; const r = modes[E.pairKey(b, a)]; if (r != null) return r;
-      if (!chosenPairs.length || !a || !b || E.hav(a, b) < 5) return undefined;
-      const tol = Math.max(1.5, E.hav(a, b) / 5), pickOf = dist => { let best = null, bestD = Infinity; for (const p of chosenPairs) { const d = dist(p); if (d <= tol && d < bestD) { best = p; bestD = d; } } return best; };
-      const best = pickOf(p => Math.max(E.hav(p.a, a), E.hav(p.b, b))) || pickOf(p => Math.max(E.hav(p.a, b), E.hav(p.b, a)));
-      return best ? { near: best.m } : undefined; };
-    // A road time from the map (the places files) holds for any two points each within a short ride of its two ends
-    // (2 km, or a fifteenth of the ride), the ends' gaps added at town speed; the closest pair wins.
+      const best = E.nearRide(a, b, chosenPairs, p => [p.a, p.b]) || E.nearRide(a, b, chosenPairs, p => [p.b, p.a]);
+      return best ? { near: best.x.m } : undefined; };
+    // A road time from the map (the places files) holds for a ride close enough to it, the gaps added by road (E.nearRide).
     const roadLegs = legs ? Object.values(legs).filter(l => l && l.road && l.a && l.b) : [];
-    const roadNear = (a, b, d) => { if (!roadLegs.length || d < 10) return null; const tol = Math.max(2, d / 15); let best = null, bd = Infinity;
-      for (const l of roadLegs) { const g = Math.max(E.hav(l.a, a), E.hav(l.b, b)); if (g <= tol && g < bd) { bd = g; best = l; } }
-      return best && Object.assign({}, best, { min: best.min + Math.round((E.hav(best.a, a) + E.hav(best.b, b)) * 1.3 / 25 * 60) }); };
+    const roadNear = (a, b) => { const n = E.nearRide(a, b, roadLegs, l => [l.a, l.b]); return n && Object.assign({}, n.x, { min: n.x.min + E.nearGap(a, b, n, true) }); };
     function estimate(a, b) {
       // A place with no position on the map is never a ride of no time (a 0-minute walk made a day look as if it fit): the
       // ride is a taxi of E.UNKNOWN_RIDE minutes, said to be a guess (Nov 19 review).
@@ -147,7 +155,7 @@
       // Jul 2: the train he picked for the ride home was carried to the ride out, which has no known train, and the app
       // said "no train").
       const got = modeOf(a, b), nearOnly = got && typeof got === "object", wantRaw = nearOnly ? got.near : got;
-      const pin = (legs && legs[E.pairKey(a, b)]) || roadNear(a, b, d), pinned = pin && isFinite(pin.min) ? pin : null;
+      const pin = (legs && legs[E.pairKey(a, b)]) || roadNear(a, b), pinned = pin && isFinite(pin.min) ? pin : null;
       const isle = p => E.byBoat(p.travelNote) || E.waterOnly(p), note = noteFor(a, b);
       // The traveler's choice, as a kind (a row of a timetable answer picked earlier counts as its kind).
       const want = wantRaw == null ? null : OLD_CHOICE[wantRaw] || wantRaw;
@@ -157,7 +165,11 @@
         // timetable's when the app has it, else the crossing the guide names (or one worked out from the distance),
         // plus the time at the pier for the next sailing.
         const holder = isle(a) ? a : b, ferryAns = answered(a, b, d, wantRaw).find(o => o.kind === "ferry");
-        if (ferryAns) opts.push(Object.assign(ferryAns, { km: d }));
+        // A timetable's boat is still a boat from pier to pier: the way to (or from) the pier is its own ride, and the
+        // boat keeps the rest of the timetable's time, never less than the time at the pier (Nov 19: a sailing borrowed
+        // from the ride next door hid the walk to the ferry).
+        if (ferryAns) { const pl = pierLeg(a, b, holder);
+          opts.push(Object.assign(ferryAns, { km: d }, pl ? { parts: pl.parts, min: Math.max(ferryAns.min, pl.min + E.PIER_MIN) } : {})); }
         else {
           const hn = holder.travelNote || "", cross = saidMin(hn) || Math.round(d / 25 * 60) + 10, pl = pierLeg(a, b, holder);
           const word = /high.?speed|fast ferry|hydrofoil|catamaran/i.test(hn) ? "Fast ferry" : /ferry/i.test(hn) ? "Ferry" : "Boat";
@@ -216,20 +228,18 @@
       return leg;
     }
     const min = (a, b) => (a && b ? estimate(a, b).min : 0);
-    // The order of the day is worked out with the usual ride times, never with the way the traveler picked: a slower
-    // train they choose changes the clock, not which place comes first (Nov 18: picking the train made the day run
-    // another way round, the ride was no longer made, and the choice was refused).
-    let plain = null;
-    const orderMin = (a, b) => { if (!chosenPairs.length && !Object.keys(modes).length) return min(a, b); if (!plain) plain = E.makeTravel(prefs, null, legs, lines, answers, piers); return plain.min(a, b); };
     // The same calculator without the traveler's ride choices: the day's order is decided with it, so a ride choice changes
-    // the clock, never which place comes first (Nov 19, Richard's Jul 2: picking the train home sent the day back and
-    // forth across a town, and the ride he had picked was no longer the ride home).
-    const plainTr = () => { if (!chosenPairs.length && !Object.keys(modes).length) return null; if (!plain) plain = E.makeTravel(prefs, null, legs, lines, answers, piers); return plain; };
+    // the clock, never which place comes first (Nov 18: picking the train made the day run another way round and the
+    // choice was refused; Nov 19, Richard's Jul 2: picking the train home sent the day back and forth across a town).
+    let plain = null;
+    const plainTr = () => { if (!Object.keys(modes).length) return null; if (!plain) plain = E.makeTravel(prefs, null, legs, lines, answers, piers); return plain; };
+    const orderMin = (a, b) => { const p = plainTr(); return p ? p.min(a, b) : min(a, b); };
     return { estimate, min, orderMin, plainTr, road: d => Object.assign({ mode: "ride", kind: "taxi", how: "Taxi or car" }, road(d)), saidMin, chosen: (a, b) => modeOf(a, b) != null };
   };
-  // The ride as the plan lists it: every fact the screens need, from the one ride record.
+  // The ride as the plan lists it: every fact the screens need, from the one ride record. A walk is just "Walk", except
+  // the walk to or from a ferry, which says so ("Walk to the ferry at ..."): the traveler sees where the boat leaves.
   E.rideItem = (leg, extra) => Object.assign({ t: "ride", mode: leg.mode, kind: leg.kind || (leg.mode === "walk" ? "walk" : "taxi"), min: leg.min, km: Math.round((leg.km || 0) * 100) / 100 },
-    leg.how && leg.mode !== "walk" ? { how: leg.how } : {}, leg.options ? { options: leg.options } : {}, leg.transitMode ? { transitMode: leg.transitMode } : {},
+    leg.how && (leg.mode !== "walk" || leg.pierName) ? { how: leg.how } : {}, leg.options ? { options: leg.options } : {}, leg.transitMode ? { transitMode: leg.transitMode } : {},
     leg.choice ? { choice: leg.choice } : {}, leg.steps && leg.steps.length ? { steps: leg.steps } : {}, leg.ans ? { ans: leg.ans } : {}, leg.note ? { note: leg.note } : {},
     leg.lost ? { lost: leg.lost } : {}, leg.source ? { source: leg.source } : {}, leg.guess ? { guess: true } : {}, leg.slack ? { slack: leg.slack } : {}, leg.pierName ? { pierName: leg.pierName } : {}, extra || {});
 })(KEngine);

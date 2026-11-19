@@ -209,7 +209,7 @@ async function tapTimes(p) { const out = []; const n = await p.evaluate(() => wi
       ferries += r.filter(l => l.kind === 'ferry').length;
       r.filter(l => !l.ok).forEach(l => bad.push(`${set.join('+')}: a ${l.kind} line from ${l.a.map(n => n.toFixed(4))} to ${l.b.map(n => n.toFixed(4))}`));
       const tl = await p.$$eval('.tl', xs => xs.map(x => x.innerText.replace(/\s+/g, ' ')).join(' | '));
-      if (set.length === 2 && set.includes(inland) && !/to the ferry at/i.test(tl)) bad.push(`${set.join('+')}: the day plan doesn't show the way to the ferry pier (${tl.slice(0, 300)})`); }
+      if (set.length === 2 && set.includes(inland) && !/to the ferry at/i.test(tl)) bad.push(`${set.join('+')}: the day plan doesn't show the way to the ferry pier (${tl.slice(0, process.env.VERBOSE2 ? 3000 : 300)})`); }
     // A road route ending on the street 300 m from a terminal out on its pier: drawn to the street, not over the water.
     const road = await p.evaluate(() => window.__kairouteRoadEnds({ mode: 'car', a: [14.2600, 40.8500], b: [14.2550, 40.8380] }, [[14.2601, 40.8501], [14.2580, 40.8440], [14.2560, 40.8410]]));
     if (road.length !== 4 || road[road.length - 1][1] !== 40.8410) bad.push('a road line was joined over the water to a stop 300 m from the street');
