@@ -119,12 +119,20 @@ async function tapTimes(p) { const out = []; const n = await p.evaluate(() => wi
   { const setPicks = async want => { for (let k = 0; k < 30; k++) { const st = await boxes(p), w = st.find(x => x.on !== want.includes(x.id)); if (!w) return true;
         if (!(await tapBox(p, w.id))) return false; if (await p.$('.fitbox, .closedbox')) { const ok = (await boxes(p)).some(x => x.id === w.id && x.on === want.includes(x.id)); if (!ok) return false; } } return false; };
     const pick = re => all.find(id => re.test(id));
-    const sets = [[pick(/pompeii/)], [pick(/sorrento/)], [pick(/sorrento/), town], [pick(/pompeii/), pick(/sorrento/)]].map(x => x.filter(Boolean)).filter(x => x.length);
+    // The last set again with a timetable answer for every ride, as the app has online (Nov 18, 7:14 PM: with an answer
+    // the guide's train showed as "Taxi or car" and the train tapped was refused; the offline test had no answers).
+    const sets = [[pick(/pompeii/)], [pick(/sorrento/)], [pick(/sorrento/), town], [pick(/pompeii/), pick(/sorrento/)], [pick(/pompeii/), town, 'answers']].map(x => x.filter(Boolean)).filter(x => x.filter(y => y !== 'answers').length);
     const bad = []; let tapped = 0;
-    for (const set of sets) {
+    for (const set0 of sets) {
+      const withAns = set0.includes('answers'), set = set0.filter(x => x !== 'answers');
       await p.evaluate(i => { window.__kairouteGo('day', i); window.__kairouteGo('sites'); }, ni); await p.waitForTimeout(500);
       if (!(await setPicks(set))) { bad.push(`could not pick ${set.join(' + ')}`); continue; }
       await p.evaluate(i => { window.__kairouteGo('day', i); window.__kairouteGo('plan'); }, ni); await p.waitForTimeout(800);
+      if (withAns) { const legs = await p.evaluate(i => (window.__kairouteEngine2()[i].items || []).filter(x => x.t === 'ride' && x.from && x.to && x.mode !== 'walk').map(x => ({ a: x.from, b: x.to, min: x.min })), ni);
+        await p.evaluate(ls => window.__kairouteTransitSet(ls.flatMap(l => [[l.a, l.b], [l.b, l.a]].map(([a, b]) => ({ a, b, opts: [{ mode: 'rail', label: 'Train 4 + 1 change', min: Math.round(l.min * 1.5) + 5 }] })))), legs);
+        await p.evaluate(i => { window.__kairouteGo('sites'); window.__kairouteGo('day', i); window.__kairouteGo('plan'); }, ni); await p.waitForTimeout(800);
+        const named = await p.evaluate(i => (window.__kairouteLegs(i) || []).filter(l => l.mode !== 'ride' && /^Taxi/.test(l.how || '')).length, ni);
+        if (named) bad.push(`${set.join('+')} with timetable answers: ${named} ride(s) called "Taxi or car" that aren't a taxi`); }
       const first = await p.$$eval('[data-ridekey]', xs => xs.map(x => ({ key: x.dataset.ridekey, val: x.dataset.rideval })));
       // Each choice, then each again in reverse order (so a later pick on one ride meets an earlier pick on another).
       const seq = first.concat(first.slice().reverse()).slice(0, 14);
@@ -136,7 +144,8 @@ async function tapTimes(p) { const out = []; const n = await p.evaluate(() => wi
           return [...document.querySelectorAll(`[data-rideval="${val}"].on`)].some(x => { const q = x.dataset.ridekey.split(',').map(Number); return d([q[0], q[1]], [kp[0], kp[1]]) <= tol && d([q[2], q[3]], [kp[2], kp[3]]) <= tol; }); }, [c.key, c.val]);
         const note = await p.evaluate(() => [...document.querySelectorAll('.ridenote, .notice, [data-ridenotice]')].map(e => e.innerText).join(' ').replace(/\s+/g, ' '));
         const canForce = !!(await p.$('[data-act="rideforce"]'));
-        if (!on && !canForce && !/too late|after .* ship/i.test(note)) bad.push(`${set.join('+')}: ${c.val} not taken${note ? ': ' + note.slice(0, 120) : ' (nothing said)'}`);
+        if (!on && !canForce && !/too late|after .* ship|isn't available|another way round/i.test(note)) bad.push(`${set.join('+')}: ${c.val} not taken${note ? ': ' + note.slice(0, 120) : ' (nothing said)'}`);
+        if (!on && /another way round/i.test(note) && withAns) bad.push(`${set.join('+')}: ${c.val} said the day goes another way round`);
       }
     }
     check(`Naples: every ride choice is taken, in any order, for ${sets.length} sets of picks (${tapped} taps), unless it costs a pick or the ship`, tapped > 0 && !bad.length, tapped ? bad.slice(0, 3).join('; ') : 'no ride choices on the plan'); }

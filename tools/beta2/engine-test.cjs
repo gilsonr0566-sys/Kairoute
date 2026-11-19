@@ -16,6 +16,13 @@ ok(E.waterOnly({ access: 'Viewed from the water on a boat tour' }) && E.waterOnl
   const port = { lat: 40.838, lng: 14.255 }, town = { lat: 40.626, lng: 14.376, travelNote: 'Ferry from the port, 40 min; or the Circumvesuviana train, 60 min.' }, sight = { lat: 40.849, lng: 14.255 }, near = { lat: 40.836, lng: 14.249 };
   const tr = E.makeTravel({}, { [E.pairKey(port, town)]: 'boat', [E.pairKey(town, sight)]: 'transit' });
   ok(tr.estimate(port, town).choice === 'boat' && tr.estimate(town, sight).choice === 'transit' && tr.estimate(town, near).choice === 'transit', 'out by ferry and back by train, as picked, also from a stop next door'); }
+{ // With a timetable answer for a trip out, the guide's own train stays a choice under its own name, the taxi is the
+  // taxi by road, and each one tapped is taken (Nov 18, 7:14 PM: the Circumvesuviana showed as "Taxi or car").
+  const port = { lat: 40.838, lng: 14.255 }, far = { lat: 40.749, lng: 14.485, travelNote: 'Circumvesuviana train, 40 min.' };
+  const ans = () => [{ id: 'rail|Train 4 + 1 change', min: 110, label: 'Train 4 + 1 change', kind: 'train' }];
+  const plain = E.makeTravel({}, {}, null, null, ans).estimate(port, far);
+  ok(plain.options.some(o => /Circumvesuviana/.test(o.how)) && !(plain.mode !== 'ride' && /^Taxi/.test(plain.how)) && plain.options.find(o => o.id === 'taxi').min >= 40, 'the guide\'s train keeps its name beside a timetable answer; the taxi is the taxi');
+  for (const want of ['rail|Train 4 + 1 change', 'transit', 'taxi']) ok(E.makeTravel({}, { [E.pairKey(port, far)]: want }, null, null, ans).estimate(port, far).choice === want, 'the ride tapped is taken: ' + want); }
 ok(E.publicWins(73, 46) && E.publicWins(100, 50) === false, 'a train an hour and a quarter long wins over a 46-minute taxi; a taxi saving 50 minutes of a 100-minute ride wins (Nov 18, Sorrento to Pompeii)');
 // A pick inside an area picked for another day moves to the area's day (one walk), and the plan says so; a sight far
 // from the heart of the place is a trip out, never a stop of a day in town.

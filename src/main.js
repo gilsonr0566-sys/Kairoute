@@ -809,8 +809,14 @@ function switchRide(key, val, force) {
   // (Nov 18, Naples: the train was refused because it "would leave out Umberto I Gallery", an optional stop).
   const d = day(), names = pl => pl && !pl.error ? pl.items.filter(i => i.type === "stop" && !i.place.bonus).map(i => i.place.name) : [];
   trip.legModes = trip.legModes || {}; const was = trip.legModes[key];
-  const back = () => { if (was == null) delete trip.legModes[key]; else trip.legModes[key] = was; };
-  const before = buildPlan(d); trip.legModes[key] = val; const after = buildPlan(d);
+  // One ride, one choice: an older choice saved for the same ride the same way round (from a stop next door, or an
+  // earlier plan of the day) gives way to the new one, so it can never outrank it (Nov 18, Naples: an old "taxi" saved
+  // from the lunch place kept the taxi when the train was tapped on the ride back to the ship).
+  const kp0 = String(key).split(",").map(Number), tol0 = kp0.length === 4 ? Math.max(1.5, hav({ lat: kp0[0], lng: kp0[1] }, { lat: kp0[2], lng: kp0[3] }) / 5) : 0;
+  const older = tol0 ? Object.keys(trip.legModes).filter(k => { if (k === key) return false; const q = k.split(",").map(Number); return q.length === 4 && hav({ lat: q[0], lng: q[1] }, { lat: kp0[0], lng: kp0[1] }) <= tol0 && hav({ lat: q[2], lng: q[3] }, { lat: kp0[2], lng: kp0[3] }) <= tol0; }) : [];
+  const olderWas = older.map(k => [k, trip.legModes[k]]);
+  const back = () => { if (was == null) delete trip.legModes[key]; else trip.legModes[key] = was; olderWas.forEach(([k, v]) => { trip.legModes[k] = v; }); };
+  const before = buildPlan(d); older.forEach(k => delete trip.legModes[k]); trip.legModes[key] = val; const after = buildPlan(d);
   // The ride between the same two places, whichever way the day now runs and even from a stop next door (the lunch
   // place, a sight beside it): the engine applies the choice to it (Nov 18, Sorrento and Pompeii).
   const kp = String(key).split(",").map(Number), tol = kp.length === 4 ? Math.max(1.5, hav({ lat: kp[0], lng: kp[1] }, { lat: kp[2], lng: kp[3] }) / 5) : 1.5, near2 = (x, i) => x && isFinite(x.lat) && hav({ lat: kp[i], lng: kp[i + 1] }, x) <= tol;
@@ -826,7 +832,9 @@ function switchRide(key, val, force) {
   else { const lost = names(before).filter(n => !names(after).includes(n)), used = findRide(after.items);
     // With the new ride the day may work better in another order that no longer makes this ride at all: then the
     // choice would do nothing (and vanish from the menu), so the plan keeps the ride it had and says so.
-    if (!lost.length && !(used && used.leg.choice === val)) { back(); rideNotice = { key, text: `With ${esc(label(val))} the day works better in another order that doesn't make this ride, so the plan keeps ${esc(label(nowId))}.` }; }
+    // A ride the traveler picks is kept as their choice. If today's plan then doesn't make that ride (the day goes
+    // another way round), the choice stays saved for it and the app says so plainly; it is never quietly refused.
+    if (!lost.length && !(used && used.leg.choice === val)) rideNotice = { key, text: used ? `${esc(label(val))} isn't available for this ride on the plan's date, so it uses ${esc(label(used.leg.choice))}. Your choice is saved and used whenever it runs.` : `Saved: ${esc(label(val))} for this ride. Today's plan now goes another way round and doesn't make this ride.` };
     else if (lost.length && !force) { back(); const a = choice(val), b = choice(nowId), more = a && b ? a.min - b.min : 0;
       rideNotice = { key, force: val, text: `${esc(label(val))} takes ${a ? dur(a.min) : "longer"}${more > 0 ? `, ${dur(more)} longer than ${esc(label(nowId))}` : ""}. With it, ${esc(lost.join(" and "))} wouldn't fit before ${d.type === "port" ? "the ship" : "the day ends"}, so the plan keeps ${esc(label(nowId))} and every stop.`, forceText: `Take ${label(val)} and leave out ${lost.join(" and ")}` }; }
     else rideNotice = lost.length ? { key, undo: was === undefined ? "" : was, text: `You chose ${esc(label(val))}: ${esc(lost.join(" and "))} ${lost.length > 1 ? "are" : "is"} left out today.` } : null; }

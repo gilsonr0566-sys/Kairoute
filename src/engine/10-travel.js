@@ -113,11 +113,27 @@
       if (!answers || d < 1.5 || leg.pinned || leg.mode === "boat" || leg.mode === "lift" || leg.mode === "walk") return leg;
       const got = (answers(a, b) || []).filter(o => o && isFinite(o.min)).sort((x, y) => x.min - y.min || String(x.label).localeCompare(String(y.label)));
       if (!got.length) return leg;
-      const want = modeOf(a, b), o = got.find(x => x.id != null && x.id === want) || got[0], sl = leg.slack || 0, pub = o.min + sl;
-      const boats = (leg.options || []).filter(x => x.mode === "boat"); // a ferry the guide names stays a choice beside the timetable answers
-      const options = got.slice(0, 3).map(x => ({ id: x.id != null ? String(x.id) : "transit", mode: "transit", transitMode: x.kind, kind: x.kind, how: E.latin(x.label), min: x.min + sl })).concat(boats, [{ id: "taxi", mode: "ride", kind: "car", how: "Taxi or car", min: leg.min }]);
-      if (want === "taxi" || want === "ride" || (want !== "transit" && o.id !== want && !E.publicWins(pub, leg.min))) return Object.assign({}, leg, { how: "Taxi or car", options, choice: "taxi" });
-      return { mode: "transit", transitMode: o.kind, how: E.latin(o.label), km: leg.km, min: pub, slack: sl || undefined, options, choice: o.id != null ? String(o.id) : "transit" };
+      const want = modeOf(a, b), sl = leg.slack || 0;
+      // The guide's own ways for this ride (a ferry, the train its note names) stay choices beside the timetable answers,
+      // and the taxi is the taxi by road, never the guide's train under a taxi's name (Nov 18, Naples: with a timetable
+      // answer the Circumvesuviana was shown as "Taxi or car, 55 min" and the train the traveler tapped was refused).
+      const own = (leg.options || []).filter(x => x.mode !== "ride");
+      const taxiOpt = (leg.options || []).find(x => x.mode === "ride") || (leg.mode === "ride" ? { id: "taxi", mode: "ride", kind: "car", how: "Taxi or car", min: leg.min } : null);
+      const taxiLeg = taxiOpt ? (leg.mode === "ride" ? leg : Object.assign(road(d), { min: taxiOpt.min })) : null;
+      const answersOpt = got.slice(0, 3).map(x => ({ id: x.id != null ? String(x.id) : "transit", mode: "transit", transitMode: x.kind, kind: x.kind, how: E.latin(x.label), min: x.min + sl, ans: x }));
+      const options = answersOpt.map(({ ans, ...o }) => o).concat(own.filter(x => !answersOpt.some(y => y.id === x.id)), taxiOpt ? [{ id: "taxi", mode: "ride", kind: "car", how: "Taxi or car", min: taxiOpt.min }] : []);
+      const asTaxi = () => Object.assign({}, taxiLeg, { how: "Taxi or car", options, choice: "taxi" });
+      const asAnswer = x => ({ mode: "transit", transitMode: x.ans.kind, how: E.latin(x.ans.label), km: leg.km, min: x.min, slack: sl || undefined, options, choice: x.id });
+      const asOwn = x => Object.assign({}, leg, { mode: x.mode, how: x.how, min: x.min, options, choice: x.id }, x.mode === "boat" ? { cross: x.cross, pier: E.PIER_MIN, timetable: true } : { transitMode: x.transitMode || x.kind });
+      // The traveler's own choice first, whichever list it is in.
+      if ((want === "taxi" || want === "ride") && taxiLeg) return asTaxi();
+      const wa = answersOpt.find(x => x.id === want); if (wa) return asAnswer(wa);
+      const wo = own.find(x => x.id === want); if (wo) return asOwn(wo);
+      // Else the quickest public way, unless a taxi saves a great deal (the app's rule).
+      const pubs = answersOpt.map(x => ({ x, min: x.min, t: "a" })).concat(own.map(x => ({ x, min: x.min, t: "o" }))).sort((p, q) => p.min - q.min || String(p.x.id).localeCompare(String(q.x.id)));
+      const best = pubs[0];
+      if (taxiLeg && !E.publicWins(best.min, taxiOpt.min)) return asTaxi();
+      return best.t === "a" ? asAnswer(best.x) : asOwn(best.x);
     }
     function base(a, b) {
       const pin = legs && legs[E.pairKey(a, b)];
