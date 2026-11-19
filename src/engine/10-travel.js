@@ -52,7 +52,9 @@
   // answers(a, b): the app's own public transport answers for a ride, as the app keeps them (a timetable search per ride,
   // [{ min, label, kind }]), or null. A known line is taken unless a taxi saves a lot (over 25 minutes and a third of
   // the time), the same rule the app uses: cheaper, and no traffic. The traveler's own choice always wins.
-  E.publicWins = (pub, roadMin) => !(roadMin < pub - 25 && roadMin < pub * 0.67);
+  // The public way wins unless a taxi saves a great deal: over 40 minutes and over 40% of the ride (Nov 18, Richard:
+  // the Circumvesuviana from Sorrento to Pompeii, 1 h 13, lost to a 46-minute taxi; he wants the trains).
+  E.publicWins = (pub, roadMin) => !(roadMin < pub - 40 && roadMin < pub * 0.6);
   E.makeTravel = (prefs, legModes, legs, lines, answers) => {
     const walk = (prefs && prefs.walk) || "medium", lim = WALK_LIMIT[walk] || WALK_LIMIT.medium, speed = walk === "low" ? 3.6 : 4.5, modes = legModes || {}, memo = new Map(), memoEnd = new Map(), trains = (lines || []).filter(l => l.mode === "train");
     // The traveler's ride choice belongs to the two places, whichever way the day goes between them (Nov 18: the train
