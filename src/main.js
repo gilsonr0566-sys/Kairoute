@@ -811,11 +811,15 @@ function switchRide(key, val, force) {
   trip.legModes = trip.legModes || {}; const was = trip.legModes[key];
   const back = () => { if (was == null) delete trip.legModes[key]; else trip.legModes[key] = was; };
   const before = buildPlan(d); trip.legModes[key] = val; const after = buildPlan(d);
-  const choice = c => { const leg = after.items.concat(before.items).find(i => i.type === "travel" && i.leg.key === key); return leg && leg.leg.choices.find(x => x.id === c); };
+  // The ride between the same two places, whichever way the day now runs and even from a stop next door (the lunch
+  // place, a sight beside it): the engine applies the choice to it (Nov 18, Sorrento and Pompeii).
+  const kp = String(key).split(",").map(Number), tol = kp.length === 4 ? Math.max(1.5, hav({ lat: kp[0], lng: kp[1] }, { lat: kp[2], lng: kp[3] }) / 5) : 1.5, near2 = (x, i) => x && isFinite(x.lat) && hav({ lat: kp[i], lng: kp[i + 1] }, x) <= tol;
+  const sameRide = l => l && (l.key === key || (kp.length === 4 && l.from && l.to && ((near2(l.from, 0) && near2(l.to, 2)) || (near2(l.from, 2) && near2(l.to, 0)))));
+  const choice = c => { const leg = after.items.concat(before.items).find(i => i.type === "travel" && sameRide(i.leg)); return leg && leg.leg.choices.find(x => x.id === c); };
   const label = c => { const ch = choice(c); return ch ? ch.label : "that ride"; };
-  const cur = before.items.find(i => i.type === "travel" && i.leg.key === key), nowId = cur ? cur.leg.choice : was;
+  const cur = before.items.find(i => i.type === "travel" && sameRide(i.leg)), nowId = cur ? cur.leg.choice : was;
   if (after.error || after.over) { back(); rideNotice = { key, text: `${esc(label(val))} would get you back after ${fmt(after.endBy || 0)}, too late for the ship, so the plan keeps the ride it had.` }; }
-  else { const lost = names(before).filter(n => !names(after).includes(n)), used = after.items.find(i => i.type === "travel" && i.leg.key === key);
+  else { const lost = names(before).filter(n => !names(after).includes(n)), used = after.items.find(i => i.type === "travel" && sameRide(i.leg));
     // With the new ride the day may work better in another order that no longer makes this ride at all: then the
     // choice would do nothing (and vanish from the menu), so the plan keeps the ride it had and says so.
     if (!lost.length && !(used && used.leg.choice === val)) { back(); rideNotice = { key, text: `With ${esc(label(val))} the day works better in another order that doesn't make this ride, so the plan keeps ${esc(label(nowId))}.` }; }

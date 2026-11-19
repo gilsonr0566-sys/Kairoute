@@ -8,6 +8,8 @@
 //   cleared   an emptied day plans nothing
 //   rideFrom  a ride between two trips out is never timed from either one's "getting there" note (the note is from town)
 //   ways      a ride out to a sight offers every way its note names, each with the note's own time
+//   rideChoice a ride choice the traveler picks is the ride the plan takes between those two places, whichever way
+//             the day runs (Nov 18: the train from Sorrento to Pompeii was lost when the day turned round)
 //   lunchWay  lunch is where the traveler is or along the way: never out and back off the path (Nov 18, Corpus Christi:
 //             North Beach, back over the bridge for lunch, then over the bridge again)
 //   lunch     a day out of town at lunchtime names a place to eat there (a data gap when the guide has none: listed apart)
@@ -17,9 +19,9 @@ const fs = require('fs'), path = require('path'), E = require('./engine.cjs');
 const dir = path.join(__dirname, 'snapshots'), list = process.argv.includes('--list');
 const PD = process.env.PLACES_DIR, places = {};
 if (PD) for (const f of fs.readdirSync(PD).filter(f => f.endsWith('.json'))) { const p = JSON.parse(fs.readFileSync(path.join(PD, f))); places[p.key] = p; }
-const out = { safe: [], picked: [], cleared: [], rideFrom: [], ways: [], lunchWay: [], lunch: [], tickets: [] }, gaps = { lunch: [], tickets: [] };
+const out = { safe: [], picked: [], cleared: [], rideFrom: [], ways: [], rideChoice: [], lunchWay: [], lunch: [], tickets: [] }, gaps = { lunch: [], tickets: [] };
 const label = { safe: 'stop or ride past the time to be back', picked: 'pick neither planned nor explained', cleared: 'emptied day still planned',
-  rideFrom: "ride between two trips out timed from a sight's own note", ways: "way to a sight its note names, not offered", lunchWay: 'lunch off the way (out and back)', lunch: 'lunch out of town not named', tickets: 'book-ahead sight without its official website' };
+  rideFrom: "ride between two trips out timed from a sight's own note", ways: "way to a sight its note names, not offered", lunchWay: 'lunch off the way (out and back)', rideChoice: 'a picked ride not taken', lunch: 'lunch out of town not named', tickets: 'book-ahead sight without its official website' };
 let variants = 0;
 const seen = new Set(), add = (k, msg) => { if (seen.has(k + msg)) return; seen.add(k + msg); out[k].push(msg); };
 for (const f of fs.readdirSync(dir).filter(f => f.endsWith('.json')).sort()) {
@@ -60,6 +62,16 @@ for (const f of fs.readdirSync(dir).filter(f => f.endsWith('.json')).sort()) {
         const one = noteOf(sa) && !noteOf(sb) && inTown(b) ? sa : noteOf(sb) && !noteOf(sa) && inTown(a) ? sb : null;
         if (one && E.hav(a, b) > 15) for (const w of E.noteWays(one.travelNote).filter(w => w.said && w.id !== 'taxi'))
           if (!(x.options || []).some(o => o.id === w.id && o.min >= w.said)) add('ways', `${tag}: ${a.name} to ${b.name}: ${w.how} (${w.said} min) not offered`); });
+      // a picked ride is taken: each other way on the first long ride, picked, is the ride between those places
+      if (pick.some(id => /-far$/.test(id))) { const legs = p.items.filter((x, k) => x.t === 'ride' && x.from && x.to && E.hav(x.from, x.to) > 5 && (x.options || []).length > 1 && ![p.items[k - 1], p.items[k + 1]].some(y => !y || y.bonus || y.t === 'meal')); // between the traveler's own places (an optional stop gives way)
+        for (const leg of legs.slice(0, 1)) for (const o of leg.options.filter(o => o.id && o.id !== leg.choice && o.id !== 'walk')) {
+          const k = E.pairKey(leg.from, leg.to), s2 = Object.assign({}, s, { legModes: Object.assign({}, s.legModes || {}, { [k]: o.id }) });
+          let p2; try { p2 = E.planTrip(s2)[i]; } catch (e) { continue; } if (!p2 || !p2.items || p2.safe) continue;
+          const tol = Math.max(1.5, E.hav(leg.from, leg.to) / 5), near = (x, y) => E.hav(x, y) <= tol, same = r => r.t === 'ride' && r.from && r.to && ((near(r.from, leg.from) && near(r.to, leg.to)) || (near(r.from, leg.to) && near(r.to, leg.from)));
+          const allKept = pick.every(id => p2.items.some(x => x.t === 'stop' && String(x.id) === String(id))); // a ride that costs a pick is the traveler's call (the app asks first)
+          const got = p2.items.filter(same);
+          if (allKept && got.length && !got.some(r => r.choice === o.id || (o.id === 'taxi' && r.mode === 'ride'))) add('rideChoice', `${tag}: ${leg.from.name || ''} to ${leg.to.name || ''}: picked ${o.how || o.id}, plan took ${got.map(r => r.choice || r.mode).join('/')}`);
+                    if (!got.length && allKept) add('rideChoice', `${tag}: picked ${o.how || o.id}: the ride is gone from the plan`); } }
       // lunch on the way: from the place before lunch to the one after, lunch adds at most 1 km of going out of the way (a tenth of
       // the hop on a long ride back from a trip out)
       p.items.forEach((x, k) => { if (x.t !== 'meal' || !isFinite(x.lat)) return;

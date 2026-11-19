@@ -55,6 +55,15 @@
   E.publicWins = (pub, roadMin) => !(roadMin < pub - 25 && roadMin < pub * 0.67);
   E.makeTravel = (prefs, legModes, legs, lines, answers) => {
     const walk = (prefs && prefs.walk) || "medium", lim = WALK_LIMIT[walk] || WALK_LIMIT.medium, speed = walk === "low" ? 3.6 : 4.5, modes = legModes || {}, memo = new Map(), memoEnd = new Map(), trains = (lines || []).filter(l => l.mode === "train");
+    // The traveler's ride choice belongs to the two places, whichever way the day goes between them (Nov 18: the train
+    // picked from Sorrento to Pompeii was lost when the day ran Pompeii first).
+    // A ride from the lunch place next door, or from a sight beside the place, is still that ride: a choice also holds
+    // for any two points each within a short walk (1.5 km) of its two places, on a ride long enough to need one (over 5 km).
+    const chosenPairs = Object.keys(modes).map(k => { const v = k.split(",").map(Number); return v.length === 4 && v.every(isFinite) ? { a: { lat: v[0], lng: v[1] }, b: { lat: v[2], lng: v[3] }, m: modes[k] } : null; }).filter(Boolean);
+    const modeOf = (a, b) => { const k = modes[E.pairKey(a, b)]; if (k != null) return k; const r = modes[E.pairKey(b, a)]; if (r != null) return r;
+      if (!chosenPairs.length || !a || !b || E.hav(a, b) < 5) return undefined;
+      // (each end within 1.5 km, or a fifth of the ride: the ride out to a town 80 km away and its sights around it is the same from any hotel in the city)
+      const tol = Math.max(1.5, E.hav(a, b) / 5), c = chosenPairs.find(p => (E.hav(p.a, a) <= tol && E.hav(p.b, b) <= tol) || (E.hav(p.a, b) <= tol && E.hav(p.b, a) <= tol)); return c ? c.m : undefined; };
     function estimate(a, b) {
       if (!a || !b || !isFinite(a.lat) || !isFinite(b.lat)) return { mode: "walk", how: "Walk", km: 0, min: 0, unknown: true };
       // The cable car (or funicular) between a landing and the town above: its own fixed step holds the time.
@@ -78,7 +87,7 @@
         const t = E.transitOption(a, b, trains, km => Math.max(1, Math.round(km * 1.3 / speed * 60)), { km: 12, taxiMin: km => road(km).min });
         if (!t) return leg;
         const sl = leg.slack || 0, tmin = t.min + sl, options = [{ id: "transit", mode: "transit", kind: "train", how: t.how, min: tmin }, { id: "taxi", mode: "ride", kind: "car", how: leg.how, min: leg.min }];
-        const want = modes[E.pairKey(a, b)];
+        const want = modeOf(a, b);
         if (want === "ride" || want === "taxi" || (want !== "transit" && !E.publicWins(tmin, leg.min))) return Object.assign(leg, { options, choice: "taxi" });
         return { mode: "transit", transitMode: t.mode, how: t.how, km: leg.km, min: tmin, slack: sl || undefined, options, choice: "transit" };
       }
@@ -86,7 +95,7 @@
       // A leg short enough to walk offers the line only when it is quicker than walking; a leg too far to walk weighs it
       // against the taxi instead (an uphill walk from the station can make it slower than the whole walk, never than a taxi).
       const t = E.transitOption(a, b, lines, walkMin); if (!t || (leg.mode !== "ride" && t.min >= onFoot)) return leg;
-      const taxi = road(d), want = modes[E.pairKey(a, b)];
+      const taxi = road(d), want = modeOf(a, b);
       const options = [{ id: "walk", mode: "walk", kind: "walk", how: "Walk", min: onFoot }, { id: "transit", mode: "transit", kind: t.mode === "tram" ? "tram" : "train", how: t.how, min: t.min }, { id: "taxi", mode: "ride", kind: "car", how: taxi.how, min: taxi.min }];
       // Too far to walk: public transport is taken unless a taxi saves a lot (the same rule as everywhere: cheaper, no
       // traffic); the traveler's own choice always wins.
@@ -98,7 +107,7 @@
       if (!answers || d < 1.5 || leg.pinned || leg.mode === "boat" || leg.mode === "lift" || leg.mode === "walk") return leg;
       const got = (answers(a, b) || []).filter(o => o && isFinite(o.min)).sort((x, y) => x.min - y.min || String(x.label).localeCompare(String(y.label)));
       if (!got.length) return leg;
-      const want = modes[E.pairKey(a, b)], o = got.find(x => x.id != null && x.id === want) || got[0], sl = leg.slack || 0, pub = o.min + sl;
+      const want = modeOf(a, b), o = got.find(x => x.id != null && x.id === want) || got[0], sl = leg.slack || 0, pub = o.min + sl;
       const boats = (leg.options || []).filter(x => x.mode === "boat"); // a ferry the guide names stays a choice beside the timetable answers
       const options = got.slice(0, 3).map(x => ({ id: x.id != null ? String(x.id) : "transit", mode: "transit", transitMode: x.kind, kind: x.kind, how: E.latin(x.label), min: x.min + sl })).concat(boats, [{ id: "taxi", mode: "ride", kind: "car", how: "Taxi or car", min: leg.min }]);
       if (want === "taxi" || want === "ride" || (want !== "transit" && o.id !== want && !E.publicWins(pub, leg.min))) return Object.assign({}, leg, { how: "Taxi or car", options, choice: "taxi" });
@@ -122,7 +131,7 @@
         if (b.backToShip || b.deadline) { const sl = Math.max(15, Math.round(leg.min * 0.3 / 5) * 5); leg = Object.assign(leg, { min: leg.min + sl, slack: sl }); }
         return leg;
       }
-      const walkMin = Math.max(2, Math.round(d * 1.3 / speed * 60)), either = d >= 0.6 && d <= WALK_EITHER, want = either ? modes[E.pairKey(a, b)] : null;
+      const walkMin = Math.max(2, Math.round(d * 1.3 / speed * 60)), either = d >= 0.6 && d <= WALK_EITHER, want = either ? modeOf(a, b) : null;
       if (d <= lim ? !want || want === "walk" : want === "walk") return { mode: "walk", how: "Walk", km: d * 1.3, min: walkMin, either };
       let leg = road(d); leg.either = either;
       if (d > 15) { // a day trip: the guide's own note on how to get there, from the place's own base (port, hotel, town)
@@ -136,7 +145,7 @@
           ? { id: "boat", mode: "boat", kind: "ferry", how: w.how + ", " + w.said + " min crossing, plus " + E.PIER_MIN + " min at the pier for the next sailing", min: w.said + E.PIER_MIN, cross: w.said, timetable: true }
           : { id: "transit", mode: "transit", transitMode: w.kind, kind: w.kind, how: w.how + ", " + w.said + " min, plus 15 to get to the station", min: w.said + 15 });
         if (opts.length) {
-          const all = opts.concat([{ id: "taxi", mode: "ride", kind: "car", how: "Taxi or car", min: taxi.min }]), wantNow = modes[E.pairKey(a, b)];
+          const all = opts.concat([{ id: "taxi", mode: "ride", kind: "car", how: "Taxi or car", min: taxi.min }]), wantNow = modeOf(a, b);
           const best = opts.slice().sort((x, y) => x.min - y.min || x.id.localeCompare(y.id))[0];
           // The traveler's own choice wins; else the quickest public way, unless a taxi saves a lot (the app's rule).
           const pick = all.find(o => o.id === wantNow) || (E.publicWins(best.min, taxi.min) ? best : all[all.length - 1]);
@@ -154,6 +163,6 @@
       return leg;
     }
     const min = (a, b) => (a && b ? estimate(a, b).min : 0);
-    return { estimate, min, road, saidMin };
+    return { estimate, min, road, saidMin, chosen: (a, b) => modeOf(a, b) != null };
   };
 })(KEngine);

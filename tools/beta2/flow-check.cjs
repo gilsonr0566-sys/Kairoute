@@ -123,11 +123,17 @@ async function tapTimes(p) { const out = []; const n = await p.evaluate(() => wi
       const sel = `[data-ridekey="${c.key}"][data-rideval="${c.val}"]`; if (!(await p.$(sel + ':not(.on)'))) continue;
       const opt = await p.evaluate(i => (window.__kairouteEngine2()[i].items || []).filter(x => x.t === 'stop' && x.bonus).map(x => x.name), ni);
       if (!(await tapSel(p, sel))) { bad.push(`could not tap "${c.label}"`); continue; } tapped++;
-      const on = !!(await p.$(sel + '.on')), note = await p.evaluate(() => [...document.querySelectorAll('.ridenote')].map(e => e.innerText).join(' '));
+      // Taken: that way is now the ride between the same two places (the day may now run it from a stop nearby).
+      const on = await p.evaluate(([key, val]) => { const kp = key.split(',').map(Number), d = (a, b) => { const R = Math.PI / 180, x = Math.sin((b[0] - a[0]) * R / 2) ** 2 + Math.cos(a[0] * R) * Math.cos(b[0] * R) * Math.sin((b[1] - a[1]) * R / 2) ** 2; return 12742 * Math.asin(Math.sqrt(x)); };
+        const tol = Math.max(1.5, d([kp[0], kp[1]], [kp[2], kp[3]]) / 5);
+        return [...document.querySelectorAll(`[data-rideval="${val}"].on`)].some(x => { const q = x.dataset.ridekey.split(',').map(Number); return (d([q[0], q[1]], [kp[0], kp[1]]) <= tol && d([q[2], q[3]], [kp[2], kp[3]]) <= tol) || (d([q[0], q[1]], [kp[2], kp[3]]) <= tol && d([q[2], q[3]], [kp[0], kp[1]]) <= tol); }); }, [c.key, c.val]), note = await p.evaluate(() => [...document.querySelectorAll('.ridenote')].map(e => e.innerText).join(' '));
       if (!on && opt.some(n => note.includes(n)) && !/too late|after .* ship/i.test(note)) bad.push(`"${c.label}" refused for an optional stop: ${note.slice(0, 140)}`);
       if (!on && !note) bad.push(`"${c.label}" did nothing`);
+      // Not taken is right only when it would be too late for the ship, or it would cost a pick (the app then offers it).
+      const canForce = !!(await p.$('[data-act="rideforce"]'));
+      if (!on && note && !canForce && !/too late|after .* ship/i.test(note)) bad.push(`"${c.label}" not taken: ${note.slice(0, 140)}`);
     }
-    check(`Naples: every ride choice can be picked (${tapped} tapped); optional stops never block one`, tapped > 0 && !bad.length, tapped ? bad.slice(0, 3).join('; ') : 'no ride choices on the plan'); }
+    check(`Naples: every ride choice picked is taken (${tapped} tapped), unless it costs a pick or the ship`, tapped > 0 && !bad.length, tapped ? bad.slice(0, 3).join('; ') : 'no ride choices on the plan'); }
 
   // 2a1a. A ferry is drawn straight across the water, never along the road (Nov 18, Naples to Sorrento on the coast road).
   { await p.evaluate(i => { window.__kairouteGo('day', i); window.__kairouteGo('plan'); }, ni); await p.waitForTimeout(600);
