@@ -54,6 +54,7 @@
   // transit = on rails or a bus, boat), and every kind has its own icon in the app.
   E.RIDE_KINDS = Object.freeze(["walk", "metro", "tram", "train", "bus", "ferry", "taxi"]);
   E.hasPos = p => !!p && p.lat != null && p.lng != null && p.lat !== "" && p.lng !== "" && isFinite(p.lat) && isFinite(p.lng);
+  E.SLOWER_THAN_WALK = 10; // most a way may be slower than a walk of up to twice the traveler's walking limit
   E.UNKNOWN_RIDE = 45; // minutes for a ride to or from a place not on the map: a guess, said as one
   E.modeOfKind = k => k === "walk" ? "walk" : k === "taxi" ? "ride" : k === "ferry" ? "boat" : "transit";
   // A choice saved before the kinds were named (the app kept "transit", "boat", "ride" or a timetable row's own id).
@@ -186,7 +187,13 @@
         const pub = answered(a, b, d, wantRaw);
         if (d >= 0.6 && lines && lines.length) { const t = E.transitOption(a, b, lines, walkMinOf, d >= 20 ? { taxiMin: k => road(k).min } : undefined);
           if (t && !pub.some(o => o.kind === t.kind)) pub.push({ id: t.kind, kind: t.kind, how: t.how, min: t.min, steps: t.steps.slice(), mapped: true, transitMode: t.mode }); }
-        for (const o of pub) if (d > lim || o.min < onFoot) opts.push(Object.assign({ km: d * 1.3 }, o));
+        // Never a way much slower than a walk this traveler would take (Nov 19, Richard: a river boat of 1 h 40 min offered
+        // for a 1.6-mile hop beside a 34-minute walk, "sticks out like a sore thumb"). Within the traveler's walking limit a
+        // way is offered only when quicker than the walk; up to twice the limit, at most E.SLOWER_THAN_WALK minutes slower
+        // (a bus that spares a longish walk); beyond that any way that spares the walk is offered (a slow tram beats a
+        // 78-minute walk for someone who walks little).
+        const slowOk = o => o.min < onFoot || (d > lim && (d > 2 * lim || o.min <= onFoot + E.SLOWER_THAN_WALK));
+        for (const o of pub) if (slowOk(o)) opts.push(Object.assign({ km: d * 1.3 }, o));
         // By road: a taxi or car, on the road network's time when the places database has it, else the road estimate.
         // The guide's own time for the ride (a winding road it knows) is the floor, never the label.
         if (d >= 0.6 || !opts.length) {

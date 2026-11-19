@@ -594,6 +594,20 @@ ok(E.readable('Café Ñandú') && E.readable("Joe's Bar & Grill") && !E.readable
     'lunch is wanted on any day out over lunchtime for two hours or more, an afternoon from 13:40 included');
   // A minute riding weighs at least as much as a minute waiting: the planner never buys a little less waiting with a long crossing.
   { const r = { over: 0, late: 0, mealPen: 0, end: 600 }; ok(E.dayCost(Object.assign({ waits: 0, rideMin: 60 }, r)) >= E.dayCost(Object.assign({ waits: 60, rideMin: 0 }, r)), 'an hour more riding never costs less than an hour of waiting'); }
+  // Never a way much slower than walking where the walk is offered (Nov 19, Richard's Rome day: "Those 2 ferries stick out
+  // like a sore thumb", a river boat of 1 h 40 min for a 1.6-mile hop beside a 34-minute walk and a 17-minute taxi).
+  { const a = { lat: 41.8986, lng: 12.4769 }, b = { lat: 41.9022, lng: 12.4539 };
+    const ans = () => [{ id: 'ferry|boat', mode: 'ferry', min: 100, label: 'Ferry Battelli', steps: [] }, { id: 'bus|40', mode: 'bus', min: 20, label: 'Bus 40', steps: [] }];
+    const r = E.makeTravel({}, {}, null, null, ans).estimate(a, b), kinds = (r.options || []).map(o => o.kind + ' ' + o.min);
+    ok(!(r.options || []).some(o => o.kind === 'ferry') && (r.options || []).some(o => o.kind === 'bus'), `a boat far slower than the walk is not offered; a quicker bus is (got ${kinds.join(', ')})`);
+    // On every ride of every saved trip (with the places files): no way offered beside a walk is much slower than it.
+    const PD = path.join(__dirname, '..', 'places', 'data'), places = {}; let rides = 0, slow = [];
+    if (fs.existsSync(PD)) for (const g of fs.readdirSync(PD).filter(g => g.endsWith('.json'))) { const q = JSON.parse(fs.readFileSync(path.join(PD, g))); places[q.key] = q; }
+    for (const f of fs.readdirSync(dir).filter(f => f.endsWith('.json'))) { let pl, sn; try { sn = JSON.parse(fs.readFileSync(path.join(dir, f))); pl = E.planTrip(E.applyPlaces(sn, places)); } catch (e) { continue; }
+      const lim = { low: 0.8, medium: 1.7, high: 3.2 }[(sn.prefs || {}).walk || 'medium'] || 1.7;
+      pl.forEach((p, i) => (p && p.items || []).forEach(x => { if (x.t !== 'ride' || !x.options) return; const w = x.options.find(o => o.kind === 'walk'); if (!w || x.km / 1.3 > 2 * lim) return; rides++;
+        x.options.filter(o => o.kind !== 'walk' && o.kind !== 'taxi' && o.min > w.min + E.SLOWER_THAN_WALK).forEach(o => slow.push(`${f} day ${i + 1}: ${o.how} ${o.min} min beside a ${w.min}-min walk`)); })); }
+    ok(!slow.length, `no way offered beside a walk of up to twice the walking limit is more than ${E.SLOWER_THAN_WALK} min slower than walking (${rides} rides with a walk; ${slow.slice(0, 3).join('; ')})`); }
   // ONE hours rule for places to eat and sights (Nov 19 fold): shut for a meal exactly when E.closedForDay says so over
   // the meal's hours, and a place that opens later is waited for by E.hoursFit, as a sight is.
   { const dinnerOnly = { closed: false, oh: { spans: [[18 * 60, 23 * 60]], last: null } }, late = { closed: false, oh: { spans: [[13 * 60, 23 * 60]], last: null } };

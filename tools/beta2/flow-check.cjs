@@ -285,6 +285,8 @@ async function tapTimes(p) { const out = []; const n = await p.evaluate(() => wi
   // first stop of the plan, and the plan keeps the order dropped.
   { const nd = await p.evaluate(() => window.__kairouteDays().length); let di = -1;
     for (let i = 0; i < nd && di < 0; i++) { const st = await p.evaluate(i => (window.__kairouteEngine2()[i].items || []).filter(x => x.t === 'stop').length, i); if (st >= 3) di = i; }
+    if (di < 0) check('Drag to reorder: the stop dragged to the top is planned first, and the order holds', !!process.env.FULL, 'no day has three stops'); // FULL leaves every day with two picks
+    else {
     await p.evaluate(i => { window.__kairouteGo('day', i); window.__kairouteGo('plan'); }, di); await p.waitForTimeout(800);
     const cbtn = await p.$('[data-act="tlview"][data-v="compact"]'); if (cbtn) { await cbtn.evaluate(b => b.click()); await p.waitForTimeout(800); }
     const before = await p.$$eval('.timeline .tl[data-stop]', xs => xs.map(x => x.dataset.stop));
@@ -303,7 +305,7 @@ async function tapTimes(p) { const out = []; const n = await p.evaluate(() => wi
     check('Drag to reorder: the stop dragged to the top is planned first, and the order holds', moved && moved[0] === before[2],
       `day ${di + 1}: before ${before.join('>')}, after ${(moved || []).join('>') || 'no drag possible'} ${JSON.stringify(dragInfo)}`);
     const back = await p.$('[data-act="orderreset"]'); if (back) { await back.evaluate(b => b.click()); await p.waitForTimeout(600); }
-    const fbtn = await p.$('[data-act="tlview"][data-v="full"]'); if (fbtn) { await fbtn.evaluate(b => b.click()); await p.waitForTimeout(400); } }
+    const fbtn = await p.$('[data-act="tlview"][data-v="full"]'); if (fbtn) { await fbtn.evaluate(b => b.click()); await p.waitForTimeout(400); } } }
 
   // 3. Reload: the trip comes back as it was (the traveler's Naples list kept), and every other day is planned the same.
   const before = await p.evaluate(() => JSON.stringify(window.__kairouteEngine2().map(d => (d.items || []).filter(x => x.t === 'stop').map(x => x.id))));
