@@ -53,7 +53,17 @@
   };
   // Best place for lunch in an ordered day: each gap, each of the nearest places to eat; the lowest penalty wins.
   // quick: a rough check while trying a candidate stop (the nearest place to eat only); the chosen day gets the full search.
+  // The same order in the same day window always gets the same lunch, so each is worked out once per day (the
+  // move-by-move repair and the fill try many orders more than once).
   function withLunch(order, win, ctx, quick) {
+    if (!ctx.lunchMemo) ctx.lunchMemo = new WeakMap(); let wm = ctx.lunchMemo.get(win); if (!wm) ctx.lunchMemo.set(win, wm = new Map());
+    const key = (quick ? "q" : "f") + order.map(p => p.id + ":" + p.minutes + ":" + p.lat + ":" + p.lng + ":" + (p.far ? 1 : 0) + (p.bonus ? "b" : "") + (p.along ? "a" : "")).join("|");
+    let got = wm.get(key); if (!got) { if (wm.size > 20000) wm.clear(); wm.set(key, got = Object.assign(lunchFor(order, win, ctx, quick), { orderIn: order })); }
+    // The answer carries this call's own stops (the same places, perhaps as other objects).
+    if (got.orderIn === order) return got;
+    return Object.assign({}, got, { seq: got.seq.map(x => { const j = got.orderIn.indexOf(x); return j >= 0 ? order[j] : x; }) });
+  }
+  function lunchFor(order, win, ctx, quick) {
     const plain = walk(order, win, ctx), my = E.mealPlan(ctx, "Lunch"), L = my.meal;
     if (my.skip || !lunchWanted(win) || (!ctx.eats.length && !my.pick)) return { seq: order, r: plain };
     let best = null, tight = false;
@@ -74,7 +84,10 @@
       // The three least out of the way (each one is timed in full below, so only the likely winners are tried).
       const cands = my.pick ? [my.pick] : [...new Map((quick ? [a] : [a, b, mid]).filter(q => q && isFinite(q.lat)).flatMap(q => eatsNear(q, ctx, "Lunch", 3)).map(e => [e.k, e])).values()]
         .sort((x, y) => offOf(x) + (x.r.fromMap ? 0.3 : 0) - offOf(y) - (y.r.fromMap ? 0.3 : 0) || x.k.localeCompare(y.k)).slice(0, quick ? 1 : 3);
-      for (const e of cands) for (const len of [L.len, L.quick, E.TO_GO]) {
+      for (const e of cands) { let fullFits = false; for (const len of [L.len, L.quick, E.TO_GO]) {
+        // A shorter lunch only ever helps a day that runs over or reaches a stop late: once the full lunch has neither
+        // (and fits the margin), a quicker one can only cost more, so it isn't timed.
+        if (fullFits) break;
         // A sit-down lunch, a quicker one when the day is tight, or lunch on the go (bought and eaten walking on) when
         // only that keeps every stop: each a small cost, so the fuller lunch wins whenever it fits.
         const toGo = len === E.TO_GO;
@@ -83,8 +96,9 @@
         const seq = order.slice(0, k).concat([meal], order.slice(k)), r = walk(seq, win, ctx), pen = penalty(r) + (toGo ? 60 : len < L.len ? 20 : 0) + off * 1.5 + (e.r.fromMap ? 0.5 : 0); // a km out of the way weighs like half an hour more riding
         // On a ship, train or plane day lunch is something the app adds, so it keeps the same margin as any added sight.
         if (win.hard && !r.over && win.endBy - r.end < E.FILL_MARGIN) { tight = true; continue; }
+        if (len === L.len && !r.over && !r.late) fullFits = true;
         if (!best || pen < best.pen - 1e-9) best = { seq, r, pen };
-      }
+      } }
     }
     // Lunch never makes the day run late or reach a stop after its last entry: then the day goes without (and says so).
     // Nor does it mean sitting idle waiting for the kitchen to open (lunch first, then a long ride out of town).
