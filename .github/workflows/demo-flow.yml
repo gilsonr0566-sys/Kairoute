@@ -35,6 +35,8 @@ jobs:
           sleep 2 && curl -sf http://localhost:8080/ >/dev/null
           echo "URL=http://localhost:8080/" >> "$GITHUB_ENV"
       - run: npm i --no-save playwright@1 && npx playwright install --with-deps chromium
+      - name: Live check of the Nov 19 fixes (verify branch only)
+        run: mkdir -p checks/demo && node tools/live-verify.cjs
       - name: Demo flow on the live site
         run: node tools/demo-flow.cjs
         env:
