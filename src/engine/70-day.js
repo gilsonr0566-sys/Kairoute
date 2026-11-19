@@ -30,7 +30,7 @@
     const key = meal + n + "@" + p.lat + "," + p.lng, got = ctx.eatMemo.get(key); if (got) return got;
     const out = [];
     for (const x of ctx.eatList) {
-      if (meal === "Lunch" ? x.f.lunchShut : x.f.dinnerShut || x.r.townLunch) continue;
+      if (meal === "Lunch" ? x.f.lunchShut : x.f.dinnerShut || x.r.townLunch || x.r.inTown) continue;
       if (!ctx.ledger.eatFree(x.k, ctx.dayIdx)) continue;
       out.push({ r: x.r, k: x.k, d: E.hav(p, x.r) + (x.r.fromMap ? 0.4 : 0) }); // a guide place to eat first, a map one when it is nearer the way
     }
@@ -79,7 +79,8 @@
       // Lunch where the traveler is or along the way (Nov 18, Corpus Christi: North Beach, back over the bridge for lunch,
       // then over the bridge again): places to eat near the stop before, near the stop after and halfway between; each
       // costs what it takes them out of their way, so the one on the path wins over a slightly nearer one behind them.
-      const a = pts[k], b = order[k] || null, mid = b && isFinite(b.lat) ? { lat: (a.lat + b.lat) / 2, lng: (a.lng + b.lng) / 2 } : null;
+      // After the last stop: lunch on the way back too, near where the day ends (the hotel, the port).
+      const a = pts[k], b = order[k] || (k === order.length && win.tail.length ? win.tail[0] : null), mid = b && isFinite(b.lat) ? { lat: (a.lat + b.lat) / 2, lng: (a.lng + b.lng) / 2 } : null;
       const offOf = e => b && isFinite(b.lat) ? E.hav(a, e.r) + E.hav(e.r, b) - E.hav(a, b) : E.hav(a, e.r);
       // The three least out of the way (each one is timed in full below, so only the likely winners are tried).
       const cands = my.pick ? [my.pick] : [...new Map((quick ? [a] : [a, b, mid]).filter(q => q && isFinite(q.lat)).flatMap(q => eatsNear(q, ctx, "Lunch", 3)).map(e => [e.k, e])).values()]
@@ -91,19 +92,45 @@
         // A sit-down lunch, a quicker one when the day is tight, or lunch on the go (bought and eaten walking on) when
         // only that keeps every stop: each a small cost, so the fuller lunch wins whenever it fits.
         const toGo = len === E.TO_GO;
-        const meal = { id: "eat:" + e.k, eatKey: e.k, name: e.r.name, lat: e.r.lat, lng: e.r.lng, mealOf: L, len, quick: len < L.len, toGo, chosen: !!my.pick, fromMap: !!e.r.fromMap };
+        const meal = { id: "eat:" + e.k, eatKey: e.k, name: e.r.name, lat: e.r.lat, lng: e.r.lng, mealOf: L, len, quick: len < L.len, toGo, chosen: !!my.pick, fromMap: !!e.r.fromMap, travelNote: e.r.travelNote || "" };
         const off = my.pick ? 0 : offOf(e);
         const seq = order.slice(0, k).concat([meal], order.slice(k)), r = walk(seq, win, ctx, { r: plain, k }), pen = penalty(r) + (toGo ? 60 : len < L.len ? 20 : 0) + off * 1.5 + (e.r.fromMap ? 0.5 : 0); // a km out of the way weighs like half an hour more riding
         // On a ship, train or plane day lunch is something the app adds, so it keeps the same margin as any added sight.
         if (win.hard && !r.over && win.endBy - r.end < E.FILL_MARGIN) { tight = true; continue; }
         if (len === L.len && !r.over && !r.late) fullFits = true;
-        if (!best || pen < best.pen - 1e-9) best = { seq, r, pen };
+        if (!best || pen < best.pen - 1e-9) best = { seq, r, pen, k };
       } }
     }
     // Lunch never makes the day run late or reach a stop after its last entry: then the day goes without (and says so).
     // Nor does it mean sitting idle waiting for the kitchen to open (lunch first, then a long ride out of town).
-    const ok = best && best.r.lateMeal < 90 && best.r.over <= plain.over && best.r.late <= plain.late && best.r.waits - plain.waits <= 45;
-    return ok ? { seq: best.seq, r: best.r } : { seq: order, r: plain, noLunch: best || tight ? "time" : "place" };
+    // A wait for the kitchen after the last stop is free time anyway (back early, lunch before the ride home).
+    const okOf = c => c && c.r.lateMeal < 90 && c.r.over <= plain.over && c.r.late <= plain.late && (c.k === order.length || c.r.waits - plain.waits <= 45) && !(win.hard && !c.r.over && win.endBy - c.r.end < E.FILL_MARGIN);
+    if (okOf(best)) return { seq: best.seq, r: best.r };
+    // No room for lunch between the stops: a long visit over lunchtime (a town, an island, a big site) has lunch in it,
+    // there, taken out of the visit's own time (Nov 18, Richard: "No lunch in Naples trip": four hours on Capri over
+    // midday and no lunch, because nothing could be added to a full day). The visit is that much shorter; the day isn't longer.
+    {
+      let inside = null;
+      plain.items.filter(x => x.t === "stop" || x.t === "meal").forEach((st, k) => {
+        const s = order[k]; if (!s || s.mealOf || st.t !== "stop" || !isFinite(s.lat)) return;
+        const from = st.at, to = st.at + (st.min || 0), over = Math.min(to, L.to) - Math.max(from, L.from);
+        for (const len of [L.len, L.quick, E.TO_GO]) {
+          if (over < len || (s.minutes || 0) - len < 45) continue;
+          const cands = my.pick ? [my.pick] : eatsNear(s, ctx, "Lunch", 3);
+          for (const e of cands) {
+            const short = Object.assign({}, s, { minutes: s.minutes - len, lunchIn: len });
+            const meal = { id: "eat:" + e.k, eatKey: e.k, name: e.r.name, lat: e.r.lat, lng: e.r.lng, mealOf: L, len, quick: len < L.len, toGo: len === E.TO_GO, chosen: !!my.pick, fromMap: !!e.r.fromMap, inside: s.id, travelNote: e.r.travelNote || (E.byBoat(s.travelNote) && E.hav(s, e.r) <= 3 ? s.travelNote : "") };
+            const seq = order.slice(0, k).concat([short, meal], order.slice(k + 1)), r = walk(seq, win, ctx, { r: plain, k });
+            const pen = penalty(r) + (len < L.len ? 20 : 0) + E.hav(s, e.r) * 1.5 + (e.r.fromMap ? 0.5 : 0);
+            const c = { seq, r, pen, k: k + 1 };
+            if (r.lateMeal < 90 && r.over <= plain.over && r.late <= plain.late && (!inside || pen < inside.pen - 1e-9)) inside = c;
+          }
+          if (inside) break;
+        }
+      });
+      if (inside) return { seq: inside.seq, r: inside.r, lunchIn: true };
+    }
+    return { seq: order, r: plain, noLunch: best || tight ? "time" : "place" };
   }
   // A day that could have lunch but lost it to the stops counts as worse than a slightly later end.
   const cost = c => penalty(c.r) + (c.noLunch === "time" ? 300 : 0);

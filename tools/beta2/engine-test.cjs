@@ -300,7 +300,9 @@ if (fs.existsSync(dir)) { let rides = 0, placed = 0;
   // ride by road or rail never crosses to a place reached only by boat.
     { const piers = E.piersOf(s), placeAt = new Map();
     for (const c of Object.values(s.cities)) for (const x of [...(c.sites || []), ...(c.farther || [])]) if (isFinite(x.lat)) placeAt.set(x.lat.toFixed(5) + ',' + x.lng.toFixed(5), x);
-    const boatPlace = q => { const x = q && placeAt.get(q.lat.toFixed(5) + ',' + q.lng.toFixed(5)); return !!x && (E.byBoat(x.travelNote) || E.waterOnly(x)); };
+    // On an island: at a place reached only by boat, or within 2 km of one (a place to eat in its town, its pier).
+    const isles = [...placeAt.values()].filter(x => E.byBoat(x.travelNote) || E.waterOnly(x));
+    const boatPlace = q => !!q && isles.some(x => E.hav(x, q) <= 2);
     const near = (q, km) => piers.some(p => E.hav(p, q) <= km);
     plans.forEach((p, i) => { if (!p || !p.items) return; p.items.forEach(x => { if (x.t !== 'ride' || !x.from || !x.to || x.mode === 'lift') return; if (x.mode === 'boat') boats++; if (x.pierName) piered++;
       if (x.mode === 'boat') { for (const q of [x.from, x.to]) ok(near(q, E.PIER_AT) || boatPlace(q) || !near(q, E.PIER_KM),
@@ -320,6 +322,23 @@ if (fs.existsSync(dir)) { let rides = 0, placed = 0;
   { const t = E.makeTravel({}, null, null, [], null, [{ name: 'Near Pier', lat: 40.8429, lng: 14.2612 }, { name: 'Named Quay (Terminal)', lat: 40.8374, lng: 14.2548 }]);
     const e = t.estimate({ lat: 40.8525, lng: 14.2597 }, { lat: 40.5532, lng: 14.2222, travelNote: 'About 50 minutes by fast ferry from Named Quay.' });
     ok(e.parts && e.parts[0].pierName === 'Named Quay (Terminal)' && /from Named Quay/.test(e.how), `the boat leaves from the pier the guide names (got ${e.parts && e.parts[0].pierName})`); }
+  // Lunch on every day over lunchtime (Nov 18, Richard: "No lunch in Naples trip"): a day with stops whose time ashore
+  // or in town spans lunch has a lunch stop, at a real place, unless the traveler skipped it; a long visit over midday
+  // has it inside. Every trip, and the Naples picks that had none (Capri and Pompeii, Capri alone, the cathedral too).
+  { let days = 0, said = 0; const noLunch = [];
+    const lunchCheck = (f, s, plans) => plans.forEach((p, i) => { if (!p || !p.items || p.error || p.safe) return; const d = s.days[i]; if (((d.mealPrefs || {}).Lunch || {}).skip) return;
+      const w = E.dayWindow(d, E.makeTravel(s.prefs, s.legModes)); if (!w || w.error || !E.lunchWanted(w) || !p.items.some(x => x.t === 'stop')) return;
+      const c = s.cities[d.city] || {}; if (!(c.restaurants || []).length && !(c.farther || []).some(t => (t.foodDrink || []).length)) return; // no place to eat known at all
+      days++; const m = p.items.find(x => x.t === 'meal' && x.meal === 'Lunch');
+      // None only when the plan says why, plainly (no time left before the ship; no place to eat known out there).
+      if (!m && !(p.explain || []).some(t => /no room for lunch|no place to eat|places to eat aren't in the guide/i.test(t))) noLunch.push(`${f} day ${i + 1}`); else if (!m) said++; else if (/^Lunch in /.test(m.name) && (c.farther || []).some(t => ('Lunch in ' + t.name) === m.name && (t.foodDrink || []).some(x => x.kind === 'eat' && isFinite(x.lat) && E.hav(x, t) <= 3))) noLunch.push(`${f} day ${i + 1}: "${m.name}" names no place`); });
+    for (const f of fs.readdirSync(dir).filter(f => f.endsWith('.json'))) { const s = E.applyPlaces(JSON.parse(fs.readFileSync(path.join(dir, f))), places); lunchCheck(f, s, E.planTrip(s)); }
+    if (fs.existsSync(nf)) for (const picks of [['capri-far', 'pompeii-far'], ['capri-far'], ['duomo-na', 'capri-far', 'pompeii-far'], ['pompeii-far'], ['sorrento-far', 'pompeii-far']]) {
+      const s = E.applyPlaces(JSON.parse(fs.readFileSync(nf)), places), ni = s.days.findIndex(d => /naples/i.test(d.city)); if (ni < 0) continue;
+      s.days[ni].selected = picks; s.days[ni].own = true; const ps = E.planTrip(s); lunchCheck('Naples ' + picks.join('+'), s, ps.map((p, k) => k === ni ? p : null));
+      check('Naples ' + picks.join('+'), s, ps.map((p, k) => k === ni ? p : null)); }
+    for (const x of noLunch.slice(0, 8)) ok(false, `no lunch on a day over lunchtime: ${x}`);
+    if (!noLunch.length) oks++; console.log(`ok   lunch on ${days - said - noLunch.length} of ${days} days over lunchtime (${said} say plainly why not)${noLunch.length ? ', missing silently on ' + noLunch.length : ''}`); }
   console.log(`ok   every ride the kind it is drawn as: ${boats} boat rides, ${piered} rides to or from a pier`); }
 
 // ---- The whole trip (step 6 to 8): same plan whatever order the pieces arrive in, nothing used twice, every day safe.

@@ -175,7 +175,12 @@
       const ranked = E.rank(listed, prefs, style);
       // A town a day away whose travel guide names places to eat gets a lunch stop in its centre (the plan names the
       // guide's suggestions); it is never a dinner idea.
-      const townLunch = (city.farther || []).filter(t => !t.town && (t.foodDrink || []).length && isFinite(t.lat)).map(t => ({ name: "Lunch in " + t.name, lat: t.lat, lng: t.lng, townLunch: t.id }));
+      // Its places to eat that are on the map are planned by name, where they are (Nov 18, Richard's Naples day: "Lunch in
+      // Capri", with no place named); a town whose guide gives none a spot keeps a lunch stop in its centre.
+      const townLunch = (city.farther || []).filter(t => !t.town && (t.foodDrink || []).length && isFinite(t.lat)).flatMap(t => {
+        const real = t.foodDrink.filter(x => x.kind === "eat" && isFinite(x.lat) && isFinite(x.lng) && E.hav(x, t) <= 3);
+        return real.length ? real.map(x => ({ name: x.name, lat: x.lat, lng: x.lng, kind: "restaurant", amenity: "restaurant", fromMap: !!x.fromMap, inTown: t.id, travelNote: t.travelNote || "" }))
+          : [{ name: "Lunch in " + t.name, lat: t.lat, lng: t.lng, townLunch: t.id, travelNote: t.travelNote || "" }]; });
       const ctx = { single: (byCity.get(d.city) || [i]).length === 1, tr, ledger, dayIdx: i, siteDay, eats: (city.restaurants || []).concat(townLunch).sort((a, b) => E.eatKey(a.name).localeCompare(E.eatKey(b.name))), eatFacts: d.eats || {}, mealPrefs: d.mealPrefs || {} };
       // May this day add a sight on its own? Not one used on another day, picked for another day, or in another
       // day's area, unless that day is already planned and left it over.
