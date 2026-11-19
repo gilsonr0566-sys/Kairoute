@@ -22,6 +22,10 @@
   // least a short lunch (Nov 19, Richard: a day landing at the airport and out from 13:40 still gets lunch).
   const lunchWanted = E.lunchWanted = win => { const from = win.sightFrom || win.start, to = isFinite(win.sightTo) ? win.sightTo : win.endBy, L = E.MEALS[0];
     return to - from >= 120 && Math.min(to, L.to) - Math.max(from, L.from) >= E.TO_GO + 10; };
+  // ONE hours rule for places to eat and sights alike (Nov 19 fold: lunch had its own "shut" flags and its own lunch-hour
+  // spans beside the sights' hours). A place's facts for the date are { closed, oh } read the same way as a sight's; it
+  // is shut for a meal when E.closedForDay says so over the meal's hours, and its timing uses E.hoursFit (part 2).
+  E.eatShut = (f, label) => { const m = E.MEALS.find(x => x.label === label) || E.MEALS[0]; return E.closedForDay(f, { start: m.from, endBy: m.to }, m.quick); };
   // The nearest few real places to eat around a point that are open for this meal today and not used on another day.
   function eatsNear(p, ctx, meal, n) {
     // Within one day the list of places to eat and the ledger don't change, so each point is worked out once.
@@ -35,7 +39,7 @@
     const key = meal + n + "@" + p.lat + "," + p.lng, got = ctx.eatMemo.get(key); if (got) return got;
     const out = [];
     for (const x of ctx.eatList) {
-      if (meal === "Lunch" ? x.f.lunchShut : x.f.dinnerShut || x.r.townLunch || x.r.inTown) continue;
+      if (E.eatShut(x.f, meal) || (meal !== "Lunch" && (x.r.townLunch || x.r.inTown))) continue;
       if (!ctx.ledger.eatFree(x.k, ctx.dayIdx)) continue;
       out.push({ r: x.r, k: x.k, d: E.hav(p, x.r) + (x.r.fromMap ? 0.4 : 0) }); // a guide place to eat first, a map one when it is nearer the way
     }
@@ -55,7 +59,7 @@
       // A place the traveler chose that doesn't serve this meal that day (its listed hours): not planned there, and the plan
       // says why (Nov 19 review: a chosen restaurant skipped every check).
       const f = (ctx.eatFacts || {})[k] || {};
-      if (label === "Lunch" ? f.lunchShut : f.dinnerShut) return { skip: !!p.skip, meal, pick: null, pickShut: p.pick.name || "The place you chose" };
+      if (E.eatShut(f, label)) return { skip: !!p.skip, meal, pick: null, pickShut: p.pick.name || "The place you chose" };
       pick = { r: guide || p.pick, k, d: 0 };
     }
     return { skip: !!p.skip, meal, pick };
@@ -86,7 +90,7 @@
     if (my.skip || !lunchWanted(win) || (!ctx.eats.length && !my.pick)) return { seq: order, r: plain };
     const pts = [win.head[win.head.length - 1]].concat(order), lens = [L.len, L.quick, E.TO_GO];
     const mealAt = (e, len, extra) => Object.assign({ id: "eat:" + e.k, eatKey: e.k, name: e.r.name, lat: e.r.lat, lng: e.r.lng, mealOf: L, len, quick: len < L.len, toGo: len === E.TO_GO, chosen: !!my.pick, fromMap: !!e.r.fromMap, travelNote: e.r.travelNote || "",
-      open: len === E.TO_GO ? null : ((ctx.eatFacts || {})[e.k] || {}).lunchOpen || null }, extra || {});
+      oh: len === E.TO_GO ? null : ((ctx.eatFacts || {})[e.k] || {}).oh || null }, extra || {});
     const ok = c => c.r.lateMeal < 90 && !c.r.items.some(x => x.shut) && c.r.late <= plain.late && c.r.over <= plain.over
       && (c.k === order.length || c.r.waits - plain.waits <= 45)
       && !(win.hard && !c.r.over && c.r.end > plain.end && win.endBy - c.r.end < E.FILL_MARGIN);

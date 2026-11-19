@@ -483,12 +483,12 @@ if (fs.existsSync(dir)) for (const f of fs.readdirSync(dir).filter(f => f.endsWi
   ok((r.options || [r]).every(o => ['timetable', 'map', 'roads', 'guide', 'estimate'].includes(o.source)) && /estimate/.test(r.note || ''), `the ride back to the ship says it is an estimate (got ${r.source}: ${r.note || 'no note'})`); }
 // Lunch at a time the place serves it (its listed hours that day); a chosen place shut that day is said, not planned.
 { const L = E.MEALS[0], o = { lat: 0, lng: 0, name: 'A' }, tr = () => ({ min: 0, mode: 'walk', kind: 'walk', how: 'Walk' });
-  const day = (start, open) => E.walkDay([{ id: 'eat:x', name: 'X', lat: 0, lng: 0, mealOf: L, len: 60, open }], { start, endBy: 18 * 60, head: [o], tail: [] }, tr, null);
+  const day = (start, open) => E.walkDay([{ id: 'eat:x', name: 'X', lat: 0, lng: 0, mealOf: L, len: 60, oh: { spans: open, last: null } }], { start, endBy: 18 * 60, head: [o], tail: [] }, tr, null);
   const a = day(12 * 60, [[13 * 60, 15 * 60]]), m = a.items.find(x => x.t === 'meal');
   ok(m.at === 13 * 60 && !m.shut, `lunch waits for the place to open (at ${E.clock(m.at)})`);
   const b = day(12 * 60 + 30, [[11 * 60, 13 * 60]]), mb = b.items.find(x => x.t === 'meal');
   ok(mb.shut && mb.lateMeal >= 30, 'a lunch running past the place\'s closing is marked shut and late');
-  const ctx = { mealPrefs: { Lunch: { pick: { name: 'Shut Taverna', lat: 1, lng: 1 } } }, eatFacts: { [E.eatKey('Shut Taverna')]: { lunchShut: true } }, eats: [] };
+  const ctx = { mealPrefs: { Lunch: { pick: { name: 'Shut Taverna', lat: 1, lng: 1 } } }, eatFacts: { [E.eatKey('Shut Taverna')]: { closed: false, oh: { spans: [[18 * 60, 23 * 60]], last: null } } }, eats: [] };
   const mp = E.mealPlan(ctx, 'Lunch'); ok(!mp.pick && mp.pickShut === 'Shut Taverna', 'a chosen lunch place shut that day is not planned, and named'); }
 // The final check reads the plan itself: a ride of no time between places apart, a guessed ride on a ship day, or a ride
 // back with no extra time each make the day unsafe; and every planned ship day passes it.
@@ -594,6 +594,13 @@ ok(E.readable('Café Ñandú') && E.readable("Joe's Bar & Grill") && !E.readable
     'lunch is wanted on any day out over lunchtime for two hours or more, an afternoon from 13:40 included');
   // A minute riding weighs at least as much as a minute waiting: the planner never buys a little less waiting with a long crossing.
   { const r = { over: 0, late: 0, mealPen: 0, end: 600 }; ok(E.dayCost(Object.assign({ waits: 0, rideMin: 60 }, r)) >= E.dayCost(Object.assign({ waits: 60, rideMin: 0 }, r)), 'an hour more riding never costs less than an hour of waiting'); }
+  // ONE hours rule for places to eat and sights (Nov 19 fold): shut for a meal exactly when E.closedForDay says so over
+  // the meal's hours, and a place that opens later is waited for by E.hoursFit, as a sight is.
+  { const dinnerOnly = { closed: false, oh: { spans: [[18 * 60, 23 * 60]], last: null } }, late = { closed: false, oh: { spans: [[13 * 60, 23 * 60]], last: null } };
+    const L = E.MEALS[0], D = E.MEALS[1], same = f => E.eatShut(f, 'Lunch') === E.closedForDay(f, { start: L.from, endBy: L.to }, L.quick) && E.eatShut(f, 'Dinner') === E.closedForDay(f, { start: D.from, endBy: D.to }, D.quick);
+    ok(E.eatShut(dinnerOnly, 'Lunch') && !E.eatShut(dinnerOnly, 'Dinner') && !E.eatShut(late, 'Lunch') && E.eatShut({ closed: true }, 'Dinner') && !E.eatShut({}, 'Lunch')
+      && [dinnerOnly, late, { closed: true }, {}].every(same), 'a place to eat is shut for a meal by the same hours check as a sight');
+    const f = E.hoursFit(late.oh, 12 * 60, 60); ok(f.wait === 60 && !f.late, `a lunch place opening at 13:00 is waited for, as a sight is (got wait ${f.wait}, late ${f.late})`); }
   // A timetable's boat (exact or borrowed from the ride next door) is still a boat from pier to pier: the way to the pier
   // is a ride of its own, and the whole ride is never shorter than that way plus the time at the pier.
   { const land = { lat: 40.850, lng: 14.258 }, pier = { name: 'Main Pier', lat: 40.838, lng: 14.255 }, isle = { lat: 40.550, lng: 14.240, travelNote: 'Ferry from the main pier, 50 min.' };

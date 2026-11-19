@@ -84,7 +84,7 @@ for (const f of fs.readdirSync(dir).filter(f => f.endsWith('.json')).sort()) {
         // guide, and not the meal of another day. Else it is the nearest the data has: a data gap, listed.
         const used = new Set(all.flatMap(q => !q || !q.items ? [] : q.items.filter(y => (y.t === 'meal' || y.t === 'evening') && y !== x).map(y => E.eatKey(y.name))));
         const offOf = r => E.hav(a, r) + E.hav(r, b) - E.hav(a, b);
-        const better = (city.restaurants || []).filter(r => isFinite(r.lat) && E.mealPlace(r) && !used.has(E.eatKey(r.name)) && !((d.eats || {})[E.eatKey(r.name)] || {}).lunchShut && offOf(r) <= off - 0.4).sort((r, q) => offOf(r) - offOf(q))[0];
+        const better = (city.restaurants || []).filter(r => isFinite(r.lat) && E.mealPlace(r) && !used.has(E.eatKey(r.name)) && !E.eatShut((d.eats || {})[E.eatKey(r.name)] || {}, 'Lunch') && offOf(r) <= off - 0.4).sort((r, q) => offOf(r) - offOf(q))[0];
         if (better) add('lunchWay', `${tag}: ${a.name} > ${x.name} > ${b.name}: ${off.toFixed(1)} km out of the way (${better.name} was ${offOf(better).toFixed(1)} km)`);
         else gaps.lunchWay.push(`${tag}: ${x.name}, ${off.toFixed(1)} km out of the way, is the nearest place to eat known`); });
       // lunch out of town

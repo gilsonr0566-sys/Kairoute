@@ -82,12 +82,10 @@ function engineBucket(withOld) {
       if (!on) { on = { sites: {}, eats: {} };
         allSites(city).forEach(s => { const oh = siteWindow(s, d.date), cw = crowdWindows(Object.assign({ _city: ck }, s), d.date);
           on.sites[s.id] = { closed: siteClosed(s, d.date), oh: oh ? { spans: oh.spans, last: oh.last != null ? oh.last : null } : null, busy: cw ? cw.busy : null }; });
-        // When each place serves lunch that day (Nov 19 review: lunch was planned at a time the restaurant was shut): the
-        // spans its listed hours say it is open between 10:00 and 16:00, in 15-minute steps. None when no hours are listed.
-        const lunchOpen = r => { const h = hoursOf(r); if (!h || r.booked) return null; const sp = []; let st = null;
-          for (let m = 600; m <= 960; m += 15) { const open = ohState(h, d.date, m) === "open"; if (open && st == null) st = m; if (!open && st != null) { sp.push([st, m]); st = null; } }
-          if (st != null) sp.push([st, 960]); return sp; };
-        (city.restaurants || []).forEach(r => { on.eats[keyOf(r.name)] = { lunchShut: mealShut(r, "Lunch", d.date), dinnerShut: mealShut(r, "Dinner", d.date), lunchOpen: lunchOpen(r) }; });
+        // Each place to eat, the same facts as a sight for that date (Nov 19 fold: one hours rule): closed that day, and its
+        // open spans when its hours are known. A table the traveler booked has no hours limit.
+        (city.restaurants || []).forEach(r0 => { const r = Object.assign({}, r0, { hours: hoursOf(r0) }), w = r.booked ? null : siteWindow(r, d.date);
+          on.eats[keyOf(r.name)] = { closed: !r.booked && siteClosed(r, d.date), oh: w ? { spans: w.spans, last: null } : null }; });
         cm.dates.set(d.date, on); }
       facts.sites = on.sites; facts.eats = on.eats;
     }
