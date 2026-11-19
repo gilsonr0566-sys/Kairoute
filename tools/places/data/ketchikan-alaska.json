@@ -184,5 +184,67 @@
    "hours": "",
    "osm": "node/14213844834"
   }
+ ],
+ "piers": [
+  {
+   "name": "Ketchikan",
+   "lat": 55.35894,
+   "lng": -131.70268,
+   "osm": "node/1609347743"
+  },
+  {
+   "name": "Ferry pier",
+   "lat": 55.35484,
+   "lng": -131.69581,
+   "osm": "node/1609416010"
+  },
+  {
+   "name": "Ketchikan",
+   "lat": 55.35384,
+   "lng": -131.69228,
+   "osm": "node/1609416111"
+  },
+  {
+   "name": "Ketchikan",
+   "lat": 55.35368,
+   "lng": -131.69461,
+   "osm": "node/1609416212"
+  },
+  {
+   "name": "Airport",
+   "lat": 55.3565,
+   "lng": -131.70712,
+   "osm": "node/4747147330"
+  },
+  {
+   "name": "Airport Ferry Terminal",
+   "lat": 55.35899,
+   "lng": -131.70183,
+   "osm": "node/4747147342"
+  },
+  {
+   "name": "Airport Ferry Terminal",
+   "lat": 55.3567,
+   "lng": -131.70776,
+   "osm": "node/8305852804"
+  },
+  {
+   "name": "Ketchikan",
+   "lat": 55.35384,
+   "lng": -131.69228,
+   "osm": "node/9198507535"
+  },
+  {
+   "name": "Alaska Marine Highway Ketchikan Ferry Terminal",
+   "lat": 55.35461,
+   "lng": -131.69354,
+   "osm": "way/435392012"
+  },
+  {
+   "name": "Ferry pier",
+   "lat": 55.35708,
+   "lng": -131.70921,
+   "osm": "way/893670126"
+  }
  ]
 }

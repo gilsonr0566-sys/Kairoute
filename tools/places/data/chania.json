@@ -331,5 +331,37 @@
    "hours": "",
    "osm": "node/5239101521"
   }
+ ],
+ "piers": [
+  {
+   "name": "Ferry pier",
+   "lat": 35.51737,
+   "lng": 24.01763,
+   "osm": "node/1323400082"
+  },
+  {
+   "name": "Ferry pier",
+   "lat": 35.60662,
+   "lng": 23.57855,
+   "osm": "node/255408500"
+  },
+  {
+   "name": "Ferry pier",
+   "lat": 35.58743,
+   "lng": 23.58647,
+   "osm": "node/304580106"
+  },
+  {
+   "name": "Souda",
+   "lat": 35.4892,
+   "lng": 24.07547,
+   "osm": "node/576432749"
+  },
+  {
+   "name": "Souda",
+   "lat": 35.48979,
+   "lng": 24.07291,
+   "osm": "node/576432754"
+  }
  ]
 }

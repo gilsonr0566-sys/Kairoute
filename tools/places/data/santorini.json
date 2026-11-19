@@ -324,5 +324,61 @@
    "hours": "",
    "osm": "node/10846415721"
   }
+ ],
+ "piers": [
+  {
+   "name": "Αμμούδι",
+   "lat": 36.46039,
+   "lng": 25.3698,
+   "osm": "node/1429259267"
+  },
+  {
+   "name": "Κόρφος",
+   "lat": 36.43848,
+   "lng": 25.35122,
+   "osm": "node/291758692"
+  },
+  {
+   "name": "Santorini Old Port - Fira",
+   "lat": 36.41831,
+   "lng": 25.42761,
+   "osm": "node/292989872"
+  },
+  {
+   "name": "Θήρα - Λιμάνι Αθηνιός",
+   "lat": 36.3866,
+   "lng": 25.42932,
+   "osm": "node/33711543"
+  },
+  {
+   "name": "Thira (Santorini) - Athinios Port",
+   "lat": 36.38681,
+   "lng": 25.43014,
+   "osm": "node/501803203"
+  },
+  {
+   "name": "Pier 2",
+   "lat": 36.41045,
+   "lng": 25.40122,
+   "osm": "node/501803221"
+  },
+  {
+   "name": "Pier 1",
+   "lat": 36.41097,
+   "lng": 25.40044,
+   "osm": "node/59747915"
+  },
+  {
+   "name": "Oia - Armeni Port",
+   "lat": 36.46025,
+   "lng": 25.38085,
+   "osm": "node/620235243"
+  },
+  {
+   "name": "Boat to Kamari beach",
+   "lat": 36.35663,
+   "lng": 25.476,
+   "osm": "node/8995873419"
+  }
  ]
 }

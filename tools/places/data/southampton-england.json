@@ -1212,5 +1212,157 @@
    "hours": "Mo-Su 12:00-23:00",
    "osm": "node/671767282"
   }
+ ],
+ "piers": [
+  {
+   "name": "Ferry pier",
+   "lat": 50.81201,
+   "lng": -1.08841,
+   "osm": "node/12433738596"
+  },
+  {
+   "name": "Red Funnel Terminal 1",
+   "lat": 50.8957,
+   "lng": -1.40641,
+   "osm": "node/1310467094"
+  },
+  {
+   "name": "Red Funnel Terminal 1",
+   "lat": 50.89601,
+   "lng": -1.40623,
+   "osm": "node/1418768387"
+  },
+  {
+   "name": "Southsea Hoverport",
+   "lat": 50.78495,
+   "lng": -1.09991,
+   "osm": "node/1475049967"
+  },
+  {
+   "name": "Red Funnel Terminal 2",
+   "lat": 50.89438,
+   "lng": -1.40525,
+   "osm": "node/160273012"
+  },
+  {
+   "name": "Ferry pier",
+   "lat": 50.79643,
+   "lng": -1.10916,
+   "osm": "node/2026488641"
+  },
+  {
+   "name": "Hamble Pink Ferry",
+   "lat": 50.85787,
+   "lng": -1.3119,
+   "osm": "node/252190269"
+  },
+  {
+   "name": "Ferry pier",
+   "lat": 50.79666,
+   "lng": -1.02979,
+   "osm": "node/4936929534"
+  },
+  {
+   "name": "Ferry pier",
+   "lat": 50.79628,
+   "lng": -1.02511,
+   "osm": "node/4959505408"
+  },
+  {
+   "name": "Gosport Ferry Terminal",
+   "lat": 50.79498,
+   "lng": -1.11607,
+   "osm": "node/554203223"
+  },
+  {
+   "name": "Portsmouth Car Ferry terminal",
+   "lat": 50.79289,
+   "lng": -1.10621,
+   "osm": "node/566842975"
+  },
+  {
+   "name": "Gosport Ferry Terminal",
+   "lat": 50.79701,
+   "lng": -1.10931,
+   "osm": "node/566842977"
+  },
+  {
+   "name": "Portsmouth Harbour",
+   "lat": 50.7967,
+   "lng": -1.10878,
+   "osm": "node/6010353229"
+  },
+  {
+   "name": "Town Quay",
+   "lat": 50.89408,
+   "lng": -1.40574,
+   "osm": "node/6341360307"
+  },
+  {
+   "name": "Hythe Pier",
+   "lat": 50.87492,
+   "lng": -1.39357,
+   "osm": "node/672670074"
+  },
+  {
+   "name": "Red Jet Ticket Office",
+   "lat": 50.89455,
+   "lng": -1.40605,
+   "osm": "way/128360615"
+  },
+  {
+   "name": "Portsmouth International Port",
+   "lat": 50.8131,
+   "lng": -1.09167,
+   "osm": "way/156568442"
+  },
+  {
+   "name": "Wightlink Passenger Ferry Terminal.",
+   "lat": 50.7961,
+   "lng": -1.10893,
+   "osm": "way/192089869"
+  },
+  {
+   "name": "Red Funnel Terminal 1",
+   "lat": 50.89621,
+   "lng": -1.40541,
+   "osm": "way/37375880"
+  },
+  {
+   "name": "Red Funnel Terminal 2",
+   "lat": 50.89454,
+   "lng": -1.40585,
+   "osm": "way/37375883"
+  },
+  {
+   "name": "Southsea Hoverport",
+   "lat": 50.78519,
+   "lng": -1.10011,
+   "osm": "way/43762643"
+  },
+  {
+   "name": "Portsmouth IOW Car Ferry Terminal",
+   "lat": 50.79264,
+   "lng": -1.10468,
+   "osm": "way/43763337"
+  },
+  {
+   "name": "Red Funnel Terminal 1",
+   "lat": 50.89658,
+   "lng": -1.4062,
+   "osm": "way/674435132"
+  },
+  {
+   "name": "Wightlink Car Ferry Terminal",
+   "lat": 50.79309,
+   "lng": -1.10619,
+   "osm": "way/71398461"
+  },
+  {
+   "name": "Hythe Pier",
+   "lat": 50.87067,
+   "lng": -1.39935,
+   "osm": "way/942928257"
+  }
  ]
 }

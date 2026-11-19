@@ -3185,5 +3185,103 @@
    "hours": "Mo-Su 10:00-22:00",
    "osm": "way/169002381"
   }
+ ],
+ "piers": [
+  {
+   "name": "Floridsdorfer Brücke",
+   "lat": 48.24885,
+   "lng": 16.39126,
+   "osm": "node/11279437383"
+  },
+  {
+   "name": "CopaBeach",
+   "lat": 48.23192,
+   "lng": 16.40925,
+   "osm": "node/11280560537"
+  },
+  {
+   "name": "Nordbrücke",
+   "lat": 48.25676,
+   "lng": 16.38131,
+   "osm": "node/11280560539"
+  },
+  {
+   "name": "Jedleseer Brücke",
+   "lat": 48.26677,
+   "lng": 16.3752,
+   "osm": "node/11280560546"
+  },
+  {
+   "name": "Schleuse Freudenau",
+   "lat": 48.18983,
+   "lng": 16.45738,
+   "osm": "node/1175056889"
+  },
+  {
+   "name": "Ferry pier",
+   "lat": 48.19597,
+   "lng": 16.44848,
+   "osm": "node/1175057013"
+  },
+  {
+   "name": "Handelskai Pontoon 5",
+   "lat": 48.22572,
+   "lng": 16.40641,
+   "osm": "node/11970217469"
+  },
+  {
+   "name": "Ferry pier",
+   "lat": 48.19316,
+   "lng": 16.45314,
+   "osm": "node/1505079616"
+  },
+  {
+   "name": "Ferry pier",
+   "lat": 48.19327,
+   "lng": 16.45781,
+   "osm": "node/1505079617"
+  },
+  {
+   "name": "Schiffsanlegestelle",
+   "lat": 48.26524,
+   "lng": 16.36624,
+   "osm": "node/2178093312"
+  },
+  {
+   "name": "Schiffstation Wien City",
+   "lat": 48.21232,
+   "lng": 16.37748,
+   "osm": "node/2823421580"
+  },
+  {
+   "name": "Nationalparkboot Lobau",
+   "lat": 48.21563,
+   "lng": 16.37373,
+   "osm": "node/5017981604"
+  },
+  {
+   "name": "Bratislava",
+   "lat": 48.13926,
+   "lng": 17.10662,
+   "osm": "node/6228317792"
+  },
+  {
+   "name": "Schiffstation Wien/City",
+   "lat": 48.21238,
+   "lng": 16.37747,
+   "osm": "node/6228317793"
+  },
+  {
+   "name": "Bratislava",
+   "lat": 48.13935,
+   "lng": 17.10831,
+   "osm": "node/6742518907"
+  },
+  {
+   "name": "Bratislava Passenger Port",
+   "lat": 48.13985,
+   "lng": 17.11292,
+   "osm": "way/34562815"
+  }
  ]
 }

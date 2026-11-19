@@ -7910,5 +7910,31 @@
    "hours": "",
    "osm": "node/9498676682"
   }
+ ],
+ "piers": [
+  {
+   "name": "Isola Tiberina",
+   "lat": 41.89033,
+   "lng": 12.47577,
+   "osm": "node/1349160473"
+  },
+  {
+   "name": "Ponte Risorgimento",
+   "lat": 41.91946,
+   "lng": 12.47022,
+   "osm": "node/1351740004"
+  },
+  {
+   "name": "Ponte Cavour",
+   "lat": 41.90441,
+   "lng": 12.47435,
+   "osm": "node/1351757225"
+  },
+  {
+   "name": "Sant'Angelo",
+   "lat": 41.90176,
+   "lng": 12.46815,
+   "osm": "node/1351761192"
+  }
  ]
 }

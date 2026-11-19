@@ -2117,5 +2117,157 @@
    "hours": "",
    "osm": "node/4630327404"
   }
+ ],
+ "piers": [
+  {
+   "name": "Cais do Sodré",
+   "lat": 38.70423,
+   "lng": -9.14667,
+   "osm": "node/11012708885"
+  },
+  {
+   "name": "Cacilhas",
+   "lat": 38.6884,
+   "lng": -9.14734,
+   "osm": "node/11012708886"
+  },
+  {
+   "name": "Pedrouços/Algés",
+   "lat": 38.69409,
+   "lng": -9.22658,
+   "osm": "node/14026662531"
+  },
+  {
+   "name": "Belém",
+   "lat": 38.69449,
+   "lng": -9.1984,
+   "osm": "node/257950731"
+  },
+  {
+   "name": "Porto Brandão",
+   "lat": 38.67815,
+   "lng": -9.20693,
+   "osm": "node/257950738"
+  },
+  {
+   "name": "Cacilhas",
+   "lat": 38.68827,
+   "lng": -9.14835,
+   "osm": "node/414922741"
+  },
+  {
+   "name": "Cais do Sodré",
+   "lat": 38.70437,
+   "lng": -9.14584,
+   "osm": "node/414979642"
+  },
+  {
+   "name": "Cais do Sodré",
+   "lat": 38.70449,
+   "lng": -9.14517,
+   "osm": "node/489341876"
+  },
+  {
+   "name": "Cais do Sodré",
+   "lat": 38.70461,
+   "lng": -9.1445,
+   "osm": "node/5088877287"
+  },
+  {
+   "name": "Terreiro do Paço",
+   "lat": 38.70629,
+   "lng": -9.13343,
+   "osm": "node/6354971911"
+  },
+  {
+   "name": "Terreiro do Paço",
+   "lat": 38.70649,
+   "lng": -9.13278,
+   "osm": "node/6555312687"
+  },
+  {
+   "name": "Ferry pier",
+   "lat": 38.70454,
+   "lng": -9.14669,
+   "osm": "way/1101594087"
+  },
+  {
+   "name": "Ferry pier",
+   "lat": 38.68817,
+   "lng": -9.14849,
+   "osm": "way/146419419"
+  },
+  {
+   "name": "Estação Fluvial de Belém",
+   "lat": 38.69497,
+   "lng": -9.19853,
+   "osm": "way/155477750"
+  },
+  {
+   "name": "Ferry pier",
+   "lat": 38.6946,
+   "lng": -9.19841,
+   "osm": "way/155477766"
+  },
+  {
+   "name": "Ferry pier",
+   "lat": 38.70458,
+   "lng": -9.14585,
+   "osm": "way/155614426"
+  },
+  {
+   "name": "Ferry pier",
+   "lat": 38.70469,
+   "lng": -9.14517,
+   "osm": "way/155614427"
+  },
+  {
+   "name": "Ferry pier",
+   "lat": 38.7064,
+   "lng": -9.13344,
+   "osm": "way/155685218"
+  },
+  {
+   "name": "Ferry pier",
+   "lat": 38.70659,
+   "lng": -9.13279,
+   "osm": "way/155685222"
+  },
+  {
+   "name": "Ferry pier",
+   "lat": 38.67809,
+   "lng": -9.20693,
+   "osm": "way/156254760"
+  },
+  {
+   "name": "Terminal Fluvial de Cacilhas",
+   "lat": 38.68812,
+   "lng": -9.14783,
+   "osm": "way/39627722"
+  },
+  {
+   "name": "Terminal Fluvial do Cais do Sodré",
+   "lat": 38.705,
+   "lng": -9.14569,
+   "osm": "way/39658869"
+  },
+  {
+   "name": "Estação Fluvial de Porto Brandão",
+   "lat": 38.67787,
+   "lng": -9.20664,
+   "osm": "way/454582934"
+  },
+  {
+   "name": "Ferry pier",
+   "lat": 38.7048,
+   "lng": -9.14451,
+   "osm": "way/678973023"
+  },
+  {
+   "name": "Terminal Fluvial do Terreiro do Paço",
+   "lat": 38.70688,
+   "lng": -9.13311,
+   "osm": "way/96320882"
+  }
  ]
 }

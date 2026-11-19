@@ -1411,5 +1411,133 @@
    "hours": "",
    "osm": "node/14248734990"
   }
+ ],
+ "piers": [
+  {
+   "name": "BluJets pedoni",
+   "lat": 38.21693,
+   "lng": 15.63341,
+   "osm": "node/11659376802"
+  },
+  {
+   "name": "Messina (Blu Jet)",
+   "lat": 38.18836,
+   "lng": 15.56047,
+   "osm": "node/13479140681"
+  },
+  {
+   "name": "Ferry pier",
+   "lat": 38.22276,
+   "lng": 15.63303,
+   "osm": "node/1463204372"
+  },
+  {
+   "name": "Ferry pier",
+   "lat": 38.21092,
+   "lng": 15.56171,
+   "osm": "node/1753698254"
+  },
+  {
+   "name": "Ferry pier",
+   "lat": 38.22088,
+   "lng": 15.63291,
+   "osm": "node/1753698276"
+  },
+  {
+   "name": "Ferry pier",
+   "lat": 38.22108,
+   "lng": 15.63297,
+   "osm": "node/1753698278"
+  },
+  {
+   "name": "Invasatura V",
+   "lat": 38.18818,
+   "lng": 15.56276,
+   "osm": "node/1977634007"
+  },
+  {
+   "name": "Reggio di Calabria (Liberty Lines)",
+   "lat": 38.12165,
+   "lng": 15.64884,
+   "osm": "node/2012143776"
+  },
+  {
+   "name": "Molo Norimberga",
+   "lat": 38.19076,
+   "lng": 15.56674,
+   "osm": "node/2012177911"
+  },
+  {
+   "name": "Reggio di Calabria (Meridiano Lines)",
+   "lat": 38.12321,
+   "lng": 15.65217,
+   "osm": "node/2474427013"
+  },
+  {
+   "name": "Ferry pier",
+   "lat": 38.21031,
+   "lng": 15.56166,
+   "osm": "node/247958241"
+  },
+  {
+   "name": "Ferry pier",
+   "lat": 38.21609,
+   "lng": 15.63305,
+   "osm": "node/2931755232"
+  },
+  {
+   "name": "Villa San Giovanni invasatura 2",
+   "lat": 38.21626,
+   "lng": 15.63331,
+   "osm": "node/330215846"
+  },
+  {
+   "name": "Messina (Liberty Lines)",
+   "lat": 38.18841,
+   "lng": 15.56172,
+   "osm": "node/3635807449"
+  },
+  {
+   "name": "Ferry pier",
+   "lat": 38.20901,
+   "lng": 15.56182,
+   "osm": "node/536098486"
+  },
+  {
+   "name": "Invasatura IV",
+   "lat": 38.18809,
+   "lng": 15.56312,
+   "osm": "node/746505791"
+  },
+  {
+   "name": "Invasatura III",
+   "lat": 38.18799,
+   "lng": 15.56344,
+   "osm": "node/746505793"
+  },
+  {
+   "name": "Invasatura II",
+   "lat": 38.18814,
+   "lng": 15.56369,
+   "osm": "node/746505797"
+  },
+  {
+   "name": "Invasatura I",
+   "lat": 38.18831,
+   "lng": 15.56394,
+   "osm": "node/746505798"
+  },
+  {
+   "name": "Villa San Giovanni invasatura automezzi",
+   "lat": 38.21697,
+   "lng": 15.6336,
+   "osm": "node/8191001989"
+  },
+  {
+   "name": "Villa San Giovanni invasatura 1",
+   "lat": 38.2164,
+   "lng": 15.63362,
+   "osm": "node/8191001991"
+  }
  ]
 }

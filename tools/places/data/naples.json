@@ -4870,5 +4870,163 @@
    "hours": "",
    "osm": "node/13273984829"
   }
+ ],
+ "piers": [
+  {
+   "name": "Pier 10",
+   "lat": 40.83792,
+   "lng": 14.25521,
+   "osm": "node/10072475978"
+  },
+  {
+   "name": "Pier 8",
+   "lat": 40.83765,
+   "lng": 14.25495,
+   "osm": "node/10072475979"
+  },
+  {
+   "name": "Pier 9",
+   "lat": 40.83775,
+   "lng": 14.25502,
+   "osm": "node/10072475980"
+  },
+  {
+   "name": "Pier 6",
+   "lat": 40.83745,
+   "lng": 14.25482,
+   "osm": "node/10072475981"
+  },
+  {
+   "name": "Ferry pier",
+   "lat": 40.63966,
+   "lng": 14.40022,
+   "osm": "node/11034264565"
+  },
+  {
+   "name": "Ferry pier",
+   "lat": 40.63084,
+   "lng": 14.37767,
+   "osm": "node/11037368207"
+  },
+  {
+   "name": "Ferry pier",
+   "lat": 40.63079,
+   "lng": 14.37743,
+   "osm": "node/11037368208"
+  },
+  {
+   "name": "Ferry pier",
+   "lat": 40.63073,
+   "lng": 14.37719,
+   "osm": "node/11037368209"
+  },
+  {
+   "name": "Ferry pier",
+   "lat": 40.63055,
+   "lng": 14.37682,
+   "osm": "node/11037368210"
+  },
+  {
+   "name": "Ferry pier",
+   "lat": 40.63051,
+   "lng": 14.37646,
+   "osm": "node/11037368211"
+  },
+  {
+   "name": "Ferry pier",
+   "lat": 40.6304,
+   "lng": 14.37613,
+   "osm": "node/11037368212"
+  },
+  {
+   "name": "Ferry pier",
+   "lat": 40.62996,
+   "lng": 14.37443,
+   "osm": "node/11037368653"
+  },
+  {
+   "name": "Ferry pier",
+   "lat": 40.62994,
+   "lng": 14.37438,
+   "osm": "node/11037368654"
+  },
+  {
+   "name": "Ferry pier",
+   "lat": 40.8405,
+   "lng": 14.26211,
+   "osm": "node/11192965077"
+  },
+  {
+   "name": "Molo Angioino",
+   "lat": 40.83767,
+   "lng": 14.25729,
+   "osm": "node/11192965078"
+  },
+  {
+   "name": "Ferry pier",
+   "lat": 40.62996,
+   "lng": 14.3744,
+   "osm": "node/1997518381"
+  },
+  {
+   "name": "Ferry pier",
+   "lat": 40.82744,
+   "lng": 14.22236,
+   "osm": "node/2213494363"
+  },
+  {
+   "name": "Molo Mergelina",
+   "lat": 40.82885,
+   "lng": 14.22272,
+   "osm": "node/2213494370"
+  },
+  {
+   "name": "Molo Beverello (Terminal Ascalfi)",
+   "lat": 40.83735,
+   "lng": 14.25475,
+   "osm": "node/286240671"
+  },
+  {
+   "name": "Pozzuoli",
+   "lat": 40.82371,
+   "lng": 14.11793,
+   "osm": "node/334045990"
+  },
+  {
+   "name": "Pier 7",
+   "lat": 40.83755,
+   "lng": 14.25488,
+   "osm": "node/3597881702"
+  },
+  {
+   "name": "Ferry pier",
+   "lat": 40.55627,
+   "lng": 14.242,
+   "osm": "node/3711590228"
+  },
+  {
+   "name": "Ferry pier",
+   "lat": 40.6306,
+   "lng": 14.37698,
+   "osm": "node/4290977245"
+  },
+  {
+   "name": "Porta di Massa",
+   "lat": 40.84288,
+   "lng": 14.26118,
+   "osm": "node/4822113914"
+  },
+  {
+   "name": "Pier 11",
+   "lat": 40.83797,
+   "lng": 14.25556,
+   "osm": "node/5109521171"
+  },
+  {
+   "name": "Ferry pier",
+   "lat": 40.55604,
+   "lng": 14.24037,
+   "osm": "node/5361984554"
+  }
  ]
 }

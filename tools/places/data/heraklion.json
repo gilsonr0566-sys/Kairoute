@@ -646,5 +646,49 @@
    "hours": "Mo-Su 10:00-01:00",
    "osm": "node/14242638757"
   }
+ ],
+ "piers": [
+  {
+   "name": "Heraklion",
+   "lat": 35.34253,
+   "lng": 25.14351,
+   "osm": "node/1187906551"
+  },
+  {
+   "name": "Heraklion",
+   "lat": 35.34243,
+   "lng": 25.14232,
+   "osm": "node/1187906885"
+  },
+  {
+   "name": "Ηράκλειο",
+   "lat": 35.3427,
+   "lng": 25.14444,
+   "osm": "node/1187907064"
+  },
+  {
+   "name": "Worldchampion Jet  &  Champions League Jet 1",
+   "lat": 35.342,
+   "lng": 25.14112,
+   "osm": "node/267668226"
+  },
+  {
+   "name": "Ferry pier",
+   "lat": 34.92828,
+   "lng": 24.80101,
+   "osm": "node/4361887548"
+  },
+  {
+   "name": "Ferry pier",
+   "lat": 34.92832,
+   "lng": 24.80611,
+   "osm": "node/4361887549"
+  },
+  {
+   "name": "Blue Star Chios",
+   "lat": 35.34387,
+   "lng": 25.14278,
+   "osm": "node/9282711370"
+  }
  ]
 }

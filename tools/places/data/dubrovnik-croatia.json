@@ -662,5 +662,241 @@
    "hours": "Mo-Su 11:00-23:00",
    "osm": "node/14181558207"
   }
+ ],
+ "piers": [
+  {
+   "name": "Dubrovnik",
+   "lat": 42.65778,
+   "lng": 18.08637,
+   "osm": "node/11037220678"
+  },
+  {
+   "name": "Ferry pier",
+   "lat": 42.64114,
+   "lng": 18.11811,
+   "osm": "node/12479302474"
+  },
+  {
+   "name": "Ferry pier",
+   "lat": 42.64154,
+   "lng": 18.11392,
+   "osm": "node/12479325598"
+  },
+  {
+   "name": "Ferry pier",
+   "lat": 42.63867,
+   "lng": 18.12677,
+   "osm": "node/12479347905"
+  },
+  {
+   "name": "Dubrovnik",
+   "lat": 42.65788,
+   "lng": 18.08574,
+   "osm": "node/1377046092"
+  },
+  {
+   "name": "Srebreno",
+   "lat": 42.6208,
+   "lng": 18.1983,
+   "osm": "node/13811194801"
+  },
+  {
+   "name": "Cavtat",
+   "lat": 42.5819,
+   "lng": 18.21661,
+   "osm": "node/1583747653"
+  },
+  {
+   "name": "Mlini",
+   "lat": 42.62194,
+   "lng": 18.20531,
+   "osm": "node/1612064185"
+  },
+  {
+   "name": "Dubrovnik",
+   "lat": 42.66371,
+   "lng": 18.08135,
+   "osm": "node/1825552175"
+  },
+  {
+   "name": "Ferry pier",
+   "lat": 42.6606,
+   "lng": 18.08465,
+   "osm": "node/1825561035"
+  },
+  {
+   "name": "Ferry pier",
+   "lat": 42.63424,
+   "lng": 18.13039,
+   "osm": "node/5892635326"
+  },
+  {
+   "name": "Ferry pier",
+   "lat": 42.63633,
+   "lng": 18.13011,
+   "osm": "node/5892644922"
+  },
+  {
+   "name": "Ferry pier",
+   "lat": 42.6381,
+   "lng": 18.12662,
+   "osm": "node/5892644923"
+  },
+  {
+   "name": "Ferry pier",
+   "lat": 42.64124,
+   "lng": 18.11785,
+   "osm": "node/5892644924"
+  },
+  {
+   "name": "Ferry pier",
+   "lat": 42.64121,
+   "lng": 18.11563,
+   "osm": "node/5892644926"
+  },
+  {
+   "name": "Ferry pier",
+   "lat": 42.64157,
+   "lng": 18.11226,
+   "osm": "node/5892644927"
+  },
+  {
+   "name": "Ferry pier",
+   "lat": 42.6722,
+   "lng": 18.08804,
+   "osm": "node/5892657957"
+  },
+  {
+   "name": "Ferry pier",
+   "lat": 42.6732,
+   "lng": 18.09136,
+   "osm": "node/5892657958"
+  },
+  {
+   "name": "Ferry pier",
+   "lat": 42.67318,
+   "lng": 18.09243,
+   "osm": "node/5892657959"
+  },
+  {
+   "name": "Ferry pier",
+   "lat": 42.67264,
+   "lng": 18.0934,
+   "osm": "node/5892657960"
+  },
+  {
+   "name": "Ferry pier",
+   "lat": 42.67399,
+   "lng": 18.09719,
+   "osm": "node/5892657961"
+  },
+  {
+   "name": "Ferry pier",
+   "lat": 42.67094,
+   "lng": 18.09819,
+   "osm": "node/5892663442"
+  },
+  {
+   "name": "Ferry pier",
+   "lat": 42.67084,
+   "lng": 18.10005,
+   "osm": "node/5892663443"
+  },
+  {
+   "name": "Ferry pier",
+   "lat": 42.66185,
+   "lng": 18.05701,
+   "osm": "node/5892663444"
+  },
+  {
+   "name": "Ferry pier",
+   "lat": 42.65606,
+   "lng": 18.06885,
+   "osm": "node/5892663445"
+  },
+  {
+   "name": "Ferry pier",
+   "lat": 42.65567,
+   "lng": 18.06991,
+   "osm": "node/5892663446"
+  },
+  {
+   "name": "Ferry pier",
+   "lat": 42.65119,
+   "lng": 18.06009,
+   "osm": "node/5892663447"
+  },
+  {
+   "name": "Defora",
+   "lat": 42.62926,
+   "lng": 18.12158,
+   "osm": "node/5892666990"
+  },
+  {
+   "name": "Ferry pier",
+   "lat": 42.64126,
+   "lng": 18.10509,
+   "osm": "node/5921486456"
+  },
+  {
+   "name": "Ferry pier",
+   "lat": 42.57518,
+   "lng": 18.19548,
+   "osm": "node/5923682898"
+  },
+  {
+   "name": "Ferry pier",
+   "lat": 42.65187,
+   "lng": 18.04823,
+   "osm": "node/5923684716"
+  },
+  {
+   "name": "Ferry pier",
+   "lat": 42.66898,
+   "lng": 18.05795,
+   "osm": "node/5923693588"
+  },
+  {
+   "name": "Ferry pier",
+   "lat": 42.67069,
+   "lng": 18.13311,
+   "osm": "node/5923742664"
+  },
+  {
+   "name": "Ferry pier",
+   "lat": 42.65769,
+   "lng": 18.08606,
+   "osm": "node/6255930090"
+  },
+  {
+   "name": "Pristanište Gornje Čelo Koločep",
+   "lat": 42.67089,
+   "lng": 18.01765,
+   "osm": "node/8494852180"
+  },
+  {
+   "name": "Dubrovnik",
+   "lat": 42.6409,
+   "lng": 18.11177,
+   "osm": "node/8672264450"
+  },
+  {
+   "name": "Lokrum",
+   "lat": 42.62557,
+   "lng": 18.12316,
+   "osm": "node/888663304"
+  },
+  {
+   "name": "Ferry pier",
+   "lat": 42.58006,
+   "lng": 18.21619,
+   "osm": "way/1077666761"
+  },
+  {
+   "name": "Ferry pier",
+   "lat": 42.57952,
+   "lng": 18.21483,
+   "osm": "way/239631852"
+  }
  ]
 }

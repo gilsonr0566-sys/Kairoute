@@ -241,5 +241,31 @@
    "wikidata": "",
    "note": "Small aquarium featuring entirely local marine species. Panel descriptions are in both Montenegrin and English."
   }
+ ],
+ "piers": [
+  {
+   "name": "Lepetane",
+   "lat": 42.46573,
+   "lng": 18.68548,
+   "osm": "node/11944126590"
+  },
+  {
+   "name": "Lepetane",
+   "lat": 42.46586,
+   "lng": 18.68593,
+   "osm": "node/1590042500"
+  },
+  {
+   "name": "Lepetane",
+   "lat": 42.46579,
+   "lng": 18.68569,
+   "osm": "node/1590042506"
+  },
+  {
+   "name": "Ferry pier",
+   "lat": 42.42583,
+   "lng": 18.7669,
+   "osm": "node/834266065"
+  }
  ]
 }

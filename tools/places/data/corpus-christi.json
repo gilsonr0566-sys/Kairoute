@@ -155,5 +155,19 @@
    "hours": "Mo-Sa 04:30-21:00; Su 04:30-15:00",
    "osm": "way/462900660"
   }
+ ],
+ "piers": [
+  {
+   "name": "Port Aransas Ferry Landing",
+   "lat": 27.83981,
+   "lng": -97.06914,
+   "osm": "node/227494681"
+  },
+  {
+   "name": "Aransas Pass Ferry Landing",
+   "lat": 27.84403,
+   "lng": -97.07043,
+   "osm": "node/227505779"
+  }
  ]
 }

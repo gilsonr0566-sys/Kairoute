@@ -3567,5 +3567,493 @@
    "hours": "Su-Th 10:00-01:00; Fr,Sa 10:00-02:00",
    "osm": "node/1561370936"
   }
+ ],
+ "piers": [
+  {
+   "name": "Abfahrtsstelle Barkassen Ehlers",
+   "lat": 53.54382,
+   "lng": 9.97923,
+   "osm": "node/11054903388"
+  },
+  {
+   "name": "Hafenmuseum / Bremer Kai",
+   "lat": 53.52835,
+   "lng": 9.99985,
+   "osm": "node/11144348934"
+  },
+  {
+   "name": "Cap San Diego",
+   "lat": 53.54264,
+   "lng": 9.97695,
+   "osm": "node/11144348988"
+  },
+  {
+   "name": "Holstentorterrasse",
+   "lat": 53.86553,
+   "lng": 10.68087,
+   "osm": "node/11232655745"
+  },
+  {
+   "name": "Ferry pier",
+   "lat": 53.54552,
+   "lng": 9.96314,
+   "osm": "node/11281589136"
+  },
+  {
+   "name": "Köhlbrandhöft (nur für Betriebsangehörige)",
+   "lat": 53.53987,
+   "lng": 9.93814,
+   "osm": "node/12046709910"
+  },
+  {
+   "name": "Theater im Hafen",
+   "lat": 53.54075,
+   "lng": 9.97419,
+   "osm": "node/12048959051"
+  },
+  {
+   "name": "Landungsbrücken Brücke 2",
+   "lat": 53.54498,
+   "lng": 9.97057,
+   "osm": "node/12708087255"
+  },
+  {
+   "name": "Landungsbrücken Brücke 3",
+   "lat": 53.54509,
+   "lng": 9.96979,
+   "osm": "node/12708087256"
+  },
+  {
+   "name": "Landungsbrücken Brücke 1",
+   "lat": 53.54472,
+   "lng": 9.97155,
+   "osm": "node/12708087257"
+  },
+  {
+   "name": "Landungsbrücken Brücke 4",
+   "lat": 53.54513,
+   "lng": 9.96882,
+   "osm": "node/12946980246"
+  },
+  {
+   "name": "Landungsbrücken Brücke 5",
+   "lat": 53.54517,
+   "lng": 9.96809,
+   "osm": "node/12946980247"
+  },
+  {
+   "name": "Landungsbrücken Brücke 6",
+   "lat": 53.54522,
+   "lng": 9.96704,
+   "osm": "node/12946980248"
+  },
+  {
+   "name": "Landungsbrücken Brücke 7",
+   "lat": 53.54526,
+   "lng": 9.9663,
+   "osm": "node/12946980249"
+  },
+  {
+   "name": "Landungsbrücken Brücke 10",
+   "lat": 53.54536,
+   "lng": 9.96347,
+   "osm": "node/12946980250"
+  },
+  {
+   "name": "Anleger Hamburg Port Authority Große Pötte & Kleine Züge",
+   "lat": 53.54421,
+   "lng": 9.9926,
+   "osm": "node/13004771461"
+  },
+  {
+   "name": "Musical Shuttle",
+   "lat": 53.54484,
+   "lng": 9.97107,
+   "osm": "node/13686473778"
+  },
+  {
+   "name": "Moltkebrücke",
+   "lat": 53.86256,
+   "lng": 10.70306,
+   "osm": "node/1453067057"
+  },
+  {
+   "name": "Jungfernstieg",
+   "lat": 53.55338,
+   "lng": 9.99349,
+   "osm": "node/1809693726"
+  },
+  {
+   "name": "Maritimes Museum / Hafen City",
+   "lat": 53.54226,
+   "lng": 10.00022,
+   "osm": "node/1957123571"
+  },
+  {
+   "name": "Landungsbrücken Brücke 1",
+   "lat": 53.54471,
+   "lng": 9.97157,
+   "osm": "node/197922330"
+  },
+  {
+   "name": "Elbphilharmonie",
+   "lat": 53.54028,
+   "lng": 9.98647,
+   "osm": "node/2003204241"
+  },
+  {
+   "name": "Ernst-August-Schleuse",
+   "lat": 53.52412,
+   "lng": 9.98193,
+   "osm": "node/2057707811"
+  },
+  {
+   "name": "Hansefahrt",
+   "lat": 53.87389,
+   "lng": 10.68698,
+   "osm": "node/21897367"
+  },
+  {
+   "name": "Überseestadt/Molenturm",
+   "lat": 53.10451,
+   "lng": 8.75027,
+   "osm": "node/2377708942"
+  },
+  {
+   "name": "Finkenwerder",
+   "lat": 53.53645,
+   "lng": 9.87894,
+   "osm": "node/247090118"
+  },
+  {
+   "name": "Bubendey-Ufer",
+   "lat": 53.54012,
+   "lng": 9.88533,
+   "osm": "node/270634240"
+  },
+  {
+   "name": "Dockland (Fischereihafen)",
+   "lat": 53.543,
+   "lng": 9.9355,
+   "osm": "node/277474327"
+  },
+  {
+   "name": "Steinwerder",
+   "lat": 53.54006,
+   "lng": 9.96649,
+   "osm": "node/277475190"
+  },
+  {
+   "name": "Theater im Hafen",
+   "lat": 53.54053,
+   "lng": 9.97495,
+   "osm": "node/277475289"
+  },
+  {
+   "name": "Arningstraße",
+   "lat": 53.53702,
+   "lng": 9.98531,
+   "osm": "node/277476094"
+  },
+  {
+   "name": "Argentinienbrücke",
+   "lat": 53.52816,
+   "lng": 9.976,
+   "osm": "node/277476426"
+  },
+  {
+   "name": "Anleger 1",
+   "lat": 53.89187,
+   "lng": 10.69622,
+   "osm": "node/2815755752"
+  },
+  {
+   "name": "Anleger 2",
+   "lat": 53.89377,
+   "lng": 10.69699,
+   "osm": "node/2815755753"
+  },
+  {
+   "name": "Anleger 4",
+   "lat": 53.89584,
+   "lng": 10.70045,
+   "osm": "node/2815755754"
+  },
+  {
+   "name": "Anleger 6",
+   "lat": 53.89191,
+   "lng": 10.69536,
+   "osm": "node/2815755755"
+  },
+  {
+   "name": "Atlantic",
+   "lat": 53.5581,
+   "lng": 10.00378,
+   "osm": "node/281921581"
+  },
+  {
+   "name": "Uhlenhorster Fährhaus",
+   "lat": 53.57324,
+   "lng": 10.0075,
+   "osm": "node/281922435"
+  },
+  {
+   "name": "Rabenstraße",
+   "lat": 53.5673,
+   "lng": 10.0023,
+   "osm": "node/281922819"
+  },
+  {
+   "name": "Fährdamm",
+   "lat": 53.57367,
+   "lng": 10.00278,
+   "osm": "node/281923827"
+  },
+  {
+   "name": "Krugkoppelbrücke",
+   "lat": 53.57995,
+   "lng": 9.99959,
+   "osm": "node/281923844"
+  },
+  {
+   "name": "Streekbrücke",
+   "lat": 53.58389,
+   "lng": 9.99516,
+   "osm": "node/281923848"
+  },
+  {
+   "name": "Winterhuder Fährhaus",
+   "lat": 53.59282,
+   "lng": 9.99446,
+   "osm": "node/281923855"
+  },
+  {
+   "name": "Schlachte Anleger 13",
+   "lat": 53.08084,
+   "lng": 8.79007,
+   "osm": "node/3067955783"
+  },
+  {
+   "name": "Neuhof",
+   "lat": 53.52416,
+   "lng": 9.94071,
+   "osm": "node/3298654753"
+  },
+  {
+   "name": "Waltershof",
+   "lat": 53.52563,
+   "lng": 9.93724,
+   "osm": "node/3298659664"
+  },
+  {
+   "name": "Martinianleger",
+   "lat": 53.0741,
+   "lng": 8.80412,
+   "osm": "node/3603129534"
+  },
+  {
+   "name": "Finkenwerder",
+   "lat": 53.53684,
+   "lng": 9.8783,
+   "osm": "node/3635252298"
+  },
+  {
+   "name": "Altona (Fischmarkt)",
+   "lat": 53.54413,
+   "lng": 9.95284,
+   "osm": "node/3794341954"
+  },
+  {
+   "name": "Krugkoppelbrücke",
+   "lat": 53.57991,
+   "lng": 9.99862,
+   "osm": "node/500768256"
+  },
+  {
+   "name": "Weserstadion",
+   "lat": 53.0672,
+   "lng": 8.83357,
+   "osm": "node/5734960136"
+  },
+  {
+   "name": "Finkenwerder",
+   "lat": 53.53619,
+   "lng": 9.87924,
+   "osm": "node/5758646112"
+  },
+  {
+   "name": "Landmarktower",
+   "lat": 53.09644,
+   "lng": 8.76149,
+   "osm": "node/6017884517"
+  },
+  {
+   "name": "Speicherstadt / Wunderland/Dungeon",
+   "lat": 53.54406,
+   "lng": 9.98671,
+   "osm": "node/6068990934"
+  },
+  {
+   "name": "Mühlenkamp",
+   "lat": 53.57901,
+   "lng": 10.01328,
+   "osm": "node/6082935368"
+  },
+  {
+   "name": "Ernst-August-Schleuse",
+   "lat": 53.52414,
+   "lng": 9.98179,
+   "osm": "node/6354286822"
+  },
+  {
+   "name": "Teufelsbrück",
+   "lat": 53.54647,
+   "lng": 9.86265,
+   "osm": "node/6902859419"
+  },
+  {
+   "name": "Landungsbrücken Brücke 2",
+   "lat": 53.54497,
+   "lng": 9.97058,
+   "osm": "node/7503774436"
+  },
+  {
+   "name": "Landungsbrücken Brücke 3",
+   "lat": 53.54508,
+   "lng": 9.96985,
+   "osm": "node/7503774437"
+  },
+  {
+   "name": "Ferry pier",
+   "lat": 53.5451,
+   "lng": 9.96931,
+   "osm": "node/7503774438"
+  },
+  {
+   "name": "Landungsbrücken Brücke 9",
+   "lat": 53.54534,
+   "lng": 9.96452,
+   "osm": "node/7503774439"
+  },
+  {
+   "name": "Musik und Kongesshalle (MUK) / Busparkplatz",
+   "lat": 53.8702,
+   "lng": 10.67906,
+   "osm": "node/7636350131"
+  },
+  {
+   "name": "Neumühlen",
+   "lat": 53.5435,
+   "lng": 9.91423,
+   "osm": "node/92214933"
+  },
+  {
+   "name": "Altona (Fischmarkt)",
+   "lat": 53.54399,
+   "lng": 9.95219,
+   "osm": "node/92214955"
+  },
+  {
+   "name": "Museum der Arbeit",
+   "lat": 53.58491,
+   "lng": 10.04319,
+   "osm": "node/9803768511"
+  },
+  {
+   "name": "Rüschpark",
+   "lat": 53.5416,
+   "lng": 9.86336,
+   "osm": "node/99401981"
+  },
+  {
+   "name": "Teufelsbrück",
+   "lat": 53.54653,
+   "lng": 9.86244,
+   "osm": "relation/141893"
+  },
+  {
+   "name": "Steinwerder",
+   "lat": 53.54007,
+   "lng": 9.96646,
+   "osm": "relation/2124937"
+  },
+  {
+   "name": "Argentinienbrücke",
+   "lat": 53.52815,
+   "lng": 9.97597,
+   "osm": "relation/297407"
+  },
+  {
+   "name": "Landungsbrücken",
+   "lat": 53.54621,
+   "lng": 9.97107,
+   "osm": "relation/7773183"
+  },
+  {
+   "name": "Theater im Hafen",
+   "lat": 53.54076,
+   "lng": 9.97416,
+   "osm": "way/1300869872"
+  },
+  {
+   "name": "Bubendey-Ufer",
+   "lat": 53.54011,
+   "lng": 9.88535,
+   "osm": "way/1347770420"
+  },
+  {
+   "name": "Köhlbrandhöft (nur für Betriebsangehörige)",
+   "lat": 53.53986,
+   "lng": 9.93813,
+   "osm": "way/1372682090"
+  },
+  {
+   "name": "Finkenwerder",
+   "lat": 53.53651,
+   "lng": 9.87872,
+   "osm": "way/158942986"
+  },
+  {
+   "name": "Finkenwerder",
+   "lat": 53.53682,
+   "lng": 9.87825,
+   "osm": "way/158942987"
+  },
+  {
+   "name": "Finkenwerder",
+   "lat": 53.53617,
+   "lng": 9.87921,
+   "osm": "way/158942990"
+  },
+  {
+   "name": "Theater im Hafen",
+   "lat": 53.5405,
+   "lng": 9.97505,
+   "osm": "way/164866960"
+  },
+  {
+   "name": "Dockland (Fischereihafen)",
+   "lat": 53.54301,
+   "lng": 9.93549,
+   "osm": "way/25463549"
+  },
+  {
+   "name": "Neumühlen",
+   "lat": 53.54353,
+   "lng": 9.91414,
+   "osm": "way/376079663"
+  },
+  {
+   "name": "Teufelsbrück",
+   "lat": 53.54653,
+   "lng": 9.86244,
+   "osm": "way/376079666"
+  },
+  {
+   "name": "Elbphilharmonie",
+   "lat": 53.54027,
+   "lng": 9.98661,
+   "osm": "way/376083169"
+  }
  ]
 }

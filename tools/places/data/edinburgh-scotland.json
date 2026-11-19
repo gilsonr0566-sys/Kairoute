@@ -1846,5 +1846,19 @@
    "hours": "",
    "osm": "node/734680878"
   }
+ ],
+ "piers": [
+  {
+   "name": "Broomielaw Quay Pontoon",
+   "lat": 55.85631,
+   "lng": -4.26228,
+   "osm": "node/1326289219"
+  },
+  {
+   "name": "Plantation Quay",
+   "lat": 55.85865,
+   "lng": -4.29163,
+   "osm": "node/1326289238"
+  }
  ]
 }

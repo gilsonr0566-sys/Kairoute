@@ -2168,5 +2168,565 @@
    "hours": "",
    "osm": "node/11389552000"
   }
+ ],
+ "piers": [
+  {
+   "name": "Ferry pier",
+   "lat": 41.02174,
+   "lng": 28.97325,
+   "osm": "node/11914932648"
+  },
+  {
+   "name": "Ferry pier",
+   "lat": 41.02176,
+   "lng": 28.97329,
+   "osm": "node/11914938300"
+  },
+  {
+   "name": "Moda İskelesi",
+   "lat": 40.97893,
+   "lng": 29.02519,
+   "osm": "node/12965332590"
+  },
+  {
+   "name": "Kabataş",
+   "lat": 41.03287,
+   "lng": 28.994,
+   "osm": "node/12966301758"
+  },
+  {
+   "name": "Kabataş",
+   "lat": 41.03303,
+   "lng": 28.99415,
+   "osm": "node/12966301759"
+  },
+  {
+   "name": "BUDO",
+   "lat": 41.03293,
+   "lng": 28.99284,
+   "osm": "node/12985053245"
+  },
+  {
+   "name": "BUDO",
+   "lat": 41.03297,
+   "lng": 28.99301,
+   "osm": "node/12985053246"
+  },
+  {
+   "name": "Kabataş",
+   "lat": 41.03387,
+   "lng": 28.9942,
+   "osm": "node/12985066037"
+  },
+  {
+   "name": "Şehir Hatları",
+   "lat": 41.03323,
+   "lng": 28.99335,
+   "osm": "node/12985086870"
+  },
+  {
+   "name": "Şehir Hatları",
+   "lat": 41.03337,
+   "lng": 28.99347,
+   "osm": "node/12985086871"
+  },
+  {
+   "name": "Ferry pier",
+   "lat": 41.03384,
+   "lng": 28.99365,
+   "osm": "node/12985329527"
+  },
+  {
+   "name": "Ferry pier",
+   "lat": 41.03373,
+   "lng": 28.99366,
+   "osm": "node/12985329528"
+  },
+  {
+   "name": "Ahırkapı İskelesi",
+   "lat": 41.00358,
+   "lng": 28.98237,
+   "osm": "node/13073193000"
+  },
+  {
+   "name": "Sarayburnu Limanı",
+   "lat": 41.01734,
+   "lng": 28.9832,
+   "osm": "node/13387561048"
+  },
+  {
+   "name": "Ferry pier",
+   "lat": 41.02173,
+   "lng": 28.9732,
+   "osm": "node/1346173701"
+  },
+  {
+   "name": "Üsküdar",
+   "lat": 41.02743,
+   "lng": 29.01466,
+   "osm": "node/14155798493"
+  },
+  {
+   "name": "Kasımpaşa",
+   "lat": 41.03031,
+   "lng": 28.96608,
+   "osm": "node/1667301250"
+  },
+  {
+   "name": "Kadıköy Seabus Pier",
+   "lat": 40.99168,
+   "lng": 29.01824,
+   "osm": "node/1914280996"
+  },
+  {
+   "name": "Kadıköy - Eminönü",
+   "lat": 40.99303,
+   "lng": 29.02298,
+   "osm": "node/2349794761"
+  },
+  {
+   "name": "Kabataş İskelesi",
+   "lat": 40.99281,
+   "lng": 29.02278,
+   "osm": "node/2349794772"
+  },
+  {
+   "name": "Kadıköy",
+   "lat": 40.9914,
+   "lng": 29.02044,
+   "osm": "node/2446513149"
+  },
+  {
+   "name": "Üsküdar",
+   "lat": 41.02804,
+   "lng": 29.01578,
+   "osm": "node/2456974746"
+  },
+  {
+   "name": "Üsküdar",
+   "lat": 41.0276,
+   "lng": 29.01479,
+   "osm": "node/2473741074"
+  },
+  {
+   "name": "Eminönü",
+   "lat": 41.01758,
+   "lng": 28.97518,
+   "osm": "node/2474131665"
+  },
+  {
+   "name": "Beşiktaş",
+   "lat": 41.04083,
+   "lng": 29.00742,
+   "osm": "node/2474577295"
+  },
+  {
+   "name": "Eminönü (Turyol)",
+   "lat": 41.01883,
+   "lng": 28.97044,
+   "osm": "node/2478522774"
+  },
+  {
+   "name": "Karaköy",
+   "lat": 41.0211,
+   "lng": 28.97681,
+   "osm": "node/2478522785"
+  },
+  {
+   "name": "Karaköy",
+   "lat": 41.02163,
+   "lng": 28.9757,
+   "osm": "node/2481849097"
+  },
+  {
+   "name": "Harem",
+   "lat": 41.01083,
+   "lng": 29.00992,
+   "osm": "node/2694179273"
+  },
+  {
+   "name": "Ayvansaray",
+   "lat": 41.04081,
+   "lng": 28.94485,
+   "osm": "node/27609492"
+  },
+  {
+   "name": "Sütlüce",
+   "lat": 41.04662,
+   "lng": 28.94062,
+   "osm": "node/27610949"
+  },
+  {
+   "name": "Besiktas",
+   "lat": 41.04131,
+   "lng": 29.00778,
+   "osm": "node/277162338"
+  },
+  {
+   "name": "Beşiktaş",
+   "lat": 41.03999,
+   "lng": 29.00571,
+   "osm": "node/277447220"
+  },
+  {
+   "name": "Sirkeci",
+   "lat": 41.01677,
+   "lng": 28.97764,
+   "osm": "node/3083547590"
+  },
+  {
+   "name": "Kadıköy",
+   "lat": 40.99372,
+   "lng": 29.02389,
+   "osm": "node/3279313968"
+  },
+  {
+   "name": "Ferry pier",
+   "lat": 40.99381,
+   "lng": 29.02389,
+   "osm": "node/3279318783"
+  },
+  {
+   "name": "Sütlüce Vapur İskelesi",
+   "lat": 41.04667,
+   "lng": 28.94069,
+   "osm": "node/3341121788"
+  },
+  {
+   "name": "Eminonu",
+   "lat": 41.018,
+   "lng": 28.97414,
+   "osm": "node/3457463792"
+  },
+  {
+   "name": "Ferry pier",
+   "lat": 41.01046,
+   "lng": 29.01064,
+   "osm": "node/3749623162"
+  },
+  {
+   "name": "Kadıköy",
+   "lat": 40.99306,
+   "lng": 29.02253,
+   "osm": "node/409151054"
+  },
+  {
+   "name": "Hasköy",
+   "lat": 41.04055,
+   "lng": 28.94906,
+   "osm": "node/414979679"
+  },
+  {
+   "name": "Üsküdar",
+   "lat": 41.02886,
+   "lng": 29.0164,
+   "osm": "node/4161740638"
+  },
+  {
+   "name": "Üsküdar",
+   "lat": 41.02749,
+   "lng": 29.0147,
+   "osm": "node/4161740644"
+  },
+  {
+   "name": "Kabataş",
+   "lat": 41.03546,
+   "lng": 28.99425,
+   "osm": "node/4162041569"
+  },
+  {
+   "name": "Kuzguncuk",
+   "lat": 41.03704,
+   "lng": 29.02961,
+   "osm": "node/4173452696"
+  },
+  {
+   "name": "Eminönü",
+   "lat": 41.01835,
+   "lng": 28.97316,
+   "osm": "node/5110916127"
+  },
+  {
+   "name": "Çengelköy İskelesi",
+   "lat": 41.05099,
+   "lng": 29.05141,
+   "osm": "node/5111529904"
+  },
+  {
+   "name": "Arnavutköy",
+   "lat": 41.06678,
+   "lng": 29.04338,
+   "osm": "node/513655728"
+  },
+  {
+   "name": "İDO Yenikapı Ferry Terminal",
+   "lat": 41.00208,
+   "lng": 28.95647,
+   "osm": "node/530614437"
+  },
+  {
+   "name": "Kadıköy ve Üsküdar İskelesi",
+   "lat": 41.02188,
+   "lng": 28.97339,
+   "osm": "node/5459480423"
+  },
+  {
+   "name": "Galataport",
+   "lat": 41.0232,
+   "lng": 28.97932,
+   "osm": "node/5477561862"
+  },
+  {
+   "name": "Beylerbeyi İskelesi",
+   "lat": 41.04506,
+   "lng": 29.04456,
+   "osm": "node/551453949"
+  },
+  {
+   "name": "Ferry pier",
+   "lat": 41.01951,
+   "lng": 28.96887,
+   "osm": "node/5672633532"
+  },
+  {
+   "name": "Eminonu Pier",
+   "lat": 41.01713,
+   "lng": 28.97627,
+   "osm": "node/5672864364"
+  },
+  {
+   "name": "Kadiköy",
+   "lat": 40.99182,
+   "lng": 29.02155,
+   "osm": "node/583523020"
+  },
+  {
+   "name": "Ferry pier",
+   "lat": 41.00198,
+   "lng": 28.95417,
+   "osm": "node/6233164456"
+  },
+  {
+   "name": "Üsküdar Pier",
+   "lat": 41.02814,
+   "lng": 29.01529,
+   "osm": "node/6356616321"
+  },
+  {
+   "name": "Ortaköy",
+   "lat": 41.04721,
+   "lng": 29.02566,
+   "osm": "node/6919989286"
+  },
+  {
+   "name": "Kadıköy",
+   "lat": 40.99296,
+   "lng": 29.02313,
+   "osm": "node/6990260797"
+  },
+  {
+   "name": "Üsküdar",
+   "lat": 41.02816,
+   "lng": 29.01593,
+   "osm": "node/7813094317"
+  },
+  {
+   "name": "Balat iskelesi",
+   "lat": 41.03482,
+   "lng": 28.94932,
+   "osm": "node/9521931481"
+  },
+  {
+   "name": "Kasımpaşa",
+   "lat": 41.03042,
+   "lng": 28.96624,
+   "osm": "relation/4297526"
+  },
+  {
+   "name": "Ferry pier",
+   "lat": 41.04664,
+   "lng": 28.94072,
+   "osm": "way/1020971829"
+  },
+  {
+   "name": "Eyüp Vapur İskelesi",
+   "lat": 41.04725,
+   "lng": 28.9378,
+   "osm": "way/1068175244"
+  },
+  {
+   "name": "Şehir Hatları Kadıköy Pier",
+   "lat": 41.01744,
+   "lng": 28.97507,
+   "osm": "way/112174276"
+  },
+  {
+   "name": "Ferry pier",
+   "lat": 41.00358,
+   "lng": 28.98236,
+   "osm": "way/1136239156"
+  },
+  {
+   "name": "Ferry pier",
+   "lat": 41.02625,
+   "lng": 28.95963,
+   "osm": "way/1272081087"
+  },
+  {
+   "name": "Balat İskelesi",
+   "lat": 41.03482,
+   "lng": 28.94921,
+   "osm": "way/1305509987"
+  },
+  {
+   "name": "Kabataş İskelesi",
+   "lat": 41.033,
+   "lng": 28.99401,
+   "osm": "way/1383311663"
+  },
+  {
+   "name": "Ferry pier",
+   "lat": 41.03411,
+   "lng": 28.99408,
+   "osm": "way/1411418216"
+  },
+  {
+   "name": "Ferry pier",
+   "lat": 41.03237,
+   "lng": 28.99287,
+   "osm": "way/1411418217"
+  },
+  {
+   "name": "Kabatas - Kadıkoy Boat Port",
+   "lat": 41.03551,
+   "lng": 28.99416,
+   "osm": "way/225470894"
+  },
+  {
+   "name": "Turyol Eminönü ve Karaköy İskelesi",
+   "lat": 40.99377,
+   "lng": 29.02392,
+   "osm": "way/226127060"
+  },
+  {
+   "name": "Çengelköy İskelesi",
+   "lat": 41.05102,
+   "lng": 29.05148,
+   "osm": "way/229826483"
+  },
+  {
+   "name": "Kadıköy Seabus Pier",
+   "lat": 40.99124,
+   "lng": 29.0181,
+   "osm": "way/236495360"
+  },
+  {
+   "name": "Kadıköy Turyol İskelesi",
+   "lat": 40.99129,
+   "lng": 29.02051,
+   "osm": "way/236642399"
+  },
+  {
+   "name": "İDO Sirkeci Araba Vapuru İskelesi",
+   "lat": 41.01068,
+   "lng": 29.00961,
+   "osm": "way/237883709"
+  },
+  {
+   "name": "Turyol İskelesi",
+   "lat": 41.01875,
+   "lng": 28.97035,
+   "osm": "way/239630952"
+  },
+  {
+   "name": "Fener Pier",
+   "lat": 41.03095,
+   "lng": 28.95262,
+   "osm": "way/240079127"
+  },
+  {
+   "name": "Turyol İskelesi",
+   "lat": 41.0218,
+   "lng": 28.97333,
+   "osm": "way/240079131"
+  },
+  {
+   "name": "Ferry pier",
+   "lat": 41.01943,
+   "lng": 28.96888,
+   "osm": "way/240079801"
+  },
+  {
+   "name": "Ferry pier",
+   "lat": 41.01698,
+   "lng": 28.97622,
+   "osm": "way/263756587"
+  },
+  {
+   "name": "Sirkeci-Harem İskelesi",
+   "lat": 41.01682,
+   "lng": 28.97656,
+   "osm": "way/321201987"
+  },
+  {
+   "name": "Şehir Hatları Bosphorus Pier",
+   "lat": 41.01787,
+   "lng": 28.97402,
+   "osm": "way/338641294"
+  },
+  {
+   "name": "Kuzguncuk İskelesi",
+   "lat": 41.03687,
+   "lng": 29.02977,
+   "osm": "way/401120302"
+  },
+  {
+   "name": "Beylerbeyi İskelesi",
+   "lat": 41.04497,
+   "lng": 29.04462,
+   "osm": "way/401123337"
+  },
+  {
+   "name": "Üsküdar Vapur İskelesi",
+   "lat": 41.02771,
+   "lng": 29.01515,
+   "osm": "way/415099414"
+  },
+  {
+   "name": "Üsküdar Motor İskelesi",
+   "lat": 41.02808,
+   "lng": 29.01584,
+   "osm": "way/415099418"
+  },
+  {
+   "name": "Beşiktaş - Kadıköy İskelesi",
+   "lat": 41.04004,
+   "lng": 29.00558,
+   "osm": "way/415337536"
+  },
+  {
+   "name": "Beşiktaş Motor İskelesi",
+   "lat": 41.04131,
+   "lng": 29.00779,
+   "osm": "way/416118854"
+  },
+  {
+   "name": "Kadıköy (Beşiktaş) port",
+   "lat": 40.99174,
+   "lng": 29.02158,
+   "osm": "way/45850306"
+  },
+  {
+   "name": "Karaköy Pier",
+   "lat": 41.02143,
+   "lng": 28.97673,
+   "osm": "way/52089506"
+  },
+  {
+   "name": "Ferry pier",
+   "lat": 41.01066,
+   "lng": 29.00982,
+   "osm": "way/881753041"
+  }
  ]
 }

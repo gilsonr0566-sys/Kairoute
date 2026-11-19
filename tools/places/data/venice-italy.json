@@ -1773,5 +1773,1555 @@
    "hours": "",
    "osm": "node/4467548289"
   }
+ ],
+ "piers": [
+  {
+   "name": "Punta Sabbioni Ferry",
+   "lat": 45.44699,
+   "lng": 12.4244,
+   "osm": "node/10006155418"
+  },
+  {
+   "name": "Ferry pier",
+   "lat": 45.41944,
+   "lng": 12.25544,
+   "osm": "node/1100587828"
+  },
+  {
+   "name": "S. Giobbe",
+   "lat": 45.44655,
+   "lng": 12.31815,
+   "osm": "node/12127640701"
+  },
+  {
+   "name": "Lido Casino",
+   "lat": 45.40742,
+   "lng": 12.3672,
+   "osm": "node/12154883702"
+  },
+  {
+   "name": "Isola San Clemente",
+   "lat": 45.41228,
+   "lng": 12.33501,
+   "osm": "node/13094384076"
+  },
+  {
+   "name": "Ferry pier",
+   "lat": 45.43277,
+   "lng": 12.33906,
+   "osm": "node/13094384092"
+  },
+  {
+   "name": "San Zaccaria (M.V.E.) \"B1\"",
+   "lat": 45.43349,
+   "lng": 12.34377,
+   "osm": "node/13612071133"
+  },
+  {
+   "name": "Msc croisère Terminal",
+   "lat": 45.43688,
+   "lng": 12.30871,
+   "osm": "node/13692067216"
+  },
+  {
+   "name": "Murano Faro",
+   "lat": 45.45254,
+   "lng": 12.35423,
+   "osm": "node/13928762498"
+  },
+  {
+   "name": "Zattere (per Fusina)",
+   "lat": 45.42902,
+   "lng": 12.32733,
+   "osm": "node/1499912526"
+  },
+  {
+   "name": "Ferrovia \"D\"",
+   "lat": 45.44021,
+   "lng": 12.32126,
+   "osm": "node/1522326280"
+  },
+  {
+   "name": "San Servolo",
+   "lat": 45.41961,
+   "lng": 12.35532,
+   "osm": "node/1554141249"
+  },
+  {
+   "name": "Punta Sabbioni",
+   "lat": 45.44737,
+   "lng": 12.42434,
+   "osm": "node/1694865645"
+  },
+  {
+   "name": "Serenella",
+   "lat": 45.45483,
+   "lng": 12.34751,
+   "osm": "node/1738015067"
+  },
+  {
+   "name": "Navagero",
+   "lat": 45.45467,
+   "lng": 12.35656,
+   "osm": "node/1738015070"
+  },
+  {
+   "name": "Museo",
+   "lat": 45.45609,
+   "lng": 12.35544,
+   "osm": "node/1738015076"
+  },
+  {
+   "name": "Da Mula (3, 4)",
+   "lat": 45.45612,
+   "lng": 12.35197,
+   "osm": "node/1738015078"
+  },
+  {
+   "name": "Santa Marta",
+   "lat": 45.43356,
+   "lng": 12.31125,
+   "osm": "node/1756297435"
+  },
+  {
+   "name": "Orto",
+   "lat": 45.44768,
+   "lng": 12.33291,
+   "osm": "node/1843619468"
+  },
+  {
+   "name": "Salute",
+   "lat": 45.43118,
+   "lng": 12.33437,
+   "osm": "node/1859365812"
+  },
+  {
+   "name": "Sant'Angelo",
+   "lat": 45.43559,
+   "lng": 12.33036,
+   "osm": "node/1862236397"
+  },
+  {
+   "name": "Ca' D' Oro",
+   "lat": 45.44055,
+   "lng": 12.33389,
+   "osm": "node/1905904217"
+  },
+  {
+   "name": "Bacini",
+   "lat": 45.43923,
+   "lng": 12.35731,
+   "osm": "node/1996193041"
+  },
+  {
+   "name": "Ospedale",
+   "lat": 45.44088,
+   "lng": 12.34477,
+   "osm": "node/1996193060"
+  },
+  {
+   "name": "Celestia",
+   "lat": 45.43909,
+   "lng": 12.34967,
+   "osm": "node/1996193107"
+  },
+  {
+   "name": "Cimitero",
+   "lat": 45.44869,
+   "lng": 12.34596,
+   "osm": "node/1996193117"
+  },
+  {
+   "name": "Certosa",
+   "lat": 45.43044,
+   "lng": 12.36747,
+   "osm": "node/1996193119"
+  },
+  {
+   "name": "Giardini della Biennale \"B\"",
+   "lat": 45.42903,
+   "lng": 12.35594,
+   "osm": "node/1997114401"
+  },
+  {
+   "name": "Zattere \"A\"",
+   "lat": 45.42913,
+   "lng": 12.32679,
+   "osm": "node/1997205830"
+  },
+  {
+   "name": "San Silvestro",
+   "lat": 45.43678,
+   "lng": 12.33318,
+   "osm": "node/2090158879"
+  },
+  {
+   "name": "Rialto Mercato",
+   "lat": 45.43944,
+   "lng": 12.33531,
+   "osm": "node/2090158891"
+  },
+  {
+   "name": "Venier",
+   "lat": 45.45742,
+   "lng": 12.3512,
+   "osm": "node/2247320623"
+  },
+  {
+   "name": "Vignole",
+   "lat": 45.44374,
+   "lng": 12.37627,
+   "osm": "node/2408429240"
+  },
+  {
+   "name": "Forte Massimiliano",
+   "lat": 45.44533,
+   "lng": 12.39137,
+   "osm": "node/2408434311"
+  },
+  {
+   "name": "Chiesa",
+   "lat": 45.45944,
+   "lng": 12.41007,
+   "osm": "node/2408434312"
+  },
+  {
+   "name": "Punte Vela",
+   "lat": 45.46841,
+   "lng": 12.42023,
+   "osm": "node/2408434313"
+  },
+  {
+   "name": "Lazzaretto Nuovo",
+   "lat": 45.45496,
+   "lng": 12.38687,
+   "osm": "node/2408434314"
+  },
+  {
+   "name": "Torcello",
+   "lat": 45.49506,
+   "lng": 12.4122,
+   "osm": "node/2408434315"
+  },
+  {
+   "name": "Capannone",
+   "lat": 45.45465,
+   "lng": 12.38859,
+   "osm": "node/2408434316"
+  },
+  {
+   "name": "Tronchetto Mercato",
+   "lat": 45.44137,
+   "lng": 12.30938,
+   "osm": "node/2408442121"
+  },
+  {
+   "name": "Stazione Marittima",
+   "lat": 45.4384,
+   "lng": 12.31188,
+   "osm": "node/2408443248"
+  },
+  {
+   "name": "S.Elena-Stadio Penzo \"C\"",
+   "lat": 45.42541,
+   "lng": 12.36059,
+   "osm": "node/245032746"
+  },
+  {
+   "name": "Giardini \"B\"",
+   "lat": 45.42984,
+   "lng": 12.35484,
+   "osm": "node/245032757"
+  },
+  {
+   "name": "San Basilio",
+   "lat": 45.43052,
+   "lng": 12.32082,
+   "osm": "node/245810951"
+  },
+  {
+   "name": "Murano Colonna",
+   "lat": 45.45109,
+   "lng": 12.3489,
+   "osm": "node/247790544"
+  },
+  {
+   "name": "Giudecca Palanca \"A\"",
+   "lat": 45.4269,
+   "lng": 12.32544,
+   "osm": "node/247909376"
+  },
+  {
+   "name": "San Giorgio",
+   "lat": 45.42947,
+   "lng": 12.34222,
+   "osm": "node/247911389"
+  },
+  {
+   "name": "Lido Santa Maria Elisabetta \"D\"",
+   "lat": 45.41749,
+   "lng": 12.36771,
+   "osm": "node/262937854"
+  },
+  {
+   "name": "Piazzale Roma Parisi \"E\"",
+   "lat": 45.43939,
+   "lng": 12.31849,
+   "osm": "node/262938948"
+  },
+  {
+   "name": "Sacca Fisola \"A\"",
+   "lat": 45.42901,
+   "lng": 12.31563,
+   "osm": "node/2683630315"
+  },
+  {
+   "name": "Piazzale Roma Santa Chiara \"G\"",
+   "lat": 45.43883,
+   "lng": 12.31906,
+   "osm": "node/2683946035"
+  },
+  {
+   "name": "San Marco Vallaresso \"B\"",
+   "lat": 45.43209,
+   "lng": 12.3373,
+   "osm": "node/2714417410"
+  },
+  {
+   "name": "San Zaccaria - Jolanda D",
+   "lat": 45.43344,
+   "lng": 12.3428,
+   "osm": "node/2714417413"
+  },
+  {
+   "name": "Arsenale \"B\"",
+   "lat": 45.43288,
+   "lng": 12.34833,
+   "osm": "node/2714417418"
+  },
+  {
+   "name": "Zattere \"B\"",
+   "lat": 45.42924,
+   "lng": 12.32627,
+   "osm": "node/2714453384"
+  },
+  {
+   "name": "Zitelle \"A\"",
+   "lat": 45.42664,
+   "lng": 12.33767,
+   "osm": "node/2714453385"
+  },
+  {
+   "name": "Punta Sabbioni",
+   "lat": 45.44763,
+   "lng": 12.42466,
+   "osm": "node/27177395"
+  },
+  {
+   "name": "Lido San Nicolò ferry",
+   "lat": 45.42618,
+   "lng": 12.37848,
+   "osm": "node/27241169"
+  },
+  {
+   "name": "Lido Santa Maria Elisabetta \"C\"",
+   "lat": 45.4177,
+   "lng": 12.36821,
+   "osm": "node/2725912745"
+  },
+  {
+   "name": "San Pietro di Castello",
+   "lat": 45.43383,
+   "lng": 12.36187,
+   "osm": "node/2725912748"
+  },
+  {
+   "name": "San Zaccaria (Pietà) \"A\"",
+   "lat": 45.43337,
+   "lng": 12.34495,
+   "osm": "node/27465310"
+  },
+  {
+   "name": "Murano Faro",
+   "lat": 45.45266,
+   "lng": 12.3547,
+   "osm": "node/27486304"
+  },
+  {
+   "name": "San Stae",
+   "lat": 45.44176,
+   "lng": 12.33081,
+   "osm": "node/283001258"
+  },
+  {
+   "name": "Rialto \"C\"",
+   "lat": 45.43744,
+   "lng": 12.33539,
+   "osm": "node/2961006745"
+  },
+  {
+   "name": "Aeroporto Marco Polo, terminal Alilaguna",
+   "lat": 45.50083,
+   "lng": 12.33733,
+   "osm": "node/2961130018"
+  },
+  {
+   "name": "San Marco Giardinetti",
+   "lat": 45.4323,
+   "lng": 12.338,
+   "osm": "node/2962870911"
+  },
+  {
+   "name": "San Marco Giardinetti \"A\"",
+   "lat": 45.43241,
+   "lng": 12.33841,
+   "osm": "node/2962870912"
+  },
+  {
+   "name": "Ferry pier",
+   "lat": 45.43132,
+   "lng": 12.31076,
+   "osm": "node/3044634917"
+  },
+  {
+   "name": "Ferry pier",
+   "lat": 45.43116,
+   "lng": 12.31308,
+   "osm": "node/3044705099"
+  },
+  {
+   "name": "Fusina (per Zattere)",
+   "lat": 45.41835,
+   "lng": 12.25872,
+   "osm": "node/3053395448"
+  },
+  {
+   "name": "Zitelle \"B\"",
+   "lat": 45.42673,
+   "lng": 12.33789,
+   "osm": "node/3269212235"
+  },
+  {
+   "name": "Redentore",
+   "lat": 45.42559,
+   "lng": 12.33202,
+   "osm": "node/3269244007"
+  },
+  {
+   "name": "Burano (C)",
+   "lat": 45.48758,
+   "lng": 12.4167,
+   "osm": "node/3531850940"
+  },
+  {
+   "name": "Treporti",
+   "lat": 45.47156,
+   "lng": 12.4471,
+   "osm": "node/3531851719"
+  },
+  {
+   "name": "Ca' Rezzonico",
+   "lat": 45.43326,
+   "lng": 12.32715,
+   "osm": "node/3586368091"
+  },
+  {
+   "name": "San Zaccaria (Danieli) \"F\"",
+   "lat": 45.43328,
+   "lng": 12.34192,
+   "osm": "node/3586376620"
+  },
+  {
+   "name": "Ferrovia Bar Roma",
+   "lat": 45.44128,
+   "lng": 12.32285,
+   "osm": "node/3586510852"
+  },
+  {
+   "name": "San Zaccaria (M.V.E.) \"B\"",
+   "lat": 45.43349,
+   "lng": 12.34409,
+   "osm": "node/3586674308"
+  },
+  {
+   "name": "Fondamente Nove \"D\"",
+   "lat": 45.44285,
+   "lng": 12.34119,
+   "osm": "node/3586736748"
+  },
+  {
+   "name": "Fondamente Nove \"B\"",
+   "lat": 45.44317,
+   "lng": 12.34066,
+   "osm": "node/3586736755"
+  },
+  {
+   "name": "Mazzorbo",
+   "lat": 45.48813,
+   "lng": 12.40954,
+   "osm": "node/3586816721"
+  },
+  {
+   "name": "Venice Fusina Ferry Terminal",
+   "lat": 45.42492,
+   "lng": 12.25621,
+   "osm": "node/3870653507"
+  },
+  {
+   "name": "San Lazzaro",
+   "lat": 45.4121,
+   "lng": 12.3599,
+   "osm": "node/413686738"
+  },
+  {
+   "name": "Accademia \"B\"",
+   "lat": 45.43164,
+   "lng": 12.32871,
+   "osm": "node/4212293003"
+  },
+  {
+   "name": "Burano (B)",
+   "lat": 45.48761,
+   "lng": 12.41622,
+   "osm": "node/4212293004"
+  },
+  {
+   "name": "Ferrovia \"A\"",
+   "lat": 45.441,
+   "lng": 12.32224,
+   "osm": "node/4212293005"
+  },
+  {
+   "name": "Giardini della Biennale \"A\"",
+   "lat": 45.42888,
+   "lng": 12.35609,
+   "osm": "node/4212293006"
+  },
+  {
+   "name": "Giardini \"A\"",
+   "lat": 45.42975,
+   "lng": 12.35501,
+   "osm": "node/4212293007"
+  },
+  {
+   "name": "Giudecca Palanca \"B\"",
+   "lat": 45.42686,
+   "lng": 12.32564,
+   "osm": "node/4212293009"
+  },
+  {
+   "name": "Piazzale Roma Santa Chiara \"F\"",
+   "lat": 45.43893,
+   "lng": 12.31884,
+   "osm": "node/4212293010"
+  },
+  {
+   "name": "Lido Santa Maria Elisabetta \"E\"",
+   "lat": 45.41737,
+   "lng": 12.36751,
+   "osm": "node/4212293011"
+  },
+  {
+   "name": "Lido Santa Maria Elisabetta \"B\"",
+   "lat": 45.418,
+   "lng": 12.3687,
+   "osm": "node/4212293012"
+  },
+  {
+   "name": "Lido Santa Maria Elisabetta \"A\"",
+   "lat": 45.41816,
+   "lng": 12.36895,
+   "osm": "node/4212293013"
+  },
+  {
+   "name": "Spirito Santo",
+   "lat": 45.42829,
+   "lng": 12.33196,
+   "osm": "node/4212293014"
+  },
+  {
+   "name": "San Marco Vallaresso \"A\"",
+   "lat": 45.43215,
+   "lng": 12.33751,
+   "osm": "node/4212293017"
+  },
+  {
+   "name": "Arsenale \"A\"",
+   "lat": 45.43275,
+   "lng": 12.34855,
+   "osm": "node/4212293026"
+  },
+  {
+   "name": "San Zaccaria - (Jolanda) \"C\"",
+   "lat": 45.43347,
+   "lng": 12.34306,
+   "osm": "node/4212293027"
+  },
+  {
+   "name": "Rialto \"B\"",
+   "lat": 45.43708,
+   "lng": 12.33475,
+   "osm": "node/4212293028"
+  },
+  {
+   "name": "Piazzale Roma Parisi \"D\"",
+   "lat": 45.43955,
+   "lng": 12.31834,
+   "osm": "node/4212293029"
+  },
+  {
+   "name": "Piazzale Roma Scomenzera \"C\"",
+   "lat": 45.43985,
+   "lng": 12.31784,
+   "osm": "node/4212293030"
+  },
+  {
+   "name": "Rialto \"D\"",
+   "lat": 45.43759,
+   "lng": 12.33554,
+   "osm": "node/4212293032"
+  },
+  {
+   "name": "San Tomà \"A\"",
+   "lat": 45.43524,
+   "lng": 12.32814,
+   "osm": "node/4212293033"
+  },
+  {
+   "name": "S.Elena-Stadio Penzo \"B\"",
+   "lat": 45.42529,
+   "lng": 12.36079,
+   "osm": "node/4212293034"
+  },
+  {
+   "name": "Ferrovia \"C\"",
+   "lat": 45.44036,
+   "lng": 12.32142,
+   "osm": "node/4212852272"
+  },
+  {
+   "name": "Tronchetto",
+   "lat": 45.44006,
+   "lng": 12.30636,
+   "osm": "node/4212852435"
+  },
+  {
+   "name": "Molino Stucky",
+   "lat": 45.4284,
+   "lng": 12.32014,
+   "osm": "node/4212939803"
+  },
+  {
+   "name": "San Basilio",
+   "lat": 45.43093,
+   "lng": 12.31812,
+   "osm": "node/4266644927"
+  },
+  {
+   "name": "Tronchetto ferry",
+   "lat": 45.43804,
+   "lng": 12.30439,
+   "osm": "node/455034896"
+  },
+  {
+   "name": "Riva di Biasio \"A\"",
+   "lat": 45.44183,
+   "lng": 12.32507,
+   "osm": "node/4730387602"
+  },
+  {
+   "name": "Fondamente Nove \"A\"",
+   "lat": 45.44396,
+   "lng": 12.33916,
+   "osm": "node/4735832939"
+  },
+  {
+   "name": "San Marcuola \"B\"",
+   "lat": 45.44248,
+   "lng": 12.3282,
+   "osm": "node/4735865014"
+  },
+  {
+   "name": "Guglie \"A\"",
+   "lat": 45.44429,
+   "lng": 12.32442,
+   "osm": "node/4745315831"
+  },
+  {
+   "name": "Rialto \"A\"",
+   "lat": 45.43699,
+   "lng": 12.33456,
+   "osm": "node/4779015408"
+  },
+  {
+   "name": "Aeroporto Marco Polo, pontile Alilaguna",
+   "lat": 45.5007,
+   "lng": 12.33715,
+   "osm": "node/4921114177"
+  },
+  {
+   "name": "Aeroporto Marco Polo, pontile Alilaguna",
+   "lat": 45.50077,
+   "lng": 12.33724,
+   "osm": "node/4921114178"
+  },
+  {
+   "name": "Ferrovia \"E\"",
+   "lat": 45.43994,
+   "lng": 12.32096,
+   "osm": "node/5395448187"
+  },
+  {
+   "name": "Ferrovia \"B\"",
+   "lat": 45.44091,
+   "lng": 12.32206,
+   "osm": "node/565563811"
+  },
+  {
+   "name": "Guglie \"B\"",
+   "lat": 45.44443,
+   "lng": 12.32413,
+   "osm": "node/565563823"
+  },
+  {
+   "name": "Tre Archi",
+   "lat": 45.44628,
+   "lng": 12.31977,
+   "osm": "node/565563829"
+  },
+  {
+   "name": "Piazzale Roma Sant'Andrea \"B\"",
+   "lat": 45.43887,
+   "lng": 12.316,
+   "osm": "node/5822672762"
+  },
+  {
+   "name": "Ferry pier",
+   "lat": 45.42895,
+   "lng": 12.31425,
+   "osm": "node/5959789467"
+  },
+  {
+   "name": "Riva di Biasio \"B\"",
+   "lat": 45.442,
+   "lng": 12.32567,
+   "osm": "node/643584279"
+  },
+  {
+   "name": "Crea",
+   "lat": 45.44529,
+   "lng": 12.32112,
+   "osm": "node/643584293"
+  },
+  {
+   "name": "San Alvise",
+   "lat": 45.4487,
+   "lng": 12.32951,
+   "osm": "node/643584306"
+  },
+  {
+   "name": "Fondamente Nove \"C\"",
+   "lat": 45.443,
+   "lng": 12.34094,
+   "osm": "node/643584311"
+  },
+  {
+   "name": "San Zaccaria (Danieli) \"E\"",
+   "lat": 45.43336,
+   "lng": 12.34225,
+   "osm": "node/6860720940"
+  },
+  {
+   "name": "Accademia \"A\"",
+   "lat": 45.43174,
+   "lng": 12.32853,
+   "osm": "node/695741733"
+  },
+  {
+   "name": "San Samuele",
+   "lat": 45.43348,
+   "lng": 12.32759,
+   "osm": "node/695741736"
+  },
+  {
+   "name": "San Tomà \"B\"",
+   "lat": 45.43517,
+   "lng": 12.32792,
+   "osm": "node/695741753"
+  },
+  {
+   "name": "San Marcuola \"A\"",
+   "lat": 45.44243,
+   "lng": 12.32881,
+   "osm": "node/695741790"
+  },
+  {
+   "name": "Giglio",
+   "lat": 45.43143,
+   "lng": 12.33264,
+   "osm": "node/762651642"
+  },
+  {
+   "name": "Sacca Fisola \"B\"",
+   "lat": 45.42896,
+   "lng": 12.31631,
+   "osm": "node/7842357155"
+  },
+  {
+   "name": "Punta Sabbioni",
+   "lat": 45.44794,
+   "lng": 12.42515,
+   "osm": "node/794050749"
+  },
+  {
+   "name": "Burano (A)",
+   "lat": 45.4877,
+   "lng": 12.41523,
+   "osm": "node/7943196373"
+  },
+  {
+   "name": "Piazzale Roma Sant'Andrea \"A\"",
+   "lat": 45.43856,
+   "lng": 12.31571,
+   "osm": "node/8189981975"
+  },
+  {
+   "name": "Tronchetto",
+   "lat": 45.44029,
+   "lng": 12.30655,
+   "osm": "node/892563314"
+  },
+  {
+   "name": "Burano",
+   "lat": 45.48761,
+   "lng": 12.41485,
+   "osm": "node/9238328217"
+  },
+  {
+   "name": "San Francesco del deserto",
+   "lat": 45.4736,
+   "lng": 12.41514,
+   "osm": "node/9238328241"
+  },
+  {
+   "name": "Ferry pier",
+   "lat": 45.44502,
+   "lng": 12.3375,
+   "osm": "node/9978578660"
+  },
+  {
+   "name": "Ferry pier",
+   "lat": 45.4662,
+   "lng": 12.28056,
+   "osm": "node/9978578674"
+  },
+  {
+   "name": "Isola di San Francesco del deserto",
+   "lat": 45.4736,
+   "lng": 12.41516,
+   "osm": "way/1000723557"
+  },
+  {
+   "name": "Ferry pier",
+   "lat": 45.445,
+   "lng": 12.33752,
+   "osm": "way/1089322043"
+  },
+  {
+   "name": "Ferry pier",
+   "lat": 45.46622,
+   "lng": 12.28056,
+   "osm": "way/1089322045"
+  },
+  {
+   "name": "Torcello",
+   "lat": 45.4951,
+   "lng": 12.41221,
+   "osm": "way/133956115"
+  },
+  {
+   "name": "Orto",
+   "lat": 45.44766,
+   "lng": 12.3329,
+   "osm": "way/138800215"
+  },
+  {
+   "name": "Ospedale",
+   "lat": 45.44087,
+   "lng": 12.34475,
+   "osm": "way/138800739"
+  },
+  {
+   "name": "San Marco - Jolanda",
+   "lat": 45.43349,
+   "lng": 12.34304,
+   "osm": "way/138800792"
+  },
+  {
+   "name": "Ferry pier",
+   "lat": 45.4321,
+   "lng": 12.33728,
+   "osm": "way/138801172"
+  },
+  {
+   "name": "San Zaccaria - Danieli",
+   "lat": 45.43336,
+   "lng": 12.34225,
+   "osm": "way/138801183"
+  },
+  {
+   "name": "San Giorgio",
+   "lat": 45.42946,
+   "lng": 12.34225,
+   "osm": "way/138801355"
+  },
+  {
+   "name": "Fondamente Nove (B)",
+   "lat": 45.44313,
+   "lng": 12.34068,
+   "osm": "way/138802249"
+  },
+  {
+   "name": "Rialto \"C\"",
+   "lat": 45.43741,
+   "lng": 12.3354,
+   "osm": "way/138802314"
+  },
+  {
+   "name": "Giardini",
+   "lat": 45.42976,
+   "lng": 12.35503,
+   "osm": "way/138802340"
+  },
+  {
+   "name": "San Marco Giardinetti",
+   "lat": 45.43232,
+   "lng": 12.33799,
+   "osm": "way/138802381"
+  },
+  {
+   "name": "Ca' D'oro",
+   "lat": 45.44056,
+   "lng": 12.33391,
+   "osm": "way/138802455"
+  },
+  {
+   "name": "Zitelle",
+   "lat": 45.42671,
+   "lng": 12.33791,
+   "osm": "way/138802480"
+  },
+  {
+   "name": "Fondamente Nove (C)",
+   "lat": 45.44301,
+   "lng": 12.34089,
+   "osm": "way/138802582"
+  },
+  {
+   "name": "San Silvestro",
+   "lat": 45.43681,
+   "lng": 12.33319,
+   "osm": "way/138802634"
+  },
+  {
+   "name": "Arsenale",
+   "lat": 45.4329,
+   "lng": 12.34834,
+   "osm": "way/138802643"
+  },
+  {
+   "name": "Zitelle",
+   "lat": 45.42662,
+   "lng": 12.33768,
+   "osm": "way/138802647"
+  },
+  {
+   "name": "Giardini della Biennale",
+   "lat": 45.42904,
+   "lng": 12.35596,
+   "osm": "way/138802696"
+  },
+  {
+   "name": "Fondamente Nove (D)",
+   "lat": 45.44286,
+   "lng": 12.34114,
+   "osm": "way/138802880"
+  },
+  {
+   "name": "San Zaccaria - Jolanda",
+   "lat": 45.43346,
+   "lng": 12.34281,
+   "osm": "way/138803027"
+  },
+  {
+   "name": "Santa Maria del Giglio",
+   "lat": 45.43145,
+   "lng": 12.33264,
+   "osm": "way/138803094"
+  },
+  {
+   "name": "Celestia",
+   "lat": 45.43907,
+   "lng": 12.34966,
+   "osm": "way/138803116"
+  },
+  {
+   "name": "Rialto \"B\"",
+   "lat": 45.43706,
+   "lng": 12.33476,
+   "osm": "way/138803124"
+  },
+  {
+   "name": "Sacca Fisola",
+   "lat": 45.42899,
+   "lng": 12.31564,
+   "osm": "way/138842143"
+  },
+  {
+   "name": "Piazzale Roma Parisi \"D\"",
+   "lat": 45.43954,
+   "lng": 12.31832,
+   "osm": "way/138842279"
+  },
+  {
+   "name": "San Alvise",
+   "lat": 45.44869,
+   "lng": 12.3295,
+   "osm": "way/138842339"
+  },
+  {
+   "name": "Accademia",
+   "lat": 45.43162,
+   "lng": 12.32869,
+   "osm": "way/138842420"
+  },
+  {
+   "name": "San Basilio",
+   "lat": 45.43054,
+   "lng": 12.32084,
+   "osm": "way/138842533"
+  },
+  {
+   "name": "Accademia A",
+   "lat": 45.43172,
+   "lng": 12.32851,
+   "osm": "way/138842534"
+  },
+  {
+   "name": "Zattere DX",
+   "lat": 45.42915,
+   "lng": 12.3268,
+   "osm": "way/138842627"
+  },
+  {
+   "name": "Piazzale Roma Santa Chiara \"F\"",
+   "lat": 45.43891,
+   "lng": 12.31883,
+   "osm": "way/138842657"
+  },
+  {
+   "name": "Piazzale Roma Parisi \"E\"",
+   "lat": 45.43939,
+   "lng": 12.31845,
+   "osm": "way/138842732"
+  },
+  {
+   "name": "San Samuele",
+   "lat": 45.43348,
+   "lng": 12.32762,
+   "osm": "way/138842847"
+  },
+  {
+   "name": "Ca' Rezzonico",
+   "lat": 45.43326,
+   "lng": 12.32712,
+   "osm": "way/138843293"
+  },
+  {
+   "name": "San Tomà",
+   "lat": 45.43519,
+   "lng": 12.3279,
+   "osm": "way/138843357"
+  },
+  {
+   "name": "Sant'Elena",
+   "lat": 45.42531,
+   "lng": 12.36082,
+   "osm": "way/138995571"
+  },
+  {
+   "name": "Venier",
+   "lat": 45.45745,
+   "lng": 12.35121,
+   "osm": "way/142022568"
+  },
+  {
+   "name": "Colonna",
+   "lat": 45.45111,
+   "lng": 12.34894,
+   "osm": "way/142022579"
+  },
+  {
+   "name": "Colonna",
+   "lat": 45.45112,
+   "lng": 12.34921,
+   "osm": "way/142022700"
+  },
+  {
+   "name": "Ferry pier",
+   "lat": 45.43093,
+   "lng": 12.31812,
+   "osm": "way/1455319563"
+  },
+  {
+   "name": "Ferry pier",
+   "lat": 45.43366,
+   "lng": 12.34377,
+   "osm": "way/1484621207"
+  },
+  {
+   "name": "Ferry pier",
+   "lat": 45.43351,
+   "lng": 12.34377,
+   "osm": "way/1484621208"
+  },
+  {
+   "name": "Murano Faro \"B\"",
+   "lat": 45.45257,
+   "lng": 12.35425,
+   "osm": "way/1528479682"
+  },
+  {
+   "name": "Ferry pier",
+   "lat": 45.43341,
+   "lng": 12.34152,
+   "osm": "way/1561045445"
+  },
+  {
+   "name": "Ferry pier",
+   "lat": 45.43328,
+   "lng": 12.34155,
+   "osm": "way/1561045446"
+  },
+  {
+   "name": "Ferry pier",
+   "lat": 45.45611,
+   "lng": 12.35544,
+   "osm": "way/161847148"
+  },
+  {
+   "name": "Murano Navagero",
+   "lat": 45.4547,
+   "lng": 12.35659,
+   "osm": "way/161847151"
+  },
+  {
+   "name": "Riva de Biasio \"B\"",
+   "lat": 45.44198,
+   "lng": 12.32568,
+   "osm": "way/171137028"
+  },
+  {
+   "name": "Palanca",
+   "lat": 45.42689,
+   "lng": 12.32541,
+   "osm": "way/175509449"
+  },
+  {
+   "name": "Palanca",
+   "lat": 45.42684,
+   "lng": 12.32564,
+   "osm": "way/175509450"
+  },
+  {
+   "name": "Redentore",
+   "lat": 45.42556,
+   "lng": 12.33206,
+   "osm": "way/175509465"
+  },
+  {
+   "name": "Arsenale",
+   "lat": 45.43277,
+   "lng": 12.34856,
+   "osm": "way/175653199"
+  },
+  {
+   "name": "Ferrovia",
+   "lat": 45.4413,
+   "lng": 12.32285,
+   "osm": "way/175849763"
+  },
+  {
+   "name": "Burano",
+   "lat": 45.48743,
+   "lng": 12.41647,
+   "osm": "way/175898063"
+  },
+  {
+   "name": "Giardini",
+   "lat": 45.42985,
+   "lng": 12.35486,
+   "osm": "way/176243910"
+  },
+  {
+   "name": "Giardini della Biennale",
+   "lat": 45.42889,
+   "lng": 12.35612,
+   "osm": "way/176243916"
+  },
+  {
+   "name": "Mazzorbo",
+   "lat": 45.48809,
+   "lng": 12.40951,
+   "osm": "way/176655188"
+  },
+  {
+   "name": "Ferry pier",
+   "lat": 45.44748,
+   "lng": 12.42463,
+   "osm": "way/176996605"
+  },
+  {
+   "name": "Ferry pier",
+   "lat": 45.44637,
+   "lng": 12.42369,
+   "osm": "way/188283227"
+  },
+  {
+   "name": "Ferry pier",
+   "lat": 45.44607,
+   "lng": 12.42344,
+   "osm": "way/188283289"
+  },
+  {
+   "name": "Terminal Fusina",
+   "lat": 45.4187,
+   "lng": 12.25863,
+   "osm": "way/189305617"
+  },
+  {
+   "name": "Vignole",
+   "lat": 45.4437,
+   "lng": 12.37626,
+   "osm": "way/199797101"
+  },
+  {
+   "name": "San Zaccaria (M.V.E.)",
+   "lat": 45.43365,
+   "lng": 12.34413,
+   "osm": "way/222465068"
+  },
+  {
+   "name": "San Zaccaria",
+   "lat": 45.43361,
+   "lng": 12.34291,
+   "osm": "way/222465069"
+  },
+  {
+   "name": "San Pietro di Castello",
+   "lat": 45.43383,
+   "lng": 12.36184,
+   "osm": "way/232364939"
+  },
+  {
+   "name": "Bacini",
+   "lat": 45.43919,
+   "lng": 12.3573,
+   "osm": "way/232364940"
+  },
+  {
+   "name": "Tre Archi",
+   "lat": 45.44629,
+   "lng": 12.31979,
+   "osm": "way/232379807"
+  },
+  {
+   "name": "San Marcuola",
+   "lat": 45.44245,
+   "lng": 12.32883,
+   "osm": "way/232456033"
+  },
+  {
+   "name": "Sant'Angelo",
+   "lat": 45.43558,
+   "lng": 12.33037,
+   "osm": "way/232457459"
+  },
+  {
+   "name": "Salute",
+   "lat": 45.43116,
+   "lng": 12.33438,
+   "osm": "way/232457681"
+  },
+  {
+   "name": "Santa Marta",
+   "lat": 45.43354,
+   "lng": 12.31126,
+   "osm": "way/232457935"
+  },
+  {
+   "name": "Treporti",
+   "lat": 45.47154,
+   "lng": 12.44713,
+   "osm": "way/232460001"
+  },
+  {
+   "name": "Murano Serenella",
+   "lat": 45.45484,
+   "lng": 12.34748,
+   "osm": "way/232474464"
+  },
+  {
+   "name": "Da Mula",
+   "lat": 45.45612,
+   "lng": 12.35194,
+   "osm": "way/232474467"
+  },
+  {
+   "name": "Murano Faro \"A\"",
+   "lat": 45.45267,
+   "lng": 12.35465,
+   "osm": "way/232474469"
+  },
+  {
+   "name": "Cimitero",
+   "lat": 45.44867,
+   "lng": 12.34598,
+   "osm": "way/232475244"
+  },
+  {
+   "name": "Fusina",
+   "lat": 45.41837,
+   "lng": 12.25872,
+   "osm": "way/232475246"
+  },
+  {
+   "name": "Chiesa",
+   "lat": 45.45941,
+   "lng": 12.41008,
+   "osm": "way/232564171"
+  },
+  {
+   "name": "Capannone",
+   "lat": 45.45464,
+   "lng": 12.38859,
+   "osm": "way/232564222"
+  },
+  {
+   "name": "Ferry pier",
+   "lat": 45.44533,
+   "lng": 12.3914,
+   "osm": "way/232564300"
+  },
+  {
+   "name": "San Servolo",
+   "lat": 45.41961,
+   "lng": 12.35535,
+   "osm": "way/232564429"
+  },
+  {
+   "name": "San Lazzaro",
+   "lat": 45.41211,
+   "lng": 12.35993,
+   "osm": "way/232564630"
+  },
+  {
+   "name": "Ferry pier",
+   "lat": 45.43356,
+   "lng": 12.34499,
+   "osm": "way/265934995"
+  },
+  {
+   "name": "Ferry pier",
+   "lat": 45.43287,
+   "lng": 12.34851,
+   "osm": "way/265937512"
+  },
+  {
+   "name": "Giardini",
+   "lat": 45.42984,
+   "lng": 12.35498,
+   "osm": "way/265937513"
+  },
+  {
+   "name": "Sant'Elena",
+   "lat": 45.42542,
+   "lng": 12.36061,
+   "osm": "way/265937517"
+  },
+  {
+   "name": "San Zaccaria - Danieli",
+   "lat": 45.43346,
+   "lng": 12.34206,
+   "osm": "way/267114651"
+  },
+  {
+   "name": "San Zaccaria - Danieli",
+   "lat": 45.4333,
+   "lng": 12.34191,
+   "osm": "way/267114654"
+  },
+  {
+   "name": "Guglie",
+   "lat": 45.44443,
+   "lng": 12.32416,
+   "osm": "way/292300426"
+  },
+  {
+   "name": "Crea",
+   "lat": 45.44527,
+   "lng": 12.32111,
+   "osm": "way/292300764"
+  },
+  {
+   "name": "San Marco Giardinetti",
+   "lat": 45.43244,
+   "lng": 12.3384,
+   "osm": "way/292751158"
+  },
+  {
+   "name": "Ferry pier",
+   "lat": 45.48759,
+   "lng": 12.41621,
+   "osm": "way/319161415"
+  },
+  {
+   "name": "Ferry pier",
+   "lat": 45.48755,
+   "lng": 12.41675,
+   "osm": "way/319161416"
+  },
+  {
+   "name": "Piazzale Roma Santa Chiara \"G\"",
+   "lat": 45.43881,
+   "lng": 12.31904,
+   "osm": "way/332735609"
+  },
+  {
+   "name": "Piazzale Roma Sant'Andrea \"B\"",
+   "lat": 45.43888,
+   "lng": 12.316,
+   "osm": "way/332735613"
+  },
+  {
+   "name": "Piazzale Roma Scomenzera \"C\"",
+   "lat": 45.43984,
+   "lng": 12.31784,
+   "osm": "way/332735618"
+  },
+  {
+   "name": "Colonna",
+   "lat": 45.45114,
+   "lng": 12.34858,
+   "osm": "way/333288230"
+  },
+  {
+   "name": "San Stae",
+   "lat": 45.44174,
+   "lng": 12.3308,
+   "osm": "way/352870520"
+  },
+  {
+   "name": "Ferrovia",
+   "lat": 45.44037,
+   "lng": 12.3214,
+   "osm": "way/352872851"
+  },
+  {
+   "name": "Tronchetto Mercato",
+   "lat": 45.44139,
+   "lng": 12.30943,
+   "osm": "way/352877768"
+  },
+  {
+   "name": "Spirito Santo",
+   "lat": 45.42831,
+   "lng": 12.33196,
+   "osm": "way/352878428"
+  },
+  {
+   "name": "Ferry pier",
+   "lat": 45.41769,
+   "lng": 12.36823,
+   "osm": "way/352890181"
+  },
+  {
+   "name": "Ferry pier",
+   "lat": 45.41747,
+   "lng": 12.36773,
+   "osm": "way/352892041"
+  },
+  {
+   "name": "Ferry pier",
+   "lat": 45.41735,
+   "lng": 12.36754,
+   "osm": "way/352892047"
+  },
+  {
+   "name": "Ferry pier",
+   "lat": 45.41814,
+   "lng": 12.36897,
+   "osm": "way/352892052"
+  },
+  {
+   "name": "Ferry pier",
+   "lat": 45.41798,
+   "lng": 12.36872,
+   "osm": "way/352892057"
+  },
+  {
+   "name": "Ferry pier",
+   "lat": 45.46837,
+   "lng": 12.42021,
+   "osm": "way/352895362"
+  },
+  {
+   "name": "Riva de Biasio \"A\"",
+   "lat": 45.44182,
+   "lng": 12.32508,
+   "osm": "way/480012003"
+  },
+  {
+   "name": "Guglie",
+   "lat": 45.44429,
+   "lng": 12.32445,
+   "osm": "way/481618906"
+  },
+  {
+   "name": "Rialto \"A\"",
+   "lat": 45.43697,
+   "lng": 12.33456,
+   "osm": "way/485132597"
+  },
+  {
+   "name": "Zattere SX",
+   "lat": 45.42926,
+   "lng": 12.32628,
+   "osm": "way/489933386"
+  },
+  {
+   "name": "Ferry pier",
+   "lat": 45.43012,
+   "lng": 12.32276,
+   "osm": "way/556448444"
+  },
+  {
+   "name": "Ferrovia",
+   "lat": 45.43995,
+   "lng": 12.32094,
+   "osm": "way/559401306"
+  },
+  {
+   "name": "Sacca Fisola",
+   "lat": 45.42894,
+   "lng": 12.31632,
+   "osm": "way/840434874"
+  },
+  {
+   "name": "Ferry pier",
+   "lat": 45.43856,
+   "lng": 12.31571,
+   "osm": "way/880528409"
+  }
  ]
 }

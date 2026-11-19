@@ -343,5 +343,109 @@
    "hours": "",
    "osm": "node/7844486785"
   }
+ ],
+ "piers": [
+  {
+   "name": "Rineia",
+   "lat": 37.41572,
+   "lng": 25.23786,
+   "osm": "node/11435526103"
+  },
+  {
+   "name": "Mykonos-Dilos",
+   "lat": 37.44876,
+   "lng": 25.32652,
+   "osm": "node/1162553956"
+  },
+  {
+   "name": "Ferry pier",
+   "lat": 37.45105,
+   "lng": 25.32757,
+   "osm": "node/1988496876"
+  },
+  {
+   "name": "New port - Tourlos, marina station",
+   "lat": 37.46494,
+   "lng": 25.32634,
+   "osm": "node/3701704798"
+  },
+  {
+   "name": "Ferry pier",
+   "lat": 37.46381,
+   "lng": 25.32525,
+   "osm": "node/3703165533"
+  },
+  {
+   "name": "Ferry pier",
+   "lat": 37.4642,
+   "lng": 25.32423,
+   "osm": "node/3703165536"
+  },
+  {
+   "name": "Delos",
+   "lat": 37.39847,
+   "lng": 25.26469,
+   "osm": "node/3880270023"
+  },
+  {
+   "name": "Ferry pier",
+   "lat": 37.46511,
+   "lng": 25.32214,
+   "osm": "node/4993003244"
+  },
+  {
+   "name": "Mykonos New Port",
+   "lat": 37.46401,
+   "lng": 25.32474,
+   "osm": "node/660644797"
+  },
+  {
+   "name": "Old port, archaelogical museum - bus and taxi station",
+   "lat": 37.45115,
+   "lng": 25.32804,
+   "osm": "node/6792574368"
+  },
+  {
+   "name": "Old Port",
+   "lat": 37.44824,
+   "lng": 25.32659,
+   "osm": "node/6792574371"
+  },
+  {
+   "name": "Ferry pier",
+   "lat": 37.46355,
+   "lng": 25.32622,
+   "osm": "node/7858930507"
+  },
+  {
+   "name": "Ferry pier",
+   "lat": 37.46335,
+   "lng": 25.32571,
+   "osm": "node/7858930508"
+  },
+  {
+   "name": "Ferry pier",
+   "lat": 37.46359,
+   "lng": 25.32536,
+   "osm": "node/7858930509"
+  },
+  {
+   "name": "Ferry pier",
+   "lat": 37.46443,
+   "lng": 25.32366,
+   "osm": "node/7858930510"
+  },
+  {
+   "name": "Seabus Terminal",
+   "lat": 37.46498,
+   "lng": 25.32396,
+   "osm": "node/8049465984"
+  },
+  {
+   "name": "Seabus terminal",
+   "lat": 37.45107,
+   "lng": 25.32821,
+   "osm": "node/8049468493"
+  }
  ]
 }

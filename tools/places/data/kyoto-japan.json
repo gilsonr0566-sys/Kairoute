@@ -2136,5 +2136,205 @@
    "hours": "Th-Tu 11:30-14:30, 18:00-22:00",
    "osm": "node/4527861289"
   }
+ ],
+ "piers": [
+  {
+   "name": "大阪城公園船着場",
+   "lat": 34.68966,
+   "lng": 135.53342,
+   "osm": "node/11458235099"
+  },
+  {
+   "name": "Minatomachi Pier",
+   "lat": 34.66906,
+   "lng": 135.49748,
+   "osm": "node/11471577003"
+  },
+  {
+   "name": "TUGBOAT TAISHO RIVER STATION",
+   "lat": 34.66738,
+   "lng": 135.47825,
+   "osm": "node/11471778319"
+  },
+  {
+   "name": "Minatomachi Pier",
+   "lat": 34.66905,
+   "lng": 135.49832,
+   "osm": "node/11496612772"
+  },
+  {
+   "name": "桜ノ宮港",
+   "lat": 34.69565,
+   "lng": 135.5234,
+   "osm": "node/11597185038"
+  },
+  {
+   "name": "堂島浜船着場",
+   "lat": 34.69515,
+   "lng": 135.50028,
+   "osm": "node/12399018871"
+  },
+  {
+   "name": "中之島ゲートターミナル",
+   "lat": 34.68256,
+   "lng": 135.47889,
+   "osm": "node/12816087284"
+  },
+  {
+   "name": "中之島ウエストピア 乗船口",
+   "lat": 34.68581,
+   "lng": 135.48297,
+   "osm": "node/13361582240"
+  },
+  {
+   "name": "十三船着場",
+   "lat": 34.71684,
+   "lng": 135.4865,
+   "osm": "node/13371053941"
+  },
+  {
+   "name": "大阪ドーム岩崎港",
+   "lat": 34.66766,
+   "lng": 135.47796,
+   "osm": "node/1631324674"
+  },
+  {
+   "name": "Osaka Dome-mae Chiyozaki Pier",
+   "lat": 34.66928,
+   "lng": 135.47956,
+   "osm": "node/1631462776"
+  },
+  {
+   "name": "中之島ローズポート",
+   "lat": 34.69212,
+   "lng": 135.50952,
+   "osm": "node/4022223493"
+  },
+  {
+   "name": "Fukushima Wharf (Hotarumachi Wharf)",
+   "lat": 34.69349,
+   "lng": 135.48933,
+   "osm": "node/4758881423"
+  },
+  {
+   "name": "Osaka Jo Pier",
+   "lat": 34.68974,
+   "lng": 135.5328,
+   "osm": "node/5052364472"
+  },
+  {
+   "name": "Osaka Central Fish Market",
+   "lat": 34.68491,
+   "lng": 135.48084,
+   "osm": "node/5506825810"
+  },
+  {
+   "name": "Osaka International Convention Center Pier",
+   "lat": 34.69046,
+   "lng": 135.48613,
+   "osm": "node/5731605638"
+  },
+  {
+   "name": "Hachikenyahama Pier",
+   "lat": 34.69062,
+   "lng": 135.51609,
+   "osm": "node/5731641929"
+  },
+  {
+   "name": "Hommachibashi Pier",
+   "lat": 34.68385,
+   "lng": 135.51004,
+   "osm": "node/5732806230"
+  },
+  {
+   "name": "Tazaemon Bridge Wharf",
+   "lat": 34.66912,
+   "lng": 135.50271,
+   "osm": "node/5735282173"
+  },
+  {
+   "name": "山科",
+   "lat": 34.99462,
+   "lng": 135.82635,
+   "osm": "node/6331330008"
+  },
+  {
+   "name": "Keage",
+   "lat": 35.00646,
+   "lng": 135.79165,
+   "osm": "node/6331330010"
+  },
+  {
+   "name": "Keage",
+   "lat": 35.00648,
+   "lng": 135.79167,
+   "osm": "node/6407875096"
+  },
+  {
+   "name": "Yamashina",
+   "lat": 34.99465,
+   "lng": 135.82635,
+   "osm": "node/6407875097"
+  },
+  {
+   "name": "Yamashina",
+   "lat": 34.9946,
+   "lng": 135.82635,
+   "osm": "node/6409384178"
+  },
+  {
+   "name": "Keage",
+   "lat": 35.00644,
+   "lng": 135.79162,
+   "osm": "node/6409384180"
+  },
+  {
+   "name": "乗下船場（四ノ宮舟溜）",
+   "lat": 34.99453,
+   "lng": 135.82653,
+   "osm": "node/6448946385"
+  },
+  {
+   "name": "Osaka Aqua-Liner Yodoyabashi pier",
+   "lat": 34.69266,
+   "lng": 135.50174,
+   "osm": "node/7993837502"
+  },
+  {
+   "name": "Ferry pier",
+   "lat": 34.71397,
+   "lng": 135.5211,
+   "osm": "node/9802763501"
+  },
+  {
+   "name": "Nippombash Pier",
+   "lat": 34.66898,
+   "lng": 135.50557,
+   "osm": "node/9805120126"
+  },
+  {
+   "name": "Yamashina",
+   "lat": 34.99462,
+   "lng": 135.82635,
+   "osm": "relation/9491918"
+  },
+  {
+   "name": "Keage",
+   "lat": 35.00646,
+   "lng": 135.79165,
+   "osm": "relation/9491919"
+  },
+  {
+   "name": "御座船のりば",
+   "lat": 34.68924,
+   "lng": 135.52602,
+   "osm": "way/1237719679"
+  },
+  {
+   "name": "OAP Pier",
+   "lat": 34.70057,
+   "lng": 135.52064,
+   "osm": "way/610362551"
+  }
  ]
 }

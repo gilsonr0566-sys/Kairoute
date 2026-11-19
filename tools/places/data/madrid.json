@@ -5461,5 +5461,19 @@
    "hours": "",
    "osm": "node/9810350517"
   }
+ ],
+ "piers": [
+  {
+   "name": "Ferry pier",
+   "lat": 39.85258,
+   "lng": -4.02,
+   "osm": "node/1268190655"
+  },
+  {
+   "name": "Barca pasaje",
+   "lat": 39.85301,
+   "lng": -4.02051,
+   "osm": "node/4182177809"
+  }
  ]
 }
