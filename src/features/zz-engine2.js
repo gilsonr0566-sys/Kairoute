@@ -14,12 +14,12 @@ if (typeof window !== "undefined" && window.ENGINE2 && window.KEngine) (function
   // The engine weighs many possible rides: it reads the answers known so far without asking for each one. The rides
   // it keeps are asked for when their day is shown (below), as the app does for its plans; an answer that arrives for
   // one of them changes what the plans used, so they are made again with it.
-  // One answer per way of going, as the old app showed (Nov 18, Athens airport: three metro rows that were the same M3
-  // ride); the one the traveler chose is kept.
-  const peek = (a, b) => { let r; transitPeek = true; try { r = transitFor(a, b); } finally { transitPeek = false; } return r && r.length ? oneEach(r, trip.legModes && (trip.legModes[pairKey(a, b)] || trip.legModes[pairKey(b, a)])) : r; };
-  const answerOf = (a, b) => { const r = peek(a, b); return r && r.map(o => ({ id: rideId(o), min: o.min, label: o.label, kind: rideKind(o) })); };
+  // The timetable answers as they are: the engine keeps one per kind of ride (part 1) and carries the chosen one's
+  // steps, departures and line on the ride itself.
+  const peek = (a, b) => { let r; transitPeek = true; try { r = transitFor(a, b); } finally { transitPeek = false; } return r; };
+  const answerOf = (a, b) => { const r = peek(a, b); return r && r.map(o => Object.assign({}, o, { id: rideId(o), kind: rideKind(o) })); };
   const askRides = ep => { (ep && ep.items || []).forEach(x => { if (x.t === "ride" && x.from && x.to && x.mode !== "walk" && x.mode !== "boat" && x.mode !== "lift") { try { transitFor(x.from, x.to); } catch (e) {} } }); };
-  const answerSig = (a, b) => JSON.stringify(answerOf(a, b));
+  const answerSig = (a, b) => JSON.stringify((peek(a, b) || []).map(o => [rideId(o), o.min, o.label]));
   // The whole trip planned once per change (the traveler's trip, an answer arriving, the guides, the date).
   const stat = { calls: 0, keyMs: 0, bucketMs: 0, checkMs: 0, used: 0, planned: 0 };
   window.__kairouteEngine2Stat = () => Object.assign({}, stat, { used: memo.used ? memo.used.size : 0 });
@@ -55,7 +55,7 @@ if (typeof window !== "undefined" && window.ENGINE2 && window.KEngine) (function
     if (window.PLACES2) { bucket = E.applyPlaces(bucket, window.PLACES2); guideFromPlaces(bucket); }
     // The app's own public transport answers for each ride (asked for any ride not known yet, as in the app).
     const used = new Map();
-    bucket.answers = (a, b) => { const r = answerOf(a, b); used.set(a.lat + "," + a.lng + ">" + b.lat + "," + b.lng, { a, b, sig: JSON.stringify(r) }); return r; };
+    bucket.answers = (a, b) => { const r = answerOf(a, b); used.set(a.lat + "," + a.lng + ">" + b.lat + "," + b.lng, { a, b, sig: answerSig(a, b) }); return r; };
     let plans; try { plans = E.planTrip(bucket); } catch (e) { console.warn("Beta 2 engine", e); plans = []; }
     // A day still on the app's own seeding (the traveler hasn't ticked or unticked anything there) shows what the
     // engine planned: its ticks become the engine's stops, so the picker, the counts and the plan always agree.
@@ -78,6 +78,7 @@ if (typeof window !== "undefined" && window.ENGINE2 && window.KEngine) (function
   window.__kairoutePiers = () => E.piersOf(tripPlans().bucket || {});
   window.__kairouteBoatPlace = id => { const b = tripPlans().bucket || {}; for (const c of Object.values(b.cities || {})) { const x = [...(c.sites || []), ...(c.farther || [])].find(y => String(y.id) === String(id)); if (x) return E.byBoat(x.travelNote) || E.waterOnly(x); } return false; };
   const MODE = { walk: "walk", ride: "ride", transit: "ride", boat: "ferry", lift: "ride" };
+  const UIKIND = { walk: "walk", taxi: "car", ferry: "ferry", bus: "bus", metro: "train", tram: "train", train: "train" };
   const byName = (list, name) => (list || []).find(r => r && r.name === name);
   function toApp(d, city, ep) {
     const w = dayWindow(d, city); if (w.error) return w;
@@ -88,22 +89,16 @@ if (typeof window !== "undefined" && window.ENGINE2 && window.KEngine) (function
     const at = (x, name, extra) => Object.assign({ name: name || x.name || "", lat: x.lat, lng: x.lng }, extra || {});
     ep.items.forEach((x, k) => {
       if (x.t === "ride") {
-        const leg = { mode: MODE[x.mode] || "ride", how: x.how || (x.mode === "walk" ? "Walk" : x.mode === "boat" ? "Boat" : x.mode === "lift" ? "Cable car" : "Taxi or car"), km: x.km || 0, min: x.min || 0 };
-        // Drawn and labelled as what it is: a boat as a ferry, a cable car with the rail-like lines (never as a taxi).
-        // The way to a ferry pier, or from it, says so (the boat leaves from the pier, not from the last sight).
-        if (x.pierName && x.mode !== "boat") { leg.how += (ep.items[k + 1] && ep.items[k + 1].t === "ride" ? " to the ferry at " : " from the ferry at ") + x.pierName; leg.pier = x.pierName; }
-        if (x.mode === "boat") leg.kind = "ferry"; else if (x.mode === "lift") leg.kind = "train";
-        else if (x.mode === "transit") leg.kind = ({ subway: "train", light_rail: "train", monorail: "train", tram: "train", train: "train", bus: "bus", ferry: "ferry" })[x.transitMode] || "train";
-        if (x.options) leg.options = x.options; if (x.from) leg.from = x.from; if (x.to) leg.to = x.to;
-        // A ride on a timetable answer carries the answer itself: the walk to the stop, how often it runs, each line and
-        // change, the walk at the end and the next departure, as the old app showed (never only "time includes the wait").
-        if (x.mode === "transit" && x.from && x.to) { const o = (peek(x.from, x.to) || []).find(y => rideId(y) === x.choice || y.label === x.how); if (o) leg.transit = o; }
-        // Every way the engine weighed for this ride is a choice on the plan (the ride chips): a tap saves it as the
-        // traveler's own choice for this ride, and the engine plans with it.
+        // One ride record from the engine (part 1): its kind sets the icon and the line on the map, its label names what
+        // it is, its steps say how to make it, the guide's words are a note beside it.
+        const leg = { mode: MODE[x.mode] || "ride", kind: UIKIND[x.kind] || (x.mode === "walk" ? "walk" : "car"), how: x.how || (x.mode === "walk" ? "Walk" : "Taxi or car"), km: x.km || 0, min: x.min || 0 };
+        if (x.pierName) leg.pier = x.pierName; if (x.from) leg.from = x.from; if (x.to) leg.to = x.to; if (x.options) leg.options = x.options;
+        if (x.ans) leg.transit = x.ans; if (x.steps) leg.steps = x.steps; if (x.note) leg.note = x.note; if (x.lost) leg.lost = x.lost; if (x.slack) leg.slack = x.slack;
+        // Every way for this ride is a choice on the plan (the ride chips): a tap saves it as the traveler's own choice for
+        // this ride, and the engine plans with it.
         if (x.from && x.to && x.options && x.options.length > 1) {
-          const kindOf = o => o.mode === "walk" ? "walk" : o.mode === "boat" ? "ferry" : o.mode === "ride" ? "car" : o.kind === "bus" ? "bus" : "train";
-          leg.key = E.pairKey(x.pairFrom || x.from, x.pairTo || x.to); leg.choice = x.choice || (x.mode === "walk" ? "walk" : x.mode === "ride" ? "taxi" : x.mode === "boat" ? "boat" : "transit");
-          leg.choices = x.options.map(o => ({ id: o.id || (o.mode === "ride" ? "taxi" : o.mode), label: o.how, min: o.min, kind: kindOf(o) }));
+          leg.key = E.pairKey(x.pairFrom || x.from, x.pairTo || x.to); leg.choice = x.choice;
+          leg.choices = x.options.map(o => ({ id: o.id, label: o.how, min: o.min, kind: UIKIND[o.kind] || "car" }));
         }
         items.push({ type: "travel", leg, time: (items.length ? items[items.length - 1].time + (items[items.length - 1].dur || 0) : ep.start) }); return;
       }

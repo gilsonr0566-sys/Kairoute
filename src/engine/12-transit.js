@@ -27,8 +27,9 @@
   const ride = (l, i, j) => { const c = cum(l), [a, b] = i < j ? [i, j] : [j, i];
     return Math.round((c[b] - c[a]) / (SPEED[l.mode] || 25) * 60 + 0.5 * (b - a)); };
   // lines: [{ mode, ref, name, stops: [{ name, lat, lng }] in order }]. walkMin(km) -> minutes on foot.
-  // far: a day trip out of town ({ km, taxiMin(km) }): the far end may be a taxi ride from its station (Ancient Corinth
-  // from Corinth station), trains run about hourly (half an hour's wait counted), and the option says so.
+  // A line is offered only with a walk at each end (a stop within a short walk): never a taxi stitched to a train (Nov 18:
+  // "Taxi 19 min to Athina, then Train A4, then a taxi 30 min, 3 h 28" next to a 95-minute ride). A ride with no stop
+  // near either end is the timetable's to answer, or a taxi.
   // The same lines (the places files load once; each plan gathers them into a new list) give the same answer for the
   // same two points, so answers are kept with the set of lines, not with one plan: a tick on the Sights list replans
   // the trip without measuring every metro ride again.
@@ -38,39 +39,41 @@
     k = sets.get(key); if (!k) { if (sets.size > 50) sets.clear(); sets.set(key, k = { key, lines, answers: new Map() }); }
     setOf.set(lines, k); return k; };
   E.linesKey = lines => linesSet(lines).key;
-  E.transitOption = (a, b, lines, walkMin, far) => {
+  // The kind of ride a line is, as the traveler sees it: metro, tram (light rail too), train or bus.
+  E.lineKind = m => /subway|metro/.test(m) ? "metro" : /tram|light_rail|monorail/.test(m) ? "tram" : /bus|coach/.test(m) ? "bus" : /ferry|boat/.test(m) ? "ferry" : "train";
+  // { min, mode, kind, how, legs, steps: ["Walk 6 min to Syntagma", "Metro Line 3, Syntagma to Airport, 38 min", "Walk 3 min"] }
+  E.transitOption = (a, b, lines, walkMin) => {
     if (!lines || !lines.length || !a || !b || !isFinite(a.lat) || !isFinite(b.lat)) return null;
-    const set = linesSet(lines), key = walkMin(10) + "|" + (far ? far.km + ":" + far.taxiMin(10) : "") + "|" + a.lat + "," + a.lng + "|" + b.lat + "," + b.lng;
+    const set = linesSet(lines), key = walkMin(10) + "|" + a.lat + "," + a.lng + "|" + b.lat + "," + b.lng;
     if (set.answers.has(key)) return set.answers.get(key);
     if (set.answers.size > 100000) set.answers.clear();
-    const got = findOption(a, b, set.lines, walkMin, far); set.answers.set(key, got && Object.freeze(got)); return got;
+    const got = findOption(a, b, set.lines, walkMin); set.answers.set(key, got && Object.freeze(got)); return got;
   };
-  const findOption = (a, b, lines, walkMin, far) => {
+  const findOption = (a, b, lines, walkMin) => {
     const near = (p, km) => { const g = gridOf(lines), out = [], la = Math.floor(p.lat / CELL), lo = Math.floor(p.lng / CELL);
       const sLa = Math.ceil(km / (111 * CELL)) , sLo = Math.ceil(km / (111 * CELL * Math.max(0.2, Math.cos(p.lat * Math.PI / 180))));
       for (let x = la - sLa; x <= la + sLa; x++) for (let y = lo - sLo; y <= lo + sLo; y++) { const c = g.get(x + "," + y); if (!c) continue;
         for (const [li, si] of c) { const d = E.hav(p, lines[li].stops[si]); if (d <= km) out.push({ li, si, d }); } }
       return out.sort((a, b) => a.li - b.li || a.si - b.si); };
-    const reach = far ? far.km : ACCESS_KM, endMin = d => d <= ACCESS_KM ? walkMin(d) : far.taxiMin(d), endWord = (d, nm) => d <= ACCESS_KM ? "" : ", then a taxi " + far.taxiMin(d) + " min";
-    const from = near(a, reach).filter(x => !far || x.d <= reach), to = near(b, reach); if (!from.length || !to.length) return null;
-    const wait = m => far ? 30 : (WAIT[m] || 6);
+    const from = near(a, ACCESS_KM), to = near(b, ACCESS_KM); if (!from.length || !to.length) return null;
+    const wait = m => WAIT[m] || 6, nm = st => E.latin(st.name || "the stop");
     let best = null;
-    // The label is written only for a ride that beats (or ties) the best so far: most candidates never need one.
-    const consider = (min, mode, legs, how) => { if (best && min > best.min) return; const h = how(); if (!best || min < best.min || h < best.how) best = { min, mode, how: h, legs }; };
+    // The words are written only for a ride that beats (or ties) the best so far: most candidates never need them.
+    const consider = (min, mode, legs, stepsOf) => { if (best && min > best.min) return; const steps = stepsOf(), h = steps.slice(1, -1).map(x => x.replace(/, \d+ min$/, "").replace(/^Change to /, "then ")).join(", ");
+      if (!best || min < best.min || h < best.how) best = { min, mode, kind: E.lineKind(mode), how: h, legs, steps }; };
     for (const f of from) for (const t of to) {
       const L = lines[f.li], M = lines[t.li];
       if (f.li === t.li) {
         if (f.si === t.si) continue;
-        const min = endMin(f.d) + wait(L.mode) + ride(L, f.si, t.si) + endMin(t.d);
-        consider(min, L.mode, 1, () => (f.d > ACCESS_KM ? "Taxi " + endMin(f.d) + " min to " + E.latin(L.stops[f.si].name) + ", then " : "") + E.transitLabel(L) + ", " + E.latin(L.stops[f.si].name) + " to " + E.latin(M.stops[t.si].name) + endWord(t.d));
+        const r = ride(L, f.si, t.si), min = walkMin(f.d) + wait(L.mode) + r + walkMin(t.d);
+        consider(min, L.mode, 1, () => ["Walk " + walkMin(f.d) + " min to " + nm(L.stops[f.si]), E.transitLabel(L) + ", " + nm(L.stops[f.si]) + " to " + nm(L.stops[t.si]) + ", " + r + " min", "Walk " + walkMin(t.d) + " min"]);
         continue;
       }
       // One change: a stop of the first line that is (or stands beside) a stop of the second.
       for (const [i, j] of meets(L, M)) {
-        const x = L.stops[i];
         if (i === f.si || j === t.si) continue;
-        const min = endMin(f.d) + wait(L.mode) + ride(L, f.si, i) + CHANGE_MIN + wait(M.mode) + ride(M, j, t.si) + endMin(t.d);
-        consider(min, L.mode, 2, () => (f.d > ACCESS_KM ? "Taxi " + endMin(f.d) + " min to " + E.latin(L.stops[f.si].name) + ", then " : "") + E.transitLabel(L) + " to " + E.latin(x.name) + ", then " + E.transitLabel(M) + " to " + E.latin(M.stops[t.si].name) + endWord(t.d));
+        const r1 = ride(L, f.si, i), r2 = ride(M, j, t.si), min = walkMin(f.d) + wait(L.mode) + r1 + CHANGE_MIN + wait(M.mode) + r2 + walkMin(t.d);
+        consider(min, L.mode, 2, () => ["Walk " + walkMin(f.d) + " min to " + nm(L.stops[f.si]), E.transitLabel(L) + ", " + nm(L.stops[f.si]) + " to " + nm(L.stops[i]) + ", " + r1 + " min", "Change to " + E.transitLabel(M) + ", " + nm(M.stops[j]) + " to " + nm(M.stops[t.si]) + ", " + r2 + " min", "Walk " + walkMin(t.d) + " min"]);
       }
     }
     return best;

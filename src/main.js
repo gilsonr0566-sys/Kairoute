@@ -868,8 +868,17 @@ function depLine(o, start, endBy, back, slack) {
 }
 // How to pay on a public ride, from the city's guide (only where the guide says so; nothing is assumed for other cities).
 const payNote = o => { if (!o || o.mode === "ferry") return ""; let c = null; try { c = cityFor(day()); } catch (e) {} return c && c.ridePay ? " " + esc(c.ridePay) : ""; };
+// The ride's own steps (a line mapped on the map, a ferry from its pier), the guide's words beside it, and why a choice
+// the traveler made can't be used for this ride (Beta 2: every ride is one record, part 1 of the engine).
+const LOST_WORD = { walk: "walking", metro: "the metro", tram: "the tram", train: "the train", bus: "the bus", ferry: "the ferry", taxi: "a taxi" };
+function rideExtra(leg) {
+  const steps = !leg.transit && leg.steps && leg.steps.length ? `<span class="sub ridesub ridesteps">${leg.steps.map(esc).join(". ")}.</span>` : "";
+  const lost = leg.lost ? `<span class="ridenote">You chose ${esc(LOST_WORD[leg.lost] || "another way")} for this ride, but no ${esc((LOST_WORD[leg.lost] || "such ride").replace(/^(the|a) /, ""))} is known between these two places, so it is planned as ${esc(leg.how.toLowerCase())}.</span>` : "";
+  const note = leg.note ? `<span class="sub ridesub ridenoteguide">${esc(leg.note)}</span>` : "";
+  return steps + lost + note;
+}
 function rideDetail(leg, start, endBy) {
-  if (!leg.choices) return "";
+  if (!leg.choices && !leg.transit) return rideExtra(leg);
   const o = leg.transit, ev = knownEvery(o) ? `, runs about every ${dur(o.every)}${o.everySrc === "timetable" ? " (from the timetable)" : ""}` : "";
   const ride = o && o.steps && o.steps.length ? o.steps.map(esc).join("; then ") : o ? `${dur(o.ride)} ride${o.stops ? ` (${o.stops} stops)` : ""}` : "";
   const how = o && o.access && o.egress ? `${o.access.how === "walk" ? "Walk" : "Taxi"} ${dur(o.access.min)} to ${esc(o.from || "the " + (o.mode === "ferry" ? "pier" : "station"))}${ev}. ${ride}, then ${o.egress.how === "walk" ? "walk" : "taxi"} ${dur(o.egress.min)}${o.to && !(o.steps && o.steps.length) ? " from " + esc(o.to) : ""}.${o.operator ? " " + esc(o.operator) + "." : ""}${o.hours ? " Hours: " + esc(o.hours) + "." : ""}${o.fare ? " Fare: " + esc(o.fare) + "." : ""} Times include waiting and boarding.${payNote(o)}` : leg.mode === "walk" ? "" : leg.kind === "ferry" ? "Boats keep their own timetable: check the next sailing at the pier." : leg.kind === "train" || leg.kind === "bus" ? "Time includes getting to the station and the wait." : "By road, with time for traffic.";
@@ -877,9 +886,9 @@ function rideDetail(leg, start, endBy) {
   const note = rideNotice && rideNotice.key === leg.key ? `<span class="ridenote">${rideNotice.text}${rideNotice.undo != null ? ` <button class="linkbtn" data-act="rideundo">Undo</button>` : ""}${rideNotice.force ? ` <button class="linkbtn" data-act="rideforce">${esc(rideNotice.forceText)}</button>` : ""}</span>` : "";
   // One tap per way to go, in the transport colors, each with its time (and fare when the timetable gives one).
   const chip = c => `${esc(c.label)} · ${dur(c.min)}${c.fare ? " · " + esc(c.fare) : ""}`;
-  const pick = leg.choices.length > 1 ? `<div class="ridechips" role="group" aria-label="How to go">${leg.choices.map(c => `<button type="button" class="ridechip k-${c.kind}${c.id === leg.choice ? " on" : ""}" aria-pressed="${c.id === leg.choice}" data-ridekey="${esc(leg.key)}" data-rideval="${esc(c.id)}">${chip(c)}</button>`).join("")}</div>`
+  const pick = !leg.choices ? "" : leg.choices.length > 1 ? `<div class="ridechips" role="group" aria-label="How to go">${leg.choices.map(c => `<button type="button" class="ridechip k-${c.kind}${c.id === leg.choice ? " on" : ""}" aria-pressed="${c.id === leg.choice}" data-ridekey="${esc(leg.key)}" data-rideval="${esc(c.id)}">${chip(c)}</button>`).join("")}</div>`
     : `<div class="ridechips"><span class="ridechip k-${leg.choices[0].kind} on">${chip(leg.choices[0])}</span></div>`;
-  return `${how || fall ? `<span class="sub ridesub">${how}${fall}</span>` : ""}${note}${pick}`;
+  return `${how || fall ? `<span class="sub ridesub">${how}${fall}</span>` : ""}${rideExtra(leg)}${note}${pick}`;
 }
 // One option for each way of going (the Athens airport ride came back as three metro rows): the quickest of each
 // mode, or one with fewer changes that is at most 10 min slower, or the one the traveler chose.
@@ -4055,7 +4064,7 @@ async function saveStops(sites, onStep, reserve) {
   return { done, made, total: sites.length, stopped: false };
 }
 // Quality check for every day of a trip (used by the automated planner test).
-if (typeof window !== "undefined") window.__kairouteLegs = i => { const pl = buildPlan(trip.days[i]); if (!pl || pl.error || !pl.items) return null; return pl.items.filter(x => x.type === "travel").map(x => ({ mode: x.leg.mode, how: x.leg.how, km: x.leg.km, min: x.leg.min, choices: (x.leg.choices || []).map(c => c.label + " " + c.min) })); };
+if (typeof window !== "undefined") window.__kairouteLegs = i => { const pl = buildPlan(trip.days[i]); if (!pl || pl.error || !pl.items) return null; return pl.items.filter(x => x.type === "travel").map(x => ({ mode: x.leg.mode, how: x.leg.how, km: x.leg.km, min: x.leg.min, note: x.leg.note || "", choices: (x.leg.choices || []).map(c => c.label + " " + c.min) })); };
 if (typeof window !== "undefined") window.__kairouteCrossings = () => trip.days.map((d, i) => { let r = window.__kairouteRoute(i); if (!r) return 0; r = r.filter(x => x.type !== "evening"); const h = r.findIndex(x => x.type === "stop" || x.type === "meal"); if (h > 0) r = r.slice(h - 1); if (r.length < 4) return 0; return crossCount(r[0], r.slice(1, -1), r[r.length - 1]); }); // the part the planner orders: from where the day's sights begin (after a bag drop) to the end point, without the evening dinner
 if (typeof window !== "undefined") window.__kairouteRoute = i => { bonusMemo = new Map(); mealMemo = new Map(); keptMemo = new Map(); eveMemo = new Map(); avoidMeals = new Set(); const pl = buildPlan(trip.days[i]); if (!pl || pl.error || !pl.items) return null;
   return pl.items.filter(x => x.place && x.type !== "travel").map(x => ({ type: x.type, name: x.place.name, lat: +x.place.lat, lng: +x.place.lng, time: x.time, min: x.place.minutes || 0, hours: x.place.hours || "", leg: x.leg ? (x.leg.how || x.leg.mode) : "" })); };

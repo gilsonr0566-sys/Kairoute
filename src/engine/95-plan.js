@@ -33,13 +33,13 @@
     const whereIs = x => x.t === "fixed" ? fixedAt(x.id) : x.id != null ? byId.get(String(x.id)) : x.t === "start" ? win.head[0] : x.t === "end" ? win.tail[win.tail.length - 1] : null;
     for (const x of fit.r.items) {
       if (x.t === "ride") {
-        const ride = Object.assign({ t: "ride", mode: x.mode, min: x.min, km: x.km }, x.how && x.mode !== "walk" ? { how: x.how } : {}, x.options ? { options: x.options } : {}, x.transitMode ? { transitMode: x.transitMode } : {}, x.choice ? { choice: x.choice } : {});
+        const { parts, ...one } = x, ride = Object.assign({}, one);
         if (!x.parts) { items.push(ride); continue; }
         // A boat between piers: the way to the pier and from it are rides of their own, around the boat. The traveler's
         // choice of ways stays on the boat, for the whole ride between the two places.
         const ground = x.parts.filter(g => !g.boat).reduce((t, g) => t + g.min, 0);
         x.parts.forEach(g => { const r = g.boat ? Object.assign(ride, { min: x.min - ground, whole: true }, g.from ? { pierName: g.from } : {})
-            : Object.assign({ t: "ride", mode: g.mode, min: g.min, km: Math.round((g.km || 0) * 100) / 100, pierName: g.pierName }, g.how && g.mode !== "walk" ? { how: g.how } : {}, g.transitMode ? { transitMode: g.transitMode } : {});
+            : E.rideItem(g);
           if (g.to) r.to = { lat: g.to.lat, lng: g.to.lng }; items.push(r); });
         continue;
       }

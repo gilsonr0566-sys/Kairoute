@@ -21,7 +21,7 @@ const PD = process.env.PLACES_DIR, places = {};
 if (PD) for (const f of fs.readdirSync(PD).filter(f => f.endsWith('.json'))) { const p = JSON.parse(fs.readFileSync(path.join(PD, f))); places[p.key] = p; }
 const out = { safe: [], picked: [], cleared: [], rideFrom: [], ways: [], rideChoice: [], lunchWay: [], lunch: [], tickets: [] }, gaps = { lunch: [], tickets: [] };
 const label = { safe: 'stop or ride past the time to be back', picked: 'pick neither planned nor explained', cleared: 'emptied day still planned',
-  rideFrom: "ride between two trips out timed from a sight's own note", ways: "way to a sight its note names, not offered", lunchWay: 'lunch off the way (out and back)', rideChoice: 'a picked ride not taken', lunch: 'lunch out of town not named', tickets: 'book-ahead sight without its official website' };
+  rideFrom: "ride between two trips out timed from a sight's own note", ways: "way the guide names, neither offered nor said unknown", lunchWay: 'lunch off the way (out and back)', rideChoice: 'a picked ride not taken', lunch: 'lunch out of town not named', tickets: 'book-ahead sight without its official website' };
 let variants = 0;
 const seen = new Set(), add = (k, msg) => { if (seen.has(k + msg)) return; seen.add(k + msg); out[k].push(msg); };
 for (const f of fs.readdirSync(dir).filter(f => f.endsWith('.json')).sort()) {
@@ -54,14 +54,16 @@ for (const f of fs.readdirSync(dir).filter(f => f.endsWith('.json')).sort()) {
       p.items.forEach((x, k) => { if (x.t !== 'ride') return; const a = p.items[k - 1], b = p.items[k + 1]; if (!a || !b) return;
         const sa = (city.sites || []).concat(city.farther || []).find(y => String(y.id) === String(a.id)), sb = (city.sites || []).concat(city.farther || []).find(y => String(y.id) === String(b.id));
         const noteOf = y => y && y.travelNote && !E.byBoat(y.travelNote) ? y.travelNote : '';
-        if (noteOf(sa) && noteOf(sb) && (x.options || []).some(o => (o.id === 'boat' || o.id === 'transit') && /plus 15 to get to the station|at the pier for the next sailing/.test(o.how || '')))
-          add('rideFrom', `${tag}: ${a.name} to ${b.name} offers "${(x.options.find(o => /plus 15|at the pier/.test(o.how || '')) || {}).how}"`);
+        if (noteOf(sa) && noteOf(sb) && (x.options || []).some(o => (o.id === 'boat' || o.id === 'transit') && /plus 15 to get to the station|as the guide says/.test(o.how || '')))
+          add('rideFrom', `${tag}: ${a.name} to ${b.name} offers "${(x.options.find(o => /plus 15|as the guide says/.test(o.how || '')) || {}).how}"`);
         // Only a ride between the sight and the place itself (within 15 km of where the day starts) is the note's ride.
         const home = E.dayWindow(d, E.makeTravel(base.prefs, base.legModes)), h0 = home && home.head && home.head[home.head.length - 1];
         const farIds = new Set((city.farther || []).map(z => String(z.id))), inTown = y => h0 && isFinite(y.lat) && E.hav(h0, y) <= 15 && !farIds.has(String(y.id)) && !/^Lunch in /.test(y.name || '');
         const one = noteOf(sa) && !noteOf(sb) && inTown(b) ? sa : noteOf(sb) && !noteOf(sa) && inTown(a) ? sb : null;
-        if (one && E.hav(a, b) > 15) for (const w of E.noteWays(one.travelNote).filter(w => w.said && w.id !== 'taxi'))
-          if (!(x.options || []).some(o => o.id === w.id && o.min >= w.said)) add('ways', `${tag}: ${a.name} to ${b.name}: ${w.how} (${w.said} min) not offered`); });
+        // A way the guide names is either offered from real data or named in the ride's note as unknown (never a ride
+        // made up from the guide's words, never silently dropped).
+        if (one && E.hav(a, b) > 5) for (const k of E.noteKinds(one.travelNote))
+          if (!(x.options || [{ kind: x.kind }]).some(o => o.kind === k || (k === 'train' && /metro|tram/.test(o.kind))) && !/no timetable for it is known/.test(x.note || '')) add('ways', `${tag}: ${a.name} to ${b.name}: the ${k} the guide names is neither offered nor said to be unknown`); });
       // a picked ride is taken: each other way on the first long ride, picked, is the ride between those places
       if (pick.some(id => /-far$/.test(id))) { const legs = p.items.filter((x, k) => x.t === 'ride' && x.from && x.to && E.hav(x.from, x.to) > 5 && (x.options || []).length > 1 && ![p.items[k - 1], p.items[k + 1]].some(y => !y || y.bonus || y.t === 'meal')); // between the traveler's own places (an optional stop gives way)
         for (const leg of legs.slice(0, 1)) for (const o of leg.options.filter(o => o.id && o.id !== leg.choice && o.id !== 'walk')) {

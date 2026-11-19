@@ -14,15 +14,28 @@ ok(E.waterOnly({ access: 'Viewed from the water on a boat tour' }) && E.waterOnl
 { // A ride picked one way doesn't overrule the ride the traveler picked back (Nov 18: the ferry out to Sorrento decided the
   // ride back to a sight in the city, so the train picked for it did nothing).
   const port = { lat: 40.838, lng: 14.255 }, town = { lat: 40.626, lng: 14.376, travelNote: 'Ferry from the port, 40 min; or the Circumvesuviana train, 60 min.' }, sight = { lat: 40.849, lng: 14.255 }, near = { lat: 40.836, lng: 14.249 };
-  const tr = E.makeTravel({}, { [E.pairKey(port, town)]: 'boat', [E.pairKey(town, sight)]: 'transit' });
-  ok(tr.estimate(port, town).choice === 'boat' && tr.estimate(town, sight).choice === 'transit' && tr.estimate(town, near).choice === 'transit', 'out by ferry and back by train, as picked, also from a stop next door'); }
-{ // With a timetable answer for a trip out, the guide's own train stays a choice under its own name, the taxi is the
-  // taxi by road, and each one tapped is taken (Nov 18, 7:14 PM: the Circumvesuviana showed as "Taxi or car").
+  const ans = () => [{ id: 'ferry|Ferry', min: 55, label: 'Ferry', mode: 'ferry' }, { id: 'rail|Circumvesuviana', min: 75, label: 'Circumvesuviana', mode: 'rail' }];
+  const tr = E.makeTravel({}, { [E.pairKey(port, town)]: 'ferry', [E.pairKey(town, sight)]: 'train' }, null, null, ans);
+  ok(tr.estimate(port, town).choice === 'ferry' && tr.estimate(town, sight).choice === 'train' && tr.estimate(town, near).choice === 'train', 'out by ferry and back by train, as picked, also from a stop next door');
+  // A choice saved before the kinds were named ("boat", "transit") still holds.
+  const old = E.makeTravel({}, { [E.pairKey(port, town)]: 'boat', [E.pairKey(town, sight)]: 'transit' }, null, null, ans);
+  ok(old.estimate(port, town).choice === 'ferry' && old.estimate(town, sight).choice === 'train', 'a ride choice saved by the old names still holds'); }
+{ // One layer for every ride (Nov 18 night): each way is real data with one label; the guide's words are a note, never a ride.
   const port = { lat: 40.838, lng: 14.255 }, far = { lat: 40.749, lng: 14.485, travelNote: 'Circumvesuviana train, 40 min.' };
-  const ans = () => [{ id: 'rail|Train 4 + 1 change', min: 110, label: 'Train 4 + 1 change', kind: 'train' }];
+  const ans = () => [{ id: 'rail|Train 4 + 1 change', min: 110, label: 'Train 4 + 1 change', mode: 'rail', steps: ['Train 4 to X', 'Train 7 to Y'] }, { id: 'rail|Train 4', min: 115, label: 'Train 4', mode: 'rail' }, { id: 'rail|Train 9', min: 160, label: 'Train 9', mode: 'rail' }];
   const plain = E.makeTravel({}, {}, null, null, ans).estimate(port, far);
-  ok(plain.options.some(o => /Circumvesuviana/.test(o.how)) && !(plain.mode !== 'ride' && /^Taxi/.test(plain.how)) && plain.options.find(o => o.id === 'taxi').min >= 40, 'the guide\'s train keeps its name beside a timetable answer; the taxi is the taxi');
-  for (const want of ['rail|Train 4 + 1 change', 'transit', 'taxi']) ok(E.makeTravel({}, { [E.pairKey(port, far)]: want }, null, null, ans).estimate(port, far).choice === want, 'the ride tapped is taken: ' + want); }
+  ok(plain.options.filter(o => o.kind === 'train').length === 1 && plain.options.find(o => o.kind === 'train').how === 'Train 4', 'one choice per kind: the timetable\'s train with fewer changes, at most 10 min slower');
+  ok(plain.options.every(o => E.RIDE_KINDS.includes(o.kind) && o.mode === E.modeOfKind(o.kind)) && plain.options.find(o => o.id === 'taxi').how === 'Taxi or car' && plain.options.find(o => o.id === 'taxi').min >= 40, 'every way has a kind, its mode follows it, the taxi is the taxi (no shorter than the guide\'s time)');
+  ok(!plain.options.some(o => /guide says|plus 15/.test(o.how)) && /The guide says: Circumvesuviana train, 40 min/.test(plain.note || ''), 'the guide\'s words are a note beside the ride, never a ride of their own');
+  for (const [want, got] of [['rail|Train 4 + 1 change', 'train'], ['transit', 'train'], ['taxi', 'taxi'], ['train', 'train']]) ok(E.makeTravel({}, { [E.pairKey(port, far)]: want }, null, null, ans).estimate(port, far).choice === got, 'the ride tapped is taken: ' + want);
+  // No data for the train the guide names: a taxi, and the note says so plainly; never a train guessed from the note.
+  const none = E.makeTravel({}, {}).estimate(port, far);
+  ok(none.kind === 'taxi' && !none.options && /names a train, but no timetable for it is known/.test(none.note || ''), 'no train known: the taxi, and the note says the guide\'s train has no known timetable (never a guessed train)');
+  const lost = E.makeTravel({}, { [E.pairKey(port, far)]: 'train' }).estimate(port, far);
+  ok(lost.kind === 'taxi' && lost.lost === 'train', 'a choice that can\'t hold says so (lost: train)');
+  // The ship's extra time is the same for every way.
+  const back = E.makeTravel({}, {}, null, null, ans).estimate(far, Object.assign({}, port, { backToShip: true }));
+  ok(back.options.filter(o => o.min >= 30 && o.kind !== 'walk').every(o => o.slack >= 15), 'every way back to the ship has its extra time'); }
 ok(E.publicWins(73, 46) && E.publicWins(100, 50) === false, 'a train an hour and a quarter long wins over a 46-minute taxi; a taxi saving 50 minutes of a 100-minute ride wins (Nov 18, Sorrento to Pompeii)');
 // A pick inside an area picked for another day moves to the area's day (one walk), and the plan says so; a sight far
 // from the heart of the place is a trip out, never a stop of a day in town.
@@ -86,7 +99,7 @@ ok(E.latin('Ζευγολατιό') === 'Zevgolatio' && E.latin('Ευαγγελι
   { const L3 = line('tram', '3', [['Top', 38.100, 23.700], ['Hill', 38.200, 23.680], ['Bottom', 38.100, 23.660]]), t3 = E.makeTravel({ walk: 'low' }, {}, null, [L3]);
     const p = { lat: 38.1003, lng: 23.7003 }, q = { lat: 38.1065, lng: 23.660 }, e = t3.estimate(p, q);
     ok(e.mode !== 'walk' && (e.options || []).some(o => o.mode === 'transit'), `a ride leg offers the line even when walking all the way would be as quick (got ${e.mode} ${JSON.stringify((e.options || []).map(o => o.mode + o.min))})`); }
-  const ac = tt.estimate(a, c); ok((ac.options || []).some(o => o.mode === 'transit' && /then Tram T to Far East/.test(o.how)), 'one change between lines is found');
+  const ac = tt.estimate(a, c); ok((ac.options || []).some(o => o.mode === 'transit' && /then Tram T, .* to Far East/.test(o.how)), 'one change between lines is found');
   const picked = E.makeTravel({ walk: 'medium' }, { [E.pairKey(a, b)]: 'transit' }, null, [L1, L2]).estimate(a, b);
   ok(picked.mode === 'transit' && picked.min === opts.find(o => o.mode === 'transit').min, "the traveler's choice of the metro is planned with its own time");
   ok(!tt.estimate(a, nowhere).options, 'no line near one end: no public transport offered');
@@ -195,8 +208,8 @@ if (fs.existsSync(dir)) for (const f of fs.readdirSync(dir).filter(f => f.endsWi
     if (live && Math.abs(r.end - o.end) > 1) { n--; liveDays++; return; }
     // A day trip the guide names its ways for (a train, a ferry) now rides the way chosen, with that way's own time, where
     // the old engine took the slower of the road and the note: a rule change (Nov 18), not a clock difference.
-    const guideWay = seq.some((x, k) => x && (k ? seq[k - 1] : w.head[w.head.length - 1]) && (t2.estimate(k ? seq[k - 1] : w.head[w.head.length - 1], x).options || []).some(o => o.id === 'boat' || o.id === 'transit') && t2.estimate(k ? seq[k - 1] : w.head[w.head.length - 1], x).said)
-      || (seq.length && (t2.estimate(seq[seq.length - 1], w.tail[0]).said && (t2.estimate(seq[seq.length - 1], w.tail[0]).options || []).length));
+    const guideWay = seq.some((x, k) => x && (k ? seq[k - 1] : w.head[w.head.length - 1]) && t2.estimate(k ? seq[k - 1] : w.head[w.head.length - 1], x).note)
+      || (seq.length && t2.estimate(seq[seq.length - 1], w.tail[0]).note);
     if (guideWay && Math.abs(r.end - o.end) > 1) { n--; liveDays++; return; }
     // A ride of half an hour or more to a ship, train or plane gets time for traffic at any distance now, where the old
     // engine gave it only past 15 km (Nov 18, a rule change for safety): that extra time is not a clock difference.
@@ -280,7 +293,7 @@ if (fs.existsSync(dir)) { let rides = 0, placed = 0;
 { const tb = E.makeTravel({ walk: 'medium' }, {}), port = { lat: 37.46, lng: 25.326 }, isle = { lat: 37.396, lng: 25.268, travelNote: 'About 30 to 40 minutes each way by boat from the old harbor.' };
   const go = tb.estimate(port, isle), back = tb.estimate(isle, port), ship = tb.estimate(isle, Object.assign({}, port, { backToShip: true }));
   ok(go.mode === 'boat' && back.mode === 'boat' && ship.mode === 'boat', 'an island the guide says is reached by boat: by boat both ways, never a taxi');
-  ok(go.min === 40 + E.PIER_MIN && go.cross === 40 && /40 min crossing/.test(go.how), `the crossing is the guide's time plus the pier, shown apart (got ${go.min} min: ${go.how})`);
+  ok(go.min === 40 + E.PIER_MIN && go.cross === 40 && go.steps.some(x => /40 min crossing/.test(x)) && go.kind === 'ferry', `the crossing is the guide's time plus the pier, shown apart (got ${go.min} min: ${go.how})`);
   ok(ship.min <= 40 + E.PIER_MIN + Math.max(15, Math.round((40 + E.PIER_MIN) * 0.3 / 5) * 5), 'back to the ship by boat: only the usual extra time on top'); }
 { let boats = 0; for (const f of fs.readdirSync(dir).filter(f => f.endsWith('.json'))) { const s = JSON.parse(fs.readFileSync(path.join(dir, f))), ps = E.planTrip(s);
     ps.forEach((p, i) => p && p.items && p.items.forEach((x, k) => { if (x.t !== 'ride') return; const a = p.items[k - 1], b = p.items[k + 1], c = s.cities[s.days[i].city] || {};
@@ -386,4 +399,38 @@ if (fs.existsSync(dir)) for (const f of fs.readdirSync(dir).filter(f => f.endsWi
   if (f === 'sample-cruise.json') ok(plans.some(p => p && p.items && p.items.some(x => x.t === 'stop' && /Saint Titus/.test(x.name))), 'Heraklion: the Church of Saint Titus, a finished voiced tour, keeps its own stop');
   oks += same; console.log(`ok   ${s.name}: same plan in ${same} of 10 shuffles, nothing used twice, every day safe`);
 }
+// ---- Nov 18, 11 PM (Richard's Jul 2 screenshot): Athens to Acrocorinth was "Train or car: 80 min as the guide says, plus 15
+// to get going", drawn as a taxi, beside "Taxi 19 min to Athina, then Train A4, then a taxi 30 min, 3 h 28".
+{ const plaka = { lat: 37.9725, lng: 23.73 }, acro = { lat: 37.8890, lng: 22.8690, travelNote: 'A 10-minute drive up from Ancient Corinth (about 1 hour 20 minutes from Athens); taxis wait at Ancient Corinth.' };
+  const A4 = { mode: 'train', ref: 'A4', stops: [{ name: 'Athina', lat: 37.9923, lng: 23.7210 }, { name: 'Korinthos', lat: 37.9180, lng: 22.9300 }] };
+  const e = E.makeTravel({}, {}, null, [A4]).estimate(plaka, acro);
+  ok(e.kind === 'taxi' && e.how === 'Taxi or car' && !(e.options || []).some(o => /then a taxi|Taxi \d+ min to/.test(o.how)), `Athens to Acrocorinth offline: a taxi called a taxi, no train stitched to taxis (got ${e.how}; ${(e.options || []).map(o => o.how).join(' | ')})`);
+  ok(/The guide says/.test(e.note || '') && !/guide says/.test(e.how), 'the guide\'s words sit beside the ride as a note');
+  const ans = () => [{ id: 'rail|A4', min: 105, label: 'Train A4', mode: 'rail', steps: ['Metro M1 to Athina', 'Train A4, Athina to Korinthos', 'Taxi 15 min from Korinthos'], access: { how: 'walk', min: 8 }, egress: { how: 'taxi', min: 15 } }];
+  const on = E.makeTravel({}, {}, null, [A4], ans).estimate(plaka, acro);
+  ok(on.kind === 'train' && on.how === 'Train A4' && on.steps.length === 3 && on.options.find(o => o.kind === 'taxi').how === 'Taxi or car', 'with the timetable\'s answer (as the demo has it): the train, its steps, the taxi beside it'); }
+// ---- Never fewer ways than the demo (Nov 18 night, the ride rewrite's gate). The demo app offers, for every ride, a walk
+// when it is short, each kind of public transport its timetable answers give, and a taxi. With the same answers for
+// every ride of every test trip, each ride of Beta 2 offers every kind the demo would (or is reached only by water);
+// the planned way has one label of its kind, is drawn as that kind, and gives its steps.
+{ let rides = 0, bad = 0;
+  const fake = (a, b) => { const d = E.hav(a, b); if (d < 1.5) return []; const out = [{ id: 'subway|M9', min: Math.round(d * 2 + 10), label: 'Metro M9', mode: 'subway', steps: ['Metro M9, A to B'], access: { how: 'walk', min: 4 }, egress: { how: 'walk', min: 4 } }];
+    if (d > 15) out.push({ id: 'rail|R9', min: Math.round(d * 1.1 + 20), label: 'Train R9', mode: 'rail', steps: ['Train R9, C to D'], access: { how: 'walk', min: 6 }, egress: { how: 'walk', min: 6 } });
+    return out; };
+  for (const f of fs.readdirSync(dir).filter(f => f.endsWith('.json'))) { const s = JSON.parse(fs.readFileSync(path.join(dir, f))); s.answers = fake;
+    E.planTrip(s).forEach((p, i) => p && p.items && p.items.forEach(x => { if (x.t !== 'ride' || !x.from || !x.to || x.whole || x.pierName) return; rides++;
+      const d = E.hav(x.from, x.to), opts = x.options || [{ kind: x.kind, id: x.choice }], has = k => opts.some(o => o.kind === k), why = [];
+      if (x.mode === 'boat' || x.mode === 'lift') { if (!(x.mode === 'boat' ? x.kind === 'ferry' : true)) why.push('a boat not called a ferry'); }
+      else {
+        if (d >= 1.5 && !has('metro')) why.push('no metro (the demo offers it)');
+        if (d > 15 && !has('train')) why.push('no train (the demo offers it)');
+        if (d >= 0.6 && !has('taxi')) why.push('no taxi');
+        if (x.mode !== E.modeOfKind(x.kind)) why.push(`drawn as ${x.mode} but is a ${x.kind}`);
+        if ((x.kind === 'metro' || x.kind === 'train') && !(x.ans && (x.steps || []).length)) why.push('a train or metro planned without its steps');
+        if (x.kind === 'taxi' && x.how !== 'Taxi or car') why.push(`a taxi labelled "${x.how}"`);
+        if (opts.some(o => /guide says|plus 15|then a taxi/.test(o.how || ''))) why.push('a way made from the guide\'s words or stitched together');
+        const kinds = opts.map(o => o.kind); if (new Set(kinds).size !== kinds.length) why.push('two choices of one kind');
+      }
+      if (why.length) { bad++; if (bad <= 8) ok(false, `${f} day ${i + 1}: ${x.how || x.mode} (${d.toFixed(1)} km): ${why.join('; ')}`); } })); }
+  ok(rides > 300 && !bad, `never fewer ways than the demo: ${rides} rides on all test trips, ${bad} short`); }
 console.log(`\n${oks} checks passed, ${fails} failed`); process.exit(fails ? 1 : 0);

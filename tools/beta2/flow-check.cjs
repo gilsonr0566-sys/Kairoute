@@ -110,7 +110,9 @@ async function tapTimes(p) { const out = []; const n = await p.evaluate(() => wi
       const legs = await p.evaluate(i => window.__kairouteLegs(i), ni), plan = await p.evaluate(i => window.__kairouteEngine2()[i], ni);
       const k = (plan.items || []).findIndex(x => x.t === 'stop' && x.id === sor), before = k > 0 ? plan.items[k - 1] : null;
       check('Naples: the ride out to Sorrento is on the plan', before && before.t === 'ride', 'no ride before Sorrento');
-      check('Naples: the ferry is offered for Sorrento', (legs || []).some(l => (l.choices || []).some(c => /ferry/i.test(c))), 'choices: ' + JSON.stringify((legs || []).map(l => l.choices)).slice(0, 200)); } }
+      // With no ferry timetable known (this check runs offline), the ride says the guide's ferry may run, never a ferry
+      // made up from the guide's words (Nov 18 night: one ride layer, data only); with one, the ferry is a choice (2a1).
+      check('Naples: the ferry the guide names is offered, or said to be unknown', (legs || []).some(l => (l.choices || []).some(c => /ferry/i.test(c)) || /names a ferry, but no timetable/i.test(l.note || '')), 'legs: ' + JSON.stringify((legs || []).map(l => [l.how, l.choices, l.note])).slice(0, 300)); } }
 
   // 2a1. Every ride choice on the Naples day plan can be tapped and is taken, in any order, for several sets of picks
   // (a trip out alone, two trips out, a trip out with sights in town), unless it would cost one of the traveler's own
@@ -128,18 +130,24 @@ async function tapTimes(p) { const out = []; const n = await p.evaluate(() => wi
       await p.evaluate(i => { window.__kairouteGo('day', i); window.__kairouteGo('sites'); }, ni); await p.waitForTimeout(500);
       if (!(await setPicks(set))) { bad.push(`could not pick ${set.join(' + ')}`); continue; }
       await p.evaluate(i => { window.__kairouteGo('day', i); window.__kairouteGo('plan'); }, ni); await p.waitForTimeout(800);
-      if (withAns) { const legs = await p.evaluate(i => (window.__kairouteEngine2()[i].items || []).filter(x => x.t === 'ride' && x.from && x.to && x.mode !== 'walk').map(x => ({ a: x.from, b: x.to, min: x.min })), ni);
+      if (withAns) { const legs = await p.evaluate(i => (window.__kairouteEngine2()[i].items || []).filter(x => x.t === 'ride' && x.from && x.to && x.mode !== 'walk').map(x => ({ a: x.from, b: x.to, min: x.min - (x.slack || 0) })), ni); // the answer's own time (the ship's extra time is added to every way alike)
         // Real answers come as several runs of the same line (Nov 18, Athens airport: three M3 rows): one choice per way of
         // going is shown, and the planned ride gives its steps (walk to the stop, the line, the walk at the end).
         const ans = (min, label, extra) => Object.assign({ mode: 'rail', label, min, ride: min - 15, km: 10, access: { how: 'walk', min: 5, km: 0.3 }, egress: { how: 'walk', min: 8, km: 0.5 }, from: 'Central Station', to: 'Far Station', steps: ['Train 4: Central Station to Far Station, ' + (min - 15) + ' min'], every: 30, everySrc: 'timetable' }, extra || {});
         await p.evaluate(ls => window.__kairouteTransitSet(ls.flatMap(l => [[l.a, l.b], [l.b, l.a]].map(([a, b]) => ({ a, b, opts: l.opts })))), legs.map(l => Object.assign({}, l, { opts: [ans(Math.max(20, l.min - 3), 'Train 4 + 1 change'), ans(Math.max(20, l.min - 3) + 3, 'Train 4 + 1 change'), ans(Math.max(20, l.min - 3) + 5, 'Train 4')] })));
         await p.evaluate(i => { window.__kairouteGo('sites'); window.__kairouteGo('day', i); window.__kairouteGo('plan'); }, ni); await p.waitForTimeout(800);
+        if (process.env.VERBOSE) console.error('rides with answers', JSON.stringify(await p.evaluate(i => (window.__kairouteEngine2()[i].items || []).filter(x => x.t === 'ride' && x.mode !== 'walk').map(x => [x.how, x.kind, x.min, x.slack, (x.options || []).map(o => o.id + ':' + o.how + ':' + o.min)]), ni)));
         const named = await p.evaluate(i => (window.__kairouteLegs(i) || []).filter(l => l.mode !== 'ride' && /^Taxi/.test(l.how || '')).length, ni);
         if (named) bad.push(`${set.join('+')} with timetable answers: ${named} ride(s) called "Taxi or car" that aren't a taxi`);
+        // A ride the traveler set to another way in the taps above keeps that way (their choice holds): Train 4 is picked
+        // for every ride offering it, as a traveler would tap it, and then shows its steps.
+        const tkeys = await p.$$eval('[data-rideval="train"]', xs => [...new Set(xs.map(x => x.dataset.ridekey))]);
+        for (const key of tkeys) await p.evaluate(([i, key]) => window.__kairouteRideSwitch(i, key, 'train'), [ni, key]);
+        await p.evaluate(i => { window.__kairouteGo('sites'); window.__kairouteGo('day', i); window.__kairouteGo('plan'); }, ni); await p.waitForTimeout(800);
         const dup = await p.$$eval('.ridechips', xs => xs.filter(x => [...x.querySelectorAll('.ridechip')].filter(c => /^Train 4/.test(c.innerText)).length > 1).length);
         if (dup) bad.push(`${set.join('+')} with timetable answers: ${dup} ride(s) offer the same train more than once`);
-        const steps = await p.$$eval('.tl.leg', xs => xs.filter(x => /Train 4/.test(x.querySelector('b') ? x.querySelector('b').innerText : '')).map(x => /Walk 5 min to Central Station/.test(x.innerText)));
-        if (!steps.length || steps.some(v => !v)) bad.push(`${set.join('+')} with timetable answers: a planned train ride without its steps (walk to the station, the line, the walk at the end)`); }
+        const steps = await p.$$eval('.tl.leg', xs => xs.filter(x => /Train 4/.test(x.querySelector('b') ? x.querySelector('b').innerText : '')).map(x => /Walk 5 min to Central Station/.test(x.innerText) || x.innerText.replace(/\s+/g, ' ').slice(0, 200)));
+        if (!steps.length || steps.some(v => v !== true)) bad.push(`${set.join('+')} with timetable answers: a planned train ride without its steps (walk to the station, the line, the walk at the end): ${steps.length ? steps.filter(v => v !== true).join(' / ') : 'no Train 4 planned'}`); }
       const first = await p.$$eval('[data-ridekey]', xs => xs.map(x => ({ key: x.dataset.ridekey, val: x.dataset.rideval })));
       // Each choice, then each again in reverse order (so a later pick on one ride meets an earlier pick on another).
       const seq = first.concat(first.slice().reverse()).slice(0, 14);
