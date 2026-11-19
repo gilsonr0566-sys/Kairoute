@@ -80,7 +80,8 @@ for (const f of fs.readdirSync(dir).filter(f => f.endsWith('.json')).sort()) {
   (raw.old || []).forEach((o, i) => { if (!o || !o.items) return; for (const x of o.items) { if (x.t !== 'stop' || x.id == null || planned.has(String(x.id))) continue;
     // A leak when the new day leaves the time unused and says nothing; a full day that chose other sights is a swap.
     const p = plans[i], w = p && !p.error && E.dayWindow(s.days[i], tr), spare = w && isFinite(w.endBy) && isFinite(p.end) ? w.endBy - p.end : 0;
-    const why = said[i] && said[i].includes(x.name);
+    // Free time is the traveler's (Nov 18, Richard): unused time that offers sights to add is the plan's answer.
+    const why = (said[i] && said[i].includes(x.name)) || (p && (p.suggest || []).length > 0);
     if (!why && spare >= (x.min || 30) + 20) add('lostVsOld', f, `day ${i}: ${x.name} (${spare} min left unused, no reason given)`); else swaps.push(`${f}: day ${i}: ${x.name}${why ? ' (the plan says why)' : ' (day full, other sights chosen)'}`); } });
 }
 let total = 0;

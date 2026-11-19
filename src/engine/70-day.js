@@ -247,7 +247,8 @@
       const cands = pool.filter(s => !keep.some(k => String(k.id) === String(s.id) || (E.hav(k, s) < 0.08 && !wanted(s))) && (!s.far || farOk(s)) && (ctx.mayAdd ? ctx.mayAdd(s.id) : ctx.ledger.sightFree(s.id, ctx.dayIdx)))
         .map(s => { const dt = detour(s), near = wanted(s) && dt <= 10; return { s, near, v: near ? Math.max(1, s.worth || 0) : (s.worth || 0) - 0.25 * dt }; })
         // a must-see or a finished voiced tour a few steps off the day's walk is offered first
-        .filter(x => x.v > 0).sort((a, b) => (b.near - a.near) || b.v - a.v || E.byId(a.s, b.s));
+        // (any that would fit is worth naming: the traveler decides, so a lesser one is offered when nothing better fits)
+        .sort((a, b) => (b.near - a.near) || b.v - a.v || E.byId(a.s, b.s));
       const room = win.hard ? E.FILL_MARGIN : 0;
       let tries = 0;
       for (const { s } of cands) {
@@ -256,7 +257,9 @@
         const rough = E.walkDay(E.bestOrder(next, start, win.tail.length ? win.tail[0] : null, ctx.tr.min), win, ctx.tr.estimate, ctx.siteDay);
         if (rough.over || rough.late || win.endBy - rough.end < room) continue;
         tries++;
-        const c = arrange(next, win, ctx, true);
+        const fitsDay = x => !x.r.over && !x.r.late && win.endBy - x.r.end >= room && (x.noLunch !== "time" || cur.noLunch === "time");
+        let c = arrange(next, win, ctx, true);
+        if (!fitsDay(c) && tries <= 4) c = arrange(next, win, ctx); // the first few also get the full repair
         if (!c.r.over && !c.r.late && win.endBy - c.r.end >= room && (c.noLunch !== "time" || cur.noLunch === "time")) suggest.push({ id: s.id, name: s.name, minutes: s.minutes || 0, far: !!s.far });
       }
     }

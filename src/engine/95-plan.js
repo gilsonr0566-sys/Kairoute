@@ -276,7 +276,7 @@
       let now = null;
       if (was.spare >= 30 && unused) {
         now = planDay(i, was);
-        if (!(keepsAll(now) && now.kept.length > was.kept.length)) { undo(now); now = null; }
+        if (!(keepsAll(now) && now.kept.length > was.kept.length)) { undo(now); if (was.plan && was.plan.suggest && now.plan && now.plan.suggest) now.plan.suggest.forEach(x => { if (!was.plan.suggest.some(y => String(y.id) === String(x.id))) was.plan.suggest.push(x); }); now = null; } // what would fit, seen with the other days planned
       }
       // A trip out to the best farther sight nobody has used, when it gives more than the sights it replaces (the
       // traveler's own picks always stay). On a ship, train or plane day only by road, an hour at most each way, and only
@@ -322,11 +322,11 @@
       if (!left.length) return; p.leftOut = left.map(s => s.id);
       const names = left.slice(0, 4).map(s => s.name).concat(left.length > 4 ? [(left.length - 4) + " more"] : []);
       p.explain = (p.explain || []).concat([(d.own ? "Also worth seeing here, not on your list: " : "Also worth seeing here, but not in today's time: ") + E.listWords(names, "and") + "."]); });
-    // Never a silent gap of time either: an hour and a half or more left at the end of a day are named as free time,
+    // Never a silent gap of time either: an hour or more left at the end of a day are named as free time,
     // with the nearest trip out nobody took and why it wasn't added (it doesn't fit, or not with a safe margin).
     const hm = m => { const h = Math.floor(m / 60), r = Math.round(m % 60); return (h ? h + " h" : "") + (h && r ? " " : "") + (r ? r + " min" : ""); };
     out.forEach((p, i) => { if (!p || !p.items || p.safe || !isFinite(p.end) || !isFinite(p.endBy)) return;
-      const free = p.endBy - p.end, win = wins[i]; if (free < 90 || !win) return;
+      const free = p.endBy - p.end, win = wins[i]; if (free < 60 || !win) return;
       const said = (p.explain || []).join(" "); if (/free time|time left/i.test(said)) return;
       const d = days[i], city = guides[d.city] || {}, from = win.head[win.head.length - 1];
       const stops = p.items.filter(x => x.t === "stop" && isFinite(x.lat)), near = [from].concat(stops);
@@ -341,6 +341,8 @@
         : ` ${far.s.name} (about ${hm(far.need)} there and back with the visit) is a trip of its own: pick it for a day to plan it.`;
       if (fars[1] && !d.own) why += ` Also a trip of its own: ${fars[1].s.name}, about ${hm(fars[1].need)}.`;
       p.explain = (p.explain || []).concat([`Free time: about ${hm(free)} left after the last stop, before ${win.hard ? "the time to be back" : "the day ends"} (${E.clock(p.endBy)}). Linger where you like.${why}`]); });
+    // A sight offered for free time is never one planned on any day.
+    out.forEach(p => { if (p && p.suggest) p.suggest = p.suggest.filter(x => !plannedIds.has(String(x.id))); });
     // Each thing said once.
     out.forEach(p => { if (p && p.explain) p.explain = p.explain.filter((t, k, a) => a.indexOf(t) === k); });
     return out;
