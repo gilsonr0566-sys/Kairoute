@@ -24,8 +24,11 @@
   const gridOf = lines => { let g = gridMemo.get(lines); if (g) return g; g = new Map();
     lines.forEach((l, li) => l.stops.forEach((st, si) => { if (!isFinite(st.lat)) return; const k = Math.floor(st.lat / CELL) + "," + Math.floor(st.lng / CELL); let c = g.get(k); if (!c) g.set(k, c = []); c.push([li, si]); }));
     gridMemo.set(lines, g); return g; };
+  // A train whose stops are 4 km apart or more on average is a regional line: about 70 km/h between stops (a 75 km
+  // regional ride takes about an hour, not two).
+  const speedOf = l => { const c = cum(l), n = l.stops.length; return l.mode === "train" && n > 1 && c[n - 1] / (n - 1) >= 4 ? 70 : (SPEED[l.mode] || 25); };
   const ride = (l, i, j) => { const c = cum(l), [a, b] = i < j ? [i, j] : [j, i];
-    return Math.round((c[b] - c[a]) / (SPEED[l.mode] || 25) * 60 + 0.5 * (b - a)); };
+    return Math.round((c[b] - c[a]) / speedOf(l) * 60 + 0.5 * (b - a)); };
   // lines: [{ mode, ref, name, stops: [{ name, lat, lng }] in order }]. walkMin(km) -> minutes on foot.
   // A line is offered only with a walk at each end (a stop within a short walk): never a taxi stitched to a train (Nov 18:
   // "Taxi 19 min to Athina, then Train A4, then a taxi 30 min, 3 h 28" next to a 95-minute ride). A ride with no stop
@@ -42,38 +45,51 @@
   // The kind of ride a line is, as the traveler sees it: metro, tram (light rail too), train or bus.
   E.lineKind = m => /subway|metro/.test(m) ? "metro" : /tram|light_rail|monorail/.test(m) ? "tram" : /bus|coach/.test(m) ? "bus" : /ferry|boat/.test(m) ? "ferry" : "train";
   // { min, mode, kind, how, legs, steps: ["Walk 6 min to Syntagma", "Metro Line 3, Syntagma to Airport, 38 min", "Walk 3 min"] }
-  E.transitOption = (a, b, lines, walkMin) => {
+  // far: a ride of 20 km or more ({ taxiMin(km) }). Then a train station farther than a walk may be reached by a short
+  // taxi at either end, as people really do (Nov 19, Richard: "Is there a train" on an 80 km day trip: the train was
+  // mapped, its station 2.5 km from the hotel and 5 km from the ruins). The same limits as the app's
+  // timetable lookup: a station within 12% of the ride (10 km at most), and the taxis together a third of the ride at most.
+  // Trains out of town run about hourly: half an hour's wait is counted. Every step is said, the taxis too.
+  E.transitOption = (a, b, lines, walkMin, far) => {
     if (!lines || !lines.length || !a || !b || !isFinite(a.lat) || !isFinite(b.lat)) return null;
-    const set = linesSet(lines), key = walkMin(10) + "|" + a.lat + "," + a.lng + "|" + b.lat + "," + b.lng;
+    const set = linesSet(lines), key = walkMin(10) + "|" + (far ? "far" + far.taxiMin(10) : "") + "|" + a.lat + "," + a.lng + "|" + b.lat + "," + b.lng;
     if (set.answers.has(key)) return set.answers.get(key);
     if (set.answers.size > 100000) set.answers.clear();
-    const got = findOption(a, b, set.lines, walkMin); set.answers.set(key, got && Object.freeze(got)); return got;
+    const got = findOption(a, b, set.lines, walkMin, far); set.answers.set(key, got && Object.freeze(got)); return got;
   };
-  const findOption = (a, b, lines, walkMin) => {
+  const findOption = (a, b, lines, walkMin, far) => {
     const near = (p, km) => { const g = gridOf(lines), out = [], la = Math.floor(p.lat / CELL), lo = Math.floor(p.lng / CELL);
       const sLa = Math.ceil(km / (111 * CELL)) , sLo = Math.ceil(km / (111 * CELL * Math.max(0.2, Math.cos(p.lat * Math.PI / 180))));
       for (let x = la - sLa; x <= la + sLa; x++) for (let y = lo - sLo; y <= lo + sLo; y++) { const c = g.get(x + "," + y); if (!c) continue;
         for (const [li, si] of c) { const d = E.hav(p, lines[li].stops[si]); if (d <= km) out.push({ li, si, d }); } }
       return out.sort((a, b) => a.li - b.li || a.si - b.si); };
-    const from = near(a, ACCESS_KM), to = near(b, ACCESS_KM); if (!from.length || !to.length) return null;
-    const wait = m => WAIT[m] || 6, nm = st => E.latin(st.name || "the stop");
+    const D = E.hav(a, b), reach = far ? Math.max(ACCESS_KM, Math.min(10, D * 0.12)) : ACCESS_KM;
+    // Beyond a walk only a train station counts (a taxi to a metro stop across town is just a longer taxi).
+    const ok = x => x.d <= ACCESS_KM || lines[x.li].mode === "train";
+    const from = near(a, reach).filter(ok), to = near(b, reach).filter(ok); if (!from.length || !to.length) return null;
+    const nm = st => E.latin(st.name || "the stop"), wait = m => far && m === "train" ? 30 : WAIT[m] || 6;
+    const endMin = d => d <= ACCESS_KM ? walkMin(d) : far.taxiMin(d), taxiKm = (f, t) => (f.d > ACCESS_KM ? f.d : 0) + (t.d > ACCESS_KM ? t.d : 0);
+    const goStep = (d, st) => (d <= ACCESS_KM ? "Walk " + walkMin(d) + " min to " : "Taxi " + far.taxiMin(d) + " min to ") + nm(st) + (d > ACCESS_KM ? " station" : "");
+    const endStep = (d, st) => d <= ACCESS_KM ? "Walk " + walkMin(d) + " min" : "Taxi " + far.taxiMin(d) + " min from " + nm(st) + " station";
     let best = null;
     // The words are written only for a ride that beats (or ties) the best so far: most candidates never need them.
-    const consider = (min, mode, legs, stepsOf) => { if (best && min > best.min) return; const steps = stepsOf(), h = steps.slice(1, -1).map(x => x.replace(/, \d+ min$/, "").replace(/^Change to /, "then ")).join(", ");
+    const consider = (min, mode, legs, stepsOf) => { if (best && min > best.min) return; const steps = stepsOf(), h = steps.slice(1, -1).map(x => x.replace(/ \(.*\)$/, "").replace(/, \d+ min$/, "").replace(/^Change to /, "then ")).join(", ");
       if (!best || min < best.min || h < best.how) best = { min, mode, kind: E.lineKind(mode), how: h, legs, steps }; };
     for (const f of from) for (const t of to) {
       const L = lines[f.li], M = lines[t.li];
       if (f.li === t.li) {
         if (f.si === t.si) continue;
-        const r = ride(L, f.si, t.si), min = walkMin(f.d) + wait(L.mode) + r + walkMin(t.d);
-        consider(min, L.mode, 1, () => ["Walk " + walkMin(f.d) + " min to " + nm(L.stops[f.si]), E.transitLabel(L) + ", " + nm(L.stops[f.si]) + " to " + nm(L.stops[t.si]) + ", " + r + " min", "Walk " + walkMin(t.d) + " min"]);
+        if (taxiKm(f, t) > D / 3) continue; // the taxis would be most of the trip
+        const r = ride(L, f.si, t.si), min = endMin(f.d) + wait(L.mode) + r + endMin(t.d);
+        consider(min, L.mode, 1, () => [goStep(f.d, L.stops[f.si]), E.transitLabel(L) + ", " + nm(L.stops[f.si]) + " to " + nm(L.stops[t.si]) + ", " + r + " min" + (far && L.mode === "train" ? " (trains about hourly: up to 30 min wait counted)" : ""), endStep(t.d, L.stops[t.si])]);
         continue;
       }
       // One change: a stop of the first line that is (or stands beside) a stop of the second.
       for (const [i, j] of meets(L, M)) {
         if (i === f.si || j === t.si) continue;
-        const r1 = ride(L, f.si, i), r2 = ride(M, j, t.si), min = walkMin(f.d) + wait(L.mode) + r1 + CHANGE_MIN + wait(M.mode) + r2 + walkMin(t.d);
-        consider(min, L.mode, 2, () => ["Walk " + walkMin(f.d) + " min to " + nm(L.stops[f.si]), E.transitLabel(L) + ", " + nm(L.stops[f.si]) + " to " + nm(L.stops[i]) + ", " + r1 + " min", "Change to " + E.transitLabel(M) + ", " + nm(M.stops[j]) + " to " + nm(M.stops[t.si]) + ", " + r2 + " min", "Walk " + walkMin(t.d) + " min"]);
+        if (taxiKm(f, t) > D / 3) continue;
+        const r1 = ride(L, f.si, i), r2 = ride(M, j, t.si), min = endMin(f.d) + wait(L.mode) + r1 + CHANGE_MIN + wait(M.mode) + r2 + endMin(t.d);
+        consider(min, L.mode, 2, () => [goStep(f.d, L.stops[f.si]), E.transitLabel(L) + ", " + nm(L.stops[f.si]) + " to " + nm(L.stops[i]) + ", " + r1 + " min", "Change to " + E.transitLabel(M) + ", " + nm(M.stops[j]) + " to " + nm(M.stops[t.si]) + ", " + r2 + " min", endStep(t.d, M.stops[t.si])]);
       }
     }
     return best;

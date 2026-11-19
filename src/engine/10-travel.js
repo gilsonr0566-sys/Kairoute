@@ -161,7 +161,7 @@
         // Public transport: the timetable's answers, one per kind; a line mapped on OpenStreetMap for a kind they don't
         // have (a stop within a short walk of each end). On a walk short enough, only when it is quicker than walking.
         const pub = answered(a, b, d, wantRaw);
-        if (d >= 0.6 && lines && lines.length) { const t = E.transitOption(a, b, lines, walkMinOf);
+        if (d >= 0.6 && lines && lines.length) { const t = E.transitOption(a, b, lines, walkMinOf, d >= 20 ? { taxiMin: k => road(k).min } : undefined);
           if (t && !pub.some(o => o.kind === t.kind)) pub.push({ id: t.kind, kind: t.kind, how: t.how, min: t.min, steps: t.steps.slice(), mapped: true, transitMode: t.mode }); }
         for (const o of pub) if (d > lim || o.min < onFoot) opts.push(Object.assign({ km: d * 1.3 }, o));
         // By road: a taxi or car, on the road network's time when the places database has it, else the road estimate.

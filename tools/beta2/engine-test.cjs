@@ -405,6 +405,18 @@ if (fs.existsSync(dir)) for (const f of fs.readdirSync(dir).filter(f => f.endsWi
   const A4 = { mode: 'train', ref: 'A4', stops: [{ name: 'Athina', lat: 37.9923, lng: 23.7210 }, { name: 'Korinthos', lat: 37.9180, lng: 22.9300 }] };
   const e = E.makeTravel({}, {}, null, [A4]).estimate(plaka, acro);
   ok(e.kind === 'taxi' && e.how === 'Taxi or car' && !(e.options || []).some(o => /then a taxi|Taxi \d+ min to/.test(o.how)), `Athens to Acrocorinth offline: a taxi called a taxi, no train stitched to taxis (got ${e.how}; ${(e.options || []).map(o => o.how).join(' | ')})`);
+  // Nov 19, Richard: "Is there a train". Offline, the mapped train is offered beside the taxi, with every step said: the taxi
+  // to the station (beyond a walk), the train, and the taxi from the station; its label is the train alone, and its time
+  // counts the taxis and up to half an hour's wait for an hourly train.
+  const tr = (e.options || []).find(o => o.kind === 'train');
+  ok(tr && tr.how === 'Train A4, Athina to Korinthos' && /^Taxi \d+ min to Athina station$/.test(tr.steps[0]) && /^Train A4, Athina to Korinthos, \d+ min/.test(tr.steps[1]) && /^Taxi \d+ min from Korinthos station$/.test(tr.steps[2]) && tr.min >= 110 && tr.min <= 170,
+    `Athens to Acrocorinth offline: the mapped train is offered, with the taxis to and from the stations said (got ${tr ? tr.how + ' ' + tr.min + ' min: ' + tr.steps.join(' / ') : 'no train'})`);
+  // A station farther than a walk counts only for a long ride, and only a train station: never a taxi to a metro stop across town.
+  const M1 = { mode: 'subway', ref: 'M1', stops: [{ name: 'Far A', lat: 37.9923, lng: 23.7210 }, { name: 'Far B', lat: 37.9180, lng: 22.9300 }] };
+  const em = E.makeTravel({}, {}, null, [M1]).estimate(plaka, acro);
+  ok(!(em.options || []).some(o => /Taxi \d+ min to/.test((o.steps || [])[0] || '')), 'beyond a walk only a train station counts: no taxi to a metro stop');
+  const near = { lat: 37.9923 - 0.04, lng: 23.7210 }, nb = E.makeTravel({}, {}, null, [A4]).estimate(plaka, near);
+  ok(!(nb.options || []).some(o => /Taxi \d+ min to/.test((o.steps || [])[0] || '')), 'a short ride never gets a taxi to a station');
   ok(/The guide says/.test(e.note || '') && !/guide says/.test(e.how), 'the guide\'s words sit beside the ride as a note');
   const ans = () => [{ id: 'rail|A4', min: 105, label: 'Train A4', mode: 'rail', steps: ['Metro M1 to Athina', 'Train A4, Athina to Korinthos', 'Taxi 15 min from Korinthos'], access: { how: 'walk', min: 8 }, egress: { how: 'taxi', min: 15 } }];
   const on = E.makeTravel({}, {}, null, [A4], ans).estimate(plaka, acro);
