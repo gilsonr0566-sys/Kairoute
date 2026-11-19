@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
     inputs:
       refresh:
-        description: "Parts to refresh: transit, ports, see, lifts, hours, eats"
+        description: "Parts to refresh: transit, ports, see, lifts, hours, eats, piers"
         default: "transit,ports"   # "full" builds each place in full (sights, towns, places to eat, ports, lines)
       only:
         description: "Only places whose key matches (blank: all)"

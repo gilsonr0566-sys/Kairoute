@@ -98,6 +98,21 @@ async function cruisePoints(p, island) {
   }).filter(x => x && x.name).sort((a, b) => (b.cruise - a.cruise) || a.d - b.d).slice(0, 12);
 }
 
+// Ferry piers around a place and around each town a day away (an island reached by boat lands at its own pier): a
+// boat is planned and drawn pier to pier, never from a sight inland. points: [{ lat, lng, km }].
+async function piersNear(points) {
+  const out = new Map();
+  for (let i = 0; i < points.length; i += 12) {
+    const part = points.slice(i, i + 12);
+    const els = await overpass(`[out:json][timeout:120];(${part.map(p => `nwr(around:${Math.round(p.km * 1000)},${p.lat},${p.lng})["amenity"="ferry_terminal"];nwr(around:${Math.round(p.km * 1000)},${p.lat},${p.lng})["public_transport"]["ferry"="yes"];`).join('')});out tags center;`);
+    for (const el of els || []) { const t = el.tags || {}, q = pos(el); if (!q) continue; const name = t['name:en'] || t.name || '';
+      if (CRUISE.test(name) || /cruise/i.test(t.ferry || '') || t.cruise === 'yes') continue;
+      const k = el.type + '/' + el.id; if (!out.has(k)) out.set(k, { name: name || 'Ferry pier', lat: +q.lat.toFixed(5), lng: +q.lng.toFixed(5), osm: k }); }
+    await sleep(1500);
+  }
+  return [...out.values()].sort((a, b) => a.osm.localeCompare(b.osm));
+}
+
 // Cable cars, gondolas and funiculars around a place, each with its two ends: a landing below a town (a tender port
 // under cliffs) is reached by one, and the engine counts its queue and ride as fixed steps of the day.
 async function liftsNear(centre, km) {
@@ -354,6 +369,11 @@ async function buildPlace(t) {
         console.log(`   hours for ${Object.values(fresh.sites).filter(x => x.hours).length} of ${Object.keys(saved).length} sights`);
       }
       if (refresh.includes('eats') && t.sites.length) { fresh.cityEats = await cityEats(t.sites); console.log(`   ${fresh.cityEats.length} restaurants on the map beside the sights`); }
+      if (refresh.includes('piers')) {
+        const pts = [{ lat: centre.lat, lng: centre.lng, km: 8 }];
+        for (const f of (t.farther || []).filter(x => isFinite(x.lat))) if (!pts.some(p => hav(p, f) < 3)) pts.push({ lat: f.lat, lng: f.lng, km: 5 });
+        fresh.piers = await piersNear(pts); console.log(`   ${fresh.piers.length} ferry piers (around the place and ${pts.length - 1} towns a day away)`);
+      }
       if (refresh.includes('lifts')) { fresh.lifts = await liftsNear(centre, 15); console.log(`   ${fresh.lifts.length} cable cars or funiculars`); }
       if (refresh.includes('ports') && t.port && !t.hasPorts) {
         const r = await portPoints(t.port, centre, !!t.island); fresh.ports = r.ports; fresh.missing = r.missing; fresh.portQuery = Object.assign({}, t.port, { island: !!t.island });
