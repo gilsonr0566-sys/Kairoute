@@ -64,7 +64,8 @@ function shortened(p, base) {
 }
 // And the sight is planned on this day (not moved by the planner to the day its area is walked, or left out).
 const onPlan = (p, id) => !!(p && !p.error && p.items.some(x => x.type === "stop" && (x.place.id === id || (x.place.includes || []).some(k => (k.id || k) === id) || x.place.within === id)));
-function fitsWith(d, ids, base) { const r = fitTrial(d, [...new Set([...(d.selected || []), ...ids])]); return fitsAll(r) && keepsDay(r.p, base) && ids.every(id => onPlan(r.p, id)); }
+// Planned the same way as the list's marks (fitRefine), so a sight with a tick is never refused when tapped.
+function fitsWith(d, ids, base) { const r = fitTrial(d, [...new Set([...(d.selected || []), ...ids])], null, true); return fitsAll(r) && keepsDay(r.p, base) && ids.every(id => onPlan(r.p, id)); }
 const shutOn = (d, x) => { const c = cityFor(d); let w = null; try { w = c ? dayWindow(d, c) : null; } catch (e) {} return closedForDay(x, d, w); };
 function addPick(d, id, ask) {
   const city = cityFor(d); if (!city) return false;
@@ -74,13 +75,13 @@ function addPick(d, id, ask) {
   // A sight is on one day only. When the traveler picks one planned on another day here, it moves here (and comes
   // off the other day), so it is seen today rather than ticked twice and planned once.
   const from = ask ? plannedElsewhere(d)[id] : null, back = from && { sel: from.selected.slice(), mine: (from.mine || []).slice(), anchor: from.anchor };
-  if (from) { from.selected = from.selected.filter(x => x !== id); markMine(from, id, false); if (from.anchor === id) from.anchor = null; }
+  if (from) { from.selected = from.selected.filter(x => x !== id); markMine(from, id, false); if (from.anchor === id) from.anchor = null; fitEpoch++; }
   // The won't-fit box measures the day as if the sight came here (before it goes back to its own day), and exactly
   // as the day will be once it is added: the traveler's own picks weigh more in the plan, so the trial counts this
   // one as theirs too. Otherwise the trial and the real plan can disagree, and a pick that "fit" is taken off again.
   // The day as it stands, to see that nothing on it gets shorter (planned on a copy of the picks: planning the live day
   // here can bump picks off it).
-  const base0 = ask ? fitTrial(d, (d.selected || []).slice()).p : null;
+  const base0 = ask ? fitTrial(d, (d.selected || []).slice(), null, true).p : null;
   const mine0 = (d.mine || []).slice(); if (ask) markMine(d, id, true);
   if (!fitsWith(d, [id], base0)) { if (ask) fitOpen(d, id); d.mine = mine0; if (from) { from.selected = back.sel; from.mine = back.mine; from.anchor = back.anchor; } return false; }
   const was = selKey(d); d.selected = [...d.selected, id]; if (!ask && typeof d.seedSig === "string" && d.seedSig === was) d.seedSig = selKey(d); // a sight the app adds keeps the list the app's (a hearted day's mark is left alone)
@@ -232,7 +233,7 @@ function otherDays(label) {
 // whichever day it reaches first, so the same trip showed different stops on a second screen (Nov 18 gate).
 function takeFromOtherDay(d, id) {
   const from = id && plannedElsewhere(d)[id]; if (!from) return;
-  from.selected = from.selected.filter(x => x !== id); markMine(from, id, false); if (from.anchor === id) from.anchor = null;
+  from.selected = from.selected.filter(x => x !== id); markMine(from, id, false); if (from.anchor === id) from.anchor = null; fitEpoch++;
   const c = cityFor(d), sx = c && allSites(c).find(x => x.id === id);
   movedNote = (sx ? sx.name : "That sight") + " moved here from " + fmtDow(from.date) + " " + fmtDate(from.date) + "."; d.movedIn = { ...(d.movedIn || {}), [id]: from.date };
 }
@@ -289,8 +290,10 @@ document.addEventListener("keydown", e => { if (e.key === "Escape" && fitState) 
 // (route, travel, meals, opening hours)? The answers are kept until anything about the day changes, so the
 // list recalculates after every tick or untick. A sight clearly too long for the time left is known at once;
 // the rest are checked in small batches right after the list draws, and their cards update in place.
+// A sight moved off another day changes what fits everywhere (one sight, one day): every mark is checked again.
+let fitEpoch = 0;
 let sitesCtx = null, fitMemo = { key: "", res: new Map(), add: new Map() }, fitQueue = [], fitTimer = 0;
-const fitKey = d => { try { return JSON.stringify([trip.days.indexOf(d), d, trip.lodging, trip.prefs, trip.style]); } catch (e) { return String(Math.random()); } };
+const fitKey = d => { try { return JSON.stringify([trip.days.indexOf(d), d, trip.lodging, trip.prefs, trip.style, fitEpoch]); } catch (e) { return String(Math.random()); } };
 function fitCostOf(plan, s) { if (fitMemo.add.has(s.id)) return { min: fitMemo.add.get(s.id), spare: 0, exact: true }; try { const c = stopCost(plan, s); return { min: c.min, spare: Math.max(0, c.spare) }; } catch (e) { return { min: s.minutes || 45, spare: 0 }; } }
 function timeLeft(plan, d) { const m = meterCalc(plan, d); return m ? { left: Math.max(0, m.avail - m.used), m } : null; }
 function siteFits(d, s, plan) {
@@ -336,7 +339,9 @@ function fitRefine() {
     if (el && s && !d.selected.includes(id)) el.outerHTML = siteCard(s, d, ctx.plan, ctx.near);
   } } finally { back(); }
   if (fitQueue.length) { fitTimer = setTimeout(fitRefine, 16); return; }
-  // All checked. A sight found not to fit stays where it is, greyed (the list never moves by itself, Richard Nov 17).
+  // All checked: a sight found not to fit goes to "Doesn't fit today" (Richard, Nov 19: the list organizes itself),
+  // with the screen kept where the traveler is.
+  const secs = ctx.secs; if (secs && [...fitMemo.res].some(([id, ok]) => ok === false && ["main", "must", "more", "far"].includes(secs.get(id)))) { const keep = viewSpot(); renderKeep(); keep(); }
 }
 if (typeof window !== "undefined") window.__kairouteFitPending = () => fitQueue.length;
 if (typeof window !== "undefined") window.__kairouteFitExact = id => { const d = day(); return fitsAll(fitTrial(d, [...d.selected, id], null, true)); };

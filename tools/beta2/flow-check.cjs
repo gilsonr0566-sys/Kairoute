@@ -332,7 +332,11 @@ async function tapTimes(p) { const out = []; const n = await p.evaluate(() => wi
       await p.evaluate(i => { window.__kairouteGo('day', i); window.__kairouteGo('sites'); }, i); await p.waitForTimeout(400);
       await p.waitForFunction(() => !window.__kairouteFitPending || window.__kairouteFitPending() === 0, null, { timeout: 15000, polling: 200 }).catch(() => {});
       const ids = await p.evaluate(() => [...document.querySelectorAll('label.site')].filter(l => l.querySelector('.tag.fit') && !l.querySelector('input:checked')).map(l => l.dataset.card).slice(0, 2));
-      for (const id of ids) { tried++;
+      for (const id of ids) {
+        // Marks are checked again after every change (a sight moved between days): only a card that still has its tick.
+        await p.waitForFunction(() => !window.__kairouteFitPending || window.__kairouteFitPending() === 0, null, { timeout: 20000, polling: 200 }).catch(() => {}); await p.waitForTimeout(300);
+        if (!(await p.evaluate(id => { const l = document.querySelector(`label.site[data-card="${id}"]`); return !!(l && l.querySelector('.tag.fit') && !l.querySelector('input:checked')); }, id))) continue;
+        tried++;
         const before = await p.evaluate(i => window.__kairouteEngine2()[i], i);
         await tapBox(p, id); const ok = (await boxes(p)).some(b => b.id === id && b.on);
         const after = await p.evaluate(i => window.__kairouteEngine2()[i], i);
@@ -347,6 +351,27 @@ async function tapTimes(p) { const out = []; const n = await p.evaluate(() => wi
         if (ok) await tapBox(p, id); else await p.evaluate(() => { const c = document.querySelector('.fitbox [data-act="fitcancel"]'); if (c) c.click(); }); } }
     check(`A sight with a plain tick really fits: on the plan, nothing else shorter, lunch kept (${tried} tried)`, tried > 0 && !bad.length, tried ? bad.slice(0, 3).join(' | ') : 'no sight with a tick to try'); }
 
+  // 3d. The sight list organizes itself (Richard, Nov 19): Your picks, Still fits, Also see (farther out), Already picked
+  // on other days, Doesn't fit, in that order. Every card under "Still fits" has a tick; every card under "Doesn't fit"
+  // has none and opens the box that says why and how to make it fit; a sight ticked goes up to Your picks.
+  { const bad = []; const days = await p.evaluate(() => window.__kairouteDays());
+    const ORDER = ['Your picks', 'Still fits today', 'Also see, farther out', 'Already picked on other days', "Doesn't fit today"];
+    for (const i of days.map((d, i) => i).filter(i => /Athens|Naples|Chania/.test(days[i].dest)).slice(0, 4)) {
+      await p.evaluate(i => { window.__kairouteGo('day', i); window.__kairouteGo('sites'); }, i); await p.waitForTimeout(400);
+      await p.waitForFunction(() => !window.__kairouteFitPending || window.__kairouteFitPending() === 0, null, { timeout: 20000, polling: 200 }).catch(() => {}); await p.waitForTimeout(600);
+      const r = await p.evaluate(() => { const heads = [...document.querySelectorAll('.sitesmain .foldrow span:first-child, .sitesmain .secttl')].map(e => e.innerText.replace(/\s*\(.*$/, '').trim());
+        const after = lbl => { const h = [...document.querySelectorAll('.sitesmain .secttl')].find(e => e.innerText.startsWith(lbl)); if (!h) return []; let e = h.nextElementSibling, out = []; while (e && !e.classList.contains('secttl')) { if (e.matches('.sitelist')) out = out.concat([...e.querySelectorAll(':scope > [data-card]')]); e = e.nextElementSibling; } return out; };
+        const fits = after('Still fits').concat(after('Also see')), wont = after("Doesn't fit");
+        return { heads, fitsNoTick: fits.filter(c => !c.querySelector('input[data-site]')).map(c => c.dataset.card), wontTick: wont.filter(c => c.querySelector('input[data-site]') || !c.querySelector('[data-act="fitask"]')).map(c => c.dataset.card), first: fits.length ? fits[0].dataset.card : null }; });
+      const seen = r.heads.filter(h => ORDER.includes(h)), want = ORDER.filter(h => seen.includes(h));
+      if (seen.join('|') !== want.join('|')) bad.push(`day ${i + 1}: sections out of order: ${seen.join(', ')}`);
+      if (r.fitsNoTick.length) bad.push(`day ${i + 1}: under "Still fits" without a tick: ${r.fitsNoTick.join(', ')}`);
+      if (r.wontTick.length) bad.push(`day ${i + 1}: under "Doesn't fit" with a tick or no way to ask why: ${r.wontTick.join(', ')}`);
+      if (r.first) { await tapBox(p, r.first); const up = await p.evaluate(id => { const f = document.querySelector('.sitesmain .picksfold'); return !!(f && f.querySelector(`[data-card="${id}"]`)); }, r.first);
+        if (!up) bad.push(`day ${i + 1}: ${r.first} ticked but not under Your picks`); else await tapBox(p, r.first); } }
+    check('The sight list sorts itself: Your picks, Still fits, Also see, Already picked, Doesn\'t fit (ticks only where it fits)', !bad.length, bad.slice(0, 3).join(' | ')); }
+
+  // 4. Speed: tapping between days, against the demo app on the same trip and the same slowed CPU.
   const b2t = await tapTimes(p);
   let demoMed = null; if (DEMO) { const s2 = await serve(DEMO); const d = await open(browser, s2.url); demoMed = median(await tapTimes(d.p)); await d.ctx.close(); s2.close(); }
   const m = median(b2t);

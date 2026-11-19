@@ -5869,7 +5869,7 @@ function siteCard(s, d, plan, nr) {
   if (!on && plan && !plan.error) {
     fs = nr && nr.fs && nr.fs.get(s.id) !== undefined ? nr.fs.get(s.id) : siteFits(d, s, plan); const c = fitCostOf(plan, s);
     badge = fs === false ? `<button type="button" class="tag nofit fitbadge" data-act="fitask" data-id="${esc(s.id)}" title="Ways to fit it in">Needs ${dur(c.min)}</button>`
-      : fs === true ? `<span class="tag fit fitbadge">+${dur(c.min)}</span>` : `<span class="tag fitbadge pending" aria-hidden="true">+${dur(c.min)}</span>`; // same space while it's checked, so nothing moves
+      : fs === true ? `<span class="tag fit fitbadge">${c.exact && c.min < 5 ? "Fits, same finish" : "+" + dur(c.min)}</span>` : `<span class="tag fitbadge pending" aria-hidden="true">+${dur(c.min)}</span>`; // same space while it's checked, so nothing moves
   } else if (on) badge = pickStatus(sel.includes(s.id) ? s : kidOn, plan).replace('class="tag ', 'class="tag fitbadge ');
   const sym = priceSym(city), nm = showName(s) || s.name;
   const l2 = [dur(s.minutes), s.cost ? sym + s.cost : "Free", s.far ? "Day trip" : "", near != null ? (near < 0.05 ? "At " + nearTo.name : distTxt(near, true) + " from " + nearTo.name) : ""].filter(Boolean).map(esc).join(" · ");
@@ -6080,14 +6080,21 @@ function renderSites(d) {
   const all = allSites(city).filter(x => (!laterIds.has(x.id) || (kept && kept.has(x.id))) && !parentOf(x, city) && (pass(x) || on(x)));
   const st = startOf(d, city), dist = x => st && isFinite(x.lat) && isFinite(x.lng) ? hav(st, x) : 1e9;
   const full = (() => { if (!plan || plan.error) return false; const m = meterCalc(plan, d); return !!(m && (m.over || m.dropped.length)); })();
-  const secOf = x => on(x) ? "picks" : sch(x) ? "sched" : nearbyOnly(x) ? "more" : plan && !plan.error && (full || fitNever(plan, d, x)) ? "wont" : x.mustSee ? "must" : "main";
+  // The list sorts itself into sections (Richard, Nov 19: "Your picks, still fit, also see (further locations), already
+  // picked, and don't fit ... it automatically organizes it"), each from the one full-day "fits" check (siteFits): a
+  // sight moves to its section as soon as the check says, and after every tick. Inside a section the order is steady:
+  // nearest the day's start first, set when the page opened.
+  const farIds = new Set((city.farther || []).map(x => String(x.id)));
+  const noFit = x => { if (!plan || plan.error) return false; if (full || fitNever(plan, d, x)) { fsMap.set(x.id, false); return true; } return fsOf(x) === false; };
+  const secOf = x => on(x) ? "picks" : sch(x) ? "sched" : noFit(x) ? "wont" : farIds.has(String(x.id)) ? "far" : nearbyOnly(x) ? "more" : x.mustSee ? "must" : "main";
   // Sights planned on other days go by day, in date order (then nearest first), fixed like the rest.
-  const place = x => { const sc = secOf(x); pickFrozen.sec.set(x.id, sc); pickFrozen.ord.set(x.id, (sc === "sched" ? 1e6 * (trip.days.indexOf(elsew[x.id]) + 1) : 0) + pickFrozen.n++); };
+  const place = x => { pickFrozen.sec.set(x.id, 1); pickFrozen.ord.set(x.id, pickFrozen.n++); };
   for (const x of all.slice().sort((x, y) => dist(x) - dist(y) || String(showName(x)).localeCompare(String(showName(y))) || String(x.id).localeCompare(String(y.id)))) if (!pickFrozen.sec.has(x.id)) place(x); // a sight that arrives later joins the end of its section
-  const inSec = k => all.filter(x => pickFrozen.sec.get(x.id) === k).sort((x, y) => pickFrozen.ord.get(x.id) - pickFrozen.ord.get(y.id));
-  const picked = inSec("picks"), mustL = inSec("must"), fitL = inSec("main"), wontL = inSec("wont"), moreL = inSec("more");
+  const secNow = new Map(all.map(x => [x.id, secOf(x)]));
+  const inSec = k => all.filter(x => secNow.get(x.id) === k).sort((x, y) => (k === "sched" ? trip.days.indexOf(elsew[x.id]) - trip.days.indexOf(elsew[y.id]) : 0) || pickFrozen.ord.get(x.id) - pickFrozen.ord.get(y.id));
+  const picked = inSec("picks"), mustL = inSec("must"), fitL = inSec("main"), wontL = inSec("wont"), moreL = inSec("more"), farL = inSec("far");
   const schedL = inSec("sched");
-  const refs = [], near = { refs, anc, fs: fsMap, my, st }; sitesCtx = { d, plan, near }; void fsOf;
+  const refs = [], near = { refs, anc, fs: fsMap, my, st }; sitesCtx = { d, plan, near, secs: secNow };
   const tl = plan && !plan.error ? timeLeft(plan, d) : null, availM = plan && !plan.error ? Math.max(1, plan.endBy - plan.start) : 0;
   const leftTxt = tl ? ` · <b>${tl.left >= 5 ? dur(tl.left) + " left today" : "today is full"}</b>` : "";
   // Counted as the list shows them: a sight inside a bigger one (a town's own sights) counts with it.
@@ -6110,17 +6117,19 @@ function renderSites(d) {
   ${bumpedNote(d)}${pickbar}
   ${picked.length ? `<div class="picksfold${picksOpen ? " open" : ""}"><button type="button" class="foldrow" data-act="picksfold" aria-expanded="${picksOpen}"><span>Your picks (${picked.filter(on).length})</span><span class="foldhint">${picksOpen ? "Hide" : "Show"}</span></button>
   <div class="sitelist anchorlist">${picked.map(s => siteCard(s, d, plan, near)).join("")}</div></div>` : ""}
-  <div class="sortrow"><p class="listlbl">${mustL.length || fitL.length ? (st ? `Nearest ${esc(st.name)} first` : "Your sights") : "Nothing else fits today"}${picked.length ? "" : leftTxt}</p><button type="button" class="btn ghost small" data-act="sortagain" title="Put your new picks on top and sort the list again">Sort again</button></div>
-  ${mustL.length ? `<p class="listlbl">Must-sees (${mustL.length})</p><div class="sitelist mustlist">${mustL.map(s => siteCard(s, d, plan, near)).join("")}</div>` : ""}
-  ${fitL.length ? `<p class="listlbl">${mustL.length ? "More sights" : "Sights"} (${fitL.length})</p><div class="sitelist">${fitL.map(s => siteCard(s, d, plan, near)).join("")}</div>` : ""}
-  ${wontL.length ? `<p class="listlbl">Won't fit today (${wontL.length})</p><div class="sitelist wontlist">${wontL.map(s => siteCard(s, d, plan, near)).join("")}</div>` : ""}
+  <p class="listlbl secttl">Still fits today (${mustL.length + fitL.length})${picked.length ? "" : leftTxt}</p>
+  ${mustL.length || fitL.length ? `<p class="lede small">${st ? `Nearest ${esc(st.name)} first. ` : ""}Each one fits as your day stands; the time is how much later you'd finish.</p>` : `<p class="lede small">Nothing else fits as your day stands. See "Doesn't fit today" for what would make room.</p>`}
+  ${mustL.length ? `<div class="sitelist mustlist">${mustL.map(s => siteCard(s, d, plan, near)).join("")}</div>` : ""}
+  ${fitL.length ? `<div class="sitelist">${fitL.map(s => siteCard(s, d, plan, near)).join("")}</div>` : ""}
   ${moreL.length ? `<details class="more nearby"><summary>More nearby (${moreL.length})</summary><p class="lede small" style="margin:8px 0">${my.size ? "Sights outside your interests, and" : "Quick stops:"} small stops your route adds when it passes them. Tick one to plan it.</p>
   <div class="sitelist">${moreL.map(s => siteCard(s, d, plan, near)).join("")}</div></details>` : ""}
+  ${farL.length ? `<p class="listlbl secttl">Also see, farther out (${farL.length})</p><p class="lede small">Trips out of town that fit today.</p><div class="sitelist farlist">${farL.map(s => siteCard(s, d, plan, near)).join("")}</div>` : ""}
+  ${schedL.length ? `<p class="listlbl secttl">Already picked on other days (${schedL.length})</p>
+  <p class="lede small">Picking one moves it to today; it comes off its other day.</p><div class="sitelist sched">${schedL.map(s => siteCard(s, d, plan, near)).join("")}</div>` : ""}
+  ${wontL.length ? `<p class="listlbl secttl">Doesn't fit today (${wontL.length})</p><p class="lede small">Tap one to see why, and what would make it fit.</p><div class="sitelist wontlist">${wontL.map(s => siteCard(s, d, plan, near)).join("")}</div>` : ""}
   ${errBlock()}
   ${addPlaceCard(d)}
   ${laterBlock(city, d, plan, near, new Set(all.map(x => x.id)))}
-  ${schedL.length ? `<div class="schedline" role="separator"><span>Already scheduled on other days (${schedL.length})</span></div>
-  <p class="lede small">Tick one to move it to today; it comes off its other day.</p><div class="sitelist sched">${schedL.map(s => siteCard(s, d, plan, near)).join("")}</div>` : ""}
   </div></div>`;
 }
 
