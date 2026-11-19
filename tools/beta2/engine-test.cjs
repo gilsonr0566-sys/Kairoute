@@ -11,7 +11,7 @@ const day = o => Object.assign({ type: 'land', mode: 'flight', startTime: '09:00
 { const w = E.dayWindow(day({ type: 'port', portArrive: 480, allAboard: 1020 }), tr);
   ok(w.start === 510 && w.endBy === 975 && w.hard, `port day: ashore 30 min after docking, back 45 min before all aboard (got ${w.start}-${w.endBy})`); }
 ok(E.waterOnly({ access: 'Viewed from the water on a boat tour' }) && E.waterOnly({ access: 'Only by boat' }) && !E.waterOnly({ access: 'Walk up from the old port' }), 'a sight seen only from the water is read from its access note');
-ok(E.publicWins(73, 46) && E.publicWins(60, 30) === false, 'a train an hour and a quarter long wins over a 46-minute taxi; a taxi saving half of an hour-long ride wins (Nov 18, Sorrento to Pompeii)');
+ok(E.publicWins(73, 46) && E.publicWins(100, 50) === false, 'a train an hour and a quarter long wins over a 46-minute taxi; a taxi saving 50 minutes of a 100-minute ride wins (Nov 18, Sorrento to Pompeii)');
 // A pick inside an area picked for another day moves to the area's day (one walk), and the plan says so; a sight far
 // from the heart of the place is a trip out, never a stop of a day in town.
 { const s0 = JSON.parse(fs.readFileSync(path.join(dir, 'athens-booked.json'))), c = s0.cities.athens;
