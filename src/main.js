@@ -6565,13 +6565,21 @@ function renderPlan(d) {
   let n = 0;
   const canDrag = plan.stops.filter(x => !x.place.along && !x.place.bonus).length > 1; // two or more stops: drag them into any order
   const cat = s => esc(String(s.category || "").replace(/^\w/, c => c.toUpperCase()));
+  // Free time is the traveler's: the app adds nothing on its own, it names nearby sights that would still fit (Nov 18,
+  // Richard: "I wouldn't do the suggested options. Just let them select to fill the spots"). It shows after the last
+  // stop, before the ride back.
+  const spareT = plan.endBy - plan.end, sugT = (plan.suggest || []).filter(x => x.place && !(d.selected || []).includes(x.place.id));
+  const freeCard = spareT >= 30 || sugT.length ? `<div class="tl freetime"><div class="time"></div><div class="rail"><div class="dot bonusdot">+</div></div><div class="what"><div class="nm">Free time: ${dur(Math.max(0, spareT))}</div>
+        <div class="sub">${sugT.length ? "Yours to spend as you like. These would still fit if you want one more stop:" : "Yours to spend as you like."}</div>
+        ${sugT.length ? `<div class="optacts">${sugT.map(x => `<button class="btn small" data-act="bonusadd" data-id="${esc(x.place.id)}">Add ${esc(x.place.name)} (${dur(x.minutes)}${x.far && x.rideMin ? ", " + dur(x.rideMin) + " each way" : ""})</button>`).join("")}</div>` : ""}</div></div>` : "";
+  let freeShown = false;
   const rows = plan.items.map((it, idx) => {
     const pv = plan.items[idx - 1], nx = plan.items[idx + 1], rideIn = pv && pv.type === "travel" && pv.leg.mode !== "walk" && legKind(pv.leg), rideOut = nx && nx.type === "travel" && nx.leg.mode !== "walk" && legKind(nx.leg);
     const cls = `tl ${idx === 0 ? "first" : ""} ${idx === plan.items.length - 1 || it.type === "end" ? "last" : ""} ${rideIn ? "rin rin-" + rideIn : ""} ${rideOut ? "rout rout-" + rideOut : ""}`;
     if (it.type === "start") return `<div class="${cls}">${tcell(it)}<div class="rail"><div class="dot start">S</div></div><div class="what"><div class="nm">${esc(it.label)}</div>${it.place.note ? `<div class="sub">${esc(it.place.note)}</div>` : ""}${plan.w.notes.map(t => `<div class="sub">${esc(t)}</div>`).join("")}</div></div>`;
     if (it.type === "travel") {
-      const m = it.leg.mode, k = legKind(it.leg);
-      return `<div class="tl leg ${m} k-${k}${it.leg.choices ? " ridecho" : ""}" data-kind="${k}"><div class="time"></div><div class="rail"></div><div class="what">${legIcon(k)}<span>${it.leg.km < 0.1 ? "Next door" : `<b>${esc(it.leg.how)}</b> · ${dur(it.leg.min)} · ${distTxt(it.leg.km)}`}${rideDetail(it.leg, it.time, plan.w && plan.w.endBy)}</span></div></div>`;
+      const m = it.leg.mode, k = legKind(it.leg), freeHere = !freeShown && freeCard && nx && nx.type === "end" ? (freeShown = true, freeCard) : "";
+      return freeHere + `<div class="tl leg ${m} k-${k}${it.leg.choices ? " ridecho" : ""}" data-kind="${k}"><div class="time"></div><div class="rail"></div><div class="what">${legIcon(k)}<span>${it.leg.km < 0.1 ? "Next door" : `<b>${esc(it.leg.how)}</b> · ${dur(it.leg.min)} · ${distTxt(it.leg.km)}`}${rideDetail(it.leg, it.time, plan.w && plan.w.endBy)}</span></div></div>`;
     }
     if (it.type === "fixed") return `<div class="${cls}">${tcell(it)}<div class="rail"><div class="dot fixed">H</div></div><div class="what">${it.free ? `<div class="nm">Free time until ${fmt(it.time + it.free)}</div><div class="sub">Breakfast, coffee or a last walk nearby. Then ${esc(it.place.name.replace(/^C/, "c"))} (${dur(it.bags)}).</div>` : `<div class="nm">${esc(it.place.name)}</div><div class="sub">${dur(it.place.minutes)}</div>`}</div></div>`;
     if (it.type === "meal") {
@@ -6602,15 +6610,9 @@ ${partsList(s, it.time)}${stopLiveNotes(it, d)}</div></div>`;
     }
     if (it.type === "end") {
       const spare = plan.endBy - plan.end;
-      // Free time is the traveler's: the app adds nothing on its own, it names nearby sights that would still fit
-      // (Nov 18, Richard: "I wouldn't do the suggested options. Just let them select to fill the spots").
-      const sug = (plan.suggest || []).filter(x => x.place && !(d.selected || []).includes(x.place.id));
-      const free = spare >= 30 || sug.length ? `<div class="tl freetime"><div class="time"></div><div class="rail"><div class="dot bonusdot">+</div></div><div class="what"><div class="nm">Free time: ${dur(spare)}</div>
-        <div class="sub">${sug.length ? "Yours to spend as you like. These would still fit if you want one more stop:" : "Yours to spend as you like."}</div>
-        ${sug.length ? `<div class="optacts">${sug.map(x => `<button class="btn small" data-act="bonusadd" data-id="${esc(x.place.id)}">Add ${esc(x.place.name)} (${dur(x.minutes)}${x.far && x.rideMin ? ", " + dur(x.rideMin) + " each way" : ""})</button>`).join("")}</div>` : ""}</div></div>` : "";
       // Back at the ship said plainly: the time back, how long before all aboard, and the rule behind it.
       const early = d.type === "port" && d.allAboard ? plan.endBy - plan.end + (plan.w.buffer || 45) : NaN;
-      return free + `<div class="${cls}">${tcell(it)}<div class="rail"><div class="dot start">${it.place ? "E" : "✓"}</div></div><div class="what"><div class="nm">${esc(it.label)}</div>
+      return (freeShown ? "" : (freeShown = true, freeCard)) + `<div class="${cls}">${tcell(it)}<div class="rail"><div class="dot start">${it.place ? "E" : "✓"}</div></div><div class="what"><div class="nm">${esc(it.label)}</div>
       <div class="sub">${d.type === "port" ? (isFinite(early) ? `Back ${dur(early)} before all aboard (${esc(d.allAboard)}). Kairoute always plans you back at least ${dur(plan.w.buffer || 45)} early.` : `All aboard ${esc(d.allAboard)}.`) :
         spare > 10 ? dur(spare) + " to spare." : ""}</div>
       ${(plan.w.notesEnd || []).map(t => `<div class="sub">${esc(t)}</div>`).join("")}${d.type === "departure" ? bookRideCard(d) : ""}</div></div>`;
