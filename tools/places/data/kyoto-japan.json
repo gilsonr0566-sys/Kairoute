@@ -829,5 +829,1312 @@
   "lat": 35.009670512820506,
   "lng": 135.76542358974356
  },
- "wikivoyage": "Kyoto"
+ "wikivoyage": "Kyoto",
+ "cityEats": [
+  {
+   "name": "Taki's house",
+   "lat": 34.9942689,
+   "lng": 135.7851643,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "way/102164637"
+  },
+  {
+   "name": "大のじ",
+   "lat": 35.0382014,
+   "lng": 135.7314118,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "way/344055398"
+  },
+  {
+   "name": "錦鶴",
+   "lat": 35.037888,
+   "lng": 135.7311854,
+   "amenity": "restaurant",
+   "cuisine": "japanese",
+   "hours": "",
+   "osm": "way/344056094"
+  },
+  {
+   "name": "洋食の店 トロンボ",
+   "lat": 35.0384033,
+   "lng": 135.7316382,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "way/344049729"
+  },
+  {
+   "name": "ふうみん庵",
+   "lat": 35.0384848,
+   "lng": 135.7316875,
+   "amenity": "restaurant",
+   "cuisine": "japanese",
+   "hours": "",
+   "osm": "way/344049721"
+  },
+  {
+   "name": "杓文字",
+   "lat": 35.0385147,
+   "lng": 135.7317297,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "way/344049726"
+  },
+  {
+   "name": "Kamigamo Kirin",
+   "lat": 35.0577289,
+   "lng": 135.7517428,
+   "amenity": "restaurant",
+   "cuisine": "japanese",
+   "hours": "Mo, We-Sa 11:00-12:15, 12:30-13:45; \nSu 11:00-12:15, 12:30-13:45 , 14:00-15:15",
+   "osm": "node/13257100901"
+  },
+  {
+   "name": "五木茶屋",
+   "lat": 34.9682194,
+   "lng": 135.7737603,
+   "amenity": "restaurant",
+   "cuisine": "japanese",
+   "hours": "",
+   "osm": "node/11829481442"
+  },
+  {
+   "name": "稲福",
+   "lat": 34.9678489,
+   "lng": 135.7719183,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "We-Mo 09:00-16:30",
+   "osm": "node/2656063066"
+  },
+  {
+   "name": "はな家",
+   "lat": 34.9678988,
+   "lng": 135.7716102,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/2656062944"
+  },
+  {
+   "name": "日野屋",
+   "lat": 34.9679253,
+   "lng": 135.7714549,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/2656063050"
+  },
+  {
+   "name": "Sando Chaya",
+   "lat": 34.9679735,
+   "lng": 135.7713499,
+   "amenity": "restaurant",
+   "cuisine": "coffee_shop;ice_cream;tea",
+   "hours": "",
+   "osm": "node/12308812101"
+  },
+  {
+   "name": "SALMON NOODLE 京都",
+   "lat": 34.9666049,
+   "lng": 135.7710023,
+   "amenity": "restaurant",
+   "cuisine": "ramen",
+   "hours": "",
+   "osm": "node/12265804314"
+  },
+  {
+   "name": "世續茶屋",
+   "lat": 35.027055,
+   "lng": 135.7974057,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "way/352168404"
+  },
+  {
+   "name": "Fu-ka Ginkakuji",
+   "lat": 35.0276776,
+   "lng": 135.7968408,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/6044678288"
+  },
+  {
+   "name": "御米司 ふみや",
+   "lat": 35.0272934,
+   "lng": 135.7964741,
+   "amenity": "restaurant",
+   "cuisine": "japanese",
+   "hours": "10:30-16:00",
+   "osm": "node/14156492385"
+  },
+  {
+   "name": "禁断果実kindankajitsu",
+   "lat": 35.0271031,
+   "lng": 135.7957343,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Mo-Su 08:00-17:00",
+   "osm": "node/14156373101"
+  },
+  {
+   "name": "松葉亭",
+   "lat": 35.0271179,
+   "lng": 135.7953878,
+   "amenity": "restaurant",
+   "cuisine": "regional",
+   "hours": "",
+   "osm": "node/3598159580"
+  },
+  {
+   "name": "に志田",
+   "lat": 35.0274023,
+   "lng": 135.7950305,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "way/351185902"
+  },
+  {
+   "name": "Seigen-in",
+   "lat": 35.0336334,
+   "lng": 135.717911,
+   "amenity": "restaurant",
+   "cuisine": "japanese",
+   "hours": "11:00-17:00",
+   "osm": "way/374567353"
+  },
+  {
+   "name": "バンブー",
+   "lat": 35.0327149,
+   "lng": 135.7189246,
+   "amenity": "restaurant",
+   "cuisine": "japanese",
+   "hours": "",
+   "osm": "way/374624969"
+  },
+  {
+   "name": "菜の花",
+   "lat": 35.0328296,
+   "lng": 135.7197115,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "11:00-15:00",
+   "osm": "way/382726404"
+  },
+  {
+   "name": "東寺うどん",
+   "lat": 34.9824441,
+   "lng": 135.7491036,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "way/363554443"
+  },
+  {
+   "name": "さの",
+   "lat": 34.9795472,
+   "lng": 135.7504116,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "way/281313215"
+  },
+  {
+   "name": "すし成",
+   "lat": 34.9828977,
+   "lng": 135.7490995,
+   "amenity": "restaurant",
+   "cuisine": "sushi",
+   "hours": "",
+   "osm": "way/363584752"
+  },
+  {
+   "name": "春の日",
+   "lat": 34.9789586,
+   "lng": 135.7449961,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "way/284835765"
+  },
+  {
+   "name": "洛南書房",
+   "lat": 34.978937,
+   "lng": 135.7449429,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "way/284835744"
+  },
+  {
+   "name": "うなぎ料理 美登利",
+   "lat": 34.9791405,
+   "lng": 135.7509137,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "11:00-24:00",
+   "osm": "node/5135296460"
+  },
+  {
+   "name": "Kounkei",
+   "lat": 35.0154168,
+   "lng": 135.7487942,
+   "amenity": "restaurant",
+   "cuisine": "japanese",
+   "hours": "",
+   "osm": "node/7327234756"
+  },
+  {
+   "name": "ごはんcafe TUZURE",
+   "lat": 35.016436,
+   "lng": 135.780154,
+   "amenity": "restaurant",
+   "cuisine": "japanese",
+   "hours": "",
+   "osm": "node/2959428333"
+  },
+  {
+   "name": "綴",
+   "lat": 35.016466,
+   "lng": 135.78011,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/2959428233"
+  },
+  {
+   "name": "天ぷら圓堂 岡ざき邸",
+   "lat": 35.016137,
+   "lng": 135.7801968,
+   "amenity": "restaurant",
+   "cuisine": "japanese",
+   "hours": "",
+   "osm": "node/10697639020"
+  },
+  {
+   "name": "グリル小宝",
+   "lat": 35.0159365,
+   "lng": 135.7847871,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/789396064"
+  },
+  {
+   "name": "Sitifukuya",
+   "lat": 35.0171157,
+   "lng": 135.7794046,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/13977409511"
+  },
+  {
+   "name": "月と猫",
+   "lat": 35.0180294,
+   "lng": 135.779605,
+   "amenity": "restaurant",
+   "cuisine": "japanese",
+   "hours": "",
+   "osm": "way/474632324"
+  },
+  {
+   "name": "里",
+   "lat": 34.9894168,
+   "lng": 135.7755487,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "We-Mo 09:00-22:00",
+   "osm": "node/4531777289"
+  },
+  {
+   "name": "鰻料理 うぞふすい わらじや",
+   "lat": 34.9893754,
+   "lng": 135.7705377,
+   "amenity": "restaurant",
+   "cuisine": "fine_dining;japanese",
+   "hours": "",
+   "osm": "node/13859929401"
+  },
+  {
+   "name": "CoCo ICHIBANYA",
+   "lat": 34.9894046,
+   "lng": 135.770124,
+   "amenity": "restaurant",
+   "cuisine": "curry;japanese",
+   "hours": "Mo-Su 11:00-24:00",
+   "osm": "node/3161816561"
+  },
+  {
+   "name": "坂",
+   "lat": 34.9893451,
+   "lng": 135.776232,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/5017505238"
+  },
+  {
+   "name": "私房菜 すみよし",
+   "lat": 34.9924014,
+   "lng": 135.7747145,
+   "amenity": "restaurant",
+   "cuisine": "chinese",
+   "hours": "",
+   "osm": "node/13073491525"
+  },
+  {
+   "name": "Kyonomiyako Burger",
+   "lat": 34.9871339,
+   "lng": 135.7744044,
+   "amenity": "restaurant",
+   "cuisine": "burger",
+   "hours": "Mo-Su 11:30-21:00",
+   "osm": "node/13124266564"
+  },
+  {
+   "name": "Bon",
+   "lat": 35.0288829,
+   "lng": 135.7151698,
+   "amenity": "restaurant",
+   "cuisine": "japanese",
+   "hours": "",
+   "osm": "node/3790308522"
+  },
+  {
+   "name": "ともしび",
+   "lat": 35.0280398,
+   "lng": 135.714707,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Mo 10:30-14:00,17:15-22:00; We-Su 10:30-14:00,17:30-22:00",
+   "osm": "way/373907539"
+  },
+  {
+   "name": "NAKAMURAROU",
+   "lat": 35.0028885,
+   "lng": 135.7788135,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/9706475017"
+  },
+  {
+   "name": "京料理古都梅",
+   "lat": 35.002636,
+   "lng": 135.778328,
+   "amenity": "restaurant",
+   "cuisine": "japanese",
+   "hours": "",
+   "osm": "node/10696154637"
+  },
+  {
+   "name": "GION わ",
+   "lat": 35.004348,
+   "lng": 135.7775892,
+   "amenity": "restaurant",
+   "cuisine": "barbecue",
+   "hours": "",
+   "osm": "node/14358240606"
+  },
+  {
+   "name": "Gyoza no Ohsho",
+   "lat": 35.003205,
+   "lng": 135.777282,
+   "amenity": "restaurant",
+   "cuisine": "chinese;gyoza",
+   "hours": "",
+   "osm": "node/2959342633"
+  },
+  {
+   "name": "儀兵衞",
+   "lat": 35.0041372,
+   "lng": 135.7772213,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/2959343433"
+  },
+  {
+   "name": "いもぼう",
+   "lat": 35.0043929,
+   "lng": 135.779679,
+   "amenity": "restaurant",
+   "cuisine": "japanese",
+   "hours": "",
+   "osm": "way/328903307"
+  },
+  {
+   "name": "東山本町 魚亀",
+   "lat": 34.9738521,
+   "lng": 135.7707261,
+   "amenity": "restaurant",
+   "cuisine": "japanese",
+   "hours": "",
+   "osm": "node/14098214625"
+  },
+  {
+   "name": "Aoi",
+   "lat": 35.0396729,
+   "lng": 135.7710642,
+   "amenity": "restaurant",
+   "cuisine": "japanese;soba",
+   "hours": "12:00-19:00",
+   "osm": "node/13411807760"
+  },
+  {
+   "name": "浅井食堂",
+   "lat": 35.0393643,
+   "lng": 135.7698843,
+   "amenity": "restaurant",
+   "cuisine": "american",
+   "hours": "Mo-Sa 11:00-15:00,17:30-23:00",
+   "osm": "way/525380815"
+  },
+  {
+   "name": "洋食 Grill 生研會館",
+   "lat": 35.036853,
+   "lng": 135.7711833,
+   "amenity": "restaurant",
+   "cuisine": "fine_dining",
+   "hours": "We, Fr-Mo 12:00-14:00, 17:00-20:00",
+   "osm": "node/7109159986"
+  },
+  {
+   "name": "奥丹",
+   "lat": 35.0124287,
+   "lng": 135.793058,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/5177427921"
+  },
+  {
+   "name": "Okutan Nanzenji",
+   "lat": 35.0124359,
+   "lng": 135.7930656,
+   "amenity": "restaurant",
+   "cuisine": "japanese",
+   "hours": "Fr-We 11:00-17:00",
+   "osm": "node/4846809879"
+  },
+  {
+   "name": "大力邸",
+   "lat": 35.012085,
+   "lng": 135.7913139,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/11276128438"
+  },
+  {
+   "name": "鍋善",
+   "lat": 34.9868532,
+   "lng": 135.7691632,
+   "amenity": "restaurant",
+   "cuisine": "chinese",
+   "hours": "",
+   "osm": "node/6648411485"
+  },
+  {
+   "name": "銭座庵",
+   "lat": 34.9880664,
+   "lng": 135.7688458,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/13388241341"
+  },
+  {
+   "name": "くしまつ",
+   "lat": 34.989124,
+   "lng": 135.7687521,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/3656452703"
+  },
+  {
+   "name": "料亭 左阿彌",
+   "lat": 35.0036934,
+   "lng": 135.7827778,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/4771341422"
+  },
+  {
+   "name": "Tofu restaurant Rengetsu Chaya",
+   "lat": 35.0067546,
+   "lng": 135.7823222,
+   "amenity": "restaurant",
+   "cuisine": "local",
+   "hours": "",
+   "osm": "node/14321344201"
+  },
+  {
+   "name": "いもぼう",
+   "lat": 35.0042832,
+   "lng": 135.7805232,
+   "amenity": "restaurant",
+   "cuisine": "japanese",
+   "hours": "",
+   "osm": "node/5263647386"
+  },
+  {
+   "name": "相撲茶屋 いころ",
+   "lat": 35.0044442,
+   "lng": 135.7800252,
+   "amenity": "restaurant",
+   "cuisine": "japanese",
+   "hours": "",
+   "osm": "way/328903231"
+  },
+  {
+   "name": "いふじ",
+   "lat": 35.0042865,
+   "lng": 135.7799783,
+   "amenity": "restaurant",
+   "cuisine": "japanese",
+   "hours": "",
+   "osm": "way/88108423"
+  },
+  {
+   "name": "zucca da vino",
+   "lat": 35.0045425,
+   "lng": 135.7798365,
+   "amenity": "restaurant",
+   "cuisine": "italian",
+   "hours": "",
+   "osm": "way/478615061"
+  },
+  {
+   "name": "Daitokuji",
+   "lat": 35.0421963,
+   "lng": 135.7441525,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/5854983885"
+  },
+  {
+   "name": "中立売休憩所",
+   "lat": 35.0253282,
+   "lng": 135.7597719,
+   "amenity": "restaurant",
+   "cuisine": "japanese",
+   "hours": "Mo-Su 08:00-18:00",
+   "osm": "node/13833669478"
+  },
+  {
+   "name": "京都北野 四恩",
+   "lat": 35.0286305,
+   "lng": 135.7361128,
+   "amenity": "restaurant",
+   "cuisine": "noodle",
+   "hours": "",
+   "osm": "node/4314541949"
+  },
+  {
+   "name": "古の花",
+   "lat": 35.0284548,
+   "lng": 135.7360659,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/4314541950"
+  },
+  {
+   "name": "Toyoukeya",
+   "lat": 35.0278068,
+   "lng": 135.7355977,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Fr-We 11:00-15:00",
+   "osm": "node/7108679389"
+  },
+  {
+   "name": "たわらや",
+   "lat": 35.0276359,
+   "lng": 135.7358243,
+   "amenity": "restaurant",
+   "cuisine": "noodle;udon",
+   "hours": "",
+   "osm": "node/11591395551"
+  },
+  {
+   "name": "豊しげ",
+   "lat": 35.0274519,
+   "lng": 135.7358045,
+   "amenity": "restaurant",
+   "cuisine": "sushi",
+   "hours": "",
+   "osm": "way/605416523"
+  },
+  {
+   "name": "餃子の三宝",
+   "lat": 35.028842,
+   "lng": 135.73751,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/2383267614"
+  },
+  {
+   "name": "Ajiro",
+   "lat": 35.0208542,
+   "lng": 135.7210998,
+   "amenity": "restaurant",
+   "cuisine": "japanese",
+   "hours": "",
+   "osm": "node/1937517810"
+  },
+  {
+   "name": "京料理 矢尾定",
+   "lat": 34.9937223,
+   "lng": 135.7517147,
+   "amenity": "restaurant",
+   "cuisine": "japanese",
+   "hours": "07:00-09:00,11:00-14:00,17:30-21:00",
+   "osm": "node/3759897701"
+  },
+  {
+   "name": "ロイヤルホスト",
+   "lat": 34.9947317,
+   "lng": 135.7529025,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/2991606033"
+  },
+  {
+   "name": "KITCHEN カンパネラ",
+   "lat": 34.9926477,
+   "lng": 135.7551029,
+   "amenity": "restaurant",
+   "cuisine": "curry",
+   "hours": "We-Mo 11:30-17:00; Tu 18:00-20:30",
+   "osm": "node/12119361774"
+  },
+  {
+   "name": "食と森",
+   "lat": 34.9914755,
+   "lng": 135.7553409,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/13865936201"
+  },
+  {
+   "name": "大阪屋",
+   "lat": 34.9893455,
+   "lng": 135.7535015,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/8840777381"
+  },
+  {
+   "name": "La Fourchette",
+   "lat": 35.0123387,
+   "lng": 135.7587474,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/5643109523"
+  },
+  {
+   "name": "えいたろう屋ビル",
+   "lat": 35.0110744,
+   "lng": 135.7585042,
+   "amenity": "restaurant",
+   "cuisine": "japanese",
+   "hours": "",
+   "osm": "node/14324589851"
+  },
+  {
+   "name": "とり安",
+   "lat": 35.0123294,
+   "lng": 135.7598403,
+   "amenity": "restaurant",
+   "cuisine": "japanese",
+   "hours": "",
+   "osm": "node/4716081689"
+  },
+  {
+   "name": "京季節料理 凛月",
+   "lat": 35.0116934,
+   "lng": 135.7580781,
+   "amenity": "restaurant",
+   "cuisine": "japanese",
+   "hours": "",
+   "osm": "node/14322381290"
+  },
+  {
+   "name": "肉のひろ重",
+   "lat": 35.0111881,
+   "lng": 135.7581304,
+   "amenity": "restaurant",
+   "cuisine": "japanese",
+   "hours": "",
+   "osm": "node/14324441698"
+  },
+  {
+   "name": "海鮮食堂 京りき屋",
+   "lat": 35.0125897,
+   "lng": 135.7598698,
+   "amenity": "restaurant",
+   "cuisine": "japanese",
+   "hours": "11:30-15:00,17:30-23:30",
+   "osm": "node/4716042390"
+  },
+  {
+   "name": "はぎ",
+   "lat": 35.000133,
+   "lng": 135.7796996,
+   "amenity": "restaurant",
+   "cuisine": "japanese",
+   "hours": "",
+   "osm": "way/545016546"
+  },
+  {
+   "name": "高台寺茶寮 Kodaiji Saryo",
+   "lat": 35.0017583,
+   "lng": 135.7798559,
+   "amenity": "restaurant",
+   "cuisine": "japanese",
+   "hours": "",
+   "osm": "way/258112631"
+  },
+  {
+   "name": "京大和",
+   "lat": 34.9992169,
+   "lng": 135.7813656,
+   "amenity": "restaurant",
+   "cuisine": "japanese",
+   "hours": "",
+   "osm": "node/10696241803"
+  },
+  {
+   "name": "しぇりークラブ",
+   "lat": 35.000918,
+   "lng": 135.7789497,
+   "amenity": "restaurant",
+   "cuisine": "spanish",
+   "hours": "",
+   "osm": "node/10696154611"
+  },
+  {
+   "name": "鷲尾町 割烹ほたる",
+   "lat": 35.0017837,
+   "lng": 135.7791495,
+   "amenity": "restaurant",
+   "cuisine": "japanese",
+   "hours": "",
+   "osm": "node/10696154625"
+  },
+  {
+   "name": "Wakana",
+   "lat": 35.0000638,
+   "lng": 135.7788901,
+   "amenity": "restaurant",
+   "cuisine": "japanese",
+   "hours": "",
+   "osm": "node/13953602381"
+  },
+  {
+   "name": "大雅堂",
+   "lat": 35.0268772,
+   "lng": 135.7840107,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/10694300772"
+  },
+  {
+   "name": "大忠",
+   "lat": 35.0271557,
+   "lng": 135.7841179,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/10694275203"
+  },
+  {
+   "name": "龍門",
+   "lat": 35.0284742,
+   "lng": 135.7845106,
+   "amenity": "restaurant",
+   "cuisine": "chinese",
+   "hours": "",
+   "osm": "node/1774463568"
+  },
+  {
+   "name": "天下の焼肉 大将軍",
+   "lat": 34.9874692,
+   "lng": 135.7588868,
+   "amenity": "restaurant",
+   "cuisine": "barbecue",
+   "hours": "Mo-Su 17:00-23:00",
+   "osm": "node/6699718753"
+  },
+  {
+   "name": "Kyo Chabana",
+   "lat": 34.987744,
+   "lng": 135.7588908,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/12076083352"
+  },
+  {
+   "name": "Sashisu",
+   "lat": 34.9877808,
+   "lng": 135.7588204,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/14115009602"
+  },
+  {
+   "name": "YEBISU BAR",
+   "lat": 34.9880228,
+   "lng": 135.7591899,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Mo-Su 11:00-23:00",
+   "osm": "node/2188341615"
+  },
+  {
+   "name": "但馬屋",
+   "lat": 34.9880843,
+   "lng": 135.7592719,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/4780211525"
+  },
+  {
+   "name": "Kyoto Wagyu Yaero",
+   "lat": 34.9874363,
+   "lng": 135.7583883,
+   "amenity": "restaurant",
+   "cuisine": "japanese",
+   "hours": "11:00-22:00",
+   "osm": "node/14253567996"
+  },
+  {
+   "name": "matakichi",
+   "lat": 35.001552,
+   "lng": 135.7742607,
+   "amenity": "restaurant",
+   "cuisine": "japanese",
+   "hours": "",
+   "osm": "node/13955685512"
+  },
+  {
+   "name": "Gion kitazato",
+   "lat": 35.0018405,
+   "lng": 135.7742961,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/13955685610"
+  },
+  {
+   "name": "Gion Karyo 'Kaiseki' (iK)",
+   "lat": 35.0017668,
+   "lng": 135.774578,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Th-Tu 11:30-15:30, 17:30-23:00",
+   "osm": "node/4129960899"
+  },
+  {
+   "name": "きんなべ",
+   "lat": 35.0012534,
+   "lng": 135.7727301,
+   "amenity": "restaurant",
+   "cuisine": "japanese",
+   "hours": "",
+   "osm": "way/543520796"
+  },
+  {
+   "name": "ぎおん徳屋",
+   "lat": 35.0025005,
+   "lng": 135.7748881,
+   "amenity": "restaurant",
+   "cuisine": "japanese",
+   "hours": "We-Mo 12:00-18:00; Tu off",
+   "osm": "node/11811363130"
+  },
+  {
+   "name": "Gion Yorozuya",
+   "lat": 35.0027424,
+   "lng": 135.7739861,
+   "amenity": "restaurant",
+   "cuisine": "noodle",
+   "hours": "",
+   "osm": "node/4760386959"
+  },
+  {
+   "name": "Sagan",
+   "lat": 34.9977269,
+   "lng": 135.7738227,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/4700821189"
+  },
+  {
+   "name": "貴匠桜",
+   "lat": 34.9976946,
+   "lng": 135.7740946,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/4547567790"
+  },
+  {
+   "name": "Tempura Endo Yasaka (West)",
+   "lat": 34.9988863,
+   "lng": 135.7735415,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/11283625809"
+  },
+  {
+   "name": "京都祇園天ぷら 八坂圓堂",
+   "lat": 34.9989664,
+   "lng": 135.7751293,
+   "amenity": "restaurant",
+   "cuisine": "friture;japanese",
+   "hours": "Mo-Su 11:30-15:00, 17:00-22:00",
+   "osm": "node/6390907686"
+  },
+  {
+   "name": "MIYAGAWA TONEMON - Tonkatsu",
+   "lat": 34.9984189,
+   "lng": 135.7708301,
+   "amenity": "restaurant",
+   "cuisine": "japanese",
+   "hours": "",
+   "osm": "node/11938990869"
+  },
+  {
+   "name": "加藤商店",
+   "lat": 34.9975864,
+   "lng": 135.7763741,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/4547470791"
+  },
+  {
+   "name": "旬菜食健 ひな野",
+   "lat": 35.0130543,
+   "lng": 135.784989,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/4853158542"
+  },
+  {
+   "name": "Restaurant La Cigugne",
+   "lat": 35.0117222,
+   "lng": 135.7842444,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/3112312492"
+  },
+  {
+   "name": "THE GARDEN OKAZAKI",
+   "lat": 35.0138034,
+   "lng": 135.7848982,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "way/288574437"
+  },
+  {
+   "name": "龍門",
+   "lat": 35.0140715,
+   "lng": 135.7848548,
+   "amenity": "restaurant",
+   "cuisine": "chinese",
+   "hours": "",
+   "osm": "way/289132169"
+  },
+  {
+   "name": "岡崎茶寮",
+   "lat": 35.0116385,
+   "lng": 135.7849827,
+   "amenity": "restaurant",
+   "cuisine": "japanese",
+   "hours": "",
+   "osm": "way/228653802"
+  },
+  {
+   "name": "Yamamoto Menzou",
+   "lat": 35.0142726,
+   "lng": 135.7847923,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/5010320834"
+  },
+  {
+   "name": "イル・ギィオットーネ",
+   "lat": 34.9988217,
+   "lng": 135.779175,
+   "amenity": "restaurant",
+   "cuisine": "italian",
+   "hours": "",
+   "osm": "node/14104418440"
+  },
+  {
+   "name": "The SODOH - ザ ソウドウ",
+   "lat": 34.9989683,
+   "lng": 135.7797126,
+   "amenity": "restaurant",
+   "cuisine": "italian",
+   "hours": "",
+   "osm": "node/6601419504"
+  },
+  {
+   "name": "The Sodoh Higashiyama",
+   "lat": 34.9982779,
+   "lng": 135.7800115,
+   "amenity": "restaurant",
+   "cuisine": "japanese",
+   "hours": "Sa-Su 09:00-18:00; Mo, We-Fr 11:00-18:00",
+   "osm": "node/6604147985"
+  },
+  {
+   "name": "％アラビカ食堂",
+   "lat": 34.9985559,
+   "lng": 135.7782072,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "way/568614297"
+  },
+  {
+   "name": "Benoit",
+   "lat": 34.9976042,
+   "lng": 135.7790549,
+   "amenity": "restaurant",
+   "cuisine": "french",
+   "hours": "",
+   "osm": "way/1374867503"
+  },
+  {
+   "name": "東山荘",
+   "lat": 34.9972784,
+   "lng": 135.7790033,
+   "amenity": "restaurant",
+   "cuisine": "japanese",
+   "hours": "",
+   "osm": "way/339061842"
+  },
+  {
+   "name": "Washoku Sato",
+   "lat": 35.0321999,
+   "lng": 135.7311673,
+   "amenity": "restaurant",
+   "cuisine": "japanese",
+   "hours": "",
+   "osm": "way/102998595"
+  },
+  {
+   "name": "ポッサム",
+   "lat": 35.0316505,
+   "lng": 135.7312255,
+   "amenity": "restaurant",
+   "cuisine": "korean",
+   "hours": "",
+   "osm": "node/4523314350"
+  },
+  {
+   "name": "京めん処　さくら庵",
+   "lat": 35.0334811,
+   "lng": 135.7312533,
+   "amenity": "restaurant",
+   "cuisine": "japanese",
+   "hours": "",
+   "osm": "node/6329848321"
+  },
+  {
+   "name": "わからん",
+   "lat": 35.0318593,
+   "lng": 135.7303874,
+   "amenity": "restaurant",
+   "cuisine": "japanese",
+   "hours": "",
+   "osm": "node/1542079417"
+  },
+  {
+   "name": "櫟",
+   "lat": 35.0342596,
+   "lng": 135.731658,
+   "amenity": "restaurant",
+   "cuisine": "japanese;soba",
+   "hours": "",
+   "osm": "node/6333335201"
+  },
+  {
+   "name": "かごの屋",
+   "lat": 35.0305697,
+   "lng": 135.7312207,
+   "amenity": "restaurant",
+   "cuisine": "japanese",
+   "hours": "",
+   "osm": "node/943325108"
+  },
+  {
+   "name": "うどんそば お福",
+   "lat": 35.0091387,
+   "lng": 135.7828798,
+   "amenity": "restaurant",
+   "cuisine": "japanese",
+   "hours": "",
+   "osm": "way/304957948"
+  },
+  {
+   "name": "和洋割烹　竹泉",
+   "lat": 35.0091857,
+   "lng": 135.7831112,
+   "amenity": "restaurant",
+   "cuisine": "japanese",
+   "hours": "",
+   "osm": "node/12296553945"
+  },
+  {
+   "name": "Asuka 明日香",
+   "lat": 35.009387,
+   "lng": 135.7824093,
+   "amenity": "restaurant",
+   "cuisine": "japanese",
+   "hours": "",
+   "osm": "node/3112107229"
+  },
+  {
+   "name": "花鏡",
+   "lat": 35.0093221,
+   "lng": 135.784524,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/5382306133"
+  },
+  {
+   "name": "Raisin",
+   "lat": 35.0093297,
+   "lng": 135.7846133,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/5382306134"
+  },
+  {
+   "name": "グリルにんじん",
+   "lat": 35.0419271,
+   "lng": 135.793153,
+   "amenity": "restaurant",
+   "cuisine": "western",
+   "hours": "",
+   "osm": "node/12880156318"
+  },
+  {
+   "name": "焼肉 百珍",
+   "lat": 34.9591408,
+   "lng": 135.8146686,
+   "amenity": "restaurant",
+   "cuisine": "barbecue",
+   "hours": "",
+   "osm": "way/1272608119"
+  },
+  {
+   "name": "ITTAN",
+   "lat": 34.9603738,
+   "lng": 135.8144528,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/11839480487"
+  },
+  {
+   "name": "TAITO",
+   "lat": 34.9851639,
+   "lng": 135.773896,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Mo-Sa 11:00-15:00,18:30-22:00",
+   "osm": "node/12818725817"
+  },
+  {
+   "name": "Hanaguruma",
+   "lat": 34.9924676,
+   "lng": 135.7443287,
+   "amenity": "restaurant",
+   "cuisine": "japanese",
+   "hours": "",
+   "osm": "node/2674314691"
+  },
+  {
+   "name": "割烹大関",
+   "lat": 34.992817,
+   "lng": 135.745396,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/2674318024"
+  },
+  {
+   "name": "やきとりまん天",
+   "lat": 34.9927768,
+   "lng": 135.7458864,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/2674320458"
+  },
+  {
+   "name": "UMEKOJI COLLABO",
+   "lat": 34.9895568,
+   "lng": 135.7432888,
+   "amenity": "restaurant",
+   "cuisine": "italian",
+   "hours": "Mo-Fr 11:00-15:00, 17:00-22:00; Sa, Su, PH 11:00-22:00",
+   "osm": "way/421596732"
+  },
+  {
+   "name": "Kyo-Suzaku Sushi-Ichiba",
+   "lat": 34.9896031,
+   "lng": 135.7415314,
+   "amenity": "restaurant",
+   "cuisine": "sushi",
+   "hours": "Mo-Su 10:30-14:30, 17:00-20:30",
+   "osm": "node/12440855501"
+  },
+  {
+   "name": "Kobushi Ramen",
+   "lat": 34.9892939,
+   "lng": 135.7437128,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Th-Tu 11:30-14:30, 18:00-22:00",
+   "osm": "node/4527861289"
+  }
+ ]
 }

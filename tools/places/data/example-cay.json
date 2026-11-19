@@ -1,0 +1,42 @@
+{
+ "key": "example cay",
+ "name": "Example Cay",
+ "centre": {
+  "lat": 25.81516,
+  "lng": -77.93372
+ },
+ "sites": {},
+ "towns": {},
+ "ports": [],
+ "dayTrips": [],
+ "missing": [],
+ "cityEats": [
+  {
+   "name": "Skipper's Grill",
+   "lat": 25.8182733,
+   "lng": -77.9362147,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Mo-Su 11:30-15:00",
+   "osm": "way/1163105827"
+  },
+  {
+   "name": "Chill Grill",
+   "lat": 25.8183479,
+   "lng": -77.9346716,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Mo-Su 11:30-15:00",
+   "osm": "way/1163105793"
+  },
+  {
+   "name": "Snack Shack",
+   "lat": 25.8183848,
+   "lng": -77.9383342,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Mo-Su 10:30-15:30",
+   "osm": "way/1163105806"
+  }
+ ]
+}

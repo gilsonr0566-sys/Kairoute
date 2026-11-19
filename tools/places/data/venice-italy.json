@@ -790,5 +790,988 @@
   "lat": 45.4359028,
   "lng": 12.336459999999999
  },
- "wikivoyage": "Venice"
+ "wikivoyage": "Venice",
+ "cityEats": [
+  {
+   "name": "Ai Do Leoni",
+   "lat": 45.4350386,
+   "lng": 12.3396108,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/13859550150"
+  },
+  {
+   "name": "Ristorante Falciani",
+   "lat": 45.4350879,
+   "lng": 12.3396938,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Mo-Su 11:00-23:00",
+   "osm": "node/4493372188"
+  },
+  {
+   "name": "Ristorante Marciana",
+   "lat": 45.4351531,
+   "lng": 12.3394206,
+   "amenity": "restaurant",
+   "cuisine": "italian",
+   "hours": "Mo-Su 11:00-23:00",
+   "osm": "node/13058050867"
+  },
+  {
+   "name": "Osteria Ai Specchieri",
+   "lat": 45.4352217,
+   "lng": 12.3394313,
+   "amenity": "restaurant",
+   "cuisine": "italian",
+   "hours": "",
+   "osm": "node/4487602418"
+  },
+  {
+   "name": "Ristorante Al Chianti",
+   "lat": 45.4352043,
+   "lng": 12.3393423,
+   "amenity": "restaurant",
+   "cuisine": "italian",
+   "hours": "",
+   "osm": "node/12072183203"
+  },
+  {
+   "name": "Leone D'Oro",
+   "lat": 45.4350086,
+   "lng": 12.3388857,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/4493372105"
+  },
+  {
+   "name": "Gran Caffè Chioggia",
+   "lat": 45.4334945,
+   "lng": 12.3393136,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/3781268647"
+  },
+  {
+   "name": "Taverna dei Dogi",
+   "lat": 45.4344587,
+   "lng": 12.3414063,
+   "amenity": "restaurant",
+   "cuisine": "italian",
+   "hours": "",
+   "osm": "node/4437784462"
+  },
+  {
+   "name": "Trattoria Chinellato",
+   "lat": 45.4344691,
+   "lng": 12.341445,
+   "amenity": "restaurant",
+   "cuisine": "italian",
+   "hours": "",
+   "osm": "node/4437784463"
+  },
+  {
+   "name": "Compagnia della Vela",
+   "lat": 45.4331011,
+   "lng": 12.3390141,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/9589344642"
+  },
+  {
+   "name": "Terrazza Danieli",
+   "lat": 45.433865,
+   "lng": 12.3420773,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/13860465321"
+  },
+  {
+   "name": "Ristorante Trattoria alla Basilica",
+   "lat": 45.434615,
+   "lng": 12.3414297,
+   "amenity": "restaurant",
+   "cuisine": "italian",
+   "hours": "",
+   "osm": "node/2782612424"
+  },
+  {
+   "name": "Lineadombra",
+   "lat": 45.4294299,
+   "lng": 12.3346992,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/4833396759"
+  },
+  {
+   "name": "Club del Doge",
+   "lat": 45.4316623,
+   "lng": 12.3334988,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/5632823923"
+  },
+  {
+   "name": "Ristorante Messner",
+   "lat": 45.4300037,
+   "lng": 12.332766,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/5658520042"
+  },
+  {
+   "name": "InAcqua",
+   "lat": 45.4319668,
+   "lng": 12.3355716,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/5954027789"
+  },
+  {
+   "name": "Ristorante da Raffaele",
+   "lat": 45.4323748,
+   "lng": 12.3336376,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/5632823825"
+  },
+  {
+   "name": "All'Ombra del Leone",
+   "lat": 45.4322155,
+   "lng": 12.3365628,
+   "amenity": "restaurant",
+   "cuisine": "regional",
+   "hours": "Mo-Su 09:00-23:00",
+   "osm": "node/13965256633"
+  },
+  {
+   "name": "Agli Alboretti",
+   "lat": 45.4306136,
+   "lng": 12.3284365,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/4752892017"
+  },
+  {
+   "name": "Bar Foscarini",
+   "lat": 45.4314191,
+   "lng": 12.3288231,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/5658565123"
+  },
+  {
+   "name": "Bar Foscarini",
+   "lat": 45.4312688,
+   "lng": 12.3289514,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/5365749244"
+  },
+  {
+   "name": "San Trovaso",
+   "lat": 45.4304012,
+   "lng": 12.3272872,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/912147712"
+  },
+  {
+   "name": "Taverna San Trovaso",
+   "lat": 45.4317435,
+   "lng": 12.3270513,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/999327706"
+  },
+  {
+   "name": "trattoria ai Cugnai",
+   "lat": 45.430606,
+   "lng": 12.3294305,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/1182539137"
+  },
+  {
+   "name": "La Perla d'Oriente",
+   "lat": 45.4367342,
+   "lng": 12.3270536,
+   "amenity": "restaurant",
+   "cuisine": "asian",
+   "hours": "Mo-Su 11:00-14:30, Mo-Su 15:30-23:00",
+   "osm": "node/7107980987"
+  },
+  {
+   "name": "Koenji",
+   "lat": 45.4363181,
+   "lng": 12.3268482,
+   "amenity": "restaurant",
+   "cuisine": "italian;japanese",
+   "hours": "Mo off; Tu-Su 18:00-23:00",
+   "osm": "node/9959014453"
+  },
+  {
+   "name": "Frary's",
+   "lat": 45.4375011,
+   "lng": 12.3271639,
+   "amenity": "restaurant",
+   "cuisine": "arab;greek;lebanese;mediterranean;moroccan",
+   "hours": "Mo-Su 11:30-15:00, 18:00-23:00",
+   "osm": "node/4546955607"
+  },
+  {
+   "name": "Il Refettorio",
+   "lat": 45.4363573,
+   "lng": 12.3257968,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/11648765581"
+  },
+  {
+   "name": "Muro Frari",
+   "lat": 45.4369762,
+   "lng": 12.327761,
+   "amenity": "restaurant",
+   "cuisine": "italian",
+   "hours": "",
+   "osm": "node/6855524980"
+  },
+  {
+   "name": "Al Timon",
+   "lat": 45.4368352,
+   "lng": 12.3251506,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/12895725647"
+  },
+  {
+   "name": "Ristorante Rialto",
+   "lat": 45.4377286,
+   "lng": 12.3360459,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/2242661076"
+  },
+  {
+   "name": "Riva Rialto",
+   "lat": 45.4380778,
+   "lng": 12.3354839,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/4998786722"
+  },
+  {
+   "name": "Antico Caffè Ristorante Al Buso",
+   "lat": 45.4380161,
+   "lng": 12.3363678,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/4470121310"
+  },
+  {
+   "name": "Café Saraceno",
+   "lat": 45.4379068,
+   "lng": 12.335249,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/4370729277"
+  },
+  {
+   "name": "Al Graspo de Ua",
+   "lat": 45.4374437,
+   "lng": 12.3362181,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/1521920970"
+  },
+  {
+   "name": "Naranzaria",
+   "lat": 45.4386624,
+   "lng": 12.3356015,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/4492301494"
+  },
+  {
+   "name": "Cip's Club Restaurant",
+   "lat": 45.4274432,
+   "lng": 12.3403074,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/4238219508"
+  },
+  {
+   "name": "Spaghetteria 6342 A Le Tole",
+   "lat": 45.4387544,
+   "lng": 12.3424385,
+   "amenity": "restaurant",
+   "cuisine": "italian_pizza",
+   "hours": "Mo-Su 12:00-15:30, 19:00-22:30",
+   "osm": "node/1521958082"
+  },
+  {
+   "name": "Osteria Da Nico",
+   "lat": 45.438877,
+   "lng": 12.3418965,
+   "amenity": "restaurant",
+   "cuisine": "italian;regional",
+   "hours": "Mo-Su 11:00-23:00",
+   "osm": "node/4216768822"
+  },
+  {
+   "name": "Osteria Ai do Archi",
+   "lat": 45.4386971,
+   "lng": 12.3427152,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/4216769518"
+  },
+  {
+   "name": "Taverna la Corte",
+   "lat": 45.438605,
+   "lng": 12.3416949,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/4448237190"
+  },
+  {
+   "name": "Osteria alla Staffa",
+   "lat": 45.4384737,
+   "lng": 12.3428635,
+   "amenity": "restaurant",
+   "cuisine": "italian",
+   "hours": "",
+   "osm": "node/676820120"
+  },
+  {
+   "name": "Caffè Al Cavallo",
+   "lat": 45.4390362,
+   "lng": 12.3411912,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/4448236043"
+  },
+  {
+   "name": "Osteria Antico Giardinetto",
+   "lat": 45.4400163,
+   "lng": 12.3315282,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/3508764401"
+  },
+  {
+   "name": "Ristorante Regina Sconta",
+   "lat": 45.4399846,
+   "lng": 12.3313787,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/3508764170"
+  },
+  {
+   "name": "Osteria Mocenigo",
+   "lat": 45.4407915,
+   "lng": 12.3298519,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/12607001499"
+  },
+  {
+   "name": "Òstrega",
+   "lat": 45.4400228,
+   "lng": 12.3306004,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "We-Mo 12:00-22:30; Tu closed",
+   "osm": "node/8042636228"
+  },
+  {
+   "name": "Bacarretto Bistrot Il Siciliano",
+   "lat": 45.4400381,
+   "lng": 12.3305517,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/13857722061"
+  },
+  {
+   "name": "Muro Venezia San Stae",
+   "lat": 45.4403034,
+   "lng": 12.3301327,
+   "amenity": "restaurant",
+   "cuisine": "italian;pizza",
+   "hours": "Mo-Su 12:00-15:00, 18:00-22:30",
+   "osm": "node/7931914485"
+  },
+  {
+   "name": "Al Pontil Dea Giudecca",
+   "lat": 45.4254599,
+   "lng": 12.3320047,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/4492344992"
+  },
+  {
+   "name": "Al Redentor",
+   "lat": 45.4253505,
+   "lng": 12.3311423,
+   "amenity": "restaurant",
+   "cuisine": "pizza;seafood",
+   "hours": "",
+   "osm": "node/1306838883"
+  },
+  {
+   "name": "Al Storico da Crea",
+   "lat": 45.4236702,
+   "lng": 12.3290043,
+   "amenity": "restaurant",
+   "cuisine": "regional",
+   "hours": "Tu-Su 12:00-15:00,19:00-21:30; Mo off",
+   "osm": "node/3007399009"
+  },
+  {
+   "name": "Trattoria Altanella",
+   "lat": 45.4254541,
+   "lng": 12.3285358,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/6090104386"
+  },
+  {
+   "name": "Strazzaria",
+   "lat": 45.4452478,
+   "lng": 12.3266007,
+   "amenity": "restaurant",
+   "cuisine": "pizza",
+   "hours": "We-Su 11:00-23:00",
+   "osm": "node/12580438548"
+  },
+  {
+   "name": "Pizzeria Ristorante al Faro",
+   "lat": 45.4450316,
+   "lng": 12.3258977,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Mo-Su 09:00-23:00",
+   "osm": "node/4232613001"
+  },
+  {
+   "name": "Ba Ghetto Ristorante Kosher",
+   "lat": 45.4455824,
+   "lng": 12.3271309,
+   "amenity": "restaurant",
+   "cuisine": "italian",
+   "hours": "Su-Th 11:30-23:00; Fr 11:30-15:00; Sa 19:30-23:00",
+   "osm": "node/10935266605"
+  },
+  {
+   "name": "Ormesini Dodo Caffe",
+   "lat": 45.4460216,
+   "lng": 12.326749,
+   "amenity": "restaurant",
+   "cuisine": "italian;juice;cake",
+   "hours": "",
+   "osm": "node/4190284490"
+  },
+  {
+   "name": "Osteria da Marco",
+   "lat": 45.4459676,
+   "lng": 12.3269712,
+   "amenity": "restaurant",
+   "cuisine": "italian",
+   "hours": "",
+   "osm": "node/13868283701"
+  },
+  {
+   "name": "Ital India",
+   "lat": 45.4461451,
+   "lng": 12.3261178,
+   "amenity": "restaurant",
+   "cuisine": "indian",
+   "hours": "Mo-Th 17:00-23:30; Fr-Su 12:00-00:00",
+   "osm": "node/9711370417"
+  },
+  {
+   "name": "Tratattoria da Nino",
+   "lat": 45.4348335,
+   "lng": 12.3425995,
+   "amenity": "restaurant",
+   "cuisine": "italian",
+   "hours": "",
+   "osm": "node/4217838382"
+  },
+  {
+   "name": "Sestante Osteria di Mare",
+   "lat": 45.4342266,
+   "lng": 12.3428319,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Tu-Sa 11:30-22:30, Mo 11:30-15:30, Su off",
+   "osm": "node/7411137525"
+  },
+  {
+   "name": "Ristorante Do Leoni",
+   "lat": 45.4340572,
+   "lng": 12.3432775,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/4437784457"
+  },
+  {
+   "name": "Cafe Internazionale",
+   "lat": 45.4340474,
+   "lng": 12.3430545,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/4437784211"
+  },
+  {
+   "name": "Trattoria \"Da Roberto\"",
+   "lat": 45.4350335,
+   "lng": 12.3423753,
+   "amenity": "restaurant",
+   "cuisine": "pizza",
+   "hours": "",
+   "osm": "node/10921367744"
+  },
+  {
+   "name": "Ristorante da Lorenzo",
+   "lat": 45.4341039,
+   "lng": 12.3439577,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/5937711787"
+  },
+  {
+   "name": "Hard Rock Cafe",
+   "lat": 45.4340818,
+   "lng": 12.3368029,
+   "amenity": "restaurant",
+   "cuisine": "american",
+   "hours": "09:30-22:45",
+   "osm": "node/2789072994"
+  },
+  {
+   "name": "Osteria da Carla",
+   "lat": 45.4336739,
+   "lng": 12.336241,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/4165503289"
+  },
+  {
+   "name": "Osteria San Marco",
+   "lat": 45.4339279,
+   "lng": 12.3363371,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/4178050708"
+  },
+  {
+   "name": "Caffè Delle Procuratie",
+   "lat": 45.434282,
+   "lng": 12.3379117,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/12572093001"
+  },
+  {
+   "name": "Ristorante Quadri",
+   "lat": 45.4343762,
+   "lng": 12.338052,
+   "amenity": "restaurant",
+   "cuisine": "italian;mediterranean;seafood",
+   "hours": "We-Fr 19:00-22:00; Sa-Su 12:00-14:30; 19:00-22:00",
+   "osm": "node/12453807858"
+  },
+  {
+   "name": "Ristorante San Marco",
+   "lat": 45.4345969,
+   "lng": 12.3376494,
+   "amenity": "restaurant",
+   "cuisine": "italian",
+   "hours": "11:00-22:30",
+   "osm": "node/12895725652"
+  },
+  {
+   "name": "Venice Eat",
+   "lat": 45.4343959,
+   "lng": 12.3260884,
+   "amenity": "restaurant",
+   "cuisine": "italian",
+   "hours": "",
+   "osm": "node/2165495952"
+  },
+  {
+   "name": "Osteria al Bacareto",
+   "lat": 45.4343949,
+   "lng": 12.3299031,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/4492301493"
+  },
+  {
+   "name": "Osteria delle Botteghe",
+   "lat": 45.4340098,
+   "lng": 12.330133,
+   "amenity": "restaurant",
+   "cuisine": "italian",
+   "hours": "",
+   "osm": "node/3851371362"
+  },
+  {
+   "name": "Osteria Cicchetteria \"Aea Canevassa",
+   "lat": 45.4344786,
+   "lng": 12.325853,
+   "amenity": "restaurant",
+   "cuisine": "italian",
+   "hours": "",
+   "osm": "node/11139672505"
+  },
+  {
+   "name": "Osteria Ai Do Farai",
+   "lat": 45.4338801,
+   "lng": 12.3254546,
+   "amenity": "restaurant",
+   "cuisine": "italian",
+   "hours": "",
+   "osm": "node/10087984337"
+  },
+  {
+   "name": "Osteria Doge Morosini",
+   "lat": 45.4335812,
+   "lng": 12.33042,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/14335685441"
+  },
+  {
+   "name": "El Magazen",
+   "lat": 45.4398548,
+   "lng": 12.3396458,
+   "amenity": "restaurant",
+   "cuisine": "italian",
+   "hours": "",
+   "osm": "node/1660310878"
+  },
+  {
+   "name": "Osteria da Alberto (anche Bacaro)",
+   "lat": 45.4398888,
+   "lng": 12.3397948,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/5833628286"
+  },
+  {
+   "name": "Osteria da Alberto",
+   "lat": 45.4398168,
+   "lng": 12.3399052,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/1671788276"
+  },
+  {
+   "name": "Antico Gatoleto",
+   "lat": 45.4400438,
+   "lng": 12.339,
+   "amenity": "restaurant",
+   "cuisine": "pasta;regional;italian;pizza",
+   "hours": "Mo-Su 12:00-22:30",
+   "osm": "node/4186822217"
+  },
+  {
+   "name": "Antico Gatoleto",
+   "lat": 45.4402266,
+   "lng": 12.3389714,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/10588761332"
+  },
+  {
+   "name": "Osteria La Busara",
+   "lat": 45.4398245,
+   "lng": 12.3380488,
+   "amenity": "restaurant",
+   "cuisine": "italian;mediterranean",
+   "hours": "",
+   "osm": "node/12744667401"
+  },
+  {
+   "name": "Ai Gondolieri",
+   "lat": 45.4302878,
+   "lng": 12.3307692,
+   "amenity": "restaurant",
+   "cuisine": "italian",
+   "hours": "",
+   "osm": "node/4157788991"
+  },
+  {
+   "name": "Al Vecio Forner",
+   "lat": 45.4305534,
+   "lng": 12.3302513,
+   "amenity": "restaurant",
+   "cuisine": "regional",
+   "hours": "Fr-Su,Tu 09:30-22:00; Mo,We 09:30-17:00",
+   "osm": "node/3586018004"
+  },
+  {
+   "name": "Ristorante Cantinone Storico",
+   "lat": 45.430449,
+   "lng": 12.3299044,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/4414687804"
+  },
+  {
+   "name": "Al Cafetier",
+   "lat": 45.4383679,
+   "lng": 12.3264339,
+   "amenity": "restaurant",
+   "cuisine": "italian",
+   "hours": "",
+   "osm": "node/7306539385"
+  },
+  {
+   "name": "Trattoria alla Terrazza",
+   "lat": 45.4388066,
+   "lng": 12.3263423,
+   "amenity": "restaurant",
+   "cuisine": "italian_pizza",
+   "hours": "",
+   "osm": "node/7107980986"
+  },
+  {
+   "name": "Osteria Ae Saracche",
+   "lat": 45.4389,
+   "lng": 12.3258713,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/5109258122"
+  },
+  {
+   "name": "La Bottiglia Local Street Food",
+   "lat": 45.4377454,
+   "lng": 12.3272111,
+   "amenity": "restaurant",
+   "cuisine": "regional",
+   "hours": "Mo-Su 10:00-22:30",
+   "osm": "node/4426684089"
+  },
+  {
+   "name": "Taverns da Baffo",
+   "lat": 45.438405,
+   "lng": 12.3283263,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/14163184601"
+  },
+  {
+   "name": "Osteria l'Orto dei Mori",
+   "lat": 45.445369,
+   "lng": 12.3321312,
+   "amenity": "restaurant",
+   "cuisine": "regional",
+   "hours": "",
+   "osm": "node/4910584739"
+  },
+  {
+   "name": "Ristorante Pizzeria Tintoretto",
+   "lat": 45.4447544,
+   "lng": 12.331511,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/7710844686"
+  },
+  {
+   "name": "Osteria da Rioba",
+   "lat": 45.444695,
+   "lng": 12.331736,
+   "amenity": "restaurant",
+   "cuisine": "italian;seafood;regional",
+   "hours": "",
+   "osm": "node/4195481313"
+  },
+  {
+   "name": "Osteria Il Paradiso Perduto",
+   "lat": 45.4445882,
+   "lng": 12.3320644,
+   "amenity": "restaurant",
+   "cuisine": "regional",
+   "hours": "",
+   "osm": "node/4370761851"
+  },
+  {
+   "name": "Sullaluna",
+   "lat": 45.4444692,
+   "lng": 12.3323015,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Mo-Su 09:00-22:00",
+   "osm": "node/10090344777"
+  },
+  {
+   "name": "Levante",
+   "lat": 45.4450949,
+   "lng": 12.3303385,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/13998079127"
+  },
+  {
+   "name": "Hosteria Ale do Maria",
+   "lat": 45.4369174,
+   "lng": 12.3478548,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/7019049552"
+  },
+  {
+   "name": "Ostaria ai do gati",
+   "lat": 45.4367547,
+   "lng": 12.347459,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/13432135183"
+  },
+  {
+   "name": "Trattoria da Jonny",
+   "lat": 45.4363196,
+   "lng": 12.3475916,
+   "amenity": "restaurant",
+   "cuisine": "italian",
+   "hours": "Mo-Su 11:00-23:45",
+   "osm": "node/4831554421"
+  },
+  {
+   "name": "Osteria Santa Giustina",
+   "lat": 45.4385334,
+   "lng": 12.3454056,
+   "amenity": "restaurant",
+   "cuisine": "local;italian",
+   "hours": "",
+   "osm": "node/5876645685"
+  },
+  {
+   "name": "Hostaria Ae Do Porte",
+   "lat": 45.4381712,
+   "lng": 12.3451023,
+   "amenity": "restaurant",
+   "cuisine": "italian",
+   "hours": "",
+   "osm": "node/5366795991"
+  },
+  {
+   "name": "Gibran",
+   "lat": 45.4384993,
+   "lng": 12.3449987,
+   "amenity": "restaurant",
+   "cuisine": "lebanese",
+   "hours": "Mo-Fr,Su 11:00-15:00,18:00-24:00; Sa 18:00-24:00",
+   "osm": "node/10180524381"
+  },
+  {
+   "name": "Osteria Bancogiro",
+   "lat": 45.4388471,
+   "lng": 12.3353161,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Tu-Su 09:00-24:00, Mo off",
+   "osm": "node/3884049419"
+  },
+  {
+   "name": "Trattoria Rialto Novo",
+   "lat": 45.4383883,
+   "lng": 12.3349074,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Mo-Su 09:30-23:00",
+   "osm": "node/7431082094"
+  },
+  {
+   "name": "I' Bacaro de' Bischeri",
+   "lat": 45.4386735,
+   "lng": 12.3348789,
+   "amenity": "restaurant",
+   "cuisine": "italian;sandwich",
+   "hours": "",
+   "osm": "node/8049981134"
+  },
+  {
+   "name": "Ai Pie del Ponte",
+   "lat": 45.438494,
+   "lng": 12.3417143,
+   "amenity": "restaurant",
+   "cuisine": "italian",
+   "hours": "Summer: Fr-Tu 13:00-15:00,19:30-01:00",
+   "osm": "node/4446340777"
+  },
+  {
+   "name": "Fusion Puppa",
+   "lat": 45.4398047,
+   "lng": 12.3407453,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/4216769520"
+  },
+  {
+   "name": "La Caravella Restaurant",
+   "lat": 45.4328976,
+   "lng": 12.3342744,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/4467548289"
+  }
+ ]
 }

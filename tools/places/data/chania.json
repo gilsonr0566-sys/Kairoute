@@ -68,5 +68,268 @@
   "lng": 24.0183
  },
  "lifts": [],
- "transit": []
+ "transit": [],
+ "cityEats": [
+  {
+   "name": "Canale",
+   "lat": 35.5182029,
+   "lng": 24.0184694,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/14228140486"
+  },
+  {
+   "name": "Mixalis",
+   "lat": 35.5180364,
+   "lng": 24.0183509,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/6522255585"
+  },
+  {
+   "name": "ΜΑΡΑΜΠΟΥ",
+   "lat": 35.5181804,
+   "lng": 24.0185039,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/4296496428"
+  },
+  {
+   "name": "Monastiri",
+   "lat": 35.517983,
+   "lng": 24.018386,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/3645165572"
+  },
+  {
+   "name": "Palazzo al mare",
+   "lat": 35.517907,
+   "lng": 24.018334,
+   "amenity": "restaurant",
+   "cuisine": "greek",
+   "hours": "",
+   "osm": "node/3645165583"
+  },
+  {
+   "name": "Pallas",
+   "lat": 35.5184672,
+   "lng": 24.0186988,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/2171171561"
+  },
+  {
+   "name": "Μοθτοθπακι",
+   "lat": 35.5159726,
+   "lng": 24.0158524,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/3802594355"
+  },
+  {
+   "name": "Raradosiako",
+   "lat": 35.517369,
+   "lng": 24.0153337,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/9993045254"
+  },
+  {
+   "name": "Valari Androniki",
+   "lat": 35.5158112,
+   "lng": 24.0157774,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/3802593589"
+  },
+  {
+   "name": "Strata Tavern",
+   "lat": 35.5158518,
+   "lng": 24.0158595,
+   "amenity": "restaurant",
+   "cuisine": "greek",
+   "hours": "",
+   "osm": "node/3802593489"
+  },
+  {
+   "name": "Enetikon",
+   "lat": 35.5165721,
+   "lng": 24.0161708,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/3605422938"
+  },
+  {
+   "name": "Tamam",
+   "lat": 35.5165224,
+   "lng": 24.0163034,
+   "amenity": "restaurant",
+   "cuisine": "greek;turkish",
+   "hours": "",
+   "osm": "node/1356387172"
+  },
+  {
+   "name": "Agora Foodie",
+   "lat": 35.5150977,
+   "lng": 24.0200333,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/11069707405"
+  },
+  {
+   "name": "Οινοποιείο",
+   "lat": 35.5153337,
+   "lng": 24.0203699,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/3802142207"
+  },
+  {
+   "name": "ΟΝΕΙΡΟΔΡΟΜΙΟ",
+   "lat": 35.5153991,
+   "lng": 24.0206111,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/3802137248"
+  },
+  {
+   "name": "Mesogeiako",
+   "lat": 35.5154154,
+   "lng": 24.0207317,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/2171174795"
+  },
+  {
+   "name": "Tsita",
+   "lat": 35.5152953,
+   "lng": 24.0199163,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/2171174215"
+  },
+  {
+   "name": "στήξ Ανναξ",
+   "lat": 35.5153336,
+   "lng": 24.0210892,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/9117023917"
+  },
+  {
+   "name": "Bourbos",
+   "lat": 35.5154381,
+   "lng": 24.0226884,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/11075409405"
+  },
+  {
+   "name": "mirai",
+   "lat": 35.5153094,
+   "lng": 24.0213128,
+   "amenity": "restaurant",
+   "cuisine": "japanese",
+   "hours": "",
+   "osm": "node/2171183181"
+  },
+  {
+   "name": "Κουζινα Ε.Π.Ε.",
+   "lat": 35.5158051,
+   "lng": 24.0214885,
+   "amenity": "restaurant",
+   "cuisine": "greek",
+   "hours": "Mo-Su 12:00-19:30",
+   "osm": "node/5978418937"
+  },
+  {
+   "name": "To Maridaki",
+   "lat": 35.5159406,
+   "lng": 24.0214074,
+   "amenity": "restaurant",
+   "cuisine": "seafood",
+   "hours": "Mo-Su 12:00-00:00",
+   "osm": "node/5222191339"
+  },
+  {
+   "name": "BEPMOTEPIA",
+   "lat": 35.5162652,
+   "lng": 24.0216487,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/12253920571"
+  },
+  {
+   "name": "Oinoa",
+   "lat": 35.5183101,
+   "lng": 24.014871,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/5773305657"
+  },
+  {
+   "name": "The Botanist",
+   "lat": 35.5182185,
+   "lng": 24.0149998,
+   "amenity": "restaurant",
+   "cuisine": "breakfast",
+   "hours": "",
+   "osm": "node/9884607418"
+  },
+  {
+   "name": "Folks",
+   "lat": 35.5180635,
+   "lng": 24.0149477,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/13243223101"
+  },
+  {
+   "name": "Kalderimi",
+   "lat": 35.5178559,
+   "lng": 24.0150283,
+   "amenity": "restaurant",
+   "cuisine": "regional",
+   "hours": "",
+   "osm": "node/4861278326"
+  },
+  {
+   "name": "La Bodega",
+   "lat": 35.5178453,
+   "lng": 24.0159816,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/5795531476"
+  },
+  {
+   "name": "Arismari",
+   "lat": 35.5176616,
+   "lng": 24.015951,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/5239101521"
+  }
+ ]
 }

@@ -684,5 +684,1438 @@
   "lat": 38.716243,
   "lng": -9.151091999999998
  },
- "wikivoyage": "Lisbon"
+ "wikivoyage": "Lisbon",
+ "cityEats": [
+  {
+   "name": "BELEM KEBAB & PIZZARIA",
+   "lat": 38.6992775,
+   "lng": -9.2054078,
+   "amenity": "restaurant",
+   "cuisine": "pizza;kebab",
+   "hours": "Mo-Su 07:00-00:00",
+   "osm": "node/11901260959"
+  },
+  {
+   "name": "La Fóllia de Bélem",
+   "lat": 38.6994618,
+   "lng": -9.2054979,
+   "amenity": "restaurant",
+   "cuisine": "pizza",
+   "hours": "Mo-Su 12:30-15:00 19:00-22:00",
+   "osm": "node/11885081471"
+  },
+  {
+   "name": "Flor dos Jerónimos",
+   "lat": 38.6975449,
+   "lng": -9.2039218,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/9765016176"
+  },
+  {
+   "name": "Pão Pão Queijo Queijo",
+   "lat": 38.6975445,
+   "lng": -9.2038683,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Mo-Sa 10:00-23:30; Su 10:00-22:30",
+   "osm": "node/1514445079"
+  },
+  {
+   "name": "Xi-Hu",
+   "lat": 38.6972562,
+   "lng": -9.2031331,
+   "amenity": "restaurant",
+   "cuisine": "chinese",
+   "hours": "",
+   "osm": "node/12320363231"
+  },
+  {
+   "name": "Xi-Hu",
+   "lat": 38.6972603,
+   "lng": -9.2031142,
+   "amenity": "restaurant",
+   "cuisine": "chinese",
+   "hours": "",
+   "osm": "node/11876777513"
+  },
+  {
+   "name": "Vela Latina",
+   "lat": 38.692859,
+   "lng": -9.2133215,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "way/155332133"
+  },
+  {
+   "name": "A Tasca da Sé",
+   "lat": 38.7100764,
+   "lng": -9.1331854,
+   "amenity": "restaurant",
+   "cuisine": "regional;portuguese;local",
+   "hours": "Mo-Sa 12:00-12:00, 22:00-22:00",
+   "osm": "node/4406108589"
+  },
+  {
+   "name": "Restaurante da Sé",
+   "lat": 38.7094899,
+   "lng": -9.1330093,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/4425409092"
+  },
+  {
+   "name": "Pizzaiollo",
+   "lat": 38.7095493,
+   "lng": -9.1326234,
+   "amenity": "restaurant",
+   "cuisine": "italian_pizza",
+   "hours": "Mo-Su 12:00-00:00",
+   "osm": "node/12230308901"
+  },
+  {
+   "name": "Tu e Eu restaurante",
+   "lat": 38.7094268,
+   "lng": -9.1330696,
+   "amenity": "restaurant",
+   "cuisine": "portuguese",
+   "hours": "",
+   "osm": "node/9214173818"
+  },
+  {
+   "name": "Taberna do Vilarinho",
+   "lat": 38.7094042,
+   "lng": -9.1332224,
+   "amenity": "restaurant",
+   "cuisine": "portuguese",
+   "hours": "",
+   "osm": "node/5094014922"
+  },
+  {
+   "name": "Associação do Fado Casto",
+   "lat": 38.7105787,
+   "lng": -9.1328892,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/5642571822"
+  },
+  {
+   "name": "Nosolo Italia",
+   "lat": 38.7079633,
+   "lng": -9.1354229,
+   "amenity": "restaurant",
+   "cuisine": "ice_cream;italian",
+   "hours": "",
+   "osm": "node/2003731545"
+  },
+  {
+   "name": "Can the Can Lisboa",
+   "lat": 38.7076525,
+   "lng": -9.135254,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "PH,Mo-Su 09:00-02:00",
+   "osm": "node/2503417884"
+  },
+  {
+   "name": "Terra Nova by Populi",
+   "lat": 38.7075357,
+   "lng": -9.1352072,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "09:30-02:00",
+   "osm": "node/2003731538"
+  },
+  {
+   "name": "Ministerium Cantina",
+   "lat": 38.7081204,
+   "lng": -9.1354935,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/2003731541"
+  },
+  {
+   "name": "Baía do Peixe",
+   "lat": 38.7070687,
+   "lng": -9.1375529,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "08:00-24:00",
+   "osm": "node/10158209816"
+  },
+  {
+   "name": "Squisito",
+   "lat": 38.707536,
+   "lng": -9.1377089,
+   "amenity": "restaurant",
+   "cuisine": "italian",
+   "hours": "",
+   "osm": "node/2003731539"
+  },
+  {
+   "name": "Lovely Castello",
+   "lat": 38.7134995,
+   "lng": -9.1340171,
+   "amenity": "restaurant",
+   "cuisine": "regional",
+   "hours": "",
+   "osm": "node/1801653100"
+  },
+  {
+   "name": "NATA Lisboa",
+   "lat": 38.7127075,
+   "lng": -9.1329643,
+   "amenity": "restaurant",
+   "cuisine": "local",
+   "hours": "",
+   "osm": "node/6142236686"
+  },
+  {
+   "name": "Solar de São Cristóvão",
+   "lat": 38.7139365,
+   "lng": -9.1350907,
+   "amenity": "restaurant",
+   "cuisine": "portuguese",
+   "hours": "",
+   "osm": "node/4436691189"
+  },
+  {
+   "name": "Costa do Castello",
+   "lat": 38.714569,
+   "lng": -9.131609,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/5016500721"
+  },
+  {
+   "name": "Caminho da Ronda",
+   "lat": 38.7125419,
+   "lng": -9.1323241,
+   "amenity": "restaurant",
+   "cuisine": "portuguese",
+   "hours": "",
+   "osm": "node/6024594986"
+  },
+  {
+   "name": "Restaurante Santo André",
+   "lat": 38.7146297,
+   "lng": -9.1314274,
+   "amenity": "restaurant",
+   "cuisine": "regional",
+   "hours": "",
+   "osm": "way/327874288"
+  },
+  {
+   "name": "Uma",
+   "lat": 38.7120284,
+   "lng": -9.138718,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/4357093289"
+  },
+  {
+   "name": "O Elevador",
+   "lat": 38.7122757,
+   "lng": -9.1389839,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/2933990259"
+  },
+  {
+   "name": "Natraj",
+   "lat": 38.711912,
+   "lng": -9.1386733,
+   "amenity": "restaurant",
+   "cuisine": "indian",
+   "hours": "",
+   "osm": "node/6704284723"
+  },
+  {
+   "name": "O Arco",
+   "lat": 38.7118189,
+   "lng": -9.1386441,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Mo-Su 12:00-15:00,19:00-23:00; We off",
+   "osm": "node/4803797021"
+  },
+  {
+   "name": "Casa Portuguesa do Pastel de Bacalhau",
+   "lat": 38.7119999,
+   "lng": -9.1397576,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/2372779129"
+  },
+  {
+   "name": "Leitaria A Camponeza",
+   "lat": 38.7117403,
+   "lng": -9.1385979,
+   "amenity": "restaurant",
+   "cuisine": "regional",
+   "hours": "Mo-Su 19:00-23:00",
+   "osm": "node/2620368934"
+  },
+  {
+   "name": "Picanha Janelas Verdes",
+   "lat": 38.705386,
+   "lng": -9.1607007,
+   "amenity": "restaurant",
+   "cuisine": "brazilian",
+   "hours": "Mo-Su 12:30-15:30, 22:00-22:00",
+   "osm": "node/4294390093"
+  },
+  {
+   "name": "Restaurante do Museu Nacional de Arte Antiga",
+   "lat": 38.7049148,
+   "lng": -9.1610875,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Tu-Su 10:00-17:30; Jan 01,May 01,Dec 24-25 off; easter off",
+   "osm": "node/1302891313"
+  },
+  {
+   "name": "Geographia",
+   "lat": 38.7055368,
+   "lng": -9.1617404,
+   "amenity": "restaurant",
+   "cuisine": "african;brazilian;international;portuguese",
+   "hours": "Mo-Sa 12:30-15:00, 19:30-23:30",
+   "osm": "node/9425000717"
+  },
+  {
+   "name": "Derviche - Restaurante Turco",
+   "lat": 38.7049619,
+   "lng": -9.1595518,
+   "amenity": "restaurant",
+   "cuisine": "turkish",
+   "hours": "",
+   "osm": "node/2586819833"
+  },
+  {
+   "name": "Beira Rio",
+   "lat": 38.7049769,
+   "lng": -9.159527,
+   "amenity": "restaurant",
+   "cuisine": "portuguese",
+   "hours": "",
+   "osm": "node/5221733821"
+  },
+  {
+   "name": "Italian Place",
+   "lat": 38.7064014,
+   "lng": -9.1621067,
+   "amenity": "restaurant",
+   "cuisine": "italian",
+   "hours": "",
+   "osm": "node/11893446122"
+  },
+  {
+   "name": "Nosolo Italia Belém",
+   "lat": 38.6943523,
+   "lng": -9.206488,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/2483762168"
+  },
+  {
+   "name": "Cervejaria Portugália",
+   "lat": 38.6938942,
+   "lng": -9.2069296,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "way/241540590"
+  },
+  {
+   "name": "ZeroZero Belém",
+   "lat": 38.69385,
+   "lng": -9.2072776,
+   "amenity": "restaurant",
+   "cuisine": "italian;pizza",
+   "hours": "Mo-Su 12:00-24:00",
+   "osm": "way/241540591"
+  },
+  {
+   "name": "Este-Oeste",
+   "lat": 38.6951273,
+   "lng": -9.2074335,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Mo-Su 10:00-23:00",
+   "osm": "node/954068009"
+  },
+  {
+   "name": "Topo Belém",
+   "lat": 38.6952353,
+   "lng": -9.2077213,
+   "amenity": "restaurant",
+   "cuisine": "regional",
+   "hours": "",
+   "osm": "node/5371177857"
+  },
+  {
+   "name": "A Vela",
+   "lat": 38.6942863,
+   "lng": -9.2025963,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "relation/15467072"
+  },
+  {
+   "name": "Santa Clara dos Cogumelos",
+   "lat": 38.7157204,
+   "lng": -9.1254493,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Tu-Fr 19:30-23:00; Sa 13:00-15:30, 19:30-23:00; Su 19:30-23:00",
+   "osm": "node/6086515017"
+  },
+  {
+   "name": "A Cantina",
+   "lat": 38.7155097,
+   "lng": -9.1259491,
+   "amenity": "restaurant",
+   "cuisine": "portuguese",
+   "hours": "",
+   "osm": "node/5733828121"
+  },
+  {
+   "name": "Almadrava",
+   "lat": 38.7159293,
+   "lng": -9.1252404,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/9976878999"
+  },
+  {
+   "name": "Focaccia in Giro",
+   "lat": 38.7159414,
+   "lng": -9.1252094,
+   "amenity": "restaurant",
+   "cuisine": "italian",
+   "hours": "",
+   "osm": "node/6030196385"
+  },
+  {
+   "name": "Açores na Feira",
+   "lat": 38.7159648,
+   "lng": -9.1251584,
+   "amenity": "restaurant",
+   "cuisine": "regional",
+   "hours": "Tu-Su 10:00-00:00",
+   "osm": "node/6170616085"
+  },
+  {
+   "name": "Ceia",
+   "lat": 38.7156464,
+   "lng": -9.1259483,
+   "amenity": "restaurant",
+   "cuisine": "fine_dining;local;portuguese;regional",
+   "hours": "",
+   "osm": "node/10098185421"
+  },
+  {
+   "name": "O Jardim",
+   "lat": 38.712909,
+   "lng": -9.1529095,
+   "amenity": "restaurant",
+   "cuisine": "portuguese",
+   "hours": "Mo-Su 12:00-24:00",
+   "osm": "node/11240036980"
+  },
+  {
+   "name": "A Sala",
+   "lat": 38.7118294,
+   "lng": -9.1531567,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/10314910011"
+  },
+  {
+   "name": "Il Matriciano",
+   "lat": 38.7119494,
+   "lng": -9.1529371,
+   "amenity": "restaurant",
+   "cuisine": "italian",
+   "hours": "",
+   "osm": "node/4692271455"
+  },
+  {
+   "name": "Taberna Sal Grasso São Bento",
+   "lat": 38.7117083,
+   "lng": -9.1533243,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/13191058101"
+  },
+  {
+   "name": "Café de São Bento",
+   "lat": 38.7132275,
+   "lng": -9.1530828,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Mo-Su 12:00-15:00,19:00-01:00",
+   "osm": "node/4692271866"
+  },
+  {
+   "name": "Sora Lella",
+   "lat": 38.7118841,
+   "lng": -9.1527727,
+   "amenity": "restaurant",
+   "cuisine": "italian_pizza",
+   "hours": "Tu-Sa 12:30-15:00,20:00-23:30",
+   "osm": "node/4703935152"
+  },
+  {
+   "name": "Empanadas MBQ",
+   "lat": 38.7257548,
+   "lng": -9.1649896,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Mo-Fr 10:00-20:00",
+   "osm": "node/11882458904"
+  },
+  {
+   "name": "O Petisca",
+   "lat": 38.7261096,
+   "lng": -9.1646083,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Tu-Su 09:00-23:00",
+   "osm": "node/2414810217"
+  },
+  {
+   "name": "Oásis",
+   "lat": 38.7274296,
+   "lng": -9.1636084,
+   "amenity": "restaurant",
+   "cuisine": "regional",
+   "hours": "Mo-Sa 12:00-19:00",
+   "osm": "node/9712222865"
+  },
+  {
+   "name": "Taverna Taça Virada",
+   "lat": 38.7293455,
+   "lng": -9.1657966,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/9729293298"
+  },
+  {
+   "name": "Os Bernardos",
+   "lat": 38.7274897,
+   "lng": -9.1631191,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Mo-Sa 09:00-00:00",
+   "osm": "node/2415140772"
+  },
+  {
+   "name": "Fulai",
+   "lat": 38.7272772,
+   "lng": -9.1630189,
+   "amenity": "restaurant",
+   "cuisine": "pasta",
+   "hours": "",
+   "osm": "node/9718611068"
+  },
+  {
+   "name": "O Carvoeiro",
+   "lat": 38.7139746,
+   "lng": -9.1281147,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "PH,Mo-Su 12:30-15:30,19:00-23:00",
+   "osm": "node/6023083299"
+  },
+  {
+   "name": "O Vicentinho",
+   "lat": 38.7148812,
+   "lng": -9.1288537,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/5026385421"
+  },
+  {
+   "name": "Chave D'Ouro",
+   "lat": 38.7138593,
+   "lng": -9.1280696,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/4816775622"
+  },
+  {
+   "name": "Ti Natércia",
+   "lat": 38.7138964,
+   "lng": -9.1283404,
+   "amenity": "restaurant",
+   "cuisine": "local",
+   "hours": "",
+   "osm": "node/6140906685"
+  },
+  {
+   "name": "Estacao Alfama",
+   "lat": 38.7138022,
+   "lng": -9.1280259,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/10239205409"
+  },
+  {
+   "name": "Bistro Gato Pardo",
+   "lat": 38.7147099,
+   "lng": -9.1291777,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/4355939830"
+  },
+  {
+   "name": "Estrela by Olivier",
+   "lat": 38.7141344,
+   "lng": -9.1597865,
+   "amenity": "restaurant",
+   "cuisine": "brunch;salad;sandwich;pizza",
+   "hours": "Mo-Su 09:00-22:00",
+   "osm": "way/1293269967"
+  },
+  {
+   "name": "O Lavrador",
+   "lat": 38.7130307,
+   "lng": -9.1586248,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Tu-Su 09:00-22:30",
+   "osm": "node/12329523704"
+  },
+  {
+   "name": "O Lavrador",
+   "lat": 38.7129954,
+   "lng": -9.1585451,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Tu-Su 09:00-22:30",
+   "osm": "node/12329523705"
+  },
+  {
+   "name": "Chave D'ouro",
+   "lat": 38.7126962,
+   "lng": -9.1586107,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/4699426193"
+  },
+  {
+   "name": "O Lavrador",
+   "lat": 38.7129624,
+   "lng": -9.1584773,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Tu-Su 09:00-22:30",
+   "osm": "node/4699423667"
+  },
+  {
+   "name": "Imperial da Estrela",
+   "lat": 38.7127708,
+   "lng": -9.15834,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/4699423682"
+  },
+  {
+   "name": "O Sacramento",
+   "lat": 38.7116274,
+   "lng": -9.1403926,
+   "amenity": "restaurant",
+   "cuisine": "regional",
+   "hours": "",
+   "osm": "node/1683095127"
+  },
+  {
+   "name": "Casa Chineza",
+   "lat": 38.7125333,
+   "lng": -9.1391349,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "way/1185406284"
+  },
+  {
+   "name": "Rooftop The Art Inn Lisbon",
+   "lat": 38.7130115,
+   "lng": -9.1401701,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "18:00-23:00",
+   "osm": "node/12023188388"
+  },
+  {
+   "name": "Grelha do Carmo",
+   "lat": 38.7123554,
+   "lng": -9.1410343,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Mo-Su 12:00-23:00",
+   "osm": "node/5174915822"
+  },
+  {
+   "name": "A Mesa do CAM",
+   "lat": 38.7358198,
+   "lng": -9.1539237,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/2069600067"
+  },
+  {
+   "name": "Cafetaria do Museu Calouste Gulbenkian",
+   "lat": 38.7373485,
+   "lng": -9.1534579,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/2069603646"
+  },
+  {
+   "name": "Restaurante Piccolo Napoli",
+   "lat": 38.7355775,
+   "lng": -9.1547276,
+   "amenity": "restaurant",
+   "cuisine": "italian",
+   "hours": "",
+   "osm": "node/2066988760"
+  },
+  {
+   "name": "Ground Burger",
+   "lat": 38.7354596,
+   "lng": -9.1543422,
+   "amenity": "restaurant",
+   "cuisine": "burger",
+   "hours": "Tu-Sa 12:00-00:00",
+   "osm": "node/4802190723"
+  },
+  {
+   "name": "Restaurante O Ni",
+   "lat": 38.7370329,
+   "lng": -9.1522543,
+   "amenity": "restaurant",
+   "cuisine": "regional; cabo_verdean",
+   "hours": "Mo-Fr 09:30-19:30",
+   "osm": "node/3148825692"
+  },
+  {
+   "name": "Oasis",
+   "lat": 38.736697,
+   "lng": -9.1521923,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Mo-Sa 12:00-16:00, 19:00-23:00",
+   "osm": "node/4416151018"
+  },
+  {
+   "name": "#SeaTheFuture",
+   "lat": 38.7624922,
+   "lng": -9.093414,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/11879391585"
+  },
+  {
+   "name": "Chimarrão",
+   "lat": 38.7632862,
+   "lng": -9.0952366,
+   "amenity": "restaurant",
+   "cuisine": "brasilian",
+   "hours": "",
+   "osm": "node/3293525521"
+  },
+  {
+   "name": "Arigato",
+   "lat": 38.7637769,
+   "lng": -9.0956848,
+   "amenity": "restaurant",
+   "cuisine": "sushi",
+   "hours": "",
+   "osm": "node/9972724917"
+  },
+  {
+   "name": "Nova Peixaria",
+   "lat": 38.7639429,
+   "lng": -9.0956764,
+   "amenity": "restaurant",
+   "cuisine": "fish",
+   "hours": "",
+   "osm": "node/9972641316"
+  },
+  {
+   "name": "Honorato",
+   "lat": 38.7640832,
+   "lng": -9.0956734,
+   "amenity": "restaurant",
+   "cuisine": "burger",
+   "hours": "",
+   "osm": "node/9970733203"
+  },
+  {
+   "name": "Arigato",
+   "lat": 38.7635101,
+   "lng": -9.0958039,
+   "amenity": "restaurant",
+   "cuisine": "sushi",
+   "hours": "",
+   "osm": "node/3293525520"
+  },
+  {
+   "name": "Peixaria do Rossio",
+   "lat": 38.713588,
+   "lng": -9.1400012,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Mo-Su 12:00-24:00",
+   "osm": "node/5185699924"
+  },
+  {
+   "name": "Painel da Baixa",
+   "lat": 38.7136791,
+   "lng": -9.1400768,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Mo-Su 07:00-21:00",
+   "osm": "node/13953447074"
+  },
+  {
+   "name": "Fiorella",
+   "lat": 38.7132588,
+   "lng": -9.1397497,
+   "amenity": "restaurant",
+   "cuisine": "italian;italian_pizza;portuguese",
+   "hours": "",
+   "osm": "node/5016929026"
+  },
+  {
+   "name": "Buffet Leão",
+   "lat": 38.7139219,
+   "lng": -9.1404288,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/5018721322"
+  },
+  {
+   "name": "Capítulo Restaurant & Bar",
+   "lat": 38.7144344,
+   "lng": -9.1385757,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/13021802058"
+  },
+  {
+   "name": "Los Chanetes",
+   "lat": 38.713036,
+   "lng": -9.1396636,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/12978848292"
+  },
+  {
+   "name": "Sushidō",
+   "lat": 38.7441038,
+   "lng": -9.1681575,
+   "amenity": "restaurant",
+   "cuisine": "sushi",
+   "hours": "Mo-Su 11:00-15:00,18:30-22:30",
+   "osm": "node/11917671186"
+  },
+  {
+   "name": "Ogaya",
+   "lat": 38.7423701,
+   "lng": -9.1723153,
+   "amenity": "restaurant",
+   "cuisine": "chinese;japanese",
+   "hours": "",
+   "osm": "node/8660711923"
+  },
+  {
+   "name": "A Tasca do Benfica",
+   "lat": 38.7424868,
+   "lng": -9.1726135,
+   "amenity": "restaurant",
+   "cuisine": "pizza;burger;pasta",
+   "hours": "",
+   "osm": "node/12312543791"
+  },
+  {
+   "name": "Restaurante Coral",
+   "lat": 38.7421129,
+   "lng": -9.1722881,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/8665598670"
+  },
+  {
+   "name": "O Churrasco",
+   "lat": 38.7461241,
+   "lng": -9.1695217,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/8689078959"
+  },
+  {
+   "name": "Botequim O Encontro",
+   "lat": 38.744035,
+   "lng": -9.1737084,
+   "amenity": "restaurant",
+   "cuisine": "portuguese",
+   "hours": "",
+   "osm": "node/8660198414"
+  },
+  {
+   "name": "Church LX",
+   "lat": 38.7258035,
+   "lng": -9.1137773,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/13257902483"
+  },
+  {
+   "name": "Sabor da Panela",
+   "lat": 38.7252529,
+   "lng": -9.1156559,
+   "amenity": "restaurant",
+   "cuisine": "regional",
+   "hours": "",
+   "osm": "node/4997267337"
+  },
+  {
+   "name": "O caçador",
+   "lat": 38.7257391,
+   "lng": -9.1125358,
+   "amenity": "restaurant",
+   "cuisine": "portuguese;cervejaria",
+   "hours": "Mo-Su 07:00-22:00, Sa closed",
+   "osm": "node/10716614383"
+  },
+  {
+   "name": "earth tribe",
+   "lat": 38.7257884,
+   "lng": -9.1124859,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Mo-Fr 12:00-16:00, Sa-Su closed",
+   "osm": "node/9840118517"
+  },
+  {
+   "name": "O germano",
+   "lat": 38.7259029,
+   "lng": -9.1123697,
+   "amenity": "restaurant",
+   "cuisine": "portuguese",
+   "hours": "Mo-Sa 12:00-15:00, Su closed",
+   "osm": "node/10716614384"
+  },
+  {
+   "name": "Eusébio's",
+   "lat": 38.7227532,
+   "lng": -9.1153685,
+   "amenity": "restaurant",
+   "cuisine": "chicken",
+   "hours": "",
+   "osm": "node/2549453712"
+  },
+  {
+   "name": "O Frade",
+   "lat": 38.6978772,
+   "lng": -9.199268,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/1513403812"
+  },
+  {
+   "name": "Restaurante Chinês-Grande Mundo",
+   "lat": 38.6980873,
+   "lng": -9.1992923,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/12320531543"
+  },
+  {
+   "name": "Solar do Embaixador",
+   "lat": 38.6978821,
+   "lng": -9.1991346,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/1513471725"
+  },
+  {
+   "name": "Belém Palácio",
+   "lat": 38.6974925,
+   "lng": -9.1989413,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/11112159393"
+  },
+  {
+   "name": "Rui Dos Pregos",
+   "lat": 38.6974947,
+   "lng": -9.1988708,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/11112159394"
+  },
+  {
+   "name": "Restaurante Japones Samurai",
+   "lat": 38.6974977,
+   "lng": -9.1988209,
+   "amenity": "restaurant",
+   "cuisine": "sushi",
+   "hours": "",
+   "osm": "node/8433019118"
+  },
+  {
+   "name": "Granos Espaço Vegetariano",
+   "lat": 38.7145463,
+   "lng": -9.1685208,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Mo-Fr 07:30-18:00; Sa 09:00-18:00",
+   "osm": "node/11379622469"
+  },
+  {
+   "name": "Pita Gourmet",
+   "lat": 38.7125756,
+   "lng": -9.1675281,
+   "amenity": "restaurant",
+   "cuisine": "greek",
+   "hours": "",
+   "osm": "node/7683226766"
+  },
+  {
+   "name": "Ela Canela",
+   "lat": 38.7161766,
+   "lng": -9.1681327,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/8478848957"
+  },
+  {
+   "name": "Origin's 4",
+   "lat": 38.7158898,
+   "lng": -9.167039,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/11379664469"
+  },
+  {
+   "name": "Zero Zero",
+   "lat": 38.7173455,
+   "lng": -9.1496898,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/5888817385"
+  },
+  {
+   "name": "Damas",
+   "lat": 38.7172442,
+   "lng": -9.149531,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Mo-Su 09:30-22:00",
+   "osm": "node/8237919417"
+  },
+  {
+   "name": "Sumaya",
+   "lat": 38.7173899,
+   "lng": -9.1499381,
+   "amenity": "restaurant",
+   "cuisine": "lebanese",
+   "hours": "Mo 12:00-16:00, 19:00-00:00; Su, Tu-Th 12:00-00:00; Fr-Sa 12:00-00:30",
+   "osm": "node/12307145702"
+  },
+  {
+   "name": "Pica-Pau",
+   "lat": 38.717195,
+   "lng": -9.1497469,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/10143222648"
+  },
+  {
+   "name": "Honest Greens",
+   "lat": 38.7170125,
+   "lng": -9.1480865,
+   "amenity": "restaurant",
+   "cuisine": "organic",
+   "hours": "Su-Th 08:30-23:00; Fr,Sa 08:30-24:00",
+   "osm": "node/11985343569"
+  },
+  {
+   "name": "Atalho Real",
+   "lat": 38.716953,
+   "lng": -9.1482094,
+   "amenity": "restaurant",
+   "cuisine": "steak_house",
+   "hours": "",
+   "osm": "node/4332704289"
+  },
+  {
+   "name": "Café do Rio",
+   "lat": 38.7088014,
+   "lng": -9.1343501,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/4355929807"
+  },
+  {
+   "name": "Alfandega",
+   "lat": 38.7087992,
+   "lng": -9.1338894,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/4726231996"
+  },
+  {
+   "name": "Restaurante Central",
+   "lat": 38.7087957,
+   "lng": -9.1345505,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/4622793195"
+  },
+  {
+   "name": "The Folks",
+   "lat": 38.7091182,
+   "lng": -9.1340997,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/6632030604"
+  },
+  {
+   "name": "SÁLA de João Sá",
+   "lat": 38.7091046,
+   "lng": -9.1338995,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/9586124404"
+  },
+  {
+   "name": "Bacalhoeiro",
+   "lat": 38.7092258,
+   "lng": -9.1341701,
+   "amenity": "restaurant",
+   "cuisine": "sushi",
+   "hours": "",
+   "osm": "node/10009627759"
+  },
+  {
+   "name": "Senhor Uva",
+   "lat": 38.7144868,
+   "lng": -9.1568417,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/9740320517"
+  },
+  {
+   "name": "Kefi greek bistro",
+   "lat": 38.7128672,
+   "lng": -9.1582562,
+   "amenity": "restaurant",
+   "cuisine": "greek",
+   "hours": "Mo-Su 12:00-24:00",
+   "osm": "node/10314947110"
+  },
+  {
+   "name": "Da Prata 52",
+   "lat": 38.7095505,
+   "lng": -9.1362822,
+   "amenity": "restaurant",
+   "cuisine": "regional",
+   "hours": "Mo-Tu 10:00-23:30;We 17:00-23:30;Th-Sa 10:00-23:30",
+   "osm": "node/3187833711"
+  },
+  {
+   "name": "Yuki Ramen",
+   "lat": 38.7095354,
+   "lng": -9.13607,
+   "amenity": "restaurant",
+   "cuisine": "noodle;chinese",
+   "hours": "Mo-Su 12:00-23:00",
+   "osm": "node/13304368346"
+  },
+  {
+   "name": "Bella Ciao",
+   "lat": 38.7095718,
+   "lng": -9.1360591,
+   "amenity": "restaurant",
+   "cuisine": "italian",
+   "hours": "",
+   "osm": "node/6008664716"
+  },
+  {
+   "name": "Juicy",
+   "lat": 38.7095542,
+   "lng": -9.1359968,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/6855340785"
+  },
+  {
+   "name": "Kiku",
+   "lat": 38.709452,
+   "lng": -9.1374952,
+   "amenity": "restaurant",
+   "cuisine": "chinese;japanese;sushi",
+   "hours": "11:30-23:00",
+   "osm": "node/4224367192"
+  },
+  {
+   "name": "Cervejaria Paço Real",
+   "lat": 38.7097664,
+   "lng": -9.1362855,
+   "amenity": "restaurant",
+   "cuisine": "regional",
+   "hours": "",
+   "osm": "node/7139204871"
+  },
+  {
+   "name": "Taberna",
+   "lat": 38.7157733,
+   "lng": -9.1398655,
+   "amenity": "restaurant",
+   "cuisine": "regional",
+   "hours": "",
+   "osm": "node/9043426999"
+  },
+  {
+   "name": "Casa do Alentejo",
+   "lat": 38.7160436,
+   "lng": -9.1398529,
+   "amenity": "restaurant",
+   "cuisine": "regional",
+   "hours": "Mo-Sa 12:00-16:00,19:00-23:00",
+   "osm": "node/8151114430"
+  },
+  {
+   "name": "Milano",
+   "lat": 38.7156678,
+   "lng": -9.1398731,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/7090383895"
+  },
+  {
+   "name": "Locanda Italiana",
+   "lat": 38.7154374,
+   "lng": -9.1398633,
+   "amenity": "restaurant",
+   "cuisine": "italian",
+   "hours": "",
+   "osm": "node/2829349366"
+  },
+  {
+   "name": "A Provinciana",
+   "lat": 38.7154966,
+   "lng": -9.1401543,
+   "amenity": "restaurant",
+   "cuisine": "local",
+   "hours": "Mo-Sa 12:00-15:30, 19:00-22:00",
+   "osm": "node/6141130387"
+  },
+  {
+   "name": "il Mulino",
+   "lat": 38.7156998,
+   "lng": -9.1404113,
+   "amenity": "restaurant",
+   "cuisine": "italian;pizza;pasta",
+   "hours": "12:00-24:00",
+   "osm": "node/11884789653"
+  },
+  {
+   "name": "The Green Affair",
+   "lat": 38.7632858,
+   "lng": -9.0964428,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "12:00-23:00",
+   "osm": "node/11882320731"
+  },
+  {
+   "name": "La Expo Dulce Vita",
+   "lat": 38.7633403,
+   "lng": -9.0966585,
+   "amenity": "restaurant",
+   "cuisine": "italian;pizza",
+   "hours": "",
+   "osm": "node/11882320730"
+  },
+  {
+   "name": "Brasserie de l’ Entrecôte",
+   "lat": 38.7634438,
+   "lng": -9.0964502,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "12:00-23:00",
+   "osm": "node/5305382421"
+  },
+  {
+   "name": "Restaurante Bistek",
+   "lat": 38.7630628,
+   "lng": -9.0971184,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Mo-Sa 07:30-19:30",
+   "osm": "node/8497131515"
+  },
+  {
+   "name": "Hard Rock Cafe",
+   "lat": 38.7166133,
+   "lng": -9.141757,
+   "amenity": "restaurant",
+   "cuisine": "american",
+   "hours": "Mo-Su 11:30-02:00",
+   "osm": "node/376811896"
+  },
+  {
+   "name": "Restaurante Cervejaria Pinoquio",
+   "lat": 38.7154585,
+   "lng": -9.1407397,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/5111005221"
+  },
+  {
+   "name": "Bonjardim",
+   "lat": 38.7158975,
+   "lng": -9.140564,
+   "amenity": "restaurant",
+   "cuisine": "portuguese",
+   "hours": "Mo-Su 12:00-23:30",
+   "osm": "node/4215000033"
+  },
+  {
+   "name": "100 Montaditos",
+   "lat": 38.7164345,
+   "lng": -9.1408031,
+   "amenity": "restaurant",
+   "cuisine": "sandwich",
+   "hours": "",
+   "osm": "node/11679140853"
+  },
+  {
+   "name": "Solar do Bacalahau",
+   "lat": 38.7155517,
+   "lng": -9.1405492,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/5951393386"
+  },
+  {
+   "name": "Churrasco",
+   "lat": 38.7161925,
+   "lng": -9.1405216,
+   "amenity": "restaurant",
+   "cuisine": "regional;chicken;portuguese",
+   "hours": "",
+   "osm": "node/6933998488"
+  },
+  {
+   "name": "Praia no Parque",
+   "lat": 38.7301287,
+   "lng": -9.1531294,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "way/148612125"
+  },
+  {
+   "name": "4 Ases",
+   "lat": 38.7291005,
+   "lng": -9.1497182,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/6180812586"
+  },
+  {
+   "name": "Estrela do Parque",
+   "lat": 38.7278308,
+   "lng": -9.1562037,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/4535338293"
+  },
+  {
+   "name": "Terceiro Sentido - Bistrô",
+   "lat": 38.7278199,
+   "lng": -9.1491996,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/12355103579"
+  },
+  {
+   "name": "Restaurante G",
+   "lat": 38.7284147,
+   "lng": -9.1491513,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/12355103584"
+  },
+  {
+   "name": "SushiCome",
+   "lat": 38.729078,
+   "lng": -9.149241,
+   "amenity": "restaurant",
+   "cuisine": "japanese",
+   "hours": "",
+   "osm": "node/4630327404"
+  }
+ ]
 }

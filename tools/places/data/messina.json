@@ -1346,5 +1346,70 @@
     }
    ]
   }
+ ],
+ "cityEats": [
+  {
+   "name": "Shanghai 2",
+   "lat": 38.192741,
+   "lng": 15.554094,
+   "amenity": "restaurant",
+   "cuisine": "asian;chinese",
+   "hours": "",
+   "osm": "node/7798236612"
+  },
+  {
+   "name": "Osteria del Campanile",
+   "lat": 38.1929658,
+   "lng": 15.5543135,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/9778606117"
+  },
+  {
+   "name": "Passione Eterna",
+   "lat": 38.1915193,
+   "lng": 15.554934,
+   "amenity": "restaurant",
+   "cuisine": "italian",
+   "hours": "",
+   "osm": "node/13732109690"
+  },
+  {
+   "name": "A Cucchiara",
+   "lat": 38.1918758,
+   "lng": 15.5555993,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/13732139227"
+  },
+  {
+   "name": "Piccolino Pasta Bar",
+   "lat": 38.1925952,
+   "lng": 15.5561798,
+   "amenity": "restaurant",
+   "cuisine": "italian",
+   "hours": "Su-Th 12:00-15:00; Fr,Sa 12:00-15:00,19:30-22:00",
+   "osm": "node/12832000595"
+  },
+  {
+   "name": "La Piazzetta",
+   "lat": 38.191391,
+   "lng": 15.5555365,
+   "amenity": "restaurant",
+   "cuisine": "pizza;italian;burger",
+   "hours": "",
+   "osm": "node/12800315364"
+  },
+  {
+   "name": "Non - Ritrovo",
+   "lat": 38.1915138,
+   "lng": 15.5562926,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/14248734990"
+  }
  ]
 }

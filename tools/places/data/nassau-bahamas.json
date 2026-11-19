@@ -145,5 +145,79 @@
    "editions": 5,
    "unesco": false
   }
+ ],
+ "cityEats": [
+  {
+   "name": "Clay Oven",
+   "lat": 25.0781026,
+   "lng": -77.3475351,
+   "amenity": "restaurant",
+   "cuisine": "indian",
+   "hours": "",
+   "osm": "node/4102559658"
+  },
+  {
+   "name": "Conch Fritters Bar & Grill",
+   "lat": 25.0776774,
+   "lng": -77.3454834,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/3447268699"
+  },
+  {
+   "name": "Smugglers",
+   "lat": 25.0775944,
+   "lng": -77.345008,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/5668375485"
+  },
+  {
+   "name": "Wok N Roll Chinese Resturant &Bar",
+   "lat": 25.0760818,
+   "lng": -77.4067084,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/9973094617"
+  },
+  {
+   "name": "The Pepper Pot",
+   "lat": 25.0774476,
+   "lng": -77.3437744,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/13343396301"
+  },
+  {
+   "name": "Summer Palace",
+   "lat": 25.0781527,
+   "lng": -77.3448629,
+   "amenity": "restaurant",
+   "cuisine": "chinese",
+   "hours": "",
+   "osm": "node/4100605806"
+  },
+  {
+   "name": "Señor Frog's",
+   "lat": 25.0789494,
+   "lng": -77.3448168,
+   "amenity": "restaurant",
+   "cuisine": "mexican",
+   "hours": "",
+   "osm": "node/719100659"
+  },
+  {
+   "name": "Lukka Kairi",
+   "lat": 25.078984,
+   "lng": -77.3442099,
+   "amenity": "restaurant",
+   "cuisine": "regional",
+   "hours": "",
+   "osm": "node/3748676918"
+  }
  ]
 }

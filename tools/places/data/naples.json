@@ -4634,5 +4634,241 @@
     }
    ]
   }
+ ],
+ "cityEats": [
+  {
+   "name": "Palazzo Petrucci",
+   "lat": 40.8485281,
+   "lng": 14.2545645,
+   "amenity": "restaurant",
+   "cuisine": "pizza",
+   "hours": "",
+   "osm": "node/3507625250"
+  },
+  {
+   "name": "Monsù",
+   "lat": 40.8496962,
+   "lng": 14.254226,
+   "amenity": "restaurant",
+   "cuisine": "italian;regional",
+   "hours": "",
+   "osm": "node/8930651819"
+  },
+  {
+   "name": "Insolito",
+   "lat": 40.8499006,
+   "lng": 14.2547781,
+   "amenity": "restaurant",
+   "cuisine": "pizza;regional",
+   "hours": "",
+   "osm": "node/8929453986"
+  },
+  {
+   "name": "Pizzeria dell'Angelo",
+   "lat": 40.8485421,
+   "lng": 14.2560803,
+   "amenity": "restaurant",
+   "cuisine": "pizza",
+   "hours": "",
+   "osm": "node/3056337705"
+  },
+  {
+   "name": "Pizzeria Attanasio",
+   "lat": 40.8499731,
+   "lng": 14.2544574,
+   "amenity": "restaurant",
+   "cuisine": "pizza",
+   "hours": "",
+   "osm": "node/7194012685"
+  },
+  {
+   "name": "Trattoria da Carmela",
+   "lat": 40.8500481,
+   "lng": 14.254673,
+   "amenity": "restaurant",
+   "cuisine": "italian",
+   "hours": "",
+   "osm": "node/5585708423"
+  },
+  {
+   "name": "L'Oro di Napoli",
+   "lat": 40.8498951,
+   "lng": 14.2541813,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/7099925922"
+  },
+  {
+   "name": "Pizzeria Vesi",
+   "lat": 40.8497666,
+   "lng": 14.2538004,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/5211861430"
+  },
+  {
+   "name": "Restauran Caravaggio",
+   "lat": 40.8521926,
+   "lng": 14.2600195,
+   "amenity": "restaurant",
+   "cuisine": "regional",
+   "hours": "",
+   "osm": "node/12741844015"
+  },
+  {
+   "name": "Januarius",
+   "lat": 40.852143,
+   "lng": 14.25895,
+   "amenity": "restaurant",
+   "cuisine": "regional",
+   "hours": "",
+   "osm": "node/10948799668"
+  },
+  {
+   "name": "Pizzeria dal Pescatore",
+   "lat": 40.8518152,
+   "lng": 14.2595981,
+   "amenity": "restaurant",
+   "cuisine": "pizza",
+   "hours": "",
+   "osm": "node/11476625874"
+  },
+  {
+   "name": "Pizzeria da Mammarella",
+   "lat": 40.8520731,
+   "lng": 14.2607251,
+   "amenity": "restaurant",
+   "cuisine": "italian;pizza",
+   "hours": "",
+   "osm": "node/10984688746"
+  },
+  {
+   "name": "Dal Presidente",
+   "lat": 40.851642,
+   "lng": 14.2590841,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Mo-Su 11:00-24:00+",
+   "osm": "node/3501305400"
+  },
+  {
+   "name": "Il Figlio del Presidente",
+   "lat": 40.8514584,
+   "lng": 14.259663,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/7099901399"
+  },
+  {
+   "name": "Na Bona Furchetta",
+   "lat": 40.8358753,
+   "lng": 14.2471169,
+   "amenity": "restaurant",
+   "cuisine": "pizza",
+   "hours": "",
+   "osm": "node/11047393999"
+  },
+  {
+   "name": "San Ferdinando",
+   "lat": 40.837202,
+   "lng": 14.2483831,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/6898604385"
+  },
+  {
+   "name": "Rossopomodoro",
+   "lat": 40.8374623,
+   "lng": 14.24887,
+   "amenity": "restaurant",
+   "cuisine": "italian_pizza;italian",
+   "hours": "Mo-Su 12:00-24:00",
+   "osm": "node/4550531491"
+  },
+  {
+   "name": "Nardones",
+   "lat": 40.8372212,
+   "lng": 14.2476652,
+   "amenity": "restaurant",
+   "cuisine": "regional;pizza",
+   "hours": "Mo-Sa",
+   "osm": "node/7230768125"
+  },
+  {
+   "name": "Trattoria San Ferdinando di Aldo Bruno",
+   "lat": 40.8373926,
+   "lng": 14.2479603,
+   "amenity": "restaurant",
+   "cuisine": "italian",
+   "hours": "",
+   "osm": "node/6553840823"
+  },
+  {
+   "name": "Brandi",
+   "lat": 40.8367467,
+   "lng": 14.2468974,
+   "amenity": "restaurant",
+   "cuisine": "pizza",
+   "hours": "",
+   "osm": "node/2310523920"
+  },
+  {
+   "name": "Vitto Pitagorico",
+   "lat": 40.8527625,
+   "lng": 14.2501098,
+   "amenity": "restaurant",
+   "cuisine": "pizza",
+   "hours": "Mo-Su 12:00-15:30, 19:00-23:00",
+   "osm": "node/7142669631"
+  },
+  {
+   "name": "Antica pizzera Aiello",
+   "lat": 40.8530902,
+   "lng": 14.2516851,
+   "amenity": "restaurant",
+   "cuisine": "pizza",
+   "hours": "",
+   "osm": "node/10290837087"
+  },
+  {
+   "name": "Sushi Lab",
+   "lat": 40.8530691,
+   "lng": 14.2516876,
+   "amenity": "restaurant",
+   "cuisine": "sushi",
+   "hours": "",
+   "osm": "node/10300809303"
+  },
+  {
+   "name": "Bèchamel",
+   "lat": 40.852701,
+   "lng": 14.2496508,
+   "amenity": "restaurant",
+   "cuisine": "regional",
+   "hours": "",
+   "osm": "node/10291352113"
+  },
+  {
+   "name": "Re Lazzarone",
+   "lat": 40.8525748,
+   "lng": 14.2517844,
+   "amenity": "restaurant",
+   "cuisine": "regional",
+   "hours": "",
+   "osm": "node/10300859886"
+  },
+  {
+   "name": "Il granaio",
+   "lat": 40.8520176,
+   "lng": 14.2500777,
+   "amenity": "restaurant",
+   "cuisine": "regional",
+   "hours": "",
+   "osm": "node/13273984829"
+  }
  ]
 }

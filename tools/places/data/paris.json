@@ -1,0 +1,2265 @@
+{
+ "key": "paris",
+ "name": "Paris",
+ "centre": {
+  "lat": 48.856863695652166,
+  "lng": 2.340692608695652
+ },
+ "sites": {},
+ "towns": {},
+ "ports": [],
+ "dayTrips": [],
+ "missing": [],
+ "cityEats": [
+  {
+   "name": "Comptoir Gustave",
+   "lat": 48.8582276,
+   "lng": 2.2944994,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/14320672601"
+  },
+  {
+   "name": "Le Jules Verne",
+   "lat": 48.8581328,
+   "lng": 2.2944968,
+   "amenity": "restaurant",
+   "cuisine": "fine_dining",
+   "hours": "Mo-Su 12:00-13:45,19:00-21:00",
+   "osm": "node/3135278479"
+  },
+  {
+   "name": "Madame Brasserie",
+   "lat": 48.8584113,
+   "lng": 2.294265,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "way/308145239"
+  },
+  {
+   "name": "Paris mon amour",
+   "lat": 48.8597347,
+   "lng": 2.2965756,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/14128749398"
+  },
+  {
+   "name": "Castel Cafe",
+   "lat": 48.8569007,
+   "lng": 2.2922198,
+   "amenity": "restaurant",
+   "cuisine": "french",
+   "hours": "",
+   "osm": "node/1224673311"
+  },
+  {
+   "name": "Le Bistro parisien",
+   "lat": 48.8601867,
+   "lng": 2.2932469,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/6408979608"
+  },
+  {
+   "name": "Comptoir du Louvre",
+   "lat": 48.8613538,
+   "lng": 2.335611,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "We-Mo 10:30-17:30",
+   "osm": "way/452882371"
+  },
+  {
+   "name": "Le Grand Louvre",
+   "lat": 48.861319,
+   "lng": 2.3354554,
+   "amenity": "restaurant",
+   "cuisine": "french;italian",
+   "hours": "",
+   "osm": "way/451555429"
+  },
+  {
+   "name": "Brasserie du Louvre",
+   "lat": 48.8628461,
+   "lng": 2.3362666,
+   "amenity": "restaurant",
+   "cuisine": "french",
+   "hours": "PH,Mo-Su 07:00-22:30",
+   "osm": "node/3195384059"
+  },
+  {
+   "name": "Enza Famiglia",
+   "lat": 48.8626834,
+   "lng": 2.3379144,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/3980826516"
+  },
+  {
+   "name": "Loulou",
+   "lat": 48.8627623,
+   "lng": 2.3333881,
+   "amenity": "restaurant",
+   "cuisine": "italian",
+   "hours": "Mo-Su 12:00-14:30;19:00-23:00",
+   "osm": "node/13036982902"
+  },
+  {
+   "name": "Benihana",
+   "lat": 48.8633846,
+   "lng": 2.334854,
+   "amenity": "restaurant",
+   "cuisine": "japanese",
+   "hours": "12:00-22:30",
+   "osm": "node/617827763"
+  },
+  {
+   "name": "Crêperie du Cloître",
+   "lat": 48.8534665,
+   "lng": 2.34987,
+   "amenity": "restaurant",
+   "cuisine": "crepe",
+   "hours": "",
+   "osm": "node/12403457895"
+  },
+  {
+   "name": "La Rosace",
+   "lat": 48.8533139,
+   "lng": 2.3503762,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Mo-Su 09:30-20:00",
+   "osm": "node/13838624636"
+  },
+  {
+   "name": "Au Vieux Paris d'Arcole",
+   "lat": 48.8542243,
+   "lng": 2.3502715,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "12:00-14:00,18:30-21:30",
+   "osm": "node/677610918"
+  },
+  {
+   "name": "Comme Chai Toi",
+   "lat": 48.8517627,
+   "lng": 2.3492957,
+   "amenity": "restaurant",
+   "cuisine": "french",
+   "hours": "Mo-Fr 18:30-23:00; Sa-Su 12:00-14:30,18:30-23:00",
+   "osm": "node/4035146419"
+  },
+  {
+   "name": "Au Bougnat",
+   "lat": 48.8543,
+   "lng": 2.3501665,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Mo-Fr 09:00-24:00, Sa 10:00-24:00",
+   "osm": "node/4441216900"
+  },
+  {
+   "name": "Hon Ki",
+   "lat": 48.8519867,
+   "lng": 2.3484797,
+   "amenity": "restaurant",
+   "cuisine": "japanese",
+   "hours": "Mo-Th 12:00-15:00; Fr-Sa 12:00-15:00,19:00-22:30",
+   "osm": "node/9146864043"
+  },
+  {
+   "name": "Café Campana",
+   "lat": 48.8603116,
+   "lng": 2.3261376,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Fr-We,PH 10:30-16:45; Th 11:00-15:30",
+   "osm": "node/11027800758"
+  },
+  {
+   "name": "Restaurant du Musée d'Orsay",
+   "lat": 48.8602576,
+   "lng": 2.3255957,
+   "amenity": "restaurant",
+   "cuisine": "french",
+   "hours": "",
+   "osm": "node/11027800760"
+  },
+  {
+   "name": "Le Café d'Orsay",
+   "lat": 48.859764,
+   "lng": 2.3252357,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/5003433666"
+  },
+  {
+   "name": "Le Paris Orsay",
+   "lat": 48.85982,
+   "lng": 2.325015,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/5003432663"
+  },
+  {
+   "name": "Le Poulpry",
+   "lat": 48.8588447,
+   "lng": 2.3259243,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Mo-Fr 12:00-14:00,19:00-22:00",
+   "osm": "node/5003433451"
+  },
+  {
+   "name": "Tan-dinh Vifian",
+   "lat": 48.8587167,
+   "lng": 2.3268817,
+   "amenity": "restaurant",
+   "cuisine": "vietnamese",
+   "hours": "",
+   "osm": "node/5003433450"
+  },
+  {
+   "name": "L'Aventure",
+   "lat": 48.8730446,
+   "lng": 2.2929147,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/936923254"
+  },
+  {
+   "name": "Les jardins de Presbourg",
+   "lat": 48.8741785,
+   "lng": 2.2927046,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Mo-Fr 08:00-02:00, Sa,Su 10:00-02:00",
+   "osm": "node/9778393918"
+  },
+  {
+   "name": "Le Vin Cœur",
+   "lat": 48.875242,
+   "lng": 2.29407,
+   "amenity": "restaurant",
+   "cuisine": "french",
+   "hours": "",
+   "osm": "node/2838227201"
+  },
+  {
+   "name": "Sir Winston Churchill",
+   "lat": 48.8721649,
+   "lng": 2.2948681,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/926663082"
+  },
+  {
+   "name": "Le Cristal",
+   "lat": 48.8747814,
+   "lng": 2.2930211,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/4903782065"
+  },
+  {
+   "name": "Monte Carlo",
+   "lat": 48.8753796,
+   "lng": 2.2958946,
+   "amenity": "restaurant",
+   "cuisine": "french",
+   "hours": "Mo-Su 11:00-23:00",
+   "osm": "node/911471439"
+  },
+  {
+   "name": "Café di Roma",
+   "lat": 48.8697595,
+   "lng": 2.3064424,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/4069865739"
+  },
+  {
+   "name": "L'Entrecôte",
+   "lat": 48.8696315,
+   "lng": 2.3064357,
+   "amenity": "restaurant",
+   "cuisine": "french",
+   "hours": "Mo-Su 11:30-00:30",
+   "osm": "node/4467001567"
+  },
+  {
+   "name": "La Cervoise",
+   "lat": 48.8706321,
+   "lng": 2.3077413,
+   "amenity": "restaurant",
+   "cuisine": "regional",
+   "hours": "",
+   "osm": "node/6436720755"
+  },
+  {
+   "name": "Le Marignan",
+   "lat": 48.8690699,
+   "lng": 2.3065937,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/8860448917"
+  },
+  {
+   "name": "Mun",
+   "lat": 48.8704646,
+   "lng": 2.3067146,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/9924914117"
+  },
+  {
+   "name": "Ma Dame",
+   "lat": 48.8686747,
+   "lng": 2.306941,
+   "amenity": "restaurant",
+   "cuisine": "french",
+   "hours": "Tu-Sa 07:30-23:30",
+   "osm": "way/69329957"
+  },
+  {
+   "name": "La Vagalame",
+   "lat": 48.8349936,
+   "lng": 2.3767308,
+   "amenity": "restaurant",
+   "cuisine": "french",
+   "hours": "",
+   "osm": "node/3543855845"
+  },
+  {
+   "name": "La Brigade",
+   "lat": 48.8321011,
+   "lng": 2.3755838,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Su-Th 11:30-22:30, Fr-Sa 11:30-23:00",
+   "osm": "node/913577862"
+  },
+  {
+   "name": "Bâteau El Alamein",
+   "lat": 48.8343586,
+   "lng": 2.377951,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "way/1005003004"
+  },
+  {
+   "name": "Petit Bain",
+   "lat": 48.8354828,
+   "lng": 2.3766566,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "way/366020276"
+  },
+  {
+   "name": "Épicerie Tempero",
+   "lat": 48.8318993,
+   "lng": 2.374271,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/9609843680"
+  },
+  {
+   "name": "Fresh Cube",
+   "lat": 48.8355282,
+   "lng": 2.3748638,
+   "amenity": "restaurant",
+   "cuisine": "japanese;sushi;bubble_tea",
+   "hours": "",
+   "osm": "node/9273093570"
+  },
+  {
+   "name": "Bistro Régent",
+   "lat": 48.8537976,
+   "lng": 2.3699213,
+   "amenity": "restaurant",
+   "cuisine": "steak_house;french",
+   "hours": "",
+   "osm": "node/3157885437"
+  },
+  {
+   "name": "Nigiri",
+   "lat": 48.8538867,
+   "lng": 2.3685355,
+   "amenity": "restaurant",
+   "cuisine": "japanese",
+   "hours": "Mo-Su 12:00-15:00,19:00-23:00",
+   "osm": "node/703988170"
+  },
+  {
+   "name": "Le Paradis du Fruit",
+   "lat": 48.8537389,
+   "lng": 2.3700602,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Mo-Th,Su 09:00-01:00; Fr-Sa 09:00-02:00",
+   "osm": "node/3157885438"
+  },
+  {
+   "name": "La Pizza de Nico",
+   "lat": 48.8539102,
+   "lng": 2.3699317,
+   "amenity": "restaurant",
+   "cuisine": "pizza",
+   "hours": "Mo-Fr 11:00-01:00; Dec 24,31 11:00-22:00",
+   "osm": "node/2425856836"
+  },
+  {
+   "name": "Prost",
+   "lat": 48.8540131,
+   "lng": 2.368561,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Tu-Su 12:00-02:00",
+   "osm": "node/11598532169"
+  },
+  {
+   "name": "Grande Brasserie",
+   "lat": 48.8537389,
+   "lng": 2.3679602,
+   "amenity": "restaurant",
+   "cuisine": "french",
+   "hours": "Mo-Sa 12:00-14:30, 19:00-23:00; Su 19:00-22:00, 12:15-14:30",
+   "osm": "node/4461017720"
+  },
+  {
+   "name": "Bistrot Charbon",
+   "lat": 48.8610981,
+   "lng": 2.3512749,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/2137762218"
+  },
+  {
+   "name": "Konbi",
+   "lat": 48.8613812,
+   "lng": 2.3513753,
+   "amenity": "restaurant",
+   "cuisine": "japanese",
+   "hours": "Mo-Su 10:00-22:00",
+   "osm": "node/4945934152"
+  },
+  {
+   "name": "Le Cirque",
+   "lat": 48.8614615,
+   "lng": 2.3514506,
+   "amenity": "restaurant",
+   "cuisine": "pizza",
+   "hours": "",
+   "osm": "node/2138310214"
+  },
+  {
+   "name": "La Station Rambuteau",
+   "lat": 48.8610678,
+   "lng": 2.353583,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/736956840"
+  },
+  {
+   "name": "Mamie Sushi",
+   "lat": 48.8615805,
+   "lng": 2.3527583,
+   "amenity": "restaurant",
+   "cuisine": "sushi",
+   "hours": "Mo-Su 11:30-23:00",
+   "osm": "node/5794128854"
+  },
+  {
+   "name": "Flunch",
+   "lat": 48.8614893,
+   "lng": 2.35309,
+   "amenity": "restaurant",
+   "cuisine": "french",
+   "hours": "Mo-Su 11:00-21:30",
+   "osm": "node/855292275"
+  },
+  {
+   "name": "L'Opéra Restaurant",
+   "lat": 48.8720949,
+   "lng": 2.3323339,
+   "amenity": "restaurant",
+   "cuisine": "french",
+   "hours": "Mo-Su 08:00-23:59",
+   "osm": "node/1393155090"
+  },
+  {
+   "name": "Le Relais Paris Opéra",
+   "lat": 48.8713229,
+   "lng": 2.3310353,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/4954890929"
+  },
+  {
+   "name": "L'Entracte",
+   "lat": 48.871067,
+   "lng": 2.3314804,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/4954890464"
+  },
+  {
+   "name": "Le Patio Opera",
+   "lat": 48.8717525,
+   "lng": 2.3333314,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/14384663637"
+  },
+  {
+   "name": "Café de la Paix",
+   "lat": 48.8707685,
+   "lng": 2.3316957,
+   "amenity": "restaurant",
+   "cuisine": "french",
+   "hours": "",
+   "osm": "node/1682771444"
+  },
+  {
+   "name": "Pierre Sang Express",
+   "lat": 48.8729741,
+   "lng": 2.3306521,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/11831550311"
+  },
+  {
+   "name": "Café Terrasse",
+   "lat": 48.8659497,
+   "lng": 2.323756,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/6944525742"
+  },
+  {
+   "name": "Maxim's",
+   "lat": 48.867315,
+   "lng": 2.3222252,
+   "amenity": "restaurant",
+   "cuisine": "french",
+   "hours": "",
+   "osm": "node/2271678887"
+  },
+  {
+   "name": "Restaurant Mimosa",
+   "lat": 48.8670712,
+   "lng": 2.3230901,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/9247842725"
+  },
+  {
+   "name": "Maxim's",
+   "lat": 48.8674415,
+   "lng": 2.3223225,
+   "amenity": "restaurant",
+   "cuisine": "french;gastronomique",
+   "hours": "",
+   "osm": "node/3980500231"
+  },
+  {
+   "name": "Minim's",
+   "lat": 48.8675528,
+   "lng": 2.3224013,
+   "amenity": "restaurant",
+   "cuisine": "french",
+   "hours": "",
+   "osm": "node/3980577963"
+  },
+  {
+   "name": "Park Avenue Caviar Poisson + Agence Cosmic",
+   "lat": 48.8674112,
+   "lng": 2.3229787,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/2655906794"
+  },
+  {
+   "name": "Café de la Nouvelle Mairie",
+   "lat": 48.8454582,
+   "lng": 2.3447912,
+   "amenity": "restaurant",
+   "cuisine": "french",
+   "hours": "Mo-Fr 08:00-24:00",
+   "osm": "node/2341691147"
+  },
+  {
+   "name": "Mano Nera",
+   "lat": 48.8455232,
+   "lng": 2.3446767,
+   "amenity": "restaurant",
+   "cuisine": "ice_cream;italian",
+   "hours": "12:00-14:30,19:00-22:30",
+   "osm": "node/3296495382"
+  },
+  {
+   "name": "La Table de Colette",
+   "lat": 48.8472842,
+   "lng": 2.3472531,
+   "amenity": "restaurant",
+   "cuisine": "french",
+   "hours": "Mo-Fr 12:00-13:30,19:30-21:15",
+   "osm": "node/10048944675"
+  },
+  {
+   "name": "Casa Mia",
+   "lat": 48.8473766,
+   "lng": 2.3470901,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Tu-Fr 12:00-13:30, Mo-Sa 19:00-21:30",
+   "osm": "node/7028008456"
+  },
+  {
+   "name": "La Capannina",
+   "lat": 48.8469759,
+   "lng": 2.3477841,
+   "amenity": "restaurant",
+   "cuisine": "italian;pizza",
+   "hours": "We-Su 12:00-22:30",
+   "osm": "node/9435206435"
+  },
+  {
+   "name": "La dédicace",
+   "lat": 48.8472361,
+   "lng": 2.347527,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Mo-Fr 12:00-15:00,18:30-23:00; Sa 12:00-23:00",
+   "osm": "node/11236918477"
+  },
+  {
+   "name": "La Buvette du Palais",
+   "lat": 48.8557667,
+   "lng": 2.3453212,
+   "amenity": "restaurant",
+   "cuisine": "french",
+   "hours": "",
+   "osm": "node/2368927716"
+  },
+  {
+   "name": "L'Annexe",
+   "lat": 48.8550045,
+   "lng": 2.3458787,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/1528681211"
+  },
+  {
+   "name": "Le Soleil d'or",
+   "lat": 48.854386,
+   "lng": 2.345244,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/1528684099"
+  },
+  {
+   "name": "Namasté Paris",
+   "lat": 48.8540208,
+   "lng": 2.3434331,
+   "amenity": "restaurant",
+   "cuisine": "indian",
+   "hours": "",
+   "osm": "node/6528613735"
+  },
+  {
+   "name": "Le Paradis du fruit",
+   "lat": 48.8538548,
+   "lng": 2.3436878,
+   "amenity": "restaurant",
+   "cuisine": "brunch;salad",
+   "hours": "Mo-Th 10:00-24:00; Fr 10:00-01:00; Sa 09:00-01:00; Su 09:00-24:00",
+   "osm": "node/1528685379"
+  },
+  {
+   "name": "Hanoi Quan",
+   "lat": 48.8543489,
+   "lng": 2.3427404,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "11:00-24:00",
+   "osm": "node/4465977998"
+  },
+  {
+   "name": "Le Vauban",
+   "lat": 48.8530145,
+   "lng": 2.3117479,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Mo-Fr 07:30-23:00; Sa-Su 08:00-23:00",
+   "osm": "node/1193506966"
+  },
+  {
+   "name": "Pinati",
+   "lat": 48.8543936,
+   "lng": 2.3093655,
+   "amenity": "restaurant",
+   "cuisine": "italian",
+   "hours": "",
+   "osm": "node/5828827607"
+  },
+  {
+   "name": "Pasco",
+   "lat": 48.8561271,
+   "lng": 2.3095453,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/5828827610"
+  },
+  {
+   "name": "Café - Restaurant L'augustine",
+   "lat": 48.8558632,
+   "lng": 2.3157552,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Tu-Su 10:00-17:30",
+   "osm": "node/11053201605"
+  },
+  {
+   "name": "Café Max",
+   "lat": 48.8565251,
+   "lng": 2.3091993,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/6295684358"
+  },
+  {
+   "name": "Les Parisiennes",
+   "lat": 48.8558711,
+   "lng": 2.3082775,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Mo-Sa 08:00-24:00, Su 08:00-23:30",
+   "osm": "node/6295684356"
+  },
+  {
+   "name": "Pavane",
+   "lat": 48.8493121,
+   "lng": 2.3380728,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Tu-Sa 12:00-19:30, Su 12:00-18:00",
+   "osm": "node/4811002521"
+  },
+  {
+   "name": "Bistro des Poèmes",
+   "lat": 48.8493501,
+   "lng": 2.3391528,
+   "amenity": "restaurant",
+   "cuisine": "french",
+   "hours": "Mo-Su 11:45-22:30",
+   "osm": "node/251670428"
+  },
+  {
+   "name": "Indonesia",
+   "lat": 48.8490942,
+   "lng": 2.3396105,
+   "amenity": "restaurant",
+   "cuisine": "indonesian",
+   "hours": "",
+   "osm": "node/2276138209"
+  },
+  {
+   "name": "LM Restaurant",
+   "lat": 48.8481072,
+   "lng": 2.3399447,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/5501826624"
+  },
+  {
+   "name": "Le Petit Médicis",
+   "lat": 48.8480014,
+   "lng": 2.3400393,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/9849041608"
+  },
+  {
+   "name": "La Ferrandaise",
+   "lat": 48.8490587,
+   "lng": 2.3398536,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/4447535029"
+  },
+  {
+   "name": "Valois",
+   "lat": 48.8633534,
+   "lng": 2.3380419,
+   "amenity": "restaurant",
+   "cuisine": "french",
+   "hours": "",
+   "osm": "node/5158660621"
+  },
+  {
+   "name": "Pantagruel",
+   "lat": 48.8641463,
+   "lng": 2.3361736,
+   "amenity": "restaurant",
+   "cuisine": "fine_dining",
+   "hours": "Mo-Fr 12:15-13:30,19:30-21:00",
+   "osm": "node/11694743557"
+  },
+  {
+   "name": "Tracé",
+   "lat": 48.8642277,
+   "lng": 2.335996,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Tu-Fr 12:00-13:30, Tu-Sa 19:00-21:30",
+   "osm": "node/12729979677"
+  },
+  {
+   "name": "Kodawari Ramen (Tsukiji)",
+   "lat": 48.8643846,
+   "lng": 2.3362784,
+   "amenity": "restaurant",
+   "cuisine": "japanese;ramen",
+   "hours": "Mo-Su 11:45-23:00",
+   "osm": "node/7041737153"
+  },
+  {
+   "name": "Les Galeries",
+   "lat": 48.8665256,
+   "lng": 2.3122668,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/5311767809"
+  },
+  {
+   "name": "Le Comptoir Moka",
+   "lat": 48.8667726,
+   "lng": 2.3122963,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/5311767808"
+  },
+  {
+   "name": "Le Grand Café",
+   "lat": 48.8667792,
+   "lng": 2.3130843,
+   "amenity": "restaurant",
+   "cuisine": "french",
+   "hours": "",
+   "osm": "node/13798583729"
+  },
+  {
+   "name": "Réséda Café",
+   "lat": 48.866536,
+   "lng": 2.3113243,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/12973619479"
+  },
+  {
+   "name": "Restaurant Lasserre",
+   "lat": 48.8663234,
+   "lng": 2.3099159,
+   "amenity": "restaurant",
+   "cuisine": "fine_dining",
+   "hours": "Tu-We, Sa 19:00-22:00; Th-Fr 12:00-22:00",
+   "osm": "node/5030300522"
+  },
+  {
+   "name": "Le Grand Palais",
+   "lat": 48.8664811,
+   "lng": 2.309941,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/1504098202"
+  },
+  {
+   "name": "Le Bourbon",
+   "lat": 48.860642,
+   "lng": 2.3189149,
+   "amenity": "restaurant",
+   "cuisine": "french",
+   "hours": "Mo-Fr 07:00-23:00, Sa 09:00-23:00, Su 12:00-22:00",
+   "osm": "node/9875056140"
+  },
+  {
+   "name": "Casa Germain",
+   "lat": 48.8606352,
+   "lng": 2.319168,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/8895180618"
+  },
+  {
+   "name": "Café des Ministères",
+   "lat": 48.8606285,
+   "lng": 2.3192994,
+   "amenity": "restaurant",
+   "cuisine": "french",
+   "hours": "Mo 18:30-21:30; Tu-Fr 09:00-21:30",
+   "osm": "node/8869579117"
+  },
+  {
+   "name": "Le Transit",
+   "lat": 48.8616662,
+   "lng": 2.3146849,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/2389809861"
+  },
+  {
+   "name": "Garance",
+   "lat": 48.8600385,
+   "lng": 2.3155344,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/5030031422"
+  },
+  {
+   "name": "Hana (resto & épices japonaises)",
+   "lat": 48.8589441,
+   "lng": 2.3180594,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/9976782264"
+  },
+  {
+   "name": "Babalou",
+   "lat": 48.8864623,
+   "lng": 2.3442705,
+   "amenity": "restaurant",
+   "cuisine": "italian;pizza",
+   "hours": "12:00-18:00",
+   "osm": "node/1721884559"
+  },
+  {
+   "name": "Sur la route de Plouescat",
+   "lat": 48.8865293,
+   "lng": 2.3443154,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/9797971351"
+  },
+  {
+   "name": "Babalou Pasta",
+   "lat": 48.8865965,
+   "lng": 2.3443605,
+   "amenity": "restaurant",
+   "cuisine": "italian;pasta",
+   "hours": "Mo-We off; Th-Su 12:00-18:00",
+   "osm": "node/12763108464"
+  },
+  {
+   "name": "Le Cabanon de la Butte",
+   "lat": 48.8866543,
+   "lng": 2.3443993,
+   "amenity": "restaurant",
+   "cuisine": "french",
+   "hours": "We-Su 12:00-14:30,18:30-22:30",
+   "osm": "node/1725571311"
+  },
+  {
+   "name": "Le Lamarck",
+   "lat": 48.8867314,
+   "lng": 2.3444511,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Mo off; Tu,Th-Fr 12:00-14:30,18:30-23:00; We 18:30-23:00; Sa 12:00-15:00,18:30-23:00; Su 11:30-15:00",
+   "osm": "node/12763108465"
+  },
+  {
+   "name": "Loulou Montmartre",
+   "lat": 48.8867991,
+   "lng": 2.3444963,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Mo-Su 11:00-17:00,19:00-01:00",
+   "osm": "node/8091567117"
+  },
+  {
+   "name": "L'Écritoire",
+   "lat": 48.8484255,
+   "lng": 2.3424106,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Mo-Su 08:00-23:00",
+   "osm": "node/2864996901"
+  },
+  {
+   "name": "Les Patios",
+   "lat": 48.8484832,
+   "lng": 2.3421709,
+   "amenity": "restaurant",
+   "cuisine": "italian",
+   "hours": "",
+   "osm": "node/1750435701"
+  },
+  {
+   "name": "Salvia",
+   "lat": 48.8479468,
+   "lng": 2.3423808,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/13898698194"
+  },
+  {
+   "name": "Amarvi",
+   "lat": 48.8474324,
+   "lng": 2.3432276,
+   "amenity": "restaurant",
+   "cuisine": "italian",
+   "hours": "Mo-Fr 12:00-15:00,19:00-24:00, Sa,Su 12:00-16:00,18:00-24:00",
+   "osm": "node/447033643"
+  },
+  {
+   "name": "Brasserie Balzar",
+   "lat": 48.8499057,
+   "lng": 2.34337,
+   "amenity": "restaurant",
+   "cuisine": "french",
+   "hours": "Mo-Su 08:00-23:45",
+   "osm": "node/2897679727"
+  },
+  {
+   "name": "Fouxing",
+   "lat": 48.8499497,
+   "lng": 2.3432468,
+   "amenity": "restaurant",
+   "cuisine": "chinese",
+   "hours": "Su-Fr 11:45-15:00, Mo-Fr 18:30-22:00, Sa 11:45-15:00,18:30-23:00",
+   "osm": "node/6390367455"
+  },
+  {
+   "name": "Aura",
+   "lat": 48.8656527,
+   "lng": 2.3561498,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/4181687292"
+  },
+  {
+   "name": "46 and 3rd",
+   "lat": 48.8651164,
+   "lng": 2.3551365,
+   "amenity": "restaurant",
+   "cuisine": "coffee_shop",
+   "hours": "",
+   "osm": "node/3387755693"
+  },
+  {
+   "name": "Mabrouk",
+   "lat": 48.8661218,
+   "lng": 2.3536582,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/1179938579"
+  },
+  {
+   "name": "Mala Town",
+   "lat": 48.8650605,
+   "lng": 2.3548495,
+   "amenity": "restaurant",
+   "cuisine": "chinese;soup",
+   "hours": "Mo-Fr 12:00-15:00,17:30-22:00; Sa-Su 12:00-22:00",
+   "osm": "node/11587736613"
+  },
+  {
+   "name": "Bún Caphê",
+   "lat": 48.8650077,
+   "lng": 2.3553349,
+   "amenity": "restaurant",
+   "cuisine": "vietnamese",
+   "hours": "Tu-Su 11:15-22:30; Mo off",
+   "osm": "node/10290370179"
+  },
+  {
+   "name": "Le petit clos",
+   "lat": 48.8649792,
+   "lng": 2.3549564,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/7923610547"
+  },
+  {
+   "name": "Andiamo",
+   "lat": 48.8654726,
+   "lng": 2.327118,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/3980096128"
+  },
+  {
+   "name": "Le First",
+   "lat": 48.8654911,
+   "lng": 2.3272159,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/3980096130"
+  },
+  {
+   "name": "Le Meurice Alain Ducasse",
+   "lat": 48.8651359,
+   "lng": 2.3282657,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Mo-Su 19:00-21:30",
+   "osm": "node/5029945222"
+  },
+  {
+   "name": "Rivoli Park",
+   "lat": 48.864819,
+   "lng": 2.3292321,
+   "amenity": "restaurant",
+   "cuisine": "french",
+   "hours": "",
+   "osm": "node/683260127"
+  },
+  {
+   "name": "Le Cosy",
+   "lat": 48.8662729,
+   "lng": 2.3271672,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/6685579498"
+  },
+  {
+   "name": "Saku Vendôme",
+   "lat": 48.8655217,
+   "lng": 2.3289587,
+   "amenity": "restaurant",
+   "cuisine": "japanese",
+   "hours": "12:00-15:00,19:00-23:30",
+   "osm": "node/683260122"
+  },
+  {
+   "name": "Pavillon Ledoyen",
+   "lat": 48.8660958,
+   "lng": 2.316508,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "way/108191689"
+  },
+  {
+   "name": "Pavillon Élysée Lenôtre",
+   "lat": 48.8679417,
+   "lng": 2.3153003,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "way/67028576"
+  },
+  {
+   "name": "La Bonbonnière de Marie",
+   "lat": 48.8555796,
+   "lng": 2.3008017,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/2694170131"
+  },
+  {
+   "name": "La Bonbonnière de Marie",
+   "lat": 48.8555807,
+   "lng": 2.3008039,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "way/687924368"
+  },
+  {
+   "name": "Au Petit Sud Ouest",
+   "lat": 48.856921,
+   "lng": 2.3009577,
+   "amenity": "restaurant",
+   "cuisine": "french",
+   "hours": "Tu-Sa 12:00-14:30,18:00-22:00",
+   "osm": "node/4462604025"
+  },
+  {
+   "name": "Au Ciel de Shanghai",
+   "lat": 48.8550985,
+   "lng": 2.2950194,
+   "amenity": "restaurant",
+   "cuisine": "asian",
+   "hours": "",
+   "osm": "node/3551122472"
+  },
+  {
+   "name": "Alfio",
+   "lat": 48.8580452,
+   "lng": 2.2998447,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/6404138285"
+  },
+  {
+   "name": "Bici",
+   "lat": 48.8577097,
+   "lng": 2.3005438,
+   "amenity": "restaurant",
+   "cuisine": "italian",
+   "hours": "11:00-02:00",
+   "osm": "node/1223768234"
+  },
+  {
+   "name": "Restaurant de La Mosquée de Paris",
+   "lat": 48.8417641,
+   "lng": 2.3556159,
+   "amenity": "restaurant",
+   "cuisine": "arab",
+   "hours": "",
+   "osm": "node/739770210"
+  },
+  {
+   "name": "La Table d’Hami",
+   "lat": 48.8414393,
+   "lng": 2.3554283,
+   "amenity": "restaurant",
+   "cuisine": "korean",
+   "hours": "Mo-Sa 12:00-14:45, 19:30-22:30",
+   "osm": "node/4409264400"
+  },
+  {
+   "name": "CROUS Restaurant Universitaire Censier",
+   "lat": 48.8408223,
+   "lng": 2.3556248,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Mo-Fr 11:00-14:00",
+   "osm": "way/59544128"
+  },
+  {
+   "name": "Goûts d'Italie",
+   "lat": 48.8410275,
+   "lng": 2.3561641,
+   "amenity": "restaurant",
+   "cuisine": "italian;regional;sandwich;pizza;dessert",
+   "hours": "Mo-Su 08:00-20:00",
+   "osm": "node/11007705803"
+  },
+  {
+   "name": "Octant",
+   "lat": 48.8407803,
+   "lng": 2.3539321,
+   "amenity": "restaurant",
+   "cuisine": "french",
+   "hours": "",
+   "osm": "node/8116983751"
+  },
+  {
+   "name": "Jardin doré",
+   "lat": 48.8406603,
+   "lng": 2.3562932,
+   "amenity": "restaurant",
+   "cuisine": "chinese",
+   "hours": "Mo-Fr 11:00-22:00; Sa 11:00-21:00; Su off",
+   "osm": "node/8716773848"
+  },
+  {
+   "name": "Foyer de la Madeleine",
+   "lat": 48.86996,
+   "lng": 2.3247486,
+   "amenity": "restaurant",
+   "cuisine": "french",
+   "hours": "Mo-Fr 11:45-14:00",
+   "osm": "node/1691584270"
+  },
+  {
+   "name": "Café Prunier",
+   "lat": 48.8705451,
+   "lng": 2.323833,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Mo-Sa 10:00-19:00",
+   "osm": "node/953075520"
+  },
+  {
+   "name": "Caviar Kaspia",
+   "lat": 48.8706016,
+   "lng": 2.3238683,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Mo-Sa 10:00-01:00",
+   "osm": "node/953075524"
+  },
+  {
+   "name": "Maison De La Truffe - Madeleine",
+   "lat": 48.8707204,
+   "lng": 2.3239555,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Mo-Su,PH 12:00-16:00,19:00-22:30",
+   "osm": "node/953075496"
+  },
+  {
+   "name": "Magdalena",
+   "lat": 48.8698046,
+   "lng": 2.3253485,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/5694574748"
+  },
+  {
+   "name": "Paris London",
+   "lat": 48.8699565,
+   "lng": 2.3254453,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "07:00-02:00",
+   "osm": "node/5923950286"
+  },
+  {
+   "name": "Faust",
+   "lat": 48.863038,
+   "lng": 2.3130226,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/3380247617"
+  },
+  {
+   "name": "Bistrot Alexandre III",
+   "lat": 48.8631989,
+   "lng": 2.3125311,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "way/618758844"
+  },
+  {
+   "name": "Riviera Fuga",
+   "lat": 48.8631838,
+   "lng": 2.3120327,
+   "amenity": "restaurant",
+   "cuisine": "french",
+   "hours": "",
+   "osm": "way/1229516546"
+  },
+  {
+   "name": "Divellec",
+   "lat": 48.861019,
+   "lng": 2.3113026,
+   "amenity": "restaurant",
+   "cuisine": "seafood",
+   "hours": "",
+   "osm": "node/2329539560"
+  },
+  {
+   "name": "Atelier Beyrouth",
+   "lat": 48.8577051,
+   "lng": 2.3459388,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/5237959052"
+  },
+  {
+   "name": "Yahmi",
+   "lat": 48.8580557,
+   "lng": 2.3458383,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/3475271593"
+  },
+  {
+   "name": "Le Terminus du Châtelet",
+   "lat": 48.8582854,
+   "lng": 2.3457116,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/3475257296"
+  },
+  {
+   "name": "Maslow",
+   "lat": 48.8581541,
+   "lng": 2.3443239,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Mo-Sa 12:00-22:30; Su 11:15-20:00",
+   "osm": "node/3481937893"
+  },
+  {
+   "name": "Le Bo'Vincennes",
+   "lat": 48.8445313,
+   "lng": 2.4343059,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "PH,Mo-Su 11:30-15:30,18:30-24:00",
+   "osm": "node/3442784808"
+  },
+  {
+   "name": "Olympe Sports Café",
+   "lat": 48.8417447,
+   "lng": 2.4330345,
+   "amenity": "restaurant",
+   "cuisine": "regional",
+   "hours": "Mo 12:00-14:30; Tu-Fr 12:00-14:30,19:00-02:00; Sa 19:00-02:00",
+   "osm": "node/2395933611"
+  },
+  {
+   "name": "Vincennes Food",
+   "lat": 48.8449942,
+   "lng": 2.4358813,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Mo-Su 11:00-02:00",
+   "osm": "node/4346794789"
+  },
+  {
+   "name": "Absolu",
+   "lat": 48.8450019,
+   "lng": 2.435786,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Tu-Su 12:00-14:30, Tu-Th 19:00-21:30, Su 19:00-21:00, Fr 19:00-22:00, Sa 19:00-22:30",
+   "osm": "node/4346788491"
+  },
+  {
+   "name": "Barto",
+   "lat": 48.8450138,
+   "lng": 2.4356466,
+   "amenity": "restaurant",
+   "cuisine": "italian",
+   "hours": "Mo-Sa 12:00-14:30, Mo-Su 19:00-23:00; Su 12:00-15:00",
+   "osm": "node/4346781193"
+  },
+  {
+   "name": "Chez Mimi",
+   "lat": 48.8449211,
+   "lng": 2.4368432,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/5067045640"
+  },
+  {
+   "name": "La Place Royale",
+   "lat": 48.8548999,
+   "lng": 2.3654699,
+   "amenity": "restaurant",
+   "cuisine": "french",
+   "hours": "",
+   "osm": "node/2389213207"
+  },
+  {
+   "name": "Carette",
+   "lat": 48.8563455,
+   "lng": 2.3654726,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/4002415349"
+  },
+  {
+   "name": "L'Ambroisie",
+   "lat": 48.8554103,
+   "lng": 2.3643002,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/2387678738"
+  },
+  {
+   "name": "Café Hugo",
+   "lat": 48.855938,
+   "lng": 2.3667622,
+   "amenity": "restaurant",
+   "cuisine": "french",
+   "hours": "Mo-Th 07:00-01:00; Fr-Sa 07:00-02:00; Su 07:00-01:00",
+   "osm": "node/6487937178"
+  },
+  {
+   "name": "Anne",
+   "lat": 48.8563739,
+   "lng": 2.3661099,
+   "amenity": "restaurant",
+   "cuisine": "french",
+   "hours": "Mo-Tu off; We-Sa 12:30-14:00,19:00-21:30; Su 12:30-14:00",
+   "osm": "node/11071168963"
+  },
+  {
+   "name": "Ma Bourgogne",
+   "lat": 48.8562564,
+   "lng": 2.3646952,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/703854268"
+  },
+  {
+   "name": "Bistrot Marguerite",
+   "lat": 48.8562818,
+   "lng": 2.350543,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/697183314"
+  },
+  {
+   "name": "Terraza mikuna",
+   "lat": 48.8572276,
+   "lng": 2.3538349,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Mo-Fr 19:00-02:00; Sa-Su 12:00-16:30, 19:00-02:00",
+   "osm": "node/12844783512"
+  },
+  {
+   "name": "Pastasuta",
+   "lat": 48.8574938,
+   "lng": 2.3505431,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Mo-Sa 12:00-14:30, 19:00-23:00",
+   "osm": "node/10099270359"
+  },
+  {
+   "name": "Troquet du Temple",
+   "lat": 48.8579191,
+   "lng": 2.352822,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/2927812417"
+  },
+  {
+   "name": "Le Coupe Gorge",
+   "lat": 48.8574811,
+   "lng": 2.3504511,
+   "amenity": "restaurant",
+   "cuisine": "french",
+   "hours": "Tu-Su 11:30-22:30",
+   "osm": "node/5196643322"
+  },
+  {
+   "name": "La Goulette",
+   "lat": 48.8579651,
+   "lng": 2.3528021,
+   "amenity": "restaurant",
+   "cuisine": "mediterranean",
+   "hours": "",
+   "osm": "node/2981481780"
+  },
+  {
+   "name": "Monica",
+   "lat": 48.8533029,
+   "lng": 2.3340396,
+   "amenity": "restaurant",
+   "cuisine": "italian;pizza",
+   "hours": "09:00-02:00",
+   "osm": "node/778318806"
+  },
+  {
+   "name": "Agata",
+   "lat": 48.8534774,
+   "lng": 2.3353243,
+   "amenity": "restaurant",
+   "cuisine": "pizza",
+   "hours": "12:00-15:00,19:00-23:00",
+   "osm": "node/5695218832"
+  },
+  {
+   "name": "Sugaar",
+   "lat": 48.8533621,
+   "lng": 2.3336787,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "We-Su 19:00-02:00",
+   "osm": "node/9765409113"
+  },
+  {
+   "name": "Shiro",
+   "lat": 48.8534609,
+   "lng": 2.3353933,
+   "amenity": "restaurant",
+   "cuisine": "international",
+   "hours": "Mo-Su 12:00-14:15, 19:00-22:15",
+   "osm": "node/9383584507"
+  },
+  {
+   "name": "Hanafousa",
+   "lat": 48.8536098,
+   "lng": 2.3355261,
+   "amenity": "restaurant",
+   "cuisine": "japanese",
+   "hours": "",
+   "osm": "node/5695218831"
+  },
+  {
+   "name": "Tsukizi",
+   "lat": 48.8531634,
+   "lng": 2.3339911,
+   "amenity": "restaurant",
+   "cuisine": "japanese",
+   "hours": "Tu-Sa 12:00-14:00,19:00-21:00",
+   "osm": "node/4326102942"
+  },
+  {
+   "name": "Magnum 150cl",
+   "lat": 48.8811408,
+   "lng": 2.3089207,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/6052532287"
+  },
+  {
+   "name": "Bio logis",
+   "lat": 48.8813512,
+   "lng": 2.3089087,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/11866983727"
+  },
+  {
+   "name": "Jour Phalsbourg",
+   "lat": 48.8813899,
+   "lng": 2.3088553,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Mo-Fr 09:30-15:00; Sa 11:00-15:00",
+   "osm": "node/11572542969"
+  },
+  {
+   "name": "Le Monceau",
+   "lat": 48.877189,
+   "lng": 2.309372,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/11080865560"
+  },
+  {
+   "name": "Autana",
+   "lat": 48.8815757,
+   "lng": 2.3083178,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/11085087005"
+  },
+  {
+   "name": "Le Camondo",
+   "lat": 48.8787732,
+   "lng": 2.312693,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Mo-Su 12:00-02:00",
+   "osm": "node/11085519040"
+  },
+  {
+   "name": "Les Ombres",
+   "lat": 48.861112,
+   "lng": 2.2985572,
+   "amenity": "restaurant",
+   "cuisine": "brasserie;french",
+   "hours": "12:00-14:00, 19:00-22:00",
+   "osm": "node/9718100882"
+  },
+  {
+   "name": "Café Jacques",
+   "lat": 48.8609779,
+   "lng": 2.2986125,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/11902703409"
+  },
+  {
+   "name": "Emily",
+   "lat": 48.859502,
+   "lng": 2.297547,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Mo-Su 07:00-02:00",
+   "osm": "node/14128755419"
+  },
+  {
+   "name": "Elio",
+   "lat": 48.8595145,
+   "lng": 2.2985812,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/14130433196"
+  },
+  {
+   "name": "20 Eiffel",
+   "lat": 48.8594728,
+   "lng": 2.2984524,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/1181634390"
+  },
+  {
+   "name": "Les Belles Plantes",
+   "lat": 48.8445987,
+   "lng": 2.3572926,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Mo-Fr 10:00-18:00; Sa-Su 10:00-19:00",
+   "osm": "node/977194666"
+  },
+  {
+   "name": "Pause Bobun",
+   "lat": 48.8430308,
+   "lng": 2.363447,
+   "amenity": "restaurant",
+   "cuisine": "vietnamese",
+   "hours": "Mo-Fr 11:30-21:00, Sa 12:00-15:00",
+   "osm": "node/739798709"
+  },
+  {
+   "name": "L'Éclipse",
+   "lat": 48.8426942,
+   "lng": 2.3634569,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Mo-Su 07:00-02:00",
+   "osm": "node/3045647210"
+  },
+  {
+   "name": "L'Annexe",
+   "lat": 48.8427545,
+   "lng": 2.3635055,
+   "amenity": "restaurant",
+   "cuisine": "french",
+   "hours": "Mo-Fr 08:00-18:00",
+   "osm": "node/6015226356"
+  },
+  {
+   "name": "La Maison - Austerlitz",
+   "lat": 48.8426146,
+   "lng": 2.3634014,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Mo-Su 09:00-01:00",
+   "osm": "node/9861508355"
+  },
+  {
+   "name": "Le Bonheur",
+   "lat": 48.8425312,
+   "lng": 2.3633431,
+   "amenity": "restaurant",
+   "cuisine": "chinese",
+   "hours": "Mo-Su 11:00-15:00,18:00-21:00",
+   "osm": "node/6015226357"
+  },
+  {
+   "name": "Asian 1984",
+   "lat": 48.8638778,
+   "lng": 2.3454817,
+   "amenity": "restaurant",
+   "cuisine": "asian",
+   "hours": "Mo-Su 12:00-21:00",
+   "osm": "node/3205848541"
+  },
+  {
+   "name": "Presto Fresco",
+   "lat": 48.8638346,
+   "lng": 2.3457657,
+   "amenity": "restaurant",
+   "cuisine": "italian;pizza",
+   "hours": "",
+   "osm": "node/5955313737"
+  },
+  {
+   "name": "Nino Fresco",
+   "lat": 48.8638994,
+   "lng": 2.3457364,
+   "amenity": "restaurant",
+   "cuisine": "italian",
+   "hours": "",
+   "osm": "node/9671243192"
+  },
+  {
+   "name": "Au Pied de Cochon",
+   "lat": 48.8634885,
+   "lng": 2.3437958,
+   "amenity": "restaurant",
+   "cuisine": "french",
+   "hours": "24/7",
+   "osm": "node/1678050141"
+  },
+  {
+   "name": "La Perla",
+   "lat": 48.8634417,
+   "lng": 2.3462535,
+   "amenity": "restaurant",
+   "cuisine": "italian;pizza",
+   "hours": "",
+   "osm": "node/681293895"
+  },
+  {
+   "name": "Beef Club & Co",
+   "lat": 48.8635476,
+   "lng": 2.3436112,
+   "amenity": "restaurant",
+   "cuisine": "steak_house",
+   "hours": "Su-Th 12:00-23:00; Fr-Sa 12:00-23:30",
+   "osm": "node/4205665889"
+  },
+  {
+   "name": "Chez Papa",
+   "lat": 48.835951,
+   "lng": 2.3274377,
+   "amenity": "restaurant",
+   "cuisine": "french",
+   "hours": "Mo-Su 09:00-01:00",
+   "osm": "node/1830649549"
+  },
+  {
+   "name": "Chez Rosalie",
+   "lat": 48.8393255,
+   "lng": 2.3238514,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/2108026247"
+  },
+  {
+   "name": "Poshawar",
+   "lat": 48.8356585,
+   "lng": 2.3272342,
+   "amenity": "restaurant",
+   "cuisine": "indian;pakistani",
+   "hours": "",
+   "osm": "node/12104202419"
+  },
+  {
+   "name": "Brasserie Saigon",
+   "lat": 48.8370742,
+   "lng": 2.3234272,
+   "amenity": "restaurant",
+   "cuisine": "thai",
+   "hours": "",
+   "osm": "node/6580022686"
+  },
+  {
+   "name": "Maison Edgar",
+   "lat": 48.8396112,
+   "lng": 2.3301482,
+   "amenity": "restaurant",
+   "cuisine": "french",
+   "hours": "",
+   "osm": "node/929139696"
+  },
+  {
+   "name": "Zama",
+   "lat": 48.8357758,
+   "lng": 2.3249252,
+   "amenity": "restaurant",
+   "cuisine": "mediterranean",
+   "hours": "12:00-01:30",
+   "osm": "node/4239347307"
+  },
+  {
+   "name": "Ayko Sushi",
+   "lat": 48.8334239,
+   "lng": 2.3321629,
+   "amenity": "restaurant",
+   "cuisine": "sushi",
+   "hours": "Mo-Sa 12:00-15:00,19:00-23:00; Su 19:00-23:00",
+   "osm": "node/2730495470"
+  },
+  {
+   "name": "Indiana Café",
+   "lat": 48.8334535,
+   "lng": 2.3320293,
+   "amenity": "restaurant",
+   "cuisine": "tex-mex",
+   "hours": "",
+   "osm": "node/2232018459"
+  },
+  {
+   "name": "Le Lakanal",
+   "lat": 48.8332919,
+   "lng": 2.3325229,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/1808731754"
+  },
+  {
+   "name": "Café du Rendez-Vous",
+   "lat": 48.833632,
+   "lng": 2.331532,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/2861797587"
+  },
+  {
+   "name": "Baladna",
+   "lat": 48.8338388,
+   "lng": 2.3310421,
+   "amenity": "restaurant",
+   "cuisine": "lebanese",
+   "hours": "Mo-Su 12:00-14:30, 19:00-23:00",
+   "osm": "node/3238311177"
+  },
+  {
+   "name": "Le Denfert Café",
+   "lat": 48.834159,
+   "lng": 2.3338695,
+   "amenity": "restaurant",
+   "cuisine": "couscous",
+   "hours": "Mo-Sa 06:30-02:00",
+   "osm": "node/2096219604"
+  },
+  {
+   "name": "Langosteria",
+   "lat": 48.8588367,
+   "lng": 2.3420765,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/12479814474"
+  },
+  {
+   "name": "Hakuba",
+   "lat": 48.8588963,
+   "lng": 2.3421858,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "relation/3075633"
+  },
+  {
+   "name": "Le Tout Paris",
+   "lat": 48.8587643,
+   "lng": 2.342319,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/12479880010"
+  },
+  {
+   "name": "Café du Pont Neuf",
+   "lat": 48.8588694,
+   "lng": 2.3415282,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/678892211"
+  },
+  {
+   "name": "Bonne Table sur Seine",
+   "lat": 48.8584895,
+   "lng": 2.3417342,
+   "amenity": "restaurant",
+   "cuisine": "french",
+   "hours": "Mo-Tu 17:00-23:00; We-Fr 17:00-00:00; Sa-Su 12:00-00:00",
+   "osm": "node/12879504103"
+  },
+  {
+   "name": "Luncha",
+   "lat": 48.858872,
+   "lng": 2.3413443,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/5014845611"
+  },
+  {
+   "name": "Dar Mima - Zyriab",
+   "lat": 48.8489962,
+   "lng": 2.3573756,
+   "amenity": "restaurant",
+   "cuisine": "arab",
+   "hours": "Tu-Su 12:00-14:30,15:30-17:30,19:00-02:00",
+   "osm": "node/4756412504"
+  },
+  {
+   "name": "La Rose de Damas",
+   "lat": 48.8495593,
+   "lng": 2.355181,
+   "amenity": "restaurant",
+   "cuisine": "syrian",
+   "hours": "",
+   "osm": "node/2939301201"
+  },
+  {
+   "name": "Pura Vida",
+   "lat": 48.848623,
+   "lng": 2.354846,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/2926043501"
+  },
+  {
+   "name": "Au Moulin à Vent",
+   "lat": 48.848563,
+   "lng": 2.354736,
+   "amenity": "restaurant",
+   "cuisine": "french",
+   "hours": "Mo 19:30-23:00; Tu-Fr 12:00-14:30, 18:30-23:00; Sa 19:30-23:00",
+   "osm": "node/2926036702"
+  },
+  {
+   "name": "L'Atlas",
+   "lat": 48.849596,
+   "lng": 2.354678,
+   "amenity": "restaurant",
+   "cuisine": "mediterranean",
+   "hours": "",
+   "osm": "node/2939306202"
+  },
+  {
+   "name": "La Tour d'Argent",
+   "lat": 48.84983,
+   "lng": 2.3549148,
+   "amenity": "restaurant",
+   "cuisine": "french",
+   "hours": "Tu-Sa 12:00-13:15, 19:00-21:15",
+   "osm": "node/251474108"
+  },
+  {
+   "name": "Le P'tit Bossu",
+   "lat": 48.8516198,
+   "lng": 2.3562222,
+   "amenity": "restaurant",
+   "cuisine": "italian;pizza",
+   "hours": "Tu-Su 12:00-21:30",
+   "osm": "node/7972556773"
+  },
+  {
+   "name": "L'Îlot Vache",
+   "lat": 48.8518312,
+   "lng": 2.3563783,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/9802817409"
+  },
+  {
+   "name": "Cypsèle",
+   "lat": 48.8515744,
+   "lng": 2.3561832,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/7972587929"
+  },
+  {
+   "name": "Auberge des deux ponts",
+   "lat": 48.8514645,
+   "lng": 2.3560885,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/7972587904"
+  },
+  {
+   "name": "Le Sergent recruteur",
+   "lat": 48.8519572,
+   "lng": 2.3560211,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Mo-Su 12:30-14:30,19:30-22:30",
+   "osm": "node/10064516429"
+  },
+  {
+   "name": "Pom'Cannelle",
+   "lat": 48.8520482,
+   "lng": 2.356592,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Mo-Fr 12:00-22:30; Sa-Su 12:00-23:00",
+   "osm": "node/3544768475"
+  },
+  {
+   "name": "Café QJ",
+   "lat": 48.8599374,
+   "lng": 2.3410895,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Tu 10:00-23:59; We-Sa 00:00-01:00, 10:00-23:59; Su 00:00-01:00",
+   "osm": "node/10089952620"
+  },
+  {
+   "name": "Crêperie Parisienne",
+   "lat": 48.8588885,
+   "lng": 2.3412331,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/5014847509"
+  },
+  {
+   "name": "Le Louvre ripaille",
+   "lat": 48.8603236,
+   "lng": 2.3412799,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/3405085785"
+  },
+  {
+   "name": "Cartel comedy club",
+   "lat": 48.857508,
+   "lng": 2.3501091,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Tu 18:30-01:00; We 18:30-01:00; Th 18:30-01:00; Fr 18:30-01:00; Sa 18:30-01:00; Su 18:30-01:00",
+   "osm": "node/7945578781"
+  },
+  {
+   "name": "Le Céleste Gourmand",
+   "lat": 48.8575655,
+   "lng": 2.3501491,
+   "amenity": "restaurant",
+   "cuisine": "chinese",
+   "hours": "Tu-Sa 11:30-15:00,18:00-23:00; Su 11:00-15:00,18:00-23:00",
+   "osm": "node/1143736503"
+  },
+  {
+   "name": "Sant'Antonio",
+   "lat": 48.858271,
+   "lng": 2.3499785,
+   "amenity": "restaurant",
+   "cuisine": "pizza",
+   "hours": "",
+   "osm": "node/2685576860"
+  },
+  {
+   "name": "Restaurant Bayan",
+   "lat": 48.8577035,
+   "lng": 2.3502326,
+   "amenity": "restaurant",
+   "cuisine": "chinese",
+   "hours": "Tu-Su 12:00-14:00,19:00-22:00",
+   "osm": "node/699897157"
+  },
+  {
+   "name": "Tao",
+   "lat": 48.8583596,
+   "lng": 2.3475699,
+   "amenity": "restaurant",
+   "cuisine": "asian",
+   "hours": "",
+   "osm": "node/5712090156"
+  },
+  {
+   "name": "Benoit",
+   "lat": 48.8584067,
+   "lng": 2.3500541,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Mo-Su 12:00-14:00,19:00-21:30",
+   "osm": "node/2685572988"
+  },
+  {
+   "name": "Le Petit Panthéon",
+   "lat": 48.8451901,
+   "lng": 2.3523223,
+   "amenity": "restaurant",
+   "cuisine": "french",
+   "hours": "Mo-Su 12:00-14:00,19:00-22:00",
+   "osm": "node/10017125283"
+  },
+  {
+   "name": "Hugo & co",
+   "lat": 48.8451303,
+   "lng": 2.3520029,
+   "amenity": "restaurant",
+   "cuisine": "gastromique;asian;french",
+   "hours": "Mo-Sa 12:30-14:00,19:00-23:00",
+   "osm": "node/5260348838"
+  },
+  {
+   "name": "Le Mékong",
+   "lat": 48.8442852,
+   "lng": 2.353233,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/8222344128"
+  },
+  {
+   "name": "Xiu",
+   "lat": 48.8451746,
+   "lng": 2.35198,
+   "amenity": "restaurant",
+   "cuisine": "vietnamese",
+   "hours": "Mo-Sa 11:00-21:30; Mo-Th 15:00-18:00 closed",
+   "osm": "node/10706926212"
+  },
+  {
+   "name": "Terronia",
+   "lat": 48.8457441,
+   "lng": 2.3538185,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Mo,Tu,Th-Sa 12:00-14:00,19:00-22:00",
+   "osm": "node/9667186285"
+  },
+  {
+   "name": "Kathmandu",
+   "lat": 48.8459093,
+   "lng": 2.3532236,
+   "amenity": "restaurant",
+   "cuisine": "nepalese",
+   "hours": "Mo-Fr 12:00-14:30, 19:30-22:00; Sa 19:30-22:00",
+   "osm": "node/5485816521"
+  }
+ ]
+}

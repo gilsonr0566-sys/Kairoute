@@ -582,5 +582,322 @@
    "editions": 1,
    "unesco": false
   }
+ ],
+ "cityEats": [
+  {
+   "name": "Rok",
+   "lat": 64.1429491,
+   "lng": -21.9271934,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Mo-Fr 11:30-23:00; Sa-Su 12:00-23:00",
+   "osm": "node/4963930723"
+  },
+  {
+   "name": "Kol Kitchen & Bar",
+   "lat": 64.1429966,
+   "lng": -21.9286334,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "We-Su 12:00-23:00",
+   "osm": "node/5009883057"
+  },
+  {
+   "name": "Reykjavík Pizzeria",
+   "lat": 64.1423285,
+   "lng": -21.9310521,
+   "amenity": "restaurant",
+   "cuisine": "pizza",
+   "hours": "Mo-Su 11:30-22:00",
+   "osm": "node/13450993501"
+  },
+  {
+   "name": "Salka Valka",
+   "lat": 64.1441898,
+   "lng": -21.9297323,
+   "amenity": "restaurant",
+   "cuisine": "fish",
+   "hours": "",
+   "osm": "node/4740802122"
+  },
+  {
+   "name": "Reykjavik Fish",
+   "lat": 64.1444589,
+   "lng": -21.9256033,
+   "amenity": "restaurant",
+   "cuisine": "regional;fish_and_chips",
+   "hours": "Mo-Su 11:00-22:00",
+   "osm": "node/5760811323"
+  },
+  {
+   "name": "Krua Thai",
+   "lat": 64.1443784,
+   "lng": -21.9301149,
+   "amenity": "restaurant",
+   "cuisine": "thai",
+   "hours": "Mo-Fr 11:30-21:30; Sa 12:00-21:30; Su 17:00-21:30",
+   "osm": "node/4421143474"
+  },
+  {
+   "name": "Neó",
+   "lat": 64.1491432,
+   "lng": -21.9364314,
+   "amenity": "restaurant",
+   "cuisine": "pizza",
+   "hours": "Su-Th 11:30-21:00; Fr-Sa 11:30-22:00",
+   "osm": "node/13930921077"
+  },
+  {
+   "name": "Hornið",
+   "lat": 64.1480398,
+   "lng": -21.9381541,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Mo-Su 11:00-22:00",
+   "osm": "node/1016031075"
+  },
+  {
+   "name": "Tivoli",
+   "lat": 64.1481521,
+   "lng": -21.93838,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Su-Th 11:45-22:00, Fr,Sa 11:45-23:00",
+   "osm": "node/1324164494"
+  },
+  {
+   "name": "Enoteca",
+   "lat": 64.1476636,
+   "lng": -21.9379954,
+   "amenity": "restaurant",
+   "cuisine": "italian",
+   "hours": "Mo-Su 11:00-22:00",
+   "osm": "node/11266685725"
+  },
+  {
+   "name": "Fuku Mama",
+   "lat": 64.1476379,
+   "lng": -21.9380075,
+   "amenity": "restaurant",
+   "cuisine": "korean",
+   "hours": "Mo-Su 11:00-22:00",
+   "osm": "node/11266685726"
+  },
+  {
+   "name": "Mossley",
+   "lat": 64.1476999,
+   "lng": -21.938159,
+   "amenity": "restaurant",
+   "cuisine": "burger",
+   "hours": "Mo-Su 11:00-22:00",
+   "osm": "node/11266685727"
+  },
+  {
+   "name": "Iðnó",
+   "lat": 64.1458699,
+   "lng": -21.9401854,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/688998252"
+  },
+  {
+   "name": "La Barceloneta",
+   "lat": 64.1463101,
+   "lng": -21.9398907,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "We-Su 17:30-21:30",
+   "osm": "node/6795799685"
+  },
+  {
+   "name": "Kebab Grill",
+   "lat": 64.1463166,
+   "lng": -21.9382459,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/3005947175"
+  },
+  {
+   "name": "Skólabrú",
+   "lat": 64.146555,
+   "lng": -21.9385892,
+   "amenity": "restaurant",
+   "cuisine": "regional",
+   "hours": "",
+   "osm": "node/3005750480"
+  },
+  {
+   "name": "Icelandic Street Food",
+   "lat": 64.1464497,
+   "lng": -21.9380388,
+   "amenity": "restaurant",
+   "cuisine": "local",
+   "hours": "",
+   "osm": "node/6485838852"
+  },
+  {
+   "name": "Shanghai",
+   "lat": 64.1467828,
+   "lng": -21.9386839,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/9907447018"
+  },
+  {
+   "name": "Háma",
+   "lat": 64.1400117,
+   "lng": -21.9502109,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Mo-Fr 08:00-16:00",
+   "osm": "node/1404529504"
+  },
+  {
+   "name": "Borg Restaurant",
+   "lat": 64.1469411,
+   "lng": -21.9387911,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/3005750473"
+  },
+  {
+   "name": "Fjalakötturinn",
+   "lat": 64.1474866,
+   "lng": -21.9424345,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/1264717775"
+  },
+  {
+   "name": "Fish Market",
+   "lat": 64.1477313,
+   "lng": -21.9422603,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Su-Th 18:00-22:30; Fr-Sa 18:00-23:35",
+   "osm": "node/1213739967"
+  },
+  {
+   "name": "Tapas barinn",
+   "lat": 64.1486545,
+   "lng": -21.942186,
+   "amenity": "restaurant",
+   "cuisine": "tapas",
+   "hours": "Su-Th 17:00-23:30; Fr,Sa 17:00-01:00",
+   "osm": "node/1433784491"
+  },
+  {
+   "name": "Vegan World Peace",
+   "lat": 64.1486314,
+   "lng": -21.9420647,
+   "amenity": "restaurant",
+   "cuisine": "international",
+   "hours": "Tu-Sa 11:00-21:00; Su 16:00-22:00",
+   "osm": "node/3009197137"
+  },
+  {
+   "name": "Food Cellar",
+   "lat": 64.1486344,
+   "lng": -21.9419312,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/3009197139"
+  },
+  {
+   "name": "Perlan Restaurant",
+   "lat": 64.1292991,
+   "lng": -21.9187518,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Mo-Su 11:30-18:00",
+   "osm": "node/13791603357"
+  },
+  {
+   "name": "Smurstöðin",
+   "lat": 64.1503958,
+   "lng": -21.9333604,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/3901938826"
+  },
+  {
+   "name": "TIDES",
+   "lat": 64.1500596,
+   "lng": -21.9353519,
+   "amenity": "restaurant",
+   "cuisine": "fine_dining",
+   "hours": "Mo-Su 07:00-10:30,12:00-14:30,17:30-22:00",
+   "osm": "node/9789265003"
+  },
+  {
+   "name": "Pho Vietnamese",
+   "lat": 64.1489038,
+   "lng": -21.9408098,
+   "amenity": "restaurant",
+   "cuisine": "vietnamese",
+   "hours": "Mo-Su 10:00-22:00",
+   "osm": "node/3008778031"
+  },
+  {
+   "name": "Bryggjuhúsið",
+   "lat": 64.148685,
+   "lng": -21.941029,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "way/91593492"
+  },
+  {
+   "name": "Fiskfélagið",
+   "lat": 64.1489232,
+   "lng": -21.9415366,
+   "amenity": "restaurant",
+   "cuisine": "regional",
+   "hours": "",
+   "osm": "node/1906835209"
+  },
+  {
+   "name": "B bar Iþta",
+   "lat": 64.1491281,
+   "lng": -21.9417772,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "way/102902640"
+  },
+  {
+   "name": "Napoli",
+   "lat": 64.148606,
+   "lng": -21.9396649,
+   "amenity": "restaurant",
+   "cuisine": "pizza",
+   "hours": "Su-Th 11:30-22:00; Fr,Sa 11:30-23:00",
+   "osm": "node/9907446840"
+  },
+  {
+   "name": "Fjallkonan",
+   "lat": 64.1484244,
+   "lng": -21.9408498,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Mo-Su 11:30-23:00",
+   "osm": "node/8856354025"
+  },
+  {
+   "name": "Hannesarholt",
+   "lat": 64.1442763,
+   "lng": -21.9356448,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Mo-Su,PH 11:30-16:00",
+   "osm": "node/3408671677"
+  }
  ]
 }

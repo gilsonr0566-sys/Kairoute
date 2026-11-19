@@ -1259,5 +1259,592 @@
   "lat": 55.9496025,
   "lng": -3.189695625
  },
- "wikivoyage": "Edinburgh"
+ "wikivoyage": "Edinburgh",
+ "cityEats": [
+  {
+   "name": "Cold Town House",
+   "lat": 55.9473694,
+   "lng": -3.1977772,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/6343082271"
+  },
+  {
+   "name": "Kabul Kitchen",
+   "lat": 55.9467764,
+   "lng": -3.2027315,
+   "amenity": "restaurant",
+   "cuisine": "afghan",
+   "hours": "",
+   "osm": "node/634864793"
+  },
+  {
+   "name": "Dine",
+   "lat": 55.947716,
+   "lng": -3.2045934,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/5026717446"
+  },
+  {
+   "name": "Timberyard",
+   "lat": 55.9463549,
+   "lng": -3.2017288,
+   "amenity": "restaurant",
+   "cuisine": "regional",
+   "hours": "",
+   "osm": "node/1951364889"
+  },
+  {
+   "name": "Wutong Hub",
+   "lat": 55.9463009,
+   "lng": -3.2016068,
+   "amenity": "restaurant",
+   "cuisine": "chinese",
+   "hours": "",
+   "osm": "node/634860914"
+  },
+  {
+   "name": "Mamma's",
+   "lat": 55.9474785,
+   "lng": -3.1968938,
+   "amenity": "restaurant",
+   "cuisine": "pizza",
+   "hours": "",
+   "osm": "node/2112475149"
+  },
+  {
+   "name": "The Holyrood Room Restaurant",
+   "lat": 55.9517361,
+   "lng": -3.1753642,
+   "amenity": "restaurant",
+   "cuisine": "international;regional",
+   "hours": "",
+   "osm": "node/4758881738"
+  },
+  {
+   "name": "Oink Hog Roast",
+   "lat": 55.9520221,
+   "lng": -3.1768919,
+   "amenity": "restaurant",
+   "cuisine": "burger",
+   "hours": "Mo-Su 11:00-17:00",
+   "osm": "node/3071953161"
+  },
+  {
+   "name": "Food Chain Café",
+   "lat": 55.9503936,
+   "lng": -3.1748495,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/519288737"
+  },
+  {
+   "name": "Angels with Bagpipes",
+   "lat": 55.9498329,
+   "lng": -3.191092,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/2112358150"
+  },
+  {
+   "name": "Luckenbooths",
+   "lat": 55.9498755,
+   "lng": -3.1908117,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/13694676448"
+  },
+  {
+   "name": "Burgers and Beers Grillhouse",
+   "lat": 55.9496897,
+   "lng": -3.1897241,
+   "amenity": "restaurant",
+   "cuisine": "burger",
+   "hours": "",
+   "osm": "node/2112358151"
+  },
+  {
+   "name": "Le Bistrot",
+   "lat": 55.9493185,
+   "lng": -3.1923021,
+   "amenity": "restaurant",
+   "cuisine": "french",
+   "hours": "",
+   "osm": "node/5958755086"
+  },
+  {
+   "name": "August 37",
+   "lat": 55.9501474,
+   "lng": -3.1919776,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/2880855625"
+  },
+  {
+   "name": "Filling Station",
+   "lat": 55.9500635,
+   "lng": -3.1892496,
+   "amenity": "restaurant",
+   "cuisine": "american",
+   "hours": "",
+   "osm": "node/551579452"
+  },
+  {
+   "name": "Uncle Tiger",
+   "lat": 55.946253,
+   "lng": -3.1899813,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/3816828735"
+  },
+  {
+   "name": "Nando's",
+   "lat": 55.9472973,
+   "lng": -3.1911349,
+   "amenity": "restaurant",
+   "cuisine": "chicken;portuguese",
+   "hours": "Mo-Sa 12:00-23:00; Su 12:30-18:00",
+   "osm": "node/2089205743"
+  },
+  {
+   "name": "Bobby’s Sandwich Bar",
+   "lat": 55.9466056,
+   "lng": -3.1912464,
+   "amenity": "restaurant",
+   "cuisine": "sandwich",
+   "hours": "",
+   "osm": "node/3094165625"
+  },
+  {
+   "name": "Paradise Palms",
+   "lat": 55.9462645,
+   "lng": -3.1891555,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Mo-Fr 16:00-01:00; Sa-Su 13:00-01:00",
+   "osm": "node/1770134132"
+  },
+  {
+   "name": "Bistro du Vin",
+   "lat": 55.946088,
+   "lng": -3.1902547,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/3356238184"
+  },
+  {
+   "name": "Sichuan House",
+   "lat": 55.9474871,
+   "lng": -3.1912443,
+   "amenity": "restaurant",
+   "cuisine": "chinese",
+   "hours": "",
+   "osm": "node/3042581508"
+  },
+  {
+   "name": "Happy Lamb Hot Pot",
+   "lat": 55.9532822,
+   "lng": -3.1933693,
+   "amenity": "restaurant",
+   "cuisine": "mongolian;hot_pot",
+   "hours": "",
+   "osm": "node/5247906258"
+  },
+  {
+   "name": "The Ivy",
+   "lat": 55.9533741,
+   "lng": -3.1934356,
+   "amenity": "restaurant",
+   "cuisine": "british",
+   "hours": "Mo-Th 08:30-24:00; Fr,Sa 08:30-23:00; PH,Su 08:30-24:00",
+   "osm": "node/5122156298"
+  },
+  {
+   "name": "Sir Walter Scott's Traditional Tea Room",
+   "lat": 55.9525369,
+   "lng": -3.1951782,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/4564988234"
+  },
+  {
+   "name": "Gaucho",
+   "lat": 55.9534988,
+   "lng": -3.1928163,
+   "amenity": "restaurant",
+   "cuisine": "argentinian",
+   "hours": "",
+   "osm": "node/5283471103"
+  },
+  {
+   "name": "Wagamama",
+   "lat": 55.9535162,
+   "lng": -3.1926465,
+   "amenity": "restaurant",
+   "cuisine": "asian",
+   "hours": "Mo-Su 11:00-22:00",
+   "osm": "node/4789062132"
+  },
+  {
+   "name": "Roti King",
+   "lat": 55.9532703,
+   "lng": -3.1918693,
+   "amenity": "restaurant",
+   "cuisine": "malaysian",
+   "hours": "",
+   "osm": "node/11262645836"
+  },
+  {
+   "name": "PizzaExpress",
+   "lat": 55.948801,
+   "lng": -3.1925834,
+   "amenity": "restaurant",
+   "cuisine": "pizza",
+   "hours": "Mo-Th,Su 11:30-21:00; Fr-Sa 11:30-22:00",
+   "osm": "node/511213029"
+  },
+  {
+   "name": "Commons Club",
+   "lat": 55.9485914,
+   "lng": -3.1929196,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/11128572618"
+  },
+  {
+   "name": "Cafe Andaluz",
+   "lat": 55.9480341,
+   "lng": -3.1920996,
+   "amenity": "restaurant",
+   "cuisine": "tapas",
+   "hours": "",
+   "osm": "node/658120546"
+  },
+  {
+   "name": "The Outsider",
+   "lat": 55.9478899,
+   "lng": -3.1920092,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Fr,Sa 12:00-23:00; Su-Th 12:00-22:00",
+   "osm": "node/736204951"
+  },
+  {
+   "name": "Howies",
+   "lat": 55.9487962,
+   "lng": -3.1932657,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/511213025"
+  },
+  {
+   "name": "Gateway Restaurant",
+   "lat": 55.964234,
+   "lng": -3.2119376,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/663409871"
+  },
+  {
+   "name": "Bella Sicily",
+   "lat": 55.9555706,
+   "lng": -3.1925046,
+   "amenity": "restaurant",
+   "cuisine": "italian",
+   "hours": "",
+   "osm": "node/2164748232"
+  },
+  {
+   "name": "The Magnum",
+   "lat": 55.9567595,
+   "lng": -3.1930462,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Mo-Th 12:00-14:30, 17:30-22:00; Fr-Sa 12:00-22:00; Su 12:00-15:00, 18:00-21:00",
+   "osm": "node/1707107356"
+  },
+  {
+   "name": "The Wu",
+   "lat": 55.9551261,
+   "lng": -3.1957844,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/1710418042"
+  },
+  {
+   "name": "Karen's Unicorn",
+   "lat": 55.9569075,
+   "lng": -3.1939006,
+   "amenity": "restaurant",
+   "cuisine": "chinese",
+   "hours": "Tu-Th,Su 17:00-22:00; Fr,Sa 17:00-22:30",
+   "osm": "node/2099122162"
+  },
+  {
+   "name": "Dublin Street Social",
+   "lat": 55.9569652,
+   "lng": -3.19386,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Tu 12:00-22:00; We-Sa 12:00+; Su 12:00-20:00",
+   "osm": "node/1782941207"
+  },
+  {
+   "name": "Holy Cow",
+   "lat": 55.9557911,
+   "lng": -3.1907593,
+   "amenity": "restaurant",
+   "cuisine": "burger;sandwich;soup;bowl",
+   "hours": "Mo-Th 12:00-22:00; Fr-Su 10:00-22:00",
+   "osm": "node/5111052221"
+  },
+  {
+   "name": "Nando's",
+   "lat": 55.9812151,
+   "lng": -3.1777681,
+   "amenity": "restaurant",
+   "cuisine": "chicken;portuguese",
+   "hours": "Mo-Su 10:30-22:00",
+   "osm": "node/7294343100"
+  },
+  {
+   "name": "Ocean's Cafe Edinburgh",
+   "lat": 55.9810866,
+   "lng": -3.1780027,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/1241883066"
+  },
+  {
+   "name": "McKahn's",
+   "lat": 55.9810005,
+   "lng": -3.1781321,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/10106526120"
+  },
+  {
+   "name": "The Blasta Bistro",
+   "lat": 55.9809794,
+   "lng": -3.178226,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "09:00-18:00",
+   "osm": "node/1241883088"
+  },
+  {
+   "name": "Zizzi",
+   "lat": 55.9809016,
+   "lng": -3.1784087,
+   "amenity": "restaurant",
+   "cuisine": "italian",
+   "hours": "",
+   "osm": "node/1241883587"
+  },
+  {
+   "name": "Frankie & Benny's",
+   "lat": 55.9807541,
+   "lng": -3.1786572,
+   "amenity": "restaurant",
+   "cuisine": "american",
+   "hours": "Mo-Su 11:00-21:00",
+   "osm": "node/1241883085"
+  },
+  {
+   "name": "The Place to Eat",
+   "lat": 55.9554815,
+   "lng": -3.1877142,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/6919897257"
+  },
+  {
+   "name": "Frenchie",
+   "lat": 55.9570563,
+   "lng": -3.1883886,
+   "amenity": "restaurant",
+   "cuisine": "french",
+   "hours": "Mo-We 12:00-15:00,17:00-21:00; Th-Sa 12:00-22:00; Su 12:00-21:00",
+   "osm": "node/1327629863"
+  },
+  {
+   "name": "Pho",
+   "lat": 55.9553,
+   "lng": -3.1886098,
+   "amenity": "restaurant",
+   "cuisine": "vietnamese",
+   "hours": "",
+   "osm": "node/10226495527"
+  },
+  {
+   "name": "Lane7",
+   "lat": 55.955447,
+   "lng": -3.189101,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/10226495526"
+  },
+  {
+   "name": "The Real Greek",
+   "lat": 55.9550987,
+   "lng": -3.1883384,
+   "amenity": "restaurant",
+   "cuisine": "greek",
+   "hours": "",
+   "osm": "node/13938401326"
+  },
+  {
+   "name": "Cosmo",
+   "lat": 55.9566037,
+   "lng": -3.1856569,
+   "amenity": "restaurant",
+   "cuisine": "international",
+   "hours": "",
+   "osm": "node/2908661317"
+  },
+  {
+   "name": "Lyla",
+   "lat": 55.9568023,
+   "lng": -3.1806669,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/2441578943"
+  },
+  {
+   "name": "Tony Macaroni",
+   "lat": 55.9559815,
+   "lng": -3.1853468,
+   "amenity": "restaurant",
+   "cuisine": "italian",
+   "hours": "",
+   "osm": "node/2905514219"
+  },
+  {
+   "name": "Nando's",
+   "lat": 55.9563929,
+   "lng": -3.1855108,
+   "amenity": "restaurant",
+   "cuisine": "chicken;portuguese",
+   "hours": "",
+   "osm": "node/2905514218"
+  },
+  {
+   "name": "Howies",
+   "lat": 55.9540924,
+   "lng": -3.1857179,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/829318855"
+  },
+  {
+   "name": "The Cottage",
+   "lat": 55.9574782,
+   "lng": -3.1806927,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/10853538418"
+  },
+  {
+   "name": "The Gannet Fish Bar",
+   "lat": 55.943815,
+   "lng": -3.2706214,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/801783600"
+  },
+  {
+   "name": "Cool Jade",
+   "lat": 55.9420397,
+   "lng": -3.2670591,
+   "amenity": "restaurant",
+   "cuisine": "chinese",
+   "hours": "",
+   "osm": "node/2328476652"
+  },
+  {
+   "name": "Grasslands",
+   "lat": 55.9443056,
+   "lng": -3.2708233,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/801783590"
+  },
+  {
+   "name": "Shish Edinburgh",
+   "lat": 55.9453063,
+   "lng": -3.1864969,
+   "amenity": "restaurant",
+   "cuisine": "turkish",
+   "hours": "12:00-23:00",
+   "osm": "node/734668069"
+  },
+  {
+   "name": "The Nile Valley",
+   "lat": 55.944607,
+   "lng": -3.1860121,
+   "amenity": "restaurant",
+   "cuisine": "sudanese",
+   "hours": "",
+   "osm": "node/366190899"
+  },
+  {
+   "name": "Mosque Kitchen",
+   "lat": 55.9450405,
+   "lng": -3.185356,
+   "amenity": "restaurant",
+   "cuisine": "curry",
+   "hours": "09:00-20:00",
+   "osm": "node/3414989721"
+  },
+  {
+   "name": "UMI",
+   "lat": 55.9445006,
+   "lng": -3.1859001,
+   "amenity": "restaurant",
+   "cuisine": "japanese",
+   "hours": "",
+   "osm": "node/498040629"
+  },
+  {
+   "name": "Sen",
+   "lat": 55.9446418,
+   "lng": -3.1854453,
+   "amenity": "restaurant",
+   "cuisine": "vietnamese",
+   "hours": "Su-Fr 12:00-14:30, 16:30-22:30; Sa 12:00-22:30",
+   "osm": "node/2156953056"
+  },
+  {
+   "name": "Xuzhou Chicken Soup Rice Noodles",
+   "lat": 55.9445268,
+   "lng": -3.1856901,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/734680878"
+  }
+ ]
 }

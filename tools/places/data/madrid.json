@@ -5135,5 +5135,331 @@
     }
    ]
   }
+ ],
+ "cityEats": [
+  {
+   "name": "El Botánico",
+   "lat": 40.4128754,
+   "lng": -3.6912761,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Mo-Su 11:00-01:00",
+   "osm": "node/2501795850"
+  },
+  {
+   "name": "Un sabor excepcional",
+   "lat": 40.4134972,
+   "lng": -3.6906501,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/12309738622"
+  },
+  {
+   "name": "Han Gang",
+   "lat": 40.4142469,
+   "lng": -3.6902664,
+   "amenity": "restaurant",
+   "cuisine": "korean",
+   "hours": "Mo,We-Su 13:00-15:30,19:30-22:30",
+   "osm": "node/1625167388"
+  },
+  {
+   "name": "Trattoria SantArcangelo",
+   "lat": 40.4133189,
+   "lng": -3.6902126,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/1625167425"
+  },
+  {
+   "name": "Expressio Café Restaurante",
+   "lat": 40.4129125,
+   "lng": -3.6900263,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/5652367746"
+  },
+  {
+   "name": "El Fogón Verde",
+   "lat": 40.4122937,
+   "lng": -3.6939658,
+   "amenity": "restaurant",
+   "cuisine": "spanish",
+   "hours": "",
+   "osm": "node/167302180"
+  },
+  {
+   "name": "Café de Oriente",
+   "lat": 40.4176746,
+   "lng": -3.7115376,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/2697589099"
+  },
+  {
+   "name": "Toma Jamón",
+   "lat": 40.417261,
+   "lng": -3.7115758,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/3363267774"
+  },
+  {
+   "name": "esvietnam",
+   "lat": 40.4173207,
+   "lng": -3.7114591,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/4682924480"
+  },
+  {
+   "name": "Café de los Austrias",
+   "lat": 40.4171678,
+   "lng": -3.7113353,
+   "amenity": "restaurant",
+   "cuisine": "spanish",
+   "hours": "Mo-Fr 09:00-00:00; Sa-Su 10:00-01:00",
+   "osm": "node/6538480785"
+  },
+  {
+   "name": "Sol de Beirut",
+   "lat": 40.4201695,
+   "lng": -3.7127179,
+   "amenity": "restaurant",
+   "cuisine": "lebanese",
+   "hours": "",
+   "osm": "node/12585946376"
+  },
+  {
+   "name": "La Lonja/La Mar/Raw Bar",
+   "lat": 40.4185813,
+   "lng": -3.7111009,
+   "amenity": "restaurant",
+   "cuisine": "regional",
+   "hours": "",
+   "osm": "node/2697589101"
+  },
+  {
+   "name": "Bar Andalú La Torre del Oro",
+   "lat": 40.4157877,
+   "lng": -3.7076505,
+   "amenity": "restaurant",
+   "cuisine": "regional",
+   "hours": "",
+   "osm": "node/2523695124"
+  },
+  {
+   "name": "En Copa de Balón",
+   "lat": 40.4150254,
+   "lng": -3.7070014,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/2781347245"
+  },
+  {
+   "name": "Arrabal",
+   "lat": 40.4157731,
+   "lng": -3.7080496,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/2631128250"
+  },
+  {
+   "name": "Cafetería Magerit",
+   "lat": 40.4155385,
+   "lng": -3.7081543,
+   "amenity": "restaurant",
+   "cuisine": "regional",
+   "hours": "",
+   "osm": "node/2631130966"
+  },
+  {
+   "name": "Cervecería Éboli",
+   "lat": 40.41496,
+   "lng": -3.7076879,
+   "amenity": "restaurant",
+   "cuisine": "regional",
+   "hours": "",
+   "osm": "node/2631134831"
+  },
+  {
+   "name": "Museo del Jamón",
+   "lat": 40.4153766,
+   "lng": -3.7081521,
+   "amenity": "restaurant",
+   "cuisine": "deli;spanish",
+   "hours": "Su-Th 09:00-23:30; Fr-Sa 09:00-00:30",
+   "osm": "node/2523695130"
+  },
+  {
+   "name": "Sanabria",
+   "lat": 40.4091828,
+   "lng": -3.6940348,
+   "amenity": "restaurant",
+   "cuisine": "regional",
+   "hours": "",
+   "osm": "node/1517405743"
+  },
+  {
+   "name": "Trattoria Pinocchio",
+   "lat": 40.4090165,
+   "lng": -3.6936473,
+   "amenity": "restaurant",
+   "cuisine": "italian",
+   "hours": "",
+   "osm": "node/8714822079"
+  },
+  {
+   "name": "Pasta & Pizza Bar",
+   "lat": 40.4089745,
+   "lng": -3.6935282,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/12293776734"
+  },
+  {
+   "name": "El Jardín de Arzábal",
+   "lat": 40.4081081,
+   "lng": -3.6935614,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Mo 09:00-01:00; Tu 12:00-01:00; We-Th 09:00-01:00; Fr-Sa 09:00-02:00; Su 09:00-19:00",
+   "osm": "node/9072971491"
+  },
+  {
+   "name": "Lacaña",
+   "lat": 40.4090226,
+   "lng": -3.6953055,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/8770493881"
+  },
+  {
+   "name": "Sukaldea",
+   "lat": 40.4088968,
+   "lng": -3.6929697,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/12056864573"
+  },
+  {
+   "name": "Malatesta",
+   "lat": 40.416689,
+   "lng": -3.7070404,
+   "amenity": "restaurant",
+   "cuisine": "italian",
+   "hours": "",
+   "osm": "node/3502726880"
+  },
+  {
+   "name": "Dehesa Santa María",
+   "lat": 40.4167472,
+   "lng": -3.7071384,
+   "amenity": "restaurant",
+   "cuisine": "regional",
+   "hours": "",
+   "osm": "node/3670167557"
+  },
+  {
+   "name": "La casa gallega",
+   "lat": 40.4170809,
+   "lng": -3.7073497,
+   "amenity": "restaurant",
+   "cuisine": "regional",
+   "hours": "",
+   "osm": "node/2524787188"
+  },
+  {
+   "name": "La Carbonería",
+   "lat": 40.4165825,
+   "lng": -3.7070557,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/4125784496"
+  },
+  {
+   "name": "Trattoria Malatesta",
+   "lat": 40.416551,
+   "lng": -3.707066,
+   "amenity": "restaurant",
+   "cuisine": "italian",
+   "hours": "",
+   "osm": "node/4935197121"
+  },
+  {
+   "name": "Gayagum",
+   "lat": 40.4167991,
+   "lng": -3.707515,
+   "amenity": "restaurant",
+   "cuisine": "korean",
+   "hours": "",
+   "osm": "node/2656033537"
+  },
+  {
+   "name": "La Dehesa de Santa María",
+   "lat": 40.4151747,
+   "lng": -3.7133534,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/2077053413"
+  },
+  {
+   "name": "La rebelión de los mandiles",
+   "lat": 40.4152211,
+   "lng": -3.71317,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/6959892286"
+  },
+  {
+   "name": "Casa Ciriaco",
+   "lat": 40.415304,
+   "lng": -3.7123092,
+   "amenity": "restaurant",
+   "cuisine": "regional",
+   "hours": "Mo-Tu 11:00-17:00, 20:00-24:00; Th-Su 11:00-17:00, 20:00-24:00",
+   "osm": "node/3685158990"
+  },
+  {
+   "name": "Los Arrieros",
+   "lat": 40.4158907,
+   "lng": -3.7121012,
+   "amenity": "restaurant",
+   "cuisine": "regional",
+   "hours": "",
+   "osm": "node/3685201566"
+  },
+  {
+   "name": "Torayo Antonio",
+   "lat": 40.4138083,
+   "lng": -3.715722,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/2086574287"
+  },
+  {
+   "name": "Casa Pipi",
+   "lat": 40.4149401,
+   "lng": -3.7119694,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/9810350517"
+  }
  ]
 }

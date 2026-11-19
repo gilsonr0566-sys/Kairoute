@@ -667,5 +667,52 @@
     }
    ]
   }
+ ],
+ "cityEats": [
+  {
+   "name": "Mekan",
+   "lat": 37.9512574,
+   "lng": 27.3658458,
+   "amenity": "restaurant",
+   "cuisine": "turkish",
+   "hours": "",
+   "osm": "node/10244339909"
+  },
+  {
+   "name": "Yörükoğlu",
+   "lat": 37.9521091,
+   "lng": 27.3708815,
+   "amenity": "restaurant",
+   "cuisine": "local;turkish",
+   "hours": "",
+   "osm": "node/11164849805"
+  },
+  {
+   "name": "Skopje Otantic",
+   "lat": 37.9511967,
+   "lng": 27.365873,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/11348830503"
+  },
+  {
+   "name": "Lahmacun",
+   "lat": 37.9514991,
+   "lng": 27.3706165,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/9453193017"
+  },
+  {
+   "name": "Efes Villa",
+   "lat": 37.9478111,
+   "lng": 27.3658969,
+   "amenity": "restaurant",
+   "cuisine": "korean",
+   "hours": "",
+   "osm": "node/9943156699"
+  }
  ]
 }

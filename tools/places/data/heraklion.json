@@ -302,5 +302,349 @@
   }
  ],
  "lifts": [],
- "transit": []
+ "transit": [],
+ "cityEats": [
+  {
+   "name": "The Little Garden",
+   "lat": 35.2981064,
+   "lng": 25.1614339,
+   "amenity": "restaurant",
+   "cuisine": "greek",
+   "hours": "",
+   "osm": "node/4456192693"
+  },
+  {
+   "name": "Rousakis",
+   "lat": 35.2987607,
+   "lng": 25.160684,
+   "amenity": "restaurant",
+   "cuisine": "regional",
+   "hours": "",
+   "osm": "node/1793688434"
+  },
+  {
+   "name": "Minotavros",
+   "lat": 35.2989084,
+   "lng": 25.1606288,
+   "amenity": "restaurant",
+   "cuisine": "regional",
+   "hours": "",
+   "osm": "node/4460170594"
+  },
+  {
+   "name": "Fast Vegan Food",
+   "lat": 35.3389888,
+   "lng": 25.1359047,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Mo-Sa 12:30-22:00; Su 14:00-22:00",
+   "osm": "node/11002845764"
+  },
+  {
+   "name": "Οντάς",
+   "lat": 35.3390763,
+   "lng": 25.1354835,
+   "amenity": "restaurant",
+   "cuisine": "greek",
+   "hours": "",
+   "osm": "node/3617501665"
+  },
+  {
+   "name": "Adipodas",
+   "lat": 35.3388288,
+   "lng": 25.1354831,
+   "amenity": "restaurant",
+   "cuisine": "local;mediterranean;greek",
+   "hours": "Mo-Su 12:00-01:00",
+   "osm": "node/4303213989"
+  },
+  {
+   "name": "Minos",
+   "lat": 35.3383514,
+   "lng": 25.1356608,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/4933013823"
+  },
+  {
+   "name": "Koukouvagia",
+   "lat": 35.3391776,
+   "lng": 25.1351747,
+   "amenity": "restaurant",
+   "cuisine": "greek",
+   "hours": "Mo-Su 12:00-00:00",
+   "osm": "node/5923927086"
+  },
+  {
+   "name": "Νότιο Σέλας",
+   "lat": 35.3398183,
+   "lng": 25.1354265,
+   "amenity": "restaurant",
+   "cuisine": "regional;mediterranean",
+   "hours": "Mo-Su 10:00-03:00",
+   "osm": "node/1057068138"
+  },
+  {
+   "name": "Hbapdia",
+   "lat": 35.3430985,
+   "lng": 25.1377634,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/9932428408"
+  },
+  {
+   "name": "Herbs´Garden",
+   "lat": 35.3417347,
+   "lng": 25.1366522,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/3741483464"
+  },
+  {
+   "name": "Avli Project Heraklion",
+   "lat": 35.3418344,
+   "lng": 25.1388426,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Mo-Su 09:00-00:04",
+   "osm": "way/1314359638"
+  },
+  {
+   "name": "Πλάνη",
+   "lat": 35.3413977,
+   "lng": 25.1364794,
+   "amenity": "restaurant",
+   "cuisine": "regional",
+   "hours": "Mo-Su,PH 19:30-24:00",
+   "osm": "node/2751882341"
+  },
+  {
+   "name": "Veneto",
+   "lat": 35.3415331,
+   "lng": 25.135824,
+   "amenity": "restaurant",
+   "cuisine": "greek",
+   "hours": "",
+   "osm": "node/2751874528"
+  },
+  {
+   "name": "Τα ψάρια",
+   "lat": 35.3424295,
+   "lng": 25.1346338,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/4363730100"
+  },
+  {
+   "name": "Gordian Knot",
+   "lat": 35.3394385,
+   "lng": 25.1334725,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/3612931442"
+  },
+  {
+   "name": "Baltas",
+   "lat": 35.3392849,
+   "lng": 25.1330741,
+   "amenity": "restaurant",
+   "cuisine": "greek;italian",
+   "hours": "",
+   "osm": "node/5873218578"
+  },
+  {
+   "name": "Corner",
+   "lat": 35.3396332,
+   "lng": 25.1334425,
+   "amenity": "restaurant",
+   "cuisine": "greek;italian",
+   "hours": "",
+   "osm": "node/5630012322"
+  },
+  {
+   "name": "Veranda",
+   "lat": 35.3390485,
+   "lng": 25.1329577,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/5873218501"
+  },
+  {
+   "name": "Veranda",
+   "lat": 35.3389229,
+   "lng": 25.1329926,
+   "amenity": "restaurant",
+   "cuisine": "greek",
+   "hours": "",
+   "osm": "node/6655726288"
+  },
+  {
+   "name": "Central",
+   "lat": 35.3398424,
+   "lng": 25.1335616,
+   "amenity": "restaurant",
+   "cuisine": "barbecue;greek;italian_pizza",
+   "hours": "Mo-Su 08:00-01:00",
+   "osm": "node/6724324696"
+  },
+  {
+   "name": "Umami",
+   "lat": 35.3396957,
+   "lng": 25.1350523,
+   "amenity": "restaurant",
+   "cuisine": "international",
+   "hours": "",
+   "osm": "node/9017471617"
+  },
+  {
+   "name": "Το Ροβύθι",
+   "lat": 35.3397692,
+   "lng": 25.1352254,
+   "amenity": "restaurant",
+   "cuisine": "mediterranean",
+   "hours": "Mo 10:00-21:00; Tu-Su 10:00-23:45; Dec 24,Dec 31 10:00-17:00; Jan 01-02,Aug 15-16,Nov 17,Dec 25-26 off",
+   "osm": "node/6507013786"
+  },
+  {
+   "name": "Macoo Eatery",
+   "lat": 35.3401098,
+   "lng": 25.1352969,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/9610510117"
+  },
+  {
+   "name": "Kouzeineri. The Meat Lounge.",
+   "lat": 35.3403966,
+   "lng": 25.1354546,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/14208456244"
+  },
+  {
+   "name": "Pagopoieion",
+   "lat": 35.340382,
+   "lng": 25.134514,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/5323736664"
+  },
+  {
+   "name": "Hacienda",
+   "lat": 35.3379644,
+   "lng": 25.1304692,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/11233214943"
+  },
+  {
+   "name": "Καγιαbee",
+   "lat": 35.338512,
+   "lng": 25.1314511,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/9963400056"
+  },
+  {
+   "name": "Koto",
+   "lat": 35.3382633,
+   "lng": 25.1320024,
+   "amenity": "restaurant",
+   "cuisine": "greek",
+   "hours": "",
+   "osm": "node/9986825849"
+  },
+  {
+   "name": "Firi Firi",
+   "lat": 35.3385208,
+   "lng": 25.1315642,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/9963400059"
+  },
+  {
+   "name": "Bar Paki",
+   "lat": 35.3383713,
+   "lng": 25.1319618,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/10090069222"
+  },
+  {
+   "name": "Καγιαμπής",
+   "lat": 35.3361121,
+   "lng": 25.1313278,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/669418180"
+  },
+  {
+   "name": "Ο ΓΙΑΚΟΥΜΗΣ",
+   "lat": 35.3380015,
+   "lng": 25.1336018,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/11909844069"
+  },
+  {
+   "name": "Ταβερνα Γιακουμις",
+   "lat": 35.3378983,
+   "lng": 25.1335639,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/14359292603"
+  },
+  {
+   "name": "Kanatelias",
+   "lat": 35.3373232,
+   "lng": 25.1338359,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/4363729956"
+  },
+  {
+   "name": "I Agora 1866",
+   "lat": 35.3379385,
+   "lng": 25.133253,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/3741483465"
+  },
+  {
+   "name": "origine",
+   "lat": 35.3377157,
+   "lng": 25.1330983,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/14270817684"
+  },
+  {
+   "name": "Hovoli",
+   "lat": 35.3376305,
+   "lng": 25.1355478,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Mo-Su 10:00-01:00",
+   "osm": "node/14242638757"
+  }
+ ]
 }

@@ -1741,5 +1741,826 @@
   "Wikivoyage"
  ],
  "portQuery": null,
- "wikivoyage": "Athens"
+ "wikivoyage": "Athens",
+ "cityEats": [
+  {
+   "name": "Xenious Zeus",
+   "lat": 37.9728901,
+   "lng": 23.7278059,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/11283392861"
+  },
+  {
+   "name": "Yiasemi",
+   "lat": 37.9732059,
+   "lng": 23.7278582,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/14148774301"
+  },
+  {
+   "name": "Anafiotika Café",
+   "lat": 37.9734102,
+   "lng": 23.7277788,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/6450021685"
+  },
+  {
+   "name": "Karyatides",
+   "lat": 37.9693344,
+   "lng": 23.7240316,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/2793051287"
+  },
+  {
+   "name": "Strofi",
+   "lat": 37.9691125,
+   "lng": 23.7245233,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Tu-Su 12:00-01:00",
+   "osm": "node/2793051304"
+  },
+  {
+   "name": "dionyssos",
+   "lat": 37.9688577,
+   "lng": 23.725634,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/2782612426"
+  },
+  {
+   "name": "Dionisos Zonar's",
+   "lat": 37.9694323,
+   "lng": 23.7223655,
+   "amenity": "restaurant",
+   "cuisine": "greek",
+   "hours": "",
+   "osm": "way/303308728"
+  },
+  {
+   "name": "GH Attikos",
+   "lat": 37.9691836,
+   "lng": 23.7236893,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/2792781427"
+  },
+  {
+   "name": "Greek House Attikos",
+   "lat": 37.9690901,
+   "lng": 23.7237302,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/2792733237"
+  },
+  {
+   "name": "To Κati Αllo",
+   "lat": 37.9677007,
+   "lng": 23.7286843,
+   "amenity": "restaurant",
+   "cuisine": "greek",
+   "hours": "",
+   "osm": "node/2691038189"
+  },
+  {
+   "name": "Arkadia",
+   "lat": 37.9682624,
+   "lng": 23.7295673,
+   "amenity": "restaurant",
+   "cuisine": "greek;mediterranean",
+   "hours": "",
+   "osm": "node/4311005946"
+  },
+  {
+   "name": "Liondi",
+   "lat": 37.9682964,
+   "lng": 23.7295787,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/4195188096"
+  },
+  {
+   "name": "Greek Stories",
+   "lat": 37.9683289,
+   "lng": 23.7295956,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/9621329917"
+  },
+  {
+   "name": "Elaea",
+   "lat": 37.9683608,
+   "lng": 23.7296049,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/5015812172"
+  },
+  {
+   "name": "Gods' Restaurant",
+   "lat": 37.9681028,
+   "lng": 23.7295152,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Mo-Su 11:30-23:00",
+   "osm": "node/4311006324"
+  },
+  {
+   "name": "Muses",
+   "lat": 37.9763577,
+   "lng": 23.7222842,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/3372861187"
+  },
+  {
+   "name": "Sisinely All day Bar Restaurant",
+   "lat": 37.9760188,
+   "lng": 23.723638,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/3372868250"
+  },
+  {
+   "name": "Attalos",
+   "lat": 37.9763934,
+   "lng": 23.722151,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/3463617412"
+  },
+  {
+   "name": "Kuzina",
+   "lat": 37.9764368,
+   "lng": 23.7220622,
+   "amenity": "restaurant",
+   "cuisine": "greek",
+   "hours": "",
+   "osm": "node/2836966900"
+  },
+  {
+   "name": "Antica",
+   "lat": 37.9760021,
+   "lng": 23.7238926,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/3372906214"
+  },
+  {
+   "name": "Mystilli",
+   "lat": 37.9765222,
+   "lng": 23.7218957,
+   "amenity": "restaurant",
+   "cuisine": "greek",
+   "hours": "Mo-Su 08:00-00:00",
+   "osm": "node/3463598857"
+  },
+  {
+   "name": "To Kafeneio",
+   "lat": 37.9726667,
+   "lng": 23.729649,
+   "amenity": "restaurant",
+   "cuisine": "mediterranean",
+   "hours": "Mo-Su 10:00-01:00",
+   "osm": "node/9130868617"
+  },
+  {
+   "name": "Scholarchion",
+   "lat": 37.9724849,
+   "lng": 23.72936,
+   "amenity": "restaurant",
+   "cuisine": "greek",
+   "hours": "",
+   "osm": "way/850432880"
+  },
+  {
+   "name": "Tavern Kalokerinos",
+   "lat": 37.9730246,
+   "lng": 23.730903,
+   "amenity": "restaurant",
+   "cuisine": "greek",
+   "hours": "Mo-Su 08:00-23:00",
+   "osm": "node/13649041897"
+  },
+  {
+   "name": "Eat at Milton's",
+   "lat": 37.9736635,
+   "lng": 23.7300275,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/3803531172"
+  },
+  {
+   "name": "Ο γλυκυζ",
+   "lat": 37.9724321,
+   "lng": 23.73101,
+   "amenity": "restaurant",
+   "cuisine": "greek",
+   "hours": "",
+   "osm": "node/9938654405"
+  },
+  {
+   "name": "Stamatopoulos tavern",
+   "lat": 37.9732149,
+   "lng": 23.7290123,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/10093154176"
+  },
+  {
+   "name": "Grande Bretagne Roof Garden",
+   "lat": 37.9762127,
+   "lng": 23.7354138,
+   "amenity": "restaurant",
+   "cuisine": "mediterranean",
+   "hours": "",
+   "osm": "node/4560289850"
+  },
+  {
+   "name": "Chunxi",
+   "lat": 37.9747991,
+   "lng": 23.7350729,
+   "amenity": "restaurant",
+   "cuisine": "chinese",
+   "hours": "",
+   "osm": "node/6892865335"
+  },
+  {
+   "name": "Tudor Hall",
+   "lat": 37.9763252,
+   "lng": 23.7349368,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/10582845552"
+  },
+  {
+   "name": "Ελιά",
+   "lat": 37.9771147,
+   "lng": 23.7370867,
+   "amenity": "restaurant",
+   "cuisine": "greek",
+   "hours": "",
+   "osm": "node/4040706203"
+  },
+  {
+   "name": "Τηλέμαχος",
+   "lat": 37.977625,
+   "lng": 23.73573,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/7178679182"
+  },
+  {
+   "name": "Ο Κώστας",
+   "lat": 37.9743251,
+   "lng": 23.7341119,
+   "amenity": "restaurant",
+   "cuisine": "greek",
+   "hours": "",
+   "osm": "node/13506165372"
+  },
+  {
+   "name": "Μπαρμπουνακι",
+   "lat": 37.9749379,
+   "lng": 23.7294455,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/7955886415"
+  },
+  {
+   "name": "Piazza Duomo",
+   "lat": 37.9756294,
+   "lng": 23.729748,
+   "amenity": "restaurant",
+   "cuisine": "italian;regional",
+   "hours": "",
+   "osm": "node/9121224836"
+  },
+  {
+   "name": "Old Ithaki",
+   "lat": 37.9747982,
+   "lng": 23.7300681,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/3453030789"
+  },
+  {
+   "name": "Centrale",
+   "lat": 37.9756761,
+   "lng": 23.7299875,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/2836994806"
+  },
+  {
+   "name": "Cherchez la femme",
+   "lat": 37.9754949,
+   "lng": 23.7306249,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/13027149801"
+  },
+  {
+   "name": "Eteroclite bistro",
+   "lat": 37.9756422,
+   "lng": 23.730548,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/3175028406"
+  },
+  {
+   "name": "Εύχαρις",
+   "lat": 37.9757053,
+   "lng": 23.7254971,
+   "amenity": "restaurant",
+   "cuisine": "greek",
+   "hours": "11:00-24:00",
+   "osm": "node/3793368904"
+  },
+  {
+   "name": "Μαίανδρος",
+   "lat": 37.9757139,
+   "lng": 23.7254325,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/4056070361"
+  },
+  {
+   "name": "Lagom",
+   "lat": 37.9761688,
+   "lng": 23.7261578,
+   "amenity": "restaurant",
+   "cuisine": "pasta",
+   "hours": "",
+   "osm": "node/12097765570"
+  },
+  {
+   "name": "Kotili",
+   "lat": 37.9757702,
+   "lng": 23.7252146,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/2836994808"
+  },
+  {
+   "name": "The greco's project",
+   "lat": 37.9761978,
+   "lng": 23.7261976,
+   "amenity": "restaurant",
+   "cuisine": "greek",
+   "hours": "",
+   "osm": "node/4261861956"
+  },
+  {
+   "name": "Hard Rock Cafe",
+   "lat": 37.9756255,
+   "lng": 23.7252767,
+   "amenity": "restaurant",
+   "cuisine": "american",
+   "hours": "09:30-24:00",
+   "osm": "way/223578260"
+  },
+  {
+   "name": "The Athens Gate Restaurant",
+   "lat": 37.9688438,
+   "lng": 23.7313733,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/9365782084"
+  },
+  {
+   "name": "Duende",
+   "lat": 37.9693263,
+   "lng": 23.7311603,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/2698902777"
+  },
+  {
+   "name": "Indian Haveli",
+   "lat": 37.9684472,
+   "lng": 23.731397,
+   "amenity": "restaurant",
+   "cuisine": "indian",
+   "hours": "",
+   "osm": "node/5155588721"
+  },
+  {
+   "name": "Veganaki",
+   "lat": 37.9676093,
+   "lng": 23.7328679,
+   "amenity": "restaurant",
+   "cuisine": "organic",
+   "hours": "08:00-23:00",
+   "osm": "node/4880071621"
+  },
+  {
+   "name": "Το περιβόλι τ' ουρανού",
+   "lat": 37.9705035,
+   "lng": 23.7315286,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "way/195162364"
+  },
+  {
+   "name": "Πλακιώτισσα",
+   "lat": 37.9694163,
+   "lng": 23.7304992,
+   "amenity": "restaurant",
+   "cuisine": "regional",
+   "hours": "09:00+",
+   "osm": "node/2693043424"
+  },
+  {
+   "name": "Orizondes Lycabettus",
+   "lat": 37.9817643,
+   "lng": 23.7434085,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "way/391814848"
+  },
+  {
+   "name": "K.Grill",
+   "lat": 37.9820399,
+   "lng": 23.7435564,
+   "amenity": "restaurant",
+   "cuisine": "greek",
+   "hours": "",
+   "osm": "node/778643581"
+  },
+  {
+   "name": "Ροδιά",
+   "lat": 37.9804549,
+   "lng": 23.7451764,
+   "amenity": "restaurant",
+   "cuisine": "greek",
+   "hours": "",
+   "osm": "node/1752684310"
+  },
+  {
+   "name": "Φ",
+   "lat": 37.9790793,
+   "lng": 23.7445244,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/5228463689"
+  },
+  {
+   "name": "Filippou",
+   "lat": 37.9790645,
+   "lng": 23.7445797,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/5483159221"
+  },
+  {
+   "name": "Dexamenis",
+   "lat": 37.9788888,
+   "lng": 23.7418935,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/5894603888"
+  },
+  {
+   "name": "Cave of Acropolis",
+   "lat": 37.970821,
+   "lng": 23.7291096,
+   "amenity": "restaurant",
+   "cuisine": "greek",
+   "hours": "",
+   "osm": "way/264114634"
+  },
+  {
+   "name": "Thespis",
+   "lat": 37.9713112,
+   "lng": 23.7293733,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/7969770246"
+  },
+  {
+   "name": "Diogenes",
+   "lat": 37.9711256,
+   "lng": 23.729738,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Mo-Su 10:00-24:00",
+   "osm": "node/9091151017"
+  },
+  {
+   "name": "Roof Top Garden",
+   "lat": 37.9701371,
+   "lng": 23.7302282,
+   "amenity": "restaurant",
+   "cuisine": "greek",
+   "hours": "",
+   "osm": "node/13936895701"
+  },
+  {
+   "name": "Daphne's Restaurant",
+   "lat": 37.9708829,
+   "lng": 23.7303174,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/2691421855"
+  },
+  {
+   "name": "Γευστικές αποπλανήσεις",
+   "lat": 37.9690802,
+   "lng": 23.7299549,
+   "amenity": "restaurant",
+   "cuisine": "regional",
+   "hours": "09:00+",
+   "osm": "node/2693043417"
+  },
+  {
+   "name": "Acropolis",
+   "lat": 37.9688211,
+   "lng": 23.7252641,
+   "amenity": "restaurant",
+   "cuisine": "greek",
+   "hours": "",
+   "osm": "way/263984450"
+  },
+  {
+   "name": "Καπνικαρέα",
+   "lat": 37.9762614,
+   "lng": 23.7282027,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/11544304193"
+  },
+  {
+   "name": "Vintage",
+   "lat": 37.9758435,
+   "lng": 23.728604,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/11187436892"
+  },
+  {
+   "name": "Gaya Athens",
+   "lat": 37.9765745,
+   "lng": 23.7288436,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/12202312404"
+  },
+  {
+   "name": "Suvla",
+   "lat": 37.9757028,
+   "lng": 23.7287619,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/5483686478"
+  },
+  {
+   "name": "Dragon express",
+   "lat": 37.9759612,
+   "lng": 23.7278509,
+   "amenity": "restaurant",
+   "cuisine": "chinese",
+   "hours": "",
+   "osm": "node/6056687229"
+  },
+  {
+   "name": "Taratsa",
+   "lat": 37.9758179,
+   "lng": 23.7291402,
+   "amenity": "restaurant",
+   "cuisine": "greek",
+   "hours": "",
+   "osm": "node/12596451301"
+  },
+  {
+   "name": "L'Amiral",
+   "lat": 37.9747098,
+   "lng": 23.7262897,
+   "amenity": "restaurant",
+   "cuisine": "local;greek",
+   "hours": "Mo-Su 10:00-24:00",
+   "osm": "node/12207659352"
+  },
+  {
+   "name": "Πλάτανος",
+   "lat": 37.9742823,
+   "lng": 23.7278834,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/1308000564"
+  },
+  {
+   "name": "Karyatis",
+   "lat": 37.9748846,
+   "lng": 23.7278127,
+   "amenity": "restaurant",
+   "cuisine": "greek",
+   "hours": "",
+   "osm": "node/2836966899"
+  },
+  {
+   "name": "Plaki",
+   "lat": 37.9752824,
+   "lng": 23.7276789,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/11244264845"
+  },
+  {
+   "name": "Κιτρο",
+   "lat": 37.9750863,
+   "lng": 23.7278805,
+   "amenity": "restaurant",
+   "cuisine": "regional",
+   "hours": "Mo-Su 08:00-24:00",
+   "osm": "node/2836994804"
+  },
+  {
+   "name": "To Navagio ton Aggelon",
+   "lat": 37.9873054,
+   "lng": 23.7312149,
+   "amenity": "restaurant",
+   "cuisine": "regional",
+   "hours": "Mo-Sa 18:00-02:00",
+   "osm": "node/3868390594"
+  },
+  {
+   "name": "Microulee",
+   "lat": 37.9870405,
+   "lng": 23.7342816,
+   "amenity": "restaurant",
+   "cuisine": "chinese",
+   "hours": "Mo-Sa 13:00-23:00",
+   "osm": "node/6652254848"
+  },
+  {
+   "name": "Soltee",
+   "lat": 37.9913478,
+   "lng": 23.7323399,
+   "amenity": "restaurant",
+   "cuisine": "sushi",
+   "hours": "",
+   "osm": "node/13413879949"
+  },
+  {
+   "name": "Μπούκα",
+   "lat": 37.9866592,
+   "lng": 23.7321633,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/5881364750"
+  },
+  {
+   "name": "Τεμπεσίρι",
+   "lat": 37.9867378,
+   "lng": 23.7315096,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/11544243969"
+  },
+  {
+   "name": "Σύλλογος Αιγυπτιωτών",
+   "lat": 37.9895542,
+   "lng": 23.7296518,
+   "amenity": "restaurant",
+   "cuisine": "egyptian",
+   "hours": "",
+   "osm": "node/10156824926"
+  },
+  {
+   "name": "Ilissia bistrot & cafe",
+   "lat": 37.9748626,
+   "lng": 23.7443533,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/3005038017"
+  },
+  {
+   "name": "Fellows",
+   "lat": 37.975008,
+   "lng": 23.7456542,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "way/1151639737"
+  },
+  {
+   "name": "Oikeio",
+   "lat": 37.9777686,
+   "lng": 23.7450411,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/2831388147"
+  },
+  {
+   "name": "Ορφέας",
+   "lat": 37.9770851,
+   "lng": 23.7466545,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/6546325162"
+  },
+  {
+   "name": "Brunello",
+   "lat": 37.9777959,
+   "lng": 23.7434426,
+   "amenity": "restaurant",
+   "cuisine": "italian",
+   "hours": "Mo-Su 13:00-00:30",
+   "osm": "node/13682096509"
+  },
+  {
+   "name": "Το σουτζουκάκι",
+   "lat": 37.9775255,
+   "lng": 23.7463563,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/6582980401"
+  },
+  {
+   "name": "Aegli",
+   "lat": 37.9709978,
+   "lng": 23.7374929,
+   "amenity": "restaurant",
+   "cuisine": "coffee_shop",
+   "hours": "",
+   "osm": "way/815922041"
+  },
+  {
+   "name": "Fuyunlong",
+   "lat": 37.9725714,
+   "lng": 23.7337343,
+   "amenity": "restaurant",
+   "cuisine": "chinese",
+   "hours": "",
+   "osm": "node/4384287903"
+  },
+  {
+   "name": "Ikura",
+   "lat": 37.974291,
+   "lng": 23.7341056,
+   "amenity": "restaurant",
+   "cuisine": "sushi",
+   "hours": "",
+   "osm": "node/5237694522"
+  },
+  {
+   "name": "Ιλιάδα",
+   "lat": 37.9727433,
+   "lng": 23.733465,
+   "amenity": "restaurant",
+   "cuisine": "sandwich",
+   "hours": "",
+   "osm": "node/2673130614"
+  }
+ ]
 }

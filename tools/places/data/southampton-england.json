@@ -751,5 +751,466 @@
   "lat": 50.899846000000004,
   "lng": -1.3998300000000001
  },
- "wikivoyage": "Southampton"
+ "wikivoyage": "Southampton",
+ "cityEats": [
+  {
+   "name": "楊國福 Yangguofu",
+   "lat": 50.9022887,
+   "lng": -1.4044811,
+   "amenity": "restaurant",
+   "cuisine": "chinese;malatang",
+   "hours": "",
+   "osm": "node/13593247378"
+  },
+  {
+   "name": "Edo Asia",
+   "lat": 50.9022432,
+   "lng": -1.4044637,
+   "amenity": "restaurant",
+   "cuisine": "japanese",
+   "hours": "",
+   "osm": "node/12409869825"
+  },
+  {
+   "name": "Shanghai Bay",
+   "lat": 50.9032822,
+   "lng": -1.4045403,
+   "amenity": "restaurant",
+   "cuisine": "chinese",
+   "hours": "",
+   "osm": "node/11352863607"
+  },
+  {
+   "name": "Shanghai 1814",
+   "lat": 50.9014932,
+   "lng": -1.4042393,
+   "amenity": "restaurant",
+   "cuisine": "chinese",
+   "hours": "",
+   "osm": "node/13615894793"
+  },
+  {
+   "name": "Bill's",
+   "lat": 50.902828,
+   "lng": -1.4063402,
+   "amenity": "restaurant",
+   "cuisine": "british",
+   "hours": "Mo-Th 08:00-22:30; Fr, Sa 08:00-23:00; Su 08:00-22:00",
+   "osm": "node/4605911061"
+  },
+  {
+   "name": "Bella Italia",
+   "lat": 50.9028424,
+   "lng": -1.4019179,
+   "amenity": "restaurant",
+   "cuisine": "italian",
+   "hours": "Mo-Th 11:30-22:00; Fr 11:00-22:00; Sa 11:00-23:00; Su 11:30-22:00",
+   "osm": "node/12421659537"
+  },
+  {
+   "name": "Georges",
+   "lat": 50.8994014,
+   "lng": -1.4046197,
+   "amenity": "restaurant",
+   "cuisine": "greek",
+   "hours": "",
+   "osm": "way/183691877"
+  },
+  {
+   "name": "George's",
+   "lat": 50.9001212,
+   "lng": -1.404555,
+   "amenity": "restaurant",
+   "cuisine": "greek",
+   "hours": "",
+   "osm": "node/12406703907"
+  },
+  {
+   "name": "Coriander Lounge",
+   "lat": 50.8996956,
+   "lng": -1.4041957,
+   "amenity": "restaurant",
+   "cuisine": "indian",
+   "hours": "Jan-Nov Mo-Th 17:00-23:00; Jan-Nov Fr-Su 12:00-14:00,17:30-23:00; Dec Mo 17:00-23:00; Dec Tu-Su 12:00-14:00,18:00-23:00",
+   "osm": "way/183692911"
+  },
+  {
+   "name": "Indos Piri Piri",
+   "lat": 50.8997536,
+   "lng": -1.4041627,
+   "amenity": "restaurant",
+   "cuisine": "salad",
+   "hours": "Mo-Sa 11:00-23:00; Su 12:00-23:00",
+   "osm": "way/183692906"
+  },
+  {
+   "name": "Maalu",
+   "lat": 50.8998371,
+   "lng": -1.4041606,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Th-Tu 11:30-21:30; We off",
+   "osm": "way/183692910"
+  },
+  {
+   "name": "Szechuen Kitchen",
+   "lat": 50.9000401,
+   "lng": -1.4041546,
+   "amenity": "restaurant",
+   "cuisine": "chinese",
+   "hours": "Su-Th 12:00-22:30; Fr,Sa 12:00-23:00",
+   "osm": "way/211747577"
+  },
+  {
+   "name": "La Regata",
+   "lat": 50.8967732,
+   "lng": -1.4047652,
+   "amenity": "restaurant",
+   "cuisine": "tapas",
+   "hours": "",
+   "osm": "way/183691403"
+  },
+  {
+   "name": "Ennios",
+   "lat": 50.8968583,
+   "lng": -1.4050464,
+   "amenity": "restaurant",
+   "cuisine": "italian",
+   "hours": "",
+   "osm": "way/183691407"
+  },
+  {
+   "name": "Kuti's Brasserie",
+   "lat": 50.8969787,
+   "lng": -1.4070337,
+   "amenity": "restaurant",
+   "cuisine": "indian",
+   "hours": "",
+   "osm": "way/30914539"
+  },
+  {
+   "name": "Gatehouse 1833",
+   "lat": 50.8971093,
+   "lng": -1.4070913,
+   "amenity": "restaurant",
+   "cuisine": "regional",
+   "hours": "",
+   "osm": "node/6300482641"
+  },
+  {
+   "name": "Cherrywood Kitchen",
+   "lat": 50.8983792,
+   "lng": -1.4041575,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/11210413103"
+  },
+  {
+   "name": "Thyme",
+   "lat": 50.9017743,
+   "lng": -1.4082751,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/10210422713"
+  },
+  {
+   "name": "Nando's",
+   "lat": 50.9021532,
+   "lng": -1.4074194,
+   "amenity": "restaurant",
+   "cuisine": "chicken;portuguese",
+   "hours": "",
+   "osm": "node/4944303106"
+  },
+  {
+   "name": "TGI Fridays",
+   "lat": 50.9022784,
+   "lng": -1.4074141,
+   "amenity": "restaurant",
+   "cuisine": "american",
+   "hours": "",
+   "osm": "node/5294173177"
+  },
+  {
+   "name": "Wahaca",
+   "lat": 50.9023816,
+   "lng": -1.4073899,
+   "amenity": "restaurant",
+   "cuisine": "mexican",
+   "hours": "",
+   "osm": "node/5294173176"
+  },
+  {
+   "name": "Thaikhun",
+   "lat": 50.9019886,
+   "lng": -1.4069267,
+   "amenity": "restaurant",
+   "cuisine": "thai",
+   "hours": "",
+   "osm": "node/4605911053"
+  },
+  {
+   "name": "Cosmo",
+   "lat": 50.9024628,
+   "lng": -1.4072344,
+   "amenity": "restaurant",
+   "cuisine": "international",
+   "hours": "",
+   "osm": "node/5294173173"
+  },
+  {
+   "name": "La Collina",
+   "lat": 50.9009282,
+   "lng": -1.4042009,
+   "amenity": "restaurant",
+   "cuisine": "italian",
+   "hours": "",
+   "osm": "node/10942902852"
+  },
+  {
+   "name": "Anatolian",
+   "lat": 50.9009917,
+   "lng": -1.4037848,
+   "amenity": "restaurant",
+   "cuisine": "turkish",
+   "hours": "",
+   "osm": "node/6702834085"
+  },
+  {
+   "name": "Heavenly Desserts",
+   "lat": 50.9003898,
+   "lng": -1.4041854,
+   "amenity": "restaurant",
+   "cuisine": "coffee_shop;ice_cream",
+   "hours": "Su-Th 14:00-22:00; Fr,Sa 14:00-24:00",
+   "osm": "node/10135659817"
+  },
+  {
+   "name": "Tap & Tandoor",
+   "lat": 50.9021741,
+   "lng": -1.4066664,
+   "amenity": "restaurant",
+   "cuisine": "indian",
+   "hours": "",
+   "osm": "node/4605911051"
+  },
+  {
+   "name": "Purbani",
+   "lat": 50.8758161,
+   "lng": -1.3557576,
+   "amenity": "restaurant",
+   "cuisine": "indian",
+   "hours": "",
+   "osm": "way/1026758876"
+  },
+  {
+   "name": "Mayflower Restaurant",
+   "lat": 50.9090455,
+   "lng": -1.4090766,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "way/194171577"
+  },
+  {
+   "name": "Roppongi",
+   "lat": 50.9090934,
+   "lng": -1.4091713,
+   "amenity": "restaurant",
+   "cuisine": "japanese",
+   "hours": "",
+   "osm": "way/194171576"
+  },
+  {
+   "name": "Max's Brasserie",
+   "lat": 50.909078,
+   "lng": -1.4094026,
+   "amenity": "restaurant",
+   "cuisine": "italian",
+   "hours": "",
+   "osm": "way/194171579"
+  },
+  {
+   "name": "Soleto",
+   "lat": 50.9090764,
+   "lng": -1.4094856,
+   "amenity": "restaurant",
+   "cuisine": "italian",
+   "hours": "",
+   "osm": "way/194171544"
+  },
+  {
+   "name": "K.BAP",
+   "lat": 50.9090761,
+   "lng": -1.4095612,
+   "amenity": "restaurant",
+   "cuisine": "korean",
+   "hours": "",
+   "osm": "way/194171561"
+  },
+  {
+   "name": "Turtle Bay",
+   "lat": 50.9076944,
+   "lng": -1.404886,
+   "amenity": "restaurant",
+   "cuisine": "caribbean",
+   "hours": "Su-We 11:00-23:30, Th 11:00-00:30, Fr 11:00-01:00, Sa 10:00-01:00",
+   "osm": "node/10945124761"
+  },
+  {
+   "name": "Bacaro",
+   "lat": 50.8973479,
+   "lng": -1.3920403,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "way/217751346"
+  },
+  {
+   "name": "Banana Wharf",
+   "lat": 50.8969373,
+   "lng": -1.3908635,
+   "amenity": "restaurant",
+   "cuisine": "regional",
+   "hours": "",
+   "osm": "way/395874324"
+  },
+  {
+   "name": "Figurati!",
+   "lat": 50.8966637,
+   "lng": -1.391502,
+   "amenity": "restaurant",
+   "cuisine": "italian",
+   "hours": "",
+   "osm": "node/11455346018"
+  },
+  {
+   "name": "Menabrea",
+   "lat": 50.8966181,
+   "lng": -1.3915784,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/11455319662"
+  },
+  {
+   "name": "Metropolis",
+   "lat": 50.8971201,
+   "lng": -1.3939313,
+   "amenity": "restaurant",
+   "cuisine": "kebab;fast_food",
+   "hours": "",
+   "osm": "way/184354990"
+  },
+  {
+   "name": "The Dock House",
+   "lat": 50.8964577,
+   "lng": -1.392056,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/11455376818"
+  },
+  {
+   "name": "Pierogarnia",
+   "lat": 50.9081001,
+   "lng": -1.404103,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "way/704358240"
+  },
+  {
+   "name": "Grumpy Monkey",
+   "lat": 50.9081808,
+   "lng": -1.4041564,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "way/396968976"
+  },
+  {
+   "name": "Nando's",
+   "lat": 50.9082454,
+   "lng": -1.4041557,
+   "amenity": "restaurant",
+   "cuisine": "chicken;portuguese",
+   "hours": "",
+   "osm": "way/396967722"
+  },
+  {
+   "name": "Tang Chao Hot Pot Buffet",
+   "lat": 50.9084098,
+   "lng": -1.4043205,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "way/396966966"
+  },
+  {
+   "name": "Yun Noodle Bar",
+   "lat": 50.9087099,
+   "lng": -1.4044332,
+   "amenity": "restaurant",
+   "cuisine": "noodle",
+   "hours": "",
+   "osm": "way/168802136"
+  },
+  {
+   "name": "Swatow",
+   "lat": 50.9067218,
+   "lng": -1.404765,
+   "amenity": "restaurant",
+   "cuisine": "asian",
+   "hours": "",
+   "osm": "way/358349121"
+  },
+  {
+   "name": "Tangs",
+   "lat": 50.907132,
+   "lng": -1.4047816,
+   "amenity": "restaurant",
+   "cuisine": "chinese",
+   "hours": "Mo-Sa 12:00-14:00",
+   "osm": "way/372643029"
+  },
+  {
+   "name": "M' dim sum",
+   "lat": 50.9063831,
+   "lng": -1.4047419,
+   "amenity": "restaurant",
+   "cuisine": "asian",
+   "hours": "Mo-Su 11:00-22:00",
+   "osm": "way/358516066"
+  },
+  {
+   "name": "La Tavernetta Italian Restauran",
+   "lat": 50.9067749,
+   "lng": -1.4050383,
+   "amenity": "restaurant",
+   "cuisine": "italian",
+   "hours": "Mo-Sa 12:00-22:00; Su 12:00-20:00",
+   "osm": "node/13615894800"
+  },
+  {
+   "name": "Dao",
+   "lat": 50.9063337,
+   "lng": -1.4047401,
+   "amenity": "restaurant",
+   "cuisine": "chinese",
+   "hours": "Mo-Su 12:00-20:00",
+   "osm": "way/358516162"
+  },
+  {
+   "name": "Mint Dosa",
+   "lat": 50.9070432,
+   "lng": -1.4050434,
+   "amenity": "restaurant",
+   "cuisine": "indian",
+   "hours": "Mo-Su 12:00-23:00",
+   "osm": "node/671767282"
+  }
+ ]
 }

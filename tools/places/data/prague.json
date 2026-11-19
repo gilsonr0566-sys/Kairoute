@@ -1,0 +1,789 @@
+{
+ "key": "prague",
+ "name": "Prague",
+ "centre": {
+  "lat": 50.08398533333333,
+  "lng": 14.416964000000002
+ },
+ "sites": {},
+ "towns": {},
+ "ports": [],
+ "dayTrips": [],
+ "missing": [],
+ "cityEats": [
+  {
+   "name": "Jídelna - Cafeteria",
+   "lat": 50.0910277,
+   "lng": 14.3998058,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/14320809701"
+  },
+  {
+   "name": "Vikárka Restaurant",
+   "lat": 50.0911077,
+   "lng": 14.4001278,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/10834181705"
+  },
+  {
+   "name": "Paloma",
+   "lat": 50.0890543,
+   "lng": 14.4013645,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/6681114285"
+  },
+  {
+   "name": "Dvorek pod hradem",
+   "lat": 50.0888373,
+   "lng": 14.4011999,
+   "amenity": "restaurant",
+   "cuisine": "local",
+   "hours": "",
+   "osm": "node/13982400501"
+  },
+  {
+   "name": "U Mlynáře",
+   "lat": 50.0886708,
+   "lng": 14.4008261,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Mo-Su 11:00-22:00",
+   "osm": "node/295484389"
+  },
+  {
+   "name": "U Tří housliček",
+   "lat": 50.0886859,
+   "lng": 14.4011387,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/3393593687"
+  },
+  {
+   "name": "U Karlova Mostu",
+   "lat": 50.0854101,
+   "lng": 14.4131631,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/3154299217"
+  },
+  {
+   "name": "³Gracie",
+   "lat": 50.0854144,
+   "lng": 14.4132744,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Mo-Su 11:00-23:00",
+   "osm": "node/3154299218"
+  },
+  {
+   "name": "Mlýnec",
+   "lat": 50.0854101,
+   "lng": 14.4135949,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Tu 17:00-22:00; We-Su 11:30-15:00, 17:00-22:00",
+   "osm": "node/3154299219"
+  },
+  {
+   "name": "Kamenný Most",
+   "lat": 50.0856594,
+   "lng": 14.4140467,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/4450377689"
+  },
+  {
+   "name": "Art Café",
+   "lat": 50.0856009,
+   "lng": 14.4144954,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/6644519816"
+  },
+  {
+   "name": "Loca",
+   "lat": 50.0851416,
+   "lng": 14.4140303,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Mo,Tu 15:00-02:00, We,Th 15:00-03:00, Fr 15:00-04:00, Sa 11:00-04:00, Su 11:00-02:00",
+   "osm": "node/3620035646"
+  },
+  {
+   "name": "Blatnice",
+   "lat": 50.0846899,
+   "lng": 14.4200603,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Mo-Su 11:00-23:00",
+   "osm": "node/472662968"
+  },
+  {
+   "name": "Pivnice U Zlatého slona",
+   "lat": 50.0848839,
+   "lng": 14.4206879,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Mo-Su 10:00-23:00",
+   "osm": "node/3620482763"
+  },
+  {
+   "name": "U Stare Pani",
+   "lat": 50.0848935,
+   "lng": 14.419878,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Mo-Su 11:30-22:00",
+   "osm": "node/4642088991"
+  },
+  {
+   "name": "Chilli Point",
+   "lat": 50.0845061,
+   "lng": 14.4208237,
+   "amenity": "restaurant",
+   "cuisine": "chilli",
+   "hours": "11:00-23:00",
+   "osm": "node/4425311426"
+  },
+  {
+   "name": "Venue",
+   "lat": 50.0843052,
+   "lng": 14.4205614,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/296599448"
+  },
+  {
+   "name": "Zlatá Lyra",
+   "lat": 50.0850388,
+   "lng": 14.419868,
+   "amenity": "restaurant",
+   "cuisine": "regional",
+   "hours": "Mo,Su 12:00-20:00; Tu,We 12:00-21:00; Th-Sa 12:00-22:00",
+   "osm": "node/13265150779"
+  },
+  {
+   "name": "Rio's Vyšehrad",
+   "lat": 50.0642036,
+   "lng": 14.4171334,
+   "amenity": "restaurant",
+   "cuisine": "italian",
+   "hours": "Mo-Su 10:00-22:00",
+   "osm": "node/3475173910"
+  },
+  {
+   "name": "U Šemíka",
+   "lat": 50.0657708,
+   "lng": 14.4199913,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Mo-Su 11:30-23:30",
+   "osm": "node/3615466838"
+  },
+  {
+   "name": "U Kroka",
+   "lat": 50.0665833,
+   "lng": 14.4178461,
+   "amenity": "restaurant",
+   "cuisine": "regional",
+   "hours": "Mo-Sa 11:30-23:00",
+   "osm": "node/2704114704"
+  },
+  {
+   "name": "Habibi Bistro",
+   "lat": 50.0664058,
+   "lng": 14.4191055,
+   "amenity": "restaurant",
+   "cuisine": "arab;lebanese;oriental",
+   "hours": "Mo-Su 12:00-20:00",
+   "osm": "node/10943909807"
+  },
+  {
+   "name": "Bystro Café",
+   "lat": 50.0641149,
+   "lng": 14.4210947,
+   "amenity": "restaurant",
+   "cuisine": "coffee_shop",
+   "hours": "Mo-Su 10:00-20:00",
+   "osm": "node/13970696920"
+  },
+  {
+   "name": "Restaurace Pod Vyšehradem",
+   "lat": 50.0669842,
+   "lng": 14.4168171,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Mo-Fr 11:00-22:00; Sa,Su 12:00-22:00",
+   "osm": "node/4357400889"
+  },
+  {
+   "name": "La Scala",
+   "lat": 50.0874321,
+   "lng": 14.4229103,
+   "amenity": "restaurant",
+   "cuisine": "italian",
+   "hours": "Mo-Su 11:00-24:00",
+   "osm": "node/3183501713"
+  },
+  {
+   "name": "Burgergrill",
+   "lat": 50.0880515,
+   "lng": 14.4227032,
+   "amenity": "restaurant",
+   "cuisine": "burger",
+   "hours": "",
+   "osm": "node/5182475280"
+  },
+  {
+   "name": "Caffe Italia",
+   "lat": 50.0875493,
+   "lng": 14.4220539,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/1948155694"
+  },
+  {
+   "name": "Café U Týna",
+   "lat": 50.0874744,
+   "lng": 14.4220982,
+   "amenity": "restaurant",
+   "cuisine": "regional",
+   "hours": "Mo-Su 09:00-23:00",
+   "osm": "node/2742912673"
+  },
+  {
+   "name": "Maitrea",
+   "lat": 50.0883411,
+   "lng": 14.422479,
+   "amenity": "restaurant",
+   "cuisine": "asian;regional;international",
+   "hours": "Mo-Fr 11:30-23:00; Sa-Su 12:00-23:00",
+   "osm": "node/1258869798"
+  },
+  {
+   "name": "Erawan",
+   "lat": 50.08761,
+   "lng": 14.4237049,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/14131188708"
+  },
+  {
+   "name": "Stará Doba",
+   "lat": 50.0752706,
+   "lng": 14.4149579,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/9605723821"
+  },
+  {
+   "name": "Matylda",
+   "lat": 50.0761425,
+   "lng": 14.41358,
+   "amenity": "restaurant",
+   "cuisine": "italian",
+   "hours": "",
+   "osm": "node/1185931944"
+  },
+  {
+   "name": "Wok & Sushi",
+   "lat": 50.0764606,
+   "lng": 14.4143056,
+   "amenity": "restaurant",
+   "cuisine": "vietnamese",
+   "hours": "",
+   "osm": "node/316538987"
+  },
+  {
+   "name": "Nova Pinta",
+   "lat": 50.0762653,
+   "lng": 14.4151818,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/330632522"
+  },
+  {
+   "name": "Uzavřeno Da Antonio Dittrichova pizzeria napoletana",
+   "lat": 50.0762809,
+   "lng": 14.4151816,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "closed",
+   "osm": "node/10553924726"
+  },
+  {
+   "name": "San Carlo",
+   "lat": 50.0762364,
+   "lng": 14.4155617,
+   "amenity": "restaurant",
+   "cuisine": "italian_pizza;italian;pasta",
+   "hours": "Mo-Su 12:00-22:00",
+   "osm": "node/4157881493"
+  },
+  {
+   "name": "Restaurace U Staré synagogy",
+   "lat": 50.0899095,
+   "lng": 14.4187585,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/3475173904"
+  },
+  {
+   "name": "Les Moules",
+   "lat": 50.0906327,
+   "lng": 14.4180687,
+   "amenity": "restaurant",
+   "cuisine": "belgian",
+   "hours": "Mo-Su 11:30-00:00",
+   "osm": "node/296587488"
+  },
+  {
+   "name": "Pepenero",
+   "lat": 50.0907824,
+   "lng": 14.4192566,
+   "amenity": "restaurant",
+   "cuisine": "pizza;italian_pizza;italian",
+   "hours": "Mo-Su 11:00-22:00",
+   "osm": "node/296604443"
+  },
+  {
+   "name": "Kafka Hummus Café",
+   "lat": 50.0890958,
+   "lng": 14.4186581,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Mo-Su 09:00-18:00",
+   "osm": "node/296454184"
+  },
+  {
+   "name": "La Veranda",
+   "lat": 50.0902437,
+   "lng": 14.4199947,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Mo-Sa 12:00-23:00; Su off",
+   "osm": "node/1947138803"
+  },
+  {
+   "name": "Little Break???",
+   "lat": 50.090256,
+   "lng": 14.4202092,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "09:00-23:00",
+   "osm": "node/10733086119"
+  },
+  {
+   "name": "Turquoise",
+   "lat": 50.0895881,
+   "lng": 14.4163049,
+   "amenity": "restaurant",
+   "cuisine": "mediterranean",
+   "hours": "Tu-Su 10:00-20:00",
+   "osm": "node/12759353799"
+  },
+  {
+   "name": "Heimishe Trdelaich - Kosher trdelník & Di Shpayz kosher shop",
+   "lat": 50.0889181,
+   "lng": 14.4172047,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Mo-Th 10:00-20:00; Fr 10:00-19:00; Su 10:00-20:00",
+   "osm": "node/13570594301"
+  },
+  {
+   "name": "Alforno",
+   "lat": 50.0888794,
+   "lng": 14.4175415,
+   "amenity": "restaurant",
+   "cuisine": "italian",
+   "hours": "Mo-Su 11:00-23:00",
+   "osm": "node/2475659290"
+  },
+  {
+   "name": "Pátá Čtvrť",
+   "lat": 50.0889775,
+   "lng": 14.4179224,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Mo-Su 11:00-22:00",
+   "osm": "node/3343392550"
+  },
+  {
+   "name": "Kavárna Obecní dům",
+   "lat": 50.0874868,
+   "lng": 14.4280128,
+   "amenity": "restaurant",
+   "cuisine": "coffee_shop;regional",
+   "hours": "Mo-Su 08:00-22:00",
+   "osm": "node/1412851100"
+  },
+  {
+   "name": "Plzeňská restaurace",
+   "lat": 50.0877647,
+   "lng": 14.4281928,
+   "amenity": "restaurant",
+   "cuisine": "regional",
+   "hours": "Mo-Su 11:30-23:00",
+   "osm": "node/3695883460"
+  },
+  {
+   "name": "Art Nouveau",
+   "lat": 50.0878069,
+   "lng": 14.4282006,
+   "amenity": "restaurant",
+   "cuisine": "french",
+   "hours": "Mo-Su 12:00-23:00",
+   "osm": "node/1412851103"
+  },
+  {
+   "name": "SaSaZu",
+   "lat": 50.0870272,
+   "lng": 14.4266468,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Th-Sa 11:00-23:00, Fr-Mo 11:00-24:00",
+   "osm": "node/6644367058"
+  },
+  {
+   "name": "El Gaucho",
+   "lat": 50.0870989,
+   "lng": 14.4264192,
+   "amenity": "restaurant",
+   "cuisine": "steak_house",
+   "hours": "11:00+",
+   "osm": "node/4214198538"
+  },
+  {
+   "name": "Brasileiro Slovanský dům",
+   "lat": 50.086338,
+   "lng": 14.4277353,
+   "amenity": "restaurant",
+   "cuisine": "brazilian",
+   "hours": "Tu-Sa 12:00-24:00; Mo, Su 12:00-23:00",
+   "osm": "node/3602307840"
+  },
+  {
+   "name": "Mangal Restaurant",
+   "lat": 50.0793328,
+   "lng": 14.4295775,
+   "amenity": "restaurant",
+   "cuisine": "turkish",
+   "hours": "Mo-Th, Su 11:00-23:00; Fr, Sa 11:00-00:00",
+   "osm": "node/3183565799"
+  },
+  {
+   "name": "Výtopna Railway Restaurant - Wenceslas Square",
+   "lat": 50.0801481,
+   "lng": 14.4285752,
+   "amenity": "restaurant",
+   "cuisine": "burger;czech;chicken",
+   "hours": "Mo-Su 11:00-00:00",
+   "osm": "node/1272064729"
+  },
+  {
+   "name": "Čestr",
+   "lat": 50.0796644,
+   "lng": 14.4325007,
+   "amenity": "restaurant",
+   "cuisine": "czech",
+   "hours": "Mo-Fr 11:30-23:00, Sa 12:00-23:00, Su 12:00-22:00",
+   "osm": "node/2169459498"
+  },
+  {
+   "name": "Fivuza",
+   "lat": 50.0804387,
+   "lng": 14.4281658,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Mo-Su 09:00-22:00",
+   "osm": "node/3183542263"
+  },
+  {
+   "name": "Husinec",
+   "lat": 50.0784428,
+   "lng": 14.4292675,
+   "amenity": "restaurant",
+   "cuisine": "regional",
+   "hours": "Mo-Su 11:00-23:00",
+   "osm": "node/3470917450"
+  },
+  {
+   "name": "Galata Restaurant",
+   "lat": 50.0814928,
+   "lng": 14.4303106,
+   "amenity": "restaurant",
+   "cuisine": "kebab",
+   "hours": "",
+   "osm": "node/3780928023"
+  },
+  {
+   "name": "Beanz",
+   "lat": 50.0822417,
+   "lng": 14.426965,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Mo-Su 11:00-22:00",
+   "osm": "node/296629818"
+  },
+  {
+   "name": "Triton",
+   "lat": 50.0827216,
+   "lng": 14.4251832,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Tu-Sa 17:00-23:00",
+   "osm": "node/3470883148"
+  },
+  {
+   "name": "Bohéma Anah",
+   "lat": 50.081977,
+   "lng": 14.4273244,
+   "amenity": "restaurant",
+   "cuisine": "chinese",
+   "hours": "Mo-Su 10:30-02:00",
+   "osm": "node/4197680667"
+  },
+  {
+   "name": "Don Kitchen",
+   "lat": 50.0818995,
+   "lng": 14.4249978,
+   "amenity": "restaurant",
+   "cuisine": "asian",
+   "hours": "09:00-23:00",
+   "osm": "node/12770424159"
+  },
+  {
+   "name": "Vietfood Restaurant",
+   "lat": 50.0829306,
+   "lng": 14.4270749,
+   "amenity": "restaurant",
+   "cuisine": "vietnamese",
+   "hours": "Mo-Su 10:30-22:30",
+   "osm": "node/3722062523"
+  },
+  {
+   "name": "Jídelna Světozor",
+   "lat": 50.081723,
+   "lng": 14.4250783,
+   "amenity": "restaurant",
+   "cuisine": "regional",
+   "hours": "Mo-Fr 11:00-15:00",
+   "osm": "node/13243827901"
+  },
+  {
+   "name": "A la petite Eiffel",
+   "lat": 50.083669,
+   "lng": 14.395051,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Fr-Mo 11:00-17:00",
+   "osm": "node/7054600885"
+  },
+  {
+   "name": "Restaurant Petřín",
+   "lat": 50.0796058,
+   "lng": 14.3940242,
+   "amenity": "restaurant",
+   "cuisine": "regional",
+   "hours": "Mo-Fr 11:30-24:00; Sa-Su 12:00-24:00",
+   "osm": "node/4715874724"
+  },
+  {
+   "name": "Menza Strahov",
+   "lat": 50.0791439,
+   "lng": 14.3931995,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Mo-Fr 06:30-09:30, Mo-Th 11:00-20:00, Fr 11:00-19:30",
+   "osm": "node/13970697428"
+  },
+  {
+   "name": "Restaurant Nebozízek",
+   "lat": 50.0819812,
+   "lng": 14.3987936,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Jun-Aug Mo-Su 11:00-23:00; Sep-May Mo-Su 12:00-23:00",
+   "osm": "node/13970697368"
+  },
+  {
+   "name": "Velkopřevorský mlýn",
+   "lat": 50.0862941,
+   "lng": 14.4077923,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/1462910372"
+  },
+  {
+   "name": "Al Ponte Prague",
+   "lat": 50.0868316,
+   "lng": 14.40732,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/14020642601"
+  },
+  {
+   "name": "Kočár z Vídně",
+   "lat": 50.0868426,
+   "lng": 14.4073914,
+   "amenity": "restaurant",
+   "cuisine": "regional;austrian",
+   "hours": "",
+   "osm": "node/4985371022"
+  },
+  {
+   "name": "Casanova",
+   "lat": 50.0869167,
+   "lng": 14.4071344,
+   "amenity": "restaurant",
+   "cuisine": "italian",
+   "hours": "Mo-Sa 11:00-23:00",
+   "osm": "node/6644545819"
+  },
+  {
+   "name": "The Wall Pub",
+   "lat": 50.086286,
+   "lng": 14.4080756,
+   "amenity": "restaurant",
+   "cuisine": "czech",
+   "hours": "",
+   "osm": "node/3007304372"
+  },
+  {
+   "name": "Plný Pekáč",
+   "lat": 50.0869257,
+   "lng": 14.4060611,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/5832115573"
+  },
+  {
+   "name": "Černá madona",
+   "lat": 50.0870858,
+   "lng": 14.4255067,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Mo-Su 08:00-00:00",
+   "osm": "node/7109621387"
+  },
+  {
+   "name": "Zlaty Lev",
+   "lat": 50.0868721,
+   "lng": 14.4253357,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/11033025758"
+  },
+  {
+   "name": "U Zlatého Lva",
+   "lat": 50.0868548,
+   "lng": 14.4252407,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Mo-Su 11:00-23:00",
+   "osm": "node/3374919243"
+  },
+  {
+   "name": "Na Ovocném Trhu",
+   "lat": 50.0868455,
+   "lng": 14.4251958,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Mo-Su 11:00-23:00",
+   "osm": "node/10269888909"
+  },
+  {
+   "name": "Red Eagle",
+   "lat": 50.0872447,
+   "lng": 14.4252718,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/9721282328"
+  },
+  {
+   "name": "U Templářů",
+   "lat": 50.087311,
+   "lng": 14.4258295,
+   "amenity": "restaurant",
+   "cuisine": "regional",
+   "hours": "Mo-Su 10:00-00:00",
+   "osm": "node/4214263326"
+  },
+  {
+   "name": "El Toro Negro",
+   "lat": 50.086861,
+   "lng": 14.4211045,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Mo-Su 09:00-01:00",
+   "osm": "node/1977821255"
+  },
+  {
+   "name": "420",
+   "lat": 50.0866959,
+   "lng": 14.4208627,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/6919368186"
+  },
+  {
+   "name": "Oliva Verde",
+   "lat": 50.0866084,
+   "lng": 14.4209144,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/3620445228"
+  },
+  {
+   "name": "Bílý koníček",
+   "lat": 50.08698,
+   "lng": 14.4214958,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/3620482769"
+  },
+  {
+   "name": "Al Minuto",
+   "lat": 50.0867313,
+   "lng": 14.4199897,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/3620445225"
+  },
+  {
+   "name": "Staroměstská restaurace",
+   "lat": 50.0870294,
+   "lng": 14.4216285,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Mo-Su 09:00-00:00",
+   "osm": "node/1258869789"
+  }
+ ]
+}

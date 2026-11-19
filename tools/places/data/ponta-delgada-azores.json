@@ -119,5 +119,223 @@
    "wikidata": "",
    "note": "Plain white and brown on the outside, but colorful on the inside."
   }
+ ],
+ "cityEats": [
+  {
+   "name": "Floresta Lisbonense",
+   "lat": 37.737873,
+   "lng": -25.6714111,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Mo-Fr 10:00-22:00; Sa-Su off",
+   "osm": "node/5540394934"
+  },
+  {
+   "name": "Bella Italia",
+   "lat": 37.7383242,
+   "lng": -25.6725302,
+   "amenity": "restaurant",
+   "cuisine": "italian",
+   "hours": "",
+   "osm": "node/9906125099"
+  },
+  {
+   "name": "O PataNisca",
+   "lat": 37.7386283,
+   "lng": -25.6722208,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/7159146386"
+  },
+  {
+   "name": "Cais da Sardinha",
+   "lat": 37.7374621,
+   "lng": -25.6699343,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Tu-Su 12:00-22:00",
+   "osm": "node/5536626800"
+  },
+  {
+   "name": "Pizzaria Donatello",
+   "lat": 37.7384775,
+   "lng": -25.6707732,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/5542557783"
+  },
+  {
+   "name": "Paraíso das Delícias",
+   "lat": 37.7390704,
+   "lng": -25.6727313,
+   "amenity": "restaurant",
+   "cuisine": "regional",
+   "hours": "",
+   "osm": "node/6513271252"
+  },
+  {
+   "name": "Reserva Wine & Tapas",
+   "lat": 37.7388506,
+   "lng": -25.6688794,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/2586905630"
+  },
+  {
+   "name": "Alianca",
+   "lat": 37.7390522,
+   "lng": -25.6695192,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/4857197021"
+  },
+  {
+   "name": "O Roberto",
+   "lat": 37.7387827,
+   "lng": -25.6688382,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Mo, Tu, Th, Fr, Su 12:00-15:00, 18:30-22:00; We 18:30-22:00",
+   "osm": "node/759570899"
+  },
+  {
+   "name": "Restaurante Nacional",
+   "lat": 37.7390416,
+   "lng": -25.6697796,
+   "amenity": "restaurant",
+   "cuisine": "regional",
+   "hours": "Mo-Fr 11:45-15:00,18:30-22:30, Sa 18:30-22:30, Su off",
+   "osm": "node/1433881169"
+  },
+  {
+   "name": "Adega Regional",
+   "lat": 37.7390802,
+   "lng": -25.6701556,
+   "amenity": "restaurant",
+   "cuisine": "regional",
+   "hours": "",
+   "osm": "node/1944049011"
+  },
+  {
+   "name": "Arriba",
+   "lat": 37.7389976,
+   "lng": -25.6702683,
+   "amenity": "restaurant",
+   "cuisine": "mexican",
+   "hours": "",
+   "osm": "node/759526254"
+  },
+  {
+   "name": "Restaurante O Museu",
+   "lat": 37.7435037,
+   "lng": -25.6678123,
+   "amenity": "restaurant",
+   "cuisine": "regional",
+   "hours": "",
+   "osm": "node/759361937"
+  },
+  {
+   "name": "Super Prato",
+   "lat": 37.7434083,
+   "lng": -25.6670422,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "\"Mittagspausen\"",
+   "osm": "node/760604282"
+  },
+  {
+   "name": "Na Boavista",
+   "lat": 37.7440304,
+   "lng": -25.6685718,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/12063908208"
+  },
+  {
+   "name": "Supléxio",
+   "lat": 37.7426314,
+   "lng": -25.6691028,
+   "amenity": "restaurant",
+   "cuisine": "sandwich;burger;regional",
+   "hours": "Mo-Th 12:00-22:30; Fr-Sa 12:00-00:30",
+   "osm": "node/4781833822"
+  },
+  {
+   "name": "A Grega",
+   "lat": 37.7417692,
+   "lng": -25.6680353,
+   "amenity": "restaurant",
+   "cuisine": "greek",
+   "hours": "Tu-Th 12:00-21:00; Fr,Sa 12:00-22:00",
+   "osm": "node/7157141498"
+  },
+  {
+   "name": "Rotas da ilha verde",
+   "lat": 37.7424192,
+   "lng": -25.6691772,
+   "amenity": "restaurant",
+   "cuisine": "regional",
+   "hours": "Tu-Th 12:00-15:00,19:00-23:00; Fr 12:00-15:00,18:00-24:00; Sa 18:00-24:00; Mo,Su,PH off",
+   "osm": "node/1446361224"
+  },
+  {
+   "name": "Cervejaria portas da cidade",
+   "lat": 37.739858,
+   "lng": -25.6678743,
+   "amenity": "restaurant",
+   "cuisine": "local",
+   "hours": "06:00-23:00",
+   "osm": "node/9121983017"
+  },
+  {
+   "name": "Õtaka",
+   "lat": 37.740452,
+   "lng": -25.6684357,
+   "amenity": "restaurant",
+   "cuisine": "regional;japanese;peruvian;fusion",
+   "hours": "Tu-Sa 18:30-22:00",
+   "osm": "node/9683317692"
+  },
+  {
+   "name": "Mascote",
+   "lat": 37.7398731,
+   "lng": -25.6678091,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/9121973018"
+  },
+  {
+   "name": "Burgundy",
+   "lat": 37.7400741,
+   "lng": -25.668821,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/4442998352"
+  },
+  {
+   "name": "Casa Nostra Restaurante",
+   "lat": 37.7406772,
+   "lng": -25.6683705,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Mo-Su 12:00-14:30, 18:30-22:30",
+   "osm": "node/9826348818"
+  },
+  {
+   "name": "Jonny's Smokehouse",
+   "lat": 37.7404505,
+   "lng": -25.6676228,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Mo-Su 11:00-22:00",
+   "osm": "node/9121973119"
+  }
  ]
 }

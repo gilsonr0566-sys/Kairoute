@@ -1,0 +1,159 @@
+{
+ "key": "corpus christi",
+ "name": "Corpus Christi",
+ "centre": {
+  "lat": 27.776381999999998,
+  "lng": -97.38234466666668
+ },
+ "sites": {},
+ "towns": {},
+ "ports": [],
+ "dayTrips": [],
+ "missing": [],
+ "cityEats": [
+  {
+   "name": "Pier 99",
+   "lat": 27.8157241,
+   "lng": -97.390838,
+   "amenity": "restaurant",
+   "cuisine": "seafood",
+   "hours": "Su-Th 11:00-21:00; Fr-Sa 11:00-22:00",
+   "osm": "way/882511286"
+  },
+  {
+   "name": "Thai Spice",
+   "lat": 27.7966169,
+   "lng": -97.3929438,
+   "amenity": "restaurant",
+   "cuisine": "thai",
+   "hours": "",
+   "osm": "way/530451929"
+  },
+  {
+   "name": "Harrison's Landing",
+   "lat": 27.7969799,
+   "lng": -97.3889604,
+   "amenity": "restaurant",
+   "cuisine": "seafood",
+   "hours": "",
+   "osm": "way/463024168"
+  },
+  {
+   "name": "Vietnam Restaurant",
+   "lat": 27.797936,
+   "lng": -97.392883,
+   "amenity": "restaurant",
+   "cuisine": "vietnamese",
+   "hours": "",
+   "osm": "node/8223520675"
+  },
+  {
+   "name": "Landry's Seafood House",
+   "lat": 27.7977361,
+   "lng": -97.3889182,
+   "amenity": "restaurant",
+   "cuisine": "seafood",
+   "hours": "Su 12:00-21:00; Mo-Th 11:30-21:00; Fr-Sa 11:30-21:30",
+   "osm": "relation/20595400"
+  },
+  {
+   "name": "Gallery 41",
+   "lat": 27.792006,
+   "lng": -97.3925426,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Tu-Su 11:00-17:00",
+   "osm": "node/11747169074"
+  },
+  {
+   "name": "Citrus Bistro",
+   "lat": 27.7922483,
+   "lng": -97.3922123,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Mo-Fr 11:00-14:30; Su 10:30-14:30",
+   "osm": "node/6531348750"
+  },
+  {
+   "name": "Marty McPies",
+   "lat": 27.7937365,
+   "lng": -97.3924985,
+   "amenity": "restaurant",
+   "cuisine": "pizza",
+   "hours": "Mo-Th 11:00-21:00; Fr-Sa 11:00-22:00",
+   "osm": "node/13767262664"
+  },
+  {
+   "name": "Marty McPies",
+   "lat": 27.7937806,
+   "lng": -97.3925996,
+   "amenity": "restaurant",
+   "cuisine": "pizza",
+   "hours": "",
+   "osm": "way/1547504558"
+  },
+  {
+   "name": "Water Street Oyster Bar",
+   "lat": 27.7943517,
+   "lng": -97.3934585,
+   "amenity": "restaurant",
+   "cuisine": "seafood",
+   "hours": "Su-Th 11:00-22:00; Fr-Sa 11:00-23:00",
+   "osm": "node/9550456790"
+  },
+  {
+   "name": "Water Street Sushi Room",
+   "lat": 27.7944409,
+   "lng": -97.3936412,
+   "amenity": "restaurant",
+   "cuisine": "sushi",
+   "hours": "11:00-22:00",
+   "osm": "node/9550456774"
+  },
+  {
+   "name": "Mesquite Street Pizza and Pasta Co.",
+   "lat": 27.797553,
+   "lng": -97.3951707,
+   "amenity": "restaurant",
+   "cuisine": "pizza;pasta",
+   "hours": "Tu 11:00-14:00; We-Th 11:00-22:00; Fr 11:00-23:00; Sa 12:00-23:00; Su 15:00-20:00",
+   "osm": "way/525814301"
+  },
+  {
+   "name": "House of Rock",
+   "lat": 27.7976725,
+   "lng": -97.3952732,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "way/525814302"
+  },
+  {
+   "name": "Fajitaville",
+   "lat": 27.8208745,
+   "lng": -97.3880203,
+   "amenity": "restaurant",
+   "cuisine": "mexican",
+   "hours": "",
+   "osm": "way/521924429"
+  },
+  {
+   "name": "Yo Philly Cheese Steaks & Subs",
+   "lat": 27.8202909,
+   "lng": -97.3894357,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Su 11:00-19:00; Mo-Th 11:00-21:00; Fr-Sa 11:00-22:00",
+   "osm": "way/882577552"
+  },
+  {
+   "name": "Taqueria Almedia #1",
+   "lat": 27.6434493,
+   "lng": -97.2984712,
+   "amenity": "restaurant",
+   "cuisine": "mexican",
+   "hours": "Mo-Sa 04:30-21:00; Su 04:30-15:00",
+   "osm": "way/462900660"
+  }
+ ]
+}

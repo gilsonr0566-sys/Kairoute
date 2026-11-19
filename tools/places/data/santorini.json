@@ -2,8 +2,8 @@
  "key": "santorini",
  "name": "Santorini",
  "centre": {
-  "lat": 36.4059,
-  "lng": 25.4183
+  "lat": 36.405860000000004,
+  "lng": 25.41832
  },
  "sites": {},
  "towns": {},
@@ -133,5 +133,196 @@
   "name": "Fira old port (tender landing)",
   "known": false,
   "island": false
- }
+ },
+ "cityEats": [
+  {
+   "name": "Esperisma",
+   "lat": 36.4166311,
+   "lng": 25.4310216,
+   "amenity": "restaurant",
+   "cuisine": "fine_dining;greek;mediterranean",
+   "hours": "Mo-Su 12:30-01:00",
+   "osm": "node/8592432419"
+  },
+  {
+   "name": "Restaurant Aris",
+   "lat": 36.4173638,
+   "lng": 25.4311014,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Mo-Su 12:00-23:00",
+   "osm": "node/13082499601"
+  },
+  {
+   "name": "Metropolis Str Restaurant",
+   "lat": 36.416695,
+   "lng": 25.4315115,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/2484183319"
+  },
+  {
+   "name": "The Vine",
+   "lat": 36.4174024,
+   "lng": 25.4318422,
+   "amenity": "restaurant",
+   "cuisine": "greek",
+   "hours": "",
+   "osm": "node/5941416650"
+  },
+  {
+   "name": "Κουκούμαβλος",
+   "lat": 36.4175129,
+   "lng": 25.4317848,
+   "amenity": "restaurant",
+   "cuisine": "greek",
+   "hours": "",
+   "osm": "node/5656026522"
+  },
+  {
+   "name": "Naoussa",
+   "lat": 36.4162061,
+   "lng": 25.4313585,
+   "amenity": "restaurant",
+   "cuisine": "greek",
+   "hours": "",
+   "osm": "node/3752038558"
+  },
+  {
+   "name": "Terpsi",
+   "lat": 36.4615218,
+   "lng": 25.3754241,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/6647208485"
+  },
+  {
+   "name": "Karma",
+   "lat": 36.4619379,
+   "lng": 25.3747955,
+   "amenity": "restaurant",
+   "cuisine": "regional",
+   "hours": "Mo-Su 13:30-23:00",
+   "osm": "node/6419236296"
+  },
+  {
+   "name": "Pelekanos",
+   "lat": 36.4615953,
+   "lng": 25.3747769,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/4702950293"
+  },
+  {
+   "name": "Strogili",
+   "lat": 36.4614274,
+   "lng": 25.374533,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/5709787524"
+  },
+  {
+   "name": "Lotza",
+   "lat": 36.4614391,
+   "lng": 25.3743046,
+   "amenity": "restaurant",
+   "cuisine": "greek",
+   "hours": "",
+   "osm": "node/2349271627"
+  },
+  {
+   "name": "Καντούνι",
+   "lat": 36.4626264,
+   "lng": 25.3757223,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Apr-Oct",
+   "osm": "node/4970302836"
+  },
+  {
+   "name": "Rosamary",
+   "lat": 36.383527,
+   "lng": 25.4501535,
+   "amenity": "restaurant",
+   "cuisine": "greek",
+   "hours": "",
+   "osm": "node/4312634474"
+  },
+  {
+   "name": "Kallisti",
+   "lat": 36.3823382,
+   "lng": 25.4495864,
+   "amenity": "restaurant",
+   "cuisine": "mediterranean;italian",
+   "hours": "",
+   "osm": "node/4425720235"
+  },
+  {
+   "name": "Brusco",
+   "lat": 36.3824746,
+   "lng": 25.4491324,
+   "amenity": "restaurant",
+   "cuisine": "greek",
+   "hours": "",
+   "osm": "node/4312634426"
+  },
+  {
+   "name": "Το Καντούνι",
+   "lat": 36.3824897,
+   "lng": 25.4490667,
+   "amenity": "restaurant",
+   "cuisine": "greek",
+   "hours": "",
+   "osm": "node/4312634427"
+  },
+  {
+   "name": "Rymidi",
+   "lat": 36.3818727,
+   "lng": 25.4495421,
+   "amenity": "restaurant",
+   "cuisine": "greek",
+   "hours": "",
+   "osm": "node/11051018416"
+  },
+  {
+   "name": "Madame Sousou",
+   "lat": 36.38532,
+   "lng": 25.4518265,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/13181064601"
+  },
+  {
+   "name": "Barolo Restaurant",
+   "lat": 36.4154874,
+   "lng": 25.4316366,
+   "amenity": "restaurant",
+   "cuisine": "mediterranean",
+   "hours": "",
+   "osm": "node/13621891602"
+  },
+  {
+   "name": "Ladocolla",
+   "lat": 36.4157963,
+   "lng": 25.4330164,
+   "amenity": "restaurant",
+   "cuisine": "greek",
+   "hours": "",
+   "osm": "node/6491658986"
+  },
+  {
+   "name": "Med Food",
+   "lat": 36.4159,
+   "lng": 25.4329777,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/10846415721"
+  }
+ ]
 }

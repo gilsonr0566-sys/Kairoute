@@ -461,5 +461,205 @@
   "lng": 35.0361763,
   "known": true,
   "island": false
- }
+ },
+ "cityEats": [
+  {
+   "name": "Abu Shukri",
+   "lat": 31.7795965,
+   "lng": 35.2325052,
+   "amenity": "restaurant",
+   "cuisine": "regional",
+   "hours": "",
+   "osm": "node/4995235125"
+  },
+  {
+   "name": "Tokyo",
+   "lat": 31.7753962,
+   "lng": 35.2324547,
+   "amenity": "restaurant",
+   "cuisine": "japanese",
+   "hours": "",
+   "osm": "node/13535438303"
+  },
+  {
+   "name": "Amigo emil",
+   "lat": 31.7791408,
+   "lng": 35.2300384,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/5018172023"
+  },
+  {
+   "name": "Costas Greek Restaurant",
+   "lat": 31.7780284,
+   "lng": 35.2289792,
+   "amenity": "restaurant",
+   "cuisine": "greek",
+   "hours": "",
+   "osm": "node/6465228685"
+  },
+  {
+   "name": "Celia restaurant",
+   "lat": 31.7775631,
+   "lng": 35.2301772,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/7431513885"
+  },
+  {
+   "name": "Papa Andreas",
+   "lat": 31.7772387,
+   "lng": 35.2298932,
+   "amenity": "restaurant",
+   "cuisine": "regional",
+   "hours": "",
+   "osm": "way/620317530"
+  },
+  {
+   "name": "Jaber bakery",
+   "lat": 31.7799477,
+   "lng": 35.2291513,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/4817475223"
+  },
+  {
+   "name": "Fayruz Restaurant",
+   "lat": 31.7768965,
+   "lng": 35.2277398,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Mo-Su 11:00-21:00",
+   "osm": "node/13419278801"
+  },
+  {
+   "name": "Lavan at the Cinemateque",
+   "lat": 31.769991,
+   "lng": 35.2259805,
+   "amenity": "restaurant",
+   "cuisine": "international",
+   "hours": "",
+   "osm": "node/1404739176"
+  },
+  {
+   "name": "בית בגיא",
+   "lat": 31.7672368,
+   "lng": 35.2293044,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/8812310017"
+  },
+  {
+   "name": "Nafoura",
+   "lat": 31.7771802,
+   "lng": 35.2273492,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/6767547288"
+  },
+  {
+   "name": "Armenian Tavern",
+   "lat": 31.7754913,
+   "lng": 35.2288694,
+   "amenity": "restaurant",
+   "cuisine": "armenian",
+   "hours": "",
+   "osm": "node/5708558921"
+  },
+  {
+   "name": "The Eucalyptus Restaurant",
+   "lat": 31.7745928,
+   "lng": 35.2270496,
+   "amenity": "restaurant",
+   "cuisine": "regional;local",
+   "hours": "Su-Th 18:00-23:00; Sa 20:15-23:00",
+   "osm": "node/4323468589"
+  },
+  {
+   "name": "Rimon",
+   "lat": 31.7773041,
+   "lng": 35.2258472,
+   "amenity": "restaurant",
+   "cuisine": "italian",
+   "hours": "",
+   "osm": "node/321743226"
+  },
+  {
+   "name": "Rockefeller Restaurant",
+   "lat": 31.7859462,
+   "lng": 35.2348923,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/1359328747"
+  },
+  {
+   "name": "Al Zahra",
+   "lat": 31.7862392,
+   "lng": 35.2333022,
+   "amenity": "restaurant",
+   "cuisine": "Palestinian",
+   "hours": "",
+   "osm": "node/10554820206"
+  },
+  {
+   "name": "ZAD restaurant",
+   "lat": 31.7844734,
+   "lng": 35.2323019,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/2423800365"
+  },
+  {
+   "name": "dubai restaurant",
+   "lat": 31.7843824,
+   "lng": 35.2322061,
+   "amenity": "restaurant",
+   "cuisine": "regional",
+   "hours": "",
+   "osm": "node/4056076136"
+  },
+  {
+   "name": "Panoramic Golden City Restaurant Cafe Roof",
+   "lat": 31.7776062,
+   "lng": 35.2298801,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/14071754490"
+  },
+  {
+   "name": "Samara Restaurant Cafe",
+   "lat": 31.7767974,
+   "lng": 35.2281645,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/7090301385"
+  },
+  {
+   "name": "Basti",
+   "lat": 31.7798972,
+   "lng": 35.2320515,
+   "amenity": "restaurant",
+   "cuisine": "regional",
+   "hours": "",
+   "osm": "node/4104487735"
+  },
+  {
+   "name": "Brasserie",
+   "lat": 31.7654343,
+   "lng": 35.1613093,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "way/253613069"
+  }
+ ]
 }

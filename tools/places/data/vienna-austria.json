@@ -1500,5 +1500,1690 @@
   "lat": 48.20513399999999,
   "lng": 16.370664666666666
  },
- "wikivoyage": "Vienna"
+ "wikivoyage": "Vienna",
+ "cityEats": [
+  {
+   "name": "Joseph II Schloss-Restaurant Schönbrunn",
+   "lat": 48.1859728,
+   "lng": 16.3150285,
+   "amenity": "restaurant",
+   "cuisine": "austrian",
+   "hours": "Mo-Su 10:00-22:00",
+   "osm": "node/12085769399"
+  },
+  {
+   "name": "Kutscher G'wölb",
+   "lat": 48.1865203,
+   "lng": 16.3099257,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/2537832053"
+  },
+  {
+   "name": "Stöckl im Park",
+   "lat": 48.192456,
+   "lng": 16.3789812,
+   "amenity": "restaurant",
+   "cuisine": "regional",
+   "hours": "Mo-Su,PH 11:30-23:30",
+   "osm": "node/7297115939"
+  },
+  {
+   "name": "Jarita’s Indian Kitchen",
+   "lat": 48.1939497,
+   "lng": 16.3774151,
+   "amenity": "restaurant",
+   "cuisine": "indian",
+   "hours": "Tu-Su 11:30-22:30",
+   "osm": "node/12923065375"
+  },
+  {
+   "name": "Art Corner",
+   "lat": 48.1912462,
+   "lng": 16.3793496,
+   "amenity": "restaurant",
+   "cuisine": "greek",
+   "hours": "Mo-Su 09:00-23:00",
+   "osm": "node/307433233"
+  },
+  {
+   "name": "Haas & Haas",
+   "lat": 48.207946,
+   "lng": 16.3739521,
+   "amenity": "restaurant",
+   "cuisine": "international",
+   "hours": "Mo-Sa 08:00-20:00; Su,PH 09:00-18:00",
+   "osm": "node/4958728806"
+  },
+  {
+   "name": "Ristorante Firenze Enoteca",
+   "lat": 48.2078671,
+   "lng": 16.3723947,
+   "amenity": "restaurant",
+   "cuisine": "italian",
+   "hours": "Mo-Su 12:00-22:00",
+   "osm": "node/956430162"
+  },
+  {
+   "name": "Café am Dom",
+   "lat": 48.2086271,
+   "lng": 16.3719733,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/948462504"
+  },
+  {
+   "name": "Chamäleon",
+   "lat": 48.2077601,
+   "lng": 16.3743609,
+   "amenity": "restaurant",
+   "cuisine": "swiss",
+   "hours": "Tu-Sa 11:00-22:00; Su 11:00-18:00",
+   "osm": "node/567104171"
+  },
+  {
+   "name": "Miznon",
+   "lat": 48.2083537,
+   "lng": 16.3747538,
+   "amenity": "restaurant",
+   "cuisine": "jewish;israeli",
+   "hours": "Tu-Sa 12:00-23:00",
+   "osm": "node/478928080"
+  },
+  {
+   "name": "Mae Aurel",
+   "lat": 48.2085197,
+   "lng": 16.3747893,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/929100304"
+  },
+  {
+   "name": "SiL",
+   "lat": 48.2031745,
+   "lng": 16.3628708,
+   "amenity": "restaurant",
+   "cuisine": "breakfast;cake;international;coffee_shop",
+   "hours": "Tu-Su 09:00-22:00",
+   "osm": "node/11112205868"
+  },
+  {
+   "name": "MiloSun Asian Kitchen",
+   "lat": 48.2030841,
+   "lng": 16.3627552,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Tu-Su,PH 11:00-21:30; Mo off",
+   "osm": "node/13121619601"
+  },
+  {
+   "name": "Pho Cho Lon",
+   "lat": 48.2030215,
+   "lng": 16.3626873,
+   "amenity": "restaurant",
+   "cuisine": "vietnamese",
+   "hours": "Tu-Su 11:00-21:00",
+   "osm": "node/3489171240"
+  },
+  {
+   "name": "Ganesha",
+   "lat": 48.2031014,
+   "lng": 16.3637766,
+   "amenity": "restaurant",
+   "cuisine": "indian",
+   "hours": "Mo-Sa 11:00-14:00, 17:00-22:00",
+   "osm": "node/3489171239"
+  },
+  {
+   "name": "MQ daily",
+   "lat": 48.2033682,
+   "lng": 16.3590228,
+   "amenity": "restaurant",
+   "cuisine": "organic",
+   "hours": "Tu, Fr, Sa 09:00-00:00; Mo-We, Su, PH 09:00-24:00",
+   "osm": "node/11967780564"
+  },
+  {
+   "name": "SALT&honey",
+   "lat": 48.202147,
+   "lng": 16.3624718,
+   "amenity": "restaurant",
+   "cuisine": "breakfast;coffee_shop",
+   "hours": "Mo-We 08:00-16:00; Th-Su 08:00-22:00",
+   "osm": "node/13236554401"
+  },
+  {
+   "name": "Rote Bar",
+   "lat": 48.2040003,
+   "lng": 16.3697108,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/6326749207"
+  },
+  {
+   "name": "Grüne Bar",
+   "lat": 48.204031,
+   "lng": 16.3699788,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/6326749206"
+  },
+  {
+   "name": "Well Being",
+   "lat": 48.2024426,
+   "lng": 16.3693057,
+   "amenity": "restaurant",
+   "cuisine": "korean",
+   "hours": "Mo-Sa 11:00-22:00; Su,PH 12:00-21:00",
+   "osm": "way/411407993"
+  },
+  {
+   "name": "Bristol Restaurant",
+   "lat": 48.2028735,
+   "lng": 16.370326,
+   "amenity": "restaurant",
+   "cuisine": "regional",
+   "hours": "",
+   "osm": "node/478814056"
+  },
+  {
+   "name": "Veggiezz",
+   "lat": 48.2031049,
+   "lng": 16.3675372,
+   "amenity": "restaurant",
+   "cuisine": "austrian",
+   "hours": "Mo-Fr 11:00-22:00; Sa, Su 12:00-22:00",
+   "osm": "node/5007092121"
+  },
+  {
+   "name": "Ristorante San Carlo",
+   "lat": 48.2029897,
+   "lng": 16.3707734,
+   "amenity": "restaurant",
+   "cuisine": "italian",
+   "hours": "",
+   "osm": "node/478814058"
+  },
+  {
+   "name": "Ha Ha Sushi",
+   "lat": 48.2054865,
+   "lng": 16.3578571,
+   "amenity": "restaurant",
+   "cuisine": "asian",
+   "hours": "Su-Th 11:00-22:00; Fr-Sa 12:00-22:00",
+   "osm": "node/5445872971"
+  },
+  {
+   "name": "MQ-Kantine",
+   "lat": 48.2039649,
+   "lng": 16.3584335,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Su-Tu 09:00-24:00; Fr-Sa 09:00-02:00",
+   "osm": "node/244497017"
+  },
+  {
+   "name": "Kaan",
+   "lat": 48.2042441,
+   "lng": 16.3577778,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Mo-Sa 10:00-23:00",
+   "osm": "node/3517279902"
+  },
+  {
+   "name": "Rote Bar",
+   "lat": 48.2050948,
+   "lng": 16.3573016,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/317767122"
+  },
+  {
+   "name": "Liebling im Volkstheater",
+   "lat": 48.2049767,
+   "lng": 16.3570828,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Mo-Th 16:00-21:00; Fr-Sa 16:00-02:00",
+   "osm": "node/13392494001"
+  },
+  {
+   "name": "Z'som",
+   "lat": 48.1975365,
+   "lng": 16.3719924,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "We-Su 18:00-23:00",
+   "osm": "node/696546392"
+  },
+  {
+   "name": "trude und töchter: trude",
+   "lat": 48.1990344,
+   "lng": 16.3729088,
+   "amenity": "restaurant",
+   "cuisine": "regional",
+   "hours": "Tu-Su 09:00-23:00",
+   "osm": "node/12209615559"
+  },
+  {
+   "name": "Alt-Wiener Gasthaus Buchecker und Sohn",
+   "lat": 48.1970001,
+   "lng": 16.3711774,
+   "amenity": "restaurant",
+   "cuisine": "regional",
+   "hours": "Mo-Sa 12:00-22:30",
+   "osm": "node/618284053"
+  },
+  {
+   "name": "Ostmeer",
+   "lat": 48.1967864,
+   "lng": 16.372236,
+   "amenity": "restaurant",
+   "cuisine": "chinese",
+   "hours": "Tu-Fr 11:30-14:30, Sa,Su 12:00-22:00, Tu-Fr 17:00-22:00; Mo off",
+   "osm": "node/412345248"
+  },
+  {
+   "name": "Café dein Alter Ego",
+   "lat": 48.1974037,
+   "lng": 16.3699196,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/618284057"
+  },
+  {
+   "name": "Manzana Restaurante",
+   "lat": 48.1978476,
+   "lng": 16.3696074,
+   "amenity": "restaurant",
+   "cuisine": "spanish",
+   "hours": "Mo-Sa 17:00-23:00",
+   "osm": "node/1732241000"
+  },
+  {
+   "name": "Café Rafael",
+   "lat": 48.2074089,
+   "lng": 16.3932776,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Tu-Su 11:00-19:00; Mo off",
+   "osm": "node/9320714069"
+  },
+  {
+   "name": "Zum goldenen Löwen",
+   "lat": 48.2083108,
+   "lng": 16.3929011,
+   "amenity": "restaurant",
+   "cuisine": "austrian;italian",
+   "hours": "Mo-Su 11:00-23:00",
+   "osm": "node/342308867"
+  },
+  {
+   "name": "Pizzeria Eduardo",
+   "lat": 48.2089007,
+   "lng": 16.3926105,
+   "amenity": "restaurant",
+   "cuisine": "pizza",
+   "hours": "Mo-Su 11:00-23:00; PH off",
+   "osm": "node/76469902"
+  },
+  {
+   "name": "Taste of India",
+   "lat": 48.206494,
+   "lng": 16.3916498,
+   "amenity": "restaurant",
+   "cuisine": "indian",
+   "hours": "Mo-Fr 11:00-14:30, 17:30-23:00; Sa-Su,PH 12:00-23:00",
+   "osm": "node/6321524417"
+  },
+  {
+   "name": "Paradisia",
+   "lat": 48.2066595,
+   "lng": 16.3913752,
+   "amenity": "restaurant",
+   "cuisine": "arab",
+   "hours": "Mo-Su,PH 12:00-23:00",
+   "osm": "node/3806650772"
+  },
+  {
+   "name": "Sophienbeisl",
+   "lat": 48.2076152,
+   "lng": 16.3909261,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Mo-Fr 11:00-22:00",
+   "osm": "node/342302681"
+  },
+  {
+   "name": "DO&CO Albertina",
+   "lat": 48.20475,
+   "lng": 16.3681376,
+   "amenity": "restaurant",
+   "cuisine": "international",
+   "hours": "Su,Mo 09:00-18:00; Tu-Sa 09:00-24:00",
+   "osm": "node/2113489038"
+  },
+  {
+   "name": "Bitzinger Augustinerkeller",
+   "lat": 48.2045802,
+   "lng": 16.3685697,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Mo-Tu off",
+   "osm": "node/2124106507"
+  },
+  {
+   "name": "the guest house",
+   "lat": 48.2051419,
+   "lng": 16.3690801,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Mo-Su 06:30-24:00; PH open \"365 Tage im Jahr offen \"",
+   "osm": "node/5238076425"
+  },
+  {
+   "name": "Gasthaus Reinthaler",
+   "lat": 48.2055529,
+   "lng": 16.3689909,
+   "amenity": "restaurant",
+   "cuisine": "regional",
+   "hours": "",
+   "osm": "node/365859732"
+  },
+  {
+   "name": "Führich",
+   "lat": 48.2049164,
+   "lng": 16.3698087,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/8928808101"
+  },
+  {
+   "name": "Palmenhaus",
+   "lat": 48.2050544,
+   "lng": 16.3667974,
+   "amenity": "restaurant",
+   "cuisine": "breakfast;regional;international",
+   "hours": "Mo-Fr 10:00-23:00; Sa,Su 09:00-23:00",
+   "osm": "node/76518712"
+  },
+  {
+   "name": "Green Door Bistro Vienna",
+   "lat": 48.2057708,
+   "lng": 16.3658015,
+   "amenity": "restaurant",
+   "cuisine": "austrian",
+   "hours": "Mo-Fr 11:00-15:00",
+   "osm": "node/12028866970"
+  },
+  {
+   "name": "La Taverna del Duca",
+   "lat": 48.2062034,
+   "lng": 16.3678125,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "We-Su 12:00-22:00",
+   "osm": "node/1944670145"
+  },
+  {
+   "name": "Zum alten Hofkeller",
+   "lat": 48.2081633,
+   "lng": 16.3650513,
+   "amenity": "restaurant",
+   "cuisine": "regional",
+   "hours": "Mo-Fr 11:00-14:00",
+   "osm": "node/1717868175"
+  },
+  {
+   "name": "L'asino che ride",
+   "lat": 48.2058923,
+   "lng": 16.3679829,
+   "amenity": "restaurant",
+   "cuisine": "italian",
+   "hours": "Mo-Su,PH 11:00-24:00",
+   "osm": "node/1563596967"
+  },
+  {
+   "name": "La Sosta",
+   "lat": 48.208394,
+   "lng": 16.3654384,
+   "amenity": "restaurant",
+   "cuisine": "italian",
+   "hours": "Tu-Sa 11:30-23:00",
+   "osm": "node/5561498121"
+  },
+  {
+   "name": "Cocore",
+   "lat": 48.2156102,
+   "lng": 16.3610931,
+   "amenity": "restaurant",
+   "cuisine": "pizza",
+   "hours": "",
+   "osm": "node/4748985824"
+  },
+  {
+   "name": "Aspic",
+   "lat": 48.2159492,
+   "lng": 16.3568986,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/10238950146"
+  },
+  {
+   "name": "Das Kolin",
+   "lat": 48.2158111,
+   "lng": 16.3619724,
+   "amenity": "restaurant",
+   "cuisine": "hipster",
+   "hours": "Mo-Th 11:00-24:00; Fr 11:00-02:00; Sa 16:00-02:00",
+   "osm": "node/2152354132"
+  },
+  {
+   "name": "Schatz Imhof",
+   "lat": 48.2143003,
+   "lng": 16.3566073,
+   "amenity": "restaurant",
+   "cuisine": "austrian",
+   "hours": "We-Th 17:00-00:00; Fr 17:00-01:00; Sa 14:00-01:00",
+   "osm": "node/5528896721"
+  },
+  {
+   "name": "Anniekocht",
+   "lat": 48.2148558,
+   "lng": 16.3561046,
+   "amenity": "restaurant",
+   "cuisine": "austrian",
+   "hours": "Mo-Th 06:30-13:30",
+   "osm": "node/9506315186"
+  },
+  {
+   "name": "Sichuan Restaurant",
+   "lat": 48.2175368,
+   "lng": 16.3591574,
+   "amenity": "restaurant",
+   "cuisine": "chinese",
+   "hours": "Mo-Su 11:30-22:00",
+   "osm": "node/1381006446"
+  },
+  {
+   "name": "Fabios",
+   "lat": 48.2099679,
+   "lng": 16.3698098,
+   "amenity": "restaurant",
+   "cuisine": "italian",
+   "hours": "Mo-Th 09:00-24:00; Fr,Sa 09:00-01:00; Su off",
+   "osm": "node/1209007877"
+  },
+  {
+   "name": "Neue Hoheit Brasserie",
+   "lat": 48.2098213,
+   "lng": 16.3694045,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Mo-Su 07:00-11:00,12:00-22:30",
+   "osm": "node/567084187"
+  },
+  {
+   "name": "Paul & Vitos",
+   "lat": 48.2092848,
+   "lng": 16.3703905,
+   "amenity": "restaurant",
+   "cuisine": "international",
+   "hours": "Mo-Sa 11:00-02:00",
+   "osm": "node/6170701885"
+  },
+  {
+   "name": "Josefins",
+   "lat": 48.2092326,
+   "lng": 16.3704409,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/12673098138"
+  },
+  {
+   "name": "Patara",
+   "lat": 48.2091182,
+   "lng": 16.3701524,
+   "amenity": "restaurant",
+   "cuisine": "thai",
+   "hours": "Mo-Sa 12:00-15:00,17:30-23:00; Su,PH 17:30-22:00",
+   "osm": "node/1365266760"
+  },
+  {
+   "name": "wienerin Restaurant & Bar",
+   "lat": 48.20906,
+   "lng": 16.3700692,
+   "amenity": "restaurant",
+   "cuisine": "regional",
+   "hours": "Mo-Sa 09:00-24:00; Su 11:00-00:00",
+   "osm": "node/4191240192"
+  },
+  {
+   "name": "Restaurant Zentral",
+   "lat": 48.1543669,
+   "lng": 16.4438873,
+   "amenity": "restaurant",
+   "cuisine": "austrian",
+   "hours": "",
+   "osm": "way/354945759"
+  },
+  {
+   "name": "Ludwig und Adele",
+   "lat": 48.2009133,
+   "lng": 16.3713034,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Mo-Fr 17:00-24:00, Sa 12:00-24:00, Su,PH 12:00-23:00",
+   "osm": "node/6471043644"
+  },
+  {
+   "name": "Le's",
+   "lat": 48.1995677,
+   "lng": 16.3740535,
+   "amenity": "restaurant",
+   "cuisine": "vietnamese",
+   "hours": "Mo-Fr 11:00-19:00; Sa off",
+   "osm": "node/5185156871"
+  },
+  {
+   "name": "Cafe - Restaurant im Otto Wagner Pavillon",
+   "lat": 48.2001577,
+   "lng": 16.3708108,
+   "amenity": "restaurant",
+   "cuisine": "regional",
+   "hours": "Mo-Su 09:00-04:00",
+   "osm": "node/3371230811"
+  },
+  {
+   "name": "Glasswing",
+   "lat": 48.2016934,
+   "lng": 16.3711268,
+   "amenity": "restaurant",
+   "cuisine": "fine_dining",
+   "hours": "Mo-Su,PH 07:00-23:00",
+   "osm": "node/11750315918"
+  },
+  {
+   "name": "Le Ciel by Toni Morwald",
+   "lat": 48.2021466,
+   "lng": 16.3720596,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/5125393079"
+  },
+  {
+   "name": "Billa Marktküche",
+   "lat": 48.2090394,
+   "lng": 16.4231931,
+   "amenity": "restaurant",
+   "cuisine": "regional",
+   "hours": "",
+   "osm": "node/13968631659"
+  },
+  {
+   "name": "Rakki Sushi",
+   "lat": 48.2093955,
+   "lng": 16.4236547,
+   "amenity": "restaurant",
+   "cuisine": "sushi",
+   "hours": "",
+   "osm": "node/13968631660"
+  },
+  {
+   "name": "Sajado",
+   "lat": 48.2100439,
+   "lng": 16.421795,
+   "amenity": "restaurant",
+   "cuisine": "japanese",
+   "hours": "",
+   "osm": "node/13968631664"
+  },
+  {
+   "name": "Don Camillo",
+   "lat": 48.2102349,
+   "lng": 16.4215123,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/4239973193"
+  },
+  {
+   "name": "BLOCK HOUSE",
+   "lat": 48.1996101,
+   "lng": 16.3646354,
+   "amenity": "restaurant",
+   "cuisine": "steak_house",
+   "hours": "Mo-Th,Su 11:30-22:00; Fr-Sa 11:30-23:00",
+   "osm": "node/4852403788"
+  },
+  {
+   "name": "Prime",
+   "lat": 48.1992791,
+   "lng": 16.3644804,
+   "amenity": "restaurant",
+   "cuisine": "steak_house",
+   "hours": "Mo-Sa 11:00-22:00",
+   "osm": "node/4118542484"
+  },
+  {
+   "name": "Steakviertel",
+   "lat": 48.1991397,
+   "lng": 16.3642384,
+   "amenity": "restaurant",
+   "cuisine": "steak",
+   "hours": "",
+   "osm": "node/4118542486"
+  },
+  {
+   "name": "Erzhetzogtum",
+   "lat": 48.1994275,
+   "lng": 16.3647755,
+   "amenity": "restaurant",
+   "cuisine": "austrian",
+   "hours": "Mo-Fr 11:00-23:00; Sa 08:00-23:00; Su 11:00-21:00",
+   "osm": "node/9998366109"
+  },
+  {
+   "name": "Tokki",
+   "lat": 48.1990239,
+   "lng": 16.3640808,
+   "amenity": "restaurant",
+   "cuisine": "korean",
+   "hours": "Mo-Fr 12:00-23:00",
+   "osm": "node/2146196525"
+  },
+  {
+   "name": "Fisch Viertel At 1060",
+   "lat": 48.1991202,
+   "lng": 16.3644999,
+   "amenity": "restaurant",
+   "cuisine": "seafood",
+   "hours": "Mo-Sa 08:00-23:00",
+   "osm": "node/11577267819"
+  },
+  {
+   "name": "Villa Victoria",
+   "lat": 48.2155303,
+   "lng": 16.3958464,
+   "amenity": "restaurant",
+   "cuisine": "regional",
+   "hours": "",
+   "osm": "node/1896113645"
+  },
+  {
+   "name": "Rollercoaster",
+   "lat": 48.2173141,
+   "lng": 16.3967726,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Mo-Th 16:00-22:00; Fr-Su 11:30-22:00",
+   "osm": "node/4449369247"
+  },
+  {
+   "name": "Zum Kaiser",
+   "lat": 48.2175874,
+   "lng": 16.3959416,
+   "amenity": "restaurant",
+   "cuisine": "austrian;fine_dining",
+   "hours": "Mo-Su 11:00-23:00",
+   "osm": "node/4564764973"
+  },
+  {
+   "name": "Fercos",
+   "lat": 48.2152773,
+   "lng": 16.3986562,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/4823108123"
+  },
+  {
+   "name": "QuickWu",
+   "lat": 48.217709,
+   "lng": 16.3923163,
+   "amenity": "restaurant",
+   "cuisine": "running_sushi",
+   "hours": "Mo-Fr 11:00-22:00; Su 12:00-22:00",
+   "osm": "way/1275453387"
+  },
+  {
+   "name": "Ginza",
+   "lat": 48.2184899,
+   "lng": 16.3930455,
+   "amenity": "restaurant",
+   "cuisine": "sushi",
+   "hours": "Tu-Su 11:00-22:00; PH Mo 11:00-22:00; May-Aug,Dec Mo 11:00-22:00",
+   "osm": "way/368897674"
+  },
+  {
+   "name": "Vestibül",
+   "lat": 48.2098341,
+   "lng": 16.3612146,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/270066222"
+  },
+  {
+   "name": "Ebi",
+   "lat": 48.2112672,
+   "lng": 16.3625385,
+   "amenity": "restaurant",
+   "cuisine": "japanese",
+   "hours": "Mo-Su 12:00-23:00",
+   "osm": "node/5316611640"
+  },
+  {
+   "name": "Minoritenstüberl",
+   "lat": 48.2099463,
+   "lng": 16.3635349,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Mo-Fr 11:30-01:30",
+   "osm": "node/5859225235"
+  },
+  {
+   "name": "Giorgina",
+   "lat": 48.2106706,
+   "lng": 16.3640101,
+   "amenity": "restaurant",
+   "cuisine": "austrian",
+   "hours": "Mo-Fr 09:00-23:00; PH off",
+   "osm": "node/1988328669"
+  },
+  {
+   "name": "Nano's Am Ring",
+   "lat": 48.2120783,
+   "lng": 16.3615924,
+   "amenity": "restaurant",
+   "cuisine": "italian",
+   "hours": "Mo-Su 11:00-00:00",
+   "osm": "node/13205332077"
+  },
+  {
+   "name": "Al Fayrooz",
+   "lat": 48.2121368,
+   "lng": 16.3616104,
+   "amenity": "restaurant",
+   "cuisine": "oriental",
+   "hours": "",
+   "osm": "node/6080863218"
+  },
+  {
+   "name": "Saigon",
+   "lat": 48.2006764,
+   "lng": 16.3645829,
+   "amenity": "restaurant",
+   "cuisine": "vietnamese",
+   "hours": "Mo-Su 11:30-23:00",
+   "osm": "node/524673105"
+  },
+  {
+   "name": "Iris Modern Greek",
+   "lat": 48.1997542,
+   "lng": 16.3653796,
+   "amenity": "restaurant",
+   "cuisine": "greek",
+   "hours": "",
+   "osm": "node/1672651160"
+  },
+  {
+   "name": "Umar Fisch",
+   "lat": 48.1996687,
+   "lng": 16.3655232,
+   "amenity": "restaurant",
+   "cuisine": "seafood",
+   "hours": "",
+   "osm": "node/4806064553"
+  },
+  {
+   "name": "Yumi Teppanyaki Dim Sum",
+   "lat": 48.1996632,
+   "lng": 16.3652061,
+   "amenity": "restaurant",
+   "cuisine": "asian",
+   "hours": "Mo-Sa 11:00-22:30; PH,Su off",
+   "osm": "node/4118542480"
+  },
+  {
+   "name": "Juli",
+   "lat": 48.2011376,
+   "lng": 16.3669336,
+   "amenity": "restaurant",
+   "cuisine": "chinese",
+   "hours": "Tu-Su 11:00-21:30",
+   "osm": "node/10043129945"
+  },
+  {
+   "name": "Hitomi",
+   "lat": 48.199539,
+   "lng": 16.3660669,
+   "amenity": "restaurant",
+   "cuisine": "noodles;sushi;thai",
+   "hours": "Mo-Su 11:00-22:00",
+   "osm": "node/13234930201"
+  },
+  {
+   "name": "Turm Restaurant",
+   "lat": 48.2402308,
+   "lng": 16.4100434,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/12184398144"
+  },
+  {
+   "name": "donaubräu",
+   "lat": 48.240531,
+   "lng": 16.4100185,
+   "amenity": "restaurant",
+   "cuisine": "regional",
+   "hours": "Fr-Su 11:30-22:00",
+   "osm": "node/3822359258"
+  },
+  {
+   "name": "Österreicher im MAK",
+   "lat": 48.2075637,
+   "lng": 16.3816084,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/1076021076"
+  },
+  {
+   "name": "Salonplafond",
+   "lat": 48.2078847,
+   "lng": 16.3819194,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Mo-Su 10:00-00:00",
+   "osm": "way/410955436"
+  },
+  {
+   "name": "Comida",
+   "lat": 48.2082307,
+   "lng": 16.3810336,
+   "amenity": "restaurant",
+   "cuisine": "international",
+   "hours": "Mo-Fr 11:00-01:00; Sa, Su, PH 18:00-01:00",
+   "osm": "node/2489078827"
+  },
+  {
+   "name": "Al Zaytouna",
+   "lat": 48.2084372,
+   "lng": 16.3812295,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/4187164254"
+  },
+  {
+   "name": "Mr. Du Ramen Bar",
+   "lat": 48.2080764,
+   "lng": 16.3804593,
+   "amenity": "restaurant",
+   "cuisine": "ramen",
+   "hours": "",
+   "osm": "node/4892925056"
+  },
+  {
+   "name": "Restaurant zur WILDen Schimanszky",
+   "lat": 48.2079057,
+   "lng": 16.3803212,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Mo-Fr 12:00-14:00,18:00-21:00",
+   "osm": "node/4892925055"
+  },
+  {
+   "name": "Totò Sapori",
+   "lat": 48.1853337,
+   "lng": 16.4186453,
+   "amenity": "restaurant",
+   "cuisine": "pizza;italian;pasta",
+   "hours": "",
+   "osm": "node/1442012604"
+  },
+  {
+   "name": "El Greco",
+   "lat": 48.1849496,
+   "lng": 16.4185739,
+   "amenity": "restaurant",
+   "cuisine": "greek;pizza",
+   "hours": "Mo-Sa 09:00-22:00",
+   "osm": "node/1442012590"
+  },
+  {
+   "name": "Mizu Ramen",
+   "lat": 48.1855119,
+   "lng": 16.4181504,
+   "amenity": "restaurant",
+   "cuisine": "noodle",
+   "hours": "Mo-Sa 11:00-21:00",
+   "osm": "node/1442012610"
+  },
+  {
+   "name": "Cenaro",
+   "lat": 48.1858572,
+   "lng": 16.4185767,
+   "amenity": "restaurant",
+   "cuisine": "regional",
+   "hours": "Mo-Fr 08:00-24:00",
+   "osm": "node/1618097104"
+  },
+  {
+   "name": "Youmi",
+   "lat": 48.1867622,
+   "lng": 16.4200563,
+   "amenity": "restaurant",
+   "cuisine": "asian",
+   "hours": "Mo-Fr 11:00-21:00; Su 12:30-21:00; Sa off",
+   "osm": "node/9026648859"
+  },
+  {
+   "name": "Hitomi Plus",
+   "lat": 48.1855154,
+   "lng": 16.4213277,
+   "amenity": "restaurant",
+   "cuisine": "asian",
+   "hours": "",
+   "osm": "node/11746577385"
+  },
+  {
+   "name": "Café-Restaurant Resselpark",
+   "lat": 48.1995427,
+   "lng": 16.369186,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Mo-Sa 09:00-23:00; Su 09:00-22:00",
+   "osm": "way/1303973266"
+  },
+  {
+   "name": "Pointers",
+   "lat": 48.1989041,
+   "lng": 16.3686553,
+   "amenity": "restaurant",
+   "cuisine": "burger;sandwich",
+   "hours": "Mo-Fr 12:00-01:00, Sa 15:00-01:00; Su,PH off",
+   "osm": "node/306095249"
+  },
+  {
+   "name": "Wiener Cucina",
+   "lat": 48.1851891,
+   "lng": 16.3876393,
+   "amenity": "restaurant",
+   "cuisine": "regional",
+   "hours": "Mo-Fr 10:00-15:30, Fr 18:00-23:00",
+   "osm": "node/2803285701"
+  },
+  {
+   "name": "klein Steiermark",
+   "lat": 48.1861959,
+   "lng": 16.3861499,
+   "amenity": "restaurant",
+   "cuisine": "regional",
+   "hours": "Mo-Su,PH 11:30-23:00",
+   "osm": "way/1138655193"
+  },
+  {
+   "name": "Eugen21",
+   "lat": 48.1851662,
+   "lng": 16.3833924,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Mo-Fr 06:30-10:30,12:00-14:00,18:00-22:00; Sa,PH 06:30-12:00,18:00-22:00; Su 06:30-12:00",
+   "osm": "node/8812393722"
+  },
+  {
+   "name": "HOTSPOT",
+   "lat": 48.2489397,
+   "lng": 16.3657522,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/13784656801"
+  },
+  {
+   "name": "Bowl Market",
+   "lat": 48.2487485,
+   "lng": 16.3673677,
+   "amenity": "restaurant",
+   "cuisine": "asian;bowl;wok",
+   "hours": "Mo-Su 11:00-20:00",
+   "osm": "node/11757828584"
+  },
+  {
+   "name": "The Wong",
+   "lat": 48.2487596,
+   "lng": 16.3675838,
+   "amenity": "restaurant",
+   "cuisine": "chinese",
+   "hours": "",
+   "osm": "node/13536057979"
+  },
+  {
+   "name": "Square To Eat",
+   "lat": 48.2481331,
+   "lng": 16.367244,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Mo-Fr 07:00-15:00",
+   "osm": "node/13289125820"
+  },
+  {
+   "name": "Oji Izakaya",
+   "lat": 48.2490641,
+   "lng": 16.3678509,
+   "amenity": "restaurant",
+   "cuisine": "japanese",
+   "hours": "Mo-Sa 11:30-15:00, 17:30-22:00; Su 11:30-15:00, 17:00-20:00",
+   "osm": "node/11388092189"
+  },
+  {
+   "name": "Da Contessa",
+   "lat": 48.2517309,
+   "lng": 16.3641864,
+   "amenity": "restaurant",
+   "cuisine": "italian",
+   "hours": "Mo-Su 11:00-23:00",
+   "osm": "node/1166326830"
+  },
+  {
+   "name": "Restaurant Kaiserpavillon",
+   "lat": 48.1822957,
+   "lng": 16.3029111,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "way/27240345"
+  },
+  {
+   "name": "Jumbo Grillgarten",
+   "lat": 48.181329,
+   "lng": 16.3038622,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "way/172941403"
+  },
+  {
+   "name": "Biergarten",
+   "lat": 48.1830084,
+   "lng": 16.3040858,
+   "amenity": "restaurant",
+   "cuisine": "austrian",
+   "hours": "Mo-Su 11:00-17:30",
+   "osm": "node/11891801540"
+  },
+  {
+   "name": "Orang.erie",
+   "lat": 48.1835732,
+   "lng": 16.3003769,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "PH,Mo-Su 09:00-16:30",
+   "osm": "node/836868334"
+  },
+  {
+   "name": "Gasthaus Tirolergarten",
+   "lat": 48.1797131,
+   "lng": 16.303373,
+   "amenity": "restaurant",
+   "cuisine": "regional",
+   "hours": "",
+   "osm": "way/26721761"
+  },
+  {
+   "name": "Maxing Stüberl",
+   "lat": 48.1845837,
+   "lng": 16.300641,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Mo-We 17:00-22:00; Th-Sa 12:00-22:00; Su 12:00-21:00",
+   "osm": "node/2694283360"
+  },
+  {
+   "name": "Kelsen",
+   "lat": 48.2079721,
+   "lng": 16.3587999,
+   "amenity": "restaurant",
+   "cuisine": "international",
+   "hours": "Mo-Fr 11:45-23:30; Sa 10:00-23:30",
+   "osm": "node/10693512798"
+  },
+  {
+   "name": "Pho Ben Thanh",
+   "lat": 48.2089495,
+   "lng": 16.3570914,
+   "amenity": "restaurant",
+   "cuisine": "vietnamese",
+   "hours": "Tu-Fr 11:30-14:30,17:30-22:00; Sa,Su 12:00-22:00",
+   "osm": "node/566991847"
+  },
+  {
+   "name": "PIZZA SENZA DANZA",
+   "lat": 48.2069305,
+   "lng": 16.3609196,
+   "amenity": "restaurant",
+   "cuisine": "italian",
+   "hours": "Tu-Sa 17:00-02:00",
+   "osm": "way/124434535"
+  },
+  {
+   "name": "Cantina Osteria Friulana",
+   "lat": 48.207982,
+   "lng": 16.3562812,
+   "amenity": "restaurant",
+   "cuisine": "italian",
+   "hours": "Mo-Fr 11:30-21:30",
+   "osm": "node/4782483029"
+  },
+  {
+   "name": "Velobis",
+   "lat": 48.1925938,
+   "lng": 16.3162128,
+   "amenity": "restaurant",
+   "cuisine": "african;austrian",
+   "hours": "Tu-Fr 09:00-22:00; Sa-Su 09:30-16:00",
+   "osm": "node/3734218983"
+  },
+  {
+   "name": "Asiahaus",
+   "lat": 48.1931573,
+   "lng": 16.3195315,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/11809674616"
+  },
+  {
+   "name": "Daily Spice",
+   "lat": 48.1926621,
+   "lng": 16.314727,
+   "amenity": "restaurant",
+   "cuisine": "indian",
+   "hours": "Mo-Su 11:00-22:00",
+   "osm": "node/7807238190"
+  },
+  {
+   "name": "Dom Schnitzel",
+   "lat": 48.2090423,
+   "lng": 16.369825,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/13899201375"
+  },
+  {
+   "name": "Zu den 3 goldenen Kugeln",
+   "lat": 48.2401736,
+   "lng": 16.3873098,
+   "amenity": "restaurant",
+   "cuisine": "austrian",
+   "hours": "Mo-Sa 10:00-21:00",
+   "osm": "node/2662867562"
+  },
+  {
+   "name": "Donmono",
+   "lat": 48.2405211,
+   "lng": 16.3863761,
+   "amenity": "restaurant",
+   "cuisine": "sushi;ramen",
+   "hours": "",
+   "osm": "node/10743550097"
+  },
+  {
+   "name": "D'Lounge",
+   "lat": 48.2402702,
+   "lng": 16.3859015,
+   "amenity": "restaurant",
+   "cuisine": "italian",
+   "hours": "Mo-Su 00:00-02:00,11:00-24:00",
+   "osm": "node/4921950104"
+  },
+  {
+   "name": "Zushimarket Buffet Restaurant",
+   "lat": 48.2402712,
+   "lng": 16.3853178,
+   "amenity": "restaurant",
+   "cuisine": "asian",
+   "hours": "Mo-Su 11:00-22:00",
+   "osm": "node/10723627394"
+  },
+  {
+   "name": "Noya",
+   "lat": 48.2405634,
+   "lng": 16.3854742,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/9233622440"
+  },
+  {
+   "name": "Pizzeria Il Delfino",
+   "lat": 48.2395403,
+   "lng": 16.385274,
+   "amenity": "restaurant",
+   "cuisine": "pizza",
+   "hours": "Mo-Su 11:00-23:00",
+   "osm": "node/599189787"
+  },
+  {
+   "name": "Tomochan Ramen",
+   "lat": 48.1974147,
+   "lng": 16.3751802,
+   "amenity": "restaurant",
+   "cuisine": "ramen",
+   "hours": "Mo-Th 11:30-22:00; Fr-Su 12:30-22:00",
+   "osm": "node/12301517263"
+  },
+  {
+   "name": "Wohlleben",
+   "lat": 48.1966416,
+   "lng": 16.3739932,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Tu-Sa 12:00-22:30",
+   "osm": "node/1943204056"
+  },
+  {
+   "name": "Huber's",
+   "lat": 48.1973402,
+   "lng": 16.3799962,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Mo-Fr 10:30-16:00,17:30-22:00",
+   "osm": "node/10013725002"
+  },
+  {
+   "name": "Falco's Vienna",
+   "lat": 48.2005638,
+   "lng": 16.375465,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Mo-Th 08:30-24:00; Fr-Sa 08:30-01:00; Su 08:30-24:00",
+   "osm": "node/418164970"
+  },
+  {
+   "name": "Salzamt",
+   "lat": 48.2120808,
+   "lng": 16.3740647,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Mo-Su 17:00-01:00",
+   "osm": "node/567096861"
+  },
+  {
+   "name": "Babida",
+   "lat": 48.2121919,
+   "lng": 16.3748425,
+   "amenity": "restaurant",
+   "cuisine": "korean",
+   "hours": "Mo-Sa 11:30-14:30,17:30-22:00",
+   "osm": "node/3375759782"
+  },
+  {
+   "name": "Alef-Alef",
+   "lat": 48.2117023,
+   "lng": 16.3741316,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Mo-Th 17:00-22:00",
+   "osm": "node/1202223902"
+  },
+  {
+   "name": "Amore della Mutti",
+   "lat": 48.2120224,
+   "lng": 16.3751482,
+   "amenity": "restaurant",
+   "cuisine": "pizza",
+   "hours": "",
+   "osm": "node/3215857492"
+  },
+  {
+   "name": "Kornat",
+   "lat": 48.2122172,
+   "lng": 16.3735275,
+   "amenity": "restaurant",
+   "cuisine": "fish",
+   "hours": "Mo-Su 11:30-24:00",
+   "osm": "node/3461830769"
+  },
+  {
+   "name": "Koh-i-noor",
+   "lat": 48.2121718,
+   "lng": 16.3734541,
+   "amenity": "restaurant",
+   "cuisine": "indian",
+   "hours": "11:30-14:30; 18:00-23:00",
+   "osm": "node/1453831920"
+  },
+  {
+   "name": "Glacis Beisl",
+   "lat": 48.2033596,
+   "lng": 16.357219,
+   "amenity": "restaurant",
+   "cuisine": "regional",
+   "hours": "Mo-Su 12:00-00:00",
+   "osm": "node/1566503977"
+  },
+  {
+   "name": "Minante",
+   "lat": 48.2026844,
+   "lng": 16.3567007,
+   "amenity": "restaurant",
+   "cuisine": "pizza",
+   "hours": "Mo-Su 17:00-23:00; PH off",
+   "osm": "node/3451340767"
+  },
+  {
+   "name": "&flora",
+   "lat": 48.2035736,
+   "lng": 16.3566024,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Mo 07:00-16:00; Tu-Sa 07:00-24:00; Su,PH 07:30-16:00",
+   "osm": "node/9995798817"
+  },
+  {
+   "name": "Kommod",
+   "lat": 48.209103,
+   "lng": 16.3488937,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Tu-Fr 18:00-24:00; Sa 10:00-14:00; PH,Su,Mo off",
+   "osm": "node/6019440986"
+  },
+  {
+   "name": "Hey Hotpot",
+   "lat": 48.2087837,
+   "lng": 16.3489409,
+   "amenity": "restaurant",
+   "cuisine": "chinese",
+   "hours": "",
+   "osm": "node/4210289795"
+  },
+  {
+   "name": "Mi fa Cori",
+   "lat": 48.2098558,
+   "lng": 16.3469305,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Mo-Fr 09:00-17:30; Sa 10:00-13:30",
+   "osm": "node/10701800317"
+  },
+  {
+   "name": "Ruffino",
+   "lat": 48.2100488,
+   "lng": 16.3471505,
+   "amenity": "restaurant",
+   "cuisine": "pizza",
+   "hours": "Mo-Su,PH 11:00-23:00",
+   "osm": "node/345622346"
+  },
+  {
+   "name": "Veggico",
+   "lat": 48.2099741,
+   "lng": 16.3464351,
+   "amenity": "restaurant",
+   "cuisine": "asian",
+   "hours": "Mo, We-Su 11:30-21:00",
+   "osm": "node/4037399448"
+  },
+  {
+   "name": "Kekko",
+   "lat": 48.2094304,
+   "lng": 16.349759,
+   "amenity": "restaurant",
+   "cuisine": "sushi",
+   "hours": "Tu-Su 11:30-15:00,17:30-22:30",
+   "osm": "node/7969246373"
+  },
+  {
+   "name": "Sägewerk Wien",
+   "lat": 48.2188127,
+   "lng": 16.3575033,
+   "amenity": "restaurant",
+   "cuisine": "pizza;burger;salad;noodle;regional;french;waffle",
+   "hours": "Mo-We 11:00-23:00, Th 11:00-24:00, Fr,Sa 11:00-01:00, Su 12:00-22:00, PH 11:00-23:00",
+   "osm": "node/3944963113"
+  },
+  {
+   "name": "The Sly & Arny Restaurant Bar",
+   "lat": 48.2185663,
+   "lng": 16.3569847,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Mo-Su 18:00-02:00",
+   "osm": "node/587006002"
+  },
+  {
+   "name": "VinziRast-mittendrin",
+   "lat": 48.2186354,
+   "lng": 16.3576547,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Mo-Fr 11:00-15:00",
+   "osm": "node/2730873527"
+  },
+  {
+   "name": "Forky's",
+   "lat": 48.2203822,
+   "lng": 16.3558035,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/1534768208"
+  },
+  {
+   "name": "Café Negroni",
+   "lat": 48.21803,
+   "lng": 16.3559999,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Mo-Fr 16:30+; Sa 18:00+",
+   "osm": "node/2151815684"
+  },
+  {
+   "name": "Ethiopian Restaurant",
+   "lat": 48.2182968,
+   "lng": 16.3579788,
+   "amenity": "restaurant",
+   "cuisine": "ethiopian",
+   "hours": "Tu-Sa 13:00-23:00; Su 16:00-21:00",
+   "osm": "node/2096142609"
+  },
+  {
+   "name": "Ribelli",
+   "lat": 48.2065489,
+   "lng": 16.3546343,
+   "amenity": "restaurant",
+   "cuisine": "italian",
+   "hours": "Mo-Su 12:00-24:00",
+   "osm": "node/415409756"
+  },
+  {
+   "name": "Los Mexikas",
+   "lat": 48.2076566,
+   "lng": 16.3528714,
+   "amenity": "restaurant",
+   "cuisine": "mexican",
+   "hours": "",
+   "osm": "node/1129258020"
+  },
+  {
+   "name": "La Mia",
+   "lat": 48.2064147,
+   "lng": 16.3531142,
+   "amenity": "restaurant",
+   "cuisine": "italian",
+   "hours": "Mo-Su 11:00-24:00",
+   "osm": "node/767358632"
+  },
+  {
+   "name": "ARPI street",
+   "lat": 48.2079766,
+   "lng": 16.3527473,
+   "amenity": "restaurant",
+   "cuisine": "pizza",
+   "hours": "We-Fr 16:00-22:30, Sa 13:00-23:00, Th 12:30-19:00; Mo,Tu off",
+   "osm": "node/3380176573"
+  },
+  {
+   "name": "Gastwirtschaft Blauensteiner",
+   "lat": 48.2093211,
+   "lng": 16.3545168,
+   "amenity": "restaurant",
+   "cuisine": "regional",
+   "hours": "Mo-Su 11:00-22:30",
+   "osm": "node/1415830157"
+  },
+  {
+   "name": "Wiener Rathauskeller",
+   "lat": 48.2113568,
+   "lng": 16.3582875,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Mo-Sa 11:30-15:00,18:00-23:30; PH off",
+   "osm": "node/2057899567"
+  },
+  {
+   "name": "Einstein",
+   "lat": 48.2122589,
+   "lng": 16.3584806,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Mo-Su 08:00-24:00; Sa,Su 00:00-02:00",
+   "osm": "node/1375294851"
+  },
+  {
+   "name": "Hofkellerei Liechtenstein",
+   "lat": 48.2224522,
+   "lng": 16.3603533,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Mo,Su off; Tu-Sa 12:00-22:00",
+   "osm": "node/12692543154"
+  },
+  {
+   "name": "Bröselei",
+   "lat": 48.221714,
+   "lng": 16.3548689,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Mo-Fr 11:30-15:00",
+   "osm": "node/9084743137"
+  },
+  {
+   "name": "Goldener Drache",
+   "lat": 48.2214697,
+   "lng": 16.3605668,
+   "amenity": "restaurant",
+   "cuisine": "chinese",
+   "hours": "Tu-Sa 17:30-22:00; Su 11:30-15:00,17:30-22:00",
+   "osm": "node/1325455101"
+  },
+  {
+   "name": "Das1090",
+   "lat": 48.2209665,
+   "lng": 16.3605286,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Mo-Fr 08:00-24:00; Sa 10:00-24:00; Su 10:00-23:00",
+   "osm": "node/2210358270"
+  },
+  {
+   "name": "Kim kocht Feine Kost",
+   "lat": 48.2217693,
+   "lng": 16.3543269,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/6019712903"
+  },
+  {
+   "name": "Studio 15",
+   "lat": 48.2239586,
+   "lng": 16.3617711,
+   "amenity": "restaurant",
+   "cuisine": "regional",
+   "hours": "Mo-Fr 08:00-23:00; Sa 17:00-23:00; Su off; PH off",
+   "osm": "node/1467240380"
+  },
+  {
+   "name": "Herzmanufaktur",
+   "lat": 48.2241785,
+   "lng": 16.3645753,
+   "amenity": "restaurant",
+   "cuisine": "coffee_shop;local",
+   "hours": "Mo-Tu 09:00-20:00, We 09:00-14:00, Th-Fr 09:00-20:00, Sa 10:00-14:00",
+   "osm": "node/1701363936"
+  },
+  {
+   "name": "Casa Caribeña",
+   "lat": 48.2248216,
+   "lng": 16.3639802,
+   "amenity": "restaurant",
+   "cuisine": "caribbean",
+   "hours": "Tu-Sa 17:00-24:00",
+   "osm": "node/1707142906"
+  },
+  {
+   "name": "Kathmandu Kitchen",
+   "lat": 48.2250942,
+   "lng": 16.3633165,
+   "amenity": "restaurant",
+   "cuisine": "indian",
+   "hours": "Th-Tu 11:30-14:30, 17:30-22:30",
+   "osm": "node/344482365"
+  },
+  {
+   "name": "Rembetiko",
+   "lat": 48.2224986,
+   "lng": 16.3613465,
+   "amenity": "restaurant",
+   "cuisine": "greek",
+   "hours": "Mo-Su 11:30-15:00, 17:30-00:00",
+   "osm": "node/1466973182"
+  },
+  {
+   "name": "Mast Weinbistro",
+   "lat": 48.2250576,
+   "lng": 16.3615463,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "We-Fr 12:00-14:00,18:00-22:00; Sa,Su 18:00-22:00; Mo,Tu off",
+   "osm": "node/6019440888"
+  },
+  {
+   "name": "Sperling im Augarten",
+   "lat": 48.2239137,
+   "lng": 16.3780516,
+   "amenity": "restaurant",
+   "cuisine": "regional",
+   "hours": "Mo-Sa 09:00-22:00; Su 09:00-18:00",
+   "osm": "node/1804294334"
+  },
+  {
+   "name": "Die Schankwirtschaft",
+   "lat": 48.2243268,
+   "lng": 16.3740452,
+   "amenity": "restaurant",
+   "cuisine": "regional",
+   "hours": "Mo-Su 10:00-22:00",
+   "osm": "way/169002381"
+  }
+ ]
 }

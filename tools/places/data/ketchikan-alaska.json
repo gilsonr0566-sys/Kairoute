@@ -110,5 +110,79 @@
    "wikidata": "",
    "note": "While Alaska is probably one of the last places people would associate with the term \"rainforest\", the large amount of rainfall over this {{acre"
   }
+ ],
+ "cityEats": [
+  {
+   "name": "Carb & Go",
+   "lat": 55.3398095,
+   "lng": -131.6438714,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/14213844850"
+  },
+  {
+   "name": "The Alaska Fish House",
+   "lat": 55.339854,
+   "lng": -131.6434533,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "way/893358921"
+  },
+  {
+   "name": "Pioneer Cafe",
+   "lat": 55.3418442,
+   "lng": -131.6437928,
+   "amenity": "restaurant",
+   "cuisine": "american",
+   "hours": "Su-Th 06:00-22:00; Fr-Sa 00:00-24:00",
+   "osm": "node/11364366669"
+  },
+  {
+   "name": "Sushi Harbor",
+   "lat": 55.342006,
+   "lng": -131.6435616,
+   "amenity": "restaurant",
+   "cuisine": "sushi",
+   "hours": "",
+   "osm": "way/1423998370"
+  },
+  {
+   "name": "Alaska Crepe Company",
+   "lat": 55.3417479,
+   "lng": -131.6419898,
+   "amenity": "restaurant",
+   "cuisine": "crepe",
+   "hours": "",
+   "osm": "node/13524369794"
+  },
+  {
+   "name": "Chico's Mexican Resturant",
+   "lat": 55.3421438,
+   "lng": -131.6451813,
+   "amenity": "restaurant",
+   "cuisine": "mexican;pizza",
+   "hours": "",
+   "osm": "way/1484730096"
+  },
+  {
+   "name": "Good Fortune Restaurant",
+   "lat": 55.34281,
+   "lng": -131.6430381,
+   "amenity": "restaurant",
+   "cuisine": "chinese",
+   "hours": "",
+   "osm": "node/3119220247"
+  },
+  {
+   "name": "New China Restaurant",
+   "lat": 55.3421319,
+   "lng": -131.6453747,
+   "amenity": "restaurant",
+   "cuisine": "chinese",
+   "hours": "",
+   "osm": "node/14213844834"
+  }
  ]
 }

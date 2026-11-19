@@ -318,5 +318,349 @@
    "wikidata": "",
    "note": "An exhibition centre of war and conflict photography. Exhibits change during the season. Stunning images by world-renowned photo journalists."
   }
+ ],
+ "cityEats": [
+  {
+   "name": "Lokanda Peskarija",
+   "lat": 42.6403288,
+   "lng": 18.1110745,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "way/171261361"
+  },
+  {
+   "name": "Taverna Arsenal",
+   "lat": 42.6406742,
+   "lng": 18.1110681,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/1894515086"
+  },
+  {
+   "name": "Veritas Konoba",
+   "lat": 42.6401938,
+   "lng": 18.1101683,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/11061473075"
+  },
+  {
+   "name": "Gradskavana",
+   "lat": 42.6407912,
+   "lng": 18.1108573,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/5514678921"
+  },
+  {
+   "name": "Rhea Silvia",
+   "lat": 42.6401111,
+   "lng": 18.1101542,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/3040562773"
+  },
+  {
+   "name": "Storia",
+   "lat": 42.6399554,
+   "lng": 18.1113936,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/4832484436"
+  },
+  {
+   "name": "congo",
+   "lat": 42.6411495,
+   "lng": 18.1102909,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/5106602021"
+  },
+  {
+   "name": "Dundo Maroje",
+   "lat": 42.6412403,
+   "lng": 18.1102483,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/4217128512"
+  },
+  {
+   "name": "Poklisar",
+   "lat": 42.6411412,
+   "lng": 18.1110318,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Mo-Su 10:00-22:00",
+   "osm": "node/1823529771"
+  },
+  {
+   "name": "Konoba Sciabeco",
+   "lat": 42.6415076,
+   "lng": 18.1104644,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/4894355760"
+  },
+  {
+   "name": "Gajeta",
+   "lat": 42.6412839,
+   "lng": 18.1100325,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/11057111478"
+  },
+  {
+   "name": "Orhan",
+   "lat": 42.6415443,
+   "lng": 18.1046983,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Mo-Su 09:00-24:00",
+   "osm": "node/2344590452"
+  },
+  {
+   "name": "Nautika",
+   "lat": 42.6415599,
+   "lng": 18.1056501,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/1874405817"
+  },
+  {
+   "name": "Magnolia",
+   "lat": 42.6417041,
+   "lng": 18.1056831,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/4382931303"
+  },
+  {
+   "name": "Dubravka 1836 Restaurant & Cafe",
+   "lat": 42.6416231,
+   "lng": 18.106223,
+   "amenity": "restaurant",
+   "cuisine": "local;seafood;steak_house",
+   "hours": "Mo-Su 08:00-23:45",
+   "osm": "node/1871515447"
+  },
+  {
+   "name": "Silk",
+   "lat": 42.6423718,
+   "lng": 18.1052566,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Mo-Su 12:00-22:00",
+   "osm": "node/8223931624"
+  },
+  {
+   "name": "Pizzeria Tomato",
+   "lat": 42.6423534,
+   "lng": 18.1057651,
+   "amenity": "restaurant",
+   "cuisine": "pizza",
+   "hours": "Mo-Sa 11:00-22:30; Su off",
+   "osm": "node/4866286485"
+  },
+  {
+   "name": "Tavulin",
+   "lat": 42.6405509,
+   "lng": 18.1100849,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/11055344700"
+  },
+  {
+   "name": "Bistro Tavulin",
+   "lat": 42.6405967,
+   "lng": 18.1100111,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/3040562789"
+  },
+  {
+   "name": "Bòkār Dubrovnik",
+   "lat": 42.6407304,
+   "lng": 18.1100761,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/11874306755"
+  },
+  {
+   "name": "Oliva",
+   "lat": 42.6405986,
+   "lng": 18.1099456,
+   "amenity": "restaurant",
+   "cuisine": "pizza",
+   "hours": "",
+   "osm": "node/3040562799"
+  },
+  {
+   "name": "Segreto",
+   "lat": 42.6406425,
+   "lng": 18.1098753,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/3040562796"
+  },
+  {
+   "name": "Zuzori",
+   "lat": 42.6407193,
+   "lng": 18.1099009,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/3040562766"
+  },
+  {
+   "name": "Paparazzo",
+   "lat": 42.6396712,
+   "lng": 18.1105966,
+   "amenity": "restaurant",
+   "cuisine": "steak",
+   "hours": "12:00-24:00",
+   "osm": "node/5009840065"
+  },
+  {
+   "name": "Ginger",
+   "lat": 42.6400372,
+   "lng": 18.1099677,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/3040562775"
+  },
+  {
+   "name": "Pizzeria Castro",
+   "lat": 42.6401383,
+   "lng": 18.1096015,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/3040562777"
+  },
+  {
+   "name": "Heritage of Dubrovnik",
+   "lat": 42.6419364,
+   "lng": 18.1082386,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Mo-Su 12:00-22:00",
+   "osm": "node/8913305105"
+  },
+  {
+   "name": "Bokčilo",
+   "lat": 42.6418999,
+   "lng": 18.1082614,
+   "amenity": "restaurant",
+   "cuisine": "regional;seafood",
+   "hours": "",
+   "osm": "node/5349464661"
+  },
+  {
+   "name": "Heritage of Dubrovnik",
+   "lat": 42.6419175,
+   "lng": 18.1082998,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/9025365817"
+  },
+  {
+   "name": "Lucin Kantun",
+   "lat": 42.6418044,
+   "lng": 18.1083566,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/5135633621"
+  },
+  {
+   "name": "Portun",
+   "lat": 42.6416035,
+   "lng": 18.1082958,
+   "amenity": "restaurant",
+   "cuisine": "regional;seafood",
+   "hours": "Mo-Su 09:00-24:00",
+   "osm": "node/5349464660"
+  },
+  {
+   "name": "Jedro",
+   "lat": 42.641365,
+   "lng": 18.1079727,
+   "amenity": "restaurant",
+   "cuisine": "pizza;kebab;burger;tex-mex",
+   "hours": "",
+   "osm": "node/14039418807"
+  },
+  {
+   "name": "Vita Bella Pizzeria",
+   "lat": 42.6493564,
+   "lng": 18.0920437,
+   "amenity": "restaurant",
+   "cuisine": "italian_pizza;croatian",
+   "hours": "Mo-Sa 10:00-00:00; Su 16:00-00:00",
+   "osm": "node/4806367221"
+  },
+  {
+   "name": "Falcone",
+   "lat": 42.6492802,
+   "lng": 18.0920754,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/2344675061"
+  },
+  {
+   "name": "Fjelica",
+   "lat": 42.6491408,
+   "lng": 18.0921945,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/2344675060"
+  },
+  {
+   "name": "Konoba Tabak",
+   "lat": 42.6521953,
+   "lng": 18.0922187,
+   "amenity": "restaurant",
+   "cuisine": "croatian",
+   "hours": "Mo-Su 07:00-20:00",
+   "osm": "node/3183903500"
+  },
+  {
+   "name": "Mezzanave",
+   "lat": 42.6521268,
+   "lng": 18.0895767,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/4210580303"
+  },
+  {
+   "name": "Chinese Restaurant Kun Lun",
+   "lat": 42.6514466,
+   "lng": 18.0888631,
+   "amenity": "restaurant",
+   "cuisine": "chinese",
+   "hours": "Mo-Su 11:00-23:00",
+   "osm": "node/14181558207"
+  }
  ]
 }

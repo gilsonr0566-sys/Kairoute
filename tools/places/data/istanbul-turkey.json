@@ -546,5 +546,1627 @@
   "lat": 41.0234254054054,
   "lng": 28.97302243243243
  },
- "wikivoyage": "Istanbul"
+ "wikivoyage": "Istanbul",
+ "cityEats": [
+  {
+   "name": "Matbah",
+   "lat": 41.0093013,
+   "lng": 28.9792031,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/5113620603"
+  },
+  {
+   "name": "Karakol Restaurant",
+   "lat": 41.0092963,
+   "lng": 28.9810833,
+   "amenity": "restaurant",
+   "cuisine": "turkish",
+   "hours": "",
+   "osm": "node/1784925344"
+  },
+  {
+   "name": "Sofia",
+   "lat": 41.0097888,
+   "lng": 28.9794451,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Mo-Su 11:00-23:00",
+   "osm": "node/1784925351"
+  },
+  {
+   "name": "Sarnic Restaurant",
+   "lat": 41.0098698,
+   "lng": 28.9795524,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/1784925350"
+  },
+  {
+   "name": "Mihri Cafe",
+   "lat": 41.0071912,
+   "lng": 28.9792525,
+   "amenity": "restaurant",
+   "cuisine": "turkish",
+   "hours": "",
+   "osm": "node/1908677120"
+  },
+  {
+   "name": "Alemdar Restaurant",
+   "lat": 41.0095299,
+   "lng": 28.9785281,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Mo-Su 09:00-00:00",
+   "osm": "node/9609786052"
+  },
+  {
+   "name": "Serbethane Cafe & Restaurant",
+   "lat": 41.0043335,
+   "lng": 28.9768088,
+   "amenity": "restaurant",
+   "cuisine": "turkish",
+   "hours": "",
+   "osm": "node/3107720171"
+  },
+  {
+   "name": "Sultan Köşesi",
+   "lat": 41.004157,
+   "lng": 28.9763532,
+   "amenity": "restaurant",
+   "cuisine": "turkish",
+   "hours": "",
+   "osm": "node/3090816363"
+  },
+  {
+   "name": "Tamara",
+   "lat": 41.0039882,
+   "lng": 28.9760214,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/4367577789"
+  },
+  {
+   "name": "Mom's Garden",
+   "lat": 41.0046289,
+   "lng": 28.975054,
+   "amenity": "restaurant",
+   "cuisine": "kebab;fish",
+   "hours": "",
+   "osm": "node/5484108425"
+  },
+  {
+   "name": "Buhara 93 Restaurant",
+   "lat": 41.0044522,
+   "lng": 28.9751751,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/10178410611"
+  },
+  {
+   "name": "DoyDoy Restaurant",
+   "lat": 41.0040729,
+   "lng": 28.9754577,
+   "amenity": "restaurant",
+   "cuisine": "oriental;sandwich;regional;international;breakfast;local;friture;asian;pasta;chicken;curry;turkish",
+   "hours": "",
+   "osm": "node/4936342125"
+  },
+  {
+   "name": "Erzincanlı Ali Baba Restoran",
+   "lat": 41.0155142,
+   "lng": 28.9632711,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/3090853858"
+  },
+  {
+   "name": "Kuru Fasulyeci Süleyman",
+   "lat": 41.0154426,
+   "lng": 28.9632486,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/6939657816"
+  },
+  {
+   "name": "Beydagi",
+   "lat": 41.0157263,
+   "lng": 28.9628873,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/6939659398"
+  },
+  {
+   "name": "Mirar Sinan",
+   "lat": 41.0158363,
+   "lng": 28.9627761,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/6939603515"
+  },
+  {
+   "name": "Daruzziyafe",
+   "lat": 41.0166939,
+   "lng": 28.9625453,
+   "amenity": "restaurant",
+   "cuisine": "regional",
+   "hours": "",
+   "osm": "node/1769514222"
+  },
+  {
+   "name": "Daruzziyafe turkish resturant",
+   "lat": 41.0163768,
+   "lng": 28.9623213,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/5111205405"
+  },
+  {
+   "name": "Konyalı Restaurant",
+   "lat": 41.013559,
+   "lng": 28.9858813,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/903438877"
+  },
+  {
+   "name": "Tarihi Fener işkembecisi",
+   "lat": 41.0296681,
+   "lng": 28.9518618,
+   "amenity": "restaurant",
+   "cuisine": "turkish",
+   "hours": "",
+   "osm": "node/12004758169"
+  },
+  {
+   "name": "Perispri",
+   "lat": 41.0286531,
+   "lng": 28.9530554,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/5081445080"
+  },
+  {
+   "name": "New Balat café restaurant",
+   "lat": 41.030568,
+   "lng": 28.949824,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/13272149001"
+  },
+  {
+   "name": "Meşhur Sarıyer börekçisi",
+   "lat": 41.0277935,
+   "lng": 28.9552412,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/5081445031"
+  },
+  {
+   "name": "Fatih Belediyesi",
+   "lat": 41.0310384,
+   "lng": 28.9394422,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/4419254703"
+  },
+  {
+   "name": "Asitane",
+   "lat": 41.0308701,
+   "lng": 28.9389957,
+   "amenity": "restaurant",
+   "cuisine": "turkish;ottoman",
+   "hours": "12:00-23:30",
+   "osm": "node/5113615118"
+  },
+  {
+   "name": "Ak Çiçek Mangal",
+   "lat": 41.0304394,
+   "lng": 28.9403785,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/5112749785"
+  },
+  {
+   "name": "Cadde döner",
+   "lat": 41.0303312,
+   "lng": 28.940276,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/5113611490"
+  },
+  {
+   "name": "Akçiçek doner",
+   "lat": 41.0301993,
+   "lng": 28.9400947,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/5113611488"
+  },
+  {
+   "name": "Altınay Kebap Ve Lahmacun",
+   "lat": 41.0311378,
+   "lng": 28.9408609,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/5112749779"
+  },
+  {
+   "name": "Firuzende",
+   "lat": 41.0255542,
+   "lng": 28.9740231,
+   "amenity": "restaurant",
+   "cuisine": "turkish",
+   "hours": "",
+   "osm": "node/5529400835"
+  },
+  {
+   "name": "Lezzette Son Nokta",
+   "lat": 41.0252573,
+   "lng": 28.97396,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/5718181828"
+  },
+  {
+   "name": "Galata Kiva",
+   "lat": 41.0260402,
+   "lng": 28.9742741,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/3188738222"
+  },
+  {
+   "name": "Pepo",
+   "lat": 41.025386,
+   "lng": 28.9746171,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/4427329097"
+  },
+  {
+   "name": "Güney",
+   "lat": 41.02601,
+   "lng": 28.974564,
+   "amenity": "restaurant",
+   "cuisine": "turkish",
+   "hours": "08:00-24:00",
+   "osm": "node/3188737190"
+  },
+  {
+   "name": "Nola",
+   "lat": 41.0252147,
+   "lng": 28.9736624,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/5718181824"
+  },
+  {
+   "name": "Shang Palace",
+   "lat": 41.0403805,
+   "lng": 29.0053244,
+   "amenity": "restaurant",
+   "cuisine": "chinese",
+   "hours": "Mo-Su 12:00-15:00, 18:00-23:00",
+   "osm": "node/8493543925"
+  },
+  {
+   "name": "Ist Too",
+   "lat": 41.0404011,
+   "lng": 29.0054246,
+   "amenity": "restaurant",
+   "cuisine": "turkish;sushi",
+   "hours": "Mo-Su 07:00-23:00",
+   "osm": "node/8493543924"
+  },
+  {
+   "name": "The House Cafe Akaretler",
+   "lat": 41.0423339,
+   "lng": 29.0026725,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/6116062085"
+  },
+  {
+   "name": "Quppa Cafe",
+   "lat": 41.0424466,
+   "lng": 29.0028834,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/6116063188"
+  },
+  {
+   "name": "Kadırga Resturant",
+   "lat": 41.0045189,
+   "lng": 28.9714465,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/5244802008"
+  },
+  {
+   "name": "Arch Bistro",
+   "lat": 41.0046271,
+   "lng": 28.9712651,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/4195127490"
+  },
+  {
+   "name": "Lale Sultan",
+   "lat": 41.0044497,
+   "lng": 28.9713533,
+   "amenity": "restaurant",
+   "cuisine": "turkish",
+   "hours": "",
+   "osm": "node/10206749532"
+  },
+  {
+   "name": "Ayasofya Liman Restorant",
+   "lat": 41.0043434,
+   "lng": 28.9714544,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/5244802006"
+  },
+  {
+   "name": "Ezgi restaurant",
+   "lat": 41.0042098,
+   "lng": 28.9715724,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/5244802005"
+  },
+  {
+   "name": "Olive Garden",
+   "lat": 41.0046052,
+   "lng": 28.9711564,
+   "amenity": "restaurant",
+   "cuisine": "italian",
+   "hours": "",
+   "osm": "node/10583738805"
+  },
+  {
+   "name": "Maiden's tower",
+   "lat": 41.0211236,
+   "lng": 29.0040752,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/1352469368"
+  },
+  {
+   "name": "Filizler Köftecisi",
+   "lat": 41.02247,
+   "lng": 29.0069937,
+   "amenity": "restaurant",
+   "cuisine": "turkish",
+   "hours": "Mo-Su 08:00-22:30",
+   "osm": "way/310112375"
+  },
+  {
+   "name": "Jing Ya Tang Restaurant",
+   "lat": 41.0191018,
+   "lng": 28.9577466,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/5106122966"
+  },
+  {
+   "name": "Jing ya Tang Restaurant",
+   "lat": 41.0190956,
+   "lng": 28.9578128,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/5081442470"
+  },
+  {
+   "name": "Meşhur Unkapanı Pilavcısı",
+   "lat": 41.0202882,
+   "lng": 28.9587595,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/5081442474"
+  },
+  {
+   "name": "Zeyrek Cafe Restaurant",
+   "lat": 41.0205474,
+   "lng": 28.9588929,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/5081442476"
+  },
+  {
+   "name": "Fatih Çitir Pide",
+   "lat": 41.0193901,
+   "lng": 28.9550798,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/5108308875"
+  },
+  {
+   "name": "Karadeniz Pide Vefa",
+   "lat": 41.0172793,
+   "lng": 28.9583182,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Mo-Sa 07:30-19:00",
+   "osm": "node/7090566391"
+  },
+  {
+   "name": "Zeman alkheir",
+   "lat": 41.0280454,
+   "lng": 28.9463818,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/5243953356"
+  },
+  {
+   "name": "Konak Bufe",
+   "lat": 41.0291408,
+   "lng": 28.9441748,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/5113612623"
+  },
+  {
+   "name": "Kaçar borek salonu",
+   "lat": 41.0291831,
+   "lng": 28.9440018,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/5113612622"
+  },
+  {
+   "name": "Yaraligoz borek",
+   "lat": 41.031121,
+   "lng": 28.9448204,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/5113610091"
+  },
+  {
+   "name": "Şanlar Pastneleri",
+   "lat": 41.0265212,
+   "lng": 28.9474243,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/5106127801"
+  },
+  {
+   "name": "Domino Cafe",
+   "lat": 41.0317756,
+   "lng": 28.9477735,
+   "amenity": "restaurant",
+   "cuisine": "turkish;arab",
+   "hours": "",
+   "osm": "node/5040810722"
+  },
+  {
+   "name": "Sütiş Special",
+   "lat": 41.0099544,
+   "lng": 28.9700533,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/5244807394"
+  },
+  {
+   "name": "Çarşıkapı Muhallebicisi 1984",
+   "lat": 41.0099667,
+   "lng": 28.9699649,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/5115939926"
+  },
+  {
+   "name": "Historical Subasi Restaurant",
+   "lat": 41.0106207,
+   "lng": 28.9699663,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/5244807403"
+  },
+  {
+   "name": "Dönerci Şahin Usta",
+   "lat": 41.010689,
+   "lng": 28.9700096,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/5244807405"
+  },
+  {
+   "name": "Vejetaryen Mutfak",
+   "lat": 41.0107748,
+   "lng": 28.9703903,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/5244807402"
+  },
+  {
+   "name": "Tarihi Sofçuhan Muhallebicisi",
+   "lat": 41.0097996,
+   "lng": 28.9699626,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/5244807393"
+  },
+  {
+   "name": "Cihannuma",
+   "lat": 41.0085551,
+   "lng": 28.977766,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/4816553622"
+  },
+  {
+   "name": "Omar Cafe and Restaurant",
+   "lat": 41.0084509,
+   "lng": 28.9776292,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/5108843113"
+  },
+  {
+   "name": "Altin Kupa Restaurant",
+   "lat": 41.0085872,
+   "lng": 28.9777365,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/5108843115"
+  },
+  {
+   "name": "Barbeku House",
+   "lat": 41.0086074,
+   "lng": 28.9777141,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/5108843562"
+  },
+  {
+   "name": "Palmiye",
+   "lat": 41.0081218,
+   "lng": 28.9775091,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/3090853857"
+  },
+  {
+   "name": "Bodrum Cafe and Restaurant",
+   "lat": 41.008222,
+   "lng": 28.9773126,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/5108843088"
+  },
+  {
+   "name": "YTÜ Yemekhanesi",
+   "lat": 41.0514938,
+   "lng": 29.010113,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "way/279984488"
+  },
+  {
+   "name": "Tony's Pizza",
+   "lat": 41.0524977,
+   "lng": 29.0108497,
+   "amenity": "restaurant",
+   "cuisine": "pizza",
+   "hours": "",
+   "osm": "way/324863352"
+  },
+  {
+   "name": "Fatih alhayr",
+   "lat": 41.0203133,
+   "lng": 28.9487785,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/5113480872"
+  },
+  {
+   "name": "كنافة نابلسي",
+   "lat": 41.0203859,
+   "lng": 28.9486275,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/8771469619"
+  },
+  {
+   "name": "Öz antakya",
+   "lat": 41.0207109,
+   "lng": 28.9491714,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/5113483634"
+  },
+  {
+   "name": "Sevecen ev yemekleri",
+   "lat": 41.0202852,
+   "lng": 28.94832,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/5113480880"
+  },
+  {
+   "name": "Dede sultan",
+   "lat": 41.0207875,
+   "lng": 28.9489316,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/5113483630"
+  },
+  {
+   "name": "Bab alhara",
+   "lat": 41.020946,
+   "lng": 28.9493267,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/5113481333"
+  },
+  {
+   "name": "Cistern Restaurant",
+   "lat": 41.0099971,
+   "lng": 28.9794755,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/1914160119"
+  },
+  {
+   "name": "Ela Sofia Kebap",
+   "lat": 41.0102483,
+   "lng": 28.9788701,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/5113620691"
+  },
+  {
+   "name": "Le Safran Restaurant",
+   "lat": 41.0105078,
+   "lng": 28.978481,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/3457689622"
+  },
+  {
+   "name": "Göktaş Branda",
+   "lat": 41.0167464,
+   "lng": 28.9553714,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/5106122989"
+  },
+  {
+   "name": "bitlis buryan",
+   "lat": 41.0165997,
+   "lng": 28.9546989,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "way/373077069"
+  },
+  {
+   "name": "Fatih Sur Börekçisi",
+   "lat": 41.0168814,
+   "lng": 28.9555386,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/5106122982"
+  },
+  {
+   "name": "Bahçıvan 2 Pide Lavaş Fırını",
+   "lat": 41.0169673,
+   "lng": 28.9554297,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/5106122981"
+  },
+  {
+   "name": "Adana Güneş Kebap",
+   "lat": 41.0169531,
+   "lng": 28.9561473,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/9480329226"
+  },
+  {
+   "name": "Uğur Büryan",
+   "lat": 41.0170952,
+   "lng": 28.9554323,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/9833781517"
+  },
+  {
+   "name": "Acemoğlu Beklavaları",
+   "lat": 41.0172972,
+   "lng": 28.9688479,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/5244796162"
+  },
+  {
+   "name": "Osmanlı Kebapçısı",
+   "lat": 41.0179383,
+   "lng": 28.9687092,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/5717779824"
+  },
+  {
+   "name": "Hatay Asi Künefeleri",
+   "lat": 41.0172599,
+   "lng": 28.9689292,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/5244796163"
+  },
+  {
+   "name": "Köfteci Yaşar",
+   "lat": 41.0179851,
+   "lng": 28.9685272,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/5244812119"
+  },
+  {
+   "name": "Burgerillas",
+   "lat": 41.0174874,
+   "lng": 28.9694058,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/5111212299"
+  },
+  {
+   "name": "Tarihi kardeşler börek ve pideci",
+   "lat": 41.0172694,
+   "lng": 28.9681577,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/9722432917"
+  },
+  {
+   "name": "Buryan Kebap Ve Izgara Salonu",
+   "lat": 40.996348,
+   "lng": 28.9277896,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/5076115938"
+  },
+  {
+   "name": "Rumeli Tulumbacısı",
+   "lat": 40.9963869,
+   "lng": 28.9275759,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/5087179467"
+  },
+  {
+   "name": "Kule köfte",
+   "lat": 40.9959514,
+   "lng": 28.927454,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/5076115923"
+  },
+  {
+   "name": "Eyüp Sultan Sofrası",
+   "lat": 40.9969376,
+   "lng": 28.9280756,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/5087172338"
+  },
+  {
+   "name": "Ümit Börek Salonu",
+   "lat": 40.9967123,
+   "lng": 28.9276693,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/5087172333"
+  },
+  {
+   "name": "Öz Anteplizade",
+   "lat": 40.9961426,
+   "lng": 28.9273472,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/5087179461"
+  },
+  {
+   "name": "Unkapanı pilavcısı",
+   "lat": 41.0134382,
+   "lng": 28.9608192,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/5110342190"
+  },
+  {
+   "name": "Oses Çiğköfte Vefa",
+   "lat": 41.0133179,
+   "lng": 28.961086,
+   "amenity": "restaurant",
+   "cuisine": "turkish",
+   "hours": "",
+   "osm": "node/13204905930"
+  },
+  {
+   "name": "Direklerarası Kebap Salonu",
+   "lat": 41.0124064,
+   "lng": 28.9593382,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/5110342204"
+  },
+  {
+   "name": "Direklerarası Sofrası",
+   "lat": 41.0118728,
+   "lng": 28.9591953,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/5112728863"
+  },
+  {
+   "name": "Express Restaurant and Pub",
+   "lat": 41.0119274,
+   "lng": 28.959088,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/5112728862"
+  },
+  {
+   "name": "Şehzade Börek",
+   "lat": 41.0118019,
+   "lng": 28.959214,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/5112728864"
+  },
+  {
+   "name": "Feriye",
+   "lat": 41.0471328,
+   "lng": 29.0244571,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Mo-Su 09:00-01:00",
+   "osm": "way/1446551360"
+  },
+  {
+   "name": "Banyan",
+   "lat": 41.0476325,
+   "lng": 29.0250963,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/6732844886"
+  },
+  {
+   "name": "The House Cafe",
+   "lat": 41.0473665,
+   "lng": 29.0254137,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/2773225766"
+  },
+  {
+   "name": "Ortakoy Manticisi",
+   "lat": 41.0490287,
+   "lng": 29.0253693,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Mo-Su 08:00-24:00",
+   "osm": "node/14235341701"
+  },
+  {
+   "name": "Elise Pide Lahmacun",
+   "lat": 41.0491056,
+   "lng": 29.0253102,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Mo-Fr 10:30-23:30",
+   "osm": "node/13174149472"
+  },
+  {
+   "name": "Konyali",
+   "lat": 41.0484632,
+   "lng": 29.0260665,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/4161524049"
+  },
+  {
+   "name": "Falafel & Humus",
+   "lat": 41.008645,
+   "lng": 28.971502,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/4429003940"
+  },
+  {
+   "name": "Makarna Sarayı",
+   "lat": 41.0086854,
+   "lng": 28.9714945,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/5244806778"
+  },
+  {
+   "name": "Çemberlitaş Köftecisi",
+   "lat": 41.0088945,
+   "lng": 28.9714053,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/5244806780"
+  },
+  {
+   "name": "Dehliz Restaurant",
+   "lat": 41.0092411,
+   "lng": 28.9712879,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/5244806783"
+  },
+  {
+   "name": "Bombay Masala Indian Restaurant",
+   "lat": 41.0081165,
+   "lng": 28.9716616,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/8247183034"
+  },
+  {
+   "name": "Tarihi Cemberlitas Muhallebicisi",
+   "lat": 41.0079631,
+   "lng": 28.9714864,
+   "amenity": "restaurant",
+   "cuisine": "turkish",
+   "hours": "Mo-Su 07:00-22:00",
+   "osm": "node/7109062286"
+  },
+  {
+   "name": "Büfe",
+   "lat": 40.9941385,
+   "lng": 28.9226289,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/4874834121"
+  },
+  {
+   "name": "Yedikule kebap pilavcı",
+   "lat": 40.9942001,
+   "lng": 28.9226072,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/5087168296"
+  },
+  {
+   "name": "Safir Köfte",
+   "lat": 40.9944004,
+   "lng": 28.9235383,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/5087168298"
+  },
+  {
+   "name": "Kebapçıoğlu",
+   "lat": 40.9943336,
+   "lng": 28.9238694,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/5087179426"
+  },
+  {
+   "name": "Farrujna",
+   "lat": 40.9944523,
+   "lng": 28.9252534,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/5087179431"
+  },
+  {
+   "name": "Yesilkir pide bank",
+   "lat": 40.9941424,
+   "lng": 28.9257294,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/5076114618"
+  },
+  {
+   "name": "Chez Boré Restaurant Café",
+   "lat": 41.0313233,
+   "lng": 28.9791838,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/11990436970"
+  },
+  {
+   "name": "Zeytuna Cezayir'de",
+   "lat": 41.0318135,
+   "lng": 28.9794648,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Tu-Th 17:00-00:00; Fr-Su 14:00-00:00",
+   "osm": "node/10595229805"
+  },
+  {
+   "name": "Onur Homemade Cuisine",
+   "lat": 41.0303377,
+   "lng": 28.9809023,
+   "amenity": "restaurant",
+   "cuisine": "local",
+   "hours": "",
+   "osm": "node/4887115922"
+  },
+  {
+   "name": "Limonlu bahçe",
+   "lat": 41.0314448,
+   "lng": 28.9786429,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/3709002234"
+  },
+  {
+   "name": "AGA Ocakbaşı",
+   "lat": 41.031606,
+   "lng": 28.978756,
+   "amenity": "restaurant",
+   "cuisine": "kebab;turkish",
+   "hours": "",
+   "osm": "node/14211760201"
+  },
+  {
+   "name": "Peymane",
+   "lat": 41.0298314,
+   "lng": 28.97997,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/3810855325"
+  },
+  {
+   "name": "Sosyal Lokanta",
+   "lat": 41.0670087,
+   "lng": 28.9456604,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "way/685291102"
+  },
+  {
+   "name": "Gusto Stop",
+   "lat": 41.0681007,
+   "lng": 28.944503,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "way/688202327"
+  },
+  {
+   "name": "Mutfak",
+   "lat": 41.0682298,
+   "lng": 28.9445283,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "way/688202326"
+  },
+  {
+   "name": "Altınay Yufkacısı",
+   "lat": 41.0322705,
+   "lng": 28.9407412,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/5112749742"
+  },
+  {
+   "name": "Nupera",
+   "lat": 41.0317028,
+   "lng": 28.9750718,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/3188737339"
+  },
+  {
+   "name": "Beykizi Kave Ve Restoran",
+   "lat": 41.0314464,
+   "lng": 28.9758201,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/12347693519"
+  },
+  {
+   "name": "Şaka Da Pera",
+   "lat": 41.0320103,
+   "lng": 28.9760485,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/12347693515"
+  },
+  {
+   "name": "Lucy Pera",
+   "lat": 41.031258,
+   "lng": 28.9757662,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/12347693522"
+  },
+  {
+   "name": "Midpoint",
+   "lat": 41.0315097,
+   "lng": 28.9761021,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/6185569130"
+  },
+  {
+   "name": "Fıccın",
+   "lat": 41.0325552,
+   "lng": 28.9757155,
+   "amenity": "restaurant",
+   "cuisine": "fish;turkish",
+   "hours": "",
+   "osm": "node/1665037883"
+  },
+  {
+   "name": "Günaydın",
+   "lat": 41.02649,
+   "lng": 28.9834903,
+   "amenity": "restaurant",
+   "cuisine": "kebab;turkish;sandwich",
+   "hours": "",
+   "osm": "node/13245382593"
+  },
+  {
+   "name": "Kirpi",
+   "lat": 41.0261872,
+   "lng": 28.9838976,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/9524243917"
+  },
+  {
+   "name": "Cookshop",
+   "lat": 41.0262998,
+   "lng": 28.9841407,
+   "amenity": "restaurant",
+   "cuisine": "turkish",
+   "hours": "",
+   "osm": "node/11385598768"
+  },
+  {
+   "name": "Fasuli",
+   "lat": 41.0261611,
+   "lng": 28.9815268,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/6185503620"
+  },
+  {
+   "name": "Kervan Karaköy",
+   "lat": 41.026136,
+   "lng": 28.9814937,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/6185503007"
+  },
+  {
+   "name": "Bosnjak",
+   "lat": 41.0257897,
+   "lng": 28.9812173,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/5171238821"
+  },
+  {
+   "name": "Miniatürk",
+   "lat": 41.0589395,
+   "lng": 28.9488253,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/5482528222"
+  },
+  {
+   "name": "Lezzet Co. Döner",
+   "lat": 41.0511315,
+   "lng": 28.9904785,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/4836807821"
+  },
+  {
+   "name": "Smash House",
+   "lat": 41.0512807,
+   "lng": 28.9902436,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/13779801188"
+  },
+  {
+   "name": "Falafel Veggie",
+   "lat": 41.0511155,
+   "lng": 28.9926497,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/1697171839"
+  },
+  {
+   "name": "Azurro Pizza Napoletana",
+   "lat": 41.0515976,
+   "lng": 28.9898505,
+   "amenity": "restaurant",
+   "cuisine": "pizza",
+   "hours": "",
+   "osm": "node/13776063921"
+  },
+  {
+   "name": "Bodeum manti cafe",
+   "lat": 41.0523934,
+   "lng": 28.9927222,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/10592337905"
+  },
+  {
+   "name": "iskender1867istanbul",
+   "lat": 41.0521767,
+   "lng": 28.992922,
+   "amenity": "restaurant",
+   "cuisine": "turkish",
+   "hours": "",
+   "osm": "node/9584101417"
+  },
+  {
+   "name": "Ortaklar Kebab Lahmacun",
+   "lat": 41.0072732,
+   "lng": 28.9722043,
+   "amenity": "restaurant",
+   "cuisine": "chicken;kebab;local;turkish",
+   "hours": "Mo-Su 10:30-01:00",
+   "osm": "node/5193225922"
+  },
+  {
+   "name": "Mevlana",
+   "lat": 41.0073837,
+   "lng": 28.9721872,
+   "amenity": "restaurant",
+   "cuisine": "turkish",
+   "hours": "",
+   "osm": "node/10738474298"
+  },
+  {
+   "name": "Hidden Garden Sultanat",
+   "lat": 41.0068013,
+   "lng": 28.9723973,
+   "amenity": "restaurant",
+   "cuisine": "barbecue;breakfast;chicken;coffee_shop;fish_and_chips;friture;grill",
+   "hours": "Mo-Su 11:00-23:30",
+   "osm": "node/5113500300"
+  },
+  {
+   "name": "Green Hill",
+   "lat": 41.007067,
+   "lng": 28.9733156,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/12339920801"
+  },
+  {
+   "name": "Shyra Rooftop Restaurant",
+   "lat": 41.0072903,
+   "lng": 28.9734046,
+   "amenity": "restaurant",
+   "cuisine": "turkish",
+   "hours": "Mo-Su 09:00-23:30",
+   "osm": "way/527622320"
+  },
+  {
+   "name": "Saray Kebap",
+   "lat": 41.007844,
+   "lng": 28.971591,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/5113500287"
+  },
+  {
+   "name": "Payidar galata",
+   "lat": 41.0268267,
+   "lng": 28.9727176,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/10086546422"
+  },
+  {
+   "name": "By Boss Lounge",
+   "lat": 41.026812,
+   "lng": 28.9728764,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/11010229194"
+  },
+  {
+   "name": "Inegöl Köfte Salonu",
+   "lat": 41.0272615,
+   "lng": 28.9723307,
+   "amenity": "restaurant",
+   "cuisine": "turkish",
+   "hours": "",
+   "osm": "node/10175242217"
+  },
+  {
+   "name": "SARIKAYA KEBAP (KEBAPCI)",
+   "lat": 41.0262402,
+   "lng": 28.9733863,
+   "amenity": "restaurant",
+   "cuisine": "turkish",
+   "hours": "Mo-Su 08:00-20:00",
+   "osm": "node/7831815086"
+  },
+  {
+   "name": "Walton Breakfast",
+   "lat": 41.0258983,
+   "lng": 28.97231,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/14115034882"
+  },
+  {
+   "name": "Privato Cafe",
+   "lat": 41.0268623,
+   "lng": 28.9740831,
+   "amenity": "restaurant",
+   "cuisine": "turkish",
+   "hours": "09:00-23:00",
+   "osm": "node/5370651424"
+  },
+  {
+   "name": "Köroğlu Fatih Kıztaşı Lokantası",
+   "lat": 41.0154219,
+   "lng": 28.950153,
+   "amenity": "restaurant",
+   "cuisine": "regional",
+   "hours": "Mo-Su 09:00-21:00",
+   "osm": "node/14078863701"
+  },
+  {
+   "name": "Pihlivan Lokantası",
+   "lat": 41.0164274,
+   "lng": 28.9508387,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/5081274106"
+  },
+  {
+   "name": "Sırdaş Restaurant",
+   "lat": 41.0167472,
+   "lng": 28.950346,
+   "amenity": "restaurant",
+   "cuisine": "turkish",
+   "hours": "",
+   "osm": "node/5817897755"
+  },
+  {
+   "name": "Almahaba restaurant",
+   "lat": 41.0166506,
+   "lng": 28.9512812,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/5113471040"
+  },
+  {
+   "name": "adiyaman çikoftecisi",
+   "lat": 41.0164496,
+   "lng": 28.9488029,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/5243951557"
+  },
+  {
+   "name": "Hayat lokantasi",
+   "lat": 41.0164193,
+   "lng": 28.9487198,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/5243951555"
+  },
+  {
+   "name": "Pidepark",
+   "lat": 41.0494876,
+   "lng": 29.002199,
+   "amenity": "restaurant",
+   "cuisine": "turkish",
+   "hours": "Mo-Su 08:00-23:00",
+   "osm": "node/4357186591"
+  },
+  {
+   "name": "YES Kardesler",
+   "lat": 41.0529189,
+   "lng": 29.0003731,
+   "amenity": "restaurant",
+   "cuisine": "turkish",
+   "hours": "",
+   "osm": "node/5536187466"
+  },
+  {
+   "name": "Çıtır Usta Pideci",
+   "lat": 41.0479361,
+   "lng": 29.0023532,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/7198407661"
+  },
+  {
+   "name": "Happy Moon's",
+   "lat": 40.9880961,
+   "lng": 29.0284254,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/6525073710"
+  },
+  {
+   "name": "Happy Moon's Kadıköy",
+   "lat": 40.988153,
+   "lng": 29.0282951,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/2465881545"
+  },
+  {
+   "name": "Massa Köfte Lokanta",
+   "lat": 40.9884794,
+   "lng": 29.0282713,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/14381195960"
+  },
+  {
+   "name": "Agapia Mezze",
+   "lat": 40.988243,
+   "lng": 29.0279658,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/14381195948"
+  },
+  {
+   "name": "Mütalaa Meyhane",
+   "lat": 40.9883202,
+   "lng": 29.0279943,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/10149337919"
+  },
+  {
+   "name": "The gospel culture",
+   "lat": 40.9872687,
+   "lng": 29.0283306,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/11389552000"
+  }
+ ]
 }

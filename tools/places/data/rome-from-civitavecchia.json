@@ -7638,5 +7638,277 @@
     }
    ]
   }
+ ],
+ "cityEats": [
+  {
+   "name": "La Pilotta",
+   "lat": 41.9001014,
+   "lng": 12.4555046,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/6198580465"
+  },
+  {
+   "name": "Homebaked",
+   "lat": 41.9001043,
+   "lng": 12.4557161,
+   "amenity": "restaurant",
+   "cuisine": "breakfast",
+   "hours": "Mo-Sa 08:00-16:00; Su 09:00-16:00",
+   "osm": "node/6198580464"
+  },
+  {
+   "name": "Osteria Pizzeria Come Va?",
+   "lat": 41.8996917,
+   "lng": 12.4540114,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/14211580226"
+  },
+  {
+   "name": "Il Colonnato",
+   "lat": 41.9007745,
+   "lng": 12.4567018,
+   "amenity": "restaurant",
+   "cuisine": "italian",
+   "hours": "Mo-Sa 07:30-18:00; Su 07:30-16:00",
+   "osm": "node/12652255697"
+  },
+  {
+   "name": "Traditional Food Co. S.R.L.",
+   "lat": 41.9007381,
+   "lng": 12.4567091,
+   "amenity": "restaurant",
+   "cuisine": "italian;pizza;sandwich;pasta",
+   "hours": "",
+   "osm": "node/13039086080"
+  },
+  {
+   "name": "Ristrot San Pietro",
+   "lat": 41.8996014,
+   "lng": 12.4537627,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/14211627112"
+  },
+  {
+   "name": "RoYaL Art Cafè",
+   "lat": 41.8915062,
+   "lng": 12.4925537,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/6992316685"
+  },
+  {
+   "name": "Ristoro Della Salute",
+   "lat": 41.8898614,
+   "lng": 12.4942155,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/5365793336"
+  },
+  {
+   "name": "Gran Caffe Martini & Rossi",
+   "lat": 41.8897129,
+   "lng": 12.4941649,
+   "amenity": "restaurant",
+   "cuisine": "italian",
+   "hours": "Mo-Su 08:30-01:00",
+   "osm": "node/1688847325"
+  },
+  {
+   "name": "Royal art café",
+   "lat": 41.8899551,
+   "lng": 12.4942704,
+   "amenity": "restaurant",
+   "cuisine": "italian",
+   "hours": "",
+   "osm": "node/1688847355"
+  },
+  {
+   "name": "Al Gladiatore",
+   "lat": 41.8894459,
+   "lng": 12.494046,
+   "amenity": "restaurant",
+   "cuisine": "italian",
+   "hours": "",
+   "osm": "node/1688847351"
+  },
+  {
+   "name": "Antica DOMUS",
+   "lat": 41.8900303,
+   "lng": 12.4943293,
+   "amenity": "restaurant",
+   "cuisine": "italian_pizza",
+   "hours": "",
+   "osm": "node/12174641901"
+  },
+  {
+   "name": "Appetito",
+   "lat": 41.8988302,
+   "lng": 12.4773173,
+   "amenity": "restaurant",
+   "cuisine": "pizza",
+   "hours": "",
+   "osm": "node/14031985706"
+  },
+  {
+   "name": "Come 'na Vorta Pasta e Vino - Palombella",
+   "lat": 41.8982636,
+   "lng": 12.476348,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/13570424601"
+  },
+  {
+   "name": "T-Burger station & Bar",
+   "lat": 41.8982634,
+   "lng": 12.4763113,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Mo-Su 11:00-23:00",
+   "osm": "node/6056793785"
+  },
+  {
+   "name": "Miscellanea",
+   "lat": 41.8982577,
+   "lng": 12.4762516,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/4294932354"
+  },
+  {
+   "name": "Ristorante La Sagrestia",
+   "lat": 41.8989897,
+   "lng": 12.4775061,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/4196496989"
+  },
+  {
+   "name": "Taverna del Seminario",
+   "lat": 41.899036,
+   "lng": 12.4774563,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Mo-Su 12:00-23:15",
+   "osm": "node/7757282085"
+  },
+  {
+   "name": "Pizza in Trevi",
+   "lat": 41.9006435,
+   "lng": 12.4836115,
+   "amenity": "restaurant",
+   "cuisine": "pizza",
+   "hours": "",
+   "osm": "node/3067499648"
+  },
+  {
+   "name": "Brew Restaurant",
+   "lat": 41.901294,
+   "lng": 12.4828619,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/6783675235"
+  },
+  {
+   "name": "Doppio Malto",
+   "lat": 41.9012843,
+   "lng": 12.4828426,
+   "amenity": "restaurant",
+   "cuisine": "burger;italian;steak_house",
+   "hours": "",
+   "osm": "node/5655847222"
+  },
+  {
+   "name": "al Picchio",
+   "lat": 41.9008897,
+   "lng": 12.484006,
+   "amenity": "restaurant",
+   "cuisine": "italian;italian_pizza",
+   "hours": "24/7",
+   "osm": "node/10794737105"
+  },
+  {
+   "name": "Allegro Pachino",
+   "lat": 41.9009022,
+   "lng": 12.4825833,
+   "amenity": "restaurant",
+   "cuisine": "italian",
+   "hours": "",
+   "osm": "node/3531834098"
+  },
+  {
+   "name": "Birreria",
+   "lat": 41.9008905,
+   "lng": 12.4840258,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/3061568276"
+  },
+  {
+   "name": "Il vero Tre Scalini dal 1946",
+   "lat": 41.899245,
+   "lng": 12.4727194,
+   "amenity": "restaurant",
+   "cuisine": "italian",
+   "hours": "",
+   "osm": "node/9498676681"
+  },
+  {
+   "name": "Ristorante Caffé Barocco",
+   "lat": 41.8993378,
+   "lng": 12.4734402,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/9498676683"
+  },
+  {
+   "name": "Aux Trois Truffes",
+   "lat": 41.8991497,
+   "lng": 12.472699,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/12052926107"
+  },
+  {
+   "name": "Bistrot er Marchese",
+   "lat": 41.8992148,
+   "lng": 12.4725493,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/13667503201"
+  },
+  {
+   "name": "Tre Scalini",
+   "lat": 41.8994451,
+   "lng": 12.472615,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Mo-Su 11:00-24:00",
+   "osm": "node/9498676688"
+  },
+  {
+   "name": "Ristorante Panzirone",
+   "lat": 41.8995852,
+   "lng": 12.4734121,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/9498676682"
+  }
  ]
 }

@@ -116,5 +116,232 @@
   "lng": 25.326,
   "known": true,
   "island": false
- }
+ },
+ "cityEats": [
+  {
+   "name": "Kostas",
+   "lat": 37.4456311,
+   "lng": 25.3270135,
+   "amenity": "restaurant",
+   "cuisine": "greek",
+   "hours": "",
+   "osm": "way/736601359"
+  },
+  {
+   "name": "Casa di Giorgio",
+   "lat": 37.4455555,
+   "lng": 25.3267308,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "way/736885938"
+  },
+  {
+   "name": "Nice n Easy",
+   "lat": 37.4455255,
+   "lng": 25.3262402,
+   "amenity": "restaurant",
+   "cuisine": "bistro",
+   "hours": "Mo-Su 09:00-24:00",
+   "osm": "node/5553140909"
+  },
+  {
+   "name": "Fato a Mano",
+   "lat": 37.4460033,
+   "lng": 25.327437,
+   "amenity": "restaurant",
+   "cuisine": "italian",
+   "hours": "",
+   "osm": "way/736555288"
+  },
+  {
+   "name": "Meatropolitan",
+   "lat": 37.4449512,
+   "lng": 25.3275131,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/5882085085"
+  },
+  {
+   "name": "Cafe Manto Restaurant",
+   "lat": 37.445803,
+   "lng": 25.328053,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "way/736585221"
+  },
+  {
+   "name": "D' Angelo Restaurante",
+   "lat": 37.4437133,
+   "lng": 25.3272378,
+   "amenity": "restaurant",
+   "cuisine": "italian;regional",
+   "hours": "",
+   "osm": "way/734585143"
+  },
+  {
+   "name": "Sea Satin by Gryparis",
+   "lat": 37.445172,
+   "lng": 25.3257267,
+   "amenity": "restaurant",
+   "cuisine": "greek",
+   "hours": "",
+   "osm": "node/2317750634"
+  },
+  {
+   "name": "Lakka Garden",
+   "lat": 37.4440767,
+   "lng": 25.3280786,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "way/735200836"
+  },
+  {
+   "name": "Kastro's",
+   "lat": 37.4469986,
+   "lng": 25.3256736,
+   "amenity": "restaurant",
+   "cuisine": "greek",
+   "hours": "",
+   "osm": "node/6656188897"
+  },
+  {
+   "name": "Pasta Fresca Barkia",
+   "lat": 37.4467387,
+   "lng": 25.3268143,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/5550401631"
+  },
+  {
+   "name": "Niko's Taverna",
+   "lat": 37.4471021,
+   "lng": 25.3269069,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "way/736253691"
+  },
+  {
+   "name": "Remezzo",
+   "lat": 37.4497936,
+   "lng": 25.3297789,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/6656178579"
+  },
+  {
+   "name": "Salparo",
+   "lat": 37.449635,
+   "lng": 25.3296387,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/6656178578"
+  },
+  {
+   "name": "Roca Restaurant Mykonos",
+   "lat": 37.4503208,
+   "lng": 25.3293613,
+   "amenity": "restaurant",
+   "cuisine": "greek;italian;mediterranean",
+   "hours": "Mo-Su 07:00-01:00",
+   "osm": "node/6656178144"
+  },
+  {
+   "name": "Kavos",
+   "lat": 37.4494476,
+   "lng": 25.3297823,
+   "amenity": "restaurant",
+   "cuisine": "greek",
+   "hours": "",
+   "osm": "node/5891781756"
+  },
+  {
+   "name": "Maria's Traditional Restaurant",
+   "lat": 37.448089,
+   "lng": 25.3302893,
+   "amenity": "restaurant",
+   "cuisine": "pizza;italian;mediterranean;greek",
+   "hours": "",
+   "osm": "node/5891781748"
+  },
+  {
+   "name": "Catari",
+   "lat": 37.4478661,
+   "lng": 25.3297445,
+   "amenity": "restaurant",
+   "cuisine": "italian",
+   "hours": "",
+   "osm": "node/7591022682"
+  },
+  {
+   "name": "Interni",
+   "lat": 37.4454915,
+   "lng": 25.328708,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "way/736555310"
+  },
+  {
+   "name": "Rhino",
+   "lat": 37.4453695,
+   "lng": 25.3287835,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/12490240445"
+  },
+  {
+   "name": "Ling Ling Hakkasan",
+   "lat": 37.4456414,
+   "lng": 25.3287022,
+   "amenity": "restaurant",
+   "cuisine": "japanese;asian;chinese",
+   "hours": "",
+   "osm": "way/734600157"
+  },
+  {
+   "name": "Healthylicious",
+   "lat": 37.4454753,
+   "lng": 25.3288992,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/9621447017"
+  },
+  {
+   "name": "Avra Garden  Restaurant",
+   "lat": 37.4457713,
+   "lng": 25.3282172,
+   "amenity": "restaurant",
+   "cuisine": "greek;regional;international",
+   "hours": "",
+   "osm": "node/3611660157"
+  },
+  {
+   "name": "Avra Garden Restaurant",
+   "lat": 37.4458146,
+   "lng": 25.3283028,
+   "amenity": "restaurant",
+   "cuisine": "greek;regional",
+   "hours": "",
+   "osm": "way/734601326"
+  },
+  {
+   "name": "Coya Mykonos",
+   "lat": 37.4457964,
+   "lng": 25.3287216,
+   "amenity": "restaurant",
+   "cuisine": "international",
+   "hours": "",
+   "osm": "node/7844486785"
+  }
+ ]
 }

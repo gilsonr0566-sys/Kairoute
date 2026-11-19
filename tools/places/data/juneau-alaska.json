@@ -301,5 +301,151 @@
    "editions": 2,
    "unesco": false
   }
+ ],
+ "cityEats": [
+  {
+   "name": "In Bocca Al Lupo",
+   "lat": 58.3011234,
+   "lng": -134.4087843,
+   "amenity": "restaurant",
+   "cuisine": "Italian",
+   "hours": "Mo-Fr 11:00-15:00, 17:00-21:00; Sa 17:00-21:00",
+   "osm": "node/14040672225"
+  },
+  {
+   "name": "Little Tokyo",
+   "lat": 58.3010237,
+   "lng": -134.4081332,
+   "amenity": "restaurant",
+   "cuisine": "sushi",
+   "hours": "",
+   "osm": "node/5059211124"
+  },
+  {
+   "name": "Bullwinkles",
+   "lat": 58.3005542,
+   "lng": -134.4124726,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/6054033978"
+  },
+  {
+   "name": "McGivney's Sports Bar & Grill - Downtown",
+   "lat": 58.2997386,
+   "lng": -134.4101978,
+   "amenity": "restaurant",
+   "cuisine": "burger",
+   "hours": "",
+   "osm": "node/9799716853"
+  },
+  {
+   "name": "Pizzeria Roma",
+   "lat": 58.2993542,
+   "lng": -134.40817,
+   "amenity": "restaurant",
+   "cuisine": "pizza",
+   "hours": "",
+   "osm": "node/4947836487"
+  },
+  {
+   "name": "T.K. Maguire's",
+   "lat": 58.2993541,
+   "lng": -134.4155638,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/9799716835"
+  },
+  {
+   "name": "Tracy's Crab Shack",
+   "lat": 58.2982819,
+   "lng": -134.4140412,
+   "amenity": "restaurant",
+   "cuisine": "seafood",
+   "hours": "",
+   "osm": "way/1314693901"
+  },
+  {
+   "name": "Buoy Deck U.S. Coast Guard facility",
+   "lat": 58.2985793,
+   "lng": -134.4125137,
+   "amenity": "restaurant",
+   "cuisine": "grill",
+   "hours": "",
+   "osm": "way/1314693712"
+  },
+  {
+   "name": "Tracy's King Crab Shack",
+   "lat": 58.2969799,
+   "lng": -134.4020198,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/4947935225"
+  },
+  {
+   "name": "Twisted Fish Company Alaskan Grill",
+   "lat": 58.2955999,
+   "lng": -134.3994597,
+   "amenity": "restaurant",
+   "cuisine": "seafood",
+   "hours": "",
+   "osm": "node/4327570412"
+  },
+  {
+   "name": "Taqueria",
+   "lat": 58.2990808,
+   "lng": -134.4051007,
+   "amenity": "restaurant",
+   "cuisine": "mexican",
+   "hours": "",
+   "osm": "node/5759484342"
+  },
+  {
+   "name": "El Sombrero",
+   "lat": 58.3004567,
+   "lng": -134.4052107,
+   "amenity": "restaurant",
+   "cuisine": "mexican",
+   "hours": "",
+   "osm": "node/5759484102"
+  },
+  {
+   "name": "Alaska Fish & Chips Company",
+   "lat": 58.2994257,
+   "lng": -134.4071412,
+   "amenity": "restaurant",
+   "cuisine": "fish_and_chips",
+   "hours": "",
+   "osm": "node/4947844611"
+  },
+  {
+   "name": "Pelmini",
+   "lat": 58.2994671,
+   "lng": -134.407434,
+   "amenity": "restaurant",
+   "cuisine": "russian",
+   "hours": "",
+   "osm": "node/5759484106"
+  },
+  {
+   "name": "The Flight Deck",
+   "lat": 58.2993569,
+   "lng": -134.4071564,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/5759484105"
+  },
+  {
+   "name": "The Hanger",
+   "lat": 58.2992516,
+   "lng": -134.4078341,
+   "amenity": "restaurant",
+   "cuisine": "american;burger;fish;grill",
+   "hours": "",
+   "osm": "node/4947836492"
+  }
  ]
 }
