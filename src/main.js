@@ -897,6 +897,10 @@ if (typeof window !== "undefined") window.__kairouteOneEach = (opts, want) => on
 function rideLeg(a, b, road, lastMile, walkMin) {
   const walk = walkMin ? [{ id: "walk", label: "Walk", min: walkMin, kind: "walk" }] : [];
   let opts = transitFor(a, b);
+  // A ride slower than walking the same way is never offered (Nov 19, Rome: "Ferry Battelli di Roma 1 h 40 min" next to
+  // a 34 min walk and a 17 min taxi; "those 2 ferries stick out like a sore thumb"): with a walk on offer, a line that
+  // takes longer than it is dropped, and the taxi and the walk remain.
+  if (opts && walkMin) opts = opts.filter(o => !(o.min > walkMin));
   // No line found: the ride is a taxi, and says so (not "Taxi, bus or metro", not "Train or car": the label never names
   // a way to go that has no button, Richard Nov 17); a short one can be walked instead.
   if (!opts || !opts.length) return Object.assign({}, road, { how: "Taxi or car", key: pairKey(a, b), choice: "taxi", road: road.min, lastMile, choices: [...walk, { id: "taxi", label: "Taxi or car", min: road.min, kind: "car" }] });
@@ -4255,6 +4259,7 @@ if (typeof window !== "undefined") window.__kairouteEmptyRides = i => { const c 
   for (const x of all) for (const y of all) if (x !== y && isFinite(x.lat) && isFinite(y.lat) && hav(x, y) >= 4) { const k = pairKey(x, y) + "|" + kd; if (!transitMem[k]) { transitMem[k] = { opts: [], t: Date.now(), v: TRANSIT_V }; n++; } }
   nearGen++; return n; };
 if (typeof window !== "undefined") window.__kairouteTransitSet = pairs => { nearGen++; (pairs || []).forEach(x => { transitMem[pairKey(x.a, x.b)] = { opts: x.opts, t: Date.now(), v: TRANSIT_V }; }); return Object.keys(transitMem).length; };
+if (typeof window !== "undefined") window.__kairouteTravel = (a, b) => { const l = travel(a, b); return { how: l.how, min: l.min, choices: (l.choices || []).map(c => c.label + " " + c.min) }; };
 if (typeof window !== "undefined") window.__kairouteMapLegs = () => { const d = day(), pl = buildPlan(d); return pl && !pl.error ? mapPlanData(pl, d).legs : []; };
 // Test hook: try to add, on day i, a sight that is closed that day (the first one found): it must not be added and the
 // box must say it's closed and offer an open day or an open sight instead.

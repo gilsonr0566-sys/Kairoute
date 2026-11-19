@@ -159,6 +159,24 @@ function helper(r, calls) {
     else ok(`${tag}: all ${days.length} hotel days plan (incl. boarding), ${noted.length} say the hotel isn't placed yet`);
     if (errs.length) bad(tag + ': page errors ' + errs.slice(0, 3).join(' / '));
     await p.close(); }
+  // 1b5. A ride slower than walking the same way is never offered (Nov 19, Rome: "Ferry Battelli di Roma 1 h 40 min"
+  // next to a 34 min walk and a 17 min taxi: "those 2 ferries stick out like a sore thumb"). A quicker line stays, and
+  // a slow line on a ride too long to walk is still offered.
+  if (!LIVE) { const p = await b.newPage({ viewport: { width: 1280, height: 800 } });
+    await p.route('**/*', r => /^file:/.test(r.request().url()) ? r.continue() : r.abort());
+    await p.goto('file://' + FILE); await p.evaluate(() => localStorage.setItem('kairoute.intro1', '1')); await p.reload(); await p.waitForTimeout(600);
+    const s = p.locator('[data-act="loadsample"]').first(); if (await s.isVisible().catch(() => false)) await s.click(); await p.waitForTimeout(1200);
+    const r = await p.evaluate(() => {
+      const op = (mode, label, min) => ({ mode, kind: mode === 'ferry' ? 'Ferry' : 'Bus', label, operator: '', from: '', to: '', ride: min - 20, wait: 12, every: 20, everySrc: 'usual', access: { how: 'walk', min: 4, km: 0.3 }, egress: { how: 'walk', min: 4, km: 0.3 }, min, km: 2, noTimetable: true });
+      const pan = { lat: 41.8986, lng: 12.4769, name: 'Pantheon' }, stp = { lat: 41.9022, lng: 12.4539, name: "St Peter's Basilica" }, far = { lat: 41.8530, lng: 12.5200, name: 'Far' };
+      window.__kairouteTransitSet([{ a: pan, b: stp, opts: [op('ferry', 'Ferry Battelli di Roma', 100), op('bus', 'Bus 64', 22)] }, { a: pan, b: far, opts: [op('ferry', 'Ferry Slow', 100)] }]);
+      return { near: window.__kairouteTravel(pan, stp), far: window.__kairouteTravel(pan, far) }; });
+    const n = r.near.choices.join(', '), f = r.far.choices.join(', ');
+    if (/Ferry/.test(n) || /Ferry/.test(r.near.how)) bad(`slow ride: a ferry slower than walking is offered (${n})`);
+    else if (!/Walk/.test(n) || !/Bus 64/.test(n) || !/Taxi/.test(n)) bad(`slow ride: the walk, the quicker bus or the taxi went missing (${n})`);
+    else if (!/Ferry Slow/.test(f)) bad(`slow ride: a line on a ride too long to walk was dropped (${f})`);
+    else ok(`slow ride: a 100 min ferry beside a ${(n.match(/Walk (\d+)/) || [])[1]} min walk is not offered (${n}); on a ride too long to walk it stays`);
+    await p.close(); }
   // 1c. A trip that starts with a cruise (Bahamas test trip, Nov 17): "+ Add a cruise" on the new form replaces the empty
   // city stay it opens with, so the traveler isn't stopped by "Stop 1: type the city"; one typed into is kept.
   if (!LIVE) { const p = await b.newPage({ viewport: { width: 412, height: 860 } });
