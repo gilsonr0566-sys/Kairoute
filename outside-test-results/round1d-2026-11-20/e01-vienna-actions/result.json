@@ -1,0 +1,246 @@
+{
+ "name": "e01-vienna-actions",
+ "label": "",
+ "legs": [
+  {
+   "k": "stay",
+   "place": "Vienna, Austria",
+   "date": "2027-05-09",
+   "nights": 3,
+   "inAt": "14:00",
+   "homeAt": "12:00"
+  }
+ ],
+ "started": "2026-11-20T21:53:50.240Z",
+ "passed": {
+  "/sources": 13,
+  "/transit": 14,
+  "/guide": 1,
+  "/places": 3,
+  "/voyage": 3,
+  "/ground": 1,
+  "/x/near": 13,
+  "/route": 14,
+  "/facts": 3
+ },
+ "refused": {
+  "/ratings": 2,
+  "/grating": 6,
+  "/events": 5
+ },
+ "errors": [],
+ "days": [
+  {
+   "i": 0,
+   "date": "2027-05-09",
+   "type": "arrival",
+   "text": "SUN MAY 9 · VIENNA, AUSTRIA · ARRIVING\nVienna, Austria ✎ Rename\nLock this day\n▶ Start the tour\n3:15 pm–10:29 pm\n7 h 14 min ✎\n2\nsights\n1.0 mi\nwalking\n6:12 pm\nlast stop done\nChoose sights\nMore\nAbout today's plan2 notes\nKunsthistorisches Museum would arrive after its last entry.\nVienna State Opera house would arrive after its last entry.\nUse Ctrl + scroll to zoom the map\nStart · Airport\nH\n1\n2\n300 ft\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nWalk\nTaxi or car\n■ Hotel\nMore about today\nDidn't fit today: Kunsthistorisches Museum, Vienna State Opera house. Your sights don't all fit today's time.\nMake it fit\n\nAll times are Vienna time, 7 h ahead of your device.\n\nLEAVE\n3:15 pm\nS\nOut of Vienna International Airport\nFlight arrives 2:00 pm. We allow 1 h 15 min to get off the plane and through baggage claim (and passport control after a flight from abroad).\nTaxi or car · 54 min · 15 mi\nARRIVE\n4:09 pm\nLEAVE\n4:29 pm\nH\nCheck in or drop bags\n20 min\nNext door\nARRIVE\n4:31 pm\nLEAVE\n5:01 pm\n1\nSt. Stephen's Cathedral\n30 min · Church · Must-see\nWalk · 11 min · 0.5 mi\nWalk · 11 min\nTaxi or car · 12 min\nARRIVE\n5:12 pm\nLEAVE\n6:02 pm\n2\nHofburg Palace\n50 min · Palace · Must-see\nWalk · 10 min · 0.5 mi\nARRIVE\n6:12 pm\nE\nBack at Hotel in central Vienna, Austria\n4 h 17 min to spare.\nARRIVE\n6:42 pm\nD\nSuggested dinner: Ristorante Firenze Enoteca\nRestaurant\nChange dinner\nDinner: why here"
+  },
+  {
+   "i": 1,
+   "date": "2027-05-10",
+   "type": "land",
+   "text": "MON MAY 10 · VIENNA, AUSTRIA · LAND DAY\nVienna, Austria ✎ Rename\nLock this day\n▶ Start the tour\n9:00 am–6:00 pm\n9 h ✎\n3\nsights\n1.3 mi\nwalking\n2:26 pm\nlast stop done\nChoose sights\nMore\nAbout today's plan2 notes\nUse Ctrl + scroll to zoom the map\nS\n1\n2\nL\n3\n1000 ft\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nWalk\nTaxi or car\n● Meal\nMore about today\n\nAll times are Vienna time, 7 h ahead of your device.\n\nLEAVE\n9:00 am\nS\nLeave Hotel in central Vienna, Austria\nAdd your own hotel on the Trip page for exact times.\nTaxi or car · 26 min · 3.6 mi\nARRIVE\n9:26 am\nLEAVE\n10:56 am\n1\nVienna Technical Museum\n1 h 30 min · Museum\nWalk · 14 min · 0.7 mi\nWalk · 14 min\nTaxi or car · 13 min\nARRIVE\n11:10 am\nLEAVE\n12:00 pm\n2\nSchönbrunn Palace\n50 min · Palace · Must-see\nWalk · 11 min · 0.5 mi\nWalk · 11 min\nTaxi or car · 12 min\nARRIVE\n12:11 pm\nLEAVE\n1:11 pm\nL\nLunch: Biergarten\nPopular with visitors · 1 h\nChange lunch\nRate Biergarten\nWalk · 3 min · 0.1 mi\nARRIVE\n1:14 pm\nLEAVE\n1:54 pm\n3\nSchönbrunn Zoo\n40 min · Sight\nUNTIL\n5:28 pm\n+\nFree time: 3 h 34 min\nYours to spend as you like. See what fits\nTaxi or car · 32 min · 4.8 mi\nBY\n6:00 pm\nE\nBack at Hotel in central Vienna, Austria\nARRIVE\n6:30 pm\nD\nSuggested dinner: Haas & Haas\nRestaurant\nChange dinner\nDinner: why here"
+  },
+  {
+   "i": 2,
+   "date": "2027-05-11",
+   "type": "land",
+   "text": "TUE MAY 11 · VIENNA, AUSTRIA · LAND DAY\nVienna, Austria ✎ Rename\nLock this day\n▶ Start the tour\n9:00 am–6:00 pm\n9 h ✎\n6\nsights\n3.2 mi\nwalking\n3:51 pm\nlast stop done\nChoose sights\nMore\nAbout today's plan1 note\nUse Ctrl + scroll to zoom the map\nS\n1\n2\n3\n4\nL\n5\n6\n1000 ft\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nWalk\n● Meal\nMore about today\n\nAll times are Vienna time, 7 h ahead of your device.\n\nLEAVE\n9:00 am\nS\nLeave Hotel in central Vienna, Austria\nAdd your own hotel on the Trip page for exact times.\nNext door\nARRIVE\n9:02 am\nLEAVE\n9:42 am\n1\ncontinental Europe\n40 min · Sight · Must-see\nWalk · 23 min · 1.1 mi\nWalk · 23 min\nTaxi or car · 15 min\nARRIVE\n10:05 am\nLEAVE\n10:35 am\n2\nVotive Church\n30 min · Church\nWalk · 23 min · 1.1 mi\nWalk · 23 min\nTaxi or car · 15 min\nARRIVE\n10:58 am\nLEAVE\n12:28 pm\n3\nKunsthistorisches Museum\n1 h 30 min · Museum · Must-see\nWalk · 6 min · 0.3 mi\nARRIVE\n12:34 pm\nLEAVE\n1:14 pm\n4\nAustrian National Library\n40 min · Sight\nWalk · 2 min · 0.1 mi\nARRIVE\n1:16 pm\nLEAVE\n2:16 pm\nL\nLunch: Palmenhaus\nRestaurant · Popular with visitors · 1 h\nTRAVELERS RECOMMEND\nChange lunch\nLunch: why here\nWalk · 2 min · 0.1 mi\nARRIVE\n2:18 pm\nLEAVE\n2:58 pm\n5\nAlbertina\n40 min · Sight\nWalk · 3 min · 0.1 mi\nARRIVE\n3:01 pm\nLEAVE\n3:41 pm\n6\nVienna State Opera house\n40 min · Sight · Must-see\nUNTIL\n5:50 pm\n+\nFree time: 2 h 9 min\nYours to spend as you like. See what fits\nWalk · 10 min · 0.5 mi\nBY\n6:00 pm\nE\nBack at Hotel in central Vienna, Austria\nARRIVE\n6:30 pm\nD\nSuggested dinner: Café am Dom\nRestaurant\nChange dinner\nDinner: why here"
+  },
+  {
+   "i": 3,
+   "date": "2027-05-12",
+   "type": "departure",
+   "text": "WED MAY 12 · VIENNA, AUSTRIA · LEAVING\nVienna, Austria ✎ Rename\nLock this day\n✈️\nLEAVE BY\nto your flight\n7:51 am\n▶ Start the tour\n\nFlight 12:00 pm · Back at Vienna International Airport by 9:00 am\n\nGetting back on time is up to you\n\nKairoute's leave-by and back-by times are estimates with spare time built in. Traffic, queues and the weather can still slow you down. The time that counts is the ship's all-aboard time or your train or flight, as your cruise line or carrier gives it. Check it on the day.\n\nI understand\nTerms of use\n0\nsights\nChoose sights\nMore\nAbout today's plan2 notes\nUse Ctrl + scroll to zoom the map\nS\nFinish · Airport\n2 mi\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nTaxi or car\n■ Hotel\nMore about today\nThere isn't much time today, so keep it close: a coffee and one nearby sight at most.\n\nAll times are Vienna time, 7 h ahead of your device.\n\nLEAVE\n7:36 am\nS\nCheck out of Hotel in central Vienna, Austria\nAdd your own hotel on the Trip page for exact times.\nMost hotels keep your bags for the day after check-out: ask at the desk.\nNext door\nARRIVE\n7:36 am\nLEAVE\n7:51 am\nH\nCollect bags\n15 min\nTaxi or car · 1 h 9 min · 15 mi\nNo timetable or live traffic confirms this ride's time: it is an estimate with 15 min extra for the connection. Leave by the time shown, never later.\nARRIVE\n9:00 am\nE\nAt Vienna International Airport\nFlight leaves 12:00 pm: be at the airport by 9:00 am, 3 h early for an international flight."
+  }
+ ],
+ "guides": {
+  "Vienna, Austria": {
+   "city": "Vienna, Austria",
+   "src": true,
+   "ai": false,
+   "n": 45,
+   "sights": "Schönbrunn Palace* | Belvedere* | St. Stephen's Cathedral* | Kunsthistorisches Museum* | Vienna State Opera house* | Natural History Museum, Vienna | Karlskirche | Hundertwasserhaus | Albertina | Hofburg Palace* | Votive Church | Austrian National Library | Innere Stadt | Vienna Central Cemetery | Musikverein | Ernst-Happel-Stadion* | Theater an der Wien | Vienna Ring Road | Prater | Burgtheater | Vienna Secession | Donauturm | MAK – Museum of Applied Arts | Gasometer | TU Wien | Heeresgeschichtliches Museum | Karl Marx-Hof | Schönbrunn Zoo | Austrian Parliament Building | Wiener Riesenrad | Vienna Technical Museum | continental Europe* | St. Peter's Church | Wiener Stadthalle | Kirche am Steinhof | Millennium Tower | Soviet War Memorial | St. Rupert's Church | Neugebäude Palace | Leopold Museum | Vienna New Year's Concert | Strozzi Palace | Josephinum | Auersperg Palace | Rathauspark",
+   "far": "Krems | Baden | Eisenstadt | Bratislava | Steiner Tor | Kunsthalle Krems | Karikatur Museum Krems | Museumkrems | Gozzoburg | Jewish Cemetery Krems | Piaristenkirche | Burgruine Rehberg | Bratislava Castle | Red Crayfish Pharmacy Pharmacological Museum | Slovak National Gallery (SNG) | Bratislava City Gallery (GMB) | National Museum | Bratislava City Museum | Natural Science Museum | Museum of Transport | Museum of City History | St. Martin's Cathedral | Church of the Annunciation | Church of the Holy Savior | Church of St. Elisabeth | Trinitarian Church of Bratislava | Primate's Palace | Old Town Hall | Grassalkovich Palace and gardens | Gallery Nedbalka | Mirbach Palace | Palffy Palace | Slovak Radio Building | Slavín monument | Roland Fountain | Michael's Gate with Tower | Laurin's Gate | Chatam Sofer Mausoleum | SNP Bridge | Main Indoor Market",
+   "eats": 60,
+   "starts": {
+    "cruise": [
+     "Terminal 3 (check-in)"
+    ],
+    "airport": [
+     "Vienna International Airport"
+    ],
+    "station": [
+     "Vienna Central Station"
+    ],
+    "hotel": [
+     "Hotel in central Vienna, Austria"
+    ],
+    "point": [
+     "Central Vienna, Austria"
+    ]
+   }
+  }
+ },
+ "steps": [
+  {
+   "name": "1-ticks-vs-plan",
+   "r": {
+    "on": [
+     "Vienna Technical Museum",
+     "Schönbrunn Palace",
+     "Schönbrunn Zoo"
+    ],
+    "total": 43
+   },
+   "text": "MON MAY 10 · VIENNA, AUSTRIA · LAND DAY\nVienna, Austria ✎ Rename\nLock this day\n▶ Start the tour\n9:00 am–6:00 pm\n9 h ✎\n3\nsights\n1.3 mi\nwalking\n2:26 pm\nlast stop done\nChoose sights\nMore\nAbout today's plan2 notes\nUse Ctrl + scroll to zoom the map\nS\n1\n2\nL\n3\n1000 ft\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nWalk\nTaxi or car\n● Meal\nMore about today\n\nAll times are Vienna time, 7 h ahead of your device.\n\nLEAVE\n9:00 am\nS\nLeave Hotel in central Vienna, Austria\nAdd your own hotel on the Trip page for exact times.\nTaxi or car · 26 min · 3.6 mi\nARRIVE\n9:26 am\nLEAVE\n10:56 am\n1\nVienna Technical Museum\n1 h 30 min · Museum\nWalk · 14 min · 0.7 mi\nWalk · 14 min\nTaxi or car · 13 min\nARRIVE\n11:10 am\nLEAVE\n12:00 pm\n2\nSchönbrunn Palace\n50 min · Palace · Must-see\nWalk · 11 min · 0.5 mi\nWalk · 11 min\nTaxi or car · 12 min\nARRIVE\n12:11 pm\nLEAVE\n1:11 pm\nL\nLunch: Biergarten\nPopular with visitors · 1 h\nChange lunch\nRate Biergarten\nWalk · 3 min · 0.1 mi\nARRIVE\n1:14 pm\nLEAVE\n1:54 pm\n3\nSchönbrunn Zoo\n40 min · Sight\nUNTIL\n5:28 pm\n+\nFree time: 3 h 34 min\nYours to spend as you like. See what fits\nTaxi or car · 32 min · 4.8 mi\nBY\n6:00 pm\nE\nBack at Hotel in central Vienna, Austria\nARRIVE\n6:30 pm\nD\nSuggested dinner: Haas & Haas\nRestaurant\nChange dinner\nDinner: why here"
+  },
+  {
+   "name": "2-untick-one",
+   "r": {
+    "tapped": [
+     "Pick Vienna Technical Museum"
+    ],
+    "onBefore": [
+     "Vienna Technical Museum",
+     "Schönbrunn Palace",
+     "Schönbrunn Zoo"
+    ],
+    "onAfter": [
+     "Schönbrunn Palace",
+     "Schönbrunn Zoo"
+    ],
+    "offCount": 44,
+    "pickerPage": "MON MAY 10 · VIENNA, AUSTRIA · LAND DAY\nChoose sights\n‹ Back to my day plan\nAll\nMust-sees\nFamous\nLocal favorites\n\nVisits 1 h 30 min · Lunch 1 h · Walking and rides 1 h 17 min\n\nLet your guide plan it\n\nThe best stops for all 4 days in Vienna, Austria, fitted to your hours, pace and interests. Nothing repeats.\n\nSuggest my tour\nFresh sights for this day only\n\nMore sights come from checked sources (Wikidata, Wikipedia, heritage registers); their short descriptions are from Wikivoyage (CC BY-SA). Each one's full story is written when you add it to a day.\n\n2 sights chosen\n5 h 13 min left of 9 h\nYour sights (2)\nHide\nSchönbrunn Palace\nOn your plan · 9:29 am\n50 min · Free · 3.2 mi from your hotel\nPalace\nSchönbrunn Zoo\nOn your plan · 10:32 am\n40 min · Free · 3.7 mi from your hotel\nFamous sight\n\nStill fits today (37)\n\nNearest your hotel first. Each one fits as your day stands; the time is how much later you'd finish.\n\nSt. Stephen's Cathedral\n+32 min\n30 min · Free · 150 ft from your hotel\nChurch\nHofburg Palace\n+55 min\n50 min · Free · 0.4 mi from your hotel\nPalace\nBelvedere\n+55 min\n40 min · Free · 1.1 mi from your hotel\nFamous sight\nErnst-Happel-Stadion\n+1 h 10 min\n40 min · Free · 2.2 mi from your hotel\nFamous sight\nSt. Peter's Church\n+31 min\n30 min · Free · 900 ft from your hotel\nChurch\nInnere Stadt\n+42 min\n40 min · Free · 950 ft from your hotel\nPark or garden\nSt. Rupert's Church\n+37 min\n30 min · Free · 0.3 mi from your hotel\nChurch\nMAK – Museum of Applied Arts\n+1 h 39 min\n1 h 30 min · Fr",
+    "dialog": []
+   },
+   "text": "MON MAY 10 · VIENNA, AUSTRIA · LAND DAY\nVienna, Austria ✎ Rename\nLock this day\n▶ Start the tour\n9:00 am–6:00 pm\n9 h ✎\n2\nsights\n0.7 mi\nwalking\n12:47 pm\nlast stop done\nChoose sights\nMore\nAbout today's plan1 note\nUse Ctrl + scroll to zoom the map\nS\n1\n2\nL\n3000 ft\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nWalk\nTaxi or car\n● Meal\nMore about today\n\nAll times are Vienna time, 7 h ahead of your device.\n\nLEAVE\n9:00 am\nS\nLeave Hotel in central Vienna, Austria\nAdd your own hotel on the Trip page for exact times.\nTaxi or car · 29 min · 4.2 mi\nARRIVE\n9:29 am\nLEAVE\n10:19 am\n1\nSchönbrunn Palace\n50 min · Palace · Must-see\nWalk · 13 min · 0.6 mi\nWalk · 13 min\nTaxi or car · 13 min\nARRIVE\n10:32 am\nLEAVE\n11:12 am\n2\nSchönbrunn Zoo\n40 min · Sight\nTaxi or car · 32 min · 4.8 mi\nARRIVE\n11:45 am\nLEAVE\n12:45 pm\nL\nLunch: Café am Dom\nRestaurant · Popular with visitors · 1 h\nChange lunch\nLunch: why here\nUNTIL\n5:58 pm\n+\nFree time: 5 h 13 min\nYours to spend as you like. See what fits\nWalk · 2 min · 0.1 mi\nBY\n6:00 pm\nE\nBack at Hotel in central Vienna, Austria\nARRIVE\n6:30 pm\nD\nSuggested dinner: Haas & Haas\nRestaurant\nChange dinner\nDinner: why here"
+  },
+  {
+   "name": "3-tick-one-more",
+   "r": {
+    "tapped": [
+     "Pick St. Stephen's Cathedral"
+    ],
+    "onBefore": [
+     "Schönbrunn Palace",
+     "Schönbrunn Zoo"
+    ],
+    "onAfter": [
+     "St. Stephen's Cathedral",
+     "Schönbrunn Palace",
+     "Schönbrunn Zoo"
+    ],
+    "offCount": 43,
+    "pickerPage": "MON MAY 10 · VIENNA, AUSTRIA · LAND DAY\nChoose sights\n‹ Back to my day plan\nAll\nMust-sees\nFamous\nLocal favorites\n\nVisits 2 h · Lunch 1 h · Walking and rides 1 h 19 min\n\nLet your guide plan it\n\nThe best stops for all 4 days in Vienna, Austria, fitted to your hours, pace and interests. Nothing repeats.\n\nSuggest my tour\nFresh sights for this day only\n\nMore sights come from checked sources (Wikidata, Wikipedia, heritage registers); their short descriptions are from Wikivoyage (CC BY-SA). Each one's full story is written when you add it to a day.\n\n3 sights chosen\n4 h 41 min left of 9 h\nYour sights (3)\nHide\nSt. Stephen's Cathedral\nOn your plan · 12:47 pm\n30 min · Free · 150 ft from your hotel\nChurch\nSchönbrunn Palace\nOn your plan · 9:29 am\n50 min · Free · 3.2 mi from your hotel\nPalace\nSchönbrunn Zoo\nOn your plan · 10:32 am\n40 min · Free · 3.7 mi from your hotel\nFamous sight\n\nStill fits today (36)\n\nNearest your hotel first. Each one fits as your day stands; the time is how much later you'd finish.\n\nBelvedere\n+55 min\n40 min · Free · 1.1 mi from your hotel\nFamous sight\nErnst-Happel-Stadion\n+1 h 9 min\n40 min · Free · 2.2 mi from your hotel\nFamous sight\nSt. Peter's Church\n+30 min\n30 min · Free · 900 ft from your hotel\nChurch\nInnere Stadt\n+42 min\n40 min · Free · 950 ft from your hotel\nPark or garden\nSt. Rupert's Church\n+37 min\n30 min · Free · 0.3 mi from your hotel\nChurch\nMAK – Museum of Applied Arts\n+1 h 39 min\n1 h 30 min · Free · 0.4 mi from your hotel\nMuseum\nAustrian National Library\n",
+    "dialog": []
+   },
+   "text": "MON MAY 10 · VIENNA, AUSTRIA · LAND DAY\nVienna, Austria ✎ Rename\nLock this day\n▶ Start the tour\n9:00 am–6:00 pm\n9 h ✎\n3\nsights\n0.8 mi\nwalking\n1:19 pm\nlast stop done\nChoose sights\nMore\nAbout today's plan1 note\nUse Ctrl + scroll to zoom the map\nS\n1\n2\nL\n3\n5000 ft\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nWalk\nTaxi or car\n● Meal\nMore about today\n\nAll times are Vienna time, 7 h ahead of your device.\n\nLEAVE\n9:00 am\nS\nLeave Hotel in central Vienna, Austria\nAdd your own hotel on the Trip page for exact times.\nTaxi or car · 29 min · 4.2 mi\nARRIVE\n9:29 am\nLEAVE\n10:19 am\n1\nSchönbrunn Palace\n50 min · Palace · Must-see\nWalk · 13 min · 0.6 mi\nWalk · 13 min\nTaxi or car · 13 min\nARRIVE\n10:32 am\nLEAVE\n11:12 am\n2\nSchönbrunn Zoo\n40 min · Sight\nTaxi or car · 32 min · 4.8 mi\nARRIVE\n11:45 am\nLEAVE\n12:45 pm\nL\nLunch: Café am Dom\nRestaurant · Popular with visitors · 1 h\nChange lunch\nLunch: why here\nWalk · 2 min · 0.1 mi\nARRIVE\n12:47 pm\nLEAVE\n1:17 pm\n3\nSt. Stephen's Cathedral\n30 min · Church · Must-see\nUNTIL\n5:58 pm\n+\nFree time: 4 h 41 min\nYours to spend as you like. See what fits\nNext door\nBY\n6:00 pm\nE\nBack at Hotel in central Vienna, Austria\nARRIVE\n6:30 pm\nD\nSuggested dinner: Haas & Haas\nRestaurant\nChange dinner\nDinner: why here"
+  },
+  {
+   "name": "4-tick-six-more",
+   "r": {
+    "tapped": [
+     "Pick Belvedere",
+     "Pick Ernst-Happel-Stadion",
+     "Pick St. Peter's Church",
+     "Pick Innere Stadt",
+     "Pick St. Rupert's Church"
+    ],
+    "onBefore": [
+     "St. Stephen's Cathedral",
+     "Schönbrunn Palace",
+     "Schönbrunn Zoo"
+    ],
+    "onAfter": [
+     "St. Stephen's Cathedral",
+     "St. Peter's Church",
+     "Innere Stadt",
+     "St. Rupert's Church",
+     "Belvedere",
+     "Ernst-Happel-Stadion",
+     "Schönbrunn Palace",
+     "Schönbrunn Zoo"
+    ],
+    "offCount": 0,
+    "pickerPage": "MON MAY 10 · VIENNA, AUSTRIA · LAND DAY\nChoose sights\n‹ Back to my day plan\nAll\nMust-sees\nFamous\nLocal favorites\n\nVisits 5 h · Lunch 1 h · Walking and rides 2 h 15 min\n\nLet your guide plan it\n\nThe best stops for all 4 days in Vienna, Austria, fitted to your hours, pace and interests. Nothing repeats.\n\nSuggest my tour\nFresh sights for this day only\n\nMore sights come from checked sources (Wikidata, Wikipedia, heritage registers); their short descriptions are from Wikivoyage (CC BY-SA). Each one's full story is written when you add it to a day.\n\n8 sights chosen\n45 min left of 9 h\nYour sights (8)\nHide\nSt. Stephen's Cathedral\nOn your plan · 9:02 am\n30 min · Free · 150 ft from your hotel\nChurch\nSt. Peter's Church\nOn your plan · 3:58 pm\n30 min · Free · 900 ft from your hotel\nChurch\nInnere Stadt\nOn your plan · 4:30 pm\n40 min · Free · 950 ft from your hotel\nPark or garden\nSt. Rupert's Church\nOn your plan · 9:39 am\n30 min · Free · 0.3 mi from your hotel\nChurch\nBelvedere\nOn your plan · 11:34 am\n40 min · Free · 1.1 mi from your hotel\nFamous sight\nErnst-Happel-Stadion\nOn your plan · 10:32 am\n40 min · Free · 2.2 mi from your hotel\nFamous sight\nSchönbrunn Palace\nOn your plan · 12:43 pm\n50 min · Free · 3.2 mi from your hotel\nPalace\nSchönbrunn Zoo\nOn your plan · 2:47 pm\n40 min · Free · 3.7 mi from your hotel\nFamous sight\n\nStill fits today (0)\n\n45 min is left, but every sight still to see needs more time than that, with its ride. See \"Doesn't fit today\" for what would make room.\n\nAlready picke",
+    "dialog": []
+   },
+   "text": "MON MAY 10 · VIENNA, AUSTRIA · LAND DAY\nVienna, Austria ✎ Rename\nLock this day\n▶ Start the tour\n9:00 am–6:00 pm\n9 h ✎\n8\nsights\n1.3 mi\nwalking\n5:15 pm\nlast stop done\nChoose sights\nMore\nAbout today's plan2 notes\nUse Ctrl + scroll to zoom the map\nS\n1\n2\n3\n4\n5\nL\n6\n7\n8\n1 mi\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nWalk\nTaxi or car\n● Meal\nMore about today\n\nAll times are Vienna time, 7 h ahead of your device.\n\nLEAVE\n9:00 am\nS\nLeave Hotel in central Vienna, Austria\nAdd your own hotel on the Trip page for exact times.\nNext door\nARRIVE\n9:02 am\nLEAVE\n9:32 am\n1\nSt. Stephen's Cathedral\n30 min · Church · Must-see\nWalk · 7 min · 0.3 mi\nARRIVE\n9:39 am\nLEAVE\n10:09 am\n2\nSt. Rupert's Church\n30 min · Church\nTaxi or car · 23 min · 2.8 mi\nBy road, with time for traffic.\nWalk · 1 h\nTaxi or car · 23 min\nARRIVE\n10:32 am\nLEAVE\n11:12 am\n3\nErnst-Happel-Stadion\n40 min · Sight · Must-see\nTaxi or car · 22 min · 2.7 mi\nWalk · 58 min\nTaxi or car · 22 min\nARRIVE\n11:34 am\nLEAVE\n12:14 pm\n4\nBelvedere\n40 min · Sight · Must-see\nTaxi or car · 29 min · 4.2 mi\nARRIVE\n12:43 pm\nLEAVE\n1:33 pm\n5\nSchönbrunn Palace\n50 min · Palace · Must-see\nWalk · 11 min · 0.5 mi\nWalk · 11 min\nTaxi or car · 12 min\nARRIVE\n1:44 pm\nLEAVE\n2:44 pm\nL\nLunch: Biergarten\nPopular with visitors · 1 h\nChange lunch\nRate Biergarten\nWalk · 3 min · 0.1 mi\nARRIVE\n2:47 pm\nLEAVE\n3:27 pm\n6\nSchönbrunn Zoo\n40 min · Sight\nTaxi or car · 31 min · 4.7 mi\nARRIVE\n3:58 pm\nLEAVE\n4:28 pm\n7\nSt. Peter's Church\n30 min · Church\nNext door\nARRIVE\n4:30 pm\nLEAVE\n5:10 pm\n8\nInnere Stadt\n40 min · Park or garden\nUNTIL\n5:55 pm\n+\nFree time: 45 min\nYours to spend as you like. See what fits\nWalk · 5 min · 0.2 mi\nBY\n6:00 pm\nE\nBack at Hotel in central Vienna, Austria\nARRIVE\n6:30 pm\nD\nSuggested dinner: Haas & Haas\nRestaurant\nChange dinner\nDinner: why here"
+  },
+  {
+   "name": "5-make-it-fit",
+   "r": {
+    "pressed": null,
+    "candidates": 0
+   },
+   "text": "MON MAY 10 · VIENNA, AUSTRIA · LAND DAY\nVienna, Austria ✎ Rename\nLock this day\n▶ Start the tour\n9:00 am–6:00 pm\n9 h ✎\n8\nsights\n1.3 mi\nwalking\n5:15 pm\nlast stop done\nChoose sights\nMore\nAbout today's plan2 notes\nUse Ctrl + scroll to zoom the map\nS\n1\n2\n3\n4\n5\nL\n6\n7\n8\n1 mi\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nWalk\nTaxi or car\n● Meal\nMore about today\n\nAll times are Vienna time, 7 h ahead of your device.\n\nLEAVE\n9:00 am\nS\nLeave Hotel in central Vienna, Austria\nAdd your own hotel on the Trip page for exact times.\nNext door\nARRIVE\n9:02 am\nLEAVE\n9:32 am\n1\nSt. Stephen's Cathedral\n30 min · Church · Must-see\nWalk · 7 min · 0.3 mi\nARRIVE\n9:39 am\nLEAVE\n10:09 am\n2\nSt. Rupert's Church\n30 min · Church\nTaxi or car · 23 min · 2.8 mi\nBy road, with time for traffic.\nWalk · 1 h\nTaxi or car · 23 min\nARRIVE\n10:32 am\nLEAVE\n11:12 am\n3\nErnst-Happel-Stadion\n40 min · Sight · Must-see\nTaxi or car · 22 min · 2.7 mi\nWalk · 58 min\nTaxi or car · 22 min\nARRIVE\n11:34 am\nLEAVE\n12:14 pm\n4\nBelvedere\n40 min · Sight · Must-see\nTaxi or car · 29 min · 4.2 mi\nARRIVE\n12:43 pm\nLEAVE\n1:33 pm\n5\nSchönbrunn Palace\n50 min · Palace · Must-see\nWalk · 11 min · 0.5 mi\nWalk · 11 min\nTaxi or car · 12 min\nARRIVE\n1:44 pm\nLEAVE\n2:44 pm\nL\nLunch: Biergarten\nPopular with visitors · 1 h\nChange lunch\nRate Biergarten\nWalk · 3 min · 0.1 mi\nARRIVE\n2:47 pm\nLEAVE\n3:27 pm\n6\nSchönbrunn Zoo\n40 min · Sight\nTaxi or car · 31 min · 4.7 mi\nARRIVE\n3:58 pm\nLEAVE\n4:28 pm\n7\nSt. Peter's Church\n30 min · Church\nNext door\nARRIVE\n4:30 pm\nLEAVE\n5:10 pm\n8\nInnere Stadt\n40 min · Park or garden\nUNTIL\n5:55 pm\n+\nFree time: 45 min\nYours to spend as you like. See what fits\nWalk · 5 min · 0.2 mi\nBY\n6:00 pm\nE\nBack at Hotel in central Vienna, Austria\nARRIVE\n6:30 pm\nD\nSuggested dinner: Haas & Haas\nRestaurant\nChange dinner\nDinner: why here"
+  },
+  {
+   "name": "6-switch-a-ride",
+   "r": {
+    "pressed": "Walk · 1 h",
+    "candidates": 3,
+    "dialog": []
+   },
+   "text": "MON MAY 10 · VIENNA, AUSTRIA · LAND DAY\nVienna, Austria ✎ Rename\nLock this day\n▶ Start the tour\n9:00 am–6:00 pm\n9 h ✎\n8\nsights\n4.1 mi\nwalking\n5:27 pm\nlast stop done\nChoose sights\nMore\nAbout today's plan2 notes\nUse Ctrl + scroll to zoom the map\nS\n1\n2\n3\n4\n5\nL\n6\n7\n8\n1 mi\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nWalk\nTaxi or car\n● Meal\nMore about today\n\nAll times are Vienna time, 7 h ahead of your device.\n\nLEAVE\n9:00 am\nS\nLeave Hotel in central Vienna, Austria\nAdd your own hotel on the Trip page for exact times.\nNext door\nARRIVE\n9:02 am\nLEAVE\n9:32 am\n1\nSt. Stephen's Cathedral\n30 min · Church · Must-see\nWalk · 7 min · 0.3 mi\nARRIVE\n9:39 am\nLEAVE\n10:09 am\n2\nSt. Rupert's Church\n30 min · Church\nWalk · 1 h · 2.8 mi\nWalk · 1 h\nTaxi or car · 23 min\nARRIVE\n11:09 am\nLEAVE\n11:49 am\n3\nErnst-Happel-Stadion\n40 min · Sight · Must-see\nTaxi or car · 22 min · 2.7 mi\nBy road, with time for traffic.\nWalk · 58 min\nTaxi or car · 22 min\nARRIVE\n12:11 pm\nLEAVE\n12:51 pm\n4\nBelvedere\n40 min · Sight · Must-see\nTaxi or car · 29 min · 4.2 mi\nARRIVE\n1:20 pm\nLEAVE\n2:10 pm\n5\nSchönbrunn Palace\n50 min · Palace · Must-see\nWalk · 11 min · 0.5 mi\nWalk · 11 min\nTaxi or car · 12 min\nARRIVE\n2:21 pm\nLEAVE\n2:56 pm\nL\nLunch: Biergarten\nPopular with visitors · 35 min\nChange lunch\nRate Biergarten\nWalk · 3 min · 0.1 mi\nARRIVE\n2:59 pm\nLEAVE\n3:39 pm\n6\nSchönbrunn Zoo\n40 min · Sight\nTaxi or car · 31 min · 4.7 mi\nARRIVE\n4:10 pm\nLEAVE\n4:40 pm\n7\nSt. Peter's Church\n30 min · Church\nNext door\nARRIVE\n4:42 pm\nLEAVE\n5:22 pm\n8\nInnere Stadt\n40 min · Park or garden\nUNTIL\n5:55 pm\n+\nFree time: 33 min\nYours to spend as you like. See what fits\nWalk · 5 min · 0.2 mi\nBY\n6:00 pm\nE\nBack at Hotel in central Vienna, Austria\nARRIVE\n6:30 pm\nD\nSuggested dinner: Haas & Haas\nRestaurant\nChange dinner\nDinner: why here"
+  },
+  {
+   "name": "7-change-lunch",
+   "r": {
+    "pressed": "Change lunch",
+    "candidates": 1,
+    "dialog": []
+   },
+   "text": "MON MAY 10 · VIENNA, AUSTRIA · LAND DAY\nVienna, Austria ✎ Rename\nLock this day\n▶ Start the tour\n9:00 am–6:00 pm\n9 h ✎\n8\nsights\n2.3 mi\nwalking\n5:09 pm\nlast stop done\nChoose sights\nMore\nAbout today's plan1 note\nUse Ctrl + scroll to zoom the map\nS\n1\n2\n3\n4\nL\n5\n6\n7\n8\n1 mi\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nWalk\nTaxi or car\n● Meal\nMore about today\nChange lunch\n\nNow: Don Jorgo at 11:50 am\n\nEAT SOMEWHERE ELSE NEARBY\n\nWein & Co\n0.1 mi from St. Stephen's Cathedral\nChamäleon\n0.1 mi from St. Stephen's Cathedral\nMiznon\n0.1 mi from St. Stephen's Cathedral\nDO&CO am Stephansplatz\n0.1 mi from St. Stephen's Cathedral\nWOA\n0.1 mi from St. Peter's Church\nCheng Chinese Cuisine\n0.1 mi from St. Stephen's Cathedral\n\nTIME\n\nBest fit\n11:30 am\n12:00 pm\n12:30 pm\n1:00 pm\n1:30 pm\n2:00 pm\nDone\nSkip lunch today\nI have a reservation\n\nAll times are Vienna time, 7 h ahead of your device.\n\nLEAVE\n9:00 am\nS\nLeave Hotel in central Vienna, Austria\nAdd your own hotel on the Trip page for exact times.\nNext door\nARRIVE\n9:02 am\nLEAVE\n9:32 am\n1\nSt. Stephen's Cathedral\n30 min · Church · Must-see\nWalk · 5 min · 0.2 mi\nARRIVE\n9:37 am\nLEAVE\n10:07 am\n2\nSt. Peter's Church\n30 min · Church\nNext door\nARRIVE\n10:09 am\nLEAVE\n10:49 am\n3\nInnere Stadt\n40 min · Park or garden\nWalk · 7 min · 0.3 mi\nARRIVE\n10:56 am\nLEAVE\n11:26 am\n4\nSt. Rupert's Church\n30 min · Church\nWalk · 24 min · 1.1 mi\nWalk · 24 min\nTaxi or car · 15 min\nARRIVE\n11:50 am\nLEAVE\n12:25 pm\nL\nLunch: Don Jorgo\nRestaurant · Local spot · 35 min\nChange lunch\nLunch: why here\nTaxi or car · 18 min · 1.7 mi\nBy road, with time for traffic.\nWalk · 37 min\nTaxi or car · 18 min\nARRIVE\n12:43 pm\nLEAVE\n1:23 pm\n5\nErnst-Happel-Stadion\n40 min · Sight · Must-see\nTaxi or car · 22 min · 2.7 mi\nWalk · 58 min\nTaxi or car · 22 min\nARRIVE\n1:45 pm\nLEAVE\n2:25 pm\n6\nBelvedere\n40 min · Sight · Must-see\nTaxi or car · 32 min · 4.8 mi\nARRIVE\n2:57 pm\nLEAVE\n3:37 pm\n7\nSchönbrunn Zoo\n40 min · Sight\nWalk · 13 min · 0.6 mi\nWalk · 13 min\nTaxi or car · 13 min\nARRIVE\n3:50 pm\nLEAVE\n4:40 pm\n8\nSchönbrunn Palace\n50 min · Palace · Must-see\nUNTIL\n5:31 pm\n+\nFree time: 51 min\nYours to spend as you like. See what fits\nTaxi or car · 29 min · 4.2 mi\nBY\n6:00 pm\nE\nBack at Hotel in central Vienna, Austria\nARRIVE\n6:30 pm\nD\nSuggested dinner: Haas & Haas\nRestaurant\nChange dinner\nDinner: why here"
+  },
+  {
+   "name": "8-shorter-day",
+   "r": "hours 4",
+   "text": "MON MAY 10 · VIENNA, AUSTRIA · LAND DAY\nVienna, Austria ✎ Rename\nLock this day\n▶ Start the tour\n9:00 am–2:00 pm\n5 h ✎\n5\nsights\n0.4 mi\nwalking\n2:01 pm\nlast stop done\nChoose sights\nMore\nAbout today's plan6 notes\nSchönbrunn Zoo didn't fit in the time. To fit it in: skip St. Peter's Church.\nSt. Rupert's Church didn't fit in the time.\nInnere Stadt didn't fit in the time. To fit it in: skip St. Peter's Church.\nA shorter visit to Schönbrunn Palace (35 min instead of 50 min) so the rest of the day fits.\nA shorter visit to Ernst-Happel-Stadion (30 min instead of 40 min) so the rest of the day fits.\nOpening hours aren't known for St. Peter's Church, Schönbrunn Palace and Ernst-Happel-Stadion and 1 more on this date: planned between 9:00 am and 5:00 pm, check before you go.\nUse Ctrl + scroll to zoom the map\nS\n1\n2\n3\n4\nL\n5\n1 mi\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nWalk\nTaxi or car\n● Meal\nMore about today\nWith the shorter day, these no longer fit: Schönbrunn Zoo, St. Rupert's Church, Innere Stadt. Shorten the day and take them off your picks?\nKeep my hours\nShorten anyway\nDidn't fit today: Schönbrunn Zoo, St. Rupert's Church, Innere Stadt. Your sights don't all fit today's time.\nMake it fit\nLeave at 6:30 am instead of 9:00 am and you also fit Schönbrunn Zoo, St. Rupert's Church, Innere Stadt, back by 2:01 pm. Earlier also means cooler weather, less traffic and fewer crowds.\nLeave at 6:30 am\nYou set 4 h of sightseeing today, so the day ends at 2:00 pm. Free longer? Stay out until 5:00 pm and you also see Schönbrunn Zoo, St. Rupert's Church, Innere Stadt.\nStay until 5:00 pm\nChange lunch\n\nNow: Stöckl im Park at 12:42 pm\n\nEAT SOMEWHERE ELSE NEARBY\n\nWein & Co\n0.1 mi from St. Stephen's Cathedral\nChamäleon\n0.1 mi from St. Stephen's Cathedral\nMiznon\n0.1 mi from St. Stephen's Cathedral\nDO&CO am Stephansplatz\n0.1 mi from St. Stephen's Cathedral\nWOA\n0.1 mi from St. Peter's Church\nCheng Chinese Cuisine\n0.1 mi from St. Stephen's Cathedral\n\nTIME\n\nBest fit\n11:30 am\n12:00 pm\n12:30 pm\n1:00 pm\n1:30 pm\nDone\nSkip lunch today\nI have a reservation\n\nAll times are Vienna time, 7 h ahead of your device.\n\nLEAVE\n9:00 am\nS\nLeave Hotel in central Vienna, Austria\nAdd your own hotel on the Trip page for exact times.\nNext door\nARRIVE\n9:02 am\nLEAVE\n9:32 am\n1\nSt. Stephen's Cathedral\n30 min · Church · Must-see\nWalk · 5 min · 0.2 mi\nARRIVE\n9:37 am\nLEAVE\n10:07 am\n2\nSt. Peter's Church\n30 min · Church\nTaxi or car · 29 min · 4.1 mi\nARRIVE\n10:36 am\nLEAVE\n11:11 am\n3\nSchönbrunn Palace\n35 min · Palace · Must-see\nTaxi or car · 38 min · 6.8 mi\nARRIVE\n11:49 am\nLEAVE\n12:19 pm\n4\nErnst-Happel-Stadion\n30 min · Sight · Must-see\nTaxi or car · 23 min · 2.8 mi\nBy road, with time for traffic.\nWalk · 1 h 1 min\nTaxi or car · 23 min\nARRIVE\n12:42 pm\nLEAVE\n1:02 pm\nL\nLunch: Stöckl im Park\nRestaurant · Popular with visitors · 20 min\nChange lunch\nLunch: why here\nWalk · 3 min · 0.1 mi\nARRIVE\n1:05 pm\nLEAVE\n1:45 pm\n5\nBelvedere\n40 min · Sight · Must-see\nTaxi or car · 16 min · 1.4 mi\nWalk · 30 min\nTaxi or car · 16 min\nARRIVE\n2:01 pm\nE\nBack at Hotel in central Vienna, Austria\nARRIVE\n6:30 pm\nD\nSuggested dinner: Haas & Haas\nRestaurant\nChange dinner\nDinner: why here"
+  },
+  {
+   "name": "9-reload",
+   "r": "reloaded",
+   "text": "MON MAY 10 · VIENNA, AUSTRIA · LAND DAY\nVienna, Austria ✎ Rename\nLock this day\n▶ Start the tour\n9:00 am–6:00 pm\n9 h ✎\n8\nsights\n2.3 mi\nwalking\n5:09 pm\nlast stop done\nChoose sights\nMore\nAbout today's plan1 note\nUse Ctrl + scroll to zoom the map\nS\n1\n2\n3\n4\nL\n5\n6\n7\n8\n1 mi\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nWalk\nTaxi or car\n● Meal\nMore about today\n\nAll times are Vienna time, 7 h ahead of your device.\n\nLEAVE\n9:00 am\nS\nLeave Hotel in central Vienna, Austria\nAdd your own hotel on the Trip page for exact times.\nNext door\nARRIVE\n9:02 am\nLEAVE\n9:32 am\n1\nSt. Stephen's Cathedral\n30 min · Church · Must-see\nWalk · 5 min · 0.2 mi\nARRIVE\n9:37 am\nLEAVE\n10:07 am\n2\nSt. Peter's Church\n30 min · Church\nNext door\nARRIVE\n10:09 am\nLEAVE\n10:49 am\n3\nInnere Stadt\n40 min · Park or garden\nWalk · 7 min · 0.3 mi\nARRIVE\n10:56 am\nLEAVE\n11:26 am\n4\nSt. Rupert's Church\n30 min · Church\nWalk · 24 min · 1.1 mi\nWalk · 24 min\nTaxi or car · 15 min\nARRIVE\n11:50 am\nLEAVE\n12:25 pm\nL\nLunch: Don Jorgo\nRestaurant · Local spot · 35 min\nChange lunch\nLunch: why here\nTaxi or car · 18 min · 1.7 mi\nBy road, with time for traffic.\nWalk · 37 min\nTaxi or car · 18 min\nARRIVE\n12:43 pm\nLEAVE\n1:23 pm\n5\nErnst-Happel-Stadion\n40 min · Sight · Must-see\nTaxi or car · 22 min · 2.7 mi\nWalk · 58 min\nTaxi or car · 22 min\nARRIVE\n1:45 pm\nLEAVE\n2:25 pm\n6\nBelvedere\n40 min · Sight · Must-see\nTaxi or car · 32 min · 4.8 mi\nARRIVE\n2:57 pm\nLEAVE\n3:37 pm\n7\nSchönbrunn Zoo\n40 min · Sight\nWalk · 13 min · 0.6 mi\nWalk · 13 min\nTaxi or car · 13 min\nARRIVE\n3:50 pm\nLEAVE\n4:40 pm\n8\nSchönbrunn Palace\n50 min · Palace · Must-see\nUNTIL\n5:31 pm\n+\nFree time: 51 min\nYours to spend as you like. See what fits\nTaxi or car · 29 min · 4.2 mi\nBY\n6:00 pm\nE\nBack at Hotel in central Vienna, Austria\nARRIVE\n6:30 pm\nD\nSuggested dinner: Haas & Haas\nRestaurant\nChange dinner\nDinner: why here"
+  },
+  {
+   "name": "10-phone",
+   "r": "phone",
+   "text": "MON MAY 10 · VIENNA, AUSTRIA · LAND DAY\nVienna, Austria ✎ Rename\nLock this day\n▶ Start tour\n9:00 am–6:00 pm\n9 h ✎\n8\nsights\n2.3 mi\nwalking\n5:09 pm\nlast stop done\nChoose sights\nMore\nAbout today's plan1 note\nUse Ctrl + scroll to zoom the map\nS\n1\n2\n3\n4\nL\n5\n6\n7\n8\n1 mi\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nWalk\nTaxi or car\n● Meal\nMore about today\n\nAll times are Vienna time, 7 h ahead of your device.\n\nLEAVE\n9:00 am\nS\nLeave Hotel in central Vienna, Austria\nAdd your own hotel on the Trip page for exact times.\nNext door\nARRIVE\n9:02 am\nLEAVE\n9:32 am\n1\nSt. Stephen's Cathedral\n30 min · Church · Must-see\nWalk · 5 min · 0.2 mi\nARRIVE\n9:37 am\nLEAVE\n10:07 am\n2\nSt. Peter's Church\n30 min · Church\nNext door\nARRIVE\n10:09 am\nLEAVE\n10:49 am\n3\nInnere Stadt\n40 min · Park or garden\nWalk · 7 min · 0.3 mi\nARRIVE\n10:56 am\nLEAVE\n11:26 am\n4\nSt. Rupert's Church\n30 min · Church\nWalk · 24 min · 1.1 mi\nWalk · 24 min\nTaxi or car · 15 min\nARRIVE\n11:50 am\nLEAVE\n12:25 pm\nL\nLunch: Don Jorgo\nRestaurant · Local spot · 35 min\nChange lunch\nLunch: why here\nTaxi or car · 18 min · 1.7 mi\nBy road, with time for traffic.\nWalk · 37 min\nTaxi or car · 18 min\nARRIVE\n12:43 pm\nLEAVE\n1:23 pm\n5\nErnst-Happel-Stadion\n40 min · Sight · Must-see\nTaxi or car · 22 min · 2.7 mi\nWalk · 58 min\nTaxi or car · 22 min\nARRIVE\n1:45 pm\nLEAVE\n2:25 pm\n6\nBelvedere\n40 min · Sight · Must-see\nTaxi or car · 32 min · 4.8 mi\nARRIVE\n2:57 pm\nLEAVE\n3:37 pm\n7\nSchönbrunn Zoo\n40 min · Sight\nWalk · 13 min · 0.6 mi\nWalk · 13 min\nTaxi or car · 13 min\nARRIVE\n3:50 pm\nLEAVE\n4:40 pm\n8\nSchönbrunn Palace\n50 min · Palace · Must-see\nUNTIL\n5:31 pm\n+\nFree time: 51 min\nYours to spend as you like. See what fits\nTaxi or car · 29 min · 4.2 mi\nBY\n6:00 pm\nE\nBack at Hotel in central Vienna, Austria\nARRIVE\n6:30 pm\nD\nSuggested dinner: Haas & Haas\nRestaurant\nChange dinner\nDinner: why here"
+  }
+ ],
+ "version": "88a1dc8-1795204327",
+ "aiReady": false,
+ "wizard": {
+  "miss": [],
+  "prev": "Your days: 4 days",
+  "form": "Add each place in order, the way it's booked. Each new stop starts where the last one ends.\n\nSTOP 1 · CITY STAY\nCity\nArrive on\nNights\nHotel (optional)\nGetting there\nFlight\nTrain\nFerry\nCar or bus\nArrive in town at\nLeave empty if you don't know yet.\n+ Add a city stay\n+ Add a cruise\nGoing home from here\nFlight\nTrain\nFerry\nCar or bus\nFlight at\nYour days: 4 days\nAdd more details (optional)\nName this trip\n\nKairoute picks good defaults for pace, walking and voice, and you can change any of them later.\n\nCancel\nPersonalize first\nBuild my trip"
+ },
+ "buildSec": 4,
+ "state": {
+  "busy": "",
+  "err": "",
+  "days": [
+   {
+    "date": "2027-05-09",
+    "type": "arrival"
+   },
+   {
+    "date": "2027-05-10",
+    "type": "land"
+   },
+   {
+    "date": "2027-05-11",
+    "type": "land"
+   },
+   {
+    "date": "2027-05-12",
+    "type": "departure"
+   }
+  ]
+ },
+ "phoneText": "MON MAY 10 · VIENNA, AUSTRIA · LAND DAY\nVienna, Austria ✎ Rename\nLock this day\n▶ Start tour\n9:00 am–6:00 pm\n9 h ✎\n3\nsights\n1.3 mi\nwalking\n2:26 pm\nlast stop done\nChoose sights\nMore\nAbout today's plan2 notes\nUse Ctrl + scroll to zoom the map\nS\n1\n2\nL\n3\n1000 ft\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nWalk\nTaxi or car\n● Meal\nMore about today\n\nAll times are Vienna time, 7 h ahead of your device.\n\nLEAVE\n9:00 am\nS\nLeave Hotel in central Vienna, Austria\nAdd your own hotel on the Trip page for exact times.\nTaxi or car · 26 min · 3.6 mi\nARRIVE\n9:26 am\nLEAVE\n10:56 am\n1\nVienna Technical Museum\n1 h 30 min · Museum\nWalk · 14 min · 0.7 mi\nWalk · 14 min\nTaxi or car · 13 min\nARRIVE\n11:10 am\nLEAVE\n12:00 pm\n2\nSchönbrunn Palace\n50 min · Palace · Must-see\nWalk · 11 min · 0.5 mi\nWalk · 11 min\nTaxi or car · 12 min\nARRIVE\n12:11 pm\nLEAVE\n1:11 pm\nL\nLunch: Biergarten\nPopular with visitors · 1 h\nChange lunch\nRate Biergarten\nWalk · 3 min · 0.1 mi\nARRIVE\n1:14 pm\nLEAVE\n1:54 pm\n3\nSchönbrunn Zoo\n40 min · Sight\nUNTIL\n5:28 pm\n+\nFree time: 3 h 34 min\nYours to spend as you like. See what fits\nTaxi or car · 32 min · 4.8 mi\nBY\n6:00 pm\nE\nBack at Hotel in central Vienna, Austria\nARRIVE\n6:30 pm\nD\nSuggested dinner: Haas & Haas\nRestaurant\nChange dinner\nDinner: why here",
+ "finished": "2026-11-20T21:56:59.739Z"
+}
