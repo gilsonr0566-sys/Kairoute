@@ -1,0 +1,212 @@
+{
+ "name": "b04-notfound-cities",
+ "label": "",
+ "legs": [
+  {
+   "k": "stay",
+   "place": "Paris",
+   "date": "2027-05-20",
+   "nights": 1,
+   "inBy": "train",
+   "inAt": "12:47"
+  },
+  {
+   "k": "stay",
+   "place": "Florence",
+   "nights": 1,
+   "inBy": "train",
+   "leaveAt": "09:00",
+   "inAt": "16:00"
+  },
+  {
+   "k": "stay",
+   "place": "Buenos Aires",
+   "nights": 1,
+   "inAt": "09:00",
+   "leaveAt": "20:00",
+   "homeAt": "22:00"
+  }
+ ],
+ "started": "2026-11-20T21:08:53.185Z",
+ "passed": {
+  "/sources": 14,
+  "/transit": 22,
+  "/guide": 3,
+  "/places": 4,
+  "/voyage": 4,
+  "/ground": 3,
+  "/x/near": 5,
+  "/route": 5,
+  "/departures": 1,
+  "/bookcheck": 1
+ },
+ "refused": {
+  "/ratings": 3,
+  "/grating": 3,
+  "/events": 2
+ },
+ "errors": [],
+ "days": [
+  {
+   "i": 0,
+   "date": "2027-05-20",
+   "type": "arrival",
+   "text": "THU MAY 20 · PARIS · ARRIVING\nParis ✎ Rename\nLock this day\n\nWhich station do you arrive at? There is more than one here (Gare du Nord or Gare de Paris Bercy). Choose it in the day's settings: no time is given on a guess.\n\nEdit this day"
+  },
+  {
+   "i": 1,
+   "date": "2027-05-21",
+   "type": "departure",
+   "text": "FRI MAY 21 · PARIS · LEAVING\nParis ✎ Rename\nLock this day\n\nWhich station do you leave from? There is more than one here (Gare du Nord or Gare de Paris Bercy). Choose it in the day's settings and the day gets its time to leave by: no time is given on a guess.\n\nEdit this day"
+  },
+  {
+   "i": 2,
+   "date": "2027-05-21",
+   "type": "arrival",
+   "text": "FRI MAY 21 · FLORENCE · ARRIVING\nFlorence ✎ Rename\nLock this day\n▶ Start the tour\n4:15 pm–10:47 pm\n6 h 32 min ✎\n2\nsights\n1.2 mi\nwalking\n6:46 pm\nlast stop done\nChoose sights\nMore\nAbout today's plan1 note\nPalazzo Pitti would arrive after its last entry.\nUse Ctrl + scroll to zoom the map\nS\nH\n1\n2\n3000 ft\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nWalk\nTaxi or car\n■ Hotel\nMore about today\nDidn't fit today: Santo Spirito Church, Santa Felicita Church, Santa Maria del Carmine Church, Palazzo Pitti. Your sights don't all fit today's time.\nMake it fit\n\nAll times are Florence time, 7 h ahead of your device.\n\nLEAVE\n4:15 pm\nS\nOut of Firenze Santa Maria Novella\nTrain arrives 4:00 pm. We allow 15 min to get off the train.\nTaxi or car · 12 min · 0.5 mi\nBy road, with time for traffic.\nWalk · 12 min\nTaxi or car · 12 min\nARRIVE\n4:27 pm\nLEAVE\n4:47 pm\nH\nCheck in or drop bags\n20 min\nTaxi or car · 19 min · 1.9 mi\nWalk · 42 min\nTaxi or car · 19 min\nARRIVE\n5:06 pm\nLEAVE\n5:46 pm\n1\nBoboli Gardens\n40 min · Park or garden\nWalk · 26 min · 1.2 mi\nWalk · 26 min\nTaxi or car · 15 min\nARRIVE\n6:12 pm\nLEAVE\n6:27 pm\n2\npiazzale Michelangelo\n15 min · Square\nTaxi or car · 19 min · 2.1 mi\nWalk · 45 min\nTaxi or car · 19 min\nARRIVE\n6:46 pm\nE\nBack at Hotel in central Florence\n4 h 1 min to spare.\nARRIVE\n7:16 pm\nD\nSuggested dinner: Osir\nChinese\nChange dinner\nDinner: why here"
+  },
+  {
+   "i": 3,
+   "date": "2027-05-22",
+   "type": "departure",
+   "text": "SAT MAY 22 · FLORENCE · LEAVING\nFlorence ✎ Rename\nLock this day\n🚆\nLEAVE BY\nto your train\n4:17 pm\n▶ Start the tour\n\nTrain 8:00 pm · Back at Firenze Santa Maria Novella by 7:15 pm\n\nGetting back on time is up to you\n\nKairoute's leave-by and back-by times are estimates with spare time built in. Traffic, queues and the weather can still slow you down. The time that counts is the ship's all-aboard time or your train or flight, as your cruise line or carrier gives it. Check it on the day.\n\nI understand\nTerms of use\n7\nsights\n2.3 mi\nwalking\nChoose sights\nMore\nAbout today's plan3 notes\nUse Ctrl + scroll to zoom the map\nS\n1\n2\n3\n4\nL\n5\n6\n7\nE\n2000 ft\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nWalk\nTaxi or car\n● Meal\n■ Hotel\nMore about today\n\nAll times are Florence time, 7 h ahead of your device.\n\nLEAVE\n9:00 am\nS\nCheck out of Hotel in central Florence\nAdd your own hotel on the Trip page for exact times.\nMost hotels keep your bags for the day after check-out: ask at the desk.\nTaxi or car · 17 min · 1.6 mi\nBy road, with time for traffic.\nWalk · 35 min\nTaxi or car · 17 min\nARRIVE\n9:17 am\nLEAVE\n10:07 am\n1\nPalazzo Pitti\n50 min · Palace · Must-see\nWalk · 7 min · 0.3 mi\nARRIVE\n10:14 am\nLEAVE\n10:44 am\n2\nPonte Vecchio\n30 min · Landmark · Must-see\nWalk · 3 min · 0.1 mi\nARRIVE\n10:47 am\nLEAVE\n12:17 pm\n3\nUffizi Gallery\n1 h 30 min · Museum · Must-see\nWalk · 2 min · 0.1 mi\nARRIVE\n12:19 pm\nLEAVE\n1:09 pm\n4\nPalazzo Vecchio\n50 min · Palace\nWalk · 5 min · 0.2 mi\nARRIVE\n1:14 pm\nLEAVE\n2:14 pm\nL\nLunch: Ristorante Dante e Beatrice\nRestaurant · Popular with visitors · 1 h\nChange lunch\nLunch: why here\nWalk · 2 min · 0.1 mi\nARRIVE\n2:16 pm\nLEAVE\n2:56 pm\n5\nFlorence Baptistery\n40 min · Sight\nWalk · 3 min · 0.1 mi\nARRIVE\n2:59 pm\nLEAVE\n3:29 pm\n6\nFlorence Cathedral\n30 min · Church · Must-see\nWalk · 8 min · 0.4 mi\nARRIVE\n3:37 pm\nLEAVE\n4:17 pm\n7\nDavid\n40 min · Sight · Must-see\nWalk · 18 min · 0.9 mi\nWalk · 18 min\nTaxi or car · 14 min\nARRIVE\n4:35 pm\nLEAVE\n4:50 pm\nH\nCollect bags\n15 min\nUNTIL\n4:17 pm\n+\nFree time: 2 h 3 min\nYours to spend as you like. Leave here by 4:17 pm to be back by 7:15 pm. See what fits\nTaxi or car · 22 min · 0.5 mi\nIncludes 10 min spare before the ship.\nWalk · 12 min\nTaxi or car · 12 min\nBY\n7:15 pm\nE\nAt Firenze Santa Maria Novella\nTrain leaves 8:00 pm: be at the station by 7:30 pm, 30 min early.\n🚆\nTrain to Buenos Aires\nSat May 22 · planned for 8:00 pm\nTrain times couldn't be loaded just now. The booking page lists every train.\nBook train\n↗\nOpens Rome2Rio, which shows every way from Florence to Buenos Aires and links to the company that sells the ticket. Choose Sat May 22. The fare is set by the rail company and shown before you pay."
+  },
+  {
+   "i": 4,
+   "date": "2027-05-22",
+   "type": "arrival",
+   "text": "SAT MAY 22 · BUENOS AIRES · ARRIVING\nBuenos Aires ✎ Rename\nLock this day\n\nWe couldn't find exactly where Buenos Aires main station is, so this day isn't planned on a guess (every ride time and the time to head back depend on it). It's being looked up again; you can also pick another arrival point in the day's settings.\n\nEdit this day"
+  },
+  {
+   "i": 5,
+   "date": "2027-05-23",
+   "type": "departure",
+   "text": "SUN MAY 23 · BUENOS AIRES · LEAVING\nBuenos Aires ✎ Rename\nLock this day\n\nWhich airport do you leave from? There is more than one here (Jorge Newbery Airpark or Ministro Pistarini International Airport). Choose it in the day's settings and the day gets its time to leave by: no time is given on a guess.\n\nEdit this day"
+  }
+ ],
+ "guides": {
+  "Paris": {
+   "city": "Paris",
+   "src": true,
+   "ai": false,
+   "n": 46,
+   "sights": "UNESCO* | Eiffel Tower* | Louvre Museum* | Notre-Dame de Paris | Musée d'Orsay | Arc de Triomphe | avenue des Champs-Élysées | Bibliothèque nationale de France | Père Lachaise Cemetery | Bastille | Centre Georges Pompidou | Palais Garnier | place de la Concorde | Panthéon | Sainte Chapelle | Les Invalides | Luxembourg Palace | Palais-Royal | Grand Palais | Institut Polytechnique des Sciences Avancées | National Assembly | Sacré-Cœur | Venus de Milo | Sorbonne | Musée des Arts et Métiers | Tuileries Garden | Petit Palais | École Normale Supérieure | Collège de France | Champ de Mars | Grand Mosque of Paris | La Madeleine | Pont Alexandre III~ | Paris Institute of Political Studies | Conciergerie | 1st arrondissement of Paris | Montmartre | Château de Vincennes | place des Vosges | Hôtel de Ville, Paris | Royal abbey of Saint-Germain-des-Prés | parc Monceau | île de la Cité | Musée du quai Branly | Jardin des plantes | Mines ParisTech",
+   "far": "Chantilly | Chartres | Disneyland Paris | Rambouillet",
+   "eats": 60,
+   "starts": {
+    "cruise": [
+     "Terminal 2E - Gates L"
+    ],
+    "airport": [
+     "Paris–Le Bourget Airport",
+     "Paris Charles de Gaulle Airport",
+     "Charles de Gaulle International Airport",
+     "Paris–Orly Airport"
+    ],
+    "station": [
+     "Gare du Nord",
+     "Gare de Paris Bercy"
+    ],
+    "hotel": [
+     "Hotel in central Paris"
+    ],
+    "point": [
+     "Central Paris"
+    ]
+   }
+  },
+  "Florence": {
+   "city": "Florence",
+   "src": true,
+   "ai": false,
+   "n": 33,
+   "sights": "Florence Cathedral* | Uffizi Gallery* | Palazzo Pitti* | David* | Ponte Vecchio* | Palazzo Vecchio | Basilica of Santa Croce | Florence Baptistery | Bargello National Museum | Basilica of Santa Maria Novella | Basilica of San Lorenzo | Boboli Gardens | Palazzo Strozzi | Galleria dell'Accademia | Santa Maria del Carmine Church | Museo dell'Opera del Duomo | Museum of San Marco | Galileo Museum | Biblioteca Medicea Laurenziana | National Central Library of Florence | San Miniato al Monte Church | Orsanmichele | Palazzo Medici Riccardi | Villa Castello | Santo Spirito Church | Davanzati Palace | Horne Museum | Stibbert Museum | Santa Felicita Church | Villa Medicea del Poggio Imperiale | piazzale Michelangelo | Marino Marini Museum | Great Synagogue of Florence",
+   "far": "",
+   "eats": 68,
+   "starts": {
+    "cruise": [
+     "Cruise port of Florence (unknown)"
+    ],
+    "airport": [
+     "Florence Amerigo Vespucci Airport"
+    ],
+    "station": [
+     "Firenze Santa Maria Novella"
+    ],
+    "hotel": [
+     "Hotel in central Florence"
+    ],
+    "point": [
+     "Central Florence"
+    ]
+   }
+  },
+  "Buenos Aires": {
+   "city": "Buenos Aires",
+   "src": true,
+   "ai": false,
+   "n": 35,
+   "sights": "Casa Rosada* | Colón Theater* | Barolo Palace* | Plaza de Mayo* | La Bombonera* | Palace of the Argentine National Congress* | Obelisco de Buenos Aires* | Recoleta Cemetery* | Buenos Aires Cathedral* | National Museum of Fine Arts, Argentina | Puente de la Mujer | Kavanagh building | Buenos Aires Botanical Garden | Plaza San Martín | Templo Libertad | Monumental Tower | Japanese Gardens | House of Culture of Buenos Aires | El Ateneo Grand Splendid | National Historical Museum | Confitería Ideal | National Museum of Immigration | Nicolás Avellaneda Transporter Bridge~ | Paz Palace | plaza Dorrego | Saint Ignatius of Loyola Church, Buenos Aires | Illuminated Block | Mitre Museum | Floralis Genérica | San Telmo market | Héctor Carlos Janson Historic and  Numismatics Museum | Palacio Duhau Park Hyatt | Botica del Ángel | Palermo Viejo | Las Cañitas",
+   "far": "",
+   "eats": 60,
+   "starts": {
+    "cruise": [
+     "Port of Buenos Aires"
+    ],
+    "airport": [
+     "Jorge Newbery Airpark",
+     "Ministro Pistarini International Airport"
+    ],
+    "station": [
+     "Buenos Aires main station (unknown)"
+    ],
+    "hotel": [
+     "Hotel in central Buenos Aires"
+    ],
+    "point": [
+     "Central Buenos Aires"
+    ]
+   }
+  }
+ },
+ "steps": [],
+ "version": "88a1dc8-1795204327",
+ "aiReady": false,
+ "wizard": {
+  "miss": [],
+  "prev": "Your days: 4 days",
+  "form": "Add each place in order, the way it's booked. Each new stop starts where the last one ends.\n\nSTOP 1 · CITY STAY\nRemove\nCity\nArrive on\nNights\nHotel (optional)\nGetting there\nFlight\nTrain\nFerry\nCar or bus\nArrive in Paris at\nSTOP 2 · CITY STAY\nRemove\nCity\nArrive on\nNights\nHotel (optional)\nGetting there\nFlight\nTrain\nFerry\nCar or bus\nLeave Paris at\nArrive in Florence at\nSTOP 3 · CITY STAY\nRemove\nCity\nArrive on\nNights\nHotel (optional)\nGetting there\nFlight\nTrain\nFerry\nCar or bus\nLeave Florence at\nArrive in town at\nLeave empty if you don't know yet.\n+ Add a city stay\n+ Add a cruise\nGoing home from here\nFlight\nTrain\nFerry\nCar or bus\nFlight at\nYour days: 4 days\nAdd more details (optional)\nName this trip\n\nKairoute picks good defaults for pace, walking and voice, and you can change any of them later.\n\nCancel\nPersonalize first\nBuild my trip"
+ },
+ "buildSec": 156,
+ "state": {
+  "busy": "",
+  "err": "",
+  "days": [
+   {
+    "date": "2027-05-20",
+    "type": "arrival"
+   },
+   {
+    "date": "2027-05-21",
+    "type": "departure"
+   },
+   {
+    "date": "2027-05-21",
+    "type": "arrival"
+   },
+   {
+    "date": "2027-05-22",
+    "type": "departure"
+   },
+   {
+    "date": "2027-05-22",
+    "type": "arrival"
+   },
+   {
+    "date": "2027-05-23",
+    "type": "departure"
+   }
+  ]
+ },
+ "finished": "2026-11-20T21:12:28.633Z"
+}

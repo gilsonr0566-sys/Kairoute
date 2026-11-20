@@ -1,0 +1,397 @@
+{
+ "name": "b03-notfound-europe",
+ "label": "",
+ "legs": [
+  {
+   "k": "cruise",
+   "board": "Southampton",
+   "date": "2027-06-11",
+   "aboard": "16:00",
+   "inBy": "train",
+   "inAt": "12:00",
+   "ports": [
+    {
+     "date": "2027-06-12",
+     "place": "Le Havre, France",
+     "arrive": "07:00",
+     "aboard": "19:00"
+    },
+    {
+     "date": "2027-06-13",
+     "place": "Zeebrugge, Belgium",
+     "arrive": "08:00",
+     "aboard": "17:00"
+    },
+    {
+     "date": "2027-06-15",
+     "place": "Bergen, Norway",
+     "arrive": "08:00",
+     "aboard": "17:00"
+    },
+    {
+     "date": "2027-06-19",
+     "place": "Ponta Delgada, Portugal",
+     "arrive": "08:00",
+     "aboard": "17:00"
+    },
+    {
+     "date": "2027-06-23",
+     "place": "Kotor, Montenegro",
+     "arrive": "08:00",
+     "aboard": "17:00",
+     "tender": true
+    },
+    {
+     "date": "2027-06-24",
+     "place": "Limassol, Cyprus",
+     "arrive": "08:00",
+     "aboard": "18:00"
+    }
+   ],
+   "end": "Southampton",
+   "endDate": "2027-06-30",
+   "off": "07:00"
+  }
+ ],
+ "started": "2026-11-20T21:08:08.150Z",
+ "passed": {
+  "/sources": 18,
+  "/transit": 15,
+  "/guide": 7,
+  "/places": 4,
+  "/voyage": 5,
+  "/ground": 4,
+  "/route": 5,
+  "/x/near": 3
+ },
+ "refused": {
+  "/ratings": 4,
+  "/grating": 1,
+  "/events": 1
+ },
+ "errors": [],
+ "days": [
+  {
+   "i": 0,
+   "date": "2027-06-11",
+   "type": "arrival",
+   "text": "FRI JUN 11 · SOUTHAMPTON · ARRIVING\nSouthampton ✎ Rename\nLock this day\nToday is one plan\n\nTrain in at 12:00 pm, then the ship at 4:00 pm: the sightseeing in between, your bags and the countdown are on one page.\n\nSee today's plan"
+  },
+  {
+   "i": 1,
+   "date": "2027-06-11",
+   "type": "embark",
+   "text": "FRI JUN 11 · SOUTHAMPTON · BOARDING\nSouthampton ✎ Rename\nLock this day\nI couldn't find Southampton and Ponta Delgada, Portugal and Limassol, Cyprus in the travel guides and maps. Check the spelling on the day (for example \"Kotor, Montenegro\"), then tap Build again.\nNo guide for Southampton yet\n\nKairoute will build the guide for Southampton from travel guides and maps: real sights, places to eat, the cruise port and stations.\n\nBuild the Southampton guide"
+  },
+  {
+   "i": 2,
+   "date": "2027-06-12",
+   "type": "port",
+   "text": "SAT JUN 12 · LE HAVRE, FRANCE · IN PORT\nLe Havre, France ✎ Rename\nLock this day\n🚢\nLEAVE BY\nall aboard 7:00 pm\n12:53 pm\n▶ Start the tour\n\nAshore 7:30 am · Official all aboard 7:00 pm · Back at the ship by 6:15 pm\n\nGetting back on time is up to you\n\nKairoute's leave-by and back-by times are estimates with spare time built in. Traffic, queues and the weather can still slow you down. The time that counts is the ship's all-aboard time or your train or flight, as your cruise line or carrier gives it. Check it on the day.\n\nI understand\nTerms of use\n3\nsights\n0.6 mi\nwalking\nChoose sights\nMore\nAbout today's plan2 notes\nUse Ctrl + scroll to zoom the map\nStart · Cruise port\n1\n2\n3\nL\n5 mi\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nWalk\nTaxi or car\nBus\n● Meal\nMore about today\n\nAll times are Le Havre time, 7 h ahead of your device.\n\nLEAVE\n8:42 am\nS\nOff the ship at Port of Le Havre\nShip docks 7:00 am.\nTaxi or car · 18 min · 1.8 mi\nBy road, with time for traffic.\nWalk · 39 min\nTaxi or car · 18 min\nARRIVE\n9:00 am\nLEAVE\n9:30 am\n1\nLe Havre Cathedral\n30 min · Church\nWalk · 12 min · 0.6 mi\nWalk · 12 min\nTaxi or car · 13 min\nARRIVE\n9:42 am\nLEAVE\n10:12 am\n2\nSt. Joseph's Church\n30 min · Church\nTaxi or car · 18 min · 1.7 mi\nWalk · 37 min\nTaxi or car · 18 min\nARRIVE\n10:30 am\nLEAVE\n11:10 am\n3\nSainte-Adresse\n40 min · Sight · Must-see\nBus 509) · 43 min · 1.9 mi\nWalk 2 min to Saint-Denis (Église), runs about every 3 h 20 min (from the timetable). Allow 8 min to reach this route's start and finish from your stops; then Bus 509): Saint-Denis (Église) to Samuel de Champlain, 3 min, then walk 12 min. Times include waiting and boarding. Next departure about 11:54 am (timetable checked Nov 20; Kairoute checks it again the day before and the morning of).\nWalk · 41 min\nBus 509) · 43 min\nTaxi or car · 19 min\nARRIVE\n11:53 am\nLEAVE\n12:53 pm\nL\nLunch: Ristorante Al Dente\nRestaurant · Local spot · 1 h\nChange lunch\nLunch: why here\nUNTIL\n12:53 pm\n+\nFree time: 4 h 42 min\nYours to spend as you like. Leave here by 12:53 pm to be back by 6:15 pm. See what fits\nTaxi or car · 40 min · 2.1 mi\nIncludes 20 min spare before the ship.\nWalk · 46 min\nTaxi or car · 20 min\nBY\n6:15 pm\nE\nBack at the ship\nThe ship's official all aboard is 7:00 pm. Kairoute plans you back at least 45 min before it."
+  },
+  {
+   "i": 3,
+   "date": "2027-06-13",
+   "type": "port",
+   "text": "SUN JUN 13 · ZEEBRUGGE, BELGIUM · IN PORT\nZeebrugge, Belgium ✎ Rename\nLock this day\n\nWe couldn't find exactly where Cruise port of Zeebrugge, Belgium is, so this day isn't planned on a guess (every ride time and the time to head back depend on it). It's being looked up again; you can also pick another cruise terminal in the day's settings.\n\nEdit this day"
+  },
+  {
+   "i": 4,
+   "date": "2027-06-14",
+   "type": "sea"
+  },
+  {
+   "i": 5,
+   "date": "2027-06-15",
+   "type": "port",
+   "text": "TUE JUN 15 · BERGEN, NORWAY · IN PORT\nBergen, Norway ✎ Rename\nLock this day\n\nWe couldn't find exactly where Cruise port of Bergen, Norway is, so this day isn't planned on a guess (every ride time and the time to head back depend on it). It's being looked up again; you can also pick another cruise terminal in the day's settings.\n\nEdit this day"
+  },
+  {
+   "i": 6,
+   "date": "2027-06-16",
+   "type": "sea"
+  },
+  {
+   "i": 7,
+   "date": "2027-06-17",
+   "type": "sea"
+  },
+  {
+   "i": 8,
+   "date": "2027-06-18",
+   "type": "sea"
+  },
+  {
+   "i": 9,
+   "date": "2027-06-19",
+   "type": "port",
+   "text": "SAT JUN 19 · PONTA DELGADA, PORTUGAL · IN PORT\nPonta Delgada, Portugal ✎ Rename\nLock this day\nI couldn't find Southampton and Ponta Delgada, Portugal and Limassol, Cyprus in the travel guides and maps. Check the spelling on the day (for example \"Kotor, Montenegro\"), then tap Build again.\nNo guide for Ponta Delgada, Portugal yet\n\nKairoute will build the guide for Ponta Delgada, Portugal from travel guides and maps: real sights, places to eat, the cruise port and stations.\n\nBuild the Ponta Delgada, Portugal guide"
+  },
+  {
+   "i": 10,
+   "date": "2027-06-20",
+   "type": "sea"
+  },
+  {
+   "i": 11,
+   "date": "2027-06-21",
+   "type": "sea"
+  },
+  {
+   "i": 12,
+   "date": "2027-06-22",
+   "type": "sea"
+  },
+  {
+   "i": 13,
+   "date": "2027-06-23",
+   "type": "port",
+   "text": "WED JUN 23 · KOTOR, MONTENEGRO · IN PORT\nKotor, Montenegro ✎ Rename\nLock this day\n\nWe couldn't find exactly where Cruise port of Kotor, Montenegro is, so this day isn't planned on a guess (every ride time and the time to head back depend on it). It's being looked up again; you can also pick another cruise terminal in the day's settings.\n\nEdit this day"
+  },
+  {
+   "i": 14,
+   "date": "2027-06-24",
+   "type": "port",
+   "text": "THU JUN 24 · LIMASSOL, CYPRUS · IN PORT\nLimassol, Cyprus ✎ Rename\nLock this day\nI couldn't find Southampton and Ponta Delgada, Portugal and Limassol, Cyprus in the travel guides and maps. Check the spelling on the day (for example \"Kotor, Montenegro\"), then tap Build again.\nNo guide for Limassol, Cyprus yet\n\nKairoute will build the guide for Limassol, Cyprus from travel guides and maps: real sights, places to eat, the cruise port and stations.\n\nBuild the Limassol, Cyprus guide"
+  },
+  {
+   "i": 15,
+   "date": "2027-06-25",
+   "type": "sea"
+  },
+  {
+   "i": 16,
+   "date": "2027-06-26",
+   "type": "sea"
+  },
+  {
+   "i": 17,
+   "date": "2027-06-27",
+   "type": "sea"
+  },
+  {
+   "i": 18,
+   "date": "2027-06-28",
+   "type": "sea"
+  },
+  {
+   "i": 19,
+   "date": "2027-06-29",
+   "type": "sea"
+  },
+  {
+   "i": 20,
+   "date": "2027-06-30",
+   "type": "arrival",
+   "text": "WED JUN 30 · SOUTHAMPTON · ARRIVING\nSouthampton ✎ Rename\nLock this day\nI couldn't find Southampton and Ponta Delgada, Portugal and Limassol, Cyprus in the travel guides and maps. Check the spelling on the day (for example \"Kotor, Montenegro\"), then tap Build again.\nNo guide for Southampton yet\n\nKairoute will build the guide for Southampton from travel guides and maps: real sights, places to eat, the cruise port and stations.\n\nBuild the Southampton guide"
+  }
+ ],
+ "guides": {
+  "Le Havre, France": {
+   "city": "Le Havre, France",
+   "src": true,
+   "ai": false,
+   "n": 5,
+   "sights": "Sainte-Adresse* | St. Joseph's Church | Le Havre Cathedral | MuMa Museum of modern art André Malraux | Maison de l'Armateur (Le Havre)",
+   "far": "Étretat | Honfleur",
+   "eats": 36,
+   "starts": {
+    "cruise": [
+     "Port of Le Havre"
+    ],
+    "airport": [
+     "Le Havre–Octeville Airport"
+    ],
+    "station": [
+     "Le Havre, France main station (unknown)"
+    ],
+    "hotel": [
+     "Hotel in central Le Havre, France"
+    ],
+    "point": [
+     "Central Le Havre, France"
+    ]
+   }
+  },
+  "Zeebrugge, Belgium": {
+   "city": "Zeebrugge, Belgium",
+   "src": true,
+   "ai": false,
+   "n": 10,
+   "sights": "Church of Our Lady* | Museum van het Heilig Bloed* | Ten Wijngaerde | Madonna of Bruges* | Groeningemuseum* | Sint-Janshospitaal | Belfry of Bruges* | Ezelpoort | Gentpoort | Smedenpoort",
+   "far": "Sluis | Ostend | De Haan | Ghent",
+   "eats": 60,
+   "starts": {
+    "cruise": [
+     "Cruise port of Zeebrugge, Belgium (unknown)"
+    ],
+    "airport": [
+     "Zeebrugge, Belgium airport (unknown)"
+    ],
+    "station": [
+     "Brugge railway station",
+     "Station Zeebrugge-Dorp"
+    ],
+    "hotel": [
+     "Hotel in central Zeebrugge, Belgium"
+    ],
+    "point": [
+     "Central Zeebrugge, Belgium"
+    ]
+   }
+  },
+  "Bergen, Norway": {
+   "city": "Bergen, Norway",
+   "src": true,
+   "ai": false,
+   "n": 15,
+   "sights": "Bryggen* | Sandviken* | Fantoft Stave Church | St Mary's Church | Bergenhus Fortress | Hanseatic Museum and Schøtstuene | Den Nationale Scene | Gaahl | Gamlehaugen | Fløibanen | Damsgård Manor | Troldhaugen | Bergen Aquarium | Nygårdsparken | Statsraad Lehmkuhl",
+   "far": "",
+   "eats": 56,
+   "starts": {
+    "cruise": [
+     "Cruise port of Bergen, Norway (unknown)"
+    ],
+    "airport": [
+     "Bergen Airport, Flesland"
+    ],
+    "station": [
+     "Bergen station"
+    ],
+    "hotel": [
+     "Hotel in central Bergen, Norway"
+    ],
+    "point": [
+     "Central Bergen, Norway"
+    ]
+   }
+  },
+  "Kotor, Montenegro": {
+   "city": "Kotor, Montenegro",
+   "src": true,
+   "ai": false,
+   "n": 15,
+   "sights": "Kotor Cathedral* | Fortifications of Kotor* | Dobrota* | Prčanj* | Njeguši* | Škaljari* | Muo | Lovćen National Park | Church of Our Lady of Remedy | Mrčevac | Serbian Orthodox church of St Nicolas in Kotor | Kavač | Maritime Museum of Montenegro in Kotor | Castle of San Giovanni | Aquarium Boka",
+   "far": "",
+   "eats": 40,
+   "starts": {
+    "cruise": [
+     "Cruise port of Kotor, Montenegro (unknown)"
+    ],
+    "airport": [
+     "Kotor, Montenegro airport (unknown)"
+    ],
+    "station": [
+     "Kotor, Montenegro main station (unknown)"
+    ],
+    "hotel": [
+     "Hotel in central Kotor, Montenegro"
+    ],
+    "point": [
+     "Central Kotor, Montenegro"
+    ]
+   }
+  }
+ },
+ "steps": [],
+ "version": "88a1dc8-1795204327",
+ "aiReady": false,
+ "wizard": {
+  "miss": [],
+  "prev": "Your days: 20 days · 6 ports",
+  "form": "Add each place in order, the way it's booked. Each new stop starts where the last one ends.\n\nSTOP 1 · CRUISE\nLeaves from\nShip (optional)\nBoarding day\nAll aboard\nGetting to the ship (if you arrive the same day)\nFlight\nTrain\nFerry\nCar or bus\nArrive in Southampton at\nPorts of call\nIn order, from your cruise booking. Days with no port are added as sea days.\nDate\nPort\nShip arrives\nAll aboard\nTender port (small boats take you ashore)\nRemove port\nDate\nPort\nShip arrives\nAll aboard\nTender port (small boats take you ashore)\nRemove port\nDate\nPort\nShip arrives\nAll aboard\nTender port (small boats take you ashore)\nRemove port\nDate\nPort\nShip arrives\nAll aboard\nTender port (small boats take you ashore)\nRemove port\nDate\nPort\nShip arrives\nAll aboard\nTender port (small boats take you ashore)\nRemove port\nDate\nPort\nShip arrives\nAll aboard\nTender port (small boats take you ashore)\nRemove port\n+ Add a port\nCruise ends in\nOn\nOff the ship at\n+ Add a city stay\n+ Add a cruise\nGoing home from Southampton\nFlight\nTrain\nFerry\nCar or bus\nFlight at\nYour days: 20 days · 6 ports\nAdd more details (optional)\nName this trip\n\nKairoute picks good defaults for pace, walking and voice, and you can change any of them later.\n\nCancel\nPersonalize first\nBuild my trip"
+ },
+ "buildSec": 222,
+ "state": {
+  "busy": "",
+  "err": "I couldn't find Southampton and Ponta Delgada, Portugal and Limassol, Cyprus in the travel guides and maps. Check the spelling on the day (for example \"Kotor, Montenegro\"), then tap Build again.",
+  "days": [
+   {
+    "date": "2027-06-11",
+    "type": "arrival"
+   },
+   {
+    "date": "2027-06-11",
+    "type": "embark"
+   },
+   {
+    "date": "2027-06-12",
+    "type": "port"
+   },
+   {
+    "date": "2027-06-13",
+    "type": "port"
+   },
+   {
+    "date": "2027-06-14",
+    "type": "sea"
+   },
+   {
+    "date": "2027-06-15",
+    "type": "port"
+   },
+   {
+    "date": "2027-06-16",
+    "type": "sea"
+   },
+   {
+    "date": "2027-06-17",
+    "type": "sea"
+   },
+   {
+    "date": "2027-06-18",
+    "type": "sea"
+   },
+   {
+    "date": "2027-06-19",
+    "type": "port"
+   },
+   {
+    "date": "2027-06-20",
+    "type": "sea"
+   },
+   {
+    "date": "2027-06-21",
+    "type": "sea"
+   },
+   {
+    "date": "2027-06-22",
+    "type": "sea"
+   },
+   {
+    "date": "2027-06-23",
+    "type": "port"
+   },
+   {
+    "date": "2027-06-24",
+    "type": "port"
+   },
+   {
+    "date": "2027-06-25",
+    "type": "sea"
+   },
+   {
+    "date": "2027-06-26",
+    "type": "sea"
+   },
+   {
+    "date": "2027-06-27",
+    "type": "sea"
+   },
+   {
+    "date": "2027-06-28",
+    "type": "sea"
+   },
+   {
+    "date": "2027-06-29",
+    "type": "sea"
+   },
+   {
+    "date": "2027-06-30",
+    "type": "arrival"
+   }
+  ]
+ },
+ "phoneText": "SAT JUN 12 · LE HAVRE, FRANCE · IN PORT\nLe Havre, France ✎ Rename\nLock this day\n🚢\nLEAVE BY\nall aboard 7:00 pm\n12:53 pm\n▶ Start tour\n\nAshore 7:30 am · Official all aboard 7:00 pm · Back at the ship by 6:15 pm\n\nGetting back on time is up to you\n\nKairoute's leave-by and back-by times are estimates with spare time built in. Traffic, queues and the weather can still slow you down. The time that counts is the ship's all-aboard time or your train or flight, as your cruise line or carrier gives it. Check it on the day.\n\nI understand\nTerms of use\n3\nsights\n0.6 mi\nwalking\nChoose sights\nMore\nAbout today's plan2 notes\nUse Ctrl + scroll to zoom the map\nStart · Cruise port\n1\n2\n3\nL\n5 mi\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nWalk\nTaxi or car\nBus\n● Meal\nMore about today\n\nAll times are Le Havre time, 7 h ahead of your device.\n\nLEAVE\n8:42 am\nS\nOff the ship at Port of Le Havre\nShip docks 7:00 am.\nTaxi or car · 18 min · 1.8 mi\nBy road, with time for traffic.\nWalk · 39 min\nTaxi or car · 18 min\nARRIVE\n9:00 am\nLEAVE\n9:30 am\n1\nLe Havre Cathedral\n30 min · Church\nWalk · 12 min · 0.6 mi\nWalk · 12 min\nTaxi or car · 13 min\nARRIVE\n9:42 am\nLEAVE\n10:12 am\n2\nSt. Joseph's Church\n30 min · Church\nTaxi or car · 18 min · 1.7 mi\nWalk · 37 min\nTaxi or car · 18 min\nARRIVE\n10:30 am\nLEAVE\n11:10 am\n3\nSainte-Adresse\n40 min · Sight · Must-see\nBus 509) · 43 min · 1.9 mi\nWalk 2 min to Saint-Denis (Église), runs about every 3 h 20 min (from the timetable). Allow 8 min to reach this route's start and finish from ",
+ "finished": "2026-11-20T21:13:17.151Z"
+}

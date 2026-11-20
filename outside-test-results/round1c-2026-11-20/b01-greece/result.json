@@ -1,0 +1,636 @@
+{
+ "name": "b01-greece",
+ "label": "",
+ "legs": [
+  {
+   "k": "stay",
+   "place": "Athens, Greece",
+   "date": "2027-06-30",
+   "nights": 4,
+   "inAt": "10:30"
+  },
+  {
+   "k": "cruise",
+   "board": "Piraeus (Athens), Greece",
+   "ship": "Sun Princess",
+   "date": "2027-07-04",
+   "aboard": "18:30",
+   "ports": [
+    {
+     "date": "2027-07-05",
+     "place": "Heraklion, Crete",
+     "arrive": "07:00",
+     "aboard": "16:30"
+    },
+    {
+     "date": "2027-07-06",
+     "place": "Kusadasi (Ephesus), Turkey",
+     "arrive": "09:00",
+     "aboard": "18:30"
+    },
+    {
+     "date": "2027-07-07",
+     "place": "Santorini, Greece",
+     "arrive": "07:00",
+     "aboard": "20:30",
+     "tender": true
+    },
+    {
+     "date": "2027-07-08",
+     "place": "Mykonos, Greece",
+     "arrive": "08:00",
+     "aboard": "20:30"
+    },
+    {
+     "date": "2027-07-09",
+     "place": "Chania, Crete",
+     "arrive": "08:00",
+     "aboard": "17:30"
+    },
+    {
+     "date": "2027-07-11",
+     "place": "Messina, Sicily",
+     "arrive": "08:00",
+     "aboard": "17:30"
+    },
+    {
+     "date": "2027-07-12",
+     "place": "Naples, Italy",
+     "arrive": "07:00",
+     "aboard": "18:30"
+    },
+    {
+     "date": "2027-07-13",
+     "place": "Civitavecchia (Rome), Italy",
+     "arrive": "07:00",
+     "aboard": "20:30"
+    }
+   ],
+   "end": "Barcelona, Spain",
+   "endDate": "2027-07-15",
+   "off": "07:00"
+  },
+  {
+   "k": "stay",
+   "place": "Barcelona, Spain",
+   "nights": 3
+  },
+  {
+   "k": "stay",
+   "place": "Madrid, Spain",
+   "nights": 2,
+   "inBy": "train",
+   "leaveAt": "13:00",
+   "inAt": "15:45",
+   "homeAt": "16:00"
+  }
+ ],
+ "started": "2026-11-20T21:05:03.004Z",
+ "passed": {
+  "/sources": 11,
+  "/transit": 11,
+  "/places": 13,
+  "/voyage": 21,
+  "/x/near": 57,
+  "/route": 49
+ },
+ "refused": {
+  "/ratings": 11,
+  "/grating": 18,
+  "/events": 17
+ },
+ "errors": [],
+ "days": [
+  {
+   "i": 0,
+   "date": "2027-06-30",
+   "type": "arrival",
+   "text": "WED JUN 30 · ATHENS · ARRIVING\nAthens ✎ Rename\nLock this day\n▶ Start the tour\n11:45 am–7:15 pm\n7 h 30 min ✎\n4\nsights\n2.7 mi\nwalking\n5:38 pm\nlast stop done\nChoose sights\nMore\nAbout today's plan1 note\nUse Ctrl + scroll to zoom the map\nStart · Airport\nH\nL\n1\n2\n3\n4\n1000 ft\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nWalk\nTrain, metro or tram\n● Meal\n■ Hotel\nMore about today\n\nAll times are Athens time, 8 h ahead of your device.\n\nLEAVE\n11:45 am\nS\nOut of Athens Airport (Eleftherios Venizelos)\nAbout 40 minutes to the center by taxi (fixed fare by day), or metro line 3.\nFlight arrives 10:30 am. We allow 1 h 15 min to get off the plane and through baggage claim (and passport control after a flight from abroad).\nMetro M3 · 1 h 10 min · 16 mi\nWalk 1 min to El. Venizelos, runs about every 36 min (from the timetable). Metro M3: El. Venizelos to Syntagma, 38 min, then walk 13 min. Times include waiting and boarding. Next departure about 1:22 pm (timetable checked Nov 20; Kairoute checks it again the day before and the morning of).\nMetro M3 · 1 h 10 min\nTaxi or car · 55 min\nARRIVE\n12:55 pm\nLEAVE\n1:15 pm\nH\nCheck in or drop bags\n20 min\nWalk · 3 min · 0.1 mi\nARRIVE\n1:18 pm\nLEAVE\n2:18 pm\nL\nLunch: The Old Tavern of Psarras\nRestaurant · Local spot · 1 h\nChange lunch\nLunch: why here\nWalk · 4 min · 0.2 mi\nARRIVE\n2:22 pm\nLEAVE\n3:02 pm\n1\nRoman Agora and Tower of the Winds\n40 min · Ancient site\nWalk · 16 min · 0.7 mi\nWalk · 16 min\nMetro M3, Monastiraki to Syntagma · 13 min\nTaxi or car · 13 min\nARRIVE\n3:18 pm\nLEAVE\n3:48 pm\n2\nSyntagma Square and the changing of the guard\n30 min · Square\nWalk · 15 min · 0.7 mi\nWalk · 15 min\nTaxi or car · 13 min\nARRIVE\n4:03 pm\nLEAVE\n4:43 pm\n3\nPanathenaic Stadium\n40 min · Sight\nWalk · 12 min · 0.6 mi\nWalk · 12 min\nTaxi or car · 13 min\nARRIVE\n4:55 pm\nLEAVE\n5:30 pm\n4\nTemple of Olympian Zeus and Hadrian's Arch\n35 min · Ancient site\nUNTIL\n7:07 pm\n+\nFree time: 1 h 37 min\nYours to spend as you like. See what fits\nWalk · 8 min · 0.4 mi\nBY\n7:15 pm\nE\nBack at Hotel in Plaka\nARRIVE\n6:30 pm\nD\nSuggested dinner: To Kafeneio\nRestaurant\nChange dinner\nDinner: why here"
+  },
+  {
+   "i": 1,
+   "date": "2027-07-01",
+   "type": "land",
+   "text": "THU JUL 1 · ATHENS · LAND DAY\nAthens ✎ Rename\nLock this day\n▶ Start the tour\n9:00 am–6:00 pm\n9 h ✎\n5\nsights\n1.7 mi\nwalking\n3:28 pm\nlast stop done\nChoose sights\nMore\nAbout today's plan1 note\nUse Ctrl + scroll to zoom the map\nS\n1\n2\n3\n4\n5\nL\n500 ft\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nWalk\n● Meal\nMore about today\n\nAll times are Athens time, 8 h ahead of your device.\n\nLEAVE\n9:00 am\nS\nLeave Hotel in Plaka\nWalk to the Acropolis and old town.\nNext door\nARRIVE\n9:02 am\nLEAVE\n9:32 am\n1\nPlaka and Anafiotika\n30 min · Old town · Must-see\nWalk · 5 min · 0.2 mi\nARRIVE\n9:37 am\nLEAVE\n10:02 am\n2\nAthens Cathedral and the Little Metropolis\n25 min · Church\nWalk · 12 min · 0.5 mi\nWalk · 12 min\nTaxi or car · 12 min\nARRIVE\n10:14 am\nLEAVE\n10:39 am\n3\nAreopagus (Mars Hill)\n25 min · Bible site · Must-see\nWalk · 4 min · 0.2 mi\nARRIVE\n10:43 am\nLEAVE\n12:43 pm\n4\nAcropolis and Parthenon\n2 h · Ancient site · Must-see\nBOOK AHEAD\nBook tickets\n↗\nMark booked\nEntrance fee not included · more\nWalk · 7 min · 0.3 mi\nARRIVE\n12:50 pm\nLEAVE\n2:20 pm\n5\nAcropolis Museum\n1 h 30 min · Museum · Must-see\nBOOK AHEAD\nBook tickets\n↗\nMark booked\nEntrance fee not included · more\nWalk · 6 min · 0.3 mi\nARRIVE\n2:26 pm\nLEAVE\n3:26 pm\nL\nLunch: Thespis\nRestaurant · Local spot · 1 h\nChange lunch\nLunch: why here\nUNTIL\n5:58 pm\n+\nFree time: 2 h 32 min\nYours to spend as you like. See what fits\nWalk · 2 min · 0.1 mi\nBY\n6:00 pm\nE\nBack at Hotel in Plaka\nARRIVE\n6:30 pm\nD\nSuggested dinner: Scholarchion\nRestaurant\nChange dinner\nDinner: why here"
+  },
+  {
+   "i": 2,
+   "date": "2027-07-02",
+   "type": "land",
+   "text": "FRI JUL 2 · ATHENS · LAND DAY\nAthens ✎ Rename\nLock this day\n▶ Start the tour\n9:00 am–6:00 pm\n9 h ✎\n6\nsights\n3.1 mi\nwalking\n4:29 pm\nlast stop done\nChoose sights\nMore\nAbout today's plan2 notes\nUse Ctrl + scroll to zoom the map\nS\n1\n2\n3\n4\nL\n5\n6\n3000 ft\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nWalk\nTaxi or car\n● Meal\nMore about today\n\nAll times are Athens time, 8 h ahead of your device.\n\nLEAVE\n9:00 am\nS\nLeave Hotel in Plaka\nWalk to the Acropolis and old town.\nWalk · 12 min · 0.6 mi\nWalk · 12 min\nTaxi or car · 13 min\nARRIVE\n9:12 am\nLEAVE\n10:27 am\n1\nAncient Agora\n1 h 15 min · Ancient site\nIncludes Temple of Hephaestus\nWalk · 14 min · 0.7 mi\nWalk · 14 min\nTaxi or car · 13 min\nARRIVE\n10:41 am\nLEAVE\n11:26 am\n2\nPhilopappos Hill\n45 min · Viewpoint\nTaxi or car · 21 min · 2.4 mi\nBy road, with time for traffic.\nWalk · 51 min\nTaxi or car · 21 min\nARRIVE\n11:47 am\nLEAVE\n12:27 pm\n3\nPlatonic Academy\n40 min · Sight\nTaxi or car · 22 min · 2.7 mi\nWalk · 57 min\nTaxi or car · 22 min\nARRIVE\n12:49 pm\nLEAVE\n1:49 pm\n4\nLycabettus Hill\n1 h · Viewpoint\nWalk · 8 min · 0.4 mi\nARRIVE\n1:57 pm\nLEAVE\n2:57 pm\nL\nLunch: Brunello\nPopular with visitors · 1 h\nChange lunch\nRate Brunello\nWalk · 7 min · 0.3 mi\nARRIVE\n3:04 pm\nLEAVE\n3:44 pm\n5\nLyceum\n40 min · Sight\nWalk · 21 min · 1.0 mi\nWalk · 21 min\nTaxi or car · 14 min\nARRIVE\n4:05 pm\nLEAVE\n4:25 pm\n6\nAgia Ekaterini (St Catherine's Church)\n20 min · Byzantine church\nUNTIL\n5:56 pm\n+\nFree time: 1 h 31 min\nYours to spend as you like. See what fits\nWalk · 4 min · 0.2 mi\nBY\n6:00 pm\nE\nBack at Hotel in Plaka\nARRIVE\n6:30 pm\nD\nSuggested dinner: Kosmikon\nRestaurant\nChange dinner\nDinner: why here"
+  },
+  {
+   "i": 3,
+   "date": "2027-07-03",
+   "type": "land",
+   "text": "SAT JUL 3 · ATHENS · LAND DAY\nAthens ✎ Rename\nLock this day\n▶ Start the tour\n9:00 am–6:00 pm\n9 h ✎\n4\nsights\n2.5 mi\nwalking\n4:20 pm\nlast stop done\nChoose sights\nMore\nAbout today's plan2 notes\nUse Ctrl + scroll to zoom the map\nS\n1\n2\n3\nL\n4\n3000 ft\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nWalk\nTrain, metro or tram\n● Meal\nMore about today\n\nAll times are Athens time, 8 h ahead of your device.\n\nLEAVE\n9:00 am\nS\nLeave Hotel in Plaka\nWalk to the Acropolis and old town.\nWalk · 8 min · 0.4 mi\nARRIVE\n9:08 am\nLEAVE\n9:38 am\n1\nTemple of Athena Nike\n30 min · Church\nWalk · 9 min · 0.4 mi\nARRIVE\n9:47 am\nLEAVE\n10:32 am\n2\nMonastiraki and the flea market\n45 min · Market\nMetro M3 · 14 min · 1.7 mi\nWalk 1 min to Monastiraki, runs about every 3 min (from the timetable). Metro M3: Monastiraki to Evangelismos, 3 min, then walk 5 min. Times include waiting and boarding. Next departure about 1:03 pm (timetable checked Nov 20; Kairoute checks it again the day before and the morning of).\nWalk · 36 min\nMetro M3 · 14 min\nTaxi or car · 18 min\nARRIVE\n10:46 am\nLEAVE\n12:16 pm\n3\nNational Gallery of Athens\n1 h 30 min · Museum\nWalk · 15 min · 0.7 mi\nWalk · 15 min\nTaxi or car · 13 min\nARRIVE\n12:31 pm\nLEAVE\n1:31 pm\nL\nLunch: Orizondes Lycabettus\nPopular with visitors · 1 h\nChange lunch\nRate Orizondes Lycabettus\nWalk · 21 min · 1.0 mi\nWalk · 21 min\nTaxi or car · 15 min\nARRIVE\n1:52 pm\nLEAVE\n3:52 pm\n4\nNational Archaeological Museum\n2 h · Museum\nUNTIL\n5:32 pm\n+\nFree time: 1 h 40 min\nYours to spend as you like. See what fits\nMetro M1, Omonia to Monastiraki · 28 min · 1.5 mi\nTime includes getting to the station and the wait.\nWalk 11 min to Omonia. Metro M1, Omonia to Monastiraki, 2 min. Walk 10 min.\nWalk · 32 min\nMetro M1, Omonia to Monastiraki · 28 min\nTaxi or car · 17 min\nBY\n6:00 pm\nE\nBack at Hotel in Plaka\nARRIVE\n6:30 pm\nD\nSuggested dinner: Ο γλυκυζ\nRestaurant\nChange dinner\nDinner: why here"
+  },
+  {
+   "i": 4,
+   "date": "2027-07-04",
+   "type": "departure",
+   "text": "SUN JUL 4 · ATHENS · LEAVING\nAthens ✎ Rename\nLock this day\n✈️\nLEAVE BY\nto your flight\n9:35 am\n▶ Start the tour\n\nFlight 3:00 pm · Back at Athens Airport (Eleftherios Venizelos) by 12:00 pm\n\nGetting back on time is up to you\n\nKairoute's leave-by and back-by times are estimates with spare time built in. Traffic, queues and the weather can still slow you down. The time that counts is the ship's all-aboard time or your train or flight, as your cruise line or carrier gives it. Check it on the day.\n\nI understand\nTerms of use\n1\nsight\n0.5 mi\nwalking\nChoose sights\nMore\nAbout today's plan1 note\nUse Ctrl + scroll to zoom the map\nS\n1\nFinish · Airport\n300 ft\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nWalk\nTrain, metro or tram\n■ Hotel\nMore about today\nThese port times are estimated. Check them against your cruise documents.\n\nAll times are Athens time, 8 h ahead of your device.\n\nLEAVE\n9:00 am\nS\nCheck out of Hotel in Plaka\nWalk to the Acropolis and old town.\nMost hotels keep your bags for the day after check-out: ask at the desk.\nWalk · 5 min · 0.2 mi\nARRIVE\n9:05 am\nLEAVE\n9:35 am\n1\nTheatre of Dionysus\n30 min · Ancient theater\nWalk · 5 min · 0.2 mi\nARRIVE\n9:40 am\nLEAVE\n9:55 am\nH\nCollect bags\n15 min\nUNTIL\n9:35 am\n+\nFree time: 36 min\nYours to spend as you like. Leave here by 9:35 am to be back by 12:00 pm. See what fits\nMetro M3, Syntagma to Athens Airport (AIA) · 1 h 29 min · 16 mi\nTime includes getting to the station and the wait. Includes 20 min spare before the ship.\nWalk 10 min to Syntagma. Metro M3, Syntagma to Athens Airport (AIA), 53 min. Walk 1 min.\nNo timetable or live traffic confirms this ride's time: it is an estimate with 20 min extra for the connection. Leave by the time shown, never later.\nMetro M3, Syntagma to Athens Airport (AIA) · 1 h 29 min\nTaxi or car · 1 h 10 min\nBY\n12:00 pm\nE\nAt Athens Airport (Eleftherios Venizelos)\nFlight leaves 3:00 pm: be at the airport by 12:00 pm, 3 h early for an international flight."
+  },
+  {
+   "i": 5,
+   "date": "2027-07-04",
+   "type": "arrival",
+   "text": "SUN JUL 4 · ATHENS · ARRIVING\nAthens ✎ Rename\nLock this day\nToday is one plan\n\nFlight in at 10:30 am, then the ship at 6:30 pm: the sightseeing in between, your bags and the countdown are on one page.\n\nSee today's plan"
+  },
+  {
+   "i": 6,
+   "date": "2027-07-04",
+   "type": "embark",
+   "text": "SUN JUL 4 · ATHENS · BOARDING\nAthens ✎ Rename\nLock this day\n🚢\nLEAVE BY\nall aboard 6:30 pm\n3:24 pm\n▶ Start the tour\n\nOfficial all aboard 6:30 pm · Back at the cruise terminal by 5:30 pm\n\nGetting back on time is up to you\n\nKairoute's leave-by and back-by times are estimates with spare time built in. Traffic, queues and the weather can still slow you down. The time that counts is the ship's all-aboard time or your train or flight, as your cruise line or carrier gives it. Check it on the day.\n\nI understand\nTerms of use\n1\nsight\nChoose sights\nMore\nAbout today's plan2 notes\nCollect your bags at 11:45 am and leave for the cruise terminal by 3:24 pm.\nToday's stops fill the time ashore, so there's no room for lunch and still a safe margin to get back. Grab lunch on the go between stops.\nUse Ctrl + scroll to zoom the map\nStart · Airport\n1\nFinish · Cruise port\n100 ft\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nTaxi or car\nTrain, metro or tram\n■ Hotel\nMore about today\n🛳 When do you board Sun Princess?\nBoarding time\nTerminal (optional)\nSave\n\nOn your boarding pass or check-in confirmation (also called arrival or check-in time). Until you add it, the plan uses the time to be back above.\n\nWhat to have on you · 0 of 9 ready\n📅 Add reminders to my calendar\nThis day has 4 h 18 min of travel for 30 min at the sights. Consider fewer far-apart stops, more hours, or splitting it over two days.\n\nAll times are Athens time, 8 h ahead of your device.\n\nLEAVE\n11:45 am\nS\nOut of Athens Airport (Eleftherios Venizelos)\nAbout 40 minutes to the center by taxi (fixed fare by day), or metro line 3.\nFlight arrives 10:30 am. We allow 1 h 15 min to get off the plane and through baggage claim (and passport control after a flight from abroad). Book luggage storage near Athens Airport (Eleftherios Venizelos) ahead (a left-luggage desk or a storage shop), or ask your hotel or station.\nYou fly in the day the ship sails. A late or missed flight is the most common way travelers miss a ship, and the ship won't wait: if your flight is delayed, skip the sightseeing and go straight to the port.\nNext door\nARRIVE\n11:45 am\nLEAVE\n12:00 pm\nH\nLeave your bags in luggage storage\n15 min\nMetro M3 · 1 h 24 min · 16 mi\nWalk 1 min to El. Venizelos, runs about every 36 min (from the timetable). Allow 14 min to reach this route's start and finish from your stops; then Metro M3: El. Venizelos to Syntagma, 38 min, then walk 13 min. Times include waiting and boarding. Next departure about 1:22 pm (timetable checked Nov 20; Kairoute checks it again the day before and the morning of).\nMetro M3 · 1 h 24 min\nTaxi or car · 55 min\nARRIVE\n1:24 pm\nLEAVE\n1:54 pm\n1\nAcropolis promenade (Dionysiou Areopagitou and Apostolou Pavlou)\n30 min · Walk\nMetro M3, Monastiraki to Athens Airport (AIA) · 1 h 15 min · 16 mi\nTime includes getting to the station and the wait.\nWalk 14 min to Monastiraki. Metro M3, Monastiraki to Athens Airport (AIA), 55 min. Walk 1 min.\nMetro M3, Monastiraki to Athens Airport (AIA) · 1 h 15 min\nTaxi or car · 55 min\nARRIVE\n3:09 pm\nLEAVE\n3:24 pm\nH\nCollect your bags\n15 min\nTaxi or car · 1 h 39 min · 21 mi\nBy road, with time for traffic. Includes 40 min spare before the ship.\nNo timetable or live traffic confirms this ride's time: it is an estimate with 20 min extra for the connection. Leave by the time shown, never later.\nTrain A1, Airport to Piraeus · 2 h 37 min\nOr take metro · 1 h 25 min\nTaxi or car · 1 h 19 min\nARRIVE\n5:03 pm\nE\nBoarding at Piraeus cruise terminals\n27 min to spare.\nOfficial all aboard 6:30 pm: be at the terminal by 5:30 pm at the latest. Your cruise line gives you a boarding time: add it and the plan gets you there for it.\nPorters take your big bags at the curb (luggage tags on; they reach your cabin by evening). Keep your passport, boarding pass, medicines and valuables in your carry-on for check-in and security.\nBig ports have more than one cruise terminal: check yours on your boarding pass and tell the driver.\nBook the taxi or transfer the day before, or ask your hotel to call one. Being aboard on time is your responsibility: check your boarding time with your cruise line."
+  },
+  {
+   "i": 7,
+   "date": "2027-07-05",
+   "type": "port",
+   "text": "MON JUL 5 · HERAKLION · IN PORT\nHeraklion ✎ Rename\nLock this day\n🚢\nLEAVE BY\nall aboard 4:30 pm\n2:50 pm\n▶ Start the tour\n\nAshore 7:30 am · Official all aboard 4:30 pm · Back at the ship by 3:45 pm\n\nGetting back on time is up to you\n\nKairoute's leave-by and back-by times are estimates with spare time built in. Traffic, queues and the weather can still slow you down. The time that counts is the ship's all-aboard time or your train or flight, as your cruise line or carrier gives it. Check it on the day.\n\nI understand\nTerms of use\n7\nsights\n1.5 mi\nwalking\nChoose sights\nMore\nAbout today's plan1 note\nUse Ctrl + scroll to zoom the map\nStart · Cruise port\n1\n2\n3\n4\nL\n5\n6\n7\n1 mi\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nWalk\nTaxi or car\n● Meal\nMore about today\n\nAll times are Heraklion time, 8 h ahead of your device.\n\nLEAVE\n7:30 am\nS\nOff the ship at Heraklion cruise port\nA 15-minute walk along the harbor to the Venetian fortress and town.\nShip docks 7:00 am.\nTaxi or car · 30 min · 4.4 mi\nARRIVE\n8:00 am\nLEAVE\n9:45 am\n1\nPalace of Knossos\n1 h 45 min · Ancient site · Must-see\nBOOK AHEAD\nBook tickets\n↗\nMark booked\nEntrance fee not included · more\nTaxi or car · 29 min · 4.3 mi\nARRIVE\n10:14 am\nLEAVE\n10:34 am\n2\nAgios Minas Cathedral\n20 min · Church\nWalk · 5 min · 0.2 mi\nARRIVE\n10:39 am\nLEAVE\n11:09 am\n3\n1866 Street market\n30 min · Market\nWalk · 3 min · 0.1 mi\nARRIVE\n11:12 am\nLEAVE\n11:42 am\n4\nLions Square and 25th August Street\n30 min · Old town\nNext door\nARRIVE\n11:45 am\nLEAVE\n12:20 pm\nL\nLunch: Kirkor\nBougatsa café · € · Popular with visitors · 35 min\nChange lunch\nLunch: why here\nWalk · 2 min · 0.1 mi\nARRIVE\n12:22 pm\nLEAVE\n12:42 pm\n5\nChurch of Saint Titus\n20 min · Bible site · Must-see\nWalk · 4 min · 0.2 mi\nARRIVE\n12:46 pm\nLEAVE\n2:01 pm\n6\nHeraklion Archaeological Museum\n1 h 15 min · Museum · Must-see\nWalk · 9 min · 0.4 mi\nARRIVE\n2:10 pm\nLEAVE\n2:50 pm\n7\nVenetian harbor and Koules fortress\n40 min · Fortress\nUNTIL\n2:50 pm\n+\nFree time: 31 min\nYours to spend as you like. Leave here by 2:50 pm to be back by 3:45 pm. See what fits\nWalk · 24 min · 0.4 mi\nBY\n3:45 pm\nE\nBack at the ship\nThe ship's official all aboard is 4:30 pm. Kairoute plans you back at least 45 min before it."
+  },
+  {
+   "i": 8,
+   "date": "2027-07-06",
+   "type": "port",
+   "text": "TUE JUL 6 · KUSADASI · IN PORT\nKusadasi ✎ Rename\nLock this day\n🚢\nLEAVE BY\nall aboard 6:30 pm\n4:33 pm\n▶ Start the tour\n\nAshore 9:30 am · Official all aboard 6:30 pm · Back at the ship by 5:45 pm\n\nGetting back on time is up to you\n\nKairoute's leave-by and back-by times are estimates with spare time built in. Traffic, queues and the weather can still slow you down. The time that counts is the ship's all-aboard time or your train or flight, as your cruise line or carrier gives it. Check it on the day.\n\nI understand\nTerms of use\n5\nsights\n0.9 mi\nwalking\nChoose sights\nMore\nAbout today's plan2 notes\nBring lunch for 1:41 pm at Ancient Ephesus: places to eat there aren't in the guide yet.\nOpening hours aren't known for Temple of Artemis and Pigeon Island castle on this date: planned between 9:00 am and 5:00 pm, check before you go.\nUse Ctrl + scroll to zoom the map\nStart · Cruise port\n1\n2\n3\nL\n4\n5\n2 mi\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nWalk\nTaxi or car\n● Meal\nMore about today\n\nAll times are Kusadasi time, 8 h ahead of your device.\n\nLEAVE\n9:30 am\nS\nOff the ship at Kusadasi cruise port\nEphesus is about 20 minutes by taxi or tour bus.\nShip docks 9:00 am.\nTaxi or car · 49 min · 11 mi\nBy road, with time for traffic.\nOr tour bus · 45 min\nTaxi or car · 49 min\nARRIVE\n10:19 am\nLEAVE\n11:04 am\n1\nBasilica of Saint John\n45 min · Bible site · Must-see\nWalk · 9 min · 0.4 mi\nARRIVE\n11:13 am\nLEAVE\n11:28 am\n2\nTemple of Artemis\n15 min · Ancient site\nTaxi or car · 18 min · 1.9 mi\nWalk · 40 min\nTaxi or car · 18 min\nARRIVE\n11:46 am\nLEAVE\n1:41 pm\n3\nAncient Ephesus\n1 h 55 min · Bible site · Must-see\nNext door\nARRIVE\n1:41 pm\nLEAVE\n2:16 pm\nL\nLunch: Bring your own\nPlaces to eat here aren't in the guide yet · 35 min\nTaxi or car · 22 min · 2.5 mi\nWalk · 55 min\nTaxi or car · 22 min\nARRIVE\n2:38 pm\nLEAVE\n3:23 pm\n4\nHouse of the Virgin Mary\n45 min · Pilgrimage\nTaxi or car · 40 min · 7.5 mi\nARRIVE\n4:03 pm\nLEAVE\n4:33 pm\n5\nPigeon Island castle\n30 min · Landmark\nUNTIL\n4:33 pm\n+\nFree time: 36 min\nYours to spend as you like. Leave here by 4:33 pm to be back by 5:45 pm. See what fits\nWalk · 36 min · 0.5 mi\nIncludes 25 min spare before the ship.\nWalk · 11 min\nTaxi or car · 12 min\nBY\n5:45 pm\nE\nBack at the ship\nThe ship's official all aboard is 6:30 pm. Kairoute plans you back at least 45 min before it."
+  },
+  {
+   "i": 9,
+   "date": "2027-07-07",
+   "type": "port",
+   "text": "WED JUL 7 · SANTORINI · IN PORT\nSantorini ✎ Rename\nLock this day\n🚢\nLEAVE BY\nall aboard 8:30 pm\n6:46 pm\n▶ Start the tour\n\nAshore 8:00 am · Official all aboard 8:30 pm · Back at the ship by 7:15 pm\n\nGetting back on time is up to you\n\nKairoute's leave-by and back-by times are estimates with spare time built in. Traffic, queues and the weather can still slow you down. The time that counts is the ship's all-aboard time or your train or flight, as your cruise line or carrier gives it. Check it on the day.\n\nI understand\nTerms of use\n6\nsights\n0.8 mi\nwalking\nChoose sights\nMore\nAbout today's plan2 notes\nUse Ctrl + scroll to zoom the map\nStart · Cruise port\nH\n1\n2\n3\nL\n4\n5\n6\n3 mi\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nWalk\nTaxi or car\nTrain, metro or tram\n● Meal\n■ Hotel\nMore about today\n\nAll times are Santorini time, 8 h ahead of your device.\n\nLEAVE\n8:00 am\nS\nTender ashore to Fira old port (tender landing)\nTenders land below Fira. Ride the cable car up (expect lines) or walk the 600 steps. Allow an hour back down in the afternoon.\nShip docks 7:00 am (tender port, so we allow an hour to get ashore).\nNext door\nARRIVE\n8:00 am\nLEAVE\n8:20 am\nH\nCable car up (with the queue)\n20 min\nWalk · 10 min · 0.5 mi\nARRIVE\n8:30 am\nLEAVE\n9:15 am\n1\nMuseum of Prehistoric Thera\n45 min · Museum\nTaxi or car · 22 min · 2.7 mi\nBy road, with time for traffic.\nWalk · 58 min\nTaxi or car · 22 min\nARRIVE\n9:37 am\nLEAVE\n10:17 am\n2\nNea Kameni\n40 min · Sight · Must-see\nTaxi or car · 35 min · 5.8 mi\nARRIVE\n10:52 am\nLEAVE\n12:15 pm\n3\nOia village\n1 h 23 min · Village · Must-see\nNext door\nARRIVE\n12:17 pm\nLEAVE\n12:52 pm\nL\nLunch: Terpsi\nPopular with visitors · 35 min\nChange lunch\nRate Terpsi\nTaxi or car · 47 min · 10 mi\nARRIVE\n1:39 pm\nLEAVE\n2:54 pm\n4\nAkrotiri prehistoric town\n1 h 15 min · Ancient site\nTaxi or car · 30 min · 4.4 mi\nARRIVE\n3:24 pm\nLEAVE\n4:24 pm\n5\nPyrgos village\n1 h · Village\nTaxi or car · 25 min · 3.3 mi\nFerry · 1 h 45 min\nTaxi or car · 25 min\nARRIVE\n4:49 pm\nLEAVE\n5:49 pm\n6\nFira caldera path\n1 h · Viewpoint · Must-see\nWalk · 7 min · 0.3 mi\nARRIVE\n5:56 pm\nLEAVE\n6:46 pm\nH\nCable car down (the queue is longest when ships leave)\n50 min\nNext door\nARRIVE\n7:01 pm\nE\nBack at the ship\nThe ship's official all aboard is 8:30 pm. Kairoute plans you back at least 45 min before it."
+  },
+  {
+   "i": 10,
+   "date": "2027-07-08",
+   "type": "port",
+   "text": "THU JUL 8 · MYKONOS · IN PORT\nMykonos ✎ Rename\nLock this day\n🚢\nLEAVE BY\nall aboard 8:30 pm\n1:18 pm\n▶ Start the tour\n\nAshore 8:30 am · Official all aboard 8:30 pm · Back at the ship by 7:45 pm\n\nGetting back on time is up to you\n\nKairoute's leave-by and back-by times are estimates with spare time built in. Traffic, queues and the weather can still slow you down. The time that counts is the ship's all-aboard time or your train or flight, as your cruise line or carrier gives it. Check it on the day.\n\nI understand\nTerms of use\n5\nsights\n1.7 mi\nwalking\nChoose sights\nMore\nAbout today's plan4 notes\nUse Ctrl + scroll to zoom the map\nStart · Cruise port\n1\n2\n3\n4\nL\n2000 ft\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nWalk\nTaxi or car\n● Meal\nMore about today\n\nAll times are Mykonos time, 8 h ahead of your device.\n\nLEAVE\n8:30 am\nS\nOff the ship at Mykonos new port (Tourlos)\nSea bus to the old harbor every 20 to 30 minutes, about 10 minutes.\nShip docks 8:00 am.\nTaxi or car · 17 min · 1.4 mi\nBy road, with time for traffic.\nWalk · 31 min\nTaxi or car · 17 min\nARRIVE\n9:00 am\nLEAVE\n9:30 am\n1\nKato Mili windmills\n30 min · Landmark · Must-see\nWalk · 3 min · 0.2 mi\nARRIVE\n9:33 am\nLEAVE\n10:13 am\n2\nMykonos Town (Chora) lanes\n40 min · Old town · Must-see\nIncludes House of Lena, Aegean Maritime Museum and Little Venice\nWalk · 3 min · 0.1 mi\nARRIVE\n10:16 am\nLEAVE\n10:36 am\n3\nPanagia Paraportiani church\n20 min · Church · Must-see\nWalk · 10 min · 0.4 mi\nARRIVE\n10:46 am\nLEAVE\n12:16 pm\n4\nArchaeological Museum of Mykonos\n1 h 30 min · Museum\nNext door\nARRIVE\n12:18 pm\nLEAVE\n1:18 pm\nL\nLunch: Roca Restaurant Mykonos\nPopular with visitors · 1 h\nChange lunch\nRate Roca Restaurant Mykonos\nUNTIL\n1:18 pm\n+\nFree time: 6 h 8 min\nYours to spend as you like. Leave here by 1:18 pm to be back by 7:45 pm. See what fits\nWalk · 19 min · 0.9 mi\nWalk · 19 min\nTaxi or car · 14 min\nBY\n7:45 pm\nE\nBack at the ship\nThe ship's official all aboard is 8:30 pm. Kairoute plans you back at least 45 min before it."
+  },
+  {
+   "i": 11,
+   "date": "2027-07-09",
+   "type": "port",
+   "text": "FRI JUL 9 · CHANIA · IN PORT\nChania ✎ Rename\nLock this day\n🚢\nLEAVE BY\nall aboard 5:30 pm\n1:55 pm\n▶ Start the tour\n\nAshore 8:30 am · Official all aboard 5:30 pm · Back at the ship by 4:45 pm\n\nGetting back on time is up to you\n\nKairoute's leave-by and back-by times are estimates with spare time built in. Traffic, queues and the weather can still slow you down. The time that counts is the ship's all-aboard time or your train or flight, as your cruise line or carrier gives it. Check it on the day.\n\nI understand\nTerms of use\n5\nsights\n1.1 mi\nwalking\nChoose sights\nMore\nAbout today's plan2 notes\nUse Ctrl + scroll to zoom the map\nStart · Cruise port\n1\n2\n3\n4\n5\nL\n500 ft\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nWalk\nTaxi or car\n● Meal\nMore about today\n\nAll times are Chania time, 8 h ahead of your device.\n\nLEAVE\n8:30 am\nS\nOff the ship at Souda Bay cruise port\nChania old town is about 20 minutes away by taxi or the shuttle bus.\nShip docks 8:00 am.\nTaxi or car · 30 min · 4.5 mi\nBy road, with time for traffic.\nOr the shuttle bus · 45 min\nTaxi or car · 30 min\nARRIVE\n9:00 am\nLEAVE\n9:20 am\n1\nChurch of Saint Nicholas, Splantzia\n20 min · Church\nWalk · 4 min · 0.2 mi\nARRIVE\n9:24 am\nLEAVE\n9:54 am\n2\nMunicipal Market (Agora)\n30 min · Market\nWalk · 9 min · 0.4 mi\nARRIVE\n10:03 am\nLEAVE\n11:03 am\n3\nOld town lanes and Topanas\n1 h · Old town · Must-see\nIncludes Etz Hayyim Synagogue\nWalk · 6 min · 0.3 mi\nARRIVE\n11:09 am\nLEAVE\n11:49 am\n4\nFirkas fortress and Maritime Museum\n40 min · Museum\nWalk · 4 min · 0.2 mi\nARRIVE\n11:53 am\nLEAVE\n12:53 pm\n5\nVenetian harbor and lighthouse\n1 h · Harbor · Must-see\nWalk · 2 min · 0.1 mi\nARRIVE\n12:55 pm\nLEAVE\n1:55 pm\nL\nLunch: Mixalis\nPopular with visitors · 1 h\nChange lunch\nRate Mixalis\nUNTIL\n1:55 pm\n+\nFree time: 2 h 3 min\nYours to spend as you like. Leave here by 1:55 pm to be back by 4:45 pm. See what fits\nTaxi or car · 47 min · 4.9 mi\nIncludes 15 min spare before the ship.\nNo timetable or live traffic confirms this ride's time: it is an estimate with 15 min extra for the ship. Leave by the time shown, never later.\nOr the shuttle bus · 1 h\nTaxi or car · 47 min\nBY\n4:45 pm\nE\nBack at the ship\nThe ship's official all aboard is 5:30 pm. Kairoute plans you back at least 45 min before it."
+  },
+  {
+   "i": 12,
+   "date": "2027-07-10",
+   "type": "sea"
+  },
+  {
+   "i": 13,
+   "date": "2027-07-11",
+   "type": "port",
+   "text": "SUN JUL 11 · MESSINA · IN PORT\nMessina ✎ Rename\nLock this day\n🚢\nLEAVE BY\nall aboard 5:30 pm\n3:21 pm\n▶ Start the tour\n\nAshore 8:30 am · Official all aboard 5:30 pm · Back at the ship by 4:45 pm\n\nGetting back on time is up to you\n\nKairoute's leave-by and back-by times are estimates with spare time built in. Traffic, queues and the weather can still slow you down. The time that counts is the ship's all-aboard time or your train or flight, as your cruise line or carrier gives it. Check it on the day.\n\nI understand\nTerms of use\n5\nsights\n2.6 mi\nwalking\nChoose sights\nMore\nAbout today's plan2 notes\nUse Ctrl + scroll to zoom the map\nStart · Cruise port\n1\n2\nL\n3\n4\n5\n3000 ft\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nWalk\nTrain, metro or tram\n● Meal\nMore about today\n\nAll times are Messina time, 7 h ahead of your device.\n\nLEAVE\n8:58 am\nS\nOff the ship at Messina cruise terminal\nRight in town: the cathedral is a 10-minute walk.\nShip docks 8:00 am.\nNext door\nARRIVE\n9:00 am\nLEAVE\n9:30 am\n1\nZanca Palace\n30 min · Sight\nTram Line 28, Municipio to Brasile / Imbarchi Caronte · 27 min · 1.9 mi\nTime includes getting to the station and the wait.\nWalk 2 min to Municipio. Tram Line 28, Municipio to Brasile / Imbarchi Caronte, 10 min. Walk 8 min.\nWalk · 41 min\nTram Line 28, Municipio to Brasile / Imbarchi Caronte · 27 min\nTaxi or car · 19 min\nARRIVE\n9:57 am\nLEAVE\n11:12 am\n2\nRegional Museum of Messina\n1 h 15 min · Museum\nWalk · 20 min · 0.9 mi\nWalk · 20 min\nTaxi or car · 14 min\nARRIVE\n11:45 am\nLEAVE\n12:45 pm\nL\nLunch: Chez Toi\nRestaurant · Local spot · 1 h\nChange lunch\nLunch: why here\nWalk · 26 min · 1.2 mi\nWalk · 26 min\nTram Line 28, Trapani to Municipio · 21 min\nTaxi or car · 16 min\nARRIVE\n1:11 pm\nLEAVE\n1:26 pm\n3\nChurch of the Most Holy Annunciation of the Catalans\n15 min · Church\nWalk · 2 min · 0.1 mi\nARRIVE\n1:28 pm\nLEAVE\n2:18 pm\n4\nMessina Cathedral and the astronomical clock\n50 min · Cathedral · Must-see\nWalk · 3 min · 0.2 mi\nARRIVE\n2:21 pm\nLEAVE\n3:21 pm\n5\nVittorio Emanuele III Gallery\n1 h · Sight\nUNTIL\n3:21 pm\n+\nFree time: 1 h 21 min\nYours to spend as you like. Leave here by 3:21 pm to be back by 4:45 pm. See what fits\nWalk · 3 min · 0.1 mi\nBY\n4:45 pm\nE\nBack at the ship\nThe ship's official all aboard is 5:30 pm. Kairoute plans you back at least 45 min before it."
+  },
+  {
+   "i": 14,
+   "date": "2027-07-12",
+   "type": "port",
+   "text": "MON JUL 12 · NAPLES · IN PORT\nNaples ✎ Rename\nLock this day\n🚢\nLEAVE BY\nall aboard 6:30 pm\n3:46 pm\n▶ Start the tour\n\nAshore 7:30 am · Official all aboard 6:30 pm · Back at the ship by 5:45 pm\n\nGetting back on time is up to you\n\nKairoute's leave-by and back-by times are estimates with spare time built in. Traffic, queues and the weather can still slow you down. The time that counts is the ship's all-aboard time or your train or flight, as your cruise line or carrier gives it. Check it on the day.\n\nI understand\nTerms of use\n7\nsights\n2.7 mi\nwalking\nChoose sights\nMore\nAbout today's plan2 notes\nUse Ctrl + scroll to zoom the map\nStart · Cruise port\n1\n2\n3\n4\nL\n5\n6\n7\n2000 ft\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nWalk\nTaxi or car\n● Meal\nMore about today\n\nAll times are Naples time, 7 h ahead of your device.\n\nLEAVE\n7:30 am\nS\nOff the ship at Stazione Marittima (Naples cruise terminal)\nRight by the old town and the ferries to Capri and Sorrento.\nShip docks 7:00 am.\nWalk · 21 min · 1.0 mi\nWalk · 21 min\nMetro Line 1, Municipio to Dante · 20 min\nTaxi or car · 14 min\nARRIVE\n7:51 am\nLEAVE\n8:26 am\n1\nSpaccanapoli and the historic center\n35 min · Old town · Must-see\nIncludes Palace of Sangro of Casacalenda, Naples, Santa Chiara Church, Basilica of St. Dominic, San Gregorio Armeno, Napoli Sotteranea and Neapolis Sotterrata\nNext door\nARRIVE\n9:00 am\nLEAVE\n9:40 am\n2\nSansevero Chapel (Veiled Christ)\n40 min · Chapel · Must-see\nBOOK AHEAD\nFind official tickets\n↗\nMark booked\nEntrance fee not included · more\nWalk · 10 min · 0.5 mi\nARRIVE\n9:50 am\nLEAVE\n11:20 am\n3\nNational Archaeological Museum\n1 h 30 min · Museum · Must-see\nWalk · 14 min · 0.6 mi\nWalk · 14 min\nTaxi or car · 13 min\nARRIVE\n11:34 am\nLEAVE\n12:09 pm\n4\nNaples Cathedral and the Chapel of San Gennaro\n35 min · Cathedral · Must-see\nTaxi or car · 17 min · 1.6 mi\nBy road, with time for traffic.\nWalk · 35 min\nTaxi or car · 17 min\nARRIVE\n12:26 pm\nLEAVE\n1:26 pm\nL\nLunch: Gran Caffè Gambrinus\nHistoric café · €€ · Popular with visitors · 1 h\nTRAVELERS RECOMMEND\nChange lunch\nLunch: why here\nWalk · 2 min · 0.1 mi\nARRIVE\n1:28 pm\nLEAVE\n2:08 pm\n5\nPiazza del Plebiscito and the Royal Palace\n40 min · Square\nWalk · 3 min · 0.1 mi\nARRIVE\n2:11 pm\nLEAVE\n3:11 pm\n6\nTeatro di San Carlo\n1 h · Ancient site · Must-see\nWalk · 5 min · 0.3 mi\nARRIVE\n3:16 pm\nLEAVE\n3:46 pm\n7\nCastel Nuovo\n30 min · Sight · Must-see\nUNTIL\n3:46 pm\n+\nFree time: 1 h 46 min\nYours to spend as you like. Leave here by 3:46 pm to be back by 5:45 pm. See what fits\nWalk · 13 min · 0.1 mi\nBY\n5:45 pm\nE\nBack at the ship\nThe ship's official all aboard is 6:30 pm. Kairoute plans you back at least 45 min before it."
+  },
+  {
+   "i": 15,
+   "date": "2027-07-13",
+   "type": "port",
+   "text": "TUE JUL 13 · ROME · IN PORT\nRome ✎ Rename\nLock this day\n🚢\nLEAVE BY\nall aboard 8:30 pm\n5:16 pm\n▶ Start the tour\n\nAshore 7:30 am · Official all aboard 8:30 pm · Back at the ship by 7:45 pm\n\nGetting back on time is up to you\n\nKairoute's leave-by and back-by times are estimates with spare time built in. Traffic, queues and the weather can still slow you down. The time that counts is the ship's all-aboard time or your train or flight, as your cruise line or carrier gives it. Check it on the day.\n\nI understand\nTerms of use\n8\nsights\n2.4 mi\nwalking\nChoose sights\nMore\nAbout today's plan2 notes\nUse Ctrl + scroll to zoom the map\nStart · Cruise port\n1\n2\n3\n4\nL\n5\n6\n7\n8\n3000 ft\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nWalk\nTaxi or car\nTrain, metro or tram\n● Meal\nMore about today\n\nAll times are Rome time, 7 h ahead of your device.\n\nLEAVE\n7:30 am\nS\nOff the ship at Civitavecchia cruise port\nRome is about 1 hour 15 minutes by train from Civitavecchia station, or 1.5 hours by car. Leave Rome by mid-afternoon.\nShip docks 7:00 am.\nTrain RV 4137 + 2 changes · 1 h 43 min · 50 mi\nWalk 3 min to CIVITAVECCHIA | Ist. superiore G.Calamatta # f71. Bus CV620A: CIVITAVECCHIA | Ist. superiore G.Calamatta # f71 to CIVITAVECCHIA | Stazione FS # f233, 5 min; then change to Train RV 4137: Civitavecchia to Roma Ostiense, 52 min; then change to Metro MEB1: Piramide to Colosseo, 4 min, then walk 6 min. Times include waiting and boarding. Next departure about 8:31 pm (timetable checked Nov 20; Kairoute checks it again the day before and the morning of).\nTrain RV 4137 + 2 changes · 1 h 43 min\nTaxi or car · 1 h 26 min\nARRIVE\n9:13 am\nLEAVE\n11:13 am\n1\nColosseum and Roman Forum\n2 h · Ancient site · Must-see\nBOOK AHEAD\nBook tickets\n↗\nMark booked\nEntrance fee not included · more\nTaxi or car · 19 min · 2.1 mi\nBy road, with time for traffic.\nWalk · 45 min\nTaxi or car · 19 min\nARRIVE\n11:32 am\nLEAVE\n12:02 pm\n2\nCastel Sant'Angelo\n30 min · Sight\nWalk · 13 min · 0.6 mi\nWalk · 13 min\nTaxi or car · 13 min\nARRIVE\n12:15 pm\nLEAVE\n12:45 pm\n3\nSt. Peter's Square\n30 min · Sight\nWalk · 5 min · 0.2 mi\nARRIVE\n12:50 pm\nLEAVE\n1:35 pm\n4\nSt Peter's Basilica\n45 min · Basilica · Must-see\nWalk · 5 min · 0.2 mi\nARRIVE\n1:40 pm\nLEAVE\n2:15 pm\nL\nLunch: La Pilotta\nPopular with visitors · 35 min\nChange lunch\nRate La Pilotta\nWalk · 13 min · 0.6 mi\nWalk · 13 min\nTaxi or car · 13 min\nARRIVE\n2:28 pm\nLEAVE\n3:28 pm\n5\nThe Vatican Museum\n1 h · Sight\nTaxi or car · 17 min · 1.5 mi\nWalk · 31 min\nTaxi or car · 17 min\nARRIVE\n3:45 pm\nLEAVE\n4:10 pm\n6\nPiazza Navona\n25 min · Square\nIncludes San Luigi dei Francesi\nWalk · 6 min · 0.3 mi\nARRIVE\n4:16 pm\nLEAVE\n4:46 pm\n7\nPantheon\n30 min · Temple and church · Must-see\nWalk · 10 min · 0.5 mi\nARRIVE\n4:56 pm\nLEAVE\n5:16 pm\n8\nTrevi Fountain\n20 min · Fountain\nTaxi or car · 2 h 1 min · 44 mi\nIncludes 35 min spare before the ship.\nNo timetable or live traffic confirms this ride's time: it is an estimate with 25 min extra for the ship. Leave by the time shown, never later.\nTrain Frecciabianca, Rome to Civitavecchia · 2 h 28 min\nTaxi or car · 1 h 51 min\nARRIVE\n7:17 pm\nE\nBack at the ship\nThe ship's official all aboard is 8:30 pm. Kairoute plans you back at least 45 min before it."
+  },
+  {
+   "i": 16,
+   "date": "2027-07-14",
+   "type": "sea"
+  },
+  {
+   "i": 17,
+   "date": "2027-07-15",
+   "type": "arrival",
+   "text": "THU JUL 15 · BARCELONA · ARRIVING\nBarcelona ✎ Rename\nLock this day\n▶ Start the tour\n8:00 am–3:44 pm\n7 h 44 min ✎\n5\nsights\n1.7 mi\nwalking\n2:32 pm\nlast stop done\nChoose sights\nMore\nAbout today's plan1 note\nUse Ctrl + scroll to zoom the map\nStart · Cruise port\nH\n1\n2\n3\n4\nL\n5\n2000 ft\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nWalk\nTaxi or car\nTrain, metro or tram\n● Meal\n■ Hotel\nMore about today\n\nAll times are Barcelona time, 7 h ahead of your device.\n\nLEAVE\n8:00 am\nS\nOff the ship at Moll Adossat cruise terminals\nMost big ships dock here. A port shuttle bus runs to the Columbus Monument.\nShip arrives 7:00 am. We allow 1 h to get off the ship with your luggage.\nTaxi or car · 24 min · 3.1 mi\nBy road, with time for traffic.\nWalk · 1 h 6 min\nPort shuttle bus · 49 min\nTaxi or car · 24 min\nARRIVE\n8:24 am\nLEAVE\n8:44 am\nH\nCheck in or drop bags\n20 min\nMetro L1, Catalunya to Espanya · 13 min · 1.8 mi\nTime includes getting to the station and the wait.\nWalk 1 min to Catalunya. Metro L1, Catalunya to Espanya, 6 min. Walk 1 min.\nWalk · 38 min\nMetro L1, Catalunya to Espanya · 13 min\nTaxi or car · 18 min\nARRIVE\n8:57 am\nLEAVE\n9:12 am\n1\nPlaça d'Espanya\n15 min · Square\nMetro L3, Espanya to Drassanes · 26 min · 2.4 mi\nWalk 3 min to Espanya. Metro L3, Espanya to Drassanes, 6 min. Walk 12 min.\nWalk · 51 min\nMetro L3, Espanya to Drassanes · 26 min\nTaxi or car · 21 min\nARRIVE\n9:38 am\nLEAVE\n10:18 am\n2\nAquarium Barcelona\n40 min · Sight\nWalk · 15 min · 0.7 mi\nWalk · 15 min\nTaxi or car · 13 min\nARRIVE\n10:33 am\nLEAVE\n10:48 am\n3\nRoyal Square\n15 min · Square\nIncludes Gran Teatre del Liceu\nWalk · 6 min · 0.3 mi\nARRIVE\n10:54 am\nLEAVE\n11:39 am\n4\nLa Rambla & La Boqueria market\n45 min · Street & market\nNext door\nARRIVE\n11:45 am\nLEAVE\n12:45 pm\nL\nLunch: Bar Pinotxo (La Boqueria)\nMarket tapas counter · €€ · Local spot · 1 h\nTRAVELERS RECOMMEND\nChange lunch\nLunch: why here\nWalk · 8 min · 0.4 mi\nARRIVE\n12:53 pm\nLEAVE\n2:23 pm\n5\nMACBA Barcelona Museum of Contemporary Art\n1 h 30 min · Museum\nUNTIL\n3:35 pm\n+\nFree time: 1 h 12 min\nYours to spend as you like. See what fits\nWalk · 9 min · 0.4 mi\nBY\n3:44 pm\nE\nBack at Hotel near Plaça de Catalunya\nARRIVE\n6:30 pm\nD\nSuggested dinner: El Nacional\nFood hall · €€\nTRAVELERS RECOMMEND\nChange dinner\nDinner: why here"
+  },
+  {
+   "i": 18,
+   "date": "2027-07-16",
+   "type": "land",
+   "text": "FRI JUL 16 · BARCELONA · LAND DAY\nBarcelona ✎ Rename\nLock this day\n▶ Start the tour\n9:00 am–6:00 pm\n9 h ✎\n4\nsights\n1.1 mi\nwalking\n4:31 pm\nlast stop done\nChoose sights\nMore\nAbout today's plan2 notes\nUse Ctrl + scroll to zoom the map\nS\n1\n2\nL\n3\n4\n3000 ft\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nWalk\nTaxi or car\nTrain, metro or tram\n● Meal\nMore about today\n\nAll times are Barcelona time, 7 h ahead of your device.\n\nLEAVE\n9:00 am\nS\nLeave Hotel near Plaça de Catalunya\nWalk · 11 min · 0.5 mi\nWalk · 11 min\nTaxi or car · 12 min\nARRIVE\n9:30 am\nLEAVE\n10:20 am\n1\nGothic Quarter & Cathedral\n50 min · Old town · Must-see\nIncludes Cathedral of the Holy Cross and Saint Eulalia and Generalitat of Catalonia\nMetro L4, Jaume I to Verdaguer · 27 min · 1.8 mi\nTime includes getting to the station and the wait.\nWalk 4 min to Jaume I. Metro L4, Jaume I to Verdaguer, 7 min. Walk 11 min.\nWalk · 38 min\nMetro L4, Jaume I to Verdaguer · 27 min\nTaxi or car · 18 min\nARRIVE\n10:47 am\nLEAVE\n12:17 pm\n2\nSagrada Família\n1 h 30 min · Basilica · Must-see · UNESCO\nBOOK AHEAD\nBook tickets\n↗\nMark booked\nEntrance fee not included · more\nTaxi or car · 18 min · 1.7 mi\nBy road, with time for traffic.\nWalk · 36 min\nTaxi or car · 18 min\nARRIVE\n12:35 pm\nLEAVE\n1:35 pm\nL\nLunch: La Torreta del Parc Güell\nPopular with visitors · 1 h\nChange lunch\nRate La Torreta del Parc Güell\nWalk · 2 min · 0.1 mi\nARRIVE\n1:37 pm\nLEAVE\n2:52 pm\n3\nPark Güell\n1 h 15 min · Park · Must-see\nBOOK AHEAD\nBook tickets\n↗\nMark booked\nEntrance fee not included · more\nMetro L3, Vallcarca to Passeig de Gràcia · 27 min · 2.2 mi\nWalk 13 min to Vallcarca. Metro L3, Vallcarca to Passeig de Gràcia, 8 min. Walk 1 min.\nWalk · 47 min\nMetro L3, Vallcarca to Passeig de Gràcia · 27 min\nTaxi or car · 20 min\nARRIVE\n3:19 pm\nLEAVE\n4:19 pm\n4\nCasa Batlló\n1 h · Gaudí house · Must-see\nBOOK AHEAD\nBook tickets\n↗\nMark booked\nEntrance fee not included · more\nUNTIL\n5:48 pm\n+\nFree time: 1 h 29 min\nYours to spend as you like. See what fits\nWalk · 12 min · 0.5 mi\nWalk · 12 min\nMetro L3, Passeig de Gràcia to Catalunya · 10 min\nTaxi or car · 12 min\nBY\n6:00 pm\nE\nBack at Hotel near Plaça de Catalunya\nARRIVE\n6:30 pm\nD\nSuggested dinner: Tapas 24\nTapas · €€\nChange dinner\nDinner: why here"
+  },
+  {
+   "i": 19,
+   "date": "2027-07-17",
+   "type": "land",
+   "text": "SAT JUL 17 · BARCELONA · LAND DAY\nBarcelona ✎ Rename\nLock this day\n▶ Start the tour\n9:00 am–6:00 pm\n9 h ✎\n6\nsights\n2.5 mi\nwalking\n3:38 pm\nlast stop done\nChoose sights\nMore\nAbout today's plan1 note\nUse Ctrl + scroll to zoom the map\nS\n1\n2\n3\n4\n5\nL\n6\n3000 ft\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nWalk\nTrain, metro or tram\n● Meal\nMore about today\n\nAll times are Barcelona time, 7 h ahead of your device.\n\nLEAVE\n9:00 am\nS\nLeave Hotel near Plaça de Catalunya\nWalk · 10 min · 0.5 mi\nWalk · 10 min\nTaxi or car · 12 min\nARRIVE\n9:10 am\nLEAVE\n9:50 am\n1\nLleó Morera House\n40 min · Sight\nMetro L3, Passeig de Gràcia to Fontana · 14 min · 1.5 mi\nTime includes getting to the station and the wait.\nWalk 1 min to Passeig de Gràcia. Metro L3, Passeig de Gràcia to Fontana, 4 min. Walk 4 min.\nWalk · 32 min\nMetro L3, Passeig de Gràcia to Fontana · 14 min\nTaxi or car · 17 min\nARRIVE\n10:04 am\nLEAVE\n10:44 am\n2\nCasa Vicens\n40 min · Sight\nWalk · 11 min · 0.5 mi\nWalk · 11 min\nTaxi or car · 12 min\nARRIVE\n10:55 am\nLEAVE\n11:40 am\n3\nGràcia squares\n45 min · Neighborhood\nWalk · 13 min · 0.6 mi\nWalk · 13 min\nTaxi or car · 13 min\nARRIVE\n11:53 am\nLEAVE\n12:53 pm\n4\nCasa Milà (La Pedrera)\n1 h · Gaudí house\nBOOK AHEAD\nBook tickets\n↗\nMark booked\nEntrance fee not included · more\nMetro L3, Diagonal to Liceu · 15 min · 1.4 mi\nWalk 3 min to Diagonal. Metro L3, Diagonal to Liceu, 5 min. Walk 2 min.\nWalk · 30 min\nMetro L3, Diagonal to Liceu · 15 min\nTaxi or car · 16 min\nARRIVE\n1:08 pm\nLEAVE\n1:53 pm\n5\nLa Rambla & La Boqueria market\n45 min · Street & market\nNext door\nARRIVE\n1:53 pm\nLEAVE\n2:28 pm\nL\nLunch: Bar Pinotxo (La Boqueria)\nMarket tapas counter · €€ · Local spot · 35 min\nTRAVELERS RECOMMEND\nChange lunch\nLunch: why here\nWalk · 12 min · 0.6 mi\nWalk · 12 min\nTaxi or car · 13 min\nARRIVE\n2:40 pm\nLEAVE\n3:30 pm\n6\nPalau de la Música Catalana\n50 min · Concert hall\nBOOK AHEAD\nBook tickets\n↗\nMark booked\nEntrance fee not included · more\nUNTIL\n5:52 pm\n+\nFree time: 2 h 22 min\nYours to spend as you like. See what fits\nWalk · 8 min · 0.4 mi\nBY\n6:00 pm\nE\nBack at Hotel near Plaça de Catalunya\nARRIVE\n6:30 pm\nD\nSuggested dinner: Nineteen\nChange dinner\nRate Nineteen"
+  },
+  {
+   "i": 20,
+   "date": "2027-07-18",
+   "type": "departure",
+   "text": "SUN JUL 18 · BARCELONA · LEAVING\nBarcelona ✎ Rename\nLock this day\n\nWhich station do you leave from? There is more than one here (Barcelona Sants station or Estació de França). Choose it in the day's settings and the day gets its time to leave by: no time is given on a guess.\n\nEdit this day"
+  },
+  {
+   "i": 21,
+   "date": "2027-07-18",
+   "type": "arrival",
+   "text": "SUN JUL 18 · MADRID · ARRIVING\nMadrid ✎ Rename\nLock this day\n\nWhich station do you arrive at? There is more than one here (Madrid Atocha station or Madrid Chamartín station). Choose it in the day's settings: no time is given on a guess.\n\nEdit this day"
+  },
+  {
+   "i": 22,
+   "date": "2027-07-19",
+   "type": "land",
+   "text": "MON JUL 19 · MADRID · LAND DAY\nMadrid ✎ Rename\nLock this day\n▶ Start the tour\n9:00 am–6:00 pm\n9 h ✎\n7\nsights\n3.5 mi\nwalking\n6:02 pm\nlast stop done\nChoose sights\nMore\nAbout today's plan5 notes\nNot planned today: Reina Sofía Museum (Guernica) didn't fit in the time.\nNot planned today: Almudena Cathedral didn't fit in the time. To fit it in: spend 5 minutes less at Royal Palace and have lunch on the go, spend 5 minutes less at Prado Museum and have lunch on the go or spend 5 minutes less at Retiro Park and have lunch on the go.\nA shorter visit to Royal Palace (1 h 20 min instead of 1 h 30 min) so the rest of the day fits.\nA shorter visit to Prado Museum (1 h 45 min instead of 2 h) so the rest of the day fits.\nOpening hours aren't known for Chocolatería San Ginés, Bernabéu and Biblioteca Nacional de España on this date: planned between 9:00 am and 5:00 pm, check before you go.\nUse Ctrl + scroll to zoom the map\nS\n1\n2\n3\nL\n4\n5\n6\n7\n1 mi\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nWalk\nTrain, metro or tram\n● Meal\nMore about today\n\nAll times are Madrid time, 7 h ahead of your device.\n\nLEAVE\n9:00 am\nS\nLeave Hotel near Puerta del Sol\nWalk · 5 min · 0.2 mi\nARRIVE\n9:05 am\nLEAVE\n9:30 am\n1\nChocolatería San Ginés\n25 min · Food stop\nWalk · 3 min · 0.1 mi\nARRIVE\n9:33 am\nLEAVE\n10:13 am\n2\nPlaza Mayor and Puerta del Sol\n40 min · Square · Must-see\nWalk · 11 min · 0.5 mi\nWalk · 11 min\nTaxi or car · 12 min\nARRIVE\n10:24 am\nLEAVE\n11:44 am\n3\nRoyal Palace\n1 h 20 min · Palace · Must-see\nBOOK AHEAD\nBook tickets\n↗\nMark booked\nEntrance fee not included · more\nWalk · 9 min · 0.4 mi\nARRIVE\n11:53 am\nLEAVE\n12:13 pm\nL\nLunch: El Chulo\nRegional · Local spot · 20 min\nChange lunch\nLunch: why here\nMetro L10, Plaza de España to Santiago Bernabéu · 27 min · 3.3 mi\nTime includes getting to the station and the wait.\nWalk 8 min to Plaza de España. Metro L10, Plaza de España to Santiago Bernabéu, 10 min. Walk 4 min.\nMetro L10, Plaza de España to Santiago Bernabéu · 27 min\nTaxi or car · 25 min\nARRIVE\n12:40 pm\nLEAVE\n1:20 pm\n4\nBernabéu\n40 min · Sight · Must-see\nMetro L10, Santiago Bernabéu to Alonso Martínez · 29 min · 2.6 mi\nWalk 4 min to Santiago Bernabéu. Metro L10, Santiago Bernabéu to Alonso Martínez, 7 min. Walk 13 min.\nWalk · 56 min\nMetro L10, Santiago Bernabéu to Alonso Martínez · 29 min\nTaxi or car · 22 min\nARRIVE\n1:49 pm\nLEAVE\n2:29 pm\n5\nBiblioteca Nacional de España\n40 min · Sight · Must-see\nWalk · 18 min · 0.9 mi\nWalk · 18 min\nTaxi or car · 14 min\nARRIVE\n2:47 pm\nLEAVE\n3:47 pm\n6\nRetiro Park\n1 h · Park\nWalk · 12 min · 0.5 mi\nWalk · 12 min\nTaxi or car · 12 min\nARRIVE\n3:59 pm\nLEAVE\n5:44 pm\n7\nPrado Museum\n1 h 45 min · Museum · Must-see\nBOOK AHEAD\nFind official tickets\n↗\nMark booked\nEntrance fee not included · more\nWalk · 18 min · 0.8 mi\nWalk · 18 min\nTaxi or car · 14 min\nARRIVE\n6:02 pm\nE\nBack at Hotel near Puerta del Sol\nARRIVE\n6:32 pm\nD\nSuggested dinner: Casa Labra\nTapas bar · €\nChange dinner\nDinner: why here"
+  },
+  {
+   "i": 23,
+   "date": "2027-07-20",
+   "type": "departure",
+   "text": "TUE JUL 20 · MADRID · LEAVING\nMadrid ✎ Rename\nLock this day\n\nWhich airport do you leave from? There is more than one here (Madrid-Barajas Airport, Terminal 4 or Madrid-Barajas Airport, Terminals 1–3). Choose it in the day's settings and the day gets its time to leave by: no time is given on a guess.\n\nEdit this day"
+  }
+ ],
+ "guides": {
+  "Athens": {
+   "city": "Athens",
+   "src": false,
+   "ai": false,
+   "n": 29,
+   "sights": "Acropolis and Parthenon* | Areopagus (Mars Hill)* | Acropolis Museum* | Ancient Agora | Plaka and Anafiotika* | Syntagma Square and the changing of the guard | Athens Cathedral and the Little Metropolis | Monastiraki and the flea market | Temple of Olympian Zeus and Hadrian's Arch | Lycabettus Hill | Theatre of Dionysus | Acropolis promenade (Dionysiou Areopagitou and Apostolou Pavlou) | Agia Ekaterini (St Catherine's Church) | Panagia Kapnikarea | Roman Agora and Tower of the Winds | National Archaeological Museum | Byzantine and Christian Museum | National Garden | Philopappos Hill | Platonic Academy | Erechtheion | Panathenaic Stadium | Temple of Hephaestus | Kerameikos | Temple of Athena Nike | Classical Athens | Lyceum | Kaisariani monastery | National Gallery of Athens",
+   "far": "Ancient Corinth | Temple of Poseidon at Sounion | Delphi | Corinth Canal | Acrocorinth | Museum | Ancient Theater | Temple of Apollo | Sanctuary of Athena with the Tholos | Delphi Stadium",
+   "eats": 23,
+   "starts": {
+    "cruise": [
+     "Piraeus cruise terminals"
+    ],
+    "airport": [
+     "Athens Airport (Eleftherios Venizelos)"
+    ],
+    "station": [
+     "Athens central station (Larissis)"
+    ],
+    "hotel": [
+     "Hotel in Plaka",
+     "Hotel near Syntagma Square",
+     "Hotel in Koukaki (Acropolis Museum)",
+     "Hotel in Monastiraki"
+    ],
+    "point": [
+     "Syntagma Square",
+     "Monastiraki Square"
+    ]
+   }
+  },
+  "Heraklion": {
+   "city": "Heraklion",
+   "src": false,
+   "ai": false,
+   "n": 12,
+   "sights": "Palace of Knossos* | Heraklion Archaeological Museum* | Venetian harbor and Koules fortress | Lions Square and 25th August Street | Church of Saint Titus* | Agios Minas Cathedral | 1866 Street market | Historical Museum of Crete | Fortifications of Heraklion | Natural History Museum of Crete | Dominican Church of St Peter | Rocca a Mare",
+   "far": "Phaistos palace | Kali Limenes (Fair Havens)",
+   "eats": 8,
+   "starts": {
+    "cruise": [
+     "Heraklion cruise port"
+    ],
+    "airport": [
+     "Heraklion Airport"
+    ],
+    "station": [],
+    "hotel": [
+     "Hotel near Lions Square"
+    ],
+    "point": [
+     "Lions Square (Morosini Fountain)"
+    ]
+   }
+  },
+  "Kusadasi": {
+   "city": "Kusadasi",
+   "src": false,
+   "ai": false,
+   "n": 5,
+   "sights": "Ancient Ephesus* | Basilica of Saint John* | House of the Virgin Mary | Temple of Artemis | Pigeon Island castle",
+   "far": "",
+   "eats": 3,
+   "starts": {
+    "cruise": [
+     "Kusadasi cruise port"
+    ],
+    "airport": [],
+    "station": [],
+    "hotel": [
+     "Hotel in Kusadasi center"
+    ],
+    "point": [
+     "Selçuk town center"
+    ]
+   }
+  },
+  "Santorini": {
+   "city": "Santorini",
+   "src": false,
+   "ai": false,
+   "n": 6,
+   "sights": "Fira caldera path* | Oia village* | Akrotiri prehistoric town | Pyrgos village | Museum of Prehistoric Thera | Nea Kameni*",
+   "far": "",
+   "eats": 19,
+   "starts": {
+    "cruise": [
+     "Fira old port (tender landing)"
+    ],
+    "airport": [],
+    "station": [],
+    "hotel": [
+     "Hotel in Fira",
+     "Hotel in Oia"
+    ],
+    "point": [
+     "Fira cable car top station"
+    ]
+   }
+  },
+  "Mykonos": {
+   "city": "Mykonos",
+   "src": false,
+   "ai": false,
+   "n": 8,
+   "sights": "Mykonos Town (Chora) lanes* | Kato Mili windmills* | Little Venice* | Panagia Paraportiani church* | Ftelia | Archaeological Museum of Mykonos | Aegean Maritime Museum | House of Lena",
+   "far": "Delos island",
+   "eats": 3,
+   "starts": {
+    "cruise": [
+     "Mykonos new port (Tourlos)"
+    ],
+    "airport": [],
+    "station": [],
+    "hotel": [
+     "Hotel in Mykonos Town"
+    ],
+    "point": [
+     "Old harbor, Mykonos Town"
+    ]
+   }
+  },
+  "Chania": {
+   "city": "Chania",
+   "src": false,
+   "ai": false,
+   "n": 6,
+   "sights": "Venetian harbor and lighthouse* | Old town lanes and Topanas* | Municipal Market (Agora) | Church of Saint Nicholas, Splantzia | Firkas fortress and Maritime Museum | Etz Hayyim Synagogue",
+   "far": "Balos lagoon | Souda Bay War Cemetery",
+   "eats": 4,
+   "starts": {
+    "cruise": [
+     "Souda Bay cruise port"
+    ],
+    "airport": [],
+    "station": [],
+    "hotel": [
+     "Hotel in the old town"
+    ],
+    "point": [
+     "Chania Venetian harbor"
+    ]
+   }
+  },
+  "Messina": {
+   "city": "Messina",
+   "src": false,
+   "ai": false,
+   "n": 25,
+   "sights": "Messina Cathedral and the astronomical clock* | Church of the Most Holy Annunciation of the Catalans | Regional Museum of Messina | Palace of the Mount of Piety | Vittorio Emanuele III Gallery | Former Church of Santa Maria Alemanna | Fountain of Neptune | Our Lady of the Letter | Grazia Gate of Messina | Church of Montevergine | Zanca Palace | Shrine of Our Lady of Montalto | Memorial Shrine of Christ the King | Church of Carmel | Falconieri Fountain | Villa de Pasquale | Fountain of Orion | Four Fountains | Statue of John of Austria | Fort of the Holy Saviour | Palace of Culture | Royal Citadel | Monumental Cemetery of Messina | Fountain of Gennaro~ | Calapaj-d'Alcontres Palace",
+   "far": "Taormina | Reggio Calabria (ancient Rhegium) | Piazza IX Aprile | Torre dell'Orologio/ Porta di Mezzo, | Corvaja Palace | Badia Vecchia Palace | Palazzo dei Duchi di Santo Stefano | Naumachie | Cuseni House | Isola Bella | Museo Nazionale della Magna Grecia | Duomo (Cathedral) | Aragonese Castle | Chiesa degli Ottimati | Shrine of Sant'Antonio | Villa Genoese Zerbi | Basilica dell'Eremo",
+   "eats": 7,
+   "starts": {
+    "cruise": [
+     "Messina cruise terminal"
+    ],
+    "airport": [],
+    "station": [],
+    "hotel": [
+     "Hotel near the cathedral"
+    ],
+    "point": [
+     "Piazza del Duomo"
+    ]
+   }
+  },
+  "Naples": {
+   "city": "Naples",
+   "src": false,
+   "ai": false,
+   "n": 39,
+   "sights": "Spaccanapoli and the historic center* | Sansevero Chapel (Veiled Christ)* | Naples Cathedral and the Chapel of San Gennaro* | Piazza del Plebiscito and the Royal Palace | National Archaeological Museum* | Castel dell'Ovo | Certosa e Museo di San Martino | Royal Palace and National Museum of Capodimonte | Castel Capuano | Santa Maria del Carmine Maggiore | Albergo dei Poveri | Capuana Gate | San Gregorio Armeno | Catacombe di San Gennaro | Fontana del Gigante | Catacombe di San Gaudioso | Borbonica Gallery | Villa Floridiana and Museo Nazionale della ceramica Duca di Martina | National railway Museum of Pietrarsa | Filangieri Civic Museum | Castel Nuovo* | Castel Sant'Elmo | Fontanelle Cemetery | Umberto I Gallery | Gesù Nuovo | Universitario Museum | Museum of Contemporary Art Donnaregina | Napoli Sotteranea | Neapolis Sotterrata | Palace of the Arts | Teatro di San Carlo* | Historic Centre of Naples | Santa Chiara Church | Basilica of St. Dominic | Virgiliano Park | Sant'Anna dei Lombardi Church | Stazione Zoologica Anton Dohrn | Palace of Sangro of Casacalenda, Naples | Posillipo",
+   "far": "Pompeii | Capri | Sorrento | Pozzuoli (ancient Puteoli) | Amphitheatre | Great Palaestra | House of the Vettii | House of the Faun | Temple of Apollo | Lupanar | House of the Ancient Hunt | House of the Tragic Poet | Villa dei Misteri | Shrine of the Virgin of the Rosary of Pompei | Small Port | Villa Pollio | Hotel Tramontano | Archeological Museum of the Sorrentine Peninsula | Museum of the Inlaid Wood | Duomo (Cathedral) | Church of San Francesco | Basilica of Sant'Antonino | Piazza Torquato Tasso | Via San Cesareo | Sedil Dominova | Villa Comunale | Piazza Vittoria | Flavian Amphitheater | Rione Terra | Pozzuoli Cathedral | Macellum of Pozzuoli",
+   "eats": 4,
+   "starts": {
+    "cruise": [
+     "Stazione Marittima (Naples cruise terminal)"
+    ],
+    "airport": [],
+    "station": [
+     "Napoli Centrale"
+    ],
+    "hotel": [
+     "Hotel near Piazza del Plebiscito"
+    ],
+    "point": [
+     "Piazza del Plebiscito"
+    ]
+   }
+  },
+  "Rome (from Civitavecchia)": {
+   "city": "Rome (from Civitavecchia)",
+   "src": false,
+   "ai": false,
+   "n": 49,
+   "sights": "St Peter's Basilica* | Colosseum and Roman Forum* | Pantheon* | Trevi Fountain | Piazza Navona | San Giovanni in Laterano | Palace of the Chancellery | Olympic Stadium | St. Peter's Square | The Vatican Museum | Palatine Hill | Santa Maria Maggiore | Castel Sant'Angelo | Palazzo del Quirinale | Circus Maximus | Musei Capitolini | The Celio | Terme di Caracalla | Vittorio Emanuele Monument | Arch of Titus | San Pietro in Vincoli | Chiesa del Gesù | Ara Pacis | Piazza di Spagna | Mausoleo di Augusto | The Spanish Steps | Column of Marcus Aurelius | Piazza del Popolo | Holy See | Sistine Chapel | Sovereign Military Order of Malta | Arch of Constantine~ | Galleria Borghese | Vatican Library | Capitoline Hill | Prelature of the Holy Cross and Opus Dei | Aurelian Walls | The Creation of Adam | Trajan's Forum | Ponte Sant'Angelo~ | Apostolic Palace | Saint Charles at the Four Fountains | Santa Maria della Vittoria | Santa Maria sopra Minerva | Ponte Milvio~ | San Luigi dei Francesi | Trajan's Column~ | Sisto Bridge~ | Fontana delle Tartarughe~",
+   "far": "Basilica of Saint Paul Outside the Walls",
+   "eats": 4,
+   "starts": {
+    "cruise": [
+     "Civitavecchia cruise port"
+    ],
+    "airport": [],
+    "station": [
+     "Roma San Pietro station",
+     "Roma Termini"
+    ],
+    "hotel": [
+     "Hotel near Piazza Navona"
+    ],
+    "point": [
+     "Civitavecchia train station"
+    ]
+   }
+  },
+  "Barcelona": {
+   "city": "Barcelona",
+   "src": false,
+   "n": 51,
+   "sights": "Sagrada Família* | Park Güell* | Casa Batlló* | Casa Milà (La Pedrera) | Gothic Quarter & Cathedral* | La Rambla & La Boqueria market | Museu Picasso | Santa Maria del Mar | Palau de la Música Catalana | Sant Pau Recinte Modernista | Bunkers del Carmel | Gràcia squares | Sant Antoni Market | Parc de la Ciutadella | Barceloneta beach | Montjuïc Castle | MNAC & Magic Fountain | El Born Centre de Cultura | Plaça Reial~ | Pont del Bisbe~ | Amatller House~ | Arc de Triomf~ | Columbus Monument~ | Plaça de Catalunya | Palau Güell~ | Camp Nou | Torre Glòries | Cathedral of the Holy Cross and Saint Eulalia | Casa Vicens | Lluís Companys Olympic Stadium | Museu Nacional d'Art de Catalunya | MACBA Barcelona Museum of Contemporary Art | Fundació Joan Miró | Generalitat of Catalonia | Tower of Collserola | German Pavilion, Barcelona | Lleó Morera House | FC Barcelona Museum | Palau Sant Jordi | Poble Espanyol | Tàpies Museum | Plaça d'Espanya | Royal Square | Gran Teatre del Liceu | Aquarium Barcelona | Maritime Museum of Barcelona | Monastery of Pedralbes | Gaudi House Museum | Güell Pavilions | Hash Marihuana & Hemp Museum | Botànic Garden of Barcelona",
+   "far": "Montserrat monastery | Sitges | Girona old town | Tibidabo | Maricel Museum | Contemporary Art Gallery",
+   "eats": 11,
+   "starts": {
+    "cruise": [
+     "Moll Adossat cruise terminals",
+     "World Trade Center cruise terminal"
+    ],
+    "airport": [
+     "Barcelona Airport, Terminal 1",
+     "Barcelona Airport, Terminal 2"
+    ],
+    "hotel": [
+     "Hotel near Plaça de Catalunya",
+     "Hotel on Passeig de Gràcia",
+     "Hotel at Port Olímpic"
+    ],
+    "station": [
+     "Barcelona Sants station",
+     "Estació de França"
+    ],
+    "point": [
+     "Barcelona Sants train station",
+     "Plaça d'Espanya"
+    ]
+   }
+  },
+  "Madrid": {
+   "city": "Madrid",
+   "src": false,
+   "ai": false,
+   "n": 45,
+   "sights": "Prado Museum* | Royal Palace* | Plaza Mayor and Puerta del Sol* | Retiro Park | Reina Sofía Museum (Guernica) | Chocolatería San Ginés | Almudena Cathedral | Cuatro Torres | National Museum of Antropología | Museo Nacional de Ciencias Naturales | Arch of Victory | Real Ermita de San Antonio de la Florida | Torres de Colón | Nuevos Ministerios | Plaza de Castilla | Madrid Río Park | Basilica of La Milagrosa | Gallardo House | Faunia | Hospital de Maudes | Plaza de Olavide | CaixaForum Madrid | House of Campo | Constitutional Tribunal | Estación de Chamberí | Lighthouse of Moncloa | Fundación Juan March | Gran Vía | La Tabacalera | Mercado de la Cebada | Bernabéu* | National Museum of Archaeology | Temple of Debod | Biblioteca Nacional de España* | Royal Botanic Garden of Madrid | Thyssen-Bornemisza Museum | Sorolla Museum | plaza de España | plaza de Cibeles | Museum of the Americas | Madrid History Museum | Podemos | Las Ventas | Senate of Spain | Palace of Cibeles",
+   "far": "Toledo | El Escorial monastery | Cathedral | Iglesia de los Jesuitas | Mosque of Cristo de la Luz | Iglesia del Salvador | The Burial of the Count of Orgaz | Synagogue of Santa María la Blanca | Monastery of San Juan de los Reyes | Synagogue of El Tránsito | The Alcazar | El Greco Museum | Museum of the Army",
+   "eats": 14,
+   "starts": {
+    "cruise": [],
+    "airport": [
+     "Madrid-Barajas Airport, Terminal 4",
+     "Madrid-Barajas Airport, Terminals 1–3"
+    ],
+    "station": [
+     "Madrid Atocha station",
+     "Madrid Chamartín station"
+    ],
+    "hotel": [
+     "Hotel near Puerta del Sol",
+     "Hotel near Gran Vía",
+     "Hotel in the Barrio de las Letras",
+     "Hotel near Atocha"
+    ],
+    "point": [
+     "Puerta del Sol"
+    ]
+   }
+  }
+ },
+ "steps": [],
+ "version": "88a1dc8-1795204327",
+ "aiReady": false,
+ "wizard": {
+  "miss": [],
+  "prev": "Your days: 21 days · 8 ports",
+  "form": "Add each place in order, the way it's booked. Each new stop starts where the last one ends.\n\nSTOP 1 · CITY STAY\nRemove\nCity\nArrive on\nNights\nHotel (optional)\nGetting there\nFlight\nTrain\nFerry\nCar or bus\nArrive in Athens, Greece at\nSTOP 2 · CRUISE\nRemove\nLeaves from\nShip (optional)\nBoarding day\nAll aboard\nGetting to the ship (if you arrive the same day)\nFlight\nTrain\nFerry\nCar or bus\nLeave Athens, Greece at\nArrive in Piraeus , Greece at\nLeave empty if you don't know yet.\nPorts of call\nIn order, from your cruise booking. Days with no port are added as sea days.\nDate\nPort\nShip arrives\nAll aboard\nTender port (small boats take you ashore)\nRemove port\nDate\nPort\nShip arrives\nAll aboard\nTender port (small boats take you ashore)\nRemove port\nDate\nPort\nShip arrives\nAll aboard\nTender port (small boats take you ashore)\nRemove port\nDate\nPort\nShip arrives\nAll aboard\nTender port (small boats take you ashore)\nRemove port\nDate\nPort\nShip arrives\nAll aboard\nTender port (small boats take you ashore)\nRemove port\nDate\nPort\nShip arrives\nAll aboard\nTender port (small boats take you ashore)\nRemove port\nDate\nPort\nShip arrives\nAll aboard\nTender port (small boats take you ashore)\nRemove port\nDate\nPort\nShip arrives\nAll aboard\nTender port (small boats take you ashore)\nRemove port\n+ Add a port\nCruise ends in\nOn\nOff the ship at\nSTOP 3 · CITY STAY\nRemove\nCity\nArrive on\nNights\nHotel (optional)\nSTOP 4 · CITY STAY\nRemove\nCity\nArrive on\nNights\nHotel (optional)\nGetting there\nFlight\nTrain\nFerry\nCar or bus\nLeave Barce"
+ },
+ "buildSec": 5,
+ "state": {
+  "busy": "",
+  "err": "",
+  "days": [
+   {
+    "date": "2027-06-30",
+    "type": "arrival"
+   },
+   {
+    "date": "2027-07-01",
+    "type": "land"
+   },
+   {
+    "date": "2027-07-02",
+    "type": "land"
+   },
+   {
+    "date": "2027-07-03",
+    "type": "land"
+   },
+   {
+    "date": "2027-07-04",
+    "type": "departure"
+   },
+   {
+    "date": "2027-07-04",
+    "type": "arrival"
+   },
+   {
+    "date": "2027-07-04",
+    "type": "embark"
+   },
+   {
+    "date": "2027-07-05",
+    "type": "port"
+   },
+   {
+    "date": "2027-07-06",
+    "type": "port"
+   },
+   {
+    "date": "2027-07-07",
+    "type": "port"
+   },
+   {
+    "date": "2027-07-08",
+    "type": "port"
+   },
+   {
+    "date": "2027-07-09",
+    "type": "port"
+   },
+   {
+    "date": "2027-07-10",
+    "type": "sea"
+   },
+   {
+    "date": "2027-07-11",
+    "type": "port"
+   },
+   {
+    "date": "2027-07-12",
+    "type": "port"
+   },
+   {
+    "date": "2027-07-13",
+    "type": "port"
+   },
+   {
+    "date": "2027-07-14",
+    "type": "sea"
+   },
+   {
+    "date": "2027-07-15",
+    "type": "arrival"
+   },
+   {
+    "date": "2027-07-16",
+    "type": "land"
+   },
+   {
+    "date": "2027-07-17",
+    "type": "land"
+   },
+   {
+    "date": "2027-07-18",
+    "type": "departure"
+   },
+   {
+    "date": "2027-07-18",
+    "type": "arrival"
+   },
+   {
+    "date": "2027-07-19",
+    "type": "land"
+   },
+   {
+    "date": "2027-07-20",
+    "type": "departure"
+   }
+  ]
+ },
+ "phoneText": "THU JUL 1 · ATHENS · LAND DAY\nAthens ✎ Rename\nLock this day\n▶ Start tour\n9:00 am–6:00 pm\n9 h ✎\n5\nsights\n1.7 mi\nwalking\n3:28 pm\nlast stop done\nChoose sights\nMore\nAbout today's plan1 note\nUse Ctrl + scroll to zoom the map\nS\n1\n2\n3\n4\n5\nL\n1000 ft\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nWalk\n● Meal\nMore about today\n\nAll times are Athens time, 8 h ahead of your device.\n\nLEAVE\n9:00 am\nS\nLeave Hotel in Plaka\nWalk to the Acropolis and old town.\nNext door\nARRIVE\n9:02 am\nLEAVE\n9:32 am\n1\nPlaka and Anafiotika\n30 min · Old town · Must-see\nWalk · 5 min · 0.2 mi\nARRIVE\n9:37 am\nLEAVE\n10:02 am\n2\nAthens Cathedral and the Little Metropolis\n25 min · Church\nWalk · 12 min · 0.5 mi\nWalk · 12 min\nTaxi or car · 12 min\nARRIVE\n10:14 am\nLEAVE\n10:39 am\n3\nAreopagus (Mars Hill)\n25 min · Bible site · Must-see\nWalk · 4 min · 0.2 mi\nARRIVE\n10:43 am\nLEAVE\n12:43 pm\n4\nAcropolis and Parthenon\n2 h · Ancient site · Must-see\nBOOK AHEAD\nBook tickets\n↗\nMark booked\nEntrance fee not included · more\nWalk · 7 min · 0.3 mi\nARRIVE\n12:50 pm\nLEAVE\n2:20 pm\n5\nAcropolis Museum\n1 h 30 min · Museum · Must-see\nBOOK AHEAD\nBook tickets\n↗\nMark booked\nEntrance fee not included · more\nWalk · 6 min · 0.3 mi\nARRIVE\n2:26 pm\nLEAVE\n3:26 pm\nL\nLunch: Thespis\nRestaurant · Local spot · 1 h\nChange lunch\nLunch: why here\nUNTIL\n5:58 pm\n+\nFree time: 2 h 32 min\nYours to spend as you like. See what fits\nWalk · 2 min · 0.1 mi\nBY\n6:00 pm\nE\nBack at Hotel in Plaka\nARRIVE\n6:30 pm\nD\nSuggested dinner: Scholarchion\nRestaurant\nChange dinner\nDinner: why",
+ "finished": "2026-11-20T21:07:58.757Z"
+}

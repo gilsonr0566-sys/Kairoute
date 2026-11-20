@@ -1,0 +1,239 @@
+{
+ "name": "b02-notfound-caribbean",
+ "label": "",
+ "legs": [
+  {
+   "k": "cruise",
+   "board": "Miami, Florida",
+   "date": "2027-03-01",
+   "aboard": "15:30",
+   "inAt": "09:00",
+   "ports": [
+    {
+     "date": "2027-03-02",
+     "place": "CocoCay, Bahamas",
+     "arrive": "08:00",
+     "aboard": "17:00"
+    },
+    {
+     "date": "2027-03-03",
+     "place": "Half Moon Cay",
+     "arrive": "08:00",
+     "aboard": "16:00",
+     "tender": true
+    },
+    {
+     "date": "2027-03-05",
+     "place": "Cozumel",
+     "arrive": "07:00",
+     "aboard": "16:00"
+    },
+    {
+     "date": "2027-03-07",
+     "place": "Cartagena, Colombia",
+     "arrive": "08:00",
+     "aboard": "15:00"
+    }
+   ],
+   "end": "Miami, Florida",
+   "endDate": "2027-03-10",
+   "off": "07:00"
+  }
+ ],
+ "started": "2026-11-20T21:05:06.789Z",
+ "passed": {
+  "/sources": 16,
+  "/transit": 12,
+  "/guide": 5,
+  "/places": 4,
+  "/voyage": 3,
+  "/ground": 2,
+  "/route": 6,
+  "/x/near": 2
+ },
+ "refused": {
+  "/ratings": 2,
+  "/grating": 2,
+  "/events": 2
+ },
+ "errors": [],
+ "days": [
+  {
+   "i": 0,
+   "date": "2027-03-01",
+   "type": "arrival",
+   "text": "MON MAR 1 · MIAMI, FLORIDA · ARRIVING\nMiami, Florida ✎ Rename\nLock this day\nToday is one plan\n\nFlight in at 9:00 am, then the ship at 3:30 pm: the sightseeing in between, your bags and the countdown are on one page.\n\nSee today's plan"
+  },
+  {
+   "i": 1,
+   "date": "2027-03-01",
+   "type": "embark",
+   "text": "MON MAR 1 · MIAMI, FLORIDA · BOARDING\nMiami, Florida ✎ Rename\nLock this day\n🚢\nLEAVE BY\nall aboard 3:30 pm\n1:41 pm\n▶ Start the tour\n\nOfficial all aboard 3:30 pm · Back at the cruise terminal by 2:30 pm\n\nGetting back on time is up to you\n\nKairoute's leave-by and back-by times are estimates with spare time built in. Traffic, queues and the weather can still slow you down. The time that counts is the ship's all-aboard time or your train or flight, as your cruise line or carrier gives it. Check it on the day.\n\nI understand\nTerms of use\n1\nsight\nChoose sights\nMore\nAbout today's plan1 note\nUse Ctrl + scroll to zoom the map\nStart · Airport\n1\nL\nFinish · Cruise port\n3000 ft\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nTaxi or car\nBus\n● Meal\nMore about today\n🛳 When do you board?\nBoarding time\nTerminal (optional)\nSave\n\nOn your boarding pass or check-in confirmation (also called arrival or check-in time). Until you add it, the plan uses the time to be back above.\n\nWhat to have on you · 0 of 9 ready\n📅 Add reminders to my calendar\n\nAll times are Miami time, 1 h ahead of your device.\n\nLEAVE\n10:15 am\nS\nOut of Miami International Airport\nFlight arrives 9:00 am. We allow 1 h 15 min to get off the plane and through baggage claim (and passport control after a flight from abroad). Book luggage storage near Miami International Airport ahead (a left-luggage desk or a storage shop), or ask your hotel or station.\nYou fly in the day the ship sails, so today goes straight from the airport to the ship: there isn't enough time for sightseeing with a safe margin. A late or missed flight is the most common way travelers miss a ship, and the ship won't wait. Keep your airline's and cruise line's phone numbers handy, and if a delay is announced, call the cruise line at once.\nTaxi or car · 41 min · 7.9 mi\nARRIVE\n10:56 am\nLEAVE\n12:26 pm\n1\nVizcaya Museum and Gardens\n1 h 30 min · Museum · Must-see\nBus MIABRK (Miami-Dade Transit) · 40 min · 2.5 mi\nWalk 8 min to S Miami Av & #3251 (Op Museum), runs about every 20 min (from the timetable). Bus MIABRK (Miami-Dade Transit): S Miami Av & #3251 (Op Museum) to SE 10 ST & SE 1 AV, 13 min, then walk 6 min. Times include waiting and boarding. Next departure about 12:34 pm (timetable checked Nov 20; Kairoute checks it again the day before and the morning of).\nWalk · 55 min\nBus MIABRK (Miami-Dade Transit) · 40 min\nTaxi or car · 22 min\nARRIVE\n1:06 pm\nLEAVE\n1:41 pm\nL\nLunch: Luke's Lobster\nSeafood · Local spot · 35 min\nChange lunch\nLunch: why here\nTaxi or car · 33 min · 1.7 mi\nBy road, with time for traffic. Includes 15 min spare before the ship.\nWalk · 37 min\nBus MIACOR (Miami-Dade Transit) · 1 h\nTaxi or car · 18 min\nARRIVE\n2:14 pm\nE\nBoarding at Cruise Terminal G\n16 min to spare.\nOfficial all aboard 3:30 pm: be at the terminal by 2:30 pm at the latest. Your cruise line gives you a boarding time: add it and the plan gets you there for it.\nPorters take your big bags at the curb (luggage tags on; they reach your cabin by evening). Keep your passport, boarding pass, medicines and valuables in your carry-on for check-in and security.\nBig ports have more than one cruise terminal: check yours on your boarding pass and tell the driver.\nBook the taxi or transfer the day before, or ask your hotel to call one. Being aboard on time is your responsibility: check your boarding time with your cruise line."
+  },
+  {
+   "i": 2,
+   "date": "2027-03-02",
+   "type": "port",
+   "text": "TUE MAR 2 · COCOCAY, BAHAMAS · IN PORT\nCocoCay, Bahamas ✎ Rename\nLock this day\n🚢\nLEAVE BY\nall aboard 5:00 pm\n12:45 pm\n▶ Start the tour\n\nAshore 8:30 am · Official all aboard 5:00 pm · Back at the ship by 4:15 pm\n\nGetting back on time is up to you\n\nKairoute's leave-by and back-by times are estimates with spare time built in. Traffic, queues and the weather can still slow you down. The time that counts is the ship's all-aboard time or your train or flight, as your cruise line or carrier gives it. Check it on the day.\n\nI understand\nTerms of use\n3\nsights\n1.1 mi\nwalking\nChoose sights\nMore\nUse Ctrl + scroll to zoom the map\nStart · Cruise port\n1\n2\n3\nL\n500 ft\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nWalk\n● Meal\nMore about today\n\nAll times are CocoCay time, 1 h ahead of your device.\n\nLEAVE\n8:30 am\nS\nOff the ship at Royal Carribean Cruise Pier\nShip docks 8:00 am.\nWalk · 8 min · 0.4 mi\nARRIVE\n8:38 am\nLEAVE\n9:18 am\n1\nThrill Waterpark\n40 min · Park or garden · Must-see\nWalk · 3 min · 0.2 mi\nARRIVE\n9:21 am\nLEAVE\n10:01 am\n2\nHarbour Beach\n40 min · Sight · Must-see\nWalk · 2 min · 0.1 mi\nARRIVE\n10:03 am\nLEAVE\n10:43 am\n3\nHarbor Lagoon\n40 min · Sight · Must-see\nWalk · 2 min · 0.1 mi\nARRIVE\n11:45 am\nLEAVE\n12:45 pm\nL\nLunch: Skipper's Grill\nRestaurant · Popular with visitors · 1 h\nChange lunch\nLunch: why here\nUNTIL\n12:45 pm\n+\nFree time: 3 h 20 min\nYours to spend as you like. Leave here by 12:45 pm to be back by 4:15 pm. See what fits\nWalk · 10 min · 0.4 mi\nBY\n4:15 pm\nE\nBack at the ship\nThe ship's official all aboard is 5:00 pm. Kairoute plans you back at least 45 min before it."
+  },
+  {
+   "i": 3,
+   "date": "2027-03-03",
+   "type": "port",
+   "text": "WED MAR 3 · HALF MOON CAY · IN PORT\nHalf Moon Cay ✎ Rename\nLock this day\nI couldn't find Half Moon Cay and Cozumel and Cartagena, Colombia in the travel guides and maps. Check the spelling on the day (for example \"Kotor, Montenegro\"), then tap Build again.\nNo guide for Half Moon Cay yet\n\nKairoute will build the guide for Half Moon Cay from travel guides and maps: real sights, places to eat, the cruise port and stations.\n\nBuild the Half Moon Cay guide"
+  },
+  {
+   "i": 4,
+   "date": "2027-03-04",
+   "type": "sea"
+  },
+  {
+   "i": 5,
+   "date": "2027-03-05",
+   "type": "port",
+   "text": "FRI MAR 5 · COZUMEL · IN PORT\nCozumel ✎ Rename\nLock this day\nI couldn't find Half Moon Cay and Cozumel and Cartagena, Colombia in the travel guides and maps. Check the spelling on the day (for example \"Kotor, Montenegro\"), then tap Build again.\nNo guide for Cozumel yet\n\nKairoute will build the guide for Cozumel from travel guides and maps: real sights, places to eat, the cruise port and stations.\n\nBuild the Cozumel guide"
+  },
+  {
+   "i": 6,
+   "date": "2027-03-06",
+   "type": "sea"
+  },
+  {
+   "i": 7,
+   "date": "2027-03-07",
+   "type": "port",
+   "text": "SUN MAR 7 · CARTAGENA, COLOMBIA · IN PORT\nCartagena, Colombia ✎ Rename\nLock this day\nI couldn't find Half Moon Cay and Cozumel and Cartagena, Colombia in the travel guides and maps. Check the spelling on the day (for example \"Kotor, Montenegro\"), then tap Build again.\nNo guide for Cartagena, Colombia yet\n\nKairoute will build the guide for Cartagena, Colombia from travel guides and maps: real sights, places to eat, the cruise port and stations.\n\nBuild the Cartagena, Colombia guide"
+  },
+  {
+   "i": 8,
+   "date": "2027-03-08",
+   "type": "sea"
+  },
+  {
+   "i": 9,
+   "date": "2027-03-09",
+   "type": "sea"
+  },
+  {
+   "i": 10,
+   "date": "2027-03-10",
+   "type": "arrival",
+   "text": "WED MAR 10 · MIAMI, FLORIDA · ARRIVING\nMiami, Florida ✎ Rename\nLock this day\n\nThis is your last day. Add how you leave and when (your flight or train home) on the Trip page, or your hotel if you're staying on, and the day is planned around it: nothing is planned on a guess.\n\nEdit this day"
+  }
+ ],
+ "guides": {
+  "Miami, Florida": {
+   "city": "Miami, Florida",
+   "src": true,
+   "ai": false,
+   "n": 6,
+   "sights": "Vizcaya Museum and Gardens* | Miami Circle | Gesu Church | Plymouth Congregational Church | Lyric Theater | Dana A. Dorsey House",
+   "far": "Miami Beach | Fort Lauderdale",
+   "eats": 14,
+   "starts": {
+    "cruise": [
+     "Cruise Terminal G"
+    ],
+    "airport": [
+     "Miami International Airport"
+    ],
+    "station": [
+     "Miami, Florida main station (unknown)"
+    ],
+    "hotel": [
+     "Hotel in central Miami, Florida"
+    ],
+    "point": [
+     "Central Miami, Florida"
+    ]
+   }
+  },
+  "CocoCay, Bahamas": {
+   "city": "CocoCay, Bahamas",
+   "src": true,
+   "ai": false,
+   "n": 3,
+   "sights": "Thrill Waterpark* | Harbour Beach* | Harbor Lagoon*",
+   "far": "",
+   "eats": 4,
+   "starts": {
+    "cruise": [
+     "Royal Carribean Cruise Pier"
+    ],
+    "airport": [
+     "Great Harbour Cay Airport"
+    ],
+    "station": [
+     "CocoCay, Bahamas main station (unknown)"
+    ],
+    "hotel": [
+     "Hotel in central CocoCay, Bahamas"
+    ],
+    "point": [
+     "Central CocoCay, Bahamas"
+    ]
+   }
+  }
+ },
+ "steps": [],
+ "version": "88a1dc8-1795204327",
+ "aiReady": false,
+ "wizard": {
+  "miss": [],
+  "prev": "Your days: 10 days · 4 ports",
+  "form": "Add each place in order, the way it's booked. Each new stop starts where the last one ends.\n\nSTOP 1 · CRUISE\nLeaves from\nShip (optional)\nBoarding day\nAll aboard\nGetting to the ship (if you arrive the same day)\nFlight\nTrain\nFerry\nCar or bus\nArrive in Miami, Florida at\nPorts of call\nIn order, from your cruise booking. Days with no port are added as sea days.\nDate\nPort\nShip arrives\nAll aboard\nTender port (small boats take you ashore)\nRemove port\nDate\nPort\nShip arrives\nAll aboard\nTender port (small boats take you ashore)\nRemove port\nDate\nPort\nShip arrives\nAll aboard\nTender port (small boats take you ashore)\nRemove port\nDate\nPort\nShip arrives\nAll aboard\nTender port (small boats take you ashore)\nRemove port\n+ Add a port\nCruise ends in\nOn\nOff the ship at\n+ Add a city stay\n+ Add a cruise\nGoing home from Miami, Florida\nFlight\nTrain\nFerry\nCar or bus\nFlight at\nYour days: 10 days · 4 ports\nAdd more details (optional)\nName this trip\n\nKairoute picks good defaults for pace, walking and voice, and you can change any of them later.\n\nCancel\nPersonalize first\nBuild my trip"
+ },
+ "buildSec": 80,
+ "state": {
+  "busy": "",
+  "err": "I couldn't find Half Moon Cay and Cozumel and Cartagena, Colombia in the travel guides and maps. Check the spelling on the day (for example \"Kotor, Montenegro\"), then tap Build again.",
+  "days": [
+   {
+    "date": "2027-03-01",
+    "type": "arrival"
+   },
+   {
+    "date": "2027-03-01",
+    "type": "embark"
+   },
+   {
+    "date": "2027-03-02",
+    "type": "port"
+   },
+   {
+    "date": "2027-03-03",
+    "type": "port"
+   },
+   {
+    "date": "2027-03-04",
+    "type": "sea"
+   },
+   {
+    "date": "2027-03-05",
+    "type": "port"
+   },
+   {
+    "date": "2027-03-06",
+    "type": "sea"
+   },
+   {
+    "date": "2027-03-07",
+    "type": "port"
+   },
+   {
+    "date": "2027-03-08",
+    "type": "sea"
+   },
+   {
+    "date": "2027-03-09",
+    "type": "sea"
+   },
+   {
+    "date": "2027-03-10",
+    "type": "arrival"
+   }
+  ]
+ },
+ "phoneText": "TUE MAR 2 · COCOCAY, BAHAMAS · IN PORT\nCocoCay, Bahamas ✎ Rename\nLock this day\n🚢\nLEAVE BY\nall aboard 5:00 pm\n12:45 pm\n▶ Start tour\n\nAshore 8:30 am · Official all aboard 5:00 pm · Back at the ship by 4:15 pm\n\nGetting back on time is up to you\n\nKairoute's leave-by and back-by times are estimates with spare time built in. Traffic, queues and the weather can still slow you down. The time that counts is the ship's all-aboard time or your train or flight, as your cruise line or carrier gives it. Check it on the day.\n\nI understand\nTerms of use\n3\nsights\n1.1 mi\nwalking\nChoose sights\nMore\nUse Ctrl + scroll to zoom the map\nStart · Cruise port\n1\n2\n3\nL\n500 ft\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nWalk\n● Meal\nMore about today\n\nAll times are CocoCay time, 1 h ahead of your device.\n\nLEAVE\n8:30 am\nS\nOff the ship at Royal Carribean Cruise Pier\nShip docks 8:00 am.\nWalk · 8 min · 0.4 mi\nARRIVE\n8:38 am\nLEAVE\n9:18 am\n1\nThrill Waterpark\n40 min · Park or garden · Must-see\nWalk · 3 min · 0.2 mi\nARRIVE\n9:21 am\nLEAVE\n10:01 am\n2\nHarbour Beach\n40 min · Sight · Must-see\nWalk · 2 min · 0.1 mi\nARRIVE\n10:03 am\nLEAVE\n10:43 am\n3\nHarbor Lagoon\n40 min · Sight · Must-see\nWalk · 2 min · 0.1 mi\nARRIVE\n11:45 am\nLEAVE\n12:45 pm\nL\nLunch: Skipper's Grill\nRestaurant · Popular with visitors · 1 h\nChange lunch\nLunch: why here\nUNTIL\n12:45 pm\n+\nFree time: 3 h 20 min\nYours to spend as you like. Leave here by 12:45 pm to be back by 4:15 pm. See what fits\nWalk · 10 min · 0.4 mi\nBY\n4:15 pm\nE\nBack at the ship\nThe sh",
+ "finished": "2026-11-20T21:07:38.421Z"
+}
