@@ -22,7 +22,7 @@
   // seaplane base and a freight terminal were each taken for a station, airport or cruise port). kind: station, airport
   // or cruise; a candidate's map kind (OpenStreetMap's value), when known, must be one that kind can be.
   const GATE_BAD = { station: /\b(fire|police|service|petrol|gas|filling|fuel|power|pumping|radio|lifeboat|research|space|weather|polling|coast ?guard|ambulance|bus|coach|subway|u-?bahn|metro|underground|tram|tube)\b|\bterminus\b/i,
-    airport: /\b(airfield|heliport|seaplane|sea plane|air ?base|air force|naval air|aero ?club|gliding|flying club|airstrip)\b/i,
+    airport: /\b(airfield|heliport|seaplane|sea plane|air ?base|air force|naval air|aero ?club|gliding|flying club|airstrip|national guard|army|military|executive airport)\b/i,
     cruise: /\b(freight|cargo|container|seaplane|marina|yacht|fishing|naval|oil|fuel|bay|gulf|sound|strait|channel)\b/i };
   const GATE_KINDS = { station: /^(station|halt|train_station|stop)$/, airport: /^(aerodrome|airport|terminal|international_airport)$/, cruise: /^(ferry_terminal|pier|terminal|harbour|harbor|port|dock|wharf|quay|berth|cruise_terminal)$/ };
   // Where a cruise ship ties up (Round 1, Nov 20: a state ferry terminal, an old harbour for small boats, a whole port's

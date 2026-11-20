@@ -13,7 +13,12 @@ const tsCruise = o => Object.assign({ k: "cruise", ship: "", board: "", date: ""
 const tsPort = o => Object.assign({ date: "", place: "", arrive: "", aboard: "", tender: false }, o || {});
 const tsEnd = l => l.k === "stay" ? (l.date ? addDays(l.date, Math.max(0, +l.nights || 0)) : "") : l.endDate;
 const tsWhere = l => l.k === "stay" ? l.place : l.end;
-const tsSame = (a, b) => !!a && !!b && keyOf(bareName(a)) === keyOf(bareName(b));
+// The same city, however it is typed: "Athens", "Athens, Greece", "Piraeus (Athens)" (the form's own example for a cruise
+// port) and "Athens (Piraeus)" are all the same place as a stay in Athens (Round 1 part 2: a stay in a city and the cruise
+// from its port the same day became a flight out and a flight in, with times made up).
+const tsNames = x => { const E = typeof KEngine !== "undefined" ? KEngine : null, out = [bareName(x)];
+  if (E && E.placeOnly) out.push(E.placeOnly(x), E.bracketPlace(x)); return out.map(keyOf).filter(Boolean); };
+const tsSame = (a, b) => { if (!a || !b) return false; const A = tsNames(a), B = tsNames(b); return A.some(k => B.includes(k)); };
 // Does this stop start where and when the one before it ends (off the ship into a stay, a stay straight onto the ship)?
 function tsJoined(prev, l) {
   if (!prev) return false;

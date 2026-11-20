@@ -26,6 +26,13 @@ const RULES = [
       '2027-07-04|embark|Athens|flight||18:30|', '2027-07-05|port|Heraklion|flight||07:00-16:30|', '2027-07-06|sea|At sea|flight|||', '2027-07-07|port|Santorini|flight||07:00-20:30|',
       '2027-07-08|sea|At sea|flight|||', '2027-07-09|arrival|Barcelona|ship|07:00||', '2027-07-10|land|Barcelona|flight|||', '2027-07-11|land|Barcelona|flight|||', '2027-07-12|land|Barcelona|flight|||',
       '2027-07-13|departure|Barcelona|train|09:00||', '2027-07-13|arrival|Madrid|train|11:45||', '2027-07-14|land|Madrid|flight|||', '2027-07-15|land|Madrid|flight|||', '2027-07-16|departure|Madrid|flight|16:00||'] },
+  // Round 1 part 2: a stay and the cruise from the same city's port, typed as the form suggests ("Piraeus (Athens)") or
+  // with the country after the stay: straight from the hotel to the ship, never a flight out and back in with times made up.
+  { name: 'a stay, then the cruise from its port typed "Port (City)" or with the country: no flight out and in', legs: [
+      { k: 'stay', place: 'Athens, Greece', date: '2027-06-30', nights: 2, inBy: 'flight', inAt: '10:30' },
+      { k: 'cruise', board: 'Piraeus (Athens)', date: '2027-07-02', aboard: '18:30', ports: [], end: 'Piraeus (Athens)', endDate: '2027-07-04', off: '07:00', homeBy: 'flight', homeAt: '15:00' }],
+    want: ['2027-06-30|arrival|Athens, Greece|flight|10:30||', '2027-07-01|land|Athens, Greece|flight|||', '2027-07-02|embark|Piraeus (Athens)|flight||18:30|', '2027-07-03|sea|At sea|flight|||',
+      '2027-07-04|arrival|Piraeus (Athens)|ship|07:00||', '2027-07-04|departure|Piraeus (Athens)|flight|15:00||'] },
   { name: 'fly in and board the same day, off the ship and fly home the same day', legs: [
       { k: 'cruise', board: 'Miami', date: '2027-01-11', aboard: '16:00', inBy: 'flight', inAt: '09:15', ports: [{ date: '2027-01-12', place: 'Nassau', arrive: '08:00', aboard: '17:00' }], end: 'Miami', endDate: '2027-01-14', off: '07:30', homeBy: 'flight', homeAt: '14:00' }],
     want: ['2027-01-11|arrival|Miami|flight|09:15||', '2027-01-11|embark|Miami|flight||16:00|', '2027-01-12|port|Nassau|flight||08:00-17:00|', '2027-01-13|sea|At sea|flight|||',

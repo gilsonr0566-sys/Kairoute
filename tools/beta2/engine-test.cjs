@@ -829,6 +829,11 @@ ok(E.readable('Café Ñandú') && E.readable("Joe's Bar & Grill") && !E.readable
     const ch = E.gateChoices([{ name: 'Alaska Marine Highway Ferry Terminal', kind: 'ferry_terminal', lat: 55.37, lng: -131.72 }, { name: 'Berth 1 Cruise Ship Dock', lat: 55.342, lng: -131.646 }], 'cruise');
     ok(ch.length === 1 && /Berth 1/.test(ch[0].name), `the ship's pier is chosen over the state ferry (got ${ch.map(x => x.name)})`);
     ok(E.cruiseRank({ name: 'Marina Bay Cruise Centre' }) > E.cruiseRank({ name: 'Harbour' }), 'a pier named for cruises ranks above a plain harbour'); }
+  // Round 1 S1-3: no military or executive airfield is offered as the airport, and a closed station never as a station.
+  { const a = E.gateChoices([{ name: 'Tennessee Air National Guard', lat: 36.1, lng: -86.7 }, { name: 'Example Executive Airport', lat: 36.3, lng: -86.9 }, { name: 'Example International Airport', lat: 36.12, lng: -86.68 }], 'airport');
+    ok(a.length === 1 && /International/.test(a[0].name), `only the passenger airport is offered (got ${a.map(x => x.name)})`);
+    const st = E.gateChoices([{ name: 'Example Necropolis railway station (closed 1941)', lat: 51.5, lng: -0.1 }, { name: 'Example Central', lat: 51.53, lng: -0.12 }], 'station');
+    ok(st.length === 1 && st[0].name === 'Example Central', `a closed station is never offered (got ${st.map(x => x.name)})`); }
   // Round 1 S1-8: a stop the map puts across the water is a boat away however close it looks (Lokrum, "Walk 6 min"), and
   // a stop far from any road is reached on foot or by a taxi from the nearest road (Venice: taxis between sights).
   { const tw = E.makeTravel({ walk: 'medium' }, {});
