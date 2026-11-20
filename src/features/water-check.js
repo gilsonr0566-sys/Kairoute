@@ -90,6 +90,8 @@ function waterCheck(city, homes) {
       if (isl) { if (across[s.id]) s.acrossWater = across[s.id]; else delete s.acrossWater; }
       if (gaps) { const g = gaps[i]; if (g != null && g > 150) s.roadGap = g; else if (g != null) delete s.roadGap; } });
     if (isl && gaps) city.waterSig = sig;
+    // One service busy (the map turns away a burst of questions): ask the rest again in a few minutes.
+    else setTimeout(() => { if (waterAsked.get(keyOf(city.city)) === sig) waterAsked.delete(keyOf(city.city)); }, 180000);
     try { save(); } catch (e) {}
     try { render(); } catch (e) {}
   })();

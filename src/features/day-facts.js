@@ -53,7 +53,9 @@ function dayFacts(d, plan) {
   const left = tl ? Math.max(0, Math.round(tl.left)) : Math.max(0, plan.endBy - plan.end);
   // The ride back from the plan's last stop or meal: the same rides the timeline lists after it.
   const its = plan.items || []; let j = -1; its.forEach((it, k) => { if (it.type === "stop" || (it.type === "meal" && !(it.place && it.place.onBoard))) j = k; }); // lunch back on board comes after the ride back (Round 1: Ketchikan)
-  let back = 0; for (let k = j + 1; j >= 0 && k < its.length; k++) { const it = its[k]; if (it.type === "travel") back += (it.leg && it.leg.min) || 0; else if (it.type === "fixed" || it.type === "end") break; }
+  // A fixed step on the way back (a cable car's queue down) is part of the way back; bags kept somewhere are not.
+  let back = 0; for (let k = j + 1; j >= 0 && k < its.length; k++) { const it = its[k]; if (it.type === "travel") back += (it.leg && it.leg.min) || 0;
+    else if (it.type === "fixed" && !/bags/i.test((it.place && it.place.name) || "")) back += (it.place && it.place.minutes) || 0; else if (it.type === "fixed" || it.type === "end") break; }
   let leaveBy = plan.endBy - back;
   if (fixed && typeof alarmState === "function") { try { const st = alarmState(d, plan); if (st && isFinite(st.leaveBy)) leaveBy = Math.min(leaveBy, st.leaveBy); } catch (e) {} }
   const aa = (d.type === "port" || d.type === "embark") && d.allAboard ? shipToPort(d, d.allAboard) : null;

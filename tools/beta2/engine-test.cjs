@@ -912,7 +912,8 @@ ok(E.readable('Café Ñandú') && E.readable("Joe's Bar & Grill") && !E.readable
     if (fs.existsSync(PD)) for (const g of fs.readdirSync(PD).filter(g => g.endsWith('.json'))) { const q = JSON.parse(fs.readFileSync(path.join(PD, g))); places[q.key] = q; }
     for (const f of fs.readdirSync(dir).filter(f => f.endsWith('.json'))) { let s, pl; try { s = E.applyPlaces(JSON.parse(fs.readFileSync(path.join(dir, f))), places); pl = E.planTrip(s); } catch (e) { continue; }
       pl.forEach((p, i) => { if (!p || !p.items || !(/departure|embark/.test(s.days[i].type) || (s.days[i].type === 'port' && p.leaveAt))) return; if (!p.items.some(x => x.t === 'stop' || (x.t === 'meal' && !x.onBoard))) return; n++;
-        const its = p.items, endI = its.findIndex(x => x.t === 'end'); let k = endI, t = its[endI].at; while (k > 0 && its[k - 1].t === 'ride') { k--; t -= its[k].min || 0; }
+        const its = p.items, endI = its.findIndex(x => x.t === 'end'); let k = endI, t = its[endI].at; while (k > 0 && (its[k - 1].t === 'ride' || (its[k - 1].t === 'fixed' && !/bags/i.test(its[k - 1].name || '')))) { k--; t -= (its[k].min || 0) + (its[k].wait || 0); }
+        // The way back counts a fixed step on it (a cable car's queue down), never just the rides after it (Nov 20 sweep).
         const ride = its[endI].at - t, timed = its.slice(k, endI).some(x => x.mode === 'boat' || x.kind === 'ferry' || (x.ans && (x.ans.deps || []).length)), want = timed ? t : Math.max(t, p.endBy - ride);
         const lines = (p.explain || []).filter(x => / leave for .* by |^Leave for /i.test(x));
         // Never later than the time to be back less the ride there (Round 1, Ketchikan: the badge was the time to be back).

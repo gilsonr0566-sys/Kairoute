@@ -377,12 +377,18 @@
       const endI = plan.items.findIndex(x => x.t === "end");
       if ((d.type === "departure" || d.type === "embark" || (d.type === "port" && win.hard)) && endI > 0 && plan.items.slice(0, endI).some(x => x.t === "stop" || (x.t === "meal" && !x.onBoard) || x.t === "fixed")) {
         const its = plan.items.slice(0, endI + 1), endAt = its[endI].at; let k = endI, t = endAt;
-        while (k > 0 && its[k - 1].t === "ride") { k--; t -= its[k].min || 0; }
+        // The way back is every ride and fixed step after the last stop or meal (a cable car's queue down is part of it,
+        // Nov 20 sweep: a tender day's leave-by left out the 50-minute queue); bags kept somewhere are counted apart.
+        while (k > 0 && (its[k - 1].t === "ride" || (its[k - 1].t === "fixed" && !/bags/i.test(its[k - 1].name || "")))) { k--; t -= (its[k].min || 0) + (its[k].wait || 0); }
+        const ridesBack = endAt - t;
         // The latest safe time to leave: the time to be back less the rides there. Time left before it is free time, so the
         // badge, the free time row and the notes all say this one time (Round 1).
         // A boat or a timetabled line back keeps the plan's own time (its sailings don't move to suit the traveler).
         const backRides = its.slice(k, endI), fixedTimes = backRides.some(x => x.mode === "boat" || x.kind === "ferry" || (x.ans && Array.isArray(x.ans.deps) && x.ans.deps.length));
-        if (!fixedTimes && isFinite(win.endBy) && win.endBy - (endAt - t) > t) t = win.endBy - (endAt - t);
+        if (!fixedTimes && isFinite(win.endBy) && win.endBy - ridesBack > t) t = win.endBy - ridesBack;
+        // Never later than the back-by time less the rides back, whatever the plan's own end row says (a boat's wait at
+        // the pier counted in its row): one leave-by for the badge, the countdown and the notes.
+        if (isFinite(win.endBy)) t = Math.min(t, win.endBy - ridesBack);
         const bagsK = its.findIndex(x => x.t === "fixed" && /bags/i.test(x.name || "")), lastK = its.map(x => x.t).reduce((a, x, j) => x === "stop" || x === "meal" || x === "start" ? j : a, -1);
         plan.leaveAt = { out: t, bags: bagsK >= 0 && its[bagsK].at != null ? its[bagsK].at : null, last: bagsK < 0 ? t : lastK >= 0 && lastK < bagsK ? (its[lastK].at || 0) + (its[lastK].t === "start" ? 0 : its[lastK].min || 0) : null };
         const word = d.type === "embark" ? "the cruise terminal" : d.type === "port" ? "the ship" : "the " + ((E.MODES[d.mode] || E.MODES.flight).word);

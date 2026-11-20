@@ -433,7 +433,8 @@ function alarmState(d, plan, opt) {
   let worst = null;
   if (target && src === "plan" && now == null) { const its = plan.items; let j = -1; its.forEach((it, k) => { if (it.type === "stop" || it.type === "meal") j = k; });
     if (j >= 0 && its[j].place && isFinite(its[j].place.lat)) { from = its[j].place; let m = 0, how = "";
-      for (let k = j + 1; k < its.length; k++) { const it = its[k]; if (it.type === "travel") { m += it.leg.min || 0; how = how || it.leg.how || ""; } else if (it.type === "fixed" || it.type === "end") break; }
+      for (let k = j + 1; k < its.length; k++) { const it = its[k]; if (it.type === "travel") { m += it.leg.min || 0; how = how || it.leg.how || ""; }
+        else if (it.type === "fixed" && !/bags/i.test((it.place && it.place.name) || "")) m += (it.place && it.place.minutes) || 0; else if (it.type === "fixed" || it.type === "end") break; }
       const lt = legTo(from, target); leg = /street route/.test(lt.src || "") && lt.min > m ? lt : { min: m, how: how || lt.how, transit: lt.transit, src: "the day plan's own ride back" }; } }
   // One return time, the same before and on the day: the latest safe time back (the plan's cushion before all aboard),
   // never the plan's own finish, which moves whenever stops are added or removed. On the day it counts down from

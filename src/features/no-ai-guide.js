@@ -92,10 +92,10 @@ async function srcStarts(label, area, port, centre, d) {
     // London's Paris train sent to Victoria, Paris's station a Grand Paris Express building site).
     const real = typeof KEngine !== "undefined" && KEngine.gateChoices ? KEngine.gateChoices(near, k) : near;
     // A port with more than one cruise pier the map is as sure of: the traveler is asked which, as for airports (Round 1);
-    // until then the plan starts from the one farthest from town, so the ride back is never planned short.
-    if (k === "cruise") { if (!real.length) return null; const R = typeof KEngine !== "undefined" && KEngine.cruiseRank ? KEngine.cruiseRank : () => 0, top = Math.max(...real.map(R));
-      const sure = real.filter(p => R(p) >= top - 1 && R(p) > 0); if (sure.length < 2) return real.slice().sort((a, b) => R(b) - R(a))[0];
-      return sure.sort((a, b) => hav(b, centre) - hav(a, centre)).slice(0, 3); }
+    // Only piers the port's own name search found count (the plain "Cruise pier" search also finds a neighbour island's).
+    // The order stays the one above (a real terminal first, then the closest), so the plan starts from the likeliest.
+    if (k === "cruise") { if (!real.length) return null; const R = typeof KEngine !== "undefined" && KEngine.cruiseRank ? KEngine.cruiseRank : () => 0, own = real.filter(p => !p.any), top = Math.max(0, ...own.map(R));
+      const sure = own.filter(p => R(p) >= top - 1 && R(p) > 0); return sure.length >= 2 ? sure.slice(0, 3) : real[0]; }
     return real.length ? real.slice(0, 5) : null;
   };
   const starts = { cruise: [], airport: [], station: [], hotel: [], point: [] };
