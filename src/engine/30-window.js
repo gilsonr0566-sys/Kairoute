@@ -64,6 +64,10 @@
         if (!L) return E.fail("Choose where you're staying.");
         w.start = E.toMin(d.startTime); w.head = [L]; w.tail = d.noBags ? [end] : [fixed(L, "Collect bags", 15), end];
       }
+      // A time to leave earlier than the day's start is after midnight, the next morning (Nov 20 review: a 00:40 flight gave
+      // "Leave by -4:-43 am"): the day's window runs through midnight.
+      if (isFinite(w.start) && isFinite(w.endBy) && w.endBy + (ship ? E.BOARD_BEFORE : m.need) < w.start) {
+        w.endBy += 24 * 60; if (ship) { w.latest += 24 * 60; if (w.boardAt != null && w.boardAt < w.start) w.boardAt += 24 * 60; } }
       // Flying in the day the ship sails: under 3 hours left for sightseeing means none, straight to the ship.
       if (ship && d.thru && d.thru.mode === "flight") {
         const free = w.endBy - w.start - chain(w.head, tr) - chain(w.tail, tr);
@@ -72,7 +76,9 @@
       }
     } else if (d.type === "port") {
       if (!P) return E.fail("Choose where the ship docks.");
-      w.start = d.portArrive + (d.tender ? E.TENDER_ASHORE : 30); w.buffer = E.PORT_BUFFER + (d.tender ? E.TENDER_BACK : 0); w.endBy = d.allAboard - w.buffer;
+      // All aboard after midnight (earlier on the clock than docking) is the next morning's.
+      const aboard = isFinite(d.allAboard) && isFinite(d.portArrive) && d.allAboard < d.portArrive ? d.allAboard + 24 * 60 : d.allAboard;
+      w.start = d.portArrive + (d.tender ? E.TENDER_ASHORE : 30); w.buffer = E.PORT_BUFFER + (d.tender ? E.TENDER_BACK : 0); w.endBy = aboard - w.buffer;
       w.head = [Object.assign({}, P, { leaveWhenReady: true })]; w.tail = [Object.assign({}, P, { backToShip: true })];
       const lf = P.lift;
       if (lf && lf.top && isFinite(lf.top.lat)) {

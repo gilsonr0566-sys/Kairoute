@@ -23,7 +23,16 @@ for (const f of fs.readdirSync(dir).filter(f => f.endsWith('.json')).sort()) {
   // before a ship, train or plane never below the old engine's, or below the app's own fill margin when the old
   // engine left hours idle (the new engine uses that time for sights, never the safety buffer itself).
   const a = o.total, b = n.total, worse = [];
-  if (b.picksKept < a.picksKept) worse.push(`kept ${b.picksKept} picks, old ${a.picksKept}`);
+  // A pick the old engine kept only by leaving less than the margin before the ship (it had no extra time for the whole
+  // way back, Nov 20 review finding 2) is a safety change, not a loss: said, not counted.
+  const safer = a.minMargin != null && b.minMargin != null && a.minMargin < E.FILL_MARGIN && b.minMargin > a.minMargin;
+  // A pick the old engine kept only by planning a sight with unknown hours before 9 or after 5 (Nov 20, review finding 7:
+  // a fortress at 7:39 am) is honesty, not a loss: said, not counted.
+  const guessed = (s.old || []).some((op, i) => op && op.items && op.items.some(x => { if (x.t !== 'stop') return false; const c = s.cities[s.days[i].city] || {}, sx = [...(c.sites || [])].find(y => String(y.id) === String(x.id)), sd = (s.days[i].sites || {})[x.id];
+    return sx && E.needsHours(sx) && !(sd && (sd.closed || sd.allDay || (sd.oh && sd.oh.spans && sd.oh.spans.length))) && (x.at < E.ASSUME_OPEN || x.at + (x.min || 0) > E.ASSUME_CLOSE); }));
+  if (b.picksKept < a.picksKept && !safer && guessed) console.log(`   HONEST kept ${b.picksKept} picks, old ${a.picksKept}: the old plan visited a sight with unknown hours before 9 am or after 5 pm`);
+  else if (b.picksKept < a.picksKept && safer) console.log(`   SAFER kept ${b.picksKept} picks, old ${a.picksKept}: the old plan left only ${a.minMargin} min before the time to be back (now ${b.minMargin})`);
+  else if (b.picksKept < a.picksKept) worse.push(`kept ${b.picksKept} picks, old ${a.picksKept}`);
   if (b.mustKept < a.mustKept) worse.push(`kept ${b.mustKept} must-sees, old ${a.mustKept}`);
   if (b.backtrack > a.backtrack) worse.push(`doubles back ${b.backtrack}x, old ${a.backtrack}x`);
   if (a.minMargin != null && b.minMargin != null && b.minMargin < Math.min(a.minMargin, E.FILL_MARGIN)) worse.push(`${b.minMargin} min to spare, old ${a.minMargin}`);

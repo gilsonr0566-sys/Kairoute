@@ -32,7 +32,9 @@ function score(facts, plans) {
     meals.forEach(m => { if (!m.name || m.packed || m.onBoard || /^(Lunch|Dinner) near /.test(m.name) || /^Booked /.test(m.name)) return; const k = m.name.toLowerCase(); if (seenMeal.has(k) && seenMeal.get(k) !== i) r.mealRepeat = (r.mealRepeat || []).concat(m.name); else seenMeal.set(k, i); });
     rides.forEach(x => { r.rideMin += x.min || 0; });
     r.end = p.end; r.endBy = p.endBy;
-    if (HARD.has(d.type)) r.margin = p.endBy - p.end; // minutes to spare before the ship, train or plane's "be there by"
+    // Minutes to spare before the ship, train or plane's "be there by". The extra time the way back now carries (Nov 20,
+    // review finding 2) is spare time too: it is counted in, so a safer way back never reads as less to spare.
+    if (HARD.has(d.type)) r.margin = p.endBy - p.end + (p.items || []).reduce((a, x) => a + (x.wayBack || 0), 0);
     r.over = Math.max(0, p.end - p.endBy - (HARD.has(d.type) ? 0 : 5));
     const label = `${d.date} ${d.city} (${i})`;
     if (r.closed.length) fails.push(label + ': closed stop ' + r.closed.join(', '));

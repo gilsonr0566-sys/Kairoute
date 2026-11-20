@@ -454,6 +454,12 @@ async function tapTimes(p) { const out = []; const n = await p.evaluate(() => wi
       if (/Choose where you're staying/.test(t)) blank.push(d.date + ' ' + d.type); if (/on the map yet/.test(t)) noted.push(d.i); }
     check(`A hotel not on the map yet never blanks a day (${JSON.stringify(v.name)}${v.ll ? ', empty spot' : ''})`, days.length && !blank.length && noted.length, !days.length ? 'no hotel days' : blank.length ? 'blank: ' + blank.join(', ') : 'never says the hotel is not placed yet'); }
 
+  // 6. A day the new planner can't plan says so and shows nothing else, never the old planner's day (Nov 20 review).
+  { const d = (await p.evaluate(() => window.__kairouteDays())).find(x => x.type === 'land' || x.type === 'port');
+    if (d) { await p.evaluate(i => { window.__kairouteFailDay = i; window.__kairouteAt(i, 'plan'); }, d.i); await p.waitForTimeout(800);
+      const t = await p.evaluate(() => document.getElementById('view').innerText), stops = await p.$$eval('#view [data-act="stopinfo"], #view .stop', xs => xs.length).catch(() => 0);
+      await p.evaluate(() => { window.__kairouteFailDay = undefined; });
+      check('A day the planner can\'t plan says so, with no stand-in plan', /couldn't be planned/.test(t) && !stops, /couldn't be planned/.test(t) ? `${stops} stops shown under the message` : 'no message: ' + t.slice(0, 120).replace(/\s+/g, ' ')); } }
   await ctx.close(); srv.close(); await browser.close();
   const leaks = results.filter(r => !r.ok);
   for (const r of results) console.log((r.ok ? 'pass  ' : 'LEAK  ') + r.name + (r.ok ? '' : ' — ' + r.why));

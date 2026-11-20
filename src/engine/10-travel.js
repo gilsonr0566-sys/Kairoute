@@ -27,10 +27,12 @@
     if (/\b(tram|trams)\b/i.test(n)) out.push("tram"); if (/\b(bus|buses|coach|shuttle)\b/i.test(n)) out.push("bus"); if (E.BOAT.test(n.replace(/water ?taxi/gi, "boat"))) out.push("ferry"); return out; };
   const WALK_LIMIT = { low: 0.8, medium: 1.7, high: 3.2 }, WALK_EITHER = 4;
   // By road (taxi or car) for d km as the crow flies: town streets, regional roads, then highway.
-  function road(d) {
-    const k = d <= 15 ? 1.3 : d <= 40 ? 1.35 : 1.25, v = d <= 6 ? 22 : d <= 15 ? 25 : d <= 40 ? 45 : 85, add = d <= 15 ? 10 : 15;
-    return { km: d * k, min: Math.round(add + d * k / v * 60) };
-  }
+  // The average speed rises smoothly with the length of the ride (Nov 20 review: one speed for the whole ride, chosen by
+  // its length, made a 53 km ride quicker than a 37 km one on the same road). A longer ride is never quicker.
+  E.roadSpeed = d => d <= 6 ? 22 : d <= 15 ? 22 + (d - 6) * 8 / 9 : d <= 40 ? 30 + (d - 15) * 1.2 : d <= 70 ? 60 + (d - 40) * 2 / 3 : Math.min(85, 80 + (d - 70) * 0.1);
+  // The road is longer than the straight line: about 1.3 times in town, 1.2 on the open road.
+  E.roadTime = d => { const k = 1.3 - 0.1 * Math.min(1, Math.max(0, (d - 15) / 25)), add = 10 + 5 * Math.min(1, d / 40); return { km: d * k, min: Math.round(add + d * k / E.roadSpeed(d) * 60) }; };
+  const road = d => E.roadTime(d);
   // The longest time a guide's note names ("1 hour on the train", "60-75 min"), 10 to 300 minutes, else 0.
   function saidMin(note) {
     const low = String(note || "").toLowerCase(); if (!low) return 0; let m = 0;
@@ -47,6 +49,13 @@
   E.piersOf = bucket => (bucket.piers || []).filter(p => p && isFinite(p.lat) && isFinite(p.lng)).concat((bucket.days || [])
     .filter(d => d && d.point && isFinite(d.point.lat) && !d.point.unknown && (d.type === "port" || d.type === "embark" || ((d.type === "arrival" || d.type === "departure") && (d.mode === "ship" || d.mode === "ferry"))))
     .map(d => ({ name: d.point.name || "the port", lat: d.point.lat, lng: d.point.lng })));
+  // A pier's name or a note in plain words, every word for a harbor read as "port" (harbour, porto, puerto, hafen, limani).
+  E.pierWords = t => String(t || "").toLowerCase().normalize("NFKD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-z0-9]+/g, " ")
+    .replace(/\b(harbou?r|porto|puerto|porte?|hafen|limani|haven)\b/g, "port").trim();
+  E.PIER_BACK = 60; // at the pier for a boat back with no sailing times known: a gap between sailings
+  // The first sailing a guide's note gives ("boats leave from about 9:00", "first boat at 9.30 am"), in minutes, else null.
+  E.firstSailing = note => { const m = String(note || "").match(/\b(?:from|after|first (?:boat|ferry|sailing|departure)s?(?: \w+){0,2}?)\s+(?:about |around |approx(?:imately|\.)? )?(\d{1,2})[:.](\d{2})\s*(am|pm)?/i);
+    if (!m) return null; let h = +m[1]; if (m[3] && /pm/i.test(m[3]) && h < 12) h += 12; if (m[3] && /am/i.test(m[3]) && h === 12) h = 0; return h < 24 && +m[2] < 60 ? h * 60 + +m[2] : null; };
   E.PIER_AT = 0.3;  // within this of a pier is at the water already
   E.PIER_KM = 40;   // farthest a pier may be from where the traveler is to take a boat from it
   E.PIER_ISLAND = 5; // farthest the pier of a place reached by boat may be from it (on the same island)
@@ -133,15 +142,17 @@
     // ran across the streets). The boat runs from the mapped pier nearest the land end (or the pier the guide's note
     // names) to the pier nearest the boat's place, and the way to or from each pier is a ride of its own. Returns
     // { parts, min, from, to } or null when both ends are at the water already or no pier is known near them.
-    const pierList = (piers || []).filter(p => p && isFinite(p.lat));
+    const pierList = (piers || []).filter(p => p && isFinite(p.lat)).map(p => Object.assign({}, p, { name: String(p.name || "the pier").split(/\s[-–]\s|,/)[0].trim() })); // its own name, not the stops listed after it
     const nearestPier = (p, km) => { let best = null, bd = Infinity; for (const q of pierList) { const d = E.hav(p, q); if (d < bd || (d === bd && best && String(q.name) < String(best.name))) { best = q; bd = d; } } return best && bd <= km ? { q: best, d: bd } : null; };
     const plainPt = p => ({ lat: p.lat, lng: p.lng });
     const groundOf = (g, pierName, toPier, to) => Object.assign({ mode: g.mode, kind: g.kind, how: g.how + (toPier ? " to the ferry at " : " from the ferry at ") + pierName, min: g.min, km: g.km || 0, pierName, steps: g.steps || [] },
       g.transitMode ? { transitMode: g.transitMode } : {}, g.slack ? { slack: g.slack } : {}, g.ans ? { ans: g.ans } : {}, to ? { to } : {});
     function pierLeg(a, b, boatEnd) {
       const land = boatEnd === b ? a : b; if (!pierList.length || !land || land.viaLift || boatEnd.viaLift) return null;
-      const said = String(boatEnd.travelNote || "").toLowerCase(), base = n => String(n || "").replace(/\s*\(.*?\)\s*/g, " ").trim().toLowerCase();
-      const named = pierList.filter(q => base(q.name).length >= 5 && said.includes(base(q.name)) && E.hav(land, q) <= E.PIER_KM).sort((x, y) => E.hav(land, x) - E.hav(land, y))[0];
+      // The pier the guide names, matched on its own words with the words for a harbor taken as one ("the old harbor" is the
+      // map's "Old port"; Nov 20 review: the boat to an island left from the ship's dock, 2 km from the harbor the guide named).
+      const said = E.pierWords(boatEnd.travelNote), base = n => E.pierWords(String(n || "").replace(/\s*\(.*?\)\s*/g, " ").split(/\s[-–,]\s|,/)[0]);
+      const named = pierList.filter(q => base(q.name).length >= 5 && (" " + said + " ").includes(" " + base(q.name) + " ") && E.hav(land, q) <= E.PIER_KM).sort((x, y) => E.hav(land, x) - E.hav(land, y))[0];
       const lp = named ? { q: named, d: E.hav(land, named) } : nearestPier(land, E.PIER_KM), bp = nearestPier(boatEnd, E.PIER_ISLAND);
       const useL = lp && lp.d >= E.PIER_AT, useB = bp && bp.d >= E.PIER_AT && (!lp || E.hav(lp.q, bp.q) > 1);
       if (!useL && !useB) return null;
@@ -183,8 +194,15 @@
           const hn = holder.travelNote || "", cross = saidMin(hn) || Math.round(d / 25 * 60) + 10, pl = pierLeg(a, b, holder);
           const word = /high.?speed|fast ferry|hydrofoil|catamaran/i.test(hn) ? "Fast ferry" : /ferry/i.test(hn) ? "Ferry" : "Boat";
           const fromTo = pl && pl.parts.find(x => x.boat), how = word + (fromTo && fromTo.from ? " from " + fromTo.from : "") + (fromTo && fromTo.at ? " to " + fromTo.at : "");
-          opts.push(Object.assign({ id: "ferry", kind: "ferry", how, min: cross + E.PIER_MIN + (pl ? pl.min : 0), km: d, cross, pier: E.PIER_MIN, source: saidMin(hn) ? "guide" : "estimate",
-            steps: [word + (fromTo && fromTo.from ? " from " + fromTo.from : "") + ", about " + cross + " min crossing", "Allow " + E.PIER_MIN + " min at the pier for the ticket and the next sailing", "No sailing times are known here: check the timetable at the pier"] }, pl ? { parts: pl.parts } : {}));
+          // With no sailing times known, the boat back waits as long as a gap between sailings (Nov 20 review: boats to an
+          // island sail a few times a day; 15 minutes at the pier planned the ship day on a boat that may not come). The boat
+          // out never sails before the first time the guide gives ("boats leave from about 9:00").
+          const back = holder === a, pier = back ? E.PIER_BACK : E.PIER_MIN, first = back ? null : E.firstSailing(hn);
+          const gIsle = pl && pl.parts.length && !pl.parts[pl.parts.length - 1].boat ? pl.parts[pl.parts.length - 1].min : 0;
+          opts.push(Object.assign({ id: "ferry", kind: "ferry", how, min: cross + pier + (pl ? pl.min : 0), km: d, cross, pier, source: saidMin(hn) ? "guide" : "estimate",
+            steps: [word + (fromTo && fromTo.from ? " from " + fromTo.from : "") + ", about " + cross + " min crossing" + (first != null ? ", first boat about " + E.clock(first) : ""),
+              back ? "No sailing times are known here: up to " + pier + " min at the pier is allowed for the next boat back. Check the timetable at the pier when you land"
+                : "Allow " + pier + " min at the pier for the ticket and the next sailing", ...(back ? [] : ["No sailing times are known here: check the timetable at the pier"])] }, pl ? { parts: pl.parts } : {}, first != null ? { first: { at: first, after: cross + gIsle } } : {}));
         }
       } else {
         // On foot: any ride up to 4 km may be walked.
@@ -219,8 +237,12 @@
       const ansPick = wantRaw != null ? opts.find(o => o.ans && String(o.ans.id) === String(wantRaw)) : null;
       let pick = ansPick || (want === "transit" ? pubs.find(o => o.kind !== "ferry") : want != null ? byKind(want) : null), lost = null;
       if (want != null && !pick && !nearOnly) lost = want;
+      // On the way to a ship, train or plane the app takes a line on its own only when a timetable answers for it, or it is a
+      // metro or tram (they run every few minutes); a train or bus known only from the map stays a choice, said (Nov 20
+      // review: the ride back to the ship was planned on a long-distance train no timetable confirmed).
+      const auto = (b.backToShip || b.deadline) ? pubs.filter(o => !o.mapped || o.kind === "metro" || o.kind === "tram") : pubs;
       if (!pick) { const w = byKind("walk"), t = byKind("taxi");
-        pick = w && d <= lim ? w : pubs.length && (!t || E.publicWins(pubs[0].min, t.min)) ? pubs[0] : t || pubs[0] || w || opts[0]; }
+        pick = w && d <= lim ? w : auto.length && (!t || E.publicWins(auto[0].min, t.min)) ? auto[0] : t || auto[0] || pubs[0] || w || opts[0]; }
       // A way the guide names that the data doesn't have: said plainly, never planned as if it were known.
       const missing = d > 5 && note ? E.noteKinds(note).filter(k => !opts.some(o => o.kind === k || (k === "train" && (o.kind === "metro" || o.kind === "tram")))) : [];
       // Where each way's time comes from (Nov 19 review: an estimate must never read as a timetable): the timetable, a line
@@ -237,7 +259,7 @@
       const leg = Object.assign({ mode: E.modeOfKind(pick.kind), kind: pick.kind, how: pick.how, km: pick.km || d, min: pick.min, steps: pick.steps || [], choice: pick.id, options },
         pick.kind !== "walk" && pick.kind !== "taxi" && pick.kind !== "ferry" ? { transitMode: pick.transitMode || (pick.ans && pick.ans.mode) || pick.kind } : {},
         pick.kind === "ferry" ? { cross: pick.cross, pier: pick.pier || E.PIER_MIN, timetable: pick.source === "timetable" } : {}, { source: pick.source },
-        pick.parts ? { parts: pick.parts } : {}, pick.ans ? { ans: pick.ans } : {}, pick.slack ? { slack: pick.slack } : {}, pinned ? { pinned: true } : {},
+        pick.parts ? { parts: pick.parts } : {}, pick.first ? { first: pick.first } : {}, pick.ans ? { ans: pick.ans } : {}, pick.slack ? { slack: pick.slack } : {}, pinned ? { pinned: true } : {},
         notes.length ? { note: notes.join(" ") } : {}, lost ? { lost } : {});
       if (options.length < 2) delete leg.options;
       return leg;
