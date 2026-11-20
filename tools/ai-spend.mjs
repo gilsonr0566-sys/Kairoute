@@ -63,6 +63,20 @@ const report = [`## AI spend check, ${now.toISOString().slice(0, 16).replace("T"
   "| Day (UTC) | Neurons | Paid neurons | By model |", "|---|---|---|---|", ...lines].join("\n");
 console.log(report);
 if (process.env.GITHUB_STEP_SUMMARY) appendFileSync(process.env.GITHUB_STEP_SUMMARY, report + "\n");
+// Workers Logs / Traces (Cloudflare Observability, billed by volume from Dec 1 2026): is it on for any worker, and how much was logged?
+try {
+  const ls = await (await fetch(`https://api.cloudflare.com/client/v4/accounts/${id}/workers/scripts`, { headers: H })).json();
+  for (const w of (ls.result || [])) {
+    const ss = await (await fetch(`https://api.cloudflare.com/client/v4/accounts/${id}/workers/scripts/${w.id}/script-settings`, { headers: H })).json();
+    console.log(`Observability for worker ${w.id}: ${JSON.stringify(ss.result ? ss.result.observability ?? "(not set)" : ss.errors)} | logpush ${ss.result ? !!ss.result.logpush : "?"} | tail consumers ${JSON.stringify(ss.result ? ss.result.tail_consumers || [] : "?")}`);
+  }
+  if (!ls.result) console.log("Workers list unavailable: " + JSON.stringify(ls.errors));
+  for (const ds of ["workersObservabilityEventsAdaptiveGroups", "workersObservabilityTelemetryAdaptiveGroups", "observabilityTelemetryAdaptiveGroups"]) {
+    const q = `{ viewer { accounts(filter: { accountTag: "${id}" }) { ${ds}(limit: 100, filter: { date_geq: "${month}-01" }) { count dimensions { date } } } } }`;
+    const r = await (await fetch("https://api.cloudflare.com/client/v4/graphql", { method: "POST", headers: H, body: JSON.stringify({ query: q }) })).json();
+    console.log(`Observability dataset ${ds}: ` + (r.errors ? "n/a (" + String(r.errors[0] && r.errors[0].message).slice(0, 120) + ")" : JSON.stringify(r.data.viewer.accounts[0][ds])));
+  }
+} catch (e) { console.log("Observability check failed: " + e.message); }
 // Last 36 hours by hour, to match busy storage hours with test runs.
 try {
   const since = new Date(now - 36 * 3600e3).toISOString().slice(0, 13) + ":00:00Z";
