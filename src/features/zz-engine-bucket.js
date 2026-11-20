@@ -44,7 +44,7 @@ function engineBucket(withOld) {
   const n = v => (isFinite(+v) ? +v : null);
   const pt = p => p ? { id: p.id || null, name: p.name || "", lat: n(p.lat), lng: n(p.lng), unknown: !!p.unknown || (typeof unsurePoint === "function" && unsurePoint(p)), ask: Array.isArray(p.ask) && p.ask.length > 1 ? p.ask.map(String) : null } : null;
   const ints = (() => { try { return interestWords(); } catch (e) { console.warn("engineBucket: interests", e); return []; } })();
-  const cityOut = {}, dayOut = [];
+  const cityOut = {}, dayOut = [], waterHomes = {};
   const siteFacts = (city, s) => ({
     id: s.id, name: s.name, lat: n(s.lat), lng: n(s.lng), minutes: n(s.minutes) || 30, floor: stopFloor(s) || 0,
     mustSee: !!s.mustSee, quick: !!s.quick, far: !!s.far || (city.farther || []).includes(s), indoor: !!s.indoor,
@@ -52,6 +52,8 @@ function engineBucket(withOld) {
     religiousOk: religiousOk(s), srcOnly: !!s.srcOnly, hasGuide: !!s.guide, recommended: !!(s.unesco || (s.src || []).some(t => /Wikivoyage/.test(t))),
     likes: ints.reduce((a, w) => a + (((s.category || "") + " " + (s.summary || "")).toLowerCase().includes(w) ? 1 : 0), 0),
     travelNote: typeof s.travel === "string" ? s.travel : "", show: s.show || null,
+    // From the map (water-check.js): on another island with no way there but a boat; how far the nearest road is.
+    ...(s.acrossWater ? { acrossWater: s.acrossWater } : {}), ...(s.roadGap > 0 ? { roadGap: +s.roadGap } : {}),
     access: [s.access, s.tickets, s.howToSee].filter(x => typeof x === "string").join(" ").slice(0, 300), // e.g. "viewed from the water"
     tags: sightTags(city, s), // step 4: every label the app sorts and shows by (same rules as the screens)
     in: typeof inArea === "function" ? allSites(city).filter(a => a !== s && inArea(s, a)).map(a => a.id) : [] // the map areas it stands in (groups, step 3)
@@ -118,7 +120,10 @@ function engineBucket(withOld) {
     facts.missing = [!city && !noShore(d) ? "guide" : "", city && !noShore(d) && !L && d.type !== "port" ? "hotel" : "", city && !noShore(d) && !P && d.type !== "land" ? "arrival or departure point" : "",
       d.type === "port" && !(isFinite(facts.portArrive) && isFinite(facts.allAboard)) ? "ship times" : "", d.type === "embark" && !isFinite(facts.allAboard) ? "all-aboard time" : ""].filter(Boolean);
     dayOut.push(facts);
+    if (city && !noShore(d)) { const h = waterHomes[ck] || (waterHomes[ck] = { city, pts: [] }); [P, L, A].forEach(x => { if (x && isFinite(+x.lat) && !h.pts.some(y => hav(x, y) < 0.2)) h.pts.push(x); }); }
   });
+  // Which stops are across the water and how far each is from a road: asked of the map once per place, in the background.
+  if (typeof waterCheck === "function") Object.values(waterHomes).forEach(h => { try { waterCheck(h.city, h.pts); } catch (e) { console.warn("water check", e); } });
   const out = { v: 1, complete: dayOut.every(x => !x.missing.length), today: todayISO(), prefs: Object.assign({}, P()), style: trip.style || "mix", legModes: Object.assign({}, trip.legModes || {}), cities: cityOut, days: dayOut };
   if (withOld) out.old = engineOldPlans();
   return out;

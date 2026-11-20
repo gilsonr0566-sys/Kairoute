@@ -197,7 +197,10 @@
       // The traveler's choice, as a kind (a row of a timetable answer picked earlier counts as its kind).
       const want = wantRaw == null ? null : OLD_CHOICE[wantRaw] || (/^note\|/.test(String(wantRaw)) ? String(wantRaw).slice(5) : wantRaw); // a note's way is its kind
       const opts = [];
-      if (isle(a) !== isle(b) && d > 1) {
+      // Two stops on two different islands, each across the water from the start, are a boat apart too; a stop the map
+      // puts across the water is a boat away however close it looks (Round 1: Lokrum "Walk 6 min" from the old town).
+      const across = p => p.acrossWater ? String(p.acrossWater) : "", apart = isle(a) !== isle(b) || (across(a) && across(b) && across(a) !== across(b));
+      if (apart && (d > 1 || across(a) || across(b))) {
         // Across water: a place reached only by boat is reached by boat, never a taxi or a walk. The boat's time is the
         // timetable's when the app has it, else the crossing the guide names (or one worked out from the distance),
         // plus the time at the pier for the next sailing.
@@ -233,8 +236,8 @@
         // Never a way much slower than a walk this traveler would take (Nov 19, Richard: a river boat of 1 h 40 min offered
         // for a 1.6-mile hop beside a 34-minute walk, "sticks out like a sore thumb"). Within the traveler's walking limit a
         // way is offered only when quicker than the walk; up to twice the limit, at most E.SLOWER_THAN_WALK minutes slower
-        // (a bus that spares a longish walk); beyond that any way that spares the walk is offered (a slow tram beats a
-        // 78-minute walk for someone who walks little).
+        // (a bus that spares a longish walk); beyond that any way that spares the walk is offered, unless it is far slower
+        // than both the taxi and the walk (below).
         // A way the start place's note names (a port's sea bus or shuttle) that the data doesn't have: a choice of its own,
         // on the guide's ride time (else the road's) with the wait for it (half its interval going out, all of it back to a
         // ship, train or plane, 15 min if not said) and 10 min from where it stops. Never taken on its own: the traveler picks it.
@@ -248,8 +251,17 @@
         // The guide's own time for the ride (a winding road it knows) is the floor, never the label.
         if (d >= 0.6 || !opts.length) {
           const r = pinned && pinned.mode !== "walk" && pinned.mode !== "boat" ? { km: pinned.km || d * 1.3, min: Math.round(pinned.min) } : road(d), said = d > 5 ? saidMin(note) : 0;
-          opts.push({ id: "taxi", kind: "taxi", how: "Taxi or car", min: Math.max(r.min, said), km: r.km, steps: [], source: said > r.min ? "guide" : pinned && pinned.road ? "roads" : "estimate" });
+          // A stop far from any road a car can drive (a car-free old town on the water, Round 1: taxis between Venice's
+          // sights): the taxi starts or ends at the nearest road, and the walk to it is part of the ride. Between two such
+          // stops within a walk, no taxi at all.
+          const gap = p => Math.max(0, +p.roadGap || 0) / 1000, ga = gap(a), gb = gap(b);
+          if (!(ga && gb && d <= WALK_EITHER)) {
+            const gw = k => k ? Math.max(2, Math.round(k * 1.3 / speed * 60)) : 0, walkTo = gw(ga) + gw(gb);
+            opts.push(Object.assign({ id: "taxi", kind: "taxi", how: walkTo ? "Walk to the road, then taxi" : "Taxi or car", min: Math.max(r.min, said) + walkTo, km: r.km, steps: walkTo ? [(ga ? "Walk about " + gw(ga) + " min to the nearest road a car can reach" : "") + (ga && gb ? "; " : "") + (gb ? "the taxi stops about " + gw(gb) + " min walk away" : "")] : [], source: said > r.min ? "guide" : pinned && pinned.road ? "roads" : "estimate" }, walkTo ? { roadWalk: walkTo } : {}));
+          }
         }
+        // Nothing else reaches it (two stops far from any road, farther apart than a walk): the walk is offered, on its time.
+        if (!opts.length) opts.push({ id: "walk", kind: "walk", how: "Walk", min: onFoot, km: d * 1.3, steps: [] });
         // Never a way far slower than the road (Round 1, Nov 20: a ferry to another island offered for a ride across the
         // city, a coach with 6 changes taking 13 h): over twice the taxi's time and 20 min more, it isn't offered, unless it is
         // the traveler's own choice.

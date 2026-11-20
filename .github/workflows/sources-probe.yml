@@ -9,7 +9,7 @@ on:
         default: ""
   push:
     branches: ["claude/project-thread-xrdp7v"]
-    paths: [".github/workflows/sources-probe.yml", "tools/beta2/sources-probe.cjs", "tools/beta2/transit-probe.cjs"]
+    paths: [".github/workflows/sources-probe.yml", "tools/beta2/sources-probe.cjs", "tools/beta2/transit-probe.cjs", "tools/beta2/water-probe.cjs"]
 permissions:
   contents: write
 jobs:
@@ -23,8 +23,8 @@ jobs:
           node-version: 22
       - env:
           ONLY: ${{ inputs.only || '' }}
-          TRANSIT: "1"
-        run: if [ -n "$TRANSIT" ]; then node tools/beta2/transit-probe.cjs; else node tools/beta2/sources-probe.cjs; fi
+          WATER: "1"
+        run: if [ -n "$WATER" ]; then node tools/beta2/water-probe.cjs; elif [ -n "$TRANSIT" ]; then node tools/beta2/transit-probe.cjs; else node tools/beta2/sources-probe.cjs; fi
       - name: Save the answers to the branch
         run: |
           git config user.name "Kairoute places"

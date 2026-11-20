@@ -815,6 +815,35 @@ ok(E.readable('Café Ñandú') && E.readable("Joe's Bar & Grill") && !E.readable
       const p = E.planTrip(E.applyPlaces(b, P))[0]; return (p.items || []).filter(x => x.t === 'ride').map(x => x.kind); };
     const a = mk(true), b = mk(false);
     ok(a.length && a.every(k => k === 'ferry' || k === 'walk') && b.includes('taxi'), `a town across the water on the map is reached by boat, one on the same land by road (got ${a.join(', ')} / ${b.join(', ')})`); }
+  // Round 1 S1-8: a stop the map puts across the water is a boat away however close it looks (Lokrum, "Walk 6 min"), and
+  // a stop far from any road is reached on foot or by a taxi from the nearest road (Venice: taxis between sights).
+  { const tw = E.makeTravel({ walk: 'medium' }, {});
+    const town = { lat: 42.640, lng: 18.110 }, isle = { lat: 42.634, lng: 18.118, acrossWater: 'Lokrum' }, isle2 = { lat: 42.600, lng: 18.200, acrossWater: 'Other' };
+    const e = tw.estimate(town, isle), back = tw.estimate(isle, town);
+    ok(e.mode === 'boat' && !(e.options || []).some(o => o.kind === 'walk' || o.kind === 'taxi'), `a stop across the water 1 km away is a boat ride, never a walk or a taxi (got ${e.mode} ${JSON.stringify((e.options || []).map(o => o.kind))})`);
+    ok(back.mode === 'boat', 'and the way back from it too');
+    const two = tw.estimate(isle, isle2); ok(two.mode === 'boat' && !(two.options || []).some(o => o.kind === 'walk' || o.kind === 'taxi'), `two stops on two different islands across the water are a boat apart (got ${JSON.stringify((two.options || [two]).map(o => o.kind))})`);
+    const same = tw.estimate(isle, { lat: 42.6345, lng: 18.1185, acrossWater: 'Lokrum' }); ok(same.mode === 'walk', 'two stops on the same island are a walk apart');
+    const v1 = { lat: 45.434, lng: 12.338, roadGap: 1500 }, v2 = { lat: 45.440, lng: 12.327, roadGap: 900 }, road = { lat: 45.437, lng: 12.318 };
+    const vv = tw.estimate(v1, v2); ok(!(vv.options || [vv]).some(o => o.kind === 'taxi'), `two stops far from any road within a walk: no taxi (got ${JSON.stringify((vv.options || [vv]).map(o => o.kind + o.min))})`);
+    const plain = E.makeTravel({ walk: 'low' }, {}).estimate({ lat: 45.434, lng: 12.338 }, { lat: 45.48, lng: 12.36 }), vr = E.makeTravel({ walk: 'low' }, {}).estimate(v1, { lat: 45.48, lng: 12.36 });
+    const tx = (vr.options || [vr]).find(o => o.kind === 'taxi'), tp = (plain.options || [plain]).find(o => o.kind === 'taxi');
+    ok(tx && tp && tx.min > tp.min + 10 && /Walk to the road/.test(tx.how), `a taxi from a stop far from the road starts at the road, the walk to it counted (got ${tx && tx.how} ${tx && tx.min} vs ${tp && tp.min})`);
+    void road; }
+  // The app's map check (water-check.js), its rule apart from the fetching: an island no start stands on, with no way on
+  // foot without a ferry, is across the water; a bridge (a way on foot) keeps it on land; the mainland is never across.
+  { const fs = require('fs'), src = fs.readFileSync(require('path').join(__dirname, '../../src/features/water-check.js'), 'utf8');
+    const W = new Function('fetch', 'allSites', 'keyOf', 'save', 'render', 'window', src + '; return { waterIslandsFrom, waterAcross, waterIslandQuery };')(null, () => [], x => x, () => {}, () => {}, undefined);
+    const ans = { elements: [{ tags: { i: '0', isl: '', nm: '', nl: '' } }, { tags: { i: '1', isl: '3600001', nm: 'Lokrum', nl: 'Lokrum' } }, { tags: { i: '2', isl: '3600002', nm: '', nl: 'Bridge Isle' } }, { tags: { i: '3', isl: '' } }] };
+    const isl = W.waterIslandsFrom(ans, 4);
+    ok(isl[0] === '' && isl[1].name === 'Lokrum' && isl[2].name === 'Bridge Isle' && isl[3] === '', `islands read per point from the map's answer (got ${JSON.stringify(isl)})`);
+    const stops = [{ id: 'old' }, { id: 'lok' }, { id: 'br' }];
+    const out = W.waterAcross(stops, [{}], isl.slice(0, 3), [isl[3]], i => i === 1 ? false : true);
+    ok(out.lok === 'Lokrum' && !out.br && !out.old, `across the water: the island with no way on foot only (got ${JSON.stringify(out)})`);
+    ok(!Object.keys(W.waterAcross(stops, [{}], isl.slice(0, 3), [isl[1]], () => false)).includes('lok'), 'a stop on the island the ship or hotel is on is not across the water');
+    ok(!Object.keys(W.waterAcross(stops, [{}], isl.slice(0, 3), [null], () => false)).length, 'no answer about the start: nothing is marked');
+    ok(!Object.keys(W.waterAcross(stops, [{}], isl.slice(0, 3), [isl[3]], () => null)).length, 'no answer from the walking router: nothing is marked');
+    ok(/is_in\(42\.00000,18\.00000\)/.test(W.waterIslandQuery([{ lat: 42, lng: 18 }])) && /make w i=0/.test(W.waterIslandQuery([{ lat: 42, lng: 18 }])), 'one map question for all points, each answer tagged with its point'); }
   // Folding (Richard, Nov 20: "a false sense of not enough time in the day"): a picked sight inside a bigger picked visit, or a
   // small open-air sight right beside it, is part of that visit and adds only a little time.
   { const castle = { id: 'c', name: 'Hill Castle', category: 'Castle', lat: 40.0, lng: 10.0, minutes: 120 }, tower = { id: 't', name: 'Keep Tower', lat: 40.0004, lng: 10.0003, minutes: 30, in: ['c'] },
