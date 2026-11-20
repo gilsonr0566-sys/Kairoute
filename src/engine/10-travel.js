@@ -30,6 +30,9 @@
   // said, and how often it runs if said (Nov 20 UI review: the note named a ride the plan offered no button for).
   E.noteWays = note => { const out = [];
     for (const part of String(note || "").split(/(?<=[.;!?])\s+|\n/)) {
+      // Only a sentence that offers the ride: it gives a time or how often it runs, says it runs or goes, or starts with it
+      // ("Right by the ferries to the islands" only says where the port is).
+      if (!/\b(every|min|mins|minutes?|hours?|runs?|goes|go|leaves?|departs?|takes?|connects?|links?)\b/i.test(part) && !/^\s*(?:a|an|the|take a|take the|by)?\s*(?:[a-z]+\s+){0,2}?(?:sea ?bus|water ?bus|water ?taxi|shuttle|bus|ferry|boat|tram|metro|train)/i.test(part)) continue;
       const m = part.match(/\b((?:[a-z]+\s+){0,2}?(?:sea ?bus|water ?bus|water ?taxi|shuttle(?: bus(?:es)?)?|bus(?:es)?|ferry|ferries|boats?|tram|metro|train))\b/i); if (!m) continue;
       const kind = /sea ?bus|water|ferr|boat/i.test(m[1]) ? "ferry" : /tram/i.test(m[1]) ? "tram" : /metro/i.test(m[1]) ? "metro" : /train/i.test(m[1]) ? "train" : "bus";
       if (out.some(w => w.kind === kind)) continue;
@@ -192,7 +195,7 @@
       const pin = (legs && legs[E.pairKey(a, b)]) || roadNear(a, b), pinned = pin && isFinite(pin.min) ? pin : null;
       const isle = p => E.byBoat(p.travelNote) || E.waterOnly(p), note = noteFor(a, b);
       // The traveler's choice, as a kind (a row of a timetable answer picked earlier counts as its kind).
-      const want = wantRaw == null ? null : OLD_CHOICE[wantRaw] || wantRaw;
+      const want = wantRaw == null ? null : OLD_CHOICE[wantRaw] || (/^note\|/.test(String(wantRaw)) ? String(wantRaw).slice(5) : wantRaw); // a note's way is its kind
       const opts = [];
       if (isle(a) !== isle(b) && d > 1) {
         // Across water: a place reached only by boat is reached by boat, never a taxi or a walk. The boat's time is the

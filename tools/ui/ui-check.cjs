@@ -87,8 +87,11 @@ function repeats(text) {
       ok(`no "0.0" distance (${dn})`, !dom.zero, 'a distance reads 0.0');
       ok(`one word for a sight (${dn})`, !dom.words.length, `old words on the page: ${dom.words.join(', ')}`);
       // 5. A ride named in the text is a button, or the text says it isn't planned.
-      if (dom.named) { const kinds = [[/\b(sea ?bus|water ?bus|water taxi|ferr(y|ies)|boats?)\b/i, /k-ferry/], [/\b(shuttle|bus(es)?)\b/i, /k-bus/], [/\b(tram|metro|train|funicular)\b/i, /k-(train|tram|metro)/]];
-        for (const [re, chip] of kinds) if (re.test(dom.named.sub)) ok(`a named ride has a button or says it isn't planned (${dn})`, chip.test(dom.named.chips) || /isn't in the plan/.test(dom.named.sub), `"${dom.named.sub.slice(0, 120)}" names a ride with no button`); }
+      if (dom.named) { const kinds = [[/\b(sea ?bus|water ?bus|water taxi|ferr(y|ies)|boats?)\b/i, /k-ferry/], [/\b(?<!sea |water )(shuttle|bus(es)?)\b/i, /k-bus/], [/\b(tram|metro|train|funicular)\b/i, /k-(train|tram|metro)/]];
+        // Only a sentence that offers the ride (a time, how often, "runs"), as the engine reads a note (E.noteWays): "right by
+        // the ferries to the islands" only says where the port is.
+        const offers = dom.named.sub.split(/(?<=[.;!?])\s+/).filter(t => /\b(every|min|mins|minutes?|hours?|runs?|goes|go|leaves?|departs?|takes?|connects?|links?)\b/i.test(t) || /^\s*(?:a|an|the|take a|take the|by)?\s*(?:[a-z]+\s+){0,2}?(?:sea ?bus|water ?bus|water ?taxi|shuttle|bus|ferry|boat|tram|metro|train)/i.test(t)).join(' ');
+        for (const [re, chip] of kinds) if (re.test(offers)) ok(`a named ride has a button or says it isn't planned (${dn})`, chip.test(dom.named.chips) || /isn't in the plan/.test(dom.named.sub), `"${dom.named.sub.slice(0, 120)}" names a ride with no button`); }
       // 6. Nothing said twice on the screen.
       const rep = repeats(await proseText(p)); ok(`nothing said twice on the Day plan (${dn})`, !rep.length, `said twice: ${rep.slice(0, 3).map(x => '"' + x.slice(0, 80) + '"').join('; ')}`);
       // 7. Choose sights says the same time left and day length as the Day plan.

@@ -77,6 +77,8 @@ function engineBucket(withOld) {
       portArrive: sh(d.portArrive), allAboard: sh(d.allAboard), boardAt: typeof boardAt === "function" ? boardAt(d) : null,
       thru: thru ? { mode: thru.mode, time: thru.time || "", point: pt(A) } : null,
       // The start place's note, when it names a way to ride (a port's sea bus or shuttle): offered as a choice for that ride.
+      // The trip's last day, and whether the hotel is only the guide's guess (the traveler named none here).
+      lastDay: i === trip.days.length - 1, stayGuess: !((trip.lodging[cityKeyFor(d) || keyOf(d.destination)] || {}).idx === "custom"),
       lodging: pt(L), point: P ? Object.assign(pt(P), typeof P.note === "string" && /\b(bus|buses|shuttle|boat|ferry|sea ?bus|water ?taxi|tram|metro|train)\b/i.test(P.note) ? { startNote: P.note.slice(0, 400) } : {}) : null,
       // The countries a leaving train runs between (a border means passport or ID checks: be there earlier).
       country: (city && city.country) || "", toCountry: d.type === "departure" && trip.days[i + 1] ? ((cityFor(trip.days[i + 1]) || {}).country || "") : "",

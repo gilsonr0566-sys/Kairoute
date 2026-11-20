@@ -808,6 +808,15 @@ ok(E.readable('Café Ñandú') && E.readable("Joe's Bar & Grill") && !E.readable
     const out = tr.estimate(port, town), back = tr.estimate(town, Object.assign({}, port, { backToShip: true })), so = (out.options || []).find(o => o.how === 'Sea bus'), sb = (back.options || []).find(o => o.how === 'Sea bus');
     ok(so && sb && out.kind !== 'ferry' && back.kind !== 'ferry' && so.min === 10 + 15 + 10 && sb.min >= 10 + 30 + 10, `the port's sea bus is offered both ways, never picked on its own, with half the interval going out and all of it back (out ${so && so.min}, back ${sb && sb.min})`);
     const pick = E.makeTravel({ walk: 'medium' }, { [E.pairKey(port, town)]: 'ferry' }).estimate(port, town);
-    ok(pick.kind === 'ferry' && pick.how === 'Sea bus', `the traveler's tap on it plans it (got ${pick.how})`); }
+    const tap = E.makeTravel({ walk: 'medium' }, { [E.pairKey(port, town)]: 'note|ferry' }).estimate(port, town);
+    ok(pick.kind === 'ferry' && pick.how === 'Sea bus' && tap.how === 'Sea bus', `the traveler's tap on it plans it, by kind or by its chip's id (got ${pick.how}, ${tap.how})`);
+    ok(!E.noteWays('Right by the old town and the ferries to the islands.').length, 'a note that only says where the port is offers no ride'); }
+  // The last day of a trip, arriving with no hotel of the traveler's own: going home at an unknown time, so asked, never
+  // planned as a stay (Nov 20 tester: off the ship at 6:00, then a hotel check-in, a museum and a dinner).
+  { const hotel = { name: 'Hotel in central X', lat: 25.77, lng: -80.19 }, pier = { name: 'Pier', lat: 25.78, lng: -80.17 };
+    const mk = o => ({ prefs: { walk: 'medium' }, cities: { x: { key: 'x', name: 'X', sites: [{ id: 'm', name: 'Museum', lat: 25.74, lng: -80.21, minutes: 90 }], restaurants: [] } },
+      days: [Object.assign({ i: 0, type: 'arrival', mode: 'ship', city: 'x', date: '2027-01-15', time: '06:00', hours: 8, lodging: hotel, point: pier, selected: ['m'] }, o)] });
+    const last = E.planTrip(mk({ lastDay: true, stayGuess: true }))[0], own = E.planTrip(mk({ lastDay: true, stayGuess: false }))[0], mid = E.planTrip(mk({ lastDay: false, stayGuess: true }))[0];
+    ok(last.error && /This is your last day/.test(last.error) && own.items && mid.items, `the trip's last day with no hotel of the traveler's own asks how they leave; with their hotel, or mid-trip, it is planned (${last.error ? 'asked' : 'planned'})`); }
 }
 console.log(`\n${oks} checks passed, ${fails} failed`); process.exit(fails ? 1 : 0);

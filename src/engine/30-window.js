@@ -70,6 +70,10 @@
       w.head = [L]; w.tail = d.returnToStart ? [L] : [];
       w.start = E.toMin(d.startTime); w.endBy = Math.min(23 * 60 + 30, lunchIn(w.start, d.hours)); w.sightFrom = w.start;
     } else if (d.type === "arrival") {
+      // Arriving on the trip's last day with no hotel of the traveler's own: they are going home, and the time they leave
+      // isn't known. Asked, never planned as a stay with a guessed hotel (Nov 20 tester: off the ship at 6:00 on the last
+      // morning, planned with a hotel check-in, a museum before it opened and a dinner).
+      if (d.lastDay && d.stayGuess) return E.fail("This is your last day. Add how you leave and when (your flight or train home) on the Trip page, or your hotel if you're staying on, and the day is planned around it: nothing is planned on a guess.", { unsure: true, askLeave: true });
       if (!L) return E.fail("Choose where you're staying."); if (!P) return E.fail("Choose your arrival point.");
       const m = E.MODES[d.mode] || E.MODES.flight;
       w.start = E.toMin(d.time) + m.clear; w.head = [P, Object.assign(fixed(L, "Check in or drop bags", 20), { bags: true })]; w.tail = [L];

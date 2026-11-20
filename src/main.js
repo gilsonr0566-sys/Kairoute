@@ -1325,7 +1325,7 @@ function dayWindow(d, city) {
     w.sightFrom = w.start + chainCost(w.head); w.tail = [L]; w.endBy = Math.min(23 * 60, lunchIn(w.sightFrom, d.hours));
     w.startLabel = (d.mode === "ship" ? "Off the ship at " : "Out of ") + P.name;
     w.endLabel = "Back at " + L.name;
-    w.notes.push(`${m.label} arrives ${d.time}. We allow ${dur(m.clear)} to get ${d.mode === "flight" ? "through passport control and baggage" : d.mode === "ship" ? "off the ship with your luggage" : d.mode === "train" ? "off the train" : "parked and on your way"}.`);
+    w.notes.push(`${m.label} arrives ${d.time}. We allow ${dur(m.clear)} to get ${d.mode === "flight" ? "off the plane and through baggage claim (and passport control after a flight from abroad)" : d.mode === "ship" ? "off the ship with your luggage" : d.mode === "train" ? "off the train" : "parked and on your way"}.`);
   } else if (d.type === "departure" || d.type === "embark") {
     // Leaving days and boarding days: sightseeing until it's time to collect the bags and go, never past a
     // conservative "be there by" (flight: 3 h, train: 30 min, ship: an hour before all aboard). The last ride gets
@@ -1347,7 +1347,7 @@ function dayWindow(d, city) {
       w.head = d.noBags ? [A] : [A, fixedStop(A, "Leave your bags in luggage storage", 15)];
       w.tail = d.noBags ? [end] : [fixedStop(A, "Collect your bags", 15), end];
       w.startLabel = (thru.mode === "ship" ? "Off the ship at " : "Out of ") + A.name;
-      w.notes.push(`${am.label} arrives ${thru.time}. We allow ${dur(am.clear)} to get ${thru.mode === "ship" ? "off the ship with your luggage" : thru.mode === "flight" ? "through passport control and baggage" : "off with your luggage"}.${d.noBags ? "" : " Book luggage storage near " + A.name + " ahead (a left-luggage desk or a storage shop), or ask " + (thru.mode === "ship" ? "your cruise line about luggage transfer." : "your hotel or station.")}`);
+      w.notes.push(`${am.label} arrives ${thru.time}. We allow ${dur(am.clear)} to get ${thru.mode === "ship" ? "off the ship with your luggage" : thru.mode === "flight" ? "off the plane and through baggage claim (and passport control after a flight from abroad)" : "off with your luggage"}.${d.noBags ? "" : " Book luggage storage near " + A.name + " ahead (a left-luggage desk or a storage shop), or ask " + (thru.mode === "ship" ? "your cruise line about luggage transfer." : "your hotel or station.")}`);
     } else {
       if (!L) return { error: "Choose where you're staying in " + d.destination + "." };
       w.start = toMin(d.startTime);

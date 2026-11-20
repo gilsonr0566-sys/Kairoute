@@ -323,12 +323,13 @@
       // ONE leave-by time on a leaving or boarding day, read off the plan itself (Nov 20 tester: a leaving day showed
       // 8:15 on the badge, 8:29 in the note and 8:44 on the timeline). out: the ride to the station, airport or ship starts;
       // bags: the bags are collected (when that's a stop of its own); last: the last stop or meal is left.
-      if ((d.type === "departure" || d.type === "embark") && plan.items.length && plan.items[plan.items.length - 1].t === "end") {
+      // A port day too (Nov 20 tester: the badge said leave by 15:26 while the plan was already back at 15:21).
+      if ((d.type === "departure" || d.type === "embark" || (d.type === "port" && win.hard)) && plan.items.length > 1 && plan.items[plan.items.length - 1].t === "end" && plan.items.some(x => x.t === "stop" || x.t === "meal" || x.t === "fixed")) {
         const its = plan.items, endAt = its[its.length - 1].at; let k = its.length - 1, t = endAt;
         while (k > 0 && its[k - 1].t === "ride") { k--; t -= its[k].min || 0; }
         const bagsK = its.findIndex(x => x.t === "fixed" && /bags/i.test(x.name || "")), lastK = its.map(x => x.t).reduce((a, x, j) => x === "stop" || x === "meal" || x === "start" ? j : a, -1);
         plan.leaveAt = { out: t, bags: bagsK >= 0 && its[bagsK].at != null ? its[bagsK].at : null, last: lastK >= 0 && lastK < (bagsK >= 0 ? bagsK : its.length) ? (its[lastK].at || 0) + (its[lastK].t === "start" ? 0 : its[lastK].min || 0) : null };
-        const word = d.type === "embark" ? "the cruise terminal" : "the " + ((E.MODES[d.mode] || E.MODES.flight).word);
+        const word = d.type === "embark" ? "the cruise terminal" : d.type === "port" ? "the ship" : "the " + ((E.MODES[d.mode] || E.MODES.flight).word);
         const atHotel = bagsK >= 0 && plan.leaveAt.last != null && Math.abs(plan.leaveAt.bags - plan.leaveAt.last) <= 2;
         explain.push(plan.leaveAt.bags != null && !atHotel && plan.leaveAt.last != null
           ? "Leave " + String(its[lastK].name || "your last stop").split(",")[0] + " by " + E.clock(plan.leaveAt.last) + ", collect your bags at " + E.clock(plan.leaveAt.bags) + ", and leave for " + word + " by " + E.clock(t) + "."

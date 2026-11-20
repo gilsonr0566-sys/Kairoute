@@ -238,8 +238,12 @@ function listings(text) {
 async function portPoints(port, centre, island) {
   let p = port.known && isFinite(port.lat) ? port : null;
   for (let i = 0; !p && i < 2; i++) { const f = await findQ(baseName(port.name), centre, 400); if (f) p = f.c; else await sleep(3000); }
+  // A port with no town of its own (a private island, a small cay): the ship docks at the place itself, so its piers are
+  // searched around the place's own centre (Nov 20 tester: a private-island day got no plan, its pier never searched).
+  const noTown = !p && centre && isFinite(centre.lat);
+  if (noTown) p = centre;
   if (!p) return { ports: [], missing: ['the port town', 'a mapped cruise terminal or pier'] };
-  const ports = await cruisePoints(p, island);
+  const ports = await cruisePoints(p, island || noTown);
   return { ports, missing: ports.some(x => x.cruise) ? [] : ['a mapped cruise terminal or pier'] };
 }
 
