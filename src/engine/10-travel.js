@@ -250,6 +250,14 @@
           const r = pinned && pinned.mode !== "walk" && pinned.mode !== "boat" ? { km: pinned.km || d * 1.3, min: Math.round(pinned.min) } : road(d), said = d > 5 ? saidMin(note) : 0;
           opts.push({ id: "taxi", kind: "taxi", how: "Taxi or car", min: Math.max(r.min, said), km: r.km, steps: [], source: said > r.min ? "guide" : pinned && pinned.road ? "roads" : "estimate" });
         }
+        // Never a way far slower than the road (Round 1, Nov 20: a ferry to another island offered for a ride across the
+        // city, a coach with 6 changes taking 13 h): over twice the taxi's time and 20 min more, it isn't offered, unless it is
+        // the traveler's own choice.
+        const taxiO = opts.find(o => o.kind === "taxi");
+        if (taxiO) for (let k = opts.length - 1; k >= 0; k--) { const o = opts[k]; if (o.kind === "taxi" || o.kind === "walk") continue;
+          const mine = wantRaw != null && (String(o.id) === String(wantRaw) || (o.ans && String(o.ans.id) === String(wantRaw)) || o.kind === wantRaw);
+          // A way the start place's own note names (a port's sea bus) stays: the traveler picks it knowing what it is.
+          if (!mine && !o.said && o.min > 2 * taxiO.min + 20 && o.min > onFoot) opts.splice(k, 1); }
       }
       // Time for the ship, a train or a plane, in one place for every way: a ride of half an hour or more to it gets 30%
       // more, at least 15 minutes (a late train, traffic, a slow boat queue).

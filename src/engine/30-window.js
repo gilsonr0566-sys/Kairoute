@@ -74,6 +74,9 @@
       // isn't known. Asked, never planned as a stay with a guessed hotel (Nov 20 tester: off the ship at 6:00 on the last
       // morning, planned with a hotel check-in, a museum before it opened and a dinner).
       if (d.lastDay && d.stayGuess) return E.fail("This is your last day. Add how you leave and when (your flight or train home) on the Trip page, or your hotel if you're staying on, and the day is planned around it: nothing is planned on a guess.", { unsure: true, askLeave: true });
+      // No arrival time given: asked, never planned on a time the app made up (Round 1, Nov 20: "Flight in at 10:30 am" on 12 of 15 cruises).
+      const askArrive = mode => E.fail(`When does your ${(E.MODES[mode] || E.MODES.flight).label.toLowerCase()} arrive? Add the time on the Trip page and the day is planned around it: nothing is planned on a guess.`, { unsure: true, askArrive: true });
+      if (d.timeGuess) return askArrive(d.mode);
       if (!L) return E.fail("Choose where you're staying."); if (!P) return E.fail("Choose your arrival point.");
       const m = E.MODES[d.mode] || E.MODES.flight;
       w.start = E.toMin(d.time) + m.clear; w.head = [P, Object.assign(fixed(L, "Check in or drop bags", 20), { bags: true })]; w.tail = [L];
@@ -91,6 +94,7 @@
       if (unknownBorder) w.borderUnknown = true; else if (border && border > m.need) w.borderNeed = border;
       if (ship) { w.boardAt = d.boardAt; w.latest = latest; }
       if (d.thru) { // off a ship, plane or train and leaving the same day: bags in storage near where you arrive
+        if (d.thru.guess) return E.fail(`When does your ${(E.MODES[d.thru.mode] || E.MODES.flight).label.toLowerCase()} arrive? Add the time on the Trip page and the day is planned around it, with the time to get to ${d.type === "embark" ? "the ship" : "your next ride"}: nothing is planned on a guess.`, { unsure: true, askArrive: true });
         const am = E.MODES[d.thru.mode] || E.MODES.flight, A = d.thru.point; if (!A) return E.fail("Choose where you arrive.");
         w.start = E.toMin(d.thru.time) + am.clear; w.through = true;
         w.head = d.noBags ? [A] : [A, fixed(A, "Leave your bags in luggage storage", 15)];

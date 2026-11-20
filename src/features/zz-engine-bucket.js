@@ -75,7 +75,9 @@ function engineBucket(withOld) {
     const facts = { i, id: d.id, date: d.date || "", type: d.type, mode: d.mode, city: ck, noShore: noShore(d), through: !!throughTo(d),
       startTime: d.startTime || "", hours: n(d.hours), time: d.time || "", tender: !!d.tender, noBags: !!d.noBags, returnToStart: d.returnToStart !== false,
       portArrive: sh(d.portArrive), allAboard: sh(d.allAboard), boardAt: typeof boardAt === "function" ? boardAt(d) : null,
-      thru: thru ? { mode: thru.mode, time: thru.time || "", point: pt(A) } : null,
+      thru: thru ? { mode: thru.mode, time: thru.time || "", point: pt(A), guess: !!thru.estimated || !thru.time } : null,
+      // An arrival time the traveler never gave (the trip builder fills one in): asked, never planned on (Round 1: "Flight in at 10:30 am" invented).
+      timeGuess: d.type === "arrival" && (!!d.estimated || !d.time),
       // The start place's note, when it names a way to ride (a port's sea bus or shuttle): offered as a choice for that ride.
       // The trip's last day, and whether the hotel is only the guide's guess (the traveler named none here).
       lastDay: i === trip.days.length - 1, stayGuess: !((trip.lodging[cityKeyFor(d) || keyOf(d.destination)] || {}).idx === "custom"),

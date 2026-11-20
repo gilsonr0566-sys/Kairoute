@@ -500,6 +500,12 @@ async function tapTimes(p) { const out = []; const n = await p.evaluate(() => wi
       return { no, yes, eat }; });
     check('A business, an office building or an event is never a sight; a monument or memorial is; a staff canteen is never a place to eat', !r.no.length && !r.yes.length && !r.eat.length,
       `taken as sights: ${r.no.join(', ') || 'none'}; refused: ${r.yes.join(', ') || 'none'}; canteens kept: ${r.eat.join(', ') || 'none'}`); }
+  // The leave-by time on every fixed day leaves room for the ride back: leave-by plus the ride is never past the time to be
+  // back (Round 1, Nov 20: Ketchikan's badge said leave by 12:15, the time to be back, with a 38 min ride after it).
+  { const days = await p.evaluate(() => window.__kairouteDays()), bad = []; let n = 0;
+    for (const d of days) { const F = await p.evaluate(i => { try { return window.__kairouteFacts.day(i); } catch (e) { return null; } }, d.i); if (!F || !F.fixed) continue; n++;
+      if (F.leaveBy + F.back > F.endBy + 0.5) bad.push(`day ${d.i + 1}: leave by ${F.leaveBy} + ride ${F.back} > back by ${F.endBy}`); }
+    check(`Every fixed day's leave-by leaves time for the ride back (${n} days)`, n > 0 && !bad.length, bad.slice(0, 3).join('; ') || 'no fixed day'); }
   // A request the helper couldn't finish (a big city's lines, Nov 20: Tokyo got only taxis) is asked again in smaller parts.
   { const r = await p.evaluate(() => { const f = window.__kairouteTransitNextBatch; return f ? [f(12, false, 12), f(6, false, 6), f(2, false, 2), f(6, true, 6), f(12, true, 12)] : null; });
     check('Rides the helper couldn\'t answer in one go are asked again in smaller parts', !!r && r.join() === '6,3,2,7,12', `batch sizes ${r}`); }

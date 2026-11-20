@@ -312,6 +312,9 @@
         if (!d.own && (!picks || !picks.length)) picks = wishes.length ? wishes : autoPicks(pool, win, ctx);
         autoIds = new Set(wishes.length ? [] : picks.map(s => String(s.id)));
       }
+      // Straight from the plane to the ship (under 3 h left with a safe margin): no sightseeing at all, the app's or the
+      // traveler's (Round 1, Nov 20: the day said "no time for sightseeing" and then planned three sights with luggage).
+      if (win.straight) { if (!again && wishes.length) explain.push("Not planned today: " + E.listWords(wishes.map(s => s.name), "and") + ". You fly in the day the ship sails, with too little time for sightseeing with a safe margin."); picks = []; }
       // Picks inside or right beside a bigger picked visit are part of it (E.foldPicks); never added again as fillers.
       let foldedIds = new Set();
       if (!again) { const fp = E.foldPicks(picks, groups, h => gated(ownDay(h.id))); picks = fp.picks; Object.values(fp.folded).forEach(f => f.forEach(x => foldedIds.add(String(x.id)))); }
@@ -369,11 +372,19 @@
       // 8:15 on the badge, 8:29 in the note and 8:44 on the timeline). out: the ride to the station, airport or ship starts;
       // bags: the bags are collected (when that's a stop of its own); last: the last stop or meal is left.
       // A port day too (Nov 20 tester: the badge said leave by 15:26 while the plan was already back at 15:21).
-      if ((d.type === "departure" || d.type === "embark" || (d.type === "port" && win.hard)) && plan.items.length > 1 && plan.items[plan.items.length - 1].t === "end" && plan.items.some(x => x.t === "stop" || x.t === "meal" || x.t === "fixed")) {
-        const its = plan.items, endAt = its[its.length - 1].at; let k = its.length - 1, t = endAt;
+      // The end is found by its kind, not as the last row: lunch back on board comes after it (Round 1, Nov 20: Ketchikan's
+      // badge said leave by 12:15, the time to be back, because that lunch hid the 38 min ride back).
+      const endI = plan.items.findIndex(x => x.t === "end");
+      if ((d.type === "departure" || d.type === "embark" || (d.type === "port" && win.hard)) && endI > 0 && plan.items.slice(0, endI).some(x => x.t === "stop" || (x.t === "meal" && !x.onBoard) || x.t === "fixed")) {
+        const its = plan.items.slice(0, endI + 1), endAt = its[endI].at; let k = endI, t = endAt;
         while (k > 0 && its[k - 1].t === "ride") { k--; t -= its[k].min || 0; }
+        // The latest safe time to leave: the time to be back less the rides there. Time left before it is free time, so the
+        // badge, the free time row and the notes all say this one time (Round 1: Ketchikan).
+        // A boat or a timetabled line back keeps the plan's own time (its sailings don't move to suit the traveler).
+        const backRides = its.slice(k, endI), fixedTimes = backRides.some(x => x.mode === "boat" || x.kind === "ferry" || (x.ans && Array.isArray(x.ans.deps) && x.ans.deps.length));
+        if (!fixedTimes && isFinite(win.endBy) && win.endBy - (endAt - t) > t) t = win.endBy - (endAt - t);
         const bagsK = its.findIndex(x => x.t === "fixed" && /bags/i.test(x.name || "")), lastK = its.map(x => x.t).reduce((a, x, j) => x === "stop" || x === "meal" || x === "start" ? j : a, -1);
-        plan.leaveAt = { out: t, bags: bagsK >= 0 && its[bagsK].at != null ? its[bagsK].at : null, last: lastK >= 0 && lastK < (bagsK >= 0 ? bagsK : its.length) ? (its[lastK].at || 0) + (its[lastK].t === "start" ? 0 : its[lastK].min || 0) : null };
+        plan.leaveAt = { out: t, bags: bagsK >= 0 && its[bagsK].at != null ? its[bagsK].at : null, last: bagsK < 0 ? t : lastK >= 0 && lastK < bagsK ? (its[lastK].at || 0) + (its[lastK].t === "start" ? 0 : its[lastK].min || 0) : null };
         const word = d.type === "embark" ? "the cruise terminal" : d.type === "port" ? "the ship" : "the " + ((E.MODES[d.mode] || E.MODES.flight).word);
         const atHotel = bagsK >= 0 && plan.leaveAt.last != null && Math.abs(plan.leaveAt.bags - plan.leaveAt.last) <= 2;
         explain.push(plan.leaveAt.bags != null && !atHotel && plan.leaveAt.last != null

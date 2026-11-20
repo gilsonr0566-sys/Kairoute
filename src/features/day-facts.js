@@ -52,7 +52,7 @@ function dayFacts(d, plan) {
   const tl = typeof timeLeft === "function" ? timeLeft(plan, d) : null;
   const left = tl ? Math.max(0, Math.round(tl.left)) : Math.max(0, plan.endBy - plan.end);
   // The ride back from the plan's last stop or meal: the same rides the timeline lists after it.
-  const its = plan.items || []; let j = -1; its.forEach((it, k) => { if (it.type === "stop" || it.type === "meal") j = k; });
+  const its = plan.items || []; let j = -1; its.forEach((it, k) => { if (it.type === "stop" || (it.type === "meal" && !(it.place && it.place.onBoard))) j = k; }); // lunch back on board comes after the ride back (Round 1: Ketchikan)
   let back = 0; for (let k = j + 1; j >= 0 && k < its.length; k++) { const it = its[k]; if (it.type === "travel") back += (it.leg && it.leg.min) || 0; else if (it.type === "fixed" || it.type === "end") break; }
   let leaveBy = plan.endBy - back;
   if (fixed && typeof alarmState === "function") { try { const st = alarmState(d, plan); if (st && isFinite(st.leaveBy)) leaveBy = Math.min(leaveBy, st.leaveBy); } catch (e) {} }
