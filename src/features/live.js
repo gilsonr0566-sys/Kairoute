@@ -14,7 +14,7 @@
 
 // ---------- 1. Opening hours ----------
 const OPEN_AIR_RE = /square|plaza|piazza|park|garden|hill|neighbo|street|promenade|old town|quarter|district|beach|viewpoint|harbou?r|waterfront|bridge|canal|walk|market street|boulevard|avenue|fountain|monument|statue/i;
-const isOpenAir = s => !!s && OPEN_AIR_RE.test((s.category || "") + " " + (s.name || "")) && !/museum|gallery|palace|castle|church|cathedral|basilica|monastery|tower|house|hall|theat|tomb/i.test((s.category || "") + " " + (s.name || ""));
+const isOpenAir = s => !!s && OPEN_AIR_RE.test((s.category || "") + " " + (s.name || "")) && !/museum|gallery|palace|castle|castel|chateau|fort|church|cathedral|basilica|chapel|mosque|synagogue|temple|monaster|abbey|library|tower|house|hall|theat|tomb/i.test((s.category || "") + " " + (s.name || ""));
 const DAY_STEMS = ["sun", "mon", "tue", "wed", "thu", "fri", "sat"];
 const isOsmHours = h => /\b(Mo|Tu|We|Th|Fr|Sa|Su|PH|off)\b|^\d\d:\d\d-\d\d:\d\d(,\d\d:\d\d-\d\d:\d\d)*$|^24\/7$/.test(h);
 // "Closed Mondays", "closed Mon and Tue", "Closed Monday–Wednesday", in the closed field or the hours text.

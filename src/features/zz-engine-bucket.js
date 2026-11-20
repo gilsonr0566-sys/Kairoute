@@ -36,6 +36,10 @@ function cityMemoOf(city, ck, ints) {
   let m = bucketCityMemo.get(ck); if (!m || m.sig !== sig) { m = { sig, sites: null, farther: null, dates: new Map() }; bucketCityMemo.set(ck, m); }
   return m;
 }
+function mealPrefsFor(d) {
+  const out = {}; Object.entries((d && d.mealPrefs) || {}).forEach(([k, v]) => { if (v && typeof v === "object") out[k] = Object.assign({}, v, v.pick ? { pick: { name: v.pick.name || "", lat: +v.pick.lat, lng: +v.pick.lng } } : {}); });
+  return Object.keys(out).length ? out : null;
+}
 function engineBucket(withOld) {
   const n = v => (isFinite(+v) ? +v : null);
   const pt = p => p ? { id: p.id || null, name: p.name || "", lat: n(p.lat), lng: n(p.lng), unknown: !!p.unknown || (typeof unsurePoint === "function" && unsurePoint(p)) } : null;
@@ -82,6 +86,9 @@ function engineBucket(withOld) {
       own: !!d.ownList || clearedByYou(d) || (Array.isArray(d.selected) && typeof d.seedSig === "string" && !appSeeded(d)),
       cleared: clearedByYou(d), rain: !!d.rain, alongWay: d.alongWay !== false, fillTime: d.fillTime !== false, skipBonus: (d.skipBonus || []).slice(),
       booked: bookedMeals(d, city || {}).map(m => ({ label: m.label, from: m.from, len: m.len, place: pt(m.node) })),
+      // The traveler's say on each meal (Change lunch: the place, a time, skip). The engine reads it with the booked tables
+      // as ONE meal input (E.mealInput; Nov 20 review: none of these reached the planner).
+      mealPrefs: mealPrefsFor(d),
       locked: d.ready && d.ready.lock && Array.isArray(d.ready.lock.seq) ? { t: d.ready.lock.t, seq: d.ready.lock.seq.filter(x => !x.meal).map(x => x.id).filter(Boolean) } : null,
       wx: city ? wxFor(d, city) : null, sites: {}, eats: {} };
     if (city && d.date) {

@@ -7,7 +7,11 @@ var KEngine = typeof KEngine !== "undefined" ? KEngine : {};
   E.hav = (a, b) => { const dLa = R(b.lat - a.lat), dLo = R(b.lng - a.lng);
     const h = Math.sin(dLa / 2) ** 2 + Math.cos(R(a.lat)) * Math.cos(R(b.lat)) * Math.sin(dLo / 2) ** 2; return 2 * 6371 * Math.asin(Math.sqrt(h)); };
   // "09:30" -> 570. Anything else is NaN, never a guess.
-  E.clock = m => { const h = Math.floor(m / 60), mm = String(Math.round(m % 60)).padStart(2, "0"); return (h % 12 || 12) + ":" + mm + (h >= 12 && h < 24 ? " pm" : " am"); };
+  // A clock time, never with a minus sign: past midnight reads as the next morning's time (Nov 20 review).
+  // The app may set its own clock format (24-hour or am/pm, from the traveler's setting); the engine's own text is am/pm.
+  E.clockFmt = null;
+  E.clockText = m0 => { const m = ((Math.round(m0) % 1440) + 1440) % 1440, h = Math.floor(m / 60), mm = String(m % 60).padStart(2, "0"); return (h % 12 || 12) + ":" + mm + (h >= 12 ? " pm" : " am"); };
+  E.clock = m => E.clockFmt ? E.clockFmt(m) : E.clockText(m);
   E.toMin = t => { const m = /^(\d{1,2}):(\d{2})$/.exec(String(t || "").trim()); return m ? +m[1] * 60 + +m[2] : NaN; };
   // The key two places share for a traveler's ride choice (the app's own pairKey, so saved choices still apply).
   const pk = p => (+p.lat).toFixed(3) + "," + (+p.lng).toFixed(3);

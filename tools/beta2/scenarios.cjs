@@ -58,7 +58,8 @@ for (const f of fs.readdirSync(dir).filter(f => f.endsWith('.json')).sort()) {
           add('rideFrom', `${tag}: ${a.name} to ${b.name} offers "${(x.options.find(o => /plus 15|as the guide says/.test(o.how || '')) || {}).how}"`);
         // Only a ride between the sight and the place itself (within 15 km of where the day starts) is the note's ride.
         const home = E.dayWindow(d, E.makeTravel(base.prefs, base.legModes)), h0 = home && home.head && home.head[home.head.length - 1];
-        const farIds = new Set((city.farther || []).map(z => String(z.id))), inTown = y => h0 && isFinite(y.lat) && E.hav(h0, y) <= 15 && !farIds.has(String(y.id)) && !/^Lunch in /.test(y.name || '');
+        const farIds = new Set((city.farther || []).map(z => String(z.id))), inTown = y => h0 && isFinite(y.lat) && E.hav(h0, y) <= 15 && !farIds.has(String(y.id)) && !/^Lunch in /.test(y.name || '')
+          && !(city.farther || []).some(z => isFinite(z.lat) && E.hav(z, y) <= 3); // a place to eat beside a trip out is at that trip out (Nov 20: lunch by Pozzuoli after Sorrento)
         const one = noteOf(sa) && !noteOf(sb) && inTown(b) ? sa : noteOf(sb) && !noteOf(sa) && inTown(a) ? sb : null;
         // A way the guide names is either offered from real data or named in the ride's note as unknown (never a ride
         // made up from the guide's words, never silently dropped).
@@ -76,7 +77,7 @@ for (const f of fs.readdirSync(dir).filter(f => f.endsWith('.json')).sort()) {
                     if (!got.length && allKept) add('rideChoice', `${tag}: picked ${o.how || o.id}: the ride is gone from the plan`); } }
       // lunch on the way: from the place before lunch to the one after, lunch adds at most 1 km of going out of the way (a tenth of
       // the hop on a long ride back from a trip out)
-      p.items.forEach((x, k) => { if (x.t !== 'meal' || !isFinite(x.lat)) return;
+      p.items.forEach((x, k) => { if (x.t !== 'meal' || !isFinite(x.lat) || x.booked || x.chosen) return; // a table the traveler booked or chose is where they said
         const pts = p.items.filter(y => isFinite(y.lat) && y.t !== 'ride'), j = pts.indexOf(x), a = pts[j - 1], b = pts[j + 1]; if (!a || !b || (a.t !== 'stop' && b.t !== 'stop')) return; // lunch alone is the outing
         const off = E.hav(a, x) + E.hav(x, b) - E.hav(a, b);
         if (off <= Math.max(1.0, 0.1 * E.hav(a, b))) return;

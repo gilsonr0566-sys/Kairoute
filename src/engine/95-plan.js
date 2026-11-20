@@ -58,13 +58,13 @@
       // Every stop on a plan is a pick: the traveler's, or the app's starting picks on a day they haven't touched (shown
       // ticked). Nothing is optional (Nov 18, Richard).
       const it = { t: x.t, id: x.t === "meal" ? null : x.id, name: x.name, at: x.at, min: x.min, bonus: false, along: false, meal: x.meal || null, late: x.late || 0 };
-      if (x.wait) it.wait = x.wait; if (x.chosen) it.chosen = true; if (x.pinned) it.pinned = true;
+      if (x.wait) it.wait = x.wait; if (x.chosen) it.chosen = true; if (x.pinned) it.pinned = true; if (x.booked) it.booked = true;
       if (x.packed) it.packed = true; if (src && src.lunchCut) it.lunchCut = src.lunchCut; // lunch is inside this visit: the visit gave it these minutes
       Object.assign(it, point(whereIs(x)));
       items.push(it);
     }
     if (fit.onBoard) { const sp = win.tail[win.tail.length - 1]; items.push({ t: "meal", id: null, name: "Back on board", at: fit.onBoard.at, min: fit.onBoard.min, bonus: false, along: false, meal: "Lunch", late: 0, onBoard: true, lat: sp.lat, lng: sp.lng }); }
-    if (dinner) items.push({ t: "evening", id: null, name: dinner.name, at: dinner.at, min: dinner.min, lat: dinner.lat, lng: dinner.lng, bonus: false, along: false, meal: "Dinner", late: 0, chosen: !!dinner.chosen });
+    if (dinner) items.push({ t: "evening", id: null, name: dinner.name, at: dinner.at, min: dinner.min, lat: dinner.lat, lng: dinner.lng, bonus: false, along: false, meal: "Dinner", late: 0, booked: !!dinner.booked, chosen: !!dinner.chosen });
     return { i, start: win.start, endBy: win.endBy, end: fit.r.end, over: fit.r.over > 0, straight: !!win.straight,
       head: win.head.map(x => ({ name: x.name, fixed: !!x.fixed, minutes: x.fixed ? x.minutes : 0 })), tail: win.tail.map(x => ({ name: x.name, fixed: !!x.fixed, minutes: x.fixed ? x.minutes : 0 })), items,
       suggest: (fit.suggest || []).slice(), noLunch: fit.noLunch || null, orderExtra: fit.orderExtra || 0 };
@@ -80,7 +80,14 @@
     plan.items.forEach((x, k) => { if (x.t !== "ride" || x.mode === "lift") return; const a = plan.items[k - 1], b = plan.items[k + 1];
       if (x.from && x.to && E.hasPos(x.from) && E.hasPos(x.to) && E.hav(x.from, x.to) > 0.05 && !(x.min > 0)) why.push("a ride with no time between " + ((a && a.name) || "two places") + " and " + ((b && b.name) || "the next"));
       if (win.hard && x.guess) why.push("a ride to or from a place not on the map, on a day with a time to be back");
-      if (win.hard && b && (b.t === "end") && x.mode !== "walk" && x.min >= 30 && !(x.slack >= 15)) why.push("the ride back has no extra time for traffic or delays"); });
+    });
+    // The way back from the day's farthest place carries its extra time, however many stops lie on it (Nov 20 review).
+    const end = plan.items[plan.items.length - 1];
+    if (win.hard && end && end.t === "end") {
+      let far = 0, fd = -1; if (E.hasPos(end)) plan.items.forEach((x, k) => { if ((x.t === "stop" || x.t === "meal") && E.hasPos(x) && E.hav(end, x) > fd) { fd = E.hav(end, x); far = k; } });
+      const back = plan.items.slice(far).filter(x => x.t === "ride"), has = back.reduce((a, x) => a + (x.slack || 0), 0), base = back.reduce((a, x) => a + (x.mode === "walk" ? 0 : x.min || 0), 0) - has;
+      if (has < E.slackFor(base)) why.push("the way back has no extra time for traffic or delays");
+    }
     return why;
   }
   E.guardPlan = (plan, win) => guard(plan, win);
@@ -91,8 +98,13 @@
   // A sight inside a group (a church on a square) is folded into the group's visit, unless it is worth a stop of its
   // own: a finished guide or audio tour, a must-see, or the traveler's pick. Then it is always its own stop.
   E.ownStop = (s, picked) => !!(s && (s.hasGuide || s.mustSee || E.has(s, "must-see") || (picked && picked.has(String(s.id)))));
-  // A place with an entrance and hours (a museum, a church, a site with a gate), not a square, a street, a beach or a view.
-  E.hasEntrance = s => /museum|gallery|church|cathedral|basilica|mosque|synagogue|monastery|palace|castle|fortress|ancient|archaeolog|site|tower|temple|tomb|library|theatre|theater|zoo|aquarium|garden/i.test((s.category || "") + " " + (s.name || "")) && !/square|street|beach|view|walk|promenade|park\b|neighbo|quarter|market|harbou?r|port\b/i.test((s.category || "") + " " + (s.name || ""));
+  // ONE rule for "has a door and hours" (Nov 20 review: two word lists disagreed, and a fortress named for its harbor or a
+  // "Castel" was on neither): read from the sight's tags, which the app sets once per sight. Anything not open-air needs
+  // hours; a trip out of town is its own place.
+  E.needsHours = s => !!s && !s.far && !E.has(s, "open-air");
+  const ACT = /didn't fit|would arrive after|is closed on|Boats keep their own timetable|^Bring lunch|where you put it|lunch is back on board|no room for lunch|take a boat back/i, FREE = /^Free time|^Time left for|^Nothing left to plan/;
+  E.explainKind = t => FREE.test(t) ? "free" : ACT.test(t) ? "act" : "info";
+  E.ASSUME_OPEN = 9 * 60; E.ASSUME_CLOSE = 17 * 60; // hours assumed for a sight that needs them when none are known
   E.listWords = (xs, joiner) => xs.length < 2 ? xs.join("") : xs.slice(0, -1).join(", ") + " " + (joiner || "or") + " " + xs[xs.length - 1];
   // Which list a sight came in on (a guide's sights or its trips out) doesn't decide how it's planned; where it is does.
   // A sight more than FAR_KM from the heart of the place's sights (their median point) is a trip out, with its own ride,
@@ -182,8 +194,12 @@
       if (win.error) return { plan: { i, error: win.error } };
       const city = guides[d.city];
       if (!city) return { plan: { i, error: "no guide" } };
-      const siteDay = id => (d.sites || {})[id] || null;
       const listed = (city.sites || []).map((s, k) => Object.assign({}, s, { rank: k })).concat((city.farther || []).map(s => Object.assign({}, s, { far: true })));
+      // A sight that needs hours and has none known for the date is never planned as open at dawn or late (Nov 20 review: a
+      // fortress at 7:39 am): it is planned inside 9 to 5 and marked for checking.
+      const rawDay = id => (d.sites || {})[id] || null, needById = new Map(listed.map(s => [String(s.id), E.needsHours(s)]));
+      const hoursKnown = id => { const sd = rawDay(id); return !!(sd && (sd.closed || sd.allDay || (sd.oh && sd.oh.spans && sd.oh.spans.length))); };
+      const siteDay = id => { const sd = rawDay(id); return needById.get(String(id)) && !hoursKnown(id) ? Object.assign({}, sd, { oh: { spans: [[E.ASSUME_OPEN, E.ASSUME_CLOSE]], last: null }, assumed: true }) : sd; };
       const ranked = E.rank(listed, prefs, style);
       // A town a day away whose travel guide names places to eat gets a lunch stop in its centre (the plan names the
       // guide's suggestions); it is never a dinner idea.
@@ -197,7 +213,7 @@
         const o = win.head[win.head.length - 1], tn = o && isFinite(o.lat) && E.hav(o, t) <= 5 ? "" : t.travelNote || "";
         return real.length ? real.map(x => ({ name: x.name, lat: x.lat, lng: x.lng, kind: "restaurant", amenity: "restaurant", fromMap: !!x.fromMap, inTown: t.id, travelNote: tn }))
           : [{ name: "Lunch in " + t.name, lat: t.lat, lng: t.lng, townLunch: t.id, travelNote: t.travelNote || "" }]; });
-      const ctx = { single: (byCity.get(d.city) || [i]).length === 1, tr, ledger, dayIdx: i, siteDay, eats: (city.restaurants || []).concat(townLunch).sort((a, b) => E.eatKey(a.name).localeCompare(E.eatKey(b.name))), eatFacts: d.eats || {}, mealPrefs: d.mealPrefs || {} };
+      const ctx = { single: (byCity.get(d.city) || [i]).length === 1, tr, ledger, dayIdx: i, siteDay, eats: (city.restaurants || []).concat(townLunch).sort((a, b) => E.eatKey(a.name).localeCompare(E.eatKey(b.name))), eatFacts: d.eats || {}, mealPrefs: E.mealInput(d) };
       // May this day add a sight on its own? Not one used on another day, picked for another day, or in another
       // day's area, unless that day is already planned and left it over.
       const doneDay = j => j == null || j === i || out[j] != null;
@@ -282,18 +298,21 @@
       { const lp = E.mealPlan(ctx, "Lunch"); if (lp.pickShut) explain.push(lp.pickShut + " doesn't serve lunch on this day (its listed hours), so lunch is planned at another place nearby."); }
       const lunchNote = !fit.kept.length ? null : fit.noLunch && outTown ? (fit.noLunch === "time" ? "No time for a sit-down lunch on this plan: grab lunch on the go in " : "Have lunch in ") + outTown.name + (eatThere.length ? ": " + suggests + E.listWords(eatThere) + (fromMap ? " (check reviews before you go)." : ".") : ": its places to eat aren't in the guide yet.") : fit.noLunch ? (fit.noLunch === "time" ? (win.hard ? (fit.kept.some(k => k.wish) ? "Your picks fill" : "Today's stops fill") + " the time ashore, so there's no room for lunch and still a safe margin to get back. Grab lunch on the go between stops" + (longVisit ? ", or spend less time at " + String(longVisit.name).split(",")[0] + " to make room." : ".") : "No time for a sit-down lunch on this plan: grab lunch on the go between stops.") : "No place to eat along the way at lunchtime: bring food or eat at a stop's own café.") : null;
       // Never quietly sure: where the map gives hours for this place's sights but not for some of today's stops, say so.
-      const hoursKnown = id => { const sd = siteDay(id); return !!(sd && (sd.closed || sd.allDay || (sd.oh && sd.oh.spans && sd.oh.spans.length))); };
-      // Only for a stop you go into (a museum, church, palace...) or one the traveler picked: a square or a district has no door.
-      const BUILDING = /museum|church|basilica|cathedral|chapel|mosque|synagogue|temple|monaster|abbey|palace|castle|fort|galler|parliament|knesset|tower|hall|house|library|aquarium|zoo/i;
-      const unknownHours = fit.kept.filter(k => !k.far && !E.has(k, "open-air") && (k.wish || BUILDING.test(k.name + " " + (k.category || ""))) && !hoursKnown(k.id));
-      if (unknownHours.length && (city.sites || []).some(s => hoursKnown(s.id)))
-        explain.push("Opening hours for " + E.listWords(unknownHours.slice(0, 4).map(k => String(k.name).split(",")[0]).concat(unknownHours.length > 4 ? ["others"] : []), "and") + " aren't on the map yet: check before you go.");
       { const m = (fit.seq || []).find(x => x.mealOf && x.fromMap); if (m) explain.push("Lunch at " + m.name + " is a place to eat on the map beside your stops (the guide names none on your way): check reviews before you go."); }
       const plan = shortForm(i, win, fit, autoIds, dinner, !!d.own);
+      // Lunch the traveler put after a stop that isn't there: said, never moved without a word (Nov 20: the extra time for
+      // the way back can leave no room where it was put).
+      { const at = d.mealAt && d.mealAt.Lunch != null ? String(d.mealAt.Lunch) : null, li = plan.items.findIndex(x => x.t === "meal" && x.meal === "Lunch");
+        if (at && at !== "^" && li > 0 && !plan.items[li].inside) { const prev = plan.items.slice(0, li).reverse().find(x => x.t !== "ride"), st = plan.items.find(x => x.t === "stop" && String(x.id) === at);
+          if (st && !(prev && String(prev.id) === at)) explain.push("Lunch is after " + String(prev && prev.name || "another stop").split(",")[0] + ", not after " + String(st.name).split(",")[0] + " where you put it: there it doesn't fit the day" + (win.hard ? " with a safe margin before the time to be back" : "") + "."); } }
       // A boat on its own timetable: the plan names the latest boat back that keeps the day as planned.
-      plan.items.forEach((x, k) => { if (x.t !== "ride" || x.mode !== "boat" || !plan.items[k - 1] || plan.items[k - 1].t !== "stop") return;
-        const from = plan.items[k - 1], next = plan.items[k + 1]; if (!next || !isFinite(next.at)) return;
-        explain.push("Boats keep their own timetable: take one back from " + from.name + " that lands you by " + E.clock(next.at) + (win.hard ? ", well before the time to be back at the ship (" + E.clock(win.endBy) + ")" : "") + "."); });
+      // The stop before it and the next timed item are found past the walks to and from the piers (Nov 20 review: since the
+      // way to the pier became its own ride, the line was never written).
+      plan.items.forEach((x, k) => { if (x.t !== "ride" || x.mode !== "boat" || x.source === "timetable") return;
+        let j = k - 1; while (j >= 0 && plan.items[j].t === "ride") j--; let n = k + 1; while (n < plan.items.length && plan.items[n].t === "ride") n++;
+        const from = plan.items[j], next = plan.items[n]; if (!from || from.t !== "stop" || !next || !isFinite(next.at)) return;
+        const lands = next.at - plan.items.slice(k + 1, n).reduce((a, r) => a + (r.min || 0), 0);
+        explain.push("Boats keep their own timetable: take one back from " + from.name + " that lands you by " + E.clock(lands) + (win.hard ? ", well before the time to be back at the ship (" + E.clock(win.endBy) + ")" : "") + "."); });
       plan.explain = explain.slice();
       // A stop inside an area walked today says so: one walk, not separate trips.
       const keptIds = new Set(fit.kept.map(k => String(k.id)));
@@ -308,11 +327,11 @@
       fit.kept.forEach(s => { sightIds.push(String(s.id)); (groups.members.get(String(s.id)) || []).filter(m => !E.ownStop(byIdHere.get(String(m)), picked)).forEach(m => sightIds.push(String(m))); });
       const eatIds = fit.seq.filter(s => s.eatKey).map(s => s.eatKey).concat(dinner ? [dinner.eatKey] : []);
       sightIds.forEach(id => ledger.claimSight(id, i)); eatIds.forEach(k => ledger.claimEat(k, i));
-      // Unknown opening hours are never read as open (Nov 19 review): a stop with an entrance (not a square, a walk or a
-      // town) whose hours aren't known for the date is marked, and the plan says to check.
-      const noHours = plan.items.filter(x => x.t === "stop" && !x.bonus && (() => { const sx = byIdR.get(String(x.id)), sd = siteDay(x.id); return sx && !sx.far && E.hasEntrance(sx) && !(sd && sd.oh && sd.oh.spans && sd.oh.spans.length); })());
+      // Unknown opening hours are never read as open (Nov 19 review), by the one rule above: every planned stop that needs hours
+      // and has none known for the date is marked, and the plan says to check.
+      const noHours = plan.items.filter(x => x.t === "stop" && needById.get(String(x.id)) && !hoursKnown(x.id));
       noHours.forEach(x => { x.hoursUnknown = true; });
-      if (noHours.length && !explain.some(t => /^Opening hours for .* aren't on the map yet/.test(t))) explain.push("Opening hours aren't known for " + E.listWords(noHours.slice(0, 3).map(x => x.name), "and") + (noHours.length > 3 ? " and " + (noHours.length - 3) + " more" : "") + " on this date: check before you go.");
+      if (noHours.length) explain.push("Opening hours aren't known for " + E.listWords(noHours.slice(0, 3).map(x => String(x.name).split(",")[0]), "and") + (noHours.length > 3 ? " and " + (noHours.length - 3) + " more" : "") + " on this date: planned between " + E.clock(E.ASSUME_OPEN) + " and " + E.clock(E.ASSUME_CLOSE) + ", check before you go.");
       plan.dropped = fit.dropped.map(x => x.id); if (Object.keys(ways).length) plan.waysToFit = ways; plan.explain = explain.concat(lunchNote ? [lunchNote] : []);
       return { plan, sightIds, eatIds, kept: fit.kept, autoIds: [...autoIds], explain, spare: win.endBy - fit.r.end, win };
     };
@@ -369,7 +388,7 @@
       // Time left on a ship day and a trip out by boat the guide names: say so, with the time to be back on shore.
       if (was.win.hard && d.type === "port" && was.plan && was.plan.items) {
         const boat = E.rank((city.farther || []).map(s => Object.assign({}, s, { far: true })), prefs, style)
-          .find(s => !s.town && E.byBoat(s.travelNote || "") && ledger.sightFree(s.id, i) && 2 * (tr.saidMin(s.travelNote) || 60) + (s.minutes || 60) + 60 <= was.spare);
+          .find(s => !s.town && E.byBoat(s.travelNote || "") && ledger.sightFree(s.id, i) && !was.kept.some(k => String(k.id) === String(s.id)) && 2 * (tr.saidMin(s.travelNote) || 60) + (s.minutes || 60) + 60 <= was.spare);
         if (boat) was.plan.explain = (was.plan.explain || []).concat(["Time left for " + boat.name + (boat.travelNote ? " (" + String(boat.travelNote).replace(/[.\s]+$/, "") + ")" : "") + ": not added on its own, since boats keep their own timetable. If you go, take a boat back that lands you by " + E.clock(was.win.endBy - 30) + "."]);
       }
       was.sightIds.forEach(id => ledger.claimSight(id, i)); was.eatIds.forEach(k => ledger.claimEat(k, i));
@@ -405,6 +424,9 @@
     out.forEach(p => { if (p && p.suggest) p.suggest = p.suggest.filter(x => !plannedIds.has(String(x.id))); });
     // Each thing said once.
     out.forEach(p => { if (p && p.explain) p.explain = p.explain.filter((t, k, a) => a.indexOf(t) === k); });
+    // Each line's kind, for the screens: "act" when the traveler has something to decide or do, "free" for the time left,
+    // "info" for the rest. Read from the planner's own sentences, in one place.
+    out.forEach(p => { if (p && p.explain) p.explainKind = p.explain.map(E.explainKind); });
     return out;
   };
   // The whole trip, place by place. Days in different places share nothing (a sight, a place to eat and a day trip

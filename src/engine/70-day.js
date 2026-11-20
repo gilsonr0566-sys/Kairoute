@@ -51,16 +51,23 @@
   // The traveler's own say on a meal (d.mealPrefs.Lunch / .Dinner): skip it, a time to hold ("13:30"), or the place.
   // A set time becomes a ten-minute window from that time; a chosen place is the only one tried, and when the guide
   // lists a place of the same name within 200 m, the guide's entry (with its facts) is the one used.
+  // ONE meal input from the day: the traveler's say on each meal (d.mealPrefs: place, time, skip) with any table they booked
+  // (d.booked: its place at its time) taking that meal's place and time.
+  E.mealInput = d => { const out = Object.assign({}, (d && d.mealPrefs) || {});
+    ((d && d.booked) || []).forEach(b => { if (!b || !b.label || !isFinite(b.from) || !b.place || !E.hasPos(b.place)) return;
+      out[b.label] = { pick: { name: b.place.name || "Your table", lat: b.place.lat, lng: b.place.lng }, at: String(Math.floor(b.from / 60)).padStart(2, "0") + ":" + String(b.from % 60).padStart(2, "0"), booked: true }; });
+    return out; };
   E.mealPlan = (ctx, label) => {
     const p = (ctx.mealPrefs || {})[label] || {}, base = label === "Lunch" ? L : D, at = E.toMin(p.at);
-    const meal = isFinite(at) ? Object.freeze({ label, from: at, to: at + 10, len: base.len, quick: base.quick, pinned: true }) : base;
+    // A booked table is held at its own time and place, whatever its listed hours (the booking is the proof it serves then).
+    const meal = isFinite(at) ? Object.freeze(Object.assign({ label, from: at, to: at + 10, len: base.len, quick: base.quick, pinned: true }, p.booked ? { booked: true } : {})) : base;
     let pick = null;
     if (p.pick && isFinite(p.pick.lat) && isFinite(p.pick.lng)) {
       const k = E.eatKey(p.pick.name), guide = (ctx.eats || []).find(r => E.eatKey(r.name) === k && E.hav(r, p.pick) <= 0.2);
       // A place the traveler chose that doesn't serve this meal that day (its listed hours): not planned there, and the plan
       // says why (Nov 19 review: a chosen restaurant skipped every check).
       const f = (ctx.eatFacts || {})[k] || {};
-      if (E.eatShut(f, label)) return { skip: !!p.skip, meal, pick: null, pickShut: p.pick.name || "The place you chose" };
+      if (!p.booked && E.eatShut(f, label)) return { skip: !!p.skip, meal, pick: null, pickShut: p.pick.name || "The place you chose" };
       pick = { r: guide || p.pick, k, d: 0 };
     }
     return { skip: !!p.skip, meal, pick };
@@ -401,6 +408,6 @@
     if (win.hard || !lastPoint || my.skip) return null;
     const e = my.pick || eatsNear(lastPoint, ctx, "Dinner", 4).find(x => !(usedToday && usedToday.has(x.k))); if (!e) return null;
     const ride = my.pick ? ctx.tr.min(lastPoint, e.r) : 30, from = my.meal.pinned ? my.meal.from : D.from;
-    return Object.assign({ t: "evening", id: "eat:" + e.k, eatKey: e.k, name: e.r.name, at: Math.max(end + ride, from), min: D.len, lat: e.r.lat, lng: e.r.lng }, my.pick ? { chosen: true } : {});
+    return Object.assign({ t: "evening", id: "eat:" + e.k, eatKey: e.k, name: e.r.name, at: Math.max(end + ride, from), min: D.len, lat: e.r.lat, lng: e.r.lng }, my.pick ? { chosen: true } : {}, my.meal.booked ? { booked: true } : {});
   };
 })(KEngine);

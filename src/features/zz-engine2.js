@@ -151,6 +151,7 @@ if (typeof window !== "undefined" && window.ENGINE2 && window.KEngine) (function
       if (x.t === "meal" || x.t === "evening") {
         const label = x.meal || "Lunch", m = MEALS.find(z => z.label === label) || MEALS[0];
         const r = x.onBoard ? { name: "Back on board", onBoard: true, generic: true, lat: x.lat, lng: x.lng, alts: [] } : x.packed ? { name: "Bring your own", packed: true, generic: true, lat: x.lat, lng: x.lng, alts: [] } : Object.assign({}, byName(city.restaurants, x.name) || at(x), { alts: [] });
+        if (x.booked) Object.assign(r, { booked: true, why: "Your reservation at " + fmt(x.at) + "." }); // a table the traveler booked shows as theirs
         const it = { type: x.t === "evening" ? "evening" : "meal", meal: Object.assign({}, m, { len: x.min || m.len }), place: r, time: x.at };
         items.push(it); (x.t === "evening" ? evening : meals).push(x.t === "evening" ? it : r);
       }
@@ -162,7 +163,7 @@ if (typeof window !== "undefined" && window.ENGINE2 && window.KEngine) (function
     return { city, w: Object.assign({}, w, { start: ep.start, endBy: ep.endBy }), items, stops, dropped, folded: [], elsewhere: [], quickMeals: false, along: [], bonus: stops.filter(s => s.place.bonus).map(s => s.place), fill: [], noLunch: ep.noLunch || null, orderExtra: ep.orderExtra || 0, suggest: (ep.suggest || []).map(x => { const p = byId.get(String(x.id)); return p ? { place: p, minutes: x.minutes, far: x.far, rideMin: x.rideMin, must: !!x.must, voiced: !!x.voiced } : null; }).filter(Boolean),
       meals, evening, swaps: [], closedToday: [], lock: { t: null, seq: stops.map(s => s.place.id), late: 0, quick: false, eve: "" }, locked: false, seen: false, seenBroke: false, seenSkipped: [],
       lockBroken: false, routeX: null, start: ep.start, endBy: ep.endBy, end: ep.end, walkKm, over: !!ep.over,
-      engine2: { explain: ep.explain || [], waysToFit: ep.waysToFit || null, leftOut: ep.leftOut || [], safe: !!ep.safe } };
+      engine2: { explain: ep.explain || [], explainKind: (ep.explain || []).map(E.explainKind), waysToFit: ep.waysToFit || null, leftOut: ep.leftOut || [], safe: !!ep.safe } };
   }
   // The engine chooses each untouched day's stops, so the old planner's late hand-out of a day trip stays off.
   if (typeof leadLate === "function") leadLate = function () {};
@@ -170,6 +171,8 @@ if (typeof window !== "undefined" && window.ENGINE2 && window.KEngine) (function
   buildPlanForDay = function (d) {
     const city = cityFor(d); if (!city) return null;
     const i = trip.days.indexOf(d); if (i < 0) return oldDay(d); // a day outside the trip (a preview): the old planner
-    try { const ep = tripPlans().plans[i]; askRides(ep); return toApp(d, city, ep); } catch (e) { console.warn("Beta 2 day", e); return oldDay(d); }
+    // A day the new planner can't plan says so plainly and shows nothing else (Nov 20 review: it quietly showed the old
+    // planner's day, with its looser safety rules, and nobody could tell which planner made it).
+    try { if (window.__kairouteFailDay === i) throw new Error("phone check: a forced error"); const ep = tripPlans().plans[i]; askRides(ep); return toApp(d, city, ep); } catch (e) { console.warn("Beta 2 day", e); window.__kairouteDayErrors = (window.__kairouteDayErrors || 0) + 1; return { error: "This day couldn't be planned. Nothing is shown rather than a plan we can't stand behind: change a pick or reload, and tell us if it stays." }; }
   };
 })();
