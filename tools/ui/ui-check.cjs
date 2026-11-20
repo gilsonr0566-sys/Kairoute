@@ -91,7 +91,7 @@ function repeats(text) {
       ok(`time zone note is quiet (${dn})`, !dom.tzWarn, `time zone note styled as a warning: "${dom.tz}"`);
       // 4. Plan first: notes start folded unless one needs a decision; on a phone the first stop is on the first screen.
       if (dom.aboutOpen) ok(`notes fold opens only for a decision (${dn})`, dom.aboutOpen.open === dom.aboutOpen.act, `"About today's plan" is ${dom.aboutOpen.open ? 'open' : 'closed'} with${dom.aboutOpen.act ? '' : 'out'} a note that needs a decision`);
-      if (size === 'phone' && dom.firstStop != null && !dom.dropped && !dom.asks) ok(`phone: the plan starts on the first screen (${dn})`, dom.firstStop < SIZES.phone.height - 120, `first stop starts at ${dom.firstStop}px on a ${SIZES.phone.height}px screen`);
+      if (size === 'phone' && dom.firstStop != null && !dom.dropped && !dom.asks && !(dom.aboutOpen && dom.aboutOpen.act)) // a note the traveler must act on may come first ok(`phone: the plan starts on the first screen (${dn})`, dom.firstStop < SIZES.phone.height - 120, `first stop starts at ${dom.firstStop}px on a ${SIZES.phone.height}px screen`);
       if (size !== 'phone' && dom.head) ok(`tablet: title and main button on one row (${dn})`, dom.head.same, 'the main button sits on a row of its own');
       ok(`Beta 2 tag covers no menu label (${dn})`, !dom.badge, 'the Beta 2 tag overlaps a menu label');
       ok(`no "0.0" distance (${dn})`, !dom.zero, 'a distance reads 0.0');

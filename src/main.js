@@ -1679,7 +1679,9 @@ function planAdded(plan, d) {
 // free-time note is said once, on the timeline's free time row, so it isn't repeated here (kind "free").
 function engine2Card(plan) {
   const e = plan && plan.engine2, all = (e && e.explain) || [], kind = (e && e.explainKind) || [];
-  const say = all.map((t, k) => ({ t, k: kind[k] || "info" })).filter(x => x.t && x.k !== "free");
+  const say = all.map((t, k) => ({ t, k: kind[k] || "info" })).filter(x => x.t && x.k !== "free")
+    // The leave-by on a ship, train or flight day is the countdown's, at the top of the page: said once (Nov 20).
+    .filter(x => !(plan.w && plan.w.tail && plan.w.tail.length && /^Leave for .+ by \d/.test(x.t)));
   if (!say.length) return "";
   const act = say.some(x => x.k === "act");
   return `<details class="card foldlist engine2why"${act ? " open" : ""}><summary>About today's plan<span class="cnt">${say.length} note${say.length === 1 ? "" : "s"}</span></summary><ul>${say.map(x => `<li${x.k === "act" ? ' class="act"' : ""}>${esc(x.t)}</li>`).join("")}</ul></details>`;
