@@ -128,7 +128,7 @@ if (typeof window !== "undefined" && window.ENGINE2 && window.KEngine) (function
       }
       if (x.t === "meal" || x.t === "evening") {
         const label = x.meal || "Lunch", m = MEALS.find(z => z.label === label) || MEALS[0];
-        const r = Object.assign({}, byName(city.restaurants, x.name) || at(x), { alts: [] });
+        const r = x.onBoard ? { name: "Back on board", onBoard: true, generic: true, lat: x.lat, lng: x.lng, alts: [] } : x.packed ? { name: "Bring your own", packed: true, generic: true, lat: x.lat, lng: x.lng, alts: [] } : Object.assign({}, byName(city.restaurants, x.name) || at(x), { alts: [] });
         const it = { type: x.t === "evening" ? "evening" : "meal", meal: Object.assign({}, m, { len: x.min || m.len }), place: r, time: x.at };
         items.push(it); (x.t === "evening" ? evening : meals).push(x.t === "evening" ? it : r);
       }

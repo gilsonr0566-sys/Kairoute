@@ -59,10 +59,11 @@
       // ticked). Nothing is optional (Nov 18, Richard).
       const it = { t: x.t, id: x.t === "meal" ? null : x.id, name: x.name, at: x.at, min: x.min, bonus: false, along: false, meal: x.meal || null, late: x.late || 0 };
       if (x.wait) it.wait = x.wait; if (x.chosen) it.chosen = true; if (x.pinned) it.pinned = true;
-      if (src && src.lunchCut) it.lunchCut = src.lunchCut; // lunch is inside this visit: the visit gave it these minutes
+      if (x.packed) it.packed = true; if (src && src.lunchCut) it.lunchCut = src.lunchCut; // lunch is inside this visit: the visit gave it these minutes
       Object.assign(it, point(whereIs(x)));
       items.push(it);
     }
+    if (fit.onBoard) { const sp = win.tail[win.tail.length - 1]; items.push({ t: "meal", id: null, name: "Back on board", at: fit.onBoard.at, min: fit.onBoard.min, bonus: false, along: false, meal: "Lunch", late: 0, onBoard: true, lat: sp.lat, lng: sp.lng }); }
     if (dinner) items.push({ t: "evening", id: null, name: dinner.name, at: dinner.at, min: dinner.min, lat: dinner.lat, lng: dinner.lng, bonus: false, along: false, meal: "Dinner", late: 0, chosen: !!dinner.chosen });
     return { i, start: win.start, endBy: win.endBy, end: fit.r.end, over: fit.r.over > 0, straight: !!win.straight,
       head: win.head.map(x => ({ name: x.name, fixed: !!x.fixed, minutes: x.fixed ? x.minutes : 0 })), tail: win.tail.map(x => ({ name: x.name, fixed: !!x.fixed, minutes: x.fixed ? x.minutes : 0 })), items,
@@ -247,6 +248,15 @@
       }
       const fit = E.fitDay(d.cleared ? Object.assign({}, d, { fillTime: false }) : d, win, picks, pool, ctx);
       fit.kept.forEach(s => { if (s.filled) autoIds.add(String(s.id)); });
+      // Lunch back on board (Nov 20, decided for Richard's lunch rule: every day over lunchtime has a timed lunch): a port day
+      // whose picks fill the time ashore, back at the ship in time for lunch, has lunch on board. It never shortens a pick
+      // and never touches the time to be back: it comes after the return.
+      { const L = E.MEALS[0], ship = win.tail.length && win.tail[win.tail.length - 1].backToShip;
+        if (fit.noLunch === "time" && ship && fit.kept.length && fit.r.end <= L.to - E.TO_GO) {
+          fit.onBoard = { at: Math.max(fit.r.end, L.from), min: E.TO_GO + 10 }; fit.noLunch = null;
+          explain.push("Your picks fill the time ashore, so lunch is back on board at " + E.clock(fit.onBoard.at) + "."); } }
+      { const pk = (fit.r.items || []).find(x => x.packed), at = pk && fit.r.items.filter(x => x.t === "stop" && x.at <= pk.at).pop();
+        if (pk) explain.push("Bring lunch for " + E.clock(pk.at) + (at ? " at " + at.name : "") + ": places to eat there aren't in the guide yet."); }
       // A wanted stop the day had to give up (a pick, a finished guide, a must-see) comes with the ways to fit it back in.
       const ways = {};
       if (!again) fit.dropped.forEach(x => { if (!x.wish && !x.wanted) return;

@@ -1,7 +1,7 @@
 // Beta 2 side by side: the old engine's plans (saved in each snapshot) and the new engine's, on the same bucket, with
 // the same scorer. Usage: node tools/beta2/compare.cjs [name-filter]. Exit 1 if the new engine has a safety failure.
 const fs = require('fs'), path = require('path'), E = require('./engine.cjs'), { score } = require('./score.cjs');
-const dir = path.join(__dirname, 'snapshots'), only = process.argv[2] ? new RegExp(process.argv[2]) : null;
+const dir = process.env.SNAP_DIR || path.join(__dirname, 'snapshots'), only = process.argv[2] ? new RegExp(process.argv[2]) : null;
 let unsafe = 0, notWorse = 0;
 // PLACES_DIR=<folder of places files>: fold them into each trip first (step 2), as the app will.
 const PD = process.env.PLACES_DIR, places = {};

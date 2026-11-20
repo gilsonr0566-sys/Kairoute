@@ -6,7 +6,7 @@
 // by land. Usage: PLACES_DIR=tools/places/data node tools/beta2/leaks.cjs [--list]
 // Exit 1 when any leak is found (CI can gate on it once the known ones are fixed).
 const fs = require('fs'), path = require('path'), E = require('./engine.cjs');
-const dir = path.join(__dirname, 'snapshots'), list = process.argv.includes('--list');
+const dir = process.env.SNAP_DIR || path.join(__dirname, 'snapshots'), list = process.argv.includes('--list');
 const PD = process.env.PLACES_DIR, places = {};
 if (PD) for (const f of fs.readdirSync(PD).filter(f => f.endsWith('.json'))) { const p = JSON.parse(fs.readFileSync(path.join(PD, f))); places[p.key] = p; }
 const SCRIPT = /[Ͱ-Ͽἀ-῿Ѐ-ӿ֐-׿؀-ۿ฀-๿぀-ヿ㐀-鿿가-힯]/;
@@ -39,7 +39,7 @@ for (const f of fs.readdirSync(dir).filter(f => f.endsWith('.json')).sort()) {
       // the meal costs at most the way from that stop to it; eating where the ride out arrives is on the way too)
       const off = !b || E.hav(a || x, b) > 10 ? (a ? (b ? Math.min(E.hav(a, x), E.hav(x, b)) : E.hav(a, x)) : 0) : E.hav(a, x) + E.hav(x, b) - E.hav(a, b);
       if (lunch && a && b && isFinite(x.lat) && off > 1.6) add('mealOff', f, `day ${i}: ${x.name} adds ${off.toFixed(1)} km between ${a.name} and ${b.name}`);
-      if (x.name) { const was = eatDays.get(x.name); if (was != null && was !== i) add('mealAgain', f, `${x.name} on day ${was} and day ${i}`); else eatDays.set(x.name, i); } });
+      if (x.name && !x.packed && !x.onBoard) { const was = eatDays.get(x.name); if (was != null && was !== i) add('mealAgain', f, `${x.name} on day ${was} and day ${i}`); else eatDays.set(x.name, i); } });
     // Path and transport: no long walk where a ride is offered; no taxi for a few steps.
     p.items.forEach((x, k) => { if (x.t !== 'ride') return; const a = p.items[k - 1], b = p.items[k + 1]; if (!a || !b || !isFinite(a.lat) || !isFinite(b.lat)) return; const km = E.hav(a, b);
       if (x.mode === 'walk' && km > 2.5 && (x.options || []).some(o => o.mode !== 'walk')) add('longWalk', f, `day ${i}: ${km.toFixed(1)} km on foot, ${a.name} to ${b.name}`);

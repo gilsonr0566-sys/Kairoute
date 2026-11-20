@@ -89,7 +89,7 @@
     const plain = walk(order, win, ctx), my = E.mealPlan(ctx, "Lunch"), L = my.meal;
     if (my.skip || !lunchWanted(win) || (!ctx.eats.length && !my.pick)) return { seq: order, r: plain };
     const pts = [win.head[win.head.length - 1]].concat(order), lens = [L.len, L.quick, E.TO_GO];
-    const mealAt = (e, len, extra) => Object.assign({ id: "eat:" + e.k, eatKey: e.k, name: e.r.name, lat: e.r.lat, lng: e.r.lng, mealOf: L, len, quick: len < L.len, toGo: len === E.TO_GO, chosen: !!my.pick, fromMap: !!e.r.fromMap, travelNote: e.r.travelNote || "",
+    const mealAt = (e, len, extra) => Object.assign({ id: "eat:" + e.k, eatKey: e.k, name: e.r.name, lat: e.r.lat, lng: e.r.lng, mealOf: L, len, quick: len < L.len, toGo: len === E.TO_GO, chosen: !!my.pick, fromMap: !!e.r.fromMap, packed: !!e.r.packed, travelNote: e.r.travelNote || "",
       oh: len === E.TO_GO ? null : ((ctx.eatFacts || {})[e.k] || {}).oh || null }, extra || {});
     const ok = c => c.r.lateMeal < 90 && !c.r.items.some(x => x.shut) && c.r.late <= plain.late && c.r.over <= plain.over
       && (c.k === order.length || c.r.waits - plain.waits <= 45)
@@ -125,10 +125,14 @@
     }
     // Inside a long visit over lunchtime: the visit gives up the lunch and the walk there and back. A visit keeps at least
     // 45 minutes of its own.
-    plain.items.filter(x => x.t === "stop" || x.t === "meal").forEach((st, k) => {
+    // Last of all, only when no place to eat fits anywhere on the day: inside a long visit with no place to eat known
+    // within reach (a beach park, a ranch), lunch is still a timed stop, one the traveler brings, said plainly (Nov 20,
+    // the lunch goal: every day out over lunchtime has a timed lunch).
+    const inside = packed => plain.items.filter(x => x.t === "stop" || x.t === "meal").forEach((st, k) => {
       const s = order[k]; if (!s || s.mealOf || st.t !== "stop" || !isFinite(s.lat)) return;
       const over = Math.min(st.at + (st.min || 0), L.to) - Math.max(st.at, L.from);
-      const cands = my.pick ? [my.pick] : eatsNear(s, ctx, "Lunch", quick ? 1 : 3);
+      const near = my.pick ? [my.pick] : eatsNear(s, ctx, "Lunch", quick ? 1 : 3);
+      const cands = !packed ? near : near.length || my.pick || (s.minutes || 0) < 120 ? [] : [{ k: "own:" + s.id, r: { name: "A lunch you bring", lat: s.lat, lng: s.lng, packed: true } }];
       for (const len of lens) {
         if (over < len) continue;
         for (const e of cands) {
@@ -142,6 +146,7 @@
         }
       }
     });
+    inside(false); if (!best && !quick) inside(true);
     if (best) return Object.assign({ seq: best.seq, r: best.r }, best.cut ? { lunchIn: true } : {});
     // No lunch: on a day with room it's for want of a place; otherwise the stops fill the day.
     return { seq: order, r: plain, noLunch: tried ? "time" : "place" };
@@ -236,6 +241,25 @@
     }
     return null;
   }
+  // Lunch is part of the day (Richard, Nov 19: "Even if its a short 20 30 minute lunch, it needs to be notated"): a day
+  // whose stops leave no time for lunch gives one visit the few minutes a lunch on the go needs, the longest visit first,
+  // never below half its time or SHORT_MIN, as a visit is shortened to fit the day (and said so), before anything is dropped.
+  function trimForLunch(keep, win, ctx, end0) {
+    const ok = c => !c.r.over && !c.r.late && c.noLunch !== "time" && !(win.hard && c.r.end > end0 && win.endBy - c.r.end < E.FILL_MARGIN);
+    // One visit at a time, longest first, then the next as well: at most 45 minutes in all, so a short lunch is planned.
+    let k = keep.slice(), given = 0;
+    const cands = keep.filter(s => (s.minutes || 0) >= 40 && !s.mealOf).sort((a, b) => (b.minutes || 0) - (a.minutes || 0) || E.byId(a, b));
+    for (const s0 of cands) {
+      for (const by of [10, 15, 20, 25, 30]) {
+        const s = k.find(x => String(x.id) === String(s0.id)), was = s0.trimmed || s0.minutes, to = s0.minutes - by;
+        if (to < Math.max(SHORT_MIN, Math.ceil(was / 2)) || given + by > 45) break;
+        const t = k.map(x => x === s ? Object.assign({}, s0, { minutes: to, trimmed: was }) : x), c = arrange(t, win, ctx);
+        if (ok(c)) return { keep: t, cur: c };
+        if (by === 15 || to - 5 < Math.max(SHORT_MIN, Math.ceil(was / 2))) { k = t; given += by; break; } // keep this much and try the next visit too
+      }
+    }
+    return null;
+  }
   const lowestFirst = (a, b) => keepRank(a) - keepRank(b) || (a.worth || 0) - (b.worth || 0) || E.byId(b, a);
   // stops: the day's chosen sights (each with worth; wish = the traveler picked it). pool: other sights it may add.
   // Which stop to give up: among those whose loss makes the day fit, the one worth least; if no single loss is enough,
@@ -324,6 +348,7 @@
       const next = keep.concat([x.stop]), c = arrange(next, win, ctx);
       if (!c.r.over && !c.r.late && !(win.hard && win.endBy - c.r.end < E.FILL_MARGIN) && (c.noLunch !== "time" || cur.noLunch === "time" || wanted(x.stop))) { keep = next; cur = c; dropped = dropped.filter(y => y !== x); }
     }
+    if (cur.noLunch === "time" && lunchWanted(win)) { const t = trimForLunch(keep, win, ctx, cur.r.end); if (t) { keep = t.keep; cur = t.cur; } }
     // Spare time is the traveler's (Nov 18, Richard: "I wouldn't do the suggested options. Just let them select to fill
     // the spots."): the app never adds a sight on its own. It names the best unused sights nearby that would still fit,
     // each checked with the day as it is, for the traveler to add if they like. The day itself is only their picks.

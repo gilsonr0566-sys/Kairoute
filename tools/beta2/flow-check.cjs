@@ -373,6 +373,47 @@ async function tapTimes(p) { const out = []; const n = await p.evaluate(() => wi
         if (!up) bad.push(`day ${i + 1}: ${r.first} ticked but not under Your picks`); else await tapBox(p, r.first); } }
     check('The sight list sorts itself: Your picks, Still fits, Also see, Already picked, Doesn\'t fit (ticks only where it fits)', !bad.length, bad.slice(0, 3).join(' | ')); }
 
+  // 3e. The scorecard's goals, on screen (Nov 19, Richard: "And the phone test"): every day's plan, as the traveler sees it.
+  //   - lunch: every day out over lunchtime with sights shows a timed "Lunch:" stop (Richard: "it needs to be notated")
+  //   - rides: no ride choice is much slower than its walk where the walk is one this traveler would take (his Rome boats)
+  //   - the sight list: every sight listed once
+  { const nd = await p.evaluate(() => window.__kairouteDays().length), noLunch = [], slowRide = [], twice = [], notSame = [];
+    const mins = t => { const h = /(\d+)\s*h/.exec(t), m = /(\d+)\s*min/.exec(t); return (h ? +h[1] * 60 : 0) + (m ? +m[1] : 0); };
+    for (let i = 0; i < nd; i++) {
+      await p.evaluate(i => { window.__kairouteGo('day', i); window.__kairouteGo('plan'); }, i); await p.waitForTimeout(400);
+      const r = await p.evaluate(i => { const e = window.__kairouteEngine2()[i] || {}, w = e.w || {}, st = (e.stops || []).length;
+        const wants = st > 0 && !e.error && typeof KEngine !== 'undefined' && KEngine.lunchWanted({ start: w.start, endBy: w.endBy, sightFrom: w.sightFrom, sightTo: w.sightTo });
+        const tl = [...document.querySelectorAll('.timeline .tl')].map(x => x.innerText.replace(/\s+/g, ' ')).join(' | ');
+        const legs = [...document.querySelectorAll('.timeline .tl.leg')].map(x => ({ head: (x.querySelector('.what span') || x).innerText.split('\n')[0], chips: [...x.querySelectorAll('.ridechip')].map(c => ({ k: [...c.classList].find(n => /^k-/.test(n)), t: c.innerText.replace(/\s+/g, ' ') })) }));
+        const shown = [...new Set([...document.querySelectorAll('.timeline [data-stop]')].map(x => x.dataset.stop))], planned = [...new Set((e.items || []).filter(x => x.t === 'stop' && !x.along && !x.bonus).map(x => String(x.id)))];
+        return { dest: (window.__kairouteDays()[i] || {}).dest, wants, lunch: /Lunch:/.test(tl) || (e.items || []).some(x => x.lunchIn), legs, shown, planned }; }, i);
+      if (r.shown.join('>') !== r.planned.join('>')) notSame.push(`day ${i + 1}: screen ${r.shown.join('>')}, plan ${r.planned.join('>')}`);
+      if (r.wants && !r.lunch) noLunch.push(`day ${i + 1} (${r.dest})`);
+      for (const l of r.legs) { const w = l.chips.find(c => c.k === 'k-walk'); if (!w) continue; const mi = /([\d.]+)\s*mi\b/.exec(l.head), km = mi ? +mi[1] * 1.609 : 0;
+        if (km / 1.3 > 2 * 1.7) continue; // the sample trip's traveler walks a medium amount (limit 1.7 km)
+        l.chips.filter(c => c.k !== 'k-walk' && c.k !== 'k-car' && c.k !== 'k-taxi' && mins(c.t) > mins(w.t) + 10).forEach(c => slowRide.push(`day ${i + 1}: ${c.t} beside ${w.t}`)); }
+      await p.evaluate(i => { window.__kairouteGo('day', i); window.__kairouteGo('sites'); }, i); await p.waitForTimeout(300);
+      const ids = await p.$$eval('input[data-site]', xs => xs.map(x => x.dataset.site)), seen = new Set();
+      ids.forEach(id => { if (seen.has(id)) twice.push(`day ${i + 1}: ${id}`); seen.add(id); });
+    }
+    check('Every day out over lunchtime shows a timed lunch on its plan', !noLunch.length, noLunch.slice(0, 5).join('; '));
+    check('No ride choice on any day is much slower than walking it', !slowRide.length, slowRide.slice(0, 5).join('; '));
+    check('Every sight is listed once in each day\'s list', !twice.length, twice.slice(0, 5).join('; '));
+    check('Every day shows its stops in the order the planner chose', !notSame.length, notSame.slice(0, 3).join('; ')); }
+  // 3f. The rest of the scorecard on the phone's own trip (Nov 20, Richard: "And the phone test"): the trip exactly as the
+  // phone holds it (its facts and the demo planner's own plans for it) goes through the same leak, demo and order checks.
+  { const snap = await p.evaluate(() => window.__kairouteBucket(true)), sd = fs.mkdtempSync(path.join(require('os').tmpdir(), 'phone-snap-'));
+    fs.writeFileSync(path.join(sd, 'phone-trip.json'), JSON.stringify(Object.assign({ label: 'the trip on the phone' }, snap)));
+    const { execFileSync } = require('child_process'), PD = path.join(__dirname, '..', 'places', 'data');
+    const run = (f, a) => { try { return execFileSync('node', [path.join(__dirname, f)].concat(a || []), { env: Object.assign({}, process.env, { SNAP_DIR: sd, PLACES_DIR: PD }), encoding: 'utf8', maxBuffer: 1 << 26 }); } catch (e) { return String(e.stdout || '') + String(e.stderr || ''); } };
+    const num = (t, re) => { const m = re.exec(t); return m ? +m[1] : null; };
+    const lk = run('leaks.cjs', ['--list']), cmp = run('compare.cjs'), st = run('stress.cjs', ['--list']);
+    const nl = num(lk, /(\d+)\s+leaks?\b/i) != null ? num(lk, /(\d+)\s+leaks?\b/i) : num(lk, /leaks?:\s*(\d+)/i), worse = num(cmp, /worse than the old engine:\s*(\d+)/), unsafe = num(cmp, /safety failures:\s*(\d+)/), zig = num(st, /(\d+)\s+order crosses back and forth/) || 0;
+    check('No leaks on the trip as the phone holds it', nl === 0, nl == null ? 'leak report did not run: ' + lk.slice(-300) : lk.split('\n').filter(l => /^      \S/.test(l)).slice(0, 3).join(' | '));
+    check('No day on the phone is worse than the demo app plans it', worse === 0 && unsafe === 0, `${worse} worse, ${unsafe} safety failures`);
+    check('No day on the phone crosses back and forth', zig === 0, st.split('\n').filter(l => /^      \S/.test(l)).slice(0, 3).join(' | '));
+    if (process.env.KEEP_SNAP) fs.copyFileSync(path.join(sd, 'phone-trip.json'), process.env.KEEP_SNAP); fs.rmSync(sd, { recursive: true, force: true }); }
+
   // 4. Speed: tapping between days, against the demo app on the same trip and the same slowed CPU.
   const b2t = await tapTimes(p);
   let demoMed = null; if (DEMO) { const s2 = await serve(DEMO); const d = await open(browser, s2.url); demoMed = median(await tapTimes(d.p)); await d.ctx.close(); s2.close(); }
@@ -382,6 +423,20 @@ async function tapTimes(p) { const out = []; const n = await p.evaluate(() => wi
     check(`Ticking a sight answers quickly (median ${med} ms, slowest ${worst} ms on a phone-speed CPU, ${sl.length} taps)`, med <= 700 && worst <= 2500, `median ${med} ms, slowest ${worst} ms`); }
   { const shut = await p.evaluate(() => window.__foldShut || 0); check('A fold the traveler opened never closes by itself', !shut, shut + ' times a fold had closed again before the next tap'); }
   check('No errors in the app', !errs.length, errs.slice(0, 2).join(' | '));
+  // 5. A hotel the map hasn't placed (typed in or brought in with a trip, no spot yet, no name, or an empty spot) never
+  // blanks a day (demo copy rule, Nov 19: the boarding day showed only "Choose where you're staying"). Each hotel day
+  // still plans, from the guide's hotel area, and says the hotel isn't placed yet. Last, as it changes the saved trip.
+  for (const v of [{ name: 'Hotel Grande Bretagne', ll: null }, { name: '', ll: null }, { name: 'X', ll: { lat: null, lng: null } }]) {
+    await p.evaluate(v => { const t = JSON.parse(localStorage.getItem('wayside.trip2')); t.lodging = t.lodging || {};
+      for (const d of t.days) { const k = (d.cityKey || d.destination || '').toLowerCase().trim(); if (k) t.lodging[k] = Object.assign({ idx: 'custom' }, v); }
+      for (const k of Object.keys(t.lodging)) t.lodging[k] = Object.assign({ idx: 'custom' }, v);
+      localStorage.setItem('wayside.trip2', JSON.stringify(t)); }, v);
+    await p.reload(); await p.waitForTimeout(4000);
+    const days = (await p.evaluate(() => window.__kairouteDays())).filter(x => /^(land|arrival|embark|departure)$/.test(x.type)).slice(0, 5), blank = [], noted = [];
+    for (const d of days) { await p.evaluate(i => window.__kairouteAt(i, 'plan'), d.i); await p.waitForTimeout(500);
+      const t = await p.evaluate(() => document.getElementById('view').innerText);
+      if (/Choose where you're staying/.test(t)) blank.push(d.date + ' ' + d.type); if (/on the map yet/.test(t)) noted.push(d.i); }
+    check(`A hotel not on the map yet never blanks a day (${JSON.stringify(v.name)}${v.ll ? ', empty spot' : ''})`, days.length && !blank.length && noted.length, !days.length ? 'no hotel days' : blank.length ? 'blank: ' + blank.join(', ') : 'never says the hotel is not placed yet'); }
 
   await ctx.close(); srv.close(); await browser.close();
   const leaks = results.filter(r => !r.ok);

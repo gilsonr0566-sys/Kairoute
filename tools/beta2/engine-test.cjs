@@ -372,7 +372,7 @@ if (fs.existsSync(dir)) for (const f of fs.readdirSync(dir).filter(f => f.endsWi
   plans.forEach((p, i) => { if (!p || p.error) return; const w = E.dayWindow(s.days[i], E.makeTravel(s.prefs, s.legModes));
     if (w.hard && p.end > w.endBy) unsafe++;
     p.items.forEach(x => { if (x.t === 'stop') { if (x.late) unsafe++; const was = sights.get(String(x.id)); if (was != null && was !== i) ok(false, `${f}: ${x.name} planned on day ${was} and day ${i}`); sights.set(String(x.id), i); }
-      if ((x.t === 'meal' || x.t === 'evening') && x.name) { const k = x.name.toLowerCase(); const was = eats.get(k); if (was != null && was !== i) ok(false, `${f}: ${x.name} used on day ${was} and day ${i}`); eats.set(k, i); } }); });
+      if ((x.t === 'meal' || x.t === 'evening') && x.name && !x.packed && !x.onBoard) { const k = x.name.toLowerCase(); const was = eats.get(k); if (was != null && was !== i) ok(false, `${f}: ${x.name} used on day ${was} and day ${i}`); eats.set(k, i); } }); });
   ok(unsafe === 0, `${f}: ${unsafe} unsafe stops or late days`);
   // A sight with its own finished guide, a must-see, or the traveler's pick is never folded away into a visit next door.
   const planned = new Set([...sights.keys()]); let kept = 0;
@@ -594,6 +594,26 @@ ok(E.readable('Café Ñandú') && E.readable("Joe's Bar & Grill") && !E.readable
     'lunch is wanted on any day out over lunchtime for two hours or more, an afternoon from 13:40 included');
   // A minute riding weighs at least as much as a minute waiting: the planner never buys a little less waiting with a long crossing.
   { const r = { over: 0, late: 0, mealPen: 0, end: 600 }; ok(E.dayCost(Object.assign({ waits: 0, rideMin: 60 }, r)) >= E.dayCost(Object.assign({ waits: 60, rideMin: 0 }, r)), 'an hour more riding never costs less than an hour of waiting'); }
+  // One sight, one id (Nov 19 sweep: the app sends back the town sights it lists from the places files, and they were
+  // added a second time: a day trip of 23 stops, an 8-second tick). Facts applied twice still list every sight once.
+  { const PD = path.join(__dirname, '..', 'places', 'data'), places = {}, dup = [];
+    if (fs.existsSync(PD)) for (const g of fs.readdirSync(PD).filter(g => g.endsWith('.json'))) { const q = JSON.parse(fs.readFileSync(path.join(PD, g))); places[q.key] = q; }
+    for (const f of fs.readdirSync(dir).filter(f => f.endsWith('.json'))) { const b = E.applyPlaces(E.applyPlaces(JSON.parse(fs.readFileSync(path.join(dir, f))), places), places);
+      for (const [k, c] of Object.entries(b.cities || {})) { const ids = (c.sites || []).concat(c.farther || []).map(x => String(x.id)), seen = new Set();
+        for (const id of ids) { if (seen.has(id)) dup.push(f + ' ' + k + ': ' + id); seen.add(id); } } }
+    ok(!dup.length, `every sight is listed once, even when the app sends back the sights it got from the places files (${dup.length} twice: ${dup.slice(0, 3).join('; ')})`); }
+  // Lunch on every day out over lunchtime (Nov 20, the scorecard's lunch goal). Two general ways when the picks fill the day:
+  //   - a port day whose return is before lunch ends: lunch back on board, timed, after the traveler is back, never moving
+  //     the time back at the ship or the margin;
+  //   - otherwise a visit or two of 40 min or more give up a few minutes (never below half, or SHORT_MIN) for a short lunch.
+  { const PD = path.join(__dirname, '..', 'places', 'data'), places = {}, bad = [], cut = []; let onBoard = 0;
+    if (fs.existsSync(PD)) for (const g of fs.readdirSync(PD).filter(g => g.endsWith('.json'))) { const q = JSON.parse(fs.readFileSync(path.join(PD, g))); places[q.key] = q; }
+    for (const f of fs.readdirSync(dir).filter(f => f.endsWith('.json'))) { const s = E.applyPlaces(JSON.parse(fs.readFileSync(path.join(dir, f))), places), pl = E.planTrip(s);
+      pl.forEach((p, i) => { if (!p || !p.items) return; const d = s.days[i], c = s.cities[d.city] || {}, mins = new Map((c.sites || []).concat(c.farther || []).map(x => [String(x.id), x.minutes || 0]));
+        p.items.filter(x => x.onBoard).forEach(x => { onBoard++; if (!/port/.test(d.type) || x.at < p.end || x.at + x.min > E.MEALS[0].to + 30) bad.push(`${f} day ${i + 1} at ${E.clock(x.at)}, back ${E.clock(p.end)}`); });
+        p.items.filter(x => x.t === 'stop' && mins.has(String(x.id))).forEach(x => { const was = mins.get(String(x.id)); if (x.min < was && x.min < Math.min(was, Math.max(E.SHORT_MIN || 25, Math.floor(was / 2) - 8))) cut.push(`${f} day ${i + 1}: ${x.name} ${x.min} of ${was} min`); }); }); }
+    ok(!bad.length && onBoard > 0, `lunch back on board only on port days, after the traveler is back, never moving the time back at the ship (${onBoard} days; ${bad.slice(0, 3).join('; ')})`);
+    ok(!cut.length, `a visit shortened for lunch or to fit the day keeps at least half its time (${cut.slice(0, 3).join('; ')})`); }
   // Never a way much slower than walking where the walk is offered (Nov 19, Richard's Rome day: "Those 2 ferries stick out
   // like a sore thumb", a river boat of 1 h 40 min for a 1.6-mile hop beside a 34-minute walk and a 17-minute taxi).
   { const a = { lat: 41.8986, lng: 12.4769 }, b = { lat: 41.9022, lng: 12.4539 };

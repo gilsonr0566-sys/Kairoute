@@ -62,7 +62,9 @@
       if ((P.cityEats || []).length) { const have = new Set((city.restaurants || []).map(r => E.eatKey(r.name)));
         city.restaurants = (city.restaurants || []).concat(P.cityEats.filter(x => x.name && E.readable(E.latin(x.name) || x.name) && isFinite(x.lat) && isFinite(x.lng) && !have.has(E.eatKey(x.name)))
           .map(x => ({ id: "map~" + E.eatKey(x.name).replace(/ /g, "-"), name: E.latin(x.name) || x.name, lat: x.lat, lng: x.lng,  kind: x.amenity || "restaurant", amenity: x.amenity || "restaurant", cuisine: x.cuisine || "", fromMap: true }))); }
-      const added = [];
+      // One sight, one id: a town's sights the app already lists (it shows the places files' sights in its own list, and
+      // sends them back) are never added again (Nov 19 sweep: Toledo's sights twice over made a day of 23 stops, an 8-second tick).
+      const added = [], haveFar = new Set((city.farther || []).map(x => String(x.id)));
       for (const s of city.farther || []) {
         const t = P.towns && P.towns[s.id]; if (!t) continue;
         if (t.editions) s.editions = t.editions;
@@ -73,8 +75,8 @@
         const own = (t.sights || []).filter(x => (x.kind || "see") === "see" && isFinite(x.lat) && isFinite(x.lng) && E.hav(s, x) <= TOWN_KM);
         s.townSights = own.map(x => ({ name: x.name, lat: x.lat, lng: x.lng }));
         // A museum gets an hour, anything else half an hour; getting there takes what the town's own ride note says.
-        own.forEach((x, n) => added.push({ id: s.id + "~" + (x.wikidata || n), name: x.name, lat: x.lat, lng: x.lng, minutes: /museum|museo|musée|museu|muzeum|galler/i.test(x.name) ? 60 : 30,
-          far: true, town: s.id, townName: s.name, travelNote: s.travelNote || "", editions: x.editions || 0, unesco: !!x.unesco, tags: ["in-town"], category: "Sight" }));
+        own.forEach((x, n) => { const id = s.id + "~" + (x.wikidata || n); if (haveFar.has(id)) return; haveFar.add(id); added.push({ id, name: x.name, lat: x.lat, lng: x.lng, minutes: /museum|museo|musée|museu|muzeum|galler/i.test(x.name) ? 60 : 30,
+          far: true, town: s.id, townName: s.name, travelNote: s.travelNote || "", editions: x.editions || 0, unesco: !!x.unesco, tags: ["in-town"], category: "Sight" }); });
         // With its sights listed one by one, the town itself is the walk through its centre.
         if (own.length >= 2) s.minutes = Math.min(s.minutes || 60, 60);
         s.foodDrink = (t.foodDrink || []).map(x => ({ name: E.latin(x.name) || x.name, lat: isFinite(x.lat) ? x.lat : null, lng: isFinite(x.lng) ? x.lng : null, kind: x.kind, note: x.content || "", special: E.foodSpecial(x) }));

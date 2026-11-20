@@ -12,7 +12,7 @@
 // on a day over lunchtime or said why not, every pick planned or said why not, a dragged order kept, no engine error.
 // No AI, no network. Usage: node tools/beta2/stress.cjs [--list]
 const fs = require('fs'), path = require('path'), E = require('./engine.cjs');
-const dir = path.join(__dirname, 'snapshots'), PD = path.join(__dirname, '..', 'places', 'data'), list = process.argv.includes('--list');
+const dir = process.env.SNAP_DIR || path.join(__dirname, 'snapshots'), PD = path.join(__dirname, '..', 'places', 'data'), list = process.argv.includes('--list');
 const places = {}; if (fs.existsSync(PD)) for (const f of fs.readdirSync(PD).filter(f => f.endsWith('.json'))) { const p = JSON.parse(fs.readFileSync(path.join(PD, f))); places[p.key] = p; }
 const out = {}, add = (k, m) => { (out[k] = out[k] || new Set()).add(m); };
 const label = { error: 'engine error', past: 'past the time to be back', zero: 'ride of no time between places apart', nan: 'time not a number',

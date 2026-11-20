@@ -29,7 +29,7 @@ function score(facts, plans) {
       if (f && isFinite(f.lat)) { const prev = been[been.length - 1]; if (prev && hav(prev, f) > 20 && been.slice(0, -1).some(b => hav(b, f) < 10)) r.backtrack++; been.push(f); }
       if (seenStop.has(s.id) && seenStop.get(s.id) !== i) r.repeat = (r.repeat || []).concat(s.id); else seenStop.set(s.id, i);
     });
-    meals.forEach(m => { if (!m.name || /^(Lunch|Dinner) near /.test(m.name) || /^Booked /.test(m.name)) return; const k = m.name.toLowerCase(); if (seenMeal.has(k) && seenMeal.get(k) !== i) r.mealRepeat = (r.mealRepeat || []).concat(m.name); else seenMeal.set(k, i); });
+    meals.forEach(m => { if (!m.name || m.packed || m.onBoard || /^(Lunch|Dinner) near /.test(m.name) || /^Booked /.test(m.name)) return; const k = m.name.toLowerCase(); if (seenMeal.has(k) && seenMeal.get(k) !== i) r.mealRepeat = (r.mealRepeat || []).concat(m.name); else seenMeal.set(k, i); });
     rides.forEach(x => { r.rideMin += x.min || 0; });
     r.end = p.end; r.endBy = p.endBy;
     if (HARD.has(d.type)) r.margin = p.endBy - p.end; // minutes to spare before the ship, train or plane's "be there by"
