@@ -1,0 +1,107 @@
+{
+ "name": "dry-bruges",
+ "label": "Dry run: Bruges one night by train",
+ "legs": [
+  {
+   "k": "stay",
+   "place": "Bruges, Belgium",
+   "date": "2027-05-18",
+   "nights": 1,
+   "inBy": "train",
+   "inAt": "10:30",
+   "homeBy": "train",
+   "homeAt": "16:00"
+  }
+ ],
+ "started": "2026-11-20T18:36:47.799Z",
+ "passed": {
+  "/sources": 12,
+  "/transit": 16,
+  "/guide": 1,
+  "/places": 1,
+  "/voyage": 2,
+  "/ground": 1,
+  "/x/near": 4,
+  "/route": 6
+ },
+ "refused": {
+  "/ratings": 1,
+  "/grating": 2,
+  "/events": 2,
+  "/x/knowhow": 1,
+  "/x/write": 1
+ },
+ "errors": [],
+ "days": [
+  {
+   "i": 0,
+   "date": "2027-05-18",
+   "type": "arrival",
+   "text": "TUE MAY 18 · BRUGES, BELGIUM · ARRIVING\nBruges, Belgium ✎ Rename\nMark day ready\n▶ Start the tour\n10:45–18:30\n6 h sightseeing ✎\n2\npicks\n2.1 mi\nwalking\n14:49\nfinish\nChange stops\nMore\nLight\n2½ h\nHalf\n4 h\nFull\n8 h\nAbout today's plan\nOpening hours aren't known for Church of Our Lady and Museum van het Heilig Bloed on this date: check before you go.\nFree time: about 3 h 41 min left after the last stop, before the day ends (6:30 pm). Linger where you like.\nUse Ctrl + scroll to zoom the map\nStart · Station\nH\n1\nL\n2\n1000 ft\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nWalk\n● Meal\n■ Hotel\nMore about today\n\nAll times are Bruges time.\n\nFull details\nCompact\nLEAVE\n10:45\nS\nOut of Brugge railway station\nTrain arrives 10:30. We allow 15 min to get off the train.\nWalk · 25 min · 1.2 mi\nWalk · 25 min\nTaxi or car · 15 min\nARRIVE\n11:10\nLEAVE\n11:30\nH\nCheck in or drop bags\n20 min\nWalk · 9 min · 0.4 mi\nARRIVE\n11:39\nLEAVE\n12:09\n1\nChurch of Our Lady\n30 min · Church · Must-see\nWalk · 5 min · 0.3 mi\nARRIVE\n12:14\nLEAVE\n13:14\nL\nLunch: Breakfast tearoom\nRestaurant · Popular with visitors · 1 h\nChange lunch\nLunch: why here\nWalk · 2 min · 0.1 mi\nARRIVE\n13:16\nLEAVE\n14:46\n2\nMuseum van het Heilig Bloed\n1 h 30 min · Museum · Must-see\n+\nFree time: 3 h 41 min\nYours to spend as you like. These would still fit if you want one more stop:\nAdd Ezelpoort (40 min)\nAdd Choco-Story Bruges (40 min)\nAdd Gentpoort (40 min)\nAdd Smedenpoort (40 min)\nWalk · 3 min · 0.1 mi\nARRIVE\n14:49\nE\nBack at Hotel in central Bruges, Belgium\n3 h 41 min to spare.\nARRIVE\n18:30\nD\nSuggested dinner: Curiosa\nRestaurant\nTRAVELERS RECOMMEND\nChange dinner\nDinner: why here"
+  },
+  {
+   "i": 1,
+   "date": "2027-05-19",
+   "type": "departure",
+   "text": "WED MAY 19 · BRUGES, BELGIUM · LEAVING\nBruges, Belgium ✎ Rename\nMark day ready\n🚆\nLEAVE BY\nto your train\n14:47\n▶ Start the tour\n09:00–15:30\n6 h 30 min before you go\n3\npicks\n3.3 mi\nwalking\nChange stops\nMore\nAbout today's plan\nOpening hours aren't known for Groeningemuseum on this date: check before you go.\nFree time: about 1 h 15 min left after the last stop, before the time to be back (3:30 pm). Linger where you like.\nUse Ctrl + scroll to zoom the map\nS\n1\n2\n3\nL\nFinish · Station\n1000 ft\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nWalk\n● Meal\n■ Hotel\nMore about today\n\nAll times are Bruges time.\n\nFull details\nCompact\nLEAVE\n09:00\nS\nCheck out of Hotel in central Bruges, Belgium\nAdd your own hotel on the Trip page for exact times.\nMost hotels keep your bags for the day after check-out: ask at the desk.\nWalk · 21 min · 1.0 mi\nWalk · 21 min\nTaxi or car · 14 min\nARRIVE\n09:21\nLEAVE\n10:01\n1\nTen Wijngaerde\n40 min · Sight\nWalk · 11 min · 0.5 mi\nWalk · 11 min\nTaxi or car · 12 min\nARRIVE\n10:12\nLEAVE\n10:52\n2\nSint-Janshospitaal\n40 min · Sight\nWalk · 5 min · 0.2 mi\nARRIVE\n10:57\nLEAVE\n12:27\n3\nGroeningemuseum\n1 h 30 min · Museum · Must-see\nWalk · 6 min · 0.3 mi\nARRIVE\n12:33\nLEAVE\n13:33\nL\nLunch: The Waffle Duke\nRestaurant · Popular with visitors · 1 h\nChange lunch\nLunch: why here\nWalk · 2 min · 0.1 mi\nARRIVE\n13:35\nLEAVE\n13:50\nH\nCollect bags\n15 min\n+\nFree time: 1 h 15 min\nYours to spend as you like. These would still fit if you want one more stop:\nAdd Choco-Story Bruges (40 min)\nAdd Gentpoort (40 min)\nAdd Smedenpoort (40 min)\nAdd Ezelpoort (40 min)\nWalk · 25 min · 1.2 mi\nWalk · 25 min\nTaxi or car · 15 min\nARRIVE\n14:15\nE\nAt Brugge railway station\n1 h 15 min to spare.\nTrain leaves 16:00: be at the station by 15:30, 30 min early."
+  }
+ ],
+ "guides": {
+  "Bruges, Belgium": {
+   "city": "Bruges, Belgium",
+   "src": true,
+   "ai": false,
+   "n": 9,
+   "sights": "Church of Our Lady* | Museum van het Heilig Bloed* | Ten Wijngaerde | Groeningemuseum* | Sint-Janshospitaal | Choco-Story Bruges | Ezelpoort | Gentpoort | Smedenpoort",
+   "far": "",
+   "eats": 60,
+   "starts": {
+    "cruise": [
+     "Zeebrugge Cruise Terminal (ABC Tower)"
+    ],
+    "airport": [
+     "Ostend–Bruges International Airport"
+    ],
+    "station": [
+     "Brugge railway station"
+    ],
+    "hotel": [
+     "Hotel in central Bruges, Belgium"
+    ],
+    "point": [
+     "Central Bruges, Belgium"
+    ]
+   }
+  }
+ },
+ "steps": [
+  {
+   "name": "phone-day0",
+   "r": true,
+   "text": "TUE MAY 18 · BRUGES, BELGIUM · ARRIVING\nBruges, Belgium ✎ Rename\nMark day ready\n▶ Start tour\n10:45–18:30\n6 h sightseeing ✎\n2\npicks\n2.1 mi\nwalking\n14:49\nfinish\nChange stops\nMore\nLight\n2½ h\nHalf\n4 h\nFull\n8 h\nAbout today's plan\nOpening hours aren't known for Church of Our Lady and Museum van het Heilig Bloed on this date: check before you go.\nFree time: about 3 h 41 min left after the last stop, before the day ends (6:30 pm). Linger where you like.\nUse Ctrl + scroll to zoom the map\nStart · Station\nH\n1\nL\n2\n1000 ft\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nWalk\n● Meal\n■ Hotel\nMore about today\n\nAll times are Bruges time.\n\nFull details\nCompact\nLEAVE\n10:45\nS\nOut of Brugge railway station\nTrain arrives 10:30. We allow 15 min to get off the train.\nWalk · 25 min · 1.2 mi\nWalk · 25 min\nTaxi or car · 15 min\nARRIVE\n11:10\nLEAVE\n11:30\nH\nCheck in or drop bags\n20 min\nWalk · 9 min · 0.4 mi\nARRIVE\n11:39\nLEAVE\n12:09\n1\nChurch of Our Lady\n30 min · Church · Must-see\nWalk · 5 min · 0.3 mi\nARRIVE\n12:14\nLEAVE\n13:14\nL\nLunch: Breakfast tearoom\nRestaurant · Popular with visitors · 1 h\nChange lunch\nLunch: why here\nWalk · 2 min · 0.1 mi\nARRIVE\n13:16\nLEAVE\n14:46\n2\nMuseum van het Heilig Bloed\n1 h 30 min · Museum · Must-see\n+\nFree time: 3 h 41 min\nYours to spend as you like. These would still fit if you want one more stop:\nAdd Ezelpoort (40 min)\nAdd Choco-Story Bruges (40 min)\nAdd Gentpoort (40 min)\nAdd Smedenpoort (40 min)\nWalk · 3 min · 0.1 mi\nARRIVE\n14:49\nE\nBack at Hotel in central Bruges, Belgium\n3 h 41 min to spare.\nARRIVE\n18:30\nD\nSuggested dinner: Curiosa\nRestaurant\nTRAVELERS RECOMMEND\nChange dinner\nDinner: why here"
+  }
+ ],
+ "version": "5133e5b-1795154095",
+ "aiReady": false,
+ "wizard": {
+  "miss": [],
+  "prev": "Your days: 2 days",
+  "form": "Add each place in order, the way it's booked. Each new stop starts where the last one ends.\n\nSTOP 1 · CITY STAY\nCity\nArrive on\nNights\nHotel (optional)\nGetting there\nFlight\nTrain\nFerry\nCar or bus\nArrive in town at\nLeave empty if you don't know yet.\nGoing home from here\nFlight\nTrain\nFerry\nCar or bus\nTrain at\n+ Add a city stay\n+ Add a cruise\nYour days: 2 days\nAdd more details (optional)\nName this trip\n\nKairoute picks good defaults for pace, walking and voice, and you can change any of them later.\n\nCancel\nPersonalize first\nBuild my trip"
+ },
+ "buildSec": 232,
+ "state": {
+  "busy": "",
+  "err": "",
+  "days": [
+   {
+    "date": "2027-05-18",
+    "type": "arrival"
+   },
+   {
+    "date": "2027-05-19",
+    "type": "departure"
+   }
+  ]
+ },
+ "finished": "2026-11-20T18:41:16.241Z"
+}

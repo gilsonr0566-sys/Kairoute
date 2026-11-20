@@ -1,0 +1,173 @@
+{
+ "name": "dry-kotor",
+ "label": "Dry run: Kotor tender call",
+ "legs": [
+  {
+   "k": "cruise",
+   "board": "Venice, Italy",
+   "date": "2027-07-06",
+   "aboard": "16:00",
+   "ports": [
+    {
+     "date": "2027-07-08",
+     "place": "Kotor, Montenegro",
+     "arrive": "08:00",
+     "aboard": "17:00",
+     "tender": true
+    }
+   ],
+   "end": "Venice, Italy",
+   "endDate": "2027-07-10",
+   "off": "08:00"
+  }
+ ],
+ "started": "2026-11-20T18:36:48.898Z",
+ "passed": {
+  "/sources": 13,
+  "/transit": 9,
+  "/guide": 2,
+  "/places": 3,
+  "/voyage": 3,
+  "/ground": 2,
+  "/x/near": 9,
+  "/route": 7
+ },
+ "refused": {
+  "/ratings": 2,
+  "/grating": 3,
+  "/events": 3,
+  "/x/knowhow": 2,
+  "/x/write": 1
+ },
+ "errors": [],
+ "days": [
+  {
+   "i": 0,
+   "date": "2027-07-06",
+   "type": "arrival",
+   "text": "TUE JUL 6 · VENICE, ITALY · ARRIVING\nVenice, Italy ✎ Rename\nMark day ready\nToday is one plan\n\nFlight in at 10:30, then the ship at 16:00: the sightseeing in between, your bags and the countdown are on one page.\n\nSee today's plan"
+  },
+  {
+   "i": 1,
+   "date": "2027-07-06",
+   "type": "embark",
+   "text": "TUE JUL 6 · VENICE, ITALY · BOARDING\nVenice, Italy ✎ Rename\nMark day ready\n🚢\nLEAVE BY\nto the ship\n14:54\n▶ Start the tour\n11:45–15:00\n3 h 15 min before you go\n3\npicks\n1.3 mi\nwalking\nChange stops\nMore\nAbout today's plan\nDoge's Palace didn't fit in the time. To fit it in: skip Gallerie dell'Accademia or skip Santa Maria della Salute.\nRialto Bridge didn't fit in the time.\nA shorter visit to Gallerie dell'Accademia (30 min instead of 40 min) so the rest of the day fits.\nOpening hours for Santa Maria della Salute and St Mark's Basilica aren't on the map yet: check before you go.\nUse Ctrl + scroll to zoom the map\nStart · Airport\n1\n2\n3\nL\nFinish · Cruise port\n500 ft\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nWalk\nTaxi or car\n● Meal\nMore about today\n🛳 When do you board?\nBoarding time\nTerminal (optional)\nSave\n\nOn your boarding pass or check-in confirmation (also called arrival or check-in time). Until then the plan gets you there by 15:00, an hour before all aboard.\n\nWhat to have on you · 0 of 9 ready\n📅 Add reminders to my calendar\nDidn't fit today: Doge's Palace, Rialto Bridge. Your picks are over today's time.\nMake it fit\n\nAll times are Venice time.\n\nFull details\nCompact\nLEAVE\n11:45\nS\nOut of Venice Marco Polo Airport\nFlight arrives 10:30. We allow 1 h 15 min to get through passport control and baggage. Book luggage storage near Venice Marco Polo Airport ahead (a left-luggage desk or a storage shop), or ask your hotel or station.\nYou fly in the day the ship sails, so today goes straight from the airport to the ship: there isn't enough time for sightseeing with a safe margin. A late or missed flight is the most common way travelers miss a ship, and the ship won't wait. Keep your airline's and cruise line's phone numbers handy, and if a delay is announced, call the cruise line at once.\nTaxi or car · 36 min · 6.8 mi\nARRIVE\n12:21\nLEAVE\n12:51\n1\nGallerie dell'Accademia\n30 min · Sight · Must-see\nWalk · 9 min · 0.4 mi\nARRIVE\n13:00\nLEAVE\n13:30\n2\nSanta Maria della Salute\n30 min · Church · Must-see\nWalk · 10 min · 0.5 mi\nARRIVE\n13:40\nLEAVE\n14:10\n3\nSt Mark's Basilica\n30 min · Church · Must-see\nWalk · 2 min · 0.1 mi\nARRIVE\n14:12\nLEAVE\n14:32\nL\nLunch: Leone D'Oro\nRestaurant · Popular with visitors · 20 min\nChange lunch\nLunch: why here\nWalk · 6 min · 0.3 mi\nARRIVE\n14:38\nE\nBoarding at Port of Venice\n22 min to spare.\nAll aboard 16:00: be at the terminal by 15:00 at the latest. Your cruise line gives you a boarding time: add it and the plan gets you there for it.\nPorters take your big bags at the curb (luggage tags on; they reach your cabin by evening). Keep your passport, boarding pass, medicines and valuables in your carry-on for check-in and security.\nBig ports have more than one cruise terminal: check yours on your boarding pass and tell the driver.\nBook the taxi or transfer the day before, or ask your hotel to call one. Being aboard on time is your responsibility: check your boarding time with your cruise line."
+  },
+  {
+   "i": 2,
+   "date": "2027-07-07",
+   "type": "sea"
+  },
+  {
+   "i": 3,
+   "date": "2027-07-08",
+   "type": "port",
+   "text": "THU JUL 8 · KOTOR, MONTENEGRO · IN PORT · ⚓ Staying on board?\nKotor, Montenegro ✎ Rename\nMark day ready\n🚢\nLEAVE BY\nback to ship\n15:40\n▶ Start the tour\n09:00–15:45\nashore 6 h 45 min\n7\npicks\n1.8 mi\nwalking\nChange stops\nMore\nAbout today's plan\nA shorter visit to Fortifications of Kotor (25 min instead of 40 min) so the rest of the day fits.\nA shorter visit to Dobrota (25 min instead of 40 min) so the rest of the day fits.\nOpening hours for Kotor Cathedral, Fortifications of Kotor, Dobrota, Prčanj and others aren't on the map yet: check before you go.\nUse Ctrl + scroll to zoom the map\nStart · Cruise port\n1\n2\n3\n4\n5\nL\n6\n7\n1 mi\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nWalk\nTaxi or car\n● Meal\nMore about today\n\nAll times are Kotor time.\n\nFull details\nCompact\nLEAVE\n09:00\nS\nTender ashore to Port Authority of Kotor\nShip docks 08:00 (tender port, so we allow an hour to get ashore).\nWalk · 19 min · 0.9 mi\nWalk · 19 min\nTaxi or car · 14 min\nARRIVE\n09:19\nLEAVE\n09:59\n1\nMuo\n40 min · Sight\nTaxi or car · 21 min · 2.5 mi\nBy road, with time for traffic.\nWalk · 54 min\nTaxi or car · 21 min\nARRIVE\n10:20\nLEAVE\n11:00\n2\nPrčanj\n40 min · Sight · Must-see\nTaxi or car · 18 min · 1.8 mi\nBy road, with time for traffic.\nWalk · 38 min\nTaxi or car · 18 min\nARRIVE\n11:18\nLEAVE\n11:43\n3\nDobrota\n25 min · Sight · Must-see\nTaxi or car · 25 min · 3.3 mi\nARRIVE\n12:08\nLEAVE\n12:48\n4\nNjeguši\n40 min · Sight · Must-see\nTaxi or car · 24 min · 3.2 mi\nBy road, with time for traffic.\nWalk · 1 h 9 min\nTaxi or car · 24 min\nARRIVE\n13:12\nLEAVE\n13:52\n5\nŠkaljari\n40 min · Sight · Must-see\nWalk · 6 min · 0.3 mi\nARRIVE\n13:58\nLEAVE\n14:18\nL\nLunch: Ladovina\nRestaurant · Local spot · 20 min\nChange lunch\nLunch: why here\nWalk · 7 min · 0.3 mi\nARRIVE\n14:25\nLEAVE\n14:55\n6\nKotor Cathedral\n30 min · Church · Must-see\nNext door\nARRIVE\n14:57\nLEAVE\n15:22\n7\nFortifications of Kotor\n25 min · Sight · Must-see\nWalk · 5 min · 0.2 mi\nARRIVE\n15:27\nE\nBack at the ship\nBack 1 h 3 min before all aboard (17:00). Kairoute always plans you back at least 45 min early."
+  },
+  {
+   "i": 4,
+   "date": "2027-07-09",
+   "type": "sea"
+  },
+  {
+   "i": 5,
+   "date": "2027-07-10",
+   "type": "arrival",
+   "text": "SAT JUL 10 · VENICE, ITALY · ARRIVING\nVenice, Italy ✎ Rename\nMark day ready\n▶ Start the tour\n09:00–16:33\n6 h sightseeing ✎\n5\npicks\n3.9 mi\nwalking\n14:35\nfinish\nChange stops\nMore\nLight\n2½ h\nHalf\n4 h\nFull\n8 h\nAbout today's plan\nOpening hours for Doge's Palace aren't on the map yet: check before you go.\nFree time: about 1 h 58 min left after the last stop, before the day ends (4:33 pm). Linger where you like. Lace Museum needs about 5 h 16 min there and back with the visit, more than the time left. Also a trip of its own: Church of Santa Fosca, about 5 h 26 min.\nUse Ctrl + scroll to zoom the map\nStart · Cruise port\nH\n1\n2\n3\n4\n5\nL\n1000 ft\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nWalk\n● Meal\n■ Hotel\nMore about today\n\nAll times are Venice time.\n\nFull details\nCompact\nLEAVE\n09:00\nS\nOff the ship at Port of Venice\nShip arrives 08:00. We allow 1 h to get off the ship with your luggage.\nWalk · 13 min · 0.6 mi\nWalk · 13 min\nTaxi or car · 13 min\nARRIVE\n09:13\nLEAVE\n09:33\nH\nCheck in or drop bags\n20 min\nWalk · 13 min · 0.6 mi\nWalk · 13 min\nTaxi or car · 13 min\nARRIVE\n09:46\nLEAVE\n10:16\n1\nRialto Bridge\n30 min · Landmark · Must-see\nWalk · 9 min · 0.4 mi\nARRIVE\n10:25\nLEAVE\n10:55\n2\nSanti Giovanni e Paolo Church\n30 min · Church\nWalk · 9 min · 0.4 mi\nARRIVE\n11:04\nLEAVE\n11:34\n3\nSan Zaccaria Church\n30 min · Church\nWalk · 10 min · 0.5 mi\nWalk · 10 min\nTaxi or car · 12 min\nARRIVE\n11:44\nLEAVE\n12:14\n4\nChurch of San Giorgio Maggiore\n30 min · Church\nWalk · 9 min · 0.4 mi\nARRIVE\n12:23\nLEAVE\n13:13\n5\nDoge's Palace\n50 min · Palace · Must-see\nWalk · 2 min · 0.1 mi\nARRIVE\n13:15\nLEAVE\n14:15\nL\nLunch: Gran Caffè Chioggia\nRestaurant · Popular with visitors · 1 h\nChange lunch\nLunch: why here\n+\nFree time: 1 h 58 min\nYours to spend as you like. These would still fit if you want one more stop:\nAdd Santa Maria Gloriosa dei Frari (30 min)\nAdd Correr Museum (1 h 30 min)\nAdd Peggy Guggenheim Collection (1 h 30 min)\nAdd National Archaeological Museum, Venice (1 h 30 min)\nWalk · 20 min · 0.9 mi\nWalk · 20 min\nTaxi or car · 14 min\nARRIVE\n14:35\nE\nBack at Hotel in central Venice, Italy\n1 h 58 min to spare.\nARRIVE\n18:30\nD\nSuggested dinner: Al Cafetier\nRestaurant\nChange dinner\nDinner: why here"
+  }
+ ],
+ "guides": {
+  "Venice, Italy": {
+   "city": "Venice, Italy",
+   "src": true,
+   "ai": false,
+   "n": 25,
+   "sights": "St Mark's Basilica* | Doge's Palace* | Santa Maria della Salute* | Gallerie dell'Accademia* | Santa Maria Gloriosa dei Frari | Rialto Bridge~ | Church of San Giorgio Maggiore | Santi Giovanni e Paolo Church | Ca' Pesaro | Il Redentore | Venetian Ghetto | San Zaccaria Church | Correr Museum | Grassi Palace | San Pietro di Castello Church | Santa Maria dei Miracoli Church, Venice | Peggy Guggenheim Collection | National Archaeological Museum, Venice | State Archives of Venice | Madonna dell'Orto | San Francesco della Vigna Church | San Giacomo di Rialto Church | Statue of Bartolomeo Colleoni~ | Punta della Dogana | Internazionale Gallery of Modern Art",
+   "far": "Venice/Burano | Venice/Torcello | Lace Museum | Archaeological Museum | Chiesa di Santa Fosca",
+   "eats": 60,
+   "starts": {
+    "cruise": [
+     "Port of Venice"
+    ],
+    "airport": [
+     "Venice Marco Polo Airport"
+    ],
+    "station": [
+     "Venezia Santa Lucia railway station"
+    ],
+    "hotel": [
+     "Hotel in central Venice, Italy"
+    ],
+    "point": [
+     "Central Venice, Italy"
+    ]
+   }
+  },
+  "Kotor, Montenegro": {
+   "city": "Kotor, Montenegro",
+   "src": true,
+   "ai": false,
+   "n": 15,
+   "sights": "Kotor Cathedral* | Fortifications of Kotor* | Dobrota* | Prčanj* | Njeguši* | Škaljari* | Muo | Lovćen National Park | Church of Our Lady of Remedy | Mrčevac | Serbian Orthodox church of St Nicolas in Kotor | Kavač | Maritime Museum of Montenegro in Kotor | Castle of San Giovanni | Aquarium Boka",
+   "far": "",
+   "eats": 56,
+   "starts": {
+    "cruise": [
+     "Port Authority of Kotor"
+    ],
+    "airport": [
+     "Kotor, Montenegro airport (unknown)"
+    ],
+    "station": [
+     "Kotor bus station"
+    ],
+    "hotel": [
+     "Hotel in central Kotor, Montenegro"
+    ],
+    "point": [
+     "Central Kotor, Montenegro"
+    ]
+   }
+  }
+ },
+ "steps": [],
+ "version": "5133e5b-1795154095",
+ "aiReady": false,
+ "wizard": {
+  "miss": [],
+  "prev": "Your days: 5 days · 1 port",
+  "form": "Add each place in order, the way it's booked. Each new stop starts where the last one ends.\n\nSTOP 1 · CRUISE\nLeaves from\nShip (optional)\nBoarding day\nAll aboard\nGetting to the ship (if you arrive the same day)\nFlight\nTrain\nFerry\nCar or bus\nArrive in town at\nLeave empty if you don't know yet.\nPorts of call\nIn order, from your cruise booking. Days with no port are added as sea days.\nDate\nPort\nShip arrives\nAll aboard\nTender port (small boats take you ashore)\nRemove port\n+ Add a port\nCruise ends in\nOn\nOff the ship at\nUsually 7:00 to 9:00. Leave empty if you don't know.\nGoing home from here\nFlight\nTrain\nFerry\nCar or bus\nFlight at\n+ Add a city stay\n+ Add a cruise\nYour days: 5 days · 1 port\nAdd more details (optional)\nName this trip\n\nKairoute picks good defaults for pace, walking and voice, and you can change any of them later.\n\nCancel\nPersonalize first\nBuild my trip"
+ },
+ "buildSec": 96,
+ "state": {
+  "busy": "",
+  "err": "",
+  "days": [
+   {
+    "date": "2027-07-06",
+    "type": "arrival"
+   },
+   {
+    "date": "2027-07-06",
+    "type": "embark"
+   },
+   {
+    "date": "2027-07-07",
+    "type": "sea"
+   },
+   {
+    "date": "2027-07-08",
+    "type": "port"
+   },
+   {
+    "date": "2027-07-09",
+    "type": "sea"
+   },
+   {
+    "date": "2027-07-10",
+    "type": "arrival"
+   }
+  ]
+ },
+ "finished": "2026-11-20T18:39:08.182Z"
+}
