@@ -656,6 +656,10 @@ let transitSeen = null, transitRetry = 0;
 let transitBatch = 12;
 const transitNextBatch = (cur, full, sent) => full ? Math.min(12, cur + 1) : Math.max(2, Math.floor(sent / 2));
 if (typeof window !== "undefined") window.__kairouteTransitNextBatch = transitNextBatch;
+// The earlier-start offer for a day, and the plan it would make (flow-check: never a start that only waits at the door).
+if (typeof window !== "undefined") window.__kairouteEarlierStart = i => { const d = trip.days[i], p = buildPlan(d); if (!p || p.error) return null; const e = earlierStart(d, p); if (!e) return null;
+  const keep = { startTime: d.startTime, hours: d.hours }; try { d.startTime = e.start; d.hours = e.hours; bonusMemo.delete(d); mealMemo.delete(d); const q = buildPlan(d); return { start: e.start, waits: q.items.filter(x => x.type === "stop" && (x.wait || 0) >= 15).map(x => x.place.name) }; }
+  finally { Object.assign(d, keep); bonusMemo.delete(d); mealMemo.delete(d); } };
 const transitFail = new Map(), transitQ = new Map(), transitPins = new Set(); let transitTimer = 0, transitBusy = false; // pins: rides of the trip being kept for offline
 // Speed: asked hundreds of thousands of times while planning, so each place's half of the key is kept with it.
 const pkMemo = new WeakMap();
@@ -6615,7 +6619,9 @@ function earlierStart(d, plan) {
     for (let st = s0 - 30; st >= 6 * 60 + 30; st -= 30) {
       d.startTime = fmt(st); d.hours = (end0 - st) / 60; bonusMemo.delete(d); mealMemo.delete(d);
       const p = buildPlan(d); if (!p || p.error) continue;
-      const early = p.items.some(i => i.type === "stop" && opensAt(i.place) != null && i.time < opensAt(i.place) - 5);
+      // Never a start that only means waiting at the door: a stop planned before its hours (written or assumed, the
+      // engine's wait) rules that start out (Round 1 part 3: "Leave at 6:30 am" beside "assumed open 9 to 5").
+      const early = p.items.some(i => i.type === "stop" && ((opensAt(i.place) != null && i.time < opensAt(i.place) - 5) || (i.wait || 0) >= 15));
       if (early) continue;
       if (p.dropped.length < plan.dropped.length || (!p.dropped.length && !p.over)) { best = { start: fmt(st), hours: (end0 - st) / 60, fits: plan.dropped.filter(x => !p.dropped.some(y => y.id === x.id)).map(x => x.name), all: !p.dropped.length && !p.over, end: fmt(p.end) }; if (best.all) break; }
     }

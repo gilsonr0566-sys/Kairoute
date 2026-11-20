@@ -506,6 +506,11 @@ async function tapTimes(p) { const out = []; const n = await p.evaluate(() => wi
     for (const d of days) { const F = await p.evaluate(i => { try { return window.__kairouteFacts.day(i); } catch (e) { return null; } }, d.i); if (!F || !F.fixed) continue; n++;
       if (F.leaveBy + F.back > F.endBy + 0.5) bad.push(`day ${d.i + 1}: leave by ${F.leaveBy} + ride ${F.back} > back by ${F.endBy}`); }
     check(`Every fixed day's leave-by leaves time for the ride back (${n} days)`, n > 0 && !bad.length, bad.slice(0, 3).join('; ') || 'no fixed day'); }
+  // Round 1 part 3 (A4): an earlier start is offered only when it doesn't mean waiting at a door (hours written or assumed).
+  { const days = await p.evaluate(() => window.__kairouteDays()), bad = []; let n = 0;
+    for (const d of days) { const e = await p.evaluate(i => { try { return window.__kairouteEarlierStart(i); } catch (x) { return { err: String(x) }; } }, d.i); if (!e) continue; n++;
+      if (e.err || e.waits.length) bad.push(`day ${d.i + 1}: leave at ${e.start} ${e.err || 'waits at ' + e.waits.join(', ')}`); }
+    check(`An earlier start never means waiting for a sight to open (${n} offered)`, !bad.length, bad.slice(0, 3).join('; ')); }
   // A request the helper couldn't finish (a big city's lines, Nov 20: Tokyo got only taxis) is asked again in smaller parts.
   { const r = await p.evaluate(() => { const f = window.__kairouteTransitNextBatch; return f ? [f(12, false, 12), f(6, false, 6), f(2, false, 2), f(6, true, 6), f(12, true, 12)] : null; });
     check('Rides the helper couldn\'t answer in one go are asked again in smaller parts', !!r && r.join() === '6,3,2,7,12', `batch sizes ${r}`); }
