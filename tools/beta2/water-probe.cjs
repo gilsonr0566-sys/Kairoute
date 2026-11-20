@@ -2,7 +2,9 @@
 // Round 1 cases, and saves what it found to tools/beta2/sources/water-probe.json. Free services, no AI.
 const fs = require('fs'), path = require('path');
 const src = fs.readFileSync(path.join(__dirname, '../../src/features/water-check.js'), 'utf8');
-const W = new Function('fetch', 'allSites', 'keyOf', 'save', 'render', 'window', 'navigator', src + '; return { waterIslandQuery, waterIslandsFrom, waterAcross, waterOverpass, waterFoot, waterRoadGaps };')(fetch, () => [], x => x, () => {}, () => {}, undefined, undefined);
+// A browser sends its own User-Agent; Node's fetch sends none, which the map services turn away, so the probe names itself.
+const uaFetch = (u, o = {}) => fetch(u, Object.assign({}, o, { headers: Object.assign({ 'user-agent': 'Kairoute-test/1.0 (trip planner check)' }, o.headers || {}) }));
+const W = new Function('fetch', 'allSites', 'keyOf', 'save', 'render', 'window', 'navigator', src + '; return { waterIslandQuery, waterIslandsFrom, waterAcross, waterOverpass, waterFoot, waterRoadGaps };')(uaFetch, () => [], x => x, () => {}, () => {}, undefined, undefined);
 // Each case: a start (pier or centre) and stops, with what the tester says is true (across: needs a boat; road: false =
 // far from any road).
 const CASES = [
@@ -16,7 +18,7 @@ const CASES = [
 (async () => {
   // What the map service says to the island question itself (status and the start of the answer), to see a refusal.
   for (const ep of ['https://overpass-api.de/api/interpreter', 'https://overpass.private.coffee/api/interpreter']) {
-    try { const q = W.waterIslandQuery([{ lat: 42.6272, lng: 18.1194 }, { lat: 42.6584, lng: 18.0850 }]); const r = await fetch(ep, { method: 'POST', body: 'data=' + encodeURIComponent(q), headers: { 'content-type': 'application/x-www-form-urlencoded' } });
+    try { const q = W.waterIslandQuery([{ lat: 42.6272, lng: 18.1194 }, { lat: 42.6584, lng: 18.0850 }]); const r = await uaFetch(ep, { method: 'POST', body: 'data=' + encodeURIComponent(q), headers: { 'content-type': 'application/x-www-form-urlencoded' } });
       console.log('raw', ep, r.status, (await r.text()).slice(0, 1500)); } catch (e) { console.log('raw', ep, String(e)); } }
   const out = [];
   for (const c of CASES) {
