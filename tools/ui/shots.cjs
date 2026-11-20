@@ -12,6 +12,8 @@ function serve(file) { const dir = path.dirname(file), name = path.basename(file
 const SIZES = { phone: { width: 412, height: 915, isMobile: true, hasTouch: true }, tablet: { width: 1280, height: 800 }, upright: { width: 800, height: 1280, hasTouch: true } };
 async function open(browser, url, size) {
   const ctx = await browser.newContext(Object.assign({ deviceScaleFactor: +process.env.DSF || 1, timezoneId: 'America/Chicago' }, SIZES[size], { viewport: { width: SIZES[size].width, height: SIZES[size].height } }));
+  // BACKACK=0 shows the one-time "getting back on time" notice; by default it's taken as read, as after the first day.
+  if (process.env.BACKACK !== '0') await ctx.addInitScript(() => { try { const k = 'b2:kairoute.app', v = JSON.parse(localStorage.getItem(k) || '{}'); v.backAck = v.backAck || '2026-11-20'; localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} });
   const p = await ctx.newPage(); p.on('pageerror', e => console.error('pageerror', String(e).slice(0, 200)));
   await p.route(u => !/^http:\/\/localhost/.test(String(u)), r => r.fulfill({ status: 503, body: '' }));
   await p.goto(url); await p.waitForTimeout(2500);
@@ -25,7 +27,7 @@ async function go(p, view, re) { const i = re ? await dayOf(p, re) : -1; await p
 const SHOTS = [
   ['home', 'lobby'], ['trip', 'trip'],
   ['plan-barcelona', 'plan', 'Barcelona'], ['sites-barcelona', 'sites', 'Barcelona'],
-  ['plan-mykonos', 'plan', 'Mykonos'], ['plan-rome', 'plan', 'Rome|Civitavecchia'],
+  ['plan-mykonos', 'plan', 'Mykonos'], ['terms', 'terms'], ['plan-rome', 'plan', 'Rome|Civitavecchia'],
   ['journal', 'journal'], ['tour-barcelona', 'tour', 'Barcelona'],
 ];
 (async () => {
