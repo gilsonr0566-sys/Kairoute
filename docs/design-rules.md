@@ -12,15 +12,22 @@ on every page, at tablet and phone sizes in both orientations, before anything i
 - Don't explain what the screen already shows. No "Tap a day to edit it" or "Pick a stop to read its story"
   paragraphs. Short labels and clear buttons do that job.
 
+- **One home for each fact** (outside UI review, Nov 20). The day's hours, time left, back-by, leave-by and all
+  aboard come only from `dayFacts` in src/features/day-facts.js; the trip's length and day numbers only from
+  `tripFacts` / `dayNo`. No screen works them out again. `tools/ui/ui-check.cjs` fails two screens that disagree,
+  and a page that says the same sentence twice.
+- Ship, train and flight days say their times once, in one line under the head: "Ashore 8:30 am · All aboard
+  8:30 pm · Back at the ship by 7:45 pm".
+
 ## 2. One screen on a tablet
 - On a tablet (sideways or upright) every page fits the window. The page itself never scrolls; panels scroll
-  on their own (Day plan: map on the left, timeline on the right; Guide: stop list and story; Change stops:
+  on their own (Day plan: map on the left, timeline on the right; Guide: stop list and story; Choose sights:
   tools and sights; Trip: day list and day form; Settings: sections and the open section).
 - A re-render (live data, sync, a tap) never moves what the traveler is reading: each panel keeps its place.
 - Phones scroll as one page, with the main content first (the timeline before the map).
 
 ## 3. The page head
-Every day page (Day plan, Change stops, Guide) opens with the same head, in this order, on one row:
+Every day page (Day plan, Choose sights, Guide) opens with the same head, in this order, on one row:
 1. Small grey line: date · place · kind of day (`.eyebrow`).
 2. The page title (`h2`) with **✎ Rename** as a small link beside it, never a separate button.
 3. On the right: the back-to-the-ship countdown on ship, train and flight days, then the page's actions, with the
@@ -34,7 +41,7 @@ it applies, and the main action on the right. They have no day strip, because th
   - The page's **one main action** sits in the head's action slot (`.headacts`), **last, top right**, beside the
     countdown when there is one. Built only with `mainBtnHTML(act, long, short)` in src/main.js, class `.mainbtn`:
     sunrise orange (`--cta`), white text, 44px tall (42px on phones, where it shows its short label).
-    Today: Day plan and Guide **▶ Start the tour**, Change stops **See my day plan** ("See my plan" on phones),
+    Today: Day plan and Guide **▶ Start the tour**, Choose sights **‹ Back to my day plan** ("‹ Day plan" on phones),
     Journal **Make my memory video**, sea days **▶ Hear the briefing**.
   - Other buttons in the head (📷 What's this?, Make my storybook, Exit tour) are plain outlined buttons
     (`.btn.ghost.small`), the same height as the main action, to its left.
@@ -44,7 +51,8 @@ it applies, and the main action on the right. They have no day strip, because th
     card, because it moves the walk forward and must be within thumb reach.
   - `tools/layout-check.cjs` fails a page with more than one main action, a main action outside the head's
     top-right slot, head buttons of different heights, or a floating action bar.
-- A short row of tools under the head (Light / Half / Full, Change stops, More).
+- A short row of tools under the head (Choose sights, More). Light / Half / Full live in the hours editor, opened
+  from the day's hours tile.
 - Less-used options go in a drop-down **More** menu, grouped with small headings (`details.moremenu`), or in a
   fold-out list (**More about today**, **More options for this day**). New features join a menu or a fold, never a
   new row of buttons.
@@ -52,7 +60,7 @@ it applies, and the main action on the right. They have no day strip, because th
 
 ## 5. Critical information is pinned
 - On ship, train and flight days the back-to-the-ship countdown is in the head of **every** day page (Day plan,
-  Change stops, Guide, Tour). On tablets it stays on screen because the page doesn't scroll; on phones it pins
+  Choose sights, Guide, Tour). On tablets it stays on screen because the page doesn't scroll; on phones it pins
   to the top once you scroll past it. It never jumps or covers the content.
 - Its colour follows the time left: green, amber at 30 min, red at 15, flashing at leave-by.
 - The day strip is always within reach (Richard, Nov 14): on tablets the header stays put; on phones the strip pins to
@@ -83,6 +91,13 @@ it applies, and the main action on the right. They have no day strip, because th
 
 ## 8. Professional
 - Real words, no jargon, no internal names. Times in the traveler's local time, labelled.
+- **One clock**: every time on screen is in one format, 24-hour or am/pm, from Settings > Display > Clock (default:
+  whatever the device uses). Code writes times as HH:MM; the page puts all text through `clockText` as it draws, so
+  no screen mixes the two.
+- **Same words everywhere**: a *sight* is something the traveler chose; a *stop* is a place on the day's route
+  (sights, lunch, the ship). The page that chooses them is **Choose sights**; its main action **‹ Back to my day plan**.
+- **Three levels of message**: a warning the traveler must act on (red, shown open); a note worth knowing (quiet line
+  or closed fold with a count, "2 notes"); and nothing at all for what the screen already shows.
 - Empty states say what to do next in one line and offer the one button that does it.
 - Emoji only as small icons on buttons that already have words (📷 What's this?), never as decoration.
 
@@ -111,7 +126,7 @@ the line pattern carry the meaning for colour-blind travellers.
   bus, train, car and walk leg uses its own look on the timeline, the map and the key.
 
 ## Checklist for a new screen
-- [ ] Nothing is shown twice. No paragraph explains what the screen already shows.
+- [ ] Nothing is shown twice (`node tools/ui/ui-check.cjs`). Facts come from `dayFacts` / `tripFacts`. No paragraph explains what the screen already shows.
 - [ ] Fits one tablet screen, sideways and upright; panels scroll on their own.
 - [ ] Same head as the other pages; one orange main action from `mainBtnHTML`, top right; less-used things in More or a fold.
 - [ ] Countdown in the head on ship, train and flight days.

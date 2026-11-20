@@ -888,14 +888,20 @@ const LOST_WORD = { walk: "walking", metro: "the metro", tram: "the tram", train
 function rideExtra(leg) {
   const steps = !leg.transit && leg.steps && leg.steps.length ? `<span class="sub ridesub ridesteps">${leg.steps.map(esc).join(". ")}.</span>` : "";
   const lost = leg.lost ? `<span class="ridenote">You chose ${esc(LOST_WORD[leg.lost] || "another way")} for this ride, but no ${esc((LOST_WORD[leg.lost] || "such ride").replace(/^(the|a) /, ""))} is known between these two places, so it is planned as ${esc(leg.how.toLowerCase())}.</span>` : "";
-  const note = leg.note ? `<span class="sub ridesub ridenoteguide">${esc(leg.note)}</span>` : "";
+  // Each sentence once a day: the ride out and the ride back carry the same guide's words (UI check, Nov 20).
+  const said = leg.note ? String(leg.note).split(/(?<=[.!?])\s+(?=[A-Z])/).map(rideOnce).filter(Boolean).join(" ") : "";
+  const note = said ? `<span class="sub ridesub ridenoteguide">${esc(said)}</span>` : "";
   return steps + lost + note;
 }
+// The same general line under every ride ("By road, with time for traffic.") is said once a day, on the first ride
+// it applies to (UI check, Nov 20: it repeated under every taxi of the day). renderPlan starts each day afresh.
+let rideSaid = new Set();
+const rideOnce = t => !t || rideSaid.has(t) ? "" : (rideSaid.add(t), t);
 function rideDetail(leg, start, endBy) {
   if (!leg.choices && !leg.transit) return rideExtra(leg);
   const o = leg.transit, ev = knownEvery(o) ? `, runs about every ${dur(o.every)}${o.everySrc === "timetable" ? " (from the timetable)" : ""}` : "";
   const ride = o && o.steps && o.steps.length ? o.steps.map(esc).join("; then ") : o ? `${dur(o.ride)} ride${o.stops ? ` (${o.stops} stops)` : ""}` : "";
-  const how = o && o.access && o.egress ? `${o.access.how === "walk" ? "Walk" : "Taxi"} ${dur(o.access.min)} to ${esc(o.from || "the " + (o.mode === "ferry" ? "pier" : "station"))}${ev}. ${ride}, then ${o.egress.how === "walk" ? "walk" : "taxi"} ${dur(o.egress.min)}${o.to && !(o.steps && o.steps.length) ? " from " + esc(o.to) : ""}.${o.operator ? " " + esc(o.operator) + "." : ""}${o.hours ? " Hours: " + esc(o.hours) + "." : ""}${o.fare ? " Fare: " + esc(o.fare) + "." : ""} Times include waiting and boarding.${payNote(o)}` : leg.mode === "walk" ? "" : leg.kind === "ferry" ? "Boats keep their own timetable: check the next sailing at the pier." : leg.kind === "train" || leg.kind === "bus" ? "Time includes getting to the station and the wait." : "By road, with time for traffic.";
+  const how = o && o.access && o.egress ? `${o.access.how === "walk" ? "Walk" : "Taxi"} ${dur(o.access.min)} to ${esc(o.from || "the " + (o.mode === "ferry" ? "pier" : "station"))}${ev}. ${ride}, then ${o.egress.how === "walk" ? "walk" : "taxi"} ${dur(o.egress.min)}${o.to && !(o.steps && o.steps.length) ? " from " + esc(o.to) : ""}.${o.operator ? " " + esc(o.operator) + "." : ""}${o.hours ? " Hours: " + esc(o.hours) + "." : ""}${o.fare ? " Fare: " + esc(o.fare) + "." : ""} Times include waiting and boarding.${payNote(o)}` : leg.mode === "walk" ? "" : rideOnce(leg.kind === "ferry" ? "Boats keep their own timetable: check the next sailing at the pier." : leg.kind === "train" || leg.kind === "bus" ? "Time includes getting to the station and the wait." : "By road, with time for traffic.");
   const fall = depLine(o, start, endBy, leg.lastMile, leg.slack) + (leg.slack ? ` Includes ${dur(leg.slack)} spare before the ship.` : "") + (leg.lastMile && o ? ` <b>If you miss it:</b> a taxi takes about ${dur(leg.road)}.` : "");
   const note = rideNotice && rideNotice.key === leg.key ? `<span class="ridenote">${rideNotice.text}${rideNotice.undo != null ? ` <button class="linkbtn" data-act="rideundo">Undo</button>` : ""}${rideNotice.force ? ` <button class="linkbtn" data-act="rideforce">${esc(rideNotice.forceText)}</button>` : ""}</span>` : "";
   // One tap per way to go, in the transport colors, each with its time (and fare when the timetable gives one).
@@ -4686,10 +4692,13 @@ function ensureBuiltins() {
   }
 }
 // Fold-out sections stay open across re-renders, so a tap inside one never snaps it shut.
-const openFolds = new Set();
+// Only the traveler's own taps count: a fold the app drew open (a note that needs a decision today) is not carried
+// to other days (UI check, Nov 20: Mykonos' open notes stayed open on every later day).
+const openFolds = new Set(); let foldTap = null;
+document.addEventListener("click", e => { const sm = e.target.closest && e.target.closest("summary"); if (sm) foldTap = { sm, t: Date.now() }; }, true);
 document.addEventListener("toggle", e => {
   const el = e.target; if (!el.matches || !el.matches("details") || el.classList.contains("moremenu")) return;
-  const sm = el.querySelector("summary"); if (!sm) return;
+  const sm = el.querySelector("summary"); if (!sm || !foldTap || foldTap.sm !== sm || Date.now() - foldTap.t > 1500) return;
   const k = foldKey(sm); if (el.open) openFolds.add(k); else openFolds.delete(k);
 }, true);
 // A fold is known by its title without its count ("More nearby (12)" is still "More nearby" after a tick makes it 11),
@@ -5915,7 +5924,7 @@ function siteCard(s, d, plan, nr) {
   const incl = kids.length ? `<div class="incl"><b>Included:</b> ${kids.map(k => esc(showName(k) || k.name)).join(" · ")}</div>` : "";
   const l3 = `<div class="tags ints">${cardLabels(s, city, nr && nr.my).map(x => `<span class="tag int${x.mine ? " mine" : " kind"}">${esc(x.t)}</span>`).join("")}</div>`;
   const ex = ((plan && plan.elsewhere) || []).find(x => x.s.id === s.id);
-  const seen = other ? `<span class="tag seen">${!on ? "Picking moves it from " + esc(schedWhen(other)) : ex && ex.earlier ? "Seen " + esc(fmtDow(ex.on.date)) + " " + esc(fmtDate(ex.on.date)) + " · not repeated" : ex && ex.later ? "No room today · seen " + esc(fmtDow(ex.on.date)) + " " + esc(fmtDate(ex.on.date)) : "Today · not repeated " + esc(fmtDow(other.date)) + " " + esc(fmtDate(other.date))}</span>` : "";
+  const seen = other ? `<span class="tag seen">${!on ? "Planned " + esc(schedWhen(other)) : ex && ex.earlier ? "Seen " + esc(fmtDow(ex.on.date)) + " " + esc(fmtDate(ex.on.date)) + " · not repeated" : ex && ex.later ? "No room today · seen " + esc(fmtDow(ex.on.date)) + " " + esc(fmtDate(ex.on.date)) : "Today · not repeated " + esc(fmtDow(other.date)) + " " + esc(fmtDate(other.date))}</span>` : "";
   const hrs = txt(s.hours) ? txt(hoursText(s.hours)) : "", cl = txt(s.closed);
   const det = `<div class="cdet">
       <p class="sum">${esc(unitText(s.summary))}</p>${localLine(s)}
@@ -6016,7 +6025,8 @@ if (typeof window !== "undefined") window.__kairoutePicker = i => { const d = tr
   return { city: city.city, picked: nm(allSites(city).filter(x => d.selected.includes(x.id))), main: nm(city.sites.filter(x => !x.quick)), far: nm(city.farther || []), quick: nm(city.sites.filter(x => x.quick)), elsewhere: nm(allSites(city).filter(away)).map(n => n + " (day " + ((trip.days.indexOf(elsewhere[allSites(city).find(x => x.name === n).id]) + 1) || "?") + ")") }; };
 const d0 = plan => `${fmt(plan.start)} to ${fmt(plan.endBy)}`;
 // Which day a sight is already planned on, as the list shows it: "Day 3 · Fri Jul 2 · Corinth day".
-function schedWhen(o) { const i = trip.days.indexOf(o); return `Day ${i + 1} · ${fmtDow(o.date)} ${fmtDate(o.date)} · ${dayName(o)}`; }
+// The day a sight is planned on, by its date (the section's own line says what picking it does; outside review, Nov 20).
+function schedWhen(o) { const d = day(); return `${fmtDow(o.date)} ${fmtDate(o.date)}${d && dayName(o) !== dayName(d) ? " · " + dayName(o) : ""}`; }
 // ---------- The sights list's steady order (Richard, Nov 17) ----------
 let pickFrozen = null; // the list as set when the page opened: section and place of every sight
 const frozenKey = (d, city) => trip.days.indexOf(d) + "|" + keyOf(city.city) + "|" + siteFilter + "|" + prefsSig();
@@ -6159,7 +6169,7 @@ function renderSites(d) {
   <p class="listlbl secttl">Still fits today (${mustL.length + fitL.length})${picked.length ? "" : leftTxt}</p>
   ${mustL.length || fitL.length ? `<p class="lede small">${st ? `Nearest ${esc(st.name)} first. ` : ""}Each one fits as your day stands; the time is how much later you'd finish.</p>` : `<p class="lede small">${farL.length ? `No other sight in town fits as your day stands, but ${farL.length === 1 ? "the trip out of town below does" : `the ${farL.length} trips out of town below do`}.` : F && F.left >= 30 ? `${dur(F.left)} is left, but every sight still to see needs more time than that, with its ride. See "Doesn't fit today" for what would make room.` : `Your day is full. See "Doesn't fit today" for what would make room.`}</p>`}
   ${mustL.length ? `<div class="sitelist mustlist">${mustL.map(s => siteCard(s, d, plan, near)).join("")}</div>` : ""}
-  ${fitL.length ? `<div class="sitelist">${fitL.map(s => siteCard(s, d, plan, near)).join("")}</div>` : ""}
+  ${fitL.length ? `<div class="sitelist fitlist">${fitL.map(s => siteCard(s, d, plan, near)).join("")}</div>` : ""}
   ${moreL.length ? `<details class="more nearby"><summary>More nearby (${moreL.length})</summary><p class="lede small" style="margin:8px 0">${my.size ? "Sights outside your interests, and" : "Quick stops:"} small stops your route adds when it passes them. Tick one to plan it.</p>
   <div class="sitelist">${moreL.map(s => siteCard(s, d, plan, near)).join("")}</div></details>` : ""}
   ${farL.length ? `<p class="listlbl secttl">Also see, farther out (${farL.length})</p><p class="lede small">Trips out of town that fit in today's time left.</p><div class="sitelist farlist">${farL.map(s => siteCard(s, d, plan, near)).join("")}</div>` : ""}
@@ -6634,7 +6644,7 @@ function tcell(it) {
   return `<div class="time">${arr != null ? `<span class="ta">Arrive</span><span class="tt ar">${fmt(arr)}</span>` : ""}${lv != null && (arr == null || len >= 5) ? `<span class="ta">Leave</span><span class="tt lv">${fmt(lv)}</span>` : ""}</div>`;
 }
 function renderPlan(d) {
-  const city = cityFor(d);
+  const city = cityFor(d); rideSaid = new Set();
   if (!city) return `${dayHeading(d)}${busyBlock()}${errBlock()}${needsCity(d)}`;
   refillIfNeeded(d, city); if (!d.selected) seedPicks(d, city); crowdFor(city); fameFor(d, city); farEatsFor(city, d); upgradeThin(d, city);
   const plan = buildPlan(d); if (plan && !plan.error) { gCheck(plan, city); queueExtras(plan); writeSrcSights(plan, city); }

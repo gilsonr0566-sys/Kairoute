@@ -25,11 +25,14 @@ async function open(browser, url, size, clock) {
 async function go(p, view, i) { await p.evaluate(([v, i]) => { if (i != null) window.__kairouteGo('day', i); window.__kairouteGo(v); }, [view, i]); await p.waitForTimeout(700); await p.evaluate(() => { scrollTo(0, 0); document.querySelectorAll('.pane').forEach(x => x.scrollTop = 0); }); await p.waitForTimeout(150); }
 // What the page says, as the traveler reads it.
 const pageText = p => p.evaluate(() => (document.querySelector('#view') || document.body).innerText);
+// The page's sentences without its buttons and fold titles: a "Change lunch" or "more" under each item is a control,
+// not information said twice.
+const proseText = p => p.evaluate(() => { const st = document.createElement('style'); st.textContent = '#view button, #view summary, #view a.btn, #view .ridechips, #view .tag, #view .badge { display: none !important; }'; document.head.appendChild(st); const t = (document.querySelector('#view') || document.body).innerText; st.remove(); return t; });
 const H24 = /\b([01]\d|2[0-3]):[0-5]\d\b(?!\s?[ap]m)/, H12 = /\b(1[0-2]|[1-9]):[0-5]\d\s?(am|pm|AM|PM)\b/;
 // Sentences said twice on one screen (longer than a short label), with the place each was found.
 function repeats(text) {
   const seen = new Map(), out = [];
-  for (const raw of text.split(/(?<=[.!?])\s+|\n+/)) { const t = raw.trim(); if (t.length < 28 || !/[a-z]/.test(t) || /^(Walk|Taxi|Train|Bus|Ferry|Arrive|Leave)\b/.test(t)) continue; const k = t.toLowerCase(); if (seen.has(k)) out.push(t); else seen.set(k, 1); }
+  for (const raw of text.split(/(?<=[.!?])\s+|\n+/)) { const t = raw.trim(); if (t.length < 28 || !/[a-z]/.test(t) || /^\d+ (h|min)\b/.test(t) || /^(Walk|Taxi|Train|Bus|Ferry|Arrive|Leave)\b/.test(t)) continue; const k = t.toLowerCase(); if (seen.has(k)) out.push(t); else seen.set(k, 1); }
   return [...new Set(out)];
 }
 (async () => {
@@ -57,7 +60,7 @@ function repeats(text) {
         tzWarn: !!document.querySelector('.tzline.warn, .banner.warn .tzline'), tz: (document.querySelector('.tzline') || {}).innerText || '',
         firstStop: (() => { const s = document.querySelector('.timeline .tl:not(.leg)'); return s ? Math.round(s.getBoundingClientRect().top) : null; })(),
         aboutOpen: (() => { const a = document.querySelector('.engine2why'); return a ? { open: a.open, act: !!a.querySelector('li.act') } : null; })(),
-        dropped: !!document.querySelector('.banner.dropped'), zero: /\b0\.0 (mi|km)\b/.test(document.body.innerText),
+        dropped: !!document.querySelector('.banner.dropped'), asks: !!document.querySelector('.heads input, .heads [role=alert]'), // a card that needs the traveler's answer may come first zero: /\b0\.0 (mi|km)\b/.test(document.body.innerText),
         badge: (() => { const bs = [...document.querySelectorAll('.b2tag')].filter(b => b.offsetParent); const tabs = [...document.querySelectorAll('.tabs .tab, .tabs a')].filter(x => x.offsetParent);
           return bs.some(b => { const r = b.getBoundingClientRect(); return tabs.some(x => { const q = x.getBoundingClientRect(); const lab = x.querySelector('span'); const L = lab ? lab.getBoundingClientRect() : q; return r.left < L.right && r.right > L.left && r.top < L.bottom && r.bottom > L.top; }); }); })(),
         head: (() => { const h = document.querySelector('#view .dayhead h2'), m = document.querySelector('#view .dayhead .mainbtn'); if (!h || !m) return null; const a = h.getBoundingClientRect(), b = m.getBoundingClientRect(); return { same: b.top < a.bottom && b.bottom > a.top - 30 }; })(),
@@ -78,7 +81,7 @@ function repeats(text) {
       ok(`time zone note is quiet (${dn})`, !dom.tzWarn, `time zone note styled as a warning: "${dom.tz}"`);
       // 4. Plan first: notes start folded unless one needs a decision; on a phone the first stop is on the first screen.
       if (dom.aboutOpen) ok(`notes fold opens only for a decision (${dn})`, dom.aboutOpen.open === dom.aboutOpen.act, `"About today's plan" is ${dom.aboutOpen.open ? 'open' : 'closed'} with${dom.aboutOpen.act ? '' : 'out'} a note that needs a decision`);
-      if (size === 'phone' && dom.firstStop != null && !dom.dropped) ok(`phone: the plan starts on the first screen (${dn})`, dom.firstStop < SIZES.phone.height - 120, `first stop starts at ${dom.firstStop}px on a ${SIZES.phone.height}px screen`);
+      if (size === 'phone' && dom.firstStop != null && !dom.dropped && !dom.asks) ok(`phone: the plan starts on the first screen (${dn})`, dom.firstStop < SIZES.phone.height - 120, `first stop starts at ${dom.firstStop}px on a ${SIZES.phone.height}px screen`);
       if (size !== 'phone' && dom.head) ok(`tablet: title and main button on one row (${dn})`, dom.head.same, 'the main button sits on a row of its own');
       ok(`Beta 2 tag covers no menu label (${dn})`, !dom.badge, 'the Beta 2 tag overlaps a menu label');
       ok(`no "0.0" distance (${dn})`, !dom.zero, 'a distance reads 0.0');
@@ -87,14 +90,14 @@ function repeats(text) {
       if (dom.named) { const kinds = [[/\b(sea ?bus|water ?bus|water taxi|ferr(y|ies)|boats?)\b/i, /k-ferry/], [/\b(shuttle|bus(es)?)\b/i, /k-bus/], [/\b(tram|metro|train|funicular)\b/i, /k-(train|tram|metro)/]];
         for (const [re, chip] of kinds) if (re.test(dom.named.sub)) ok(`a named ride has a button or says it isn't planned (${dn})`, chip.test(dom.named.chips) || /isn't in the plan/.test(dom.named.sub), `"${dom.named.sub.slice(0, 120)}" names a ride with no button`); }
       // 6. Nothing said twice on the screen.
-      const rep = repeats(t); ok(`nothing said twice on the Day plan (${dn})`, !rep.length, `said twice: ${rep.slice(0, 3).map(x => '"' + x.slice(0, 80) + '"').join('; ')}`);
+      const rep = repeats(await proseText(p)); ok(`nothing said twice on the Day plan (${dn})`, !rep.length, `said twice: ${rep.slice(0, 3).map(x => '"' + x.slice(0, 80) + '"').join('; ')}`);
       // 7. Choose sights says the same time left and day length as the Day plan.
       if (clock === '12' && size !== 'upright') { await go(p, 'sites', i);
         const s = await p.evaluate(() => ({ left: (document.querySelector('.pickbar .pbleft') || {}).innerText || '', title: (document.querySelector('#view .dayhead h2') || {}).innerText || '', text: (document.querySelector('#view') || document.body).innerText }));
         const dt = m => { const d = Math.round(m); return d < 60 ? d + ' min' : Math.floor(d / 60) + ' h' + (d % 60 ? ' ' + d % 60 + ' min' : ''); };
         if (F.left >= 5 && s.left) ok(`Choose sights: same time left and day length (${dn})`, s.left.includes(dt(F.left)) && s.left.includes(dt(F.len)), `"${s.left}" vs ${dt(F.left)} left of ${dt(F.len)}`);
         ok(`Choose sights has its own title (${dn})`, /Choose sights/.test(s.title), `title "${s.title}"`);
-        const r2 = repeats(s.text); ok(`nothing said twice on Choose sights (${dn})`, !r2.length, `said twice: ${r2.slice(0, 3).map(x => '"' + x.slice(0, 80) + '"').join('; ')}`);
+        const r2 = repeats(await proseText(p)); ok(`nothing said twice on Choose sights (${dn})`, !r2.length, `said twice: ${r2.slice(0, 3).map(x => '"' + x.slice(0, 80) + '"').join('; ')}`);
         // The Tour's map key is the Day plan's.
         await go(p, 'plan', i); const k1 = await p.evaluate(() => [...document.querySelectorAll('.mapbox .maplegend .lk')].map(x => x.dataset.kind).join(','));
         await go(p, 'tour', i); const k2 = await p.evaluate(() => [...document.querySelectorAll('.tourmap .maplegend .lk')].map(x => x.dataset.kind).join(','));

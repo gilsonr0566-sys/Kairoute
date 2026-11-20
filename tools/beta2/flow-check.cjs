@@ -216,8 +216,9 @@ async function tapTimes(p) { const out = []; const n = await p.evaluate(() => wi
     check(`Every line on the Naples map is its kind of ride: ferries pier to pier (${ferries} drawn), nothing on land goes to the island, roads don't cross the harbour`, ferries > 0 && !bad.length, bad.slice(0, 3).join('; ') || 'no ferry drawn'); }
 
   // 2a1b. Free time is the traveler's (Nov 18, Richard: "I wouldn't do the suggested options. Just let them select to
-  // fill the spots."): no day plan has a stop the app put there on its own; a day with free time offers sights that
-  // would fit, and "Add" puts one on the plan as a pick that stays after a reload.
+  // fill the spots."): no day plan has a stop the app put there on its own. A day with free time says so in one row
+  // whose "See what fits" opens Choose sights at its "Still fits today" list (outside UI review, Nov 20: the row's own
+  // list of sights said the same as that page); ticking one there makes it a pick that stays after a reload.
   { const days = await p.evaluate(() => window.__kairouteDays()), extra = []; let done = null;
     for (let i = 0; i < days.length; i++) {
       const it = await p.evaluate(i => (window.__kairouteEngine2()[i] || {}).items || [], i);
@@ -225,13 +226,17 @@ async function tapTimes(p) { const out = []; const n = await p.evaluate(() => wi
       if (done) continue;
       await p.evaluate(i => { window.__kairouteGo('day', i); window.__kairouteGo('plan'); }, i); await p.waitForTimeout(400);
       if (await p.$('.tl.optional')) extra.push(`day ${i + 1}: an "Optional:" stop shows`);
-      const id = await p.$eval('.freetime [data-act="bonusadd"]', x => x.dataset.id).catch(() => null); if (!id) continue;
-      const ok = await tapSel(p, `.freetime [data-act="bonusadd"][data-id="${id}"]`);
+      if (!(await p.$('.freetime [data-goto="sites"]'))) continue;
+      const went = await tapSel(p, '.freetime [data-goto="sites"]') && await p.evaluate(() => !!document.querySelector('.pickbar'));
+      await p.waitForFunction(() => !window.__kairouteFitPending || window.__kairouteFitPending() === 0, null, { timeout: 8000, polling: 100 }).catch(() => {});
+      const id = await p.$eval('.mustlist input[data-site]:not(:checked), .fitlist input[data-site]:not(:checked)', x => x.dataset.site).catch(() => null);
+      if (!id) { if (went) continue; done = { i, id: '(none)', went }; continue; }
+      const ok = await tapBox(p, id);
       const has = () => p.evaluate(([i, id]) => (window.__kairouteEngine2()[i].items || []).some(x => x.t === 'stop' && String(x.id) === String(id) && !x.bonus), [i, id]);
       const now = ok && await has(); await p.reload(); await p.waitForTimeout(6000);
-      done = { i, id, ok, now, after: await has() }; }
+      done = { i, id, went, ok, now, after: await has() }; }
     check('No day plan has a sight the app added on its own', !extra.length, extra.slice(0, 3).join('; '));
-    check('Free time offers sights that fit, and "Add" puts one on the plan as a pick that stays after a reload', !!done && done.ok && done.now && done.after, !done ? 'no day offered a sight in its free time' : `day ${done.i + 1} ${done.id}: ${!done.ok ? 'could not tap' : !done.now ? 'not on the plan' : 'gone after a reload'}`); }
+    check('Free time\'s "See what fits" opens the sights that fit, and ticking one makes it a pick that stays after a reload', !!done && done.went && done.ok && done.now && done.after, !done ? 'no day offered a sight in its free time' : `day ${done.i + 1} ${done.id}: ${!done.went ? '"See what fits" did not open Choose sights' : !done.ok ? 'could not tick' : !done.now ? 'not on the plan' : 'gone after a reload'}`); }
 
   // 2a2. A fold opened by the traveler (its title carries a count) stays open when a sight inside it is ticked.
   { const det = await p.$('#view details:not([open]) input[data-site]');

@@ -27,7 +27,8 @@ const URL0 = LIVE ? ARG : 'file://' + FILE;
     if (LIVE) { let last = '', same = 0; for (let t = 0; t < 240 && same < 4; t++) { await p.waitForTimeout(1000); await go(); const now = (await ids()).join(), up = await p.evaluate(() => window.__kairouteUpgrading && window.__kairouteUpgrading()); same = now === last && !up ? same + 1 : 0; last = now; } }
     // 0. Full details shows no handles; Compact shows them (Richard, Nov 17: dragging is hard when fully open)
     const fullH = await p.evaluate(() => [...document.querySelectorAll('.draghandle')].filter(x => x.offsetParent).length);
-    await p.click('.tlview [data-v="compact"]'); await frame();
+    // Change the order is in the day's More menu (outside UI review, Nov 20): open it, then pick the item.
+    await p.click('details.planmore:has([data-act="tlview"]) > summary'); await frame(); await p.click('[data-act="tlview"][data-v="compact"]'); await frame();
     const cmp = await p.evaluate(() => ({ on: !!document.querySelector('.timeline.compact'), saved: localStorage.getItem('kairoute.tlview'), chips: [...document.querySelectorAll('.timeline .ridechips')].filter(x => x.offsetParent).length }));
     if (fullH || !cmp.on || cmp.saved !== 'compact' || cmp.chips) fail(`${size}: view switch: ${fullH} handles in Full details, compact ${JSON.stringify(cmp)}`); else ok(`${size}: Full details has no handles; Compact shows them, hides the ride buttons, and is remembered`);
     // 1. A handle on every stop, big enough for a finger
