@@ -5,7 +5,8 @@
 (function (E) {
   const L = E.MEALS[0], D = E.MEALS[1];
   E.FILL_MARGIN = 15; // a sight the app adds on its own never brings a ship, train or plane day closer than this to its deadline
-  E.eatKey = name => String(name || "").toLowerCase().normalize("NFKD").replace(/[̀-ͯ]/g, "").replace(/[^a-z0-9]+/g, " ").trim();
+  const eatKeys = new Map(); // the same names are keyed again and again while a day is planned
+  E.eatKey = name => { const n = String(name || ""); let k = eatKeys.get(n); if (k === undefined) { if (eatKeys.size > 50000) eatKeys.clear(); k = n.toLowerCase().normalize("NFKD").replace(/[̀-ͯ]/g, "").replace(/[^a-z0-9]+/g, " ").trim(); eatKeys.set(n, k); } return k; };
   // Penalty of a timed day: running past the end is worst, then stops reached after their last entry, then a late lunch.
   // A minute riding weighs like a minute waiting (Nov 19, Richard's day trip crossed the same stretch three times: at a tenth
   // of a wait, a long crossing was "cheaper" than a few minutes waiting for a gate to open).

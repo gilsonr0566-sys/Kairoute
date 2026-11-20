@@ -83,6 +83,7 @@
     for (const x of list) { const e = endsOf(x); if (!e || !e[0] || !e[1]) continue; const off = Math.max(E.hav(e[0], a), E.hav(e[1], b)); if (off <= tol && (!best || off < best.off)) best = { x, A: e[0], B: e[1], off }; }
     return best; };
   E.nearGap = (a, b, n, byRoad) => n ? E.gapMin(E.hav(a, n.A), byRoad) + E.gapMin(E.hav(b, n.B), byRoad) : 0;
+  const roadMemos = new Map();
   E.makeTravel = (prefs, legModes, legs, lines, answers, piers) => {
     const walk = (prefs && prefs.walk) || "medium", lim = WALK_LIMIT[walk] || WALK_LIMIT.medium, speed = walk === "low" ? 3.6 : 4.5, modes = legModes || {}, memo = new Map(), memoEnd = new Map();
     const walkMinOf = km => Math.max(1, Math.round(km * 1.3 / speed * 60));
@@ -95,7 +96,14 @@
       return best ? { near: best.x.m } : undefined; };
     // A road time from the map (the places files) holds for a ride close enough to it, the gaps added by road (E.nearRide).
     const roadLegs = legs ? Object.values(legs).filter(l => l && l.road && l.a && l.b) : [];
-    const roadNear = (a, b) => { const n = E.nearRide(a, b, roadLegs, l => [l.a, l.b]); return n && Object.assign({}, n.x, { min: n.x.min + E.nearGap(a, b, n, true) }); };
+    // The answer depends only on the road times and the two points, so it is kept across plans for the same road times
+    // (the Sights list plans the day again for every sight it checks: measuring every ride against every road time each
+    // time made a tick on a day of day trips take seconds on a phone, Nov 20 sweep).
+    const roadSig = roadLegs.map(l => l.a.lat + "," + l.a.lng + ">" + l.b.lat + "," + l.b.lng + "=" + l.min).join("|");
+    let roadMemo = roadMemos.get(roadSig); if (!roadMemo) { if (roadMemos.size > 20) roadMemos.clear(); roadMemos.set(roadSig, roadMemo = new Map()); }
+    const roadNear = (a, b) => { const key = a.lat + "," + a.lng + ">" + b.lat + "," + b.lng; if (roadMemo.has(key)) { const r = roadMemo.get(key); return r && Object.assign({}, r); }
+      const n = E.nearRide(a, b, roadLegs, l => [l.a, l.b]), r = n && Object.assign({}, n.x, { min: n.x.min + E.nearGap(a, b, n, true) });
+      if (roadMemo.size > 200000) roadMemo.clear(); roadMemo.set(key, r && Object.freeze(Object.assign({}, r))); return r; };
     function estimate(a, b) {
       // A place with no position on the map is never a ride of no time (a 0-minute walk made a day look as if it fit): the
       // ride is a taxi of E.UNKNOWN_RIDE minutes, said to be a guess (Nov 19 review).

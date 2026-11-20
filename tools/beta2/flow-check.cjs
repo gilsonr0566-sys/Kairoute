@@ -260,7 +260,7 @@ async function tapTimes(p) { const out = []; const n = await p.evaluate(() => wi
       await p.evaluate(i => { window.__kairouteGo('day', i); window.__kairouteGo('sites'); }, i); await p.waitForTimeout(500);
       if (!(await p.$('input[data-site]'))) continue;
       const yp3 = p.locator('[data-act="picksfold"][aria-expanded="false"]').first(); if (await yp3.isVisible().catch(() => false)) { await yp3.tap(); await p.waitForTimeout(300); }
-      for (let k = 0; k < 15; k++) { const on = (await boxes(p)).filter(b => b.on); if (!on.length) break; await tapBox(p, on[0].id); }
+      for (let k = 0; k < 15; k++) { const on = (await boxes(p)).filter(b => b.on); if (!on.length) break; if (process.env.VERBOSE2) console.error('untick', i + 1, k, on.length, on.map(b => b.id).join(' ')); await tapBox(p, on[0].id); }
       if ((await boxes(p)).some(b => b.on)) { bad.push(`day ${i + 1} (${days[i].dest}): could not untick everything (still on: ${(await boxes(p)).filter(b => b.on).map(b => b.id).join(', ')})`); continue; }
       const free = await p.evaluate(i => (window.__kairouteEngine2()[i].items || []).filter(x => x.t === 'stop' && !x.bonus).length, i);
       if (free) bad.push(`day ${i + 1} (${days[i].dest}): emptied, yet ${free} stops planned (${await p.evaluate(i => (window.__kairouteEngine2()[i].items || []).filter(x => x.t === 'stop' && !x.bonus).map(x => x.name).join(', ') + ' | ' + (window.__kairouteEngine2()[i].explain || []).join(' '), i)})`);
@@ -423,6 +423,16 @@ async function tapTimes(p) { const out = []; const n = await p.evaluate(() => wi
     check(`Ticking a sight answers quickly (median ${med} ms, slowest ${worst} ms on a phone-speed CPU, ${sl.length} taps)`, med <= 700 && worst <= 2500, `median ${med} ms, slowest ${worst} ms`); }
   { const shut = await p.evaluate(() => window.__foldShut || 0); check('A fold the traveler opened never closes by itself', !shut, shut + ' times a fold had closed again before the next tap'); }
   check('No errors in the app', !errs.length, errs.slice(0, 2).join(' | '));
+  // 4b. A won't-fit box belongs to its day (Nov 20 sweep: El Escorial's box from one Madrid day stayed over the next
+  // day's list, and nothing there could be tapped). Open one, go to another day: no box is left over.
+  { const nd = await p.evaluate(() => window.__kairouteDays().length); let found = null;
+    for (let i = 0; i < nd && !found; i++) {
+      await p.evaluate(i => { window.__kairouteGo('day', i); window.__kairouteGo('sites'); }, i); await p.waitForTimeout(500);
+      const far = (await boxes(p)).filter(b => !b.on && /-far$/.test(b.id)).slice(0, 3);
+      for (const b of far) { try { await tapBox(p, b.id); if (await p.$('.fitbox')) { found = { i, id: b.id }; break; } if ((await boxes(p)).some(x => x.id === b.id && x.on)) await tapBox(p, b.id); } catch (e) { /* the list redrew under the tap: try the next */ } } }
+    if (found) { const j = (found.i + 1) % nd; await p.evaluate(j => { window.__kairouteGo('day', j); window.__kairouteGo('sites'); }, j); await p.waitForTimeout(600); }
+    check("A won't-fit box closes when the traveler goes to another day", !!found && !(await p.$('.fitbox')), !found ? 'no sight opened a won\'t-fit box' : `the box for ${found.id} (day ${found.i + 1}) stayed open on another day`);
+    const left = await p.$('.fitbox'); if (left) await p.evaluate(() => { const b = document.querySelector('.fitbox'); if (b) b.remove(); }); }
   // 5. A hotel the map hasn't placed (typed in or brought in with a trip, no spot yet, no name, or an empty spot) never
   // blanks a day (demo copy rule, Nov 19: the boarding day showed only "Choose where you're staying"). Each hotel day
   // still plans, from the guide's hotel area, and says the hotel isn't placed yet. Last, as it changes the saved trip.

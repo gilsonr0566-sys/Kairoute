@@ -34,6 +34,7 @@ if (typeof window !== "undefined" && window.ENGINE2 && window.KEngine) (function
   const askRides = ep => { (ep && ep.items || []).forEach(x => { if (x.t === "ride" && x.from && x.to && x.mode !== "walk" && x.mode !== "boat" && x.mode !== "lift") { try { transitFor(x.from, x.to); } catch (e) {} } }); };
   const answerSig = (a, b) => JSON.stringify((peek(a, b) || []).map(o => [rideId(o), o.min, o.label]));
   // The whole trip planned once per change (the traveler's trip, an answer arriving, the guides, the date).
+  const recent = new Map();
   const stat = { calls: 0, keyMs: 0, bucketMs: 0, checkMs: 0, used: 0, planned: 0 };
   window.__kairouteEngine2Stat = () => Object.assign({}, stat, { used: memo.used ? memo.used.size : 0 });
   // Every sight the engine may plan is one the traveler can see and tick: the sights the places files add (the travel
@@ -54,6 +55,9 @@ if (typeof window !== "undefined" && window.ENGINE2 && window.KEngine) (function
     stat.calls++; let t0 = performance.now();
     const k = keyNow(); stat.keyMs += performance.now() - t0;
     if (memo.k === k && memo.plans) return memo;
+    // The last few states are kept too: the Sights list tries a sight (a different selection), then the day as it is
+    // again, then the next sight; going back to a state planned a moment ago is a lookup, not a new bucket and plan.
+    { const m = recent.get(k); if (m && m.plans) { recent.delete(k); recent.set(k, m); memo = m; stat.recent = (stat.recent || 0) + 1; return memo; } }
     // The plans depend only on what the engine is given (the bucket) and the ride answers known so far. Most changes
     // to the trip or answers arriving (weather, a photo, the day being looked at) leave both as they were: then the
     // plans stand and nothing is planned again. Only a real change of the engine's inputs replans.
@@ -84,7 +88,7 @@ if (typeof window !== "undefined" && window.ENGINE2 && window.KEngine) (function
       d.selected = ids; d.seedSig = seedSigOf(d); d.autoEmpty = !ids.length; synced = true;
     });
     // The bucket is the same after the sync (a seeded day sends only the traveler's own picks), so the plans stand.
-    memo = { k: synced ? keyNow() : k, ik, used, plans, bucket }; return memo;
+    memo = { k: synced ? keyNow() : k, ik, used, plans, bucket }; recent.set(memo.k, memo); if (recent.size > 8) recent.delete(recent.keys().next().value); return memo;
   }
   window.__kairouteEngine2 = () => JSON.parse(JSON.stringify(tripPlans().plans));
   // For the phone test: every pier a boat may leave from, and whether a place is reached only by boat.
