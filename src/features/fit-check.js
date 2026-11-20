@@ -63,7 +63,7 @@ function shortened(p, base) {
   return out;
 }
 // And the sight is planned on this day (not moved by the planner to the day its area is walked, or left out).
-const onPlan = (p, id) => !!(p && !p.error && p.items.some(x => x.type === "stop" && (x.place.id === id || (x.place.includes || []).some(k => (k.id || k) === id) || x.place.within === id)));
+const onPlan = (p, id) => !!(p && !p.error && (p.items.some(x => x.type === "stop" && (x.place.id === id || (x.place.includes || []).some(k => (k.id || k) === id) || x.place.within === id)) || (p.folded || []).some(k => String(k) === String(id))));
 // Planned the same way as the list's marks (fitRefine), so a sight with a tick is never refused when tapped.
 function fitsWith(d, ids, base) { const r = fitTrial(d, [...new Set([...(d.selected || []), ...ids])], null, true); return fitsAll(r) && keepsDay(r.p, base) && ids.every(id => onPlan(r.p, id)); }
 const shutOn = (d, x) => { const c = cityFor(d); let w = null; try { w = c ? dayWindow(d, c) : null; } catch (e) {} return closedForDay(x, d, w); };

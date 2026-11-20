@@ -108,6 +108,44 @@
   E.genericEat = n => { const t = String(n || "").trim(); return !t || (/\b(tavernas|restaurants|cafes|cafés|bars|eateries|stalls|kiosks|trattorias|bistros|pubs|food trucks|places to eat|spots|joints|street food)\b/i.test(t) && !/^[A-Z][\w'’.-]*\s*['’]s\b/.test(t) && !/\b(&|and)\b.*\b(bar|cafe|restaurant)\b$/i.test(t)); };
   E.explainKind = t => FREE.test(t) ? "free" : ACT.test(t) ? "act" : "info";
   E.ASSUME_OPEN = 9 * 60; E.ASSUME_CLOSE = 17 * 60; // hours assumed for a sight that needs them when none are known
+  // Richard, Nov 20: a sight inside a bigger visit the traveler picked (a house in an excavation site, a chapel in a museum
+  // complex, a tower in a castle), or a small open-air sight right beside it (a fountain on its square), is seen on that
+  // visit: it adds only a small extra time, never a whole stop of its own with walks to and from it ("a false sense of not
+  // enough time in the day"). Folds into a gated visit (one with hours: the time inside covers what is inside), or an
+  // open-air sight into any visit; a museum inside an open old town stays a stop of its own (the walk doesn't cover it).
+  // picks: the day's picks; groups: E.makeGroups. Returns { picks, folded: holder id -> [{ id, name, extra, beside }] }.
+  E.FOLD_NEAR = 0.2; // km: right beside the bigger visit
+  E.foldExtra = s => Math.min(20, Math.max(5, Math.round((s.minutes || 30) * 0.25 / 5) * 5));
+  // gated(h): the bigger visit has its own opening hours this day (a gate: an excavation town, a castle).
+  E.foldPicks = (picks, groups, gated) => {
+    const ids = new Map(picks.map(s => [String(s.id), s])), into = new Map();
+    const covers = (h, s) => !!(gated && gated(h)) || (!s.far && !E.needsHours(s)) || (s.minutes || 30) <= 15 || (!h.far && E.needsHours(h) && !E.isOpenArea(h));
+    for (const s of picks) {
+      let k = String(s.id), seen = new Set([k]), h = null;
+      if (s.town != null && ids.has(String(s.town))) h = ids.get(String(s.town));
+      else while (groups && groups.groupOf.has(k)) { k = String(groups.groupOf.get(k)); if (seen.has(k)) break; seen.add(k); if (ids.has(k)) { h = ids.get(k); break; } }
+      if (h && covers(h, s)) { into.set(String(s.id), { h, beside: false }); continue; }
+      if (s.far || E.needsHours(s) || !isFinite(s.lat)) continue;
+      const near = picks.filter(x => x !== s && !x.far && isFinite(x.lat) && (x.fullMinutes || x.minutes || 30) > (s.minutes || 30) && E.hav(x, s) <= E.FOLD_NEAR)
+        .sort((a, b) => E.hav(a, s) - E.hav(b, s) || E.byId(a, b))[0];
+      if (near) into.set(String(s.id), { h: near, beside: true }); }
+    // Through a chain (a fountain beside a chapel folded into a museum) to the visit that stays a stop.
+    const root = id => { let k = id, n = 0; while (into.has(k) && n++ < 20) k = String(into.get(k).h.id); return k; };
+    const folded = {};
+    for (const [id, f] of into) { const r = root(id); if (r === id) continue; const s = ids.get(id);
+      (folded[r] = folded[r] || []).push({ id: s.id, name: s.name, extra: E.foldExtra(s), beside: f.beside && r === String(f.h.id) }); }
+    if (!Object.keys(folded).length) return { picks, folded };
+    const out0 = picks.filter(s => !(into.has(String(s.id)) && root(String(s.id)) !== String(s.id)));
+    const out = out0.map(s => { const f = folded[String(s.id)]; if (!f) return s;
+      const gone = new Set(f.map(x => x.name)), walkOf = (s.walkOf || []).filter(n => !gone.has(n));
+      // Its own time back, less only what its remaining own stops take (as the pool shortens it, never under half an hour).
+      const base = s.fullMinutes || s.minutes || 60, rest = out0.filter(x => walkOf.includes(x.name)).reduce((a, x) => a + (x.minutes || 30), 0);
+      const left = walkOf.length ? Math.min(base, Math.max(30, Math.round((base - rest) / 5) * 5)) : base;
+      const t = Object.assign({}, s, { minutes: left + f.reduce((a, x) => a + x.extra, 0), folded: f });
+      if (walkOf.length) t.walkOf = walkOf; else { delete t.walkOf; delete t.fullMinutes; }
+      return t; });
+    return { picks: out, folded };
+  };
   E.listWords = (xs, joiner) => xs.length < 2 ? xs.join("") : xs.slice(0, -1).join(", ") + " " + (joiner || "or") + " " + xs[xs.length - 1];
   // Which list a sight came in on (a guide's sights or its trips out) doesn't decide how it's planned; where it is does.
   // A sight more than FAR_KM from the heart of the place's sights (their median point) is a trip out, with its own ride,
@@ -273,11 +311,17 @@
         if (!d.own && (!picks || !picks.length)) picks = wishes.length ? wishes : autoPicks(pool, win, ctx);
         autoIds = new Set(wishes.length ? [] : picks.map(s => String(s.id)));
       }
-      const fit = E.fitDay(d.cleared ? Object.assign({}, d, { fillTime: false }) : d, win, picks, pool, ctx);
+      // Picks inside or right beside a bigger picked visit are part of it (E.foldPicks); never added again as fillers.
+      let foldedIds = new Set();
+      if (!again) { const fp = E.foldPicks(picks, groups, h => gated(ownDay(h.id))); picks = fp.picks; Object.values(fp.folded).forEach(f => f.forEach(x => foldedIds.add(String(x.id)))); }
+      else again.kept.forEach(k => (k.folded || []).forEach(x => foldedIds.add(String(x.id))));
+      const fit = E.fitDay(d.cleared ? Object.assign({}, d, { fillTime: false }) : d, win, picks, foldedIds.size ? pool.filter(s => !foldedIds.has(String(s.id))) : pool, ctx);
       fit.kept.forEach(s => { if (s.filled) autoIds.add(String(s.id)); });
       // A place shortened because its own sights are stops of their own says so (Fable review #12: never shortened silently).
       fit.kept.filter(s => s.walkOf && s.fullMinutes > s.minutes).forEach(s => { const line = s.name + " gets " + s.minutes + " min, the walk " + (s.walkOf.length > 1 ? "between " + E.listWords(s.walkOf, "and") + ", which you picked as stops of their own" : "to " + s.walkOf[0] + ", which you picked as a stop of its own") + " (on its own it gets " + s.fullMinutes + " min).";
         if (!explain.includes(line)) explain.push(line); });
+      fit.kept.forEach(s => (s.folded || []).forEach(x => { const line = x.name + (x.beside ? " is right beside " : " is inside ") + s.name + ": seen on that visit (" + x.extra + " min more), not a stop of its own.";
+        if (!explain.includes(line)) explain.push(line); }));
       // Lunch back on board (Nov 20, decided for Richard's lunch rule: every day over lunchtime has a timed lunch): a port day
       // whose picks fill the time ashore, back at the ship in time for lunch, has lunch on board. It never shortens a pick
       // and never touches the time to be back: it comes after the return.
@@ -354,13 +398,14 @@
       const keptIds = new Set(fit.kept.map(k => String(k.id)));
       // A group's visit names what it includes (the sights folded into it), so nothing is hidden.
       plan.items.forEach(x => { if (x.t !== "stop") return; const inc = (groups.members.get(String(x.id)) || []).map(m => byIdR.get(String(m))).filter(m => m && !E.ownStop(m, picked));
-        if (inc.length) { x.includes = inc.map(m => m.name); x.includesIds = inc.map(m => m.id); } });
+        const k = fit.kept.find(s => String(s.id) === String(x.id)), f = (k && k.folded) || [];
+        if (inc.length || f.length) { x.includes = inc.map(m => m.name).concat(f.map(m => m.name)); x.includesIds = inc.map(m => m.id).concat(f.map(m => m.id)); } });
       plan.items.forEach(x => { if (x.t !== "stop") return; const g = groups.groupOf.get(String(x.id)); if (g != null && keptIds.has(String(g))) x.within = (byIdR.get(String(g)) || {}).name; });
       const bad = guard(plan, win);
       if (bad.length) return { plan: safeDay(i, win, tr, bad) };
       const sightIds = [];
       const byIdHere = new Map(ranked.map(s => [String(s.id), s]));
-      fit.kept.forEach(s => { sightIds.push(String(s.id)); (groups.members.get(String(s.id)) || []).filter(m => !E.ownStop(byIdHere.get(String(m)), picked)).forEach(m => sightIds.push(String(m))); });
+      fit.kept.forEach(s => { sightIds.push(String(s.id)); (s.folded || []).forEach(x => sightIds.push(String(x.id))); (groups.members.get(String(s.id)) || []).filter(m => !E.ownStop(byIdHere.get(String(m)), picked)).forEach(m => sightIds.push(String(m))); });
       const eatIds = fit.seq.filter(s => s.eatKey).map(s => s.eatKey).concat(dinner ? [dinner.eatKey] : []);
       sightIds.forEach(id => ledger.claimSight(id, i)); eatIds.forEach(k => ledger.claimEat(k, i));
       // Unknown opening hours are never read as open (Nov 19 review), by the one rule above: every planned stop that needs hours
@@ -370,7 +415,9 @@
       if (noHours.length) explain.push("Opening hours aren't known for " + E.listWords(noHours.slice(0, 3).map(x => String(x.name).split(",")[0]), "and") + (noHours.length > 3 ? " and " + (noHours.length - 3) + " more" : "") + " on this date: planned between " + E.clock(E.ASSUME_OPEN) + " and " + E.clock(E.ASSUME_CLOSE) + ", check before you go.");
       // Only the traveler's own picks are "didn't fit" (Nov 20 tester: a leaving day with no picks said "Didn't fit today:
       // an abbey. Your picks are over today's time.").
-      plan.dropped = d.wantsOnly ? [] : fit.dropped.map(x => x.id); if (Object.keys(ways).length) plan.waysToFit = ways; plan.explain = explain.concat(lunchNote ? [lunchNote] : []);
+      plan.folded = [].concat(...fit.kept.map(s => (s.folded || []).map(x => x.id)));
+      // A visit that didn't fit takes what was folded into it along (never dropped silently).
+      plan.dropped = d.wantsOnly ? [] : [].concat(...fit.dropped.map(x => [x.id].concat(((picks.find(p => String(p.id) === String(x.id)) || {}).folded || []).map(f => f.id)))); if (Object.keys(ways).length) plan.waysToFit = ways; plan.explain = explain.concat(lunchNote ? [lunchNote] : []);
       return { plan, sightIds, eatIds, kept: fit.kept, autoIds: [...autoIds], explain, spare: win.endBy - fit.r.end, win };
     };
     const done = new Array(days.length).fill(null);

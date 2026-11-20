@@ -276,12 +276,14 @@ if (fs.existsSync(dir)) { let rides = 0, placed = 0;
 { const f = path.join(dir, 'sample-cruise.json');
   if (fs.existsSync(f)) {
     const s0 = JSON.parse(fs.readFileSync(f)), di = 5, base = E.planTrip(s0)[di];
-    const ids = base.items.filter(x => x.t === 'stop').map(x => String(x.id));
+    const ids = base.items.filter(x => x.t === 'stop').map(x => String(x.id)).concat((base.folded || []).map(String));
     const tight = cut => { const s = JSON.parse(JSON.stringify(s0)); s.days[di].selected = ids; s.days[di].allAboard -= cut; return s; };
     const p20 = E.planTrip(tight(20))[di], meal20 = p20.items.find(x => x.t === 'meal');
-    ok(ids.every(id => p20.items.some(x => x.t === 'stop' && String(x.id) === id)) && meal20 && meal20.min < 60,
+    ok(ids.every(id => p20.items.some(x => x.t === 'stop' && String(x.id) === id) || (p20.folded || []).map(String).includes(id)) && meal20 && meal20.min < 60,
       `20 minutes less ashore: every pick kept, the lunch gets quicker instead (lunch ${meal20 && meal20.min} min)`);
-    const s90 = tight(80), p90 = E.planTrip(s90)[di], w = E.dayWindow(s90.days[di], E.makeTravel(s90.prefs, s90.legModes));
+    // Cut until a pick has to go (folding sights into the visit around them leaves more time, Nov 20).
+    let cutBy = 80; while (cutBy < 240 && !(E.planTrip(tight(cutBy))[di].dropped || []).length) cutBy += 20;
+    const s90 = tight(cutBy), p90 = E.planTrip(s90)[di], w = E.dayWindow(s90.days[di], E.makeTravel(s90.prefs, s90.legModes));
     const lost = (p90.dropped || [])[0], ways = lost != null && (p90.waysToFit || {})[lost];
     ok(!!(ways && ways.length), 'a pick that had to go comes with ways to fit it back in');
     if (ways && ways.length) {
@@ -767,10 +769,34 @@ ok(E.readable('Café Ñandú') && E.readable("Joe's Bar & Grill") && !E.readable
       if (town && inner) { const run = sel => runAt(ni, sel);
         const a = run([town.id]), b = run([town.id, inner.id]), sa = a.items.find(x => String(x.id) === String(town.id)), sb = b.items.find(x => String(x.id) === String(town.id)), ib = b.items.find(x => String(x.id) === String(inner.id));
         ok(sa && sa.min > town.townWalk && !(a.explain || []).some(t => t.startsWith(town.name + ' gets ')), `${town.name} picked on its own keeps its own visit (got ${sa && sa.min} of ${town.minutes} min)`);
-        ok(sb && sb.min === town.townWalk && (b.explain || []).some(t => t.startsWith(town.name + ' gets ' + town.townWalk + ' min, the walk to ' + inner.name)), `${town.name} with ${inner.name} picked too becomes the walk to it, and says so (got ${sb && sb.min} min)`);
         const tday = (s0.days[ni].sites || {})[town.id], open = tday && tday.oh && tday.oh.spans && tday.oh.spans.length ? tday.oh.spans[0][0] : null;
-        ok(open == null || (ib && ib.at >= open), `a sight inside a gated town is never planned before the town opens (${inner.name} at ${ib && E.clock(ib.at)}, opens ${open == null ? '?' : E.clock(open)})`); }
+        // Richard (Nov 20): a sight inside a gated town (one with its own opening hours) is part of that visit: the town keeps
+        // its full time plus a little, and the sight is no stop of its own. An open town becomes the walk to it, and says so.
+        if (open != null || (inner.minutes || 30) <= 15) ok(sb && (sb.min === (town.minutes || 60) + E.foldExtra(inner) || (b.explain || []).some(t => t.startsWith('A shorter visit to ' + town.name + ' (' ) && t.includes(' instead of ' + ((m => m >= 60 ? Math.floor(m / 60) + ' h' + (m % 60 ? ' ' + (m % 60) + ' min' : '') : m + ' min')((town.minutes || 60) + E.foldExtra(inner)))))) && !ib && (b.folded || []).map(String).includes(String(inner.id)) && (b.explain || []).some(t => t.startsWith(inner.name + ' is inside ' + town.name + ': seen on that visit')),
+          `${inner.name} inside the gated ${town.name} is part of that visit (+${E.foldExtra(inner)} min), not a stop of its own (got ${sb && sb.min} of ${town.minutes} + ${E.foldExtra(inner)} min, own stop: ${!!ib}, trimmed ${sb && sb.trimmed})`);
+        else { ok(sb && sb.min === town.townWalk && (b.explain || []).some(t => t.startsWith(town.name + ' gets ' + town.townWalk + ' min, the walk to ' + inner.name)), `${town.name} with ${inner.name} picked too becomes the walk to it, and says so (got ${sb && sb.min} min)`);
+          ok(open == null || (ib && ib.at >= open), `a sight inside a gated town is never planned before the town opens (${inner.name} at ${ib && E.clock(ib.at)}, opens ${open == null ? '?' : E.clock(open)})`); } }
       else ok(false, 'a town with its own sights is in the test trip'); } }
+  // Folding (Richard, Nov 20: "a false sense of not enough time in the day"): a picked sight inside a bigger picked visit, or a
+  // small open-air sight right beside it, is part of that visit and adds only a little time.
+  { const castle = { id: 'c', name: 'Hill Castle', category: 'Castle', lat: 40.0, lng: 10.0, minutes: 120 }, tower = { id: 't', name: 'Keep Tower', lat: 40.0004, lng: 10.0003, minutes: 30, in: ['c'] },
+      ot = { id: 'o', name: 'Old Town', category: 'Old town', lat: 40.01, lng: 10.01, minutes: 90, tags: ['open-air'] }, mus = { id: 'm', name: 'Town Museum', lat: 40.0105, lng: 10.0102, minutes: 60, in: ['o'] },
+      ch = { id: 'h', name: 'Big Church', lat: 40.02, lng: 10.02, minutes: 45 }, fo = { id: 'f', name: 'Lion Fountain', lat: 40.0208, lng: 10.0205, minutes: 15, tags: ['open-air'] },
+      far = { id: 'x', name: 'Far Fountain', lat: 40.03, lng: 10.03, minutes: 15, tags: ['open-air'] };
+    const all = [castle, tower, ot, mus, ch, fo, far], g = E.makeGroups(all), fp = E.foldPicks(all, g, () => false), ids = fp.picks.map(s => s.id).sort().join(',');
+    ok(ids === 'c,h,m,o,x', `inside a gated visit or right beside a bigger one is folded; a museum in an open old town and a sight further away stay stops (left ${ids})`);
+    const c2 = fp.picks.find(s => s.id === 'c'), h2 = fp.picks.find(s => s.id === 'h');
+    ok(c2.minutes === 120 + E.foldExtra(tower) && h2.minutes === 45 + E.foldExtra(fo) && E.foldExtra(tower) >= 5 && E.foldExtra(tower) <= 20 && E.foldExtra({ minutes: 300 }) === 20 && E.foldExtra({ minutes: 10 }) === 5,
+      `a folded sight adds 5 to 20 min, a quarter of its own time (castle ${c2.minutes}, church ${h2.minutes})`);
+    ok(!E.foldPicks([tower], g, () => false).folded.c && E.foldPicks([tower], g, () => false).picks.length === 1, 'a sight inside a visit not picked stays a stop of its own');
+    const ga = E.foldPicks([ot, mus], g, s => s.id === 'o'); ok(ga.picks.length === 1, 'inside a place with its own opening hours (a gate) is folded, even a museum');
+    // In a plan: one stop, the folded sight named on it, claimed for that day, a line that says so.
+    const trip = { prefs: { walk: 'medium' }, cities: { k: { key: 'k', name: 'K', sites: all.map(x => Object.assign({}, x)), restaurants: [] } },
+      days: [{ i: 0, type: 'land', city: 'k', date: '2027-05-04', startTime: '09:00', hours: 9, lodging: { name: 'Hotel', lat: 40.005, lng: 10.005 }, selected: ['c', 't'], own: true }, { i: 1, type: 'land', city: 'k', date: '2027-05-05', startTime: '09:00', hours: 9, lodging: { name: 'Hotel', lat: 40.005, lng: 10.005 }, selected: [] }] };
+    const P = E.planTrip(trip), st = (P[0].items || []).filter(x => x.t === 'stop'), cs = st.find(x => x.id === 'c');
+    ok(st.length === 1 && cs && cs.min === 120 + E.foldExtra(tower) && (cs.includes || []).includes('Keep Tower') && (P[0].folded || []).includes('t') && (P[0].explain || []).some(t => t === 'Keep Tower is inside Hill Castle: seen on that visit (' + E.foldExtra(tower) + ' min more), not a stop of its own.'),
+      `castle and its tower picked: one visit of ${120 + E.foldExtra(tower)} min that names the tower, and says so (got ${st.map(x => x.name + ' ' + x.min).join(', ')})`);
+    ok(!(P[1].items || []).some(x => x.id === 't'), 'a folded sight is never planned again on another day'); }
   // Tester's safety findings (Nov 20): the right station or airport or a question, never a building site; border trains;
   // no "your picks" when the traveler picked nothing; one leave-by time.
   { const ch = E.gateChoices([{ name: 'Chantier Grand Paris Express - Future Station Saint-Denis-Pleyel', lat: 48.918, lng: 2.343 }, { name: 'Gare du Nord', lat: 48.8809, lng: 2.3553 }, { name: 'Paris Gare du Nord', lat: 48.8812, lng: 2.3550 }, { name: 'Gare de Lyon', lat: 48.8443, lng: 2.3744 }]);

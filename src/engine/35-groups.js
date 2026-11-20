@@ -18,6 +18,9 @@
   const AREA = /\b(square|plaza|piazza|platz|old town|old city|historic (?:centre|center|quarter)|quarter|district|neighbou?rhood|castle|citadel|fortress|kremlin|alcazar|alcázar|archaeological (?:site|park)|ruins|excavations|palace complex|city-state|park|gardens?|island|cay|museum complex|monastery complex|campus|cemetery)\b/i;
   const text = s => (s.category || "") + " " + (s.name || "");
   E.isSquare = s => SQUARE.test(text(s));
+  // An open area walked rather than entered (a square, an old town or district, a park or garden): no gate, so its time
+  // is the walk, not what is inside its buildings.
+  E.isOpenArea = s => E.isSquare(s) || OLD_TOWN.test(text(s)) || /\b(park|garden|gardens|promenade|waterfront)\b/i.test(text(s));
   E.isAreaKind = s => AREA.test(text(s)) || E.isSquare(s);
   // sites: every sight of a city (main and farther), as in the trip bucket. Returns
   //   { kind: id -> "group" | "site", groupOf: id -> the innermost group holding it, members: group id -> [ids], parent }
