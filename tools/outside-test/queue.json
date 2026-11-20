@@ -1,217 +1,254 @@
 {
- "run": "round1c-2026-11-20",
+ "run": "round1d-2026-11-20",
  "url": "https://gilsonr0566-sys.github.io/Kairoute-Beta2/",
  "trips": [
   {
-   "name": "b01-greece",
+   "name": "e01-vienna-actions",
    "legs": [
     {
      "k": "stay",
-     "place": "Athens, Greece",
-     "date": "2027-06-30",
-     "nights": 4,
-     "inAt": "10:30"
+     "place": "Vienna, Austria",
+     "date": "2027-05-09",
+     "nights": 3,
+     "inAt": "14:00",
+     "homeAt": "12:00"
+    }
+   ],
+   "steps": [
+    {
+     "name": "1-ticks-vs-plan",
+     "js": "(async()=>{const t=await __T.ticks(1);window.__kairouteAt(1,'plan');await __T.sleep(5000);return {on:t.filter(x=>x.on).map(x=>x.n),total:t.length}})()"
     },
     {
-     "k": "cruise",
-     "board": "Piraeus (Athens), Greece",
-     "ship": "Sun Princess",
-     "date": "2027-07-04",
-     "aboard": "18:30",
-     "ports": [
-      {
-       "date": "2027-07-05",
-       "place": "Heraklion, Crete",
-       "arrive": "07:00",
-       "aboard": "16:30"
-      },
-      {
-       "date": "2027-07-06",
-       "place": "Kusadasi (Ephesus), Turkey",
-       "arrive": "09:00",
-       "aboard": "18:30"
-      },
-      {
-       "date": "2027-07-07",
-       "place": "Santorini, Greece",
-       "arrive": "07:00",
-       "aboard": "20:30",
-       "tender": true
-      },
-      {
-       "date": "2027-07-08",
-       "place": "Mykonos, Greece",
-       "arrive": "08:00",
-       "aboard": "20:30"
-      },
-      {
-       "date": "2027-07-09",
-       "place": "Chania, Crete",
-       "arrive": "08:00",
-       "aboard": "17:30"
-      },
-      {
-       "date": "2027-07-11",
-       "place": "Messina, Sicily",
-       "arrive": "08:00",
-       "aboard": "17:30"
-      },
-      {
-       "date": "2027-07-12",
-       "place": "Naples, Italy",
-       "arrive": "07:00",
-       "aboard": "18:30"
-      },
-      {
-       "date": "2027-07-13",
-       "place": "Civitavecchia (Rome), Italy",
-       "arrive": "07:00",
-       "aboard": "20:30"
-      }
-     ],
-     "end": "Barcelona, Spain",
-     "endDate": "2027-07-15",
-     "off": "07:00"
+     "name": "2-untick-one",
+     "js": "__T.tap(1,false,1)"
     },
     {
-     "k": "stay",
-     "place": "Barcelona, Spain",
-     "nights": 3
+     "name": "3-tick-one-more",
+     "js": "__T.tap(1,true,1)"
     },
     {
-     "k": "stay",
-     "place": "Madrid, Spain",
-     "nights": 2,
-     "inBy": "train",
-     "leaveAt": "13:00",
-     "inAt": "15:45",
-     "homeAt": "16:00"
+     "name": "4-tick-six-more",
+     "js": "__T.tap(1,true,6)"
+    },
+    {
+     "name": "5-make-it-fit",
+     "js": "__T.press(1,/^Make it fit$/)"
+    },
+    {
+     "name": "6-switch-a-ride",
+     "js": "__T.press(1,/^(Taxi or car|Walk|Metro|Train|Bus|Tram|Port shuttle).* · /)"
+    },
+    {
+     "name": "7-change-lunch",
+     "js": "__T.press(1,/^Change lunch$/)"
+    },
+    {
+     "name": "8-shorter-day",
+     "js": "(async()=>{window.__kairouteAt(1,'plan');await __T.sleep(2000);window.__kairouteSetHours(4);await __T.sleep(6000);return 'hours 4'})()"
+    },
+    {
+     "name": "9-reload",
+     "reload": true,
+     "js": "(async()=>{window.__kairouteAt(1,'plan');await __T.sleep(6000);return 'reloaded'})()"
+    },
+    {
+     "name": "10-phone",
+     "phone": true,
+     "js": "(async()=>{window.__kairouteAt(1,'plan');await __T.sleep(3000);return 'phone'})()"
     }
    ]
   },
   {
-   "name": "b02-notfound-caribbean",
+   "name": "e02-barcelona-port-actions",
    "legs": [
     {
      "k": "cruise",
-     "board": "Miami, Florida",
-     "date": "2027-03-01",
-     "aboard": "15:30",
+     "board": "Marseille, France",
+     "date": "2027-05-15",
+     "aboard": "17:00",
      "inAt": "09:00",
      "ports": [
       {
-       "date": "2027-03-02",
-       "place": "CocoCay, Bahamas",
-       "arrive": "08:00",
-       "aboard": "17:00"
-      },
-      {
-       "date": "2027-03-03",
-       "place": "Half Moon Cay",
-       "arrive": "08:00",
-       "aboard": "16:00",
-       "tender": true
-      },
-      {
-       "date": "2027-03-05",
-       "place": "Cozumel",
-       "arrive": "07:00",
-       "aboard": "16:00"
-      },
-      {
-       "date": "2027-03-07",
-       "place": "Cartagena, Colombia",
-       "arrive": "08:00",
-       "aboard": "15:00"
-      }
-     ],
-     "end": "Miami, Florida",
-     "endDate": "2027-03-10",
-     "off": "07:00"
-    }
-   ]
-  },
-  {
-   "name": "b03-notfound-europe",
-   "legs": [
-    {
-     "k": "cruise",
-     "board": "Southampton",
-     "date": "2027-06-11",
-     "aboard": "16:00",
-     "inBy": "train",
-     "inAt": "12:00",
-     "ports": [
-      {
-       "date": "2027-06-12",
-       "place": "Le Havre, France",
-       "arrive": "07:00",
-       "aboard": "19:00"
-      },
-      {
-       "date": "2027-06-13",
-       "place": "Zeebrugge, Belgium",
-       "arrive": "08:00",
-       "aboard": "17:00"
-      },
-      {
-       "date": "2027-06-15",
-       "place": "Bergen, Norway",
-       "arrive": "08:00",
-       "aboard": "17:00"
-      },
-      {
-       "date": "2027-06-19",
-       "place": "Ponta Delgada, Portugal",
-       "arrive": "08:00",
-       "aboard": "17:00"
-      },
-      {
-       "date": "2027-06-23",
-       "place": "Kotor, Montenegro",
-       "arrive": "08:00",
-       "aboard": "17:00",
-       "tender": true
-      },
-      {
-       "date": "2027-06-24",
-       "place": "Limassol, Cyprus",
+       "date": "2027-05-16",
+       "place": "Barcelona, Spain",
        "arrive": "08:00",
        "aboard": "18:00"
       }
      ],
-     "end": "Southampton",
-     "endDate": "2027-06-30",
+     "end": "Marseille, France",
+     "endDate": "2027-05-17",
      "off": "07:00"
+    }
+   ],
+   "steps": [
+    {
+     "name": "1-ticks-vs-plan",
+     "js": "(async()=>{const t=await __T.ticks(2);window.__kairouteAt(2,'plan');await __T.sleep(5000);return {on:t.filter(x=>x.on).map(x=>x.n),total:t.length}})()"
+    },
+    {
+     "name": "2-untick-one",
+     "js": "__T.tap(2,false,1)"
+    },
+    {
+     "name": "3-tick-one-more",
+     "js": "__T.tap(2,true,1)"
+    },
+    {
+     "name": "4-tick-six-more",
+     "js": "__T.tap(2,true,6)"
+    },
+    {
+     "name": "5-make-it-fit",
+     "js": "__T.press(2,/^Make it fit$/)"
+    },
+    {
+     "name": "6-switch-a-ride",
+     "js": "__T.press(2,/^(Taxi or car|Walk|Metro|Train|Bus|Tram|Port shuttle).* · /)"
+    },
+    {
+     "name": "7-change-lunch",
+     "js": "__T.press(2,/^Change lunch$/)"
+    },
+    {
+     "name": "8-shorter-day",
+     "js": "(async()=>{window.__kairouteAt(2,'plan');await __T.sleep(2000);window.__kairouteSetHours(4);await __T.sleep(6000);return 'hours 4'})()"
+    },
+    {
+     "name": "9-reload",
+     "reload": true,
+     "js": "(async()=>{window.__kairouteAt(2,'plan');await __T.sleep(6000);return 'reloaded'})()"
+    },
+    {
+     "name": "10-phone",
+     "phone": true,
+     "js": "(async()=>{window.__kairouteAt(2,'plan');await __T.sleep(3000);return 'phone'})()"
     }
    ]
   },
   {
-   "name": "b04-notfound-cities",
+   "name": "e03-edinburgh-actions",
    "legs": [
     {
      "k": "stay",
-     "place": "Paris",
-     "date": "2027-05-20",
-     "nights": 1,
+     "place": "Edinburgh, Scotland",
+     "date": "2027-08-09",
+     "nights": 3,
      "inBy": "train",
-     "inAt": "12:47"
+     "inAt": "14:20",
+     "homeBy": "train",
+     "homeAt": "10:00"
+    }
+   ],
+   "steps": [
+    {
+     "name": "1-ticks-vs-plan",
+     "js": "(async()=>{const t=await __T.ticks(1);window.__kairouteAt(1,'plan');await __T.sleep(5000);return {on:t.filter(x=>x.on).map(x=>x.n),total:t.length}})()"
     },
     {
-     "k": "stay",
-     "place": "Florence",
-     "nights": 1,
-     "inBy": "train",
-     "leaveAt": "09:00",
-     "inAt": "16:00"
+     "name": "2-untick-one",
+     "js": "__T.tap(1,false,1)"
     },
     {
-     "k": "stay",
-     "place": "Buenos Aires",
-     "nights": 1,
+     "name": "3-tick-one-more",
+     "js": "__T.tap(1,true,1)"
+    },
+    {
+     "name": "4-tick-six-more",
+     "js": "__T.tap(1,true,6)"
+    },
+    {
+     "name": "5-make-it-fit",
+     "js": "__T.press(1,/^Make it fit$/)"
+    },
+    {
+     "name": "6-switch-a-ride",
+     "js": "__T.press(1,/^(Taxi or car|Walk|Metro|Train|Bus|Tram|Port shuttle).* · /)"
+    },
+    {
+     "name": "7-change-lunch",
+     "js": "__T.press(1,/^Change lunch$/)"
+    },
+    {
+     "name": "8-shorter-day",
+     "js": "(async()=>{window.__kairouteAt(1,'plan');await __T.sleep(2000);window.__kairouteSetHours(4);await __T.sleep(6000);return 'hours 4'})()"
+    },
+    {
+     "name": "9-reload",
+     "reload": true,
+     "js": "(async()=>{window.__kairouteAt(1,'plan');await __T.sleep(6000);return 'reloaded'})()"
+    },
+    {
+     "name": "10-phone",
+     "phone": true,
+     "js": "(async()=>{window.__kairouteAt(1,'plan');await __T.sleep(3000);return 'phone'})()"
+    }
+   ]
+  },
+  {
+   "name": "e04-nassau-port-actions",
+   "legs": [
+    {
+     "k": "cruise",
+     "board": "Miami, Florida",
+     "date": "2027-01-11",
+     "aboard": "15:30",
      "inAt": "09:00",
-     "leaveAt": "20:00",
-     "homeAt": "22:00"
+     "ports": [
+      {
+       "date": "2027-01-13",
+       "place": "Nassau, Bahamas",
+       "arrive": "08:30",
+       "aboard": "16:30"
+      }
+     ],
+     "end": "Miami, Florida",
+     "endDate": "2027-01-15",
+     "off": "06:00"
+    }
+   ],
+   "steps": [
+    {
+     "name": "1-ticks-vs-plan",
+     "js": "(async()=>{const t=await __T.ticks(3);window.__kairouteAt(3,'plan');await __T.sleep(5000);return {on:t.filter(x=>x.on).map(x=>x.n),total:t.length}})()"
+    },
+    {
+     "name": "2-untick-one",
+     "js": "__T.tap(3,false,1)"
+    },
+    {
+     "name": "3-tick-one-more",
+     "js": "__T.tap(3,true,1)"
+    },
+    {
+     "name": "4-tick-six-more",
+     "js": "__T.tap(3,true,6)"
+    },
+    {
+     "name": "5-make-it-fit",
+     "js": "__T.press(3,/^Make it fit$/)"
+    },
+    {
+     "name": "6-switch-a-ride",
+     "js": "__T.press(3,/^(Taxi or car|Walk|Metro|Train|Bus|Tram|Port shuttle).* · /)"
+    },
+    {
+     "name": "7-change-lunch",
+     "js": "__T.press(3,/^Change lunch$/)"
+    },
+    {
+     "name": "8-shorter-day",
+     "js": "(async()=>{window.__kairouteAt(3,'plan');await __T.sleep(2000);window.__kairouteSetHours(4);await __T.sleep(6000);return 'hours 4'})()"
+    },
+    {
+     "name": "9-reload",
+     "reload": true,
+     "js": "(async()=>{window.__kairouteAt(3,'plan');await __T.sleep(6000);return 'reloaded'})()"
+    },
+    {
+     "name": "10-phone",
+     "phone": true,
+     "js": "(async()=>{window.__kairouteAt(3,'plan');await __T.sleep(3000);return 'phone'})()"
     }
    ]
   }
