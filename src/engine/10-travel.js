@@ -198,7 +198,7 @@
       const want = wantRaw == null ? null : OLD_CHOICE[wantRaw] || (/^note\|/.test(String(wantRaw)) ? String(wantRaw).slice(5) : wantRaw); // a note's way is its kind
       const opts = [];
       // Two stops on two different islands, each across the water from the start, are a boat apart too; a stop the map
-      // puts across the water is a boat away however close it looks (Round 1: Lokrum "Walk 6 min" from the old town).
+      // puts across the water is a boat away however close it looks (Round 1: an island off an old town planned as "Walk 6 min").
       const across = p => p.acrossWater ? String(p.acrossWater) : "", apart = isle(a) !== isle(b) || (across(a) && across(b) && across(a) !== across(b));
       if (apart && (d > 1 || across(a) || across(b))) {
         // Across water: a place reached only by boat is reached by boat, never a taxi or a walk. The boat's time is the
@@ -251,7 +251,7 @@
         // The guide's own time for the ride (a winding road it knows) is the floor, never the label.
         if (d >= 0.6 || !opts.length) {
           const r = pinned && pinned.mode !== "walk" && pinned.mode !== "boat" ? { km: pinned.km || d * 1.3, min: Math.round(pinned.min) } : road(d), said = d > 5 ? saidMin(note) : 0;
-          // A stop far from any road a car can drive (a car-free old town on the water, Round 1: taxis between Venice's
+          // A stop far from any road a car can drive (a car-free old town on the water, Round 1: taxis between the
           // sights): the taxi starts or ends at the nearest road, and the walk to it is part of the ride. Between two such
           // stops within a walk, no taxi at all.
           const gap = p => Math.max(0, +p.roadGap || 0) / 1000, ga = gap(a), gb = gap(b);

@@ -32,13 +32,13 @@ var KEngine = typeof KEngine !== "undefined" ? KEngine : {};
   const GR1 = { α: "a", β: "v", γ: "g", δ: "d", ε: "e", ζ: "z", η: "i", θ: "th", ι: "i", κ: "k", λ: "l", μ: "m", ν: "n", ξ: "x", ο: "o", π: "p", ρ: "r", σ: "s", ς: "s", τ: "t", υ: "y", φ: "f", χ: "ch", ψ: "ps", ω: "o" };
   const CY = { а: "a", б: "b", в: "v", г: "g", д: "d", е: "e", ё: "yo", ж: "zh", з: "z", и: "i", й: "y", к: "k", л: "l", м: "m", н: "n", о: "o", п: "p", р: "r", с: "s", т: "t", у: "u", ф: "f", х: "kh", ц: "ts", ч: "ch", ш: "sh", щ: "shch", ъ: "", ы: "y", ь: "", э: "e", ю: "yu", я: "ya", і: "i", ї: "yi", є: "ye", ґ: "g", ј: "j", љ: "lj", њ: "nj", ћ: "c", ђ: "dj", џ: "dz" };
   const latinMemo = new Map();
-  // A place as the traveler typed it, without what they added in brackets ("Le Havre (Paris), France" -> "Le Havre,
-  // France"), never a space left before the comma (Round 1: "Cruise port of Le Havre , France" found nothing, 6 port days
+  // A place as the traveler typed it, without what they added in brackets ("Port (City), Country" -> "Port,
+  // Country"), never a space left before the comma (Round 1: "Cruise port of Port , Country" found nothing, 6 port days
   // lost to one text bug).
   E.bareName = s => String(s || "").replace(/\s*\([^)]*\)\s*/g, " ").replace(/\s+([,;.])/g, "$1").replace(/,\s*,/g, ",").replace(/\s+/g, " ").replace(/^[\s,]+|[\s,]+$/g, "").trim();
-  // The place alone, without the country or region after the first comma ("Paris, France" -> "Paris").
+  // The place alone, without the country or region after the first comma ("City, Country" -> "City").
   E.placeOnly = s => E.bareName(s).split(",")[0].trim();
-  // What the traveler put in brackets after a port: the place they mean to see from it ("Aqaba (Petra)" -> "Petra").
+  // What the traveler put in brackets after a port: the place they mean to see from it ("Port (Site)" -> "Site").
   E.bracketPlace = s => { const m = String(s || "").match(/\(([^)]+)\)/); return m ? m[1].trim() : ""; };
   E.latin = name => {
     const s0 = String(name == null ? "" : name); if (!/[\u0370-\u03ff\u1f00-\u1fff\u0400-\u04ff]/.test(s0)) return s0;
