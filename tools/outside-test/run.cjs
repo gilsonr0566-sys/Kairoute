@@ -13,7 +13,7 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
   const out = path.join(process.cwd(), 'outside-out', t.name); fs.mkdirSync(out, { recursive: true });
   const res = { name: t.name, label: t.label || '', legs: t.legs, started: new Date().toISOString(), passed: {}, refused: {}, errors: [], days: [], guides: {}, steps: [] };
   const b = await chromium.launch();
-  const ctx = await b.newContext({ viewport: { width: 1100, height: 1400 }, locale: 'en-US', timezoneId: t.tz || 'America/Chicago' });
+  const ctx = await b.newContext({ viewport: { width: 1100, height: 2800 }, locale: 'en-US', timezoneId: t.tz || 'America/Chicago' });
   await ctx.addInitScript(() => { try { localStorage.setItem('kairoute.intro1', '1'); } catch (e) {} });
   await ctx.route(u => /workers\.dev/.test(u.hostname), async r => {
     const req = r.request(), u = new URL(req.url()), p = u.pathname;
@@ -46,7 +46,7 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
     console.log('\n===== day ' + i + ' ' + d.date + ' ' + d.type + ' ' + (d.destination || '') + '\n' + text);
   }
   // Extra traveler steps for this trip: each is a line of page script (a tap, a tick, a changed hour) and a picture after it.
-  for (const s of t.steps || []) { let r; try { r = await p.evaluate(s.js); } catch (e) { r = 'ERR ' + e.message; } await sleep(s.wait || 4000); if (s.phone) await p.setViewportSize({ width: 390, height: 844 }); if (s.tablet) await p.setViewportSize({ width: 1100, height: 1400 });
+  for (const s of t.steps || []) { let r; try { r = await p.evaluate(s.js); } catch (e) { r = 'ERR ' + e.message; } await sleep(s.wait || 4000); if (s.phone) await p.setViewportSize({ width: 390, height: 844 }); if (s.tablet) await p.setViewportSize({ width: 1100, height: 2800 });
     const text = await p.evaluate(() => document.querySelector('main').innerText).catch(() => ''); await p.screenshot({ path: path.join(out, 'step-' + s.name + '.jpg'), type: 'jpeg', quality: 55, fullPage: !s.screen }); res.steps.push({ name: s.name, r, text }); console.log('\n===== step ' + s.name + ' -> ' + JSON.stringify(r) + '\n' + text.slice(0, 6000)); }
   console.log('\nGUIDES ' + JSON.stringify(res.guides)); console.log('\nversion', res.version, 'aiReady', res.aiReady, 'build', res.buildSec + 's', 'passed', JSON.stringify(res.passed), 'refused', JSON.stringify(res.refused), 'errors', JSON.stringify([...new Set(res.errors)]));
   res.finished = new Date().toISOString(); fs.writeFileSync(path.join(out, 'result.json'), JSON.stringify(res, null, 1)); await b.close();
