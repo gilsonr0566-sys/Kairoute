@@ -9,13 +9,28 @@
  ],
  "sites": {},
  "towns": {},
- "ports": [],
- "dayTrips": [],
- "missing": [
-  "travel guide page",
-  "the port town",
-  "a mapped cruise terminal or pier"
+ "ports": [
+  {
+   "name": "Royal Carribean Cruise Pier",
+   "lat": 25.82222,
+   "lng": -77.9365,
+   "osm": "way/1163105787",
+   "kind": "pier",
+   "cruise": true,
+   "d": 0.36
+  },
+  {
+   "name": "CocoCay Harbor",
+   "lat": 25.8226,
+   "lng": -77.93638,
+   "osm": "way/1163105826",
+   "kind": "terminal",
+   "cruise": false,
+   "d": 0.4
+  }
  ],
+ "dayTrips": [],
+ "missing": [],
  "centre": {
   "lat": 25.818983333333335,
   "lng": -77.93618666666667
