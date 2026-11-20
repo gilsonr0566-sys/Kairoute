@@ -1677,6 +1677,11 @@ function planAdded(plan, d) {
 // Closed, with a count, so the stops come first (outside review, Nov 20: on a phone the open notes pushed every stop off
 // the first screen). It opens by itself only when a note asks the traveler to decide something (kind "act"). The
 // free-time note is said once, on the timeline's free time row, so it isn't repeated here (kind "free").
+// Sights folded into a bigger visit (a tower inside a castle, a house in an excavation): the traveler's pick is planned,
+// as part of this stop, so the stop says so (Richard's folding rule, Nov 20).
+const inclNames = s => (Array.isArray(s && s.includes) ? s.includes : []).map(x => typeof x === "string" ? x : x && x.name).filter(Boolean);
+const inclLine = s => { const n = inclNames(s); return n.length ? `<div class="sub incl">Includes ${esc(E2words(n))}</div>` : ""; };
+const E2words = xs => xs.length < 2 ? xs.join("") : xs.slice(0, -1).join(", ") + " and " + xs[xs.length - 1];
 function engine2Card(plan) {
   const e = plan && plan.engine2, all = (e && e.explain) || [], kind = (e && e.explainKind) || [];
   const say = all.map((t, k) => ({ t, k: kind[k] || "info" })).filter(x => x.t && x.k !== "free")
@@ -6701,7 +6706,7 @@ function renderPlan(d) {
         <div class="optacts"><button class="btn small" data-act="bonusadd" data-id="${esc(s.id)}">Add to my sights</button><button class="btn ghost small" data-act="bonusskip" data-id="${esc(s.id)}">Skip it</button></div></div></div>`;
       n++;
       return `<div class="${cls}" data-stop="${esc(s.id)}">${tcell(it)}<div class="rail"><div class="dot">${n}</div></div><div class="what">${canDrag ? dragHandle(s) : ""}
-        ${it.area ? `<div class="areahd">${esc(areaHead(it))}</div>` : ""}<button class="nm namebtn" data-open="${esc(s.id)}">${esc(s.areaRest ? "The rest of " + s.name : s.name)}</button><div class="sub">${dur(s.minutes)} · ${cat(s)}${s.mustSee ? " · Must-see" : ""}${s.unesco ? " · UNESCO" : ""}${s.far && s.travel ? " · " + esc(unitText(s.travel)) : ""}</div>
+        ${it.area ? `<div class="areahd">${esc(areaHead(it))}</div>` : ""}<button class="nm namebtn" data-open="${esc(s.id)}">${esc(s.areaRest ? "The rest of " + s.name : s.name)}</button><div class="sub">${dur(s.minutes)} · ${cat(s)}${s.mustSee ? " · Must-see" : ""}${s.unesco ? " · UNESCO" : ""}${s.far && s.travel ? " · " + esc(unitText(s.travel)) : ""}</div>${inclLine(s)}
 ${partsList(s, it.time)}${stopLiveNotes(it, d)}</div></div>`;
     }
     if (it.type === "evening") {

@@ -27,7 +27,7 @@ async function go(p, view, re) { const i = re ? await dayOf(p, re) : -1; await p
 const SHOTS = [
   ['home', 'lobby'], ['trip', 'trip'],
   ['plan-barcelona', 'plan', 'Barcelona'], ['sites-barcelona', 'sites', 'Barcelona'],
-  ['plan-mykonos', 'plan', 'Mykonos'], ['terms', 'terms'], ['plan-rome', 'plan', 'Rome|Civitavecchia'], ['plan-kusadasi', 'plan', 'Kusadasi'],
+  ['plan-mykonos', 'plan', 'Mykonos'], ['terms', 'terms'], ['plan-rome', 'plan', 'Rome|Civitavecchia'], ['plan-kusadasi', 'plan', 'Kusadasi'], ['plan-heraklion', 'plan', 'Heraklion'],
   ['journal', 'journal'], ['tour-barcelona', 'tour', 'Barcelona'],
 ];
 (async () => {

@@ -102,6 +102,10 @@ function repeats(text) {
         // the ferries to the islands" only says where the port is.
         const offers = dom.named.sub.split(/(?<=[.;!?])\s+/).filter(t => /\b(every|min|mins|minutes?|hours?|runs?|goes|go|leaves?|departs?|takes?|connects?|links?)\b/i.test(t) || /^\s*(?:a|an|the|take a|take the|by)?\s*(?:[a-z]+\s+){0,2}?(?:sea ?bus|water ?bus|water ?taxi|shuttle|bus|ferry|boat|tram|metro|train)/i.test(t)).join(' ');
         for (const [re, chip] of kinds) if (re.test(offers)) ok(`a named ride has a button or says it isn't planned (${dn})`, chip.test(dom.named.chips) || /isn't in the plan/.test(dom.named.sub), `"${dom.named.sub.slice(0, 120)}" names a ride with no button`); }
+      // 5b. A pick folded into a bigger visit (a tower in a castle) is named on that stop, so the traveler sees it planned.
+      { const inc = await p.evaluate(i => ((window.__kairouteEngine2()[i] || {}).items || []).filter(x => x.t === 'stop' && x.includes && x.includes.length).map(x => (x.includes || []).map(y => typeof y === 'string' ? y : y && y.name)).flat().filter(Boolean), i).catch(() => []);
+        const tl = await p.evaluate(() => [...document.querySelectorAll('.timeline .incl')].map(x => x.innerText).join(' | '));
+        for (const n of inc) ok(`a folded pick is named on its stop (${dn})`, tl.includes(n), `"${n}" is folded into a visit but no stop says "Includes ${n}"`); }
       // 6. Nothing said twice on the screen.
       const rep = repeats(await proseText(p)); ok(`nothing said twice on the Day plan (${dn})`, !rep.length, `said twice: ${rep.slice(0, 3).map(x => '"' + x.slice(0, 80) + '"').join('; ')}`);
       // 7. Choose sights says the same time left and day length as the Day plan.
