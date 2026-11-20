@@ -10,6 +10,8 @@
 // are asked for the city the day is really spent in.
 const SRC_KIND_CAP = { Church: 12, Museum: 12, Palace: 8 };
 const SRC_MAX_MAIN = 45, SRC_MAX_QUICK = 12, SRC_R = 8;
+// A big city's landmarks spread wider than its centre (a tower 11 km out): one famous the world over counts within this.
+const SRC_R_FAMED = 15;
 // How many sources must agree on a place. Two, normally (a place is trusted because independent sources name it). A
 // small place has too few for that: Nassau's travel guide names Fort Fincastle and Parliament House, but where English
 // is the local language there is no second, local-language guide to agree, and a small island has only the map. There,
@@ -28,7 +30,12 @@ const srcWorthyAt = need => need >= 2 ? srcWorthy : x => x && x.lat != null && /
 // Entries that are not one place to visit: a whole city or country, a district, transport, institutions.
 const SRC_NEVER = /\b(city|district|business area|ministerios|rione|quartiere|municipality|province|region|metro|subway|railway|station|airport|line|radio|embassy|bank|ministry|school|hospital|programme|organization|organisation)\b/i;
 const SRC_UNLESS_LISTED = /\b(stadium|stadio|estadio|university|universit[àa]|academy|parliament)\b/i; // a listed monument (Panathenaic Stadium) is a sight
-const srcNotSpot = x => SRC_NEVER.test(x.name) || (SRC_UNLESS_LISTED.test(x.name) && !x.heritage && !x.unesco);
+// Not a place a visitor goes in (competitor review, Nov 20: a stock exchange as a must-see, a plane crash as a sight, an office
+// tower as a 40 min visit): a business or an office, or an event rather than a place (unless it names its memorial or museum).
+// An office building is no stop unless it is a listed monument (the Chrysler Building) or World Heritage.
+const SRC_BUSINESS = /\b(stock exchange|exchange|headquarters|head office|offices?|corporation|company|bank)\b/i;
+const SRC_EVENT = /\b(disaster|crash|accident|bombing|shooting|attack|explosion|derailment|collision|fire of \d{4})\b/i, SRC_MEMORIAL = /\b(memorial|monument|museum|cenotaph)\b/i;
+const srcNotSpot = x => SRC_NEVER.test(x.name) || SRC_BUSINESS.test(x.name) || (SRC_EVENT.test(x.name) && !SRC_MEMORIAL.test(x.name)) || ((SRC_UNLESS_LISTED.test(x.name) || /\bbuilding\b/i.test(x.name)) && !x.heritage && !x.unesco);
 // What kind of stop a name describes: a typical visit length, a category and whether it is a walk-past stop.
 const SRC_KINDS = [
   [/museum|museo|musei|museu|mus[ée]e|gallery|galleria|galer[ií]a|pinacoteca|collection/i, "Museum", 90],
@@ -56,6 +63,7 @@ function srcSummary(x, cat, area) {
   const kind = cat === "Sight" ? "sight" : cat.toLowerCase();
   return `${x.unesco ? "A World Heritage " : x.heritage ? "A listed historic " : "A "}${kind} in ${area}, named by ${x.src.length} independent sources.`;
 }
+if (typeof window !== "undefined") window.__kairouteNotSpot = x => srcNotSpot(x);
 const srcVisitable = x => x && x.lat != null && (x.src || []).some(t => /Wikivoyage|heritage|UNESCO/.test(t));
 // The quality bar (Richard: "not full for the sake of quantity, quality is the key"): a place joins the list only
 // if travelers recommend it (a Wikivoyage listing, English or local), it is World Heritage, or it is a listed monument
@@ -71,7 +79,15 @@ const SRC_SEAT = /\bofficial (residence|seat|workplace)\b|\bseat of the (governm
 const SRC_SEAT_OK = /\b(though|although|but|however|tours?|visit|visitors|open (to|for|daily|on)|tickets?|museum|state rooms)\b/i;
 const srcShut = x => { const t = String((x && x.en) || ""); if (SRC_SHUT.test(t)) return true;
   return (t.match(/[^.!?]+[.!?]*/g) || []).some(s => SRC_SEAT.test(s) && !SRC_SEAT_OK.test(s)); };
-const srcWorthy = x => srcVisitable(x) && !srcShut(x) && (x.unesco || (x.heritage && (x.sl || 0) >= 40) || (x.src || []).some(t => /Wikivoyage/.test(t))) && ((x.sl || 0) >= 15 || (x.src || []).length >= 3) && !srcNotSpot(x);
+// Famous the world over (competitor review, Nov 20: London had no Big Ben, Istanbul no Grand Bazaar, because no travel-guide
+// page the sources read lists them): written about in 80+ Wikipedia languages, or 40+ with a second source agreeing, is a
+// sight visitors expect even with no travel-guide listing. One source alone below 80 (a district's own article) is not.
+const SRC_WORLD = 80, SRC_WIDE = 40;
+const srcFamed = x => x && x.lat != null && ((x.sl || 0) >= SRC_WORLD || ((x.sl || 0) >= SRC_WIDE && (x.src || []).length >= 2));
+// A listed monument three sources agree on, written about in 25+ languages, is a sight too (Dubrovnik's walls, a city's main
+// shrine), even with no travel-guide listing.
+const srcWorthy = x => (srcVisitable(x) || srcFamed(x) || (x.heritage && (x.sl || 0) >= 25 && (x.src || []).length >= 3)) && !srcShut(x) && (x.unesco || (x.heritage && ((x.sl || 0) >= 40 || ((x.sl || 0) >= 25 && (x.src || []).length >= 3))) || (x.src || []).some(t => /Wikivoyage/.test(t)) || srcFamed(x)) && ((x.sl || 0) >= 15 || (x.src || []).length >= 3) && !srcNotSpot(x);
+if (typeof window !== "undefined") window.__kairouteSourceSights = (city, src) => sourceSights(city, src);
 // "Acropolis of Athens" is the guide's "Acropolis and Parthenon": the city's own name is set aside when comparing.
 const srcBare = (x, area) => { const a = keyOf(area); if (!a) return x; const n = keyOf(x.name).replace(new RegExp("\\b(of|in|de|di|del|d) " + a + "\\b|^" + a + " | " + a + "$", "g"), " ").replace(/\s+/g, " ").trim(); return n && n !== keyOf(x.name) ? Object.assign({}, x, { name: n }) : x; };
 // A place inside a bigger stop's grounds (the Erechtheion on the Acropolis, a fountain on its square) is one of that
@@ -84,6 +100,11 @@ function srcReach(s) {
 const SRC_GROUNDS = /castle|citadel|fortress|kremlin|acropolis|archaeolog|ancient|forum|agora|monaster|abbey|complex|cemetery|campus/i;
 const srcFame = (s, src) => s.fame != null ? s.fame : s.sl != null ? s.sl : ((src && srcStop(src, s.name, s)) || {}).sl || 0;
 const srcPartOf = (x, s, src) => {
+  // A sight famous in its own right (Big Ben beside the abbey) is never just a part of its neighbour: the planner folds it
+  // into one visit when both are picked.
+  if (srcFamed(x)) return false;
+  // Nor is a museum travelers list on its own and many languages write about (the museum below a citadel, not in it).
+  if ((x.sl || 0) >= 30 && (x.src || []).some(t => /Wikivoyage/.test(t)) && srcKind(x.name, x.local)[1] === "Museum") return false;
   const r = srcReach(s); if (!r || x.lat == null || !isFinite(s.lat) || hav(x, s) > r || (x.sl || 0) >= srcFame(s, src)) return false;
   // A museum, church or palace across from a park or on a square is its own visit; inside a castle's or an
   // ancient site's grounds it is part of that visit.
@@ -111,7 +132,7 @@ function sourceSights(city, src) {
   const score = x => (x.sl || 0) + 8 * (x.src || []).length + (x.unesco ? 30 : x.heritage ? 5 : 0) + ((x.src || []).some(t => /Wikivoyage/.test(t)) ? 10 : 0); // travelers recommend it
   const need = srcNeed(src, centre);
   const worthy = srcWorthyAt(need);
-  const cands = src.stops.filter(x => worthy(x) && (x.src || []).length >= need && x.lat != null && x.name && keyOf(x.name) !== keyOf(area) && hav(x, centre) <= SRC_R)
+  const cands = src.stops.filter(x => worthy(x) && ((x.src || []).length >= need || (x.sl || 0) >= SRC_WORLD) && x.lat != null && x.name && keyOf(x.name) !== keyOf(area) && hav(x, centre) <= (srcFamed(x) && (x.sl || 0) >= 60 ? SRC_R_FAMED : SRC_R))
     .sort((a, b) => score(b) - score(a));
   let n = 0;
   const make = (x, extra) => {
@@ -217,3 +238,5 @@ if (typeof window !== "undefined") {
   // Test hook: hand the app a snapshot of a city's sources, as if the helper had answered.
   window.__kairouteSeedSources = (label, fam, src) => { if (fam) famousCache[label] = fam; if (src) sourcesCache[label] = src; Object.keys(fameAsked).forEach(k => delete fameAsked[k]); return true; };
 }
+// Test hook: the sight rules, for the checks (tools/beta2/flow-check.cjs and debugging).
+if (typeof window !== "undefined") window.__kairouteSrcRules = () => ({ srcWorthy, srcFamed, srcNotSpot, srcPartOf, sameSight, placeRel, hav, srcCentre, srcKind });

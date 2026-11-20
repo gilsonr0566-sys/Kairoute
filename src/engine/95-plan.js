@@ -125,7 +125,8 @@
       if (s.town != null && ids.has(String(s.town))) h = ids.get(String(s.town));
       else while (groups && groups.groupOf.has(k)) { k = String(groups.groupOf.get(k)); if (seen.has(k)) break; seen.add(k); if (ids.has(k)) { h = ids.get(k); break; } }
       if (h && covers(h, s)) { into.set(String(s.id), { h, beside: false }); continue; }
-      if (s.far || E.needsHours(s) || !isFinite(s.lat)) continue;
+      // Beside: only one small thing (a fountain, a statue), never an area or a street (a historic centre is never part of a chapel).
+      if (s.far || E.needsHours(s) || E.isAreaKind(s) || E.isOpenArea(s) || /\b(street|road|avenue|boulevard|lane|rua|calle|strasse|straße)\b/i.test(s.name) || !isFinite(s.lat)) continue;
       const near = picks.filter(x => x !== s && !x.far && isFinite(x.lat) && (x.fullMinutes || x.minutes || 30) > (s.minutes || 30) && E.hav(x, s) <= E.FOLD_NEAR)
         .sort((a, b) => E.hav(a, s) - E.hav(b, s) || E.byId(a, b))[0];
       if (near) into.set(String(s.id), { h: near, beside: true }); }

@@ -12,7 +12,9 @@ function score(facts, plans) {
   const days = [], fails = [], seenStop = new Map(), seenMeal = new Map();
   // A pick counts as kept when the stay plans it on any of its days (a pick closed on its own day may move to another).
   const keptIn = new Map(); plans.forEach((p, i) => { if (!p || p.error) return; const c = facts.days[i].city; if (!keptIn.has(c)) keptIn.set(c, new Set());
-    p.items.forEach(x => { if (x.t === 'stop' && !x.bonus && !x.along) keptIn.get(c).add(x.id); }); });
+    p.items.forEach(x => { if (x.t === 'stop' && !x.bonus && !x.along) keptIn.get(c).add(x.id); });
+    // A sight folded into the visit around it (seen on that visit, Nov 20) is kept.
+    (p.folded || []).forEach(id => keptIn.get(c).add(id)); });
   plans.forEach((p, i) => {
     const d = facts.days[i]; if (!p || p.error) { days.push({ i, skip: p ? p.error : 'none' }); return; }
     const city = facts.cities[d.city] || { sites: [], farther: [] }, byId = new Map([...city.sites, ...city.farther].map(s => [s.id, s]));
@@ -21,6 +23,7 @@ function score(facts, plans) {
     const r = { i, date: d.date, type: d.type, city: d.city, stops: stops.length, picks: picks.size, picksKept: 0, mustKept: 0, sightMin: 0, rideMin: 0, backtrack: 0, closed: [], late: [], margin: null, over: 0 };
     r.picksKept = [...picks].filter(id => keptIn.get(d.city).has(id)).length;
     const been = [];
+    (p.folded || []).forEach(id => { const f = byId.get(id); if (f && f.mustSee) r.mustKept++; });
     stops.forEach(s => {
       const f = byId.get(s.id);
       if (f && f.mustSee) r.mustKept++; r.sightMin += s.min || 0;

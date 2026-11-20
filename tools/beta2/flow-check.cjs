@@ -225,7 +225,8 @@ async function tapTimes(p) { const out = []; const n = await p.evaluate(() => wi
   // 2a1b. Free time is the traveler's (Nov 18, Richard: "I wouldn't do the suggested options. Just let them select to
   // fill the spots."): no day plan has a stop the app put there on its own. A day with free time says so in one row
   // whose "See what fits" opens Choose sights at its "Still fits today" list (outside UI review, Nov 20: the row's own
-  // list of sights said the same as that page); ticking one there makes it a pick that stays after a reload.
+  // list of sights said the same as that page); ticking one there makes it a pick that stays after a reload (on the plan, or
+  // part of a visit on it: folded, Nov 20).
   { const days = await p.evaluate(() => window.__kairouteDays()), extra = []; let done = null;
     for (let i = 0; i < days.length; i++) {
       const it = await p.evaluate(i => (window.__kairouteEngine2()[i] || {}).items || [], i);
@@ -239,7 +240,7 @@ async function tapTimes(p) { const out = []; const n = await p.evaluate(() => wi
       const id = await p.$eval('.mustlist input[data-site]:not(:checked), .fitlist input[data-site]:not(:checked)', x => x.dataset.site).catch(() => null);
       if (!id) { if (went) continue; done = { i, id: '(none)', went }; continue; }
       const ok = await tapBox(p, id);
-      const has = () => p.evaluate(([i, id]) => (window.__kairouteEngine2()[i].items || []).some(x => x.t === 'stop' && String(x.id) === String(id) && !x.bonus), [i, id]);
+      const has = () => p.evaluate(([i, id]) => ((window.__kairouteEngine2()[i].items || []).some(x => x.t === 'stop' && String(x.id) === String(id) && !x.bonus) || (window.__kairouteEngine2()[i].folded || []).map(String).includes(String(id))), [i, id]);
       const now = ok && await has(); await p.reload(); await p.waitForTimeout(6000);
       done = { i, id, went, ok, now, after: await has() }; }
     check('No day plan has a sight the app added on its own', !extra.length, extra.slice(0, 3).join('; '));
@@ -279,7 +280,7 @@ async function tapTimes(p) { const out = []; const n = await p.evaluate(() => wi
       const ids = (await boxes(p)).map(b => b.id), pick = [ids.find(x => !/-far$/.test(x)), ids.find(x => /-far$/.test(x))].filter(Boolean);
       for (const id of pick) { await tapBox(p, id); const okTick = (await boxes(p)).some(b => b.id === id && b.on);
         const why = okTick ? '' : await p.evaluate(id => [...document.querySelectorAll('.fitbox, .closedbox')].map(e => e.innerText.replace(/\s+/g, ' ').slice(0, 100)).join(' / ') || ((document.querySelector(`[data-card="${id}"]`) || {}).innerText || 'no card').replace(/\s+/g, ' ').slice(0, 120), id);
-        const planned = okTick && await p.evaluate(([i, id]) => (window.__kairouteEngine2()[i].items || []).some(x => x.t === 'stop' && x.id === id), [i, id]);
+        const planned = okTick && await p.evaluate(([i, id]) => ((window.__kairouteEngine2()[i].items || []).some(x => x.t === 'stop' && x.id === id) || (window.__kairouteEngine2()[i].folded || []).map(String).includes(String(id))), [i, id]);
         if (!okTick && !/closed|won.t fit|doesn.t fit|isn.t open|not open|Needs \d/i.test(why)) bad.push(`day ${i + 1} (${days[i].dest}): ${id} would not tick${why ? ' (' + why + ')' : ''}`);
         else if (okTick && !planned) bad.push(`day ${i + 1} (${days[i].dest}): ${id} ticked but not on the plan`); }
     }
@@ -357,7 +358,7 @@ async function tapTimes(p) { const out = []; const n = await p.evaluate(() => wi
         const own = x => (x.min || 0) + (x.lunchCut || 0), stops = pl => (pl.items || []).filter(x => x.t === 'stop'), lunch = pl => (pl.items || []).find(x => x.t === 'meal' && x.meal === 'Lunch');
         const why = [];
         if (!ok) why.push('the tick was refused');
-        else if (!stops(after).some(x => String(x.id) === String(id))) why.push('not on the plan');
+        else if (!stops(after).some(x => String(x.id) === String(id)) && !(after.folded || []).map(String).includes(String(id))) why.push('not on the plan');
         for (const x of stops(before)) { const y = stops(after).find(z => String(z.id) === String(x.id)); if (!y) why.push(x.name + ' dropped'); else if (own(y) < own(x)) why.push(`${x.name} ${own(x)} -> ${own(y)} min`); }
         if (lunch(before) && (!lunch(after) || lunch(after).min < lunch(before).min)) why.push('lunch ' + lunch(before).min + ' -> ' + (lunch(after) ? lunch(after).min : 'none') + ' min');
         if (why.length && process.env.VERBOSE2) console.error('3C', id, JSON.stringify((after.explain || []).join(' | ')).slice(0, 600));
@@ -491,6 +492,26 @@ async function tapTimes(p) { const out = []; const n = await p.evaluate(() => wi
       const e2 = await p.evaluate(i => (window.__kairouteEngine2()[i] || {}).error || '', i);
       if (e2) { ok7 = false; why = `day ${i + 1}: still not planned after choosing (${e2.slice(0, 80)})`; } }
     check('A city with several stations or airports asks which, gives no time on a guess, and plans the day once chosen', ok7, why); }
+  // Not a sight, in any city (competitor review, Nov 20): a stock exchange, an office building, an event such as a crash. Listed
+  // monuments and memorials stay. And no staff canteen as a place to eat.
+  { const r = await p.evaluate(() => { const no = ['Tokyo Stock Exchange', 'NTT Docomo Yoyogi Building', 'Bijlmer disaster', 'Shell Headquarters'].filter(n => !window.__kairouteNotSpot({ name: n }));
+      const yes = ['Senso-ji', 'Empire State Building|h', 'National Monument', 'Bijlmer disaster memorial'].map(n => n.split('|')).filter(([n, h]) => window.__kairouteNotSpot({ name: n, heritage: !!h })).map(x => x[0]);
+      const eat = ["Metropolitan Officers' Cafeteria", 'Staff canteen'].filter(n => !KEngine.notPublicEat({ name: n }));
+      return { no, yes, eat }; });
+    check('A business, an office building or an event is never a sight; a monument or memorial is; a staff canteen is never a place to eat', !r.no.length && !r.yes.length && !r.eat.length,
+      `taken as sights: ${r.no.join(', ') || 'none'}; refused: ${r.yes.join(', ') || 'none'}; canteens kept: ${r.eat.join(', ') || 'none'}`); }
+  // Famous sights first (competitor review, Nov 20): for each place saved from the sources (tools/beta2/sources, by the
+  // Sources probe), the app's sight list offers every sight visitors expect (tools/beta2/fame-expect.json) that the sources
+  // return. One the sources don't return at all is a data gap, listed apart.
+  { const fe = JSON.parse(fs.readFileSync(path.join(__dirname, 'fame-expect.json'))), SD = path.join(__dirname, 'sources'), fk = t => t.toLowerCase().normalize('NFKD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+    const miss = [], gaps = []; let n = 0;
+    for (const pl of fe.places) { const f = path.join(SD, fk(pl.label) + '.json'); if (!fs.existsSync(f)) continue; const src = JSON.parse(fs.readFileSync(f));
+      const r = await p.evaluate(([label, src, expect]) => { const k = t => String(t || '').toLowerCase().normalize('NFKD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, ' ').trim();
+        const has = (list, names) => list.some(x => names.some(nm => { const a = k(x.name), b = k(nm), c = k(x.local); return a === b || (b.length > 4 && (a.includes(b) || (a.length > 4 && b.includes(a)))) || (c && c === b); }));
+        const city = { city: label.split(',')[0], country: '', sites: [], farther: [], starts: {}, restaurants: [] }; window.__kairouteSourceSights(city, src);
+        return expect.map(e => { const names = e.split('|'); return { e: names[0], inSrc: has(src.stops || [], names), inApp: has(city.sites, names) }; }); }, [pl.label, src, pl.expect]);
+      for (const x of r) { n++; if (!x.inSrc) gaps.push(pl.label.split(',')[0] + ': ' + x.e); else if (!x.inApp) miss.push(pl.label.split(',')[0] + ': ' + x.e); } }
+    if (n) check(`Every famous sight the sources know is offered (${n - miss.length - gaps.length} of ${n}; not in the sources at all: ${gaps.join(', ') || 'none'})`, !miss.length, `left out: ${miss.join(', ')}`); }
   await ctx.close(); srv.close(); await browser.close();
   const leaks = results.filter(r => !r.ok);
   for (const r of results) console.log((r.ok ? 'pass  ' : 'LEAK  ') + r.name + (r.ok ? '' : ' — ' + r.why));

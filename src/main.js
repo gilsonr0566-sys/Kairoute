@@ -2946,7 +2946,7 @@ function fameMark(city, src) {
 // the best known few are must-sees, and any the guide left out entirely are written in (their place comes from
 // the sources, never the AI).
 function famousTop(city, src) {
-  const vis = x => x.lat != null && (x.src || []).some(t => /Wikivoyage|heritage|UNESCO/.test(t));
+  const vis = x => x.lat != null && ((x.src || []).some(t => /Wikivoyage|heritage|UNESCO/.test(t)) || srcFamed(x)) && !srcNotSpot(x);
   const pts = (city.sites || []).filter(x => isFinite(x.lat)), la = pts.map(x => x.lat).sort((a, b) => a - b), ln = pts.map(x => x.lng).sort((a, b) => a - b);
   const mid = pts.length ? { lat: la[pts.length >> 1], lng: ln[pts.length >> 1] } : null;
   return (src.stops || []).filter(x => vis(x) && (!mid || hav(x, mid) <= 8)).sort((a, b) => (b.sl || 0) - (a.sl || 0)).slice(0, 12);
@@ -3634,7 +3634,7 @@ async function realPlaces(raw, label) {
   const pl = pts.length ? await post("/places", { pts, r: 700 }) : null;
   if (pl && Array.isArray(pl.places)) {
     const seen = new Set(), score = p => (p.cuisine ? 2 : 0) + (p.hours ? 1 : 0) + (p.web ? 1 : 0) + Math.min(6, p.tags) / 3 + (p.amenity === "restaurant" ? 1 : 0);
-    const good = pl.places.filter(p => p.amenity !== "bar" && !(p.amenity === "fast_food" && !p.cuisine) && !seen.has(keyOf(p.name)) && seen.add(keyOf(p.name))).sort((a, b) => score(b) - score(a));
+    const good = pl.places.filter(p => !(typeof KEngine !== "undefined" && KEngine.notPublicEat && KEngine.notPublicEat(p)) && p.amenity !== "bar" && !(p.amenity === "fast_food" && !p.cuisine) && !seen.has(keyOf(p.name)) && seen.add(keyOf(p.name))).sort((a, b) => score(b) - score(a));
     const pick = []; // the best few near each stop, so every part of the city has somewhere to eat
     for (const sct of main) good.filter(p => hav(p, pos(sct)) <= 0.5 && !pick.includes(p) && !pick.some(q => hav(q, p) < 0.03)).slice(0, 5).forEach(p => pick.push(p));
     const vg = await voyageFor(label);
@@ -6565,7 +6565,7 @@ function farEatsFor(city, d) {
     .then(r => r.ok ? r.json() : null).then(async pl => {
       if (!pl || !Array.isArray(pl.places)) return;
       const seen = new Set((city.restaurants || []).map(r => keyOf(r.name))), score = p => (p.cuisine ? 2 : 0) + (p.hours ? 1 : 0) + (p.web ? 1 : 0) + Math.min(6, p.tags || 0) / 3 + (p.amenity === "restaurant" ? 1 : 0);
-      const good = pl.places.filter(p => p.name && p.amenity !== "bar" && !(p.amenity === "fast_food" && !p.cuisine) && !seen.has(keyOf(p.name)) && seen.add(keyOf(p.name))).sort((a, b) => score(b) - score(a));
+      const good = pl.places.filter(p => !(typeof KEngine !== "undefined" && KEngine.notPublicEat && KEngine.notPublicEat(p)) && p.name && p.amenity !== "bar" && !(p.amenity === "fast_food" && !p.cuisine) && !seen.has(keyOf(p.name)) && seen.add(keyOf(p.name))).sort((a, b) => score(b) - score(a));
       const nice = t => String(t || "").split(/[;,]/)[0].replace(/_/g, " ").replace(/^\w/, c => c.toUpperCase());
       const pick = [];
       for (const x of bare) good.filter(p => hav(p, x) <= 1.5 && !pick.includes(p) && !pick.some(q => hav(q, p) < 0.03)).slice(0, 8).forEach(p => pick.push(p)); // one entry per building: the map sometimes lists a place twice

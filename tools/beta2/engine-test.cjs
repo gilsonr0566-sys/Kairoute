@@ -250,6 +250,15 @@ if (fs.existsSync(dir)) { let rides = 0, placed = 0;
 // ---- Every city with public transport lines in its places file: each ride the day plan makes along a line offers it.
 { const PD = path.join(__dirname, '..', 'places', 'data'), places = {};
   if (fs.existsSync(PD)) for (const f of fs.readdirSync(PD).filter(f => f.endsWith('.json'))) { const p = JSON.parse(fs.readFileSync(path.join(PD, f))); places[p.key] = p; }
+  // A port with no town around it (a private island, Nov 20: no day plan at all) still gets its mapped pier: every port day
+  // whose places file maps a cruise pier is planned from it, never from a guess, and gets a plan.
+  { let n = 0; const bad = [];
+    if (fs.existsSync(dir)) for (const f of fs.readdirSync(dir).filter(f => f.endsWith('.json'))) { const s0 = JSON.parse(fs.readFileSync(path.join(dir, f)));
+      if (!s0.days.some(d => d.type === 'port' && places[d.city] && (places[d.city].ports || []).some(x => x.cruise))) continue;
+      const s = E.applyPlaces(s0, places), P = E.planTrip(s);
+      s.days.forEach((d, i) => { if (d.type !== 'port' || !places[d.city] || !(places[d.city].ports || []).some(x => x.cruise)) return; n++;
+        if (!d.point || d.point.unknown || !P[i] || P[i].error) bad.push(f + ' ' + d.city + ': ' + (P[i] && P[i].error || 'no pier')); }); }
+    ok(n > 0 && !bad.length, `every port day with a mapped cruise pier is planned from it (${n} days${bad.length ? '; not: ' + bad.join('; ') : ''})`); }
   if (fs.existsSync(dir)) for (const f of fs.readdirSync(dir).filter(f => f.endsWith('.json'))) {
     const s0 = JSON.parse(fs.readFileSync(path.join(dir, f))); if (!Object.keys(s0.cities || {}).some(k => (places[k] && places[k].transit || []).length)) continue;
     const s = E.applyPlaces(s0, places), plans = E.planTrip(s), walkMin = km => Math.max(1, Math.round(km * 1.3 / (s.prefs && s.prefs.walk === 'low' ? 3.6 : 4.5) * 60));
@@ -777,6 +786,7 @@ ok(E.readable('Café Ñandú') && E.readable("Joe's Bar & Grill") && !E.readable
         else { ok(sb && sb.min === town.townWalk && (b.explain || []).some(t => t.startsWith(town.name + ' gets ' + town.townWalk + ' min, the walk to ' + inner.name)), `${town.name} with ${inner.name} picked too becomes the walk to it, and says so (got ${sb && sb.min} min)`);
           ok(open == null || (ib && ib.at >= open), `a sight inside a gated town is never planned before the town opens (${inner.name} at ${ib && E.clock(ib.at)}, opens ${open == null ? '?' : E.clock(open)})`); } }
       else ok(false, 'a town with its own sights is in the test trip'); } }
+  ok(E.notPublicEat({ name: "Metropolitan Officers' Cafeteria" }) && E.notPublicEat({ name: 'Cafe', access: 'private' }) && !E.notPublicEat({ name: 'Trattoria da Enzo' }), 'a staff or officers\' canteen, or a private place, is never a place to eat');
   // Folding (Richard, Nov 20: "a false sense of not enough time in the day"): a picked sight inside a bigger picked visit, or a
   // small open-air sight right beside it, is part of that visit and adds only a little time.
   { const castle = { id: 'c', name: 'Hill Castle', category: 'Castle', lat: 40.0, lng: 10.0, minutes: 120 }, tower = { id: 't', name: 'Keep Tower', lat: 40.0004, lng: 10.0003, minutes: 30, in: ['c'] },
@@ -788,6 +798,9 @@ ok(E.readable('Café Ñandú') && E.readable("Joe's Bar & Grill") && !E.readable
     const c2 = fp.picks.find(s => s.id === 'c'), h2 = fp.picks.find(s => s.id === 'h');
     ok(c2.minutes === 120 + E.foldExtra(tower) && h2.minutes === 45 + E.foldExtra(fo) && E.foldExtra(tower) >= 5 && E.foldExtra(tower) <= 20 && E.foldExtra({ minutes: 300 }) === 20 && E.foldExtra({ minutes: 10 }) === 5,
       `a folded sight adds 5 to 20 min, a quarter of its own time (castle ${c2.minutes}, church ${h2.minutes})`);
+    { const area = { id: 'a', name: 'Old Lanes and the historic center', lat: 40.05, lng: 10.05, minutes: 30, tags: ['open-air'] }, chap = { id: 'p', name: 'Small Chapel', lat: 40.0505, lng: 10.0503, minutes: 45 },
+        st2 = { id: 's', name: 'Main Street', lat: 40.0502, lng: 10.0501, minutes: 20, tags: ['open-air'] };
+      ok((r => r.includes('a') && r.includes('p') && !r.includes('s'))(E.foldPicks([area, chap, st2], E.makeGroups([area, chap, st2]), () => false).picks.map(x => x.id)), 'an area is never folded into a small building beside it (a historic centre into a chapel); a street inside it is part of its walk'); }
     ok(!E.foldPicks([tower], g, () => false).folded.c && E.foldPicks([tower], g, () => false).picks.length === 1, 'a sight inside a visit not picked stays a stop of its own');
     const ga = E.foldPicks([ot, mus], g, s => s.id === 'o'); ok(ga.picks.length === 1, 'inside a place with its own opening hours (a gate) is folded, even a museum');
     // In a plan: one stop, the folded sight named on it, claimed for that day, a line that says so.
