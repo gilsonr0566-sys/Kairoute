@@ -4,7 +4,7 @@ window.__T = {
   btn: re => [...document.querySelectorAll('button')].find(x => re.test(x.innerText.trim())),
   set(id, v) { const el = document.getElementById(id) || document.querySelector('[data-tsf="' + id + '"]'); if (!el) throw new Error('no field ' + id); if (el.type === 'checkbox') { if (el.checked !== !!v) el.click(); return; } Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, 'value').set.call(el, String(v)); el.dispatchEvent(new Event('input', { bubbles: true })); el.dispatchEvent(new Event('change', { bubbles: true })); },
   seg(i, key, v) { const b = document.querySelector('[data-ts="set"][data-i="' + i + '"][data-key="' + key + '"][data-v="' + v + '"]'); if (!b) throw new Error('no seg ' + key); b.click(); },
-  async wizard(legs, name) { const T = this; T.miss = []; const h = T.btn(/^Home$/); if (h) { h.click(); await T.sleep(700); } T.btn(/Start a new trip/).click(); await T.sleep(800);
+  async wizard(legs, name) { const T = this; T.miss = []; const h = T.btn(/^Home$/); if (h) { h.click(); await T.sleep(700); } const nt = document.querySelector('[data-act="newtrip"]') || T.btn(/new trip/i); if (!nt) throw new Error('no new-trip button; page says: ' + document.body.innerText.slice(0, 300)); nt.click(); await T.sleep(800); const sm = document.querySelector('[data-ts="mode"][data-v="steps"]'); if (sm && sm.getAttribute('aria-pressed') !== 'true') { sm.click(); await T.sleep(400); }
     for (let i = 0; i < legs.length; i++) { const l = legs[i];
       if (i > 0 || l.k === 'cruise') { document.querySelector('[data-ts="' + (l.k === 'cruise' ? 'addcruise' : 'addstay') + '"]').click(); await T.sleep(300); }
       const F = Object.assign({}, l); delete F.k; const ports = F.ports || []; delete F.ports;
