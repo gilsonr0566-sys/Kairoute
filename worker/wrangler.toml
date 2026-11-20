@@ -7,6 +7,12 @@ workers_dev = true
 [ai]
 binding = "AI"
 
+# Workers Logs and Traces stay OFF (Cloudflare bills them by volume from Dec 1 2026; Richard's zero-spend rule).
+# Saying so here means every deploy turns them back off, even if someone switches them on in the dashboard.
+# Live checks use `wrangler tail` (real-time, not stored, not billed) instead.
+[observability]
+enabled = false
+
 [[kv_namespaces]]
 binding = "USAGE"
 id = "5062677df32b4a3b9e877e2b355057de"
