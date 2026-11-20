@@ -1,11 +1,805 @@
 {
- "run": "dryrun-2026-11-20",
+ "run": "round1-2026-11-20",
  "url": "https://gilsonr0566-sys.github.io/Kairoute-Beta2/",
  "trips": [
-  { "name": "dry-bruges", "label": "Dry run: Bruges one night by train", "tz": "Europe/Brussels",
-    "legs": [ { "k": "stay", "place": "Bruges, Belgium", "date": "2027-05-18", "nights": 1, "inBy": "train", "inAt": "10:30", "homeBy": "train", "homeAt": "16:00" } ],
-    "steps": [ { "name": "phone-day0", "js": "window.__kairouteAt(0,'plan')", "phone": true, "wait": 5000 } ] },
-  { "name": "dry-kotor", "label": "Dry run: Kotor tender call", "tz": "Europe/Podgorica",
-    "legs": [ { "k": "cruise", "board": "Venice, Italy", "date": "2027-07-06", "aboard": "16:00", "ports": [ { "date": "2027-07-08", "place": "Kotor, Montenegro", "arrive": "08:00", "aboard": "17:00", "tender": true } ], "end": "Venice, Italy", "endDate": "2027-07-10", "off": "08:00" } ] }
+  {
+   "name": "a01-istanbul",
+   "label": "Istanbul Thu+Fri stay",
+   "legs": [
+    {
+     "k": "stay",
+     "place": "Istanbul, Turkey",
+     "date": "2027-05-12",
+     "nights": 3,
+     "inAt": "15:00",
+     "homeAt": "13:00"
+    }
+   ]
+  },
+  {
+   "name": "a02-vienna",
+   "label": "Vienna Mon+Tue stay",
+   "legs": [
+    {
+     "k": "stay",
+     "place": "Vienna, Austria",
+     "date": "2027-05-09",
+     "nights": 3,
+     "inAt": "14:00",
+     "homeAt": "12:00"
+    }
+   ]
+  },
+  {
+   "name": "a03-lisbon",
+   "label": "Lisbon Mon+Tue stay",
+   "legs": [
+    {
+     "k": "stay",
+     "place": "Lisbon, Portugal",
+     "date": "2027-05-09",
+     "nights": 3,
+     "inAt": "13:00",
+     "homeAt": "11:30"
+    }
+   ]
+  },
+  {
+   "name": "a04-barcelona-call",
+   "label": "Barcelona Sunday cruise call",
+   "legs": [
+    {
+     "k": "cruise",
+     "board": "Marseille, France",
+     "date": "2027-05-15",
+     "aboard": "17:00",
+     "ports": [
+      {
+       "date": "2027-05-16",
+       "place": "Barcelona, Spain",
+       "arrive": "08:00",
+       "aboard": "18:00"
+      }
+     ],
+     "end": "Marseille, France",
+     "endDate": "2027-05-17",
+     "off": "07:00"
+    }
+   ]
+  },
+  {
+   "name": "a05-edinburgh",
+   "label": "Edinburgh August stay",
+   "legs": [
+    {
+     "k": "stay",
+     "place": "Edinburgh, Scotland",
+     "date": "2027-08-09",
+     "nights": 3,
+     "inBy": "train",
+     "inAt": "14:20",
+     "homeBy": "train",
+     "homeAt": "10:00"
+    }
+   ]
+  },
+  {
+   "name": "a06-kyoto",
+   "label": "Kyoto April stay",
+   "legs": [
+    {
+     "k": "stay",
+     "place": "Kyoto, Japan",
+     "date": "2027-04-05",
+     "nights": 3,
+     "inBy": "train",
+     "inAt": "13:15",
+     "homeBy": "train",
+     "homeAt": "11:00"
+    }
+   ]
+  },
+  {
+   "name": "a07-southampton-lehavre",
+   "label": "Southampton fly in, board next day, Le Havre for Paris Saturday call",
+   "legs": [
+    {
+     "k": "stay",
+     "place": "Southampton, England",
+     "date": "2027-06-10",
+     "nights": 1,
+     "inAt": "13:00"
+    },
+    {
+     "k": "cruise",
+     "board": "Southampton, England",
+     "date": "2027-06-11",
+     "aboard": "16:00",
+     "ports": [
+      {
+       "date": "2027-06-12",
+       "place": "Le Havre (Paris), France",
+       "arrive": "07:00",
+       "aboard": "19:00"
+      }
+     ],
+     "end": "Southampton, England",
+     "endDate": "2027-06-13",
+     "off": "07:00",
+     "homeAt": "14:00"
+    }
+   ]
+  },
+  {
+   "name": "a09-kotor-dubrovnik",
+   "label": "Kotor tender call and Dubrovnik call",
+   "legs": [
+    {
+     "k": "cruise",
+     "board": "Venice, Italy",
+     "date": "2027-07-06",
+     "aboard": "16:00",
+     "inAt": "10:30",
+     "ports": [
+      {
+       "date": "2027-07-08",
+       "place": "Kotor, Montenegro",
+       "arrive": "08:00",
+       "aboard": "17:00",
+       "tender": true
+      },
+      {
+       "date": "2027-07-09",
+       "place": "Dubrovnik, Croatia",
+       "arrive": "08:00",
+       "aboard": "18:00"
+      }
+     ],
+     "end": "Venice, Italy",
+     "endDate": "2027-07-11",
+     "off": "07:00"
+    }
+   ]
+  },
+  {
+   "name": "a11-alaska",
+   "label": "Juneau, Skagway and a short Ketchikan call",
+   "legs": [
+    {
+     "k": "cruise",
+     "board": "Seattle, Washington",
+     "date": "2027-06-13",
+     "aboard": "15:30",
+     "ports": [
+      {
+       "date": "2027-06-15",
+       "place": "Juneau, Alaska",
+       "arrive": "07:00",
+       "aboard": "20:00"
+      },
+      {
+       "date": "2027-06-16",
+       "place": "Skagway, Alaska",
+       "arrive": "07:00",
+       "aboard": "17:00"
+      },
+      {
+       "date": "2027-06-17",
+       "place": "Ketchikan, Alaska",
+       "arrive": "06:00",
+       "aboard": "13:00"
+      }
+     ],
+     "end": "Vancouver, Canada",
+     "endDate": "2027-06-19",
+     "off": "07:30",
+     "homeAt": "13:00"
+    }
+   ]
+  },
+  {
+   "name": "a13-grandturk-halfmoon",
+   "label": "Grand Turk and Half Moon Cay (tender)",
+   "legs": [
+    {
+     "k": "cruise",
+     "board": "Fort Lauderdale, Florida",
+     "date": "2027-02-08",
+     "aboard": "15:30",
+     "ports": [
+      {
+       "date": "2027-02-10",
+       "place": "Grand Turk, Turks and Caicos",
+       "arrive": "08:00",
+       "aboard": "17:00"
+      },
+      {
+       "date": "2027-02-12",
+       "place": "Half Moon Cay, Bahamas",
+       "arrive": "08:00",
+       "aboard": "16:00",
+       "tender": true
+      }
+     ],
+     "end": "Fort Lauderdale, Florida",
+     "endDate": "2027-02-14",
+     "off": "07:00"
+    }
+   ]
+  },
+  {
+   "name": "a14-mykonos-santorini",
+   "label": "Mykonos evening tender call and Santorini tender call",
+   "legs": [
+    {
+     "k": "cruise",
+     "board": "Piraeus (Athens), Greece",
+     "date": "2027-07-01",
+     "aboard": "17:00",
+     "ports": [
+      {
+       "date": "2027-07-02",
+       "place": "Mykonos, Greece",
+       "arrive": "10:00",
+       "aboard": "23:00",
+       "tender": true
+      },
+      {
+       "date": "2027-07-03",
+       "place": "Santorini, Greece",
+       "arrive": "07:00",
+       "aboard": "18:00",
+       "tender": true
+      }
+     ],
+     "end": "Piraeus (Athens), Greece",
+     "endDate": "2027-07-04",
+     "off": "07:00"
+    }
+   ]
+  },
+  {
+   "name": "a15-pontadelgada",
+   "label": "Ponta Delgada call",
+   "legs": [
+    {
+     "k": "cruise",
+     "board": "Lisbon, Portugal",
+     "date": "2027-04-18",
+     "aboard": "17:00",
+     "ports": [
+      {
+       "date": "2027-04-20",
+       "place": "Ponta Delgada, Azores",
+       "arrive": "08:00",
+       "aboard": "17:00"
+      }
+     ],
+     "end": "Lisbon, Portugal",
+     "endDate": "2027-04-22",
+     "off": "07:00"
+    }
+   ]
+  },
+  {
+   "name": "a17-haifa",
+   "label": "Jerusalem from Haifa, Saturday call",
+   "legs": [
+    {
+     "k": "cruise",
+     "board": "Limassol, Cyprus",
+     "date": "2027-05-14",
+     "aboard": "18:00",
+     "ports": [
+      {
+       "date": "2027-05-15",
+       "place": "Haifa (Jerusalem), Israel",
+       "arrive": "06:00",
+       "aboard": "20:00"
+      }
+     ],
+     "end": "Limassol, Cyprus",
+     "endDate": "2027-05-16",
+     "off": "07:00"
+    }
+   ]
+  },
+  {
+   "name": "a18-reykjavik",
+   "label": "Reykjavik January stay",
+   "legs": [
+    {
+     "k": "stay",
+     "place": "Reykjavik, Iceland",
+     "date": "2027-01-18",
+     "nights": 3,
+     "inAt": "15:30",
+     "homeAt": "16:00"
+    }
+   ]
+  },
+  {
+   "name": "a19-venice",
+   "label": "Venice Sat+Sun stay",
+   "legs": [
+    {
+     "k": "stay",
+     "place": "Venice, Italy",
+     "date": "2027-05-14",
+     "nights": 3,
+     "inBy": "train",
+     "inAt": "12:30",
+     "homeBy": "train",
+     "homeAt": "10:30"
+    }
+   ]
+  },
+  {
+   "name": "a20-dubai",
+   "label": "Dubai July stay",
+   "legs": [
+    {
+     "k": "stay",
+     "place": "Dubai, UAE",
+     "date": "2027-07-19",
+     "nights": 3,
+     "inAt": "06:00",
+     "homeAt": "23:00"
+    }
+   ]
+  },
+  {
+   "name": "a21-hamburg",
+   "label": "Hamburg Tue to Thu stay (Lubeck day trip)",
+   "legs": [
+    {
+     "k": "stay",
+     "place": "Hamburg, Germany",
+     "date": "2027-05-10",
+     "nights": 4,
+     "inBy": "train",
+     "inAt": "13:00",
+     "homeBy": "train",
+     "homeAt": "12:00"
+    }
+   ]
+  },
+  {
+   "name": "c01-bahamas",
+   "label": "Bahamas cruise field-test trip",
+   "legs": [
+    {
+     "k": "cruise",
+     "board": "Miami, Florida",
+     "date": "2027-01-11",
+     "aboard": "15:30",
+     "inAt": "11:25",
+     "ship": "Wonder of the Seas",
+     "ports": [
+      {
+       "date": "2027-01-13",
+       "place": "Nassau, Bahamas",
+       "arrive": "08:30",
+       "aboard": "16:30"
+      },
+      {
+       "date": "2027-01-14",
+       "place": "Perfect Day at CocoCay, Bahamas",
+       "arrive": "07:30",
+       "aboard": "16:30"
+      }
+     ],
+     "end": "Miami, Florida",
+     "endDate": "2027-01-15",
+     "off": "06:00"
+    }
+   ]
+  },
+  {
+   "name": "d01-tokyo-kyoto-osaka",
+   "label": "Tokyo, Kyoto, Osaka by train",
+   "legs": [
+    {
+     "k": "stay",
+     "place": "Tokyo, Japan",
+     "date": "2027-04-13",
+     "nights": 3,
+     "inAt": "14:00"
+    },
+    {
+     "k": "stay",
+     "place": "Kyoto, Japan",
+     "nights": 2,
+     "inBy": "train",
+     "leaveAt": "09:30",
+     "inAt": "11:45"
+    },
+    {
+     "k": "stay",
+     "place": "Osaka, Japan",
+     "nights": 1,
+     "inBy": "train",
+     "leaveAt": "10:00",
+     "inAt": "10:30",
+     "homeAt": "11:00"
+    }
+   ]
+  },
+  {
+   "name": "d02-london-paris-amsterdam",
+   "label": "London, Paris, Amsterdam by train (re-test)",
+   "legs": [
+    {
+     "k": "stay",
+     "place": "London, England",
+     "date": "2027-05-17",
+     "nights": 3,
+     "inAt": "10:00"
+    },
+    {
+     "k": "stay",
+     "place": "Paris, France",
+     "nights": 3,
+     "inBy": "train",
+     "leaveAt": "09:31",
+     "inAt": "12:47"
+    },
+    {
+     "k": "stay",
+     "place": "Amsterdam, Netherlands",
+     "nights": 2,
+     "inBy": "train",
+     "leaveAt": "10:25",
+     "inAt": "13:44",
+     "homeAt": "12:30"
+    }
+   ]
+  },
+  {
+   "name": "d03-rome-florence-venice",
+   "label": "Rome, Florence, Venice by train",
+   "legs": [
+    {
+     "k": "stay",
+     "place": "Rome, Italy",
+     "date": "2027-09-20",
+     "nights": 3,
+     "inAt": "09:00"
+    },
+    {
+     "k": "stay",
+     "place": "Florence, Italy",
+     "nights": 2,
+     "inBy": "train",
+     "leaveAt": "09:10",
+     "inAt": "10:46"
+    },
+    {
+     "k": "stay",
+     "place": "Venice, Italy",
+     "nights": 2,
+     "inBy": "train",
+     "leaveAt": "10:20",
+     "inAt": "12:34",
+     "homeAt": "13:00"
+    }
+   ]
+  },
+  {
+   "name": "d04-sydney",
+   "label": "Sydney stay",
+   "legs": [
+    {
+     "k": "stay",
+     "place": "Sydney, Australia",
+     "date": "2027-03-08",
+     "nights": 3,
+     "inAt": "07:00",
+     "homeAt": "21:00"
+    }
+   ]
+  },
+  {
+   "name": "d05-newyork",
+   "label": "New York stay",
+   "legs": [
+    {
+     "k": "stay",
+     "place": "New York City",
+     "date": "2027-10-11",
+     "nights": 3,
+     "inAt": "12:00",
+     "homeAt": "18:00"
+    }
+   ]
+  },
+  {
+   "name": "d06-marrakech",
+   "label": "Marrakech stay",
+   "legs": [
+    {
+     "k": "stay",
+     "place": "Marrakech, Morocco",
+     "date": "2027-03-18",
+     "nights": 2,
+     "inAt": "11:00",
+     "homeAt": "15:00"
+    }
+   ]
+  },
+  {
+   "name": "d07-mexicocity",
+   "label": "Mexico City stay",
+   "legs": [
+    {
+     "k": "stay",
+     "place": "Mexico City, Mexico",
+     "date": "2027-11-01",
+     "nights": 3,
+     "inAt": "13:00",
+     "homeAt": "12:00"
+    }
+   ]
+  },
+  {
+   "name": "d08-capetown",
+   "label": "Cape Town stay",
+   "legs": [
+    {
+     "k": "stay",
+     "place": "Cape Town, South Africa",
+     "date": "2027-02-15",
+     "nights": 3,
+     "inAt": "10:00",
+     "homeAt": "19:00"
+    }
+   ]
+  },
+  {
+   "name": "d09-buenosaires",
+   "label": "Buenos Aires stay",
+   "legs": [
+    {
+     "k": "stay",
+     "place": "Buenos Aires, Argentina",
+     "date": "2027-11-15",
+     "nights": 2,
+     "inAt": "09:00",
+     "homeAt": "22:00"
+    }
+   ]
+  },
+  {
+   "name": "d10-singapore",
+   "label": "Singapore stay",
+   "legs": [
+    {
+     "k": "stay",
+     "place": "Singapore",
+     "date": "2027-08-16",
+     "nights": 2,
+     "inAt": "06:30",
+     "homeAt": "23:30"
+    }
+   ]
+  },
+  {
+   "name": "d11-nashville",
+   "label": "Nashville by car",
+   "legs": [
+    {
+     "k": "stay",
+     "place": "Nashville, Tennessee",
+     "date": "2027-04-23",
+     "nights": 2,
+     "inBy": "car",
+     "inAt": "15:00",
+     "homeBy": "car",
+     "homeAt": "11:00"
+    }
+   ]
+  },
+  {
+   "name": "d12-bruges",
+   "label": "Bruges one night by train",
+   "legs": [
+    {
+     "k": "stay",
+     "place": "Bruges, Belgium",
+     "date": "2027-05-18",
+     "nights": 1,
+     "inBy": "train",
+     "inAt": "10:30",
+     "homeBy": "train",
+     "homeAt": "16:00"
+    }
+   ]
+  },
+  {
+   "name": "d13-cozumel-cartagena",
+   "label": "Cozumel and Cartagena calls",
+   "legs": [
+    {
+     "k": "cruise",
+     "board": "Miami, Florida",
+     "date": "2027-03-01",
+     "aboard": "15:30",
+     "ports": [
+      {
+       "date": "2027-03-03",
+       "place": "Cozumel, Mexico",
+       "arrive": "07:00",
+       "aboard": "16:00"
+      },
+      {
+       "date": "2027-03-05",
+       "place": "Cartagena, Colombia",
+       "arrive": "08:00",
+       "aboard": "15:00"
+      }
+     ],
+     "end": "Miami, Florida",
+     "endDate": "2027-03-08",
+     "off": "07:00",
+     "homeAt": "13:30"
+    }
+   ]
+  },
+  {
+   "name": "d14-bergen-geiranger",
+   "label": "Bergen and Geiranger (tender)",
+   "legs": [
+    {
+     "k": "cruise",
+     "board": "Copenhagen, Denmark",
+     "date": "2027-06-20",
+     "aboard": "16:00",
+     "ports": [
+      {
+       "date": "2027-06-22",
+       "place": "Bergen, Norway",
+       "arrive": "08:00",
+       "aboard": "17:00"
+      },
+      {
+       "date": "2027-06-23",
+       "place": "Geiranger, Norway",
+       "arrive": "09:00",
+       "aboard": "18:00",
+       "tender": true
+      }
+     ],
+     "end": "Copenhagen, Denmark",
+     "endDate": "2027-06-26",
+     "off": "07:00"
+    }
+   ]
+  },
+  {
+   "name": "d15-livorno-rome-naples",
+   "label": "Livorno for Florence, Civitavecchia for Rome, Naples",
+   "legs": [
+    {
+     "k": "cruise",
+     "board": "Barcelona, Spain",
+     "date": "2027-09-05",
+     "aboard": "17:00",
+     "ports": [
+      {
+       "date": "2027-09-07",
+       "place": "Livorno (Florence), Italy",
+       "arrive": "07:00",
+       "aboard": "19:00"
+      },
+      {
+       "date": "2027-09-08",
+       "place": "Civitavecchia (Rome), Italy",
+       "arrive": "07:00",
+       "aboard": "19:00"
+      },
+      {
+       "date": "2027-09-09",
+       "place": "Naples, Italy",
+       "arrive": "07:00",
+       "aboard": "17:30"
+      }
+     ],
+     "end": "Barcelona, Spain",
+     "endDate": "2027-09-11",
+     "off": "07:00"
+    }
+   ]
+  },
+  {
+   "name": "d16-warnemunde-zeebrugge",
+   "label": "Warnemunde for Berlin, Zeebrugge for Bruges",
+   "legs": [
+    {
+     "k": "cruise",
+     "board": "Copenhagen, Denmark",
+     "date": "2027-08-01",
+     "aboard": "17:00",
+     "ports": [
+      {
+       "date": "2027-08-02",
+       "place": "Warnemunde (Berlin), Germany",
+       "arrive": "07:00",
+       "aboard": "21:00"
+      },
+      {
+       "date": "2027-08-04",
+       "place": "Zeebrugge (Bruges), Belgium",
+       "arrive": "08:00",
+       "aboard": "17:00"
+      }
+     ],
+     "end": "Southampton, England",
+     "endDate": "2027-08-05",
+     "off": "07:00",
+     "homeBy": "train",
+     "homeAt": "11:00"
+    }
+   ]
+  },
+  {
+   "name": "d17-laemchabang",
+   "label": "Laem Chabang for Bangkok",
+   "legs": [
+    {
+     "k": "cruise",
+     "board": "Singapore",
+     "date": "2027-11-10",
+     "aboard": "16:00",
+     "ports": [
+      {
+       "date": "2027-11-12",
+       "place": "Laem Chabang (Bangkok), Thailand",
+       "arrive": "07:00",
+       "aboard": "19:00"
+      }
+     ],
+     "end": "Singapore",
+     "endDate": "2027-11-15",
+     "off": "07:00"
+    }
+   ]
+  },
+  {
+   "name": "d18-aqaba-petra",
+   "label": "Aqaba for Petra",
+   "legs": [
+    {
+     "k": "cruise",
+     "board": "Piraeus (Athens), Greece",
+     "date": "2027-10-10",
+     "aboard": "17:00",
+     "ports": [
+      {
+       "date": "2027-10-13",
+       "place": "Aqaba (Petra), Jordan",
+       "arrive": "07:00",
+       "aboard": "19:00"
+      }
+     ],
+     "end": "Piraeus (Athens), Greece",
+     "endDate": "2027-10-16",
+     "off": "07:00"
+    }
+   ]
+  },
+  {
+   "name": "d19-honolulu",
+   "label": "Honolulu stay",
+   "legs": [
+    {
+     "k": "stay",
+     "place": "Honolulu, Hawaii",
+     "date": "2027-02-22",
+     "nights": 2,
+     "inAt": "14:00",
+     "homeAt": "22:00"
+    }
+   ]
+  }
  ]
 }

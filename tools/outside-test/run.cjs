@@ -31,7 +31,7 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
   res.wizard = await p.evaluate(([legs, name]) => window.__T.wizard(legs, name), [t.legs, t.label || t.name]);
   await p.screenshot({ path: path.join(out, 'wizard.jpg'), type: 'jpeg', quality: 55, fullPage: true });
   const t0 = Date.now(); await p.click('#wizForm button[type=submit]'); await sleep(4000);
-  const limit = (t.buildMin || 30) * 60000; let last = '';
+  const limit = (t.buildMin || 45) * 60000; let last = '';
   while (Date.now() - t0 < limit) { const s = await p.evaluate(() => { const s = window.__kairouteState(); return { busy: s.busy, err: s.err }; }); if (s.busy !== last) { console.log(Math.round((Date.now() - t0) / 1000) + 's', s.busy || '(done)', s.err || ''); last = s.busy; } if (!s.busy) break; await sleep(2000); }
   res.buildSec = Math.round((Date.now() - t0) / 1000); await sleep(10000);
   const st = await p.evaluate(() => { const s = window.__kairouteState(); return { busy: s.busy, err: s.err, days: (s.days || []).map(d => ({ date: d.date, type: d.type, destination: d.destination, mode: d.mode, time: d.time, portArrive: d.portArrive, allAboard: d.allAboard })) }; });
@@ -45,6 +45,9 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
     res.days.push({ i, date: d.date, type: d.type, destination: d.destination, text });
     console.log('\n===== day ' + i + ' ' + d.date + ' ' + d.type + ' ' + (d.destination || '') + '\n' + text);
   }
+  // The first sightseeing day again at phone size.
+  const ph = st.days.findIndex(d => d.type === 'land' || d.type === 'port');
+  if (ph >= 0) { await p.setViewportSize({ width: 390, height: 844 }); await p.evaluate(i => window.__kairouteAt(i, 'plan'), ph); await sleep(5000); await p.screenshot({ path: path.join(out, 'phone-day-' + String(ph).padStart(2, '0') + '.jpg'), type: 'jpeg', quality: 55, fullPage: true }); res.phoneText = await p.evaluate(() => document.querySelector('main').innerText.slice(0, 1500)); await p.setViewportSize({ width: 1100, height: 2800 }); }
   // Extra traveler steps for this trip: each is a line of page script (a tap, a tick, a changed hour) and a picture after it.
   for (const s of t.steps || []) { let r; try { r = await p.evaluate(s.js); } catch (e) { r = 'ERR ' + e.message; } await sleep(s.wait || 4000); if (s.phone) await p.setViewportSize({ width: 390, height: 844 }); if (s.tablet) await p.setViewportSize({ width: 1100, height: 2800 });
     const text = await p.evaluate(() => document.querySelector('main').innerText).catch(() => ''); await p.screenshot({ path: path.join(out, 'step-' + s.name + '.jpg'), type: 'jpeg', quality: 55, fullPage: !s.screen }); res.steps.push({ name: s.name, r, text }); console.log('\n===== step ' + s.name + ' -> ' + JSON.stringify(r) + '\n' + text.slice(0, 6000)); }
