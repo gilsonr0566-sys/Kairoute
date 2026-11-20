@@ -1,0 +1,119 @@
+{
+ "name": "d08-capetown",
+ "label": "Cape Town stay",
+ "legs": [
+  {
+   "k": "stay",
+   "place": "Cape Town, South Africa",
+   "date": "2027-02-15",
+   "nights": 3,
+   "inAt": "10:00",
+   "homeAt": "19:00"
+  }
+ ],
+ "started": "2026-11-20T20:45:53.858Z",
+ "passed": {
+  "/sources": 12,
+  "/transit": 9,
+  "/guide": 1,
+  "/places": 3,
+  "/voyage": 1,
+  "/ground": 1,
+  "/x/near": 5,
+  "/route": 2
+ },
+ "refused": {
+  "/ratings": 1,
+  "/grating": 2,
+  "/events": 2
+ },
+ "errors": [],
+ "days": [
+  {
+   "i": 0,
+   "date": "2027-02-15",
+   "type": "arrival",
+   "text": "MON FEB 15 · CAPE TOWN, SOUTH AFRICA · ARRIVING\nCape Town, South Africa ✎ Rename\nLock this day\n\nWhich airport do you arrive at? There is more than one here (Cape Town International Airport or Cape Winelands Airport). Choose it in the day's settings: no time is given on a guess.\n\nEdit this day"
+  },
+  {
+   "i": 1,
+   "date": "2027-02-16",
+   "type": "land",
+   "text": "TUE FEB 16 · CAPE TOWN, SOUTH AFRICA · LAND DAY\nCape Town, South Africa ✎ Rename\nLock this day\n▶ Start the tour\n9:00 am–6:00 pm\n9 h ✎\n1\nsight\n12:47 pm\nlast stop done\nChoose sights\nMore\nAbout today's plan1 note\nUse Ctrl + scroll to zoom the map\nS\n1\nL\n3000 ft\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nWalk\nTaxi or car\n● Meal\nMore about today\n\nAll times are Cape Town time (time zone estimated until you're online once), 7 h ahead of your device.\n\nLEAVE\n9:00 am\nS\nLeave Hotel in central Cape Town, South Africa\nAdd your own hotel on the Trip page for exact times.\nTaxi or car · 32 min · 4.8 mi\nARRIVE\n9:32 am\nLEAVE\n10:12 am\n1\nTable Mountain\n40 min · Sight · Must-see\nTaxi or car · 32 min · 4.8 mi\nARRIVE\n11:45 am\nLEAVE\n12:45 pm\nL\nLunch: Naan Better\nRestaurant · Local spot · 1 h\nChange lunch\nLunch: why here\nUNTIL\n5:58 pm\n+\nFree time: 5 h 13 min\nYours to spend as you like. See what fits\nNext door\nBY\n6:00 pm\nE\nBack at Hotel in central Cape Town, South Africa\nARRIVE\n6:30 pm\nD\nSuggested dinner: Reverie Social Table\nRestaurant\nChange dinner\nDinner: why here"
+  },
+  {
+   "i": 2,
+   "date": "2027-02-17",
+   "type": "land",
+   "text": "WED FEB 17 · CAPE TOWN, SOUTH AFRICA · LAND DAY\nCape Town, South Africa ✎ Rename\nLock this day\n▶ Start the tour\n9:00 am–6:00 pm\n9 h ✎\n5\nsights\n2.4 mi\nwalking\n4:02 pm\nlast stop done\nChoose sights\nMore\nAbout today's plan1 note\nUse Ctrl + scroll to zoom the map\nS\n1\n2\n3\n4\nL\n5\n1000 ft\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nWalk\nTaxi or car\n● Meal\nMore about today\n\nAll times are Cape Town time (time zone estimated until you're online once), 7 h ahead of your device.\n\nLEAVE\n9:00 am\nS\nLeave Hotel in central Cape Town, South Africa\nAdd your own hotel on the Trip page for exact times.\nTaxi or car · 23 min · 3.0 mi\nBy road, with time for traffic.\nWalk · 1 h 4 min\nTaxi or car · 23 min\nARRIVE\n9:23 am\nLEAVE\n10:03 am\n1\nArtscape Theatre Centre\n40 min · Sight\nWalk · 12 min · 0.6 mi\nWalk · 12 min\nTaxi or car · 13 min\nARRIVE\n10:15 am\nLEAVE\n11:05 am\n2\nCastle of Good Hope\n50 min · Palace\nWalk · 12 min · 0.6 mi\nWalk · 12 min\nTaxi or car · 13 min\nARRIVE\n11:17 am\nLEAVE\n11:57 am\n3\nSlave Lodge\n40 min · Sight\nWalk · 9 min · 0.4 mi\nARRIVE\n12:06 pm\nLEAVE\n1:36 pm\n4\nSouth African National Gallery\n1 h 30 min · Museum\nWalk · 5 min · 0.2 mi\nARRIVE\n1:41 pm\nLEAVE\n2:41 pm\nL\nLunch: 95 Keerom\nRestaurant · Local spot · 1 h\nTRAVELERS RECOMMEND\nChange lunch\nLunch: why here\nWalk · 12 min · 0.6 mi\nWalk · 12 min\nTaxi or car · 13 min\nARRIVE\n2:53 pm\nLEAVE\n3:33 pm\n5\nBo-Kaap\n40 min · Sight\nUNTIL\n5:31 pm\n+\nFree time: 1 h 58 min\nYours to spend as you like. See what fits\nTaxi or car · 29 min · 4.2 mi\nBY\n6:00 pm\nE\nBack at Hotel in central Cape Town, South Africa\nARRIVE\n6:30 pm\nD\nSuggested dinner: Pizza Shed\nRestaurant\nChange dinner\nDinner: why here"
+  },
+  {
+   "i": 3,
+   "date": "2027-02-18",
+   "type": "departure",
+   "text": "THU FEB 18 · CAPE TOWN, SOUTH AFRICA · LEAVING\nCape Town, South Africa ✎ Rename\nLock this day\n\nWhich airport do you leave from? There is more than one here (Cape Town International Airport or Cape Winelands Airport). Choose it in the day's settings and the day gets its time to leave by: no time is given on a guess.\n\nEdit this day"
+  }
+ ],
+ "guides": {
+  "Cape Town, South Africa": {
+   "city": "Cape Town, South Africa",
+   "src": true,
+   "ai": false,
+   "n": 10,
+   "sights": "Table Mountain* | Castle of Good Hope | Bo-Kaap | South African National Gallery | V&A Waterfront | Zeitz Museum of Contemporary Art Africa | Rhodes Memorial | Slave Lodge | Kirstenbosch National Botanical Garden | Artscape Theatre Centre",
+   "far": "",
+   "eats": 61,
+   "starts": {
+    "cruise": [
+     "Port of Cape Town"
+    ],
+    "airport": [
+     "Cape Town International Airport",
+     "Cape Winelands Airport"
+    ],
+    "station": [
+     "Cape Town, South Africa main station (unknown)"
+    ],
+    "hotel": [
+     "Hotel in central Cape Town, South Africa"
+    ],
+    "point": [
+     "Central Cape Town, South Africa"
+    ]
+   }
+  }
+ },
+ "steps": [],
+ "version": "88a1dc8-1795204327",
+ "aiReady": false,
+ "wizard": {
+  "miss": [],
+  "prev": "Your days: 4 days",
+  "form": "Add each place in order, the way it's booked. Each new stop starts where the last one ends.\n\nSTOP 1 · CITY STAY\nCity\nArrive on\nNights\nHotel (optional)\nGetting there\nFlight\nTrain\nFerry\nCar or bus\nArrive in town at\nLeave empty if you don't know yet.\n+ Add a city stay\n+ Add a cruise\nGoing home from here\nFlight\nTrain\nFerry\nCar or bus\nFlight at\nYour days: 4 days\nAdd more details (optional)\nName this trip\n\nKairoute picks good defaults for pace, walking and voice, and you can change any of them later.\n\nCancel\nPersonalize first\nBuild my trip"
+ },
+ "buildSec": 44,
+ "state": {
+  "busy": "",
+  "err": "",
+  "days": [
+   {
+    "date": "2027-02-15",
+    "type": "arrival"
+   },
+   {
+    "date": "2027-02-16",
+    "type": "land"
+   },
+   {
+    "date": "2027-02-17",
+    "type": "land"
+   },
+   {
+    "date": "2027-02-18",
+    "type": "departure"
+   }
+  ]
+ },
+ "phoneText": "TUE FEB 16 · CAPE TOWN, SOUTH AFRICA · LAND DAY\nCape Town, South Africa ✎ Rename\nLock this day\n▶ Start tour\n9:00 am–6:00 pm\n9 h ✎\n1\nsight\n12:47 pm\nlast stop done\nChoose sights\nMore\nAbout today's plan1 note\nUse Ctrl + scroll to zoom the map\nS\n1\nL\n1 mi\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nWalk\nTaxi or car\n● Meal\nMore about today\n\nAll times are Cape Town time (time zone estimated until you're online once), 7 h ahead of your device.\n\nLEAVE\n9:00 am\nS\nLeave Hotel in central Cape Town, South Africa\nAdd your own hotel on the Trip page for exact times.\nTaxi or car · 32 min · 4.8 mi\nARRIVE\n9:32 am\nLEAVE\n10:12 am\n1\nTable Mountain\n40 min · Sight · Must-see\nTaxi or car · 32 min · 4.8 mi\nARRIVE\n11:45 am\nLEAVE\n12:45 pm\nL\nLunch: Naan Better\nRestaurant · Local spot · 1 h\nChange lunch\nLunch: why here\nUNTIL\n5:58 pm\n+\nFree time: 5 h 13 min\nYours to spend as you like. See what fits\nNext door\nBY\n6:00 pm\nE\nBack at Hotel in central Cape Town, South Africa\nARRIVE\n6:30 pm\nD\nSuggested dinner: Reverie Social Table\nRestaurant\nChange dinner\nDinner: why here",
+ "finished": "2026-11-20T20:47:25.346Z"
+}

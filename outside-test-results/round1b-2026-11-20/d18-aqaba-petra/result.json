@@ -1,0 +1,193 @@
+{
+ "name": "d18-aqaba-petra",
+ "label": "Aqaba for Petra",
+ "legs": [
+  {
+   "k": "cruise",
+   "board": "Piraeus (Athens), Greece",
+   "date": "2027-10-10",
+   "aboard": "17:00",
+   "ports": [
+    {
+     "date": "2027-10-13",
+     "place": "Aqaba (Petra), Jordan",
+     "arrive": "07:00",
+     "aboard": "19:00"
+    }
+   ],
+   "end": "Piraeus (Athens), Greece",
+   "endDate": "2027-10-16",
+   "off": "07:00"
+  }
+ ],
+ "started": "2026-11-20T20:53:22.635Z",
+ "passed": {
+  "/sources": 12,
+  "/transit": 10,
+  "/guide": 1,
+  "/places": 2,
+  "/voyage": 4,
+  "/ground": 1,
+  "/route": 6,
+  "/x/near": 5
+ },
+ "refused": {
+  "/ratings": 2,
+  "/events": 2,
+  "/grating": 1
+ },
+ "errors": [],
+ "days": [
+  {
+   "i": 0,
+   "date": "2027-10-10",
+   "type": "arrival",
+   "text": "SUN OCT 10 · ATHENS · ARRIVING\nAthens ✎ Rename\nLock this day\nToday is one plan\n\nFlight in at 10:30 am, then the ship at 5:00 pm: the sightseeing in between, your bags and the countdown are on one page.\n\nSee today's plan"
+  },
+  {
+   "i": 1,
+   "date": "2027-10-10",
+   "type": "embark",
+   "text": "SUN OCT 10 · ATHENS · BOARDING\nAthens ✎ Rename\nLock this day\n🚢\nLEAVE BY\nall aboard 5:00 pm\n2:38 pm\n▶ Start the tour\n\nOfficial all aboard 5:00 pm · Back at the cruise terminal by 4:00 pm\n\nGetting back on time is up to you\n\nKairoute's leave-by and back-by times are estimates with spare time built in. Traffic, queues and the weather can still slow you down. The time that counts is the ship's all-aboard time or your train or flight, as your cruise line or carrier gives it. Check it on the day.\n\nI understand\nTerms of use\n3\nsights\n0.6 mi\nwalking\nChoose sights\nMore\nAbout today's plan18 notes\nPlaka and Anafiotika gets 30 min, the walk between Agia Ekaterini (St Catherine's Church) and Athens Cathedral and the Little Metropolis, which you picked as stops of their own (on its own it gets 60 min).\nNot planned today: Byzantine and Christian Museum didn't fit in the time.\nNot planned today: Philopappos Hill didn't fit in the time.\nNot planned today: National Archaeological Museum didn't fit in the time.\nNot planned today: Lycabettus Hill didn't fit in the time.\nNot planned today: National Garden didn't fit in the time.\nNot planned today: Monastiraki and the flea market didn't fit in the time.\nNot planned today: Ancient Agora didn't fit in the time.\nNot planned today: Roman Agora and Tower of the Winds didn't fit in the time.\nNot planned today: Agia Ekaterini (St Catherine's Church) didn't fit in the time.\nNot planned today: Panagia Kapnikarea didn't fit in the time.\nNot planned today: Acropolis promenade (Dionysiou Areopagitou and Apostolou Pavlou) didn't fit in the time.\nNot planned today: Syntagma Square and the changing of the guard didn't fit in the time.\nNot planned today: Athens Cathedral and the Little Metropolis didn't fit in the time.\nNot planned today: Temple of Olympian Zeus and Hadrian's Arch didn't fit in the time.\nNot planned today: Acropolis and Parthenon didn't fit in the time.\nNot planned today: Acropolis Museum didn't fit in the time.\nToday's stops fill the time ashore, so there's no room for lunch and still a safe margin to get back. Grab lunch on the go between stops.\nUse Ctrl + scroll to zoom the map\nStart · Airport\n1\n2\n3\nFinish · Cruise port\n300 ft\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nWalk\nTaxi or car\nTrain, metro or tram\nMore about today\n🛳 When do you board?\nBoarding time\nTerminal (optional)\nSave\n\nOn your boarding pass or check-in confirmation (also called arrival or check-in time). Until you add it, the plan uses the time to be back above.\n\nWhat to have on you · 0 of 9 ready\n📅 Add reminders to my calendar\n\nAll times are Athens time, 8 h ahead of your device.\n\nLEAVE\n11:45 am\nS\nOut of Athens Airport (Eleftherios Venizelos)\nAbout 40 minutes to the center by taxi (fixed fare by day), or metro line 3.\nFlight arrives 10:30 am. We allow 1 h 15 min to get off the plane and through baggage claim (and passport control after a flight from abroad). Book luggage storage near Athens Airport (Eleftherios Venizelos) ahead (a left-luggage desk or a storage shop), or ask your hotel or station.\nYou fly in the day the ship sails, so today goes straight from the airport to the ship: there isn't enough time for sightseeing with a safe margin. A late or missed flight is the most common way travelers miss a ship, and the ship won't wait. Keep your airline's and cruise line's phone numbers handy, and if a delay is announced, call the cruise line at once.\nMetro M3 · 1 h 14 min · 16 mi\nWalk 1 min to El. Venizelos, runs about every 36 min (from the timetable). Allow 4 min to reach this route's start and finish from your stops; then Metro M3: El. Venizelos to Syntagma, 38 min, then walk 13 min. Times include waiting and boarding. Next departure about 1:22 pm (timetable checked Nov 20; Kairoute checks it again the day before and the morning of).\nMetro M3 · 1 h 14 min\nTaxi or car · 55 min\nARRIVE\n12:59 pm\nLEAVE\n1:29 pm\n1\nPlaka and Anafiotika\n30 min · Old town · Must-see\nWalk · 6 min · 0.3 mi\nARRIVE\n1:35 pm\nLEAVE\n2:05 pm\n2\nTheatre of Dionysus\n30 min · Ancient theater\nWalk · 8 min · 0.4 mi\nARRIVE\n2:13 pm\nLEAVE\n2:38 pm\n3\nAreopagus (Mars Hill)\n25 min · Bible site · Must-see\nTaxi or car · 53 min · 6.7 mi\nBy road, with time for traffic. Includes 15 min spare before the ship.\nNo timetable or live traffic confirms this ride's time: it is an estimate with 15 min extra for the connection. Leave by the time shown, never later.\nOr take metro · 1 h 25 min\nTaxi or car · 53 min\nARRIVE\n3:31 pm\nE\nBoarding at Piraeus cruise terminals\n29 min to spare.\nOfficial all aboard 5:00 pm: be at the terminal by 4:00 pm at the latest. Your cruise line gives you a boarding time: add it and the plan gets you there for it.\nPorters take your big bags at the curb (luggage tags on; they reach your cabin by evening). Keep your passport, boarding pass, medicines and valuables in your carry-on for check-in and security.\nBig ports have more than one cruise terminal: check yours on your boarding pass and tell the driver.\nBook the taxi or transfer the day before, or ask your hotel to call one. Being aboard on time is your responsibility: check your boarding time with your cruise line."
+  },
+  {
+   "i": 2,
+   "date": "2027-10-11",
+   "type": "sea"
+  },
+  {
+   "i": 3,
+   "date": "2027-10-12",
+   "type": "sea"
+  },
+  {
+   "i": 4,
+   "date": "2027-10-13",
+   "type": "port",
+   "text": "WED OCT 13 · AQABA , JORDAN · IN PORT\nAqaba , Jordan ✎ Rename\nLock this day\n🚢\nLEAVE BY\nall aboard 7:00 pm\n12:45 pm\n▶ Start the tour\n\nAshore 7:30 am · Official all aboard 7:00 pm · Back at the ship by 6:15 pm\n\nGetting back on time is up to you\n\nKairoute's leave-by and back-by times are estimates with spare time built in. Traffic, queues and the weather can still slow you down. The time that counts is the ship's all-aboard time or your train or flight, as your cruise line or carrier gives it. Check it on the day.\n\nI understand\nTerms of use\n3\nsights\n1.8 mi\nwalking\nChoose sights\nMore\nAbout today's plan2 notes\nUse Ctrl + scroll to zoom the map\nStart · Cruise port\n1\n2\n3\nL\n1000 ft\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nWalk\nTaxi or car\n● Meal\nMore about today\n\nAll times are Aqaba time, 8 h ahead of your device.\n\nLEAVE\n8:25 am\nS\nOff the ship at From Jordan to Egypt. (Aqaba Nuwaibee, 50JD, 3hours, taxi from center 5JD max)\nShip docks 7:00 am.\nTaxi or car · 35 min · 5.6 mi\nARRIVE\n9:00 am\nLEAVE\n9:50 am\n1\nAqaba Fortress\n50 min · Palace\nWalk · 10 min · 0.4 mi\nARRIVE\n10:00 am\nLEAVE\n10:40 am\n2\nAqaba Governorate\n40 min · Sight · Must-see\nWalk · 24 min · 1.1 mi\nWalk · 24 min\nTaxi or car · 15 min\nARRIVE\n11:04 am\nLEAVE\n11:34 am\n3\nAqaba Church\n30 min · Church\nWalk · 6 min · 0.3 mi\nARRIVE\n11:45 am\nLEAVE\n12:45 pm\nL\nLunch: Sheikh Alhara\nRestaurant · Local spot · 1 h\nChange lunch\nLunch: why here\nUNTIL\n12:45 pm\n+\nFree time: 4 h 38 min\nYours to spend as you like. Leave here by 12:45 pm to be back by 6:15 pm. See what fits\nTaxi or car · 52 min · 6.5 mi\nNo timetable or live traffic confirms this ride's time: it is an estimate with 15 min extra for the ship. Leave by the time shown, never later.\nBY\n6:15 pm\nE\nBack at the ship\nThe ship's official all aboard is 7:00 pm. Kairoute plans you back at least 45 min before it."
+  },
+  {
+   "i": 5,
+   "date": "2027-10-14",
+   "type": "sea"
+  },
+  {
+   "i": 6,
+   "date": "2027-10-15",
+   "type": "sea"
+  },
+  {
+   "i": 7,
+   "date": "2027-10-16",
+   "type": "arrival",
+   "text": "SAT OCT 16 · ATHENS · ARRIVING\nAthens ✎ Rename\nLock this day\n\nThis is your last day. Add how you leave and when (your flight or train home) on the Trip page, or your hotel if you're staying on, and the day is planned around it: nothing is planned on a guess.\n\nEdit this day"
+  }
+ ],
+ "guides": {
+  "Athens": {
+   "city": "Athens",
+   "src": false,
+   "ai": false,
+   "n": 29,
+   "sights": "Acropolis and Parthenon* | Areopagus (Mars Hill)* | Acropolis Museum* | Ancient Agora | Plaka and Anafiotika* | Syntagma Square and the changing of the guard | Athens Cathedral and the Little Metropolis | Monastiraki and the flea market | Temple of Olympian Zeus and Hadrian's Arch | Lycabettus Hill | Theatre of Dionysus | Acropolis promenade (Dionysiou Areopagitou and Apostolou Pavlou) | Agia Ekaterini (St Catherine's Church) | Panagia Kapnikarea | Roman Agora and Tower of the Winds | National Archaeological Museum | Byzantine and Christian Museum | National Garden | Philopappos Hill | Platonic Academy | Erechtheion | Panathenaic Stadium | Temple of Hephaestus | Kerameikos | Temple of Athena Nike | Classical Athens | Lyceum | Kaisariani monastery | National Gallery of Athens",
+   "far": "Ancient Corinth | Temple of Poseidon at Sounion | Delphi | Corinth Canal | Acrocorinth | Museum | Ancient Theater | Temple of Apollo | Sanctuary of Athena with the Tholos | Delphi Stadium",
+   "eats": 7,
+   "starts": {
+    "cruise": [
+     "Piraeus cruise terminals"
+    ],
+    "airport": [
+     "Athens Airport (Eleftherios Venizelos)"
+    ],
+    "station": [
+     "Athens central station (Larissis)"
+    ],
+    "hotel": [
+     "Hotel in Plaka",
+     "Hotel near Syntagma Square",
+     "Hotel in Koukaki (Acropolis Museum)",
+     "Hotel in Monastiraki"
+    ],
+    "point": [
+     "Syntagma Square",
+     "Monastiraki Square"
+    ]
+   }
+  },
+  "Aqaba , Jordan": {
+   "city": "Aqaba , Jordan",
+   "src": true,
+   "ai": false,
+   "n": 3,
+   "sights": "Aqaba Governorate* | Aqaba Fortress | Aqaba Church",
+   "far": "",
+   "eats": 17,
+   "starts": {
+    "cruise": [
+     "From Jordan to Egypt. (Aqaba Nuwaibee, 50JD, 3hours, taxi from center 5JD max)"
+    ],
+    "airport": [
+     "King Hussein International Airport"
+    ],
+    "station": [
+     "Aqaba , Jordan main station (unknown)"
+    ],
+    "hotel": [
+     "Hotel in central Aqaba , Jordan"
+    ],
+    "point": [
+     "Central Aqaba , Jordan"
+    ]
+   }
+  }
+ },
+ "steps": [],
+ "version": "88a1dc8-1795204327",
+ "aiReady": false,
+ "wizard": {
+  "miss": [],
+  "prev": "Your days: 7 days · 1 port",
+  "form": "Add each place in order, the way it's booked. Each new stop starts where the last one ends.\n\nSTOP 1 · CRUISE\nLeaves from\nShip (optional)\nBoarding day\nAll aboard\nGetting to the ship (if you arrive the same day)\nFlight\nTrain\nFerry\nCar or bus\nArrive in town at\nLeave empty if you don't know yet.\nPorts of call\nIn order, from your cruise booking. Days with no port are added as sea days.\nDate\nPort\nShip arrives\nAll aboard\nTender port (small boats take you ashore)\nRemove port\n+ Add a port\nCruise ends in\nOn\nOff the ship at\nUsually 7:00 am to 9:00 am. Leave empty if you don't know.\n+ Add a city stay\n+ Add a cruise\nGoing home from here\nFlight\nTrain\nFerry\nCar or bus\nFlight at\nYour days: 7 days · 1 port\nAdd more details (optional)\nName this trip\n\nKairoute picks good defaults for pace, walking and voice, and you can change any of them later.\n\nCancel\nPersonalize first\nBuild my trip"
+ },
+ "buildSec": 33,
+ "state": {
+  "busy": "",
+  "err": "",
+  "days": [
+   {
+    "date": "2027-10-10",
+    "type": "arrival"
+   },
+   {
+    "date": "2027-10-10",
+    "type": "embark"
+   },
+   {
+    "date": "2027-10-11",
+    "type": "sea"
+   },
+   {
+    "date": "2027-10-12",
+    "type": "sea"
+   },
+   {
+    "date": "2027-10-13",
+    "type": "port"
+   },
+   {
+    "date": "2027-10-14",
+    "type": "sea"
+   },
+   {
+    "date": "2027-10-15",
+    "type": "sea"
+   },
+   {
+    "date": "2027-10-16",
+    "type": "arrival"
+   }
+  ]
+ },
+ "phoneText": "WED OCT 13 · AQABA , JORDAN · IN PORT\nAqaba , Jordan ✎ Rename\nLock this day\n🚢\nLEAVE BY\nall aboard 7:00 pm\n12:45 pm\n▶ Start tour\n\nAshore 7:30 am · Official all aboard 7:00 pm · Back at the ship by 6:15 pm\n\nGetting back on time is up to you\n\nKairoute's leave-by and back-by times are estimates with spare time built in. Traffic, queues and the weather can still slow you down. The time that counts is the ship's all-aboard time or your train or flight, as your cruise line or carrier gives it. Check it on the day.\n\nI understand\nTerms of use\n3\nsights\n1.8 mi\nwalking\nChoose sights\nMore\nAbout today's plan2 notes\nUse Ctrl + scroll to zoom the map\nStart · Cruise port\n1\n2\n3\nL\n1000 ft\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nWalk\nTaxi or car\n● Meal\nMore about today\n\nAll times are Aqaba time, 8 h ahead of your device.\n\nLEAVE\n8:25 am\nS\nOff the ship at From Jordan to Egypt. (Aqaba Nuwaibee, 50JD, 3hours, taxi from center 5JD max)\nShip docks 7:00 am.\nTaxi or car · 35 min · 5.6 mi\nARRIVE\n9:00 am\nLEAVE\n9:50 am\n1\nAqaba Fortress\n50 min · Palace\nWalk · 10 min · 0.4 mi\nARRIVE\n10:00 am\nLEAVE\n10:40 am\n2\nAqaba Governorate\n40 min · Sight · Must-see\nWalk · 24 min · 1.1 mi\nWalk · 24 min\nTaxi or car · 15 min\nARRIVE\n11:04 am\nLEAVE\n11:34 am\n3\nAqaba Church\n30 min · Church\nWalk · 6 min · 0.3 mi\nARRIVE\n11:45 am\nLEAVE\n12:45 pm\nL\nLunch: Sheikh Alhara\nRestaurant · Local spot · 1 h\nChange lunch\nLunch: why here\nUNTIL\n12:45 pm\n+\nFree time: 4 h 38 min\nYours to spend as you like. Leave here by 12:45 pm to be ",
+ "finished": "2026-11-20T20:54:43.699Z"
+}

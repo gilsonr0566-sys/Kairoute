@@ -1,0 +1,121 @@
+{
+ "name": "a01-istanbul",
+ "label": "Istanbul Thu+Fri stay",
+ "legs": [
+  {
+   "k": "stay",
+   "place": "Istanbul, Turkey",
+   "date": "2027-05-12",
+   "nights": 3,
+   "inAt": "15:00",
+   "homeAt": "13:00"
+  }
+ ],
+ "started": "2026-11-20T20:32:43.053Z",
+ "passed": {
+  "/sources": 12,
+  "/transit": 9,
+  "/guide": 1,
+  "/places": 2,
+  "/voyage": 1,
+  "/ground": 1,
+  "/x/near": 8,
+  "/route": 2
+ },
+ "refused": {
+  "/ratings": 1,
+  "/grating": 2,
+  "/events": 2
+ },
+ "errors": [],
+ "days": [
+  {
+   "i": 0,
+   "date": "2027-05-12",
+   "type": "arrival",
+   "text": "WED MAY 12 · ISTANBUL, TURKEY · ARRIVING\nIstanbul, Turkey ✎ Rename\nLock this day\n\nWhich airport do you arrive at? There is more than one here (Istanbul Airport, Sabiha Gökçen International Airport, Atatürk Airport or Istanbul Atatürk Airport). Choose it in the day's settings: no time is given on a guess.\n\nEdit this day"
+  },
+  {
+   "i": 1,
+   "date": "2027-05-13",
+   "type": "land",
+   "text": "THU MAY 13 · ISTANBUL, TURKEY · LAND DAY\nIstanbul, Turkey ✎ Rename\nLock this day\n▶ Start the tour\n9:00 am–6:00 pm\n9 h ✎\n7\nsights\n3.1 mi\nwalking\n3:25 pm\nlast stop done\nChoose sights\nMore\nAbout today's plan1 note\nUse Ctrl + scroll to zoom the map\nS\n1\n2\n3\n4\n5\n6\nL\n7\n1000 ft\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nWalk\nTaxi or car\n● Meal\nMore about today\n\nAll times are Istanbul time, 8 h ahead of your device.\n\nLEAVE\n9:00 am\nS\nLeave Hotel in central Istanbul, Turkey\nAdd your own hotel on the Trip page for exact times.\nWalk · 14 min · 0.6 mi\nWalk · 14 min\nTaxi or car · 13 min\nARRIVE\n9:14 am\nLEAVE\n9:44 am\n1\nSüleymaniye Mosque\n30 min · Church\nWalk · 15 min · 0.7 mi\nWalk · 15 min\nTaxi or car · 13 min\nARRIVE\n9:59 am\nLEAVE\n10:29 am\n2\nNuruosmaniye Mosque\n30 min · Church\nWalk · 11 min · 0.5 mi\nWalk · 11 min\nTaxi or car · 12 min\nARRIVE\n10:40 am\nLEAVE\n11:10 am\n3\nSokollu Mehmed Pasha I Mosque\n30 min · Church\nWalk · 7 min · 0.3 mi\nARRIVE\n11:17 am\nLEAVE\n11:47 am\n4\nSultan Ahmed Mosque\n30 min · Church\nWalk · 6 min · 0.3 mi\nARRIVE\n11:53 am\nLEAVE\n12:23 pm\n5\nBasilica Cistern\n30 min · Church\nWalk · 3 min · 0.1 mi\nARRIVE\n12:26 pm\nLEAVE\n1:06 pm\n6\nHagia Sophia\n40 min · Sight · Must-see\nWalk · 2 min · 0.1 mi\nARRIVE\n1:08 pm\nLEAVE\n2:08 pm\nL\nLunch: Karakol Restaurant\nRestaurant · Popular with visitors · 1 h\nChange lunch\nLunch: why here\nWalk · 8 min · 0.4 mi\nARRIVE\n2:16 pm\nLEAVE\n3:06 pm\n7\nTopkapı Palace\n50 min · Palace\nUNTIL\n5:41 pm\n+\nFree time: 2 h 35 min\nYours to spend as you like. See what fits\nTaxi or car · 19 min · 2.0 mi\nBy road, with time for traffic.\nWalk · 42 min\nTaxi or car · 19 min\nBY\n6:00 pm\nE\nBack at Hotel in central Istanbul, Turkey\nARRIVE\n6:30 pm\nD\nSuggested dinner: Gaziantep Restaurant\nRestaurant\nChange dinner\nDinner: why here"
+  },
+  {
+   "i": 2,
+   "date": "2027-05-14",
+   "type": "land",
+   "text": "FRI MAY 14 · ISTANBUL, TURKEY · LAND DAY\nIstanbul, Turkey ✎ Rename\nLock this day\n▶ Start the tour\n9:00 am–6:00 pm\n9 h ✎\n7\nsights\n2.2 mi\nwalking\n3:31 pm\nlast stop done\nChoose sights\nMore\nAbout today's plan1 note\nUse Ctrl + scroll to zoom the map\nS\n1\n2\n3\n4\n5\nL\n6\n7\n2000 ft\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nWalk\nTaxi or car\n● Meal\nMore about today\n\nAll times are Istanbul time, 8 h ahead of your device.\n\nLEAVE\n9:00 am\nS\nLeave Hotel in central Istanbul, Turkey\nAdd your own hotel on the Trip page for exact times.\nWalk · 5 min · 0.2 mi\nARRIVE\n9:05 am\nLEAVE\n9:45 am\n1\nAqueduct of Valens\n40 min · Sight\nWalk · 8 min · 0.4 mi\nARRIVE\n9:53 am\nLEAVE\n10:23 am\n2\nZeyrek Mosque\n30 min · Church\nWalk · 11 min · 0.5 mi\nWalk · 11 min\nTaxi or car · 12 min\nARRIVE\n10:34 am\nLEAVE\n11:04 am\n3\nFatih Istanbul Mosque\n30 min · Church\nTaxi or car · 16 min · 1.4 mi\nBy road, with time for traffic.\nWalk · 31 min\nTaxi or car · 16 min\nARRIVE\n11:20 am\nLEAVE\n12:10 pm\n4\nPalace of the Porphyrogenitus\n50 min · Palace\nWalk · 6 min · 0.3 mi\nARRIVE\n12:16 pm\nLEAVE\n12:46 pm\n5\nChora Church\n30 min · Church\nWalk · 2 min · 0.1 mi\nARRIVE\n12:48 pm\nLEAVE\n1:48 pm\nL\nLunch: Ak Çiçek Mangal\nRestaurant · Local spot · 1 h\nChange lunch\nLunch: why here\nWalk · 9 min · 0.4 mi\nARRIVE\n1:57 pm\nLEAVE\n2:27 pm\n6\nPammakaristos Church\n30 min · Church\nWalk · 8 min · 0.4 mi\nARRIVE\n2:35 pm\nLEAVE\n3:15 pm\n7\nEcumenical Patriarchate of Constantinople\n40 min · Sight\nUNTIL\n5:44 pm\n+\nFree time: 2 h 29 min\nYours to spend as you like. See what fits\nTaxi or car · 16 min · 1.4 mi\nWalk · 30 min\nTaxi or car · 16 min\nBY\n6:00 pm\nE\nBack at Hotel in central Istanbul, Turkey\nARRIVE\n6:30 pm\nD\nSuggested dinner: Meşhur Sarıyer Börekçisi\nRestaurant\nChange dinner\nDinner: why here"
+  },
+  {
+   "i": 3,
+   "date": "2027-05-15",
+   "type": "departure",
+   "text": "SAT MAY 15 · ISTANBUL, TURKEY · LEAVING\nIstanbul, Turkey ✎ Rename\nLock this day\n\nWhich airport do you leave from? There is more than one here (Istanbul Airport, Sabiha Gökçen International Airport, Atatürk Airport or Istanbul Atatürk Airport). Choose it in the day's settings and the day gets its time to leave by: no time is given on a guess.\n\nEdit this day"
+  }
+ ],
+ "guides": {
+  "Istanbul, Turkey": {
+   "city": "Istanbul, Turkey",
+   "src": true,
+   "ai": false,
+   "n": 45,
+   "sights": "Hagia Sophia* | Sultan Ahmed Mosque | Süleymaniye Mosque | Topkapı Palace | Ecumenical Patriarchate of Constantinople | Chora Church | Galata Tower | Dolmabahçe Palace | Sokollu Mehmed Pasha I Mosque | Maiden's Tower | Golden Horn | Zeyrek Mosque | Pammakaristos Church | Nuruosmaniye Mosque | Basilica Cistern | Beyoğlu | Yıldız Palace | Fatih Istanbul Mosque | Istanbul Archaeology Museums | Aqueduct of Valens | Rüstem Pasha Mosque | Monastery of Stoudios | Taksim Square | Sublime Porte | Hippodrome of Constantinople | Kalenderhane Mosque | Grand Bazaar | Marmaray | Beylerbeyi Palace | Ortaköy | Walls of Constantinople | Column of Constantine~ | Yedikule Fortress | The Museum of Innocence | santralistanbul | Palace of the Porphyrogenitus | Pera Museum | İstanbul Modern | Miniatürk | Nişantaşı | Theodosius Cistern | Jewish Museum of Turkey | Column of Marcian~ | Ihlamur Palace | Süreyya Opera House",
+   "far": "",
+   "eats": 68,
+   "starts": {
+    "cruise": [
+     "Port of Istanbul"
+    ],
+    "airport": [
+     "Istanbul Airport",
+     "Sabiha Gökçen International Airport",
+     "Atatürk Airport",
+     "Istanbul Atatürk Airport"
+    ],
+    "station": [
+     "Beyoğlu Station, Tünel Line"
+    ],
+    "hotel": [
+     "Hotel in central Istanbul, Turkey"
+    ],
+    "point": [
+     "Central Istanbul, Turkey"
+    ]
+   }
+  }
+ },
+ "steps": [],
+ "version": "88a1dc8-1795204327",
+ "aiReady": false,
+ "wizard": {
+  "miss": [],
+  "prev": "Your days: 4 days",
+  "form": "Add each place in order, the way it's booked. Each new stop starts where the last one ends.\n\nSTOP 1 · CITY STAY\nCity\nArrive on\nNights\nHotel (optional)\nGetting there\nFlight\nTrain\nFerry\nCar or bus\nArrive in town at\nLeave empty if you don't know yet.\n+ Add a city stay\n+ Add a cruise\nGoing home from here\nFlight\nTrain\nFerry\nCar or bus\nFlight at\nYour days: 4 days\nAdd more details (optional)\nName this trip\n\nKairoute picks good defaults for pace, walking and voice, and you can change any of them later.\n\nCancel\nPersonalize first\nBuild my trip"
+ },
+ "buildSec": 24,
+ "state": {
+  "busy": "",
+  "err": "",
+  "days": [
+   {
+    "date": "2027-05-12",
+    "type": "arrival"
+   },
+   {
+    "date": "2027-05-13",
+    "type": "land"
+   },
+   {
+    "date": "2027-05-14",
+    "type": "land"
+   },
+   {
+    "date": "2027-05-15",
+    "type": "departure"
+   }
+  ]
+ },
+ "phoneText": "THU MAY 13 · ISTANBUL, TURKEY · LAND DAY\nIstanbul, Turkey ✎ Rename\nLock this day\n▶ Start tour\n9:00 am–6:00 pm\n9 h ✎\n7\nsights\n3.1 mi\nwalking\n3:25 pm\nlast stop done\nChoose sights\nMore\nAbout today's plan1 note\nUse Ctrl + scroll to zoom the map\nS\n1\n2\n3\n4\n5\n6\nL\n7\n3000 ft\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nWalk\nTaxi or car\n● Meal\nMore about today\n\nAll times are Istanbul time, 8 h ahead of your device.\n\nLEAVE\n9:00 am\nS\nLeave Hotel in central Istanbul, Turkey\nAdd your own hotel on the Trip page for exact times.\nWalk · 14 min · 0.6 mi\nWalk · 14 min\nTaxi or car · 13 min\nARRIVE\n9:14 am\nLEAVE\n9:44 am\n1\nSüleymaniye Mosque\n30 min · Church\nWalk · 15 min · 0.7 mi\nWalk · 15 min\nTaxi or car · 13 min\nARRIVE\n9:59 am\nLEAVE\n10:29 am\n2\nNuruosmaniye Mosque\n30 min · Church\nWalk · 11 min · 0.5 mi\nWalk · 11 min\nTaxi or car · 12 min\nARRIVE\n10:40 am\nLEAVE\n11:10 am\n3\nSokollu Mehmed Pasha I Mosque\n30 min · Church\nWalk · 7 min · 0.3 mi\nARRIVE\n11:17 am\nLEAVE\n11:47 am\n4\nSultan Ahmed Mosque\n30 min · Church\nWalk · 6 min · 0.3 mi\nARRIVE\n11:53 am\nLEAVE\n12:23 pm\n5\nBasilica Cistern\n30 min · Church\nWalk · 3 min · 0.1 mi\nARRIVE\n12:26 pm\nLEAVE\n1:06 pm\n6\nHagia Sophia\n40 min · Sight · Must-see\nWalk · 2 min · 0.1 mi\nARRIVE\n1:08 pm\nLEAVE\n2:08 pm\nL\nLunch: Karakol Restaurant\nRestaurant · Popular with visitors · 1 h\nChange lunch\nLunch: why here\nWalk · 8 min · 0.4 mi\nARRIVE\n2:16 pm\nLEAVE\n3:06 pm\n7\nTopkapı Palace\n50 min · Palace\nUNTIL\n5:41 pm\n+\nFree time: 2 h 35 min\nYours to spend as you like. See what fits\nTax",
+ "finished": "2026-11-20T20:33:54.467Z"
+}

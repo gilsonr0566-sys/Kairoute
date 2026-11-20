@@ -1,0 +1,296 @@
+{
+ "name": "a11-alaska",
+ "label": "Juneau, Skagway and a short Ketchikan call",
+ "legs": [
+  {
+   "k": "cruise",
+   "board": "Seattle, Washington",
+   "date": "2027-06-13",
+   "aboard": "15:30",
+   "ports": [
+    {
+     "date": "2027-06-15",
+     "place": "Juneau, Alaska",
+     "arrive": "07:00",
+     "aboard": "20:00"
+    },
+    {
+     "date": "2027-06-16",
+     "place": "Skagway, Alaska",
+     "arrive": "07:00",
+     "aboard": "17:00"
+    },
+    {
+     "date": "2027-06-17",
+     "place": "Ketchikan, Alaska",
+     "arrive": "06:00",
+     "aboard": "13:00"
+    }
+   ],
+   "end": "Vancouver, Canada",
+   "endDate": "2027-06-19",
+   "off": "07:30",
+   "homeAt": "13:00"
+  }
+ ],
+ "started": "2026-11-20T20:36:15.556Z",
+ "passed": {
+  "/sources": 16,
+  "/transit": 17,
+  "/guide": 5,
+  "/places": 7,
+  "/voyage": 8,
+  "/ground": 5,
+  "/route": 12,
+  "/x/near": 8
+ },
+ "refused": {
+  "/ratings": 5,
+  "/grating": 3,
+  "/events": 4
+ },
+ "errors": [],
+ "days": [
+  {
+   "i": 0,
+   "date": "2027-06-13",
+   "type": "arrival",
+   "text": "SUN JUN 13 · SEATTLE, WASHINGTON · ARRIVING\nSeattle, Washington ✎ Rename\nLock this day\nToday is one plan\n\nFlight in at 10:30 am, then the ship at 3:30 pm: the sightseeing in between, your bags and the countdown are on one page.\n\nSee today's plan"
+  },
+  {
+   "i": 1,
+   "date": "2027-06-13",
+   "type": "embark",
+   "text": "SUN JUN 13 · SEATTLE, WASHINGTON · BOARDING\nSeattle, Washington ✎ Rename\nLock this day\n🚢\nLEAVE BY\nall aboard 3:30 pm\n2:00 pm\n▶ Start the tour\n\nOfficial all aboard 3:30 pm · Back at the cruise terminal by 2:30 pm\n\nGetting back on time is up to you\n\nKairoute's leave-by and back-by times are estimates with spare time built in. Traffic, queues and the weather can still slow you down. The time that counts is the ship's all-aboard time or your train or flight, as your cruise line or carrier gives it. Check it on the day.\n\nI understand\nTerms of use\n1\nsight\n0.7 mi\nwalking\nChoose sights\nMore\nAbout today's plan3 notes\nNot planned today: Lumen Field didn't fit in the time.\nNot planned today: Columbia Center didn't fit in the time.\nOpening hours aren't known for Space Needle on this date: planned between 9:00 am and 5:00 pm, check before you go.\nUse Ctrl + scroll to zoom the map\nStart · Airport\n1\nL\nFinish · Cruise port\n500 ft\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nWalk\nTaxi or car\n● Meal\nMore about today\n🛳 When do you board?\nBoarding time\nTerminal (optional)\nSave\n\nOn your boarding pass or check-in confirmation (also called arrival or check-in time). Until you add it, the plan uses the time to be back above.\n\nWhat to have on you · 0 of 9 ready\n📅 Add reminders to my calendar\n\nAll times are Seattle time, 2 h behind your device.\n\nLEAVE\n11:45 am\nS\nOut of Seattle–Tacoma International Airport\nFlight arrives 10:30 am. We allow 1 h 15 min to get off the plane and through baggage claim (and passport control after a flight from abroad). Book luggage storage near Seattle–Tacoma International Airport ahead (a left-luggage desk or a storage shop), or ask your hotel or station.\nYou fly in the day the ship sails, so today goes straight from the airport to the ship: there isn't enough time for sightseeing with a safe margin. A late or missed flight is the most common way travelers miss a ship, and the ship won't wait. Keep your airline's and cruise line's phone numbers handy, and if a delay is announced, call the cruise line at once.\nTaxi or car · 55 min · 15 mi\nARRIVE\n12:40 pm\nLEAVE\n1:20 pm\n1\nSpace Needle\n40 min · Sight · Must-see\nWalk · 5 min · 0.2 mi\nARRIVE\n1:25 pm\nLEAVE\n2:00 pm\nL\nLunch: Sushi Blossom\nRestaurant · Local spot · 35 min\nChange lunch\nLunch: why here\nWalk · 9 min · 0.4 mi\nARRIVE\n2:09 pm\nE\nBoarding at Port of Seattle\n21 min to spare.\nOfficial all aboard 3:30 pm: be at the terminal by 2:30 pm at the latest. Your cruise line gives you a boarding time: add it and the plan gets you there for it.\nPorters take your big bags at the curb (luggage tags on; they reach your cabin by evening). Keep your passport, boarding pass, medicines and valuables in your carry-on for check-in and security.\nBig ports have more than one cruise terminal: check yours on your boarding pass and tell the driver.\nBook the taxi or transfer the day before, or ask your hotel to call one. Being aboard on time is your responsibility: check your boarding time with your cruise line."
+  },
+  {
+   "i": 2,
+   "date": "2027-06-14",
+   "type": "sea"
+  },
+  {
+   "i": 3,
+   "date": "2027-06-15",
+   "type": "port",
+   "text": "TUE JUN 15 · JUNEAU, ALASKA · IN PORT\nJuneau, Alaska ✎ Rename\nLock this day\n🚢\nLEAVE BY\nall aboard 8:00 pm\n12:45 pm\n▶ Start the tour\n\nAshore 7:30 am · Official all aboard 8:00 pm · Back at the ship by 7:15 pm\n\nGetting back on time is up to you\n\nKairoute's leave-by and back-by times are estimates with spare time built in. Traffic, queues and the weather can still slow you down. The time that counts is the ship's all-aboard time or your train or flight, as your cruise line or carrier gives it. Check it on the day.\n\nI understand\nTerms of use\n3\nsights\n1.2 mi\nwalking\nChoose sights\nMore\nAbout today's plan2 notes\nUse Ctrl + scroll to zoom the map\nStart · Cruise port\n1\n2\n3\nL\n500 ft\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nWalk\n● Meal\nMore about today\n\nAll times are Juneau time, 3 h behind your device.\n\nLEAVE\n8:49 am\nS\nOff the ship at Cruise Ship Pier\nShip docks 7:00 am.\nWalk · 11 min · 0.5 mi\nWalk · 11 min\nTaxi or car · 12 min\nARRIVE\n9:00 am\nLEAVE\n9:30 am\n1\nSt. Nicholas Russian Orthodox Church\n30 min · Church\nWalk · 3 min · 0.1 mi\nARRIVE\n9:33 am\nLEAVE\n10:13 am\n2\nWickersham House\n40 min · Sight\nWalk · 3 min · 0.1 mi\nARRIVE\n10:16 am\nLEAVE\n10:56 am\n3\nAlaska State Capitol\n40 min · Sight · Must-see\nWalk · 6 min · 0.3 mi\nARRIVE\n11:45 am\nLEAVE\n12:45 pm\nL\nLunch: Pel Meni\nRestaurant · Local spot · 1 h\nTRAVELERS RECOMMEND\nChange lunch\nLunch: why here\nUNTIL\n12:45 pm\n+\nFree time: 6 h 26 min\nYours to spend as you like. Leave here by 12:45 pm to be back by 7:15 pm. See what fits\nWalk · 4 min · 0.2 mi\nBY\n7:15 pm\nE\nBack at the ship\nThe ship's official all aboard is 8:00 pm. Kairoute plans you back at least 45 min before it."
+  },
+  {
+   "i": 4,
+   "date": "2027-06-16",
+   "type": "port",
+   "text": "WED JUN 16 · SKAGWAY, ALASKA · IN PORT\nSkagway, Alaska ✎ Rename\nLock this day\n🚢\nLEAVE BY\nall aboard 5:00 pm\n1:20 pm\n▶ Start the tour\n\nAshore 7:30 am · Official all aboard 5:00 pm · Back at the ship by 4:15 pm\n\nGetting back on time is up to you\n\nKairoute's leave-by and back-by times are estimates with spare time built in. Traffic, queues and the weather can still slow you down. The time that counts is the ship's all-aboard time or your train or flight, as your cruise line or carrier gives it. Check it on the day.\n\nI understand\nTerms of use\n3\nsights\n2.2 mi\nwalking\nChoose sights\nMore\nAbout today's plan2 notes\nUse Ctrl + scroll to zoom the map\nStart · Cruise port\n1\n2\n3\nL\n2000 ft\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nWalk\nTaxi or car\n● Meal\nMore about today\n\nAll times are Skagway time, 3 h behind your device.\n\nLEAVE\n8:43 am\nS\nOff the ship at Alaska State Ferry Terminal - Skagway\nShip docks 7:00 am.\nTaxi or car · 17 min · 1.5 mi\nBy road, with time for traffic.\nWalk · 32 min\nTaxi or car · 17 min\nARRIVE\n9:00 am\nLEAVE\n9:40 am\n1\nSkagway Overlook\n40 min · Sight\nWalk · 20 min · 0.9 mi\nWalk · 20 min\nTaxi or car · 14 min\nARRIVE\n10:00 am\nLEAVE\n11:30 am\n2\nSkagway Museum and Archives\n1 h 30 min · Museum\nWalk · 8 min · 0.4 mi\nARRIVE\n11:38 am\nLEAVE\n12:18 pm\n3\nKlondike Gold Rush National Historical Park\n40 min · Park or garden · Must-see\nWalk · 2 min · 0.1 mi\nARRIVE\n12:20 pm\nLEAVE\n1:20 pm\nL\nLunch: Bites On Broadway\nCafé · Popular with visitors · 1 h\nChange lunch\nLunch: why here\nUNTIL\n1:20 pm\n+\nFree time: 2 h 37 min\nYours to spend as you like. Leave here by 1:20 pm to be back by 4:15 pm. See what fits\nWalk · 18 min · 0.8 mi\nWalk · 18 min\nTaxi or car · 14 min\nBY\n4:15 pm\nE\nBack at the ship\nThe ship's official all aboard is 5:00 pm. Kairoute plans you back at least 45 min before it."
+  },
+  {
+   "i": 5,
+   "date": "2027-06-17",
+   "type": "port",
+   "text": "THU JUN 17 · KETCHIKAN, ALASKA · IN PORT\nKetchikan, Alaska ✎ Rename\nLock this day\n🚢\nLEAVE BY\nall aboard 1:00 pm\n12:15 pm\n▶ Start the tour\n\nAshore 6:30 am · Official all aboard 1:00 pm · Back at the ship by 12:15 pm\n\nGetting back on time is up to you\n\nKairoute's leave-by and back-by times are estimates with spare time built in. Traffic, queues and the weather can still slow you down. The time that counts is the ship's all-aboard time or your train or flight, as your cruise line or carrier gives it. Check it on the day.\n\nI understand\nTerms of use\n3\nsights\n0.5 mi\nwalking\nChoose sights\nMore\nAbout today's plan2 notes\nYour picks fill the time ashore, so lunch is back on board at 11:45 am.\nOpening hours aren't known for Totem Heritage Center and Southeast Alaska Discovery Center on this date: planned between 9:00 am and 5:00 pm, check before you go.\nUse Ctrl + scroll to zoom the map\nStart · Cruise port\n1\n2\n3\nL\n3000 ft\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nWalk\nTaxi or car\n● Meal\nMore about today\n\nAll times are Ketchikan time, 3 h behind your device.\n\nLEAVE\n6:30 am\nS\nOff the ship at Alaska Marine Highway Ketchikan Ferry Terminal\nShip docks 6:00 am.\nTaxi or car · 36 min · 5.9 mi\nARRIVE\n7:06 am\nLEAVE\n7:46 am\n1\nSaxman Totem Park\n40 min · Park or garden · Must-see\nTaxi or car · 23 min · 2.9 mi\nBy road, with time for traffic.\nWalk · 1 h 1 min\nTaxi or car · 23 min\nARRIVE\n9:00 am\nLEAVE\n9:40 am\n2\nTotem Heritage Center\n40 min · Sight · Must-see\nWalk · 12 min · 0.5 mi\nWalk · 12 min\nTaxi or car · 12 min\nARRIVE\n9:52 am\nLEAVE\n10:32 am\n3\nSoutheast Alaska Discovery Center\n40 min · Sight\nUNTIL\n12:15 pm\n+\nFree time: 1 h 5 min\nYours to spend as you like. Leave here by 12:15 pm to be back by 12:15 pm. See what fits\nTaxi or car · 38 min · 2.8 mi\nIncludes 15 min spare before the ship.\nWalk · 1 h 1 min\nTaxi or car · 23 min\nBY\n12:15 pm\nE\nBack at the ship\nThe ship's official all aboard is 1:00 pm. Kairoute plans you back at least 45 min before it.\nARRIVE\n11:45 am\nLEAVE\n12:15 pm\nL\nLunch: Back on board\nOn the ship, once you're back · 30 min"
+  },
+  {
+   "i": 6,
+   "date": "2027-06-18",
+   "type": "sea"
+  },
+  {
+   "i": 7,
+   "date": "2027-06-19",
+   "type": "arrival",
+   "text": "SAT JUN 19 · VANCOUVER, CANADA · ARRIVING\nVancouver, Canada ✎ Rename\nLock this day\nToday is one plan\n\nShip in at 7:30 am, then your flight at 1:00 pm: the sightseeing in between, your bags and the countdown are on one page.\n\nSee today's plan"
+  },
+  {
+   "i": 8,
+   "date": "2027-06-19",
+   "type": "departure",
+   "text": "SAT JUN 19 · VANCOUVER, CANADA · LEAVING\nVancouver, Canada ✎ Rename\nLock this day\n\nWhich airport do you leave from? There is more than one here (Vancouver International Airport or Boundary Bay Airport). Choose it in the day's settings and the day gets its time to leave by: no time is given on a guess.\n\nEdit this day"
+  }
+ ],
+ "guides": {
+  "Seattle, Washington": {
+   "city": "Seattle, Washington",
+   "src": true,
+   "ai": false,
+   "n": 15,
+   "sights": "Space Needle* | Columbia Center* | Lumen Field* | Pioneer Square | Climate Pledge Arena | Museum of Pop Culture | Amazon Spheres | Smith Tower | Seattle Central Library | Statue of Lenin, Seattle~ | Seattle Art Museum | Gas Works Park | Seattle Great Wheel | Fremont Troll | Seattle Aquarium",
+   "far": "Edmonds | Everett | Bainbridge Island | Bremerton",
+   "eats": 60,
+   "starts": {
+    "cruise": [
+     "Port of Seattle"
+    ],
+    "airport": [
+     "Seattle–Tacoma International Airport"
+    ],
+    "station": [
+     "King Street Station",
+     "Capitol Hill Light Rail Station"
+    ],
+    "hotel": [
+     "Hotel in central Seattle, Washington"
+    ],
+    "point": [
+     "Central Seattle, Washington"
+    ]
+   }
+  },
+  "Juneau, Alaska": {
+   "city": "Juneau, Alaska",
+   "src": true,
+   "ai": false,
+   "n": 8,
+   "sights": "Alaska State Capitol* | St. Nicholas Russian Orthodox Church | Wickersham House | Alaska State Centennial Museum | Goldbelt Tram | Sealaska Heritage Institute | Juneau Arts & Humanities Council | Upside-Down Forest",
+   "far": "",
+   "eats": 33,
+   "starts": {
+    "cruise": [
+     "Cruise Ship Pier"
+    ],
+    "airport": [
+     "Juneau International Airport"
+    ],
+    "station": [
+     "Juneau, Alaska main station (unknown)"
+    ],
+    "hotel": [
+     "Hotel in central Juneau, Alaska"
+    ],
+    "point": [
+     "Central Juneau, Alaska"
+    ]
+   }
+  },
+  "Skagway, Alaska": {
+   "city": "Skagway, Alaska",
+   "src": true,
+   "ai": false,
+   "n": 7,
+   "sights": "Klondike Gold Rush National Historical Park* | Skagway Centennial Statue | Skagway Museum and Archives | Footbridge to Yakutania Point & Smuggler's Cove | Skagway Overlook | Jewell Gardens | Gold Rush Cemetery",
+   "far": "",
+   "eats": 12,
+   "starts": {
+    "cruise": [
+     "Alaska State Ferry Terminal - Skagway"
+    ],
+    "airport": [
+     "Skagway Airport"
+    ],
+    "station": [
+     "Skagway Station"
+    ],
+    "hotel": [
+     "Hotel in central Skagway, Alaska"
+    ],
+    "point": [
+     "Central Skagway, Alaska"
+    ]
+   }
+  },
+  "Ketchikan, Alaska": {
+   "city": "Ketchikan, Alaska",
+   "src": true,
+   "ai": false,
+   "n": 6,
+   "sights": "Saxman Totem Park* | Totem Heritage Center* | Southeast Alaska Discovery Center | Tongass Historical Museum | Tribal Fish Hatchery | Alaska Rainforest Sanctuary",
+   "far": "",
+   "eats": 17,
+   "starts": {
+    "cruise": [
+     "Alaska Marine Highway Ketchikan Ferry Terminal"
+    ],
+    "airport": [
+     "Ketchikan International Airport"
+    ],
+    "station": [
+     "Ketchikan, Alaska main station (unknown)"
+    ],
+    "hotel": [
+     "Hotel in central Ketchikan, Alaska"
+    ],
+    "point": [
+     "Central Ketchikan, Alaska"
+    ]
+   }
+  },
+  "Vancouver, Canada": {
+   "city": "Vancouver, Canada",
+   "src": true,
+   "ai": false,
+   "n": 13,
+   "sights": "BC Place* | Stanley Park* | Rogers Arena* | Gastown | Sam Kee Building | Lions Gate Bridge~ | Dominion Building | Sun Tower | Christ Church Cathedral | Marine Building | Vancouver Art Gallery | Vancouver Public Library | Hotel Vancouver",
+   "far": "",
+   "eats": 57,
+   "starts": {
+    "cruise": [
+     "Port of Vancouver"
+    ],
+    "airport": [
+     "Vancouver International Airport",
+     "Boundary Bay Airport"
+    ],
+    "station": [
+     "Waterfront Station",
+     "Pacific Central Station",
+     "Rupert"
+    ],
+    "hotel": [
+     "Hotel in central Vancouver, Canada"
+    ],
+    "point": [
+     "Central Vancouver, Canada"
+    ]
+   }
+  }
+ },
+ "steps": [],
+ "version": "88a1dc8-1795204327",
+ "aiReady": false,
+ "wizard": {
+  "miss": [],
+  "prev": "Your days: 7 days · 3 ports",
+  "form": "Add each place in order, the way it's booked. Each new stop starts where the last one ends.\n\nSTOP 1 · CRUISE\nLeaves from\nShip (optional)\nBoarding day\nAll aboard\nGetting to the ship (if you arrive the same day)\nFlight\nTrain\nFerry\nCar or bus\nArrive in Seattle, Washington at\nLeave empty if you don't know yet.\nPorts of call\nIn order, from your cruise booking. Days with no port are added as sea days.\nDate\nPort\nShip arrives\nAll aboard\nTender port (small boats take you ashore)\nRemove port\nDate\nPort\nShip arrives\nAll aboard\nTender port (small boats take you ashore)\nRemove port\nDate\nPort\nShip arrives\nAll aboard\nTender port (small boats take you ashore)\nRemove port\n+ Add a port\nCruise ends in\nOn\nOff the ship at\n+ Add a city stay\n+ Add a cruise\nGoing home from Vancouver, Canada\nFlight\nTrain\nFerry\nCar or bus\nFlight at\nYour days: 7 days · 3 ports\nAdd more details (optional)\nName this trip\n\nKairoute picks good defaults for pace, walking and voice, and you can change any of them later.\n\nCancel\nPersonalize first\nBuild my trip"
+ },
+ "buildSec": 297,
+ "state": {
+  "busy": "",
+  "err": "",
+  "days": [
+   {
+    "date": "2027-06-13",
+    "type": "arrival"
+   },
+   {
+    "date": "2027-06-13",
+    "type": "embark"
+   },
+   {
+    "date": "2027-06-14",
+    "type": "sea"
+   },
+   {
+    "date": "2027-06-15",
+    "type": "port"
+   },
+   {
+    "date": "2027-06-16",
+    "type": "port"
+   },
+   {
+    "date": "2027-06-17",
+    "type": "port"
+   },
+   {
+    "date": "2027-06-18",
+    "type": "sea"
+   },
+   {
+    "date": "2027-06-19",
+    "type": "arrival"
+   },
+   {
+    "date": "2027-06-19",
+    "type": "departure"
+   }
+  ]
+ },
+ "phoneText": "TUE JUN 15 · JUNEAU, ALASKA · IN PORT\nJuneau, Alaska ✎ Rename\nLock this day\n🚢\nLEAVE BY\nall aboard 8:00 pm\n12:45 pm\n▶ Start tour\n\nAshore 7:30 am · Official all aboard 8:00 pm · Back at the ship by 7:15 pm\n\nGetting back on time is up to you\n\nKairoute's leave-by and back-by times are estimates with spare time built in. Traffic, queues and the weather can still slow you down. The time that counts is the ship's all-aboard time or your train or flight, as your cruise line or carrier gives it. Check it on the day.\n\nI understand\nTerms of use\n3\nsights\n1.2 mi\nwalking\nChoose sights\nMore\nAbout today's plan2 notes\nUse Ctrl + scroll to zoom the map\nStart · Cruise port\n1\n2\n3\nL\n1000 ft\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nWalk\n● Meal\nMore about today\n\nAll times are Juneau time, 3 h behind your device.\n\nLEAVE\n8:49 am\nS\nOff the ship at Cruise Ship Pier\nShip docks 7:00 am.\nWalk · 11 min · 0.5 mi\nWalk · 11 min\nTaxi or car · 12 min\nARRIVE\n9:00 am\nLEAVE\n9:30 am\n1\nSt. Nicholas Russian Orthodox Church\n30 min · Church\nWalk · 3 min · 0.1 mi\nARRIVE\n9:33 am\nLEAVE\n10:13 am\n2\nWickersham House\n40 min · Sight\nWalk · 3 min · 0.1 mi\nARRIVE\n10:16 am\nLEAVE\n10:56 am\n3\nAlaska State Capitol\n40 min · Sight · Must-see\nWalk · 6 min · 0.3 mi\nARRIVE\n11:45 am\nLEAVE\n12:45 pm\nL\nLunch: Pel Meni\nRestaurant · Local spot · 1 h\nTRAVELERS RECOMMEND\nChange lunch\nLunch: why here\nUNTIL\n12:45 pm\n+\nFree time: 6 h 26 min\nYours to spend as you like. Leave here by 12:45 pm to be back by 7:15 pm. See what fits\nWalk · 4 mi",
+ "finished": "2026-11-20T20:42:22.438Z"
+}

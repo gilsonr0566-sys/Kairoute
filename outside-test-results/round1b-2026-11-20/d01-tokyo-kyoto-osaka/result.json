@@ -1,0 +1,244 @@
+{
+ "name": "d01-tokyo-kyoto-osaka",
+ "label": "Tokyo, Kyoto, Osaka by train",
+ "legs": [
+  {
+   "k": "stay",
+   "place": "Tokyo, Japan",
+   "date": "2027-04-13",
+   "nights": 3,
+   "inAt": "14:00"
+  },
+  {
+   "k": "stay",
+   "place": "Kyoto, Japan",
+   "nights": 2,
+   "inBy": "train",
+   "leaveAt": "09:30",
+   "inAt": "11:45"
+  },
+  {
+   "k": "stay",
+   "place": "Osaka, Japan",
+   "nights": 1,
+   "inBy": "train",
+   "leaveAt": "10:00",
+   "inAt": "10:30",
+   "homeAt": "11:00"
+  }
+ ],
+ "started": "2026-11-20T20:41:19.540Z",
+ "passed": {
+  "/sources": 14,
+  "/transit": 16,
+  "/guide": 3,
+  "/places": 6,
+  "/voyage": 3,
+  "/ground": 3,
+  "/x/near": 10,
+  "/route": 4
+ },
+ "refused": {
+  "/ratings": 3,
+  "/grating": 4,
+  "/events": 3
+ },
+ "errors": [],
+ "days": [
+  {
+   "i": 0,
+   "date": "2027-04-13",
+   "type": "arrival",
+   "text": "TUE APR 13 · TOKYO, JAPAN · ARRIVING\nTokyo, Japan ✎ Rename\nLock this day\n\nWhich airport do you arrive at? There is more than one here (Haneda Airport or Chofu Airport). Choose it in the day's settings: no time is given on a guess.\n\nEdit this day"
+  },
+  {
+   "i": 1,
+   "date": "2027-04-14",
+   "type": "land",
+   "text": "WED APR 14 · TOKYO, JAPAN · LAND DAY\nTokyo, Japan ✎ Rename\nLock this day\n▶ Start the tour\n9:00 am–6:00 pm\n9 h ✎\n5\nsights\n1.8 mi\nwalking\n3:36 pm\nlast stop done\nChoose sights\nMore\nAbout today's plan1 note\nUse Ctrl + scroll to zoom the map\nS\n1\n2\n3\nL\n4\n5\n2000 ft\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nWalk\nTaxi or car\nTrain, metro or tram\n● Meal\nMore about today\n\nAll times are Tokyo time, 14 h ahead of your device.\n\nLEAVE\n9:00 am\nS\nLeave Hotel in central Tokyo, Japan\nAdd your own hotel on the Trip page for exact times.\nTaxi or car · 37 min · 6.2 mi\nARRIVE\n9:37 am\nLEAVE\n10:17 am\n1\nTsukiji fish market\n40 min · Sight\nWalk · 12 min · 0.6 mi\nWalk · 12 min\nTaxi or car · 13 min\nARRIVE\n10:29 am\nLEAVE\n11:09 am\n2\nHamarikyu Gardens\n40 min · Park or garden\nWalk · 22 min · 1.0 mi\nWalk · 22 min\nTaxi or car · 15 min\nARRIVE\n11:31 am\nLEAVE\n12:11 pm\n3\nZōjō-ji Temple\n40 min · Sight\nNext door\nARRIVE\n12:13 pm\nLEAVE\n1:13 pm\nL\nLunch: Teikyo-an\nCafé · Local spot · 1 h\nChange lunch\nLunch: why here\nWalk · 4 min · 0.2 mi\nARRIVE\n1:17 pm\nLEAVE\n1:57 pm\n4\nTokyo Tower\n40 min · Sight · Must-see\nTaxi or car · 18 min · 1.8 mi\nBy road, with time for traffic.\nWalk · 38 min\nTaxi or car · 18 min\nARRIVE\n2:15 pm\nLEAVE\n2:55 pm\n5\nNational Diet Library\n40 min · Sight · Must-see\nUNTIL\n5:19 pm\n+\nFree time: 2 h 24 min\nYours to spend as you like. See what fits\nMetro M · 41 min · 4.0 mi\nWalk 12 min to 国会議事堂前 Kokkai-gijidomae, runs about every 4 min (from the timetable). Metro M: 国会議事堂前 Kokkai-gijidomae to 西新宿 Nishi-shinjuku, 14 min, then walk 10 min. Times include waiting and boarding. Next departure about 4:13 pm (timetable checked Nov 20; Kairoute checks it again the day before and the morning of).\nMetro M · 41 min\nTaxi or car · 28 min\nBY\n6:00 pm\nE\nBack at Hotel in central Tokyo, Japan\nARRIVE\n6:30 pm\nD\nSuggested dinner: The Wine Bar - 50th Floor\nRestaurant\nTRAVELERS RECOMMEND\nChange dinner\nDinner: why here"
+  },
+  {
+   "i": 2,
+   "date": "2027-04-15",
+   "type": "land",
+   "text": "THU APR 15 · TOKYO, JAPAN · LAND DAY\nTokyo, Japan ✎ Rename\nLock this day\n▶ Start the tour\n9:00 am–6:00 pm\n9 h ✎\n1\nsight\n0.2 mi\nwalking\n12:49 pm\nlast stop done\nChoose sights\nMore\nAbout today's plan1 note\nUse Ctrl + scroll to zoom the map\nS\n1\nL\n2000 mi\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nWalk\nTrain, metro or tram\n● Meal\nMore about today\n\nAll times are Tokyo time, 14 h ahead of your device.\n\nLEAVE\n9:00 am\nS\nLeave Hotel in central Tokyo, Japan\nAdd your own hotel on the Trip page for exact times.\nMetro 新宿線 (東京都交通局) + 1 change · 55 min · 8.9 mi\nWalk 14 min to 新宿, runs about every 8 min (from the timetable). Metro 新宿線 (東京都交通局): 新宿 to 馬喰横山, 15 min; then change to Train A: 東日本橋 Higashi-nihombashi to 押上〈スカイツリー前〉 Oshiage (Skytree), 9 min, then walk 8 min. Times include waiting and boarding. Next departure about 4:23 pm (timetable checked Nov 20; Kairoute checks it again the day before and the morning of).\nMetro 新宿線 (東京都交通局) + 1 change · 55 min\nTrain JB + 3 changes · 1 h 5 min\nTaxi or car · 44 min\nARRIVE\n9:55 am\nLEAVE\n10:35 am\n1\nTokyo Skytree\n40 min · Sight · Must-see\nTrain JB + 2 changes · 56 min · 8.7 mi\nWalk 7 min to 押上〈スカイツリー前〉 Oshiage (Skytree). Allow 8 min to reach this route's start and finish from your stops; then Train Z: 押上〈スカイツリー前〉 Oshiage (Skytree) to 錦糸町 Kinshichō, 4 min; then change to Train JB: 錦糸町 Kinshichō to 御茶ノ水 Ochanomizu, 11 min; then change to Train JC: 御茶ノ水 Ochanomizu to 新宿 Shinjuku, 9 min, then walk 8 min. Times include waiting and boarding. Next departure about 4:19 pm (timetable checked Nov 20; Kairoute checks it again the day before and the morning of).\nTrain JB + 2 changes · 56 min\nMetro E + 1 change · 58 min\nTaxi or car · 43 min\nARRIVE\n11:45 am\nLEAVE\n12:45 pm\nL\nLunch: Aurora (Sky Lounge)\nRestaurant · Local spot · 1 h\nChange lunch\nLunch: why here\nUNTIL\n5:56 pm\n+\nFree time: 5 h 11 min\nYours to spend as you like. See what fits\nWalk · 4 min · 0.2 mi\nBY\n6:00 pm\nE\nBack at Hotel in central Tokyo, Japan\nARRIVE\n6:30 pm\nD\nSuggested dinner: Godaigo\nRestaurant\nChange dinner\nDinner: why here"
+  },
+  {
+   "i": 3,
+   "date": "2027-04-16",
+   "type": "departure",
+   "text": "FRI APR 16 · TOKYO, JAPAN · LEAVING\nTokyo, Japan ✎ Rename\nLock this day\n\nWhich station do you leave from? There is more than one here (Tokyo Station, Ueno Railway Station or JR Oji Station). Choose it in the day's settings and the day gets its time to leave by: no time is given on a guess.\n\nEdit this day"
+  },
+  {
+   "i": 4,
+   "date": "2027-04-16",
+   "type": "arrival",
+   "text": "FRI APR 16 · KYOTO, JAPAN · ARRIVING\nKyoto, Japan ✎ Rename\nLock this day\n\nWhich station do you arrive at? There is more than one here (Kyōto Station, Arashiyama Station or Kurama Station). Choose it in the day's settings: no time is given on a guess.\n\nEdit this day"
+  },
+  {
+   "i": 5,
+   "date": "2027-04-17",
+   "type": "land",
+   "text": "SAT APR 17 · KYOTO, JAPAN · LAND DAY\nKyoto, Japan ✎ Rename\nLock this day\n▶ Start the tour\n9:00 am–6:00 pm\n9 h ✎\n5\nsights\n1.9 mi\nwalking\n4:53 pm\nlast stop done\nChoose sights\nMore\nAbout today's plan1 note\nUse Ctrl + scroll to zoom the map\nS\n1\n2\n3\nL\n4\n5\n1 mi\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nWalk\nTaxi or car\n● Meal\nMore about today\n\nAll times are Kyoto time, 14 h ahead of your device.\n\nLEAVE\n9:00 am\nS\nLeave Hotel in central Kyoto, Japan\nAdd your own hotel on the Trip page for exact times.\nTaxi or car · 28 min · 3.9 mi\nARRIVE\n9:28 am\nLEAVE\n10:08 am\n1\nKinkaku-ji Temple\n40 min · Sight · Must-see\nTaxi or car · 22 min · 2.6 mi\nBy road, with time for traffic.\nWalk · 55 min\nTaxi or car · 22 min\nARRIVE\n10:30 am\nLEAVE\n11:30 am\n2\nHistoric Monuments of Ancient Kyoto\n1 h · Ancient site · Must-see · UNESCO\nTaxi or car · 34 min · 5.4 mi\nARRIVE\n12:04 pm\nLEAVE\n12:44 pm\n3\nYasaka Shrine\n40 min · Sight\nWalk · 8 min · 0.4 mi\nARRIVE\n12:52 pm\nLEAVE\n1:52 pm\nL\nLunch: Slow Jet Coffee\nCafé · Local spot · 1 h\nChange lunch\nLunch: why here\nWalk · 11 min · 0.5 mi\nWalk · 11 min\nTaxi or car · 12 min\nARRIVE\n2:03 pm\nLEAVE\n2:43 pm\n4\nKiyomizu-dera\n40 min · Sight · Must-see\nWalk · 21 min · 1.0 mi\nWalk · 21 min\nTaxi or car · 14 min\nARRIVE\n3:04 pm\nLEAVE\n4:34 pm\n5\nKyoto National Museum\n1 h 30 min · Museum\nUNTIL\n5:41 pm\n+\nFree time: 1 h 7 min\nYours to spend as you like. See what fits\nTaxi or car · 19 min · 2.0 mi\nWalk · 42 min\nTaxi or car · 19 min\nBY\n6:00 pm\nE\nBack at Hotel in central Kyoto, Japan\nARRIVE\n6:30 pm\nD\nSuggested dinner: Nowvelle vagne Kyoto\nRestaurant\nChange dinner\nDinner: why here"
+  },
+  {
+   "i": 6,
+   "date": "2027-04-18",
+   "type": "departure",
+   "text": "SUN APR 18 · KYOTO, JAPAN · LEAVING\nKyoto, Japan ✎ Rename\nLock this day\n\nWhich station do you leave from? There is more than one here (Kyōto Station, Arashiyama Station or Kurama Station). Choose it in the day's settings and the day gets its time to leave by: no time is given on a guess.\n\nEdit this day"
+  },
+  {
+   "i": 7,
+   "date": "2027-04-18",
+   "type": "arrival",
+   "text": "SUN APR 18 · OSAKA, JAPAN · ARRIVING\nOsaka, Japan ✎ Rename\nLock this day\n\nWhich station do you arrive at? There is more than one here (Ōsaka Station, Ōsaka Uehommachi Station or Hirano Station). Choose it in the day's settings: no time is given on a guess.\n\nEdit this day"
+  },
+  {
+   "i": 8,
+   "date": "2027-04-19",
+   "type": "departure",
+   "text": "MON APR 19 · OSAKA, JAPAN · LEAVING\nOsaka, Japan ✎ Rename\nLock this day\n\nWhich airport do you leave from? There is more than one here (Kansai International Airport or Itami Airport). Choose it in the day's settings and the day gets its time to leave by: no time is given on a guess.\n\nEdit this day"
+  }
+ ],
+ "guides": {
+  "Tokyo, Japan": {
+   "city": "Tokyo, Japan",
+   "src": true,
+   "ai": false,
+   "n": 33,
+   "sights": "Tokyo Tower* | Mode Gakuen Cocoon Tower* | Tokyo Skytree* | Hachikō* | Yasukuni Shrine* | National Diet Library* | Meiji Jingū | St. Mary's Cathedral | Tsukiji fish market | Hamarikyu Gardens | Shinjuku Gyoen | The National Museum of Modern Art | Harajuku | Akasaka Palace | Holy Resurrection Cathedral | Kanda-myōjin | Zōjō-ji Temple | Nezu Shrine | Rikugi Garden | Koishikawa Botanical Garden | Gokoku-ji Temple | Tokyo Metropolitan Teien Art Museum | Tsukiji Hongan-ji Temple | Koishikawa Kōrakuen Garden | Yushima Seidō | Tokyo International Forum | Shibuya scramble crossing | Sunshine 60 | Japanese Folk Crafts Museum | Institute for Nature Study | Kōgan-ji Temple | Hijiri-bashi bridge~ | National Theatre of Japan",
+   "far": "Kamakura | Kawasaki",
+   "eats": 68,
+   "starts": {
+    "cruise": [
+     "Tokyo International Cruise Terminal"
+    ],
+    "airport": [
+     "Haneda Airport",
+     "Chofu Airport"
+    ],
+    "station": [
+     "Tokyo Station",
+     "Ueno Railway Station",
+     "JR Oji Station"
+    ],
+    "hotel": [
+     "Hotel in central Tokyo, Japan"
+    ],
+    "point": [
+     "Central Tokyo, Japan"
+    ]
+   }
+  },
+  "Kyoto, Japan": {
+   "city": "Kyoto, Japan",
+   "src": true,
+   "ai": false,
+   "n": 40,
+   "sights": "Kiyomizu-dera* | Kinkaku-ji Temple* | Historic Monuments of Ancient Kyoto* | Fushimi Inari-taisha | Ginkaku-ji Temple | Ryōan-ji Temple | Tō-ji Temple | Nijō Castle | Heian Jingū | Kyoto National Museum | Ninna-ji Temple | Yasaka Shrine | Tōfuku-ji Temple | Shimogamo Shrine | Nanzen-ji Temple | Sanjūsangen-dō Temple | Chion-in Temple | Daitoku-ji Temple | Kyoto Imperial Palace | Kitano Tenmangū | Myōshin-ji Temple | Nishi Hongan-ji Temple | Kyoto International Manga Museum | Kōdai-ji Temple | Yoshida Shrine | Gion | Sennyū-ji Temple | Kyoto Tower | Kennin-ji Temple | Rokuharamitsu-ji Temple | Kyoto Municipal Museum of Art | Maruyama Park | Hōkan-ji Temple | Hirano Shrine | Shōren-in Temple | Shisen-dō Temple | Imamiya Shrine | Zuishin-in Temple | Yōgen-in Temple | Sumiya",
+   "far": "",
+   "eats": 68,
+   "starts": {
+    "cruise": [
+     "Cruise port of Kyoto, Japan (unknown)"
+    ],
+    "airport": [
+     "Osaka Itami Airport"
+    ],
+    "station": [
+     "Kyōto Station",
+     "Arashiyama Station",
+     "Kurama Station"
+    ],
+    "hotel": [
+     "Hotel in central Kyoto, Japan"
+    ],
+    "point": [
+     "Central Kyoto, Japan"
+    ]
+   }
+  },
+  "Osaka, Japan": {
+   "city": "Osaka, Japan",
+   "src": true,
+   "ai": false,
+   "n": 10,
+   "sights": "Abeno Harukas* | Osaka Castle* | Tsūtenkaku | Shitennō-ji Temple | Ōsaka Tenmangū | Osaka Science Museum | Osaka Museum of History | Japan Mint | Tennōji Zoo | Osaka International Peace Center",
+   "far": "Suita",
+   "eats": 55,
+   "starts": {
+    "cruise": [
+     "Cruise Ship Terminal"
+    ],
+    "airport": [
+     "Kansai International Airport",
+     "Itami Airport"
+    ],
+    "station": [
+     "Ōsaka Station",
+     "Ōsaka Uehommachi Station",
+     "Hirano Station"
+    ],
+    "hotel": [
+     "Hotel in central Osaka, Japan"
+    ],
+    "point": [
+     "Central Osaka, Japan"
+    ]
+   }
+  }
+ },
+ "steps": [],
+ "version": "88a1dc8-1795204327",
+ "aiReady": false,
+ "wizard": {
+  "miss": [],
+  "prev": "Your days: 7 days",
+  "form": "Add each place in order, the way it's booked. Each new stop starts where the last one ends.\n\nSTOP 1 · CITY STAY\nRemove\nCity\nArrive on\nNights\nHotel (optional)\nGetting there\nFlight\nTrain\nFerry\nCar or bus\nArrive in Tokyo, Japan at\nSTOP 2 · CITY STAY\nRemove\nCity\nArrive on\nNights\nHotel (optional)\nGetting there\nFlight\nTrain\nFerry\nCar or bus\nLeave Tokyo, Japan at\nArrive in Kyoto, Japan at\nSTOP 3 · CITY STAY\nRemove\nCity\nArrive on\nNights\nHotel (optional)\nGetting there\nFlight\nTrain\nFerry\nCar or bus\nLeave Kyoto, Japan at\nArrive in town at\nLeave empty if you don't know yet.\n+ Add a city stay\n+ Add a cruise\nGoing home from here\nFlight\nTrain\nFerry\nCar or bus\nFlight at\nYour days: 7 days\nAdd more details (optional)\nName this trip\n\nKairoute picks good defaults for pace, walking and voice, and you can change any of them later.\n\nCancel\nPersonalize first\nBuild my trip"
+ },
+ "buildSec": 166,
+ "state": {
+  "busy": "",
+  "err": "",
+  "days": [
+   {
+    "date": "2027-04-13",
+    "type": "arrival"
+   },
+   {
+    "date": "2027-04-14",
+    "type": "land"
+   },
+   {
+    "date": "2027-04-15",
+    "type": "land"
+   },
+   {
+    "date": "2027-04-16",
+    "type": "departure"
+   },
+   {
+    "date": "2027-04-16",
+    "type": "arrival"
+   },
+   {
+    "date": "2027-04-17",
+    "type": "land"
+   },
+   {
+    "date": "2027-04-18",
+    "type": "departure"
+   },
+   {
+    "date": "2027-04-18",
+    "type": "arrival"
+   },
+   {
+    "date": "2027-04-19",
+    "type": "departure"
+   }
+  ]
+ },
+ "phoneText": "WED APR 14 · TOKYO, JAPAN · LAND DAY\nTokyo, Japan ✎ Rename\nLock this day\n▶ Start tour\n9:00 am–6:00 pm\n9 h ✎\n5\nsights\n1.8 mi\nwalking\n3:35 pm\nlast stop done\nChoose sights\nMore\nAbout today's plan1 note\nUse Ctrl + scroll to zoom the map\nS\n1\n2\n3\nL\n4\n5\n3000 ft\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nWalk\nTaxi or car\nTrain, metro or tram\n● Meal\nMore about today\n\nAll times are Tokyo time, 14 h ahead of your device.\n\nLEAVE\n9:00 am\nS\nLeave Hotel in central Tokyo, Japan\nAdd your own hotel on the Trip page for exact times.\nMetro M · 41 min · 4.0 mi\nWalk 10 min to 西新宿 Nishi-shinjuku, runs about every 4 min (from the timetable). Metro M: 西新宿 Nishi-shinjuku to 国会議事堂前 Kokkai-gijidomae, 14 min, then walk 12 min. Times include waiting and boarding. Next departure about 12:12 pm (timetable checked Nov 20; Kairoute checks it again the day before and the morning of).\nMetro M · 41 min\nTrain JC + 2 changes · 50 min\nBus 宿４１ (京王電鉄バス株式会社) + 2 changes · 52 min\nTaxi or car · 28 min\nARRIVE\n9:41 am\nLEAVE\n10:21 am\n1\nNational Diet Library\n40 min · Sight · Must-see\nTaxi or car · 18 min · 1.8 mi\nBy road, with time for traffic.\nWalk · 38 min\nTaxi or car · 18 min\nARRIVE\n10:39 am\nLEAVE\n11:19 am\n2\nTokyo Tower\n40 min · Sight · Must-see\nWalk · 5 min · 0.2 mi\nARRIVE\n11:24 am\nLEAVE\n12:04 pm\n3\nZōjō-ji Temple\n40 min · Sight\nWalk · 2 min · 0.1 mi\nARRIVE\n12:06 pm\nLEAVE\n1:06 pm\nL\nLunch: Garden Islands\nRestaurant · Local spot · 1 h\nChange lunch\nLunch: why here\nWalk · 20 min · 0.9 mi\nWalk · 20 min\nTaxi or car · 1",
+ "finished": "2026-11-20T20:45:27.148Z"
+}

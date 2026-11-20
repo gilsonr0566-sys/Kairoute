@@ -1,0 +1,120 @@
+{
+ "name": "a03-lisbon",
+ "label": "Lisbon Mon+Tue stay",
+ "legs": [
+  {
+   "k": "stay",
+   "place": "Lisbon, Portugal",
+   "date": "2027-05-09",
+   "nights": 3,
+   "inAt": "13:00",
+   "homeAt": "11:30"
+  }
+ ],
+ "started": "2026-11-20T20:32:47.008Z",
+ "passed": {
+  "/sources": 12,
+  "/transit": 9,
+  "/guide": 1,
+  "/places": 2,
+  "/voyage": 1,
+  "/ground": 1,
+  "/x/near": 7,
+  "/route": 3
+ },
+ "refused": {
+  "/ratings": 1,
+  "/grating": 2,
+  "/events": 2
+ },
+ "errors": [],
+ "days": [
+  {
+   "i": 0,
+   "date": "2027-05-09",
+   "type": "arrival",
+   "text": "SUN MAY 9 · LISBON, PORTUGAL · ARRIVING\nLisbon, Portugal ✎ Rename\nLock this day\n\nWhich airport do you arrive at? There is more than one here (Lisbon Airport or Lisbon Luís de Camões Airport). Choose it in the day's settings: no time is given on a guess.\n\nEdit this day"
+  },
+  {
+   "i": 1,
+   "date": "2027-05-10",
+   "type": "land",
+   "text": "MON MAY 10 · LISBON, PORTUGAL · LAND DAY\nLisbon, Portugal ✎ Rename\nLock this day\n▶ Start the tour\n9:00 am–6:00 pm\n9 h ✎\n4\nsights\n1.7 mi\nwalking\n3:01 pm\nlast stop done\nChoose sights\nMore\nAbout today's plan1 note\nUse Ctrl + scroll to zoom the map\nS\n1\n2\n3\nL\n4\n500 ft\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nWalk\nTaxi or car\n● Meal\nMore about today\n\nAll times are Lisbon time, 6 h ahead of your device.\n\nLEAVE\n9:00 am\nS\nLeave Hotel in central Lisbon, Portugal\nAdd your own hotel on the Trip page for exact times.\nTaxi or car · 35 min · 5.8 mi\nARRIVE\n9:35 am\nLEAVE\n10:15 am\n1\nBelém Tower\n40 min · Sight · Must-see\nWalk · 16 min · 0.7 mi\nWalk · 16 min\nTaxi or car · 13 min\nARRIVE\n10:31 am\nLEAVE\n11:11 am\n2\nPadrão dos Descobrimentos\n40 min · Sight\nWalk · 9 min · 0.4 mi\nARRIVE\n11:20 am\nLEAVE\n11:50 am\n3\nJerónimos Monastery\n30 min · Church · Must-see · UNESCO\nWalk · 4 min · 0.2 mi\nARRIVE\n11:54 am\nLEAVE\n12:54 pm\nL\nLunch: Pão Pão Queijo Queijo\nRestaurant · Local spot · 1 h\nChange lunch\nLunch: why here\nWalk · 6 min · 0.3 mi\nARRIVE\n1:00 pm\nLEAVE\n2:30 pm\n4\nNational Coach Museum\n1 h 30 min · Museum\nUNTIL\n5:29 pm\n+\nFree time: 2 h 59 min\nYours to spend as you like. See what fits\nTaxi or car · 31 min · 4.6 mi\nBY\n6:00 pm\nE\nBack at Hotel in central Lisbon, Portugal\nARRIVE\n6:30 pm\nD\nSuggested dinner: RIB - Beef & Wine Lisboa\nRestaurant\nChange dinner\nDinner: why here"
+  },
+  {
+   "i": 2,
+   "date": "2027-05-11",
+   "type": "land",
+   "text": "TUE MAY 11 · LISBON, PORTUGAL · LAND DAY\nLisbon, Portugal ✎ Rename\nLock this day\n▶ Start the tour\n9:00 am–6:00 pm\n9 h ✎\n3\nsights\n1:55 pm\nlast stop done\nChoose sights\nMore\nAbout today's plan1 note\nUse Ctrl + scroll to zoom the map\nS\n1\n2\n3\nL\n1 mi\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nTaxi or car\n● Meal\nMore about today\n\nAll times are Lisbon time, 6 h ahead of your device.\n\nLEAVE\n9:00 am\nS\nLeave Hotel in central Lisbon, Portugal\nAdd your own hotel on the Trip page for exact times.\nTaxi or car · 21 min · 2.5 mi\nBy road, with time for traffic.\nWalk · 54 min\nTaxi or car · 21 min\nARRIVE\n9:21 am\nLEAVE\n10:01 am\n1\nPrazeres Cemetery\n40 min · Sight\nTaxi or car · 19 min · 1.9 mi\nWalk · 40 min\nTaxi or car · 19 min\nARRIVE\n10:20 am\nLEAVE\n10:50 am\n2\n25 de Abril Bridge\n30 min · Landmark\nTaxi or car · 17 min · 1.6 mi\nWalk · 34 min\nTaxi or car · 17 min\nARRIVE\n11:07 am\nLEAVE\n12:37 pm\n3\nNational Museum of Ancient Art\n1 h 30 min · Museum\nNext door\nARRIVE\n12:37 pm\nLEAVE\n1:37 pm\nL\nLunch: Picanha Janelas Verdes\nRestaurant · Local spot · 1 h\nChange lunch\nLunch: why here\nUNTIL\n5:42 pm\n+\nFree time: 4 h 5 min\nYours to spend as you like. See what fits\nTaxi or car · 18 min · 1.8 mi\nWalk · 38 min\nTaxi or car · 18 min\nBY\n6:00 pm\nE\nBack at Hotel in central Lisbon, Portugal\nARRIVE\n6:30 pm\nD\nSuggested dinner: Juicy\nRestaurant\nChange dinner\nDinner: why here"
+  },
+  {
+   "i": 3,
+   "date": "2027-05-12",
+   "type": "departure",
+   "text": "WED MAY 12 · LISBON, PORTUGAL · LEAVING\nLisbon, Portugal ✎ Rename\nLock this day\n\nWhich airport do you leave from? There is more than one here (Lisbon Airport or Lisbon Luís de Camões Airport). Choose it in the day's settings and the day gets its time to leave by: no time is given on a guess.\n\nEdit this day"
+  }
+ ],
+ "guides": {
+  "Lisbon, Portugal": {
+   "city": "Lisbon, Portugal",
+   "src": true,
+   "ai": false,
+   "n": 32,
+   "sights": "Jerónimos Monastery* | Belém Tower* | 25 de Abril Bridge | Lisbon Cathedral | Praça do Comércio | Castle of Saint George | Santa Justa Lift | National Museum of Ancient Art | Padrão dos Descobrimentos | Church of Santa Engrácia | São Bento Palace | Águas Livres Aqueduct | Monastery of São Vicente de Fora | Estrela Basilica | Carmo Convent | Alfama | Calouste Gulbenkian Museum | Lisbon Baixa | Lisbon Oceanarium | Rossio Square | Lisbon Zoo | National Azulejo Museum | National Coach Museum | Prazeres Cemetery | Botânico Garden of Lisboa | Church of Nossa Senhora da Conceição Velha | Jardim da Estrela | Design Museum | Alverca Palace | Pavilhão do Conhecimento - Ciência Viva Science Centre | Restauradores Square | Edward VII Park",
+   "far": "Mafra | Ericeira | Sintra | Convento de Mafra | Basilica of Our Lady and St. Anthony | Parque de Santa Marta | Pena National Palace | Moorish Castle | Sintra National Palace | Quintinha de Monserrate | Quinta da Regaleira",
+   "eats": 60,
+   "starts": {
+    "cruise": [
+     "Port of Lisbon"
+    ],
+    "airport": [
+     "Lisbon Airport",
+     "Lisbon Luís de Camões Airport"
+    ],
+    "station": [
+     "Lisbon-Santa Apolónia Station",
+     "Estação Ferroviária de Lisboa - Rossio"
+    ],
+    "hotel": [
+     "Hotel in central Lisbon, Portugal"
+    ],
+    "point": [
+     "Central Lisbon, Portugal"
+    ]
+   }
+  }
+ },
+ "steps": [],
+ "version": "88a1dc8-1795204327",
+ "aiReady": false,
+ "wizard": {
+  "miss": [],
+  "prev": "Your days: 4 days",
+  "form": "Add each place in order, the way it's booked. Each new stop starts where the last one ends.\n\nSTOP 1 · CITY STAY\nCity\nArrive on\nNights\nHotel (optional)\nGetting there\nFlight\nTrain\nFerry\nCar or bus\nArrive in town at\nLeave empty if you don't know yet.\n+ Add a city stay\n+ Add a cruise\nGoing home from here\nFlight\nTrain\nFerry\nCar or bus\nFlight at\nYour days: 4 days\nAdd more details (optional)\nName this trip\n\nKairoute picks good defaults for pace, walking and voice, and you can change any of them later.\n\nCancel\nPersonalize first\nBuild my trip"
+ },
+ "buildSec": 20,
+ "state": {
+  "busy": "",
+  "err": "",
+  "days": [
+   {
+    "date": "2027-05-09",
+    "type": "arrival"
+   },
+   {
+    "date": "2027-05-10",
+    "type": "land"
+   },
+   {
+    "date": "2027-05-11",
+    "type": "land"
+   },
+   {
+    "date": "2027-05-12",
+    "type": "departure"
+   }
+  ]
+ },
+ "phoneText": "MON MAY 10 · LISBON, PORTUGAL · LAND DAY\nLisbon, Portugal ✎ Rename\nLock this day\n▶ Start tour\n9:00 am–6:00 pm\n9 h ✎\n4\nsights\n1.7 mi\nwalking\n3:01 pm\nlast stop done\nChoose sights\nMore\nAbout today's plan1 note\nUse Ctrl + scroll to zoom the map\nS\n1\n2\n3\nL\n4\n1000 ft\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nWalk\nTaxi or car\n● Meal\nMore about today\n\nAll times are Lisbon time, 6 h ahead of your device.\n\nLEAVE\n9:00 am\nS\nLeave Hotel in central Lisbon, Portugal\nAdd your own hotel on the Trip page for exact times.\nTaxi or car · 35 min · 5.8 mi\nARRIVE\n9:35 am\nLEAVE\n10:15 am\n1\nBelém Tower\n40 min · Sight · Must-see\nWalk · 16 min · 0.7 mi\nWalk · 16 min\nTaxi or car · 13 min\nARRIVE\n10:31 am\nLEAVE\n11:11 am\n2\nPadrão dos Descobrimentos\n40 min · Sight\nWalk · 9 min · 0.4 mi\nARRIVE\n11:20 am\nLEAVE\n11:50 am\n3\nJerónimos Monastery\n30 min · Church · Must-see · UNESCO\nWalk · 4 min · 0.2 mi\nARRIVE\n11:54 am\nLEAVE\n12:54 pm\nL\nLunch: Pão Pão Queijo Queijo\nRestaurant · Local spot · 1 h\nChange lunch\nLunch: why here\nWalk · 6 min · 0.3 mi\nARRIVE\n1:00 pm\nLEAVE\n2:30 pm\n4\nNational Coach Museum\n1 h 30 min · Museum\nUNTIL\n5:29 pm\n+\nFree time: 2 h 59 min\nYours to spend as you like. See what fits\nTaxi or car · 31 min · 4.6 mi\nBY\n6:00 pm\nE\nBack at Hotel in central Lisbon, Portugal\nARRIVE\n6:30 pm\nD\nSuggested dinner: RIB - Beef & Wine Lisboa\nRestaurant\nChange dinner\nDinner: why here",
+ "finished": "2026-11-20T20:33:54.625Z"
+}

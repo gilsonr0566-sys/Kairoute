@@ -1,0 +1,224 @@
+{
+ "name": "d14-bergen-geiranger",
+ "label": "Bergen and Geiranger (tender)",
+ "legs": [
+  {
+   "k": "cruise",
+   "board": "Copenhagen, Denmark",
+   "date": "2027-06-20",
+   "aboard": "16:00",
+   "ports": [
+    {
+     "date": "2027-06-22",
+     "place": "Bergen, Norway",
+     "arrive": "08:00",
+     "aboard": "17:00"
+    },
+    {
+     "date": "2027-06-23",
+     "place": "Geiranger, Norway",
+     "arrive": "09:00",
+     "aboard": "18:00",
+     "tender": true
+    }
+   ],
+   "end": "Copenhagen, Denmark",
+   "endDate": "2027-06-26",
+   "off": "07:00"
+  }
+ ],
+ "started": "2026-11-20T20:49:39.147Z",
+ "passed": {
+  "/sources": 14,
+  "/transit": 15,
+  "/guide": 3,
+  "/places": 4,
+  "/voyage": 3,
+  "/ground": 3,
+  "/route": 3,
+  "/x/near": 2
+ },
+ "refused": {
+  "/ratings": 3,
+  "/grating": 1,
+  "/events": 1
+ },
+ "errors": [],
+ "days": [
+  {
+   "i": 0,
+   "date": "2027-06-20",
+   "type": "arrival",
+   "text": "SUN JUN 20 · COPENHAGEN, DENMARK · ARRIVING\nCopenhagen, Denmark ✎ Rename\nLock this day\nToday is one plan\n\nFlight in at 10:30 am, then the ship at 4:00 pm: the sightseeing in between, your bags and the countdown are on one page.\n\nSee today's plan"
+  },
+  {
+   "i": 1,
+   "date": "2027-06-20",
+   "type": "embark",
+   "text": "SUN JUN 20 · COPENHAGEN, DENMARK · BOARDING\nCopenhagen, Denmark ✎ Rename\nLock this day\n🚢\nLEAVE BY\nall aboard 4:00 pm\n2:04 pm\n▶ Start the tour\n\nOfficial all aboard 4:00 pm · Back at the cruise terminal by 3:00 pm\n\nGetting back on time is up to you\n\nKairoute's leave-by and back-by times are estimates with spare time built in. Traffic, queues and the weather can still slow you down. The time that counts is the ship's all-aboard time or your train or flight, as your cruise line or carrier gives it. Check it on the day.\n\nI understand\nTerms of use\n2\nsights\n0.2 mi\nwalking\nChoose sights\nMore\nAbout today's plan3 notes\nUse Ctrl + scroll to zoom the map\nStart · Airport\nL\n1\n2\nFinish · Cruise port\n3000 ft\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nWalk\nTaxi or car\n● Meal\nMore about today\n🛳 When do you board?\nBoarding time\nTerminal (optional)\nSave\n\nOn your boarding pass or check-in confirmation (also called arrival or check-in time). Until you add it, the plan uses the time to be back above.\n\nWhat to have on you · 0 of 9 ready\n📅 Add reminders to my calendar\n\nAll times are Copenhagen time, 7 h ahead of your device.\n\nLEAVE\n11:45 am\nS\nOut of Copenhagen Airport\nFlight arrives 10:30 am. We allow 1 h 15 min to get off the plane and through baggage claim (and passport control after a flight from abroad). Book luggage storage near Copenhagen Airport ahead (a left-luggage desk or a storage shop), or ask your hotel or station.\nYou fly in the day the ship sails, so today goes straight from the airport to the ship: there isn't enough time for sightseeing with a safe margin. A late or missed flight is the most common way travelers miss a ship, and the ship won't wait. Keep your airline's and cruise line's phone numbers handy, and if a delay is announced, call the cruise line at once.\nTaxi or car · 39 min · 7.1 mi\nARRIVE\n12:24 pm\nLEAVE\n12:44 pm\nL\nLunch: Dang Dang Asian Flavours\nAsian · Local spot · 20 min\nChange lunch\nLunch: why here\nWalk · 5 min · 0.2 mi\nARRIVE\n12:49 pm\nLEAVE\n1:19 pm\n1\nThe Little Mermaid\n30 min · Sight · Must-see\nTaxi or car · 20 min · 2.2 mi\nBy road, with time for traffic.\nWalk · 47 min\nTaxi or car · 20 min\nARRIVE\n1:39 pm\nLEAVE\n2:04 pm\n2\nGlobal Biodiversity Information Facility\n25 min · Sight · Must-see\nTaxi or car · 39 min · 3.0 mi\nIncludes 15 min spare before the ship.\nWalk · 1 h 4 min\nTaxi or car · 24 min\nARRIVE\n2:43 pm\nE\nBoarding at Port of Copenhagen\n17 min to spare.\nOfficial all aboard 4:00 pm: be at the terminal by 3:00 pm at the latest. Your cruise line gives you a boarding time: add it and the plan gets you there for it.\nPorters take your big bags at the curb (luggage tags on; they reach your cabin by evening). Keep your passport, boarding pass, medicines and valuables in your carry-on for check-in and security.\nBig ports have more than one cruise terminal: check yours on your boarding pass and tell the driver.\nBook the taxi or transfer the day before, or ask your hotel to call one. Being aboard on time is your responsibility: check your boarding time with your cruise line."
+  },
+  {
+   "i": 2,
+   "date": "2027-06-21",
+   "type": "sea"
+  },
+  {
+   "i": 3,
+   "date": "2027-06-22",
+   "type": "port",
+   "text": "TUE JUN 22 · BERGEN, NORWAY · IN PORT\nBergen, Norway ✎ Rename\nLock this day\n\nWe couldn't find exactly where Cruise port of Bergen, Norway is, so this day isn't planned on a guess (every ride time and the time to head back depend on it). It's being looked up again; you can also pick another cruise terminal in the day's settings.\n\nEdit this day"
+  },
+  {
+   "i": 4,
+   "date": "2027-06-23",
+   "type": "port",
+   "text": "WED JUN 23 · GEIRANGER, NORWAY · IN PORT\nGeiranger, Norway ✎ Rename\nLock this day\n\nWe couldn't find exactly where Cruise port of Geiranger, Norway is, so this day isn't planned on a guess (every ride time and the time to head back depend on it). It's being looked up again; you can also pick another cruise terminal in the day's settings.\n\nEdit this day"
+  },
+  {
+   "i": 5,
+   "date": "2027-06-24",
+   "type": "sea"
+  },
+  {
+   "i": 6,
+   "date": "2027-06-25",
+   "type": "sea"
+  },
+  {
+   "i": 7,
+   "date": "2027-06-26",
+   "type": "arrival",
+   "text": "SAT JUN 26 · COPENHAGEN, DENMARK · ARRIVING\nCopenhagen, Denmark ✎ Rename\nLock this day\n\nThis is your last day. Add how you leave and when (your flight or train home) on the Trip page, or your hotel if you're staying on, and the day is planned around it: nothing is planned on a guess.\n\nEdit this day"
+  }
+ ],
+ "guides": {
+  "Copenhagen, Denmark": {
+   "city": "Copenhagen, Denmark",
+   "src": true,
+   "ai": false,
+   "n": 30,
+   "sights": "The Little Mermaid* | Amalienborg | Rosenborg Castle | Ny Carlsberg Glyptotek | Rundetaarn | Royal Danish Library | Christiansborg Palace | Thorvaldsen Museum | Kastellet | National Museum of Denmark | Global Biodiversity Information Facility* | Frederiksberg Palace | Statens Museum for Kunst | Grundtvig's Church | Nyhavn | Frederik's Church | European Environment Agency | Copenhagen Zoo | Tivoli Gardens | Assistens Cemetery | Charlottenborg Palace | Hirschsprung Collection | Designmuseum Denmark | Middelgrundsfortet | Danish War Museum | Trekroner Fort | Brumleby | Medical Museion | Gefion Fountain~ | Kastrup Fortress",
+   "far": "Malmö | Elsinore | Hillerød | Roskilde",
+   "eats": 60,
+   "starts": {
+    "cruise": [
+     "Port of Copenhagen"
+    ],
+    "airport": [
+     "Copenhagen Airport"
+    ],
+    "station": [
+     "Copenhagen Central Station",
+     "Copenhagen South railway station"
+    ],
+    "hotel": [
+     "Hotel in central Copenhagen, Denmark"
+    ],
+    "point": [
+     "Central Copenhagen, Denmark"
+    ]
+   }
+  },
+  "Bergen, Norway": {
+   "city": "Bergen, Norway",
+   "src": true,
+   "ai": false,
+   "n": 15,
+   "sights": "Bryggen* | Sandviken* | Fantoft Stave Church | St Mary's Church | Bergenhus Fortress | Hanseatic Museum and Schøtstuene | Den Nationale Scene | Gaahl | Gamlehaugen | Fløibanen | Damsgård Manor | Troldhaugen | Bergen Aquarium | Nygårdsparken | Statsraad Lehmkuhl",
+   "far": "",
+   "eats": 56,
+   "starts": {
+    "cruise": [
+     "Cruise port of Bergen, Norway (unknown)"
+    ],
+    "airport": [
+     "Bergen Airport, Flesland"
+    ],
+    "station": [
+     "Bergen station"
+    ],
+    "hotel": [
+     "Hotel in central Bergen, Norway"
+    ],
+    "point": [
+     "Central Bergen, Norway"
+    ]
+   }
+  },
+  "Geiranger, Norway": {
+   "city": "Geiranger, Norway",
+   "src": true,
+   "ai": false,
+   "n": 5,
+   "sights": "Geirangerfjord* | Seven Sisters waterfall | Dalsnibba | Norsk Fjordsenter | Ørnesvingen",
+   "far": "",
+   "eats": 0,
+   "starts": {
+    "cruise": [
+     "Cruise port of Geiranger, Norway (unknown)"
+    ],
+    "airport": [
+     "Geiranger, Norway airport (unknown)"
+    ],
+    "station": [
+     "Geiranger, Norway main station (unknown)"
+    ],
+    "hotel": [
+     "Hotel in central Geiranger, Norway"
+    ],
+    "point": [
+     "Central Geiranger, Norway"
+    ]
+   }
+  }
+ },
+ "steps": [],
+ "version": "88a1dc8-1795204327",
+ "aiReady": false,
+ "wizard": {
+  "miss": [],
+  "prev": "Your days: 7 days · 2 ports",
+  "form": "Add each place in order, the way it's booked. Each new stop starts where the last one ends.\n\nSTOP 1 · CRUISE\nLeaves from\nShip (optional)\nBoarding day\nAll aboard\nGetting to the ship (if you arrive the same day)\nFlight\nTrain\nFerry\nCar or bus\nArrive in Copenhagen, Denmark at\nLeave empty if you don't know yet.\nPorts of call\nIn order, from your cruise booking. Days with no port are added as sea days.\nDate\nPort\nShip arrives\nAll aboard\nTender port (small boats take you ashore)\nRemove port\nDate\nPort\nShip arrives\nAll aboard\nTender port (small boats take you ashore)\nRemove port\n+ Add a port\nCruise ends in\nOn\nOff the ship at\n+ Add a city stay\n+ Add a cruise\nGoing home from Copenhagen, Denmark\nFlight\nTrain\nFerry\nCar or bus\nFlight at\nYour days: 7 days · 2 ports\nAdd more details (optional)\nName this trip\n\nKairoute picks good defaults for pace, walking and voice, and you can change any of them later.\n\nCancel\nPersonalize first\nBuild my trip"
+ },
+ "buildSec": 387,
+ "state": {
+  "busy": "",
+  "err": "",
+  "days": [
+   {
+    "date": "2027-06-20",
+    "type": "arrival"
+   },
+   {
+    "date": "2027-06-20",
+    "type": "embark"
+   },
+   {
+    "date": "2027-06-21",
+    "type": "sea"
+   },
+   {
+    "date": "2027-06-22",
+    "type": "port"
+   },
+   {
+    "date": "2027-06-23",
+    "type": "port"
+   },
+   {
+    "date": "2027-06-24",
+    "type": "sea"
+   },
+   {
+    "date": "2027-06-25",
+    "type": "sea"
+   },
+   {
+    "date": "2027-06-26",
+    "type": "arrival"
+   }
+  ]
+ },
+ "phoneText": "TUE JUN 22 · BERGEN, NORWAY · IN PORT\nBergen, Norway ✎ Rename\nLock this day\n\nWe couldn't find exactly where Cruise port of Bergen, Norway is, so this day isn't planned on a guess (every ride time and the time to head back depend on it). It's being looked up again; you can also pick another cruise terminal in the day's settings.\n\nEdit this day",
+ "finished": "2026-11-20T20:57:04.254Z"
+}

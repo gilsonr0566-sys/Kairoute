@@ -1,0 +1,200 @@
+{
+ "name": "a13-grandturk-halfmoon",
+ "label": "Grand Turk and Half Moon Cay (tender)",
+ "legs": [
+  {
+   "k": "cruise",
+   "board": "Fort Lauderdale, Florida",
+   "date": "2027-02-08",
+   "aboard": "15:30",
+   "ports": [
+    {
+     "date": "2027-02-10",
+     "place": "Grand Turk, Turks and Caicos",
+     "arrive": "08:00",
+     "aboard": "17:00"
+    },
+    {
+     "date": "2027-02-12",
+     "place": "Half Moon Cay, Bahamas",
+     "arrive": "08:00",
+     "aboard": "16:00",
+     "tender": true
+    }
+   ],
+   "end": "Fort Lauderdale, Florida",
+   "endDate": "2027-02-14",
+   "off": "07:00"
+  }
+ ],
+ "started": "2026-11-20T20:36:36.542Z",
+ "passed": {
+  "/sources": 14,
+  "/transit": 10,
+  "/guide": 3,
+  "/places": 4,
+  "/voyage": 3,
+  "/ground": 2,
+  "/route": 8,
+  "/x/near": 4
+ },
+ "refused": {
+  "/ratings": 2,
+  "/grating": 3,
+  "/events": 2
+ },
+ "errors": [],
+ "days": [
+  {
+   "i": 0,
+   "date": "2027-02-08",
+   "type": "arrival",
+   "text": "MON FEB 8 · FORT LAUDERDALE, FLORIDA · ARRIVING\nFort Lauderdale, Florida ✎ Rename\nLock this day\nToday is one plan\n\nFlight in at 10:30 am, then the ship at 3:30 pm: the sightseeing in between, your bags and the countdown are on one page.\n\nSee today's plan"
+  },
+  {
+   "i": 1,
+   "date": "2027-02-08",
+   "type": "embark",
+   "text": "MON FEB 8 · FORT LAUDERDALE, FLORIDA · BOARDING\nFort Lauderdale, Florida ✎ Rename\nLock this day\n🚢\nLEAVE BY\nall aboard 3:30 pm\n1:35 pm\n▶ Start the tour\n\nOfficial all aboard 3:30 pm · Back at the cruise terminal by 2:30 pm\n\nGetting back on time is up to you\n\nKairoute's leave-by and back-by times are estimates with spare time built in. Traffic, queues and the weather can still slow you down. The time that counts is the ship's all-aboard time or your train or flight, as your cruise line or carrier gives it. Check it on the day.\n\nI understand\nTerms of use\n1\nsight\nChoose sights\nMore\nAbout today's plan9 notes\nNot planned today: Hugh Taylor Birch State Park didn't fit in the time.\nNot planned today: International Swimming Hall of Fame didn't fit in the time.\nNot planned today: Roosevelt Gardens didn't fit in the time.\nNot planned today: Las Olas Boulevard didn't fit in the time.\nNot planned today: Boulevard Gardens didn't fit in the time.\nNot planned today: Franklin Park didn't fit in the time.\nNot planned today: Washington Park didn't fit in the time.\nA shorter visit to Lazy Lake (25 min instead of 40 min) so the rest of the day fits.\nOpening hours aren't known for Lazy Lake on this date: planned between 9:00 am and 5:00 pm, check before you go.\nUse Ctrl + scroll to zoom the map\nStart · Airport\n1\nL\nFinish · Cruise port\n5000 ft\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nTaxi or car\n● Meal\nMore about today\n🛳 When do you board?\nBoarding time\nTerminal (optional)\nSave\n\nOn your boarding pass or check-in confirmation (also called arrival or check-in time). Until you add it, the plan uses the time to be back above.\n\nWhat to have on you · 0 of 9 ready\n📅 Add reminders to my calendar\n\nAll times are Fort Lauderdale time, 1 h ahead of your device.\n\nLEAVE\n11:45 am\nS\nOut of Fort Lauderdale airport shooting\nFlight arrives 10:30 am. We allow 1 h 15 min to get off the plane and through baggage claim (and passport control after a flight from abroad). Book luggage storage near Fort Lauderdale airport shooting ahead (a left-luggage desk or a storage shop), or ask your hotel or station.\nYou fly in the day the ship sails, so today goes straight from the airport to the ship: there isn't enough time for sightseeing with a safe margin. A late or missed flight is the most common way travelers miss a ship, and the ship won't wait. Keep your airline's and cruise line's phone numbers handy, and if a delay is announced, call the cruise line at once.\nTaxi or car · 40 min · 7.5 mi\nARRIVE\n12:25 pm\nLEAVE\n12:50 pm\n1\nLazy Lake\n25 min · Sight · Must-see\nTaxi or car · 25 min · 3.4 mi\nARRIVE\n1:15 pm\nLEAVE\n1:35 pm\nL\nLunch: Cavier Club\nRestaurant · Local spot · 20 min\nChange lunch\nLunch: why here\nTaxi or car · 40 min · 3.4 mi\nARRIVE\n2:15 pm\nE\nBoarding at Port Everglades\n15 min to spare.\nOfficial all aboard 3:30 pm: be at the terminal by 2:30 pm at the latest. Your cruise line gives you a boarding time: add it and the plan gets you there for it.\nPorters take your big bags at the curb (luggage tags on; they reach your cabin by evening). Keep your passport, boarding pass, medicines and valuables in your carry-on for check-in and security.\nBig ports have more than one cruise terminal: check yours on your boarding pass and tell the driver.\nBook the taxi or transfer the day before, or ask your hotel to call one. Being aboard on time is your responsibility: check your boarding time with your cruise line."
+  },
+  {
+   "i": 2,
+   "date": "2027-02-09",
+   "type": "sea"
+  },
+  {
+   "i": 3,
+   "date": "2027-02-10",
+   "type": "port",
+   "text": "WED FEB 10 · GRAND TURK, TURKS AND CAICOS · IN PORT\nGrand Turk, Turks and Caicos ✎ Rename\nLock this day\n🚢\nLEAVE BY\nall aboard 5:00 pm\n12:45 pm\n▶ Start the tour\n\nAshore 8:30 am · Official all aboard 5:00 pm · Back at the ship by 4:15 pm\n\nGetting back on time is up to you\n\nKairoute's leave-by and back-by times are estimates with spare time built in. Traffic, queues and the weather can still slow you down. The time that counts is the ship's all-aboard time or your train or flight, as your cruise line or carrier gives it. Check it on the day.\n\nI understand\nTerms of use\n3\nsights\n1.2 mi\nwalking\nChoose sights\nMore\nAbout today's plan1 note\nUse Ctrl + scroll to zoom the map\nStart · Cruise port\n1\n2\n3\nL\n2000 ft\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nWalk\nTaxi or car\n● Meal\nMore about today\n\nAll times are Grand Turk time, 1 h ahead of your device.\n\nLEAVE\n8:30 am\nS\nOff the ship at Grand Turk Cruise Center\nShip docks 8:00 am.\nTaxi or car · 28 min · 4.0 mi\nARRIVE\n9:00 am\nLEAVE\n9:40 am\n1\nGrand Turk\n40 min · Sight · Must-see\nWalk · 15 min · 0.7 mi\nWalk · 15 min\nTaxi or car · 13 min\nARRIVE\n9:55 am\nLEAVE\n10:35 am\n2\nHer Majesty's Prison\n40 min · Sight\nTaxi or car · 16 min · 1.4 mi\nBy road, with time for traffic.\nWalk · 30 min\nTaxi or car · 16 min\nARRIVE\n10:51 am\nLEAVE\n11:31 am\n3\nPalm Grove Sunset Cabana beach\n40 min · Sight\nWalk · 11 min · 0.5 mi\nWalk · 11 min\nTaxi or car · 12 min\nARRIVE\n11:45 am\nLEAVE\n12:45 pm\nL\nLunch: Ranchy Cafe\nCafé · Local spot · 1 h\nChange lunch\nLunch: why here\nUNTIL\n12:45 pm\n+\nFree time: 2 h 53 min\nYours to spend as you like. Leave here by 12:45 pm to be back by 4:15 pm. See what fits\nTaxi or car · 37 min · 2.7 mi\nIncludes 15 min spare before the ship.\nWalk · 58 min\nTaxi or car · 22 min\nBY\n4:15 pm\nE\nBack at the ship\nThe ship's official all aboard is 5:00 pm. Kairoute plans you back at least 45 min before it."
+  },
+  {
+   "i": 4,
+   "date": "2027-02-11",
+   "type": "sea"
+  },
+  {
+   "i": 5,
+   "date": "2027-02-12",
+   "type": "port",
+   "text": "FRI FEB 12 · HALF MOON CAY, BAHAMAS · IN PORT\nHalf Moon Cay, Bahamas ✎ Rename\nLock this day\nI couldn't find Half Moon Cay, Bahamas in the travel guides and maps. Check the spelling on the day (for example \"Kotor, Montenegro\"), then tap Build again.\nNo guide for Half Moon Cay, Bahamas yet\n\nKairoute will build the guide for Half Moon Cay, Bahamas from travel guides and maps: real sights, places to eat, the cruise port and stations.\n\nBuild the Half Moon Cay, Bahamas guide"
+  },
+  {
+   "i": 6,
+   "date": "2027-02-13",
+   "type": "sea"
+  },
+  {
+   "i": 7,
+   "date": "2027-02-14",
+   "type": "arrival",
+   "text": "SUN FEB 14 · FORT LAUDERDALE, FLORIDA · ARRIVING\nFort Lauderdale, Florida ✎ Rename\nLock this day\n\nThis is your last day. Add how you leave and when (your flight or train home) on the Trip page, or your hotel if you're staying on, and the day is planned around it: nothing is planned on a guess.\n\nEdit this day"
+  }
+ ],
+ "guides": {
+  "Fort Lauderdale, Florida": {
+   "city": "Fort Lauderdale, Florida",
+   "src": true,
+   "ai": false,
+   "n": 16,
+   "sights": "Lazy Lake* | Washington Park* | Boulevard Gardens* | Franklin Park* | Roosevelt Gardens* | Bonnet House | International Swimming Hall of Fame* | Hugh Taylor Birch State Park | Las Olas Boulevard | Broward Center for the Performing Arts | Beach Place | NSU Art Museum | Museum of Discovery and Science | Old Fort Lauderdale Village & Museum | Stranahan House | Antique Car Museum",
+   "far": "Miami | Miami Beach",
+   "eats": 43,
+   "starts": {
+    "cruise": [
+     "Port Everglades"
+    ],
+    "airport": [
+     "Fort Lauderdale airport shooting",
+     "Fort Lauderdale Executive Airport"
+    ],
+    "station": [
+     "Fort Lauderdale station (Brightline)",
+     "Fort Lauderdale station",
+     "Fort Lauderdale Airport station"
+    ],
+    "hotel": [
+     "Hotel in central Fort Lauderdale, Florida"
+    ],
+    "point": [
+     "Central Fort Lauderdale, Florida"
+    ]
+   }
+  },
+  "Grand Turk, Turks and Caicos": {
+   "city": "Grand Turk, Turks and Caicos",
+   "src": true,
+   "ai": false,
+   "n": 4,
+   "sights": "Grand Turk* | Palm Grove Sunset Cabana beach | Her Majesty's Prison | Turks and Caicos National Museum",
+   "far": "",
+   "eats": 11,
+   "starts": {
+    "cruise": [
+     "Grand Turk Cruise Center"
+    ],
+    "airport": [
+     "JAGS McCartney International Airport"
+    ],
+    "station": [
+     "Grand Turk, Turks and Caicos main station (unknown)"
+    ],
+    "hotel": [
+     "Hotel in central Grand Turk, Turks and Caicos"
+    ],
+    "point": [
+     "Central Grand Turk, Turks and Caicos"
+    ]
+   }
+  }
+ },
+ "steps": [],
+ "version": "88a1dc8-1795204327",
+ "aiReady": false,
+ "wizard": {
+  "miss": [],
+  "prev": "Your days: 7 days · 2 ports",
+  "form": "Add each place in order, the way it's booked. Each new stop starts where the last one ends.\n\nSTOP 1 · CRUISE\nLeaves from\nShip (optional)\nBoarding day\nAll aboard\nGetting to the ship (if you arrive the same day)\nFlight\nTrain\nFerry\nCar or bus\nArrive in Fort Lauderdale, Florida at\nLeave empty if you don't know yet.\nPorts of call\nIn order, from your cruise booking. Days with no port are added as sea days.\nDate\nPort\nShip arrives\nAll aboard\nTender port (small boats take you ashore)\nRemove port\nDate\nPort\nShip arrives\nAll aboard\nTender port (small boats take you ashore)\nRemove port\n+ Add a port\nCruise ends in\nOn\nOff the ship at\n+ Add a city stay\n+ Add a cruise\nGoing home from Fort Lauderdale, Florida\nFlight\nTrain\nFerry\nCar or bus\nFlight at\nYour days: 7 days · 2 ports\nAdd more details (optional)\nName this trip\n\nKairoute picks good defaults for pace, walking and voice, and you can change any of them later.\n\nCancel\nPersonalize first\nBuild my trip"
+ },
+ "buildSec": 70,
+ "state": {
+  "busy": "",
+  "err": "I couldn't find Half Moon Cay, Bahamas in the travel guides and maps. Check the spelling on the day (for example \"Kotor, Montenegro\"), then tap Build again.",
+  "days": [
+   {
+    "date": "2027-02-08",
+    "type": "arrival"
+   },
+   {
+    "date": "2027-02-08",
+    "type": "embark"
+   },
+   {
+    "date": "2027-02-09",
+    "type": "sea"
+   },
+   {
+    "date": "2027-02-10",
+    "type": "port"
+   },
+   {
+    "date": "2027-02-11",
+    "type": "sea"
+   },
+   {
+    "date": "2027-02-12",
+    "type": "port"
+   },
+   {
+    "date": "2027-02-13",
+    "type": "sea"
+   },
+   {
+    "date": "2027-02-14",
+    "type": "arrival"
+   }
+  ]
+ },
+ "phoneText": "WED FEB 10 · GRAND TURK, TURKS AND CAICOS · IN PORT\nGrand Turk, Turks and Caicos ✎ Rename\nLock this day\n🚢\nLEAVE BY\nall aboard 5:00 pm\n12:45 pm\n▶ Start tour\n\nAshore 8:30 am · Official all aboard 5:00 pm · Back at the ship by 4:15 pm\n\nGetting back on time is up to you\n\nKairoute's leave-by and back-by times are estimates with spare time built in. Traffic, queues and the weather can still slow you down. The time that counts is the ship's all-aboard time or your train or flight, as your cruise line or carrier gives it. Check it on the day.\n\nI understand\nTerms of use\n3\nsights\n1.2 mi\nwalking\nChoose sights\nMore\nAbout today's plan1 note\nUse Ctrl + scroll to zoom the map\nStart · Cruise port\n1\n2\n3\nL\n2000 ft\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nWalk\nTaxi or car\n● Meal\nMore about today\n\nAll times are Grand Turk time, 1 h ahead of your device.\n\nLEAVE\n8:30 am\nS\nOff the ship at Grand Turk Cruise Center\nShip docks 8:00 am.\nTaxi or car · 28 min · 4.0 mi\nARRIVE\n9:00 am\nLEAVE\n9:40 am\n1\nGrand Turk\n40 min · Sight · Must-see\nWalk · 15 min · 0.7 mi\nWalk · 15 min\nTaxi or car · 13 min\nARRIVE\n9:55 am\nLEAVE\n10:35 am\n2\nHer Majesty's Prison\n40 min · Sight\nTaxi or car · 16 min · 1.4 mi\nBy road, with time for traffic.\nWalk · 30 min\nTaxi or car · 16 min\nARRIVE\n10:51 am\nLEAVE\n11:31 am\n3\nPalm Grove Sunset Cabana beach\n40 min · Sight\nWalk · 11 min · 0.5 mi\nWalk · 11 min\nTaxi or car · 12 min\nARRIVE\n11:45 am\nLEAVE\n12:45 pm\nL\nLunch: Ranchy Cafe\nCafé · Local spot · 1 h\nChange lunch\nLunch: why here\nUN",
+ "finished": "2026-11-20T20:38:43.359Z"
+}

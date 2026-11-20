@@ -1,0 +1,120 @@
+{
+ "name": "a05-edinburgh",
+ "label": "Edinburgh August stay",
+ "legs": [
+  {
+   "k": "stay",
+   "place": "Edinburgh, Scotland",
+   "date": "2027-08-09",
+   "nights": 3,
+   "inBy": "train",
+   "inAt": "14:20",
+   "homeBy": "train",
+   "homeAt": "10:00"
+  }
+ ],
+ "started": "2026-11-20T20:32:39.678Z",
+ "passed": {
+  "/sources": 12,
+  "/transit": 21,
+  "/guide": 1,
+  "/places": 1,
+  "/voyage": 2,
+  "/ground": 1,
+  "/x/near": 7,
+  "/route": 7
+ },
+ "refused": {
+  "/ratings": 1,
+  "/grating": 3,
+  "/events": 4
+ },
+ "errors": [],
+ "days": [
+  {
+   "i": 0,
+   "date": "2027-08-09",
+   "type": "arrival",
+   "text": "MON AUG 9 · EDINBURGH, SCOTLAND · ARRIVING\nEdinburgh, Scotland ✎ Rename\nLock this day\n▶ Start the tour\n2:35 pm–8:57 pm\n6 h 22 min ✎\n1\nsight\n1.8 mi\nwalking\n4:23 pm\nlast stop done\nChoose sights\nMore\nAbout today's plan1 note\nUse Ctrl + scroll to zoom the map\nStart · Station\nH\n1\n500 ft\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nWalk\n■ Hotel\nMore about today\n\nAll times are Edinburgh time, 6 h ahead of your device.\n\nLEAVE\n2:35 pm\nS\nOut of Edinburgh Waverley railway station\nTrain arrives 2:20 pm. We allow 15 min to get off the train.\nWalk · 2 min · 0.1 mi\nARRIVE\n2:37 pm\nLEAVE\n2:57 pm\nH\nCheck in or drop bags\n20 min\nWalk · 18 min · 0.8 mi\nWalk · 18 min\nTaxi or car · 14 min\nARRIVE\n3:15 pm\nLEAVE\n4:05 pm\n1\nHolyrood Palace\n50 min · Palace · Must-see\nUNTIL\n8:39 pm\n+\nFree time: 4 h 34 min\nYours to spend as you like. See what fits\nWalk · 18 min · 0.8 mi\nWalk · 18 min\nTaxi or car · 14 min\nBY\n8:57 pm\nE\nBack at Hotel in central Edinburgh, Scotland\nARRIVE\n6:30 pm\nD\nSuggested dinner: Roti King\nRestaurant\nChange dinner\nDinner: why here"
+  },
+  {
+   "i": 1,
+   "date": "2027-08-10",
+   "type": "land",
+   "text": "TUE AUG 10 · EDINBURGH, SCOTLAND · LAND DAY\nEdinburgh, Scotland ✎ Rename\nLock this day\n▶ Start the tour\n9:00 am–6:00 pm\n9 h ✎\n4\nsights\n1.0 mi\nwalking\n1:26 pm\nlast stop done\nChoose sights\nMore\nAbout today's plan1 note\nUse Ctrl + scroll to zoom the map\nS\n1\n2\n3\n4\nL\n2000 ft\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nWalk\nTaxi or car\n● Meal\nMore about today\n\nAll times are Edinburgh time, 6 h ahead of your device.\n\nLEAVE\n9:00 am\nS\nLeave Hotel in central Edinburgh, Scotland\nAdd your own hotel on the Trip page for exact times.\nWalk · 6 min · 0.3 mi\nARRIVE\n9:06 am\nLEAVE\n9:36 am\n1\nSt Mary's Cathedral\n30 min · Church\nWalk · 6 min · 0.3 mi\nARRIVE\n9:42 am\nLEAVE\n10:22 am\n2\nCalton Hill\n40 min · Sight\nTaxi or car · 17 min · 1.6 mi\nBy road, with time for traffic.\nWalk · 34 min\nTaxi or car · 17 min\nARRIVE\n10:39 am\nLEAVE\n11:19 am\n3\nRoyal Botanic Garden Edinburgh\n40 min · Park or garden\nTaxi or car · 18 min · 1.7 mi\nWalk · 36 min\nTaxi or car · 18 min\nARRIVE\n11:37 am\nLEAVE\n12:17 pm\n4\nNational Library of Scotland\n40 min · Sight\nWalk · 2 min · 0.1 mi\nARRIVE\n12:19 pm\nLEAVE\n1:19 pm\nL\nLunch: Angels with Bagpipes\nRestaurant · Local spot · 1 h\nChange lunch\nLunch: why here\nUNTIL\n5:53 pm\n+\nFree time: 4 h 34 min\nYours to spend as you like. See what fits\nWalk · 7 min · 0.3 mi\nBY\n6:00 pm\nE\nBack at Hotel in central Edinburgh, Scotland\nARRIVE\n6:30 pm\nD\nSuggested dinner: Gaucho\nRestaurant\nChange dinner\nDinner: why here"
+  },
+  {
+   "i": 2,
+   "date": "2027-08-11",
+   "type": "land",
+   "text": "WED AUG 11 · EDINBURGH, SCOTLAND · LAND DAY\nEdinburgh, Scotland ✎ Rename\nLock this day\n▶ Start the tour\n9:00 am–6:00 pm\n9 h ✎\n5\nsights\n1.9 mi\nwalking\n3:40 pm\nlast stop done\nChoose sights\nMore\nAbout today's plan1 note\nUse Ctrl + scroll to zoom the map\nS\n1\n2\n3\nL\n4\n5\n500 ft\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nWalk\n● Meal\nMore about today\n\nAll times are Edinburgh time, 6 h ahead of your device.\n\nLEAVE\n9:00 am\nS\nLeave Hotel in central Edinburgh, Scotland\nAdd your own hotel on the Trip page for exact times.\nWalk · 5 min · 0.2 mi\nARRIVE\n9:05 am\nLEAVE\n9:45 am\n1\nScott Monument\n40 min · Sight\nWalk · 4 min · 0.2 mi\nARRIVE\n9:49 am\nLEAVE\n11:19 am\n2\nScottish National Gallery\n1 h 30 min · Museum · Must-see\nWalk · 7 min · 0.3 mi\nARRIVE\n11:26 am\nLEAVE\n12:16 pm\n3\nEdinburgh Castle\n50 min · Palace · Must-see\nWalk · 10 min · 0.5 mi\nARRIVE\n12:26 pm\nLEAVE\n1:26 pm\nL\nLunch: Mr Wood Fire\nRestaurant · Local spot · 1 h\nChange lunch\nLunch: why here\nWalk · 2 min · 0.1 mi\nARRIVE\n1:28 pm\nLEAVE\n2:58 pm\n4\nNational Museum of Scotland\n1 h 30 min · Museum\nWalk · 5 min · 0.2 mi\nARRIVE\n3:03 pm\nLEAVE\n3:33 pm\n5\nSt Giles' Cathedral\n30 min · Church\nUNTIL\n5:53 pm\n+\nFree time: 2 h 20 min\nYours to spend as you like. See what fits\nWalk · 7 min · 0.3 mi\nBY\n6:00 pm\nE\nBack at Hotel in central Edinburgh, Scotland\nARRIVE\n6:30 pm\nD\nSuggested dinner: Happy Lamb Hot Pot\nRestaurant\nChange dinner\nDinner: why here"
+  },
+  {
+   "i": 3,
+   "date": "2027-08-12",
+   "type": "departure",
+   "text": "THU AUG 12 · EDINBURGH, SCOTLAND · LEAVING\nEdinburgh, Scotland ✎ Rename\nLock this day\n🚆\nLEAVE BY\nto your train\n9:15 am\n▶ Start the tour\n\nTrain 10:00 am · Back at Edinburgh Waverley railway station by 9:30 am\n\nGetting back on time is up to you\n\nKairoute's leave-by and back-by times are estimates with spare time built in. Traffic, queues and the weather can still slow you down. The time that counts is the ship's all-aboard time or your train or flight, as your cruise line or carrier gives it. Check it on the day.\n\nI understand\nTerms of use\n0\nsights\nChoose sights\nMore\nAbout today's plan1 note\nUse Ctrl + scroll to zoom the map\nS\nFinish · Station\n100 ft\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nWalk\n■ Hotel\nMore about today\nThere isn't much time today, so keep it close: a coffee and one nearby sight at most.\n\nAll times are Edinburgh time, 6 h ahead of your device.\n\nLEAVE\n9:00 am\nS\nCheck out of Hotel in central Edinburgh, Scotland\nAdd your own hotel on the Trip page for exact times.\nMost hotels keep your bags for the day after check-out: ask at the desk.\nNext door\nARRIVE\n9:00 am\nLEAVE\n9:15 am\nH\nCollect bags\n15 min\nWalk · 2 min · 0.1 mi\nARRIVE\n9:17 am\nE\nAt Edinburgh Waverley railway station\n13 min to spare.\nTrain leaves 10:00 am: be at the station by 9:30 am, 30 min early."
+  }
+ ],
+ "guides": {
+  "Edinburgh, Scotland": {
+   "city": "Edinburgh, Scotland",
+   "src": true,
+   "ai": false,
+   "n": 16,
+   "sights": "Edinburgh Castle* | Holyrood Palace* | Scottish National Gallery* | St Giles' Cathedral | National Museum of Scotland | Scott Monument | National Library of Scotland | Royal Botanic Garden Edinburgh | HMY Britannia | Arthur's Seat | Craigmillar Castle | Royal Observatory | St Mary's Cathedral | Calton Hill | Edinburgh Zoo | Edinburgh Central Mosque",
+   "far": "",
+   "eats": 60,
+   "starts": {
+    "cruise": [
+     "Port of Leith"
+    ],
+    "airport": [
+     "Edinburgh Airport"
+    ],
+    "station": [
+     "Edinburgh Waverley railway station"
+    ],
+    "hotel": [
+     "Hotel in central Edinburgh, Scotland"
+    ],
+    "point": [
+     "Central Edinburgh, Scotland"
+    ]
+   }
+  }
+ },
+ "steps": [],
+ "version": "88a1dc8-1795204327",
+ "aiReady": false,
+ "wizard": {
+  "miss": [],
+  "prev": "Your days: 4 days",
+  "form": "Add each place in order, the way it's booked. Each new stop starts where the last one ends.\n\nSTOP 1 · CITY STAY\nCity\nArrive on\nNights\nHotel (optional)\nGetting there\nFlight\nTrain\nFerry\nCar or bus\nArrive in town at\nLeave empty if you don't know yet.\n+ Add a city stay\n+ Add a cruise\nGoing home from here\nFlight\nTrain\nFerry\nCar or bus\nTrain at\nYour days: 4 days\nAdd more details (optional)\nName this trip\n\nKairoute picks good defaults for pace, walking and voice, and you can change any of them later.\n\nCancel\nPersonalize first\nBuild my trip"
+ },
+ "buildSec": 82,
+ "state": {
+  "busy": "",
+  "err": "",
+  "days": [
+   {
+    "date": "2027-08-09",
+    "type": "arrival"
+   },
+   {
+    "date": "2027-08-10",
+    "type": "land"
+   },
+   {
+    "date": "2027-08-11",
+    "type": "land"
+   },
+   {
+    "date": "2027-08-12",
+    "type": "departure"
+   }
+  ]
+ },
+ "phoneText": "TUE AUG 10 · EDINBURGH, SCOTLAND · LAND DAY\nEdinburgh, Scotland ✎ Rename\nLock this day\n▶ Start tour\n9:00 am–6:00 pm\n9 h ✎\n4\nsights\n1.0 mi\nwalking\n1:26 pm\nlast stop done\nChoose sights\nMore\nAbout today's plan1 note\nUse Ctrl + scroll to zoom the map\nS\n1\n2\n3\n4\nL\n3000 ft\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nWalk\nTaxi or car\n● Meal\nMore about today\n\nAll times are Edinburgh time, 6 h ahead of your device.\n\nLEAVE\n9:00 am\nS\nLeave Hotel in central Edinburgh, Scotland\nAdd your own hotel on the Trip page for exact times.\nWalk · 6 min · 0.3 mi\nARRIVE\n9:06 am\nLEAVE\n9:36 am\n1\nSt Mary's Cathedral\n30 min · Church\nWalk · 6 min · 0.3 mi\nARRIVE\n9:42 am\nLEAVE\n10:22 am\n2\nCalton Hill\n40 min · Sight\nTaxi or car · 17 min · 1.6 mi\nBy road, with time for traffic.\nWalk · 34 min\nTaxi or car · 17 min\nARRIVE\n10:39 am\nLEAVE\n11:19 am\n3\nRoyal Botanic Garden Edinburgh\n40 min · Park or garden\nTaxi or car · 18 min · 1.7 mi\nWalk · 36 min\nTaxi or car · 18 min\nARRIVE\n11:37 am\nLEAVE\n12:17 pm\n4\nNational Library of Scotland\n40 min · Sight\nWalk · 2 min · 0.1 mi\nARRIVE\n12:19 pm\nLEAVE\n1:19 pm\nL\nLunch: Angels with Bagpipes\nRestaurant · Local spot · 1 h\nChange lunch\nLunch: why here\nUNTIL\n5:53 pm\n+\nFree time: 4 h 34 min\nYours to spend as you like. See what fits\nWalk · 7 min · 0.3 mi\nBY\n6:00 pm\nE\nBack at Hotel in central Edinburgh, Scotland\nARRIVE\n6:30 pm\nD\nSuggested dinner: Gaucho\nRestaurant\nChange dinner\nDinner: why here",
+ "finished": "2026-11-20T20:34:49.378Z"
+}

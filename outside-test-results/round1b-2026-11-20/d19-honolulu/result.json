@@ -1,0 +1,109 @@
+{
+ "name": "d19-honolulu",
+ "label": "Honolulu stay",
+ "legs": [
+  {
+   "k": "stay",
+   "place": "Honolulu, Hawaii",
+   "date": "2027-02-22",
+   "nights": 2,
+   "inAt": "14:00",
+   "homeAt": "22:00"
+  }
+ ],
+ "started": "2026-11-20T20:54:47.848Z",
+ "passed": {
+  "/sources": 12,
+  "/transit": 9,
+  "/guide": 1,
+  "/places": 1,
+  "/voyage": 1,
+  "/ground": 1,
+  "/x/near": 2,
+  "/route": 1
+ },
+ "refused": {
+  "/ratings": 1,
+  "/grating": 1,
+  "/events": 1
+ },
+ "errors": [],
+ "days": [
+  {
+   "i": 0,
+   "date": "2027-02-22",
+   "type": "arrival",
+   "text": "MON FEB 22 · HONOLULU, HAWAII · ARRIVING\nHonolulu, Hawaii ✎ Rename\nLock this day\n\nWhich airport do you arrive at? There is more than one here (Daniel K. Inouye International Airport or Kalaeloa Airport). Choose it in the day's settings: no time is given on a guess.\n\nEdit this day"
+  },
+  {
+   "i": 1,
+   "date": "2027-02-23",
+   "type": "land",
+   "text": "TUE FEB 23 · HONOLULU, HAWAII · LAND DAY\nHonolulu, Hawaii ✎ Rename\nLock this day\n▶ Start the tour\n9:00 am–6:00 pm\n9 h ✎\n2\nsights\n0.2 mi\nwalking\n1:44 pm\nlast stop done\nChoose sights\nMore\nAbout today's plan1 note\nUse Ctrl + scroll to zoom the map\nS\n1\n2\nL\n2000 mi\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nWalk\nTaxi or car\nBus\n● Meal\nMore about today\n\nAll times are Honolulu time, 4 h behind your device.\n\nLEAVE\n9:00 am\nS\nLeave Hotel in central Honolulu, Hawaii\nAdd your own hotel on the Trip page for exact times.\nTaxi or car · 27 min · 3.7 mi\nARRIVE\n9:27 am\nLEAVE\n10:07 am\n1\nWaikiki\n40 min · Sight · Must-see\nTaxi or car · 51 min · 12 mi\nARRIVE\n10:58 am\nLEAVE\n11:38 am\n2\nPearl Harbor\n40 min · Sight · Must-see\nBus 51 · 1 h 2 min · 8.5 mi\nWalk 6 min to Kamehameha Hwy + Arizona Memorial Pl. Bus 51: Kamehameha Hwy + Arizona Memorial Pl to S King St + Alakea St, 38 min, then walk 2 min. Times include waiting and boarding. Next departure about 1:14 pm (timetable checked Nov 20; Kairoute checks it again the day before and the morning of).\nBus 51 · 1 h 2 min\nTaxi or car · 43 min\nARRIVE\n12:40 pm\nLEAVE\n1:40 pm\nL\nLunch: Cafe Julia\nCafé · Local spot · 1 h\nChange lunch\nLunch: why here\nUNTIL\n5:56 pm\n+\nFree time: 4 h 16 min\nYours to spend as you like. See what fits\nWalk · 4 min · 0.2 mi\nBY\n6:00 pm\nE\nBack at Hotel in central Honolulu, Hawaii\nARRIVE\n6:30 pm\nD\nSuggested dinner: Alakea Steak\nRestaurant\nChange dinner\nDinner: why here"
+  },
+  {
+   "i": 2,
+   "date": "2027-02-24",
+   "type": "departure",
+   "text": "WED FEB 24 · HONOLULU, HAWAII · LEAVING\nHonolulu, Hawaii ✎ Rename\nLock this day\n\nWhich airport do you leave from? There is more than one here (Daniel K. Inouye International Airport or Kalaeloa Airport). Choose it in the day's settings and the day gets its time to leave by: no time is given on a guess.\n\nEdit this day"
+  }
+ ],
+ "guides": {
+  "Honolulu, Hawaii": {
+   "city": "Honolulu, Hawaii",
+   "src": true,
+   "ai": false,
+   "n": 10,
+   "sights": "Pearl Harbor* | Waikiki* | Honolulu Museum of Art | Bishop Museum | Cathedral Basilica of Our Lady of Peace | Aloha Tower | Washington Place | Aliiolani Hale | First Hawaiian Center | Hawaii State Capitol",
+   "far": "Kailua",
+   "eats": 43,
+   "starts": {
+    "cruise": [
+     "Cruise port of Honolulu, Hawaii (unknown)"
+    ],
+    "airport": [
+     "Daniel K. Inouye International Airport",
+     "Kalaeloa Airport"
+    ],
+    "station": [
+     "Honolulu, Hawaii main station (unknown)"
+    ],
+    "hotel": [
+     "Hotel in central Honolulu, Hawaii"
+    ],
+    "point": [
+     "Central Honolulu, Hawaii"
+    ]
+   }
+  }
+ },
+ "steps": [],
+ "version": "88a1dc8-1795204327",
+ "aiReady": false,
+ "wizard": {
+  "miss": [],
+  "prev": "Your days: 3 days",
+  "form": "Add each place in order, the way it's booked. Each new stop starts where the last one ends.\n\nSTOP 1 · CITY STAY\nCity\nArrive on\nNights\nHotel (optional)\nGetting there\nFlight\nTrain\nFerry\nCar or bus\nArrive in town at\nLeave empty if you don't know yet.\n+ Add a city stay\n+ Add a cruise\nGoing home from here\nFlight\nTrain\nFerry\nCar or bus\nFlight at\nYour days: 3 days\nAdd more details (optional)\nName this trip\n\nKairoute picks good defaults for pace, walking and voice, and you can change any of them later.\n\nCancel\nPersonalize first\nBuild my trip"
+ },
+ "buildSec": 44,
+ "state": {
+  "busy": "",
+  "err": "",
+  "days": [
+   {
+    "date": "2027-02-22",
+    "type": "arrival"
+   },
+   {
+    "date": "2027-02-23",
+    "type": "land"
+   },
+   {
+    "date": "2027-02-24",
+    "type": "departure"
+   }
+  ]
+ },
+ "phoneText": "TUE FEB 23 · HONOLULU, HAWAII · LAND DAY\nHonolulu, Hawaii ✎ Rename\nLock this day\n▶ Start tour\n9:00 am–6:00 pm\n9 h ✎\n2\nsights\n0.2 mi\nwalking\n1:44 pm\nlast stop done\nChoose sights\nMore\nAbout today's plan1 note\nUse Ctrl + scroll to zoom the map\nS\n1\n2\nL\n2000 mi\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nWalk\nTaxi or car\nBus\n● Meal\nMore about today\n\nAll times are Honolulu time, 4 h behind your device.\n\nLEAVE\n9:00 am\nS\nLeave Hotel in central Honolulu, Hawaii\nAdd your own hotel on the Trip page for exact times.\nTaxi or car · 27 min · 3.7 mi\nARRIVE\n9:27 am\nLEAVE\n10:07 am\n1\nWaikiki\n40 min · Sight · Must-see\nTaxi or car · 51 min · 12 mi\nARRIVE\n10:58 am\nLEAVE\n11:38 am\n2\nPearl Harbor\n40 min · Sight · Must-see\nBus 51 · 1 h 2 min · 8.5 mi\nWalk 6 min to Kamehameha Hwy + Arizona Memorial Pl. Bus 51: Kamehameha Hwy + Arizona Memorial Pl to S King St + Alakea St, 38 min, then walk 2 min. Times include waiting and boarding. Next departure about 1:14 pm (timetable checked Nov 20; Kairoute checks it again the day before and the morning of).\nBus 51 · 1 h 2 min\nTaxi or car · 43 min\nARRIVE\n12:40 pm\nLEAVE\n1:40 pm\nL\nLunch: Cafe Julia\nCafé · Local spot · 1 h\nChange lunch\nLunch: why here\nUNTIL\n5:56 pm\n+\nFree time: 4 h 16 min\nYours to spend as you like. See what fits\nWalk · 4 min · 0.2 mi\nBY\n6:00 pm\nE\nBack at Hotel in central Honolulu, Hawaii\nARRIVE\n6:30 pm\nD\nSuggested dinner: Alakea Steak\nRestaurant\nChange dinner\nDinner: why here",
+ "finished": "2026-11-20T20:56:14.060Z"
+}

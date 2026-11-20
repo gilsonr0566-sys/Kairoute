@@ -1,0 +1,112 @@
+{
+ "name": "d11-nashville",
+ "label": "Nashville by car",
+ "legs": [
+  {
+   "k": "stay",
+   "place": "Nashville, Tennessee",
+   "date": "2027-04-23",
+   "nights": 2,
+   "inBy": "car",
+   "inAt": "15:00",
+   "homeBy": "car",
+   "homeAt": "11:00"
+  }
+ ],
+ "started": "2026-11-20T20:53:04.920Z",
+ "passed": {
+  "/sources": 12,
+  "/transit": 11,
+  "/guide": 1,
+  "/places": 1,
+  "/voyage": 2,
+  "/ground": 1,
+  "/x/near": 2,
+  "/route": 4
+ },
+ "refused": {
+  "/ratings": 1,
+  "/grating": 2,
+  "/events": 3
+ },
+ "errors": [],
+ "days": [
+  {
+   "i": 0,
+   "date": "2027-04-23",
+   "type": "arrival",
+   "text": "FRI APR 23 · NASHVILLE, TENNESSEE · ARRIVING\nNashville, Tennessee ✎ Rename\nLock this day\n▶ Start the tour\n3:10 pm–9:30 pm\n6 h 20 min ✎\n1\nsight\n1.6 mi\nwalking\n4:44 pm\nlast stop done\nChoose sights\nMore\nAbout today's plan1 note\nUse Ctrl + scroll to zoom the map\nS\n1\n500 ft\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nWalk\n■ Hotel\nMore about today\n\nAll times are Nashville time.\n\nLEAVE\n3:10 pm\nS\nOut of Hotel in central Nashville, Tennessee\nAdd your own hotel on the Trip page for exact times.\nCar or bus arrives 3:00 pm. We allow 10 min to get parked and on your way.\nNext door\nARRIVE\n3:10 pm\nLEAVE\n3:30 pm\nH\nCheck in or drop bags\n20 min\nWalk · 17 min · 0.8 mi\nWalk · 17 min\nTaxi or car · 14 min\nARRIVE\n3:47 pm\nLEAVE\n4:27 pm\n1\nTennessee State Capitol\n40 min · Sight · Must-see\nUNTIL\n9:13 pm\n+\nFree time: 4 h 46 min\nYours to spend as you like. See what fits\nWalk · 17 min · 0.8 mi\nWalk · 17 min\nTaxi or car · 14 min\nBY\n9:30 pm\nE\nBack at Hotel in central Nashville, Tennessee\nARRIVE\n6:30 pm\nD\nSuggested dinner: Acme Feed and Seed\nRestaurant\nTRAVELERS RECOMMEND\nChange dinner\nDinner: why here"
+  },
+  {
+   "i": 1,
+   "date": "2027-04-24",
+   "type": "land",
+   "text": "SAT APR 24 · NASHVILLE, TENNESSEE · LAND DAY\nNashville, Tennessee ✎ Rename\nLock this day\n▶ Start the tour\n9:00 am–6:00 pm\n9 h ✎\n1\nsight\n12:47 pm\nlast stop done\nChoose sights\nMore\nAbout today's plan1 note\nUse Ctrl + scroll to zoom the map\nS\n1\nL\n2000 ft\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nWalk\nTaxi or car\n● Meal\nMore about today\n\nAll times are Nashville time.\n\nLEAVE\n9:00 am\nS\nLeave Hotel in central Nashville, Tennessee\nAdd your own hotel on the Trip page for exact times.\nTaxi or car · 24 min · 3.1 mi\nBy road, with time for traffic.\nWalk · 1 h 6 min\nTaxi or car · 24 min\nARRIVE\n9:24 am\nLEAVE\n10:04 am\n1\nParthenon\n40 min · Sight · Must-see\nTaxi or car · 24 min · 3.0 mi\nWalk · 1 h 5 min\nTaxi or car · 24 min\nARRIVE\n11:45 am\nLEAVE\n12:45 pm\nL\nLunch: Hard Rock Cafe\nAmerican · Local spot · 1 h\nChange lunch\nLunch: why here\nUNTIL\n5:58 pm\n+\nFree time: 5 h 13 min\nYours to spend as you like. See what fits\nNext door\nBY\n6:00 pm\nE\nBack at Hotel in central Nashville, Tennessee\nARRIVE\n6:30 pm\nD\nSuggested dinner: Category 10 (formerly Wild Horse Saloon)\nPub\nTRAVELERS RECOMMEND\nChange dinner\nDinner: why here"
+  },
+  {
+   "i": 2,
+   "date": "2027-04-25",
+   "type": "departure",
+   "text": "SUN APR 25 · NASHVILLE, TENNESSEE · LEAVING\nNashville, Tennessee ✎ Rename\nLock this day\n🚌\nLEAVE BY\nto your car or bus\n9:15 am\n▶ Start the tour\n\nCar or bus 11:00 am · Back at Hotel in central Nashville, Tennessee by 10:40 am\n\nGetting back on time is up to you\n\nKairoute's leave-by and back-by times are estimates with spare time built in. Traffic, queues and the weather can still slow you down. The time that counts is the ship's all-aboard time or your train or flight, as your cruise line or carrier gives it. Check it on the day.\n\nI understand\nTerms of use\n0\nsights\nChoose sights\nMore\nAbout today's plan2 notes\nNot planned today: Country Music Hall of Fame and Museum didn't fit in the time.\nCollect your bags at 9:00 am and leave for the starting point by 9:15 am.\nUse Ctrl + scroll to zoom the map\nS\n200 ft\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\n■ Hotel\nMore about today\n\nAll times are Nashville time.\n\nLEAVE\n9:00 am\nS\nCheck out of Hotel in central Nashville, Tennessee\nAdd your own hotel on the Trip page for exact times.\nMost hotels keep your bags for the day after check-out: ask at the desk.\nNext door\nARRIVE\n9:00 am\nLEAVE\n9:15 am\nH\nCollect bags\n15 min\nUNTIL\n9:15 am\n+\nFree time: 1 h 25 min\nYours to spend as you like. Leave here by 9:15 am to be back by 10:40 am. See what fits\nNext door\nBY\n10:40 am\nE\nAt Hotel in central Nashville, Tennessee\nCar or bus leaves 11:00 am: be at the starting point by 10:40 am, 20 min early."
+  }
+ ],
+ "guides": {
+  "Nashville, Tennessee": {
+   "city": "Nashville, Tennessee",
+   "src": true,
+   "ai": false,
+   "n": 3,
+   "sights": "Parthenon* | Tennessee State Capitol* | Country Music Hall of Fame and Museum*",
+   "far": "",
+   "eats": 26,
+   "starts": {
+    "cruise": [
+     "Cruise port of Nashville, Tennessee (unknown)"
+    ],
+    "airport": [
+     "Nashville International Airport",
+     "Tennessee Air National Guard",
+     "Nashville International Airport Terminal"
+    ],
+    "station": [
+     "Tennessee Central Railway Museum"
+    ],
+    "hotel": [
+     "Hotel in central Nashville, Tennessee"
+    ],
+    "point": [
+     "Central Nashville, Tennessee"
+    ]
+   }
+  }
+ },
+ "steps": [],
+ "version": "88a1dc8-1795204327",
+ "aiReady": false,
+ "wizard": {
+  "miss": [],
+  "prev": "Your days: 3 days",
+  "form": "Add each place in order, the way it's booked. Each new stop starts where the last one ends.\n\nSTOP 1 · CITY STAY\nCity\nArrive on\nNights\nHotel (optional)\nGetting there\nFlight\nTrain\nFerry\nCar or bus\nArrive in town at\nLeave empty if you don't know yet.\n+ Add a city stay\n+ Add a cruise\nGoing home from here\nFlight\nTrain\nFerry\nCar or bus\nLeave at\nYour days: 3 days\nAdd more details (optional)\nName this trip\n\nKairoute picks good defaults for pace, walking and voice, and you can change any of them later.\n\nCancel\nPersonalize first\nBuild my trip"
+ },
+ "buildSec": 66,
+ "state": {
+  "busy": "",
+  "err": "",
+  "days": [
+   {
+    "date": "2027-04-23",
+    "type": "arrival"
+   },
+   {
+    "date": "2027-04-24",
+    "type": "land"
+   },
+   {
+    "date": "2027-04-25",
+    "type": "departure"
+   }
+  ]
+ },
+ "phoneText": "SAT APR 24 · NASHVILLE, TENNESSEE · LAND DAY\nNashville, Tennessee ✎ Rename\nLock this day\n▶ Start tour\n9:00 am–6:00 pm\n9 h ✎\n1\nsight\n12:47 pm\nlast stop done\nChoose sights\nMore\nAbout today's plan1 note\nUse Ctrl + scroll to zoom the map\nS\n1\nL\n3000 ft\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nWalk\nTaxi or car\n● Meal\nMore about today\n\nAll times are Nashville time.\n\nLEAVE\n9:00 am\nS\nLeave Hotel in central Nashville, Tennessee\nAdd your own hotel on the Trip page for exact times.\nTaxi or car · 24 min · 3.1 mi\nBy road, with time for traffic.\nWalk · 1 h 6 min\nTaxi or car · 24 min\nARRIVE\n9:24 am\nLEAVE\n10:04 am\n1\nParthenon\n40 min · Sight · Must-see\nTaxi or car · 24 min · 3.0 mi\nWalk · 1 h 5 min\nTaxi or car · 24 min\nARRIVE\n11:45 am\nLEAVE\n12:45 pm\nL\nLunch: Hard Rock Cafe\nAmerican · Local spot · 1 h\nChange lunch\nLunch: why here\nUNTIL\n5:58 pm\n+\nFree time: 5 h 13 min\nYours to spend as you like. See what fits\nNext door\nBY\n6:00 pm\nE\nBack at Hotel in central Nashville, Tennessee\nARRIVE\n6:30 pm\nD\nSuggested dinner: Category 10 (formerly Wild Horse Saloon)\nPub\nTRAVELERS RECOMMEND\nChange dinner\nDinner: why here",
+ "finished": "2026-11-20T20:54:52.495Z"
+}

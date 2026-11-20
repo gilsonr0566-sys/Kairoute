@@ -1,0 +1,121 @@
+{
+ "name": "d04-sydney",
+ "label": "Sydney stay",
+ "legs": [
+  {
+   "k": "stay",
+   "place": "Sydney, Australia",
+   "date": "2027-03-08",
+   "nights": 3,
+   "inAt": "07:00",
+   "homeAt": "21:00"
+  }
+ ],
+ "started": "2026-11-20T20:42:54.936Z",
+ "passed": {
+  "/sources": 12,
+  "/transit": 9,
+  "/guide": 1,
+  "/places": 2,
+  "/voyage": 1,
+  "/ground": 1,
+  "/x/near": 4,
+  "/route": 2
+ },
+ "refused": {
+  "/ratings": 1,
+  "/grating": 2,
+  "/events": 2
+ },
+ "errors": [],
+ "days": [
+  {
+   "i": 0,
+   "date": "2027-03-08",
+   "type": "arrival",
+   "text": "MON MAR 8 · SYDNEY, AUSTRALIA · ARRIVING\nSydney, Australia ✎ Rename\nLock this day\n\nWhich airport do you arrive at? There is more than one here (Sydney Airport, Western Sydney Airport or Bankstown Airport). Choose it in the day's settings: no time is given on a guess.\n\nEdit this day"
+  },
+  {
+   "i": 1,
+   "date": "2027-03-09",
+   "type": "land",
+   "text": "TUE MAR 9 · SYDNEY, AUSTRALIA · LAND DAY\nSydney, Australia ✎ Rename\nLock this day\n▶ Start the tour\n9:00 am–6:00 pm\n9 h ✎\n4\nsights\n0.8 mi\nwalking\n2:33 pm\nlast stop done\nChoose sights\nMore\nAbout today's plan1 note\nUse Ctrl + scroll to zoom the map\nS\n1\n2\n3\nL\n4\n2000 ft\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nWalk\nTaxi or car\n● Meal\nMore about today\n\nAll times are Sydney time, 17 h ahead of your device.\n\nLEAVE\n9:00 am\nS\nLeave Hotel in central Sydney, Australia\nAdd your own hotel on the Trip page for exact times.\nTaxi or car · 31 min · 4.7 mi\nARRIVE\n9:31 am\nLEAVE\n10:11 am\n1\nDarling Harbour\n40 min · Sight\nTaxi or car · 17 min · 1.5 mi\nBy road, with time for traffic.\nWalk · 32 min\nTaxi or car · 17 min\nARRIVE\n10:28 am\nLEAVE\n11:08 am\n2\nRoyal Botanic Gardens, Sydney\n40 min · Park or garden\nWalk · 14 min · 0.6 mi\nWalk · 14 min\nTaxi or car · 13 min\nARRIVE\n11:22 am\nLEAVE\n12:02 pm\n3\nSydney Opera House\n40 min · Sight · Must-see · UNESCO\nWalk · 2 min · 0.1 mi\nARRIVE\n12:04 pm\nLEAVE\n1:04 pm\nL\nLunch: Winnie's\nRestaurant · Popular with visitors · 1 h\nChange lunch\nLunch: why here\nTaxi or car · 16 min · 1.4 mi\nWalk · 30 min\nTaxi or car · 16 min\nARRIVE\n1:20 pm\nLEAVE\n2:00 pm\n4\nHyde Park\n40 min · Park or garden\nUNTIL\n5:27 pm\n+\nFree time: 3 h 27 min\nYours to spend as you like. See what fits\nTaxi or car · 33 min · 5.1 mi\nBY\n6:00 pm\nE\nBack at Hotel in central Sydney, Australia\nARRIVE\n6:30 pm\nD\nSuggested dinner: Hasu Sushi\nRestaurant\nChange dinner\nDinner: why here"
+  },
+  {
+   "i": 2,
+   "date": "2027-03-10",
+   "type": "land",
+   "text": "WED MAR 10 · SYDNEY, AUSTRALIA · LAND DAY\nSydney, Australia ✎ Rename\nLock this day\n▶ Start the tour\n9:00 am–6:00 pm\n9 h ✎\n3\nsights\n0.8 mi\nwalking\n2:02 pm\nlast stop done\nChoose sights\nMore\nAbout today's plan1 note\nUse Ctrl + scroll to zoom the map\nS\n1\n2\nL\n3\n500 ft\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nWalk\nTaxi or car\n● Meal\nMore about today\n\nAll times are Sydney time, 17 h ahead of your device.\n\nLEAVE\n9:00 am\nS\nLeave Hotel in central Sydney, Australia\nAdd your own hotel on the Trip page for exact times.\nTaxi or car · 33 min · 5.1 mi\nARRIVE\n9:33 am\nLEAVE\n11:03 am\n1\nAustralian Museum\n1 h 30 min · Museum\nWalk · 6 min · 0.3 mi\nARRIVE\n11:09 am\nLEAVE\n11:39 am\n2\nSt Mary’s Cathedral\n30 min · Church\nWalk · 6 min · 0.3 mi\nARRIVE\n11:45 am\nLEAVE\n12:45 pm\nL\nLunch: Palace Chinese Restaurant\nRestaurant · Local spot · 1 h\nChange lunch\nLunch: why here\nWalk · 4 min · 0.2 mi\nARRIVE\n12:49 pm\nLEAVE\n1:29 pm\n3\nQueen Victoria Building\n40 min · Sight\nUNTIL\n5:27 pm\n+\nFree time: 3 h 58 min\nYours to spend as you like. See what fits\nTaxi or car · 33 min · 5.0 mi\nBY\n6:00 pm\nE\nBack at Hotel in central Sydney, Australia\nARRIVE\n6:30 pm\nD\nSuggested dinner: Baba's Place\nRestaurant\nChange dinner\nDinner: why here"
+  },
+  {
+   "i": 3,
+   "date": "2027-03-11",
+   "type": "departure",
+   "text": "THU MAR 11 · SYDNEY, AUSTRALIA · LEAVING\nSydney, Australia ✎ Rename\nLock this day\n\nWhich airport do you leave from? There is more than one here (Sydney Airport, Western Sydney Airport or Bankstown Airport). Choose it in the day's settings and the day gets its time to leave by: no time is given on a guess.\n\nEdit this day"
+  }
+ ],
+ "guides": {
+  "Sydney, Australia": {
+   "city": "Sydney, Australia",
+   "src": true,
+   "ai": false,
+   "n": 7,
+   "sights": "Sydney Opera House* | Australian Museum | Royal Botanic Gardens, Sydney | Darling Harbour | St Mary’s Cathedral | Queen Victoria Building | Hyde Park",
+   "far": "",
+   "eats": 43,
+   "starts": {
+    "cruise": [
+     "Overseas Passenger Terminal"
+    ],
+    "airport": [
+     "Sydney Airport",
+     "Western Sydney Airport",
+     "Bankstown Airport"
+    ],
+    "station": [
+     "Central railway station, Sydney",
+     "Wynyard railway station, Sydney"
+    ],
+    "hotel": [
+     "Hotel in central Sydney, Australia"
+    ],
+    "point": [
+     "Central Sydney, Australia"
+    ]
+   }
+  }
+ },
+ "steps": [],
+ "version": "88a1dc8-1795204327",
+ "aiReady": false,
+ "wizard": {
+  "miss": [],
+  "prev": "Your days: 4 days",
+  "form": "Add each place in order, the way it's booked. Each new stop starts where the last one ends.\n\nSTOP 1 · CITY STAY\nCity\nArrive on\nNights\nHotel (optional)\nGetting there\nFlight\nTrain\nFerry\nCar or bus\nArrive in town at\nLeave empty if you don't know yet.\n+ Add a city stay\n+ Add a cruise\nGoing home from here\nFlight\nTrain\nFerry\nCar or bus\nFlight at\nYour days: 4 days\nAdd more details (optional)\nName this trip\n\nKairoute picks good defaults for pace, walking and voice, and you can change any of them later.\n\nCancel\nPersonalize first\nBuild my trip"
+ },
+ "buildSec": 88,
+ "state": {
+  "busy": "",
+  "err": "",
+  "days": [
+   {
+    "date": "2027-03-08",
+    "type": "arrival"
+   },
+   {
+    "date": "2027-03-09",
+    "type": "land"
+   },
+   {
+    "date": "2027-03-10",
+    "type": "land"
+   },
+   {
+    "date": "2027-03-11",
+    "type": "departure"
+   }
+  ]
+ },
+ "phoneText": "TUE MAR 9 · SYDNEY, AUSTRALIA · LAND DAY\nSydney, Australia ✎ Rename\nLock this day\n▶ Start tour\n9:00 am–6:00 pm\n9 h ✎\n4\nsights\n0.8 mi\nwalking\n2:33 pm\nlast stop done\nChoose sights\nMore\nAbout today's plan1 note\nUse Ctrl + scroll to zoom the map\nS\n1\n2\n3\nL\n4\n3000 ft\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nWalk\nTaxi or car\n● Meal\nMore about today\n\nAll times are Sydney time, 17 h ahead of your device.\n\nLEAVE\n9:00 am\nS\nLeave Hotel in central Sydney, Australia\nAdd your own hotel on the Trip page for exact times.\nTaxi or car · 31 min · 4.7 mi\nARRIVE\n9:31 am\nLEAVE\n10:11 am\n1\nDarling Harbour\n40 min · Sight\nTaxi or car · 17 min · 1.5 mi\nBy road, with time for traffic.\nWalk · 32 min\nTaxi or car · 17 min\nARRIVE\n10:28 am\nLEAVE\n11:08 am\n2\nRoyal Botanic Gardens, Sydney\n40 min · Park or garden\nWalk · 14 min · 0.6 mi\nWalk · 14 min\nTaxi or car · 13 min\nARRIVE\n11:22 am\nLEAVE\n12:02 pm\n3\nSydney Opera House\n40 min · Sight · Must-see · UNESCO\nWalk · 2 min · 0.1 mi\nARRIVE\n12:04 pm\nLEAVE\n1:04 pm\nL\nLunch: Winnie's\nRestaurant · Popular with visitors · 1 h\nChange lunch\nLunch: why here\nTaxi or car · 16 min · 1.4 mi\nWalk · 30 min\nTaxi or car · 16 min\nARRIVE\n1:20 pm\nLEAVE\n2:00 pm\n4\nHyde Park\n40 min · Park or garden\nUNTIL\n5:27 pm\n+\nFree time: 3 h 27 min\nYours to spend as you like. See what fits\nTaxi or car · 33 min · 5.1 mi\nBY\n6:00 pm\nE\nBack at Hotel in central Sydney, Australia\nARRIVE\n6:30 pm\nD\nSuggested dinner: Hasu Sushi\nRestaurant\nChange dinner\nDinner: why here",
+ "finished": "2026-11-20T20:45:12.565Z"
+}

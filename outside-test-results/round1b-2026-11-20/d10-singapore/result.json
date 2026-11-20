@@ -1,0 +1,114 @@
+{
+ "name": "d10-singapore",
+ "label": "Singapore stay",
+ "legs": [
+  {
+   "k": "stay",
+   "place": "Singapore",
+   "date": "2027-08-16",
+   "nights": 2,
+   "inAt": "06:30",
+   "homeAt": "23:30"
+  }
+ ],
+ "started": "2026-11-20T20:46:16.571Z",
+ "passed": {
+  "/sources": 12,
+  "/transit": 8,
+  "/guide": 1,
+  "/places": 2,
+  "/voyage": 1,
+  "/ground": 1,
+  "/x/near": 4,
+  "/route": 1
+ },
+ "refused": {
+  "/ratings": 1,
+  "/grating": 1,
+  "/events": 1
+ },
+ "errors": [],
+ "days": [
+  {
+   "i": 0,
+   "date": "2027-08-16",
+   "type": "arrival",
+   "text": "MON AUG 16 · SINGAPORE · ARRIVING\nSingapore ✎ Rename\nLock this day\n\nWhich airport do you arrive at? There is more than one here (Changi Airport, Seletar Airport or Hang Nadim Batam International Airport). Choose it in the day's settings: no time is given on a guess.\n\nEdit this day"
+  },
+  {
+   "i": 1,
+   "date": "2027-08-17",
+   "type": "land",
+   "text": "TUE AUG 17 · SINGAPORE · LAND DAY\nSingapore ✎ Rename\nLock this day\n▶ Start the tour\n9:00 am–6:00 pm\n9 h ✎\n6\nsights\n1.2 mi\nwalking\n4:16 pm\nlast stop done\nChoose sights\nMore\nAbout today's plan1 note\nUse Ctrl + scroll to zoom the map\nS\n1\n2\n3\nL\n4\n5\n6\n1 mi\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nWalk\nTaxi or car\n● Meal\nMore about today\n\nAll times are Singapore time, 13 h ahead of your device.\n\nLEAVE\n9:00 am\nS\nLeave Hotel in central Singapore\nAdd your own hotel on the Trip page for exact times.\nTaxi or car · 28 min · 3.9 mi\nARRIVE\n9:28 am\nLEAVE\n10:08 am\n1\nSentosa\n40 min · Sight · Must-see\nTaxi or car · 29 min · 4.1 mi\nARRIVE\n10:37 am\nLEAVE\n11:17 am\n2\nMarina Bay Sands\n40 min · Sight · Must-see\nWalk · 10 min · 0.5 mi\nARRIVE\n11:27 am\nLEAVE\n12:07 pm\n3\nGardens by the Bay\n40 min · Park or garden · Must-see\nWalk · 4 min · 0.2 mi\nARRIVE\n12:11 pm\nLEAVE\n1:11 pm\nL\nLunch: Marguerite\nRestaurant · Local spot · 1 h\nTRAVELERS RECOMMEND\nChange lunch\nLunch: why here\nWalk · 13 min · 0.6 mi\nWalk · 13 min\nTaxi or car · 13 min\nARRIVE\n1:24 pm\nLEAVE\n2:04 pm\n4\nSingapore Grand Prix\n40 min · Sight · Must-see\nNext door\nARRIVE\n2:04 pm\nLEAVE\n2:44 pm\n5\nMarina Bay Street Circuit\n40 min · Sight · Must-see\nTaxi or car · 32 min · 4.8 mi\nARRIVE\n3:16 pm\nLEAVE\n3:56 pm\n6\nSingapore Botanic Gardens\n40 min · Park or garden · Must-see · UNESCO\nUNTIL\n5:40 pm\n+\nFree time: 1 h 44 min\nYours to spend as you like. See what fits\nTaxi or car · 20 min · 2.3 mi\nBy road, with time for traffic.\nWalk · 49 min\nTaxi or car · 20 min\nBY\n6:00 pm\nE\nBack at Hotel in central Singapore\nARRIVE\n6:30 pm\nD\nSuggested dinner: EATcetera\nRestaurant\nChange dinner\nDinner: why here"
+  },
+  {
+   "i": 2,
+   "date": "2027-08-18",
+   "type": "departure",
+   "text": "WED AUG 18 · SINGAPORE · LEAVING\nSingapore ✎ Rename\nLock this day\n\nWhich airport do you leave from? There is more than one here (Changi Airport, Seletar Airport or Hang Nadim Batam International Airport). Choose it in the day's settings and the day gets its time to leave by: no time is given on a guess.\n\nEdit this day"
+  }
+ ],
+ "guides": {
+  "Singapore": {
+   "city": "Singapore",
+   "src": true,
+   "ai": false,
+   "n": 21,
+   "sights": "Singapore Botanic Gardens* | Marina Bay Sands* | Gardens by the Bay* | Masjid Sultan | Merlion | St Andrew's Cathedral | Sentosa* | Singapore Grand Prix* | Maghain Aboth Synagogue | National Museum of Singapore | Sri Mariamman Temple, Singapore | Marina Bay Street Circuit* | Universal Studios Singapore | National Gallery Singapore | Masjid Hajjah Fatimah | Masjid Jamae | Asian Civilisations Museum | Sun Yat Sen Memorial Hall (Singapore) | Singapore Art Museum | ArtScience Museum | National Library Singapore",
+   "far": "",
+   "eats": 68,
+   "starts": {
+    "cruise": [
+     "Singapore Cruise Centre"
+    ],
+    "airport": [
+     "Changi Airport",
+     "Seletar Airport",
+     "Hang Nadim Batam International Airport"
+    ],
+    "station": [
+     "Bukit Timah Railway Station",
+     "Marina Bay",
+     "Bukit Batok",
+     "Orchard",
+     "Dhoby Ghaut"
+    ],
+    "hotel": [
+     "Hotel in central Singapore"
+    ],
+    "point": [
+     "Central Singapore"
+    ]
+   }
+  }
+ },
+ "steps": [],
+ "version": "88a1dc8-1795204327",
+ "aiReady": false,
+ "wizard": {
+  "miss": [],
+  "prev": "Your days: 3 days",
+  "form": "Add each place in order, the way it's booked. Each new stop starts where the last one ends.\n\nSTOP 1 · CITY STAY\nCity\nArrive on\nNights\nHotel (optional)\nGetting there\nFlight\nTrain\nFerry\nCar or bus\nArrive in town at\nLeave empty if you don't know yet.\n+ Add a city stay\n+ Add a cruise\nGoing home from here\nFlight\nTrain\nFerry\nCar or bus\nFlight at\nYour days: 3 days\nAdd more details (optional)\nName this trip\n\nKairoute picks good defaults for pace, walking and voice, and you can change any of them later.\n\nCancel\nPersonalize first\nBuild my trip"
+ },
+ "buildSec": 114,
+ "state": {
+  "busy": "",
+  "err": "",
+  "days": [
+   {
+    "date": "2027-08-16",
+    "type": "arrival"
+   },
+   {
+    "date": "2027-08-17",
+    "type": "land"
+   },
+   {
+    "date": "2027-08-18",
+    "type": "departure"
+   }
+  ]
+ },
+ "phoneText": "TUE AUG 17 · SINGAPORE · LAND DAY\nSingapore ✎ Rename\nLock this day\n▶ Start tour\n9:00 am–6:00 pm\n9 h ✎\n6\nsights\n1.2 mi\nwalking\n4:16 pm\nlast stop done\nChoose sights\nMore\nAbout today's plan1 note\nUse Ctrl + scroll to zoom the map\nS\n1\n2\n3\nL\n4\n5\n6\n1 mi\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nWalk\nTaxi or car\n● Meal\nMore about today\n\nAll times are Singapore time, 13 h ahead of your device.\n\nLEAVE\n9:00 am\nS\nLeave Hotel in central Singapore\nAdd your own hotel on the Trip page for exact times.\nTaxi or car · 28 min · 3.9 mi\nARRIVE\n9:28 am\nLEAVE\n10:08 am\n1\nSentosa\n40 min · Sight · Must-see\nTaxi or car · 29 min · 4.1 mi\nARRIVE\n10:37 am\nLEAVE\n11:17 am\n2\nMarina Bay Sands\n40 min · Sight · Must-see\nWalk · 10 min · 0.5 mi\nARRIVE\n11:27 am\nLEAVE\n12:07 pm\n3\nGardens by the Bay\n40 min · Park or garden · Must-see\nWalk · 4 min · 0.2 mi\nARRIVE\n12:11 pm\nLEAVE\n1:11 pm\nL\nLunch: Marguerite\nRestaurant · Local spot · 1 h\nTRAVELERS RECOMMEND\nChange lunch\nLunch: why here\nWalk · 13 min · 0.6 mi\nWalk · 13 min\nTaxi or car · 13 min\nARRIVE\n1:24 pm\nLEAVE\n2:04 pm\n4\nSingapore Grand Prix\n40 min · Sight · Must-see\nNext door\nARRIVE\n2:04 pm\nLEAVE\n2:44 pm\n5\nMarina Bay Street Circuit\n40 min · Sight · Must-see\nTaxi or car · 32 min · 4.8 mi\nARRIVE\n3:16 pm\nLEAVE\n3:56 pm\n6\nSingapore Botanic Gardens\n40 min · Park or garden · Must-see · UNESCO\nUNTIL\n5:40 pm\n+\nFree time: 1 h 44 min\nYours to spend as you like. See what fits\nTaxi or car · 20 min · 2.3 mi\nBy road, with time for traffic.\nWalk · 49 min\nTaxi or car · 20 min",
+ "finished": "2026-11-20T20:48:51.556Z"
+}

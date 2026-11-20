@@ -1,0 +1,187 @@
+{
+ "name": "d17-laemchabang",
+ "label": "Laem Chabang for Bangkok",
+ "legs": [
+  {
+   "k": "cruise",
+   "board": "Singapore",
+   "date": "2027-11-10",
+   "aboard": "16:00",
+   "ports": [
+    {
+     "date": "2027-11-12",
+     "place": "Laem Chabang (Bangkok), Thailand",
+     "arrive": "07:00",
+     "aboard": "19:00"
+    }
+   ],
+   "end": "Singapore",
+   "endDate": "2027-11-15",
+   "off": "07:00"
+  }
+ ],
+ "started": "2026-11-20T20:51:57.308Z",
+ "passed": {
+  "/sources": 13,
+  "/transit": 13,
+  "/guide": 2,
+  "/places": 3,
+  "/voyage": 2,
+  "/ground": 2,
+  "/route": 5,
+  "/x/near": 2
+ },
+ "refused": {
+  "/ratings": 2,
+  "/grating": 2,
+  "/events": 1
+ },
+ "errors": [],
+ "days": [
+  {
+   "i": 0,
+   "date": "2027-11-10",
+   "type": "arrival",
+   "text": "WED NOV 10 · SINGAPORE · ARRIVING\nSingapore ✎ Rename\nLock this day\nToday is one plan\n\nFlight in at 10:30 am, then the ship at 4:00 pm: the sightseeing in between, your bags and the countdown are on one page.\n\nSee today's plan"
+  },
+  {
+   "i": 1,
+   "date": "2027-11-10",
+   "type": "embark",
+   "text": "WED NOV 10 · SINGAPORE · BOARDING\nSingapore ✎ Rename\nLock this day\n🚢\nLEAVE BY\nall aboard 4:00 pm\n1:48 pm\n▶ Start the tour\n\nOfficial all aboard 4:00 pm · Back at the cruise terminal by 3:00 pm\n\nGetting back on time is up to you\n\nKairoute's leave-by and back-by times are estimates with spare time built in. Traffic, queues and the weather can still slow you down. The time that counts is the ship's all-aboard time or your train or flight, as your cruise line or carrier gives it. Check it on the day.\n\nI understand\nTerms of use\n1\nsight\n0.2 mi\nwalking\nChoose sights\nMore\nAbout today's plan6 notes\nNot planned today: Singapore Botanic Gardens didn't fit in the time. To fit it in: skip Singapore Grand Prix.\nNot planned today: Marina Bay Sands didn't fit in the time.\nNot planned today: Gardens by the Bay didn't fit in the time. To fit it in: skip Singapore Grand Prix.\nNot planned today: Sentosa didn't fit in the time. To fit it in: skip Singapore Grand Prix.\nNot planned today: Marina Bay Street Circuit didn't fit in the time.\nOpening hours aren't known for Singapore Grand Prix on this date: planned between 9:00 am and 5:00 pm, check before you go.\nUse Ctrl + scroll to zoom the map\nStart · Airport\n1\nL\nFinish · Cruise port\n300 ft\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nWalk\nTrain, metro or tram\n● Meal\nMore about today\n🛳 When do you board?\nBoarding time\nTerminal (optional)\nSave\n\nOn your boarding pass or check-in confirmation (also called arrival or check-in time). Until you add it, the plan uses the time to be back above.\n\nWhat to have on you · 0 of 9 ready\n📅 Add reminders to my calendar\n\nAll times are Singapore time, 14 h ahead of your device.\n\nLEAVE\n11:45 am\nS\nOut of Changi Airport\nFlight arrives 10:30 am. We allow 1 h 15 min to get off the plane and through baggage claim (and passport control after a flight from abroad). Book luggage storage near Changi Airport ahead (a left-luggage desk or a storage shop), or ask your hotel or station.\nYou fly in the day the ship sails, so today goes straight from the airport to the ship: there isn't enough time for sightseeing with a safe margin. A late or missed flight is the most common way travelers miss a ship, and the ship won't wait. Keep your airline's and cruise line's phone numbers handy, and if a delay is announced, call the cruise line at once.\nMetro EW + 2 changes · 58 min · 13 mi\nWalk 4 min to Changi Airport, runs about every 10 min (from the timetable). Metro CG: Changi Airport to Tanah Merah, 6 min; then change to Metro EW: Tanah Merah to Paya Lebar, 11 min; then change to Metro CC: Paya Lebar to Promenade, 10 min, then walk 11 min. Times include waiting and boarding. Next departure about 1:10 pm (timetable checked Nov 20; Kairoute checks it again the day before and the morning of).\nMetro EW + 2 changes · 58 min\nTaxi or car · 52 min\nARRIVE\n12:43 pm\nLEAVE\n1:23 pm\n1\nSingapore Grand Prix\n40 min · Sight · Must-see\nWalk · 5 min · 0.2 mi\nARRIVE\n1:28 pm\nLEAVE\n1:48 pm\nL\nLunch: Seafood Paradise\nRestaurant · Local spot · 20 min\nChange lunch\nLunch: why here\nMetro DT + 1 change · 53 min · 4.5 mi\nWalk 12 min to Promenade, runs about every 3 min (from the timetable). Metro DT: Promenade to Chinatown, 7 min; then change to Metro NE: Chinatown to Harbourfront, 5 min, then walk 6 min. Times include waiting and boarding. Departures about every 3 min (timetable checked Nov 20; Kairoute checks it again the day before and the morning of). Includes 15 min spare before the ship.\nMetro DT + 1 change · 53 min\nBus 77 + 1 change · 1 h 5 min\nTaxi or car · 45 min\nARRIVE\n2:41 pm\nE\nBoarding at Singapore Cruise Centre\n19 min to spare.\nOfficial all aboard 4:00 pm: be at the terminal by 3:00 pm at the latest. Your cruise line gives you a boarding time: add it and the plan gets you there for it.\nPorters take your big bags at the curb (luggage tags on; they reach your cabin by evening). Keep your passport, boarding pass, medicines and valuables in your carry-on for check-in and security.\nBig ports have more than one cruise terminal: check yours on your boarding pass and tell the driver.\nBook the taxi or transfer the day before, or ask your hotel to call one. Being aboard on time is your responsibility: check your boarding time with your cruise line."
+  },
+  {
+   "i": 2,
+   "date": "2027-11-11",
+   "type": "sea"
+  },
+  {
+   "i": 3,
+   "date": "2027-11-12",
+   "type": "port",
+   "text": "FRI NOV 12 · BANGKOK · IN PORT\nBangkok ✎ Rename\nLock this day\n\nWe couldn't find exactly where Cruise port of Laem Chabang , Thailand is, so this day isn't planned on a guess (every ride time and the time to head back depend on it). It's being looked up again; you can also pick another cruise terminal in the day's settings.\n\nEdit this day"
+  },
+  {
+   "i": 4,
+   "date": "2027-11-13",
+   "type": "sea"
+  },
+  {
+   "i": 5,
+   "date": "2027-11-14",
+   "type": "sea"
+  },
+  {
+   "i": 6,
+   "date": "2027-11-15",
+   "type": "arrival",
+   "text": "MON NOV 15 · SINGAPORE · ARRIVING\nSingapore ✎ Rename\nLock this day\n\nThis is your last day. Add how you leave and when (your flight or train home) on the Trip page, or your hotel if you're staying on, and the day is planned around it: nothing is planned on a guess.\n\nEdit this day"
+  }
+ ],
+ "guides": {
+  "Singapore": {
+   "city": "Singapore",
+   "src": true,
+   "ai": false,
+   "n": 21,
+   "sights": "Singapore Botanic Gardens* | Marina Bay Sands* | Gardens by the Bay* | Masjid Sultan | Merlion | St Andrew's Cathedral | Sentosa* | Singapore Grand Prix* | Maghain Aboth Synagogue | National Museum of Singapore | Sri Mariamman Temple, Singapore | Marina Bay Street Circuit* | Universal Studios Singapore | National Gallery Singapore | Masjid Hajjah Fatimah | Masjid Jamae | Asian Civilisations Museum | Sun Yat Sen Memorial Hall (Singapore) | Singapore Art Museum | ArtScience Museum | National Library Singapore",
+   "far": "",
+   "eats": 60,
+   "starts": {
+    "cruise": [
+     "Singapore Cruise Centre"
+    ],
+    "airport": [
+     "Changi Airport",
+     "Seletar Airport",
+     "Hang Nadim Batam International Airport"
+    ],
+    "station": [
+     "Bukit Timah Railway Station",
+     "Marina Bay",
+     "Bukit Batok",
+     "Orchard",
+     "Dhoby Ghaut"
+    ],
+    "hotel": [
+     "Hotel in central Singapore"
+    ],
+    "point": [
+     "Central Singapore"
+    ]
+   }
+  },
+  "Bangkok (from Laem Chabang , Thailand)": {
+   "city": "Bangkok (from Laem Chabang , Thailand)",
+   "src": true,
+   "ai": false,
+   "n": 27,
+   "sights": "Grand Palace* | Wat Arun* | Wat Phra Kaew* | Wat Pho | Wat Benchamabophit | Lumphini Park | Democracy Monument | Wat Suthat | Sanam Luang | Victory Monument | Assumption Cathedral | Wat Bowonniwet Vihara | Wat Yan Nawa | Bangkok National Museum | Vimanmek Mansion | Erawan Shrine | Dusit Palace | Dusit Zoo | Bangkok Art and Culture Centre | Holy Rosary Church | Wat Kanlayanamit | Wat Chai Chana Songkhram | Wat Chakkrawat | Holy Cross Church | Wat Rakhang | Wat Suwannaram | Phra Sumen Fort",
+   "far": "",
+   "eats": 42,
+   "starts": {
+    "cruise": [
+     "Cruise port of Laem Chabang , Thailand (unknown)"
+    ],
+    "airport": [
+     "Bangkok airport (unknown)"
+    ],
+    "station": [
+     "Hua Lamphong railway station",
+     "Phaya Thai station"
+    ],
+    "hotel": [
+     "Hotel in central Bangkok"
+    ],
+    "point": [
+     "Central Bangkok"
+    ]
+   }
+  }
+ },
+ "steps": [],
+ "version": "88a1dc8-1795204327",
+ "aiReady": false,
+ "wizard": {
+  "miss": [],
+  "prev": "Your days: 6 days · 1 port",
+  "form": "Add each place in order, the way it's booked. Each new stop starts where the last one ends.\n\nSTOP 1 · CRUISE\nLeaves from\nShip (optional)\nBoarding day\nAll aboard\nGetting to the ship (if you arrive the same day)\nFlight\nTrain\nFerry\nCar or bus\nArrive in town at\nLeave empty if you don't know yet.\nPorts of call\nIn order, from your cruise booking. Days with no port are added as sea days.\nDate\nPort\nShip arrives\nAll aboard\nTender port (small boats take you ashore)\nRemove port\n+ Add a port\nCruise ends in\nOn\nOff the ship at\nUsually 7:00 am to 9:00 am. Leave empty if you don't know.\n+ Add a city stay\n+ Add a cruise\nGoing home from here\nFlight\nTrain\nFerry\nCar or bus\nFlight at\nYour days: 6 days · 1 port\nAdd more details (optional)\nName this trip\n\nKairoute picks good defaults for pace, walking and voice, and you can change any of them later.\n\nCancel\nPersonalize first\nBuild my trip"
+ },
+ "buildSec": 122,
+ "state": {
+  "busy": "",
+  "err": "",
+  "days": [
+   {
+    "date": "2027-11-10",
+    "type": "arrival"
+   },
+   {
+    "date": "2027-11-10",
+    "type": "embark"
+   },
+   {
+    "date": "2027-11-11",
+    "type": "sea"
+   },
+   {
+    "date": "2027-11-12",
+    "type": "port"
+   },
+   {
+    "date": "2027-11-13",
+    "type": "sea"
+   },
+   {
+    "date": "2027-11-14",
+    "type": "sea"
+   },
+   {
+    "date": "2027-11-15",
+    "type": "arrival"
+   }
+  ]
+ },
+ "phoneText": "FRI NOV 12 · BANGKOK · IN PORT\nBangkok ✎ Rename\nLock this day\n\nWe couldn't find exactly where Cruise port of Laem Chabang , Thailand is, so this day isn't planned on a guess (every ride time and the time to head back depend on it). It's being looked up again; you can also pick another cruise terminal in the day's settings.\n\nEdit this day",
+ "finished": "2026-11-20T20:54:47.894Z"
+}
