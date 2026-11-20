@@ -500,6 +500,9 @@ async function tapTimes(p) { const out = []; const n = await p.evaluate(() => wi
       return { no, yes, eat }; });
     check('A business, an office building or an event is never a sight; a monument or memorial is; a staff canteen is never a place to eat', !r.no.length && !r.yes.length && !r.eat.length,
       `taken as sights: ${r.no.join(', ') || 'none'}; refused: ${r.yes.join(', ') || 'none'}; canteens kept: ${r.eat.join(', ') || 'none'}`); }
+  // A request the helper couldn't finish (a big city's lines, Nov 20: Tokyo got only taxis) is asked again in smaller parts.
+  { const r = await p.evaluate(() => { const f = window.__kairouteTransitNextBatch; return f ? [f(12, false, 12), f(6, false, 6), f(2, false, 2), f(6, true, 6), f(12, true, 12)] : null; });
+    check('Rides the helper couldn\'t answer in one go are asked again in smaller parts', !!r && r.join() === '6,3,2,7,12', `batch sizes ${r}`); }
   // Famous sights first (competitor review, Nov 20): for each place saved from the sources (tools/beta2/sources, by the
   // Sources probe), the app's sight list offers every sight visitors expect (tools/beta2/fame-expect.json) that the sources
   // return. One the sources don't return at all is a data gap, listed apart.

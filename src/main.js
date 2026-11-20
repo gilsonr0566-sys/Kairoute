@@ -651,6 +651,11 @@ try { ["kairoute.transit", "kairoute.transit2"].forEach(k => localStorage.remove
 const TRANSIT_V = 7;
 const transitMem = (() => { try { return JSON.parse(localStorage.getItem(TRANSIT_KEY) || "{}"); } catch (e) { return {}; } })();
 let transitSeen = null, transitRetry = 0;
+// How many rides one request to the helper asks for: 12 normally, halved after a request the helper couldn't finish (a big
+// city's lines took too long: Tokyo got only taxis, competitor review Nov 20), and back up by one with each full answer.
+let transitBatch = 12;
+const transitNextBatch = (cur, full, sent) => full ? Math.min(12, cur + 1) : Math.max(2, Math.floor(sent / 2));
+if (typeof window !== "undefined") window.__kairouteTransitNextBatch = transitNextBatch;
 const transitFail = new Map(), transitQ = new Map(), transitPins = new Set(); let transitTimer = 0, transitBusy = false; // pins: rides of the trip being kept for offline
 // Speed: asked hundreds of thousands of times while planning, so each place's half of the key is kept with it.
 const pkMemo = new WeakMap();
@@ -733,7 +738,8 @@ async function askTransit() {
     let got = 0;
     try { const r = await fetch(freeAI.url + "/transit", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ pairs: part.map(x => ({ a: x[1].a, b: x[1].b, dow: x[1].dow, date: x[1].date })) }) }); if (!r.ok) throw new Error("transit " + r.status);
       const j = await r.json(); part.forEach(([k, q], i) => { const res = (j.results || [])[i]; if (res && Array.isArray(res.opts)) { transitMem[k] = transitMerge(res, transitMem[k] || nearWithGap({ lat: q.a[0], lng: q.a[1] }, { lat: q.b[0], lng: q.b[1] }, k.split("|")[1])); nearGen++; got++; } else transitFail.set(k, Date.now()); });
-    } catch (e) { part.forEach(([k]) => transitFail.set(k, Date.now())); }
+      if (got === part.length) transitBatch = transitNextBatch(transitBatch, true, part.length);
+    } catch (e) { part.forEach(([k]) => transitFail.set(k, Date.now())); transitBatch = transitNextBatch(transitBatch, false, part.length); }
     // A ride the helper couldn't answer is asked again by itself once the 2-minute pause is over (the page is redrawn,
     // which asks again), instead of showing the road estimate until the traveler happens to touch something.
     if (got < part.length) { clearTimeout(transitRetry); transitRetry = setTimeout(transitShow, 125000); }
@@ -742,7 +748,7 @@ async function askTransit() {
   try {
     while (transitQ.size) {
       const all = [...transitQ.entries()].sort((x, y) => (y[1].pri ? 1 : 0) - (x[1].pri ? 1 : 0)), parts = [];
-      for (let i = 0; i < all.length && parts.length < 3; i += 12) parts.push(all.slice(i, i + 12));
+      const n = transitBatch; for (let i = 0; i < all.length && parts.length < 3; i += n) parts.push(all.slice(i, i + n));
       parts.flat().forEach(([k]) => transitQ.delete(k));
       await Promise.all(parts.map(one));
     }
