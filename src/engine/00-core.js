@@ -47,6 +47,9 @@ var KEngine = typeof KEngine !== "undefined" ? KEngine : {};
     return out;
   };
   E.PAD_MAX = 45; // longest ride each way for a trip out added to fill a day in town // lunch on the go: bought and eaten on the way, minutes
+  // A meal starts at most this long after its last orders (Nov 20 phone check: lunch at 3:47 pm after a day trip counted as
+  // lunch). The leak report's "odd hour" is the same line.
+  E.MEAL_LATE = 60;
   E.MEALS = Object.freeze([
     Object.freeze({ label: "Lunch", from: 11 * 60 + 45, to: 14 * 60 + 30, len: 60, quick: 35 }),
     Object.freeze({ label: "Dinner", from: 18 * 60 + 30, to: 21 * 60, len: 75, quick: 45 })

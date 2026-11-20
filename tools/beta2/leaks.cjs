@@ -32,7 +32,7 @@ for (const f of fs.readdirSync(dir).filter(f => f.endsWith('.json')).sort()) {
         if (extra > 20 && !st.some(x => x.far)) add('cross', f, `day ${i}: ${extra} min more travel than the best order (${st.map(x => x.name).join(' > ')}; best: ${best.map(x => x.name).join(' > ')})`); } }
     // Restaurants: lunch between 11:30 and 15:00, dinner from 17:30; a meal stop near the way; a place not repeated.
     p.items.forEach((x, k) => { if (x.t !== 'meal' && x.t !== 'evening') return; const lunch = (x.meal || 'Lunch') === 'Lunch' && x.t === 'meal';
-      if (lunch && (x.at < 690 || x.at > 930)) add('mealTime', f, `day ${i}: lunch at ${E.clock(x.at)} (${x.name})`);
+      if (lunch && (x.at < 690 || x.at > E.MEALS[0].to + E.MEAL_LATE)) add('mealTime', f, `day ${i}: lunch at ${E.clock(x.at)} (${x.name})`);
       if (!lunch && x.at < 1050) add('mealTime', f, `day ${i}: dinner at ${E.clock(x.at)} (${x.name})`);
       const a = p.items.slice(0, k).reverse().find(y => isFinite(y.lat) && y.t !== 'ride'), b = p.items.slice(k + 1).find(y => isFinite(y.lat) && y.t !== 'ride');
       // (before a ride out of town the lunch is measured from the last stop in town: the ride out leaves from the city, so
