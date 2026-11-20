@@ -13,10 +13,10 @@ function boardShip() { return trip && trip.ship && trip.ship.name ? trip.ship.na
 
 // The lines under "Boarding at …" on the Day plan's last row.
 function boardNotes(d, w) {
-  const bt = w.boardAt, aa = d.allAboard, out = [];
-  if (bt != null && bt > w.latest) out.push(`Your boarding time is late in the day, so the plan gets you to the terminal by ${fmt(w.latest)}, an hour before all aboard (${aa}).`);
-  else if (bt != null) out.push(`Your boarding time is ${fmt(bt)}: the plan gets you to the terminal then. All aboard ${aa}.`);
-  else out.push(`All aboard ${aa}: be at the terminal by ${fmt(w.endBy)} at the latest. Your cruise line gives you a boarding time: add it and the plan gets you there for it.`);
+  const bt = w.boardAt, aa = d.allAboard ? fmt(shipToPort(d, d.allAboard)) : d.allAboard, out = []; // the ship's own time, named as the official one (Nov 20)
+  if (bt != null && bt > w.latest) out.push(`Your boarding time is late in the day, so the plan gets you to the terminal by ${fmt(w.latest)}, an hour before the official all aboard (${aa}).`);
+  else if (bt != null) out.push(`Your boarding time is ${fmt(bt)}: the plan gets you to the terminal then. Official all aboard ${aa}.`);
+  else out.push(`Official all aboard ${aa}: be at the terminal by ${fmt(w.endBy)} at the latest. Your cruise line gives you a boarding time: add it and the plan gets you there for it.`);
   out.push(`${d.noBags ? "" : "Porters take your big bags at the curb (luggage tags on; they reach your cabin by evening). "}Keep your passport, boarding pass, medicines and valuables in your carry-on for check-in and security.`);
   out.push(d.terminal ? `Your terminal: ${d.terminal}. Tell the driver.` : "Big ports have more than one cruise terminal: check yours on your boarding pass and tell the driver.");
   out.push("Book the taxi or transfer the day before, or ask your hotel to call one. Being aboard on time is your responsibility: check your boarding time with your cruise line.");
