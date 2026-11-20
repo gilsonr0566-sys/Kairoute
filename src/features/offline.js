@@ -117,7 +117,7 @@ async function offCheckDay(d, base, mem) {
   if (rides.some(r => !offRideHas(r) && tried[r[0]])) out.notes.push("No published timetable was found for a ride, so the plan uses the cautious taxi time.");
   // The written guide comes with the city guide, which is always kept on the device.
   const thin = offSites(plan).filter(s => !s.along && !s.quick && (!s.guide || String(s.guide).length < 40)).length;
-  put("text", true); if (thin) out.notes.push(`${thin === 1 ? "One stop has" : thin + " stops have"} only a short written guide.`);
+  put("text", true); if (thin) out.thin = thin; // said once for the trip, with the places (offThinNote)
   put("zone", offZoneOk(d), "the time zone");
   // Map: the tiles for this exact route, a sample of them really in the device's map store.
   if (base && base.tpl) { const t = dayTiles(d, plan, base.tpl), done = mapSavedList()[d.id] === t.sig; put("map", done && await offTileHits(t.urls), "the street map"); }
@@ -162,7 +162,7 @@ async function offCheckNow(eager) { // eager: asked for (a download ending, a te
     const app = await offAppCheck();
     const todo = days.filter(x => !x.ready);
     // The key is taken after the days are checked: checking a day can pick its sights for the first time.
-    offRep = { key: offKey(), dg: dataGen, at: Date.now(), days, app, ready: !!days.length && !todo.length && app.ok, todo: todo.length, notes: [...new Set(days.flatMap(x => x.notes))] };
+    offRep = { key: offKey(), dg: dataGen, at: Date.now(), days, app, ready: !!days.length && !todo.length && app.ok, todo: todo.length, notes: [...new Set(days.flatMap(x => x.notes))].concat(offThinNote(days)) };
     return offRep;
   } finally { offChecking = false; offHurry = false; if (offAgain) { offAgain = false; offSoon(200); } }
 }
@@ -273,6 +273,15 @@ async function offDownload() {
 }
 
 // ---------- What the traveler sees ----------
+// Days counted the way the rest of the app counts them: calendar days ("19 days ashore" when sea days need nothing).
+function offDaysWord(days) { const n = new Set(days.map(x => x.date || x.id)).size, all = tripFacts().days; return { n, w: n === all ? (n === 1 ? "day" : "days") : (n === 1 ? "day ashore" : "days ashore") }; }
+// One sentence for the whole trip, naming the places (outside review, Nov 20: "3 stops have only a short written
+// guide. 2 stops have only a short written guide. 6 stops..." with no place named).
+function offThinNote(days) {
+  const by = new Map(); days.filter(x => x.thin).forEach(x => by.set(x.place, (by.get(x.place) || 0) + x.thin));
+  if (!by.size) return [];
+  return [`Only a short written guide for some stops in ${offJoin([...by].map(([p, n]) => `${p} (${n})`))}.`];
+}
 const OFF_PART_NAMES = { guide: "Guide", plan: "Plan", rides: "Rides", text: "Guide text", zone: "Time zone", map: "Map", audio: "Stories" };
 function offMissingText(x) { return Object.values(x.parts).filter(p => !p.ok).map(p => p.miss); }
 const offJoin = a => a.length <= 1 ? a.join("") : a.slice(0, -1).join(", ") + " and " + a[a.length - 1];
@@ -282,21 +291,26 @@ function offHead() {
   if (offRun) return { cls: "run", ico: "⤓", title: "Saving your trip for offline", text: esc(offRun.step) + "…" };
   if (!offDays().length) return { cls: "", ico: "⤓", title: "Offline", text: "Add a day with a destination, then download it for offline." };
   if (!r) return { cls: "", ico: "…", title: "Checking what's saved", text: "Looking on this " + offDevice() + "." };
-  const n = r.days.length, lockTxt = locked ? ` ${locked} more day${locked === 1 ? "" : "s"} unlock${locked === 1 ? "s" : ""} with a trip pass.` : "";
-  if (r.ready) return { cls: "ok", ico: "✓", title: "Ready for offline", text: `${n === 1 ? "Your day is" : `All ${n} days are`} saved on this ${offDevice()}: plans, street maps, stories, ride timetables and time zones. No internet needed on the trip.${lockTxt}` };
+  const { n, w } = offDaysWord(r.days), todoN = offDaysWord(r.days.filter(x => !x.ready)).n, lockTxt = locked ? ` ${locked} more day${locked === 1 ? "" : "s"} unlock${locked === 1 ? "s" : ""} with a trip pass.` : "";
+  if (r.ready) return { cls: "ok", ico: "✓", title: "Ready for offline", text: `${n === 1 ? "Your day is" : `All ${n} ${w} are`} saved on this ${offDevice()}: plans, street maps, stories, ride timetables and time zones. No internet needed on the trip.${lockTxt}` };
   const what = [...new Set(r.days.flatMap(offMissingText))].slice(0, 3);
   if (!r.app.ok && !r.todo) what.unshift(r.app.miss);
-  const many = r.todo === n ? (n === 1 ? "Your day isn't" : `None of the ${n} days are`) : `${r.todo} of ${n} days aren't`;
+  const many = todoN === n ? (n === 1 ? "Your day isn't" : `None of the ${n} ${w} are`) : `${todoN} of ${n} ${w} aren't`;
   return { cls: "warn", ico: "!", title: "Not ready for offline yet", text: (offOnline() ? `${r.todo ? many + " fully saved on this " + offDevice() : "Almost there"}. Download now while you have Wi-Fi, before the ship sails or the flight leaves.` : `No internet right now. ${r.todo ? many + " fully saved" : "Some app files aren't saved"}: missing ${esc(offJoin(what))}.`) + lockTxt };
 }
 function offDayRows(r) {
   return r.days.map(x => `<li class="${x.ready ? "ok" : "no"}"><span class="offd">${esc(fmtDate(x.date) || "Day " + (x.i + 1))}</span><span class="offp">${esc(x.place)}</span><span class="offparts">${Object.entries(x.parts).map(([k, p]) => `<i class="${p.ok ? "y" : "n"}" title="${esc(p.ok ? OFF_PART_NAMES[k] + " saved" : "Missing: " + p.miss)}">${p.ok ? "✓" : "✗"} ${OFF_PART_NAMES[k]}</i>`).join("")}</span></li>`).join("") +
     trip.days.filter(d => !noShore(d) && d.destination && dayLocked(d)).map(d => `<li class="lock"><span class="offd">${esc(fmtDate(d.date) || "")}</span><span class="offp">${esc(mainPlace(d) || d.destination)}</span><span class="offparts"><i>Unlocks with a trip pass</i></span></li>`).join("");
 }
-function offCard() {
+// compact (the Trip page): one line with its button; the details fold open below it, so the day list comes first.
+function offCard(compact) {
   const h = offHead(), r = offFresh();
   const btn = offRun ? `<button class="btn ghost small" data-act="offstop">Pause</button>`
     : h.cls === "ok" ? "" : `<button class="btn small" data-act="offdl" ${offOnline() && offDays().length ? "" : "disabled"}>Download for offline</button>`;
+  if (compact && !offRun) return `<div class="card offcard offline1 ${h.cls}" id="offCard" role="status" aria-live="polite">
+    <div class="offhead"><span class="offico" aria-hidden="true">${h.ico}</span><div class="offtxt"><b>${h.title}</b></div>${btn}</div>
+    ${r && (r.days.length || r.notes.length) || h.cls ? `<details class="offdays"><summary>Details, day by day</summary><p class="offmsg">${h.text}</p>${offMsg ? `<p class="offmsg">${esc(offMsg)}</p>` : ""}${r && r.notes.length ? `<p class="offmsg">${r.notes.map(esc).join(" ")}</p>` : ""}${r && r.days.length ? `<ul>${offDayRows(r)}</ul>${r.ready && offOnline() ? `<button class="linkbtn" data-act="offdl">Check for updates and download again</button>` : ""}` : ""}</details>` : ""}
+  </div>`;
   return `<div class="card offcard ${h.cls}" id="offCard" role="status" aria-live="polite">
     <div class="offhead"><span class="offico" aria-hidden="true">${h.ico}</span><div class="offtxt"><b>${h.title}</b><span>${h.text}</span></div>${btn}</div>
     ${offRun ? `<div class="offbar" role="progressbar" aria-valuenow="${offRun.pct}" aria-valuemin="0" aria-valuemax="100" aria-label="Download progress"><i style="width:${offRun.pct}%"></i></div>` : ""}
@@ -338,7 +352,7 @@ function offBanner() {
     return `<div class="banner warn offban" id="offBanner" role="status"><span><b>No internet.</b> This day isn't fully saved: missing ${esc(offJoin(miss))}. ${x.parts.plan && x.parts.plan.ok ? "The plan and its times still work" + (works.length ? "; " + works.join(", ") : "") + "." : ""}</span></div>`;
   }
   if (offLater || !tripSoon()) return "";
-  return `<div class="banner warn offban" id="offBanner" role="status"><span><b>Get ready for offline.</b> ${r.todo ? `${r.todo} of ${r.days.length} days aren't saved on this ${offDevice()} yet` : "Some app files aren't saved yet"}. Download now while you have Wi-Fi.</span><span class="offbtns"><button class="btn small" data-act="offdl">Download now</button><button class="btn ghost small" data-act="offlater">Later</button></span></div>`;
+  return `<div class="banner warn offban" id="offBanner" role="status"><span><b>Get ready for offline.</b> ${r.todo ? (o => `${offDaysWord(r.days.filter(x => !x.ready)).n} of ${o.n} ${o.w} aren't saved on this ${offDevice()} yet`)(offDaysWord(r.days)) : "Some app files aren't saved yet"}. Download now while you have Wi-Fi.</span><span class="offbtns"><button class="btn small" data-act="offdl">Download now</button><button class="btn ghost small" data-act="offlater">Later</button></span></div>`;
 }
 // Updates the card and the banner in place (no full redraw, so nothing the traveler is reading moves).
 function offPaint() {

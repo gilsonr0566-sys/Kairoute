@@ -205,7 +205,7 @@ function moveClosed(id, to) {
 // traveler rating, then the ticket row for a book-ahead stop. A stop you'd reach too late gets its own warning line.
 function stopLiveNotes(it, d) {
   const s = it.place, out = [], bits = [];
-  if (it.ohLate) out.push(`<div class="sub livewarn">⚠ Closes at ${fmt(it.closes)}${s.oh && s.oh.last != null ? ` (last entry ${fmt(s.oh.last)})` : ""}: you'd get there too late to see it properly. Move it earlier with Change stops, or start the day earlier.</div>`);
+  if (it.ohLate) out.push(`<div class="sub livewarn">⚠ Closes at ${fmt(it.closes)}${s.oh && s.oh.last != null ? ` (last entry ${fmt(s.oh.last)})` : ""}: you'd get there too late to see it properly. Move it earlier with Choose sights, or start the day earlier.</div>`);
   else if (s.oh && s.oh.spans.length) bits.push(`Open ${esc(spanTxt(s.oh.spans))}${s.oh.last != null ? `, last entry ${fmt(s.oh.last)}` : ""}${it.wait ? ` (you start at opening)` : ""} <small>${esc(s.oh.src === "OpenStreetMap" ? "OpenStreetMap" : "guide")}</small>`);
   if (s.cw && s.cw.busy.length) {
     const end = it.time + (s.minutes || 0), hit = s.cw.busy.filter(([a, b]) => overlap(it.time, end, a, b) > 10);

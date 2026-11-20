@@ -71,7 +71,7 @@ function tixRow(it, d) {
     <div class="tixtop">${done ? `<i class="badge tixok">✓ Tickets booked</i>` : `<i class="badge book" title="${esc(String(s.tickets || s.priceNote || "").slice(0, 200))}">Book ahead</i>`}
       <a class="btn tixbook${L.kind === "search" ? " find" : ""}" href="${esc(L.url)}" target="_blank" rel="noopener" data-tixurl="${esc(L.kind)}">${done ? "Ticket site" : L.label} <span aria-hidden="true">↗</span></a>
       <button class="tixdone" data-act="tixdone" data-sid="${esc(s.id)}" aria-pressed="${done}">${done ? "Undo" : "Mark booked"}</button></div>
-    ${done ? "" : `<div class="sub tixsmall">${note} Entrance fee not included: you pay the site.</div>`}
+    ${done ? "" : `<details class="sub tixsmall"><summary>Entrance fee not included · more</summary>${note}</details>`}
   </div>`;
 }
 function tixAct(act, t) {

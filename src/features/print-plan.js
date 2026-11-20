@@ -71,7 +71,7 @@ function printDay(d, i) {
 function printPlanHTML(days) {
   const dates = trip.days.map(x => x.date).filter(Boolean).sort(), one = days.length === 1;
   const span = one ? "" : dates.length ? `${printDate(dates[0], { month: "long", day: "numeric" })} to ${printDate(dates[dates.length - 1])}` : "";
-  return `<header class="phead">${PRINT_LOGO}<div><div class="pbrand">Kairoute</div><h1>${esc(trip.name || tripName(trip))}</h1>${span ? `<div class="pspan">${esc(span)} · ${trip.days.length} days</div>` : ""}</div></header>
+  return `<header class="phead">${PRINT_LOGO}<div><div class="pbrand">Kairoute</div><h1>${esc(trip.name || tripName(trip))}</h1>${span ? `<div class="pspan">${esc(span)} · ${tripDaysText(trip)}</div>` : ""}</div></header>
     ${days.map(printDay).join("")}
     <footer class="pfoot"><p><b>Your times.</b> All times are local to each place. Kairoute plans every day around getting you back with a safety margin before all aboard, your train or your flight. The cruise line's, airline's and rail company's times are final: always follow them. Opening hours can change, so check timed tickets before you go.</p><p>Made with Kairoute on ${esc(printDate(todayISO()))}.</p></footer>`;
 }

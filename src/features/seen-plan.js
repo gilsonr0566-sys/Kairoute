@@ -3,7 +3,7 @@
 // to eat and their ratings, the outside sources that confirm or merge sights, a fuller city guide. Planning again from
 // each new piece put the same Athens stops in another order, swapped places to eat, and once took the Acropolis off a
 // day when a merge gave it a new id. A traveler who has seen a day's plan must find the same plan there later, online
-// or offline. So each day remembers the plan last shown for it (Day plan, Change stops, Guide or Tour, and every day
+// or offline. So each day remembers the plan last shown for it (Day plan, Choose sights, Guide or Tour, and every day
 // when the offline status is checked or the trip is downloaded), and the planner replays it, the way a hearted day
 // replays its own, with the same safety checks. Only these plan the day again:
 //  - a change the traveler makes: different sights, new times or hours, a new ship time, a dragged order, a setting

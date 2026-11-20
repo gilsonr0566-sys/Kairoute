@@ -75,7 +75,7 @@ async function tapTimes(p) { const out = []; const n = await p.evaluate(() => wi
     const t = await p.evaluate(() => (document.querySelector('main') || document.body).innerText);
     const bad = t.split('\n').filter(l => SCRIPT.test(l)); if (bad.length) foreign.push(`day ${i + 1}: "${bad[0].slice(0, 60)}"`);
     await p.evaluate(() => window.__kairouteGo('sites')); await p.waitForTimeout(300);
-    const said = await p.evaluate(() => { const m = /(\d+) sites? picked/.exec((document.querySelector('.pickbar') || {}).innerText || ''); return m ? +m[1] : null; });
+    const said = await p.evaluate(() => { const m = /(\d+) sights? chosen/.exec((document.querySelector('.pickbar') || {}).innerText || ''); return m ? +m[1] : null; });
     const ticked = (await boxes(p)).filter(b => b.on).length;
     if (said != null && said !== ticked) counts.push(`day ${i + 1}: says ${said} picked, ${ticked} ticked`);
   }

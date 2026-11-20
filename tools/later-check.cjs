@@ -12,7 +12,7 @@ const { chromium } = require('playwright'); const path = require('path');
   await p.evaluate(() => window.__kairouteGo('plan', 20)); await p.waitForTimeout(500); await p.evaluate(() => window.__kairouteSetHours(2)); await p.waitForTimeout(800); const c = p.locator('[data-act="cutok"]').first(); ok(await c.count() > 0, 'a shorter day asks first'); if (await c.count()) await c.click(); await p.waitForTimeout(800);
   await p.evaluate(() => window.__kairouteGo('sites', 20)); await p.waitForTimeout(800);
   const a1 = await p.evaluate(() => window.__kairouteLater(20)); ok(a1.later.length > 0, 'picks that came off a booked day are kept for "If you come back": ' + a1.later.join(', '));
-  const blk = await p.evaluate(() => { const e = document.querySelector('details.comeback'); return e ? e.textContent.replace(/\s+/g, ' ') : ''; }); ok(/If you come back/.test(blk) && a1.later.every(n => blk.includes(n)), 'Change stops shows the "If you come back" list');
+  const blk = await p.evaluate(() => { const e = document.querySelector('details.comeback'); return e ? e.textContent.replace(/\s+/g, ' ') : ''; }); ok(/If you come back/.test(blk) && a1.later.every(n => blk.includes(n)), 'Choose sights shows the "If you come back" list');
   const dup = await p.evaluate(names => { const t = [...document.querySelectorAll('#view .sitelist')].map(x => x.textContent).join(' '); return names.filter(n => t.split(n).length > 2); }, a1.later); ok(!dup.length, 'each come-back sight is listed once' + (dup.length ? ': twice: ' + dup.join(', ') : ''));
   
   // Not booked: Madrid's days without dates

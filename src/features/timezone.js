@@ -84,8 +84,10 @@ function zoneNote(d) {
   const gap = zoneOffset(z.tz, d.date) - zoneOffset(dev, d.date);
   const ship = d.shipOff ? ` The ship's clock is ${dur(Math.abs(d.shipOff))} ${d.shipOff > 0 ? "ahead of" : "behind"} ${esc(lab)}: all aboard ${esc(d.allAboard)} ship time is ${fmt(toMin(d.allAboard) - d.shipOff)} ${esc(lab)}.` : "";
   const est = z.known ? "" : " (time zone estimated until you're online once)";
+  // Quiet grey text, never a warning colour: planning from home on another clock is not a problem (outside review,
+  // Nov 20). Red and pink stay for what the traveler must act on.
   if (!gap) return `<p class="tzline">All times are ${esc(lab)}${est}.${ship}</p>`;
-  return `<p class="tzline warn"><b>All times are ${esc(lab)}${est}.</b> Your device is on a different time zone (${dur(Math.abs(gap))} ${gap > 0 ? "behind" : "ahead"}); follow these times.${ship}</p>`;
+  return `<p class="tzline">All times are ${esc(lab)}${est}, ${dur(Math.abs(gap))} ${gap > 0 ? "ahead of" : "behind"} your device.${ship}</p>`;
 }
 
 // ---------- Ship's clock check: on a ship day, confirm the ship's clock matches the port's ----------
@@ -123,7 +125,7 @@ function shipMount() {
   const d = typeof day === "function" ? day() : null;
   if (!shipChk && shipCheckDue(d) && !shipLater[d.id]) shipChk = { step: "ask" };
   // A card in the Day plan's head, under the countdown: in plain view, but it never covers the plan or its buttons.
-  const head = document.querySelector("#view .plantop .dayhead");
+  const head = document.querySelector("#view > .dayhead, #view .plantop .dayhead");
   if (shipChk && d && view === "plan") { if (head) head.insertAdjacentHTML("afterend", shipSheetHTML(d)); else document.body.insertAdjacentHTML("beforeend", shipSheetHTML(d)); }
 }
 const shipLater = {};

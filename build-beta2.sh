@@ -34,9 +34,15 @@ var ENGINE2 = true;
   try { Object.defineProperty(window, "localStorage", { configurable: true, get: function () { return shim; } }); } catch (e) {}
   addEventListener("DOMContentLoaded", function () {
     document.title = "Kairoute Beta 2";
-    var b = document.createElement("div"); b.textContent = "Beta 2"; b.setAttribute("aria-hidden", "true");
-    b.style.cssText = "position:fixed;left:8px;bottom:8px;z-index:99999;background:#E8792B;color:#fff;font:600 12px/1 system-ui,sans-serif;padding:5px 8px;border-radius:10px;opacity:.9;pointer-events:none";
-    document.body.appendChild(b);
+    // The "Beta 2" tag sits beside the logo or the trip name, where nothing is tapped (outside review, Nov 20: a badge
+    // pinned to the corner covered the menu's Settings or Trip label on every screen).
+    var css = document.createElement("style");
+    css.textContent = ".b2tag{display:inline-block;vertical-align:middle;margin-left:8px;background:#E8792B;color:#fff;font:700 11px/1 system-ui,sans-serif;padding:4px 6px;border-radius:4px;letter-spacing:.02em;pointer-events:none;white-space:nowrap}.tabs .b2tag{display:none;margin:2px auto 6px;align-self:center}@media (min-width:800px) and (min-height:560px){html.railnav .tabs .b2tag{display:inline-block}html.railnav .brand .b2tag{display:none}}";
+    document.head.appendChild(css);
+    var mk = function () { var b = document.createElement("span"); b.className = "b2tag"; b.textContent = "Beta 2"; b.setAttribute("aria-hidden", "true"); return b; };
+    var logo = document.querySelector(".brand h1"), home = document.querySelector(".tabs .railhome");
+    if (logo) logo.appendChild(mk());
+    if (home) home.parentNode.insertBefore(mk(), home.nextSibling);
   });
 })();
 EOF

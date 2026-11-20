@@ -926,10 +926,11 @@ details.story:not([open]) > summary::before { content: "▸ "; }
   html.appview .tab { padding: 8px 16px 7px; }
   html.appview .plangrid { grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); grid-template-areas: "top right" "left right"; }
   html.appview .plangrid .plantop { max-height: 52vh; }
-  /* Landscape: the day's name gets the full width of its column, the countdown and Start the tour share the line below. */
-  html.appview .dayhead { flex-wrap: wrap; gap: 8px 10px; }
-  html.appview .dayhead > div:first-child { flex: 1 1 100%; }
-  html.appview .dayhead .cdchip { flex: 1 1 auto; min-width: 0; }
+  /* Landscape: the head spans the page above both columns, so the title, the countdown and the main button share one
+     row on every kind of day (outside review, Nov 20: on hotel days the button fell to a row of its own). */
+  html.appview .dayhead { flex-wrap: nowrap; gap: 8px 12px; }
+  html.appview .dayhead > div:first-child { flex: 1 1 auto; }
+  html.appview .dayhead .cdchip { flex: none; }
   html.appview .guidegrid { grid-template-columns: 270px minmax(0, 1fr); grid-template-rows: minmax(0, 1fr); gap: 18px; }
   html.appview .guideside > .lede { display: block; }
   html.appview .guideside .jumps { flex-direction: column; overflow: visible; }
@@ -1261,6 +1262,9 @@ details.morefold:not([open]) { padding-bottom: 0 !important; }
 .tixrow.done .tixbook { background: transparent; color: var(--route); border: 1px solid var(--line); }
 .tixrow .badge.tixok { color: var(--route); background: var(--route-soft); }
 .tixrow .tixsmall { font-size: .82rem; margin: 0; }
+.tixrow details.tixsmall > summary { cursor: pointer; color: var(--muted); padding-block: 2px !important; }
+/* On a phone the ticket button takes its own full row, so its label never spills out (outside review, Nov 20) */
+@media (max-width: 640px) { .tixrow .tixbook { flex: 1 1 100%; justify-content: center; text-align: center; white-space: normal; } }
 .esimcard { gap: 8px; border-left: 4px solid var(--route); }
 .esimcard.ok .offico { background: var(--route); color: var(--card); }
 .esimtag { display: flex; gap: 6px; align-items: center; font-size: .85rem; color: var(--muted); flex-wrap: wrap; }
@@ -1496,6 +1500,31 @@ body.psheet-on { overflow: hidden; }
   #printView .pnote { font-size: 11pt; color: #9A3B12; margin: 6px 0; }
   #printView .pfoot { margin-top: 18px; border-top: 2px solid #D8DED8; padding-top: 8px; font-size: 10pt; color: #56636C; break-inside: avoid; }
 }
+/* ---- Outside UI review, Nov 20: one home for each fact, the plan first ---- */
+.factline { margin: 0; font-size: .95rem; color: var(--ink); }
+.factline b { font-variant-numeric: tabular-nums; }
+.hrsedit .hrsquick { flex: 1 1 100%; }
+.hrsedit .seg.daylen { margin: 0; }
+.tl.freetime .what .sub .linkbtn { margin-left: 4px; }
+/* 12-hour times are wider: the time column and the summary tiles make room, and a time never breaks over two lines */
+html.clock12 .tl { grid-template-columns: 70px 30px 1fr; }
+.tl .time .tt, .daysum b, .factline b { white-space: nowrap; }
+@media (min-width: 521px) {
+  .daysum.n4 { grid-template-columns: max-content max-content max-content max-content minmax(0, 1fr); }
+  .daysum.n3 { grid-template-columns: max-content max-content max-content minmax(0, 1fr); }
+  .daysum.n2 { grid-template-columns: max-content max-content minmax(0, 1fr); }
+  .daysum.n1 { grid-template-columns: max-content minmax(0, 1fr); }
+}
+.daysum > .daytools { justify-content: flex-end; }
+.daysum b { overflow: visible; text-overflow: clip; }
+/* Phones get the same menu as tablets: Settings joins the bottom bar (outside review, Nov 20) */
+@media (max-width: 640px) {
+  .tabs:has(.navset) { grid-template-columns: repeat(5, 1fr); }
+  .tabs .tab.navset { display: flex !important; }
+  .daysum > .daytools { justify-content: flex-start; }
+}
+.hero.seen .heroacts, .hero.seen .wordmark, .hero.seen .tagline, .hero.seen .herosub, .hero.seen .k-anim * { animation: none !important; opacity: 1 !important; stroke-dashoffset: 0 !important; transform: none !important; }
+.engine2why > summary .cnt { color: var(--muted); font-weight: 500; margin-left: 6px; }
 </style>
 
 <header class="top">
@@ -1512,7 +1541,7 @@ body.psheet-on { overflow: hidden; }
       <button class="tab" role="tab" data-view="plan" id="tab-plan"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" d="M9 4 3 6v14l6-2 6 2 6-2V4l-6 2-6-2zM9 4v14M15 6v14"/></svg><span>Day plan</span></button>
       <button class="tab" role="tab" data-view="guide" id="tab-guide"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M4 15v-3a8 8 0 0 1 16 0v3"/><rect x="3" y="14" width="5" height="7" rx="2" fill="currentColor"/><rect x="16" y="14" width="5" height="7" rx="2" fill="currentColor"/></svg><span>Guide</span></button>
       <button class="tab" role="tab" data-view="journal" id="tab-journal"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" d="M6 3h11a2 2 0 0 1 2 2v16H7a2 2 0 0 1-2-2V4a1 1 0 0 1 1-1zM5 17a2 2 0 0 1 2-2h12"/></svg><span>Journal</span></button>
-      <span class="railgap railonly" aria-hidden="true"></span><button class="tab railonly" data-act="settings"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg><span>Settings</span></button>
+      <span class="railgap railonly" aria-hidden="true"></span><button class="tab railonly navset" data-act="settings"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg><span>Settings</span></button>
     </nav>
   </div>
 </header>

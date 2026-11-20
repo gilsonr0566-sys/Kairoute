@@ -102,10 +102,12 @@ function tsGetHere(l, i, legs) {
   return `<div class="field"><span class="lbl">${word}${l.k === "cruise" ? " (if you arrive the same day)" : ""}</span>${tsSeg(i, "inBy", l.inBy, TS_MOVE)}</div>
     <div class="row2">${prev && from ? tsTimeF(`ts-${i}-leaveAt`, `Leave ${esc(bareName(from))} at`, l.leaveAt) : ""}${tsTimeF(`ts-${i}-inAt`, `Arrive in ${esc(bareName(l.k === "cruise" ? l.board : l.place) || "town")} at`, l.inAt, l.inAt ? "" : "Leave empty if you don't know yet.")}</div>`;
 }
+// How the trip ends is asked once, after the last stop and the buttons that add more (outside review, Nov 20: it was
+// asked on the first stop, before the traveler had said where else they were going).
 function tsGoHome(l, i, legs) {
-  if (i !== legs.length - 1) return "";
-  return `<div class="field"><span class="lbl">Going home from ${esc(bareName(tsWhere(l)) || "here")}</span>${tsSeg(i, "homeBy", l.homeBy, TS_MOVE)}</div>
-    <div class="row2">${tsTimeF(`ts-${i}-homeAt`, `${l.homeBy === "flight" ? "Flight" : l.homeBy === "train" ? "Train" : l.homeBy === "ferry" ? "Ferry" : "Leave"} at`, l.homeAt)}</div>`;
+  if (!l || i !== legs.length - 1) return "";
+  return `<div class="tsleg tshome"><div class="field"><span class="lbl">Going home from ${esc(bareName(tsWhere(l)) || "here")}</span>${tsSeg(i, "homeBy", l.homeBy, TS_MOVE)}</div>
+    <div class="row2">${tsTimeF(`ts-${i}-homeAt`, `${l.homeBy === "flight" ? "Flight" : l.homeBy === "train" ? "Train" : l.homeBy === "ferry" ? "Ferry" : "Leave"} at`, l.homeAt)}</div></div>`;
 }
 function tsLegHTML(l, i, legs) {
   const head = `<div class="tshead"><span class="eyebrow">Stop ${i + 1} · ${l.k === "stay" ? "City stay" : "Cruise"}</span>${legs.length > 1 ? `<button type="button" class="linkbtn" data-ts="del" data-i="${i}" aria-label="Remove stop ${i + 1}">Remove</button>` : ""}</div>`;
@@ -114,7 +116,7 @@ function tsLegHTML(l, i, legs) {
       <div class="field"><label for="ts-${i}-date">Arrive on</label><input type="date" id="ts-${i}-date" data-tsf="ts-${i}-date" value="${esc(l.date)}"></div></div>
     <div class="row2"><div class="field"><label for="ts-${i}-nights">Nights</label><input type="number" id="ts-${i}-nights" data-tsf="ts-${i}-nights" min="0" max="60" value="${esc(String(l.nights))}"></div>
       <div class="field"><label for="ts-${i}-hotel">Hotel (optional)</label><input type="text" id="ts-${i}-hotel" data-tsf="ts-${i}-hotel" value="${esc(l.hotel)}" placeholder="Name or address"></div></div>
-    ${tsGetHere(l, i, legs)}${tsGoHome(l, i, legs)}</div>`;
+    ${tsGetHere(l, i, legs)}</div>`;
   const ports = l.ports.map((p, j) => `<div class="tsport" data-port="${j}">
       <div class="row2"><div class="field"><label for="ts-${i}-p${j}-date">Date</label><input type="date" id="ts-${i}-p${j}-date" data-tsf="ts-${i}-p${j}-date" value="${esc(p.date)}"></div>
         <div class="field"><label for="ts-${i}-p${j}-place">Port</label><input type="text" id="ts-${i}-p${j}-place" data-tsf="ts-${i}-p${j}-place" list="ts-cities" value="${esc(p.place)}" placeholder="e.g. Santorini" autocomplete="off"></div></div>
@@ -131,7 +133,7 @@ function tsLegHTML(l, i, legs) {
     <div class="row2"><div class="field"><label for="ts-${i}-end">Cruise ends in</label><input type="text" id="ts-${i}-end" data-tsf="ts-${i}-end" list="ts-cities" value="${esc(l.end)}" placeholder="e.g. Barcelona" autocomplete="off"></div>
       <div class="field"><label for="ts-${i}-endDate">On</label><input type="date" id="ts-${i}-endDate" data-tsf="ts-${i}-endDate" value="${esc(l.endDate)}"></div></div>
     <div class="row2">${tsTimeF(`ts-${i}-off`, "Off the ship at", l.off, l.off ? "" : "Usually 7:00 to 9:00. Leave empty if you don't know.")}</div>
-    ${tsGoHome(l, i, legs)}</div>`;
+</div>`;
 }
 function tsKnownPlaces() {
   const out = new Set(); try { ensureBuiltins(); for (const [c] of BUILTIN_CITIES) out.add(String(c.city).replace(/\s*\(.*\)/, "")); } catch (e) {}
@@ -152,6 +154,7 @@ function tsHTML(w) {
     <p class="lede">Add each place in order, the way it's booked. Each new stop starts where the last one ends.</p>
     ${w.legs.map((l, i) => tsLegHTML(l, i, w.legs)).join("")}
     <div class="actions"><button type="button" class="btn ghost small" data-ts="addstay">+ Add a city stay</button><button type="button" class="btn ghost small" data-ts="addcruise">+ Add a cruise</button></div>
+    ${tsGoHome(w.legs[w.legs.length - 1], w.legs.length - 1, w.legs)}
     <div id="tsPrev">${tsPreview(w.legs)}</div>`;
 }
 // Reads every field of the form into the trip being made (called before any tap acts, and as the traveler types).
