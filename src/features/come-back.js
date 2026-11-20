@@ -1,6 +1,6 @@
 // ===================== How many days your picks need / If you come back =====================
 // Richard (Nov 16): while a trip's days in a city aren't booked yet, a quiet hint says how many days the traveler's
-// picks fit best in ("Your picks fit best in 3–4 days"). It never says "you need more days". Once the days are booked,
+// picks fit best in ("Your sights fit best in 3–4 days"). It never says "you need more days". Once the days are booked,
 // a pick that doesn't fit any of them isn't lost: it goes to an "If you come back" list for that city.
 // The same rule for every city: "booked" means every day spent in the city has a date.
 const laterKey = city => keyOf((city && city.city) || "");
@@ -51,9 +51,9 @@ function picksDaysHint(city) {
   if (!city || cityBooked(city)) return "";
   const r = picksDays(city); if (!r) return "";
   const txt = r.lo === r.hi ? `${r.lo} day${r.lo === 1 ? "" : "s"}` : `${r.lo}–${r.hi} days`;
-  return `<p class="lede small daysfit" role="note">Your picks fit best in ${txt}.</p>`;
+  return `<p class="lede small daysfit" role="note">Your sights fit best in ${txt}.</p>`;
 }
-// The folded "If you come back" list on Change stops (each sight can still be ticked for today).
+// The folded "If you come back" list on Choose sights (each sight can still be ticked for today).
 function laterBlock(city, d, plan, near, skip) {
   if (!city || !cityBooked(city)) return "";
   const l = laterList(city).filter(s => !(skip && skip.has(s.id))); if (!l.length) return ""; // one shown in place in the list above stays there (Nov 17)

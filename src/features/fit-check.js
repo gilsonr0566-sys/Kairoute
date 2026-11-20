@@ -29,8 +29,8 @@ function fixedWhy(d, newSight) {
     : d.type === "arrival" ? `Today starts when your ${what} gets in${d.time ? " at " + esc(d.time) : ""}, so`
     : "Today's times are fixed, so";
   const sep = d.type === "arrival" || !/^(port|embark|departure)$/.test(d.type) ? " " : ", ";
-  return newSight ? `${why}${sep}there's no room for this today. Swap it for one of your picks, or see it on another day.`
-    : `${why}${sep}there's no room for all of these picks today. Untick one, or move it to another day.`;
+  return newSight ? `${why}${sep}there's no room for this today. Swap it for one of your sights, or see it on another day.`
+    : `${why}${sep}there's no room for all of these sights today. Untick one, or move it to another day.`;
 }
 // The smallest change to today's times that fits everything: start earlier (same finish), or finish later.
 function timeOptions(d, sel) {
@@ -110,7 +110,10 @@ function fitTrim(d, keep) {
 function fitOpen(d, id) {
   const city = cityFor(d); if (!city) return true;
   const s = id ? allSites(city).find(x => x.id === id) : null; if (id && !s) return true;
-  const sel0 = (d.selected || []).slice(), target = id ? [...sel0, id] : sel0;
+  // A pick already on the list that didn't fit (the Day plan's "Didn't fit today" banner) is weighed the same way as a
+  // new sight: the day without it, then what it takes to fit it in (outside review, Nov 20: the box offered to leave
+  // out other sights without ever naming the one the banner said didn't fit).
+  const sel0 = (d.selected || []).filter(x => x !== id), target = id ? [...sel0, id] : sel0;
   const base = fitTrial(d, sel0); if (!base.m) return true;
   const full = fitTrial(d, target); if (!full.m || (fitsAll(full) && keepsDay(full.p, base.p) && (!id || onPlan(full.p, id)))) return true;
   let need = 0;
@@ -194,7 +197,7 @@ function fitShow() {
   const b = document.querySelector('.fitbox [data-fitdrop], .fitbox [data-act="fitcancel"]'); if (b) b.focus({ preventScroll: true });
 }
 function fitHTML() {
-  const F = fitState, d = F.d, sel = [...d.selected.filter(i => !F.drop.has(i)), ...(F.id ? [F.id] : [])];
+  const F = fitState, d = F.d, sel = [...d.selected.filter(i => !F.drop.has(i) && i !== F.id), ...(F.id ? [F.id] : [])];
   const r = fitTrial(d, sel), m = r.m, ok = fitsAll(r);
   const freed = F.rows.filter(x => F.drop.has(x.x.id)).reduce((a, x) => a + x.frees, 0);
   // Until it fits, a new sight is counted as the day as planned without it plus its visit and detour.
@@ -205,7 +208,7 @@ function fitHTML() {
   // It fits only if something on the day gets shorter: said as such, with each change named (Nov 19, Richard).
   const cutFix = F.s && ok && !F.drop.size ? F.fixes.find(f => f.kind === "shorter") : null;
   const cutWords = cutFix ? cutFix.cut.map(c => c.to ? `${esc(c.name)} is ${dur(c.to)} instead of ${dur(c.from)}` : `there's no ${esc(c.name.toLowerCase())}`).join(" and ") : "";
-  const title = cutFix ? `${esc(F.s.name)} fits only if something gets shorter` : F.s ? `${esc(F.s.name)} doesn't fit ${when} yet` : `Your picks don't all fit ${when}`;
+  const title = cutFix ? `${esc(F.s.name)} fits only if something gets shorter` : F.s ? `${esc(F.s.name)} doesn't fit ${when} yet` : `Your sights don't all fit ${when}`;
   return `<h3 id="fitTitle">${title}</h3>
     <div class="meter ${ok ? "" : "full"}" role="status" aria-live="polite">
       <div class="mrow"><b>${dur(Math.min(used, 24 * 60))} of ${dur(avail)}</b><span>${fmt(m ? m.start : F.base.start)} to ${fmt(m ? m.endBy : F.base.endBy)}</span></div>
@@ -215,9 +218,9 @@ function fitHTML() {
     </div>
     ${timesFixed(d) && !cutFix ? `<p class="fitwhy">${fixedWhy(d, !!F.s)}</p>` : ""}
     ${F.fixes.length ? `<div class="fitfixes"><p class="lbl">${F.s ? "Ways to fit it in, one tap" : "Ways to make it fit, one tap"}</p>${F.fixes.map((f, k) => `<button type="button" class="btn ${k ? "ghost " : ""}fixbtn" data-act="fitfixgo" data-k="${k}">${fixLabel(F, f)}</button>`).join("")}</div>`
-      : F.loading ? `<p class="mparts">Working out the ways to fit it in…</p>` : `<p class="mparts"><b>${F.s ? "There's no way to fit it into this day." : "Untick picks below until it fits."}</b></p>`}
+      : F.loading ? `<p class="mparts">Working out the ways to fit it in…</p>` : `<p class="mparts"><b>${F.s ? "There's no way to fit it into this day." : "Untick sights below until it fits."}</b></p>`}
     ${F.rows.length ? `<details class="fitown"${F.drop.size ? " open" : ""}><summary>Or choose what to untick yourself</summary><div class="fitlist">${F.rows.map(x => `<label class="fitrow"><input type="checkbox" data-fitdrop="${esc(x.x.id)}" ${F.drop.has(x.x.id) ? "" : "checked"}><span class="nm">${esc(x.x.name)}</span><span class="tags">${x.x.mustSee ? `<span class="tag must">Must-see</span>` : ""}<span class="tag">Frees ${x.frees >= 5 ? "about " + dur(x.frees) : "little time"}</span></span></label>`).join("")}</div></details>` : ""}
-    <div class="row"><button type="button" class="btn ghost" data-act="fitcancel">${F.s ? "Keep my day as is" : "Not now"}</button><button type="button" class="btn" data-act="fitadd" ${ok ? "" : "disabled"}>${F.s ? "Add " + esc(F.s.name) : "Done"}</button></div>`;
+    <div class="row">${F.s && (d.selected || []).includes(F.id) ? `<button type="button" class="btn ghost" data-act="fitleave">Leave ${esc(F.s.name)} out today</button>` : `<button type="button" class="btn ghost" data-act="fitcancel">${F.s ? "Keep my day as is" : "Not now"}</button>`}<button type="button" class="btn" data-act="fitadd" ${ok ? "" : "disabled"}>${F.s ? "Add " + esc(F.s.name) : "Done"}</button></div>`;
 }
 function endWord(d) { return d.type === "port" || d.type === "embark" ? "back on board" : d.type === "departure" ? "at the " + ((MODES[d.mode] || {}).word || "station") : "finish"; }
 function fixLabel(F, f) {
@@ -232,7 +235,7 @@ function fixLabel(F, f) {
 }
 function fitNext(F) {
   if (F.fixes.length) return "Pick one of the ways below and Kairoute rearranges your day.";
-  return F.s ? "Even with nothing else picked, it can't fit this day." : "Untick picks below until it fits.";
+  return F.s ? "Even with nothing else picked, it can't fit this day." : "Untick sights below until it fits.";
 }
 function otherDays(label) {
   const F = fitState; if (!F.others.length) return "";
@@ -249,7 +252,7 @@ function takeFromOtherDay(d, id) {
 }
 function fitApply(t) {
   const F = fitState; if (!F) return;
-  const d = F.d; if (F.id) takeFromOtherDay(d, F.id); d.selected = [...d.selected.filter(i => !F.drop.has(i)), ...(F.id ? [F.id] : [])];
+  const d = F.d; if (F.id) takeFromOtherDay(d, F.id); d.selected = [...d.selected.filter(i => !F.drop.has(i) && i !== F.id), ...(F.id ? [F.id] : [])];
   if (F.id || F.drop.size) { d.ownList = true; delete d.autoEmpty; delete d.cleared; } // a swap is the traveler's own change, as a tick is
   if (t) { if (t.hours != null) d.hours = t.hours; if (t.startTime) d.startTime = t.startTime; }
   if (F.s) { d.anchor = F.id; rememberPick(d, F.s); markMine(d, F.id, true); }
@@ -274,7 +277,9 @@ document.addEventListener("change", e => {
 });
 document.addEventListener("click", e => {
   const t0 = e.target.closest && e.target.closest("button");
-  if (t0 && t0.dataset.act === "fitfix") { const d = day(); if (fitOpen(d, null)) render(); return; }
+  // "Make it fit" on a day with a pick that didn't fit opens the box for that sight, so the box finishes the banner's
+  // sentence ("To fit the Vatican Museum, leave out one of these", move it to another day, or leave it out).
+  if (t0 && t0.dataset.act === "fitfix") { const d = day(), p = buildPlan(d), out = p && !p.error ? (p.dropped || []).find(x => (d.selected || []).includes(x.id)) : null; if (fitOpen(d, out ? out.id : null)) render(); return; }
   if (t0 && t0.dataset.act === "fitask") { const d = day(); if (addPick(d, t0.dataset.id, true)) { save(); render(); } return; }
   if (t0 && t0.dataset.act === "bumpok") { const d = day(); d.bumped = []; save(); render(); return; }
   if (closedState) { if (t0 && t0.dataset.act === "closedday") { closedGo("day", +t0.dataset.to); return; } if (t0 && t0.dataset.act === "closedalt") { closedGo("alt"); return; }
@@ -282,6 +287,7 @@ document.addEventListener("click", e => {
   if (fitState && e.target.classList && e.target.classList.contains("fitbox")) { fitState = null; fitShow(); return; }
   const t = t0; if (!t || !fitState) return;
   if (t.dataset.act === "fitcancel") { fitState = null; fitShow(); }
+  else if (t.dataset.act === "fitleave") { const F = fitState, d = F.d; d.selected = d.selected.filter(i => i !== F.id); d.ownList = true; fitState = null; fitShow(); save(); render(); }
   else if (t.dataset.act === "fitadd" && !t.disabled) fitApply();
   else if (t.dataset.act === "fitfixgo") { const f = fitState.fixes[+t.dataset.k]; if (!f) return;
     if (f.kind === "swap") { fitState.drop = new Set(f.drop); fitApply(); }

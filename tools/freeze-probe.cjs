@@ -75,7 +75,7 @@ const MIME = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css
   if (port) {
     await step('Naples day'); await tap('.daychip', `back to ${port.dest}`, port.i); await p.waitForTimeout(8000);
     await step('Naples: scroll the Day plan'); for (let k = 0; k < 6; k++) { await p.mouse.wheel(0, 500); await p.waitForTimeout(250); }
-    await step('Naples: open Change stops'); await tap('[data-goto="sites"]', 'open Change stops'); await p.waitForTimeout(3000);
+    await step('Naples: open Choose sights'); await tap('[data-goto="sites"]', 'open Choose sights'); await p.waitForTimeout(3000);
     await step('Naples: scroll the Sights list'); for (let k = 0; k < 8; k++) { await p.mouse.wheel(0, 600); await p.waitForTimeout(250); }
     for (let k = 0; k < 3; k++) { await step('Naples: tick a sight'); await tap('input[data-site]', 'tick a sight', k); await p.waitForTimeout(1500); }
     await step('Naples: back to Day plan, waiting (10 s)'); await tap('.tab[data-view="plan"]', 'back to Day plan'); await p.waitForTimeout(10000);

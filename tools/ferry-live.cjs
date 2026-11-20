@@ -42,18 +42,18 @@ const URL = process.env.URL || "https://gilsonr0566-sys.github.io/Kairoute/";
     const ok = /ferry/i.test(first) || !!firstMenu;
     console.log((ok ? "ok   " : "FAIL ") + "the ride from the ship to Sorrento offers the ferry" + (ok ? "" : ": " + first.slice(0, 200)));
     if (!ok) bad++;
-    // Change stops (Richard, Nov 14: "Change stops button isn't working now"): tap it on the Day plan; the stops list
+    // Choose sights (Richard, Nov 14: "Choose sights button isn't working now"): tap it on the Day plan; the stops list
     // must open with its sights, and no page error.
     { const errs = []; p.on("pageerror", e => errs.push(e.message + " @ " + String(e.stack || "").split("\n").slice(1, 3).join(" | ")));
       await p.evaluate(i => window.__kairouteGo("plan", i), d.i); await p.waitForTimeout(1500);
       const btn = await p.$('[data-goto="sites"]'); if (btn) { await btn.click(); await p.waitForTimeout(2500); }
       const v = await p.evaluate(() => ({ boxes: document.querySelectorAll('input[type=checkbox]').length, text: document.body.innerText.slice(0, 200).replace(/\n+/g, " / ") }));
       const pk = await p.evaluate(i => window.__kairoutePicker ? window.__kairoutePicker(i) : null, d.i);
-      console.log("   Change stops offers: " + JSON.stringify(pk));
+      console.log("   Choose sights offers: " + JSON.stringify(pk));
       if (pk && !pk.error) { const all0 = [...pk.picked, ...pk.main, ...pk.far, ...pk.quick, ...pk.elsewhere].join(" | "); console.log("info Amalfi " + (/amalfi/i.test(all0) ? "is" : "is not") + " in this Naples guide"); }
-      if (pk && !pk.error) for (const want of ["Sorrento", "Pompeii", "Capri"]) { const all = [...pk.picked, ...pk.main, ...pk.far, ...pk.quick, ...pk.elsewhere].join(" | "); const okW = new RegExp(want, "i").test(all); console.log((okW ? "ok   " : "FAIL ") + want + " is offered in Change stops"); if (!okW) bad++; }
+      if (pk && !pk.error) for (const want of ["Sorrento", "Pompeii", "Capri"]) { const all = [...pk.picked, ...pk.main, ...pk.far, ...pk.quick, ...pk.elsewhere].join(" | "); const okW = new RegExp(want, "i").test(all); console.log((okW ? "ok   " : "FAIL ") + want + " is offered in Choose sights"); if (!okW) bad++; }
       const okS = !!btn && v.boxes >= 5 && !errs.length;
-      console.log((okS ? "ok   " : "FAIL ") + "Change stops opens the stops list (" + (btn ? v.boxes + " sights" : "no button") + ")" + (errs.length ? " page errors: " + errs.join(" || ") : "") + (okS ? "" : " :: " + v.text));
+      console.log((okS ? "ok   " : "FAIL ") + "Choose sights opens the stops list (" + (btn ? v.boxes + " sights" : "no button") + ")" + (errs.length ? " page errors: " + errs.join(" || ") : "") + (okS ? "" : " :: " + v.text));
       if (!okS) bad++; }
     // A phone that planned the trip earlier: its kept answers are from an older version and hold no lines.
     const old = {}; for (const l of (legs.legs || [])) { old[l.key] = { opts: [], t: Date.now() - 60000 }; old[l.key.split("|")[0]] = { opts: [], t: Date.now() - 60000 }; }

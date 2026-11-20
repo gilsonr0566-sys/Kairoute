@@ -1,5 +1,5 @@
 // Kairoute safety net: runs before every publish and blocks it if anything fails.
-//  1. One truth: on every day of several sample trips, the Day plan, map, Change stops, time bar and Guide
+//  1. One truth: on every day of several sample trips, the Day plan, map, Choose sights, time bar and Guide
 //     must agree with what the planner decided (same stops, same counts, times that add up, no sight on two
 //     days, no optional stop shown as a pick, labels that follow the evidence rule).
 //  2. Data truth: every stop is a real guide sight, every restaurant comes from the map data (never invented),
@@ -89,7 +89,7 @@ const log = (suite, trip, ok, what) => { results.push({ suite, trip, ok, what })
       const want = t.picks.length + (t.bonus.length ? ' + ' + t.bonus.length : '');
       if (pv.stat !== want) bad.push(`summary says "${pv.stat}" stops, plan has ${want}`);
       if (!!pv.dropped !== !!t.dropped.length) bad.push(`"Didn't fit" note ${pv.dropped ? 'shown' : 'missing'} but ${t.dropped.length} picks don't fit`);
-      // Change stops screen
+      // Choose sights screen
       await p.evaluate(i => window.__kairouteAt(i, 'sites'), D.i); await p.waitForTimeout(120);
       const sv = await p.evaluate(() => {
         const cards = [...document.querySelectorAll('.site')];
@@ -102,8 +102,8 @@ const log = (suite, trip, ok, what) => { results.push({ suite, trip, ok, what })
       });
       const sel = new Set(t.selected);
       sv.checked.forEach(id => { if (!sel.has(id)) bad.push(`${id} shows ticked but isn't picked`); });
-      if (parseInt(sv.count) !== t.selected.length) bad.push(`Change stops says "${sv.count}", ${t.selected.length} are picked`);
-      if (sv.optional.sort().join() !== t.bonus.slice().sort().join()) bad.push(`Change stops marks ${sv.optional.length} as optional on the plan, the plan has ${t.bonus.length}`);
+      if (parseInt(sv.count) !== t.selected.length) bad.push(`Choose sights says "${sv.count}", ${t.selected.length} are picked`);
+      if (sv.optional.sort().join() !== t.bonus.slice().sort().join()) bad.push(`Choose sights marks ${sv.optional.length} as optional on the plan, the plan has ${t.bonus.length}`);
       if (sv.both.length) bad.push(`Must-see and Local favorite on the same sight: ${sv.both.join(', ')}`);
       if (sv.head) { const sum = sv.parts.split('·').reduce((a, x) => a + mins(x), 0), tot = mins(sv.head.split(' of ')[0]); if (Math.abs(sum - tot) > 2) bad.push(`time bar parts add to ${sum} min, its total says ${tot} min`); }
       // Guide screen
@@ -220,7 +220,7 @@ const log = (suite, trip, ok, what) => { results.push({ suite, trip, ok, what })
         for (const n of ['Pompeii', 'Sorrento']) { if (!w.picked.some(x => x && x.includes(n))) bad.push(n + ' not picked (' + w.picked.join(', ') + ')'); if (!w.mine.some(x => x && x.includes(n))) bad.push(n + ' not kept as the traveler\'s own pick'); } }
       log('New trip', 'new-trips', !bad.length, 'Sun Princess to Naples, wants Pompeii and Sorrento: ' + (bad.length ? bad.join('; ') : 'ship kept; Pompeii and Sorrento are the day\'s own picks from the start (' + w.picked.join(', ') + ')')); }
     // Richard, Nov 14: "my selections don't even offer Sorrento or Amalfi": on a trip with several Naples days, the
-    // day trips planned on one day vanished from the other days' Change stops. Every day offers every day trip.
+    // day trips planned on one day vanished from the other days' Choose sights. Every day offers every day trip.
     { await p.evaluate(([d, a]) => window.__kairouteNewTrip(d, a), ['Naples three days', 'STOPS: Naples\nDAY|2027-07-12|Naples|port|ship||08:00|17:00|no||yes|Pompeii; Sorrento\nDAY|2027-07-13|Naples|port|ship||08:00|17:00|no||yes|\nDAY|2027-07-14|Naples|port|ship||08:00|17:00|no||yes|']); await p.waitForTimeout(300);
       const bad = [];
       for (const i of [0, 1, 2]) { const pk = await p.evaluate(i => window.__kairoutePicker(i), i); if (!pk || pk.error) { bad.push('day ' + (i + 1) + ': ' + JSON.stringify(pk)); continue; }
@@ -228,7 +228,7 @@ const log = (suite, trip, ok, what) => { results.push({ suite, trip, ok, what })
         for (const n of ['Sorrento', 'Pompeii', 'Capri']) if (!offered.includes(n)) bad.push(`day ${i + 1} doesn't offer ${n}`); }
       await p.evaluate(() => window.__kairouteAt(1, 'sites')); await p.waitForTimeout(300);
       const txt = await p.evaluate(() => document.body.innerText);
-      if (!/Sorrento/.test(txt) || !/Day \d+ · /.test(txt)) bad.push('Change stops on day 2 does not show Sorrento tagged with the day it is planned');
+      if (!/Sorrento/.test(txt) || !/Day \d+ · /.test(txt)) bad.push('Choose sights on day 2 does not show Sorrento tagged with the day it is planned');
       // Ticking a sight planned on day 1 (Pompeii) on day 2 moves it: on day 2 now, off day 1, and the traveler is told.
       const mv = await p.evaluate(() => { const card = [...document.querySelectorAll('.site')].find(c => /Pompeii/.test(c.querySelector('.name') ? c.querySelector('.name').innerText : '') && /Day \d+ · /.test(c.innerText) && c.querySelector('input[data-site]')); if (!card) return { err: 'Pompeii is not offered with a tick box and its day on day 2' }; const x = card.querySelector('input[data-site]'); x.click(); return { id: x.dataset.site, box: !!document.querySelector('.fitbox') }; });
       await p.waitForTimeout(300);
@@ -491,7 +491,7 @@ const log = (suite, trip, ok, what) => { results.push({ suite, trip, ok, what })
       if (!her || her.date !== '2027-07-05') bad.push('Heraklion moved off the photo\'s Jul 5: ' + JSON.stringify(her));
       log('New trip', 'new-trips', !bad.length, 'City stay then cruise from a photo: ' + (bad.length ? bad.join('; ') : 'one boarding day on Jul 4, ports on the photo\'s dates')); }
     // Demo gate, Nov 14: Rome's built-in "Colosseum and Roman Forum" folded into a written "Roman Forum", and the Colosseum
-    // vanished from Change stops. The name that covers more is kept.
+    // vanished from Choose sights. The name that covers more is kept.
     { const S = (id, name, lat, lng, x) => Object.assign({ id, name, lat, lng, category: 'Ancient site', minutes: 60 }, x || {});
       const names = await p.evaluate(s => window.__kairouteFoldNames(s), [S('colosseum', 'Colosseum and Roman Forum', 41.8902, 12.4922, { builtin: true, mustSee: true }), S('forum', 'Roman Forum', 41.8925, 12.4853, { mustSee: true, guide: 'y'.repeat(900) })]);
       log('New trip', 'new-trips', names.some(n => /colosseum/i.test(n)), 'Folding a combined sight keeps every place in its name: ' + names.join(', ')); }
@@ -560,7 +560,7 @@ const log = (suite, trip, ok, what) => { results.push({ suite, trip, ok, what })
       if (onPlan !== 3) bad.push(`Day plan lists ${onPlan} parts for ${sp.name}, it has 3`);
       await p.evaluate(i => window.__kairouteAt(i, 'sites'), D.i); await p.waitForTimeout(150);
       const ticks = await p.evaluate(id => document.querySelectorAll(`input[data-part^="${id}:"]`).length, sp.id);
-      if (ticks !== 3) bad.push(`Change stops shows ${ticks} part ticks, the stop has 3`);
+      if (ticks !== 3) bad.push(`Choose sights shows ${ticks} part ticks, the stop has 3`);
       await p.evaluate(id => document.querySelector(`input[data-part="${id}:2"]`).click(), sp.id); await p.waitForTimeout(150);
       const stillPicked = await p.evaluate(id => document.querySelector(`input[data-site="${id}"]`).checked, sp.id);
       if (!stillPicked) bad.push('unticking a part unticked the whole stop');
@@ -649,7 +649,7 @@ const log = (suite, trip, ok, what) => { results.push({ suite, trip, ok, what })
         log('Sights coverage', 'rome-port', pl.opt <= 2, `Rome port day adds ${pl.opt} optional stops on its own (at most 2: a longer list is for browsing, not for packing the day)`);
         await p.evaluate(i => window.__kairouteAt(i, 'sites'), D.i); await p.waitForTimeout(400);
         const v = await p.evaluate(() => ({ cards: document.querySelectorAll('.sitesmain [data-card]').length, nofit: [...document.querySelectorAll('.sitesmain .nofitcard .name')].map(e => e.innerText), boxes: document.querySelectorAll('.sitesmain input[data-site]').length, twin: [...document.querySelectorAll('.sitesmain .travelnote')].map(e => e.innerText).filter(t => /Not the same place/.test(t)) }));
-        log('Sights coverage', 'rome-port', v.cards >= 30, `Rome port day, Change stops: ${v.cards} sights listed (${v.boxes} can be ticked, ${v.nofit.length} shown greyed out as not fitting the ship time)`);
+        log('Sights coverage', 'rome-port', v.cards >= 30, `Rome port day, Choose sights: ${v.cards} sights listed (${v.boxes} can be ticked, ${v.nofit.length} shown greyed out as not fitting the ship time)`);
         log('Sights coverage', 'rome-port', v.twin.some(t => /Peter|Paul/.test(t)), `look-alike basilicas told apart on screen: ${v.twin.slice(0, 2).join(' / ') || 'no note shown'}`);
         await p.screenshot({ path: path.join(OUT, 'rome-port-sights.jpg'), type: 'jpeg', quality: 60 }); shots.push({ f: 'rome-port-sights.jpg', cap: 'Rome port day: the full sights list, far ones greyed out' });
       }
@@ -699,14 +699,14 @@ const log = (suite, trip, ok, what) => { results.push({ suite, trip, ok, what })
       if (!/wouldn't fit|doesn't make this ride/.test(sw.tried.notice)) sb.push('no reason given for keeping the ride: ' + sw.tried.notice);
       if (sw.tried.canForce && (sw.forced.kept !== 'ferry|Ferry Napoli - Sorrento' || !/left out/.test(sw.forced.notice))) sb.push('taking the ferry anyway was not kept or not explained: ' + JSON.stringify(sw.forced));
       if (sb.length) bad.push(...sb); else log('Ride switch keeps stops', 'transport', true, `a slower ride never drops a stop by itself (${sw.before.stops.join(', ')} kept; "${sw.tried.notice.slice(0, 90)}…"); taken anyway, it is kept and explained`); }
-    // Speed with many kept ride answers (Richard, Nov 14: "Change stops button isn't working": the page froze looking
+    // Speed with many kept ride answers (Richard, Nov 14: "Choose sights button isn't working": the page froze looking
     // for a nearby answer on every one of the plan's ride lookups). 2,000 kept answers elsewhere plus every ride of
-    // the day kept empty: the Day plan and Change stops must still open quickly.
+    // the day kept empty: the Day plan and Choose sights must still open quickly.
     { const extra = []; for (let k = 0; k < 2000; k++) extra.push({ a: { lat: 35 + (k % 50) * 0.2, lng: -5 + Math.floor(k / 50) * 0.3 }, b: { lat: 35.1 + (k % 50) * 0.2, lng: -4.8 + Math.floor(k / 50) * 0.3 }, opts: [{ mode: 'train', kind: 'Train', label: 'T' + k, min: 30, ride: 20, wait: 5, every: 30, access: { how: 'walk', min: 2, km: 0.1 }, egress: { how: 'walk', min: 3, km: 0.2 }, km: 10, path: [] }] });
       await p.evaluate(([ex, i]) => { window.__kairouteTransitSet(ex); window.__kairouteEmptyRides(i); window.__kairouteAt(i, 'plan'); }, [extra, i]); await p.waitForTimeout(300);
       const t0 = Date.now(); await p.click('[data-goto="sites"]'); const opened = await p.waitForFunction(() => document.querySelectorAll('input[type=checkbox]').length > 3, null, { timeout: 20000 }).then(() => true).catch(() => false); const ms = Date.now() - t0;
-      if (!opened || ms > 5000) bad.push(`Change stops took ${ms} ms to open with many kept ride answers${opened ? '' : ' (did not open)'}`);
-      else log('Change stops with many kept rides', 'transport', true, `opens in ${ms} ms with 2,000 kept ride answers and every ride of the day kept empty`);
+      if (!opened || ms > 5000) bad.push(`Choose sights took ${ms} ms to open with many kept ride answers${opened ? '' : ' (did not open)'}`);
+      else log('Choose sights with many kept rides', 'transport', true, `opens in ${ms} ms with 2,000 kept ride answers and every ride of the day kept empty`);
       await p.evaluate(i => window.__kairouteAt(i, 'plan'), i); }
     void mp; void i;
     log('Rides', 'transport', !bad.length, bad.length ? bad.join('; ') : 'Naples: ferry out, Circumvesuviana via Pompeii and back, each ride switchable to a taxi, the plan and ship checks follow, the map draws the real lines');
@@ -782,7 +782,7 @@ details{background:var(--card);border:1px solid var(--line);border-radius:12px;m
 .shots{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px}figure{margin:0;background:var(--card);border:1px solid var(--line);border-radius:10px;overflow:hidden}figure img{width:100%;display:block}figcaption{padding:6px 10px;font-size:.85rem;color:var(--muted)}</style></head>
 <body><main><h1>Kairoute checks</h1><p class="sub">Run ${esc(when)}. These run automatically before every update; if anything fails, the update is held back.</p>
 <div class="big">${fails ? `${fails} problem${fails > 1 ? 's' : ''} found: this update was held back` : `All ${passed} checks passed`}</div>
-<p>What's checked: on every day of ${TRIPS.length} sample trips, the Day plan, map, Change stops, time bar and Guide must agree with the planner (same stops, same counts, times that add up, no sight on two days, no optional stop shown as a pick, labels that follow the sources). Every stop must be a real guide sight, every restaurant must come from the map data, and meals must be near the route. Then a script taps through the real screens on tablet and phone: untick everything, reload, tick, change the day length, Suggest my tour, and sync between two devices. Live trip features are checked with a stand-in server, a fake clock and a fake GPS: opening hours and closed days, the rain swap, crowd tips, re-planning when you fall behind, the back-to-the-ship alerts, traveler ratings and the photo look-up.</p>
+<p>What's checked: on every day of ${TRIPS.length} sample trips, the Day plan, map, Choose sights, time bar and Guide must agree with the planner (same stops, same counts, times that add up, no sight on two days, no optional stop shown as a pick, labels that follow the sources). Every stop must be a real guide sight, every restaurant must come from the map data, and meals must be near the route. Then a script taps through the real screens on tablet and phone: untick everything, reload, tick, change the day length, Suggest my tour, and sync between two devices. Live trip features are checked with a stand-in server, a fake clock and a fake GPS: opening hours and closed days, the rain swap, crowd tips, re-planning when you fall behind, the back-to-the-ship alerts, traveler ratings and the photo look-up.</p>
 ${groups.map(g => { const [suite, trip] = g.split('|'), rs = results.filter(r => r.suite === suite && r.trip === trip), nb = rs.filter(r => !r.ok).length, T = TRIPS.find(x => x.key === trip) || (trip === 'famous' ? { label: 'Top famous sights and big stops (Prague snapshot)' } : trip === 'new-trips' ? { label: 'Planning a new trip from a description (several cities)' } : trip === 'live' ? { label: 'Live trip features: opening hours, weather, crowds, running late, back-to-the-ship alarm, traveler ratings, What am I looking at?' } : null);
   return `<details ${nb ? 'open' : ''}><summary>${esc(suite)}: ${esc(T ? T.label : trip)} <span class="${nb ? 'bad' : 'ok'}">${nb ? nb + ' failed' : 'all passed'}</span></summary><ul>${rs.map(r => `<li class="${r.ok ? 'ok' : 'bad'}">${r.ok ? '✓' : '✗'} ${esc(r.what)}</li>`).join('')}</ul></details>`; }).join('')}
 <h2>Screenshots from this run</h2><div class="shots">${shots.map(s => `<figure><a href="${esc(s.f)}"><img loading="lazy" src="${esc(s.f)}" alt=""></a><figcaption>${esc(s.cap)}</figcaption></figure>`).join('')}</div></main></body></html>`;

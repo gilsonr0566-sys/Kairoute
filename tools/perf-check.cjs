@@ -71,7 +71,7 @@ const SIZES = [['phone', { ...devices['Galaxy S9+'], viewport: { width: 412, hei
     const port = days.find(d => /naples/i.test(d.dest)) || days.find(d => d.type === 'port') || days[0];
     await p.evaluate(i => window.__kairouteGo('plan', i), port.i); await p.waitForTimeout(400);
     for (let k = 0; k < 3; k++) { add(`Port day (${port.dest}): Light/Half/Full`, await tap('[data-act="dayfill"], [data-fill], .fillbtn', 'fill', k % 3)); }
-    add(`Port day (${port.dest}): open Change stops`, await tap('[data-goto="sites"]', 'sites'));
+    add(`Port day (${port.dest}): open Choose sights`, await tap('[data-goto="sites"]', 'sites'));
     await p.waitForTimeout(300);
     for (let k = 0; k < 4; k++) add(`Port day (${port.dest}): tick a sight`, await tap('input[data-site]', 'site', k));
     for (let k = 0; k < 4; k++) add(`Port day (${port.dest}): tick a sight`, await tap('input[data-site]', 'site', k));

@@ -42,6 +42,7 @@ function hoursEditHTML(d, plan) {
   return `<div class="hrsedit card" id="hrsEdit" role="group" aria-label="Today's hours">
     ${startF}
     <div class="field"><label for="hrsEnd">End</label><input type="time" id="hrsEnd" step="900" min="${fmt(lim.from + 60)}" max="${fmt(latestEnd(lim))}" value="${fmt(plan.endBy)}"><small>Latest ${fmt(latestEnd(lim))}</small></div>
+    <div class="field hrsquick"><span class="lbl">Or a quick length</span><div class="seg pace daylen" role="group" aria-label="How long to sightsee today">${DAY_LEN.map(([h, l, sub]) => `<button type="button" data-act="daylen" data-h="${h}" aria-pressed="${+d.hours === h}" title="${esc(l)}: ${esc(sub)} of sightseeing">${esc(l.replace(/ day$/, ""))} <small>${sub}</small></button>`).join("")}</div></div>
     <button type="button" class="btn small" data-act="hrsdone">Done</button>
   </div>`;
 }

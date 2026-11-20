@@ -46,11 +46,13 @@ function readyChange(d) {
   const added = now.filter(n => !was.includes(n)), gone = was.filter(n => !now.includes(n));
   const p = buildPlan(d); return { added, gone, why: p && !p.error ? p.lockBroken || "" : "" };
 }
-const readyCount = () => { const ds = readyDays(); return { done: ds.filter(d => readyState(d) === "ok").length, of: ds.length }; };
+// Counted in calendar days, as the trip's length is (tripFacts): a day that moves from one city to another is one day,
+// ready when both its parts are.
+const readyCount = () => { const by = new Map(); readyDays().forEach(d => { const k = d.date || d.id; by.set(k, (by.has(k) ? by.get(k) : true) && readyState(d) === "ok"); }); return { done: [...by.values()].filter(Boolean).length, of: by.size }; };
 const heartSVG = on => `<svg class="heartico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7.5-4.6-10-9.3C.4 8.6 2.3 4.5 6.2 4.5c2.3 0 3.8 1.3 4.6 2.6h2.4c.8-1.3 2.3-2.6 4.6-2.6 3.9 0 5.8 4.1 4.2 7.2C19.5 16.4 12 21 12 21z" ${on ? 'fill="currentColor"' : 'fill="none" stroke="currentColor" stroke-width="2"'}/></svg>`;
 // The heart in the day's head, next to Rename.
 function heartBtn(d) {
-  const s = readyState(d), label = s === "ok" ? "Day ready" : s === "changed" ? "Changed: tap to lock" : "Mark day ready";
+  const s = readyState(d), label = s === "ok" ? "Day locked" : s === "changed" ? "Changed: tap to lock" : "Lock this day";
   // A brief pulse the first time the heart is shown changed, so the traveler notices; not on every redraw.
   let pulse = ""; if (s === "changed" && !d.ready.pulse) { d.ready.pulse = Date.now(); readyLater(); pulse = " pulse"; } else if (s === "changed" && Date.now() - d.ready.pulse < 2500) pulse = " pulse";
   return `<button class="linkbtn heartbtn ${s || "off"}${pulse}" data-act="dayready" aria-pressed="${s === "ok"}" title="${s === "ok" ? "Tap to unmark this day" : "Tap when this day is planned the way you want it"}">${heartSVG(s === "ok")}<span>${label}</span></button>`;

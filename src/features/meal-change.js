@@ -74,7 +74,7 @@ function mealFormHTML(d, plan) {
   const item = plan.items.find(x => (x.type === "meal" || x.type === "evening") && x.meal && x.meal.label === lbl && x.place);
   const ch = mealChoices(d, plan, lbl);
   const times = (MEAL_TIMES[lbl] || []).filter(t => { const m = toMin(t); return m >= plan.start && m + 30 <= Math.max(plan.endBy, item && item.type === "evening" ? 23 * 60 : 0); });
-  const near = x => x.km < 0.05 ? "next to " + x.at.name : distTxt(x.km) + " from " + x.at.name;
+  const near = x => x.km < 0.1 ? "next door to " + x.at.name : distTxt(x.km) + " from " + x.at.name;
   return `<div class="card bookform mealform" id="mealform"><h3>Change ${esc(low)}</h3>
     ${item ? `<p class="lede small">Now: <b>${esc(item.place.name)}</b> at ${fmt(item.time)}</p>` : ""}
     ${ch.length ? `<p class="eyebrow">Eat somewhere else nearby</p><div class="bookres">${ch.map((x, i) => `<button class="btn ghost" data-mealpick="${i}"><b>${esc(x.r.name)}</b><small>${[x.r.cuisine && x.r.cuisine !== "Restaurant" ? x.r.cuisine : "", mealRateTxt(x.r), near(x)].filter(Boolean).map(esc).join(" · ")}</small></button>`).join("")}</div>`

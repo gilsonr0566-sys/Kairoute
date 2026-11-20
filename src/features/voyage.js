@@ -91,7 +91,7 @@ function voyPortPanel(o) {
   const pr = city && city.primer && city.primer.text;
   const fold = (k, title, body, open) => body ? `<details class="card foldlist voyfold" data-voy-fold="${k}" ${open || voyOpen.has(k) ? "open" : ""}><summary>${title}</summary><div class="voyin">${body}</div></details>` : "";
   return `<div class="card voyday"><div class="voytop"><div><span class="eyebrow">${esc(voyWhen(o))} · ${esc(typeInfo(o.type).short)}</span><h3>${esc(dayName(o))}</h3><p class="lede small">${esc(voyTimes(o, plan))}</p></div>
-      <div class="voyacts"><button class="btn small" data-voyopen="${i}:plan">Open the day plan</button><button class="btn ghost small" data-voyopen="${i}:sites">Change stops</button></div></div>
+      <div class="voyacts"><button class="btn small" data-voyopen="${i}:plan">Open the day plan</button><button class="btn ghost small" data-voyopen="${i}:sites">Choose sights</button></div></div>
     ${checks.length ? `<div class="banner warn">${checks.map(esc).join(" ")}</div>` : ""}
     ${rows ? `<ol class="voyplan">${rows}</ol>` : `<p class="lede small">No stops planned yet. <button class="linkbtn" data-voyopen="${i}:sites">Choose stops</button></p>`}</div>
     ${fold("story", "The story of " + esc(voyWho(o)), pr ? `<div class="guidetext">${paras(pr)}</div><p class="ai-note">Told from Kairoute's checked guide and Wikivoyage.</p>` : "", true)}

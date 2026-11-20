@@ -54,8 +54,8 @@ function boardCard(d, plan) {
       ${ed && ed.busy ? `<span class="bc-busy" role="status"><span class="spinner"></span> Reading your photo…</span>` : ""}
       ${bt != null ? `<button class="btn ghost small" data-act="boardcancel">Cancel</button>` : ""}
     </div>
-    <p class="bc-hint">${ed && ed.msg ? esc(ed.msg) : `On your boarding pass or check-in confirmation (also called arrival or check-in time). Until then the plan gets you there by ${fmt(plan.endBy)}, an hour before all aboard.`}</p>`
-    : `<div class="bc-set"><span>🛳 Boarding time <b>${fmt(bt)}</b>${d.terminal ? ` · ${esc(d.terminal)}` : ""}${ship ? ` · ${esc(ship)}` : ""} · all aboard ${esc(d.allAboard)}</span><button class="btn ghost small" data-act="boardchange">Change</button></div>`;
+    <p class="bc-hint">${ed && ed.msg ? esc(ed.msg) : `On your boarding pass or check-in confirmation (also called arrival or check-in time). Until you add it, the plan uses the time to be back above.`}</p>`
+    : `<div class="bc-set"><span>🛳 Boarding time <b>${fmt(bt)}</b>${d.terminal ? ` · ${esc(d.terminal)}` : ""}${ship ? ` · ${esc(ship)}` : ""}</span><button class="btn ghost small" data-act="boardchange">Change</button></div>`;
   const n = boardDone(d), all = BOARD_LIST.length;
   const list = `<details class="more bc-list" data-board-fold="list" ${boardOpenFolds.has("list") ? "open" : ""}><summary>What to have on you · <b>${n} of ${all}</b> ready</summary>
     <div class="bc-items">${BOARD_LIST.map(([k, t]) => `<label class="check"><input type="checkbox" data-board-check="${k}" ${d.boardChecks && d.boardChecks[k] ? "checked" : ""}><span>${esc(t)}</span></label>`).join("")}</div></details>`;

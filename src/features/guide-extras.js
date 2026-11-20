@@ -410,7 +410,7 @@ async function gxMakeBook() {
       }
     }
     page(); text("The trip in numbers", 22, "bold", [18, 60, 58], 8);
-    text(`${stopsSeen} places · about ${distTxt(km)} on foot · ${trip.days.filter(d => !noShore(d)).length} days`, 13, "normal", null, 6);
+    text(`${stopsSeen} places · about ${distTxt(km)} on foot · ${tripDaysText(trip)}`, 13, "normal", null, 6);
     if (saved > 0) text(`Saved about ${money(sym, saved)} compared with the ship's tours.`, 13, "normal", null, 6);
     const badges = Object.values(trip.badges || {}); if (badges.length) text("Explorer badges: " + badges.map(b => b.name).join(", "), 11, "normal", null, 6);
     text("Made with Kairoute. Stories are from Kairoute's checked city guides; photos are yours unless marked.", 9, "italic", [120, 120, 120]);
