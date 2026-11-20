@@ -34,7 +34,7 @@ if (typeof window !== "undefined" && window.ENGINE2 && window.KEngine) (function
   const askRides = ep => { (ep && ep.items || []).forEach(x => { if (x.t === "ride" && x.from && x.to && x.mode !== "walk" && x.mode !== "boat" && x.mode !== "lift") { try { transitFor(x.from, x.to); } catch (e) {} } }); };
   const answerSig = (a, b) => JSON.stringify((peek(a, b) || []).map(o => [rideId(o), o.min, o.label]));
   // The whole trip planned once per change (the traveler's trip, an answer arriving, the guides, the date).
-  const recent = new Map();
+  const recent = new Map(), recentAlone = new Map(); // the quick checks' plans kept apart (see alonePlans)
   const stat = { calls: 0, keyMs: 0, bucketMs: 0, checkMs: 0, used: 0, planned: 0 };
   window.__kairouteEngine2Stat = () => Object.assign({}, stat, { used: memo.used ? memo.used.size : 0 });
   // Every sight the engine may plan is one the traveler can see and tick: the sights the places files add (the travel
@@ -57,13 +57,16 @@ if (typeof window !== "undefined" && window.ENGINE2 && window.KEngine) (function
   let alone = null;
   window.__kairouteAlone = (d, fn) => { const was = alone; alone = d; try { return fn(); } finally { alone = was; } };
   function alonePlans() {
-    const ai = trip.days.indexOf(alone), k = keyNow() + "|alone:" + ai, m = recent.get(k); if (m) return m;
+    const ai = trip.days.indexOf(alone), k = keyNow() + "|alone:" + ai, m = recentAlone.get(k); if (m) { recentAlone.delete(k); recentAlone.set(k, m); return m; }
     let bucket = engineBucket(false);
+    // Only the guides of the day's own place (and places sharing a sight with it) are needed: the trip's other places
+    // aren't planned, so they aren't copied either.
+    bucket.cities = E.citiesFor(bucket, ai);
     if (window.PLACES2) { bucket = E.applyPlaces(bucket, window.PLACES2); guideFromPlaces(bucket); }
     bucket.days = bucket.days.map((x, i) => i === ai ? Object.assign({}, x, { alone: true }) : x);
     bucket.answers = (a, b) => answerOf(a, b);
     let plans; try { plans = E.planTrip(bucket); } catch (e) { console.warn("Beta 2 engine", e); plans = []; }
-    const mm = { k, plans, bucket, used: new Map() }; recent.set(k, mm); if (recent.size > 8) recent.delete(recent.keys().next().value); return mm;
+    const mm = { k, plans, bucket, used: new Map() }; recentAlone.set(k, mm); if (recentAlone.size > 40) recentAlone.delete(recentAlone.keys().next().value); return mm;
   }
   function tripPlans() {
     if (alone && trip.days.includes(alone)) return alonePlans();

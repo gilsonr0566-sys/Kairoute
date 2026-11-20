@@ -24,8 +24,15 @@ function sightTags(city, s) {
 }
 const wishIds = (d, city) => { try { return city && typeof wantIds === "function" ? wantIds(d, city) : []; } catch (e) { return []; } };
 const bucketCityMemo = new Map();
+// A guide's own fingerprint is worked out once until something could have changed it: an answer arrived (dataGen) or the
+// traveler changed something (planGen). The Sights list's quick fit checks build the bucket many times in between.
+const cityHashMemo = new WeakMap();
+function cityHashOf(city) {
+  const m = cityHashMemo.get(city); if (m && m.g === dataGen && m.pg === planGen) return m.h;
+  const h = strHash(JSON.stringify(city)); cityHashMemo.set(city, { g: dataGen, pg: planGen, h }); return h;
+}
 function cityMemoOf(city, ck, ints) {
-  const sig = strHash(JSON.stringify(city)) + "|" + ints.join(",") + "|" + JSON.stringify(P());
+  const sig = cityHashOf(city) + "|" + ints.join(",") + "|" + JSON.stringify(P());
   let m = bucketCityMemo.get(ck); if (!m || m.sig !== sig) { m = { sig, sites: null, farther: null, dates: new Map() }; bucketCityMemo.set(ck, m); }
   return m;
 }

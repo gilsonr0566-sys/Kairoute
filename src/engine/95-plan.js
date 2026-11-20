@@ -412,7 +412,17 @@
   // each place's days are planned on their own and kept: a change on one day replans only the days of its place, and
   // checking whether a sight fits (the Sights list asks for every sight after every tick) replans one place, not the
   // whole trip. Kept plans are reused only when everything they were made from is the same, ride answers included.
-  const kept = new Map(), KEEP = 30;
+  // A day planned alone keeps its plans apart, so the Sights list's many quick checks never push out the whole plans.
+  const kept = new Map(), keptAlone = new Map(), KEEP = 30;
+  // The guides one day is planned from: its own place's and those of places sharing a sight with it (planned together).
+  // A day planned alone needs no other guide, so the app copies no other.
+  E.citiesFor = (bucket, i) => {
+    const all = bucket.cities || {}, own = ((bucket.days || [])[i] || {}).city; if (own == null || !all[own]) return all;
+    const idsOf = c => [].concat(c.sites || [], c.farther || []).map(x => String(x.id)), mine = new Set(idsOf(all[own])), keep = { [own]: all[own] };
+    for (let grew = true; grew;) { grew = false;
+      for (const [k, c] of Object.entries(all)) if (!keep[k] && idsOf(c).some(id => mine.has(id))) { keep[k] = c; idsOf(c).forEach(id => mine.add(id)); grew = true; } }
+    return keep;
+  };
   E.planTrip = bucket => {
     const days = bucket.days || [], cities = bucket.cities || {}, out = new Array(days.length).fill(null);
     const ids = key => { const c = cities[key] || {}; return (c.sites || []).concat(c.farther || []).map(x => String(x.id)); };
@@ -430,14 +440,15 @@
       sub.cities = {}; gk.forEach(k => { if (cities[k]) sub.cities[k] = cities[k]; });
       sub.placeNotes = (bucket.placeNotes || []).filter(n => idx.some(i => n.day === (days[i].i != null ? days[i].i : i)));
       const sig = JSON.stringify(sub) + "|" + lines;
-      let got = kept.get(sig);
-      if (got && got.asked.every(([a, b, was]) => JSON.stringify(bucket.answers ? bucket.answers(a, b) : null) === was)) { kept.delete(sig); kept.set(sig, got); }
+      const store = idx.some(i => days[i].alone) ? keptAlone : kept;
+      let got = store.get(sig);
+      if (got && got.asked.every(([a, b, was]) => JSON.stringify(bucket.answers ? bucket.answers(a, b) : null) === was)) { store.delete(sig); store.set(sig, got); }
       else {
         const asked = [];
         if (bucket.answers) sub.answers = (a, b) => { const r = bucket.answers(a, b); asked.push([a, b, JSON.stringify(r)]); return r; };
         if (bucket.transit) sub.transit = bucket.transit;
         const plans = planAll(sub); plans.forEach((p, k) => { if (p) p.i = idx[k]; });
-        got = { plans, asked }; kept.set(sig, got); if (kept.size > KEEP) kept.delete(kept.keys().next().value);
+        got = { plans, asked }; store.set(sig, got); if (store.size > KEEP) store.delete(store.keys().next().value);
       }
       idx.forEach((i, k) => { out[i] = got.plans[k]; });
     }
