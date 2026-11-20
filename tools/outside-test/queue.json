@@ -1,0 +1,11 @@
+{
+ "run": "dryrun-2026-11-20",
+ "url": "https://gilsonr0566-sys.github.io/Kairoute-Beta2/",
+ "trips": [
+  { "name": "dry-bruges", "label": "Dry run: Bruges one night by train", "tz": "Europe/Brussels",
+    "legs": [ { "k": "stay", "place": "Bruges, Belgium", "date": "2027-05-18", "nights": 1, "inBy": "train", "inAt": "10:30", "homeBy": "train", "homeAt": "16:00" } ],
+    "steps": [ { "name": "phone-day0", "js": "window.__kairouteAt(0,'plan')", "phone": true, "wait": 5000 } ] },
+  { "name": "dry-kotor", "label": "Dry run: Kotor tender call", "tz": "Europe/Podgorica",
+    "legs": [ { "k": "cruise", "board": "Venice, Italy", "date": "2027-07-06", "aboard": "16:00", "ports": [ { "date": "2027-07-08", "place": "Kotor, Montenegro", "arrive": "08:00", "aboard": "17:00", "tender": true } ], "end": "Venice, Italy", "endDate": "2027-07-10", "off": "08:00" } ] }
+ ]
+}

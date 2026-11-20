@@ -1,0 +1,70 @@
+name: Outside test (live Beta 2)
+# The outside tester's rounds. A headless browser enters trips on the LIVE Beta 2 site as a traveler would and saves
+# every day's text and picture. AI off, paid lookups refused: zero spend. Changes nothing in the app and publishes nothing.
+# Runs when the tester pushes a new trip list (tools/outside-test/queue.json) to its own branch.
+on:
+  workflow_dispatch:
+  push:
+    branches: ["claude/project-thread-vmz3d0"]
+    paths: ["tools/outside-test/queue.json"]
+permissions:
+  contents: read
+concurrency:
+  group: outside-test
+  cancel-in-progress: false
+jobs:
+  plan:
+    runs-on: ubuntu-latest
+    outputs:
+      trips: ${{ steps.q.outputs.trips }}
+      run: ${{ steps.q.outputs.run }}
+    steps:
+      - uses: actions/checkout@v4
+      - id: q
+        run: |
+          node -e "const q=require('./tools/outside-test/queue.json');const fs=require('fs');fs.appendFileSync(process.env.GITHUB_OUTPUT,'trips='+JSON.stringify(q.trips.map(t=>t.name))+'\nrun='+String(q.run).replace(/[^A-Za-z0-9._-]/g,'-')+'\n')"
+  run:
+    needs: plan
+    strategy:
+      fail-fast: false
+      max-parallel: 4
+      matrix:
+        trip: ${{ fromJson(needs.plan.outputs.trips) }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 50
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm i --no-save playwright@1 && npx playwright install --with-deps chromium
+      - env:
+          TRIP: ${{ matrix.trip }}
+        run: node tools/outside-test/run.cjs
+      - if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: out-${{ matrix.trip }}
+          path: outside-out
+          retention-days: 14
+  collect:
+    needs: [plan, run]
+    if: always()
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          path: _in
+          pattern: out-*
+          merge-multiple: true
+      - env:
+          RUN: ${{ needs.plan.outputs.run }}
+        run: |
+          mkdir -p "outside-test-results/$RUN" && cp -r _in/* "outside-test-results/$RUN/" 2>/dev/null || true
+          rm -rf _in
+          git config user.name "outside-test" && git config user.email "outside-test@users.noreply.github.com"
+          git add outside-test-results && git commit -q -m "Outside test results: $RUN" || echo "nothing new"
+          git pull -q --rebase origin "${{ github.ref_name }}" && git push origin "HEAD:${{ github.ref_name }}"

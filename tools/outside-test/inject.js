@@ -1,0 +1,21 @@
+// Outside tester's page helper for the live Beta 2 site: fills the Step by step wizard the way a traveler would and reads days back.
+window.__T = {
+  sleep: ms => new Promise(r => setTimeout(r, ms)),
+  btn: re => [...document.querySelectorAll('button')].find(x => re.test(x.innerText.trim())),
+  set(id, v) { const el = document.getElementById(id) || document.querySelector('[data-tsf="' + id + '"]'); if (!el) throw new Error('no field ' + id); if (el.type === 'checkbox') { if (el.checked !== !!v) el.click(); return; } Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, 'value').set.call(el, String(v)); el.dispatchEvent(new Event('input', { bubbles: true })); el.dispatchEvent(new Event('change', { bubbles: true })); },
+  seg(i, key, v) { const b = document.querySelector('[data-ts="set"][data-i="' + i + '"][data-key="' + key + '"][data-v="' + v + '"]'); if (!b) throw new Error('no seg ' + key); b.click(); },
+  async wizard(legs, name) { const T = this; T.miss = []; const h = T.btn(/^Home$/); if (h) { h.click(); await T.sleep(700); } T.btn(/Start a new trip/).click(); await T.sleep(800);
+    for (let i = 0; i < legs.length; i++) { const l = legs[i];
+      if (i > 0 || l.k === 'cruise') { document.querySelector('[data-ts="' + (l.k === 'cruise' ? 'addcruise' : 'addstay') + '"]').click(); await T.sleep(300); }
+      const F = Object.assign({}, l); delete F.k; const ports = F.ports || []; delete F.ports;
+      for (const key of ['inBy', 'homeBy']) if (F[key]) { T.seg(i, key, F[key]); await T.sleep(200); delete F[key]; }
+      for (const [k, v] of Object.entries(F)) { if (document.getElementById('ts-' + i + '-' + k)) { T.set('ts-' + i + '-' + k, v); await T.sleep(200); } else T.miss.push(i + ':' + k); }
+      for (let j = 0; j < ports.length; j++) { if (j > 0) { document.querySelector('[data-ts="addport"][data-i="' + i + '"]').click(); await T.sleep(300); } for (const [k, v] of Object.entries(ports[j])) { T.set('ts-' + i + '-p' + j + '-' + k, v); await T.sleep(200); } } }
+    if (name) { const n = document.getElementById('w-name'); if (n) { const d = n.closest('details'); if (d) d.open = true; T.set('w-name', name); } }
+    await T.sleep(400); return { miss: T.miss, prev: (document.getElementById('tsPrev') || {}).innerText, form: document.getElementById('wizForm').innerText.slice(0, 1500) }; },
+  async build(maxMs) { document.querySelector('#wizForm button[type=submit]').click(); const t0 = Date.now(); await this.sleep(3000); while (Date.now() - t0 < (maxMs || 25000)) { if (!window.__kairouteState().busy) break; await this.sleep(1000); } return { busy: window.__kairouteState().busy, err: window.__kairouteState().err, ms: Date.now() - t0 }; },
+  status() { const s = window.__kairouteState(); return { busy: s.busy, err: s.err, days: (s.days || []).length, fg: window.__fgLog }; },
+  async day(i, max) { window.__kairouteAt(i, 'plan'); await this.sleep(4500); return document.querySelector('main').innerText.replace(/\n(Light|2½ h|Half|4 h|Full|8 h|Use Ctrl \+ scroll to zoom the map|OpenFreeMap © OpenMapTiles Data from OpenStreetMap|Mark day ready|Change stops|More|Full details|Compact|Change lunch|Change dinner|Lunch: why here|Dinner: why here|✎ Rename)(?=\n)/g, '').replace(/\n(Walk|Taxi or car|Transit|Metro|Bus|Train|Tram|Ferry|Boat|Subway) · [\dh ]+min(?=\n)/g, '').replace(/\n(ARRIVE|LEAVE)\n/g, '\n$1 ').slice(0, max || 3500); },
+  guide(i) { const c = window.__kairouteCityOf(i); if (!c) return null; return { city: c.city || c.name, src: !!c.srcGuide, ai: c.ai, n: (c.sites || []).length, sights: (c.sites || []).map(s => s.name + (s.mustSee || s.must ? '*' : '') + (s.quick ? '~' : '')).join(' | '), far: (c.farther || []).map(s => s.name).join(' | '), eats: (c.restaurants || []).length, starts: Object.fromEntries(Object.entries(c.starts || {}).map(([k, v]) => [k, (v || []).map(p => p.name + (p.unknown ? ' (unknown)' : ''))])) }; }
+};
+'ok';
