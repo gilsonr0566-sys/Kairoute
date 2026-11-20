@@ -317,11 +317,14 @@
       return { plan, sightIds, eatIds, kept: fit.kept, autoIds: [...autoIds], explain, spare: win.endBy - fit.r.end, win };
     };
     const done = new Array(days.length).fill(null);
-    for (const i of order) { done[i] = planDay(i, null); out[i] = done[i].plan; }
+    // A day marked alone (the Sights list asking whether one sight fits) is the only day planned: the other days still
+    // count for which picks move where, but their plans are not made.
+    const only = days.findIndex(d => d.alone), skip = i => only >= 0 && i !== only;
+    for (const i of order) { if (skip(i)) { done[i] = { plan: null, sightIds: [], eatIds: [], kept: [] }; continue; } done[i] = planDay(i, null); out[i] = done[i].plan; }
     // Second pass: a day with spare time takes sights no day used (an area's leftovers, a later day's surplus).
     for (const i of order) {
       const was = done[i], d = days[i];
-      if (!was.kept || was.win.straight || d.fillTime === false || d.cleared) continue;
+      if (skip(i) || !was.kept || was.win.straight || d.fillTime === false || d.cleared) continue;
       was.sightIds.forEach(id => ledger.release(id, i)); was.eatIds.forEach(k => ledger.releaseEat(k, i));
       const keepsAll = r => r.kept && was.kept.every(s => r.kept.some(k => String(k.id) === String(s.id)));
       const undo = r => { if (r.sightIds) { r.sightIds.forEach(id => ledger.release(id, i)); r.eatIds.forEach(k => ledger.releaseEat(k, i)); } };
@@ -420,6 +423,7 @@
     const groups = new Map(); days.forEach((d, i) => { const g = top(d.city); if (!groups.has(g)) groups.set(g, []); groups.get(g).push(i); });
     const lines = bucket.transit && bucket.transit.length ? E.linesKey(bucket.transit) : "";
     for (const idx of groups.values()) {
+      if (days.some(d => d.alone) && !idx.some(i => days[i].alone)) continue;
       const gk = [...new Set(idx.map(i => days[i].city))], sub = {};
       for (const k in bucket) if (k !== "days" && k !== "cities" && k !== "answers" && k !== "transit" && k !== "placeNotes") sub[k] = bucket[k];
       sub.days = idx.map(i => days[i].i != null ? days[i] : Object.assign({}, days[i], { i }));

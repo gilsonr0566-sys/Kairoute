@@ -51,7 +51,22 @@ if (typeof window !== "undefined" && window.ENGINE2 && window.KEngine) (function
       if (addS.length) city.sites = (city.sites || []).concat(addS.map(s => app(s, false)));
       if (addF.length) city.farther = (city.farther || []).concat(addF.map(s => app(s, true))); });
   }
+  // A quick "does it fit?" check from the Sights list plans the day being checked on its own (the other days of its place
+  // still decide which picks move where, but are not planned): planning every other day of the place again for each card made the list keep
+  // a phone busy for half a minute after a tick (Nov 20 sweep, Madrid). Only for the list's marks; a tick plans in full.
+  let alone = null;
+  window.__kairouteAlone = (d, fn) => { const was = alone; alone = d; try { return fn(); } finally { alone = was; } };
+  function alonePlans() {
+    const ai = trip.days.indexOf(alone), k = keyNow() + "|alone:" + ai, m = recent.get(k); if (m) return m;
+    let bucket = engineBucket(false);
+    if (window.PLACES2) { bucket = E.applyPlaces(bucket, window.PLACES2); guideFromPlaces(bucket); }
+    bucket.days = bucket.days.map((x, i) => i === ai ? Object.assign({}, x, { alone: true }) : x);
+    bucket.answers = (a, b) => answerOf(a, b);
+    let plans; try { plans = E.planTrip(bucket); } catch (e) { console.warn("Beta 2 engine", e); plans = []; }
+    const mm = { k, plans, bucket, used: new Map() }; recent.set(k, mm); if (recent.size > 8) recent.delete(recent.keys().next().value); return mm;
+  }
   function tripPlans() {
+    if (alone && trip.days.includes(alone)) return alonePlans();
     stat.calls++; let t0 = performance.now();
     const k = keyNow(); stat.keyMs += performance.now() - t0;
     if (memo.k === k && memo.plans) return memo;

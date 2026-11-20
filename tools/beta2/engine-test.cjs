@@ -221,6 +221,18 @@ if (fs.existsSync(dir)) for (const f of fs.readdirSync(dir).filter(f => f.endsWi
   ok(n > 0 || liveDays > 0, f + ': no days to compare'); oks += same; console.log(`ok   ${s.name}: ${same} of ${n} timed days match the old engine to the minute${liveDays ? ` (${liveDays} left out: the old app used a live route time)` : ''}`);
 }
 
+// ---- A day planned alone (the Sights list's quick "does it fit?") has the same sights as in the whole trip ----
+// Nov 20: the alone check first dropped the place's other days, so a pick closed on its day and moved to another
+// day (or into an area picked for another day) was lost from the check. The other days still decide the moves.
+if (fs.existsSync(dir)) { let n = 0, same = 0;
+  for (const f of fs.readdirSync(dir).filter(f => f.endsWith('.json'))) { const s0 = JSON.parse(fs.readFileSync(path.join(dir, f))), full = E.planTrip(s0);
+    const stops = p => (p && p.items || []).filter(x => x.t === 'stop').map(x => String(x.id)).sort().join(',');
+    (s0.days || []).forEach((d, i) => { if (!full[i] || !full[i].items || !Array.isArray(d.selected)) return; n++; // a day the app fills itself (old trips) takes other days' leftovers
+      const s = JSON.parse(JSON.stringify(s0)); s.days[i] = Object.assign({}, s.days[i], { alone: true }); const p = E.planTrip(s);
+      const others = p.some((x, k) => k !== i && x && x.items && x.items.length);
+      if (stops(p[i]) === stops(full[i]) && !others) same++; else ok(false, `${f} day ${i}: planned alone it has ${stops(p[i]) || 'no sights'}, in the whole trip ${stops(full[i])}${others ? ' (and other days were planned)' : ''}`); }); }
+  ok(n > 20, 'days to plan alone: ' + n); console.log(`ok   ${same} of ${n} days planned alone keep the same sights as in the whole trip`); }
+
 // ---- Every ride in a plan says where it starts and ends (the map draws each ride on its own) ----
 if (fs.existsSync(dir)) { let rides = 0, placed = 0;
   for (const f of fs.readdirSync(dir).filter(f => f.endsWith('.json'))) E.planTrip(JSON.parse(fs.readFileSync(path.join(dir, f)))).forEach(p => (p && p.items || []).forEach((x, k) => {

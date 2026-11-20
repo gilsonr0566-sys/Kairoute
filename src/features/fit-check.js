@@ -13,7 +13,7 @@ function fitTrial(d, sel, t, fast) {
   // counts them), so a check plans the day once instead of twice. The won't-fit box and its fixes plan in full.
   const keep = { selected: d.selected, hours: d.hours, startTime: d.startTime, fillTime: d.fillTime };
   d.selected = sel; if (fast) d.fillTime = false; if (t && t.hours != null) d.hours = t.hours; if (t && t.startTime) d.startTime = t.startTime; forget0(d);
-  try { const p = buildPlan(d), m = meterCalc(p, d); return { p, m }; }
+  try { const p = fast && window.__kairouteAlone ? window.__kairouteAlone(d, () => buildPlanRaw(d)) : buildPlan(d), m = meterCalc(p, d); return { p, m }; }
   finally { Object.assign(d, keep); if (keep.fillTime === undefined) delete d.fillTime; forget0(d); }
 }
 // The same test as the planner's (E.roomFor): a day left with no time for lunch has no room for this sight either.
@@ -334,6 +334,8 @@ function fitRefine() {
   // at least one), stops early when the traveler is touching the screen, then lets the browser respond first.
   const t0 = performance.now(), pend = () => { try { return !!(navigator.scheduling && navigator.scheduling.isInputPending && navigator.scheduling.isInputPending()); } catch (e) { return false; } };
   const back = viewSpot(); // cards redrawn above keep what's on screen in place
+  // Each card is weighed against the day planned the same quick way (the day on its own), so only the sight makes the difference.
+  let base1 = null; const baseNow = () => base1 || (base1 = (fitTrial(d, (d.selected || []).slice(), null, true).p) || ctx.plan);
   try { while (fitQueue.length) {
     if (performance.now() - t0 > 10 || (performance.now() > t0 && pend())) break;
     const id = fitQueue.shift();
@@ -343,7 +345,7 @@ function fitRefine() {
     let ok = false; if (s && !fitNever(ctx.plan, d, s)) {
       // A sight planned on another day is tried as a pick moves it: off that day, onto this one (as addPick does).
       const from = plannedElsewhere(d)[id], fromSel = from && from.selected; if (from) from.selected = fromSel.filter(x => x !== id);
-      let r; try { r = fitTrial(d, [...d.selected, id], null, true); } finally { if (from) from.selected = fromSel; } ok = fitsAll(r) && keepsDay(r.p, ctx.plan) && onPlan(r.p, id); if (ok && r.p && ctx.plan && !ctx.plan.error) fitMemo.add.set(id, Math.max(0, Math.round(r.p.end - ctx.plan.end))); }
+      let r; try { r = fitTrial(d, [...d.selected, id], null, true); } finally { if (from) from.selected = fromSel; } const b1 = baseNow(); ok = fitsAll(r) && keepsDay(r.p, b1) && onPlan(r.p, id); if (ok && r.p && b1 && !b1.error) fitMemo.add.set(id, Math.max(0, Math.round(r.p.end - b1.end))); }
     fitMemo.res.set(id, ok);
     const el = document.querySelector(`#view [data-card="${CSS.escape(id)}"]`);
     if (el && s && !d.selected.includes(id)) el.outerHTML = siteCard(s, d, ctx.plan, ctx.near);
