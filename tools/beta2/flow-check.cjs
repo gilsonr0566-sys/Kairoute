@@ -428,8 +428,14 @@ async function tapTimes(p) { const out = []; const n = await p.evaluate(() => wi
   { const nd = await p.evaluate(() => window.__kairouteDays().length); let found = null;
     for (let i = 0; i < nd && !found; i++) {
       await p.evaluate(i => { window.__kairouteGo('day', i); window.__kairouteGo('sites'); }, i); await p.waitForTimeout(500);
-      const far = (await boxes(p)).filter(b => !b.on && /-far$/.test(b.id)).slice(0, 3);
-      for (const b of far) { try { await tapBox(p, b.id); if (await p.$('.fitbox')) { found = { i, id: b.id }; break; } if ((await boxes(p)).some(x => x.id === b.id && x.on)) await tapBox(p, b.id); } catch (e) { /* the list redrew under the tap: try the next */ } } }
+      await p.waitForFunction(() => !window.__kairouteFitPending || window.__kairouteFitPending() === 0, null, { timeout: 8000, polling: 100 }).catch(() => {});
+      const ask = await p.$$eval('#view [data-act="fitask"]', xs => xs.map(x => x.dataset.id).filter(Boolean));
+      for (const id of ask.slice(0, 2)) { const sel = `#view [data-act="fitask"][data-id="${id}"]`; if (!(await p.$(sel))) continue; const tA = Date.now(); await tapSel(p, sel);
+        await p.waitForSelector('.fitbox', { timeout: 5000 }).catch(() => {}); if (await p.$('.fitbox')) { found = { i, id, ms: Date.now() - tA }; break; } } }
+    // The box opens at once and its ways to fit fill in a moment later: they do arrive (never left "working out").
+    if (found) { const t0 = Date.now(); await p.waitForFunction(() => !/Working out the ways/.test((document.querySelector('.fitbox') || {}).innerText || ''), null, { timeout: 15000, polling: 100 }).catch(() => {});
+      const txt = await p.evaluate(() => (document.querySelector('.fitbox') || {}).innerText || '');
+      check("A won't-fit box fills in its ways to fit within a few seconds", !/Working out the ways/.test(txt) && /one tap|no way to fit|Untick picks/i.test(txt) && Date.now() - t0 < 8000, `after ${Date.now() - t0} ms: ${txt.replace(/\s+/g, ' ').slice(0, 160)}`); }
     if (found) { const j = (found.i + 1) % nd; await p.evaluate(j => { window.__kairouteGo('day', j); window.__kairouteGo('sites'); }, j); await p.waitForTimeout(600); }
     check("A won't-fit box closes when the traveler goes to another day", !!found && !(await p.$('.fitbox')), !found ? 'no sight opened a won\'t-fit box' : `the box for ${found.id} (day ${found.i + 1}) stayed open on another day`);
     const left = await p.$('.fitbox'); if (left) await p.evaluate(() => { const b = document.querySelector('.fitbox'); if (b) b.remove(); }); }

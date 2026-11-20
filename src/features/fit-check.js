@@ -115,6 +115,15 @@ function fitOpen(d, id) {
   const full = fitTrial(d, target); if (!full.m || (fitsAll(full) && keepsDay(full.p, base.p) && (!id || onPlan(full.p, id)))) return true;
   let need = 0;
   if (s) { try { need = stopCost(base.p, s).min; } catch (e) {} if (!(need > 0)) need = Math.max(5, full.m.used - base.m.used); }
+  // The box opens at once with what is known (the meter, why it doesn't fit); the ways to fit it are worked out next,
+  // each a full plan of the day, and fill in a moment later (Nov 20 sweep: a day trip's box took 3.7 s on a phone).
+  const prov = { fixes: [], d, id, s, need, never: false, others: [], moves: [], dayFirst: false, canRoom: false, base: base.m, rows: [], sugg: [], drop: new Set(), times: [], loading: true };
+  fitState = prov; fitShow();
+  setTimeout(() => { if (fitState !== prov || day() !== d) return; fitFinish(d, id, s, sel0, target, base, full, need, prov); }, 30);
+  return false;
+}
+function fitFinish(d, id, s, sel0, target, base, full, need, prov) {
+  const city = cityFor(d); if (!city) return;
   const picks = allSites(city).filter(x => sel0.includes(x.id));
   const fitsWithout = ids => fitsAll(fitTrial(d, target.filter(i => !ids.includes(i))));
   const rows = picks.map(x => { const r = fitTrial(d, sel0.filter(i => i !== x.id)); return { x, frees: Math.max(0, base.m.used - (r.m ? r.m.used : base.m.used)), alone: fitsWithout([x.id]) }; });
@@ -148,8 +157,9 @@ function fitOpen(d, id) {
   // A swap that costs a must-see comes after other ways (a new time or another day), never first.
   const rank = f => f.kind === "shorter" ? -1 : f.kind === "swap" ? (f.must ? 3 : 0) : f.kind === "time" ? 1 : 2;
   fixes.sort((a, b) => rank(a) - rank(b));
-  fitState = { fixes, d, id, s, need, never, others, moves, dayFirst, canRoom, base: base.m, rows, sugg, drop: new Set(), times };
-  fitShow(); return false;
+  if (fitState !== prov) return; // closed, or another box opened, while the ways were worked out
+  fitState = { fixes, d, id, s, need, never, others, moves, dayFirst, canRoom, base: base.m, rows, sugg, drop: prov.drop, times };
+  fitShow();
 }
 // A sight closed on the day the traveler tried to add it to: say why, and offer, in one tap, a day of the trip here
 // when it's open and fits, or the best sight that is open today and fits instead.
@@ -205,7 +215,7 @@ function fitHTML() {
     </div>
     ${timesFixed(d) && !cutFix ? `<p class="fitwhy">${fixedWhy(d, !!F.s)}</p>` : ""}
     ${F.fixes.length ? `<div class="fitfixes"><p class="lbl">${F.s ? "Ways to fit it in, one tap" : "Ways to make it fit, one tap"}</p>${F.fixes.map((f, k) => `<button type="button" class="btn ${k ? "ghost " : ""}fixbtn" data-act="fitfixgo" data-k="${k}">${fixLabel(F, f)}</button>`).join("")}</div>`
-      : `<p class="mparts"><b>${F.s ? "There's no way to fit it into this day." : "Untick picks below until it fits."}</b></p>`}
+      : F.loading ? `<p class="mparts">Working out the ways to fit it in…</p>` : `<p class="mparts"><b>${F.s ? "There's no way to fit it into this day." : "Untick picks below until it fits."}</b></p>`}
     ${F.rows.length ? `<details class="fitown"${F.drop.size ? " open" : ""}><summary>Or choose what to untick yourself</summary><div class="fitlist">${F.rows.map(x => `<label class="fitrow"><input type="checkbox" data-fitdrop="${esc(x.x.id)}" ${F.drop.has(x.x.id) ? "" : "checked"}><span class="nm">${esc(x.x.name)}</span><span class="tags">${x.x.mustSee ? `<span class="tag must">Must-see</span>` : ""}<span class="tag">Frees ${x.frees >= 5 ? "about " + dur(x.frees) : "little time"}</span></span></label>`).join("")}</div></details>` : ""}
     <div class="row"><button type="button" class="btn ghost" data-act="fitcancel">${F.s ? "Keep my day as is" : "Not now"}</button><button type="button" class="btn" data-act="fitadd" ${ok ? "" : "disabled"}>${F.s ? "Add " + esc(F.s.name) : "Done"}</button></div>`;
 }
