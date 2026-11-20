@@ -163,7 +163,7 @@ if (typeof window !== "undefined" && window.ENGINE2 && window.KEngine) (function
     return { city, w: Object.assign({}, w, { start: ep.start, endBy: ep.endBy }), items, stops, dropped, folded: [], elsewhere: [], quickMeals: false, along: [], bonus: stops.filter(s => s.place.bonus).map(s => s.place), fill: [], noLunch: ep.noLunch || null, orderExtra: ep.orderExtra || 0, suggest: (ep.suggest || []).map(x => { const p = byId.get(String(x.id)); return p ? { place: p, minutes: x.minutes, far: x.far, rideMin: x.rideMin, must: !!x.must, voiced: !!x.voiced } : null; }).filter(Boolean),
       meals, evening, swaps: [], closedToday: [], lock: { t: null, seq: stops.map(s => s.place.id), late: 0, quick: false, eve: "" }, locked: false, seen: false, seenBroke: false, seenSkipped: [],
       lockBroken: false, routeX: null, start: ep.start, endBy: ep.endBy, end: ep.end, walkKm, over: !!ep.over,
-      engine2: { explain: ep.explain || [], explainKind: (ep.explain || []).map(E.explainKind), waysToFit: ep.waysToFit || null, leftOut: ep.leftOut || [], safe: !!ep.safe } };
+      engine2: { leaveAt: ep.leaveAt || null, explain: ep.explain || [], explainKind: (ep.explain || []).map(E.explainKind), waysToFit: ep.waysToFit || null, leftOut: ep.leftOut || [], safe: !!ep.safe } };
   }
   // The engine chooses each untouched day's stops, so the old planner's late hand-out of a day trip stays off.
   if (typeof leadLate === "function") leadLate = function () {};

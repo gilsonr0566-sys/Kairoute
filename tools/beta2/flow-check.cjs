@@ -105,7 +105,9 @@ async function tapTimes(p) { const out = []; const n = await p.evaluate(() => wi
 
   // 2a. Richard's Naples day, Nov 18: Sorrento and Pompeii picked. Getting out to Sorrento is a ride of its own with every
   // way the guide names as a choice (the ferry among them); no stop runs past the leave-by time back to the ship.
-  { const sor = all.find(id => /sorrento/.test(id)); if (sor) { await tapBox(p, sor);
+  // Since Nov 20 (outside review #12) Pompeii picked on its own keeps its full visit, so Pompeii and Sorrento no longer fit
+  // one port day together: Sorrento is picked with the sight in town instead.
+  { const sor = all.find(id => /sorrento/.test(id)); if (sor) { if (far && (await boxes(p)).some(b => b.id === far && b.on)) await tapBox(p, far); await tapBox(p, sor);
       if (process.env.VERBOSE) console.error('sorrento card', await p.evaluate(id => { const c = document.querySelector(`[data-card="${id}"]`); return (c ? c.className + ' ' + c.innerText.replace(/\s+/g, ' ').slice(0, 160) : 'no card') + ' | box: ' + [...document.querySelectorAll('.fitbox, .closedbox')].map(e => e.innerText.replace(/\s+/g, ' ').slice(0, 300)).join(' / '); }, sor));
       const legs = await p.evaluate(i => window.__kairouteLegs(i), ni), plan = await p.evaluate(i => window.__kairouteEngine2()[i], ni);
       const k = (plan.items || []).findIndex(x => x.t === 'stop' && x.id === sor), before = k > 0 ? plan.items[k - 1] : null;
@@ -118,12 +120,16 @@ async function tapTimes(p) { const out = []; const n = await p.evaluate(() => wi
   // (a trip out alone, two trips out, a trip out with sights in town), unless it would cost one of the traveler's own
   // stops (the app then offers to take it anyway) or the ship. Nov 18: the train was refused for an optional stop; the
   // ferry back couldn't be picked once the train was taken out; a ride picked out decided the ride picked back.
-  { const setPicks = async want => { for (let k = 0; k < 30; k++) { const st = await boxes(p), w = st.find(x => x.on !== want.includes(x.id)); if (!w) return true;
-        if (!(await tapBox(p, w.id))) return false; if (await p.$('.fitbox, .closedbox')) { const ok = (await boxes(p)).some(x => x.id === w.id && x.on === want.includes(x.id)); if (!ok) return false; } } return false; };
+  // Unticks first: a pick that fits alone may not fit beside the last set's picks (Pompeii keeps its full visit since Nov 20).
+  { const setPicks = async want => { for (let k = 0; k < 30; k++) { const st = await boxes(p), w = st.find(x => x.on && !want.includes(x.id)) || st.find(x => x.on !== want.includes(x.id)); if (!w) return true;
+        if (!(await tapBox(p, w.id))) return false; if (await p.$('.fitbox, .closedbox')) { let ok = (await boxes(p)).some(x => x.id === w.id && x.on === want.includes(x.id));
+          // A pick that fits only with another shorter: added through its pop-up, as the traveler would ("Add it, with ...").
+          if (!ok && want.includes(w.id)) { const fix = p.locator('.fitbox .fixbtn', { hasText: 'Add it, with' }).first(); if (await fix.isVisible().catch(() => false)) { await fix.evaluate(e => e.click()); await p.waitForTimeout(500); ok = (await boxes(p)).some(x => x.id === w.id && x.on); } }
+          if (!ok) return false; } } return false; };
     const pick = re => all.find(id => re.test(id));
     // The last set again with a timetable answer for every ride, as the app has online (Nov 18, 7:14 PM: with an answer
     // the guide's train showed as "Taxi or car" and the train tapped was refused; the offline test had no answers).
-    const sets = [[pick(/pompeii/)], [pick(/sorrento/)], [pick(/sorrento/), town], [pick(/pompeii/), pick(/sorrento/)], [pick(/pompeii/), town, 'answers']].map(x => x.filter(Boolean)).filter(x => x.filter(y => y !== 'answers').length);
+    const sets = [[pick(/pompeii/)], [pick(/sorrento/)], [pick(/sorrento/), town], [pick(/pompeii-far$/), pick(/pompeii-far~/)], [pick(/pompeii/), town, 'answers']].map(x => x.filter(Boolean)).filter(x => x.filter(y => y !== 'answers').length);
     const bad = []; let tapped = 0;
     for (const set0 of sets) {
       const withAns = set0.includes('answers'), set = set0.filter(x => x !== 'answers');
@@ -183,7 +189,8 @@ async function tapTimes(p) { const out = []; const n = await p.evaluate(() => wi
   // joins a stop only where the stop is beside the street (no straight line over the harbour to a terminal on its pier).
   // A pick that fits only with something else shorter opens the box that names it (Nov 19, Richard: no quiet cuts); the
   // traveler taps "Add it, with ..." as Richard would.
-  { const setPicks = async want => { for (let k = 0; k < 30; k++) { const st = await boxes(p), w = st.find(x => x.on !== want.includes(x.id));
+  // Unticks first: a pick that fits alone may not fit beside the last set's picks (Pompeii keeps its full visit since Nov 20).
+  { const setPicks = async want => { for (let k = 0; k < 30; k++) { const st = await boxes(p), w = st.find(x => x.on && !want.includes(x.id)) || st.find(x => x.on !== want.includes(x.id));
         // A wanted sight with no tick (it fits only if something changes) is added through its pop-up, as Richard asked.
         let miss = !w ? want.find(id => !st.some(x => x.id === id)) : null; if (!w && !miss) return true;
         if (w) { if (await tapBox(p, w.id)) { const fix = p.locator('.fitbox .fixbtn', { hasText: 'Add it, with' }).first(); if (await fix.isVisible().catch(() => false)) { await fix.evaluate(e => e.click()); await p.waitForTimeout(400); } continue; }
@@ -460,6 +467,25 @@ async function tapTimes(p) { const out = []; const n = await p.evaluate(() => wi
       const t = await p.evaluate(() => document.getElementById('view').innerText), stops = await p.$$eval('#view [data-act="stopinfo"], #view .stop', xs => xs.length).catch(() => 0);
       await p.evaluate(() => { window.__kairouteFailDay = undefined; });
       check('A day the planner can\'t plan says so, with no stand-in plan', /couldn't be planned/.test(t) && !stops, /couldn't be planned/.test(t) ? `${stops} stops shown under the message` : 'no message: ' + t.slice(0, 120).replace(/\s+/g, ' ')); } }
+  // 7. A city with more than one station or airport and none chosen: the day asks which, with no leave-by time on a guess,
+  //    and once the traveler chooses in the day's settings the day is planned (Nov 20 tester: the wrong station, said with confidence).
+  { const days = await p.evaluate(() => window.__kairouteDays()), many = [];
+    for (const d of days.filter(x => x.type === 'departure' || x.type === 'arrival')) {
+      await p.evaluate(i => window.__kairouteUnpickPoint(i), d.i); await p.waitForTimeout(150);
+      const e = await p.evaluate(i => (window.__kairouteEngine2()[i] || {}).error || '', d.i); if (/^Which (station|airport)/.test(e)) many.push(d.i); }
+    let ok7 = many.length > 0, why = many.length ? '' : 'no day with more than one station or airport to ask about';
+    for (const i of many) { if (!ok7) break;
+      const lb = await p.evaluate(i => window.__kairouteLiveTest.alarm(i), i);
+      await p.evaluate(i => window.__kairouteAt(i, 'plan'), i); await p.waitForTimeout(500);
+      const t = await p.evaluate(() => document.getElementById('view').innerText);
+      if (lb || !/Which (station|airport)/.test(t)) { ok7 = false; why = `day ${i + 1}: ${lb ? 'a leave-by time on a guess' : 'no question on the day: ' + t.slice(0, 100).replace(/\s+/g, ' ')}`; break; }
+      await p.evaluate(i => window.__kairouteAt(i, 'trip'), i); await p.waitForTimeout(500);
+      const sel = await p.$('#f-point'); const ph = sel && await sel.evaluate(x => x.value === '-1' && x.dataset.ask === '1');
+      if (!ph) { ok7 = false; why = `day ${i + 1}: the day's settings don't ask which one`; break; }
+      await sel.selectOption('0'); await p.waitForTimeout(600);
+      const e2 = await p.evaluate(i => (window.__kairouteEngine2()[i] || {}).error || '', i);
+      if (e2) { ok7 = false; why = `day ${i + 1}: still not planned after choosing (${e2.slice(0, 80)})`; } }
+    check('A city with several stations or airports asks which, gives no time on a guess, and plans the day once chosen', ok7, why); }
   await ctx.close(); srv.close(); await browser.close();
   const leaks = results.filter(r => !r.ok);
   for (const r of results) console.log((r.ok ? 'pass  ' : 'LEAK  ') + r.name + (r.ok ? '' : ' — ' + r.why));

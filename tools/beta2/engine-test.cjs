@@ -183,7 +183,7 @@ if (fs.existsSync(dir)) for (const f of fs.readdirSync(dir).filter(f => f.endsWi
 // The two checks against the old engine below compare the clock itself, so they run on the old engine's road estimate (one
 // speed for the whole ride by its length); the estimate changed on purpose on Nov 20 (review finding 5, tested above).
 const roadNow = E.roadTime;
-E.roadTime = d => { const k = d <= 15 ? 1.3 : d <= 40 ? 1.35 : 1.25, v = d <= 6 ? 22 : d <= 15 ? 25 : d <= 40 ? 45 : 85, add = d <= 15 ? 10 : 15; return { km: d * k, min: Math.round(add + d * k / v * 60) }; };
+const bagsNow = E.BAGS_WALK; E.BAGS_WALK = 1e9; E.roadTime = d => { const k = d <= 15 ? 1.3 : d <= 40 ? 1.35 : 1.25, v = d <= 6 ? 22 : d <= 15 ? 25 : d <= 40 ? 45 : 85, add = d <= 15 ? 10 : 15; return { km: d * k, min: Math.round(add + d * k / v * 60) }; };
 // ---- Against the old engine: every day's window on the saved test trips ----
 
 if (fs.existsSync(dir)) for (const f of fs.readdirSync(dir).filter(f => f.endsWith('.json'))) {
@@ -227,7 +227,7 @@ if (fs.existsSync(dir)) for (const f of fs.readdirSync(dir).filter(f => f.endsWi
   ok(n > 0 || liveDays > 0, f + ': no days to compare'); oks += same; console.log(`ok   ${s.name}: ${same} of ${n} timed days match the old engine to the minute${liveDays ? ` (${liveDays} left out: the old app used a live route time)` : ''}`);
 }
 
-E.roadTime = roadNow;
+E.roadTime = roadNow; E.BAGS_WALK = bagsNow;
 // ---- A day planned alone (the Sights list's quick "does it fit?") has the same sights as in the whole trip ----
 // Nov 20: the alone check first dropped the place's other days, so a pick closed on its day and moved to another
 // day (or into an area picked for another day) was lost from the check. The other days still decide the moves.
@@ -740,5 +740,74 @@ ok(E.readable('Café Ñandú') && E.readable("Joe's Bar & Grill") && !E.readable
       else if (r.pinned) worse++; }
     ok(used > 10 && !worse, `a borrowed road time is never shorter than reaching the known ride's ends and riding it, and a choice is borrowed by the same rule (${used} borrowed, ${worse} wrong)`);
     ok(E.gapMin(0.5) > E.gapMin(0.5, true) && E.gapMin(2) >= 5 && E.gapMin(0) === 0, 'the gap to a borrowed public ride is walked (a taxi beyond a walk); to a road time it is driven'); }
+  // Fable review #10-#12 (Nov 20): no silent waits, no long walks with luggage, a place keeps its own visit length.
+  { const PD = path.join(__dirname, '..', 'places', 'data'), places = {}; let firsts = 0, meals = 0, bagRides = 0; const waits = [], silent = [], bagWalks = [], shortSilent = [];
+    if (fs.existsSync(PD)) for (const g of fs.readdirSync(PD).filter(g => g.endsWith('.json'))) { const q = JSON.parse(fs.readFileSync(path.join(PD, g))); places[q.key] = q; }
+    for (const f of fs.readdirSync(dir).filter(f => f.endsWith('.json'))) { let s, pl; try { s = E.applyPlaces(JSON.parse(fs.readFileSync(path.join(dir, f))), places); pl = E.planTrip(s); } catch (e) { continue; }
+      pl.forEach((p, i) => { if (!p || !p.items) return; const d = s.days[i], c = s.cities[d.city] || {}, mins = new Map((c.sites || []).concat(c.farther || []).map(x => [String(x.id), x.minutes || 0]));
+        const k = p.items.findIndex(x => x.t === 'stop');
+        if (k > 0 && p.items[0].t === 'start' && p.items.slice(1, k).every(x => x.t === 'ride')) { firsts++; if ((p.items[k].wait || 0) > 20) waits.push(`${f} day ${i + 1}: ${p.items[k].name} ${p.items[k].wait} min`); }
+        p.items.forEach((x, j) => { if (x.t !== 'meal' || x.onBoard || !x.at) return; meals++; const prev = p.items.slice(0, j).reverse().find(y => y.at != null && y.t !== 'ride');
+          if (x.freeBefore > 20 && !(p.explain || []).some(t => /^Free time: about \d+ min before/.test(t))) silent.push(`${f} day ${i + 1}: ${x.freeBefore} min before ${x.name}`); });
+        if (/arriv|embark|depart|disembark/.test(d.type || '') || d.mode) p.items.forEach((x, j) => { if (x.t !== 'ride') return; const nx = p.items[j + 1], pv = p.items[j - 1];
+          const bags = (nx && /Check in or drop bags/.test(nx.name || '')) || (j === p.items.length - 2 && nx && nx.t === 'end' && !d.noBags && d.type !== 'port' && !d.returnToStart);
+          if (!bags) return; bagRides++; if (x.kind === 'walk' && x.min > E.BAGS_WALK) bagWalks.push(`${f} day ${i + 1}: walk ${x.min} min`); });
+        p.items.filter(x => x.t === 'stop' && mins.has(String(x.id))).forEach(x => { const was = mins.get(String(x.id)); if (x.min * 2 < was && !(p.explain || []).some(t => t.startsWith(String(x.name) + ' gets '))) shortSilent.push(`${f} day ${i + 1}: ${x.name} ${x.min} of ${was}`); }); }); }
+    ok(firsts > 20 && !waits.length, `a day never starts with a wait of over 20 min at the first stop's door: it starts later and says so (${firsts} days; ${waits.slice(0, 3).join('; ')})`);
+    ok(meals > 20 && !silent.length, `over 20 free minutes before a meal is named as free time (${meals} meals; ${silent.slice(0, 3).join('; ')})`);
+    ok(!bagWalks.length, `no ride with luggage is a walk of over ${E.BAGS_WALK} min (${bagRides} rides with bags; ${bagWalks.slice(0, 3).join('; ')})`);
+    ok(!shortSilent.length, `no visit is cut below half its length without a line saying why (${shortSilent.slice(0, 3).join('; ')})`);
+    // A town with its own sights listed keeps its full visit picked on its own; with one of its sights picked too it becomes the
+    // walk to it, and says so; that sight keeps the gated town's opening hours.
+    const sf = path.join(dir, 'athens-booked.json');
+    if (fs.existsSync(sf)) { const s0 = E.applyPlaces(JSON.parse(fs.readFileSync(sf)), places); let ni = -1, town = null, inner = null;
+      const runAt = (k, sel) => { const s = JSON.parse(JSON.stringify(s0)); s.days[k].selected = sel; return E.planTrip(s)[k]; };
+      for (let k = 0; k < s0.days.length && !town; k++) for (const t of ((s0.cities[s0.days[k].city] || {}).farther || []).filter(t => t.townWalk && t.minutes > t.townWalk)) {
+        const p = runAt(k, [t.id]); if (p && p.items && p.items.some(x => String(x.id) === String(t.id))) { ni = k; town = t; inner = s0.cities[s0.days[k].city].farther.find(x => x.town === t.id); break; } }
+      if (town && inner) { const run = sel => runAt(ni, sel);
+        const a = run([town.id]), b = run([town.id, inner.id]), sa = a.items.find(x => String(x.id) === String(town.id)), sb = b.items.find(x => String(x.id) === String(town.id)), ib = b.items.find(x => String(x.id) === String(inner.id));
+        ok(sa && sa.min > town.townWalk && !(a.explain || []).some(t => t.startsWith(town.name + ' gets ')), `${town.name} picked on its own keeps its own visit (got ${sa && sa.min} of ${town.minutes} min)`);
+        ok(sb && sb.min === town.townWalk && (b.explain || []).some(t => t.startsWith(town.name + ' gets ' + town.townWalk + ' min, the walk to ' + inner.name)), `${town.name} with ${inner.name} picked too becomes the walk to it, and says so (got ${sb && sb.min} min)`);
+        const tday = (s0.days[ni].sites || {})[town.id], open = tday && tday.oh && tday.oh.spans && tday.oh.spans.length ? tday.oh.spans[0][0] : null;
+        ok(open == null || (ib && ib.at >= open), `a sight inside a gated town is never planned before the town opens (${inner.name} at ${ib && E.clock(ib.at)}, opens ${open == null ? '?' : E.clock(open)})`); }
+      else ok(false, 'a town with its own sights is in the test trip'); } }
+  // Tester's safety findings (Nov 20): the right station or airport or a question, never a building site; border trains;
+  // no "your picks" when the traveler picked nothing; one leave-by time.
+  { const ch = E.gateChoices([{ name: 'Chantier Grand Paris Express - Future Station Saint-Denis-Pleyel', lat: 48.918, lng: 2.343 }, { name: 'Gare du Nord', lat: 48.8809, lng: 2.3553 }, { name: 'Paris Gare du Nord', lat: 48.8812, lng: 2.3550 }, { name: 'Gare de Lyon', lat: 48.8443, lng: 2.3744 }]);
+    ok(ch.length === 2 && !ch.some(x => /chantier|future/i.test(x.name)), `a building site is never a station, and one place is listed once (got ${ch.map(x => x.name).join(', ')})`);
+    const wrong = [['station', { name: 'Central Fire Station' }], ['station', { name: 'Rubis Service Station' }], ['station', { name: 'Old Terminus' }], ['station', { name: 'Main Square', kind: 'subway_entrance' }],
+      ['airport', { name: 'Harbor Seaplane Base' }], ['airport', { name: 'List of airports in the Greater Area' }], ['airport', { name: 'City Airfield' }], ['cruise', { name: 'Gladstone Freight Terminal' }], ['cruise', { name: 'City Marina' }], ['cruise', { name: 'Kotor Bay' }], ['cruise', { name: 'Port', kind: 'fuel' }]];
+    const right = [['station', { name: 'Central Station', kind: 'station' }], ['station', { name: 'Roma Termini' }], ['airport', { name: 'International Airport', kind: 'aerodrome' }], ['cruise', { name: 'Prince George Wharf' }], ['cruise', { name: 'Cruise Terminal', kind: 'ferry_terminal' }]];
+    const badOk = wrong.filter(([k, c]) => E.gateOk(k, c)).map(([k, c]) => k + ': ' + c.name), goodNo = right.filter(([k, c]) => !E.gateOk(k, c)).map(([k, c]) => k + ': ' + c.name);
+    ok(!badOk.length && !goodNo.length, `a station, airport or cruise port is the right kind of place (taken wrongly: ${badOk.join('; ') || 'none'}; refused wrongly: ${goodNo.join('; ') || 'none'})`);
+    const hotel = { name: 'Hotel', lat: 51.5007, lng: -0.1246 }, st = { name: 'St Pancras', lat: 51.5308, lng: -0.1260 };
+    const trip = (o, dd) => ({ prefs: { walk: 'medium' }, cities: { lon: { key: 'lon', name: 'L', sites: [{ id: 'wa', name: 'Abbey', lat: 51.4993, lng: -0.1273, minutes: 90 }], restaurants: [] } },
+      days: [Object.assign({ i: 0, type: 'departure', mode: 'train', city: 'lon', date: '2027-05-03', time: '12:31', startTime: '09:00', hours: 8, lodging: hotel, point: Object.assign({}, st, o || {}), selected: [] }, dd || {})] });
+    const asked = E.planTrip(trip({ ask: ['St Pancras', 'Victoria'] }))[0];
+    ok(asked && asked.error && /^Which station do you leave from\?/.test(asked.error) && !asked.items, `a city with more than one station and none chosen is asked, with no time given on a guess (got ${asked && (asked.error || 'a plan')})`);
+    ok(E.trainNeed('France', 'Germany') === E.BORDER_NEED.open && E.trainNeed('United Kingdom', 'France') === E.BORDER_NEED.passport && E.trainNeed('Italy', 'Italy') === null && E.trainNeed('', 'France') === null, 'border trains: ID checks inside the open-border area, passport checks across its edge');
+    const uk = E.planTrip(trip(null, { country: 'United Kingdom', toCountry: 'France', toOther: true }))[0], unk = E.planTrip(trip(null, { toOther: true }))[0], home = E.planTrip(trip(null, { country: 'Italy', toCountry: 'Italy', toOther: true }))[0];
+    ok(uk.endBy === 12 * 60 + 31 - E.BORDER_NEED.passport && uk.explain.some(t => /passport and security/.test(t)), `a train out of Britain to France: at the station ${E.BORDER_NEED.passport} min before, and said (back by ${E.clock(uk.endBy)})`);
+    ok(unk.endBy === 12 * 60 + 31 - E.BORDER_NEED.open && unk.explain.some(t => /Where passports and bags are checked/.test(t)) && home.endBy === 12 * 60 + 31 - E.MODES.train.need, `countries unknown: ${E.BORDER_NEED.open} min and the plan says when to allow more; a train at home keeps ${E.MODES.train.need} min`);
+    const wants = E.planTrip(Object.assign(trip(null, { time: '09:31', wantsOnly: true }), {}))[0], tw = trip(null, { time: '10:31', wantsOnly: true }); tw.days[0].selected = ['wa'];
+    const pw = E.planTrip(tw)[0], tp = trip(null, { time: '10:31' }); tp.days[0].selected = ['wa']; const pp = E.planTrip(tp)[0];
+    ok(!(pw.dropped || []).length && pw.explain.some(t => /^Not planned today: Abbey/.test(t)) && (pp.dropped || []).length === 1, `a sight the guide wanted that doesn't fit is "not planned today", never a dropped pick; a real pick that doesn't fit is (${(pw.dropped || []).length} / ${(pp.dropped || []).length})`);
+    // One leave-by on every leaving and boarding day of every saved trip: the time the last rides to the end begin.
+    const PD = path.join(__dirname, '..', 'places', 'data'), places = {}; let n = 0; const bad = [];
+    if (fs.existsSync(PD)) for (const g of fs.readdirSync(PD).filter(g => g.endsWith('.json'))) { const q = JSON.parse(fs.readFileSync(path.join(PD, g))); places[q.key] = q; }
+    for (const f of fs.readdirSync(dir).filter(f => f.endsWith('.json'))) { let s, pl; try { s = E.applyPlaces(JSON.parse(fs.readFileSync(path.join(dir, f))), places); pl = E.planTrip(s); } catch (e) { continue; }
+      pl.forEach((p, i) => { if (!p || !p.items || !/departure|embark/.test(s.days[i].type)) return; n++; const its = p.items; let k = its.length - 1, t = its[k].at; while (k > 0 && its[k - 1].t === 'ride') { k--; t -= its[k].min || 0; }
+        const lines = (p.explain || []).filter(x => / leave for .* by |^Leave for /i.test(x));
+        if (!p.leaveAt || p.leaveAt.out !== t || lines.length !== 1 || !lines[0].endsWith(E.clock(t) + '.') || (p.explain || []).some(x => /^Leave by /.test(x))) bad.push(`${f} day ${i + 1}: ${lines.join(' | ') || 'no line'} (rides start ${E.clock(t)})`); }); }
+    ok(n > 10 && !bad.length, `one leave-by time on every leaving or boarding day, the time its last rides begin (${n} days; ${bad.slice(0, 3).join('; ')})`); }
+  // A way a start place's note names (a port's sea bus or shuttle) is a choice of its own, never taken on its own, with the
+  // wait for it; the way back to the ship waits the whole interval (Nov 20 UI review, finding 5).
+  { const w = E.noteWays('Sea bus to the old harbor every 20 to 30 minutes, about 10 minutes. A port shuttle bus runs to the main square.');
+    ok(w.length === 2 && w[0].kind === 'ferry' && w[0].how === 'Sea bus' && w[0].ride === 10 && w[0].every === 30 && w[1].kind === 'bus' && w[1].how === 'Port shuttle bus', `a note's ways are read with their names, times and intervals (got ${JSON.stringify(w.map(x => [x.kind, x.how, x.ride, x.every]))})`);
+    const port = { name: 'Port', lat: 37.4467, lng: 25.3289, startNote: 'Sea bus to the old harbor every 20 to 30 minutes, about 10 minutes.' }, town = { name: 'Town', lat: 37.4456, lng: 25.3589 }, tr = E.makeTravel({ walk: 'medium' }, {});
+    const out = tr.estimate(port, town), back = tr.estimate(town, Object.assign({}, port, { backToShip: true })), so = (out.options || []).find(o => o.how === 'Sea bus'), sb = (back.options || []).find(o => o.how === 'Sea bus');
+    ok(so && sb && out.kind !== 'ferry' && back.kind !== 'ferry' && so.min === 10 + 15 + 10 && sb.min >= 10 + 30 + 10, `the port's sea bus is offered both ways, never picked on its own, with half the interval going out and all of it back (out ${so && so.min}, back ${sb && sb.min})`);
+    const pick = E.makeTravel({ walk: 'medium' }, { [E.pairKey(port, town)]: 'ferry' }).estimate(port, town);
+    ok(pick.kind === 'ferry' && pick.how === 'Sea bus', `the traveler's tap on it plans it (got ${pick.how})`); }
 }
 console.log(`\n${oks} checks passed, ${fails} failed`); process.exit(fails ? 1 : 0);

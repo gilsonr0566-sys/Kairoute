@@ -12,6 +12,30 @@
   E.TENDER_ASHORE = 60;      // getting ashore by tender boat; 30 by gangway
   E.BOARD_BEFORE = 60;       // at the terminal at least an hour before all aboard
   E.GATE_KM = { flight: 80, other: 40 }; // farthest a port or station (airports lie farther out) may be from the nearest sight
+  // Never a place that isn't built yet, or no longer used, as a station, airport or port (Nov 20 tester: a capital's
+  // station was a metro building site).
+  E.NOT_BUILT = /\b(under construction|construction|chantier|cantiere|obras?|baustelle|future|futur|proposed|planned|projet|project|disused|abandoned|former|closed)\b/i;
+  // The real places of one kind a city search found, one per place (same name, or within 1 km), unbuilt ones left out.
+  // More than one means the traveler is asked which (Nov 20 tester: a train abroad was sent to the wrong one of a
+  // capital's stations; a city with two airports got one with no question asked).
+  // The right KIND of place on the map (Nov 20 tester's 70-city table: a fire station, a petrol station, a subway stop, a
+  // seaplane base and a freight terminal were each taken for a station, airport or cruise port). kind: station, airport
+  // or cruise; a candidate's map kind (OpenStreetMap's value), when known, must be one that kind can be.
+  const GATE_BAD = { station: /\b(fire|police|service|petrol|gas|filling|fuel|power|pumping|radio|lifeboat|research|space|weather|polling|coast ?guard|ambulance|bus|coach|subway|u-?bahn|metro|underground|tram|tube)\b|\bterminus\b/i,
+    airport: /\b(airfield|heliport|seaplane|sea plane|air ?base|air force|naval air|aero ?club|gliding|flying club|airstrip)\b/i,
+    cruise: /\b(freight|cargo|container|seaplane|marina|yacht|fishing|naval|oil|fuel|bay|gulf|sound|strait|channel)\b/i };
+  const GATE_KINDS = { station: /^(station|halt|train_station|stop)$/, airport: /^(aerodrome|airport|terminal|international_airport)$/, cruise: /^(ferry_terminal|pier|terminal|harbour|harbor|port|dock|wharf|quay|berth|cruise_terminal)$/ };
+  E.gateOk = (kind, c) => !!c && !/^(list|lists|index|outline) of\b/i.test(String(c.name || "").trim()) && !(GATE_BAD[kind] && GATE_BAD[kind].test(String(c.name || ""))) && !(c.kind && GATE_KINDS[kind] && !GATE_KINDS[kind].test(String(c.kind)));
+  E.gateChoices = (list, kind) => { const key = n => String(n || "").toLowerCase().normalize("NFKD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-z0-9]+/g, " ").trim(), out = [];
+    for (const c of list || []) { if (!c || !c.name || !isFinite(c.lat) || !isFinite(c.lng) || E.NOT_BUILT.test(c.name + " " + (c.kind || "")) || (kind && !E.gateOk(kind, c))) continue;
+      if (!out.some(x => key(x.name) === key(c.name) || E.hav(x, c) <= 1)) out.push(c); }
+    return out; };
+  // How early to be at the station for a train to another country: ID checks inside the open-border area, passport and
+  // security checks across its edge (Nov 20 tester: 30 min for a train with passport checks is not safe).
+  E.OPEN_BORDERS = new Set(["austria", "belgium", "bulgaria", "croatia", "czechia", "czech republic", "denmark", "estonia", "finland", "france", "germany", "greece", "hungary", "iceland", "italy", "latvia", "liechtenstein", "lithuania", "luxembourg", "malta", "netherlands", "norway", "poland", "portugal", "romania", "slovakia", "slovenia", "spain", "sweden", "switzerland"]);
+  E.BORDER_NEED = { open: 45, passport: 90 };
+  E.trainNeed = (from, to) => { const a = String(from || "").trim().toLowerCase(), b = String(to || "").trim().toLowerCase();
+    if (!a || !b || a === b) return null; return E.OPEN_BORDERS.has(a) && E.OPEN_BORDERS.has(b) ? E.BORDER_NEED.open : E.BORDER_NEED.passport; };
   E.TENDER_BACK = 30;        // tender port: the boats back stop well before all aboard and queue, so back this much earlier
   // A landing below the town, reached by cable car or funicular (from the places files): the queue and ride up, and the
   // queue and ride down, which is far longer when every passenger heads back at once.
@@ -37,6 +61,9 @@
     const servesFrom = words.some(x => named.normalize("NFKD").replace(/[\u0300-\u036f]/g, "").includes(x));
     if (P && !P.unknown && !servesFrom && d.type !== "land" && isFinite(P.lat) && (d.siteSpots || []).length && Math.min(...d.siteSpots.map(x => E.hav(P, x))) > E.GATE_KM[d.mode === "flight" && d.type !== "port" && d.type !== "embark" ? "flight" : "other"])
       return E.fail(`${P.name} is ${Math.round(Math.min(...d.siteSpots.map(x => E.hav(P, x))))} km from every sight here, so it can't be the right place. Check where you arrive or leave; this day isn't planned on a guess.`, { unsure: true, farGate: true });
+    // A city with more than one station or airport and none chosen: asked, never guessed.
+    if (P && P.ask && P.ask.length > 1 && d.type !== "land" && d.type !== "port" && d.type !== "embark") { const word = (E.MODES[d.mode] || E.MODES.flight).word;
+      return E.fail(`Which ${word} ${d.type === "arrival" ? "do you arrive at" : "do you leave from"}? There is more than one here (${E.listWords(P.ask.slice(0, 4), "or")}${P.ask.length > 4 ? " or another" : ""}). Choose it in the day's settings${d.type === "arrival" ? "" : " and the day gets its time to leave by"}: no time is given on a guess.`, { unsure: true, askGate: true }); }
     if (P && P.unknown && d.type !== "land" && !d.thru) return E.fail(`We couldn't find exactly where ${P.name} is, so this day isn't planned on a guess.`, { unsure: true });
     if (d.type === "land") {
       if (!L) return E.fail("Choose where you're staying.");
@@ -45,15 +72,19 @@
     } else if (d.type === "arrival") {
       if (!L) return E.fail("Choose where you're staying."); if (!P) return E.fail("Choose your arrival point.");
       const m = E.MODES[d.mode] || E.MODES.flight;
-      w.start = E.toMin(d.time) + m.clear; w.head = [P, fixed(L, "Check in or drop bags", 20)]; w.tail = [L];
+      w.start = E.toMin(d.time) + m.clear; w.head = [P, Object.assign(fixed(L, "Check in or drop bags", 20), { bags: true })]; w.tail = [L];
       w.sightFrom = w.start + chain(w.head, tr); w.endBy = Math.min(23 * 60, lunchIn(w.sightFrom, d.hours));
     } else if (d.type === "departure" || d.type === "embark") {
       const ship = d.type === "embark", m = ship ? E.MODES.ship : E.MODES[d.mode] || E.MODES.flight;
       if (!P) return E.fail(ship ? "Choose the cruise port." : "Choose your departure point.");
-      const end = Object.assign({}, P, { deadline: true });
+      const end = Object.assign({}, P, { deadline: true }, d.noBags ? {} : { bags: true }); // reached from the bags, with them
       // Boarding: at the terminal by the boarding time, and never later than an hour before all aboard.
       const latest = ship ? d.allAboard - E.BOARD_BEFORE : null;
-      w.endBy = ship ? (d.boardAt != null ? Math.min(d.boardAt, latest) : latest) : E.toMin(d.time) - m.need;
+      // Countries not known for a train to another city: planned for ID checks at least, and the plan says when to allow more.
+      const unknownBorder = !ship && d.mode === "train" && d.toOther && (!d.country || !d.toCountry);
+      const border = !ship && d.mode === "train" ? (E.trainNeed(d.country, d.toCountry) || (unknownBorder ? E.BORDER_NEED.open : null)) : null;
+      w.endBy = ship ? (d.boardAt != null ? Math.min(d.boardAt, latest) : latest) : E.toMin(d.time) - Math.max(m.need, border || 0);
+      if (unknownBorder) w.borderUnknown = true; else if (border && border > m.need) w.borderNeed = border;
       if (ship) { w.boardAt = d.boardAt; w.latest = latest; }
       if (d.thru) { // off a ship, plane or train and leaving the same day: bags in storage near where you arrive
         const am = E.MODES[d.thru.mode] || E.MODES.flight, A = d.thru.point; if (!A) return E.fail("Choose where you arrive.");

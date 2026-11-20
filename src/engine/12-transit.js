@@ -27,8 +27,14 @@
   // A train whose stops are 4 km apart or more on average is a regional line: about 70 km/h between stops (a 75 km
   // regional ride takes about an hour, not two).
   const speedOf = l => { const c = cum(l), n = l.stops.length; return l.mode === "train" && n > 1 && c[n - 1] / (n - 1) >= 4 ? 70 : (SPEED[l.mode] || 25); };
+  // A metro or light rail runs at town speed between close stops, and far faster on a long stretch with no stop (an airport
+  // branch): the first 1.5 km of each stretch at its town speed, the rest at 70 km/h (Fable review #13: an airport metro
+  // planned at twice its real time). A longer ride is never quicker.
+  const FAST = { subway: 1, light_rail: 1, monorail: 1 };
   const ride = (l, i, j) => { const c = cum(l), [a, b] = i < j ? [i, j] : [j, i];
-    return Math.round((c[b] - c[a]) / speedOf(l) * 60 + 0.5 * (b - a)); };
+    if (!FAST[l.mode]) return Math.round((c[b] - c[a]) / speedOf(l) * 60 + 0.5 * (b - a));
+    let m = 0; for (let k = a; k < b; k++) { const km = c[k + 1] - c[k]; m += Math.min(km, 1.5) / speedOf(l) * 60 + Math.max(0, km - 1.5) / 70 * 60 + 0.5; }
+    return Math.round(m); };
   // lines: [{ mode, ref, name, stops: [{ name, lat, lng }] in order }]. walkMin(km) -> minutes on foot.
   // A line is offered only with a walk at each end (a stop within a short walk): never a taxi stitched to a train (Nov 18:
   // "Taxi 19 min to Athina, then Train A4, then a taxi 30 min, 3 h 28" next to a 95-minute ride). A ride with no stop

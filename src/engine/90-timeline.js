@@ -25,7 +25,9 @@
         if (p.bonus) it.bonus = true; if (p.along) it.along = true; }
       // Early at a place to eat: seated with a drink and the menu, the first quarter hour is no idle wait (Nov 19: lunch
       // 1.7 km out of the way, to save five minutes before the kitchen opened). Longer is still a wait.
-      if (type === "meal") { const m = p.mealOf; if (clock < m.from) { waits += Math.max(0, m.from - clock - E.MEAL_SEATED); clock = m.from; }
+      // Twenty minutes or more before lunch starts is free time, named on the meal (Nov 20 review: the day jumped to lunch with
+      // nothing said).
+      if (type === "meal") { const m = p.mealOf; if (clock < m.from) { if (m.from - clock > 20) it.freeBefore = m.from - clock; waits += Math.max(0, m.from - clock - E.MEAL_SEATED); clock = m.from; }
         // The place's own hours that day, read and checked exactly as a sight's (E.hoursFit): wait for it to open (the first
         // quarter hour seated is no idle wait), and a meal that can't finish before closing is late by the minutes it runs
         // over (Nov 19 review: lunch was planned when the restaurant was shut).

@@ -25,6 +25,19 @@
   E.noteKinds = note => { const n = String(note || "").replace(/cable ?cars?|funiculars?|rack railway/gi, ""), out = [];
     if (/\b(train|trains|rail|railway)\b/i.test(n)) out.push("train"); if (/\b(metro|subway|underground)\b/i.test(n)) out.push("metro");
     if (/\b(tram|trams)\b/i.test(n)) out.push("tram"); if (/\b(bus|buses|coach|shuttle)\b/i.test(n)) out.push("bus"); if (E.BOAT.test(n.replace(/water ?taxi/gi, "boat"))) out.push("ferry"); return out; };
+  // Every way a start place's note names (a port's "Sea bus to the old harbor every 20 to 30 minutes, about 10 minutes";
+  // "A port shuttle bus runs to the main square"), one per kind, with its name as the guide gives it, its ride time if
+  // said, and how often it runs if said (Nov 20 UI review: the note named a ride the plan offered no button for).
+  E.noteWays = note => { const out = [];
+    for (const part of String(note || "").split(/(?<=[.;!?])\s+|\n/)) {
+      const m = part.match(/\b((?:[a-z]+\s+){0,2}?(?:sea ?bus|water ?bus|water ?taxi|shuttle(?: bus(?:es)?)?|bus(?:es)?|ferry|ferries|boats?|tram|metro|train))\b/i); if (!m) continue;
+      const kind = /sea ?bus|water|ferr|boat/i.test(m[1]) ? "ferry" : /tram/i.test(m[1]) ? "tram" : /metro/i.test(m[1]) ? "metro" : /train/i.test(m[1]) ? "train" : "bus";
+      if (out.some(w => w.kind === kind)) continue;
+      const ev = part.match(/every\s+(\d+)(?:\s*(?:-|–|to)\s*(\d+))?\s*(?:minutes?|mins?\b|min\b)/i), every = ev ? +(ev[2] || ev[1]) : 0;
+      const ride = saidMin(part.replace(/every\s+\d+(?:\s*(?:-|–|to)\s*\d+)?\s*(?:minutes?|mins?\b|min\b)/ig, ""));
+      const name = m[1].replace(/^(?:a|an|the|by|take|takes)\s+/i, "").replace(/buses$/i, "bus").replace(/ferries$/i, "ferry").replace(/boats$/i, "boat").trim();
+      out.push({ kind, how: name.charAt(0).toUpperCase() + name.slice(1), ride, every, text: part.trim() }); }
+    return out; };
   const WALK_LIMIT = { low: 0.8, medium: 1.7, high: 3.2 }, WALK_EITHER = 4;
   // By road (taxi or car) for d km as the crow flies: town streets, regional roads, then highway.
   // The average speed rises smoothly with the length of the ride (Nov 20 review: one speed for the whole ride, chosen by
@@ -52,6 +65,7 @@
   // A pier's name or a note in plain words, every word for a harbor read as "port" (harbour, porto, puerto, hafen, limani).
   E.pierWords = t => String(t || "").toLowerCase().normalize("NFKD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-z0-9]+/g, " ")
     .replace(/\b(harbou?r|porto|puerto|porte?|hafen|limani|haven)\b/g, "port").trim();
+  E.BAGS_WALK = 10; // longest walk planned with luggage
   E.PIER_BACK = 60; // at the pier for a boat back with no sailing times known: a gap between sailings
   // The first sailing a guide's note gives ("boats leave from about 9:00", "first boat at 9.30 am"), in minutes, else null.
   E.firstSailing = note => { const m = String(note || "").match(/\b(?:from|after|first (?:boat|ferry|sailing|departure)s?(?: \w+){0,2}?)\s+(?:about |around |approx(?:imately|\.)? )?(\d{1,2})[:.](\d{2})\s*(am|pm)?/i);
@@ -94,7 +108,7 @@
   E.nearGap = (a, b, n, byRoad) => n ? E.gapMin(E.hav(a, n.A), byRoad) + E.gapMin(E.hav(b, n.B), byRoad) : 0;
   const roadMemos = new Map();
   E.makeTravel = (prefs, legModes, legs, lines, answers, piers) => {
-    const walk = (prefs && prefs.walk) || "medium", lim = WALK_LIMIT[walk] || WALK_LIMIT.medium, speed = walk === "low" ? 3.6 : 4.5, modes = legModes || {}, memo = new Map(), memoEnd = new Map();
+    const walk = (prefs && prefs.walk) || "medium", lim = WALK_LIMIT[walk] || WALK_LIMIT.medium, speed = walk === "low" ? 3.6 : 4.5, modes = legModes || {}, memo = new Map(), memoEnd = new Map(), memoBags = new Map();
     const walkMinOf = km => Math.max(1, Math.round(km * 1.3 / speed * 60));
     // The traveler's ride choice belongs to the two places, whichever way the day goes between them (Nov 18: the train
     // picked between two trips out was lost when the day ran them the other way round). A choice also holds for a ride close
@@ -122,7 +136,7 @@
       const lift = (p, q) => p.viaLift && E.hav(q, p.viaLift) < 0.05;
       if (lift(a, b) || lift(b, a)) return { mode: "lift", kind: "train", how: (a.viaLift || b.viaLift).name || "Cable car", km: 0, min: 0 };
       // Remembered by the four coordinates (numbers make fast keys), apart for legs that end at a deadline.
-      let m = (b.backToShip || b.deadline) ? memoEnd : memo;
+      let m = b.bags ? memoBags : (b.backToShip || b.deadline) ? memoEnd : memo;
       for (const x of [a.lat, a.lng, b.lat]) { let n = m.get(x); if (!n) { n = new Map(); m.set(x, n); } m = n; }
       const got = m.get(b.lng); if (got) return got;
       const v = Object.freeze(calc(a, b)); m.set(b.lng, v); return v;
@@ -218,6 +232,13 @@
         // way is offered only when quicker than the walk; up to twice the limit, at most E.SLOWER_THAN_WALK minutes slower
         // (a bus that spares a longish walk); beyond that any way that spares the walk is offered (a slow tram beats a
         // 78-minute walk for someone who walks little).
+        // A way the start place's note names (a port's sea bus or shuttle) that the data doesn't have: a choice of its own,
+        // on the guide's ride time (else the road's) with the wait for it (half its interval going out, all of it back to a
+        // ship, train or plane, 15 min if not said) and 10 min from where it stops. Never taken on its own: the traveler picks it.
+        const sNote = a.startNote || b.startNote || "";
+        if (sNote && d >= 0.6) for (const w of E.noteWays(sNote)) if (!pub.some(o => o.kind === w.kind)) {
+          const wait = w.every ? ((b.backToShip || b.deadline) ? w.every : Math.ceil(w.every / 2)) : 15;
+          pub.push({ id: "note|" + w.kind, kind: w.kind, how: w.how, min: (w.ride || road(d).min) + wait + 10, steps: [w.text], said: true, source: w.ride ? "guide" : "estimate" }); }
         const slowOk = o => o.min < onFoot || (d > lim && (d > 2 * lim || o.min <= onFoot + E.SLOWER_THAN_WALK));
         for (const o of pub) if (slowOk(o)) opts.push(Object.assign({ km: d * 1.3 }, o));
         // By road: a taxi or car, on the road network's time when the places database has it, else the road estimate.
@@ -240,9 +261,11 @@
       // On the way to a ship, train or plane the app takes a line on its own only when a timetable answers for it, or it is a
       // metro or tram (they run every few minutes); a train or bus known only from the map stays a choice, said (Nov 20
       // review: the ride back to the ship was planned on a long-distance train no timetable confirmed).
-      const auto = (b.backToShip || b.deadline) ? pubs.filter(o => !o.mapped || o.kind === "metro" || o.kind === "tram") : pubs;
+      const auto = ((b.backToShip || b.deadline) ? pubs.filter(o => !o.mapped || o.kind === "metro" || o.kind === "tram") : pubs).filter(o => !o.said);
       if (!pick) { const w = byKind("walk"), t = byKind("taxi");
-        pick = w && d <= lim ? w : auto.length && (!t || E.publicWins(auto[0].min, t.min)) ? auto[0] : t || auto[0] || pubs[0] || w || opts[0]; }
+        // With luggage (to the hotel on arrival, to the station, airport or ship from it) a walk is taken only when it is 10
+        // minutes or less (Nov 20 review: 29 minutes on foot with suitcases).
+        pick = w && d <= lim && !(b.bags && w.min > E.BAGS_WALK) ? w : auto.length && (!t || E.publicWins(auto[0].min, t.min)) ? auto[0] : t || auto[0] || pubs[0] || w || opts[0]; }
       // A way the guide names that the data doesn't have: said plainly, never planned as if it were known.
       const missing = d > 5 && note ? E.noteKinds(note).filter(k => !opts.some(o => o.kind === k || (k === "train" && (o.kind === "metro" || o.kind === "tram")))) : [];
       // Where each way's time comes from (Nov 19 review: an estimate must never read as a timetable): the timetable, a line

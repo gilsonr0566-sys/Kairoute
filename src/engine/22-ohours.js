@@ -32,7 +32,10 @@
     const spans = []; let cur = null;
     for (let m = 0; m <= 1440; m += 15) {
       const st = m < 1440 ? E.ohState(h, iso, m) : "closed"; if (st == null) return null;
-      if (st === "open" && cur == null) cur = m; if (st !== "open" && cur != null) { spans.push([cur, m]); cur = null; }
+      // Each change found in 15-minute steps is then found to the minute (Fable review #13: a sight closing at 5:20 was
+      // taken as open until 5:30).
+      const exact = (from, want) => { for (let k = Math.max(0, from - 14); k < from; k++) if ((E.ohState(h, iso, k) === "open") === want) return k; return from; };
+      if (st === "open" && cur == null) cur = exact(m, true); if (st !== "open" && cur != null) { spans.push([cur, m < 1440 ? exact(m, false) : m]); cur = null; }
     }
     if (spans.length === 1 && spans[0][0] === 0 && spans[0][1] >= 1440) return null;
     return { spans, last: null };

@@ -21,6 +21,9 @@ function gxRefresh() {
 // Returns what is known now (or undefined) and fetches it once in the background.
 function gxGet(key, path, opts) {
   const hit = gxCache[key]; if (hit && hit.v !== undefined) return hit.v;
+  // The helper's writing and know-how paths use AI: never asked while AI is switched off (Nov 20 tester: the city primer still
+  // posted with AI off; the helper refused it, nothing spent, but the app must not ask).
+  if (freeAI && freeAI.on !== true && /^\/x\/(write|knowhow)\b/.test(path)) return undefined;
   if (!freeAI || gxPending.has(key) || (gxFailed.get(key) || 0) > Date.now() || (typeof navigator !== "undefined" && navigator.onLine === false)) return undefined;
   gxPending.add(key);
   fetch(freeAI.url + path, opts && opts.body ? { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify(opts.body) } : {})

@@ -192,8 +192,14 @@
     // Its own lunch memo: a day timed by the plain rides is never reused as the day timed by the traveler's choices (Nov 19:
     // the train picked for a day trip was planned as a taxi, with no word why, when the plain day was worked out first).
     const pctx = Object.assign({}, ctx, { tr: pt, lunchMemo: ctx.plainLunchMemo || (ctx.plainLunchMemo = new WeakMap()) }), got = arrangeBy(stops, win, pctx, quick);
-    const byId = new Map(stops.map(s => [String(s.id), s]));
-    return withLunch(got.seq.filter(x => !x.mealOf).map(x => byId.get(String(x.id)) || x), win, ctx, quick);
+    const byId = new Map(stops.map(s => [String(s.id), s])), order = got.seq.filter(x => !x.mealOf).map(x => byId.get(String(x.id)) || x);
+    // The lunch place too is the plain day's, while it still fits with the rides picked: a ride the traveler picks changes the
+    // clock, never where lunch is, so the ride (and the choice on it) stays where it was (Nov 20 sweep: picking the light rail
+    // back from an excavation site moved lunch next door, and the picked ride, now from another place, was quietly lost).
+    const pm = got.seq.find(x => x.mealOf && x.eatKey), own = (ctx.mealPrefs || {}).Lunch;
+    if (pm && !(own && (own.pick || own.skip || own.at))) { const only = (ctx.eats || []).filter(r => E.eatKey(r.name) === pm.eatKey);
+      if (only.length) { const c = withLunch(order, win, Object.assign({}, ctx, { eats: only, lunchMemo: ctx.hintMemo || (ctx.hintMemo = new WeakMap()) }), quick); if (!c.noLunch && !c.r.over && !c.r.late) return c; } }
+    return withLunch(order, win, ctx, quick);
   }
   function arrangeBy(stops, win, ctx, quick) {
     const from = win.head[win.head.length - 1], to = win.tail.length ? win.tail[0] : null;
@@ -349,7 +355,11 @@
       const next = keep.filter(s => s !== out), c = arrange(next, win, ctx);
       if (why === "lunch" && c.noLunch === "time") break; // giving it up wouldn't make room for lunch: keep it
       keep = next; cur = c;
-      dropped.push({ id: out.id, name: out.name, wish: !!out.wish, wanted: wanted(out), stop: out, why: why === "late" ? "would arrive after its last entry" : "didn't fit in the time" });
+      // The real reason (Fable review #13: a museum "didn't fit" when it simply opens too late for the day): a sight that
+      // opens too late to be seen before the day's end says so.
+      const sd = ctx.siteDay ? ctx.siteDay(out.id) : null, opens = sd && sd.oh && sd.oh.spans && sd.oh.spans.length ? sd.oh.spans[0][0] : null;
+      const tooLate = opens != null && isFinite(win.endBy) && opens + Math.min(out.minutes || 60, 60) > win.endBy;
+      dropped.push({ id: out.id, name: out.name, wish: !!out.wish, wanted: wanted(out), stop: out, why: tooLate ? "opens at " + E.clock(opens) + ", too late to see before " + E.clock(win.endBy) : why === "late" ? "would arrive after its last entry" : "didn't fit in the time" });
     }
     // Room left after the drops: a stop given up earlier comes back when it now fits (wanted ones first, best first).
     for (const x of dropped.slice().sort((a, b) => keepRank(b.stop) - keepRank(a.stop) || (b.stop.worth || 0) - (a.stop.worth || 0) || E.byId(a.stop, b.stop))) {

@@ -440,6 +440,12 @@ function alarmState(d, plan, opt) {
   // wherever the traveler really is.
   const backBy = plan.endBy, goBy = backBy - viaMin;
   const st = { now, from, src, point, via, goBy, leg, backBy, latest: plan.endBy, leaveBy: leg ? goBy - Math.max(leg.min, worst ? worst.min : 0) : null, early: !!(leg && worst && worst.min > leg.min) };
+  // Before the day, every leave-by time is the plan's own (Nov 20 tester: three different times on one leaving day).
+  const LA = plan.engine2 && plan.engine2.leaveAt;
+  if (LA && now == null && src === "plan" && Number.isFinite(LA.out)) {
+    const sameSpot = !via || (from && hav(from, via) < 0.05);
+    st.leaveBy = sameSpot || !Number.isFinite(LA.last) ? LA.out : LA.last; if (Number.isFinite(LA.bags)) st.goBy = LA.bags; st.early = false;
+  }
   st.ride = point && !via ? rideBack(d, plan, st) : null;
   // On the day, leave-by is for the train or ferry you can still catch.
   if (st.ride && now != null) st.leaveBy = st.ride.leaveBy;
@@ -695,7 +701,7 @@ if (typeof window !== "undefined") window.__kairouteLiveTest = {
   replan: (i, o) => { trip.active = i; return replanNow(trip.days[i], o || {}); },
   render: () => render(),
   wxFor: i => { const d = trip.days[i]; return wxFor(d, cityFor(d)); },
-  alarm: i => { const d = trip.days[i], p = buildPlan(d), st = alarmState(d, p); return { now: st.now, leaveBy: st.leaveBy, backBy: st.backBy, live: liveOn(d), src: st.src, from: st.from.name, alerts: liveAlertLog.length }; },
+  alarm: i => { const d = trip.days[i], p = buildPlan(d); if (!p || !p.items) return null; const st = alarmState(d, p); return { now: st.now, leaveBy: st.leaveBy, backBy: st.backBy, live: liveOn(d), src: st.src, from: st.from.name, alerts: liveAlertLog.length }; },
   siteIdByName: (i, re) => { const s = allSites(cityFor(trip.days[i])).find(x => new RegExp(re).test(x.name)); return s ? s.id : null; },
   bookCount: i => { const p = buildPlan(trip.days[i]); return p && !p.error ? p.items.filter(x => x.type === "stop" && !x.place.along && !x.place.bonus && bookAhead(x.place)).length : 0; },
   // The ride back: where the plan's last leg starts and ends, a timetable to put on it, and the countdown's view of it.
@@ -706,6 +712,6 @@ if (typeof window !== "undefined") window.__kairouteLiveTest = {
     return p.items.map((it, k) => it.type === "travel" && it.leg.mode !== "walk" ? { k, from: p.items[k - 1].place.name, to: p.items[k + 1].place.name, key: pairKey(p.items[k - 1].place, p.items[k + 1].place) + "|" + wd, how: it.leg.how, kind: legKind(it.leg), far: hav(p.items[k - 1].place, p.items[k + 1].place) >= 4 } : null).filter(Boolean); },
   geo: () => ({ fresh: geoFresh(), age: geoPos && Date.now() - geoPos.at, acc: geoPos && geoPos.acc, watching: liveGeo != null, guideWatch: geoWatch != null, asking: geoAsking, perm: geoPerm }),
   addTransit: (k, opts) => { transitMem[k] = { opts, t: Date.now(), v: TRANSIT_V }; nearGen++; },
-  ride: i => { const d = trip.days[i], p = buildPlan(d), st = alarmState(d, p), r = st.ride; return { leaveBy: st.leaveBy, src: st.src, ride: r && { next: r.next && r.next.t, last: r.last && r.last.t, planned: r.planned && r.planned.t, missed: r.missed, none: r.none, extra: r.extra, taxiMin: r.taxiMin, fare: r.fare } }; },
+  ride: i => { const d = trip.days[i], p = buildPlan(d); if (!p || !p.items) return null; const st = alarmState(d, p), r = st.ride; return { leaveBy: st.leaveBy, src: st.src, ride: r && { next: r.next && r.next.t, last: r.last && r.last.t, planned: r.planned && r.planned.t, missed: r.missed, none: r.none, extra: r.extra, taxiMin: r.taxiMin, fare: r.fare } }; },
   siteLL: i => { const p = buildPlan(trip.days[i]), s = p.items.find(x => x.type === "stop" && !x.place.along).place; return { name: s.name, lat: s.lat, lng: s.lng }; }
 };

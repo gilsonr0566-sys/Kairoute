@@ -42,7 +42,7 @@ function mealPrefsFor(d) {
 }
 function engineBucket(withOld) {
   const n = v => (isFinite(+v) ? +v : null);
-  const pt = p => p ? { id: p.id || null, name: p.name || "", lat: n(p.lat), lng: n(p.lng), unknown: !!p.unknown || (typeof unsurePoint === "function" && unsurePoint(p)) } : null;
+  const pt = p => p ? { id: p.id || null, name: p.name || "", lat: n(p.lat), lng: n(p.lng), unknown: !!p.unknown || (typeof unsurePoint === "function" && unsurePoint(p)), ask: Array.isArray(p.ask) && p.ask.length > 1 ? p.ask.map(String) : null } : null;
   const ints = (() => { try { return interestWords(); } catch (e) { console.warn("engineBucket: interests", e); return []; } })();
   const cityOut = {}, dayOut = [];
   const siteFacts = (city, s) => ({
@@ -76,10 +76,16 @@ function engineBucket(withOld) {
       startTime: d.startTime || "", hours: n(d.hours), time: d.time || "", tender: !!d.tender, noBags: !!d.noBags, returnToStart: d.returnToStart !== false,
       portArrive: sh(d.portArrive), allAboard: sh(d.allAboard), boardAt: typeof boardAt === "function" ? boardAt(d) : null,
       thru: thru ? { mode: thru.mode, time: thru.time || "", point: pt(A) } : null,
-      lodging: pt(L), point: pt(P),
+      // The start place's note, when it names a way to ride (a port's sea bus or shuttle): offered as a choice for that ride.
+      lodging: pt(L), point: P ? Object.assign(pt(P), typeof P.note === "string" && /\b(bus|buses|shuttle|boat|ferry|sea ?bus|water ?taxi|tram|metro|train)\b/i.test(P.note) ? { startNote: P.note.slice(0, 400) } : {}) : null,
+      // The countries a leaving train runs between (a border means passport or ID checks: be there earlier).
+      country: (city && city.country) || "", toCountry: d.type === "departure" && trip.days[i + 1] ? ((cityFor(trip.days[i + 1]) || {}).country || "") : "",
+      toOther: d.type === "departure" && !!trip.days[i + 1] && (cityKeyFor(trip.days[i + 1]) || keyOf(trip.days[i + 1].destination || "")) !== (cityKeyFor(d) || keyOf(d.destination || "")),
       // The traveler's picks only: a list the app seeded on its own (untouched since: seedSig still matches) is the app's
       // suggestion, not the traveler's wish, so the engine picks for itself and keeps only what they chose (mine).
       // A day not seeded yet sends the sights the traveler named when making the trip (their wishes), as seeding would.
+      // No picks of the traveler's own: the day's list is the guide's wants, and one that doesn't fit is never called "your pick".
+      wantsOnly: !Array.isArray(d.selected) || (!d.ownList && appSeeded(d) && !(d.mine || []).length),
       selected: Array.isArray(d.selected) ? (!d.ownList && appSeeded(d) ? (d.mine || []).slice() : d.selected.slice()) : wishIds(d, city),
       mine: Array.isArray(d.selected) ? (d.mine || []).slice() : [...new Set((d.mine || []).concat(wishIds(d, city)))], order: Array.isArray(d.order) ? d.order.slice() : null, mealAt: d.mealAt && Object.keys(d.mealAt).length ? Object.assign({}, d.mealAt) : null,
       // The traveler's own list: they ticked or unticked something here (the app's seeding no longer stands).

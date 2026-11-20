@@ -250,10 +250,10 @@ function sampleTrip() {
     newDay({ date: "2027-07-15", destination: "Barcelona", type: "arrival", mode: "ship", time: "07:00", hours: 9, pointIdx: 0, cityKey: "barcelona", selected: ["gothic", "rambla", "smdm", "picasso", "born"] }),
     newDay({ date: "2027-07-16", destination: "Barcelona", type: "land", cityKey: "barcelona", selected: ["sagrada", "santpau", "batllo", "pedrera", "gracia"] }),
     newDay({ date: "2027-07-17", destination: "Barcelona", type: "land", cityKey: "barcelona", startTime: "09:30", hours: 7, selected: ["montserrat"] }),
-    newDay({ date: "2027-07-18", destination: "Barcelona", type: "departure", mode: "train", time: "13:00", startTime: "09:00", cityKey: "barcelona", selected: ["parkguell"] }),
-    newDay({ date: "2027-07-18", destination: "Madrid", type: "arrival", mode: "train", time: "15:45", hours: 5 }),
+    newDay({ date: "2027-07-18", destination: "Barcelona", type: "departure", mode: "train", time: "13:00", startTime: "09:00", cityKey: "barcelona", pointPicked: true, selected: ["parkguell"] }),
+    newDay({ date: "2027-07-18", destination: "Madrid", type: "arrival", mode: "train", time: "15:45", hours: 5, pointPicked: true }),
     newDay({ date: "2027-07-19", destination: "Madrid", type: "land" }),
-    newDay({ date: "2027-07-20", destination: "Madrid", type: "departure", mode: "flight", time: "16:00", startTime: "09:00" })
+    newDay({ date: "2027-07-20", destination: "Madrid", type: "departure", mode: "flight", time: "16:00", startTime: "09:00", pointPicked: true })
   ];
   return { id: SAMPLE_ID, name: "Athens, Sun Princess cruise, Barcelona & Madrid", active: 15, style: "mix", prefs: Object.assign(defaultPrefs(), { interests: ["bible", "churches"] }), lodging: { barcelona: { idx: 0 } }, days, sample: true };
 }
@@ -1240,8 +1240,14 @@ function lodgingFor(d, city) {
 const approxStayNote = L => L && L.approx ? `We couldn't place ${L.wanted || "your hotel"} on the map yet, so today's plan uses ${L.name} as your hotel. Ride times from your real hotel may differ: add its street address under Trip to make them exact.` : null;
 function dayPoint(d, city) {
   const listKey = d.type === "port" || d.type === "embark" ? "cruise" : MODES[d.mode].list;
-  const list = pointList(city, listKey);
-  return list[d.pointIdx] || list[0] || null;
+  const list = pointList(city, listKey), p = list[d.pointIdx] || list[0] || null;
+  // More than one real station or airport and the traveler hasn't said which: asked, never guessed (Nov 20 tester).
+  const ask = pointAsk(d, list, listKey);
+  return p && ask ? Object.assign({}, p, { ask }) : p;
+}
+function pointAsk(d, list, listKey) {
+  if (d.pointPicked || d.pointIdx > 0 || (listKey !== "station" && listKey !== "airport") || (list || []).length < 2 || typeof KEngine === "undefined" || !KEngine.gateChoices) return null;
+  const ch = KEngine.gateChoices(list); return ch.length > 1 ? ch.map(x => x.name) : null;
 }
 // A leaving or boarding day with no night in the city: the day before it in the list is an arrival here on the same
 // date (off the cruise and flying home; off the plane and onto the ship). That arrival's morning is part of this plan.
@@ -2666,7 +2672,7 @@ function installGuide(d, c) {
   // is kept, and every pick is carried over to the same sight in the new guide.
   if (prev) carryGuide(prev, c);
   cities[key] = c;
-  trip.days.forEach(x => { if (keyOf(x.destination) === keyOf(label) && !x.event === !d.event) { x.cityKey = key; x.pointIdx = 0; if (prev && x.selected) carryPicks(x, prev, c); if (!x.selected) { x.selected = defaultSelection(c, trip.style, x); fitTrim(x); } } });
+  trip.days.forEach(x => { if (keyOf(x.destination) === keyOf(label) && !x.event === !d.event) { x.cityKey = key; x.pointIdx = 0; delete x.pointPicked; if (prev && x.selected) carryPicks(x, prev, c); if (!x.selected) { x.selected = defaultSelection(c, trip.style, x); fitTrim(x); } } });
   save();
 }
 // A guide for a place: the AI writer when it's on; when it's off, or when it can't answer (the day's allowance used up,
@@ -4141,6 +4147,7 @@ if (typeof window !== "undefined") window.__kairouteSyncCheck = () => {
 // tests can compare every screen with it.
 if (typeof window !== "undefined") {
   window.__kairouteAt = (i, v) => { trip.active = i; view = v || "plan"; render(); toTop(); return true; };
+  window.__kairouteUnpickPoint = i => { const d = trip.days[i]; if (!d) return false; delete d.pointPicked; d.pointIdx = 0; edited(); render(); return true; }; // phone check: a day whose station isn't chosen
   window.__kairouteEdit = (i, patch) => { if (i === "all") trip.days.forEach(d => Object.assign(d, typeof patch === "function" ? patch(d) : patch)); else Object.assign(trip.days[i], patch); save(); render(); return true; };
   window.__kairouteSettled = () => !seedTimer && !fillPending && !seedNext(); // background seeding of other days is done
   window.__kairouteDays = () => trip.days.map((d, i) => ({ i, date: d.date, type: d.type, dest: d.destination, city: cityFor(d) ? keyOf(cityFor(d).city) : "" }));
@@ -5756,7 +5763,7 @@ function renderTrip(d) {
         ${t === "arrival" || t === "departure" ? `<div class="field"><span class="lbl">${t === "arrival" ? "Arriving by" : "Leaving by"}</span>
           <div class="seg" role="group" aria-label="Travel mode">${Object.keys(MODES).filter(k => t === "arrival" || k !== "ship").map(k => `<button type="button" data-mode="${k}" aria-pressed="${d.mode === k}">${MODES[k].label}</button>`).join("")}</div></div>` : ""}
         ${t !== "land" ? `<div class="field"><label for="f-point">${pointWord}</label>
-          ${city ? (points.length ? `<select id="f-point">${opts(points, d.pointIdx)}</select>${points[d.pointIdx] && points[d.pointIdx].note ? `<span class="hint">${esc(points[d.pointIdx].note)}</span>` : ""}` : `<span class="hint">No ${esc(listKey)} listed for this city.</span>`) : `<span class="hint">Appears once the guide for ${esc(d.destination || "this city")} is built.</span>`}
+          ${city ? (points.length ? `<select id="f-point"${pointAsk(d, points, listKey) ? ` data-ask="1"><option value="-1" selected>Which ${esc(MODES[d.mode] && t !== "port" && t !== "embark" ? MODES[d.mode].word : "place")}? Choose yours</option>${opts(points, -1)}` : `>${opts(points, d.pointIdx)}`}</select>${points[d.pointIdx] && points[d.pointIdx].note ? `<span class="hint">${esc(points[d.pointIdx].note)}</span>` : ""}` : `<span class="hint">No ${esc(listKey)} listed for this city.</span>`) : `<span class="hint">Appears once the guide for ${esc(d.destination || "this city")} is built.</span>`}
         </div>` : ""}
         <div class="row2">
           ${t === "arrival" || t === "departure" ? `<div class="field"><label for="f-time">${t === "arrival" ? "Arrival time" : "Departure time"}</label><input type="time" id="f-time" value="${esc(d.time)}"></div>` : ""}
@@ -7095,7 +7102,7 @@ function readForm() {
     d.destination = newDest; d.event = newEvent;
     const key = keyOf(newDest) + (newEvent ? "|" + keyOf(newEvent) : "");
     d.cityKey = cities[key] ? key : (!newEvent && cities[keyOf(newDest)] ? keyOf(newDest) : null);
-    d.selected = null; d.pointIdx = 0;
+    d.selected = null; d.pointIdx = 0; delete d.pointPicked;
   }
   d.date = v("f-date") || d.date;
   // Times the traveler types in are their real ones (from the booking): the day is no longer an estimate.
@@ -7106,7 +7113,7 @@ function readForm() {
   if (d.estimated && [d.time, d.portArrive, d.allAboard].join("|") !== was) delete d.estimated;
   if (g("f-start")) d.startTime = v("f-start") || "09:00";
   if (g("f-hours")) d.hours = Math.max(1, Math.min(14, parseFloat(v("f-hours")) || 8));
-  if (g("f-point")) d.pointIdx = +v("f-point");
+  if (g("f-point")) { const nv = +v("f-point"); if (nv >= 0) { if (g("f-point").dataset.ask === "1") d.pointPicked = true; d.pointIdx = nv; } }
   if (g("f-tender")) d.tender = g("f-tender").checked;
   if (g("f-return")) d.returnToStart = g("f-return").checked;
   if (g("f-along")) d.alongWay = g("f-along").checked;
@@ -7146,7 +7153,7 @@ document.addEventListener("click", e => {
   if (t.dataset.act === "savekey") { const k = ((document.getElementById("aikey") || {}).value || "").trim(); if (k) { try { localStorage.setItem(KEY_STORE, k); } catch (e) {} sample = webSample; } render(); return; }
   if (t.dataset.act === "clearkey") { try { localStorage.removeItem(KEY_STORE); } catch (e) {} if (!(cl && cl.use)) sample = freeAI ? freeSample : null; render(); return; }
   if (t.dataset.hrs) { readForm(); const d = day(); d.hours = +t.dataset.hrs; if (!d.ownList && !(d.mine || []).length) d.selected = null; edited(); save(); render(); return; } // the traveler's own picks stay (a shorter day asks first)
-  if (t.dataset.mode) { readForm(); day().mode = t.dataset.mode; day().pointIdx = 0; edited(); save(); render(); return; }
+  if (t.dataset.mode) { readForm(); day().mode = t.dataset.mode; day().pointIdx = 0; delete day().pointPicked; edited(); save(); render(); return; }
   if (t.dataset.style) { readForm(); trip.style = t.dataset.style; save(); render(); return; }
   if (t.dataset.chg) { const el = document.getElementById("chgText"); if (el) { el.value = t.dataset.chg; changeText = t.dataset.chg; el.focus(); } return; }
   if (t.dataset.filter) { siteFilter = t.dataset.filter; render(); return; }
@@ -7398,7 +7405,7 @@ document.addEventListener("change", e => {
       .catch(() => { aiError = "That photo couldn't be read. Try a JPEG or PNG."; render(); });
     return;
   }
-  if (t.id === "f-type") { readForm(); const d = day(); d.type = t.value; d.pointIdx = 0; if (d.type === "departure" && d.mode === "ship") d.mode = "flight"; d.selected = null; edited(); save(); render(); return; }
+  if (t.id === "f-type") { readForm(); const d = day(); d.type = t.value; d.pointIdx = 0; delete d.pointPicked; if (d.type === "departure" && d.mode === "ship") d.mode = "flight"; d.selected = null; edited(); save(); render(); return; }
   if (t.id === "f-stayaboard") { setAboard(day(), t.checked); render(); return; }
   if (["f-point", "f-return", "f-along", "f-fill", "f-lodging", "f-tender", "f-date"].includes(t.id)) { readForm(); edited(); save(); render(); return; }
   if (t.closest && t.closest("#dayForm")) { readForm(); edited(); save(); }
