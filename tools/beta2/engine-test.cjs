@@ -815,6 +815,11 @@ ok(E.readable('Café Ñandú') && E.readable("Joe's Bar & Grill") && !E.readable
       const p = E.planTrip(E.applyPlaces(b, P))[0]; return (p.items || []).filter(x => x.t === 'ride').map(x => x.kind); };
     const a = mk(true), b = mk(false);
     ok(a.length && a.every(k => k === 'ferry' || k === 'walk') && b.includes('taxi'), `a town across the water on the map is reached by boat, one on the same land by road (got ${a.join(', ')} / ${b.join(', ')})`); }
+  // Round 1 S1-9: a port typed with the place to see in brackets is looked up by the port's own name, no stray space.
+  { const cases = { 'Le Havre (Paris), France': 'Le Havre, France', 'Haifa (Jerusalem), Israel': 'Haifa, Israel', 'Laem Chabang (Bangkok), Thailand': 'Laem Chabang, Thailand', 'Aqaba (Petra)': 'Aqaba', 'Kotor, Montenegro': 'Kotor, Montenegro', 'Zeebrugge ( Bruges ) , Belgium': 'Zeebrugge, Belgium' };
+    const bad = Object.entries(cases).filter(([k, v]) => E.bareName(k) !== v).map(([k]) => k + ' -> ' + JSON.stringify(E.bareName(k)));
+    ok(!bad.length, `a port's name without the brackets, never a space before the comma (${bad.join('; ')})`);
+    ok(E.bracketPlace('Warnemunde (Berlin), Germany') === 'Berlin' && E.bracketPlace('Kotor') === '', 'the place in brackets is read apart'); }
   // Round 1 S1-8: a stop the map puts across the water is a boat away however close it looks (Lokrum, "Walk 6 min"), and
   // a stop far from any road is reached on foot or by a taxi from the nearest road (Venice: taxis between sights).
   { const tw = E.makeTravel({ walk: 'medium' }, {});

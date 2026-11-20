@@ -14,6 +14,10 @@ const CASES = [
   { place: 'Copenhagen (bridges)', start: { lat: 55.6761, lng: 12.5683 }, stops: [{ id: 'Christiansborg (Slotsholmen)', lat: 55.6761, lng: 12.5800, across: false }] },
 ];
 (async () => {
+  // What the map service says to the island question itself (status and the start of the answer), to see a refusal.
+  for (const ep of ['https://overpass-api.de/api/interpreter', 'https://overpass.private.coffee/api/interpreter']) {
+    try { const q = W.waterIslandQuery([{ lat: 42.6272, lng: 18.1194 }, { lat: 42.6584, lng: 18.0850 }]); const r = await fetch(ep, { method: 'POST', body: 'data=' + encodeURIComponent(q), headers: { 'content-type': 'application/x-www-form-urlencoded' } });
+      console.log('raw', ep, r.status, (await r.text()).slice(0, 1500)); } catch (e) { console.log('raw', ep, String(e)); } }
   const out = [];
   for (const c of CASES) {
     const pts = c.stops.concat([c.start]), d = await W.waterOverpass(W.waterIslandQuery(pts));

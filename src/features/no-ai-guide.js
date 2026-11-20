@@ -8,7 +8,7 @@
 // day says so instead of planning from a guess (never confidently wrong). Once the AI writer is on again, the spoken
 // stories are written for the sights on the traveler's days, as for any source sight.
 const SRCG_V = 1;
-const bareName = s => String(s || "").replace(/\s*\(.*?\)\s*/g, " ").replace(/\s+/g, " ").trim();
+const bareName = s => KEngine.bareName(s);
 async function guideNoAI(d, quiet) {
   const label = d.destination; if (!label || !freeAI) return false;
   if (!quiet) { if (view === "tour") view = "plan"; busy = { text: "Finding " + label + " in travel guides and maps…" }; aiError = ""; render(); toTop(); }
