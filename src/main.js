@@ -1258,8 +1258,9 @@ function dayPoint(d, city) {
   return p && ask ? Object.assign({}, p, { ask }) : p;
 }
 function pointAsk(d, list, listKey) {
-  if (d.pointPicked || d.pointIdx > 0 || (listKey !== "station" && listKey !== "airport") || (list || []).length < 2 || typeof KEngine === "undefined" || !KEngine.gateChoices) return null;
-  const ch = KEngine.gateChoices(list); return ch.length > 1 ? ch.map(x => x.name) : null;
+  if (d.pointPicked || d.pointIdx > 0 || (listKey !== "station" && listKey !== "airport" && listKey !== "cruise") || (list || []).length < 2 || typeof KEngine === "undefined" || !KEngine.gateChoices) return null;
+  // A port with more than one cruise pier is asked too (Round 1: the ride back timed to the wrong pier).
+  const ch = KEngine.gateChoices(list.filter(x => !x.unknown), listKey === "cruise" ? "cruise" : undefined); return ch.length > 1 ? ch.map(x => x.name) : null;
 }
 // A leaving or boarding day with no night in the city: the day before it in the list is an arrival here on the same
 // date (off the cruise and flying home; off the plane and onto the ship). That arrival's morning is part of this plan.

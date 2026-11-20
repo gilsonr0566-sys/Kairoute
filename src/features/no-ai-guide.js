@@ -65,14 +65,19 @@ const SG_KIND = {
 };
 async function srcStarts(label, area, port, centre, d) {
   const gate = keyOf(port) !== keyOf(area);
-  const ask = { airport: [area + " airport", area + " international airport"], station: [area + " railway station", area + " central station"], cruise: ["Port of " + port, port + " cruise terminal", "Cruise pier"] };
+  // The map is asked by the place's own name, never with the country after it (Round 1 part 2: "Paris, France railway
+  // station" found nothing where "Paris railway station" found the stations; the same for Florence, Buenos Aires,
+  // Le Havre and CocoCay). The country stays in the search's city label.
+  const own = x => KEngine.placeOnly(x) || String(x || "");
+  const A = own(area), Pn = own(port);
+  const ask = { airport: [A + " airport", A + " international airport"], station: [A + " railway station", A + " central station"], cruise: ["Port of " + Pn, Pn + " cruise terminal", "Cruise pier"] };
   const names = [...ask.airport, ...ask.station, ...ask.cruise];
   let res = null;
   try { const r = await fetch(freeAI.url + "/ground", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ city: label, names: names.slice(0, 8), center: centre && isFinite(centre.lat) ? { lat: centre.lat, lng: centre.lng } : undefined }) }); if (r.ok) { const j = await r.json(); if (Array.isArray(j.results)) res = j.results; } } catch (e) {}
   const found = k => {
     const K = SG_KIND[k], lim = k === "cruise" && gate ? 150 : K.km, cands = [];
     names.forEach((n, i) => { if (!ask[k].includes(n)) return; const x = (res && res[i]) || {};
-      (x.wiki || []).forEach(w => { if (w.lat != null && K.re.test(w.title || "")) cands.push({ name: w.title, lat: +w.lat, lng: +w.lng, any: n === "Cruise pier" }); });
+      (x.wiki || []).forEach(w => { if (w.lat != null && K.re.test(w.title || "")) cands.push({ name: w.title, lat: +w.lat, lng: +w.lng, any: n === "Cruise pier", wiki: true }); });
       (x.map || []).forEach(m => { if (isFinite(m.lat) && (K.re.test(m.name || "") || K.map.test(m.kind || ""))) cands.push({ name: m.name || n, lat: +m.lat, lng: +m.lng, kind: m.kind || "", any: n === "Cruise pier", fit: (K.map.test(m.kind || "") ? 2 : 0) + (k === "cruise" && /cruise|terminal|wharf|pier/i.test(m.name || "") ? 2 : 0) }); }); });
     // The plain "Cruise pier" search (asked last) only counts a place that names itself a cruise pier: a private island
     // or small port whose pier has no "Port of ..." name (Nov 18: CocoCay's pier is mapped as "Royal Caribbean Cruise
@@ -86,17 +91,22 @@ async function srcStarts(label, area, port, centre, d) {
     // Never a building site or a closed station; every real one kept, so a city with several is asked which (Nov 20 tester:
     // London's Paris train sent to Victoria, Paris's station a Grand Paris Express building site).
     const real = typeof KEngine !== "undefined" && KEngine.gateChoices ? KEngine.gateChoices(near, k) : near;
-    return k === "cruise" ? real[0] || null : real.length ? real.slice(0, 5) : null;
+    // A port with more than one cruise pier the map is as sure of: the traveler is asked which, as for airports (Round 1);
+    // until then the plan starts from the one farthest from town, so the ride back is never planned short.
+    if (k === "cruise") { if (!real.length) return null; const R = typeof KEngine !== "undefined" && KEngine.cruiseRank ? KEngine.cruiseRank : () => 0, top = Math.max(...real.map(R));
+      const sure = real.filter(p => R(p) >= top - 1 && R(p) > 0); if (sure.length < 2) return real.slice().sort((a, b) => R(b) - R(a))[0];
+      return sure.sort((a, b) => hav(b, centre) - hav(a, centre)).slice(0, 3); }
+    return real.length ? real.slice(0, 5) : null;
   };
   const starts = { cruise: [], airport: [], station: [], hotel: [], point: [] };
   for (const k of ["airport", "station", "cruise"]) {
     let p = found(k);
     if (Array.isArray(p)) { p.forEach(x => starts[k].push({ name: x.name, lat: x.lat, lng: x.lng, note: "" })); continue; }
-    if (!p && k !== "station") { const g = knownGate(k, { name: k === "cruise" ? port : area + " airport" }, centre, k === "cruise" && gate ? 150 : SG_KIND[k].km); if (g) p = { name: g.name, lat: g.lat, lng: g.lng }; }
-    starts[k].push(p ? { name: p.name, lat: p.lat, lng: p.lng, note: "" } : { name: (k === "cruise" ? "Cruise port of " + port : k === "airport" ? area + " airport" : area + " main station"), lat: centre.lat, lng: centre.lng, note: "", unknown: true });
+    if (!p && k !== "station") { const g = knownGate(k, { name: k === "cruise" ? Pn : A + " airport" }, centre, k === "cruise" && gate ? 150 : SG_KIND[k].km); if (g) p = { name: g.name, lat: g.lat, lng: g.lng }; }
+    starts[k].push(p ? { name: p.name, lat: p.lat, lng: p.lng, note: "" } : { name: (k === "cruise" ? "Cruise port of " + Pn : k === "airport" ? A + " airport" : A + " main station"), lat: centre.lat, lng: centre.lng, note: "", unknown: true });
   }
-  starts.hotel.push({ name: "Hotel in central " + area, lat: centre.lat, lng: centre.lng, note: "Add your own hotel on the Trip page for exact times." });
-  starts.point.push({ name: "Central " + area, lat: centre.lat, lng: centre.lng, note: "" });
+  starts.hotel.push({ name: "Hotel in central " + A, lat: centre.lat, lng: centre.lng, note: "Add your own hotel on the Trip page for exact times." });
+  starts.point.push({ name: "Central " + A, lat: centre.lat, lng: centre.lng, note: "" });
   return starts;
 }
 if (typeof window !== "undefined") window.__kairouteSrcStarts = (label, centre) => srcStarts(label, label, label, centre, null);

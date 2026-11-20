@@ -36,6 +36,8 @@ var KEngine = typeof KEngine !== "undefined" ? KEngine : {};
   // France"), never a space left before the comma (Round 1: "Cruise port of Le Havre , France" found nothing, 6 port days
   // lost to one text bug).
   E.bareName = s => String(s || "").replace(/\s*\([^)]*\)\s*/g, " ").replace(/\s+([,;.])/g, "$1").replace(/,\s*,/g, ",").replace(/\s+/g, " ").replace(/^[\s,]+|[\s,]+$/g, "").trim();
+  // The place alone, without the country or region after the first comma ("Paris, France" -> "Paris").
+  E.placeOnly = s => E.bareName(s).split(",")[0].trim();
   // What the traveler put in brackets after a port: the place they mean to see from it ("Aqaba (Petra)" -> "Petra").
   E.bracketPlace = s => { const m = String(s || "").match(/\(([^)]+)\)/); return m ? m[1].trim() : ""; };
   E.latin = name => {
