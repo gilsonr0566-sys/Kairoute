@@ -65,7 +65,7 @@ const dayHoursText = f => `${fmt(f.start)}–${fmt(f.endBy)}`;
 function fixedLine(d, plan) {
   const f = dayFacts(d, plan); if (!f || !f.fixed) return "";
   const where = d.type === "port" ? "the ship" : d.type === "embark" ? "the cruise terminal" : (fixedPointName(d, plan) || "your " + ((MODES[d.mode] || {}).label || "ride").toLowerCase());
-  const parts = [d.type === "port" ? `Ashore ${fmt(f.start)}` : "", f.allAboard != null ? `All aboard <b>${fmt(f.allAboard)}</b>` : d.time && d.type === "departure" ? `${esc((MODES[d.mode] || {}).label || "Leaves")} <b>${fmt(toMin(d.time))}</b>` : "", `Back at ${esc(where)} by <b>${fmt(f.endBy)}</b>`].filter(Boolean);
+  const parts = [d.type === "port" ? `Ashore ${fmt(f.start)}` : "", f.allAboard != null ? `Official all aboard <b>${fmt(f.allAboard)}</b>` : d.time && d.type === "departure" ? `${esc((MODES[d.mode] || {}).label || "Leaves")} <b>${fmt(toMin(d.time))}</b>` : "", `Back at ${esc(where)} by <b>${fmt(f.endBy)}</b>`].filter(Boolean);
   return `<p class="factline" data-fact="fixed">${parts.join(" · ")}</p>`;
 }
 function fixedPointName(d, plan) { const T = plan && plan.w && plan.w.tail; const p = T && T[T.length - 1]; return p && p.name ? p.name : ""; }

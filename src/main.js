@@ -5156,7 +5156,7 @@ function pageBar(title) {
 // Settings, privacy and terms share one page: a section list on the left (chips on phones) and one section at a time,
 // so every section fits on a screen and nothing is listed twice.
 let setSec = "display", guideStop = null;
-const SET_SECS = [["display", "Display"], ["voice", "Guide voice"], ["prefs", "Trip preferences"], ["sync", "Connect another device"], ["group", "Group tour"], ["ai", "AI guide"], ["offline", "Offline"], ["data", "Your data"], ["about", "About"], ["privacy", "Privacy"], ["terms", "Terms"]];
+const SET_SECS = [["display", "Display"], ["voice", "Guide voice"], ["prefs", "Trip preferences"], ["sync", "Connect another device"], ["group", "Group tour"], ["ai", "AI guide"], ["offline", "Offline"], ["data", "Your data"], ["about", "About"], ["privacy", "Privacy"], ["terms", "Terms of use"]];
 function renderSettings(sec) {
   if (sec) setSec = sec;
   const seg = (key, list) => `<div class="seg" role="group">${list.map(([k, l]) => `<button type="button" data-app="${key}" data-v="${k}" aria-pressed="${appSet[key] === k}">${l}</button>`).join("")}</div>`;
@@ -5213,7 +5213,7 @@ function renderSettings(sec) {
   <div class="setgrid"><nav class="setnav pane" data-pane="nav" aria-label="Settings sections">${SET_SECS.map(([k, l]) => `<button type="button" class="setlink" data-setsec="${k}" ${k === setSec ? 'aria-current="page"' : ""}>${l}</button>`).join("")}</nav>
   <div class="setmain pane" data-pane="set-${setSec}"><h3 class="settitle">${esc(title)}</h3>${body()}</div></div></div>`;
 }
-const DRAFT = `<p class="draftnote"><b>Draft for the preview.</b> Have a lawyer review this before Kairoute is sold or published in an app store.</p>`;
+const DRAFT = `<p class="draftnote"><b>Draft, lawyer review before launch.</b> Not yet reviewed by a lawyer; it will be before Kairoute is sold or published in an app store.</p>`;
 function privacyBody() { return `${DRAFT}<div class="card legal">
   <p class="lede">Effective November 10, 2026</p>
   <p>Kairoute is built to keep your trip yours. This policy explains what the app stores, what it sends, and the choices you have.</p>
@@ -5237,16 +5237,20 @@ function privacyBody() { return `${DRAFT}<div class="card legal">
   </div>`; }
 function renderPrivacy() { return renderSettings("privacy"); }
 function termsBody() { return `${DRAFT}<div class="card legal">
-  <p class="lede">Effective November 10, 2026</p>
+  <p class="lede">Effective November 20, 2026</p>
   <p>By using Kairoute you agree to these terms. If you do not agree, please do not use the app.</p>
-  <h3>A planning guide, not a guarantee</h3>
+  <h3>A planning guide with estimated times</h3>
   <p>Kairoute suggests routes, times, places to eat and stories about the sights. Opening hours, prices, port times, transit and closures change. Always confirm important details with the venue, your cruise line, airline or rail operator.</p>
-  <h3>You are responsible for your timing</h3>
-  <p>Countdowns and leave-by times are estimates. You are responsible for being back aboard your ship, at your gate or on your train on time. Kairoute is not liable for missed departures, connections or bookings.</p>
+  <h3>Getting back on time is your responsibility</h3>
+  <p>Leave-by times, back-by times and countdowns are estimates. Kairoute pads them with spare time (on a port day it plans you back at least 45 minutes before all aboard), but traffic, queues, weather, strikes and changes to timetables can still make a trip take longer.</p>
+  <p>The official time is always the one your cruise line, airline or rail operator gives you: the ship's all-aboard time, your boarding time or your departure. Kairoute shows the ship's all-aboard time next to its own times so you can check them against each other. Confirm it on the day, as it can change.</p>
+  <p>You are responsible for being back aboard your ship, at your gate or on your train on time. Kairoute is not liable for missed ships, flights, trains, connections, tours or bookings, or for any costs that follow from them.</p>
   <h3>AI content</h3>
-  <p>Guides, translations and answers are written with the help of AI and can contain mistakes. Use your judgment, and do not rely on the app for medical, legal or safety advice.</p>
+  <p>Guides, translations and answers may be written with the help of AI and can contain mistakes. Use your judgment, and do not rely on the app for medical, legal or safety advice.</p>
   <h3>Stay safe</h3>
   <p>Watch where you walk, follow local laws and posted rules, and be aware of your surroundings. Do not use the app while driving.</p>
+  <h3>Entrance fees and tickets</h3>
+  <p>Prices shown are estimates. Entrance fees, tickets, rides and meals are not included in the price of Kairoute.</p>
   <h3>Third parties</h3>
   <p>Kairoute is not affiliated with any cruise line, airline, railway, museum or restaurant it mentions. Links to other sites are provided for convenience.</p>
   <h3>Your content</h3>
@@ -5256,7 +5260,7 @@ function termsBody() { return `${DRAFT}<div class="card legal">
   <h3>Limitation of liability</h3>
   <p>To the extent the law allows, Kairoute is provided "as is" without warranties, and our total liability is limited to the amount you paid for the app in the past 12 months.</p>
   <h3>Changes and contact</h3>
-  <p>We may update these terms and will note the new date above. Questions: support@[your domain].</p>
+  <p>We may update these terms and will note the new date above. Contact details will be added here before launch.</p>
   </div>`; }
 function renderTerms() { return renderSettings("terms"); }
 // Brand film: a 16-second animated intro, built from the logo.
@@ -5755,7 +5759,7 @@ function renderTrip(d) {
   <div class="tripgrid">
     <div class="leftcol pane" data-pane="days">
       <div class="pagehead"><div><div class="eyebrow">${(() => { const dates = tripFacts().days, cities = new Set(trip.days.filter(x => !noShore(x) && x.type !== "port" && x.destination).map(x => keyOf(x.destination))).size, ports = trip.days.filter(x => x.type === "port").length; return `${dates} day${dates === 1 ? "" : "s"}${cities > 1 ? ` · ${cities} cities` : ""}${ports ? ` · ${ports} cruise stop${ports === 1 ? "" : "s"}` : ""}`; })()}</div>${renameId === trip.id ? renameBox(trip.id, trip.name || tripName(trip)) : `<h2 class="dayname">${esc(trip.name || "Your trip")} <button class="linkbtn rename" data-act="rename" data-id="${esc(trip.id)}" aria-label="Rename this trip">✎ Rename</button></h2>`}</div></div>
-      ${readyTripLine()}
+      ${backNoticeHTML()}${readyTripLine()}
       ${offCard(true)}
       ${(aiReady() || freeAI) && missing ? `<button class="btn ghost small" data-act="genall" ${busy ? "disabled" : ""}>${missing === 1 ? `Build the guide for ${esc(missingNames[0])}` : missing <= 3 ? `Build the guides for ${esc(missingNames.join(" and "))}` : `Build the guides for all ${missing} places`}</button>` : ""}
       <div class="itin">${itinerary()}</div>
@@ -6711,7 +6715,7 @@ ${partsList(s, it.time)}${stopLiveNotes(it, d)}</div></div>`;
       // Back at the ship said plainly: the time back, how long before all aboard, and the rule behind it.
       const byEnd = freeOn ? `<div class="time"><span class="ta">By</span><span class="tt ar">${fmt(F.endBy)}</span></div>` : tcell(it);
       return (freeShown ? "" : (freeShown = true, freeCard)) + `<div class="${cls}">${byEnd}<div class="rail"><div class="dot start">${it.place ? "E" : "✓"}</div></div><div class="what"><div class="nm">${esc(it.label)}</div>
-      <div class="sub">${d.type === "port" && d.allAboard ? `Kairoute always plans you back at least ${dur(plan.w.buffer || 45)} before all aboard.` :
+      <div class="sub">${d.type === "port" && d.allAboard ? `The ship's official all aboard is ${fmt(shipToPort(d, d.allAboard))}. Kairoute plans you back at least ${dur(plan.w.buffer || 45)} before it.` :
         spare > 10 && !freeOn ? dur(spare) + " to spare." : ""}</div>
       ${(plan.w.notesEnd || []).map(t => `<div class="sub">${esc(t)}</div>`).join("")}${d.type === "departure" ? bookRideCard(d) : ""}</div></div>`;
     }
@@ -6750,7 +6754,7 @@ ${partsList(s, it.time)}${stopLiveNotes(it, d)}</div></div>`;
   return `
   ${pageHead(d, plan, [], tourBtnHTML())}
   <div class="plangrid"><div class="plantop">
-  ${fixedLine(d, plan)}<div class="daysum n${(F.fixed ? 1 : 2) + (walkTile ? 1 : 0) + (cdHTML ? 0 : 1)}" role="group" aria-label="Today at a glance">
+  ${fixedLine(d, plan)}${timedDay(d) ? backNoticeHTML() : ""}<div class="daysum n${(F.fixed ? 1 : 2) + (walkTile ? 1 : 0) + (cdHTML ? 0 : 1)}" role="group" aria-label="Today at a glance">
     ${F.fixed ? "" : canLen && hoursLimits(d, plan) ? `<div class="hrscell">${hoursTileHTML(d, plan, dur(F.len))}</div>` : `<div><b>${dayHoursText(F)}</b><span>${dur(F.len)}</span></div>`}
     <div><b>${stopsN}${optN ? " + " + optN : ""}</b><span>${stopsN === 1 ? "sight" : "sights"}${optN ? (added ? " + added by Kairoute" : " + optional") : ""}${plan.along.length && !optN ? ` · ${plan.along.length} on the way` : ""}</span></div>
     ${walkTile ? `<div><b>${distTxt(plan.walkKm)}</b><span>walking</span></div>` : ""}

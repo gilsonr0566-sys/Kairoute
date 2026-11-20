@@ -498,7 +498,7 @@ function alarmCard(d, plan) {
   // A compact countdown in the Day plan's top row, always on screen; tap it for the details.
   const title = fixed ? fixedTitle(d) : "Your day, live";
   return `<details class="moremenu planmore cdchip livecard" id="cdCard"><summary aria-label="${esc(title)}: details">
-      <span class="cdday" aria-hidden="true">${esc(dayPinText(d))}</span><span class="cdico" aria-hidden="true">${fixed ? (d.type === "departure" ? ({ flight: "✈️", train: "🚆", ferry: "⛴️", ship: "🚢", car: "🚌" }[d.mode] || "🧭") : "🚢"): "📍"}</span><span class="cdwords"><span class="cdlbl" id="cdLbl">${fixed ? (today ? "Leave in" : "Leave by") : "Live"}</span><span class="cdto">${fixed ? esc(d.type === "port" ? "back to ship" : d.type === "embark" ? "to the ship" : "to your " + MODES[d.mode].label.toLowerCase()) : "re-plan"}</span></span><b class="cdbig" id="cdBig">${fixed ? "--:--" : (today ? "On" : "Preview")}</b>
+      <span class="cdday" aria-hidden="true">${esc(dayPinText(d))}</span><span class="cdico" aria-hidden="true">${fixed ? (d.type === "departure" ? ({ flight: "✈️", train: "🚆", ferry: "⛴️", ship: "🚢", car: "🚌" }[d.mode] || "🧭") : "🚢"): "📍"}</span><span class="cdwords"><span class="cdlbl" id="cdLbl">${fixed ? (today ? "Leave in" : "Leave by") : "Live"}</span><span class="cdto">${fixed ? esc((d.type === "port" || d.type === "embark") && d.allAboard ? "all aboard " + fmt(shipToPort(d, d.allAboard)) : d.type === "port" ? "back to ship" : d.type === "embark" ? "to the ship" : "to your " + MODES[d.mode].label.toLowerCase()) : "re-plan"}</span></span><b class="cdbig" id="cdBig">${fixed ? "--:--" : (today ? "On" : "Preview")}</b>
     </summary><div class="menupanel cdpanel" role="dialog" aria-label="${esc(title)}">
     <div><span class="eyebrow">${esc(title)}${!today && live ? " · preview" : ""}</span></div>
     ${fixed ? `<div class="cdsub" id="cdSub"></div><div class="cdsrc" id="cdSrc"></div>
@@ -572,7 +572,7 @@ function alarmTick() {
         // Warn early: about 30 minutes before you must leave for the last safe departure.
         if (!R.none && R.lastLeave != null && R.lastLeave - st.now <= 30 && R.lastLeave - st.now > 0) once("lastsafe", `Last safe ${R.word} soon`, `The last ${R.word} that gets you to ${dest} in time leaves ${R.where} at ${fmt(R.last.t)}. Leave by ${fmt(R.lastLeave)}.`);
       }
-      if (bar) { bar.className = level; bar.innerHTML = `<span class="ab-time">${esc(big)}</span><span class="ab-txt">${esc(fixedTitle(d))}: leave by ${fmt(st.leaveBy)} · ${esc(legTxt)}</span><button data-act="alarmopen">Open</button>`; }
+      if (bar) { bar.className = level; bar.innerHTML = `<span class="ab-time">${esc(big)}</span><span class="ab-txt">${esc(fixedTitle(d))}: leave by ${fmt(st.leaveBy)} · ${esc(legTxt)}${(d.type === "port" || d.type === "embark") && d.allAboard ? ` · official all aboard ${fmt(shipToPort(d, d.allAboard))}` : ""}</span><button data-act="alarmopen">Open</button>`; }
     }
   }
   const show = !!(bar && fixed && live && st && st.now != null && view !== "plan" && !FULL_VIEWS[view]);
