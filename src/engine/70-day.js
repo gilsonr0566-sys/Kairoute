@@ -10,12 +10,17 @@
   // Penalty of a timed day: running past the end is worst, then stops reached after their last entry, then a late lunch.
   // A minute riding weighs like a minute waiting (Nov 19, Richard's day trip crossed the same stretch three times: at a tenth
   // of a wait, a long crossing was "cheaper" than a few minutes waiting for a gate to open).
-  const penalty = E.dayCost = r => r.over * 1000 + r.late * 500 + (r.mealPen || 0) * 4 + r.waits * 0.5 + r.end * 0.01 + r.rideMin * 0.5;
+  // Lunch late in the afternoon is a cost of its own (Round 1 part 3: with eight picks lunch slid to 2:10 and 2:50 pm while
+  // another order of the same picks had it before 1:30): each minute lunch starts after E.LUNCH_BY weighs a little less than a
+  // minute riding, so the order and the gap for lunch keep it near midday unless that costs a lot of travel.
+  E.LUNCH_BY = 14 * 60;
+  const penalty = E.dayCost = r => r.over * 1000 + r.late * 500 + (r.mealPen || 0) * 4 + r.waits * 0.5 + r.end * 0.01 + r.rideMin * 0.5 + (r.lunchLate || 0) * 0.4;
   function walk(seq, win, ctx, from) {
     const r = E.walkDay(seq, win, ctx.tr.estimate, ctx.siteDay, from);
     r.lateMeal = r.items.reduce((a, x) => a + (x.lateMeal || 0), 0);
     // A meal at a time the traveler set is held like a booked table: being late for it costs ten times as much.
     r.mealPen = r.items.reduce((a, x) => a + (x.lateMeal || 0) * (x.pinned ? 10 : 1), 0);
+    r.lunchLate = r.items.reduce((a, x) => a + (x.t === "meal" && x.meal === "Lunch" && !x.pinned && isFinite(x.at) ? Math.max(0, x.at - E.LUNCH_BY) : 0), 0);
     return r;
   }
   // Lunch belongs in a day whose sightseeing runs at least four hours and through the middle of the day.

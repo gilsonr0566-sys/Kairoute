@@ -834,6 +834,9 @@ ok(E.readable('Café Ñandú') && E.readable("Joe's Bar & Grill") && !E.readable
     ok(a.length === 1 && /International/.test(a[0].name), `only the passenger airport is offered (got ${a.map(x => x.name)})`);
     const st = E.gateChoices([{ name: 'Example Necropolis railway station (closed 1941)', lat: 51.5, lng: -0.1 }, { name: 'Example Central', lat: 51.53, lng: -0.12 }], 'station');
     ok(st.length === 1 && st[0].name === 'Example Central', `a closed station is never offered (got ${st.map(x => x.name)})`); }
+  // Round 1 part 3 (A1): lunch sliding into mid-afternoon costs the plan, so the order and lunch's gap keep it near midday.
+  { const r = { over: 0, late: 0, mealPen: 0, waits: 0, end: 900, rideMin: 60 }, lateL = Object.assign({}, r, { lunchLate: 50 });
+    ok(E.dayCost(lateL) - E.dayCost(r) >= 15, `a lunch 50 min past ${E.clock(E.LUNCH_BY)} costs about as much as 40 min more riding (got ${E.dayCost(lateL) - E.dayCost(r)})`); }
   // Round 1 S1-8: a stop the map puts across the water is a boat away however close it looks (Lokrum, "Walk 6 min"), and
   // a stop far from any road is reached on foot or by a taxi from the nearest road (Venice: taxis between sights).
   { const tw = E.makeTravel({ walk: 'medium' }, {});
