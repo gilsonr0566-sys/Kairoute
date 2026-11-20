@@ -73,13 +73,15 @@
         if (t.editions) s.editions = t.editions;
         if (t.unesco) s.unesco = true;
         if (t.dayTripListed) s.dayTripListed = true;
+        // Across the water, from the map (Fable review #6): on another island, with no road there but a ferry.
+        const isl = P.islands && P.islands.towns && P.islands.towns[s.id]; if (isl && isl.across) s.acrossWater = (isl.island && isl.island.name) || true;
         // The town's own sights (travel guide "see" listings on the map, within a walk of the town) become stops of
         // their own, so a day there is planned sight by sight and weighed by what the town really offers.
         const own = (t.sights || []).filter(x => (x.kind || "see") === "see" && isFinite(x.lat) && isFinite(x.lng) && E.hav(s, x) <= TOWN_KM);
         s.townSights = own.map(x => ({ name: x.name, lat: x.lat, lng: x.lng }));
         // A museum gets an hour, anything else half an hour; getting there takes what the town's own ride note says.
         own.forEach((x, n) => { const id = s.id + "~" + (x.wikidata || n); if (haveFar.has(id)) return; haveFar.add(id); added.push({ id, name: x.name, lat: x.lat, lng: x.lng, minutes: /museum|museo|musée|museu|muzeum|galler/i.test(x.name) ? 60 : 30,
-          far: true, town: s.id, townName: s.name, travelNote: s.travelNote || "", editions: x.editions || 0, unesco: !!x.unesco, tags: ["in-town"], category: "Sight" }); });
+          far: true, town: s.id, townName: s.name, travelNote: s.travelNote || "", ...(s.acrossWater ? { acrossWater: s.acrossWater } : {}), editions: x.editions || 0, unesco: !!x.unesco, tags: ["in-town"], category: "Sight" }); });
         // A town keeps its own visit length when picked on its own (Fable review #12: an excavation town picked alone got an hour). Only when its
         // own sights are picked too does it shrink to the walk through its centre (planAll does that, and says so).
         if (own.length >= 2) s.townWalk = Math.min(s.minutes || 60, 60);

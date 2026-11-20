@@ -42,6 +42,26 @@ async function roadsBetween(pts) {
     if (i === k || !isFinite(s) || s == null || hav(a, b) < 10) return; out.push({ a: { lat: +a.lat, lng: +a.lng }, b: { lat: +b.lat, lng: +b.lng }, min: Math.round(s / 60), km: isFinite(m) ? Math.round(m / 100) / 10 : null }); }));
   return out;
 }
+// ---- Islands (Fable review #6, Nov 20): which mapped island (place=island or islet) each point stands on, and whether a
+// car can get from the place to a town a day away without a ferry (a bridge or a causeway). A town on another island with
+// no road but a ferry is across the water: reached by boat, whatever its guide note says.
+async function islandOf(p) {
+  const el = await overpass(`[out:json][timeout:60];is_in(${(+p.lat).toFixed(5)},${(+p.lng).toFixed(5)})->.a;area.a["place"~"^(island|islet)$"];out tags;`);
+  const isl = el.filter(x => x.tags && x.tags.place).sort((x, y) => (x.tags.place === 'islet' ? 0 : 1) - (y.tags.place === 'islet' ? 0 : 1))[0];
+  return isl ? { id: String(isl.id), name: (isl.tags['name:en'] || isl.tags.name || 'an island') } : null;
+}
+async function roadWithoutFerry(a, b) {
+  const j = await get('https://router.project-osrm.org/route/v1/driving/' + [a, b].map(p => (+p.lng).toFixed(5) + ',' + (+p.lat).toFixed(5)).join(';') + '?steps=true&overview=false', {}, 3, 60000);
+  if (!j || j.code !== 'Ok' || !j.routes || !j.routes[0]) return j && j.code === 'NoRoute' ? false : null;   // null: unknown
+  return !j.routes[0].legs.some(l => (l.steps || []).some(st => st.mode === 'ferry'));
+}
+async function islandsFor(centre, towns) {
+  const c = await islandOf(centre), out = { centre: c, towns: {} };
+  for (const t of towns) { const ti = await islandOf(t); await sleep(1500);
+    if (!ti || (c && c.id === ti.id)) { out.towns[t.id] = { island: ti, across: false }; continue; }
+    const road = await roadWithoutFerry(centre, t); out.towns[t.id] = { island: ti, across: road === false, road }; }
+  return out;
+}
 // ---- Wikidata
 const WD = 'https://www.wikidata.org/w/api.php?format=json&origin=*';
 async function entities(qs) {
@@ -395,6 +415,8 @@ async function buildPlace(t) {
         const pts = [{ name: 'centre', lat: centre.lat, lng: centre.lng }].concat((saved.ports || []).filter(p => p.cruise || p.kind).slice(0, 2).map(p => ({ name: p.name, lat: p.lat, lng: p.lng })), (t.farther || []).filter(x => isFinite(x.lat) && hav(centre, x) <= 250).map(x => ({ name: x.id, lat: x.lat, lng: x.lng })))
           .filter((x, k, a) => isFinite(x.lat) && a.findIndex(y => hav(x, y) < 0.5) === k).slice(0, 40);
         fresh.roads = await roadsBetween(pts); console.log(`   ${fresh.roads.length} road times between ${pts.length} points`); }
+      if (refresh.includes('islands')) { fresh.islands = await islandsFor(centre, (t.farther || []).filter(x => isFinite(x.lat) && !x.town));
+        console.log(`   on ${fresh.islands.centre ? fresh.islands.centre.name : 'no mapped island'}; across the water: ${Object.entries(fresh.islands.towns).filter(([, v]) => v.across).map(([k]) => k).join(', ') || 'none'}`); }
       if (refresh.includes('lifts')) { fresh.lifts = await liftsNear(centre, 15); console.log(`   ${fresh.lifts.length} cable cars or funiculars`); }
       if (refresh.includes('ports') && t.port && !t.hasPorts) {
         const r = await portPoints(t.port, centre, !!t.island); fresh.ports = r.ports; fresh.missing = r.missing; fresh.portQuery = Object.assign({}, t.port, { island: !!t.island });

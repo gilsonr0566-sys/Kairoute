@@ -787,6 +787,14 @@ ok(E.readable('Café Ñandú') && E.readable("Joe's Bar & Grill") && !E.readable
           ok(open == null || (ib && ib.at >= open), `a sight inside a gated town is never planned before the town opens (${inner.name} at ${ib && E.clock(ib.at)}, opens ${open == null ? '?' : E.clock(open)})`); } }
       else ok(false, 'a town with its own sights is in the test trip'); } }
   ok(E.notPublicEat({ name: "Metropolitan Officers' Cafeteria" }) && E.notPublicEat({ name: 'Cafe', access: 'private' }) && !E.notPublicEat({ name: 'Trattoria da Enzo' }), 'a staff or officers\' canteen, or a private place, is never a place to eat');
+  // Across the water from the map (Fable review #6): a town on another island with no road there but a ferry is reached by
+  // boat, even with no guide note and a road time on file (a car ferry's route), never by taxi.
+  { const mk = across => { const b = { prefs: { walk: 'medium' }, cities: { k: { key: 'k', name: 'K', sites: [{ id: 'a', name: 'Harbour Church', lat: 37.0, lng: 25.0, minutes: 30 }], farther: [{ id: 't', name: 'Isle Town', lat: 37.0, lng: 25.25, minutes: 120, travelNote: '' }], restaurants: [] } },
+      days: [{ i: 0, type: 'land', city: 'k', date: '2027-06-03', startTime: '09:00', hours: 10, lodging: { name: 'Hotel', lat: 37.001, lng: 25.001 }, selected: ['t'], own: true }] };
+      const P = { k: { key: 'k', towns: { t: { editions: 5 } }, roads: [{ a: { lat: 37.001, lng: 25.001 }, b: { lat: 37.0, lng: 25.25 }, min: 40, km: 30 }], islands: { centre: { id: '1', name: 'Big' }, towns: { t: { island: { id: across ? '2' : '1', name: 'Isle' }, across } } } } };
+      const p = E.planTrip(E.applyPlaces(b, P))[0]; return (p.items || []).filter(x => x.t === 'ride').map(x => x.kind); };
+    const a = mk(true), b = mk(false);
+    ok(a.length && a.every(k => k === 'ferry' || k === 'walk') && b.includes('taxi'), `a town across the water on the map is reached by boat, one on the same land by road (got ${a.join(', ')} / ${b.join(', ')})`); }
   // Folding (Richard, Nov 20: "a false sense of not enough time in the day"): a picked sight inside a bigger picked visit, or a
   // small open-air sight right beside it, is part of that visit and adds only a little time.
   { const castle = { id: 'c', name: 'Hill Castle', category: 'Castle', lat: 40.0, lng: 10.0, minutes: 120 }, tower = { id: 't', name: 'Keep Tower', lat: 40.0004, lng: 10.0003, minutes: 30, in: ['c'] },
