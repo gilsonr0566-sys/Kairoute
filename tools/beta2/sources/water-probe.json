@@ -1,0 +1,137 @@
+{
+ "at": "2026-11-20T21:44:10.460Z",
+ "out": [
+  {
+   "place": "Dubrovnik",
+   "stop": "Lokrum",
+   "island": "no answer",
+   "startIsland": null,
+   "across": null,
+   "expectAcross": true,
+   "roadGap": 1215,
+   "expectNoRoad": false,
+   "ok": false
+  },
+  {
+   "place": "Dubrovnik",
+   "stop": "Old town walls",
+   "island": "no answer",
+   "startIsland": null,
+   "across": null,
+   "expectAcross": false,
+   "roadGap": 130,
+   "expectNoRoad": false,
+   "ok": false
+  },
+  {
+   "place": "Santorini",
+   "stop": "Nea Kameni",
+   "island": "no answer",
+   "startIsland": null,
+   "across": null,
+   "expectAcross": true,
+   "roadGap": 3006,
+   "expectNoRoad": false,
+   "ok": false
+  },
+  {
+   "place": "Santorini",
+   "stop": "Oia",
+   "island": "no answer",
+   "startIsland": null,
+   "across": null,
+   "expectAcross": false,
+   "roadGap": 77,
+   "expectNoRoad": false,
+   "ok": false
+  },
+  {
+   "place": "Reykjavik",
+   "stop": "Videy",
+   "island": "no answer",
+   "startIsland": null,
+   "across": null,
+   "expectAcross": true,
+   "roadGap": 1256,
+   "expectNoRoad": false,
+   "ok": false
+  },
+  {
+   "place": "Reykjavik",
+   "stop": "Hallgrimskirkja",
+   "island": "no answer",
+   "startIsland": null,
+   "across": null,
+   "expectAcross": false,
+   "roadGap": 48,
+   "expectNoRoad": false,
+   "ok": false
+  },
+  {
+   "place": "Marseille",
+   "stop": "Chateau d'If",
+   "island": "no answer",
+   "startIsland": null,
+   "across": null,
+   "expectAcross": true,
+   "roadGap": 1803,
+   "expectNoRoad": false,
+   "ok": false
+  },
+  {
+   "place": "Marseille",
+   "stop": "Notre-Dame de la Garde",
+   "island": "no answer",
+   "startIsland": null,
+   "across": null,
+   "expectAcross": false,
+   "roadGap": 23,
+   "expectNoRoad": false,
+   "ok": false
+  },
+  {
+   "place": "Venice",
+   "stop": "San Giorgio Maggiore",
+   "island": "no answer",
+   "startIsland": null,
+   "across": null,
+   "expectAcross": true,
+   "roadGap": 1954,
+   "expectNoRoad": true,
+   "ok": false
+  },
+  {
+   "place": "Venice",
+   "stop": "St Mark's Basilica",
+   "island": "no answer",
+   "startIsland": null,
+   "across": null,
+   "expectAcross": false,
+   "roadGap": 1639,
+   "expectNoRoad": true,
+   "ok": false
+  },
+  {
+   "place": "Venice",
+   "stop": "Rialto Bridge",
+   "island": "no answer",
+   "startIsland": null,
+   "across": null,
+   "expectAcross": false,
+   "roadGap": 1313,
+   "expectNoRoad": true,
+   "ok": false
+  },
+  {
+   "place": "Copenhagen (bridges)",
+   "stop": "Christiansborg (Slotsholmen)",
+   "island": "no answer",
+   "startIsland": null,
+   "across": null,
+   "expectAcross": false,
+   "roadGap": null,
+   "expectNoRoad": false,
+   "ok": false
+  }
+ ]
+}
