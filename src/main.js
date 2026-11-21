@@ -218,13 +218,17 @@ function guideInLang(c, lang) {
 }
 const langCode = n => (LANGS.find(x => x[0] === n) || LANGS[0])[1];
 const VOICES = [["buttery", "Warm"], ["airy", "Light"], ["glassy", "Clear"], ["rounded", "Deep"]];
-// Natural guide voices (Deepgram Aura 2). Picked from a 17-voice listening test (Nov 2026): these moved
-// the most in pitch and paced most like a real guide. Chosen once in Settings and used for every stop.
+// Kairoute's guide voices (Richard, Nov 21): free Kokoro voices (Apache 2.0), recorded at build time on GitHub's
+// machines (stories/tools/record-scripts.mjs), so the app only ever plays saved files: no AI and no cost when a
+// traveler listens. Each entry: setting key, name the traveler sees, description, Kokoro voice the files are made with.
 const GUIDES = [
-  ["aurora", "Aurora", "Woman, American"], ["andromeda", "Andromeda", "Woman, American, softer"], ["pandora", "Pandora", "Woman, British"], ["theia", "Theia", "Woman, Australian"],
-  ["apollo", "Apollo", "Man, American"], ["arcas", "Arcas", "Man, American, deeper"], ["draco", "Draco", "Man, British"], ["hyperion", "Hyperion", "Man, Australian"]];
-const guideVoice = () => ({ model: "aura-2", speaker: GUIDES.some(g => g[0] === appSet.guide) ? appSet.guide : "aurora" });
-const GUIDE_PACE = 0.9; // the voices speak at ~210-225 words a minute; a real guide is nearer 170-190
+  ["clara", "Clara", "Woman, American, warm", "af_heart"], ["maya", "Maya", "Woman, American, bright", "af_bella"], ["eleanor", "Eleanor", "Woman, British", "bf_emma"],
+  ["daniel", "Daniel", "Man, American, calm", "am_michael"], ["henry", "Henry", "Man, British", "bm_george"]];
+// A choice of one of the old paid voices (removed Nov 21) moves to the nearest new one.
+const GUIDE_WAS = { aurora: "clara", andromeda: "maya", pandora: "eleanor", theia: "eleanor", apollo: "daniel", arcas: "daniel", draco: "henry", hyperion: "henry" };
+const guideOf = () => GUIDES.find(g => g[0] === (GUIDE_WAS[appSet.guide] || appSet.guide)) || GUIDES[0];
+const guideVoice = () => { const g = guideOf(); return { model: "kokoro", speaker: g[3], key: g[0], name: g[1] }; };
+const GUIDE_PACE = 1; // the recordings are made at a guide's pace (Kokoro speed 0.95), so they play as recorded
 const ACCESS = [["none", "No special needs"], ["limited", "Limited walking"], ["wheelchair", "Wheelchair or scooter"], ["kids", "Young kids or a stroller"]];
 const DOWS = ["Sundays", "Mondays", "Tuesdays", "Wednesdays", "Thursdays", "Fridays", "Saturdays"];
 function closedOn(s, iso) { if (!s.closed || !iso) return false; const dow = DOWS[new Date(iso + "T12:00:00Z").getUTCDay()]; return s.closed.toLowerCase().includes(dow.toLowerCase()); }
@@ -2408,8 +2412,7 @@ function aiStatusText() {
   return `On. ${who} ${listWords(on, "and")}.${off.length ? ` Not in this version yet: it ${listWords(off, "or")}.` : ""}${left}`;
 }
 function voiceStatusText() {
-  if (aiCan("liveVoice")) return "The natural voice is a lifelike AI recording of each story, made once per stop and kept, so replays are free. A few new stops a day fit in the free allowance; after that your device's best voice reads until 6 pm Central.";
-  return "Stops that have a saved Kairoute recording play it. Every other story is read by your device's most natural voice: new natural recordings aren't being made in this version.";
+  return "Stops with a recorded Kairoute story play it in the guide voice you pick here, with no signal too once the trip is downloaded. So far only a few stops have one. Every other story is read by your device's own voice.";
 }
 // Said where a feature is off: what still works, and the way to switch it on only when the traveler really has one.
 const aiOffWhy = what => `${what} ${aiReady() ? "isn't part of this version yet" : "is switched off for now"}.${cl && cl.use ? "" : aiReady() ? "" : " Settings, AI guide, has the details."}`;
@@ -3994,8 +3997,8 @@ function speakText(id, text) {
   const city = cityFor(day()), lc = city && city.lang && city.lang === P().lang && P().lang !== "English" ? langCode(P().lang) : null;
   speakLines(id, lines, lc);
 }
-// Natural voice: Kairoute's AI helper turns the story into a lifelike recording (made once per stop and
-// kept, so replays are free). Falls back to the device voice if it's off, used up for the day, or offline.
+// Kairoute's own recorded voice: stops with a recorded script (stop-scripts.js) play the saved files in the
+// traveler's guide voice. Nothing is recorded while a traveler listens; every other story is read by the device voice.
 const natAudio = typeof Audio !== "undefined" ? new Audio() : null;
 const SILENT = (() => { // a tiny silent WAV, played on the tap itself so the browser lets the recording play later
   const n = 800, b = new Uint8Array(44 + n), v = new DataView(b.buffer), w = (o, t) => [...t].forEach((c, i) => b[o + i] = c.charCodeAt(0));
@@ -4003,9 +4006,6 @@ const SILENT = (() => { // a tiny silent WAV, played on the tap itself so the br
   v.setUint32(24, 8000, true); v.setUint32(28, 8000, true); v.setUint16(32, 1, true); v.setUint16(34, 8, true); w(36, "data"); v.setUint32(40, n, true); b.fill(128, 44);
   let bin = ""; b.forEach(x => bin += String.fromCharCode(x)); return "data:audio/wav;base64," + btoa(bin);
 })();
-let natVoiceNote = "";
-// With no internet the helper may be unknown, but recordings saved for offline still play (missing ones fall back to the device voice).
-const natVoiceOn = lc => !!((freeAI || (typeof navigator !== "undefined" && navigator.onLine === false)) && natAudio && !tts && !lc && (P().lang || "English") === "English" && appSet.natvoice !== "off");
 // ---- The Kairoute voice: our own delivery and sound on top of the voice engines ----
 // Delivery: rewrite the written guide the way a guide would say it (no abbreviations, natural pauses).
 function shapeForSpeech(t) {
@@ -4042,18 +4042,7 @@ function kairouteSound() {
     if (soundCtx.state === "suspended") soundCtx.resume().catch(() => {});
   } catch (e) { soundReady = false; }
 }
-// The natural voice speaks a guide's script one breath at a time, with real pauses between, instead
-// of reading the whole page in one go. The script and each line's audio are made once and kept.
-function localParts(text) {
-  const out = [];
-  text.split(/\n\s*\n/).forEach((para, pi) => {
-    const sent = para.replace(/…/g, "").match(/[^.!?]+[.!?]+["')\]]*\s*|[^.!?]+$/g) || [para];
-    for (let i = 0; i < sent.length; i += 2) { const t = sent.slice(i, i + 2).join(" ").trim(); if (t) out.push((pi && !i ? "~" : "") + t); }
-  });
-  return out;
-}
-// Offline store: each stop's guide script and recorded lines are kept on the device after the first play
-// (or after "Save for offline"), so they replay instantly with no signal and cost nothing.
+// Offline store on the device (ride timetables, famous-place lists, sources and other saved answers).
 const kv = (() => {
   let dbp = null;
   const db = () => dbp || (dbp = new Promise((res, rej) => { try { const r = indexedDB.open("kairoute-audio", 1); r.onupgradeneeded = () => r.result.createObjectStore("kv"); r.onsuccess = () => res(r.result); r.onerror = () => rej(r.error); } catch (e) { rej(e); } }));
@@ -4071,82 +4060,6 @@ function toLines(parts) {
   const lines = [];
   parts.join("\n\n").split(/\n\s*\n/).forEach(p => { p = p.trim(); while (p.length > 1800) { const cut = p.lastIndexOf(". ", 1800) + 1 || 1800; lines.push(p.slice(0, cut)); p = p.slice(cut).trim(); } if (p) lines.push(p); });
   return lines;
-}
-// The whole stop becomes one guide script, in pieces of up to ~2,200 characters, so one voice reads it all.
-function scriptChunks(lines) {
-  const chunks = []; let cur = "";
-  lines.map(shapeForSpeech).map(l => l.replace(/\n\n…\n\n/g, "\n\n")).forEach(l => { if (cur && (cur + "\n\n" + l).length > 2200) { chunks.push(cur); cur = l; } else cur += (cur ? "\n\n" : "") + l; });
-  if (cur) chunks.push(cur);
-  return chunks;
-}
-async function scriptParts(lines) {
-  const chunks = scriptChunks(lines);
-  const each = await Promise.all(chunks.map(async text => {
-    const saved = await kv.get("s:" + text); if (Array.isArray(saved) && saved.length) return saved;
-    try { if (!freeAI) throw new Error("offline"); const r = await fetch(freeAI.url + "/script", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ text }) }); if (r.ok) { const parts = (await r.json()).parts; if (Array.isArray(parts) && parts.length >= 2) { kv.set("s:" + text, parts); return parts; } } } catch (e) {}
-    return localParts(text);
-  }));
-  return each.flatMap((ps, i) => i && ps.length && !/^~/.test(ps[0]) ? ["~" + ps[0], ...ps.slice(1)] : ps);
-}
-const RESTING = "The natural voice is resting until 6 pm Central, so your device voice is reading for now.";
-async function lineAudio(t) {
-  const v = guideVoice(), k = "a:" + v.model + ":" + v.speaker + ":" + t;
-  const saved = await kv.get(k); if (saved instanceof Blob && saved.size > 500) return saved;
-  const once = () => fetch(freeAI.url + "/speak", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify(Object.assign({ text: t }, v)) })
-    .then(r => { if (r.status === 429) { natVoiceNote = RESTING; throw new Error("resting"); } return r.ok ? r.blob() : null; });
-  let b = null; try { b = await once(); if (!b) b = await once(); } catch (e) { if (e.message === "resting") return null; }
-  if (b && b.size > 500) kv.set(k, b);
-  return b;
-}
-async function voicePlanOk(parts) {
-  try {
-    const pr = await fetch(freeAI.url + "/voiceplan", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify(Object.assign({ texts: parts.map(t => t.replace(/^~\s*/, "")) }, guideVoice())) });
-    if (pr.ok) return !!(await pr.json()).ok;
-  } catch (e) {}
-  return true; // offline or unsure: try anyway, saved lines still play
-}
-async function speakNatural(id, lines) {
-  if (!lines.length) return false;
-  // Must run on the tap itself, first thing, on the tap: phones only allow audio that starts from a tap.
-  kairouteSound(); // set up on the tap itself, which browsers require for audio
-  try { natAudio.src = SILENT; natAudio.play().catch(() => {}); } catch (e) {} // claim the tap so the recording can play when it arrives
-  const parts = await scriptParts(lines);
-  if (speakingId !== id) return true;
-  // One voice for the whole stop: if the allowance can't cover every line, the device voice reads it all.
-  if (!(await voicePlanOk(parts))) { natVoiceNote = RESTING; return false; }
-  if (speakingId !== id) return true;
-  const clean = t => t.replace(/^~\s*/, "");
-  let next = lineAudio(clean(parts[0]));
-  for (let i = 0; i < parts.length; i++) {
-    const blob = await next;
-    if (speakingId !== id) return true;
-    if (!blob) { if (i === 0) return false; speakDevice(id, parts.slice(i).map(clean), null); return true; }
-    if (i + 1 < parts.length) next = lineAudio(clean(parts[i + 1])); // fetch the next line while this one plays
-    const url = URL.createObjectURL(blob);
-    const done = new Promise(res => { natAudio.onended = () => res(true); natAudio.onerror = () => res(false); });
-    natAudio.src = url; natAudio.preservesPitch = true; natAudio.defaultPlaybackRate = natAudio.playbackRate = GUIDE_PACE;
-    try { await natAudio.play(); } catch (e) { URL.revokeObjectURL(url); if (i === 0) return false; speakDevice(id, parts.slice(i).map(clean), null); return true; }
-    if (i === 0) { const g = GUIDES.find(x => x[0] === guideVoice().speaker); voiceNow = `${g[1]}, natural voice`; ttsState = "speaking"; natVoiceNote = ""; updateAudioUI(); }
-    await done; URL.revokeObjectURL(url);
-    if (speakingId !== id) return true;
-    const gap = i + 1 < parts.length ? (/^~/.test(parts[i + 1]) ? 900 : /\?\s*$/.test(parts[i]) ? 700 : 380) : 0;
-    if (gap) await new Promise(r => setTimeout(r, gap));
-  }
-  if (speakingId === id) { speakingId = null; ttsState = "idle"; updateAudioUI(); }
-  return true;
-}
-// Save every stop of the given cities ahead of time (on the device, and recorded once on the server for everyone).
-// Stops early if today's allowance runs low, keeping `reserve` for live use; run again later to finish.
-async function saveStops(sites, onStep, reserve) {
-  let done = 0, made = 0;
-  for (const site of sites) {
-    const lines = toLines(siteLines(site)).map(shapeForSpeech);
-    const parts = await scriptParts(toLines(siteLines(site)));
-    if (reserve) { try { const st = await (await fetch(freeAI.url + "/status")).json(); const need = parts.join(" ").length * 2.75; if ((st.voiceLeft || 0) - need < reserve) return { done, made, total: sites.length, stopped: true }; } catch (e) {} }
-    for (const p of parts) { const b = await lineAudio(p.replace(/^~\s*/, "")); if (!b) return { done, made, total: sites.length, stopped: true }; }
-    done++; made += lines.length; if (onStep) onStep(done, sites.length, site);
-  }
-  return { done, made, total: sites.length, stopped: false };
 }
 // Quality check for every day of a trip (used by the automated planner test).
 if (typeof window !== "undefined") window.__kairouteLegs = i => { const pl = buildPlan(trip.days[i]); if (!pl || pl.error || !pl.items) return null; return pl.items.filter(x => x.type === "travel").map(x => ({ mode: x.leg.mode, how: x.leg.how, km: x.leg.km, min: x.leg.min, note: x.leg.note || "", choices: (x.leg.choices || []).map(c => c.label + " " + c.min) })); };
@@ -4399,10 +4312,8 @@ if (typeof window !== "undefined") window.__kairouteAboard = i => {
   return { before: before.length, on, off };
 };
 if (typeof window !== "undefined") window.__kairouteGo = (v, i) => { if (typeof i === "number") trip.active = i; view = v; renderKeep(); toTop(); };
-if (typeof window !== "undefined") window.kairoutePrewarm = (reserve, log) => saveStops(BUILTIN_CITIES.flatMap(([c]) => allSites(c)), log || ((d, n, s) => console.log(`saved ${d}/${n} ${s.name}`)), reserve ?? 15000);
 function speakLines(id, lines, lc) {
   speakingId = id; audioMsg = "";
-  if (natVoiceOn(lc)) { speakNatural(id, lines).then(ok => { if (!ok && speakingId === id) speakDevice(id, lines, lc); }); return; }
   speakDevice(id, lines, lc);
 }
 function speakDevice(id, lines, lc) {
@@ -4502,7 +4413,7 @@ function updateAudioUI() {
     b.innerHTML = on ? "■ Stop audio" : (b.dataset.label || "▶ Play audio guide");
     b.setAttribute("aria-pressed", on ? "true" : "false");
     const st = b.parentElement.querySelector(".state");
-    if (st) st.textContent = on ? (ttsState === "starting" ? "Starting…" : natVoiceNote ? `Playing with ${voiceNow || "your device voice"}. The natural voice is back at 6 pm Central.` : `Playing${voiceNow ? " · " + voiceNow : ""}`) : (audioMsg || "");
+    if (st) st.textContent = on ? (ttsState === "starting" ? "Starting…" : `Playing${voiceNow ? " · " + voiceNow : ""}`) : (audioMsg || "");
   });
 }
 
@@ -5073,8 +4984,9 @@ function needsCity(d) {
 function lobbySeen() { let was = false; try { was = !!localStorage.getItem("kairoute.lobbySeen"); localStorage.setItem("kairoute.lobbySeen", "1"); } catch (e) {} return was || !!(typeof library !== "undefined" && library.length > 1); }
 const TAGLINE = "Be your own guide.";
 const APP_VERSION = "Preview 0.9";
-let appSet = { theme: "system", text: "standard", natvoice: "on", voicefx: "on", guide: "aurora" };
+let appSet = { theme: "system", text: "standard", natvoice: "on", voicefx: "on", guide: "clara" };
 try { Object.assign(appSet, JSON.parse(localStorage.getItem("kairoute.app") || "{}")); } catch (e) {}
+if (GUIDE_WAS[appSet.guide]) appSet.guide = GUIDE_WAS[appSet.guide];
 function applyAppSet() {
   const r = document.documentElement;
   if (appSet.theme === "system") r.removeAttribute("data-theme"); else r.setAttribute("data-theme", appSet.theme);
@@ -5218,11 +5130,11 @@ function renderSettings(sec) {
   </div>
 `,
     voice: () => `
-  <div class="card"><h3>Natural voice</h3><p class="lede">${esc(voiceStatusText())}${natVoiceNote ? " " + esc(natVoiceNote) : ""}</p>
-    ${freeAI ? `<div class="field"><span class="lbl">${aiCan("liveVoice") ? "Natural AI voice (English)" : "Saved natural recordings (English)"}</span>${seg("natvoice", [["on", "On"], ["off", "Device voice only"]])}</div>
-    <div class="field"><span class="lbl">Guide voice</span>${seg("guide", GUIDES.map(([k, n, d]) => [k, `${n} <small>${d}</small>`]))}
+  <div class="card"><h3>Guide voice</h3><p class="lede">${esc(voiceStatusText())}</p>
+    <div class="field"><span class="lbl">Your guide</span>${seg("guide", GUIDES.map(([k, n, d]) => [k, `${n} <small>${d}</small>`]))}
       <button type="button" class="btn" data-act="voicetry">Hear this voice</button></div>
-    <div class="field"><span class="lbl">Kairoute sound (warmer, clearer outdoors, even volume)</span>${seg("voicefx", [["on", "On"], ["off", "Off"]])}</div>` : ""}
+    <div class="field"><span class="lbl">Recorded stories (English)</span>${seg("natvoice", [["on", "Your guide's voice"], ["off", "Device voice only"]])}</div>
+    <div class="field"><span class="lbl">Kairoute sound (warmer, clearer outdoors, even volume)</span>${seg("voicefx", [["on", "On"], ["off", "Off"]])}</div>
   </div>
 `,
     prefs: () => settingsCard().replace('<details class="card more">', '<details class="card more" open>'),
@@ -5248,6 +5160,7 @@ function renderSettings(sec) {
       ["Follow me, phone in pocket", "GPS keeps guiding and starts each story even with the screen off."]
     ].map(([a, b]) => `<li><span><b>${a}:</b> ${b}</span></li>`).join("")}</ul>
   </div>
+  <div class="card"><h3>Credits</h3><p class="lede">The guide voices (Clara, Maya, Eleanor, Daniel and Henry) are recorded with Kokoro, an open voice model by hexgrad, used under the Apache License, Version 2.0. Maps use OpenStreetMap data, © OpenStreetMap contributors.</p></div>
 `,
     privacy: () => privacyBody(),
     terms: () => termsBody()
@@ -5500,6 +5413,11 @@ function startCountdown() {
   tickCountdown(); cdTimer = setInterval(tickCountdown, 15000);
 }
 const jKey = (s) => (cityKeyFor(day()) || "x") + "/" + s.id;
+// The guide-voice picker beside Play, on stops with a recorded story (the only stories the chosen voice reads).
+function voicePick(s) {
+  if (!s || !s.scriptV || appSet.natvoice === "off" || (P().lang || "English") !== "English") return "";
+  return `<label class="voicepick"><span>Voice</span><select data-guidepick aria-label="Guide voice">${GUIDES.map(([k, n, d]) => `<option value="${k}"${guideOf()[0] === k ? " selected" : ""}>${n} (${d})</option>`).join("")}</select></label>`;
+}
 function journalBlock(s) {
   const j = (trip.journal || {})[jKey(s)] || {};
   return `<div class="journal"><span class="eyebrow">Your journal</span>
@@ -7060,6 +6978,7 @@ function renderTour(d) {
       ${cp.p.stand ? `<p class="stand"><b>Stand here:</b> ${esc(cp.p.stand)}</p>` : ""}
       ${cp.wait ? `<p class="banner">⏱ ${esc(s.show.what)} at ${fmt(cp.time)}. Be in front of ${esc(cp.p.name)} by then.</p>` : ""}
       <div class="audio"><button class="btn bigplay" data-play="part:${esc(s.id)}:${cp.k}" data-label="▶ Play this part">▶ Play this part</button><span class="state" aria-live="polite"></span></div>
+      ${voicePick(s)}
       <p class="guidetext">${esc(unitText(cp.p.guide))}</p>
       ${cp.p.lookFor ? `<div class="field"><span class="eyebrow">Can you find it?</span><p>${esc(cp.p.lookFor)}</p></div>` : ""}
       ${pk + 1 === pp.length && s.wrap ? `<p class="lede">${esc(unitText(s.wrap))}</p>` : ""}
@@ -7313,10 +7232,9 @@ document.addEventListener("click", e => {
   if (act === "film" || act === "filmreplay") { stopAudio(); playFilm(false); return; }
   if (act === "filmclose") { closeFilm(); return; }
   if (act === "mytrips") { if (view === "trip") readForm(); save(); view = "trips"; aiError = ""; render(); toTop(); return; }
-  if (act === "voicetry") {
+  if (act === "voicetry") { // a short recorded hello in the chosen voice (stop-scripts.js, script "voice-sample")
     if (speakingId === "voice-sample") { stopAudio(); render(); return; }
-    stopAudio(); const g = GUIDES.find(x => x[0] === guideVoice().speaker);
-    speakLines("voice-sample", [`Hi, I'm ${g[1]}. Let's walk over to the old harbor together. Look up, just there, see that worn stone lion above the gate? It has been watching ships come and go for almost six hundred years.`], null);
+    stopAudio(); playVoiceSample();
     setTimeout(render, 300); return;
   }
   if (act === "newtrip") { wiz = { step: 0, mode: "steps", legs: [tsStay()], text: "", name: "", style: trip.style || "mix", interests: [], pace: "moderate", walk: "medium", hotels: "", travelers: "", access: "none", party: 2, lang: "English", voice: "buttery", cruiseLine: "", ship: "" }; view = "wizard"; aiError = ""; render(); return; }
@@ -7440,6 +7358,7 @@ document.addEventListener("click", e => {
 });
 document.addEventListener("change", e => {
   const t = e.target;
+  if (t.dataset && t.dataset.guidepick !== undefined) { stopAudio(); appSet.guide = t.value; saveAppSet(); const y = window.scrollY; render(); window.scrollTo(0, y); return; }
   if (t.dataset && t.dataset.site) {
     const d = day(), id = t.dataset.site;
     d.selected = d.selected || []; movedNote = "";
