@@ -17,7 +17,11 @@ function latinName(s) {
 }
 // "Metro M3 (Urban Rail Transport S.A.)" -> "Metro M3". A line with no number of its own keeps the operator, which is
 // then its name ("Train (Circumvesuviana)"), without the legal ending.
-function lineOnly(s) {
+// A line known only by a name in another script and no number ("Ferry Οία - Παλιό Λιμάνι Φηρών") is shown by its kind
+// alone ("Ferry"): its stops, in Latin letters, already say where it goes.
+function lineOnly(s) { const b = lineBare(s), rest = b.replace(/^\S+\s*/, "");
+  return /[Ͱ-Ͽἀ-῿Ѐ-ӿ]/.test(rest) && !/\d/.test(rest) && /^\p{L}+$/u.test(b.split(/\s/)[0]) ? b.split(/\s/)[0] : latinName(b); }
+function lineBare(s) {
   s = String(s || ""); const bare = s.replace(/\s*\([^)]*\)/g, "").trim();
   if (/\d|\b[A-Z]{1,3}\b/.test(bare.replace(/^\S+\s*/, ""))) return bare;
   return s.replace(/\(([^)]*)\)/g, (m, a) => "(" + a.replace(/\b(S\.?A\.?|S\.?p\.?A\.?|s\.?r\.?l\.?|Ltd\.?|GmbH|Inc\.?|plc)\b\.?/gi, "").replace(/\s+/g, " ").trim() + ")").replace(/\(\)/g, "").trim();
@@ -29,9 +33,9 @@ function tidyRide(o) {
   if (r.from) r.from = latinName(r.from); if (r.to) r.to = latinName(r.to);
   let legs = null;
   if (Array.isArray(o.steps) && o.steps.length) {
-    const parsed = o.steps.map(s => { const m = /^(.+?): (.+) to (.+), (\d+) min$/.exec(String(s)); return m ? { line: lineOnly(m[1]), from: latinName(m[2]), to: latinName(m[3]), min: +m[4] } : null; });
+    const parsed = o.steps.map(s => { const m = /^(.+?): (.+) to (.+), (\d+) min$/.exec(String(s)); return m ? { line: lineOnly(m[1]), raw: m[1], from: latinName(m[2]), to: latinName(m[3]), min: +m[4] } : null; });
     if (parsed.every(Boolean)) {
-      legs = []; for (const p of parsed) { const last = legs[legs.length - 1]; if (last && last.line === p.line) { last.to = p.to; last.min += p.min; } else legs.push(Object.assign({}, p)); }
+      legs = []; for (const p of parsed) { const last = legs[legs.length - 1]; if (last && last.raw === p.raw) { last.to = p.to; last.min += p.min; } else legs.push(Object.assign({}, p)); }
       r.steps = legs.map((l, i) => i ? `change to ${l.line}: ${l.from} to ${l.to}, ${l.min} min` : `${l.line}: ${l.from} to ${l.to}, ${l.min} min`);
     } else r.steps = o.steps.map(s => lineOnly(s));
   }

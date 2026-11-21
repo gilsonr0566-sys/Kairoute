@@ -589,8 +589,8 @@ function travel(a, b) {
   const walkMin = Math.max(2, Math.round(d * 1.3 / speed * 60)), either = d >= 0.6 && d <= WALK_EITHER, want = either && trip.legModes ? trip.legModes[pairKey(a, b)] : null;
   if (d <= lim ? !want || want === "walk" : want === "walk") { const w = { mode: "walk", how: "Walk", km: d * 1.3, min: walkMin };
     if (!either) return w; const r = roadGuess(d); return Object.assign(w, { key: pairKey(a, b), choice: "walk", road: r.min, choices: [{ id: "walk", label: "Walk", min: walkMin, kind: "walk" }, { id: "taxi", label: "Taxi or car", min: r.min, kind: "car" }] }); }
-  if (d <= 6) return rideLeg(a, b, roadGuess(d), false, either ? walkMin : 0);
-  if (d <= 15) return rideLeg(a, b, roadGuess(d), b.backToShip);
+  if (d <= 6) return boatLeg(a, b, rideLeg(a, b, roadGuess(d), false, either ? walkMin : 0));
+  if (d <= 15) return boatLeg(a, b, rideLeg(a, b, roadGuess(d), b.backToShip));
   let leg = roadGuess(d);
   // A day trip's own note says how long the trip really takes ("1 hour on the Circumvesuviana train", "60-75 min"):
   // the slowest time it names, plus getting to the station or pier, wins over the estimate.
@@ -598,8 +598,26 @@ function travel(a, b) {
   if (said && !(saidMin(a) && saidMin(b))) leg = Object.assign(leg, { min: Math.max(leg.min, said + 15), said: true });
   leg = rideLeg(a, b, leg, b.backToShip);
   // A long ride back to the ship gets time for a late train or traffic: missing the ship is not an option.
+  leg = boatLeg(a, b, leg);
   if ((b.backToShip || b.deadline) && leg.min >= 30) { const sl = Math.max(15, Math.round(leg.min * 0.3 / 5) * 5); leg = Object.assign(leg, { min: leg.min + sl, slack: sl }); }
   return leg;
+}
+// A place reached by boat (an island: Delos from Mykonos, Nov 18 "It has it as a taxi") is never shown as a taxi ride.
+// When no real ferry line was found, a place whose own travel note says it's reached by boat or ferry gets a boat leg:
+// the slowest time the note names plus getting to the pier and a wait for the boat, never less than the road guess.
+const BOAT_NOTE = /\b(boats?|ferry|ferries|water ?taxis?|caiques?|hydrofoils?|catamarans?)\b/i;
+const LAND_NOTE = /\b(train|rail|metro|tram|bus|coach|car|road|drive|driving|taxi|cab|walk|hike|bridge|causeway)\b/i;
+// Only a place the note says is reached by boat alone (an island): "40 minutes by ferry, or 1 hour on the train" (Sorrento)
+// can be reached by land, and the usual ride options stay.
+const byBoat = p => !!(p && typeof p.travel === "string" && BOAT_NOTE.test(p.travel) && !LAND_NOTE.test(p.travel.replace(/water ?taxis?/gi, "")));
+function boatLeg(a, b, leg) {
+  if (!leg || leg.mode === "walk" || !(byBoat(a) || byBoat(b))) return leg;
+  if (leg.transit && leg.transit.mode === "ferry" && leg.transit.checked) return leg; // a ferry with a real timetable says when it sails
+  // A ferry line mapped with no timetable was timed with a full gap between sailings plus getting to the pier (Delos
+  // showed 1 h 27 min for a 30 to 45 min crossing, and lost to a taxi that can't cross the sea): the guide's own crossing
+  // time is used instead, and a road or bus option is never offered to an island.
+  const said = Math.max(saidMin(a), saidMin(b)), min = Math.max(leg.min, (said || 30) + 15); // the crossing the note names (its slowest) plus 15 min to reach the pier and board
+  return Object.assign({}, leg, { how: "Boat", kind: "ferry", boat: true, min, said: !!said, choice: "boat", choices: [{ id: "boat", label: "Boat", min, kind: "ferry" }] });
 }
 // By road (taxi, car or bus), as the crow flies d km. 15-40 km: regional roads around bays and through towns
 // (Naples to Sorrento is 26 km as the crow flies but about 50 km of coast road); farther: highway (Athens to
@@ -851,7 +869,7 @@ function rideDetail(leg, start, endBy) {
   if (!leg.choices) return "";
   const o = leg.transit, ev = knownEvery(o) ? `, runs about every ${dur(o.every)}${o.everySrc === "timetable" ? " (from the timetable)" : ""}` : "";
   const ride = o && o.steps && o.steps.length ? o.steps.map(esc).join("; then ") : o ? `${dur(o.ride)} ride${o.stops ? ` (${o.stops} stops)` : ""}` : "";
-  const how = o ? `${o.access.how === "walk" ? "Walk" : "Taxi"} ${dur(o.access.min)} to ${esc(o.from || "the " + (o.mode === "ferry" ? "pier" : "station"))}${ev}. ${ride}, then ${o.egress.how === "walk" ? "walk" : "taxi"} ${dur(o.egress.min)}${o.to && !(o.steps && o.steps.length) ? " from " + esc(o.to) : ""}.${o.operator ? " " + esc(o.operator) + "." : ""}${o.hours ? " Hours: " + esc(o.hours) + "." : ""}${o.fare ? " Fare: " + esc(o.fare) + "." : ""} Times include waiting and boarding.${payNote(o)}` : leg.mode === "walk" ? "" : "By road, with time for traffic.";
+  const how = o ? `${o.access.how === "walk" ? "Walk" : "Taxi"} ${dur(o.access.min)} to ${esc(o.from || "the " + (o.mode === "ferry" ? "pier" : "station"))}${ev}. ${ride}, then ${o.egress.how === "walk" ? "walk" : "taxi"} ${dur(o.egress.min)}${o.to && !(o.steps && o.steps.length) ? " from " + esc(o.to) : ""}.${o.operator ? " " + esc(o.operator) + "." : ""}${o.hours ? " Hours: " + esc(o.hours) + "." : ""}${o.fare ? " Fare: " + esc(o.fare) + "." : ""} Times include waiting and boarding.${payNote(o)}` : leg.mode === "walk" ? "" : leg.boat ? "The crossing plus 15 min to reach the pier and board. Boats run on a timetable, so you may wait for the next one: check the times at the pier, and above all the last boat back." : "By road, with time for traffic.";
   const fall = depLine(o, start, endBy, leg.lastMile, leg.slack) + (leg.slack ? ` Includes ${dur(leg.slack)} spare before the ship.` : "") + (leg.lastMile && o ? ` <b>If you miss it:</b> a taxi takes about ${dur(leg.road)}.` : "");
   const note = rideNotice && rideNotice.key === leg.key ? `<span class="ridenote">${rideNotice.text}${rideNotice.undo != null ? ` <button class="linkbtn" data-act="rideundo">Undo</button>` : ""}${rideNotice.force ? ` <button class="linkbtn" data-act="rideforce">${esc(rideNotice.forceText)}</button>` : ""}</span>` : "";
   // One tap per way to go, in the transport colors, each with its time (and fare when the timetable gives one).
@@ -879,6 +897,10 @@ if (typeof window !== "undefined") window.__kairouteOneEach = (opts, want) => on
 function rideLeg(a, b, road, lastMile, walkMin) {
   const walk = walkMin ? [{ id: "walk", label: "Walk", min: walkMin, kind: "walk" }] : [];
   let opts = transitFor(a, b);
+  // A ride slower than walking the same way is never offered (Nov 19, Rome: "Ferry Battelli di Roma 1 h 40 min" next to
+  // a 34 min walk and a 17 min taxi; "those 2 ferries stick out like a sore thumb"): with a walk on offer, a line that
+  // takes longer than it is dropped, and the taxi and the walk remain.
+  if (opts && walkMin) opts = opts.filter(o => !(o.min > walkMin));
   // No line found: the ride is a taxi, and says so (not "Taxi, bus or metro", not "Train or car": the label never names
   // a way to go that has no button, Richard Nov 17); a short one can be walked instead.
   if (!opts || !opts.length) return Object.assign({}, road, { how: "Taxi or car", key: pairKey(a, b), choice: "taxi", road: road.min, lastMile, choices: [...walk, { id: "taxi", label: "Taxi or car", min: road.min, kind: "car" }] });
@@ -1173,14 +1195,22 @@ function pointList(city, listKey) { return (city && city.starts && city.starts[l
 function lodgingFor(d, city) {
   const k = cityKeyFor(d) || keyOf(d.destination);
   const L = trip.lodging[k] || { idx: 0 };
-  if (L.idx === "custom") return L.ll ? { name: L.name, lat: L.ll.lat, lng: L.ll.lng } : null;
+  const real = v => v !== null && v !== "" && isFinite(+v) && +v !== 0;
+  if (L.idx === "custom" && L.ll && real(L.ll.lat) && real(L.ll.lng)) return { name: String(L.name || "").trim() || "Your hotel", lat: +L.ll.lat, lng: +L.ll.lng };
   const list = pointList(city, "hotel");
-  const hit = list[L.idx] || list[0];
-  if (hit) return hit;
+  // A hotel typed in (or brought in with a trip) that the map hasn't placed yet never blanks the day (Richard's
+  // boarding day, Nov 19: "Choose where you're staying" and nothing else). The day starts from the guide's first
+  // hotel area or the city centre, marked approx, and says so, until the hotel's spot is known.
+  const wanted = L.idx === "custom" ? String(L.name || "").trim() : "";
+  const mark = p => L.idx === "custom" && p ? Object.assign({}, p, { approx: true, wanted }) : p;
+  const hit = L.idx === "custom" ? list[0] : (list[L.idx] || list[0]);
+  if (hit) return mark(hit);
   // A guide with no hotel areas listed: start from the city center rather than stopping the day plan.
   const c = pointList(city, "point")[0] || (city && city.sites && city.sites[0]);
-  return c ? { name: "Hotel near " + c.name, lat: c.lat, lng: c.lng } : null;
+  return c ? mark({ name: "Hotel near " + c.name, lat: c.lat, lng: c.lng }) : null;
 }
+// The day's note when the hotel isn't placed on the map yet (see lodgingFor).
+const approxStayNote = L => L && L.approx ? `We couldn't place ${L.wanted || "your hotel"} on the map yet, so today's plan uses ${L.name} as your hotel. Ride times from your real hotel may differ: add its street address under Trip to make them exact.` : null;
 function dayPoint(d, city) {
   const listKey = d.type === "port" || d.type === "embark" ? "cruise" : MODES[d.mode].list;
   const list = pointList(city, listKey);
@@ -1235,6 +1265,7 @@ const unsurePoint = P => !!P && (P.unknown || /Location approximate: city centre
 function dayWindow(d, city) {
   const L = lodgingFor(d, city), P = dayPoint(d, city);
   const w = { head: [], tail: [], start: 0, endBy: 0, notes: [], notesEnd: [], buffer: 0 };
+  if (approxStayNote(L) && !throughFrom(d)) w.notes.push(approxStayNote(L));
   if (unsurePoint(P) && P.unknown) { // a port already marked unknown in a saved guide: the app's own known terminals first
     const k = d.type === "port" || d.mode === "ship" ? "cruise" : /airport/i.test(P.name || "") || d.mode === "flight" ? "airport" : "cruise", ss = (city.sites || []).filter(x => isFinite(+x.lat)), mid = ss.length ? { lat: ss.map(x => +x.lat).sort((a, b) => a - b)[ss.length >> 1], lng: ss.map(x => +x.lng).sort((a, b) => a - b)[ss.length >> 1] } : null, g = knownGate(k, P, mid, 150);
     if (g) { P.lat = g.lat; P.lng = g.lng; delete P.unknown; } }
@@ -1555,9 +1586,9 @@ function mealSpots(seq, O, Z, city) {
   // Any stop with no known place to eat a short walk away (often a day trip out of town) also offers
   // "Lunch near <stop>", so the plan never travels back to town just to eat.
   const bare = seq.filter(x => !x.mealOf && !(city.restaurants || []).some(r => !r.crowdDrop && hav(r, x) <= 0.6));
-  const gen = bare.map(x => ({ name: "Lunch near " + x.name, lat: x.lat, lng: x.lng, generic: true, kind: "local", cuisine: "Your pick", price: "", why: "Choose any café or taverna around here, or bring a picnic. A good sign is a place full of locals." }));
+  const gen = bare.map(x => ({ name: "Lunch near " + x.name, lat: x.lat, lng: x.lng, ...(byBoat(x) ? { travel: x.travel } : {}) /* an island's boat goes with its lunch (only then: a "1 hour by train" note would time every ride from the lunch) */, generic: true, kind: "local", cuisine: "Your pick", price: "", why: "Choose any café or taverna around here, or bring a picnic. A good sign is a place full of locals." }));
   // Every place near here is already another day's meal: "Lunch near <stop>" rather than the same restaurant twice.
-  if (!fresh.length && !gen.length && near.length) { const a = seq.find(x => !x.mealOf) || O; if (a) gen.push({ name: "Lunch near " + a.name, lat: a.lat, lng: a.lng, generic: true, kind: "local", cuisine: "Your pick", price: "", why: "You've eaten at the guide's places around here on other days: try somewhere new nearby, a café or taverna full of locals." }); }
+  if (!fresh.length && !gen.length && near.length) { const a = seq.find(x => !x.mealOf) || O; if (a) gen.push({ name: "Lunch near " + a.name, lat: a.lat, lng: a.lng, ...(byBoat(a) ? { travel: a.travel } : {}), generic: true, kind: "local", cuisine: "Your pick", price: "", why: "You've eaten at the guide's places around here on other days: try somewhere new nearby, a café or taverna full of locals." }); }
   return (fresh.length ? fresh : []).concat(gen); // never repeat another day's restaurant
 }
 // The places worth trying for one meal: with real map data a big city has hundreds of places to eat near the
@@ -2421,8 +2452,8 @@ function cleanCity(c, dest) {
   for (const k of ["cruise", "airport", "station", "hotel", "point"]) starts[k] = ((c.starts && c.starts[k]) || []).filter(okLL).map(p => ({ name: (k !== "hotel" && enNameOf(String(p.name))) || String(p.name), lat: num(p.lat), lng: num(p.lng), note: p.note ? String(p.note) : "" }));
   return {
     city: String(c.city || dest), country: String(c.country || ""), ai: true, verified: c.verified || 0, grounded: !!c.grounded, gv: String(c.gv || ""), eatsV: +c.eatsV || 0, farFillV: +c.farFillV || 0, startsOk: c.startsOk === true ? 1 : +c.startsOk || 0, starts,
-    sites: (c.sites || []).filter(okLL).map((s, i) => site(s, i)),
-    farther: (c.farther || []).filter(okLL).map((s, i) => Object.assign(site(s, i, "-far"), { far: true })),
+    sites: (c.sites || []).filter(okLL).map((s, i) => splitLocalName(site(s, i))),
+    farther: (c.farther || []).filter(okLL).map((s, i) => splitLocalName(Object.assign(site(s, i, "-far"), { far: true }))),
     basics: c.basics ? {
       currency: String(c.basics.currency || ""), symbol: String(c.basics.symbol || ""), prices: /^[A-Z]{3}$/.test(String(c.basics.prices || "")) ? c.basics.prices : "", language: String(c.basics.language || ""), langCode: String(c.basics.langCode || ""),
       tipping: String(c.basics.tipping || ""), safety: String(c.basics.safety || ""), emergency: String(c.basics.emergency || ""), plugs: String(c.basics.plugs || ""), water: String(c.basics.water || ""),
@@ -2802,6 +2833,7 @@ function fameMark(city, src) {
   // Fills first, then the sources' sights: the same order online and offline, so the list comes out the same.
   restoreFills(city, fillsMem[keyOf(city.city)]);
   for (const s of [...(city.sites || []), ...(city.farther || [])]) {
+    splitLocalName(s);   // a guide saved before the rule
     const nm0 = s.srcName || s.name;   // the name the guide gave it, before it was put into English
     const hit = srcStop(src, nm0, s) || ((src.far || []).find(x => nameMatch(s.name, x.name) || nameMatch(x.name, s.name)) && Object.assign({ src: ["Wikidata (Wikipedia in many languages)"] }, (src.far || []).find(x => nameMatch(s.name, x.name) || nameMatch(x.name, s.name))));
     if (hit) { s.fame = hit.sl || 0; s.unesco = !!hit.unesco; s.heritage = !!hit.heritage; s.src = hit.src || []; if (hit.web && !s.web) s.web = hit.web; 
@@ -4227,6 +4259,7 @@ if (typeof window !== "undefined") window.__kairouteEmptyRides = i => { const c 
   for (const x of all) for (const y of all) if (x !== y && isFinite(x.lat) && isFinite(y.lat) && hav(x, y) >= 4) { const k = pairKey(x, y) + "|" + kd; if (!transitMem[k]) { transitMem[k] = { opts: [], t: Date.now(), v: TRANSIT_V }; n++; } }
   nearGen++; return n; };
 if (typeof window !== "undefined") window.__kairouteTransitSet = pairs => { nearGen++; (pairs || []).forEach(x => { transitMem[pairKey(x.a, x.b)] = { opts: x.opts, t: Date.now(), v: TRANSIT_V }; }); return Object.keys(transitMem).length; };
+if (typeof window !== "undefined") window.__kairouteTravel = (a, b) => { const l = travel(a, b); return { how: l.how, min: l.min, choices: (l.choices || []).map(c => c.label + " " + c.min) }; };
 if (typeof window !== "undefined") window.__kairouteMapLegs = () => { const d = day(), pl = buildPlan(d); return pl && !pl.error ? mapPlanData(pl, d).legs : []; };
 // Test hook: try to add, on day i, a sight that is closed that day (the first one found): it must not be added and the
 // box must say it's closed and offer an open day or an open sight instead.
@@ -6777,7 +6810,29 @@ function renderGuide(d) {
   return `${pageHead(d, plan, camBtnHTML() + tourBtnHTML())}
     <div class="guidegrid"><div class="guideside pane" data-pane="side">
     ${jumps ? `<nav class="jumps" aria-label="Jump to a stop">${jumps}</nav>` : ""}</div>
-    <div class="guidemain pane" data-pane="stories">${cards ? `<div class="stoplist">${cards}</div>` : `<div class="card empty"><p>No stops planned for today.</p><button class="btn" data-goto="sites">Choose stops</button></div>`}</div></div>`;
+    <div class="guidemain pane" data-pane="stories">${cards ? `<div class="stoplist">${cards}</div>` : guideNoStops(d, plan)}</div></div>`;
+}
+// A day with no sights in it (a boarding morning too short for one, a flight day) was a blank Guide with only
+// "No stops planned for today" (Richard, Nov 18: "Embarkation day still has a blank screen"). The day still has
+// its own steps, so the Guide walks through them: leave the hotel, collect the bags, the ride, and what to expect
+// at the terminal, station or airport, with the same times and notes as the Day plan. On a day that ends at a
+// ship, train or flight, "Choose stops" isn't offered as the main action: there may be no time for one.
+function guideNoStops(d, plan) {
+  const steps = plan.items.filter(it => it.type === "start" || it.type === "fixed" || (it.type === "end" && it.place));
+  const leaving = steps.some(it => it.type === "end") && (plan.w.notesEnd || []).length;
+  if (!leaving) return `<div class="card empty"><p>No stops planned for today.</p><button class="btn" data-goto="sites">Choose stops</button></div>`;
+  const legBefore = it => { const k = plan.items.indexOf(it), pv = plan.items[k - 1]; return pv && pv.type === "travel" && pv.leg.km >= 0.1 ? pv.leg : null; };
+  const row = it => {
+    const leg = legBefore(it), nm = it.type === "fixed" && it.free ? `Free time until ${fmt(it.time + it.free)}` : it.type === "start" || it.type === "end" ? it.label : it.place.name;
+    const notes = it.type === "start" ? (plan.w.notes || []) /* not the hotel's "walk to the old town" note: no sight fits today */ : it.type === "end" ? plan.w.notesEnd
+      : it.free ? [`Breakfast, coffee or a last walk nearby. Then ${it.place.name.replace(/^C/, "c")} (${dur(it.bags)}).`] : [dur(it.place.minutes)]; // the Day plan's own lines
+    return `<div class="card guidestep">${leg ? `<p class="tourleg ${leg.mode} k-${legKind(leg)}">${legIcon(legKind(leg))}<span>${esc(leg.how)} · ${dur(leg.min)} · ${distTxt(leg.km)}</span></p>` : ""}
+      <div class="eyebrow">${it.type === "start" ? "Leave " : "Arrive "}${fmt(it.time)}</div><h3>${esc(nm)}</h3>
+      ${notes.filter(Boolean).map(t => `<p class="sub">${esc(t)}</p>`).join("")}</div>`;
+  };
+  return `<div class="stoplist"><div class="card"><p>No sights fit in today before you go, so here is how the day runs.</p>
+    <div class="actions"><button class="btn ghost small" data-goto="plan">Open the day plan</button><button class="btn ghost small" data-goto="sites">Choose stops</button></div></div>
+    ${steps.map(row).join("")}</div>`;
 }
 // ---------- Tour mode ----------
 function tourSteps(plan) {
@@ -6849,7 +6904,7 @@ function renderTour(d) {
       </div></div>`;
   } else if (st.type === "start") {
     body = `<div class="tourcard"><div class="eyebrow">Good morning</div><h2 class="tourtitle">${esc(st.label)}</h2>
-      <p class="lede">Today: ${stopsOnly.length} stops${plan.meals.length ? ", " + plan.meals.map(m => esc(m.name)).join(" and ") + " to eat" : ""}, about ${distTxt(plan.walkKm)} on foot. ${d.type === "port" ? "I'll keep an eye on the time so you're back aboard early." : "I'll keep you on time."}</p>
+      <p class="lede">${!stopsOnly.length && (plan.w.notesEnd || []).length ? "No sights fit in today before you go: I'll take you through each step and keep you on time." : `Today: ${stopsOnly.length} stop${stopsOnly.length === 1 ? "" : "s"}${plan.meals.length ? ", " + plan.meals.map(m => esc(m.name)).join(" and ") + " to eat" : ""}, about ${distTxt(plan.walkKm)} on foot. ${d.type === "port" ? "I'll keep an eye on the time so you're back aboard early." : "I'll keep you on time."}`}</p>
       ${tourMap(plan, d, null, null)}
       <ol class="tourlist">${stopsOnly.map(x => `<li>${fmt(x.time)} · ${esc(x.place.name)}</li>`).join("")}</ol>
       <div class="audio"><button class="btn ghost" data-play="intro:${d.id}" data-label="▶ Hear today's plan">▶ Hear today's plan</button><span class="state" aria-live="polite"></span></div>
@@ -6857,7 +6912,7 @@ function renderTour(d) {
   } else if (st.type === "end") {
     const rated = steps.filter(x => x.type === "stop" && ((trip.journal || {})[jKey(x.place)] || {}).rating).length;
     body = `<div class="tourcard"><div class="eyebrow">That's the day</div><h2 class="tourtitle">${esc(st.label)}</h2>
-      <p class="lede">You saw ${stopsOnly.length} stops. ${rated ? "You rated " + rated + " of them." : "Rate them in your journal while it's fresh."}</p>
+      <p class="lede">${stopsOnly.length ? `You saw ${stopsOnly.length} stop${stopsOnly.length > 1 ? "s" : ""}. ${rated ? "You rated " + rated + " of them." : "Rate them in your journal while it's fresh."}` : (plan.w.notesEnd || []).map(esc).join(" ")}</p>
       <div class="actions tourmain"><button class="btn" data-goto="journal">${trip.days[trip.active + 1] ? "Open the journal" : "Make my memory video"}</button>${trip.days[trip.active + 1] ? `<button class="btn ghost" data-act="tourtomorrow">Next day: ${esc(trip.days[trip.active + 1].destination)}</button>` : ""}</div></div>`;
   } else if (st.type === "meal") {
     const r = st.place;

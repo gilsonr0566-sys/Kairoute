@@ -101,6 +101,89 @@ function helper(r, calls) {
       const saved = await p.evaluate(i => JSON.parse(localStorage.getItem('wayside.trip2')).days[i].boardTime, d.i);
       if (saved !== '12:30') bad(`boarding: a typed time redrawn over before Save was lost (saved ${saved})`); else ok('boarding: a typed time survives a redraw before Save (12:30 saved)'); }
     await p.close(); }
+  // 1b2. A boarding morning too short for any sight (boarding 10:00) still has a Guide and a tour that walk through the
+  // day: hotel, bags, the ride, what to expect at the terminal (Nov 18: "Embarkation day still has a blank screen";
+  // the Guide said only "No stops planned for today" and the tour jumped to "You saw 0 stops").
+  if (!LIVE) { const p = await b.newPage({ viewport: { width: 800, height: 1280 } }); const errs = []; p.on('pageerror', e => errs.push(e.message));
+    await p.route('**/*', r => /^file:/.test(r.request().url()) ? r.continue() : r.abort());
+    await p.goto('file://' + FILE); await p.evaluate(() => localStorage.setItem('kairoute.intro1', '1')); await p.reload(); await p.waitForTimeout(600);
+    const s = p.locator('[data-act="loadsample"]').first(); if (await s.isVisible().catch(() => false)) await s.click(); await p.waitForTimeout(1200);
+    const d = (await p.evaluate(() => window.__kairouteDays())).find(x => x.type === 'embark');
+    if (d) { await p.evaluate(i => window.__kairouteGo('plan', i), d.i); await p.waitForTimeout(1000);
+      if (!(await p.locator('#bc-time').isVisible().catch(() => false))) { await p.locator('[data-act="boardchange"]').first().click(); await p.waitForTimeout(500); }
+      await p.locator('#bc-time').fill('10:00'); await p.locator('[data-act="boardsave"]').first().click(); await p.waitForTimeout(1000);
+      await p.evaluate(i => window.__kairouteGo('guide', i), d.i); await p.waitForTimeout(800);
+      const g = await p.evaluate(() => document.getElementById('view').innerText);
+      if (/No stops planned/.test(g) || !/terminal/i.test(g) || !/bags/i.test(g)) bad(`boarding 10:00: the Guide doesn't walk through the day: ${JSON.stringify(g.replace(/\s+/g, ' ').slice(0, 200))}`);
+      else ok('boarding 10:00: the Guide walks through the hotel, bags and terminal');
+      await p.locator('[data-act="tourstart"]').first().click(); await p.waitForTimeout(600);
+      for (let k = 0; k < 8 && await p.locator('[data-act="tournext"],[data-act="tourhere"]').count(); k++) { await p.locator('[data-act="tournext"],[data-act="tourhere"]').first().click(); await p.waitForTimeout(300); }
+      const e = await p.evaluate(() => document.getElementById('view').innerText);
+      if (/saw 0 stops/i.test(e) || !/terminal/i.test(e)) bad(`boarding 10:00: the tour ends without the terminal notes: ${JSON.stringify(e.replace(/\s+/g, ' ').slice(0, 200))}`);
+      else ok('boarding 10:00: the tour ends with what to expect at the terminal');
+      if (errs.length) bad('boarding 10:00: page errors ' + errs.slice(0, 3).join(' / ')); }
+    await p.close(); }
+  // 1b3. An island reached by boat is never a taxi ride (Nov 18, Mykonos: "It has it as a taxi" to Delos): with no ferry
+  // line found, a place whose own travel note names a boat or ferry gets a Boat leg, there and back.
+  if (!LIVE) { const p = await b.newPage({ viewport: { width: 1280, height: 800 } });
+    await p.route('**/*', r => /^file:/.test(r.request().url()) ? r.continue() : r.abort());
+    await p.goto('file://' + FILE); await p.evaluate(() => localStorage.setItem('kairoute.intro1', '1')); await p.reload(); await p.waitForTimeout(600);
+    const s = p.locator('[data-act="loadsample"]').first(); if (await s.isVisible().catch(() => false)) await s.click(); await p.waitForTimeout(1200);
+    const d = (await p.evaluate(() => window.__kairouteDays())).find(x => /Mykonos/.test(x.dest));
+    if (d) { await p.evaluate(i => window.__kairouteAt(i, 'sites'), d.i); await p.waitForTimeout(800);
+      await p.evaluate(() => window.__kairouteTryAdd('delos')); await p.waitForTimeout(300);
+      const legs = await p.evaluate(i => { const pl = window.__kairouteDay ? null : null; return window.__kairouteLegs(i); }, d.i) || [];
+      const boats = legs.filter(l => l.how === 'Boat').length, taxi = await p.evaluate(i => { window.__kairouteAt(i, 'plan'); return null; }, d.i);
+      await p.waitForTimeout(800); const t = await p.evaluate(() => document.getElementById('view').innerText);
+      const delos = /Delos/.test(t);
+      if (!delos) bad('Delos: not on the Mykonos plan to check');
+      else if (boats < 2 || /By road[^\n]*\n[^\n]*Delos/.test(t)) bad(`Delos: the ride there and back isn't by boat (${JSON.stringify(legs.map(l => l.how))})`);
+      else ok(`Delos: by boat there and back (${legs.filter(l => l.how === 'Boat').map(l => l.min + ' min').join(', ')}), never a taxi`); }
+    await p.close(); }
+  // 1b4. A hotel the map hasn't placed (typed in, or brought in with a trip: custom, no spot yet, even no name) never
+  // blanks a day (Nov 19, demo boarding day: "Choose where you're staying in Athens." and nothing else). Every day
+  // that stays in the city still plans, from the guide's hotel area, and says the hotel isn't placed yet.
+  if (!LIVE) for (const v of [{ name: 'Hotel Grande Bretagne', ll: null }, { name: '', ll: null }, { name: 'X', ll: { lat: null, lng: null } }]) {
+    const p = await b.newPage({ viewport: { width: 800, height: 1280 } }); const errs = []; p.on('pageerror', e => errs.push(e.message));
+    await p.route('**/*', r => /^file:/.test(r.request().url()) ? r.continue() : r.abort());
+    await p.goto('file://' + FILE); await p.evaluate(() => localStorage.setItem('kairoute.intro1', '1')); await p.reload(); await p.waitForTimeout(600);
+    const s = p.locator('[data-act="loadsample"]').first(); if (await s.isVisible().catch(() => false)) await s.click(); await p.waitForTimeout(1200);
+    await p.evaluate(v => { const t = JSON.parse(localStorage.getItem('wayside.trip2')); t.lodging = t.lodging || {};
+      for (const d of t.days) { const k = (d.cityKey || d.destination || '').toLowerCase().trim(); if (k) t.lodging[k] = Object.assign({ idx: 'custom' }, v); }
+      for (const k of Object.keys(t.lodging)) t.lodging[k] = Object.assign({ idx: 'custom' }, v);
+      localStorage.setItem('wayside.trip2', JSON.stringify(t)); }, v);
+    await p.reload(); await p.waitForTimeout(1200);
+    const days = (await p.evaluate(() => window.__kairouteDays())).filter(x => /^(land|arrival|embark|departure)$/.test(x.type)).slice(0, 8);
+    const blank = [], noted = [];
+    for (const d of days) { await p.evaluate(i => window.__kairouteAt(i, 'plan'), d.i); await p.waitForTimeout(500);
+      const t = await p.evaluate(() => document.getElementById('view').innerText);
+      if (/Choose where you're staying/.test(t)) blank.push(d.date + ' ' + d.type);
+      if (/on the map yet/.test(t)) noted.push(d.i); }
+    const tag = `unplaced hotel (${JSON.stringify(v.name)}${v.ll ? ', empty spot' : ''})`;
+    if (!days.length) bad(tag + ': no days to check');
+    else if (blank.length) bad(`${tag}: days blanked with "Choose where you're staying": ${blank.join(', ')}`);
+    else if (!noted.length) bad(`${tag}: the days plan but never say the hotel isn't placed yet`);
+    else ok(`${tag}: all ${days.length} hotel days plan (incl. boarding), ${noted.length} say the hotel isn't placed yet`);
+    if (errs.length) bad(tag + ': page errors ' + errs.slice(0, 3).join(' / '));
+    await p.close(); }
+  // 1b5. A ride slower than walking the same way is never offered (Nov 19, Rome: "Ferry Battelli di Roma 1 h 40 min"
+  // next to a 34 min walk and a 17 min taxi: "those 2 ferries stick out like a sore thumb"). A quicker line stays, and
+  // a slow line on a ride too long to walk is still offered.
+  if (!LIVE) { const p = await b.newPage({ viewport: { width: 1280, height: 800 } });
+    await p.route('**/*', r => /^file:/.test(r.request().url()) ? r.continue() : r.abort());
+    await p.goto('file://' + FILE); await p.evaluate(() => localStorage.setItem('kairoute.intro1', '1')); await p.reload(); await p.waitForTimeout(600);
+    const s = p.locator('[data-act="loadsample"]').first(); if (await s.isVisible().catch(() => false)) await s.click(); await p.waitForTimeout(1200);
+    const r = await p.evaluate(() => {
+      const op = (mode, label, min) => ({ mode, kind: mode === 'ferry' ? 'Ferry' : 'Bus', label, operator: '', from: '', to: '', ride: min - 20, wait: 12, every: 20, everySrc: 'usual', access: { how: 'walk', min: 4, km: 0.3 }, egress: { how: 'walk', min: 4, km: 0.3 }, min, km: 2, noTimetable: true });
+      const pan = { lat: 41.8986, lng: 12.4769, name: 'Pantheon' }, stp = { lat: 41.9022, lng: 12.4539, name: "St Peter's Basilica" }, far = { lat: 41.8530, lng: 12.5200, name: 'Far' };
+      window.__kairouteTransitSet([{ a: pan, b: stp, opts: [op('ferry', 'Ferry Battelli di Roma', 100), op('bus', 'Bus 64', 22)] }, { a: pan, b: far, opts: [op('ferry', 'Ferry Slow', 100)] }]);
+      return { near: window.__kairouteTravel(pan, stp), far: window.__kairouteTravel(pan, far) }; });
+    const n = r.near.choices.join(', '), f = r.far.choices.join(', ');
+    if (/Ferry/.test(n) || /Ferry/.test(r.near.how)) bad(`slow ride: a ferry slower than walking is offered (${n})`);
+    else if (!/Walk/.test(n) || !/Bus 64/.test(n) || !/Taxi/.test(n)) bad(`slow ride: the walk, the quicker bus or the taxi went missing (${n})`);
+    else if (!/Ferry Slow/.test(f)) bad(`slow ride: a line on a ride too long to walk was dropped (${f})`);
+    else ok(`slow ride: a 100 min ferry beside a ${(n.match(/Walk (\d+)/) || [])[1]} min walk is not offered (${n}); on a ride too long to walk it stays`);
+    await p.close(); }
   // 1c. A trip that starts with a cruise (Bahamas test trip, Nov 17): "+ Add a cruise" on the new form replaces the empty
   // city stay it opens with, so the traveler isn't stopped by "Stop 1: type the city"; one typed into is kept.
   if (!LIVE) { const p = await b.newPage({ viewport: { width: 412, height: 860 } });
