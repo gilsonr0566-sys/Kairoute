@@ -1,5 +1,5 @@
 {
- "run": "round2g-2026-11-21",
+ "run": "round3a-2026-11-21",
  "dayWait": 40000,
  "trips": [
   {
@@ -175,6 +175,138 @@
      "leaveAt": "13:00",
      "inAt": "15:45",
      "homeAt": "16:00"
+    }
+   ]
+  },
+  {
+   "name": "f01-dubrovnik-naples-islands",
+   "label": "Dubrovnik (Lokrum) and Naples (Capri) ship days",
+   "legs": [
+    {
+     "k": "cruise",
+     "board": "Venice, Italy",
+     "date": "2027-07-06",
+     "aboard": "16:00",
+     "inAt": "10:30",
+     "ports": [
+      {
+       "date": "2027-07-08",
+       "place": "Dubrovnik, Croatia",
+       "arrive": "08:00",
+       "aboard": "18:00"
+      },
+      {
+       "date": "2027-07-10",
+       "place": "Naples, Italy",
+       "arrive": "07:00",
+       "aboard": "18:00"
+      }
+     ],
+     "end": "Venice, Italy",
+     "endDate": "2027-07-12",
+     "off": "07:00"
+    }
+   ],
+   "steps": [
+    {
+     "name": "dbv-1-ticks",
+     "js": "(async()=>{const t=await __T.ticks(3);return t})()"
+    },
+    {
+     "name": "dbv-2-pick-island",
+     "js": "__T.tap(3,'Lokrum',1)"
+    },
+    {
+     "name": "dbv-3-plan-after-pick",
+     "js": "(async()=>{window.__kairouteAt(3,'plan');await __T.sleep(9000);return document.querySelector('main').innerText.slice(0,7000)})()"
+    },
+    {
+     "name": "dbv-4-ferry-chip",
+     "js": "__T.press(3,/^(Ferry|Boat|Hydrofoil)/)"
+    },
+    {
+     "name": "dbv-5-plan-after-chip",
+     "js": "(async()=>{window.__kairouteAt(3,'plan');await __T.sleep(9000);return document.querySelector('main').innerText.slice(0,7000)})()"
+    },
+    {
+     "name": "nap-1-ticks",
+     "js": "(async()=>{const t=await __T.ticks(5);return t})()"
+    },
+    {
+     "name": "nap-2-pick-island",
+     "js": "__T.tap(5,'Capri',1)"
+    },
+    {
+     "name": "nap-3-plan-after-pick",
+     "js": "(async()=>{window.__kairouteAt(5,'plan');await __T.sleep(9000);return document.querySelector('main').innerText.slice(0,7000)})()"
+    },
+    {
+     "name": "nap-4-ferry-chip",
+     "js": "__T.press(5,/^(Ferry|Boat|Hydrofoil)/)"
+    },
+    {
+     "name": "nap-5-plan-after-chip",
+     "js": "(async()=>{window.__kairouteAt(5,'plan');await __T.sleep(9000);return document.querySelector('main').innerText.slice(0,7000)})()"
+    }
+   ]
+  },
+  {
+   "name": "f02-reykjavik-port-videy",
+   "label": "Reykjavik ship day (Videy)",
+   "legs": [
+    {
+     "k": "cruise",
+     "board": "Copenhagen, Denmark",
+     "date": "2027-08-01",
+     "aboard": "17:00",
+     "inAt": "10:00",
+     "ports": [
+      {
+       "date": "2027-08-04",
+       "place": "Reykjavik, Iceland",
+       "arrive": "08:00",
+       "aboard": "18:00"
+      }
+     ],
+     "end": "Copenhagen, Denmark",
+     "endDate": "2027-08-08",
+     "off": "07:00"
+    }
+   ],
+   "steps": [
+    {
+     "name": "rvk-1-ticks",
+     "js": "(async()=>{const t=await __T.ticks(4);return t})()"
+    },
+    {
+     "name": "rvk-2-pick-island",
+     "js": "__T.tap(4,'Vi.ey',1)"
+    },
+    {
+     "name": "rvk-3-plan-after-pick",
+     "js": "(async()=>{window.__kairouteAt(4,'plan');await __T.sleep(9000);return document.querySelector('main').innerText.slice(0,7000)})()"
+    },
+    {
+     "name": "rvk-4-ferry-chip",
+     "js": "__T.press(4,/^(Ferry|Boat|Hydrofoil)/)"
+    },
+    {
+     "name": "rvk-5-plan-after-chip",
+     "js": "(async()=>{window.__kairouteAt(4,'plan');await __T.sleep(9000);return document.querySelector('main').innerText.slice(0,7000)})()"
+    }
+   ]
+  },
+  {
+   "name": "f03-ljubljana",
+   "label": "Ljubljana stay, no built-in guide",
+   "legs": [
+    {
+     "k": "stay",
+     "place": "Ljubljana, Slovenia",
+     "date": "2027-05-10",
+     "nights": 2,
+     "inAt": "13:00",
+     "homeAt": "15:00"
     }
    ]
   }
