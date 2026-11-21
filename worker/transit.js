@@ -141,6 +141,11 @@ async function timetableAt(a, b, when) {
       min: Math.round(typ + wait), km: +km.toFixed(1), stops: x.ride.reduce((n, l) => n + ((l.intermediateStops || []).length), 0), hours: "", fare: "", steps, deps: deps.slice(0, 30), checked: new Date().toISOString().slice(0, 10),
       path: thin(path.length > 1 ? path : [a, b], 160).map(p => [+p.lng.toFixed(5), +p.lat.toFixed(5)]), fromPt: [+a.lng, +a.lat], toPt: [+b.lng, +b.lat], src: "Transitous timetables (" + (m.agencyName || "operator") + ")" });
   }
+  // Every departure of the kind (all trains between the two places, whatever their numbers), on each answer kept: only
+  // the best few answers are kept, and a train known by its own number leaves once a day, so its own list alone left
+  // whole hours unknown (Nov 21 outside test: Civitavecchia to Rome showed four trains a day). a: the walk to its stop.
+  const kd = new Map(); for (const o of out) { const l = kd.get(o.kind) || kd.set(o.kind, []).get(o.kind); for (const d of o.deps || []) l.push({ t: d.t, lead: d.lead, dur: d.dur, a: (o.access && o.access.min) || 0 }); }
+  for (const o of out) { const seen = new Set(); o.kindDeps = (kd.get(o.kind) || []).sort((x, y) => x.t - y.t).filter(d => { const k = d.t + "|" + d.dur; if (seen.has(k)) return false; seen.add(k); return true; }).slice(0, 60); }
   return topRides(out, 4);
 }
 // Both sources: real timetables first; the map adds what timetables lack (ferries mostly). A map rail line is kept
