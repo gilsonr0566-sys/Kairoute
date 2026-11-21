@@ -216,6 +216,10 @@ export default {
       const get = async u => { for (let t = 0; t < 3; t++) { let wait = 700 * (t + 1); try { const r = await fetch(u, { headers: UA, signal: AbortSignal.timeout(8000) }); if (r.ok) return await r.json(); if (r.status === 429 || r.status >= 500) wait = 1500 * (t + 1); else return null; } catch (e) {} if (t < 2) await new Promise(ok => setTimeout(ok, wait)); } return null; };
       // The city's own location, so map searches favour places in this city over same-named places
       // elsewhere in the world, and the app measures "in this city" from the real centre.
+      // The app may send the place's centre it already knows (a guide built from its sources): a private island or
+      // small port that the travel guide and the map can't place by name (Nov 18: "Perfect Day at CocoCay") still gets
+      // its searches kept to its own area. Used only when the place can't be found by name, so other cities' answers stay as they were.
+      const given = b.center && isFinite(+b.center.lat) && isFinite(+b.center.lng) && Math.abs(+b.center.lat) <= 90 && Math.abs(+b.center.lng) <= 180 ? { lat: +b.center.lat, lng: +b.center.lng, from: "app" } : null;
       let center = null; const ck = "gc2:" + (await sha(cityQ.toLowerCase()));
       if (city) { center = await env.USAGE.get(ck, "json");
         // The travel guide's own page for the city (Wikivoyage) knows which Corpus Christi or Kotor is meant.
@@ -227,13 +231,14 @@ export default {
         if (!center) { const j = await get("https://photon.komoot.io/api/?limit=3&lang=en&osm_tag=place&q=" + encodeURIComponent(cityQ));
           const f = j && (j.features || []).find(f => /city|town|village|municipality|suburb|borough|island/.test((f.properties || {}).osm_value || "")) || (j && (j.features || [])[0]);
           if (f) { center = { lat: f.geometry.coordinates[1], lng: f.geometry.coordinates[0] }; ctx.waitUntil(env.USAGE.put(ck, JSON.stringify(center), { expirationTtl: 365 * 86400 })); } } }
+      const usedGiven = !center && !!given; if (usedGiven) center = given; // only when the place couldn't be found by name
       // OpenStreetMap's own search allows about one request a second: calls in this request wait their turn.
       let photonFails = 0, nomiNext = 0;
       const nomi = async u => { const wait = Math.max(0, nomiNext - Date.now()); nomiNext = Math.max(Date.now(), nomiNext) + 1100; if (wait) await new Promise(ok => setTimeout(ok, wait)); return get(u); };
       const bias = center ? "&lat=" + center.lat + "&lon=" + center.lng + "&location_bias_scale=0.2&zoom=12" : "";
       const one = async name => {
         if (!name) return null;
-        const k = "gr5:" + (await sha(name + "|" + cityQ + (farNames.has(name) ? "|far" : ""))), hit = await env.USAGE.get(k, "json"); if (hit) return hit;
+        const k = "gr5:" + (await sha(name + "|" + cityQ + (farNames.has(name) ? "|far" : "") + (usedGiven ? "|c" + given.lat.toFixed(2) + "," + given.lng.toFixed(2) : ""))), hit = await env.USAGE.get(k, "json"); if (hit) return hit;
         const plain = name.replace(/\s*\(.*?\)\s*/g, " ").trim(), q = plain + " " + cityQ;
         let wiki = null, map = null;
         {
