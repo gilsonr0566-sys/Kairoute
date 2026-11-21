@@ -11,10 +11,13 @@ let fitState = null;
 function fitTrial(d, sel, t, fast) {
   // fast (the Sights list's marks): measured without the optional stops that fill spare time (the time meter never
   // counts them), so a check plans the day once instead of twice. The won't-fit box and its fixes plan in full.
-  const keep = { selected: d.selected, hours: d.hours, startTime: d.startTime, fillTime: d.fillTime };
+  const keep = { selected: d.selected, hours: d.hours, startTime: d.startTime, fillTime: d.fillTime, mine: d.mine };
+  // A sight tried here is the traveler's own choice, as it will be once added (a boat they choose is planned with its
+  // warning): Nov 21 outside check, Capri's box said it could never fit a 9 h 45 min day it fits in 6 h 44 min.
+  const added = (sel || []).filter(id => !(keep.selected || []).includes(id)); if (added.length) d.mine = [...new Set((d.mine || []).concat(added))];
   d.selected = sel; if (fast) d.fillTime = false; if (t && t.hours != null) d.hours = t.hours; if (t && t.startTime) d.startTime = t.startTime; forget0(d);
   try { const p = fast && window.__kairouteAlone ? window.__kairouteAlone(d, () => buildPlanRaw(d)) : buildPlan(d), m = meterCalc(p, d); return { p, m }; }
-  finally { Object.assign(d, keep); if (keep.fillTime === undefined) delete d.fillTime; forget0(d); }
+  finally { Object.assign(d, keep); if (keep.fillTime === undefined) delete d.fillTime; if (keep.mine === undefined) delete d.mine; forget0(d); }
 }
 // The same test as the planner's (E.roomFor): a day left with no time for lunch has no room for this sight either.
 const fitsAll = r => !!(r && r.m && !r.m.over && !r.m.dropped.length && !((r.p && r.p.closedToday) || []).length && !(r.p && r.p.noLunch === "time")); // a pick the day can't visit (closed) never "fits"
@@ -373,3 +376,7 @@ if (typeof window !== "undefined") window.__kairouteLateStops = i => { const d =
 if (typeof window !== "undefined") window.__kairouteFitWhy = (i, id) => { const d = trip.days[i], base0 = fitTrial(d, (d.selected || []).slice(), null, true).p, r = fitTrial(d, [...new Set([...(d.selected || []), id])], null, true);
   return { err: r.p && r.p.error, fits: fitsAll(r), over: r.m && r.m.over, dropped: r.m && r.m.dropped.map(x => x.id || x.name), closed: ((r.p && r.p.closedToday) || []).map(x => x.id), noLunch: r.p && r.p.noLunch, keeps: keepsDay(r.p, base0), on: onPlan(r.p, id),
     stops: r.p && r.p.items ? r.p.items.filter(x => x.type === "stop").map(x => x.place.id + (x.place.within ? "<" + x.place.within : "")) : null, folded: r.p && r.p.folded }; };
+// Test hook: the full trial the won't-fit box makes for a set of picks on the open day.
+if (typeof window !== "undefined") window.__kairouteFitTrial = sel => { const d = day(), r = fitTrial(d, sel), p = r.p || {};
+  return { fits: fitsAll(r), error: p.error || null, over: !!(r.m && r.m.over), dropped: ((r.m && r.m.dropped) || []).map(x => x.name || String(x)), closed: (p.closedToday || []).map(x => x.name || x.id), noLunch: p.noLunch || null,
+    items: (p.items || []).map(x => x.type + ":" + (x.place ? x.place.name : "") + (x.leg ? " (" + x.leg.how + " " + x.leg.min + ")" : "")) }; };

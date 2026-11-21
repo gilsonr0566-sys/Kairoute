@@ -28,8 +28,9 @@
       let unsure = null;
       // The traveler's own choice of the boat (the ride's choice, or a place across the water they picked) is planned all
       // the same, said plainly, with an hour at the pier for the boat back (Richard, Nov 21: "Yes, your pick, with a
-      // warning"); the app never takes such a boat on its own.
-      const isleStop = leg.isle === "back" ? prev : p, ownBoat = !!(leg.mine || (isleStop && isleStop.wish));
+      // warning"); the app never takes such a boat on its own. Lunch inside that visit is part of it: the boat back from
+      // the island's lunch place is the same boat (Nov 21 live check: Capri alone "could never fit" a 9 h 45 min day).
+      const isleStop = leg.isle === "back" ? prev : p, ownBoat = !!(leg.mine || (isleStop && (isleStop.wish || isleStop.insideWish)));
       if (win.hard && leg.kind === "ferry" && (unsure = E.boatUnsure(leg, clock, win.date))) {
         if (ownBoat && leg.source !== "timetable" || ownBoat && /no sailing times are known/.test(unsure)) {
           const why = "No sailing times are confirmed for this boat (" + unsure + "): it is planned because you chose it. " + (leg.isle === "back" ? "Up to an hour at the pier is allowed for the boat back; ask at the pier for the last boat back when you land, and leave for the ship by the time shown." : "Check the sailings at the pier, and the last boat back, before you go.");

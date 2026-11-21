@@ -7,8 +7,12 @@
   const AREA_KM = 2.5;
   const lunchWanted = win => E.lunchWanted(win);
   // The best area around the day's best free sight, up to about three quarters of the free time (fit trims, fill adds).
+  // On a day with a time to be back, the app never picks on its own a place across the water (a boat is the way back,
+  // and is taken only by the traveler's choice), nor one the map's water check hasn't answered for yet (Nov 21 outside
+  // check: an island off the old town was picked and planned by taxi before the check came back).
+  const wetOrUnknown = s => !!(s.acrossWater || s.waterPending || E.byBoat(s.travelNote) || E.waterOnly(s));
   function autoPicks(pool, win, ctx) {
-    const free = pool.filter(s => !s.far && !s.quick && ctx.mayAdd(s.id));
+    const free = pool.filter(s => !s.far && !s.quick && ctx.mayAdd(s.id) && !(win.hard && wetOrUnknown(s)));
     if (!free.length) return [];
     // A skipped lunch gives its time to sightseeing.
     const lunch = lunchWanted(win) && !(ctx.mealPrefs && ctx.mealPrefs.Lunch && ctx.mealPrefs.Lunch.skip);

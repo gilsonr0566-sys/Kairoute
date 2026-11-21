@@ -150,7 +150,7 @@
         if (over < len) continue;
         for (const e of cands) {
           const build = cut => order.slice(0, k).concat([Object.assign({}, s, { minutes: s.minutes - cut, lunchIn: len, lunchCut: cut }),
-            mealAt(e, len, { inside: s.id, travelNote: e.r.travelNote || (E.byBoat(s.travelNote) && E.hav(s, e.r) <= 3 ? s.travelNote : "") })], order.slice(k + 1));
+            mealAt(e, len, { inside: s.id, insideWish: !!s.wish, travelNote: e.r.travelNote || (E.byBoat(s.travelNote) && E.hav(s, e.r) <= 3 ? s.travelNote : "") })], order.slice(k + 1));
           if ((s.minutes || 0) - len < 45) continue;
           // First try: the visit loses the lunch itself; the walk shows as how much later the day ends. Then it loses that too.
           const r0 = walk(build(len), win, ctx, { r: plain, k }), cut = len + Math.max(0, Math.ceil(r0.end - plain.end));

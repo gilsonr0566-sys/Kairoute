@@ -17,6 +17,10 @@ const WATER_FAR_ROAD = 400; // metres from a road a car can drive: a stop this f
 // answer that does change something changes the place's own fields, and that re-plans it.
 const waterFetch = (u, o) => (typeof window !== "undefined" && window.fetch ? window.fetch(u, o) : fetch(u, o));
 const waterAsked = new Map();
+const waterRoad = new Map(); // city key -> the question (sig) whose road and walking answers are in, or failed
+// The water check for a place is still out (asked, and neither its road answer nor an earlier full answer is in): the
+// plan then never picks a stop of that place on its own on a day with a time to be back (95-plan, autoPicks).
+function waterPending(city) { if (!city) return false; const k = keyOf(city.city), q = waterAsked.get(k); return !!q && waterRoad.get(k) !== q && city.waterSig !== q; }
 const OVERPASS_EPS = ["https://overpass-api.de/api/interpreter", "https://overpass.private.coffee/api/interpreter"];
 
 // One question for all points: the islands each one stands on, as "id:name" ("" for none), in the points' order.
@@ -117,6 +121,8 @@ function waterCheck(city, homes) {
     // Walking routes for the stops far from a road (the farthest first), then for any on another island than every start.
     if (gaps) await walk(stops.map((s, i) => i).filter(i => gaps[i] > WATER_FAR_ROAD).sort((x, y) => gaps[y] - gaps[x]));
     if (gaps || Object.keys(foot).length) apply();
+    // The road answer is in (or the service didn't answer): the place's stops are no longer waiting on it.
+    waterRoad.set(keyOf(city.city), sig); try { dataGen++; render(); } catch (e) {}
     isl = await islP;
     if (isl) { sIsl = isl.slice(0, stops.length); hIsl = isl.slice(stops.length);
       await walk(stops.map((s, i) => i).filter(i => sIsl[i] && !hIsl.some(h => h !== null && share(sIsl[i], h)))); apply(); }

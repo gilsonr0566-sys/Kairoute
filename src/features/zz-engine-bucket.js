@@ -126,6 +126,8 @@ function engineBucket(withOld) {
   });
   // Which stops are across the water and how far each is from a road: asked of the map once per place, in the background.
   if (typeof waterCheck === "function") Object.values(waterHomes).forEach(h => { try { waterCheck(h.city, h.pts); } catch (e) { console.warn("water check", e); } });
+  if (typeof waterPending === "function") Object.values(waterHomes).forEach(h => { const ck = keyOf(h.city.city), c = cityOut[ck];
+    if (c && waterPending(h.city)) { const wait = s => s.acrossWater ? s : Object.assign({}, s, { waterPending: true }); cityOut[ck] = Object.assign({}, c, { sites: (c.sites || []).map(wait), farther: (c.farther || []).map(wait) }); } });
   const out = { v: 1, complete: dayOut.every(x => !x.missing.length), today: todayISO(), prefs: Object.assign({}, P()), style: trip.style || "mix", legModes: Object.assign({}, trip.legModes || {}), cities: cityOut, days: dayOut };
   if (withOld) out.old = engineOldPlans();
   return out;

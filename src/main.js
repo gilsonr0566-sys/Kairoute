@@ -1885,6 +1885,9 @@ async function bookSearch() {
 // map is ever used; nothing is guessed (Nov 21 outside check: Dubrovnik and Reykjavik port days stayed blank, with
 // nothing the traveler could do).
 let pierForm = null;
+// Never a district, a town or a region (Nov 21 outside check: "Gruž" found only the city district of that name, and the
+// day was planned from the middle of it): a pier is a place you can stand at.
+const PIER_NOT = /administrative|boundary|suburb|city|town|village|hamlet|neighbou?rhood|quarter|district|county|state|region|province|island|locality/i;
 const pierAsk = (d, city) => { if (!d || !city || !(d.type === "port" || d.type === "embark" || d.mode === "ship")) return false; const P = dayPoint(d, city); return !!P && unsurePoint(P); };
 async function pierSearch() {
   const d = day(), city = cityFor(d); if (!city) return;
@@ -1894,7 +1897,7 @@ async function pierSearch() {
   f.busy = true; f.msg = ""; f.results = []; render();
   const ss = allSites(city).filter(x => isFinite(+x.lat)), mid = ss.length ? { lat: ss.map(x => +x.lat).sort((a, b) => a - b)[ss.length >> 1], lng: ss.map(x => +x.lng).sort((a, b) => a - b)[ss.length >> 1] } : null;
   try { const r = freeAI ? await fetch(freeAI.url + "/findplace?city=" + encodeURIComponent(bareName(d.destination)) + "&q=" + encodeURIComponent(f.q)) : null, j = r && r.ok ? await r.json() : null;
-    ((j && j.places) || []).filter(m => isFinite(+m.lat) && isFinite(+m.lng) && (!mid || hav(mid, m) <= 60)).forEach(m => { if (!f.results.some(y => hav(y, m) < 0.05)) f.results.push({ name: m.name, lat: +(+m.lat).toFixed(5), lng: +(+m.lng).toFixed(5), kind: String(m.kind || "").replace(/_/g, " "), addr: m.addr || "", km: mid ? hav(mid, m) : null }); });
+    ((j && j.places) || []).filter(m => isFinite(+m.lat) && isFinite(+m.lng) && (!mid || hav(mid, m) <= 60) && !PIER_NOT.test(String(m.kind || ""))).forEach(m => { if (!f.results.some(y => hav(y, m) < 0.05)) f.results.push({ name: m.name, lat: +(+m.lat).toFixed(5), lng: +(+m.lng).toFixed(5), kind: String(m.kind || "").replace(/_/g, " "), addr: m.addr || "", km: mid ? hav(mid, m) : null }); });
   } catch (e) {}
   f.results = f.results.slice(0, 5); f.busy = false;
   if (!f.results.length) f.msg = `I couldn't find "${f.q}" on the map near ${bareName(d.destination)}. Try the name your cruise line uses for the terminal or quay, or the port's own word for it.`;
@@ -7255,7 +7258,7 @@ document.addEventListener("click", e => {
   if (t.dataset.act === "booksearch") { bookSearch(); return; }
   if (t.dataset.act === "piersearch") { pierSearch(); return; }
   if (t.dataset.pierpick != null && pierForm) { const y = (pierForm.results || [])[+t.dataset.pierpick], d = day();
-    if (y && d) { d.pier = { name: y.name, lat: y.lat, lng: y.lng }; pierForm = null; d.selected = null; trip.tour = null; edited(); save(); render(); } return; }
+    if (y && d) { d.pier = { name: y.name, lat: y.lat, lng: y.lng }; pierForm = null; trip.tour = null; edited(); save(); render(); } return; }
   if (t.dataset.act === "bookcancel") { bookForm = null; render(); return; }
   if (t.dataset.bookpick != null && bookForm) { const y = bookForm.results[+t.dataset.bookpick], d = day(), tm = ((document.getElementById("bk-time") || {}).value || bookForm.time);
     if (y) { d.booked = Object.assign({}, d.booked, { [bookForm.label]: { name: y.name, lat: y.lat, lng: y.lng, kind: y.kind || "", addr: y.addr || "", time: /^\d\d:\d\d$/.test(tm) ? tm : bookForm.time } }); bookForm = null; trip.tour = null; save(); render(); } return; }

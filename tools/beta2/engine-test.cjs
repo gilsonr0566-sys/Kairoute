@@ -285,6 +285,33 @@ if (fs.existsSync(dir)) { let rides = 0, placed = 0;
 // is checked (the time to be back never moves).
 // ---- A day the traveler made their own is planned from their list only (Richard, Nov 18: Naples unticked to add
 // Pompeii, and the app filled the day with its own picks so nothing else "fit") ----
+// On a day with a time to be back, the app never picks on its own a stop across the water, or one whose water check
+// hasn't answered yet (Nov 21 outside check: an island off an old town picked and planned by taxi); the traveler's own still is.
+{ const s0 = JSON.parse(fs.readFileSync(path.join(dir, 'sample-cruise.json'))), i = s0.days.findIndex(d => /napl/i.test(d.city));
+  const base = E.planTrip(JSON.parse(JSON.stringify(s0)))[i], ids = (base.items || []).filter(x => x.t === 'stop' && !x.bonus).map(x => String(x.id));
+  const app = JSON.parse(JSON.stringify(s0)); Object.assign(app.days[i], { own: false, selected: null, mine: [] });
+  const pend = JSON.parse(JSON.stringify(app)), ck = pend.days[i].city;
+  for (const k of Object.keys(pend.cities)) if (k === ck) ['sites', 'farther'].forEach(f => { pend.cities[k][f] = (pend.cities[k][f] || []).map(x => Object.assign({}, x, { waterPending: true })); });
+  const pp = E.planTrip(pend)[i], picked = (pp.items || []).filter(x => x.t === 'stop' && !x.bonus);
+  ok(ids.length && !picked.length, `a ship day whose water check is still out picks nothing on its own (base ${ids.length}, now ${picked.map(x => x.name).join(', ') || 'none'})`);
+  const wet = JSON.parse(JSON.stringify(app)), keyId = ids[0];
+  for (const k of Object.keys(wet.cities)) if (k === ck) wet.cities[k].sites = (wet.cities[k].sites || []).map(x => String(x.id) === keyId ? Object.assign({}, x, { acrossWater: 'An island' }) : x);
+  const pw = E.planTrip(wet)[i];
+  ok(!(pw.items || []).some(x => x.t === 'stop' && String(x.id) === keyId && !x.bonus), 'a ship day never picks a stop across the water on its own');
+  const mine = JSON.parse(JSON.stringify(pend)); Object.assign(mine.days[i], { own: true, selected: [keyId], mine: [keyId] });
+  const pm = E.planTrip(mine)[i];
+  ok((pm.items || []).some(x => x.t === 'stop' && String(x.id) === keyId), 'the traveler\'s own pick is planned while the water check is out'); }
+// Lunch inside the traveler's own island visit goes back on the same boat they chose (Nov 21 live check: an island
+// picked alone on a 9 h 45 min ship day "could never fit", because the boat back from the island's lunch place was
+// refused as one the app had picked).
+{ const s0 = JSON.parse(fs.readFileSync(path.join(dir, 'sample-cruise.json'))), i = s0.days.findIndex(d => /napl/i.test(d.city));
+  const b = JSON.parse(JSON.stringify(s0)), ck = b.days[i].city, isle = (b.cities[ck].farther || []).find(x => E.byBoat(x.travelNote) || E.waterOnly(x));
+  if (isle) { b.cities[ck].farther = b.cities[ck].farther.map(x => x === isle ? Object.assign({}, x, { minutes: 300 }) : x);
+    Object.assign(b.days[i], { own: true, selected: [isle.id], mine: [isle.id] });
+    const p = E.planTrip(b)[i], its = p.items || [], si = its.findIndex(x => x.t === 'stop' && String(x.id) === String(isle.id)), mi = its.findIndex(x => x.t === 'meal');
+    const back = its.findIndex((x, k) => k > si && x.t === 'ride' && x.kind === 'ferry');
+    ok(si >= 0 && mi > si && back > mi && !p.noLunch, `lunch inside the traveler's own island visit, before the boat back (${its.map(x => x.t === 'ride' ? x.kind : x.t).join(' ')}, noLunch ${p.noLunch})`); }
+  else ok(false, 'the sample ship day has a place reached by boat'); }
 { const s0 = JSON.parse(fs.readFileSync(path.join(dir, 'sample-cruise.json'))), i = s0.days.findIndex(d => /napl/i.test(d.city));
   const cleared = JSON.parse(JSON.stringify(s0)); Object.assign(cleared.days[i], { own: true, cleared: true, selected: [], mine: [] });
   const pc = E.planTrip(cleared)[i];

@@ -96,6 +96,11 @@ async function tapTimes(p) { const out = []; const n = await p.evaluate(() => wi
   const plan0 = await p.evaluate(i => window.__kairouteEngine2()[i], ni);
   const stops0 = (plan0.items || []).filter(x => x.t === 'stop' && !x.bonus);
   check('An emptied day stays free (the app does not refill it)', !stops0.length, 'planned anyway: ' + stops0.map(x => x.name).join(', '));
+  // Nov 21 live check: a place reached only by boat, picked alone on the emptied ship day, was said to "never fit" a
+  // 9 h 45 min day it fits in under 7 hours (lunch on the island was refused, as if the boat back were the app's pick).
+  { const isle = await p.evaluate(() => { const ids = [...document.querySelectorAll('input[data-site]')].map(x => x.dataset.site); return ids.find(id => window.__kairouteBoatPlace(id)) || null; });
+    if (isle) { const r = await p.evaluate(id => window.__kairouteFitTrial([id]), isle);
+      check(`A place reached only by boat (${isle}), picked alone on the emptied ship day, fits with lunch when the box tries it`, r.fits, JSON.stringify(r).slice(0, 400)); } }
   const all = (await boxes(p)).map(b => b.id), far = all.find(id => /pompeii/.test(id)) || all.find(id => /-far$/.test(id)), town = all.find(id => !/-far$/.test(id));
   for (const id of [far, town].filter(Boolean)) { await tapBox(p, id); const on = (await boxes(p)).some(b => b.id === id && b.on);
     const box = await p.evaluate(() => [...document.querySelectorAll('.fitbox, .closedbox')].map(e => e.innerText.slice(0, 120)).join(' / '));
