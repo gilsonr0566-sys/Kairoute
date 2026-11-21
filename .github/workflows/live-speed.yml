@@ -17,6 +17,6 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-      - run: npm i --no-save playwright@1 && npx playwright install --with-deps chromium
+      - run: npm i --no-save playwright@1.65.1 && npx playwright install --with-deps chromium
       - name: Speed test of the live site
         run: node tools/perf-check.cjs https://gilsonr0566-sys.github.io/Kairoute/

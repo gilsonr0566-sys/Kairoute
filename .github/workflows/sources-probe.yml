@@ -24,7 +24,7 @@ jobs:
       - env:
           ONLY: ${{ inputs.only || '' }}
           TT: "1"
-        run: if [ -n "$TT" ]; then node tools/beta2/tt-check.cjs; exit 0; fi; if [ -n "$PIER" ]; then npm i --no-save playwright@1 && npx playwright install --with-deps chromium && node tools/beta2/pier-live.cjs; exit 0; fi; if [ -n "$WATER" ]; then node tools/beta2/water-probe.cjs; elif [ -n "$TRANSIT" ]; then node tools/beta2/transit-probe.cjs; else node tools/beta2/sources-probe.cjs; fi
+        run: if [ -n "$TT" ]; then node tools/beta2/tt-check.cjs; exit 0; fi; if [ -n "$PIER" ]; then npm i --no-save playwright@1.65.1 && npx playwright install --with-deps chromium && node tools/beta2/pier-live.cjs; exit 0; fi; if [ -n "$WATER" ]; then node tools/beta2/water-probe.cjs; elif [ -n "$TRANSIT" ]; then node tools/beta2/transit-probe.cjs; else node tools/beta2/sources-probe.cjs; fi
       - name: Save the answers to the branch
         run: |
           git config user.name "Kairoute places"

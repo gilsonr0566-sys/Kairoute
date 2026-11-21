@@ -22,10 +22,10 @@ jobs:
         with:
           node-version: 22
       - if: ${{ inputs.probe != 'picker' }}
-        run: npm i playwright@1 && npx playwright install chromium && node tools/dump-sights.cjs
+        run: npm i playwright@1.65.1 && npx playwright install chromium && node tools/dump-sights.cjs
       - if: ${{ inputs.probe == 'picker' }}
         run: |
-          npm i playwright@1 && npx playwright install chromium
+          npm i playwright@1.65.1 && npx playwright install chromium
           if [ "${{ inputs.site }}" = "branch" ]; then (python3 -m http.server 8765 >/dev/null 2>&1 &); sleep 1; export URL=http://localhost:8765/; fi
           node tools/picker-probe.cjs
       - if: ${{ always() && inputs.probe == 'picker' }}

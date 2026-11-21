@@ -29,4 +29,4 @@ jobs:
           echo "URL=http://localhost:8080/" >> "$GITHUB_ENV"
       - env:
           NAMES: ${{ inputs.names }}
-        run: npm i playwright@1 && npx playwright install chromium && node tools/addplace-live.cjs
+        run: npm i playwright@1.65.1 && npx playwright install chromium && node tools/addplace-live.cjs

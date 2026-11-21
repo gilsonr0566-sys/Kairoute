@@ -22,7 +22,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-      - run: npm i playwright@1 && npx playwright install chromium && node tools/plan-test.cjs && node tools/picks-e2e.cjs
+      - run: npm i playwright@1.65.1 && npx playwright install chromium && node tools/plan-test.cjs && node tools/picks-e2e.cjs
       - name: Stop the test stand-in (writes what it kept)
         if: always()
         run: sh tools/test-helper.sh stop

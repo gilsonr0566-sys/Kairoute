@@ -17,5 +17,5 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-      - run: npm i --no-save playwright@1 && npx playwright install --with-deps chromium
+      - run: npm i --no-save playwright@1.65.1 && npx playwright install --with-deps chromium
       - run: node tools/walk-live.cjs

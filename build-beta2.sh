@@ -63,4 +63,7 @@ h = h.replace(/@@W1/g, "#146B61").replace(/@@W2/g, "#4CC2B0");
 fs.writeFileSync("beta2-site/index.html", h);' "$PRE"
 rm -f "$PRE"
 cp version.txt beta2-site/
+# Beta 2's own offline store name, so its updates and the demo app's never delete each other's saved copy.
+sed 's/^const APP = "kairoute";/const APP = "kairoute-b2";/' sw.js > beta2-site/sw.js
+grep -q '^const APP = "kairoute-b2";' beta2-site/sw.js || { echo "beta2-site/sw.js: offline store name not set"; exit 1; }
 echo "Beta 2 app: beta2-site/index.html ($(wc -c < beta2-site/index.html) bytes)"

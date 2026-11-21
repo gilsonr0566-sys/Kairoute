@@ -20,7 +20,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-      - run: npm i --no-save playwright@1 && npx playwright install --with-deps chromium
+      - run: npm i --no-save playwright@1.65.1 && npx playwright install --with-deps chromium
       - name: Record (live site, phone)
         run: mkdir -p tools/fixtures && node tools/freeze-probe.cjs https://gilsonr0566-sys.github.io/Kairoute/ --cpu 4 --device phone --record tools/fixtures/net-live.json.gz | grep -E "Recorded|Freeze probe|Freezes over|Left alone"
       - name: Save to the speed branch

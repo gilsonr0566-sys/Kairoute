@@ -25,5 +25,5 @@ jobs:
           nohup python3 -m http.server 8080 >/dev/null 2>&1 &
           sleep 2 && curl -sf http://localhost:8080/ >/dev/null
           echo "URL=http://localhost:8080/" >> "$GITHUB_ENV"
-      - run: npm i --no-save playwright@1 && npx playwright install --with-deps chromium
+      - run: npm i --no-save playwright@1.65.1 && npx playwright install --with-deps chromium
       - run: node tools/loop-live.cjs
