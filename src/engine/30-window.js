@@ -39,11 +39,10 @@
   // How sure a cruise pier is: named for cruises, a mapped terminal, a pier or wharf.
   E.cruiseRank = c => (/cruise/i.test(String(c.name || "")) ? 4 : 0) + (/cruise_terminal/.test(String(c.kind || "")) ? 3 : 0) + (/terminal|berth|wharf|pier|dock|quay/i.test(String(c.name || "")) ? 1 : 0);
   E.gateOk = (kind, c) => !!c && (kind !== "cruise" || E.cruiseOk(c)) && !/^(list|lists|index|outline) of\b/i.test(String(c.name || "").trim()) && !(GATE_BAD[kind] && GATE_BAD[kind].test(String(c.name || ""))) && !(c.kind && GATE_KINDS[kind] && !GATE_KINDS[kind].test(String(c.kind)));
-  // An airport or station only the encyclopedia knows is offered only when the map knows none: a closed one keeps its
-  // article but leaves the map (Round 2: a station closed in 1941, an airport closed to passengers, were offered).
+  // Every real airport and station is kept, whether the map or the encyclopedia found it: a big airport known only from
+  // its article must never be dropped (Round 2 re-check: dropping those picked a small airport silently, no question).
   E.gateChoices = (list, kind) => { const key = n => String(n || "").toLowerCase().normalize("NFKD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-z0-9]+/g, " ").trim(), out = [];
-    const mapped = (kind === "station" || kind === "airport") && (list || []).some(c => c && !c.wiki && c.name && isFinite(c.lat) && E.gateOk(kind, c) && !E.NOT_BUILT.test(c.name + " " + (c.kind || "")));
-    for (const c of list || []) { if (mapped && c && c.wiki) continue; if (!c || !c.name || !isFinite(c.lat) || !isFinite(c.lng) || E.NOT_BUILT.test(c.name + " " + (c.kind || "")) || (kind && !E.gateOk(kind, c))) continue;
+    for (const c of list || []) { if (!c || !c.name || !isFinite(c.lat) || !isFinite(c.lng) || E.NOT_BUILT.test(c.name + " " + (c.kind || "")) || (kind && !E.gateOk(kind, c))) continue;
       if (!out.some(x => key(x.name) === key(c.name) || E.hav(x, c) <= 1)) out.push(c); }
     return out; };
   // How early to be at the station for a train to another country: ID checks inside the open-border area, passport and

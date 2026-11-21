@@ -951,9 +951,8 @@ ok(E.readable('Café Ñandú') && E.readable("Joe's Bar & Grill") && !E.readable
   const tr1 = o => (o.options || [o]).find(x => x.ans);
   ok(tr1(one) && tr1(one).slack >= E.SPARE_RUN && tr1(own) && tr1(own).slack >= 90 && tr1(str) && tr1(str).slack < E.SPARE_RUN && tr1(str).slack >= 15,
     `a train back to the ship with a change keeps a spare train (${tr1(one) && tr1(one).slack} / ${tr1(own) && tr1(own).slack} / straight ${tr1(str) && tr1(str).slack})`); }
-// Round 2: a station or airport only the encyclopedia knows (closed, its article kept) is offered only when the map
-// knows none.
-{ const g = E.gateChoices([{ name: 'Old Closed Station', lat: 51.50, lng: -0.12, wiki: true }, { name: 'Main Line Station', lat: 51.53, lng: -0.12, kind: 'station' }], 'station'),
-    w = E.gateChoices([{ name: 'Only Known Station', lat: 51.50, lng: -0.12, wiki: true }], 'station');
-  ok(g.length === 1 && g[0].name === 'Main Line Station' && w.length === 1, `a gate only the encyclopedia knows is offered only when the map knows none (${g.map(x => x.name)} / ${w.length})`); }
+// Round 2 re-check: a big airport known only from the encyclopedia is never dropped beside mapped ones (dropping it
+// picked a small airport silently, with no question).
+{ const g = E.gateChoices([{ name: 'Big International Airport', lat: 63.98, lng: -22.62, wiki: true }, { name: 'City Airport', lat: 64.13, lng: -21.94, kind: 'aerodrome' }], 'airport');
+  ok(g.length === 2 && g.some(x => x.name === 'Big International Airport'), `an airport only the encyclopedia knows stays a choice beside the map's (${g.map(x => x.name)})`); }
 console.log(`\n${oks} checks passed, ${fails} failed`); process.exit(fails ? 1 : 0);

@@ -4,7 +4,7 @@ const fs = require('fs'), path = require('path');
 const src = fs.readFileSync(path.join(__dirname, '../../src/features/water-check.js'), 'utf8');
 // A browser sends its own User-Agent; Node's fetch sends none, which the map services turn away, so the probe names itself.
 const uaFetch = (u, o = {}) => fetch(u, Object.assign({}, o, { headers: Object.assign({ 'user-agent': 'Kairoute-test/1.0 (trip planner check)' }, o.headers || {}) }));
-const W = new Function('fetch', 'allSites', 'keyOf', 'save', 'render', 'window', 'navigator', src + '; return { waterIslandQuery, waterIslandsFrom, waterAcross, waterOverpass, waterFoot, waterRoadGaps };')(uaFetch, () => [], x => x, () => {}, () => {}, undefined, undefined);
+const W = new Function('fetch', 'allSites', 'keyOf', 'save', 'render', 'window', 'navigator', src + '; return { waterIslandQuery, waterIslandsFrom, waterAcross, waterOverpass, waterFoot, waterRoadGaps, waterIslands };')(uaFetch, () => [], x => x, () => {}, () => {}, undefined, undefined);
 // Each case: a start (pier or centre) and stops, with what the tester says is true (across: needs a boat; road: false =
 // far from any road).
 const CASES = [
@@ -33,6 +33,27 @@ const CASES = [
       out.push(r); console.log((r.ok ? 'ok   ' : 'FAIL ') + JSON.stringify(r)); });
     await new Promise(r => setTimeout(r, 2000));
   }
+  // A whole place at once, as the app asks it (every guide sight plus the start): one question vs. a few at a time.
+  const whole = [];
+  for (const [f, start, want] of [['dubrovnik-croatia', { lat: 42.6584, lng: 18.0850 }, /lokrum/i], ['reykjavik-iceland', { lat: 64.1530, lng: -21.9510 }, /vi[dð]ey/i], ['santorini', { lat: 36.4166, lng: 25.4318 }, /kameni/i]]) {
+    let g = []; try { g = JSON.parse(fs.readFileSync(path.join(__dirname, '../places/data', f + '.json'))).guideSights.filter(x => isFinite(x.lat)).slice(0, 79); } catch (e) {}
+    const pts = g.concat([start]); let t = Date.now(); const one = await W.waterOverpass(W.waterIslandQuery(pts)); const tOne = Date.now() - t;
+    await new Promise(r => setTimeout(r, 3000)); t = Date.now(); const bat = await W.waterIslands(pts); const tBat = Date.now() - t;
+    const hits = bat ? g.map((x, i) => bat[i] && bat[i].name ? x.name + ' on ' + bat[i].name : '').filter(Boolean) : null;
+    const r = { place: f, points: pts.length, single: one ? 'answered' : 'no answer', singleMs: tOne, batched: bat ? bat.filter(x => x !== null).length + ' of ' + pts.length + ' answered' : 'no answer', batchedMs: tBat, start: bat ? bat[pts.length - 1] : null, onIslands: hits, wantFound: !!(hits && hits.some(h => want.test(h))) };
+    whole.push(r); console.log('WHOLE ' + JSON.stringify(r)); await new Promise(r => setTimeout(r, 3000)); }
+  out.push({ whole });
+  // The helper's free map-and-encyclopedia answer (/ground, no AI) for the piers the outside tester found wrong or missing,
+  // asked exactly as the app asks it, so the pier rule can be checked against real answers.
+  const ground = [];
+  for (const [label, port, c] of [['Dubrovnik, Croatia', 'Dubrovnik', { lat: 42.6407, lng: 18.1077 }], ['Florence, Italy', 'Livorno', { lat: 43.7696, lng: 11.2558 }], ['Paris, France', 'Le Havre', { lat: 48.8566, lng: 2.3522 }],
+    ['Haifa, Israel', 'Haifa', { lat: 32.794, lng: 34.9896 }], ['Berlin, Germany', 'Warnemunde', { lat: 52.52, lng: 13.405 }], ['Bangkok, Thailand', 'Laem Chabang', { lat: 13.7563, lng: 100.5018 }], ['CocoCay, Bahamas', 'CocoCay', { lat: 25.8167, lng: -77.9333 }]]) {
+    const names = ['Port of ' + port, port + ' cruise terminal', 'Cruise pier'];
+    try { const r = await uaFetch('https://kairoute-ai.rickgilson.workers.dev/ground', { method: 'POST', headers: { 'content-type': 'application/json', origin: 'https://gilsonr0566-sys.github.io' }, body: JSON.stringify({ city: label, names, center: c }) });
+      const j = await r.json(); const res = (j.results || []).map((x, i) => ({ q: names[i], wiki: (x.wiki || []).map(w => [w.title, w.lat, w.lng]), map: (x.map || []).map(m => [m.name, m.kind, m.lat, m.lng]) }));
+      ground.push({ label, port, status: r.status, res }); console.log('GROUND ' + JSON.stringify({ label, port, res })); } catch (e) { ground.push({ label, port, err: String(e) }); }
+    await new Promise(r => setTimeout(r, 1500)); }
+  out.push({ ground });
   fs.mkdirSync(path.join(__dirname, 'sources'), { recursive: true });
   fs.writeFileSync(path.join(__dirname, 'sources', 'water-probe.json'), JSON.stringify({ at: new Date().toISOString(), out }, null, 1));
   console.log(out.filter(x => x.ok).length + ' of ' + out.length + ' as expected');

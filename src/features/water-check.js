@@ -51,6 +51,18 @@ async function waterOverpass(q) {
   }
   return null;
 }
+// The islands for many points, asked a few at a time: one question for a whole place's sights (80 points) runs past the
+// map's time limit and is turned away (Round 2 re-check: no stop was ever found across the water on the live site,
+// while the same rule found every one when asked about a few points). A batch with no answer leaves its points not known
+// (null): those stops stay as they were, and the place is asked again later.
+const WATER_BATCH = 15;
+async function waterIslands(pts) {
+  const out = new Array(pts.length).fill(null); let any = false;
+  for (let k = 0; k < pts.length; k += WATER_BATCH) {
+    const part = pts.slice(k, k + WATER_BATCH), d = await waterOverpass(waterIslandQuery(part));
+    if (!d) continue; any = true; waterIslandsFrom(d, part.length).forEach((x, i) => { out[k + i] = x; }); }
+  return any ? out : null;
+}
 // On foot from a to b on OpenStreetMap's paths: true, false (no way, or a ferry on it), null (no answer).
 async function waterFoot(a, b) {
   try { const r = await waterFetch(`https://routing.openstreetmap.de/routed-foot/route/v1/foot/${(+a.lng).toFixed(5)},${(+a.lat).toFixed(5)};${(+b.lng).toFixed(5)},${(+b.lat).toFixed(5)}?overview=false&steps=true`, { signal: AbortSignal.timeout(20000) });
@@ -79,8 +91,7 @@ function waterCheck(city, homes) {
   if (city.waterSig === sig || waterAsked.get(keyOf(city.city)) === sig) return;
   waterAsked.set(keyOf(city.city), sig);
   (async () => {
-    const pts = stops.concat(starts), d = await waterOverpass(waterIslandQuery(pts));
-    const isl = d ? waterIslandsFrom(d, pts.length) : null;
+    const pts = stops.concat(starts), isl = await waterIslands(pts);
     const across = {};
     if (isl) { const sIsl = isl.slice(0, stops.length), hIsl = isl.slice(stops.length), foot = {};
       // Walking routes only for the stops on another island than every start (a few per place at most).
@@ -95,7 +106,7 @@ function waterCheck(city, homes) {
     stops.forEach((s, i) => {
       if (isl) { if (across[s.id]) s.acrossWater = across[s.id]; else delete s.acrossWater; }
       if (gaps) { const g = gaps[i]; if (g != null && g > 150) s.roadGap = g; else if (g != null) delete s.roadGap; } });
-    if (isl && gaps) city.waterSig = sig;
+    if (isl && isl.every(x => x !== null) && gaps) city.waterSig = sig;
     // One service busy (the map turns away a burst of questions): ask the rest again in a few minutes.
     else setTimeout(() => { if (waterAsked.get(keyOf(city.city)) === sig) waterAsked.delete(keyOf(city.city)); }, 180000);
     // The answer changes the place's own fields: plans made from the old ones are stale (the app's fetch wasn't used, so
@@ -106,4 +117,4 @@ function waterCheck(city, homes) {
     if (changed) try { render(); } catch (e) {}
   })();
 }
-if (typeof window !== "undefined") window.__kairouteWater = { waterIslandQuery, waterIslandsFrom, waterAcross };
+if (typeof window !== "undefined") window.__kairouteWater = { waterIslandQuery, waterIslandsFrom, waterAcross, waterIslands };
