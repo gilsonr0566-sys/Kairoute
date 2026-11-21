@@ -125,7 +125,7 @@
     if (ctx.lunchAt != null && !my.pick) { const k = ctx.lunchAt === "^" ? 0 : order.findIndex(s => String(s.id) === ctx.lunchAt) + 1; if (k >= 0 && (ctx.lunchAt === "^" || k > 0)) gaps.splice(0, gaps.length, k); }
     for (const k of [...new Set(gaps)].sort((a, b) => a - b)) {
       // Places near the stop before, near the stop after and halfway: each costs what it takes them out of their way
-      // (Nov 18, Corpus Christi: not back over the bridge for lunch). After the last stop: near where the day ends.
+      // (Nov 18, a city across a bay: not back over the bridge for lunch). After the last stop: near where the day ends.
       const a = pts[k], b = order[k] || (k === order.length && win.tail.length ? win.tail[0] : null);
       const mid = b && isFinite(b.lat) ? { lat: (a.lat + b.lat) / 2, lng: (a.lng + b.lng) / 2 } : null;
       const offOf = e => b && isFinite(b.lat) ? E.hav(a, e.r) + E.hav(e.r, b) - E.hav(a, b) : E.hav(a, e.r);
@@ -351,7 +351,7 @@
         const t = Object.assign({}, flex, { minutes: Math.min(to, flex.minutes - 15), trimmed: was });
         keep = keep.map(s => s === flex ? t : s); cur = arrange(keep, win, ctx); continue;
       }
-      const lateIds = new Set(cur.r.items.filter(x => x.late).map(x => String(x.id)));
+      const lateIds = new Set(cur.r.items.filter(x => x.late || x.noBoat).map(x => String(x.id))), noBoat = new Map(cur.r.items.filter(x => x.noBoat).map(x => [String(x.id), x.noBoat]));
       const pickFrom = why === "over" ? keep : why === "late" ? keep.filter(s => lateIds.has(String(s.id))) : keep.filter(s => !s.wish);
       const out = toDrop(keep, pickFrom.length ? pickFrom : keep, win, ctx, why);
       if (why === "over" && wanted(out)) {
@@ -364,7 +364,7 @@
       // opens too late to be seen before the day's end says so.
       const sd = ctx.siteDay ? ctx.siteDay(out.id) : null, opens = sd && sd.oh && sd.oh.spans && sd.oh.spans.length ? sd.oh.spans[0][0] : null;
       const tooLate = opens != null && isFinite(win.endBy) && opens + Math.min(out.minutes || 60, 60) > win.endBy;
-      dropped.push({ id: out.id, name: out.name, wish: !!out.wish, wanted: wanted(out), stop: out, why: tooLate ? "opens at " + E.clock(opens) + ", too late to see before " + E.clock(win.endBy) : why === "late" ? "would arrive after its last entry" : "didn't fit in the time" });
+      dropped.push({ id: out.id, name: out.name, wish: !!out.wish, wanted: wanted(out), stop: out, why: noBoat.has(String(out.id)) ? "is reached only by boat, and " + noBoat.get(String(out.id)) + ": on a day with a time to be back, the way back is planned only on a sailing a timetable confirms" : tooLate ? "opens at " + E.clock(opens) + ", too late to see before " + E.clock(win.endBy) : why === "late" ? "would arrive after its last entry" : "didn't fit in the time" });
     }
     // Room left after the drops: a stop given up earlier comes back when it now fits (wanted ones first, best first).
     for (const x of dropped.slice().sort((a, b) => keepRank(b.stop) - keepRank(a.stop) || (b.stop.worth || 0) - (a.stop.worth || 0) || E.byId(a.stop, b.stop))) {

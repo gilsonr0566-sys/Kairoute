@@ -378,9 +378,18 @@ if (fs.existsSync(dir)) { let rides = 0, placed = 0;
   // (a short island visit, so both fit with the wait for a boat back).
   const nf = path.join(dir, 'sample-cruise.json');
   if (fs.existsSync(nf)) { const s = E.applyPlaces(JSON.parse(fs.readFileSync(nf)), places), ni = s.days.findIndex(d => /naples/i.test(d.city));
-    if (ni >= 0) { s.days[ni].selected = ['duomo-na', 'capri-far']; s.days[ni].own = true; (s.cities[s.days[ni].city].farther || []).forEach(x => { if (x.id === 'capri-far') x.minutes = 120; }); const p = E.planTrip(s)[ni], rides = (p.items || []).filter(x => x.t === 'ride');
-      const k = (p.items || []).findIndex(x => x.t === 'ride' && x.mode === 'boat'), before = p.items[k - 1];
-      ok(k > 0 && before.t === 'ride' && before.pierName && before.to && E.hav(before.to, p.items[k].from) < 0.01, 'Naples: the cathedral, then a walk or ride to the ferry pier, then the boat from the pier');
+    if (ni >= 0) { s.days[ni].selected = ['duomo-na', 'capri-far']; s.days[ni].own = true; (s.cities[s.days[ni].city].farther || []).forEach(x => { if (x.id === 'capri-far') x.minutes = 120; });
+      // Ship safety (Nov 21 outside review): with no sailing times known, the island isn't planned on a ship day, and says why.
+      s.answers = () => null; const p0 = E.planTrip(s)[ni];
+      ok(!p0.safe && !(p0.items || []).some(x => x.t === 'ride' && x.kind === 'ferry') && (p0.explain || []).some(t => /reached only by boat, and no sailing times are known/.test(t)) && (p0.items || []).some(x => x.t === 'stop' && /duomo|cathedral/i.test(x.id + ' ' + x.name)),
+        'ship day, island with no sailing times known: the island is not planned, the reason is said, the rest of the day stays');
+      // With the boat's timetable (sailings every half hour, 7:00 to 20:00): planned, the walk to the pier, then the boat.
+      const capri = (s.cities[s.days[ni].city].farther || []).find(x => x.id === 'capri-far'), deps = []; for (let t = 7 * 60; t <= 20 * 60; t += 30) deps.push({ t });
+      s.answers = (a, b) => capri && (E.hav(a, capri) < 3 || E.hav(b, capri) < 3) ? [{ id: 'f1', mode: 'ferry', label: 'Ferry', min: 55, every: 30, deps }] : null;
+      const p = E.planTrip(s)[ni], rides = (p.items || []).filter(x => x.t === 'ride'); delete s.answers;
+      const its = p.items || [], ks = its.map((x, k) => x.t === 'ride' && x.mode === 'boat' ? k : -1).filter(k => k > 0);
+      ok(ks.length === 2 && ks.every(k => its[k].source === 'timetable') && ks.some(k => { const before = its[k - 1]; return before.t === 'ride' && before.pierName && before.to && E.hav(before.to, its[k].from) < 0.01; }),
+        'Naples: the island and the cathedral, a walk or ride to the ferry pier, then the boat from the pier (sailings known)');
       check('sample-cruise.json (cathedral and Capri)', s, [].concat(new Array(ni).fill(null), [p])); } }
   // The pier the guide's note names is the one taken, when it is mapped (not merely the nearest pier).
   { const t = E.makeTravel({}, null, null, [], null, [{ name: 'Near Pier', lat: 40.8429, lng: 14.2612 }, { name: 'Named Quay (Terminal)', lat: 40.8374, lng: 14.2548 }]);
@@ -599,6 +608,40 @@ if (fs.existsSync(dir)) for (const f of fs.readdirSync(dir).filter(f => f.endsWi
     'the final check catches a ride of no time, a guessed ride and a ride back with no extra time on a ship day');
   let shipDays = 0, safe = 0; for (const f of fs.readdirSync(dir).filter(f => f.endsWith('.json'))) { const s = JSON.parse(fs.readFileSync(path.join(dir, f))); E.planTrip(s).forEach((p, i) => { if (p && p.items && s.days[i].type === 'port') { shipDays++; if (p.safe) safe++; } }); }
   ok(shipDays > 10 && safe <= 2, `ship days still planned in full under the final check (${shipDays - safe} of ${shipDays})`); }
+// Ship safety, boats (Nov 21 outside review): on a day with a time to be back, a boat is planned only on a sailing a
+// timetable confirms for the day; the final check reads where every boat's time comes from, not only how long it is.
+{ const win = { hard: true, endBy: 17 * 60 }, A = { lat: 38, lng: 23.7 }, B = { lat: 38.05, lng: 23.75 };
+  const plan = x => ({ end: 16 * 60, items: [{ t: 'start', name: 'Port' }, Object.assign({ t: 'ride', mode: 'boat', kind: 'ferry', from: A, to: B, min: 105, slack: 25 }, x), { t: 'end', name: 'Port' }] });
+  ok(E.guardPlan(plan({ source: 'guide' }), win).length && E.guardPlan(plan({ source: 'estimate' }), win).length && E.guardPlan(plan({ source: 'timetable', unsure: 'x' }), win).length && !E.guardPlan(plan({ source: 'timetable' }), win).length
+    && !E.guardPlan(plan({ source: 'guide' }), { hard: false, endBy: 17 * 60 }).length,
+    'final check: a boat on a ship day from the guide or an estimate is refused; a confirmed sailing passes; a day with no time to be back is not held to it');
+  const deps = (from, to, every) => { const r = []; for (let t = from; t <= to; t += every) r.push({ t }); return r; };
+  const leg = (ans, x) => Object.assign({ kind: 'ferry', mode: 'boat', min: 60, source: ans ? 'timetable' : 'guide' }, ans ? { ans } : {}, x || {});
+  const runs = { id: 'f', mode: 'ferry', min: 50, every: 30, deps: deps(7 * 60, 19 * 60, 30) };
+  ok(/no sailing times are known/.test(E.boatUnsure(leg(null), 600, '2027-07-01') || ''), 'no timetable: the boat is not confirmed');
+  ok(/doesn't run in November/.test(E.boatUnsure(leg(Object.assign({}, runs, { months: [5, 6, 7, 8, 9] })), 600, '2026-11-25') || '') && !E.boatUnsure(leg(Object.assign({}, runs, { months: [5, 6, 7, 8, 9] })), 600, '2027-07-01'),
+    'seasonal boat: not confirmed outside its months, confirmed in them');
+  ok(/no sailing after 7:30 pm/.test(E.boatUnsure(leg(runs), 19 * 60 + 30, '2027-07-01') || ''), 'last sailing missed: not confirmed after it');
+  ok(/no sailing times for this day/.test(E.boatUnsure(leg(Object.assign({}, runs, { deps: [] })), 600, '2027-07-01') || ''), 'no service that day (a line on the map, no sailings): not confirmed');
+  ok(/next is about 4:00 pm/.test(E.boatUnsure(leg(Object.assign({}, runs, { deps: [{ t: 8 * 60 }, { t: 16 * 60 }] })), 600, '2027-07-01') || '') && !E.boatUnsure(leg(runs), 600, '2027-07-01'),
+    'a sailing hours away is not near enough; one within the half hour is confirmed');
+  // In the timed day: the island across the water with no sailing known is not reached on a ship day; the boat back waits
+  // for its real sailing.
+  const port = { name: 'Port', lat: 40.84, lng: 14.255 }, isle = { id: 'i', name: 'Island', lat: 40.55, lng: 14.24, minutes: 60, acrossWater: 'island' };
+  const W = { start: 540, endBy: 1020, hard: true, date: '2027-07-01', head: [port], tail: [Object.assign({ backToShip: true }, port)] };
+  const t0 = E.makeTravel({}, null, null, [], null, []), r0 = E.walkDay([isle], W, t0.estimate, null), st0 = r0.items.find(x => x.t === 'stop');
+  ok(r0.late > 0 && st0 && /no sailing times are known/.test(st0.noBoat || ''), 'timed day: an island with no sailing known is marked, never planned on an hour at the pier');
+  const ansF = (a, b) => [{ id: 'f', mode: 'ferry', label: 'Ferry', min: 50, every: 60, deps: deps(9 * 60 + 15, 18 * 60 + 15, 60) }];
+  const t1 = E.makeTravel({}, null, null, [], ansF, []), r1 = E.walkDay([isle], W, t1.estimate, null), boats = r1.items.filter(x => x.t === 'ride' && x.kind === 'ferry');
+  ok(!r1.late && boats.length === 2 && boats.every(b => b.source === 'timetable') && boats[0].depWait === 15 && boats[1].depWait > 0,
+    `timed day: with sailings known the island is planned, and each boat waits for its real sailing (${boats.map(b => b.depWait).join(', ')})`);
+  ok(E.walkDay([isle], Object.assign({}, W, { hard: false }), t0.estimate, null).late === 0, 'a day with no time to be back still plans the island on the guide\'s boat'); }
+// How sure the way back is: every ship day's leave-by says what it rests on, and a ride back timed from the distance is
+// never called a timetable.
+{ let n = 0, wrong = 0; for (const f of fs.readdirSync(dir).filter(f => f.endsWith('.json'))) { const s = JSON.parse(fs.readFileSync(path.join(dir, f)));
+    E.planTrip(s).forEach(p => { if (!p || !p.leaveAt) return; n++; const back = p.items.filter(x => x.t === 'ride' && x.mode !== 'walk' && x.mode !== 'lift'), b = p.leaveAt.basis;
+      if (!['timetable', 'roads', 'estimate', 'walk'].includes(b) || (b === 'timetable' && back.length && p.items.slice(-4).some(x => x.t === 'ride' && x.mode !== 'walk' && x.source === 'estimate'))) wrong++; }); }
+  ok(n > 20 && !wrong, `every leave-by says what the way back rests on (${n} days, ${wrong} wrong)`); }
 // Unknown opening hours are never read as open: a stop with an entrance whose hours aren't known for the date is marked,
 // and the day says to check.
 { let marked = 0, silent = 0, dawn = 0; for (const f of fs.readdirSync(dir).filter(f => f.endsWith('.json'))) { const s = JSON.parse(fs.readFileSync(path.join(dir, f)));
@@ -998,5 +1041,7 @@ ok(E.readable('Café Ñandú') && E.readable("Joe's Bar & Grill") && !E.readable
   // The departures of every answer of the kind count together (a train known by its own number shows once).
   const two = E.makeTravel({ walk: 'medium' }, null, null, null, (a, b) => [{ id: 'rail|A', min: 75, label: 'Train A', mode: 'rail', steps: ['A'], deps: [{ t: 1231 }] }, { id: 'rail|B', min: 80, label: 'Train B', mode: 'rail', steps: ['B'], deps: [{ t: 515 }, { t: 600 }] }], null).estimate({ lat: 41.9, lng: 12.5 }, { lat: 42.09, lng: 11.79 });
   const lt = ((two.options || [two]).find(x => x.kind === 'train') || two).leaveTimes || two.leaveTimes;
-  ok(Array.isArray(two.leaveTimes || lt) && (two.leaveTimes || lt).length === 3, `a kind's departures are read together (${JSON.stringify(two.leaveTimes || lt)})`); }
+  ok(Array.isArray(two.leaveTimes || lt) && (two.leaveTimes || lt).length === 3, `a kind's departures are read together (${JSON.stringify(two.leaveTimes || lt)})`);
+  const kd = E.makeTravel({ walk: 'medium' }, null, null, null, (a, b) => [{ id: 'rail|A', min: 75, label: 'Train A', mode: 'rail', steps: ['A'], deps: [{ t: 1231 }], kindDeps: [{ t: 455, a: 5 }, { t: 515, a: 5 }, { t: 1231, a: 8 }] }], null).estimate({ lat: 41.9, lng: 12.5 }, { lat: 42.09, lng: 11.79 });
+  ok(JSON.stringify(kd.leaveTimes) === '[450,510,1223]', `every departure of the kind the helper sends is read (${JSON.stringify(kd.leaveTimes)})`); }
 console.log(`\n${oks} checks passed, ${fails} failed`); process.exit(fails ? 1 : 0);
