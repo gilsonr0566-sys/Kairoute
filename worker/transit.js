@@ -98,10 +98,14 @@ export function headways(deps) {
   const out = []; for (const ts of by.values()) { ts.sort((x, y) => x - y); for (let i = 1; i < ts.length; i++) { const m = (ts[i] - ts[i - 1]) / 60000; if (m >= 3) out.push(m); } }
   return out.sort((x, y) => x - y);
 }
+export const TT_HOURS = [6, 9, 12, 15, 18];
 async function timetableAt(a, b, when) {
-  // Morning, midday and late afternoon, so the plan knows the departures through the day (the last ones back included).
+  // Every three hours from early morning to evening, so the plan knows the departures through the whole day: a ship day
+  // leaves at 7:30 and comes back in the late afternoon, and three searches (8, 12, 16) left whole hours unknown, so
+  // trains that run all day fell to a taxi (Nov 21 outside test: Civitavecchia to Rome, Zeebrugge to Bruges). The
+  // answer is kept and shared, so each pair is looked up this way once per kind of day.
   const ask = hh => fetch(`https://api.transitous.org/api/v1/plan?fromPlace=${a.lat},${a.lng}&toPlace=${b.lat},${b.lng}&time=${when(hh)}&numItineraries=6`, { headers: UA, signal: AbortSignal.timeout(20000) }).then(r => r.ok ? r.json() : Promise.reject(new Error("timetable " + r.status)));
-  const all = await Promise.allSettled([ask(8), ask(12), ask(16)]);
+  const all = await Promise.allSettled(TT_HOURS.map(ask));
   if (!all.some(x => x.status === "fulfilled")) throw new Error("timetable busy");
   // Each itinerary remembers which of the three searches found it (w): how often a line runs is measured only between
   // departures found by the same search. Two searches are hours apart, so the gap from the last morning departure to the
