@@ -1,6 +1,12 @@
 // Kairoute offline support: keep the app and its fonts on the device so it opens with no signal.
-const CACHE = "kairoute-v4";
+// This app's own caches are named APP + "-v" + a number. The website address is shared with every other site of the same
+// GitHub account (the demo app, Beta 2, other projects), and so is the browser's cache store: an update deletes only
+// this app's own older caches, never another app's (Nov 21 review: Beta 2 and the demo used the same name, and an update
+// of either deleted every other cache on the address). build-beta2.sh gives Beta 2 its own APP name.
+const APP = "kairoute";
+const CACHE = APP + "-v4";
 const KEEP = /^kairoute-maps-/; // the map store (tiles and label fonts) is managed by the app and survives app updates
+const OWN = k => k.indexOf(APP + "-v") === 0;
 const CORE = ["./index.html", "./manifest.webmanifest", "./icons/web-192.png", "./icons/web-512.png", "./icons/apple-touch-icon-180.png", "./lib/maplibre-gl.js", "./lib/maplibre-gl.css"];
 // The copy of index.html kept in the repository is only a placeholder (the real app is built and published by
 // the "Publish website" workflow). GitHub can briefly serve that placeholder right after an update; it must
@@ -9,7 +15,7 @@ const PLACEHOLDER = "kairoute-placeholder";
 const isPlaceholder = r => r.clone().text().then(t => t.includes(PLACEHOLDER)).catch(() => false);
 self.addEventListener("install", e => { e.waitUntil(caches.open(CACHE).then(c => c.addAll(CORE).then(() => c.match("./index.html")).then(r => r && isPlaceholder(r).then(p => p && c.delete("./index.html")))).then(() => self.skipWaiting())); });
 self.addEventListener("activate", e => {
-  const ready = caches.keys().then(ks => Promise.all(ks.filter(k => k !== CACHE && !KEEP.test(k)).map(k => caches.delete(k)))).then(() => self.clients.claim());
+  const ready = caches.keys().then(ks => Promise.all(ks.filter(k => k !== CACHE && OWN(k) && !KEEP.test(k)).map(k => caches.delete(k)))).then(() => self.clients.claim());
   e.waitUntil(ready);
   // Only once activation is finished: a page reloaded before then would wait on this worker forever.
   ready.then(() => setTimeout(refreshOld, 0));
