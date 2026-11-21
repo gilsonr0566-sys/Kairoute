@@ -1,15 +1,15 @@
 {
- "at": "2026-11-21T03:49:47.978Z",
+ "at": "2026-11-21T04:15:20.217Z",
  "out": [
   {
    "place": "Dubrovnik",
    "stop": "Lokrum",
-   "across": "Lokrum",
+   "across": "an island",
    "expectAcross": true,
    "roadGap": 1215,
    "expectNoRoad": false,
-   "done": true,
-   "ms": 40057,
+   "done": false,
+   "ms": 180222,
    "ok": true
   },
   {
@@ -19,8 +19,8 @@
    "expectAcross": false,
    "roadGap": null,
    "expectNoRoad": false,
-   "done": true,
-   "ms": 40057,
+   "done": false,
+   "ms": 180222,
    "ok": true
   },
   {
@@ -30,8 +30,8 @@
    "expectAcross": true,
    "roadGap": 3006,
    "expectNoRoad": false,
-   "done": true,
-   "ms": 10005,
+   "done": false,
+   "ms": 180149,
    "ok": false
   },
   {
@@ -41,8 +41,8 @@
    "expectAcross": false,
    "roadGap": null,
    "expectNoRoad": false,
-   "done": true,
-   "ms": 10005,
+   "done": false,
+   "ms": 180149,
    "ok": true
   },
   {
@@ -53,7 +53,7 @@
    "roadGap": 1256,
    "expectNoRoad": false,
    "done": false,
-   "ms": 180109,
+   "ms": 180154,
    "ok": true
   },
   {
@@ -64,18 +64,18 @@
    "roadGap": null,
    "expectNoRoad": false,
    "done": false,
-   "ms": 180109,
+   "ms": 180154,
    "ok": true
   },
   {
    "place": "Marseille",
    "stop": "Chateau d'If",
-   "across": "Île d'If",
+   "across": "an island",
    "expectAcross": true,
    "roadGap": 1803,
    "expectNoRoad": false,
-   "done": true,
-   "ms": 20004,
+   "done": false,
+   "ms": 180148,
    "ok": true
   },
   {
@@ -85,19 +85,19 @@
    "expectAcross": false,
    "roadGap": null,
    "expectNoRoad": false,
-   "done": true,
-   "ms": 20004,
+   "done": false,
+   "ms": 180148,
    "ok": true
   },
   {
    "place": "Venice",
    "stop": "San Giorgio Maggiore",
-   "across": "Island of San Giorgio Maggiore",
+   "across": "an island",
    "expectAcross": true,
    "roadGap": 1954,
    "expectNoRoad": true,
-   "done": true,
-   "ms": 22003,
+   "done": false,
+   "ms": 180150,
    "ok": true
   },
   {
@@ -107,8 +107,8 @@
    "expectAcross": false,
    "roadGap": 1639,
    "expectNoRoad": true,
-   "done": true,
-   "ms": 22003,
+   "done": false,
+   "ms": 180150,
    "ok": true
   },
   {
@@ -118,8 +118,8 @@
    "expectAcross": false,
    "roadGap": 1313,
    "expectNoRoad": true,
-   "done": true,
-   "ms": 22003,
+   "done": false,
+   "ms": 180150,
    "ok": true
   },
   {
@@ -130,7 +130,7 @@
    "roadGap": null,
    "expectNoRoad": false,
    "done": false,
-   "ms": 180163,
+   "ms": 180152,
    "ok": true
   },
   {
@@ -138,8 +138,8 @@
     {
      "place": "dubrovnik-croatia",
      "points": 15,
-     "ms": 34006,
-     "done": true,
+     "ms": 180153,
+     "done": false,
      "across": [],
      "wantFound": false,
      "wrong": []
@@ -147,8 +147,8 @@
     {
      "place": "reykjavik-iceland",
      "points": 23,
-     "ms": 36005,
-     "done": true,
+     "ms": 180152,
+     "done": false,
      "across": [
       "Viðey across to Viðey",
       "Imagine Peace Tower across to Viðey"
