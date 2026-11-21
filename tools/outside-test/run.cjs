@@ -39,10 +39,11 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
   for (let i = 0; i < st.days.length; i++) {
     const d = st.days[i]; if (d.type === 'sea') { res.days.push({ i, date: d.date, type: 'sea' }); continue; }
     await p.evaluate(i => window.__kairouteAt(i, 'plan'), i); await sleep(6000);
+    let textEarly; if (Q.dayWait) { textEarly = await p.evaluate(() => document.querySelector('main').innerText); await sleep(Q.dayWait); }
     const text = await p.evaluate(() => document.querySelector('main').innerText);
     await p.screenshot({ path: path.join(out, 'day-' + String(i).padStart(2, '0') + '.jpg'), type: 'jpeg', quality: 55, fullPage: true });
     const g = await p.evaluate(i => window.__T.guide(i), i); if (g && !res.guides[g.city]) res.guides[g.city] = g;
-    res.days.push({ i, date: d.date, type: d.type, destination: d.destination, text });
+    res.days.push({ i, date: d.date, type: d.type, destination: d.destination, text, textEarly: textEarly && textEarly !== text ? textEarly : undefined });
     console.log('\n===== day ' + i + ' ' + d.date + ' ' + d.type + ' ' + (d.destination || '') + '\n' + text);
   }
   // The first sightseeing day again at phone size.
