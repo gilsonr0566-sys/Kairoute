@@ -101,6 +101,13 @@ async function tapTimes(p) { const out = []; const n = await p.evaluate(() => wi
   { const isle = await p.evaluate(() => { const ids = [...document.querySelectorAll('input[data-site]')].map(x => x.dataset.site); return ids.find(id => window.__kairouteBoatPlace(id)) || null; });
     if (isle) { const r = await p.evaluate(id => window.__kairouteFitTrial([id]), isle);
       check(`A place reached only by boat (${isle}), picked alone on the emptied ship day, fits with lunch when the box tries it`, r.fits, JSON.stringify(r).slice(0, 400)); } }
+  // Nov 21 live check: a train kept from before the helper sent every departure of the kind knew only its own few, and
+  // the way back to the ship became a taxi ("no departure near 4:10 pm"). A fresh answer that knows the whole day replaces it.
+  { const mg = await p.evaluate(() => { const M = window.__kairouteTransitMerge, kd = [{ t: 960, lead: 5, dur: 90, a: 5 }];
+      const old = { v: 1, opts: [{ mode: 'train', label: 'Train REG 1 + 2 changes', min: 90, deps: [{ t: 700, lead: 5, dur: 90 }] }, { mode: 'ferry', label: 'Ferry A - B', min: 70 }] };
+      const r = M({ opts: [{ mode: 'train', label: 'Train RV 2 + 1 change', min: 92, deps: [{ t: 860, lead: 5, dur: 90 }], kindDeps: kd }], partial: true }, old);
+      return r.opts.map(o => o.label).join(','); });
+    check('A train kept from older answers gives way to a fresh one that knows the whole day (a ferry once found stays)', mg === 'Ferry A - B,Train RV 2 + 1 change' || mg === 'Train RV 2 + 1 change,Ferry A - B', mg); }
   const all = (await boxes(p)).map(b => b.id), far = all.find(id => /pompeii/.test(id)) || all.find(id => /-far$/.test(id)), town = all.find(id => !/-far$/.test(id));
   for (const id of [far, town].filter(Boolean)) { await tapBox(p, id); const on = (await boxes(p)).some(b => b.id === id && b.on);
     const box = await p.evaluate(() => [...document.querySelectorAll('.fitbox, .closedbox')].map(e => e.innerText.slice(0, 120)).join(' / '));

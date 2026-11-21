@@ -652,7 +652,9 @@ try { ["kairoute.transit", "kairoute.transit2"].forEach(k => localStorage.remove
 // 5: answers are looked up for the trip's own date (a summer ferry isn't on a November timetable), asked again once.
 // 6: frequencies only from gaps inside one search, and the quickest ride of each kind kept (the airport bus).
 // 7: trains between towns whose stations are a taxi away (Athens to Corinth), asked again once.
-const TRANSIT_V = 7;
+// 8: every departure of the kind of ride (kindDeps), searched every hour of the day: a train kept from before knew only
+//    its own departure, so the way back to a ship found "no departure near 4:10 pm" and became a taxi (Nov 21 live check).
+const TRANSIT_V = 8;
 const transitMem = (() => { try { return JSON.parse(localStorage.getItem(TRANSIT_KEY) || "{}"); } catch (e) { return {}; } })();
 let transitSeen = null, transitRetry = 0;
 // How many rides one request to the helper asks for: 12 normally, halved after a request the helper couldn't finish (a big
@@ -770,7 +772,11 @@ async function askTransit() {
 function transitMerge(res, prev) {
   // Each line notes when it was last confirmed (at), so with no signal the Day plan can say "last checked <date>".
   const now = Date.now(), partial = !!res.partial || !res.opts.length, opts = res.opts.map(o => Object.assign({}, o, { at: now })), have = new Set(opts.map(rideId));
-  for (const o of (prev && prev.opts) || []) if ((partial || o.mode === "ferry") && !have.has(rideId(o))) { opts.push(o); have.add(rideId(o)); }
+  // A ride kept from an older version of the answers is not carried over a fresh one of its kind that knows the whole
+  // day's departures: its own departures were the few an older search found (Nov 21: Rome's train back kept "no
+  // departure near 4:10 pm" from such a ride).
+  const stale = o => prev && prev.v !== TRANSIT_V && o.mode !== "ferry" && opts.some(n => n.mode === o.mode && Array.isArray(n.kindDeps) && n.kindDeps.length);
+  for (const o of (prev && prev.opts) || []) if ((partial || o.mode === "ferry") && !have.has(rideId(o)) && !stale(o)) { opts.push(o); have.add(rideId(o)); }
   return { opts: opts.sort((x, y) => x.min - y.min), t: Date.now(), v: TRANSIT_V, partial };
 }
 if (typeof window !== "undefined") window.__kairouteTransitMerge = transitMerge;
