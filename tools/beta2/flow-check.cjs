@@ -534,6 +534,26 @@ async function tapTimes(p) { const out = []; const n = await p.evaluate(() => wi
         return expect.map(e => { const names = e.split('|'); return { e: names[0], inSrc: has(src.stops || [], names), inApp: has(city.sites, names) }; }); }, [pl.label, src, pl.expect]);
       for (const x of r) { n++; if (!x.inSrc) gaps.push(pl.label.split(',')[0] + ': ' + x.e); else if (!x.inApp) miss.push(pl.label.split(',')[0] + ': ' + x.e); } }
     if (n) check(`Every famous sight the sources know is offered (${n - miss.length - gaps.length} of ${n}; not in the sources at all: ${gaps.join(', ') || 'none'})`, !miss.length, `left out: ${miss.join(', ')}`); }
+  // A port whose pier the map search couldn't find (Nov 21 outside check: Dubrovnik and Reykjavik days blank with nothing
+  // to do): the day says so and asks for the pier's name; the traveler's pick from the map plans the day from there.
+  { const i = await dayIdx(p, /Naples/); let why = '';
+    await p.route(u => /\/findplace\?/.test(String(u)), r => r.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify({ places: [{ name: 'Molo Angioino Cruise Terminal', lat: 40.8385, lng: 14.2545, kind: 'ferry_terminal' }, { name: 'Far Away Pier', lat: 41.9, lng: 12.5, kind: 'pier' }] }) }));
+    await p.evaluate(() => window.__kairouteMockHelper('http://helper.test', null, true));
+    await p.evaluate(i => { window.__kairouteGo('day', i); window.__kairouteLosePier(i); window.__kairouteGo('plan'); }, i);
+    const asked = await p.waitForSelector('#pierform #pier-name', { timeout: 8000 }).catch(() => null);
+    // Its sight list never says what "fits" a day that has no plan (Nov 21 outside check: "Still fits today (9)").
+    if (asked) { await p.evaluate(() => window.__kairouteGo('sites')); await p.waitForTimeout(800);
+      const t = await p.evaluate(() => (document.querySelector('main') || document.body).innerText);
+      if (/Still fits today|Each one fits as your day stands/.test(t)) why = 'the blank day\'s sight list says sights fit it';
+      await p.evaluate(() => window.__kairouteGo('plan')); await p.waitForSelector('#pierform #pier-name', { timeout: 8000 }).catch(() => null); }
+    if (why) {} else if (!asked) why = 'no pier form on the blank day: ' + (await p.evaluate(() => (document.querySelector('.card.empty') || {}).innerText || '')).slice(0, 160);
+    else { await p.fill('#pier-name', 'Molo Angioino'); await tapSel(p, '[data-act="piersearch"]'); await p.waitForTimeout(800);
+      const picks = await p.$$eval('[data-pierpick]', xs => xs.map(x => x.innerText.replace(/\s+/g, ' ')));
+      if (picks.length !== 1) why = 'the map answers offered: ' + JSON.stringify(picks) + ' (the one 200 km away must not be)';
+      else { await tapSel(p, '[data-pierpick="0"]'); await p.waitForTimeout(1200);
+        const r = await p.evaluate(() => ({ err: (document.querySelector('.card.empty') || {}).innerText || '', first: (document.querySelector('.timeline .tl.first') || {}).innerText || '' }));
+        if (r.err || !/Molo Angioino/.test(r.first)) why = 'after the pick: ' + (r.err || r.first).replace(/\s+/g, ' ').slice(0, 160); } }
+    check('A port whose pier the map can\'t find asks for its name, and the pier picked on the map plans the day', !why, why); }
   await ctx.close(); srv.close(); await browser.close();
   const leaks = results.filter(r => !r.ok);
   for (const r of results) console.log((r.ok ? 'pass  ' : 'LEAK  ') + r.name + (r.ok ? '' : ' — ' + r.why));

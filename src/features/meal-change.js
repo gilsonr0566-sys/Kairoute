@@ -63,6 +63,7 @@ function mealChangeLink(lbl, r) {
 
 // Heads-up line when the traveler skipped a meal, with one tap to bring it back.
 function mealSkipNote(d) {
+  if (d && d.grpTour) return ""; // a booked group tour day says so in its own card
   return ["Lunch", "Dinner"].filter(l => { const p = mealPref(d, l); return p && p.skip; })
     .map(l => `<div class="banner mealskip"><span>No ${l.toLowerCase()} planned today: you skipped it.</span><button type="button" class="btn small ghost" data-act="mealunskip" data-meal="${l}">Add ${l.toLowerCase()} back</button></div>`).join("");
 }

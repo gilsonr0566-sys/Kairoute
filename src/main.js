@@ -1262,6 +1262,9 @@ function lodgingFor(d, city) {
 const approxStayNote = L => L && L.approx ? `We couldn't place ${L.wanted || "your hotel"} on the map yet, so today's plan uses ${L.name} as your hotel. Ride times from your real hotel may differ: add its street address under Trip to make them exact.` : null;
 function dayPoint(d, city) {
   const listKey = d.type === "port" || d.type === "embark" ? "cruise" : MODES[d.mode].list;
+  // The pier the traveler named from their cruise documents and picked on the map (when the map search found none):
+  // a real place they confirmed, never a guess (Nov 21 outside check: Dubrovnik and Reykjavik port days stayed blank).
+  if (listKey === "cruise" && d.pier && isFinite(+d.pier.lat) && isFinite(+d.pier.lng)) return { name: d.pier.name, lat: +d.pier.lat, lng: +d.pier.lng, note: "The pier you named, found on the map.", own: true };
   const list = pointList(city, listKey), p = list[d.pointIdx] || list[0] || null;
   // More than one real station or airport and the traveler hasn't said which: asked, never guessed (Nov 20 tester).
   const ask = pointAsk(d, list, listKey);
@@ -1313,6 +1316,8 @@ function placeStart(k, p, site, r, mid) {
 }
 if (typeof window !== "undefined") window.__kairoutePlaceStart = (k, p, site, r, mid) => placeStart(k, Object.assign({}, p), site, r, mid);
 if (typeof window !== "undefined") window.__kairoutePortTest = (i, patch) => { const d = trip.days[i], c = cityFor(d), P = dayPoint(d, c); if (!P) return { error: "no point" }; const was = Object.assign({}, P); Object.assign(P, patch); let w; try { w = dayWindow(d, c); } finally { for (const k of Object.keys(P)) delete P[k]; Object.assign(P, was); } return { name: P.name, error: w.error || null, unsure: !!w.unsure }; };
+// Test hook: a port whose pier the map search couldn't find (every listed pier unknown, under a name no built-in guide knows).
+if (typeof window !== "undefined") window.__kairouteLosePier = i => { const d = trip.days[i], c = d && cityFor(d); if (!c) return false; pointList(c, "cruise").forEach(p => { p.unknown = true; p.name = "Cruise port of Nowhere Bay"; }); delete d.pier; render(); return true; };
 // STARTS_V 2: cruise ports and airports are never moved to the city centre (guides checked before are checked again).
 const STARTS_V = 2;
 // A start point placed on a guess (a port or airport the map lookup couldn't find, or one an older guide moved to the
@@ -1364,6 +1369,7 @@ function dayWindow(d, city) {
       w.head = d.noBags ? [A] : [A, fixedStop(A, "Leave your bags in luggage storage", 15)];
       w.tail = d.noBags ? [end] : [fixedStop(A, "Collect your bags", 15), end];
       w.startLabel = (thru.mode === "ship" ? "Off the ship at " : "Out of ") + A.name;
+      w.bagsNote = { i: w.notes.length, at: A.name, am, thru };
       w.notes.push(`${am.label} arrives ${thru.time}. We allow ${dur(am.clear)} to get ${thru.mode === "ship" ? "off the ship with your luggage" : thru.mode === "flight" ? "off the plane and through baggage claim (and passport control after a flight from abroad)" : "off with your luggage"}.${d.noBags ? "" : " Book luggage storage near " + A.name + " ahead (a left-luggage desk or a storage shop), or ask " + (thru.mode === "ship" ? "your cruise line about luggage transfer." : "your hotel or station.")}`);
     } else {
       if (!L) return { error: "Choose where you're staying in " + d.destination + "." };
@@ -1380,6 +1386,10 @@ function dayWindow(d, city) {
     if (ship && thru && thru.mode === "flight") {
       const free = w.endBy - w.start - chainCost(w.head) - chainCost(w.tail);
       if (free < STRAIGHT_MIN) { w.straight = true; w.head = [w.head[0]]; w.tail = [end]; w.sightFrom = w.start; }
+      // Straight from the airport to the ship, the bags go with you to the ship, never into storage (Nov 21, Bahamas
+      // test trip: the day said to book luggage storage near the airport).
+      if (w.straight && w.bagsNote && !d.noBags) { const b = w.bagsNote;
+        w.notes[b.i] = `${b.am.label} arrives ${b.thru.time}. We allow ${dur(b.am.clear)} to get off the plane and through baggage claim (and passport control after a flight from abroad). Your bags go with you to the ship: porters take them at the cruise terminal.`; }
       w.notes.push(w.straight
         ? `You fly in the day the ship sails, so today goes straight from the airport to the ship: there isn't enough time for sightseeing with a safe margin. A late or missed flight is the most common way travelers miss a ship, and the ship won't wait. Keep your airline's and cruise line's phone numbers handy, and if a delay is announced, call the cruise line at once.`
         : `You fly in the day the ship sails. A late or missed flight is the most common way travelers miss a ship, and the ship won't wait: if your flight is delayed, skip the sightseeing and go straight to the port.`);
@@ -1869,6 +1879,34 @@ async function bookSearch() {
   f.busy = false;
   if (!f.results.length) f.msg = `I couldn't find "${f.q}" on the map in ${d.destination}. Check the spelling, or add the street name.`;
   render();
+}
+// A cruise pier the map search couldn't find: the traveler types its name from their cruise documents (or the port's
+// own name for it), and picks the right one of the places the map finds by that name in the port. Only a place on the
+// map is ever used; nothing is guessed (Nov 21 outside check: Dubrovnik and Reykjavik port days stayed blank, with
+// nothing the traveler could do).
+let pierForm = null;
+const pierAsk = (d, city) => { if (!d || !city || !(d.type === "port" || d.type === "embark" || d.mode === "ship")) return false; const P = dayPoint(d, city); return !!P && unsurePoint(P); };
+async function pierSearch() {
+  const d = day(), city = cityFor(d); if (!city) return;
+  const f = pierForm = Object.assign(pierForm || {}, { id: d.id }); f.q = ((document.getElementById("pier-name") || {}).value || "").trim();
+  if (f.q.length < 2) { f.msg = "Type the pier or terminal name from your cruise documents."; render(); return; }
+  if (typeof navigator !== "undefined" && navigator.onLine === false) { f.msg = "There's no internet right now, and I need it to find the pier on the map. Try again when you're online."; render(); return; }
+  f.busy = true; f.msg = ""; f.results = []; render();
+  const ss = allSites(city).filter(x => isFinite(+x.lat)), mid = ss.length ? { lat: ss.map(x => +x.lat).sort((a, b) => a - b)[ss.length >> 1], lng: ss.map(x => +x.lng).sort((a, b) => a - b)[ss.length >> 1] } : null;
+  try { const r = freeAI ? await fetch(freeAI.url + "/findplace?city=" + encodeURIComponent(bareName(d.destination)) + "&q=" + encodeURIComponent(f.q)) : null, j = r && r.ok ? await r.json() : null;
+    ((j && j.places) || []).filter(m => isFinite(+m.lat) && isFinite(+m.lng) && (!mid || hav(mid, m) <= 60)).forEach(m => { if (!f.results.some(y => hav(y, m) < 0.05)) f.results.push({ name: m.name, lat: +(+m.lat).toFixed(5), lng: +(+m.lng).toFixed(5), kind: String(m.kind || "").replace(/_/g, " "), addr: m.addr || "", km: mid ? hav(mid, m) : null }); });
+  } catch (e) {}
+  f.results = f.results.slice(0, 5); f.busy = false;
+  if (!f.results.length) f.msg = `I couldn't find "${f.q}" on the map near ${bareName(d.destination)}. Try the name your cruise line uses for the terminal or quay, or the port's own word for it.`;
+  render();
+}
+function pierFormHTML(d) {
+  const f = pierForm && pierForm.id === d.id ? pierForm : { q: "", results: [] };
+  return `<div class="card bookform" id="pierform"><h3>Where does your ship dock?</h3><p class="lede small">Type the pier, quay or terminal name from your cruise documents. I'll find it on the map and plan the day from there.</p>
+    <label>Pier or terminal<input id="pier-name" type="text" autocomplete="off" value="${esc(f.q || "")}" placeholder="e.g. Cruise Terminal 2"></label>
+    <div class="actions"><button class="btn" data-act="piersearch" ${f.busy ? "disabled" : ""}>${f.busy ? "Looking it up…" : "Find it"}</button></div>
+    ${f.msg ? `<p class="banner warn" role="status">${esc(f.msg)}</p>` : ""}
+    ${f.results && f.results.length ? `<p class="lede small">Which one is it?</p><div class="bookres">${f.results.map((y, i) => `<button class="btn ghost" data-pierpick="${i}"><b>${esc(y.name)}</b><small>${[y.addr, y.kind, y.km != null ? distTxt(y.km) + " from the sights" : ""].filter(Boolean).map(esc).join(" · ")}</small></button>`).join("")}</div>` : ""}</div>`;
 }
 function bookFormHTML(d) {
   const f = bookForm; if (!f) return "";
@@ -5078,7 +5116,7 @@ function renderLobby() {
       <div><div class="eyebrow">Pick up where you left off</div>${renameId === cur.id ? renameBox(cur.id, cur.name || tripName(cur)) : `<h3>${esc(cur.name || tripName(cur))}</h3>`}
         <div class="meta">${esc(tripSpan(cur))} · ${tripDaysText(cur)} · ${(() => { const td = cur.days.find(x => isToday(x)); const dd = td || d; return (td ? "Today: " : "Next: ") + esc(placeLabel(dd) || "New day"); })()}</div></div>
       <div class="go"><button class="btn" data-act="continue">Continue trip</button></div>
-      <div class="resacts"><span class="lede">${syncSt() ? "Synced across your devices" + (syncSt().at ? " · last synced " + esc(new Date(syncSt().at).toLocaleTimeString([], { hour: "numeric", minute: "2-digit" })) : "") : `Saved on this device · <button class="linkbtn" data-act="syncfromlobby">Sync with another device</button>`}</span><button class="btn ghost small" data-goto="trip" data-act2="edit">Edit itinerary</button>${moreMenu(cur.id, `<button class="btn ghost small" data-act="rename" data-id="${esc(cur.id)}">Rename</button><button class="btn ghost small" data-act="archive" data-id="${esc(cur.id)}">Archive</button>${delBtn(cur.id)}`)}</div>
+      <div class="resacts"><span class="lede">${syncSt() ? "Synced across your devices" + (syncSt().at ? " · last synced " + esc(new Date(syncSt().at).toLocaleTimeString([], { hour: "numeric", minute: "2-digit" })) : "") : `Saved on this device · <button class="linkbtn" data-act="syncfromlobby">Sync with another device</button>`}</span><button class="btn ghost small" data-goto="trip" data-act2="edit">Edit itinerary</button>${moreMenu(cur.id, `<button class="btn ghost small" data-grp="sharegrp">Share with my group</button><button class="btn ghost small" data-act="rename" data-id="${esc(cur.id)}">Rename</button><button class="btn ghost small" data-act="archive" data-id="${esc(cur.id)}">Archive</button>${delBtn(cur.id)}`)}</div>
     </div>` : ""}
     ${others.length || !hasSample ? `    <div class="sechead"><h2>Planned trips</h2><span class="lede">${list.length - archived.length} ${syncSt() ? "synced across your devices" + (syncSt().at ? " · last synced " + esc(new Date(syncSt().at).toLocaleTimeString([], { hour: "numeric", minute: "2-digit" })) : "") : `saved on this device · <button class="linkbtn" data-act="syncfromlobby">Sync with another device</button>`}</span></div>
     <div class="tripcards">
@@ -5112,7 +5150,7 @@ function pageBar(title) {
 // Settings, privacy and terms share one page: a section list on the left (chips on phones) and one section at a time,
 // so every section fits on a screen and nothing is listed twice.
 let setSec = "display", guideStop = null;
-const SET_SECS = [["display", "Display"], ["voice", "Guide voice"], ["prefs", "Trip preferences"], ["sync", "Connect another device"], ["group", "Group tour"], ["ai", "AI guide"], ["offline", "Offline"], ["data", "Your data"], ["about", "About"], ["privacy", "Privacy"], ["terms", "Terms of use"]];
+const SET_SECS = [["display", "Display"], ["voice", "Guide voice"], ["prefs", "Trip preferences"], ["sync", "Connect another device"], ["group", "Group trip"], ["ai", "AI guide"], ["offline", "Offline"], ["data", "Your data"], ["about", "About"], ["privacy", "Privacy"], ["terms", "Terms of use"]];
 function renderSettings(sec) {
   if (sec) setSec = sec;
   const seg = (key, list) => `<div class="seg" role="group">${list.map(([k, l]) => `<button type="button" data-app="${key}" data-v="${k}" aria-pressed="${appSet[key] === k}">${l}</button>`).join("")}</div>`;
@@ -5155,7 +5193,6 @@ function renderSettings(sec) {
       ["Live maps", "Mapbox maps with turn-by-turn walking directions and your blue dot."],
       ["Real photos", "Pictures of every stop showing exactly what to look for."],
       ["Weather smarts", "Read the forecast and move indoor sights to rainy days for you."],
-      ["Travel together", "Share a live trip so everyone in your group sees the same plan and journal."],
       ["Running-late alerts", "Phone alerts for the ship countdown, even with the app closed."],
       ["Follow me, phone in pocket", "GPS keeps guiding and starts each story even with the screen off."]
     ].map(([a, b]) => `<li><span><b>${a}:</b> ${b}</span></li>`).join("")}</ul>
@@ -5282,7 +5319,6 @@ function renderTrips() {
       ["Live maps", "Mapbox maps with turn-by-turn walking directions and your blue dot."],
       ["Real photos", "Pictures of every stop showing exactly what to look for."],
       ["Weather smarts", "Read the forecast and move indoor sights to rainy days for you."],
-      ["Travel together", "Share a live trip so everyone in your group sees the same plan and journal."],
       ["Running-late alerts", "Phone alerts for the ship countdown, even with the app closed."]
     ].map(([a, b]) => `<li><span><b>${a}:</b> ${b}</span></li>`).join("")}</ul>
   </details>
@@ -5629,10 +5665,16 @@ function itineraryText() {
     if (!noShore(d) && city) {
       refillIfNeeded(d, city); if (!d.selected) seedPicks(d, city);
       const plan = buildPlan(d);
-      if (plan && !plan.error) plan.items.forEach(it => {
+      // The same rows and times as the Day plan (Nov 21, Bahamas test trip: the copy ended at the last ride's time while
+      // the screen had free time and "back by"): free time from dayFacts before the rides back, and the end row "by" the
+      // day's back-by time when there is free time.
+      const F = plan && !plan.error ? dayFacts(d, plan) : null, freeOn = F && F.left >= 30 && !(plan.dropped || []).length && !(plan.w && plan.w.straight);
+      let freeDone = false;
+      if (plan && !plan.error) plan.items.forEach((it, k) => {
+        if (freeOn && !freeDone && (it.type === "end" || (it.type === "travel" && plan.items.slice(k).every(x => x.type === "travel" || x.type === "end")))) { freeDone = true; out.push(`   ${fmt(F.leaveBy - F.left)}  Free time until ${fmt(F.leaveBy)}`); }
         if (it.type === "travel") return;
         const nm = it.type === "meal" ? it.meal.label + ": " + it.place.name : it.type === "start" || it.type === "end" ? it.label : (it.place.along ? "On the way: " : it.place.bonus ? "Optional: " : "") + it.place.name;
-        out.push(`   ${fmt(it.time)}  ${nm}`);
+        out.push(`   ${it.type === "end" && freeOn ? "by " + fmt(F.endBy) : fmt(it.time)}  ${nm}`);
       });
     } else if (!noShore(d)) out.push("   (guide not built yet)");
     out.push("");
@@ -5750,7 +5792,7 @@ function renderTrip(d) {
         ${t === "arrival" || t === "departure" ? `<div class="field"><span class="lbl">${t === "arrival" ? "Arriving by" : "Leaving by"}</span>
           <div class="seg" role="group" aria-label="Travel mode">${Object.keys(MODES).filter(k => t === "arrival" || k !== "ship").map(k => `<button type="button" data-mode="${k}" aria-pressed="${d.mode === k}">${MODES[k].label}</button>`).join("")}</div></div>` : ""}
         ${t !== "land" ? `<div class="field"><label for="f-point">${pointWord}</label>
-          ${city ? (points.length ? `<select id="f-point"${pointAsk(d, points, listKey) ? ` data-ask="1"><option value="-1" selected>Which ${esc(MODES[d.mode] && t !== "port" && t !== "embark" ? MODES[d.mode].word : "place")}? Choose yours</option>${opts(points, -1)}` : `>${opts(points, d.pointIdx)}`}</select>${points[d.pointIdx] && points[d.pointIdx].note ? `<span class="hint">${esc(points[d.pointIdx].note)}</span>` : ""}` : `<span class="hint">No ${esc(listKey)} listed for this city.</span>`) : `<span class="hint">Appears once the guide for ${esc(d.destination || "this city")} is built.</span>`}
+          ${city ? (points.length ? `<select id="f-point"${pointAsk(d, points, listKey) ? ` data-ask="1"><option value="-1" selected>Which ${esc(MODES[d.mode] && t !== "port" && t !== "embark" ? MODES[d.mode].word : "place")}? Choose yours</option>${opts(points, -1)}` : `>${opts(points, d.pointIdx)}`}</select>${d.pier && listKey === "cruise" ? `<span class="hint">Your pier: ${esc(d.pier.name)}, found on the map from the name you gave. Choose one from the list to change it.</span>` : points[d.pointIdx] && points[d.pointIdx].note ? `<span class="hint">${esc(points[d.pointIdx].note)}</span>` : ""}` : `<span class="hint">No ${esc(listKey)} listed for this city.</span>`) : `<span class="hint">Appears once the guide for ${esc(d.destination || "this city")} is built.</span>`}
         </div>` : ""}
         <div class="row2">
           ${t === "arrival" || t === "departure" ? `<div class="field"><label for="f-time">${t === "arrival" ? "Arrival time" : "Departure time"}</label><input type="time" id="f-time" value="${esc(d.time)}"></div>` : ""}
@@ -6139,8 +6181,8 @@ function renderSites(d) {
   ${bumpedNote(d)}${pickbar}
   ${picked.length ? `<div class="picksfold${picksOpen ? " open" : ""}"><button type="button" class="foldrow" data-act="picksfold" aria-expanded="${picksOpen}"><span>Your sights (${picked.filter(on).length})</span><span class="foldhint">${picksOpen ? "Hide" : "Show"}</span></button>
   <div class="sitelist anchorlist">${picked.map(s => siteCard(s, d, plan, near)).join("")}</div></div>` : ""}
-  <p class="listlbl secttl">Still fits today (${mustL.length + fitL.length})${picked.length ? "" : leftTxt}</p>
-  ${mustL.length || fitL.length ? `<p class="lede small">${st ? `Nearest ${esc(st.name)} first. ` : ""}Each one fits as your day stands; the time is how much later you'd finish.</p>` : `<p class="lede small">${farL.length ? `No other sight in town fits as your day stands, but ${farL.length === 1 ? "the trip out of town below does" : `the ${farL.length} trips out of town below do`}.` : F && F.left >= 30 ? `${dur(F.left)} is left, but every sight still to see needs more time than that, with its ride. See "Doesn't fit today" for what would make room.` : `Your day is full. See "Doesn't fit today" for what would make room.`}</p>`}
+  ${plan && plan.error ? `<p class="listlbl secttl">Sights (${mustL.length + fitL.length})</p><p class="lede small">Today isn't planned yet, so I can't say what fits: ${esc(plan.error.replace(/^We couldn't/, "I couldn't").split(/(?<=\.)\s/)[0])} Your picks are kept for when it is.</p>` : `<p class="listlbl secttl">Still fits today (${mustL.length + fitL.length})${picked.length ? "" : leftTxt}</p>`}
+  ${plan && plan.error ? "" : mustL.length || fitL.length ? `<p class="lede small">${st ? `Nearest ${esc(st.name)} first. ` : ""}Each one fits as your day stands; the time is how much later you'd finish.</p>` : `<p class="lede small">${farL.length ? `No other sight in town fits as your day stands, but ${farL.length === 1 ? "the trip out of town below does" : `the ${farL.length} trips out of town below do`}.` : F && F.left >= 30 ? `${dur(F.left)} is left, but every sight still to see needs more time than that, with its ride. See "Doesn't fit today" for what would make room.` : `Your day is full. See "Doesn't fit today" for what would make room.`}</p>`}
   ${mustL.length ? `<div class="sitelist mustlist">${mustL.map(s => siteCard(s, d, plan, near)).join("")}</div>` : ""}
   ${fitL.length ? `<div class="sitelist fitlist">${fitL.map(s => siteCard(s, d, plan, near)).join("")}</div>` : ""}
   ${moreL.length ? `<details class="more nearby"><summary>More nearby (${moreL.length})</summary><p class="lede small" style="margin:8px 0">${my.size ? "Sights outside your interests, and" : "Quick stops:"} small stops your route adds when it passes them. Tick one to plan it.</p>
@@ -6623,7 +6665,7 @@ function renderPlan(d) {
   if (!city) return `${dayHeading(d)}${busyBlock()}${errBlock()}${needsCity(d)}`;
   refillIfNeeded(d, city); if (!d.selected) seedPicks(d, city); crowdFor(city); fameFor(d, city); farEatsFor(city, d); upgradeThin(d, city);
   const plan = buildPlan(d); if (plan && !plan.error) { gCheck(plan, city); queueExtras(plan); writeSrcSights(plan, city); }
-  if (plan.error) return `${dayHeading(d)}<div class="card empty"><p>${esc(plan.error)}</p><button class="btn" data-goto="trip">Edit this day</button></div>`;
+  if (plan.error) return `${dayHeading(d)}<div class="card empty"><p>${esc(plan.error)}</p><button class="btn" data-goto="trip">Edit this day</button></div>${pierAsk(d, city) ? pierFormHTML(d) : ""}`;
   let n = 0;
   const canDrag = plan.stops.filter(x => !x.place.along && !x.place.bonus).length > 1; // two or more stops: drag them into any order
   const cat = s => esc(String(s.category || "").replace(/^\w/, c => c.toUpperCase()));
@@ -6632,7 +6674,7 @@ function renderPlan(d) {
   // stop, before the ride back.
   // One quiet line, with the day's one "time left" figure and the one leave-by time (dayFacts); what would fit it is the
   // Choose sights list, never a second list here (outside review, Nov 20: the two lists disagreed).
-  const F = dayFacts(d, plan), freeOn = F && F.left >= 30 && !(plan.dropped || []).length;
+  const F = dayFacts(d, plan), freeOn = F && F.left >= 30 && !(plan.dropped || []).length && !(plan.w && plan.w.straight); // straight to the ship: the time to spare is margin, not free time
   const freeCard = freeOn ? `<div class="tl freetime"><div class="time"><span class="ta">Until</span><span class="tt">${fmt(F.leaveBy)}</span></div><div class="rail"><div class="dot bonusdot">+</div></div><div class="what"><div class="nm">Free time: ${dur(F.left)}</div>
         <div class="sub">${F.fixed ? `Yours to spend as you like. Leave here by ${fmt(F.leaveBy)} to be back by ${fmt(F.endBy)}.` : "Yours to spend as you like."} <button type="button" class="linkbtn" data-goto="sites">See what fits</button></div></div></div>` : "";
   let freeShown = false;
@@ -6694,7 +6736,7 @@ ${partsList(s, it.time)}${stopLiveNotes(it, d)}</div></div>`;
   // Heads-up: everything that needs a decision today, in one place above the schedule, most urgent first.
   const askOut = new Set(d.pendingOrder && orderNote(d, plan) ? d.pendingOrder.names : []), dropNow = plan.dropped.filter(s => !askOut.has(s.name)); // the order question already names those
   const heads = [
-    orderNote(d, plan), readyBanner(d), mealSkipNote(d),
+    grpDayCard(d, plan), orderNote(d, plan), readyBanner(d), mealSkipNote(d),
     boardCard(d, plan), boardEve(d),
     (b => b ? `<div class="livecard">${b}</div>` : "")(liveBanner(d, plan)),
     rideChangeBanner(d),
@@ -6729,6 +6771,7 @@ ${partsList(s, it.time)}${stopLiveNotes(it, d)}</div></div>`;
       <button class="menuitem" role="menuitem" data-act="suggesttour">✨ Suggest my tour</button>
       ${canDrag ? `<button class="menuitem" role="menuitem" data-act="tlview" data-v="${tlCompact() ? "full" : "compact"}">${tlCompact() ? "☰ Show full details" : "⠿ Change the order (drag the stops)"}</button>` : ""}
       ${d.type === "port" && !d.aboard ? `<button class="menuitem" role="menuitem" data-act="aboard">⚓ I'm staying on board today</button>` : ""}
+      ${grpMenuHTML(d)}
       ${wxChip ? "" : wxt.replace('class="btn ghost small toggle"', 'class="menuitem toggle"').replace("<span>Rainy day</span>", "<span>Rainy day: plan indoor sights</span>")}
       ${preview ? `<button class="menuitem" role="menuitem" data-act="cdpreview">▶ Preview the day live</button>` : ""}
       <div class="menugroup">On the way</div>
@@ -7209,6 +7252,9 @@ document.addEventListener("click", e => {
   if (t.dataset.act === "syncoff") { syncSet(null); syncNote = "Sync is off on this device. Your trips stay here."; render(); return; }
   if (t.dataset.act === "bookopen") { const b = (day().booked || {})[t.dataset.meal]; bookForm = { label: t.dataset.meal, q: b ? b.name : "", time: b ? b.time : t.dataset.meal === "Lunch" ? "12:30" : "19:30", results: [] }; render(); const el = document.getElementById("bookform"); if (el) { el.scrollIntoView({ block: "center" }); const i = document.getElementById("bk-name"); if (i) i.focus(); } return; }
   if (t.dataset.act === "booksearch") { bookSearch(); return; }
+  if (t.dataset.act === "piersearch") { pierSearch(); return; }
+  if (t.dataset.pierpick != null && pierForm) { const y = (pierForm.results || [])[+t.dataset.pierpick], d = day();
+    if (y && d) { d.pier = { name: y.name, lat: y.lat, lng: y.lng }; pierForm = null; d.selected = null; trip.tour = null; edited(); save(); render(); } return; }
   if (t.dataset.act === "bookcancel") { bookForm = null; render(); return; }
   if (t.dataset.bookpick != null && bookForm) { const y = bookForm.results[+t.dataset.bookpick], d = day(), tm = ((document.getElementById("bk-time") || {}).value || bookForm.time);
     if (y) { d.booked = Object.assign({}, d.booked, { [bookForm.label]: { name: y.name, lat: y.lat, lng: y.lng, kind: y.kind || "", addr: y.addr || "", time: /^\d\d:\d\d$/.test(tm) ? tm : bookForm.time } }); bookForm = null; trip.tour = null; save(); render(); } return; }
@@ -7402,7 +7448,7 @@ document.addEventListener("change", e => {
   }
   if (t.id === "f-type") { readForm(); const d = day(); d.type = t.value; d.pointIdx = 0; delete d.pointPicked; if (d.type === "departure" && d.mode === "ship") d.mode = "flight"; d.selected = null; edited(); save(); render(); return; }
   if (t.id === "f-stayaboard") { setAboard(day(), t.checked); render(); return; }
-  if (["f-point", "f-return", "f-along", "f-fill", "f-lodging", "f-tender", "f-date"].includes(t.id)) { readForm(); edited(); save(); render(); return; }
+  if (["f-point", "f-return", "f-along", "f-fill", "f-lodging", "f-tender", "f-date"].includes(t.id)) { if (t.id === "f-point") delete day().pier; readForm(); edited(); save(); render(); return; }
   if (t.closest && t.closest("#dayForm")) { readForm(); edited(); save(); }
 });
 document.addEventListener("submit", e => {

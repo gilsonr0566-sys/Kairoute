@@ -4,7 +4,9 @@
 // to add nothing; each answer is made once and kept, so every traveler shares it and the cost stays tiny.
 const UA = { "user-agent": "Kairoute/1.0 (travel guide; https://gilsonr0566-sys.github.io/Kairoute/)" };
 const OVERPASS = ["https://overpass-api.de/api/interpreter", "https://overpass.private.coffee/api/interpreter", "https://overpass.kumi.systems/api/interpreter", "https://maps.mail.ru/osm/tools/overpass/api/interpreter"];
-const GROUP_TTL = 2 * 86400;
+// A group lasts as long as its trip is in use: 400 days after the last time anyone in it opened it (as sync codes do).
+// It was 2 days when groups were only for touring together; a trip shared months ahead needs to stay (Nov 21 2026).
+const GROUP_TTL = 400 * 86400;
 
 async function overpass(q) {
   for (const ep of OVERPASS) {
@@ -221,6 +223,10 @@ export class Group {
     if (u.pathname === "/get") {
       if (!g) return Response.json({ error: "Unknown code" }, { status: 404 });
       const since = +u.searchParams.get("since") || 0, out = { rev: g.rev, live: g.live, regroup: g.regroup, name: g.name, now, followers: Object.keys(g.seen || {}).filter(k => now - g.seen[k] < 90000).length };
+      // Who is in the group (phones seen in the last 30 days) and, for each day, how many of them plan their own day.
+      const mem = Object.keys(g.seen || {}).filter(k => now - g.seen[k] < 30 * 86400000), own = {};
+      mem.forEach(k => ((g.own || {})[k] || []).forEach(id => { own[id] = (own[id] || 0) + 1; }));
+      out.members = mem.length; out.ownDays = own; out.offers = g.offers || {};
       if (since < g.tripRev) { out.trip = await this.getTrip(); out.tripRev = g.tripRev; }
       return Response.json(out);
     }
@@ -234,11 +240,30 @@ export class Group {
       return Response.json({ code: u.searchParams.get("code"), token, rev: 1, now });
     }
     if (!g) return Response.json({ error: "Unknown code" }, { status: 404 });
-    if (b.op === "hello") { g.seen = g.seen || {}; g.seen[String(b.who || "x").slice(0, 40)] = now; for (const k in g.seen) if (now - g.seen[k] > 600000) delete g.seen[k]; g.touched = now; await st.put("g", g); return Response.json({ ok: true, now }); }
+    if (b.op === "hello") {
+      const who = String(b.who || "x").slice(0, 40); g.seen = g.seen || {}; g.own = g.own || {};
+      if (!g.seen[who] && Object.keys(g.seen).length >= 200) return Response.json({ error: "This group is full" }, { status: 409 });
+      g.seen[who] = now;
+      if (Array.isArray(b.own)) g.own[who] = b.own.slice(0, 120).map(x => String(x).slice(0, 40)); // the days this phone plans on its own
+      for (const k in g.seen) if (now - g.seen[k] > 30 * 86400000) { delete g.seen[k]; delete g.own[k]; }
+      g.touched = now; await st.put("g", g); return Response.json({ ok: true, now });
+    }
+    // A member offers their own day to the group; the leader can then use it for everyone (or set it aside).
+    if (b.op === "offer") {
+      const dayId = String(b.dayId || "").slice(0, 40), who = String(b.who || "x").slice(0, 40), day = b.day;
+      if (!dayId || !day || typeof day !== "object" || JSON.stringify(day).length > 60000) return Response.json({ error: "Bad day" }, { status: 400 });
+      g.offers = g.offers || {}; const list = (g.offers[dayId] || []).filter(o => o.who !== who);
+      if (!b.withdraw) list.push({ who, name: String(b.name || "").slice(0, 40), day, at: now });
+      if (list.length > 20) list.shift();
+      if (list.length) g.offers[dayId] = list; else delete g.offers[dayId];
+      if (JSON.stringify(g.offers).length > 900000) return Response.json({ error: "Too many offers" }, { status: 409 });
+      g.rev++; g.touched = now; await st.put("g", g); return Response.json({ ok: true, rev: g.rev, now });
+    }
     if (b.token !== g.token) return Response.json({ error: "Only the leader can do that" }, { status: 403 });
     if (b.op === "live") { g.live = Object.assign({}, b.live || {}, { at: now }); g.rev++; }
     else if (b.op === "regroup") { g.regroup = { where: String(b.where || "").slice(0, 160), lat: +b.lat || null, lng: +b.lng || null, note: String(b.note || "").slice(0, 160), at: now, id: now.toString(36) }; g.rev++; }
     else if (b.op === "trip") { if (!b.trip || JSON.stringify(b.trip).length > 8e6) return Response.json({ error: "Bad trip" }, { status: 400 }); await this.putTrip(b.trip); g.tripRev = g.rev + 1; g.rev++; }
+    else if (b.op === "offerdone") { const id = String(b.dayId || ""); g.offers = g.offers || {}; g.offers[id] = (g.offers[id] || []).filter(o => o.who !== String(b.who || "")); if (!g.offers[id].length) delete g.offers[id]; g.rev++; }
     else if (b.op === "end") { await st.deleteAll(); return Response.json({ ok: true }); }
     else return Response.json({ error: "Bad request" }, { status: 400 });
     g.touched = now; await st.put("g", g);

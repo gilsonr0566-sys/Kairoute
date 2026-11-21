@@ -379,7 +379,7 @@
       // The end is found by its kind, not as the last row: lunch back on board comes after it (Round 1, Nov 20: a port day's
       // badge said leave by 12:15, the time to be back, because that lunch hid the 38 min ride back).
       const endI = plan.items.findIndex(x => x.t === "end");
-      if ((d.type === "departure" || d.type === "embark" || (d.type === "port" && win.hard)) && endI > 0 && plan.items.slice(0, endI).some(x => x.t === "stop" || (x.t === "meal" && !x.onBoard) || x.t === "fixed")) {
+      if ((d.type === "departure" || d.type === "embark" || (d.type === "port" && win.hard)) && endI > 0 && (win.straight || plan.items.slice(0, endI).some(x => x.t === "stop" || (x.t === "meal" && !x.onBoard) || x.t === "fixed"))) { // straight there: leave-by from the start, on the plan's own ride
         const its = plan.items.slice(0, endI + 1), endAt = its[endI].at; let k = endI, t = endAt;
         // The way back is every ride and fixed step after the last stop or meal (a cable car's queue down is part of it,
         // Nov 20 sweep: a tender day's leave-by left out the 50-minute queue); bags kept somewhere are counted apart.
@@ -519,6 +519,10 @@
     out.forEach((p, i) => { if (!p || !p.items || p.safe || !isFinite(p.end) || !isFinite(p.endBy)) return;
       const free = p.endBy - p.end, win = wins[i]; if (free < 60 || !win) return;
       const said = (p.explain || []).join(" "); if (/free time|time left/i.test(said)) return;
+      // Straight to the ship, train or plane (no sightseeing: a fly-in boarding day): the minutes to spare are the margin
+      // for a late arrival or slow bags, never free time at the airport (Nov 21, Bahamas test trip: "Free time: 50 min"
+      // at the airport before the ride to the ship).
+      if (win.straight) { p.explain = (p.explain || []).concat([`Go straight there: the about ${hm(free)} to spare before ${E.clock(p.endBy)} are your margin for a late arrival, slow bags or traffic.`]); return; }
       const d = days[i], city = guides[d.city] || {}, from = win.head[win.head.length - 1];
       const stops = p.items.filter(x => x.t === "stop" && isFinite(x.lat)), near = [from].concat(stops);
       const away = s => Math.min(...near.map(a => tr.min(a, s)));
