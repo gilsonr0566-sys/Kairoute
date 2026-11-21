@@ -1,0 +1,111 @@
+{
+ "name": "d09-buenosaires",
+ "label": "Buenos Aires stay",
+ "legs": [
+  {
+   "k": "stay",
+   "place": "Buenos Aires, Argentina",
+   "date": "2027-11-15",
+   "nights": 2,
+   "inAt": "09:00",
+   "homeAt": "22:00"
+  }
+ ],
+ "started": "2026-11-21T01:25:24.064Z",
+ "passed": {
+  "/sources": 12,
+  "/transit": 8,
+  "/guide": 1,
+  "/places": 2,
+  "/voyage": 1,
+  "/ground": 1,
+  "/x/near": 4,
+  "/route": 1
+ },
+ "refused": {
+  "/ratings": 1,
+  "/grating": 1,
+  "/events": 1
+ },
+ "errors": [],
+ "days": [
+  {
+   "i": 0,
+   "date": "2027-11-15",
+   "type": "arrival",
+   "text": "MON NOV 15 · BUENOS AIRES, ARGENTINA · ARRIVING\nBuenos Aires, Argentina ✎ Rename\nLock this day\n\nWhich airport do you arrive at? There is more than one here (Ministro Pistarini International Airport, El Palomar Airport, San Fernando Airport or Aeródromo de Campo de Mayo). Choose it in the day's settings: no time is given on a guess.\n\nEdit this day"
+  },
+  {
+   "i": 1,
+   "date": "2027-11-16",
+   "type": "land",
+   "text": "TUE NOV 16 · BUENOS AIRES, ARGENTINA · LAND DAY\nBuenos Aires, Argentina ✎ Rename\nLock this day\n▶ Start the tour\n9:00 am–6:00 pm\n9 h ✎\n9\nsights\n1.7 mi\nwalking\n4:52 pm\nlast stop done\nChoose sights\nMore\nAbout today's plan1 note\nUse Ctrl + scroll to zoom the map\nS\n1\n2\n3\n4\n5\n6\nL\n7\n8\n9\n1 mi\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nWalk\nTaxi or car\n● Meal\nMore about today\n\nAll times are Buenos Aires time (time zone estimated until you're online once), 2 h ahead of your device.\n\nLEAVE\n9:00 am\nS\nLeave Hotel in central Buenos Aires\nAdd your own hotel on the Trip page for exact times.\nWalk · 2 min · 0.1 mi\nARRIVE\n9:02 am\nLEAVE\n9:32 am\n1\nObelisco de Buenos Aires\n30 min · Landmark · Must-see\nWalk · 15 min · 0.7 mi\nWalk · 15 min\nTaxi or car · 13 min\nARRIVE\n9:47 am\nLEAVE\n10:17 am\n2\nBuenos Aires Cathedral\n30 min · Church · Must-see\nWalk · 3 min · 0.1 mi\nARRIVE\n10:20 am\nLEAVE\n10:35 am\n3\nPlaza de Mayo\n15 min · Square · Must-see\nWalk · 3 min · 0.1 mi\nARRIVE\n10:38 am\nLEAVE\n11:18 am\n4\nCasa Rosada\n40 min · Sight · Must-see\nTaxi or car · 21 min · 2.5 mi\nBy road, with time for traffic.\nWalk · 54 min\nTaxi or car · 21 min\nARRIVE\n11:39 am\nLEAVE\n12:19 pm\n5\nLa Bombonera\n40 min · Sight · Must-see\nTaxi or car · 23 min · 2.8 mi\nWalk · 1 h 1 min\nTaxi or car · 23 min\nARRIVE\n12:42 pm\nLEAVE\n1:32 pm\n6\nBarolo Palace\n50 min · Palace · Must-see\nWalk · 4 min · 0.2 mi\nARRIVE\n1:36 pm\nLEAVE\n1:56 pm\nL\nLunch: Ya Pe' Causa\nPeruvian · Local spot · 20 min\nChange lunch\nLunch: why here\nWalk · 7 min · 0.3 mi\nARRIVE\n2:03 pm\nLEAVE\n2:53 pm\n7\nPalace of the Argentine National Congress\n50 min · Palace · Must-see\nTaxi or car · 19 min · 2.0 mi\nWalk · 42 min\nTaxi or car · 19 min\nARRIVE\n3:12 pm\nLEAVE\n3:52 pm\n8\nRecoleta Cemetery\n40 min · Sight · Must-see\nTaxi or car · 16 min · 1.4 mi\nWalk · 30 min\nTaxi or car · 16 min\nARRIVE\n4:08 pm\nLEAVE\n4:48 pm\n9\nColón Theater\n40 min · Sight · Must-see\nUNTIL\n5:56 pm\n+\nFree time: 1 h 8 min\nYours to spend as you like. See what fits\nWalk · 4 min · 0.2 mi\nBY\n6:00 pm\nE\nBack at Hotel in central Buenos Aires\nARRIVE\n6:30 pm\nD\nSuggested dinner: Edelwisse\nGerman\nChange dinner\nDinner: why here"
+  },
+  {
+   "i": 2,
+   "date": "2027-11-17",
+   "type": "departure",
+   "text": "WED NOV 17 · BUENOS AIRES, ARGENTINA · LEAVING\nBuenos Aires, Argentina ✎ Rename\nLock this day\n\nWhich airport do you leave from? There is more than one here (Ministro Pistarini International Airport, El Palomar Airport, San Fernando Airport or Aeródromo de Campo de Mayo). Choose it in the day's settings and the day gets its time to leave by: no time is given on a guess.\n\nEdit this day"
+  }
+ ],
+ "guides": {
+  "Buenos Aires, Argentina": {
+   "city": "Buenos Aires, Argentina",
+   "src": true,
+   "ai": false,
+   "n": 35,
+   "sights": "Casa Rosada* | Colón Theater* | Barolo Palace* | Plaza de Mayo* | La Bombonera* | Palace of the Argentine National Congress* | Obelisco de Buenos Aires* | Recoleta Cemetery* | Buenos Aires Cathedral* | National Museum of Fine Arts, Argentina | Puente de la Mujer | Kavanagh building | Buenos Aires Botanical Garden | Plaza San Martín | Templo Libertad | Monumental Tower | Japanese Gardens | House of Culture of Buenos Aires | El Ateneo Grand Splendid | National Historical Museum | Confitería Ideal | National Museum of Immigration | Nicolás Avellaneda Transporter Bridge~ | Paz Palace | plaza Dorrego | Saint Ignatius of Loyola Church, Buenos Aires | Illuminated Block | Mitre Museum | Floralis Genérica | San Telmo market | Héctor Carlos Janson Historic and  Numismatics Museum | Palacio Duhau Park Hyatt | Botica del Ángel | Palermo Viejo | Las Cañitas",
+   "far": "",
+   "eats": 60,
+   "starts": {
+    "cruise": [
+     "Cruise port of Buenos Aires (unknown)"
+    ],
+    "airport": [
+     "Ministro Pistarini International Airport",
+     "El Palomar Airport",
+     "San Fernando Airport",
+     "Aeródromo de Campo de Mayo"
+    ],
+    "station": [
+     "Correo Central"
+    ],
+    "hotel": [
+     "Hotel in central Buenos Aires"
+    ],
+    "point": [
+     "Central Buenos Aires"
+    ]
+   }
+  }
+ },
+ "steps": [],
+ "version": "5d14162-1795221656",
+ "aiReady": false,
+ "wizard": {
+  "miss": [],
+  "prev": "Your days: 3 days",
+  "form": "Add each place in order, the way it's booked. Each new stop starts where the last one ends.\n\nSTOP 1 · CITY STAY\nCity\nArrive on\nNights\nHotel (optional)\nGetting there\nFlight\nTrain\nFerry\nCar or bus\nArrive in town at\nLeave empty if you don't know yet.\n+ Add a city stay\n+ Add a cruise\nGoing home from here\nFlight\nTrain\nFerry\nCar or bus\nFlight at\nYour days: 3 days\nAdd more details (optional)\nName this trip\n\nKairoute picks good defaults for pace, walking and voice, and you can change any of them later.\n\nCancel\nPersonalize first\nBuild my trip"
+ },
+ "buildSec": 6,
+ "state": {
+  "busy": "",
+  "err": "",
+  "days": [
+   {
+    "date": "2027-11-15",
+    "type": "arrival"
+   },
+   {
+    "date": "2027-11-16",
+    "type": "land"
+   },
+   {
+    "date": "2027-11-17",
+    "type": "departure"
+   }
+  ]
+ },
+ "phoneText": "TUE NOV 16 · BUENOS AIRES, ARGENTINA · LAND DAY\nBuenos Aires, Argentina ✎ Rename\nLock this day\n▶ Start tour\n9:00 am–6:00 pm\n9 h ✎\n9\nsights\n1.7 mi\nwalking\n4:52 pm\nlast stop done\nChoose sights\nMore\nAbout today's plan1 note\nUse Ctrl + scroll to zoom the map\nS\n1\n2\n3\n4\n5\n6\nL\n7\n8\n9\n1 mi\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nWalk\nTaxi or car\n● Meal\nMore about today\n\nAll times are Buenos Aires time (time zone estimated until you're online once), 2 h ahead of your device.\n\nLEAVE\n9:00 am\nS\nLeave Hotel in central Buenos Aires\nAdd your own hotel on the Trip page for exact times.\nWalk · 2 min · 0.1 mi\nARRIVE\n9:02 am\nLEAVE\n9:32 am\n1\nObelisco de Buenos Aires\n30 min · Landmark · Must-see\nWalk · 15 min · 0.7 mi\nWalk · 15 min\nTaxi or car · 13 min\nARRIVE\n9:47 am\nLEAVE\n10:17 am\n2\nBuenos Aires Cathedral\n30 min · Church · Must-see\nWalk · 3 min · 0.1 mi\nARRIVE\n10:20 am\nLEAVE\n10:35 am\n3\nPlaza de Mayo\n15 min · Square · Must-see\nWalk · 3 min · 0.1 mi\nARRIVE\n10:38 am\nLEAVE\n11:18 am\n4\nCasa Rosada\n40 min · Sight · Must-see\nTaxi or car · 21 min · 2.5 mi\nBy road, with time for traffic.\nWalk · 54 min\nTaxi or car · 21 min\nARRIVE\n11:39 am\nLEAVE\n12:19 pm\n5\nLa Bombonera\n40 min · Sight · Must-see\nTaxi or car · 23 min · 2.8 mi\nWalk · 1 h 1 min\nTaxi or car · 23 min\nARRIVE\n12:42 pm\nLEAVE\n1:32 pm\n6\nBarolo Palace\n50 min · Palace · Must-see\nWalk · 4 min · 0.2 mi\nARRIVE\n1:36 pm\nLEAVE\n1:56 pm\nL\nLunch: Ya Pe' Causa\nPeruvian · Local spot · 20 min\nChange lunch\nLunch: why here\nWalk · 7 min · 0.3 mi\nARRIVE\n2:03 ",
+ "finished": "2026-11-21T01:26:13.748Z"
+}

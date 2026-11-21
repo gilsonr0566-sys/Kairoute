@@ -1,0 +1,120 @@
+{
+ "name": "a20-dubai",
+ "label": "Dubai July stay",
+ "legs": [
+  {
+   "k": "stay",
+   "place": "Dubai, UAE",
+   "date": "2027-07-19",
+   "nights": 3,
+   "inAt": "06:00",
+   "homeAt": "23:00"
+  }
+ ],
+ "started": "2026-11-21T01:13:28.645Z",
+ "passed": {
+  "/sources": 12,
+  "/transit": 9,
+  "/guide": 1,
+  "/places": 2,
+  "/voyage": 1,
+  "/ground": 1,
+  "/x/near": 3,
+  "/route": 2
+ },
+ "refused": {
+  "/ratings": 1,
+  "/grating": 2,
+  "/events": 2
+ },
+ "errors": [],
+ "days": [
+  {
+   "i": 0,
+   "date": "2027-07-19",
+   "type": "arrival",
+   "text": "MON JUL 19 · DUBAI, UAE · ARRIVING\nDubai, UAE ✎ Rename\nLock this day\n\nWhich airport do you arrive at? There is more than one here (Dubai International Airport or Al Maktoum International Airport). Choose it in the day's settings: no time is given on a guess.\n\nEdit this day"
+  },
+  {
+   "i": 1,
+   "date": "2027-07-20",
+   "type": "land",
+   "text": "TUE JUL 20 · DUBAI, UAE · LAND DAY\nDubai, UAE ✎ Rename\nLock this day\n▶ Start the tour\n9:00 am–6:00 pm\n9 h ✎\n2\nsights\n0.4 mi\nwalking\n12:56 pm\nlast stop done\nChoose sights\nMore\nAbout today's plan1 note\nUse Ctrl + scroll to zoom the map\nS\n1\n2\nL\n1 mi\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nWalk\nTaxi or car\n● Meal\nMore about today\n\nAll times are Dubai time, 9 h ahead of your device.\n\nLEAVE\n9:00 am\nS\nLeave Hotel in central Dubai\nAdd your own hotel on the Trip page for exact times.\nTaxi or car · 32 min · 4.8 mi\nARRIVE\n9:32 am\nLEAVE\n10:12 am\n1\nEmirates Towers\n40 min · Sight\nTaxi or car · 19 min · 2.0 mi\nBy road, with time for traffic.\nWalk · 42 min\nTaxi or car · 19 min\nARRIVE\n10:31 am\nLEAVE\n11:11 am\n2\nBurj Khalifa\n40 min · Sight · Must-see\nTaxi or car · 37 min · 6.4 mi\nARRIVE\n11:48 am\nLEAVE\n12:48 pm\nL\nLunch: Aden Restaurant for Mandi, Madhbi & Madghod\nRestaurant · Local spot · 1 h\nChange lunch\nLunch: why here\nUNTIL\n5:52 pm\n+\nFree time: 5 h 4 min\nYours to spend as you like. See what fits\nWalk · 8 min · 0.4 mi\nBY\n6:00 pm\nE\nBack at Hotel in central Dubai\nARRIVE\n6:30 pm\nD\nSuggested dinner: Souk Parking\nRestaurant\nChange dinner\nDinner: why here"
+  },
+  {
+   "i": 2,
+   "date": "2027-07-21",
+   "type": "land",
+   "text": "WED JUL 21 · DUBAI, UAE · LAND DAY\nDubai, UAE ✎ Rename\nLock this day\n▶ Start the tour\n9:00 am–6:00 pm\n9 h ✎\n3\nsights\n1.5 mi\nwalking\n1:14 pm\nlast stop done\nChoose sights\nMore\nAbout today's plan1 note\nUse Ctrl + scroll to zoom the map\nS\n1\n2\n3\nL\n1000 ft\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nWalk\n● Meal\nMore about today\n\nAll times are Dubai time, 9 h ahead of your device.\n\nLEAVE\n9:00 am\nS\nLeave Hotel in central Dubai\nAdd your own hotel on the Trip page for exact times.\nWalk · 11 min · 0.5 mi\nWalk · 11 min\nTaxi or car · 12 min\nARRIVE\n9:11 am\nLEAVE\n9:41 am\n1\nGrand Mosque\n30 min · Church\nWalk · 3 min · 0.1 mi\nARRIVE\n9:44 am\nLEAVE\n11:14 am\n2\nDubai Museum\n1 h 30 min · Museum\nWalk · 5 min · 0.2 mi\nARRIVE\n11:19 am\nLEAVE\n11:59 am\n3\nAl Bastakiya\n40 min · Sight\nNext door\nARRIVE\n12:01 pm\nLEAVE\n1:01 pm\nL\nLunch: Make\nRestaurant · Local spot · 1 h\nChange lunch\nLunch: why here\nUNTIL\n5:47 pm\n+\nFree time: 4 h 46 min\nYours to spend as you like. See what fits\nWalk · 13 min · 0.6 mi\nWalk · 13 min\nTaxi or car · 13 min\nBY\n6:00 pm\nE\nBack at Hotel in central Dubai\nARRIVE\n6:30 pm\nD\nSuggested dinner: Sharda Vegetarian Restaurant\nRestaurant\nChange dinner\nDinner: why here"
+  },
+  {
+   "i": 3,
+   "date": "2027-07-22",
+   "type": "departure",
+   "text": "THU JUL 22 · DUBAI, UAE · LEAVING\nDubai, UAE ✎ Rename\nLock this day\n\nWhich airport do you leave from? There is more than one here (Dubai International Airport or Al Maktoum International Airport). Choose it in the day's settings and the day gets its time to leave by: no time is given on a guess.\n\nEdit this day"
+  }
+ ],
+ "guides": {
+  "Dubai, UAE": {
+   "city": "Dubai, UAE",
+   "src": true,
+   "ai": false,
+   "n": 8,
+   "sights": "Burj Khalifa* | Dubai Museum | Dubai Frame | Museum of the Future | Emirates Towers | Jumeirah Mosque | Grand Mosque | Al Bastakiya",
+   "far": "",
+   "eats": 48,
+   "starts": {
+    "cruise": [
+     "Dubai Harbour Cruise Terminal B",
+     "Cruise Terminal 3 - Port Rashid"
+    ],
+    "airport": [
+     "Dubai International Airport",
+     "Al Maktoum International Airport"
+    ],
+    "station": [
+     "Burj Khalifa / Dubai Mall"
+    ],
+    "hotel": [
+     "Hotel in central Dubai"
+    ],
+    "point": [
+     "Central Dubai"
+    ]
+   }
+  }
+ },
+ "steps": [],
+ "version": "5d14162-1795221656",
+ "aiReady": false,
+ "wizard": {
+  "miss": [],
+  "prev": "Your days: 4 days",
+  "form": "Add each place in order, the way it's booked. Each new stop starts where the last one ends.\n\nSTOP 1 · CITY STAY\nCity\nArrive on\nNights\nHotel (optional)\nGetting there\nFlight\nTrain\nFerry\nCar or bus\nArrive in town at\nLeave empty if you don't know yet.\n+ Add a city stay\n+ Add a cruise\nGoing home from here\nFlight\nTrain\nFerry\nCar or bus\nFlight at\nYour days: 4 days\nAdd more details (optional)\nName this trip\n\nKairoute picks good defaults for pace, walking and voice, and you can change any of them later.\n\nCancel\nPersonalize first\nBuild my trip"
+ },
+ "buildSec": 4,
+ "state": {
+  "busy": "",
+  "err": "",
+  "days": [
+   {
+    "date": "2027-07-19",
+    "type": "arrival"
+   },
+   {
+    "date": "2027-07-20",
+    "type": "land"
+   },
+   {
+    "date": "2027-07-21",
+    "type": "land"
+   },
+   {
+    "date": "2027-07-22",
+    "type": "departure"
+   }
+  ]
+ },
+ "phoneText": "TUE JUL 20 · DUBAI, UAE · LAND DAY\nDubai, UAE ✎ Rename\nLock this day\n▶ Start tour\n9:00 am–6:00 pm\n9 h ✎\n2\nsights\n0.4 mi\nwalking\n12:56 pm\nlast stop done\nChoose sights\nMore\nAbout today's plan1 note\nUse Ctrl + scroll to zoom the map\nS\n1\n2\nL\n2 mi\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nWalk\nTaxi or car\n● Meal\nMore about today\n\nAll times are Dubai time, 9 h ahead of your device.\n\nLEAVE\n9:00 am\nS\nLeave Hotel in central Dubai\nAdd your own hotel on the Trip page for exact times.\nTaxi or car · 32 min · 4.8 mi\nARRIVE\n9:32 am\nLEAVE\n10:12 am\n1\nEmirates Towers\n40 min · Sight\nTaxi or car · 19 min · 2.0 mi\nBy road, with time for traffic.\nWalk · 42 min\nTaxi or car · 19 min\nARRIVE\n10:31 am\nLEAVE\n11:11 am\n2\nBurj Khalifa\n40 min · Sight · Must-see\nTaxi or car · 37 min · 6.4 mi\nARRIVE\n11:48 am\nLEAVE\n12:48 pm\nL\nLunch: Aden Restaurant for Mandi, Madhbi & Madghod\nRestaurant · Local spot · 1 h\nChange lunch\nLunch: why here\nUNTIL\n5:52 pm\n+\nFree time: 5 h 4 min\nYours to spend as you like. See what fits\nWalk · 8 min · 0.4 mi\nBY\n6:00 pm\nE\nBack at Hotel in central Dubai\nARRIVE\n6:30 pm\nD\nSuggested dinner: Souk Parking\nRestaurant\nChange dinner\nDinner: why here",
+ "finished": "2026-11-21T01:14:19.695Z"
+}

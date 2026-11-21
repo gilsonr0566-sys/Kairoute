@@ -1,0 +1,194 @@
+{
+ "name": "d18-aqaba-petra",
+ "label": "Aqaba for Petra",
+ "legs": [
+  {
+   "k": "cruise",
+   "board": "Piraeus (Athens), Greece",
+   "date": "2027-10-10",
+   "aboard": "17:00",
+   "ports": [
+    {
+     "date": "2027-10-13",
+     "place": "Aqaba (Petra), Jordan",
+     "arrive": "07:00",
+     "aboard": "19:00"
+    }
+   ],
+   "end": "Piraeus (Athens), Greece",
+   "endDate": "2027-10-16",
+   "off": "07:00"
+  }
+ ],
+ "started": "2026-11-21T01:33:12.137Z",
+ "passed": {
+  "/sources": 12,
+  "/transit": 9,
+  "/guide": 1,
+  "/places": 2,
+  "/voyage": 3,
+  "/ground": 1,
+  "/route": 3,
+  "/x/near": 3
+ },
+ "refused": {
+  "/ratings": 2,
+  "/grating": 1,
+  "/events": 1
+ },
+ "errors": [],
+ "days": [
+  {
+   "i": 0,
+   "date": "2027-10-10",
+   "type": "arrival",
+   "text": "SUN OCT 10 · ATHENS · ARRIVING\nAthens ✎ Rename\nLock this day\nToday is one plan\n\nFlight in at 10:30 am, then the ship at 5:00 pm: the sightseeing in between, your bags and the countdown are on one page.\n\nSee today's plan"
+  },
+  {
+   "i": 1,
+   "date": "2027-10-10",
+   "type": "embark",
+   "text": "SUN OCT 10 · ATHENS · BOARDING\nAthens ✎ Rename\nLock this day\n\nWhen does your flight arrive? Add the time on the Trip page and the day is planned around it, with the time to get to the ship: nothing is planned on a guess.\n\nEdit this day"
+  },
+  {
+   "i": 2,
+   "date": "2027-10-11",
+   "type": "sea"
+  },
+  {
+   "i": 3,
+   "date": "2027-10-12",
+   "type": "sea"
+  },
+  {
+   "i": 4,
+   "date": "2027-10-13",
+   "type": "port",
+   "text": "WED OCT 13 · AQABA, JORDAN · IN PORT\nAqaba, Jordan ✎ Rename\nLock this day\n🚢\nLEAVE BY\nall aboard 7:00 pm\n5:22 pm\n▶ Start the tour\n\nAshore 7:30 am · Official all aboard 7:00 pm · Back at the ship by 6:15 pm\n\nGetting back on time is up to you\n\nKairoute's leave-by and back-by times are estimates with spare time built in. Traffic, queues and the weather can still slow you down. The time that counts is the ship's all-aboard time or your train or flight, as your cruise line or carrier gives it. Check it on the day.\n\nI understand\nTerms of use\n3\nsights\n1.8 mi\nwalking\nChoose sights\nMore\nAbout today's plan2 notes\nUse Ctrl + scroll to zoom the map\nStart · Cruise port\n1\n2\n3\nL\n1000 ft\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nWalk\nTaxi or car\n● Meal\nMore about today\n\nAll times are Aqaba time, 8 h ahead of your device.\n\nLEAVE\n8:25 am\nS\nOff the ship at Aqaba\nShip docks 7:00 am.\nTaxi or car · 35 min · 5.8 mi\nARRIVE\n9:00 am\nLEAVE\n9:50 am\n1\nAqaba Fortress\n50 min · Palace\nWalk · 10 min · 0.4 mi\nARRIVE\n10:00 am\nLEAVE\n10:40 am\n2\nAqaba Governorate\n40 min · Sight · Must-see\nWalk · 24 min · 1.1 mi\nWalk · 24 min\nTaxi or car · 15 min\nARRIVE\n11:04 am\nLEAVE\n11:34 am\n3\nAqaba Church\n30 min · Church\nWalk · 6 min · 0.3 mi\nARRIVE\n11:45 am\nLEAVE\n12:45 pm\nL\nLunch: Sheikh Alhara\nRestaurant · Local spot · 1 h\nChange lunch\nLunch: why here\nUNTIL\n5:22 pm\n+\nFree time: 4 h 37 min\nYours to spend as you like. Leave here by 5:22 pm to be back by 6:15 pm. See what fits\nTaxi or car · 53 min · 6.7 mi\nNo timetable or live traffic confirms this ride's time: it is an estimate with 15 min extra for the ship. Leave by the time shown, never later.\nBY\n6:15 pm\nE\nBack at the ship\nThe ship's official all aboard is 7:00 pm. Kairoute plans you back at least 45 min before it."
+  },
+  {
+   "i": 5,
+   "date": "2027-10-14",
+   "type": "sea"
+  },
+  {
+   "i": 6,
+   "date": "2027-10-15",
+   "type": "sea"
+  },
+  {
+   "i": 7,
+   "date": "2027-10-16",
+   "type": "arrival",
+   "text": "SAT OCT 16 · ATHENS · ARRIVING\nAthens ✎ Rename\nLock this day\n\nThis is your last day. Add how you leave and when (your flight or train home) on the Trip page, or your hotel if you're staying on, and the day is planned around it: nothing is planned on a guess.\n\nEdit this day"
+  }
+ ],
+ "guides": {
+  "Athens": {
+   "city": "Athens",
+   "src": false,
+   "ai": false,
+   "n": 29,
+   "sights": "Acropolis and Parthenon* | Areopagus (Mars Hill)* | Acropolis Museum* | Ancient Agora | Plaka and Anafiotika* | Syntagma Square and the changing of the guard | Athens Cathedral and the Little Metropolis | Monastiraki and the flea market | Temple of Olympian Zeus and Hadrian's Arch | Lycabettus Hill | Theatre of Dionysus | Acropolis promenade (Dionysiou Areopagitou and Apostolou Pavlou) | Agia Ekaterini (St Catherine's Church) | Panagia Kapnikarea | Roman Agora and Tower of the Winds | National Archaeological Museum | Byzantine and Christian Museum | National Garden | Philopappos Hill | Platonic Academy | Erechtheion | Panathenaic Stadium | Temple of Hephaestus | Kerameikos | Temple of Athena Nike | Classical Athens | Lyceum | Kaisariani monastery | National Gallery of Athens",
+   "far": "Ancient Corinth | Temple of Poseidon at Sounion | Delphi | Corinth Canal | Acrocorinth | Museum | Ancient Theater | Temple of Apollo | Sanctuary of Athena with the Tholos | Delphi Stadium",
+   "eats": 7,
+   "starts": {
+    "cruise": [
+     "Piraeus cruise terminals"
+    ],
+    "airport": [
+     "Athens Airport (Eleftherios Venizelos)"
+    ],
+    "station": [
+     "Athens central station (Larissis)"
+    ],
+    "hotel": [
+     "Hotel in Plaka",
+     "Hotel near Syntagma Square",
+     "Hotel in Koukaki (Acropolis Museum)",
+     "Hotel in Monastiraki"
+    ],
+    "point": [
+     "Syntagma Square",
+     "Monastiraki Square"
+    ]
+   }
+  },
+  "Aqaba, Jordan": {
+   "city": "Aqaba, Jordan",
+   "src": true,
+   "ai": false,
+   "n": 3,
+   "sights": "Aqaba Governorate* | Aqaba Fortress | Aqaba Church",
+   "far": "",
+   "eats": 17,
+   "starts": {
+    "cruise": [
+     "Aqaba"
+    ],
+    "airport": [
+     "Ramon Airport",
+     "King Hussein International Airport"
+    ],
+    "station": [
+     "Aqaba main station (unknown)"
+    ],
+    "hotel": [
+     "Hotel in central Aqaba"
+    ],
+    "point": [
+     "Central Aqaba"
+    ]
+   }
+  }
+ },
+ "steps": [],
+ "version": "5d14162-1795221656",
+ "aiReady": false,
+ "wizard": {
+  "miss": [],
+  "prev": "Your days: 7 days · 1 port",
+  "form": "Add each place in order, the way it's booked. Each new stop starts where the last one ends.\n\nSTOP 1 · CRUISE\nLeaves from\nShip (optional)\nBoarding day\nAll aboard\nGetting to the ship (if you arrive the same day)\nFlight\nTrain\nFerry\nCar or bus\nArrive in town at\nLeave empty if you don't know yet.\nPorts of call\nIn order, from your cruise booking. Days with no port are added as sea days.\nDate\nPort\nShip arrives\nAll aboard\nTender port (small boats take you ashore)\nRemove port\n+ Add a port\nCruise ends in\nOn\nOff the ship at\nUsually 7:00 am to 9:00 am. Leave empty if you don't know.\n+ Add a city stay\n+ Add a cruise\nGoing home from here\nFlight\nTrain\nFerry\nCar or bus\nFlight at\nYour days: 7 days · 1 port\nAdd more details (optional)\nName this trip\n\nKairoute picks good defaults for pace, walking and voice, and you can change any of them later.\n\nCancel\nPersonalize first\nBuild my trip"
+ },
+ "buildSec": 8,
+ "state": {
+  "busy": "",
+  "err": "",
+  "days": [
+   {
+    "date": "2027-10-10",
+    "type": "arrival"
+   },
+   {
+    "date": "2027-10-10",
+    "type": "embark"
+   },
+   {
+    "date": "2027-10-11",
+    "type": "sea"
+   },
+   {
+    "date": "2027-10-12",
+    "type": "sea"
+   },
+   {
+    "date": "2027-10-13",
+    "type": "port"
+   },
+   {
+    "date": "2027-10-14",
+    "type": "sea"
+   },
+   {
+    "date": "2027-10-15",
+    "type": "sea"
+   },
+   {
+    "date": "2027-10-16",
+    "type": "arrival"
+   }
+  ]
+ },
+ "phoneText": "WED OCT 13 · AQABA, JORDAN · IN PORT\nAqaba, Jordan ✎ Rename\nLock this day\n🚢\nLEAVE BY\nall aboard 7:00 pm\n5:22 pm\n▶ Start tour\n\nAshore 7:30 am · Official all aboard 7:00 pm · Back at the ship by 6:15 pm\n\nGetting back on time is up to you\n\nKairoute's leave-by and back-by times are estimates with spare time built in. Traffic, queues and the weather can still slow you down. The time that counts is the ship's all-aboard time or your train or flight, as your cruise line or carrier gives it. Check it on the day.\n\nI understand\nTerms of use\n3\nsights\n1.8 mi\nwalking\nChoose sights\nMore\nAbout today's plan2 notes\nUse Ctrl + scroll to zoom the map\nStart · Cruise port\n1\n2\n3\nL\n1000 ft\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nWalk\nTaxi or car\n● Meal\nMore about today\n\nAll times are Aqaba time, 8 h ahead of your device.\n\nLEAVE\n8:25 am\nS\nOff the ship at Aqaba\nShip docks 7:00 am.\nTaxi or car · 35 min · 5.8 mi\nARRIVE\n9:00 am\nLEAVE\n9:50 am\n1\nAqaba Fortress\n50 min · Palace\nWalk · 10 min · 0.4 mi\nARRIVE\n10:00 am\nLEAVE\n10:40 am\n2\nAqaba Governorate\n40 min · Sight · Must-see\nWalk · 24 min · 1.1 mi\nWalk · 24 min\nTaxi or car · 15 min\nARRIVE\n11:04 am\nLEAVE\n11:34 am\n3\nAqaba Church\n30 min · Church\nWalk · 6 min · 0.3 mi\nARRIVE\n11:45 am\nLEAVE\n12:45 pm\nL\nLunch: Sheikh Alhara\nRestaurant · Local spot · 1 h\nChange lunch\nLunch: why here\nUNTIL\n5:22 pm\n+\nFree time: 4 h 37 min\nYours to spend as you like. Leave here by 5:22 pm to be back by 6:15 pm. See what fits\nTaxi or car · 53 min · 6.7 mi\nNo timetable or l",
+ "finished": "2026-11-21T01:34:10.221Z"
+}

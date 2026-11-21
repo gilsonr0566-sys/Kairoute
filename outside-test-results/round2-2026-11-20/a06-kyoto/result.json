@@ -1,0 +1,121 @@
+{
+ "name": "a06-kyoto",
+ "label": "Kyoto April stay",
+ "legs": [
+  {
+   "k": "stay",
+   "place": "Kyoto, Japan",
+   "date": "2027-04-05",
+   "nights": 3,
+   "inBy": "train",
+   "inAt": "13:15",
+   "homeBy": "train",
+   "homeAt": "11:00"
+  }
+ ],
+ "started": "2026-11-21T01:04:14.346Z",
+ "passed": {
+  "/sources": 12,
+  "/transit": 14,
+  "/guide": 1,
+  "/places": 3,
+  "/voyage": 1,
+  "/ground": 1,
+  "/x/near": 8,
+  "/route": 2
+ },
+ "refused": {
+  "/ratings": 1,
+  "/grating": 2,
+  "/events": 2
+ },
+ "errors": [],
+ "days": [
+  {
+   "i": 0,
+   "date": "2027-04-05",
+   "type": "arrival",
+   "text": "MON APR 5 · KYOTO, JAPAN · ARRIVING\nKyoto, Japan ✎ Rename\nLock this day\n\nWhich station do you arrive at? There is more than one here (Kyōto Station or Kyoto-kawaramachi Station). Choose it in the day's settings: no time is given on a guess.\n\nEdit this day"
+  },
+  {
+   "i": 1,
+   "date": "2027-04-06",
+   "type": "land",
+   "text": "TUE APR 6 · KYOTO, JAPAN · LAND DAY\nKyoto, Japan ✎ Rename\nLock this day\n▶ Start the tour\n9:00 am–6:00 pm\n9 h ✎\n5\nsights\n1.3 mi\nwalking\n3:37 pm\nlast stop done\nChoose sights\nMore\nAbout today's plan2 notes\nUse Ctrl + scroll to zoom the map\nS\n1\n2\n3\nL\n4\n5\n3000 ft\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nWalk\nTaxi or car\n● Meal\nMore about today\n\nAll times are Kyoto time (time zone estimated until you're online once), 14 h ahead of your device.\n\nLEAVE\n9:00 am\nS\nLeave Hotel in central Kyoto\nAdd your own hotel on the Trip page for exact times.\nTaxi or car · 19 min · 1.9 mi\nBy road, with time for traffic.\nWalk · 42 min\nTaxi or car · 19 min\nARRIVE\n9:19 am\nLEAVE\n9:59 am\n1\nKiyomizu-dera\n40 min · Sight · Must-see\nWalk · 13 min · 0.6 mi\nWalk · 13 min\nTaxi or car · 13 min\nARRIVE\n10:12 am\nLEAVE\n10:52 am\n2\nKōdai-ji Temple\n40 min · Sight\nWalk · 7 min · 0.3 mi\nARRIVE\n10:59 am\nLEAVE\n11:39 am\n3\nYasaka Shrine\n40 min · Sight\nWalk · 3 min · 0.1 mi\nARRIVE\n11:45 am\nLEAVE\n12:45 pm\nL\nLunch: zucca da vino\nPopular with visitors · 1 h\nChange lunch\nRate zucca da vino\nWalk · 6 min · 0.3 mi\nARRIVE\n12:51 pm\nLEAVE\n1:31 pm\n4\nChion-in Temple\n40 min · Sight\nTaxi or car · 17 min · 1.6 mi\nWalk · 34 min\nTaxi or car · 17 min\nARRIVE\n1:48 pm\nLEAVE\n3:18 pm\n5\nKyoto National Museum\n1 h 30 min · Museum\nUNTIL\n5:41 pm\n+\nFree time: 2 h 23 min\nYours to spend as you like. See what fits\nTaxi or car · 19 min · 2.0 mi\nWalk · 42 min\nTaxi or car · 19 min\nBY\n6:00 pm\nE\nBack at Hotel in central Kyoto\nARRIVE\n6:30 pm\nD\nSuggested dinner: Nowvelle vagne Kyoto\nRestaurant\nChange dinner\nDinner: why here"
+  },
+  {
+   "i": 2,
+   "date": "2027-04-07",
+   "type": "land",
+   "text": "WED APR 7 · KYOTO, JAPAN · LAND DAY\nKyoto, Japan ✎ Rename\nLock this day\n▶ Start the tour\n9:00 am–6:00 pm\n9 h ✎\n6\nsights\n2.4 mi\nwalking\n4:03 pm\nlast stop done\nChoose sights\nMore\nAbout today's plan1 note\nUse Ctrl + scroll to zoom the map\nS\n1\n2\n3\nL\n4\n5\n6\n2000 ft\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nWalk\nTaxi or car\n● Meal\nMore about today\n\nAll times are Kyoto time (time zone estimated until you're online once), 14 h ahead of your device.\n\nLEAVE\n9:00 am\nS\nLeave Hotel in central Kyoto\nAdd your own hotel on the Trip page for exact times.\nTaxi or car · 25 min · 3.3 mi\nARRIVE\n9:25 am\nLEAVE\n10:05 am\n1\nDaitoku-ji Temple\n40 min · Sight\nTaxi or car · 22 min · 2.6 mi\nBy road, with time for traffic.\nWalk · 56 min\nTaxi or car · 22 min\nARRIVE\n10:27 am\nLEAVE\n11:07 am\n2\nNinna-ji Temple\n40 min · Sight\nWalk · 10 min · 0.4 mi\nARRIVE\n11:17 am\nLEAVE\n11:57 am\n3\nRyōan-ji Temple\n40 min · Sight\nWalk · 2 min · 0.1 mi\nARRIVE\n11:59 am\nLEAVE\n12:59 pm\nL\nLunch: Ryoanji Yudofu - Seigenin\nRestaurant · Local spot · 1 h\nChange lunch\nLunch: why here\nWalk · 18 min · 0.8 mi\nWalk · 18 min\nTaxi or car · 14 min\nARRIVE\n1:17 pm\nLEAVE\n1:57 pm\n4\nKinkaku-ji Temple\n40 min · Sight · Must-see\nWalk · 15 min · 0.7 mi\nWalk · 15 min\nTaxi or car · 13 min\nARRIVE\n2:12 pm\nLEAVE\n2:52 pm\n5\nHirano Shrine\n40 min · Sight\nWalk · 8 min · 0.4 mi\nARRIVE\n3:00 pm\nLEAVE\n3:40 pm\n6\nKitano Tenmangū\n40 min · Sight\nUNTIL\n5:37 pm\n+\nFree time: 1 h 57 min\nYours to spend as you like. See what fits\nTaxi or car · 23 min · 2.9 mi\nWalk · 1 h 3 min\nTaxi or car · 23 min\nBY\n6:00 pm\nE\nBack at Hotel in central Kyoto\nARRIVE\n6:30 pm\nD\nSuggested dinner: Bungalow Terramachi\nRestaurant\nChange dinner\nDinner: why here"
+  },
+  {
+   "i": 3,
+   "date": "2027-04-08",
+   "type": "departure",
+   "text": "THU APR 8 · KYOTO, JAPAN · LEAVING\nKyoto, Japan ✎ Rename\nLock this day\n\nWhich station do you leave from? There is more than one here (Kyōto Station or Kyoto-kawaramachi Station). Choose it in the day's settings and the day gets its time to leave by: no time is given on a guess.\n\nEdit this day"
+  }
+ ],
+ "guides": {
+  "Kyoto, Japan": {
+   "city": "Kyoto, Japan",
+   "src": true,
+   "ai": false,
+   "n": 40,
+   "sights": "Kiyomizu-dera* | Kinkaku-ji Temple* | Historic Monuments of Ancient Kyoto* | Fushimi Inari-taisha | Ginkaku-ji Temple | Ryōan-ji Temple | Tō-ji Temple | Nijō Castle | Heian Jingū | Kyoto National Museum | Ninna-ji Temple | Yasaka Shrine | Tōfuku-ji Temple | Shimogamo Shrine | Nanzen-ji Temple | Sanjūsangen-dō Temple | Chion-in Temple | Daitoku-ji Temple | Kyoto Imperial Palace | Kitano Tenmangū | Myōshin-ji Temple | Nishi Hongan-ji Temple | Kyoto International Manga Museum | Kōdai-ji Temple | Yoshida Shrine | Gion | Sennyū-ji Temple | Kyoto Tower | Kennin-ji Temple | Rokuharamitsu-ji Temple | Kyoto Municipal Museum of Art | Maruyama Park | Hōkan-ji Temple | Hirano Shrine | Shōren-in Temple | Shisen-dō Temple | Imamiya Shrine | Zuishin-in Temple | Yōgen-in Temple | Sumiya",
+   "far": "",
+   "eats": 68,
+   "starts": {
+    "cruise": [
+     "Cruise port of Kyoto (unknown)"
+    ],
+    "airport": [
+     "Kyoto airport (unknown)"
+    ],
+    "station": [
+     "Kyōto Station",
+     "Kyoto-kawaramachi Station"
+    ],
+    "hotel": [
+     "Hotel in central Kyoto"
+    ],
+    "point": [
+     "Central Kyoto"
+    ]
+   }
+  }
+ },
+ "steps": [],
+ "version": "5d14162-1795221656",
+ "aiReady": false,
+ "wizard": {
+  "miss": [],
+  "prev": "Your days: 4 days",
+  "form": "Add each place in order, the way it's booked. Each new stop starts where the last one ends.\n\nSTOP 1 · CITY STAY\nCity\nArrive on\nNights\nHotel (optional)\nGetting there\nFlight\nTrain\nFerry\nCar or bus\nArrive in town at\nLeave empty if you don't know yet.\n+ Add a city stay\n+ Add a cruise\nGoing home from here\nFlight\nTrain\nFerry\nCar or bus\nTrain at\nYour days: 4 days\nAdd more details (optional)\nName this trip\n\nKairoute picks good defaults for pace, walking and voice, and you can change any of them later.\n\nCancel\nPersonalize first\nBuild my trip"
+ },
+ "buildSec": 24,
+ "state": {
+  "busy": "",
+  "err": "",
+  "days": [
+   {
+    "date": "2027-04-05",
+    "type": "arrival"
+   },
+   {
+    "date": "2027-04-06",
+    "type": "land"
+   },
+   {
+    "date": "2027-04-07",
+    "type": "land"
+   },
+   {
+    "date": "2027-04-08",
+    "type": "departure"
+   }
+  ]
+ },
+ "phoneText": "TUE APR 6 · KYOTO, JAPAN · LAND DAY\nKyoto, Japan ✎ Rename\nLock this day\n▶ Start tour\n9:00 am–6:00 pm\n9 h ✎\n5\nsights\n1.3 mi\nwalking\n3:37 pm\nlast stop done\nChoose sights\nMore\nAbout today's plan2 notes\nUse Ctrl + scroll to zoom the map\nS\n1\n2\n3\nL\n4\n5\n3000 ft\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nWalk\nTaxi or car\n● Meal\nMore about today\n\nAll times are Kyoto time (time zone estimated until you're online once), 14 h ahead of your device.\n\nLEAVE\n9:00 am\nS\nLeave Hotel in central Kyoto\nAdd your own hotel on the Trip page for exact times.\nTaxi or car · 19 min · 1.9 mi\nBy road, with time for traffic.\nWalk · 42 min\nTaxi or car · 19 min\nARRIVE\n9:19 am\nLEAVE\n9:59 am\n1\nKiyomizu-dera\n40 min · Sight · Must-see\nWalk · 13 min · 0.6 mi\nWalk · 13 min\nTaxi or car · 13 min\nARRIVE\n10:12 am\nLEAVE\n10:52 am\n2\nKōdai-ji Temple\n40 min · Sight\nWalk · 7 min · 0.3 mi\nARRIVE\n10:59 am\nLEAVE\n11:39 am\n3\nYasaka Shrine\n40 min · Sight\nWalk · 3 min · 0.1 mi\nARRIVE\n11:45 am\nLEAVE\n12:45 pm\nL\nLunch: zucca da vino\nPopular with visitors · 1 h\nChange lunch\nRate zucca da vino\nWalk · 6 min · 0.3 mi\nARRIVE\n12:51 pm\nLEAVE\n1:31 pm\n4\nChion-in Temple\n40 min · Sight\nTaxi or car · 17 min · 1.6 mi\nWalk · 34 min\nTaxi or car · 17 min\nARRIVE\n1:48 pm\nLEAVE\n3:18 pm\n5\nKyoto National Museum\n1 h 30 min · Museum\nUNTIL\n5:41 pm\n+\nFree time: 2 h 23 min\nYours to spend as you like. See what fits\nTaxi or car · 19 min · 2.0 mi\nWalk · 42 min\nTaxi or car · 19 min\nBY\n6:00 pm\nE\nBack at Hotel in central Kyoto\nARRIVE\n6:30 pm\nD\nSuggested dinn",
+ "finished": "2026-11-21T01:05:29.496Z"
+}

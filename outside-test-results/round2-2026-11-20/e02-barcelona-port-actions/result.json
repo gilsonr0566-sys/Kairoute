@@ -1,0 +1,361 @@
+{
+ "name": "e02-barcelona-port-actions",
+ "label": "",
+ "legs": [
+  {
+   "k": "cruise",
+   "board": "Marseille, France",
+   "date": "2027-05-15",
+   "aboard": "17:00",
+   "inAt": "09:00",
+   "ports": [
+    {
+     "date": "2027-05-16",
+     "place": "Barcelona, Spain",
+     "arrive": "08:00",
+     "aboard": "18:00"
+    }
+   ],
+   "end": "Marseille, France",
+   "endDate": "2027-05-17",
+   "off": "07:00"
+  }
+ ],
+ "started": "2026-11-21T01:39:49.156Z",
+ "passed": {
+  "/sources": 14,
+  "/transit": 21,
+  "/guide": 1,
+  "/places": 4,
+  "/voyage": 4,
+  "/ground": 1,
+  "/route": 22,
+  "/x/near": 10,
+  "/facts": 2
+ },
+ "refused": {
+  "/ratings": 3,
+  "/grating": 5,
+  "/events": 3
+ },
+ "errors": [],
+ "days": [
+  {
+   "i": 0,
+   "date": "2027-05-15",
+   "type": "arrival",
+   "text": "SAT MAY 15 · MARSEILLE, FRANCE · ARRIVING\nMarseille, France ✎ Rename\nLock this day\nToday is one plan\n\nFlight in at 9:00 am, then the ship at 5:00 pm: the sightseeing in between, your bags and the countdown are on one page.\n\nSee today's plan"
+  },
+  {
+   "i": 1,
+   "date": "2027-05-15",
+   "type": "embark",
+   "text": "SAT MAY 15 · MARSEILLE, FRANCE · BOARDING\nMarseille, France ✎ Rename\nLock this day\n🚢\nLEAVE BY\nall aboard 5:00 pm\n2:41 pm\n▶ Start the tour\n\nOfficial all aboard 5:00 pm · Back at the cruise terminal by 4:00 pm\n\nGetting back on time is up to you\n\nKairoute's leave-by and back-by times are estimates with spare time built in. Traffic, queues and the weather can still slow you down. The time that counts is the ship's all-aboard time or your train or flight, as your cruise line or carrier gives it. Check it on the day.\n\nI understand\nTerms of use\n1\nsight\nChoose sights\nMore\nAbout today's plan3 notes\nNot planned today: Stade Vélodrome didn't fit in the time. To fit it in: skip Château d'If.\nCollect your bags at 10:15 am and leave for the cruise terminal by 2:41 pm.\nOpening hours aren't known for Château d'If on this date: planned between 9:00 am and 5:00 pm, check before you go.\nUse Ctrl + scroll to zoom the map\nStart · Airport\n1\nL\nFinish · Cruise port\n100 ft\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nWalk\nTaxi or car\n● Meal\n■ Hotel\nMore about today\n🛳 When do you board?\nBoarding time\nTerminal (optional)\nSave\n\nOn your boarding pass or check-in confirmation (also called arrival or check-in time). Until you add it, the plan uses the time to be back above.\n\nWhat to have on you · 0 of 9 ready\n📅 Add reminders to my calendar\nThis day has 3 h 11 min of travel for 40 min at the sights. Consider fewer far-apart stops, more hours, or splitting it over two days.\n\nAll times are Marseille time, 7 h ahead of your device.\n\nLEAVE\n10:15 am\nS\nOut of Marseille Provence Airport\nFlight arrives 9:00 am. We allow 1 h 15 min to get off the plane and through baggage claim (and passport control after a flight from abroad). Book luggage storage near Marseille Provence Airport ahead (a left-luggage desk or a storage shop), or ask your hotel or station.\nYou fly in the day the ship sails. A late or missed flight is the most common way travelers miss a ship, and the ship won't wait: if your flight is delayed, skip the sightseeing and go straight to the port.\nNext door\nARRIVE\n10:15 am\nLEAVE\n10:30 am\nH\nLeave your bags in luggage storage\n15 min\nTaxi or car · 55 min · 16 mi\nARRIVE\n11:25 am\nLEAVE\n12:05 pm\n1\nChâteau d'If\n40 min · Sight · Must-see\nWalk · 2 min · 0.1 mi\nARRIVE\n12:07 pm\nLEAVE\n1:07 pm\nL\nLunch: Marseille en face\nRestaurant · Popular with visitors · 1 h\nChange lunch\nLunch: why here\nTaxi or car · 55 min · 16 mi\nARRIVE\n2:02 pm\nLEAVE\n2:17 pm\nH\nCollect your bags\n15 min\nTaxi or car · 1 h 19 min · 11 mi\nNo timetable or live traffic confirms this ride's time: it is an estimate with 15 min extra for the connection. Leave by the time shown, never later.\nARRIVE\n3:36 pm\nE\nBoarding at Marseille Provence Cruise Terminal\n24 min to spare.\nOfficial all aboard 5:00 pm: be at the terminal by 4:00 pm at the latest. Your cruise line gives you a boarding time: add it and the plan gets you there for it.\nPorters take your big bags at the curb (luggage tags on; they reach your cabin by evening). Keep your passport, boarding pass, medicines and valuables in your carry-on for check-in and security.\nBig ports have more than one cruise terminal: check yours on your boarding pass and tell the driver.\nBook the taxi or transfer the day before, or ask your hotel to call one. Being aboard on time is your responsibility: check your boarding time with your cruise line."
+  },
+  {
+   "i": 2,
+   "date": "2027-05-16",
+   "type": "port",
+   "text": "SUN MAY 16 · BARCELONA · IN PORT\nBarcelona ✎ Rename\nLock this day\n🚢\nLEAVE BY\nall aboard 6:00 pm\n4:37 pm\n▶ Start the tour\n\nAshore 8:30 am · Official all aboard 6:00 pm · Back at the ship by 5:15 pm\n\nGetting back on time is up to you\n\nKairoute's leave-by and back-by times are estimates with spare time built in. Traffic, queues and the weather can still slow you down. The time that counts is the ship's all-aboard time or your train or flight, as your cruise line or carrier gives it. Check it on the day.\n\nI understand\nTerms of use\n5\nsights\n1.5 mi\nwalking\nChoose sights\nMore\nAbout today's plan16 notes\nNot planned today: Bunkers del Carmel didn't fit in the time.\nNot planned today: MNAC & Magic Fountain didn't fit in the time.\nNot planned today: Montjuïc Castle didn't fit in the time.\nNot planned today: Gràcia squares didn't fit in the time.\nNot planned today: Barceloneta beach didn't fit in the time.\nNot planned today: El Born Centre de Cultura didn't fit in the time. To fit it in: spend 5 minutes less at Casa Batlló and have lunch on the go, spend 5 minutes less at Park Güell and have lunch on the go or spend 5 minutes less at Sagrada Família and have lunch on the go.\nNot planned today: Plaça de Catalunya didn't fit in the time. To fit it in: spend 10 minutes less at Casa Batlló and have lunch on the go, spend 10 minutes less at Park Güell and have lunch on the go or spend 10 minutes less at Sagrada Família and have lunch on the go.\nNot planned today: Museu Picasso didn't fit in the time.\nNot planned today: Parc de la Ciutadella didn't fit in the time. To fit it in: spend 25 minutes less at Sagrada Família and have lunch on the go.\nNot planned today: Sant Pau Recinte Modernista didn't fit in the time. To fit it in: spend 30 minutes less at Sagrada Família and have lunch on the go or skip Santa Maria del Mar.\nNot planned today: Casa Milà (La Pedrera) didn't fit in the time. To fit it in: skip Santa Maria del Mar.\nNot planned today: Palau de la Música Catalana didn't fit in the time.\nNot planned today: Gothic Quarter & Cathedral didn't fit in the time. To fit it in: spend 30 minutes less at Sagrada Família and have lunch on the go or skip Camp Nou.\nLunch at La Torreta del Parc Güell is a place to eat on the map beside your stops (the guide names none on your way): check reviews before you go.\nOpening hours aren't known for Camp Nou on this date: planned between 9:00 am and 5:00 pm, check before you go.\nAlso worth seeing here, but not in today's time: La Rambla & La Boqueria market, Sant Antoni Market, Plaça Reial, Pont del Bisbe and 4 more.\nUse Ctrl + scroll to zoom the map\nStart · Cruise port\n1\n2\nL\n3\n4\n5\n1 mi\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nWalk\nTaxi or car\nTrain, metro or tram\n● Meal\nMore about today\n\nAll times are Barcelona time, 7 h ahead of your device.\n\nLEAVE\n8:30 am\nS\nOff the ship at Moll Adossat cruise terminals\nMost big ships dock here. A port shuttle bus runs to the Columbus Monument.\nShip docks 8:00 am.\nTaxi or car · 28 min · 4.0 mi\nBy road, with time for traffic.\nPort shuttle bus · 53 min\nTaxi or car · 28 min\nARRIVE\n9:00 am\nLEAVE\n9:40 am\n1\nCamp Nou\n40 min · Sight · Must-see\nMetro L5, Badal to Sagrada Família · 32 min · 4.0 mi\nTime includes getting to the station and the wait.\nWalk 12 min to Badal. Metro L5, Badal to Sagrada Família, 14 min. Walk 1 min.\nMetro L5, Badal to Sagrada Família · 32 min\nTaxi or car · 28 min\nARRIVE\n10:12 am\nLEAVE\n11:42 am\n2\nSagrada Família\n1 h 30 min · Basilica · Must-see · UNESCO\nBOOK AHEAD\nBook tickets\n↗\nMark booked\nEntrance fee not included · more\nTaxi or car · 18 min · 1.7 mi\nWalk · 36 min\nTaxi or car · 18 min\nARRIVE\n12:00 pm\nLEAVE\n12:35 pm\nL\nLunch: La Torreta del Parc Güell\nPopular with visitors · 35 min\nChange lunch\nRate La Torreta del Parc Güell\nWalk · 2 min · 0.1 mi\nARRIVE\n12:37 pm\nLEAVE\n1:52 pm\n3\nPark Güell\n1 h 15 min · Park · Must-see\nBOOK AHEAD\nBook tickets\n↗\nMark booked\nEntrance fee not included · more\nMetro L3, Vallcarca to Passeig de Gràcia · 27 min · 2.2 mi\nWalk 13 min to Vallcarca. Metro L3, Vallcarca to Passeig de Gràcia, 8 min. Walk 1 min.\nWalk · 47 min\nMetro L3, Vallcarca to Passeig de Gràcia · 27 min\nTaxi or car · 20 min\nARRIVE\n2:19 pm\nLEAVE\n3:19 pm\n4\nCasa Batlló\n1 h · Gaudí house · Must-see\nBOOK AHEAD\nBook tickets\n↗\nMark booked\nEntrance fee not included · more\nWalk · 29 min · 1.3 mi\nWalk · 29 min\nMetro L4, Passeig de Gràcia to Jaume I · 18 min\nTaxi or car · 16 min\nARRIVE\n3:48 pm\nLEAVE\n4:18 pm\n5\nSanta Maria del Mar\n30 min · Church\nTaxi or car · 38 min · 2.9 mi\nIncludes 15 min spare before the ship.\nWalk · 1 h 2 min\nPort shuttle bus · 1 h 3 min\nTaxi or car · 23 min\nARRIVE\n4:56 pm\nE\nBack at the ship\nThe ship's official all aboard is 6:00 pm. Kairoute plans you back at least 45 min before it."
+  },
+  {
+   "i": 3,
+   "date": "2027-05-17",
+   "type": "arrival",
+   "text": "MON MAY 17 · MARSEILLE, FRANCE · ARRIVING\nMarseille, France ✎ Rename\nLock this day\n\nThis is your last day. Add how you leave and when (your flight or train home) on the Trip page, or your hotel if you're staying on, and the day is planned around it: nothing is planned on a guess.\n\nEdit this day"
+  }
+ ],
+ "guides": {
+  "Marseille, France": {
+   "city": "Marseille, France",
+   "src": true,
+   "ai": false,
+   "n": 20,
+   "sights": "Stade Vélodrome* | Notre-Dame de la Garde | Marseille Cathedral | Château d'If* | Fort Saint-Jean | Longchamp Palace | Museum of European and Mediterranean Civilisations | Abbey of St. Victor | Old Port of Marseille | Unité d'Habitation de Marseille | Museum of the Roman Docks | Musée des beaux-arts de Marseille | Cantini Museum | Parc Borély | La Vieille Charité | Marseille History Museum | Noailles | Musée d’Archéologie Méditerranéenne | Vallon des Auffes | Museum of Contemporary Art, Marseille",
+   "far": "Aix-en-Provence | Cassis",
+   "eats": 60,
+   "starts": {
+    "cruise": [
+     "Marseille Provence Cruise Terminal"
+    ],
+    "airport": [
+     "Marseille Provence Airport"
+    ],
+    "station": [
+     "Marseille-Saint-Charles station"
+    ],
+    "hotel": [
+     "Hotel in central Marseille"
+    ],
+    "point": [
+     "Central Marseille"
+    ]
+   }
+  },
+  "Barcelona": {
+   "city": "Barcelona",
+   "src": false,
+   "n": 51,
+   "sights": "Sagrada Família* | Park Güell* | Casa Batlló* | Casa Milà (La Pedrera) | Gothic Quarter & Cathedral* | La Rambla & La Boqueria market | Museu Picasso | Santa Maria del Mar | Palau de la Música Catalana | Sant Pau Recinte Modernista | Bunkers del Carmel | Gràcia squares | Sant Antoni Market | Parc de la Ciutadella | Barceloneta beach | Montjuïc Castle | MNAC & Magic Fountain | El Born Centre de Cultura | Plaça Reial~ | Pont del Bisbe~ | Amatller House~ | Arc de Triomf~ | Columbus Monument~ | Plaça de Catalunya | Palau Güell~ | Camp Nou* | Torre Glòries | Cathedral of the Holy Cross and Saint Eulalia | Casa Vicens | Lluís Companys Olympic Stadium | Museu Nacional d'Art de Catalunya | MACBA Barcelona Museum of Contemporary Art | Fundació Joan Miró | Generalitat of Catalonia | Tower of Collserola | German Pavilion, Barcelona | Lleó Morera House | FC Barcelona Museum | Palau Sant Jordi | Poble Espanyol | Tàpies Museum | Plaça d'Espanya | Royal Square | Gran Teatre del Liceu | Aquarium Barcelona | Maritime Museum of Barcelona | Monastery of Pedralbes | Gaudi House Museum | Güell Pavilions | Hash Marihuana & Hemp Museum | Botànic Garden of Barcelona",
+   "far": "Montserrat monastery | Sitges | Girona old town | Tibidabo | Maricel Museum | Contemporary Art Gallery",
+   "eats": 35,
+   "starts": {
+    "cruise": [
+     "Moll Adossat cruise terminals",
+     "World Trade Center cruise terminal"
+    ],
+    "airport": [
+     "Barcelona Airport, Terminal 1",
+     "Barcelona Airport, Terminal 2"
+    ],
+    "hotel": [
+     "Hotel near Plaça de Catalunya",
+     "Hotel on Passeig de Gràcia",
+     "Hotel at Port Olímpic"
+    ],
+    "station": [
+     "Barcelona Sants station",
+     "Estació de França"
+    ],
+    "point": [
+     "Barcelona Sants train station",
+     "Plaça d'Espanya"
+    ]
+   }
+  }
+ },
+ "steps": [
+  {
+   "name": "1-ticks-vs-plan",
+   "r": {
+    "on": [
+     "Santa Maria del Mar",
+     "Casa Batlló",
+     "Camp Nou",
+     "Sagrada Família",
+     "Park Güell"
+    ],
+    "total": 13
+   },
+   "text": "SUN MAY 16 · BARCELONA · IN PORT\nBarcelona ✎ Rename\nLock this day\n🚢\nLEAVE BY\nall aboard 6:00 pm\n4:37 pm\n▶ Start the tour\n\nAshore 8:30 am · Official all aboard 6:00 pm · Back at the ship by 5:15 pm\n\nGetting back on time is up to you\n\nKairoute's leave-by and back-by times are estimates with spare time built in. Traffic, queues and the weather can still slow you down. The time that counts is the ship's all-aboard time or your train or flight, as your cruise line or carrier gives it. Check it on the day.\n\nI understand\nTerms of use\n5\nsights\n1.1 mi\nwalking\nChoose sights\nMore\nAbout today's plan17 notes\nGothic Quarter & Cathedral gets 50 min, the walk to Pont del Bisbe, which you picked as a stop of its own (on its own it gets 60 min).\nNot planned today: Bunkers del Carmel didn't fit in the time.\nNot planned today: MNAC & Magic Fountain didn't fit in the time.\nNot planned today: Montjuïc Castle didn't fit in the time.\nNot planned today: Gràcia squares didn't fit in the time.\nNot planned today: Barceloneta beach didn't fit in the time.\nNot planned today: El Born Centre de Cultura didn't fit in the time.\nNot planned today: Plaça de Catalunya didn't fit in the time. To fit it in: spend 20 minutes less at Casa Batlló and have lunch on the go, spend 20 minutes less at Sagrada Família and have lunch on the go or spend 25 minutes less at Park Güell.\nNot planned today: Museu Picasso didn't fit in the time.\nNot planned today: Parc de la Ciutadella didn't fit in the time.\nNot planned today: Sant Pau Recinte Modernista didn't fit in the time.\nNot planned today: Casa Milà (La Pedrera) didn't fit in the time.\nNot planned today: Santa Maria del Mar didn't fit in the time. To fit it in: spend 30 minutes less at Sagrada Família and have lunch on the go.\nNot planned today: Palau de la Música Catalana didn't fit in the time.\nLunch at La Torreta del Parc Güell is a place to eat on the map beside your stops (the guide names none on your way): check reviews before you go.\nOpening hours aren't known for Camp Nou on this date: planned between 9:00 am and 5:00 pm, check before you go.\nAlso worth seeing here, but not in today's time: La Rambla & La Boqueria market, Sant Antoni Market, Plaça Reial, Amatller House and 3 more.\nUse Ctrl + scroll to zoom the map\nStart · Cruise port\n1\n2\nL\n3\n4\n5\n1 mi\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nWalk\nTaxi or car\nTrain, metro or tram\n● Meal\nMore about today\n\nAll times are Barcelona time, 7 h ahead of your device.\n\nLEAVE\n8:30 am\nS\nOff the ship at Moll Adossat cruise terminals\nMost big ships dock here. A port shuttle bus runs to the Columbus Monument.\nShip docks 8:00 am.\nTaxi or car · 28 min · 4.0 mi\nBy road, with time for traffic.\nPort shuttle bus · 53 min\nTaxi or car · 28 min\nARRIVE\n9:00 am\nLEAVE\n9:40 am\n1\nCamp Nou\n40 min · Sight · Must-see\nMetro L5, Badal to Sagrada Família · 32 min · 4.0 mi\nTime includes getting to the station and the wait.\nWalk 12 min to Badal. Metro L5, Badal to Sagrada Família, 14 min. Walk 1 min.\nMetro L5, Badal to Sagrada Família · 32 min\nTaxi or car · 28 min\nARRIVE\n10:12 am\nLEAVE\n11:42 am\n2\nSagrada Família\n1 h 30 min · Basilica · Must-see · UNESCO\nBOOK AHEAD\nBook tickets\n↗\nMark booked\nEntrance fee not included · more\nTaxi or car · 18 min · 1.7 mi\nWalk · 36 min\nTaxi or car · 18 min\nARRIVE\n12:00 pm\nLEAVE\n12:20 pm\nL\nLunch: La Torreta del Parc Güell\nPopular with visitors · 20 min\nChange lunch\nRate La Torreta del Parc Güell\nWalk · 2 min · 0.1 mi\nARRIVE\n12:22 pm\nLEAVE\n1:37 pm\n3\nPark Güell\n1 h 15 min · Park · Must-see\nBOOK AHEAD\nBook tickets\n↗\nMark booked\nEntrance fee not included · more\nMetro L3, Vallcarca to Passeig de Gràcia · 27 min · 2.2 mi\nWalk 13 min to Vallcarca. Metro L3, Vallcarca to Passeig de Gràcia, 8 min. Walk 1 min.\nWalk · 47 min\nMetro L3, Vallcarca to Passeig de Gràcia · 27 min\nWalk to the road, then taxi · 23 min\nARRIVE\n2:04 pm\nLEAVE\n3:04 pm\n4\nCasa Batlló\n1 h · Gaudí house · Must-see\nBOOK AHEAD\nBook tickets\n↗\nMark booked\nEntrance fee not included · more\nWalk · 22 min · 1.0 mi\nWalk · 22 min\nMetro L3, Passeig de Gràcia to Liceu · 17 min\nTaxi or car · 15 min\nARRIVE\n3:26 pm\nLEAVE\n4:16 pm\n5\nGothic Quarter & Cathedral\n50 min · Old town · Must-see\nIncludes Cathedral of the Holy Cross and Saint Eulalia and Generalitat of Catalonia\nTaxi or car · 38 min · 2.8 mi\nIncludes 15 min spare before the ship.\nWalk · 1 h\nPort shuttle bus · 1 h 3 min\nTaxi or car · 23 min\nARRIVE\n4:54 pm\nE\nBack at the ship\nThe ship's official all aboard is 6:00 pm. Kairoute plans you back at least 45 min before it."
+  },
+  {
+   "name": "2-untick-one",
+   "r": {
+    "tapped": [
+     "Pick Gothic Quarter & Cathedral"
+    ],
+    "onBefore": [
+     "Gothic Quarter & Cathedral",
+     "Casa Batlló",
+     "Camp Nou",
+     "Sagrada Família",
+     "Park Güell"
+    ],
+    "onAfter": [
+     "Casa Batlló",
+     "Camp Nou",
+     "Sagrada Família",
+     "Park Güell"
+    ],
+    "offCount": 1,
+    "pickerPage": "SUN MAY 16 · BARCELONA · IN PORT\nChoose sights\n🚢\nLEAVE BY\nall aboard 6:00 pm\n4:22 pm\n‹ Back to my day plan\nAll\nMust-sees\nFamous\nLocal favorites\n\nVisits 4 h 25 min · Lunch 1 h · Walking and rides 2 h 57 min\n\nAlmost full: about 23 min left.\n\nLet your guide plan it\n\nThe best stops for today in Barcelona, fitted to your hours, pace and interests. Nothing repeats.\n\nSuggest my tour\nFresh sights for this day only\n\nMore sights come from checked sources (Wikidata, Wikipedia, heritage registers); their short descriptions are from Wikivoyage (CC BY-SA). Each one's full story is written when you add it to a day.\n\n4 sights chosen\n23 min left of 8 h 45 min\nYour sights (4)\nHide\nCasa Batlló\nOn your plan · 10:50 am\n1 h · €35 · 2.7 mi from the ship\nGaudí house\nCamp Nou\nOn your plan · 3:19 pm\n40 min · Free · 3.1 mi from the ship\nIncluded: FC Barcelona Museum\nFamous sight\nSagrada Família\nOn your plan · 1:17 pm\n1 h 30 min · €26 · 3.5 mi from the ship\nBasilica\nPark Güell\nOn your plan · 9:08 am\n1 h 15 min · €18 · 4.3 mi from the ship\nIncluded: Gaudi House Museum\nPark\n\nStill fits today (0)\n\nYour day is full. See \"Doesn't fit today\" for what would make room.\n\nMore nearby (1)\n\nDoesn't fit today (48)\n\nTap one to see why, and what would make it fit.\n\nMontjuïc Castle\nNeeds 1 h 17 min\n1 h · €19 · 0.8 mi from the ship\nViewpoint\nBotànic Garden of Barcelona\nNeeds 59 min\n40 min · Free · 0.8 mi from the ship\nPark or garden\nLluís Companys Olympic Stadium\nNeeds 50 min\n40 min · Free · 1.1 mi from the ship\nFamous",
+    "dialog": []
+   },
+   "text": "SUN MAY 16 · BARCELONA · IN PORT\nBarcelona ✎ Rename\nLock this day\n🚢\nLEAVE BY\nall aboard 6:00 pm\n4:22 pm\n▶ Start the tour\n\nAshore 8:30 am · Official all aboard 6:00 pm · Back at the ship by 5:15 pm\n\nGetting back on time is up to you\n\nKairoute's leave-by and back-by times are estimates with spare time built in. Traffic, queues and the weather can still slow you down. The time that counts is the ship's all-aboard time or your train or flight, as your cruise line or carrier gives it. Check it on the day.\n\nI understand\nTerms of use\n4\nsights\n1.3 mi\nwalking\nChoose sights\nMore\nAbout today's plan2 notes\nUse Ctrl + scroll to zoom the map\nStart · Cruise port\n1\n2\nL\n3\n4\n3000 ft\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nWalk\nTaxi or car\nTrain, metro or tram\n● Meal\nMore about today\n\nAll times are Barcelona time, 7 h ahead of your device.\n\nLEAVE\n8:30 am\nS\nOff the ship at Moll Adossat cruise terminals\nMost big ships dock here. A port shuttle bus runs to the Columbus Monument.\nShip docks 8:00 am.\nWalk to the road, then taxi · 38 min · 5.6 mi\nBy road, with time for traffic.\nthe taxi stops about 3 min walk away.\nPort shuttle bus · 1 h\nWalk to the road, then taxi · 38 min\nARRIVE\n9:08 am\nLEAVE\n10:23 am\n1\nPark Güell\n1 h 15 min · Park · Must-see\nBOOK AHEAD\nBook tickets\n↗\nMark booked\nEntrance fee not included · more\nMetro L3, Vallcarca to Passeig de Gràcia · 27 min · 2.2 mi\nTime includes getting to the station and the wait.\nWalk 13 min to Vallcarca. Metro L3, Vallcarca to Passeig de Gràcia, 8 min. Walk 1 min.\nWalk · 47 min\nMetro L3, Vallcarca to Passeig de Gràcia · 27 min\nWalk to the road, then taxi · 23 min\nARRIVE\n10:50 am\nLEAVE\n11:50 am\n2\nCasa Batlló\n1 h · Gaudí house · Must-see\nBOOK AHEAD\nBook tickets\n↗\nMark booked\nEntrance fee not included · more\nWalk · 5 min · 0.2 mi\nARRIVE\n11:55 am\nLEAVE\n12:55 pm\nL\nLunch: Parking Pizza\nItalian · Local spot · 1 h\nChange lunch\nLunch: why here\nWalk · 22 min · 1.0 mi\nWalk · 22 min\nMetro L5, Verdaguer to Sagrada Família · 17 min\nTaxi or car · 15 min\nARRIVE\n1:17 pm\nLEAVE\n2:47 pm\n3\nSagrada Família\n1 h 30 min · Basilica · Must-see · UNESCO\nBOOK AHEAD\nBook tickets\n↗\nMark booked\nEntrance fee not included · more\nMetro L5, Sagrada Família to Badal · 32 min · 4.0 mi\nWalk 1 min to Sagrada Família. Metro L5, Sagrada Família to Badal, 14 min. Walk 12 min.\nMetro L5, Sagrada Família to Badal · 32 min\nTaxi or car · 28 min\nARRIVE\n3:19 pm\nLEAVE\n3:59 pm\n4\nCamp Nou\n40 min · Sight · Must-see\nTaxi or car · 53 min · 4.0 mi\nIncludes 25 min spare before the ship.\nPort shuttle bus · 1 h 8 min\nTaxi or car · 28 min\nARRIVE\n4:52 pm\nE\nBack at the ship\nThe ship's official all aboard is 6:00 pm. Kairoute plans you back at least 45 min before it."
+  },
+  {
+   "name": "3-tick-one-more",
+   "r": {
+    "tapped": [
+     "Pick Columbus Monument"
+    ],
+    "onBefore": [
+     "Casa Batlló",
+     "Camp Nou",
+     "Sagrada Família",
+     "Park Güell"
+    ],
+    "onAfter": [
+     "Columbus Monument",
+     "Casa Batlló",
+     "Camp Nou",
+     "Sagrada Família",
+     "Park Güell"
+    ],
+    "offCount": 1,
+    "pickerPage": "SUN MAY 16 · BARCELONA · IN PORT\nChoose sights\n🚢\nLEAVE BY\nall aboard 6:00 pm\n4:35 pm\n‹ Back to my day plan\nAll\nMust-sees\nFamous\nLocal favorites\n\nVisits 4 h 35 min · Lunch 1 h · Walking and rides 2 h 43 min\n\nAlmost full: about 27 min left.\n\nLet your guide plan it\n\nThe best stops for today in Barcelona, fitted to your hours, pace and interests. Nothing repeats.\n\nSuggest my tour\nFresh sights for this day only\n\nMore sights come from checked sources (Wikidata, Wikipedia, heritage registers); their short descriptions are from Wikivoyage (CC BY-SA). Each one's full story is written when you add it to a day.\n\n5 sights chosen\n27 min left of 8 h 45 min\nYour sights (5)\nHide\nColumbus Monument\nOn your plan · 3:58 pm\n10 min · Free · 1.6 mi from the ship\nMonument\nCasa Batlló\nOn your plan · 2:44 pm\n1 h · €35 · 2.7 mi from the ship\nGaudí house\nCamp Nou\nOn your plan · 9:00 am\n40 min · Free · 3.1 mi from the ship\nIncluded: FC Barcelona Museum\nFamous sight\nSagrada Família\nOn your plan · 10:12 am\n1 h 30 min · €26 · 3.5 mi from the ship\nBasilica\nPark Güell\nOn your plan · 1:02 pm\n1 h 15 min · €18 · 4.3 mi from the ship\nIncluded: Gaudi House Museum\nPark\n\nStill fits today (0)\n\nYour day is full. See \"Doesn't fit today\" for what would make room.\n\nMore nearby (1)\n\nDoesn't fit today (47)\n\nTap one to see why, and what would make it fit.\n\nMontjuïc Castle\nNeeds 1 h 17 min\n1 h · €19 · 0.8 mi from the ship\nViewpoint\nBotànic Garden of Barcelona\nNeeds 59 min\n40 min · Free · 0.8 mi from the ship\nPark or garden\n",
+    "dialog": []
+   },
+   "text": "SUN MAY 16 · BARCELONA · IN PORT\nBarcelona ✎ Rename\nLock this day\n🚢\nLEAVE BY\nall aboard 6:00 pm\n4:35 pm\n▶ Start the tour\n\nAshore 8:30 am · Official all aboard 6:00 pm · Back at the ship by 5:15 pm\n\nGetting back on time is up to you\n\nKairoute's leave-by and back-by times are estimates with spare time built in. Traffic, queues and the weather can still slow you down. The time that counts is the ship's all-aboard time or your train or flight, as your cruise line or carrier gives it. Check it on the day.\n\nI understand\nTerms of use\n5\nsights\n0.1 mi\nwalking\nChoose sights\nMore\nAbout today's plan3 notes\nUse Ctrl + scroll to zoom the map\nStart · Cruise port\n1\n2\nL\n3\n4\n5\n1 mi\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nWalk\nTaxi or car\nTrain, metro or tram\n● Meal\nMore about today\n\nAll times are Barcelona time, 7 h ahead of your device.\n\nLEAVE\n8:30 am\nS\nOff the ship at Moll Adossat cruise terminals\nMost big ships dock here. A port shuttle bus runs to the Columbus Monument.\nShip docks 8:00 am.\nTaxi or car · 28 min · 4.0 mi\nBy road, with time for traffic.\nPort shuttle bus · 53 min\nTaxi or car · 28 min\nARRIVE\n9:00 am\nLEAVE\n9:40 am\n1\nCamp Nou\n40 min · Sight · Must-see\nMetro L5, Badal to Sagrada Família · 32 min · 4.0 mi\nTime includes getting to the station and the wait.\nWalk 12 min to Badal. Metro L5, Badal to Sagrada Família, 14 min. Walk 1 min.\nMetro L5, Badal to Sagrada Família · 32 min\nTaxi or car · 28 min\nARRIVE\n10:12 am\nLEAVE\n11:42 am\n2\nSagrada Família\n1 h 30 min · Basilica · Must-see · UNESCO\nBOOK AHEAD\nBook tickets\n↗\nMark booked\nEntrance fee not included · more\nTaxi or car · 18 min · 1.7 mi\nWalk · 36 min\nTaxi or car · 18 min\nARRIVE\n12:00 pm\nLEAVE\n1:00 pm\nL\nLunch: La Torreta del Parc Güell\nPopular with visitors · 1 h\nChange lunch\nRate La Torreta del Parc Güell\nWalk · 2 min · 0.1 mi\nARRIVE\n1:02 pm\nLEAVE\n2:17 pm\n3\nPark Güell\n1 h 15 min · Park · Must-see\nBOOK AHEAD\nBook tickets\n↗\nMark booked\nEntrance fee not included · more\nMetro L3, Vallcarca to Passeig de Gràcia · 27 min · 2.2 mi\nWalk 13 min to Vallcarca. Metro L3, Vallcarca to Passeig de Gràcia, 8 min. Walk 1 min.\nWalk · 47 min\nMetro L3, Vallcarca to Passeig de Gràcia · 27 min\nWalk to the road, then taxi · 23 min\nARRIVE\n2:44 pm\nLEAVE\n3:44 pm\n4\nCasa Batlló\n1 h · Gaudí house · Must-see\nBOOK AHEAD\nBook tickets\n↗\nMark booked\nEntrance fee not included · more\nMetro L3, Passeig de Gràcia to Drassanes · 14 min · 1.7 mi\nWalk 1 min to Passeig de Gràcia. Metro L3, Passeig de Gràcia to Drassanes, 5 min. Walk 3 min.\nWalk · 36 min\nMetro L3, Passeig de Gràcia to Drassanes · 14 min\nTaxi or car · 18 min\nARRIVE\n3:58 pm\nLEAVE\n4:08 pm\n5\nColumbus Monument\n10 min · Monument\nTaxi or car · 40 min · 2.1 mi\nIncludes 20 min spare before the ship.\nWalk · 45 min\nPort shuttle bus · 1 h\nTaxi or car · 20 min\nARRIVE\n4:48 pm\nE\nBack at the ship\nThe ship's official all aboard is 6:00 pm. Kairoute plans you back at least 45 min before it."
+  },
+  {
+   "name": "4-tick-six-more",
+   "r": {
+    "tapped": [
+     "Pick Amatller House"
+    ],
+    "onBefore": [
+     "Columbus Monument",
+     "Casa Batlló",
+     "Camp Nou",
+     "Sagrada Família",
+     "Park Güell"
+    ],
+    "onAfter": [
+     "Columbus Monument",
+     "Amatller House",
+     "Casa Batlló",
+     "Camp Nou",
+     "Sagrada Família",
+     "Park Güell"
+    ],
+    "offCount": 0,
+    "pickerPage": "SUN MAY 16 · BARCELONA · IN PORT\nChoose sights\n🚢\nLEAVE BY\nall aboard 6:00 pm\n4:35 pm\n‹ Back to my day plan\nAll\nMust-sees\nFamous\nLocal favorites\n\nVisits 4 h 45 min · Lunch 1 h · Walking and rides 2 h 45 min\n\nAlmost full: about 15 min left.\n\nLet your guide plan it\n\nThe best stops for today in Barcelona, fitted to your hours, pace and interests. Nothing repeats.\n\nSuggest my tour\nFresh sights for this day only\n\nMore sights come from checked sources (Wikidata, Wikipedia, heritage registers); their short descriptions are from Wikivoyage (CC BY-SA). Each one's full story is written when you add it to a day.\n\n6 sights chosen\n15 min left of 8 h 45 min\nYour sights (6)\nHide\nColumbus Monument\nOn your plan · 4:10 pm\n10 min · Free · 1.6 mi from the ship\nMonument\nAmatller House\nOn your plan · 3:46 pm\n10 min · Free · 2.7 mi from the ship\nFaçade\nCasa Batlló\nOn your plan · 2:44 pm\n1 h · €35 · 2.7 mi from the ship\nGaudí house\nCamp Nou\nOn your plan · 9:00 am\n40 min · Free · 3.1 mi from the ship\nIncluded: FC Barcelona Museum\nFamous sight\nSagrada Família\nOn your plan · 10:12 am\n1 h 30 min · €26 · 3.5 mi from the ship\nBasilica\nPark Güell\nOn your plan · 1:02 pm\n1 h 15 min · €18 · 4.3 mi from the ship\nIncluded: Gaudi House Museum\nPark\n\nStill fits today (0)\n\nYour day is full. See \"Doesn't fit today\" for what would make room.\n\nDoesn't fit today (47)\n\nTap one to see why, and what would make it fit.\n\nMontjuïc Castle\nNeeds 1 h 17 min\n1 h · €19 · 0.8 mi from the ship\nViewpoint\nBotànic Garden of Barcelona\n",
+    "dialog": []
+   },
+   "text": "SUN MAY 16 · BARCELONA · IN PORT\nBarcelona ✎ Rename\nLock this day\n🚢\nLEAVE BY\nall aboard 6:00 pm\n4:35 pm\n▶ Start the tour\n\nAshore 8:30 am · Official all aboard 6:00 pm · Back at the ship by 5:15 pm\n\nGetting back on time is up to you\n\nKairoute's leave-by and back-by times are estimates with spare time built in. Traffic, queues and the weather can still slow you down. The time that counts is the ship's all-aboard time or your train or flight, as your cruise line or carrier gives it. Check it on the day.\n\nI understand\nTerms of use\n6\nsights\n0.1 mi\nwalking\nChoose sights\nMore\nAbout today's plan3 notes\nUse Ctrl + scroll to zoom the map\nStart · Cruise port\n1\n2\nL\n3\n4\n5\n6\n1 mi\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nWalk\nTaxi or car\nTrain, metro or tram\n● Meal\nMore about today\n\nAll times are Barcelona time, 7 h ahead of your device.\n\nLEAVE\n8:30 am\nS\nOff the ship at Moll Adossat cruise terminals\nMost big ships dock here. A port shuttle bus runs to the Columbus Monument.\nShip docks 8:00 am.\nTaxi or car · 28 min · 4.0 mi\nBy road, with time for traffic.\nPort shuttle bus · 53 min\nTaxi or car · 28 min\nARRIVE\n9:00 am\nLEAVE\n9:40 am\n1\nCamp Nou\n40 min · Sight · Must-see\nMetro L5, Badal to Sagrada Família · 32 min · 4.0 mi\nTime includes getting to the station and the wait.\nWalk 12 min to Badal. Metro L5, Badal to Sagrada Família, 14 min. Walk 1 min.\nMetro L5, Badal to Sagrada Família · 32 min\nTaxi or car · 28 min\nARRIVE\n10:12 am\nLEAVE\n11:42 am\n2\nSagrada Família\n1 h 30 min · Basilica · Must-see · UNESCO\nBOOK AHEAD\nBook tickets\n↗\nMark booked\nEntrance fee not included · more\nTaxi or car · 18 min · 1.7 mi\nWalk · 36 min\nTaxi or car · 18 min\nARRIVE\n12:00 pm\nLEAVE\n1:00 pm\nL\nLunch: La Torreta del Parc Güell\nPopular with visitors · 1 h\nChange lunch\nRate La Torreta del Parc Güell\nWalk · 2 min · 0.1 mi\nARRIVE\n1:02 pm\nLEAVE\n2:17 pm\n3\nPark Güell\n1 h 15 min · Park · Must-see\nBOOK AHEAD\nBook tickets\n↗\nMark booked\nEntrance fee not included · more\nMetro L3, Vallcarca to Passeig de Gràcia · 27 min · 2.2 mi\nWalk 13 min to Vallcarca. Metro L3, Vallcarca to Passeig de Gràcia, 8 min. Walk 1 min.\nWalk · 47 min\nMetro L3, Vallcarca to Passeig de Gràcia · 27 min\nWalk to the road, then taxi · 23 min\nARRIVE\n2:44 pm\nLEAVE\n3:44 pm\n4\nCasa Batlló\n1 h · Gaudí house · Must-see\nBOOK AHEAD\nBook tickets\n↗\nMark booked\nEntrance fee not included · more\nNext door\nARRIVE\n3:46 pm\nLEAVE\n3:56 pm\n5\nAmatller House\n10 min · Façade\nMetro L3, Passeig de Gràcia to Drassanes · 14 min · 1.7 mi\nWalk 1 min to Passeig de Gràcia. Metro L3, Passeig de Gràcia to Drassanes, 5 min. Walk 3 min.\nWalk · 36 min\nMetro L3, Passeig de Gràcia to Drassanes · 14 min\nTaxi or car · 18 min\nARRIVE\n4:10 pm\nLEAVE\n4:20 pm\n6\nColumbus Monument\n10 min · Monument\nTaxi or car · 40 min · 2.1 mi\nIncludes 20 min spare before the ship.\nWalk · 45 min\nPort shuttle bus · 1 h\nTaxi or car · 20 min\nARRIVE\n5:00 pm\nE\nBack at the ship\nThe ship's official all aboard is 6:00 pm. Kairoute plans you back at least 45 min before it."
+  },
+  {
+   "name": "5-fit-in-one",
+   "r": {
+    "asked": "montjuic",
+    "wont": [
+     "Montjuïc Castle\nNeeds 1 h 17 min\n1 h · €19 · 0.8 mi from the ship\nViewpoint",
+     "Botànic Garden of Barcelona\nNeeds 59 min\n40 min · Free · 0.8 mi from the ship\nPark or garden",
+     "Lluís Companys Olympic Stadium\nNeeds 50 min\n40 min · Free · 1.1 mi from the ship\nFamous sight",
+     "Palau Sant Jordi\nNeeds 1 h\n50 min · Free · 1.2 mi from the ship\nPalace",
+     "Fundació Joan Miró\nNeeds 51 min\n40 min · Free · 1.2 mi from the ship\nFamous sight",
+     "Museu Nacional d'Art de Catalunya\nNeeds 1 h 40 min\n1 h 30 min · Free · 1.4 mi from the ship\nMuseum",
+     "MNAC & Magic Fountain\nNeeds 1 h 10 min\n1 h · €12 · 1.4 mi from the ship\nMuseum",
+     "Maritime Museum of Barcelona\nNeeds 1 h 33 min\n1 h 30 min · Free · 1.6 mi from the ship\nMuseum",
+     "German Pavilion, Barcelona\nNeeds 50 min\n40 min · Free · 1.6 mi from the ship\nFamous sight",
+     "Poble Espanyol\nNeeds 50 min\n40 min · Free · 1.6 mi from the ship\nLocal favorite",
+     "Aquarium Barcelona\nNeeds 50 min\n40 min · Free · 1.8 mi from the ship\nFamous sight",
+     "Palau Güell\nNeeds 19 min\n10 min · Free · 1.8 mi from the ship\nFaçade",
+     "Sant Antoni Market\nNeeds 44 min\n30 min · Free · 1.8 mi from the ship\nMarket",
+     "Plaça d'Espanya\nNeeds 26 min\n15 min · Free · 1.9 mi from the ship\nSquare",
+     "Royal Square\nNeeds 26 min\n15 min · Free · 1.9 mi from the ship\nSquare",
+     "Plaça Reial\nNeeds 21 min\n10 min · Free · 1.9 mi from the ship\nSquare",
+     "Gran Teatre del Liceu\nNeeds 53 min\n40 min · Free · 1.9 mi from the ship\nFamous sight",
+     "Hash Marihuana & Hemp Museum\nNeeds 1 h 39 min\n1 h 30 min · Free · 2.0 mi from the ship\nMuseum",
+     "La Rambla & La Boqueria market\nNeeds 1 h\n45 min · Free · 2.0 mi from the ship\nStreet & market",
+     "MACBA Barcelona Museum of Contemporary Art\nNeeds 1 h 43 min\n1 h 30 min · Free · 2.1 mi from the ship\nMuseum",
+     "Generalitat of Catalonia\nNeeds 56 min\n40 min · Free · 2.1 mi from the ship\nFamous sight",
+     "Barceloneta beach\nNeeds 1 h 9 min\n45 min · Free · 2.1 mi from the ship\nBeach",
+     "Pont del Bisbe\nNeeds 26 min\n10 min · Free · 2.1 mi from the ship\nFamous sight",
+     "Cathedral of the Holy Cross and Saint Eulalia\nNeeds 46 min\n30 min · Free · 2.2 mi from the ship\nChurch",
+     "Gothic Quarter & Cathedral\nNeeds 1 h 16 min\n1 h · €9 · 2.2 mi from the ship\nOld town",
+     "Santa Maria del Mar\nNeeds 48 min\n30 min · €5 · 2.2 mi from the ship\nChurch",
+     "Museu Picasso\nNeeds 1 h 32 min\n1 h 15 min · €15 · 2.3 mi from the ship\nMuseum",
+     "Plaça de Catalunya\nNeeds 44 min\n30 min · Free · 2.3 mi from the ship\nSquare",
+     "El Born Centre de Cultura\nNeeds 48 min\n30 min · Free · 2.4 mi from the ship\nLocal favorite",
+     "Palau de la Música Catalana\nNeeds 1 h 4 min\n50 min · €22 · 2.4 mi from the ship\nConcert hall",
+     "Parc de la Ciutadella\nNeeds 58 min\n40 min · Free · 2.6 mi from the ship\nPark",
+     "Lleó Morera House\nNeeds 42 min\n40 min · Free · 2.7 mi from the ship\nLocal favorite",
+     "Arc de Triomf\nNeeds 32 min\n10 min · Free · 2.7 mi from the ship\nMonument",
+     "Tàpies Museum\nNeeds 1 h 32 min\n1 h 30 min · Free · 2.7 mi from the ship\nMuseum",
+     "Casa Milà (La Pedrera)\nNeeds 1 h 6 min\n1 h · €28 · 3.0 mi from the ship\nGaudí house",
+     "Gràcia squares\nNeeds 1 h 5 min\n45 min · Free · 3.4 mi from the ship\nNeighborhood",
+     "Casa Vicens\nNeeds 51 min\n40 min · Free · 3.6 mi from the ship\nFamous sight",
+     "Torre Glòries\nNeeds 1 h 1 min\n40 min · Free · 3.6 mi from the ship\nFamous sight",
+     "Güell Pavilions\nNeeds 56 min\n40 min · Free · 3.6 mi from the ship\nLocal favorite",
+     "Sant Pau Recinte Modernista\nNeeds 1 h 14 min\n1 h · €17 · 4.1 mi from the ship\nLocal favorite",
+     "Monastery of Pedralbes\nNeeds 48 min\n30 min · Free · 4.2 mi from the ship\nChurch",
+     "Bunkers del Carmel\nNeeds 1 h\n45 min · Free · 4.6 mi from the ship\nViewpoint",
+     "Tower of Collserola\nNeeds 1 h 6 min\n40 min · Free · 5.3 mi from the ship\nLocal favorite",
+     "Tibidabo\nNeeds 1 h 56 min\n1 h 30 min · €35 · Day trip · 5.4 mi from the ship\nFamous sight",
+     "Sitges\nNeeds 3 h 57 min\n2 h · €10 · Day trip · 21 mi from the ship\nIncluded: Maricel Museum · Contemporary Art Gallery\nFamous sight",
+     "Montserrat monastery\nNeeds 4 h 35 min\n2 h 30 min · €40 · Day trip · 24 mi from the ship\nFamous sight",
+     "Girona old town\nNeeds 5 h 34 min\n3 h · €30 · Day trip · 55 mi from the ship\nFamous sight"
+    ],
+    "box1": "Montjuïc Castle doesn't fit your time ashore yet\n9 h 47 min of 8 h 45 min\n8:30 am to 5:15 pm\n\nMontjuïc Castle needs about 1 h 17 min with getting there and back on your route.\n\n1 h 2 min over. Pick one of the ways below and Kairoute rearranges your day.\n\nTo make sure you're back on board on time (all aboard 6:00 pm, with a 45-minute safety margin), there's no room for this today. Swap it for one of your sights, or see it on another day.\n\nWays to fit it in, one tap\n\nSwap Amatller House for Montjuïc Castle · back on board 5:15 pm\nSwap Columbus Monument for Montjuïc Castle · back on board 5:12 pm\nOr choose what to untick yourself\nKeep my day as is\nAdd Montjuïc Castle",
+    "fixed": "Swap Amatller House for Montjuïc Castle · back on board 5:15 pm",
+    "box2": null,
+    "added": null,
+    "on": [
+     "Montjuïc Castle",
+     "Columbus Monument",
+     "Casa Batlló",
+     "Camp Nou",
+     "Sagrada Família",
+     "Park Güell"
+    ]
+   },
+   "text": "SUN MAY 16 · BARCELONA · IN PORT\nBarcelona ✎ Rename\nLock this day\n🚢\nLEAVE BY\nall aboard 6:00 pm\n4:39 pm\n▶ Start the tour\n\nAshore 8:30 am · Official all aboard 6:00 pm · Back at the ship by 5:15 pm\n\nGetting back on time is up to you\n\nKairoute's leave-by and back-by times are estimates with spare time built in. Traffic, queues and the weather can still slow you down. The time that counts is the ship's all-aboard time or your train or flight, as your cruise line or carrier gives it. Check it on the day.\n\nI understand\nTerms of use\n6\nsights\n1.1 mi\nwalking\nChoose sights\nMore\nAbout today's plan3 notes\nUse Ctrl + scroll to zoom the map\nStart · Cruise port\n1\n2\n3\nL\n4\n5\n6\n1 mi\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nWalk\nTaxi or car\nTrain, metro or tram\n● Meal\nMore about today\n\nAll times are Barcelona time, 7 h ahead of your device.\n\nLEAVE\n8:30 am\nS\nOff the ship at Moll Adossat cruise terminals\nMost big ships dock here. A port shuttle bus runs to the Columbus Monument.\nShip docks 8:00 am.\nTaxi or car · 28 min · 4.0 mi\nBy road, with time for traffic.\nPort shuttle bus · 53 min\nTaxi or car · 28 min\nARRIVE\n9:00 am\nLEAVE\n9:40 am\n1\nCamp Nou\n40 min · Sight · Must-see\nMetro L5, Badal to Sagrada Família · 32 min · 4.0 mi\nTime includes getting to the station and the wait.\nWalk 12 min to Badal. Metro L5, Badal to Sagrada Família, 14 min. Walk 1 min.\nMetro L5, Badal to Sagrada Família · 32 min\nTaxi or car · 28 min\nARRIVE\n10:12 am\nLEAVE\n11:42 am\n2\nSagrada Família\n1 h 30 min · Basilica · Must-see · UNESCO\nBOOK AHEAD\nBook tickets\n↗\nMark booked\nEntrance fee not included · more\nMetro L5, Sagrada Família to Diagonal, then Metro L3, Diagonal to Vallcarca · 40 min · 1.8 mi\nWalk 1 min to Sagrada Família. Metro L5, Sagrada Família to Diagonal, 4 min. Change to Metro L3, Diagonal to Vallcarca, 6 min. Walk 13 min.\nWalk · 38 min\nMetro L5, Sagrada Família to Diagonal, then Metro L3, Diagonal to Vallcarca · 40 min\nWalk to the road, then taxi · 21 min\nARRIVE\n12:22 pm\nLEAVE\n1:17 pm\n3\nPark Güell\n55 min · Park · Must-see\nBOOK AHEAD\nBook tickets\n↗\nMark booked\nEntrance fee not included · more\nWalk · 2 min · 0.1 mi\nARRIVE\n1:19 pm\nLEAVE\n1:39 pm\nL\nLunch: La Torreta del Parc Güell\nPopular with visitors · 20 min\nChange lunch\nRate La Torreta del Parc Güell\nTaxi or car · 20 min · 2.1 mi\nWalk · 45 min\nTaxi or car · 20 min\nARRIVE\n1:59 pm\nLEAVE\n2:59 pm\n4\nCasa Batlló\n1 h · Gaudí house · Must-see\nBOOK AHEAD\nBook tickets\n↗\nMark booked\nEntrance fee not included · more\nMetro L3, Passeig de Gràcia to Drassanes · 14 min · 1.7 mi\nWalk 1 min to Passeig de Gràcia. Metro L3, Passeig de Gràcia to Drassanes, 5 min. Walk 3 min.\nWalk · 36 min\nBus N6 · 38 min\nMetro L3, Passeig de Gràcia to Drassanes · 14 min\nTaxi or car · 18 min\nARRIVE\n3:13 pm\nLEAVE\n3:23 pm\n5\nColumbus Monument\n10 min · Monument\nTaxi or car · 16 min · 1.4 mi\nWalk · 30 min\nTaxi or car · 16 min\nARRIVE\n3:39 pm\nLEAVE\n4:39 pm\n6\nMontjuïc Castle\n1 h · Viewpoint\nWalk · 36 min · 1.0 mi\nIncludes 15 min spare before the ship.\nWalk · 21 min\nTaxi or car · 14 min\nARRIVE\n5:15 pm\nE\nBack at the ship\nThe ship's official all aboard is 6:00 pm. Kairoute plans you back at least 45 min before it."
+  },
+  {
+   "name": "6-switch-a-ride",
+   "r": {
+    "pressed": "Port shuttle bus · 53 min",
+    "candidates": 10,
+    "dialog": []
+   },
+   "text": "SUN MAY 16 · BARCELONA · IN PORT\nBarcelona ✎ Rename\nLock this day\n🚢\nLEAVE BY\nall aboard 6:00 pm\n4:39 pm\n▶ Start the tour\n\nAshore 8:30 am · Official all aboard 6:00 pm · Back at the ship by 5:15 pm\n\nGetting back on time is up to you\n\nKairoute's leave-by and back-by times are estimates with spare time built in. Traffic, queues and the weather can still slow you down. The time that counts is the ship's all-aboard time or your train or flight, as your cruise line or carrier gives it. Check it on the day.\n\nI understand\nTerms of use\n6\nsights\n1.1 mi\nwalking\nChoose sights\nMore\nAbout today's plan3 notes\nUse Ctrl + scroll to zoom the map\nStart · Cruise port\n1\n2\n3\nL\n4\n5\n6\n1 mi\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nWalk\nTaxi or car\nTrain, metro or tram\n● Meal\nMore about today\n\nAll times are Barcelona time, 7 h ahead of your device.\n\nLEAVE\n8:30 am\nS\nOff the ship at Moll Adossat cruise terminals\nMost big ships dock here. A port shuttle bus runs to the Columbus Monument.\nShip docks 8:00 am.\nTaxi or car · 28 min · 4.0 mi\nBy road, with time for traffic.\nPort shuttle bus takes 53 min, 25 min longer than Taxi or car. With it, Montjuïc Castle wouldn't fit before the ship, so the plan keeps Taxi or car and every stop. Take Port shuttle bus and leave out Montjuïc Castle\nPort shuttle bus · 53 min\nTaxi or car · 28 min\nARRIVE\n9:00 am\nLEAVE\n9:40 am\n1\nCamp Nou\n40 min · Sight · Must-see\nMetro L5, Badal to Sagrada Família · 32 min · 4.0 mi\nTime includes getting to the station and the wait.\nWalk 12 min to Badal. Metro L5, Badal to Sagrada Família, 14 min. Walk 1 min.\nMetro L5, Badal to Sagrada Família · 32 min\nTaxi or car · 28 min\nARRIVE\n10:12 am\nLEAVE\n11:42 am\n2\nSagrada Família\n1 h 30 min · Basilica · Must-see · UNESCO\nBOOK AHEAD\nBook tickets\n↗\nMark booked\nEntrance fee not included · more\nMetro L5, Sagrada Família to Diagonal, then Metro L3, Diagonal to Vallcarca · 40 min · 1.8 mi\nWalk 1 min to Sagrada Família. Metro L5, Sagrada Família to Diagonal, 4 min. Change to Metro L3, Diagonal to Vallcarca, 6 min. Walk 13 min.\nWalk · 38 min\nMetro L5, Sagrada Família to Diagonal, then Metro L3, Diagonal to Vallcarca · 40 min\nWalk to the road, then taxi · 21 min\nARRIVE\n12:22 pm\nLEAVE\n1:17 pm\n3\nPark Güell\n55 min · Park · Must-see\nBOOK AHEAD\nBook tickets\n↗\nMark booked\nEntrance fee not included · more\nWalk · 2 min · 0.1 mi\nARRIVE\n1:19 pm\nLEAVE\n1:39 pm\nL\nLunch: La Torreta del Parc Güell\nPopular with visitors · 20 min\nChange lunch\nRate La Torreta del Parc Güell\nTaxi or car · 20 min · 2.1 mi\nWalk · 45 min\nTaxi or car · 20 min\nARRIVE\n1:59 pm\nLEAVE\n2:59 pm\n4\nCasa Batlló\n1 h · Gaudí house · Must-see\nBOOK AHEAD\nBook tickets\n↗\nMark booked\nEntrance fee not included · more\nMetro L3, Passeig de Gràcia to Drassanes · 14 min · 1.7 mi\nWalk 1 min to Passeig de Gràcia. Metro L3, Passeig de Gràcia to Drassanes, 5 min. Walk 3 min.\nWalk · 36 min\nBus N6 · 38 min\nMetro L3, Passeig de Gràcia to Drassanes · 14 min\nTaxi or car · 18 min\nARRIVE\n3:13 pm\nLEAVE\n3:23 pm\n5\nColumbus Monument\n10 min · Monument\nTaxi or car · 16 min · 1.4 mi\nWalk · 30 min\nTaxi or car · 16 min\nARRIVE\n3:39 pm\nLEAVE\n4:39 pm\n6\nMontjuïc Castle\n1 h · Viewpoint\nWalk · 36 min · 1.0 mi\nIncludes 15 min spare before the ship.\nWalk · 21 min\nTaxi or car · 14 min\nARRIVE\n5:15 pm\nE\nBack at the ship\nThe ship's official all aboard is 6:00 pm. Kairoute plans you back at least 45 min before it."
+  },
+  {
+   "name": "7-change-lunch",
+   "r": {
+    "pressed": "Change lunch",
+    "candidates": 1,
+    "dialog": []
+   },
+   "text": "SUN MAY 16 · BARCELONA · IN PORT\nBarcelona ✎ Rename\nLock this day\n🚢\nLEAVE BY\nall aboard 6:00 pm\n4:39 pm\n▶ Start the tour\n\nAshore 8:30 am · Official all aboard 6:00 pm · Back at the ship by 5:15 pm\n\nGetting back on time is up to you\n\nKairoute's leave-by and back-by times are estimates with spare time built in. Traffic, queues and the weather can still slow you down. The time that counts is the ship's all-aboard time or your train or flight, as your cruise line or carrier gives it. Check it on the day.\n\nI understand\nTerms of use\n6\nsights\n1.1 mi\nwalking\nChoose sights\nMore\nAbout today's plan3 notes\nUse Ctrl + scroll to zoom the map\nStart · Cruise port\n1\n2\n3\nL\n4\n5\n6\n1 mi\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nWalk\nTaxi or car\nTrain, metro or tram\n● Meal\nMore about today\nChange lunch\n\nNow: La Torreta del Parc Güell at 1:19 pm\n\nEAT SOMEWHERE ELSE NEARBY\n\nCervecería Catalana\nTapas · 0.2 mi from Casa Batlló\nEl Nacional\nFood hall · 0.2 mi from Casa Batlló\nLos Caracoles\nCatalan classics · 0.3 mi from Columbus Monument\nTaller de Tapes\n0.2 mi from Camp Nou\nTapas 24\nTapas · 0.2 mi from Casa Batlló\nAv. Corrientes\n0.2 mi from Camp Nou\n\nTIME\n\nBest fit\n11:30 am\n12:00 pm\n12:30 pm\n1:00 pm\n1:30 pm\n2:00 pm\nDone\nSkip lunch today\nI have a reservation\n\nAll times are Barcelona time, 7 h ahead of your device.\n\nLEAVE\n8:30 am\nS\nOff the ship at Moll Adossat cruise terminals\nMost big ships dock here. A port shuttle bus runs to the Columbus Monument.\nShip docks 8:00 am.\nTaxi or car · 28 min · 4.0 mi\nBy road, with time for traffic.\nPort shuttle bus takes 53 min, 25 min longer than Taxi or car. With it, Montjuïc Castle wouldn't fit before the ship, so the plan keeps Taxi or car and every stop. Take Port shuttle bus and leave out Montjuïc Castle\nPort shuttle bus · 53 min\nTaxi or car · 28 min\nARRIVE\n9:00 am\nLEAVE\n9:40 am\n1\nCamp Nou\n40 min · Sight · Must-see\nMetro L5, Badal to Sagrada Família · 32 min · 4.0 mi\nTime includes getting to the station and the wait.\nWalk 12 min to Badal. Metro L5, Badal to Sagrada Família, 14 min. Walk 1 min.\nMetro L5, Badal to Sagrada Família · 32 min\nTaxi or car · 28 min\nARRIVE\n10:12 am\nLEAVE\n11:42 am\n2\nSagrada Família\n1 h 30 min · Basilica · Must-see · UNESCO\nBOOK AHEAD\nBook tickets\n↗\nMark booked\nEntrance fee not included · more\nMetro L5, Sagrada Família to Diagonal, then Metro L3, Diagonal to Vallcarca · 40 min · 1.8 mi\nWalk 1 min to Sagrada Família. Metro L5, Sagrada Família to Diagonal, 4 min. Change to Metro L3, Diagonal to Vallcarca, 6 min. Walk 13 min.\nWalk · 38 min\nMetro L5, Sagrada Família to Diagonal, then Metro L3, Diagonal to Vallcarca · 40 min\nWalk to the road, then taxi · 21 min\nARRIVE\n12:22 pm\nLEAVE\n1:17 pm\n3\nPark Güell\n55 min · Park · Must-see\nBOOK AHEAD\nBook tickets\n↗\nMark booked\nEntrance fee not included · more\nWalk · 2 min · 0.1 mi\nARRIVE\n1:19 pm\nLEAVE\n1:39 pm\nL\nLunch: La Torreta del Parc Güell\nPopular with visitors · 20 min\nChange lunch\nRate La Torreta del Parc Güell\nTaxi or car · 20 min · 2.1 mi\nWalk · 45 min\nTaxi or car · 20 min\nARRIVE\n1:59 pm\nLEAVE\n2:59 pm\n4\nCasa Batlló\n1 h · Gaudí house · Must-see\nBOOK AHEAD\nBook tickets\n↗\nMark booked\nEntrance fee not included · more\nMetro L3, Passeig de Gràcia to Drassanes · 14 min · 1.7 mi\nWalk 1 min to Passeig de Gràcia. Metro L3, Passeig de Gràcia to Drassanes, 5 min. Walk 3 min.\nWalk · 36 min\nBus N6 · 38 min\nMetro L3, Passeig de Gràcia to Drassanes · 14 min\nTaxi or car · 18 min\nARRIVE\n3:13 pm\nLEAVE\n3:23 pm\n5\nColumbus Monument\n10 min · Monument\nTaxi or car · 16 min · 1.4 mi\nWalk · 30 min\nTaxi or car · 16 min\nARRIVE\n3:39 pm\nLEAVE\n4:39 pm\n6\nMontjuïc Castle\n1 h · Viewpoint\nWalk · 36 min · 1.0 mi\nIncludes 15 min spare before the ship.\nWalk · 21 min\nTaxi or car · 14 min\nARRIVE\n5:15 pm\nE\nBack at the ship\nThe ship's official all aboard is 6:00 pm. Kairoute plans you back at least 45 min before it."
+  },
+  {
+   "name": "8-shorter-day",
+   "r": "hours 4",
+   "text": "SUN MAY 16 · BARCELONA · IN PORT\nBarcelona ✎ Rename\nLock this day\n🚢\nLEAVE BY\nall aboard 6:00 pm\n4:39 pm\n▶ Start the tour\n\nAshore 8:30 am · Official all aboard 6:00 pm · Back at the ship by 5:15 pm\n\nGetting back on time is up to you\n\nKairoute's leave-by and back-by times are estimates with spare time built in. Traffic, queues and the weather can still slow you down. The time that counts is the ship's all-aboard time or your train or flight, as your cruise line or carrier gives it. Check it on the day.\n\nI understand\nTerms of use\n6\nsights\n1.1 mi\nwalking\nChoose sights\nMore\nAbout today's plan3 notes\nUse Ctrl + scroll to zoom the map\nStart · Cruise port\n1\n2\n3\nL\n4\n5\n6\n1 mi\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nWalk\nTaxi or car\nTrain, metro or tram\n● Meal\nMore about today\nChange lunch\n\nNow: La Torreta del Parc Güell at 1:19 pm\n\nEAT SOMEWHERE ELSE NEARBY\n\nCervecería Catalana\nTapas · 0.2 mi from Casa Batlló\nEl Nacional\nFood hall · 0.2 mi from Casa Batlló\nLos Caracoles\nCatalan classics · 0.3 mi from Columbus Monument\nTaller de Tapes\n0.2 mi from Camp Nou\nTapas 24\nTapas · 0.2 mi from Casa Batlló\nAv. Corrientes\n0.2 mi from Camp Nou\n\nTIME\n\nBest fit\n11:30 am\n12:00 pm\n12:30 pm\n1:00 pm\n1:30 pm\n2:00 pm\nDone\nSkip lunch today\nI have a reservation\n\nAll times are Barcelona time, 7 h ahead of your device.\n\nLEAVE\n8:30 am\nS\nOff the ship at Moll Adossat cruise terminals\nMost big ships dock here. A port shuttle bus runs to the Columbus Monument.\nShip docks 8:00 am.\nTaxi or car · 28 min · 4.0 mi\nBy road, with time for traffic.\nPort shuttle bus takes 53 min, 25 min longer than Taxi or car. With it, Montjuïc Castle wouldn't fit before the ship, so the plan keeps Taxi or car and every stop. Take Port shuttle bus and leave out Montjuïc Castle\nPort shuttle bus · 53 min\nTaxi or car · 28 min\nARRIVE\n9:00 am\nLEAVE\n9:40 am\n1\nCamp Nou\n40 min · Sight · Must-see\nMetro L5, Badal to Sagrada Família · 32 min · 4.0 mi\nTime includes getting to the station and the wait.\nWalk 12 min to Badal. Metro L5, Badal to Sagrada Família, 14 min. Walk 1 min.\nMetro L5, Badal to Sagrada Família · 32 min\nTaxi or car · 28 min\nARRIVE\n10:12 am\nLEAVE\n11:42 am\n2\nSagrada Família\n1 h 30 min · Basilica · Must-see · UNESCO\nBOOK AHEAD\nBook tickets\n↗\nMark booked\nEntrance fee not included · more\nMetro L5, Sagrada Família to Diagonal, then Metro L3, Diagonal to Vallcarca · 40 min · 1.8 mi\nWalk 1 min to Sagrada Família. Metro L5, Sagrada Família to Diagonal, 4 min. Change to Metro L3, Diagonal to Vallcarca, 6 min. Walk 13 min.\nWalk · 38 min\nMetro L5, Sagrada Família to Diagonal, then Metro L3, Diagonal to Vallcarca · 40 min\nWalk to the road, then taxi · 21 min\nARRIVE\n12:22 pm\nLEAVE\n1:17 pm\n3\nPark Güell\n55 min · Park · Must-see\nBOOK AHEAD\nBook tickets\n↗\nMark booked\nEntrance fee not included · more\nWalk · 2 min · 0.1 mi\nARRIVE\n1:19 pm\nLEAVE\n1:39 pm\nL\nLunch: La Torreta del Parc Güell\nPopular with visitors · 20 min\nChange lunch\nRate La Torreta del Parc Güell\nTaxi or car · 20 min · 2.1 mi\nWalk · 45 min\nTaxi or car · 20 min\nARRIVE\n1:59 pm\nLEAVE\n2:59 pm\n4\nCasa Batlló\n1 h · Gaudí house · Must-see\nBOOK AHEAD\nBook tickets\n↗\nMark booked\nEntrance fee not included · more\nMetro L3, Passeig de Gràcia to Drassanes · 14 min · 1.7 mi\nWalk 1 min to Passeig de Gràcia. Metro L3, Passeig de Gràcia to Drassanes, 5 min. Walk 3 min.\nWalk · 36 min\nBus N6 · 38 min\nMetro L3, Passeig de Gràcia to Drassanes · 14 min\nTaxi or car · 18 min\nARRIVE\n3:13 pm\nLEAVE\n3:23 pm\n5\nColumbus Monument\n10 min · Monument\nTaxi or car · 16 min · 1.4 mi\nWalk · 30 min\nTaxi or car · 16 min\nARRIVE\n3:39 pm\nLEAVE\n4:39 pm\n6\nMontjuïc Castle\n1 h · Viewpoint\nWalk · 36 min · 1.0 mi\nIncludes 15 min spare before the ship.\nWalk · 21 min\nTaxi or car · 14 min\nARRIVE\n5:15 pm\nE\nBack at the ship\nThe ship's official all aboard is 6:00 pm. Kairoute plans you back at least 45 min before it."
+  },
+  {
+   "name": "8b-shorten-anyway",
+   "r": {
+    "act": "cutok",
+    "found": false
+   },
+   "text": "SUN MAY 16 · BARCELONA · IN PORT\nBarcelona ✎ Rename\nLock this day\n🚢\nLEAVE BY\nall aboard 6:00 pm\n4:39 pm\n▶ Start the tour\n\nAshore 8:30 am · Official all aboard 6:00 pm · Back at the ship by 5:15 pm\n\nGetting back on time is up to you\n\nKairoute's leave-by and back-by times are estimates with spare time built in. Traffic, queues and the weather can still slow you down. The time that counts is the ship's all-aboard time or your train or flight, as your cruise line or carrier gives it. Check it on the day.\n\nI understand\nTerms of use\n6\nsights\n1.1 mi\nwalking\nChoose sights\nMore\nAbout today's plan3 notes\nUse Ctrl + scroll to zoom the map\nStart · Cruise port\n1\n2\n3\nL\n4\n5\n6\n1 mi\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nWalk\nTaxi or car\nTrain, metro or tram\n● Meal\nMore about today\nChange lunch\n\nNow: La Torreta del Parc Güell at 1:19 pm\n\nEAT SOMEWHERE ELSE NEARBY\n\nCervecería Catalana\nTapas · 0.2 mi from Casa Batlló\nEl Nacional\nFood hall · 0.2 mi from Casa Batlló\nLos Caracoles\nCatalan classics · 0.3 mi from Columbus Monument\nTaller de Tapes\n0.2 mi from Camp Nou\nTapas 24\nTapas · 0.2 mi from Casa Batlló\nAv. Corrientes\n0.2 mi from Camp Nou\n\nTIME\n\nBest fit\n11:30 am\n12:00 pm\n12:30 pm\n1:00 pm\n1:30 pm\n2:00 pm\nDone\nSkip lunch today\nI have a reservation\n\nAll times are Barcelona time, 7 h ahead of your device.\n\nLEAVE\n8:30 am\nS\nOff the ship at Moll Adossat cruise terminals\nMost big ships dock here. A port shuttle bus runs to the Columbus Monument.\nShip docks 8:00 am.\nTaxi or car · 28 min · 4.0 mi\nBy road, with time for traffic.\nPort shuttle bus takes 53 min, 25 min longer than Taxi or car. With it, Montjuïc Castle wouldn't fit before the ship, so the plan keeps Taxi or car and every stop. Take Port shuttle bus and leave out Montjuïc Castle\nPort shuttle bus · 53 min\nTaxi or car · 28 min\nARRIVE\n9:00 am\nLEAVE\n9:40 am\n1\nCamp Nou\n40 min · Sight · Must-see\nMetro L5, Badal to Sagrada Família · 32 min · 4.0 mi\nTime includes getting to the station and the wait.\nWalk 12 min to Badal. Metro L5, Badal to Sagrada Família, 14 min. Walk 1 min.\nMetro L5, Badal to Sagrada Família · 32 min\nTaxi or car · 28 min\nARRIVE\n10:12 am\nLEAVE\n11:42 am\n2\nSagrada Família\n1 h 30 min · Basilica · Must-see · UNESCO\nBOOK AHEAD\nBook tickets\n↗\nMark booked\nEntrance fee not included · more\nMetro L5, Sagrada Família to Diagonal, then Metro L3, Diagonal to Vallcarca · 40 min · 1.8 mi\nWalk 1 min to Sagrada Família. Metro L5, Sagrada Família to Diagonal, 4 min. Change to Metro L3, Diagonal to Vallcarca, 6 min. Walk 13 min.\nWalk · 38 min\nMetro L5, Sagrada Família to Diagonal, then Metro L3, Diagonal to Vallcarca · 40 min\nWalk to the road, then taxi · 21 min\nARRIVE\n12:22 pm\nLEAVE\n1:17 pm\n3\nPark Güell\n55 min · Park · Must-see\nBOOK AHEAD\nBook tickets\n↗\nMark booked\nEntrance fee not included · more\nWalk · 2 min · 0.1 mi\nARRIVE\n1:19 pm\nLEAVE\n1:39 pm\nL\nLunch: La Torreta del Parc Güell\nPopular with visitors · 20 min\nChange lunch\nRate La Torreta del Parc Güell\nTaxi or car · 20 min · 2.1 mi\nWalk · 45 min\nTaxi or car · 20 min\nARRIVE\n1:59 pm\nLEAVE\n2:59 pm\n4\nCasa Batlló\n1 h · Gaudí house · Must-see\nBOOK AHEAD\nBook tickets\n↗\nMark booked\nEntrance fee not included · more\nMetro L3, Passeig de Gràcia to Drassanes · 14 min · 1.7 mi\nWalk 1 min to Passeig de Gràcia. Metro L3, Passeig de Gràcia to Drassanes, 5 min. Walk 3 min.\nWalk · 36 min\nBus N6 · 38 min\nMetro L3, Passeig de Gràcia to Drassanes · 14 min\nTaxi or car · 18 min\nARRIVE\n3:13 pm\nLEAVE\n3:23 pm\n5\nColumbus Monument\n10 min · Monument\nTaxi or car · 16 min · 1.4 mi\nWalk · 30 min\nTaxi or car · 16 min\nARRIVE\n3:39 pm\nLEAVE\n4:39 pm\n6\nMontjuïc Castle\n1 h · Viewpoint\nWalk · 36 min · 1.0 mi\nIncludes 15 min spare before the ship.\nWalk · 21 min\nTaxi or car · 14 min\nARRIVE\n5:15 pm\nE\nBack at the ship\nThe ship's official all aboard is 6:00 pm. Kairoute plans you back at least 45 min before it."
+  },
+  {
+   "name": "9-reload",
+   "r": "reloaded",
+   "text": "SUN MAY 16 · BARCELONA · IN PORT\nBarcelona ✎ Rename\nLock this day\n🚢\nLEAVE BY\nall aboard 6:00 pm\n4:39 pm\n▶ Start the tour\n\nAshore 8:30 am · Official all aboard 6:00 pm · Back at the ship by 5:15 pm\n\nGetting back on time is up to you\n\nKairoute's leave-by and back-by times are estimates with spare time built in. Traffic, queues and the weather can still slow you down. The time that counts is the ship's all-aboard time or your train or flight, as your cruise line or carrier gives it. Check it on the day.\n\nI understand\nTerms of use\n6\nsights\n1.1 mi\nwalking\nChoose sights\nMore\nAbout today's plan3 notes\nUse Ctrl + scroll to zoom the map\nStart · Cruise port\n1\n2\n3\nL\n4\n5\n6\n1 mi\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nWalk\nTaxi or car\nTrain, metro or tram\n● Meal\nMore about today\n\nAll times are Barcelona time, 7 h ahead of your device.\n\nLEAVE\n8:30 am\nS\nOff the ship at Moll Adossat cruise terminals\nMost big ships dock here. A port shuttle bus runs to the Columbus Monument.\nShip docks 8:00 am.\nTaxi or car · 28 min · 4.0 mi\nBy road, with time for traffic.\nPort shuttle bus · 53 min\nTaxi or car · 28 min\nARRIVE\n9:00 am\nLEAVE\n9:40 am\n1\nCamp Nou\n40 min · Sight\nMetro L5, Badal to Sagrada Família · 32 min · 4.0 mi\nTime includes getting to the station and the wait.\nWalk 12 min to Badal. Metro L5, Badal to Sagrada Família, 14 min. Walk 1 min.\nMetro L5, Badal to Sagrada Família · 32 min\nTaxi or car · 28 min\nARRIVE\n10:12 am\nLEAVE\n11:42 am\n2\nSagrada Família\n1 h 30 min · Basilica · Must-see · UNESCO\nBOOK AHEAD\nBook tickets\n↗\nMark booked\nEntrance fee not included · more\nMetro L5, Sagrada Família to Diagonal, then Metro L3, Diagonal to Vallcarca · 40 min · 1.8 mi\nWalk 1 min to Sagrada Família. Metro L5, Sagrada Família to Diagonal, 4 min. Change to Metro L3, Diagonal to Vallcarca, 6 min. Walk 13 min.\nWalk · 38 min\nMetro L5, Sagrada Família to Diagonal, then Metro L3, Diagonal to Vallcarca · 40 min\nTaxi or car · 18 min\nARRIVE\n12:22 pm\nLEAVE\n1:17 pm\n3\nPark Güell\n55 min · Park · Must-see\nBOOK AHEAD\nBook tickets\n↗\nMark booked\nEntrance fee not included · more\nWalk · 2 min · 0.1 mi\nARRIVE\n1:19 pm\nLEAVE\n1:39 pm\nL\nLunch: La Torreta del Parc Güell\nPopular with visitors · 20 min\nChange lunch\nRate La Torreta del Parc Güell\nTaxi or car · 20 min · 2.1 mi\nWalk · 45 min\nTaxi or car · 20 min\nARRIVE\n1:59 pm\nLEAVE\n2:59 pm\n4\nCasa Batlló\n1 h · Gaudí house · Must-see\nBOOK AHEAD\nBook tickets\n↗\nMark booked\nEntrance fee not included · more\nMetro L3, Passeig de Gràcia to Drassanes · 14 min · 1.7 mi\nWalk 1 min to Passeig de Gràcia. Metro L3, Passeig de Gràcia to Drassanes, 5 min. Walk 3 min.\nWalk · 36 min\nBus N6 · 38 min\nMetro L3, Passeig de Gràcia to Drassanes · 14 min\nTaxi or car · 18 min\nARRIVE\n3:13 pm\nLEAVE\n3:23 pm\n5\nColumbus Monument\n10 min · Monument\nTaxi or car · 16 min · 1.4 mi\nWalk · 30 min\nTaxi or car · 16 min\nARRIVE\n3:39 pm\nLEAVE\n4:39 pm\n6\nMontjuïc Castle\n1 h · Viewpoint\nWalk · 36 min · 1.0 mi\nIncludes 15 min spare before the ship.\nWalk · 21 min\nTaxi or car · 14 min\nARRIVE\n5:15 pm\nE\nBack at the ship\nThe ship's official all aboard is 6:00 pm. Kairoute plans you back at least 45 min before it."
+  },
+  {
+   "name": "10-phone",
+   "r": "phone",
+   "text": "SUN MAY 16 · BARCELONA · IN PORT\nBarcelona ✎ Rename\nLock this day\n🚢\nLEAVE BY\nall aboard 6:00 pm\n4:39 pm\n▶ Start tour\n\nAshore 8:30 am · Official all aboard 6:00 pm · Back at the ship by 5:15 pm\n\nGetting back on time is up to you\n\nKairoute's leave-by and back-by times are estimates with spare time built in. Traffic, queues and the weather can still slow you down. The time that counts is the ship's all-aboard time or your train or flight, as your cruise line or carrier gives it. Check it on the day.\n\nI understand\nTerms of use\n6\nsights\n1.1 mi\nwalking\nChoose sights\nMore\nAbout today's plan3 notes\nUse Ctrl + scroll to zoom the map\nStart · Cruise port\n1\n2\n3\nL\n4\n5\n6\n1 mi\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nWalk\nTaxi or car\nTrain, metro or tram\n● Meal\nMore about today\n\nAll times are Barcelona time, 7 h ahead of your device.\n\nLEAVE\n8:30 am\nS\nOff the ship at Moll Adossat cruise terminals\nMost big ships dock here. A port shuttle bus runs to the Columbus Monument.\nShip docks 8:00 am.\nTaxi or car · 28 min · 4.0 mi\nBy road, with time for traffic.\nPort shuttle bus · 53 min\nTaxi or car · 28 min\nARRIVE\n9:00 am\nLEAVE\n9:40 am\n1\nCamp Nou\n40 min · Sight\nMetro L5, Badal to Sagrada Família · 32 min · 4.0 mi\nTime includes getting to the station and the wait.\nWalk 12 min to Badal. Metro L5, Badal to Sagrada Família, 14 min. Walk 1 min.\nMetro L5, Badal to Sagrada Família · 32 min\nTaxi or car · 28 min\nARRIVE\n10:12 am\nLEAVE\n11:42 am\n2\nSagrada Família\n1 h 30 min · Basilica · Must-see · UNESCO\nBOOK AHEAD\nBook tickets\n↗\nMark booked\nEntrance fee not included · more\nMetro L5, Sagrada Família to Diagonal, then Metro L3, Diagonal to Vallcarca · 40 min · 1.8 mi\nWalk 1 min to Sagrada Família. Metro L5, Sagrada Família to Diagonal, 4 min. Change to Metro L3, Diagonal to Vallcarca, 6 min. Walk 13 min.\nWalk · 38 min\nMetro L5, Sagrada Família to Diagonal, then Metro L3, Diagonal to Vallcarca · 40 min\nTaxi or car · 18 min\nARRIVE\n12:22 pm\nLEAVE\n1:17 pm\n3\nPark Güell\n55 min · Park · Must-see\nBOOK AHEAD\nBook tickets\n↗\nMark booked\nEntrance fee not included · more\nWalk · 2 min · 0.1 mi\nARRIVE\n1:19 pm\nLEAVE\n1:39 pm\nL\nLunch: La Torreta del Parc Güell\nPopular with visitors · 20 min\nChange lunch\nRate La Torreta del Parc Güell\nTaxi or car · 20 min · 2.1 mi\nWalk · 45 min\nTaxi or car · 20 min\nARRIVE\n1:59 pm\nLEAVE\n2:59 pm\n4\nCasa Batlló\n1 h · Gaudí house · Must-see\nBOOK AHEAD\nBook tickets\n↗\nMark booked\nEntrance fee not included · more\nMetro L3, Passeig de Gràcia to Drassanes · 14 min · 1.7 mi\nWalk 1 min to Passeig de Gràcia. Metro L3, Passeig de Gràcia to Drassanes, 5 min. Walk 3 min.\nWalk · 36 min\nBus N6 · 38 min\nMetro L3, Passeig de Gràcia to Drassanes · 14 min\nTaxi or car · 18 min\nARRIVE\n3:13 pm\nLEAVE\n3:23 pm\n5\nColumbus Monument\n10 min · Monument\nTaxi or car · 16 min · 1.4 mi\nWalk · 30 min\nTaxi or car · 16 min\nARRIVE\n3:39 pm\nLEAVE\n4:39 pm\n6\nMontjuïc Castle\n1 h · Viewpoint\nWalk · 36 min · 1.0 mi\nIncludes 15 min spare before the ship.\nWalk · 21 min\nTaxi or car · 14 min\nARRIVE\n5:15 pm\nE\nBack at the ship\nThe ship's official all aboard is 6:00 pm. Kairoute plans you back at least 45 min before it."
+  }
+ ],
+ "version": "5d14162-1795221656",
+ "aiReady": false,
+ "wizard": {
+  "miss": [],
+  "prev": "Your days: 3 days · 1 port",
+  "form": "Add each place in order, the way it's booked. Each new stop starts where the last one ends.\n\nSTOP 1 · CRUISE\nLeaves from\nShip (optional)\nBoarding day\nAll aboard\nGetting to the ship (if you arrive the same day)\nFlight\nTrain\nFerry\nCar or bus\nArrive in town at\nLeave empty if you don't know yet.\nPorts of call\nIn order, from your cruise booking. Days with no port are added as sea days.\nDate\nPort\nShip arrives\nAll aboard\nTender port (small boats take you ashore)\nRemove port\n+ Add a port\nCruise ends in\nOn\nOff the ship at\nUsually 7:00 am to 9:00 am. Leave empty if you don't know.\n+ Add a city stay\n+ Add a cruise\nGoing home from here\nFlight\nTrain\nFerry\nCar or bus\nFlight at\nYour days: 3 days · 1 port\nAdd more details (optional)\nName this trip\n\nKairoute picks good defaults for pace, walking and voice, and you can change any of them later.\n\nCancel\nPersonalize first\nBuild my trip"
+ },
+ "buildSec": 4,
+ "state": {
+  "busy": "",
+  "err": "",
+  "days": [
+   {
+    "date": "2027-05-15",
+    "type": "arrival"
+   },
+   {
+    "date": "2027-05-15",
+    "type": "embark"
+   },
+   {
+    "date": "2027-05-16",
+    "type": "port"
+   },
+   {
+    "date": "2027-05-17",
+    "type": "arrival"
+   }
+  ]
+ },
+ "phoneText": "SUN MAY 16 · BARCELONA · IN PORT\nBarcelona ✎ Rename\nLock this day\n🚢\nLEAVE BY\nall aboard 6:00 pm\n4:37 pm\n▶ Start tour\n\nAshore 8:30 am · Official all aboard 6:00 pm · Back at the ship by 5:15 pm\n\nGetting back on time is up to you\n\nKairoute's leave-by and back-by times are estimates with spare time built in. Traffic, queues and the weather can still slow you down. The time that counts is the ship's all-aboard time or your train or flight, as your cruise line or carrier gives it. Check it on the day.\n\nI understand\nTerms of use\n5\nsights\n1.5 mi\nwalking\nChoose sights\nMore\nAbout today's plan16 notes\nNot planned today: Bunkers del Carmel didn't fit in the time.\nNot planned today: MNAC & Magic Fountain didn't fit in the time.\nNot planned today: Montjuïc Castle didn't fit in the time.\nNot planned today: Gràcia squares didn't fit in the time.\nNot planned today: Barceloneta beach didn't fit in the time.\nNot planned today: El Born Centre de Cultura didn't fit in the time. To fit it in: spend 5 minutes less at Casa Batlló and have lunch on the go, spend 5 minutes less at Park Güell and have lunch on the go or spend 5 minutes less at Sagrada Família and have lunch on the go.\nNot planned today: Plaça de Catalunya didn't fit in the time. To fit it in: spend 10 minutes less at Casa Batlló and have lunch on the go, spend 10 minutes less at Park Güell and have lunch on the go or spend 10 minutes less at Sagrada Família and have lunch on the go.\nNot planned today: Museu Picasso didn't fit in the ",
+ "finished": "2026-11-21T01:43:17.340Z"
+}

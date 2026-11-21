@@ -1,0 +1,141 @@
+{
+ "name": "a07-southampton-lehavre",
+ "label": "Southampton fly in, board next day, Le Havre for Paris Saturday call",
+ "legs": [
+  {
+   "k": "stay",
+   "place": "Southampton, England",
+   "date": "2027-06-10",
+   "nights": 1,
+   "inAt": "13:00"
+  },
+  {
+   "k": "cruise",
+   "board": "Southampton, England",
+   "date": "2027-06-11",
+   "aboard": "16:00",
+   "ports": [
+    {
+     "date": "2027-06-12",
+     "place": "Le Havre (Paris), France",
+     "arrive": "07:00",
+     "aboard": "19:00"
+    }
+   ],
+   "end": "Southampton, England",
+   "endDate": "2027-06-13",
+   "off": "07:00",
+   "homeAt": "14:00"
+  }
+ ],
+ "started": "2026-11-21T01:05:17.048Z",
+ "passed": {
+  "/sources": 13,
+  "/transit": 8,
+  "/guide": 2,
+  "/places": 1,
+  "/voyage": 1,
+  "/ground": 1
+ },
+ "refused": {
+  "/ratings": 1
+ },
+ "errors": [],
+ "days": [
+  {
+   "i": 0,
+   "date": "2027-06-10",
+   "type": "arrival",
+   "text": "THU JUN 10 · SOUTHAMPTON, ENGLAND · ARRIVING\nSouthampton, England ✎ Rename\nLock this day\nI couldn't find Southampton, England in the travel guides and maps. Check the spelling on the day (for example \"Kotor, Montenegro\"), then tap Build again.\nNo guide for Southampton, England yet\n\nKairoute will build the guide for Southampton, England from travel guides and maps: real sights, places to eat, the cruise port and stations.\n\nBuild the Southampton, England guide"
+  },
+  {
+   "i": 1,
+   "date": "2027-06-11",
+   "type": "embark",
+   "text": "FRI JUN 11 · SOUTHAMPTON, ENGLAND · BOARDING\nSouthampton, England ✎ Rename\nLock this day\nI couldn't find Southampton, England in the travel guides and maps. Check the spelling on the day (for example \"Kotor, Montenegro\"), then tap Build again.\nNo guide for Southampton, England yet\n\nKairoute will build the guide for Southampton, England from travel guides and maps: real sights, places to eat, the cruise port and stations.\n\nBuild the Southampton, England guide"
+  },
+  {
+   "i": 2,
+   "date": "2027-06-12",
+   "type": "port",
+   "text": "SAT JUN 12 · PARIS · IN PORT\nParis ✎ Rename\nLock this day\n\nWe couldn't find exactly where Cruise port of Le Havre is, so this day isn't planned on a guess (every ride time and the time to head back depend on it). It's being looked up again; you can also pick another cruise terminal in the day's settings.\n\nEdit this day"
+  },
+  {
+   "i": 3,
+   "date": "2027-06-13",
+   "type": "arrival",
+   "text": "SUN JUN 13 · SOUTHAMPTON, ENGLAND · ARRIVING\nSouthampton, England ✎ Rename\nLock this day\nToday is one plan\n\nShip in at 7:00 am, then your flight at 2:00 pm: the sightseeing in between, your bags and the countdown are on one page.\n\nSee today's plan"
+  },
+  {
+   "i": 4,
+   "date": "2027-06-13",
+   "type": "departure",
+   "text": "SUN JUN 13 · SOUTHAMPTON, ENGLAND · LEAVING\nSouthampton, England ✎ Rename\nLock this day\nI couldn't find Southampton, England in the travel guides and maps. Check the spelling on the day (for example \"Kotor, Montenegro\"), then tap Build again.\nNo guide for Southampton, England yet\n\nKairoute will build the guide for Southampton, England from travel guides and maps: real sights, places to eat, the cruise port and stations.\n\nBuild the Southampton, England guide"
+  }
+ ],
+ "guides": {
+  "Paris (from Le Havre, France)": {
+   "city": "Paris (from Le Havre, France)",
+   "src": true,
+   "ai": false,
+   "n": 46,
+   "sights": "UNESCO* | Eiffel Tower* | Louvre Museum* | Notre-Dame de Paris | Musée d'Orsay | Arc de Triomphe | avenue des Champs-Élysées | Bibliothèque nationale de France | Père Lachaise Cemetery | Bastille | Centre Georges Pompidou | Palais Garnier | place de la Concorde | Panthéon | Sainte Chapelle | Les Invalides | Luxembourg Palace | Palais-Royal | Grand Palais | Institut Polytechnique des Sciences Avancées | Tuileries Garden | National Assembly | Sacré-Cœur | Venus de Milo | Sorbonne | Musée des Arts et Métiers | Petit Palais | École Normale Supérieure | Collège de France | Champ de Mars | Grand Mosque of Paris | La Madeleine | Pont Alexandre III~ | Paris Institute of Political Studies | Conciergerie | 1st arrondissement of Paris | Montmartre | Château de Vincennes | place des Vosges | Hôtel de Ville, Paris | Royal abbey of Saint-Germain-des-Prés | parc Monceau | île de la Cité | Musée du quai Branly | Jardin des plantes | Mines ParisTech",
+   "far": "Chantilly | Chartres | Disneyland Paris | Rambouillet | Ch&acirc;teau de Chantilly | Chartres Cathedral | Maison Picassiette | Musée du Vitrail",
+   "eats": 60,
+   "starts": {
+    "cruise": [
+     "Cruise port of Le Havre (unknown)"
+    ],
+    "airport": [
+     "Paris airport (unknown)"
+    ],
+    "station": [
+     "Gare Saint-Lazare"
+    ],
+    "hotel": [
+     "Hotel in central Paris"
+    ],
+    "point": [
+     "Central Paris"
+    ]
+   }
+  }
+ },
+ "steps": [],
+ "version": "5d14162-1795221656",
+ "aiReady": false,
+ "wizard": {
+  "miss": [],
+  "prev": "Your days: 4 days · 1 port",
+  "form": "Add each place in order, the way it's booked. Each new stop starts where the last one ends.\n\nSTOP 1 · CITY STAY\nRemove\nCity\nArrive on\nNights\nHotel (optional)\nGetting there\nFlight\nTrain\nFerry\nCar or bus\nArrive in Southampton, England at\nSTOP 2 · CRUISE\nRemove\nLeaves from\nShip (optional)\nBoarding day\nAll aboard\nPorts of call\nIn order, from your cruise booking. Days with no port are added as sea days.\nDate\nPort\nShip arrives\nAll aboard\nTender port (small boats take you ashore)\nRemove port\n+ Add a port\nCruise ends in\nOn\nOff the ship at\nUsually 7:00 am to 9:00 am. Leave empty if you don't know.\n+ Add a city stay\n+ Add a cruise\nGoing home from here\nFlight\nTrain\nFerry\nCar or bus\nFlight at\nYour days: 4 days · 1 port\nAdd more details (optional)\nName this trip\n\nKairoute picks good defaults for pace, walking and voice, and you can change any of them later.\n\nCancel\nPersonalize first\nBuild my trip"
+ },
+ "buildSec": 4,
+ "state": {
+  "busy": "",
+  "err": "I couldn't find Southampton, England in the travel guides and maps. Check the spelling on the day (for example \"Kotor, Montenegro\"), then tap Build again.",
+  "days": [
+   {
+    "date": "2027-06-10",
+    "type": "arrival"
+   },
+   {
+    "date": "2027-06-11",
+    "type": "embark"
+   },
+   {
+    "date": "2027-06-12",
+    "type": "port"
+   },
+   {
+    "date": "2027-06-13",
+    "type": "arrival"
+   },
+   {
+    "date": "2027-06-13",
+    "type": "departure"
+   }
+  ]
+ },
+ "phoneText": "SAT JUN 12 · PARIS · IN PORT\nParis ✎ Rename\nLock this day\n\nWe couldn't find exactly where Cruise port of Le Havre is, so this day isn't planned on a guess (every ride time and the time to head back depend on it). It's being looked up again; you can also pick another cruise terminal in the day's settings.\n\nEdit this day",
+ "finished": "2026-11-21T01:06:17.757Z"
+}

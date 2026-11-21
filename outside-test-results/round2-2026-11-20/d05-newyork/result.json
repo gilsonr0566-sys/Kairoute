@@ -1,0 +1,118 @@
+{
+ "name": "d05-newyork",
+ "label": "New York stay",
+ "legs": [
+  {
+   "k": "stay",
+   "place": "New York City",
+   "date": "2027-10-11",
+   "nights": 3,
+   "inAt": "12:00",
+   "homeAt": "18:00"
+  }
+ ],
+ "started": "2026-11-21T01:21:18.525Z",
+ "passed": {
+  "/sources": 12,
+  "/transit": 9,
+  "/guide": 1,
+  "/places": 4,
+  "/voyage": 2,
+  "/ground": 1,
+  "/x/near": 9,
+  "/route": 11
+ },
+ "refused": {
+  "/ratings": 1,
+  "/grating": 6,
+  "/events": 4
+ },
+ "errors": [],
+ "days": [
+  {
+   "i": 0,
+   "date": "2027-10-11",
+   "type": "arrival",
+   "text": "MON OCT 11 · NEW YORK CITY · ARRIVING\nNew York City ✎ Rename\nLock this day\n▶ Start the tour\n1:15 pm–8:31 pm\n7 h 16 min ✎\n2\nsights\n1.0 mi\nwalking\n4:58 pm\nlast stop done\nChoose sights\nMore\nAbout today's plan1 note\nUse Ctrl + scroll to zoom the map\nStart · Airport\nH\n1\n2\n3000 ft\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nWalk\nTaxi or car\n■ Hotel\nMore about today\n\nAll times are New York City time, 1 h ahead of your device.\n\nLEAVE\n1:15 pm\nS\nOut of John F. Kennedy International Airport\nFlight arrives 12:00 pm. We allow 1 h 15 min to get off the plane and through baggage claim (and passport control after a flight from abroad).\nTaxi or car · 56 min · 16 mi\nARRIVE\n2:11 pm\nLEAVE\n2:31 pm\nH\nCheck in or drop bags\n20 min\nTaxi or car · 23 min · 2.8 mi\nBy road, with time for traffic.\nWalk · 1 h\nTaxi or car · 23 min\nARRIVE\n2:54 pm\nLEAVE\n3:34 pm\n1\nInterlingua\n40 min · Sight · Must-see\nWalk · 21 min · 1.0 mi\nWalk · 21 min\nTaxi or car · 15 min\nARRIVE\n3:55 pm\nLEAVE\n4:35 pm\n2\nEmpire State Building\n40 min · Sight · Must-see\nUNTIL\n8:08 pm\n+\nFree time: 3 h 33 min\nYours to spend as you like. See what fits\nTaxi or car · 23 min · 2.9 mi\nWalk · 1 h 1 min\nTaxi or car · 23 min\nBY\n8:31 pm\nE\nBack at Hotel in central New York City\nARRIVE\n6:30 pm\nD\nSuggested dinner: Joey Pepperoni’s Pizza\nRestaurant\nChange dinner\nDinner: why here"
+  },
+  {
+   "i": 1,
+   "date": "2027-10-12",
+   "type": "land",
+   "text": "TUE OCT 12 · NEW YORK CITY · LAND DAY\nNew York City ✎ Rename\nLock this day\n▶ Start the tour\n9:00 am–6:00 pm\n9 h ✎\n7\nsights\n2.3 mi\nwalking\n4:21 pm\nlast stop done\nChoose sights\nMore\nAbout today's plan1 note\nUse Ctrl + scroll to zoom the map\nS\n1\n2\n3\nL\n4\n5\n6\n7\n3000 ft\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nWalk\nTaxi or car\n● Meal\nMore about today\n\nAll times are New York City time, 1 h ahead of your device.\n\nLEAVE\n9:00 am\nS\nLeave Hotel in central New York City\nAdd your own hotel on the Trip page for exact times.\nTaxi or car · 20 min · 2.2 mi\nBy road, with time for traffic.\nWalk · 46 min\nTaxi or car · 20 min\nARRIVE\n9:20 am\nLEAVE\n10:00 am\n1\nFlatiron Building\n40 min · Sight\nTaxi or car · 16 min · 1.4 mi\nWalk · 30 min\nTaxi or car · 16 min\nARRIVE\n10:16 am\nLEAVE\n10:56 am\n2\nNasdaq\n40 min · Sight\nWalk · 18 min · 0.9 mi\nWalk · 18 min\nTaxi or car · 14 min\nARRIVE\n11:14 am\nLEAVE\n11:54 am\n3\nCarnegie Hall\n40 min · Sight\nWalk · 7 min · 0.3 mi\nARRIVE\n12:01 pm\nLEAVE\n1:01 pm\nL\nLunch: Mastro's\nRestaurant · Local spot · 1 h\nChange lunch\nLunch: why here\nWalk · 4 min · 0.2 mi\nARRIVE\n1:05 pm\nLEAVE\n1:45 pm\n4\nNBC\n40 min · Sight · Must-see\nWalk · 2 min · 0.1 mi\nARRIVE\n1:47 pm\nLEAVE\n2:27 pm\n5\nRockefeller Center\n40 min · Sight\nWalk · 4 min · 0.2 mi\nARRIVE\n2:31 pm\nLEAVE\n3:01 pm\n6\nSt. Patrick's Cathedral\n30 min · Church\nWalk · 14 min · 0.6 mi\nWalk · 14 min\nTaxi or car · 13 min\nARRIVE\n3:15 pm\nLEAVE\n3:55 pm\n7\nChrysler Building\n40 min · Sight\nUNTIL\n5:34 pm\n+\nFree time: 1 h 39 min\nYours to spend as you like. See what fits\nTaxi or car · 26 min · 3.4 mi\nBY\n6:00 pm\nE\nBack at Hotel in central New York City\nARRIVE\n6:30 pm\nD\nSuggested dinner: Joe's Steam Rice Roll\nRestaurant\nChange dinner\nDinner: why here"
+  },
+  {
+   "i": 2,
+   "date": "2027-10-13",
+   "type": "land",
+   "text": "WED OCT 13 · NEW YORK CITY · LAND DAY\nNew York City ✎ Rename\nLock this day\n▶ Start the tour\n9:00 am–6:00 pm\n9 h ✎\n1\nsight\n3:01 pm\nlast stop done\nChoose sights\nMore\nAbout today's plan1 note\nUse Ctrl + scroll to zoom the map\nS\n1\nL\n100 ft\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nTaxi or car\n● Meal\nMore about today\n\nAll times are New York City time, 1 h ahead of your device.\n\nLEAVE\n9:00 am\nS\nLeave Hotel in central New York City\nAdd your own hotel on the Trip page for exact times.\nTaxi or car · 1 h 10 min · 12 mi\nThe guide says: Metro from Canal St, about 70 min one way The guide names a metro, but no timetable for it is known here, so this ride is planned by taxi: check at the station or with your hotel.\nARRIVE\n10:10 am\nLEAVE\n1:10 pm\n1\nFort Lee\n3 h · Day trip · Metro from Canal St, about 70 min one way\nNext door\nARRIVE\n1:10 pm\nLEAVE\n2:10 pm\nL\nLunch: Wok Bar\nRestaurant · Local spot · 1 h\nChange lunch\nLunch: why here\nUNTIL\n5:09 pm\n+\nFree time: 2 h 59 min\nYours to spend as you like. See what fits\nTaxi or car · 51 min · 12 mi\nBY\n6:00 pm\nE\nBack at Hotel in central New York City\nARRIVE\n6:30 pm\nD\nSuggested dinner: Au Cheval Diner\nRestaurant\nChange dinner\nDinner: why here"
+  },
+  {
+   "i": 3,
+   "date": "2027-10-14",
+   "type": "departure",
+   "text": "THU OCT 14 · NEW YORK CITY · LEAVING\nNew York City ✎ Rename\nLock this day\n✈️\nLEAVE BY\nto your flight\n12:53 pm\n▶ Start the tour\n\nFlight 6:00 pm · Back at John F. Kennedy International Airport by 3:00 pm\n\nGetting back on time is up to you\n\nKairoute's leave-by and back-by times are estimates with spare time built in. Traffic, queues and the weather can still slow you down. The time that counts is the ship's all-aboard time or your train or flight, as your cruise line or carrier gives it. Check it on the day.\n\nI understand\nTerms of use\n3\nsights\n2.3 mi\nwalking\nChoose sights\nMore\nAbout today's plan2 notes\nUse Ctrl + scroll to zoom the map\nS\n1\n2\n3\nL\nFinish · Airport\n2000 ft\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nWalk\nTaxi or car\n● Meal\n■ Hotel\nMore about today\n\nAll times are New York City time, 1 h ahead of your device.\n\nLEAVE\n9:00 am\nS\nCheck out of Hotel in central New York City\nAdd your own hotel on the Trip page for exact times.\nMost hotels keep your bags for the day after check-out: ask at the desk.\nWalk · 16 min · 0.7 mi\nWalk · 16 min\nTaxi or car · 13 min\nARRIVE\n9:16 am\nLEAVE\n9:56 am\n1\nWoolworth Building\n40 min · Sight\nWalk · 12 min · 0.6 mi\nWalk · 12 min\nTaxi or car · 13 min\nARRIVE\n10:08 am\nLEAVE\n10:48 am\n2\nWall Street\n40 min · Sight\nWalk · 19 min · 0.9 mi\nWalk · 19 min\nTaxi or car · 14 min\nARRIVE\n11:07 am\nLEAVE\n11:37 am\n3\nBrooklyn Bridge\n30 min · Landmark\nTaxi or car · 16 min · 1.4 mi\nBy road, with time for traffic.\nWalk · 30 min\nTaxi or car · 16 min\nARRIVE\n11:53 am\nLEAVE\n12:53 pm\nL\nLunch: HUMBLE FISH\nRestaurant · Local spot · 1 h\nChange lunch\nLunch: why here\nWalk · 3 min · 0.1 mi\nARRIVE\n12:56 pm\nLEAVE\n1:11 pm\nH\nCollect bags\n15 min\nUNTIL\n12:53 pm\n+\nFree time: 33 min\nYours to spend as you like. Leave here by 12:53 pm to be back by 3:00 pm. See what fits\nTaxi or car · 1 h 16 min · 16 mi\nNo timetable or live traffic confirms this ride's time: it is an estimate with 15 min extra for the connection. Leave by the time shown, never later.\nBY\n3:00 pm\nE\nAt John F. Kennedy International Airport\nFlight leaves 6:00 pm: be at the airport by 3:00 pm, 3 h early for an international flight."
+  }
+ ],
+ "guides": {
+  "New York City": {
+   "city": "New York City",
+   "src": true,
+   "ai": false,
+   "n": 18,
+   "sights": "Statue of Liberty~ | Interlingua* | Empire State Building* | Brooklyn Bridge | NBC* | Nasdaq | Chrysler Building | Wall Street | Ellis Island | Greenwich Village | Grand Central Terminal | Carnegie Hall | Flatiron Building | Rockefeller Center | Woolworth Building | Manhattan Bridge~ | Enterprise | St. Patrick's Cathedral",
+   "far": "Fort Lee",
+   "eats": 66,
+   "starts": {
+    "cruise": [
+     "Manhattan Cruise Terminal"
+    ],
+    "airport": [
+     "John F. Kennedy International Airport"
+    ],
+    "station": [
+     "New York City main station (unknown)"
+    ],
+    "hotel": [
+     "Hotel in central New York City"
+    ],
+    "point": [
+     "Central New York City"
+    ]
+   }
+  }
+ },
+ "steps": [],
+ "version": "5d14162-1795221656",
+ "aiReady": false,
+ "wizard": {
+  "miss": [],
+  "prev": "Your days: 4 days",
+  "form": "Add each place in order, the way it's booked. Each new stop starts where the last one ends.\n\nSTOP 1 · CITY STAY\nCity\nArrive on\nNights\nHotel (optional)\nGetting there\nFlight\nTrain\nFerry\nCar or bus\nArrive in town at\nLeave empty if you don't know yet.\n+ Add a city stay\n+ Add a cruise\nGoing home from here\nFlight\nTrain\nFerry\nCar or bus\nFlight at\nYour days: 4 days\nAdd more details (optional)\nName this trip\n\nKairoute picks good defaults for pace, walking and voice, and you can change any of them later.\n\nCancel\nPersonalize first\nBuild my trip"
+ },
+ "buildSec": 4,
+ "state": {
+  "busy": "",
+  "err": "",
+  "days": [
+   {
+    "date": "2027-10-11",
+    "type": "arrival"
+   },
+   {
+    "date": "2027-10-12",
+    "type": "land"
+   },
+   {
+    "date": "2027-10-13",
+    "type": "land"
+   },
+   {
+    "date": "2027-10-14",
+    "type": "departure"
+   }
+  ]
+ },
+ "phoneText": "TUE OCT 12 · NEW YORK CITY · LAND DAY\nNew York City ✎ Rename\nLock this day\n▶ Start tour\n9:00 am–6:00 pm\n9 h ✎\n7\nsights\n2.3 mi\nwalking\n4:21 pm\nlast stop done\nChoose sights\nMore\nAbout today's plan1 note\nUse Ctrl + scroll to zoom the map\nS\n1\n2\n3\nL\n4\n5\n6\n7\n3000 ft\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nWalk\nTaxi or car\n● Meal\nMore about today\n\nAll times are New York City time, 1 h ahead of your device.\n\nLEAVE\n9:00 am\nS\nLeave Hotel in central New York City\nAdd your own hotel on the Trip page for exact times.\nTaxi or car · 20 min · 2.2 mi\nBy road, with time for traffic.\nWalk · 46 min\nTaxi or car · 20 min\nARRIVE\n9:20 am\nLEAVE\n10:00 am\n1\nFlatiron Building\n40 min · Sight\nTaxi or car · 16 min · 1.4 mi\nWalk · 30 min\nTaxi or car · 16 min\nARRIVE\n10:16 am\nLEAVE\n10:56 am\n2\nNasdaq\n40 min · Sight\nWalk · 18 min · 0.9 mi\nWalk · 18 min\nTaxi or car · 14 min\nARRIVE\n11:14 am\nLEAVE\n11:54 am\n3\nCarnegie Hall\n40 min · Sight\nWalk · 7 min · 0.3 mi\nARRIVE\n12:01 pm\nLEAVE\n1:01 pm\nL\nLunch: Mastro's\nRestaurant · Local spot · 1 h\nChange lunch\nLunch: why here\nWalk · 4 min · 0.2 mi\nARRIVE\n1:05 pm\nLEAVE\n1:45 pm\n4\nNBC\n40 min · Sight · Must-see\nWalk · 2 min · 0.1 mi\nARRIVE\n1:47 pm\nLEAVE\n2:27 pm\n5\nRockefeller Center\n40 min · Sight\nWalk · 4 min · 0.2 mi\nARRIVE\n2:31 pm\nLEAVE\n3:01 pm\n6\nSt. Patrick's Cathedral\n30 min · Church\nWalk · 14 min · 0.6 mi\nWalk · 14 min\nTaxi or car · 13 min\nARRIVE\n3:15 pm\nLEAVE\n3:55 pm\n7\nChrysler Building\n40 min · Sight\nUNTIL\n5:34 pm\n+\nFree time: 1 h 39 min\nYours to spend as you lik",
+ "finished": "2026-11-21T01:22:10.676Z"
+}

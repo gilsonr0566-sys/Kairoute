@@ -1,0 +1,209 @@
+{
+ "name": "c01-bahamas",
+ "label": "Bahamas cruise field-test trip",
+ "legs": [
+  {
+   "k": "cruise",
+   "board": "Miami, Florida",
+   "date": "2027-01-11",
+   "aboard": "15:30",
+   "inAt": "11:25",
+   "ship": "Wonder of the Seas",
+   "ports": [
+    {
+     "date": "2027-01-13",
+     "place": "Nassau, Bahamas",
+     "arrive": "08:30",
+     "aboard": "16:30"
+    },
+    {
+     "date": "2027-01-14",
+     "place": "Perfect Day at CocoCay, Bahamas",
+     "arrive": "07:30",
+     "aboard": "16:30"
+    }
+   ],
+   "end": "Miami, Florida",
+   "endDate": "2027-01-15",
+   "off": "06:00"
+  }
+ ],
+ "started": "2026-11-21T01:15:21.871Z",
+ "passed": {
+  "/sources": 14,
+  "/transit": 13,
+  "/guide": 3,
+  "/places": 4,
+  "/voyage": 4,
+  "/ground": 3,
+  "/route": 7,
+  "/x/near": 5
+ },
+ "refused": {
+  "/ratings": 3,
+  "/events": 2,
+  "/grating": 2
+ },
+ "errors": [],
+ "days": [
+  {
+   "i": 0,
+   "date": "2027-01-11",
+   "type": "arrival",
+   "text": "MON JAN 11 · MIAMI, FLORIDA · ARRIVING\nMiami, Florida ✎ Rename\nLock this day\nToday is one plan\n\nFlight in at 11:25 am, then the ship at 3:30 pm: the sightseeing in between, your bags and the countdown are on one page.\n\nSee today's plan"
+  },
+  {
+   "i": 1,
+   "date": "2027-01-11",
+   "type": "embark",
+   "text": "MON JAN 11 · MIAMI, FLORIDA · BOARDING\nMiami, Florida ✎ Rename\nLock this day\n🚢\nLEAVE BY\nall aboard 3:30 pm\n1:44 pm\n▶ Start the tour\n\nOfficial all aboard 3:30 pm · Back at the cruise terminal by 2:30 pm\n\nGetting back on time is up to you\n\nKairoute's leave-by and back-by times are estimates with spare time built in. Traffic, queues and the weather can still slow you down. The time that counts is the ship's all-aboard time or your train or flight, as your cruise line or carrier gives it. Check it on the day.\n\nI understand\nTerms of use\n0\nsights\nChoose sights\nMore\nUse Ctrl + scroll to zoom the map\nStart · Airport\nFinish · Cruise port\n1 mi\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nTaxi or car\nMore about today\n🛳 When do you board Wonder of the Seas?\nBoarding time\nTerminal (optional)\nSave\n\nOn your boarding pass or check-in confirmation (also called arrival or check-in time). Until you add it, the plan uses the time to be back above.\n\nWhat to have on you · 0 of 9 ready\n📅 Add reminders to my calendar\n\nAll times are Miami time, 1 h ahead of your device.\n\nLEAVE\n12:40 pm\nS\nOut of Miami International Airport\nFlight arrives 11:25 am. We allow 1 h 15 min to get off the plane and through baggage claim (and passport control after a flight from abroad). Book luggage storage near Miami International Airport ahead (a left-luggage desk or a storage shop), or ask your hotel or station.\nYou fly in the day the ship sails, so today goes straight from the airport to the ship: there isn't enough time for sightseeing with a safe margin. A late or missed flight is the most common way travelers miss a ship, and the ship won't wait. Keep your airline's and cruise line's phone numbers handy, and if a delay is announced, call the cruise line at once.\nUNTIL\n1:44 pm\n+\nFree time: 50 min\nYours to spend as you like. Leave here by 1:44 pm to be back by 2:30 pm. See what fits\nTaxi or car · 1 h · 9.3 mi\nNo timetable or live traffic confirms this ride's time: it is an estimate with 15 min extra for the connection. Leave by the time shown, never later.\nBY\n2:30 pm\nE\nBoarding at Cruise Terminal G\nOfficial all aboard 3:30 pm: be at the terminal by 2:30 pm at the latest. Your cruise line gives you a boarding time: add it and the plan gets you there for it.\nPorters take your big bags at the curb (luggage tags on; they reach your cabin by evening). Keep your passport, boarding pass, medicines and valuables in your carry-on for check-in and security.\nBig ports have more than one cruise terminal: check yours on your boarding pass and tell the driver.\nBook the taxi or transfer the day before, or ask your hotel to call one. Being aboard on time is your responsibility: check your boarding time with your cruise line."
+  },
+  {
+   "i": 2,
+   "date": "2027-01-12",
+   "type": "sea"
+  },
+  {
+   "i": 3,
+   "date": "2027-01-13",
+   "type": "port",
+   "text": "WED JAN 13 · NASSAU, BAHAMAS · IN PORT\nNassau, Bahamas ✎ Rename\nLock this day\n🚢\nLEAVE BY\nall aboard 4:30 pm\n3:11 pm\n▶ Start the tour\n\nAshore 9:00 am · Official all aboard 4:30 pm · Back at the ship by 3:45 pm\n\nGetting back on time is up to you\n\nKairoute's leave-by and back-by times are estimates with spare time built in. Traffic, queues and the weather can still slow you down. The time that counts is the ship's all-aboard time or your train or flight, as your cruise line or carrier gives it. Check it on the day.\n\nI understand\nTerms of use\n5\nsights\n2.3 mi\nwalking\nChoose sights\nMore\nAbout today's plan1 note\nUse Ctrl + scroll to zoom the map\nStart · Cruise port\n1\n2\n3\nL\n4\n5\n1 mi\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nWalk\nTaxi or car\n● Meal\nMore about today\n\nAll times are Nassau time, 1 h ahead of your device.\n\nLEAVE\n9:00 am\nS\nOff the ship at Prince George Wharf Cruise Ship Terminal\nShip docks 8:30 am.\nWalk · 8 min · 0.4 mi\nARRIVE\n9:08 am\nLEAVE\n9:48 am\n1\nParadise Island\n40 min · Sight · Must-see\nWalk · 21 min · 1.0 mi\nWalk · 21 min\nTaxi or car · 14 min\nARRIVE\n10:09 am\nLEAVE\n10:59 am\n2\nFort Fincastle\n50 min · Palace · Must-see\nWalk · 16 min · 0.7 mi\nWalk · 16 min\nTaxi or car · 13 min\nARRIVE\n11:15 am\nLEAVE\n12:05 pm\n3\nNational Art Gallery of The Bahamas\n50 min · Museum · Must-see\nWalk · 5 min · 0.2 mi\nARRIVE\n12:10 pm\nLEAVE\n12:45 pm\nL\nLunch: Clay Oven\nRestaurant · Local spot · 35 min\nChange lunch\nLunch: why here\nTaxi or car · 32 min · 4.8 mi\nARRIVE\n1:17 pm\nLEAVE\n1:57 pm\n4\nCable Beach\n40 min · Sight · Must-see\nTaxi or car · 27 min · 3.7 mi\nARRIVE\n2:24 pm\nLEAVE\n3:04 pm\n5\nArdastra Gardens, Zoo and Conservation Centre\n40 min · Park or garden · Must-see\nTaxi or car · 34 min · 2.0 mi\nBy road, with time for traffic. Includes 15 min spare before the ship.\nWalk · 43 min\nTaxi or car · 19 min\nARRIVE\n3:38 pm\nE\nBack at the ship\nThe ship's official all aboard is 4:30 pm. Kairoute plans you back at least 45 min before it."
+  },
+  {
+   "i": 4,
+   "date": "2027-01-14",
+   "type": "port",
+   "text": "THU JAN 14 · PERFECT DAY AT COCOCAY, BAHAMAS · IN PORT\nPerfect Day at CocoCay, Bahamas ✎ Rename\nLock this day\n\nWe couldn't find exactly where Cruise port of Perfect Day at CocoCay is, so this day isn't planned on a guess (every ride time and the time to head back depend on it). It's being looked up again; you can also pick another cruise terminal in the day's settings.\n\nEdit this day"
+  },
+  {
+   "i": 5,
+   "date": "2027-01-15",
+   "type": "arrival",
+   "text": "FRI JAN 15 · MIAMI, FLORIDA · ARRIVING\nMiami, Florida ✎ Rename\nLock this day\n\nWhich port do you arrive at? There is more than one here (Cruise Terminal G or Cruise Terminal B). Choose it in the day's settings: no time is given on a guess.\n\nEdit this day"
+  }
+ ],
+ "guides": {
+  "Miami, Florida": {
+   "city": "Miami, Florida",
+   "src": true,
+   "ai": false,
+   "n": 6,
+   "sights": "Vizcaya Museum and Gardens* | Miami Circle | Gesu Church | Plymouth Congregational Church | Lyric Theater | Dana A. Dorsey House",
+   "far": "Miami Beach | Fort Lauderdale",
+   "eats": 14,
+   "starts": {
+    "cruise": [
+     "Cruise Terminal G",
+     "Cruise Terminal B"
+    ],
+    "airport": [
+     "Miami International Airport"
+    ],
+    "station": [
+     "Miami station (Amtrak)",
+     "Miami Central",
+     "Miami Airport"
+    ],
+    "hotel": [
+     "Hotel in central Miami"
+    ],
+    "point": [
+     "Central Miami"
+    ]
+   }
+  },
+  "Nassau, Bahamas": {
+   "city": "Nassau, Bahamas",
+   "src": true,
+   "ai": false,
+   "n": 6,
+   "sights": "Paradise Island* | Ardastra Gardens, Zoo and Conservation Centre* | National Art Gallery of The Bahamas* | Cable Beach* | Fort Fincastle* | Pirates of Nassau",
+   "far": "",
+   "eats": 18,
+   "starts": {
+    "cruise": [
+     "Prince George Wharf Cruise Ship Terminal"
+    ],
+    "airport": [
+     "Lynden Pindling International Airport"
+    ],
+    "station": [
+     "Nassau main station (unknown)"
+    ],
+    "hotel": [
+     "Hotel in central Nassau"
+    ],
+    "point": [
+     "Central Nassau"
+    ]
+   }
+  },
+  "Perfect Day at CocoCay, Bahamas": {
+   "city": "Perfect Day at CocoCay, Bahamas",
+   "src": true,
+   "ai": false,
+   "n": 3,
+   "sights": "Harbour Beach* | Thrill Waterpark* | Harbor Lagoon*",
+   "far": "",
+   "eats": 4,
+   "starts": {
+    "cruise": [
+     "Cruise port of Perfect Day at CocoCay (unknown)"
+    ],
+    "airport": [
+     "Perfect Day at CocoCay airport (unknown)"
+    ],
+    "station": [
+     "Perfect Day at CocoCay main station (unknown)"
+    ],
+    "hotel": [
+     "Hotel in central Perfect Day at CocoCay"
+    ],
+    "point": [
+     "Central Perfect Day at CocoCay"
+    ]
+   }
+  }
+ },
+ "steps": [],
+ "version": "5d14162-1795221656",
+ "aiReady": false,
+ "wizard": {
+  "miss": [],
+  "prev": "Your days: 5 days · 2 ports",
+  "form": "Add each place in order, the way it's booked. Each new stop starts where the last one ends.\n\nSTOP 1 · CRUISE\nLeaves from\nShip (optional)\nBoarding day\nAll aboard\nGetting to the ship (if you arrive the same day)\nFlight\nTrain\nFerry\nCar or bus\nArrive in Miami, Florida at\nPorts of call\nIn order, from your cruise booking. Days with no port are added as sea days.\nDate\nPort\nShip arrives\nAll aboard\nTender port (small boats take you ashore)\nRemove port\nDate\nPort\nShip arrives\nAll aboard\nTender port (small boats take you ashore)\nRemove port\n+ Add a port\nCruise ends in\nOn\nOff the ship at\n+ Add a city stay\n+ Add a cruise\nGoing home from Miami, Florida\nFlight\nTrain\nFerry\nCar or bus\nFlight at\nYour days: 5 days · 2 ports\nAdd more details (optional)\nName this trip\n\nKairoute picks good defaults for pace, walking and voice, and you can change any of them later.\n\nCancel\nPersonalize first\nBuild my trip"
+ },
+ "buildSec": 132,
+ "state": {
+  "busy": "",
+  "err": "",
+  "days": [
+   {
+    "date": "2027-01-11",
+    "type": "arrival"
+   },
+   {
+    "date": "2027-01-11",
+    "type": "embark"
+   },
+   {
+    "date": "2027-01-12",
+    "type": "sea"
+   },
+   {
+    "date": "2027-01-13",
+    "type": "port"
+   },
+   {
+    "date": "2027-01-14",
+    "type": "port"
+   },
+   {
+    "date": "2027-01-15",
+    "type": "arrival"
+   }
+  ]
+ },
+ "phoneText": "WED JAN 13 · NASSAU, BAHAMAS · IN PORT\nNassau, Bahamas ✎ Rename\nLock this day\n🚢\nLEAVE BY\nall aboard 4:30 pm\n3:11 pm\n▶ Start tour\n\nAshore 9:00 am · Official all aboard 4:30 pm · Back at the ship by 3:45 pm\n\nGetting back on time is up to you\n\nKairoute's leave-by and back-by times are estimates with spare time built in. Traffic, queues and the weather can still slow you down. The time that counts is the ship's all-aboard time or your train or flight, as your cruise line or carrier gives it. Check it on the day.\n\nI understand\nTerms of use\n5\nsights\n2.3 mi\nwalking\nChoose sights\nMore\nAbout today's plan1 note\nUse Ctrl + scroll to zoom the map\nStart · Cruise port\n1\n2\n3\nL\n4\n5\n1 mi\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nWalk\nTaxi or car\n● Meal\nMore about today\n\nAll times are Nassau time, 1 h ahead of your device.\n\nLEAVE\n9:00 am\nS\nOff the ship at Prince George Wharf Cruise Ship Terminal\nShip docks 8:30 am.\nWalk · 8 min · 0.4 mi\nARRIVE\n9:08 am\nLEAVE\n9:48 am\n1\nParadise Island\n40 min · Sight · Must-see\nWalk · 21 min · 1.0 mi\nWalk · 21 min\nTaxi or car · 14 min\nARRIVE\n10:09 am\nLEAVE\n10:59 am\n2\nFort Fincastle\n50 min · Palace · Must-see\nWalk · 16 min · 0.7 mi\nWalk · 16 min\nTaxi or car · 13 min\nARRIVE\n11:15 am\nLEAVE\n12:05 pm\n3\nNational Art Gallery of The Bahamas\n50 min · Museum · Must-see\nWalk · 5 min · 0.2 mi\nARRIVE\n12:10 pm\nLEAVE\n12:45 pm\nL\nLunch: Clay Oven\nRestaurant · Local spot · 35 min\nChange lunch\nLunch: why here\nTaxi or car · 32 min · 4.8 mi\nARRIVE\n1:17 pm\nLEAVE\n1:57 pm\n4\nCa",
+ "finished": "2026-11-21T01:18:33.634Z"
+}

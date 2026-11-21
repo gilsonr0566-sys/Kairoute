@@ -1,0 +1,143 @@
+{
+ "name": "a15-pontadelgada",
+ "label": "Ponta Delgada call",
+ "legs": [
+  {
+   "k": "cruise",
+   "board": "Lisbon, Portugal",
+   "date": "2027-04-18",
+   "aboard": "17:00",
+   "ports": [
+    {
+     "date": "2027-04-20",
+     "place": "Ponta Delgada, Azores",
+     "arrive": "08:00",
+     "aboard": "17:00"
+    }
+   ],
+   "end": "Lisbon, Portugal",
+   "endDate": "2027-04-22",
+   "off": "07:00"
+  }
+ ],
+ "started": "2026-11-21T01:10:07.726Z",
+ "passed": {
+  "/sources": 13,
+  "/transit": 10,
+  "/guide": 2,
+  "/places": 1,
+  "/voyage": 1,
+  "/ground": 1
+ },
+ "refused": {
+  "/ratings": 1
+ },
+ "errors": [],
+ "days": [
+  {
+   "i": 0,
+   "date": "2027-04-18",
+   "type": "arrival",
+   "text": "SUN APR 18 · LISBON, PORTUGAL · ARRIVING\nLisbon, Portugal ✎ Rename\nLock this day\nToday is one plan\n\nFlight in at 10:30 am, then the ship at 5:00 pm: the sightseeing in between, your bags and the countdown are on one page.\n\nSee today's plan"
+  },
+  {
+   "i": 1,
+   "date": "2027-04-18",
+   "type": "embark",
+   "text": "SUN APR 18 · LISBON, PORTUGAL · BOARDING\nLisbon, Portugal ✎ Rename\nLock this day\n\nWhen does your flight arrive? Add the time on the Trip page and the day is planned around it, with the time to get to the ship: nothing is planned on a guess.\n\nEdit this day"
+  },
+  {
+   "i": 2,
+   "date": "2027-04-19",
+   "type": "sea"
+  },
+  {
+   "i": 3,
+   "date": "2027-04-20",
+   "type": "port",
+   "text": "TUE APR 20 · PONTA DELGADA, AZORES · IN PORT\nPonta Delgada, Azores ✎ Rename\nLock this day\nI couldn't find Ponta Delgada, Azores in the travel guides and maps. Check the spelling on the day (for example \"Kotor, Montenegro\"), then tap Build again.\nNo guide for Ponta Delgada, Azores yet\n\nKairoute will build the guide for Ponta Delgada, Azores from travel guides and maps: real sights, places to eat, the cruise port and stations.\n\nBuild the Ponta Delgada, Azores guide"
+  },
+  {
+   "i": 4,
+   "date": "2027-04-21",
+   "type": "sea"
+  },
+  {
+   "i": 5,
+   "date": "2027-04-22",
+   "type": "arrival",
+   "text": "THU APR 22 · LISBON, PORTUGAL · ARRIVING\nLisbon, Portugal ✎ Rename\nLock this day\n\nThis is your last day. Add how you leave and when (your flight or train home) on the Trip page, or your hotel if you're staying on, and the day is planned around it: nothing is planned on a guess.\n\nEdit this day"
+  }
+ ],
+ "guides": {
+  "Lisbon, Portugal": {
+   "city": "Lisbon, Portugal",
+   "src": true,
+   "ai": false,
+   "n": 32,
+   "sights": "Jerónimos Monastery* | Belém Tower* | 25 de Abril Bridge~ | Lisbon Cathedral | Praça do Comércio | Castle of Saint George | Santa Justa Lift | National Museum of Ancient Art | Padrão dos Descobrimentos | Church of Santa Engrácia | São Bento Palace | Águas Livres Aqueduct | Monastery of São Vicente de Fora | Estrela Basilica | Carmo Convent | Alfama | Calouste Gulbenkian Museum | Lisbon Baixa | Lisbon Oceanarium | Rossio Square | Lisbon Zoo | National Azulejo Museum | National Coach Museum | Prazeres Cemetery | Botânico Garden of Lisboa | Church of Nossa Senhora da Conceição Velha | Jardim da Estrela | Design Museum | Alverca Palace | Pavilhão do Conhecimento - Ciência Viva Science Centre | Restauradores Square | Edward VII Park",
+   "far": "Mafra | Ericeira | Sintra | Convento de Mafra | Basilica of Our Lady and St. Anthony | Parque de Santa Marta | Pena National Palace | Moorish Castle | Sintra National Palace | Quintinha de Monserrate | Quinta da Regaleira",
+   "eats": 60,
+   "starts": {
+    "cruise": [
+     "Alcântara Maritime Terminal"
+    ],
+    "airport": [
+     "Lisbon Airport",
+     "Lisbon Luís de Camões Airport"
+    ],
+    "station": [
+     "Lisbon-Santa Apolónia Station",
+     "Estação Ferroviária de Lisboa - Rossio"
+    ],
+    "hotel": [
+     "Hotel in central Lisbon"
+    ],
+    "point": [
+     "Central Lisbon"
+    ]
+   }
+  }
+ },
+ "steps": [],
+ "version": "5d14162-1795221656",
+ "aiReady": false,
+ "wizard": {
+  "miss": [],
+  "prev": "Your days: 5 days · 1 port",
+  "form": "Add each place in order, the way it's booked. Each new stop starts where the last one ends.\n\nSTOP 1 · CRUISE\nLeaves from\nShip (optional)\nBoarding day\nAll aboard\nGetting to the ship (if you arrive the same day)\nFlight\nTrain\nFerry\nCar or bus\nArrive in town at\nLeave empty if you don't know yet.\nPorts of call\nIn order, from your cruise booking. Days with no port are added as sea days.\nDate\nPort\nShip arrives\nAll aboard\nTender port (small boats take you ashore)\nRemove port\n+ Add a port\nCruise ends in\nOn\nOff the ship at\nUsually 7:00 am to 9:00 am. Leave empty if you don't know.\n+ Add a city stay\n+ Add a cruise\nGoing home from here\nFlight\nTrain\nFerry\nCar or bus\nFlight at\nYour days: 5 days · 1 port\nAdd more details (optional)\nName this trip\n\nKairoute picks good defaults for pace, walking and voice, and you can change any of them later.\n\nCancel\nPersonalize first\nBuild my trip"
+ },
+ "buildSec": 4,
+ "state": {
+  "busy": "",
+  "err": "I couldn't find Ponta Delgada, Azores in the travel guides and maps. Check the spelling on the day (for example \"Kotor, Montenegro\"), then tap Build again.",
+  "days": [
+   {
+    "date": "2027-04-18",
+    "type": "arrival"
+   },
+   {
+    "date": "2027-04-18",
+    "type": "embark"
+   },
+   {
+    "date": "2027-04-19",
+    "type": "sea"
+   },
+   {
+    "date": "2027-04-20",
+    "type": "port"
+   },
+   {
+    "date": "2027-04-21",
+    "type": "sea"
+   },
+   {
+    "date": "2027-04-22",
+    "type": "arrival"
+   }
+  ]
+ },
+ "phoneText": "TUE APR 20 · PONTA DELGADA, AZORES · IN PORT\nPonta Delgada, Azores ✎ Rename\nLock this day\nI couldn't find Ponta Delgada, Azores in the travel guides and maps. Check the spelling on the day (for example \"Kotor, Montenegro\"), then tap Build again.\nNo guide for Ponta Delgada, Azores yet\n\nKairoute will build the guide for Ponta Delgada, Azores from travel guides and maps: real sights, places to eat, the cruise port and stations.\n\nBuild the Ponta Delgada, Azores guide",
+ "finished": "2026-11-21T01:11:02.061Z"
+}

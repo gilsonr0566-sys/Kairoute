@@ -1,0 +1,298 @@
+{
+ "name": "e03-edinburgh-actions",
+ "label": "",
+ "legs": [
+  {
+   "k": "stay",
+   "place": "Edinburgh, Scotland",
+   "date": "2027-08-09",
+   "nights": 3,
+   "inBy": "train",
+   "inAt": "14:20",
+   "homeBy": "train",
+   "homeAt": "10:00"
+  }
+ ],
+ "started": "2026-11-21T01:43:42.535Z",
+ "passed": {
+  "/sources": 13,
+  "/transit": 21,
+  "/guide": 1,
+  "/places": 2,
+  "/voyage": 3,
+  "/ground": 1,
+  "/x/near": 16,
+  "/route": 13,
+  "/facts": 1
+ },
+ "refused": {
+  "/ratings": 2,
+  "/grating": 8,
+  "/events": 5
+ },
+ "errors": [],
+ "days": [
+  {
+   "i": 0,
+   "date": "2027-08-09",
+   "type": "arrival",
+   "text": "MON AUG 9 · EDINBURGH, SCOTLAND · ARRIVING\nEdinburgh, Scotland ✎ Rename\nLock this day\n▶ Start the tour\n2:35 pm–8:57 pm\n6 h 22 min ✎\n1\nsight\n1.8 mi\nwalking\n4:23 pm\nlast stop done\nChoose sights\nMore\nAbout today's plan1 note\nUse Ctrl + scroll to zoom the map\nStart · Station\nH\n1\n500 ft\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nWalk\n■ Hotel\nMore about today\n\nAll times are Edinburgh time, 6 h ahead of your device.\n\nLEAVE\n2:35 pm\nS\nOut of Edinburgh Waverley railway station\nTrain arrives 2:20 pm. We allow 15 min to get off the train.\nWalk · 2 min · 0.1 mi\nARRIVE\n2:37 pm\nLEAVE\n2:57 pm\nH\nCheck in or drop bags\n20 min\nWalk · 18 min · 0.8 mi\nWalk · 18 min\nTaxi or car · 14 min\nARRIVE\n3:15 pm\nLEAVE\n4:05 pm\n1\nHolyrood Palace\n50 min · Palace · Must-see\nUNTIL\n8:39 pm\n+\nFree time: 4 h 34 min\nYours to spend as you like. See what fits\nWalk · 18 min · 0.8 mi\nWalk · 18 min\nTaxi or car · 14 min\nBY\n8:57 pm\nE\nBack at Hotel in central Edinburgh\nARRIVE\n6:30 pm\nD\nSuggested dinner: Roti King\nRestaurant\nChange dinner\nDinner: why here"
+  },
+  {
+   "i": 1,
+   "date": "2027-08-10",
+   "type": "land",
+   "text": "TUE AUG 10 · EDINBURGH, SCOTLAND · LAND DAY\nEdinburgh, Scotland ✎ Rename\nLock this day\n▶ Start the tour\n9:00 am–6:00 pm\n9 h ✎\n6\nsights\n2.1 mi\nwalking\n3:24 pm\nlast stop done\nChoose sights\nMore\nAbout today's plan1 note\nUse Ctrl + scroll to zoom the map\nS\n1\n2\n3\n4\nL\n5\n6\n1000 ft\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nWalk\n● Meal\nMore about today\n\nAll times are Edinburgh time, 6 h ahead of your device.\n\nLEAVE\n9:00 am\nS\nLeave Hotel in central Edinburgh\nAdd your own hotel on the Trip page for exact times.\nWalk · 6 min · 0.3 mi\nARRIVE\n9:06 am\nLEAVE\n9:36 am\n1\nSt Mary's Cathedral\n30 min · Church\nWalk · 9 min · 0.4 mi\nARRIVE\n9:45 am\nLEAVE\n10:25 am\n2\nScott Monument\n40 min · Sight\nWalk · 4 min · 0.2 mi\nARRIVE\n10:29 am\nLEAVE\n11:59 am\n3\nScottish National Gallery\n1 h 30 min · Museum · Must-see\nWalk · 7 min · 0.3 mi\nARRIVE\n12:06 pm\nLEAVE\n12:56 pm\n4\nEdinburgh Castle\n50 min · Palace · Must-see\nWalk · 5 min · 0.3 mi\nARRIVE\n1:01 pm\nLEAVE\n2:01 pm\nL\nLunch: Amber\nRestaurant · Local spot · 1 h\nChange lunch\nLunch: why here\nWalk · 4 min · 0.2 mi\nARRIVE\n2:05 pm\nLEAVE\n2:45 pm\n5\nNational Library of Scotland\n40 min · Sight\nWalk · 2 min · 0.1 mi\nARRIVE\n2:47 pm\nLEAVE\n3:17 pm\n6\nSt Giles' Cathedral\n30 min · Church\nUNTIL\n5:53 pm\n+\nFree time: 2 h 36 min\nYours to spend as you like. See what fits\nWalk · 7 min · 0.3 mi\nBY\n6:00 pm\nE\nBack at Hotel in central Edinburgh\nARRIVE\n6:30 pm\nD\nSuggested dinner: Gaucho\nRestaurant\nChange dinner\nDinner: why here"
+  },
+  {
+   "i": 2,
+   "date": "2027-08-11",
+   "type": "land",
+   "text": "WED AUG 11 · EDINBURGH, SCOTLAND · LAND DAY\nEdinburgh, Scotland ✎ Rename\nLock this day\n▶ Start the tour\n9:00 am–6:00 pm\n9 h ✎\n8\nsights\n3.1 mi\nwalking\n6:05 pm\nlast stop done\nChoose sights\nMore\nAbout today's plan2 notes\nUse Ctrl + scroll to zoom the map\nS\n1\n2\n3\n4\n5\n6\n7\n8\n2000 ft\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nWalk\nTaxi or car\nMore about today\nMitchell Library no longer fits today's time, so it's off your list.\nWays to fit it in\nOK\nTaken off this day\n1\n\nAll times are Edinburgh time, 6 h ahead of your device.\n\nLEAVE\n9:00 am\nS\nLeave Hotel in central Edinburgh\nAdd your own hotel on the Trip page for exact times.\nTaxi or car · 1 h 32 min · 46 mi\nThe guide says: Train from Edinburgh, about 85 min one way The guide names a train, but no timetable for it is known here, so this ride is planned by taxi: check at the station or with your hotel.\nARRIVE\n10:32 am\nLEAVE\n11:02 am\n1\nGlasgow Green\n30 min · Sight · Train from Edinburgh, about 85 min one way\nWalk · 3 min · 0.1 mi\nARRIVE\n11:05 am\nLEAVE\n11:35 am\n2\nPeople's Palace\n30 min · Sight · Train from Edinburgh, about 85 min one way\nWalk · 23 min · 1.1 mi\nWalk · 23 min\nTaxi or car · 15 min\nARRIVE\n11:58 am\nLEAVE\n12:28 pm\n3\nGlasgow Necropolis\n30 min · Sight · Train from Edinburgh, about 85 min one way\nWalk · 4 min · 0.2 mi\nARRIVE\n12:32 pm\nLEAVE\n1:02 pm\n4\nGlasgow Cathedral\n30 min · Sight · Train from Edinburgh, about 85 min one way\nWalk · 16 min · 0.7 mi\nWalk · 16 min\nTaxi or car · 13 min\nARRIVE\n1:18 pm\nLEAVE\n1:48 pm\n5\nCity Chambers\n30 min · Sight · Train from Edinburgh, about 85 min one way\nWalk · 2 min · 0.1 mi\nARRIVE\n1:50 pm\nLEAVE\n2:20 pm\n6\nGeorge Square\n30 min · Sight · Train from Edinburgh, about 85 min one way\nWalk · 14 min · 0.6 mi\nWalk · 14 min\nTaxi or car · 13 min\nARRIVE\n2:34 pm\nLEAVE\n3:04 pm\n7\nWillow Tea Rooms\n30 min · Sight · Train from Edinburgh, about 85 min one way\nWalk · 6 min · 0.3 mi\nARRIVE\n3:10 pm\nLEAVE\n4:40 pm\n8\nGlasgow\n1 h 30 min · Day trip · Train from Edinburgh, about 85 min one way\nTaxi or car · 1 h 25 min · 47 mi\nARRIVE\n6:05 pm\nE\nBack at Hotel in central Edinburgh\nARRIVE\n6:35 pm\nD\nSuggested dinner: Happy Lamb Hot Pot\nRestaurant\nChange dinner\nDinner: why here"
+  },
+  {
+   "i": 3,
+   "date": "2027-08-12",
+   "type": "departure",
+   "text": "THU AUG 12 · EDINBURGH, SCOTLAND · LEAVING\nEdinburgh, Scotland ✎ Rename\nLock this day\n🚆\nLEAVE BY\nto your train\n9:28 am\n▶ Start the tour\n\nTrain 10:00 am · Back at Edinburgh Waverley railway station by 9:30 am\n\nGetting back on time is up to you\n\nKairoute's leave-by and back-by times are estimates with spare time built in. Traffic, queues and the weather can still slow you down. The time that counts is the ship's all-aboard time or your train or flight, as your cruise line or carrier gives it. Check it on the day.\n\nI understand\nTerms of use\n0\nsights\nChoose sights\nMore\nAbout today's plan1 note\nUse Ctrl + scroll to zoom the map\nS\nFinish · Station\n100 ft\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nWalk\n■ Hotel\nMore about today\nThere isn't much time today, so keep it close: a coffee and one nearby sight at most.\n\nAll times are Edinburgh time, 6 h ahead of your device.\n\nLEAVE\n9:00 am\nS\nCheck out of Hotel in central Edinburgh\nAdd your own hotel on the Trip page for exact times.\nMost hotels keep your bags for the day after check-out: ask at the desk.\nNext door\nARRIVE\n9:00 am\nLEAVE\n9:15 am\nH\nCollect bags\n15 min\nWalk · 2 min · 0.1 mi\nARRIVE\n9:17 am\nE\nAt Edinburgh Waverley railway station\n13 min to spare.\nTrain leaves 10:00 am: be at the station by 9:30 am, 30 min early."
+  }
+ ],
+ "guides": {
+  "Edinburgh, Scotland": {
+   "city": "Edinburgh, Scotland",
+   "src": true,
+   "ai": false,
+   "n": 16,
+   "sights": "Edinburgh Castle* | Holyrood Palace* | Scottish National Gallery* | St Giles' Cathedral | National Museum of Scotland | Scott Monument | National Library of Scotland | Royal Botanic Garden Edinburgh | HMY Britannia | Arthur's Seat | Craigmillar Castle | Royal Observatory | St Mary's Cathedral | Calton Hill | Edinburgh Zoo | Edinburgh Central Mosque",
+   "far": "Linlithgow | Falkirk | Glasgow | Culross | Linlithgow Palace | Callendar House | Glasgow Cathedral | Glasgow Necropolis | George Square | City Chambers | Gallery of Modern Art | Glasgow Cross | Glasgow Police Museum | Sharmanka Kinetic Theatre | St Enoch Subway Station | St Andrews in the Square | Glasgow Green | People's Palace | Willow Tea Rooms | Tenement House | The Museum of Piping | Mitchell Library | Park Circus | [https://www.glasgow.gov.uk/index.aspx Kelvingrove Park] | Kelvingrove Art Gallery and Museum | Kelvin Hall | Glasgow University | Hunterian Art Gallery | Hunterian Zoology Museum | Botanic Gardens | St Andrew's Suspension Bridge | Scotland Street School | Glasgow Science Centre | Riverside Museum | Govan Stones | Queen's Cross Church",
+   "eats": 60,
+   "starts": {
+    "cruise": [
+     "Port of Leith"
+    ],
+    "airport": [
+     "Edinburgh Airport"
+    ],
+    "station": [
+     "Edinburgh Waverley railway station"
+    ],
+    "hotel": [
+     "Hotel in central Edinburgh"
+    ],
+    "point": [
+     "Central Edinburgh"
+    ]
+   }
+  }
+ },
+ "steps": [
+  {
+   "name": "1-ticks-vs-plan",
+   "r": {
+    "on": [
+     "Scott Monument",
+     "St Mary's Cathedral",
+     "St Giles' Cathedral",
+     "Scottish National Gallery",
+     "National Library of Scotland",
+     "Edinburgh Castle"
+    ],
+    "total": 16
+   },
+   "text": "TUE AUG 10 · EDINBURGH, SCOTLAND · LAND DAY\nEdinburgh, Scotland ✎ Rename\nLock this day\n▶ Start the tour\n9:00 am–6:00 pm\n9 h ✎\n6\nsights\n2.1 mi\nwalking\n3:24 pm\nlast stop done\nChoose sights\nMore\nAbout today's plan1 note\nUse Ctrl + scroll to zoom the map\nS\n1\n2\n3\n4\nL\n5\n6\n1000 ft\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nWalk\n● Meal\nMore about today\n\nAll times are Edinburgh time, 6 h ahead of your device.\n\nLEAVE\n9:00 am\nS\nLeave Hotel in central Edinburgh\nAdd your own hotel on the Trip page for exact times.\nWalk · 6 min · 0.3 mi\nARRIVE\n9:06 am\nLEAVE\n9:36 am\n1\nSt Mary's Cathedral\n30 min · Church\nWalk · 9 min · 0.4 mi\nARRIVE\n9:45 am\nLEAVE\n10:25 am\n2\nScott Monument\n40 min · Sight\nWalk · 4 min · 0.2 mi\nARRIVE\n10:29 am\nLEAVE\n11:59 am\n3\nScottish National Gallery\n1 h 30 min · Museum · Must-see\nWalk · 7 min · 0.3 mi\nARRIVE\n12:06 pm\nLEAVE\n12:56 pm\n4\nEdinburgh Castle\n50 min · Palace · Must-see\nWalk · 5 min · 0.3 mi\nARRIVE\n1:01 pm\nLEAVE\n2:01 pm\nL\nLunch: Amber\nRestaurant · Local spot · 1 h\nChange lunch\nLunch: why here\nWalk · 4 min · 0.2 mi\nARRIVE\n2:05 pm\nLEAVE\n2:45 pm\n5\nNational Library of Scotland\n40 min · Sight\nWalk · 2 min · 0.1 mi\nARRIVE\n2:47 pm\nLEAVE\n3:17 pm\n6\nSt Giles' Cathedral\n30 min · Church\nUNTIL\n5:53 pm\n+\nFree time: 2 h 36 min\nYours to spend as you like. See what fits\nWalk · 7 min · 0.3 mi\nBY\n6:00 pm\nE\nBack at Hotel in central Edinburgh\nARRIVE\n6:30 pm\nD\nSuggested dinner: Gaucho\nRestaurant\nChange dinner\nDinner: why here"
+  },
+  {
+   "name": "2-untick-one",
+   "r": {
+    "tapped": [
+     "Pick Scott Monument"
+    ],
+    "onBefore": [
+     "Scott Monument",
+     "St Mary's Cathedral",
+     "St Giles' Cathedral",
+     "Scottish National Gallery",
+     "National Library of Scotland",
+     "Edinburgh Castle"
+    ],
+    "onAfter": [
+     "St Mary's Cathedral",
+     "St Giles' Cathedral",
+     "Scottish National Gallery",
+     "National Library of Scotland",
+     "Edinburgh Castle"
+    ],
+    "offCount": 12,
+    "pickerPage": "TUE AUG 10 · EDINBURGH, SCOTLAND · LAND DAY\nChoose sights\n‹ Back to my day plan\nAll\nMust-sees\nFamous\nLocal favorites\n\nVisits 4 h · Lunch 1 h · Walking and rides 44 min\n\nLet your guide plan it\n\nThe best stops for all 4 days in Edinburgh, Scotland, fitted to your hours, pace and interests. Nothing repeats.\n\nSuggest my tour\nFresh sights for this day only\n\nMore sights come from checked sources (Wikidata, Wikipedia, heritage registers); their short descriptions are from Wikivoyage (CC BY-SA). Each one's full story is written when you add it to a day.\n\n5 sights chosen\n3 h 16 min left of 9 h\nYour sights (5)\nHide\nSt Mary's Cathedral\nOn your plan · 9:06 am\n30 min · Free · 0.2 mi from your hotel\nChurch\nSt Giles' Cathedral\nOn your plan · 2:07 pm\n30 min · Free · 0.3 mi from your hotel\nChurch\nScottish National Gallery\nOn your plan · 9:49 am\n1 h 30 min · Free · 0.3 mi from your hotel\nMuseum\nNational Library of Scotland\nOn your plan · 1:25 pm\n40 min · Free · 0.3 mi from your hotel\nFamous sight\nEdinburgh Castle\nOn your plan · 11:26 am\n50 min · Free · 0.5 mi from your hotel\nPalace\n\nStill fits today (10)\n\nNearest your hotel first. Each one fits as your day stands; the time is how much later you'd finish.\n\nScott Monument\n+40 min\n40 min · Free · 950 ft from your hotel\nLocal favorite\nCalton Hill\n+49 min\n40 min · Free · 0.3 mi from your hotel\nFamous sight\nNational Museum of Scotland\n+1 h 37 min\n1 h 30 min · Free · 0.4 mi from your hotel\nMuseum\nEdinburgh Central Mosque\n+47 min\n30 min · Free · 0.6 m",
+    "dialog": []
+   },
+   "text": "TUE AUG 10 · EDINBURGH, SCOTLAND · LAND DAY\nEdinburgh, Scotland ✎ Rename\nLock this day\n▶ Start the tour\n9:00 am–6:00 pm\n9 h ✎\n5\nsights\n2.1 mi\nwalking\n2:44 pm\nlast stop done\nChoose sights\nMore\nAbout today's plan1 note\nUse Ctrl + scroll to zoom the map\nS\n1\n2\n3\nL\n4\n5\n1000 ft\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nWalk\n● Meal\nMore about today\n\nAll times are Edinburgh time, 6 h ahead of your device.\n\nLEAVE\n9:00 am\nS\nLeave Hotel in central Edinburgh\nAdd your own hotel on the Trip page for exact times.\nWalk · 6 min · 0.3 mi\nARRIVE\n9:06 am\nLEAVE\n9:36 am\n1\nSt Mary's Cathedral\n30 min · Church\nWalk · 13 min · 0.6 mi\nWalk · 13 min\nTaxi or car · 13 min\nARRIVE\n9:49 am\nLEAVE\n11:19 am\n2\nScottish National Gallery\n1 h 30 min · Museum · Must-see\nWalk · 7 min · 0.3 mi\nARRIVE\n11:26 am\nLEAVE\n12:16 pm\n3\nEdinburgh Castle\n50 min · Palace · Must-see\nWalk · 5 min · 0.3 mi\nARRIVE\n12:21 pm\nLEAVE\n1:21 pm\nL\nLunch: Amber\nRestaurant · Local spot · 1 h\nChange lunch\nLunch: why here\nWalk · 4 min · 0.2 mi\nARRIVE\n1:25 pm\nLEAVE\n2:05 pm\n4\nNational Library of Scotland\n40 min · Sight\nWalk · 2 min · 0.1 mi\nARRIVE\n2:07 pm\nLEAVE\n2:37 pm\n5\nSt Giles' Cathedral\n30 min · Church\nUNTIL\n5:53 pm\n+\nFree time: 3 h 16 min\nYours to spend as you like. See what fits\nWalk · 7 min · 0.3 mi\nBY\n6:00 pm\nE\nBack at Hotel in central Edinburgh\nARRIVE\n6:30 pm\nD\nSuggested dinner: Gaucho\nRestaurant\nChange dinner\nDinner: why here"
+  },
+  {
+   "name": "3-tick-one-more",
+   "r": {
+    "tapped": [
+     "Pick Scott Monument"
+    ],
+    "onBefore": [
+     "St Mary's Cathedral",
+     "St Giles' Cathedral",
+     "Scottish National Gallery",
+     "National Library of Scotland",
+     "Edinburgh Castle"
+    ],
+    "onAfter": [
+     "Scott Monument",
+     "St Mary's Cathedral",
+     "St Giles' Cathedral",
+     "Scottish National Gallery",
+     "National Library of Scotland",
+     "Edinburgh Castle"
+    ],
+    "offCount": 10,
+    "pickerPage": "TUE AUG 10 · EDINBURGH, SCOTLAND · LAND DAY\nChoose sights\n‹ Back to my day plan\nAll\nMust-sees\nFamous\nLocal favorites\n\nVisits 4 h 40 min · Lunch 1 h · Walking and rides 44 min\n\nLet your guide plan it\n\nThe best stops for all 4 days in Edinburgh, Scotland, fitted to your hours, pace and interests. Nothing repeats.\n\nSuggest my tour\nFresh sights for this day only\n\nMore sights come from checked sources (Wikidata, Wikipedia, heritage registers); their short descriptions are from Wikivoyage (CC BY-SA). Each one's full story is written when you add it to a day.\n\n6 sights chosen\n2 h 36 min left of 9 h\nYour sights (6)\nHide\nScott Monument\nOn your plan · 9:45 am\n40 min · Free · 950 ft from your hotel\nLocal favorite\nSt Mary's Cathedral\nOn your plan · 9:06 am\n30 min · Free · 0.2 mi from your hotel\nChurch\nSt Giles' Cathedral\nOn your plan · 2:47 pm\n30 min · Free · 0.3 mi from your hotel\nChurch\nScottish National Gallery\nOn your plan · 10:29 am\n1 h 30 min · Free · 0.3 mi from your hotel\nMuseum\nNational Library of Scotland\nOn your plan · 2:05 pm\n40 min · Free · 0.3 mi from your hotel\nFamous sight\nEdinburgh Castle\nOn your plan · 12:06 pm\n50 min · Free · 0.5 mi from your hotel\nPalace\n\nStill fits today (9)\n\nNearest your hotel first. Each one fits as your day stands; the time is how much later you'd finish.\n\nCalton Hill\n+49 min\n40 min · Free · 0.3 mi from your hotel\nFamous sight\nNational Museum of Scotland\n+1 h 37 min\n1 h 30 min · Free · 0.4 mi from your hotel\nMuseum\nEdinburgh Central Mosque\n+47 min",
+    "dialog": []
+   },
+   "text": "TUE AUG 10 · EDINBURGH, SCOTLAND · LAND DAY\nEdinburgh, Scotland ✎ Rename\nLock this day\n▶ Start the tour\n9:00 am–6:00 pm\n9 h ✎\n6\nsights\n2.1 mi\nwalking\n3:24 pm\nlast stop done\nChoose sights\nMore\nAbout today's plan1 note\nUse Ctrl + scroll to zoom the map\nS\n1\n2\n3\n4\nL\n5\n6\n1000 ft\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nWalk\n● Meal\nMore about today\n\nAll times are Edinburgh time, 6 h ahead of your device.\n\nLEAVE\n9:00 am\nS\nLeave Hotel in central Edinburgh\nAdd your own hotel on the Trip page for exact times.\nWalk · 6 min · 0.3 mi\nARRIVE\n9:06 am\nLEAVE\n9:36 am\n1\nSt Mary's Cathedral\n30 min · Church\nWalk · 9 min · 0.4 mi\nARRIVE\n9:45 am\nLEAVE\n10:25 am\n2\nScott Monument\n40 min · Sight\nWalk · 4 min · 0.2 mi\nARRIVE\n10:29 am\nLEAVE\n11:59 am\n3\nScottish National Gallery\n1 h 30 min · Museum · Must-see\nWalk · 7 min · 0.3 mi\nARRIVE\n12:06 pm\nLEAVE\n12:56 pm\n4\nEdinburgh Castle\n50 min · Palace · Must-see\nWalk · 5 min · 0.3 mi\nARRIVE\n1:01 pm\nLEAVE\n2:01 pm\nL\nLunch: Amber\nRestaurant · Local spot · 1 h\nChange lunch\nLunch: why here\nWalk · 4 min · 0.2 mi\nARRIVE\n2:05 pm\nLEAVE\n2:45 pm\n5\nNational Library of Scotland\n40 min · Sight\nWalk · 2 min · 0.1 mi\nARRIVE\n2:47 pm\nLEAVE\n3:17 pm\n6\nSt Giles' Cathedral\n30 min · Church\nUNTIL\n5:53 pm\n+\nFree time: 2 h 36 min\nYours to spend as you like. See what fits\nWalk · 7 min · 0.3 mi\nBY\n6:00 pm\nE\nBack at Hotel in central Edinburgh\nARRIVE\n6:30 pm\nD\nSuggested dinner: Gaucho\nRestaurant\nChange dinner\nDinner: why here"
+  },
+  {
+   "name": "4-tick-six-more",
+   "r": {
+    "tapped": [
+     "Pick Calton Hill",
+     "Pick National Museum of Scotland"
+    ],
+    "onBefore": [
+     "Scott Monument",
+     "St Mary's Cathedral",
+     "St Giles' Cathedral",
+     "Scottish National Gallery",
+     "National Library of Scotland",
+     "Edinburgh Castle"
+    ],
+    "onAfter": [
+     "Scott Monument",
+     "St Mary's Cathedral",
+     "St Giles' Cathedral",
+     "Calton Hill",
+     "Scottish National Gallery",
+     "National Library of Scotland",
+     "National Museum of Scotland",
+     "Edinburgh Castle"
+    ],
+    "offCount": 0,
+    "pickerPage": "TUE AUG 10 · EDINBURGH, SCOTLAND · LAND DAY\nChoose sights\n‹ Back to my day plan\nAll\nMust-sees\nFamous\nLocal favorites\n\nVisits 6 h 50 min · Lunch 1 h · Walking and rides 59 min\n\nAlmost full: about 11 min left.\n\nLet your guide plan it\n\nThe best stops for all 4 days in Edinburgh, Scotland, fitted to your hours, pace and interests. Nothing repeats.\n\nSuggest my tour\nFresh sights for this day only\n\nMore sights come from checked sources (Wikidata, Wikipedia, heritage registers); their short descriptions are from Wikivoyage (CC BY-SA). Each one's full story is written when you add it to a day.\n\n8 sights chosen\n11 min left of 9 h\nYour sights (8)\nHide\nScott Monument\nOn your plan · 3:36 pm\n40 min · Free · 950 ft from your hotel\nLocal favorite\nSt Mary's Cathedral\nOn your plan · 4:25 pm\n30 min · Free · 0.2 mi from your hotel\nChurch\nSt Giles' Cathedral\nOn your plan · 9:07 am\n30 min · Free · 0.3 mi from your hotel\nChurch\nCalton Hill\nOn your plan · 5:01 pm\n40 min · Free · 0.3 mi from your hotel\nFamous sight\nScottish National Gallery\nOn your plan · 2:02 pm\n1 h 30 min · Free · 0.3 mi from your hotel\nMuseum\nNational Library of Scotland\nOn your plan · 9:39 am\n40 min · Free · 0.3 mi from your hotel\nFamous sight\nNational Museum of Scotland\nOn your plan · 10:23 am\n1 h 30 min · Free · 0.4 mi from your hotel\nMuseum\nEdinburgh Castle\nOn your plan · 1:05 pm\n50 min · Free · 0.5 mi from your hotel\nPalace\n\nStill fits today (0)\n\nYour day is full. See \"Doesn't fit today\" for what would make room.\n\nAlready pic",
+    "dialog": []
+   },
+   "text": "TUE AUG 10 · EDINBURGH, SCOTLAND · LAND DAY\nEdinburgh, Scotland ✎ Rename\nLock this day\n▶ Start the tour\n9:00 am–6:00 pm\n9 h ✎\n8\nsights\n2.8 mi\nwalking\n5:49 pm\nlast stop done\nChoose sights\nMore\nAbout today's plan1 note\nUse Ctrl + scroll to zoom the map\nS\n1\n2\n3\nL\n4\n5\n6\n7\n8\n1000 ft\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nWalk\n● Meal\nMore about today\n\nAll times are Edinburgh time, 6 h ahead of your device.\n\nLEAVE\n9:00 am\nS\nLeave Hotel in central Edinburgh\nAdd your own hotel on the Trip page for exact times.\nWalk · 7 min · 0.3 mi\nARRIVE\n9:07 am\nLEAVE\n9:37 am\n1\nSt Giles' Cathedral\n30 min · Church\nWalk · 2 min · 0.1 mi\nARRIVE\n9:39 am\nLEAVE\n10:19 am\n2\nNational Library of Scotland\n40 min · Sight\nWalk · 4 min · 0.2 mi\nARRIVE\n10:23 am\nLEAVE\n11:53 am\n3\nNational Museum of Scotland\n1 h 30 min · Museum\nWalk · 2 min · 0.1 mi\nARRIVE\n11:55 am\nLEAVE\n12:55 pm\nL\nLunch: Mr Wood Fire\nRestaurant · Local spot · 1 h\nChange lunch\nLunch: why here\nWalk · 10 min · 0.5 mi\nARRIVE\n1:05 pm\nLEAVE\n1:55 pm\n4\nEdinburgh Castle\n50 min · Palace · Must-see\nWalk · 7 min · 0.3 mi\nARRIVE\n2:02 pm\nLEAVE\n3:32 pm\n5\nScottish National Gallery\n1 h 30 min · Museum · Must-see\nWalk · 4 min · 0.2 mi\nARRIVE\n3:36 pm\nLEAVE\n4:16 pm\n6\nScott Monument\n40 min · Sight\nWalk · 9 min · 0.4 mi\nARRIVE\n4:25 pm\nLEAVE\n4:55 pm\n7\nSt Mary's Cathedral\n30 min · Church\nWalk · 6 min · 0.3 mi\nARRIVE\n5:01 pm\nLEAVE\n5:41 pm\n8\nCalton Hill\n40 min · Sight\nWalk · 8 min · 0.4 mi\nARRIVE\n5:49 pm\nE\nBack at Hotel in central Edinburgh\n11 min to spare.\nARRIVE\n6:30 pm\nD\nSuggested dinner: Gaucho\nRestaurant\nChange dinner\nDinner: why here"
+  },
+  {
+   "name": "5-fit-in-one",
+   "r": {
+    "asked": "src-q1144643",
+    "wont": [
+     "Edinburgh Central Mosque\nNeeds 41 min\n30 min · Free · 0.6 mi from your hotel\nChurch",
+     "Royal Botanic Garden Edinburgh\nNeeds 1 h 5 min\n40 min · Free · 1.1 mi from your hotel\nPark or garden",
+     "Arthur's Seat\nNeeds 1 h 5 min\n40 min · Free · 1.2 mi from your hotel\nFamous sight",
+     "HMY Britannia\nNeeds 1 h 13 min\n40 min · Free · 2.1 mi from your hotel\nLocal favorite",
+     "Royal Observatory\nNeeds 1 h 10 min\n40 min · Free · 2.1 mi from your hotel\nLocal favorite",
+     "Craigmillar Castle\nNeeds 1 h 30 min\n50 min · Free · 2.7 mi from your hotel\nPalace",
+     "Edinburgh Zoo\nNeeds 1 h 22 min\n40 min · Free · 3.2 mi from your hotel\nFamous sight",
+     "Linlithgow\nNeeds 5 h 10 min\n3 h · Free · Day trip · 16 mi from your hotel\nIncluded: Linlithgow Palace\nFamous sight",
+     "Culross\nNeeds 6 h 30 min\n3 h · Free · Day trip · 18 mi from your hotel\nFamous sight",
+     "Falkirk\nNeeds 5 h 33 min\n3 h · Free · Day trip · 23 mi from your hotel\nIncluded: Callendar House\nFamous sight"
+    ],
+    "box1": "Edinburgh Central Mosque fits only if something gets shorter\n8 h 50 min of 9 h\n9:00 am to 6:00 pm\n\nEdinburgh Central Mosque needs about 41 min with getting there and back on your route.\n\nIt fits if lunch is 20 min instead of 1 h. Pick a way below, or keep your day as is.\n\nWays to fit it in, one tap\n\nAdd it, with lunch 20 min instead of 1 h · finish 5:50 pm\nSwap Calton Hill for Edinburgh Central Mosque · finish 5:02 pm\nSwap National Library of Scotland for Edinburgh Central Mosque · finish 5:49 pm\nStart at 8:30 am instead of 9:00 am, and add it\nFinish at 6:30 pm instead of 6:00 pm, and add it\nAdd it to Mon Aug 9 instead\nOr choose what to untick yourself\nKeep my day as is\nAdd Edinburgh Central Mosque",
+    "fixed": "Add it, with lunch 20 min instead of 1 h · finish 5:50 pm",
+    "box2": null,
+    "added": null,
+    "on": [
+     "Scott Monument",
+     "St Mary's Cathedral",
+     "St Giles' Cathedral",
+     "Calton Hill",
+     "Scottish National Gallery",
+     "National Library of Scotland",
+     "National Museum of Scotland",
+     "Edinburgh Castle",
+     "Edinburgh Central Mosque"
+    ]
+   },
+   "text": "TUE AUG 10 · EDINBURGH, SCOTLAND · LAND DAY\nEdinburgh, Scotland ✎ Rename\nLock this day\n▶ Start the tour\n9:00 am–6:00 pm\n9 h ✎\n9\nsights\n3.3 mi\nwalking\n5:50 pm\nlast stop done\nChoose sights\nMore\nAbout today's plan1 note\nUse Ctrl + scroll to zoom the map\nS\n1\n2\n3\n4\nL\n5\n6\n7\n8\n9\n1000 ft\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nWalk\n● Meal\nMore about today\n\nAll times are Edinburgh time, 6 h ahead of your device.\n\nLEAVE\n9:00 am\nS\nLeave Hotel in central Edinburgh\nAdd your own hotel on the Trip page for exact times.\nWalk · 7 min · 0.3 mi\nARRIVE\n9:07 am\nLEAVE\n9:37 am\n1\nSt Giles' Cathedral\n30 min · Church\nWalk · 2 min · 0.1 mi\nARRIVE\n9:39 am\nLEAVE\n10:19 am\n2\nNational Library of Scotland\n40 min · Sight\nWalk · 4 min · 0.2 mi\nARRIVE\n10:23 am\nLEAVE\n11:53 am\n3\nNational Museum of Scotland\n1 h 30 min · Museum\nWalk · 6 min · 0.3 mi\nARRIVE\n11:59 am\nLEAVE\n12:29 pm\n4\nEdinburgh Central Mosque\n30 min · Church\nWalk · 13 min · 0.6 mi\nWalk · 13 min\nTaxi or car · 13 min\nARRIVE\n12:42 pm\nLEAVE\n1:02 pm\nL\nLunch: Cold Town House\nRestaurant · Local spot · 20 min\nChange lunch\nLunch: why here\nWalk · 4 min · 0.2 mi\nARRIVE\n1:06 pm\nLEAVE\n1:56 pm\n5\nEdinburgh Castle\n50 min · Palace · Must-see\nWalk · 7 min · 0.3 mi\nARRIVE\n2:03 pm\nLEAVE\n3:33 pm\n6\nScottish National Gallery\n1 h 30 min · Museum · Must-see\nWalk · 4 min · 0.2 mi\nARRIVE\n3:37 pm\nLEAVE\n4:17 pm\n7\nScott Monument\n40 min · Sight\nWalk · 9 min · 0.4 mi\nARRIVE\n4:26 pm\nLEAVE\n4:56 pm\n8\nSt Mary's Cathedral\n30 min · Church\nWalk · 6 min · 0.3 mi\nARRIVE\n5:02 pm\nLEAVE\n5:42 pm\n9\nCalton Hill\n40 min · Sight\nWalk · 8 min · 0.4 mi\nARRIVE\n5:50 pm\nE\nBack at Hotel in central Edinburgh\nARRIVE\n6:30 pm\nD\nSuggested dinner: Gaucho\nRestaurant\nChange dinner\nDinner: why here"
+  },
+  {
+   "name": "6-switch-a-ride",
+   "r": {
+    "pressed": "Taxi or car · 13 min",
+    "candidates": 1,
+    "dialog": []
+   },
+   "text": "TUE AUG 10 · EDINBURGH, SCOTLAND · LAND DAY\nEdinburgh, Scotland ✎ Rename\nLock this day\n▶ Start the tour\n9:00 am–6:00 pm\n9 h ✎\n9\nsights\n2.6 mi\nwalking\n5:49 pm\nlast stop done\nChoose sights\nMore\nAbout today's plan1 note\nUse Ctrl + scroll to zoom the map\nS\n1\n2\n3\n4\n5\nL\n6\n7\n8\n9\n1000 ft\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nWalk\nTaxi or car\n● Meal\nMore about today\n\nAll times are Edinburgh time, 6 h ahead of your device.\n\nLEAVE\n9:00 am\nS\nLeave Hotel in central Edinburgh\nAdd your own hotel on the Trip page for exact times.\nWalk · 7 min · 0.3 mi\nARRIVE\n9:07 am\nLEAVE\n9:37 am\n1\nSt Giles' Cathedral\n30 min · Church\nWalk · 2 min · 0.1 mi\nARRIVE\n9:39 am\nLEAVE\n10:19 am\n2\nNational Library of Scotland\n40 min · Sight\nWalk · 4 min · 0.2 mi\nARRIVE\n10:23 am\nLEAVE\n11:53 am\n3\nNational Museum of Scotland\n1 h 30 min · Museum\nWalk · 6 min · 0.3 mi\nARRIVE\n11:59 am\nLEAVE\n12:29 pm\n4\nEdinburgh Central Mosque\n30 min · Church\nTaxi or car · 14 min · 0.8 mi\nBy road, with time for traffic.\nWalk · 17 min\nTaxi or car · 14 min\nARRIVE\n12:43 pm\nLEAVE\n1:33 pm\n5\nEdinburgh Castle\n50 min · Palace · Must-see\nWalk · 5 min · 0.2 mi\nARRIVE\n1:38 pm\nLEAVE\n1:58 pm\nL\nLunch: Contini Cannonball\nRestaurant · Local spot · 20 min\nChange lunch\nLunch: why here\nWalk · 4 min · 0.2 mi\nARRIVE\n2:02 pm\nLEAVE\n3:32 pm\n6\nScottish National Gallery\n1 h 30 min · Museum · Must-see\nWalk · 4 min · 0.2 mi\nARRIVE\n3:36 pm\nLEAVE\n4:16 pm\n7\nScott Monument\n40 min · Sight\nWalk · 9 min · 0.4 mi\nARRIVE\n4:25 pm\nLEAVE\n4:55 pm\n8\nSt Mary's Cathedral\n30 min · Church\nWalk · 6 min · 0.3 mi\nARRIVE\n5:01 pm\nLEAVE\n5:41 pm\n9\nCalton Hill\n40 min · Sight\nWalk · 8 min · 0.4 mi\nARRIVE\n5:49 pm\nE\nBack at Hotel in central Edinburgh\n11 min to spare.\nARRIVE\n6:30 pm\nD\nSuggested dinner: Gaucho\nRestaurant\nChange dinner\nDinner: why here"
+  },
+  {
+   "name": "7-change-lunch",
+   "r": {
+    "pressed": "Change lunch",
+    "candidates": 1,
+    "dialog": []
+   },
+   "text": "TUE AUG 10 · EDINBURGH, SCOTLAND · LAND DAY\nEdinburgh, Scotland ✎ Rename\nLock this day\n▶ Start the tour\n9:00 am–6:00 pm\n9 h ✎\n9\nsights\n2.6 mi\nwalking\n5:49 pm\nlast stop done\nChoose sights\nMore\nAbout today's plan1 note\nUse Ctrl + scroll to zoom the map\nS\n1\n2\n3\n4\n5\nL\n6\n7\n8\n9\n1000 ft\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nWalk\nTaxi or car\n● Meal\nMore about today\nChange lunch\n\nNow: Contini Cannonball at 1:38 pm\n\nEAT SOMEWHERE ELSE NEARBY\n\nLe Bistrot\nnext door to National Library of Scotland\nWhiski Rooms\n0.1 mi from Scottish National Gallery\nNok’s Kitchen\n0.1 mi from National Library of Scotland\nThe Witchery\n0.1 mi from Scottish National Gallery\nTimberyard\n0.2 mi from Edinburgh Castle\nPetit Paris\n0.2 mi from Edinburgh Castle\n\nTIME\n\nBest fit\n11:30 am\n12:00 pm\n12:30 pm\n1:00 pm\n1:30 pm\n2:00 pm\nDone\nSkip lunch today\nI have a reservation\n\nAll times are Edinburgh time, 6 h ahead of your device.\n\nLEAVE\n9:00 am\nS\nLeave Hotel in central Edinburgh\nAdd your own hotel on the Trip page for exact times.\nWalk · 7 min · 0.3 mi\nARRIVE\n9:07 am\nLEAVE\n9:37 am\n1\nSt Giles' Cathedral\n30 min · Church\nWalk · 2 min · 0.1 mi\nARRIVE\n9:39 am\nLEAVE\n10:19 am\n2\nNational Library of Scotland\n40 min · Sight\nWalk · 4 min · 0.2 mi\nARRIVE\n10:23 am\nLEAVE\n11:53 am\n3\nNational Museum of Scotland\n1 h 30 min · Museum\nWalk · 6 min · 0.3 mi\nARRIVE\n11:59 am\nLEAVE\n12:29 pm\n4\nEdinburgh Central Mosque\n30 min · Church\nTaxi or car · 14 min · 0.8 mi\nBy road, with time for traffic.\nWalk · 17 min\nTaxi or car · 14 min\nARRIVE\n12:43 pm\nLEAVE\n1:33 pm\n5\nEdinburgh Castle\n50 min · Palace · Must-see\nWalk · 5 min · 0.2 mi\nARRIVE\n1:38 pm\nLEAVE\n1:58 pm\nL\nLunch: Contini Cannonball\nRestaurant · Local spot · 20 min\nChange lunch\nLunch: why here\nWalk · 4 min · 0.2 mi\nARRIVE\n2:02 pm\nLEAVE\n3:32 pm\n6\nScottish National Gallery\n1 h 30 min · Museum · Must-see\nWalk · 4 min · 0.2 mi\nARRIVE\n3:36 pm\nLEAVE\n4:16 pm\n7\nScott Monument\n40 min · Sight\nWalk · 9 min · 0.4 mi\nARRIVE\n4:25 pm\nLEAVE\n4:55 pm\n8\nSt Mary's Cathedral\n30 min · Church\nWalk · 6 min · 0.3 mi\nARRIVE\n5:01 pm\nLEAVE\n5:41 pm\n9\nCalton Hill\n40 min · Sight\nWalk · 8 min · 0.4 mi\nARRIVE\n5:49 pm\nE\nBack at Hotel in central Edinburgh\n11 min to spare.\nARRIVE\n6:30 pm\nD\nSuggested dinner: Gaucho\nRestaurant\nChange dinner\nDinner: why here"
+  },
+  {
+   "name": "8-shorter-day",
+   "r": "hours 4",
+   "text": "TUE AUG 10 · EDINBURGH, SCOTLAND · LAND DAY\nEdinburgh, Scotland ✎ Rename\nLock this day\n▶ Start the tour\n9:00 am–2:00 pm\n5 h ✎\n5\nsights\n2.1 mi\nwalking\n2:04 pm\nlast stop done\nChoose sights\nMore\nAbout today's plan6 notes\nNational Museum of Scotland didn't fit in the time.\nCalton Hill didn't fit in the time.\nEdinburgh Central Mosque didn't fit in the time. To fit it in: spend 25 minutes less at Scottish National Gallery.\nSt Giles' Cathedral didn't fit in the time. To fit it in: spend 10 minutes less at Edinburgh Castle, spend 10 minutes less at Scottish National Gallery, skip St Mary's Cathedral or skip National Library of Scotland.\nA shorter visit to Scottish National Gallery (1 h 20 min instead of 1 h 30 min) so the rest of the day fits.\nOpening hours aren't known for St Mary's Cathedral, Scottish National Gallery and Edinburgh Castle and 1 more on this date: planned between 9:00 am and 5:00 pm, check before you go.\nUse Ctrl + scroll to zoom the map\nS\n1\n2\n3\n4\nL\n5\n1000 ft\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nWalk\n● Meal\nMore about today\nWith the shorter day, these no longer fit: National Museum of Scotland, Calton Hill, Edinburgh Central Mosque, St Giles' Cathedral. Shorten the day and take them off your picks?\nKeep my hours\nShorten anyway\nDidn't fit today: National Museum of Scotland, Calton Hill, Edinburgh Central Mosque, St Giles' Cathedral. Your sights don't all fit today's time.\nMake it fit\nLeave at 7:00 am instead of 9:00 am and you also fit Calton Hill, Edinburgh Central Mosque, St Giles' Cathedral, back by 1:56 pm. Earlier also means cooler weather, less traffic and fewer crowds.\nLeave at 7:00 am\nYou set 4 h of sightseeing today, so the day ends at 2:00 pm. Free longer? Stay out until 5:30 pm and you also see National Museum of Scotland, Calton Hill, Edinburgh Central Mosque, St Giles' Cathedral.\nStay until 5:30 pm\nChange lunch\n\nNow: Amber at 12:51 pm\n\nEAT SOMEWHERE ELSE NEARBY\n\nLe Bistrot\nnext door to National Library of Scotland\nWhiski Rooms\n0.1 mi from Scottish National Gallery\nNok’s Kitchen\n0.1 mi from National Library of Scotland\nThe Witchery\n0.1 mi from Scottish National Gallery\nTimberyard\n0.2 mi from Edinburgh Castle\nPetit Paris\n0.2 mi from Edinburgh Castle\n\nTIME\n\nBest fit\n11:30 am\n12:00 pm\n12:30 pm\n1:00 pm\n1:30 pm\nDone\nSkip lunch today\nI have a reservation\n\nAll times are Edinburgh time, 6 h ahead of your device.\n\nLEAVE\n9:00 am\nS\nLeave Hotel in central Edinburgh\nAdd your own hotel on the Trip page for exact times.\nWalk · 6 min · 0.3 mi\nARRIVE\n9:06 am\nLEAVE\n9:36 am\n1\nSt Mary's Cathedral\n30 min · Church\nWalk · 9 min · 0.4 mi\nARRIVE\n9:45 am\nLEAVE\n10:25 am\n2\nScott Monument\n40 min · Sight\nWalk · 4 min · 0.2 mi\nARRIVE\n10:29 am\nLEAVE\n11:49 am\n3\nScottish National Gallery\n1 h 20 min · Museum · Must-see\nWalk · 7 min · 0.3 mi\nARRIVE\n11:56 am\nLEAVE\n12:46 pm\n4\nEdinburgh Castle\n50 min · Palace · Must-see\nWalk · 5 min · 0.3 mi\nARRIVE\n12:51 pm\nLEAVE\n1:11 pm\nL\nLunch: Amber\nRestaurant · Local spot · 20 min\nChange lunch\nLunch: why here\nWalk · 4 min · 0.2 mi\nARRIVE\n1:15 pm\nLEAVE\n1:55 pm\n5\nNational Library of Scotland\n40 min · Sight\nWalk · 9 min · 0.4 mi\nARRIVE\n2:04 pm\nE\nBack at Hotel in central Edinburgh\nARRIVE\n6:30 pm\nD\nSuggested dinner: Gaucho\nRestaurant\nChange dinner\nDinner: why here"
+  },
+  {
+   "name": "8b-shorten-anyway",
+   "r": {
+    "act": "cutok",
+    "found": true,
+    "label": "Shorten anyway"
+   },
+   "text": "TUE AUG 10 · EDINBURGH, SCOTLAND · LAND DAY\nEdinburgh, Scotland ✎ Rename\nLock this day\n▶ Start the tour\n9:00 am–2:00 pm\n5 h ✎\n5\nsights\n2.2 mi\nwalking\n1:58 pm\nlast stop done\nChoose sights\nMore\nAbout today's plan1 note\nUse Ctrl + scroll to zoom the map\nS\n1\n2\n3\n4\nL\n5\n1000 ft\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nWalk\n● Meal\nMore about today\nThese no longer fit today's time, so they're off your list: National Museum of Scotland, Calton Hill, Edinburgh Central Mosque, St Giles' Cathedral.\nFit in National Museum of Scotland\nFit in Calton Hill\nFit in Edinburgh Central Mosque\nFit in St Giles' Cathedral\nOK\nChange lunch\n\nNow: Whiski Rooms at 12:31 pm\n\nEAT SOMEWHERE ELSE NEARBY\n\nLe Bistrot\nnext door to National Library of Scotland\nNok’s Kitchen\n0.1 mi from National Library of Scotland\nThe Witchery\n0.1 mi from Scottish National Gallery\nTimberyard\n0.2 mi from Edinburgh Castle\nPetit Paris\n0.2 mi from Edinburgh Castle\nThe Scottish Cafe & Restaurant\nnext door to Scottish National Gallery\n\nTIME\n\nBest fit\n11:30 am\n12:00 pm\n12:30 pm\n1:00 pm\n1:30 pm\nDone\nSkip lunch today\nI have a reservation\n\nAll times are Edinburgh time, 6 h ahead of your device.\n\nLEAVE\n9:00 am\nS\nLeave Hotel in central Edinburgh\nAdd your own hotel on the Trip page for exact times.\nWalk · 6 min · 0.3 mi\nARRIVE\n9:06 am\nLEAVE\n9:36 am\n1\nSt Mary's Cathedral\n30 min · Church\nWalk · 9 min · 0.4 mi\nARRIVE\n9:45 am\nLEAVE\n10:25 am\n2\nScott Monument\n40 min · Sight\nWalk · 11 min · 0.5 mi\nWalk · 11 min\nTaxi or car · 12 min\nARRIVE\n10:36 am\nLEAVE\n11:26 am\n3\nEdinburgh Castle\n50 min · Palace · Must-see\nWalk · 7 min · 0.3 mi\nARRIVE\n11:33 am\nLEAVE\n12:28 pm\n4\nScottish National Gallery\n55 min · Museum · Must-see\nWalk · 3 min · 0.1 mi\nARRIVE\n12:31 pm\nLEAVE\n1:06 pm\nL\nLunch: Whiski Rooms\nRestaurant · Popular with visitors · 35 min\nTRAVELERS RECOMMEND\nChange lunch\nLunch: why here\nWalk · 3 min · 0.1 mi\nARRIVE\n1:09 pm\nLEAVE\n1:49 pm\n5\nNational Library of Scotland\n40 min · Sight\nWalk · 9 min · 0.4 mi\nARRIVE\n1:58 pm\nE\nBack at Hotel in central Edinburgh\nARRIVE\n6:30 pm\nD\nSuggested dinner: Gaucho\nRestaurant\nChange dinner\nDinner: why here"
+  },
+  {
+   "name": "9-reload",
+   "r": "reloaded",
+   "text": "TUE AUG 10 · EDINBURGH, SCOTLAND · LAND DAY\nEdinburgh, Scotland ✎ Rename\nLock this day\n▶ Start the tour\n9:00 am–2:00 pm\n5 h ✎\n5\nsights\n2.2 mi\nwalking\n1:58 pm\nlast stop done\nChoose sights\nMore\nAbout today's plan1 note\nUse Ctrl + scroll to zoom the map\nS\n1\n2\n3\n4\nL\n5\n1000 ft\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nWalk\n● Meal\nMore about today\nThese no longer fit today's time, so they're off your list: National Museum of Scotland, Calton Hill, Edinburgh Central Mosque, St Giles' Cathedral.\nFit in National Museum of Scotland\nFit in Calton Hill\nFit in Edinburgh Central Mosque\nFit in St Giles' Cathedral\nOK\n\nAll times are Edinburgh time, 6 h ahead of your device.\n\nLEAVE\n9:00 am\nS\nLeave Hotel in central Edinburgh\nAdd your own hotel on the Trip page for exact times.\nWalk · 6 min · 0.3 mi\nARRIVE\n9:06 am\nLEAVE\n9:36 am\n1\nSt Mary's Cathedral\n30 min · Church\nWalk · 9 min · 0.4 mi\nARRIVE\n9:45 am\nLEAVE\n10:25 am\n2\nScott Monument\n40 min · Sight\nWalk · 11 min · 0.5 mi\nWalk · 11 min\nTaxi or car · 12 min\nARRIVE\n10:36 am\nLEAVE\n11:26 am\n3\nEdinburgh Castle\n50 min · Palace · Must-see\nWalk · 7 min · 0.3 mi\nARRIVE\n11:33 am\nLEAVE\n12:28 pm\n4\nScottish National Gallery\n55 min · Museum · Must-see\nWalk · 3 min · 0.1 mi\nARRIVE\n12:31 pm\nLEAVE\n1:06 pm\nL\nLunch: Whiski Rooms\nRestaurant · Popular with visitors · 35 min\nTRAVELERS RECOMMEND\nChange lunch\nLunch: why here\nWalk · 3 min · 0.1 mi\nARRIVE\n1:09 pm\nLEAVE\n1:49 pm\n5\nNational Library of Scotland\n40 min · Sight\nWalk · 9 min · 0.4 mi\nARRIVE\n1:58 pm\nE\nBack at Hotel in central Edinburgh\nARRIVE\n6:30 pm\nD\nSuggested dinner: Gaucho\nRestaurant\nChange dinner\nDinner: why here"
+  },
+  {
+   "name": "10-phone",
+   "r": "phone",
+   "text": "TUE AUG 10 · EDINBURGH, SCOTLAND · LAND DAY\nEdinburgh, Scotland ✎ Rename\nLock this day\n▶ Start tour\n9:00 am–2:00 pm\n5 h ✎\n5\nsights\n2.2 mi\nwalking\n1:58 pm\nlast stop done\nChoose sights\nMore\nAbout today's plan1 note\nUse Ctrl + scroll to zoom the map\nS\n1\n2\n3\n4\nL\n5\n1000 ft\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nWalk\n● Meal\nMore about today\nThese no longer fit today's time, so they're off your list: National Museum of Scotland, Calton Hill, Edinburgh Central Mosque, St Giles' Cathedral.\nFit in National Museum of Scotland\nFit in Calton Hill\nFit in Edinburgh Central Mosque\nFit in St Giles' Cathedral\nOK\n\nAll times are Edinburgh time, 6 h ahead of your device.\n\nLEAVE\n9:00 am\nS\nLeave Hotel in central Edinburgh\nAdd your own hotel on the Trip page for exact times.\nWalk · 6 min · 0.3 mi\nARRIVE\n9:06 am\nLEAVE\n9:36 am\n1\nSt Mary's Cathedral\n30 min · Church\nWalk · 9 min · 0.4 mi\nARRIVE\n9:45 am\nLEAVE\n10:25 am\n2\nScott Monument\n40 min · Sight\nWalk · 11 min · 0.5 mi\nWalk · 11 min\nTaxi or car · 12 min\nARRIVE\n10:36 am\nLEAVE\n11:26 am\n3\nEdinburgh Castle\n50 min · Palace · Must-see\nWalk · 7 min · 0.3 mi\nARRIVE\n11:33 am\nLEAVE\n12:28 pm\n4\nScottish National Gallery\n55 min · Museum · Must-see\nWalk · 3 min · 0.1 mi\nARRIVE\n12:31 pm\nLEAVE\n1:06 pm\nL\nLunch: Whiski Rooms\nRestaurant · Popular with visitors · 35 min\nTRAVELERS RECOMMEND\nChange lunch\nLunch: why here\nWalk · 3 min · 0.1 mi\nARRIVE\n1:09 pm\nLEAVE\n1:49 pm\n5\nNational Library of Scotland\n40 min · Sight\nWalk · 9 min · 0.4 mi\nARRIVE\n1:58 pm\nE\nBack at Hotel in central Edinburgh\nARRIVE\n6:30 pm\nD\nSuggested dinner: Gaucho\nRestaurant\nChange dinner\nDinner: why here"
+  }
+ ],
+ "version": "5d14162-1795221656",
+ "aiReady": false,
+ "wizard": {
+  "miss": [],
+  "prev": "Your days: 4 days",
+  "form": "Add each place in order, the way it's booked. Each new stop starts where the last one ends.\n\nSTOP 1 · CITY STAY\nCity\nArrive on\nNights\nHotel (optional)\nGetting there\nFlight\nTrain\nFerry\nCar or bus\nArrive in town at\nLeave empty if you don't know yet.\n+ Add a city stay\n+ Add a cruise\nGoing home from here\nFlight\nTrain\nFerry\nCar or bus\nTrain at\nYour days: 4 days\nAdd more details (optional)\nName this trip\n\nKairoute picks good defaults for pace, walking and voice, and you can change any of them later.\n\nCancel\nPersonalize first\nBuild my trip"
+ },
+ "buildSec": 7,
+ "state": {
+  "busy": "",
+  "err": "",
+  "days": [
+   {
+    "date": "2027-08-09",
+    "type": "arrival"
+   },
+   {
+    "date": "2027-08-10",
+    "type": "land"
+   },
+   {
+    "date": "2027-08-11",
+    "type": "land"
+   },
+   {
+    "date": "2027-08-12",
+    "type": "departure"
+   }
+  ]
+ },
+ "phoneText": "TUE AUG 10 · EDINBURGH, SCOTLAND · LAND DAY\nEdinburgh, Scotland ✎ Rename\nLock this day\n▶ Start tour\n9:00 am–6:00 pm\n9 h ✎\n6\nsights\n2.1 mi\nwalking\n3:24 pm\nlast stop done\nChoose sights\nMore\nAbout today's plan1 note\nUse Ctrl + scroll to zoom the map\nS\n1\n2\n3\n4\nL\n5\n6\n1000 ft\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nWalk\n● Meal\nMore about today\n\nAll times are Edinburgh time, 6 h ahead of your device.\n\nLEAVE\n9:00 am\nS\nLeave Hotel in central Edinburgh\nAdd your own hotel on the Trip page for exact times.\nWalk · 6 min · 0.3 mi\nARRIVE\n9:06 am\nLEAVE\n9:36 am\n1\nSt Mary's Cathedral\n30 min · Church\nWalk · 9 min · 0.4 mi\nARRIVE\n9:45 am\nLEAVE\n10:25 am\n2\nScott Monument\n40 min · Sight\nWalk · 4 min · 0.2 mi\nARRIVE\n10:29 am\nLEAVE\n11:59 am\n3\nScottish National Gallery\n1 h 30 min · Museum · Must-see\nWalk · 7 min · 0.3 mi\nARRIVE\n12:06 pm\nLEAVE\n12:56 pm\n4\nEdinburgh Castle\n50 min · Palace · Must-see\nWalk · 5 min · 0.3 mi\nARRIVE\n1:01 pm\nLEAVE\n2:01 pm\nL\nLunch: Amber\nRestaurant · Local spot · 1 h\nChange lunch\nLunch: why here\nWalk · 4 min · 0.2 mi\nARRIVE\n2:05 pm\nLEAVE\n2:45 pm\n5\nNational Library of Scotland\n40 min · Sight\nWalk · 2 min · 0.1 mi\nARRIVE\n2:47 pm\nLEAVE\n3:17 pm\n6\nSt Giles' Cathedral\n30 min · Church\nUNTIL\n5:53 pm\n+\nFree time: 2 h 36 min\nYours to spend as you like. See what fits\nWalk · 7 min · 0.3 mi\nBY\n6:00 pm\nE\nBack at Hotel in central Edinburgh\nARRIVE\n6:30 pm\nD\nSuggested dinner: Gaucho\nRestaurant\nChange dinner\nDinner: why here",
+ "finished": "2026-11-21T01:47:19.936Z"
+}

@@ -1,0 +1,132 @@
+{
+ "name": "a21-hamburg",
+ "label": "Hamburg Tue to Thu stay (Lubeck day trip)",
+ "legs": [
+  {
+   "k": "stay",
+   "place": "Hamburg, Germany",
+   "date": "2027-05-10",
+   "nights": 4,
+   "inBy": "train",
+   "inAt": "13:00",
+   "homeBy": "train",
+   "homeAt": "12:00"
+  }
+ ],
+ "started": "2026-11-21T01:13:31.115Z",
+ "passed": {
+  "/sources": 12,
+  "/transit": 11,
+  "/guide": 1,
+  "/places": 2,
+  "/voyage": 1,
+  "/ground": 1,
+  "/x/near": 7,
+  "/route": 4
+ },
+ "refused": {
+  "/ratings": 1,
+  "/grating": 3,
+  "/events": 3
+ },
+ "errors": [],
+ "days": [
+  {
+   "i": 0,
+   "date": "2027-05-10",
+   "type": "arrival",
+   "text": "MON MAY 10 · HAMBURG, GERMANY · ARRIVING\nHamburg, Germany ✎ Rename\nLock this day\n\nWhich station do you arrive at? There is more than one here (Hamburg-Altona station or Hamburg Central Station). Choose it in the day's settings: no time is given on a guess.\n\nEdit this day"
+  },
+  {
+   "i": 1,
+   "date": "2027-05-11",
+   "type": "land",
+   "text": "TUE MAY 11 · HAMBURG, GERMANY · LAND DAY\nHamburg, Germany ✎ Rename\nLock this day\n▶ Start the tour\n9:00 am–6:00 pm\n9 h ✎\n6\nsights\n2.1 mi\nwalking\n4:15 pm\nlast stop done\nChoose sights\nMore\nAbout today's plan1 note\nUse Ctrl + scroll to zoom the map\nS\n1\n2\n3\nL\n4\n5\n6\n2000 ft\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nWalk\nTaxi or car\n● Meal\nMore about today\n\nAll times are Hamburg time, 7 h ahead of your device.\n\nLEAVE\n9:00 am\nS\nLeave Hotel in central Hamburg\nAdd your own hotel on the Trip page for exact times.\nTaxi or car · 17 min · 1.5 mi\nBy road, with time for traffic.\nWalk · 33 min\nTaxi or car · 17 min\nARRIVE\n9:17 am\nLEAVE\n9:57 am\n1\nChilehaus\n40 min · Sight · Must-see\nWalk · 9 min · 0.4 mi\nARRIVE\n10:06 am\nLEAVE\n10:36 am\n2\nSt. Catherine's Church, Hamburg\n30 min · Church\nWalk · 6 min · 0.3 mi\nARRIVE\n10:42 am\nLEAVE\n11:22 am\n3\nSpeicherstadt\n40 min · Sight · Must-see\nWalk · 9 min · 0.4 mi\nARRIVE\n11:45 am\nLEAVE\n12:45 pm\nL\nLunch: Fang & Feld\nRestaurant · Popular with visitors · 1 h\nChange lunch\nLunch: why here\nNext door\nARRIVE\n12:47 pm\nLEAVE\n1:27 pm\n4\nElbphilharmonie\n40 min · Sight · Must-see\nWalk · 3 min · 0.1 mi\nARRIVE\n1:30 pm\nLEAVE\n2:10 pm\n5\nPort of Hamburg\n40 min · Sight · Must-see\nTaxi or car · 18 min · 1.8 mi\nWalk · 39 min\nTaxi or car · 18 min\nARRIVE\n2:28 pm\nLEAVE\n3:58 pm\n6\nSt. Pauli\n1 h 30 min · Museum · Must-see\nUNTIL\n5:43 pm\n+\nFree time: 1 h 45 min\nYours to spend as you like. See what fits\nWalk · 17 min · 0.8 mi\nWalk · 17 min\nTaxi or car · 14 min\nBY\n6:00 pm\nE\nBack at Hotel in central Hamburg\nARRIVE\n6:30 pm\nD\nSuggested dinner: Old Commercial Room\nRestaurant\nTRAVELERS RECOMMEND\nChange dinner\nDinner: why here"
+  },
+  {
+   "i": 2,
+   "date": "2027-05-12",
+   "type": "land",
+   "text": "WED MAY 12 · HAMBURG, GERMANY · LAND DAY\nHamburg, Germany ✎ Rename\nLock this day\n▶ Start the tour\n9:00 am–6:00 pm\n9 h ✎\n1\nsight\n12:47 pm\nlast stop done\nChoose sights\nMore\nAbout today's plan1 note\nUse Ctrl + scroll to zoom the map\nS\n1\nL\n1 mi\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nWalk\nTaxi or car\n● Meal\nMore about today\n\nAll times are Hamburg time, 7 h ahead of your device.\n\nLEAVE\n9:00 am\nS\nLeave Hotel in central Hamburg\nAdd your own hotel on the Trip page for exact times.\nTaxi or car · 33 min · 5.2 mi\nARRIVE\n9:33 am\nLEAVE\n10:13 am\n1\nVolksparkstadion\n40 min · Park or garden · Must-see\nTaxi or car · 33 min · 5.2 mi\nARRIVE\n11:45 am\nLEAVE\n12:45 pm\nL\nLunch: La Cocina Kochschule\nPopular with visitors · 1 h\nChange lunch\nRate La Cocina Kochschule\nUNTIL\n5:58 pm\n+\nFree time: 5 h 13 min\nYours to spend as you like. See what fits\nNext door\nBY\n6:00 pm\nE\nBack at Hotel in central Hamburg\nARRIVE\n6:30 pm\nD\nSuggested dinner: Nom\nChange dinner\nRate Nom"
+  },
+  {
+   "i": 3,
+   "date": "2027-05-13",
+   "type": "land",
+   "text": "THU MAY 13 · HAMBURG, GERMANY · LAND DAY\nHamburg, Germany ✎ Rename\nLock this day\n▶ Start the tour\n9:00 am–6:00 pm\n9 h ✎\n8\nsights\n0.7 mi\nwalking\n5:57 pm\nlast stop done\nChoose sights\nMore\nAbout today's plan3 notes\nUse Ctrl + scroll to zoom the map\nS\n1\n2\n3\n4\n5\nL\n6\n7\n8\n500 ft\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nWalk\nTaxi or car\n● Meal\nMore about today\n\nAll times are Hamburg time, 7 h ahead of your device.\n\nLEAVE\n9:00 am\nS\nLeave Hotel in central Hamburg\nAdd your own hotel on the Trip page for exact times.\nTaxi or car · 1 h 50 min · 76 mi\nThe guide says: Train from Landungsbrücken, about 110 min one way The guide names a train, but no timetable for it is known here, so this ride is planned by taxi: check at the station or with your hotel.\nARRIVE\n10:50 am\nLEAVE\n11:20 am\n1\nWilhelm-Wagenfeld-Haus\n30 min · Sight · Train from Landungsbrücken, about 110 min one way\nNext door\nARRIVE\n11:22 am\nLEAVE\n11:52 am\n2\nGerhard-Marcks-Haus\n30 min · Sight · Train from Landungsbrücken, about 110 min one way\nWalk · 2 min · 0.1 mi\nARRIVE\n11:54 am\nLEAVE\n12:24 pm\n3\nKunsthalle\n30 min · Sight · Train from Landungsbrücken, about 110 min one way\nWalk · 4 min · 0.2 mi\nARRIVE\n12:28 pm\nLEAVE\n12:58 pm\n4\nSchnoor\n30 min · Sight · Train from Landungsbrücken, about 110 min one way\nWalk · 6 min · 0.3 mi\nARRIVE\n1:04 pm\nLEAVE\n1:57 pm\n5\nBremen\n53 min · Day trip · Train from Landungsbrücken, about 110 min one way\nNext door\nARRIVE\n1:59 pm\nLEAVE\n2:34 pm\nL\nLunch: Bremer Ratskeller\nRestaurant · Local spot · 35 min\nChange lunch\nLunch: why here\nNext door\nARRIVE\n2:34 pm\nLEAVE\n3:04 pm\n6\nRoland\n30 min · Sight · UNESCO · Train from Landungsbrücken, about 110 min one way\nNext door\nARRIVE\n3:04 pm\nLEAVE\n3:34 pm\n7\nRathaus\n30 min · Sight · Train from Landungsbrücken, about 110 min one way\nWalk · 2 min · 0.1 mi\nARRIVE\n3:36 pm\nLEAVE\n4:06 pm\n8\nDom St. Petri\n30 min · Sight · Train from Landungsbrücken, about 110 min one way\nTaxi or car · 1 h 51 min · 74 mi\nARRIVE\n5:57 pm\nE\nBack at Hotel in central Hamburg\nARRIVE\n6:30 pm\nD\nSuggested dinner: Petit Bonheur\nChange dinner\nRate Petit Bonheur"
+  },
+  {
+   "i": 4,
+   "date": "2027-05-14",
+   "type": "departure",
+   "text": "FRI MAY 14 · HAMBURG, GERMANY · LEAVING\nHamburg, Germany ✎ Rename\nLock this day\n\nWhich station do you leave from? There is more than one here (Hamburg-Altona station or Hamburg Central Station). Choose it in the day's settings and the day gets its time to leave by: no time is given on a guess.\n\nEdit this day"
+  }
+ ],
+ "guides": {
+  "Hamburg, Germany": {
+   "city": "Hamburg, Germany",
+   "src": true,
+   "ai": false,
+   "n": 47,
+   "sights": "Speicherstadt* | Hamburger Kunsthalle | Elbphilharmonie* | St. Michaelis Church, Hamburg | Tierpark Hagenbeck | Chilehaus* | Volksparkstadion* | Port of Hamburg* | St. Catherine's Church, Hamburg | Reeperbahn | Miniatur Wunderland | Museum of Art and Crafts Hamburg | St. Pauli* | Islamic Centre Hamburg | St. Peter’s Church | Museum für Hamburgische Geschichte | Domkirche St. Marien | St. James' Church | Planten un Blomen | HafenCity | Binnenalster | Elbe Tunnel | Cap San Diego | St. Nicholas Church, Hamburg | Außenalster | Altonaer Museum | Jenisch park | St. Johannis (Curslack) | Rote Flora | Heinrich Hertz Tower | Christianskirche | Eppendorf | Deichtorhallen | Deutsches Schauspielhaus | Monument to the X-ray and Radium Martyrs of All Nations~ | Hamburg Stadtpark | International Maritime Museum Hamburg | B-515 | Hansa-Theater | Fish Auction Hall | Prototype Museum | Kaiser-Wilhelm-Denkmal, Hamburg | St. Ansgar | St. Trinitatis, Hamburg-Altona | Hulbehaus | Trinity church in Hamburg-St.Georg | Lombard Bridge~",
+   "far": "Bremen | Buxtehude | Lüneburg | Stade | Rathaus | Roland | Dom St. Petri | Böttcherstraße | Wallanlagen | Schnoor | Überseemuseum | Wuseum | Kunsthalle | Gerhard-Marcks-Haus | Wilhelm-Wagenfeld-Haus | Weserburg | St. Petri church | City hall | Buxtehude Museum für Regionalgeschichte und Kunst",
+   "eats": 60,
+   "starts": {
+    "cruise": [
+     "Cruise port of Hamburg (unknown)"
+    ],
+    "airport": [
+     "Hamburg Airport",
+     "Hamburg Finkenwerder Airport"
+    ],
+    "station": [
+     "Hamburg-Altona station",
+     "Hamburg Central Station"
+    ],
+    "hotel": [
+     "Hotel in central Hamburg"
+    ],
+    "point": [
+     "Central Hamburg"
+    ]
+   }
+  }
+ },
+ "steps": [],
+ "version": "5d14162-1795221656",
+ "aiReady": false,
+ "wizard": {
+  "miss": [],
+  "prev": "Your days: 5 days",
+  "form": "Add each place in order, the way it's booked. Each new stop starts where the last one ends.\n\nSTOP 1 · CITY STAY\nCity\nArrive on\nNights\nHotel (optional)\nGetting there\nFlight\nTrain\nFerry\nCar or bus\nArrive in town at\nLeave empty if you don't know yet.\n+ Add a city stay\n+ Add a cruise\nGoing home from here\nFlight\nTrain\nFerry\nCar or bus\nTrain at\nYour days: 5 days\nAdd more details (optional)\nName this trip\n\nKairoute picks good defaults for pace, walking and voice, and you can change any of them later.\n\nCancel\nPersonalize first\nBuild my trip"
+ },
+ "buildSec": 4,
+ "state": {
+  "busy": "",
+  "err": "",
+  "days": [
+   {
+    "date": "2027-05-10",
+    "type": "arrival"
+   },
+   {
+    "date": "2027-05-11",
+    "type": "land"
+   },
+   {
+    "date": "2027-05-12",
+    "type": "land"
+   },
+   {
+    "date": "2027-05-13",
+    "type": "land"
+   },
+   {
+    "date": "2027-05-14",
+    "type": "departure"
+   }
+  ]
+ },
+ "phoneText": "TUE MAY 11 · HAMBURG, GERMANY · LAND DAY\nHamburg, Germany ✎ Rename\nLock this day\n▶ Start tour\n9:00 am–6:00 pm\n9 h ✎\n6\nsights\n2.1 mi\nwalking\n4:15 pm\nlast stop done\nChoose sights\nMore\nAbout today's plan1 note\nUse Ctrl + scroll to zoom the map\nS\n1\n2\n3\nL\n4\n5\n6\n3000 ft\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nWalk\nTaxi or car\n● Meal\nMore about today\n\nAll times are Hamburg time, 7 h ahead of your device.\n\nLEAVE\n9:00 am\nS\nLeave Hotel in central Hamburg\nAdd your own hotel on the Trip page for exact times.\nTaxi or car · 17 min · 1.5 mi\nBy road, with time for traffic.\nWalk · 33 min\nTaxi or car · 17 min\nARRIVE\n9:17 am\nLEAVE\n9:57 am\n1\nChilehaus\n40 min · Sight · Must-see\nWalk · 9 min · 0.4 mi\nARRIVE\n10:06 am\nLEAVE\n10:36 am\n2\nSt. Catherine's Church, Hamburg\n30 min · Church\nWalk · 6 min · 0.3 mi\nARRIVE\n10:42 am\nLEAVE\n11:22 am\n3\nSpeicherstadt\n40 min · Sight · Must-see\nWalk · 9 min · 0.4 mi\nARRIVE\n11:45 am\nLEAVE\n12:45 pm\nL\nLunch: Fang & Feld\nRestaurant · Popular with visitors · 1 h\nChange lunch\nLunch: why here\nNext door\nARRIVE\n12:47 pm\nLEAVE\n1:27 pm\n4\nElbphilharmonie\n40 min · Sight · Must-see\nWalk · 3 min · 0.1 mi\nARRIVE\n1:30 pm\nLEAVE\n2:10 pm\n5\nPort of Hamburg\n40 min · Sight · Must-see\nTaxi or car · 18 min · 1.8 mi\nWalk · 39 min\nTaxi or car · 18 min\nARRIVE\n2:28 pm\nLEAVE\n3:58 pm\n6\nSt. Pauli\n1 h 30 min · Museum · Must-see\nUNTIL\n5:43 pm\n+\nFree time: 1 h 45 min\nYours to spend as you like. See what fits\nWalk · 17 min · 0.8 mi\nWalk · 17 min\nTaxi or car · 14 min\nBY\n6:00 pm\nE\nBack at Hotel ",
+ "finished": "2026-11-21T01:14:28.620Z"
+}

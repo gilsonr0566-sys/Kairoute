@@ -1,0 +1,199 @@
+{
+ "name": "a13-grandturk-halfmoon",
+ "label": "Grand Turk and Half Moon Cay (tender)",
+ "legs": [
+  {
+   "k": "cruise",
+   "board": "Fort Lauderdale, Florida",
+   "date": "2027-02-08",
+   "aboard": "15:30",
+   "ports": [
+    {
+     "date": "2027-02-10",
+     "place": "Grand Turk, Turks and Caicos",
+     "arrive": "08:00",
+     "aboard": "17:00"
+    },
+    {
+     "date": "2027-02-12",
+     "place": "Half Moon Cay, Bahamas",
+     "arrive": "08:00",
+     "aboard": "16:00",
+     "tender": true
+    }
+   ],
+   "end": "Fort Lauderdale, Florida",
+   "endDate": "2027-02-14",
+   "off": "07:00"
+  }
+ ],
+ "started": "2026-11-21T01:07:49.327Z",
+ "passed": {
+  "/sources": 14,
+  "/transit": 10,
+  "/guide": 3,
+  "/places": 3,
+  "/voyage": 3,
+  "/ground": 2,
+  "/route": 4,
+  "/x/near": 3
+ },
+ "refused": {
+  "/ratings": 2,
+  "/grating": 2,
+  "/events": 1
+ },
+ "errors": [],
+ "days": [
+  {
+   "i": 0,
+   "date": "2027-02-08",
+   "type": "arrival",
+   "text": "MON FEB 8 · FORT LAUDERDALE, FLORIDA · ARRIVING\nFort Lauderdale, Florida ✎ Rename\nLock this day\nToday is one plan\n\nFlight in at 10:30 am, then the ship at 3:30 pm: the sightseeing in between, your bags and the countdown are on one page.\n\nSee today's plan"
+  },
+  {
+   "i": 1,
+   "date": "2027-02-08",
+   "type": "embark",
+   "text": "MON FEB 8 · FORT LAUDERDALE, FLORIDA · BOARDING\nFort Lauderdale, Florida ✎ Rename\nLock this day\n\nWhen does your flight arrive? Add the time on the Trip page and the day is planned around it, with the time to get to the ship: nothing is planned on a guess.\n\nEdit this day"
+  },
+  {
+   "i": 2,
+   "date": "2027-02-09",
+   "type": "sea"
+  },
+  {
+   "i": 3,
+   "date": "2027-02-10",
+   "type": "port",
+   "text": "WED FEB 10 · GRAND TURK, TURKS AND CAICOS · IN PORT\nGrand Turk, Turks and Caicos ✎ Rename\nLock this day\n🚢\nLEAVE BY\nall aboard 5:00 pm\n3:38 pm\n▶ Start the tour\n\nAshore 8:30 am · Official all aboard 5:00 pm · Back at the ship by 4:15 pm\n\nGetting back on time is up to you\n\nKairoute's leave-by and back-by times are estimates with spare time built in. Traffic, queues and the weather can still slow you down. The time that counts is the ship's all-aboard time or your train or flight, as your cruise line or carrier gives it. Check it on the day.\n\nI understand\nTerms of use\n3\nsights\n1.2 mi\nwalking\nChoose sights\nMore\nAbout today's plan1 note\nUse Ctrl + scroll to zoom the map\nStart · Cruise port\n1\n2\n3\nL\n2000 ft\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nWalk\nTaxi or car\n● Meal\nMore about today\n\nAll times are Grand Turk time, 1 h ahead of your device.\n\nLEAVE\n8:30 am\nS\nOff the ship at Grand Turk Cruise Center\nShip docks 8:00 am.\nTaxi or car · 28 min · 4.0 mi\nARRIVE\n9:00 am\nLEAVE\n9:40 am\n1\nGrand Turk\n40 min · Sight · Must-see\nWalk · 15 min · 0.7 mi\nWalk · 15 min\nTaxi or car · 13 min\nARRIVE\n9:55 am\nLEAVE\n10:35 am\n2\nHer Majesty's Prison\n40 min · Sight\nTaxi or car · 16 min · 1.4 mi\nBy road, with time for traffic.\nWalk · 30 min\nTaxi or car · 16 min\nARRIVE\n10:51 am\nLEAVE\n11:31 am\n3\nPalm Grove Sunset Cabana beach\n40 min · Sight\nWalk · 11 min · 0.5 mi\nWalk · 11 min\nTaxi or car · 12 min\nARRIVE\n11:45 am\nLEAVE\n12:45 pm\nL\nLunch: Ranchy Cafe\nCafé · Local spot · 1 h\nChange lunch\nLunch: why here\nUNTIL\n3:38 pm\n+\nFree time: 2 h 53 min\nYours to spend as you like. Leave here by 3:38 pm to be back by 4:15 pm. See what fits\nTaxi or car · 37 min · 2.7 mi\nIncludes 15 min spare before the ship.\nWalk · 58 min\nTaxi or car · 22 min\nBY\n4:15 pm\nE\nBack at the ship\nThe ship's official all aboard is 5:00 pm. Kairoute plans you back at least 45 min before it."
+  },
+  {
+   "i": 4,
+   "date": "2027-02-11",
+   "type": "sea"
+  },
+  {
+   "i": 5,
+   "date": "2027-02-12",
+   "type": "port",
+   "text": "FRI FEB 12 · HALF MOON CAY, BAHAMAS · IN PORT\nHalf Moon Cay, Bahamas ✎ Rename\nLock this day\nI couldn't find Half Moon Cay, Bahamas in the travel guides and maps. Check the spelling on the day (for example \"Kotor, Montenegro\"), then tap Build again.\nNo guide for Half Moon Cay, Bahamas yet\n\nKairoute will build the guide for Half Moon Cay, Bahamas from travel guides and maps: real sights, places to eat, the cruise port and stations.\n\nBuild the Half Moon Cay, Bahamas guide"
+  },
+  {
+   "i": 6,
+   "date": "2027-02-13",
+   "type": "sea"
+  },
+  {
+   "i": 7,
+   "date": "2027-02-14",
+   "type": "arrival",
+   "text": "SUN FEB 14 · FORT LAUDERDALE, FLORIDA · ARRIVING\nFort Lauderdale, Florida ✎ Rename\nLock this day\n\nThis is your last day. Add how you leave and when (your flight or train home) on the Trip page, or your hotel if you're staying on, and the day is planned around it: nothing is planned on a guess.\n\nEdit this day"
+  }
+ ],
+ "guides": {
+  "Fort Lauderdale, Florida": {
+   "city": "Fort Lauderdale, Florida",
+   "src": true,
+   "ai": false,
+   "n": 16,
+   "sights": "Lazy Lake* | Washington Park* | Boulevard Gardens* | Franklin Park* | Roosevelt Gardens* | Bonnet House | International Swimming Hall of Fame* | Hugh Taylor Birch State Park | Las Olas Boulevard | Broward Center for the Performing Arts | Beach Place | NSU Art Museum | Museum of Discovery and Science | Old Fort Lauderdale Village & Museum | Stranahan House | Antique Car Museum",
+   "far": "Miami | Miami Beach",
+   "eats": 43,
+   "starts": {
+    "cruise": [
+     "Port Everglades"
+    ],
+    "airport": [
+     "Fort Lauderdale airport shooting"
+    ],
+    "station": [
+     "Fort Lauderdale station (Brightline)",
+     "Fort Lauderdale station",
+     "Fort Lauderdale Airport station"
+    ],
+    "hotel": [
+     "Hotel in central Fort Lauderdale"
+    ],
+    "point": [
+     "Central Fort Lauderdale"
+    ]
+   }
+  },
+  "Grand Turk, Turks and Caicos": {
+   "city": "Grand Turk, Turks and Caicos",
+   "src": true,
+   "ai": false,
+   "n": 4,
+   "sights": "Grand Turk* | Palm Grove Sunset Cabana beach | Her Majesty's Prison | Turks and Caicos National Museum",
+   "far": "",
+   "eats": 11,
+   "starts": {
+    "cruise": [
+     "Grand Turk Cruise Center"
+    ],
+    "airport": [
+     "JAGS McCartney International Airport"
+    ],
+    "station": [
+     "Grand Turk main station (unknown)"
+    ],
+    "hotel": [
+     "Hotel in central Grand Turk"
+    ],
+    "point": [
+     "Central Grand Turk"
+    ]
+   }
+  }
+ },
+ "steps": [],
+ "version": "5d14162-1795221656",
+ "aiReady": false,
+ "wizard": {
+  "miss": [],
+  "prev": "Your days: 7 days · 2 ports",
+  "form": "Add each place in order, the way it's booked. Each new stop starts where the last one ends.\n\nSTOP 1 · CRUISE\nLeaves from\nShip (optional)\nBoarding day\nAll aboard\nGetting to the ship (if you arrive the same day)\nFlight\nTrain\nFerry\nCar or bus\nArrive in Fort Lauderdale, Florida at\nLeave empty if you don't know yet.\nPorts of call\nIn order, from your cruise booking. Days with no port are added as sea days.\nDate\nPort\nShip arrives\nAll aboard\nTender port (small boats take you ashore)\nRemove port\nDate\nPort\nShip arrives\nAll aboard\nTender port (small boats take you ashore)\nRemove port\n+ Add a port\nCruise ends in\nOn\nOff the ship at\n+ Add a city stay\n+ Add a cruise\nGoing home from Fort Lauderdale, Florida\nFlight\nTrain\nFerry\nCar or bus\nFlight at\nYour days: 7 days · 2 ports\nAdd more details (optional)\nName this trip\n\nKairoute picks good defaults for pace, walking and voice, and you can change any of them later.\n\nCancel\nPersonalize first\nBuild my trip"
+ },
+ "buildSec": 6,
+ "state": {
+  "busy": "",
+  "err": "I couldn't find Half Moon Cay, Bahamas in the travel guides and maps. Check the spelling on the day (for example \"Kotor, Montenegro\"), then tap Build again.",
+  "days": [
+   {
+    "date": "2027-02-08",
+    "type": "arrival"
+   },
+   {
+    "date": "2027-02-08",
+    "type": "embark"
+   },
+   {
+    "date": "2027-02-09",
+    "type": "sea"
+   },
+   {
+    "date": "2027-02-10",
+    "type": "port"
+   },
+   {
+    "date": "2027-02-11",
+    "type": "sea"
+   },
+   {
+    "date": "2027-02-12",
+    "type": "port"
+   },
+   {
+    "date": "2027-02-13",
+    "type": "sea"
+   },
+   {
+    "date": "2027-02-14",
+    "type": "arrival"
+   }
+  ]
+ },
+ "phoneText": "WED FEB 10 · GRAND TURK, TURKS AND CAICOS · IN PORT\nGrand Turk, Turks and Caicos ✎ Rename\nLock this day\n🚢\nLEAVE BY\nall aboard 5:00 pm\n3:38 pm\n▶ Start tour\n\nAshore 8:30 am · Official all aboard 5:00 pm · Back at the ship by 4:15 pm\n\nGetting back on time is up to you\n\nKairoute's leave-by and back-by times are estimates with spare time built in. Traffic, queues and the weather can still slow you down. The time that counts is the ship's all-aboard time or your train or flight, as your cruise line or carrier gives it. Check it on the day.\n\nI understand\nTerms of use\n3\nsights\n1.2 mi\nwalking\nChoose sights\nMore\nAbout today's plan1 note\nUse Ctrl + scroll to zoom the map\nStart · Cruise port\n1\n2\n3\nL\n2000 ft\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nWalk\nTaxi or car\n● Meal\nMore about today\n\nAll times are Grand Turk time, 1 h ahead of your device.\n\nLEAVE\n8:30 am\nS\nOff the ship at Grand Turk Cruise Center\nShip docks 8:00 am.\nTaxi or car · 28 min · 4.0 mi\nARRIVE\n9:00 am\nLEAVE\n9:40 am\n1\nGrand Turk\n40 min · Sight · Must-see\nWalk · 15 min · 0.7 mi\nWalk · 15 min\nTaxi or car · 13 min\nARRIVE\n9:55 am\nLEAVE\n10:35 am\n2\nHer Majesty's Prison\n40 min · Sight\nTaxi or car · 16 min · 1.4 mi\nBy road, with time for traffic.\nWalk · 30 min\nTaxi or car · 16 min\nARRIVE\n10:51 am\nLEAVE\n11:31 am\n3\nPalm Grove Sunset Cabana beach\n40 min · Sight\nWalk · 11 min · 0.5 mi\nWalk · 11 min\nTaxi or car · 12 min\nARRIVE\n11:45 am\nLEAVE\n12:45 pm\nL\nLunch: Ranchy Cafe\nCafé · Local spot · 1 h\nChange lunch\nLunch: why here\nUNT",
+ "finished": "2026-11-21T01:08:52.075Z"
+}

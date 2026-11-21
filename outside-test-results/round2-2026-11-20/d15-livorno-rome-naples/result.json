@@ -1,0 +1,258 @@
+{
+ "name": "d15-livorno-rome-naples",
+ "label": "Livorno for Florence, Civitavecchia for Rome, Naples",
+ "legs": [
+  {
+   "k": "cruise",
+   "board": "Barcelona, Spain",
+   "date": "2027-09-05",
+   "aboard": "17:00",
+   "ports": [
+    {
+     "date": "2027-09-07",
+     "place": "Livorno (Florence), Italy",
+     "arrive": "07:00",
+     "aboard": "19:00"
+    },
+    {
+     "date": "2027-09-08",
+     "place": "Civitavecchia (Rome), Italy",
+     "arrive": "07:00",
+     "aboard": "19:00"
+    },
+    {
+     "date": "2027-09-09",
+     "place": "Naples, Italy",
+     "arrive": "07:00",
+     "aboard": "17:30"
+    }
+   ],
+   "end": "Barcelona, Spain",
+   "endDate": "2027-09-11",
+   "off": "07:00"
+  }
+ ],
+ "started": "2026-11-21T01:29:43.154Z",
+ "passed": {
+  "/sources": 12,
+  "/transit": 13,
+  "/guide": 1,
+  "/places": 3,
+  "/voyage": 5,
+  "/ground": 1,
+  "/route": 39,
+  "/x/near": 7
+ },
+ "refused": {
+  "/ratings": 4,
+  "/grating": 4,
+  "/events": 2
+ },
+ "errors": [],
+ "days": [
+  {
+   "i": 0,
+   "date": "2027-09-05",
+   "type": "arrival",
+   "text": "SUN SEP 5 · BARCELONA · ARRIVING\nBarcelona ✎ Rename\nLock this day\nToday is one plan\n\nFlight in at 10:30 am, then the ship at 5:00 pm: the sightseeing in between, your bags and the countdown are on one page.\n\nSee today's plan"
+  },
+  {
+   "i": 1,
+   "date": "2027-09-05",
+   "type": "embark",
+   "text": "SUN SEP 5 · BARCELONA · BOARDING\nBarcelona ✎ Rename\nLock this day\n\nWhen does your flight arrive? Add the time on the Trip page and the day is planned around it, with the time to get to the ship: nothing is planned on a guess.\n\nEdit this day"
+  },
+  {
+   "i": 2,
+   "date": "2027-09-06",
+   "type": "sea"
+  },
+  {
+   "i": 3,
+   "date": "2027-09-07",
+   "type": "port",
+   "text": "TUE SEP 7 · FLORENCE · IN PORT\nFlorence ✎ Rename\nLock this day\n\nCruise Terminal is 79 km from every sight here, so it can't be the right place. Check where you arrive or leave; this day isn't planned on a guess.\n\nEdit this day"
+  },
+  {
+   "i": 4,
+   "date": "2027-09-08",
+   "type": "port",
+   "text": "WED SEP 8 · ROME · IN PORT\nRome ✎ Rename\nLock this day\n🚢\nLEAVE BY\nall aboard 7:00 pm\n4:14 pm\n▶ Start the tour\n\nAshore 7:30 am · Official all aboard 7:00 pm · Back at the ship by 6:15 pm\n\nGetting back on time is up to you\n\nKairoute's leave-by and back-by times are estimates with spare time built in. Traffic, queues and the weather can still slow you down. The time that counts is the ship's all-aboard time or your train or flight, as your cruise line or carrier gives it. Check it on the day.\n\nI understand\nTerms of use\n7\nsights\n2.7 mi\nwalking\nChoose sights\nMore\nAbout today's plan2 notes\nUse Ctrl + scroll to zoom the map\nStart · Cruise port\n1\n2\n3\n4\n5\nL\n6\n7\n2000 ft\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nWalk\nTaxi or car\nTrain, metro or tram\n● Meal\nMore about today\n\nAll times are Rome time, 7 h ahead of your device.\n\nLEAVE\n7:30 am\nS\nOff the ship at Civitavecchia cruise port\nRome is about 1 hour 15 minutes by train from Civitavecchia station, or 1.5 hours by car. Leave Rome by mid-afternoon.\nShip docks 7:00 am.\nTrain RV 4137 + 2 changes · 1 h 43 min · 50 mi\nWalk 3 min to CIVITAVECCHIA | Ist. superiore G.Calamatta # f71. Bus CV620A: CIVITAVECCHIA | Ist. superiore G.Calamatta # f71 to CIVITAVECCHIA | Stazione FS # f233, 5 min; then change to Train RV 4137: Civitavecchia to Roma Ostiense, 52 min; then change to Metro MEB1: Piramide to Colosseo, 4 min, then walk 6 min. Times include waiting and boarding. Next departure about 8:31 pm (timetable checked Nov 20; Kairoute checks it again the day before and the morning of).\nTrain RV 4137 + 2 changes · 1 h 43 min\nTaxi or car · 1 h 26 min\nARRIVE\n9:13 am\nLEAVE\n11:13 am\n1\nColosseum and Roman Forum\n2 h · Ancient site · Must-see\nBOOK AHEAD\nBook tickets\n↗\nMark booked\nEntrance fee not included · more\nWalk · 24 min · 1.1 mi\nWalk · 24 min\nTaxi or car · 15 min\nARRIVE\n11:37 am\nLEAVE\n11:57 am\n2\nTrevi Fountain\n20 min · Fountain\nWalk · 15 min · 0.7 mi\nWalk · 15 min\nTaxi or car · 13 min\nARRIVE\n12:12 pm\nLEAVE\n12:37 pm\n3\nPiazza Navona\n25 min · Square\nIncludes San Luigi dei Francesi\nWalk · 6 min · 0.3 mi\nARRIVE\n12:43 pm\nLEAVE\n1:13 pm\n4\nPantheon\n30 min · Temple and church · Must-see\nTaxi or car · 17 min · 1.6 mi\nBy road, with time for traffic.\nWalk · 34 min\nTaxi or car · 17 min\nARRIVE\n1:30 pm\nLEAVE\n2:15 pm\n5\nSt Peter's Basilica\n45 min · Basilica · Must-see\nWalk · 5 min · 0.2 mi\nARRIVE\n2:20 pm\nLEAVE\n2:55 pm\nL\nLunch: La Pilotta\nPopular with visitors · 35 min\nChange lunch\nRate La Pilotta\nWalk · 7 min · 0.3 mi\nARRIVE\n3:02 pm\nLEAVE\n3:42 pm\n6\nHoly See\n40 min · Sight · Must-see\nWalk · 2 min · 0.1 mi\nARRIVE\n3:44 pm\nLEAVE\n4:14 pm\n7\nSistine Chapel\n30 min · Church · Must-see\nTrain RV 4134 + 1 change · 1 h 59 min · 48 mi\nWalk 12 min to Roma S.Pietro. Allow 7 min to reach this route's start and finish from your stops; then Train RV 4134: Roma S.Pietro to Civitavecchia, 41 min; then change to Bus CV120D: CIVITAVECCHIA | Stazione FS # f233 to CIVITAVECCHIA | Ist. Superiore G. CALAMATTA # f73, 3 min, then walk 3 min. Times include waiting and boarding. Includes 30 min spare before the ship.\nTrain RV 4134 + 1 change · 1 h 54 min\nBus TO240D + 1 change · 3 h 50 min\nTaxi or car · 1 h 55 min\nARRIVE\n6:13 pm\nE\nBack at the ship\nThe ship's official all aboard is 7:00 pm. Kairoute plans you back at least 45 min before it."
+  },
+  {
+   "i": 5,
+   "date": "2027-09-09",
+   "type": "port",
+   "text": "THU SEP 9 · NAPLES · IN PORT\nNaples ✎ Rename\nLock this day\n🚢\nLEAVE BY\nall aboard 5:30 pm\n4:23 pm\n▶ Start the tour\n\nAshore 7:30 am · Official all aboard 5:30 pm · Back at the ship by 4:45 pm\n\nGetting back on time is up to you\n\nKairoute's leave-by and back-by times are estimates with spare time built in. Traffic, queues and the weather can still slow you down. The time that counts is the ship's all-aboard time or your train or flight, as your cruise line or carrier gives it. Check it on the day.\n\nI understand\nTerms of use\n7\nsights\n4.8 mi\nwalking\nChoose sights\nMore\nAbout today's plan2 notes\nUse Ctrl + scroll to zoom the map\nStart · Cruise port\n1\n2\n3\n4\nL\n5\n6\n7\n2000 ft\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nWalk\nTaxi or car\n● Meal\nMore about today\n\nAll times are Naples time, 7 h ahead of your device.\n\nLEAVE\n7:30 am\nS\nOff the ship at Stazione Marittima (Naples cruise terminal)\nRight by the old town and the ferries to Capri and Sorrento.\nShip docks 7:00 am.\nWalk · 21 min · 1.0 mi\nWalk · 21 min\nMetro Line 1, Municipio to Dante · 20 min\nTaxi or car · 14 min\nARRIVE\n7:51 am\nLEAVE\n8:26 am\n1\nSpaccanapoli and the historic center\n35 min · Old town · Must-see\nIncludes Palace of Sangro of Casacalenda, Naples, Santa Chiara Church, Basilica of St. Dominic, San Gregorio Armeno, Napoli Sotteranea and Neapolis Sotterrata\nWalk · 21 min · 1.0 mi\nWalk · 21 min\nMetro Line 1, Dante to Municipio · 18 min\nTaxi or car · 14 min\nARRIVE\n9:00 am\nLEAVE\n9:30 am\n2\nCastel Nuovo\n30 min · Sight · Must-see\nWalk · 5 min · 0.3 mi\nARRIVE\n9:35 am\nLEAVE\n10:35 am\n3\nTeatro di San Carlo\n1 h · Ancient site · Must-see\nWalk · 3 min · 0.1 mi\nARRIVE\n10:38 am\nLEAVE\n11:18 am\n4\nPiazza del Plebiscito and the Royal Palace\n40 min · Square\nTaxi or car · 16 min · 1.4 mi\nBy road, with time for traffic.\nWalk · 30 min\nTaxi or car · 16 min\nARRIVE\n11:45 am\nLEAVE\n12:45 pm\nL\nLunch: Sorbillo\nPizza · € · Local spot · 1 h\nTRAVELERS RECOMMEND\nChange lunch\nLunch: why here\nWalk · 7 min · 0.3 mi\nARRIVE\n12:52 pm\nLEAVE\n1:27 pm\n5\nNaples Cathedral and the Chapel of San Gennaro\n35 min · Cathedral · Must-see\nWalk · 14 min · 0.6 mi\nWalk · 14 min\nTaxi or car · 13 min\nARRIVE\n1:41 pm\nLEAVE\n3:11 pm\n6\nNational Archaeological Museum\n1 h 30 min · Museum · Must-see\nWalk · 10 min · 0.5 mi\nARRIVE\n3:21 pm\nLEAVE\n4:01 pm\n7\nSansevero Chapel (Veiled Christ)\n40 min · Chapel · Must-see\nBOOK AHEAD\nFind official tickets\n↗\nMark booked\nEntrance fee not included · more\nWalk · 22 min · 1.0 mi\nWalk · 22 min\nMetro Line 1, Dante to Municipio · 20 min\nTaxi or car · 15 min\nARRIVE\n4:23 pm\nE\nBack at the ship\nThe ship's official all aboard is 5:30 pm. Kairoute plans you back at least 45 min before it."
+  },
+  {
+   "i": 6,
+   "date": "2027-09-10",
+   "type": "sea"
+  },
+  {
+   "i": 7,
+   "date": "2027-09-11",
+   "type": "arrival",
+   "text": "SAT SEP 11 · BARCELONA · ARRIVING\nBarcelona ✎ Rename\nLock this day\n\nWhich port do you arrive at? There is more than one here (Moll Adossat cruise terminals or World Trade Center cruise terminal). Choose it in the day's settings: no time is given on a guess.\n\nEdit this day"
+  }
+ ],
+ "guides": {
+  "Barcelona": {
+   "city": "Barcelona",
+   "src": false,
+   "n": 51,
+   "sights": "Sagrada Família* | Park Güell* | Casa Batlló* | Casa Milà (La Pedrera) | Gothic Quarter & Cathedral* | La Rambla & La Boqueria market | Museu Picasso | Santa Maria del Mar | Palau de la Música Catalana | Sant Pau Recinte Modernista | Bunkers del Carmel | Gràcia squares | Sant Antoni Market | Parc de la Ciutadella | Barceloneta beach | Montjuïc Castle | MNAC & Magic Fountain | El Born Centre de Cultura | Plaça Reial~ | Pont del Bisbe~ | Amatller House~ | Arc de Triomf~ | Columbus Monument~ | Plaça de Catalunya | Palau Güell~ | Camp Nou | Torre Glòries | Cathedral of the Holy Cross and Saint Eulalia | Casa Vicens | Lluís Companys Olympic Stadium | Museu Nacional d'Art de Catalunya | MACBA Barcelona Museum of Contemporary Art | Fundació Joan Miró | Generalitat of Catalonia | Tower of Collserola | German Pavilion, Barcelona | Lleó Morera House | FC Barcelona Museum | Palau Sant Jordi | Poble Espanyol | Tàpies Museum | Plaça d'Espanya | Royal Square | Gran Teatre del Liceu | Aquarium Barcelona | Maritime Museum of Barcelona | Monastery of Pedralbes | Gaudi House Museum | Güell Pavilions | Hash Marihuana & Hemp Museum | Botànic Garden of Barcelona",
+   "far": "Montserrat monastery | Sitges | Girona old town | Tibidabo | Maricel Museum | Contemporary Art Gallery",
+   "eats": 11,
+   "starts": {
+    "cruise": [
+     "Moll Adossat cruise terminals",
+     "World Trade Center cruise terminal"
+    ],
+    "airport": [
+     "Barcelona Airport, Terminal 1",
+     "Barcelona Airport, Terminal 2"
+    ],
+    "hotel": [
+     "Hotel near Plaça de Catalunya",
+     "Hotel on Passeig de Gràcia",
+     "Hotel at Port Olímpic"
+    ],
+    "station": [
+     "Barcelona Sants station",
+     "Estació de França"
+    ],
+    "point": [
+     "Barcelona Sants train station",
+     "Plaça d'Espanya"
+    ]
+   }
+  },
+  "Florence (from Livorno, Italy)": {
+   "city": "Florence (from Livorno, Italy)",
+   "src": true,
+   "ai": false,
+   "n": 33,
+   "sights": "Florence Cathedral* | Uffizi Gallery* | Palazzo Pitti* | David* | Ponte Vecchio* | Palazzo Vecchio | Basilica of Santa Croce | Florence Baptistery | Bargello National Museum | Basilica of Santa Maria Novella | Basilica of San Lorenzo | Boboli Gardens | Palazzo Strozzi | Galleria dell'Accademia | Santa Maria del Carmine Church | Museo dell'Opera del Duomo | Museum of San Marco | Galileo Museum | Biblioteca Medicea Laurenziana | National Central Library of Florence | San Miniato al Monte Church | Orsanmichele | Palazzo Medici Riccardi | Villa Castello | Santo Spirito Church | Davanzati Palace | Horne Museum | Stibbert Museum | Santa Felicita Church | Villa Medicea del Poggio Imperiale | piazzale Michelangelo | Marino Marini Museum | Great Synagogue of Florence",
+   "far": "",
+   "eats": 60,
+   "starts": {
+    "cruise": [
+     "Cruise Terminal"
+    ],
+    "airport": [
+     "Florence airport (unknown)"
+    ],
+    "station": [
+     "Firenze Santa Maria Novella railway station",
+     "Firenze Rifredi railway station"
+    ],
+    "hotel": [
+     "Hotel in central Florence"
+    ],
+    "point": [
+     "Central Florence"
+    ]
+   }
+  },
+  "Rome (from Civitavecchia)": {
+   "city": "Rome (from Civitavecchia)",
+   "src": false,
+   "ai": false,
+   "n": 49,
+   "sights": "St Peter's Basilica* | Colosseum and Roman Forum* | Pantheon* | Trevi Fountain | Piazza Navona | San Giovanni in Laterano | Palace of the Chancellery | Olympic Stadium | St. Peter's Square | The Vatican Museum | Palatine Hill | Santa Maria Maggiore | Castel Sant'Angelo | Palazzo del Quirinale | Circus Maximus | Musei Capitolini | The Celio | Terme di Caracalla | Vittorio Emanuele Monument | Arch of Titus | San Pietro in Vincoli | Chiesa del Gesù | Ara Pacis | Piazza di Spagna | Mausoleo di Augusto | The Spanish Steps | Column of Marcus Aurelius | Piazza del Popolo | Holy See* | Sistine Chapel* | Sovereign Military Order of Malta | Arch of Constantine~ | Galleria Borghese | Vatican Library | Capitoline Hill | Prelature of the Holy Cross and Opus Dei | Aurelian Walls | The Creation of Adam | Trajan's Forum | Ponte Sant'Angelo~ | Apostolic Palace | Saint Charles at the Four Fountains | Santa Maria della Vittoria | Santa Maria sopra Minerva | Ponte Milvio~ | San Luigi dei Francesi | Trajan's Column~ | Sisto Bridge~ | Fontana delle Tartarughe~",
+   "far": "Basilica of Saint Paul Outside the Walls",
+   "eats": 20,
+   "starts": {
+    "cruise": [
+     "Civitavecchia cruise port"
+    ],
+    "airport": [],
+    "station": [
+     "Roma San Pietro station",
+     "Roma Termini"
+    ],
+    "hotel": [
+     "Hotel near Piazza Navona"
+    ],
+    "point": [
+     "Civitavecchia train station"
+    ]
+   }
+  },
+  "Naples": {
+   "city": "Naples",
+   "src": false,
+   "ai": false,
+   "n": 39,
+   "sights": "Spaccanapoli and the historic center* | Sansevero Chapel (Veiled Christ)* | Naples Cathedral and the Chapel of San Gennaro* | Piazza del Plebiscito and the Royal Palace | National Archaeological Museum* | Castel dell'Ovo | Certosa e Museo di San Martino | Royal Palace and National Museum of Capodimonte | Castel Capuano | Santa Maria del Carmine Maggiore | Albergo dei Poveri | Capuana Gate | San Gregorio Armeno | Catacombe di San Gennaro | Fontana del Gigante | Catacombe di San Gaudioso | Borbonica Gallery | Villa Floridiana and Museo Nazionale della ceramica Duca di Martina | National railway Museum of Pietrarsa | Filangieri Civic Museum | Castel Nuovo* | Castel Sant'Elmo | Fontanelle Cemetery | Umberto I Gallery | Gesù Nuovo | Universitario Museum | Museum of Contemporary Art Donnaregina | Napoli Sotteranea | Neapolis Sotterrata | Palace of the Arts | Teatro di San Carlo* | Historic Centre of Naples | Santa Chiara Church | Basilica of St. Dominic | Virgiliano Park | Sant'Anna dei Lombardi Church | Stazione Zoologica Anton Dohrn | Palace of Sangro of Casacalenda, Naples | Posillipo",
+   "far": "Pompeii | Capri | Sorrento | Pozzuoli (ancient Puteoli) | Amphitheatre | Great Palaestra | House of the Vettii | House of the Faun | Temple of Apollo | Lupanar | House of the Ancient Hunt | House of the Tragic Poet | Villa dei Misteri | Shrine of the Virgin of the Rosary of Pompei | Small Port | Villa Pollio | Hotel Tramontano | Archeological Museum of the Sorrentine Peninsula | Museum of the Inlaid Wood | Duomo (Cathedral) | Church of San Francesco | Basilica of Sant'Antonino | Piazza Torquato Tasso | Via San Cesareo | Sedil Dominova | Villa Comunale | Piazza Vittoria | Flavian Amphitheater | Rione Terra | Pozzuoli Cathedral | Macellum of Pozzuoli",
+   "eats": 4,
+   "starts": {
+    "cruise": [
+     "Stazione Marittima (Naples cruise terminal)"
+    ],
+    "airport": [],
+    "station": [
+     "Napoli Centrale"
+    ],
+    "hotel": [
+     "Hotel near Piazza del Plebiscito"
+    ],
+    "point": [
+     "Piazza del Plebiscito"
+    ]
+   }
+  }
+ },
+ "steps": [],
+ "version": "5d14162-1795221656",
+ "aiReady": false,
+ "wizard": {
+  "miss": [],
+  "prev": "Your days: 7 days · 3 ports",
+  "form": "Add each place in order, the way it's booked. Each new stop starts where the last one ends.\n\nSTOP 1 · CRUISE\nLeaves from\nShip (optional)\nBoarding day\nAll aboard\nGetting to the ship (if you arrive the same day)\nFlight\nTrain\nFerry\nCar or bus\nArrive in Barcelona, Spain at\nLeave empty if you don't know yet.\nPorts of call\nIn order, from your cruise booking. Days with no port are added as sea days.\nDate\nPort\nShip arrives\nAll aboard\nTender port (small boats take you ashore)\nRemove port\nDate\nPort\nShip arrives\nAll aboard\nTender port (small boats take you ashore)\nRemove port\nDate\nPort\nShip arrives\nAll aboard\nTender port (small boats take you ashore)\nRemove port\n+ Add a port\nCruise ends in\nOn\nOff the ship at\n+ Add a city stay\n+ Add a cruise\nGoing home from Barcelona, Spain\nFlight\nTrain\nFerry\nCar or bus\nFlight at\nYour days: 7 days · 3 ports\nAdd more details (optional)\nName this trip\n\nKairoute picks good defaults for pace, walking and voice, and you can change any of them later.\n\nCancel\nPersonalize first\nBuild my trip"
+ },
+ "buildSec": 4,
+ "state": {
+  "busy": "",
+  "err": "",
+  "days": [
+   {
+    "date": "2027-09-05",
+    "type": "arrival"
+   },
+   {
+    "date": "2027-09-05",
+    "type": "embark"
+   },
+   {
+    "date": "2027-09-06",
+    "type": "sea"
+   },
+   {
+    "date": "2027-09-07",
+    "type": "port"
+   },
+   {
+    "date": "2027-09-08",
+    "type": "port"
+   },
+   {
+    "date": "2027-09-09",
+    "type": "port"
+   },
+   {
+    "date": "2027-09-10",
+    "type": "sea"
+   },
+   {
+    "date": "2027-09-11",
+    "type": "arrival"
+   }
+  ]
+ },
+ "phoneText": "TUE SEP 7 · FLORENCE · IN PORT\nFlorence ✎ Rename\nLock this day\n\nCruise Terminal is 79 km from every sight here, so it can't be the right place. Check where you arrive or leave; this day isn't planned on a guess.\n\nEdit this day",
+ "finished": "2026-11-21T01:30:50.469Z"
+}

@@ -1,0 +1,118 @@
+{
+ "name": "d07-mexicocity",
+ "label": "Mexico City stay",
+ "legs": [
+  {
+   "k": "stay",
+   "place": "Mexico City, Mexico",
+   "date": "2027-11-01",
+   "nights": 3,
+   "inAt": "13:00",
+   "homeAt": "12:00"
+  }
+ ],
+ "started": "2026-11-21T01:23:09.993Z",
+ "passed": {
+  "/sources": 12,
+  "/transit": 10,
+  "/guide": 1,
+  "/places": 2,
+  "/voyage": 2,
+  "/ground": 1,
+  "/x/near": 7,
+  "/route": 7
+ },
+ "refused": {
+  "/ratings": 1,
+  "/events": 4,
+  "/grating": 3
+ },
+ "errors": [],
+ "days": [
+  {
+   "i": 0,
+   "date": "2027-11-01",
+   "type": "arrival",
+   "text": "MON NOV 1 · MEXICO CITY, MEXICO · ARRIVING\nMexico City, Mexico ✎ Rename\nLock this day\n▶ Start the tour\n2:15 pm–9:09 pm\n6 h 54 min ✎\n1\nsight\n4:41 pm\nlast stop done\nChoose sights\nMore\nAbout today's plan1 note\nUse Ctrl + scroll to zoom the map\nStart · Airport\nH\n1\n3000 ft\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nTaxi or car\n■ Hotel\nMore about today\n\nAll times are Mexico City time, 1 h behind your device.\n\nLEAVE\n2:15 pm\nS\nOut of Mexico City International Airport\nFlight arrives 1:00 pm. We allow 1 h 15 min to get off the plane and through baggage claim (and passport control after a flight from abroad).\nTaxi or car · 34 min · 5.5 mi\nARRIVE\n2:49 pm\nLEAVE\n3:09 pm\nH\nCheck in or drop bags\n20 min\nTaxi or car · 21 min · 2.4 mi\nBy road, with time for traffic.\nWalk · 51 min\nTaxi or car · 21 min\nARRIVE\n3:30 pm\nLEAVE\n4:20 pm\n1\nPalace of Fine arts\n50 min · Palace · Must-see\nUNTIL\n8:48 pm\n+\nFree time: 4 h 28 min\nYours to spend as you like. See what fits\nTaxi or car · 21 min · 2.4 mi\nWalk · 51 min\nTaxi or car · 21 min\nBY\n9:09 pm\nE\nBack at Hotel in central Mexico City\nARRIVE\n6:30 pm\nD\nSuggested dinner: Los Abanicos\nRestaurant\nChange dinner\nDinner: why here"
+  },
+  {
+   "i": 1,
+   "date": "2027-11-02",
+   "type": "land",
+   "text": "TUE NOV 2 · MEXICO CITY, MEXICO · LAND DAY\nMexico City, Mexico ✎ Rename\nLock this day\n▶ Start the tour\n9:00 am–6:00 pm\n9 h ✎\n3\nsights\n1.1 mi\nwalking\n3:04 pm\nlast stop done\nChoose sights\nMore\nAbout today's plan1 note\nUse Ctrl + scroll to zoom the map\nS\n1\n2\nL\n3\n1000 ft\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nWalk\nTaxi or car\n● Meal\nMore about today\n\nAll times are Mexico City time, 1 h behind your device.\n\nLEAVE\n9:00 am\nS\nLeave Hotel in central Mexico City\nAdd your own hotel on the Trip page for exact times.\nTaxi or car · 34 min · 5.4 mi\nARRIVE\n9:34 am\nLEAVE\n11:04 am\n1\nLeon Trotsky House Museum\n1 h 30 min · Museum\nWalk · 7 min · 0.3 mi\nARRIVE\n11:11 am\nLEAVE\n12:41 pm\n2\nFrida Kahlo Museum\n1 h 30 min · Museum · Must-see\nWalk · 5 min · 0.2 mi\nARRIVE\n12:46 pm\nLEAVE\n1:46 pm\nL\nLunch: Trinidad Ritual de Sabores\nRestaurant · Local spot · 1 h\nChange lunch\nLunch: why here\nWalk · 12 min · 0.6 mi\nWalk · 12 min\nTaxi or car · 13 min\nARRIVE\n1:58 pm\nLEAVE\n2:28 pm\n3\nCapilla de la Purísima Concepción\n30 min · Church\nUNTIL\n5:24 pm\n+\nFree time: 2 h 56 min\nYours to spend as you like. See what fits\nTaxi or car · 36 min · 6.2 mi\nBY\n6:00 pm\nE\nBack at Hotel in central Mexico City\nARRIVE\n6:30 pm\nD\nSuggested dinner: Vips\nRestaurant\nChange dinner\nDinner: why here"
+  },
+  {
+   "i": 2,
+   "date": "2027-11-03",
+   "type": "land",
+   "text": "WED NOV 3 · MEXICO CITY, MEXICO · LAND DAY\nMexico City, Mexico ✎ Rename\nLock this day\n▶ Start the tour\n9:00 am–6:00 pm\n9 h ✎\n5\nsights\n1.7 mi\nwalking\n4:06 pm\nlast stop done\nChoose sights\nMore\nAbout today's plan1 note\nUse Ctrl + scroll to zoom the map\nS\n1\n2\n3\nL\n4\n5\n1000 ft\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nWalk\nTaxi or car\n● Meal\nMore about today\n\nAll times are Mexico City time, 1 h behind your device.\n\nLEAVE\n9:00 am\nS\nLeave Hotel in central Mexico City\nAdd your own hotel on the Trip page for exact times.\nTaxi or car · 26 min · 3.5 mi\nARRIVE\n9:26 am\nLEAVE\n10:06 am\n1\nAngel of Independence\n40 min · Sight\nTaxi or car · 17 min · 1.6 mi\nBy road, with time for traffic.\nWalk · 34 min\nTaxi or car · 17 min\nARRIVE\n10:23 am\nLEAVE\n11:53 am\n2\nNational Museum of Anthropology\n1 h 30 min · Museum · Must-see\nWalk · 8 min · 0.4 mi\nARRIVE\n12:01 pm\nLEAVE\n12:41 pm\n3\nChapultepec Zoo\n40 min · Sight\nWalk · 6 min · 0.3 mi\nARRIVE\n12:47 pm\nLEAVE\n1:47 pm\nL\nLunch: Maxico Arte & Sabor\nCafé · Local spot · 1 h\nChange lunch\nLunch: why here\nWalk · 8 min · 0.4 mi\nARRIVE\n1:55 pm\nLEAVE\n2:45 pm\n4\nChapultepec Castle\n50 min · Palace · Must-see\nWalk · 13 min · 0.6 mi\nWalk · 13 min\nTaxi or car · 13 min\nARRIVE\n2:58 pm\nLEAVE\n3:38 pm\n5\nMain Tower\n40 min · Sight\nUNTIL\n5:32 pm\n+\nFree time: 1 h 54 min\nYours to spend as you like. See what fits\nTaxi or car · 28 min · 4.0 mi\nBY\n6:00 pm\nE\nBack at Hotel in central Mexico City\nARRIVE\n6:30 pm\nD\nSuggested dinner: El Abanico\nRestaurant\nChange dinner\nDinner: why here"
+  },
+  {
+   "i": 3,
+   "date": "2027-11-04",
+   "type": "departure",
+   "text": "THU NOV 4 · MEXICO CITY, MEXICO · LEAVING\nMexico City, Mexico ✎ Rename\nLock this day\n✈️\nLEAVE BY\nto your flight\n8:11 am\n▶ Start the tour\n\nFlight 12:00 pm · Back at Mexico City International Airport by 9:00 am\n\nGetting back on time is up to you\n\nKairoute's leave-by and back-by times are estimates with spare time built in. Traffic, queues and the weather can still slow you down. The time that counts is the ship's all-aboard time or your train or flight, as your cruise line or carrier gives it. Check it on the day.\n\nI understand\nTerms of use\n0\nsights\nChoose sights\nMore\nAbout today's plan2 notes\nUse Ctrl + scroll to zoom the map\nS\nFinish · Airport\n5000 ft\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nTaxi or car\n■ Hotel\nMore about today\nThere isn't much time today, so keep it close: a coffee and one nearby sight at most.\n\nAll times are Mexico City time, 1 h behind your device.\n\nLEAVE\n7:56 am\nS\nCheck out of Hotel in central Mexico City\nAdd your own hotel on the Trip page for exact times.\nMost hotels keep your bags for the day after check-out: ask at the desk.\nNext door\nARRIVE\n7:56 am\nLEAVE\n8:11 am\nH\nCollect bags\n15 min\nTaxi or car · 49 min · 5.5 mi\nNo timetable or live traffic confirms this ride's time: it is an estimate with 15 min extra for the connection. Leave by the time shown, never later.\nARRIVE\n9:00 am\nE\nAt Mexico City International Airport\nFlight leaves 12:00 pm: be at the airport by 9:00 am, 3 h early for an international flight."
+  }
+ ],
+ "guides": {
+  "Mexico City, Mexico": {
+   "city": "Mexico City, Mexico",
+   "src": true,
+   "ai": false,
+   "n": 38,
+   "sights": "Luis Barragán House and Studio* | Palace of Fine arts* | Angel of Independence | Frida Kahlo Museum* | A la Revolución Monument | National Museum of Anthropology* | National Palace* | National Museum of Art | Paseo de la Reforma* | Main Tower | Plaza de las Tres Culturas | Chapultepec Castle* | Palace of Correos of Mexico | Mexican Grand Prix* | Palace of Iturbide | Vasconcelos Library | Franz Mayer Museum | Monument to Cuauhtémoc~ | plaza Garibaldi | Palace of Minería | Chapultepec Zoo | Leon Trotsky House Museum | San Ildefonso College | Museo Nacional de las Culturas del Mundo | Tamayo Arte Contemporáneo Museum | Polyforum Cultural Siqueiros | Museum of Memory and Tolerance | Diana the Huntress fountain~ | España Park | Palace of the Inquisition | José Luis Cuevas Museum | Museo Nacional de la Estampa | Templo Mayor Museum* | Santa Teresa la Antigua Church | San Lorenzo Xochimanca Church | Memorial del 68 | Capilla de la Purísima Concepción | archaeological site of Mixcoac",
+   "far": "",
+   "eats": 68,
+   "starts": {
+    "cruise": [
+     "Cruise port of Mexico City (unknown)"
+    ],
+    "airport": [
+     "Mexico City International Airport"
+    ],
+    "station": [
+     "Ferrería/Arena Ciudad de México"
+    ],
+    "hotel": [
+     "Hotel in central Mexico City"
+    ],
+    "point": [
+     "Central Mexico City"
+    ]
+   }
+  }
+ },
+ "steps": [],
+ "version": "5d14162-1795221656",
+ "aiReady": false,
+ "wizard": {
+  "miss": [],
+  "prev": "Your days: 4 days",
+  "form": "Add each place in order, the way it's booked. Each new stop starts where the last one ends.\n\nSTOP 1 · CITY STAY\nCity\nArrive on\nNights\nHotel (optional)\nGetting there\nFlight\nTrain\nFerry\nCar or bus\nArrive in town at\nLeave empty if you don't know yet.\n+ Add a city stay\n+ Add a cruise\nGoing home from here\nFlight\nTrain\nFerry\nCar or bus\nFlight at\nYour days: 4 days\nAdd more details (optional)\nName this trip\n\nKairoute picks good defaults for pace, walking and voice, and you can change any of them later.\n\nCancel\nPersonalize first\nBuild my trip"
+ },
+ "buildSec": 42,
+ "state": {
+  "busy": "",
+  "err": "",
+  "days": [
+   {
+    "date": "2027-11-01",
+    "type": "arrival"
+   },
+   {
+    "date": "2027-11-02",
+    "type": "land"
+   },
+   {
+    "date": "2027-11-03",
+    "type": "land"
+   },
+   {
+    "date": "2027-11-04",
+    "type": "departure"
+   }
+  ]
+ },
+ "phoneText": "TUE NOV 2 · MEXICO CITY, MEXICO · LAND DAY\nMexico City, Mexico ✎ Rename\nLock this day\n▶ Start tour\n9:00 am–6:00 pm\n9 h ✎\n3\nsights\n1.1 mi\nwalking\n3:04 pm\nlast stop done\nChoose sights\nMore\nAbout today's plan1 note\nUse Ctrl + scroll to zoom the map\nS\n1\n2\nL\n3\n1000 ft\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nWalk\nTaxi or car\n● Meal\nMore about today\n\nAll times are Mexico City time, 1 h behind your device.\n\nLEAVE\n9:00 am\nS\nLeave Hotel in central Mexico City\nAdd your own hotel on the Trip page for exact times.\nTaxi or car · 34 min · 5.4 mi\nARRIVE\n9:34 am\nLEAVE\n11:04 am\n1\nLeon Trotsky House Museum\n1 h 30 min · Museum\nWalk · 7 min · 0.3 mi\nARRIVE\n11:11 am\nLEAVE\n12:41 pm\n2\nFrida Kahlo Museum\n1 h 30 min · Museum · Must-see\nWalk · 5 min · 0.2 mi\nARRIVE\n12:46 pm\nLEAVE\n1:46 pm\nL\nLunch: Trinidad Ritual de Sabores\nRestaurant · Local spot · 1 h\nChange lunch\nLunch: why here\nWalk · 12 min · 0.6 mi\nWalk · 12 min\nTaxi or car · 13 min\nARRIVE\n1:58 pm\nLEAVE\n2:28 pm\n3\nCapilla de la Purísima Concepción\n30 min · Church\nUNTIL\n5:24 pm\n+\nFree time: 2 h 56 min\nYours to spend as you like. See what fits\nTaxi or car · 36 min · 6.2 mi\nBY\n6:00 pm\nE\nBack at Hotel in central Mexico City\nARRIVE\n6:30 pm\nD\nSuggested dinner: Vips\nRestaurant\nChange dinner\nDinner: why here",
+ "finished": "2026-11-21T01:24:40.600Z"
+}

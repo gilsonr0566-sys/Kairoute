@@ -1,0 +1,97 @@
+{
+ "name": "d12-bruges",
+ "label": "Bruges one night by train",
+ "legs": [
+  {
+   "k": "stay",
+   "place": "Bruges, Belgium",
+   "date": "2027-05-18",
+   "nights": 1,
+   "inBy": "train",
+   "inAt": "10:30",
+   "homeBy": "train",
+   "homeAt": "16:00"
+  }
+ ],
+ "started": "2026-11-21T01:27:18.296Z",
+ "passed": {
+  "/sources": 12,
+  "/transit": 14,
+  "/guide": 1,
+  "/places": 1,
+  "/voyage": 1,
+  "/ground": 1
+ },
+ "refused": {
+  "/ratings": 1
+ },
+ "errors": [],
+ "days": [
+  {
+   "i": 0,
+   "date": "2027-05-18",
+   "type": "arrival",
+   "text": "TUE MAY 18 · BRUGES, BELGIUM · ARRIVING\nBruges, Belgium ✎ Rename\nLock this day\n\nWhich station do you arrive at? There is more than one here (Brugge railway station or Station Blankenberge). Choose it in the day's settings: no time is given on a guess.\n\nEdit this day"
+  },
+  {
+   "i": 1,
+   "date": "2027-05-19",
+   "type": "departure",
+   "text": "WED MAY 19 · BRUGES, BELGIUM · LEAVING\nBruges, Belgium ✎ Rename\nLock this day\n\nWhich station do you leave from? There is more than one here (Brugge railway station or Station Blankenberge). Choose it in the day's settings and the day gets its time to leave by: no time is given on a guess.\n\nEdit this day"
+  }
+ ],
+ "guides": {
+  "Bruges, Belgium": {
+   "city": "Bruges, Belgium",
+   "src": true,
+   "ai": false,
+   "n": 10,
+   "sights": "Church of Our Lady* | Museum van het Heilig Bloed* | Ten Wijngaerde | Madonna of Bruges* | Groeningemuseum* | Sint-Janshospitaal | Belfry of Bruges* | Ezelpoort | Gentpoort | Smedenpoort",
+   "far": "Sluis | Ostend | De Haan | Ghent",
+   "eats": 60,
+   "starts": {
+    "cruise": [
+     "Cruise port of Bruges (unknown)"
+    ],
+    "airport": [
+     "Ostend–Bruges International Airport",
+     "Kortrijk-Wevelgem International Airport"
+    ],
+    "station": [
+     "Brugge railway station",
+     "Station Blankenberge"
+    ],
+    "hotel": [
+     "Hotel in central Bruges"
+    ],
+    "point": [
+     "Central Bruges"
+    ]
+   }
+  }
+ },
+ "steps": [],
+ "version": "5d14162-1795221656",
+ "aiReady": false,
+ "wizard": {
+  "miss": [],
+  "prev": "Your days: 2 days",
+  "form": "Add each place in order, the way it's booked. Each new stop starts where the last one ends.\n\nSTOP 1 · CITY STAY\nCity\nArrive on\nNights\nHotel (optional)\nGetting there\nFlight\nTrain\nFerry\nCar or bus\nArrive in town at\nLeave empty if you don't know yet.\n+ Add a city stay\n+ Add a cruise\nGoing home from here\nFlight\nTrain\nFerry\nCar or bus\nTrain at\nYour days: 2 days\nAdd more details (optional)\nName this trip\n\nKairoute picks good defaults for pace, walking and voice, and you can change any of them later.\n\nCancel\nPersonalize first\nBuild my trip"
+ },
+ "buildSec": 6,
+ "state": {
+  "busy": "",
+  "err": "",
+  "days": [
+   {
+    "date": "2027-05-18",
+    "type": "arrival"
+   },
+   {
+    "date": "2027-05-19",
+    "type": "departure"
+   }
+  ]
+ },
+ "finished": "2026-11-21T01:27:55.391Z"
+}

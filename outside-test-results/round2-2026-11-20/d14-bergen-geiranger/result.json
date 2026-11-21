@@ -1,0 +1,226 @@
+{
+ "name": "d14-bergen-geiranger",
+ "label": "Bergen and Geiranger (tender)",
+ "legs": [
+  {
+   "k": "cruise",
+   "board": "Copenhagen, Denmark",
+   "date": "2027-06-20",
+   "aboard": "16:00",
+   "ports": [
+    {
+     "date": "2027-06-22",
+     "place": "Bergen, Norway",
+     "arrive": "08:00",
+     "aboard": "17:00"
+    },
+    {
+     "date": "2027-06-23",
+     "place": "Geiranger, Norway",
+     "arrive": "09:00",
+     "aboard": "18:00",
+     "tender": true
+    }
+   ],
+   "end": "Copenhagen, Denmark",
+   "endDate": "2027-06-26",
+   "off": "07:00"
+  }
+ ],
+ "started": "2026-11-21T01:28:53.654Z",
+ "passed": {
+  "/sources": 14,
+  "/transit": 12,
+  "/guide": 3,
+  "/places": 3,
+  "/voyage": 4,
+  "/ground": 3,
+  "/route": 3,
+  "/x/near": 3
+ },
+ "refused": {
+  "/ratings": 3,
+  "/grating": 1,
+  "/events": 1
+ },
+ "errors": [],
+ "days": [
+  {
+   "i": 0,
+   "date": "2027-06-20",
+   "type": "arrival",
+   "text": "SUN JUN 20 · COPENHAGEN, DENMARK · ARRIVING\nCopenhagen, Denmark ✎ Rename\nLock this day\nToday is one plan\n\nFlight in at 10:30 am, then the ship at 4:00 pm: the sightseeing in between, your bags and the countdown are on one page.\n\nSee today's plan"
+  },
+  {
+   "i": 1,
+   "date": "2027-06-20",
+   "type": "embark",
+   "text": "SUN JUN 20 · COPENHAGEN, DENMARK · BOARDING\nCopenhagen, Denmark ✎ Rename\nLock this day\n\nWe couldn't find exactly where Cruise port of Copenhagen is, so this day isn't planned on a guess (every ride time and the time to head back depend on it). It's being looked up again; you can also pick another cruise terminal in the day's settings.\n\nEdit this day"
+  },
+  {
+   "i": 2,
+   "date": "2027-06-21",
+   "type": "sea"
+  },
+  {
+   "i": 3,
+   "date": "2027-06-22",
+   "type": "port",
+   "text": "TUE JUN 22 · BERGEN, NORWAY · IN PORT\nBergen, Norway ✎ Rename\nLock this day\n🚢\nLEAVE BY\nall aboard 5:00 pm\n3:51 pm\n▶ Start the tour\n\nAshore 8:30 am · Official all aboard 5:00 pm · Back at the ship by 4:15 pm\n\nGetting back on time is up to you\n\nKairoute's leave-by and back-by times are estimates with spare time built in. Traffic, queues and the weather can still slow you down. The time that counts is the ship's all-aboard time or your train or flight, as your cruise line or carrier gives it. Check it on the day.\n\nI understand\nTerms of use\n4\nsights\n0.9 mi\nwalking\nChoose sights\nMore\nAbout today's plan1 note\nUse Ctrl + scroll to zoom the map\nStart · Cruise port\n1\n2\n3\n4\nL\n1 mi\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nWalk\nTaxi or car\n● Meal\nMore about today\n\nAll times are Bergen time, 7 h ahead of your device.\n\nLEAVE\n8:30 am\nS\nOff the ship at Bergen Port\nShip docks 8:00 am.\nTaxi or car · 17 min · 1.4 mi\nBy road, with time for traffic.\nWalk · 31 min\nTaxi or car · 17 min\nARRIVE\n9:00 am\nLEAVE\n9:40 am\n1\nSandviken\n40 min · Sight · Must-see\nTaxi or car · 37 min · 6.2 mi\nARRIVE\n10:17 am\nLEAVE\n10:47 am\n2\nFantoft Stave Church\n30 min · Church\nTaxi or car · 34 min · 5.5 mi\nARRIVE\n11:21 am\nLEAVE\n11:51 am\n3\nSt Mary's Church\n30 min · Church\nWalk · 3 min · 0.1 mi\nARRIVE\n11:54 am\nLEAVE\n12:34 pm\n4\nBryggen\n40 min · Sight · Must-see · UNESCO\nWalk · 7 min · 0.3 mi\nARRIVE\n12:41 pm\nLEAVE\n1:41 pm\nL\nLunch: Agave Bergen\nMexican · Local spot · 1 h\nChange lunch\nLunch: why here\nUNTIL\n3:51 pm\n+\nFree time: 2 h 10 min\nYours to spend as you like. Leave here by 3:51 pm to be back by 4:15 pm. See what fits\nWalk · 24 min · 0.4 mi\nBY\n4:15 pm\nE\nBack at the ship\nThe ship's official all aboard is 5:00 pm. Kairoute plans you back at least 45 min before it."
+  },
+  {
+   "i": 4,
+   "date": "2027-06-23",
+   "type": "port",
+   "text": "WED JUN 23 · GEIRANGER, NORWAY · IN PORT\nGeiranger, Norway ✎ Rename\nLock this day\n\nWe couldn't find exactly where Cruise port of Geiranger is, so this day isn't planned on a guess (every ride time and the time to head back depend on it). It's being looked up again; you can also pick another cruise terminal in the day's settings.\n\nEdit this day"
+  },
+  {
+   "i": 5,
+   "date": "2027-06-24",
+   "type": "sea"
+  },
+  {
+   "i": 6,
+   "date": "2027-06-25",
+   "type": "sea"
+  },
+  {
+   "i": 7,
+   "date": "2027-06-26",
+   "type": "arrival",
+   "text": "SAT JUN 26 · COPENHAGEN, DENMARK · ARRIVING\nCopenhagen, Denmark ✎ Rename\nLock this day\n\nWe couldn't find exactly where Cruise port of Copenhagen is, so this day isn't planned on a guess (every ride time and the time to head back depend on it). It's being looked up again; you can also pick another cruise terminal in the day's settings.\n\nEdit this day"
+  }
+ ],
+ "guides": {
+  "Copenhagen, Denmark": {
+   "city": "Copenhagen, Denmark",
+   "src": true,
+   "ai": false,
+   "n": 30,
+   "sights": "The Little Mermaid* | Amalienborg | Rosenborg Castle | Ny Carlsberg Glyptotek | Rundetaarn | Royal Danish Library | Christiansborg Palace | Thorvaldsen Museum | Kastellet | National Museum of Denmark | Global Biodiversity Information Facility* | Frederiksberg Palace | Statens Museum for Kunst | Grundtvig's Church | Nyhavn | Frederik's Church | European Environment Agency | Copenhagen Zoo | Tivoli Gardens | Assistens Cemetery | Charlottenborg Palace | Hirschsprung Collection | Designmuseum Denmark | Middelgrundsfortet | Danish War Museum | Trekroner Fort | Brumleby | Medical Museion | Gefion Fountain~ | Kastrup Fortress",
+   "far": "Malmö | Elsinore | Hillerød | Roskilde",
+   "eats": 60,
+   "starts": {
+    "cruise": [
+     "Cruise port of Copenhagen (unknown)"
+    ],
+    "airport": [
+     "Copenhagen Airport"
+    ],
+    "station": [
+     "Copenhagen South railway station",
+     "Copenhagen Central Station",
+     "Copenhagen Airport railway station"
+    ],
+    "hotel": [
+     "Hotel in central Copenhagen"
+    ],
+    "point": [
+     "Central Copenhagen"
+    ]
+   }
+  },
+  "Bergen, Norway": {
+   "city": "Bergen, Norway",
+   "src": true,
+   "ai": false,
+   "n": 15,
+   "sights": "Bryggen* | Sandviken* | Fantoft Stave Church | St Mary's Church | Bergenhus Fortress | Hanseatic Museum and Schøtstuene | Den Nationale Scene | Gaahl | Gamlehaugen | Fløibanen | Damsgård Manor | Troldhaugen | Bergen Aquarium | Nygårdsparken | Statsraad Lehmkuhl",
+   "far": "",
+   "eats": 56,
+   "starts": {
+    "cruise": [
+     "Bergen Port"
+    ],
+    "airport": [
+     "Bergen Airport, Flesland"
+    ],
+    "station": [
+     "Bergen station",
+     "Bergen lufthavn"
+    ],
+    "hotel": [
+     "Hotel in central Bergen"
+    ],
+    "point": [
+     "Central Bergen"
+    ]
+   }
+  },
+  "Geiranger, Norway": {
+   "city": "Geiranger, Norway",
+   "src": true,
+   "ai": false,
+   "n": 5,
+   "sights": "Geirangerfjord* | Seven Sisters waterfall | Dalsnibba | Norsk Fjordsenter | Ørnesvingen",
+   "far": "",
+   "eats": 0,
+   "starts": {
+    "cruise": [
+     "Cruise port of Geiranger (unknown)"
+    ],
+    "airport": [
+     "Geiranger airport (unknown)"
+    ],
+    "station": [
+     "Geiranger main station (unknown)"
+    ],
+    "hotel": [
+     "Hotel in central Geiranger"
+    ],
+    "point": [
+     "Central Geiranger"
+    ]
+   }
+  }
+ },
+ "steps": [],
+ "version": "5d14162-1795221656",
+ "aiReady": false,
+ "wizard": {
+  "miss": [],
+  "prev": "Your days: 7 days · 2 ports",
+  "form": "Add each place in order, the way it's booked. Each new stop starts where the last one ends.\n\nSTOP 1 · CRUISE\nLeaves from\nShip (optional)\nBoarding day\nAll aboard\nGetting to the ship (if you arrive the same day)\nFlight\nTrain\nFerry\nCar or bus\nArrive in Copenhagen, Denmark at\nLeave empty if you don't know yet.\nPorts of call\nIn order, from your cruise booking. Days with no port are added as sea days.\nDate\nPort\nShip arrives\nAll aboard\nTender port (small boats take you ashore)\nRemove port\nDate\nPort\nShip arrives\nAll aboard\nTender port (small boats take you ashore)\nRemove port\n+ Add a port\nCruise ends in\nOn\nOff the ship at\n+ Add a city stay\n+ Add a cruise\nGoing home from Copenhagen, Denmark\nFlight\nTrain\nFerry\nCar or bus\nFlight at\nYour days: 7 days · 2 ports\nAdd more details (optional)\nName this trip\n\nKairoute picks good defaults for pace, walking and voice, and you can change any of them later.\n\nCancel\nPersonalize first\nBuild my trip"
+ },
+ "buildSec": 78,
+ "state": {
+  "busy": "",
+  "err": "",
+  "days": [
+   {
+    "date": "2027-06-20",
+    "type": "arrival"
+   },
+   {
+    "date": "2027-06-20",
+    "type": "embark"
+   },
+   {
+    "date": "2027-06-21",
+    "type": "sea"
+   },
+   {
+    "date": "2027-06-22",
+    "type": "port"
+   },
+   {
+    "date": "2027-06-23",
+    "type": "port"
+   },
+   {
+    "date": "2027-06-24",
+    "type": "sea"
+   },
+   {
+    "date": "2027-06-25",
+    "type": "sea"
+   },
+   {
+    "date": "2027-06-26",
+    "type": "arrival"
+   }
+  ]
+ },
+ "phoneText": "TUE JUN 22 · BERGEN, NORWAY · IN PORT\nBergen, Norway ✎ Rename\nLock this day\n🚢\nLEAVE BY\nall aboard 5:00 pm\n3:51 pm\n▶ Start tour\n\nAshore 8:30 am · Official all aboard 5:00 pm · Back at the ship by 4:15 pm\n\nGetting back on time is up to you\n\nKairoute's leave-by and back-by times are estimates with spare time built in. Traffic, queues and the weather can still slow you down. The time that counts is the ship's all-aboard time or your train or flight, as your cruise line or carrier gives it. Check it on the day.\n\nI understand\nTerms of use\n4\nsights\n0.9 mi\nwalking\nChoose sights\nMore\nAbout today's plan1 note\nUse Ctrl + scroll to zoom the map\nStart · Cruise port\n1\n2\n3\n4\nL\n1 mi\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nWalk\nTaxi or car\n● Meal\nMore about today\n\nAll times are Bergen time, 7 h ahead of your device.\n\nLEAVE\n8:30 am\nS\nOff the ship at Bergen Port\nShip docks 8:00 am.\nTaxi or car · 17 min · 1.4 mi\nBy road, with time for traffic.\nWalk · 31 min\nTaxi or car · 17 min\nARRIVE\n9:00 am\nLEAVE\n9:40 am\n1\nSandviken\n40 min · Sight · Must-see\nTaxi or car · 37 min · 6.2 mi\nARRIVE\n10:17 am\nLEAVE\n10:47 am\n2\nFantoft Stave Church\n30 min · Church\nTaxi or car · 34 min · 5.5 mi\nARRIVE\n11:21 am\nLEAVE\n11:51 am\n3\nSt Mary's Church\n30 min · Church\nWalk · 3 min · 0.1 mi\nARRIVE\n11:54 am\nLEAVE\n12:34 pm\n4\nBryggen\n40 min · Sight · Must-see · UNESCO\nWalk · 7 min · 0.3 mi\nARRIVE\n12:41 pm\nLEAVE\n1:41 pm\nL\nLunch: Agave Bergen\nMexican · Local spot · 1 h\nChange lunch\nLunch: why here\nUNTIL\n3:51 pm\n+\nFree tim",
+ "finished": "2026-11-21T01:31:08.694Z"
+}

@@ -1,0 +1,191 @@
+{
+ "name": "d13-cozumel-cartagena",
+ "label": "Cozumel and Cartagena calls",
+ "legs": [
+  {
+   "k": "cruise",
+   "board": "Miami, Florida",
+   "date": "2027-03-01",
+   "aboard": "15:30",
+   "ports": [
+    {
+     "date": "2027-03-03",
+     "place": "Cozumel, Mexico",
+     "arrive": "07:00",
+     "aboard": "16:00"
+    },
+    {
+     "date": "2027-03-05",
+     "place": "Cartagena, Colombia",
+     "arrive": "08:00",
+     "aboard": "15:00"
+    }
+   ],
+   "end": "Miami, Florida",
+   "endDate": "2027-03-08",
+   "off": "07:00",
+   "homeAt": "13:30"
+  }
+ ],
+ "started": "2026-11-21T01:28:04.458Z",
+ "passed": {
+  "/sources": 14,
+  "/transit": 11,
+  "/guide": 3,
+  "/places": 1,
+  "/voyage": 1,
+  "/ground": 1,
+  "/route": 3
+ },
+ "refused": {
+  "/ratings": 1,
+  "/events": 1
+ },
+ "errors": [],
+ "days": [
+  {
+   "i": 0,
+   "date": "2027-03-01",
+   "type": "arrival",
+   "text": "MON MAR 1 · MIAMI, FLORIDA · ARRIVING\nMiami, Florida ✎ Rename\nLock this day\nToday is one plan\n\nFlight in at 10:30 am, then the ship at 3:30 pm: the sightseeing in between, your bags and the countdown are on one page.\n\nSee today's plan"
+  },
+  {
+   "i": 1,
+   "date": "2027-03-01",
+   "type": "embark",
+   "text": "MON MAR 1 · MIAMI, FLORIDA · BOARDING\nMiami, Florida ✎ Rename\nLock this day\n\nWhen does your flight arrive? Add the time on the Trip page and the day is planned around it, with the time to get to the ship: nothing is planned on a guess.\n\nEdit this day"
+  },
+  {
+   "i": 2,
+   "date": "2027-03-02",
+   "type": "sea"
+  },
+  {
+   "i": 3,
+   "date": "2027-03-03",
+   "type": "port",
+   "text": "WED MAR 3 · COZUMEL, MEXICO · IN PORT\nCozumel, Mexico ✎ Rename\nLock this day\nI couldn't find Cozumel, Mexico and Cartagena, Colombia in the travel guides and maps. Check the spelling on the day (for example \"Kotor, Montenegro\"), then tap Build again.\nNo guide for Cozumel, Mexico yet\n\nKairoute will build the guide for Cozumel, Mexico from travel guides and maps: real sights, places to eat, the cruise port and stations.\n\nBuild the Cozumel, Mexico guide"
+  },
+  {
+   "i": 4,
+   "date": "2027-03-04",
+   "type": "sea"
+  },
+  {
+   "i": 5,
+   "date": "2027-03-05",
+   "type": "port",
+   "text": "FRI MAR 5 · CARTAGENA, COLOMBIA · IN PORT\nCartagena, Colombia ✎ Rename\nLock this day\nI couldn't find Cozumel, Mexico and Cartagena, Colombia in the travel guides and maps. Check the spelling on the day (for example \"Kotor, Montenegro\"), then tap Build again.\nNo guide for Cartagena, Colombia yet\n\nKairoute will build the guide for Cartagena, Colombia from travel guides and maps: real sights, places to eat, the cruise port and stations.\n\nBuild the Cartagena, Colombia guide"
+  },
+  {
+   "i": 6,
+   "date": "2027-03-06",
+   "type": "sea"
+  },
+  {
+   "i": 7,
+   "date": "2027-03-07",
+   "type": "sea"
+  },
+  {
+   "i": 8,
+   "date": "2027-03-08",
+   "type": "arrival",
+   "text": "MON MAR 8 · MIAMI, FLORIDA · ARRIVING\nMiami, Florida ✎ Rename\nLock this day\nToday is one plan\n\nShip in at 7:00 am, then your flight at 1:30 pm: the sightseeing in between, your bags and the countdown are on one page.\n\nSee today's plan"
+  },
+  {
+   "i": 9,
+   "date": "2027-03-08",
+   "type": "departure",
+   "text": "MON MAR 8 · MIAMI, FLORIDA · LEAVING\nMiami, Florida ✎ Rename\nLock this day\n✈️\nLEAVE BY\nto your flight\n9:30 am\n▶ Start the tour\n\nFlight 1:30 pm · Back at Miami International Airport by 10:30 am\n\nGetting back on time is up to you\n\nKairoute's leave-by and back-by times are estimates with spare time built in. Traffic, queues and the weather can still slow you down. The time that counts is the ship's all-aboard time or your train or flight, as your cruise line or carrier gives it. Check it on the day.\n\nI understand\nTerms of use\n0\nsights\nChoose sights\nMore\nAbout today's plan2 notes\nNot planned today: Vizcaya Museum and Gardens didn't fit in the time.\nCollect your bags at 8:00 am and leave for the airport by 9:30 am.\nUse Ctrl + scroll to zoom the map\nStart · Cruise port\nFinish · Airport\n1 mi\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nTaxi or car\n■ Hotel\nMore about today\n\nAll times are Miami time (time zone estimated until you're online once), 1 h ahead of your device.\n\nLEAVE\n8:00 am\nS\nOff the ship at Cruise Terminal G\nShip arrives 7:00 am. We allow 1 h to get off the ship with your luggage. Book luggage storage near Cruise Terminal G ahead (a left-luggage desk or a storage shop), or ask your cruise line about luggage transfer.\nNext door\nARRIVE\n8:00 am\nLEAVE\n8:15 am\nH\nLeave your bags in luggage storage\n15 min\nNext door\nARRIVE\n8:15 am\nLEAVE\n8:30 am\nH\nCollect your bags\n15 min\nUNTIL\n9:30 am\n+\nFree time: 1 h\nYours to spend as you like. Leave here by 9:30 am to be back by 10:30 am. See what fits\nTaxi or car · 1 h · 9.3 mi\nNo timetable or live traffic confirms this ride's time: it is an estimate with 15 min extra for the connection. Leave by the time shown, never later.\nBY\n10:30 am\nE\nAt Miami International Airport\nFlight leaves 1:30 pm: be at the airport by 10:30 am, 3 h early for an international flight."
+  }
+ ],
+ "guides": {
+  "Miami, Florida": {
+   "city": "Miami, Florida",
+   "src": true,
+   "ai": false,
+   "n": 6,
+   "sights": "Vizcaya Museum and Gardens* | Miami Circle | Gesu Church | Plymouth Congregational Church | Lyric Theater | Dana A. Dorsey House",
+   "far": "Miami Beach | Fort Lauderdale",
+   "eats": 14,
+   "starts": {
+    "cruise": [
+     "Cruise Terminal G",
+     "Cruise Terminal B"
+    ],
+    "airport": [
+     "Miami International Airport"
+    ],
+    "station": [
+     "Miami station (Amtrak)",
+     "Miami Central",
+     "Miami Airport"
+    ],
+    "hotel": [
+     "Hotel in central Miami"
+    ],
+    "point": [
+     "Central Miami"
+    ]
+   }
+  }
+ },
+ "steps": [],
+ "version": "5d14162-1795221656",
+ "aiReady": false,
+ "wizard": {
+  "miss": [],
+  "prev": "Your days: 8 days · 2 ports",
+  "form": "Add each place in order, the way it's booked. Each new stop starts where the last one ends.\n\nSTOP 1 · CRUISE\nLeaves from\nShip (optional)\nBoarding day\nAll aboard\nGetting to the ship (if you arrive the same day)\nFlight\nTrain\nFerry\nCar or bus\nArrive in Miami, Florida at\nLeave empty if you don't know yet.\nPorts of call\nIn order, from your cruise booking. Days with no port are added as sea days.\nDate\nPort\nShip arrives\nAll aboard\nTender port (small boats take you ashore)\nRemove port\nDate\nPort\nShip arrives\nAll aboard\nTender port (small boats take you ashore)\nRemove port\n+ Add a port\nCruise ends in\nOn\nOff the ship at\n+ Add a city stay\n+ Add a cruise\nGoing home from Miami, Florida\nFlight\nTrain\nFerry\nCar or bus\nFlight at\nYour days: 8 days · 2 ports\nAdd more details (optional)\nName this trip\n\nKairoute picks good defaults for pace, walking and voice, and you can change any of them later.\n\nCancel\nPersonalize first\nBuild my trip"
+ },
+ "buildSec": 4,
+ "state": {
+  "busy": "",
+  "err": "I couldn't find Cozumel, Mexico and Cartagena, Colombia in the travel guides and maps. Check the spelling on the day (for example \"Kotor, Montenegro\"), then tap Build again.",
+  "days": [
+   {
+    "date": "2027-03-01",
+    "type": "arrival"
+   },
+   {
+    "date": "2027-03-01",
+    "type": "embark"
+   },
+   {
+    "date": "2027-03-02",
+    "type": "sea"
+   },
+   {
+    "date": "2027-03-03",
+    "type": "port"
+   },
+   {
+    "date": "2027-03-04",
+    "type": "sea"
+   },
+   {
+    "date": "2027-03-05",
+    "type": "port"
+   },
+   {
+    "date": "2027-03-06",
+    "type": "sea"
+   },
+   {
+    "date": "2027-03-07",
+    "type": "sea"
+   },
+   {
+    "date": "2027-03-08",
+    "type": "arrival"
+   },
+   {
+    "date": "2027-03-08",
+    "type": "departure"
+   }
+  ]
+ },
+ "phoneText": "WED MAR 3 · COZUMEL, MEXICO · IN PORT\nCozumel, Mexico ✎ Rename\nLock this day\nI couldn't find Cozumel, Mexico and Cartagena, Colombia in the travel guides and maps. Check the spelling on the day (for example \"Kotor, Montenegro\"), then tap Build again.\nNo guide for Cozumel, Mexico yet\n\nKairoute will build the guide for Cozumel, Mexico from travel guides and maps: real sights, places to eat, the cruise port and stations.\n\nBuild the Cozumel, Mexico guide",
+ "finished": "2026-11-21T01:29:14.627Z"
+}

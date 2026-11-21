@@ -1,0 +1,251 @@
+{
+ "name": "d03-rome-florence-venice",
+ "label": "Rome, Florence, Venice by train",
+ "legs": [
+  {
+   "k": "stay",
+   "place": "Rome, Italy",
+   "date": "2027-09-20",
+   "nights": 3,
+   "inAt": "09:00"
+  },
+  {
+   "k": "stay",
+   "place": "Florence, Italy",
+   "nights": 2,
+   "inBy": "train",
+   "leaveAt": "09:10",
+   "inAt": "10:46"
+  },
+  {
+   "k": "stay",
+   "place": "Venice, Italy",
+   "nights": 2,
+   "inBy": "train",
+   "leaveAt": "10:20",
+   "inAt": "12:34",
+   "homeAt": "13:00"
+  }
+ ],
+ "started": "2026-11-21T01:19:10.470Z",
+ "passed": {
+  "/sources": 13,
+  "/transit": 25,
+  "/guide": 2,
+  "/places": 8,
+  "/voyage": 4,
+  "/ground": 2,
+  "/x/near": 18,
+  "/route": 11,
+  "/departures": 1,
+  "/bookcheck": 1
+ },
+ "refused": {
+  "/ratings": 3,
+  "/grating": 8,
+  "/events": 6
+ },
+ "errors": [],
+ "days": [
+  {
+   "i": 0,
+   "date": "2027-09-20",
+   "type": "arrival",
+   "text": "MON SEP 20 · ROME · ARRIVING\nRome ✎ Rename\nLock this day\n\nChoose your arrival airport.\n\nEdit this day"
+  },
+  {
+   "i": 1,
+   "date": "2027-09-21",
+   "type": "land",
+   "text": "TUE SEP 21 · ROME · LAND DAY\nRome ✎ Rename\nLock this day\n▶ Start the tour\n9:00 am–6:00 pm\n9 h ✎\n6\nsights\n1.1 mi\nwalking\n3:39 pm\nlast stop done\nChoose sights\nMore\nAbout today's plan1 note\nUse Ctrl + scroll to zoom the map\nS\n1\n2\n3\n4\n5\nL\n6\n1000 ft\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nWalk\nTaxi or car\n● Meal\nMore about today\n\nAll times are Rome time, 7 h ahead of your device.\n\nLEAVE\n9:00 am\nS\nLeave Hotel near Piazza Navona\nTaxi or car · 17 min · 1.5 mi\nBy road, with time for traffic.\nWalk · 31 min\nTaxi or car · 17 min\nARRIVE\n9:17 am\nLEAVE\n10:17 am\n1\nThe Vatican Museum\n1 h · Sight\nWalk · 6 min · 0.3 mi\nARRIVE\n10:23 am\nLEAVE\n11:03 am\n2\nHoly See\n40 min · Sight · Must-see\nWalk · 2 min · 0.1 mi\nARRIVE\n11:05 am\nLEAVE\n12:35 pm\n3\nSt Peter's Basilica\n1 h 30 min · Basilica · Must-see\nWalk · 5 min · 0.2 mi\nARRIVE\n12:40 pm\nLEAVE\n1:10 pm\n4\nSt. Peter's Square\n30 min · Sight\nWalk · 4 min · 0.2 mi\nARRIVE\n1:14 pm\nLEAVE\n1:44 pm\n5\nSistine Chapel\n30 min · Church · Must-see\nTaxi or car · 17 min · 1.5 mi\nWalk · 33 min\nTaxi or car · 17 min\nARRIVE\n2:01 pm\nLEAVE\n3:01 pm\nL\nLunch: Armando al Pantheon\nRoman · €€ · Popular with visitors · 1 h\nChange lunch\nLunch: why here\nNext door\nARRIVE\n3:03 pm\nLEAVE\n3:33 pm\n6\nPantheon\n30 min · Temple and church · Must-see\nUNTIL\n5:54 pm\n+\nFree time: 2 h 21 min\nYours to spend as you like. See what fits\nWalk · 6 min · 0.3 mi\nBY\n6:00 pm\nE\nBack at Hotel near Piazza Navona\nARRIVE\n6:30 pm\nD\nSuggested dinner: Casa Bleve\nItalian\nChange dinner\nDinner: why here"
+  },
+  {
+   "i": 2,
+   "date": "2027-09-22",
+   "type": "land",
+   "text": "WED SEP 22 · ROME · LAND DAY\nRome ✎ Rename\nLock this day\n▶ Start the tour\n9:00 am–6:00 pm\n9 h ✎\n6\nsights\n3.7 mi\nwalking\n4:12 pm\nlast stop done\nChoose sights\nMore\nAbout today's plan2 notes\nUse Ctrl + scroll to zoom the map\nS\n1\n2\n3\nL\n4\n5\n6\n2000 ft\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nWalk\nTaxi or car\n● Meal\nMore about today\n\nAll times are Rome time, 7 h ahead of your device.\n\nLEAVE\n9:00 am\nS\nLeave Hotel near Piazza Navona\nWalk · 18 min · 0.8 mi\nWalk · 18 min\nTaxi or car · 14 min\nARRIVE\n9:18 am\nLEAVE\n9:48 am\n1\nMusei Capitolini\n30 min · Sight\nWalk · 11 min · 0.5 mi\nWalk · 11 min\nTaxi or car · 12 min\nARRIVE\n9:59 am\nLEAVE\n10:29 am\n2\nPalatine Hill\n30 min · Sight\nWalk · 8 min · 0.4 mi\nARRIVE\n10:37 am\nLEAVE\n12:37 pm\n3\nColosseum and Roman Forum\n2 h · Ancient site · Must-see\nBOOK AHEAD\nBook tickets\n↗\nMark booked\nEntrance fee not included · more\nWalk · 3 min · 0.1 mi\nARRIVE\n12:40 pm\nLEAVE\n1:40 pm\nL\nLunch: RoYaL Art Cafè\nPopular with visitors · 1 h\nChange lunch\nRate RoYaL Art Cafè\nWalk · 5 min · 0.2 mi\nARRIVE\n1:45 pm\nLEAVE\n2:15 pm\n4\nSan Pietro in Vincoli\n30 min · Sight\nWalk · 11 min · 0.5 mi\nWalk · 11 min\nTaxi or car · 12 min\nARRIVE\n2:26 pm\nLEAVE\n2:56 pm\n5\nSanta Maria Maggiore\n30 min · Sight\nWalk · 25 min · 1.2 mi\nWalk · 25 min\nMetro A, Vittorio Emanuele to San Giovanni · 24 min\nTaxi or car · 15 min\nARRIVE\n3:21 pm\nLEAVE\n3:51 pm\n6\nSan Giovanni in Laterano\n30 min · Sight\nUNTIL\n5:39 pm\n+\nFree time: 1 h 48 min\nYours to spend as you like. See what fits\nTaxi or car · 21 min · 2.5 mi\nBy road, with time for traffic.\nWalk · 54 min\nTaxi or car · 21 min\nBY\n6:00 pm\nE\nBack at Hotel near Piazza Navona\nARRIVE\n6:30 pm\nD\nSuggested dinner: Pizzeria La Montecarlo\nPizza\nChange dinner\nDinner: why here"
+  },
+  {
+   "i": 3,
+   "date": "2027-09-23",
+   "type": "departure",
+   "text": "THU SEP 23 · ROME · LEAVING\nRome ✎ Rename\nLock this day\n\nWhich station do you leave from? There is more than one here (Roma San Pietro station or Roma Termini). Choose it in the day's settings and the day gets its time to leave by: no time is given on a guess.\n\nEdit this day"
+  },
+  {
+   "i": 4,
+   "date": "2027-09-23",
+   "type": "arrival",
+   "text": "THU SEP 23 · FLORENCE, ITALY · ARRIVING\nFlorence, Italy ✎ Rename\nLock this day\n▶ Start the tour\n11:01 am–6:30 pm\n7 h 29 min ✎\n3\nsights\n1.6 mi\nwalking\n3:55 pm\nlast stop done\nChoose sights\nMore\nAbout today's plan1 note\nUse Ctrl + scroll to zoom the map\nStart · Station\nH\n1\nL\n2\n3\n2000 ft\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nWalk\nTaxi or car\n● Meal\n■ Hotel\nMore about today\n\nAll times are Florence time, 7 h ahead of your device.\n\nLEAVE\n11:01 am\nS\nOut of Firenze Santa Maria Novella railway station\nTrain arrives 10:46 am. We allow 15 min to get off the train.\nTaxi or car · 13 min · 0.7 mi\nBy road, with time for traffic.\nWalk · 14 min\nTaxi or car · 13 min\nARRIVE\n11:14 am\nLEAVE\n11:34 am\nH\nCheck in or drop bags\n20 min\nTaxi or car · 16 min · 1.4 mi\nWalk · 30 min\nTaxi or car · 16 min\nARRIVE\n11:50 am\nLEAVE\n12:20 pm\n1\nPonte Vecchio\n30 min · Landmark · Must-see\nWalk · 2 min · 0.1 mi\nARRIVE\n12:22 pm\nLEAVE\n1:22 pm\nL\nLunch: Trattoria ponte vecchio\nRestaurant · Popular with visitors · 1 h\nChange lunch\nLunch: why here\nWalk · 2 min · 0.1 mi\nARRIVE\n1:24 pm\nLEAVE\n2:54 pm\n2\nUffizi Gallery\n1 h 30 min · Museum · Must-see\nWalk · 9 min · 0.4 mi\nARRIVE\n3:03 pm\nLEAVE\n3:33 pm\n3\nFlorence Cathedral\n30 min · Church · Must-see\nUNTIL\n6:08 pm\n+\nFree time: 2 h 35 min\nYours to spend as you like. See what fits\nWalk · 22 min · 1.0 mi\nWalk · 22 min\nTaxi or car · 15 min\nBY\n6:30 pm\nE\nBack at Hotel in central Florence\nARRIVE\n6:30 pm\nD\nSuggested dinner: Osir\nChinese\nChange dinner\nDinner: why here"
+  },
+  {
+   "i": 5,
+   "date": "2027-09-24",
+   "type": "land",
+   "text": "FRI SEP 24 · FLORENCE, ITALY · LAND DAY\nFlorence, Italy ✎ Rename\nLock this day\n▶ Start the tour\n9:00 am–6:00 pm\n9 h ✎\n6\nsights\n2.4 mi\nwalking\n4:14 pm\nlast stop done\nChoose sights\nMore\nAbout today's plan1 note\nUse Ctrl + scroll to zoom the map\nS\n1\n2\n3\n4\nL\n5\n6\n3000 ft\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nWalk\nTaxi or car\n● Meal\nMore about today\n\nAll times are Florence time, 7 h ahead of your device.\n\nLEAVE\n9:00 am\nS\nLeave Hotel in central Florence\nAdd your own hotel on the Trip page for exact times.\nTaxi or car · 19 min · 1.9 mi\nBy road, with time for traffic.\nWalk · 42 min\nTaxi or car · 19 min\nARRIVE\n9:19 am\nLEAVE\n9:59 am\n1\nBoboli Gardens\n40 min · Park or garden\nWalk · 8 min · 0.4 mi\nARRIVE\n10:07 am\nLEAVE\n10:57 am\n2\nPalazzo Pitti\n50 min · Palace · Must-see\nWalk · 12 min · 0.6 mi\nWalk · 12 min\nTaxi or car · 13 min\nARRIVE\n11:09 am\nLEAVE\n11:59 am\n3\nPalazzo Vecchio\n50 min · Palace\nWalk · 7 min · 0.3 mi\nARRIVE\n12:06 pm\nLEAVE\n12:46 pm\n4\nFlorence Baptistery\n40 min · Sight\nWalk · 2 min · 0.1 mi\nARRIVE\n12:48 pm\nLEAVE\n1:48 pm\nL\nLunch: Osteria de'Cicalini\nRestaurant · Popular with visitors · 1 h\nChange lunch\nLunch: why here\nWalk · 4 min · 0.2 mi\nARRIVE\n1:52 pm\nLEAVE\n3:22 pm\n5\nBargello National Museum\n1 h 30 min · Museum\nWalk · 18 min · 0.8 mi\nWalk · 18 min\nTaxi or car · 14 min\nARRIVE\n3:40 pm\nLEAVE\n3:55 pm\n6\npiazzale Michelangelo\n15 min · Square\nUNTIL\n5:41 pm\n+\nFree time: 1 h 46 min\nYours to spend as you like. See what fits\nTaxi or car · 19 min · 2.1 mi\nWalk · 45 min\nTaxi or car · 19 min\nBY\n6:00 pm\nE\nBack at Hotel in central Florence\nARRIVE\n6:30 pm\nD\nSuggested dinner: Il giardino di Barbano\nPizza\nChange dinner\nDinner: why here"
+  },
+  {
+   "i": 6,
+   "date": "2027-09-25",
+   "type": "departure",
+   "text": "SAT SEP 25 · FLORENCE, ITALY · LEAVING\nFlorence, Italy ✎ Rename\nLock this day\n🚆\nLEAVE BY\nto your train\n9:12 am\n▶ Start the tour\n\nTrain 10:20 am · Back at Firenze Santa Maria Novella railway station by 9:35 am\n\nGetting back on time is up to you\n\nKairoute's leave-by and back-by times are estimates with spare time built in. Traffic, queues and the weather can still slow you down. The time that counts is the ship's all-aboard time or your train or flight, as your cruise line or carrier gives it. Check it on the day.\n\nI understand\nTerms of use\n0\nsights\nChoose sights\nMore\nAbout today's plan4 notes\nThis plan has you at the station 45 min before your train, enough for ID checks at a border. Where passports and bags are checked (to or from Britain, for one), be there 90 min before: leave the last stop earlier.\nThe day starts at 8:57 am, 3 min before your planned start of 9:00 am, to be there by 9:35 am.\nNot planned today: David opens at 9:00 am, too late to see before 9:35 am.\nCollect your bags at 8:57 am and leave for the station by 9:12 am.\nUse Ctrl + scroll to zoom the map\nS\nFinish · Station\n1000 ft\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nTaxi or car\n■ Hotel\nMore about today\nThere isn't much time today, so keep it close: a coffee and one nearby sight at most.\n\nAll times are Florence time, 7 h ahead of your device.\n\nLEAVE\n8:57 am\nS\nCheck out of Hotel in central Florence\nAdd your own hotel on the Trip page for exact times.\nMost hotels keep your bags for the day after check-out: ask at the desk.\nNext door\nARRIVE\n8:57 am\nLEAVE\n9:12 am\nH\nCollect bags\n15 min\nTaxi or car · 23 min · 0.7 mi\nBy road, with time for traffic. Includes 10 min spare before the ship.\nWalk · 14 min\nTaxi or car · 13 min\nARRIVE\n9:35 am\nE\nAt Firenze Santa Maria Novella railway station\nTrain leaves 10:20 am: be at the station by 9:50 am, 30 min early.\n🚆\nTrain to Venice, Italy\nSat Sep 25 · planned for 10:20 am\nLooking up the trains that day…\nBook train\n↗\nOpens Rome2Rio, which shows every way from Florence, Italy to Venice, Italy and links to the company that sells the ticket. Choose Sat Sep 25. The fare is set by the rail company and shown before you pay."
+  },
+  {
+   "i": 7,
+   "date": "2027-09-25",
+   "type": "arrival",
+   "text": "SAT SEP 25 · VENICE, ITALY · ARRIVING\nVenice, Italy ✎ Rename\nLock this day\n\nWhich station do you arrive at? There is more than one here (Venezia Santa Lucia railway station or Venezia Mestre railway station). Choose it in the day's settings: no time is given on a guess.\n\nEdit this day"
+  },
+  {
+   "i": 8,
+   "date": "2027-09-26",
+   "type": "land",
+   "text": "SUN SEP 26 · VENICE, ITALY · LAND DAY\nVenice, Italy ✎ Rename\nLock this day\n▶ Start the tour\n9:00 am–6:00 pm\n9 h ✎\n7\nsights\n1.9 mi\nwalking\n3:50 pm\nlast stop done\nChoose sights\nMore\nAbout today's plan1 note\nUse Ctrl + scroll to zoom the map\nS\n1\n2\n3\n4\n5\n6\nL\n7\n5000 ft\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nWalk\nTaxi or car\n● Meal\nMore about today\n\nAll times are Venice time, 7 h ahead of your device.\n\nLEAVE\n9:00 am\nS\nLeave Hotel in central Venice\nAdd your own hotel on the Trip page for exact times.\nWalk · 19 min · 0.9 mi\nWalk · 19 min\nTaxi or car · 14 min\nARRIVE\n9:19 am\nLEAVE\n9:49 am\n1\nSanta Maria della Salute\n30 min · Church\nWalk · 8 min · 0.4 mi\nARRIVE\n9:57 am\nLEAVE\n10:12 am\n2\nPiazza San Marco\n15 min · Square · Must-see\nIncludes Correr Museum, National Archaeological Museum, Venice and Biblioteca Nazionale Marciana\nWalk · 2 min · 0.1 mi\nARRIVE\n10:14 am\nLEAVE\n10:44 am\n3\nSt Mark's Basilica\n30 min · Church · Must-see\nWalk · 2 min · 0.1 mi\nARRIVE\n10:46 am\nLEAVE\n11:36 am\n4\nDoge's Palace\n50 min · Palace · Must-see\nTaxi or car · 24 min · 3.0 mi\nBy road, with time for traffic.\nWalk · 1 h 4 min\nTaxi or car · 24 min\nARRIVE\n12:00 pm\nLEAVE\n12:40 pm\n5\nVenice Film Festival\n40 min · Sight · Must-see\nTaxi or car · 20 min · 2.1 mi\nWalk · 46 min\nTaxi or car · 20 min\nARRIVE\n1:00 pm\nLEAVE\n1:40 pm\n6\nVenice Biennale\n40 min · Sight · Must-see\nWalk · 3 min · 0.1 mi\nARRIVE\n1:43 pm\nLEAVE\n2:43 pm\nL\nLunch: Osteria San Isepo\nRestaurant · Local spot · 1 h\nChange lunch\nLunch: why here\nTaxi or car · 20 min · 2.2 mi\nWalk · 48 min\nTaxi or car · 20 min\nARRIVE\n3:03 pm\nLEAVE\n3:43 pm\n7\nGrand Canal\n40 min · Sight · Must-see\nUNTIL\n5:53 pm\n+\nFree time: 2 h 10 min\nYours to spend as you like. See what fits\nWalk · 7 min · 0.3 mi\nBY\n6:00 pm\nE\nBack at Hotel in central Venice\nARRIVE\n6:30 pm\nD\nSuggested dinner: Al Cafetier\nRestaurant\nChange dinner\nDinner: why here"
+  },
+  {
+   "i": 9,
+   "date": "2027-09-27",
+   "type": "departure",
+   "text": "MON SEP 27 · VENICE, ITALY · LEAVING\nVenice, Italy ✎ Rename\nLock this day\n\nWhich airport do you leave from? There is more than one here (Venice Marco Polo Airport, Venice-Lido Airport or Treviso Airport). Choose it in the day's settings and the day gets its time to leave by: no time is given on a guess.\n\nEdit this day"
+  }
+ ],
+ "guides": {
+  "Rome (from Civitavecchia)": {
+   "city": "Rome (from Civitavecchia)",
+   "src": false,
+   "ai": false,
+   "n": 49,
+   "sights": "St Peter's Basilica* | Colosseum and Roman Forum* | Pantheon* | Trevi Fountain | Piazza Navona | San Giovanni in Laterano | Palace of the Chancellery | Olympic Stadium | St. Peter's Square | The Vatican Museum | Palatine Hill | Santa Maria Maggiore | Castel Sant'Angelo | Palazzo del Quirinale | Circus Maximus | Musei Capitolini | The Celio | Terme di Caracalla | Vittorio Emanuele Monument | Arch of Titus | San Pietro in Vincoli | Chiesa del Gesù | Ara Pacis | Piazza di Spagna | Mausoleo di Augusto | The Spanish Steps | Column of Marcus Aurelius | Piazza del Popolo | Holy See* | Sistine Chapel* | Sovereign Military Order of Malta | Arch of Constantine~ | Galleria Borghese | Vatican Library | Capitoline Hill | Prelature of the Holy Cross and Opus Dei | Aurelian Walls | The Creation of Adam | Trajan's Forum | Ponte Sant'Angelo~ | Apostolic Palace | Saint Charles at the Four Fountains | Santa Maria della Vittoria | Santa Maria sopra Minerva | Ponte Milvio~ | San Luigi dei Francesi | Trajan's Column~ | Sisto Bridge~ | Fontana delle Tartarughe~",
+   "far": "Basilica of Saint Paul Outside the Walls",
+   "eats": 12,
+   "starts": {
+    "cruise": [
+     "Civitavecchia cruise port"
+    ],
+    "airport": [],
+    "station": [
+     "Roma San Pietro station",
+     "Roma Termini"
+    ],
+    "hotel": [
+     "Hotel near Piazza Navona"
+    ],
+    "point": [
+     "Civitavecchia train station"
+    ]
+   }
+  },
+  "Florence, Italy": {
+   "city": "Florence, Italy",
+   "src": true,
+   "ai": false,
+   "n": 33,
+   "sights": "Florence Cathedral* | Uffizi Gallery* | Palazzo Pitti* | David* | Ponte Vecchio* | Palazzo Vecchio | Basilica of Santa Croce | Florence Baptistery | Bargello National Museum | Basilica of Santa Maria Novella | Basilica of San Lorenzo | Boboli Gardens | Palazzo Strozzi | Galleria dell'Accademia | Santa Maria del Carmine Church | Museo dell'Opera del Duomo | Museum of San Marco | Galileo Museum | Biblioteca Medicea Laurenziana | National Central Library of Florence | San Miniato al Monte Church | Orsanmichele | Palazzo Medici Riccardi | Villa Castello | Santo Spirito Church | Davanzati Palace | Horne Museum | Stibbert Museum | Santa Felicita Church | Villa Medicea del Poggio Imperiale | piazzale Michelangelo | Marino Marini Museum | Great Synagogue of Florence",
+   "far": "",
+   "eats": 68,
+   "starts": {
+    "cruise": [
+     "Cruise port of Florence (unknown)"
+    ],
+    "airport": [
+     "Florence Amerigo Vespucci Airport"
+    ],
+    "station": [
+     "Firenze Santa Maria Novella railway station"
+    ],
+    "hotel": [
+     "Hotel in central Florence"
+    ],
+    "point": [
+     "Central Florence"
+    ]
+   }
+  },
+  "Venice, Italy": {
+   "city": "Venice, Italy",
+   "src": true,
+   "ai": false,
+   "n": 36,
+   "sights": "St Mark's Basilica* | Doge's Palace* | Venice Film Festival* | Santa Maria della Salute | Gallerie dell'Accademia | Biblioteca Nazionale Marciana | Piazza San Marco* | Bridge of Sighs | Santa Maria Gloriosa dei Frari | Rialto Bridge | Church of San Giorgio Maggiore | Santi Giovanni e Paolo Church | Ca' Pesaro | Venice Biennale* | Grand Canal* | Murano | Il Redentore | Venetian Arsenal | Venetian Ghetto | San Zaccaria Church | Correr Museum | Teatro La Fenice | Grassi Palace | San Pietro di Castello Church | Santa Maria dei Miracoli Church, Venice | Peggy Guggenheim Collection | Carnival of Venice | Ca' Rezzonico | National Archaeological Museum, Venice | State Archives of Venice | Madonna dell'Orto | San Francesco della Vigna Church | San Giacomo di Rialto Church | Statue of Bartolomeo Colleoni~ | Punta della Dogana | Internazionale Gallery of Modern Art",
+   "far": "Venice/Burano | Mestre | Venice/Torcello | Padua | Lace Museum | Cathedral of Mestre | Piazza Ferretto | Bissuola Park | Archaeological Museum | Church of Santa Fosca | Saint Anthony's cathedral | Scrovegni Chapel | Astronomic Observatory | Palazzo della Ragione | Palazzo del Bo' | Botanic Garden | Eremitani Civic Museum",
+   "eats": 60,
+   "starts": {
+    "cruise": [
+     "Venice Fusina Cruise Terminal",
+     "Cruise Terminal 107/108"
+    ],
+    "airport": [
+     "Venice Marco Polo Airport",
+     "Venice-Lido Airport",
+     "Treviso Airport"
+    ],
+    "station": [
+     "Venezia Santa Lucia railway station",
+     "Venezia Mestre railway station"
+    ],
+    "hotel": [
+     "Hotel in central Venice"
+    ],
+    "point": [
+     "Central Venice"
+    ]
+   }
+  }
+ },
+ "steps": [],
+ "version": "5d14162-1795221656",
+ "aiReady": false,
+ "wizard": {
+  "miss": [],
+  "prev": "Your days: 8 days",
+  "form": "Add each place in order, the way it's booked. Each new stop starts where the last one ends.\n\nSTOP 1 · CITY STAY\nRemove\nCity\nArrive on\nNights\nHotel (optional)\nGetting there\nFlight\nTrain\nFerry\nCar or bus\nArrive in Rome, Italy at\nSTOP 2 · CITY STAY\nRemove\nCity\nArrive on\nNights\nHotel (optional)\nGetting there\nFlight\nTrain\nFerry\nCar or bus\nLeave Rome, Italy at\nArrive in Florence, Italy at\nSTOP 3 · CITY STAY\nRemove\nCity\nArrive on\nNights\nHotel (optional)\nGetting there\nFlight\nTrain\nFerry\nCar or bus\nLeave Florence, Italy at\nArrive in town at\nLeave empty if you don't know yet.\n+ Add a city stay\n+ Add a cruise\nGoing home from here\nFlight\nTrain\nFerry\nCar or bus\nFlight at\nYour days: 8 days\nAdd more details (optional)\nName this trip\n\nKairoute picks good defaults for pace, walking and voice, and you can change any of them later.\n\nCancel\nPersonalize first\nBuild my trip"
+ },
+ "buildSec": 6,
+ "state": {
+  "busy": "",
+  "err": "",
+  "days": [
+   {
+    "date": "2027-09-20",
+    "type": "arrival"
+   },
+   {
+    "date": "2027-09-21",
+    "type": "land"
+   },
+   {
+    "date": "2027-09-22",
+    "type": "land"
+   },
+   {
+    "date": "2027-09-23",
+    "type": "departure"
+   },
+   {
+    "date": "2027-09-23",
+    "type": "arrival"
+   },
+   {
+    "date": "2027-09-24",
+    "type": "land"
+   },
+   {
+    "date": "2027-09-25",
+    "type": "departure"
+   },
+   {
+    "date": "2027-09-25",
+    "type": "arrival"
+   },
+   {
+    "date": "2027-09-26",
+    "type": "land"
+   },
+   {
+    "date": "2027-09-27",
+    "type": "departure"
+   }
+  ]
+ },
+ "phoneText": "TUE SEP 21 · ROME · LAND DAY\nRome ✎ Rename\nLock this day\n▶ Start tour\n9:00 am–6:00 pm\n9 h ✎\n6\nsights\n1.1 mi\nwalking\n3:39 pm\nlast stop done\nChoose sights\nMore\nAbout today's plan1 note\nUse Ctrl + scroll to zoom the map\nS\n1\n2\n3\n4\n5\nL\n6\n2000 ft\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nWalk\nTaxi or car\n● Meal\nMore about today\n\nAll times are Rome time, 7 h ahead of your device.\n\nLEAVE\n9:00 am\nS\nLeave Hotel near Piazza Navona\nTaxi or car · 17 min · 1.5 mi\nBy road, with time for traffic.\nWalk · 31 min\nTaxi or car · 17 min\nARRIVE\n9:17 am\nLEAVE\n10:17 am\n1\nThe Vatican Museum\n1 h · Sight\nWalk · 6 min · 0.3 mi\nARRIVE\n10:23 am\nLEAVE\n11:03 am\n2\nHoly See\n40 min · Sight · Must-see\nWalk · 2 min · 0.1 mi\nARRIVE\n11:05 am\nLEAVE\n12:35 pm\n3\nSt Peter's Basilica\n1 h 30 min · Basilica · Must-see\nWalk · 5 min · 0.2 mi\nARRIVE\n12:40 pm\nLEAVE\n1:10 pm\n4\nSt. Peter's Square\n30 min · Sight\nWalk · 4 min · 0.2 mi\nARRIVE\n1:14 pm\nLEAVE\n1:44 pm\n5\nSistine Chapel\n30 min · Church · Must-see\nTaxi or car · 17 min · 1.5 mi\nWalk · 33 min\nTaxi or car · 17 min\nARRIVE\n2:01 pm\nLEAVE\n3:01 pm\nL\nLunch: Armando al Pantheon\nRoman · €€ · Popular with visitors · 1 h\nChange lunch\nLunch: why here\nNext door\nARRIVE\n3:03 pm\nLEAVE\n3:33 pm\n6\nPantheon\n30 min · Temple and church · Must-see\nUNTIL\n5:54 pm\n+\nFree time: 2 h 21 min\nYours to spend as you like. See what fits\nWalk · 6 min · 0.3 mi\nBY\n6:00 pm\nE\nBack at Hotel near Piazza Navona\nARRIVE\n6:30 pm\nD\nSuggested dinner: Casa Bleve\nItalian\nChange dinner\nDinner: why here",
+ "finished": "2026-11-21T01:20:44.099Z"
+}

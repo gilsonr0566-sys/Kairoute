@@ -1,0 +1,108 @@
+{
+ "name": "d06-marrakech",
+ "label": "Marrakech stay",
+ "legs": [
+  {
+   "k": "stay",
+   "place": "Marrakech, Morocco",
+   "date": "2027-03-18",
+   "nights": 2,
+   "inAt": "11:00",
+   "homeAt": "15:00"
+  }
+ ],
+ "started": "2026-11-21T01:22:44.810Z",
+ "passed": {
+  "/sources": 12,
+  "/transit": 10,
+  "/guide": 1,
+  "/places": 1,
+  "/voyage": 2,
+  "/ground": 1,
+  "/x/near": 6,
+  "/route": 6
+ },
+ "refused": {
+  "/ratings": 1,
+  "/grating": 2,
+  "/events": 3
+ },
+ "errors": [],
+ "days": [
+  {
+   "i": 0,
+   "date": "2027-03-18",
+   "type": "arrival",
+   "text": "THU MAR 18 · MARRAKECH, MOROCCO · ARRIVING\nMarrakech, Morocco ✎ Rename\nLock this day\n▶ Start the tour\n12:15 pm–7:03 pm\n6 h 48 min ✎\n2\nsights\n0.8 mi\nwalking\n3:33 pm\nlast stop done\nChoose sights\nMore\nAbout today's plan1 note\nUse Ctrl + scroll to zoom the map\nStart · Airport\nH\n1\nL\n2\n300 ft\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nWalk\nTaxi or car\n● Meal\n■ Hotel\nMore about today\n\nAll times are Marrakech time, 5 h ahead of your device.\n\nLEAVE\n12:15 pm\nS\nOut of Marrakesh Menara Airport\nFlight arrives 11:00 am. We allow 1 h 15 min to get off the plane and through baggage claim (and passport control after a flight from abroad).\nTaxi or car · 28 min · 4.0 mi\nARRIVE\n12:43 pm\nLEAVE\n1:03 pm\nH\nCheck in or drop bags\n20 min\nNext door\nARRIVE\n1:05 pm\nLEAVE\n1:45 pm\n1\nJemaa el-Fnaa\n40 min · Sight · Must-see\nWalk · 6 min · 0.3 mi\nARRIVE\n1:51 pm\nLEAVE\n2:51 pm\nL\nLunch: Cafe Kif-Kif\nRestaurant · Popular with visitors · 1 h\nChange lunch\nLunch: why here\nWalk · 3 min · 0.1 mi\nARRIVE\n2:54 pm\nLEAVE\n3:24 pm\n2\nKoutoubia Mosque\n30 min · Church · Must-see\nUNTIL\n6:54 pm\n+\nFree time: 3 h 30 min\nYours to spend as you like. See what fits\nWalk · 9 min · 0.4 mi\nBY\n7:03 pm\nE\nBack at Hotel in central Marrakech\nARRIVE\n6:30 pm\nD\nSuggested dinner: Les Terrasses de l'Alhambra\nRestaurant\nChange dinner\nDinner: why here"
+  },
+  {
+   "i": 1,
+   "date": "2027-03-19",
+   "type": "land",
+   "text": "FRI MAR 19 · MARRAKECH, MOROCCO · LAND DAY\nMarrakech, Morocco ✎ Rename\nLock this day\n▶ Start the tour\n9:00 am–6:00 pm\n9 h ✎\n5\nsights\n2.6 mi\nwalking\n3:08 pm\nlast stop done\nChoose sights\nMore\nAbout today's plan2 notes\nUse Ctrl + scroll to zoom the map\nS\n1\n2\n3\n4\nL\n5\n1000 ft\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nWalk\n● Meal\nMore about today\nTaken off this day\n1\n\nAll times are Marrakech time, 5 h ahead of your device.\n\nLEAVE\n9:00 am\nS\nLeave Hotel in central Marrakech\nAdd your own hotel on the Trip page for exact times.\nWalk · 11 min · 0.5 mi\nWalk · 11 min\nTaxi or car · 12 min\nARRIVE\n9:11 am\nLEAVE\n9:41 am\n1\nMedina of Marrakech\n30 min · Sight · Must-see · UNESCO\nIncludes Ben Youssef Madrasa, Almoravid Koubba and Ibn Yusuf Mosque\nNext door\nARRIVE\n9:43 am\nLEAVE\n11:13 am\n2\nMarrakech Museum\n1 h 30 min · Museum\nWalk · 20 min · 0.9 mi\nWalk · 20 min\nTaxi or car · 14 min\nARRIVE\n11:33 am\nLEAVE\n12:23 pm\n3\nBahia Palace\n50 min · Palace\nWalk · 3 min · 0.1 mi\nARRIVE\n12:26 pm\nLEAVE\n12:56 pm\n4\nSlat Al Azama Synagogue\n30 min · Church\nWalk · 5 min · 0.2 mi\nARRIVE\n1:01 pm\nLEAVE\n2:01 pm\nL\nLunch: Cafe Terrasse Palais El Badia\nRestaurant · Local spot · 1 h\nChange lunch\nLunch: why here\nWalk · 2 min · 0.1 mi\nARRIVE\n2:03 pm\nLEAVE\n2:53 pm\n5\nEl Badi Palace\n50 min · Palace\nUNTIL\n5:45 pm\n+\nFree time: 2 h 52 min\nYours to spend as you like. See what fits\nWalk · 15 min · 0.7 mi\nWalk · 15 min\nTaxi or car · 13 min\nBY\n6:00 pm\nE\nBack at Hotel in central Marrakech\nARRIVE\n6:30 pm\nD\nSuggested dinner: Tiznit\nRestaurant\nChange dinner\nDinner: why here"
+  },
+  {
+   "i": 2,
+   "date": "2027-03-20",
+   "type": "departure",
+   "text": "SAT MAR 20 · MARRAKECH, MOROCCO · LEAVING\nMarrakech, Morocco ✎ Rename\nLock this day\n✈️\nLEAVE BY\nto your flight\n9:58 am\n▶ Start the tour\n\nFlight 3:00 pm · Back at Marrakesh Menara Airport by 12:00 pm\n\nGetting back on time is up to you\n\nKairoute's leave-by and back-by times are estimates with spare time built in. Traffic, queues and the weather can still slow you down. The time that counts is the ship's all-aboard time or your train or flight, as your cruise line or carrier gives it. Check it on the day.\n\nI understand\nTerms of use\n1\nsight\nChoose sights\nMore\nAbout today's plan1 note\nUse Ctrl + scroll to zoom the map\nS\n1\nFinish · Airport\n2000 ft\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nTaxi or car\n■ Hotel\nMore about today\n\nAll times are Marrakech time, 5 h ahead of your device.\n\nLEAVE\n9:00 am\nS\nCheck out of Hotel in central Marrakech\nAdd your own hotel on the Trip page for exact times.\nMost hotels keep your bags for the day after check-out: ask at the desk.\nTaxi or car · 18 min · 1.8 mi\nBy road, with time for traffic.\nWalk · 38 min\nTaxi or car · 18 min\nARRIVE\n9:18 am\nLEAVE\n9:58 am\n1\nMajorelle Garden\n40 min · Park or garden · Must-see\nTaxi or car · 18 min · 1.8 mi\nWalk · 38 min\nTaxi or car · 18 min\nARRIVE\n10:16 am\nLEAVE\n10:31 am\nH\nCollect bags\n15 min\nUNTIL\n9:58 am\n+\nFree time: 46 min\nYours to spend as you like. Leave here by 9:58 am to be back by 12:00 pm. See what fits\nTaxi or car · 43 min · 4.0 mi\nBY\n12:00 pm\nE\nAt Marrakesh Menara Airport\nFlight leaves 3:00 pm: be at the airport by 12:00 pm, 3 h early for an international flight."
+  }
+ ],
+ "guides": {
+  "Marrakech, Morocco": {
+   "city": "Marrakech, Morocco",
+   "src": true,
+   "ai": false,
+   "n": 13,
+   "sights": "Koutoubia Mosque* | Jemaa el-Fnaa* | Medina of Marrakech* | Majorelle Garden* | Ben Youssef Madrasa | Menara gardens | El Badi Palace | Bahia Palace | Almoravid Koubba | Agdal Gardens | Marrakech Museum | Ibn Yusuf Mosque | Slat Al Azama Synagogue",
+   "far": "",
+   "eats": 60,
+   "starts": {
+    "cruise": [
+     "Cruise port of Marrakech (unknown)"
+    ],
+    "airport": [
+     "Marrakesh Menara Airport"
+    ],
+    "station": [
+     "Marrakesh Railway Station"
+    ],
+    "hotel": [
+     "Hotel in central Marrakech"
+    ],
+    "point": [
+     "Central Marrakech"
+    ]
+   }
+  }
+ },
+ "steps": [],
+ "version": "5d14162-1795221656",
+ "aiReady": false,
+ "wizard": {
+  "miss": [],
+  "prev": "Your days: 3 days",
+  "form": "Add each place in order, the way it's booked. Each new stop starts where the last one ends.\n\nSTOP 1 · CITY STAY\nCity\nArrive on\nNights\nHotel (optional)\nGetting there\nFlight\nTrain\nFerry\nCar or bus\nArrive in town at\nLeave empty if you don't know yet.\n+ Add a city stay\n+ Add a cruise\nGoing home from here\nFlight\nTrain\nFerry\nCar or bus\nFlight at\nYour days: 3 days\nAdd more details (optional)\nName this trip\n\nKairoute picks good defaults for pace, walking and voice, and you can change any of them later.\n\nCancel\nPersonalize first\nBuild my trip"
+ },
+ "buildSec": 40,
+ "state": {
+  "busy": "",
+  "err": "",
+  "days": [
+   {
+    "date": "2027-03-18",
+    "type": "arrival"
+   },
+   {
+    "date": "2027-03-19",
+    "type": "land"
+   },
+   {
+    "date": "2027-03-20",
+    "type": "departure"
+   }
+  ]
+ },
+ "phoneText": "FRI MAR 19 · MARRAKECH, MOROCCO · LAND DAY\nMarrakech, Morocco ✎ Rename\nLock this day\n▶ Start tour\n9:00 am–6:00 pm\n9 h ✎\n5\nsights\n2.6 mi\nwalking\n3:08 pm\nlast stop done\nChoose sights\nMore\nAbout today's plan2 notes\nUse Ctrl + scroll to zoom the map\nS\n1\n2\n3\n4\nL\n5\n2000 ft\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nWalk\n● Meal\nMore about today\nTaken off this day\n1\n\nAll times are Marrakech time, 5 h ahead of your device.\n\nLEAVE\n9:00 am\nS\nLeave Hotel in central Marrakech\nAdd your own hotel on the Trip page for exact times.\nWalk · 11 min · 0.5 mi\nWalk · 11 min\nTaxi or car · 12 min\nARRIVE\n9:11 am\nLEAVE\n9:41 am\n1\nMedina of Marrakech\n30 min · Sight · Must-see · UNESCO\nIncludes Ben Youssef Madrasa, Almoravid Koubba and Ibn Yusuf Mosque\nNext door\nARRIVE\n9:43 am\nLEAVE\n11:13 am\n2\nMarrakech Museum\n1 h 30 min · Museum\nWalk · 20 min · 0.9 mi\nWalk · 20 min\nTaxi or car · 14 min\nARRIVE\n11:33 am\nLEAVE\n12:23 pm\n3\nBahia Palace\n50 min · Palace\nWalk · 3 min · 0.1 mi\nARRIVE\n12:26 pm\nLEAVE\n12:56 pm\n4\nSlat Al Azama Synagogue\n30 min · Church\nWalk · 5 min · 0.2 mi\nARRIVE\n1:01 pm\nLEAVE\n2:01 pm\nL\nLunch: Cafe Terrasse Palais El Badia\nRestaurant · Local spot · 1 h\nChange lunch\nLunch: why here\nWalk · 2 min · 0.1 mi\nARRIVE\n2:03 pm\nLEAVE\n2:53 pm\n5\nEl Badi Palace\n50 min · Palace\nUNTIL\n5:45 pm\n+\nFree time: 2 h 52 min\nYours to spend as you like. See what fits\nWalk · 15 min · 0.7 mi\nWalk · 15 min\nTaxi or car · 13 min\nBY\n6:00 pm\nE\nBack at Hotel in central Marrakech\nARRIVE\n6:30 pm\nD\nSuggested dinner: Tiznit\nRest",
+ "finished": "2026-11-21T01:24:07.002Z"
+}

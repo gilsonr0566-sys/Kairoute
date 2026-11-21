@@ -1,0 +1,122 @@
+{
+ "name": "d04-sydney",
+ "label": "Sydney stay",
+ "legs": [
+  {
+   "k": "stay",
+   "place": "Sydney, Australia",
+   "date": "2027-03-08",
+   "nights": 3,
+   "inAt": "07:00",
+   "homeAt": "21:00"
+  }
+ ],
+ "started": "2026-11-21T01:20:29.779Z",
+ "passed": {
+  "/sources": 12,
+  "/transit": 10,
+  "/guide": 1,
+  "/places": 2,
+  "/voyage": 1,
+  "/ground": 1,
+  "/x/near": 4,
+  "/route": 2
+ },
+ "refused": {
+  "/ratings": 1,
+  "/grating": 2,
+  "/events": 2
+ },
+ "errors": [],
+ "days": [
+  {
+   "i": 0,
+   "date": "2027-03-08",
+   "type": "arrival",
+   "text": "MON MAR 8 · SYDNEY, AUSTRALIA · ARRIVING\nSydney, Australia ✎ Rename\nLock this day\n\nWhich airport do you arrive at? There is more than one here (Sydney Airport, Western Sydney Airport or Bankstown Airport). Choose it in the day's settings: no time is given on a guess.\n\nEdit this day"
+  },
+  {
+   "i": 1,
+   "date": "2027-03-09",
+   "type": "land",
+   "text": "TUE MAR 9 · SYDNEY, AUSTRALIA · LAND DAY\nSydney, Australia ✎ Rename\nLock this day\n▶ Start the tour\n9:00 am–6:00 pm\n9 h ✎\n4\nsights\n1.6 mi\nwalking\n2:32 pm\nlast stop done\nChoose sights\nMore\nAbout today's plan1 note\nUse Ctrl + scroll to zoom the map\nS\n1\n2\n3\nL\n4\n2000 ft\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nWalk\nTaxi or car\nTrain, metro or tram\n● Meal\nMore about today\n\nAll times are Sydney time, 17 h ahead of your device.\n\nLEAVE\n9:00 am\nS\nLeave Hotel in central Sydney\nAdd your own hotel on the Trip page for exact times.\nMetro M1 · 33 min · 4.7 mi\nWalk 5 min to Sydenham Station, runs about every 4 min (from the timetable). Metro M1: Sydenham Station to Gadigal Station, 8 min, then walk 15 min. Times include waiting and boarding. Next departure about 9:05 am (timetable checked Nov 20; Kairoute checks it again the day before and the morning of).\nMetro M1 · 33 min\nTram L1 + 1 change · 44 min\nTaxi or car · 31 min\nARRIVE\n9:33 am\nLEAVE\n10:13 am\n1\nDarling Harbour\n40 min · Sight\nTaxi or car · 18 min · 1.8 mi\nBy road, with time for traffic.\nWalk · 39 min\nTaxi or car · 18 min\nARRIVE\n10:31 am\nLEAVE\n11:11 am\n2\nSydney Opera House\n40 min · Sight · Must-see · UNESCO\nWalk · 14 min · 0.6 mi\nWalk · 14 min\nTaxi or car · 13 min\nARRIVE\n11:25 am\nLEAVE\n12:05 pm\n3\nRoyal Botanic Gardens, Sydney\n40 min · Park or garden\nNext door\nARRIVE\n12:07 pm\nLEAVE\n1:07 pm\nL\nLunch: Botanic House\nRestaurant · Local spot · 1 h\nChange lunch\nLunch: why here\nWalk · 19 min · 0.9 mi\nWalk · 19 min\nTaxi or car · 14 min\nARRIVE\n1:26 pm\nLEAVE\n2:06 pm\n4\nHyde Park\n40 min · Park or garden\nUNTIL\n5:34 pm\n+\nFree time: 3 h 28 min\nYours to spend as you like. See what fits\nMetro M1 · 26 min · 5.1 mi\nWalk 5 min to Gadigal Station, runs about every 5 min (from the timetable). Metro M1: Gadigal Station to Sydenham Station, 8 min, then walk 7 min. Times include waiting and boarding. Next departure about 5:07 pm (timetable checked Nov 20; Kairoute checks it again the day before and the morning of).\nMetro M1 · 26 min\nTaxi or car · 33 min\nBY\n6:00 pm\nE\nBack at Hotel in central Sydney\nARRIVE\n6:30 pm\nD\nSuggested dinner: Hasu Sushi\nRestaurant\nChange dinner\nDinner: why here"
+  },
+  {
+   "i": 2,
+   "date": "2027-03-10",
+   "type": "land",
+   "text": "WED MAR 10 · SYDNEY, AUSTRALIA · LAND DAY\nSydney, Australia ✎ Rename\nLock this day\n▶ Start the tour\n9:00 am–6:00 pm\n9 h ✎\n3\nsights\n0.8 mi\nwalking\n1:55 pm\nlast stop done\nChoose sights\nMore\nAbout today's plan1 note\nUse Ctrl + scroll to zoom the map\nS\n1\n2\nL\n3\n300 ft\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nWalk\nTrain, metro or tram\n● Meal\nMore about today\n\nAll times are Sydney time, 17 h ahead of your device.\n\nLEAVE\n9:00 am\nS\nLeave Hotel in central Sydney\nAdd your own hotel on the Trip page for exact times.\nMetro M1 · 27 min · 5.1 mi\nWalk 5 min to Sydenham Station, runs about every 4 min (from the timetable). Metro M1: Sydenham Station to Gadigal Station, 8 min, then walk 9 min. Times include waiting and boarding. Next departure about 9:05 am (timetable checked Nov 20; Kairoute checks it again the day before and the morning of).\nMetro M1 · 27 min\nTaxi or car · 33 min\nARRIVE\n9:27 am\nLEAVE\n10:57 am\n1\nAustralian Museum\n1 h 30 min · Museum\nWalk · 6 min · 0.3 mi\nARRIVE\n11:03 am\nLEAVE\n11:33 am\n2\nSt Mary’s Cathedral\n30 min · Church\nWalk · 6 min · 0.3 mi\nARRIVE\n11:45 am\nLEAVE\n12:45 pm\nL\nLunch: Palace Chinese Restaurant\nRestaurant · Local spot · 1 h\nChange lunch\nLunch: why here\nWalk · 4 min · 0.2 mi\nARRIVE\n12:49 pm\nLEAVE\n1:29 pm\n3\nQueen Victoria Building\n40 min · Sight\nUNTIL\n5:34 pm\n+\nFree time: 4 h 5 min\nYours to spend as you like. See what fits\nTrain T4 · 26 min · 5.0 mi\nWalk 3 min to Town Hall Station, runs about every 10 min (from the timetable). Train T4: Town Hall Station to Sydenham Station, 10 min, then walk 5 min. Times include waiting and boarding. Next departure about 5:09 pm (timetable checked Nov 20; Kairoute checks it again the day before and the morning of).\nTrain T4 · 26 min\nMetro M1 · 27 min\nTaxi or car · 33 min\nBY\n6:00 pm\nE\nBack at Hotel in central Sydney\nARRIVE\n6:30 pm\nD\nSuggested dinner: Baba's Place\nRestaurant\nChange dinner\nDinner: why here"
+  },
+  {
+   "i": 3,
+   "date": "2027-03-11",
+   "type": "departure",
+   "text": "THU MAR 11 · SYDNEY, AUSTRALIA · LEAVING\nSydney, Australia ✎ Rename\nLock this day\n\nWhich airport do you leave from? There is more than one here (Sydney Airport, Western Sydney Airport or Bankstown Airport). Choose it in the day's settings and the day gets its time to leave by: no time is given on a guess.\n\nEdit this day"
+  }
+ ],
+ "guides": {
+  "Sydney, Australia": {
+   "city": "Sydney, Australia",
+   "src": true,
+   "ai": false,
+   "n": 7,
+   "sights": "Sydney Opera House* | Australian Museum | Royal Botanic Gardens, Sydney | Darling Harbour | St Mary’s Cathedral | Queen Victoria Building | Hyde Park",
+   "far": "",
+   "eats": 43,
+   "starts": {
+    "cruise": [
+     "Overseas Passenger Terminal"
+    ],
+    "airport": [
+     "Sydney Airport",
+     "Western Sydney Airport",
+     "Bankstown Airport"
+    ],
+    "station": [
+     "Central railway station, Sydney",
+     "Wynyard railway station, Sydney",
+     "Sydenham railway station, Sydney"
+    ],
+    "hotel": [
+     "Hotel in central Sydney"
+    ],
+    "point": [
+     "Central Sydney"
+    ]
+   }
+  }
+ },
+ "steps": [],
+ "version": "5d14162-1795221656",
+ "aiReady": false,
+ "wizard": {
+  "miss": [],
+  "prev": "Your days: 4 days",
+  "form": "Add each place in order, the way it's booked. Each new stop starts where the last one ends.\n\nSTOP 1 · CITY STAY\nCity\nArrive on\nNights\nHotel (optional)\nGetting there\nFlight\nTrain\nFerry\nCar or bus\nArrive in town at\nLeave empty if you don't know yet.\n+ Add a city stay\n+ Add a cruise\nGoing home from here\nFlight\nTrain\nFerry\nCar or bus\nFlight at\nYour days: 4 days\nAdd more details (optional)\nName this trip\n\nKairoute picks good defaults for pace, walking and voice, and you can change any of them later.\n\nCancel\nPersonalize first\nBuild my trip"
+ },
+ "buildSec": 64,
+ "state": {
+  "busy": "",
+  "err": "",
+  "days": [
+   {
+    "date": "2027-03-08",
+    "type": "arrival"
+   },
+   {
+    "date": "2027-03-09",
+    "type": "land"
+   },
+   {
+    "date": "2027-03-10",
+    "type": "land"
+   },
+   {
+    "date": "2027-03-11",
+    "type": "departure"
+   }
+  ]
+ },
+ "phoneText": "TUE MAR 9 · SYDNEY, AUSTRALIA · LAND DAY\nSydney, Australia ✎ Rename\nLock this day\n▶ Start tour\n9:00 am–6:00 pm\n9 h ✎\n4\nsights\n1.6 mi\nwalking\n2:32 pm\nlast stop done\nChoose sights\nMore\nAbout today's plan1 note\nUse Ctrl + scroll to zoom the map\nS\n1\n2\n3\nL\n4\n1 mi\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nWalk\nTaxi or car\nTrain, metro or tram\n● Meal\nMore about today\n\nAll times are Sydney time, 17 h ahead of your device.\n\nLEAVE\n9:00 am\nS\nLeave Hotel in central Sydney\nAdd your own hotel on the Trip page for exact times.\nMetro M1 · 33 min · 4.7 mi\nWalk 5 min to Sydenham Station, runs about every 4 min (from the timetable). Metro M1: Sydenham Station to Gadigal Station, 8 min, then walk 15 min. Times include waiting and boarding. Next departure about 9:05 am (timetable checked Nov 20; Kairoute checks it again the day before and the morning of).\nMetro M1 · 33 min\nTram L1 + 1 change · 44 min\nTaxi or car · 31 min\nARRIVE\n9:33 am\nLEAVE\n10:13 am\n1\nDarling Harbour\n40 min · Sight\nTaxi or car · 18 min · 1.8 mi\nBy road, with time for traffic.\nWalk · 39 min\nTaxi or car · 18 min\nARRIVE\n10:31 am\nLEAVE\n11:11 am\n2\nSydney Opera House\n40 min · Sight · Must-see · UNESCO\nWalk · 14 min · 0.6 mi\nWalk · 14 min\nTaxi or car · 13 min\nARRIVE\n11:25 am\nLEAVE\n12:05 pm\n3\nRoyal Botanic Gardens, Sydney\n40 min · Park or garden\nNext door\nARRIVE\n12:07 pm\nLEAVE\n1:07 pm\nL\nLunch: Botanic House\nRestaurant · Local spot · 1 h\nChange lunch\nLunch: why here\nWalk · 19 min · 0.9 mi\nWalk · 19 min\nTaxi or car · 14 min\nARRIV",
+ "finished": "2026-11-21T01:22:22.321Z"
+}
