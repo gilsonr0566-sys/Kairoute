@@ -1,44 +1,7 @@
 {
- "run": "round2c-2026-11-20",
+ "run": "round2d-2026-11-21",
  "dayWait": 40000,
  "trips": [
-  {
-   "name": "a01-istanbul",
-   "label": "Istanbul Thu+Fri stay",
-   "legs": [
-    {
-     "k": "stay",
-     "place": "Istanbul, Turkey",
-     "date": "2027-05-12",
-     "nights": 3,
-     "inAt": "15:00",
-     "homeAt": "13:00"
-    }
-   ]
-  },
-  {
-   "name": "a04-barcelona-call",
-   "label": "Barcelona Sunday cruise call",
-   "legs": [
-    {
-     "k": "cruise",
-     "board": "Marseille, France",
-     "date": "2027-05-15",
-     "aboard": "17:00",
-     "ports": [
-      {
-       "date": "2027-05-16",
-       "place": "Barcelona, Spain",
-       "arrive": "08:00",
-       "aboard": "18:00"
-      }
-     ],
-     "end": "Marseille, France",
-     "endDate": "2027-05-17",
-     "off": "07:00"
-    }
-   ]
-  },
   {
    "name": "a07-southampton-lehavre",
    "label": "Southampton fly in, board next day, Le Havre for Paris Saturday call",
@@ -197,64 +160,6 @@
      "end": "Miami, Florida",
      "endDate": "2027-01-15",
      "off": "06:00"
-    }
-   ]
-  },
-  {
-   "name": "d02-london-paris-amsterdam",
-   "label": "London, Paris, Amsterdam by train (re-test)",
-   "legs": [
-    {
-     "k": "stay",
-     "place": "London, England",
-     "date": "2027-05-17",
-     "nights": 3,
-     "inAt": "10:00"
-    },
-    {
-     "k": "stay",
-     "place": "Paris, France",
-     "nights": 3,
-     "inBy": "train",
-     "leaveAt": "09:31",
-     "inAt": "12:47"
-    },
-    {
-     "k": "stay",
-     "place": "Amsterdam, Netherlands",
-     "nights": 2,
-     "inBy": "train",
-     "leaveAt": "10:25",
-     "inAt": "13:44",
-     "homeAt": "12:30"
-    }
-   ]
-  },
-  {
-   "name": "d09-buenosaires",
-   "label": "Buenos Aires stay",
-   "legs": [
-    {
-     "k": "stay",
-     "place": "Buenos Aires, Argentina",
-     "date": "2027-11-15",
-     "nights": 2,
-     "inAt": "09:00",
-     "homeAt": "22:00"
-    }
-   ]
-  },
-  {
-   "name": "d10-singapore",
-   "label": "Singapore stay",
-   "legs": [
-    {
-     "k": "stay",
-     "place": "Singapore",
-     "date": "2027-08-16",
-     "nights": 2,
-     "inAt": "06:30",
-     "homeAt": "23:30"
     }
    ]
   },
@@ -431,46 +336,6 @@
      "leaveAt": "13:00",
      "inAt": "15:45",
      "homeAt": "16:00"
-    }
-   ]
-  },
-  {
-   "name": "e02-barcelona-port-actions",
-   "legs": [
-    {
-     "k": "cruise",
-     "board": "Marseille, France",
-     "date": "2027-05-15",
-     "aboard": "17:00",
-     "inAt": "09:00",
-     "ports": [
-      {
-       "date": "2027-05-16",
-       "place": "Barcelona, Spain",
-       "arrive": "08:00",
-       "aboard": "18:00"
-      }
-     ],
-     "end": "Marseille, France",
-     "endDate": "2027-05-17",
-     "off": "07:00"
-    }
-   ],
-   "steps": []
-  },
-  {
-   "name": "a19-venice",
-   "label": "Venice Sat+Sun stay",
-   "legs": [
-    {
-     "k": "stay",
-     "place": "Venice, Italy",
-     "date": "2027-05-14",
-     "nights": 3,
-     "inBy": "train",
-     "inAt": "12:30",
-     "homeBy": "train",
-     "homeAt": "10:30"
     }
    ]
   }
