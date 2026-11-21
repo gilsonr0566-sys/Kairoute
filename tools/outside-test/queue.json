@@ -1,39 +1,49 @@
 {
- "run": "round3b-2026-11-21",
+ "run": "round3c-2026-11-21",
  "dayWait": 40000,
  "trips": [
   {
-   "name": "d15-livorno-rome-naples",
-   "label": "Livorno for Florence, Civitavecchia for Rome, Naples",
+   "name": "f04-vienna-hours",
+   "label": "Vienna stay: hours to sightsee in day settings",
    "legs": [
     {
-     "k": "cruise",
-     "board": "Barcelona, Spain",
-     "date": "2027-09-05",
-     "aboard": "17:00",
-     "ports": [
-      {
-       "date": "2027-09-07",
-       "place": "Livorno (Florence), Italy",
-       "arrive": "07:00",
-       "aboard": "19:00"
-      },
-      {
-       "date": "2027-09-08",
-       "place": "Civitavecchia (Rome), Italy",
-       "arrive": "07:00",
-       "aboard": "19:00"
-      },
-      {
-       "date": "2027-09-09",
-       "place": "Naples, Italy",
-       "arrive": "07:00",
-       "aboard": "17:30"
-      }
-     ],
-     "end": "Barcelona, Spain",
-     "endDate": "2027-09-11",
-     "off": "07:00"
+     "k": "stay",
+     "place": "Vienna, Austria",
+     "date": "2027-05-09",
+     "nights": 3,
+     "inAt": "14:00",
+     "homeAt": "12:00"
+    }
+   ],
+   "steps": [
+    {
+     "name": "h0-plan-default",
+     "js": "(async()=>{window.__kairouteAt(1,'plan');await __T.sleep(15000);return __T.planText(12000)})()"
+    },
+    {
+     "name": "h1-light",
+     "js": "__T.hours(1,'Light')"
+    },
+    {
+     "name": "h2-half",
+     "js": "__T.hours(1,'Half')"
+    },
+    {
+     "name": "h3-full",
+     "js": "__T.hours(1,'Full')"
+    },
+    {
+     "name": "h4-typed-3.5",
+     "js": "__T.hours(1,3.5)"
+    },
+    {
+     "name": "h5-typed-11",
+     "js": "__T.hours(1,11)"
+    },
+    {
+     "name": "h6-reload",
+     "reload": true,
+     "js": "(async()=>{window.__kairouteAt(1,'trip');await __T.sleep(3000);const a=document.getElementById('f-hours');return {hours:a&&a.value}})()"
     }
    ]
   },
@@ -68,52 +78,36 @@
    ],
    "steps": [
     {
-     "name": "picker-full-day5",
-     "js": "(async()=>{window.__kairouteAt(5,'sites');await __T.sleep(5000);const m=document.querySelector('main');return {text:m.innerText.slice(0,12000),buttons:[...m.querySelectorAll('button,[data-act]')].map(b=>(b.dataset.act||'')+':'+b.innerText.trim().slice(0,50)).slice(0,200)}})()"
+     "name": "nap-1-fit-capri",
+     "js": "__T.fitName(5,'Capri')"
     },
     {
-     "name": "picker-full-day3",
-     "js": "(async()=>{window.__kairouteAt(3,'sites');await __T.sleep(5000);const m=document.querySelector('main');return {text:m.innerText.slice(0,12000),buttons:[...m.querySelectorAll('button,[data-act]')].map(b=>(b.dataset.act||'')+':'+b.innerText.trim().slice(0,50)).slice(0,200)}})()"
+     "name": "nap-2-basis",
+     "js": "__T.basis(5)"
     },
     {
-     "name": "dbv-1-ticks",
-     "js": "(async()=>{const t=await __T.ticks(3);return t})()"
+     "name": "dbv-1-blank-picker",
+     "js": "(async()=>{window.__kairouteAt(3,'sites');await __T.sleep(5000);return __T.planText(2500)})()"
     },
     {
-     "name": "dbv-2-pick-island",
+     "name": "dbv-2-pier-gruz",
+     "js": "__T.pier(3,'Gruž')"
+    },
+    {
+     "name": "dbv-2b-pier-gruz-plain",
+     "js": "__T.pier(3,'Port Gruz')"
+    },
+    {
+     "name": "dbv-3-pick-lokrum",
      "js": "__T.tap(3,'Lokrum',1)"
     },
     {
-     "name": "dbv-3-plan-after-pick",
-     "js": "(async()=>{window.__kairouteAt(3,'plan');await __T.sleep(9000);return document.querySelector('main').innerText.slice(0,7000)})()"
+     "name": "dbv-4-plan",
+     "js": "(async()=>{window.__kairouteAt(3,'plan');await __T.sleep(15000);return __T.planText(12000)})()"
     },
     {
-     "name": "dbv-4-ferry-chip",
-     "js": "__T.press(3,/^(Ferry|Boat|Hydrofoil)/)"
-    },
-    {
-     "name": "dbv-5-plan-after-chip",
-     "js": "(async()=>{window.__kairouteAt(3,'plan');await __T.sleep(9000);return document.querySelector('main').innerText.slice(0,7000)})()"
-    },
-    {
-     "name": "nap-1-ticks",
-     "js": "(async()=>{const t=await __T.ticks(5);return t})()"
-    },
-    {
-     "name": "nap-2-pick-island",
-     "js": "__T.tap(5,'Capri',1)"
-    },
-    {
-     "name": "nap-3-plan-after-pick",
-     "js": "(async()=>{window.__kairouteAt(5,'plan');await __T.sleep(9000);return document.querySelector('main').innerText.slice(0,7000)})()"
-    },
-    {
-     "name": "nap-4-ferry-chip",
-     "js": "__T.press(5,/^(Ferry|Boat|Hydrofoil)/)"
-    },
-    {
-     "name": "nap-5-plan-after-chip",
-     "js": "(async()=>{window.__kairouteAt(5,'plan');await __T.sleep(9000);return document.querySelector('main').innerText.slice(0,7000)})()"
+     "name": "dbv-5-basis",
+     "js": "__T.basis(3)"
     }
    ]
   },
@@ -142,28 +136,143 @@
    ],
    "steps": [
     {
-     "name": "picker-full-day4",
-     "js": "(async()=>{window.__kairouteAt(4,'sites');await __T.sleep(5000);const m=document.querySelector('main');return {text:m.innerText.slice(0,12000),buttons:[...m.querySelectorAll('button,[data-act]')].map(b=>(b.dataset.act||'')+':'+b.innerText.trim().slice(0,50)).slice(0,200)}})()"
+     "name": "rvk-1-blank-picker",
+     "js": "(async()=>{window.__kairouteAt(4,'sites');await __T.sleep(5000);return __T.planText(2500)})()"
     },
     {
-     "name": "rvk-1-ticks",
-     "js": "(async()=>{const t=await __T.ticks(4);return t})()"
+     "name": "rvk-2-pier",
+     "js": "__T.pier(4,'Skarfabakki')"
     },
     {
-     "name": "rvk-2-pick-island",
+     "name": "rvk-3-pick-videy",
      "js": "__T.tap(4,'Vi.ey',1)"
     },
     {
-     "name": "rvk-3-plan-after-pick",
-     "js": "(async()=>{window.__kairouteAt(4,'plan');await __T.sleep(9000);return document.querySelector('main').innerText.slice(0,7000)})()"
+     "name": "rvk-4-plan",
+     "js": "(async()=>{window.__kairouteAt(4,'plan');await __T.sleep(15000);return __T.planText(12000)})()"
     },
     {
-     "name": "rvk-4-ferry-chip",
-     "js": "__T.press(4,/^(Ferry|Boat|Hydrofoil)/)"
+     "name": "rvk-5-basis",
+     "js": "__T.basis(4)"
+    }
+   ]
+  },
+  {
+   "name": "d15-livorno-rome-naples",
+   "label": "Livorno for Florence, Civitavecchia for Rome, Naples",
+   "legs": [
+    {
+     "k": "cruise",
+     "board": "Barcelona, Spain",
+     "date": "2027-09-05",
+     "aboard": "17:00",
+     "ports": [
+      {
+       "date": "2027-09-07",
+       "place": "Livorno (Florence), Italy",
+       "arrive": "07:00",
+       "aboard": "19:00"
+      },
+      {
+       "date": "2027-09-08",
+       "place": "Civitavecchia (Rome), Italy",
+       "arrive": "07:00",
+       "aboard": "19:00"
+      },
+      {
+       "date": "2027-09-09",
+       "place": "Naples, Italy",
+       "arrive": "07:00",
+       "aboard": "17:30"
+      }
+     ],
+     "end": "Barcelona, Spain",
+     "endDate": "2027-09-11",
+     "off": "07:00"
+    }
+   ],
+   "steps": [
+    {
+     "name": "basis-day3",
+     "js": "__T.basis(3)"
     },
     {
-     "name": "rvk-5-plan-after-chip",
-     "js": "(async()=>{window.__kairouteAt(4,'plan');await __T.sleep(9000);return document.querySelector('main').innerText.slice(0,7000)})()"
+     "name": "basis-day4",
+     "js": "__T.basis(4)"
+    },
+    {
+     "name": "basis-day5",
+     "js": "__T.basis(5)"
+    }
+   ]
+  },
+  {
+   "name": "d16-warnemunde-zeebrugge",
+   "label": "Warnemunde for Berlin, Zeebrugge for Bruges",
+   "legs": [
+    {
+     "k": "cruise",
+     "board": "Copenhagen, Denmark",
+     "date": "2027-08-01",
+     "aboard": "17:00",
+     "ports": [
+      {
+       "date": "2027-08-02",
+       "place": "Warnemunde (Berlin), Germany",
+       "arrive": "07:00",
+       "aboard": "21:00"
+      },
+      {
+       "date": "2027-08-04",
+       "place": "Zeebrugge (Bruges), Belgium",
+       "arrive": "08:00",
+       "aboard": "17:00"
+      }
+     ],
+     "end": "Southampton, England",
+     "endDate": "2027-08-05",
+     "off": "07:00",
+     "homeBy": "train",
+     "homeAt": "11:00"
+    }
+   ],
+   "steps": [
+    {
+     "name": "basis-day2",
+     "js": "__T.basis(2)"
+    },
+    {
+     "name": "basis-day4",
+     "js": "__T.basis(4)"
+    }
+   ]
+  },
+  {
+   "name": "a17-haifa",
+   "label": "Jerusalem from Haifa, Saturday call",
+   "legs": [
+    {
+     "k": "cruise",
+     "board": "Limassol, Cyprus",
+     "date": "2027-05-14",
+     "aboard": "18:00",
+     "ports": [
+      {
+       "date": "2027-05-15",
+       "place": "Haifa (Jerusalem), Israel",
+       "arrive": "06:00",
+       "aboard": "20:00"
+      }
+     ],
+     "end": "Limassol, Cyprus",
+     "endDate": "2027-05-16",
+     "off": "07:00"
+    }
+   ],
+   "steps": [
+    {
+     "name": "basis-day2",
+     "js": "__T.basis(2)"
     }
    ]
   }
