@@ -55,7 +55,7 @@ ok(!(await ferryChain(ship, { lat: 38.12, lng: 13.36 }, ways)).length, "no chang
   const worker = (await import("../worker/worker.js")).default, kv = new Map();
   const env = { USAGE: { get: async (k, t) => { const v = kv.get(k); return v == null ? null : t === "json" ? JSON.parse(v) : v; }, put: async (k, v) => { kv.set(k, v); }, delete: async k => { kv.delete(k); }, list: async ({ prefix }) => ({ keys: [...kv.keys()].filter(k => k.startsWith(prefix)).map(name => ({ name })) }) } };
   const ctx = { waitUntil: () => {} }, a = [40.852, 14.26], b = [40.6263, 14.3757];
-  kv.set("tr6:wk:" + [...a, ...b].map(n => n.toFixed(3)).join(","), JSON.stringify({ opts: [{ mode: "train", label: "Train 1 (Eav) + 1 change", min: 112 }], partial: false, t: Date.now() }));
+  kv.set("tr10:wk:" + [...a, ...b].map(n => n.toFixed(3)).join(","), JSON.stringify({ opts: [{ mode: "train", label: "Train 1 (Eav) + 1 change", min: 112 }], partial: false, t: Date.now() }));
   const ask = async () => (await (await worker.fetch(new Request("https://x/transit", { method: "POST", body: JSON.stringify({ pairs: [{ a, b, dow: 3 }] }) }), env, ctx)).json()).results[0];
   const r1 = await ask();
   ok(r1.partial === true && !r1.opts.some(o => o.mode === "ferry"), "ferries at an end not known yet: the saved answer is sent as partial (asked again soon)");
@@ -69,10 +69,11 @@ ok(!(await ferryChain(ship, { lat: 38.12, lng: 13.36 }, ways)).length, "no chang
   ok(t.length === 5 && t.some(o => o.mode === "ferry"), "a long list of quicker trains never pushes the ferry out (" + t.map(o => o.label).join(",") + ")"); }
 // Trip date: the timetable is asked for the trip's own date (a summer ferry shows only then), the answer marked with it;
 // when that date isn't published yet (nothing comes back) the next date of the same weekday kind is asked instead.
-{ const realFetch = globalThis.fetch, asked = []; let empty = false;
+// The date is a month ahead: dates more than 120 days out are not asked (operators haven't published them).
+{ const realFetch = globalThis.fetch, asked = [], date = new Date(Date.now() + 30 * 86400e3).toISOString().slice(0, 10); let empty = false;
   const it = (h) => ({ startTime: `2027-07-12T0${h}:00:00Z`, endTime: `2027-07-12T0${h + 1}:30:00Z`, duration: 5400, legs: [{ mode: "FERRY", startTime: `2027-07-12T0${h}:00:00Z`, duration: 5400, routeShortName: "", agencyName: "NLG", from: { name: "Molo Beverello", tz: "Europe/Rome" }, to: { name: "Amalfi" } }] });
-  globalThis.fetch = async u => { const t = new URL(u).searchParams.get("time"); asked.push(t); return { ok: true, json: async () => ({ itineraries: empty && t.startsWith("2027-07-12") ? [] : [it(6), it(8)] }) }; };
-  const A = { lat: 40.8366, lng: 14.2563 }, B = { lat: 40.6327, lng: 14.6029 }, yr = new Date().getUTCFullYear() + 1, date = yr + "-07-12";
+  globalThis.fetch = async u => { const t = new URL(u).searchParams.get("time"); asked.push(t); return { ok: true, json: async () => ({ itineraries: empty && t.startsWith(date) ? [] : [it(6), it(8)] }) }; };
+  const A = { lat: 40.8366, lng: 14.2563 }, B = { lat: 40.6327, lng: 14.6029 };
   const r = await timetableOptions(A, B, 1, date);
   ok(asked.length && asked.every(t => t.startsWith(date)), `timetable asked for the trip's own date (${asked[0]})`);
   ok(r.length && r.every(o => o.forDate === date && o.mode === "ferry"), "rides found for that date are marked with it");

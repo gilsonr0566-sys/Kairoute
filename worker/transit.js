@@ -100,16 +100,17 @@ export function headways(deps) {
   const out = []; for (const ts of by.values()) { ts.sort((x, y) => x - y); for (let i = 1; i < ts.length; i++) { const m = (ts[i] - ts[i - 1]) / 60000; if (m >= 3) out.push(m); } }
   return out.sort((x, y) => x - y);
 }
-export const TT_HOURS = [6, 9, 12, 15, 18];
+export const TT_HOURS = [6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20];
 async function timetableAt(a, b, when) {
-  // Every three hours from early morning to evening, so the plan knows the departures through the whole day: a ship day
-  // leaves at 7:30 and comes back in the late afternoon, and three searches (8, 12, 16) left whole hours unknown, so
-  // trains that run all day fell to a taxi (Nov 21 outside test: Civitavecchia to Rome, Zeebrugge to Bruges). The
-  // answer is kept and shared, so each pair is looked up this way once per kind of day.
+  // Every hour from early morning to evening, so the plan knows the departures through the whole day: a ship day
+  // leaves at 7:30 and comes back in the late afternoon. Searches three hours apart (6, 9, 12, 15, 18), six trips each,
+  // still left hours unknown, so a train back that runs every half hour fell to a taxi (Nov 21 outside check: Rome at
+  // 4:10 pm showed "the next known is about 6:07 pm"). The answer is kept and shared, so each pair is looked up this
+  // way once per kind of day.
   const ask = hh => fetch(`https://api.transitous.org/api/v1/plan?fromPlace=${a.lat},${a.lng}&toPlace=${b.lat},${b.lng}&time=${when(hh)}&numItineraries=6`, { headers: UA, signal: AbortSignal.timeout(20000) }).then(r => r.ok ? r.json() : Promise.reject(new Error("timetable " + r.status)));
-  // Two at a time: the free timetable service turns away a burst (five searches for each of several rides at once).
-  const all = new Array(TT_HOURS.length);
-  for (let k = 0; k < TT_HOURS.length; k += 2) { const part = await Promise.allSettled(TT_HOURS.slice(k, k + 2).map(ask)); part.forEach((x, i) => { all[k + i] = x; }); }
+  // Three at a time: the free timetable service turns away a burst (every search for each of several rides at once).
+  const all = new Array(TT_HOURS.length), N = 3;
+  for (let k = 0; k < TT_HOURS.length; k += N) { const part = await Promise.allSettled(TT_HOURS.slice(k, k + N).map(ask)); part.forEach((x, i) => { all[k + i] = x; }); }
   if (!all.some(x => x.status === "fulfilled")) throw new Error("timetable busy");
   // Each itinerary remembers which of the three searches found it (w): how often a line runs is measured only between
   // departures found by the same search. Two searches are hours apart, so the gap from the last morning departure to the
@@ -138,14 +139,14 @@ async function timetableAt(a, b, when) {
     const km = path.length > 1 ? lineLen(path) : hav(a, b) * 1.3;
     out.push({ mode: kind.toLowerCase(), kind, label: nm(m) + (x.ride.length > 1 ? ` + ${x.ride.length - 1} change${x.ride.length > 2 ? "s" : ""}` : ""), operator: "", from: (x.ride[0].from || {}).name || "", to: (x.ride[x.ride.length - 1].to || {}).name || "",
       ride: Math.round(typ - walkA - walkB), wait, every: ev, everySrc: every && gaps.length >= 2 ? "timetable" : "none", everyN: gaps.length, access: { how: "walk", min: walkA, km: +(walkA * 4.5 / 60).toFixed(2) }, egress: { how: "walk", min: walkB, km: +(walkB * 4.5 / 60).toFixed(2) },
-      min: Math.round(typ + wait), km: +km.toFixed(1), stops: x.ride.reduce((n, l) => n + ((l.intermediateStops || []).length), 0), hours: "", fare: "", steps, deps: deps.slice(0, 30), checked: new Date().toISOString().slice(0, 10),
+      min: Math.round(typ + wait), km: +km.toFixed(1), stops: x.ride.reduce((n, l) => n + ((l.intermediateStops || []).length), 0), hours: "", fare: "", steps, deps: deps.slice(0, 90), checked: new Date().toISOString().slice(0, 10),
       path: thin(path.length > 1 ? path : [a, b], 160).map(p => [+p.lng.toFixed(5), +p.lat.toFixed(5)]), fromPt: [+a.lng, +a.lat], toPt: [+b.lng, +b.lat], src: "Transitous timetables (" + (m.agencyName || "operator") + ")" });
   }
   // Every departure of the kind (all trains between the two places, whatever their numbers), on each answer kept: only
   // the best few answers are kept, and a train known by its own number leaves once a day, so its own list alone left
   // whole hours unknown (Nov 21 outside test: Civitavecchia to Rome showed four trains a day). a: the walk to its stop.
   const kd = new Map(); for (const o of out) { const l = kd.get(o.kind) || kd.set(o.kind, []).get(o.kind); for (const d of o.deps || []) l.push({ t: d.t, lead: d.lead, dur: d.dur, a: (o.access && o.access.min) || 0 }); }
-  for (const o of out) { const seen = new Set(); o.kindDeps = (kd.get(o.kind) || []).sort((x, y) => x.t - y.t).filter(d => { const k = d.t + "|" + d.dur; if (seen.has(k)) return false; seen.add(k); return true; }).slice(0, 60); }
+  for (const o of out) { const seen = new Set(); o.kindDeps = (kd.get(o.kind) || []).sort((x, y) => x.t - y.t).filter(d => { const k = d.t + "|" + d.dur; if (seen.has(k)) return false; seen.add(k); return true; }).slice(0, 120); }
   return topRides(out, 4);
 }
 // Both sources: real timetables first; the map adds what timetables lack (ferries mostly). A map rail line is kept
