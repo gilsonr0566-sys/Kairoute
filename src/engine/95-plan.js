@@ -81,8 +81,9 @@
       if (x.from && x.to && E.hasPos(x.from) && E.hasPos(x.to) && E.hav(x.from, x.to) > 0.05 && !(x.min > 0)) why.push("a ride with no time between " + ((a && a.name) || "two places") + " and " + ((b && b.name) || "the next"));
       if (win.hard && x.guess) why.push("a ride to or from a place not on the map, on a day with a time to be back");
       // Where each boat's time comes from, not only how long it is (Nov 21 outside review): on such a day every boat rests
-      // on a sailing a timetable confirms.
-      if (win.hard && x.kind === "ferry" && (x.source !== "timetable" || x.noRun || x.unsure)) why.push("a boat with no sailing a timetable confirms, on a day with a time to be back");
+      // on a sailing a timetable confirms, or is the traveler's own choice of boat, said, with the hour at the pier for the
+      // boat back (Richard, Nov 21).
+      if (win.hard && x.kind === "ferry" && (x.noRun || x.unsure || (x.source !== "timetable" && !(x.ownBoat && (x.isle !== "back" || (x.pier || 0) >= E.PIER_BACK))))) why.push("a boat with no sailing a timetable confirms, on a day with a time to be back");
     });
     // The way back from the day's farthest place carries its extra time, however many stops lie on it (Nov 20 review).
     const end = plan.items[plan.items.length - 1];

@@ -290,6 +290,7 @@
       const pubs = opts.filter(o => o.kind !== "walk" && o.kind !== "taxi").sort((x, y) => x.min - y.min || x.kind.localeCompare(y.kind));
       const ansPick = wantRaw != null ? opts.find(o => o.ans && String(o.ans.id) === String(wantRaw)) : null;
       let pick = ansPick || (want === "transit" ? pubs.find(o => o.kind !== "ferry") : want != null ? byKind(want) : null), lost = null;
+      const yours = !!pick && !nearOnly; // the way the traveler chose for this very ride
       if (want != null && !pick && !nearOnly) lost = want;
       // On the way to a ship, train or plane the app takes a line on its own only when a timetable answers for it, or it is a
       // metro or tram (they run every few minutes); a train or bus known only from the map stays a choice, said (Nov 20
@@ -316,7 +317,7 @@
         pick.kind !== "walk" && pick.kind !== "taxi" && pick.kind !== "ferry" ? { transitMode: pick.transitMode || (pick.ans && pick.ans.mode) || pick.kind } : {},
         pick.kind === "ferry" ? { cross: pick.cross, pier: pick.pier || E.PIER_MIN, timetable: pick.source === "timetable" } : {}, pick.isle ? { isle: pick.isle } : {}, { source: pick.source },
         pick.parts ? { parts: pick.parts } : {}, pick.first ? { first: pick.first } : {}, pick.ans ? { ans: pick.ans } : {}, pick.leaveTimes && pick.leaveTimes.length ? { leaveTimes: pick.leaveTimes } : {}, pick.slack ? { slack: pick.slack } : {}, pinned ? { pinned: true } : {},
-        notes.length ? { note: notes.join(" ") } : {}, lost ? { lost } : {});
+        notes.length ? { note: notes.join(" ") } : {}, lost ? { lost } : {}, yours ? { mine: true } : {});
       if (options.length < 2) delete leg.options;
       return leg;
     }
@@ -371,5 +372,5 @@
   E.rideItem = (leg, extra) => Object.assign({ t: "ride", mode: leg.mode, kind: leg.kind || (leg.mode === "walk" ? "walk" : "taxi"), min: leg.min, km: Math.round((leg.km || 0) * 100) / 100 },
     leg.how && (leg.mode !== "walk" || leg.pierName) ? { how: leg.how } : {}, leg.options ? { options: leg.options } : {}, leg.transitMode ? { transitMode: leg.transitMode } : {},
     leg.choice ? { choice: leg.choice } : {}, leg.steps && leg.steps.length ? { steps: leg.steps } : {}, leg.ans ? { ans: leg.ans } : {}, leg.note ? { note: leg.note } : {},
-    leg.lost ? { lost: leg.lost } : {}, leg.source ? { source: leg.source } : {}, leg.guess ? { guess: true } : {}, leg.slack ? { slack: leg.slack } : {}, leg.pierName ? { pierName: leg.pierName } : {}, leg.isle ? { isle: leg.isle } : {}, leg.unsure ? { unsure: leg.unsure } : {}, extra || {});
+    leg.lost ? { lost: leg.lost } : {}, leg.source ? { source: leg.source } : {}, leg.guess ? { guess: true } : {}, leg.slack ? { slack: leg.slack } : {}, leg.pierName ? { pierName: leg.pierName } : {}, leg.isle ? { isle: leg.isle } : {}, leg.unsure ? { unsure: leg.unsure } : {}, leg.mine ? { mine: true } : {}, leg.ownBoat ? { ownBoat: leg.ownBoat } : {}, leg.kind === "ferry" && leg.pier ? { pier: leg.pier } : {}, extra || {});
 })(KEngine);

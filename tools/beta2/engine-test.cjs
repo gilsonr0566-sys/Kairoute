@@ -381,8 +381,11 @@ if (fs.existsSync(dir)) { let rides = 0, placed = 0;
     if (ni >= 0) { s.days[ni].selected = ['duomo-na', 'capri-far']; s.days[ni].own = true; (s.cities[s.days[ni].city].farther || []).forEach(x => { if (x.id === 'capri-far') x.minutes = 120; });
       // Ship safety (Nov 21 outside review): with no sailing times known, the island isn't planned on a ship day, and says why.
       s.answers = () => null; const p0 = E.planTrip(s)[ni];
-      ok(!p0.safe && !(p0.items || []).some(x => x.t === 'ride' && x.kind === 'ferry') && (p0.explain || []).some(t => /reached only by boat, and no sailing times are known/.test(t)) && (p0.items || []).some(x => x.t === 'stop' && /duomo|cathedral/i.test(x.id + ' ' + x.name)),
-        'ship day, island with no sailing times known: the island is not planned, the reason is said, the rest of the day stays');
+      // Richard, Nov 21 ("Yes, your pick, with a warning"): the island the traveler picked is planned on the guide's boat all
+      // the same, said plainly, with the hour at the pier for the boat back; the final check lets it through.
+      const boats0 = (p0.items || []).filter(x => x.t === 'ride' && x.kind === 'ferry');
+      ok(!p0.safe && boats0.length === 2 && boats0.every(b => b.ownBoat && /planned because you chose it/.test(b.note || '')) && boats0.some(b => b.isle === 'back' && b.pier >= E.PIER_BACK) && (p0.items || []).some(x => x.t === 'stop' && /duomo|cathedral/i.test(x.id + ' ' + x.name)),
+        'ship day, an island the traveler picked with no sailing times known: planned on their pick, with the warning and an hour at the pier for the boat back');
       // With the boat's timetable (sailings every half hour, 7:00 to 20:00): planned, the walk to the pier, then the boat.
       const capri = (s.cities[s.days[ni].city].farther || []).find(x => x.id === 'capri-far'), deps = []; for (let t = 7 * 60; t <= 20 * 60; t += 30) deps.push({ t });
       s.answers = (a, b) => capri && (E.hav(a, capri) < 3 || E.hav(b, capri) < 3) ? [{ id: 'f1', mode: 'ferry', label: 'Ferry', min: 55, every: 30, deps }] : null;
@@ -612,7 +615,7 @@ if (fs.existsSync(dir)) for (const f of fs.readdirSync(dir).filter(f => f.endsWi
 // timetable confirms for the day; the final check reads where every boat's time comes from, not only how long it is.
 { const win = { hard: true, endBy: 17 * 60 }, A = { lat: 38, lng: 23.7 }, B = { lat: 38.05, lng: 23.75 };
   const plan = x => ({ end: 16 * 60, items: [{ t: 'start', name: 'Port' }, Object.assign({ t: 'ride', mode: 'boat', kind: 'ferry', from: A, to: B, min: 105, slack: 25 }, x), { t: 'end', name: 'Port' }] });
-  ok(E.guardPlan(plan({ source: 'guide' }), win).length && E.guardPlan(plan({ source: 'estimate' }), win).length && E.guardPlan(plan({ source: 'timetable', unsure: 'x' }), win).length && !E.guardPlan(plan({ source: 'timetable' }), win).length
+  ok(!E.guardPlan(plan({ source: 'guide', ownBoat: 'x', isle: 'back', pier: 60 }), win).length && E.guardPlan(plan({ source: 'guide', ownBoat: 'x', isle: 'back', pier: 15 }), win).length && E.guardPlan(plan({ source: 'guide' }), win).length && E.guardPlan(plan({ source: 'estimate' }), win).length && E.guardPlan(plan({ source: 'timetable', unsure: 'x' }), win).length && !E.guardPlan(plan({ source: 'timetable' }), win).length
     && !E.guardPlan(plan({ source: 'guide' }), { hard: false, endBy: 17 * 60 }).length,
     'final check: a boat on a ship day from the guide or an estimate is refused; a confirmed sailing passes; a day with no time to be back is not held to it');
   const deps = (from, to, every) => { const r = []; for (let t = from; t <= to; t += every) r.push({ t }); return r; };
@@ -631,6 +634,11 @@ if (fs.existsSync(dir)) for (const f of fs.readdirSync(dir).filter(f => f.endsWi
   const W = { start: 540, endBy: 1020, hard: true, date: '2027-07-01', head: [port], tail: [Object.assign({ backToShip: true }, port)] };
   const t0 = E.makeTravel({}, null, null, [], null, []), r0 = E.walkDay([isle], W, t0.estimate, null), st0 = r0.items.find(x => x.t === 'stop');
   ok(r0.late > 0 && st0 && /no sailing times are known/.test(st0.noBoat || ''), 'timed day: an island with no sailing known is marked, never planned on an hour at the pier');
+  const rw = E.walkDay([Object.assign({ wish: true }, isle)], W, t0.estimate, null), bw = rw.items.filter(x => x.t === 'ride' && x.kind === 'ferry');
+  ok(!rw.late && bw.length === 2 && bw.every(b => b.ownBoat) && !E.guardPlan({ end: rw.end, items: rw.items }, W).filter(t => /boat/.test(t)).length,
+    'timed day: the traveler\'s own island pick is planned on the boat with the warning, and the final check accepts it');
+  const pk = E.pairKey(isle, port), tm = E.makeTravel({}, { [pk]: 'ferry' }, null, [], null, []);
+  ok(tm.estimate(isle, Object.assign({ backToShip: true }, port)).mine === true && !t0.estimate(isle, Object.assign({ backToShip: true }, port)).mine, 'a ride the traveler chose is marked as theirs; the app\'s own pick is not');
   const ansF = (a, b) => [{ id: 'f', mode: 'ferry', label: 'Ferry', min: 50, every: 60, deps: deps(9 * 60 + 15, 18 * 60 + 15, 60) }];
   const t1 = E.makeTravel({}, null, null, [], ansF, []), r1 = E.walkDay([isle], W, t1.estimate, null), boats = r1.items.filter(x => x.t === 'ride' && x.kind === 'ferry');
   ok(!r1.late && boats.length === 2 && boats.every(b => b.source === 'timetable') && boats[0].depWait === 15 && boats[1].depWait > 0,

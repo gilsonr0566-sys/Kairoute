@@ -26,8 +26,16 @@
       // taxi when the road reaches, else the place across the water isn't planned today, with the reason (never an hour
       // allowed at the pier for a boat that may not come).
       let unsure = null;
-      if (win.hard && leg.kind === "ferry" && (unsure = E.boatUnsure(leg, clock, win.date))) { const t = (leg.options || []).find(o => o.kind === "taxi");
-        leg = t ? E.legAs(leg, t, "The boat isn't planned on a day with a time to be back: " + unsure + ", so this ride is planned by taxi.") : Object.assign({}, leg, { unsure, noRun: true }); if (t) unsure = null; }
+      // The traveler's own choice of the boat (the ride's choice, or a place across the water they picked) is planned all
+      // the same, said plainly, with an hour at the pier for the boat back (Richard, Nov 21: "Yes, your pick, with a
+      // warning"); the app never takes such a boat on its own.
+      const isleStop = leg.isle === "back" ? prev : p, ownBoat = !!(leg.mine || (isleStop && isleStop.wish));
+      if (win.hard && leg.kind === "ferry" && (unsure = E.boatUnsure(leg, clock, win.date))) {
+        if (ownBoat && leg.source !== "timetable" || ownBoat && /no sailing times are known/.test(unsure)) {
+          const why = "No sailing times are confirmed for this boat (" + unsure + "): it is planned because you chose it. " + (leg.isle === "back" ? "Up to an hour at the pier is allowed for the boat back; ask at the pier for the last boat back when you land, and leave for the ship by the time shown." : "Check the sailings at the pier, and the last boat back, before you go.");
+          leg = Object.assign({}, leg, { note: (leg.note ? leg.note + " " : "") + why, ownBoat: unsure }); unsure = null;
+        } else { const t = (leg.options || []).find(o => o.kind === "taxi");
+          leg = t ? E.legAs(leg, t, "The boat isn't planned on its own on a day with a time to be back: " + unsure + ", so this ride is planned by taxi. Pick the boat yourself to take it anyway.") : Object.assign({}, leg, { unsure, noRun: true }); if (t) unsure = null; } }
       const ri = E.rideItem(leg, leg.parts ? { parts: leg.parts } : null); items.push(ri); clock += leg.min; rideMin += leg.min;
       if (leg.noRun) { late++; ri.noRun = true; }
       // The way back on a timetable (to a ship, a train or a plane, or a boat on such a day) waits for its real departure:
