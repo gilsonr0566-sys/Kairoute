@@ -1,6 +1,6 @@
 {
- "run": "round2b-2026-11-20",
- "dayWait": 30000,
+ "run": "round2c-2026-11-20",
+ "dayWait": 40000,
  "trips": [
   {
    "name": "a01-istanbul",
@@ -457,6 +457,22 @@
     }
    ],
    "steps": []
+  },
+  {
+   "name": "a19-venice",
+   "label": "Venice Sat+Sun stay",
+   "legs": [
+    {
+     "k": "stay",
+     "place": "Venice, Italy",
+     "date": "2027-05-14",
+     "nights": 3,
+     "inBy": "train",
+     "inAt": "12:30",
+     "homeBy": "train",
+     "homeAt": "10:30"
+    }
+   ]
   }
  ]
 }
