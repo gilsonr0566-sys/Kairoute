@@ -1,100 +1,7 @@
 {
- "run": "round2d-2026-11-21",
+ "run": "round2e-2026-11-21",
  "dayWait": 40000,
  "trips": [
-  {
-   "name": "a07-southampton-lehavre",
-   "label": "Southampton fly in, board next day, Le Havre for Paris Saturday call",
-   "legs": [
-    {
-     "k": "stay",
-     "place": "Southampton, England",
-     "date": "2027-06-10",
-     "nights": 1,
-     "inAt": "13:00"
-    },
-    {
-     "k": "cruise",
-     "board": "Southampton, England",
-     "date": "2027-06-11",
-     "aboard": "16:00",
-     "ports": [
-      {
-       "date": "2027-06-12",
-       "place": "Le Havre (Paris), France",
-       "arrive": "07:00",
-       "aboard": "19:00"
-      }
-     ],
-     "end": "Southampton, England",
-     "endDate": "2027-06-13",
-     "off": "07:00",
-     "homeAt": "14:00"
-    }
-   ]
-  },
-  {
-   "name": "a09-kotor-dubrovnik",
-   "label": "Kotor tender call and Dubrovnik call",
-   "legs": [
-    {
-     "k": "cruise",
-     "board": "Venice, Italy",
-     "date": "2027-07-06",
-     "aboard": "16:00",
-     "inAt": "10:30",
-     "ports": [
-      {
-       "date": "2027-07-08",
-       "place": "Kotor, Montenegro",
-       "arrive": "08:00",
-       "aboard": "17:00",
-       "tender": true
-      },
-      {
-       "date": "2027-07-09",
-       "place": "Dubrovnik, Croatia",
-       "arrive": "08:00",
-       "aboard": "18:00"
-      }
-     ],
-     "end": "Venice, Italy",
-     "endDate": "2027-07-11",
-     "off": "07:00"
-    }
-   ]
-  },
-  {
-   "name": "a14-mykonos-santorini",
-   "label": "Mykonos evening tender call and Santorini tender call",
-   "legs": [
-    {
-     "k": "cruise",
-     "board": "Piraeus (Athens), Greece",
-     "date": "2027-07-01",
-     "aboard": "17:00",
-     "ports": [
-      {
-       "date": "2027-07-02",
-       "place": "Mykonos, Greece",
-       "arrive": "10:00",
-       "aboard": "23:00",
-       "tender": true
-      },
-      {
-       "date": "2027-07-03",
-       "place": "Santorini, Greece",
-       "arrive": "07:00",
-       "aboard": "18:00",
-       "tender": true
-      }
-     ],
-     "end": "Piraeus (Athens), Greece",
-     "endDate": "2027-07-04",
-     "off": "07:00"
-    }
-   ]
-  },
   {
    "name": "a17-haifa",
    "label": "Jerusalem from Haifa, Saturday call",
@@ -115,51 +22,6 @@
      "end": "Limassol, Cyprus",
      "endDate": "2027-05-16",
      "off": "07:00"
-    }
-   ]
-  },
-  {
-   "name": "a18-reykjavik",
-   "label": "Reykjavik January stay",
-   "legs": [
-    {
-     "k": "stay",
-     "place": "Reykjavik, Iceland",
-     "date": "2027-01-18",
-     "nights": 3,
-     "inAt": "15:30",
-     "homeAt": "16:00"
-    }
-   ]
-  },
-  {
-   "name": "c01-bahamas",
-   "label": "Bahamas cruise field-test trip",
-   "legs": [
-    {
-     "k": "cruise",
-     "board": "Miami, Florida",
-     "date": "2027-01-11",
-     "aboard": "15:30",
-     "inAt": "11:25",
-     "ship": "Wonder of the Seas",
-     "ports": [
-      {
-       "date": "2027-01-13",
-       "place": "Nassau, Bahamas",
-       "arrive": "08:30",
-       "aboard": "16:30"
-      },
-      {
-       "date": "2027-01-14",
-       "place": "Perfect Day at CocoCay, Bahamas",
-       "arrive": "07:30",
-       "aboard": "16:30"
-      }
-     ],
-     "end": "Miami, Florida",
-     "endDate": "2027-01-15",
-     "off": "06:00"
     }
    ]
   },
@@ -226,29 +88,6 @@
      "off": "07:00",
      "homeBy": "train",
      "homeAt": "11:00"
-    }
-   ]
-  },
-  {
-   "name": "d17-laemchabang",
-   "label": "Laem Chabang for Bangkok",
-   "legs": [
-    {
-     "k": "cruise",
-     "board": "Singapore",
-     "date": "2027-11-10",
-     "aboard": "16:00",
-     "ports": [
-      {
-       "date": "2027-11-12",
-       "place": "Laem Chabang (Bangkok), Thailand",
-       "arrive": "07:00",
-       "aboard": "19:00"
-      }
-     ],
-     "end": "Singapore",
-     "endDate": "2027-11-15",
-     "off": "07:00"
     }
    ]
   },
