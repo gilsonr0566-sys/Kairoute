@@ -9,7 +9,7 @@ const hm = t => String(Math.floor(t / 60)).padStart(2, '0') + ':' + String(t % 6
     const r = await fetch(H + '/transit', { method: 'POST', headers: { 'content-type': 'application/json', origin: 'https://gilsonr0566-sys.github.io' }, body: JSON.stringify({ pairs: PAIRS.map(([, a, b, date]) => ({ a, b, date, dow: new Date(date + 'T12:00:00Z').getUTCDay() })) }) });
     const j = await r.json(); let partial = false;
     (j.results || []).forEach((x, i) => { if (x.partial) partial = true; const by = {};
-      for (const o of x.opts || []) { const k = o.kind || o.mode; (by[k] = by[k] || []).push(...(o.deps || []).map(d => d.t)); }
+      for (const o of x.opts || []) { const k = o.kind || o.mode; (by[k] = by[k] || []).push(...(o.kindDeps || o.deps || []).map(d => d.t)); }
       console.log('TT ' + PAIRS[i][0] + (x.partial ? ' (partial)' : '') + ': ' + Object.entries(by).map(([k, ts]) => k + ' ' + [...new Set(ts)].sort((p, q) => p - q).map(hm).join(' ')).join(' | ')); });
     if (!partial) break; await new Promise(ok => setTimeout(ok, 90000));
   }
