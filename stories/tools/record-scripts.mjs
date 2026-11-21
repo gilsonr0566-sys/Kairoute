@@ -6,7 +6,9 @@ import fs from "node:fs"; import vm from "node:vm"; import crypto from "node:cry
 import { KokoroTTS } from "kokoro-js";
 const src = fs.readFileSync("src/features/stop-scripts.js", "utf8");
 const body = src.slice(src.indexOf("const SAY ="), src.indexOf("// The script that belongs to a stop"));
-const box = {}; vm.runInNewContext(body.replace("const SAY =", "SAY =").replace("const sayText =", "sayText =").replace("var STOP_SCRIPTS =", "STOP_SCRIPTS ="), box);
+// The story library (stop-stories.js, made by to-app.mjs) adds its stories and pronunciations to the same lists.
+const lib = fs.existsSync("src/features/stop-stories.js") ? fs.readFileSync("src/features/stop-stories.js", "utf8") : "";
+const box = {}; vm.runInNewContext(body.replace("const SAY =", "SAY =").replace("const sayText =", "sayText =").replace("var STOP_SCRIPTS =", "STOP_SCRIPTS =") + "\n" + lib, box);
 const { STOP_SCRIPTS, sayText } = box;
 const voices = (process.argv[2] || "af_heart af_bella bf_emma am_michael bm_george").split(/\s+/).filter(Boolean);
 const only = process.argv[3] || "";
