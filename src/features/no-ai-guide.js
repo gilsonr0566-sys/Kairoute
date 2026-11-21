@@ -74,20 +74,21 @@ async function srcStarts(label, area, port, centre, d) {
   const names = [...ask.airport, ...ask.station, ...ask.cruise];
   let res = null;
   try { const r = await fetch(freeAI.url + "/ground", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ city: label, names: names.slice(0, 8), center: centre && isFinite(centre.lat) ? { lat: centre.lat, lng: centre.lng } : undefined }) }); if (r.ok) { const j = await r.json(); if (Array.isArray(j.results)) res = j.results; } } catch (e) {}
-  const found = k => {
+  // R: the answers, one per name in N; C: where the search was centred (the city, or the port itself on a second look).
+  const found = (k, R = res, N = names, C = centre) => {
     // A port named apart from its city can be a long way out (a port 180 km from the capital it serves).
     const K = SG_KIND[k], lim = k === "cruise" && gate ? 300 : K.km, cands = [];
-    names.forEach((n, i) => { if (!ask[k].includes(n)) return; const x = (res && res[i]) || {};
+    N.forEach((n, i) => { if (!ask[k].includes(n)) return; const x = (R && R[i]) || {};
       (x.wiki || []).forEach(w => { if (w.lat != null && K.re.test(w.title || "")) cands.push({ name: w.title, lat: +w.lat, lng: +w.lng, any: n === "Cruise pier", wiki: true }); });
       (x.map || []).forEach(m => { if (isFinite(m.lat) && (K.re.test(m.name || "") || K.map.test(m.kind || ""))) cands.push({ name: m.name || n, lat: +m.lat, lng: +m.lng, kind: m.kind || "", any: n === "Cruise pier", fit: (K.map.test(m.kind || "") ? 2 : 0) + (k === "cruise" && /cruise|terminal|wharf|pier/i.test(m.name || "") ? 2 : 0) }); }); });
     // The plain "Cruise pier" search (asked last) only counts a place that names itself a cruise pier: a private island
     // or small port whose pier has no "Port of ..." name (Nov 18: CocoCay's pier is mapped as "Royal Caribbean Cruise
     // Pier"), never a nearby fishing or ferry pier.
     for (let i = cands.length - 1; i >= 0; i--) if (cands[i].any && !/cruise/i.test(cands[i].name)) cands.splice(i, 1);
-    const inReach = cands.filter(p => p.name && hav(p, centre) <= lim);
+    const inReach = cands.filter(p => p.name && hav(p, C) <= lim);
     // A real terminal on the map ("Prince George Wharf Cruise Ship Terminal", a dock) before a shop or a bank that only
     // has "port" in its name (Nov 18, Nassau: "Banana Bay Nassau's Port Shop" was taken for the cruise port).
-    const near = inReach.filter(p => !p.any).sort((a, b) => (a.fit === 0 ? 1 : 0) - (b.fit === 0 ? 1 : 0)).concat(inReach.filter(p => p.any).sort((a, b) => hav(a, centre) - hav(b, centre))); // the closest cruise pier, not a neighbour island's
+    const near = inReach.filter(p => !p.any).sort((a, b) => (a.fit === 0 ? 1 : 0) - (b.fit === 0 ? 1 : 0)).concat(inReach.filter(p => p.any).sort((a, b) => hav(a, C) - hav(b, C))); // the closest cruise pier, not a neighbour island's
     // A port named apart from the city ("Port (City)"): the pier is where the port is, the city only has the sights. The
     // search is centred on the city, so a pier in the city itself ("Bangkok Port" for a ship at a port 2 hours away) is
     // never taken for it (Round 2, N1): a pier that doesn't carry the port's own name counts only when it lies out of
@@ -96,13 +97,14 @@ async function srcStarts(label, area, port, centre, d) {
     // it serves the place from there (Round 2 re-check: a pier mapped only as "Cruise Terminal" was refused as too far).
     if (k === "cruise" && gate) { const out = (typeof KEngine !== "undefined" && KEngine.GATE_OUT) || 25;
       for (let i = near.length - 1; i >= 0; i--) { const c = near[i]; if (nameMatch(Pn, c.name)) continue;
-        if (/cruise/i.test(c.name) && hav(c, centre) > out) near[i] = Object.assign({}, c, { name: c.name + ", " + Pn }); else near.splice(i, 1); } }
+        if (/cruise|\bpassengers?\b.*\bterminal\b/i.test(c.name) && hav(c, centre) > out) near[i] = Object.assign({}, c, { addPort: true }); else near.splice(i, 1); } }
     // A pier named as another port's ("Port of <somewhere else>") is that port's, never this one's (Round 2 re-check: a
     // small harbour's pier taken for a city's cruise port).
     if (k === "cruise") for (let i = near.length - 1; i >= 0; i--) { const m = /^port of (.+)$/i.exec(String(near[i].name || "").trim()); if (m && !nameMatch(Pn, m[1]) && !nameMatch(A, m[1])) near.splice(i, 1); }
     // Never a building site or a closed station; every real one kept, so a city with several is asked which (Nov 20 tester:
     // London's Paris train sent to Victoria, Paris's station a Grand Paris Express building site).
-    const real = typeof KEngine !== "undefined" && KEngine.gateChoices ? KEngine.gateChoices(near, k) : near;
+    // (The port's name is added after this check, so a word in it never decides what the pier is.)
+    const real = (typeof KEngine !== "undefined" && KEngine.gateChoices ? KEngine.gateChoices(near, k) : near).map(c => c.addPort ? Object.assign({}, c, { name: c.name + ", " + Pn }) : c);
     // A port with more than one cruise pier the map is as sure of: the traveler is asked which, as for airports (Round 1);
     // Only piers the port's own name search found count (the plain "Cruise pier" search also finds a neighbour island's).
     // The order stays the one above (a real terminal first, then the closest), so the plan starts from the likeliest.
@@ -118,6 +120,15 @@ async function srcStarts(label, area, port, centre, d) {
     if (Array.isArray(p)) { p.forEach(x => starts[k].push({ name: x.name, lat: x.lat, lng: x.lng, note: "" })); continue; }
     if (!p && k !== "station") { const g = knownGate(k, { name: k === "cruise" ? Pn : A + " airport" }, centre, k === "cruise" && gate ? 300 : SG_KIND[k].km); if (g) p = { name: g.name, lat: g.lat, lng: g.lng }; }
     starts[k].push(p ? { name: p.name, lat: p.lat, lng: p.lng, note: "" } : { name: (k === "cruise" ? "Cruise port of " + Pn : k === "airport" ? A + " airport" : A + " main station"), lat: centre.lat, lng: centre.lng, note: "", unknown: true });
+  }
+  // A port named apart from its city with no pier found near the city: looked for again around the port itself, found
+  // from its own encyclopedia article (Round 2 re-check: a port 120 km from the city it serves was searched for only
+  // around the city, and nothing was found).
+  if (gate && freeAI && starts.cruise.length === 1 && starts.cruise[0].unknown && Array.isArray(res)) {
+    const at = res.flatMap(x => (x && x.wiki) || []).find(w => w && w.lat != null && isFinite(w.lat) && isFinite(w.lng) && nameMatch(Pn, w.title || ""));
+    if (at) try { const r = await fetch(freeAI.url + "/ground", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ city: Pn, names: ask.cruise, center: { lat: +at.lat, lng: +at.lng } }) });
+      if (r.ok) { const j = await r.json(); if (Array.isArray(j.results)) { const p = found("cruise", j.results, ask.cruise, { lat: +at.lat, lng: +at.lng });
+        if (p) starts.cruise = (Array.isArray(p) ? p : [p]).map(x => ({ name: x.name, lat: x.lat, lng: x.lng, note: "" })); } } } catch (e) {}
   }
   starts.hotel.push({ name: "Hotel in central " + A, lat: centre.lat, lng: centre.lng, note: "Add your own hotel on the Trip page for exact times." });
   starts.point.push({ name: "Central " + A, lat: centre.lat, lng: centre.lng, note: "" });

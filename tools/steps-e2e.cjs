@@ -74,6 +74,11 @@ function helper(r, calls) {
     if (/example other cove/i.test(b.city || '')) return j({ center: null, results: names.map(n => /^Port of/.test(n) ? { wiki: [], answered: true, map: [{ name: 'Port of Somewhere Else', kind: 'pier', lat: 42.6256, lng: 18.1229 }] } : { wiki: [], map: [], answered: true }) });
     if (/example far capital/i.test(b.city || '')) return j({ center: null, results: names.map(n => /cruise terminal/.test(n) ? { wiki: [], answered: true, map: [{ name: 'Cruise Terminal', kind: 'ferry_terminal', lat: 49.4809, lng: 0.1077 }] } : { wiki: [], map: [], answered: true }) });
     if (/example passenger port/i.test(b.city || '')) return j({ center: null, results: names.map(n => /cruise terminal/.test(n) ? { wiki: [], answered: true, map: [{ name: 'Example Passenger Port Industrial Port', kind: 'industrial', lat: 32.8193, lng: 35.0361 }, { name: 'Passengers Terminal', kind: 'public', lat: 32.8223, lng: 34.9997 }] } : { wiki: [], map: [], answered: true }) });
+    // A cruise terminal filed as an office, a cruise pier filed as a marina; a port far from its city found only by a
+    // second look around the port's own article.
+    if (/example office port/i.test(b.city || '')) return j({ center: null, results: names.map(n => /cruise terminal/.test(n) ? { wiki: [], answered: true, map: [{ name: 'Example Office Port Cruise Terminal (Tower)', kind: 'office', lat: 51.33, lng: 3.20 }] } : /^Port of/.test(n) ? { wiki: [], answered: true, map: [{ name: 'Example Office Port Pirs', kind: 'marina', lat: 51.32, lng: 3.21 }] } : { wiki: [], map: [], answered: true }) });
+    if (/example holy city/i.test(b.city || '')) return j({ center: null, results: names.map(n => /^Port of/.test(n) ? { wiki: [{ title: 'Example Bay Port', lat: 32.80, lng: 35.00 }], answered: true, map: [] } : { wiki: [], map: [], answered: true }) });
+    if (/^example bay port$/i.test(b.city || '')) return j({ center: null, results: names.map(n => /cruise terminal/.test(n) ? { wiki: [], answered: true, map: [{ name: 'Passengers Terminal', kind: 'public', lat: 32.8223, lng: 34.9997 }] } : { wiki: [], map: [], answered: true }) });
     if (/example inland (city|town)/i.test(b.city || '')) { const out = /city/i.test(b.city);
       return j({ center: null, results: names.map(n => /^Port of/.test(n) ? { wiki: [], answered: true, map: [{ name: 'Example Inland Port', kind: 'harbour', lat: 13.70, lng: 100.56 }] }
         : /cruise terminal/.test(n) && out ? { wiki: [], answered: true, map: [{ name: 'Cruise Terminal', kind: 'terminal', lat: 13.08, lng: 100.88 }] } : { wiki: [], map: [], answered: true }) }); }
@@ -178,6 +183,10 @@ function helper(r, calls) {
     if (!fc || !fc[0] || fc[0].name !== 'Cruise Terminal, Example Coast Port') bad(`port apart from the city: a pier 180 km out was not found: ${JSON.stringify(fc)}`); else ok('port apart from the city: a pier 180 km out is found and named with its port');
     const pt = await p.evaluate(() => window.__kairouteSrcStarts('Example Passenger Port', { lat: 32.794, lng: 34.9896 }).then(s => s.cruise[0]));
     if (!pt || pt.name !== 'Passengers Terminal') bad(`port: the passenger terminal was dropped for how the map files it: ${JSON.stringify(pt)}`); else ok('port: a passenger terminal counts however the map files it');
+    const of = await p.evaluate(() => window.__kairouteSrcStarts('Example Office Port', { lat: 51.31, lng: 3.22 }).then(s => s.cruise[0]));
+    if (!of || of.name !== 'Example Office Port Cruise Terminal (Tower)') bad(`port: a cruise terminal filed as an office was dropped: ${JSON.stringify(of)}`); else ok('port: a cruise terminal by name counts however the map files it');
+    const hc = await p.evaluate(() => window.__kairouteSrcStarts('Example Holy City', { lat: 31.77, lng: 35.21 }, 'Example Bay Port').then(s => s.cruise[0]));
+    if (!hc || !/^Passengers Terminal/.test(hc.name) || hc.unknown) bad(`port apart from the city: not looked for around the port itself: ${JSON.stringify(hc)}`); else ok('port apart from the city: none near the city, so looked for again around the port itself, and found');
     // Round 2, N1: "Port (City)" docks at the port's own pier, never the city's harbour by the centre; with none named
     // for the port and none out of the city, the pier is asked, never guessed.
     const gp = await p.evaluate(() => window.__kairouteSrcStarts('Example Inland City', { lat: 13.75, lng: 100.50 }, 'Example Seaport').then(s => s.cruise));

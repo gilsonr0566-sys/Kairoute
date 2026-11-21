@@ -36,11 +36,12 @@
     // An article about a whole port (no map kind) says nothing about where the ships tie up.
     if (c.wiki && !c.kind && /^(port|harbou?r) of\b/i.test(n) && !/cruise|terminal|pier|wharf|berth/i.test(n)) return false;
     return true; };
-  // A passenger terminal is where ships take people on, however the map files it (Round 2 re-check: a port's
-  // "Passengers Terminal" was mapped as a public building and dropped). How sure a cruise pier is: named for cruises,
+  // A passenger terminal, or a cruise terminal or pier by name, is where ships take people on, however the map files
+  // it (Round 2 re-check: "Passengers Terminal" filed as a public building, a cruise terminal as an office or "yes", a
+  // cruise pier as a marina, were dropped). How sure a cruise pier is: named for cruises,
   // a mapped terminal, a pier or wharf.
   E.cruiseRank = c => (/cruise/i.test(String(c.name || "")) ? 4 : 0) + (/cruise_terminal/.test(String(c.kind || "")) ? 3 : 0) + (/terminal|berth|wharf|pier|dock|quay/i.test(String(c.name || "")) ? 1 : 0);
-  E.gateOk = (kind, c) => !!c && (kind !== "cruise" || E.cruiseOk(c)) && !/^(list|lists|index|outline) of\b/i.test(String(c.name || "").trim()) && !(GATE_BAD[kind] && GATE_BAD[kind].test(String(c.name || ""))) && !(c.kind && GATE_KINDS[kind] && !GATE_KINDS[kind].test(String(c.kind)) && !(kind === "cruise" && /\bpassengers?\b.*\bterminal\b/i.test(String(c.name || ""))));
+  E.gateOk = (kind, c) => !!c && (kind !== "cruise" || E.cruiseOk(c)) && !/^(list|lists|index|outline) of\b/i.test(String(c.name || "").trim()) && !(GATE_BAD[kind] && GATE_BAD[kind].test(String(c.name || ""))) && !(c.kind && GATE_KINDS[kind] && !GATE_KINDS[kind].test(String(c.kind)) && !(kind === "cruise" && /\bpassengers?\b.*\bterminal\b|\bcruise\b.*\b(terminal|pier|pirs?|quay|berth|wharf|dock|center|centre)s?\b/i.test(String(c.name || ""))));
   // Every real airport and station is kept, whether the map or the encyclopedia found it: a big airport known only from
   // its article must never be dropped (Round 2 re-check: dropping those picked a small airport silently, no question).
   E.gateChoices = (list, kind) => { const key = n => String(n || "").toLowerCase().normalize("NFKD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-z0-9]+/g, " ").trim(), out = [];

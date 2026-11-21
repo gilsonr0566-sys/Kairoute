@@ -10,6 +10,7 @@
 // The answers are kept with the place (its sights' own fields), so they are asked once and work offline. Free services,
 // no AI, from the traveler's own connection. A service that doesn't answer changes nothing: the plan stays as it was.
 const WATER_STORE_V = 2;
+const WATER_NO_ROAD = 1000; // metres: a stop this far from any road, with no path near it, is reached by boat
 const WATER_FAR_ROAD = 400; // metres from a road a car can drive: a stop this far is checked on foot for a ferry
 // The browser's own fetch, not the app's counting one: a question that fails or finds nothing changes no plan, so it must
 // not make every plan look stale (Nov 20 sweep: offline, each failed question re-planned the day, an 8.7 s tick). An
@@ -39,13 +40,15 @@ function waterIslandsFrom(d, n) {
 //   on another island than every start with no path near it (a summit far from a path is not across by itself). A stop on
 //   a start's island, or on the mainland with every start, is never across. The map's island question is often turned
 //   away (Round 2 re-check: no answer in 3 of 6 places), so a ferry on the only way on foot is enough without it.
-function waterAcross(pts, homes, isl, homeIsl, onFoot) {
+function waterAcross(pts, homes, isl, homeIsl, onFoot, far) {
   const share = (x, y) => !x ? !y : !!y && x.ids.some(id => y.ids.includes(id));
   const known = (homeIsl || []).filter(x => x !== null), out = {}, named = [];
   pts.forEach((p, i) => { const mine = isl ? isl[i] : null, walk = onFoot(i);
     if (walk == null || walk === true) return;
     if (mine != null && known.length && known.some(h => share(mine, h))) return;                           // a start's island, or the mainland
-    const other = mine && known.length;                                                                      // another island than every start
+    // Another island than every start, or (no island answer) no path near a stop far out from any road: the road
+    // router's nearest road is then over the water (Round 2: a volcano islet planned as "walk to the road, then taxi").
+    const other = (mine && known.length) || (!mine && walk === false && far && far(i));
     if (!(walk === "ferry" || walk === "none" || (walk === false && other))) return;
     // The island's name; without the map's answer, stops close together share the first one's name (one island, one boat).
     const near = !mine && named.find(x => typeof hav === "function" && isFinite(+p.lat) && hav(x.p, p) <= 2);
@@ -98,7 +101,7 @@ function waterCheck(city, homes) {
       const hk = hIsl.findIndex(h => h !== null), from = starts[hk >= 0 ? hk : 0];
       for (let k = 0; k < list.length; k += 4) await Promise.all(list.slice(k, k + 4).map(async i => { foot[i] = await waterFoot(from, stops[i]); })); };
     const apply = () => {
-      const across = waterAcross(stops, starts, sIsl, hIsl, i => foot[i] === undefined ? (sIsl[i] != null && !asked.has(i) ? true : null) : foot[i]);
+      const across = waterAcross(stops, starts, sIsl, hIsl, i => foot[i] === undefined ? (sIsl[i] != null && !asked.has(i) ? true : null) : foot[i], i => !!gaps && gaps[i] > WATER_NO_ROAD);
       const before = stops.map(s => ({ a: s.acrossWater, g: s.roadGap }));
       stops.forEach((s, i) => {
         // A stop is marked or cleared only on an answer about it (a walking route, or the map's island for one not walked).

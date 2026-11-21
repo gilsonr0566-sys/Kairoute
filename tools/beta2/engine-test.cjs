@@ -870,6 +870,9 @@ ok(E.readable('Café Ñandú') && E.readable("Joe's Bar & Grill") && !E.readable
       const st = [{ id: 'a', name: 'Isle A', lat: 42.627, lng: 18.119 }, { id: 'b', name: 'Tower', lat: 42.630, lng: 18.121 }, { id: 'c', name: 'Summit', lat: 42.70, lng: 18.2 }, { id: 'd', name: 'Old town', lat: 42.64, lng: 18.11 }], none = st.map(() => null);
       const r = Wh.waterAcross(st, [{}], none, [null], i => ['ferry', 'ferry', false, true][i]);
       ok(r.a === 'Isle A' && r.b === 'Isle A' && !r.c && !r.d, `with no island answer: a ferry on the only way on foot is across, stops close together share one island, a summit with no path is not (got ${JSON.stringify(r)})`);
+      const fr = Wh.waterAcross(st, [{}], none, [null], i => i === 2 ? false : true, i => i === 2);
+      const fn = Wh.waterAcross(st, [{}], none, [null], i => i === 2 ? false : true, () => false);
+      ok(fr.c && !fn.c, 'no path near a stop over a kilometre from any road: reached by boat; near a road it is not');
       const nr = Wh.waterAcross(st, [{}], none, [null], i => i === 0 ? 'none' : true);
       ok(nr.a === 'Isle A' && !nr.b, 'paths that never join the start\'s (another shore) are across the water');
       const same = Wh.waterAcross(st, [{}], [isl[1], null, null, null], [isl[1]], () => 'ferry');
