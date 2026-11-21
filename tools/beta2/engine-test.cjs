@@ -243,7 +243,7 @@ E.roadTime = roadNow; E.BAGS_WALK = bagsNow;
 if (fs.existsSync(dir)) { let n = 0, same = 0;
   for (const f of fs.readdirSync(dir).filter(f => f.endsWith('.json'))) { const s0 = JSON.parse(fs.readFileSync(path.join(dir, f))), full = E.planTrip(s0);
     const stops = p => (p && p.items || []).filter(x => x.t === 'stop').map(x => String(x.id)).sort().join(',');
-    (s0.days || []).forEach((d, i) => { if (!full[i] || !full[i].items || !Array.isArray(d.selected)) return; n++; // a day the app fills itself (old trips) takes other days' leftovers
+    (s0.days || []).forEach((d, i) => { if (!full[i] || !full[i].items || !Array.isArray(d.selected) || d.own === false) return; n++; // a day the app fills itself (no picks yet: old trips, or own false) takes other days' leftovers
       const s = JSON.parse(JSON.stringify(s0)); s.days[i] = Object.assign({}, s.days[i], { alone: true }); s.cities = E.citiesFor(s, i); const p = E.planTrip(s);
       const others = p.some((x, k) => k !== i && x && x.items && x.items.length);
       if (stops(p[i]) === stops(full[i]) && !others) same++; else ok(false, `${f} day ${i}: planned alone it has ${stops(p[i]) || 'no sights'}, in the whole trip ${stops(full[i])}${others ? ' (and other days were planned)' : ''}`); }); }
@@ -295,7 +295,7 @@ if (fs.existsSync(dir)) { let rides = 0, placed = 0;
   if (fs.existsSync(f)) {
     const s0 = JSON.parse(fs.readFileSync(f)), di = 5, base = E.planTrip(s0)[di];
     const ids = base.items.filter(x => x.t === 'stop').map(x => String(x.id)).concat((base.folded || []).map(String));
-    const tight = cut => { const s = JSON.parse(JSON.stringify(s0)); s.days[di].selected = ids; s.days[di].allAboard -= cut; return s; };
+    const tight = cut => { const s = JSON.parse(JSON.stringify(s0)); Object.assign(s.days[di], { selected: ids, own: true, wantsOnly: false }); s.days[di].allAboard -= cut; return s; }; // the traveler's own picks
     const p20 = E.planTrip(tight(20))[di], meal20 = p20.items.find(x => x.t === 'meal');
     ok(ids.every(id => p20.items.some(x => x.t === 'stop' && String(x.id) === id) || (p20.folded || []).map(String).includes(id)) && meal20 && meal20.min < 60,
       `20 minutes less ashore: every pick kept, the lunch gets quicker instead (lunch ${meal20 && meal20.min} min)`);
@@ -499,7 +499,7 @@ if (fs.existsSync(dir)) for (const f of fs.readdirSync(dir).filter(f => f.endsWi
         const l = q.items.find(x => x.t === 'ride' && x.lost); if (l) { lostN++; if (lostN <= 3) ok(false, `${f} day ${i + 1}: picking ${o.how} on one ride made another say "${l.lost} not known"`); }
         // and the way picked is the way planned (Nov 19: the train picked was planned as a taxi, with no word why)
         const same = q.items.find(x => x.t === 'ride' && x.from && x.to && E.pairKey(x.from, x.to) === E.pairKey(r.from, r.to));
-        if (sameSet && same && same.choice !== o.id && !same.lost) { notTaken++; if (notTaken <= 3) ok(false, `${f} day ${i + 1}: picked ${o.how}, the plan took ${same.how}`); } } }); }
+        if (sameSet && same && same.choice !== o.id && !same.lost && !/isn't planned on a day with a time to be back|shows no departure near/.test(same.note || '')) { notTaken++; if (notTaken <= 3) ok(false, `${f} day ${i + 1}: picked ${o.how}, the plan took ${same.how}`); } } }); }
   ok(tried > 30 && !moved && !lostN && !notTaken, `a ride choice is the way planned, never moves the stops or turns into "not known" (${tried} choices tried)`); }
 // The ride home from Acrocorinth by train, picked: the stops stay, the train is the ride home, nothing says "no train".
 { const s = JSON.parse(fs.readFileSync(path.join(dir, 'corinth-day.json'))), i = 3, hotel = { lat: 37.9725, lng: 23.73 }, acro = s.cities.athens.farther.find(x => x.id === 'acrocorinth-far');

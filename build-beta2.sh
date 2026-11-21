@@ -3,7 +3,7 @@
 # Same app as build.sh, plus, ahead of everything else:
 #  - its own storage: every saved key is kept under "b2:" so this copy never reads over or writes into the main app's
 #    trips on the same web address family; on its first start it copies the main app's trips in once (read only);
-#  - the places files (tools/places/data), and ENGINE2 = true so the app's plans
+#  - the new engine (src/engine/) and the places files (tools/places/data), and ENGINE2 = true so the app's plans
 #    come from the new engine (src/features/zz-engine2.js).
 set -e
 cd "$(dirname "$0")"
@@ -46,7 +46,7 @@ var ENGINE2 = true;
   });
 })();
 EOF
-  # The engine itself comes with build.sh (every build has it).
+  cat src/engine/*.js
   printf '\nvar PLACES2 = {};\n'
   for f in tools/places/data/*.json; do node -e 'const p=JSON.parse(require("fs").readFileSync(process.argv[1]));process.stdout.write("PLACES2["+JSON.stringify(p.key)+"]="+JSON.stringify(p)+";\n")' "$f"; done
 } > "$PRE"

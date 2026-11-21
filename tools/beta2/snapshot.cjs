@@ -21,7 +21,12 @@ const TRIPS = [
     await p.route('**/*', r => /^file:/.test(r.request().url()) ? r.continue() : r.abort());
     await p.goto('file://' + FILE); await p.waitForTimeout(600);
     if (t.setup) { await p.evaluate(t.setup, t.arg); await p.reload(); await p.waitForTimeout(800); }
+    // A day that arrives at or leaves from a place with more than one real port, station or airport asks which; the test
+    // traveler has answered with the first one listed, as the saved trips always did (the asking itself is checked on the phone).
+    if (await p.evaluate(() => { const k = 'wayside.trip2', t = JSON.parse(localStorage.getItem(k) || 'null'); if (!t || !t.days) return false; t.days.forEach(d => { d.pointPicked = true; }); localStorage.setItem(k, JSON.stringify(t)); return true; })) { await p.reload(); await p.waitForTimeout(800); }
     if (t.after) await p.evaluate(t.after);
+    // A day that arrives at or leaves from a place with more than one real port, station or airport asks which; the test
+    // traveler answers with the first one listed, as the saved trips always did (the asking itself is checked on the phone).
     const snap = await p.evaluate(() => window.__kairouteBucket ? window.__kairouteBucket(true) : null);
     if (!snap) { console.log('FAIL ' + t.name + ': bucket hook missing'); bad++; await p.close(); continue; }
     snap.name = t.name; snap.label = t.label;
