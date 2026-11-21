@@ -1,0 +1,127 @@
+{
+ "name": "a17-haifa",
+ "label": "Jerusalem from Haifa, Saturday call",
+ "legs": [
+  {
+   "k": "cruise",
+   "board": "Limassol, Cyprus",
+   "date": "2027-05-14",
+   "aboard": "18:00",
+   "ports": [
+    {
+     "date": "2027-05-15",
+     "place": "Haifa (Jerusalem), Israel",
+     "arrive": "06:00",
+     "aboard": "20:00"
+    }
+   ],
+   "end": "Limassol, Cyprus",
+   "endDate": "2027-05-16",
+   "off": "07:00"
+  }
+ ],
+ "started": "2026-11-21T08:16:20.256Z",
+ "passed": {
+  "/sources": 13,
+  "/transit": 12,
+  "/guide": 2,
+  "/places": 1,
+  "/voyage": 3,
+  "/ground": 1,
+  "/route": 4,
+  "/x/near": 4
+ },
+ "refused": {
+  "/ratings": 1,
+  "/grating": 1,
+  "/events": 1
+ },
+ "errors": [],
+ "days": [
+  {
+   "i": 0,
+   "date": "2027-05-14",
+   "type": "arrival",
+   "text": "FRI MAY 14 · LIMASSOL, CYPRUS · ARRIVING\nLimassol, Cyprus ✎ Rename\nLock this day\nToday is one plan\n\nFlight in (the time isn't given yet), then the ship at 6:00 pm: the sightseeing in between, your bags and the countdown are on one page.\n\nSee today's plan"
+  },
+  {
+   "i": 1,
+   "date": "2027-05-14",
+   "type": "embark",
+   "text": "FRI MAY 14 · LIMASSOL, CYPRUS · BOARDING\nLimassol, Cyprus ✎ Rename\nLock this day\nI couldn't find Limassol, Cyprus in the travel guides and maps. Check the spelling on the day (for example \"Kotor, Montenegro\"), then tap Build again.\nNo guide for Limassol, Cyprus yet\n\nKairoute will build the guide for Limassol, Cyprus from travel guides and maps: real sights, places to eat, the cruise port and stations.\n\nBuild the Limassol, Cyprus guide"
+  },
+  {
+   "i": 2,
+   "date": "2027-05-15",
+   "type": "port",
+   "text": "SAT MAY 15 · JERUSALEM · IN PORT\nJerusalem ✎ Rename\nLock this day\n🚢\nLEAVE BY\nall aboard 8:00 pm\n3:04 pm\n▶ Start the tour\n\nAshore 6:30 am · Official all aboard 8:00 pm · Back at the ship by 7:15 pm\n\nGetting back on time is up to you\n\nKairoute's leave-by and back-by times are estimates with spare time built in. Traffic, queues and the weather can still slow you down. The time that counts is the ship's all-aboard time or your train or flight, as your cruise line or carrier gives it. Check it on the day.\n\nI understand\nTerms of use\n7\nsights\n1.4 mi\nwalking\nChoose sights\nMore\nAbout today's plan2 notes\nUse Ctrl + scroll to zoom the map\nStart · Cruise port\n1\n2\n3\n4\n5\nL\n6\n7\n1000 ft\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nWalk\nTaxi or car\nBus\n● Meal\nMore about today\nIsrael Museum no longer fits today's time, so it's off your list.\nWays to fit it in\nOK\nThis day has 7 h 12 min of travel for 4 h 20 min at the sights. Consider fewer far-apart stops, more hours, or splitting it over two days.\n\nAll times are Jerusalem time, 8 h ahead of your device.\n\nLEAVE\n6:30 am\nS\nOff the ship at Passengers Terminal, Haifa\nShip docks 6:00 am.\nBus 960 + 2 changes · 2 h 51 min · 96 mi\nWalk 10 min to תחנת רכבת חיפה מרכז השמונה. Bus 1: תחנת רכבת חיפה מרכז השמונה to ת. מרכזית המפרץ/מטרונית לקריות, 14 min; then change to Bus 960: ת. מרכזית המפרץ/רציפים בינעירוני to ת. מרכזית ירושלים/הורדה, 101 min; then change to Bus 1: ת. מרכזית ירושלים/יפו to הכותל המערבי, 16 min, then walk 4 min. Times include waiting and boarding. Next departure about 5:18 pm (timetable checked Nov 21; Kairoute checks it again the day before and the morning of).\nBus 960 + 2 changes · 2 h 51 min\nWalk to the road, then taxi · 1 h 58 min\nARRIVE\n9:21 am\nLEAVE\n10:01 am\n1\nWestern Wall\n40 min · Sight\nWalk · 3 min · 0.1 mi\nARRIVE\n10:04 am\nLEAVE\n10:34 am\n2\nAl-Aqsa Mosque\n30 min · Church · Must-see · UNESCO\nWalk · 4 min · 0.2 mi\nARRIVE\n10:38 am\nLEAVE\n11:18 am\n3\nDome of the Rock\n40 min · Sight · Must-see · UNESCO\nWalk · 9 min · 0.4 mi\nARRIVE\n11:27 am\nLEAVE\n12:07 pm\n4\nHoly Land\n40 min · Sight · Must-see\nNext door\nARRIVE\n12:07 pm\nLEAVE\n12:37 pm\n5\nChurch of the Holy Sepulchre\n30 min · Church\nWalk · 6 min · 0.3 mi\nARRIVE\n12:43 pm\nLEAVE\n1:18 pm\nL\nLunch: Armenian Tavern\nRestaurant · Local spot · 35 min\nTRAVELERS RECOMMEND\nChange lunch\nLunch: why here\nWalk · 7 min · 0.3 mi\nARRIVE\n1:25 pm\nLEAVE\n2:05 pm\n6\nPentecost\n40 min · Sight · Must-see\nTaxi or car · 19 min · 1.9 mi\nBy road, with time for traffic.\nWalk · 41 min\nTaxi or car · 19 min\nARRIVE\n2:24 pm\nLEAVE\n3:04 pm\n7\nThe Knesset\n40 min · Sight · Must-see\nUNTIL\n3:04 pm\n+\nFree time: 38 min\nYours to spend as you like. Leave here by 3:04 pm to be back by 7:15 pm. See what fits\nBus 960 + 2 changes · 3 h 33 min · 95 mi\nWalk 8 min to הכנסת/קפלן. Bus 66: הכנסת/קפלן to ת. מרכזית ירושלים/יפו, 4 min; then change to Bus 960: ת. מרכזית ירושלים קומה 3/רציפים to מרכזית המפרץ, 100 min; then change to Bus 2: ת. מרכזית המפרץ/מטרונית לחיפה to תחנת רכבת חיפה מרכז השמונה, 11 min, then walk 10 min. Times include waiting and boarding. Includes 55 min spare before the ship.\nBus 960 + 2 changes · 3 h 23 min\nTrain באר שבע מרכז-באר שבע<->כרמיאל-כרמיאל (רכבת ישראל) + 4 changes · 3 h 37 min\nTaxi or car · 2 h 30 min\nBY\n7:15 pm\nE\nBack at the ship\nThe ship's official all aboard is 8:00 pm. Kairoute plans you back at least 45 min before it."
+  },
+  {
+   "i": 3,
+   "date": "2027-05-16",
+   "type": "arrival",
+   "text": "SUN MAY 16 · LIMASSOL, CYPRUS · ARRIVING\nLimassol, Cyprus ✎ Rename\nLock this day\nI couldn't find Limassol, Cyprus in the travel guides and maps. Check the spelling on the day (for example \"Kotor, Montenegro\"), then tap Build again.\nNo guide for Limassol, Cyprus yet\n\nKairoute will build the guide for Limassol, Cyprus from travel guides and maps: real sights, places to eat, the cruise port and stations.\n\nBuild the Limassol, Cyprus guide"
+  }
+ ],
+ "guides": {
+  "Jerusalem (from Haifa, Israel)": {
+   "city": "Jerusalem (from Haifa, Israel)",
+   "src": true,
+   "ai": false,
+   "n": 27,
+   "sights": "Dome of the Rock* | Al-Aqsa Mosque* | Pentecost* | Western Wall | The Knesset* | Israel Museum* | Church of the Holy Sepulchre | The Temple Institute | Holy Land* | Last Supper | National Library of Israel | Bible Lands Museum | Yad Vashem | Calvary | Mount Herzl | Gehenna | Greek Orthodox Patriarchate of Jerusalem | Tower of David | Church of Mary Magdalene | Rockefeller Museum | Dominus Flevit Church | Muristan | Church of the Flagellation | Dormition Abbey | Church of St. Peter in Gallicantu | Lifta | Church of the Visitation",
+   "far": "Abu Ghosh | Tel Aviv | Church of Our Lady of the Covenant | The Benedictine monastery in Abu Ghosh",
+   "eats": 58,
+   "starts": {
+    "cruise": [
+     "Passengers Terminal, Haifa"
+    ],
+    "airport": [
+     "Ben Gurion Airport"
+    ],
+    "station": [
+     "Jerusalem–Yitzhak Navon railway station"
+    ],
+    "hotel": [
+     "Hotel in central Jerusalem"
+    ],
+    "point": [
+     "Central Jerusalem"
+    ]
+   }
+  }
+ },
+ "steps": [],
+ "version": "8113b32-1795248830",
+ "aiReady": false,
+ "wizard": {
+  "miss": [],
+  "prev": "Your days: 3 days · 1 port",
+  "form": "Add each place in order, the way it's booked. Each new stop starts where the last one ends.\n\nSTOP 1 · CRUISE\nLeaves from\nShip (optional)\nBoarding day\nAll aboard\nGetting to the ship (if you arrive the same day)\nFlight\nTrain\nFerry\nCar or bus\nArrive in town at\nLeave empty if you don't know yet.\nPorts of call\nIn order, from your cruise booking. Days with no port are added as sea days.\nDate\nPort\nShip arrives\nAll aboard\nTender port (small boats take you ashore)\nRemove port\n+ Add a port\nCruise ends in\nOn\nOff the ship at\nUsually 7:00 am to 9:00 am. Leave empty if you don't know.\n+ Add a city stay\n+ Add a cruise\nGoing home from here\nFlight\nTrain\nFerry\nCar or bus\nFlight at\nYour days: 3 days · 1 port\nAdd more details (optional)\nName this trip\n\nKairoute picks good defaults for pace, walking and voice, and you can change any of them later.\n\nCancel\nPersonalize first\nBuild my trip"
+ },
+ "buildSec": 4,
+ "state": {
+  "busy": "",
+  "err": "I couldn't find Limassol, Cyprus in the travel guides and maps. Check the spelling on the day (for example \"Kotor, Montenegro\"), then tap Build again.",
+  "days": [
+   {
+    "date": "2027-05-14",
+    "type": "arrival"
+   },
+   {
+    "date": "2027-05-14",
+    "type": "embark"
+   },
+   {
+    "date": "2027-05-15",
+    "type": "port"
+   },
+   {
+    "date": "2027-05-16",
+    "type": "arrival"
+   }
+  ]
+ },
+ "phoneText": "SAT MAY 15 · JERUSALEM · IN PORT\nJerusalem ✎ Rename\nLock this day\n🚢\nLEAVE BY\nall aboard 8:00 pm\n3:04 pm\n▶ Start tour\n\nAshore 6:30 am · Official all aboard 8:00 pm · Back at the ship by 7:15 pm\n\nGetting back on time is up to you\n\nKairoute's leave-by and back-by times are estimates with spare time built in. Traffic, queues and the weather can still slow you down. The time that counts is the ship's all-aboard time or your train or flight, as your cruise line or carrier gives it. Check it on the day.\n\nI understand\nTerms of use\n7\nsights\n1.4 mi\nwalking\nChoose sights\nMore\nAbout today's plan2 notes\nUse Ctrl + scroll to zoom the map\nStart · Cruise port\n1\n2\n3\n4\n5\nL\n6\n7\n1000 ft\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nWalk\nTaxi or car\nBus\n● Meal\nMore about today\nIsrael Museum no longer fits today's time, so it's off your list.\nWays to fit it in\nOK\nThis day has 7 h 12 min of travel for 4 h 20 min at the sights. Consider fewer far-apart stops, more hours, or splitting it over two days.\n\nAll times are Jerusalem time, 8 h ahead of your device.\n\nLEAVE\n6:30 am\nS\nOff the ship at Passengers Terminal, Haifa\nShip docks 6:00 am.\nBus 960 + 2 changes · 2 h 51 min · 96 mi\nWalk 10 min to תחנת רכבת חיפה מרכז השמונה. Bus 1: תחנת רכבת חיפה מרכז השמונה to ת. מרכזית המפרץ/מטרונית לקריות, 14 min; then change to Bus 960: ת. מרכזית המפרץ/רציפים בינעירוני to ת. מרכזית ירושלים/הורדה, 101 min; then change to Bus 1: ת. מרכזית ירושלים/יפו to הכותל המערבי, 16 min, then walk 4 min. Times include waiting a",
+ "finished": "2026-11-21T08:19:54.950Z"
+}
