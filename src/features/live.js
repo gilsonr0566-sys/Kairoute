@@ -548,6 +548,10 @@ function alarmTick() {
     if (sub) sub.textContent = R && st.now != null ? `${word} ${rideTxt}` : `${word}${viaTxt} From ${fromTxt}: ${legTxt}, so leave by ${fmt(st.leaveBy)}${st.early ? " (early enough from any of today's stops)" : ""}.${R ? " " + rideTxt : ""}`;
     const agent = document.getElementById("cdAgent"); if (agent) agent.hidden = !(R && (R.none || R.missed) && d.portAgent);
     if (srcEl) srcEl.textContent = `Travel time: ${st.leg.src}${st.src === "GPS" ? ", from your GPS position" : st.src === "plan" ? ", from where the plan has you now" : ""}.`;
+    // How sure the way back is, from the plan itself (the engine's leaveAt.basis: the weakest ride on it), said by the
+    // leave-by time (Nov 21 outside review: a guessed way back must never read as sure as a timetabled one).
+    const basis = st.src === "plan" && plan.engine2 && plan.engine2.leaveAt && plan.engine2.leaveAt.basis;
+    if (srcEl && basis && basis !== "walk") srcEl.textContent += basis === "timetable" ? " The way back is on a timetable." : basis === "roads" ? " The way back is timed on the road map, with no live traffic: extra time for delays is in it." : " The way back is an estimate: no timetable or road map confirms it, so extra time for delays is in it. Check the ride before you set out.";
     if (srcEl && (d.type === "port" || d.type === "embark")) srcEl.textContent += " Being on board on time is your responsibility: confirm the all-aboard time with your cruise line on the day. Ships don't wait.";
     const chip = document.getElementById("cdCard"), lbl = document.getElementById("cdLbl");
     if (st.now == null) { if (lbl) lbl.textContent = "Leave by"; if (chip) chip.classList.remove("amber", "soon", "go"); if (el) el.textContent = fmt(st.leaveBy); if (msg) msg.hidden = true; if (srcEl) srcEl.textContent += ` On ${fmtDate(d.date)} it counts down live from your GPS position, with alerts.`; }
