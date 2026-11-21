@@ -534,6 +534,19 @@ async function tapTimes(p) { const out = []; const n = await p.evaluate(() => wi
         return expect.map(e => { const names = e.split('|'); return { e: names[0], inSrc: has(src.stops || [], names), inApp: has(city.sites, names) }; }); }, [pl.label, src, pl.expect]);
       for (const x of r) { n++; if (!x.inSrc) gaps.push(pl.label.split(',')[0] + ': ' + x.e); else if (!x.inApp) miss.push(pl.label.split(',')[0] + ': ' + x.e); } }
     if (n) check(`Every famous sight the sources know is offered (${n - miss.length - gaps.length} of ${n}; not in the sources at all: ${gaps.join(', ') || 'none'})`, !miss.length, `left out: ${miss.join(', ')}`); }
+  // How long to sightsee is set in the day's settings, as in the demo (Richard, Nov 21: "It use to allow you to say how
+  // many hours a day you want to site see"), and the plan follows it.
+  { const i = await p.evaluate(() => window.__kairouteDays().findIndex(d => d.type === 'land')); let why = '';
+    if (i < 0) why = 'no city day in the sample trip';
+    else { await p.evaluate(i => { window.__kairouteGo('day', i); window.__kairouteGo('trip'); }, i); await p.waitForTimeout(800);
+      if (!(await p.$('#dayForm #f-hours'))) why = 'no "Hours to sightsee" in the day\'s settings';
+      else { const ok = await tapSel(p, '#dayForm [data-hrs="4"]'); await p.waitForTimeout(800);
+        await p.evaluate(() => window.__kairouteGo('plan')); await p.waitForTimeout(800);
+        const h = await p.evaluate(() => window.__kairouteDayHours.get());
+        if (!ok || !h || +h.hours !== 4) why = 'Half day tapped, the day has ' + JSON.stringify(h);
+        else { await p.evaluate(() => window.__kairouteGo('trip')); await p.waitForTimeout(600); await p.fill('#f-hours', '6'); await p.$eval('#f-hours', x => x.dispatchEvent(new Event('change', { bubbles: true }))); await p.waitForTimeout(800);
+          const h2 = await p.evaluate(() => window.__kairouteDayHours.get()); if (!h2 || +h2.hours !== 6) why = '6 hours typed, the day has ' + JSON.stringify(h2); } } }
+    check('The day\'s settings say how many hours to sightsee, and the plan follows', !why, why); }
   // A port whose pier the map search couldn't find (Nov 21 outside check: Dubrovnik and Reykjavik days blank with nothing
   // to do): the day says so and asks for the pier's name; the traveler's pick from the map plans the day from there.
   { const i = await dayIdx(p, /Naples/); let why = '';

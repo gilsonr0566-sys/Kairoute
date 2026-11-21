@@ -5876,6 +5876,7 @@ function renderTrip(d) {
         ${t !== "land" ? `<div class="field"><label for="f-point">${pointWord}</label>
           ${city ? (points.length ? `<select id="f-point"${pointAsk(d, points, listKey) ? ` data-ask="1"><option value="-1" selected>Which ${esc(MODES[d.mode] && t !== "port" && t !== "embark" ? MODES[d.mode].word : "place")}? Choose yours</option>${opts(points, -1)}` : `>${opts(points, d.pointIdx)}`}</select>${d.pier && listKey === "cruise" ? `<span class="hint">Your pier: ${esc(d.pier.name)}, found on the map from the name you gave. Choose one from the list to change it.</span>` : points[d.pointIdx] && points[d.pointIdx].note ? `<span class="hint">${esc(points[d.pointIdx].note)}</span>` : ""}` : `<span class="hint">No ${esc(listKey)} listed for this city.</span>`) : `<span class="hint">Appears once the guide for ${esc(d.destination || "this city")} is built.</span>`}
         </div>` : ""}
+        ${t === "land" || t === "arrival" ? `<div class="field"><label for="f-hours">Hours to sightsee</label><input type="number" id="f-hours" min="1" max="14" step="0.5" value="${esc(String(d.hours))}"><div class="seg pace" role="group" aria-label="How long to sightsee">${DAY_LEN.map(([h, l]) => `<button type="button" data-hrs="${h}" aria-pressed="${+d.hours === h}">${l}</button>`).join("")}</div><span class="hint">Also on the Day plan: tap the day's hours to set a start and end time.</span></div>` : ""}
         <div class="row2">
           ${t === "arrival" || t === "departure" ? `<div class="field"><label for="f-time">${t === "arrival" ? "Arrival time" : "Departure time"}</label><input type="time" id="f-time" value="${esc(d.time)}"></div>` : ""}
           ${t === "port" ? `<div class="field"><label for="f-parr">Ship docks</label><input type="time" id="f-parr" value="${esc(d.portArrive)}"></div>` : ""}
@@ -7527,7 +7528,7 @@ document.addEventListener("change", e => {
   }
   if (t.id === "f-type") { readForm(); const d = day(); d.type = t.value; d.pointIdx = 0; delete d.pointPicked; if (d.type === "departure" && d.mode === "ship") d.mode = "flight"; d.selected = null; edited(); save(); render(); return; }
   if (t.id === "f-stayaboard") { setAboard(day(), t.checked); render(); return; }
-  if (["f-point", "f-return", "f-along", "f-fill", "f-lodging", "f-tender", "f-date"].includes(t.id)) { if (t.id === "f-point") delete day().pier; readForm(); edited(); save(); render(); return; }
+  if (["f-point", "f-return", "f-along", "f-fill", "f-lodging", "f-tender", "f-date", "f-hours"].includes(t.id)) { if (t.id === "f-point") delete day().pier; readForm(); edited(); save(); render(); return; }
   if (t.closest && t.closest("#dayForm")) { readForm(); edited(); save(); }
 });
 document.addEventListener("submit", e => {
