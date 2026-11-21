@@ -1,0 +1,48 @@
+name: Beta 2 release gate
+# Nov 21 review: the Kairoute-Beta2 site publishes whatever is pushed to it, with no checks of its own; the checks ran
+# only in whichever working copy built it. This gate runs the same offline checks on GitHub for every push to the
+# Beta 2 branch, on a clean copy, so "this build passed" is a record anyone can open. Publish a Beta 2 build only from
+# a commit whose gate is green. No network beyond installing tools, no AI, no secrets; never publishes anything.
+on:
+  workflow_dispatch:
+  push:
+    branches: ["claude/project-thread-xrdp7v", "claude/project-thread-8wi5ra"]
+permissions:
+  contents: read
+concurrency:
+  group: beta2-gate-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  gate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm i --no-save playwright@1.65.1 && npx playwright install --with-deps chromium
+      - name: Build both copies (the demo build is index.html, Beta 2 is beta2-site/index.html)
+        run: sh build-beta2.sh
+      - name: Code checks (secrets, syntax) and the engine's own rules
+        run: node tools/static-check.cjs && node tools/beta2/engine-static.cjs
+      - name: Helper (AI switch, one AI gate, spend caps, other websites)
+        if: always()
+        run: node tools/worker-check.mjs && node tools/worker-ai-gate.mjs
+      - name: Saved test trips (snapshots), then the engine, leak and stress suites
+        if: always()
+        run: |
+          node tools/beta2/snapshot.cjs
+          node tools/beta2/noai-trips.cjs
+          node tools/beta2/engine-test.cjs
+          node tools/beta2/leaks.cjs
+          node tools/beta2/stress.cjs
+      - name: Phone flow on the Beta 2 build
+        if: always()
+        run: node tools/beta2/flow-check.cjs beta2-site/index.html
+      - name: Outside text never runs as code (Beta 2 build)
+        if: always()
+        run: node tools/inject-check.cjs beta2-site/index.html
+      - name: The app says only what the AI can really do
+        if: always()
+        run: node tools/ai-honesty-check.cjs
