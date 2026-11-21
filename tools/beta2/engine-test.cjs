@@ -974,4 +974,13 @@ ok(E.readable('Café Ñandú') && E.readable("Joe's Bar & Grill") && !E.readable
   const far = E.dayWindow(Object.assign({}, base, { point: { name: 'Cruise Terminal, Example Port', lat: 43.552, lng: 10.30 }, placeName: 'x Example City Example Port (Example City)' }), tr0);
   const bare = E.dayWindow(Object.assign({}, base, { point: { name: 'Cruise Terminal', lat: 43.552, lng: 10.30 }, placeName: 'x Example City Example Port (Example City)' }), tr0);
   ok(!far.farGate && bare.farGate, `a pier named with the port the traveler typed serves the place; an unnamed one far away is refused (${!!far.farGate} / ${!!bare.farGate})`); }
+// Round 2 re-check 3: a timetabled ride with no departure near the time it is needed (a rest-day bus whose next one is
+// hours later) is never planned on: the taxi instead, said; with a departure soon, the line is kept.
+{ const O = { lat: 32.82, lng: 35.0, name: 'Pier' }, S = { id: 'far', lat: 31.78, lng: 35.23, name: 'Far town sight', minutes: 60 };
+  const mk = deps => (a, b) => ({ mode: 'transit', kind: 'bus', how: 'Bus 9 + 2 changes', min: 171, ans: { id: 'bus|9', label: 'Bus 9', deps, every: 0, access: { min: 5 } }, source: 'timetable',
+    options: [{ id: 'bus', kind: 'bus', how: 'Bus 9 + 2 changes', min: 171, source: 'timetable' }, { id: 'taxi', kind: 'taxi', how: 'Taxi or car', min: 150, source: 'estimate' }] });
+  const win = { head: [O], tail: [], start: 390, endBy: 1215, hard: true, notes: [] };
+  const late = E.walkDay([S], win, mk([{ t: 1038, lead: 5, dur: 171 }]), null), soon = E.walkDay([S], win, mk([{ t: 410, lead: 5, dur: 171 }]), null);
+  const r1 = late.items.find(x => x.t === 'ride'), r2 = soon.items.find(x => x.t === 'ride');
+  ok(r1.kind === 'taxi' && /no departure near/.test(r1.note || '') && r2.kind === 'bus', `a line with no departure near the time is planned by taxi, said; one leaving soon is kept (${r1.kind} / ${r2.kind})`); }
 console.log(`\n${oks} checks passed, ${fails} failed`); process.exit(fails ? 1 : 0);

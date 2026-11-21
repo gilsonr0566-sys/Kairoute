@@ -327,6 +327,18 @@
   };
   // The ride as the plan lists it: every fact the screens need, from the one ride record. A walk is just "Walk", except
   // the walk to or from a ferry, which says so ("Walk to the ferry at ..."): the traveler sees where the boat leaves.
+  // A timetabled ride is taken only when it runs near the time it is needed: the next departure after reaching the stop
+  // within E.DEP_GAP minutes (or two of the line's own intervals). Otherwise the ride is made by taxi, said (Round 2
+  // re-check: a Saturday plan left at 6:30 am on a bus whose next departure was 5:18 pm). Any rest day, Sunday or holiday
+  // timetable is covered the same way, from the departures themselves.
+  E.DEP_GAP = 60;
+  E.runsAt = (leg, at) => { const a = leg && leg.ans; if (!a || !Array.isArray(a.deps) || !a.deps.length || !isFinite(at)) return true;
+    const t0 = at + ((a.access && a.access.min) || 0), nx = a.deps.find(d => d && isFinite(d.t) && d.t >= t0);
+    return !!nx && nx.t - t0 <= Math.max(E.DEP_GAP, 2 * (+a.every || 0)); };
+  E.nextDepAfter = (leg, at) => { const a = leg && leg.ans, t0 = at + ((a && a.access && a.access.min) || 0), nx = a && (a.deps || []).find(d => d && d.t >= t0); return nx ? nx.t : null; };
+  E.legAs = (leg, o, why) => { const out = Object.assign({}, leg, { mode: E.modeOfKind(o.kind), kind: o.kind, how: o.how, min: o.min, steps: o.steps || [], choice: o.id, source: o.source },
+      why ? { note: (leg.note ? leg.note + " " : "") + why } : {});
+    ["ans", "transitMode", "parts", "first", "pinned", "slack", "cross", "timetable"].forEach(k => delete out[k]); if (o.slack) out.slack = o.slack; if (o.ans) out.ans = o.ans; return out; };
   E.rideItem = (leg, extra) => Object.assign({ t: "ride", mode: leg.mode, kind: leg.kind || (leg.mode === "walk" ? "walk" : "taxi"), min: leg.min, km: Math.round((leg.km || 0) * 100) / 100 },
     leg.how && (leg.mode !== "walk" || leg.pierName) ? { how: leg.how } : {}, leg.options ? { options: leg.options } : {}, leg.transitMode ? { transitMode: leg.transitMode } : {},
     leg.choice ? { choice: leg.choice } : {}, leg.steps && leg.steps.length ? { steps: leg.steps } : {}, leg.ans ? { ans: leg.ans } : {}, leg.note ? { note: leg.note } : {},

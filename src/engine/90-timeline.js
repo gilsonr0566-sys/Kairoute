@@ -16,7 +16,13 @@
     let clock = win.start, prev = O, late = 0, waits = 0, rideMin = 0;
     if (st) ({ clock, prev, late, waits, rideMin } = st); else items.push({ t: "start", name: O && O.name, at: clock });
     const go = (p, type) => {
-      const leg = ride(prev, p), ri = E.rideItem(leg, leg.parts ? { parts: leg.parts } : null); items.push(ri); clock += leg.min; rideMin += leg.min;
+      let leg = ride(prev, p);
+      // A timetabled line with no departure near this time (E.runsAt) is never planned on: the taxi instead, said.
+      if (!E.runsAt(leg, clock)) { const t = (leg.options || []).find(o => o.kind === "taxi"), nx = E.nextDepAfter(leg, clock);
+        const why = (leg.how || "The line") + (nx != null ? " has no departure near " + E.clock(clock) + " (the next is about " + E.clock(nx) + ")" : " has no later departure today") + (t ? ", so this ride is planned by taxi." : ": check another way before you go.");
+        leg = t ? E.legAs(leg, t, why) : Object.assign({}, leg, { note: (leg.note ? leg.note + " " : "") + why, noRun: true }); }
+      const ri = E.rideItem(leg, leg.parts ? { parts: leg.parts } : null); items.push(ri); clock += leg.min; rideMin += leg.min;
+      if (leg.noRun) { late++; ri.noRun = true; }
       // A boat that doesn't sail before a set time (the guide's first boat): the wait at the pier is part of the day.
       if (leg.first && clock < leg.first.at + leg.first.after) { const w = leg.first.at + leg.first.after - clock; clock += w; waits += w; ri.wait = w; ri.firstBoat = leg.first.at; }
       const it = { t: type, id: p.id || null, name: p.name, min: p.minutes || 0 };
