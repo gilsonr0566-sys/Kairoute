@@ -154,7 +154,10 @@
       for (const o of got) { const k = E.lineKind(String(o.mode || o.kind || "train")), r = by.get(k);
         if (!r) { by.set(k, o); continue; } if (want != null && String(r.id) === String(want)) continue;
         if ((want != null && String(o.id) === String(want)) || (changesOf(o) < changesOf(r) && o.min <= r.min + 10)) by.set(k, o); }
-      return [...by.entries()].map(([kind, o]) => ({ id: kind, kind, how: E.latin(o.label), min: Math.round(o.min), ans: o, steps: Array.isArray(o.steps) ? o.steps.map(E.latin) : [] }));
+      // When to leave for each known departure of ANY answer of the kind (a train known by its own number shows once in
+      // the sample; together the kind's answers say when a train runs at all): its departure less the walk to the stop.
+      const leaveOf = k => [...new Set(got.filter(o => E.lineKind(String(o.mode || o.kind || "train")) === k).flatMap(o => (Array.isArray(o.deps) ? o.deps : []).map(q => q && isFinite(q.t) ? q.t - ((o.access && o.access.min) || 0) : null)).filter(x => x != null))].sort((x, y) => x - y);
+      return [...by.entries()].map(([kind, o]) => ({ id: kind, kind, how: E.latin(o.label), min: Math.round(o.min), ans: o, leaveTimes: leaveOf(kind), steps: Array.isArray(o.steps) ? o.steps.map(E.latin) : [] }));
     }
     // A boat leaves from a pier and lands at one (Nov 18, Richard's map: the ferry to an island left from a cathedral and
     // ran across the streets). The boat runs from the mapped pier nearest the land end (or the pier the guide's note
@@ -311,7 +314,7 @@
       const leg = Object.assign({ mode: E.modeOfKind(pick.kind), kind: pick.kind, how: pick.how, km: pick.km || d, min: pick.min, steps: pick.steps || [], choice: pick.id, options },
         pick.kind !== "walk" && pick.kind !== "taxi" && pick.kind !== "ferry" ? { transitMode: pick.transitMode || (pick.ans && pick.ans.mode) || pick.kind } : {},
         pick.kind === "ferry" ? { cross: pick.cross, pier: pick.pier || E.PIER_MIN, timetable: pick.source === "timetable" } : {}, { source: pick.source },
-        pick.parts ? { parts: pick.parts } : {}, pick.first ? { first: pick.first } : {}, pick.ans ? { ans: pick.ans } : {}, pick.slack ? { slack: pick.slack } : {}, pinned ? { pinned: true } : {},
+        pick.parts ? { parts: pick.parts } : {}, pick.first ? { first: pick.first } : {}, pick.ans ? { ans: pick.ans } : {}, pick.leaveTimes && pick.leaveTimes.length ? { leaveTimes: pick.leaveTimes } : {}, pick.slack ? { slack: pick.slack } : {}, pinned ? { pinned: true } : {},
         notes.length ? { note: notes.join(" ") } : {}, lost ? { lost } : {});
       if (options.length < 2) delete leg.options;
       return leg;
@@ -329,22 +332,27 @@
   // the walk to or from a ferry, which says so ("Walk to the ferry at ..."): the traveler sees where the boat leaves.
   // A timetabled ride is taken only when it runs near the time it is needed. The departures known are a sample: the
   // trips found by three searches of the day (from about 8:00, 12:00 and 16:00, on the trip's date or the same kind of
-  // day), grouped by line, so a train known by its own number shows once a day. So "doesn't run then" is said only on
-  // strong evidence: a line seen at least E.DEP_MIN times, with nothing for E.DEP_GAP minutes after it is needed, and
-  // nothing from the first search's hour either until two hours past it or until two hours before it is needed (Round 2
-  // re-check 3: a rest-day bus whose first departure was 5:18 pm). A sample never proves there is no later departure
-  // (re-check 4: two weekday trains wrongly dropped), so then the line is kept as planned.
-  E.DEP_GAP = 60; E.DEP_MIN = 3; E.DEP_FROM = 8 * 60;
-  E.runsAt = (leg, at) => { const a = leg && leg.ans; if (!a || !Array.isArray(a.deps) || !isFinite(at)) return true;
-    const ts = a.deps.map(d => d && +d.t).filter(isFinite).sort((x, y) => x - y); if (ts.length < E.DEP_MIN) return true;
-    const t0 = at + ((a.access && a.access.min) || 0), nx = ts.find(t => t >= t0); if (nx == null) return true;
-    if (nx - t0 <= Math.max(E.DEP_GAP, 2 * (+a.every || 0))) return true;
-    const S = E.DEP_FROM, emptyFromS = !ts.some(t => t >= S && t < t0);
-    return !(nx - Math.max(t0, S) >= 120 || (emptyFromS && t0 - S >= 120)); };
-  E.nextDepAfter = (leg, at) => { const a = leg && leg.ans, t0 = at + ((a && a.access && a.access.min) || 0), nx = a && (a.deps || []).find(d => d && d.t >= t0); return nx ? nx.t : null; };
+  // day), so they are read for the kind of ride as a whole (every train answer between the two places), not one line.
+  //  - On the way to a ship, train or plane (deadline): only a known departure within E.DEP_GAP minutes (or two of the
+  //    line's intervals) of leaving; else another way (Round 2 re-check 5: a train back whose only known departure was
+  //    3 hours after the planned one). Never rest the way back on a departure that isn't known.
+  //  - Otherwise, dropped only on strong evidence: nothing near the time, and nothing known from the first search's
+  //    hour until two hours past it or until two hours before it is needed (re-check 3: a rest-day bus whose first
+  //    departure was 5:18 pm). A sample never proves there is no later departure, so that alone never drops a ride.
+  E.DEP_GAP = 60; E.DEP_FROM = 8 * 60;
+  const leaveTimesOf = leg => { const a = leg && leg.ans; if (Array.isArray(leg && leg.leaveTimes) && leg.leaveTimes.length) return leg.leaveTimes;
+    return a && Array.isArray(a.deps) ? a.deps.map(d => d && +d.t - ((a.access && a.access.min) || 0)).filter(isFinite).sort((x, y) => x - y) : []; };
+  E.runsAt = (leg, at, deadline) => { const a = leg && leg.ans; if (!a || !Array.isArray(a.deps) || !a.deps.length || !isFinite(at)) return true;
+    const ts = leaveTimesOf(leg), nx = ts.find(t => t >= at);
+    if (nx != null && nx - at <= Math.max(E.DEP_GAP, 2 * (+a.every || 0))) return true;
+    if (deadline) return false;
+    if (nx == null) return true;
+    const S = E.DEP_FROM, emptyFromS = !ts.some(t => t >= S && t < at);
+    return !(nx - Math.max(at, S) >= 120 || (emptyFromS && at - S >= 120)); };
+  E.nextDepAfter = (leg, at) => { const a = leg && leg.ans, nx = leaveTimesOf(leg).find(t => t >= at); return nx == null ? null : nx + ((a && a.access && a.access.min) || 0); };
   E.legAs = (leg, o, why) => { const out = Object.assign({}, leg, { mode: E.modeOfKind(o.kind), kind: o.kind, how: o.how, min: o.min, steps: o.steps || [], choice: o.id, source: o.source },
       why ? { note: (leg.note ? leg.note + " " : "") + why } : {});
-    ["ans", "transitMode", "parts", "first", "pinned", "slack", "cross", "timetable"].forEach(k => delete out[k]); if (o.slack) out.slack = o.slack; if (o.ans) out.ans = o.ans; return out; };
+    ["ans", "leaveTimes", "transitMode", "parts", "first", "pinned", "slack", "cross", "timetable"].forEach(k => delete out[k]); if (o.slack) out.slack = o.slack; if (o.ans) out.ans = o.ans; return out; };
   E.rideItem = (leg, extra) => Object.assign({ t: "ride", mode: leg.mode, kind: leg.kind || (leg.mode === "walk" ? "walk" : "taxi"), min: leg.min, km: Math.round((leg.km || 0) * 100) / 100 },
     leg.how && (leg.mode !== "walk" || leg.pierName) ? { how: leg.how } : {}, leg.options ? { options: leg.options } : {}, leg.transitMode ? { transitMode: leg.transitMode } : {},
     leg.choice ? { choice: leg.choice } : {}, leg.steps && leg.steps.length ? { steps: leg.steps } : {}, leg.ans ? { ans: leg.ans } : {}, leg.note ? { note: leg.note } : {},

@@ -18,8 +18,8 @@
     const go = (p, type) => {
       let leg = ride(prev, p);
       // A timetabled line with no departure near this time (E.runsAt) is never planned on: the taxi instead, said.
-      if (!E.runsAt(leg, clock)) { const t = (leg.options || []).find(o => o.kind === "taxi"), nx = E.nextDepAfter(leg, clock);
-        const why = "The timetable found for " + (leg.how || "this line") + " shows no departure near " + E.clock(clock) + (nx != null ? " (the next is about " + E.clock(nx) + ")" : "") + (t ? ", so this ride is planned by taxi." : ": check another way before you go.");
+      if (!E.runsAt(leg, clock, !!(p && (p.backToShip || p.deadline)))) { const t = (leg.options || []).find(o => o.kind === "taxi"), nx = E.nextDepAfter(leg, clock);
+        const why = "The timetable found for " + (leg.how || "this line") + " shows no departure near " + E.clock(clock) + (nx != null ? " (the next known is about " + E.clock(nx) + ")" : "") + (t ? ", so this ride is planned by taxi." : ": check another way before you go.");
         leg = t ? E.legAs(leg, t, why) : Object.assign({}, leg, { note: (leg.note ? leg.note + " " : "") + why, noRun: true }); }
       const ri = E.rideItem(leg, leg.parts ? { parts: leg.parts } : null); items.push(ri); clock += leg.min; rideMin += leg.min;
       if (leg.noRun) { late++; ri.noRun = true; }

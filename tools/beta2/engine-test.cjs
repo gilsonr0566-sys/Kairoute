@@ -986,7 +986,17 @@ ok(E.readable('Café Ñandú') && E.readable("Joe's Bar & Grill") && !E.readable
   ok(r1.kind === 'taxi' && /no departure near/.test(r1.note || '') && r2.kind === 'bus', `a line with no departure near the time is planned by taxi, said; one leaving soon is kept (${r1.kind} / ${r2.kind})`);
   // Re-check 4: the departures are a sample. A train known by its own number (one or two departures), a time before the
   // first search's hour with a departure soon after it, or no later departure in the sample never drop the line.
-  const one = E.walkDay([S], win, mk(D([1231])), null), early = E.walkDay([S], Object.assign({}, win, { start: 450 }), mk(D([511, 571, 631])), null), none = E.walkDay([S], Object.assign({}, win, { start: 900 }), mk(D([500, 560, 620])), null);
+  const early = E.walkDay([S], Object.assign({}, win, { start: 450 }), mk(D([511])), null), none = E.walkDay([S], Object.assign({}, win, { start: 900 }), mk(D([500, 560, 620])), null);
   const k = r => r.items.find(x => x.t === 'ride').kind;
-  ok(k(one) === 'bus' && k(early) === 'bus' && k(none) === 'bus', `a sample of departures never drops a line without strong evidence (${k(one)} / ${k(early)} / ${k(none)})`); }
+  ok(k(early) === 'bus' && k(none) === 'bus', `a sample of departures never drops a line without strong evidence (${k(early)} / ${k(none)})`);
+  // Re-check 5: the way back to the ship rests only on a known departure near the time; else another way.
+  const Z = Object.assign({}, O, { id: 'ship', backToShip: true });
+  const winB = st => Object.assign({}, win, { head: [S], tail: [Z], start: st });
+  const bFar = E.walkDay([], winB(884), mk(D([1080])), null), bNear = E.walkDay([], winB(884), mk(D([900])), null);
+  const rb = r => (r.items.filter(x => x.t === 'ride').pop() || {}).kind;
+  ok(rb(bFar) === 'taxi' && rb(bNear) === 'bus', `the way back to the ship rests only on a departure known near the time (${rb(bFar)} / ${rb(bNear)})`);
+  // The departures of every answer of the kind count together (a train known by its own number shows once).
+  const two = E.makeTravel({ walk: 'medium' }, null, null, null, (a, b) => [{ id: 'rail|A', min: 75, label: 'Train A', mode: 'rail', steps: ['A'], deps: [{ t: 1231 }] }, { id: 'rail|B', min: 80, label: 'Train B', mode: 'rail', steps: ['B'], deps: [{ t: 515 }, { t: 600 }] }], null).estimate({ lat: 41.9, lng: 12.5 }, { lat: 42.09, lng: 11.79 });
+  const lt = ((two.options || [two]).find(x => x.kind === 'train') || two).leaveTimes || two.leaveTimes;
+  ok(Array.isArray(two.leaveTimes || lt) && (two.leaveTimes || lt).length === 3, `a kind's departures are read together (${JSON.stringify(two.leaveTimes || lt)})`); }
 console.log(`\n${oks} checks passed, ${fails} failed`); process.exit(fails ? 1 : 0);
