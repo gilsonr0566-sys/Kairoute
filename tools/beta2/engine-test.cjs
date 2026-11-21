@@ -980,7 +980,13 @@ ok(E.readable('Café Ñandú') && E.readable("Joe's Bar & Grill") && !E.readable
   const mk = deps => (a, b) => ({ mode: 'transit', kind: 'bus', how: 'Bus 9 + 2 changes', min: 171, ans: { id: 'bus|9', label: 'Bus 9', deps, every: 0, access: { min: 5 } }, source: 'timetable',
     options: [{ id: 'bus', kind: 'bus', how: 'Bus 9 + 2 changes', min: 171, source: 'timetable' }, { id: 'taxi', kind: 'taxi', how: 'Taxi or car', min: 150, source: 'estimate' }] });
   const win = { head: [O], tail: [], start: 390, endBy: 1215, hard: true, notes: [] };
-  const late = E.walkDay([S], win, mk([{ t: 1038, lead: 5, dur: 171 }]), null), soon = E.walkDay([S], win, mk([{ t: 410, lead: 5, dur: 171 }]), null);
+  const D = ts => ts.map(t => ({ t, lead: 5, dur: 171 }));
+  const late = E.walkDay([S], win, mk(D([1038, 1068, 1098])), null), soon = E.walkDay([S], win, mk(D([410, 470, 530])), null);
   const r1 = late.items.find(x => x.t === 'ride'), r2 = soon.items.find(x => x.t === 'ride');
-  ok(r1.kind === 'taxi' && /no departure near/.test(r1.note || '') && r2.kind === 'bus', `a line with no departure near the time is planned by taxi, said; one leaving soon is kept (${r1.kind} / ${r2.kind})`); }
+  ok(r1.kind === 'taxi' && /no departure near/.test(r1.note || '') && r2.kind === 'bus', `a line with no departure near the time is planned by taxi, said; one leaving soon is kept (${r1.kind} / ${r2.kind})`);
+  // Re-check 4: the departures are a sample. A train known by its own number (one or two departures), a time before the
+  // first search's hour with a departure soon after it, or no later departure in the sample never drop the line.
+  const one = E.walkDay([S], win, mk(D([1231])), null), early = E.walkDay([S], Object.assign({}, win, { start: 450 }), mk(D([511, 571, 631])), null), none = E.walkDay([S], Object.assign({}, win, { start: 900 }), mk(D([500, 560, 620])), null);
+  const k = r => r.items.find(x => x.t === 'ride').kind;
+  ok(k(one) === 'bus' && k(early) === 'bus' && k(none) === 'bus', `a sample of departures never drops a line without strong evidence (${k(one)} / ${k(early)} / ${k(none)})`); }
 console.log(`\n${oks} checks passed, ${fails} failed`); process.exit(fails ? 1 : 0);

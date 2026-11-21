@@ -327,14 +327,20 @@
   };
   // The ride as the plan lists it: every fact the screens need, from the one ride record. A walk is just "Walk", except
   // the walk to or from a ferry, which says so ("Walk to the ferry at ..."): the traveler sees where the boat leaves.
-  // A timetabled ride is taken only when it runs near the time it is needed: the next departure after reaching the stop
-  // within E.DEP_GAP minutes (or two of the line's own intervals). Otherwise the ride is made by taxi, said (Round 2
-  // re-check: a Saturday plan left at 6:30 am on a bus whose next departure was 5:18 pm). Any rest day, Sunday or holiday
-  // timetable is covered the same way, from the departures themselves.
-  E.DEP_GAP = 60;
-  E.runsAt = (leg, at) => { const a = leg && leg.ans; if (!a || !Array.isArray(a.deps) || !a.deps.length || !isFinite(at)) return true;
-    const t0 = at + ((a.access && a.access.min) || 0), nx = a.deps.find(d => d && isFinite(d.t) && d.t >= t0);
-    return !!nx && nx.t - t0 <= Math.max(E.DEP_GAP, 2 * (+a.every || 0)); };
+  // A timetabled ride is taken only when it runs near the time it is needed. The departures known are a sample: the
+  // trips found by three searches of the day (from about 8:00, 12:00 and 16:00, on the trip's date or the same kind of
+  // day), grouped by line, so a train known by its own number shows once a day. So "doesn't run then" is said only on
+  // strong evidence: a line seen at least E.DEP_MIN times, with nothing for E.DEP_GAP minutes after it is needed, and
+  // nothing from the first search's hour either until two hours past it or until two hours before it is needed (Round 2
+  // re-check 3: a rest-day bus whose first departure was 5:18 pm). A sample never proves there is no later departure
+  // (re-check 4: two weekday trains wrongly dropped), so then the line is kept as planned.
+  E.DEP_GAP = 60; E.DEP_MIN = 3; E.DEP_FROM = 8 * 60;
+  E.runsAt = (leg, at) => { const a = leg && leg.ans; if (!a || !Array.isArray(a.deps) || !isFinite(at)) return true;
+    const ts = a.deps.map(d => d && +d.t).filter(isFinite).sort((x, y) => x - y); if (ts.length < E.DEP_MIN) return true;
+    const t0 = at + ((a.access && a.access.min) || 0), nx = ts.find(t => t >= t0); if (nx == null) return true;
+    if (nx - t0 <= Math.max(E.DEP_GAP, 2 * (+a.every || 0))) return true;
+    const S = E.DEP_FROM, emptyFromS = !ts.some(t => t >= S && t < t0);
+    return !(nx - Math.max(t0, S) >= 120 || (emptyFromS && t0 - S >= 120)); };
   E.nextDepAfter = (leg, at) => { const a = leg && leg.ans, t0 = at + ((a && a.access && a.access.min) || 0), nx = a && (a.deps || []).find(d => d && d.t >= t0); return nx ? nx.t : null; };
   E.legAs = (leg, o, why) => { const out = Object.assign({}, leg, { mode: E.modeOfKind(o.kind), kind: o.kind, how: o.how, min: o.min, steps: o.steps || [], choice: o.id, source: o.source },
       why ? { note: (leg.note ? leg.note + " " : "") + why } : {});
