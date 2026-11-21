@@ -1,30 +1,7 @@
 {
- "run": "round3a-2026-11-21",
+ "run": "round3b-2026-11-21",
  "dayWait": 40000,
  "trips": [
-  {
-   "name": "a17-haifa",
-   "label": "Jerusalem from Haifa, Saturday call",
-   "legs": [
-    {
-     "k": "cruise",
-     "board": "Limassol, Cyprus",
-     "date": "2027-05-14",
-     "aboard": "18:00",
-     "ports": [
-      {
-       "date": "2027-05-15",
-       "place": "Haifa (Jerusalem), Israel",
-       "arrive": "06:00",
-       "aboard": "20:00"
-      }
-     ],
-     "end": "Limassol, Cyprus",
-     "endDate": "2027-05-16",
-     "off": "07:00"
-    }
-   ]
-  },
   {
    "name": "d15-livorno-rome-naples",
    "label": "Livorno for Florence, Civitavecchia for Rome, Naples",
@@ -61,124 +38,6 @@
    ]
   },
   {
-   "name": "d16-warnemunde-zeebrugge",
-   "label": "Warnemunde for Berlin, Zeebrugge for Bruges",
-   "legs": [
-    {
-     "k": "cruise",
-     "board": "Copenhagen, Denmark",
-     "date": "2027-08-01",
-     "aboard": "17:00",
-     "ports": [
-      {
-       "date": "2027-08-02",
-       "place": "Warnemunde (Berlin), Germany",
-       "arrive": "07:00",
-       "aboard": "21:00"
-      },
-      {
-       "date": "2027-08-04",
-       "place": "Zeebrugge (Bruges), Belgium",
-       "arrive": "08:00",
-       "aboard": "17:00"
-      }
-     ],
-     "end": "Southampton, England",
-     "endDate": "2027-08-05",
-     "off": "07:00",
-     "homeBy": "train",
-     "homeAt": "11:00"
-    }
-   ]
-  },
-  {
-   "name": "b01-greece",
-   "legs": [
-    {
-     "k": "stay",
-     "place": "Athens, Greece",
-     "date": "2027-06-30",
-     "nights": 4,
-     "inAt": "10:30"
-    },
-    {
-     "k": "cruise",
-     "board": "Piraeus (Athens), Greece",
-     "ship": "Sun Princess",
-     "date": "2027-07-04",
-     "aboard": "18:30",
-     "ports": [
-      {
-       "date": "2027-07-05",
-       "place": "Heraklion, Crete",
-       "arrive": "07:00",
-       "aboard": "16:30"
-      },
-      {
-       "date": "2027-07-06",
-       "place": "Kusadasi (Ephesus), Turkey",
-       "arrive": "09:00",
-       "aboard": "18:30"
-      },
-      {
-       "date": "2027-07-07",
-       "place": "Santorini, Greece",
-       "arrive": "07:00",
-       "aboard": "20:30",
-       "tender": true
-      },
-      {
-       "date": "2027-07-08",
-       "place": "Mykonos, Greece",
-       "arrive": "08:00",
-       "aboard": "20:30"
-      },
-      {
-       "date": "2027-07-09",
-       "place": "Chania, Crete",
-       "arrive": "08:00",
-       "aboard": "17:30"
-      },
-      {
-       "date": "2027-07-11",
-       "place": "Messina, Sicily",
-       "arrive": "08:00",
-       "aboard": "17:30"
-      },
-      {
-       "date": "2027-07-12",
-       "place": "Naples, Italy",
-       "arrive": "07:00",
-       "aboard": "18:30"
-      },
-      {
-       "date": "2027-07-13",
-       "place": "Civitavecchia (Rome), Italy",
-       "arrive": "07:00",
-       "aboard": "20:30"
-      }
-     ],
-     "end": "Barcelona, Spain",
-     "endDate": "2027-07-15",
-     "off": "07:00"
-    },
-    {
-     "k": "stay",
-     "place": "Barcelona, Spain",
-     "nights": 3
-    },
-    {
-     "k": "stay",
-     "place": "Madrid, Spain",
-     "nights": 2,
-     "inBy": "train",
-     "leaveAt": "13:00",
-     "inAt": "15:45",
-     "homeAt": "16:00"
-    }
-   ]
-  },
-  {
    "name": "f01-dubrovnik-naples-islands",
    "label": "Dubrovnik (Lokrum) and Naples (Capri) ship days",
    "legs": [
@@ -208,6 +67,14 @@
     }
    ],
    "steps": [
+    {
+     "name": "picker-full-day5",
+     "js": "(async()=>{window.__kairouteAt(5,'sites');await __T.sleep(5000);const m=document.querySelector('main');return {text:m.innerText.slice(0,12000),buttons:[...m.querySelectorAll('button,[data-act]')].map(b=>(b.dataset.act||'')+':'+b.innerText.trim().slice(0,50)).slice(0,200)}})()"
+    },
+    {
+     "name": "picker-full-day3",
+     "js": "(async()=>{window.__kairouteAt(3,'sites');await __T.sleep(5000);const m=document.querySelector('main');return {text:m.innerText.slice(0,12000),buttons:[...m.querySelectorAll('button,[data-act]')].map(b=>(b.dataset.act||'')+':'+b.innerText.trim().slice(0,50)).slice(0,200)}})()"
+    },
     {
      "name": "dbv-1-ticks",
      "js": "(async()=>{const t=await __T.ticks(3);return t})()"
@@ -275,6 +142,10 @@
    ],
    "steps": [
     {
+     "name": "picker-full-day4",
+     "js": "(async()=>{window.__kairouteAt(4,'sites');await __T.sleep(5000);const m=document.querySelector('main');return {text:m.innerText.slice(0,12000),buttons:[...m.querySelectorAll('button,[data-act]')].map(b=>(b.dataset.act||'')+':'+b.innerText.trim().slice(0,50)).slice(0,200)}})()"
+    },
+    {
      "name": "rvk-1-ticks",
      "js": "(async()=>{const t=await __T.ticks(4);return t})()"
     },
@@ -293,20 +164,6 @@
     {
      "name": "rvk-5-plan-after-chip",
      "js": "(async()=>{window.__kairouteAt(4,'plan');await __T.sleep(9000);return document.querySelector('main').innerText.slice(0,7000)})()"
-    }
-   ]
-  },
-  {
-   "name": "f03-ljubljana",
-   "label": "Ljubljana stay, no built-in guide",
-   "legs": [
-    {
-     "k": "stay",
-     "place": "Ljubljana, Slovenia",
-     "date": "2027-05-10",
-     "nights": 2,
-     "inAt": "13:00",
-     "homeAt": "15:00"
     }
    ]
   }
