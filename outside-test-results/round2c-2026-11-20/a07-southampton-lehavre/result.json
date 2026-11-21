@@ -1,0 +1,145 @@
+{
+ "name": "a07-southampton-lehavre",
+ "label": "Southampton fly in, board next day, Le Havre for Paris Saturday call",
+ "legs": [
+  {
+   "k": "stay",
+   "place": "Southampton, England",
+   "date": "2027-06-10",
+   "nights": 1,
+   "inAt": "13:00"
+  },
+  {
+   "k": "cruise",
+   "board": "Southampton, England",
+   "date": "2027-06-11",
+   "aboard": "16:00",
+   "ports": [
+    {
+     "date": "2027-06-12",
+     "place": "Le Havre (Paris), France",
+     "arrive": "07:00",
+     "aboard": "19:00"
+    }
+   ],
+   "end": "Southampton, England",
+   "endDate": "2027-06-13",
+   "off": "07:00",
+   "homeAt": "14:00"
+  }
+ ],
+ "started": "2026-11-21T04:25:38.541Z",
+ "passed": {
+  "/sources": 13,
+  "/transit": 13,
+  "/guide": 2,
+  "/places": 1,
+  "/voyage": 3,
+  "/ground": 1,
+  "/route": 4,
+  "/x/near": 4
+ },
+ "refused": {
+  "/ratings": 1,
+  "/grating": 1,
+  "/events": 1
+ },
+ "errors": [],
+ "days": [
+  {
+   "i": 0,
+   "date": "2027-06-10",
+   "type": "arrival",
+   "text": "THU JUN 10 · SOUTHAMPTON, ENGLAND · ARRIVING\nSouthampton, England ✎ Rename\nLock this day\nI couldn't find Southampton, England in the travel guides and maps. Check the spelling on the day (for example \"Kotor, Montenegro\"), then tap Build again.\nNo guide for Southampton, England yet\n\nKairoute will build the guide for Southampton, England from travel guides and maps: real sights, places to eat, the cruise port and stations.\n\nBuild the Southampton, England guide"
+  },
+  {
+   "i": 1,
+   "date": "2027-06-11",
+   "type": "embark",
+   "text": "FRI JUN 11 · SOUTHAMPTON, ENGLAND · BOARDING\nSouthampton, England ✎ Rename\nLock this day\nI couldn't find Southampton, England in the travel guides and maps. Check the spelling on the day (for example \"Kotor, Montenegro\"), then tap Build again.\nNo guide for Southampton, England yet\n\nKairoute will build the guide for Southampton, England from travel guides and maps: real sights, places to eat, the cruise port and stations.\n\nBuild the Southampton, England guide"
+  },
+  {
+   "i": 2,
+   "date": "2027-06-12",
+   "type": "port",
+   "text": "SAT JUN 12 · PARIS · IN PORT\nParis ✎ Rename\nLock this day\n🚢\nLEAVE BY\nall aboard 7:00 pm\n2:41 pm\n▶ Start the tour\n\nAshore 7:30 am · Official all aboard 7:00 pm · Back at the ship by 6:15 pm\n\nGetting back on time is up to you\n\nKairoute's leave-by and back-by times are estimates with spare time built in. Traffic, queues and the weather can still slow you down. The time that counts is the ship's all-aboard time or your train or flight, as your cruise line or carrier gives it. Check it on the day.\n\nI understand\nTerms of use\n4\nsights\nChoose sights\nMore\nAbout today's plan1 note\nUse Ctrl + scroll to zoom the map\nStart · Cruise port\n1\n2\n3\n4\nL\n3000 ft\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nWalk\nTaxi or car\n● Meal\nMore about today\nThis day has 7 h 13 min of travel for 2 h 53 min at the sights. Consider fewer far-apart stops, more hours, or splitting it over two days.\n\nAll times are Paris time, 7 h ahead of your device.\n\nLEAVE\n7:30 am\nS\nOff the ship at Cruise Terminal, Le Havre\nShip docks 7:00 am.\nTaxi or car · 2 h 42 min · 129 mi\nARRIVE\n10:12 am\nLEAVE\n10:52 am\n1\nEiffel Tower\n40 min · Sight · Must-see\nTaxi or car · 16 min · 1.4 mi\nBy road, with time for traffic.\nWalk · 30 min\nTaxi or car · 16 min\nARRIVE\n11:08 am\nLEAVE\n11:48 am\n2\nArc de Triomphe\n40 min · Sight\nTaxi or car · 20 min · 2.3 mi\nWalk · 48 min\nTaxi or car · 20 min\nARRIVE\n12:08 pm\nLEAVE\n12:48 pm\n3\nUNESCO\n40 min · Sight · Must-see\nTaxi or car · 19 min · 2.0 mi\nWalk · 44 min\nTaxi or car · 19 min\nARRIVE\n1:07 pm\nLEAVE\n2:00 pm\n4\nLouvre Museum\n53 min · Museum · Must-see\nNext door\nARRIVE\n2:02 pm\nLEAVE\n2:37 pm\nL\nLunch: Comptoir du Louvre\nRestaurant · Popular with visitors · 35 min\nChange lunch\nLunch: why here\nTaxi or car · 3 h 34 min · 131 mi\nNo timetable or live traffic confirms this ride's time: it is an estimate with 50 min extra for the ship. Leave by the time shown, never later.\nARRIVE\n6:11 pm\nE\nBack at the ship\nThe ship's official all aboard is 7:00 pm. Kairoute plans you back at least 45 min before it."
+  },
+  {
+   "i": 3,
+   "date": "2027-06-13",
+   "type": "arrival",
+   "text": "SUN JUN 13 · SOUTHAMPTON, ENGLAND · ARRIVING\nSouthampton, England ✎ Rename\nLock this day\nToday is one plan\n\nShip in at 7:00 am, then your flight at 2:00 pm: the sightseeing in between, your bags and the countdown are on one page.\n\nSee today's plan"
+  },
+  {
+   "i": 4,
+   "date": "2027-06-13",
+   "type": "departure",
+   "text": "SUN JUN 13 · SOUTHAMPTON, ENGLAND · LEAVING\nSouthampton, England ✎ Rename\nLock this day\nI couldn't find Southampton, England in the travel guides and maps. Check the spelling on the day (for example \"Kotor, Montenegro\"), then tap Build again.\nNo guide for Southampton, England yet\n\nKairoute will build the guide for Southampton, England from travel guides and maps: real sights, places to eat, the cruise port and stations.\n\nBuild the Southampton, England guide"
+  }
+ ],
+ "guides": {
+  "Paris (from Le Havre, France)": {
+   "city": "Paris (from Le Havre, France)",
+   "src": true,
+   "ai": false,
+   "n": 46,
+   "sights": "UNESCO* | Eiffel Tower* | Louvre Museum* | Notre-Dame de Paris | Musée d'Orsay | Arc de Triomphe | avenue des Champs-Élysées | Bibliothèque nationale de France | Père Lachaise Cemetery | Bastille | Centre Georges Pompidou | Palais Garnier | place de la Concorde | Panthéon | Sainte Chapelle | Les Invalides | Luxembourg Palace | Palais-Royal | Grand Palais | Institut Polytechnique des Sciences Avancées | Tuileries Garden | National Assembly | Sacré-Cœur | Venus de Milo | Sorbonne | Musée des Arts et Métiers | Petit Palais | École Normale Supérieure | Collège de France | Champ de Mars | Grand Mosque of Paris | La Madeleine | Pont Alexandre III~ | Paris Institute of Political Studies | Conciergerie | 1st arrondissement of Paris | Montmartre | Château de Vincennes | place des Vosges | Hôtel de Ville, Paris | Royal abbey of Saint-Germain-des-Prés | parc Monceau | île de la Cité | Musée du quai Branly | Jardin des plantes | Mines ParisTech",
+   "far": "Chantilly | Chartres | Disneyland Paris | Fontainebleau | Ch&acirc;teau de Chantilly | Chartres Cathedral | Maison Picassiette | Musée du Vitrail | Château de Fontainebleau | Forêt de Fontainebleau | Musée d'art figuratif contemporain | Musée des pompiers",
+   "eats": 60,
+   "starts": {
+    "cruise": [
+     "Cruise Terminal, Le Havre"
+    ],
+    "airport": [
+     "Paris airport (unknown)"
+    ],
+    "station": [
+     "Gare Saint-Lazare"
+    ],
+    "hotel": [
+     "Hotel in central Paris"
+    ],
+    "point": [
+     "Central Paris"
+    ]
+   }
+  }
+ },
+ "steps": [],
+ "version": "142b953-1795234773",
+ "aiReady": false,
+ "wizard": {
+  "miss": [],
+  "prev": "Your days: 4 days · 1 port",
+  "form": "Add each place in order, the way it's booked. Each new stop starts where the last one ends.\n\nSTOP 1 · CITY STAY\nRemove\nCity\nArrive on\nNights\nHotel (optional)\nGetting there\nFlight\nTrain\nFerry\nCar or bus\nArrive in Southampton, England at\nSTOP 2 · CRUISE\nRemove\nLeaves from\nShip (optional)\nBoarding day\nAll aboard\nPorts of call\nIn order, from your cruise booking. Days with no port are added as sea days.\nDate\nPort\nShip arrives\nAll aboard\nTender port (small boats take you ashore)\nRemove port\n+ Add a port\nCruise ends in\nOn\nOff the ship at\nUsually 7:00 am to 9:00 am. Leave empty if you don't know.\n+ Add a city stay\n+ Add a cruise\nGoing home from here\nFlight\nTrain\nFerry\nCar or bus\nFlight at\nYour days: 4 days · 1 port\nAdd more details (optional)\nName this trip\n\nKairoute picks good defaults for pace, walking and voice, and you can change any of them later.\n\nCancel\nPersonalize first\nBuild my trip"
+ },
+ "buildSec": 4,
+ "state": {
+  "busy": "",
+  "err": "I couldn't find Southampton, England in the travel guides and maps. Check the spelling on the day (for example \"Kotor, Montenegro\"), then tap Build again.",
+  "days": [
+   {
+    "date": "2027-06-10",
+    "type": "arrival"
+   },
+   {
+    "date": "2027-06-11",
+    "type": "embark"
+   },
+   {
+    "date": "2027-06-12",
+    "type": "port"
+   },
+   {
+    "date": "2027-06-13",
+    "type": "arrival"
+   },
+   {
+    "date": "2027-06-13",
+    "type": "departure"
+   }
+  ]
+ },
+ "phoneText": "SAT JUN 12 · PARIS · IN PORT\nParis ✎ Rename\nLock this day\n🚢\nLEAVE BY\nall aboard 7:00 pm\n2:41 pm\n▶ Start tour\n\nAshore 7:30 am · Official all aboard 7:00 pm · Back at the ship by 6:15 pm\n\nGetting back on time is up to you\n\nKairoute's leave-by and back-by times are estimates with spare time built in. Traffic, queues and the weather can still slow you down. The time that counts is the ship's all-aboard time or your train or flight, as your cruise line or carrier gives it. Check it on the day.\n\nI understand\nTerms of use\n4\nsights\nChoose sights\nMore\nAbout today's plan1 note\nUse Ctrl + scroll to zoom the map\nStart · Cruise port\n1\n2\n3\n4\nL\n3000 ft\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nWalk\nTaxi or car\n● Meal\nMore about today\nThis day has 7 h 13 min of travel for 2 h 53 min at the sights. Consider fewer far-apart stops, more hours, or splitting it over two days.\n\nAll times are Paris time, 7 h ahead of your device.\n\nLEAVE\n7:30 am\nS\nOff the ship at Cruise Terminal, Le Havre\nShip docks 7:00 am.\nTaxi or car · 2 h 42 min · 129 mi\nARRIVE\n10:12 am\nLEAVE\n10:52 am\n1\nEiffel Tower\n40 min · Sight · Must-see\nTaxi or car · 16 min · 1.4 mi\nBy road, with time for traffic.\nWalk · 30 min\nTaxi or car · 16 min\nARRIVE\n11:08 am\nLEAVE\n11:48 am\n2\nArc de Triomphe\n40 min · Sight\nTaxi or car · 20 min · 2.3 mi\nWalk · 48 min\nTaxi or car · 20 min\nARRIVE\n12:08 pm\nLEAVE\n12:48 pm\n3\nUNESCO\n40 min · Sight · Must-see\nTaxi or car · 19 min · 2.0 mi\nWalk · 44 min\nTaxi or car · 19 min\nARRIVE\n1:07 pm\nLEAVE\n2:00 p",
+ "finished": "2026-11-21T04:30:00.517Z"
+}

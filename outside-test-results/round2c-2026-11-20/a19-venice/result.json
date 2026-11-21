@@ -1,0 +1,124 @@
+{
+ "name": "a19-venice",
+ "label": "Venice Sat+Sun stay",
+ "legs": [
+  {
+   "k": "stay",
+   "place": "Venice, Italy",
+   "date": "2027-05-14",
+   "nights": 3,
+   "inBy": "train",
+   "inAt": "12:30",
+   "homeBy": "train",
+   "homeAt": "10:30"
+  }
+ ],
+ "started": "2026-11-21T05:00:58.003Z",
+ "passed": {
+  "/sources": 12,
+  "/transit": 37,
+  "/guide": 1,
+  "/places": 2,
+  "/voyage": 1,
+  "/ground": 1,
+  "/x/near": 5,
+  "/route": 3
+ },
+ "refused": {
+  "/ratings": 1,
+  "/grating": 2,
+  "/events": 2
+ },
+ "errors": [],
+ "days": [
+  {
+   "i": 0,
+   "date": "2027-05-14",
+   "type": "arrival",
+   "text": "FRI MAY 14 · VENICE, ITALY · ARRIVING\nVenice, Italy ✎ Rename\nLock this day\n\nWhich station do you arrive at? There is more than one here (Venezia Santa Lucia railway station or Venezia Mestre railway station). Choose it in the day's settings: no time is given on a guess.\n\nEdit this day"
+  },
+  {
+   "i": 1,
+   "date": "2027-05-15",
+   "type": "land",
+   "text": "SAT MAY 15 · VENICE, ITALY · LAND DAY\nVenice, Italy ✎ Rename\nLock this day\n▶ Start the tour\n9:00 am–6:00 pm\n9 h ✎\n7\nsights\n5.2 mi\nwalking\n3:25 pm\nlast stop done\nChoose sights\nMore\nAbout today's plan2 notes\nUse Ctrl + scroll to zoom the map\nS\n1\n2\n3\n4\n5\nL\n6\n1000 ft\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nWalk\n● Meal\nMore about today\n\nAll times are Venice time, 7 h ahead of your device.\n\nLEAVE\n9:00 am\nS\nLeave Hotel in central Venice\nAdd your own hotel on the Trip page for exact times.\nWalk · 19 min · 0.9 mi\nWalk · 19 min\nWalk to the road, then taxi · 36 min\nARRIVE\n9:19 am\nLEAVE\n9:49 am\n1\nSanta Maria della Salute\n30 min · Church\nWalk · 32 min · 1.5 mi\nARRIVE\n10:21 am\nLEAVE\n11:01 am\n2\nVenice Biennale\n40 min · Sight · Must-see\nWalk · 26 min · 1.2 mi\nARRIVE\n11:27 am\nLEAVE\n12:27 pm\n3\nDoge's Palace\n1 h · Palace · Must-see\nIncludes Bridge of Sighs\nWalk · 2 min · 0.1 mi\nARRIVE\n12:29 pm\nLEAVE\n12:59 pm\n4\nSt Mark's Basilica\n30 min · Church · Must-see\nWalk · 2 min · 0.1 mi\nARRIVE\n1:01 pm\nLEAVE\n1:16 pm\n5\nPiazza San Marco\n15 min · Square · Must-see\nIncludes Correr Museum, National Archaeological Museum, Venice and Biblioteca Nazionale Marciana\nWalk · 17 min · 0.8 mi\nWalk · 17 min\nWalk to the road, then taxi · 40 min\nARRIVE\n1:33 pm\nLEAVE\n2:33 pm\nL\nLunch: MAJER San Stae\nCafé · Local spot · 1 h\nChange lunch\nLunch: why here\nWalk · 5 min · 0.3 mi\nARRIVE\n2:38 pm\nLEAVE\n3:18 pm\n6\nGrand Canal\n40 min · Sight · Must-see\nUNTIL\n5:53 pm\n+\nFree time: 2 h 35 min\nYours to spend as you like. See what fits\nWalk · 7 min · 0.3 mi\nBY\n6:00 pm\nE\nBack at Hotel in central Venice\nARRIVE\n6:30 pm\nD\nSuggested dinner: Al Cafetier\nRestaurant\nChange dinner\nDinner: why here"
+  },
+  {
+   "i": 2,
+   "date": "2027-05-16",
+   "type": "land",
+   "text": "SUN MAY 16 · VENICE, ITALY · LAND DAY\nVenice, Italy ✎ Rename\nLock this day\n▶ Start the tour\n9:00 am–6:00 pm\n9 h ✎\n1\nsight\n0.2 mi\nwalking\n1:12 pm\nlast stop done\nChoose sights\nMore\nAbout today's plan1 note\nUse Ctrl + scroll to zoom the map\nS\n1\nL\n200 ft\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nWalk\nTaxi or car\n● Meal\nMore about today\n\nAll times are Venice time, 7 h ahead of your device.\n\nLEAVE\n9:00 am\nS\nLeave Hotel in central Venice\nAdd your own hotel on the Trip page for exact times.\nTaxi or car · 28 min · 3.9 mi\nARRIVE\n9:28 am\nLEAVE\n10:08 am\n1\nVenice Film Festival\n40 min · Sight · Must-see\nWalk · 3 min · 0.2 mi\nARRIVE\n11:45 am\nLEAVE\n12:45 pm\nL\nLunch: La Cantinita\nRestaurant · Local spot · 1 h\nTRAVELERS RECOMMEND\nChange lunch\nLunch: why here\nUNTIL\n5:33 pm\n+\nFree time: 4 h 48 min\nYours to spend as you like. See what fits\nTaxi or car · 27 min · 3.8 mi\nBY\n6:00 pm\nE\nBack at Hotel in central Venice\nARRIVE\n6:30 pm\nD\nSuggested dinner: Pasticceria Rio Marin\nCafé\nTRAVELERS RECOMMEND\nChange dinner\nDinner: why here"
+  },
+  {
+   "i": 3,
+   "date": "2027-05-17",
+   "type": "departure",
+   "text": "MON MAY 17 · VENICE, ITALY · LEAVING\nVenice, Italy ✎ Rename\nLock this day\n\nWhich station do you leave from? There is more than one here (Venezia Santa Lucia railway station or Venezia Mestre railway station). Choose it in the day's settings and the day gets its time to leave by: no time is given on a guess.\n\nEdit this day"
+  }
+ ],
+ "guides": {
+  "Venice, Italy": {
+   "city": "Venice, Italy",
+   "src": true,
+   "ai": false,
+   "n": 36,
+   "sights": "St Mark's Basilica* | Doge's Palace* | Venice Film Festival* | Santa Maria della Salute | Gallerie dell'Accademia | Biblioteca Nazionale Marciana | Piazza San Marco* | Bridge of Sighs | Santa Maria Gloriosa dei Frari | Rialto Bridge | Church of San Giorgio Maggiore | Santi Giovanni e Paolo Church | Ca' Pesaro | Venice Biennale* | Grand Canal* | Murano | Il Redentore | Venetian Arsenal | Venetian Ghetto | San Zaccaria Church | Correr Museum | Teatro La Fenice | Grassi Palace | San Pietro di Castello Church | Santa Maria dei Miracoli Church, Venice | Peggy Guggenheim Collection | Carnival of Venice | Ca' Rezzonico | National Archaeological Museum, Venice | State Archives of Venice | Madonna dell'Orto | San Francesco della Vigna Church | San Giacomo di Rialto Church | Statue of Bartolomeo Colleoni~ | Punta della Dogana | Internazionale Gallery of Modern Art",
+   "far": "Venice/Burano | Mestre | Venice/Torcello | Padua | Lace Museum | Cathedral of Mestre | Piazza Ferretto | Bissuola Park | Archaeological Museum | Church of Santa Fosca | Saint Anthony's cathedral | Scrovegni Chapel | Astronomic Observatory | Palazzo della Ragione | Palazzo del Bo' | Botanic Garden | Eremitani Civic Museum",
+   "eats": 60,
+   "starts": {
+    "cruise": [
+     "Venice Fusina Cruise Terminal",
+     "Cruise Terminal 107/108"
+    ],
+    "airport": [
+     "Venice Marco Polo Airport",
+     "Venice-Lido Airport",
+     "Treviso Airport"
+    ],
+    "station": [
+     "Venezia Santa Lucia railway station",
+     "Venezia Mestre railway station"
+    ],
+    "hotel": [
+     "Hotel in central Venice"
+    ],
+    "point": [
+     "Central Venice"
+    ]
+   }
+  }
+ },
+ "steps": [],
+ "version": "142b953-1795234773",
+ "aiReady": false,
+ "wizard": {
+  "miss": [],
+  "prev": "Your days: 4 days",
+  "form": "Add each place in order, the way it's booked. Each new stop starts where the last one ends.\n\nSTOP 1 · CITY STAY\nCity\nArrive on\nNights\nHotel (optional)\nGetting there\nFlight\nTrain\nFerry\nCar or bus\nArrive in town at\nLeave empty if you don't know yet.\n+ Add a city stay\n+ Add a cruise\nGoing home from here\nFlight\nTrain\nFerry\nCar or bus\nTrain at\nYour days: 4 days\nAdd more details (optional)\nName this trip\n\nKairoute picks good defaults for pace, walking and voice, and you can change any of them later.\n\nCancel\nPersonalize first\nBuild my trip"
+ },
+ "buildSec": 4,
+ "state": {
+  "busy": "",
+  "err": "",
+  "days": [
+   {
+    "date": "2027-05-14",
+    "type": "arrival"
+   },
+   {
+    "date": "2027-05-15",
+    "type": "land"
+   },
+   {
+    "date": "2027-05-16",
+    "type": "land"
+   },
+   {
+    "date": "2027-05-17",
+    "type": "departure"
+   }
+  ]
+ },
+ "phoneText": "SAT MAY 15 · VENICE, ITALY · LAND DAY\nVenice, Italy ✎ Rename\nLock this day\n▶ Start tour\n9:00 am–6:00 pm\n9 h ✎\n7\nsights\n5.2 mi\nwalking\n3:25 pm\nlast stop done\nChoose sights\nMore\nAbout today's plan2 notes\nUse Ctrl + scroll to zoom the map\nS\n1\n2\n3\n4\n5\nL\n6\n2000 ft\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nWalk\n● Meal\nMore about today\n\nAll times are Venice time, 7 h ahead of your device.\n\nLEAVE\n9:00 am\nS\nLeave Hotel in central Venice\nAdd your own hotel on the Trip page for exact times.\nWalk · 19 min · 0.9 mi\nWalk · 19 min\nWalk to the road, then taxi · 36 min\nARRIVE\n9:19 am\nLEAVE\n9:49 am\n1\nSanta Maria della Salute\n30 min · Church\nWalk · 32 min · 1.5 mi\nARRIVE\n10:21 am\nLEAVE\n11:01 am\n2\nVenice Biennale\n40 min · Sight · Must-see\nWalk · 26 min · 1.2 mi\nARRIVE\n11:27 am\nLEAVE\n12:27 pm\n3\nDoge's Palace\n1 h · Palace · Must-see\nIncludes Bridge of Sighs\nWalk · 2 min · 0.1 mi\nARRIVE\n12:29 pm\nLEAVE\n12:59 pm\n4\nSt Mark's Basilica\n30 min · Church · Must-see\nWalk · 2 min · 0.1 mi\nARRIVE\n1:01 pm\nLEAVE\n1:16 pm\n5\nPiazza San Marco\n15 min · Square · Must-see\nIncludes Correr Museum, National Archaeological Museum, Venice and Biblioteca Nazionale Marciana\nWalk · 17 min · 0.8 mi\nWalk · 17 min\nWalk to the road, then taxi · 40 min\nARRIVE\n1:33 pm\nLEAVE\n2:33 pm\nL\nLunch: MAJER San Stae\nCafé · Local spot · 1 h\nChange lunch\nLunch: why here\nWalk · 5 min · 0.3 mi\nARRIVE\n2:38 pm\nLEAVE\n3:18 pm\n6\nGrand Canal\n40 min · Sight · Must-see\nUNTIL\n5:53 pm\n+\nFree time: 2 h 35 min\nYours to spend as you like. See what fi",
+ "finished": "2026-11-21T05:04:31.080Z"
+}

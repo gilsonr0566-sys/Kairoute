@@ -1,0 +1,119 @@
+{
+ "name": "a18-reykjavik",
+ "label": "Reykjavik January stay",
+ "legs": [
+  {
+   "k": "stay",
+   "place": "Reykjavik, Iceland",
+   "date": "2027-01-18",
+   "nights": 3,
+   "inAt": "15:30",
+   "homeAt": "16:00"
+  }
+ ],
+ "started": "2026-11-21T04:34:39.567Z",
+ "passed": {
+  "/sources": 12,
+  "/transit": 10,
+  "/guide": 1,
+  "/places": 3,
+  "/voyage": 1,
+  "/ground": 1,
+  "/x/near": 5,
+  "/route": 2
+ },
+ "refused": {
+  "/ratings": 1,
+  "/grating": 2,
+  "/events": 2
+ },
+ "errors": [],
+ "days": [
+  {
+   "i": 0,
+   "date": "2027-01-18",
+   "type": "arrival",
+   "text": "MON JAN 18 · REYKJAVIK, ICELAND · ARRIVING\nReykjavik, Iceland ✎ Rename\nLock this day\n\nWhich airport do you arrive at? There is more than one here (Keflavík International Airport or Reykjavik Airport). Choose it in the day's settings: no time is given on a guess.\n\nEdit this day"
+  },
+  {
+   "i": 1,
+   "date": "2027-01-19",
+   "type": "land",
+   "text": "TUE JAN 19 · REYKJAVIK, ICELAND · LAND DAY\nReykjavik, Iceland ✎ Rename\nLock this day\n▶ Start the tour\n9:00 am–6:00 pm\n9 h ✎\n6\nsights\n1.9 mi\nwalking\n3:37 pm\nlast stop done\nChoose sights\nMore\nAbout today's plan1 note\nUse Ctrl + scroll to zoom the map\nS\n1\n2\n3\n4\n5\nL\n6\n1000 ft\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nWalk\nTaxi or car\n● Meal\nMore about today\n\nAll times are Reykjavik time, 6 h ahead of your device.\n\nLEAVE\n9:00 am\nS\nLeave Hotel in central Reykjavik\nAdd your own hotel on the Trip page for exact times.\nTaxi or car · 16 min · 1.4 mi\nBy road, with time for traffic.\nWalk · 30 min\nTaxi or car · 16 min\nARRIVE\n9:16 am\nLEAVE\n9:56 am\n1\nTjörnin\n40 min · Sight\nWalk · 4 min · 0.2 mi\nARRIVE\n10:00 am\nLEAVE\n10:40 am\n2\nAlþingishúsið\n40 min · Sight\nNext door\nARRIVE\n10:40 am\nLEAVE\n11:20 am\n3\nAlthing\n40 min · Sight · Must-see\nNext door\nARRIVE\n11:22 am\nLEAVE\n11:52 am\n4\nReykjavík Cathedral\n30 min · Church\nWalk · 5 min · 0.2 mi\nARRIVE\n11:57 am\nLEAVE\n1:27 pm\n5\nIcelandic Phallological Museum\n1 h 30 min · Museum · Must-see\nWalk · 12 min · 0.6 mi\nWalk · 12 min\nTaxi or car · 13 min\nARRIVE\n1:39 pm\nLEAVE\n2:39 pm\nL\nLunch: Kol Kitchen & Bar\nRestaurant · Popular with visitors · 1 h\nChange lunch\nLunch: why here\nWalk · 2 min · 0.1 mi\nARRIVE\n2:41 pm\nLEAVE\n3:21 pm\n6\nHallgrímskirkja\n40 min · Sight · Must-see\nUNTIL\n5:44 pm\n+\nFree time: 2 h 23 min\nYours to spend as you like. See what fits\nWalk · 16 min · 0.8 mi\nWalk · 16 min\nTaxi or car · 13 min\nBY\n6:00 pm\nE\nBack at Hotel in central Reykjavik\nARRIVE\n6:30 pm\nD\nSuggested dinner: Potturinn og Pannan\nRestaurant\nChange dinner\nDinner: why here"
+  },
+  {
+   "i": 2,
+   "date": "2027-01-20",
+   "type": "land",
+   "text": "WED JAN 20 · REYKJAVIK, ICELAND · LAND DAY\nReykjavik, Iceland ✎ Rename\nLock this day\n▶ Start the tour\n9:00 am–6:00 pm\n9 h ✎\n2\nsights\n0.6 mi\nwalking\n2:33 pm\nlast stop done\nChoose sights\nMore\nAbout today's plan2 notes\nBoats keep their own timetable: take one back from Imagine Peace Tower that lands you by 1:28 pm.\nOpening hours aren't known for Viðey and Imagine Peace Tower on this date: planned between 9:00 am and 5:00 pm, check before you go.\nUse Ctrl + scroll to zoom the map\nS\n1\n2\nL\n3000 ft\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nWalk\nFerry\n● Meal\nMore about today\nThis day has 3 h 13 min of travel for 1 h 20 min at the sights. Consider fewer far-apart stops, more hours, or splitting it over two days.\n\nAll times are Reykjavik time, 6 h ahead of your device.\n\nLEAVE\n9:00 am\nS\nLeave Hotel in central Reykjavik\nAdd your own hotel on the Trip page for exact times.\nFerry Viðey ferry: Viðey - Reykjavík (Old Harbour) · 1 h 43 min · 2.4 mi\nTaxi 14 min to Reykjavík Old Harbour. 9 min ride, then walk 10 min from Viðey. Elding. Hours: Jun-Aug 11:30 am-11:50 am, 2:30 pm-2:50 pm, 5:30 pm-5:50 pm. Times include waiting and boarding. No published timetable found for this ferry: planned with a full gap between departures. Check the ferry timetable before you go.\nARRIVE\n10:43 am\nLEAVE\n11:23 am\n1\nViðey\n40 min · Sight\nWalk · 7 min · 0.3 mi\nARRIVE\n11:30 am\nLEAVE\n12:10 pm\n2\nImagine Peace Tower\n40 min · Sight\nBoat · 1 h 18 min · 2.0 mi\nBoat, about 18 min crossing. No sailing times are known here: up to 60 min at the pier is allowed for the next boat back. Check the timetable at the pier when you land.\nARRIVE\n1:28 pm\nLEAVE\n2:28 pm\nL\nLunch: Loving Hut\nRestaurant · Local spot · 1 h\nChange lunch\nLunch: why here\nUNTIL\n5:55 pm\n+\nFree time: 3 h 27 min\nYours to spend as you like. See what fits\nWalk · 5 min · 0.2 mi\nBY\n6:00 pm\nE\nBack at Hotel in central Reykjavik\nARRIVE\n6:30 pm\nD\nSuggested dinner: Restó\nRestaurant\nChange dinner\nDinner: why here"
+  },
+  {
+   "i": 3,
+   "date": "2027-01-21",
+   "type": "departure",
+   "text": "THU JAN 21 · REYKJAVIK, ICELAND · LEAVING\nReykjavik, Iceland ✎ Rename\nLock this day\n\nWhich airport do you leave from? There is more than one here (Keflavík International Airport or Reykjavik Airport). Choose it in the day's settings and the day gets its time to leave by: no time is given on a guess.\n\nEdit this day"
+  }
+ ],
+ "guides": {
+  "Reykjavik, Iceland": {
+   "city": "Reykjavik, Iceland",
+   "src": true,
+   "ai": false,
+   "n": 17,
+   "sights": "Althing* | Hallgrímskirkja* | Icelandic Phallological Museum* | Tjörnin | Viðey | National Museum of Iceland | Imagine Peace Tower | Alþingishúsið | Landakotskirkja | Perlan | Harpa | Reykjavík Cathedral | Reykjavik Art Museum | National Gallery of Iceland | Ráðhús Reykjavíkur | Reykjavík Botanic Garden | Árbæjarsafn",
+   "far": "Hafnarfjörður | Hafnarborg | Hafnarfjörður Museum | Hafnarfjarðarkirkja | Sankti Jósefskirkja | Karmelklaustrið í Hafnarfirði | Safnaðarheimili Fríkirkjunnar í Hafnarfirði | Hellisgerði | Víðistaðatún | Viti",
+   "eats": 68,
+   "starts": {
+    "cruise": [
+     "Cruise port of Reykjavik (unknown)"
+    ],
+    "airport": [
+     "Keflavík International Airport",
+     "Reykjavik Airport"
+    ],
+    "station": [
+     "Reykjavik main station (unknown)"
+    ],
+    "hotel": [
+     "Hotel in central Reykjavik"
+    ],
+    "point": [
+     "Central Reykjavik"
+    ]
+   }
+  }
+ },
+ "steps": [],
+ "version": "142b953-1795234773",
+ "aiReady": false,
+ "wizard": {
+  "miss": [],
+  "prev": "Your days: 4 days",
+  "form": "Add each place in order, the way it's booked. Each new stop starts where the last one ends.\n\nSTOP 1 · CITY STAY\nCity\nArrive on\nNights\nHotel (optional)\nGetting there\nFlight\nTrain\nFerry\nCar or bus\nArrive in town at\nLeave empty if you don't know yet.\n+ Add a city stay\n+ Add a cruise\nGoing home from here\nFlight\nTrain\nFerry\nCar or bus\nFlight at\nYour days: 4 days\nAdd more details (optional)\nName this trip\n\nKairoute picks good defaults for pace, walking and voice, and you can change any of them later.\n\nCancel\nPersonalize first\nBuild my trip"
+ },
+ "buildSec": 4,
+ "state": {
+  "busy": "",
+  "err": "",
+  "days": [
+   {
+    "date": "2027-01-18",
+    "type": "arrival"
+   },
+   {
+    "date": "2027-01-19",
+    "type": "land"
+   },
+   {
+    "date": "2027-01-20",
+    "type": "land"
+   },
+   {
+    "date": "2027-01-21",
+    "type": "departure"
+   }
+  ]
+ },
+ "phoneText": "TUE JAN 19 · REYKJAVIK, ICELAND · LAND DAY\nReykjavik, Iceland ✎ Rename\nLock this day\n▶ Start tour\n9:00 am–6:00 pm\n9 h ✎\n6\nsights\n1.9 mi\nwalking\n3:37 pm\nlast stop done\nChoose sights\nMore\nAbout today's plan1 note\nUse Ctrl + scroll to zoom the map\nS\n1\n2\n3\n4\n5\nL\n6\n2000 ft\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nWalk\nTaxi or car\n● Meal\nMore about today\n\nAll times are Reykjavik time, 6 h ahead of your device.\n\nLEAVE\n9:00 am\nS\nLeave Hotel in central Reykjavik\nAdd your own hotel on the Trip page for exact times.\nTaxi or car · 16 min · 1.4 mi\nBy road, with time for traffic.\nWalk · 30 min\nTaxi or car · 16 min\nARRIVE\n9:16 am\nLEAVE\n9:56 am\n1\nTjörnin\n40 min · Sight\nWalk · 4 min · 0.2 mi\nARRIVE\n10:00 am\nLEAVE\n10:40 am\n2\nAlþingishúsið\n40 min · Sight\nNext door\nARRIVE\n10:40 am\nLEAVE\n11:20 am\n3\nAlthing\n40 min · Sight · Must-see\nNext door\nARRIVE\n11:22 am\nLEAVE\n11:52 am\n4\nReykjavík Cathedral\n30 min · Church\nWalk · 5 min · 0.2 mi\nARRIVE\n11:57 am\nLEAVE\n1:27 pm\n5\nIcelandic Phallological Museum\n1 h 30 min · Museum · Must-see\nWalk · 12 min · 0.6 mi\nWalk · 12 min\nTaxi or car · 13 min\nARRIVE\n1:39 pm\nLEAVE\n2:39 pm\nL\nLunch: Kol Kitchen & Bar\nRestaurant · Popular with visitors · 1 h\nChange lunch\nLunch: why here\nWalk · 2 min · 0.1 mi\nARRIVE\n2:41 pm\nLEAVE\n3:21 pm\n6\nHallgrímskirkja\n40 min · Sight · Must-see\nUNTIL\n5:44 pm\n+\nFree time: 2 h 23 min\nYours to spend as you like. See what fits\nWalk · 16 min · 0.8 mi\nWalk · 16 min\nTaxi or car · 13 min\nBY\n6:00 pm\nE\nBack at Hotel in central Reykjavik\nARRIVE\n",
+ "finished": "2026-11-21T04:38:10.658Z"
+}

@@ -1,0 +1,217 @@
+{
+ "name": "a09-kotor-dubrovnik",
+ "label": "Kotor tender call and Dubrovnik call",
+ "legs": [
+  {
+   "k": "cruise",
+   "board": "Venice, Italy",
+   "date": "2027-07-06",
+   "aboard": "16:00",
+   "inAt": "10:30",
+   "ports": [
+    {
+     "date": "2027-07-08",
+     "place": "Kotor, Montenegro",
+     "arrive": "08:00",
+     "aboard": "17:00",
+     "tender": true
+    },
+    {
+     "date": "2027-07-09",
+     "place": "Dubrovnik, Croatia",
+     "arrive": "08:00",
+     "aboard": "18:00"
+    }
+   ],
+   "end": "Venice, Italy",
+   "endDate": "2027-07-11",
+   "off": "07:00"
+  }
+ ],
+ "started": "2026-11-21T04:25:26.215Z",
+ "passed": {
+  "/sources": 14,
+  "/transit": 13,
+  "/guide": 3,
+  "/places": 3,
+  "/voyage": 3,
+  "/ground": 3,
+  "/route": 2
+ },
+ "refused": {
+  "/ratings": 3,
+  "/events": 1
+ },
+ "errors": [],
+ "days": [
+  {
+   "i": 0,
+   "date": "2027-07-06",
+   "type": "arrival",
+   "text": "TUE JUL 6 · VENICE, ITALY · ARRIVING\nVenice, Italy ✎ Rename\nLock this day\nToday is one plan\n\nFlight in at 10:30 am, then the ship at 4:00 pm: the sightseeing in between, your bags and the countdown are on one page.\n\nSee today's plan"
+  },
+  {
+   "i": 1,
+   "date": "2027-07-06",
+   "type": "embark",
+   "text": "TUE JUL 6 · VENICE, ITALY · BOARDING\nVenice, Italy ✎ Rename\nLock this day\n🚢\nLEAVE BY\nall aboard 4:00 pm\n2:13 pm\n▶ Start the tour\n\nOfficial all aboard 4:00 pm · Back at the cruise terminal by 3:00 pm\n\nGetting back on time is up to you\n\nKairoute's leave-by and back-by times are estimates with spare time built in. Traffic, queues and the weather can still slow you down. The time that counts is the ship's all-aboard time or your train or flight, as your cruise line or carrier gives it. Check it on the day.\n\nI understand\nTerms of use\n0\nsights\nChoose sights\nMore\nUse Ctrl + scroll to zoom the map\nStart · Airport\nFinish · Cruise port\n2 mi\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nTaxi or car\nMore about today\n🛳 When do you board?\nBoarding time\nTerminal (optional)\nSave\n\nOn your boarding pass or check-in confirmation (also called arrival or check-in time). Until you add it, the plan uses the time to be back above.\n\nWhat to have on you · 0 of 9 ready\n📅 Add reminders to my calendar\n\nAll times are Venice time, 7 h ahead of your device.\n\nLEAVE\n11:45 am\nS\nOut of Venice Marco Polo Airport\nFlight arrives 10:30 am. We allow 1 h 15 min to get off the plane and through baggage claim (and passport control after a flight from abroad). Book luggage storage near Venice Marco Polo Airport ahead (a left-luggage desk or a storage shop), or ask your hotel or station.\nYou fly in the day the ship sails, so today goes straight from the airport to the ship: there isn't enough time for sightseeing with a safe margin. A late or missed flight is the most common way travelers miss a ship, and the ship won't wait. Keep your airline's and cruise line's phone numbers handy, and if a delay is announced, call the cruise line at once.\nUNTIL\n2:13 pm\n+\nFree time: 2 h 15 min\nYours to spend as you like. Leave here by 2:13 pm to be back by 3:00 pm. See what fits\nTaxi or car · 1 h · 9.5 mi\nNo timetable or live traffic confirms this ride's time: it is an estimate with 15 min extra for the connection. Leave by the time shown, never later.\nBY\n3:00 pm\nE\nBoarding at Venice Fusina Cruise Terminal\nOfficial all aboard 4:00 pm: be at the terminal by 3:00 pm at the latest. Your cruise line gives you a boarding time: add it and the plan gets you there for it.\nPorters take your big bags at the curb (luggage tags on; they reach your cabin by evening). Keep your passport, boarding pass, medicines and valuables in your carry-on for check-in and security.\nBig ports have more than one cruise terminal: check yours on your boarding pass and tell the driver.\nBook the taxi or transfer the day before, or ask your hotel to call one. Being aboard on time is your responsibility: check your boarding time with your cruise line."
+  },
+  {
+   "i": 2,
+   "date": "2027-07-07",
+   "type": "sea"
+  },
+  {
+   "i": 3,
+   "date": "2027-07-08",
+   "type": "port",
+   "text": "THU JUL 8 · KOTOR, MONTENEGRO · IN PORT\nKotor, Montenegro ✎ Rename\nLock this day\n\nWe couldn't find exactly where Cruise port of Kotor is, so this day isn't planned on a guess (every ride time and the time to head back depend on it). It's being looked up again; you can also pick another cruise terminal in the day's settings.\n\nEdit this day"
+  },
+  {
+   "i": 4,
+   "date": "2027-07-09",
+   "type": "port",
+   "text": "FRI JUL 9 · DUBROVNIK, CROATIA · IN PORT\nDubrovnik, Croatia ✎ Rename\nLock this day\n\nWe couldn't find exactly where Cruise port of Dubrovnik is, so this day isn't planned on a guess (every ride time and the time to head back depend on it). It's being looked up again; you can also pick another cruise terminal in the day's settings.\n\nEdit this day"
+  },
+  {
+   "i": 5,
+   "date": "2027-07-10",
+   "type": "sea"
+  },
+  {
+   "i": 6,
+   "date": "2027-07-11",
+   "type": "arrival",
+   "text": "SUN JUL 11 · VENICE, ITALY · ARRIVING\nVenice, Italy ✎ Rename\nLock this day\n\nWhich port do you arrive at? There is more than one here (Venice Fusina Cruise Terminal or Cruise Terminal 107/108). Choose it in the day's settings: no time is given on a guess.\n\nEdit this day"
+  }
+ ],
+ "guides": {
+  "Venice, Italy": {
+   "city": "Venice, Italy",
+   "src": true,
+   "ai": false,
+   "n": 36,
+   "sights": "St Mark's Basilica* | Doge's Palace* | Venice Film Festival* | Santa Maria della Salute | Gallerie dell'Accademia | Biblioteca Nazionale Marciana | Piazza San Marco* | Bridge of Sighs~ | Santa Maria Gloriosa dei Frari | Rialto Bridge~ | Church of San Giorgio Maggiore | Santi Giovanni e Paolo Church | Ca' Pesaro | Venice Biennale* | Grand Canal* | Murano | Il Redentore | Venetian Arsenal | Venetian Ghetto | San Zaccaria Church | Correr Museum | Teatro La Fenice | Grassi Palace | San Pietro di Castello Church | Santa Maria dei Miracoli Church, Venice | Peggy Guggenheim Collection | Carnival of Venice | Ca' Rezzonico | National Archaeological Museum, Venice | State Archives of Venice | Madonna dell'Orto | San Francesco della Vigna Church | San Giacomo di Rialto Church | Statue of Bartolomeo Colleoni~ | Punta della Dogana | Internazionale Gallery of Modern Art",
+   "far": "Venice/Burano | Mestre | Venice/Torcello | Padua | Lace Museum | Duomo di Mestre | Piazza Ferretto | Parco Bissuola | Archaeological Museum | Chiesa di Santa Fosca | Saint Anthony's cathedral | Scrovegni Chapel | Astronomic Observatory | Palazzo della Ragione | Palazzo del Bo' | Botanic Garden | Eremitani Civic Museum",
+   "eats": 60,
+   "starts": {
+    "cruise": [
+     "Venice Fusina Cruise Terminal",
+     "Cruise Terminal 107/108"
+    ],
+    "airport": [
+     "Venice Marco Polo Airport",
+     "Venice-Lido Airport",
+     "Treviso Airport"
+    ],
+    "station": [
+     "Venezia Santa Lucia railway station",
+     "Venezia Mestre railway station"
+    ],
+    "hotel": [
+     "Hotel in central Venice"
+    ],
+    "point": [
+     "Central Venice"
+    ]
+   }
+  },
+  "Kotor, Montenegro": {
+   "city": "Kotor, Montenegro",
+   "src": true,
+   "ai": false,
+   "n": 15,
+   "sights": "Kotor Cathedral* | Fortifications of Kotor* | Dobrota* | Prčanj* | Njeguši* | Škaljari* | Muo | Lovćen National Park | Church of Our Lady of Remedy | Mrčevac | Serbian Orthodox church of St Nicolas in Kotor | Kavač | Maritime Museum of Montenegro in Kotor | Castle of San Giovanni | Aquarium Boka",
+   "far": "",
+   "eats": 40,
+   "starts": {
+    "cruise": [
+     "Cruise port of Kotor (unknown)"
+    ],
+    "airport": [
+     "Kotor airport (unknown)"
+    ],
+    "station": [
+     "Kotor main station (unknown)"
+    ],
+    "hotel": [
+     "Hotel in central Kotor"
+    ],
+    "point": [
+     "Central Kotor"
+    ]
+   }
+  },
+  "Dubrovnik, Croatia": {
+   "city": "Dubrovnik, Croatia",
+   "src": true,
+   "ai": false,
+   "n": 9,
+   "sights": "Rector's Palace, Dubrovnik* | Sponza Palace* | Lovrijenac | St Blaise's Church | Dubrovnik Cathedral* | Lokrum* | Walls of Dubrovnik* | Franciscan Church and Monastery* | Dubrovnik Synagogue",
+   "far": "",
+   "eats": 56,
+   "starts": {
+    "cruise": [
+     "Cruise port of Dubrovnik (unknown)"
+    ],
+    "airport": [
+     "Dubrovnik Airport"
+    ],
+    "station": [
+     "Dubrovnik main station (unknown)"
+    ],
+    "hotel": [
+     "Hotel in central Dubrovnik"
+    ],
+    "point": [
+     "Central Dubrovnik"
+    ]
+   }
+  }
+ },
+ "steps": [],
+ "version": "142b953-1795234773",
+ "aiReady": false,
+ "wizard": {
+  "miss": [],
+  "prev": "Your days: 6 days · 2 ports",
+  "form": "Add each place in order, the way it's booked. Each new stop starts where the last one ends.\n\nSTOP 1 · CRUISE\nLeaves from\nShip (optional)\nBoarding day\nAll aboard\nGetting to the ship (if you arrive the same day)\nFlight\nTrain\nFerry\nCar or bus\nArrive in Venice, Italy at\nPorts of call\nIn order, from your cruise booking. Days with no port are added as sea days.\nDate\nPort\nShip arrives\nAll aboard\nTender port (small boats take you ashore)\nRemove port\nDate\nPort\nShip arrives\nAll aboard\nTender port (small boats take you ashore)\nRemove port\n+ Add a port\nCruise ends in\nOn\nOff the ship at\n+ Add a city stay\n+ Add a cruise\nGoing home from Venice, Italy\nFlight\nTrain\nFerry\nCar or bus\nFlight at\nYour days: 6 days · 2 ports\nAdd more details (optional)\nName this trip\n\nKairoute picks good defaults for pace, walking and voice, and you can change any of them later.\n\nCancel\nPersonalize first\nBuild my trip"
+ },
+ "buildSec": 6,
+ "state": {
+  "busy": "",
+  "err": "",
+  "days": [
+   {
+    "date": "2027-07-06",
+    "type": "arrival"
+   },
+   {
+    "date": "2027-07-06",
+    "type": "embark"
+   },
+   {
+    "date": "2027-07-07",
+    "type": "sea"
+   },
+   {
+    "date": "2027-07-08",
+    "type": "port"
+   },
+   {
+    "date": "2027-07-09",
+    "type": "port"
+   },
+   {
+    "date": "2027-07-10",
+    "type": "sea"
+   },
+   {
+    "date": "2027-07-11",
+    "type": "arrival"
+   }
+  ]
+ },
+ "phoneText": "THU JUL 8 · KOTOR, MONTENEGRO · IN PORT\nKotor, Montenegro ✎ Rename\nLock this day\n\nWe couldn't find exactly where Cruise port of Kotor is, so this day isn't planned on a guess (every ride time and the time to head back depend on it). It's being looked up again; you can also pick another cruise terminal in the day's settings.\n\nEdit this day",
+ "finished": "2026-11-21T04:29:48.500Z"
+}
