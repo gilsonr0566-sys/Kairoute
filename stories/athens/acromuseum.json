@@ -1,0 +1,303 @@
+{
+ "id": "acromuseum",
+ "v": 1,
+ "city": "athens",
+ "title": "Acropolis Museum",
+ "match": {
+  "ids": [
+   "acromuseum"
+  ],
+  "names": [
+   "acropolis museum"
+  ],
+  "wikidata": [
+   "Q330122"
+  ]
+ },
+ "checked": "2026-11-21",
+ "claims": {
+  "purpose": {
+   "label": "supported",
+   "says": "The museum was built to house every artifact found on the rock and its slopes.",
+   "src": [
+    "wp-acromuseum"
+   ],
+   "quote": [
+    "The museum was built to house every artifact found on the rock and on the surrounding slopes"
+   ]
+  },
+  "opened": {
+   "label": "supported",
+   "says": "It opened to the public on 20 June 2009.",
+   "src": [
+    "wp-acromuseum"
+   ],
+   "quote": [
+    "It opened to the public on 20 June 2009."
+   ]
+  },
+  "size": {
+   "label": "supported",
+   "says": "More than 4,250 objects are shown over 14,000 square metres.",
+   "src": [
+    "wp-acromuseum"
+   ],
+   "quote": [
+    "More than 4,250 objects are exhibited over an area of 14,000 square metres."
+   ]
+  },
+  "architect": {
+   "label": "supported",
+   "says": "The design is by Bernard Tschumi with the Greek architect Michael Photiadis.",
+   "src": [
+    "wp-acromuseum"
+   ],
+   "quote": [
+    "it was won by New York–based architect, Bernard Tschumi, in collaboration with the Greek architect Michael Photiadis"
+   ]
+  },
+  "pillars": {
+   "label": "supported",
+   "says": "The building stands on pillars above excavated remains of houses and workshops.",
+   "src": [
+    "wp-acromuseum"
+   ],
+   "quote": [
+    "The new plans were adjusted so that the building was elevated above ground, on pillars.",
+    "Excavation has revealed two layers of modest, private roadside houses and workshops, one from the early Byzantine era and another from the classical era."
+   ]
+  },
+  "glass": {
+   "label": "supported",
+   "says": "Parts of the floor are glass so visitors can see the excavations below.",
+   "src": [
+    "wp-acromuseum"
+   ],
+   "quote": [
+    "some parts of the floor uses glass to allow visitors to see the excavations below"
+   ]
+  },
+  "slope": {
+   "label": "supported",
+   "says": "The first gallery has a sloping floor, like the climb to the rock.",
+   "src": [
+    "wp-acromuseum"
+   ],
+   "quote": [
+    "The long and rectangular hall has a sloping floor, resembling the ascension to the rock."
+   ]
+  },
+  "archaic": {
+   "label": "supported",
+   "says": "A large trapezoidal hall holds the archaic finds, along with pieces from the Erechtheion, the Nike temple and the Propylaea.",
+   "src": [
+    "wp-acromuseum"
+   ],
+   "quote": [
+    "Following the hall is a large trapezoidal hall that contains the archaic findings.",
+    "such as the Erechtheum, the Temple of Athena Nike, and the Propylaea"
+   ]
+  },
+  "top": {
+   "label": "supported",
+   "says": "The top floor sits askew to match the orientation of the Parthenon, and shows the Parthenon marbles.",
+   "src": [
+    "wp-acromuseum"
+   ],
+   "quote": [
+    "they will first be directed to the top level, which displays the Parthenon marbles.",
+    "The top level of the Museum sits askew on the lower levels to achieve the same cardinal orientation of the ancient temple on the Acropolis."
+   ]
+  },
+  "columns": {
+   "label": "supported",
+   "says": "48 columns in the Parthenon hall mark the outline of the temple; the sculptures face outward as on the building.",
+   "src": [
+    "wp-acromuseum"
+   ],
+   "quote": [
+    "The 48 columns in the Parthenon hall mark the outline of the ancient temple",
+    "the pediments, metopes and frieze are displayed facing outwards, as they did on Parthenon"
+   ]
+  },
+  "view": {
+   "label": "supported",
+   "says": "From the north side of the hall you can see the Parthenon above.",
+   "src": [
+    "wp-acromuseum"
+   ],
+   "quote": [
+    "From the north side of the Parthenon hall, one can see the ancient temple above on the Acropolis."
+   ]
+  },
+  "elgin": {
+   "label": "supported",
+   "says": "Elgin's agents removed about half the surviving Parthenon sculptures between 1801 and 1812.",
+   "src": [
+    "wp-elgin"
+   ],
+   "quote": [
+    "From 1801 to 1812, Elgin's agents removed about half the surviving Parthenon sculptures"
+   ]
+  },
+  "hope": {
+   "label": "supported",
+   "says": "Greek officials hope the museum helps the campaign for the return of the Parthenon marbles.",
+   "src": [
+    "wp-acromuseum"
+   ],
+   "quote": [
+    "Greek officials expressed their hope that the new museum will help in the campaign for the return of the Parthenon Marbles."
+   ]
+  },
+  "legal": {
+   "label": "disputed",
+   "says": "The legality of the removal is disputed; an 1816 British inquiry found it legal.",
+   "src": [
+    "wp-elgin"
+   ],
+   "quote": [
+    "The legality of Elgin's actions has been disputed.",
+    "A British parliamentary inquiry in 1816 concluded that Elgin had acquired the marbles legally."
+   ]
+  },
+  "light-critique": {
+   "label": "disputed",
+   "says": "Some scholars criticise the museum's lighting and display.",
+   "src": [
+    "wp-acromuseum"
+   ],
+   "quote": [
+    "The permanent exhibition of the new museum, its lighting conditions, and the political nature of the design have been criticised by archaeologists and museum professionals."
+   ]
+  },
+  "casts": {
+   "label": "supported",
+   "says": "The museum shows casts of the missing Parthenon pieces.",
+   "src": [
+    "wp-acromuseum"
+   ],
+   "quote": [
+    "presenting the cast of the missing pieces for the Parthenon"
+   ]
+  },
+  "ask1983": {
+   "label": "supported",
+   "says": "In 1983 the Greek government formally asked the British government to return them.",
+   "src": [
+    "wp-elgin"
+   ],
+   "quote": [
+    "In 1983, the Greek government formally asked the British government to return them to Greece"
+   ]
+  },
+  "caryatid-london": {
+   "label": "supported",
+   "says": "One Caryatid ended up in the British Museum.",
+   "src": [
+    "wp-erechtheion"
+   ],
+   "quote": [
+    "This is how one of the caryatids was separated from the rest of the building and ended up in the British Museum."
+   ]
+  }
+ },
+ "parts": [
+  {
+   "name": "Arrival",
+   "stand": "Outside the entrance, on the glass floor of the forecourt, looking down.",
+   "paras": [
+    {
+     "t": "This museum was built for one job: to hold everything found on the Acropolis rock and its slopes. It opened in June 2009, and today it shows more than 4,250 objects.",
+     "c": [
+      "purpose",
+      "opened",
+      "size"
+     ],
+     "level": 1
+    },
+    {
+     "t": "Look down through the glass. The whole building stands on pillars above an excavated neighbourhood, with houses and workshops from classical and early Byzantine times. Parts of the floor inside are glass too.",
+     "c": [
+      "pillars",
+      "glass"
+     ],
+     "level": 2
+    }
+   ]
+  },
+  {
+   "name": "The climb",
+   "stand": "Inside, at the foot of the long sloping gallery.",
+   "paras": [
+    {
+     "t": "This first gallery slopes upward on purpose, like the climb up to the rock. Then comes a big hall of archaic finds, and pieces from the Erechtheion, the temple of Athena Nike and the gateway you may have walked through.",
+     "c": [
+      "slope",
+      "archaic"
+     ],
+     "level": 2
+    },
+    {
+     "t": "Look out for the Maidens, the Caryatids from the Erechtheion. One of them ended up in the British Museum in London.",
+     "c": [
+      "caryatid-london"
+     ],
+     "level": 3
+    }
+   ]
+  },
+  {
+   "name": "The Parthenon hall",
+   "stand": "On the top floor, at the north windows, with the Parthenon in view.",
+   "paras": [
+    {
+     "t": "This top floor is the heart of the museum. Notice it sits at an angle to the rest of the building. That's so it lines up with the Parthenon itself. Look out the north windows and there it is.",
+     "c": [
+      "top",
+      "view"
+     ],
+     "level": 1
+    },
+    {
+     "t": "The 48 columns in this hall mark out the outline of the temple, and the sculptures face outward, the way they did on the building.",
+     "c": [
+      "columns"
+     ],
+     "level": 2
+    },
+    {
+     "t": "Now look closely at the sculptures. Where Parthenon pieces are missing, the museum shows casts in their place. Many of the missing pieces are in London. Between 1801 and 1812, agents of Lord Elgin took about half the surviving Parthenon sculptures.",
+     "c": [
+      "casts",
+      "elgin"
+     ],
+     "level": 1
+    },
+    {
+     "t": "Whether that was legal is still disputed. A British inquiry in 1816 said it was. In 1983 Greece formally asked Britain to return them, and Greek officials hope this room will help bring them home.",
+     "c": [
+      "legal",
+      "ask1983",
+      "hope"
+     ],
+     "level": 2
+    },
+    {
+     "t": "Not everyone loves the display. Some archaeologists and museum professionals criticise the lighting and the politics of the design. Decide for yourself.",
+     "c": [
+      "light-critique"
+     ],
+     "level": 3
+    }
+   ]
+  }
+ ],
+ "practical": [
+  {
+   "t": "Hours and ticket prices change by season. Check the museum's official website before you go.",
+   "src": [],
+   "checked": "2026-11-21"
+  }
+ ]
+}

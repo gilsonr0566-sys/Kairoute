@@ -2,3 +2,5 @@ checks/
 test-results/
 tools/beta2/snapshots/
 beta2-site/
+stories/tools/node_modules/
+stories/tools/package*.json

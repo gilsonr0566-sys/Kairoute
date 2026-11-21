@@ -1,0 +1,66 @@
+SOURCE: https://en.wikipedia.org/wiki/Arch_of_Hadrian_(Athens)
+RETRIEVED: 2026-11-21T14:20:21.594Z
+STATUS: 200
+TITLE: Arch of Hadrian (Athens)
+
+The Arch of Hadrian (Greek: Αψίδα του Αδριανού, romanized: Apsida tou Adrianou), most commonly known in Greek as Hadrian's Gate (Greek: Πύλη του Αδριανού, romanized: Pyli tou Adrianou), is a monumental gateway resembling—in some respects—a Roman triumphal arch. It spanned an ancient road from the center of Athens, Greece, to the complex of structures on the eastern side of the city that included the Temple of Olympian Zeus.
+It has been proposed that the arch was built to celebrate the adventus (arrival) of the Roman emperor Hadrian and to honor him for his many benefactions to the city, on the occasion of the dedication of the nearby temple complex in 131 or 132 AD.  Since Hadrian had become an Athenian citizen nearly two decades before the monument was built, Kouremenos has argued that the inscriptions on the arch honor him as an Athenian rather than as the Roman emperor. It is not certain who commissioned the arch, although it is probable that it was the citizens of Athens.  There were two inscriptions on the arch, facing in opposite directions, naming both Theseus and Hadrian as founders of Athens.  While it is clear that the inscriptions honor Hadrian, it is uncertain whether they refer to the city as a whole or to the city in two parts: one old and one new.  The early idea, however, that the arch marked the line of the ancient city wall, and thus the division between the old and the new regions of the city, has been shown to be false by further excavation.  The arch is located 325 metres (1,066 ft) southeast of the Acropolis.
+
+
+== Construction and design ==
+
+
+=== Material and design ===
+
+The entire monument is made of Pentelic marble, from Mount Pentelicus, 18.2 km northeast of the arch.  Pentelic marble was used for the Parthenon and many other notable structures in Athens, although its quality can vary significantly.  The marble used for the arch is of a lower grade that had more inclusions than that used in the best Athenian buildings.  The arch was constructed without cement or mortar from solid marble, using clamps to connect the cut stones.  It is 18m high, 13.5m wide, and 2.3m in  depth.  Its design is fully symmetrical from front to back and side to side.
+The single arched passageway of the lower level is 6.5m wide and was supported by pilasters crowned with Corinthian capitals.  Similar, but taller, pilasters flank the outer corners of the lower level.  The space between the outer pilasters and the arched opening was filled in with squared stones with drafted edges to emphasize the design.  On either side of the central passageway was a Corinthian column on a rectangular, raised base projecting from the center of the wall.  The lower level was crowned with an Ionic architrave capped with dentils and a projecting geison.
+The upper level of the arch (the attic) was composed of a series of Corinthian columns and pilasters dividing the space into three rectangular openings. Each of the outer openings was crowned with an Ionic architrave capped with dentils and a projecting geison, in the manner of the lower level.  The central opening, however, was flanked by antae with engaged Corinthian half-columns that supported a projecting triangular pediment, which rested above the dentils, geison, and sima that joined to those of the two wings.  At the peak of the pediment, there was a small vegetal acroterion.  The central opening of the upper level was originally closed off by a thin screen of stone, c. 7 cm thick. Graindor states that the screen of the central opening of the attic was removed for aesthetic reason on the instructions of Queen Amalia, for whom the avenue running past the arch was named. Hill states that all three openings were closed, but this view has not prevailed. Only the slots for its mounting are now preserved.  The design of this central aediculum-like, niche of the upper level is similar to the architecture of the scaenae frons (façade of ancient stage buildings) and highly evocative of the representations of aedicula in wall painting of the 2nd Pompeian style.
+Even a casual examination of this arch, with a few of the many preserved Roman triumphal arches in mind, reveals the significant design variation between the two structures.  The number of arched passageways of the lower level of Roman triumphal arches was variable as was the presence of a secondary passageway along the long axis of the structure; as a dipylon arch with a single passageway, the lower level of the Arch of Hadrian falls within the gamut of the architectural genre.  Roman triumphal arches, however, typically have a massive, solid attic (upper level), often filled with a dedicatory inscription and sculptural decoration.  In addition, Roman arches typically supported major stone or bronze statuary, often including a quadriga (four-horse chariot) or similar at top center.  As Willers notes, the design of the Arch of Hadrian has a very refined upper level that does not allow the mounting of major decoration on top of the attic.
+
+
+=== Sculptural decoration ===
+It has been proposed that there were statues positioned on top of the lower level, on either side of the central, aediculum-like, niche of the upper level, as was common for this architectural form; Theseus and Hadrian are the most commonly advanced candidates for these two statues, based on the inscriptions. Ward-Perkins has proposed that the attic held additional multiple statues, located over the projecting Corinthian columns of the lower level. In stark opposition to these proposals, Willers states that there is no evidence of the type of doweling needed to mount statuary on the top of the lower level and that the stone is far too roughly worked on the upper surface for statues to rest on it. Although Willers has done a study of the lower level of the arch, permission was not granted for close study of the upper level, so his statements concerning the upper level are based on previously published measurements and images. Kouremenos suggests that in Hadrian's time the arch contained painted reliefs, possibly with statues in the central opening, that were taken down and replaced at some point in the Byzantine period. A complete investigation of the monument remains to be done.
+
+
+=== Inscriptions and location ===
+Two inscriptions are carved on the architrave of the arch’s lower level, one centered over the arched opening on either side.  On the northwest side (towards the Acropolis), the inscription was:
+
+ΑΙΔ' ΕΙΣΙΝ ΑΘΗΝΑΙ ΘΗΣΕΩΣ Η ΠΡΙΝ ΠΟΛΙΣ (this is Athens, the ancient city of Theseus).
+The inscription on the southeast side (facing the Olympeion) reads:
+
+ΑΙΔ' ΕΙΣ' ΑΔΡΙΑΝΟΥ ΚΟΥΧΙ ΘΗΣΕΩΣ ΠΟΛΙΣ (this is the city of Hadrian, and not of Theseus).  An ancient scholium (marginal note) on a manuscript of Aristides states that the emperor Hadrian, when he was expanding the city wall (of Athens), wrote (inscribed) at the boundary of the old and the new areas of Athens a double inscription matching the sense, but not the exact wording, of the inscriptions on the arch.  Based on a combined reading of the arch inscriptions and the scholium, it was at first accepted that the arch stood on the line of the Themistocleian wall and that it marked the division between the old city of Theseus and the new city of Hadrian. In this view, the second inscription referred to a new urban section on the eastern side of Athens created by Hadrian, and - for convenience - this area is termed Hadrianopolis in subsequent scholarly discussion. This newer, Roman section of the city was thought to have been added to the ancient Greek city during the period of the Pax Romana (Roman peace).
+
+Adams has proposed that the inscriptions, rather than dividing Athens into an old city of Theseus and a new city of Hadrian (Hadrianopolis), claim the entire city as a refoundation by the emperor.  In this view, the inscriptions should be read: this is Athens, once the city of Theseus; this is the city of Hadrian, and not of Theseus.  One option claims a part and the other the whole of Athens for the emperor. Adams has also challenged the idea that the arch was on the line of the Themistocleian wall, and this position has now been generally accepted.  A gate of the Themistocleian wall has been excavated c. 140m east of the arch, which has settled the question.  Stuart and Revett, who did the earliest and only complete architectural study of the arch in 1751-53 CE, were perplexed by the fact that the arch is not aligned with the Temple of Olympian Zeus, despite the fact that it is only c. 20m from the peribolos wall (boundary wall) of that complex.  Excavations in the intervening time have shown that the arch is aligned with an ancient road that was roughly on the same course as modern Lysikrates street.  The arch faces the Choragic Monument of Lysicrates 207m to the northwest along this street.
+
+
+=== Preservation ===
+
+At the time that it was recorded architecturally by Stuart and Revett in the mid-18th century, the base of the arch was buried in earth only to the level of around three feet.  Given that it was thus never protected by being buried during its nearly nineteen centuries of existence, the arch entered the modern era in extraordinary condition.  Although the columns of the lower level are missing, the arch is preserved to its full height and towers over modern Amalias Avenue.  In recent decades, atmospheric pollution has damaged the monument.  There is extensive discoloration of the stone and degradation of the inscriptions.
+
+
+== Patronage ==
+Patronage of the arch has been attributed to either the Athenian state or to the Panhellenes, a newly formed association of all the Greek cities, based in Athens.  Early scholarship held that the Athenians were responsible for its creation, on the argument that the quality of material and execution did not equal the other known buildings of Hadrian in Athens, and on the assumption that an emperor who loved Athens so much could not have been so arrogant as to put such an inscription on a structure of his own making.  Two arches of the same scale and design were constructed at the sanctuary of Demeter and Kore at Eleusis later in the 2nd century CE and dedicated to an emperor (perhaps Marcus Aurelius) by the Panhellenes.  These arches flanked the propylon into the sanctuary and stood at the ends of roads to Megara and to a harbor respectively.  The southeastern arch had an inscription that read:
+
+ΤΟΙΝ ΘΕΟΙΝ ΚΑΙ ΤΩΙ ΑΥΤΟΚ[Ρ]ΑΤΟΡΙ ΟΙ ΠΑΝΕ[ΛΛΗ]ΝΕΣ (to the two goddesses and to the emperor, the Panhellenes).
+The use of the same design to honor two emperors within the space of a few decades and a few kilometers has prompted the idea that the Panhellenes were responsible for the arches in both locations.
+
+
+== See also ==
+
+Arch of Hadrian (Jerash)
+
+
+== References ==
+
+
+== Notes ==
+Adams, A. 1989. "The Arch of Hadrian at Athens," in The Greek Renaissance in the Roman Empire, eds. S. Walker and A. Cameron, London, pp. 10–15.
+Graindor, Fredrick E. 1934.  Athenes sous Hadrien. Le Caire: Imprint Nationale.
+Kouremenos, Anna. 2022. "The City of Hadrian and not of Theseus: A cultural history of Hadrian's Arch", in The Province of Achaea in the 2nd Century CE: The Past Present, ed. Anna Kouremenos. London: Routledge. https://www.academia.edu/43746490/_Forthcoming_The_City_of_Hadrian_and_not_of_Theseus_A_Cultural_History_of_Hadrians_Arch
+Ορλανδος, Α. 1968.  Αι αγιογραπηιαι της εν Αθηναις Πυλης του Αδριανου.  Πλατων 20. 248-255.
+Stuart, J. and Revett, N. 1968.  The Antiquities of Athens. Benjamin Bloom: New York.
+Spawforth, A. J., and Walker, Susan.  1985.  The World of the Panhellenion. I. Athens and Eleusis.  The Journal of Roman Studies, 75, pp. 78–104.
+Spawforth, A. J. 1992.  Review: Hadrians panhellenisches Programm.  The Classical Review, 42, pp. 372–374.
+Travlos, J. 1971. Pictorial Dictionary of Ancient Athens, London, pp. 253–257, figs. 325-329.
+Vanderpool, Eugene.  1970.  Some Attic Inscriptions.  Hesperia, 39, no1 pp. 40–46.
+Willers, Dietrich.  1990.  Hadrians panhellenisches Programm: Archäologische Beiträge zur Neugestaltung Athens durch Hadrian.  Steiner AG: Basel.

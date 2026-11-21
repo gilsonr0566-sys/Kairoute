@@ -1,0 +1,184 @@
+{
+ "id": "metropolis",
+ "v": 1,
+ "city": "athens",
+ "title": "Athens Cathedral and the Little Metropolis",
+ "match": {
+  "ids": [
+   "metropolis"
+  ],
+  "names": [
+   "metropolitan cathedral",
+   "mitropoli",
+   "metropolis",
+   "little metropolis"
+  ],
+  "wikidata": [
+   "Q1053047"
+  ]
+ },
+ "checked": "2026-11-21",
+ "claims": {
+  "what": {
+   "label": "supported",
+   "says": "The Metropolitan Cathedral of the Annunciation is the cathedral of the Archbishopric of Athens and all of Greece.",
+   "src": [
+    "wp-metropolis"
+   ],
+   "quote": [
+    "is the cathedral church of the Archbishopric of Athens and all of Greece"
+   ]
+  },
+  "start": {
+   "label": "supported",
+   "says": "The cornerstone was laid on Christmas Day 1842 by King Otto and Queen Amalia.",
+   "src": [
+    "wp-metropolis"
+   ],
+   "quote": [
+    "Construction of the cathedral began on Christmas Day, 1842 with the laying of the cornerstone by King Otto and Queen Amalia."
+   ]
+  },
+  "marble": {
+   "label": "supported",
+   "says": "Workers used marble from 72 demolished churches.",
+   "src": [
+    "wp-metropolis"
+   ],
+   "quote": [
+    "Workers used marble from 72 demolished churches to build the cathedral's immense walls."
+   ]
+  },
+  "done": {
+   "label": "supported",
+   "says": "It took 20 years and several architects; it was dedicated on 21 May 1862.",
+   "src": [
+    "wp-metropolis"
+   ],
+   "quote": [
+    "Construction started under the architect Theophil Hansen and was continued by Dimitris Zezos, Panagis Kalkos and François Boulanger.",
+    "20 years later, it was completed.",
+    "On 21 May 1862, the completed cathedral was dedicated to the Annunciation"
+   ]
+  },
+  "philothei": {
+   "label": "supported",
+   "says": "Saint Philothei, martyred in 1589, is honoured for ransoming enslaved Greek women; her relics are in a silver reliquary.",
+   "src": [
+    "wp-metropolis"
+   ],
+   "quote": [
+    "Saint Philothei built a convent, was martyred in 1589, and her bones are still visible in a silver reliquary.",
+    "She is honoured for ransoming Greek women enslaved"
+   ]
+  },
+  "gregory": {
+   "label": "supported",
+   "says": "Patriarch Gregory V was hanged in 1821 in retaliation for the Greek uprising; his body was later enshrined in Athens.",
+   "src": [
+    "wp-metropolis"
+   ],
+   "quote": [
+    "was hanged by order of Sultan Mahmud II and his body thrown into the Bosphorus in 1821, in retaliation for the Greek uprising",
+    "His body was rescued by Greek sailors and eventually enshrined in Athens."
+   ]
+  },
+  "little": {
+   "label": "supported",
+   "says": "Just south is the little Church of St. Eleftherios, the \"Little Mitropoli\".",
+   "src": [
+    "wp-metropolis"
+   ],
+   "quote": [
+    "To the immediate south of the cathedral is the little Church of St. Eleftherios also called the \"Little Mitropoli\"."
+   ]
+  },
+  "statues": {
+   "label": "supported",
+   "says": "Statues in the square show Constantine XI, the last Byzantine emperor, and Archbishop Damaskinos.",
+   "src": [
+    "wp-metropolis"
+   ],
+   "quote": [
+    "The first is that of Constantine XI, the last emperor of the Eastern Roman Empire.",
+    "The second is a statue of Archbishop Damaskinos who was Archbishop of Athens during World War II"
+   ]
+  },
+  "dress": {
+   "label": "supported",
+   "says": "In Greek churches, no short sleeves or bare legs is a good rule of thumb, as a mark of respect.",
+   "src": [
+    "wv-athens"
+   ],
+   "quote": [
+    "no short sleeves or bare legs is a good rule of thumb, as a mark of respect"
+   ]
+  }
+ },
+ "parts": [
+  {
+   "name": "The cathedral",
+   "stand": "In Mitropoleos Square, facing the cathedral's front.",
+   "paras": [
+    {
+     "t": "This is the Metropolitan Cathedral of the Annunciation, the cathedral of the Archbishop of Athens and all Greece. King Otto and Queen Amalia laid its first stone on Christmas Day 1842.",
+     "c": [
+      "what",
+      "start"
+     ],
+     "level": 1
+    },
+    {
+     "t": "It wasn't quick. It took several architects and 20 years, and builders used marble from 72 demolished churches. It was dedicated in May 1862.",
+     "c": [
+      "marble",
+      "done"
+     ],
+     "level": 2
+    },
+    {
+     "t": "Inside lie two people Greeks hold very dear. Saint Philothei, martyred in 1589, remembered for buying the freedom of Greek women enslaved under Ottoman rule. And Patriarch Gregory the Fifth, hanged in 1821 in revenge for the Greek uprising. Greek sailors rescued his body, and eventually it was enshrined here in Athens.",
+     "c": [
+      "philothei",
+      "gregory"
+     ],
+     "level": 2
+    },
+    {
+     "t": "If a service is on, step in quietly. A good rule of thumb for Greek churches: no short sleeves or bare legs, as a mark of respect.",
+     "c": [
+      "dress"
+     ],
+     "level": 1
+    }
+   ]
+  },
+  {
+   "name": "The Little Metropolis",
+   "stand": "Walk to the small stone church just south of the cathedral.",
+   "paras": [
+    {
+     "t": "Now look at this little church beside the giant. It's Saint Eleftherios, nicknamed the Little Metropolis.",
+     "c": [
+      "little"
+     ],
+     "level": 1
+    },
+    {
+     "t": "We don't yet have a source we trust for its history, so we won't guess. It's well worth a slow walk around the outside.",
+     "c": [],
+     "level": 2,
+     "cue": true
+    },
+    {
+     "t": "In the square, the two statues are Constantine the Eleventh, the last Byzantine emperor, and Archbishop Damaskinos, who led the church in Athens through the Second World War.",
+     "c": [
+      "statues"
+     ],
+     "level": 3
+    }
+   ]
+  }
+ ],
+ "practical": []
+}
