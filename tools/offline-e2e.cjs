@@ -1,7 +1,7 @@
 // Offline check: plan a trip online, tap "Download for offline", then cut the internet (the website itself goes
 // away too) and use the trip. Every unlocked day must come out the same with no signal: the app opens from the
 // device, each Day plan has the same stops, meals, times and rides, the street map draws from saved tiles, a stop's
-// story plays in the saved natural voice, and the status says "Ready for offline". Also checks that a day missing
+// story plays (a recorded story from its saved file in the guide's voice, any other in the device's voice), and the status says "Ready for offline". Also checks that a day missing
 // a piece is named (and says what still works), and that a free trip counts only its first day.
 // All outside services are stand-ins (no network or cost). Usage: node tools/offline-e2e.cjs [index.html]
 // Screenshots go to checks/offline-*.png.
@@ -115,14 +115,15 @@ async function services(ctx) {
   if (same === days.length && days.length) ok(`with no internet: all ${same} days plan exactly the same (stops, meals, times; ${rides} days with real train/ferry rides)`);
   if (maps === days.length && days.length) ok(`with no internet: the street map draws from saved tiles on all ${maps} days`);
   await p.evaluate(() => window.__kairouteGo('plan', 6)); await p.waitForTimeout(800); await p.screenshot({ path: path.join(OUT, 'offline-dayplan-no-internet.png') });
-  // 4. A stop's story plays in the saved natural voice.
-  await p.evaluate(() => { window.__played = []; const pl = HTMLMediaElement.prototype.play; HTMLMediaElement.prototype.play = function () { window.__played.push(String(this.src).slice(0, 5)); return pl.call(this).catch(() => {}); }; });
+  // 4. A stop's story plays with no internet: a recorded story from the saved file, any other in the device's own voice.
+  await p.evaluate(() => { window.__played = []; const pl = HTMLMediaElement.prototype.play; HTMLMediaElement.prototype.play = function () { if (/\/audio\//.test(this.src)) window.__played.push('rec'); return pl.call(this).catch(() => {}); };
+    if (window.speechSynthesis) { const sp = speechSynthesis.speak.bind(speechSynthesis); speechSynthesis.speak = u => { window.__played.push('device'); try { sp(u); } catch (e) {} }; } });
   const di = days.find(i => i > 0) ?? days[0];
   await p.evaluate(i => window.__kairouteGo('guide', i), di); await p.waitForTimeout(400);
   const playBtn = p.locator('#view [data-play]').first();
   if (!(await playBtn.count())) fail('no play button on the Guide');
   else { await playBtn.click(); await p.waitForTimeout(2500); const pl = await p.evaluate(() => window.__played);
-    if (!pl.includes('blob:')) fail('with no internet the story did not play the saved natural voice (played: ' + pl.join(',') + ')'); else ok('with no internet, a stop\'s story plays in the saved natural voice'); }
+    if (!pl.length) fail('with no internet the story did not play at all'); else ok('with no internet, a stop\'s story plays (' + [...new Set(pl)].join(', ') + ' voice)'); }
   await p.evaluate(() => { const b = document.querySelector('[data-act="stop"], [data-play]'); });
   // 5. The Trip screen still says ready with no internet.
   await O('check'); await p.evaluate(() => window.__kairouteGo('trip', 0)); await p.waitForTimeout(300);

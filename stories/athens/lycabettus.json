@@ -1,0 +1,169 @@
+{
+ "id": "lycabettus",
+ "v": 1,
+ "city": "athens",
+ "title": "Lycabettus Hill",
+ "match": {
+  "ids": [
+   "lycabettus"
+  ],
+  "names": [
+   "lycabettus",
+   "lykavittos",
+   "lycabettos"
+  ],
+  "wikidata": [
+   "Q752839"
+  ]
+ },
+ "checked": "2026-11-21",
+ "claims": {
+  "height": {
+   "label": "supported",
+   "says": "At 277 metres, its summit is the highest point in central Athens.",
+   "src": [
+    "wp-lycabettus"
+   ],
+   "quote": [
+    "At 277 meters (908 feet) above sea level, its summit is the highest point in Central Athens"
+   ]
+  },
+  "rock": {
+   "label": "supported",
+   "says": "It is a limestone hill with pine trees around its base.",
+   "src": [
+    "wp-lycabettus"
+   ],
+   "quote": [
+    "is a Cretaceous limestone hill",
+    "pine trees cover its base"
+   ]
+  },
+  "top": {
+   "label": "supported",
+   "says": "At the top are the 19th-century Chapel of Saint George, a theatre and a restaurant.",
+   "src": [
+    "wp-lycabettus"
+   ],
+   "quote": [
+    "At its two peaks are the 19th century Chapel of St. George, a theatre, and a restaurant."
+   ]
+  },
+  "wolves": {
+   "label": "disputed",
+   "says": "The name may come from wolves (lycos); another theory says it is pre-Greek.",
+   "src": [
+    "wp-lycabettus"
+   ],
+   "quote": [
+    "Popular stories suggest it was once the refuge of wolves (lycos in Greek), which is possibly the origin of its name",
+    "Another etymology suggests a Pelasgian, pre-Mycenean, origin"
+   ]
+  },
+  "athena": {
+   "label": "legend",
+   "says": "Myth says Athena dropped the mountain while carrying it for the Acropolis.",
+   "src": [
+    "wp-lycabettus"
+   ],
+   "quote": [
+    "Mythologically, Lycabettus is credited to Athena, who created it when she dropped a limestone mountain she had been carrying from the Pallene peninsula for the construction of the Acropolis"
+   ]
+  },
+  "theatre": {
+   "label": "supported",
+   "says": "The open-air theatre near the top reopened in September 2023 after being closed for 15 years.",
+   "src": [
+    "wp-lycabettus"
+   ],
+   "quote": [
+    "After being closed for 15 years, the theatre was reopened in September of 2023."
+   ]
+  },
+  "funicular": {
+   "label": "supported",
+   "says": "A funicular climbs from Aristippou Street in Kolonaki.",
+   "src": [
+    "wp-lycabettus"
+   ],
+   "quote": [
+    "can be ascended by the Lycabettus Funicular, a funicular railway which climbs the hill from a lower terminus on Aristippou Street in Kolonaki"
+   ]
+  },
+  "walk": {
+   "label": "supported",
+   "says": "Wikivoyage: the paved path takes about 30 minutes to walk up.",
+   "src": [
+    "wv-athens"
+   ],
+   "quote": [
+    "will take 30 minutes to walk up the winding, but paved and not steep, path"
+   ]
+  }
+ },
+ "parts": [
+  {
+   "name": "Getting up",
+   "stand": "At the start of the path or the funicular station on Aristippou Street.",
+   "paras": [
+    {
+     "t": "Lycabettus is the highest point in central Athens, 277 metres above sea level. You can ride the funicular from Aristippou Street in Kolonaki, or walk the paved path, which Wikivoyage reckons takes about 30 minutes.",
+     "c": [
+      "height",
+      "funicular",
+      "walk"
+     ],
+     "level": 1
+    },
+    {
+     "t": "If you walk, you'll climb through pines that cover the lower slopes of this big limestone hill.",
+     "c": [
+      "rock"
+     ],
+     "level": 2
+    }
+   ]
+  },
+  {
+   "name": "At the top",
+   "stand": "On the terrace beside the small white chapel, looking southwest toward the Acropolis.",
+   "paras": [
+    {
+     "t": "Here's your reward. Take a moment to look out over the city and find the Acropolis.",
+     "c": [],
+     "level": 1,
+     "cue": true
+    },
+    {
+     "t": "Up here are the little Chapel of Saint George, from the 1800s, a restaurant, and just below, an open-air theatre that reopened in September 2023 after 15 years closed.",
+     "c": [
+      "top",
+      "theatre"
+     ],
+     "level": 2
+    },
+    {
+     "t": "And the name? It may come from the Greek word for wolf, from a time when wolves roamed here, or from an older, pre-Greek word. Nobody's sure. There's a myth too: Athena was carrying a mountain to build up the Acropolis, dropped it, and here it is.",
+     "c": [
+      "wolves",
+      "athena"
+     ],
+     "level": 3
+    },
+    {
+     "t": "Stay for sunset if you can, and then watch the city lights come on.",
+     "c": [],
+     "level": 1,
+     "cue": true
+    }
+   ]
+  }
+ ],
+ "practical": [
+  {
+   "t": "Funicular times and fares change; check before you go.",
+   "src": [],
+   "checked": "2026-11-21"
+  }
+ ]
+}

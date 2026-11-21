@@ -4,7 +4,7 @@
 //  - the day's plan and what it is built from (the city guide, real places to eat and their ratings, the last
 //    weather forecast, real ride timetables), so the plan comes out the same with no signal;
 //  - the street map (tiles down to street level, label fonts, map icons) and the street routes;
-//  - each stop's story, written out and recorded in the natural voice;
+//  - each stop's story, written out, and the recordings of stops that have one, in the traveler's guide voice;
 //  - the day's time zone, so every time and the back-to-the-ship countdown stay right;
 //  - the app itself (kept by the service worker; inside the Android app it is already on the device).
 // "Ready for offline" shows only when a check of the device itself finds every piece. Anything missing is named,
@@ -75,23 +75,27 @@ function offSpoken(d, plan) {
   const steps = tourSteps(plan); for (let i = 1; i < steps.length; i++) out.push(offParas(walkText(steps[i], steps[i + 1])));
   return out.filter(x => x.length);
 }
-// A piece is saved when its script and every recorded line are on the device (the same keys playback uses).
-async function offStorySaved(lines) {
-  const v = guideVoice();
-  for (const text of scriptChunks(lines)) {
-    const saved = await kv.get("s:" + text), parts = Array.isArray(saved) && saved.length ? saved : localParts(text);
-    for (const p of parts) { const b = await kv.get("a:" + v.model + ":" + v.speaker + ":" + p.replace(/^~\s*/, "")); if (!(b instanceof Blob && b.size > 500)) return false; }
-  }
+// Recorded stories (stop-scripts.js): the files for the traveler's guide voice, kept in their own store on the device.
+// The name starts with "kairoute-maps-" so no app update (this app, Beta 2 or the demo on the same address) clears it.
+const VOICE_CACHE = "kairoute-maps-voice-1";
+function offScripts(plan) {
+  const out = [];
+  plan.items.forEach(it => { if (it.type !== "stop") return; const s = allSites(plan.city).find(x => x.id === it.place.id) || it.place;
+    const sc = s.scriptV && STOP_SCRIPTS.find(x => s.scriptV === x.id + x.v); if (sc && !out.includes(sc)) out.push(sc); });
+  return out;
+}
+const offAbs = f => new URL(f, location.href).href;
+async function offScriptSaved(sc) {
+  let c; try { c = await caches.open(VOICE_CACHE); } catch (e) { return false; }
+  for (const f of scriptFiles(sc)) if (!(await c.match(offAbs(f)))) return false;
   return true;
 }
-// Records one piece in the natural voice. Stops (false) when today's voice allowance runs low, keeping some for live use.
-async function offRecord(lines, ask) {
-  const parts = await scriptParts(lines);
-  if (ask) { try { const st = await (await fetch(freeAI.url + "/status", { cache: "no-store" })).json(); if (st && st.voiceLeft != null && st.voiceLeft - parts.join(" ").length * 2.75 * 10 < 2000) return false; } catch (e) {} }
-  for (const p of parts) { const b = await lineAudio(p.replace(/^~\s*/, "")); if (!b) return false; }
+async function offSaveScript(sc) {
+  const c = await caches.open(VOICE_CACHE);
+  for (const f of scriptFiles(sc)) { const u = offAbs(f); if (await c.match(u)) continue; const r = await fetch(u); if (!r.ok) return false; await c.put(u, r); }
   return true;
 }
-// The natural voice records English stories; other languages, or the device-voice setting, use the device's voice.
+// Recordings are in English; other languages, or the device-voice setting, use the device's voice.
 const offNatural = () => appSet.natvoice !== "off" && (P().lang || "English") === "English";
 function offDeviceVoice() {
   if (nativeTTS) return true;
@@ -122,11 +126,12 @@ async function offCheckDay(d, base, mem) {
   // Map: the tiles for this exact route, a sample of them really in the device's map store.
   if (base && base.tpl) { const t = dayTiles(d, plan, base.tpl), done = mapSavedList()[d.id] === t.sig; put("map", done && await offTileHits(t.urls), "the street map"); }
   else put("map", false, "the street map");
-  // Stories: recorded in the natural voice, or read by a voice that is on the device itself.
-  const spoken = offSpoken(d, plan); let rec = 0; if (offNatural()) for (const l of spoken) if (await offStorySaved(l)) rec++;
-  const left = spoken.length - rec, dev = offDeviceVoice();
-  put("audio", !left || dev, left === 1 ? "1 piece of the guide's audio" : left + " pieces of the guide's audio");
-  if (left && dev && offNatural()) out.notes.push(`Some of the guide's audio will be read by your device's own voice.`);
+  // Stories: a stop with a recorded story plays its saved recording in the guide's voice; every other story is read
+  // by a voice that is on the device itself.
+  const spoken = offSpoken(d, plan), scs = offNatural() ? offScripts(plan) : []; let rec = 0; for (const sc of scs) if (await offScriptSaved(sc)) rec++;
+  const dev = offDeviceVoice(), left = scs.length - rec;
+  put("audio", !left, left === 1 ? "1 recorded story" : left + " recorded stories");
+  if (!dev && spoken.length > scs.length) out.notes.push("This device has no voice of its own, so only the recorded stories play aloud. Every story is still on screen.");
   out.rec = rec; out.stories = spoken.length;
   out.ready = Object.values(out.parts).every(p => p.ok);
   return out;
@@ -191,7 +196,7 @@ async function offDownload() {
   offRun = { pct: 0, step: "Getting ready", stop: false }; offMsg = ""; offPaint();
   const step = (pct, text) => { offRun.pct = Math.max(offRun.pct, Math.min(100, Math.round(pct))); offRun.step = text; offPaint(); };
   const mem = offMem(); mem.tried = mem.tried || {};
-  let stoppedVoice = false, failed = [];
+  let failed = [];
   try {
     try { if (navigator.storage && navigator.storage.persist) await navigator.storage.persist(); } catch (e) {} // ask the browser never to clear the saved trip
     // 1. Guides for any place that doesn't have one yet.
@@ -246,14 +251,14 @@ async function offDownload() {
       // A stop's details can change what its day's map shows: a day whose map no longer matches is saved again.
       if (tpl) for (const d of days) { if (offRun.stop) break; const { plan } = offPlan(d); if (plan && mapSavedList()[d.id] !== dayTiles(d, plan, tpl).sig) await saveDayMap(d, plan, tpl, () => {}); }
     }
-    // 6. Stories in the natural voice, every stop once (a stop on two days is recorded once).
-    if (!offRun.stop && offNatural() && freeAI) {
-      const seen = new Set(), todo = [];
-      for (const d of days) { const { plan } = offPlan(d); if (!plan) continue; for (const l of offSpoken(d, plan)) { const k = l.join("\n"); if (!seen.has(k)) { seen.add(k); if (!(await offStorySaved(l))) todo.push({ l, d }); } } }
+    // 6. Recorded stories in the traveler's guide voice, every stop once (a stop on two days is saved once).
+    if (!offRun.stop && offNatural()) {
+      const todo = [];
+      for (const d of days) { const { plan } = offPlan(d); if (!plan) continue; for (const sc of offScripts(plan)) if (!todo.some(x => x.sc === sc) && !(await offScriptSaved(sc))) todo.push({ sc, d }); }
       let k = 0;
       for (const x of todo) {
-        if (offRun.stop) break; k++; step(60 + 38 * (k - 1) / Math.max(1, todo.length), `Recording the guide's audio for ${mainPlace(x.d) || x.d.destination} (${k} of ${todo.length})`);
-        if (!(await offRecord(x.l, k === 1 || k % 10 === 0))) { stoppedVoice = true; break; }
+        if (offRun.stop) break; k++; step(60 + 38 * (k - 1) / Math.max(1, todo.length), `Saving the guide's recordings for ${mainPlace(x.d) || x.d.destination} (${k} of ${todo.length})`);
+        try { if (!(await offSaveScript(x.sc))) failed.push("recording " + x.sc.id); } catch (e) { failed.push("recording " + x.sc.id); }
       }
     }
     // 7. Time zones the Day plan thread looks up, and anything else the app keeps, then check the device itself.
@@ -266,7 +271,6 @@ async function offDownload() {
   const r = offRep;
   offMsg = stopped ? "Download paused. Tap Download for offline to carry on." :
     r.ready ? "" :
-    stoppedVoice && !offDeviceVoice() ? "The natural voice has used today's allowance. The rest of the stories will record when you tap Download again later today or tomorrow." :
     !offOnline() ? "The internet dropped during the download. Tap Download for offline again when you're back on Wi-Fi." :
     "Some pieces didn't download (an outside service was busy). Tap Download for offline again to finish.";
   offPaint(); if (view === "plan" || view === "trip") render();

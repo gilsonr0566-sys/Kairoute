@@ -1,7 +1,8 @@
 // Hand-written stop scripts (Richard, Nov 15): a finished, researched guide script for a stop, played one part
-// at a time in Kairoute's own recorded voice (Aurora). Each part's words are recorded ahead (tools/voice-render.mjs,
-// workflow "Record stop scripts") into audio/<id>/p<part>-<paragraph>.mp3, so they play at once, need no AI helper,
-// and work offline after the first play. A paragraph whose recording is missing is read by the device voice.
+// at a time in the traveler's chosen Kairoute guide voice (GUIDES in main.js). Each paragraph is recorded ahead in every
+// guide voice with free Kokoro on GitHub's machines (stories/tools/record-scripts.mjs, workflow "Record stop scripts in the
+// Kairoute voices") into audio/<id>/<Kokoro voice>/p<part>-<paragraph>.mp3, so they play at once, need no AI and cost
+// nothing, and work offline once saved. A paragraph whose recording is missing is read by the device voice.
 // The research behind each script (sources, confidence labels) is kept with the project's tour scripts; the words
 // here are the spoken script only. Later every stop gets a script built the same way (see the narration template).
 // Pronunciations for the voice only: the screen shows the real spelling.
@@ -198,6 +199,16 @@ var STOP_SCRIPTS = [{ // var: cityFor can run while main.js is still starting, b
     }
   ]
 }];
+// The hello the Settings page plays for "Hear this voice": recorded in every guide voice like the scripts, never put on a stop.
+STOP_SCRIPTS.push({ id: "voice-sample", v: 1, city: /(?!)/, site: /(?!)/, title: "Voice sample", where: "Settings", parts: [{ name: "Hello", minutes: 1, stand: "",
+  paras: ["Hi, I'm your Kairoute guide. Let's walk over to the old harbor together. Look up, just there. See that stone lion above the gate? People have walked under it for centuries."] }] });
+function playVoiceSample() { const sc = STOP_SCRIPTS.find(x => x.id === "voice-sample"); speakScript("voice-sample", sc, [0]); }
+// Where a library story's facts come from (stop-stories.js): shown under the story, so the traveler can check it.
+function scriptSources(s) {
+  const sc = s && s.scriptV && STOP_SCRIPTS.find(x => s.scriptV === x.id + x.v); if (!sc || !sc.sources || !sc.sources.length) return "";
+  return `<details class="more howknow"><summary>How we know</summary><p class="sub">Every fact in this story is checked against these sources (read ${esc(sc.checked || "")}). Where historians disagree, or a story is a legend, the guide says so.</p>
+<ul class="tips">${sc.sources.map(x => `<li><span>${esc(x.pub)}: <a href="${esc(x.url)}" target="_blank" rel="noopener">${esc(x.title)}</a></span></li>`).join("")}</ul></details>`;
+}
 // The script that belongs to a stop, if any.
 const scriptFor = (s, city) => s && city && STOP_SCRIPTS.find(sc => sc.city.test(city.city || "") && sc.site.test(s.name + " " + (s.local || "")));
 // Puts the script on the stop as its parts (the same parts the voice tour and the day plan already show). The AI
@@ -211,7 +222,9 @@ function scriptStops(city) {
     if (sc.show) s.show = Object.assign({ part: null }, sc.show);
   }
 }
-const scriptAudio = (sc, k, i) => `audio/${sc.id}/p${k}-${i}.mp3`;
+const scriptAudio = (sc, k, i, v) => `audio/${sc.id}/${v || guideVoice().speaker}/p${k}-${i}.mp3`;
+// Every recording of a script in one voice (for saving a trip for offline use).
+const scriptFiles = (sc, v) => sc.parts.flatMap((p, k) => p.paras.map((t, i) => scriptAudio(sc, k, i, v)));
 // A scripted stop says exactly its script: no AI rewrite, no added opening.
 const partSpeech0 = partSpeech;
 partSpeech = function (s, k, first) { const sc = s && s.scriptV && STOP_SCRIPTS.find(x => s.scriptV === x.id + x.v); return sc && sc.parts[k] ? sc.parts[k].paras.join("\n\n") : partSpeech0(s, k, first); };
@@ -220,14 +233,14 @@ async function speakScript(id, sc, ks) {
   speakingId = id; audioMsg = "";
   kairouteSound(); // set up on the tap itself, which browsers require for audio
   try { natAudio.src = SILENT; natAudio.play().catch(() => {}); } catch (e) {} // claim the tap so the recording can play
-  const g = GUIDES.find(x => x[0] === "aurora");
+  const v = guideVoice();
   for (let n = 0; n < ks.length; n++) {
     const paras = sc.parts[ks[n]].paras;
     for (let i = 0; i < paras.length; i++) {
       if (speakingId !== id) return;
       const ok = await new Promise(res => { natAudio.onended = () => res(true); natAudio.onerror = () => res(false);
-        natAudio.src = scriptAudio(sc, ks[n], i); natAudio.preservesPitch = true; natAudio.defaultPlaybackRate = natAudio.playbackRate = GUIDE_PACE;
-        natAudio.play().then(() => { voiceNow = `${g ? g[1] : "Aurora"}, natural voice`; ttsState = "speaking"; updateAudioUI(); }).catch(() => res(false)); });
+        natAudio.src = scriptAudio(sc, ks[n], i, v.speaker); natAudio.preservesPitch = true; natAudio.defaultPlaybackRate = natAudio.playbackRate = GUIDE_PACE;
+        natAudio.play().then(() => { voiceNow = `${v.name}, Kairoute voice`; ttsState = "speaking"; updateAudioUI(); }).catch(() => res(false)); });
       if (speakingId !== id) return;
       // No recording (or it couldn't play): the device voice reads the rest of the script from here.
       if (!ok) { speakDevice(id, paras.slice(i).concat(...ks.slice(n + 1).map(k => sc.parts[k].paras)).map(sayText), null); return; }
@@ -262,7 +275,7 @@ function scriptDemo() {
 #scriptdemo ol.parts{font-size:1rem;padding-left:1.4em}#scriptdemo ol.parts li{margin:10px 0}#scriptdemo details{margin:4px 0}#scriptdemo summary{cursor:pointer;color:var(--route,#146B61)}
 #scriptdemo .state{display:block;color:var(--muted,#56636C);font-size:.9rem;margin-top:4px;min-height:1.2em}</style>
 <div class="sd"><div class="sdtop"><span class="eyebrow">${esc(sc.where)}</span><button class="btn ghost small" data-sdclose>✕ Close</button></div>
-<h2>${esc(sc.title)}</h2><p class="lede">${sc.parts.length} short parts, told by Aurora. Play it all, or tap any part to hear just that one.</p>
+<h2>${esc(sc.title)}</h2><p class="lede">${sc.parts.length} short parts, told by your Kairoute guide. Play it all, or tap any part to hear just that one.</p>${voicePick({ scriptV: sc.id })}
 ${sc.show ? `<p class="sub show">⏱ ${esc(sc.show.what)}: every hour, 9 AM to 11 PM. Start part 1 about 10 minutes before the hour.</p>` : ""}
 <div class="audio"><button class="btn bigplay" data-sp="${sdId(sc, "all")}" data-label="▶ Play the whole stop">▶ Play the whole stop</button><span class="state" aria-live="polite"></span></div>
 <ol class="parts">${sc.parts.map((p, k) => `<li><b>${esc(p.name)}</b> <small>${p.minutes} min</small>${p.stand ? `<span class="cue"><b>${k && !sc.allStand ? "Look at" : "Stand here"}:</b> ${esc(p.stand)}</span>` : ""}
@@ -286,4 +299,4 @@ updateAudioUI = function () {
     const st = b.parentElement.querySelector(".state"); if (st) st.textContent = on ? (ttsState === "starting" ? "Starting…" : `Playing${voiceNow ? " · " + voiceNow : ""}`) : ""; });
 };
 if (typeof window !== "undefined" && typeof document !== "undefined") setTimeout(scriptDemo, 200);
-if (typeof window !== "undefined") window.__kairouteScripts = { STOP_SCRIPTS, sayText, scriptStops, speech: (s, k) => partSpeech(s, k, true), play: s => speakSite(s), state: () => ({ speakingId, ttsState, voiceNow }) };
+if (typeof window !== "undefined") window.__kairouteScripts = { STOP_SCRIPTS, voices: GUIDES.map(g => g[3]), sayText, scriptStops, speech: (s, k) => partSpeech(s, k, true), play: s => speakSite(s), state: () => ({ speakingId, ttsState, voiceNow }) };
