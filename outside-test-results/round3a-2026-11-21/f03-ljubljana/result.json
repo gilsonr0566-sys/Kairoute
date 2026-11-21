@@ -1,0 +1,108 @@
+{
+ "name": "f03-ljubljana",
+ "label": "Ljubljana stay, no built-in guide",
+ "legs": [
+  {
+   "k": "stay",
+   "place": "Ljubljana, Slovenia",
+   "date": "2027-05-10",
+   "nights": 2,
+   "inAt": "13:00",
+   "homeAt": "15:00"
+  }
+ ],
+ "started": "2026-11-21T19:00:07.790Z",
+ "passed": {
+  "/sources": 12,
+  "/transit": 10,
+  "/guide": 1,
+  "/places": 1,
+  "/voyage": 2,
+  "/ground": 1,
+  "/x/near": 4,
+  "/route": 7
+ },
+ "refused": {
+  "/ratings": 1,
+  "/grating": 2,
+  "/events": 3
+ },
+ "errors": [],
+ "days": [
+  {
+   "i": 0,
+   "date": "2027-05-10",
+   "type": "arrival",
+   "text": "MON MAY 10 · LJUBLJANA, SLOVENIA · ARRIVING\nLjubljana, Slovenia ✎ Rename\nLock this day\n▶ Start the tour\n2:15 pm–9:30 pm\n7 h 15 min ✎\n1\nsight\n1.2 mi\nwalking\n4:36 pm\nlast stop done\nChoose sights\nMore\nAbout today's plan1 note\nUse Ctrl + scroll to zoom the map\nStart · Airport\nH\n1\n500 ft\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nWalk\nTaxi or car\n■ Hotel\nMore about today\n\nAll times are Ljubljana time, 7 h ahead of your device.\n\nLEAVE\n2:15 pm\nS\nOut of Ljubljana Airport\nFlight arrives 1:00 pm. We allow 1 h 15 min to get off the plane and through baggage claim (and passport control after a flight from abroad).\nTaxi or car · 55 min · 16 mi\nARRIVE\n3:10 pm\nLEAVE\n3:30 pm\nH\nCheck in or drop bags\n20 min\nWalk · 13 min · 0.6 mi\nWalk · 13 min\nTaxi or car · 13 min\nARRIVE\n3:43 pm\nLEAVE\n4:23 pm\n1\nThe works of Jože Plečnik in Ljubljana – Human Centred Urban Design\n40 min · Sight · Must-see · UNESCO\nUNTIL\n9:17 pm\n+\nFree time: 4 h 54 min\nYours to spend as you like. See what fits\nWalk · 13 min · 0.6 mi\nWalk · 13 min\nTaxi or car · 13 min\nBY\n9:30 pm\nE\nBack at Hotel in central Ljubljana\nARRIVE\n6:30 pm\nD\nSuggested dinner: Hotel Cubo\nRestaurant\nTRAVELERS RECOMMEND\nChange dinner\nDinner: why here"
+  },
+  {
+   "i": 1,
+   "date": "2027-05-11",
+   "type": "land",
+   "text": "TUE MAY 11 · LJUBLJANA, SLOVENIA · LAND DAY\nLjubljana, Slovenia ✎ Rename\nLock this day\n▶ Start the tour\n9:00 am–6:00 pm\n9 h ✎\n6\nsights\n1.7 mi\nwalking\n3:04 pm\nlast stop done\nChoose sights\nMore\nAbout today's plan1 note\nUse Ctrl + scroll to zoom the map\nS\n1\n2\n3\n4\n5\nL\n6\n1000 ft\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nWalk\n● Meal\nMore about today\n\nAll times are Ljubljana time, 7 h ahead of your device.\n\nLEAVE\n9:00 am\nS\nLeave Hotel in central Ljubljana\nAdd your own hotel on the Trip page for exact times.\nNext door\nARRIVE\n9:02 am\nLEAVE\n9:17 am\n1\nRepublic Square, Ljubljana\n15 min · Square\nWalk · 7 min · 0.3 mi\nARRIVE\n9:24 am\nLEAVE\n9:54 am\n2\nSts. Cyril and Methodius Church\n30 min · Church\nNext door\nARRIVE\n9:56 am\nLEAVE\n11:26 am\n3\nNational Gallery of Slovenia\n1 h 30 min · Museum\nWalk · 5 min · 0.2 mi\nARRIVE\n11:31 am\nLEAVE\n12:11 pm\n4\nNebotičnik\n40 min · Sight\nWalk · 11 min · 0.5 mi\nWalk · 11 min\nTaxi or car · 12 min\nARRIVE\n12:22 pm\nLEAVE\n1:12 pm\n5\nLjubljana Castle\n50 min · Palace · Must-see\nWalk · 4 min · 0.2 mi\nARRIVE\n1:16 pm\nLEAVE\n2:16 pm\nL\nLunch: Tokyo Piknik\nRestaurant · Local spot · 1 h\nChange lunch\nLunch: why here\nWalk · 8 min · 0.4 mi\nARRIVE\n2:24 pm\nLEAVE\n3:04 pm\n6\nCarniola\n40 min · Sight · Must-see\nUNTIL\n6:00 pm\n+\nFree time: 2 h 56 min\nYours to spend as you like. See what fits\nNext door\nBY\n6:00 pm\nE\nBack at Hotel in central Ljubljana\nARRIVE\n6:30 pm\nD\nSuggested dinner: DA BU Da\nRestaurant\nTRAVELERS RECOMMEND\nChange dinner\nDinner: why here"
+  },
+  {
+   "i": 2,
+   "date": "2027-05-12",
+   "type": "departure",
+   "text": "WED MAY 12 · LJUBLJANA, SLOVENIA · LEAVING\nLjubljana, Slovenia ✎ Rename\nLock this day\n✈️\nLEAVE BY\nto your flight\n9:33 am\n▶ Start the tour\n\nFlight 3:00 pm · Back at Ljubljana Airport by 12:00 pm\n\nGetting back on time is up to you\n\nKairoute's leave-by and back-by times are estimates with spare time built in. Traffic, queues and the weather can still slow you down. The time that counts is the ship's all-aboard time or your train or flight, as your cruise line or carrier gives it. Check it on the day.\n\nI understand\nTerms of use\n1\nsight\n0.3 mi\nwalking\nChoose sights\nMore\nAbout today's plan2 notes\nUse Ctrl + scroll to zoom the map\nS\n1\nFinish · Airport\n300 ft\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nWalk\nTaxi or car\n■ Hotel\nMore about today\n\nAll times are Ljubljana time, 7 h ahead of your device.\n\nLEAVE\n9:00 am\nS\nCheck out of Hotel in central Ljubljana\nAdd your own hotel on the Trip page for exact times.\nMost hotels keep your bags for the day after check-out: ask at the desk.\nWalk · 3 min · 0.1 mi\nARRIVE\n9:03 am\nLEAVE\n9:33 am\n1\nUrsuline Church of the Holy Trinity\n30 min · Church\nWalk · 3 min · 0.1 mi\nARRIVE\n9:36 am\nLEAVE\n9:51 am\nH\nCollect bags\n15 min\nUNTIL\n9:33 am\n+\nFree time: 59 min\nYours to spend as you like. Leave here by 9:33 am to be back by 12:00 pm. See what fits\nTaxi or car · 1 h 10 min · 16 mi\nNo timetable or live traffic confirms this ride's time: it is an estimate with 15 min extra for the connection. Leave by the time shown, never later.\nBY\n12:00 pm\nE\nAt Ljubljana Airport\nFlight leaves 3:00 pm: be at the airport by 12:00 pm, 3 h early for an international flight."
+  }
+ ],
+ "guides": {
+  "Ljubljana, Slovenia": {
+   "city": "Ljubljana, Slovenia",
+   "src": true,
+   "ai": false,
+   "n": 13,
+   "sights": "Ljubljana Castle* | The works of Jože Plečnik in Ljubljana – Human Centred Urban Design* | Sts. Cyril and Methodius Church | National Gallery of Slovenia | Ljubljana Botanical Garden | Carniola* | Museum of Modern Art | Republic Square, Ljubljana | Tivoli Castle | Nebotičnik | Ljubljana Zoo | Metelkova | Ursuline Church of the Holy Trinity",
+   "far": "Bled | Postojna | Koper | Kamnik",
+   "eats": 60,
+   "starts": {
+    "cruise": [
+     "Cruise port of Ljubljana (unknown)"
+    ],
+    "airport": [
+     "Ljubljana Airport"
+    ],
+    "station": [
+     "Ljubljana railway station"
+    ],
+    "hotel": [
+     "Hotel in central Ljubljana"
+    ],
+    "point": [
+     "Central Ljubljana"
+    ]
+   }
+  }
+ },
+ "steps": [],
+ "version": "ecac048-1795285760",
+ "aiReady": false,
+ "wizard": {
+  "miss": [],
+  "prev": "Your days: 3 days",
+  "form": "Add each place in order, the way it's booked. Each new stop starts where the last one ends.\n\nSTOP 1 · CITY STAY\nCity\nArrive on\nNights\nHotel (optional)\nGetting there\nFlight\nTrain\nFerry\nCar or bus\nArrive in town at\nLeave empty if you don't know yet.\n+ Add a city stay\n+ Add a cruise\nGoing home from here\nFlight\nTrain\nFerry\nCar or bus\nFlight at\nYour days: 3 days\nAdd more details (optional)\nName this trip\n\nKairoute picks good defaults for pace, walking and voice, and you can change any of them later.\n\nCancel\nPersonalize first\nBuild my trip"
+ },
+ "buildSec": 108,
+ "state": {
+  "busy": "",
+  "err": "",
+  "days": [
+   {
+    "date": "2027-05-10",
+    "type": "arrival"
+   },
+   {
+    "date": "2027-05-11",
+    "type": "land"
+   },
+   {
+    "date": "2027-05-12",
+    "type": "departure"
+   }
+  ]
+ },
+ "phoneText": "TUE MAY 11 · LJUBLJANA, SLOVENIA · LAND DAY\nLjubljana, Slovenia ✎ Rename\nLock this day\n▶ Start tour\n9:00 am–6:00 pm\n9 h ✎\n6\nsights\n1.7 mi\nwalking\n3:04 pm\nlast stop done\nChoose sights\nMore\nAbout today's plan1 note\nUse Ctrl + scroll to zoom the map\nS\n1\n2\n3\n4\n5\nL\n6\n1000 ft\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nWalk\n● Meal\nMore about today\n\nAll times are Ljubljana time, 7 h ahead of your device.\n\nLEAVE\n9:00 am\nS\nLeave Hotel in central Ljubljana\nAdd your own hotel on the Trip page for exact times.\nNext door\nARRIVE\n9:02 am\nLEAVE\n9:17 am\n1\nRepublic Square, Ljubljana\n15 min · Square\nWalk · 7 min · 0.3 mi\nARRIVE\n9:24 am\nLEAVE\n9:54 am\n2\nSts. Cyril and Methodius Church\n30 min · Church\nNext door\nARRIVE\n9:56 am\nLEAVE\n11:26 am\n3\nNational Gallery of Slovenia\n1 h 30 min · Museum\nWalk · 5 min · 0.2 mi\nARRIVE\n11:31 am\nLEAVE\n12:11 pm\n4\nNebotičnik\n40 min · Sight\nWalk · 11 min · 0.5 mi\nWalk · 11 min\nTaxi or car · 12 min\nARRIVE\n12:22 pm\nLEAVE\n1:12 pm\n5\nLjubljana Castle\n50 min · Palace · Must-see\nWalk · 4 min · 0.2 mi\nARRIVE\n1:16 pm\nLEAVE\n2:16 pm\nL\nLunch: Tokyo Piknik\nRestaurant · Local spot · 1 h\nChange lunch\nLunch: why here\nWalk · 8 min · 0.4 mi\nARRIVE\n2:24 pm\nLEAVE\n3:04 pm\n6\nCarniola\n40 min · Sight · Must-see\nUNTIL\n6:00 pm\n+\nFree time: 2 h 56 min\nYours to spend as you like. See what fits\nNext door\nBY\n6:00 pm\nE\nBack at Hotel in central Ljubljana\nARRIVE\n6:30 pm\nD\nSuggested dinner: DA BU Da\nRestaurant\nTRAVELERS RECOMMEND\nChange dinner\nDinner: why here",
+ "finished": "2026-11-21T19:04:36.518Z"
+}
