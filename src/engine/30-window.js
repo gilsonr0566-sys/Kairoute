@@ -70,7 +70,9 @@
   E.dayWindow = (d, tr) => {
     if (d.noShore) return E.fail("At sea or staying aboard: no time ashore.", { noShore: true });
     if (d.through) return E.fail("This day's plan is on the next page, with your departure or boarding.", { through: true });
-    const L = d.lodging, P = d.point, w = { head: [], tail: [], start: NaN, endBy: NaN, buffer: 0, hard: hardEnd(d.type), notes: [] }; if (d.date) w.date = String(d.date);
+    const L = d.lodging, P = d.point, w = { head: [], tail: [], start: NaN, endBy: NaN, buffer: 0, hard: hardEnd(d.type), notes: [] };
+    // A group trip's day ends at the group's meeting time: not a minute past it (a day at the hotel may otherwise run 5 min over).
+    if (d.meet) w.strict = true; if (d.date) w.date = String(d.date);
     // A port, station or airport far from every sight of the place (a port on another island, a gate grounded to the
     // wrong town) is as good as unknown: never planned from it.
     // A guide written as a trip out from that very place ("City from Port") names it, and is far by design.

@@ -5166,7 +5166,7 @@ function renderLobby() {
       <div><div class="eyebrow">Pick up where you left off</div>${renameId === cur.id ? renameBox(cur.id, cur.name || tripName(cur)) : `<h3>${esc(cur.name || tripName(cur))}</h3>`}
         <div class="meta">${esc(tripSpan(cur))} · ${tripDaysText(cur)} · ${(() => { const td = cur.days.find(x => isToday(x)); const dd = td || d; return (td ? "Today: " : "Next: ") + esc(placeLabel(dd) || "New day"); })()}</div></div>
       <div class="go"><button class="btn" data-act="continue">Continue trip</button></div>
-      <div class="resacts"><span class="lede">${syncSt() ? "Synced across your devices" + (syncSt().at ? " · last synced " + esc(new Date(syncSt().at).toLocaleTimeString([], { hour: "numeric", minute: "2-digit" })) : "") : `Saved on this device · <button class="linkbtn" data-act="syncfromlobby">Sync with another device</button>`}</span><button class="btn ghost small" data-goto="trip" data-act2="edit">Edit itinerary</button>${moreMenu(cur.id, `<button class="btn ghost small" data-act="rename" data-id="${esc(cur.id)}">Rename</button><button class="btn ghost small" data-act="archive" data-id="${esc(cur.id)}">Archive</button>${delBtn(cur.id)}`)}</div>
+      <div class="resacts"><span class="lede">${syncSt() ? "Synced across your devices" + (syncSt().at ? " · last synced " + esc(new Date(syncSt().at).toLocaleTimeString([], { hour: "numeric", minute: "2-digit" })) : "") : `Saved on this device · <button class="linkbtn" data-act="syncfromlobby">Sync with another device</button>`}</span><button class="btn ghost small" data-goto="trip" data-act2="edit">Edit itinerary</button>${moreMenu(cur.id, `<button class="btn ghost small" data-grp="sharegrp">Share with my group</button><button class="btn ghost small" data-act="rename" data-id="${esc(cur.id)}">Rename</button><button class="btn ghost small" data-act="archive" data-id="${esc(cur.id)}">Archive</button>${delBtn(cur.id)}`)}</div>
     </div>` : ""}
     ${others.length || !hasSample ? `    <div class="sechead"><h2>Planned trips</h2><span class="lede">${list.length - archived.length} ${syncSt() ? "synced across your devices" + (syncSt().at ? " · last synced " + esc(new Date(syncSt().at).toLocaleTimeString([], { hour: "numeric", minute: "2-digit" })) : "") : `saved on this device · <button class="linkbtn" data-act="syncfromlobby">Sync with another device</button>`}</span></div>
     <div class="tripcards">
@@ -5200,7 +5200,7 @@ function pageBar(title) {
 // Settings, privacy and terms share one page: a section list on the left (chips on phones) and one section at a time,
 // so every section fits on a screen and nothing is listed twice.
 let setSec = "display", guideStop = null;
-const SET_SECS = [["display", "Display"], ["voice", "Guide voice"], ["prefs", "Trip preferences"], ["sync", "Connect another device"], ["group", "Group tour"], ["ai", "AI guide"], ["offline", "Offline"], ["data", "Your data"], ["about", "About"], ["privacy", "Privacy"], ["terms", "Terms of use"]];
+const SET_SECS = [["display", "Display"], ["voice", "Guide voice"], ["prefs", "Trip preferences"], ["sync", "Connect another device"], ["group", "Group trip"], ["ai", "AI guide"], ["offline", "Offline"], ["data", "Your data"], ["about", "About"], ["privacy", "Privacy"], ["terms", "Terms of use"]];
 function renderSettings(sec) {
   if (sec) setSec = sec;
   const seg = (key, list) => `<div class="seg" role="group">${list.map(([k, l]) => `<button type="button" data-app="${key}" data-v="${k}" aria-pressed="${appSet[key] === k}">${l}</button>`).join("")}</div>`;
@@ -5243,7 +5243,6 @@ function renderSettings(sec) {
       ["Live maps", "Mapbox maps with turn-by-turn walking directions and your blue dot."],
       ["Real photos", "Pictures of every stop showing exactly what to look for."],
       ["Weather smarts", "Read the forecast and move indoor sights to rainy days for you."],
-      ["Travel together", "Share a live trip so everyone in your group sees the same plan and journal."],
       ["Running-late alerts", "Phone alerts for the ship countdown, even with the app closed."],
       ["Follow me, phone in pocket", "GPS keeps guiding and starts each story even with the screen off."]
     ].map(([a, b]) => `<li><span><b>${a}:</b> ${b}</span></li>`).join("")}</ul>
@@ -5369,7 +5368,6 @@ function renderTrips() {
       ["Live maps", "Mapbox maps with turn-by-turn walking directions and your blue dot."],
       ["Real photos", "Pictures of every stop showing exactly what to look for."],
       ["Weather smarts", "Read the forecast and move indoor sights to rainy days for you."],
-      ["Travel together", "Share a live trip so everyone in your group sees the same plan and journal."],
       ["Running-late alerts", "Phone alerts for the ship countdown, even with the app closed."]
     ].map(([a, b]) => `<li><span><b>${a}:</b> ${b}</span></li>`).join("")}</ul>
   </details>
@@ -6776,7 +6774,7 @@ ${partsList(s, it.time)}${stopLiveNotes(it, d)}</div></div>`;
   // Heads-up: everything that needs a decision today, in one place above the schedule, most urgent first.
   const askOut = new Set(d.pendingOrder && orderNote(d, plan) ? d.pendingOrder.names : []), dropNow = plan.dropped.filter(s => !askOut.has(s.name)); // the order question already names those
   const heads = [
-    orderNote(d, plan), readyBanner(d), mealSkipNote(d),
+    grpDayCard(d, plan), orderNote(d, plan), readyBanner(d), mealSkipNote(d),
     boardCard(d, plan), boardEve(d),
     (b => b ? `<div class="livecard">${b}</div>` : "")(liveBanner(d, plan)),
     rideChangeBanner(d),
@@ -6811,6 +6809,7 @@ ${partsList(s, it.time)}${stopLiveNotes(it, d)}</div></div>`;
       <button class="menuitem" role="menuitem" data-act="suggesttour">✨ Suggest my tour</button>
       ${canDrag ? `<button class="menuitem" role="menuitem" data-act="tlview" data-v="${tlCompact() ? "full" : "compact"}">${tlCompact() ? "☰ Show full details" : "⠿ Change the order (drag the stops)"}</button>` : ""}
       ${d.type === "port" && !d.aboard ? `<button class="menuitem" role="menuitem" data-act="aboard">⚓ I'm staying on board today</button>` : ""}
+      ${grpMenuHTML(d)}
       ${wxChip ? "" : wxt.replace('class="btn ghost small toggle"', 'class="menuitem toggle"').replace("<span>Rainy day</span>", "<span>Rainy day: plan indoor sights</span>")}
       ${preview ? `<button class="menuitem" role="menuitem" data-act="cdpreview">▶ Preview the day live</button>` : ""}
       <div class="menugroup">On the way</div>

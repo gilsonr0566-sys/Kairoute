@@ -77,6 +77,7 @@ function engineBucket(withOld) {
     const facts = { i, id: d.id, date: d.date || "", type: d.type, mode: d.mode, city: ck, typed: String(d.destination || ""), // as the traveler typed it ("Port (City), Country")
       noShore: noShore(d), through: !!throughTo(d),
       startTime: d.startTime || "", hours: n(d.hours), time: d.time || "", tender: !!d.tender, noBags: !!d.noBags, returnToStart: d.returnToStart !== false,
+      meet: !!(trip && (trip.group || trip.groupShared)), // a group trip: every plan ends by the group's meeting time
       portArrive: sh(d.portArrive), allAboard: sh(d.allAboard), boardAt: typeof boardAt === "function" ? boardAt(d) : null,
       thru: thru ? { mode: thru.mode, time: thru.time || "", point: pt(A), guess: !!thru.estimated || !thru.time } : null,
       // An arrival time the traveler never gave (the trip builder fills one in): asked, never planned on (Round 1: "Flight in at 10:30 am" invented).

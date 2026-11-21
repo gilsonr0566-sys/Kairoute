@@ -83,6 +83,6 @@
     }
     if (!Z) items.push({ t: "end", name: "Day done", at: clock });
     const end = clock, over = end - win.endBy;
-    return { items, end, late, waits, rideMin, over: over > (win.hard ? 0 : 5) ? over : 0, states };
+    return { items, end, late, waits, rideMin, over: over > (win.hard || win.strict ? 0 : 5) ? over : 0, states };
   };
 })(KEngine);

@@ -1114,6 +1114,15 @@ html, body { overflow-x: hidden; }
 .grpform { flex-basis: 100%; display: flex; gap: 6px; }
 .grpform input { flex: 1; min-width: 0; }
 .grpform select { width: auto; }
+.grpday > div { display: grid; gap: 6px; width: 100%; }
+.grpday p { margin: 0; }
+.grpday .warn { color: var(--ink); background: var(--meal-soft); border-radius: 4px; padding: 4px 8px; }
+.grpday input { max-width: 320px; }
+.grpoffer { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.grptrips { display: grid; gap: 8px; margin: 10px 0 14px; }
+.grptrip { display: flex; gap: 10px; align-items: center; justify-content: space-between; border: 1px solid var(--line, rgba(0,0,0,.12)); border-radius: var(--r); padding: 10px 12px; }
+.grptrip > span { display: grid; gap: 2px; min-width: 0; }
+.grptrip b { overflow-wrap: anywhere; }
 .grpregroup { display: flex; gap: 10px; align-items: center; justify-content: space-between; flex-wrap: wrap; }
 
 /* ---- Day plan, decluttered (Nov 13): the day at a glance on top, one main action, every less-used tool in
