@@ -658,11 +658,13 @@ ok(E.readable('Café Ñandú') && E.readable("Joe's Bar & Grill") && !E.readable
 // The order repair takes the best single move, not the first that helps (Nov 19: a sight beside the first stop was sent
 // across town and back to fix a late museum, when swapping the two museums fixed it with less riding).
 { const PD = path.join(__dirname, '..', 'places', 'data'), places = {}; if (fs.existsSync(PD)) for (const g of fs.readdirSync(PD).filter(g => g.endsWith('.json'))) { const q = JSON.parse(fs.readFileSync(path.join(PD, g))); places[q.key] = q; }
+  // A trip from the live 20-city run (tools/beta2/live-trip.cjs, needs the internet): checked where it has been saved, said when not.
+  if (!fs.existsSync(path.join(dir, 'g17-haifa.json'))) console.log('NOT RUN here: the Old City order check needs g17-haifa.json (node tools/beta2/live-trip.cjs)'); else {
   const s = E.applyPlaces(JSON.parse(fs.readFileSync(path.join(dir, 'g17-haifa.json'))), places), p = E.planTrip(s)[1], ids = p.items.filter(x => x.t === 'stop').map(x => x.name);
   const old = ['Dome of the Rock', 'Al-Aqsa Mosque', 'Western Wall'].map(n => ids.indexOf(n)), museum = Math.min(...['Israel Museum', 'Bible Lands Museum'].map(n => ids.indexOf(n)).filter(k => k >= 0));
   // (Nov 20: with unknown hours kept to 9 to 5 the museums may come first; what counts is that each side of town is visited once.)
   const mus = ['Israel Museum', 'Bible Lands Museum'].map(n => ids.indexOf(n)).filter(k => k >= 0), museumLast = Math.max(...mus);
-  ok(old.every(k => k >= 0) && (old.every(k => k < museum) || old.every(k => k > museumLast)), `the Old City sights together, never split by the museums across town (got ${ids.join(' > ')})`); }
+  ok(old.every(k => k >= 0) && (old.every(k => k < museum) || old.every(k => k > museumLast)), `the Old City sights together, never split by the museums across town (got ${ids.join(' > ')})`); } }
 // Road times from the map: two trips out across a gulf are timed by the road, not the straight line.
 { const PD = path.join(__dirname, '..', 'places', 'data'), places = {}; if (fs.existsSync(PD)) for (const g of fs.readdirSync(PD).filter(g => g.endsWith('.json'))) { const q = JSON.parse(fs.readFileSync(path.join(PD, g))); places[q.key] = q; }
   const s = E.applyPlaces(JSON.parse(fs.readFileSync(path.join(dir, 'athens-booked.json'))), places), far = id => s.cities.athens.farther.find(x => x.id === id);

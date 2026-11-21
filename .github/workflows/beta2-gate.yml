@@ -32,6 +32,9 @@ jobs:
       - name: Saved test trips (snapshots), then the engine, leak and stress suites
         if: always()
         run: |
+          # The saved test trips (tools/beta2/corpus: the 20-city list, live trips, no traveler data), then the ones this
+          # build makes fresh on top (the sample trip and its variants, the no-AI trips).
+          mkdir -p tools/beta2/snapshots && cp tools/beta2/corpus/*.json tools/beta2/snapshots/
           node tools/beta2/snapshot.cjs
           node tools/beta2/noai-trips.cjs
           node tools/beta2/engine-test.cjs
