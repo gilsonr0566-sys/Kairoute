@@ -5,6 +5,9 @@ on:
       stop:
         description: Stop script id
         default: prague-clock
+      url:
+        description: Site address (blank = demo)
+        default: ""
 permissions:
   contents: read
 jobs:
@@ -16,4 +19,4 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-      - run: npm i --no-save playwright@1.65.1 && npx playwright install --with-deps chromium && node tools/script-live.cjs "" "${{ inputs.stop }}"
+      - run: npm i --no-save playwright@1.65.1 && npx playwright install --with-deps chromium && node tools/script-live.cjs "${{ inputs.url }}" "${{ inputs.stop }}"
