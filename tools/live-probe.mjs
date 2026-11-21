@@ -10,11 +10,10 @@ const probes = [
   ["/sample trip (traveler)", "/sample", { prompt: "Plan one day in Lisbon, probe " + n, purpose: "trip", tier: "quick" }],
   ["/sample guide (traveler)", "/sample", { prompt: "Two lines about Lisbon, probe " + n, purpose: "guide", tier: "quick" }],
   ["/sample walk", "/sample", { prompt: "Walk probe " + n, purpose: "walk", tier: "quick" }],
-  ["/script", "/script", { name: "Probe Tower " + n, city: "Lisbon" }],
+  ["/script", "/script", { text: "The tower stands by the river. Probe " + n + "." }],
   ["/speak", "/speak", { text: "Probe line " + n }],
-  ["/identify", "/identify", { image: img, city: "Lisbon" }],
-  ["/x/primer", "/x/primer", { city: "Probe City " + n }],
-  ["/x/ask", "/x/ask", { q: "What is this probe " + n + "?", city: "Lisbon" }],
+  ["/identify", "/identify", { image: img, cands: [{ name: "Belem Tower", kind: "tower", m: 40 }], dev: (n.toString(16) + "0000000000000000").slice(0, 16) }],
+  ["/x/write primer", "/x/write", { kind: "primer", text: "Lisbon is a city by the sea. Probe " + n + ".", name: "Lisbon" }],
 ];
 let bad = 0;
 for (const [name, p, b] of probes) { const [s, t] = await post(p, b); const ok = s !== 200; if (!ok) bad++; console.log(`${ok ? "refused" : "ANSWERED"} ${s} ${name}: ${t}`); }
