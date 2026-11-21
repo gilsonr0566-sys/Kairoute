@@ -10,6 +10,10 @@
 // The answers are kept with the place (its sights' own fields), so they are asked once and work offline. Free services,
 // no AI, from the traveler's own connection. A service that doesn't answer changes nothing: the plan stays as it was.
 const WATER_STORE_V = 1;
+// The browser's own fetch, not the app's counting one: a question that fails or finds nothing changes no plan, so it must
+// not make every plan look stale (Nov 20 sweep: offline, each failed question re-planned the day, an 8.7 s tick). An
+// answer that does change something changes the place's own fields, and that re-plans it.
+const waterFetch = (u, o) => (typeof window !== "undefined" && window.fetch ? window.fetch(u, o) : fetch(u, o));
 const waterAsked = new Map();
 const OVERPASS_EPS = ["https://overpass-api.de/api/interpreter", "https://overpass.private.coffee/api/interpreter"];
 
@@ -42,14 +46,14 @@ function waterAcross(pts, homes, isl, homeIsl, onFoot) {
 }
 async function waterOverpass(q) {
   for (const ep of OVERPASS_EPS) {
-    try { const r = await fetch(ep, { method: "POST", body: "data=" + encodeURIComponent(q), headers: { "content-type": "application/x-www-form-urlencoded" }, signal: AbortSignal.timeout(45000) });
+    try { const r = await waterFetch(ep, { method: "POST", body: "data=" + encodeURIComponent(q), headers: { "content-type": "application/x-www-form-urlencoded" }, signal: AbortSignal.timeout(45000) });
       if (!r.ok) continue; const d = await r.json(); if (d.remark && !(d.elements || []).length) continue; return d; } catch (e) {}
   }
   return null;
 }
 // On foot from a to b on OpenStreetMap's paths: true, false (no way, or a ferry on it), null (no answer).
 async function waterFoot(a, b) {
-  try { const r = await fetch(`https://routing.openstreetmap.de/routed-foot/route/v1/foot/${(+a.lng).toFixed(5)},${(+a.lat).toFixed(5)};${(+b.lng).toFixed(5)},${(+b.lat).toFixed(5)}?overview=false&steps=true`, { signal: AbortSignal.timeout(20000) });
+  try { const r = await waterFetch(`https://routing.openstreetmap.de/routed-foot/route/v1/foot/${(+a.lng).toFixed(5)},${(+a.lat).toFixed(5)};${(+b.lng).toFixed(5)},${(+b.lat).toFixed(5)}?overview=false&steps=true`, { signal: AbortSignal.timeout(20000) });
     const j = await r.json(); if (j && j.code === "NoRoute") return false; if (!j || j.code !== "Ok" || !j.routes || !j.routes[0]) return null;
     const legs = j.routes[0].legs || [];
     // Snapped far from the stop (the nearest path is on the other shore) or a ferry on the way: not on foot.
@@ -60,7 +64,7 @@ async function waterFoot(a, b) {
 async function waterRoadGaps(pts) {
   try { const coords = pts.map(p => (+p.lng).toFixed(5) + "," + (+p.lat).toFixed(5)).join(";");
     // Every point as a source and one destination: the answer's "sources" are each point snapped to its nearest road.
-    const r = await fetch(`https://router.project-osrm.org/table/v1/driving/${coords}?destinations=0`, { signal: AbortSignal.timeout(20000) });
+    const r = await waterFetch(`https://router.project-osrm.org/table/v1/driving/${coords}?destinations=0`, { signal: AbortSignal.timeout(20000) });
     const k = await r.json(); if (!k || k.code !== "Ok" || !Array.isArray(k.sources)) return null;
     return k.sources.map(w => isFinite(w && w.distance) ? Math.round(w.distance) : null);
   } catch (e) { return null; }
@@ -85,7 +89,7 @@ function waterCheck(city, homes) {
       Object.assign(across, waterAcross(stops, starts, sIsl, hIsl, i => foot[i] == null ? null : foot[i])); }
     const gaps = await waterRoadGaps(stops);
     // Nothing answered: ask again another time.
-    if (!isl && !gaps) { waterAsked.delete(keyOf(city.city)); return; }
+    if (!isl && !gaps) { setTimeout(() => { if (waterAsked.get(keyOf(city.city)) === sig) waterAsked.delete(keyOf(city.city)); }, 180000); return; }
     stops.forEach((s, i) => {
       if (isl) { if (across[s.id]) s.acrossWater = across[s.id]; else delete s.acrossWater; }
       if (gaps) { const g = gaps[i]; if (g != null && g > 150) s.roadGap = g; else if (g != null) delete s.roadGap; } });

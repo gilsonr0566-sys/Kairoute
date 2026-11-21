@@ -280,7 +280,8 @@ async function tapTimes(p) { const out = []; const n = await p.evaluate(() => wi
       const ids = (await boxes(p)).map(b => b.id), pick = [ids.find(x => !/-far$/.test(x)), ids.find(x => /-far$/.test(x))].filter(Boolean);
       for (const id of pick) { await tapBox(p, id); const okTick = (await boxes(p)).some(b => b.id === id && b.on);
         const why = okTick ? '' : await p.evaluate(id => [...document.querySelectorAll('.fitbox, .closedbox')].map(e => e.innerText.replace(/\s+/g, ' ').slice(0, 100)).join(' / ') || ((document.querySelector(`[data-card="${id}"]`) || {}).innerText || 'no card').replace(/\s+/g, ' ').slice(0, 120), id);
-        const planned = okTick && await p.evaluate(([i, id]) => ((window.__kairouteEngine2()[i].items || []).some(x => x.t === 'stop' && x.id === id) || (window.__kairouteEngine2()[i].folded || []).map(String).includes(String(id))), [i, id]);
+        // A day still asking the traveler something (which pier) keeps the tick and plans once answered.
+        const planned = okTick && await p.evaluate(([i, id]) => { const e = window.__kairouteEngine2()[i]; return /\?/.test(String(e.error || '')) || (e.items || []).some(x => x.t === 'stop' && x.id === id) || (e.folded || []).map(String).includes(String(id)); }, [i, id]);
         if (!okTick && !/closed|won.t fit|doesn.t fit|isn.t open|not open|Needs \d/i.test(why)) bad.push(`day ${i + 1} (${days[i].dest}): ${id} would not tick${why ? ' (' + why + ')' : ''}`);
         else if (okTick && !planned) bad.push(`day ${i + 1} (${days[i].dest}): ${id} ticked but not on the plan`); }
     }

@@ -65,7 +65,9 @@ function shortened(p, base) {
 // And the sight is planned on this day (not moved by the planner to the day its area is walked, or left out).
 const onPlan = (p, id) => !!(p && !p.error && (p.items.some(x => x.type === "stop" && (x.place.id === id || (x.place.includes || []).some(k => (k.id || k) === id) || x.place.within === id)) || (p.folded || []).some(k => String(k) === String(id))));
 // Planned the same way as the list's marks (fitRefine), so a sight with a tick is never refused when tapped.
-function fitsWith(d, ids, base) { const r = fitTrial(d, [...new Set([...(d.selected || []), ...ids])], null, true); return fitsAll(r) && keepsDay(r.p, base) && ids.every(id => onPlan(r.p, id)); }
+// A day that can't be planned until the traveler answers a question (which pier, when the flight lands) can't be measured:
+// the pick is kept and the day plan asks its question (Nov 20 sweep: a tick on such a day did nothing and said nothing).
+function fitsWith(d, ids, base) { const r = fitTrial(d, [...new Set([...(d.selected || []), ...ids])], null, true); if (r.p && r.p.error && !r.m) return true; return fitsAll(r) && keepsDay(r.p, base) && ids.every(id => onPlan(r.p, id)); }
 const shutOn = (d, x) => { const c = cityFor(d); let w = null; try { w = c ? dayWindow(d, c) : null; } catch (e) {} return closedForDay(x, d, w); };
 function addPick(d, id, ask) {
   const city = cityFor(d); if (!city) return false;
@@ -367,3 +369,7 @@ if (typeof window !== "undefined") window.__kairouteTimesFixed = () => timesFixe
 if (typeof window !== "undefined") window.__kairouteTryAdd = id => addPick(day(), id, true);
 // Safety net: day i's stops reached after their last sensible entry (the "you'd get there too late" warning).
 if (typeof window !== "undefined") window.__kairouteLateStops = i => { const d = trip.days[i], pl = cityFor(d) && !noShore(d) ? buildPlan(d) : null; return pl && !pl.error ? { n: pl.items.filter(x => x.type === "stop" && !x.place.along).length, late: pl.items.filter(x => x.type === "stop" && x.ohLate).map(x => `${x.place.name} at ${fmt(x.time)} (closes ${fmt(x.closes)})`) } : null; };
+// Why a sight would or wouldn't tick on a day (checks): each part of fitsWith, measured as the tap measures it.
+if (typeof window !== "undefined") window.__kairouteFitWhy = (i, id) => { const d = trip.days[i], base0 = fitTrial(d, (d.selected || []).slice(), null, true).p, r = fitTrial(d, [...new Set([...(d.selected || []), id])], null, true);
+  return { err: r.p && r.p.error, fits: fitsAll(r), over: r.m && r.m.over, dropped: r.m && r.m.dropped.map(x => x.id || x.name), closed: ((r.p && r.p.closedToday) || []).map(x => x.id), noLunch: r.p && r.p.noLunch, keeps: keepsDay(r.p, base0), on: onPlan(r.p, id),
+    stops: r.p && r.p.items ? r.p.items.filter(x => x.type === "stop").map(x => x.place.id + (x.place.within ? "<" + x.place.within : "")) : null, folded: r.p && r.p.folded }; };
