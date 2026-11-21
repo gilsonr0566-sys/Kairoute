@@ -87,7 +87,9 @@ function onDate(iso, lng, hh) { const d = new Date(iso + "T00:00:00Z"); if (!isF
 export async function timetableOptions(a, b, dow, date) {
   // The trip's own date first: a summer ferry doesn't show on a November date. When the operators haven't
   // published that far ahead yet (nothing at all comes back), the next date of the same kind is used.
-  if (date && /^\d{4}-\d{2}-\d{2}$/.test(date) && Date.parse(date) > Date.now() - 86400e3) {
+  // Operators publish a few weeks to a few months ahead: a date further out is not asked (it finds nothing, and doubles
+  // the searches); the same kind of day is used instead.
+  if (date && /^\d{4}-\d{2}-\d{2}$/.test(date) && Date.parse(date) > Date.now() - 86400e3 && Date.parse(date) < Date.now() + 120 * 86400e3) {
     try { const r = await timetableAt(a, b, hh => onDate(date, a.lng, hh)); if (r.length) return r.map(o => Object.assign(o, { forDate: date })); } catch (e) {}
   }
   return timetableAt(a, b, hh => dayFor(dow, a.lng, hh));
@@ -105,7 +107,9 @@ async function timetableAt(a, b, when) {
   // trains that run all day fell to a taxi (Nov 21 outside test: Civitavecchia to Rome, Zeebrugge to Bruges). The
   // answer is kept and shared, so each pair is looked up this way once per kind of day.
   const ask = hh => fetch(`https://api.transitous.org/api/v1/plan?fromPlace=${a.lat},${a.lng}&toPlace=${b.lat},${b.lng}&time=${when(hh)}&numItineraries=6`, { headers: UA, signal: AbortSignal.timeout(20000) }).then(r => r.ok ? r.json() : Promise.reject(new Error("timetable " + r.status)));
-  const all = await Promise.allSettled(TT_HOURS.map(ask));
+  // Two at a time: the free timetable service turns away a burst (five searches for each of several rides at once).
+  const all = new Array(TT_HOURS.length);
+  for (let k = 0; k < TT_HOURS.length; k += 2) { const part = await Promise.allSettled(TT_HOURS.slice(k, k + 2).map(ask)); part.forEach((x, i) => { all[k + i] = x; }); }
   if (!all.some(x => x.status === "fulfilled")) throw new Error("timetable busy");
   // Each itinerary remembers which of the three searches found it (w): how often a line runs is measured only between
   // departures found by the same search. Two searches are hours apart, so the gap from the last morning departure to the
