@@ -20,4 +20,4 @@ jobs:
           node-version: 22
       - env:
           REBUILD: ${{ inputs.rebuild }}
-        run: npm i playwright@1 && npx playwright install chromium && node tools/upgrade-thin.cjs
+        run: npm i playwright@1.65.1 && npx playwright install chromium && node tools/upgrade-thin.cjs

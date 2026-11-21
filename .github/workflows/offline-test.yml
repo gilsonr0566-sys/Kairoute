@@ -23,7 +23,7 @@ jobs:
         with:
           node-version: 22
       - name: Download a trip, cut the internet, use every day
-        run: npm i --no-save playwright@1 && npx playwright install --with-deps chromium && node tools/offline-e2e.cjs
+        run: npm i --no-save playwright@1.65.1 && npx playwright install --with-deps chromium && node tools/offline-e2e.cjs
       - name: Keep the screenshots
         if: always()
         uses: actions/upload-artifact@v4

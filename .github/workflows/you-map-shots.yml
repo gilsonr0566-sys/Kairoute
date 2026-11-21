@@ -14,7 +14,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-      - run: npm i playwright@1 && npx playwright install chromium
+      - run: npm i playwright@1.65.1 && npx playwright install chromium
       - name: Check with stand-in tiles (no network)
         run: sh build.sh && MOCK=1 node tools/you-map-check.cjs && MOCK=1 node tools/ride-map-check.cjs
       - name: Check with the real OpenFreeMap tiles

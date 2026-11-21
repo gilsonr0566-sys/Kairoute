@@ -13,4 +13,4 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-      - run: npm i playwright@1 && npx playwright install chromium && node tools/sync-e2e.cjs
+      - run: npm i playwright@1.65.1 && npx playwright install chromium && node tools/sync-e2e.cjs

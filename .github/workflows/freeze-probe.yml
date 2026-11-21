@@ -21,7 +21,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-      - run: npm i --no-save playwright@1 && npx playwright install --with-deps chromium
+      - run: npm i --no-save playwright@1.65.1 && npx playwright install --with-deps chromium
       - name: Live site, phone
         run: node tools/freeze-probe.cjs ${{ github.event.inputs.url || 'https://gilsonr0566-sys.github.io/Kairoute/' }} --cpu 4 --device phone --out live-phone.json
       - name: Live site, tablet

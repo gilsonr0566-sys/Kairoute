@@ -19,4 +19,4 @@ jobs:
           node-version: 22
       - env:
           URL: ${{ inputs.url }}
-        run: npm i playwright@1 && npx playwright install chromium && node tools/page-text.cjs
+        run: npm i playwright@1.65.1 && npx playwright install chromium && node tools/page-text.cjs
