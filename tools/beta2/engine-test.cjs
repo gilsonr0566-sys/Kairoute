@@ -73,7 +73,10 @@ ok(E.latin('Ζευγολατιό') === 'Zevgolatio' && E.latin('Ευαγγελι
   if (i >= 0) { const st = JSON.parse(JSON.stringify(b)); const air0 = Object.assign({}, st.days[i].point || st.days[i].lodging, { name: 'Airport' });
     st.days[i] = Object.assign({}, st.days[i], { thru: { mode: 'flight', time: (m => String(Math.floor(m / 60)).padStart(2, '0') + ':' + String(m % 60).padStart(2, '0'))((st.days[i].allAboard || 930) - 200), point: air0 }, boardAt: null });
     const w = E.dayWindow(st.days[i], E.makeTravel(st.prefs, st.legModes)), p = E.planTrip(st)[i];
-    ok(w.straight && (p.items || []).every(x => x.t !== 'stop'), `a day straight from the plane to the ship plans no sights (${w.straight ? (p.items || []).filter(x => x.t === 'stop').length + ' stops' : 'not straight'})`); } }
+    ok(w.straight && (p.items || []).every(x => x.t !== 'stop'), `a day straight from the plane to the ship plans no sights (${w.straight ? (p.items || []).filter(x => x.t === 'stop').length + ' stops' : 'not straight'})`);
+    ok(w.straight && !(p.explain || []).some(t => /^Free time/.test(t)) && (p.explain || []).every(t => !/Free time/.test(t) || /margin/.test(t)), 'straight to the ship: the time to spare is margin, never free time at the airport');
+    { const la = p.leaveAt, end = (p.items || []).filter(x => x.t === 'ride').pop(), endBy = w.endBy;
+      ok(la && la.out != null && end && la.out + (end.min || 0) <= endBy && la.out + (end.min || 0) >= endBy - 5, `straight to the ship: the leave-by plus the ride the plan shows reach the be-by time (${la ? E.clock(la.out) : 'none'} + ${end ? end.min : '?'} min vs ${E.clock(endBy)})`); } } }
 { const w = E.dayWindow(day({ type: 'embark', allAboard: 1200, boardAt: null, thru: { mode: 'flight', time: '08:00', point: air } }), tr);
   ok(!w.straight && w.notes.includes('flyInWarn'), 'same-day fly-in with time to spare: sightseeing, with the late-flight warning'); }
 { const w = E.dayWindow(day({ type: 'port', portArrive: NaN, allAboard: 1020 }), tr); ok(w.error && /times/.test(w.error), 'missing ship times: an error, never a guess'); }
@@ -549,6 +552,7 @@ if (fs.existsSync(dir)) for (const f of fs.readdirSync(dir).filter(f => f.endsWi
   const day = (start, open) => E.walkDay([{ id: 'eat:x', name: 'X', lat: 0, lng: 0, mealOf: L, len: 60, oh: { spans: open, last: null } }], { start, endBy: 18 * 60, head: [o], tail: [] }, tr, null);
   const a = day(12 * 60, [[13 * 60, 15 * 60]]), m = a.items.find(x => x.t === 'meal');
   ok(m.at === 13 * 60 && !m.shut, `lunch waits for the place to open (at ${E.clock(m.at)})`);
+  ok(m.freeBefore === 60, `the hour waiting for the place to open is named free time, never a silent gap (got ${m.freeBefore})`);
   const b = day(12 * 60 + 30, [[11 * 60, 13 * 60]]), mb = b.items.find(x => x.t === 'meal');
   ok(mb.shut && mb.lateMeal >= 30, 'a lunch running past the place\'s closing is marked shut and late');
   const ctx = { mealPrefs: { Lunch: { pick: { name: 'Shut Taverna', lat: 1, lng: 1 } } }, eatFacts: { [E.eatKey('Shut Taverna')]: { closed: false, oh: { spans: [[18 * 60, 23 * 60]], last: null } } }, eats: [] };

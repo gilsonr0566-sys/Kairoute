@@ -1360,6 +1360,7 @@ function dayWindow(d, city) {
       w.head = d.noBags ? [A] : [A, fixedStop(A, "Leave your bags in luggage storage", 15)];
       w.tail = d.noBags ? [end] : [fixedStop(A, "Collect your bags", 15), end];
       w.startLabel = (thru.mode === "ship" ? "Off the ship at " : "Out of ") + A.name;
+      w.bagsNote = { i: w.notes.length, at: A.name, am, thru };
       w.notes.push(`${am.label} arrives ${thru.time}. We allow ${dur(am.clear)} to get ${thru.mode === "ship" ? "off the ship with your luggage" : thru.mode === "flight" ? "off the plane and through baggage claim (and passport control after a flight from abroad)" : "off with your luggage"}.${d.noBags ? "" : " Book luggage storage near " + A.name + " ahead (a left-luggage desk or a storage shop), or ask " + (thru.mode === "ship" ? "your cruise line about luggage transfer." : "your hotel or station.")}`);
     } else {
       if (!L) return { error: "Choose where you're staying in " + d.destination + "." };
@@ -1376,6 +1377,10 @@ function dayWindow(d, city) {
     if (ship && thru && thru.mode === "flight") {
       const free = w.endBy - w.start - chainCost(w.head) - chainCost(w.tail);
       if (free < STRAIGHT_MIN) { w.straight = true; w.head = [w.head[0]]; w.tail = [end]; w.sightFrom = w.start; }
+      // Straight from the airport to the ship, the bags go with you to the ship, never into storage (Nov 21, Bahamas
+      // test trip: the day said to book luggage storage near the airport).
+      if (w.straight && w.bagsNote && !d.noBags) { const b = w.bagsNote;
+        w.notes[b.i] = `${b.am.label} arrives ${b.thru.time}. We allow ${dur(b.am.clear)} to get off the plane and through baggage claim (and passport control after a flight from abroad). Your bags go with you to the ship: porters take them at the cruise terminal.`; }
       w.notes.push(w.straight
         ? `You fly in the day the ship sails, so today goes straight from the airport to the ship: there isn't enough time for sightseeing with a safe margin. A late or missed flight is the most common way travelers miss a ship, and the ship won't wait. Keep your airline's and cruise line's phone numbers handy, and if a delay is announced, call the cruise line at once.`
         : `You fly in the day the ship sails. A late or missed flight is the most common way travelers miss a ship, and the ship won't wait: if your flight is delayed, skip the sightseeing and go straight to the port.`);
@@ -5709,10 +5714,16 @@ function itineraryText() {
     if (!noShore(d) && city) {
       refillIfNeeded(d, city); if (!d.selected) seedPicks(d, city);
       const plan = buildPlan(d);
-      if (plan && !plan.error) plan.items.forEach(it => {
+      // The same rows and times as the Day plan (Nov 21, Bahamas test trip: the copy ended at the last ride's time while
+      // the screen had free time and "back by"): free time from dayFacts before the rides back, and the end row "by" the
+      // day's back-by time when there is free time.
+      const F = plan && !plan.error ? dayFacts(d, plan) : null, freeOn = F && F.left >= 30 && !(plan.dropped || []).length && !(plan.w && plan.w.straight);
+      let freeDone = false;
+      if (plan && !plan.error) plan.items.forEach((it, k) => {
+        if (freeOn && !freeDone && (it.type === "end" || (it.type === "travel" && plan.items.slice(k).every(x => x.type === "travel" || x.type === "end")))) { freeDone = true; out.push(`   ${fmt(F.leaveBy - F.left)}  Free time until ${fmt(F.leaveBy)}`); }
         if (it.type === "travel") return;
         const nm = it.type === "meal" ? it.meal.label + ": " + it.place.name : it.type === "start" || it.type === "end" ? it.label : (it.place.along ? "On the way: " : it.place.bonus ? "Optional: " : "") + it.place.name;
-        out.push(`   ${fmt(it.time)}  ${nm}`);
+        out.push(`   ${it.type === "end" && freeOn ? "by " + fmt(F.endBy) : fmt(it.time)}  ${nm}`);
       });
     } else if (!noShore(d)) out.push("   (guide not built yet)");
     out.push("");
@@ -6712,7 +6723,7 @@ function renderPlan(d) {
   // stop, before the ride back.
   // One quiet line, with the day's one "time left" figure and the one leave-by time (dayFacts); what would fit it is the
   // Choose sights list, never a second list here (outside review, Nov 20: the two lists disagreed).
-  const F = dayFacts(d, plan), freeOn = F && F.left >= 30 && !(plan.dropped || []).length;
+  const F = dayFacts(d, plan), freeOn = F && F.left >= 30 && !(plan.dropped || []).length && !(plan.w && plan.w.straight); // straight to the ship: the time to spare is margin, not free time
   const freeCard = freeOn ? `<div class="tl freetime"><div class="time"><span class="ta">Until</span><span class="tt">${fmt(F.leaveBy)}</span></div><div class="rail"><div class="dot bonusdot">+</div></div><div class="what"><div class="nm">Free time: ${dur(F.left)}</div>
         <div class="sub">${F.fixed ? `Yours to spend as you like. Leave here by ${fmt(F.leaveBy)} to be back by ${fmt(F.endBy)}.` : "Yours to spend as you like."} <button type="button" class="linkbtn" data-goto="sites">See what fits</button></div></div></div>` : "";
   let freeShown = false;

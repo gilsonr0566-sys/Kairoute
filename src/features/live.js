@@ -432,6 +432,9 @@ function alarmState(d, plan, opt) {
   // A street route measured later that is slower than the plan's ride makes it earlier, never later.
   let worst = null;
   if (target && src === "plan" && now == null) { const its = plan.items; let j = -1; its.forEach((it, k) => { if (it.type === "stop" || it.type === "meal") j = k; });
+    // No stop at all (straight from the airport to the ship): from the start, on the plan's own ride with its extra time
+    // (Nov 21, Bahamas test trip: "leave by 1:43" from a 47-min estimate while the plan's ride was 1 h with the extra).
+    if (j < 0) j = its.findIndex(it => it.type === "start");
     if (j >= 0 && its[j].place && isFinite(its[j].place.lat)) { from = its[j].place; let m = 0, how = "";
       for (let k = j + 1; k < its.length; k++) { const it = its[k]; if (it.type === "travel") { m += it.leg.min || 0; how = how || it.leg.how || ""; }
         else if (it.type === "fixed" && !/bags/i.test((it.place && it.place.name) || "")) m += (it.place && it.place.minutes) || 0; else if (it.type === "fixed" || it.type === "end") break; }
