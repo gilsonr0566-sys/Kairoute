@@ -1,245 +1,160 @@
 {
- "at": "2026-11-21T03:38:14.727Z",
+ "at": "2026-11-21T03:49:47.978Z",
  "out": [
   {
    "place": "Dubrovnik",
    "stop": "Lokrum",
-   "island": {
-    "ids": [
-     "3610189546",
-     "6193666"
-    ],
-    "name": "Lokrum"
-   },
-   "startIsland": "",
-   "onFoot": false,
-   "across": true,
+   "across": "Lokrum",
    "expectAcross": true,
    "roadGap": 1215,
    "expectNoRoad": false,
+   "done": true,
+   "ms": 40057,
    "ok": true
   },
   {
    "place": "Dubrovnik",
    "stop": "Old town walls",
-   "island": "",
-   "startIsland": "",
    "across": false,
    "expectAcross": false,
-   "roadGap": 130,
+   "roadGap": null,
    "expectNoRoad": false,
+   "done": true,
+   "ms": 40057,
    "ok": true
   },
   {
    "place": "Santorini",
    "stop": "Nea Kameni",
-   "island": "no answer",
-   "startIsland": null,
-   "across": null,
+   "across": false,
    "expectAcross": true,
    "roadGap": 3006,
    "expectNoRoad": false,
+   "done": true,
+   "ms": 10005,
    "ok": false
   },
   {
    "place": "Santorini",
    "stop": "Oia",
-   "island": "no answer",
-   "startIsland": null,
-   "across": null,
+   "across": false,
    "expectAcross": false,
-   "roadGap": 77,
+   "roadGap": null,
    "expectNoRoad": false,
-   "ok": false
+   "done": true,
+   "ms": 10005,
+   "ok": true
   },
   {
    "place": "Reykjavik",
    "stop": "Videy",
-   "island": {
-    "ids": [
-     "3608385552"
-    ],
-    "name": "Viðey"
-   },
-   "startIsland": {
-    "ids": [
-     "3607681889"
-    ],
-    "name": "Iceland"
-   },
-   "onFoot": false,
-   "across": true,
+   "across": "an island",
    "expectAcross": true,
    "roadGap": 1256,
    "expectNoRoad": false,
+   "done": false,
+   "ms": 180109,
    "ok": true
   },
   {
    "place": "Reykjavik",
    "stop": "Hallgrimskirkja",
-   "island": {
-    "ids": [
-     "3607681889"
-    ],
-    "name": "Iceland"
-   },
-   "startIsland": {
-    "ids": [
-     "3607681889"
-    ],
-    "name": "Iceland"
-   },
    "across": false,
    "expectAcross": false,
-   "roadGap": 48,
+   "roadGap": null,
    "expectNoRoad": false,
+   "done": false,
+   "ms": 180109,
    "ok": true
   },
   {
    "place": "Marseille",
    "stop": "Chateau d'If",
-   "island": "no answer",
-   "startIsland": null,
-   "across": null,
+   "across": "Île d'If",
    "expectAcross": true,
    "roadGap": 1803,
    "expectNoRoad": false,
-   "ok": false
+   "done": true,
+   "ms": 20004,
+   "ok": true
   },
   {
    "place": "Marseille",
    "stop": "Notre-Dame de la Garde",
-   "island": "no answer",
-   "startIsland": null,
-   "across": null,
-   "expectAcross": false,
-   "roadGap": 23,
-   "expectNoRoad": false,
-   "ok": false
-  },
-  {
-   "place": "Venice",
-   "stop": "San Giorgio Maggiore",
-   "island": "no answer",
-   "startIsland": null,
-   "across": null,
-   "expectAcross": true,
-   "roadGap": 1954,
-   "expectNoRoad": true,
-   "ok": false
-  },
-  {
-   "place": "Venice",
-   "stop": "St Mark's Basilica",
-   "island": "no answer",
-   "startIsland": null,
-   "across": null,
-   "expectAcross": false,
-   "roadGap": 1639,
-   "expectNoRoad": true,
-   "ok": false
-  },
-  {
-   "place": "Venice",
-   "stop": "Rialto Bridge",
-   "island": "no answer",
-   "startIsland": null,
-   "across": null,
-   "expectAcross": false,
-   "roadGap": 1313,
-   "expectNoRoad": true,
-   "ok": false
-  },
-  {
-   "place": "Copenhagen (bridges)",
-   "stop": "Christiansborg (Slotsholmen)",
-   "island": {
-    "ids": [
-     "3604232118"
-    ],
-    "name": "Slotsholmen"
-   },
-   "startIsland": {
-    "ids": [
-     "3605175856"
-    ],
-    "name": "Zealand"
-   },
-   "onFoot": true,
    "across": false,
    "expectAcross": false,
    "roadGap": null,
    "expectNoRoad": false,
+   "done": true,
+   "ms": 20004,
+   "ok": true
+  },
+  {
+   "place": "Venice",
+   "stop": "San Giorgio Maggiore",
+   "across": "Island of San Giorgio Maggiore",
+   "expectAcross": true,
+   "roadGap": 1954,
+   "expectNoRoad": true,
+   "done": true,
+   "ms": 22003,
+   "ok": true
+  },
+  {
+   "place": "Venice",
+   "stop": "St Mark's Basilica",
+   "across": false,
+   "expectAcross": false,
+   "roadGap": 1639,
+   "expectNoRoad": true,
+   "done": true,
+   "ms": 22003,
+   "ok": true
+  },
+  {
+   "place": "Venice",
+   "stop": "Rialto Bridge",
+   "across": false,
+   "expectAcross": false,
+   "roadGap": 1313,
+   "expectNoRoad": true,
+   "done": true,
+   "ms": 22003,
+   "ok": true
+  },
+  {
+   "place": "Copenhagen (bridges)",
+   "stop": "Christiansborg (Slotsholmen)",
+   "across": false,
+   "expectAcross": false,
+   "roadGap": null,
+   "expectNoRoad": false,
+   "done": false,
+   "ms": 180163,
    "ok": true
   },
   {
    "whole": [
     {
      "place": "dubrovnik-croatia",
-     "points": 16,
-     "single": "answered",
-     "singleMs": 38471,
-     "batched": "1 of 16 answered",
-     "batchedMs": 72299,
-     "start": "",
-     "onIslands": [],
-     "wantFound": false
+     "points": 15,
+     "ms": 34006,
+     "done": true,
+     "across": [],
+     "wantFound": false,
+     "wrong": []
     },
     {
      "place": "reykjavik-iceland",
-     "points": 24,
-     "single": "answered",
-     "singleMs": 29014,
-     "batched": "24 of 24 answered",
-     "batchedMs": 58126,
-     "start": {
-      "ids": [
-       "3607681889"
-      ],
-      "name": "Iceland"
-     },
-     "onIslands": [
-      "Tjörnin on Iceland",
-      "Austurvöllur on Iceland",
-      "Klambratún on Iceland",
-      "Reykjavík Botanical Gardens on Iceland",
-      "Viðey on Viðey",
-      "Grótta on Grótta",
-      "Alþingi on Iceland",
-      "Reykjavík Cathedral on Iceland",
-      "City Hall on Iceland",
-      "Hallgrímskirkja on Iceland",
-      "Harpa on Iceland",
-      "Perlan on Iceland",
-      "Imagine Peace Tower on Viðey",
-      "Christ the King Cathedral on Iceland",
-      "National Gallery of Iceland on Iceland",
-      "Reykjavík Art Museum - Hafnarhús on Iceland",
-      "Reykjavík Art Museum - Kjarvalsstaðir on Iceland",
-      "Reykjavik Museum of Photography on Iceland",
-      "National Museum of Iceland on Iceland",
-      "Reykjavík City Museum on Iceland",
-      "871±2 on Iceland",
-      "The House of Collections on Iceland",
-      "Icelandic Punk Museum on Iceland"
+     "points": 23,
+     "ms": 36005,
+     "done": true,
+     "across": [
+      "Viðey across to Viðey",
+      "Imagine Peace Tower across to Viðey"
      ],
-     "wantFound": true
-    },
-    {
-     "place": "santorini",
-     "points": 1,
-     "single": "answered",
-     "singleMs": 17654,
-     "batched": "1 of 1 answered",
-     "batchedMs": 28620,
-     "start": {
-      "ids": [
-       "3600453964"
-      ],
-      "name": "Santorini"
-     },
-     "onIslands": [],
-     "wantFound": false
+     "wantFound": true,
+     "wrong": []
     }
    ]
   },
