@@ -865,6 +865,13 @@ ok(E.readable('Café Ñandú') && E.readable("Joe's Bar & Grill") && !E.readable
     ok(!Object.keys(W.waterAcross(stops, [{}], isl.slice(0, 3), [isl[1]], () => false)).includes('lok'), 'a stop on the island the ship or hotel is on is not across the water');
     ok(!Object.keys(W.waterAcross(stops, [{}], isl.slice(0, 3), [null], () => false)).length, 'no answer about the start: nothing is marked');
     ok(!Object.keys(W.waterAcross(stops, [{}], isl.slice(0, 3), [isl[3]], () => null)).length, 'no answer from the walking router: nothing is marked');
+    // Round 2 re-check: the map's island question often gets no answer; a walking route that takes a ferry is enough.
+    { const Wh = new Function('fetch', 'allSites', 'keyOf', 'save', 'render', 'window', 'hav', src + '; return { waterAcross };')(null, () => [], x => x, () => {}, () => {}, undefined, E.hav);
+      const st = [{ id: 'a', name: 'Isle A', lat: 42.627, lng: 18.119 }, { id: 'b', name: 'Tower', lat: 42.630, lng: 18.121 }, { id: 'c', name: 'Summit', lat: 42.70, lng: 18.2 }, { id: 'd', name: 'Old town', lat: 42.64, lng: 18.11 }], none = st.map(() => null);
+      const r = Wh.waterAcross(st, [{}], none, [null], i => ['ferry', 'ferry', false, true][i]);
+      ok(r.a === 'Isle A' && r.b === 'Isle A' && !r.c && !r.d, `with no island answer: a ferry on the only way on foot is across, stops close together share one island, a summit with no path is not (got ${JSON.stringify(r)})`);
+      const same = Wh.waterAcross(st, [{}], [isl[1], null, null, null], [isl[1]], () => 'ferry');
+      ok(!same.a, 'a ferry shortcut on the island a start stands on is not across the water'); }
     ok(/is_in\(42\.00000,18\.00000\)/.test(W.waterIslandQuery([{ lat: 42, lng: 18 }])) && /make w i=0/.test(W.waterIslandQuery([{ lat: 42, lng: 18 }])), 'one map question for all points, each answer tagged with its point'); }
   // Folding (Richard, Nov 20: "a false sense of not enough time in the day"): a picked sight inside a bigger picked visit, or a
   // small open-air sight right beside it, is part of that visit and adds only a little time.

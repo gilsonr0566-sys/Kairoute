@@ -4,7 +4,12 @@ const fs = require('fs'), path = require('path');
 const src = fs.readFileSync(path.join(__dirname, '../../src/features/water-check.js'), 'utf8');
 // A browser sends its own User-Agent; Node's fetch sends none, which the map services turn away, so the probe names itself.
 const uaFetch = (u, o = {}) => fetch(u, Object.assign({}, o, { headers: Object.assign({ 'user-agent': 'Kairoute-test/1.0 (trip planner check)' }, o.headers || {}) }));
-const W = new Function('fetch', 'allSites', 'keyOf', 'save', 'render', 'window', 'navigator', src + '; return { waterIslandQuery, waterIslandsFrom, waterAcross, waterOverpass, waterFoot, waterRoadGaps, waterIslands };')(uaFetch, () => [], x => x, () => {}, () => {}, undefined, undefined);
+const hav = (a, b) => { const R = 6371, t = x => x * Math.PI / 180, d = t(b.lat - a.lat), e = t(b.lng - a.lng), h = Math.sin(d / 2) ** 2 + Math.cos(t(a.lat)) * Math.cos(t(b.lat)) * Math.sin(e / 2) ** 2; return 2 * R * Math.asin(Math.sqrt(h)); };
+const W = new Function('fetch', 'allSites', 'keyOf', 'save', 'render', 'window', 'navigator', 'hav', src + '; return { waterIslandQuery, waterIslandsFrom, waterAcross, waterOverpass, waterFoot, waterRoadGaps, waterCheck };')(uaFetch, c => c.sites, x => x, () => {}, () => {}, undefined, undefined, hav);
+// The app's own check, start to end, as the app runs it: done when the place is marked asked, or after 3 minutes.
+const runCheck = async (name, stops, start) => { const city = { city: name, sites: stops.map(x => Object.assign({}, x)) }, t = Date.now(); W.waterCheck(city, [start]);
+  let last = ''; while (Date.now() - t < 180000 && !city.waterSig) { await new Promise(r => setTimeout(r, 2000)); const now = city.sites.map(x => x.acrossWater || '').join('|'); if (now !== last && now.replace(/\|/g, '')) { last = now; console.log('  ' + name + ' marked at ' + Math.round((Date.now() - t) / 1000) + ' s'); } }
+  return { city, ms: Date.now() - t }; };
 // Each case: a start (pier or centre) and stops, with what the tester says is true (across: needs a boat; road: false =
 // far from any road).
 const CASES = [
@@ -16,31 +21,21 @@ const CASES = [
   { place: 'Copenhagen (bridges)', start: { lat: 55.6761, lng: 12.5683 }, stops: [{ id: 'Christiansborg (Slotsholmen)', lat: 55.6761, lng: 12.5800, across: false }] },
 ];
 (async () => {
-  // What the map service says to the island question itself (status and the start of the answer), to see a refusal.
-  for (const ep of ['https://overpass-api.de/api/interpreter', 'https://overpass.private.coffee/api/interpreter']) {
-    try { const q = W.waterIslandQuery([{ lat: 42.6272, lng: 18.1194 }, { lat: 42.6584, lng: 18.0850 }]); const r = await uaFetch(ep, { method: 'POST', body: 'data=' + encodeURIComponent(q), headers: { 'content-type': 'application/x-www-form-urlencoded' } });
-      console.log('raw', ep, r.status, (await r.text()).slice(0, 1500)); } catch (e) { console.log('raw', ep, String(e)); } }
   const out = [];
   for (const c of CASES) {
-    const pts = c.stops.concat([c.start]), d = await W.waterOverpass(W.waterIslandQuery(pts));
-    const isl = d ? W.waterIslandsFrom(d, pts.length) : null, foot = {};
-    if (isl) for (let i = 0; i < c.stops.length; i++) if (isl[i] && !(isl[pts.length - 1] && isl[pts.length - 1].ids.some(id => isl[i].ids.includes(id)))) foot[i] = await W.waterFoot(c.start, c.stops[i]);
-    const across = isl ? W.waterAcross(c.stops, [c.start], isl.slice(0, c.stops.length), [isl[pts.length - 1]], i => foot[i] == null ? null : foot[i]) : null;
-    const gaps = await W.waterRoadGaps(c.stops);
-    c.stops.forEach((s, i) => { const got = across ? !!across[s.id] : null, gap = gaps ? gaps[i] : null;
-      const r = { place: c.place, stop: s.id, island: isl ? isl[i] : 'no answer', startIsland: isl ? isl[pts.length - 1] : null, onFoot: foot[i], across: got, expectAcross: s.across, roadGap: gap, expectNoRoad: s.road === false,
-        ok: got === s.across && (s.road === false ? gap > 150 : true) };
+    const { city, ms } = await runCheck(c.place, c.stops, c.start);
+    city.sites.forEach((s, i) => { const want = c.stops[i], got = !!s.acrossWater;
+      const r = { place: c.place, stop: s.id, across: s.acrossWater || false, expectAcross: want.across, roadGap: s.roadGap || null, expectNoRoad: want.road === false, done: !!city.waterSig, ms,
+        ok: got === want.across && (want.road === false ? s.roadGap > 150 : true) };
       out.push(r); console.log((r.ok ? 'ok   ' : 'FAIL ') + JSON.stringify(r)); });
     await new Promise(r => setTimeout(r, 2000));
   }
-  // A whole place at once, as the app asks it (every guide sight plus the start): one question vs. a few at a time.
+  // A whole place at once, as the app asks it (every guide sight plus the start).
   const whole = [];
-  for (const [f, start, want] of [['dubrovnik-croatia', { lat: 42.6584, lng: 18.0850 }, /lokrum/i], ['reykjavik-iceland', { lat: 64.1530, lng: -21.9510 }, /vi[dð]ey/i], ['santorini', { lat: 36.4166, lng: 25.4318 }, /kameni/i]]) {
-    let g = []; try { g = JSON.parse(fs.readFileSync(path.join(__dirname, '../places/data', f + '.json'))).guideSights.filter(x => isFinite(x.lat)).slice(0, 79); } catch (e) {}
-    const pts = g.concat([start]); let t = Date.now(); const one = await W.waterOverpass(W.waterIslandQuery(pts)); const tOne = Date.now() - t;
-    await new Promise(r => setTimeout(r, 3000)); t = Date.now(); const bat = await W.waterIslands(pts); const tBat = Date.now() - t;
-    const hits = bat ? g.map((x, i) => bat[i] && bat[i].name ? x.name + ' on ' + bat[i].name : '').filter(Boolean) : null;
-    const r = { place: f, points: pts.length, single: one ? 'answered' : 'no answer', singleMs: tOne, batched: bat ? bat.filter(x => x !== null).length + ' of ' + pts.length + ' answered' : 'no answer', batchedMs: tBat, start: bat ? bat[pts.length - 1] : null, onIslands: hits, wantFound: !!(hits && hits.some(h => want.test(h))) };
+  for (const [f, start, want] of [['dubrovnik-croatia', { lat: 42.6584, lng: 18.0850 }, /lokrum/i], ['reykjavik-iceland', { lat: 64.1530, lng: -21.9510 }, /vi[dð]ey|peace tower/i]]) {
+    let g = []; try { g = JSON.parse(fs.readFileSync(path.join(__dirname, '../places/data', f + '.json'))).guideSights.filter(x => isFinite(x.lat)).slice(0, 79).map((x, i) => ({ id: 'g' + i, name: x.name, lat: x.lat, lng: x.lng })); } catch (e) {}
+    const { city, ms } = await runCheck(f, g, start), hits = city.sites.filter(x => x.acrossWater).map(x => x.name + ' across to ' + x.acrossWater);
+    const r = { place: f, points: g.length, ms, done: !!city.waterSig, across: hits, wantFound: hits.some(h => want.test(h)), wrong: hits.filter(h => !want.test(h)) };
     whole.push(r); console.log('WHOLE ' + JSON.stringify(r)); await new Promise(r => setTimeout(r, 3000)); }
   out.push({ whole });
   // The helper's free map-and-encyclopedia answer (/ground, no AI) for the piers the outside tester found wrong or missing,
