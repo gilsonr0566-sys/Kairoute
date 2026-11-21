@@ -65,6 +65,13 @@ function helper(r, calls) {
   if (u.pathname === '/ground') { const b = JSON.parse(r.request().postData() || '{}'), names = b.names || [];
     if (/example harbour town/i.test(b.city || '')) return j({ center: null, results: names.map(n => /^Port of/.test(n) ? { wiki: [], answered: true, map: [{ name: "Example Harbour Town's Port Shop", kind: 'yes', lat: 25.0783, lng: -77.3430 }] }
       : /cruise terminal/.test(n) ? { wiki: [], answered: true, map: [{ name: 'Example Wharf Cruise Ship Terminal', kind: 'dock', lat: 25.0812, lng: -77.3375 }] } : { wiki: [], map: [], answered: true }) });
+    // A port named apart from its city: the city's own harbour sits by the centre, the port's pier (mapped only as
+    // "Cruise Terminal") 70 km out; "inland town" has only the city's harbour.
+    if (/example old harbour/i.test(b.city || '')) return j({ center: null, results: names.map(n => /^Port of/.test(n) ? { wiki: [], answered: true, map: [{ name: 'Port of Example Cove', kind: 'harbour', lat: 42.6256, lng: 18.1229 }] }
+      : /cruise terminal/.test(n) ? { wiki: [], answered: true, map: [{ name: 'Example Old Harbour Cruise Port', kind: 'harbour', lat: 42.6590, lng: 18.0850 }] } : { wiki: [], map: [], answered: true }) });
+    if (/example inland (city|town)/i.test(b.city || '')) { const out = /city/i.test(b.city);
+      return j({ center: null, results: names.map(n => /^Port of/.test(n) ? { wiki: [], answered: true, map: [{ name: 'Example Inland Port', kind: 'harbour', lat: 13.70, lng: 100.56 }] }
+        : /cruise terminal/.test(n) && out ? { wiki: [], answered: true, map: [{ name: 'Cruise Terminal', kind: 'terminal', lat: 13.08, lng: 100.88 }] } : { wiki: [], map: [], answered: true }) }); }
     if (/example cay/i.test(b.city || '')) { const near = !/far/i.test(b.city);
       return j({ center: null, results: names.map(n => n === 'Cruise pier' && b.center ? { wiki: [], answered: true, map: [
         { name: 'Fishing Pier', kind: 'pier', lat: 25.8180, lng: -77.9340 },
@@ -92,6 +99,10 @@ function helper(r, calls) {
       if (got.days.length !== t.want.length) diff.push(`${got.days.length} days, want ${t.want.length}`);
       if (diff.length) bad(`${t.name}:\n   ${diff.join('\n   ')}`); else ok(t.name);
     }
+    // Round 2, S1-6: an arrival or ship time the traveler never gave is never shown as theirs on the day's cover.
+    { const l = await p.evaluate(() => [window.__kairouteThroughLede({ mode: 'flight', time: '10:30', estimated: true }, { type: 'embark', allAboard: '17:00', estimated: true }),
+        window.__kairouteThroughLede({ mode: 'flight', time: '09:15' }, { type: 'embark', allAboard: '16:30' })]);
+      if (/10:30|17:00/.test(l[0]) || !/09:15/.test(l[1]) || !/16:30/.test(l[1])) bad(`cover: a time the traveler never gave is shown: ${l.join(' | ')}`); else ok('cover: only the times the traveler gave are shown'); }
     await p.close(); }
   // 1b. A boarding time typed and then redrawn over (an answer from the internet arriving before Save) is still saved
   // (Nov 17: the demo gate's typed 12:30 was lost to a redraw, and the day planned to all-aboard instead).
@@ -154,6 +165,14 @@ function helper(r, calls) {
     if (!wharf || wharf.name !== 'Example Wharf Cruise Ship Terminal') bad(`port: a shop with "port" in its name was taken for the cruise terminal: ${JSON.stringify(wharf)}`); else ok('port: the real cruise terminal wins over a shop named "Port Shop"');
     const none = await p.evaluate(() => window.__kairouteSrcStarts('Example Cay far', { lat: 25.8167, lng: -77.9333 }).then(s => s.cruise[0]));
     if (!none || !none.unknown) bad(`small port: a fishing pier was taken for the cruise pier: ${JSON.stringify(none)}`); else ok('small port: a pier not named for cruises is never the ship\'s spot');
+    const oh = await p.evaluate(() => window.__kairouteSrcStarts('Example Old Harbour', { lat: 42.6407, lng: 18.1077 }).then(s => s.cruise[0]));
+    if (!oh || oh.name !== 'Example Old Harbour Cruise Port') bad(`port: a harbour found first was taken over the cruise port: ${JSON.stringify(oh)}`); else ok('port: the cruise port wins over an old harbour found first');
+    // Round 2, N1: "Port (City)" docks at the port's own pier, never the city's harbour by the centre; with none named
+    // for the port and none out of the city, the pier is asked, never guessed.
+    const gp = await p.evaluate(() => window.__kairouteSrcStarts('Example Inland City', { lat: 13.75, lng: 100.50 }, 'Example Seaport').then(s => s.cruise));
+    const g0 = gp && gp[0]; if (!g0 || g0.name !== 'Cruise Terminal') bad(`port apart from the city: the city's harbour was taken for the port's pier: ${JSON.stringify(gp)}`); else ok('port apart from the city: the pier out of the city is the ship\'s spot, never the city\'s harbour');
+    const gn = await p.evaluate(() => window.__kairouteSrcStarts('Example Inland Town', { lat: 13.75, lng: 100.50 }, 'Example Seaport').then(s => s.cruise[0]));
+    if (!gn || !gn.unknown) bad(`port apart from the city: the city's harbour was guessed for the port: ${JSON.stringify(gn)}`); else ok('port apart from the city: no pier for the port, so it is asked');
     await p.close(); }
   // 2. The screens.
   for (const [W, H, tag] of [[412, 915, 'phone'], [1280, 800, 'tablet']]) {

@@ -171,7 +171,7 @@
     const guides = E.sortFar(bucket.cities || {}), days = bucket.days || [], out = new Array(days.length).fill(null);
     // Each day knows where its place's own sights are, so a gate far from all of them is caught (part 3).
     const spots = key => ((guides[key] || {}).sites || []).filter(s => isFinite(s.lat)).map(s => ({ lat: s.lat, lng: s.lng }));
-    const wins = days.map(d => (d.noShore || d.type === "sea") ? null : E.dayWindow(Object.assign({}, d, { siteSpots: spots(d.city), placeName: d.city + " " + ((guides[d.city] || {}).name || "") }), tr));
+    const wins = days.map(d => (d.noShore || d.type === "sea") ? null : E.dayWindow(Object.assign({}, d, { siteSpots: spots(d.city), placeName: d.city + " " + ((guides[d.city] || {}).name || "") + " " + (d.typed || "") }), tr));
     // A pick closed on its own day moves to another day in the same place when it's open then (never onto or off a
     // day the traveler locked, nor onto a day they made their own: a list they set, or emptied, stays theirs), and the
     // plan says so.

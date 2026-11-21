@@ -28,6 +28,7 @@
   // Where a cruise ship ties up (Round 1, Nov 20: a state ferry terminal, an old harbour for small boats, a whole port's
   // encyclopedia article placed in the old town, and a travel-guide sentence about the ferry to another country were each
   // taken for the cruise pier). A ferry terminal, an old port, a sentence or an article about the whole port is not a pier.
+  E.GATE_OUT = 25; // km: a port named apart from its city ("Port (City)") lies at least this far out of the city
   const CRUISE_NOT = /\b(ferry|ferries|marine highway|old (port|harbou?r)|vieux[- ]port|porto (antico|vecchio)|stara luka|eski liman|puerto viejo|alter hafen)\b/i;
   E.cruiseOk = c => { const n = String((c && c.name) || "").trim(); if (!n) return false;
     if (n.length > 70 || /[.!?;]\s|\d+\s*(jd|eur|usd|euros?|dollars?|hours?)\b/i.test(n) || n.split(/\s+/).length > 9) return false; // a sentence
@@ -38,8 +39,11 @@
   // How sure a cruise pier is: named for cruises, a mapped terminal, a pier or wharf.
   E.cruiseRank = c => (/cruise/i.test(String(c.name || "")) ? 4 : 0) + (/cruise_terminal/.test(String(c.kind || "")) ? 3 : 0) + (/terminal|berth|wharf|pier|dock|quay/i.test(String(c.name || "")) ? 1 : 0);
   E.gateOk = (kind, c) => !!c && (kind !== "cruise" || E.cruiseOk(c)) && !/^(list|lists|index|outline) of\b/i.test(String(c.name || "").trim()) && !(GATE_BAD[kind] && GATE_BAD[kind].test(String(c.name || ""))) && !(c.kind && GATE_KINDS[kind] && !GATE_KINDS[kind].test(String(c.kind)));
+  // An airport or station only the encyclopedia knows is offered only when the map knows none: a closed one keeps its
+  // article but leaves the map (Round 2: a station closed in 1941, an airport closed to passengers, were offered).
   E.gateChoices = (list, kind) => { const key = n => String(n || "").toLowerCase().normalize("NFKD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-z0-9]+/g, " ").trim(), out = [];
-    for (const c of list || []) { if (!c || !c.name || !isFinite(c.lat) || !isFinite(c.lng) || E.NOT_BUILT.test(c.name + " " + (c.kind || "")) || (kind && !E.gateOk(kind, c))) continue;
+    const mapped = (kind === "station" || kind === "airport") && (list || []).some(c => c && !c.wiki && c.name && isFinite(c.lat) && E.gateOk(kind, c) && !E.NOT_BUILT.test(c.name + " " + (c.kind || "")));
+    for (const c of list || []) { if (mapped && c && c.wiki) continue; if (!c || !c.name || !isFinite(c.lat) || !isFinite(c.lng) || E.NOT_BUILT.test(c.name + " " + (c.kind || "")) || (kind && !E.gateOk(kind, c))) continue;
       if (!out.some(x => key(x.name) === key(c.name) || E.hav(x, c) <= 1)) out.push(c); }
     return out; };
   // How early to be at the station for a train to another country: ID checks inside the open-border area, passport and

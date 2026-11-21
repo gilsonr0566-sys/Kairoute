@@ -85,19 +85,25 @@ function waterCheck(city, homes) {
     if (isl) { const sIsl = isl.slice(0, stops.length), hIsl = isl.slice(stops.length), foot = {};
       // Walking routes only for the stops on another island than every start (a few per place at most).
       const cand = stops.map((s, i) => i).filter(i => sIsl[i] && !hIsl.some(h => h !== null && (h ? h.ids.some(id => sIsl[i].ids.includes(id)) : false)));
-      for (const i of cand.slice(0, 12)) { const hi = hIsl.findIndex(h => h !== null); foot[i] = hi >= 0 ? await waterFoot(starts[hi], stops[i]) : null; }
+      const hi = hIsl.findIndex(h => h !== null);
+      await Promise.all(cand.slice(0, 12).map(async i => { foot[i] = hi >= 0 ? await waterFoot(starts[hi], stops[i]) : null; }));
       Object.assign(across, waterAcross(stops, starts, sIsl, hIsl, i => foot[i] == null ? null : foot[i])); }
     const gaps = await waterRoadGaps(stops);
     // Nothing answered: ask again another time.
     if (!isl && !gaps) { setTimeout(() => { if (waterAsked.get(keyOf(city.city)) === sig) waterAsked.delete(keyOf(city.city)); }, 180000); return; }
+    const before = stops.map(s => ({ a: s.acrossWater, g: s.roadGap }));
     stops.forEach((s, i) => {
       if (isl) { if (across[s.id]) s.acrossWater = across[s.id]; else delete s.acrossWater; }
       if (gaps) { const g = gaps[i]; if (g != null && g > 150) s.roadGap = g; else if (g != null) delete s.roadGap; } });
     if (isl && gaps) city.waterSig = sig;
     // One service busy (the map turns away a burst of questions): ask the rest again in a few minutes.
     else setTimeout(() => { if (waterAsked.get(keyOf(city.city)) === sig) waterAsked.delete(keyOf(city.city)); }, 180000);
+    // The answer changes the place's own fields: plans made from the old ones are stale (the app's fetch wasn't used, so
+    // the change is counted here; Round 2: stops across the water still planned on foot after the answer came).
+    const changed = stops.some((s, i) => (s.acrossWater || null) !== (before[i].a || null) || (s.roadGap || null) !== (before[i].g || null));
+    if (changed) { try { dataGen++; } catch (e) {} }
     try { save(); } catch (e) {}
-    try { render(); } catch (e) {}
+    if (changed) try { render(); } catch (e) {}
   })();
 }
 if (typeof window !== "undefined") window.__kairouteWater = { waterIslandQuery, waterIslandsFrom, waterAcross };

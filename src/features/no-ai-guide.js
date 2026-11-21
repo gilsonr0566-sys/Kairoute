@@ -87,7 +87,12 @@ async function srcStarts(label, area, port, centre, d) {
     // A real terminal on the map ("Prince George Wharf Cruise Ship Terminal", a dock) before a shop or a bank that only
     // has "port" in its name (Nov 18, Nassau: "Banana Bay Nassau's Port Shop" was taken for the cruise port).
     const near = inReach.filter(p => !p.any).sort((a, b) => (a.fit === 0 ? 1 : 0) - (b.fit === 0 ? 1 : 0)).concat(inReach.filter(p => p.any).sort((a, b) => hav(a, centre) - hav(b, centre))); // the closest cruise pier, not a neighbour island's
-    if (k === "cruise" && gate) near.sort((a, b) => (nameMatch(port, b.name) ? 0 : 1) - (nameMatch(port, a.name) ? 0 : 1));
+    // A port named apart from the city ("Port (City)"): the pier is where the port is, the city only has the sights. The
+    // search is centred on the city, so a pier in the city itself ("Bangkok Port" for a ship at a port 2 hours away) is
+    // never taken for it (Round 2, N1): a pier that doesn't carry the port's own name counts only when it lies out of
+    // the city (E.GATE_OUT km), as a port named apart does (a pier mapped only as "Cruise Terminal"). None: asked.
+    if (k === "cruise" && gate) { const out = (typeof KEngine !== "undefined" && KEngine.GATE_OUT) || 25;
+      for (let i = near.length - 1; i >= 0; i--) if (!nameMatch(Pn, near[i].name) && !(/cruise/i.test(near[i].name) && hav(near[i], centre) > out)) near.splice(i, 1); }
     // Never a building site or a closed station; every real one kept, so a city with several is asked which (Nov 20 tester:
     // London's Paris train sent to Victoria, Paris's station a Grand Paris Express building site).
     const real = typeof KEngine !== "undefined" && KEngine.gateChoices ? KEngine.gateChoices(near, k) : near;
@@ -95,7 +100,9 @@ async function srcStarts(label, area, port, centre, d) {
     // Only piers the port's own name search found count (the plain "Cruise pier" search also finds a neighbour island's).
     // The order stays the one above (a real terminal first, then the closest), so the plan starts from the likeliest.
     if (k === "cruise") { if (!real.length) return null; const R = typeof KEngine !== "undefined" && KEngine.cruiseRank ? KEngine.cruiseRank : () => 0, own = real.filter(p => !p.any), top = Math.max(0, ...own.map(R));
-      const sure = own.filter(p => R(p) >= top - 1 && R(p) > 0); return sure.length >= 2 ? sure.slice(0, 3) : real[0]; }
+      // One the map is surest of: that one, never the first found (Round 2: a city's old harbour found first by the
+      // "Port of ..." search was taken over the cruise port the terminal search found).
+      const sure = own.filter(p => R(p) >= top - 1 && R(p) > 0); return sure.length >= 2 ? sure.slice(0, 3) : sure[0] || real[0]; }
     return real.length ? real.slice(0, 5) : null;
   };
   const starts = { cruise: [], airport: [], station: [], hotel: [], point: [] };
@@ -109,7 +116,7 @@ async function srcStarts(label, area, port, centre, d) {
   starts.point.push({ name: "Central " + A, lat: centre.lat, lng: centre.lng, note: "" });
   return starts;
 }
-if (typeof window !== "undefined") window.__kairouteSrcStarts = (label, centre) => srcStarts(label, label, label, centre, null);
+if (typeof window !== "undefined") window.__kairouteSrcStarts = (label, centre, port) => srcStarts(label, label, port || label, centre, null);
 // The traveler's own hotel, found on the map by name (OpenStreetMap through the helper), with no AI.
 async function findHotelNoAI(name, d) {
   if (!freeAI || !name) return null;

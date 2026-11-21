@@ -81,6 +81,7 @@
   E.RIDE_KINDS = Object.freeze(["walk", "metro", "tram", "train", "bus", "ferry", "taxi"]);
   E.hasPos = p => !!p && p.lat != null && p.lng != null && p.lat !== "" && p.lng !== "" && isFinite(p.lat) && isFinite(p.lng);
   E.SLOWER_THAN_WALK = 10; // most a way may be slower than a walk of up to twice the traveler's walking limit
+  E.SPARE_RUN = 60; // minutes kept for a missed change on the way to the ship, a train or a plane (one train or bus later)
   E.UNKNOWN_RIDE = 45; // minutes for a ride to or from a place not on the map: a guess, said as one
   E.modeOfKind = k => k === "walk" ? "walk" : k === "taxi" ? "ride" : k === "ferry" ? "boat" : "transit";
   // A choice saved before the kinds were named (the app kept "transit", "boat", "ride" or a timetable row's own id).
@@ -273,7 +274,12 @@
       }
       // Time for the ship, a train or a plane, in one place for every way: a ride of half an hour or more to it gets 30%
       // more, at least 15 minutes (a late train, traffic, a slow boat queue).
-      if (b.backToShip || b.deadline) for (const o of opts) if (o.kind !== "walk" && o.min >= 30) { o.slack = Math.max(15, Math.round(o.min * 0.3 / 5) * 5); o.min += o.slack; }
+      // A timetabled train or bus of half an hour or more with a change gets a spare one: a missed change waits for the next,
+      // so the time kept is at least one interval (its own, else E.SPARE_RUN) (Round 2: a change 2 min before back-by).
+      if (b.backToShip || b.deadline) for (const o of opts) { if (o.kind === "walk") continue;
+        if (o.min < 30) continue;
+        const spare = o.ans && o.kind !== "ferry" && changesOf(o.ans) >= 1 ? Math.max(15, +o.ans.every || E.SPARE_RUN) : 0;
+        o.slack = Math.max(15, Math.round(o.min * 0.3 / 5) * 5, spare); o.min += o.slack; }
       // The way taken: the traveler's own choice when it is offered; else a walk when it is short enough; else the
       // quickest public way unless a taxi saves a great deal; else the taxi.
       const byKind = k => opts.find(o => o.kind === k);

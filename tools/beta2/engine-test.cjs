@@ -941,4 +941,19 @@ ok(E.readable('Café Ñandú') && E.readable("Joe's Bar & Grill") && !E.readable
     const last = E.planTrip(mk({ lastDay: true, stayGuess: true }))[0], own = E.planTrip(mk({ lastDay: true, stayGuess: false }))[0], mid = E.planTrip(mk({ lastDay: false, stayGuess: true }))[0];
     ok(last.error && /This is your last day/.test(last.error) && own.items && mid.items, `the trip's last day with no hotel of the traveler's own asks how they leave; with their hotel, or mid-trip, it is planned (${last.error ? 'asked' : 'planned'})`); }
 }
+// Round 2: a train back to the ship with a change keeps one spare train (a missed change waits for the next), the
+// timetable's own interval when it gives one; a straight train keeps the usual 30%.
+{ const A = { lat: 41.90, lng: 12.50, name: 'Station A' }, P = { lat: 42.09, lng: 11.79, name: 'Pier', backToShip: true };
+  const ans = (ev) => (a, b) => [{ id: 'rail|X', min: 75, label: 'Train + 1 change', mode: 'rail', steps: ['Train 1', 'Train 2'], every: ev }];
+  const one = E.makeTravel({ walk: 'medium' }, null, null, null, ans(0), null).estimate(A, P);
+  const own = E.makeTravel({ walk: 'medium' }, null, null, null, ans(90), null).estimate(A, P);
+  const str = E.makeTravel({ walk: 'medium' }, null, null, null, (a, b) => [{ id: 'rail|Y', min: 75, label: 'Train', mode: 'rail', steps: ['Train 1'] }], null).estimate(A, P);
+  const tr1 = o => (o.options || [o]).find(x => x.ans);
+  ok(tr1(one) && tr1(one).slack >= E.SPARE_RUN && tr1(own) && tr1(own).slack >= 90 && tr1(str) && tr1(str).slack < E.SPARE_RUN && tr1(str).slack >= 15,
+    `a train back to the ship with a change keeps a spare train (${tr1(one) && tr1(one).slack} / ${tr1(own) && tr1(own).slack} / straight ${tr1(str) && tr1(str).slack})`); }
+// Round 2: a station or airport only the encyclopedia knows (closed, its article kept) is offered only when the map
+// knows none.
+{ const g = E.gateChoices([{ name: 'Old Closed Station', lat: 51.50, lng: -0.12, wiki: true }, { name: 'Main Line Station', lat: 51.53, lng: -0.12, kind: 'station' }], 'station'),
+    w = E.gateChoices([{ name: 'Only Known Station', lat: 51.50, lng: -0.12, wiki: true }], 'station');
+  ok(g.length === 1 && g[0].name === 'Main Line Station' && w.length === 1, `a gate only the encyclopedia knows is offered only when the map knows none (${g.map(x => x.name)} / ${w.length})`); }
 console.log(`\n${oks} checks passed, ${fails} failed`); process.exit(fails ? 1 : 0);

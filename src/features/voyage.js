@@ -130,10 +130,15 @@ function renderSea(d) {
     <div class="guidemain pane" data-pane="stories">${body}</div></div>`;
 }
 
-// A leaving or boarding day with no night here: the arrival's page points to the one plan for the whole day.
+// A leaving or boarding day with no night here: the arrival's page points to the one plan for the whole day. An arrival
+// time the traveler never gave (the trip builder's guess) is never shown as theirs (Round 2, S1-6).
+function throughLede(d, n) {
+  return `${esc(MODES[d.mode] ? MODES[d.mode].label : "You")} ${d.time && !d.estimated ? "in at " + esc(d.time) : "in (the time isn't given yet)"}, then ${n.type === "embark" ? "the ship" : "your " + (MODES[n.mode] ? MODES[n.mode].label.toLowerCase() : "departure")} ${n.estimated ? "(its time isn't given yet)" : "at " + esc(n.type === "embark" ? n.allAboard : n.time)}`;
+}
+if (typeof window !== "undefined") window.__kairouteThroughLede = throughLede;
 function renderThrough(d) {
   const n = throughTo(d), k = trip.days.indexOf(n);
-  return `${dayHeading(d)}<div class="card empty"><h3>Today is one plan</h3><p class="lede">${esc(MODES[d.mode] ? MODES[d.mode].label : "You")} in at ${esc(d.time)}, then ${n.type === "embark" ? "the ship" : "your " + (MODES[n.mode] ? MODES[n.mode].label.toLowerCase() : "departure")} at ${esc(n.type === "embark" ? n.allAboard : n.time)}: the sightseeing in between, your bags and the countdown are on one page.</p>
+  return `${dayHeading(d)}<div class="card empty"><h3>Today is one plan</h3><p class="lede">${throughLede(d, n)}: the sightseeing in between, your bags and the countdown are on one page.</p>
     <button class="btn" data-voyopen="${k}:${view === "guide" || view === "sites" ? view : "plan"}">See today's plan</button></div>`;
 }
 
