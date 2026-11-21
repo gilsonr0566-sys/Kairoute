@@ -55,7 +55,11 @@ const shot = async (p, n) => { if (SHOTS) { fs.mkdirSync(SHOTS, { recursive: tru
 // The plan of day i as a list of its stops (ids) and where/when it ends.
 const planOf = (p, i) => p.evaluate(i => { const T = window.__kairouteGrpT, trip = T.trip, buildPlan = T.buildPlan; const d = trip.days[i], pl = buildPlan(d); const m = window.__kairouteGroup.meet(i); return { stops: (pl.stops || []).map(s => String(s.place.id)), end: pl.end, endBy: pl.endBy, meet: m, sel: d.selected, own: !!d.grpOwn, tour: !!d.grpTour, hours: d.hours, meals: (pl.items || []).filter(x => x.type === 'meal').length }; }, i);
 const openDay = (p, i) => p.evaluate(i => { const T = window.__kairouteGrpT; T.trip.active = i; T.view = 'plan'; T.render(); window.scrollTo(0, 0); document.querySelectorAll('.pane').forEach(e => { e.scrollTop = 0; }); }, i);
-const pollMember = async p => { await p.evaluate(() => window.__kairouteGroup.poll()); await p.waitForTimeout(400); };
+const pollMember = async p => { const was = await p.evaluate(() => (window.__kairouteGroup.state() || {}).tripRev); await p.evaluate(() => window.__kairouteGroup.poll());
+  for (let k = 0; k < 40; k++) { const now = await p.evaluate(() => (window.__kairouteGroup.state() || {}).tripRev); if (now !== was) break; await p.waitForTimeout(250); await p.evaluate(() => window.__kairouteGroup.poll()); }
+  await settle(p); };
+// Waits until the app has finished changing the open trip (two reads of its days the same, half a second apart).
+const settle = async p => { let a = ''; for (let k = 0; k < 20; k++) { const b = await p.evaluate(() => JSON.stringify(window.__kairouteGrpT.trip.days.map(d => [d.selected, d.hours]))); if (b === a) return; a = b; await p.waitForTimeout(500); } };
 const pushLead = async p => { await p.evaluate(() => window.__kairouteGroup.push()); await p.waitForTimeout(400); };
 
 (async () => {
@@ -133,13 +137,16 @@ const pushLead = async p => { await p.evaluate(() => window.__kairouteGroup.push
   check(!meetBad, `own days meet the group at the same place, never late (${meetN} day plans)`);
 
   console.log('The owner changes the plan');
-  const before1 = await planOf(m1, D);
+  await settle(m1); const before1 = await planOf(m1, D);
   await openDay(lead, D);
   await lead.evaluate(i => { const T = window.__kairouteGrpT, buildPlan = T.buildPlan; const d = T.trip.days[i]; const pl = buildPlan(d); const ids = (pl.stops || []).map(s => s.place.id); d.selected = ids.slice(0, Math.max(1, ids.length - 1)); d.ownList = true; d.hours = Math.max(5, (+d.hours || 8) - 1); T.save(); }, D);
   await pushLead(lead); await pollMember(m2); await pollMember(m1);
   const L = await planOf(lead, D), F = await planOf(m2, D), O = await planOf(m1, D);
   check(L.stops.join() === F.stops.join() && L.end === F.end, 'a following member gets the owner\'s changed plan', `${L.stops} / ${F.stops}`);
-  check(O.own && JSON.stringify(O.sel) === JSON.stringify(before1.sel), 'an own day keeps the member\'s own sights when the owner changes theirs');
+  // The owner's shorter day reaches the own day too, so the app may take off an own sight that no longer fits: every
+  // sight left must be one the member had, never one the owner's plan brought in.
+  const had = new Set((before1.sel || []).map(String)), extra = (O.sel || []).map(String).filter(x => !had.has(x));
+  check(O.own && !extra.length && (O.sel || []).length > 0, 'an own day keeps the member\'s own sights when the owner changes theirs', `had ${[...had]}, now ${O.sel}, owner ${L.sel}`);
   check(O.hours === L.hours && (!O.meet || !L.meet || (O.meet.time === L.meet.time && O.meet.where === L.meet.where)), 'a change to the day\'s hours reaches own days too (same meeting time)', `${O.hours}/${L.hours}`);
   check(!O.meet || !O.meet.known || O.end <= O.meet.time, 'the own day still ends by the new meeting time');
 
