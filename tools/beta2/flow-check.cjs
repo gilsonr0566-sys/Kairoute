@@ -204,6 +204,13 @@ async function tapTimes(p) { const out = []; const n = await p.evaluate(() => wi
       } return false; };
     const isle = all.find(id => /capri/.test(id)), inland = all.find(id => /duomo/.test(id)) || town, inl = all.find(id => /pompeii/.test(id));
     const bad = []; let ferries = 0, skipped = 0; // a set that doesn't fit the day (the pop-up says so) is not tried
+    // On a ship day a boat is planned only on a sailing a timetable confirms (Nov 21 outside review): the island's ferry gets
+    // its timetable here (every half hour, 7:00 to 19:30), as the helper sends it, kept under the Naples day's own kind of day.
+    await p.evaluate(([i, isleId]) => { const b = window.__kairouteBucket(true), d = b.days[i], c = (b.cities || {})[d.city] || {}, x = [...(c.sites || []), ...(c.farther || [])].find(y => String(y.id) === String(isleId));
+      const e = (window.__kairouteEngine2()[i] || {}).items || [], o = e[0]; if (!x || !o || !isFinite(o.lat)) return;
+      const w = new Date(d.date + 'T12:00:00Z').getUTCDay(), kd = w === 0 ? 'su' : w === 6 ? 'sa' : 'wk', deps = []; for (let t = 7 * 60; t <= 19 * 60 + 30; t += 30) deps.push({ t });
+      const f = { mode: 'ferry', label: 'Ferry', min: 60, ride: 50, wait: 5, every: 30, everySrc: 'timetable', km: 30, access: { how: 'walk', min: 5, km: 0.3 }, egress: { how: 'walk', min: 5, km: 0.3 }, steps: ['Ferry, 50 min'], deps };
+      const A = { lat: o.lat, lng: o.lng }, B = { lat: x.lat, lng: x.lng }; window.__kairouteTransitSet([{ a: A, b: B, kd, opts: [f] }, { a: B, b: A, kd, opts: [f] }]); }, [ni, isle]);
     for (const set of [[inland, isle], [isle, inl], [inland, isle, inl]].map(x => x.filter(Boolean)).filter(x => x.includes(isle))) {
       await p.evaluate(i => { window.__kairouteGo('day', i); window.__kairouteGo('sites'); }, ni); await p.waitForTimeout(500);
       const got = await setPicks(set); if (got === 'nofit') { skipped++; continue; } if (!got) { bad.push(`could not pick ${set.join(' + ')}`); continue; }
