@@ -502,10 +502,10 @@ function alarmCard(d, plan) {
   // A compact countdown in the Day plan's top row, always on screen; tap it for the details.
   const title = fixed ? fixedTitle(d) : "Your day, live";
   return `<details class="moremenu planmore cdchip livecard" id="cdCard"><summary aria-label="${esc(title)}: details">
-      <span class="cdday" aria-hidden="true">${esc(dayPinText(d))}</span><span class="cdico" aria-hidden="true">${fixed ? (d.type === "departure" ? ({ flight: "✈️", train: "🚆", ferry: "⛴️", ship: "🚢", car: "🚌" }[d.mode] || "🧭") : "🚢"): "📍"}</span><span class="cdwords"><span class="cdlbl" id="cdLbl">${fixed ? (today ? "Leave in" : "Leave by") : "Live"}</span><span class="cdto">${fixed ? esc((d.type === "port" || d.type === "embark") && d.allAboard ? "all aboard " + fmt(shipToPort(d, d.allAboard)) : d.type === "port" ? "back to ship" : d.type === "embark" ? "to the ship" : "to your " + MODES[d.mode].label.toLowerCase()) : "re-plan"}</span></span><b class="cdbig" id="cdBig">${fixed ? "--:--" : (today ? "On" : "Preview")}</b>
+      <span class="cdday" aria-hidden="true">${esc(dayPinText(d))}</span><span class="cdico" aria-hidden="true">${fixed ? (d.type === "departure" ? ({ flight: "✈️", train: "🚆", ferry: "⛴️", ship: "🚢", car: "🚌" }[d.mode] || "🧭") : "🚢"): "📍"}</span><span class="cdwords"><span class="cdlbl" id="cdLbl">${fixed ? (today ? "Leave in" : "Leave by") : "Live"}</span><span class="cdto">${fixed ? esc((d.type === "port" || d.type === "embark") && d.allAboard ? "all aboard " + fmt(shipToPort(d, d.allAboard)) : d.type === "port" ? "back to ship" : d.type === "embark" ? "to the ship" : "to your " + MODES[d.mode].label.toLowerCase()) : "re-plan"}</span>${fixed ? `<span class="cdbasis" id="cdBasis" hidden></span>` : ""}</span><b class="cdbig" id="cdBig">${fixed ? "--:--" : (today ? "On" : "Preview")}</b>
     </summary><div class="menupanel cdpanel" role="dialog" aria-label="${esc(title)}">
     <div><span class="eyebrow">${esc(title)}${!today && live ? " · preview" : ""}</span></div>
-    ${fixed ? `<div class="cdsub" id="cdSub"></div><div class="cdsrc" id="cdSrc"></div>
+    ${fixed ? `<p class="cdbasisline" id="cdBasisLine" hidden></p><div class="cdsub" id="cdSub"></div><div class="cdsrc" id="cdSrc"></div>
     <div class="banner" id="cdMsg" hidden></div>
     ${d.type === "port" ? `<p class="cdagent" id="cdAgent" ${d.portAgent ? "" : "hidden"}>${d.portAgent ? `Can't make all aboard? Call the port agent: <a href="tel:${esc(String(d.portAgent).replace(/[^\d+]/g, ""))}">${esc(d.portAgent)}</a>` : ""}</p>
     <details class="cdwhere cdagentfold"><summary>${d.portAgent ? "Port agent's phone" : "Add the port agent's phone"}</summary><div class="field"><label for="cdAgentIn">Port agent's phone (it's in your cruise documents for each port)</label><input id="cdAgentIn" type="tel" inputmode="tel" value="${esc(d.portAgent || "")}" placeholder="+39 081 ..."></div></details>` : ""}
@@ -553,8 +553,16 @@ function alarmTick() {
     if (srcEl) srcEl.textContent = `Travel time: ${st.leg.src}${st.src === "GPS" ? ", from your GPS position" : st.src === "plan" ? ", from where the plan has you now" : ""}.`;
     // How sure the way back is, from the plan itself (the engine's leaveAt.basis: the weakest ride on it), said by the
     // leave-by time (Nov 21 outside review: a guessed way back must never read as sure as a timetabled one).
-    const basis = st.src === "plan" && plan.engine2 && plan.engine2.leaveAt && plan.engine2.leaveAt.basis;
-    if (srcEl && basis && basis !== "walk") srcEl.textContent += basis === "timetable" ? " The way back is on a timetable." : basis === "roads" ? " The way back is timed on the road map, with no live traffic: extra time for delays is in it." : " The way back is an estimate: no timetable or road map confirms it, so extra time for delays is in it. Check the ride before you set out.";
+    // Said on the card itself, next to the time (Nov 21 outside check: it was only in the small print, so the card read
+    // as sure on a guess as on a timetable): a word under the time, and the sentence first in the details.
+    const basis = plan.engine2 && plan.engine2.leaveAt && plan.engine2.leaveAt.basis, bEl = document.getElementById("cdBasis"), bLine = document.getElementById("cdBasisLine");
+    const bWord = { timetable: "by timetable", roads: "by road map", estimate: "estimate", walk: "walk back" }[basis] || "";
+    const bSay = basis === "timetable" ? "This time rests on a timetable: the way back is a ride with real departures, with extra time for delays."
+      : basis === "roads" ? "This time rests on the road map, with no live traffic: extra time for delays is in it."
+      : basis === "walk" ? "This time rests on the walk back, timed on the street map."
+      : basis === "estimate" ? "This time is an estimate: no timetable or road map confirms the way back, so extra time for delays is in it. Check the ride before you set out." : "";
+    if (bEl) { bEl.textContent = bWord; bEl.hidden = !bWord; }
+    if (bLine) { bLine.textContent = bSay; bLine.hidden = !bSay; }
     if (srcEl && (d.type === "port" || d.type === "embark")) srcEl.textContent += " Being on board on time is your responsibility: confirm the all-aboard time with your cruise line on the day. Ships don't wait.";
     const chip = document.getElementById("cdCard"), lbl = document.getElementById("cdLbl");
     if (st.now == null) { if (lbl) lbl.textContent = "Leave by"; if (chip) chip.classList.remove("amber", "soon", "go"); if (el) el.textContent = fmt(st.leaveBy); if (msg) msg.hidden = true; if (srcEl) srcEl.textContent += ` On ${fmtDate(d.date)} it counts down live from your GPS position, with alerts.`; }
