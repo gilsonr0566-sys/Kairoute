@@ -43,6 +43,9 @@ jobs:
       - name: Phone flow on the Beta 2 build
         if: always()
         run: node tools/beta2/flow-check.cjs beta2-site/index.html
+      - name: Group trips (share one trip, follow or own day, meeting point, offers, booked tours)
+        if: always()
+        run: node tools/beta2/group-check.cjs beta2-site/index.html
       - name: Outside text never runs as code (Beta 2 build)
         if: always()
         run: node tools/inject-check.cjs beta2-site/index.html

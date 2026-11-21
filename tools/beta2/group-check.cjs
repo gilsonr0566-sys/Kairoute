@@ -54,7 +54,7 @@ async function phone(b, w, h, hash) {
 const shot = async (p, n) => { if (SHOTS) { fs.mkdirSync(SHOTS, { recursive: true }); await p.screenshot({ path: path.join(SHOTS, n + '.png') }); } };
 // The plan of day i as a list of its stops (ids) and where/when it ends.
 const planOf = (p, i) => p.evaluate(i => { const T = window.__kairouteGrpT, trip = T.trip, buildPlan = T.buildPlan; const d = trip.days[i], pl = buildPlan(d); const m = window.__kairouteGroup.meet(i); return { stops: (pl.stops || []).map(s => String(s.place.id)), end: pl.end, endBy: pl.endBy, meet: m, sel: d.selected, own: !!d.grpOwn, tour: !!d.grpTour, hours: d.hours, meals: (pl.items || []).filter(x => x.type === 'meal').length }; }, i);
-const openDay = (p, i) => p.evaluate(i => { const T = window.__kairouteGrpT; T.trip.active = i; T.view = 'plan'; T.render(); }, i);
+const openDay = (p, i) => p.evaluate(i => { const T = window.__kairouteGrpT; T.trip.active = i; T.view = 'plan'; T.render(); window.scrollTo(0, 0); document.querySelectorAll('.pane').forEach(e => { e.scrollTop = 0; }); }, i);
 const pollMember = async p => { await p.evaluate(() => window.__kairouteGroup.poll()); await p.waitForTimeout(400); };
 const pushLead = async p => { await p.evaluate(() => window.__kairouteGroup.push()); await p.waitForTimeout(400); };
 
