@@ -24,6 +24,7 @@ const CASES = [
   const out = [];
   for (const c of CASES) {
     const { city, ms } = await runCheck(c.place, c.stops, c.start);
+    for (const st of c.stops) if (st.across) console.log('  foot ' + c.place + ' ' + st.id + ': ' + JSON.stringify(await W.waterFoot(c.start, st)));
     city.sites.forEach((s, i) => { const want = c.stops[i], got = !!s.acrossWater;
       const r = { place: c.place, stop: s.id, across: s.acrossWater || false, expectAcross: want.across, roadGap: s.roadGap || null, expectNoRoad: want.road === false, done: !!city.waterSig, ms,
         ok: got === want.across && (want.road === false ? s.roadGap > 150 : true) };

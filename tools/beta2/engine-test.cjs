@@ -870,6 +870,8 @@ ok(E.readable('Café Ñandú') && E.readable("Joe's Bar & Grill") && !E.readable
       const st = [{ id: 'a', name: 'Isle A', lat: 42.627, lng: 18.119 }, { id: 'b', name: 'Tower', lat: 42.630, lng: 18.121 }, { id: 'c', name: 'Summit', lat: 42.70, lng: 18.2 }, { id: 'd', name: 'Old town', lat: 42.64, lng: 18.11 }], none = st.map(() => null);
       const r = Wh.waterAcross(st, [{}], none, [null], i => ['ferry', 'ferry', false, true][i]);
       ok(r.a === 'Isle A' && r.b === 'Isle A' && !r.c && !r.d, `with no island answer: a ferry on the only way on foot is across, stops close together share one island, a summit with no path is not (got ${JSON.stringify(r)})`);
+      const nr = Wh.waterAcross(st, [{}], none, [null], i => i === 0 ? 'none' : true);
+      ok(nr.a === 'Isle A' && !nr.b, 'paths that never join the start\'s (another shore) are across the water');
       const same = Wh.waterAcross(st, [{}], [isl[1], null, null, null], [isl[1]], () => 'ferry');
       ok(!same.a, 'a ferry shortcut on the island a start stands on is not across the water'); }
     ok(/is_in\(42\.00000,18\.00000\)/.test(W.waterIslandQuery([{ lat: 42, lng: 18 }])) && /make w i=0/.test(W.waterIslandQuery([{ lat: 42, lng: 18 }])), 'one map question for all points, each answer tagged with its point'); }
@@ -962,4 +964,11 @@ ok(E.readable('Café Ñandú') && E.readable("Joe's Bar & Grill") && !E.readable
 // picked a small airport silently, with no question).
 { const g = E.gateChoices([{ name: 'Big International Airport', lat: 63.98, lng: -22.62, wiki: true }, { name: 'City Airport', lat: 64.13, lng: -21.94, kind: 'aerodrome' }], 'airport');
   ok(g.length === 2 && g.some(x => x.name === 'Big International Airport'), `an airport only the encyclopedia knows stays a choice beside the map's (${g.map(x => x.name)})`); }
+// Round 2 re-check: a pier found for a port named apart from its city carries that port's name, so the plan knows it
+// serves the place from there and never refuses it as too far.
+{ const d0 = E.planTrip ? null : null; const tr0 = E.makeTravel({ walk: 'medium' });
+  const base = { i: 0, type: 'port', mode: 'ship', city: 'x', date: '2027-06-01', portArrive: 480, allAboard: 1080, siteSpots: [{ lat: 43.77, lng: 11.25 }], lodging: null };
+  const far = E.dayWindow(Object.assign({}, base, { point: { name: 'Cruise Terminal, Example Port', lat: 43.552, lng: 10.30 }, placeName: 'x Example City Example Port (Example City)' }), tr0);
+  const bare = E.dayWindow(Object.assign({}, base, { point: { name: 'Cruise Terminal', lat: 43.552, lng: 10.30 }, placeName: 'x Example City Example Port (Example City)' }), tr0);
+  ok(!far.farGate && bare.farGate, `a pier named with the port the traveler typed serves the place; an unnamed one far away is refused (${!!far.farGate} / ${!!bare.farGate})`); }
 console.log(`\n${oks} checks passed, ${fails} failed`); process.exit(fails ? 1 : 0);

@@ -69,6 +69,11 @@ function helper(r, calls) {
     // "Cruise Terminal") 70 km out; "inland town" has only the city's harbour.
     if (/example old harbour/i.test(b.city || '')) return j({ center: null, results: names.map(n => /^Port of/.test(n) ? { wiki: [], answered: true, map: [{ name: 'Port of Example Cove', kind: 'harbour', lat: 42.6256, lng: 18.1229 }] }
       : /cruise terminal/.test(n) ? { wiki: [], answered: true, map: [{ name: 'Example Old Harbour Cruise Port', kind: 'harbour', lat: 42.6590, lng: 18.0850 }] } : { wiki: [], map: [], answered: true }) });
+    // Round 2 re-check, from the real answers: a pier named as another port's; a port 180 km out; a passenger terminal
+    // the map files as a public building.
+    if (/example other cove/i.test(b.city || '')) return j({ center: null, results: names.map(n => /^Port of/.test(n) ? { wiki: [], answered: true, map: [{ name: 'Port of Somewhere Else', kind: 'pier', lat: 42.6256, lng: 18.1229 }] } : { wiki: [], map: [], answered: true }) });
+    if (/example far capital/i.test(b.city || '')) return j({ center: null, results: names.map(n => /cruise terminal/.test(n) ? { wiki: [], answered: true, map: [{ name: 'Cruise Terminal', kind: 'ferry_terminal', lat: 49.4809, lng: 0.1077 }] } : { wiki: [], map: [], answered: true }) });
+    if (/example passenger port/i.test(b.city || '')) return j({ center: null, results: names.map(n => /cruise terminal/.test(n) ? { wiki: [], answered: true, map: [{ name: 'Example Passenger Port Industrial Port', kind: 'industrial', lat: 32.8193, lng: 35.0361 }, { name: 'Passengers Terminal', kind: 'public', lat: 32.8223, lng: 34.9997 }] } : { wiki: [], map: [], answered: true }) });
     if (/example inland (city|town)/i.test(b.city || '')) { const out = /city/i.test(b.city);
       return j({ center: null, results: names.map(n => /^Port of/.test(n) ? { wiki: [], answered: true, map: [{ name: 'Example Inland Port', kind: 'harbour', lat: 13.70, lng: 100.56 }] }
         : /cruise terminal/.test(n) && out ? { wiki: [], answered: true, map: [{ name: 'Cruise Terminal', kind: 'terminal', lat: 13.08, lng: 100.88 }] } : { wiki: [], map: [], answered: true }) }); }
@@ -167,10 +172,16 @@ function helper(r, calls) {
     if (!none || !none.unknown) bad(`small port: a fishing pier was taken for the cruise pier: ${JSON.stringify(none)}`); else ok('small port: a pier not named for cruises is never the ship\'s spot');
     const oh = await p.evaluate(() => window.__kairouteSrcStarts('Example Old Harbour', { lat: 42.6407, lng: 18.1077 }).then(s => s.cruise[0]));
     if (!oh || oh.name !== 'Example Old Harbour Cruise Port') bad(`port: a harbour found first was taken over the cruise port: ${JSON.stringify(oh)}`); else ok('port: the cruise port wins over an old harbour found first');
+    const oc = await p.evaluate(() => window.__kairouteSrcStarts('Example Other Cove', { lat: 42.6407, lng: 18.1077 }).then(s => s.cruise[0]));
+    if (!oc || !oc.unknown) bad(`port: a pier named as another port's was taken: ${JSON.stringify(oc)}`); else ok('port: a pier named as another port\'s is never this port\'s; asked instead');
+    const fc = await p.evaluate(() => window.__kairouteSrcStarts('Example Far Capital', { lat: 48.8566, lng: 2.3522 }, 'Example Coast Port').then(s => s.cruise));
+    if (!fc || !fc[0] || fc[0].name !== 'Cruise Terminal, Example Coast Port') bad(`port apart from the city: a pier 180 km out was not found: ${JSON.stringify(fc)}`); else ok('port apart from the city: a pier 180 km out is found and named with its port');
+    const pt = await p.evaluate(() => window.__kairouteSrcStarts('Example Passenger Port', { lat: 32.794, lng: 34.9896 }).then(s => s.cruise[0]));
+    if (!pt || pt.name !== 'Passengers Terminal') bad(`port: the passenger terminal was dropped for how the map files it: ${JSON.stringify(pt)}`); else ok('port: a passenger terminal counts however the map files it');
     // Round 2, N1: "Port (City)" docks at the port's own pier, never the city's harbour by the centre; with none named
     // for the port and none out of the city, the pier is asked, never guessed.
     const gp = await p.evaluate(() => window.__kairouteSrcStarts('Example Inland City', { lat: 13.75, lng: 100.50 }, 'Example Seaport').then(s => s.cruise));
-    const g0 = gp && gp[0]; if (!g0 || g0.name !== 'Cruise Terminal') bad(`port apart from the city: the city's harbour was taken for the port's pier: ${JSON.stringify(gp)}`); else ok('port apart from the city: the pier out of the city is the ship\'s spot, never the city\'s harbour');
+    const g0 = gp && gp[0]; if (!g0 || g0.name !== 'Cruise Terminal, Example Seaport') bad(`port apart from the city: the city's harbour was taken for the port's pier: ${JSON.stringify(gp)}`); else ok('port apart from the city: the pier out of the city is the ship\'s spot, never the city\'s harbour');
     const gn = await p.evaluate(() => window.__kairouteSrcStarts('Example Inland Town', { lat: 13.75, lng: 100.50 }, 'Example Seaport').then(s => s.cruise[0]));
     if (!gn || !gn.unknown) bad(`port apart from the city: the city's harbour was guessed for the port: ${JSON.stringify(gn)}`); else ok('port apart from the city: no pier for the port, so it is asked');
     await p.close(); }

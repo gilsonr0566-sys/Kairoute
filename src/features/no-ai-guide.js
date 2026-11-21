@@ -75,7 +75,8 @@ async function srcStarts(label, area, port, centre, d) {
   let res = null;
   try { const r = await fetch(freeAI.url + "/ground", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ city: label, names: names.slice(0, 8), center: centre && isFinite(centre.lat) ? { lat: centre.lat, lng: centre.lng } : undefined }) }); if (r.ok) { const j = await r.json(); if (Array.isArray(j.results)) res = j.results; } } catch (e) {}
   const found = k => {
-    const K = SG_KIND[k], lim = k === "cruise" && gate ? 150 : K.km, cands = [];
+    // A port named apart from its city can be a long way out (a port 180 km from the capital it serves).
+    const K = SG_KIND[k], lim = k === "cruise" && gate ? 300 : K.km, cands = [];
     names.forEach((n, i) => { if (!ask[k].includes(n)) return; const x = (res && res[i]) || {};
       (x.wiki || []).forEach(w => { if (w.lat != null && K.re.test(w.title || "")) cands.push({ name: w.title, lat: +w.lat, lng: +w.lng, any: n === "Cruise pier", wiki: true }); });
       (x.map || []).forEach(m => { if (isFinite(m.lat) && (K.re.test(m.name || "") || K.map.test(m.kind || ""))) cands.push({ name: m.name || n, lat: +m.lat, lng: +m.lng, kind: m.kind || "", any: n === "Cruise pier", fit: (K.map.test(m.kind || "") ? 2 : 0) + (k === "cruise" && /cruise|terminal|wharf|pier/i.test(m.name || "") ? 2 : 0) }); }); });
@@ -91,8 +92,14 @@ async function srcStarts(label, area, port, centre, d) {
     // search is centred on the city, so a pier in the city itself ("Bangkok Port" for a ship at a port 2 hours away) is
     // never taken for it (Round 2, N1): a pier that doesn't carry the port's own name counts only when it lies out of
     // the city (E.GATE_OUT km), as a port named apart does (a pier mapped only as "Cruise Terminal"). None: asked.
+    // Kept, it carries the port's name ("Cruise Terminal, <port>"), so the traveler sees where it is and the plan knows
+    // it serves the place from there (Round 2 re-check: a pier mapped only as "Cruise Terminal" was refused as too far).
     if (k === "cruise" && gate) { const out = (typeof KEngine !== "undefined" && KEngine.GATE_OUT) || 25;
-      for (let i = near.length - 1; i >= 0; i--) if (!nameMatch(Pn, near[i].name) && !(/cruise/i.test(near[i].name) && hav(near[i], centre) > out)) near.splice(i, 1); }
+      for (let i = near.length - 1; i >= 0; i--) { const c = near[i]; if (nameMatch(Pn, c.name)) continue;
+        if (/cruise/i.test(c.name) && hav(c, centre) > out) near[i] = Object.assign({}, c, { name: c.name + ", " + Pn }); else near.splice(i, 1); } }
+    // A pier named as another port's ("Port of <somewhere else>") is that port's, never this one's (Round 2 re-check: a
+    // small harbour's pier taken for a city's cruise port).
+    if (k === "cruise") for (let i = near.length - 1; i >= 0; i--) { const m = /^port of (.+)$/i.exec(String(near[i].name || "").trim()); if (m && !nameMatch(Pn, m[1]) && !nameMatch(A, m[1])) near.splice(i, 1); }
     // Never a building site or a closed station; every real one kept, so a city with several is asked which (Nov 20 tester:
     // London's Paris train sent to Victoria, Paris's station a Grand Paris Express building site).
     const real = typeof KEngine !== "undefined" && KEngine.gateChoices ? KEngine.gateChoices(near, k) : near;
@@ -109,7 +116,7 @@ async function srcStarts(label, area, port, centre, d) {
   for (const k of ["airport", "station", "cruise"]) {
     let p = found(k);
     if (Array.isArray(p)) { p.forEach(x => starts[k].push({ name: x.name, lat: x.lat, lng: x.lng, note: "" })); continue; }
-    if (!p && k !== "station") { const g = knownGate(k, { name: k === "cruise" ? Pn : A + " airport" }, centre, k === "cruise" && gate ? 150 : SG_KIND[k].km); if (g) p = { name: g.name, lat: g.lat, lng: g.lng }; }
+    if (!p && k !== "station") { const g = knownGate(k, { name: k === "cruise" ? Pn : A + " airport" }, centre, k === "cruise" && gate ? 300 : SG_KIND[k].km); if (g) p = { name: g.name, lat: g.lat, lng: g.lng }; }
     starts[k].push(p ? { name: p.name, lat: p.lat, lng: p.lng, note: "" } : { name: (k === "cruise" ? "Cruise port of " + Pn : k === "airport" ? A + " airport" : A + " main station"), lat: centre.lat, lng: centre.lng, note: "", unknown: true });
   }
   starts.hotel.push({ name: "Hotel in central " + A, lat: centre.lat, lng: centre.lng, note: "Add your own hotel on the Trip page for exact times." });

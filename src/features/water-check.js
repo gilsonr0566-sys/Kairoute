@@ -34,8 +34,9 @@ function waterIslandsFrom(d, n) {
 }
 // The rule, apart from the fetching (so it can be tested): which stops are across the water.
 //   pts: the stops; homes: the start points; isl / homeIsl: the islands from waterIslandsFrom (null = not known);
-//   onFoot(i): true (a way on foot), "ferry" (the walking router's way takes a ferry), false (no way on foot), null (no
-//   answer). Across: on another island than every start with no way on foot, or a way on foot only by ferry. A stop on
+//   onFoot(i): true (a way on foot), "ferry" (the walking router's way takes a ferry), "none" (its paths don't join the
+//   start's), false (no path near it), null (no answer). Across: a way on foot only by ferry, paths that don't join, or
+//   on another island than every start with no path near it (a summit far from a path is not across by itself). A stop on
 //   a start's island, or on the mainland with every start, is never across. The map's island question is often turned
 //   away (Round 2 re-check: no answer in 3 of 6 places), so a ferry on the only way on foot is enough without it.
 function waterAcross(pts, homes, isl, homeIsl, onFoot) {
@@ -45,7 +46,7 @@ function waterAcross(pts, homes, isl, homeIsl, onFoot) {
     if (walk == null || walk === true) return;
     if (mine != null && known.length && known.some(h => share(mine, h))) return;                           // a start's island, or the mainland
     const other = mine && known.length;                                                                      // another island than every start
-    if (!(walk === "ferry" || (walk === false && other))) return;
+    if (!(walk === "ferry" || walk === "none" || (walk === false && other))) return;
     // The island's name; without the map's answer, stops close together share the first one's name (one island, one boat).
     const near = !mine && named.find(x => typeof hav === "function" && isFinite(+p.lat) && hav(x.p, p) <= 2);
     out[p.id] = mine ? mine.name : near ? near.name : (p.name || "an island"); named.push({ p, name: out[p.id] }); });
@@ -58,10 +59,11 @@ async function waterOverpass(q) {
   }
   return null;
 }
-// On foot from a to b on OpenStreetMap's paths: true, "ferry" (only with a ferry), false (no way), null (no answer).
+// On foot from a to b on OpenStreetMap's paths: true, "ferry" (only with a ferry), "none" (the paths there don't join
+// the start's: another shore), false (no path near the stop), null (no answer).
 async function waterFoot(a, b) {
   try { const r = await waterFetch(`https://routing.openstreetmap.de/routed-foot/route/v1/foot/${(+a.lng).toFixed(5)},${(+a.lat).toFixed(5)};${(+b.lng).toFixed(5)},${(+b.lat).toFixed(5)}?overview=false&steps=true`, { signal: AbortSignal.timeout(20000) });
-    const j = await r.json(); if (j && j.code === "NoRoute") return false; if (!j || j.code !== "Ok" || !j.routes || !j.routes[0]) return null;
+    const j = await r.json(); if (j && j.code === "NoRoute") return "none"; if (!j || j.code !== "Ok" || !j.routes || !j.routes[0]) return null;
     const legs = j.routes[0].legs || [];
     // Snapped far from the stop (the nearest path is on the other shore) or a ferry on the way: not on foot.
     const snapFar = (j.waypoints || []).some(w => (w.distance || 0) > 300);
