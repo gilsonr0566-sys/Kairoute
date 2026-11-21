@@ -424,7 +424,7 @@ async function tapTimes(p) { const out = []; const n = await p.evaluate(() => wi
     const lk = run('leaks.cjs', ['--list']), cmp = run('compare.cjs'), st = run('stress.cjs', ['--list']);
     const nl = num(lk, /(\d+)\s+leaks?\b/i) != null ? num(lk, /(\d+)\s+leaks?\b/i) : num(lk, /leaks?:\s*(\d+)/i), worse = num(cmp, /worse than the old engine:\s*(\d+)/), unsafe = num(cmp, /safety failures:\s*(\d+)/), zig = num(st, /(\d+)\s+order crosses back and forth/) || 0;
     check('No leaks on the trip as the phone holds it', nl === 0, nl == null ? 'leak report did not run: ' + lk.slice(-300) : lk.split('\n').filter(l => /^      \S/.test(l)).slice(0, 3).join(' | '));
-    check('No day on the phone is worse than the demo app plans it', worse === 0 && unsafe === 0, `${worse} worse, ${unsafe} safety failures`);
+    check('No day on the phone is worse than the demo app plans it', worse === 0 && unsafe === 0, `${worse} worse, ${unsafe} safety failures` + (worse || unsafe ? ': ' + cmp.split('\n').filter(l => /WORSE|NEW FAIL/.test(l)).slice(0, 3).map(l => l.trim()).join('; ') : ''));
     check('No day on the phone crosses back and forth', zig === 0, st.split('\n').filter(l => /^      \S/.test(l)).slice(0, 3).join(' | '));
     if (process.env.KEEP_SNAP) fs.copyFileSync(path.join(sd, 'phone-trip.json'), process.env.KEEP_SNAP); fs.rmSync(sd, { recursive: true, force: true }); }
 

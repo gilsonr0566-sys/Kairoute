@@ -18,14 +18,30 @@
     const go = (p, type) => {
       let leg = ride(prev, p);
       // A timetabled line with no departure near this time (E.runsAt) is never planned on: the taxi instead, said.
-      if (!E.runsAt(leg, clock, !!(p && (p.backToShip || p.deadline)))) { const t = (leg.options || []).find(o => o.kind === "taxi"), nx = E.nextDepAfter(leg, clock);
+      const deadlineRide = !!(p && (p.backToShip || p.deadline));
+      if (!E.runsAt(leg, clock, deadlineRide)) { const t = (leg.options || []).find(o => o.kind === "taxi"), nx = E.nextDepAfter(leg, clock);
         const why = "The timetable found for " + (leg.how || "this line") + " shows no departure near " + E.clock(clock) + (nx != null ? " (the next known is about " + E.clock(nx) + ")" : "") + (t ? ", so this ride is planned by taxi." : ": check another way before you go.");
         leg = t ? E.legAs(leg, t, why) : Object.assign({}, leg, { note: (leg.note ? leg.note + " " : "") + why, noRun: true }); }
+      // On a day with a time to be back, a boat is planned only on a sailing a timetable confirms (E.boatUnsure): else a
+      // taxi when the road reaches, else the place across the water isn't planned today, with the reason (never an hour
+      // allowed at the pier for a boat that may not come).
+      let unsure = null;
+      if (win.hard && leg.kind === "ferry" && (unsure = E.boatUnsure(leg, clock, win.date))) { const t = (leg.options || []).find(o => o.kind === "taxi");
+        leg = t ? E.legAs(leg, t, "The boat isn't planned on a day with a time to be back: " + unsure + ", so this ride is planned by taxi.") : Object.assign({}, leg, { unsure, noRun: true }); if (t) unsure = null; }
       const ri = E.rideItem(leg, leg.parts ? { parts: leg.parts } : null); items.push(ri); clock += leg.min; rideMin += leg.min;
       if (leg.noRun) { late++; ri.noRun = true; }
+      // The way back on a timetable (to a ship, a train or a plane, or a boat on such a day) waits for its real departure:
+      // the ride's own time holds only the usual wait, so any longer wait until the next known departure is added (Nov 21:
+      // a sailing 55 minutes off was planned as if it left at once, eating the extra time kept for delays).
+      if (!leg.noRun && leg.ans && (deadlineRide || (win.hard && leg.kind === "ferry"))) { const nx = E.nextLeave(leg, clock - leg.min);
+        const extra = nx == null ? 0 : Math.max(0, nx - (clock - leg.min) - (+leg.ans.wait || 0));
+        if (extra > 0) { clock += extra; waits += extra; ri.wait = (ri.wait || 0) + extra; ri.depWait = extra; } }
+      // The place across the water is the stop the boat serves: the one it leaves from on the way back, else the one it reaches.
+      if (unsure && leg.isle === "back") { const s = items.slice().reverse().find(x => x.t === "stop"); if (s) s.noBoat = unsure; }
       // A boat that doesn't sail before a set time (the guide's first boat): the wait at the pier is part of the day.
       if (leg.first && clock < leg.first.at + leg.first.after) { const w = leg.first.at + leg.first.after - clock; clock += w; waits += w; ri.wait = w; ri.firstBoat = leg.first.at; }
       const it = { t: type, id: p.id || null, name: p.name, min: p.minutes || 0 };
+      if (unsure && leg.isle !== "back" && type === "stop") it.noBoat = unsure;
       if (type === "stop") { const sd = siteDay ? siteDay(p.id) : null, f = E.hoursFit(sd && sd.oh, clock, p.minutes);
         if (f.wait) { clock += f.wait; waits += f.wait; it.wait = f.wait; } if (f.late > 0) { late++; it.late = f.late; }
         if (p.bonus) it.bonus = true; if (p.along) it.along = true; }

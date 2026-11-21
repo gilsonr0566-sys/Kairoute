@@ -80,6 +80,9 @@
     plan.items.forEach((x, k) => { if (x.t !== "ride" || x.mode === "lift") return; const a = plan.items[k - 1], b = plan.items[k + 1];
       if (x.from && x.to && E.hasPos(x.from) && E.hasPos(x.to) && E.hav(x.from, x.to) > 0.05 && !(x.min > 0)) why.push("a ride with no time between " + ((a && a.name) || "two places") + " and " + ((b && b.name) || "the next"));
       if (win.hard && x.guess) why.push("a ride to or from a place not on the map, on a day with a time to be back");
+      // Where each boat's time comes from, not only how long it is (Nov 21 outside review): on such a day every boat rests
+      // on a sailing a timetable confirms.
+      if (win.hard && x.kind === "ferry" && (x.source !== "timetable" || x.noRun || x.unsure)) why.push("a boat with no sailing a timetable confirms, on a day with a time to be back");
     });
     // The way back from the day's farthest place carries its extra time, however many stops lie on it (Nov 20 review).
     const end = plan.items[plan.items.length - 1];
@@ -182,7 +185,7 @@
       for (const id of (d.selected || []).slice().sort()) { const s = findSite(city, id); if (!s || openOn(s, i)) continue;
         const j = days.findIndex((e, k) => k !== i && e.city === d.city && !e.locked && !e.own && openOn(s, k) && !sel[k].map(String).includes(String(id)));
         if (j < 0) continue; sel[i] = sel[i].filter(x => String(x) !== String(id)); sel[j].push(id); movedTo.set(String(id), { from: i, to: j, name: s.name }); } });
-    // A pick that stands inside an area picked for another day (the Erechtheion on the Acropolis) moves to that day: one
+    // A pick that stands inside an area picked for another day (a temple on a hilltop site) moves to that day: one
     // walk, not two trips. Never onto or off a locked day; the plan says so.
     days.forEach((d, i) => { if (d.locked || !wins[i] || wins[i].error) return; const city = guides[d.city]; if (!city) return;
       const g = E.makeGroups((city.sites || []).concat((city.farther || []).map(x => Object.assign({}, x, { far: true }))));
@@ -348,7 +351,7 @@
       // tastings and local specialties first.
       const outStop = fit.kept.find(k => k.far), townNear = s => (city.farther || []).filter(t => t !== s && !t.town && (t.foodDrink || []).length && isFinite(t.lat) && isFinite(s.lat) && E.hav(t, s) <= 3).sort((x, y) => E.hav(x, s) - E.hav(y, s) || E.byId(x, y))[0];
       // A sight out of town is eaten near in its own town: the one it names, else the nearest town (3 km at most) whose
-      // travel guide lists places to eat (Pompeii's ruins and the town of Pompei beside them).
+      // travel guide lists places to eat (an excavation site and the town beside it).
       const outTown = outStop && (outStop.town ? (city.farther || []).find(t => String(t.id) === String(outStop.town)) || { name: outStop.townName } : (outStop.foodDrink || []).length ? outStop : townNear(outStop) || outStop);
       const eatList = outTown ? (outTown.foodDrink || []).slice().sort((a, b) => (a.fromMap ? 1 : 0) - (b.fromMap ? 1 : 0) || (b.special ? 1 : 0) - (a.special ? 1 : 0)).slice(0, 3) : [];
       const eatThere = eatList.map(x => x.name), fromMap = eatList.length && eatList.every(x => x.fromMap);
@@ -390,7 +393,12 @@
         // the pier counted in its row): one leave-by for the badge, the countdown and the notes.
         if (isFinite(win.endBy)) t = Math.min(t, win.endBy - ridesBack);
         const bagsK = its.findIndex(x => x.t === "fixed" && /bags/i.test(x.name || "")), lastK = its.map(x => x.t).reduce((a, x, j) => x === "stop" || x === "meal" || x === "start" ? j : a, -1);
-        plan.leaveAt = { out: t, bags: bagsK >= 0 && its[bagsK].at != null ? its[bagsK].at : null, last: bagsK < 0 ? t : lastK >= 0 && lastK < bagsK ? (its[lastK].at || 0) + (its[lastK].t === "start" ? 0 : its[lastK].min || 0) : null };
+        // How sure the way back is (Nov 21 outside review): a plan whose way back rests on a guessed ride time never reads
+        // as sure as one a timetable or the road map confirms. "timetable": every ride on it has its timetable; "roads": the
+        // road map's time (no live traffic); "estimate": at least one ride is timed from the distance or the guide's words; "walk": on foot.
+        const rank = { timetable: 0, roads: 1, map: 2, guide: 2, estimate: 2 }, onWheels = backRides.filter(x => x.t === "ride" && x.mode !== "walk" && x.mode !== "lift");
+        const basis = onWheels.length ? ["timetable", "roads", "estimate"][onWheels.reduce((a, x) => Math.max(a, rank[x.source] != null ? rank[x.source] : 2), 0)] : "walk";
+        plan.leaveAt = { out: t, bags: bagsK >= 0 && its[bagsK].at != null ? its[bagsK].at : null, last: bagsK < 0 ? t : lastK >= 0 && lastK < bagsK ? (its[lastK].at || 0) + (its[lastK].t === "start" ? 0 : its[lastK].min || 0) : null, basis };
         const word = d.type === "embark" ? "the cruise terminal" : d.type === "port" ? "the ship" : "the " + ((E.MODES[d.mode] || E.MODES.flight).word);
         const atHotel = bagsK >= 0 && plan.leaveAt.last != null && Math.abs(plan.leaveAt.bags - plan.leaveAt.last) <= 2;
         explain.push(plan.leaveAt.bags != null && !atHotel && plan.leaveAt.last != null
@@ -462,8 +470,8 @@
       // traveler's own picks always stay). On a ship, train or plane day only by road, an hour at most each way, and only
       // when the day still ends 45 minutes before the time to be back: the app adds no boat there on its own (boats keep
       // their own timetable), it names it instead.
-      // How far a trip out is: from the nearest of the day's start and the stops it already has (Rome's sights from the
-      // Colosseum, not from the ship two hours away).
+      // How far a trip out is: from the nearest of the day's start and the stops it already has (a city's sights from the
+      // city's own landmark, not from the ship two hours away).
       const from0 = was.win.head[was.win.head.length - 1], near = [from0].concat(was.kept.filter(k => isFinite(k.lat)));
       const away = s => Math.min(...near.map(a => tr.min(a, s)));
       const shortRoad = s => away(s) <= 60 && !E.byBoat(s.travelNote || "");

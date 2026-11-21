@@ -70,10 +70,10 @@
   E.dayWindow = (d, tr) => {
     if (d.noShore) return E.fail("At sea or staying aboard: no time ashore.", { noShore: true });
     if (d.through) return E.fail("This day's plan is on the next page, with your departure or boarding.", { through: true });
-    const L = d.lodging, P = d.point, w = { head: [], tail: [], start: NaN, endBy: NaN, buffer: 0, hard: hardEnd(d.type), notes: [] };
+    const L = d.lodging, P = d.point, w = { head: [], tail: [], start: NaN, endBy: NaN, buffer: 0, hard: hardEnd(d.type), notes: [] }; if (d.date) w.date = String(d.date);
     // A port, station or airport far from every sight of the place (a port on another island, a gate grounded to the
     // wrong town) is as good as unknown: never planned from it.
-    // A guide written as a trip out from that very place ("Rome from Civitavecchia") names it, and is far by design.
+    // A guide written as a trip out from that very place ("City from Port") names it, and is far by design.
     const GENERIC = /^(port|ports|cruise|terminal|terminals|pier|piers|harbou?r|marina|station|central|airport|international|ferry|new|old|the)$/;
     const named = String(d.placeName || "").toLowerCase(), words = String(P && P.name || "").toLowerCase().normalize("NFKD").replace(/[\u0300-\u036f]/g, "").split(/[^a-z]+/).filter(x => x.length >= 4 && !GENERIC.test(x));
     const servesFrom = words.some(x => named.normalize("NFKD").replace(/[\u0300-\u036f]/g, "").includes(x));
