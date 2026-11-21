@@ -1,0 +1,266 @@
+{
+ "name": "d02-london-paris-amsterdam",
+ "label": "London, Paris, Amsterdam by train (re-test)",
+ "legs": [
+  {
+   "k": "stay",
+   "place": "London, England",
+   "date": "2027-05-17",
+   "nights": 3,
+   "inAt": "10:00"
+  },
+  {
+   "k": "stay",
+   "place": "Paris, France",
+   "nights": 3,
+   "inBy": "train",
+   "leaveAt": "09:31",
+   "inAt": "12:47"
+  },
+  {
+   "k": "stay",
+   "place": "Amsterdam, Netherlands",
+   "nights": 2,
+   "inBy": "train",
+   "leaveAt": "10:25",
+   "inAt": "13:44",
+   "homeAt": "12:30"
+  }
+ ],
+ "started": "2026-11-21T02:54:14.900Z",
+ "passed": {
+  "/sources": 14,
+  "/transit": 15,
+  "/guide": 3,
+  "/places": 5,
+  "/voyage": 3,
+  "/ground": 3,
+  "/x/near": 24,
+  "/route": 10
+ },
+ "refused": {
+  "/ratings": 3,
+  "/grating": 6,
+  "/events": 6
+ },
+ "errors": [],
+ "days": [
+  {
+   "i": 0,
+   "date": "2027-05-17",
+   "type": "arrival",
+   "text": "MON MAY 17 · LONDON, ENGLAND · ARRIVING\nLondon, England ✎ Rename\nLock this day\n\nWhich airport do you arrive at? There is more than one here (Heathrow Airport, London City Airport or London Biggin Hill Airport). Choose it in the day's settings: no time is given on a guess.\n\nEdit this day"
+  },
+  {
+   "i": 1,
+   "date": "2027-05-18",
+   "type": "land",
+   "text": "TUE MAY 18 · LONDON, ENGLAND · LAND DAY\nLondon, England ✎ Rename\nLock this day\n▶ Start the tour\n9:00 am–6:00 pm\n9 h ✎\n6\nsights\n2.9 mi\nwalking\n4:03 pm\nlast stop done\nChoose sights\nMore\nAbout today's plan1 note\nUse Ctrl + scroll to zoom the map\nS\n1\n2\n3\nL\n4\n5\n6\n3000 ft\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nWalk\nTaxi or car\n● Meal\nMore about today\n\nAll times are London time, 6 h ahead of your device.\n\nLEAVE\n9:00 am\nS\nLeave Hotel in central London\nAdd your own hotel on the Trip page for exact times.\nTaxi or car · 19 min · 1.9 mi\nBy road, with time for traffic.\nWalk · 40 min\nTaxi or car · 19 min\nARRIVE\n9:19 am\nLEAVE\n9:59 am\n1\nBritish Library\n40 min · Sight\nWalk · 19 min · 0.9 mi\nWalk · 19 min\nTaxi or car · 14 min\nARRIVE\n10:18 am\nLEAVE\n11:48 am\n2\nBritish Museum\n1 h 30 min · Museum · Must-see\nTaxi or car · 18 min · 1.8 mi\nWalk · 39 min\nTaxi or car · 18 min\nARRIVE\n12:06 pm\nLEAVE\n12:36 pm\n3\nWestminster Abbey\n30 min · Church\nWalk · 4 min · 0.2 mi\nARRIVE\n12:40 pm\nLEAVE\n1:40 pm\nL\nLunch: Old Queen Street Cafe\nRestaurant · Local spot · 1 h\nChange lunch\nLunch: why here\nWalk · 14 min · 0.7 mi\nWalk · 14 min\nTaxi or car · 13 min\nARRIVE\n1:54 pm\nLEAVE\n2:44 pm\n4\nBuckingham Palace\n50 min · Palace · Must-see\nWalk · 11 min · 0.5 mi\nWalk · 11 min\nTaxi or car · 12 min\nARRIVE\n2:55 pm\nLEAVE\n3:35 pm\n5\nCommonwealth of Nations\n40 min · Sight · Must-see\nWalk · 11 min · 0.5 mi\nWalk · 11 min\nTaxi or car · 12 min\nARRIVE\n3:46 pm\nLEAVE\n4:01 pm\n6\nTrafalgar Square\n15 min · Square\nIncludes St Martin-in-the-Fields and National Gallery\nUNTIL\n5:58 pm\n+\nFree time: 1 h 57 min\nYours to spend as you like. See what fits\nWalk · 2 min · 0.1 mi\nBY\n6:00 pm\nE\nBack at Hotel in central London\nARRIVE\n6:30 pm\nD\nSuggested dinner: The Portrait Restaurant\nRestaurant\nTRAVELERS RECOMMEND\nChange dinner\nDinner: why here"
+  },
+  {
+   "i": 2,
+   "date": "2027-05-19",
+   "type": "land",
+   "text": "WED MAY 19 · LONDON, ENGLAND · LAND DAY\nLondon, England ✎ Rename\nLock this day\n▶ Start the tour\n9:00 am–6:00 pm\n9 h ✎\n7\nsights\n3.8 mi\nwalking\n4:04 pm\nlast stop done\nChoose sights\nMore\nAbout today's plan1 note\nUse Ctrl + scroll to zoom the map\nS\n1\n2\n3\n4\n5\nL\n6\n7\n2000 ft\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nWalk\nTaxi or car\n● Meal\nMore about today\n\nAll times are London time, 6 h ahead of your device.\n\nLEAVE\n9:00 am\nS\nLeave Hotel in central London\nAdd your own hotel on the Trip page for exact times.\nTaxi or car · 17 min · 1.5 mi\nBy road, with time for traffic.\nWalk · 32 min\nTaxi or car · 17 min\nARRIVE\n9:17 am\nLEAVE\n9:57 am\n1\nTate Modern\n40 min · Sight\nWalk · 12 min · 0.6 mi\nWalk · 12 min\nTaxi or car · 13 min\nARRIVE\n10:09 am\nLEAVE\n10:39 am\n2\nSouthwark Cathedral\n30 min · Church\nWalk · 5 min · 0.2 mi\nARRIVE\n10:44 am\nLEAVE\n11:24 am\n3\nThe Shard\n40 min · Sight\nWalk · 15 min · 0.7 mi\nWalk · 15 min\nTaxi or car · 13 min\nARRIVE\n11:39 am\nLEAVE\n12:19 pm\n4\nTower of London\n40 min · Sight · Must-see · UNESCO\nTaxi or car · 17 min · 1.5 mi\nWalk · 31 min\nTaxi or car · 17 min\nARRIVE\n12:36 pm\nLEAVE\n1:16 pm\n5\nBarbican Centre\n40 min · Sight\nWalk · 10 min · 0.5 mi\nARRIVE\n1:26 pm\nLEAVE\n2:26 pm\nL\nLunch: Haz St Paul's\nTurkish · Local spot · 1 h\nChange lunch\nLunch: why here\nWalk · 3 min · 0.2 mi\nARRIVE\n2:29 pm\nLEAVE\n2:59 pm\n6\nSt Paul's Cathedral\n30 min · Church\nWalk · 14 min · 0.7 mi\nWalk · 14 min\nTaxi or car · 13 min\nARRIVE\n3:13 pm\nLEAVE\n3:43 pm\n7\nTemple Church, London\n30 min · Church\nUNTIL\n5:39 pm\n+\nFree time: 1 h 56 min\nYours to spend as you like. See what fits\nWalk · 21 min · 1.0 mi\nWalk · 21 min\nTaxi or car · 15 min\nBY\n6:00 pm\nE\nBack at Hotel in central London\nARRIVE\n6:30 pm\nD\nSuggested dinner: Garfunkel's\nRestaurant\nChange dinner\nDinner: why here"
+  },
+  {
+   "i": 3,
+   "date": "2027-05-20",
+   "type": "departure",
+   "text": "THU MAY 20 · LONDON, ENGLAND · LEAVING\nLondon, England ✎ Rename\nLock this day\n\nWhich station do you leave from? There is more than one here (London Paddington Railway Station, Euston Railway Station, Charing Cross Railway Station or Bow Church Railway Station or another). Choose it in the day's settings and the day gets its time to leave by: no time is given on a guess.\n\nEdit this day"
+  },
+  {
+   "i": 4,
+   "date": "2027-05-20",
+   "type": "arrival",
+   "text": "THU MAY 20 · PARIS, FRANCE · ARRIVING\nParis, France ✎ Rename\nLock this day\n\nWhich station do you arrive at? There is more than one here (Gare Montparnasse or Gare de Lyon). Choose it in the day's settings: no time is given on a guess.\n\nEdit this day"
+  },
+  {
+   "i": 5,
+   "date": "2027-05-21",
+   "type": "land",
+   "text": "FRI MAY 21 · PARIS, FRANCE · LAND DAY\nParis, France ✎ Rename\nLock this day\n▶ Start the tour\n9:00 am–6:00 pm\n9 h ✎\n6\nsights\n1.2 mi\nwalking\n4:22 pm\nlast stop done\nChoose sights\nMore\nAbout today's plan1 note\nUse Ctrl + scroll to zoom the map\nS\n1\n2\n3\nL\n4\n5\n6\n3000 ft\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nWalk\nTaxi or car\n● Meal\nMore about today\n\nAll times are Paris time, 7 h ahead of your device.\n\nLEAVE\n9:00 am\nS\nLeave Hotel in central Paris\nAdd your own hotel on the Trip page for exact times.\nTaxi or car · 22 min · 2.7 mi\nBy road, with time for traffic.\nWalk · 58 min\nTaxi or car · 22 min\nARRIVE\n9:22 am\nLEAVE\n10:02 am\n1\nUNESCO\n40 min · Sight · Must-see\nTaxi or car · 18 min · 1.8 mi\nWalk · 39 min\nTaxi or car · 18 min\nARRIVE\n10:20 am\nLEAVE\n11:00 am\n2\navenue des Champs-Élysées\n40 min · Sight\nWalk · 18 min · 0.8 mi\nWalk · 18 min\nTaxi or car · 14 min\nARRIVE\n11:18 am\nLEAVE\n11:58 am\n3\nArc de Triomphe\n40 min · Sight\nTaxi or car · 16 min · 1.4 mi\nWalk · 30 min\nTaxi or car · 16 min\nARRIVE\n12:14 pm\nLEAVE\n1:14 pm\nL\nLunch: Madame Brasserie\nRestaurant · Popular with visitors · 1 h\nChange lunch\nLunch: why here\nNext door\nARRIVE\n1:14 pm\nLEAVE\n1:54 pm\n4\nEiffel Tower\n40 min · Sight · Must-see\nWalk · 7 min · 0.3 mi\nARRIVE\n2:01 pm\nLEAVE\n3:31 pm\n5\nMusée du quai Branly\n1 h 30 min · Museum\nTaxi or car · 17 min · 1.4 mi\nWalk · 31 min\nTaxi or car · 17 min\nARRIVE\n3:48 pm\nLEAVE\n4:03 pm\n6\nplace de la Concorde\n15 min · Square\nUNTIL\n5:41 pm\n+\nFree time: 1 h 38 min\nYours to spend as you like. See what fits\nTaxi or car · 19 min · 2.0 mi\nWalk · 42 min\nTaxi or car · 19 min\nBY\n6:00 pm\nE\nBack at Hotel in central Paris\nARRIVE\n6:30 pm\nD\nSuggested dinner: Les Deux Colombes\nRestaurant\nChange dinner\nDinner: why here"
+  },
+  {
+   "i": 6,
+   "date": "2027-05-22",
+   "type": "land",
+   "text": "SAT MAY 22 · PARIS, FRANCE · LAND DAY\nParis, France ✎ Rename\nLock this day\n▶ Start the tour\n9:00 am–6:00 pm\n9 h ✎\n5\nsights\n2.3 mi\nwalking\n3:56 pm\nlast stop done\nChoose sights\nMore\nAbout today's plan1 note\nUse Ctrl + scroll to zoom the map\nS\n1\n2\n3\nL\n4\n5\n1000 ft\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nWalk\nTaxi or car\n● Meal\nMore about today\n\nAll times are Paris time, 7 h ahead of your device.\n\nLEAVE\n9:00 am\nS\nLeave Hotel in central Paris\nAdd your own hotel on the Trip page for exact times.\nWalk · 6 min · 0.3 mi\nARRIVE\n9:06 am\nLEAVE\n9:46 am\n1\nNotre-Dame de Paris\n40 min · Sight\nTaxi or car · 17 min · 1.5 mi\nBy road, with time for traffic.\nWalk · 32 min\nTaxi or car · 17 min\nARRIVE\n10:03 am\nLEAVE\n11:33 am\n2\nMusée d'Orsay\n1 h 30 min · Museum\nWalk · 12 min · 0.6 mi\nWalk · 12 min\nTaxi or car · 13 min\nARRIVE\n11:45 am\nLEAVE\n1:15 pm\n3\nLouvre Museum\n1 h 30 min · Museum · Must-see\nWalk · 3 min · 0.2 mi\nARRIVE\n1:18 pm\nLEAVE\n2:18 pm\nL\nLunch: Brasserie du Louvre\nRestaurant · Popular with visitors · 1 h\nChange lunch\nLunch: why here\nNext door\nARRIVE\n2:20 pm\nLEAVE\n3:00 pm\n4\nPalais-Royal\n40 min · Sight\nWalk · 18 min · 0.9 mi\nWalk · 18 min\nTaxi or car · 14 min\nARRIVE\n3:18 pm\nLEAVE\n3:48 pm\n5\nSainte Chapelle\n30 min · Church\nUNTIL\n5:52 pm\n+\nFree time: 2 h 4 min\nYours to spend as you like. See what fits\nWalk · 8 min · 0.4 mi\nBY\n6:00 pm\nE\nBack at Hotel in central Paris\nARRIVE\n6:30 pm\nD\nSuggested dinner: Le Parvis\nRestaurant\nChange dinner\nDinner: why here"
+  },
+  {
+   "i": 7,
+   "date": "2027-05-23",
+   "type": "departure",
+   "text": "SUN MAY 23 · PARIS, FRANCE · LEAVING\nParis, France ✎ Rename\nLock this day\n\nWhich station do you leave from? There is more than one here (Gare Montparnasse or Gare de Lyon). Choose it in the day's settings and the day gets its time to leave by: no time is given on a guess.\n\nEdit this day"
+  },
+  {
+   "i": 8,
+   "date": "2027-05-23",
+   "type": "arrival",
+   "text": "SUN MAY 23 · AMSTERDAM, NETHERLANDS · ARRIVING\nAmsterdam, Netherlands ✎ Rename\nLock this day\n\nWhich station do you arrive at? There is more than one here (Amsterdam Central Station or Station Sloterdijk). Choose it in the day's settings: no time is given on a guess.\n\nEdit this day"
+  },
+  {
+   "i": 9,
+   "date": "2027-05-24",
+   "type": "land",
+   "text": "MON MAY 24 · AMSTERDAM, NETHERLANDS · LAND DAY\nAmsterdam, Netherlands ✎ Rename\nLock this day\n▶ Start the tour\n9:00 am–6:00 pm\n9 h ✎\n5\nsights\n3.3 mi\nwalking\n4:10 pm\nlast stop done\nChoose sights\nMore\nAbout today's plan1 note\nUse Ctrl + scroll to zoom the map\nS\n1\n2\nL\n3\n4\n5\n1000 ft\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nWalk\n● Meal\nMore about today\n\nAll times are Amsterdam time, 7 h ahead of your device.\n\nLEAVE\n9:00 am\nS\nLeave Hotel in central Amsterdam\nAdd your own hotel on the Trip page for exact times.\nWalk · 17 min · 0.8 mi\nWalk · 17 min\nTaxi or car · 14 min\nARRIVE\n9:17 am\nLEAVE\n9:57 am\n1\nGrachtengordel\n40 min · Sight · Must-see\nWalk · 16 min · 0.8 mi\nWalk · 16 min\nTaxi or car · 13 min\nARRIVE\n10:13 am\nLEAVE\n11:43 am\n2\nVan Gogh Museum\n1 h 30 min · Museum\nWalk · 4 min · 0.2 mi\nARRIVE\n11:47 am\nLEAVE\n12:47 pm\nL\nLunch: Rijks\nRestaurant · Local spot · 1 h\nChange lunch\nLunch: why here\nWalk · 2 min · 0.1 mi\nARRIVE\n12:49 pm\nLEAVE\n2:19 pm\n3\nRijksmuseum\n1 h 30 min · Museum\nWalk · 17 min · 0.8 mi\nWalk · 17 min\nTaxi or car · 14 min\nARRIVE\n2:36 pm\nLEAVE\n3:16 pm\n4\nIdo\n40 min · Sight · Must-see\nWalk · 7 min · 0.3 mi\nARRIVE\n3:23 pm\nLEAVE\n4:03 pm\n5\nMagere Brug\n40 min · Sight\nUNTIL\n5:53 pm\n+\nFree time: 1 h 50 min\nYours to spend as you like. See what fits\nWalk · 7 min · 0.3 mi\nBY\n6:00 pm\nE\nBack at Hotel in central Amsterdam\nARRIVE\n6:30 pm\nD\nSuggested dinner: Lo Stivale d'Oro\nRestaurant\nChange dinner\nDinner: why here"
+  },
+  {
+   "i": 10,
+   "date": "2027-05-25",
+   "type": "departure",
+   "text": "TUE MAY 25 · AMSTERDAM, NETHERLANDS · LEAVING\nAmsterdam, Netherlands ✎ Rename\nLock this day\n✈️\nLEAVE BY\nto your flight\n8:30 am\n▶ Start the tour\n\nFlight 12:30 pm · Back at Amsterdam Airport Schiphol by 9:30 am\n\nGetting back on time is up to you\n\nKairoute's leave-by and back-by times are estimates with spare time built in. Traffic, queues and the weather can still slow you down. The time that counts is the ship's all-aboard time or your train or flight, as your cruise line or carrier gives it. Check it on the day.\n\nI understand\nTerms of use\n0\nsights\nChoose sights\nMore\nAbout today's plan2 notes\nUse Ctrl + scroll to zoom the map\nS\nFinish · Airport\n1 mi\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nTaxi or car\n■ Hotel\nMore about today\nThere isn't much time today, so keep it close: a coffee and one nearby sight at most.\n\nAll times are Amsterdam time, 7 h ahead of your device.\n\nLEAVE\n8:15 am\nS\nCheck out of Hotel in central Amsterdam\nAdd your own hotel on the Trip page for exact times.\nMost hotels keep your bags for the day after check-out: ask at the desk.\nNext door\nARRIVE\n8:15 am\nLEAVE\n8:30 am\nH\nCollect bags\n15 min\nTaxi or car · 1 h · 9.4 mi\nNo timetable or live traffic confirms this ride's time: it is an estimate with 15 min extra for the connection. Leave by the time shown, never later.\nARRIVE\n9:30 am\nE\nAt Amsterdam Airport Schiphol\nFlight leaves 12:30 pm: be at the airport by 9:30 am, 3 h early for an international flight."
+  }
+ ],
+ "guides": {
+  "London, England": {
+   "city": "London, England",
+   "src": true,
+   "ai": false,
+   "n": 46,
+   "sights": "Commonwealth of Nations* | Tower of London* | British Museum* | Chelsea F.C.* | Buckingham Palace* | Westminster Abbey | Palace of Westminster | British Library | St Paul's Cathedral | Trafalgar Square | National Gallery | London Eye | Hyde Park | Royal Society of London | Big Ben | Natural History Museum | Madame Tussauds | Kensington Palace | House of Commons | Tate Modern | Victoria and Albert Museum | The Shard | 10 Downing Street | Piccadilly Circus | Royal Opera House | Royal Albert Hall | Regent's Park | Royal Academy of Arts | Abbey Road Studios | St Martin-in-the-Fields | Barbican Centre | Kensington Gardens | Marble Arch | Lambeth Palace | Somerset House | Albert Memorial | Temple Church, London | Southwark Cathedral | Monument to the Great Fire of London~ | BT Tower | Broadcasting House | Gray's Inn | Wellington Arch | Apsley House | London Central Mosque | Serpentine Galleries",
+   "far": "Berkhamsted | Canterbury | Eastbourne | Cambridge",
+   "eats": 60,
+   "starts": {
+    "cruise": [
+     "Enderby's Wharf"
+    ],
+    "airport": [
+     "Heathrow Airport",
+     "London City Airport",
+     "London Biggin Hill Airport"
+    ],
+    "station": [
+     "London Paddington Railway Station",
+     "Euston Railway Station",
+     "Charing Cross Railway Station",
+     "Bow Church Railway Station",
+     "Hackney Central Railway Station"
+    ],
+    "hotel": [
+     "Hotel in central London"
+    ],
+    "point": [
+     "Central London"
+    ]
+   }
+  },
+  "Paris, France": {
+   "city": "Paris, France",
+   "src": true,
+   "ai": false,
+   "n": 46,
+   "sights": "UNESCO* | Eiffel Tower* | Louvre Museum* | Notre-Dame de Paris | Musée d'Orsay | Arc de Triomphe | avenue des Champs-Élysées | Bibliothèque nationale de France | Père Lachaise Cemetery | Bastille | Centre Georges Pompidou | Palais Garnier | place de la Concorde | Panthéon | Sainte Chapelle | Les Invalides | Luxembourg Palace | Palais-Royal | Grand Palais | Institut Polytechnique des Sciences Avancées | National Assembly | Sacré-Cœur | Venus de Milo | Sorbonne | Musée des Arts et Métiers | Tuileries Garden | Petit Palais | École Normale Supérieure | Collège de France | Champ de Mars | Grand Mosque of Paris | La Madeleine | Pont Alexandre III~ | Paris Institute of Political Studies | Conciergerie | 1st arrondissement of Paris | Montmartre | Château de Vincennes | place des Vosges | Hôtel de Ville, Paris | Royal abbey of Saint-Germain-des-Prés | parc Monceau | île de la Cité | Musée du quai Branly | Jardin des plantes | Mines ParisTech",
+   "far": "Chantilly | Chartres | Disneyland Paris | Fontainebleau",
+   "eats": 60,
+   "starts": {
+    "cruise": [
+     "Terminal 2E - Gates L"
+    ],
+    "airport": [
+     "Paris – Le Bourget Airport",
+     "Charles de Gaulle International Airport",
+     "Paris–Orly Airport"
+    ],
+    "station": [
+     "Gare Montparnasse",
+     "Gare de Lyon"
+    ],
+    "hotel": [
+     "Hotel in central Paris"
+    ],
+    "point": [
+     "Central Paris"
+    ]
+   }
+  },
+  "Amsterdam, Netherlands": {
+   "city": "Amsterdam, Netherlands",
+   "src": true,
+   "ai": false,
+   "n": 43,
+   "sights": "Ido* | Rijksmuseum | Van Gogh Museum | Concertgebouw | Royal Palace of Amsterdam | Westerkerk | Vondelpark | Anne Frank House | Stedelijk Museum Amsterdam | Johan Cruyff Arena | Oude Kerk | Rembrandt House Museum | Grachtengordel* | Magere Brug | Homomonument | Portuguese Synagogue | Olympic Stadium | Natura Artis Magistra | Wereldmuseum Amsterdam | Our Lord in the Attic Museum | Noorderkerk | Wheatfield with Crows | NEMO Science Center | H'Art Museum | El Al Flight 1862 | Hortus Botanicus Amsterdam | Zuiderkerk | Cat Cabinet | Museum of the Canals,  Amsterdam | Museum Van Loon | De Otter | Heineken Experience | De Gooyer | Riekermolen | Huis met de Kabouters | De 1100 Roe | De 1200 Roe | De Bloem | Molen van Sloten | D'Admiraal | Jewish Museum | Sarphatipark | Het Scheepvaartmuseum",
+   "far": "'s-Hertogenbosch | Lisse",
+   "eats": 68,
+   "starts": {
+    "cruise": [
+     "Cruise port of Amsterdam (unknown)"
+    ],
+    "airport": [
+     "Amsterdam Airport Schiphol"
+    ],
+    "station": [
+     "Amsterdam Central Station",
+     "Station Sloterdijk"
+    ],
+    "hotel": [
+     "Hotel in central Amsterdam"
+    ],
+    "point": [
+     "Central Amsterdam"
+    ]
+   }
+  }
+ },
+ "steps": [],
+ "version": "5d14162-1795226935",
+ "aiReady": false,
+ "wizard": {
+  "miss": [],
+  "prev": "Your days: 9 days",
+  "form": "Add each place in order, the way it's booked. Each new stop starts where the last one ends.\n\nSTOP 1 · CITY STAY\nRemove\nCity\nArrive on\nNights\nHotel (optional)\nGetting there\nFlight\nTrain\nFerry\nCar or bus\nArrive in London, England at\nSTOP 2 · CITY STAY\nRemove\nCity\nArrive on\nNights\nHotel (optional)\nGetting there\nFlight\nTrain\nFerry\nCar or bus\nLeave London, England at\nArrive in Paris, France at\nSTOP 3 · CITY STAY\nRemove\nCity\nArrive on\nNights\nHotel (optional)\nGetting there\nFlight\nTrain\nFerry\nCar or bus\nLeave Paris, France at\nArrive in town at\nLeave empty if you don't know yet.\n+ Add a city stay\n+ Add a cruise\nGoing home from here\nFlight\nTrain\nFerry\nCar or bus\nFlight at\nYour days: 9 days\nAdd more details (optional)\nName this trip\n\nKairoute picks good defaults for pace, walking and voice, and you can change any of them later.\n\nCancel\nPersonalize first\nBuild my trip"
+ },
+ "buildSec": 6,
+ "state": {
+  "busy": "",
+  "err": "",
+  "days": [
+   {
+    "date": "2027-05-17",
+    "type": "arrival"
+   },
+   {
+    "date": "2027-05-18",
+    "type": "land"
+   },
+   {
+    "date": "2027-05-19",
+    "type": "land"
+   },
+   {
+    "date": "2027-05-20",
+    "type": "departure"
+   },
+   {
+    "date": "2027-05-20",
+    "type": "arrival"
+   },
+   {
+    "date": "2027-05-21",
+    "type": "land"
+   },
+   {
+    "date": "2027-05-22",
+    "type": "land"
+   },
+   {
+    "date": "2027-05-23",
+    "type": "departure"
+   },
+   {
+    "date": "2027-05-23",
+    "type": "arrival"
+   },
+   {
+    "date": "2027-05-24",
+    "type": "land"
+   },
+   {
+    "date": "2027-05-25",
+    "type": "departure"
+   }
+  ]
+ },
+ "phoneText": "TUE MAY 18 · LONDON, ENGLAND · LAND DAY\nLondon, England ✎ Rename\nLock this day\n▶ Start tour\n9:00 am–6:00 pm\n9 h ✎\n6\nsights\n2.9 mi\nwalking\n4:03 pm\nlast stop done\nChoose sights\nMore\nAbout today's plan1 note\nUse Ctrl + scroll to zoom the map\nS\n1\n2\n3\nL\n4\n5\n6\n1 mi\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nWalk\nTaxi or car\n● Meal\nMore about today\n\nAll times are London time, 6 h ahead of your device.\n\nLEAVE\n9:00 am\nS\nLeave Hotel in central London\nAdd your own hotel on the Trip page for exact times.\nTaxi or car · 19 min · 1.9 mi\nBy road, with time for traffic.\nWalk · 40 min\nTaxi or car · 19 min\nARRIVE\n9:19 am\nLEAVE\n9:59 am\n1\nBritish Library\n40 min · Sight\nWalk · 19 min · 0.9 mi\nWalk · 19 min\nTaxi or car · 14 min\nARRIVE\n10:18 am\nLEAVE\n11:48 am\n2\nBritish Museum\n1 h 30 min · Museum · Must-see\nTaxi or car · 18 min · 1.8 mi\nWalk · 39 min\nTaxi or car · 18 min\nARRIVE\n12:06 pm\nLEAVE\n12:36 pm\n3\nWestminster Abbey\n30 min · Church\nWalk · 4 min · 0.2 mi\nARRIVE\n12:40 pm\nLEAVE\n1:40 pm\nL\nLunch: Old Queen Street Cafe\nRestaurant · Local spot · 1 h\nChange lunch\nLunch: why here\nWalk · 14 min · 0.7 mi\nWalk · 14 min\nTaxi or car · 13 min\nARRIVE\n1:54 pm\nLEAVE\n2:44 pm\n4\nBuckingham Palace\n50 min · Palace · Must-see\nWalk · 11 min · 0.5 mi\nWalk · 11 min\nTaxi or car · 12 min\nARRIVE\n2:55 pm\nLEAVE\n3:35 pm\n5\nCommonwealth of Nations\n40 min · Sight · Must-see\nWalk · 11 min · 0.5 mi\nWalk · 11 min\nTaxi or car · 12 min\nARRIVE\n3:46 pm\nLEAVE\n4:01 pm\n6\nTrafalgar Square\n15 min · Square\nIncludes St Martin-in-the-Fie",
+ "finished": "2026-11-21T03:01:25.770Z"
+}

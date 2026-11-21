@@ -1,0 +1,160 @@
+{
+ "name": "e02-barcelona-port-actions",
+ "label": "",
+ "legs": [
+  {
+   "k": "cruise",
+   "board": "Marseille, France",
+   "date": "2027-05-15",
+   "aboard": "17:00",
+   "inAt": "09:00",
+   "ports": [
+    {
+     "date": "2027-05-16",
+     "place": "Barcelona, Spain",
+     "arrive": "08:00",
+     "aboard": "18:00"
+    }
+   ],
+   "end": "Marseille, France",
+   "endDate": "2027-05-17",
+   "off": "07:00"
+  }
+ ],
+ "started": "2026-11-21T03:08:17.804Z",
+ "passed": {
+  "/sources": 12,
+  "/transit": 14,
+  "/guide": 1,
+  "/places": 3,
+  "/voyage": 3,
+  "/ground": 1,
+  "/route": 9,
+  "/x/near": 6
+ },
+ "refused": {
+  "/ratings": 2,
+  "/grating": 2,
+  "/events": 2
+ },
+ "errors": [],
+ "days": [
+  {
+   "i": 0,
+   "date": "2027-05-15",
+   "type": "arrival",
+   "text": "SAT MAY 15 · MARSEILLE, FRANCE · ARRIVING\nMarseille, France ✎ Rename\nLock this day\nToday is one plan\n\nFlight in at 9:00 am, then the ship at 5:00 pm: the sightseeing in between, your bags and the countdown are on one page.\n\nSee today's plan"
+  },
+  {
+   "i": 1,
+   "date": "2027-05-15",
+   "type": "embark",
+   "text": "SAT MAY 15 · MARSEILLE, FRANCE · BOARDING\nMarseille, France ✎ Rename\nLock this day\n🚢\nLEAVE BY\nall aboard 5:00 pm\n2:40 pm\n▶ Start the tour\n\nOfficial all aboard 5:00 pm · Back at the cruise terminal by 4:00 pm\n\nGetting back on time is up to you\n\nKairoute's leave-by and back-by times are estimates with spare time built in. Traffic, queues and the weather can still slow you down. The time that counts is the ship's all-aboard time or your train or flight, as your cruise line or carrier gives it. Check it on the day.\n\nI understand\nTerms of use\n1\nsight\nChoose sights\nMore\nAbout today's plan3 notes\nNot planned today: Stade Vélodrome didn't fit in the time. To fit it in: skip Château d'If.\nCollect your bags at 10:15 am and leave for the cruise terminal by 2:40 pm.\nOpening hours aren't known for Château d'If on this date: planned between 9:00 am and 5:00 pm, check before you go.\nUse Ctrl + scroll to zoom the map\nStart · Airport\n1\nL\nFinish · Cruise port\n100 ft\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nWalk\nTaxi or car\n● Meal\n■ Hotel\nMore about today\n🛳 When do you board?\nBoarding time\nTerminal (optional)\nSave\n\nOn your boarding pass or check-in confirmation (also called arrival or check-in time). Until you add it, the plan uses the time to be back above.\n\nWhat to have on you · 0 of 9 ready\n📅 Add reminders to my calendar\nThis day has 3 h 12 min of travel for 40 min at the sights. Consider fewer far-apart stops, more hours, or splitting it over two days.\n\nAll times are Marseille time, 7 h ahead of your device.\n\nLEAVE\n10:15 am\nS\nOut of Marseille Provence Airport\nFlight arrives 9:00 am. We allow 1 h 15 min to get off the plane and through baggage claim (and passport control after a flight from abroad). Book luggage storage near Marseille Provence Airport ahead (a left-luggage desk or a storage shop), or ask your hotel or station.\nYou fly in the day the ship sails. A late or missed flight is the most common way travelers miss a ship, and the ship won't wait: if your flight is delayed, skip the sightseeing and go straight to the port.\nNext door\nARRIVE\n10:15 am\nLEAVE\n10:30 am\nH\nLeave your bags in luggage storage\n15 min\nTaxi or car · 55 min · 16 mi\nARRIVE\n11:25 am\nLEAVE\n12:05 pm\n1\nChâteau d'If\n40 min · Sight · Must-see\nWalk · 2 min · 0.1 mi\nARRIVE\n12:07 pm\nLEAVE\n1:07 pm\nL\nLunch: Marseille en face\nRestaurant · Popular with visitors · 1 h\nChange lunch\nLunch: why here\nTaxi or car · 55 min · 16 mi\nARRIVE\n2:02 pm\nLEAVE\n2:17 pm\nH\nCollect your bags\n15 min\nTaxi or car · 1 h 20 min · 12 mi\nNo timetable or live traffic confirms this ride's time: it is an estimate with 15 min extra for the connection. Leave by the time shown, never later.\nARRIVE\n3:37 pm\nE\nBoarding at Marseille Provence Cruise Terminal\n23 min to spare.\nOfficial all aboard 5:00 pm: be at the terminal by 4:00 pm at the latest. Your cruise line gives you a boarding time: add it and the plan gets you there for it.\nPorters take your big bags at the curb (luggage tags on; they reach your cabin by evening). Keep your passport, boarding pass, medicines and valuables in your carry-on for check-in and security.\nBig ports have more than one cruise terminal: check yours on your boarding pass and tell the driver.\nBook the taxi or transfer the day before, or ask your hotel to call one. Being aboard on time is your responsibility: check your boarding time with your cruise line.",
+   "textEarly": "SAT MAY 15 · MARSEILLE, FRANCE · BOARDING\nMarseille, France ✎ Rename\nLock this day\n🚢\nLEAVE BY\nall aboard 5:00 pm\n2:40 pm\n▶ Start the tour\n\nOfficial all aboard 5:00 pm · Back at the cruise terminal by 4:00 pm\n\nGetting back on time is up to you\n\nKairoute's leave-by and back-by times are estimates with spare time built in. Traffic, queues and the weather can still slow you down. The time that counts is the ship's all-aboard time or your train or flight, as your cruise line or carrier gives it. Check it on the day.\n\nI understand\nTerms of use\n1\nsight\nChoose sights\nMore\nAbout today's plan3 notes\nNot planned today: Stade Vélodrome didn't fit in the time. To fit it in: skip Château d'If.\nCollect your bags at 10:15 am and leave for the cruise terminal by 2:40 pm.\nOpening hours aren't known for Château d'If on this date: planned between 9:00 am and 5:00 pm, check before you go.\nUse Ctrl + scroll to zoom the map\nStart · Airport\n1\nL\nFinish · Cruise port\n100 ft\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nWalk\nTaxi or car\n● Meal\n■ Hotel\nMore about today\n🛳 When do you board?\nBoarding time\nTerminal (optional)\nSave\n\nOn your boarding pass or check-in confirmation (also called arrival or check-in time). Until you add it, the plan uses the time to be back above.\n\nWhat to have on you · 0 of 9 ready\n📅 Add reminders to my calendar\nThis day has 3 h 12 min of travel for 40 min at the sights. Consider fewer far-apart stops, more hours, or splitting it over two days.\n\nAll times are Marseille time (time zone estimated until you're online once), 5 h ahead of your device.\n\nLEAVE\n10:15 am\nS\nOut of Marseille Provence Airport\nFlight arrives 9:00 am. We allow 1 h 15 min to get off the plane and through baggage claim (and passport control after a flight from abroad). Book luggage storage near Marseille Provence Airport ahead (a left-luggage desk or a storage shop), or ask your hotel or station.\nYou fly in the day the ship sails. A late or missed flight is the most common way travelers miss a ship, and the ship won't wait: if your flight is delayed, skip the sightseeing and go straight to the port.\nNext door\nARRIVE\n10:15 am\nLEAVE\n10:30 am\nH\nLeave your bags in luggage storage\n15 min\nTaxi or car · 55 min · 16 mi\nARRIVE\n11:25 am\nLEAVE\n12:05 pm\n1\nChâteau d'If\n40 min · Sight · Must-see\nWalk · 2 min · 0.1 mi\nARRIVE\n12:07 pm\nLEAVE\n1:07 pm\nL\nLunch: Marseille en face\nRestaurant · Popular with visitors · 1 h\nChange lunch\nLunch: why here\nTaxi or car · 55 min · 16 mi\nARRIVE\n2:02 pm\nLEAVE\n2:17 pm\nH\nCollect your bags\n15 min\nTaxi or car · 1 h 20 min · 12 mi\nNo timetable or live traffic confirms this ride's time: it is an estimate with 15 min extra for the connection. Leave by the time shown, never later.\nARRIVE\n3:37 pm\nE\nBoarding at Marseille Provence Cruise Terminal\n23 min to spare.\nOfficial all aboard 5:00 pm: be at the terminal by 4:00 pm at the latest. Your cruise line gives you a boarding time: add it and the plan gets you there for it.\nPorters take your big bags at the curb (luggage tags on; they reach your cabin by evening). Keep your passport, boarding pass, medicines and valuables in your carry-on for check-in and security.\nBig ports have more than one cruise terminal: check yours on your boarding pass and tell the driver.\nBook the taxi or transfer the day before, or ask your hotel to call one. Being aboard on time is your responsibility: check your boarding time with your cruise line."
+  },
+  {
+   "i": 2,
+   "date": "2027-05-16",
+   "type": "port",
+   "text": "SUN MAY 16 · BARCELONA · IN PORT\nBarcelona ✎ Rename\nLock this day\n🚢\nLEAVE BY\nall aboard 6:00 pm\n4:37 pm\n▶ Start the tour\n\nAshore 8:30 am · Official all aboard 6:00 pm · Back at the ship by 5:15 pm\n\nGetting back on time is up to you\n\nKairoute's leave-by and back-by times are estimates with spare time built in. Traffic, queues and the weather can still slow you down. The time that counts is the ship's all-aboard time or your train or flight, as your cruise line or carrier gives it. Check it on the day.\n\nI understand\nTerms of use\n5\nsights\n1.1 mi\nwalking\nChoose sights\nMore\nAbout today's plan17 notes\nGothic Quarter & Cathedral gets 50 min, the walk to Pont del Bisbe, which you picked as a stop of its own (on its own it gets 60 min).\nNot planned today: Bunkers del Carmel didn't fit in the time.\nNot planned today: MNAC & Magic Fountain didn't fit in the time.\nNot planned today: Montjuïc Castle didn't fit in the time.\nNot planned today: Gràcia squares didn't fit in the time.\nNot planned today: Barceloneta beach didn't fit in the time.\nNot planned today: El Born Centre de Cultura didn't fit in the time.\nNot planned today: Museu Picasso didn't fit in the time.\nNot planned today: Parc de la Ciutadella didn't fit in the time.\nNot planned today: Sant Pau Recinte Modernista didn't fit in the time.\nNot planned today: Casa Milà (La Pedrera) didn't fit in the time.\nNot planned today: Plaça de Catalunya didn't fit in the time. To fit it in: spend 20 minutes less at Casa Batlló and have lunch on the go, spend 20 minutes less at Sagrada Família and have lunch on the go or spend 25 minutes less at Park Güell.\nNot planned today: Santa Maria del Mar didn't fit in the time. To fit it in: spend 30 minutes less at Sagrada Família and have lunch on the go.\nNot planned today: Palau de la Música Catalana didn't fit in the time.\nLunch at La Torreta del Parc Güell is a place to eat on the map beside your stops (the guide names none on your way): check reviews before you go.\nOpening hours aren't known for Camp Nou on this date: planned between 9:00 am and 5:00 pm, check before you go.\nAlso worth seeing here, but not in today's time: La Rambla & La Boqueria market, Sant Antoni Market, Plaça Reial, Amatller House and 3 more.\nUse Ctrl + scroll to zoom the map\nStart · Cruise port\n1\n2\nL\n3\n4\n5\n1 mi\nOpenFreeMap © OpenMapTiles Data from OpenStreetMap\nWalk\nTaxi or car\nTrain, metro or tram\n● Meal\nMore about today\n\nAll times are Barcelona time, 7 h ahead of your device.\n\nLEAVE\n8:30 am\nS\nOff the ship at Moll Adossat cruise terminals\nMost big ships dock here. A port shuttle bus runs to the Columbus Monument.\nShip docks 8:00 am.\nTaxi or car · 28 min · 4.0 mi\nBy road, with time for traffic.\nPort shuttle bus · 53 min\nTaxi or car · 28 min\nARRIVE\n9:00 am\nLEAVE\n9:40 am\n1\nCamp Nou\n40 min · Sight · Must-see\nMetro L5, Badal to Sagrada Família · 32 min · 4.0 mi\nTime includes getting to the station and the wait.\nWalk 12 min to Badal. Metro L5, Badal to Sagrada Família, 14 min. Walk 1 min.\nMetro L5, Badal to Sagrada Família · 32 min\nTaxi or car · 28 min\nARRIVE\n10:12 am\nLEAVE\n11:42 am\n2\nSagrada Família\n1 h 30 min · Basilica · Must-see · UNESCO\nBOOK AHEAD\nBook tickets\n↗\nMark booked\nEntrance fee not included · more\nTaxi or car · 18 min · 1.7 mi\nWalk · 36 min\nTaxi or car · 18 min\nARRIVE\n12:00 pm\nLEAVE\n12:20 pm\nL\nLunch: La Torreta del Parc Güell\nPopular with visitors · 20 min\nChange lunch\nRate La Torreta del Parc Güell\nWalk · 2 min · 0.1 mi\nARRIVE\n12:22 pm\nLEAVE\n1:37 pm\n3\nPark Güell\n1 h 15 min · Park · Must-see\nBOOK AHEAD\nBook tickets\n↗\nMark booked\nEntrance fee not included · more\nMetro L3, Vallcarca to Passeig de Gràcia · 27 min · 2.2 mi\nWalk 13 min to Vallcarca. Metro L3, Vallcarca to Passeig de Gràcia, 8 min. Walk 1 min.\nWalk · 47 min\nMetro L3, Vallcarca to Passeig de Gràcia · 27 min\nWalk to the road, then taxi · 23 min\nARRIVE\n2:04 pm\nLEAVE\n3:04 pm\n4\nCasa Batlló\n1 h · Gaudí house · Must-see\nBOOK AHEAD\nBook tickets\n↗\nMark booked\nEntrance fee not included · more\nWalk · 22 min · 1.0 mi\nWalk · 22 min\nMetro L3, Passeig de Gràcia to Liceu · 17 min\nTaxi or car · 15 min\nARRIVE\n3:26 pm\nLEAVE\n4:16 pm\n5\nGothic Quarter & Cathedral\n50 min · Old town · Must-see\nIncludes Cathedral of the Holy Cross and Saint Eulalia and Generalitat of Catalonia\nTaxi or car · 38 min · 2.8 mi\nIncludes 15 min spare before the ship.\nWalk · 1 h\nPort shuttle bus · 1 h 3 min\nTaxi or car · 23 min\nARRIVE\n4:54 pm\nE\nBack at the ship\nThe ship's official all aboard is 6:00 pm. Kairoute plans you back at least 45 min before it."
+  },
+  {
+   "i": 3,
+   "date": "2027-05-17",
+   "type": "arrival",
+   "text": "MON MAY 17 · MARSEILLE, FRANCE · ARRIVING\nMarseille, France ✎ Rename\nLock this day\n\nThis is your last day. Add how you leave and when (your flight or train home) on the Trip page, or your hotel if you're staying on, and the day is planned around it: nothing is planned on a guess.\n\nEdit this day"
+  }
+ ],
+ "guides": {
+  "Marseille, France": {
+   "city": "Marseille, France",
+   "src": true,
+   "ai": false,
+   "n": 20,
+   "sights": "Stade Vélodrome* | Notre-Dame de la Garde | Marseille Cathedral | Château d'If* | Fort Saint-Jean | Longchamp Palace | Museum of European and Mediterranean Civilisations | Abbey of St. Victor | Old Port of Marseille | Unité d'Habitation de Marseille | Museum of the Roman Docks | Musée des beaux-arts de Marseille | Cantini Museum | Parc Borély | La Vieille Charité | Marseille History Museum | Noailles | Musée d’Archéologie Méditerranéenne | Vallon des Auffes | Museum of Contemporary Art, Marseille",
+   "far": "Aix-en-Provence | Cassis",
+   "eats": 60,
+   "starts": {
+    "cruise": [
+     "Marseille Provence Cruise Terminal"
+    ],
+    "airport": [
+     "Marseille Provence Airport"
+    ],
+    "station": [
+     "Marseille Saint-Charles railway station"
+    ],
+    "hotel": [
+     "Hotel in central Marseille"
+    ],
+    "point": [
+     "Central Marseille"
+    ]
+   }
+  },
+  "Barcelona": {
+   "city": "Barcelona",
+   "src": false,
+   "n": 51,
+   "sights": "Sagrada Família* | Park Güell* | Casa Batlló* | Casa Milà (La Pedrera) | Gothic Quarter & Cathedral* | La Rambla & La Boqueria market | Museu Picasso | Santa Maria del Mar | Palau de la Música Catalana | Sant Pau Recinte Modernista | Bunkers del Carmel | Gràcia squares | Sant Antoni Market | Parc de la Ciutadella | Barceloneta beach | Montjuïc Castle | MNAC & Magic Fountain | El Born Centre de Cultura | Plaça Reial~ | Pont del Bisbe~ | Amatller House~ | Arc de Triomf~ | Columbus Monument~ | Plaça de Catalunya | Palau Güell~ | Camp Nou* | Torre Glòries | Cathedral of the Holy Cross and Saint Eulalia | Casa Vicens | Lluís Companys Olympic Stadium | Museu Nacional d'Art de Catalunya | MACBA Barcelona Museum of Contemporary Art | Fundació Joan Miró | Generalitat of Catalonia | Tower of Collserola | German Pavilion, Barcelona | Lleó Morera House | FC Barcelona Museum | Palau Sant Jordi | Poble Espanyol | Tàpies Museum | Plaça d'Espanya | Royal Square | Gran Teatre del Liceu | Aquarium Barcelona | Maritime Museum of Barcelona | Monastery of Pedralbes | Gaudi House Museum | Güell Pavilions | Hash Marihuana & Hemp Museum | Botànic Garden of Barcelona",
+   "far": "Montserrat monastery | Sitges | Girona old town | Tibidabo | Maricel Museum | Contemporary Art Gallery",
+   "eats": 35,
+   "starts": {
+    "cruise": [
+     "Moll Adossat cruise terminals",
+     "World Trade Center cruise terminal"
+    ],
+    "airport": [
+     "Barcelona Airport, Terminal 1",
+     "Barcelona Airport, Terminal 2"
+    ],
+    "hotel": [
+     "Hotel near Plaça de Catalunya",
+     "Hotel on Passeig de Gràcia",
+     "Hotel at Port Olímpic"
+    ],
+    "station": [
+     "Barcelona Sants station",
+     "Estació de França"
+    ],
+    "point": [
+     "Barcelona Sants train station",
+     "Plaça d'Espanya"
+    ]
+   }
+  }
+ },
+ "steps": [],
+ "version": "5d14162-1795226935",
+ "aiReady": false,
+ "wizard": {
+  "miss": [],
+  "prev": "Your days: 3 days · 1 port",
+  "form": "Add each place in order, the way it's booked. Each new stop starts where the last one ends.\n\nSTOP 1 · CRUISE\nLeaves from\nShip (optional)\nBoarding day\nAll aboard\nGetting to the ship (if you arrive the same day)\nFlight\nTrain\nFerry\nCar or bus\nArrive in town at\nLeave empty if you don't know yet.\nPorts of call\nIn order, from your cruise booking. Days with no port are added as sea days.\nDate\nPort\nShip arrives\nAll aboard\nTender port (small boats take you ashore)\nRemove port\n+ Add a port\nCruise ends in\nOn\nOff the ship at\nUsually 7:00 am to 9:00 am. Leave empty if you don't know.\n+ Add a city stay\n+ Add a cruise\nGoing home from here\nFlight\nTrain\nFerry\nCar or bus\nFlight at\nYour days: 3 days · 1 port\nAdd more details (optional)\nName this trip\n\nKairoute picks good defaults for pace, walking and voice, and you can change any of them later.\n\nCancel\nPersonalize first\nBuild my trip"
+ },
+ "buildSec": 4,
+ "state": {
+  "busy": "",
+  "err": "",
+  "days": [
+   {
+    "date": "2027-05-15",
+    "type": "arrival"
+   },
+   {
+    "date": "2027-05-15",
+    "type": "embark"
+   },
+   {
+    "date": "2027-05-16",
+    "type": "port"
+   },
+   {
+    "date": "2027-05-17",
+    "type": "arrival"
+   }
+  ]
+ },
+ "phoneText": "SUN MAY 16 · BARCELONA · IN PORT\nBarcelona ✎ Rename\nLock this day\n🚢\nLEAVE BY\nall aboard 6:00 pm\n4:37 pm\n▶ Start tour\n\nAshore 8:30 am · Official all aboard 6:00 pm · Back at the ship by 5:15 pm\n\nGetting back on time is up to you\n\nKairoute's leave-by and back-by times are estimates with spare time built in. Traffic, queues and the weather can still slow you down. The time that counts is the ship's all-aboard time or your train or flight, as your cruise line or carrier gives it. Check it on the day.\n\nI understand\nTerms of use\n5\nsights\n1.1 mi\nwalking\nChoose sights\nMore\nAbout today's plan17 notes\nGothic Quarter & Cathedral gets 50 min, the walk to Pont del Bisbe, which you picked as a stop of its own (on its own it gets 60 min).\nNot planned today: Bunkers del Carmel didn't fit in the time.\nNot planned today: MNAC & Magic Fountain didn't fit in the time.\nNot planned today: Montjuïc Castle didn't fit in the time.\nNot planned today: Gràcia squares didn't fit in the time.\nNot planned today: Barceloneta beach didn't fit in the time.\nNot planned today: El Born Centre de Cultura didn't fit in the time.\nNot planned today: Museu Picasso didn't fit in the time.\nNot planned today: Parc de la Ciutadella didn't fit in the time.\nNot planned today: Sant Pau Recinte Modernista didn't fit in the time.\nNot planned today: Casa Milà (La Pedrera) didn't fit in the time.\nNot planned today: Plaça de Catalunya didn't fit in the time. To fit it in: spend 20 minutes less at Casa Batlló and have lunch on t",
+ "finished": "2026-11-21T03:11:13.664Z"
+}

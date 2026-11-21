@@ -1,0 +1,183 @@
+{
+ "name": "d17-laemchabang",
+ "label": "Laem Chabang for Bangkok",
+ "legs": [
+  {
+   "k": "cruise",
+   "board": "Singapore",
+   "date": "2027-11-10",
+   "aboard": "16:00",
+   "ports": [
+    {
+     "date": "2027-11-12",
+     "place": "Laem Chabang (Bangkok), Thailand",
+     "arrive": "07:00",
+     "aboard": "19:00"
+    }
+   ],
+   "end": "Singapore",
+   "endDate": "2027-11-15",
+   "off": "07:00"
+  }
+ ],
+ "started": "2026-11-21T03:04:46.320Z",
+ "passed": {
+  "/sources": 13,
+  "/transit": 12,
+  "/guide": 2,
+  "/places": 3,
+  "/voyage": 2,
+  "/ground": 2
+ },
+ "refused": {
+  "/ratings": 2
+ },
+ "errors": [],
+ "days": [
+  {
+   "i": 0,
+   "date": "2027-11-10",
+   "type": "arrival",
+   "text": "WED NOV 10 · SINGAPORE · ARRIVING\nSingapore ✎ Rename\nLock this day\nToday is one plan\n\nFlight in (the time isn't given yet), then the ship at 4:00 pm: the sightseeing in between, your bags and the countdown are on one page.\n\nSee today's plan"
+  },
+  {
+   "i": 1,
+   "date": "2027-11-10",
+   "type": "embark",
+   "text": "WED NOV 10 · SINGAPORE · BOARDING\nSingapore ✎ Rename\nLock this day\n\nWhen does your flight arrive? Add the time on the Trip page and the day is planned around it, with the time to get to the ship: nothing is planned on a guess.\n\nEdit this day"
+  },
+  {
+   "i": 2,
+   "date": "2027-11-11",
+   "type": "sea"
+  },
+  {
+   "i": 3,
+   "date": "2027-11-12",
+   "type": "port",
+   "text": "FRI NOV 12 · BANGKOK · IN PORT\nBangkok ✎ Rename\nLock this day\n\nWe couldn't find exactly where Cruise port of Laem Chabang is, so this day isn't planned on a guess (every ride time and the time to head back depend on it). It's being looked up again; you can also pick another cruise terminal in the day's settings.\n\nEdit this day"
+  },
+  {
+   "i": 4,
+   "date": "2027-11-13",
+   "type": "sea"
+  },
+  {
+   "i": 5,
+   "date": "2027-11-14",
+   "type": "sea"
+  },
+  {
+   "i": 6,
+   "date": "2027-11-15",
+   "type": "arrival",
+   "text": "MON NOV 15 · SINGAPORE · ARRIVING\nSingapore ✎ Rename\nLock this day\n\nThis is your last day. Add how you leave and when (your flight or train home) on the Trip page, or your hotel if you're staying on, and the day is planned around it: nothing is planned on a guess.\n\nEdit this day"
+  }
+ ],
+ "guides": {
+  "Singapore": {
+   "city": "Singapore",
+   "src": true,
+   "ai": false,
+   "n": 21,
+   "sights": "Singapore Botanic Gardens* | Marina Bay Sands* | Gardens by the Bay* | Masjid Sultan | Merlion | St Andrew's Cathedral | Sentosa* | Singapore Grand Prix* | Maghain Aboth Synagogue | National Museum of Singapore | Sri Mariamman Temple, Singapore | Marina Bay Street Circuit* | Universal Studios Singapore | National Gallery Singapore | Masjid Hajjah Fatimah | Masjid Jamae | Asian Civilisations Museum | Sun Yat Sen Memorial Hall (Singapore) | Singapore Art Museum | ArtScience Museum | National Library Singapore",
+   "far": "",
+   "eats": 60,
+   "starts": {
+    "cruise": [
+     "Singapore Cruise Centre"
+    ],
+    "airport": [
+     "Singapore Changi Airport",
+     "Seletar Airport",
+     "Hang Nadim Batam International Airport"
+    ],
+    "station": [
+     "Bukit Timah Railway Station",
+     "Marina Bay",
+     "Bukit Batok",
+     "Orchard",
+     "Dhoby Ghaut"
+    ],
+    "hotel": [
+     "Hotel in central Singapore"
+    ],
+    "point": [
+     "Central Singapore"
+    ]
+   }
+  },
+  "Bangkok (from Laem Chabang, Thailand)": {
+   "city": "Bangkok (from Laem Chabang, Thailand)",
+   "src": true,
+   "ai": false,
+   "n": 27,
+   "sights": "Grand Palace* | Wat Arun* | Wat Phra Kaew* | Wat Pho | Wat Benchamabophit | Lumphini Park | Democracy Monument | Wat Suthat | Sanam Luang | Victory Monument | Assumption Cathedral | Wat Bowonniwet Vihara | Wat Yan Nawa | Bangkok National Museum | Vimanmek Mansion | Erawan Shrine | Dusit Palace | Dusit Zoo | Bangkok Art and Culture Centre | Holy Rosary Church | Wat Kanlayanamit | Wat Chai Chana Songkhram | Wat Chakkrawat | Holy Cross Church | Wat Rakhang | Wat Suwannaram | Phra Sumen Fort",
+   "far": "",
+   "eats": 42,
+   "starts": {
+    "cruise": [
+     "Cruise port of Laem Chabang (unknown)"
+    ],
+    "airport": [
+     "Bangkok airport (unknown)"
+    ],
+    "station": [
+     "Hua Lamphong railway station",
+     "Phaya Thai station"
+    ],
+    "hotel": [
+     "Hotel in central Bangkok"
+    ],
+    "point": [
+     "Central Bangkok"
+    ]
+   }
+  }
+ },
+ "steps": [],
+ "version": "5d14162-1795226935",
+ "aiReady": false,
+ "wizard": {
+  "miss": [],
+  "prev": "Your days: 6 days · 1 port",
+  "form": "Add each place in order, the way it's booked. Each new stop starts where the last one ends.\n\nSTOP 1 · CRUISE\nLeaves from\nShip (optional)\nBoarding day\nAll aboard\nGetting to the ship (if you arrive the same day)\nFlight\nTrain\nFerry\nCar or bus\nArrive in town at\nLeave empty if you don't know yet.\nPorts of call\nIn order, from your cruise booking. Days with no port are added as sea days.\nDate\nPort\nShip arrives\nAll aboard\nTender port (small boats take you ashore)\nRemove port\n+ Add a port\nCruise ends in\nOn\nOff the ship at\nUsually 7:00 am to 9:00 am. Leave empty if you don't know.\n+ Add a city stay\n+ Add a cruise\nGoing home from here\nFlight\nTrain\nFerry\nCar or bus\nFlight at\nYour days: 6 days · 1 port\nAdd more details (optional)\nName this trip\n\nKairoute picks good defaults for pace, walking and voice, and you can change any of them later.\n\nCancel\nPersonalize first\nBuild my trip"
+ },
+ "buildSec": 4,
+ "state": {
+  "busy": "",
+  "err": "",
+  "days": [
+   {
+    "date": "2027-11-10",
+    "type": "arrival"
+   },
+   {
+    "date": "2027-11-10",
+    "type": "embark"
+   },
+   {
+    "date": "2027-11-11",
+    "type": "sea"
+   },
+   {
+    "date": "2027-11-12",
+    "type": "port"
+   },
+   {
+    "date": "2027-11-13",
+    "type": "sea"
+   },
+   {
+    "date": "2027-11-14",
+    "type": "sea"
+   },
+   {
+    "date": "2027-11-15",
+    "type": "arrival"
+   }
+  ]
+ },
+ "phoneText": "FRI NOV 12 · BANGKOK · IN PORT\nBangkok ✎ Rename\nLock this day\n\nWe couldn't find exactly where Cruise port of Laem Chabang is, so this day isn't planned on a guess (every ride time and the time to head back depend on it). It's being looked up again; you can also pick another cruise terminal in the day's settings.\n\nEdit this day",
+ "finished": "2026-11-21T03:07:38.687Z"
+}

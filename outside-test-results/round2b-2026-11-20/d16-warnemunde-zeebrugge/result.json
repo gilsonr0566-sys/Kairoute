@@ -1,0 +1,214 @@
+{
+ "name": "d16-warnemunde-zeebrugge",
+ "label": "Warnemunde for Berlin, Zeebrugge for Bruges",
+ "legs": [
+  {
+   "k": "cruise",
+   "board": "Copenhagen, Denmark",
+   "date": "2027-08-01",
+   "aboard": "17:00",
+   "ports": [
+    {
+     "date": "2027-08-02",
+     "place": "Warnemunde (Berlin), Germany",
+     "arrive": "07:00",
+     "aboard": "21:00"
+    },
+    {
+     "date": "2027-08-04",
+     "place": "Zeebrugge (Bruges), Belgium",
+     "arrive": "08:00",
+     "aboard": "17:00"
+    }
+   ],
+   "end": "Southampton, England",
+   "endDate": "2027-08-05",
+   "off": "07:00",
+   "homeBy": "train",
+   "homeAt": "11:00"
+  }
+ ],
+ "started": "2026-11-21T03:01:51.951Z",
+ "passed": {
+  "/sources": 15,
+  "/transit": 10,
+  "/guide": 4,
+  "/places": 3,
+  "/voyage": 3,
+  "/ground": 3
+ },
+ "refused": {
+  "/ratings": 3
+ },
+ "errors": [],
+ "days": [
+  {
+   "i": 0,
+   "date": "2027-08-01",
+   "type": "arrival",
+   "text": "SUN AUG 1 · COPENHAGEN, DENMARK · ARRIVING\nCopenhagen, Denmark ✎ Rename\nLock this day\nToday is one plan\n\nFlight in (the time isn't given yet), then the ship at 5:00 pm: the sightseeing in between, your bags and the countdown are on one page.\n\nSee today's plan"
+  },
+  {
+   "i": 1,
+   "date": "2027-08-01",
+   "type": "embark",
+   "text": "SUN AUG 1 · COPENHAGEN, DENMARK · BOARDING\nCopenhagen, Denmark ✎ Rename\nLock this day\n\nWe couldn't find exactly where Cruise port of Copenhagen is, so this day isn't planned on a guess (every ride time and the time to head back depend on it). It's being looked up again; you can also pick another cruise terminal in the day's settings.\n\nEdit this day"
+  },
+  {
+   "i": 2,
+   "date": "2027-08-02",
+   "type": "port",
+   "text": "MON AUG 2 · BERLIN · IN PORT\nBerlin ✎ Rename\nLock this day\n\nWe couldn't find exactly where Cruise port of Warnemunde is, so this day isn't planned on a guess (every ride time and the time to head back depend on it). It's being looked up again; you can also pick another cruise terminal in the day's settings.\n\nEdit this day"
+  },
+  {
+   "i": 3,
+   "date": "2027-08-03",
+   "type": "sea"
+  },
+  {
+   "i": 4,
+   "date": "2027-08-04",
+   "type": "port",
+   "text": "WED AUG 4 · ZEEBRUGGE, BELGIUM · IN PORT\nZeebrugge, Belgium ✎ Rename\nLock this day\n\nWe couldn't find exactly where Cruise port of Zeebrugge is, so this day isn't planned on a guess (every ride time and the time to head back depend on it). It's being looked up again; you can also pick another cruise terminal in the day's settings.\n\nEdit this day"
+  },
+  {
+   "i": 5,
+   "date": "2027-08-05",
+   "type": "arrival",
+   "text": "THU AUG 5 · SOUTHAMPTON, ENGLAND · ARRIVING\nSouthampton, England ✎ Rename\nLock this day\nToday is one plan\n\nShip in at 7:00 am, then your train at 11:00 am: the sightseeing in between, your bags and the countdown are on one page.\n\nSee today's plan"
+  },
+  {
+   "i": 6,
+   "date": "2027-08-05",
+   "type": "departure",
+   "text": "THU AUG 5 · SOUTHAMPTON, ENGLAND · LEAVING\nSouthampton, England ✎ Rename\nLock this day\nI couldn't find Southampton, England in the travel guides and maps. Check the spelling on the day (for example \"Kotor, Montenegro\"), then tap Build again.\nNo guide for Southampton, England yet\n\nKairoute will build the guide for Southampton, England from travel guides and maps: real sights, places to eat, the cruise port and stations.\n\nBuild the Southampton, England guide"
+  }
+ ],
+ "guides": {
+  "Copenhagen, Denmark": {
+   "city": "Copenhagen, Denmark",
+   "src": true,
+   "ai": false,
+   "n": 30,
+   "sights": "The Little Mermaid* | Amalienborg | Rosenborg Castle | Ny Carlsberg Glyptotek | Rundetaarn | Royal Danish Library | Christiansborg Palace | Thorvaldsen Museum | Kastellet | National Museum of Denmark | Global Biodiversity Information Facility* | Frederiksberg Palace | Statens Museum for Kunst | Grundtvig's Church | Nyhavn | Frederik's Church | European Environment Agency | Copenhagen Zoo | Tivoli Gardens | Assistens Cemetery | Charlottenborg Palace | Hirschsprung Collection | Designmuseum Denmark | Middelgrundsfortet | Danish War Museum | Trekroner Fort | Brumleby | Medical Museion | Gefion Fountain~ | Kastrup Fortress",
+   "far": "Malmö | Elsinore | Hillerød | Roskilde",
+   "eats": 60,
+   "starts": {
+    "cruise": [
+     "Cruise port of Copenhagen (unknown)"
+    ],
+    "airport": [
+     "Copenhagen Airport"
+    ],
+    "station": [
+     "Copenhagen Central Station",
+     "Copenhagen South",
+     "Copenhagen Airport, Kastrup"
+    ],
+    "hotel": [
+     "Hotel in central Copenhagen"
+    ],
+    "point": [
+     "Central Copenhagen"
+    ]
+   }
+  },
+  "Berlin (from Warnemunde, Germany)": {
+   "city": "Berlin (from Warnemunde, Germany)",
+   "src": true,
+   "ai": false,
+   "n": 45,
+   "sights": "Brandenburg Gate* | Museum Island* | Reichstag* | Altes Museum* | Humboldt-Universität zu Berlin* | Fernsehturm Berlin* | Berlin Zoological Garden | Berlin Cathedral | Neues Museum* | Berlin International Film Festival* | Siegessäule | Bode Museum* | Charlottenburg Palace | Rotes Rathaus | Kaiser-Wilhelm-Gedächtniskirche | Pariser Platz | Museum für Naturkunde - Leibniz Institute for Evolution and Biodiversity Science* | Gendarmenmarkt | New Synagogue Berlin | Memorial to the Murdered Jews of Europe | Egyptian Museum of Berlin* | Berlin State Opera | Potsdamer Platz | Großer Tiergarten | Alexanderplatz | Gemäldegalerie Berlin | Jewish Museum Berlin* | Soviet War Memorial | Marienkirche (Berlin-Mitte) | Checkpoint Charlie | East Side Gallery | Oberbaum Bridge~ | Deutscher Dom | Bebelplatz | Bundesrat* | Neptunbrunnen | Berlin State Library | Kulturforum | Nikolaiviertel | Bauhaus-Archiv | Friedrichswerder Church | Technische Universität Berlin | Funkturm Berlin | Hackesche Höfe | Kurfürstendamm",
+   "far": "Oranienburg",
+   "eats": 60,
+   "starts": {
+    "cruise": [
+     "Cruise port of Warnemunde (unknown)"
+    ],
+    "airport": [
+     "Berlin Brandenburg Airport \"Willy Brandt\""
+    ],
+    "station": [
+     "Berlin Central Station"
+    ],
+    "hotel": [
+     "Hotel in central Berlin"
+    ],
+    "point": [
+     "Central Berlin"
+    ]
+   }
+  },
+  "Zeebrugge, Belgium": {
+   "city": "Zeebrugge, Belgium",
+   "src": true,
+   "ai": false,
+   "n": 10,
+   "sights": "Church of Our Lady* | Museum van het Heilig Bloed* | Ten Wijngaerde | Madonna of Bruges* | Groeningemuseum* | Sint-Janshospitaal | Belfry of Bruges* | Ezelpoort | Gentpoort | Smedenpoort",
+   "far": "Sluis | Ostend | De Haan | Ghent",
+   "eats": 60,
+   "starts": {
+    "cruise": [
+     "Cruise port of Zeebrugge (unknown)"
+    ],
+    "airport": [
+     "Kortrijk-Wevelgem International Airport"
+    ],
+    "station": [
+     "Zeebrugge-Dorp"
+    ],
+    "hotel": [
+     "Hotel in central Zeebrugge"
+    ],
+    "point": [
+     "Central Zeebrugge"
+    ]
+   }
+  }
+ },
+ "steps": [],
+ "version": "5d14162-1795226935",
+ "aiReady": false,
+ "wizard": {
+  "miss": [],
+  "prev": "Your days: 5 days · 2 ports",
+  "form": "Add each place in order, the way it's booked. Each new stop starts where the last one ends.\n\nSTOP 1 · CRUISE\nLeaves from\nShip (optional)\nBoarding day\nAll aboard\nGetting to the ship (if you arrive the same day)\nFlight\nTrain\nFerry\nCar or bus\nArrive in Copenhagen, Denmark at\nLeave empty if you don't know yet.\nPorts of call\nIn order, from your cruise booking. Days with no port are added as sea days.\nDate\nPort\nShip arrives\nAll aboard\nTender port (small boats take you ashore)\nRemove port\nDate\nPort\nShip arrives\nAll aboard\nTender port (small boats take you ashore)\nRemove port\n+ Add a port\nCruise ends in\nOn\nOff the ship at\n+ Add a city stay\n+ Add a cruise\nGoing home from Southampton, England\nFlight\nTrain\nFerry\nCar or bus\nTrain at\nYour days: 5 days · 2 ports\nAdd more details (optional)\nName this trip\n\nKairoute picks good defaults for pace, walking and voice, and you can change any of them later.\n\nCancel\nPersonalize first\nBuild my trip"
+ },
+ "buildSec": 6,
+ "state": {
+  "busy": "",
+  "err": "I couldn't find Southampton, England in the travel guides and maps. Check the spelling on the day (for example \"Kotor, Montenegro\"), then tap Build again.",
+  "days": [
+   {
+    "date": "2027-08-01",
+    "type": "arrival"
+   },
+   {
+    "date": "2027-08-01",
+    "type": "embark"
+   },
+   {
+    "date": "2027-08-02",
+    "type": "port"
+   },
+   {
+    "date": "2027-08-03",
+    "type": "sea"
+   },
+   {
+    "date": "2027-08-04",
+    "type": "port"
+   },
+   {
+    "date": "2027-08-05",
+    "type": "arrival"
+   },
+   {
+    "date": "2027-08-05",
+    "type": "departure"
+   }
+  ]
+ },
+ "phoneText": "MON AUG 2 · BERLIN · IN PORT\nBerlin ✎ Rename\nLock this day\n\nWe couldn't find exactly where Cruise port of Warnemunde is, so this day isn't planned on a guess (every ride time and the time to head back depend on it). It's being looked up again; you can also pick another cruise terminal in the day's settings.\n\nEdit this day",
+ "finished": "2026-11-21T03:05:59.694Z"
+}

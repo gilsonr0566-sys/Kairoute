@@ -1,0 +1,123 @@
+{
+ "name": "a17-haifa",
+ "label": "Jerusalem from Haifa, Saturday call",
+ "legs": [
+  {
+   "k": "cruise",
+   "board": "Limassol, Cyprus",
+   "date": "2027-05-14",
+   "aboard": "18:00",
+   "ports": [
+    {
+     "date": "2027-05-15",
+     "place": "Haifa (Jerusalem), Israel",
+     "arrive": "06:00",
+     "aboard": "20:00"
+    }
+   ],
+   "end": "Limassol, Cyprus",
+   "endDate": "2027-05-16",
+   "off": "07:00"
+  }
+ ],
+ "started": "2026-11-21T02:47:06.621Z",
+ "passed": {
+  "/sources": 13,
+  "/transit": 8,
+  "/guide": 2,
+  "/places": 1,
+  "/voyage": 1,
+  "/ground": 1
+ },
+ "refused": {
+  "/ratings": 1
+ },
+ "errors": [],
+ "days": [
+  {
+   "i": 0,
+   "date": "2027-05-14",
+   "type": "arrival",
+   "text": "FRI MAY 14 · LIMASSOL, CYPRUS · ARRIVING\nLimassol, Cyprus ✎ Rename\nLock this day\nToday is one plan\n\nFlight in (the time isn't given yet), then the ship at 6:00 pm: the sightseeing in between, your bags and the countdown are on one page.\n\nSee today's plan"
+  },
+  {
+   "i": 1,
+   "date": "2027-05-14",
+   "type": "embark",
+   "text": "FRI MAY 14 · LIMASSOL, CYPRUS · BOARDING\nLimassol, Cyprus ✎ Rename\nLock this day\nI couldn't find Limassol, Cyprus in the travel guides and maps. Check the spelling on the day (for example \"Kotor, Montenegro\"), then tap Build again.\nNo guide for Limassol, Cyprus yet\n\nKairoute will build the guide for Limassol, Cyprus from travel guides and maps: real sights, places to eat, the cruise port and stations.\n\nBuild the Limassol, Cyprus guide"
+  },
+  {
+   "i": 2,
+   "date": "2027-05-15",
+   "type": "port",
+   "text": "SAT MAY 15 · JERUSALEM · IN PORT\nJerusalem ✎ Rename\nLock this day\n\nWe couldn't find exactly where Cruise port of Haifa is, so this day isn't planned on a guess (every ride time and the time to head back depend on it). It's being looked up again; you can also pick another cruise terminal in the day's settings.\n\nEdit this day"
+  },
+  {
+   "i": 3,
+   "date": "2027-05-16",
+   "type": "arrival",
+   "text": "SUN MAY 16 · LIMASSOL, CYPRUS · ARRIVING\nLimassol, Cyprus ✎ Rename\nLock this day\nI couldn't find Limassol, Cyprus in the travel guides and maps. Check the spelling on the day (for example \"Kotor, Montenegro\"), then tap Build again.\nNo guide for Limassol, Cyprus yet\n\nKairoute will build the guide for Limassol, Cyprus from travel guides and maps: real sights, places to eat, the cruise port and stations.\n\nBuild the Limassol, Cyprus guide"
+  }
+ ],
+ "guides": {
+  "Jerusalem (from Haifa, Israel)": {
+   "city": "Jerusalem (from Haifa, Israel)",
+   "src": true,
+   "ai": false,
+   "n": 27,
+   "sights": "Dome of the Rock* | Al-Aqsa Mosque* | Pentecost* | Western Wall | The Knesset* | Israel Museum* | Church of the Holy Sepulchre | The Temple Institute | Holy Land* | Last Supper | National Library of Israel | Bible Lands Museum | Yad Vashem | Calvary | Mount Herzl | Gehenna | Greek Orthodox Patriarchate of Jerusalem | Tower of David | Church of Mary Magdalene | Rockefeller Museum | Dominus Flevit Church | Muristan | Church of the Flagellation | Dormition Abbey | Church of St. Peter in Gallicantu | Lifta | Church of the Visitation",
+   "far": "Abu Ghosh | Tel Aviv | Church of Our Lady of the Covenant | The Benedictine monastery in Abu Ghosh",
+   "eats": 58,
+   "starts": {
+    "cruise": [
+     "Cruise port of Haifa (unknown)"
+    ],
+    "airport": [
+     "Ben Gurion Airport"
+    ],
+    "station": [
+     "Jerusalem–Yitzhak Navon railway station"
+    ],
+    "hotel": [
+     "Hotel in central Jerusalem"
+    ],
+    "point": [
+     "Central Jerusalem"
+    ]
+   }
+  }
+ },
+ "steps": [],
+ "version": "5d14162-1795226935",
+ "aiReady": false,
+ "wizard": {
+  "miss": [],
+  "prev": "Your days: 3 days · 1 port",
+  "form": "Add each place in order, the way it's booked. Each new stop starts where the last one ends.\n\nSTOP 1 · CRUISE\nLeaves from\nShip (optional)\nBoarding day\nAll aboard\nGetting to the ship (if you arrive the same day)\nFlight\nTrain\nFerry\nCar or bus\nArrive in town at\nLeave empty if you don't know yet.\nPorts of call\nIn order, from your cruise booking. Days with no port are added as sea days.\nDate\nPort\nShip arrives\nAll aboard\nTender port (small boats take you ashore)\nRemove port\n+ Add a port\nCruise ends in\nOn\nOff the ship at\nUsually 7:00 am to 9:00 am. Leave empty if you don't know.\n+ Add a city stay\n+ Add a cruise\nGoing home from here\nFlight\nTrain\nFerry\nCar or bus\nFlight at\nYour days: 3 days · 1 port\nAdd more details (optional)\nName this trip\n\nKairoute picks good defaults for pace, walking and voice, and you can change any of them later.\n\nCancel\nPersonalize first\nBuild my trip"
+ },
+ "buildSec": 4,
+ "state": {
+  "busy": "",
+  "err": "I couldn't find Limassol, Cyprus in the travel guides and maps. Check the spelling on the day (for example \"Kotor, Montenegro\"), then tap Build again.",
+  "days": [
+   {
+    "date": "2027-05-14",
+    "type": "arrival"
+   },
+   {
+    "date": "2027-05-14",
+    "type": "embark"
+   },
+   {
+    "date": "2027-05-15",
+    "type": "port"
+   },
+   {
+    "date": "2027-05-16",
+    "type": "arrival"
+   }
+  ]
+ },
+ "phoneText": "SAT MAY 15 · JERUSALEM · IN PORT\nJerusalem ✎ Rename\nLock this day\n\nWe couldn't find exactly where Cruise port of Haifa is, so this day isn't planned on a guess (every ride time and the time to head back depend on it). It's being looked up again; you can also pick another cruise terminal in the day's settings.\n\nEdit this day",
+ "finished": "2026-11-21T02:50:03.334Z"
+}
