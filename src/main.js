@@ -6980,6 +6980,7 @@ function renderTour(d) {
       <div class="audio"><button class="btn bigplay" data-play="part:${esc(s.id)}:${cp.k}" data-label="▶ Play this part">▶ Play this part</button><span class="state" aria-live="polite"></span></div>
       ${voicePick(s)}
       <p class="guidetext">${esc(unitText(cp.p.guide))}</p>
+      ${scriptSources(s)}
       ${cp.p.lookFor ? `<div class="field"><span class="eyebrow">Can you find it?</span><p>${esc(cp.p.lookFor)}</p></div>` : ""}
       ${pk + 1 === pp.length && s.wrap ? `<p class="lede">${esc(unitText(s.wrap))}</p>` : ""}
       ${s.show && s.show.what && !cp.wait ? `<p class="travelnote">⏱ ${esc(showLine(s, st.time))}</p>` : ""}</div>

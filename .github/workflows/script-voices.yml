@@ -4,11 +4,10 @@ name: Record stop scripts in the Kairoute voices (free Kokoro)
 on:
   workflow_dispatch:
     inputs:
-      voices: { description: "Kokoro voices, space separated", default: "af_heart af_bella bf_emma am_michael bm_george" }
       script: { description: "One script id (blank = all)", default: "" }
   push:
     branches: [ "claude/**" ]
-    paths: [ "src/features/stop-scripts.js", "stories/tools/record-scripts.mjs", ".github/workflows/script-voices.yml" ]
+    paths: [ "src/features/stop-scripts.js", "src/features/stop-stories.js", "stories/tools/record-scripts.mjs", ".github/workflows/script-voices.yml" ]
 permissions:
   contents: write
 concurrency:
@@ -18,6 +17,10 @@ jobs:
   record:
     runs-on: ubuntu-latest
     timeout-minutes: 150
+    strategy:
+      fail-fast: false
+      matrix:
+        voice: [ af_heart, af_bella, bf_emma, am_michael, bm_george ] # Clara, Maya, Eleanor, Daniel, Henry (GUIDES in main.js)
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -25,9 +28,9 @@ jobs:
       - run: sudo apt-get install -y -qq ffmpeg >/dev/null
       - run: cd stories/tools && npm init -y >/dev/null && npm install --no-audit --no-fund kokoro-js@1.2.1 --onnxruntime-node-install-cuda=skip
       - name: Record
-        run: node stories/tools/record-scripts.mjs "${{ github.event.inputs.voices || 'af_heart af_bella bf_emma am_michael bm_george' }}" "${{ github.event.inputs.script }}"
+        run: node stories/tools/record-scripts.mjs "${{ matrix.voice }}" "${{ github.event.inputs.script }}"
       - run: |
           git config user.name "kairoute-bot"; git config user.email "actions@users.noreply.github.com"
           git add audio
-          git commit -m "Stop scripts: Kokoro recordings in every guide voice $(date -u +%F)" || exit 0
-          git pull --rebase -q -X theirs && git push
+          git commit -m "Recorded stories: Kokoro ${{ matrix.voice }} $(date -u +%F)" || exit 0
+          for i in 1 2 3 4 5; do git pull --rebase -q -X theirs && git push && break; sleep $((i * 7)); done

@@ -203,6 +203,12 @@ var STOP_SCRIPTS = [{ // var: cityFor can run while main.js is still starting, b
 STOP_SCRIPTS.push({ id: "voice-sample", v: 1, city: /(?!)/, site: /(?!)/, title: "Voice sample", where: "Settings", parts: [{ name: "Hello", minutes: 1, stand: "",
   paras: ["Hi, I'm your Kairoute guide. Let's walk over to the old harbor together. Look up, just there. See that stone lion above the gate? People have walked under it for centuries."] }] });
 function playVoiceSample() { const sc = STOP_SCRIPTS.find(x => x.id === "voice-sample"); speakScript("voice-sample", sc, [0]); }
+// Where a library story's facts come from (stop-stories.js): shown under the story, so the traveler can check it.
+function scriptSources(s) {
+  const sc = s && s.scriptV && STOP_SCRIPTS.find(x => s.scriptV === x.id + x.v); if (!sc || !sc.sources || !sc.sources.length) return "";
+  return `<details class="more howknow"><summary>How we know</summary><p class="sub">Every fact in this story is checked against these sources (read ${esc(sc.checked || "")}). Where historians disagree, or a story is a legend, the guide says so.</p>
+<ul class="tips">${sc.sources.map(x => `<li><span>${esc(x.pub)}: <a href="${esc(x.url)}" target="_blank" rel="noopener">${esc(x.title)}</a></span></li>`).join("")}</ul></details>`;
+}
 // The script that belongs to a stop, if any.
 const scriptFor = (s, city) => s && city && STOP_SCRIPTS.find(sc => sc.city.test(city.city || "") && sc.site.test(s.name + " " + (s.local || "")));
 // Puts the script on the stop as its parts (the same parts the voice tour and the day plan already show). The AI
@@ -293,4 +299,4 @@ updateAudioUI = function () {
     const st = b.parentElement.querySelector(".state"); if (st) st.textContent = on ? (ttsState === "starting" ? "Starting…" : `Playing${voiceNow ? " · " + voiceNow : ""}`) : ""; });
 };
 if (typeof window !== "undefined" && typeof document !== "undefined") setTimeout(scriptDemo, 200);
-if (typeof window !== "undefined") window.__kairouteScripts = { STOP_SCRIPTS, sayText, scriptStops, speech: (s, k) => partSpeech(s, k, true), play: s => speakSite(s), state: () => ({ speakingId, ttsState, voiceNow }) };
+if (typeof window !== "undefined") window.__kairouteScripts = { STOP_SCRIPTS, voices: GUIDES.map(g => g[3]), sayText, scriptStops, speech: (s, k) => partSpeech(s, k, true), play: s => speakSite(s), state: () => ({ speakingId, ttsState, voiceNow }) };
