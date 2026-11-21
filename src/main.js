@@ -6797,7 +6797,8 @@ function stopCard(s, num, city, at) {
       <p class="lede">${esc(unitText(s.summary))}</p>
       ${s.parts && s.parts.length >= 2 ? `<div class="field partsbox"><span class="eyebrow">What's here, in walking order</span>${partsList(s, at, true)}</div>` : partsList(s, at)}
 ${quietOn(s) ? `<p class="banner quiet" role="note">🤫 <span><b>Quiet place.</b> Read the story below. Audio plays only after you confirm your earbuds are in.</span></p>` : ""}<div class="audio"><button class="btn" data-play="${esc(s.id)}" data-label="${quietOn(s) ? "🎧 Play with earbuds" : "▶ Play audio guide"}">${quietOn(s) ? "🎧 Play with earbuds" : "▶ Play audio guide"}</button><span class="state" aria-live="polite"></span></div>
-      <details class="story" id="story-${esc(s.id)}" open><summary>The story</summary><div class="guidetext">${paras(unitText(s.guide))}</div></details>
+      ${voicePick(s)}${scriptSources(s)}
+      ${s.scriptV && s.parts && s.parts.length ? "" : `<details class="story" id="story-${esc(s.id)}" open><summary>The story</summary><div class="guidetext">${paras(unitText(s.guide))}</div></details>`}
       </div><div class="scside">
       ${s.lookFor && s.lookFor.length ? `<div class="field"><span class="eyebrow">What to look for</span><ol class="lookfor">${s.lookFor.map(x => `<li><span>${esc(x)}</span></li>`).join("")}</ol></div>` : ""}
       ${picksBlock(s)}
@@ -6984,7 +6985,7 @@ function renderTour(d) {
       ${cp.p.lookFor ? `<div class="field"><span class="eyebrow">Can you find it?</span><p>${esc(cp.p.lookFor)}</p></div>` : ""}
       ${pk + 1 === pp.length && s.wrap ? `<p class="lede">${esc(unitText(s.wrap))}</p>` : ""}
       ${s.show && s.show.what && !cp.wait ? `<p class="travelnote">⏱ ${esc(showLine(s, st.time))}</p>` : ""}</div>
-      <div class="tcside"><details class="more" id="story-${esc(s.id)}"><summary>The whole story of ${esc(s.name)}</summary><div class="guidetext" style="margin-top:8px">${paras(unitText(s.guide))}</div></details>
+      <div class="tcside">${s.scriptV ? "" : `<details class="more" id="story-${esc(s.id)}"><summary>The whole story of ${esc(s.name)}</summary><div class="guidetext" style="margin-top:8px">${paras(unitText(s.guide))}</div></details>`}
       ${journalBlock(s)}</div>
       <div class="actions tourmain">${pk + 1 < pp.length ? `<button class="btn bigbtn" data-act="tourpart">Next part: ${esc(pp[pk + 1].p.name)}</button>` : `<button class="btn bigbtn" data-act="tournext">${nxt ? "Next: " + esc(stepName(nxt)) : "Finish"}</button>`}</div>
     </div>`;
