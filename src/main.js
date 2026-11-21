@@ -97,7 +97,7 @@ async function freeSample(prompt, opts = {}) {
 }
 async function refreshFreeAI() {
   if (!freeAI) return;
-  try { const st = await (await fetch(freeAI.url + "/status", { cache: "no-store" })).json(); freeAI.left = st.left; freeAI.budget = st.budget; freeAI.mode = st.mode; freeAI.on = st.on !== false; } catch (e) {}
+  try { const st = await (await fetch(freeAI.url + "/status", { cache: "no-store" })).json(); freeAI.left = st.left; freeAI.budget = st.budget; freeAI.mode = st.mode; freeAI.on = st.on !== false; freeAI.caps = st.caps || null; } catch (e) {}
 }
 async function findFreeAI() {
   if (cl && cl.use) return;
@@ -2389,6 +2389,30 @@ function buildPlanForDay(d) {
 // it is off and asks it for nothing: every AI button is hidden and every background AI step is skipped. The helper's
 // free lookups (sources, maps, saved guides, routes) still work, so trips are still built and planned without it.
 const aiReady = () => !!sample && !(sample === freeSample && freeAI && freeAI.on === false);
+// What the AI can do right now, from the helper's own answer (its /status "caps"), so every button and every sentence
+// matches what really works (Nov 21 review: settings promised photos and questions that minimal mode refused, and
+// "Turn on the AI guide in Settings" pointed at a switch the traveler doesn't have). The Claude app or the traveler's
+// own key can do everything; an older helper without caps is read from its mode (minimal = trips and guides only).
+// Jobs: tripImport, cityGuide, askQuestions, photoIdentify, extras, stopScripts, liveVoice, savedVoice.
+const aiCan = job => { if (job === "savedVoice") return true; if (!sample) return false; if (sample !== freeSample) return true;
+  if (!freeAI || freeAI.on === false) return false; if (freeAI.caps) return !!freeAI.caps[job];
+  return freeAI.mode === "full" ? job !== "liveVoice" : job === "tripImport" || job === "cityGuide"; };
+// Settings' plain account of the AI guide and the voice: what works now and what is off, from aiCan only.
+const listWords = (a, w) => a.length < 2 ? (a[0] || "") : a.slice(0, -1).join(", ") + " " + w + " " + a[a.length - 1];
+function aiStatusText() {
+  const jobs = [["cityGuide", "writes guides for new cities"], ["tripImport", "reads a trip from your words or a booking photo"], ["askQuestions", "answers your questions at a stop"], ["photoIdentify", "names a sight from your photo"]];
+  const on = jobs.filter(([k]) => aiCan(k)).map(x => x[1]), off = jobs.filter(([k]) => !aiCan(k)).map(x => x[1]);
+  const left = sample === freeSample && freeAI && freeAI.budget && on.length ? ` About ${Math.round(100 * (freeAI.left || 0) / freeAI.budget)}% of today's allowance is left; it resets every evening at 6 pm Central (7 pm in summer).` : "";
+  if (!on.length) return "Off for now. You can still build any trip step by step, and every city gets a guide and day plans from travel guides, encyclopedias and maps.";
+  const who = sample === freeSample ? "Kairoute's AI" : "Claude";
+  return `On. ${who} ${listWords(on, "and")}.${off.length ? ` Not in this version yet: it ${listWords(off, "or")}.` : ""}${left}`;
+}
+function voiceStatusText() {
+  if (aiCan("liveVoice")) return "The natural voice is a lifelike AI recording of each story, made once per stop and kept, so replays are free. A few new stops a day fit in the free allowance; after that your device's best voice reads until 6 pm Central.";
+  return "Stops that have a saved Kairoute recording play it. Every other story is read by your device's most natural voice: new natural recordings aren't being made in this version.";
+}
+// Said where a feature is off: what still works, and the way to switch it on only when the traveler really has one.
+const aiOffWhy = what => `${what} ${aiReady() ? "isn't part of this version yet" : "is switched off for now"}.${cl && cl.use ? "" : aiReady() ? "" : " Settings, AI guide, has the details."}`;
 // "Change my trip": say what changed or show the new booking, and the AI rewrites the days.
 let changeImgs = [], changeText = "";
 // A cruise whose port times the traveler didn't give: the times shown are an estimate until they add their cruise
@@ -2682,7 +2706,7 @@ function useKnown(d, s) {
   if (el) (el.closest("label") || el).scrollIntoView({ block: "center" });
 }
 function addPlaceCard(d) {
-  if (!aiReady()) return `<div class="card addplace"><h3>Don't see a place you want?</h3><p class="lede">Adding any place, or more day trips, uses Claude. Turn on the AI guide in Settings to turn it on.</p></div>`;
+  if (!aiReady()) return `<div class="card addplace"><h3>Don't see a place you want?</h3><p class="lede">${esc(aiOffWhy("Adding a place the app doesn't list yet"))} Every place already in your guide can be picked under Change stops.</p></div>`;
   return `<div class="card addplace"><div><h3>Don't see a place you want?</h3><p class="lede">Name it and your guide adds it to today, with the travel time and its story.</p></div>
     ${addNote ? `<p class="banner ok" role="status">${esc(addNote)}</p>` : ""}<div class="addrow"><input id="addPlace" type="text" placeholder="e.g. Ancient Corinth" enterkeyhint="go" ${addBusy ? "disabled" : ""}><button class="btn" data-act="addplace" ${addBusy ? "disabled" : ""}>Add it</button></div>
     <div class="actions"><button class="btn ghost" data-act="moretrips" ${addBusy ? "disabled" : ""}>Show more day trips farther out</button>${addBusy ? `<span class="lede"><span class="spinner"></span> ${esc(addBusy)}</span>` : ""}</div></div>`;
@@ -3877,8 +3901,8 @@ async function askGuide(site, city, q, opts) {
   q = String(q || "").trim(); if (!q || !city) return;
   const k = site ? site.id : "day:" + (day().date || trip.active), d = day(), voice = opts && opts.voice;
   const offline = typeof navigator !== "undefined" && navigator.onLine === false;
-  if (offline || !aiReady()) {
-    if (!offline) { answers[k] = { q, text: "", error: "Turn on the AI guide in Settings to ask questions." }; renderGuideOnly(); return; }
+  if (offline || !aiReady() || !aiCan("askQuestions")) {
+    if (!offline) { answers[k] = { q, text: "", error: aiOffWhy("Asking the guide questions") }; renderGuideOnly(); return; }
     askState.pending.push({ k, siteId: site ? site.id : null, dayIdx: trip.active, q, at: Date.now() });
     answers[k] = { q, text: "", saved: true, note: "There's no internet connection right now, so I can't look that up. I've saved your question and I'll answer it as soon as you're back online." };
     askSave(); renderGuideOnly(); return;
@@ -5194,8 +5218,8 @@ function renderSettings(sec) {
   </div>
 `,
     voice: () => `
-  <div class="card"><h3>Natural voice</h3><p class="lede">${freeAI ? "The natural voice is a lifelike AI recording of each story, made once per stop and kept, so replays are free. A few new stops a day fit in the free allowance; after that your device's best voice reads until 6 pm Central." : "Your device's most natural voice reads the stories."}${natVoiceNote ? " " + esc(natVoiceNote) : ""}</p>
-    ${freeAI ? `<div class="field"><span class="lbl">Natural AI voice (English)</span>${seg("natvoice", [["on", "On"], ["off", "Device voice only"]])}</div>
+  <div class="card"><h3>Natural voice</h3><p class="lede">${esc(voiceStatusText())}${natVoiceNote ? " " + esc(natVoiceNote) : ""}</p>
+    ${freeAI ? `<div class="field"><span class="lbl">${aiCan("liveVoice") ? "Natural AI voice (English)" : "Saved natural recordings (English)"}</span>${seg("natvoice", [["on", "On"], ["off", "Device voice only"]])}</div>
     <div class="field"><span class="lbl">Guide voice</span>${seg("guide", GUIDES.map(([k, n, d]) => [k, `${n} <small>${d}</small>`]))}
       <button type="button" class="btn" data-act="voicetry">Hear this voice</button></div>
     <div class="field"><span class="lbl">Kairoute sound (warmer, clearer outdoors, even volume)</span>${seg("voicefx", [["on", "On"], ["off", "Off"]])}</div>` : ""}
@@ -5205,7 +5229,7 @@ function renderSettings(sec) {
     sync: () => syncCard(),
     group: () => groupCard(),
     ai: () => `
-  <div class="card"><h3>AI guide</h3><p class="lede">${sample === freeSample && !aiReady() ? "Off for now. You can still build any trip step by step, and every city gets a guide and day plans from travel guides, encyclopedias and maps. Spoken stories, itinerary photos and questions to the guide come back when the AI guide is turned on again." : sample === freeSample ? `On, using Kairoute's free test AI. It builds guides for any city, finds your hotel, reads itinerary photos and answers questions.${freeAI && freeAI.budget ? ` About ${Math.round(100 * (freeAI.left || 0) / freeAI.budget)}% of today's free allowance is left; it resets every evening at 6 pm Central (7 pm in summer).` : ""}` : aiReady() ? "On. Kairoute uses Claude to build city guides, find your hotel, read itinerary photos and answer your questions." : "Off right now. The built-in cities still work fully."}</p>
+  <div class="card"><h3>AI guide</h3><p class="lede">${esc(aiStatusText())}</p>
     ${cl && cl.use ? "" : `<details class="more" ${getKey() ? "open" : ""}><summary>Advanced: use your own Anthropic key</summary><div class="field" style="margin-top:10px"><label for="aikey">Anthropic API key</label><div class="ask"><input type="password" id="aikey" autocomplete="off" placeholder="${getKey() ? "Saved on this device" : "sk-ant-…"}"><button type="button" class="btn small" data-act="savekey">Save</button>${getKey() ? `<button type="button" class="btn ghost small" data-act="clearkey">Remove</button>` : ""}</div><span class="hint">Stored only on this device and sent only to Anthropic. Get one at console.anthropic.com under API keys. Usage on your key is billed to you by Anthropic.</span></div></details>`}</div>`,
     offline: () => offSettings(),
     data: () => `
@@ -5412,7 +5436,7 @@ function renderWizard() {
     <div class="row2"><div class="field"><label for="w-party">How many people?</label><input type="number" id="w-party" min="1" max="20" value="${w.party}"></div>
       <div class="field"><label for="w-lang">Guide language</label><select id="w-lang">${LANGS.map(([n]) => `<option ${w.lang === n ? "selected" : ""}>${n}</option>`).join("")}</select></div></div>
     <div class="field"><label for="w-trav">Anything else about the travelers? (optional)</label><input type="text" id="w-trav" value="${esc(w.travelers)}" placeholder="e.g. one uses a cane; kids aged 8 and 11"></div>
-    ${ready || wizSteps() ? "" : `<div class="banner warn">Building the trip uses the AI guide. Turn on the AI guide in Settings to turn it on.</div>`}`;
+    ${ready || wizSteps() ? "" : `<div class="banner warn">${esc(aiOffWhy("Reading a trip from your words or a photo"))} Build it step by step below instead.</div>`}`;
   return `${head}<div><h2>${["Where are you going?", "How do you like to explore?", "A few last details"][w.step]}</h2></div>
     ${busyBlock()}${errBlock()}
     <form class="card" id="wizForm" autocomplete="off">${body}
@@ -5790,7 +5814,7 @@ function renderTrip(d) {
         <div class="actions"><button class="btn ghost small" data-act="copytrip">Copy itinerary</button></div>
         <div id="copyBox"></div>
         ${aiReady() ? `<div class="field"><label for="f-triptext">Your trip</label><textarea id="f-triptext" placeholder="Flying into Athens on May 3 and staying 4 days at the Hotel Grande Bretagne. Then a cruise from Piraeus to Mykonos, Santorini… ending in Barcelona. 3 days in Barcelona, train to Madrid for 2 days, flying home at 4 pm.">${esc(tripText)}</textarea><span class="hint">Your guide lays out every day, with port times, flights and trains. This replaces the trip above.</span></div>
-        <div class="actions"><button class="btn" data-act="parsetrip" ${busy ? "disabled" : ""}>Build my itinerary</button></div>` : `<p class="ai-note">This uses the AI guide. Turn on the AI guide in Settings to turn it on.</p>`}
+        <div class="actions"><button class="btn" data-act="parsetrip" ${busy ? "disabled" : ""}>Build my itinerary</button></div>` : `<p class="ai-note">${esc(aiOffWhy("Reading your itinerary"))} Add the days one by one instead.</p>`}
       </details>
     </div>
     <div class="tripright pane" data-pane="form">
@@ -6808,7 +6832,7 @@ ${partsList(s, it.time)}${stopLiveNotes(it, d)}</div></div>`;
   ${checksCard(d, city, plan)}
   ${eventsCard(d, city, plan)}
   ${gxPlanCards(d, city, plan)}
-  ${aiReady() || askState.pending.length ? `<details class="more askfold"><summary>Ask your guide about today</summary>${askBlock(null, "Ask about today: what to wear, where to get water, how to get tickets…")}</details>` : ""}
+  ${aiCan("askQuestions") ? `<details class="more askfold"><summary>Ask your guide about today</summary>${askBlock(null, "Ask about today: what to wear, where to get water, how to get tickets…")}</details>` : ""}
   <details class="more goodtoknow"><summary>Getting around, costs and local words</summary>
   ${gettingAround(city, plan)}
   ${budgetCard(plan, d)}
@@ -6876,8 +6900,8 @@ ${quietOn(s) ? `<p class="banner quiet" role="note">🤫 <span><b>Quiet place.</
       ${(() => { const tr = translations[s.id + "|" + P().lang]; const need = P().lang !== "English" && city.lang !== P().lang;
         return need ? (tr ? `<div class="guidetext" id="tr-${esc(s.id)}">${tr.text ? paras(tr.text) : `<p class="ai-note"><span class="spinner"></span> Translating…</p>`}</div>${tr.error ? `<p class="ai-note">${esc(tr.error)}</p>` : ""}` : (ready ? `<div><button class="btn ghost small" data-translate="${esc(s.id)}">Read it in ${esc(P().lang)}</button></div>` : "")) : ""; })()}
       ${dp ? `<div class="guidetext" id="deep-${esc(s.id)}">${dp.text ? paras(dp.text) : `<p class="ai-note"><span class="spinner"></span> Your guide is thinking…</p>`}</div>${dp.error ? `<p class="ai-note">${esc(dp.error)}</p>` : ""}` : ""}
-      ${ready ? `<div class="actions">${!dp || dp.error ? `<button class="btn ghost small" data-deeper="${esc(s.id)}">Tell me more</button>` : ""}</div>
-      ${askBlock(s)}` : `<p class="ai-note">Turn on the AI guide in Settings to ask the guide questions and hear more.</p>`}
+      ${ready ? `<div class="actions">${aiCan("askQuestions") && (!dp || dp.error) ? `<button class="btn ghost small" data-deeper="${esc(s.id)}">Tell me more</button>` : ""}</div>
+      ${aiCan("askQuestions") ? askBlock(s) : ""}` : ""}
       ${(j => `<details class="more scmore" ${j.rating || j.note || (j.photos || []).length ? "open" : ""}><summary>Your journal${j.rating ? " · " + "★".repeat(j.rating) : ""}</summary>${journalBlock(s)}</details>`)((trip.journal || {})[jKey(s)] || {})}
     </div></div>
   </article>`;
@@ -7057,7 +7081,7 @@ ${quietOn(s) ? `<p class="banner quiet" role="note">🤫 <span><b>Quiet place.</
       ${srcNote(s)}
       ${s.photoTip ? `<p class="phototip"><b>Photo spot:</b> ${esc(s.photoTip)}</p>` : ""}
       <details class="more" id="story-${esc(s.id)}" ${quietOn(s) ? "open" : ""}><summary>Read the story</summary><div class="guidetext" style="margin-top:8px">${paras(unitText(s.guide))}</div></details>
-      ${aiReady() || askState.pending.length ? askBlock(s) : ""}
+      ${aiCan("askQuestions") ? askBlock(s) : ""}
       ${journalBlock(s)}</div>
       <div class="actions tourmain"><button class="btn bigbtn" data-act="tournext">${nxt ? "Next: " + esc(stepName(nxt)) : "Finish"}</button></div>
     </div>`;

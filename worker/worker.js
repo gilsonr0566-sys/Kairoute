@@ -82,6 +82,34 @@ const voiceLive = env => aiOn(env) && !minimal(env) && env.VOICE_LIVE === "1";
 // only with Richard's own go-ahead. While off, cached guides, cached scripts and saved recordings still answer, and the
 // app falls back to its own guides and the phone's voice.
 const aiOn = env => env.AI_ON === "1";
+// THE ONE AI GATE (Nov 21 review): every Workers AI call in the helper goes through this, wherever it is made, so a
+// route can't skip a rule by making its own call. A call runs only when all three hold, checked at the moment of the
+// call: 1) the master switch is on (AI_ON = "1"); 2) in minimal mode, the route is /sample and the job it named is
+// one of MIN_JOBS (photos, extras, scripts, voice, the recorder, the drip and scheduled work are refused); 3) today's
+// count is under today's hard total (the routes' own checks stay too). Refusals throw, and are counted (g:) so the
+// owner's page can show what was turned away.
+const AI_REFUSED = "AI refused by the gate";
+// What the helper can do right now, said plainly so the app's buttons and words match (Nov 21 review: settings said
+// photos could be read and questions answered while minimal mode refused both). Saved answers and recordings work
+// whatever the switch says.
+function aiCaps(env) { const on = aiOn(env), full = on && !minimal(env);
+  return { tripImport: on, cityGuide: on, askQuestions: full, photoIdentify: full, extras: full, stopScripts: full, liveVoice: voiceLive(env), savedVoice: true, savedGuides: true }; }
+// A refusal by the gate (switched off, not allowed in this mode, allowance used up) is a plain "not available"
+// answer, never "busy": the app says the feature is off instead of asking the traveler to try again.
+const gateOff = (e, h) => e && e.gate ? Response.json({ error: e.gate === "today's AI allowance is used up" ? "The AI allowance for today is used up." : "This feature is switched off for now.", disabled: true, why: e.gate }, { status: e.gate === "today's AI allowance is used up" ? 429 : 403, headers: h }) : null;
+function aiGate(env, path, lim) {
+  const real = env.AI, gate = { job: "", calls: 0 };
+  const refuse = why => { const e = new Error(AI_REFUSED + ": " + why); e.gate = why; return e; };
+  gate.run = async (...a) => {
+    if (!aiOn(env)) throw refuse("switched off");
+    if (!path || !lim) throw refuse("no AI for this work");
+    if (minimal(env) && !(path === "/sample" && MIN_JOBS.has(gate.job))) throw refuse("not in minimal AI");
+    const L = await lim(); if (!(L && L.DAILY_NEURONS > 0) || (await used(env)) >= L.DAILY_NEURONS) throw refuse("today's AI allowance is used up");
+    if (!real || typeof real.run !== "function") throw refuse("no AI binding");
+    gate.calls++; return real.run(...a);
+  };
+  return gate;
+}
 // Memory of kept answers (see the fetch handler). Only these content prefixes; everything else reads the store.
 const MEMO_KEYS = /^(tr6|fp1|rt1|ns1|ns2|fx2|bz1|g|fm6|fm8|sr8|gr5|gq1|ev1|dp1|p2|kh4|gc2|nv1|fq|sp1|wd|xw1|xn1|xf1|wx1|wv1|bk1|s3):/, MEMO_MS = 600000, MEMO = new Map();
 let memoChars = 0; // kept under ~30 MB of the Worker's 128 MB memory
@@ -116,7 +144,8 @@ async function fillFerries(env) {
 }
 
 export default {
-  async scheduled(ev, env, ctx) { ctx.waitUntil(fillFerries(env)); },
+  // Scheduled work never needs the AI: it gets the gate with no route, which refuses every call.
+  async scheduled(ev, env, ctx) { ctx.waitUntil(fillFerries({ ...env, AI: aiGate(env, "", null) })); },
   async fetch(req, env, ctx) {
     const origin = req.headers.get("Origin") || "", h = cors(origin);
     if (req.method === "OPTIONS") return new Response(null, { headers: h });
@@ -126,10 +155,10 @@ export default {
     // or any headless browser (Playwright, the demo flow on the live site). Real travelers are never any of these.
     const lab = req.headers.get("x-kairoute-lab") === "1", test = lab || url.searchParams.get("auto") === "1" || /^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/.test(origin || "") || /Headless/i.test(req.headers.get("user-agent") || "");
     let lp = null; const lim = () => lp || (lp = limits(env, test));
-    if (!aiOn(env)) env = { ...env, AI: { run: async () => { throw new Error("AI is switched off"); } } };
-    // Minimal AI: only /sample (and there only the trip and guide jobs) may reach the AI. Photos, extras, scripts,
-    // voice, the recorder and the drip all get a stand-in that refuses.
-    else if (minimal(env) && url.pathname !== "/sample") env = { ...env, AI: { run: async () => { throw new Error("Not in minimal AI"); } } };
+    // ONE GATE for every AI call (master switch, allowed jobs, today's cap): see aiGate. No other code may hold the
+    // real AI binding. /sample names its job with gate.job once it has read the request.
+    const gate = aiGate(env, url.pathname, () => lim());
+    env = { ...env, AI: gate };
     // Kept answers (rides, ferries, routes, guides, places) are remembered in this Worker's own memory for 10 minutes,
     // so the same page asking again (test runs ask the same trip many times) costs no storage read. Counters and
     // travelers' own data are never remembered here.
@@ -157,7 +186,7 @@ export default {
       await env.USAGE.put("r:" + today(), String(Math.round(+b.neurons)), { expirationTtl: 3 * 86400 });
       return Response.json({ ok: true, prev, on: aiOn(env), used: Math.round(await used(env)) }, { headers: h });
     }
-    if (url.pathname === "/status") { const u = await used(env), { DAILY_NEURONS } = await lim(), t = +(await env.USAGE.get("t:" + today())) || 0, left = Math.max(0, Math.floor(DAILY_NEURONS - u)); return Response.json({ ok: true, on: aiOn(env), mode: aiOn(env) ? (minimal(env) ? "minimal" : "full") : "off", jobs: aiOn(env) && minimal(env) ? [...MIN_JOBS] : undefined, model: MODEL, usedToday: Math.round(u), budget: Math.round(DAILY_NEURONS), left, voiceLeft: voiceLive(env) ? left : 0, labLeft: aiOn(env) && !minimal(env) ? Math.max(0, Math.floor(TEST_DAILY - t)) : 0, monthExtraUsed: Math.round(+(await env.USAGE.get("x:" + month())) || 0), monthExtraCap: (await lim()).MONTH_EXTRA, labToday: Math.round(t) }, { headers: h }); }
+    if (url.pathname === "/status") { const u = await used(env), { DAILY_NEURONS } = await lim(), t = +(await env.USAGE.get("t:" + today())) || 0, left = Math.max(0, Math.floor(DAILY_NEURONS - u)); return Response.json({ ok: true, caps: aiCaps(env), on: aiOn(env), mode: aiOn(env) ? (minimal(env) ? "minimal" : "full") : "off", jobs: aiOn(env) && minimal(env) ? [...MIN_JOBS] : undefined, model: MODEL, usedToday: Math.round(u), budget: Math.round(DAILY_NEURONS), left, voiceLeft: voiceLive(env) ? left : 0, labLeft: aiOn(env) && !minimal(env) ? Math.max(0, Math.floor(TEST_DAILY - t)) : 0, monthExtraUsed: Math.round(+(await env.USAGE.get("x:" + month())) || 0), monthExtraCap: (await lim()).MONTH_EXTRA, labToday: Math.round(t) }, { headers: h }); }
     // Real places from OpenStreetMap, so the app never sends anyone to a place the AI made up.
     // /places: restaurants and cafés around given points. /verify: finds each named sight on the map.
     if (url.pathname === "/places" && req.method === "POST") {
@@ -415,6 +444,8 @@ export default {
     // per day the high and low, the chance of rain, rain total and weather code, and per hour (7:00 to 21:00)
     // temperature, chance of rain and rain amount. Kept 3 hours per 0.1 degree, so a city is fetched once for everyone.
     if (url.pathname === "/weather") {
+      // Another website's page never gets free work from the helper (Nov 21 review).
+      if (origin && !ALLOWED.some(r => r.test(origin))) return Response.json({ error: "Not allowed" }, { status: 403, headers: h });
       const la = +(+url.searchParams.get("lat")).toFixed(1), ln = +(+url.searchParams.get("lng")).toFixed(1);
       if (!isFinite(la) || !isFinite(ln) || Math.abs(la) > 90 || Math.abs(ln) > 180) return Response.json({ error: "Bad request" }, { status: 400, headers: h });
       const key = "wx1:" + la + "," + ln, hit = await env.USAGE.get(key); if (hit) return new Response(hit, { headers: { ...h, "content-type": "application/json" } });
@@ -588,6 +619,8 @@ export default {
     // artworks, viewpoints, museums, historic buildings, fountains). These are the real points a guide stops at
     // when walking someone through a square, an old town or a castle; nothing here is invented.
     if (url.pathname === "/nearsights") {
+      // Another website's page never gets free work from the helper (Nov 21 review).
+      if (origin && !ALLOWED.some(r => r.test(origin))) return Response.json({ error: "Not allowed" }, { status: 403, headers: h });
       const la = +(+url.searchParams.get("lat")).toFixed(4), ln = +(+url.searchParams.get("lng")).toFixed(4), r = Math.min(600, Math.max(60, +url.searchParams.get("r") || 250));
       if (!isFinite(la) || !isFinite(ln)) return Response.json({ error: "Bad request" }, { status: 400, headers: h });
       const key = "ns2:" + r + ":" + la + "," + ln, hit = await env.USAGE.get(key); if (hit) return new Response(hit, { headers: { ...h, "content-type": "application/json" } });
@@ -713,7 +746,7 @@ Reply with JSON only: {"parts":["...","~..."]}
 Written text:
 """${text}"""`;
       let out; try { out = await env.AI.run(MODEL, { messages: [{ role: "user", content: prompt }], max_tokens: 1500, temperature: 0.5, chat_template_kwargs: { enable_thinking: false } }); }
-      catch (e) { return Response.json({ error: "busy" }, { status: 502, headers: h }); }
+      catch (e) { return gateOff(e, h) || Response.json({ error: "busy" }, { status: 502, headers: h }); }
       const ch = out && out.choices && out.choices[0];
       const raw = typeof (out && out.response) === "string" ? out.response : (ch && ch.message && ch.message.content) || "";
       let parts = []; try { const j = JSON.parse(raw.slice(raw.indexOf("{"), raw.lastIndexOf("}") + 1)); parts = (j.parts || []).map(String).map(x => x.trim()).filter(Boolean).slice(0, 200); } catch (e) {}
@@ -751,7 +784,7 @@ Written text:
       const vUsed = +(await env.USAGE.get(vk)) || 0;
       let audio;
       try { const r = await env.AI.run(vm.id, { text, speaker, encoding: "mp3" }, { returnRawResponse: true }); if (!r.ok) throw new Error("tts " + r.status); audio = await r.arrayBuffer(); }
-      catch (e) { return Response.json({ error: "The voice service is busy." }, { status: 502, headers: h }); }
+      catch (e) { return gateOff(e, h) || Response.json({ error: "The voice service is busy." }, { status: 502, headers: h }); }
       if (!audio || audio.byteLength < 1000) return Response.json({ error: "No audio" }, { status: 502, headers: h });
       ctx.waitUntil(Promise.all([addUse(env, cost, test), rec ? null : env.USAGE.put(vk, String(+(vUsed + cost).toFixed(1)), { expirationTtl: 3 * 86400 }), env.USAGE.put(key, audio, { expirationTtl: 365 * 86400 })]));
       return new Response(audio, { headers: { ...h, "content-type": "audio/mpeg", "cache-control": "public, max-age=31536000" } });
@@ -762,6 +795,7 @@ Written text:
     // (roughly 15 neurons), capped at 40 a day per traveler.
     if (url.pathname === "/identify" && req.method === "POST") {
       if (origin && !ALLOWED.some(r => r.test(origin))) return Response.json({ error: "Not allowed" }, { status: 403, headers: h });
+      if (!aiCaps(env).photoIdentify) return Response.json({ error: "Photo look-up is switched off for now.", disabled: true }, { status: 403, headers: h });
       let b; try { b = await req.json(); } catch (e) { return Response.json({ error: "Bad request" }, { status: 400, headers: h }); }
       const img = typeof b.image === "string" && /^data:image\/(jpeg|png|webp);base64,(\/9j\/|iVBOR|UklGR)/.test(b.image) && b.image.length < 400000 ? b.image : null;
       const cands = (Array.isArray(b.cands) ? b.cands : []).slice(0, 25).map((c, i) => ({ n: i + 1, name: String((c && c.name) || "").slice(0, 90), kind: String((c && c.kind) || "").slice(0, 40), m: Math.round(+(c && c.m) || 0) })).filter(c => c.name);
@@ -772,7 +806,7 @@ Written text:
       const prompt = `A traveler took this photo standing where they are now. These are the only real places near them, with how far away each is:\n${cands.map(c => `${c.n}. ${c.name}${c.kind ? " (" + c.kind + ")" : ""}, ${c.m} m away`).join("\n")}\n\nWhich numbered place is the main subject of the photo? Use what you see (architecture, shape, signs, statues, columns, domes) and prefer nearer places when it's unclear. If none of them is clearly what the photo shows, answer 0. Reply only with JSON: {"n": number, "sure": "high"|"medium"|"low", "seen": "a few words on what is in the photo"}`;
       let out;
       try { out = await env.AI.run(MODEL, { messages: [{ role: "user", content: [{ type: "image_url", image_url: { url: img } }, { type: "text", text: prompt }] }], max_tokens: 120, temperature: 0.1, chat_template_kwargs: { enable_thinking: false } }); }
-      catch (e) { return Response.json({ error: "The AI service is busy. Try again in a minute." }, { status: 502, headers: h }); }
+      catch (e) { return gateOff(e, h) || Response.json({ error: "The AI service is busy. Try again in a minute." }, { status: 502, headers: h }); }
       const ch = out && out.choices && out.choices[0], text = typeof (out && out.response) === "string" ? out.response : (ch && ch.message && ch.message.content) || "";
       const u2 = (out && out.usage) || {}, pin = +u2.prompt_tokens || 1500, pout = +u2.completion_tokens || 40;
       ctx.waitUntil(Promise.all([addUse(env, pin * IN_RATE + pout * OUT_RATE, test), env.USAGE.put(ik, String(n + 1), { expirationTtl: 2 * 86400 })]));
@@ -789,7 +823,7 @@ Written text:
     if (!prompt) return Response.json({ error: "Empty prompt" }, { status: 400, headers: h });
 
     // Kept answers: the same ask (same job, size, prompt and photos) is answered from the store, never paid twice.
-    const job = String(body.purpose || ""), ck = "sp1:" + (await sha(JSON.stringify([job, tier, prompt, images])));
+    const job = String(body.purpose || ""); gate.job = job; const ck = "sp1:" + (await sha(JSON.stringify([job, tier, prompt, images])));
     const kept = await env.USAGE.get(ck);
     if (kept) { try { const k = JSON.parse(kept); return Response.json({ ...k, kept: true }, { headers: { ...h, "cache-control": "no-store" } }); } catch (e) {} }
     if (aiOn(env) && minimal(env) && !MIN_JOBS.has(job)) return Response.json({ error: "Kairoute is saving its AI for building trips and guides for now.", minimal: true }, { status: 403, headers: h });
@@ -804,7 +838,7 @@ Written text:
     try {
       out = await env.AI.run(MODEL, { messages: [{ role: "user", content }], max_tokens: MAX_OUT[tier], temperature: 0.4, chat_template_kwargs: { enable_thinking: false } });
     } catch (e) {
-      return Response.json({ error: "The AI service is busy. Try again in a minute." }, { status: 502, headers: h });
+      return gateOff(e, h) || Response.json({ error: "The AI service is busy. Try again in a minute." }, { status: 502, headers: h });
     }
     const ch = out && out.choices && out.choices[0];
     const text = typeof (out && out.response) === "string" ? out.response : (ch && ch.message && ch.message.content) || "";

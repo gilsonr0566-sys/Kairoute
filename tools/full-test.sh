@@ -13,6 +13,7 @@ TESTS=$(cat <<'LIST'
 code-check|security|sh tools/check.sh
 static-check|security|node tools/static-check.cjs
 worker-check|security|node tools/worker-check.mjs
+worker-ai-gate|security|node tools/worker-ai-gate.mjs
 inject-check|security|node tools/inject-check.cjs
 stress-check|security|node tools/stress-check.cjs
 plan-test|data|node tools/plan-test.cjs

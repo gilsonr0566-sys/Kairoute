@@ -661,11 +661,13 @@ async function camLookup(file) {
   cam.cands = cands; cam.noGps = !pos;
   if (!cands.length) { cam.busy = false; cam.msg = pos ? "I don't know any sights within a few hundred meters of you, so I can't say what this is." : "I need your location to see what's around you. Turn on location and try again."; camSheet(); return; }
   if (!freeAI) { cam.busy = false; cam.msg = "Photo look-up needs the internet. Here's what's nearest to you:"; camSheet(); return; }
+  // Photo matching switched off on the helper (minimal AI, or AI off): said plainly, never sent to be refused as "busy".
+  if (!aiCan("photoIdentify")) { cam.busy = false; cam.msg = "Matching a photo isn't part of this version yet. Here's what's nearest to you:"; camSheet(); return; }
   cam.msg = "Matching your photo…"; camSheet();
   try {
     const r = await fetch(`${freeAI.url}/identify`, { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ image: cam.img, lat: pos && pos.lat, lng: pos && pos.lng, cands: cands.map(c => ({ name: c.name, kind: c.kind, m: c.m })), dev: devId() }) });
     const j = await r.json().catch(() => null);
-    if (!r.ok || !j) { cam.msg = (j && j.error) || "The photo service is busy. Here's what's nearest to you:"; }
+    if (!r.ok || !j) { cam.msg = j && j.disabled ? "Matching a photo isn't part of this version yet. Here's what's nearest to you:" : (j && j.error) || "The photo service is busy. Here's what's nearest to you:"; }
     else { cam.pick = j.n ? cands[j.n - 1] : null; cam.sure = j.sure; cam.seen = j.seen; cam.msg = ""; }
   } catch (e) { cam.msg = "No connection right now. Here's what's nearest to you:"; }
   cam.busy = false; camSheet();
