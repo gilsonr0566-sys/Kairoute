@@ -8,10 +8,12 @@ const LIVE = Q.url || 'https://gilsonr0566-sys.github.io/Kairoute-Beta2/';
 const PASS = new Set(['/sources', '/famous', '/ground', '/places', '/transit', '/route', '/departures', '/ferries', '/weather', '/facts', '/osm', '/findplace', '/nearsights', '/verify', '/bookcheck', '/voyage', '/x/near', '/x/group']);
 const INJECT = fs.readFileSync(path.join(__dirname, 'inject.js'), 'utf8');
 const sleep = ms => new Promise(r => setTimeout(r, ms));
+const SC = require('./screen-check.cjs');
+const screen = (res, where, text) => { const c = SC.check(text); if (!c) return; if (c.late.length || c.badLunch.length) { const f = { where, head: String(text).split('\n')[0], leaveBy: c.lbTxt, late: c.late.map(x => x.k + ' ' + x.name + ' leaves ' + x.leaveTxt), lunch: c.badLunch.map(x => x.name + ' | ' + x.meta) }; res.screen.push(f); console.log('SCREEN CHECK FAIL ' + JSON.stringify(f)); } res.screenRead++; };
 (async () => {
   const t = Q.trips.find(x => x.name === process.env.TRIP); if (!t) { console.log('no such trip', process.env.TRIP); process.exit(1); }
   const out = path.join(process.cwd(), 'outside-out', t.name); fs.mkdirSync(out, { recursive: true });
-  const res = { name: t.name, label: t.label || '', legs: t.legs, started: new Date().toISOString(), passed: {}, refused: {}, errors: [], days: [], guides: {}, steps: [] };
+  const res = { name: t.name, label: t.label || '', legs: t.legs, started: new Date().toISOString(), passed: {}, refused: {}, errors: [], days: [], guides: {}, steps: [], screen: [], screenRead: 0 };
   const b = await chromium.launch();
   const ctx = await b.newContext({ viewport: { width: 1100, height: 2800 }, locale: 'en-US', timezoneId: t.tz || 'America/Chicago' });
   await ctx.addInitScript(() => { try { localStorage.setItem('kairoute.intro1', '1'); } catch (e) {} });
@@ -45,6 +47,7 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
     const text = await p.evaluate(() => document.querySelector('main').innerText);
     await p.screenshot({ path: path.join(out, 'day-' + String(i).padStart(2, '0') + '.jpg'), type: 'jpeg', quality: 55, fullPage: true });
     const g = await p.evaluate(i => window.__T.guide(i), i); if (g && !res.guides[g.city]) res.guides[g.city] = g;
+    screen(res, 'day ' + i, text); if (textEarly) screen(res, 'day ' + i + ' early', textEarly);
     res.days.push({ i, date: d.date, type: d.type, destination: d.destination, text, textEarly: textEarly && textEarly !== text ? textEarly : undefined });
     console.log('\n===== day ' + i + ' ' + d.date + ' ' + d.type + ' ' + (d.destination || '') + '\n' + text);
   }
@@ -53,7 +56,7 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
   if (ph >= 0) { await p.setViewportSize({ width: 390, height: 844 }); await p.evaluate(i => window.__kairouteAt(i, 'plan'), ph); await sleep(5000); await p.screenshot({ path: path.join(out, 'phone-day-' + String(ph).padStart(2, '0') + '.jpg'), type: 'jpeg', quality: 55, fullPage: true }); res.phoneText = await p.evaluate(() => document.querySelector('main').innerText.slice(0, 1500)); await p.setViewportSize({ width: 1100, height: 2800 }); }
   // Extra traveler steps for this trip: each is a line of page script (a tap, a tick, a changed hour) and a picture after it.
   for (const s of t.steps || []) { let r; if (s.reload) { await p.reload({ waitUntil: 'load' }); await sleep(3000); await p.evaluate(() => window.__kairouteMockHelper && window.__kairouteMockHelper('https://kairoute-ai.rickgilson.workers.dev', null, true)); await p.evaluate(INJECT + '; 1'); } try { r = await p.evaluate(s.js); } catch (e) { r = 'ERR ' + e.message; } await sleep(s.wait || 4000); if (s.phone) await p.setViewportSize({ width: 390, height: 844 }); if (s.tablet) await p.setViewportSize({ width: 1100, height: 2800 });
-    const text = await p.evaluate(() => document.querySelector('main').innerText).catch(() => ''); await p.screenshot({ path: path.join(out, 'step-' + s.name + '.jpg'), type: 'jpeg', quality: 55, fullPage: !s.screen }); res.steps.push({ name: s.name, r, text }); console.log('\n===== step ' + s.name + ' -> ' + JSON.stringify(r) + '\n' + text.slice(0, 6000)); }
+    const text = await p.evaluate(() => document.querySelector('main').innerText).catch(() => ''); await p.screenshot({ path: path.join(out, 'step-' + s.name + '.jpg'), type: 'jpeg', quality: 55, fullPage: !s.screen }); screen(res, 'step ' + s.name, text); res.steps.push({ name: s.name, r, text }); console.log('\n===== step ' + s.name + ' -> ' + JSON.stringify(r) + '\n' + text.slice(0, 6000)); }
 
   // Group trip: this browser shares the trip (owner), a second clean browser joins with the code (member) and makes its own day.
   if (t.group) { const G = res.group = { log: [] }, gi = t.group.day; const shot = (pg, n) => pg.screenshot({ path: path.join(out, 'group-' + n + '.jpg'), type: 'jpeg', quality: 55, fullPage: true }).catch(() => {});

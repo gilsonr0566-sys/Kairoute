@@ -1,43 +1,174 @@
 {
- "run": "round3k-2026-11-22",
+ "run": "round4a-2026-11-22",
  "dayWait": 30000,
  "trips": [
   {
-   "name": "g01-group-naples",
-   "label": "Group trip, Naples ship day",
+   "name": "r01-naples-pompeii-sorrento-1800",
+   "label": "Naples ship day with Pompeii and Sorrento",
    "legs": [
     {
      "k": "cruise",
-     "board": "Venice, Italy",
-     "date": "2027-07-06",
-     "aboard": "16:00",
+     "board": "Civitavecchia (Rome), Italy",
+     "date": "2027-07-10",
+     "aboard": "17:00",
      "inAt": "10:30",
      "ports": [
       {
-       "date": "2027-07-08",
-       "place": "Dubrovnik, Croatia",
+       "date": "2027-07-11",
+       "place": "Messina, Italy",
        "arrive": "08:00",
        "aboard": "18:00"
       },
       {
-       "date": "2027-07-10",
+       "date": "2027-07-12",
        "place": "Naples, Italy",
        "arrive": "07:00",
        "aboard": "18:00"
       }
      ],
-     "end": "Venice, Italy",
-     "endDate": "2027-07-12",
+     "end": "Civitavecchia (Rome), Italy",
+     "endDate": "2027-07-13",
      "off": "07:00"
     }
    ],
    "onlyDays": [
-    5
+    2,
+    3
    ],
-   "steps": [],
-   "group": {
-    "day": 5
-   }
+   "steps": [
+    {
+     "name": "1-untick-all",
+     "js": "__T.tap(3,false,25)"
+    },
+    {
+     "name": "2-add-pompeii",
+     "js": "__T.addByName(3,'Pompeii')"
+    },
+    {
+     "name": "3-add-sorrento",
+     "js": "__T.addByName(3,'Sorrento')"
+    },
+    {
+     "name": "4-plan",
+     "js": "(async()=>{window.__kairouteAt(3,'plan');await __T.sleep(60000);return __T.planText(14000)})()"
+    },
+    {
+     "name": "5-basis",
+     "js": "__T.basis(3)"
+    },
+    {
+     "name": "6-plan-3min",
+     "js": "(async()=>{await __T.sleep(120000);window.__kairouteAt(3,'plan');await __T.sleep(5000);return __T.planText(14000)})()"
+    }
+   ]
+  },
+  {
+   "name": "r02-naples-pompeii-sorrento-1700",
+   "label": "Naples ship day with Pompeii and Sorrento",
+   "legs": [
+    {
+     "k": "cruise",
+     "board": "Civitavecchia (Rome), Italy",
+     "date": "2027-07-10",
+     "aboard": "17:00",
+     "inAt": "10:30",
+     "ports": [
+      {
+       "date": "2027-07-11",
+       "place": "Messina, Italy",
+       "arrive": "08:00",
+       "aboard": "18:00"
+      },
+      {
+       "date": "2027-07-12",
+       "place": "Naples, Italy",
+       "arrive": "07:00",
+       "aboard": "17:00"
+      }
+     ],
+     "end": "Civitavecchia (Rome), Italy",
+     "endDate": "2027-07-13",
+     "off": "07:00"
+    }
+   ],
+   "onlyDays": [
+    2,
+    3
+   ],
+   "steps": [
+    {
+     "name": "1-untick-all",
+     "js": "__T.tap(3,false,25)"
+    },
+    {
+     "name": "2-add-pompeii",
+     "js": "__T.addByName(3,'Pompeii')"
+    },
+    {
+     "name": "3-add-sorrento",
+     "js": "__T.addByName(3,'Sorrento')"
+    },
+    {
+     "name": "4-plan",
+     "js": "(async()=>{window.__kairouteAt(3,'plan');await __T.sleep(60000);return __T.planText(14000)})()"
+    },
+    {
+     "name": "5-basis",
+     "js": "__T.basis(3)"
+    },
+    {
+     "name": "6-plan-3min",
+     "js": "(async()=>{await __T.sleep(120000);window.__kairouteAt(3,'plan');await __T.sleep(5000);return __T.planText(14000)})()"
+    }
+   ]
+  },
+  {
+   "name": "r03-naples-pompeii-sorrento-kept",
+   "label": "Naples ship day with Pompeii and Sorrento",
+   "legs": [
+    {
+     "k": "cruise",
+     "board": "Civitavecchia (Rome), Italy",
+     "date": "2027-07-10",
+     "aboard": "17:00",
+     "inAt": "10:30",
+     "ports": [
+      {
+       "date": "2027-07-11",
+       "place": "Messina, Italy",
+       "arrive": "08:00",
+       "aboard": "18:00"
+      },
+      {
+       "date": "2027-07-12",
+       "place": "Naples, Italy",
+       "arrive": "08:00",
+       "aboard": "18:30"
+      }
+     ],
+     "end": "Civitavecchia (Rome), Italy",
+     "endDate": "2027-07-13",
+     "off": "07:00"
+    }
+   ],
+   "onlyDays": [
+    2,
+    3
+   ],
+   "steps": [
+    {
+     "name": "1-add-pompeii",
+     "js": "__T.addByName(3,'Pompeii')"
+    },
+    {
+     "name": "2-add-sorrento",
+     "js": "__T.addByName(3,'Sorrento')"
+    },
+    {
+     "name": "3-plan",
+     "js": "(async()=>{window.__kairouteAt(3,'plan');await __T.sleep(60000);return __T.planText(14000)})()"
+    }
+   ]
   }
  ]
 }
