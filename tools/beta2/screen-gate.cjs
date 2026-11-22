@@ -9,6 +9,9 @@
 //      every day passes the screen rules
 //   E. every screen size: no page wider than the screen (phone, phone sideways, tablet both ways)
 //   F. every recorded guide story has its recording in every guide voice (else the device voice reads it)
+//   G. the app's own screen guard: quiet on a good day, warns on a day whose times disagree
+//   H. never state something untrue: every "closed" is backed by the sight's hours; every ride choice's notice gives
+//      the one real reason, with numbers that add up, and a timetable hole is said as missing data
 // Usage: node tools/beta2/screen-gate.cjs [beta2-site/index.html] [older build .html ...]
 //   OLD=<file> also from env. Exit 1 on any S1/S2 failure. Prints plain words.
 const { chromium } = require('playwright'); const path = require('path'), http = require('http'), fs = require('fs');
@@ -16,7 +19,7 @@ const R = require('./screen-rules.cjs');
 const ROOT = path.join(__dirname, '..', '..');
 const B2 = path.resolve(process.argv[2] || path.join(ROOT, 'beta2-site', 'index.html'));
 const OLDS = process.argv.slice(3).concat((process.env.OLD || '').split(',').filter(Boolean)).map(f => path.resolve(f));
-const ONLY = process.env.ONLY || 'ABCDEF', on = k => ONLY.includes(k);
+const ONLY = process.env.ONLY || 'ABCDEFGH', on = k => ONLY.includes(k);
 const results = []; const check = (sev, name, ok, why) => results.push({ sev, name, ok: !!ok, why: ok ? '' : why });
 // What a plan IS on screen: the LEAVE BY time, every row's times and name, every ride's chosen way. Notices that come
 // and go with the signal ("No internet", the boarding-pass reader) or the phone's own clock ("7 h ahead") are not the plan.
@@ -46,7 +49,8 @@ async function dayTexts(p) {
   const days = await p.evaluate(() => window.__kairouteDays ? window.__kairouteDays() : []); const out = [];
   for (let i = 0; i < days.length; i++) {
     await p.evaluate(i => { window.__kairouteGo('day', i); window.__kairouteGo('plan'); }, i); await p.waitForTimeout(500); await settle(p); await p.waitForTimeout(300);
-    out.push({ trip: 'sample', i, date: days[i].date, type: days[i].type, dest: days[i].dest, text: await p.evaluate(() => (document.querySelector('main') || document.body).innerText) });
+    // Folded notes ("Taken off this day", "About today's plan") are opened first: a reason must be true even when folded.
+    out.push({ trip: 'sample', i, date: days[i].date, type: days[i].type, dest: days[i].dest, text: await p.evaluate(() => { document.querySelectorAll('#view details').forEach(d => { d.open = true; }); return (document.querySelector('main') || document.body).innerText; }) });
   }
   return out;
 }
@@ -75,6 +79,32 @@ async function steadyTexts(p) { const a = await dayTexts(p); await p.waitForTime
     check('S1', 'The app\'s own guard stays quiet on a day whose times agree', g && g.quiet, JSON.stringify(g && g.g0).slice(0, 200));
     check('S1', 'The app\'s own guard warns on a day whose LEAVE BY comes before a stop ends, and names the earliest time', g && g.warned && /leave by 6:00 am/i.test(g.txt), g ? (g.why || g.txt || JSON.stringify(g.r).slice(0, 200)) : 'no port day');
     await A.p.evaluate(() => { window.__kairouteGo('plan'); }); }
+  // ---- H. Never state something untrue (Richard, Nov 22: "Lies create mistrust of the app").
+  //  1. every "X is closed on <day>" on screen is backed by X's own hours or closed days for that date;
+  //  2. every ride choice the traveler can tap: the notice it brings up passes the same rules (one real reason, numbers
+  //     that add up, a timetable hole said as missing data), then the planner's own choice is tapped back.
+  if (on('H')) { const H = await phone(browser); await openApp(H.p, URL); const n = await H.p.evaluate(() => window.__kairouteDays().length);
+    const unbacked = [], said = [], taps = { n: 0 };
+    for (let i = 0; i < n; i++) {
+      await H.p.evaluate(i => { window.__kairouteGo('day', i); window.__kairouteGo('plan'); }, i); await H.p.waitForTimeout(600); await settle(H.p);
+      const r = await H.p.evaluate(i => { document.querySelectorAll('#view details').forEach(d => { d.open = true; });
+        const t = document.querySelector('main').innerText, d = window.__kairouteDays()[i], c = window.__kairouteCityOf(i) || {}, all = [].concat(c.sites || [], c.farther || []), out = [];
+        for (const m of t.matchAll(/([^\n.]{2,80}?) is closed on (\w+)/g)) { const name = m[1].replace(/^.*\b(Not planned today|Taken off this day):\s*/i, '').trim(), s = all.find(x => x.name === name || (x.name && name.endsWith(x.name)));
+          const dow = new Date(d.date + 'T12:00:00Z').toLocaleDateString('en-US', { weekday: 'short', timeZone: 'UTC' }).toLowerCase();
+          const h = s ? String(s.hours || '') : '', w = s && s.hours ? window.__kairouteHours(s.hours, d.date) : null;
+          const backed = s && (s.closed || new RegExp('closed[^.;]*' + dow.slice(0, 3), 'i').test(h) || (w && w.spans && !w.spans.length) || /closed (on )?(this|that) (day|date)|public holiday/i.test(h + ' ' + (s.why || '')));
+          out.push({ name, found: !!s, hours: h, backed: !!backed }); }
+        return out; }, i);
+      r.filter(x => !x.backed).forEach(x => unbacked.push(`day ${i + 1}: "${x.name} is closed" but ${x.found ? 'its hours (' + (x.hours || 'none known') + ') don\'t say so' : 'no such sight is in the day\'s guide'}`));
+      const chips = await H.p.$$eval('.ridechip', xs => xs.map((x, k) => ({ k, on: x.classList.contains('on'), key: x.dataset.ridekey, val: x.dataset.rideval })));
+      for (const c of chips.filter(c => !c.on).slice(0, 8)) { const back = chips.find(x => x.on && x.key === c.key);
+        await H.p.evaluate(c => { const x = [...document.querySelectorAll('.ridechip')].find(x => x.dataset.ridekey === c.key && x.dataset.rideval === c.val); if (x) x.click(); }, c); await H.p.waitForTimeout(1200); taps.n++;
+        const t = await H.p.evaluate(() => { document.querySelectorAll('#view details').forEach(d => { d.open = true; }); return document.querySelector('main').innerText; });
+        R.rules(t, { type: '', date: '' }).filter(f => /one real reason|reason adds up|missing data said as missing/.test(f.rule)).forEach(f => said.push(`day ${i + 1}, tapping ${c.val}: ${f.msg}`));
+        if (back) { await H.p.evaluate(c => { const x = [...document.querySelectorAll('.ridechip')].find(x => x.dataset.ridekey === c.key && x.dataset.rideval === c.val); if (x) x.click(); }, back); await H.p.waitForTimeout(800); } } }
+    check('S2', 'Every "closed on" the screen shows is backed by the sight\'s own hours for that date', !unbacked.length, unbacked.slice(0, 4).join('; '));
+    check('S2', `Every reason a ride choice brings up is the one real reason, with numbers that add up (${taps.n} taps)`, taps.n > 0 && !said.length, taps.n ? said.slice(0, 4).join('; ') : 'no ride choice to tap');
+    await H.ctx.close(); }
   // ---- B. phone set to other time zones
   for (const tz of on('B') ? ['Asia/Tokyo', 'Europe/Athens'] : []) {
     const B = await phone(browser, { timezoneId: tz }); await openApp(B.p, URL); const t = await steadyTexts(B.p);

@@ -88,8 +88,20 @@ function rules(text, info = {}) {
   { const flight = /to your flight|Flight \d|✈/.test(raw.slice(0, 400)), ship = /all aboard|🚢/.test(raw.slice(0, 400));
     if (flight && !ship && /before the ship|back at the ship|to the ship\b/i.test(raw)) add('S2', 'right words for the day', `a flight day says "${(raw.match(/[^\n.]{0,40}(before the ship|back at the ship|to the ship)[^\n.]{0,20}/i) || [''])[0].trim()}"`);
     if (ship && !flight && /before (your|the) flight/i.test(raw)) add('S2', 'right words for the day', 'a ship day talks about a flight'); }
+  // ---- S2: never state something untrue (Richard, Nov 22: "Lies create mistrust of the app"). A reason on screen names
+  // the ONE cause the app knows, with its numbers; when the data doesn't say, the screen says "not known" or "not confirmed".
+  { const lines = raw.split('\n');
+    lines.filter(l => /closed,? or (no longer|can't|doesn't)|is closed or |closed or can't be visited|isn't available on the plan's date|not available on (this|the) (date|day)/i.test(l))
+      .forEach(l => add('S2', 'one real reason', `"${l.trim().slice(0, 120)}" gives a guessed either/or reason instead of the one the app knows`));
+    lines.filter(l => /(no longer fits|doesn't fit|didn't fit|won't fit|can't fit)/i.test(l) && !/needs|over today's time|left|picks are over|more than|only \d|minutes? short|h \d+ min|\d+ min/i.test(l))
+      .forEach(l => add('S3', 'reason has its numbers', `"${l.trim().slice(0, 120)}" says it doesn't fit without the numbers`));
+    lines.forEach(l => { const m = /needs about (?:(\d+) h ?)?(?:(\d+) min)?[^.]*?only (?:(\d+) h ?)?(?:(\d+) min)? (?:is )?left/i.exec(l);
+      if (m) { const need = (+m[1] || 0) * 60 + (+m[2] || 0), left = (+m[3] || 0) * 60 + (+m[4] || 0); if (need && need <= left) add('S2', 'reason adds up', `"${l.trim().slice(0, 120)}": needs ${need} min but ${left} min are left`); } });
+    lines.forEach((l, k) => { const m = /no departure near (\d{1,2}:\d\d\s*[ap]m)[^.]*?next (?:known )?is about (\d{1,2}:\d\d\s*[ap]m)/i.exec(l); if (!m) return;
+      const near = lines.slice(Math.max(0, k - 6), k + 6).join(' '), ev = /runs about every (\d+) min/i.exec(near), gap = T(m[2]) - T(m[1]);
+      if (ev && gap > 2 * +ev[1] + 10 && !/missing|not known|isn't known|not in the timetable data|not confirmed/i.test(l)) add('S2', 'missing data said as missing', `a line that runs about every ${ev[1]} min is said to have no departure for ${gap} min: "${l.trim().slice(0, 100)}"`); }); }
   // ---- S3: readable
-  const foreign = raw.split('\n').filter(l => SCRIPT.test(l)); if (foreign.length) add('S3', 'English letters', `"${foreign[0].trim().slice(0, 70)}"`);
+  const RL = raw.split('\n'), foreign = RL.filter((l, k) => SCRIPT.test(l) && !/^[A-Za-z]+(-[A-Za-z]+)+\b/.test((RL[k + 1] || '').trim()) && !/USEFUL WORDS/i.test(RL.slice(Math.max(0, k - 30), k).join(' '))); // a phrase card shows the local words with how to say them if (foreign.length) add('S3', 'English letters', `"${foreign[0].trim().slice(0, 70)}"`);
   P.rides.forEach(r => r.choices.forEach(c => { if (c.min > Math.max(3 * r.min, r.min + 90)) add('S3', 'no absurd ride choice', `"${c.txt}" offered beside ${r.head}`); }));
   return out;
 }
