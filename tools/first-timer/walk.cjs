@@ -53,16 +53,18 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
   const done = p.locator('.coach button'); if (await done.first().isVisible().catch(() => false)) await tap(done.last(), 'coach last');
   await shot('home');
   await tap(p.getByRole('button', { name: /Plan a new trip/i }), 'Plan a new trip'); await shot('new-trip');
+  // Typed in the traveler's own words (no AI in the app): the second way the form offers.
+  if (t.text) { await tap(p.locator('[data-ts="mode"]').nth(1), 'Describe it mode'); await type('w-text', t.text); }
   // Enter the trip leg by leg, in the order the form asks.
-  for (let i = 0; i < t.legs.length; i++) { const l = t.legs[i];
+  for (let i = 0; i < (t.legs || []).length; i++) { const l = t.legs[i];
     if (i > 0 || l.k === 'cruise') await tap(p.locator(`[data-ts="${l.k === 'cruise' ? 'addcruise' : 'addstay'}"]`), 'add ' + l.k);
     if (l.k === 'stay') { await type(`ts-${i}-place`, l.place); await type(`ts-${i}-date`, l.date); await type(`ts-${i}-nights`, l.nights); await type(`ts-${i}-hotel`, l.hotel); }
     else { await type(`ts-${i}-board`, l.board); await type(`ts-${i}-ship`, l.ship); await type(`ts-${i}-date`, l.date); await type(`ts-${i}-aboard`, l.aboard); }
     await seg(i, 'inBy', l.inBy); await type(`ts-${i}-leaveAt`, l.leaveAt); await type(`ts-${i}-inAt`, l.inAt);
     for (let j = 0; j < (l.ports || []).length; j++) { const q = l.ports[j]; if (j > 0) await tap(p.locator(`[data-ts="addport"][data-i="${i}"]`), 'add port');
-      await type(`ts-${i}-p${j}-date`, q.date); await type(`ts-${i}-p${j}-place`, q.place); await type(`ts-${i}-p${j}-arrive`, q.arrive); await type(`ts-${i}-p${j}-aboard`, q.aboard); }
+      await type(`ts-${i}-p${j}-date`, q.date); await type(`ts-${i}-p${j}-place`, q.place); await type(`ts-${i}-p${j}-arrive`, q.arrive); await type(`ts-${i}-p${j}-aboard`, q.aboard); if (q.tender) await tap(p.locator(`[data-tsf="ts-${i}-p${j}-tender"]`), 'tender port'); }
     if (l.k === 'cruise') { await type(`ts-${i}-end`, l.end); await type(`ts-${i}-endDate`, l.endDate); await type(`ts-${i}-off`, l.off); }
-    if (i === t.legs.length - 1) { await seg(i, 'homeBy', l.homeBy); await type(`ts-${i}-homeAt`, l.homeAt); } }
+    if (i === (t.legs || []).length - 1) { await seg(i, 'homeBy', l.homeBy); await type(`ts-${i}-homeAt`, l.homeAt); } }
   const prev = p.locator('#tsPrev summary'); if (await prev.first().isVisible().catch(() => false)) await tap(prev, 'Your days preview');
   await shot('wizard-filled'); R.entry = { taps: R.taps, keys: R.keys };
   await tap(p.getByRole('button', { name: /Build my trip/i }), 'Build my trip');

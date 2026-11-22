@@ -1,16 +1,15 @@
 {
- "run": "ft1",
+ "run": "ft2",
  "trips": [
-  { "name": "city", "label": "Lisbon city stay",
-    "legs": [ { "k": "stay", "place": "Lisbon", "date": "2027-05-09", "nights": 3, "inBy": "flight", "inAt": "13:00", "homeBy": "flight", "homeAt": "11:30" } ] },
-  { "name": "multi", "label": "Vienna then Prague",
-    "legs": [ { "k": "stay", "place": "Vienna", "date": "2027-06-07", "nights": 2, "inBy": "flight", "inAt": "14:00" },
-              { "k": "stay", "place": "Prague", "date": "2027-06-09", "nights": 2, "inBy": "train", "leaveAt": "09:00", "inAt": "13:00", "homeBy": "flight", "homeAt": "16:00" } ] },
-  { "name": "cruise", "label": "Barcelona cruise",
-    "legs": [ { "k": "cruise", "board": "Barcelona", "ship": "", "date": "2027-05-15", "aboard": "17:00", "inBy": "flight", "inAt": "09:00",
-                "ports": [ { "date": "2027-05-16", "place": "Marseille", "arrive": "08:00", "aboard": "17:30" },
-                           { "date": "2027-05-18", "place": "Naples", "arrive": "07:00", "aboard": "18:30" },
-                           { "date": "2027-05-19", "place": "Civitavecchia", "arrive": "07:00", "aboard": "19:00" } ],
-                "end": "Barcelona", "endDate": "2027-05-21", "off": "08:00", "homeBy": "flight", "homeAt": "14:00" } ] }
+  { "name": "words", "label": "Trip typed in own words",
+    "text": "Flying into Rome on June 14 2027 at 10am, 3 nights at Hotel Artemide, then the train to Florence on June 17 for 2 nights, flying home from Florence June 19 at 3pm." },
+  { "name": "hotel", "label": "Rome with a named hotel, late flight in",
+    "legs": [ { "k": "stay", "place": "Rome", "date": "2027-06-14", "nights": 3, "hotel": "Hotel Artemide", "inBy": "flight", "inAt": "21:30", "homeBy": "flight", "homeAt": "07:00" } ] },
+  { "name": "tender", "label": "Bahamas cruise with a tender port",
+    "legs": [ { "k": "cruise", "board": "Fort Lauderdale", "date": "2027-01-11", "aboard": "15:30", "inBy": "flight", "inAt": "08:30",
+                "ports": [ { "date": "2027-01-12", "place": "Nassau", "arrive": "08:00", "aboard": "16:30" },
+                           { "date": "2027-01-13", "place": "Half Moon Cay", "arrive": "08:00", "aboard": "16:00", "tender": true },
+                           { "date": "2027-01-14", "place": "Grand Turk", "arrive": "09:00", "aboard": "17:00" } ],
+                "end": "Fort Lauderdale", "endDate": "2027-01-15", "off": "07:30", "homeBy": "flight", "homeAt": "13:00" } ] }
  ]
 }
