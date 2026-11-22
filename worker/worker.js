@@ -553,8 +553,8 @@ export default {
         const date = typeof pr.date === "string" && /^\d{4}-\d{2}-\d{2}$/.test(pr.date) ? pr.date : null;
         const key = "tr11:" + kind + ":" + [...pr.a, ...pr.b].map(n => n.toFixed(3)).join(",") + (date ? ":m" + +date.slice(5, 7) : "");
         // A full answer is kept 14 days (timetables change); one where a source was busy only 1 day. When the map answered
-        // after the reply went out, its full answer replaces the partial one. A partial answer met again after 10 minutes
-        // is looked up afresh in the background (once per 10 minutes), so a busy map server never hides a ferry for a day.
+        // after the reply went out, its full answer replaces the partial one. A partial answer met again after 2 minutes
+        // is looked up afresh in the background (once per 2 minutes), so a busy map server never hides a ferry for a day.
         const keep = x => env.USAGE.put(key, JSON.stringify({ opts: x.opts, partial: !!x.partial, ttMissed: x.ttMissed == null ? null : x.ttMissed, t: Date.now() }), { expirationTtl: (x.partial ? 1 : x.opts.length ? 14 : 7) * 86400 });
         // A fresh look replaces a kept partial answer when it knows more of the day: more hours of the timetable answered,
         // or more departures (Nov 21: an answer kept with 3 of 15 hours was never replaced, as both looked "partial").
@@ -579,8 +579,10 @@ export default {
           try { const r = await look(); if (!r.partial && r.opts.length) { ctx.waitUntil(keep(r).catch(() => {})); return withFerries({ opts: r.opts, partial: false }); } } catch (e) {}
         }
         if (hit) {
-          if (hit.partial && Date.now() - (hit.t || 0) > 600000 && !(await env.USAGE.get("lk:" + key))) {
-            ctx.waitUntil(env.USAGE.put("lk:" + key, "1", { expirationTtl: 600 }).then(look).then(r => better(r, hit) ? keep(r).then(() => r.late ? r.late.then(f => f && keep(f)) : null) : (r.late ? r.late.then(f => f && keep(f)) : null)).catch(() => {}));
+          // Every 2 minutes, not 10 (Nov 22 live probe: a way back to the ship known only until 9:53 am stayed a taxi
+          // while the page waited; the page now asks again after 2 minutes, so the fresh look must be there by then).
+          if (hit.partial && Date.now() - (hit.t || 0) > 120000 && !(await env.USAGE.get("lk:" + key))) {
+            ctx.waitUntil(env.USAGE.put("lk:" + key, "1", { expirationTtl: 120 }).then(look).then(r => better(r, hit) ? keep(r).then(() => r.late ? r.late.then(f => f && keep(f)) : null) : (r.late ? r.late.then(f => f && keep(f)) : null)).catch(() => {}));
           }
           return withFerries({ opts: hit.opts, partial: !!hit.partial });
         }
