@@ -12,6 +12,7 @@
 //   G. the app's own screen guard: quiet on a good day, warns on a day whose times disagree
 //   H. never state something untrue: every "closed" is backed by the sight's hours; every ride choice's notice gives
 //      the one real reason, with numbers that add up, and a timetable hole is said as missing data
+//   I. nothing waits forever: with no AI and no signal no spinner is still turning 20 s after a day opened
 // Usage: node tools/beta2/screen-gate.cjs [beta2-site/index.html] [older build .html ...]
 //   OLD=<file> also from env. Exit 1 on any S1/S2 failure. Prints plain words.
 const { chromium } = require('playwright'); const path = require('path'), http = require('http'), fs = require('fs');
@@ -19,7 +20,7 @@ const R = require('./screen-rules.cjs');
 const ROOT = path.join(__dirname, '..', '..');
 const B2 = path.resolve(process.argv[2] || path.join(ROOT, 'beta2-site', 'index.html'));
 const OLDS = process.argv.slice(3).concat((process.env.OLD || '').split(',').filter(Boolean)).map(f => path.resolve(f));
-const ONLY = process.env.ONLY || 'ABCDEFGH', on = k => ONLY.includes(k);
+const ONLY = process.env.ONLY || 'ABCDEFGHI', on = k => ONLY.includes(k);
 const results = []; const check = (sev, name, ok, why) => results.push({ sev, name, ok: !!ok, why: ok ? '' : why });
 // What a plan IS on screen: the LEAVE BY time, every row's times and name, every ride's chosen way. Notices that come
 // and go with the signal ("No internet", the boarding-pass reader) or the phone's own clock ("7 h ahead") are not the plan.
@@ -105,6 +106,18 @@ async function steadyTexts(p) { const a = await dayTexts(p); await p.waitForTime
     check('S2', 'Every "closed on" the screen shows is backed by the sight\'s own hours for that date', !unbacked.length, unbacked.slice(0, 4).join('; '));
     check('S2', `Every reason a ride choice brings up is the one real reason, with numbers that add up (${taps.n} taps)`, taps.n > 0 && !said.length, taps.n ? said.slice(0, 4).join('; ') : 'no ride choice to tap');
     await H.ctx.close(); }
+  // ---- I. Never "working on it" forever (the "I don't know" principle): with no AI and no signal, nothing on a day
+  // still shows a spinner ("Your guide is writing the story…", "Reading the travel guides…") 20 s after it opened. When
+  // a piece can't come, the screen says so ("not available offline", "not written yet").
+  if (on('I')) { const spin = [];
+    for (let i = 0; i < base.length; i++) { if (/sea/.test(base[i].type)) continue;
+      await A.p.evaluate(i => { window.__kairouteGo('day', i); window.__kairouteGo('plan'); document.querySelectorAll('#view details').forEach(d => { d.open = true; }); }, i);
+      await A.p.waitForTimeout(i < 3 ? 20000 : 6000); // the first days wait the full 20 s; later days reuse what already settled
+      const s = await A.p.evaluate(() => [...document.querySelectorAll('#view .spinner')].filter(x => x.offsetParent).map(x => (x.parentElement.innerText || '').trim().slice(0, 70)));
+      s.forEach(t => spin.push(`day ${i + 1}: "${t}"`)); }
+    const uniq = [...new Set(spin.map(x => x.replace(/^day \d+: /, '').replace(/ of [A-Z][\w ,'-]+…/, ' of <city>…')))];
+    check('S2', 'Nothing waits forever: with no AI and no signal every spinner gives way to "not available" within 20 s', !spin.length, `${spin.length} spinners still turning, kinds: ${uniq.slice(0, 5).join(' | ')}`);
+    await A.p.evaluate(() => window.__kairouteGo('plan')); }
   // ---- B. phone set to other time zones
   for (const tz of on('B') ? ['Asia/Tokyo', 'Europe/Athens'] : []) {
     const B = await phone(browser, { timezoneId: tz }); await openApp(B.p, URL); const t = await steadyTexts(B.p);
