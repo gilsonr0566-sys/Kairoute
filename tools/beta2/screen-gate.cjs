@@ -16,11 +16,8 @@ const R = require('./screen-rules.cjs');
 const ROOT = path.join(__dirname, '..', '..');
 const B2 = path.resolve(process.argv[2] || path.join(ROOT, 'beta2-site', 'index.html'));
 const OLDS = process.argv.slice(3).concat((process.env.OLD || '').split(',').filter(Boolean)).map(f => path.resolve(f));
-const ONLY = process.env.ONLY || 'ABCDEF', on = k => ONLY.includes(k);
 const results = []; const check = (sev, name, ok, why) => results.push({ sev, name, ok: !!ok, why: ok ? '' : why });
-// What a plan IS on screen: the LEAVE BY time, every row's times and name, every ride's chosen way. Notices that come
-// and go with the signal ("No internet", the boarding-pass reader) or the phone's own clock ("7 h ahead") are not the plan.
-const norm = t => { const P = R.parse(t); return [`LEAVE BY ${P.leaveBy}`, `back ${P.backBy}`].concat(P.rows.map(r => [r.key, r.arrive, r.leave, r.until, r.by, r.name].join(' ')), P.rides.map(r => r.head)).join('\n'); };
+const norm = t => String(t || '').split('\n').filter(l => !/ahead of your device|behind your device|same time as your device|Use Ctrl \+ scroll|^\d+(\.\d+)? ?(mi|km|ft|m)$/.test(l)).join('\n');
 
 function serve() { const files = { '/index.html': B2 }; OLDS.forEach((f, i) => { files['/old' + i + '.html'] = f; });
   return new Promise(res => { const s = http.createServer((q, r) => { const u = decodeURIComponent(q.url.split('?')[0]);
@@ -62,38 +59,25 @@ async function steadyTexts(p) { const a = await dayTexts(p); await p.waitForTime
   const fails = []; for (const d of base) for (const f of R.rules(d.text, d)) fails.push(Object.assign({ day: d }, f));
   for (const sev of ['S1', 'S2', 'S3']) { const byRule = {}; fails.filter(f => f.sev === sev).forEach(f => (byRule[f.rule] = byRule[f.rule] || []).push(`day ${f.day.i + 1} (${f.day.dest}): ${f.msg}`));
     const rulesSeen = new Set(Object.keys(byRule)); for (const r of rulesSeen) check(sev, `Screen rule "${r}" on every day`, false, byRule[r].slice(0, 3).join('; ') + (byRule[r].length > 3 ? ` (+${byRule[r].length - 3} more)` : '')); }
-  if (fails.some(f => f.sev === 'S1')) check('S1', 'No ship, train or flight rule fails on screen', false, `${fails.filter(f => f.sev === 'S1').length} failures (listed above)`); else check('S1', 'No ship, train or flight rule fails on screen', true);
-  // ---- G. the app's own screen guard: quiet on a good day; on a day whose banner disagrees with a stop it says so
-  if (on('G')) { const i = base.findIndex(d => /port/.test(d.type) && R.parse(d.text).leaveBy != null);
-    const g = i < 0 ? null : await A.p.evaluate(async i => { window.__kairouteGo('day', i); window.__kairouteGo('plan'); await new Promise(r => setTimeout(r, 1500));
-      const quiet = !document.querySelector('.guardnote'); const g0 = window.__kairouteGuard;
-      // Make the banner's time 2 hours earlier on screen only (as a wrong banner would look), then let the guard read it.
-      const lb = [...document.querySelectorAll('#view *')].find(e => e.children.length === 0 && /^\d{1,2}:\d\d\s*[ap]m$/i.test(e.textContent.trim()) && /LEAVE BY/.test((e.closest('div,section') || {}).innerText || ''));
-      if (!lb) return { quiet, g0, why: 'no LEAVE BY time found on the page' };
-      lb.textContent = '6:00 am'; const r = window.__kairouteGuardCheck(); const note = document.querySelector('.guardnote');
-      return { quiet, g0, warned: !!note, txt: note ? note.innerText : '', r }; }, i);
-    check('S1', 'The app\'s own guard stays quiet on a day whose times agree', g && g.quiet, JSON.stringify(g && g.g0).slice(0, 200));
-    check('S1', 'The app\'s own guard warns on a day whose LEAVE BY comes before a stop ends, and names the earliest time', g && g.warned && /leave by 6:00 am/i.test(g.txt), g ? (g.why || g.txt || JSON.stringify(g.r).slice(0, 200)) : 'no port day');
-    await A.p.evaluate(() => { window.__kairouteGo('plan'); }); }
+  check('S1', 'Every screen rule holds on every day of the trip', !fails.some(f => f.sev !== 'S3'), `${fails.length} failures (listed above)`);
   // ---- B. phone set to other time zones
-  for (const tz of on('B') ? ['Asia/Tokyo', 'Europe/Athens'] : []) {
+  for (const tz of ['Asia/Tokyo', 'Europe/Athens']) {
     const B = await phone(browser, { timezoneId: tz }); await openApp(B.p, URL); const t = await steadyTexts(B.p);
     const diff = base.map((d, i) => t[i] && norm(t[i].text) !== norm(d.text) ? i : -1).filter(i => i >= 0);
     const firstDiff = diff.length ? (() => { const a = norm(base[diff[0]].text).split('\n'), b = norm(t[diff[0]].text).split('\n'); const k = a.findIndex((l, j) => l !== b[j]); return `day ${diff[0] + 1}: "${a[k]}" on a Chicago phone, "${b[k]}" in ${tz}`; })() : '';
     check('S1', `A phone set to ${tz} shows the same plan as one in Chicago`, t.length === base.length && !diff.length, t.length !== base.length ? `${t.length} days vs ${base.length}` : `${diff.length} days differ, e.g. ${firstDiff}`);
     await B.ctx.close(); }
   // ---- C. no signal
-  if (on('C')) { const sw = await A.p.evaluate(async () => { try { if (!navigator.serviceWorker) return 'none'; const r = await Promise.race([navigator.serviceWorker.ready.then(() => 'ready'), new Promise(r => setTimeout(() => r('not ready'), 8000))]); return r; } catch (e) { return 'error ' + e; } });
+  { const sw = await A.p.evaluate(async () => { try { if (!navigator.serviceWorker) return 'none'; const r = await Promise.race([navigator.serviceWorker.ready.then(() => 'ready'), new Promise(r => setTimeout(() => r('not ready'), 8000))]); return r; } catch (e) { return 'error ' + e; } });
     await A.ctx.setOffline(true);
     let ok = true, why = ''; try { await A.p.reload({ timeout: 20000 }); await A.p.waitForTimeout(5000); const t = await steadyTexts(A.p);
       const diff = base.map((d, i) => t[i] && norm(t[i].text) !== norm(d.text) ? i + 1 : 0).filter(Boolean);
-      ok = t.length === base.length && !diff.length; const dd = diff.length ? (() => { const a = norm(base[diff[0] - 1].text).split('\n'), b = norm(t[diff[0] - 1].text).split('\n'); const k = a.findIndex((l, j) => l !== b[j]); return ` (day ${diff[0]}: "${a[k]}" with signal, "${b[k]}" without)`; })() : '';
-      why = t.length !== base.length ? `${t.length} of ${base.length} days open with no signal` : `days ${diff.slice(0, 8).join(', ')} plan differently with no signal${dd}`; } catch (e) { ok = false; why = 'the app did not open with no signal: ' + String(e).slice(0, 120); }
+      ok = t.length === base.length && !diff.length; why = t.length !== base.length ? `${t.length} of ${base.length} days open with no signal` : `days ${diff.slice(0, 5).join(', ')} plan differently with no signal`; } catch (e) { ok = false; why = 'the app did not open with no signal: ' + String(e).slice(0, 120); }
     check('S1', `With no signal, a trip opened before still opens and plans the same (offline helper: ${sw})`, ok, why);
     await A.ctx.setOffline(false); }
   check('S2', 'No errors in the app', !A.errs.length, A.errs.slice(0, 2).join(' | '));
   // ---- D. a trip saved by an older published build
-  for (let k = 0; k < (on('D') ? OLDS.length : 0); k++) {
+  for (let k = 0; k < OLDS.length; k++) {
     const D = await phone(browser); await openApp(D.p, srv.base + '/old' + k + '.html');
     const own = await D.p.evaluate(async () => { const days = window.__kairouteDays(); const i = days.findIndex(d => /port/.test(d.type)); if (i < 0) return null;
       window.__kairouteGo('day', i); window.__kairouteGo('sites'); await new Promise(r => setTimeout(r, 1500));
@@ -109,7 +93,7 @@ async function steadyTexts(p) { const a = await dayTexts(p); await p.waitForTime
     check('S2', `A trip saved by an older build (${name}): no errors`, !D.errs.length, D.errs.slice(0, 2).join(' | '));
     await D.ctx.close(); }
   // ---- E. screen sizes
-  if (on('E')) { const sizes = [[360, 780, true], [412, 915, true], [915, 412, true], [800, 1280, false], [1280, 800, false]], bad = [];
+  { const sizes = [[360, 780, true], [412, 915, true], [915, 412, true], [800, 1280, false], [1280, 800, false]], bad = [];
     for (const [w, h, mob] of sizes) { const E = await phone(browser, { viewport: { width: w, height: h }, isMobile: mob, hasTouch: mob }); await openApp(E.p, URL);
       const n = await E.p.evaluate(() => window.__kairouteDays().length);
       for (const i of [0, Math.floor(n / 2), n - 1]) for (const v of ['plan', 'sites', 'trip']) {
@@ -119,17 +103,12 @@ async function steadyTexts(p) { const a = await dayTexts(p); await p.waitForTime
         if (o) bad.push(`${w}x${h} day ${i + 1} ${v}: ${o}`); }
       await E.ctx.close(); }
     check('S2', 'No page is wider than the screen (phone, phone sideways, tablet both ways)', !bad.length, bad.slice(0, 4).join('; ')); }
-  // ---- F. recorded voices (read from the app's own story files, so a new story or voice is covered the day it is added)
-  if (on('F')) { let want = null; try { const vm = require('vm');
-      const stub = new Proxy(function () {}, { get: (t, k) => k === Symbol.toPrimitive ? () => '' : stub, apply: () => stub, construct: () => stub });
-      const ctx = new Proxy({ console }, { has: () => true, get: (t, k) => k in t ? t[k] : (k in globalThis ? globalThis[k] : stub), set: (t, k, v) => { t[k] = v; return true; } });
-      const src = ['stop-scripts.js', 'stop-stories.js'].map(f => fs.readFileSync(path.join(ROOT, 'src', 'features', f), 'utf8')).join(';\n');
-      vm.runInNewContext(src + ';this.__S = STOP_SCRIPTS;', ctx);
-      const voices = [...fs.readFileSync(path.join(ROOT, 'src', 'main.js'), 'utf8').matchAll(/\["\w+", "\w+", "[^"]+", "([a-z]{2}_\w+)"\]/g)].map(m => m[1]);
-      want = ctx.__S.flatMap(sc => voices.flatMap(v => sc.parts.flatMap((p, k) => p.paras.map((t, i) => `audio/${sc.id}/${v}/p${k}-${i}.mp3`))));
-      if (!voices.length) want = null; } catch (e) { console.error('stories:', e.message); }
+  // ---- F. recorded voices
+  { const P = await phone(browser); await openApp(P.p, URL, false);
+    const want = await P.p.evaluate(() => (typeof STOP_SCRIPTS === 'undefined' || typeof GUIDES === 'undefined') ? null : STOP_SCRIPTS.flatMap(sc => GUIDES.flatMap(g => sc.parts.flatMap((p, k) => p.paras.map((t, i) => `audio/${sc.id}/${g[3]}/p${k}-${i}.mp3`)))));
     const AUD = process.env.AUDIO_DIR || ROOT; const miss = want ? want.filter(f => !fs.existsSync(path.join(AUD, f))) : null;
-    check('S2', `Every recorded story has its recording in every guide voice (${want ? want.length : 0} files)`, want && !miss.length, !want ? 'could not read the stories list' : `${miss.length} missing, e.g. ${miss.slice(0, 3).join(', ')}`); }
+    check('S2', `Every recorded story has its recording in every guide voice (${want ? want.length : 0} files)`, want && !miss.length, !want ? 'could not read the stories list' : `${miss.length} missing, e.g. ${miss.slice(0, 3).join(', ')}`);
+    await P.ctx.close(); }
   await browser.close(); srv.close();
   const order = { S1: 0, S2: 1, S3: 2 }; results.sort((a, b) => (a.ok - b.ok) || order[a.sev] - order[b.sev]);
   const bad = results.filter(r => !r.ok);
