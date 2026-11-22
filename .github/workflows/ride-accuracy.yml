@@ -17,6 +17,8 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
+      - name: The test trips (as the release gate makes them)
+        run: mkdir -p tools/beta2/snapshots && cp tools/beta2/corpus/*.json tools/beta2/snapshots/ && node tools/beta2/snapshot.cjs && node tools/beta2/noai-trips.cjs
       - name: The live helper's ride code (main)
         run: git fetch -q origin main && mkdir -p /tmp/live && git show origin/main:worker/transit.js > /tmp/live/transit.js
       - name: Measure (live helper code)
