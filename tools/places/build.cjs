@@ -9,7 +9,7 @@
 // No AI, no paid service. Runs on GitHub (beta2-live.yml) where the internet is open. Usage:
 //   node tools/places/build.cjs [snapshots dir] [targets.json]
 // Each file is printed as PLACES lines (gzip + base64) so it can be read back from the run's log.
-const fs = require('fs'), path = require('path'), zlib = require('zlib'), { merge } = require('./merge.cjs');
+const fs = require('fs'), path = require('path'), zlib = require('zlib'), { merge } = require('./merge.cjs'), { placeOf } = require('./where.cjs');
 const SNAP = process.argv[2] || path.join(__dirname, '..', 'beta2', 'snapshots');
 const TARGETS = process.argv[3] || path.join(__dirname, 'targets.json');
 const OUT = path.join(__dirname, 'data'); fs.mkdirSync(OUT, { recursive: true });
@@ -144,6 +144,23 @@ async function piersNear(points) {
   return [...out.values()].sort((a, b) => a.osm.localeCompare(b.osm));
 }
 
+// The ferry routes the map draws around a place (OpenStreetMap route=ferry ways), each by its two ends: which pier sails
+// to which island. A boat to an island leaves from where a route to it starts (Nov 22 outside test: the boat to an island
+// off an old town was planned from the cruise pier 4 km away; its boats sail only from the old harbor).
+async function ferryLinksNear(points) {
+  const out = new Map();
+  for (let i = 0; i < points.length; i += 12) {
+    const part = points.slice(i, i + 12);
+    const els = await overpass(`[out:json][timeout:120];(${part.map(p => `way(around:${Math.round(p.km * 1000)},${p.lat},${p.lng})["route"="ferry"];`).join('')});out geom tags;`);
+    for (const el of els || []) { const g = el.geometry || []; if (g.length < 2) continue;
+      const a = { lat: +g[0].lat.toFixed(5), lng: +g[0].lon.toFixed(5) }, b = { lat: +g[g.length - 1].lat.toFixed(5), lng: +g[g.length - 1].lon.toFixed(5) };
+      if (hav(a, b) < 0.2 || hav(a, b) > 80) continue; // a day's boat, not a ship's line across the sea
+      const t = el.tags || {}, k = 'way/' + el.id; if (!out.has(k)) out.set(k, { name: t['name:en'] || t.name || '', a, b, osm: k }); }
+    await sleep(1500);
+  }
+  return [...out.values()].sort((a, b) => a.osm.localeCompare(b.osm));
+}
+
 // Cable cars, gondolas and funiculars around a place, each with its two ends: a landing below a town (a tender port
 // under cliffs) is reached by one, and the engine counts its queue and ride as fixed steps of the day.
 async function liftsNear(centre, km) {
@@ -198,9 +215,16 @@ async function guideSights(title, centre) {
   const out = listings(text).filter(l => l.kind === 'see' && isFinite(l.lat) && isFinite(l.lng) && hav(centre, l) <= 12)
     .map(l => ({ name: l.name, lat: l.lat, lng: l.lng, wikidata: /^Q\d+$/.test(l.wikidata) ? l.wikidata : '', note: l.content || '' }));
   const qs = [...new Set(out.map(x => x.wikidata).filter(Boolean))];
-  if (qs.length) { const e = await entities(qs), lp = new Set(); Object.values(e).forEach(x => ids(x, 'P361').forEach(q => lp.add(q))); const lpe = lp.size ? await entities([...lp]) : {};
+  if (qs.length) { const e = await entities(qs), lp = new Set(); Object.values(e).forEach(x => ['P361', 'P276'].forEach(P => ids(x, P).forEach(q => lp.add(q)))); const lpe = lp.size ? await entities([...lp]) : {};
+    // The map's own point for each sight: the OpenStreetMap element linked to the same Wikidata item (see where.cjs).
+    const mapAt = new Map();
+    for (const el of await overpass(`[out:json][timeout:120];nwr["wikidata"~"^(${qs.join('|')})$"](around:15000,${centre.lat},${centre.lng});out center tags;`)) {
+      const q = el.tags && el.tags.wikidata, p = pos(el); if (q && p && !mapAt.has(q)) mapAt.set(q, p); }
     for (const x of out) { const k = e[x.wikidata]; if (!k) continue; x.editions = Object.keys(k.sitelinks || {}).length;
-      x.unesco = ids(k, 'P1435').includes(WHS) || ids(k, 'P361').some(q => ids(lpe[q], 'P1435').includes(WHS)); if (shut(k)) x.closedForGood = true; const w = officialWeb(k); if (w) x.web = w; } }
+      x.unesco = ids(k, 'P1435').includes(WHS) || ids(k, 'P361').some(q => ids(lpe[q], 'P1435').includes(WHS)); if (shut(k)) x.closedForGood = true; const w = officialWeb(k); if (w) x.web = w;
+      const at = placeOf(x, coord(k), mapAt.get(x.wikidata), ['P361', 'P276'].flatMap(P => ids(k, P)).map(q => coord(lpe[q])));
+      if (at) { if (at.moved) console.log(`   ${x.name}: placed by ${at.from}, ${at.moved} km from the guide's point`); if (at.posDoubt) console.log(`   ${x.name}: position not sure`);
+        x.lat = at.lat; x.lng = at.lng; if (at.from !== 'listing') x.posFrom = at.from; if (at.posDoubt) x.posDoubt = true; } } }
   return out;
 }
 
@@ -408,6 +432,7 @@ async function buildPlace(t) {
         const pts = [{ lat: centre.lat, lng: centre.lng, km: 8 }];
         for (const f of (t.farther || []).filter(x => isFinite(x.lat))) if (!pts.some(p => hav(p, f) < 3)) pts.push({ lat: f.lat, lng: f.lng, km: 5 });
         fresh.piers = await piersNear(pts); console.log(`   ${fresh.piers.length} ferry piers (around the place and ${pts.length - 1} towns a day away)`);
+        fresh.ferryLinks = await ferryLinksNear(pts); console.log(`   ${fresh.ferryLinks.length} ferry routes between piers`);
       }
       // Road times by car between the place, its port and its trips out, from the free OSRM router on OpenStreetMap's roads
       // (Nov 19: two trips out across a gulf were timed by the straight line, 79 min for a road of 2 h 20).

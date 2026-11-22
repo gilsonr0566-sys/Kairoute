@@ -37,6 +37,8 @@
       // a ferry to an island was drawn from a cathedral, across the streets).
       const piers = (P.ports || []).filter(x => !x.cruise && /ferry|pier/i.test(String(x.kind || ""))).concat(P.piers || []).filter(x => isFinite(x.lat) && isFinite(x.lng));
       if (piers.length) b.piers = (b.piers || []).concat(piers.map(x => ({ name: E.latin(x.name) || "the ferry pier", lat: x.lat, lng: x.lng })));
+      // The ferry routes the map draws between piers (which pier sails to which island).
+      for (const l of P.ferryLinks || []) if (l && l.a && l.b && isFinite(l.a.lat) && isFinite(l.b.lat)) (b.ferryLinks = b.ferryLinks || []).push({ name: E.latin(l.name || ""), a: { lat: l.a.lat, lng: l.a.lng, name: E.latin(l.a.name || "") }, b: { lat: l.b.lat, lng: l.b.lng, name: E.latin(l.b.name || "") } });
       for (const s of city.sites || []) {
         const f = P.sites && P.sites[s.id]; if (!f) continue;
         if (f.editions) s.editions = f.editions;

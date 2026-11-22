@@ -943,6 +943,22 @@ ok(E.readable('Café Ñandú') && E.readable("Joe's Bar & Grill") && !E.readable
     const tx = (vr.options || [vr]).find(o => o.kind === 'taxi'), tp = (plain.options || [plain]).find(o => o.kind === 'taxi');
     ok(tx && tp && tx.min > tp.min + 10 && /Walk to the road/.test(tx.how), `a taxi from a stop far from the road starts at the road, the walk to it counted (got ${tx && tx.how} ${tx && tx.min} vs ${tp && tp.min})`);
     void road; }
+  // Nov 22 outside test: the boat to an island off an old town was planned from the cruise pier 4 km away ("Off the ship",
+  // then "Boat 35 min"). The map's ferry routes say which pier sails to the island: the boat leaves from there, with a
+  // ride to it first; with no route known, the nearest pier as before.
+  { const ship = { lat: 42.6578, lng: 18.0864 }, isle = { lat: 42.6230, lng: 18.1210, acrossWater: 'Isle' };
+    const piers = [{ name: 'Cruise pier', lat: 42.6578, lng: 18.0864 }, { name: 'Old harbour', lat: 42.6412, lng: 18.1118 }, { name: 'Isle pier', lat: 42.6256, lng: 18.1232 }];
+    const withRoute = Object.assign(piers.slice(), { links: [{ name: 'Old harbour - Isle', a: { lat: 42.6413, lng: 18.1120 }, b: { lat: 42.6255, lng: 18.1231 } }] });
+    const parts = e => (e.parts || ((e.options || []).find(o => o.kind === 'ferry') || {}).parts || []);
+    const boatOf = e => parts(e).find(x => x.boat) || {};
+    const r = E.makeTravel({ walk: 'medium' }, {}, null, null, null, withRoute).estimate(ship, isle), b = boatOf(r), first = parts(r)[0] || {};
+    ok(r.mode === 'boat' && b.from === 'Old harbour' && !first.boat && /to the ferry at Old harbour/.test(first.how || ''), `the boat to an island leaves from the pier its mapped route starts at, with a ride there first (got ${JSON.stringify(parts(r).map(x => x.boat ? 'boat from ' + x.from : x.how))})`);
+    const back = E.makeTravel({ walk: 'medium' }, {}, null, null, null, withRoute).estimate(isle, ship), bb = boatOf(back);
+    ok(bb.at === 'Old harbour', `and the boat back lands there too (got ${JSON.stringify(parts(back).map(x => x.boat ? 'boat to ' + x.at : x.how))})`);
+    const none = E.makeTravel({ walk: 'medium' }, {}, null, null, null, piers.slice()).estimate(ship, isle);
+    const far = Object.assign(piers.slice(), { links: [{ name: 'Elsewhere', a: { lat: 42.70, lng: 18.00 }, b: { lat: 42.72, lng: 17.98 } }] });
+    const rf = E.makeTravel({ walk: 'medium' }, {}, null, null, null, far).estimate(ship, isle);
+    ok(JSON.stringify(parts(rf)) === JSON.stringify(parts(none)), 'a route that does not reach the island changes nothing'); }
   // The app's map check (water-check.js), its rule apart from the fetching: an island no start stands on, with no way on
   // foot without a ferry, is across the water; a bridge (a way on foot) keeps it on land; the mainland is never across.
   { const fs = require('fs'), src = fs.readFileSync(require('path').join(__dirname, '../../src/features/water-check.js'), 'utf8');

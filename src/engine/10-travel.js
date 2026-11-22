@@ -62,7 +62,8 @@
   E.publicWins = (pub, roadMin) => !(roadMin < pub - 40 && roadMin < pub * 0.6);
   // Every pier a boat may leave from: the ferry piers mapped for each place, and the port of a day the ship docks or sails
   // (a ship's port is on the water). [{ name, lat, lng }]
-  E.piersOf = bucket => (bucket.piers || []).filter(p => p && isFinite(p.lat) && isFinite(p.lng)).concat((bucket.days || [])
+  E.piersOf = bucket => Object.assign(E.piersOnly(bucket), { links: (bucket.ferryLinks || []).slice() });
+  E.piersOnly = bucket => (bucket.piers || []).filter(p => p && isFinite(p.lat) && isFinite(p.lng)).concat((bucket.days || [])
     .filter(d => d && d.point && isFinite(d.point.lat) && !d.point.unknown && (d.type === "port" || d.type === "embark" || ((d.type === "arrival" || d.type === "departure") && (d.mode === "ship" || d.mode === "ferry"))))
     .map(d => ({ name: d.point.name || "the port", lat: d.point.lat, lng: d.point.lng })));
   // A pier's name or a note in plain words, every word for a harbor read as "port" (harbour, porto, puerto, hafen, limani).
@@ -165,6 +166,8 @@
     // names) to the pier nearest the boat's place, and the way to or from each pier is a ride of its own. Returns
     // { parts, min, from, to } or null when both ends are at the water already or no pier is known near them.
     const pierList = (piers || []).filter(p => p && isFinite(p.lat)).map(p => Object.assign({}, p, { name: String(p.name || "the pier").split(/\s[-–]\s|,/)[0].trim() })); // its own name, not the stops listed after it
+    // The ferry routes the map draws, each by its two ends ({ a, b, name }): which pier sails to which.
+    const links = ((piers && piers.links) || []).filter(l => l && l.a && l.b && isFinite(l.a.lat) && isFinite(l.b.lat));
     const nearestPier = (p, km) => { let best = null, bd = Infinity; for (const q of pierList) { const d = E.hav(p, q); if (d < bd || (d === bd && best && String(q.name) < String(best.name))) { best = q; bd = d; } } return best && bd <= km ? { q: best, d: bd } : null; };
     const plainPt = p => ({ lat: p.lat, lng: p.lng });
     const groundOf = (g, pierName, toPier, to) => Object.assign({ mode: g.mode, kind: g.kind, how: g.how + (toPier ? " to the ferry at " : " from the ferry at ") + pierName, min: g.min, km: g.km || 0, pierName, steps: g.steps || [] },
@@ -175,7 +178,16 @@
       // map's "Old port"; Nov 20 review: the boat to an island left from the ship's dock, 2 km from the harbor the guide named).
       const said = E.pierWords(boatEnd.travelNote), base = n => E.pierWords(String(n || "").replace(/\s*\(.*?\)\s*/g, " ").split(/\s[-–,]\s|,/)[0]);
       const named = pierList.filter(q => base(q.name).length >= 5 && (" " + said + " ").includes(" " + base(q.name) + " ") && E.hav(land, q) <= E.PIER_KM).sort((x, y) => E.hav(land, x) - E.hav(land, y))[0];
-      const lp = named ? { q: named, d: E.hav(land, named) } : nearestPier(land, E.PIER_KM), bp = nearestPier(boatEnd, E.PIER_ISLAND);
+      const bp = nearestPier(boatEnd, E.PIER_ISLAND);
+      // The boats that sail to the place, as the map draws them (OpenStreetMap's ferry routes): the boat leaves from
+      // where a route to it starts on this side, the one nearest the traveler, never from whatever pier is nearest
+      // (Nov 22 outside test: the boat to an island off an old town left from the cruise pier 4 km away; its boats sail
+      // only from the old harbor).
+      const isleAt = p => E.hav(p, boatEnd) <= 1 || (bp && E.hav(p, bp.q) <= 0.5);
+      const routeEnd = named ? null : links.flatMap(l => [[l.a, l.b], [l.b, l.a]]).filter(([i, o]) => isleAt(i) && !isleAt(o) && E.hav(o, land) <= E.PIER_KM)
+        .map(([, o]) => o).sort((x, y) => E.hav(land, x) - E.hav(land, y) || x.lat - y.lat)[0];
+      const routed = routeEnd ? (() => { const n = nearestPier(routeEnd, 0.3), q = n ? n.q : { name: routeEnd.name || "the ferry pier", lat: routeEnd.lat, lng: routeEnd.lng }; return { q, d: E.hav(land, q) }; })() : null;
+      const lp = named ? { q: named, d: E.hav(land, named) } : routed || nearestPier(land, E.PIER_KM);
       const useL = lp && lp.d >= E.PIER_AT, useB = bp && bp.d >= E.PIER_AT && (!lp || E.hav(lp.q, bp.q) > 1);
       if (!useL && !useB) return null;
       const L = useL ? { lat: lp.q.lat, lng: lp.q.lng } : null, B = useB ? { lat: bp.q.lat, lng: bp.q.lng } : null, out = boatEnd === b;
