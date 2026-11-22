@@ -103,6 +103,11 @@ function rules(text, info = {}) {
     lines.forEach((l, k) => { const m = /no departure near (\d{1,2}:\d\d\s*[ap]m)[^.]*?next (?:known )?is about (\d{1,2}:\d\d\s*[ap]m)/i.exec(l); if (!m) return;
       const near = lines.slice(Math.max(0, k - 6), k + 6).join(' '), ev = /runs about every (\d+) min/i.exec(near), gap = T(m[2]) - T(m[1]);
       if (ev && gap > 2 * +ev[1] + 10 && !/missing|not known|isn't known|not in the timetable data|not confirmed/i.test(l)) add('S2', 'missing data said as missing', `a line that runs about every ${ev[1]} min is said to have no departure for ${gap} min: "${l.trim().slice(0, 100)}"`); }); }
+  // A list in a sentence never has empty names ("Opening hours not confirmed for , , , ,").
+  raw.split('\n').filter(l => /\b(for|of|are|:)\s*,\s*[,.]|,\s*,\s*,/.test(l) && /[A-Za-z]/.test(l)).forEach(l => add('S2', 'no empty names', `"${l.trim().slice(0, 100)}"`));
+  // The parts of a visit ("1. Arrival 11:02", "2. The climb 11:03", ...) are spread over the visit, not a minute apart.
+  stops.forEach(st => { const ts = st.notes.map(l => /(\d{1,2}:\d\d\s*[ap]m)$/i.exec(l)).filter(Boolean).map(m => T(m[1])), want = dur(st.meta);
+    if (ts.length >= 3 && want >= 30 && Math.max(...ts) - Math.min(...ts) < want / 4) add('S2', 'visit parts spread over the visit', `${st.name}: ${ts.length} parts timed ${clock(Math.min(...ts))} to ${clock(Math.max(...ts))} in a ${want} min visit`); });
   // ---- S3: readable
   const RL = raw.split('\n'), foreign = RL.filter((l, k) => SCRIPT.test(l) && !/^[A-Za-z]+(-[A-Za-z]+)+\b/.test((RL[k + 1] || '').trim()) && !/USEFUL WORDS/i.test(RL.slice(Math.max(0, k - 30), k).join(' '))); /* a phrase card shows the local words with how to say them */ if (foreign.length) add('S3', 'English letters', `"${foreign[0].trim().slice(0, 70)}"`);
   P.rides.forEach(r => r.choices.forEach(c => { if (c.min > Math.max(3 * r.min, r.min + 90)) add('S3', 'no absurd ride choice', `"${c.txt}" offered beside ${r.head}`); }));
