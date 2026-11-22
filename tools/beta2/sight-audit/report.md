@@ -1,3 +1,36 @@
+## Vienna, Austria
+No dump.
+
+## Dubrovnik, Croatia
+No dump.
+
+## Reykjavik, Iceland
+No dump.
+
+## Messina
+No dump.
+## Lisbon, Portugal
+No dump.
+
+## Juneau, Alaska
+No dump.
+
+## Venice, Italy
+No dump.
+
+## Naples
+No dump.
+## Edinburgh, Scotland
+No dump.
+
+## Grand Turk, Turks and Caicos
+No dump.
+
+## Athens
+No dump.
+
+## Madrid
+No dump.
 ## Le Havre (Paris), France (Paris (from Le Havre, France), guide from sources)
 - POS 1st arrondissement of Paris: app 48.85995,2.34206 is 0.76 km from the map's 1st Arrondissement (node/253456008, 48.86461,2.33440); Wikidata 0.76 km from the map
 - POS Versailles [day trip]: app 48.80440,2.12316 is 0.28 km from the map's Versailles (node/26692491, 48.80354,2.12669); Wikidata 0.63 km from the map
