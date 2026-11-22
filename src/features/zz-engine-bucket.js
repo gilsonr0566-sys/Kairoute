@@ -97,7 +97,7 @@ function engineBucket(withOld) {
       selected: Array.isArray(d.selected) ? (!d.ownList && appSeeded(d) ? (d.mine || []).slice() : d.selected.slice()) : wishIds(d, city),
       mine: Array.isArray(d.selected) ? (d.mine || []).slice() : [...new Set((d.mine || []).concat(wishIds(d, city)))], order: Array.isArray(d.order) ? d.order.slice() : null, mealAt: d.mealAt && Object.keys(d.mealAt).length ? Object.assign({}, d.mealAt) : null,
       // The traveler's own list: they ticked or unticked something here (the app's seeding no longer stands).
-      own: !!d.ownList || clearedByYou(d) || (Array.isArray(d.selected) && typeof d.seedSig === "string" && !appSeeded(d)),
+      own: listIsOwn(d),
       cleared: clearedByYou(d), rain: !!d.rain, alongWay: d.alongWay !== false, fillTime: d.fillTime !== false, skipBonus: (d.skipBonus || []).slice(),
       booked: bookedMeals(d, city || {}).map(m => ({ label: m.label, from: m.from, len: m.len, place: pt(m.node) })),
       // The traveler's say on each meal (Change lunch: the place, a time, skip). The engine reads it with the booked tables

@@ -97,7 +97,9 @@ if (typeof window !== "undefined" && window.ENGINE2 && window.KEngine) (function
     let synced = false;
     trip.days.forEach((d, i) => {
       const ep = plans[i], fresh = !Array.isArray(d.selected);
-      if (!ep || ep.error || !Array.isArray(ep.items) || d.ready || d.ownList || (!fresh && !appSeeded(d))) return;
+      // An empty list with no seeding mark is the app's too (nothing of the traveler's to lose); a non-empty one without
+      // the mark (an older trip's picks) is left as it is.
+      if (!ep || ep.error || !Array.isArray(ep.items) || d.ready || listIsOwn(d) || (!fresh && !appSeeded(d) && d.selected.length)) return;
       const ids = ep.items.filter(x => x.t === "stop" && x.id != null).map(x => x.id);
       // A day not seeded yet is seeded here, from the engine's plan (the old planner's background seeding then has
       // nothing left to do): the sights the traveler named become theirs, as seeding does.

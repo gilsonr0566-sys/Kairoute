@@ -81,6 +81,14 @@ async function tapTimes(p) { const out = []; const n = await p.evaluate(() => wi
   }
   check('Every Day plan reads in English letters', !foreign.length, foreign.slice(0, 3).join('; '));
   check('Picker count matches the ticks on every day', !counts.length, counts.slice(0, 3).join('; '));
+  // Nov 22 live check: a ship day whose list was empty with no seeding mark (the traveler never touched it) was planned
+  // with 7 sights while its picker showed none ticked. The picker shows what the planner chose.
+  { const pi = await dayIdx(p, /Naples/);
+    await p.evaluate(i => { window.__kairouteGo('day', i); window.__kairouteEdit(i, { selected: [], seedSig: undefined, autoEmpty: undefined, ownList: undefined, cleared: undefined }); window.__kairouteGo('plan'); }, pi); await p.waitForTimeout(2500);
+    const stops = await p.evaluate(i => ((window.__kairouteEngine2()[i] || {}).items || []).filter(x => x.t === 'stop' && !x.bonus).map(x => String(x.id)).sort(), pi);
+    await p.evaluate(() => window.__kairouteGo('sites')); await p.waitForTimeout(800);
+    const ticked = await p.$$eval('input[data-site]', xs => xs.filter(x => x.checked).map(x => String(x.dataset.site)).sort());
+    check('A day the traveler never touched, its list empty with no seeding mark: the picker ticks what the plan shows', stops.length > 0 && stops.every(id => ticked.includes(id)), `plan ${stops.join(',')} / ticked ${ticked.join(',')}`); }
 
   // 2. Untick everything on a port day, then pick a day trip and a sight in town (Richard, Nov 18: Naples).
   const ni = await dayIdx(p, /Naples/);

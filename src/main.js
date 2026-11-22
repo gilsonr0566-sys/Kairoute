@@ -728,11 +728,14 @@ function transitFor(a, b) {
   // Used meanwhile, and asked again when online: an answer from an older version (at once), one given while a source
   // was busy or an empty one (after 10 minutes), or a nearby trip's answer (the exact ride is asked). With no internet
   // whatever is kept is simply used.
-  if (hit && !transitDue(exact, hit)) return borrowGap(a, b, hit, exact, hit.opts.filter(runsThen).map(tidyRide));
+  // An answer the helper could give only in part (hours of the timetable it couldn't read) says so on each ride, so the
+  // plan never reads a missing hour as no departure (Nov 22 live check: "FR 8606 shows no departure near 4:23 pm").
+  const part = l => hit && hit === exact && exact.partial ? l.map(o => Object.assign({}, o, { partial: true })) : l;
+  if (hit && !transitDue(exact, hit)) return part(borrowGap(a, b, hit, exact, hit.opts.filter(runsThen).map(tidyRide)));
   // A look without asking: a planner weighing many possible rides reads what is known and asks only for the rides it keeps.
-  if (transitPeek) return hit ? borrowGap(a, b, hit, exact, hit.opts.filter(runsThen).map(tidyRide)) : null;
+  if (transitPeek) return hit ? part(borrowGap(a, b, hit, exact, hit.opts.filter(runsThen).map(tidyRide))) : null;
   if (typeof freeAI !== "undefined" && freeAI && !transitQ.has(k) && !(transitFail.get(k) > Date.now() - 120000)) { transitQ.set(k, { a: [+a.lat, +a.lng], b: [+b.lat, +b.lng], dow, date: typeof planDate !== "undefined" && planDate ? planDate : undefined, pri: typeof trip !== "undefined" && trip.days && trip.days[trip.active] && typeof planDate !== "undefined" && trip.days[trip.active].date === planDate }); clearTimeout(transitTimer); transitTimer = setTimeout(askTransit, 300); }
-  return hit ? borrowGap(a, b, hit, exact, hit.opts.filter(runsThen).map(tidyRide)) : null;
+  return hit ? part(borrowGap(a, b, hit, exact, hit.opts.filter(runsThen).map(tidyRide))) : null;
 }
 function transitDue(exact, hit) {
   if (typeof navigator !== "undefined" && navigator.onLine === false) return false;
@@ -1158,6 +1161,11 @@ const seedSigOf = d => (Array.isArray(d.selected) ? d.selected.slice().sort() : 
 // a day the app left empty (everything planned on other days) is still the app's to fill, never the traveler's choice
 // (Nov 18: a Madrid day seeded empty was planned by the engine while its picker showed nothing ticked).
 const appSeeded = d => !!d && Array.isArray(d.selected) && typeof d.seedSig === "string" && d.seedSig === seedSigOf(d);
+// The traveler's own list (they ticked or unticked something there): the planner then takes their picks as they are.
+// Anything else is the app's to fill, and its ticks show what the planner chose (one rule for the planner's bucket and
+// the picker's sync: Nov 22 live check, a day whose empty list had no seeding mark was planned with 7 sights while the
+// picker showed none ticked).
+const listIsOwn = d => !!d && (!!d.ownList || clearedByYou(d) || (Array.isArray(d.selected) && typeof d.seedSig === "string" && !appSeeded(d)));
 function seedPicks(d, city) {
   const i = trip.days.indexOf(d); let made = false;
   // A day that starts with no picks (everything is planned on other days) is not a day cleared on purpose: the

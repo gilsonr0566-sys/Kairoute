@@ -539,7 +539,7 @@ if (fs.existsSync(dir)) for (const f of fs.readdirSync(dir).filter(f => f.endsWi
         const l = q.items.find(x => x.t === 'ride' && x.lost); if (l) { lostN++; if (lostN <= 3) ok(false, `${f} day ${i + 1}: picking ${o.how} on one ride made another say "${l.lost} not known"`); }
         // and the way picked is the way planned (Nov 19: the train picked was planned as a taxi, with no word why)
         const same = q.items.find(x => x.t === 'ride' && x.from && x.to && E.pairKey(x.from, x.to) === E.pairKey(r.from, r.to));
-        if (sameSet && same && same.choice !== o.id && !same.lost && !/isn't planned on a day with a time to be back|shows no departure near|aren't known yet/.test(same.note || '')) { notTaken++; if (notTaken <= 3) ok(false, `${f} day ${i + 1}: picked ${o.how}, the plan took ${same.how}`); } } }); }
+        if (sameSet && same && same.choice !== o.id && !same.lost && !/isn't planned on a day with a time to be back|shows no departure near|aren't known yet|couldn't be read yet/.test(same.note || '')) { notTaken++; if (notTaken <= 3) ok(false, `${f} day ${i + 1}: picked ${o.how}, the plan took ${same.how}`); } } }); }
   ok(tried > 30 && !moved && !lostN && !notTaken, `a ride choice is the way planned, never moves the stops or turns into "not known" (${tried} choices tried)`); }
 // The ride home from Acrocorinth by train, picked: the stops stay, the train is the ride home, nothing says "no train".
 { const s = JSON.parse(fs.readFileSync(path.join(dir, 'corinth-day.json'))), i = 3, hotel = { lat: 37.9725, lng: 23.73 }, acro = s.cities.athens.farther.find(x => x.id === 'acrocorinth-far');
@@ -1090,7 +1090,12 @@ ok(E.readable('Café Ñandú') && E.readable("Joe's Bar & Grill") && !E.readable
   // 3:59 pm". Times that don't reach the hour are said as not known yet (still the taxi).
   { const bShort = E.walkDay([], winB(959), mk(D([372, 450, 593])), null), r = bShort.items.filter(x => x.t === 'ride').pop() || {};
     ok(r.kind === 'taxi' && /only reach \d+:\d\d am; the times near \d+:\d\d pm aren't known yet/.test(r.note || '') && !/shows no departure/.test(r.note || ''), `times that don't reach the hour are said as not known, not as no departure (${r.kind}: ${r.note})`);
-    const r2 = bFar.items.filter(x => x.t === 'ride').pop() || {}; ok(/shows no departure near/.test(r2.note || ''), `a known gap is still said as no departure (${r2.note})`); }
+    const r2 = bFar.items.filter(x => x.t === 'ride').pop() || {}; ok(/shows no departure near/.test(r2.note || ''), `a known gap is still said as no departure (${r2.note})`);
+    // Nov 22 live check: an answer the helper marked incomplete (hours it couldn't read) said "FR 8606 shows no departure
+    // near 4:23 pm". Said as not read yet, still the taxi.
+    const mkP = deps => (a, b) => { const l = mk(deps)(a, b); l.ans = Object.assign({}, l.ans, { partial: true }); return l; };
+    const bPart = E.walkDay([], winB(884), mkP(D([700, 840, 1080])), null), r3 = bPart.items.filter(x => x.t === 'ride').pop() || {};
+    ok(r3.kind === 'taxi' && /couldn't be read yet/.test(r3.note || '') && !/shows no departure/.test(r3.note || ''), `an incomplete answer's gap is said as not read yet (${r3.kind}: ${r3.note})`); }
   // The departures of every answer of the kind count together (a train known by its own number shows once).
   const two = E.makeTravel({ walk: 'medium' }, null, null, null, (a, b) => [{ id: 'rail|A', min: 75, label: 'Train A', mode: 'rail', steps: ['A'], deps: [{ t: 1231 }] }, { id: 'rail|B', min: 80, label: 'Train B', mode: 'rail', steps: ['B'], deps: [{ t: 515 }, { t: 600 }] }], null).estimate({ lat: 41.9, lng: 12.5 }, { lat: 42.09, lng: 11.79 });
   const lt = ((two.options || [two]).find(x => x.kind === 'train') || two).leaveTimes || two.leaveTimes;
