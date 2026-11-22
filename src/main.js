@@ -1667,6 +1667,13 @@ function polishDay(seq, t0, O, Z, style, city) {
 // that close, the plan says "Lunch near <stop>" and lets the traveler pick, rather than send them far.
 // Places to eat already planned on earlier days of the trip, so a meal spot is never repeated.
 let mealMemo = new Map(), avoidMeals = new Set(), eveMemo = new Map(), skipEvening = false;
+// A lunch the traveler brings, said plainly: no place to eat is known there, and where to get one on the way.
+function packedWords(r) {
+  const here = r.inVisit ? "in or near " + r.inVisit : "here";
+  const ship = /^port|embark/.test((day() || {}).type || "") ? "the ship" : "your hotel";
+  return r.buy ? `No place to eat is known ${here}. Pick up something to take along at ${r.buy.name}${r.buyNear ? " near " + r.buyNear : ""} before you leave, or bring lunch from ${ship}`
+    : `No place to eat is known ${here}. Bring lunch from ${ship}${r.buyNear ? ", or pick something up near " + r.buyNear + " on the way" : ""}`;
+}
 function mealSpots(seq, O, Z, city) {
   const anchors = seq.filter(x => !x.mealOf).concat(O ? [O] : [], Z ? [Z] : []);
   const near = (city.restaurants || []).filter(r => !r.crowdDrop && anchors.some(a => hav(a, r) <= 0.6));
@@ -6015,7 +6022,7 @@ function siteCard(s, d, plan, nr) {
       <p class="sum">${esc(unitText(s.summary))}</p>${localLine(s)}
       <div class="tags">${s.mustSee ? `<span class="tag must">Must-see</span>` : ""}${unescoTag(s)}${sightKind(s, city) === "local" ? `<span class="tag local">Local favorite</span>` : `<span class="tag">Famous sight</span>`}${!on && plan && (plan.bonus || []).some(x => x.id === s.id) ? `<span class="tag bonus">On your plan as an optional stop</span>` : ""}${s.indoor ? `<span class="tag">Indoors</span>` : ""}${closedOn(s, d.date) && cl ? `<span class="tag nofit">${esc(cl)}</span>` : ""}</div>
       ${twinNote(s, city)}${partsPick(s)}${s.show && s.show.what ? `<p class="travelnote">⏱ ${esc(showLine(s))}</p>` : ""}${nextDoor(s, city)}
-      ${s.far && txt(s.travel) ? `<p class="travelnote">Getting there: ${esc(unitText(s.travel))}</p>` : ""}
+      ${s.far && txt(s.travel) ? `<p class="travelnote">Getting there, as the travel guide says (not a checked timetable): ${esc(unitText(s.travel))}</p>` : ""}
       ${hrs ? `<p class="travelnote">${esc(hrs)}${cl ? " · " + esc(cl) : ""}</p>` : ""}
       ${P().access !== "none" && txt(s.access) ? `<p class="travelnote"><b>Access:</b> ${esc(s.access)}</p>` : ""}
       ${srcNote(s)}${fs === false ? `<button type="button" class="btn ghost small" data-act="fitask" data-id="${esc(s.id)}">Ways to fit it in</button>` : ""}
@@ -6760,7 +6767,7 @@ function renderPlan(d) {
     if (it.type === "meal") {
       const r = it.place, lbl = it.meal.label, mv = canDrag && !r.booked && !it.meal.booked;
       // Lunch back on board: the picks fill the time ashore, so lunch is a timed stop on the ship (no place to change).
-      if (r.packed) return `<div class="${cls}">${tcell(it)}<div class="rail"><div class="dot meal">${lbl[0]}</div></div><div class="what"><div class="nm">${lbl}: ${esc(r.name)}</div><div class="sub">${esc("Places to eat here aren't in the guide yet · " + dur(it.meal.len))}</div></div></div>`;
+      if (r.packed) return `<div class="${cls}">${tcell(it)}<div class="rail"><div class="dot meal">${lbl[0]}</div></div><div class="what"><div class="nm">${lbl}: ${esc(r.name)}</div><div class="sub">${esc(packedWords(r) + " · " + dur(it.meal.len))}</div></div></div>`;
       if (r.onBoard) return `<div class="${cls}">${tcell(it)}<div class="rail"><div class="dot meal">${lbl[0]}</div></div><div class="what"><div class="nm">${lbl}: ${esc(r.name)}</div><div class="sub">${esc("On the ship, once you're back · " + dur(it.meal.len))}</div></div></div>`;
       return `<div class="${cls}"${mv ? ` data-meal="${esc(lbl)}"` : ""}>${tcell(it)}<div class="rail"><div class="dot meal">${lbl[0]}</div></div><div class="what">${mv ? dragHandle({ id: "meal:" + lbl, name: lbl }) : ""}
         <div class="nm">${it.meal.quick && !r.booked ? "Quick " + lbl.toLowerCase() : lbl}: ${esc(r.name)}</div><div class="sub">${[r.booked ? "Your reservation" : "", r.cuisine, r.price, r.generic || r.booked ? "" : r.kind === "local" ? "Local spot" : "Popular with visitors", dur(it.meal.len)].filter(Boolean).map(esc).join(" · ")}</div>
@@ -6775,7 +6782,7 @@ function renderPlan(d) {
         <div class="optacts"><button class="btn small" data-act="bonusadd" data-id="${esc(s.id)}">Add to my sights</button><button class="btn ghost small" data-act="bonusskip" data-id="${esc(s.id)}">Skip it</button></div></div></div>`;
       n++;
       return `<div class="${cls}" data-stop="${esc(s.id)}">${tcell(it)}<div class="rail"><div class="dot">${n}</div></div><div class="what">${canDrag ? dragHandle(s) : ""}
-        ${it.area ? `<div class="areahd">${esc(areaHead(it))}</div>` : ""}<button class="nm namebtn" data-open="${esc(s.id)}">${esc(s.areaRest ? "The rest of " + s.name : s.name)}</button><div class="sub">${dur(s.minutes)} · ${cat(s)}${s.mustSee ? " · Must-see" : ""}${s.unesco ? " · UNESCO" : ""}${s.far && s.travel ? " · " + esc(unitText(s.travel)) : ""}</div>${inclLine(s)}
+        ${it.area ? `<div class="areahd">${esc(areaHead(it))}</div>` : ""}<button class="nm namebtn" data-open="${esc(s.id)}">${esc(s.areaRest ? "The rest of " + s.name : s.name)}</button><div class="sub">${dur(s.minutes)} · ${cat(s)}${s.mustSee ? " · Must-see" : ""}${s.unesco ? " · UNESCO" : ""}</div>${inclLine(s)}
 ${partsList(s, it.time)}${stopLiveNotes(it, d)}</div></div>`;
     }
     if (it.type === "evening") {

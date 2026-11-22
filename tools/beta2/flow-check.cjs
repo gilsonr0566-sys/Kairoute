@@ -133,6 +133,15 @@ async function tapTimes(p) { const out = []; const n = await p.evaluate(() => wi
     check('Ride answers kept by the last version are asked again; fresh ones are kept', td.lastV === true && td.fresh === false && td.old === true, JSON.stringify(td));
     // Nov 22 live probe: a way back answered only in part (trains known until 9:53 am) waited 10 minutes to be asked again.
     check('A ride answered only in part is asked again after 2 minutes, and less often after five tries', td.busyNow === false && td.busy2min === true && td.busyOften === false && td.busyLater === true, JSON.stringify(td)); }
+  // Nov 22, Richard (Pompeii): a lunch with no place to eat known in or near the visit said only "Lunch near Pompeii".
+  // It says so plainly and names a real place to eat by the stop before to pick something up, else to bring lunch.
+  { const pk = await p.evaluate(() => {
+      const items = [{ type: 'start', label: 'the ship', place: { name: 'Pier', lat: 40.84, lng: 14.25 } }, { type: 'stop', place: { name: 'Sorrento', lat: 40.626, lng: 14.375 } }, { type: 'stop', place: { name: 'Pompeii', lat: 40.749, lng: 14.485 } }];
+      const city = { restaurants: [{ name: 'Trattoria Vicina', lat: 40.6265, lng: 14.3755, kind: 'restaurant' }, { name: 'Far Inn', lat: 40.70, lng: 14.40, kind: 'restaurant' }] };
+      const r1 = Object.assign({ packed: true }, window.__kairoutePackedBuy(items, city)), r2 = Object.assign({ packed: true }, window.__kairoutePackedBuy(items, { restaurants: [] }));
+      return [window.__kairoutePackedWords(r1), window.__kairoutePackedWords(r2)]; });
+    check('A lunch with no place to eat known says so and names a real place by the stop before to pick something up, else to bring lunch',
+      /No place to eat is known in or near Pompeii/.test(pk[0]) && /Trattoria Vicina near Sorrento/.test(pk[0]) && /No place to eat is known/.test(pk[1]) && /Bring lunch from/.test(pk[1]) && !/Far Inn/.test(pk.join(' ')), JSON.stringify(pk)); }
   const all = (await boxes(p)).map(b => b.id), far = all.find(id => /pompeii/.test(id)) || all.find(id => /-far$/.test(id)), town = all.find(id => !/-far$/.test(id));
   for (const id of [far, town].filter(Boolean)) { await tapBox(p, id); const on = (await boxes(p)).some(b => b.id === id && b.on);
     const box = await p.evaluate(() => [...document.querySelectorAll('.fitbox, .closedbox')].map(e => e.innerText.slice(0, 120)).join(' / '));

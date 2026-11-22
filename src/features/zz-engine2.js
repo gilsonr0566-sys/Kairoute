@@ -111,12 +111,28 @@ if (typeof window !== "undefined" && window.ENGINE2 && window.KEngine) (function
     memo = { k: synced ? keyNow() : k, ik, used, plans, bucket }; recent.set(memo.k, memo); if (recent.size > 8) recent.delete(recent.keys().next().value); return memo;
   }
   window.__kairouteEngine2 = () => JSON.parse(JSON.stringify(tripPlans().plans));
+  window.__kairoutePackedBuy = packedBuy; window.__kairoutePackedWords = r => packedWords(r);
   // For the phone test: every pier a boat may leave from, and whether a place is reached only by boat.
   window.__kairoutePiers = () => E.piersOf(tripPlans().bucket || {});
   window.__kairouteBoatPlace = id => { const b = tripPlans().bucket || {}; for (const c of Object.values(b.cities || {})) { const x = [...(c.sites || []), ...(c.farther || [])].find(y => String(y.id) === String(id)); if (x) return E.byBoat(x.travelNote) || E.waterOnly(x); } return false; };
   const MODE = { walk: "walk", ride: "ride", transit: "ride", boat: "ferry", lift: "ride" };
   const UIKIND = { walk: "walk", taxi: "car", ferry: "ferry", bus: "bus", metro: "train", tram: "train", train: "train" };
   const byName = (list, name) => (list || []).find(r => r && r.name === name);
+  // A lunch the traveler brings (no place to eat is known in or near the visit it falls in): where to get it on the way.
+  // The place to eat nearest the stop before (or the start), a short walk from it, named so the traveler can pick up
+  // something to take along; none known, the card says to bring it from the ship or hotel (Richard, Nov 22, Pompeii:
+  // "If there is no restaurants in this area, we need to suggest bringing a meal or grabbing something at the previous stop").
+  function packedBuy(items, city) {
+    const pts = items.filter(it => (it.type === "stop" || it.type === "start") && it.place && isFinite(it.place.lat));
+    const visit = pts.length && pts[pts.length - 1].type === "stop" ? pts[pts.length - 1].place : null, prev = pts.length > 1 ? pts[pts.length - 2] : null;
+    const out = { inVisit: visit ? visit.name || "" : "" };
+    if (!prev || !prev.place) return out;
+    const P = prev.place, eat = ((city || {}).restaurants || []).filter(r => r && !r.generic && !r.crowdDrop && isFinite(+r.lat) && E.mealPlace(r) && hav(P, r) <= 0.6 && (!visit || hav(visit, r) > 0.6))
+      .sort((a, b) => hav(P, a) - hav(P, b) || String(a.name).localeCompare(String(b.name)))[0];
+    out.buyNear = prev.type === "start" ? (prev.label || "your start") : P.name || "";
+    if (eat) out.buy = { name: eat.name, lat: +eat.lat, lng: +eat.lng };
+    return out;
+  }
   function toApp(d, city, ep) {
     const w = dayWindow(d, city); if (w.error) return w;
     if (!ep) return { error: "The new engine has no plan for this day." };
@@ -152,7 +168,7 @@ if (typeof window !== "undefined" && window.ENGINE2 && window.KEngine) (function
       }
       if (x.t === "meal" || x.t === "evening") {
         const label = x.meal || "Lunch", m = MEALS.find(z => z.label === label) || MEALS[0];
-        const r = x.onBoard ? { name: "Back on board", onBoard: true, generic: true, lat: x.lat, lng: x.lng, alts: [] } : x.packed ? { name: "Bring your own", packed: true, generic: true, lat: x.lat, lng: x.lng, alts: [] } : Object.assign({}, byName(city.restaurants, x.name) || at(x), { alts: [] });
+        const r = x.onBoard ? { name: "Back on board", onBoard: true, generic: true, lat: x.lat, lng: x.lng, alts: [] } : x.packed ? Object.assign({ name: "Bring your own", packed: true, generic: true, lat: x.lat, lng: x.lng, alts: [] }, packedBuy(items, city)) : Object.assign({}, byName(city.restaurants, x.name) || at(x), { alts: [] });
         if (x.booked) Object.assign(r, { booked: true, why: "Your reservation at " + fmt(x.at) + "." }); // a table the traveler booked shows as theirs
         const it = { type: x.t === "evening" ? "evening" : "meal", meal: Object.assign({}, m, { len: x.min || m.len }), place: r, time: x.at };
         items.push(it); (x.t === "evening" ? evening : meals).push(x.t === "evening" ? it : r);
