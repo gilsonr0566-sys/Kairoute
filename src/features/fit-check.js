@@ -122,7 +122,9 @@ function fitOpen(d, id) {
   const base = fitTrial(d, sel0); if (!base.m) return true;
   const full = fitTrial(d, target); if (!full.m || (fitsAll(full) && keepsDay(full.p, base.p) && (!id || onPlan(full.p, id)))) return true;
   let need = 0;
-  if (s) { try { need = stopCost(base.p, s).min; } catch (e) {} if (!(need > 0)) need = Math.max(5, full.m.used - base.m.used); }
+  // The same number the sight's card in the list shows ("Needs ..."), from the day as planned (Nov 22 live check: the
+  // box said 4 h 5 min beside a card saying 5 h 45 min).
+  if (s) { try { need = fitCostOf(buildPlan(d), s).min; } catch (e) {} if (!(need > 0)) try { need = stopCost(base.p, s).min; } catch (e) {} if (!(need > 0)) need = Math.max(5, full.m.used - base.m.used); }
   // The box opens at once with what is known (the meter, why it doesn't fit); the ways to fit it are worked out next,
   // each a full plan of the day, and fill in a moment later (Nov 20 sweep: a day trip's box took 3.7 s on a phone).
   const prov = { fixes: [], d, id, s, need, never: false, others: [], moves: [], dayFirst: false, canRoom: false, base: base.m, rows: [], sugg: [], drop: new Set(), times: [], loading: true };
@@ -146,11 +148,6 @@ function fitFinish(d, id, s, sel0, target, base, full, need0, prov) {
   const others = s ? trip.days.filter(o => roomOn(s, o)).slice(0, 2) : [];
   const moves = s ? [] : (full.m.dropped || []).slice(0, 3).flatMap(x => { const px = picks.find(p => p.id === x.id); return px ? trip.days.filter(o => roomOn(px, o)).slice(0, 2).map(o => ({ x: px, o })) : []; });
   const alone = s ? fitTrial(d, [id]) : null, never = s ? !fitsAll(alone) : false;
-  // What the sight takes, said the same on every day: at least what it adds to a day with nothing else on it (the boat,
-  // the waits at the pier, the way back), not only its detour from the route as it stands (Nov 21 live re-check: Capri
-  // "needs about 4 h 5 min" on one day and 6 h 15 min on the other).
-  // Both measured without the optional stops that fill spare time (an empty day would fill up with them).
-  if (s && alone && alone.m) { const a = fitTrial(d, [id], null, true), empty = fitTrial(d, [], null, true); if (a.m && empty.m) need = Math.max(need, a.m.used - empty.m.used); }
   const times = timeOptions(d, target);
   const dayFirst = !!s && others.length > 0 && !sugg.length;
   if (dayFirst) sugg = [];
@@ -167,7 +164,9 @@ function fitFinish(d, id, s, sel0, target, base, full, need0, prov) {
   // first and must-sees last, that make room, offered all the same (Nov 21 live re-check: Capri's box said "Even with
   // nothing else picked, it can't fit this day" with 7 sights on a 9 h 45 min day it fits alone).
   if (!fixes.length && canRoom && s) { const ids = [];
-    for (const r of byVal.slice().sort((a, b) => a.x.mustSee - b.x.mustSee)) { ids.push(r.x.id); const f = swapSet(ids); if (f) { f.must = ids.some(i => (picks.find(x => x.id === i) || {}).mustSee); fixes.push(f); break; } } }
+    // Measured the quick way (no optional fill) while growing the set; only the set found is planned in full.
+    for (const r of byVal.slice().sort((a, b) => a.x.mustSee - b.x.mustSee)) { ids.push(r.x.id); if (!fitsAll(fitTrial(d, target.filter(i => !ids.includes(i)), null, true))) continue;
+      const f = swapSet(ids); if (f) { f.must = ids.some(i => (picks.find(x => x.id === i) || {}).mustSee); fixes.push(f); } break; } }
   // The planner's own way: the sight goes in and a visit or lunch gets shorter, each change named (never done quietly).
   if (s && fitsAll(full)) { const cut = shortened(full.p, base.p); if (cut.length) fixes.push({ kind: "shorter", cut, end: endOf(full) }); }
   times.forEach(t => fixes.push(Object.assign({}, t, { how: t.kind, kind: "time" })));

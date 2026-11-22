@@ -89,7 +89,11 @@ async function tapTimes(p) { const out = []; const n = await p.evaluate(() => wi
   // Nov 21 live re-check: with the day's sights on, the box for a place reached only by boat said "Even with nothing else
   // picked, it can't fit this day" on a day it fits alone, and offered no way. It offers the sights to swap for it.
   { const isle = await p.evaluate(() => [...document.querySelectorAll('[data-act="fitask"]')].map(x => x.dataset.id).find(id => window.__kairouteBoatPlace(id)) || null);
+    const badge = isle ? await p.evaluate(id => [...document.querySelectorAll(`[data-act="fitask"][data-id="${id}"]`)].map(x => x.innerText).join(' '), isle) : '';
     if (isle) { await p.evaluate(id => document.querySelector(`[data-act="fitask"][data-id="${id}"]`).click(), isle); await p.waitForTimeout(5000);
+      const bt = await p.evaluate(() => (document.querySelector('.fitbox') || {}).innerText || ''), want = (/Needs ([^/\n]+?min)/.exec(badge) || [])[1], got = (/needs about ([^\n]+?min)/.exec(bt) || [])[1];
+      // Nov 22 live check: the box said 4 h 5 min beside a card that said 5 h 45 min.
+      check('The won\'t-fit box says the same time a sight needs as its card in the list', !!want && want === got, `card ${want}, box ${got}`);
       const t = await p.evaluate(() => (document.querySelector('.fitbox') || {}).innerText || '');
       check(`A place reached only by boat (${isle}) that fits the day alone: its box offers sights to swap for it, never "can't fit this day"`, /Swap .+ for /.test(t) && !/can't fit this day|no way to fit it/.test(t), t.replace(/\s+/g, ' ').slice(0, 300));
       await p.evaluate(() => { const c = document.querySelector('.fitbox [data-act="fitcancel"]'); if (c) c.click(); }); await p.waitForTimeout(500); } }
