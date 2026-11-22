@@ -38,6 +38,12 @@ jobs:
         with:
           node-version: 22
       - run: npm i --no-save playwright@1 && npx playwright install --with-deps chromium
+      - name: Screen rules, the app's own copy (falls back to the snapshot in this branch)
+        run: |
+          for b in claude/project-thread-xrdp7v claude/project-thread-fr0v6m; do
+            if git fetch -q --depth=1 origin "$b" && git show FETCH_HEAD:src/features/screen-rules.js > /tmp/sr.js 2>/dev/null && [ -s /tmp/sr.js ]; then
+              cp /tmp/sr.js tools/outside-test/screen-rules.js; echo "screen rules from $b $(git rev-parse --short FETCH_HEAD)"; break; fi
+          done
       - env:
           TRIP: ${{ matrix.trip }}
         run: node tools/outside-test/run.cjs
