@@ -975,6 +975,13 @@ ok(E.readable('Café Ñandú') && E.readable("Joe's Bar & Grill") && !E.readable
     ok(!E.depGap(leg, 700), 'no hole where the line runs as usual');
     const sw = E.legAs({ how: 'Train', min: 60, note: '' }, { kind: 'taxi', how: 'Taxi or car', min: 50 }, 'why it changed.');
     ok(sw.swapWhy === 'why it changed.', 'a ride planned another way keeps the reason, for the ride choice notice'); }
+  // Nov 22 outside test: a sight whose spot isn't sure (the guide and the encyclopedia disagree, nothing told which is
+  // right) has the rides to and from it said as not sure, never as a fact; a sure sight's rides say nothing of the kind.
+  { const H = { name: 'Hotel', lat: 37.97, lng: 23.73 }, win = { start: 540, endBy: 1080, head: [H], tail: [H] };
+    const walk = q => E.walkDay([Object.assign({ id: 'x', name: 'Old prayer house', minutes: 30, lat: 37.975, lng: 23.735 }, q)], win, tr.estimate, null).items.filter(x => x.t === 'ride');
+    const rd = walk({ posDoubt: true });
+    ok(rd.length === 2 && rd.every(x => /Old prayer house is isn't sure|Where Old prayer house is isn't sure/.test(x.note || '')), `both rides to and from a sight whose spot isn't sure say so (got ${JSON.stringify(rd.map(x => x.note))})`);
+    ok(walk({}).every(x => !/isn't sure/.test(x.note || '')), "a sight whose spot is sure has no such note"); }
   // The app's map check (water-check.js), its rule apart from the fetching: an island no start stands on, with no way on
   // foot without a ferry, is across the water; a bridge (a way on foot) keeps it on land; the mainland is never across.
   { const fs = require('fs'), src = fs.readFileSync(require('path').join(__dirname, '../../src/features/water-check.js'), 'utf8');

@@ -6043,6 +6043,7 @@ function siteCard(s, d, plan, nr) {
       <p class="sum">${esc(unitText(s.summary))}</p>${localLine(s)}
       <div class="tags">${s.mustSee ? `<span class="tag must">Must-see</span>` : ""}${unescoTag(s)}${sightKind(s, city) === "local" ? `<span class="tag local">Local favorite</span>` : `<span class="tag">Famous sight</span>`}${!on && plan && (plan.bonus || []).some(x => x.id === s.id) ? `<span class="tag bonus">On your plan as an optional stop</span>` : ""}${s.indoor ? `<span class="tag">Indoors</span>` : ""}${closedOn(s, d.date) && cl ? `<span class="tag nofit">${esc(cl)}</span>` : ""}</div>
       ${twinNote(s, city)}${partsPick(s)}${s.show && s.show.what ? `<p class="travelnote">⏱ ${esc(showLine(s))}</p>` : ""}${nextDoor(s, city)}
+      ${s.posDoubt ? `<p class="travelnote"><b>Where it is isn't sure:</b> the travel guide and the encyclopedia put it in different places, so the ride times to and from it may be wrong. Check the spot on a map before you go.</p>` : ""}
       ${s.far && txt(s.travel) ? `<p class="travelnote">Getting there, as the travel guide says (not a checked timetable): ${esc(unitText(s.travel))}</p>` : ""}
       ${hrs ? `<p class="travelnote">${esc(hrs)}${cl ? " · " + esc(cl) : ""}</p>` : ""}
       ${P().access !== "none" && txt(s.access) ? `<p class="travelnote"><b>Access:</b> ${esc(s.access)}</p>` : ""}

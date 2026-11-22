@@ -48,6 +48,11 @@
           leg = Object.assign({}, leg, { note: (leg.note ? leg.note + " " : "") + why, ownBoat: unsure }); unsure = null;
         } else { const t = (leg.options || []).find(o => o.kind === "taxi");
           leg = t ? E.legAs(leg, t, "The boat isn't planned on its own on a day with a time to be back: " + unsure + ", so this ride is planned by taxi. Pick the boat yourself to take it anyway.") : Object.assign({}, leg, { unsure, noRun: true }); if (t) unsure = null; } }
+      // A stop whose spot isn't sure (the travel guide and the encyclopedia put it in different places and nothing told
+      // which is right, tools/places/where.cjs): the ride's time is said as not sure, never shown as a fact (Nov 22 outside
+      // test: a ride of 17 minutes by taxi between two places a 2-minute walk apart).
+      const dz = [prev, p].find(x => x && x.posDoubt);
+      if (dz) leg = Object.assign({}, leg, { note: (leg.note ? leg.note + " " : "") + "Where " + dz.name + " is isn't sure (the travel guide and the encyclopedia put it in different places), so this ride's time may be wrong: check the spot on a map before you set off.", posDoubt: dz.name });
       const ri = E.rideItem(leg, leg.parts ? { parts: leg.parts } : null); items.push(ri); clock += leg.min; rideMin += leg.min;
       if (leg.noRun) { late++; ri.noRun = true; }
       // The way back on a timetable (to a ship, a train or a plane, or a boat on such a day) waits for its real departure:
