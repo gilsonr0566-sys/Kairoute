@@ -551,7 +551,7 @@ export default {
         // The trip's date (when the page gives it) picks the timetable; answers are kept per month, since a summer
         // ferry runs in July and not in November.
         const date = typeof pr.date === "string" && /^\d{4}-\d{2}-\d{2}$/.test(pr.date) ? pr.date : null;
-        const key = "tr11:" + kind + ":" + [...pr.a, ...pr.b].map(n => n.toFixed(3)).join(",") + (date ? ":m" + +date.slice(5, 7) : "");
+        const key = "tr12:" + kind + ":" + [...pr.a, ...pr.b].map(n => n.toFixed(3)).join(",") + (date ? ":m" + +date.slice(5, 7) : "");
         // A full answer is kept 14 days (timetables change); one where a source was busy only 1 day. When the map answered
         // after the reply went out, its full answer replaces the partial one. A partial answer met again after 2 minutes
         // is looked up afresh in the background (once per 2 minutes), so a busy map server never hides a ferry for a day.
