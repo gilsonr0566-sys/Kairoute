@@ -1,6 +1,6 @@
 {
- "run": "round3d-2026-11-22",
- "dayWait": 40000,
+ "run": "round3e-2026-11-22",
+ "dayWait": 90000,
  "trips": [
   {
    "name": "f01-dubrovnik-naples",
@@ -102,6 +102,10 @@
    ],
    "steps": [
     {
+     "name": "rome-plan-late",
+     "js": "(async()=>{window.__kairouteAt(4,'plan');await __T.sleep(60000);return __T.planText(12000)})()"
+    },
+    {
      "name": "basis-day3",
      "js": "__T.basis(3)"
     },
@@ -112,47 +116,6 @@
     {
      "name": "basis-day5",
      "js": "__T.basis(5)"
-    }
-   ]
-  },
-  {
-   "name": "d16-warnemunde-zeebrugge",
-   "label": "Warnemunde for Berlin, Zeebrugge for Bruges",
-   "legs": [
-    {
-     "k": "cruise",
-     "board": "Copenhagen, Denmark",
-     "date": "2027-08-01",
-     "aboard": "17:00",
-     "ports": [
-      {
-       "date": "2027-08-02",
-       "place": "Warnemunde (Berlin), Germany",
-       "arrive": "07:00",
-       "aboard": "21:00"
-      },
-      {
-       "date": "2027-08-04",
-       "place": "Zeebrugge (Bruges), Belgium",
-       "arrive": "08:00",
-       "aboard": "17:00"
-      }
-     ],
-     "end": "Southampton, England",
-     "endDate": "2027-08-05",
-     "off": "07:00",
-     "homeBy": "train",
-     "homeAt": "11:00"
-    }
-   ],
-   "steps": [
-    {
-     "name": "basis-day2",
-     "js": "__T.basis(2)"
-    },
-    {
-     "name": "basis-day4",
-     "js": "__T.basis(4)"
     }
    ]
   },
@@ -257,6 +220,10 @@
    ],
    "steps": [
     {
+     "name": "rome-plan-late",
+     "js": "(async()=>{window.__kairouteAt(4,'plan');await __T.sleep(60000);return __T.planText(12000)})()"
+    },
+    {
      "name": "basis-day3",
      "js": "__T.basis(3)"
     },
@@ -267,48 +234,6 @@
     {
      "name": "basis-day5",
      "js": "__T.basis(5)"
-    }
-   ],
-   "seed": "outside-test-results/round3b-2026-11-21/d15-livorno-rome-naples/result.json"
-  },
-  {
-   "name": "d16s-warnemunde-zeebrugge",
-   "label": "Warnemunde for Berlin, Zeebrugge for Bruges",
-   "legs": [
-    {
-     "k": "cruise",
-     "board": "Copenhagen, Denmark",
-     "date": "2027-08-01",
-     "aboard": "17:00",
-     "ports": [
-      {
-       "date": "2027-08-02",
-       "place": "Warnemunde (Berlin), Germany",
-       "arrive": "07:00",
-       "aboard": "21:00"
-      },
-      {
-       "date": "2027-08-04",
-       "place": "Zeebrugge (Bruges), Belgium",
-       "arrive": "08:00",
-       "aboard": "17:00"
-      }
-     ],
-     "end": "Southampton, England",
-     "endDate": "2027-08-05",
-     "off": "07:00",
-     "homeBy": "train",
-     "homeAt": "11:00"
-    }
-   ],
-   "steps": [
-    {
-     "name": "basis-day2",
-     "js": "__T.basis(2)"
-    },
-    {
-     "name": "basis-day4",
-     "js": "__T.basis(4)"
     }
    ],
    "seed": "outside-test-results/round3b-2026-11-21/d15-livorno-rome-naples/result.json"
