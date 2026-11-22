@@ -15,6 +15,7 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
   const b = await chromium.launch();
   const ctx = await b.newContext({ viewport: { width: 1100, height: 2800 }, locale: 'en-US', timezoneId: t.tz || 'America/Chicago' });
   await ctx.addInitScript(() => { try { localStorage.setItem('kairoute.intro1', '1'); } catch (e) {} });
+  if (t.seed) { const old = JSON.parse(fs.readFileSync(path.join(process.cwd(), t.seed), 'utf8')).bucket || {}; res.seeded = { from: t.seed, keys: Object.keys(old).length }; await ctx.addInitScript(o => { try { if (!localStorage.getItem('ot.seeded')) { for (const k in o) localStorage.setItem(k, o[k]); localStorage.setItem('ot.seeded', '1'); } } catch (e) {} }, old); }
   await ctx.route(u => /workers\.dev/.test(u.hostname), async r => {
     const req = r.request(), u = new URL(req.url()), p = u.pathname;
     if (p === '/status') return r.fulfill({ contentType: 'application/json', headers: { 'access-control-allow-origin': '*' }, body: JSON.stringify({ ok: true, on: false, left: 0, budget: 0 }) });
