@@ -364,6 +364,7 @@
     if (!leaveTimesOf(leg).length) return "the timetable found gives no sailing times for this day";
     if (!E.runsAt(leg, at, true)) { const nx = E.nextDepAfter(leg, at); return nx == null ? "the timetable shows no sailing after " + E.clock(at) : "the timetable shows no sailing near " + E.clock(at) + " (the next is about " + E.clock(nx) + ")"; }
     return null; };
+  E.lastLeave = leg => { const ts = leaveTimesOf(leg); return ts.length ? ts[ts.length - 1] : null; };
   E.nextLeave = (leg, at) => { const nx = leaveTimesOf(leg).find(t => t >= at); return nx == null ? null : nx; };
   E.nextDepAfter = (leg, at) => { const a = leg && leg.ans, nx = leaveTimesOf(leg).find(t => t >= at); return nx == null ? null : nx + ((a && a.access && a.access.min) || 0); };
   E.legAs = (leg, o, why) => { const out = Object.assign({}, leg, { mode: E.modeOfKind(o.kind), kind: o.kind, how: o.how, min: o.min, steps: o.steps || [], choice: o.id, source: o.source },

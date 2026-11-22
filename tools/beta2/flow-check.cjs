@@ -118,7 +118,9 @@ async function tapTimes(p) { const out = []; const n = await p.evaluate(() => wi
   // Nov 21 live re-check: an answer kept as complete by the last version (it knew 3 of the day's 15 hours) was never
   // asked again on a phone that planned the trip before, so its way back stayed a taxi. Answers of the last version are asked again.
   { const td = await p.evaluate(() => window.__kairouteTransitDue());
-    check('Ride answers kept by the last version are asked again; fresh ones are kept', td.lastV === true && td.fresh === false && td.old === true, JSON.stringify(td)); }
+    check('Ride answers kept by the last version are asked again; fresh ones are kept', td.lastV === true && td.fresh === false && td.old === true, JSON.stringify(td));
+    // Nov 22 live probe: a way back answered only in part (trains known until 9:53 am) waited 10 minutes to be asked again.
+    check('A ride answered only in part is asked again after 2 minutes, and less often after five tries', td.busyNow === false && td.busy2min === true && td.busyOften === false && td.busyLater === true, JSON.stringify(td)); }
   const all = (await boxes(p)).map(b => b.id), far = all.find(id => /pompeii/.test(id)) || all.find(id => /-far$/.test(id)), town = all.find(id => !/-far$/.test(id));
   for (const id of [far, town].filter(Boolean)) { await tapBox(p, id); const on = (await boxes(p)).some(b => b.id === id && b.on);
     const box = await p.evaluate(() => [...document.querySelectorAll('.fitbox, .closedbox')].map(e => e.innerText.slice(0, 120)).join(' / '));

@@ -738,11 +738,15 @@ function transitDue(exact, hit) {
   if (typeof navigator !== "undefined" && navigator.onLine === false) return false;
   if (!exact) return true;
   if (exact.v !== TRANSIT_V) return true;
-  return (exact.partial || !(exact.opts || []).length) && Date.now() - exact.t > 600000;
+  // A partial answer (the timetable search missed hours of the day) is asked again after 2 minutes, five times, then
+  // every 10 (Nov 22 live probe: the way back to the ship knew only the trains until 9:53 am and stayed a taxi, as the
+  // next ask was 10 minutes away).
+  return (exact.partial || !(exact.opts || []).length) && Date.now() - exact.t > ((exact.tries || 0) >= 5 ? 600000 : 120000);
 }
 if (typeof window !== "undefined") window.__kairouteTransitDue = () => { const now = Date.now(), opts = [{ mode: "train" }];
   return { old: transitDue({ opts, t: now }, {}), oldEmpty: transitDue({ opts: [], t: now }, {}), near: transitDue(null, { opts }), fresh: transitDue({ opts, t: now, v: TRANSIT_V }, {}), lastV: transitDue({ opts, t: now, v: TRANSIT_V - 1 }, {}),
-    busyNow: transitDue({ opts, t: now, v: TRANSIT_V, partial: true }, {}), busyLater: transitDue({ opts, t: now - 700000, v: TRANSIT_V, partial: true }, {}) }; };
+    busyNow: transitDue({ opts, t: now, v: TRANSIT_V, partial: true }, {}), busyLater: transitDue({ opts, t: now - 700000, v: TRANSIT_V, partial: true }, {}),
+    busy2min: transitDue({ opts, t: now - 130000, v: TRANSIT_V, partial: true, tries: 1 }, {}), busyOften: transitDue({ opts, t: now - 130000, v: TRANSIT_V, partial: true, tries: 5 }, {}) }; };
 // Up to 12 pairs a request and 3 requests at once (the helper looks the pairs of a request up side by side), the day
 // on screen first; the plan is redrawn as each answer arrives, not after the whole trip is done.
 async function askTransit() {
@@ -755,7 +759,8 @@ async function askTransit() {
     } catch (e) { part.forEach(([k]) => transitFail.set(k, Date.now())); transitBatch = transitNextBatch(transitBatch, false, part.length); }
     // A ride the helper couldn't answer is asked again by itself once the 2-minute pause is over (the page is redrawn,
     // which asks again), instead of showing the road estimate until the traveler happens to touch something.
-    if (got < part.length) { clearTimeout(transitRetry); transitRetry = setTimeout(transitShow, 125000); }
+    // So is a ride answered only in part (asked again once it is due, above).
+    if (got < part.length || part.some(([k]) => transitMem[k] && transitMem[k].partial && (transitMem[k].tries || 0) < 5)) { clearTimeout(transitRetry); transitRetry = setTimeout(transitShow, 125000); }
     if (got) { transitShow(); transitKeepSoon(); }
   };
   try {
@@ -780,7 +785,7 @@ function transitMerge(res, prev) {
   // departure near 4:10 pm" from such a ride).
   const stale = o => prev && prev.v !== TRANSIT_V && o.mode !== "ferry" && opts.some(n => n.mode === o.mode && Array.isArray(n.kindDeps) && n.kindDeps.length);
   for (const o of (prev && prev.opts) || []) if ((partial || o.mode === "ferry") && !have.has(rideId(o)) && !stale(o)) { opts.push(o); have.add(rideId(o)); }
-  return { opts: opts.sort((x, y) => x.min - y.min), t: Date.now(), v: TRANSIT_V, partial };
+  return Object.assign({ opts: opts.sort((x, y) => x.min - y.min), t: Date.now(), v: TRANSIT_V, partial }, partial ? { tries: (prev && prev.v === TRANSIT_V && prev.partial ? prev.tries || 0 : 0) + 1 } : {});
 }
 if (typeof window !== "undefined") window.__kairouteTransitMerge = transitMerge;
 function transitShow() { nearGen++; if (typeof view !== "undefined" && ["plan", "trip", "sites"].includes(view)) dataRender(); }

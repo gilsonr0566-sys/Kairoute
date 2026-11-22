@@ -20,7 +20,11 @@
       // A timetabled line with no departure near this time (E.runsAt) is never planned on: the taxi instead, said.
       const deadlineRide = !!(p && (p.backToShip || p.deadline));
       if (!E.runsAt(leg, clock, deadlineRide)) { const t = (leg.options || []).find(o => o.kind === "taxi"), nx = E.nextDepAfter(leg, clock);
-        const why = "The timetable found for " + (leg.how || "this line") + " shows no departure near " + E.clock(clock) + (nx != null ? " (the next known is about " + E.clock(nx) + ")" : "") + (t ? ", so this ride is planned by taxi." : ": check another way before you go.");
+        // Times known only up to well before it is needed: the search didn't reach that hour, which is not the same as no
+        // train (Nov 22 live probe: trains known until 9:53 am, said as "no departure near 3:59 pm"). Said as not known.
+        const last = E.lastLeave(leg), short = nx == null && last != null && last < clock - E.DEP_GAP;
+        const why = short ? "The train and bus times found so far for " + (leg.how || "this line") + " only reach " + E.clock(last) + "; the times near " + E.clock(clock) + " aren't known yet" + (t ? ", so this ride is planned by taxi until they are." : ": check another way before you go.")
+          : "The timetable found for " + (leg.how || "this line") + " shows no departure near " + E.clock(clock) + (nx != null ? " (the next known is about " + E.clock(nx) + ")" : "") + (t ? ", so this ride is planned by taxi." : ": check another way before you go.");
         leg = t ? E.legAs(leg, t, why) : Object.assign({}, leg, { note: (leg.note ? leg.note + " " : "") + why, noRun: true }); }
       // On a day with a time to be back, a boat is planned only on a sailing a timetable confirms (E.boatUnsure): else a
       // taxi when the road reaches, else the place across the water isn't planned today, with the reason (never an hour
