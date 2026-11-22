@@ -90,7 +90,7 @@ export async function timetableOptions(a, b, dow, date) {
   // Operators publish a few weeks to a few months ahead: a date further out is not asked (it finds nothing, and doubles
   // the searches); the same kind of day is used instead.
   if (date && /^\d{4}-\d{2}-\d{2}$/.test(date) && Date.parse(date) > Date.now() - 86400e3 && Date.parse(date) < Date.now() + 120 * 86400e3) {
-    try { const r = await timetableAt(a, b, hh => onDate(date, a.lng, hh)); if (r.length) return r.map(o => Object.assign(o, { forDate: date })); } catch (e) {}
+    try { const r = await timetableAt(a, b, hh => onDate(date, a.lng, hh)); if (r.length) return Object.assign(r.map(o => Object.assign(o, { forDate: date })), { missed: r.missed }); } catch (e) {}
   }
   return timetableAt(a, b, hh => dayFor(dow, a.lng, hh));
 }
@@ -109,9 +109,16 @@ async function timetableAt(a, b, when) {
   // way once per kind of day.
   const ask = hh => fetch(`https://api.transitous.org/api/v1/plan?fromPlace=${a.lat},${a.lng}&toPlace=${b.lat},${b.lng}&time=${when(hh)}&numItineraries=6`, { headers: UA, signal: AbortSignal.timeout(20000) }).then(r => r.ok ? r.json() : Promise.reject(new Error("timetable " + r.status)));
   // Three at a time: the free timetable service turns away a burst (every search for each of several rides at once).
-  const all = new Array(TT_HOURS.length), N = 3;
+  const all = new Array(TT_HOURS.length), N = 3, t0 = Date.now();
   for (let k = 0; k < TT_HOURS.length; k += N) { const part = await Promise.allSettled(TT_HOURS.slice(k, k + N).map(ask)); part.forEach((x, i) => { all[k + i] = x; }); }
+  // An hour the service turned away is asked again once, one at a time after a short pause (Nov 21 live check: a ride
+  // kept with only the 1 to 3 pm searches answered knew no train after 4 pm, and the way back to the ship became a taxi).
+  // Within a time budget, so the page's answer never waits much longer for it.
+  const again = all.map((x, k) => x.status !== "fulfilled" ? k : -1).filter(k => k >= 0);
+  for (let j = 0; j < again.length && Date.now() - t0 < 30000; j += N) { await new Promise(r => setTimeout(r, 1500));
+    const part = await Promise.allSettled(again.slice(j, j + N).map(k => ask(TT_HOURS[k]))); part.forEach((x, i) => { all[again[j + i]] = x; }); }
   if (!all.some(x => x.status === "fulfilled")) throw new Error("timetable busy");
+  const missed = all.filter(x => x.status !== "fulfilled").length;
   // Each itinerary remembers which of the three searches found it (w): how often a line runs is measured only between
   // departures found by the same search. Two searches are hours apart, so the gap from the last morning departure to the
   // first midday one is not the line's frequency (the Athens airport metro showed "every 4 h 12 min", Nov 16).
@@ -147,7 +154,8 @@ async function timetableAt(a, b, when) {
   // whole hours unknown (Nov 21 outside test: Civitavecchia to Rome showed four trains a day). a: the walk to its stop.
   const kd = new Map(); for (const o of out) { const l = kd.get(o.kind) || kd.set(o.kind, []).get(o.kind); for (const d of o.deps || []) l.push({ t: d.t, lead: d.lead, dur: d.dur, a: (o.access && o.access.min) || 0 }); }
   for (const o of out) { const seen = new Set(); o.kindDeps = (kd.get(o.kind) || []).sort((x, y) => x.t - y.t).filter(d => { const k = d.t + "|" + d.dur; if (seen.has(k)) return false; seen.add(k); return true; }).slice(0, 120); }
-  return topRides(out, 4);
+  // How many hours of the day stayed unanswered: such an answer is incomplete, kept only briefly and asked again.
+  return Object.assign(topRides(out, 4), { missed });
 }
 // Both sources: real timetables first; the map adds what timetables lack (ferries mostly). A map rail line is kept
 // only when the timetables had no rail answer at all. The free map servers can take a minute when busy, so the answer
@@ -178,13 +186,14 @@ export async function allOptions(a, b, dow, mapWait = 12000, store, date) {
   const merge = mergeRides;
   const TIMEOUT = Symbol("slow"), t0 = Date.now(), tt = await ttP;
   const map = await Promise.race([mapP, new Promise(r => setTimeout(() => r(TIMEOUT), Math.max(1000, mapWait - (Date.now() - t0))))]);
+  const ttMissed = tt ? tt.missed || 0 : null; // hours of the day the timetable search couldn't answer (null: none answered)
   if (map === TIMEOUT) {
-    const late = mapP.then(m => m ? { opts: merge(tt, m), partial: !tt || !!m.partial } : null);
+    const late = mapP.then(m => m ? { opts: merge(tt, m), partial: !tt || !!m.partial || ttMissed > 0, ttMissed } : null);
     if (!tt) { const m = await late; if (!m) throw new Error("map busy"); return m; } // no timetable at all: the map is all there is, so wait for it
-    return { opts: merge(tt, null), partial: true, late };
+    return { opts: merge(tt, null), partial: true, late, ttMissed };
   }
   if (!tt && !map) throw new Error("map busy");
-  return { opts: merge(tt, map), partial: !tt || !map || !!map.partial };
+  return { opts: merge(tt, map), partial: !tt || !map || !!map.partial || ttMissed > 0, ttMissed };
 }
 // Ferries near one point: the mapped ferry courses within reach of it (single ways, and the routes they belong to
 // with their whole course) and the ferry terminals' names. Ferry courses rarely change, so each answer is kept 60 days

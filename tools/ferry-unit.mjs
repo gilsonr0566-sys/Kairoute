@@ -55,7 +55,7 @@ ok(!(await ferryChain(ship, { lat: 38.12, lng: 13.36 }, ways)).length, "no chang
   const worker = (await import("../worker/worker.js")).default, kv = new Map();
   const env = { USAGE: { get: async (k, t) => { const v = kv.get(k); return v == null ? null : t === "json" ? JSON.parse(v) : v; }, put: async (k, v) => { kv.set(k, v); }, delete: async k => { kv.delete(k); }, list: async ({ prefix }) => ({ keys: [...kv.keys()].filter(k => k.startsWith(prefix)).map(name => ({ name })) }) } };
   const ctx = { waitUntil: () => {} }, a = [40.852, 14.26], b = [40.6263, 14.3757];
-  kv.set("tr10:wk:" + [...a, ...b].map(n => n.toFixed(3)).join(","), JSON.stringify({ opts: [{ mode: "train", label: "Train 1 (Eav) + 1 change", min: 112 }], partial: false, t: Date.now() }));
+  kv.set("tr11:wk:" + [...a, ...b].map(n => n.toFixed(3)).join(","), JSON.stringify({ opts: [{ mode: "train", label: "Train 1 (Eav) + 1 change", min: 112 }], partial: false, t: Date.now() }));
   const ask = async () => (await (await worker.fetch(new Request("https://x/transit", { method: "POST", body: JSON.stringify({ pairs: [{ a, b, dow: 3 }] }) }), env, ctx)).json()).results[0];
   const r1 = await ask();
   ok(r1.partial === true && !r1.opts.some(o => o.mode === "ferry"), "ferries at an end not known yet: the saved answer is sent as partial (asked again soon)");
@@ -103,4 +103,19 @@ ok(!(await ferryChain(ship, { lat: 38.12, lng: 13.36 }, ways)).length, "no chang
   ok(top.includes(x95), "the quickest ride of each kind stays: four metro variants never push the airport bus out");
   const f = { mode: "ferry", label: "Ferry", min: 200 }, many = topRides([m(1), x95, { mode: "train", label: "Train", min: 50 }, { mode: "tram", label: "Tram", min: 60 }, f], 3);
   ok(many.includes(f), "a ferry still always stays when there are more kinds than room"); }
+// An hour the timetable service turns away is asked again, and an hour it never answers marks the answer incomplete
+// (Nov 21 live check: a ride kept with only the 1 to 3 pm searches knew no train after 4 pm: the way back became a taxi).
+{ const realFetch = globalThis.fetch, tries = {}; let never = null;
+  const at = (h, m) => `2027-06-30T${String(h).padStart(2, "0")}:${String(m).padStart(2, "0")}:00Z`;
+  const it = h => ({ startTime: at(h, 5), endTime: at(h, 50), duration: 2700, legs: [{ mode: "RAIL", startTime: at(h, 5), duration: 2700, routeShortName: "R" + h, agencyName: "Rail", from: { name: "A", tz: "UTC" }, to: { name: "B" } }] });
+  globalThis.fetch = async u => { const t = new URL(u).searchParams.get("time"), h = +t.slice(11, 13); tries[h] = (tries[h] || 0) + 1;
+    if (h === never || (h >= 15 && tries[h] === 1)) return { ok: false, status: 429, json: async () => ({}) };
+    return { ok: true, json: async () => ({ itineraries: [it(h)] }) }; };
+  const A = { lat: 0.0, lng: 0.0 }, B = { lat: 0.3, lng: 0.0 };
+  const r = await timetableOptions(A, B, 3, "2027-06-30"), late = Math.max(0, ...r.flatMap(o => (o.kindDeps || []).map(d => d.t)));
+  ok(r.missed === 0 && late >= 20 * 60, `hours turned away once are asked again: the day's last train is known (${Math.floor(late / 60)}:${String(late % 60).padStart(2, "0")}, ${r.missed} hours missed)`);
+  for (const k in tries) delete tries[k]; never = 17;
+  const r2 = await timetableOptions(A, B, 3, "2027-06-30");
+  ok(r2.missed === 1, `an hour never answered is counted, so the answer is kept as incomplete and asked again (${r2.missed})`);
+  globalThis.fetch = realFetch; }
 console.log(bad ? `${bad} ferry check(s) failed` : "ferry checks passed"); process.exit(bad ? 1 : 0);
