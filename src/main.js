@@ -939,7 +939,9 @@ function deadlineWord(d) {
   return "the time you set to be back";
 }
 function rideDetail(leg, start, endBy) {
-  if (!leg.choices && !leg.transit) return rideExtra(leg);
+  // A ride with no choices (a walk back to the ship) says its spare time too: 24 min for 0.4 mi read as a mistake (failure
+  // map, Nov 22).
+  if (!leg.choices && !leg.transit) return (leg.slack ? `<span class="sub ridesub">Includes ${dur(leg.slack)} spare before ${deadlineWord(day())}.</span>` : "") + rideExtra(leg);
   const o = leg.transit, ev = knownEvery(o) ? `, runs about every ${dur(o.every)}${o.everySrc === "timetable" ? " (from the timetable)" : ""}` : "";
   const ride = o && o.steps && o.steps.length ? o.steps.map(esc).join("; then ") : o ? `${dur(o.ride)} ride${o.stops ? ` (${o.stops} stops)` : ""}` : "";
   const how = o && o.access && o.egress ? `${o.access.how === "walk" ? "Walk" : "Taxi"} ${dur(o.access.min)} to ${esc(o.from || "the " + (o.mode === "ferry" ? "pier" : "station"))}${ev}. ${ride}, then ${o.egress.how === "walk" ? "walk" : "taxi"} ${dur(o.egress.min)}${o.to && !(o.steps && o.steps.length) ? " from " + esc(o.to) : ""}.${o.operator ? " " + esc(o.operator) + "." : ""}${o.hours ? " Hours: " + esc(o.hours) + "." : ""}${o.fare ? " Fare: " + esc(o.fare) + "." : ""} Times include waiting and boarding.${payNote(o)}` : leg.mode === "walk" ? "" : rideOnce(leg.kind === "ferry" ? "Boats keep their own timetable: check the next sailing at the pier." : leg.kind === "train" || leg.kind === "bus" ? "Time includes getting to the station and the wait." : "By road, with time for traffic.");
@@ -1771,10 +1773,12 @@ function engine2Card(plan) {
 function checksCard(d, city, plan) {
   if (!plan || !plan.items) return "";
   const rows = [], add = (st, t) => rows.push(`<li class="ck ${st}"><span>${st === "ok" ? "✓" : st === "warn" ? "!" : "?"}</span>${t}</li>`);
-  const stops = (plan.stops || []).filter(s => !s.mealOf);
+  // Beta 2's plan keeps each stop's sight under .place (the timed item): its name, hours and sources are read there
+  // (failure map, Nov 22: "Opening hours not confirmed for , , , , ." on every port day).
+  const stops = (plan.stops || []).filter(s => !s.mealOf).map(s => s.place && !s.name ? Object.assign({}, s.place, s) : s).filter(s => s.name);
   if (stops.length) { const conf = stops.filter(s => s.src && s.src.length >= 2), one = stops.filter(s => !(s.src && s.src.length >= 2));
     if (conf.length === stops.length) add("ok", `All ${stops.length} stops are named by at least two independent sources.`);
-    else if (!stops.some(s => s.src)) add("unk", "Checking today's stops against outside sources…");
+    else if (!stops.some(s => s.src)) add("unk", "Today's stops have not been checked against outside sources: each comes from the travel guide or the map only.");
     else add("warn", `${conf.length} of ${stops.length} stops are named by two or more sources. Fewer sources for: ${esc(one.map(s => s.name).join(", "))}.`); }
   // Squares, parks, hills, streets and neighborhoods are open-air and always open: no hours to confirm.
   const openAir = s => /square|park|garden|hill|neighbo|street|promenade|old town|quarter|district|beach|viewpoint|harbou?r|waterfront|bridge/i.test((s.category || "") + " " + s.name);
@@ -1791,7 +1795,12 @@ function checksCard(d, city, plan) {
     add(known.length === meals.length && open.length === meals.length ? "ok" : "warn", known.length ? `${open.length} of ${meals.length} meal stops list hours that say they're open on this day.${known.length < meals.length ? " The others list no hours: check before you go." : ""}` : "No restaurant here lists its hours on the map. Check they're open on the day.");
   }
   if (d.type === "port" && d.allAboard) add(plan.over ? "warn" : "ok", `Back at the ship by ${fmt(Math.min(plan.end, plan.endBy))}, ${dur(shipToPort(d, d.allAboard) - Math.min(plan.end, plan.endBy))} before all aboard (${esc(d.allAboard)}). Being on board on time is your responsibility: confirm the all-aboard time with your cruise line on the day, as it can change.`);
-  if (plan.over) add("warn", `The day runs past ${fmt(plan.endBy)}. Take out a stop.`); else add("ok", `The day fits: done by ${fmt(plan.end)}, with travel, meals and lines allowed for.`);
+  // With free time the leave-by is the one the free time card and the banner give, never the earlier finish without it
+  // (failure map, Nov 22: one boarding day showed four different leave times).
+  const F = !plan.over ? dayFacts(d, plan) : null, freeOn = F && F.left >= 30 && F.leaveBy != null && !(plan.dropped || []).length && !(plan.w && plan.w.straight);
+  if (plan.over) add("warn", `The day runs past ${fmt(plan.endBy)}. Take out a stop.`);
+  else if (freeOn) add("ok", `The day fits, with travel, meals and lines allowed for: ${dur(F.left)} of free time, then leave by ${fmt(F.leaveBy)} to be back by ${fmt(plan.endBy)}.`);
+  else add("ok", `The day fits: done by ${fmt(plan.end)}, with travel, meals and lines allowed for.`);
   if ((plan.dropped || []).length) add("warn", `Didn't fit today: ${esc(plan.dropped.map(s => s.name).join(", "))}.`);
   const short = (plan.stops || []).filter(s => s.shortFrom && s.shortFrom > s.minutes);
   if (short.length) add("warn", `To fit all your sights, ${esc(short.map(s => `${s.name} gets ${dur(s.minutes)} (the guide suggests ${dur(s.shortFrom)})`).join("; "))}.`);
@@ -1890,6 +1899,9 @@ function rateEat(name, stars) {
 }
 function eatStars(name, city, label) {
   const mine = myEatRating(city, name);
+  // Rating a meal not eaten yet is never asked: the box shows from the day itself on (failure map, Nov 22: "Ate here? Rate
+  // it" on every future day).
+  { let dd = null; try { dd = typeof day === "function" ? day() : null; } catch (e) {} if (!mine && dd && dd.date && dd.date > todayISO(dd)) return ""; }
   return `<div class="raterow"><span>${mine ? "Your rating" : label || "Ate here? Rate it"}</span><div class="stars small" role="group" aria-label="Rate ${esc(name)}">${[1, 2, 3, 4, 5].map(n => `<button class="star ${mine >= n ? "on" : ""}" data-eatrate="${n}" data-eatname="${esc(name)}" aria-label="${n} star${n > 1 ? "s" : ""}">★</button>`).join("")}</div>${mine && mine <= 2 ? `<span class="lede">We won't suggest it to you again.</span>` : mine ? `<span class="lede">Thanks! It helps other travelers.</span>` : ""}</div>`;
 }
 // Why each alternative is offered: a different kind of meal, not just another name.
@@ -3336,15 +3348,20 @@ const showWhen = sh => sh && sh.every > 0 ? (sh.every === 60 ? "every hour" : "e
 // The parts in walking order with a time for each. A part with a timed show is moved to meet the show when it
 // falls during the visit; otherwise it says when the next one is.
 function partPlan(s, start) {
-  let list = partsOn(s).map(p => ({ p, k: s.parts.indexOf(p) }));
+  let list = partsOn(s).map(p => ({ p, k: s.parts.indexOf(p), len: +p.minutes > 0 ? +p.minutes : 0 }));
+  // The parts fill the visit: time the parts' own minutes leave over is spread over them in proportion (equal shares when
+  // none is known), never all parts in the visit's first minutes (failure map, Nov 22: a 1 h 30 min museum visit listed
+  // its parts at 11:02, 11:03 and 11:04).
+  { const sum = list.reduce((m, x) => m + x.len, 0), vis = +s.minutes || 0;
+    if (list.length && vis > sum) list.forEach(x => { x.len = sum > 0 ? x.len * vis / sum : vis / list.length; }); }
   const sh = s.show && s.show.every > 0 ? s.show : null, end = start + s.minutes;
   let show = sh ? nextShow(sh, start) : null, showK = sh && sh.part != null ? list.findIndex(x => x.k === sh.part) : -1;
   if (showK >= 0 && show != null && show < end) {
     const x = list.splice(showK, 1)[0]; let t = start, at = list.length;
-    for (let i = 0; i < list.length; i++) { if (t + list[i].p.minutes > show) { at = i; break; } t += list[i].p.minutes; }
+    for (let i = 0; i < list.length; i++) { if (t + list[i].len > show) { at = i; break; } t += list[i].len; }
     list.splice(at, 0, x);
   }
-  let t = start; list.forEach(x => { x.time = t; if (showK >= 0 && x.k === sh.part && show != null && show < end && show > t) { x.wait = show - t; t = show; } x.time = t; t += x.p.minutes; });
+  let t = start; list.forEach(x => { x.time = t; if (showK >= 0 && x.k === sh.part && show != null && show < end && show > t) { x.wait = show - t; t = show; } x.time = Math.round(t); t += x.len; });
   return { list, show, during: show != null && show < end };
 }
 function showLine(s, start) {
@@ -6918,7 +6935,7 @@ function mealFacts(r) {
 function mealMore(r, city, lbl) {
   const why = String(r.why || "").replace(/\s*\(Wikivoyage\)\s*$/, "");
   // The other places to eat are in the Change lunch card (meal-change.js), one tap each, so they aren't listed here too.
-  if (r.generic || (!why && !r.crowd)) return r.generic ? "" : `<details class="more mealmore"><summary>Rate ${esc(r.name)}</summary><div class="mealbox">${eatStars(r.name, city)}</div></details>`;
+  if (r.generic || (!why && !r.crowd)) { const st = r.generic ? "" : eatStars(r.name, city); return st ? `<details class="more mealmore"><summary>Rate ${esc(r.name)}</summary><div class="mealbox">${st}</div></details>` : ""; }
   return `<details class="more mealmore"><summary>${lbl === "Lunch" ? "Lunch" : lbl === "Dinner" ? "Dinner" : esc(lbl)}: why here</summary><div class="mealbox">${why ? `<span>${esc(why)}</span>` : ""}${r.crowd ? `<span class="crowd">${esc(crowdLine(r))}</span>` : ""}${eatStars(r.name, city)}</div></details>`;
 }
 const bookedLinks = lbl => `<div class="sub"><button class="link" data-act="bookopen" data-meal="${lbl}">Change</button> · <button class="link" data-act="bookremove" data-meal="${lbl}">Remove my reservation</button></div>`;

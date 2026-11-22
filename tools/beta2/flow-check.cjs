@@ -142,6 +142,18 @@ async function tapTimes(p) { const out = []; const n = await p.evaluate(() => wi
       return [window.__kairoutePackedWords(r1), window.__kairoutePackedWords(r2)]; });
     check('A lunch with no place to eat known says so and names a real place by the stop before to pick something up, else to bring lunch',
       /No place to eat is known in or near Pompeii/.test(pk[0]) && /Trattoria Vicina near Sorrento/.test(pk[0]) && /No place to eat is known/.test(pk[1]) && /Bring lunch from/.test(pk[1]) && !/Far Inn/.test(pk.join(' ')), JSON.stringify(pk)); }
+  // Failure map, Nov 22: a visit's parts fill the visit (never all in its first minutes); the checks card names every
+  // stop of a Beta 2 plan (its sight is under .place); an answer that will never come (AI off) is no answer, not a spinner.
+  { const fm = await p.evaluate(() => {
+      const s = { id: 'm', name: 'Museum', minutes: 90, parts: [{ name: 'A', minutes: 1 }, { name: 'B', minutes: 1 }, { name: 'C', minutes: 1 }] };
+      const F = window.__kairouteFM, times = F.partPlan(s, 660).list.map(x => x.time);
+      const plan = { items: [{ type: 'stop', place: { id: 'x', name: 'Old Fort', category: 'Fortress' } }], stops: [{ type: 'stop', place: { id: 'x', name: 'Old Fort', category: 'Fortress' } }], end: 900, endBy: 960, w: {} };
+      let ck = ''; try { ck = F.checksCard(plan); } catch (e) { ck = 'ERR ' + e.message; }
+      const v = F.aiOffAnswer();
+      return { times, ck, v }; });
+    check("A visit's parts are spread over the visit, not a minute apart", fm.times.join() === '660,690,720', JSON.stringify(fm.times));
+    check("The checks card names each stop of the plan (no empty names)", /Old Fort/.test(fm.ck) && !/for ,|, ,/.test(fm.ck), fm.ck.slice(0, 300));
+    check("With AI off, a writing request is no answer (null), never a spinner that turns for ever", fm.v === null, String(fm.v)); }
   const all = (await boxes(p)).map(b => b.id), far = all.find(id => /pompeii/.test(id)) || all.find(id => /-far$/.test(id)), town = all.find(id => !/-far$/.test(id));
   for (const id of [far, town].filter(Boolean)) { await tapBox(p, id); const on = (await boxes(p)).some(b => b.id === id && b.on);
     const box = await p.evaluate(() => [...document.querySelectorAll('.fitbox, .closedbox')].map(e => e.innerText.slice(0, 120)).join(' / '));

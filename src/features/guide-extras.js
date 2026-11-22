@@ -23,8 +23,11 @@ function gxGet(key, path, opts) {
   const hit = gxCache[key]; if (hit && hit.v !== undefined) return hit.v;
   // The helper's writing and know-how paths use AI: never asked while AI is switched off (Nov 20 tester: the city primer still
   // posted with AI off; the helper refused it, nothing spent, but the app must not ask).
-  if (freeAI && freeAI.on !== true && /^\/x\/(write|knowhow)\b/.test(path)) return undefined;
-  if (!freeAI || gxPending.has(key) || (gxFailed.get(key) || 0) > Date.now() || (typeof navigator !== "undefined" && navigator.onLine === false)) return undefined;
+  // An answer that will never come is no answer (null: the card isn't shown), never "still working" (undefined: a spinner):
+  // with AI off, offline, or just failed (failure map, Nov 22: "Your guide is writing the story of…" turning for ever).
+  if (freeAI && freeAI.on !== true && /^\/x\/(write|knowhow)\b/.test(path)) return null;
+  if (!freeAI || (gxFailed.get(key) || 0) > Date.now() || (typeof navigator !== "undefined" && navigator.onLine === false)) return null;
+  if (gxPending.has(key)) return undefined;
   gxPending.add(key);
   fetch(freeAI.url + path, opts && opts.body ? { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify(opts.body) } : {})
     .then(r => r.ok ? r.json() : Promise.reject(r.status))
@@ -448,3 +451,8 @@ if (typeof document !== "undefined") {
 }
 const gxOpen = new Set();
 if (typeof window !== "undefined") window.__kairouteExtras = { gxNearDirect, gxSun, gxLocalMin, interestWords, themeOf, gxSavings, askExtra, THEMES };
+// For the flow check (tools/beta2/flow-check.cjs): visit parts timing, the checks card, and an answer asked with AI off.
+if (typeof window !== "undefined") window.__kairouteFM = {
+  partPlan: (s, t) => partPlan(s, t), checksCard: (plan) => checksCard((trip.days || []).find(d => d.type !== "sea") || trip.days[0], {}, plan),
+  aiOffAnswer: () => { const was = freeAI; freeAI = { url: "https://example.invalid", on: false }; try { return gxGet("primer:flowcheck", "/x/write", { body: {} }); } finally { freeAI = was; } }
+};
