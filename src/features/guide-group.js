@@ -33,11 +33,6 @@ async function grpCall(body, query) {
 // What followers receive: this trip's days and the city guides it uses. No journal, notes or photos.
 function grpSnapshot() {
   const t = JSON.parse(JSON.stringify(trip)); delete t.journal; delete t.tour; delete t.badges;
-  // The group's plan as the owner sees it: its stops in their order, so a member following the day sees the same day in
-  // the same order from the first second, not one their own phone works out while its map answers are still arriving
-  // (Nov 22 outside test: a new member's day had the group's 7 sights in another order for its first minutes).
-  try { const P = typeof window !== "undefined" && window.__kairoutePlanStops ? window.__kairoutePlanStops() : [];
-    t.days.forEach((x, i) => { delete x.grpOrder; const ids = P[i] || []; if (ids.length && !x.grpTour) x.grpOrder = ids; }); } catch (e) {}
   const cs = {}; trip.days.forEach(d => { const k = cityKeyFor(d); if (k && cities[k] && k !== "barcelona") cs[k] = cities[k]; });
   return { trip: t, cities: cs };
 }
@@ -49,7 +44,7 @@ async function grpLead() {
   if (grpBusy) return null; grpBusy = true; grpNote = ""; render();
   try {
     const { status, j } = await grpCall({ op: "new", trip: grpSnapshot(), name: trip.name || tripName(trip), live: grpLive() });
-    if (status === 200 && j && j.code) { trip.groupShared = j.code; save(); grp = { code: j.code, role: "lead", token: j.token, tripId: trip.id, at: Date.now(), tripName: trip.name || tripName(trip) }; grpSave(); grpLastLive = ""; grpLastTrip = grpTripKey(); grpNote = ""; return { code: j.code }; }
+    if (status === 200 && j && j.code) { trip.groupShared = j.code; save(); grp = { code: j.code, role: "lead", token: j.token, tripId: trip.id, at: Date.now(), tripName: trip.name || tripName(trip) }; grpSave(); grpLastLive = ""; grpLastTrip = JSON.stringify(trip.days); grpNote = ""; return { code: j.code }; }
     grpNote = "The group couldn't start just now. Try again in a minute.";
   } catch (e) { grpNote = "Starting a group needs the internet. Try again when you're online."; }
   finally { grpBusy = false; render(); }
@@ -129,15 +124,12 @@ function grpSchedule(ms) {
   clearTimeout(grpPollTimer); if (!grp || grp.role !== "follow") return;
   grpPollTimer = setTimeout(async () => { if (document.visibilityState !== "hidden") await grpPoll(); grpSchedule(Math.min(view === "tour" ? 20000 : 120000, (view === "tour" ? 3000 : 30000) * Math.pow(2, Math.min(grpFails, 3)))); if (view === "tour") { const el = document.getElementById("grpSignal"); if (el) el.innerHTML = grpSignalText(); } }, ms);
 }
-const grpTripKey = () => JSON.stringify(trip.days) + JSON.stringify(typeof window !== "undefined" && window.__kairoutePlanStops ? window.__kairoutePlanStops() : []);
 // Leader: send the current step (and the trip, when its plan changes) whenever it changes.
 async function grpPush() {
   if (!grp || grp.role !== "lead" || trip.id !== grp.tripId) return;
   const live = grpLive(), key = JSON.stringify(live);
   if (key !== grpLastLive) { grpLastLive = key; try { const r = await grpCall({ op: "live", code: grp.code, token: grp.token, live }); if (r.status === 404) { grp = null; grpSave(); grpNote = "This group code has expired."; render(); } } catch (e) { grpLastLive = ""; } }
-  // The trip goes again when its days change or the owner's planned stops do (the plan settles as map answers arrive,
-  // and followers are planned in the owner's order).
-  const days = grpTripKey();
+  const days = JSON.stringify(trip.days);
   if (days !== grpLastTrip && Date.now() - (grp.tripAt || 0) > 10000) { grp.tripAt = Date.now(); grpSave(); try { const r = await grpCall({ op: "trip", code: grp.code, token: grp.token, trip: grpSnapshot() }); if (r.status === 200) grpLastTrip = days; } catch (e) {} }
 }
 async function grpRegroup(where, note) {
@@ -236,9 +228,7 @@ function grpMenuHTML(d) {
 // A member makes a day their own: it starts as a copy of the group's plan, and they change the sights from there.
 // The copied sights are the member's own list from then on (Nov 22 gate: an own day still marked as the app's seeding
 // had its sights swapped by the planner for others when the owner's day got shorter, before the member ticked anything).
-function grpMakeOwn(d) { d.grpOwn = true; if (Array.isArray(d.selected)) d.ownList = true; delete d.grpOrder; save(); grpHello(); }
-// A member's day that follows the group: the owner's stops in the owner's order (null on any other day).
-function grpFollowOrder(d) { return d && trip && trip.group && !d.grpOwn && !d.grpTour && !(Array.isArray(d.order) && d.order.length > 1) && Array.isArray(d.grpOrder) && d.grpOrder.length ? d.grpOrder.slice() : null; }
+function grpMakeOwn(d) { d.grpOwn = true; if (Array.isArray(d.selected)) d.ownList = true; save(); grpHello(); }
 function grpFollow(d) {
   const ld = grpLeadDay(d.id); const i = trip.days.indexOf(d); if (i < 0) return;
   if (ld) trip.days[i] = JSON.parse(JSON.stringify(ld)); else { delete d.grpOwn; }

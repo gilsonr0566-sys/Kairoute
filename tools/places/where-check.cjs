@@ -17,9 +17,12 @@ ok(r.from === 'listing' && !r.posDoubt && !r.moved, `agreeing points in the whol
 // No whole known, guide and encyclopedia 2 km apart, no map: not sure.
 r = placeOf(wrong, right, null, []);
 ok(r.from === 'listing' && r.posDoubt, `two sources far apart with nothing to tell: marked not sure (got ${JSON.stringify(r)})`);
-// No whole known, a map point: the map wins and is sure.
-r = placeOf(wrong, wrong, right, []);
-ok(r.from === 'map' && !r.posDoubt, `the map's point wins when nothing else tells (got ${JSON.stringify(r)})`);
+// No whole known, guide and encyclopedia disagree: the one the map agrees with stands.
+r = placeOf(wrong, right, right, []);
+ok(r.from === 'wikidata' && !r.posDoubt, `guide and encyclopedia disagree: the one the map agrees with stands (got ${JSON.stringify(r)})`);
+// Guide and encyclopedia agree: a map element far away (a long wall's middle, a mis-tagged element) never moves the sight.
+r = placeOf(right, right, { lat: 42.70, lng: 18.20 }, []);
+ok(r.from === 'listing' && !r.posDoubt && !r.moved, `two written sources that agree are never moved by the map (got ${JSON.stringify(r)})`);
 // A sight a short walk outside its whole (a monastery by the old town's gate) stays where the guide puts it.
 r = placeOf({ lat: 42.6420, lng: 18.1200 }, null, null, [oldTown]);
 ok(r.from === 'listing' && !r.posDoubt, `a sight a short walk from its whole stays put (got ${JSON.stringify(r)})`);

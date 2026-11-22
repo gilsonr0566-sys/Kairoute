@@ -111,8 +111,6 @@ if (typeof window !== "undefined" && window.ENGINE2 && window.KEngine) (function
     memo = { k: synced ? keyNow() : k, ik, used, plans, bucket }; recent.set(memo.k, memo); if (recent.size > 8) recent.delete(recent.keys().next().value); return memo;
   }
   window.__kairouteEngine2 = () => JSON.parse(JSON.stringify(tripPlans().plans));
-  // Each day's planned stops in order (ids), for the group trip's snapshot (guide-group.js).
-  window.__kairoutePlanStops = () => tripPlans().plans.map(ep => ep && !ep.error && Array.isArray(ep.items) ? ep.items.filter(y => y.t === "stop" && y.id != null).map(y => String(y.id)) : []);
   // For the phone test: every pier a boat may leave from, and whether a place is reached only by boat.
   window.__kairoutePiers = () => E.piersOf(tripPlans().bucket || {});
   window.__kairouteBoatPlace = id => { const b = tripPlans().bucket || {}; for (const c of Object.values(b.cities || {})) { const x = [...(c.sites || []), ...(c.farther || [])].find(y => String(y.id) === String(id)); if (x) return E.byBoat(x.travelNote) || E.waterOnly(x); } return false; };
