@@ -29,6 +29,9 @@ const TRIPS = [
     // traveler answers with the first one listed, as the saved trips always did (the asking itself is checked on the phone).
     const snap = await p.evaluate(() => window.__kairouteBucket ? window.__kairouteBucket(true) : null);
     if (!snap) { console.log('FAIL ' + t.name + ': bucket hook missing'); bad++; await p.close(); continue; }
+    // A water check still out is a moment's wait, not part of the trip: the saved trip is planned as when the answers are in
+    // (Nov 21: every saved ship day picked nothing, frozen mid-wait).
+    for (const c of Object.values(snap.cities || {})) for (const f of ['sites', 'farther']) (c[f] || []).forEach(x => { delete x.waterPending; });
     snap.name = t.name; snap.label = t.label;
     fs.writeFileSync(path.join(OUT, t.name + '.json'), JSON.stringify(snap));
     const days = snap.old.filter(x => !x.error).length;
