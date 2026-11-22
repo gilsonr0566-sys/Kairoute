@@ -1,5 +1,5 @@
 {
- "run": "round3e-2026-11-22",
+ "run": "round3f-2026-11-22",
  "dayWait": 90000,
  "trips": [
   {
@@ -42,11 +42,15 @@
     },
     {
      "name": "nap-3-fit-capri-alone",
-     "js": "__T.fitName(5,'Capri')"
+     "js": "(async()=>{window.__kairouteAt(5,'sites');await __T.sleep(12000);let r=await __T.fitName(5,'Capri');if(!r.found){await __T.sleep(20000);r=await __T.fitName(5,'Capri')}return r})()"
     },
     {
      "name": "nap-4-basis",
      "js": "__T.basis(5)"
+    },
+    {
+     "name": "nap-5-plan",
+     "js": "(async()=>{window.__kairouteAt(5,'plan');await __T.sleep(15000);return __T.planText(12000)})()"
     },
     {
      "name": "dbv-1-pier-gruz",
@@ -106,6 +110,10 @@
      "js": "(async()=>{window.__kairouteAt(4,'plan');await __T.sleep(60000);return __T.planText(12000)})()"
     },
     {
+     "name": "rome-plan-3min",
+     "js": "(async()=>{await __T.sleep(120000);window.__kairouteAt(4,'plan');await __T.sleep(5000);return __T.planText(12000)})()"
+    },
+    {
      "name": "basis-day3",
      "js": "__T.basis(3)"
     },
@@ -116,6 +124,10 @@
     {
      "name": "basis-day5",
      "js": "__T.basis(5)"
+    },
+    {
+     "name": "nap-capri-box",
+     "js": "__T.fitName(5,'Capri')"
     }
    ]
   },
@@ -159,11 +171,15 @@
     },
     {
      "name": "nap-3-fit-capri-alone",
-     "js": "__T.fitName(5,'Capri')"
+     "js": "(async()=>{window.__kairouteAt(5,'sites');await __T.sleep(12000);let r=await __T.fitName(5,'Capri');if(!r.found){await __T.sleep(20000);r=await __T.fitName(5,'Capri')}return r})()"
     },
     {
      "name": "nap-4-basis",
      "js": "__T.basis(5)"
+    },
+    {
+     "name": "nap-5-plan",
+     "js": "(async()=>{window.__kairouteAt(5,'plan');await __T.sleep(15000);return __T.planText(12000)})()"
     },
     {
      "name": "dbv-1-pier-gruz",
@@ -224,6 +240,10 @@
      "js": "(async()=>{window.__kairouteAt(4,'plan');await __T.sleep(60000);return __T.planText(12000)})()"
     },
     {
+     "name": "rome-plan-3min",
+     "js": "(async()=>{await __T.sleep(120000);window.__kairouteAt(4,'plan');await __T.sleep(5000);return __T.planText(12000)})()"
+    },
+    {
      "name": "basis-day3",
      "js": "__T.basis(3)"
     },
@@ -234,6 +254,10 @@
     {
      "name": "basis-day5",
      "js": "__T.basis(5)"
+    },
+    {
+     "name": "nap-capri-box",
+     "js": "__T.fitName(5,'Capri')"
     }
    ],
    "seed": "outside-test-results/round3b-2026-11-21/d15-livorno-rome-naples/result.json"
