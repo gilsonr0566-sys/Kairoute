@@ -65,6 +65,17 @@ ok(!(await ferryChain(ship, { lat: 38.12, lng: 13.36 }, ways)).length, "no chang
   const r2 = await ask(), f2 = r2.opts.find(o => o.mode === "ferry");
   ok(!!f2 && r2.opts.some(o => o.mode === "train"), `once both ends are known the saved answer offers the ferry beside the train (${f2 ? f2.label + ", " + f2.min + " min" : "none"})`);
   globalThis.fetch = realFetch; }
+// Nov 22 live probe: a kept partial answer (trains known only until 9:53 am) is looked up afresh after 2 minutes, not 10.
+{ const realFetch = globalThis.fetch; globalThis.fetch = async () => { throw new Error("busy"); };
+  const worker = (await import("../worker/worker.js")).default, kv = new Map(); let bg = 0;
+  const env = { USAGE: { get: async (k, t) => { const v = kv.get(k); return v == null ? null : t === "json" ? JSON.parse(v) : v; }, put: async (k, v) => { kv.set(k, v); }, delete: async k => { kv.delete(k); }, list: async () => ({ keys: [] }) } };
+  const ctx = { waitUntil: p => { bg++; p.catch(() => {}); } }, a = [41.9033, 12.4533], b = [42.095, 11.79], key = "tr11:wk:" + [...a, ...b].map(n => n.toFixed(3)).join(",");
+  const ask = async () => (await (await worker.fetch(new Request("https://x/transit", { method: "POST", body: JSON.stringify({ pairs: [{ a, b, dow: 3 }] }) }), env, ctx)).json()).results[0];
+  const put = age => { kv.clear(); kv.set(key, JSON.stringify({ opts: [{ mode: "train", label: "Train 1", min: 100, kindDeps: [{ t: 372 }, { t: 593 }] }], partial: true, ttMissed: 9, t: Date.now() - age })); bg = 0; };
+  put(60000); await ask(); const young = kv.has("lk:" + key);
+  put(180000); await ask(); const old = kv.has("lk:" + key);
+  ok(!young && old, `a kept partial answer is looked up afresh after 2 minutes, not before (1 min: ${young}, 3 min: ${old})`);
+  globalThis.fetch = realFetch; }
 { const many = [1, 2, 3, 4, 5].map(i => ({ mode: "train", label: "T" + i, min: 100 + i })).concat([{ mode: "ferry", label: "F", min: 134 }]), t = topRides(many, 5);
   ok(t.length === 5 && t.some(o => o.mode === "ferry"), "a long list of quicker trains never pushes the ferry out (" + t.map(o => o.label).join(",") + ")"); }
 // Trip date: the timetable is asked for the trip's own date (a summer ferry shows only then), the answer marked with it;
