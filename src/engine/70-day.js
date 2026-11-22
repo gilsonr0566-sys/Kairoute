@@ -374,9 +374,12 @@
       const endWith = cur.r.end; keep = next; cur = c;
       // The time it needs and the time there is, in numbers (Nov 22, Richard asked how a day trip was "closed" when the note said
       // "closed, or no longer fits the time safely"): with today's other stops, what it adds to the day, and what is left.
-      const hm = m => { m = Math.max(0, Math.round(m / 5) * 5); return m >= 60 ? Math.floor(m / 60) + " h" + (m % 60 ? " " + (m % 60) + " min" : "") : m + " min"; };
-      const addMin = endWith - c.r.end, leftMin = win.endBy - c.r.end;
-      const timeWhy = isFinite(addMin) && isFinite(leftMin) && addMin > leftMin && addMin > 0 ? "needs about " + hm(addMin) + " (the visit and the rides to it and on), and with today's other stops only " + hm(leftMin) + " is left before " + E.clock(win.endBy) : null;
+      // What it needs rounds up and what is left rounds down (to 5 minutes), so the two never read the same; when they
+      // would, the exact minutes are said.
+      const hm = (m, f) => { m = Math.max(0, f(m)); return m >= 60 ? Math.floor(m / 60) + " h" + (m % 60 ? " " + (m % 60) + " min" : "") : m + " min"; };
+      const up = m => Math.ceil(m / 5) * 5, down = m => Math.floor(m / 5) * 5, exact = m => Math.round(m);
+      const addMin = endWith - c.r.end, leftMin = win.endBy - c.r.end, close = up(addMin) <= down(leftMin) || up(addMin) - down(leftMin) < 5;
+      const timeWhy = isFinite(addMin) && isFinite(leftMin) && addMin > leftMin && addMin > 0 ? "needs about " + hm(addMin, close ? exact : up) + " (the visit and the rides to it and on), and with today's other stops only " + hm(leftMin, close ? exact : down) + " is left before " + E.clock(win.endBy) : null;
       // The real reason (Fable review #13: a museum "didn't fit" when it simply opens too late for the day): a sight that
       // opens too late to be seen before the day's end says so.
       const sd = ctx.siteDay ? ctx.siteDay(out.id) : null, opens = sd && sd.oh && sd.oh.spans && sd.oh.spans.length ? sd.oh.spans[0][0] : null;

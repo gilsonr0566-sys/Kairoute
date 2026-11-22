@@ -403,7 +403,11 @@
         // road map's time (no live traffic); "estimate": at least one ride is timed from the distance or the guide's words; "walk": on foot.
         const rank = { timetable: 0, roads: 1, map: 2, guide: 2, estimate: 2 }, onWheels = backRides.filter(x => x.t === "ride" && x.mode !== "walk" && x.mode !== "lift");
         const basis = onWheels.length ? ["timetable", "roads", "estimate"][onWheels.reduce((a, x) => Math.max(a, rank[x.source] != null ? rank[x.source] : 2), 0)] : "walk";
-        plan.leaveAt = { out: t, bags: bagsK >= 0 && its[bagsK].at != null ? its[bagsK].at : null, last: bagsK < 0 ? t : lastK >= 0 && lastK < bagsK ? (its[lastK].at || 0) + (its[lastK].t === "start" ? 0 : its[lastK].min || 0) : null, basis };
+        // With bags on the way, each time is the LATEST safe one, worked back from the leave-for-the-end time: at the bags by
+        // that time less their minutes, out of the last stop by that less the rides to them (screen check, Nov 22: "leave
+        // here by 2:59", the plan's own time, printed after bags collected at 3:19 when the latest was about 4:36).
+        const span = (a, b) => its.slice(a, b + 1).reduce((m, x) => m + (x.min || 0) + (x.wait || 0), 0);
+        plan.leaveAt = { out: t, bags: bagsK >= 0 ? t - (its[bagsK].min || 0) : null, last: bagsK < 0 ? t : lastK >= 0 && lastK < bagsK ? t - span(lastK + 1, bagsK) : null, basis };
         const word = d.type === "embark" ? "the cruise terminal" : d.type === "port" ? "the ship" : "the " + ((E.MODES[d.mode] || E.MODES.flight).word);
         const atHotel = bagsK >= 0 && plan.leaveAt.last != null && Math.abs(plan.leaveAt.bags - plan.leaveAt.last) <= 2;
         explain.push(plan.leaveAt.bags != null && !atHotel && plan.leaveAt.last != null

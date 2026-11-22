@@ -930,12 +930,20 @@ function rideExtra(leg) {
 // it applies to (UI check, Nov 20: it repeated under every taxi of the day). renderPlan starts each day afresh.
 let rideSaid = new Set();
 const rideOnce = t => !t || rideSaid.has(t) ? "" : (rideSaid.add(t), t);
+// What the day must be back for, in words: the ship, the flight, the train (failure-map check, Nov 22: a flight day
+// said "spare before the ship").
+function deadlineWord(d) {
+  const t = (d && d.type) || "", m = (d && d.mode) || "";
+  if (t === "port" || t === "embark" || (t === "departure" && (m === "ship" || m === "ferry"))) return m === "ferry" && t === "departure" ? "your ferry" : "the ship";
+  if (t === "departure") return m === "flight" ? "your flight" : m === "train" ? "your train" : m === "car" ? "your coach" : "your departure";
+  return "the time you set to be back";
+}
 function rideDetail(leg, start, endBy) {
   if (!leg.choices && !leg.transit) return rideExtra(leg);
   const o = leg.transit, ev = knownEvery(o) ? `, runs about every ${dur(o.every)}${o.everySrc === "timetable" ? " (from the timetable)" : ""}` : "";
   const ride = o && o.steps && o.steps.length ? o.steps.map(esc).join("; then ") : o ? `${dur(o.ride)} ride${o.stops ? ` (${o.stops} stops)` : ""}` : "";
   const how = o && o.access && o.egress ? `${o.access.how === "walk" ? "Walk" : "Taxi"} ${dur(o.access.min)} to ${esc(o.from || "the " + (o.mode === "ferry" ? "pier" : "station"))}${ev}. ${ride}, then ${o.egress.how === "walk" ? "walk" : "taxi"} ${dur(o.egress.min)}${o.to && !(o.steps && o.steps.length) ? " from " + esc(o.to) : ""}.${o.operator ? " " + esc(o.operator) + "." : ""}${o.hours ? " Hours: " + esc(o.hours) + "." : ""}${o.fare ? " Fare: " + esc(o.fare) + "." : ""} Times include waiting and boarding.${payNote(o)}` : leg.mode === "walk" ? "" : rideOnce(leg.kind === "ferry" ? "Boats keep their own timetable: check the next sailing at the pier." : leg.kind === "train" || leg.kind === "bus" ? "Time includes getting to the station and the wait." : "By road, with time for traffic.");
-  const fall = depLine(o, start, endBy, leg.lastMile, leg.slack) + (leg.slack ? ` Includes ${dur(leg.slack)} spare before the ship.` : "") + (leg.lastMile && o ? ` <b>If you miss it:</b> a taxi takes about ${dur(leg.road)}.` : "");
+  const fall = depLine(o, start, endBy, leg.lastMile, leg.slack) + (leg.slack ? ` Includes ${dur(leg.slack)} spare before ${deadlineWord(day())}.` : "") + (leg.lastMile && o ? ` <b>If you miss it:</b> a taxi takes about ${dur(leg.road)}.` : "");
   const note = rideNotice && rideNotice.key === leg.key ? `<span class="ridenote">${rideNotice.text}${rideNotice.undo != null ? ` <button class="linkbtn" data-act="rideundo">Undo</button>` : ""}${rideNotice.force ? ` <button class="linkbtn" data-act="rideforce">${esc(rideNotice.forceText)}</button>` : ""}</span>` : "";
   // One tap per way to go, in the transport colors, each with its time (and fare when the timetable gives one).
   const chip = c => `${esc(c.label)} · ${dur(c.min)}${c.fare ? " · " + esc(c.fare) : ""}`;
@@ -1101,7 +1109,7 @@ function bumpWhy(d, b) {
   try { const city = cityFor(d), s = city && allSites(city).find(x => x.id === b.id); if (!s) return "";
     if (shutOn(d, s)) return "is closed on " + fmtDow(d.date) + " " + fmtDate(d.date);
     const plan = buildPlan(d), need = plan && !plan.error ? fitCostOf(plan, s) : null, t = plan && !plan.error ? timeLeft(plan, d) : null;
-    if (need && t && need.min > t.left) return "needs about " + dur(Math.round(need.min / 5) * 5) + " (the visit and the rides to it and on), and with today's other stops only " + dur(Math.round(t.left / 5) * 5) + " is left before " + fmt(plan.endBy);
+    if (need && t && need.min > t.left) { const up = Math.ceil(need.min / 5) * 5, dn = Math.floor(t.left / 5) * 5, near = up - dn < 5; return "needs about " + dur(near ? need.min : up) + " (the visit and the rides to it and on), and with today's other stops only " + dur(near ? t.left : dn) + " is left before " + fmt(plan.endBy); }
   } catch (e) {}
   return "";
 }
@@ -5760,7 +5768,7 @@ function itineraryText() {
       const F = plan && !plan.error ? dayFacts(d, plan) : null, freeOn = F && F.left >= 30 && !(plan.dropped || []).length && !(plan.w && plan.w.straight);
       let freeDone = false;
       if (plan && !plan.error) plan.items.forEach((it, k) => {
-        if (freeOn && !freeDone && (it.type === "end" || (it.type === "travel" && plan.items.slice(k).every(x => x.type === "travel" || x.type === "end")))) { freeDone = true; out.push(`   ${fmt(F.leaveBy - F.left)}  Free time until ${fmt(F.leaveBy)}`); }
+        if (freeOn && !freeDone && k === (() => { let j = -1; plan.items.forEach((x, q) => { if (x.type === "stop" || (x.type === "meal" && !(x.place && x.place.onBoard))) j = q; }); return j + 1; })()) { freeDone = true; out.push(`   ${fmt(F.leaveBy - F.left)}  Free time until ${fmt(F.leaveBy)}`); }
         if (it.type === "travel") return;
         const nm = it.type === "meal" ? it.meal.label + ": " + it.place.name : it.type === "start" || it.type === "end" ? it.label : (it.place.along ? "On the way: " : it.place.bonus ? "Optional: " : "") + it.place.name;
         out.push(`   ${it.type === "end" && freeOn ? "by " + fmt(F.endBy) : fmt(it.time)}  ${nm}`);
@@ -6768,15 +6776,21 @@ function renderPlan(d) {
   const freeCard = freeOn ? `<div class="tl freetime"><div class="time"><span class="ta">Until</span><span class="tt">${fmt(F.leaveBy)}</span></div><div class="rail"><div class="dot bonusdot">+</div></div><div class="what"><div class="nm">Free time: ${dur(F.left)}</div>
         <div class="sub">${F.fixed ? `Yours to spend as you like. Leave here by ${fmt(F.leaveBy)} to be back by ${fmt(F.endBy)}.` : "Yours to spend as you like."} <button type="button" class="linkbtn" data-goto="sites">See what fits</button></div></div></div>` : "";
   let freeShown = false;
-  const rows = plan.items.map((it, idx) => {
+  // Free time sits where it is spent: right after the last stop or meal, before the way back with its fixed steps
+  // (collecting bags, a cable car's queue down) (screen check, Nov 22: free time printed after bags were collected).
+  const freeAt = (() => { let j = -1; plan.items.forEach((x, k) => { if (x.type === "stop" || (x.type === "meal" && !(x.place && x.place.onBoard))) j = k; }); return j + 1; })();
+  // After the free time the way back follows on the clock: its rides and fixed steps start when the free time ends.
+  const freeShift = freeOn && plan.items[freeAt] && isFinite(plan.items[freeAt].time) && F.leaveBy > plan.items[freeAt].time ? F.leaveBy - plan.items[freeAt].time : 0;
+  const rows = plan.items.map((it0, idx) => {
+    const it = freeShift && idx >= freeAt && it0.type !== "end" ? Object.assign({}, it0, { time: it0.time + freeShift }) : it0;
     const pv = plan.items[idx - 1], nx = plan.items[idx + 1], rideIn = pv && pv.type === "travel" && pv.leg.mode !== "walk" && legKind(pv.leg), rideOut = nx && nx.type === "travel" && nx.leg.mode !== "walk" && legKind(nx.leg);
     const cls = `tl ${idx === 0 ? "first" : ""} ${idx === plan.items.length - 1 || it.type === "end" ? "last" : ""} ${rideIn ? "rin rin-" + rideIn : ""} ${rideOut ? "rout rout-" + rideOut : ""}`;
     if (it.type === "start") return `<div class="${cls}">${tcell(it)}<div class="rail"><div class="dot start">S</div></div><div class="what"><div class="nm">${esc(it.label)}</div>${it.place.note ? `<div class="sub">${esc(it.place.note)}</div>` : ""}${plan.w.notes.map(t => `<div class="sub">${esc(t)}</div>`).join("")}</div></div>`;
     if (it.type === "travel") {
-      const m = it.leg.mode, k = legKind(it.leg), freeHere = !freeShown && freeCard && !(pv && pv.type === "travel") && (() => { let j = idx; while (plan.items[j] && plan.items[j].type === "travel") j++; return plan.items[j] && plan.items[j].type === "end"; })() ? (freeShown = true, freeCard) : ""; // before the first of the rides back (to the pier, then the boat)
+      const m = it.leg.mode, k = legKind(it.leg), freeHere = !freeShown && freeCard && idx === freeAt ? (freeShown = true, freeCard) : ""; // before the first of the rides back (to the pier, then the boat)
       return freeHere + `<div class="tl leg ${m} k-${k}${it.leg.choices ? " ridecho" : ""}" data-kind="${k}"><div class="time"></div><div class="rail"></div><div class="what">${legIcon(k)}<span>${it.leg.km < 0.1 ? "Next door" : `<b>${esc(it.leg.how)}</b> · ${dur(it.leg.min)} · ${distTxt(it.leg.km)}`}${rideDetail(it.leg, it.time, plan.w && plan.w.endBy)}</span></div></div>`;
     }
-    if (it.type === "fixed") return `<div class="${cls}">${tcell(it)}<div class="rail"><div class="dot fixed">H</div></div><div class="what">${it.free ? `<div class="nm">Free time until ${fmt(it.time + it.free)}</div><div class="sub">Breakfast, coffee or a last walk nearby. Then ${esc(it.place.name.replace(/^C/, "c"))} (${dur(it.bags)}).</div>` : `<div class="nm">${esc(it.place.name)}</div><div class="sub">${dur(it.place.minutes)}</div>`}</div></div>`;
+    if (it.type === "fixed") return (!freeShown && freeCard && idx === freeAt ? (freeShown = true, freeCard) : "") + `<div class="${cls}">${tcell(it)}<div class="rail"><div class="dot fixed">H</div></div><div class="what">${it.free ? `<div class="nm">Free time until ${fmt(it.time + it.free)}</div><div class="sub">Breakfast, coffee or a last walk nearby. Then ${esc(it.place.name.replace(/^C/, "c"))} (${dur(it.bags)}).</div>` : `<div class="nm">${esc(it.place.name)}</div><div class="sub">${dur(it.place.minutes)}</div>`}</div></div>`;
     if (it.type === "meal") {
       const r = it.place, lbl = it.meal.label, mv = canDrag && !r.booked && !it.meal.booked;
       // Lunch back on board: the picks fill the time ashore, so lunch is a timed stop on the ship (no place to change).
