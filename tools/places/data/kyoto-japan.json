@@ -2482,5 +2482,882 @@
    "min": 86,
    "km": 84.6
   }
+ ],
+ "guideSights": [
+  {
+   "name": "Shinsen-en Garden",
+   "lat": 35.011382,
+   "lng": 135.748369,
+   "wikidata": "",
+   "note": "Although cherry blossom-viewing and festivals can be seen all over Japan today, Shinsen-en Garden is where the very first organized cherry blossom viewing festival took place."
+  },
+  {
+   "name": "Nijō Castle",
+   "lat": 35.014167,
+   "lng": 135.7475,
+   "wikidata": "Q1013399",
+   "note": "Certainly one of the highlights of Kyoto, with fine gardens and splendid centuries-old structures. The castle was built by the Tokugawa shoguns to serve as their residence in Kyoto. After the fall of the Tokugawa shogunate, the castle serve",
+   "editions": 29,
+   "unesco": true,
+   "web": "https://nijo-jocastle.city.kyoto.lg.jp/?lang=en",
+   "posDoubt": true
+  },
+  {
+   "name": "Nijō-Jinya",
+   "lat": 35.010282,
+   "lng": 135.748658,
+   "wikidata": "",
+   "note": "A private residence, Nijo-Jinya is a former samurai house. Tours discuss the roles of samurai and the dangers experienced during that time period. The house features unique trap doors and escape routes used by samurai and former residents t"
+  },
+  {
+   "name": "The Museum of Kyoto",
+   "lat": 35.009389,
+   "lng": 135.762333,
+   "wikidata": "Q11375592",
+   "note": "The museum features many ancient artifacts relating to Kyoto life and history. It has an expansive ancient ceramics collection.",
+   "editions": 8,
+   "unesco": false,
+   "web": "https://www.bunpaku.or.jp/en/"
+  },
+  {
+   "name": "Kyoto International Manga Museum",
+   "lat": 35.010807,
+   "lng": 135.760009,
+   "wikidata": "",
+   "note": "Housed in an old elementary school building, the museum holds over 300,000 manga-related items ranging from rare Meiji-era publications to the works of contemporary artists. One of its main attractions is the so-called \"Wall of Manga\": a va"
+  },
+  {
+   "name": "Nishi Honganji",
+   "lat": 34.991778,
+   "lng": 135.751694,
+   "wikidata": "Q1146038",
+   "note": "One of many World Heritage Sites in Kyoto, Nishi Honganji is one of two temple complexes of the Buddhist sect, Jōdo Shinshū (the other being Higashi Honganji). It was founded in 1602, and has gates dating back to 1573.",
+   "editions": 17,
+   "unesco": true,
+   "web": "https://www.hongwanji.kyoto/",
+   "posDoubt": true
+  },
+  {
+   "name": "Higashi Honganji",
+   "lat": 34.99143,
+   "lng": 135.75854,
+   "wikidata": "Q910281",
+   "note": "Higashi Honganji was established in 1602 by the Shogun Tokugawa Ieyasu when he split the Shin sect in two (Nishi Honganji being the other) in order to diminish its power. Today it is the headquarters of the Ōtani branch of Jōdo Shin-shū. Th",
+   "editions": 13,
+   "unesco": false,
+   "web": "https://www.higashihonganji.or.jp/"
+  },
+  {
+   "name": "Shōseien Garden",
+   "lat": 34.991395,
+   "lng": 135.763238,
+   "wikidata": "",
+   "note": "Shosei-en Garden was commissioned by Prince Minamoto no Tōru. He designed the Ingetsu Pond to resemble the Shiogama Coast in Miyagi Prefecture. During the Tokugawa Period the garden was given to Higashi Hongan-ji Temple, restoring the old s"
+  },
+  {
+   "name": "Tō-ji",
+   "lat": 34.980556,
+   "lng": 135.747778,
+   "wikidata": "Q1046403",
+   "note": "An impressive complex of Buddhist temple buildings, this site features the tallest pagoda in Japan. Bright colors decorate the interior of many buildings on the site, and Buddhist sculptures compliment the color choices. The grounds include",
+   "editions": 30,
+   "unesco": true,
+   "web": "https://toji.or.jp/",
+   "posDoubt": true
+  },
+  {
+   "name": "Kyoto Tower",
+   "lat": 34.9875,
+   "lng": 135.759167,
+   "wikidata": "Q1201304",
+   "note": "A source of bitterness of locals due to its futuristic feel, which counteracts the historic feel the city is known for, the Kyoto Tower is an overpriced viewing tower where you can observe Kyoto's urban sprawl at its finest. There is also a",
+   "editions": 21,
+   "unesco": false,
+   "web": "https://www.keihanhotels-resorts.co.jp/kyoto-tower/"
+  },
+  {
+   "name": "Mibu-dera",
+   "lat": 35.0016,
+   "lng": 135.743339,
+   "wikidata": "",
+   "note": "Founded in 991 CE, Mibu-dera is a Buddhist temple. The temple has Setsubun celebrations in February which draws large crowds. It's free to visit the grounds, however, a small museum and garden have an admission fee."
+  },
+  {
+   "name": "Kyoto Station",
+   "lat": 34.985458,
+   "lng": 135.757756,
+   "wikidata": "Q801046",
+   "note": "Even if you are not travelling by train, it is worth spending an hour or so wandering around the station, which is an outstanding example of modern architecture. The station, with its futurist architecture designed by Hiroshi Hara, opened i",
+   "editions": 34,
+   "unesco": false
+  },
+  {
+   "name": "Kyoto Railway Museum",
+   "lat": 34.987222,
+   "lng": 135.7425,
+   "wikidata": "",
+   "note": "An expansive and modern railway museum with over 50 historical Japanese rollingstock, primarily used in service by JR West and its predecessor, JNR. Three Shinkansen models are on display, along with an extensive collection of preserved ste"
+  },
+  {
+   "name": "Kyoto Aquarium",
+   "lat": 34.9876,
+   "lng": 135.74784,
+   "wikidata": "",
+   "note": "A modern aquarium with a wide variety of sea life such as small and large Fish, Garden Eels, Dolphins, Seals, and Giant Salamanders. The Aquarium also includes a small Japanese style garden, two cafes, and a gift shop. The whole facility is"
+  },
+  {
+   "name": "Kyoto City Archaeological Museum",
+   "lat": 35.029913,
+   "lng": 135.749637,
+   "wikidata": "Q11375124",
+   "note": "A museum devoted to the archaeology and early history of Kyoto, displaying around 1,000 artefacts recovered from excavations across the city. The collection covers the Palaeolithic period through the Jōmon, Yayoi, Kofun, Heian and later per",
+   "editions": 6,
+   "unesco": false,
+   "web": "https://www.kyoto-arc.or.jp/museum/"
+  },
+  {
+   "name": "Kyoto Imperial Palace",
+   "lat": 35.024113,
+   "lng": 135.762163,
+   "wikidata": "Q1202239",
+   "note": "The palace is a reconstruction (dating from 1855), though the Emperor doesn't spend much time there, ''and'' the guided tour doesn't enter the palace buildings, only peeking at them from the outside, but nevertheless, it provides interestin",
+   "editions": 33,
+   "unesco": false,
+   "web": "https://sankan.kunaicho.go.jp/guide/kyoto.html"
+  },
+  {
+   "name": "Sentō Imperial Palace",
+   "lat": 35.021516,
+   "lng": 135.765262,
+   "wikidata": "Q909444",
+   "note": "This palace is one of the most competitive for reservations, because this is the palace where the Imperial family stays when in Kyoto.",
+   "editions": 12,
+   "unesco": false
+  },
+  {
+   "name": "Kyoto Gyoen National Garden",
+   "lat": 35.023289,
+   "lng": 135.763306,
+   "wikidata": "Q843854",
+   "note": "A large public park surrounding Kyoto Imperial Palace, covering approximately 1.3 km north–south and 700 m east–west. The grounds were formerly occupied by the residences of imperial family members and court nobles, many of which were demol",
+   "editions": 7,
+   "unesco": false,
+   "web": "https://fng.or.jp/kyoto/"
+  },
+  {
+   "name": "Bamboo Forest",
+   "lat": 35.016845,
+   "lng": 135.6716,
+   "wikidata": "Q23579173",
+   "note": "This is the reason why most people head into this area, all taking the same looking pictures. You should visit when the sun is at its highest point, because the forest is quite dark and will only let in a few sun rays — don't wait until the",
+   "editions": 22,
+   "unesco": false
+  },
+  {
+   "name": "Togetsukyō Bridge",
+   "lat": 35.012758,
+   "lng": 135.677741,
+   "wikidata": "",
+   "note": "This picturesque bridge spans the '''Hozu River''', which usually has a healthy and fast current of water in it. Please note that the sidewalks are one-way."
+  },
+  {
+   "name": "Tenryū-ji",
+   "lat": 35.015833,
+   "lng": 135.673693,
+   "wikidata": "",
+   "note": "One of the city's [[UNESCO World Heritage List"
+  },
+  {
+   "name": "Ōkōchi Sansō",
+   "lat": 35.017281,
+   "lng": 135.669355,
+   "wikidata": "",
+   "note": "A splendid mountain retreat, previously occupied by Japanese silent screen legend Ōkōchi Denjirō. The grounds have something beautiful to offer each season but are probably at their best during autumn, when the trees explode into fiery shad"
+  },
+  {
+   "name": "Nonomiya Shrine",
+   "lat": 35.017731,
+   "lng": 135.674184,
+   "wikidata": "",
+   "note": "A small shrine located amidst Arashiyama's famous bamboo forest. It was here that women were once trained prior to becoming shrine maidens at [[Ise"
+  },
+  {
+   "name": "Iwatayama Monkey Park",
+   "lat": 35.011061,
+   "lng": 135.676626,
+   "wikidata": "",
+   "note": "A great place for those looking to get away from the abundance of temples and shrines in the city, feeding the macaque monkeys atop the mountain is worth the entrance fee (and the demanding 20-minute climb!). Don't bring food up with you, t"
+  },
+  {
+   "name": "Otagi Nenbutsu-ji Temple",
+   "lat": 35.03135,
+   "lng": 135.661131,
+   "wikidata": "",
+   "note": "Despite being omitted from virtually all guidebooks, it's one of the true unknown gems of Kyoto. It was founded in the eighth century, and went through an unlucky patch for a millennium or so; by turns it was destroyed by flood, fire and ty"
+  },
+  {
+   "name": "Daikakuji Temple",
+   "lat": 35.028325,
+   "lng": 135.677803,
+   "wikidata": "",
+   "note": "While it is a temple today, originally, it was the villa of Emperor Saga. It is well-known by those who practice ''Ikebana'', the Japanese art of flower arranging, as it is the birthplace of Saga Goryu, a school of Ikebana. Often, there are"
+  },
+  {
+   "name": "Adashino Nenbutsu-ji",
+   "lat": 35.026817,
+   "lng": 135.664545,
+   "wikidata": "",
+   "note": "The famous Priest Kūkai established this temple for the purpose of saying prayers for Arashiyama's dead. The temple grounds are filled with approximately 8000 Buddhist statues, each representing an unknown or forgotten person. Although it i"
+  },
+  {
+   "name": "Giōji Temple",
+   "lat": 35.023363,
+   "lng": 135.666765,
+   "wikidata": "",
+   "note": "Mentioned in the Tales of Heike, this is the site where sisters Gio and Ginyo come to devote their lives to Buddhism. Although the temple itself is rather small, the visit is made worthwhile by its vivid bright green moss garden."
+  },
+  {
+   "name": "Takiguchi-dera Temple",
+   "lat": 35.023003,
+   "lng": 135.666583,
+   "wikidata": "",
+   "note": "A quiet, peaceful temple of less interest than nearby Gioji Temple."
+  },
+  {
+   "name": "Jōjakkōji Temple",
+   "lat": 35.019642,
+   "lng": 135.668673,
+   "wikidata": "",
+   "note": "This temple is quite beautiful in the autumn when the leaves are changing, and the view of the city from just above the pagoda is a truly spectacular."
+  },
+  {
+   "name": "Nison-in Temple",
+   "lat": 35.021218,
+   "lng": 135.667881,
+   "wikidata": "",
+   "note": "A large temple complex that houses two ancient sculptures of Buddha; one of Shakamuni Buddha and the other of Amida Buddha. It also houses the graves of some famous Japanese people. Unless you have interest in visiting one of the graves, th"
+  },
+  {
+   "name": "Hōkyō-in",
+   "lat": 35.022512,
+   "lng": 135.673534,
+   "wikidata": "",
+   "note": "Home to the graves of the court's former enemies, as well as a beautiful moss garden."
+  },
+  {
+   "name": "Seiryō-ji",
+   "lat": 35.023498,
+   "lng": 135.674289,
+   "wikidata": "",
+   "note": "This is the former home of Minamoto no Tōru who is believed to be the man that the famous Tale of Genji's protagonist Genji was inspired by."
+  },
+  {
+   "name": "Hōrinji Temple",
+   "lat": 35.010219,
+   "lng": 135.677001,
+   "wikidata": "Q3146371",
+   "note": "One of the five head Shingon temples in Kyoto. The Boddhisatva Akasagarbha is enshrined in this temple. The complex offers a nice view of Kyoto City. The lights here are quite beautiful during the autumn Kyoto Light-Up.",
+   "editions": 6,
+   "unesco": false,
+   "web": "https://www.kokuzohourinji.com/"
+  },
+  {
+   "name": "Senkō-ji",
+   "lat": 35.015807,
+   "lng": 135.665579,
+   "wikidata": "",
+   "note": "This temple was built as a memorial temple for those who died while working on dams and other projects under Suminokura Ryōi. There are a variety of monuments and statues on the temple grounds, and a haiku from the famous poet Matsuo Bashō "
+  },
+  {
+   "name": "Kōryū-ji Temple",
+   "lat": 35.015502,
+   "lng": 135.70731,
+   "wikidata": "",
+   "note": "Of all the temples in Kyōto, Kōryū-ji is the oldest, dating back to the 12th century. It also houses the Miroku Bosatsu, the first item in the nation to be designated a National Treasure."
+  },
+  {
+   "name": "Toei Kyoto Studio Park",
+   "lat": 35.016271,
+   "lng": 135.708601,
+   "wikidata": "",
+   "note": "An active film studio built by the Toei Company, one of Japan's largest entertainment companies. The highlight is the backlot with recreated Edo-period streets, where many period dramas (時代劇 ''jidaigeki'') were filmed, and continues to be i"
+  },
+  {
+   "name": "Matsunoo Taisha",
+   "lat": 34.999967,
+   "lng": 135.68517,
+   "wikidata": "",
+   "note": "A shrine that's rarely visited by foreigners, Matsuo Taisha (as it's more commonly known) is a popular place for sake brewers to pray. The shrine existed prior to the establishment of Kyoto as Japan's capital and later received offerings fr"
+  },
+  {
+   "name": "Katsura Imperial Villa",
+   "lat": 34.983991,
+   "lng": 135.709572,
+   "wikidata": "",
+   "note": "A real cultural treasure, renowned for its magnificent gardens and fine classical architecture. You can obtain permission to join a tour of the property either through the Imperial Household Agency's official website (which also contains a "
+  },
+  {
+   "name": "Umenomiya Shrine",
+   "lat": 35.004172,
+   "lng": 135.694908,
+   "wikidata": "",
+   "note": "This shrine is oddly dedicated to gods of both easy delivery and sake, because it is believed that the goddess Saketokekono was so delighted at the birth of her son that she made and drank sake. In addition, the stone to the right (upon ent"
+  },
+  {
+   "name": "Suzumushi-dera",
+   "lat": 34.993624,
+   "lng": 135.684863,
+   "wikidata": "",
+   "note": "\"Suzumushi-dera\" means \"cricket temple\", and as you might guess, there is a large case of crickets all along the wall inside the temple. Ever since the temple was featured on the NHK, Japan's national television station, it has received qui"
+  },
+  {
+   "name": "Kokedera",
+   "lat": 34.991964,
+   "lng": 135.683309,
+   "wikidata": "",
+   "note": "Kokedera, also known as '''Saiho-ji''', is one of Kyoto's [[World Heritage Site"
+  },
+  {
+   "name": "Kiyomizu Temple",
+   "lat": 34.994831,
+   "lng": 135.785003,
+   "wikidata": "Q221716",
+   "note": "This temple complex, with its spectacular location overlooking the city, is a deservedly popular attraction, approached by either of two tourist-filled souvenir-shop-lined streets, Kiyomizu-zaka or Chawan-zaka.",
+   "editions": 77,
+   "unesco": true,
+   "web": "https://www.kiyomizudera.or.jp/",
+   "posDoubt": true
+  },
+  {
+   "name": "Rokuharamitsu-ji",
+   "lat": 34.99711,
+   "lng": 135.773329,
+   "wikidata": "Q1060771",
+   "note": "While the temple may not seem so special, the trip is made worthwhile by the amazing Kamakura Period artwork housed in its museum. In particular, the statue of Kuya is quite a unique piece of artwork depicting Kuya Shonin reciting the nenbu",
+   "editions": 10,
+   "unesco": false,
+   "web": "https://www.rokuhara.or.jp/"
+  },
+  {
+   "name": "Sanjusangen-do",
+   "lat": 34.987885,
+   "lng": 135.771713,
+   "wikidata": "Q653319",
+   "note": "Definitely worth a visit. It was founded in 1164 and became famous for its 1001 beautiful wooden and gold-leaf covered statues of Kannon, goddess of mercy, housed in thirty-three bays (sanjusan = thirty-three, gendo = bays) in the main hall",
+   "editions": 22,
+   "unesco": false,
+   "web": "https://www.sanjusangendo.jp/"
+  },
+  {
+   "name": "Kyoto National Museum",
+   "lat": 34.990022,
+   "lng": 135.772972,
+   "wikidata": "Q147286",
+   "note": "It is near Sanjusangen-do, and has a large collection of ancient Japanese sculpture, ceramics, metalwork, painting, and other artifacts. (It's quite similar to the Tokyo National Museum in Tokyo/Ueno.) The Museum building is fairly grand, b",
+   "editions": 25,
+   "unesco": false,
+   "web": "https://www.kyohaku.go.jp/",
+   "posDoubt": true
+  },
+  {
+   "name": "Yogen-in",
+   "lat": 34.987861,
+   "lng": 135.773639,
+   "wikidata": "Q11666843",
+   "note": "The original temple was built by one of Hideyoshi Toyotomi's concubines in honor of her father, but the temple was destroyed by a fire. When rebuilding the temple, the floorboards of Fushimi Castle in [[Kyoto/South",
+   "editions": 3,
+   "unesco": false,
+   "web": "https://yougenin.jp/"
+  },
+  {
+   "name": "Chishaku-in Temple",
+   "lat": 34.988144,
+   "lng": 135.775931,
+   "wikidata": "",
+   "note": "Buddhist temple affiliated with Shingon-shū Chizan-ha Buddhism. The temple has a historic garden that was said to be a favourite of Sen no Rikyū."
+  },
+  {
+   "name": "Heian Shrine",
+   "lat": 35.016509,
+   "lng": 135.782454,
+   "wikidata": "Q385141",
+   "note": "Built in 1895 in commemoration of the 1100th anniversary of Kyoto, the shrine was designed as a scaled-down replica of the original Imperial Palace. The Shin'en Garden encircling the backside of the shrine is one of the city's most beautifu",
+   "editions": 28,
+   "unesco": false,
+   "web": "http://www.heianjingu.or.jp/"
+  },
+  {
+   "name": "Kyoto Municipal Museum of Art",
+   "lat": 35.012836,
+   "lng": 135.783569,
+   "wikidata": "Q3330657",
+   "note": "This museum houses a wide variety of art with the permanent collections featuring artists that are from Kyoto. Special exhibits may feature Japanese art from other areas or foreign artwork.",
+   "editions": 10,
+   "unesco": false,
+   "web": "https://kyotocity-kyocera.museum/"
+  },
+  {
+   "name": "Kyoto National Museum of Modern Art",
+   "lat": 35.012389,
+   "lng": 135.781943,
+   "wikidata": "Q1055628",
+   "note": "An interesting museum featuring works from famous, as well as up-and-coming modern artists. Exhibits change frequently, so it's best to call or visit the website to see exactly what will featured during your visit. You may also want to make",
+   "editions": 17,
+   "unesco": false,
+   "web": "https://www.momak.go.jp/"
+  },
+  {
+   "name": "Yoshida Shrine",
+   "lat": 35.025377,
+   "lng": 135.784731,
+   "wikidata": "Q713177",
+   "note": "Most famous as the site of the Setsubun Festival held in February, this small shrine was very highly revered during the Heian Period, and the court made offerings here.",
+   "editions": 14,
+   "unesco": false,
+   "web": "https://www.yoshidajinja.com/"
+  },
+  {
+   "name": "Kyoto City Zoo",
+   "lat": 35.012853,
+   "lng": 135.786006,
+   "wikidata": "Q6452176",
+   "note": "Like most zoos, visitors will see lions, tigers, and monkeys. There is an aviary and reptile exhibit, as well. The zoo has some native Japanese animals, but there isn't much to set it apart from most other zoos in the world.",
+   "editions": 8,
+   "unesco": false,
+   "web": "https://www5.city.kyoto.jp/zoo/"
+  },
+  {
+   "name": "Hosomi Art Museum",
+   "lat": 35.013833,
+   "lng": 135.779639,
+   "wikidata": "Q11606115",
+   "note": "A museum that showcases Japanese religious art from all periods of history. Exhibits change each season but typically feature famous artwork from local temples and shrines.",
+   "editions": 5,
+   "unesco": false,
+   "web": "http://www.emuseum.or.jp/eng/index.html"
+  },
+  {
+   "name": "Okazaki Shrine",
+   "lat": 35.017417,
+   "lng": 135.788778,
+   "wikidata": "Q11472971",
+   "note": "A Shinto shrine traditionally believed to have been established in 794, when Emperor Kanmu moved the capital to Heian-kyō. It was one of four shrines built to protect the new capital, and was known as Higashi-Tenno (Eastern Heavenly King) b",
+   "editions": 2,
+   "unesco": false,
+   "web": "https://okazakijinja.jp/"
+  },
+  {
+   "name": "Maruyama Park",
+   "lat": 35.003503,
+   "lng": 135.779519,
+   "wikidata": "Q1108695",
+   "note": "One of the most popular spot for cherry blossom viewing in Kyoto, and can get extremely crowded at that time of year. The park's star attraction is a weeping cherry tree (''shidarezakura''), which offers an ethereal vision lit up in the nig",
+   "editions": 10,
+   "unesco": false,
+   "web": "https://kyoto.travel/en/destinations/maruyama-park/"
+  },
+  {
+   "name": "Kōdai-ji Temple",
+   "lat": 35.000761,
+   "lng": 135.781114,
+   "wikidata": "Q2702064",
+   "note": "This temple was built for Toyotomi Hideyoshi's widow by Tokugawa Ieyasu and is located right next to the Ryōzen Kannon temple on the Higashiyama mountain. If you really like temples this is a very nice one. It's got a nice bamboo grove that",
+   "editions": 15,
+   "unesco": false,
+   "web": "https://www.kodaiji.com/"
+  },
+  {
+   "name": "Chion-in",
+   "lat": 35.006168,
+   "lng": 135.78328,
+   "wikidata": "Q873645",
+   "note": "The head temple of the Jodo sect of Buddhism. The Sanmon gate at the entrance to the temple is the largest of such gates in the nation. Visitors can walk freely around the complex and inside the buildings, except for those that house the te",
+   "editions": 20,
+   "unesco": false,
+   "web": "https://www.chion-in.or.jp/"
+  },
+  {
+   "name": "Shōren-in",
+   "lat": 35.007311,
+   "lng": 135.783197,
+   "wikidata": "Q377386",
+   "note": "Once associated with the head Tendai Buddhist sect temple, Enryaku-ji on Mount Hiei, Shōren-in is considered to be one of the top five Tendai sect temples. During the Tokugawa period, it served as temporary lodging for a retired emperor aft",
+   "editions": 9,
+   "unesco": false,
+   "web": "https://www.shorenin.com/english/"
+  },
+  {
+   "name": "Higashi Ōtani Mausoleum",
+   "lat": 35.001474,
+   "lng": 135.782486,
+   "wikidata": "",
+   "note": "Located in a cemetery, tourists typically visit this site accidentally however, because some of the ashes of Shinran, the founder of Jōdo-Shin Buddhism, are contained inside the mausoleum, it is a popular place for Buddhists to come to pay "
+  },
+  {
+   "name": "Ryōzen Kannon Statue",
+   "lat": 34.999943,
+   "lng": 135.781861,
+   "wikidata": "Q7385349",
+   "note": "A memorial to the unknown Japanese soldiers who died in World War II, with a 24-meter-tall statue of Kannon.",
+   "editions": 6,
+   "unesco": false,
+   "web": "http://www.ryozen-kwannon.jp/"
+  },
+  {
+   "name": "Ryozen History Museum",
+   "lat": 34.998944,
+   "lng": 135.782639,
+   "wikidata": "Q3329667",
+   "note": "A museum dedicated to displaying artifacts and information about the Meiji Period.",
+   "editions": 5,
+   "unesco": false,
+   "web": "http://www.ryozen-museum.or.jp/"
+  },
+  {
+   "name": "Ryozen Gokoku Shrine",
+   "lat": 34.99998,
+   "lng": 135.782915,
+   "wikidata": "",
+   "note": "This shrine was built to house the souls of all those who died in the Pacific War, from the Meiji Restoration uprisings and the Russo-Japanese War to the end of World War II. It is the first shrine in the nation to be officially recognized "
+  },
+  {
+   "name": "Yasaka Shrine",
+   "lat": 35.003645,
+   "lng": 135.778529,
+   "wikidata": "Q692714",
+   "note": "At the eastern end of Shijō-dōri, at the edge of Gion, is the shrine responsible for Kyoto's main festival - the Gion Matsuri, which takes place in July. The shrine is small in comparison with many in Kyoto, but it boasts an impressive disp",
+   "editions": 24,
+   "unesco": false,
+   "web": "https://www.yasaka-jinja.or.jp/"
+  },
+  {
+   "name": "Yasaka Pagoda",
+   "lat": 34.99855,
+   "lng": 135.779242,
+   "wikidata": "Q11555353",
+   "note": "The five-storey Yasaka Pagoda is traditionally said to have been founded in 589 by Prince Shōtoku, although the present pagoda dates from the 15th century. Standing approximately 46 metres tall, it is one of Kyoto’s most recognisable struct",
+   "editions": 10,
+   "unesco": false
+  },
+  {
+   "name": "Kenninji Temple",
+   "lat": 35.001187,
+   "lng": 135.773929,
+   "wikidata": "Q1440954",
+   "note": "Japan's oldest Zen temple, has handsome halls and sand and moss gardens, and is of particular interest to art lovers. Sōtatsu's famed Edo-period screens of the Wind and Thunder Gods are on display. And on the high ceiling of the Hatto Dharm",
+   "editions": 13,
+   "unesco": false,
+   "web": "https://www.kenninji.jp/english/"
+  },
+  {
+   "name": "Ginkakuji",
+   "lat": 35.026667,
+   "lng": 135.798333,
+   "wikidata": "Q257473",
+   "note": "This temple, known as the Silver Pavilion and restored between 2008 and 2010, is at the northern end of the Philosopher's Walk. Much like its golden counterpart Kinkakuji, the Silver Pavilion is often choked with tourists, shuffling past a ",
+   "editions": 33,
+   "unesco": true,
+   "web": "https://www.shokoku-ji.jp/ginkakuji/",
+   "posDoubt": true
+  },
+  {
+   "name": "Hōnen-in",
+   "lat": 35.02356,
+   "lng": 135.79705,
+   "wikidata": "Q11555257",
+   "note": "A quiet temple with some interesting raised sand designs. It was built in honor of Hōnen, the founder of the Jōdo sect.",
+   "editions": 7,
+   "unesco": false,
+   "web": "http://www.honen-in.jp/"
+  },
+  {
+   "name": "Anraku-ji",
+   "lat": 35.021568,
+   "lng": 135.79664,
+   "wikidata": "",
+   "note": "A temple built to console the souls of Anraku and some concubines who were killed by order of the Imperial Court who did not approve of their Buddhist sect."
+  },
+  {
+   "name": "Kōun-ji",
+   "lat": 35.017012,
+   "lng": 135.795186,
+   "wikidata": "",
+   "note": "A temple designed around the borrowed scenery of the surrounding mountains, it was once owned by Empress Go-mizunoo. <!-- to check: Go-mizunoo was an emperor, so who owned the temple? -->"
+  },
+  {
+   "name": "Nyakuoji Shrine",
+   "lat": 35.015743,
+   "lng": 135.796308,
+   "wikidata": "",
+   "note": "Established in 1160, a nice shrine to visit in the autumn when the leaves are changing. It's a worthwhile stop for those travelling along the Philosopher's Path, but probably not worth making the trip just to see this shrine."
+  },
+  {
+   "name": "Eikandō Temple",
+   "lat": 35.01437,
+   "lng": 135.79557,
+   "wikidata": "",
+   "note": "A large temple said to have been constructed by Priest Kūkai. The temple features a unique statue of Amida Buddha, Mikaeri Amida, that looks to the right rather than facing forward; there's a charming legend attached to it. The temple groun"
+  },
+  {
+   "name": "Nanzenji Temple",
+   "lat": 35.01127,
+   "lng": 135.79308,
+   "wikidata": "Q1089767",
+   "note": "with its distinctive two-story entrance gate (''sanmon'') and aqueduct, is another popular temple in Kyoto, but its larger size means that it doesn't seem as crowded as many of the others. ''Nearest bus stop: Nanzenji, Eikando-michi. Neares",
+   "editions": 22,
+   "unesco": false,
+   "web": "https://nanzenji.or.jp/"
+  },
+  {
+   "name": "Kinkaku-ji Temple",
+   "lat": 35.0395,
+   "lng": 135.7285,
+   "wikidata": "Q270983",
+   "note": "The '''Temple of the Golden Pavilion''', formally known as '''Rokuonji''' (鹿苑寺), is the most popular tourist attraction in Kyoto. The pavilion was built as a retirement villa for Shogun Ashikaga Yoshimitsu in the late 14th century, and conv",
+   "editions": 57,
+   "unesco": true,
+   "web": "https://www.shokoku-ji.jp/kinkakuji/"
+  },
+  {
+   "name": "Ryōan-ji",
+   "lat": 35.034444,
+   "lng": 135.718333,
+   "wikidata": "Q587371",
+   "note": "Famous for its Zen garden, which is considered to be one of the most notable examples of the \"dry-landscape\" style. Surrounded by low walls, an austere arrangement of fifteen rocks sits on a bed of white gravel. That's it: no trees, no hill",
+   "editions": 32,
+   "unesco": true,
+   "web": "http://www.ryoanji.jp/",
+   "posDoubt": true
+  },
+  {
+   "name": "Ninnaji Temple",
+   "lat": 35.031111,
+   "lng": 135.713889,
+   "wikidata": "Q1202871",
+   "note": "Another large temple complex which is often overlooked by tourists. Admission to the grounds is free, except during cherry blossom season, allowing visitors to view the 17th century five-story pagoda, and the plantation of dwarf cherry tree",
+   "editions": 25,
+   "unesco": true,
+   "web": "https://ninnaji.jp/",
+   "posDoubt": true
+  },
+  {
+   "name": "Daitokuji Temple",
+   "lat": 35.043891,
+   "lng": 135.74603,
+   "wikidata": "Q901256",
+   "note": "A large temple complex, boasting many smaller sub-temples within its grounds. Daitokuji is the quietest of the temples in north-western Kyoto, and if you visit it at the start of the day, you could virtually have it to yourself. 8 of the 24",
+   "editions": 20,
+   "unesco": false
+  },
+  {
+   "name": "Imamiya Shrine",
+   "lat": 35.046008,
+   "lng": 135.742039,
+   "wikidata": "Q500955",
+   "note": "Although the current structure dates back to 1902, the original was built during the Heian Period. At the time, the city was being plagued by illness and disease, so Imamiya Shrine was built to appease the gods. Even today, many visitors co",
+   "editions": 6,
+   "unesco": false,
+   "web": "http://www.imamiyajinja.org"
+  },
+  {
+   "name": "Saimyōji Temple",
+   "lat": 35.057214,
+   "lng": 135.674969,
+   "wikidata": "Q11628431",
+   "note": "A former sub-temple of Jingoji. While it is not worth making a special trip to see this temple, those touring the Takao area might as well visit, as it is located on the path connecting Jingo-ji to Kōzan-ji. The bridge leading to the temple",
+   "editions": 3,
+   "unesco": false,
+   "web": "https://www.saimyoji.or.jp/"
+  },
+  {
+   "name": "Kōzan-ji",
+   "lat": 35.060138,
+   "lng": 135.678561,
+   "wikidata": "Q986750",
+   "note": "Registered as one of Kyoto's 17 UNESCO World Heritage Sites, Kōzan-ji is a small temple dating all the way back to the Kamakura period. Inside the temple you'll find a famous painting of rabbits and monkeys acting as humans, considered to b",
+   "editions": 20,
+   "unesco": true,
+   "web": "https://kosanji.com/",
+   "posDoubt": true
+  },
+  {
+   "name": "Shimogamo Shrine",
+   "lat": 35.038759,
+   "lng": 135.773419,
+   "wikidata": "Q701620",
+   "note": "It was built prior to Kyoto becoming Japan's capital. Shimogamo is one of the first shrines built in Kyoto. Together with Kamigamo Shrine, they are known as the Kamo Shrines. These shrines were one of the most revered shrines by the Imperia",
+   "editions": 22,
+   "unesco": true,
+   "web": "https://www.shimogamo-jinja.or.jp/",
+   "posDoubt": true
+  },
+  {
+   "name": "Kamigamo Shrine",
+   "lat": 35.059281,
+   "lng": 135.75253,
+   "wikidata": "",
+   "note": "Collectively, Kamigamo Shrine and Shimogamo Shrine are known as the Kamo Shrines, and they were highly favored by the Imperial Court during the Heian Period. The shrine is most famous for the ''tatesuna'', the two large sand cones. Their or"
+  },
+  {
+   "name": "Kyoto Botanical Garden",
+   "lat": 35.048255,
+   "lng": 135.761074,
+   "wikidata": "",
+   "note": "Japan's first botanical garden since 1924, the Kyoto Prefectural Botanical Garden is quite large and houses a wide variety of plants. It is a popular place for plum blossom viewing in February and early March and cherry blossoms, which typi"
+  },
+  {
+   "name": "Shūgakuin Imperial Villa",
+   "lat": 35.053929,
+   "lng": 135.80365,
+   "wikidata": "",
+   "note": "A beautiful villa commissioned by Emperor Gomizuno-o in 1655 and completed four years later. The area is separated into three separate villas. In the lower villa, you'll find a lovely garden with a stream running through it and the Jugetsuk"
+  },
+  {
+   "name": "Entsū-ji",
+   "lat": 35.0645,
+   "lng": 135.768944,
+   "wikidata": "Q10927539",
+   "note": "A temple famous for its gardens. A particularly unique feature of this garden is incorporation of Mount Hiei, of which there is a great view from the temple, into the layout of the garden.",
+   "editions": 3,
+   "unesco": false,
+   "web": "https://www.kyoto-entsuji-teien.com/"
+  },
+  {
+   "name": "Myoman-ji",
+   "lat": 35.067333,
+   "lng": 135.774972,
+   "wikidata": "Q10943057",
+   "note": "For anyone looking to see something slightly different from the standard Japanese temple, Myōman-ji offers a replica of Bodh Gaya's Mahabodhi Temple, where the Buddha obtained Enlightenment. The rest of the complex is quite Japanese, but st",
+   "editions": 4,
+   "unesco": false,
+   "web": "https://myomanji.jp/",
+   "posDoubt": true
+  },
+  {
+   "name": "Shisen-dō",
+   "lat": 35.043744,
+   "lng": 135.796241,
+   "wikidata": "Q3028486",
+   "note": "Built in 1641, this temple once housed the poet Jōzan Ishikawa. Inside the temple there are portraits of 36 influential Chinese poets. Outside there is a garden filled with many azaleas.",
+   "editions": 8,
+   "unesco": false,
+   "web": "https://kyoto-shisendo.net/"
+  },
+  {
+   "name": "Fushimi Inari Taisha",
+   "lat": 34.967222,
+   "lng": 135.772778,
+   "wikidata": "Q714828",
+   "note": "Another of Kyoto's jewels, located just south of Higashiyama in the Fushimi area. Dedicated to Inari, the Japanese fox goddess, Fushimi-Inari-taisha is the head shrine (''taisha'') for 40,000 Inari shrines across Japan. Stretching 230 meter",
+   "editions": 41,
+   "unesco": false,
+   "web": "https://inari.jp/"
+  },
+  {
+   "name": "Fushimi Momoyama Castle",
+   "lat": 34.939501,
+   "lng": 135.77686,
+   "wikidata": "Q1196273",
+   "note": "This castle was once a favorite of Toyotomi Hideyoshi. The original was dismantled in 1623, but a 1964 reconstruction went up in its memory with a small museum and gold-lined tea room.",
+   "editions": 26,
+   "unesco": false
+  },
+  {
+   "name": "Teradaya",
+   "lat": 34.930406,
+   "lng": 135.759577,
+   "wikidata": "",
+   "note": "It was here at this inn where Ryōma Sakamoto, a famous samurai who wanted to overthrow the Tokugawa, was injured in an attack, although he escaped. Some pictures, his handgun, and other historical artifacts are viewable inside."
+  },
+  {
+   "name": "Tōfuku-ji",
+   "lat": 34.975707,
+   "lng": 135.773676,
+   "wikidata": "Q2166743",
+   "note": "A large temple complex with many small and beautiful gardens nearby. Hordes of Japanese tourists visit during the fall months, when the leaves show a dazzling array of colors, but it's not as well known to foreigners. A pleasant side path t",
+   "editions": 23,
+   "unesco": false,
+   "web": "https://tofukuji.jp/"
+  },
+  {
+   "name": "Jōnan-gū Shrine",
+   "lat": 34.951119,
+   "lng": 135.746556,
+   "wikidata": "Q11426034",
+   "note": "Although Jōnan-gū Shrine is rarely visited by foreign tourists, it is a beautiful shrine with extensive history. It was established by Emperor Kammu when Kyoto became the nation's capital. At the end of the Heian period, it became home to r",
+   "editions": 2,
+   "unesco": false,
+   "web": "https://www.jonangu.com/"
+  },
+  {
+   "name": "Daigo-ji",
+   "lat": 34.951111,
+   "lng": 135.819444,
+   "wikidata": "Q1157535",
+   "note": "Daigoji is a large temple complex consisting of the garan (main complex), Sanbōin Garden, and Reihōkan Museum. The size and position of the temple, slightly removed from the city, creates a more peaceful, serene setting. As a registered Wor",
+   "editions": 23,
+   "unesco": true,
+   "web": "https://www.daigoji.or.jp/",
+   "posDoubt": true
+  },
+  {
+   "name": "Zuishin-in",
+   "lat": 34.959494,
+   "lng": 135.816286,
+   "wikidata": "Q11658945",
+   "note": "According to legend, this is where Ono no Komachi, one of Japan's famous femme fatales, resided. She made Prince Fukakusa agree to court her for 100 days before she would agree to marry him, but on the 99th day, he died, leaving her single ",
+   "editions": 4,
+   "unesco": false,
+   "web": "https://www.zuishinin.or.jp/"
+  },
+  {
+   "name": "Kajū-ji",
+   "lat": 34.961214,
+   "lng": 135.807558,
+   "wikidata": "Q772598",
+   "note": "A temple with a peaceful lily pond and a variety of cherry trees.",
+   "editions": 10,
+   "unesco": false
+  },
+  {
+   "name": "Sennyū-ji Temple",
+   "lat": 34.978056,
+   "lng": 135.780556,
+   "wikidata": "Q1060966",
+   "note": "Sennyū-ji Temple is an important Buddhist temple complex in southeastern Kyoto, particularly notable for its close historical association with the Japanese imperial family. Its buildings, imperial tombs and artworks make it a more historica",
+   "editions": 13,
+   "unesco": false,
+   "web": "https://mitera.org/"
+  },
+  {
+   "name": "Oharano Shrine",
+   "lat": 34.960278,
+   "lng": 135.656111,
+   "wikidata": "Q3594020",
+   "note": "The shrine is believed to have been moved to Nagaokakyo at the bidding of Empress Kammu, who made it the shrine of the Fujiwara family's guardian god. The Imperial Court made annual offerings at this shrine. The pond within the shrine preci",
+   "editions": 8,
+   "unesco": false,
+   "web": "https://oharano-jinja.jp/"
+  },
+  {
+   "name": "Shōbō-ji",
+   "lat": 34.956917,
+   "lng": 135.6555,
+   "wikidata": "Q11123495",
+   "note": "A Shingon sect temple featuring an impressive statue of the 3-faced thousand armed Kannon and a beautiful, well-kept Zen rock garden. Many of the rocks within the garden were chosen to resemble animals, like a rabbit and frog.",
+   "editions": 3,
+   "unesco": false,
+   "web": "https://www.kyoto-shoboji.com/"
+  },
+  {
+   "name": "Shōji-ji",
+   "lat": 34.960694,
+   "lng": 135.651667,
+   "wikidata": "Q11400336",
+   "note": "Nicknamed Cherry Blossom Temple (''hana no tera''), it hosts a beautiful display of blossoms in the spring.",
+   "editions": 2,
+   "unesco": false,
+   "web": "http://www.shoujiji.jp/"
+  }
  ]
 }

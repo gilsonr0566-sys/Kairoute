@@ -2133,9 +2133,9 @@
   },
   {
    "name": "Pedrouços/Algés",
-   "lat": 38.69409,
-   "lng": -9.22658,
-   "osm": "node/14026662531"
+   "lat": 38.69444,
+   "lng": -9.22509,
+   "osm": "node/14004341397"
   },
   {
    "name": "Belém",
@@ -2180,10 +2180,52 @@
    "osm": "node/6354971911"
   },
   {
-   "name": "Terreiro do Paço",
+   "name": "Ferry pier",
    "lat": 38.70649,
    "lng": -9.13278,
    "osm": "node/6555312687"
+  },
+  {
+   "name": "Ferry pier",
+   "lat": 38.70609,
+   "lng": -9.1341,
+   "osm": "node/6631313550"
+  },
+  {
+   "name": "Cais da Ribeira das Naus",
+   "lat": 38.70489,
+   "lng": -9.1423,
+   "osm": "node/6631361624"
+  },
+  {
+   "name": "Ferry pier",
+   "lat": 38.70593,
+   "lng": -9.13463,
+   "osm": "node/8541561095"
+  },
+  {
+   "name": "Ferry pier",
+   "lat": 38.70623,
+   "lng": -9.13522,
+   "osm": "node/8751425452"
+  },
+  {
+   "name": "Ferry pier",
+   "lat": 38.70666,
+   "lng": -9.13219,
+   "osm": "node/8791680089"
+  },
+  {
+   "name": "Ferry pier",
+   "lat": 38.70626,
+   "lng": -9.13506,
+   "osm": "way/1046885199"
+  },
+  {
+   "name": "Ferry pier",
+   "lat": 38.70618,
+   "lng": -9.13409,
+   "osm": "way/1046885200"
   },
   {
    "name": "Ferry pier",
@@ -2193,8 +2235,8 @@
   },
   {
    "name": "Ferry pier",
-   "lat": 38.68817,
-   "lng": -9.14849,
+   "lat": 38.68814,
+   "lng": -9.14866,
    "osm": "way/146419419"
   },
   {
@@ -2240,9 +2282,21 @@
    "osm": "way/156254760"
   },
   {
+   "name": "Ferry pier",
+   "lat": 38.71332,
+   "lng": -9.12215,
+   "osm": "way/247292099"
+  },
+  {
+   "name": "Ferry pier",
+   "lat": 38.71349,
+   "lng": -9.12197,
+   "osm": "way/247292101"
+  },
+  {
    "name": "Terminal Fluvial de Cacilhas",
    "lat": 38.68812,
-   "lng": -9.14783,
+   "lng": -9.14785,
    "osm": "way/39627722"
   },
   {
@@ -2264,10 +2318,34 @@
    "osm": "way/678973023"
   },
   {
+   "name": "Estação Fluvial Sul e Sueste",
+   "lat": 38.70672,
+   "lng": -9.13401,
+   "osm": "way/940031675"
+  },
+  {
+   "name": "Ferry pier",
+   "lat": 38.70605,
+   "lng": -9.13473,
+   "osm": "way/945300212"
+  },
+  {
+   "name": "Ferry pier",
+   "lat": 38.70675,
+   "lng": -9.13217,
+   "osm": "way/949695961"
+  },
+  {
    "name": "Terminal Fluvial do Terreiro do Paço",
-   "lat": 38.70688,
-   "lng": -9.13311,
+   "lat": 38.70686,
+   "lng": -9.13339,
    "osm": "way/96320882"
+  },
+  {
+   "name": "Ferry pier",
+   "lat": 38.71315,
+   "lng": -9.12234,
+   "osm": "way/96497149"
   }
  ],
  "roads": [
@@ -2390,6 +2468,356 @@
    },
    "min": 32,
    "km": 25.7
+  }
+ ],
+ "guideSights": [
+  {
+   "name": "Palácio Foz",
+   "lat": 38.71578,
+   "lng": -9.14249,
+   "wikidata": "",
+   "note": ""
+  },
+  {
+   "name": "Praça do Comércio",
+   "lat": 38.7075,
+   "lng": -9.136389,
+   "wikidata": "",
+   "note": ""
+  },
+  {
+   "name": "Rossio Station",
+   "lat": 38.714722,
+   "lng": -9.142222,
+   "wikidata": "",
+   "note": ""
+  },
+  {
+   "name": "Igreja do Carmo",
+   "lat": 38.712,
+   "lng": -9.14057,
+   "wikidata": "",
+   "note": ""
+  },
+  {
+   "name": "Jardim de São Pedro de Alcântara",
+   "lat": 38.71497,
+   "lng": -9.14406,
+   "wikidata": "",
+   "note": ""
+  },
+  {
+   "name": "Museu Nacional de Arte Antiga",
+   "lat": 38.704167,
+   "lng": -9.161667,
+   "wikidata": "Q212459",
+   "note": "Portugal's impressive national art collection, including 14-19th century European painting, artefacts of Portuguese contact with the East and Africa and a collection of ecclesiastical treasures. Highlights include Dürer's St Jerome, Hierony",
+   "editions": 26,
+   "unesco": false,
+   "web": "http://www.mnarteantiga-ipmuseus.pt/"
+  },
+  {
+   "name": "Museu da Marioneta",
+   "lat": 38.7079,
+   "lng": -9.1561,
+   "wikidata": "",
+   "note": ""
+  },
+  {
+   "name": "Cemitério dos Prazeres",
+   "lat": 38.714016,
+   "lng": -9.169985,
+   "wikidata": "Q976850",
+   "note": "This large cemetery is packed with majestic gravestones and mausoleums, separated by wide, pedestrian, tree-lined \"streets\". Many graves are marked with icons telling something about the person's role in historical Lisbon. A beautiful respi",
+   "editions": 10,
+   "unesco": false
+  },
+  {
+   "name": "Fundação Arpad Szenes / Vieira da Silva",
+   "lat": 38.72223,
+   "lng": -9.15576,
+   "wikidata": "Q10333400",
+   "note": "This museum is installed in the restored 18th-century former Royal Silk Factory. Its permanent collection covers a wide time period of the works of 20th-century painters Arpad Szenes and Maria Helena Vieira da Silva, and regularly hosts exh",
+   "editions": 2,
+   "unesco": false,
+   "web": "http://fasvs.pt"
+  },
+  {
+   "name": "Aqueduto das Aguas Livres",
+   "lat": 38.7223,
+   "lng": -9.1591,
+   "wikidata": "",
+   "note": ""
+  },
+  {
+   "name": "Espaço Novo Banco",
+   "lat": 38.72449,
+   "lng": -9.15076,
+   "wikidata": "",
+   "note": ""
+  },
+  {
+   "name": "Lisbon Botanical Gardens",
+   "lat": 38.7181,
+   "lng": -9.14895,
+   "wikidata": "Q943407",
+   "note": "A hidden gem. It was created several hundred years ago, by a King of Portugal at the time of the Discoveries. The story goes that this King wanted one of every type of plant in the world, and although that's unlikely, there is a huge collec",
+   "editions": 9,
+   "unesco": false
+  },
+  {
+   "name": "Miradouro da Senhora do Monte",
+   "lat": 38.7189,
+   "lng": -9.1328,
+   "wikidata": "",
+   "note": ""
+  },
+  {
+   "name": "Lisbon Cathedral",
+   "lat": 38.70985,
+   "lng": -9.132983,
+   "wikidata": "",
+   "note": ""
+  },
+  {
+   "name": "Museu de Sociedade de Geografia",
+   "lat": 38.7167,
+   "lng": -9.1408,
+   "wikidata": "",
+   "note": ""
+  },
+  {
+   "name": "Museu do Teatro Romano",
+   "lat": 38.710469,
+   "lng": -9.132408,
+   "wikidata": "Q11780",
+   "note": "Along the way from downtown to Saint George's Castle.",
+   "editions": 5,
+   "unesco": false,
+   "posDoubt": true
+  },
+  {
+   "name": "Panteão Nacional",
+   "lat": 38.715,
+   "lng": -9.125,
+   "wikidata": "",
+   "note": ""
+  },
+  {
+   "name": "Ajuda Botanical Gardens",
+   "lat": 38.706208,
+   "lng": -9.200807,
+   "wikidata": "",
+   "note": ""
+  },
+  {
+   "name": "Monument to the Discoveries",
+   "lat": 38.693611,
+   "lng": -9.205556,
+   "wikidata": "",
+   "note": ""
+  },
+  {
+   "name": "Mosteiro dos Jerónimos",
+   "lat": 38.69832,
+   "lng": -9.20665,
+   "wikidata": "",
+   "note": ""
+  },
+  {
+   "name": "Museu Colecção Berardo",
+   "lat": 38.695521,
+   "lng": -9.208378,
+   "wikidata": "Q2191491",
+   "note": "The permanent collection of the museum consists of the Berardo Collection, which is made up of modern and contemporary art, with major art movements like abstract expressionism, Abstraction-Création, action painting, body Art, constructivis",
+   "editions": 11,
+   "unesco": false,
+   "web": "http://www.museuberardo.com/"
+  },
+  {
+   "name": "Museu Nacional dos Coches",
+   "lat": 38.697778,
+   "lng": -9.199722,
+   "wikidata": "Q1659559",
+   "note": "Housed in the former riding school of the palace, don't miss the world's largest collection of horse-drawn coaches and other royal vehicles. One of Lisbon's many unusual museums. In the \"Museum street\", Belem.",
+   "editions": 12,
+   "unesco": false,
+   "web": "http://museudoscoches.pt/",
+   "posDoubt": true
+  },
+  {
+   "name": "Ponte 25 de Abril",
+   "lat": 38.68975,
+   "lng": -9.177194,
+   "wikidata": "Q721152",
+   "note": "This sister bridge of the San Francisco – Oakland Bay Bridge was designed by the same architect in 1966 to connect Lisbon with the Setubal peninsula across the Tagus (Tejo) River. Formerly known as the Salazar Bridge, it was renamed after t",
+   "editions": 34,
+   "unesco": false
+  },
+  {
+   "name": "Statue to Afonso de Albuquerque",
+   "lat": 38.69667,
+   "lng": -9.20027,
+   "wikidata": "",
+   "note": "In front of the former Royal Palace of Belém, now the Presidential Palace, there is a massive statue looking out to sea, representing Afonso de Albuquerque, second ruler of Portuguese India in the early 16th century."
+  },
+  {
+   "name": "Museu da Carris",
+   "lat": 38.702317,
+   "lng": -9.180492,
+   "wikidata": "",
+   "note": "Transport museum with various old trams and buses on display."
+  },
+  {
+   "name": "Jardim Zoológico",
+   "lat": 38.7437,
+   "lng": -9.1703,
+   "wikidata": "Q220063",
+   "note": "A zoo that is fairly pricey, but has a variety of exotic animals featuring sea-lions and dolphins.",
+   "editions": 13,
+   "unesco": false,
+   "web": "http://www.zoo.pt"
+  },
+  {
+   "name": "Praça Marquês de Pombal",
+   "lat": 38.725278,
+   "lng": -9.15,
+   "wikidata": "",
+   "note": ""
+  }
+ ],
+ "ferryLinks": [
+  {
+   "name": "Cais do Sodré – Barreiro",
+   "a": {
+    "lat": 38.65127,
+    "lng": -9.07821
+   },
+   "b": {
+    "lat": 38.70461,
+    "lng": -9.1445
+   },
+   "osm": "way/1533192967"
+  },
+  {
+   "name": "Trafaria – Pedrouços/Algés",
+   "a": {
+    "lat": 38.69409,
+    "lng": -9.22658
+   },
+   "b": {
+    "lat": 38.67487,
+    "lng": -9.23088
+   },
+   "osm": "way/1537436003"
+  },
+  {
+   "name": "Belém – Pedrouços/Algés",
+   "a": {
+    "lat": 38.69449,
+    "lng": -9.1984
+   },
+   "b": {
+    "lat": 38.69409,
+    "lng": -9.22658
+   },
+   "osm": "way/1540818434"
+  },
+  {
+   "name": "Porto Brandão – Pedrouços/Algés",
+   "a": {
+    "lat": 38.67815,
+    "lng": -9.20693
+   },
+   "b": {
+    "lat": 38.69409,
+    "lng": -9.22658
+   },
+   "osm": "way/1546418923"
+  },
+  {
+   "name": "Trafaria – Belém",
+   "a": {
+    "lat": 38.69449,
+    "lng": -9.1984
+   },
+   "b": {
+    "lat": 38.67487,
+    "lng": -9.23088
+   },
+   "osm": "way/1546418924"
+  },
+  {
+   "name": "Cacilhas – Cais do Sodré",
+   "a": {
+    "lat": 38.70437,
+    "lng": -9.14584
+   },
+   "b": {
+    "lat": 38.68827,
+    "lng": -9.14835
+   },
+   "osm": "way/23805341"
+  },
+  {
+   "name": "Seixal – Cais do Sodré",
+   "a": {
+    "lat": 38.64789,
+    "lng": -9.09555
+   },
+   "b": {
+    "lat": 38.70461,
+    "lng": -9.1445
+   },
+   "osm": "way/23805373"
+  },
+  {
+   "name": "Trafaria – Porto Brandão",
+   "a": {
+    "lat": 38.67815,
+    "lng": -9.20693
+   },
+   "b": {
+    "lat": 38.67487,
+    "lng": -9.23088
+   },
+   "osm": "way/23805422"
+  },
+  {
+   "name": "Barreiro – Terreiro do Paço",
+   "a": {
+    "lat": 38.65145,
+    "lng": -9.079
+   },
+   "b": {
+    "lat": 38.70629,
+    "lng": -9.13343
+   },
+   "osm": "way/23805555"
+  },
+  {
+   "name": "Montijo – Cais do Sodré",
+   "a": {
+    "lat": 38.70423,
+    "lng": -9.14667
+   },
+   "b": {
+    "lat": 38.69953,
+    "lng": -9.00637
+   },
+   "osm": "way/261654292"
+  },
+  {
+   "name": "Porto Brandão – Belém",
+   "a": {
+    "lat": 38.69449,
+    "lng": -9.1984
+   },
+   "b": {
+    "lat": 38.67815,
+    "lng": -9.20693
+   },
+   "osm": "way/522074281"
   }
  ]
 }

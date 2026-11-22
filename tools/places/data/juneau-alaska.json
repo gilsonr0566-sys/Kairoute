@@ -224,7 +224,8 @@
    "wikidata": "Q1426502",
    "note": "One of Alaska's best exhibits covering the breadth of the state's history, native cultures, wildlife, industry, and art. Approximately a ten-minute walk from the cruise ship terminal.",
    "editions": 3,
-   "unesco": false
+   "unesco": false,
+   "web": "http://www.museums.state.ak.us/asm/asmhome.html"
   },
   {
    "name": "Saint Nicholas Russian Orthodox Church",
@@ -233,7 +234,8 @@
    "wikidata": "Q421512",
    "note": "Tiny ornate octagonal structure that was built by the Tlingits in 1893. When the Russians were still in Sitka 50 years earlier, Father Ivan Veniaminov of the Russian Orthodox Church translated the Bible into Tlingit. Thus this building beca",
    "editions": 5,
-   "unesco": false
+   "unesco": false,
+   "web": "http://stnicholasjuneau.org/"
   },
   {
    "name": "Alaska State Capitol",
@@ -258,7 +260,8 @@
    "wikidata": "Q1263944",
    "note": "There is a tram that runs from the docks in downtown Juneau up Mount Roberts, one of the peaks overlooking the city. At the top is the Mount Roberts Nature Center which features a captive eagle (not as impressive as seeing them from a dista",
    "editions": 3,
-   "unesco": false
+   "unesco": false,
+   "posDoubt": true
   },
   {
    "name": "Alaskan Brewing Company Brewery Tour",
@@ -281,7 +284,8 @@
    "wikidata": "Q18386259",
    "note": "",
    "editions": 2,
-   "unesco": false
+   "unesco": false,
+   "web": "https://juneau.org/library/museum"
   },
   {
    "name": "Sealaska Heritage Institute",
@@ -290,7 +294,8 @@
    "wikidata": "Q30291923",
    "note": "",
    "editions": 0,
-   "unesco": false
+   "unesco": false,
+   "web": "http://www.sealaskaheritage.org/"
   },
   {
    "name": "Wickersham State Historic Site",

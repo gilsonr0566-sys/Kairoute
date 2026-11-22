@@ -198,7 +198,8 @@
    "wikidata": "Q966429",
    "note": "It was built in the 11th century, and reconstructed after earthquakes. Romanesque-Gothic architecture. Chapel holds the remains of St. Tryphon, the patron saint of Kotor.",
    "editions": 23,
-   "unesco": false
+   "unesco": false,
+   "web": "https://www.kotorskabiskupija.me"
   },
   {
    "name": "St Nicolas Church",
@@ -216,7 +217,8 @@
    "wikidata": "Q16677924",
    "note": "3 floors of photographs, uniforms, weapons, paintings, and model ships.",
    "editions": 4,
-   "unesco": false
+   "unesco": false,
+   "web": "http://www.museummaritimum.com"
   },
   {
    "name": "Castle of San Giovanni",
@@ -266,6 +268,44 @@
    "lat": 42.42583,
    "lng": 18.7669,
    "osm": "node/834266065"
+  }
+ ],
+ "ferryLinks": [
+  {
+   "name": "Kamenari-Lepetane Ferry",
+   "a": {
+    "lat": 42.46579,
+    "lng": 18.68569
+   },
+   "b": {
+    "lat": 42.46662,
+    "lng": 18.67451
+   },
+   "osm": "way/145625712"
+  },
+  {
+   "name": "Kamenari-Lepetane Ferry",
+   "a": {
+    "lat": 42.46651,
+    "lng": 18.67434
+   },
+   "b": {
+    "lat": 42.46573,
+    "lng": 18.68548
+   },
+   "osm": "way/145625735"
+  },
+  {
+   "name": "Kamenari-Lepetane Ferry",
+   "a": {
+    "lat": 42.46586,
+    "lng": 18.68593
+   },
+   "b": {
+    "lat": 42.46693,
+    "lng": 18.6749
+   },
+   "osm": "way/145625750"
   }
  ]
 }

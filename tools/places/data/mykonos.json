@@ -447,5 +447,173 @@
    "lng": 25.32821,
    "osm": "node/8049468493"
   }
+ ],
+ "guideSights": [
+  {
+   "name": "Panagia Paraportiani",
+   "lat": 37.4471,
+   "lng": 25.3257,
+   "wikidata": "Q3669454",
+   "note": "Of all the churches on Mykonos, the most impressive is Panagia Paraportianí, a true Byzantine jewel. This whitewashed church, which building dates back to 1425 and was not completed until the 17th century, is the most popular and most photo",
+   "editions": 8,
+   "unesco": false
+  },
+  {
+   "name": "Archaeological Museum of Mykonos",
+   "lat": 37.45,
+   "lng": 25.329722,
+   "wikidata": "Q4785417",
+   "note": "The exhibition of the museum includes a large number of vases, ranging from the prehistoric to the late Hellenistic period (25th-1st century BC), grave statues, stelae and funerary urns from the nearby island of Rheneia (Delos' necropolis).",
+   "editions": 7,
+   "unesco": false,
+   "web": "http://odysseus.culture.gr/h/1/eh151.jsp?obj_id=3301"
+  },
+  {
+   "name": "Folklore Museum",
+   "lat": 37.4475,
+   "lng": 25.3258,
+   "wikidata": "Q16895581",
+   "note": "The Folklore Museum, housed in an 18th-century sea captain's house, brings together a number of collections of furniture, icons, pieces of sculpture, folk musical instruments, costumes and textiles.",
+   "editions": 2,
+   "unesco": false
+  },
+  {
+   "name": "Lena's House Museum",
+   "lat": 37.445304,
+   "lng": 25.328514,
+   "wikidata": "Q108650605",
+   "note": "Lena's House Museum, a branch of the Folklore Museum, is an authentic 19th-century middle class Mykonian house, completely restored with furnishings.",
+   "editions": 1,
+   "unesco": false
+  },
+  {
+   "name": "Aegean Maritime Museum",
+   "lat": 37.4453,
+   "lng": 25.3284,
+   "wikidata": "Q15178241",
+   "note": "Housed in a traditional Cycladic 19th century building, it has been in continuous operation since 1985. The mission of the Museum is the research and promotion of the maritime history of the Greeks and their engagement with the sea, from an",
+   "editions": 6,
+   "unesco": false,
+   "web": "http://aegean-maritime-museum.gr/en/"
+  },
+  {
+   "name": "Agricultural Museum",
+   "lat": 37.446613,
+   "lng": 25.33079,
+   "wikidata": "Q108611526",
+   "note": "A collection of traditional agricultural tools.",
+   "editions": 0,
+   "unesco": false
+  }
+ ],
+ "ferryLinks": [
+  {
+   "name": "Δίαυλος Δήλου",
+   "a": {
+    "lat": 37.36731,
+    "lng": 25.26031
+   },
+   "b": {
+    "lat": 37.41581,
+    "lng": 25.26487
+   },
+   "osm": "way/1008933513"
+  },
+  {
+   "name": "Mykonos - Rineia",
+   "a": {
+    "lat": 37.46401,
+    "lng": 25.32474
+   },
+   "b": {
+    "lat": 37.41572,
+    "lng": 25.23786
+   },
+   "osm": "way/1232741537"
+  },
+  {
+   "name": "Mykonos - Naxos",
+   "a": {
+    "lat": 37.10619,
+    "lng": 25.37144
+   },
+   "b": {
+    "lat": 37.46401,
+    "lng": 25.32474
+   },
+   "osm": "way/184793322"
+  },
+  {
+   "name": "Mykonos - Delos",
+   "a": {
+    "lat": 37.44876,
+    "lng": 25.32652
+   },
+   "b": {
+    "lat": 37.39847,
+    "lng": 25.26469
+   },
+   "osm": "way/225977458"
+  },
+  {
+   "name": "Syros - Mykonos",
+   "a": {
+    "lat": 37.4409,
+    "lng": 24.9414
+   },
+   "b": {
+    "lat": 37.46401,
+    "lng": 25.32474
+   },
+   "osm": "way/51768304"
+  },
+  {
+   "name": "Tinos - Mykonos",
+   "a": {
+    "lat": 37.53864,
+    "lng": 25.1565
+   },
+   "b": {
+    "lat": 37.46401,
+    "lng": 25.32474
+   },
+   "osm": "way/52577757"
+  },
+  {
+   "name": "Mykonos - Paros",
+   "a": {
+    "lat": 37.08721,
+    "lng": 25.14935
+   },
+   "b": {
+    "lat": 37.46401,
+    "lng": 25.32474
+   },
+   "osm": "way/625388587"
+  },
+  {
+   "name": "Old Port - New Port",
+   "a": {
+    "lat": 37.46549,
+    "lng": 25.32286
+   },
+   "b": {
+    "lat": 37.44824,
+    "lng": 25.32659
+   },
+   "osm": "way/724286239"
+  },
+  {
+   "name": "Ikaria (Evdilos) - Mykonos",
+   "a": {
+    "lat": 37.63294,
+    "lng": 26.18108
+   },
+   "b": {
+    "lat": 37.46401,
+    "lng": 25.32474
+   },
+   "osm": "way/971793408"
+  }
  ]
 }

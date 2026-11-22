@@ -1078,7 +1078,8 @@
    "wikidata": "Q4000489",
    "note": "A tour of an old tunnel that connects the palace to military barracks, used as a bomb shelter in World War II.",
    "editions": 7,
-   "unesco": false
+   "unesco": false,
+   "posDoubt": true
   },
   {
    "name": "Catacombe di San Gennaro",
@@ -5365,6 +5366,284 @@
    },
    "min": 77,
    "km": 69.1
+  }
+ ],
+ "ferryLinks": [
+  {
+   "name": "Capri-Amalfi",
+   "a": {
+    "lat": 40.55604,
+    "lng": 14.24037
+   },
+   "b": {
+    "lat": 40.63274,
+    "lng": 14.60142
+   },
+   "osm": "way/102697130"
+  },
+  {
+   "name": "Napoli - Forìo",
+   "a": {
+    "lat": 40.83767,
+    "lng": 14.25729
+   },
+   "b": {
+    "lat": 40.73893,
+    "lng": 13.85908
+   },
+   "osm": "way/1207988818"
+  },
+  {
+   "name": "Napoli - Procida",
+   "a": {
+    "lat": 40.76593,
+    "lng": 14.02639
+   },
+   "b": {
+    "lat": 40.83767,
+    "lng": 14.25729
+   },
+   "osm": "way/1207988819"
+  },
+  {
+   "name": "Ischia Porto - Napoli",
+   "a": {
+    "lat": 40.74566,
+    "lng": 13.939
+   },
+   "b": {
+    "lat": 40.83767,
+    "lng": 14.25729
+   },
+   "osm": "way/1207988820"
+  },
+  {
+   "name": "Napoli - Ischia",
+   "a": {
+    "lat": 40.83767,
+    "lng": 14.25729
+   },
+   "b": {
+    "lat": 40.74414,
+    "lng": 13.93938
+   },
+   "osm": "way/1207988821"
+  },
+  {
+   "name": "Napoli - Capri",
+   "a": {
+    "lat": 40.55604,
+    "lng": 14.24037
+   },
+   "b": {
+    "lat": 40.83767,
+    "lng": 14.25729
+   },
+   "osm": "way/1207988822"
+  },
+  {
+   "name": "",
+   "a": {
+    "lat": 40.79903,
+    "lng": 13.43313
+   },
+   "b": {
+    "lat": 40.83735,
+    "lng": 14.25475
+   },
+   "osm": "way/1229023564"
+  },
+  {
+   "name": "Napoli - Ischia",
+   "a": {
+    "lat": 40.83735,
+    "lng": 14.25475
+   },
+   "b": {
+    "lat": 40.74414,
+    "lng": 13.93938
+   },
+   "osm": "way/179606503"
+  },
+  {
+   "name": "Napoli - Capri",
+   "a": {
+    "lat": 40.55604,
+    "lng": 14.24037
+   },
+   "b": {
+    "lat": 40.83735,
+    "lng": 14.25475
+   },
+   "osm": "way/179606504"
+  },
+  {
+   "name": "Napoli - Forìo",
+   "a": {
+    "lat": 40.83735,
+    "lng": 14.25475
+   },
+   "b": {
+    "lat": 40.73893,
+    "lng": 13.85908
+   },
+   "osm": "way/179606505"
+  },
+  {
+   "name": "Sorrento-Capri",
+   "a": {
+    "lat": 40.62994,
+    "lng": 14.37438
+   },
+   "b": {
+    "lat": 40.55604,
+    "lng": 14.24037
+   },
+   "osm": "way/189108542"
+  },
+  {
+   "name": "Ischia-Capri",
+   "a": {
+    "lat": 40.74414,
+    "lng": 13.93938
+   },
+   "b": {
+    "lat": 40.55604,
+    "lng": 14.24037
+   },
+   "osm": "way/272578417"
+  },
+  {
+   "name": "Ischia Porto - Napoli",
+   "a": {
+    "lat": 40.74566,
+    "lng": 13.939
+   },
+   "b": {
+    "lat": 40.83735,
+    "lng": 14.25475
+   },
+   "osm": "way/287683499"
+  },
+  {
+   "name": "Pozzuoli - Ischia",
+   "a": {
+    "lat": 40.82371,
+    "lng": 14.11793
+   },
+   "b": {
+    "lat": 40.74421,
+    "lng": 13.93926
+   },
+   "osm": "way/30778468"
+  },
+  {
+   "name": "Napoli - Procida",
+   "a": {
+    "lat": 40.76593,
+    "lng": 14.02639
+   },
+   "b": {
+    "lat": 40.83735,
+    "lng": 14.25475
+   },
+   "osm": "way/37900767"
+  },
+  {
+   "name": "Pozzuoli - Procida",
+   "a": {
+    "lat": 40.82371,
+    "lng": 14.11793
+   },
+   "b": {
+    "lat": 40.76593,
+    "lng": 14.02639
+   },
+   "osm": "way/417363297"
+  },
+  {
+   "name": "Capri-Sorrento",
+   "a": {
+    "lat": 40.6306,
+    "lng": 14.37698
+   },
+   "b": {
+    "lat": 40.55604,
+    "lng": 14.24037
+   },
+   "osm": "way/429899516"
+  },
+  {
+   "name": "Napoli - Procida - Casamicciola",
+   "a": {
+    "lat": 40.84303,
+    "lng": 14.26107
+   },
+   "b": {
+    "lat": 40.76593,
+    "lng": 14.02639
+   },
+   "osm": "way/501455083"
+  },
+  {
+   "name": "Linea per Sorrento - Capri",
+   "a": {
+    "lat": 40.55604,
+    "lng": 14.24037
+   },
+   "b": {
+    "lat": 40.6929,
+    "lng": 14.47589
+   },
+   "osm": "way/525414924"
+  },
+  {
+   "name": "Capri-Seiano",
+   "a": {
+    "lat": 40.55604,
+    "lng": 14.24037
+   },
+   "b": {
+    "lat": 40.66098,
+    "lng": 14.41737
+   },
+   "osm": "way/525414925"
+  },
+  {
+   "name": "Napoli - Capri",
+   "a": {
+    "lat": 40.55628,
+    "lng": 14.24208
+   },
+   "b": {
+    "lat": 40.84303,
+    "lng": 14.26107
+   },
+   "osm": "way/525627687"
+  },
+  {
+   "name": "Capri-Positano",
+   "a": {
+    "lat": 40.55604,
+    "lng": 14.24037
+   },
+   "b": {
+    "lat": 40.62715,
+    "lng": 14.48634
+   },
+   "osm": "way/525627688"
+  },
+  {
+   "name": "Napoli - Sorrento",
+   "a": {
+    "lat": 40.62996,
+    "lng": 14.37443
+   },
+   "b": {
+    "lat": 40.83735,
+    "lng": 14.25475
+   },
+   "osm": "way/770345071"
   }
  ]
 }

@@ -2728,5 +2728,1399 @@
    "lng": 29.00982,
    "osm": "way/881753041"
   }
+ ],
+ "guideSights": [
+  {
+   "name": "Sultanahmet Mosque",
+   "lat": 41.0054,
+   "lng": 28.9768,
+   "wikidata": "Q80541",
+   "note": "The defining image of Istanbul, dominating the skyline with its great dome and six minarets. Completed in 1617 for Sultan Ahmed I, it's still a working mosque, so dress appropriately and avoid prayer times. Enter via the courtyard on the SW",
+   "editions": 89,
+   "unesco": true
+  },
+  {
+   "name": "Hagia Sophia",
+   "lat": 41.0085,
+   "lng": 28.9799,
+   "wikidata": "Q12506",
+   "note": "The third and grandest of the churches on this site, completed in 537 AD. The 30-m diameter dome covers what was for over 1000 years the largest enclosed space in the world, only surpassed in 1520 by Seville cathedral. It used \"pendentive\" ",
+   "editions": 152,
+   "unesco": true
+  },
+  {
+   "name": "Topkapı Palace",
+   "lat": 41.013,
+   "lng": 28.984,
+   "wikidata": "Q170495",
+   "note": "The imperial enclave of the Ottoman emperors for four centuries. Lavishly decorated, with exhibitions of fine craftmanship and four courts of increasing grandeur. The second court has the Harem and the State Treasury, housing a weaponry dis",
+   "editions": 79,
+   "unesco": true,
+   "web": "https://www.millisaraylar.gov.tr/Lokasyon/2/topkapi-sarayi"
+  },
+  {
+   "name": "Basilica Cistern",
+   "lat": 41.0081,
+   "lng": 28.9778,
+   "wikidata": "Q216511",
+   "note": "Vast underground cistern built by Justinian in 532 to store the city's water, the largest and best-known of the hundreds constructed. It's a cathedral-like space with 336 richly decorated columns. Time was you explored in a little rowing bo",
+   "editions": 41,
+   "unesco": false,
+   "web": "https://yerebatansarnici.gov.tr/"
+  },
+  {
+   "name": "Museum of Archaeology",
+   "lat": 41.0107,
+   "lng": 28.9812,
+   "wikidata": "Q636978",
+   "note": "Turkey was slow to protect its antiquities and to display them properly, but in 1867 Sultan Abdülaziz toured the museums of Paris, London and Vienna and saw what was needed. The main collection is in a grand neo-classical building of 1891, ",
+   "editions": 37,
+   "unesco": false,
+   "web": "https://muze.gov.tr/muze-detay?SectionId=IAR01&DistId=IAR"
+  },
+  {
+   "name": "Museum of the History of Science and Technology in Islam",
+   "lat": 41.0138,
+   "lng": 28.9796,
+   "wikidata": "Q16850295",
+   "note": "Museum in a restored building that was the stables for Topkapı Palace. It exhibits various instruments for astronomy, clocks, pumps, weaponry, a steam-powered döner spit, and so on developed in Islamic realms down the centuries, but these a",
+   "editions": 7,
+   "unesco": false
+  },
+  {
+   "name": "Istanbul Railway Museum",
+   "lat": 41.015278,
+   "lng": 28.977222,
+   "wikidata": "Q15228897",
+   "note": "Housed in the Europe-side railway terminus of 1890, this exhibits Ottoman and modern Turkish railway history. The Orient Express came and went from here, with passengers for further east transferring to ferries then the Asia-side terminus o",
+   "editions": 10,
+   "unesco": false,
+   "web": "http://www.tcdd.gov.tr/tcdding/istanbul_ing.html"
+  },
+  {
+   "name": "Rüstem Pasha Mosque",
+   "lat": 41.0176,
+   "lng": 28.9688,
+   "wikidata": "Q1137511",
+   "note": "Built in 1564 by Mimar Sinan for Rüstem Pasha, Grand Vizier of Suleiman the Magnificent, this small mosque has an interior covered by beautiful Iznik pottery, then at its zenith.",
+   "editions": 33,
+   "unesco": false
+  },
+  {
+   "name": "Beyazit II Mosque",
+   "lat": 41.0103,
+   "lng": 28.9653,
+   "wikidata": "",
+   "note": "Imposing mosque built 1500/05. The other parts of the religious complex have found secular use."
+  },
+  {
+   "name": "Sokollu Mehmet Pasha Mosque",
+   "lat": 41.0048,
+   "lng": 28.9721,
+   "wikidata": "Q1572472",
+   "note": "Sokollu Mehmet Pasha was the grand vizier and ''de facto'' ruler of the Ottoman Empire during its 16th century golden age. He commissioned this mosque, one of three in the city to bear his name, but the sloping site was a challenge. He hire",
+   "editions": 33,
+   "unesco": false
+  },
+  {
+   "name": "Little Hagia Sophia",
+   "lat": 41.0028,
+   "lng": 28.9719,
+   "wikidata": "Q1144576",
+   "note": "Built as the Church of Saints Sergius and Bacchus around 530 AD, the same time as Hagia Sophia, but their styles differ. Transformed into a mosque in the early 1500s, it's beautifully decorated, with fine marble details, and has a pleasante",
+   "editions": 36,
+   "unesco": false
+  },
+  {
+   "name": "Theodosius Cistern",
+   "lat": 41.0073,
+   "lng": 28.9726,
+   "wikidata": "Q3150393",
+   "note": "This was rediscovered in 2010 when an overlying building was demolished. It was built circa 430 AD to store water brought in by Valens Aqueduct. It's smaller than the better-known Basilica Cistern, but better lit, more atmospheric and less ",
+   "editions": 19,
+   "unesco": false,
+   "web": "https://www.serefiyesarnici.istanbul/"
+  },
+  {
+   "name": "Molla Zeyrek Mosque",
+   "lat": 41.0197,
+   "lng": 28.9572,
+   "wikidata": "Q197094",
+   "note": "This is a triple structure: the church of the Monastery of Pantokrator built 1118, then a public church circa 1136 plus a chapel that served as a royal mausoleum. It became a mosque and medresse in Ottoman times, but without massive alterat",
+   "editions": 31,
+   "unesco": true,
+   "posDoubt": true
+  },
+  {
+   "name": "Süleymaniye Mosque",
+   "lat": 41.0161,
+   "lng": 28.9639,
+   "wikidata": "Q178643",
+   "note": "On top of a hill overlooking the Golden Horn, this is a magnificent mosque built by Sinan in the 1550s. It was centrepiece of a large ''külliye'', a religious complex which included madrasas, a public kitchen and a hospital.. The small ceme",
+   "editions": 69,
+   "unesco": true,
+   "posDoubt": true
+  },
+  {
+   "name": "Fatih Mosque",
+   "lat": 41.0197,
+   "lng": 28.9497,
+   "wikidata": "Q756189",
+   "note": "The original mosque was built between 1463-1470 by the Greek architect Atik Sinan, by order of Sultan Mehmet II the Conqueror, on the site of the former Church of the Holy Apostles, which had served as Byzantine Imperial burial place for a ",
+   "editions": 38,
+   "unesco": false
+  },
+  {
+   "name": "St George's Cathedral",
+   "lat": 41.0292,
+   "lng": 28.9517,
+   "wikidata": "Q211004",
+   "note": "This is modest from the outside, as the Ottomans would not permit non-Muslim religious buildings to rival the mosques. The interior is lavish but its chief importance is as the senior Eastern Orthodox church. Their Patriarchate has been hou",
+   "editions": 70,
+   "unesco": false,
+   "web": "https://ec-patr.org"
+  },
+  {
+   "name": "Phanar Greek Orthodox College",
+   "lat": 41.0291107,
+   "lng": 28.9490685,
+   "wikidata": "",
+   "note": "This is the red-brick castle seen south of St George. Built 1881/83, it teaches the standard Turkish curriculum plus Greek language and culture, and the tower houses an observatory. No visits."
+  },
+  {
+   "name": "Fethiye Mosque",
+   "lat": 41.0292,
+   "lng": 28.9464,
+   "wikidata": "Q1420984",
+   "note": "The Church of Theotokos Pammakaristos (\"All-Blessed Mother of God\") was built between the 11th and 12th centuries. The ''parekklesion'' or side-chapel was added maybe 1300, with rich mosaics. The main building became a mosque in 1591, named",
+   "editions": 31,
+   "unesco": false
+  },
+  {
+   "name": "St Stephen Church",
+   "lat": 41.0319,
+   "lng": 28.9497,
+   "wikidata": "Q2094950",
+   "note": "A remarkable Bulgarian Orthodox church better known as ''Demir Kilise'', \"Iron Church\", as it's a cast iron prefab. The Bulgarians split from the Greek Orthodox and established their own wooden church in 1870, which burned down. The ground ",
+   "editions": 17,
+   "unesco": false,
+   "web": "http://www.svetistephan.com/"
+  },
+  {
+   "name": "Ahrida Synagogue",
+   "lat": 41.0328,
+   "lng": 28.9456,
+   "wikidata": "Q3393562",
+   "note": "This was built in the 1430s by Grecian Jews (\"Romaniotes\") from the city of Ohrid, now in North Macedonia. The district of Balat was a Jewish quarter, swelled from 1492 by those expelled from Spain. The synagogue is only open for pre-arrang",
+   "editions": 14,
+   "unesco": false
+  },
+  {
+   "name": "Panorama 1453 History Museum",
+   "lat": 41.0182,
+   "lng": 28.9204,
+   "wikidata": "Q6090202",
+   "note": "This is a circular indoor space enclosed by a 3D depiction of the Ottomans breaching the Walls of Constantinople on 29 May 1453, with sound effects. It's over-priced, unhistorical and tourist-trappy.",
+   "editions": 5,
+   "unesco": false,
+   "web": "https://www.panoramikmuze.com/"
+  },
+  {
+   "name": "Koca Mustafa Pasha Mosque",
+   "lat": 41.0034,
+   "lng": 28.9286,
+   "wikidata": "Q608787",
+   "note": "Built in the early 5th century as a monastery dedicated to Saint Andrew the Apostle, in 766 it was the burial place of Saint Andrew of Crete and was later re-dedicated to him. It was rebuilt in the late 9th century and again in the 13th, th",
+   "editions": 22,
+   "unesco": false
+  },
+  {
+   "name": "Yedikule Fortress",
+   "lat": 40.9929,
+   "lng": 28.9227,
+   "wikidata": "Q632795",
+   "note": "The Golden Gate was the ceremonial entrance through the Theodosian city walls. After the Ottomans captured the city in 1453, Mehmed II needed a stronghold for his treasures and documents. The gate was therefore bricked up and the walls rein",
+   "editions": 27,
+   "unesco": false
+  },
+  {
+   "name": "Galata Tower",
+   "lat": 41.025556,
+   "lng": 28.974167,
+   "wikidata": "Q91274",
+   "note": "It was built by the Genoese in the 14th century on the city walls of Galata, marking the highest point of their territory. Ride an elevator and take two flights of stairs to the top, then walk the parapet for a 360°-view of Istanbul, includ",
+   "editions": 58,
+   "unesco": false,
+   "web": "https://muze.gov.tr/muze-detay?SectionId=GLT04&DistId=MRK"
+  },
+  {
+   "name": "Galata Convent of Whirling Dervishes",
+   "lat": 41.028028,
+   "lng": 28.975125,
+   "wikidata": "Q6090478",
+   "note": "A ritual dancing hall of the mystical Mevlevi order, the followers of the teachings of Mewlānā Rumi. The quiet and peaceful garden is a welcome escape from the hustle and bustle of Beyoğlu. The oldest Mevlevi lodge in Istanbul, the convent ",
+   "editions": 4,
+   "unesco": false,
+   "web": "https://muze.gov.tr/muze-detay?sectionId=GLT01&distId=MRK"
+  },
+  {
+   "name": "Kasimpaşa Mevlevihanesi",
+   "lat": 41.036213,
+   "lng": 28.97069,
+   "wikidata": "",
+   "note": "a Mevlevi cultural center opened in 2024 which regularly offers Dervish sema ceremonies. There are also some posters with information in Turkish about the Mevlevi movement and a gift shop, but not much else to be seen."
+  },
+  {
+   "name": "Crimean Memorial Church",
+   "lat": 41.0277,
+   "lng": 28.9771,
+   "wikidata": "Q5185447",
+   "note": "A neo-gothic Anglican cathedral which would not be out of place in northwestern Europe, the Crimean Memorial Church was built for the Protestant community of the city by [[United Kingdom",
+   "editions": 9,
+   "unesco": false,
+   "web": "http://anglicansistanbul.blogspot.com"
+  },
+  {
+   "name": "Arap Camii",
+   "lat": 41.024444,
+   "lng": 28.970833,
+   "wikidata": "Q642478",
+   "note": "The building was erected as a Roman Catholic church in 1325 by the friars of the Dominican Order, near or above an earlier chapel dedicated to Saint Paul (Italian: San Paolo) in 1233. In 1299, the Dominican Friar Guillaume Bernard de Sévéra",
+   "editions": 25,
+   "unesco": false
+  },
+  {
+   "name": "Neve Shalom Synagogue",
+   "lat": 41.026694,
+   "lng": 28.972417,
+   "wikidata": "Q747244",
+   "note": "The most beautiful and the largest in the city where most of the religious ceremonies like bar-mitzvahs, weddings and funerals are held.",
+   "editions": 20,
+   "unesco": false,
+   "web": "http://www.nevesalom.org/"
+  },
+  {
+   "name": "The Jewish Museum of Turkey",
+   "lat": 41.026787,
+   "lng": 28.972728,
+   "wikidata": "Q1059699",
+   "note": "A former synagogue, the museum's exhibit details how the cultures mixed with and influenced each other in the past 500+ years since the Spanish expulsion.",
+   "editions": 17,
+   "unesco": false,
+   "web": "http://www.muze500.com/"
+  },
+  {
+   "name": "Camondo Stairs",
+   "lat": 41.02397,
+   "lng": 28.97378,
+   "wikidata": "Q6027749",
+   "note": "An attractive stairway mixing the Neo-Baroque and early Art Nouveau styles, climbing up from Bankalar St towards the Galata Tower. It was built in the 1870s by Abraham Salomon Camondo, who belonged to a prominent Ottoman-Venetian Jewish fam",
+   "editions": 8,
+   "unesco": false
+  },
+  {
+   "name": "Schneidertempel",
+   "lat": 41.02411637715728,
+   "lng": 28.974002326991922,
+   "wikidata": "",
+   "note": "This former synagogue of Ashkenazi Jews (many of German or French origin) now hosts an art gallery downstairs. Upstairs, there is an exhibition about the arrival and the lives of Ashkenazi Jews in Istanbul, with many original exhibits, incl"
+  },
+  {
+   "name": "Pera Museum",
+   "lat": 41.031833,
+   "lng": 28.975139,
+   "wikidata": "Q1662392",
+   "note": "A private museum with a large painting collection and archaeological collections of measurement units and tools used in Asia Minor since antiquity and faiences of Kütahya.",
+   "editions": 24,
+   "unesco": false,
+   "web": "https://www.peramuzesi.org.tr/"
+  },
+  {
+   "name": "French Institute",
+   "lat": 41.0362358,
+   "lng": 28.9839866,
+   "wikidata": "",
+   "note": "They have good art exhibits for free and sometimes have French films in the cinema."
+  },
+  {
+   "name": "Hagia Triada Greek Orthodox Church",
+   "lat": 41.0355,
+   "lng": 28.9842,
+   "wikidata": "Q5638730",
+   "note": "A charming domed church built in 1880 at the side of Taksim Square, now uneasily contesting with Taksim Mosque for being the main landmark of the southern edge of the square.",
+   "editions": 13,
+   "unesco": false
+  },
+  {
+   "name": "S. Antonio di Padova Catholic Church",
+   "lat": 41.032317,
+   "lng": 28.977234,
+   "wikidata": "Q810122",
+   "note": "Although not at the size of [[Istanbul/Sultanahmet-Old_City#See",
+   "editions": 25,
+   "unesco": false,
+   "web": "https://www.sentantuan.com"
+  },
+  {
+   "name": "Cezayir Street",
+   "lat": 41.03135,
+   "lng": 28.97917,
+   "wikidata": "Q6061491",
+   "note": "Better known as '''Fransız Sokağı''' or ''La Rue Française'', i.e. \"French Street\", is an alley of statues and geraniums hanging from windows, featuring France-themed restaurants, cafes, and pubs housed in renovated and brightly-painted neo",
+   "editions": 3,
+   "unesco": false
+  },
+  {
+   "name": "Museum of Innocence",
+   "lat": 41.030931,
+   "lng": 28.979822,
+   "wikidata": "Q15961492",
+   "note": "Opened in 2012, this museum is unique and a must-see when you are in the Beyoğlu area. It was created by Turkish Nobel laureate Orhan Pamuk alongside a novel of the same name. It tells the love story of the two main characters from the nove",
+   "editions": 27,
+   "unesco": false,
+   "web": "https://www.masumiyetmuzesi.org/en"
+  },
+  {
+   "name": "Orhan Kemal Museum",
+   "lat": 41.03055,
+   "lng": 28.98357,
+   "wikidata": "Q20949672",
+   "note": "Tiny house museum on the life of Turkish novelist Orhan Kemal (1914–1970).",
+   "editions": 5,
+   "unesco": false,
+   "web": "http://www.orhankemal.org/"
+  },
+  {
+   "name": "Adam Mickiewicz Museum",
+   "lat": 41.038777,
+   "lng": 28.9771,
+   "wikidata": "Q4679495",
+   "note": "A historic house museum dedicated to the life of Adam Mickiewicz, renowned Polish poet. This is where he lived while in Turkey from September 1855 to 26 November 1855, when he died of illness.",
+   "editions": 9,
+   "unesco": false,
+   "web": "https://muze.gov.tr/muze-detay?sectionId=IDM01&distId=MRK"
+  },
+  {
+   "name": "Miniaturk",
+   "lat": 41.06,
+   "lng": 28.948611,
+   "wikidata": "Q1085952",
+   "note": "It was built in 2001 and is the first miniature park in Istanbul (the world's largest miniature park in respect to its model area). The park hosts icons of many cultures and civilizations. Models vary from the Hagia Sophia to Galata Tower, ",
+   "editions": 21,
+   "unesco": false,
+   "web": "http://www.miniaturk.com.tr/"
+  },
+  {
+   "name": "Aynalıkavak Pavilion",
+   "lat": 41.037917,
+   "lng": 28.955319,
+   "wikidata": "Q793169",
+   "note": "Started in 1613 by the Ottoman sultan Ahmet I (r. 1603–1617, who also had the Blue Mosque in the [[Istanbul/Sultanahmet-Old City",
+   "editions": 14,
+   "unesco": false
+  },
+  {
+   "name": "Rahmi M. Koç Industrial Museum",
+   "lat": 41.04227,
+   "lng": 28.94926,
+   "wikidata": "Q3404565",
+   "note": "This is an industry museum showcasing the evolution of machines. Many transport related items including a submarine, classic cars, railway carriages, an out-of-service Bosphorus ferry and a Douglas DC-3 aircraft (possible to board) are on d",
+   "editions": 14,
+   "unesco": false,
+   "web": "http://www.rmk-museum.org.tr/english/index.html"
+  },
+  {
+   "name": "Dolmabahce Palace",
+   "lat": 41.039444,
+   "lng": 29.001667,
+   "wikidata": "Q274141",
+   "note": "This lavish palace with 285 rooms and 43 halls was the admin centre for the Ottoman Empire in its last 60 years. The palace government block (''Selamlık'') includes the Imperial Mabeyn (State Apartments) and Muayede Hall (Ceremonial Hall), ",
+   "editions": 54,
+   "unesco": false,
+   "web": "https://www.millisaraylar.gov.tr/",
+   "posDoubt": true
+  },
+  {
+   "name": "Akaretler Street",
+   "lat": 41.04226,
+   "lng": 29.00088,
+   "wikidata": "",
+   "note": "Akaretler Caddesi, or officially Süleyman Seba Caddesi features upscale garment boutiques, restaurants, and sidewalk cafés housed in renovated late Ottoman-era rowhouses built for the state elite, given their proximity to Dolmabahçe Palace,"
+  },
+  {
+   "name": "Yıldız Palace",
+   "lat": 41.0494,
+   "lng": 29.0111,
+   "wikidata": "Q911734",
+   "note": "A vast complex of former imperial Ottoman pavilions and villas in Istanbul, Turkey, built in the 19th and early 20th centuries. It was used as a residence by the Sultan and his court in the late 19th century.",
+   "editions": 34,
+   "unesco": false
+  },
+  {
+   "name": "Ortaköy",
+   "lat": 41.054627,
+   "lng": 29.02819,
+   "wikidata": "Q2249546",
+   "note": "A neighbourhood on the bank of Bosphorus with the Ortaköy Mosque&mdash;the baroque mosque under the Bosphorus Bridge, combination of which are one of the most iconic images of Istanbul. This artsy neighbourhood is filled with nice cafes, so",
+   "editions": 31,
+   "unesco": false,
+   "posFrom": "wikidata"
+  },
+  {
+   "name": "Arnavutköy",
+   "lat": 41.068024,
+   "lng": 29.041125,
+   "wikidata": "Q1095321",
+   "note": "The neighbourhood of Arnavutköy (literally \"Albanian village\", paying homage to its founders in the 16th century) features impressive ''yalı''s, multiple-storey wooden mansions lining the waterfront, and all bearing significant artwork on t",
+   "editions": 20,
+   "unesco": false,
+   "web": "https://www.arnavutkoy.bel.tr/"
+  },
+  {
+   "name": "Rumeli Fortress",
+   "lat": 41.084722,
+   "lng": 29.056111,
+   "wikidata": "Q90801",
+   "note": "Built in first half of the 15th century, this is the large medieval castle under the Second Bosphorus Bridge. Its former name ''Boğazkesen'' (Turkish)/''Laimokopia'' (Greek) means both \"strait-blocker\" and \"throat-cutter\" in both languages ",
+   "editions": 35,
+   "unesco": false
+  },
+  {
+   "name": "Baltalimanı Japanese Garden",
+   "lat": 41.0971,
+   "lng": 29.05222,
+   "wikidata": "Q97387997",
+   "note": "Built with support of Shimonoseki, one of Istanbul's sister cities, the garden features a tea room, ponds, waterfalls, as well as a cherry lane.",
+   "editions": 7,
+   "unesco": false,
+   "web": "https://www.istanbul.tr.emb-japan.go.jp/japonbahcesi/index.html"
+  },
+  {
+   "name": "Sakıp Sabancı Museum",
+   "lat": 41.099116,
+   "lng": 29.053704,
+   "wikidata": "Q3395851",
+   "note": "Museum with a rich collection of calligraphy and paintings. It also hosts temporary exhibitions of works by some world-class artists such as Pablo Picasso from time to time.",
+   "editions": 18,
+   "unesco": false,
+   "web": "https://www.sakipsabancimuzesi.org/"
+  },
+  {
+   "name": "Emirgan Park",
+   "lat": 41.108333,
+   "lng": 29.0525,
+   "wikidata": "Q5185642",
+   "note": "Situated on the gentle hill overlooking the neighbourhood of Emirgan and the Bosphorus, Emirgan Park was for long the only place in the city where Istanbulites can admire the beauty of tulips. Having lost that distinction since the first de",
+   "editions": 12,
+   "unesco": false
+  },
+  {
+   "name": "Yusuf Ziya Mansion",
+   "lat": 41.08913,
+   "lng": 29.056555,
+   "wikidata": "Q12811372",
+   "note": "It houses the headquarters of Borusan Holding and the Borusan Contemporary art museum. The popular nickname of the mansion, ''Perili Köşk'' (meaning the \"Haunted Mansion\") refers to its construction remaining partially unfinished for a long",
+   "editions": 6,
+   "unesco": false,
+   "web": "https://www.borusancontemporary.com/"
+  },
+  {
+   "name": "Eyüp Mosque Complex",
+   "lat": 41.047947,
+   "lng": 28.933786,
+   "wikidata": "Q956677",
+   "note": "This is the main attraction around this part of the city. The holiest Islamic shrine in the city, the complex includes, right next to the mosque, the tomb of Abu Ayyub al-Ansari (''Eyüp Ensari Türbesi''), the standard bearer of Prophet Moha",
+   "editions": 29,
+   "unesco": false
+  },
+  {
+   "name": "Artistanbul Feshane",
+   "lat": 41.04405,
+   "lng": 28.93754,
+   "wikidata": "Q6059242",
+   "note": "Feshane began as a factory producing '''fezzes''' (''fes''), the red hats made of felt adopted by the Ottomans in the early 19th century as a part of westernizing efforts in lieu of much more traditional turbans. However, the fez was scrapp",
+   "editions": 2,
+   "unesco": false
+  },
+  {
+   "name": "Santral İstanbul",
+   "lat": 41.0665,
+   "lng": 28.9461,
+   "wikidata": "Q2797197",
+   "note": "A contemporary art museum in a building converted from an old power plant: 1914-built and coal-fired, this was the oldest in Istanbul and the Ottoman Empire. Part of the plant was kept in almost exact original condition and now serves as th",
+   "editions": 13,
+   "unesco": false,
+   "web": "http://www.santralistanbul.org/"
+  },
+  {
+   "name": "Bahariye Mevlevihanesi",
+   "lat": 41.056008553904675,
+   "lng": 28.93938975827832,
+   "wikidata": "",
+   "note": ""
+  },
+  {
+   "name": "Atatürk Museum",
+   "lat": 41.056397,
+   "lng": 28.987212,
+   "wikidata": "Q3701681",
+   "note": "A historic 3-storey house, easily distinguishable among the modern apartment buildings thanks to its brightly coloured and gracefully decorated exterior. This is where the future founder of the Turkish Republic, Kemal Atatürk rented in 1919",
+   "editions": 11,
+   "unesco": false
+  },
+  {
+   "name": "Military Museum",
+   "lat": 41.0484,
+   "lng": 28.9883,
+   "wikidata": "Q12808583",
+   "note": "Among the exhibition of this museum are five thousand pieces from the Ottoman era through WWII, with the most prominent piece possibly being the huge chain that the Byzantines stretched across the mouth of the Golden Horn to keep out the Su",
+   "editions": 13,
+   "unesco": false,
+   "web": "https://askerimuze.msb.gov.tr/ing/index.html"
+  },
+  {
+   "name": "Radio Building",
+   "lat": 41.044506,
+   "lng": 28.987297,
+   "wikidata": "Q6024559",
+   "note": "This building dating back to 1945 houses the local radio branch of the state radio and television corporation of Turkey (''TRT''). Not exactly an architectural pearl (although fans of the 1940s' totalitarian architecture will likely find it",
+   "editions": 2,
+   "unesco": false
+  },
+  {
+   "name": "Nişantaşı",
+   "lat": 41.051667,
+   "lng": 28.991389,
+   "wikidata": "Q251601",
+   "note": "A neighbourhood east of Şişli known for its Art Nouveau apartment buildings, the ground floors of many of which are upmarket restaurants, cafes, pubs, and garment stores lining the sidewalks. Nobel laureate Orhan Pamuk, well-known Turkish n",
+   "editions": 20,
+   "unesco": false
+  },
+  {
+   "name": "Ihlamur Palace",
+   "lat": 41.05110898246619,
+   "lng": 29.00267599587044,
+   "wikidata": "",
+   "note": ""
+  },
+  {
+   "name": "HISART Museum",
+   "lat": 41.07119489165968,
+   "lng": 28.982795083636148,
+   "wikidata": "",
+   "note": ""
+  },
+  {
+   "name": "WW1 Monument",
+   "lat": 41.068152632720654,
+   "lng": 28.982065912457116,
+   "wikidata": "",
+   "note": "Next to the Court of Istanbul."
+  },
+  {
+   "name": "Armenian, Greek and Jewish Cemeteries",
+   "lat": 41.06528090194343,
+   "lng": 28.99068891688332,
+   "wikidata": "",
+   "note": ""
+  },
+  {
+   "name": "Sea Life Istanbul",
+   "lat": 41.0456,
+   "lng": 28.8963,
+   "wikidata": "Q4809463",
+   "note": "Aquarium where you walk through transparent tunnels underwater. It's small compared to Istanbul Aquarium in Yeşilköy, an hour will be plenty, and their combi-tickets with [[Istanbul/Galata#Q110538685",
+   "editions": 8,
+   "unesco": false,
+   "closedForGood": true,
+   "web": "https://www.visitsealife.com/istanbul/"
+  },
+  {
+   "name": "Maiden's Tower",
+   "lat": 41.021111,
+   "lng": 29.004167,
+   "wikidata": "Q848397",
+   "note": "One of the icons of the city is also called the '''Leander's Tower''', on a Bosphorus islet off Salacak. The local myth ascribes its name to a princess, whose father wanted to protect her in this offshore tower from a prophecy that she woul",
+   "editions": 45,
+   "unesco": false,
+   "web": "https://kizkulesi.gov.tr/"
+  },
+  {
+   "name": "Selimiye Barracks",
+   "lat": 41.00787694445489,
+   "lng": 29.016324794857535,
+   "wikidata": "",
+   "note": "Also Florence Nightingale Museum."
+  },
+  {
+   "name": "Kuzguncuk",
+   "lat": 41.036667,
+   "lng": 29.029722,
+   "wikidata": "Q2555555",
+   "note": "This attractive neighbourhood was home to a large Christian and Jewish population until some decades ago and still has a number of sights like two synagogues, some churches among which the Armenian Surp Krikor Lusavoriç, dozens of wooden ho",
+   "editions": 14,
+   "unesco": false
+  },
+  {
+   "name": "Beylerbeyi",
+   "lat": 41.045,
+   "lng": 29.045,
+   "wikidata": "Q853184",
+   "note": "is a small port with a popular fishing dock. There are many restaurants: those on the port-side serve alcohol and are moderately expensive, those down the side-streets are cheaper. Notable buildings include the 18th-century Hamid-i Evvel mo",
+   "editions": 15,
+   "unesco": false
+  },
+  {
+   "name": "Çengelköy",
+   "lat": 41.0507,
+   "lng": 29.0538,
+   "wikidata": "Q2921300",
+   "note": "About 15 minutes walking north of Beylerbeyi lies the historical fishing village Çengelköy. Its long history is attested by an 800-year-old sycamore tree on one of the two main terraced squares, and the Byzantine Aya Yorgi church. The resta",
+   "editions": 14,
+   "unesco": false
+  },
+  {
+   "name": "Kuleli Military Academy",
+   "lat": 41.05850291892891,
+   "lng": 29.054084493527156,
+   "wikidata": "",
+   "note": "One of the oldest functioning academies."
+  },
+  {
+   "name": "Çamlıca Hill",
+   "lat": 41.02752,
+   "lng": 29.06837,
+   "wikidata": "Q2414579",
+   "note": "One of the highest hills of Istanbul, at 288 m asl. Since it dominates a great part of the city, it is the site of [https://camlicakule.istanbul/ Çamlıca Tower], a 2021-built telecommunications tower and the highest structure of Istanbul, w",
+   "editions": 10,
+   "unesco": false
+  },
+  {
+   "name": "Anadolu Citadel",
+   "lat": 41.082,
+   "lng": 29.067,
+   "wikidata": "Q81650",
+   "note": "A medieval citadel on the Bosphorus at the mouth of the Göksu creek. It was built in the late 14th century to control (polite word for \"choke off\") shipping along the Bosphorus, which narrows to 660 m at this point. It worked in tandem with",
+   "editions": 33,
+   "unesco": false
+  },
+  {
+   "name": "IMOGA Graphic Arts Museum",
+   "lat": 41.00384330327569,
+   "lng": 29.065380949161934,
+   "wikidata": "",
+   "note": ""
+  },
+  {
+   "name": "Hagia Triada Greek Orthodox Church",
+   "lat": 40.9861,
+   "lng": 29.0275,
+   "wikidata": "",
+   "note": "This is still in use and only open for services."
+  },
+  {
+   "name": "French Catholic Church of the Assumption",
+   "lat": 40.9842,
+   "lng": 29.0257,
+   "wikidata": "",
+   "note": "Built in 1859, it occasionally hosts concerts but is otherwise only open for mass."
+  },
+  {
+   "name": "Barış Manço Museum",
+   "lat": 40.9821,
+   "lng": 29.0249,
+   "wikidata": "",
+   "note": "This mansion was built in 1900 for British businessman William Whittall, but it's best known as the home of rock star Barış Manço (1943-1999). He lived here from 1984 and it's now a museum of his life and work."
+  },
+  {
+   "name": "Kemal Sunal Museum",
+   "lat": 40.9709,
+   "lng": 29.0577,
+   "wikidata": "",
+   "note": "Kemal Sunal (1944-2000) was a comic actor, playing a clumsy little guy stumbling perplexed through life, and this house depicts his life and career. Late in life he achieved a masters degree, by selecting himself as thesis topic."
+  },
+  {
+   "name": "Kazım Karabekir Paşa Museum",
+   "lat": 40.9683,
+   "lng": 29.0786,
+   "wikidata": "",
+   "note": "Mansion of General Karabekir (1882-1948), who fought in the War of Independence."
+  },
+  {
+   "name": "DeCollage Art Space",
+   "lat": 40.9594,
+   "lng": 29.0854,
+   "wikidata": "",
+   "note": "Gallery and workspace for contemporary art, and hosts other cultural events."
+  },
+  {
+   "name": "Hekimbaşı Hunting Lodge",
+   "lat": 41.0622,
+   "lng": 29.0941,
+   "wikidata": "",
+   "note": "This was built for Hekimbaşı Küçük Hayrullah Efendi (1817-1866) by the architect Sarkis Balyan. It's been closed for restoration for years so you just admire the exterior from the park."
+  }
+ ],
+ "ferryLinks": [
+  {
+   "name": "Aşiyan - Üsküdar",
+   "a": {
+    "lat": 41.08114,
+    "lng": 29.05486
+   },
+   "b": {
+    "lat": 41.02814,
+    "lng": 29.01529
+   },
+   "osm": "way/1108115199"
+  },
+  {
+   "name": "Üsküdar - Kabataş (Dentur Avrasya)",
+   "a": {
+    "lat": 41.02804,
+    "lng": 29.01578
+   },
+   "b": {
+    "lat": 41.03387,
+    "lng": 28.9942
+   },
+   "osm": "way/117469390"
+  },
+  {
+   "name": "Bakırköy-Yenikapı",
+   "a": {
+    "lat": 40.97331,
+    "lng": 28.87838
+   },
+   "b": {
+    "lat": 41.00199,
+    "lng": 28.9557
+   },
+   "osm": "way/1184710053"
+  },
+  {
+   "name": "Yenikapı-Kadıköy",
+   "a": {
+    "lat": 40.99168,
+    "lng": 29.01824
+   },
+   "b": {
+    "lat": 41.00199,
+    "lng": 28.9557
+   },
+   "osm": "way/1184710054"
+  },
+  {
+   "name": "Karaköy - Eminönü Hattı",
+   "a": {
+    "lat": 41.0211,
+    "lng": 28.97681
+   },
+   "b": {
+    "lat": 41.01835,
+    "lng": 28.97316
+   },
+   "osm": "way/1340119942"
+  },
+  {
+   "name": "Küçüksu-Beşiktaş-Kabataş",
+   "a": {
+    "lat": 41.04083,
+    "lng": 29.00742
+   },
+   "b": {
+    "lat": 41.07967,
+    "lng": 29.06489
+   },
+   "osm": "way/1424465746"
+  },
+  {
+   "name": "Kabataş - Moda - Bostancı",
+   "a": {
+    "lat": 40.95156,
+    "lng": 29.09426
+   },
+   "b": {
+    "lat": 41.03287,
+    "lng": 28.994
+   },
+   "osm": "way/1426746554"
+  },
+  {
+   "name": "Galaport Üsküdar Kadıköy",
+   "a": {
+    "lat": 41.02873,
+    "lng": 28.98796
+   },
+   "b": {
+    "lat": 40.99306,
+    "lng": 29.02253
+   },
+   "osm": "way/1443429152"
+  },
+  {
+   "name": "Bostancı - Yenikapı",
+   "a": {
+    "lat": 40.95185,
+    "lng": 29.09286
+   },
+   "b": {
+    "lat": 41.00146,
+    "lng": 28.95617
+   },
+   "osm": "way/1453084864"
+  },
+  {
+   "name": "Yenikapı - Çınarcık - Esenköy",
+   "a": {
+    "lat": 41.00146,
+    "lng": 28.95617
+   },
+   "b": {
+    "lat": 40.61865,
+    "lng": 28.9535
+   },
+   "osm": "way/1453084866"
+  },
+  {
+   "name": "Esenköy - Kocadere - Çınarcık - Kadıköy - Eminönü",
+   "a": {
+    "lat": 40.61953,
+    "lng": 28.95488
+   },
+   "b": {
+    "lat": 40.9914,
+    "lng": 29.02044
+   },
+   "osm": "way/1453084867"
+  },
+  {
+   "name": "Beşiktaş - Adalar Hattı",
+   "a": {
+    "lat": 40.8761,
+    "lng": 29.12778
+   },
+   "b": {
+    "lat": 41.04083,
+    "lng": 29.00742
+   },
+   "osm": "way/1453089854"
+  },
+  {
+   "name": "Beşiktaş - Kabataş - Karaköy - Eyüp",
+   "a": {
+    "lat": 41.0473,
+    "lng": 28.93785
+   },
+   "b": {
+    "lat": 41.04083,
+    "lng": 29.00742
+   },
+   "osm": "way/1453097313"
+  },
+  {
+   "name": "Üsküdar - Eyüp (Haliç Hattı)",
+   "a": {
+    "lat": 41.02749,
+    "lng": 29.0147
+   },
+   "b": {
+    "lat": 41.0473,
+    "lng": 28.93785
+   },
+   "osm": "way/154145236"
+  },
+  {
+   "name": "Mudanya-Armutlu(İhlas TK)-Kabataş",
+   "a": {
+    "lat": 40.37442,
+    "lng": 28.88927
+   },
+   "b": {
+    "lat": 41.03233,
+    "lng": 28.99295
+   },
+   "osm": "way/1552103385"
+  },
+  {
+   "name": "Kadıköy (Metro Durağı) - Karaköy (Turyol)",
+   "a": {
+    "lat": 41.02173,
+    "lng": 28.9732
+   },
+   "b": {
+    "lat": 40.9914,
+    "lng": 29.02044
+   },
+   "osm": "way/237469603"
+  },
+  {
+   "name": "Eminönü - Üsküdar (Turyol)",
+   "a": {
+    "lat": 41.01883,
+    "lng": 28.97044
+   },
+   "b": {
+    "lat": 41.02886,
+    "lng": 29.0164
+   },
+   "osm": "way/239596979"
+  },
+  {
+   "name": "Eminönü - Kadıköy",
+   "a": {
+    "lat": 41.01835,
+    "lng": 28.97316
+   },
+   "b": {
+    "lat": 40.99303,
+    "lng": 29.02298
+   },
+   "osm": "way/239630954"
+  },
+  {
+   "name": "Kadıköy - Bakırköy",
+   "a": {
+    "lat": 40.99168,
+    "lng": 29.01824
+   },
+   "b": {
+    "lat": 40.97331,
+    "lng": 28.87838
+   },
+   "osm": "way/239681105"
+  },
+  {
+   "name": "Kadıköy-Eyüp",
+   "a": {
+    "lat": 40.99306,
+    "lng": 29.02253
+   },
+   "b": {
+    "lat": 41.03031,
+    "lng": 28.96608
+   },
+   "osm": "way/240448392"
+  },
+  {
+   "name": "Kabataş - Beşiktaş",
+   "a": {
+    "lat": 41.04083,
+    "lng": 29.00742
+   },
+   "b": {
+    "lat": 41.03303,
+    "lng": 28.99415
+   },
+   "osm": "way/240577067"
+  },
+  {
+   "name": "Ortaköy - Arnavutköy",
+   "a": {
+    "lat": 41.06678,
+    "lng": 29.04338
+   },
+   "b": {
+    "lat": 41.04721,
+    "lng": 29.02566
+   },
+   "osm": "way/240577068"
+  },
+  {
+   "name": "Beşiktaş - Ortaköy",
+   "a": {
+    "lat": 41.04721,
+    "lng": 29.02566
+   },
+   "b": {
+    "lat": 41.04083,
+    "lng": 29.00742
+   },
+   "osm": "way/240577071"
+  },
+  {
+   "name": "Kadıköy - Beşiktaş",
+   "a": {
+    "lat": 41.03999,
+    "lng": 29.00571
+   },
+   "b": {
+    "lat": 40.99182,
+    "lng": 29.02155
+   },
+   "osm": "way/240577074"
+  },
+  {
+   "name": "Arnavutköy - Bebek",
+   "a": {
+    "lat": 41.07631,
+    "lng": 29.04456
+   },
+   "b": {
+    "lat": 41.06678,
+    "lng": 29.04338
+   },
+   "osm": "way/240577075"
+  },
+  {
+   "name": "Sirkeci - Harem",
+   "a": {
+    "lat": 41.01083,
+    "lng": 29.00992
+   },
+   "b": {
+    "lat": 41.01677,
+    "lng": 28.97764
+   },
+   "osm": "way/24235295"
+  },
+  {
+   "name": "",
+   "a": {
+    "lat": 41.0211,
+    "lng": 28.97681
+   },
+   "b": {
+    "lat": 40.99607,
+    "lng": 29.01762
+   },
+   "osm": "way/244140381"
+  },
+  {
+   "name": "Eminönü - Üsküdar",
+   "a": {
+    "lat": 41.018,
+    "lng": 28.97414
+   },
+   "b": {
+    "lat": 41.0276,
+    "lng": 29.01479
+   },
+   "osm": "way/321201984"
+  },
+  {
+   "name": "",
+   "a": {
+    "lat": 40.99372,
+    "lng": 29.02389
+   },
+   "b": {
+    "lat": 41.01883,
+    "lng": 28.97044
+   },
+   "osm": "way/321202454"
+  },
+  {
+   "name": "",
+   "a": {
+    "lat": 40.99381,
+    "lng": 29.02389
+   },
+   "b": {
+    "lat": 41.02173,
+    "lng": 28.9732
+   },
+   "osm": "way/321202909"
+  },
+  {
+   "name": "Eminönü - Karaköy (Turyol)",
+   "a": {
+    "lat": 41.02173,
+    "lng": 28.9732
+   },
+   "b": {
+    "lat": 41.01883,
+    "lng": 28.97044
+   },
+   "osm": "way/321389289"
+  },
+  {
+   "name": "Kadıköy (Metro Durağı) - Eminönü (Turyol)",
+   "a": {
+    "lat": 40.9914,
+    "lng": 29.02044
+   },
+   "b": {
+    "lat": 41.01883,
+    "lng": 28.97044
+   },
+   "osm": "way/321390068"
+  },
+  {
+   "name": "Kadıköy - Kabataş",
+   "a": {
+    "lat": 40.99182,
+    "lng": 29.02155
+   },
+   "b": {
+    "lat": 41.03303,
+    "lng": 28.99415
+   },
+   "osm": "way/321391359"
+  },
+  {
+   "name": "Kadıköy - Haydarpaşa",
+   "a": {
+    "lat": 40.99607,
+    "lng": 29.01762
+   },
+   "b": {
+    "lat": 40.99281,
+    "lng": 29.02278
+   },
+   "osm": "way/321392313"
+  },
+  {
+   "name": "Arnavutköy - Çengelköy",
+   "a": {
+    "lat": 41.05099,
+    "lng": 29.05141
+   },
+   "b": {
+    "lat": 41.06678,
+    "lng": 29.04338
+   },
+   "osm": "way/344819653"
+  },
+  {
+   "name": "Kuzguncuk - Beşiktaş (Boğaz Hattı)",
+   "a": {
+    "lat": 41.03704,
+    "lng": 29.02961
+   },
+   "b": {
+    "lat": 41.04083,
+    "lng": 29.00742
+   },
+   "osm": "way/401119809"
+  },
+  {
+   "name": "Eminönü - Beşiktaş (Bosphorus Line)",
+   "a": {
+    "lat": 41.04083,
+    "lng": 29.00742
+   },
+   "b": {
+    "lat": 41.01758,
+    "lng": 28.97518
+   },
+   "osm": "way/401119810"
+  },
+  {
+   "name": "Kuzguncuk - Beylerbeyi (Boğaz Hattı)",
+   "a": {
+    "lat": 41.03704,
+    "lng": 29.02961
+   },
+   "b": {
+    "lat": 41.04506,
+    "lng": 29.04456
+   },
+   "osm": "way/401123338"
+  },
+  {
+   "name": "Kuzguncuk - Küçüksu (Boğaz Hattı)",
+   "a": {
+    "lat": 41.07967,
+    "lng": 29.06489
+   },
+   "b": {
+    "lat": 41.03704,
+    "lng": 29.02961
+   },
+   "osm": "way/401123339"
+  },
+  {
+   "name": "Beylerbeyi - Çengelköy (Boğaz Hattı)",
+   "a": {
+    "lat": 41.04506,
+    "lng": 29.04456
+   },
+   "b": {
+    "lat": 41.05099,
+    "lng": 29.05141
+   },
+   "osm": "way/401123340"
+  },
+  {
+   "name": "Üsküdar - Beşiktaş (Dentur Avrasya)",
+   "a": {
+    "lat": 41.04131,
+    "lng": 29.00778
+   },
+   "b": {
+    "lat": 41.02816,
+    "lng": 29.01593
+   },
+   "osm": "way/415099408"
+  },
+  {
+   "name": "Kadıköy - Kınalıada",
+   "a": {
+    "lat": 40.99182,
+    "lng": 29.02155
+   },
+   "b": {
+    "lat": 40.91022,
+    "lng": 29.05584
+   },
+   "osm": "way/45850311"
+  },
+  {
+   "name": "Kadıköy-Eyüp",
+   "a": {
+    "lat": 41.0473,
+    "lng": 28.93785
+   },
+   "b": {
+    "lat": 41.03031,
+    "lng": 28.96608
+   },
+   "osm": "way/485344330"
+  },
+  {
+   "name": "Kabataş-Adalar Hattı",
+   "a": {
+    "lat": 41.03287,
+    "lng": 28.994
+   },
+   "b": {
+    "lat": 40.95156,
+    "lng": 29.09426
+   },
+   "osm": "way/490551150"
+  },
+  {
+   "name": "Kadıköy - Karaköy",
+   "a": {
+    "lat": 41.0211,
+    "lng": 28.97681
+   },
+   "b": {
+    "lat": 40.99281,
+    "lng": 29.02278
+   },
+   "osm": "way/52089510"
+  },
+  {
+   "name": "Üsküdar - Ortaköy",
+   "a": {
+    "lat": 41.04721,
+    "lng": 29.02566
+   },
+   "b": {
+    "lat": 41.02814,
+    "lng": 29.01529
+   },
+   "osm": "way/525436001"
+  },
+  {
+   "name": "Üsküdar - Beylerbeyi (Boğaz Hattı)",
+   "a": {
+    "lat": 41.02814,
+    "lng": 29.01529
+   },
+   "b": {
+    "lat": 41.04506,
+    "lng": 29.04456
+   },
+   "osm": "way/525436002"
+  },
+  {
+   "name": "Çengelköy - Anadolu Hisarı (Boğaz Hattı)",
+   "a": {
+    "lat": 41.05099,
+    "lng": 29.05141
+   },
+   "b": {
+    "lat": 41.08327,
+    "lng": 29.06653
+   },
+   "osm": "way/525436003"
+  },
+  {
+   "name": "Haydarpaşa-Sirkeci Tren Feribotu",
+   "a": {
+    "lat": 40.99747,
+    "lng": 29.01852
+   },
+   "b": {
+    "lat": 41.01698,
+    "lng": 28.98243
+   },
+   "osm": "way/54484122"
+  },
+  {
+   "name": "Kadıköy - Eminönü - Adalar",
+   "a": {
+    "lat": 41.01758,
+    "lng": 28.97518
+   },
+   "b": {
+    "lat": 40.87473,
+    "lng": 29.12556
+   },
+   "osm": "way/595140309"
+  },
+  {
+   "name": "Yenikapı-Yalova Hızlı Ferbot Güzergahı",
+   "a": {
+    "lat": 40.66026,
+    "lng": 29.27981
+   },
+   "b": {
+    "lat": 41.00198,
+    "lng": 28.95417
+   },
+   "osm": "way/665873387"
+  },
+  {
+   "name": "Long Bosphorus Cruise",
+   "a": {
+    "lat": 41.01713,
+    "lng": 28.97627
+   },
+   "b": {
+    "lat": 41.17343,
+    "lng": 29.08787
+   },
+   "osm": "way/678887937"
+  },
+  {
+   "name": "Kabataş - Kadıköy",
+   "a": {
+    "lat": 41.03546,
+    "lng": 28.99425
+   },
+   "b": {
+    "lat": 40.99306,
+    "lng": 29.02253
+   },
+   "osm": "way/747039010"
+  },
+  {
+   "name": "Yenikapı - Armutlu - Bursa",
+   "a": {
+    "lat": 40.35689,
+    "lng": 28.92817
+   },
+   "b": {
+    "lat": 41.00199,
+    "lng": 28.9557
+   },
+   "osm": "way/84530996"
+  },
+  {
+   "name": "Mudanya - Kabataş",
+   "a": {
+    "lat": 41.03233,
+    "lng": 28.99295
+   },
+   "b": {
+    "lat": 40.37432,
+    "lng": 28.88936
+   },
+   "osm": "way/986219635"
+  }
  ]
 }
