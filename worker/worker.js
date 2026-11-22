@@ -1029,8 +1029,28 @@ async function mapSights(c, UA) {
   }
   return out.slice(0, 30);
 }
+// Where a sight is when its sources disagree: the SAME rule as tools/places/where.cjs (where-check.cjs runs both copies
+// through the same cases). listing = the travel guide's point (or the encyclopedia's when no guide lists it), wd = the
+// encyclopedia's, map = OpenStreetMap's element for the same item, wholes = the bigger places it is part of.
+function placeOf(listing, wd, map, wholes) {
+  const WHOLE_KM = 1.5, AGREE_KM = 0.5;
+  const hav = (a, b) => { const R = 6371, r = x => x * Math.PI / 180, dl = r(b.lat - a.lat), dg = r(b.lng - a.lng); const h = Math.sin(dl / 2) ** 2 + Math.cos(r(a.lat)) * Math.cos(r(b.lat)) * Math.sin(dg / 2) ** 2; return 2 * R * Math.asin(Math.sqrt(h)); };
+  const ok = p => !!p && isFinite(p.lat) && isFinite(p.lng);
+  if (!ok(listing)) return null;
+  const W = (wholes || []).filter(ok), fits = p => !W.length || W.some(w => hav(p, w) <= WHOLE_KM);
+  const out = (from, p, doubt) => Object.assign({ lat: +(+p.lat).toFixed(6), lng: +(+p.lng).toFixed(6), from }, doubt ? { posDoubt: true } : {}, from !== "listing" && hav(p, listing) > 0.05 ? { moved: +hav(p, listing).toFixed(2) } : {});
+  const D = ok(wd) ? wd : null, M = ok(map) ? map : null;
+  if (!fits(listing)) { if (M && fits(M)) return out("map", M); if (D && fits(D)) return out("wikidata", D); return out("listing", listing, true); }
+  // One written point only, and the map's element for the same item well away from it: one source against another, so
+  // the point is kept but marked not sure (never told as sure when it isn't).
+  if (!D && M && hav(M, listing) > WHOLE_KM) return out("listing", listing, true);
+  if (!D || hav(listing, D) <= AGREE_KM || !fits(D)) return out("listing", listing);
+  if (M && hav(M, listing) <= AGREE_KM) return out("listing", listing);
+  if (M && hav(M, D) <= AGREE_KM) return out("wikidata", D);
+  return out("listing", listing, true);
+}
 async function sourcesData(label, env, ctx) {
-  const key = "sr9:" + (await sha(label.toLowerCase())), hit = await env.USAGE.get(key); if (hit) return JSON.parse(hit);
+  const key = "sr10:" + (await sha(label.toLowerCase())), hit = await env.USAGE.get(key); if (hit) return JSON.parse(hit);
   const UA = { "user-agent": "Kairoute/1.0 (travel guide; https://gilsonr0566-sys.github.io/Kairoute/)" };
   const getJ = async (u, ms, opt) => { for (let t = 0; t < 2; t++) { try { const r = await fetch(u, Object.assign({ headers: { ...UA, accept: "application/json" }, signal: AbortSignal.timeout(ms || 20000) }, opt || {})); if (r.ok) return await r.json(); } catch (e) {} } return null; };
   const T = {}, t0 = Date.now(), lap = k => { T[k] = Date.now() - t0; };
@@ -1064,6 +1084,8 @@ async function sourcesData(label, env, ctx) {
     if (!x && !wd) x = [...byId.values(), ...noId].find(y => sameName(name, y.name) && (y.lat == null || lat == null || kmOf({ lat, lng }, y) < 1.5));
     if (!x) { x = { name, wd: wd || "", lat, lng, src: new Set(), sl: 0 }; if (wd) byId.set(wd, x); else noId.push(x); }
     x.src.add(src); if (x.lat == null && lat != null) { x.lat = lat; x.lng = lng; } Object.assign(x, extra || {});
+    // Each source's own point is kept, so where the sight really is can be decided from all of them (placeOf below).
+    if (lat != null && isFinite(lat)) { if (src === S.fame) x.wdp = x.wdp || { lat, lng }; else x.lp = x.lp || { lat, lng }; }
     return x;
   };
   for (const m of fam.main) { const x = add(m.wd, m.name, m.lat, m.lng, S.fame, { sl: m.sl, unesco: m.unesco, heritage: m.heritage }); if (m.unesco) x.src.add(S.unesco); else if (m.heritage) x.src.add(S.heritage); }
@@ -1073,22 +1095,38 @@ async function sourcesData(label, env, ctx) {
   const ids = [...byId.keys()].slice(0, 200), chunks = []; for (let k = 0; k < ids.length; k += 50) chunks.push(ids.slice(k, k + 50));
   const answers = await Promise.all(chunks.map(part => {
     const V = `VALUES ?item { ${part.map(x => "wd:" + x).join(" ")} }`, H2 = { headers: { ...UA, accept: "application/sparql-results+json" } }, url = q => "https://query.wikidata.org/sparql?format=json&query=" + encodeURIComponent(q);
-    return Promise.all([getJ(url(`SELECT ?item ?h ?w ?loc ?lab ?sl WHERE { ${V} OPTIONAL { ?item wdt:P1435 ?h } OPTIONAL { ?item wdt:P856 ?w } OPTIONAL { ?item wdt:P625 ?loc } OPTIONAL { ?item rdfs:label ?lab FILTER(LANG(?lab) = "en") } OPTIONAL { ?item wikibase:sitelinks ?sl } }`), 25000, H2),
+    return Promise.all([getJ(url(`SELECT ?item ?h ?w ?loc ?lab ?sl ?wloc WHERE { ${V} OPTIONAL { ?item wdt:P1435 ?h } OPTIONAL { ?item wdt:P856 ?w } OPTIONAL { ?item wdt:P625 ?loc } OPTIONAL { ?item rdfs:label ?lab FILTER(LANG(?lab) = "en") } OPTIONAL { ?item wikibase:sitelinks ?sl } OPTIONAL { ?item wdt:P361|wdt:P276 ?whole . ?whole wdt:P625 ?wloc } }`), 25000, H2),
       lang ? getJ(url(`SELECT ?item ?local WHERE { ${V} ?a schema:about ?item ; schema:isPartOf <https://${lang}.wikipedia.org/> ; schema:name ?local }`), 25000, H2) : null]).then(([a, b]) => ({ results: { bindings: [...((a && a.results.bindings) || []), ...((b && b.results.bindings) || [])] } })); }));
   lap("details");
   for (const j of answers) {
     for (const b of (j && j.results && j.results.bindings) || []) {
       const x = byId.get(b.item.value.split("/").pop()); if (!x) continue;
       if (b.lab && b.lab.value) x.name = b.lab.value;
-      const m = b.loc && /Point\(([-\d.]+) ([-\d.]+)\)/.exec(b.loc.value); if (m && x.lat == null) { x.lat = +m[2]; x.lng = +m[1]; }
+      const m = b.loc && /Point\(([-\d.]+) ([-\d.]+)\)/.exec(b.loc.value); if (m && x.lat == null) { x.lat = +m[2]; x.lng = +m[1]; } if (m && !x.wdp) x.wdp = { lat: +m[2], lng: +m[1] };
+      // The bigger place it is part of or stands in (an old town, a palace complex): a point far from it is wrong.
+      const wm = b.wloc && /Point\(([-\d.]+) ([-\d.]+)\)/.exec(b.wloc.value); if (wm) { x.wholes = x.wholes || []; if (!x.wholes.some(w => w.lat === +wm[2] && w.lng === +wm[1])) x.wholes.push({ lat: +wm[2], lng: +wm[1] }); }
       if (b.web && !x.web) x.web = b.web.value; if (b.sl) x.sl = Math.max(x.sl, +b.sl.value);
       if (b.h) { if (b.h.value.endsWith("/Q9259")) { x.unesco = true; x.src.add(S.unesco); x.src.delete(S.heritage); } else if (!x.unesco) { x.heritage = true; x.src.add(S.heritage); } }
       if (b.local && b.local.value) { x.src.add(S.localWiki); x.local = x.local || b.local.value; }
     }
   }
+  // Where each sight really is (Nov 22: a synagogue in an old town was placed 2 km away by the cruise port, from the
+  // encyclopedia's point, and the plan sent a taxi between two places a 2-minute walk apart). The map's own element for
+  // the same Wikidata item is a third witness, asked once for the whole city; then one rule decides (placeOf).
+  const withId = [...byId.values()].filter(x => x.lat != null && kmOf(x, center) <= 15);
+  if (withId.length) { const q = `[out:json][timeout:25];nwr["wikidata"~"^(${withId.map(x => x.wd).join("|")})$"](around:16000,${center.lat},${center.lng});out center tags;`;
+    for (const ep of ["https://overpass-api.de/api/interpreter", "https://overpass.private.coffee/api/interpreter"]) {
+      const j = await getJ(ep, 26000, { method: "POST", body: "data=" + encodeURIComponent(q), headers: { ...UA, "content-type": "application/x-www-form-urlencoded", accept: "application/json" } });
+      if (!j) continue;
+      for (const e of j.elements || []) { const x = byId.get(e.tags && e.tags.wikidata), c = e.center || (e.lat != null ? { lat: e.lat, lon: e.lon } : null); if (x && c && !x.mp) x.mp = { lat: c.lat, lng: c.lon }; }
+      break; }
+    lap("map"); }
+  for (const x of byId.values()) { const L = x.lp || x.wdp; if (!L) continue;
+    const at = placeOf(L, x.lp ? x.wdp : null, x.mp, x.wholes); if (!at) continue;
+    x.lat = at.lat; x.lng = at.lng; if (at.posDoubt) x.posDoubt = true; if (at.from !== "listing") x.posFrom = at.from; }
   const near = x => x.lat == null || kmOf(x, center) <= 12;
   const stops = [...byId.values(), ...noId].filter(x => x.name && !/^Q\d+$/.test(x.name) && near(x) && fold(x.name) !== fold(area))
-    .map(x => ({ name: x.name, local: x.local && x.local !== x.name ? x.local : undefined, wd: x.wd || undefined, lat: x.lat != null ? +(+x.lat).toFixed(5) : undefined, lng: x.lng != null ? +(+x.lng).toFixed(5) : undefined, sl: x.sl || 0, unesco: !!x.unesco, heritage: !!x.heritage, web: x.web, src: [...x.src], en: x.en || undefined, lc: x.lc || undefined }))
+    .map(x => ({ name: x.name, local: x.local && x.local !== x.name ? x.local : undefined, wd: x.wd || undefined, lat: x.lat != null ? +(+x.lat).toFixed(5) : undefined, lng: x.lng != null ? +(+x.lng).toFixed(5) : undefined, sl: x.sl || 0, unesco: !!x.unesco, heritage: !!x.heritage, web: x.web, src: [...x.src], en: x.en || undefined, lc: x.lc || undefined, posDoubt: x.posDoubt || undefined, posFrom: x.posFrom || undefined }))
     .sort((a, b) => b.src.length - a.src.length || b.sl - a.sl).slice(0, 160);
   // A small place the guidebooks and the encyclopedia barely cover (a small island, a cruise line's private island,
   // a resort port): add the named tourist places the map knows nearby (beaches, attractions, water parks,

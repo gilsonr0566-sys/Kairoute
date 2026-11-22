@@ -123,6 +123,10 @@ function sourceSights(city, src) {
   srcDone.set(city, src);
   // Sights a saved guide got from the sources before names were put into English get theirs now.
   for (const s of allSites(city)) if (s.srcOnly && !s.enN) { const en = enSight({ name: s.name, local: s.local, sl: s.fame }, s.category); if (en) Object.assign(s, en); s.enN = 1; }
+  // A sight a saved guide got from the sources takes the sources' checked point now (the helper cross-checks the travel
+  // guide, the encyclopedia and the map: Nov 22, a synagogue had been 2 km out of the old town it stands in).
+  for (const s of allSites(city)) if (s.srcOnly && s.wd) { const x = src.stops.find(y => y.wd === s.wd); if (!x || x.lat == null || !isFinite(x.lat)) continue;
+    if (!isFinite(s.lat) || hav(s, x) > 0.05) { s.lat = x.lat; s.lng = x.lng; } if (x.posDoubt) s.posDoubt = true; else delete s.posDoubt; }
   const centre = srcCentre(city, src); if (!centre) return 0;
   const area = String(src.area || city.city).replace(/\s*\(.*\)/, "");
   // The caps count the written guide and the sources' own sights, never the famous places written in (famousFix): those
@@ -139,6 +143,8 @@ function sourceSights(city, src) {
     const [, cat, min] = srcKind(x.name, x.local), q = !extra.far && srcQuick(x.name, x.local);
     const st = normSite({ id: "src-" + (x.wd || keyOf(x.name).replace(/ /g, "-")), name: x.name, lat: x.lat, lng: x.lng, minutes: q ? 10 : min, category: cat, summary: srcSummary(x, cat, area), web: x.web, kind: "touristy", quick: q }, 0);
     Object.assign(st, { srcOnly: true, fame: x.sl || 0, unesco: !!x.unesco, heritage: !!x.heritage, src: x.src || [], local: x.local, wd: x.wd }, extra);
+    // The helper's sources disagree on where it is and nothing settles it: said so on its card and on rides to it.
+    if (x.posDoubt) st.posDoubt = true;
     const en = enSight(x, cat); if (en) Object.assign(st, en); st.enN = 1;   // "Palazzo Zanca" is shown as "Zanca Palace", its local name beneath
     const w = srcWritten[srcWKey(city, st)]; if (w) Object.assign(st, w);
     return st;

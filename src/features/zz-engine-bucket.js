@@ -54,6 +54,7 @@ function engineBucket(withOld) {
     travelNote: typeof s.travel === "string" ? s.travel : "", show: s.show || null,
     // From the map (water-check.js): on another island with no way there but a boat; how far the nearest road is.
     ...(s.acrossWater ? { acrossWater: s.acrossWater } : {}), ...(s.roadGap > 0 ? { roadGap: +s.roadGap } : {}),
+    ...(s.posDoubt ? { posDoubt: true } : {}), // where it is isn't sure (its sources disagree): every ride to or from it says so
     access: [s.access, s.tickets, s.howToSee].filter(x => typeof x === "string").join(" ").slice(0, 300), // e.g. "viewed from the water"
     tags: sightTags(city, s), // step 4: every label the app sorts and shows by (same rules as the screens)
     in: typeof inArea === "function" ? allSites(city).filter(a => a !== s && inArea(s, a)).map(a => a.id) : [] // the map areas it stands in (groups, step 3)

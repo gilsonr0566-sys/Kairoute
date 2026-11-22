@@ -26,4 +26,18 @@ ok(r.from === 'listing' && !r.posDoubt && !r.moved, `two written sources that ag
 // A sight a short walk outside its whole (a monastery by the old town's gate) stays where the guide puts it.
 r = placeOf({ lat: 42.6420, lng: 18.1200 }, null, null, [oldTown]);
 ok(r.from === 'listing' && !r.posDoubt, `a sight a short walk from its whole stays put (got ${JSON.stringify(r)})`);
+// One written point, and the map's element for the same item 2 km away: kept, marked not sure.
+r = placeOf(wrong, null, right, []);
+ok(r.from === 'listing' && r.posDoubt, `one written point against the map 2 km away: marked not sure (got ${JSON.stringify(r)})`);
+// One written point and the map agreeing: sure.
+r = placeOf(right, null, { lat: 42.6416, lng: 18.1104 }, []);
+ok(r.from === 'listing' && !r.posDoubt, `one written point the map agrees with: sure (got ${JSON.stringify(r)})`);
+// The helper keeps its own copy of the rule (it can't load this file): every case above gives the same answer there.
+{ const src = require('fs').readFileSync(require('path').join(__dirname, '..', '..', 'worker', 'worker.js'), 'utf8');
+  const m = /\nfunction placeOf\(listing, wd, map, wholes\) \{[\s\S]*?\n\}\n/.exec(src);
+  ok(!!m, "the helper has its own placeOf");
+  if (m) { const W = new Function(m[0] + '; return placeOf;')();
+    const cases = [[wrong, wrong, right, [oldTown]], [wrong, right, null, [oldTown]], [wrong, wrong, null, [oldTown]], [right, { lat: 42.6415, lng: 18.1102 }, null, [oldTown]], [wrong, right, null, []],
+      [wrong, right, right, []], [right, right, { lat: 42.70, lng: 18.20 }, []], [{ lat: 42.6420, lng: 18.1200 }, null, null, [oldTown]], [wrong, null, right, []], [right, null, { lat: 42.6416, lng: 18.1104 }, []]];
+    cases.forEach((c, i) => ok(JSON.stringify(W(...c)) === JSON.stringify(placeOf(...c)), `helper's placeOf gives the same answer as where.cjs (case ${i + 1}: ${JSON.stringify(W(...c))} vs ${JSON.stringify(placeOf(...c))})`)); } }
 console.log(`where-check: ${pass} passed, ${fail} failed`); if (fail) process.exit(1);
