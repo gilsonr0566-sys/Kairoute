@@ -1941,6 +1941,16 @@ async function pierSearch() {
   if (!f.results.length && areas.length) { add(await piersAround(areas.slice(0, 2)));
     if (!f.results.length) for (const q of ["ferry terminal in " + f.q, f.q + " port"]) { add(await ask(q), areas); if (f.results.length) break; }
     if (f.results.length) f.area = areas[0].name; }
+  // Choices the traveler can tell apart (Nov 22 live check: two read "Gradski kotar Gruž · ferry terminal · 1.7 mi"): one
+  // named after the part of town is called by what it is in it; the same name twice within half a kilometre is one
+  // place; the same name further apart says which side of the others it is on.
+  const an = areas.map(a => String(a.name || "").toLowerCase());
+  f.results.forEach(y => { if (!y.name || an.includes(String(y.name).toLowerCase())) y.name = (y.kind ? y.kind[0].toUpperCase() + y.kind.slice(1) : "Pier") + " in " + (areas[0] ? areas[0].name : f.q); });
+  f.results = f.results.filter((y, i, all) => !all.slice(0, i).some(z => z.name === y.name && hav(z, y) < 0.5));
+  f.results.forEach(y => { const same = f.results.filter(z => z.name === y.name); if (same.length < 2) return;
+    const c = { lat: same.reduce((a, z) => a + z.lat, 0) / same.length, lng: same.reduce((a, z) => a + z.lng, 0) / same.length }, dy = y.lat - c.lat, dx = (y.lng - c.lng) * Math.cos(c.lat * Math.PI / 180);
+    y.side = Math.abs(dy) > Math.abs(dx) ? (dy > 0 ? "north" : "south") : (dx > 0 ? "east" : "west"); });
+  f.results.forEach(y => { if (y.side) { const twin = f.results.filter(z => z.name === y.name && z.side === y.side).length > 1; if (!twin) y.name += " (the " + y.side + "ern one)"; } });
   f.results = f.results.slice(0, 5); f.busy = false;
   if (!f.results.length) f.msg = areas.length ? `The map knows "${f.q}" as a part of ${bareName(d.destination)}, but no pier or terminal in it. Try the name your cruise line uses for the terminal or quay.` : `I couldn't find "${f.q}" on the map near ${bareName(d.destination)}. Try the name your cruise line uses for the terminal or quay, or the port's own word for it.`;
   else if (areas.length && f.area) f.msg = `The map knows "${f.q}" as a part of ${bareName(d.destination)}. These are the piers and terminals there:`;

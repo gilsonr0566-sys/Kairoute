@@ -11,7 +11,12 @@ const SEED = process.env.SEED ? JSON.parse(require('zlib').gunzipSync(fs.readFil
   if (process.env.LOCAL) await p.route(u => !/^http:\/\/localhost/.test(String(u)), r => r.fulfill({ status: 503, body: '' }));
   p.on('request', q => { const u = q.url(); if (/osrm|routing\.openstreetmap|overpass/.test(u)) console.log(ts(), 'REQ', u.slice(0, 110)); });
   p.on('requestfinished', async q => { const u = q.url(); if (/osrm|routing\.openstreetmap|overpass/.test(u)) { const r = await q.response(); console.log(ts(), 'DONE', r && r.status(), u.slice(0, 80)); } });
-  p.on('response', async r => { const u = r.url(); if (/\/transit\?/.test(u)) { let b = ''; try { b = await r.text(); } catch (e) {} console.log(ts(), 'TRANSIT', r.status(), decodeURIComponent(u).slice(0, 300)); console.log(ts(), 'BODY', b.slice(0, 6000)); } });
+  p.on('response', async r => { const u = r.url(); if (!/\/transit$/.test(u)) return; let b = ''; try { b = await r.text(); } catch (e) {}
+    let pairs = []; try { pairs = JSON.parse(r.request().postData() || '{}').pairs || []; } catch (e) {}
+    let j = null; try { j = JSON.parse(b); } catch (e) {}
+    pairs.forEach((q, k) => { if (!(q.b && +[].concat(q.b.lat != null ? q.b.lat : q.b[0])[0] < 42.2 && +[].concat(q.b.lat != null ? q.b.lat : q.b[0])[0] > 42.0)) return; const a = j && (j.results || j.answers || j)[k];
+      console.log(ts(), 'BACK', JSON.stringify(q).slice(0, 160), 'ANSWER', JSON.stringify(a && a.opts ? { partial: a.partial, opts: a.opts.map(o => ({ mode: o.mode, label: o.label, min: o.min, deps: (o.deps || []).map(d => d.t), kd: (o.kindDeps || []).map(d => d.t) })) } : a).slice(0, 3000)); });
+    if (!pairs.some(q => q.b && +[].concat(q.b.lat != null ? q.b.lat : q.b[0])[0] < 42.2 && +[].concat(q.b.lat != null ? q.b.lat : q.b[0])[0] > 42.0)) console.log(ts(), 'TRANSIT', pairs.length, 'pairs', b.length, 'bytes', JSON.stringify(Object.keys(j || {}))); });
   p.on('requestfailed', q => { const u = q.url(); if (/osrm|routing\.openstreetmap|overpass/.test(u)) console.log(ts(), 'FAIL', q.failure() && q.failure().errorText, u.slice(0, 80)); });
   await p.goto(URL); await p.waitForTimeout(3000);
   const i = await p.evaluate(dest => window.__kairouteDays().findIndex(d => new RegExp(dest).test(d.dest)), DEST.source); console.log('day', i);
