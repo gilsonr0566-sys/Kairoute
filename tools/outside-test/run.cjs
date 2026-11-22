@@ -57,7 +57,7 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
 
   // Group trip: this browser shares the trip (owner), a second clean browser joins with the code (member) and makes its own day.
   if (t.group) { const G = res.group = { log: [] }, gi = t.group.day; const shot = (pg, n) => pg.screenshot({ path: path.join(out, 'group-' + n + '.jpg'), type: 'jpeg', quality: 55, fullPage: true }).catch(() => {});
-    const nav = pg => pg.evaluate(() => { const b = [...document.querySelectorAll('header nav button, [data-act="settings"]')].find(x => /^Settings$/.test(x.innerText.trim())); if (b) b.click(); return !!b; });
+    const nav = pg => pg.evaluate(async () => { const b = [...document.querySelectorAll('header nav button, [data-act="settings"]')].find(x => /^Settings$/.test(x.innerText.trim())); if (b) b.click(); await new Promise(r => setTimeout(r, 2000)); const g = [...document.querySelectorAll('main button, main a')].find(x => /^Group trip$/.test(x.innerText.trim())); if (g) g.click(); return !!b && !!g; });
     const read = pg => pg.evaluate(() => { const m = document.querySelector('main').innerText; const ban = document.querySelector('[data-grpday]'); return { banner: ban ? ban.dataset.grpday + ': ' + ban.innerText.slice(0, 400) : null, sights: (m.match(/\n(\d+)\nsights?\n/) || [])[1] || null, stops: (m.match(/\n\d+\n[^\n]+\n[^\n]* · [^\n]*/g) || []).map(x => x.split('\n')[2]), text: m.slice(0, 9000) }; });
     const ticks = (pg, i) => pg.evaluate(i => window.__T.ticks(i).then(a => a.filter(x => x.on).map(x => x.n)), i);
     try {
