@@ -43,6 +43,14 @@ jobs:
       - name: Phone flow on the Beta 2 build
         if: always()
         run: node tools/beta2/flow-check.cjs beta2-site/index.html
+      - name: What the traveler sees (screen rules on every day, other time zones, no signal, trips saved by the last two published builds, screen sizes, voices, the app's own guard)
+        if: always()
+        run: |
+          # The two newest published Beta 2 builds (public repo) are opened first and their saved trip is then opened
+          # by this build, as a traveler's phone does after an update.
+          git clone -q --depth 6 https://github.com/gilsonr0566-sys/Kairoute-Beta2 /tmp/b2pub
+          OLD=""; for c in $(git -C /tmp/b2pub log --format=%h -n 6 -- index.html | sed -n '1p;3p'); do git -C /tmp/b2pub show $c:index.html > /tmp/old-$c.html; OLD="$OLD /tmp/old-$c.html"; done
+          node tools/beta2/screen-gate.cjs beta2-site/index.html $OLD
       - name: Ship days keep their sights while the water check waits on its slow part
         if: always()
         run: node tools/beta2/water-wait-check.cjs beta2-site/index.html
