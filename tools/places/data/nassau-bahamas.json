@@ -107,7 +107,8 @@
    "wikidata": "Q4025978",
    "note": "Visit the Bahamas' only zoo. See the marching flamingo shows. Let the parakeets land on you as you feed them.",
    "editions": 5,
-   "unesco": false
+   "unesco": false,
+   "web": "http://www.ardastra.com/"
   },
   {
    "name": "National Art Gallery of the Bahamas",
@@ -116,7 +117,8 @@
    "wikidata": "Q2912593",
    "note": "Opened in 2003, this showcases Bahamian art from the precolonial era to the present. The quality of art is rather uneven to say the least, but the renovated building &mdash; once the residence of the Chief Justice &mdash; is a sight in itse",
    "editions": 5,
-   "unesco": false
+   "unesco": false,
+   "web": "https://nagb.org.bs/"
   },
   {
    "name": "Pirates of Nassau Museum",
@@ -125,7 +127,8 @@
    "wikidata": "Q67142794",
    "note": "Recreations of a pirate town, a pirate ship and a pirate battle, with a few real artifacts mixed in. Cheesy, but fun. Try to catch a guided tour.",
    "editions": 1,
-   "unesco": false
+   "unesco": false,
+   "web": "http://www.piratesofnassau.com/"
   },
   {
    "name": "Fort Fincastle",
@@ -218,6 +221,64 @@
    "cuisine": "regional",
    "hours": "",
    "osm": "node/3748676918"
+  }
+ ],
+ "piers": [
+  {
+   "name": "Ferry pier",
+   "lat": 25.07912,
+   "lng": -77.34405,
+   "osm": "node/13787604314"
+  },
+  {
+   "name": "Paradise Island Ferry Terminal",
+   "lat": 25.08004,
+   "lng": -77.32258,
+   "osm": "node/2080727622"
+  },
+  {
+   "name": "Nassau",
+   "lat": 25.07697,
+   "lng": -77.32372,
+   "osm": "node/7785515856"
+  }
+ ],
+ "ferryLinks": [
+  {
+   "name": "Nassau, New Providence - Paradise Island",
+   "a": {
+    "lat": 25.07912,
+    "lng": -77.34405
+   },
+   "b": {
+    "lat": 25.08004,
+    "lng": -77.32258
+   },
+   "osm": "way/1507526919"
+  },
+  {
+   "name": "Nassau, New Providence - Fresh Creek, Andros",
+   "a": {
+    "lat": 25.07697,
+    "lng": -77.32372
+   },
+   "b": {
+    "lat": 24.72418,
+    "lng": -77.78553
+   },
+   "osm": "way/834025457"
+  },
+  {
+   "name": "Nassau, New Providence - Current, Eleuthera",
+   "a": {
+    "lat": 25.07697,
+    "lng": -77.32372
+   },
+   "b": {
+    "lat": 25.40309,
+    "lng": -76.78899
+   },
+   "osm": "way/834058444"
   }
  ]
 }

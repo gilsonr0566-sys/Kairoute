@@ -873,15 +873,1097 @@
   },
   {
    "name": "Ferry pier",
-   "lat": 50.12252,
-   "lng": 14.39772,
+   "lat": 50.12249,
+   "lng": 14.39781,
    "osm": "way/1520064979"
   },
   {
    "name": "Ferry pier",
    "lat": 50.12266,
-   "lng": 14.39547,
-   "osm": "way/1550769836"
+   "lng": 14.39542,
+   "osm": "way/27422595"
+  }
+ ],
+ "guideSights": [
+  {
+   "name": "Old Town Square",
+   "lat": 50.0875,
+   "lng": 14.421389,
+   "wikidata": "Q421678",
+   "note": "The center of the eventful history of Prague. The Gothic, Renaissance and Baroque buildings were preserved here. The Historical Centre, including most of the city’s major sites, became a [[UNESCO World Heritage List",
+   "editions": 40,
+   "unesco": false
+  },
+  {
+   "name": "Týn Church",
+   "lat": 50.08772,
+   "lng": 14.42269,
+   "wikidata": "",
+   "note": "A very striking pure [[Gothic architecture"
+  },
+  {
+   "name": "Storch Building",
+   "lat": 50.087253,
+   "lng": 14.421903,
+   "wikidata": "",
+   "note": "Covered in murals."
+  },
+  {
+   "name": "Jan Hus Memorial",
+   "lat": 50.087778,
+   "lng": 14.421111,
+   "wikidata": "Q3499497",
+   "note": "That striking man standing atop a patina-green metal mountain in the center of Old Town Square is not Jesus, though he resembles him. It's Jan Hus, the great Czech religious reformer whose [[Christianity#Hussites",
+   "editions": 16,
+   "unesco": false
+  },
+  {
+   "name": "Astronomical Clock",
+   "lat": 50.087008,
+   "lng": 14.420917,
+   "wikidata": "Q729370",
+   "note": "The Astronomical Clock located on a side tower of the Old Town Hall (reasonably enough, on Old Town Square) is easy to find&mdash;just wait until a few minutes before the hour and look for a large group of tourists standing around waiting f",
+   "editions": 47,
+   "unesco": false,
+   "web": "http://www.orloj600let.cz/"
+  },
+  {
+   "name": "Municipal House",
+   "lat": 50.08762,
+   "lng": 14.42824,
+   "wikidata": "Q2334312",
+   "note": "Nám. Republiky 5. The ''Obecní dům'' was built near the Powder Tower (a storage place for gunpowder and a major trade route entry into the city) on a site called King's Court where once a royal residence stood. In 1901, the Prague Civic Soc",
+   "editions": 21,
+   "unesco": false,
+   "web": "https://www.obecnidum.cz/en/"
+  },
+  {
+   "name": "Prague City Gallery",
+   "lat": 50.08778,
+   "lng": 14.42196,
+   "wikidata": "Q12018045",
+   "note": "A museum of modern Czech arts divided between several sites most of which are in the old town. Its main building is the House of the Golden Ring at the Old Town Square featuring 20th century Czech art in a beautiful medieval edifice. 19th c",
+   "editions": 1,
+   "unesco": false,
+   "web": "https://www.ghmp.cz/"
+  },
+  {
+   "name": "Speculum Alchemiae",
+   "lat": 50.090787,
+   "lng": 14.422507,
+   "wikidata": "Q112254522",
+   "note": "A museum dedicated to the mysteries of alchemy, housed in a {{UNESCO",
+   "editions": 1,
+   "unesco": false,
+   "web": "http://alchemiae.cz/en"
+  },
+  {
+   "name": "Convent of Saint Agnes",
+   "lat": 50.092494,
+   "lng": 14.424861,
+   "wikidata": "Q394832",
+   "note": "The ''Anezsky klaster'' is the first Early Gothic building in Prague (founded 1234) - something notable in a city filled with amazingly well-preserved examples of Gothic architecture such as St Vitus, the Charles Bridge and the Powder Tower",
+   "editions": 13,
+   "unesco": false
+  },
+  {
+   "name": "Museum of Czech Cubism",
+   "lat": 50.087,
+   "lng": 14.42545,
+   "wikidata": "Q2717859",
+   "note": "The Museum of Czech Cubism in the renovated House of the Black Madonna exhibits furniture suites, individual pieces, accessory furnishings and objects made of ceramic, glass and metals. It offers an overview of the foremost creative achieve",
+   "editions": 18,
+   "unesco": false
+  },
+  {
+   "name": "Museum of Decorative Arts",
+   "lat": 50.089722,
+   "lng": 14.416389,
+   "wikidata": "Q1349747",
+   "note": "This 17th century palazzo-style building houses examples of historical and contemporary crafts, as well as applied arts and design.",
+   "editions": 11,
+   "unesco": false,
+   "web": "http://www.upm.cz/"
+  },
+  {
+   "name": "Church of the Holy Spirit",
+   "lat": 50.09,
+   "lng": 14.42028,
+   "wikidata": "Q2282608",
+   "note": "Baroque church",
+   "editions": 8,
+   "unesco": false
+  },
+  {
+   "name": "Pariska Street",
+   "lat": 50.08844,
+   "lng": 14.42,
+   "wikidata": "",
+   "note": "Tree lined street with number of historic buildings, exclusive shopping and upmarket restaurants and hotels."
+  },
+  {
+   "name": "Rudolfinum",
+   "lat": 50.09,
+   "lng": 14.4156,
+   "wikidata": "Q1130137",
+   "note": "Neo-Renaissance auditorium, home of the Czech Philharmonic Orchestra. A statue of Antonin Dvořak is in the park in front of the building, whose front façade is being renovated as of August 2026.",
+   "editions": 26,
+   "unesco": false,
+   "web": "http://www.rudolfinum.cz/"
+  },
+  {
+   "name": "Jaroslav Fragner Gallery",
+   "lat": 50.084482,
+   "lng": 14.41793,
+   "wikidata": "",
+   "note": "Contemporary architecture. You can find here profiles of influential people and groups, retrospective exhibitions, thematic exhibitions, recent movement in architecture. Gallery provides lectures, seminars and publishing, regarding central "
+  },
+  {
+   "name": "Sex Machines Museum",
+   "lat": 50.086278,
+   "lng": 14.420726,
+   "wikidata": "Q3480881",
+   "note": "Humorous presentation of historic and present day sex toys and related installations. A visit takes about 60 to 90 minutes, and offers an initiation in the world of domestic and commercial pleasure engineering. No entry for persons under 18",
+   "editions": 13,
+   "unesco": false,
+   "web": "https://sexmachinesmuseum.com"
+  },
+  {
+   "name": "Lego Museum",
+   "lat": 50.0827022,
+   "lng": 14.4193908,
+   "wikidata": "",
+   "note": "A small museum dedicated to Lego bricks and their creations. Don't expect a history of the bricks, the museum is entirely focused on Lego constructions applied to the Czech context, with many monuments of Prague replicated as scale models i"
+  },
+  {
+   "name": "Powder Tower",
+   "lat": 50.087222,
+   "lng": 14.427778,
+   "wikidata": "Q1488700",
+   "note": "One of the original city gates, which separates the Old Town from the New Town. The gate was used to store gunpowder in the 17th century, hence the name Powder Tower or Powder Gate.",
+   "editions": 28,
+   "unesco": false,
+   "web": "http://www.muzeumprahy.cz/199-prasna-brana/"
+  },
+  {
+   "name": "Jewish Museum",
+   "lat": 50.090285,
+   "lng": 14.4211,
+   "wikidata": "Q707850",
+   "note": "This is not a single site but consists of four synagogues, the Old Jewish Cemetery and the Memorial Hall - entrance to all being covered by a single ticket. A combined ticket that includes the Old-New Synagogue can be obtained at a consider",
+   "editions": 15,
+   "unesco": false,
+   "web": "https://www.jewishmuseum.cz/"
+  },
+  {
+   "name": "Maisel Synagogue",
+   "lat": 50.08878,
+   "lng": 14.41866,
+   "wikidata": "Q517766",
+   "note": "One of the historical monuments of the former Prague Jewish Ghetto. Nowadays the synagogue belongs to the Jewish Community of Prague and is administered by the Jewish Museum in Prague as a part of its expositions.",
+   "editions": 22,
+   "unesco": false
+  },
+  {
+   "name": "Spanish Synagogue",
+   "lat": 50.090361,
+   "lng": 14.420833,
+   "wikidata": "Q990003",
+   "note": "The Spanish Synagogue, so-called because Sephardic Jews expelled from Spain at the end of the 15th century built a previous synagogue on this site, is a wild combination of neo-Renaissance and Moorish-Spain style. Think the Alhambra crossed",
+   "editions": 27,
+   "unesco": false,
+   "web": "http://www.jewishmuseum.cz/en/explore/sites/spanish-synagogue"
+  },
+  {
+   "name": "Pinkas Synagogue",
+   "lat": 50.089263,
+   "lng": 14.416951,
+   "wikidata": "Q599211",
+   "note": "Inside the front door of the Pinkas Synagogue, inscribed in tiny red and black letters on almost every square inch of wallspace are the names of 77,297 Jews who were killed in the war. This visual representation humanizes such a number, att",
+   "editions": 14,
+   "unesco": false
+  },
+  {
+   "name": "Old Jewish Cemetery",
+   "lat": 50.089722,
+   "lng": 14.417222,
+   "wikidata": "Q438026",
+   "note": "On the left wall before the entrance is a plaque detailing conservation efforts (which cost 1 million crowns per year). Over 20,000 people are buried in about twelve layers of graves, stacked to save space. Avigdor Kara is the earliest know",
+   "editions": 29,
+   "unesco": false,
+   "web": "https://www.jewishmuseum.cz/pamatky-a-expozice/pamatky/stary-zidovsky-hrbitov/"
+  },
+  {
+   "name": "Klausen Synagogue",
+   "lat": 50.0899,
+   "lng": 14.41725,
+   "wikidata": "Q898588",
+   "note": "The Klausen Synagogue is nowadays the largest synagogue in the former Prague Jewish ghetto and also a single example of an early Baroque synagogue in the area.",
+   "editions": 14,
+   "unesco": false,
+   "closedForGood": true
+  },
+  {
+   "name": "Ceremonial Hall",
+   "lat": 50.090034,
+   "lng": 14.417024,
+   "wikidata": "Q20860076",
+   "note": "The last service to the deceased members of the Prague Jewish Community was held here.",
+   "editions": 11,
+   "unesco": false
+  },
+  {
+   "name": "Old-New Synagogue",
+   "lat": 50.09,
+   "lng": 14.418611,
+   "wikidata": "Q443107",
+   "note": "The name sounds strange for a building from the 13th century but it was called 'New' to distinguish it from an even older synagogue. This was replaced by the Spanish Synagogue in the 17th century, when the Old-New Synagogue acquired its cur",
+   "editions": 33,
+   "unesco": false,
+   "web": "http://www.synagogue.cz/"
+  },
+  {
+   "name": "Jewish Town Hall",
+   "lat": 50.08917,
+   "lng": 14.41861,
+   "wikidata": "Q80272",
+   "note": "Renaissance-style building",
+   "editions": 16,
+   "unesco": false
+  },
+  {
+   "name": "Prague Castle",
+   "lat": 50.090246,
+   "lng": 14.399378,
+   "wikidata": "Q193369",
+   "note": "The former seat of the King and is now the seat of the Czech president. This is Prague's number one tourist attraction so expect huge crowds and possibly long lines, especially during high tourist season. Your best bet is to come early, as ",
+   "editions": 66,
+   "unesco": false,
+   "web": "https://www.hrad.cz/"
+  },
+  {
+   "name": "St. Vitus Cathedral",
+   "lat": 50.090879,
+   "lng": 14.40058,
+   "wikidata": "Q5949",
+   "note": "In the center of the castle and the most important cathedral in all of the Czech republic. The oldest parts of the cathedral are from the 14th century, but the cathedral was not completed in the Medieval period. The highest tower was comple",
+   "editions": 60,
+   "unesco": false,
+   "web": "http://www.katedralasvatehovita.cz"
+  },
+  {
+   "name": "Old Royal Palace",
+   "lat": 50.090445,
+   "lng": 14.401422,
+   "wikidata": "Q2340793",
+   "note": "The original seat of Czech rulers. Visitors first enter the Vladislav hall, the largest high-Gothic vaulted space in Central Europe. Other rooms include the Palace chapel and throne room. At the end of the exhibit is '''\"The Story of Prague",
+   "editions": 17,
+   "unesco": false
+  },
+  {
+   "name": "St. George's Basilica",
+   "lat": 50.09123,
+   "lng": 14.402667,
+   "wikidata": "Q1437065",
+   "note": "The second oldest church in the castle and features a colorful Baroque facade. The interior is visibly older and is the burial place of the Premyslid family and the first Czech saint, Princess Ludmila.",
+   "editions": 27,
+   "unesco": false
+  },
+  {
+   "name": "The Golden Lane",
+   "lat": 50.092042,
+   "lng": 14.404222,
+   "wikidata": "Q1535529",
+   "note": "During the reign of Rudolf II, goldsmiths lived in a lively alleyway filled with tiny workshops, which were also their residence, hence its name. Tiny, cobblestoned walkway filled with brightly-painted little houses, where modern man has a ",
+   "editions": 28,
+   "unesco": false
+  },
+  {
+   "name": "Charles Bridge",
+   "lat": 50.086447,
+   "lng": 14.411856,
+   "wikidata": "Q204871",
+   "note": "connects the Old Town with Lesser Town. Commissioned by Czech king and Holy Roman Emperor Charles IV and constructed between 1357 and 1402, it is one of the most interesting historical stone bridges in Europe. It is 516 meters long with 16 ",
+   "editions": 62,
+   "unesco": true
+  },
+  {
+   "name": "Child Jesus of Prague",
+   "lat": 50.085482,
+   "lng": 14.403845,
+   "wikidata": "",
+   "note": "This image of Christ, known also as the Holy Infant of Prague, is among the most widespread religious images in the world. The statue was brought from Spain in the 16th century and given to the Carmelites in 1628. It is 47 cm high and repre"
+  },
+  {
+   "name": "Petřín Hill",
+   "lat": 50.081668,
+   "lng": 14.397794,
+   "wikidata": "Q427604",
+   "note": "Due to a housing crunch, most young Czechs don't move out of their parents' house until they marry (sometimes long after!) This lack of privacy leads to some very public displays of affection – what you see on the metro or trams won't compa",
+   "editions": 28,
+   "unesco": false
+  },
+  {
+   "name": "Petřín Lookout Tower",
+   "lat": 50.083544,
+   "lng": 14.39505,
+   "wikidata": "Q12256",
+   "note": "A smaller version of the Eiffel Tower on the top of Petrin Hill overlooking Prague. The grounds near the tower contain a formal rose garden which is free to walk around. With a height of just under 60 m, it is about 1/5th scale of the Paris",
+   "editions": 22,
+   "unesco": false,
+   "web": "http://www.petrinska-rozhledna.cz/"
+  },
+  {
+   "name": "Loreta",
+   "lat": 50.0893,
+   "lng": 14.3917,
+   "wikidata": "Q22262465",
+   "note": "A beautiful Baroque convent in the Lesser Town.",
+   "editions": 2,
+   "unesco": false
+  },
+  {
+   "name": "Strahov Monastery",
+   "lat": 50.0862,
+   "lng": 14.3891,
+   "wikidata": "Q969482",
+   "note": "A monastery on the mountain. Worth a visit for both its picture gallery and its notable Renaissance library.",
+   "editions": 33,
+   "unesco": false,
+   "web": "https://www.strahovskyklaster.cz/"
+  },
+  {
+   "name": "Franz Kafka Museum",
+   "lat": 50.088353,
+   "lng": 14.41008,
+   "wikidata": "Q4306202",
+   "note": "Influences, life and works of the German language writer.",
+   "editions": 16,
+   "unesco": false,
+   "web": "http://www.kafkamuseum.cz/"
+  },
+  {
+   "name": "Wallenstein Palace",
+   "lat": 50.09005,
+   "lng": 14.40565,
+   "wikidata": "Q569877",
+   "note": "A nice Baroque palace with garden, it houses the Senate of the Czech Republic.",
+   "editions": 25,
+   "unesco": false
+  },
+  {
+   "name": "The Pedagogical Comenius Museum",
+   "lat": 50.090556,
+   "lng": 14.405278,
+   "wikidata": "Q12044524",
+   "note": "A museum documenting the writings of the Czech Renaissance erudite, centering around the legacy of J.A. Comenius: traditions and challenges of the Czech culture and education. The story starts in the 9th century with early Christian literac",
+   "editions": 1,
+   "unesco": false,
+   "web": "http://www.npmk.cz/muzeum"
+  },
+  {
+   "name": "Lobkowicz Palace",
+   "lat": 50.087172,
+   "lng": 14.398048,
+   "wikidata": "Q1282847",
+   "note": "Art museum near Prague Castle. Houses the original manuscript for Beethoven's famous 5th symphony, and many other interesting artifacts.",
+   "editions": 6,
+   "unesco": false,
+   "web": "https://www.lobkowicz.cz/",
+   "posFrom": "wikidata"
+  },
+  {
+   "name": "Museum Kampa",
+   "lat": 50.083999,
+   "lng": 14.408491,
+   "wikidata": "Q2139553",
+   "note": "A museum of modern Central European art.",
+   "editions": 10,
+   "unesco": false,
+   "web": "http://www.museumkampa.cz/"
+  },
+  {
+   "name": "National Gallery Prague - Old Masters",
+   "lat": 50.090487,
+   "lng": 14.397224,
+   "wikidata": "",
+   "note": "The Old Masters collection of the National Gallery, covering paintings from the 15th to 18th centuries, is divided between two mansions on Hradčanské Square, the Renaissance Schwarzenberg Palace and the Baroque Sternberg Palace."
+  },
+  {
+   "name": "Wenceslas Square",
+   "lat": 50.082308,
+   "lng": 14.426141,
+   "wikidata": "Q847613",
+   "note": "Václavské náměstí is a wide boulevard running down from the '''National Museum''' and it's crammed with bars, restaurants and casinos. It is the heart of central Prague. All three metro lines cross there: line A and C cross at \"Muzeum\" stat",
+   "editions": 41,
+   "unesco": false
+  },
+  {
+   "name": "National Museum",
+   "lat": 50.080071,
+   "lng": 14.432126,
+   "wikidata": "Q188112",
+   "note": "Nature and history museum in the upper part of Wenceslas Square. The building was designed by prominent Czech neo-renaissance architect Josef Schulz in the years 1885 - 1891. In the older museum, there is an excellent permanent exhibition o",
+   "editions": 41,
+   "unesco": false,
+   "web": "https://www.nm.cz/"
+  },
+  {
+   "name": "Dancing House",
+   "lat": 50.075416,
+   "lng": 14.414189,
+   "wikidata": "Q244816",
+   "note": "It is the work of the twentieth century American architect Frank Gehry, and is said to be shaped like a man and a woman dancing; hence its former name \"Fred and Ginger\". Inside you can visit a gallery or go to the rooftop bar and restaurant",
+   "editions": 50,
+   "unesco": false,
+   "web": "http://tadu.cz/"
+  },
+  {
+   "name": "Botanical Garden of the Charles University",
+   "lat": 50.070758,
+   "lng": 14.419651,
+   "wikidata": "Q11235374",
+   "note": "Botanical garden of the Charles University with valuable outdoor exhibition and a collection of tropical plants in greenhouses.",
+   "editions": 5,
+   "unesco": false
+  },
+  {
+   "name": "Vyšehrad",
+   "lat": 50.06426,
+   "lng": 14.41917,
+   "wikidata": "Q616334",
+   "note": "Seat of Czech princes for centuries before Prague Castle was built. Site of St. Paul and Peter's Cathedral, and of the famous Vyšehrad cemetery known as 'Slavín', burial grounds of extraordinary Czechs. Don't forget to visit the casemate of",
+   "editions": 40,
+   "unesco": false,
+   "web": "https://www.praha-vysehrad.cz"
+  },
+  {
+   "name": "Vyšehrad cemetery",
+   "lat": 50.064646,
+   "lng": 14.418029,
+   "wikidata": "",
+   "note": "Established in 1869 on the grounds of Vyšehrad Castle, it is the final resting place of many famous Czechs like artist Alphonse Mucha and writers Jan Neruda and Karel Čapek."
+  },
+  {
+   "name": "Basilica of St Peter and St Paul",
+   "lat": 50.064405,
+   "lng": 14.417929,
+   "wikidata": "Q2916171",
+   "note": "A neo-Gothic church in Vyšehrad fortress.",
+   "editions": 24,
+   "unesco": false,
+   "web": "https://www.kkvys.cz"
+  },
+  {
+   "name": "Velvet Revolution Memorial",
+   "lat": 50.08192,
+   "lng": 14.41788,
+   "wikidata": "Q27910042",
+   "note": "A simple brass plaque.",
+   "editions": 2,
+   "unesco": false
+  },
+  {
+   "name": "Jubilee Synagogue",
+   "lat": 50.084701,
+   "lng": 14.432009,
+   "wikidata": "Q942102",
+   "note": "Built in 1906, designed in Moorish Revival form with Art Nouveau decoration.",
+   "editions": 19,
+   "unesco": false,
+   "web": "https://www.kehilaprag.cz"
+  },
+  {
+   "name": "Museum of Communism",
+   "lat": 50.087851,
+   "lng": 14.430011,
+   "wikidata": "Q2571867",
+   "note": "An interesting museum that follows the history of communism in Czech Republic until its fall with the Velvet Revolution. The museum has several interesting communist propaganda artifacts, which are worth a look. Interesting exhibits on how ",
+   "editions": 12,
+   "unesco": false,
+   "web": "https://www.museumofcommunism.com/"
+  },
+  {
+   "name": "Mucha Museum",
+   "lat": 50.084361,
+   "lng": 14.427583,
+   "wikidata": "Q959038",
+   "note": "This museum is dedicated to the life and works of Alphonse Mucha, a leading artist in the Art Nouveau movement.",
+   "editions": 10,
+   "unesco": false,
+   "web": "http://www.mucha.cz/"
+  },
+  {
+   "name": "Emauzy monastery",
+   "lat": 50.0719492,
+   "lng": 14.4175814,
+   "wikidata": "",
+   "note": "Founded in 1347 by Charles IV, Emauzy is a historic Benedictine abbey known for hosting Slavic liturgy. Destroyed by World War II bombing and famously restored in the 1960s with modern white concrete towers, it features original 14th-centur"
+  },
+  {
+   "name": "Wenceslas Square",
+   "lat": 50.082308,
+   "lng": 14.426141,
+   "wikidata": "Q847613",
+   "note": "Václavské náměstí is a wide boulevard running down from the '''National Museum''' and it's crammed with bars, restaurants and casinos. It is the heart of central Prague. All three metro lines cross there: line A and C cross at \"Muzeum\" stat",
+   "editions": 41,
+   "unesco": false
+  },
+  {
+   "name": "National Museum",
+   "lat": 50.080071,
+   "lng": 14.432126,
+   "wikidata": "Q188112",
+   "note": "Nature and history museum in the upper part of Wenceslas Square. The building was designed by prominent Czech neo-renaissance architect Josef Schulz in the years 1885 - 1891. In the older museum, there is an excellent permanent exhibition o",
+   "editions": 41,
+   "unesco": false,
+   "web": "https://www.nm.cz/"
+  },
+  {
+   "name": "Dancing House",
+   "lat": 50.075416,
+   "lng": 14.414189,
+   "wikidata": "Q244816",
+   "note": "It is the work of the twentieth century American architect Frank Gehry, and is said to be shaped like a man and a woman dancing; hence its former name \"Fred and Ginger\". Inside you can visit a gallery or go to the rooftop bar and restaurant",
+   "editions": 50,
+   "unesco": false,
+   "web": "http://tadu.cz/"
+  },
+  {
+   "name": "Botanical Garden of the Charles University",
+   "lat": 50.070758,
+   "lng": 14.419651,
+   "wikidata": "Q11235374",
+   "note": "Botanical garden of the Charles University with valuable outdoor exhibition and a collection of tropical plants in greenhouses.",
+   "editions": 5,
+   "unesco": false
+  },
+  {
+   "name": "Vyšehrad",
+   "lat": 50.06426,
+   "lng": 14.41917,
+   "wikidata": "Q616334",
+   "note": "Seat of Czech princes for centuries before Prague Castle was built. Site of St. Paul and Peter's Cathedral, and of the famous Vyšehrad cemetery known as 'Slavín', burial grounds of extraordinary Czechs. Don't forget to visit the casemate of",
+   "editions": 40,
+   "unesco": false,
+   "web": "https://www.praha-vysehrad.cz"
+  },
+  {
+   "name": "Vyšehrad cemetery",
+   "lat": 50.064646,
+   "lng": 14.418029,
+   "wikidata": "",
+   "note": "Established in 1869 on the grounds of Vyšehrad Castle, it is the final resting place of many famous Czechs like artist Alphonse Mucha and writers Jan Neruda and Karel Čapek."
+  },
+  {
+   "name": "Basilica of St Peter and St Paul",
+   "lat": 50.064405,
+   "lng": 14.417929,
+   "wikidata": "Q2916171",
+   "note": "A neo-Gothic church in Vyšehrad fortress.",
+   "editions": 24,
+   "unesco": false,
+   "web": "https://www.kkvys.cz"
+  },
+  {
+   "name": "Velvet Revolution Memorial",
+   "lat": 50.08192,
+   "lng": 14.41788,
+   "wikidata": "Q27910042",
+   "note": "A simple brass plaque.",
+   "editions": 2,
+   "unesco": false
+  },
+  {
+   "name": "Jubilee Synagogue",
+   "lat": 50.084701,
+   "lng": 14.432009,
+   "wikidata": "Q942102",
+   "note": "Built in 1906, designed in Moorish Revival form with Art Nouveau decoration.",
+   "editions": 19,
+   "unesco": false,
+   "web": "https://www.kehilaprag.cz"
+  },
+  {
+   "name": "Museum of Communism",
+   "lat": 50.087851,
+   "lng": 14.430011,
+   "wikidata": "Q2571867",
+   "note": "An interesting museum that follows the history of communism in Czech Republic until its fall with the Velvet Revolution. The museum has several interesting communist propaganda artifacts, which are worth a look. Interesting exhibits on how ",
+   "editions": 12,
+   "unesco": false,
+   "web": "https://www.museumofcommunism.com/"
+  },
+  {
+   "name": "Mucha Museum",
+   "lat": 50.084361,
+   "lng": 14.427583,
+   "wikidata": "Q959038",
+   "note": "This museum is dedicated to the life and works of Alphonse Mucha, a leading artist in the Art Nouveau movement.",
+   "editions": 10,
+   "unesco": false,
+   "web": "http://www.mucha.cz/"
+  },
+  {
+   "name": "Emauzy monastery",
+   "lat": 50.0719492,
+   "lng": 14.4175814,
+   "wikidata": "",
+   "note": "Founded in 1347 by Charles IV, Emauzy is a historic Benedictine abbey known for hosting Slavic liturgy. Destroyed by World War II bombing and famously restored in the 1960s with modern white concrete towers, it features original 14th-centur"
+  },
+  {
+   "name": "Prague Castle",
+   "lat": 50.090246,
+   "lng": 14.399378,
+   "wikidata": "Q193369",
+   "note": "The former seat of the King and is now the seat of the Czech president. This is Prague's number one tourist attraction so expect huge crowds and possibly long lines, especially during high tourist season. Your best bet is to come early, as ",
+   "editions": 66,
+   "unesco": false,
+   "web": "https://www.hrad.cz/"
+  },
+  {
+   "name": "St. Vitus Cathedral",
+   "lat": 50.090879,
+   "lng": 14.40058,
+   "wikidata": "Q5949",
+   "note": "In the center of the castle and the most important cathedral in all of the Czech republic. The oldest parts of the cathedral are from the 14th century, but the cathedral was not completed in the Medieval period. The highest tower was comple",
+   "editions": 60,
+   "unesco": false,
+   "web": "http://www.katedralasvatehovita.cz"
+  },
+  {
+   "name": "Old Royal Palace",
+   "lat": 50.090445,
+   "lng": 14.401422,
+   "wikidata": "Q2340793",
+   "note": "The original seat of Czech rulers. Visitors first enter the Vladislav hall, the largest high-Gothic vaulted space in Central Europe. Other rooms include the Palace chapel and throne room. At the end of the exhibit is '''\"The Story of Prague",
+   "editions": 17,
+   "unesco": false
+  },
+  {
+   "name": "St. George's Basilica",
+   "lat": 50.09123,
+   "lng": 14.402667,
+   "wikidata": "Q1437065",
+   "note": "The second oldest church in the castle and features a colorful Baroque facade. The interior is visibly older and is the burial place of the Premyslid family and the first Czech saint, Princess Ludmila.",
+   "editions": 27,
+   "unesco": false
+  },
+  {
+   "name": "The Golden Lane",
+   "lat": 50.092042,
+   "lng": 14.404222,
+   "wikidata": "Q1535529",
+   "note": "During the reign of Rudolf II, goldsmiths lived in a lively alleyway filled with tiny workshops, which were also their residence, hence its name. Tiny, cobblestoned walkway filled with brightly-painted little houses, where modern man has a ",
+   "editions": 28,
+   "unesco": false
+  },
+  {
+   "name": "Charles Bridge",
+   "lat": 50.086447,
+   "lng": 14.411856,
+   "wikidata": "Q204871",
+   "note": "connects the Old Town with Lesser Town. Commissioned by Czech king and Holy Roman Emperor Charles IV and constructed between 1357 and 1402, it is one of the most interesting historical stone bridges in Europe. It is 516 meters long with 16 ",
+   "editions": 62,
+   "unesco": true
+  },
+  {
+   "name": "Child Jesus of Prague",
+   "lat": 50.085482,
+   "lng": 14.403845,
+   "wikidata": "",
+   "note": "This image of Christ, known also as the Holy Infant of Prague, is among the most widespread religious images in the world. The statue was brought from Spain in the 16th century and given to the Carmelites in 1628. It is 47 cm high and repre"
+  },
+  {
+   "name": "Petřín Hill",
+   "lat": 50.081668,
+   "lng": 14.397794,
+   "wikidata": "Q427604",
+   "note": "Due to a housing crunch, most young Czechs don't move out of their parents' house until they marry (sometimes long after!) This lack of privacy leads to some very public displays of affection – what you see on the metro or trams won't compa",
+   "editions": 28,
+   "unesco": false
+  },
+  {
+   "name": "Petřín Lookout Tower",
+   "lat": 50.083544,
+   "lng": 14.39505,
+   "wikidata": "Q12256",
+   "note": "A smaller version of the Eiffel Tower on the top of Petrin Hill overlooking Prague. The grounds near the tower contain a formal rose garden which is free to walk around. With a height of just under 60 m, it is about 1/5th scale of the Paris",
+   "editions": 22,
+   "unesco": false,
+   "web": "http://www.petrinska-rozhledna.cz/"
+  },
+  {
+   "name": "Loreta",
+   "lat": 50.0893,
+   "lng": 14.3917,
+   "wikidata": "Q22262465",
+   "note": "A beautiful Baroque convent in the Lesser Town.",
+   "editions": 2,
+   "unesco": false
+  },
+  {
+   "name": "Strahov Monastery",
+   "lat": 50.0862,
+   "lng": 14.3891,
+   "wikidata": "Q969482",
+   "note": "A monastery on the mountain. Worth a visit for both its picture gallery and its notable Renaissance library.",
+   "editions": 33,
+   "unesco": false,
+   "web": "https://www.strahovskyklaster.cz/"
+  },
+  {
+   "name": "Franz Kafka Museum",
+   "lat": 50.088353,
+   "lng": 14.41008,
+   "wikidata": "Q4306202",
+   "note": "Influences, life and works of the German language writer.",
+   "editions": 16,
+   "unesco": false,
+   "web": "http://www.kafkamuseum.cz/"
+  },
+  {
+   "name": "Wallenstein Palace",
+   "lat": 50.09005,
+   "lng": 14.40565,
+   "wikidata": "Q569877",
+   "note": "A nice Baroque palace with garden, it houses the Senate of the Czech Republic.",
+   "editions": 25,
+   "unesco": false
+  },
+  {
+   "name": "The Pedagogical Comenius Museum",
+   "lat": 50.090556,
+   "lng": 14.405278,
+   "wikidata": "Q12044524",
+   "note": "A museum documenting the writings of the Czech Renaissance erudite, centering around the legacy of J.A. Comenius: traditions and challenges of the Czech culture and education. The story starts in the 9th century with early Christian literac",
+   "editions": 1,
+   "unesco": false,
+   "web": "http://www.npmk.cz/muzeum"
+  },
+  {
+   "name": "Lobkowicz Palace",
+   "lat": 50.087172,
+   "lng": 14.398048,
+   "wikidata": "Q1282847",
+   "note": "Art museum near Prague Castle. Houses the original manuscript for Beethoven's famous 5th symphony, and many other interesting artifacts.",
+   "editions": 6,
+   "unesco": false,
+   "web": "https://www.lobkowicz.cz/",
+   "posFrom": "wikidata"
+  },
+  {
+   "name": "Museum Kampa",
+   "lat": 50.083999,
+   "lng": 14.408491,
+   "wikidata": "Q2139553",
+   "note": "A museum of modern Central European art.",
+   "editions": 10,
+   "unesco": false,
+   "web": "http://www.museumkampa.cz/"
+  },
+  {
+   "name": "National Gallery Prague - Old Masters",
+   "lat": 50.090487,
+   "lng": 14.397224,
+   "wikidata": "",
+   "note": "The Old Masters collection of the National Gallery, covering paintings from the 15th to 18th centuries, is divided between two mansions on Hradčanské Square, the Renaissance Schwarzenberg Palace and the Baroque Sternberg Palace."
+  },
+  {
+   "name": "Old Town Square",
+   "lat": 50.0875,
+   "lng": 14.421389,
+   "wikidata": "Q421678",
+   "note": "The center of the eventful history of Prague. The Gothic, Renaissance and Baroque buildings were preserved here. The Historical Centre, including most of the city’s major sites, became a [[UNESCO World Heritage List",
+   "editions": 40,
+   "unesco": false
+  },
+  {
+   "name": "Týn Church",
+   "lat": 50.08772,
+   "lng": 14.42269,
+   "wikidata": "",
+   "note": "A very striking pure [[Gothic architecture"
+  },
+  {
+   "name": "Storch Building",
+   "lat": 50.087253,
+   "lng": 14.421903,
+   "wikidata": "",
+   "note": "Covered in murals."
+  },
+  {
+   "name": "Jan Hus Memorial",
+   "lat": 50.087778,
+   "lng": 14.421111,
+   "wikidata": "Q3499497",
+   "note": "That striking man standing atop a patina-green metal mountain in the center of Old Town Square is not Jesus, though he resembles him. It's Jan Hus, the great Czech religious reformer whose [[Christianity#Hussites",
+   "editions": 16,
+   "unesco": false
+  },
+  {
+   "name": "Astronomical Clock",
+   "lat": 50.087008,
+   "lng": 14.420917,
+   "wikidata": "Q729370",
+   "note": "The Astronomical Clock located on a side tower of the Old Town Hall (reasonably enough, on Old Town Square) is easy to find&mdash;just wait until a few minutes before the hour and look for a large group of tourists standing around waiting f",
+   "editions": 47,
+   "unesco": false,
+   "web": "http://www.orloj600let.cz/"
+  },
+  {
+   "name": "Municipal House",
+   "lat": 50.08762,
+   "lng": 14.42824,
+   "wikidata": "Q2334312",
+   "note": "Nám. Republiky 5. The ''Obecní dům'' was built near the Powder Tower (a storage place for gunpowder and a major trade route entry into the city) on a site called King's Court where once a royal residence stood. In 1901, the Prague Civic Soc",
+   "editions": 21,
+   "unesco": false,
+   "web": "https://www.obecnidum.cz/en/"
+  },
+  {
+   "name": "Prague City Gallery",
+   "lat": 50.08778,
+   "lng": 14.42196,
+   "wikidata": "Q12018045",
+   "note": "A museum of modern Czech arts divided between several sites most of which are in the old town. Its main building is the House of the Golden Ring at the Old Town Square featuring 20th century Czech art in a beautiful medieval edifice. 19th c",
+   "editions": 1,
+   "unesco": false,
+   "web": "https://www.ghmp.cz/"
+  },
+  {
+   "name": "Speculum Alchemiae",
+   "lat": 50.090787,
+   "lng": 14.422507,
+   "wikidata": "Q112254522",
+   "note": "A museum dedicated to the mysteries of alchemy, housed in a {{UNESCO",
+   "editions": 1,
+   "unesco": false,
+   "web": "http://alchemiae.cz/en"
+  },
+  {
+   "name": "Convent of Saint Agnes",
+   "lat": 50.092494,
+   "lng": 14.424861,
+   "wikidata": "Q394832",
+   "note": "The ''Anezsky klaster'' is the first Early Gothic building in Prague (founded 1234) - something notable in a city filled with amazingly well-preserved examples of Gothic architecture such as St Vitus, the Charles Bridge and the Powder Tower",
+   "editions": 13,
+   "unesco": false
+  },
+  {
+   "name": "Museum of Czech Cubism",
+   "lat": 50.087,
+   "lng": 14.42545,
+   "wikidata": "Q2717859",
+   "note": "The Museum of Czech Cubism in the renovated House of the Black Madonna exhibits furniture suites, individual pieces, accessory furnishings and objects made of ceramic, glass and metals. It offers an overview of the foremost creative achieve",
+   "editions": 18,
+   "unesco": false
+  },
+  {
+   "name": "Museum of Decorative Arts",
+   "lat": 50.089722,
+   "lng": 14.416389,
+   "wikidata": "Q1349747",
+   "note": "This 17th century palazzo-style building houses examples of historical and contemporary crafts, as well as applied arts and design.",
+   "editions": 11,
+   "unesco": false,
+   "web": "http://www.upm.cz/"
+  },
+  {
+   "name": "Church of the Holy Spirit",
+   "lat": 50.09,
+   "lng": 14.42028,
+   "wikidata": "Q2282608",
+   "note": "Baroque church",
+   "editions": 8,
+   "unesco": false
+  },
+  {
+   "name": "Pariska Street",
+   "lat": 50.08844,
+   "lng": 14.42,
+   "wikidata": "",
+   "note": "Tree lined street with number of historic buildings, exclusive shopping and upmarket restaurants and hotels."
+  },
+  {
+   "name": "Rudolfinum",
+   "lat": 50.09,
+   "lng": 14.4156,
+   "wikidata": "Q1130137",
+   "note": "Neo-Renaissance auditorium, home of the Czech Philharmonic Orchestra. A statue of Antonin Dvořak is in the park in front of the building, whose front façade is being renovated as of August 2026.",
+   "editions": 26,
+   "unesco": false,
+   "web": "http://www.rudolfinum.cz/"
+  },
+  {
+   "name": "Jaroslav Fragner Gallery",
+   "lat": 50.084482,
+   "lng": 14.41793,
+   "wikidata": "",
+   "note": "Contemporary architecture. You can find here profiles of influential people and groups, retrospective exhibitions, thematic exhibitions, recent movement in architecture. Gallery provides lectures, seminars and publishing, regarding central "
+  },
+  {
+   "name": "Sex Machines Museum",
+   "lat": 50.086278,
+   "lng": 14.420726,
+   "wikidata": "Q3480881",
+   "note": "Humorous presentation of historic and present day sex toys and related installations. A visit takes about 60 to 90 minutes, and offers an initiation in the world of domestic and commercial pleasure engineering. No entry for persons under 18",
+   "editions": 13,
+   "unesco": false,
+   "web": "https://sexmachinesmuseum.com"
+  },
+  {
+   "name": "Lego Museum",
+   "lat": 50.0827022,
+   "lng": 14.4193908,
+   "wikidata": "",
+   "note": "A small museum dedicated to Lego bricks and their creations. Don't expect a history of the bricks, the museum is entirely focused on Lego constructions applied to the Czech context, with many monuments of Prague replicated as scale models i"
+  },
+  {
+   "name": "Powder Tower",
+   "lat": 50.087222,
+   "lng": 14.427778,
+   "wikidata": "Q1488700",
+   "note": "One of the original city gates, which separates the Old Town from the New Town. The gate was used to store gunpowder in the 17th century, hence the name Powder Tower or Powder Gate.",
+   "editions": 28,
+   "unesco": false,
+   "web": "http://www.muzeumprahy.cz/199-prasna-brana/"
+  },
+  {
+   "name": "Jewish Museum",
+   "lat": 50.090285,
+   "lng": 14.4211,
+   "wikidata": "Q707850",
+   "note": "This is not a single site but consists of four synagogues, the Old Jewish Cemetery and the Memorial Hall - entrance to all being covered by a single ticket. A combined ticket that includes the Old-New Synagogue can be obtained at a consider",
+   "editions": 15,
+   "unesco": false,
+   "web": "https://www.jewishmuseum.cz/"
+  },
+  {
+   "name": "Maisel Synagogue",
+   "lat": 50.08878,
+   "lng": 14.41866,
+   "wikidata": "Q517766",
+   "note": "One of the historical monuments of the former Prague Jewish Ghetto. Nowadays the synagogue belongs to the Jewish Community of Prague and is administered by the Jewish Museum in Prague as a part of its expositions.",
+   "editions": 22,
+   "unesco": false
+  },
+  {
+   "name": "Spanish Synagogue",
+   "lat": 50.090361,
+   "lng": 14.420833,
+   "wikidata": "Q990003",
+   "note": "The Spanish Synagogue, so-called because Sephardic Jews expelled from Spain at the end of the 15th century built a previous synagogue on this site, is a wild combination of neo-Renaissance and Moorish-Spain style. Think the Alhambra crossed",
+   "editions": 27,
+   "unesco": false,
+   "web": "http://www.jewishmuseum.cz/en/explore/sites/spanish-synagogue"
+  },
+  {
+   "name": "Pinkas Synagogue",
+   "lat": 50.089263,
+   "lng": 14.416951,
+   "wikidata": "Q599211",
+   "note": "Inside the front door of the Pinkas Synagogue, inscribed in tiny red and black letters on almost every square inch of wallspace are the names of 77,297 Jews who were killed in the war. This visual representation humanizes such a number, att",
+   "editions": 14,
+   "unesco": false
+  },
+  {
+   "name": "Old Jewish Cemetery",
+   "lat": 50.089722,
+   "lng": 14.417222,
+   "wikidata": "Q438026",
+   "note": "On the left wall before the entrance is a plaque detailing conservation efforts (which cost 1 million crowns per year). Over 20,000 people are buried in about twelve layers of graves, stacked to save space. Avigdor Kara is the earliest know",
+   "editions": 29,
+   "unesco": false,
+   "web": "https://www.jewishmuseum.cz/pamatky-a-expozice/pamatky/stary-zidovsky-hrbitov/"
+  },
+  {
+   "name": "Klausen Synagogue",
+   "lat": 50.0899,
+   "lng": 14.41725,
+   "wikidata": "Q898588",
+   "note": "The Klausen Synagogue is nowadays the largest synagogue in the former Prague Jewish ghetto and also a single example of an early Baroque synagogue in the area.",
+   "editions": 14,
+   "unesco": false,
+   "closedForGood": true
+  },
+  {
+   "name": "Ceremonial Hall",
+   "lat": 50.090034,
+   "lng": 14.417024,
+   "wikidata": "Q20860076",
+   "note": "The last service to the deceased members of the Prague Jewish Community was held here.",
+   "editions": 11,
+   "unesco": false
+  },
+  {
+   "name": "Old-New Synagogue",
+   "lat": 50.09,
+   "lng": 14.418611,
+   "wikidata": "Q443107",
+   "note": "The name sounds strange for a building from the 13th century but it was called 'New' to distinguish it from an even older synagogue. This was replaced by the Spanish Synagogue in the 17th century, when the Old-New Synagogue acquired its cur",
+   "editions": 33,
+   "unesco": false,
+   "web": "http://www.synagogue.cz/"
+  },
+  {
+   "name": "Jewish Town Hall",
+   "lat": 50.08917,
+   "lng": 14.41861,
+   "wikidata": "Q80272",
+   "note": "Renaissance-style building",
+   "editions": 16,
+   "unesco": false
+  }
+ ],
+ "ferryLinks": [
+  {
+   "name": "P5: Císařská louka ⇔ Kotevní ⇔ Výtoň",
+   "a": {
+    "lat": 50.06548,
+    "lng": 14.41264
+   },
+   "b": {
+    "lat": 50.0674,
+    "lng": 14.41455
+   },
+   "osm": "way/1370842699"
+  },
+  {
+   "name": "Praha – Slapy",
+   "a": {
+    "lat": 49.82146,
+    "lng": 14.44342
+   },
+   "b": {
+    "lat": 50.07386,
+    "lng": 14.41342
+   },
+   "osm": "way/659301333"
+  },
+  {
+   "name": "P5: Císařská louka ⇔ Kotevní ⇔ Výtoň",
+   "a": {
+    "lat": 50.06465,
+    "lng": 14.41309
+   },
+   "b": {
+    "lat": 50.0674,
+    "lng": 14.41455
+   },
+   "osm": "way/829840067"
+  },
+  {
+   "name": "Přívoz Vyšehrad",
+   "a": {
+    "lat": 50.06463,
+    "lng": 14.41311
+   },
+   "b": {
+    "lat": 50.06888,
+    "lng": 14.41165
+   },
+   "osm": "way/974052786"
   }
  ]
 }

@@ -389,7 +389,8 @@
    "note": "The stadium is on the west bank of River Tiber, about three km directly north of the Vatican. It is part of a sports complex that was built for the 1960 Olympic Games, including the Olympic swimming pool and the tennis complex where the ann",
    "editions": 73,
    "unesco": false,
-   "web": "https://www.sportesalute.eu/stadioolimpicotour.html"
+   "web": "https://www.sportesalute.eu/stadioolimpicotour.html",
+   "posDoubt": true
   },
   {
    "name": "Santa Passera",
@@ -426,7 +427,8 @@
    "wikidata": "Q1027069",
    "note": "Although started in the 2nd century, San Callisto has had many more recent burials, including 16 popes. The burial arcades are almost 20 km long.",
    "editions": 25,
-   "unesco": false
+   "unesco": false,
+   "posDoubt": true
   },
   {
    "name": "The Catacombs of San Domitilla",
@@ -436,7 +438,8 @@
    "note": "The Catacombs of Domitilla are considered to be the best preserved of all Roman catacombs. They are the only ones still to contain bones. Domitilla also has a subterranean basilica, much of which was reconstructed in 1870.",
    "editions": 17,
    "unesco": false,
-   "web": "http://www.domitilla.info/idx.htm?var1=docs/fr01.htm"
+   "web": "http://www.domitilla.info/idx.htm?var1=docs/fr01.htm",
+   "posDoubt": true
   },
   {
    "name": "Basilica and catacombs of San Sebastiano",
@@ -446,7 +449,8 @@
    "note": "The first basilica was constructed in the 4th century and dedicated to San Sebastian, a martyr of the 3rd century. Sebastian's remains were transferred to St. Peter's in 826, prior to a Saracen assault when the church was destroyed. The cur",
    "editions": 27,
    "unesco": false,
-   "web": "http://www.sansebastianofuorilemura.org/"
+   "web": "http://www.sansebastianofuorilemura.org/",
+   "posDoubt": true
   },
   {
    "name": "Fosse Ardeatine",
@@ -455,7 +459,8 @@
    "wikidata": "Q638761",
    "note": "This was the site of the slaughter in 1944 of 335 Italians, including many Jews from the Ghetto, in retaliation for a Partisan attack on German troops in Rome. The caves where the massacre took place are now a National Monument and Memorial",
    "editions": 22,
-   "unesco": false
+   "unesco": false,
+   "posDoubt": true
   },
   {
    "name": "Jewish Catacombs",
@@ -464,7 +469,8 @@
    "wikidata": "Q3663214",
    "note": "These are underneath a property known as Vigna Randanini. The catacombs are much smaller than the Christian catacombs and much less easy to visit. Groups are limited to twelve people at any one time and you need to take your own lighting!",
    "editions": 5,
-   "unesco": false
+   "unesco": false,
+   "posDoubt": true
   },
   {
    "name": "Caffarella Park",
@@ -594,7 +600,8 @@
    "note": "Also known as St Paul Outside the Walls. This is on the outskirts of Rome in an otherwise drab modern neighborhood. The enormous basilica is a faithful reconstruction, finished in 1854, of the ancient basilica which burned down in 1823. Par",
    "editions": 58,
    "unesco": true,
-   "web": "http://www.vatican.va/various/basiliche/san_paolo/index_en.html"
+   "web": "http://www.vatican.va/various/basiliche/san_paolo/index_en.html",
+   "posDoubt": true
   },
   {
    "name": "Santa Passera",
@@ -759,7 +766,8 @@
    "note": "At the northern end of Via XX Settembre next to the '''Porta Pia''' designed by Michaelangelo. The previous embassy had been destroyed by a terrorist bomb in 1946 and was eventually replaced by this world-renowned modern design by Sir Basil",
    "editions": 6,
    "unesco": false,
-   "web": "https://www.gov.uk/government/world/organisations/british-embassy-rome/"
+   "web": "https://www.gov.uk/government/world/organisations/british-embassy-rome/",
+   "posDoubt": true
   },
   {
    "name": "Palazzo Colonna",
@@ -1444,7 +1452,8 @@
    "wikidata": "Q623612",
    "note": "Ara Pacis is an altar to peace commissioned by the Roman Senate on 4 July 13 BC to honor the triumphal return from Hispania and Gaul of Augustus. It is universally recognised as a masterpiece. Following discovery of this work under a buildi",
    "editions": 41,
-   "unesco": false
+   "unesco": false,
+   "posDoubt": true
   },
   {
    "name": "Mausoleo di Augusto",
@@ -1463,7 +1472,8 @@
    "wikidata": "Q2462868",
    "note": "Underground burial place of an ancient Roman family and of seven early popes.",
    "editions": 18,
-   "unesco": false
+   "unesco": false,
+   "posDoubt": true
   },
   {
    "name": "Santa Maria del Popolo",
@@ -1521,7 +1531,8 @@
    "wikidata": "Q3663182",
    "note": "Small catacombs that contained the remains of Saint Agnes",
    "editions": 11,
-   "unesco": false
+   "unesco": false,
+   "posDoubt": true
   },
   {
    "name": "Piazza del Popolo",
@@ -1585,7 +1596,8 @@
    "wikidata": "Q4011749",
    "note": "A magnificent patrician house with beautiful gardens. It was built by order of Cardinal Alessando Albani in 1743-1763 in order to accommodate his collection of art. The collection was taken care of by the Winkelmann, adviser and friend of t",
    "editions": 10,
-   "unesco": false
+   "unesco": false,
+   "posDoubt": true
   },
   {
    "name": "Villa Ada",
@@ -1695,7 +1707,8 @@
    "note": "A museum devoted to pasta, Italy's premier gift to world cuisine.",
    "editions": 2,
    "unesco": false,
-   "web": "https://www.fondazionevincenzoagnesi.it/storia-del-museo/"
+   "web": "https://www.fondazionevincenzoagnesi.it/storia-del-museo/",
+   "posDoubt": true
   },
   {
    "name": "Bioparco",
@@ -1786,13 +1799,14 @@
   },
   {
    "name": "National Gallery of Ancient Art",
-   "lat": 41.893328,
-   "lng": 12.466586,
+   "lat": 41.90278,
+   "lng": 12.489527,
    "wikidata": "Q2266081",
    "note": "housed in the baroque palace Corsini where Christina, Queen of Sweden settled down in the last years of her life",
    "editions": 28,
    "unesco": false,
-   "web": "https://www.barberinicorsini.org/"
+   "web": "https://www.barberinicorsini.org/",
+   "posFrom": "wikidata"
   },
   {
    "name": "Orto Botanico dell'Università di Roma \"La Sapienza\"",
@@ -1973,12 +1987,13 @@
   },
   {
    "name": "Servian Wall",
-   "lat": 41.88041,
-   "lng": 12.48276,
+   "lat": 41.901667,
+   "lng": 12.501667,
    "wikidata": "Q281330",
    "note": "The Servian Wall was the first wall around Rome, built around the 3rd Century BC. This well-preserved section gives a good opportunity to see the construction methods used at that time, involving the use of blocks of tufa rock.",
    "editions": 37,
-   "unesco": false
+   "unesco": false,
+   "posFrom": "wikidata"
   },
   {
    "name": "Roman Houses",
@@ -2017,7 +2032,8 @@
    "wikidata": "Q1632777",
    "note": "The western end of the ancient Via Appia road connecting Rome to Brindisi in the heel of Italy, and as such the third world heritage site in Rome together with the Old Center and the Vatican. As such it's an important historical location, e",
    "editions": 21,
-   "unesco": false
+   "unesco": false,
+   "posDoubt": true
   },
   {
    "name": "Porta San Paolo",
@@ -2025,7 +2041,7 @@
    "lng": 12.4815,
    "wikidata": "Q1636207",
    "note": "Next door to the Pyramid, this fine gate in the Aurelian Wall is named after St. Paul as the Via Ostiense leads to the basilica of St. Paul's Outside the Walls (see Rome/South).",
-   "editions": 21,
+   "editions": 22,
    "unesco": false
   },
   {
@@ -2140,7 +2156,8 @@
    "wikidata": "Q623612",
    "note": "Ara Pacis is an altar to peace commissioned by the Roman Senate on 4 July 13 BC to honor the triumphal return from Hispania and Gaul of Augustus. It is universally recognised as a masterpiece. Following discovery of this work under a buildi",
    "editions": 41,
-   "unesco": false
+   "unesco": false,
+   "posDoubt": true
   },
   {
    "name": "Mausoleo di Augusto",
@@ -2159,7 +2176,8 @@
    "wikidata": "Q2462868",
    "note": "Underground burial place of an ancient Roman family and of seven early popes.",
    "editions": 18,
-   "unesco": false
+   "unesco": false,
+   "posDoubt": true
   },
   {
    "name": "Santa Maria del Popolo",
@@ -2217,7 +2235,8 @@
    "wikidata": "Q3663182",
    "note": "Small catacombs that contained the remains of Saint Agnes",
    "editions": 11,
-   "unesco": false
+   "unesco": false,
+   "posDoubt": true
   },
   {
    "name": "Piazza del Popolo",
@@ -2281,7 +2300,8 @@
    "wikidata": "Q4011749",
    "note": "A magnificent patrician house with beautiful gardens. It was built by order of Cardinal Alessando Albani in 1743-1763 in order to accommodate his collection of art. The collection was taken care of by the Winkelmann, adviser and friend of t",
    "editions": 10,
-   "unesco": false
+   "unesco": false,
+   "posDoubt": true
   },
   {
    "name": "Villa Ada",
@@ -2391,7 +2411,8 @@
    "note": "A museum devoted to pasta, Italy's premier gift to world cuisine.",
    "editions": 2,
    "unesco": false,
-   "web": "https://www.fondazionevincenzoagnesi.it/storia-del-museo/"
+   "web": "https://www.fondazionevincenzoagnesi.it/storia-del-museo/",
+   "posDoubt": true
   },
   {
    "name": "Bioparco",
@@ -7985,6 +8006,20 @@
    },
    "min": 59,
    "km": 75.9
+  }
+ ],
+ "ferryLinks": [
+  {
+   "name": "Battelli di Roma",
+   "a": {
+    "lat": 41.91236,
+    "lng": 12.4713
+   },
+   "b": {
+    "lat": 41.89033,
+    "lng": 12.47577
+   },
+   "osm": "way/176888762"
   }
  ]
 }

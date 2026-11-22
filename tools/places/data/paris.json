@@ -2261,5 +2261,431 @@
    "hours": "Mo-Fr 12:00-14:30, 19:30-22:00; Sa 19:30-22:00",
    "osm": "node/5485816521"
   }
+ ],
+ "guideSights": [
+  {
+   "name": "Paris/7th arrondissement#Q243",
+   "lat": 48.858,
+   "lng": 2.2953,
+   "wikidata": "Q243",
+   "note": "No other monument better symbolizes Paris.<!-- keep this concise: put details in the real listing in the 7th -->",
+   "editions": 191,
+   "unesco": true,
+   "web": "https://www.toureiffel.paris"
+  },
+  {
+   "name": "Paris/8th arrondissement#Q64436",
+   "lat": 48.8738,
+   "lng": 2.295,
+   "wikidata": "",
+   "note": "The Arc de Triomphe exudes grandeur and offers a central view of the city.<!-- keep this concise: put details in the real listing in the 8th -->"
+  },
+  {
+   "name": "Paris/8th arrondissement#Q550",
+   "lat": 48.86967,
+   "lng": 2.30786,
+   "wikidata": "",
+   "note": "Widely regarded to be one of the most recognizable avenues in the world"
+  },
+  {
+   "name": "Paris/4th arrondissement#Q2981",
+   "lat": 48.853,
+   "lng": 2.3498,
+   "wikidata": "",
+   "note": "Impressive [[Gothic architecture"
+  },
+  {
+   "name": "Paris/18th arrondissement#Q28785",
+   "lat": 48.886694,
+   "lng": 2.343,
+   "wikidata": "",
+   "note": "A church perched on top of the highest point in Paris. Behind the church is the artists' area, in front are spectacular views of the whole city."
+  },
+  {
+   "name": "Paris/9th arrondissement#Q187840",
+   "lat": 48.871944,
+   "lng": 2.331667,
+   "wikidata": "",
+   "note": "Masterpiece of theatre architecture of the 19th century built by Charles Garnier and inaugurated in 1875 housing the Paris Opera since it was founded by Louis XIV."
+  },
+  {
+   "name": "Paris/14th arrondissement#Q28924",
+   "lat": 48.83397,
+   "lng": 2.33245,
+   "wikidata": "",
+   "note": "Used to store the exhumed bones from the overflowing Paris cemetery. The bones of more than 6 million bodies lie here."
+  },
+  {
+   "name": "Paris/La Défense#Q216357",
+   "lat": 48.892778,
+   "lng": 2.235833,
+   "wikidata": "",
+   "note": "A modern office-building variant of the Arc de Triomphe."
+  },
+  {
+   "name": "Paris/5th arrondissement#Q188856",
+   "lat": 48.846111,
+   "lng": 2.345833,
+   "wikidata": "",
+   "note": "Underneath, the final resting place for the great heroes of the French Republic including Voltaire, Victor Hugo, and Marie Skłodowska-Curie; above, a marvellous view of the city."
+  },
+  {
+   "name": "Paris/20th arrondissement#Q311",
+   "lat": 48.861944,
+   "lng": 2.394167,
+   "wikidata": "",
+   "note": "Unlike any cemetery in the world. Ornate grave stones, monuments set among tree lined lanes. See the graves of Jim Morrison, Oscar Wilde, and Frédéric Chopin, among many others."
+  },
+  {
+   "name": "Paris/1st arrondissement#Q193193",
+   "lat": 48.855369,
+   "lng": 2.345028,
+   "wikidata": "",
+   "note": "Exquisite stained glass chapel. More beautiful interior than the gloomy Notre Dame Cathedral.<!-- keep this concise: put details in the real listing in the 1st -->"
+  },
+  {
+   "name": "Paris/1st arrondissement#Q19675",
+   "lat": 48.861089,
+   "lng": 2.33575,
+   "wikidata": "",
+   "note": "One of the finest museums in the world of art and culture. Home of the Mona Lisa and innumerable others. Enormous building and collection, plan at least two visits.<!-- keep this concise: put details in the real listing in the 1st -->."
+  },
+  {
+   "name": "Paris/7th arrondissement#Q23402",
+   "lat": 48.86,
+   "lng": 2.326389,
+   "wikidata": "",
+   "note": "Incredible collection housed in a former railway station. Works by the great artists of the 19th century (1848-1914) including Monet's \"Blue Water Lilies, Renoir's \"Bal du moulin de la Galette\", van Gogh's \"Bedroom in Arles\", Whistler's \"Th"
+  },
+  {
+   "name": "Paris/7th arrondissement#Q650519",
+   "lat": 48.855356,
+   "lng": 2.315819,
+   "wikidata": "",
+   "note": "Collection and archives dedicated to the sculptor Auguste Rodin, in a charming home with garden."
+  },
+  {
+   "name": "Paris/3rd arrondissement#Q743206",
+   "lat": 48.859731,
+   "lng": 2.362439,
+   "wikidata": "",
+   "note": "Contains the master's own collection."
+  },
+  {
+   "name": "Paris/16th arrondissement#Q1327886",
+   "lat": 48.859361,
+   "lng": 2.2675,
+   "wikidata": "",
+   "note": "Over 300 paintings of Claude Monet. Also, the works of Berthe Morisot, Edgar Degas, Édouard Manet and Pierre-Auguste Renoir. \"Impression Soleil Levant\" by Monet is on display."
+  },
+  {
+   "name": "Paris/1st arrondissement#Q726781",
+   "lat": 48.863833,
+   "lng": 2.32225,
+   "wikidata": "",
+   "note": "[Jardin des Tuileries] Houses \"The Water Lilies\" (or \"Nymphéas\") - a 360 degree depiction of Monet's flower garden at Giverny. Also, impressionist and post-Impressionist paintings by Cézanne, Matisse, Modigliani, Picasso, Renoir, Rousseau, "
+  },
+  {
+   "name": "Paris/6th arrondissement#Q1782606",
+   "lat": 48.8546,
+   "lng": 2.3354,
+   "wikidata": "",
+   "note": "Housed in the home of painter Eugène Delacroix."
+  },
+  {
+   "name": "Paris/4th arrondissement#Q178065",
+   "lat": 48.860653,
+   "lng": 2.352411,
+   "wikidata": "",
+   "note": "The museum of modern art. The building and adjoining Stravinsky Fountain are attractions in themselves. Closed for renovation until 2030."
+  },
+  {
+   "name": "Paris/7th arrondissement#Q188977",
+   "lat": 48.855,
+   "lng": 2.3125,
+   "wikidata": "",
+   "note": "Very impressive museum of arms and armor from the Middle Ages to today. Also contains the tomb of Napoleon Bonaparte."
+  },
+  {
+   "name": "Paris/5th arrondissement#Q1124095",
+   "lat": 48.850556,
+   "lng": 2.343333,
+   "wikidata": "",
+   "note": "A medieval museum exhibiting the five \"The Lady and the Unicorn\" tapestries, housed in a part Roman, part medieval building."
+  },
+  {
+   "name": "Paris/1st arrondissement#Q1319378",
+   "lat": 48.862783,
+   "lng": 2.334108,
+   "wikidata": "",
+   "note": "Showcasing eight centuries of French savoir-faire."
+  },
+  {
+   "name": "Paris/3rd arrondissement#Q640447",
+   "lat": 48.8575,
+   "lng": 2.362222,
+   "wikidata": "",
+   "note": "Museum of Paris history; exhibitions are permanent and free. Renovated 2017–2021.<!-- keep this concise: put details in the real listing in the 3rd -->"
+  },
+  {
+   "name": "Paris/19th arrondissement#Q1094338",
+   "lat": 48.895556,
+   "lng": 2.388056,
+   "wikidata": "",
+   "note": "Science museum primarily for children."
+  },
+  {
+   "name": "Paris/4th arrondissement#Q479218",
+   "lat": 48.854846,
+   "lng": 2.356196,
+   "wikidata": "",
+   "note": "Paris's Holocaust Memorial Museum, in the heart of the Marais on rue Geoffroy l'Asnier. Free Entry, weekly guided tours. Second Sunday of the month there is a free tour in English."
+  },
+  {
+   "name": "Paris/8th arrondissement#Q1165526",
+   "lat": 48.87543,
+   "lng": 2.31055,
+   "wikidata": "",
+   "note": "Private collection of French, Italian, and Dutch masterpieces in a typical 19th-century mansion."
+  },
+  {
+   "name": "Paris/16th arrondissement#Q860994",
+   "lat": 48.86527777777778,
+   "lng": 2.2938888888888886,
+   "wikidata": "",
+   "note": "One of the largest collections outside Asia of Southeast Asian, Indian, Afghan, Chinese, Japanese, and Korean art."
+  }
+ ],
+ "piers": [
+  {
+   "name": "Invalides",
+   "lat": 48.86327,
+   "lng": 2.31422,
+   "osm": "node/11396104923"
+  },
+  {
+   "name": "Corentin Cariou",
+   "lat": 48.89677,
+   "lng": 2.38355,
+   "osm": "node/1558653713"
+  },
+  {
+   "name": "Le Millénaire",
+   "lat": 48.9023,
+   "lng": 2.37413,
+   "osm": "node/1558653717"
+  },
+  {
+   "name": "Notre-Dame",
+   "lat": 48.85183,
+   "lng": 2.35006,
+   "osm": "node/21662099"
+  },
+  {
+   "name": "Embarcadère du Chalet des Îles",
+   "lat": 48.86299,
+   "lng": 2.26147,
+   "osm": "node/24910582"
+  },
+  {
+   "name": "Ferry pier",
+   "lat": 48.86337,
+   "lng": 2.26047,
+   "osm": "node/24910634"
+  },
+  {
+   "name": "Beaugrenelle",
+   "lat": 48.84945,
+   "lng": 2.28062,
+   "osm": "node/4532598849"
+  },
+  {
+   "name": "Tour-Eiffel",
+   "lat": 48.8599,
+   "lng": 2.29303,
+   "osm": "node/4532598850"
+  },
+  {
+   "name": "Place de la Concorde",
+   "lat": 48.8642,
+   "lng": 2.31538,
+   "osm": "node/4532598851"
+  },
+  {
+   "name": "Musée d'Orsay",
+   "lat": 48.86084,
+   "lng": 2.32641,
+   "osm": "node/4532598858"
+  },
+  {
+   "name": "Louvre",
+   "lat": 48.8601,
+   "lng": 2.33162,
+   "osm": "node/4532598859"
+  },
+  {
+   "name": "Hôtel-de-Ville",
+   "lat": 48.85457,
+   "lng": 2.35346,
+   "osm": "node/4532598860"
+  },
+  {
+   "name": "Jardin des Plantes",
+   "lat": 48.84659,
+   "lng": 2.36258,
+   "osm": "node/4532598863"
+  },
+  {
+   "name": "Saint-Germain-des-Prés",
+   "lat": 48.85834,
+   "lng": 2.33479,
+   "osm": "node/6830495013"
+  },
+  {
+   "name": "Bibliothèque F. Mitterrand",
+   "lat": 48.83266,
+   "lng": 2.38003,
+   "osm": "node/773075555"
+  },
+  {
+   "name": "Paris-Canal",
+   "lat": 48.89245,
+   "lng": 2.3878,
+   "osm": "node/9269468927"
+  },
+  {
+   "name": "Bateaux-Mouches",
+   "lat": 48.86398,
+   "lng": 2.30583,
+   "osm": "way/182821008"
+  },
+  {
+   "name": "Bateaux parisiens",
+   "lat": 48.86039,
+   "lng": 2.29353,
+   "osm": "way/400842891"
+  }
+ ],
+ "ferryLinks": [
+  {
+   "name": "",
+   "a": {
+    "lat": 48.8601,
+    "lng": 2.33162
+   },
+   "b": {
+    "lat": 48.8642,
+    "lng": 2.31538
+   },
+   "osm": "way/1228850164"
+  },
+  {
+   "name": "",
+   "a": {
+    "lat": 48.8642,
+    "lng": 2.31538
+   },
+   "b": {
+    "lat": 48.8599,
+    "lng": 2.29303
+   },
+   "osm": "way/1228850165"
+  },
+  {
+   "name": "",
+   "a": {
+    "lat": 48.86327,
+    "lng": 2.31422
+   },
+   "b": {
+    "lat": 48.86084,
+    "lng": 2.32641
+   },
+   "osm": "way/1228850167"
+  },
+  {
+   "name": "",
+   "a": {
+    "lat": 48.85834,
+    "lng": 2.33479
+   },
+   "b": {
+    "lat": 48.85183,
+    "lng": 2.35006
+   },
+   "osm": "way/1228850168"
+  },
+  {
+   "name": "",
+   "a": {
+    "lat": 48.85183,
+    "lng": 2.35006
+   },
+   "b": {
+    "lat": 48.84659,
+    "lng": 2.36258
+   },
+   "osm": "way/1228850169"
+  },
+  {
+   "name": "",
+   "a": {
+    "lat": 48.84659,
+    "lng": 2.36258
+   },
+   "b": {
+    "lat": 48.85457,
+    "lng": 2.35346
+   },
+   "osm": "way/1228850170"
+  },
+  {
+   "name": "",
+   "a": {
+    "lat": 48.85457,
+    "lng": 2.35346
+   },
+   "b": {
+    "lat": 48.8601,
+    "lng": 2.33162
+   },
+   "osm": "way/1228850171"
+  },
+  {
+   "name": "",
+   "a": {
+    "lat": 48.86084,
+    "lng": 2.32641
+   },
+   "b": {
+    "lat": 48.85834,
+    "lng": 2.33479
+   },
+   "osm": "way/1228850172"
+  },
+  {
+   "name": "",
+   "a": {
+    "lat": 48.8599,
+    "lng": 2.29303
+   },
+   "b": {
+    "lat": 48.86327,
+    "lng": 2.31422
+   },
+   "osm": "way/1228850173"
+  },
+  {
+   "name": "navettes fluviales électriques",
+   "a": {
+    "lat": 48.89677,
+    "lng": 2.38355
+   },
+   "b": {
+    "lat": 48.9023,
+    "lng": 2.37413
+   },
+   "osm": "way/142429701"
+  }
  ]
 }

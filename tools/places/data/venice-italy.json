@@ -3469,5 +3469,608 @@
    "min": 45,
    "km": 49.5
   }
+ ],
+ "guideSights": [
+  {
+   "name": "Galleria Giorgio Franchetti Ca' d'Oro",
+   "lat": 45.44088,
+   "lng": 12.33392,
+   "wikidata": "",
+   "note": "A collection of paintings and statues in a former palace from the 15th century. One of the best examples of Gothic architecture in Venice, sculptures, bronzes, paintings of Mantegna, Giorgione and Titian, Flemish and Dutch paintings."
+  },
+  {
+   "name": "Oratorio dei Crociferi",
+   "lat": 45.4431,
+   "lng": 12.3383,
+   "wikidata": "",
+   "note": "Small oratory facing the old monastery dei Crociferi, painting circle by Palma the Younger."
+  },
+  {
+   "name": "S. Giobbe",
+   "lat": 45.445028,
+   "lng": 12.320322,
+   "wikidata": "Q2717507",
+   "note": "",
+   "editions": 13,
+   "unesco": false,
+   "web": "http://www.parrocchiasangiobbe.it"
+  },
+  {
+   "name": "S. Michele in Isola",
+   "lat": 45.4487,
+   "lng": 12.3469,
+   "wikidata": "Q1449262",
+   "note": "",
+   "editions": 14,
+   "unesco": false
+  },
+  {
+   "name": "Santa Maria dei Miracoli",
+   "lat": 45.43951,
+   "lng": 12.33927,
+   "wikidata": "Q533680",
+   "note": "A perfect jewel box church, simple in form but ornamented with fine exterior marble facings.",
+   "editions": 24,
+   "unesco": false,
+   "web": "https://www.savevenice.org/project/church-of-santa-maria-dei-miracoli"
+  },
+  {
+   "name": "S. Giovanni Crisostomo",
+   "lat": 45.439167,
+   "lng": 12.337222,
+   "wikidata": "Q915746",
+   "note": "",
+   "editions": 14,
+   "unesco": false,
+   "web": "http://www.sangiovannicrisostomo.it"
+  },
+  {
+   "name": "San Giovanni e Paolo",
+   "lat": 45.43927,
+   "lng": 12.34218,
+   "wikidata": "Q155225",
+   "note": "A fine, huge Dominican church with the tombs of many Doges. It shares its piazza with the fine Renaissance façade of the Scuola San Marco and an equestrian statue of the mercenary captain Bartolomeo Colleoni (see below).",
+   "editions": 28,
+   "unesco": false,
+   "web": "https://santigiovanniepaolo.it/"
+  },
+  {
+   "name": "Santa Maria della Pietà",
+   "lat": 45.4341,
+   "lng": 12.34493,
+   "wikidata": "Q1559661",
+   "note": "A church that used to house an orphanage and hospital in the 18th century, it is known among classical music enthusiasts as the church where the Catholic priest and composer Antonio Vivaldi worked for most of his career.",
+   "editions": 16,
+   "unesco": false,
+   "web": "http://www.pietavenezia.org"
+  },
+  {
+   "name": "S. Francesco della Vigna",
+   "lat": 45.4381,
+   "lng": 12.3486,
+   "wikidata": "Q946542",
+   "note": "",
+   "editions": 20,
+   "unesco": false
+  },
+  {
+   "name": "S. Giovanni in Bragora",
+   "lat": 45.4344,
+   "lng": 12.347,
+   "wikidata": "Q521260",
+   "note": "",
+   "editions": 16,
+   "unesco": false,
+   "web": "https://sangiovannibattistabragora.it/"
+  },
+  {
+   "name": "S. Maria Formosa",
+   "lat": 45.4369,
+   "lng": 12.3411,
+   "wikidata": "Q1813687",
+   "note": "The first church dedicated to \"Mary of the Forms\" was built on this spot in the VII century, when the Virgin ordered bishop Magnus to erect one, appearing to him as an exceedingly shapely woman. The current building, planned by Codussi, dat",
+   "editions": 17,
+   "unesco": false
+  },
+  {
+   "name": "Basilica di San Pietro di Castello",
+   "lat": 45.4346,
+   "lng": 12.35957,
+   "wikidata": "Q945981",
+   "note": "Venice cathedral up to 1807, when the see was transferred to San Marco.",
+   "editions": 20,
+   "unesco": false,
+   "web": "http://www.patriarcatovenezia.it"
+  },
+  {
+   "name": "S. Zaccaria",
+   "lat": 45.434722,
+   "lng": 12.343333,
+   "wikidata": "Q794876",
+   "note": "",
+   "editions": 27,
+   "unesco": false
+  },
+  {
+   "name": "Museo Diocesano",
+   "lat": 45.4345,
+   "lng": 12.3409,
+   "wikidata": "Q2579358",
+   "note": "Religious furniture and objects from now demolished churches and convents, one of the most appealing Romanesque cloisters of Venice.",
+   "editions": 5,
+   "unesco": false,
+   "web": "http://www.veneziaupt.org/home_page/museo_diocesano/00000031_Il_Museo_Diocesano._Storia__collezione_e_servizi.html"
+  },
+  {
+   "name": "Museo Storico Navale",
+   "lat": 45.43276,
+   "lng": 12.34996,
+   "wikidata": "",
+   "note": "Collection of relics from the Serenissima Republic of Venice, the Italian navy, and the ancient Arsenale shipyards, miniature models, uniforms and stadarts, collection of sea shells. ''The main building of the Naval Historical Museum (Riva "
+  },
+  {
+   "name": "Fondazione Querini Stampalia",
+   "lat": 45.4365,
+   "lng": 12.3411,
+   "wikidata": "",
+   "note": "Residence-museum of the Querini-Stampa family, library, picture gallery, furniture and household objects from the 16th cent onwards, important paintings by Bellini, Palma, Ricci, Tiepolo and Longhi."
+  },
+  {
+   "name": "Byzantine Pictures Museum (Greek Institute)",
+   "lat": 45.4357,
+   "lng": 12.34447,
+   "wikidata": "",
+   "note": "Collection of Greek, Cretan and Venetian icons of the 14th to 18th century."
+  },
+  {
+   "name": "Palazzo Grimani",
+   "lat": 45.43705,
+   "lng": 12.34241,
+   "wikidata": "",
+   "note": "A jewel of Renaissance architecture that was opened as a Venetia civic museum in 2008, collections of paintings, archaeological collection of Greek and Roman artefacts, temporary exhibitions."
+  },
+  {
+   "name": "Scuola Dalmatina di San Giorgio e Trifone",
+   "lat": 45.43622,
+   "lng": 12.34595,
+   "wikidata": "Q1290662",
+   "note": "Famous painting cycle by Vittore Carpaccio depicting the lives of St.George, Tryphon and Jerome.",
+   "editions": 11,
+   "unesco": false
+  },
+  {
+   "name": "ASAC Library",
+   "lat": 45.4302,
+   "lng": 12.3589,
+   "wikidata": "",
+   "note": "An annex at the Biennale gardens where the Biennale keeps records related to the Biennale exhibitions and to 20th century art, from 1895 onwards."
+  },
+  {
+   "name": "Monument for Giovanni Caboto",
+   "lat": 45.4319,
+   "lng": 12.3511,
+   "wikidata": "",
+   "note": "Venetian explorer of North America who worked for the British (c. 1450-c. 1500)."
+  },
+  {
+   "name": "I Gesuati",
+   "lat": 45.4294,
+   "lng": 12.3272,
+   "wikidata": "Q1093909",
+   "note": "18th-century Dominican church on the Giudecca canal. The classical style building has a well-lit interior and is exceptional in preserving its original layout and Rococo decoration intact. The church and almost all its sculpture and paintin",
+   "editions": 18,
+   "unesco": false
+  },
+  {
+   "name": "S. Maria della Salute",
+   "lat": 45.430833,
+   "lng": 12.334444,
+   "wikidata": "Q52531",
+   "note": "As a votive offering for the city's deliverance from the Black Plague, the church was designed in the then fashionable Baroque style. Construction began in 1631. Most of the objects of art housed in the church bear references to the Black D",
+   "editions": 46,
+   "unesco": false,
+   "web": "https://basilicasalutevenezia.it/"
+  },
+  {
+   "name": "Santa Maria del Carmelo church",
+   "lat": 45.4332,
+   "lng": 12.3225,
+   "wikidata": "Q2780025",
+   "note": "Large 14th-century Roman Catholic church.",
+   "editions": 12,
+   "unesco": false
+  },
+  {
+   "name": "SS. Redentore",
+   "lat": 45.424992,
+   "lng": 12.332453,
+   "wikidata": "Q830807",
+   "note": "",
+   "editions": 32,
+   "unesco": false
+  },
+  {
+   "name": "Punta della Dogana",
+   "lat": 45.4308,
+   "lng": 12.3361,
+   "wikidata": "Q2931413",
+   "note": "Former customs house, centre for contemporary art, permanent exhibition of works from the François Pinault Collection. Renovation by world renowned architect Tadao Ando.",
+   "editions": 19,
+   "unesco": false,
+   "web": "https://www.palazzograssi.it"
+  },
+  {
+   "name": "Ca' Rezzonico - Museum of 18th Century Venice",
+   "lat": 45.4335,
+   "lng": 12.3265,
+   "wikidata": "",
+   "note": "Museum of the 18th century in Venice - attempts to revive the domestic atmosphere of Venetian nobilities. Furniture, interior decoration, paintings by Guardi, Canaletto, Tiepolo. On the third floor important paintings of the Venetian school"
+  },
+  {
+   "name": "Gallerie dell'Accademia",
+   "lat": 45.4313,
+   "lng": 12.3284,
+   "wikidata": "Q338330",
+   "note": "Venice's most significant art museum which is also one of Italy's best. Among the most important paintings in the Accademia are: Gentile Bellini: ''Procession on St. Mark’s Square'' (1496) and ''Miracle of the Cross at the Bridge of S. Lore",
+   "editions": 42,
+   "unesco": false,
+   "web": "http://www.gallerieaccademia.it/"
+  },
+  {
+   "name": "Gallery Palazzo Cini",
+   "lat": 45.4309,
+   "lng": 12.3299,
+   "wikidata": "Q16586218",
+   "note": "Former residence of Italian industrialist ''Vittorio Cini'' who amassed large collection of Italian art. The gallery houses a collection of 15th and 16th cent paintings from Tuscany and Ferrara, period furniture, silver, ivory and ceramic o",
+   "editions": 7,
+   "unesco": false,
+   "web": "https://www.palazzocini.it"
+  },
+  {
+   "name": "The Peggy Guggenheim Museum",
+   "lat": 45.4308,
+   "lng": 12.3315,
+   "wikidata": "Q1049033",
+   "note": "Offers a personal collection of modern art collected by Peggy Guggenheim. Peggy was an American married to modern artist Max Ernst, and funded a number of his contemporaries. The gallery includes a sculpture garden and works by Picasso, Kan",
+   "editions": 24,
+   "unesco": false,
+   "web": "https://www.guggenheim-venice.it/"
+  },
+  {
+   "name": "Scuola Grande dei Carmini",
+   "lat": 45.4337,
+   "lng": 12.3223,
+   "wikidata": "Q1641449",
+   "note": "Painting cycles dedicated to the Madonna del Carmine, canvases by Tiepolo and Padoviano.",
+   "editions": 8,
+   "unesco": false,
+   "web": "http://www.scuolagrandecarmini.it"
+  },
+  {
+   "name": "Le Macchine di Leonardo a Venezia",
+   "lat": 45.43308,
+   "lng": 12.32546,
+   "wikidata": "",
+   "note": "An exhibition in the '''Chiesa di San Barnaba''' showing around forty models of machines reproduced from Leonardo's codices. Some of the exhibits are interactive and copies of the codices are available for further reading. The church is an "
+  },
+  {
+   "name": "Rialto Bridge",
+   "lat": 45.438,
+   "lng": 12.3359,
+   "wikidata": "Q52505",
+   "note": "The bridge has become one of Venice's most recognizable icons and has a history that spans over 800 years. Today's Rialto Bridge was completed in 1591 and was used to replace a wooden bridge that collapsed in 1524.",
+   "editions": 52,
+   "unesco": false
+  },
+  {
+   "name": "Scuola Grande di San Rocco",
+   "lat": 45.4365,
+   "lng": 12.3253,
+   "wikidata": "Q1270723",
+   "note": "A masterpiece of Tintoretto, this guild house is an exquisite example of Mannerist art at its best. In order to allow a comfortable admiration of the detailed ceiling, mirrors are offered to the visitors. Cycles of allegories, life and pass",
+   "editions": 19,
+   "unesco": false,
+   "web": "http://www.scuolagrandesanrocco.org"
+  },
+  {
+   "name": "Scuola Grande di San Giovanni Evangelista",
+   "lat": 45.4383,
+   "lng": 12.3257,
+   "wikidata": "Q52083605",
+   "note": "Monumental staircase by Codussi, splendid San Giovanni Salon, Oratory of the Cross with precious reliquiaries.",
+   "editions": 8,
+   "unesco": false,
+   "web": "http://www.scuolasangiovanni.it"
+  },
+  {
+   "name": "House of Carlo Goldoni",
+   "lat": 45.4361,
+   "lng": 12.3282,
+   "wikidata": "Q856400",
+   "note": "Birthplace of Venice's most famous playwright. Museum, library and theater studies center. A MUVE museum.",
+   "editions": 7,
+   "unesco": false,
+   "web": "https://carlogoldoni.visitmuve.it/"
+  },
+  {
+   "name": "Leonardo da Vinci Museum Venice",
+   "lat": 45.4369,
+   "lng": 12.3256,
+   "wikidata": "",
+   "note": "Small museum dedicated to the life and work of Leonardo da Vinci."
+  },
+  {
+   "name": "San Giacomo di Rialto",
+   "lat": 45.43851,
+   "lng": 12.33547,
+   "wikidata": "Q922677",
+   "note": "This church is possibly the oldest church in Venice built around 421. It is most recognized for its 15th-century clock above the entrance of the church. It is also recognized for the red pillars and beautiful gold accents around the church ",
+   "editions": 20,
+   "unesco": false
+  },
+  {
+   "name": "Santa Maria Gloriosa dei Frari",
+   "lat": 45.4367,
+   "lng": 12.3262,
+   "wikidata": "Q224961",
+   "note": "The big friary church, fine example of Venetian Gothic architecture, with fine monuments and paintings of Titian, Belliniand Donatello, among which the famous 'Assunta' by Titian.",
+   "editions": 32,
+   "unesco": false,
+   "web": "http://www.basilicadeifrari.it"
+  },
+  {
+   "name": "San Simeone Piccolo",
+   "lat": 45.4404,
+   "lng": 12.3223,
+   "wikidata": "Q185910",
+   "note": "The last church built in Venice. One of the things that it is recognized for is the fact that they celebrate Tridentine Mass on Sundays. It is also recognized for its dome because it is used to make the church look taller than it is and the",
+   "editions": 13,
+   "unesco": false,
+   "web": "https://venezia.fssp.it/"
+  },
+  {
+   "name": "Natural History Museum",
+   "lat": 45.442,
+   "lng": 12.3286,
+   "wikidata": "",
+   "note": "11 exhibition halls with sections on palaeontology, explorations and nature. A MUVE museum."
+  },
+  {
+   "name": "Mocenigo Palace Museum",
+   "lat": 45.4406,
+   "lng": 12.3298,
+   "wikidata": "",
+   "note": "A collection of clothes dating from the 18th century. Splendid interior. Collection of dresses and accessories, fabrics, books, figurines in various period costumes. A MUVE museum."
+  },
+  {
+   "name": "Ca' Pesaro - International Modern Art Gallery",
+   "lat": 45.4409,
+   "lng": 12.3316,
+   "wikidata": "Q3940563",
+   "note": "Modern art collection, paintings of the 19th and 20th century. A MUVE museum.",
+   "editions": 4,
+   "unesco": false,
+   "web": "http://capesaro.visitmuve.it/en/home/"
+  },
+  {
+   "name": "Ca' Pesaro - Museum of Oriental Art",
+   "lat": 45.441,
+   "lng": 12.33146,
+   "wikidata": "Q756807",
+   "note": "Beautiful palace housing the gallery of modern art focusing on Italian art in the 19th century as well as the Marco Polo Museum, a rich collection mainly of Asian exhibits (fabrics, clothes, armours, porcelain). A MUVE museum.",
+   "editions": 27,
+   "unesco": false,
+   "web": "https://capesaro.visitmuve.it/en/home"
+  },
+  {
+   "name": "Doge's Palace",
+   "lat": 45.4337,
+   "lng": 12.3404,
+   "wikidata": "Q189883",
+   "note": "Don't miss the guided tour named ''Secret Itinerary'', which will let you discover the part of the palace where the city's administration worked, as well as Casanova's jail and the wonderful five hundred year old roof structure. A MUVE muse",
+   "editions": 60,
+   "unesco": false,
+   "web": "http://palazzoducale.visitmuve.it/"
+  },
+  {
+   "name": "Bell tower of St. Mark",
+   "lat": 45.43404,
+   "lng": 12.33905,
+   "wikidata": "Q754194",
+   "note": "The current tower dates from 1912; an exact replica of the previous tower which collapsed in 1902. The top of the tower offers great views of Venice and the lagoon.",
+   "editions": 36,
+   "unesco": false,
+   "web": "http://www.basilicasanmarco.it/basilica/campanile/"
+  },
+  {
+   "name": "Clock tower",
+   "lat": 45.4347,
+   "lng": 12.3389,
+   "wikidata": "Q966625",
+   "note": "Having been closed for restoration for many years, the restored astronomical clock is now visible. The fascinating tour of the clock mechanism (and rooftop bell) can only be visited on a guided tour, in English: M-W at 10:00 and 11:00, on o",
+   "editions": 22,
+   "unesco": false,
+   "web": "http://torreorologio.visitmuve.it/"
+  },
+  {
+   "name": "Ponte di Rialto",
+   "lat": 45.43805,
+   "lng": 12.33592,
+   "wikidata": "Q52505",
+   "note": "The bridge has become one of Venice's most recognizable icons and has a history that spans over 800 years. Today's Rialto Bridge was completed in 1591 and was used to replace a wooden bridge that collapsed in 1524.",
+   "editions": 52,
+   "unesco": false
+  },
+  {
+   "name": "Saint Mark's Basilica",
+   "lat": 45.43453,
+   "lng": 12.33969,
+   "wikidata": "Q172988",
+   "note": "Saint Mark's Basilica is on the Piazza San Marco and is one of the highlights of a visit to Venice. As with most churches in Italy, you must be dressed appropriately to be allowed in; this means no short skirts or bare shoulders. You are no",
+   "editions": 65,
+   "unesco": false,
+   "web": "http://www.basilicasanmarco.it/"
+  },
+  {
+   "name": "S. Giuliano",
+   "lat": 45.435694,
+   "lng": 12.338667,
+   "wikidata": "Q1251035",
+   "note": "",
+   "editions": 12,
+   "unesco": false,
+   "web": "https://salvadorstefano.it/"
+  },
+  {
+   "name": "Basilica San Giorgio Maggiore",
+   "lat": 45.4295,
+   "lng": 12.343,
+   "wikidata": "Q713558",
+   "note": "Designed by Andrea Palladio and build 1566-1610. Very nice views of Venice from the bell tower.",
+   "editions": 29,
+   "unesco": false,
+   "web": "https://www.abbaziasangiorgio.it"
+  },
+  {
+   "name": "S. Stefano",
+   "lat": 45.43368,
+   "lng": 12.33105,
+   "wikidata": "Q974832",
+   "note": "",
+   "editions": 19,
+   "unesco": false
+  },
+  {
+   "name": "S. Salvatore",
+   "lat": 45.4366,
+   "lng": 12.3365,
+   "wikidata": "Q1028202",
+   "note": "Includes the tomb of Caterina Cornaro, Queen of Cyprus (1454-1510).",
+   "editions": 20,
+   "unesco": false,
+   "web": "http://www.chiesasansalvador.it"
+  },
+  {
+   "name": "Correr Museum",
+   "lat": 45.433605,
+   "lng": 12.337158,
+   "wikidata": "Q1470912",
+   "note": "Interesting collection of globes, starting from the 16th century. There is also an only library hall, an archeological museum of Roman antiques and an important picture gallery. The museum offers a tour of Venetian history. Remarkable paint",
+   "editions": 22,
+   "unesco": false,
+   "web": "http://correr.visitmuve.it/"
+  },
+  {
+   "name": "Palazzo Grassi",
+   "lat": 45.4338,
+   "lng": 12.32794,
+   "wikidata": "Q907964",
+   "note": "Contemporary art museum. Temporary exhibitions from François Pinault's Collection.",
+   "editions": 25,
+   "unesco": false,
+   "web": "http://www.palazzograssi.it/en/"
+  },
+  {
+   "name": "Palazzo Fortuny",
+   "lat": 45.43532,
+   "lng": 12.33208,
+   "wikidata": "Q616676",
+   "note": "Collection of paintings and lamps. A MUVE museum.",
+   "editions": 4,
+   "unesco": false,
+   "web": "http://www.fortuny.visitmuve.it/en"
+  },
+  {
+   "name": "Scala Contarini del Bovolo",
+   "lat": 45.43481,
+   "lng": 12.33456,
+   "wikidata": "",
+   "note": "A cylindrical tower with a spiralling series of arches, among the most characteristic examples of Venetian architecture at the period of transition from Gothic to Renaissance styles. From the top there are great panoramic views of the city."
+  },
+  {
+   "name": "Music Museum",
+   "lat": 45.43308,
+   "lng": 12.3316,
+   "wikidata": "",
+   "note": "Beautiful church, collection of musical instruments, Venetian Baroque paintings. [https://www.interpretiveneziani.com/en/ Interpreti Veneziani], the creators of the Music Museum, also offer concerts in the nearby San Vidal church."
+  },
+  {
+   "name": "Archaeological Museum",
+   "lat": 45.4338,
+   "lng": 12.3391,
+   "wikidata": "Q15961396",
+   "note": "Collection of ancient Greek and Roman sculptures, Egyptian, Assyrian and Babylonian artefacts.",
+   "editions": 8,
+   "unesco": false,
+   "web": "https://archeologicovenezia.cultura.gov.it/"
+  },
+  {
+   "name": "Marciana National Library",
+   "lat": 45.43342,
+   "lng": 12.3392,
+   "wikidata": "Q578460",
+   "note": "Buildings by Sansovino, most important collection of books in Venice.",
+   "editions": 42,
+   "unesco": false,
+   "web": "https://bibliotecanazionalemarciana.cultura.gov.it/"
+  },
+  {
+   "name": "Lace Museum",
+   "lat": 45.4847,
+   "lng": 12.4187,
+   "wikidata": "",
+   "note": "There is a small lace museum called Museo del Merletto. Opinions on it vary from \"not much to see\" to \"I didn't think I was interested in lace, but I spent 90 minutes in there\".  A MUVE museum."
+  },
+  {
+   "name": "Basilica dei Santa Maria e San Donato",
+   "lat": 45.45749,
+   "lng": 12.35712,
+   "wikidata": "",
+   "note": "Known for its twelfth-century Byzantine mosaic pavement, which is a similar floor to Venice's Basilica di San Marco, and the mosaic dome in the apse of the Virgin Mary. It is said to house the bones of the dragon slain by Saint Donatus. The"
+  },
+  {
+   "name": "Chiesa di San Pietro Martire",
+   "lat": 45.45504,
+   "lng": 12.35257,
+   "wikidata": "",
+   "note": "Built in the 15th century and then reconstructed some years later after a fire. Inside are some art works, such as two canvasses by Bellini."
+  },
+  {
+   "name": "Palazzo Da Mula",
+   "lat": 45.455944,
+   "lng": 12.351722,
+   "wikidata": "Q1332755",
+   "note": "The summer residence of the Venetian patricians. The façade features large Gothic windows and Veneto-Byzantine patere and panels from the 12th and 13th centuries. It is one of the few palazzi which escaped the restructuring of the island in",
+   "editions": 6,
+   "unesco": false
+  },
+  {
+   "name": "Glass Museum",
+   "lat": 45.45658,
+   "lng": 12.35687,
+   "wikidata": "",
+   "note": "Housed in the large Palazzo Giustinian near the island's center. \"Museo Vetrario\" in Italian, offers a century-by-century tour of Venetian glass-making. Roman glass pieces dating to the 1st to 3rd cent AD. Largest collection of historical g"
+  },
+  {
+   "name": "Old Jewish Cemetery - Lido",
+   "lat": 45.42466,
+   "lng": 12.37841,
+   "wikidata": "",
+   "note": "Over thousand tombstones dating from 1550 to early 18th century. Guided tours on Sat from May to Oct (Italian and English), booking required."
+  },
+  {
+   "name": "Venice Lido Planetarium",
+   "lat": 45.4168,
+   "lng": 12.3765,
+   "wikidata": "",
+   "note": "Optical-mechanical structure, realistic reproduction of the celestial globe."
+  },
+  {
+   "name": "Mekhitarist Monastery",
+   "lat": 45.4123,
+   "lng": 12.3609,
+   "wikidata": "",
+   "note": "Library with historical manuscripts, collection of works, miniatures and documents of the Armenian history, Monastery Church. Tours in Italian, English, and Armenian. On the small island of San Lazzaro degli Armeni."
+  }
  ]
 }

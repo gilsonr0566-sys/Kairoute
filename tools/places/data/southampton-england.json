@@ -1245,13 +1245,13 @@
    "osm": "node/160273012"
   },
   {
-   "name": "Ferry pier",
+   "name": "Portsmouth Harbour Rail Station Ferry Terminal",
    "lat": 50.79643,
    "lng": -1.10916,
    "osm": "node/2026488641"
   },
   {
-   "name": "Hamble Pink Ferry",
+   "name": "Hamble Pink Ferry (Hamble-le-Rice)",
    "lat": 50.85787,
    "lng": -1.3119,
    "osm": "node/252190269"
@@ -1343,7 +1343,7 @@
   {
    "name": "Portsmouth IOW Car Ferry Terminal",
    "lat": 50.79264,
-   "lng": -1.10468,
+   "lng": -1.10467,
    "osm": "way/43763337"
   },
   {
@@ -1605,6 +1605,206 @@
    },
    "min": 40,
    "km": 52
+  }
+ ],
+ "guideSights": [
+  {
+   "name": "Bargate",
+   "lat": 50.9027,
+   "lng": -1.4042,
+   "wikidata": "Q4860547",
+   "note": "A medieval gatehouse, built about 1180 and extended in 1320, now sits slap bang in the middle of the shopping centre. The top floor is now a Heritage Visitor Centre. The Bargate is also the beginning of the original [http://www.discoversout",
+   "editions": 5,
+   "unesco": false
+  },
+  {
+   "name": "Southampton City Art Gallery",
+   "lat": 50.9085,
+   "lng": -1.4065,
+   "wikidata": "Q7569107",
+   "note": "Contains some 3,500 works of art covering six centuries.",
+   "editions": 5,
+   "unesco": false,
+   "web": "https://www.southamptoncityartgallery.com/"
+  },
+  {
+   "name": "The Bargate Monument Gallery",
+   "lat": 50.89635,
+   "lng": -1.40328,
+   "wikidata": "",
+   "note": "The Bargate has been refurbished and given a new lease of life as a contemporary art gallery and home to the arts organisation A Space."
+  },
+  {
+   "name": "John Hansard Gallery",
+   "lat": 50.90793,
+   "lng": -1.40416,
+   "wikidata": "Q6237656",
+   "note": "Was created in 1980 at the University of Southampton to combine the University's fine art and special photographic collection. Widely regarded as one of the best places in the country to see contemporary visual art, the gallery also hosts s",
+   "editions": 1,
+   "unesco": false,
+   "web": "http://www.jhg.art/"
+  },
+  {
+   "name": "SeaCity Museum",
+   "lat": 50.908,
+   "lng": -1.408,
+   "wikidata": "Q7439809",
+   "note": "Opened in 2012, SeaCity contains two main galleries: the first telling the history of Southampton through artefacts and interactive displays; the second dedicated to the voyage and sinking of the ''RMS Titanic'' and the Southampton resident",
+   "editions": 5,
+   "unesco": false,
+   "web": "https://seacitymuseum.co.uk/"
+  },
+  {
+   "name": "Medieval Merchant's House",
+   "lat": 50.89858,
+   "lng": -1.40535,
+   "wikidata": "Q6806828",
+   "note": "One of the earliest surviving merchant's houses in England. It has been restored to its mid-14th-century appearance and replica furnishings provide an insight into medieval life.",
+   "editions": 3,
+   "unesco": false,
+   "web": "https://www.english-heritage.org.uk/visit/places/medieval-merchants-house/"
+  },
+  {
+   "name": "Tudor House and Garden",
+   "lat": 50.8996,
+   "lng": -1.4059,
+   "wikidata": "Q7569167",
+   "note": "Built in 1495 for Sir John Dawtry, the Controller of Customs in Southampton.",
+   "editions": 4,
+   "unesco": false,
+   "web": "https://tudorhouseandgarden.com/"
+  },
+  {
+   "name": "Solent Sky (Hall of Aviation)",
+   "lat": 50.8979,
+   "lng": -1.3922,
+   "wikidata": "Q7557658",
+   "note": "The museum is dedicated to telling the incredible story of aviation in the Solent area. Exhibits include a Sandringham flying boat (which visitors can enter), a Spitfire, and Schneider Trophy racing seaplanes.",
+   "editions": 3,
+   "unesco": false,
+   "web": "https://www.solentskymuseum.org/"
+  }
+ ],
+ "ferryLinks": [
+  {
+   "name": "Hovertravel Ryde to Southsea",
+   "a": {
+    "lat": 50.73274,
+    "lng": -1.15848
+   },
+   "b": {
+    "lat": 50.78495,
+    "lng": -1.09991
+   },
+   "osm": "way/134124129"
+  },
+  {
+   "name": "Waterbus",
+   "a": {
+    "lat": 50.79869,
+    "lng": -1.10945
+   },
+   "b": {
+    "lat": 50.80738,
+    "lng": -1.12163
+   },
+   "osm": "way/1547997530"
+  },
+  {
+   "name": "Wightlink: Fishbourne - Portsmouth",
+   "a": {
+    "lat": 50.79289,
+    "lng": -1.10621
+   },
+   "b": {
+    "lat": 50.73435,
+    "lng": -1.21341
+   },
+   "osm": "way/1886910"
+  },
+  {
+   "name": "Wightlink: Ryde - Portsmouth Fastcat (passenger)",
+   "a": {
+    "lat": 50.73947,
+    "lng": -1.15957
+   },
+   "b": {
+    "lat": 50.79643,
+    "lng": -1.10916
+   },
+   "osm": "way/24977316"
+  },
+  {
+   "name": "Gosport Ferry (passenger)",
+   "a": {
+    "lat": 50.79495,
+    "lng": -1.116
+   },
+   "b": {
+    "lat": 50.79701,
+    "lng": -1.10931
+   },
+   "osm": "way/360563563"
+  },
+  {
+   "name": "Hamble-Warsash Ferry",
+   "a": {
+    "lat": 50.85507,
+    "lng": -1.30784
+   },
+   "b": {
+    "lat": 50.85787,
+    "lng": -1.3119
+   },
+   "osm": "way/4353627"
+  },
+  {
+   "name": "Hayling Ferry (Passenger)",
+   "a": {
+    "lat": 50.79628,
+    "lng": -1.02511
+   },
+   "b": {
+    "lat": 50.79666,
+    "lng": -1.02979
+   },
+   "osm": "way/435482351"
+  },
+  {
+   "name": "Waterbus",
+   "a": {
+    "lat": 50.78872,
+    "lng": -1.1189
+   },
+   "b": {
+    "lat": 50.79869,
+    "lng": -1.10945
+   },
+   "osm": "way/609519388"
+  },
+  {
+   "name": "Southampton - East Cowes",
+   "a": {
+    "lat": 50.75913,
+    "lng": -1.29058
+   },
+   "b": {
+    "lat": 50.89601,
+    "lng": -1.40623
+   },
+   "osm": "way/614415"
+  },
+  {
+   "name": "Southampton - Cowes",
+   "a": {
+    "lat": 50.76315,
+    "lng": -1.29598
+   },
+   "b": {
+    "lat": 50.89438,
+    "lng": -1.40525
+   },
+   "osm": "way/614416"
   }
  ]
 }
