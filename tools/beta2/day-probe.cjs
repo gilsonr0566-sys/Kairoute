@@ -3,8 +3,10 @@
 const { chromium } = require('playwright'); const fs = require('fs');
 const http = require('http'), TRIP = fs.readFileSync(__dirname + '/' + (process.env.TRIP || 'probe-trip.json'), 'utf8'), DEST = new RegExp(process.env.DEST || 'Naples');
 const T0 = Date.now(), ts = () => ((Date.now() - T0) / 1000).toFixed(1) + 's';
+const SEED = process.env.SEED ? JSON.parse(require('zlib').gunzipSync(fs.readFileSync(__dirname + '/' + process.env.SEED)).toString()) : null;
 (async () => { const sv = http.createServer((q, r) => { r.writeHead(200, { 'content-type': 'text/html' }); fs.createReadStream(__dirname + '/../../beta2-site/index.html').pipe(r); }).listen(0), URL = process.env.LIVE ? 'https://gilsonr0566-sys.github.io/Kairoute-Beta2/' : 'http://localhost:' + sv.address().port + '/';
   const b = await chromium.launch(), p = await (await b.newContext({ viewport: { width: 412, height: 915 } })).newPage();
+  if (SEED) await p.addInitScript(ls => { if (!localStorage.getItem('b2:__copied')) { localStorage.setItem('b2:__copied', '1'); for (const k in ls) localStorage.setItem('b2:' + k, ls[k]); } }, SEED);
   await p.addInitScript(t => { if (!localStorage.getItem('b2:__copied')) { localStorage.setItem('b2:__copied', '1'); localStorage.setItem('b2:wayside.trip2', t); localStorage.setItem('b2:kairoute.lobbySeen', '1'); ['intro1', 'sunprincess1', 'spread1', 'bible1'].forEach(k => localStorage.setItem('b2:kairoute.' + k, '1')); } }, TRIP);
   if (process.env.LOCAL) await p.route(u => !/^http:\/\/localhost/.test(String(u)), r => r.fulfill({ status: 503, body: '' }));
   p.on('request', q => { const u = q.url(); if (/osrm|routing\.openstreetmap|overpass/.test(u)) console.log(ts(), 'REQ', u.slice(0, 110)); });
