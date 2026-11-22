@@ -88,6 +88,9 @@ function rules(text, info = {}) {
   { const flight = /to your flight|Flight \d|✈/.test(raw.slice(0, 400)), ship = /all aboard|🚢/.test(raw.slice(0, 400));
     if (flight && !ship && /before the ship|back at the ship|to the ship\b/i.test(raw)) add('S2', 'right words for the day', `a flight day says "${(raw.match(/[^\n.]{0,40}(before the ship|back at the ship|to the ship)[^\n.]{0,20}/i) || [''])[0].trim()}"`);
     if (ship && !flight && /before (your|the) flight/i.test(raw)) add('S2', 'right words for the day', 'a ship day talks about a flight'); }
+  // One leave-by: a sentence that says when to leave for the ship, airport or station names the same time as the banner.
+  if (P.leaveBy != null) for (const m of raw.matchAll(/leave for the (?:airport|ship|port|station|terminal|cruise terminal|pier)[^.]{0,20}? by (\d{1,2}:\d\d\s*[ap]m)/gi)) { const t = T(m[1]);
+    if (t != null && Math.abs(t - P.leaveBy) > 2) add('S2', 'one leave-by', `the banner says LEAVE BY ${clock(P.leaveBy)} but a note says "${m[0]}"`); }
   // ---- S2: never state something untrue (Richard, Nov 22: "Lies create mistrust of the app"). A reason on screen names
   // the ONE cause the app knows, with its numbers; when the data doesn't say, the screen says "not known" or "not confirmed".
   { const lines = raw.split('\n');
