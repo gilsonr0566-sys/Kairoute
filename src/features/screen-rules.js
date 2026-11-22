@@ -74,6 +74,9 @@ function rules(text, info = {}) {
   P.rides.forEach(r => { if (!r.to || r.to.arrive == null) return; const left = r.from.until != null ? r.from.until : r.from.leave; if (left == null) return;
     if (r.to.arrive + 1 < left + r.min) add('S2', 'ride time matches the clock', `${r.from.name} → ${r.to.name}: ${r.head}, but the clock gives ${r.to.arrive - left} min`);
     if (r.dist != null && r.dist > 0.5 && r.min === 0) add('S2', 'ride of no time', `${r.head}`); });
+  // A walk's minutes match its distance (2 to 7 km/h), unless the card says why (spare time, steps, a queue, a climb).
+  P.rides.forEach(r => { if (!/^Walk$/.test(r.mode) || r.dist == null || r.dist < 0.25 || !r.min) return; const kmh = r.dist / (r.min / 60);
+    if ((kmh < 2 || kmh > 7) && !/spare|steps|stairs|queue|climb|uphill|hill|includes|wait/i.test(r.notes.join(' '))) add('S2', 'walk time matches its distance', `${r.head}: ${kmh.toFixed(1)} km/h, nothing on the card says why`); });
   stops.forEach(s => { const want = dur(s.meta); if (want != null && s.arrive != null && s.leave != null && s.leave - s.arrive + 1 < want) add('S2', 'visit length matches the clock', `${s.name}: card says ${s.meta.split(' · ')[0]}, clock gives ${s.leave - s.arrive} min`); });
   const lunch = P.rows.filter(r => r.key === 'L');
   lunch.forEach(s => { const t = s.name + ' ' + s.meta; if (/Lunch near |Your pick|^(Quick )?lunch:?$|on your own|find a place/i.test(t) && !/bring|pack|picnic|no restaurant/i.test(t)) add('S2', 'lunch has a real place', `"${s.name}${s.meta ? ' · ' + s.meta : ''}" names no place to eat and does not say to bring food`); });
