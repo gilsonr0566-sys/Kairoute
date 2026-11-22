@@ -46,9 +46,14 @@ const screen = (res, where, text) => { const c = SC.check(text); if (!c) return;
     let textEarly; if (Q.dayWait) { textEarly = await p.evaluate(() => document.querySelector('main').innerText); await sleep(Q.dayWait); }
     const text = await p.evaluate(() => document.querySelector('main').innerText);
     await p.screenshot({ path: path.join(out, 'day-' + String(i).padStart(2, '0') + '.jpg'), type: 'jpeg', quality: 55, fullPage: true });
+    // A picture of every card on the day's timeline (stops, rides, lunch, free time, start and end) at phone width, folded notes open.
+    let cards; if (Q.stopShots) { try { await p.setViewportSize({ width: 412, height: 900 }); await sleep(1500); await p.evaluate(() => { document.querySelectorAll('main .timeline details, main details.why, main .tl details').forEach(x => { x.open = true; }); }); await sleep(600);
+      const dir = path.join(out, 'stops'); fs.mkdirSync(dir, { recursive: true }); const loc = p.locator('.timeline .tl'); const n = await loc.count(); cards = [];
+      for (let k = 0; k < n; k++) { const el = loc.nth(k); const f = 'd' + String(i).padStart(2, '0') + '-' + String(k).padStart(2, '0') + '.jpg'; const info = await el.evaluate(x => ({ cls: x.className, text: x.innerText.slice(0, 1200) })).catch(() => null); if (!info) continue; try { await el.screenshot({ path: path.join(dir, f), type: 'jpeg', quality: 55, timeout: 8000 }); cards.push({ f, cls: info.cls, text: info.text }); } catch (e) { cards.push({ f: null, cls: info.cls, text: info.text, err: String(e.message).slice(0, 120) }); } }
+    } catch (e) { res.errors.push('stops day ' + i + ': ' + String(e.message).slice(0, 200)); } await p.setViewportSize({ width: 1100, height: 2800 }); await p.evaluate(i => window.__kairouteAt(i, 'plan'), i); await sleep(1500); }
     const g = await p.evaluate(i => window.__T.guide(i), i); if (g && !res.guides[g.city]) res.guides[g.city] = g;
     screen(res, 'day ' + i, text); if (textEarly) screen(res, 'day ' + i + ' early', textEarly);
-    res.days.push({ i, date: d.date, type: d.type, destination: d.destination, text, textEarly: textEarly && textEarly !== text ? textEarly : undefined });
+    res.days.push({ i, date: d.date, type: d.type, destination: d.destination, cards, text, textEarly: textEarly && textEarly !== text ? textEarly : undefined });
     console.log('\n===== day ' + i + ' ' + d.date + ' ' + d.type + ' ' + (d.destination || '') + '\n' + text);
   }
   // The first sightseeing day again at phone size.

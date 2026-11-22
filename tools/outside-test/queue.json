@@ -1,6 +1,6 @@
 {
- "run": "round4b-2026-11-22",
- "dayWait": 20000,
+ "run": "round4c-2026-11-22",
+ "dayWait": 8000,
  "trips": [
   {
    "name": "a01-istanbul",
@@ -14,7 +14,8 @@
      "inAt": "15:00",
      "homeAt": "13:00"
     }
-   ]
+   ],
+   "steps": []
   },
   {
    "name": "a02-vienna",
@@ -28,7 +29,8 @@
      "inAt": "14:00",
      "homeAt": "12:00"
     }
-   ]
+   ],
+   "steps": []
   },
   {
    "name": "a03-lisbon",
@@ -42,7 +44,8 @@
      "inAt": "13:00",
      "homeAt": "11:30"
     }
-   ]
+   ],
+   "steps": []
   },
   {
    "name": "a04-barcelona-call",
@@ -65,7 +68,8 @@
      "endDate": "2027-05-17",
      "off": "07:00"
     }
-   ]
+   ],
+   "steps": []
   },
   {
    "name": "a05-edinburgh",
@@ -81,7 +85,8 @@
      "homeBy": "train",
      "homeAt": "10:00"
     }
-   ]
+   ],
+   "steps": []
   },
   {
    "name": "a06-kyoto",
@@ -97,7 +102,8 @@
      "homeBy": "train",
      "homeAt": "11:00"
     }
-   ]
+   ],
+   "steps": []
   },
   {
    "name": "a07-southampton-lehavre",
@@ -128,7 +134,8 @@
      "off": "07:00",
      "homeAt": "14:00"
     }
-   ]
+   ],
+   "steps": []
   },
   {
    "name": "a09-kotor-dubrovnik",
@@ -159,7 +166,8 @@
      "endDate": "2027-07-11",
      "off": "07:00"
     }
-   ]
+   ],
+   "steps": []
   },
   {
    "name": "a11-alaska",
@@ -195,7 +203,8 @@
      "off": "07:30",
      "homeAt": "13:00"
     }
-   ]
+   ],
+   "steps": []
   },
   {
    "name": "a13-grandturk-halfmoon",
@@ -225,7 +234,8 @@
      "endDate": "2027-02-14",
      "off": "07:00"
     }
-   ]
+   ],
+   "steps": []
   },
   {
    "name": "a14-mykonos-santorini",
@@ -256,7 +266,8 @@
      "endDate": "2027-07-04",
      "off": "07:00"
     }
-   ]
+   ],
+   "steps": []
   },
   {
    "name": "a15-pontadelgada",
@@ -279,7 +290,8 @@
      "endDate": "2027-04-22",
      "off": "07:00"
     }
-   ]
+   ],
+   "steps": []
   },
   {
    "name": "a17-haifa",
@@ -302,7 +314,8 @@
      "endDate": "2027-05-16",
      "off": "07:00"
     }
-   ]
+   ],
+   "steps": []
   },
   {
    "name": "a18-reykjavik",
@@ -316,7 +329,8 @@
      "inAt": "15:30",
      "homeAt": "16:00"
     }
-   ]
+   ],
+   "steps": []
   },
   {
    "name": "a19-venice",
@@ -332,7 +346,8 @@
      "homeBy": "train",
      "homeAt": "10:30"
     }
-   ]
+   ],
+   "steps": []
   },
   {
    "name": "a20-dubai",
@@ -346,7 +361,8 @@
      "inAt": "06:00",
      "homeAt": "23:00"
     }
-   ]
+   ],
+   "steps": []
   },
   {
    "name": "a21-hamburg",
@@ -362,7 +378,8 @@
      "homeBy": "train",
      "homeAt": "12:00"
     }
-   ]
+   ],
+   "steps": []
   },
   {
    "name": "c01-bahamas",
@@ -393,7 +410,8 @@
      "endDate": "2027-01-15",
      "off": "06:00"
     }
-   ]
+   ],
+   "steps": []
   },
   {
    "name": "d01-tokyo-kyoto-osaka",
@@ -423,7 +441,8 @@
      "inAt": "10:30",
      "homeAt": "11:00"
     }
-   ]
+   ],
+   "steps": []
   },
   {
    "name": "d02-london-paris-amsterdam",
@@ -453,7 +472,8 @@
      "inAt": "13:44",
      "homeAt": "12:30"
     }
-   ]
+   ],
+   "steps": []
   },
   {
    "name": "d03-rome-florence-venice",
@@ -483,7 +503,8 @@
      "inAt": "12:34",
      "homeAt": "13:00"
     }
-   ]
+   ],
+   "steps": []
   },
   {
    "name": "d04-sydney",
@@ -497,7 +518,8 @@
      "inAt": "07:00",
      "homeAt": "21:00"
     }
-   ]
+   ],
+   "steps": []
   },
   {
    "name": "d05-newyork",
@@ -511,7 +533,8 @@
      "inAt": "12:00",
      "homeAt": "18:00"
     }
-   ]
+   ],
+   "steps": []
   },
   {
    "name": "d06-marrakech",
@@ -525,7 +548,8 @@
      "inAt": "11:00",
      "homeAt": "15:00"
     }
-   ]
+   ],
+   "steps": []
   },
   {
    "name": "d07-mexicocity",
@@ -539,7 +563,8 @@
      "inAt": "13:00",
      "homeAt": "12:00"
     }
-   ]
+   ],
+   "steps": []
   },
   {
    "name": "d08-capetown",
@@ -553,7 +578,8 @@
      "inAt": "10:00",
      "homeAt": "19:00"
     }
-   ]
+   ],
+   "steps": []
   },
   {
    "name": "d09-buenosaires",
@@ -567,7 +593,8 @@
      "inAt": "09:00",
      "homeAt": "22:00"
     }
-   ]
+   ],
+   "steps": []
   },
   {
    "name": "d10-singapore",
@@ -581,7 +608,8 @@
      "inAt": "06:30",
      "homeAt": "23:30"
     }
-   ]
+   ],
+   "steps": []
   },
   {
    "name": "d11-nashville",
@@ -597,7 +625,8 @@
      "homeBy": "car",
      "homeAt": "11:00"
     }
-   ]
+   ],
+   "steps": []
   },
   {
    "name": "d12-bruges",
@@ -613,7 +642,8 @@
      "homeBy": "train",
      "homeAt": "16:00"
     }
-   ]
+   ],
+   "steps": []
   },
   {
    "name": "d13-cozumel-cartagena",
@@ -643,7 +673,8 @@
      "off": "07:00",
      "homeAt": "13:30"
     }
-   ]
+   ],
+   "steps": []
   },
   {
    "name": "d14-bergen-geiranger",
@@ -673,7 +704,8 @@
      "endDate": "2027-06-26",
      "off": "07:00"
     }
-   ]
+   ],
+   "steps": []
   },
   {
    "name": "d15-livorno-rome-naples",
@@ -708,7 +740,8 @@
      "endDate": "2027-09-11",
      "off": "07:00"
     }
-   ]
+   ],
+   "steps": []
   },
   {
    "name": "d16-warnemunde-zeebrugge",
@@ -739,7 +772,8 @@
      "homeBy": "train",
      "homeAt": "11:00"
     }
-   ]
+   ],
+   "steps": []
   },
   {
    "name": "d17-laemchabang",
@@ -762,7 +796,8 @@
      "endDate": "2027-11-15",
      "off": "07:00"
     }
-   ]
+   ],
+   "steps": []
   },
   {
    "name": "d18-aqaba-petra",
@@ -785,7 +820,8 @@
      "endDate": "2027-10-16",
      "off": "07:00"
     }
-   ]
+   ],
+   "steps": []
   },
   {
    "name": "d19-honolulu",
@@ -799,7 +835,8 @@
      "inAt": "14:00",
      "homeAt": "22:00"
     }
-   ]
+   ],
+   "steps": []
   },
   {
    "name": "b01-greece",
@@ -886,7 +923,8 @@
      "inAt": "15:45",
      "homeAt": "16:00"
     }
-   ]
+   ],
+   "steps": []
   },
   {
    "name": "b02-notfound-caribbean",
@@ -928,7 +966,8 @@
      "endDate": "2027-03-10",
      "off": "07:00"
     }
-   ]
+   ],
+   "steps": []
   },
   {
    "name": "b03-notfound-europe",
@@ -983,7 +1022,8 @@
      "endDate": "2027-06-30",
      "off": "07:00"
     }
-   ]
+   ],
+   "steps": []
   },
   {
    "name": "b04-notfound-cities",
@@ -1012,7 +1052,8 @@
      "leaveAt": "20:00",
      "homeAt": "22:00"
     }
-   ]
+   ],
+   "steps": []
   },
   {
    "name": "e01-vienna-actions",
@@ -1026,54 +1067,7 @@
      "homeAt": "12:00"
     }
    ],
-   "steps": [
-    {
-     "name": "1-ticks-vs-plan",
-     "js": "(async()=>{const t=await __T.ticks(1);window.__kairouteAt(1,'plan');await __T.sleep(5000);return {on:t.filter(x=>x.on).map(x=>x.n),total:t.length}})()"
-    },
-    {
-     "name": "2-untick-one",
-     "js": "__T.tap(1,false,1)"
-    },
-    {
-     "name": "3-tick-one-more",
-     "js": "__T.tap(1,true,1)"
-    },
-    {
-     "name": "4-tick-six-more",
-     "js": "__T.tap(1,true,6)"
-    },
-    {
-     "name": "5-fit-in-one",
-     "js": "__T.fit(1)"
-    },
-    {
-     "name": "6-switch-a-ride",
-     "js": "__T.press(1,/^(Taxi or car|Walk|Metro|Train|Bus|Tram|Port shuttle).* · /)"
-    },
-    {
-     "name": "7-change-lunch",
-     "js": "__T.press(1,/^Change lunch$/)"
-    },
-    {
-     "name": "8-shorter-day",
-     "js": "(async()=>{window.__kairouteAt(1,'plan');await __T.sleep(2000);window.__kairouteSetHours(4);await __T.sleep(6000);return 'hours 4'})()"
-    },
-    {
-     "name": "8b-shorten-anyway",
-     "js": "__T.act(1,'cutok')"
-    },
-    {
-     "name": "9-reload",
-     "reload": true,
-     "js": "(async()=>{window.__kairouteAt(1,'plan');await __T.sleep(6000);return 'reloaded'})()"
-    },
-    {
-     "name": "10-phone",
-     "phone": true,
-     "js": "(async()=>{window.__kairouteAt(1,'plan');await __T.sleep(3000);return 'phone'})()"
-    }
-   ]
+   "steps": []
   },
   {
    "name": "e02-barcelona-port-actions",
@@ -1097,54 +1091,7 @@
      "off": "07:00"
     }
    ],
-   "steps": [
-    {
-     "name": "1-ticks-vs-plan",
-     "js": "(async()=>{const t=await __T.ticks(2);window.__kairouteAt(2,'plan');await __T.sleep(5000);return {on:t.filter(x=>x.on).map(x=>x.n),total:t.length}})()"
-    },
-    {
-     "name": "2-untick-one",
-     "js": "__T.tap(2,false,1)"
-    },
-    {
-     "name": "3-tick-one-more",
-     "js": "__T.tap(2,true,1)"
-    },
-    {
-     "name": "4-tick-six-more",
-     "js": "__T.tap(2,true,6)"
-    },
-    {
-     "name": "5-fit-in-one",
-     "js": "__T.fit(2)"
-    },
-    {
-     "name": "6-switch-a-ride",
-     "js": "__T.press(2,/^(Taxi or car|Walk|Metro|Train|Bus|Tram|Port shuttle).* · /)"
-    },
-    {
-     "name": "7-change-lunch",
-     "js": "__T.press(2,/^Change lunch$/)"
-    },
-    {
-     "name": "8-shorter-day",
-     "js": "(async()=>{window.__kairouteAt(2,'plan');await __T.sleep(2000);window.__kairouteSetHours(4);await __T.sleep(6000);return 'hours 4'})()"
-    },
-    {
-     "name": "8b-shorten-anyway",
-     "js": "__T.act(2,'cutok')"
-    },
-    {
-     "name": "9-reload",
-     "reload": true,
-     "js": "(async()=>{window.__kairouteAt(2,'plan');await __T.sleep(6000);return 'reloaded'})()"
-    },
-    {
-     "name": "10-phone",
-     "phone": true,
-     "js": "(async()=>{window.__kairouteAt(2,'plan');await __T.sleep(3000);return 'phone'})()"
-    }
-   ]
+   "steps": []
   },
   {
    "name": "e03-edinburgh-actions",
@@ -1160,54 +1107,7 @@
      "homeAt": "10:00"
     }
    ],
-   "steps": [
-    {
-     "name": "1-ticks-vs-plan",
-     "js": "(async()=>{const t=await __T.ticks(1);window.__kairouteAt(1,'plan');await __T.sleep(5000);return {on:t.filter(x=>x.on).map(x=>x.n),total:t.length}})()"
-    },
-    {
-     "name": "2-untick-one",
-     "js": "__T.tap(1,false,1)"
-    },
-    {
-     "name": "3-tick-one-more",
-     "js": "__T.tap(1,true,1)"
-    },
-    {
-     "name": "4-tick-six-more",
-     "js": "__T.tap(1,true,6)"
-    },
-    {
-     "name": "5-fit-in-one",
-     "js": "__T.fit(1)"
-    },
-    {
-     "name": "6-switch-a-ride",
-     "js": "__T.press(1,/^(Taxi or car|Walk|Metro|Train|Bus|Tram|Port shuttle).* · /)"
-    },
-    {
-     "name": "7-change-lunch",
-     "js": "__T.press(1,/^Change lunch$/)"
-    },
-    {
-     "name": "8-shorter-day",
-     "js": "(async()=>{window.__kairouteAt(1,'plan');await __T.sleep(2000);window.__kairouteSetHours(4);await __T.sleep(6000);return 'hours 4'})()"
-    },
-    {
-     "name": "8b-shorten-anyway",
-     "js": "__T.act(1,'cutok')"
-    },
-    {
-     "name": "9-reload",
-     "reload": true,
-     "js": "(async()=>{window.__kairouteAt(1,'plan');await __T.sleep(6000);return 'reloaded'})()"
-    },
-    {
-     "name": "10-phone",
-     "phone": true,
-     "js": "(async()=>{window.__kairouteAt(1,'plan');await __T.sleep(3000);return 'phone'})()"
-    }
-   ]
+   "steps": []
   },
   {
    "name": "e04-nassau-port-actions",
@@ -1231,54 +1131,7 @@
      "off": "06:00"
     }
    ],
-   "steps": [
-    {
-     "name": "1-ticks-vs-plan",
-     "js": "(async()=>{const t=await __T.ticks(3);window.__kairouteAt(3,'plan');await __T.sleep(5000);return {on:t.filter(x=>x.on).map(x=>x.n),total:t.length}})()"
-    },
-    {
-     "name": "2-untick-one",
-     "js": "__T.tap(3,false,1)"
-    },
-    {
-     "name": "3-tick-one-more",
-     "js": "__T.tap(3,true,1)"
-    },
-    {
-     "name": "4-tick-six-more",
-     "js": "__T.tap(3,true,6)"
-    },
-    {
-     "name": "5-fit-in-one",
-     "js": "__T.fit(3)"
-    },
-    {
-     "name": "6-switch-a-ride",
-     "js": "__T.press(3,/^(Taxi or car|Walk|Metro|Train|Bus|Tram|Port shuttle).* · /)"
-    },
-    {
-     "name": "7-change-lunch",
-     "js": "__T.press(3,/^Change lunch$/)"
-    },
-    {
-     "name": "8-shorter-day",
-     "js": "(async()=>{window.__kairouteAt(3,'plan');await __T.sleep(2000);window.__kairouteSetHours(4);await __T.sleep(6000);return 'hours 4'})()"
-    },
-    {
-     "name": "8b-shorten-anyway",
-     "js": "__T.act(3,'cutok')"
-    },
-    {
-     "name": "9-reload",
-     "reload": true,
-     "js": "(async()=>{window.__kairouteAt(3,'plan');await __T.sleep(6000);return 'reloaded'})()"
-    },
-    {
-     "name": "10-phone",
-     "phone": true,
-     "js": "(async()=>{window.__kairouteAt(3,'plan');await __T.sleep(3000);return 'phone'})()"
-    }
-   ]
+   "steps": []
   },
   {
    "name": "f01-dubrovnik-naples",
@@ -1309,48 +1162,7 @@
      "off": "07:00"
     }
    ],
-   "steps": [
-    {
-     "name": "nap-1-fit-capri-as-is",
-     "js": "__T.fitName(5,'Capri')"
-    },
-    {
-     "name": "nap-2-untick-all",
-     "js": "__T.tap(5,false,25)"
-    },
-    {
-     "name": "nap-3-fit-capri-alone",
-     "js": "(async()=>{window.__kairouteAt(5,'sites');await __T.sleep(12000);let r=await __T.fitName(5,'Capri');if(!r.found){await __T.sleep(20000);r=await __T.fitName(5,'Capri')}return r})()"
-    },
-    {
-     "name": "nap-4-basis",
-     "js": "__T.basis(5)"
-    },
-    {
-     "name": "nap-5-plan",
-     "js": "(async()=>{window.__kairouteAt(5,'plan');await __T.sleep(15000);return __T.planText(12000)})()"
-    },
-    {
-     "name": "dbv-1-pier-gruz",
-     "js": "__T.pier(3,'Gruž')"
-    },
-    {
-     "name": "dbv-1b-ticks-after-pier",
-     "js": "(async()=>{const a=await __T.ticks(3);await __T.sleep(12000);const b=[...document.querySelectorAll('input[data-site]')].map(c=>({n:(c.getAttribute('aria-label')||'').replace(/^Pick /,''),on:c.checked}));const page=__T.planText(1500);window.__kairouteAt(3,'plan');await __T.sleep(8000);const plan=__T.planText(4000);return {t:new Date().toISOString(),onAt3s:a.filter(x=>x.on).map(x=>x.n),onAt15s:b.filter(x=>x.on).map(x=>x.n),total:b.length,page,planSights:(plan.match(/\\n(\\d+)\\nsights?\\n/)||[])[1]||null}})()"
-    },
-    {
-     "name": "dbv-2-lokrum",
-     "js": "(async()=>{const t=await __T.ticks(3);const was=t.filter(x=>x.on).map(x=>x.n);const has=t.find(x=>/Lokrum/i.test(x.n));if(!has)return {inList:false,was,fit:await __T.fitName(3,'Lokrum')};if(has.on)return {inList:true,alreadyOn:true,was};const c=[...document.querySelectorAll('input[data-site]')].find(x=>/Lokrum/i.test(x.getAttribute('aria-label')||''));c.click();await __T.sleep(3000);const box=(document.querySelector('.fitbox')||{}).innerText||null;const t2=await __T.ticks(3);return {inList:true,alreadyOn:false,was,box,on:t2.filter(x=>x.on).map(x=>x.n)}})()"
-    },
-    {
-     "name": "dbv-3-plan",
-     "js": "(async()=>{window.__kairouteAt(3,'plan');await __T.sleep(15000);return __T.planText(12000)})()"
-    },
-    {
-     "name": "dbv-4-basis",
-     "js": "__T.basis(3)"
-    }
-   ]
+   "steps": []
   },
   {
    "name": "r01-naples-pompeii-sorrento-1800",
@@ -1385,32 +1197,8 @@
     2,
     3
    ],
-   "steps": [
-    {
-     "name": "1-untick-all",
-     "js": "__T.tap(3,false,25)"
-    },
-    {
-     "name": "2-add-pompeii",
-     "js": "__T.addByName(3,'Pompeii')"
-    },
-    {
-     "name": "3-add-sorrento",
-     "js": "__T.addByName(3,'Sorrento')"
-    },
-    {
-     "name": "4-plan",
-     "js": "(async()=>{window.__kairouteAt(3,'plan');await __T.sleep(60000);return __T.planText(14000)})()"
-    },
-    {
-     "name": "5-basis",
-     "js": "__T.basis(3)"
-    },
-    {
-     "name": "6-plan-3min",
-     "js": "(async()=>{await __T.sleep(120000);window.__kairouteAt(3,'plan');await __T.sleep(5000);return __T.planText(14000)})()"
-    }
-   ]
+   "steps": []
   }
- ]
+ ],
+ "stopShots": true
 }
