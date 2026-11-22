@@ -1,0 +1,93 @@
+{
+ "retrieve": [
+  {
+   "key": "wp-burj-khalifa",
+   "wiki": "Burj Khalifa"
+  },
+  {
+   "key": "wp-dubai-fountain",
+   "wiki": "The Dubai Fountain"
+  },
+  {
+   "key": "wp-adrian-smith",
+   "wiki": "Adrian Smith (architect)"
+  },
+  {
+   "key": "wp-khalifa-bin-zayed-al-nahyan",
+   "wiki": "Khalifa bin Zayed Al Nahyan"
+  },
+  {
+   "key": "wv-dubai",
+   "wiki": "Dubai",
+   "site": "en.wikivoyage.org"
+  },
+  {
+   "key": "wp-al-fahidi-fort",
+   "wiki": "Al Fahidi Fort"
+  },
+  {
+   "key": "wp-al-fahidi-historical-neighbo",
+   "wiki": "Al Fahidi Historical Neighbourhood"
+  },
+  {
+   "key": "wp-barjeel",
+   "wiki": "Barjeel"
+  },
+  {
+   "key": "wp-pearl-hunting",
+   "wiki": "Pearl hunting"
+  },
+  {
+   "key": "wp-dubai-creek",
+   "wiki": "Dubai Creek"
+  },
+  {
+   "key": "wp-abra",
+   "wiki": "Abra (boat)"
+  },
+  {
+   "key": "wp-deira-dubai",
+   "wiki": "Deira, Dubai"
+  },
+  {
+   "key": "wp-dhow",
+   "wiki": "Dhow"
+  },
+  {
+   "key": "wp-dubai-frame",
+   "wiki": "Dubai Frame"
+  },
+  {
+   "key": "wp-zabeel-park",
+   "wiki": "Zabeel Park"
+  },
+  {
+   "key": "wp-fernando-donis",
+   "wiki": "Fernando Donis"
+  },
+  {
+   "key": "wp-museum-future",
+   "wiki": "Museum of the Future"
+  },
+  {
+   "key": "wp-mohammed-bin-rashid-al-makto",
+   "wiki": "Mohammed bin Rashid Al Maktoum"
+  },
+  {
+   "key": "wp-arabic-calligraphy",
+   "wiki": "Arabic calligraphy"
+  },
+  {
+   "key": "wp-jumeirah-mosque",
+   "wiki": "Jumeirah Mosque"
+  },
+  {
+   "key": "wp-fatimid-architecture",
+   "wiki": "Fatimid architecture"
+  },
+  {
+   "key": "wp-jumeirah",
+   "wiki": "Jumeirah"
+  }
+ ]
+}

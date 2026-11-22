@@ -4,7 +4,10 @@
 // check-stories.mjs are used. Run: node stories/tools/to-app.mjs   (no AI; the words are the checked words)
 import fs from "node:fs"; import crypto from "node:crypto";
 const cities = fs.readdirSync("stories").filter(c => fs.existsSync(`stories/${c}/check-report.json`));
-const CITY = { athens: "Athens|Piraeus" };
+// The trip city names a story's place can go by (the stop must also match the sight's own names). Default: the folder.
+const CITY = { athens: "Athens|Piraeus", heraklion: "Heraklion|Iraklion|Iraklio", chania: "Chania|Hania|Souda",
+  santorini: "Santorini|Thira|Fira", mykonos: "Mykonos", kusadasi: "Kusadasi|Kuşadası|Ephesus|Selcuk|Selçuk|Izmir",
+  messina: "Messina|Taormina", naples: "Naples|Napoli|Pompeii|Sorrento|Capri|Pozzuoli|Salerno", rome: "Rome|Roma|Civitavecchia|Vatican" };
 const esc = s => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 const out = [], say = fs.existsSync("stories/say.json") ? JSON.parse(fs.readFileSync("stories/say.json", "utf8")) : [];
 for (const city of cities) {

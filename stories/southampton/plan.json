@@ -1,0 +1,186 @@
+{
+ "sights": [
+  {
+   "id": "stonehenge",
+   "title": "Day trip: Stonehenge",
+   "appIds": [
+    "salisbury-far"
+   ],
+   "wikidata": [
+    "Q160642",
+    "Q39671"
+   ],
+   "editions": 0,
+   "folds": [],
+   "sources": [
+    "wp-stonehenge",
+    "wp-heel-stone",
+    "wp-neolithic-british-isles",
+    "unesco-stonehenge",
+    "wv-stonehenge"
+   ]
+  },
+  {
+   "id": "salisbury-cathedral",
+   "title": "Day trip: Salisbury Cathedral",
+   "appIds": [
+    "salisbury-far"
+   ],
+   "wikidata": [
+    "Q160642",
+    "Q1201006"
+   ],
+   "editions": 0,
+   "folds": [
+    "Magna Carta"
+   ],
+   "sources": [
+    "wp-salisbury-cathedral",
+    "wp-magna-carta",
+    "wp-salisbury",
+    "wv-salisbury"
+   ]
+  },
+  {
+   "id": "winchester",
+   "title": "Day trip: Winchester Cathedral",
+   "appIds": [
+    "winchester-far"
+   ],
+   "wikidata": [
+    "Q172157",
+    "Q827113"
+   ],
+   "editions": 0,
+   "folds": [
+    "Great Hall and Round Table"
+   ],
+   "sources": [
+    "wp-winchester-cathedral",
+    "wp-jane-austen",
+    "wp-william-walker",
+    "wp-winchester",
+    "wv-winchester"
+   ]
+  },
+  {
+   "id": "portsmouth",
+   "title": "Day trip: Portsmouth Historic Dockyard",
+   "appIds": [
+    "portsmouth-far"
+   ],
+   "wikidata": [],
+   "editions": 0,
+   "folds": [
+    "HMS Victory",
+    "Mary Rose Museum",
+    "Spinnaker Tower"
+   ],
+   "sources": [
+    "wp-portsmouth-historic-dockyard",
+    "wp-hms-victory",
+    "wp-mary-rose",
+    "wp-horatio-nelson-1st-viscount",
+    "wv-portsmouth"
+   ]
+  },
+  {
+   "id": "new-forest",
+   "title": "Day trip: The New Forest",
+   "appIds": [
+    "new-forest-far"
+   ],
+   "wikidata": [
+    "Q277755"
+   ],
+   "editions": 0,
+   "folds": [],
+   "sources": [
+    "wp-new-forest",
+    "wp-new-forest-pony",
+    "wp-william-conqueror",
+    "wv-new-forest"
+   ]
+  },
+  {
+   "id": "seacity",
+   "title": "SeaCity Museum and the Titanic",
+   "appIds": [],
+   "wikidata": [
+    "Q7439809"
+   ],
+   "editions": 5,
+   "folds": [],
+   "sources": [
+    "wp-seacity-museum",
+    "wp-rms-titanic",
+    "wp-southampton",
+    "wv-southampton"
+   ]
+  },
+  {
+   "id": "bargate",
+   "title": "The Bargate and the town walls",
+   "appIds": [],
+   "wikidata": [
+    "Q4860547"
+   ],
+   "editions": 5,
+   "folds": [
+    "Southampton town walls"
+   ],
+   "sources": [
+    "wp-bargate",
+    "wp-southampton",
+    "wp-southampton-plot"
+   ]
+  },
+  {
+   "id": "tudor-house",
+   "title": "Tudor House and the Medieval Merchant's House",
+   "appIds": [],
+   "wikidata": [
+    "Q7569167",
+    "Q6806828"
+   ],
+   "editions": 4,
+   "folds": [
+    "Medieval Merchant's House"
+   ],
+   "sources": [
+    "wp-tudor-house-garden",
+    "wp-medieval-merchant-s-house",
+    "wp-southampton"
+   ]
+  },
+  {
+   "id": "mayflower",
+   "title": "The Mayflower Memorial",
+   "appIds": [],
+   "wikidata": [],
+   "editions": null,
+   "folds": [],
+   "sources": [
+    "wp-mayflower",
+    "wp-pilgrims",
+    "wp-speedwell"
+   ]
+  },
+  {
+   "id": "solent-sky",
+   "title": "Solent Sky and the Spitfire",
+   "appIds": [],
+   "wikidata": [
+    "Q7557658"
+   ],
+   "editions": 3,
+   "folds": [],
+   "sources": [
+    "wp-solent-sky",
+    "wp-supermarine-spitfire",
+    "wp-r-j-mitchell",
+    "wp-supermarine"
+   ]
+  }
+ ]
+}

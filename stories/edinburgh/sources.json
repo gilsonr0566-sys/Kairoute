@@ -1,0 +1,237 @@
+{
+ "retrieve": [
+  {
+   "key": "wp-edinburgh-castle",
+   "wiki": "Edinburgh Castle"
+  },
+  {
+   "key": "wp-st-margaret-s-chapel",
+   "wiki": "St Margaret's Chapel"
+  },
+  {
+   "key": "wp-honours-scotland",
+   "wiki": "Honours of Scotland"
+  },
+  {
+   "key": "wp-stone-scone",
+   "wiki": "Stone of Scone"
+  },
+  {
+   "key": "unesco-edinburgh",
+   "url": "https://whc.unesco.org/en/list/728/",
+   "publisher": "UNESCO World Heritage Centre"
+  },
+  {
+   "key": "wv-edinburgh",
+   "wiki": "Edinburgh",
+   "site": "en.wikivoyage.org"
+  },
+  {
+   "key": "wp-holyrood-palace",
+   "wiki": "Holyrood Palace"
+  },
+  {
+   "key": "wp-holyrood-abbey",
+   "wiki": "Holyrood Abbey"
+  },
+  {
+   "key": "wp-mary-queen-scots",
+   "wiki": "Mary, Queen of Scots"
+  },
+  {
+   "key": "wp-david-rizzio",
+   "wiki": "David Rizzio"
+  },
+  {
+   "key": "wp-scottish-parliament-building",
+   "wiki": "Scottish Parliament Building"
+  },
+  {
+   "key": "wp-scottish-national-gallery",
+   "wiki": "Scottish National Gallery"
+  },
+  {
+   "key": "wp-william-henry-playfair",
+   "wiki": "William Henry Playfair"
+  },
+  {
+   "key": "wp-skating-minister",
+   "wiki": "The Skating Minister"
+  },
+  {
+   "key": "wp-national-museum-scotland",
+   "wiki": "National Museum of Scotland"
+  },
+  {
+   "key": "wp-dolly",
+   "wiki": "Dolly (sheep)"
+  },
+  {
+   "key": "wp-lewis-chessmen",
+   "wiki": "Lewis chessmen"
+  },
+  {
+   "key": "wp-greyfriars-bobby",
+   "wiki": "Greyfriars Bobby"
+  },
+  {
+   "key": "wp-st-giles-cathedral",
+   "wiki": "St Giles' Cathedral"
+  },
+  {
+   "key": "wp-john-knox",
+   "wiki": "John Knox"
+  },
+  {
+   "key": "wp-jenny-geddes",
+   "wiki": "Jenny Geddes"
+  },
+  {
+   "key": "wp-mary-king-s-close",
+   "wiki": "Mary King's Close"
+  },
+  {
+   "key": "wp-royal-mile",
+   "wiki": "Royal Mile"
+  },
+  {
+   "key": "wp-gladstone-s-land",
+   "wiki": "Gladstone's Land"
+  },
+  {
+   "key": "wp-canongate-kirk",
+   "wiki": "Canongate Kirk"
+  },
+  {
+   "key": "wp-old-town-edinburgh",
+   "wiki": "Old Town, Edinburgh"
+  },
+  {
+   "key": "wp-scott-monument",
+   "wiki": "Scott Monument"
+  },
+  {
+   "key": "wp-walter-scott",
+   "wiki": "Walter Scott"
+  },
+  {
+   "key": "wp-princes-street-gardens",
+   "wiki": "Princes Street Gardens"
+  },
+  {
+   "key": "wp-nor-loch",
+   "wiki": "Nor Loch"
+  },
+  {
+   "key": "wp-scottish-national-portrait-g",
+   "wiki": "Scottish National Portrait Gallery"
+  },
+  {
+   "key": "wp-robert-rowand-anderson",
+   "wiki": "Robert Rowand Anderson"
+  },
+  {
+   "key": "wp-arthur-s-seat",
+   "wiki": "Arthur's Seat"
+  },
+  {
+   "key": "wp-holyrood-park",
+   "wiki": "Holyrood Park"
+  },
+  {
+   "key": "wp-salisbury-crags",
+   "wiki": "Salisbury Crags"
+  },
+  {
+   "key": "wp-james-hutton",
+   "wiki": "James Hutton"
+  },
+  {
+   "key": "wp-calton-hill",
+   "wiki": "Calton Hill"
+  },
+  {
+   "key": "wp-national-monument-scotland",
+   "wiki": "National Monument of Scotland"
+  },
+  {
+   "key": "wp-nelson-monument-edinburgh",
+   "wiki": "Nelson Monument, Edinburgh"
+  },
+  {
+   "key": "wp-old-calton-burial-ground",
+   "wiki": "Old Calton Burial Ground"
+  },
+  {
+   "key": "wp-scottish-national-gallery-mo",
+   "wiki": "Scottish National Gallery of Modern Art"
+  },
+  {
+   "key": "wp-dean-village",
+   "wiki": "Dean Village"
+  },
+  {
+   "key": "wp-eduardo-paolozzi",
+   "wiki": "Eduardo Paolozzi"
+  },
+  {
+   "key": "wp-st-mary-s-cathedral-edinburg",
+   "wiki": "St Mary's Cathedral, Edinburgh (Episcopal)"
+  },
+  {
+   "key": "wp-george-gilbert-scott",
+   "wiki": "George Gilbert Scott"
+  },
+  {
+   "key": "wp-glasgow",
+   "wiki": "Glasgow"
+  },
+  {
+   "key": "wp-glasgow-cathedral",
+   "wiki": "Glasgow Cathedral"
+  },
+  {
+   "key": "wp-kelvingrove-art-gallery-muse",
+   "wiki": "Kelvingrove Art Gallery and Museum"
+  },
+  {
+   "key": "wp-charles-rennie-mackintosh",
+   "wiki": "Charles Rennie Mackintosh"
+  },
+  {
+   "key": "wv-glasgow",
+   "wiki": "Glasgow",
+   "site": "en.wikivoyage.org"
+  },
+  {
+   "key": "wp-falkirk-wheel",
+   "wiki": "Falkirk Wheel"
+  },
+  {
+   "key": "wp-kelpies",
+   "wiki": "The Kelpies"
+  },
+  {
+   "key": "wp-antonine-wall",
+   "wiki": "Antonine Wall"
+  },
+  {
+   "key": "wv-falkirk",
+   "wiki": "Falkirk",
+   "site": "en.wikivoyage.org"
+  },
+  {
+   "key": "wp-linlithgow-palace",
+   "wiki": "Linlithgow Palace"
+  },
+  {
+   "key": "wp-james-v-scotland",
+   "wiki": "James V of Scotland"
+  },
+  {
+   "key": "wv-linlithgow",
+   "wiki": "Linlithgow",
+   "site": "en.wikivoyage.org"
+  }
+ ]
+}

@@ -1,0 +1,225 @@
+{
+ "sights": [
+  {
+   "id": "hallgrimskirkja",
+   "title": "Hallgrímskirkja",
+   "appIds": [
+    "src-q271466"
+   ],
+   "wikidata": [
+    "Q271466"
+   ],
+   "editions": 43,
+   "folds": [
+    "Leif Erikson statue"
+   ],
+   "sources": [
+    "wp-hallgrimskirkja",
+    "wp-hallgrimur-petursson",
+    "wp-gujon-samuelsson",
+    "wp-leif-erikson",
+    "wv-reykjavik"
+   ]
+  },
+  {
+   "id": "tjornin",
+   "title": "Tjörnin and City Hall",
+   "appIds": [
+    "src-q945753",
+    "src-q196471"
+   ],
+   "wikidata": [
+    "Q945753",
+    "Q196471"
+   ],
+   "editions": 33,
+   "folds": [
+    "Reykjavík City Hall"
+   ],
+   "sources": [
+    "wp-tjornin",
+    "wp-reykjavik-city-hall",
+    "wp-reykjavik"
+   ]
+  },
+  {
+   "id": "videy",
+   "title": "Viðey and the Imagine Peace Tower",
+   "appIds": [
+    "src-q116492",
+    "src-q116484"
+   ],
+   "wikidata": [
+    "Q116492",
+    "Q116484"
+   ],
+   "editions": 28,
+   "folds": [
+    "Imagine Peace Tower"
+   ],
+   "sources": [
+    "wp-viey",
+    "wp-imagine-peace-tower",
+    "wp-yoko-ono",
+    "wp-john-lennon"
+   ]
+  },
+  {
+   "id": "national-museum",
+   "title": "National Museum of Iceland",
+   "appIds": [
+    "src-q626963"
+   ],
+   "wikidata": [
+    "Q626963"
+   ],
+   "editions": 25,
+   "folds": [],
+   "sources": [
+    "wp-national-museum-iceland",
+    "wp-valjofsstaur-door",
+    "wp-settlement-iceland"
+   ]
+  },
+  {
+   "id": "althing",
+   "title": "Alþingi, Austurvöllur and Reykjavík Cathedral",
+   "appIds": [
+    "src-q451045",
+    "src-q1270853"
+   ],
+   "wikidata": [
+    "Q451045",
+    "Q1270853"
+   ],
+   "editions": 22,
+   "folds": [
+    "Austurvöllur",
+    "Reykjavík Cathedral"
+   ],
+   "sources": [
+    "wp-althing",
+    "wp-austurvollur",
+    "wp-jon-sigursson",
+    "wp-reykjavik-cathedral"
+   ]
+  },
+  {
+   "id": "landakotskirkja",
+   "title": "Christ the King Cathedral (Landakotskirkja)",
+   "appIds": [
+    "src-q794242"
+   ],
+   "wikidata": [
+    "Q794242"
+   ],
+   "editions": 21,
+   "folds": [],
+   "sources": [
+    "wp-landakotskirkja",
+    "wp-gujon-samuelsson",
+    "wp-catholic-church-in-iceland"
+   ]
+  },
+  {
+   "id": "perlan",
+   "title": "Perlan",
+   "appIds": [
+    "src-q1367886"
+   ],
+   "wikidata": [
+    "Q1367886"
+   ],
+   "editions": 21,
+   "folds": [],
+   "sources": [
+    "wp-perlan",
+    "wp-oskjuhli",
+    "wp-geothermal-power-in-iceland"
+   ]
+  },
+  {
+   "id": "harpa",
+   "title": "Harpa",
+   "appIds": [
+    "src-q1783706"
+   ],
+   "wikidata": [
+    "Q1783706"
+   ],
+   "editions": 21,
+   "folds": [],
+   "sources": [
+    "wp-harpa",
+    "wp-olafur-eliasson",
+    "wp-20082011-icelandic-financial"
+   ]
+  },
+  {
+   "id": "hafnarhus",
+   "title": "Reykjavík Art Museum: Hafnarhús",
+   "appIds": [
+    "src-q3358410"
+   ],
+   "wikidata": [
+    "Q3358410"
+   ],
+   "editions": 15,
+   "folds": [],
+   "sources": [
+    "wp-reykjavik-art-museum",
+    "wp-erro"
+   ]
+  },
+  {
+   "id": "national-gallery",
+   "title": "National Gallery of Iceland",
+   "appIds": [
+    "src-q3480309"
+   ],
+   "wikidata": [
+    "Q3480309"
+   ],
+   "editions": 15,
+   "folds": [],
+   "sources": [
+    "wp-national-gallery-iceland",
+    "wp-johannes-sveinsson-kjarval"
+   ]
+  },
+  {
+   "id": "botanic-garden",
+   "title": "Reykjavík Botanical Garden and Laugardalur",
+   "appIds": [
+    "src-q894659"
+   ],
+   "wikidata": [
+    "Q894659"
+   ],
+   "editions": 13,
+   "folds": [],
+   "sources": [
+    "wp-laugardalur",
+    "wp-reykjavik"
+   ]
+  },
+  {
+   "id": "hafnarfjordur",
+   "title": "Day trip: Hafnarfjörður",
+   "appIds": [
+    "hafnarfjor-ur-far"
+   ],
+   "wikidata": [
+    "Q103725"
+   ],
+   "editions": 86,
+   "folds": [],
+   "sources": [
+    "wp-hafnarfjorur",
+    "wp-huldufolk",
+    "wp-hellisgeri",
+    "wv-hafnarfjorur"
+   ]
+  }
+ ]
+}
