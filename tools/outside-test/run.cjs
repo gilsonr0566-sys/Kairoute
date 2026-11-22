@@ -47,6 +47,9 @@ const screen = (res, where, text) => { const c = SC.check(text); if (!c) return;
     let textEarly; if (Q.dayWait) { textEarly = await p.evaluate(() => document.querySelector('main').innerText); await sleep(Q.dayWait); }
     const text = await p.evaluate(() => document.querySelector('main').innerText);
     await p.screenshot({ path: path.join(out, 'day-' + String(i).padStart(2, '0') + '.jpg'), type: 'jpeg', quality: 55, fullPage: true });
+    let tk; if (Q.tickCheck && /\nLEAVE\n/.test(text)) { try { const on = await p.evaluate(i => window.__T.ticks(i).then(a => a.filter(x => x.on).map(x => x.n)), i); await p.evaluate(i => window.__kairouteAt(i, 'plan'), i); await sleep(2500);
+      const norm = x => String(x).toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim(); const plan = [...text.matchAll(/\n(?:LEAVE|ARRIVE)\n[^\n]+\n\d+\n([^\n]+)/g)].map(m => m[1]); const P = new Set(plan.map(norm)), O = new Set(on.map(norm));
+      tk = { on: on.length, plan: P.size, tickedNotPlanned: on.filter(x => !P.has(norm(x))), plannedNotTicked: [...new Set(plan)].filter(x => !O.has(norm(x))) }; if (tk.tickedNotPlanned.length || tk.plannedNotTicked.length) console.log('TICKS day ' + i + ' ' + JSON.stringify(tk)); } catch (e) { tk = { err: String(e.message).slice(0, 150) }; } }
     // A picture of every card on the day's timeline (stops, rides, lunch, free time, start and end) at phone width, folded notes open.
     let cards; if (Q.stopShots) { try { await p.setViewportSize({ width: 412, height: 900 }); await sleep(1500); await p.evaluate(() => { document.querySelectorAll('main .timeline details, main details.why, main .tl details').forEach(x => { x.open = true; }); }); await sleep(600);
       const dir = path.join(out, 'stops'); fs.mkdirSync(dir, { recursive: true }); const loc = p.locator('.timeline .tl'); const n = await loc.count(); cards = [];
@@ -54,14 +57,15 @@ const screen = (res, where, text) => { const c = SC.check(text); if (!c) return;
     } catch (e) { res.errors.push('stops day ' + i + ': ' + String(e.message).slice(0, 200)); } await p.setViewportSize({ width: 1100, height: 2800 }); await p.evaluate(i => window.__kairouteAt(i, 'plan'), i); await sleep(1500); }
     const g = await p.evaluate(i => window.__T.guide(i), i); if (g && !res.guides[g.city]) res.guides[g.city] = g;
     screen(res, 'day ' + i, text); if (textEarly) screen(res, 'day ' + i + ' early', textEarly);
-    res.days.push({ i, date: d.date, type: d.type, destination: d.destination, cards, text, textEarly: textEarly && textEarly !== text ? textEarly : undefined });
+    res.days.push({ i, date: d.date, type: d.type, destination: d.destination, cards, ticks: tk, text, textEarly: textEarly && textEarly !== text ? textEarly : undefined });
     console.log('\n===== day ' + i + ' ' + d.date + ' ' + d.type + ' ' + (d.destination || '') + '\n' + text);
   }
   // The first sightseeing day again at phone size.
   const ph = st.days.findIndex(d => d.type === 'land' || d.type === 'port');
   if (ph >= 0) { await p.setViewportSize({ width: 390, height: 844 }); await p.evaluate(i => window.__kairouteAt(i, 'plan'), ph); await sleep(5000); await p.screenshot({ path: path.join(out, 'phone-day-' + String(ph).padStart(2, '0') + '.jpg'), type: 'jpeg', quality: 55, fullPage: true }); res.phoneText = await p.evaluate(() => document.querySelector('main').innerText.slice(0, 1500)); await p.setViewportSize({ width: 1100, height: 2800 }); }
   // Extra traveler steps for this trip: each is a line of page script (a tap, a tick, a changed hour) and a picture after it.
-  for (const s of t.steps || []) { let r; if (s.reload) { await p.reload({ waitUntil: 'load' }); await sleep(3000); await p.evaluate(() => window.__kairouteMockHelper && window.__kairouteMockHelper('https://kairoute-ai.rickgilson.workers.dev', null, true)); await p.evaluate(INJECT + '; 1'); } try { r = await p.evaluate(s.js); } catch (e) { r = 'ERR ' + e.message; } await sleep(s.wait || 4000); if (s.phone) await p.setViewportSize({ width: 390, height: 844 }); if (s.tablet) await p.setViewportSize({ width: 1100, height: 2800 });
+  const D1 = (() => { const k = st.days.findIndex((d, i) => (d.type === 'land' || d.type === 'port') && (res.days.find(x => x.i === i) || {}).text && /\nLEAVE\n/.test((res.days.find(x => x.i === i) || {}).text)); return k >= 0 ? k : Math.max(0, ph); })(); res.stepDay = D1;
+  for (const s0 of t.steps || []) { const s = Object.assign({}, s0, { js: String(s0.js).replace(/\$D/g, String(D1)) }); let r; if (s.reload) { await p.reload({ waitUntil: 'load' }); await sleep(3000); await p.evaluate(() => window.__kairouteMockHelper && window.__kairouteMockHelper('https://kairoute-ai.rickgilson.workers.dev', null, true)); await p.evaluate(INJECT + '; 1'); } try { r = await p.evaluate(s.js); } catch (e) { r = 'ERR ' + e.message; } await sleep(s.wait || 4000); if (s.phone) await p.setViewportSize({ width: 390, height: 844 }); if (s.tablet) await p.setViewportSize({ width: 1100, height: 2800 });
     const text = await p.evaluate(() => document.querySelector('main').innerText).catch(() => ''); await p.screenshot({ path: path.join(out, 'step-' + s.name + '.jpg'), type: 'jpeg', quality: 55, fullPage: !s.screen }); screen(res, 'step ' + s.name, text); res.steps.push({ name: s.name, r, text }); console.log('\n===== step ' + s.name + ' -> ' + JSON.stringify(r) + '\n' + text.slice(0, 6000)); }
 
   // Group trip: this browser shares the trip (owner), a second clean browser joins with the code (member) and makes its own day.
