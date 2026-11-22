@@ -33,6 +33,11 @@ async function grpCall(body, query) {
 // What followers receive: this trip's days and the city guides it uses. No journal, notes or photos.
 function grpSnapshot() {
   const t = JSON.parse(JSON.stringify(trip)); delete t.journal; delete t.tour; delete t.badges;
+  // The group's plan as the owner sees it: its stops in their order, so a member following the day sees the same day in
+  // the same order from the first second, not one their own phone works out while its map answers are still arriving
+  // (Nov 22 outside test: a new member's day had the group's 7 sights in another order for its first minutes).
+  try { const P = typeof window !== "undefined" && window.__kairoutePlanStops ? window.__kairoutePlanStops() : [];
+    t.days.forEach((x, i) => { delete x.grpOrder; const ids = P[i] || []; if (ids.length && !x.grpTour) x.grpOrder = ids; }); } catch (e) {}
   const cs = {}; trip.days.forEach(d => { const k = cityKeyFor(d); if (k && cities[k] && k !== "barcelona") cs[k] = cities[k]; });
   return { trip: t, cities: cs };
 }
@@ -228,7 +233,9 @@ function grpMenuHTML(d) {
 // A member makes a day their own: it starts as a copy of the group's plan, and they change the sights from there.
 // The copied sights are the member's own list from then on (Nov 22 gate: an own day still marked as the app's seeding
 // had its sights swapped by the planner for others when the owner's day got shorter, before the member ticked anything).
-function grpMakeOwn(d) { d.grpOwn = true; if (Array.isArray(d.selected)) d.ownList = true; save(); grpHello(); }
+function grpMakeOwn(d) { d.grpOwn = true; if (Array.isArray(d.selected)) d.ownList = true; delete d.grpOrder; save(); grpHello(); }
+// A member's day that follows the group: the owner's stops in the owner's order (null on any other day).
+function grpFollowOrder(d) { return d && trip && trip.group && !d.grpOwn && !d.grpTour && !(Array.isArray(d.order) && d.order.length > 1) && Array.isArray(d.grpOrder) && d.grpOrder.length ? d.grpOrder.slice() : null; }
 function grpFollow(d) {
   const ld = grpLeadDay(d.id); const i = trip.days.indexOf(d); if (i < 0) return;
   if (ld) trip.days[i] = JSON.parse(JSON.stringify(ld)); else { delete d.grpOwn; }
