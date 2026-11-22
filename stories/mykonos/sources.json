@@ -1,0 +1,75 @@
+{
+ "retrieve": [
+  {
+   "key": "wp-mykonos",
+   "wiki": "Mykonos"
+  },
+  {
+   "key": "wp-chora-myk",
+   "wiki": "Mykonos (town)"
+  },
+  {
+   "key": "wp-kato-mili",
+   "wiki": "Kato Mili"
+  },
+  {
+   "key": "wp-windmills-myk",
+   "wiki": "Windmills of Mykonos"
+  },
+  {
+   "key": "wp-little-venice",
+   "wiki": "Little Venice, Mykonos"
+  },
+  {
+   "key": "wp-paraportiani",
+   "wiki": "Panagia Paraportiani"
+  },
+  {
+   "key": "wp-petros",
+   "wiki": "Petros the pelican"
+  },
+  {
+   "key": "wp-manto",
+   "wiki": "Manto Mavrogenous"
+  },
+  {
+   "key": "wp-delos",
+   "wiki": "Delos"
+  },
+  {
+   "key": "wp-delos-lions",
+   "wiki": "Terrace of the Lions"
+  },
+  {
+   "key": "wp-delian-league",
+   "wiki": "Delian League"
+  },
+  {
+   "key": "wp-myk-museum",
+   "wiki": "Archaeological Museum of Mykonos"
+  },
+  {
+   "key": "wp-delos-museum",
+   "wiki": "Archaeological Museum of Delos"
+  },
+  {
+   "key": "wp-leto",
+   "wiki": "Leto"
+  },
+  {
+   "key": "unesco-delos",
+   "url": "https://whc.unesco.org/en/list/530/",
+   "publisher": "UNESCO World Heritage Centre"
+  },
+  {
+   "key": "wv-mykonos",
+   "wiki": "Mykonos",
+   "site": "en.wikivoyage.org"
+  },
+  {
+   "key": "wv-delos",
+   "wiki": "Delos",
+   "site": "en.wikivoyage.org"
+  }
+ ]
+}

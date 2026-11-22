@@ -1,0 +1,168 @@
+{
+ "retrieve": [
+  {
+   "key": "wp-spaccanapoli",
+   "wiki": "Spaccanapoli"
+  },
+  {
+   "key": "wp-historic-naples",
+   "wiki": "Historic Centre of Naples"
+  },
+  {
+   "key": "wp-naples",
+   "wiki": "Naples"
+  },
+  {
+   "key": "wp-sansevero",
+   "wiki": "Sansevero Chapel"
+  },
+  {
+   "key": "wp-veiled-christ",
+   "wiki": "Veiled Christ"
+  },
+  {
+   "key": "wp-sammartino",
+   "wiki": "Giuseppe Sanmartino"
+  },
+  {
+   "key": "wp-raimondo",
+   "wiki": "Raimondo di Sangro"
+  },
+  {
+   "key": "wp-duomo-na",
+   "wiki": "Naples Cathedral"
+  },
+  {
+   "key": "wp-gennaro",
+   "wiki": "Januarius"
+  },
+  {
+   "key": "wp-gennaro-treasure",
+   "wiki": "Treasure of San Gennaro"
+  },
+  {
+   "key": "wp-plebiscito",
+   "wiki": "Piazza del Plebiscito"
+  },
+  {
+   "key": "wp-royal-palace-na",
+   "wiki": "Royal Palace of Naples"
+  },
+  {
+   "key": "wp-paola",
+   "wiki": "San Francesco di Paola"
+  },
+  {
+   "key": "wp-mann",
+   "wiki": "National Archaeological Museum, Naples"
+  },
+  {
+   "key": "wp-farnese-bull",
+   "wiki": "Farnese Bull"
+  },
+  {
+   "key": "wp-alexander-mosaic",
+   "wiki": "Alexander Mosaic"
+  },
+  {
+   "key": "wp-pompeii",
+   "wiki": "Pompeii"
+  },
+  {
+   "key": "wp-vesuvius-79",
+   "wiki": "Eruption of Mount Vesuvius in 79 AD"
+  },
+  {
+   "key": "wp-pliny-y",
+   "wiki": "Pliny the Younger"
+  },
+  {
+   "key": "wp-fiorelli",
+   "wiki": "Giuseppe Fiorelli"
+  },
+  {
+   "key": "wp-capri",
+   "wiki": "Capri"
+  },
+  {
+   "key": "wp-blue-grotto",
+   "wiki": "Blue Grotto (Capri)"
+  },
+  {
+   "key": "wp-villa-jovis",
+   "wiki": "Villa Jovis"
+  },
+  {
+   "key": "wp-faraglioni",
+   "wiki": "Faraglioni"
+  },
+  {
+   "key": "wp-sorrento",
+   "wiki": "Sorrento"
+  },
+  {
+   "key": "wp-pozzuoli",
+   "wiki": "Pozzuoli"
+  },
+  {
+   "key": "wp-macellum",
+   "wiki": "Macellum of Pozzuoli"
+  },
+  {
+   "key": "wp-flavian-pozz",
+   "wiki": "Flavian Amphitheater (Pozzuoli)"
+  },
+  {
+   "key": "wp-bradyseism",
+   "wiki": "Bradyseism"
+  },
+  {
+   "key": "wp-gesu-nuovo",
+   "wiki": "Gesù Nuovo"
+  },
+  {
+   "key": "wp-santa-chiara",
+   "wiki": "Santa Chiara, Naples"
+  },
+  {
+   "key": "unesco-naples",
+   "url": "https://whc.unesco.org/en/list/726/",
+   "publisher": "UNESCO World Heritage Centre"
+  },
+  {
+   "key": "unesco-pompeii",
+   "url": "https://whc.unesco.org/en/list/829/",
+   "publisher": "UNESCO World Heritage Centre"
+  },
+  {
+   "key": "wv-naples",
+   "wiki": "Naples",
+   "site": "en.wikivoyage.org"
+  },
+  {
+   "key": "wv-pompeii",
+   "wiki": "Pompeii",
+   "site": "en.wikivoyage.org"
+  },
+  {
+   "key": "wv-capri",
+   "wiki": "Capri",
+   "site": "en.wikivoyage.org"
+  },
+  {
+   "key": "wv-sorrento",
+   "wiki": "Sorrento",
+   "site": "en.wikivoyage.org"
+  },
+  {
+   "key": "wv-pozzuoli",
+   "wiki": "Pozzuoli",
+   "site": "en.wikivoyage.org"
+  },
+  {
+   "key": "kjv-acts28b",
+   "url": "https://bible-api.com/acts%2028%3A11-15?translation=kjv",
+   "publisher": "King James Version (public domain), via bible-api.com"
+  }
+ ]
+}

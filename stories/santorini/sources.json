@@ -1,0 +1,65 @@
+{
+ "retrieve": [
+  {
+   "key": "wp-santorini",
+   "wiki": "Santorini"
+  },
+  {
+   "key": "wp-minoan-eruption",
+   "wiki": "Minoan eruption"
+  },
+  {
+   "key": "wp-akrotiri",
+   "wiki": "Akrotiri (prehistoric city)"
+  },
+  {
+   "key": "wp-fira",
+   "wiki": "Fira"
+  },
+  {
+   "key": "wp-oia",
+   "wiki": "Oia, Greece"
+  },
+  {
+   "key": "wp-pyrgos",
+   "wiki": "Pyrgos Kallistis"
+  },
+  {
+   "key": "wp-prehist-museum",
+   "wiki": "Museum of Prehistoric Thera"
+  },
+  {
+   "key": "wp-nea-kameni",
+   "wiki": "Nea Kameni"
+  },
+  {
+   "key": "wp-1956",
+   "wiki": "1956 Amorgos earthquake"
+  },
+  {
+   "key": "wp-atlantis",
+   "wiki": "Atlantis"
+  },
+  {
+   "key": "wp-marinatos",
+   "wiki": "Spyridon Marinatos"
+  },
+  {
+   "key": "wp-thera-frescoes",
+   "wiki": "Frescoes of Akrotiri"
+  },
+  {
+   "key": "wp-ancient-thera",
+   "wiki": "Ancient Thera"
+  },
+  {
+   "key": "wp-orthodox-fira",
+   "wiki": "Orthodox Metropolitan Cathedral of Santorini"
+  },
+  {
+   "key": "wv-santorini",
+   "wiki": "Santorini",
+   "site": "en.wikivoyage.org"
+  }
+ ]
+}
