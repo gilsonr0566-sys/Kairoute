@@ -118,7 +118,7 @@ async function overpass(q) {
 // "subclass of" once per run (one query), so a "Catholic cathedral" counts as a church.
 const NOT_VISIT = { Q5: 'a person', Q4830453: 'a business', Q783794: 'a company', Q43229: 'an organization', Q327333: 'a government agency', Q27686: 'a hotel', Q79007: 'a street', Q34442: 'a road',
   Q3918: 'a university', Q3914: 'a school', Q16917: 'a hospital', Q55488: 'a railway station', Q719456: 'a station', Q1248784: 'an airport', Q3917681: 'an embassy', Q22687: 'a bank', Q1021645: 'an office building',
-  Q11755880: 'a residential building', Q123705: 'a neighbourhood', Q1656682: 'an event', Q18674739: 'an event', Q13406463: 'a list', Q4167410: 'a disambiguation page', Q11424: 'a film', Q7725634: 'a book', Q215380: 'a music group',
+  Q11755880: 'a residential building', Q123705: 'a neighbourhood', Q1656682: 'an event', Q13406463: 'a list', Q4167410: 'a disambiguation page', Q11424: 'a film', Q7725634: 'a book', Q215380: 'a music group',
   Q847017: 'a sports club', Q476028: 'a football club', Q18127: 'a record label', Q41298: 'a magazine', Q11032: 'a newspaper', Q1137809: 'a courthouse', Q1802963: 'a mansion (private)', Q15243209: 'a historic district', Q1549591: 'a big city', Q515: 'a city', Q3957: 'a town', Q486972: 'a settlement' };
 const LEN = [ // [class ids, label, min, max] first match wins (most specific first)
   [['Q207694', 'Q17431399', 'Q2668072'], 'art museum or gallery', 45, 240], [['Q33506'], 'museum', 30, 180],
