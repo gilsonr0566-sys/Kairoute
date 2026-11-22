@@ -34,7 +34,8 @@ function gxGet(key, path, opts) {
     .catch(st => opts && opts.fallback ? opts.fallback().then(v => v || Promise.reject(st), () => Promise.reject(st)) : Promise.reject(st))
     .then(v => { gxCache[key] = { v, t: Date.now() }; gxSaveCache(); gxRefresh(); })
     .catch(st => { gxFailed.set(key, Date.now() + (st === 422 || st === 400 ? 864e5 : 90000)); if (st === 422 || st === 400) { gxCache[key] = { v: null, t: Date.now() }; gxSaveCache(); } })
-    .finally(() => gxPending.delete(key));
+    // Drawn again either way: a failed answer turns its spinner into nothing (gate step I), not only a good one.
+    .finally(() => { const was = gxPending.delete(key); if (was && !(gxCache[key] && gxCache[key].v !== undefined)) gxRefresh(); });
   return undefined;
 }
 const gxR3 = n => (+n).toFixed(3);
@@ -453,6 +454,6 @@ const gxOpen = new Set();
 if (typeof window !== "undefined") window.__kairouteExtras = { gxNearDirect, gxSun, gxLocalMin, interestWords, themeOf, gxSavings, askExtra, THEMES };
 // For the flow check (tools/beta2/flow-check.cjs): visit parts timing, the checks card, and an answer asked with AI off.
 if (typeof window !== "undefined") window.__kairouteFM = {
-  partPlan: (s, t) => partPlan(s, t), checksCard: (plan) => checksCard((trip.days || []).find(d => d.type !== "sea") || trip.days[0], {}, plan),
+  partPlan: (s, t) => partPlan(s, t), checksCard: () => { const out = []; (trip.days || []).forEach(d => { if (d.type === "sea") return; const plan = buildPlan(d); if (plan && !plan.error && (plan.stops || []).length) out.push(checksCard(d, cityFor(d), plan)); }); return out.join("\n"); },
   aiOffAnswer: () => { const was = freeAI; freeAI = { url: "https://example.invalid", on: false }; try { return gxGet("primer:flowcheck", "/x/write", { body: {} }); } finally { freeAI = was; } }
 };

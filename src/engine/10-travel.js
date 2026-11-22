@@ -323,7 +323,10 @@
       // The ride back to a ship, train or plane on a time no timetable confirms: said, with the extra time already in it.
       if ((b.backToShip || b.deadline) && pick.kind !== "walk" && pick.source !== "timetable" && pick.min >= 30)
         notes.push("No timetable or live traffic confirms this ride's time: it is an estimate with " + (pick.slack || 0) + " min extra for the " + (b.backToShip ? "ship" : "connection") + ". Leave by the time shown, never later.");
-      const options = opts.map(o => Object.assign({ id: o.id, kind: o.kind, mode: E.modeOfKind(o.kind), how: o.how, min: o.min, steps: o.steps || [], source: o.source },
+      // A way that takes over three times the quickest and at least 2 h more is no real choice (outside sweep, Nov 22: a metro
+      // "25 h 27 min" and a bus "26 h 1 min", next day's departures, offered beside a 1 h taxi): not offered, unless chosen.
+      const best = Math.min(...opts.map(o => o.min)), real = o => o === pick || !(o.min > best * 3 && o.min - best >= 120);
+      const options = opts.filter(real).map(o => Object.assign({ id: o.id, kind: o.kind, mode: E.modeOfKind(o.kind), how: o.how, min: o.min, steps: o.steps || [], source: o.source },
         o.ans ? { ans: o.ans } : {}, o.parts ? { parts: o.parts, cross: o.cross } : {}, o.slack ? { slack: o.slack } : {}, o.transitMode ? { transitMode: o.transitMode } : {}, o.isle ? { isle: o.isle } : {}));
       const leg = Object.assign({ mode: E.modeOfKind(pick.kind), kind: pick.kind, how: pick.how, km: pick.km || d, min: pick.min, steps: pick.steps || [], choice: pick.id, options },
         pick.kind !== "walk" && pick.kind !== "taxi" && pick.kind !== "ferry" ? { transitMode: pick.transitMode || (pick.ans && pick.ans.mode) || pick.kind } : {},

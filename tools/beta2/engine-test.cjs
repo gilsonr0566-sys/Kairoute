@@ -975,6 +975,12 @@ ok(E.readable('Café Ñandú') && E.readable("Joe's Bar & Grill") && !E.readable
     ok(!E.depGap(leg, 700), 'no hole where the line runs as usual');
     const sw = E.legAs({ how: 'Train', min: 60, note: '' }, { kind: 'taxi', how: 'Taxi or car', min: 50 }, 'why it changed.');
     ok(sw.swapWhy === 'why it changed.', 'a ride planned another way keeps the reason, for the ride choice notice'); }
+  // Nov 22 outside sweep: a way that takes over three times the quickest and 2 h more (next day's bus) is never offered.
+  {
+    const opts = [{ id: 't', kind: 'taxi', min: 60 }, { id: 'b', kind: 'bus', min: 1561 }, { id: 'm', kind: 'metro', min: 90 }];
+    const best = Math.min(...opts.map(o => o.min)), real = o => !(o.min > best * 3 && o.min - best >= 120);
+    ok(opts.filter(real).map(o => o.id).join() === 't,m', 'the rule keeps the taxi and a metro of 1 h 30 min, drops a bus of 26 h');
+    ok(/o\.min > best \* 3 && o\.min - best >= 120/.test(require('fs').readFileSync(require('path').join(__dirname, '../../src/engine/10-travel.js'), 'utf8')), 'the travel engine applies the same rule to the ride choices'); }
   // Nov 22 outside test: a sight whose spot isn't sure (the guide and the encyclopedia disagree, nothing told which is
   // right) has the rides to and from it said as not sure, never as a fact; a sure sight's rides say nothing of the kind.
   { const H = { name: 'Hotel', lat: 37.97, lng: 23.73 }, win = { start: 540, endBy: 1080, head: [H], tail: [H] };

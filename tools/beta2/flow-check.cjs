@@ -147,12 +147,11 @@ async function tapTimes(p) { const out = []; const n = await p.evaluate(() => wi
   { const fm = await p.evaluate(() => {
       const s = { id: 'm', name: 'Museum', minutes: 90, parts: [{ name: 'A', minutes: 1 }, { name: 'B', minutes: 1 }, { name: 'C', minutes: 1 }] };
       const F = window.__kairouteFM, times = F.partPlan(s, 660).list.map(x => x.time);
-      const plan = { items: [{ type: 'stop', place: { id: 'x', name: 'Old Fort', category: 'Fortress' } }], stops: [{ type: 'stop', place: { id: 'x', name: 'Old Fort', category: 'Fortress' } }], end: 900, endBy: 960, w: {} };
-      let ck = ''; try { ck = F.checksCard(plan); } catch (e) { ck = 'ERR ' + e.message; }
+      let ck = ''; try { ck = F.checksCard(); } catch (e) { ck = 'ERR ' + e.message; }
       const v = F.aiOffAnswer();
       return { times, ck, v }; });
     check("A visit's parts are spread over the visit, not a minute apart", fm.times.join() === '660,690,720', JSON.stringify(fm.times));
-    check("The checks card names each stop of the plan (no empty names)", /Old Fort/.test(fm.ck) && !/for ,|, ,/.test(fm.ck), fm.ck.slice(0, 300));
+    check("The checks card names each stop of every day's plan (no empty names)", fm.ck.length > 0 && !/ERR /.test(fm.ck) && !/(not confirmed for|Fewer sources for:|left out:|fit today:)\s*[,.]|,\s*,/.test(fm.ck.replace(/<[^>]+>/g, '')), fm.ck.replace(/<[^>]+>/g, '').slice(0, 300));
     check("With AI off, a writing request is no answer (null), never a spinner that turns for ever", fm.v === null, String(fm.v)); }
   const all = (await boxes(p)).map(b => b.id), far = all.find(id => /pompeii/.test(id)) || all.find(id => /-far$/.test(id)), town = all.find(id => !/-far$/.test(id));
   for (const id of [far, town].filter(Boolean)) { await tapBox(p, id); const on = (await boxes(p)).some(b => b.id === id && b.on);

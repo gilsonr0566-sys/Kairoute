@@ -93,6 +93,10 @@ function rules(text, info = {}) {
     if (ship && !flight && /before (your|the) flight/i.test(raw)) add('S2', 'right words for the day', 'a ship day talks about a flight'); }
   // One leave-by: a sentence that says when to leave for the ship, airport or station names the same time as the banner.
   if (P.leaveBy != null) for (const m of raw.matchAll(/leave for the (?:airport|ship|port|station|terminal|cruise terminal|pier)[^.]{0,20}? by (\d{1,2}:\d\d\s*[ap]m)/gi)) { const t = T(m[1]);
+    // With bags on the way the same sentence first says when to leave the last stop (the banner's time), then the later
+    // bags and leave-for times: "Leave X by 4:16 pm, collect your bags at 4:21 pm, and leave for the terminal by 4:36 pm".
+    const head = raw.slice(Math.max(raw.lastIndexOf('\n', m.index), raw.lastIndexOf('. ', m.index)) + 1, m.index), first = /\bLeave [^.\n]{1,60}? by (\d{1,2}:\d\d\s*[ap]m)/i.exec(head);
+    if (first && T(first[1]) != null && Math.abs(T(first[1]) - P.leaveBy) <= 2 && t != null && t >= P.leaveBy) continue;
     if (t != null && Math.abs(t - P.leaveBy) > 2) add('S2', 'one leave-by', `the banner says LEAVE BY ${clock(P.leaveBy)} but a note says "${m[0]}"`); }
   // ---- S2: never state something untrue (Richard, Nov 22: "Lies create mistrust of the app"). A reason on screen names
   // the ONE cause the app knows, with its numbers; when the data doesn't say, the screen says "not known" or "not confirmed".
