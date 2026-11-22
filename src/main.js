@@ -1439,6 +1439,14 @@ function dayWindow(d, city) {
         ? `You fly in the day the ship sails, so today goes straight from the airport to the ship: there isn't enough time for sightseeing with a safe margin. A late or missed flight is the most common way travelers miss a ship, and the ship won't wait. Keep your airline's and cruise line's phone numbers handy, and if a delay is announced, call the cruise line at once.`
         : `You fly in the day the ship sails. A late or missed flight is the most common way travelers miss a ship, and the ship won't wait: if your flight is delayed, skip the sightseeing and go straight to the port.`);
     }
+    // Bags are stored only with an hour or more to use between leaving and collecting them: else straight on with the bags
+    // (outside test, Nov 22: bags left at 8:30 and collected at 8:45). The engine has the same rule (E.BAGS_STORE_MIN).
+    if (thru && !w.straight && !d.noBags) {
+      const free = w.endBy - w.start - chainCost(w.head) - chainCost(w.tail);
+      if (free < 60) { w.straight = true; w.head = [w.head[0]]; w.tail = [end]; w.sightFrom = w.start;
+        if (w.bagsNote) { const b = w.bagsNote; w.notes[b.i] = `${b.am.label} arrives ${b.thru.time}. We allow ${dur(b.am.clear)} to get ${b.thru.mode === "ship" ? "off the ship with your luggage" : b.thru.mode === "flight" ? "off the plane and through baggage claim" : "off with your luggage"}.`; }
+        w.notes.push(`There's less than an hour between getting off and the time to leave for ${ship ? "the ship" : "your " + m.word}, so the plan goes straight on with your bags: storing them wouldn't leave time to use.`); }
+    }
     if (ship) w.notesEnd.push(...boardNotes(d, w));
     else w.notesEnd.push(`${m.label} leaves ${d.time}: be at the ${m.word} by ${fmt(w.endBy)}, ${dur(m.need)} early${d.mode === "flight" ? " for an international flight" : ""}.`);
   } else if (d.type === "port") {

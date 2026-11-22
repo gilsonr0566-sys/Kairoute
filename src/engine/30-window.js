@@ -8,6 +8,7 @@
     ship: { label: "Ship", clear: 60, need: 60, word: "port" }, ferry: { label: "Ferry", clear: 20, need: 40, word: "ferry terminal" },
     car: { label: "Car or bus", clear: 10, need: 20, word: "starting point" } });
   E.PORT_BUFFER = 45;        // back at the ship this long before all aboard
+  E.BAGS_STORE_MIN = 60;     // off a ship, plane or train and leaving the same day: bags are stored only for an hour or more free
   E.STRAIGHT_MIN = 180;      // flying in the day the ship sails: under 3 h free means straight to the ship
   E.TENDER_ASHORE = 60;      // getting ashore by tender boat; 30 by gangway
   E.BOARD_BEFORE = 60;       // at the terminal at least an hour before all aboard
@@ -133,6 +134,10 @@
         if (free < E.STRAIGHT_MIN) { w.straight = true; w.head = [w.head[0]]; w.tail = [end]; w.sightFrom = w.start; }
         w.notes.push(w.straight ? "flyInStraight" : "flyInWarn");
       }
+      // Bags go into storage only when there is time to use between leaving and collecting them: under an hour free goes
+      // straight on with the bags (outside test, Nov 22: bags left at 8:30 and collected at 8:45, nothing in between).
+      if (d.thru && !w.straight && !d.noBags) { const free = w.endBy - w.start - chain(w.head, tr) - chain(w.tail, tr);
+        if (free < E.BAGS_STORE_MIN) { w.straight = true; w.bagsStraight = true; w.head = [w.head[0]]; w.tail = [end]; w.sightFrom = w.start; w.notes.push("bagsStraight"); } }
     } else if (d.type === "port") {
       if (!P) return E.fail("Choose where the ship docks.");
       // All aboard after midnight (earlier on the clock than docking) is the next morning's.

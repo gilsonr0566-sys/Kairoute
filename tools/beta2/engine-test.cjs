@@ -66,6 +66,13 @@ ok(E.latin('Ζευγολατιό') === 'Zevgolatio' && E.latin('Ευαγγελι
 { const w = E.dayWindow(day({ type: 'embark', allAboard: 930, boardAt: null, thru: { mode: 'flight', time: '11:25', point: air } }), tr);
   ok(w.straight === true && w.tail.length === 1 && w.head.length === 1, 'same-day fly-in with under 3 h free: straight to the ship'); }
 // Round 1 (Nov 20): an arrival time nobody gave is asked, never planned on; and a straight-to-the-ship day plans no sights.
+// Off a ship and flying out the same day (outside test, Nov 22: bags left at 8:30, collected at 8:45, nothing between):
+// bags are stored only with an hour or more free; under that the day goes straight on with them.
+{ const tight = E.dayWindow(day({ type: 'departure', mode: 'flight', time: '11:00', thru: { mode: 'ship', time: '07:30', point: port }, point: air }), tr);
+  const roomy = E.dayWindow(day({ type: 'departure', mode: 'flight', time: '18:00', thru: { mode: 'ship', time: '07:30', point: port }, point: air }), tr);
+  const has = w => [].concat(w.head || [], w.tail || []).some(x => /bags/i.test(x.name || ''));
+  ok(!tight.error && !has(tight) && tight.bagsStraight, `under an hour free: no luggage storage, straight on with the bags (head ${JSON.stringify((tight.head || []).map(x => x.name))})`);
+  ok(!roomy.error && has(roomy) && !roomy.bagsStraight, 'a long free stretch stores the bags'); }
 { const g = E.dayWindow(day({ type: 'embark', allAboard: 930, boardAt: null, thru: { mode: 'flight', time: '10:30', point: air, guess: true } }), tr);
   const a = E.dayWindow(day({ type: 'arrival', mode: 'flight', time: '10:30', timeGuess: true }), tr);
   ok(g.error && g.askArrive && a.error && a.askArrive && /When does your flight arrive/.test(a.error), 'an arrival time the traveler never gave is asked, never planned on'); }
