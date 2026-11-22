@@ -67,7 +67,7 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
       if (G.code) { const ctx2 = await b.newContext({ viewport: { width: 1100, height: 2800 }, locale: 'en-US', timezoneId: t.tz || 'America/Chicago' }); await ctx2.addInitScript(() => { try { localStorage.setItem('kairoute.intro1', '1'); } catch (e) {} }); await ctx2.route(u => /workers\.dev/.test(u.hostname), helperRoute);
         const q = await ctx2.newPage(); q.on('pageerror', e => res.errors.push('B: ' + String(e.message).slice(0, 300))); await q.goto(LIVE, { waitUntil: 'load' }); await sleep(2500); await q.evaluate(() => window.__kairouteMockHelper && window.__kairouteMockHelper('https://kairoute-ai.rickgilson.workers.dev', null, true)); await q.evaluate(INJECT + '; 1');
         G.navB = await nav(q); await sleep(3000); await q.fill('#grp-code', G.code); await q.click('[data-grp="join"]'); await sleep(15000); G.cardB = await q.evaluate(() => (document.querySelector('.grpcard') || {}).innerText || null); await shot(q, 'b-joined');
-        await q.click('[data-grp="opentrip"]'); await sleep(20000); await q.evaluate(i => window.__kairouteAt(i, 'plan'), gi); await sleep(25000); G.memberFollow = await read(q); await shot(q, 'b-follow');
+        G.openBtn = await q.evaluate(() => !!document.querySelector('[data-grp="opentrip"]')); if (G.openBtn) await q.click('[data-grp="opentrip"]'); await sleep(20000); await q.evaluate(i => window.__kairouteAt(i, 'plan'), gi); await sleep(25000); G.memberFollow = await read(q); await shot(q, 'b-follow');
         await q.click('[data-grp="ownday"]'); await sleep(3000); G.ticksOwn3s = await ticks(q, gi); await shot(q, 'b-own-picker'); await sleep(12000); G.ticksOwn15s = await ticks(q, gi);
         await q.evaluate(i => window.__kairouteAt(i, 'plan'), gi); await sleep(15000); G.memberOwn = await read(q); await shot(q, 'b-own-plan');
         // untick one sight, then see that it stays unticked
@@ -77,8 +77,8 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
         // leave the group and stop sharing, so nothing is left on the helper
         try { G.navB2 = await nav(q); await sleep(2500); q.on('dialog', d => d.accept()); await q.click('[data-grp="leave"]', { timeout: 5000 }); await sleep(4000); } catch (e) { G.log.push('leave: ' + e.message.slice(0, 200)); }
         await ctx2.close(); }
-      try { await nav(p); await sleep(2500); p.on('dialog', d => d.accept()); await p.click('[data-grp="end"]', { timeout: 5000 }); await sleep(4000); G.ended = true; } catch (e) { G.log.push('end: ' + e.message.slice(0, 200)); }
     } catch (e) { G.error = String(e.message).slice(0, 600); await shot(p, 'error'); }
+    try { await nav(p); await sleep(2500); p.on('dialog', d => d.accept()); await p.click('[data-grp="end"]', { timeout: 5000 }); await sleep(4000); G.ended = true; } catch (e) { G.log.push('end: ' + e.message.slice(0, 200)); }
     console.log('\nGROUP ' + JSON.stringify(G).slice(0, 6000)); }
   console.log('\nGUIDES ' + JSON.stringify(res.guides)); console.log('\nversion', res.version, 'aiReady', res.aiReady, 'build', res.buildSec + 's', 'passed', JSON.stringify(res.passed), 'refused', JSON.stringify(res.refused), 'errors', JSON.stringify([...new Set(res.errors)]));
   try { res.bucket = await p.evaluate(() => { const o = {}; for (let i = 0; i < localStorage.length; i++) { const k = localStorage.key(i); o[k] = localStorage.getItem(k); } return o; }); } catch (e) { res.bucket = { error: String(e) }; }
