@@ -2102,5 +2102,752 @@
    "min": 81,
    "km": 107.5
   }
+ ],
+ "guideSights": [
+  {
+   "name": "Edinburgh Castle",
+   "lat": 55.9485,
+   "lng": -3.2004,
+   "wikidata": "Q212065",
+   "note": "Iconic fortress perched magnificently on a volcanic rock above the city. The castle has been continuously used for 1100 years and is kept in excellent condition; it's still the ceremonial headquarters of the army in Scotland. Highlights inc",
+   "editions": 58,
+   "unesco": false,
+   "web": "https://www.edinburghcastle.scot/"
+  },
+  {
+   "name": "Camera Obscura",
+   "lat": 55.9489,
+   "lng": -3.1956,
+   "wikidata": "Q4211494",
+   "note": "Over 150 years old, the Camera Obscura projects light from the top of the tower onto a large dish in a dark room below, displaying a panorama of the city. The effect still works on overcast days or at night but is best in sunlight, when you",
+   "editions": 7,
+   "unesco": false,
+   "web": "https://www.camera-obscura.co.uk/"
+  },
+  {
+   "name": "Gladstone's Land",
+   "lat": 55.9495,
+   "lng": -3.1934,
+   "wikidata": "Q5566312",
+   "note": "Thomas Gladstone was a wealthy merchant, and in 1617 he had this house refashioned to accommodate his family and to partly rent out. A \"Land\" means a tall narrow townhouse from the period when Old Town was cramped and the only space for dev",
+   "editions": 5,
+   "unesco": false,
+   "web": "https://www.nts.org.uk/visit/places/gladstones-land"
+  },
+  {
+   "name": "St Giles",
+   "lat": 55.9494,
+   "lng": -3.1909,
+   "wikidata": "Q1547466",
+   "note": "It's often called a Cathedral, but the Church of Scotland brooks no such episcopal entity, and Charles I dubbing it \"cathedral\" in 1633 was one reason his head was chopped off. Safer to call it \"High Kirk\", though they're nowadays lenient w",
+   "editions": 30,
+   "unesco": false,
+   "web": "https://www.stgilescathedral.org.uk/"
+  },
+  {
+   "name": "Mary King's Close",
+   "lat": 55.95011,
+   "lng": -3.19069,
+   "wikidata": "Q1084992",
+   "note": "Mary King (1590-1644) was a clothes merchant and city burgess. She died the year before plague struck and carried off the rest of her family. In 1753 Royal Exchange, now City Chambers, was built over several closes by demolishing their uppe",
+   "editions": 12,
+   "unesco": false,
+   "web": "https://www.realmarykingsclose.com/"
+  },
+  {
+   "name": "The Peoples' Story Museum",
+   "lat": 55.9515,
+   "lng": -3.1799,
+   "wikidata": "Q4306389",
+   "note": "This is housed in Canongate Tolbooth, the medieval centre for governance and justice (preferably gruesome) as Canongate was a separate jurisdiction until 1856. The museum covers the story of working class life, and of organised labour, from",
+   "editions": 4,
+   "unesco": false,
+   "web": "https://www.edinburghmuseums.org.uk/venue/peoples-story-museum"
+  },
+  {
+   "name": "Canongate Kirk",
+   "lat": 55.9517,
+   "lng": -3.1796,
+   "wikidata": "Q6415559",
+   "note": "In 1687 James VII (II of England) chucked the Protestants out of Holyrood to convert it to a royal Roman Catholic chapel, the sort of behaviour that got him ousted from the monarchy the following year. The congregation moved to Infirmary St",
+   "editions": 4,
+   "unesco": false,
+   "web": "https://www.canongatekirk.org.uk"
+  },
+  {
+   "name": "Museum of Edinburgh",
+   "lat": 55.9514,
+   "lng": -3.1796,
+   "wikidata": "Q11838982",
+   "note": "Museum of city history in a mustard-hued mansion built in 1570.",
+   "editions": 6,
+   "unesco": false,
+   "web": "https://www.edinburghmuseums.org.uk/venue/museum-edinburgh"
+  },
+  {
+   "name": "Dunbar's Close Garden",
+   "lat": 55.952124,
+   "lng": -3.178943,
+   "wikidata": "Q13889055",
+   "note": "This close was re-modelled in the 1970s to recreate a 17th-century physic and knot garden, a hidden quiet place in the busy city.",
+   "editions": 2,
+   "unesco": false
+  },
+  {
+   "name": "Scottish Parliament",
+   "lat": 55.9523,
+   "lng": -3.1745,
+   "wikidata": "Q2746031",
+   "note": "A unique building, designed by Spanish Catalan architect Enric Miralles, completed in 2004. It's either a daring showpiece of postmodern architecture or a national embarrassment or a bit of both, time will tell. Parliament meets Tu-Th and y",
+   "editions": 18,
+   "unesco": false,
+   "web": "https://www.parliament.scot/visitandlearn/9983.aspx"
+  },
+  {
+   "name": "Dynamic Earth",
+   "lat": 55.9506,
+   "lng": -3.1746,
+   "wikidata": "Q5318903",
+   "note": "Interactive natural history museum exhibiting the forces and features of our planet: volcanoes, polar ice, rainforests and so on. Opened in 1999, it's a tent-like structure on the former site of a gasworks and brewery.",
+   "editions": 3,
+   "unesco": false,
+   "web": "http://www.dynamicearth.ca/",
+   "posDoubt": true
+  },
+  {
+   "name": "Holyrood Palace",
+   "lat": 55.9527,
+   "lng": -3.1721,
+   "wikidata": "Q505950",
+   "note": "The Palace is a royal residence, closed when the king is here for a week in July and for similar state occasions. It's been repeatedly smashed up and rebuilt, and the present building is mostly from the 1670s. Highlights are the grand stair",
+   "editions": 44,
+   "unesco": false,
+   "web": "https://www.rct.uk/visit/palace-of-holyroodhouse"
+  },
+  {
+   "name": "National Library of Scotland",
+   "lat": 55.9486,
+   "lng": -3.1919,
+   "wikidata": "Q1670994",
+   "note": "A venerable reference library, which you need membership to access, but it has public exhibitions about literature. \"Treasures\" is its permanent exhibition. But don't stumble in here mistaking it for Central Library across the street.",
+   "editions": 31,
+   "unesco": false,
+   "web": "https://www.nls.uk/"
+  },
+  {
+   "name": "Central Library",
+   "lat": 55.94824,
+   "lng": -3.19221,
+   "wikidata": "Q5061355",
+   "note": "See Edinburgh#Connect for how to access. The internet stations are in the Learning Centre, and the building houses Central Lending Library, Central Reference Library, Central Children's Library, Edinburgh and Scottish Collections, Art & Des",
+   "editions": 7,
+   "unesco": false,
+   "web": "https://www.edinburgh.gov.uk/directory-record/1229174/central-library"
+  },
+  {
+   "name": "National Museum of Scotland",
+   "lat": 55.9469,
+   "lng": -3.1892,
+   "wikidata": "Q1633842",
+   "note": "Superb museum of Scotland's heritage. You enter into the lofty Victorian Grand Gallery, where the millennium clock chimes on the hour. Exhibition halls cover Scottish and world history and culture, science, technology, art and design, and n",
+   "editions": 33,
+   "unesco": false,
+   "web": "https://www.nms.ac.uk/national-museum-of-scotland/"
+  },
+  {
+   "name": "Anatomical Museum",
+   "lat": 55.945,
+   "lng": -3.19,
+   "wikidata": "",
+   "note": "Large collection of anatomical specimens and life and death masks. Best known is the skeleton of William Burke, hanged in 1829 after he and William Hare killed at least 16 people to sell the bodies for dissection. Limited opening as the are"
+  },
+  {
+   "name": "St Cecilia's Hall",
+   "lat": 55.949,
+   "lng": -3.1864,
+   "wikidata": "Q7592777",
+   "note": "Scotland's oldest purpose-built concert hall, opened in 1763 and still in regular use. It hosts the University of Edinburgh collection of historic musical instruments, crafted 16th to 20th century, many of which (such as the Trompette Demil",
+   "editions": 3,
+   "unesco": false,
+   "web": "https://www.ed.ac.uk/visit/museums-galleries/st-cecilias"
+  },
+  {
+   "name": "Talbot Rice Gallery",
+   "lat": 55.9471,
+   "lng": -3.1878,
+   "wikidata": "Q7679039",
+   "note": "David Talbot Rice (1903-72) was in the louche crowd at Oxford that inspired ''Brideshead Revisited'' and became a distinguished scholar of East Mediterranean and Russian art, with extensive contacts in those parts - how come this fellow was",
+   "editions": 4,
+   "unesco": false,
+   "web": "https://www.ed.ac.uk/visit/museums-galleries/talbot"
+  },
+  {
+   "name": "Dovecot Studios",
+   "lat": 55.9184,
+   "lng": -3.2368,
+   "wikidata": "Q5302420",
+   "note": "Tapestry studio and gallery housed in the former public baths. There is a cafe, shop, and viewing gallery where you can look down on weavers at work.",
+   "editions": 2,
+   "unesco": false,
+   "web": "https://dovecotstudios.com"
+  },
+  {
+   "name": "Surgeons' Hall Museums",
+   "lat": 55.9467,
+   "lng": -3.1852,
+   "wikidata": "Q7646188",
+   "note": "The permanent exhibitions are the Pathology Museum, the History of Surgery and the Dental Museum. Not suitable for children under 10 as the exhibits include human remains.",
+   "editions": 5,
+   "unesco": false,
+   "web": "https://museum.rcsed.ac.uk/"
+  },
+  {
+   "name": "Edinburgh Central Mosque",
+   "lat": 55.9451,
+   "lng": -3.186,
+   "wikidata": "",
+   "note": "Stately mosque and minaret completed in 1998 in a modern variant of Turkish style. You can generally look in between prayer times."
+  },
+  {
+   "name": "City Art Centre",
+   "lat": 55.9509,
+   "lng": -3.1893,
+   "wikidata": "Q65081638",
+   "note": "Four-floor gallery run by the city council. They rotate artwork from their extensive Scottish collection and have changing exhibitions.",
+   "editions": 4,
+   "unesco": false,
+   "web": "https://www.edinburghmuseums.org.uk/venue/city-art-centre"
+  },
+  {
+   "name": "Fruitmarket",
+   "lat": 55.951389,
+   "lng": -3.188889,
+   "wikidata": "Q4402028",
+   "note": "Gallery of contemporary art, refurbished in 2018. From 1936 to the 1970s this was where soft fruit and veg were traded, handy for the trains and delivery vans.",
+   "editions": 4,
+   "unesco": false,
+   "web": "https://www.fruitmarket.co.uk"
+  },
+  {
+   "name": "Stills",
+   "lat": 55.9507,
+   "lng": -3.1903,
+   "wikidata": "",
+   "note": "Photography gallery with three exhibitions a year. They also support photographers through courses and hire of equipment, darkroom and digital lab."
+  },
+  {
+   "name": "Museum on the Mound",
+   "lat": 55.9502,
+   "lng": -3.1934,
+   "wikidata": "Q6941127",
+   "note": "Museum about money and coins, in the basement of the Palladian pile of the former Bank of Scotland headquarters. Scotland developed a banking sector in the 18th century to support long-distance trade, and still prints its own banknotes.",
+   "editions": 5,
+   "unesco": false,
+   "web": "http://museumonthemound.com/"
+  },
+  {
+   "name": "Old Calton Cemetery",
+   "lat": 55.9536,
+   "lng": -3.1862,
+   "wikidata": "Q7083575",
+   "note": "Atmospheric Georgian graves, memorials, and funerary ornaments. Memorials include those to the philosopher David Hume (1711-1776), to the Scots who died in the American Civil War, and to the Martyrs of Reform imprisoned or transported for s",
+   "editions": 4,
+   "unesco": false
+  },
+  {
+   "name": "Scott Monument",
+   "lat": 55.9524,
+   "lng": -3.1933,
+   "wikidata": "Q2502213",
+   "note": "Sir Walter Scott (1771-1832) re-invented Scotland. In the late Georgian era, he popularised tales of its medieval and Jacobean tumults, and created the clan tartans you buy on Princes St. This grand Gothic memorial, part cathedral part moon",
+   "editions": 18,
+   "unesco": false,
+   "web": "http://www.edinburghmuseums.org.uk/venues/scott-monument"
+  },
+  {
+   "name": "National Galleries of Scotland: National",
+   "lat": 55.9509,
+   "lng": -3.1956,
+   "wikidata": "Q942713",
+   "note": "This holds much of Scotland's fine artwork from Renaissance to 20th century, with changing exhibitions. These rotate seasonally, so an exhibition put on for the Festival typically stays to the end of the year, allowing quieter times to view",
+   "editions": 39,
+   "unesco": false,
+   "web": "https://www.nationalgalleries.org/visit/scottish-national-gallery"
+  },
+  {
+   "name": "National Galleries of Scotland: Portrait",
+   "lat": 55.9555,
+   "lng": -3.1936,
+   "wikidata": "Q2441562",
+   "note": "Completed in 1890, this is a striking red sandstone neo-Gothic building. It holds portraits of Scots from down the ages, with new faces being added all the time: Billy Connolly and Tilda Swinton mingle with Mary Queen of Scots. The entrance",
+   "editions": 19,
+   "unesco": false,
+   "web": "https://www.nationalgalleries.org/visit/scottish-national-portrait-gallery"
+  },
+  {
+   "name": "Palestine Museum",
+   "lat": 55.9565,
+   "lng": -3.1985,
+   "wikidata": "",
+   "note": "A branch of their main museum in Woodbridge Connecticut, this is mostly artwork with exhibitions on the ''Nakhba'' and other events."
+  },
+  {
+   "name": "Princes Street Gardens",
+   "lat": 55.9511,
+   "lng": -3.2007,
+   "wikidata": "Q980646",
+   "note": "The west portion fills the valley beyond the Mound, spanning the railway tracks to the foot of castle crag. The east portion is the terrace around the Scott Monument. They were laid out in the 1820s as private gardens for residents of the s",
+   "editions": 15,
+   "unesco": false
+  },
+  {
+   "name": "The Georgian House",
+   "lat": 55.9524,
+   "lng": -3.2083,
+   "wikidata": "Q7736202",
+   "note": "This townhouse was designed by Robert Adam, completed in 1796 and has been furnished in the style of its first owner John Lamont. Its last private owner the Marquess of Bute also acquired adjacent townhouses and along with the other owners ",
+   "editions": 3,
+   "unesco": false,
+   "web": "https://www.nts.org.uk/visit/places/georgian-house"
+  },
+  {
+   "name": "Gilbert the Phone Box",
+   "lat": 55.9537,
+   "lng": -3.205,
+   "wikidata": "",
+   "note": "An old red phone box has been kitted out with Edwardian memorabilia, and nicknamed for Sir Giles Gilbert Scott (1880-1960) designer of the box. You can look in the windows anytime, or collect the key for £3 (for Save the Children) from Stew"
+  },
+  {
+   "name": "James Clerk Maxwell's Birthplace",
+   "lat": 55.9553,
+   "lng": -3.2057,
+   "wikidata": "",
+   "note": "Isaac Newton realised that what caused the apple to fall was the very same force moving the moon, planets and stars. James Clerk Maxwell (1831-1879) was born in this house, before the family moved to Kirkcudbright. He was intensely curious "
+  },
+  {
+   "name": "Dean Bridge",
+   "lat": 55.9531,
+   "lng": -3.2144,
+   "wikidata": "Q5246025",
+   "note": "is best seen from below in Dean Village as you follow the walkway along the stream - from the top it's just a busy thoroughfare. Crossing in four arches 107 ft / 32 m above the stream, it was Telford's last major project. As well as improvi",
+   "editions": 4,
+   "unesco": false,
+   "posDoubt": true
+  },
+  {
+   "name": "National Galleries of Scotland: Modern One",
+   "lat": 55.9509,
+   "lng": -3.2276,
+   "wikidata": "Q1889944",
+   "note": "The original modern art gallery, established in 1960, was in the Botanic Gardens. In 1895 it moved into this neoclassical building, originally a refuge for fatherless children, and in 1999 it expanded across the road into the neoclassical o",
+   "editions": 16,
+   "unesco": false,
+   "web": "https://www.nationalgalleries.org/visit/scottish-national-gallery-modern-art"
+  },
+  {
+   "name": "Modern Two",
+   "lat": 55.9518,
+   "lng": -3.2242,
+   "wikidata": "Q2679817",
+   "note": "Opposite side of Belford Rd has a slightly smaller collection, but enough to infuriate about one-in-five reviewers, who rage that their kids' drawings stuck on the fridge door are better. A neon sign in the garden reassures all and sundry t",
+   "editions": 9,
+   "unesco": false,
+   "web": "https://www.nationalgalleries.org/visit/scottish-national-gallery-modern-art",
+   "posDoubt": true
+  },
+  {
+   "name": "St Mary's Episcopal Cathedral",
+   "lat": 55.9484,
+   "lng": -3.2166,
+   "wikidata": "Q2324015",
+   "note": "This stonking great neo-Gothic church was completed in 1879, designed by Sir George Gilbert Scott, with the towers added in 1917. It's the senior Episcopal church in Scotland, within the Anglican tradition of bishops (and much else) that th",
+   "editions": 14,
+   "unesco": false,
+   "web": "http://www.cathedral.net",
+   "posDoubt": true
+  },
+  {
+   "name": "St Mary's Metropolitan Cathedral",
+   "lat": 55.9561,
+   "lng": -3.1879,
+   "wikidata": "Q519072",
+   "note": "The Roman Catholic Cathedral was established as a chapel in 1814 and became a cathedral in 1886 for the archdiocese of Edinburgh and St Andrews. It was designed by James Gillespie Graham in neo-perpendicular style and has undergone several ",
+   "editions": 14,
+   "unesco": false,
+   "web": "http://www.stmaryscathedral.co.uk/"
+  },
+  {
+   "name": "Sherlock Holmes",
+   "lat": 55.95658,
+   "lng": -3.18697,
+   "wikidata": "",
+   "note": "His creator Sir Arthur Conan Doyle (1859-1930) was born nearby at 11 Picardy Place, to a genteel but impoverished Irish Catholic family. His first Sherlock story was published in 1886. The statue was in storage while the plaza was remodelle"
+  },
+  {
+   "name": "Royal Botanic Garden",
+   "lat": 55.9651,
+   "lng": -3.2083,
+   "wikidata": "Q1807521",
+   "note": "Impressive gardens with a large collection. Great place to wander around on a sunny day, or to sit and have a picnic. Highlights include the Rock Garden; the 165-m-long herbaceous border, backed by a huge, century-old beech hedge, and the P",
+   "editions": 20,
+   "unesco": false,
+   "web": "https://www.rbge.org.uk",
+   "posDoubt": true
+  },
+  {
+   "name": "Patriothall Gallery",
+   "lat": 55.9589,
+   "lng": -3.2066,
+   "wikidata": "",
+   "note": "Small art gallery and artists studios in the former co-op bakery. The gallery has regular exhibitions of modern art. The studios are open.on one weekend in mid-August and another in late November."
+  },
+  {
+   "name": "Fettes College",
+   "lat": 55.9637,
+   "lng": -3.2262,
+   "wikidata": "Q5445986",
+   "note": "Boarding school in an impressive building in the style of a French Château by David Bryce built between 1863 and 1869. It can be seen from far away. Not open for tourists - the best view is looking through the fence from Carrington Road.",
+   "editions": 8,
+   "unesco": false,
+   "web": "https://www.fettes.com",
+   "posDoubt": true
+  },
+  {
+   "name": "Museum of Scottish Fire Heritage",
+   "lat": 55.9638,
+   "lng": -3.18384,
+   "wikidata": "",
+   "note": "Volunteer-run museum within McDonald Road fire station. History of Scottish firefighting from the era of rival commercial fire companies, through early wooden fire engines to more recent appliances."
+  },
+  {
+   "name": "Royal Yacht Britannia",
+   "lat": 55.9822,
+   "lng": -3.1773,
+   "wikidata": "Q1529544",
+   "note": "This ship was commissioned in 1954 and was the royal transport and residence on overseas tours until 1997. She has a length of 412 ft / 126 m and oil-fired twin turbines; she was also designed to act as a hospital ship in wartime but was ne",
+   "editions": 23,
+   "unesco": false,
+   "web": "https://www.royalyachtbritannia.co.uk/",
+   "posDoubt": true
+  },
+  {
+   "name": "Trinity House",
+   "lat": 55.9722,
+   "lng": -3.1713,
+   "wikidata": "",
+   "note": "Stately neo-classical building of 1818 which is now a maritime museum, but only open for special events. It's built over its predecessor of 1560, which in turn was built over a medieval monastic site. The organisation dates back to 1380, wh"
+  },
+  {
+   "name": "Upright Gallery",
+   "lat": 55.9396,
+   "lng": -3.204,
+   "wikidata": "",
+   "note": "Small gallery of local artists' work."
+  },
+  {
+   "name": "Royal Observatory",
+   "lat": 55.9229,
+   "lng": -3.1881,
+   "wikidata": "Q3106882",
+   "note": "This opened in 1896 to replace the observatory on Calton Hill in New Town (which remained active to 2009 but is now an art exhibition space). The ROE is owned by the Science and Technology Facilities Council and houses the University of Edi",
+   "editions": 16,
+   "unesco": false,
+   "web": "https://www.roe.ac.uk/",
+   "posDoubt": true
+  },
+  {
+   "name": "Craigmillar Castle",
+   "lat": 55.9256,
+   "lng": -3.1409,
+   "wikidata": "Q432422",
+   "note": "Extensive ruin of a medieval castle, built from the 14th century and abandoned in the 18th. Here was hatched the plot to murder Lord Darnley, the inconvenient husband of Mary Queen of Scots. He was blown up at Kirk O'Field (now the site of ",
+   "editions": 16,
+   "unesco": false,
+   "web": "https://www.historicenvironment.scot/visit-a-place/places/craigmillar-castle/",
+   "posDoubt": true
+  },
+  {
+   "name": "Edinburgh Printmakers",
+   "lat": 55.942247,
+   "lng": -3.213065,
+   "wikidata": "Q105320053",
+   "note": "Creative centre for printmaking & visual arts, Two free galleries & shop. Vegan Cafe.",
+   "editions": 1,
+   "unesco": false
+  },
+  {
+   "name": "Edinburgh Zoo",
+   "lat": 55.9424,
+   "lng": -3.2693,
+   "wikidata": "Q1284778",
+   "note": "The pandas have returned to China but there's still plenty here. Penguins include gentoo, rockhopper and king, most famously Major General Sir Nils Olav III, Baron of the Bouvet Islands and mascot of the Norwegian King's Guard. Budongo Trai",
+   "editions": 20,
+   "unesco": false,
+   "web": "http://www.edinburghzoo.org.uk",
+   "posDoubt": true
+  },
+  {
+   "name": "Corstorphine Old Parish Church",
+   "lat": 55.9414,
+   "lng": -3.2819,
+   "wikidata": "Q17570258",
+   "note": "The present building is a collegiate church of 1429, becoming a parish church in 1646, and re-modeled in 1828.",
+   "editions": 2,
+   "unesco": false,
+   "web": "http://www.corstorphineoldparish.org.uk",
+   "posDoubt": true
+  },
+  {
+   "name": "Lauriston Castle",
+   "lat": 55.9712,
+   "lng": -3.2784,
+   "wikidata": "Q2969689",
+   "note": "This 1590s tower house was extended in the 1820s and housed a series of prosperous families. It passed into council ownership in 1926 and the interior has been preserved in its last occupants' plush Edwardian style. Visit by pre-booked guid",
+   "editions": 9,
+   "unesco": false,
+   "web": "https://www.edinburghmuseums.org.uk/venue/lauriston-castle",
+   "posDoubt": true
+  },
+  {
+   "name": "Edinburgh Castle",
+   "lat": 55.9485,
+   "lng": -3.2004,
+   "wikidata": "Q212065",
+   "note": "Iconic fortress perched magnificently on a volcanic rock above the city. The castle has been continuously used for 1100 years and is kept in excellent condition; it's still the ceremonial headquarters of the army in Scotland. Highlights inc",
+   "editions": 58,
+   "unesco": false,
+   "web": "https://www.edinburghcastle.scot/"
+  },
+  {
+   "name": "Camera Obscura",
+   "lat": 55.9489,
+   "lng": -3.1956,
+   "wikidata": "Q4211494",
+   "note": "Over 150 years old, the Camera Obscura projects light from the top of the tower onto a large dish in a dark room below, displaying a panorama of the city. The effect still works on overcast days or at night but is best in sunlight, when you",
+   "editions": 7,
+   "unesco": false,
+   "web": "https://www.camera-obscura.co.uk/"
+  },
+  {
+   "name": "Gladstone's Land",
+   "lat": 55.9495,
+   "lng": -3.1934,
+   "wikidata": "Q5566312",
+   "note": "Thomas Gladstone was a wealthy merchant, and in 1617 he had this house refashioned to accommodate his family and to partly rent out. A \"Land\" means a tall narrow townhouse from the period when Old Town was cramped and the only space for dev",
+   "editions": 5,
+   "unesco": false,
+   "web": "https://www.nts.org.uk/visit/places/gladstones-land"
+  },
+  {
+   "name": "St Giles",
+   "lat": 55.9494,
+   "lng": -3.1909,
+   "wikidata": "Q1547466",
+   "note": "It's often called a Cathedral, but the Church of Scotland brooks no such episcopal entity, and Charles I dubbing it \"cathedral\" in 1633 was one reason his head was chopped off. Safer to call it \"High Kirk\", though they're nowadays lenient w",
+   "editions": 30,
+   "unesco": false,
+   "web": "https://www.stgilescathedral.org.uk/"
+  },
+  {
+   "name": "Mary King's Close",
+   "lat": 55.95011,
+   "lng": -3.19069,
+   "wikidata": "Q1084992",
+   "note": "Mary King (1590-1644) was a clothes merchant and city burgess. She died the year before plague struck and carried off the rest of her family. In 1753 Royal Exchange, now City Chambers, was built over several closes by demolishing their uppe",
+   "editions": 12,
+   "unesco": false,
+   "web": "https://www.realmarykingsclose.com/"
+  },
+  {
+   "name": "The Peoples' Story Museum",
+   "lat": 55.9515,
+   "lng": -3.1799,
+   "wikidata": "Q4306389",
+   "note": "This is housed in Canongate Tolbooth, the medieval centre for governance and justice (preferably gruesome) as Canongate was a separate jurisdiction until 1856. The museum covers the story of working class life, and of organised labour, from",
+   "editions": 4,
+   "unesco": false,
+   "web": "https://www.edinburghmuseums.org.uk/venue/peoples-story-museum"
+  },
+  {
+   "name": "Canongate Kirk",
+   "lat": 55.9517,
+   "lng": -3.1796,
+   "wikidata": "Q6415559",
+   "note": "In 1687 James VII (II of England) chucked the Protestants out of Holyrood to convert it to a royal Roman Catholic chapel, the sort of behaviour that got him ousted from the monarchy the following year. The congregation moved to Infirmary St",
+   "editions": 4,
+   "unesco": false,
+   "web": "https://www.canongatekirk.org.uk"
+  },
+  {
+   "name": "Museum of Edinburgh",
+   "lat": 55.9514,
+   "lng": -3.1796,
+   "wikidata": "Q11838982",
+   "note": "Museum of city history in a mustard-hued mansion built in 1570.",
+   "editions": 6,
+   "unesco": false,
+   "web": "https://www.edinburghmuseums.org.uk/venue/museum-edinburgh"
+  },
+  {
+   "name": "Dunbar's Close Garden",
+   "lat": 55.952124,
+   "lng": -3.178943,
+   "wikidata": "Q13889055",
+   "note": "This close was re-modelled in the 1970s to recreate a 17th-century physic and knot garden, a hidden quiet place in the busy city.",
+   "editions": 2,
+   "unesco": false
+  },
+  {
+   "name": "Scottish Parliament",
+   "lat": 55.9523,
+   "lng": -3.1745,
+   "wikidata": "Q2746031",
+   "note": "A unique building, designed by Spanish Catalan architect Enric Miralles, completed in 2004. It's either a daring showpiece of postmodern architecture or a national embarrassment or a bit of both, time will tell. Parliament meets Tu-Th and y",
+   "editions": 18,
+   "unesco": false,
+   "web": "https://www.parliament.scot/visitandlearn/9983.aspx"
+  },
+  {
+   "name": "Dynamic Earth",
+   "lat": 55.9506,
+   "lng": -3.1746,
+   "wikidata": "Q5318903",
+   "note": "Interactive natural history museum exhibiting the forces and features of our planet: volcanoes, polar ice, rainforests and so on. Opened in 1999, it's a tent-like structure on the former site of a gasworks and brewery.",
+   "editions": 3,
+   "unesco": false,
+   "web": "http://www.dynamicearth.ca/",
+   "posDoubt": true
+  },
+  {
+   "name": "Holyrood Palace",
+   "lat": 55.9527,
+   "lng": -3.1721,
+   "wikidata": "Q505950",
+   "note": "The Palace is a royal residence, closed when the king is here for a week in July and for similar state occasions. It's been repeatedly smashed up and rebuilt, and the present building is mostly from the 1670s. Highlights are the grand stair",
+   "editions": 44,
+   "unesco": false,
+   "web": "https://www.rct.uk/visit/palace-of-holyroodhouse"
+  },
+  {
+   "name": "National Library of Scotland",
+   "lat": 55.9486,
+   "lng": -3.1919,
+   "wikidata": "Q1670994",
+   "note": "A venerable reference library, which you need membership to access, but it has public exhibitions about literature. \"Treasures\" is its permanent exhibition. But don't stumble in here mistaking it for Central Library across the street.",
+   "editions": 31,
+   "unesco": false,
+   "web": "https://www.nls.uk/"
+  },
+  {
+   "name": "Central Library",
+   "lat": 55.94824,
+   "lng": -3.19221,
+   "wikidata": "Q5061355",
+   "note": "See Edinburgh#Connect for how to access. The internet stations are in the Learning Centre, and the building houses Central Lending Library, Central Reference Library, Central Children's Library, Edinburgh and Scottish Collections, Art & Des",
+   "editions": 7,
+   "unesco": false,
+   "web": "https://www.edinburgh.gov.uk/directory-record/1229174/central-library"
+  },
+  {
+   "name": "National Museum of Scotland",
+   "lat": 55.9469,
+   "lng": -3.1892,
+   "wikidata": "Q1633842",
+   "note": "Superb museum of Scotland's heritage. You enter into the lofty Victorian Grand Gallery, where the millennium clock chimes on the hour. Exhibition halls cover Scottish and world history and culture, science, technology, art and design, and n",
+   "editions": 33,
+   "unesco": false,
+   "web": "https://www.nms.ac.uk/national-museum-of-scotland/"
+  },
+  {
+   "name": "Anatomical Museum",
+   "lat": 55.945,
+   "lng": -3.19,
+   "wikidata": "",
+   "note": "Large collection of anatomical specimens and life and death masks. Best known is the skeleton of William Burke, hanged in 1829 after he and William Hare killed at least 16 people to sell the bodies for dissection. Limited opening as the are"
+  },
+  {
+   "name": "St Cecilia's Hall",
+   "lat": 55.949,
+   "lng": -3.1864,
+   "wikidata": "Q7592777",
+   "note": "Scotland's oldest purpose-built concert hall, opened in 1763 and still in regular use. It hosts the University of Edinburgh collection of historic musical instruments, crafted 16th to 20th century, many of which (such as the Trompette Demil",
+   "editions": 3,
+   "unesco": false,
+   "web": "https://www.ed.ac.uk/visit/museums-galleries/st-cecilias"
+  },
+  {
+   "name": "Talbot Rice Gallery",
+   "lat": 55.9471,
+   "lng": -3.1878,
+   "wikidata": "Q7679039",
+   "note": "David Talbot Rice (1903-72) was in the louche crowd at Oxford that inspired ''Brideshead Revisited'' and became a distinguished scholar of East Mediterranean and Russian art, with extensive contacts in those parts - how come this fellow was",
+   "editions": 4,
+   "unesco": false,
+   "web": "https://www.ed.ac.uk/visit/museums-galleries/talbot"
+  },
+  {
+   "name": "Dovecot Studios",
+   "lat": 55.9184,
+   "lng": -3.2368,
+   "wikidata": "Q5302420",
+   "note": "Tapestry studio and gallery housed in the former public baths. There is a cafe, shop, and viewing gallery where you can look down on weavers at work.",
+   "editions": 2,
+   "unesco": false,
+   "web": "https://dovecotstudios.com"
+  },
+  {
+   "name": "Surgeons' Hall Museums",
+   "lat": 55.9467,
+   "lng": -3.1852,
+   "wikidata": "Q7646188",
+   "note": "The permanent exhibitions are the Pathology Museum, the History of Surgery and the Dental Museum. Not suitable for children under 10 as the exhibits include human remains.",
+   "editions": 5,
+   "unesco": false,
+   "web": "https://museum.rcsed.ac.uk/"
+  },
+  {
+   "name": "Edinburgh Central Mosque",
+   "lat": 55.9451,
+   "lng": -3.186,
+   "wikidata": "",
+   "note": "Stately mosque and minaret completed in 1998 in a modern variant of Turkish style. You can generally look in between prayer times."
+  },
+  {
+   "name": "City Art Centre",
+   "lat": 55.9509,
+   "lng": -3.1893,
+   "wikidata": "Q65081638",
+   "note": "Four-floor gallery run by the city council. They rotate artwork from their extensive Scottish collection and have changing exhibitions.",
+   "editions": 4,
+   "unesco": false,
+   "web": "https://www.edinburghmuseums.org.uk/venue/city-art-centre"
+  },
+  {
+   "name": "Fruitmarket",
+   "lat": 55.951389,
+   "lng": -3.188889,
+   "wikidata": "Q4402028",
+   "note": "Gallery of contemporary art, refurbished in 2018. From 1936 to the 1970s this was where soft fruit and veg were traded, handy for the trains and delivery vans.",
+   "editions": 4,
+   "unesco": false,
+   "web": "https://www.fruitmarket.co.uk"
+  },
+  {
+   "name": "Stills",
+   "lat": 55.9507,
+   "lng": -3.1903,
+   "wikidata": "",
+   "note": "Photography gallery with three exhibitions a year. They also support photographers through courses and hire of equipment, darkroom and digital lab."
+  },
+  {
+   "name": "Museum on the Mound",
+   "lat": 55.9502,
+   "lng": -3.1934,
+   "wikidata": "Q6941127",
+   "note": "Museum about money and coins, in the basement of the Palladian pile of the former Bank of Scotland headquarters. Scotland developed a banking sector in the 18th century to support long-distance trade, and still prints its own banknotes.",
+   "editions": 5,
+   "unesco": false,
+   "web": "http://museumonthemound.com/"
+  }
  ]
 }

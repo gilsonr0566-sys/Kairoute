@@ -413,5 +413,76 @@
    "min": 84,
    "km": 58.2
   }
+ ],
+ "guideSights": [
+  {
+   "name": "Etz Hayyim Synagogue",
+   "lat": 35.51595,
+   "lng": 24.01683,
+   "wikidata": "",
+   "note": "Until 1999 Etz Hayyim was a house of prayer that remained the sole Jewish monument on Crete after the destruction of Crete's Jewish community in 1944. Essentially it stood as a monument to the success of the Nazis in obliterating 2,300 year"
+  }
+ ],
+ "ferryLinks": [
+  {
+   "name": "Gramvousa Balos",
+   "a": {
+    "lat": 35.51758,
+    "lng": 23.6374
+   },
+   "b": {
+    "lat": 35.60662,
+    "lng": 23.57855
+   },
+   "osm": "way/27737147"
+  },
+  {
+   "name": "",
+   "a": {
+    "lat": 35.5834,
+    "lng": 23.58552
+   },
+   "b": {
+    "lat": 35.51758,
+    "lng": 23.6374
+   },
+   "osm": "way/424954893"
+  },
+  {
+   "name": "",
+   "a": {
+    "lat": 35.60662,
+    "lng": 23.57855
+   },
+   "b": {
+    "lat": 35.5834,
+    "lng": 23.58552
+   },
+   "osm": "way/424954895"
+  },
+  {
+   "name": "Gramvousa Balos",
+   "a": {
+    "lat": 35.60662,
+    "lng": 23.57855
+   },
+   "b": {
+    "lat": 35.51758,
+    "lng": 23.6374
+   },
+   "osm": "way/57684788"
+  },
+  {
+   "name": "Antikythira - Kissamos",
+   "a": {
+    "lat": 35.51758,
+    "lng": 23.6374
+   },
+   "b": {
+    "lat": 35.8824,
+    "lng": 23.28997
+   },
+   "osm": "way/589593645"
+  }
  ]
 }

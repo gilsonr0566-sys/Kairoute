@@ -300,7 +300,8 @@
    "wikidata": "Q2750095",
    "note": "This synagogue built by Sephardic Jews is supposed to be the second-oldest still in use synagogue in Europe today. A permanent Jewish community here was founded at the end of the 15th century following the expulsions from Portugal and Spain",
    "editions": 18,
-   "unesco": true
+   "unesco": true,
+   "posDoubt": true
   },
   {
    "name": "Maritime Museum",
@@ -309,7 +310,8 @@
    "wikidata": "Q12640048",
    "note": "Considering how vital sailing and shipbuilding were to the growth of the Dubrovnik Republic, this is one of the city’s most important museums.",
    "editions": 6,
-   "unesco": false
+   "unesco": false,
+   "web": "http://dumus.hr/en/maritime-museum/"
   },
   {
    "name": "War Photo Limited",
@@ -923,6 +925,116 @@
    },
    "min": 27,
    "km": 18.8
+  }
+ ],
+ "ferryLinks": [
+  {
+   "name": "Mlini-Srebreno-Dubrovnik",
+   "a": {
+    "lat": 42.62148,
+    "lng": 18.20475
+   },
+   "b": {
+    "lat": 42.61959,
+    "lng": 18.19885
+   },
+   "osm": "way/1446159276"
+  },
+  {
+   "name": "Mlini - Lokrum",
+   "a": {
+    "lat": 42.62557,
+    "lng": 18.12316
+   },
+   "b": {
+    "lat": 42.62194,
+    "lng": 18.20531
+   },
+   "osm": "way/163718062"
+  },
+  {
+   "name": "Dubrovnik - Mlini",
+   "a": {
+    "lat": 42.62194,
+    "lng": 18.20531
+   },
+   "b": {
+    "lat": 42.6409,
+    "lng": 18.11177
+   },
+   "osm": "way/163718063"
+  },
+  {
+   "name": "Dubrovnik - Koločep - Lopud- Šipan",
+   "a": {
+    "lat": 42.65769,
+    "lng": 18.08606
+   },
+   "b": {
+    "lat": 42.69035,
+    "lng": 17.94147
+   },
+   "osm": "way/174921703"
+  },
+  {
+   "name": "",
+   "a": {
+    "lat": 42.69035,
+    "lng": 17.94147
+   },
+   "b": {
+    "lat": 42.65788,
+    "lng": 18.08574
+   },
+   "osm": "way/178630799"
+  },
+  {
+   "name": "Dubrovnik - Sobra - Polače",
+   "a": {
+    "lat": 42.65778,
+    "lng": 18.08637
+   },
+   "b": {
+    "lat": 42.73928,
+    "lng": 17.6211
+   },
+   "osm": "way/178657278"
+  },
+  {
+   "name": "",
+   "a": {
+    "lat": 42.6409,
+    "lng": 18.11177
+   },
+   "b": {
+    "lat": 42.5819,
+    "lng": 18.21661
+   },
+   "osm": "way/284433961"
+  },
+  {
+   "name": "",
+   "a": {
+    "lat": 42.65788,
+    "lng": 18.08574
+   },
+   "b": {
+    "lat": 42.73928,
+    "lng": 17.6211
+   },
+   "osm": "way/60295883"
+  },
+  {
+   "name": "Dubrovnik - Lokrum",
+   "a": {
+    "lat": 42.6409,
+    "lng": 18.11177
+   },
+   "b": {
+    "lat": 42.62557,
+    "lng": 18.12316
+   },
+   "osm": "way/75253349"
   }
  ]
 }

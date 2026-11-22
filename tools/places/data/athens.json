@@ -414,7 +414,8 @@
    "wikidata": "Q1123019",
    "note": "Only the ruins remain today. The column that has fallen and can still be seen in pieces was brought down during a thunderstorm about a century ago.",
    "editions": 38,
-   "unesco": false
+   "unesco": false,
+   "posDoubt": true
   },
   {
    "name": "The Lyceum",
@@ -424,7 +425,8 @@
    "note": "An ancient temple here hosted lectures by Socrates, Plato, and Aristotle, and early meetings of the Athenian Assembly. Aristotle made the temple the home of his school, the Lyceum. It hosted the world's first zoo and botanical garden, as we",
    "editions": 43,
    "unesco": false,
-   "closedForGood": true
+   "closedForGood": true,
+   "posDoubt": true
   },
   {
    "name": "Plato's Academy",
@@ -434,7 +436,8 @@
    "note": "This house of study was founded by the famous philosopher Plato. His equally famous follower Aristotle studied here for 20 years before leaving to found a school of his own. The site is an outdoor free park where you can see the excavated r",
    "editions": 69,
    "unesco": false,
-   "closedForGood": true
+   "closedForGood": true,
+   "posDoubt": true
   },
   {
    "name": "Hadrian's Reservoir",
@@ -451,7 +454,8 @@
    "note": "The stadium that housed the first modern day Olympic Games of 1896. Earlier versions of the stadium date as far back as 330 BCE. It's an enormous, white, marble stadium, with a horseshoe configuration.",
    "editions": 47,
    "unesco": false,
-   "web": "http://www.panathenaicstadium.gr/"
+   "web": "http://www.panathenaicstadium.gr/",
+   "posDoubt": true
   },
   {
    "name": "Lycabettus Hill",
@@ -461,7 +465,8 @@
    "note": "A 200m hill bordering the Kolonaki district. You can reach the top by walking (the path starts 15 minutes from Evangelismos metro stop, and will take 30 minutes to walk up the winding, but paved and not steep, path) or by a funicular railwa",
    "editions": 38,
    "unesco": false,
-   "web": "http://www.lycabettushill.com"
+   "web": "http://www.lycabettushill.com",
+   "posDoubt": true
   },
   {
    "name": "Olympic Stadium",
@@ -534,7 +539,8 @@
    "note": "This is the largest and most popular of Athens' many museums, and is usually very crowded. Its vast collection includes treasures unearthed from Mycenae by Heinrich Schliemann; a staggering array of sculpture including the earliest known Gr",
    "editions": 41,
    "unesco": false,
-   "web": "https://www.namuseum.gr/"
+   "web": "https://www.namuseum.gr/",
+   "posDoubt": true
   },
   {
    "name": "Kanellopoulos Museum",
@@ -574,7 +580,8 @@
    "note": "It's one of Greece's main art institutions and features paintings and works of art from some of Greece's and Europe's best from the 19th and 20th centuries. Emphasis is given to popular Greek contemporary artists including Giannis Tsarouchi",
    "editions": 19,
    "unesco": false,
-   "web": "http://www.nationalgallery.gr"
+   "web": "http://www.nationalgallery.gr",
+   "posDoubt": true
   },
   {
    "name": "Benaki Museum of Islamic Art",
@@ -754,7 +761,8 @@
    "wikidata": "Q5588347",
    "note": "",
    "editions": 3,
-   "unesco": false
+   "unesco": false,
+   "posDoubt": true
   }
  ],
  "transit": [
