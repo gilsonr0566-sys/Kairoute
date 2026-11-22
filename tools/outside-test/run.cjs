@@ -9,11 +9,12 @@ const PASS = new Set(['/sources', '/famous', '/ground', '/places', '/transit', '
 const INJECT = fs.readFileSync(path.join(__dirname, 'inject.js'), 'utf8');
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 const SC = require('./screen-check.cjs');
-const screen = (res, where, text) => { const c = SC.check(text); if (!c) return; if (c.late.length || c.badLunch.length) { const f = { where, head: String(text).split('\n')[0], leaveBy: c.lbTxt, late: c.late.map(x => x.k + ' ' + x.name + ' leaves ' + x.leaveTxt), lunch: c.badLunch.map(x => x.name + ' | ' + x.meta) }; res.screen.push(f); console.log('SCREEN CHECK FAIL ' + JSON.stringify(f)); } res.screenRead++; };
+let SR = null; try { SR = require('./screen-rules.js'); } catch (e) {}
+const screen = (res, where, text) => { const c = SC.check(text); if (!c) return; if (c.late.length || c.badLunch.length) { const f = { where, head: String(text).split('\n')[0], leaveBy: c.lbTxt, late: c.late.map(x => x.k + ' ' + x.name + ' leaves ' + x.leaveTxt), lunch: c.badLunch.map(x => x.name + ' | ' + x.meta) }; res.screen.push(f); console.log('SCREEN CHECK FAIL ' + JSON.stringify(f)); } res.screenRead++; if (SR && SR.rules) { try { for (const f of SR.rules(text, {})) { res.rules.push({ where, sev: f.sev, rule: f.rule, msg: f.msg }); if (/^S[12]/.test(f.sev)) console.log('SCREEN RULE ' + f.sev + ' ' + f.rule + ' @ ' + where + ': ' + f.msg); } } catch (e) { res.errors.push('screen-rules: ' + String(e.message).slice(0, 200)); } } };
 (async () => {
   const t = Q.trips.find(x => x.name === process.env.TRIP); if (!t) { console.log('no such trip', process.env.TRIP); process.exit(1); }
   const out = path.join(process.cwd(), 'outside-out', t.name); fs.mkdirSync(out, { recursive: true });
-  const res = { name: t.name, label: t.label || '', legs: t.legs, started: new Date().toISOString(), passed: {}, refused: {}, errors: [], days: [], guides: {}, steps: [], screen: [], screenRead: 0 };
+  const res = { name: t.name, label: t.label || '', legs: t.legs, started: new Date().toISOString(), passed: {}, refused: {}, errors: [], days: [], guides: {}, steps: [], screen: [], screenRead: 0, rules: [] };
   const b = await chromium.launch();
   const ctx = await b.newContext({ viewport: { width: 1100, height: 2800 }, locale: 'en-US', timezoneId: t.tz || 'America/Chicago' });
   await ctx.addInitScript(() => { try { localStorage.setItem('kairoute.intro1', '1'); } catch (e) {} });
