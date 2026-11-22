@@ -17,9 +17,14 @@ var ENGINE2 = true;
   // Separate storage for the Beta 2 copy (same origin as the main app): keys live under "b2:".
   var ls; try { ls = window.localStorage; } catch (e) { return; }
   var P = "b2:", NEVER = /^kairoute\.(sync|group|devid2|deleted)/;
+  // The main app keeps its trips under "wayside." (wayside.trip2, wayside.library) and its settings under "kairoute.":
+  // both are copied (Nov 22 review: only "kairoute." keys were, so a trip planned in the demo never came over). One key
+  // at a time, the trips first and the large saved guides last, so a full device still brings the trips.
   try {
     if (!ls.getItem(P + "__copied")) {
-      for (var i = 0; i < ls.length; i++) { var k = ls.key(i); if (k && k.indexOf(P) !== 0 && /^kairoute/.test(k) && !NEVER.test(k)) ls.setItem(P + k, ls.getItem(k)); }
+      var ks = []; for (var i = 0; i < ls.length; i++) { var k = ls.key(i); if (k && k.indexOf(P) !== 0 && /^(kairoute|wayside)\./.test(k) && !NEVER.test(k)) ks.push(k); }
+      ks.sort(function (a, b) { return (a === "wayside.cities") - (b === "wayside.cities"); });
+      ks.forEach(function (k) { try { ls.setItem(P + k, ls.getItem(k)); } catch (e) {} });
       ls.setItem(P + "__copied", String(Date.now()));
     }
   } catch (e) {}
