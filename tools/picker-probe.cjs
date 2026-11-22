@@ -14,7 +14,7 @@ const URL = process.env.URL || "https://gilsonr0566-sys.github.io/Kairoute/", OU
     p.on("pageerror", e => console.log(`${tag} PAGE ERROR ${e.message}`));
     await p.goto(URL); await p.waitForFunction(() => window.__kairouteAt && window.__kairouteAiReady, null, { timeout: 120000 });
     console.log(tag, "Version", await p.evaluate(() => fetch("version.txt", { cache: "no-store" }).then(r => r.text()).catch(() => "?")));
-    await p.getByText("Continue trip").click({ timeout: 15000 }).catch(() => {});
+    await p.locator('[data-act=continue]').click({ timeout: 15000 }).catch(() => {});
     await p.waitForFunction(() => window.__kairouteAiReady(), null, { timeout: 90000 }).catch(() => {});
     await p.waitForTimeout(20000); // guides, sources and map areas arrive
     const days = (await p.evaluate(() => window.__kairouteDays())).filter(d => d.city && d.type !== "sea");

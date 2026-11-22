@@ -14,7 +14,7 @@ const FILE = path.resolve(process.argv[2] || path.join(__dirname, '..', 'index.h
   const errs = []; p.on('pageerror', e => errs.push(e.message));
   await p.route('**/*', r => /^file:/.test(r.request().url()) ? r.continue() : r.abort());
   await p.goto('file://' + FILE); await p.evaluate(() => localStorage.setItem('kairoute.intro1', '1')); await p.reload(); await p.waitForTimeout(800);
-  await p.getByText('Continue trip').click(); await p.waitForTimeout(400);
+  await p.locator('[data-act=continue]').click(); await p.waitForTimeout(400);
   const all = (await p.evaluate(() => window.__kairouteDays())).filter(d => d.city && d.type !== 'sea');
   const shown = () => p.evaluate(() => [...document.querySelectorAll('#view .tl .stop .name, #view .tl [data-stop] .name, #view .timeline .name')].map(e => e.textContent.trim()).filter(Boolean).join(' | '));
   const plan = i => p.evaluate(i => { const r = window.__kairouteRoute(i) || []; return r.filter(x => x.type !== 'travel').map(x => x.name).join(' > '); }, i);

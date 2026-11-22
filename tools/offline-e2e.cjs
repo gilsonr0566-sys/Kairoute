@@ -63,7 +63,7 @@ async function services(ctx) {
   await p.goto(base + 'index.html'); await p.evaluate(() => localStorage.setItem('kairoute.intro1', '1'));
   await p.evaluate(() => navigator.serviceWorker.ready); await p.reload(); await p.waitForTimeout(800);
   if (!(await p.evaluate(() => !!navigator.serviceWorker.controller))) fail('the service worker did not take control of the page');
-  await p.getByText('Continue trip').click(); await p.waitForTimeout(400);
+  await p.locator('[data-act=continue]').click(); await p.waitForTimeout(400);
   const O = (fn, ...a) => p.evaluate(([fn, a]) => window.__kairouteOffline[fn](...a), [fn, a]);
   // 1. Before downloading: the Trip screen says the trip is not ready, and offers the download.
   await p.evaluate(() => window.__kairouteGo('trip', 0)); await O('check'); await p.evaluate(() => window.__kairouteGo('trip', 0)); await p.waitForTimeout(300);

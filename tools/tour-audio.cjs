@@ -7,7 +7,7 @@ const { chromium, devices } = require('playwright');
   await p.route(/cdnjs|fonts\.g/, r => r.abort());
   const errs = []; p.on('pageerror', e => errs.push(e.message));
   await p.goto(process.argv[2] || 'http://localhost:8000/'); await p.evaluate(() => localStorage.setItem('kairoute.intro1', '1')); await p.reload(); await p.waitForTimeout(1500);
-  await p.click('text=Continue trip'); await p.waitForTimeout(400);
+  await p.click('[data-act=continue]'); await p.waitForTimeout(400);
   await p.click('#tab-plan').catch(() => {}); await p.waitForTimeout(300);
   const ts = await p.$('[data-act="tourstart"]'); if (!ts) throw new Error('no Start the tour button');
   await ts.scrollIntoViewIfNeeded(); await ts.tap(); await p.waitForTimeout(600);

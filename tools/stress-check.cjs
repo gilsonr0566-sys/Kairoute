@@ -10,7 +10,7 @@ const FILE = path.resolve(process.argv[2] || path.join(__dirname, '..', 'index.h
     const p = await b.newPage({ viewport: vp }); const errs = []; p.on('pageerror', e => errs.push(e.message));
     await p.route('**/*', r => /^file:/.test(r.request().url()) ? r.continue() : r.abort());
     await p.goto('file://' + FILE); await p.evaluate(() => localStorage.setItem('kairoute.intro1', '1')); await p.reload(); await p.waitForTimeout(800);
-    await p.getByText('Continue trip').click(); await p.waitForTimeout(400);
+    await p.locator('[data-act=continue]').click(); await p.waitForTimeout(400);
     const days = await p.evaluate(() => window.__kairouteDays());
     // 1. Fast taps (a fixed pseudo-random order, so every run taps the same way).
     const t0 = Date.now(); let taps = 0, seed = 7; const pick = n => { seed = (seed * 9301 + 49297) % 233280; return seed % n; };
@@ -52,7 +52,7 @@ const FILE = path.resolve(process.argv[2] || path.join(__dirname, '..', 'index.h
     const snap = () => p.evaluate(() => JSON.stringify(window.__kairouteDays().map(d => [d.date, d.dest, ((window.__kairouteTruth(d.i) || {}).picks || []).length])));
     const before = await snap();
     await p.waitForTimeout(1500); await p.reload(); await p.waitForTimeout(1000);
-    const c = p.getByText('Continue trip'); if (await c.count()) await c.first().click(); await p.waitForTimeout(500);
+    const c = p.locator('[data-act=continue]'); if (await c.count()) await c.first().click(); await p.waitForTimeout(500);
     const after = await snap();
     if (before !== after) fail(`${tag}: the trip changed after a reload\n  before ${before}\n  after  ${after}`);
     if (errs.length) fail(`${tag}: ${errs.length} script error(s), first: ${errs[0].slice(0, 200)}`);

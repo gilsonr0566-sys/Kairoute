@@ -261,6 +261,9 @@ function sampleTrip() {
   ];
   return { id: SAMPLE_ID, name: "Athens, Sun Princess cruise, Barcelona & Madrid", active: 15, style: "mix", prefs: Object.assign(defaultPrefs(), { interests: ["bible", "churches"] }), lodging: { barcelona: { idx: 0 } }, days, sample: true };
 }
+// The example trip as the app itself puts it on a device: called an example (it is nobody's booking), and marked
+// unopened until the traveler opens it, so Home never says "pick up where you left off" for a trip they never started.
+const exampleTrip = opened => Object.assign(sampleTrip(), { example: true }, opened ? {} : { unopened: true });
 let trip = sampleTrip();
 let library = [];
 let view = "lobby", siteFilter = "all", busy = null, aiError = "", tripText = "";
@@ -279,6 +282,8 @@ try {
   if (saved && saved.days && saved.days.length) { trip = saved; idSeq = 1000; }
   library = JSON.parse(localStorage.getItem("wayside.library") || "[]") || [];
 } catch (e) {}
+// A device with no trip saved yet (a first-time traveler): the example trip goes in front, as an example.
+const firstRun = (() => { try { return !localStorage.getItem("wayside.trip2") && !library.length; } catch (e) { return false; } })();
 // The old example trip had placeholder cruise ports; swap it for the real Sun Princess sailing.
 if (trip.id === "sample") trip = sampleTrip();
 library = library.filter(x => x.id !== "sample");
@@ -293,6 +298,7 @@ try {
     trip = sampleTrip(); save();
   }
 } catch (e) {}
+if (firstRun && trip.id === SAMPLE_ID && !trip.example) { trip = exampleTrip(); save(); }
 if (!trip.prefs) trip.prefs = defaultPrefs();
 // One time: trips planned before the no-repeats rule had the same sights on every day in a city. Spread them out.
 function spreadPicks(t) {
@@ -4895,15 +4901,18 @@ function pinDay() {
 const replaceMenus = () => { pinChip(); document.querySelectorAll("details.planmore[open]").forEach(placeMenu); };
 window.addEventListener("resize", replaceMenus); document.addEventListener("scroll", replaceMenus, true);
 // ---- First-run walkthrough: four short, skippable screens; replay from Settings > How Kairoute works ----
-const COACH = [
-  ["🧭", "Plan a trip in a minute", "Tap <b>Plan a new trip</b>. Type where you're going, or snap a photo of your itinerary or cruise schedule. Kairoute builds every day for you."],
+// Each screen promises only what works right now (aiCan): with the AI off there is no photo import and no Ask your guide.
+const coachSlides = () => [
+  aiCan("tripImport") ? ["🧭", "Plan a trip in a minute", "Tap <b>Plan a new trip</b>. Type where you're going, or snap a photo of your itinerary or cruise schedule. Kairoute builds every day for you."]
+    : ["🧭", "Plan a trip in a minute", "Tap <b>Plan a new trip</b> and add each stop in order, the way it's booked: city stays and cruises. Kairoute builds every day for you."],
   ["🗺️", "Your day plan", "The <b>Day plan</b> tab shows your route on a map with times, real places to eat on the way, and what's happening locally. Tap <b>Choose sights</b> to add or remove anything."],
   ["🎧", "Start the tour", "On the day, tap <b>Start the tour</b>. Kairoute walks you stop to stop and tells each place's story, like a private guide. In churches and museums it switches to text unless your earbuds are in."],
-  ["💬", "Ask your guide", "Curious about something? Use <b>Ask your guide</b> on any stop. Type, or tap 🎤 and ask out loud. No signal? Your question is saved and answered when you're back online."]
+  aiCan("askQuestions") ? ["💬", "Ask your guide", "Curious about something? Use <b>Ask your guide</b> on any stop. Type, or tap 🎤 and ask out loud. No signal? Your question is saved and answered when you're back online."]
+    : ["📶", "Ready for no signal", "Before you go, tap <b>Download for offline</b> on the Trip page while you're on Wi-Fi. The day plans, maps, stories and the back-to-the-ship countdown then work with no signal."]
 ];
 let coachStep = (() => { try { return localStorage.getItem("kairoute.intro1") ? -1 : 0; } catch (e) { return -1; } })();
 function coachHTML() {
-  if (coachStep < 0 || coachStep >= COACH.length) return "";
+  const COACH = coachSlides(); if (coachStep < 0 || coachStep >= COACH.length) return "";
   const [art, title, body] = COACH[coachStep], last = coachStep === COACH.length - 1;
   return `<div class="coach" role="dialog" aria-modal="true" aria-label="How Kairoute works"><div class="sheet">
     <div class="art" aria-hidden="true">${art}</div><span class="eyebrow">How Kairoute works · ${coachStep + 1} of ${COACH.length}</span><h2>${title}</h2><p>${body}</p>
@@ -4957,6 +4966,7 @@ function render() {
   // A won't-fit or closed box belongs to the day it was opened on: going to another day closes it,
   // never leaving it over that day's list (Nov 20 sweep: El Escorial's box from one Madrid day covered the next day).
   { const box = document.querySelector(".fitbox"); if (box && box.dataset.day !== String(trip.active)) { box.remove(); if (typeof fitState !== "undefined") fitState = null; } }
+  if (trip.unopened && /^(plan|sites|trip|guide|tour|journal)$/.test(view)) { delete trip.unopened; save(); } // the traveler has opened it now
   if (view !== "sites") pickFrozen = null; // coming back to the sights list sorts it afresh
   if (faithPrefsTidy()) save();
   if (tidyDests(trip)) save();
@@ -5233,11 +5243,11 @@ function renderLobby() {
     </div>
   </section>
   <div class="lobbybody">
-    ${cur ? `<div class="resume">
-      <div class="stamp"><span>Day<b>${dayNo(cur.days[cur.active], cur)}</b></span></div>
-      <div><div class="eyebrow">Pick up where you left off</div>${renameId === cur.id ? renameBox(cur.id, cur.name || tripName(cur)) : `<h3>${esc(cur.name || tripName(cur))}</h3>`}
-        <div class="meta">${esc(tripSpan(cur))} · ${tripDaysText(cur)} · ${(() => { const td = cur.days.find(x => isToday(x)); const dd = td || d; return (td ? "Today: " : "Next: ") + esc(placeLabel(dd) || "New day"); })()}</div></div>
-      <div class="go"><button class="btn" data-act="continue">Continue trip</button></div>
+    ${cur ? `<div class="resume${cur.unopened ? " fresh" : ""}">
+      ${cur.unopened ? "" : `<div class="stamp"><span>Day<b>${dayNo(cur.days[cur.active], cur)}</b></span></div>`}
+      <div><div class="eyebrow">${cur.unopened ? (cur.example ? "Example trip" : "Your trip") : "Pick up where you left off"}</div>${renameId === cur.id ? renameBox(cur.id, cur.name || tripName(cur)) : `<h3>${esc(cur.name || tripName(cur))}</h3>`}
+        <div class="meta">${esc(tripSpan(cur))} · ${tripDaysText(cur)}${cur.unopened ? "" : " · " + (() => { const td = cur.days.find(x => isToday(x)); const dd = td || d; return (td ? "Today: " : "Next: ") + esc(placeLabel(dd) || "New day"); })()}</div></div>
+      <div class="go"><button class="btn" data-act="continue">${cur.unopened ? (cur.example ? "Open the example trip" : "Open trip") : "Continue trip"}</button></div>
       <div class="resacts"><span class="lede">${syncSt() ? "Synced across your devices" + (syncSt().at ? " · last synced " + esc(new Date(syncSt().at).toLocaleTimeString([], { hour: "numeric", minute: "2-digit" })) : "") : `Saved on this device · <button class="linkbtn" data-act="syncfromlobby">Sync with another device</button>`}</span><button class="btn ghost small" data-goto="trip" data-act2="edit">Edit itinerary</button>${moreMenu(cur.id, `<button class="btn ghost small" data-grp="sharegrp">Share with my group</button><button class="btn ghost small" data-act="rename" data-id="${esc(cur.id)}">Rename</button><button class="btn ghost small" data-act="archive" data-id="${esc(cur.id)}">Archive</button>${delBtn(cur.id)}`)}</div>
     </div>` : ""}
     ${others.length || !hasSample ? `    <div class="sechead"><h2>Planned trips</h2><span class="lede">${list.length - archived.length} ${syncSt() ? "synced across your devices" + (syncSt().at ? " · last synced " + esc(new Date(syncSt().at).toLocaleTimeString([], { hour: "numeric", minute: "2-digit" })) : "") : `saved on this device · <button class="linkbtn" data-act="syncfromlobby">Sync with another device</button>`}</span></div>
@@ -5246,7 +5256,7 @@ function renderLobby() {
         <div><div class="eyebrow">${esc(tripSpan(x.trip))}${tripSpan(x.trip) ? " · " : ""}${tripDaysText(x.trip)}</div>${renameId === x.id ? renameBox(x.id, x.name) : `<h3>${esc(x.name)}</h3>`}</div>
         <div class="acts"><button class="btn small" data-act="opentrip" data-id="${esc(x.id)}">Open</button>${moreMenu(x.id, `<button class="btn ghost small" data-act="rename" data-id="${esc(x.id)}">Rename</button><button class="btn ghost small" data-act="archive" data-id="${esc(x.id)}">Archive</button>${delBtn(x.id)}`)}</div>
       </div></div>`).join("")}
-      ${hasSample ? "" : `<button class="newcard" data-act="loadsample"><span class="plus" style="background:var(--meal)">★</span>Open your Sun Princess trip<span class="lede" style="font-weight:400">Athens, the July 4, 2027 cruise, Barcelona and Madrid</span></button>`}
+      ${hasSample ? "" : `<button class="newcard" data-act="loadsample"><span class="plus" style="background:var(--meal)">★</span>Open the example trip<span class="lede" style="font-weight:400">Athens, the Sun Princess cruise of July 4, 2027, Barcelona and Madrid</span></button>`}
     </div>` : ""}
     ${archived.length ? `<details class="card more archive"><summary>Archived trips (${archived.length})</summary>
       <div class="sitelist">${archived.map(x => `<div class="daycard"><div><b>${esc(x.name)}</b><div class="meta">${esc(tripSpan(x.trip))}${tripSpan(x.trip) ? " · " : ""}${tripDaysText(x.trip)}</div></div>
@@ -5339,7 +5349,7 @@ function privacyBody() { return `${DRAFT}<div class="card legal">
   <h3>What is sent to provide the AI guide</h3>
   <p>When you build a guide, import an itinerary, ask the guide a question or translate a story, the text or photo you provide is sent to our AI provider to produce the answer. Do not include passport numbers, payment details or other sensitive information in itinerary photos.</p>
   <h3>Location</h3>
-  <p>The preview does not use your location. The full app will ask for permission before using GPS for walking directions and arrival alerts, and you can turn it off at any time.</p>
+  <p>Kairoute uses your device's location only if you allow it: to show where you are on the day's map, to notice when you reach a stop on the tour, and to time the back-to-the-ship countdown from where you are. To work out the walk or ride from there, that starting point is sent to Kairoute's helper. If you lead a group trip, a regroup call shares your location with the group. You can turn location off at any time in your device's settings.</p>
   <h3>What we do not do</h3>
   <ul><li>We do not sell your personal information.</li><li>We do not show third-party ads or use advertising trackers.</li><li>We do not build a profile of you for marketing.</li></ul>
   <h3>Sharing a trip</h3>
@@ -5878,7 +5888,7 @@ function renderTrip(d) {
   const points = pointList(city, listKey);
   const pointWord = t === "port" || t === "embark" ? "Cruise terminal" : t === "arrival" ? "Arriving at" : "Leaving from";
   return `
-  ${trip.sample && !trip.bannerSeen ? `<div class="banner"><span>This is your Sun Princess trip: Athens, the 11-night cruise from Piraeus on July 4, 2027, then Barcelona and Madrid. Ports and times come from your booking; all-aboard is set 30 minutes before sailing. Flight, hotel and train times are my guesses, so tap a day to change them.</span><button class="btn ghost small" data-act="gotit" style="white-space:nowrap">Got it</button></div>` : ""}
+  ${trip.sample && !trip.bannerSeen ? `<div class="banner"><span>${trip.example ? "This is an example trip, to show how Kairoute works: Athens, the 11-night Sun Princess cruise from Piraeus on July 4, 2027, then Barcelona and Madrid. Its flight, hotel and train times are examples. Tap a day to change it, or plan your own trip from Home." : `This is your Sun Princess trip: Athens, the 11-night cruise from Piraeus on July 4, 2027, then Barcelona and Madrid. Ports and times come from your booking; all-aboard is set 30 minutes before sailing. Flight, hotel and train times are my guesses, so tap a day to change them.`}</span><button class="btn ghost small" data-act="gotit" style="white-space:nowrap">Got it</button></div>` : ""}
   ${stopsBanner()}
   ${shipTimesBanner()}
   ${changeCard()}
@@ -7358,7 +7368,7 @@ document.addEventListener("click", e => {
   if (t.dataset.act === "rideforce" && rideNotice && rideNotice.force) { switchRide(rideNotice.key, rideNotice.force, true); const y = window.scrollY; render(); window.scrollTo(0, y); return; }
   if (t.dataset.act === "ridechangeok") { const d = day(); if (d) { delete d.rideChange; save(); } const y = window.scrollY; render(); window.scrollTo(0, y); return; }
   if (t.dataset.act === "rideundo" && rideNotice) { if (rideNotice.undo === "") delete trip.legModes[rideNotice.key]; else trip.legModes[rideNotice.key] = rideNotice.undo; rideNotice = null; save(); const y = window.scrollY; render(); window.scrollTo(0, y); return; }
-  if (t.dataset.act === "coachnext") { coachStep++; if (coachStep >= COACH.length) coachDone(); render(); return; }
+  if (t.dataset.act === "coachnext") { coachStep++; if (coachStep >= coachSlides().length) coachDone(); render(); return; }
   if (t.dataset.act === "coachskip") { coachDone(); render(); return; }
   if (t.dataset.act === "coachreplay") { coachStep = 0; view = "lobby"; render(); return; }
   if (t.dataset.act === "bonusadd") { const d = day(); if (!addPick(d, t.dataset.id, true)) return; d.selected = [...new Set([...(d.selected || []), t.dataset.id])]; d.skipBonus = (d.skipBonus || []).filter(x => x !== t.dataset.id); save(); render(); return; }
@@ -7420,7 +7430,7 @@ document.addEventListener("click", e => {
   if (act === "wizback") { readWiz(); wiz.step--; render(); return; }
   if (act === "wizcancel") { wiz = null; view = "lobby"; render(); toTop(); return; }
   if (act === "opentrip") { save(); const x = library.find(y => y.id === t.dataset.id); if (x) { trip = x.trip; if (!trip.prefs) trip.prefs = defaultPrefs(); jumpToToday(trip); view = trip.tour && trip.tour.dayId === day().id && cityFor(day()) ? "tour" : "plan"; save(); render(); toTop(); } return; }
-  if (act === "loadsample") { save(); trip = sampleTrip(); view = "plan"; save(); render(); return; }
+  if (act === "loadsample") { save(); trip = exampleTrip(true); view = "plan"; save(); render(); return; }
   if (act === "rename") { renameId = t.dataset.id; render(); const el = document.getElementById("renameInput"); if (el) { el.focus(); el.select(); } return; }
   if (act === "renamesave") { doRename(t.dataset.id); return; }
   if (act === "renamecancel") { renameId = null; render(); return; }
@@ -7517,7 +7527,7 @@ document.addEventListener("click", e => {
   if (act === "resetyes") {
     try { ["wayside.trip2", "wayside.cities", "wayside.library", "wayside.trip", "wayside.touched"].forEach(k => localStorage.removeItem(k)); } catch (e) {}
     for (const k in cities) if (k !== "barcelona") delete cities[k];
-    library = []; trip = sampleTrip(); resetAsk = false; view = "settings"; save(); render(); toTop(); return;
+    library = []; trip = exampleTrip(); resetAsk = false; view = "settings"; save(); render(); toTop(); return;
   }
   if (act === "prevday" || act === "nextday") {
     if (view === "trip") readForm();

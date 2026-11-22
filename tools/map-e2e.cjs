@@ -27,7 +27,7 @@ const srv = http.createServer((q, r) => { let f = path.join(ROOT, decodeURICompo
     await p.route('http://localhost:9/**', r => /\/route$/.test(r.request().url()) ? r.fallback() : r.fulfill({ status: 404, body: '' }));
   }
   await p.goto(base + 'index.html'); await p.evaluate(() => localStorage.setItem('kairoute.intro1', '1')); await p.reload(); await p.waitForTimeout(800);
-  await p.getByText('Continue trip').click(); await p.waitForTimeout(400);
+  await p.locator('[data-act=continue]').click(); await p.waitForTimeout(400);
   const n = await p.evaluate(() => document.querySelectorAll('.daychip').length);
   // On the live run, the outside map services (OpenFreeMap tiles, the route helper) are sometimes slow or busy: those
   // are warnings, not failures, so the run only goes red (and emails) for a real problem in Kairoute's map code.

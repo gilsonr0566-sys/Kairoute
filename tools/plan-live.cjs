@@ -7,7 +7,7 @@ const { chromium } = require('playwright');
   p.on('pageerror', e => console.log('PAGE ERROR ' + e.message));
   await p.goto('https://gilsonr0566-sys.github.io/Kairoute/?t=' + Date.now()); await p.evaluate(() => localStorage.setItem('kairoute.intro1', '1')); await p.reload(); await p.waitForTimeout(3000);
   console.log('BEFORE', JSON.stringify(await p.evaluate(() => window.__kairouteDay(3, 'corinth|acrocorinth', { hours: 10 })), null, 1));
-  await p.click('text=Continue trip').catch(() => {}); await p.waitForTimeout(500);
+  await p.click('[data-act=continue]').catch(() => {}); await p.waitForTimeout(500);
   await p.click('.daychip[data-day="3"]').catch(e => console.log('no day chip', e.message)); await p.waitForTimeout(300);
   await p.click('#tab-plan').catch(() => {}); await p.waitForTimeout(25000);
   console.log('ACTIVE', await p.evaluate(() => document.querySelector('.daychip[aria-pressed=true]') && document.querySelector('.daychip[aria-pressed=true]').textContent), 'VIEW', (await p.innerText('#view').catch(() => '')).slice(0, 200).replace(/\n+/g, ' | '));

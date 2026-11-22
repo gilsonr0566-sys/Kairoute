@@ -628,6 +628,7 @@ main:has(#view.full) { padding: 0; }
 .resume .stamp { width: 64px; height: 64px; border-radius: 10px; background: var(--route-soft); color: var(--route); display: grid; place-items: center; font-family: var(--font-display); font-weight: 800; line-height: 1; text-align: center; font-size: .78rem; text-transform: uppercase; letter-spacing: .04em; }
 .resume .stamp b { display: block; font-size: 1.5rem; letter-spacing: -0.02em; }
 .resume h3 { font-size: 1.3rem; }
+.resume.fresh { grid-template-columns: 1fr auto; } /* a trip not opened yet has no day to pick up from */
 .resume .meta { color: var(--muted); font-size: .92rem; }
 @media (max-width: 520px) { #aiStatus { display: none; } }
 .tag.seen { background: var(--route-soft); color: var(--route); font-weight: 700; }
@@ -756,6 +757,7 @@ details.dayopts .field, details.dayopts .check { margin-top: 10px; }
 @media (max-width: 640px) {
   .resume { grid-template-columns: auto 1fr; }
   .resume .go { grid-column: 1 / -1; }
+  .resume.fresh { grid-template-columns: 1fr; }
   .resume .go .btn { width: 100%; }
   .pillars { grid-template-columns: 1fr; }
   .heroacts .btn { width: 100%; }

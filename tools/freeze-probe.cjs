@@ -66,7 +66,7 @@ const MIME = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css
   await p.waitForFunction(() => window.__kairouteDays && document.querySelector('#view') && document.querySelector('#view').children.length, null, { timeout: 60000 });
   const ready = Date.now() - t0;
   await step('lobby, waiting'); await p.waitForTimeout(3000);
-  await step('open the trip'); const cont = p.getByText(/Continue trip|Open trip|Continue/).first(); if (await cont.count()) await cont.tap().catch(() => {}); else await p.evaluate(() => window.__kairouteGo('plan', 0));
+  await step('open the trip'); const cont = p.locator("[data-act=continue]").first(); if (await cont.count()) await cont.tap().catch(() => {}); else await p.evaluate(() => window.__kairouteGo('plan', 0));
   await step('Day plan, data arriving (20 s)'); await p.waitForTimeout(20000);
   const days = await p.evaluate(() => window.__kairouteDays());
   const chips = await p.locator('.daychip').count();
