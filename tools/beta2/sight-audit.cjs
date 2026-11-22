@@ -259,7 +259,7 @@ async function audit() {
       const top = ((j && j.results && j.results.bindings) || []).map(b => ({ wd: b.item.value.split('/').pop(), name: b.itemLabel.value, sl: +b.sl.value }));
       const have = q => sights.some(s => s.wd === q.wd || fold(s.name) === fold(q.name) || (s.parts || []).some(n => fold(n) === fold(q.name)));
       top.slice(0, 15).forEach((q, k) => { if (!have(q)) F.push(['FAME', `#${k + 1} best known nearby, "${q.name}" (${q.sl} Wikipedia languages, ${q.wd}), is not offered`, { wd: q.wd, sl: q.sl }]); });
-      const exp = EXPECT.concat(EXPECT_MORE).find(x => fold(x.label).split(' ')[0] === fold(label).split(' ')[0] || fold(label).includes(fold(x.label).split(' ')[0]));
+      const exp = EXPECT_MORE.find(x => x.key === name) || EXPECT.find(x => fold(x.label.split(',')[0]) === fold(label.split(',')[0]));
       for (const want of (exp && exp.expect) || []) {
         const hit = sights.find(s => want.split('|').some(n => fold(s.name).includes(fold(n)) || fold(n).includes(fold(s.name)) || (s.parts || []).some(p => fold(p).includes(fold(n)))));
         if (!hit) F.push(['FAME', `must-see "${want}" is not offered`, { want }]);

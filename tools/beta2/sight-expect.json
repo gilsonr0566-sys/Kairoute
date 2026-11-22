@@ -1,0 +1,26 @@
+{
+ "note": "Must-sees for the sight audit's places that fame-expect.json doesn't cover, checked by hand against travel guides (Nov 22 2026). Test expectations only: the app never reads this list. A name may list other names after |. Matched by the audit's place key.",
+ "places": [
+  { "key": "lehavre", "expect": ["Eiffel Tower", "Louvre", "Notre-Dame", "Arc de Triomphe"] },
+  { "key": "haifa", "expect": ["Western Wall", "Church of the Holy Sepulchre", "Dome of the Rock|Temple Mount"] },
+  { "key": "rome", "expect": ["Colosseum", "Pantheon", "Trevi Fountain", "St. Peter's Basilica|St Peter's Basilica", "Roman Forum", "Vatican Museums|Sistine Chapel"] },
+  { "key": "athens", "expect": ["Acropolis", "Acropolis Museum", "Ancient Agora", "Temple of Olympian Zeus", "Plaka"] },
+  { "key": "santorini", "expect": ["Oia", "Fira", "Akrotiri"] },
+  { "key": "mykonos", "expect": ["Little Venice", "windmills|Kato Mili", "Paraportiani"] },
+  { "key": "heraklion", "expect": ["Knossos", "Heraklion Archaeological Museum|Archaeological Museum of Heraklion"] },
+  { "key": "chania", "expect": ["Venetian Harbour|Old Venetian Harbour|Venetian port", "Lighthouse"] },
+  { "key": "kusadasi", "expect": ["Ephesus", "House of the Virgin Mary"] },
+  { "key": "messina", "expect": ["Messina Cathedral|Cathedral of Messina", "Taormina"] },
+  { "key": "naples", "expect": ["Pompeii", "National Archaeological Museum", "Castel Nuovo", "Spaccanapoli"] },
+  { "key": "madrid", "expect": ["Prado", "Royal Palace", "Plaza Mayor", "Retiro", "Reina Sof"] },
+  { "key": "hamburg", "expect": ["Elbphilharmonie", "Speicherstadt", "Miniatur Wunderland", "St. Michael's Church|St Michael's Church|Michel"] },
+  { "key": "juneau", "expect": ["Mendenhall Glacier", "Mount Roberts Tramway"] },
+  { "key": "ketchikan", "expect": ["Creek Street", "Totem Bight|Saxman|Totem Heritage Center"] },
+  { "key": "grandturk", "expect": ["Grand Turk Lighthouse", "Cockburn Town"] },
+  { "key": "pontadelgada", "expect": ["Portas da Cidade|City Gates", "Sete Cidades"] },
+  { "key": "southampton", "expect": ["SeaCity Museum", "Tudor House"] },
+  { "key": "barcelona", "expect": ["Sagrada Familia|Holy Family", "Park Güell", "Casa Batlló", "La Rambla", "Gothic Quarter|Barri Gòtic"] },
+  { "key": "istanbul", "expect": ["Hagia Sophia", "Sultan Ahmed Mosque|Blue Mosque", "Topkapı Palace|Topkapi Palace", "Grand Bazaar", "Basilica Cistern", "Galata Tower"] },
+  { "key": "nassau", "expect": ["Fort Fincastle", "Queen's Staircase", "Fort Charlotte"] }
+ ]
+}
