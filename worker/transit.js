@@ -16,6 +16,10 @@ const R_STOP = 2500, R_FERRY = 1500; // how far from each end a station or pier 
 export const trainReach = (a, b) => { const km = hav(a, b); return km >= 20 ? Math.min(10000, Math.max(R_STOP, Math.round(km * 120))) : R_STOP; };
 // Cautious running speeds (km/h) and the time lost at each stop between, by kind of line.
 const SPEED = { train: [55, 0.8], light_rail: [45, 0.7], subway: [33, 0.5], monorail: [30, 0.5], tram: [17, 0.4], bus: [24, 0.5], trolleybus: [20, 0.4], ferry: [28, 0] };
+// A ferry the map says carries cars (motor_vehicle/motorcar/hgv yes) is a slow car ferry (28 km/h); one that carries only
+// people is a fast boat, a hydrofoil or catamaran (38 km/h, still under their usual 45-55): Naples-Sorrento was given
+// about an hour where every operator's timetable says 35-45 min (Nov 22, Richard's check). A duration on the map wins.
+export const ferryKmh = t => /^(yes|designated)$/i.test((t && (t.motor_vehicle || t.motorcar || t.hgv)) || "") ? 28 : 38;
 // How often a line usually runs (minutes) when mappers didn't record it: kept on the cautious side.
 const EVERY = { train: 30, light_rail: 30, subway: 8, monorail: 10, tram: 12, bus: 30, trolleybus: 15, ferry: 60 };
 const NAME = { train: "Train", light_rail: "Train", subway: "Metro", monorail: "Monorail", tram: "Tram", bus: "Bus", trolleybus: "Trolleybus", ferry: "Ferry" };
@@ -290,7 +294,7 @@ async function buildOpts(el, fWays, a, b) {
     let path = [], km = hav(sa.s, sb.s) * 1.25;
     if (line.length >= 2) { const [ia, da] = nearestIdx(line, sa.s), [ib, db] = nearestIdx(line, sb.s);
       if (da < 0.5 && db < 0.5 && ia !== ib) { path = ia < ib ? line.slice(ia, ib + 1) : line.slice(ib, ia + 1).reverse(); const L = lineLen(path); if (L >= hav(sa.s, sb.s) * 0.9) km = L; else path = []; } }
-    const [v, perStop] = SPEED[mode], total = line.length >= 2 ? lineLen(line) : 0, dur = mins(t.duration);
+    const [v0, perStop] = SPEED[mode], v = mode === "ferry" ? ferryKmh(t) : v0, total = line.length >= 2 ? lineLen(line) : 0, dur = mins(t.duration);
     let ride = dur && total > 0 ? dur * Math.min(1, km / total) : km / v * 60 + between * perStop;
     ride = Math.max(ride, km / (v * 1.6) * 60); // never quicker than the line could run
     const every = mins(t.interval), nmA = (stopTag.get(sa.s.id) || {}).name, nmB = (stopTag.get(sb.s.id) || {}).name;
@@ -303,7 +307,7 @@ async function buildOpts(el, fWays, a, b) {
     const nmFrom = pierName(stopTag, from) || (fwd ? w.tags.from : w.tags.to) || "", nmTo = pierName(stopTag, to) || (fwd ? w.tags.to : w.tags.from) || "";
     if (hav(from, a) * 1000 > R_FERRY * 1.5 || hav(to, b) * 1000 > R_FERRY * 1.5) continue;
     const km = lineLen(path), dur = mins(w.tags.duration);
-    opts.push(mk({ mode: "ferry", ref: w.tags.ref || "", name: w.tags.name || "", operator: w.tags.operator || "", from: nmFrom, to: nmTo, fromPt: from, toPt: to, km, ride: dur || km / SPEED.ferry[0] * 60, every: mins(w.tags.interval), hours: w.tags.opening_hours || "", seasonal: w.tags.seasonal || "", fare: w.tags.charge || w.tags.fee || "", stops: 0, path, a, b, osm: "w" + w.id }));
+    opts.push(mk({ mode: "ferry", ref: w.tags.ref || "", name: w.tags.name || "", operator: w.tags.operator || "", from: nmFrom, to: nmTo, fromPt: from, toPt: to, km, ride: dur || km / ferryKmh(w.tags) * 60, every: mins(w.tags.interval), hours: w.tags.opening_hours || "", seasonal: w.tags.seasonal || "", fare: w.tags.charge || w.tags.fee || "", stops: 0, path, a, b, osm: "w" + w.id }));
   }
   // No ferry straight there: a ferry with one change (Naples to Capri, then Capri to Amalfi), from the map's courses.
   if (!opts.some(o => o.mode === "ferry") && fWays.length) { try { opts.push(...await ferryChain(a, b, fWays)); } catch (e) {} }
