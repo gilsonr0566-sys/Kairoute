@@ -60,6 +60,9 @@ jobs:
       - name: Outside text never runs as code (Beta 2 build)
         if: always()
         run: node tools/inject-check.cjs beta2-site/index.html
+      - name: A place the app could not reach is never called misspelled
+        if: always()
+        run: node tools/ui/no-signal-check.cjs beta2-site/index.html
       - name: The app says only what the AI can really do
         if: always()
         run: node tools/ai-honesty-check.cjs

@@ -28,7 +28,7 @@ async function guideNoAI(d, quiet) {
     return true;
   } catch (e) {
     try { console.warn("Guide (no AI) failed for " + label + ":", e && (e.message || e)); } catch (x) {}
-    if (!quiet) { busy = null; aiError = /not fuller/.test((e && e.message) || "") ? "" : `I couldn't find ${label} in the travel guides and maps just now. Check the spelling (for example "Kotor, Montenegro") and try again.`; render(); }
+    if (!quiet) { busy = null; aiError = /not fuller/.test((e && e.message) || "") ? "" : notFoundMsg([label], "Try again"); render(); }
     return false;
   }
 }

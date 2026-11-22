@@ -3092,10 +3092,23 @@ async function famousFor(label) {
 // a sight many sources name, a famous one or a World Heritage site is kept longest when a day runs short and
 // preferred when there is time to add one; restaurants the guidebooks name get a preference.
 const sourcesCache = {};
+// Places whose travel guides and maps could not be reached at all (no signal, or the helper was down), as against
+// places that were reached and are not known. A traveler is never told to check the spelling of a place the app
+// simply could not ask about (first-time traveler walk, Nov 22).
+const srcUnreached = {};
+// The words of the Trip page's own button, so the message names a button the traveler can see.
+const buildAgain = n => `Tap Build the guide${n === 1 ? "" : "s"} on the Trip page`;
+function notFoundMsg(labels, again) {
+  const off = labels.filter(l => srcUnreached[keyOf(l)]), miss = labels.filter(l => !srcUnreached[keyOf(l)]), out = [];
+  if (off.length) out.push(`I couldn't reach the travel guides and maps for ${off.join(" and ")}${typeof navigator !== "undefined" && navigator.onLine === false ? " because there's no internet right now" : ""}. Your trip is saved. ${again} when you're online.`);
+  if (miss.length) out.push(`I couldn't find ${miss.join(" and ")} in the travel guides and maps. Check the spelling (for example "Kotor, Montenegro"), then ${again.replace(/^./, c => c.toLowerCase())}.`);
+  return out.join(" ");
+}
 async function sourcesFor(label) {
   if (!label) return null; if (sourcesCache[label]) return sourcesCache[label];
   await helperKnown();
-  if (freeAI && navigator.onLine !== false) try { const r = await fetch(freeAI.url + "/sources?city=" + encodeURIComponent(label)); if (r.ok) { const j = await r.json(); if (j && Array.isArray(j.stops)) { kv.set("src:" + keyOf(label), j); return (sourcesCache[label] = j); } } } catch (e) {}
+  srcUnreached[keyOf(label)] = true;
+  if (freeAI && navigator.onLine !== false) try { const r = await fetch(freeAI.url + "/sources?city=" + encodeURIComponent(label)); if (r.status < 500 && r.status !== 429) delete srcUnreached[keyOf(label)]; if (r.ok) { const j = await r.json(); if (j && Array.isArray(j.stops)) { kv.set("src:" + keyOf(label), j); return (sourcesCache[label] = j); } } } catch (e) {}
   const kept = await srcKept("src:", label, j => j && Array.isArray(j.stops));
   return kept ? (sourcesCache[label] = kept) : null;
 }
@@ -3887,9 +3900,12 @@ function keepGuide(d, raw) {
   try { fetch(freeAI.url + "/guide", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ k: guideCacheKey(d), guide: raw }) }).catch(() => {}); } catch (e) {}
 }
 async function buildAllGuides() {
-  if (!aiReady() && !freeAI) return;
   const todo = [];
   trip.days.forEach(d => { if (!noShore(d) && !cityFor(d) && d.destination && !todo.some(x => keyOf(x.destination) === keyOf(d.destination))) todo.push(d); });
+  if (!aiReady() && !freeAI && navigator.onLine !== false) { freeAIReady = findFreeAI(); await helperKnown(); }   // look for the helper again: it was not found when the app opened
+  // The helper's address could not be found (opened with no signal): the trip is saved and the traveler is told
+  // plainly, never left with empty days and no word (first-time traveler walk, Nov 22).
+  if (!aiReady() && !freeAI) { if (todo.length) { todo.forEach(d => { srcUnreached[keyOf(d.destination)] = true; }); aiError = notFoundMsg(todo.map(d => d.destination), buildAgain(todo.length)); busy = null; render(); } return; }
   aiError = ""; const missed = [];
   for (let i = 0; i < todo.length; i++) {
     busy = { prefix: `${i + 1} of ${todo.length}: `, text: `${i + 1} of ${todo.length}: starting ${todo[i].destination}…` }; render();
@@ -3898,7 +3914,7 @@ async function buildAllGuides() {
     if (!ok) missed.push(todo[i].destination);
   }
   // Without the AI writer each place is built from its sources on its own: one that can't be found doesn't stop the rest.
-  if (missed.length) aiError = `I couldn't find ${missed.join(" and ")} in the travel guides and maps. Check the spelling on the day (for example "Kotor, Montenegro"), then tap Build again.`;
+  if (missed.length) aiError = notFoundMsg(missed, buildAgain(missed.length));
   busy = null; render();
 }
 async function geocodeLodging(d) {
@@ -5887,7 +5903,7 @@ function renderTrip(d) {
       <div class="pagehead"><div><div class="eyebrow">${(() => { const dates = tripFacts().days, cities = new Set(trip.days.filter(x => !noShore(x) && x.type !== "port" && x.destination).map(x => keyOf(x.destination))).size, ports = trip.days.filter(x => x.type === "port").length; return `${dates} day${dates === 1 ? "" : "s"}${cities > 1 ? ` · ${cities} cities` : ""}${ports ? ` · ${ports} cruise stop${ports === 1 ? "" : "s"}` : ""}`; })()}</div>${renameId === trip.id ? renameBox(trip.id, trip.name || tripName(trip)) : `<h2 class="dayname">${esc(trip.name || "Your trip")} <button class="linkbtn rename" data-act="rename" data-id="${esc(trip.id)}" aria-label="Rename this trip">✎ Rename</button></h2>`}</div></div>
       ${backNoticeHTML()}${readyTripLine()}
       ${offCard(true)}
-      ${(aiReady() || freeAI) && missing ? `<button class="btn ghost small" data-act="genall" ${busy ? "disabled" : ""}>${missing === 1 ? `Build the guide for ${esc(missingNames[0])}` : missing <= 3 ? `Build the guides for ${esc(missingNames.join(" and "))}` : `Build the guides for all ${missing} places`}</button>` : ""}
+      ${(aiReady() || freeAI || missingNames.some(n => srcUnreached[keyOf(n)])) && missing ? `<button class="btn ghost small" data-act="genall" ${busy ? "disabled" : ""}>${missing === 1 ? `Build the guide for ${esc(missingNames[0])}` : missing <= 3 ? `Build the guides for ${esc(missingNames.join(" and "))}` : `Build the guides for all ${missing} places`}</button>` : ""}
       <div class="itin">${itinerary()}</div>
       <div class="actions"><button class="btn ghost small" data-act="addday">+ Add a day</button><button class="btn ghost small" data-act="addport">+ Add a port day</button><button class="btn ghost small" data-act="printtrip">🖨 Print or save as PDF</button></div>
       ${esimCard()}
