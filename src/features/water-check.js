@@ -17,12 +17,16 @@ const WATER_FAR_ROAD = 400; // metres from a road a car can drive: a stop this f
 // answer that does change something changes the place's own fields, and that re-plans it.
 const waterFetch = (u, o) => (typeof window !== "undefined" && window.fetch ? window.fetch(u, o) : fetch(u, o));
 const waterAsked = new Map();
-const waterRoad = new Map(); // city key -> { q: the question (sig), wait: ids of stops still being walked }
+const waterTried = new Map(); // city key -> ids of stops whose turn in the check has passed this session (answered or not)
 // A stop whose water check is still out: the plan then never picks it on its own on a day with a time to be back
-// (95-plan, autoPicks). Until the road answer is in, every stop of the place waits; after it, only the stops far from any
-// road, which are walked next (Nov 21 live check: the whole ship day showed no sights while the walking routes came in).
+// (95-plan, autoPicks). Only a stop the check has never answered for waits: one the road router (and, far from a road,
+// the walking router) already answered keeps its answer, kept with the stop (waterSeen), however often the place's list
+// of stops or its start points change and the check is asked again (Nov 22 live probe: the guide's list changed by one
+// sight a minute in, the check was asked anew and every stop waited again, so the ship day showed no sights at all).
 function waterWaits(city, id) { if (!city) return false; const k = keyOf(city.city), q = waterAsked.get(k); if (!q || city.waterSig === q) return false;
-  const r = waterRoad.get(k); return !r || r.q !== q || r.wait.has(String(id)); }
+  const s = allSites(city).find(x => String(x.id) === String(id)); if (s && s.waterSeen === WATER_STORE_V) return false;
+  const t = waterTried.get(k); return !(t && t.has(String(id))); }
+const waterDone = (city, ids) => { const k = keyOf(city.city), t = waterTried.get(k) || new Set(); ids.forEach(id => t.add(String(id))); waterTried.set(k, t); };
 const OVERPASS_EPS = ["https://overpass-api.de/api/interpreter", "https://overpass.private.coffee/api/interpreter"];
 
 // One question for all points: the islands each one stands on, as "id:name" ("" for none), in the points' order.
@@ -122,12 +126,15 @@ function waterCheck(city, homes) {
     gaps = await waterRoadGaps(stops);
     // Walking routes for the stops far from a road (the farthest first), then for any on another island than every start.
     // Only those still wait once the road answer is in (or none, when the road service didn't answer).
-    const far = gaps ? stops.map((s, i) => i).filter(i => gaps[i] > WATER_FAR_ROAD).sort((x, y) => gaps[y] - gaps[x]) : [];
-    waterRoad.set(keyOf(city.city), { q: sig, wait: new Set(far.slice(0, 16).map(i => String(stops[i].id))) }); try { dataGen++; render(); } catch (e) {}
+    const far = gaps ? stops.map((s, i) => i).filter(i => gaps[i] > WATER_FAR_ROAD).sort((x, y) => gaps[y] - gaps[x]) : [], walked = new Set(far.slice(0, 16));
+    // A stop near a road is answered (kept with it); every stop but the ones walked next stops waiting.
+    if (gaps) stops.forEach((s, i) => { if (gaps[i] != null && !walked.has(i)) s.waterSeen = WATER_STORE_V; });
+    waterDone(city, stops.filter((s, i) => !walked.has(i)).map(s => s.id)); try { dataGen++; render(); } catch (e) {}
     if (far.length) await walk(far);
     if (gaps || Object.keys(foot).length) apply();
-    // The walking answers are in: no stop of the place waits any more.
-    waterRoad.set(keyOf(city.city), { q: sig, wait: new Set() }); if (far.length) try { dataGen++; render(); } catch (e) {}
+    // The walking answers are in: those answered are kept with the stop, and no stop of the place waits any more.
+    walked.forEach(i => { if (foot[i] != null) stops[i].waterSeen = WATER_STORE_V; }); waterDone(city, stops.map(s => s.id));
+    if (far.length) try { dataGen++; save(); render(); } catch (e) {}
     isl = await islP;
     if (isl) { sIsl = isl.slice(0, stops.length); hIsl = isl.slice(stops.length);
       await walk(stops.map((s, i) => i).filter(i => sIsl[i] && !hIsl.some(h => h !== null && share(sIsl[i], h)))); apply(); }
@@ -138,6 +145,9 @@ function waterCheck(city, homes) {
 }
 if (typeof window !== "undefined") window.__kairouteWater = { waterIslandQuery, waterIslandsFrom, waterAcross, waterWaits,
   // What the check is doing for one day's place (tests and live probes).
-  state: i => { const d = trip.days[i], c = d && cityFor(d); if (!c) return null; const k = keyOf(c.city), q = waterAsked.get(k), r = waterRoad.get(k), st = allSites(c);
-    return { n: st.length, q: q ? q.slice(-60) : "", saved: !!q && c.waterSig === q, road: r ? { same: r.q === q, wait: [...r.wait] } : null, waits: st.filter(s => waterWaits(c, s.id)).map(s => s.name),
-      across: st.filter(s => s.acrossWater).map(s => s.name + "=" + s.acrossWater), gaps: st.filter(s => s.roadGap).map(s => s.name + ":" + s.roadGap), sel: d.selected, mine: d.mine, own: !!d.ownList }; } };
+  state: i => { const d = trip.days[i], c = d && cityFor(d); if (!c) return null; const k = keyOf(c.city), q = waterAsked.get(k), st = allSites(c);
+    return { n: st.length, q: q ? q.slice(-60) : "", saved: !!q && c.waterSig === q, seen: st.filter(s => s.waterSeen === WATER_STORE_V).length, waits: st.filter(s => waterWaits(c, s.id)).map(s => s.name),
+      across: st.filter(s => s.acrossWater).map(s => s.name + "=" + s.acrossWater), gaps: st.filter(s => s.roadGap).map(s => s.name + ":" + s.roadGap), sel: d.selected, mine: d.mine, own: !!d.ownList }; },
+  // Tests: the guide's list of stops for one day's place changes (a sight more), as the free sources' answers do.
+  addStop: i => { const c = cityFor(trip.days[i]), s0 = c && (c.sites || [])[0]; if (!s0) return false;
+    c.sites.push(Object.assign({}, s0, { id: "test-more-" + c.sites.length, name: "One more sight", lat: +s0.lat + 0.002, lng: +s0.lng + 0.002 })); delete c.sites[c.sites.length - 1].waterSeen; try { dataGen++; } catch (e) {} render(); return true; } };

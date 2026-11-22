@@ -4,11 +4,13 @@
 // Usage: node tools/beta2/water-wait-check.cjs beta2-site/index.html
 const { chromium } = require('playwright'); const http = require('http'), fs = require('fs'), path = require('path');
 const F = path.resolve(process.argv[2] || 'beta2-site/index.html');
+let roadSlow = 0;
 (async () => { const s = http.createServer((q, r) => { r.writeHead(200, { 'content-type': 'text/html' }); fs.createReadStream(F).pipe(r); }).listen(0);
   const b = await chromium.launch(), p = await (await b.newContext({ viewport: { width: 412, height: 915 } })).newPage();
   await p.route(u => !/^http:\/\/localhost/.test(String(u)), r => { const u = r.request().url();
     if (/router\.project-osrm/.test(u)) { const n = u.split('/driving/')[1].split('?')[0].split(';').length;
-      return r.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify({ code: 'Ok', sources: Array.from({ length: n }, (x, k) => ({ distance: k === 0 ? 900 : 40 })) }) }); }
+      const ok = () => r.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify({ code: 'Ok', sources: Array.from({ length: n }, (x, k) => ({ distance: k === 0 ? 900 : 40 })) }) }).catch(() => {});
+      return roadSlow ? void setTimeout(ok, roadSlow) : ok(); }
     if (/routing\.openstreetmap|overpass/.test(u)) { setTimeout(() => r.fulfill({ status: 503, body: '' }).catch(() => {}), 40000); return; }
     r.fulfill({ status: 503, body: '' }); });
   await p.goto('http://localhost:' + s.address().port + '/'); await p.waitForTimeout(2500);
@@ -17,6 +19,13 @@ const F = path.resolve(process.argv[2] || 'beta2-site/index.html');
   let bad = []; const counts = [];
   for (const t of [3, 20]) { await p.waitForTimeout(t === 3 ? 3000 : 17000);
     for (const i of days) { const n = await p.evaluate(i => ((window.__kairouteEngine2()[i] || {}).items || []).filter(x => x.t === 'stop').length, i); counts.push(`t+${t}s day ${i + 1}: ${n}`); if (!n) bad.push(`day ${i + 1} has no sights ${t} s in`); } }
+  // The guide's list then changes by one sight while the walking answers are still out, and the road service is slow
+  // this time (Nov 22 live probe: every stop waited again, and the ship day showed no sights): the stops already
+  // answered keep the day's sights.
+  roadSlow = 15000;
+  for (const i of days) await p.evaluate(i => window.__kairouteWater.addStop(i), i);
+  await p.waitForTimeout(4000);
+  for (const i of days) { const n = await p.evaluate(i => ((window.__kairouteEngine2()[i] || {}).items || []).filter(x => x.t === 'stop').length, i); counts.push(`list changed, 4 s on, day ${i + 1}: ${n}`); if (!n) bad.push(`day ${i + 1} lost its sights when the guide's list changed`); }
   console.log(counts.join('\n'));
   console.log(bad.length ? 'FAIL ' + bad.join('; ') : 'Water wait check passed (' + days.length + ' ship days keep their sights while the walking answers come in)');
   await b.close(); s.close(); process.exit(bad.length ? 1 : 0); })();

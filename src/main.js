@@ -654,7 +654,10 @@ try { ["kairoute.transit", "kairoute.transit2"].forEach(k => localStorage.remove
 // 7: trains between towns whose stations are a taxi away (Athens to Corinth), asked again once.
 // 8: every departure of the kind of ride (kindDeps), searched every hour of the day: a train kept from before knew only
 //    its own departure, so the way back to a ship found "no departure near 4:10 pm" and became a taxi (Nov 21 live check).
-const TRANSIT_V = 8;
+// 9: answers kept from before the helper counted the hours its timetable search missed: an answer that knew 3 of the
+//    day's 15 hours was kept as complete and never asked again, so a phone that planned the trip earlier kept the
+//    taxi back to the ship while a fresh one found the train (Nov 21 live re-check, Rome).
+const TRANSIT_V = 9;
 const transitMem = (() => { try { return JSON.parse(localStorage.getItem(TRANSIT_KEY) || "{}"); } catch (e) { return {}; } })();
 let transitSeen = null, transitRetry = 0;
 // How many rides one request to the helper asks for: 12 normally, halved after a request the helper couldn't finish (a big
@@ -738,7 +741,7 @@ function transitDue(exact, hit) {
   return (exact.partial || !(exact.opts || []).length) && Date.now() - exact.t > 600000;
 }
 if (typeof window !== "undefined") window.__kairouteTransitDue = () => { const now = Date.now(), opts = [{ mode: "train" }];
-  return { old: transitDue({ opts, t: now }, {}), oldEmpty: transitDue({ opts: [], t: now }, {}), near: transitDue(null, { opts }), fresh: transitDue({ opts, t: now, v: TRANSIT_V }, {}),
+  return { old: transitDue({ opts, t: now }, {}), oldEmpty: transitDue({ opts: [], t: now }, {}), near: transitDue(null, { opts }), fresh: transitDue({ opts, t: now, v: TRANSIT_V }, {}), lastV: transitDue({ opts, t: now, v: TRANSIT_V - 1 }, {}),
     busyNow: transitDue({ opts, t: now, v: TRANSIT_V, partial: true }, {}), busyLater: transitDue({ opts, t: now - 700000, v: TRANSIT_V, partial: true }, {}) }; };
 // Up to 12 pairs a request and 3 requests at once (the helper looks the pairs of a request up side by side), the day
 // on screen first; the plan is redrawn as each answer arrives, not after the whole trip is done.
@@ -1895,6 +1898,30 @@ let pierForm = null;
 // day was planned from the middle of it): a pier is a place you can stand at.
 const PIER_NOT = /administrative|boundary|suburb|city|town|village|hamlet|neighbou?rhood|quarter|district|county|state|region|province|island|locality/i;
 const pierAsk = (d, city) => { if (!d || !city || !(d.type === "port" || d.type === "embark" || d.mode === "ship")) return false; const P = dayPoint(d, city); return !!P && unsurePoint(P); };
+// The piers, ferry and cruise terminals and port areas the map has drawn within 2 km of each point, nearest first, from
+// OpenStreetMap (Overpass; free, asked from the traveler's own connection). One with no name on the map is offered by
+// what it is ("Ferry terminal, no name on the map"), so the traveler can still pick the right quay by where it is.
+const PIER_KINDS = { ferry_terminal: "Ferry terminal", pier: "Pier", port: "Port area", harbour: "Harbour", quay: "Quay", cruise: "Cruise terminal" };
+function pierQuery(pts) {
+  return "[out:json][timeout:20];(" + pts.map(p => { const a = `(around:2000,${(+p.lat).toFixed(5)},${(+p.lng).toFixed(5)})`;
+    return `nwr${a}["amenity"="ferry_terminal"];nwr${a}["man_made"~"^(pier|quay)$"]["name"];nwr${a}["landuse"="port"];nwr${a}["harbour"~"^(yes|port)$"];nwr${a}["name"~"[Cc]ruise"];`; }).join("") + ");out center tags 40;";
+}
+function piersFrom(d, pts) {
+  const out = [];
+  for (const e of (d && d.elements) || []) { const t = e.tags || {}, lat = e.lat != null ? e.lat : e.center && e.center.lat, lng = e.lon != null ? e.lon : e.center && e.center.lon; if (!isFinite(lat) || !isFinite(lng)) continue;
+    const kind = /cruise/i.test(t.name || "") ? "cruise" : t.amenity === "ferry_terminal" ? "ferry_terminal" : t.man_made === "quay" ? "quay" : t.man_made === "pier" ? "pier" : t.landuse === "port" ? "port" : t.harbour ? "harbour" : "";
+    if (!kind) continue; const name = t["name:en"] || t.name || "";
+    out.push({ name: name || PIER_KINDS[kind] + ", no name on the map", lat, lng, kind: PIER_KINDS[kind].toLowerCase(), named: !!name, km: Math.min(...pts.map(p => hav(p, { lat, lng }))) }); }
+  // Named places first, then the nearest; one entry per spot.
+  return out.sort((a, b) => (b.named - a.named) || (b.kind === "cruise terminal") - (a.kind === "cruise terminal") || a.km - b.km).filter((m, i, all) => !all.slice(0, i).some(y => hav(y, m) < 0.15));
+}
+async function piersAround(pts) {
+  for (const ep of ["https://overpass-api.de/api/interpreter", "https://overpass.private.coffee/api/interpreter"]) {
+    try { const r = await fetch(ep, { method: "POST", body: "data=" + encodeURIComponent(pierQuery(pts)), headers: { "content-type": "application/x-www-form-urlencoded" }, signal: AbortSignal.timeout(25000) });
+      if (!r.ok) continue; return piersFrom(await r.json(), pts); } catch (e) {} }
+  return [];
+}
+if (typeof window !== "undefined") window.__kairoutePiers = { pierQuery, piersFrom };
 async function pierSearch() {
   const d = day(), city = cityFor(d); if (!city) return;
   const f = pierForm = Object.assign(pierForm || {}, { id: d.id }); f.q = ((document.getElementById("pier-name") || {}).value || "").trim();
@@ -1907,9 +1934,13 @@ async function pierSearch() {
   const add = (list, near) => list.filter(m => !PIER_NOT.test(String(m.kind || "")) && (!near || near.some(a => hav(a, m) <= 3))).forEach(m => { if (!f.results.some(y => hav(y, m) < 0.05)) f.results.push({ name: m.name, lat: +(+m.lat).toFixed(5), lng: +(+m.lng).toFixed(5), kind: String(m.kind || "").replace(/_/g, " "), addr: m.addr || "", km: mid ? hav(mid, m) : null }); });
   const got = await ask(f.q); add(got);
   // A name the map knows only as a part of the city (a port's quarter is often named after it, Nov 21: Dubrovnik's
-  // "Gruž"): the piers, terminals and harbours in that part are looked for instead, never the area's middle as a pier.
+  // "Gruž"): the piers, terminals and harbours in that part are offered instead, never the area's middle as a pier.
+  // They come from what the map has drawn there (ferry terminals, piers, port areas), not from guessing words to search
+  // for (Nov 21 live check: "Gruž port", "Gruž harbour"… found nothing, so the day stayed blank).
   const areas = got.filter(m => PIER_NOT.test(String(m.kind || "")));
-  if (!f.results.length && areas.length) { for (const more of await Promise.all([f.q + " port", f.q + " harbour", f.q + " ferry terminal", "cruise terminal"].map(ask))) add(more, areas); if (f.results.length) f.area = areas[0].name; }
+  if (!f.results.length && areas.length) { add(await piersAround(areas.slice(0, 2)));
+    if (!f.results.length) for (const q of ["ferry terminal in " + f.q, f.q + " port"]) { add(await ask(q), areas); if (f.results.length) break; }
+    if (f.results.length) f.area = areas[0].name; }
   f.results = f.results.slice(0, 5); f.busy = false;
   if (!f.results.length) f.msg = areas.length ? `The map knows "${f.q}" as a part of ${bareName(d.destination)}, but no pier or terminal in it. Try the name your cruise line uses for the terminal or quay.` : `I couldn't find "${f.q}" on the map near ${bareName(d.destination)}. Try the name your cruise line uses for the terminal or quay, or the port's own word for it.`;
   else if (areas.length && f.area) f.msg = `The map knows "${f.q}" as a part of ${bareName(d.destination)}. These are the piers and terminals there:`;

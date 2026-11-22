@@ -529,7 +529,7 @@ const log = (suite, trip, ok, what) => { results.push({ suite, trip, ok, what })
     { const nm = await p.evaluate(() => window.__kairouteNameCheck ? window.__kairouteNameCheck() : null); // Madrid, Nov 14: a sight named "[object Object]"
       if (JSON.stringify(nm) !== JSON.stringify(['Casa Gallardo', 'Plaza Mayor'])) bad.push('a sight name written as an object came out as ' + JSON.stringify(nm) + ' (want it read, or the sight dropped)'); }
     { const td = await p.evaluate(() => window.__kairouteTransitDue ? window.__kairouteTransitDue() : null); // Richard, Nov 14: a phone kept an old ride with no ferry
-      if (!td || !td.old || !td.oldEmpty || !td.near || td.fresh || td.busyNow || !td.busyLater) bad.push('kept ride answers: an old, empty, nearby or busy answer is not asked again as it should be ' + JSON.stringify(td));
+      if (!td || !td.old || !td.oldEmpty || !td.near || td.fresh || td.busyNow || !td.busyLater || td.lastV === false) bad.push('kept ride answers: an old, empty, nearby or busy answer is not asked again as it should be ' + JSON.stringify(td));
       else log('Kept rides refresh', 'rides', true, 'a ride answer kept from an older version, an empty one, or a nearby trip\'s is asked again when online; a fresh one is kept'); }
     { const mg = await p.evaluate(() => { const M = window.__kairouteTransitMerge; if (!M) return null; // Richard, Nov 14: the ferry to Sorrento appeared, then vanished from the ride menu
         const fer = { mode: 'ferry', label: 'Ferry Napoli - Sorrento', min: 70 }, tr = { mode: 'train', label: 'Train 1 (Eav)', min: 60 }, tr2 = { mode: 'train', label: 'Train 2', min: 65 };
