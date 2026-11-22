@@ -19,14 +19,14 @@ jobs:
       - run: sh build-beta2.sh
       - run: node tools/beta2/day-probe.cjs
         env:
-          TRIP: probe-trip-d15.json
-          DEST: Rome|Civitavecchia
+          SEED: probe-seed-f01.json.gz
+          DEST: Dubrovnik
           LIVE: "1"
-          N: "90"
+          N: "30"
+          PIER: "42.65778,18.08637"
       - run: node tools/beta2/day-probe.cjs
         env:
-          SEED: probe-seed-d15.json.gz
           TRIP: probe-trip-d15.json
           DEST: Rome|Civitavecchia
           LIVE: "1"
-          N: "90"
+          N: "120"

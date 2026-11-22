@@ -23,6 +23,8 @@ const SEED = process.env.SEED ? JSON.parse(require('zlib').gunzipSync(fs.readFil
   await p.evaluate(i => window.__kairouteGo('day', i), i);
   let last = '';
   for (let k = 0; k < (+process.env.N || 75); k++) { await p.waitForTimeout(2000);
+    if (process.env.PIER && k === 10) { const [la, ln] = process.env.PIER.split(',').map(Number); await p.evaluate(([i, la, ln]) => window.__kairouteEdit(i, { pier: { name: 'Probe pier', lat: la, lng: ln } }), [i, la, ln]); console.log(ts(), 'PIER SET'); }
+    if (process.env.PIER) console.log(ts(), 'SEL', await p.evaluate(() => window.__kairouteSelCount()), await p.evaluate(i => { const d = JSON.parse(localStorage.getItem('wayside.trip2') || 'null'); const x = d && d.days[i]; return x ? JSON.stringify({ sel: (x.selected || []).length, seed: x.seedSig, auto: x.autoEmpty, own: x.ownList, ready: !!x.ready }) : ''; }, i));
     const r = await p.evaluate(i => { const pl = window.__kairouteEngine2()[i] || {}, stops = (pl.items || []).filter(x => x.t === 'stop');
       const rides = (pl.items || []).filter(x => x.t === 'ride' && (x.min || 0) > 30).map(x => ({ kind: x.kind, how: x.how, min: x.min, note: x.note, src: x.source, deps: x.ans && x.ans.deps, kd: x.ans && x.ans.kindDeps && x.ans.kindDeps.map(q => q.t) }));
       return JSON.stringify(Object.assign({ stops: stops.map(x => x.name || x.id).join('|'), rides })); }, i);
