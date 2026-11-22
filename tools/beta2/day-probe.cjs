@@ -1,5 +1,5 @@
 // One-off live probe (Nov 22): opens a test cruise on the live Beta 2 app with the real free services and logs, over
-// two minutes, how many sights the ship day has and what the water check is doing. Test trip only, no traveler data.
+// two minutes, how many sights the ship day has and what the water check is doing. Test trip only, no traveler data. Re-run after 9d8cba9.
 const { chromium } = require('playwright'); const fs = require('fs');
 const http = require('http'), TRIP = fs.readFileSync(__dirname + '/probe-trip.json', 'utf8');
 const T0 = Date.now(), ts = () => ((Date.now() - T0) / 1000).toFixed(1) + 's';
