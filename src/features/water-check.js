@@ -136,4 +136,8 @@ function waterCheck(city, homes) {
     else setTimeout(() => { if (waterAsked.get(keyOf(city.city)) === sig) waterAsked.delete(keyOf(city.city)); }, 180000);
   })();
 }
-if (typeof window !== "undefined") window.__kairouteWater = { waterIslandQuery, waterIslandsFrom, waterAcross, waterWaits };
+if (typeof window !== "undefined") window.__kairouteWater = { waterIslandQuery, waterIslandsFrom, waterAcross, waterWaits,
+  // What the check is doing for one day's place (tests and live probes).
+  state: i => { const d = trip.days[i], c = d && cityFor(d); if (!c) return null; const k = keyOf(c.city), q = waterAsked.get(k), r = waterRoad.get(k), st = allSites(c);
+    return { n: st.length, q: q ? q.slice(-60) : "", saved: !!q && c.waterSig === q, road: r ? { same: r.q === q, wait: [...r.wait] } : null, waits: st.filter(s => waterWaits(c, s.id)).map(s => s.name),
+      across: st.filter(s => s.acrossWater).map(s => s.name + "=" + s.acrossWater), gaps: st.filter(s => s.roadGap).map(s => s.name + ":" + s.roadGap), sel: d.selected, mine: d.mine, own: !!d.ownList }; } };

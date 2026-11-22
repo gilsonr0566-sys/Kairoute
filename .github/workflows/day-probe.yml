@@ -1,0 +1,20 @@
+name: Beta 2 day probe
+on:
+  push:
+    branches: ["claude/project-thread-xrdp7v"]
+    paths: ["tools/beta2/day-probe.cjs", "tools/beta2/probe-trip.json"]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm i --no-save playwright@1.65.1 && npx playwright install --with-deps chromium
+      - run: sh build-beta2.sh
+      - run: node tools/beta2/day-probe.cjs
