@@ -348,7 +348,7 @@
       if (!again) fit.dropped.forEach(x => { if (!x.wish && !x.wanted) return;
         const w = x.why === "didn't fit in the time" ? E.waysToFit(win, fit.kept, x.stop, ctx) : [];
         if (w.length) ways[x.id] = w;
-        explain.push((d.wantsOnly ? "Not planned today: " : "") + x.name + " " + x.why + (w.length ? ". To fit it in: " + E.listWords(w.map(o => o.say), "or") : "") + "."); });
+        explain.push((d.wantsOnly ? "Not planned today: " : "") + x.name + " " + (x.needs && x.why === "didn't fit in the time" ? x.needs : x.why) + (w.length ? ". To fit it in: " + E.listWords(w.map(o => o.say), "or") : "") + "."); });
       fit.kept.forEach(s => { if (s.trimmed && !(again && again.kept.some(k => k.trimmed && String(k.id) === String(s.id)))) explain.push("A shorter visit to " + s.name + " (" + dur(s.minutes) + " instead of " + dur(s.trimmed) + ") so the rest of the day fits."); });
       const last = fit.seq.length ? fit.seq[fit.seq.length - 1] : win.head[0];
       const dinner = E.dinnerAfter(win, win.tail.length ? win.tail[win.tail.length - 1] : last, fit.r.end, ctx, new Set(fit.seq.filter(s => s.eatKey).map(s => s.eatKey)));
@@ -448,6 +448,8 @@
       // an abbey. Your picks are over today's time.").
       plan.folded = [].concat(...fit.kept.map(s => (s.folded || []).map(x => x.id)));
       // A visit that didn't fit takes what was folded into it along (never dropped silently).
+      // Each sight the day gave up, with the one reason the planner knows (closed, opens too late, the numbers of the time).
+      plan.dropWhy = {}; if (!d.wantsOnly) fit.dropped.forEach(x => { plan.dropWhy[x.id] = x.needs && x.why === "didn't fit in the time" ? x.needs : x.why; });
       plan.dropped = d.wantsOnly ? [] : [].concat(...fit.dropped.map(x => [x.id].concat(((picks.find(p => String(p.id) === String(x.id)) || {}).folded || []).map(f => f.id)))); if (Object.keys(ways).length) plan.waysToFit = ways; plan.explain = explain.concat(lunchNote ? [lunchNote] : []);
       return { plan, sightIds, eatIds, kept: fit.kept, autoIds: [...autoIds], explain, spare: win.endBy - fit.r.end, win };
     };

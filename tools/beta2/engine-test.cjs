@@ -959,6 +959,22 @@ ok(E.readable('Café Ñandú') && E.readable("Joe's Bar & Grill") && !E.readable
     const far = Object.assign(piers.slice(), { links: [{ name: 'Elsewhere', a: { lat: 42.70, lng: 18.00 }, b: { lat: 42.72, lng: 17.98 } }] });
     const rf = E.makeTravel({ walk: 'medium' }, {}, null, null, null, far).estimate(ship, isle);
     ok(JSON.stringify(parts(rf)) === JSON.stringify(parts(none)), 'a route that does not reach the island changes nothing'); }
+  // Nov 22, Richard ("How is Sorrento closed"): a sight the day gives up says the one reason, in numbers when it is time:
+  // what it needs with the day's other stops and what is left before the time to be back. Never "closed" unless closed.
+  { const s0 = JSON.parse(fs.readFileSync(path.join(dir, 'sample-cruise.json'))), i = s0.days.findIndex(d => /napl/i.test(d.city));
+    const sel = ['pompeii-far', 'capri-far', 'sorrento-far', 'pozzuoli-far'], one = JSON.parse(JSON.stringify(s0)); Object.assign(one.days[i], { own: true, wantsOnly: false, selected: sel, mine: sel });
+    const po = E.planTrip(one)[i], ws = Object.values(po.dropWhy || {});
+    ok((po.dropped || []).length > 0 && ws.length && ws.every(w => /^needs about \d.* is left before \d/.test(w) && !/closed/.test(w)), `a sight given up for time says what it needs and what is left (got ${JSON.stringify(po.dropWhy)})`); }
+  // Nov 22, Richard's ship day: a local line every half hour all afternoon showed nothing between 3:20 and 4:35 pm, said
+  // as "no departure". A hole far wider than the line's usual gap is missing data: said so, the ride stays a taxi.
+  { const deps = [600, 630, 660, 690, 720, 750, 780, 810, 840, 870, 900, 920, 995, 1025, 1055].map(t => ({ t }));
+    const leg = { ans: { deps } };
+    const h = E.depGap(leg, 940);
+    ok(h && h.from === 920 && h.to === 995 && h.every === 30, `a 75-minute hole in a half-hourly line is found as missing times (got ${JSON.stringify(h)})`);
+    ok(!E.depGap({ ans: { deps: [600, 720, 840, 960].map(t => ({ t })) } }, 700), 'a line that runs every 2 hours has no hole: its gaps are its timetable');
+    ok(!E.depGap(leg, 700), 'no hole where the line runs as usual');
+    const sw = E.legAs({ how: 'Train', min: 60, note: '' }, { kind: 'taxi', how: 'Taxi or car', min: 50 }, 'why it changed.');
+    ok(sw.swapWhy === 'why it changed.', 'a ride planned another way keeps the reason, for the ride choice notice'); }
   // The app's map check (water-check.js), its rule apart from the fetching: an island no start stands on, with no way on
   // foot without a ferry, is across the water; a bridge (a way on foot) keeps it on land; the mainland is never across.
   { const fs = require('fs'), src = fs.readFileSync(require('path').join(__dirname, '../../src/features/water-check.js'), 'utf8');

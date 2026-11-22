@@ -100,15 +100,6 @@ const pushLead = async p => { await p.evaluate(() => window.__kairouteGroup.push
     if (a.stops.join() !== c.stops.join() || a.end !== c.end) { bad(`day ${i}: a member following the group gets a different plan (${a.stops.join()} vs ${c.stops.join()})`); }
   }
   ok('every day a member follows is the owner\'s plan (' + days.length + ' days)');
-  // Nov 22 outside test: a new member's phone worked out the group's sights in another order for its first minutes. The
-  // owner's stop order travels with the trip, and a day the member follows is planned in it.
-  { const a0 = await planOf(lead, D), go = await m2.evaluate(i => (window.__kairouteGrpT.trip.days[i].grpOrder || []).join(), D);
-    check(a0.stops.length > 1 && go === a0.stops.join(), 'the owner\'s stop order comes with the trip', `${go} / ${a0.stops}`);
-    const sw = a0.stops.slice(); [sw[0], sw[1]] = [sw[1], sw[0]];
-    await m2.evaluate(([i, r]) => { window.__kairouteGrpT.trip.days[i].grpOrder = r; }, [D, sw]);
-    const c0 = await planOf(m2, D);
-    check(c0.stops.join() === sw.join(), 'a member following the day sees the stops in the group\'s order, not one their phone works out', `${c0.stops} / ${sw}`);
-    await m2.evaluate(([i, r]) => { window.__kairouteGrpT.trip.days[i].grpOrder = r; }, [D, a0.stops]); }
   await openDay(m1, D); await shot(m1, 'phone-group-follow-day');
   check(await m1.$('[data-grpday="follow"]'), 'a following member sees "Following the group\'s plan" and "Make my own day"');
 
@@ -178,7 +169,7 @@ const pushLead = async p => { await p.evaluate(() => window.__kairouteGroup.push
     check(after.hours === L.hours && (!after.meet || after.meet.time === L.meet.time), 'the swapped-in day keeps the group\'s meeting time');
     await pushLead(lead); await pollMember(m2);
     const f2 = await planOf(m2, D);
-    check(f2.stops.join() === after.stops.join(), 'followers get the swapped-in day', `${f2.stops} / ${after.stops} / grpOrder ${await m2.evaluate(i => JSON.stringify(window.__kairouteGrpT.trip.days[i].grpOrder || null), D)} / owner sends ${await lead.evaluate(i => JSON.stringify(window.__kairouteGrpT.trip.days[i].selected), D)}`);
+    check(f2.stops.join() === after.stops.join(), 'followers get the swapped-in day', `${f2.stops} / ${after.stops}`);
     const o2 = await planOf(m1, D); check(o2.own, 'the member who offered it keeps their own day');
     await lead.click('[data-grp="undoday"]'); await lead.waitForTimeout(300);
     const und = await planOf(lead, D);

@@ -879,7 +879,7 @@ function switchRide(key, val, force) {
     // choice would do nothing (and vanish from the menu), so the plan keeps the ride it had and says so.
     // A ride the traveler picks is kept as their choice. If today's plan then doesn't make that ride (the day goes
     // another way round), the choice stays saved for it and the app says so plainly; it is never quietly refused.
-    if (!lost.length && !(used && used.leg.choice === val)) rideNotice = { key, text: used ? `${esc(label(val))} isn't available for this ride on the plan's date, so it uses ${esc(label(used.leg.choice))}. Your choice is saved and used whenever it runs.` : `Saved: ${esc(label(val))} for this ride. Today's plan now goes another way round and doesn't make this ride.` };
+    if (!lost.length && !(used && used.leg.choice === val)) rideNotice = { key, text: used ? `${esc(label(val))} isn't planned for this ride${used.leg.swapWhy ? ": " + esc(used.leg.swapWhy.replace(/\s*,?\s*so this ride is planned by taxi[^.]*\./i, ".")) : "."} The plan uses ${esc(label(used.leg.choice))}. Your choice is saved and used whenever it can be.` : `Saved: ${esc(label(val))} for this ride. Today's plan now goes another way round and doesn't make this ride.` };
     else if (lost.length && !force) { back(); const a = choice(val), b = choice(nowId), more = a && b ? a.min - b.min : 0;
       rideNotice = { key, force: val, text: `${esc(label(val))} takes ${a ? dur(a.min) : "longer"}${more > 0 ? `, ${dur(more)} longer than ${esc(label(nowId))}` : ""}. With it, ${esc(lost.join(" and "))} wouldn't fit before ${d.type === "port" ? "the ship" : "the day ends"}, so the plan keeps ${esc(label(nowId))} and every stop.`, forceText: `Take ${label(val)} and leave out ${lost.join(" and ")}` }; }
     else rideNotice = lost.length ? { key, undo: was === undefined ? "" : was, text: `You chose ${esc(label(val))}: ${esc(lost.join(" and "))} ${lost.length > 1 ? "are" : "is"} left out today.` } : null; }
@@ -1050,9 +1050,11 @@ function settlePicks(d) {
     const out = (p.dropped || []).filter(x => d.selected.includes(x.id));
     if (!out.length) break;
     const gone = new Set(out.map(x => x.id));
-    d.bumped = (d.bumped || []).filter(b => !gone.has(b.id)).concat(out.map(x => ({ id: x.id, name: x.name, w: win(p) })));
+    // Each with the one reason the planner knows, never "closed, or ..." (Nov 22, Richard: "How is Sorrento closed").
+    const whyOf = x => shutOn(d, x) ? "is closed on " + fmtDow(d.date) + " " + fmtDate(d.date) : (p.dropWhy && p.dropWhy[x.id]) || "";
+    d.bumped = (d.bumped || []).filter(b => !gone.has(b.id)).concat(out.map(x => Object.assign({ id: x.id, name: x.name, w: win(p) }, whyOf(x) ? { why: whyOf(x) } : {})));
     laterAdd(d, out); // a booked city keeps them in "If you come back"
-    out.forEach(x => offNote(d, x, p.lockBroken ? `Your locked plan had to change: ${p.lockBroken}` : shutOn(d, x) ? "Closed that day" : "No longer fits this day's time", shutOn(d, x) ? "closed" : "fit"));
+    out.forEach(x => offNote(d, x, p.lockBroken ? `Your locked plan had to change: ${p.lockBroken}` : shutOn(d, x) ? "Closed that day" : whyOf(x) ? "It " + whyOf(x) : "No longer fits this day's time", shutOn(d, x) ? "closed" : "fit"));
     d.selected = d.selected.filter(id => !gone.has(id));
     if (gone.has(d.anchor)) d.anchor = d.selected[d.selected.length - 1] || null;
     forget0(d); moved = true;
@@ -1092,15 +1094,26 @@ function cutNote(d) {
   return askNote("cutask", `With the shorter day, ${c.names.length === 1 ? `<b>${esc(c.names[0])}</b> no longer fits` : `these no longer fit: <b>${c.names.map(esc).join(", ")}</b>`}. Shorten the day and take ${c.names.length === 1 ? "it" : "them"} off your picks?`,
     ["cutkeep", "Keep my hours"], ["cutok", "Shorten anyway"]);
 }
+// Why a sight came off the day, in one plain reason: the one saved when it came off, else worked out now from the
+// plan (what it would add with today's other stops, and the time left), else nothing (never a guess).
+function bumpWhy(d, b) {
+  if (b && b.why) return b.why;
+  try { const city = cityFor(d), s = city && allSites(city).find(x => x.id === b.id); if (!s) return "";
+    if (shutOn(d, s)) return "is closed on " + fmtDow(d.date) + " " + fmtDate(d.date);
+    const plan = buildPlan(d), need = plan && !plan.error ? fitCostOf(plan, s) : null, t = plan && !plan.error ? timeLeft(plan, d) : null;
+    if (need && t && need.min > t.left) return "needs about " + dur(Math.round(need.min / 5) * 5) + " (the visit and the rides to it and on), and with today's other stops only " + dur(Math.round(t.left / 5) * 5) + " is left before " + fmt(plan.endBy);
+  } catch (e) {}
+  return "";
+}
 function bumpedNote(d) {
   if (d.pendingCut) return cutNote(d);
   if (guideLoading(d)) return "";
   const city = cityFor(d), b0 = (d.bumped || []).filter(x => !(d.selected || []).includes(x.id) && allSites(city || {}).some(s => s.id === x.id));
   // Sights that went back to the day they were moved from: said plainly, with nothing to fix.
-  const back = b0.filter(x => x.back), b = b0.filter(x => !x.back);
+  const back = b0.filter(x => x.back), b = b0.filter(x => !x.back).map(x => Object.assign({}, x, { why: bumpWhy(d, x) }));
   const backNote = back.length ? `<div class="banner warn bumped"><span>${back.map(x => `<b>${esc(x.name)}</b> no longer fits today's time, so it went back to ${esc(fmtDow(x.back) + " " + fmtDate(x.back))}.`).join(" ")}</span><span class="actions"><button type="button" class="btn ghost small" data-act="bumpok">OK</button></span></div>` : "";
   if (!b.length) return backNote;
-  return `<div class="banner warn bumped"><span>${b.length === 1 ? `<b>${esc(b[0].name)}</b> no longer fits today's time, so it's off your list.` : `These no longer fit today's time, so they're off your list: <b>${b.map(x => esc(x.name)).join(", ")}</b>.`}${estShip(d) ? ` The ship times here are estimated; your booking's real times may leave room.` : ""}</span>
+  return `<div class="banner warn bumped"><span>${b.length === 1 ? (b[0].why ? `<b>${esc(b[0].name)}</b> is off your list: it ${esc(b[0].why)}.` : `<b>${esc(b[0].name)}</b> no longer fits today's time, so it's off your list.`) : `These are off your list: ${b.map(x => `<b>${esc(x.name)}</b>${x.why ? " (it " + esc(x.why) + ")" : ""}`).join(", ")}.`}${estShip(d) ? ` The ship times here are estimated; your booking's real times may leave room.` : ""}</span>
     <span class="actions">${b.map(x => `<button type="button" class="btn small" data-act="fitask" data-id="${esc(x.id)}">${b.length === 1 ? "Ways to fit it in" : "Fit in " + esc(x.name)}</button>`).join("")}<button type="button" class="btn ghost small" data-act="bumpok">OK</button></span></div>` + backNote;
 }
 function forget0(o) { bonusMemo.delete(o); mealMemo.delete(o); keptMemo.delete(o); eveMemo.delete(o); }

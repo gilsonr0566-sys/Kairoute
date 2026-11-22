@@ -25,10 +25,13 @@
         // The same when the helper said its answer is incomplete (hours of the day it couldn't read): a missing hour is
         // not a missing train.
         const last = E.lastLeave(leg), part = !!(leg.ans && leg.ans.partial), short = nx == null && last != null && last < clock - E.DEP_GAP;
-        if (part && !short) { const why = "The train and bus times found so far for " + (leg.how || "this line") + " show none near " + E.clock(clock) + ", but some hours of the day couldn't be read yet" + (t ? ", so this ride is planned by taxi until they are." : ": check another way before you go.");
+        const hole = !part && !short ? E.depGap(leg, clock) : null;
+        if (hole) { const why = "The times found for " + (leg.how || "this line") + " jump from " + E.clock(hole.from) + " to " + E.clock(hole.to) + ", though it otherwise runs about every " + hole.every + " min, so the times in between are likely missing from the timetable, not trains that don't run. To be back in time it would need to leave about " + E.clock(clock) + (t ? ", so this ride is planned by taxi until those times are confirmed." : ": check the times at the station before you go.");
+          leg = t ? E.legAs(leg, t, why) : Object.assign({}, leg, { note: (leg.note ? leg.note + " " : "") + why, noRun: true }); }
+        else if (part && !short) { const why = "The train and bus times found so far for " + (leg.how || "this line") + " show none near " + E.clock(clock) + ", but some hours of the day couldn't be read yet" + (t ? ", so this ride is planned by taxi until they are." : ": check another way before you go.");
           leg = t ? E.legAs(leg, t, why) : Object.assign({}, leg, { note: (leg.note ? leg.note + " " : "") + why, noRun: true }); } else {
         const why = short ? "The train and bus times found so far for " + (leg.how || "this line") + " only reach " + E.clock(last) + "; the times near " + E.clock(clock) + " aren't known yet" + (t ? ", so this ride is planned by taxi until they are." : ": check another way before you go.")
-          : "The timetable found for " + (leg.how || "this line") + " shows no departure near " + E.clock(clock) + (nx != null ? " (the next known is about " + E.clock(nx) + ")" : "") + (t ? ", so this ride is planned by taxi." : ": check another way before you go.");
+          : "The timetable found for " + (leg.how || "this line") + " shows no departure near " + E.clock(clock) + ", the time it would need to leave to be back in time" + (nx != null ? " (the next known is about " + E.clock(nx) + ")" : "") + (t ? ", so this ride is planned by taxi." : ": check another way before you go.");
         leg = t ? E.legAs(leg, t, why) : Object.assign({}, leg, { note: (leg.note ? leg.note + " " : "") + why, noRun: true }); } }
       // On a day with a time to be back, a boat is planned only on a sailing a timetable confirms (E.boatUnsure): else a
       // taxi when the road reaches, else the place across the water isn't planned today, with the reason (never an hour

@@ -62,7 +62,9 @@ const heartDot = d => { const s = readyState(d); return s ? `<span class="dheart
 function readyBanner(d) {
   const c = readyChange(d); if (!c) return "";
   const bits = [c.added.length ? `added ${c.added.map(esc).join(", ")}` : "", c.gone.length ? `took off ${c.gone.map(esc).join(", ")}` : ""].filter(Boolean).join(" and ");
-  const txt = c.why ? `Your locked day changed because ${esc(c.why)}${bits ? `: Kairoute ${bits}` : ", so Kairoute re-planned it"}.` : `You marked this day ready, then Kairoute ${bits || "changed it"}${c.gone.length ? " (closed, or no longer fits the time safely)" : ""}.`;
+  // Each sight taken off with the one reason known (it closed that day, or the numbers of the time), never an either/or.
+  const whys = c.gone.map(n => { const b = (d.bumped || []).find(x => x.name === n), w = b ? bumpWhy(d, b) : ""; return w ? `${esc(n)} ${esc(w)}` : ""; }).filter(Boolean);
+  const txt = c.why ? `Your locked day changed because ${esc(c.why)}${bits ? `: Kairoute ${bits}` : ", so Kairoute re-planned it"}.` : `You marked this day ready, then Kairoute ${bits || "changed it"}.${whys.length ? " " + whys.map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(". ") + "." : ""}`;
   return `<div class="banner warn readychg" role="status"><span>${txt} Check the plan and tap the heart to lock it again.</span><button class="btn small" data-act="dayready">${heartSVG(true)} Lock again</button></div>`;
 }
 // ---- Your trip is ready ----

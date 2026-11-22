@@ -376,11 +376,20 @@
     if (!leaveTimesOf(leg).length) return "the timetable found gives no sailing times for this day";
     if (!E.runsAt(leg, at, true)) { const nx = E.nextDepAfter(leg, at); return nx == null ? "the timetable shows no sailing after " + E.clock(at) : "the timetable shows no sailing near " + E.clock(at) + " (the next is about " + E.clock(nx) + ")"; }
     return null; };
+  // A hole in the times found for a line that otherwise runs often: missing data, not missing trains (Nov 22, Richard's
+  // ship day: a local line that runs about every half hour all afternoon showed nothing between 3:20 and 4:35 pm, said as
+  // "no departure"). { from, to, every } when the departures around `at` are much farther apart than the line's usual
+  // gap (its stated interval, else the middle of its known gaps), on a line that runs at least every 40 minutes.
+  E.depGap = (leg, at) => { const ts = leaveTimesOf(leg); if (ts.length < 4 || !isFinite(at)) return null;
+    const pv = ts.filter(t => t <= at).pop(), nx = ts.find(t => t >= at); if (pv == null || nx == null) return null;
+    const gaps = ts.slice(1).map((t, k) => t - ts[k]).filter(g => g > 0).sort((x, y) => x - y), a = leg.ans || {};
+    const every = +a.every > 0 ? +a.every : gaps.length ? gaps[Math.floor(gaps.length / 2)] : null;
+    return every && every <= 40 && nx - pv >= Math.max(2.5 * every, every + 45) ? { from: pv, to: nx, every: Math.round(every / 5) * 5 || every } : null; };
   E.lastLeave = leg => { const ts = leaveTimesOf(leg); return ts.length ? ts[ts.length - 1] : null; };
   E.nextLeave = (leg, at) => { const nx = leaveTimesOf(leg).find(t => t >= at); return nx == null ? null : nx; };
   E.nextDepAfter = (leg, at) => { const a = leg && leg.ans, nx = leaveTimesOf(leg).find(t => t >= at); return nx == null ? null : nx + ((a && a.access && a.access.min) || 0); };
   E.legAs = (leg, o, why) => { const out = Object.assign({}, leg, { mode: E.modeOfKind(o.kind), kind: o.kind, how: o.how, min: o.min, steps: o.steps || [], choice: o.id, source: o.source },
-      why ? { note: (leg.note ? leg.note + " " : "") + why } : {});
+      why ? { note: (leg.note ? leg.note + " " : "") + why, swapWhy: why } : {});
     ["ans", "leaveTimes", "transitMode", "parts", "first", "pinned", "slack", "cross", "timetable", "isle"].forEach(k => delete out[k]); if (o.slack) out.slack = o.slack; if (o.ans) out.ans = o.ans; return out; };
   E.rideItem = (leg, extra) => Object.assign({ t: "ride", mode: leg.mode, kind: leg.kind || (leg.mode === "walk" ? "walk" : "taxi"), min: leg.min, km: Math.round((leg.km || 0) * 100) / 100 },
     leg.how && (leg.mode !== "walk" || leg.pierName) ? { how: leg.how } : {}, leg.options ? { options: leg.options } : {}, leg.transitMode ? { transitMode: leg.transitMode } : {},
