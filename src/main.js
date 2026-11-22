@@ -1310,6 +1310,9 @@ function dayPoint(d, city) {
   // The pier the traveler named from their cruise documents and picked on the map (when the map search found none):
   // a real place they confirmed, never a guess (Nov 21 outside check: Dubrovnik and Reykjavik port days stayed blank).
   if (listKey === "cruise" && d.pier && isFinite(+d.pier.lat) && isFinite(+d.pier.lng)) return { name: d.pier.name, lat: +d.pier.lat, lng: +d.pier.lng, note: "The pier you named, found on the map.", own: true };
+  // The same for an airport or station the guide doesn't list (first-time traveler walk, Nov 22: Rome's arrival and
+  // leaving days said "Choose your arrival airport" with no airport to choose, and stopped there).
+  if ((listKey === "airport" || listKey === "station") && d.gate && d.gate.kind === listKey && isFinite(+d.gate.lat) && isFinite(+d.gate.lng)) return { name: d.gate.name, lat: +d.gate.lat, lng: +d.gate.lng, note: "The " + listKey + " you named, found on the map.", own: true };
   const list = pointList(city, listKey), p = list[d.pointIdx] || list[0] || null;
   // More than one real station or airport and the traveler hasn't said which: asked, never guessed (Nov 20 tester).
   const ask = pointAsk(d, list, listKey);
@@ -1958,7 +1961,19 @@ let pierForm = null;
 // Never a district, a town or a region (Nov 21 outside check: "Gruž" found only the city district of that name, and the
 // day was planned from the middle of it): a pier is a place you can stand at.
 const PIER_NOT = /administrative|boundary|suburb|city|town|village|hamlet|neighbou?rhood|quarter|district|county|state|region|province|island|locality/i;
-const pierAsk = (d, city) => { if (!d || !city || !(d.type === "port" || d.type === "embark" || d.mode === "ship")) return false; const P = dayPoint(d, city); return !!P && unsurePoint(P); };
+// Which place the traveler is asked to name when the guide doesn't know it: the cruise pier, or the airport or station
+// of an arriving or leaving day. Asked when none is listed, or the one listed is only a guess.
+function askKind(d) {
+  if (!d) return null; if (d.type === "port" || d.type === "embark" || d.mode === "ship") return "cruise";
+  if ((d.type === "arrival" || d.type === "departure") && MODES[d.mode] && (MODES[d.mode].list === "airport" || MODES[d.mode].list === "station")) return MODES[d.mode].list;
+  return null;
+}
+const pierAsk = (d, city) => { if (!d || !city || !askKind(d)) return false; const P = dayPoint(d, city); return !P || unsurePoint(P); };
+const ASK_WORDS = {
+  cruise: { h: "Where does your ship dock?", lede: "Type the pier, quay or terminal name from your cruise documents. I'll find it on the map and plan the day from there.", label: "Pier or terminal", ph: "e.g. Cruise Terminal 2", short: "Type the pier or terminal name from your cruise documents.", what: "pier", tryw: "the name your cruise line uses for the terminal or quay, or the port's own word for it" },
+  airport: { h: "Which airport?", lede: "Type the airport's name or code from your booking. I'll find it on the map and plan the day from there.", label: "Airport", ph: "e.g. Fiumicino or FCO", short: "Type the airport's name or code from your booking.", what: "airport", tryw: "the airport's full name as your booking shows it" },
+  station: { h: "Which station?", lede: "Type the station name from your ticket. I'll find it on the map and plan the day from there.", label: "Station", ph: "e.g. Roma Termini", short: "Type the station name from your ticket.", what: "station", tryw: "the station's full name as your ticket shows it" }
+};
 // The piers, ferry and cruise terminals and port areas the map has drawn within 2 km of each point, nearest first, from
 // OpenStreetMap (Overpass; free, asked from the traveler's own connection). One with no name on the map is offered by
 // what it is ("Ferry terminal, no name on the map"), so the traveler can still pick the right quay by where it is.
@@ -1985,15 +2000,23 @@ async function piersAround(pts) {
 if (typeof window !== "undefined") window.__kairoutePiers = { pierQuery, piersFrom };
 async function pierSearch() {
   const d = day(), city = cityFor(d); if (!city) return;
-  const f = pierForm = Object.assign(pierForm || {}, { id: d.id }); f.q = ((document.getElementById("pier-name") || {}).value || "").trim();
-  if (f.q.length < 2) { f.msg = "Type the pier or terminal name from your cruise documents."; render(); return; }
-  if (typeof navigator !== "undefined" && navigator.onLine === false) { f.msg = "There's no internet right now, and I need it to find the pier on the map. Try again when you're online."; render(); return; }
+  const kind = askKind(d) || "cruise", W = ASK_WORDS[kind];
+  const f = pierForm = Object.assign(pierForm || {}, { id: d.id, kind }); f.q = ((document.getElementById("pier-name") || {}).value || "").trim();
+  if (f.q.length < 2) { f.msg = W.short; render(); return; }
+  if (typeof navigator !== "undefined" && navigator.onLine === false) { f.msg = `There's no internet right now, and I need it to find the ${W.what} on the map. Try again when you're online.`; render(); return; }
   f.busy = true; f.msg = ""; f.results = []; f.area = ""; render();
   const ss = allSites(city).filter(x => isFinite(+x.lat)), mid = ss.length ? { lat: ss.map(x => +x.lat).sort((a, b) => a - b)[ss.length >> 1], lng: ss.map(x => +x.lng).sort((a, b) => a - b)[ss.length >> 1] } : null;
   const ask = async q => { try { const r = freeAI ? await fetch(freeAI.url + "/findplace?city=" + encodeURIComponent(bareName(d.destination)) + "&q=" + encodeURIComponent(q)) : null, j = r && r.ok ? await r.json() : null;
     return ((j && j.places) || []).filter(m => isFinite(+m.lat) && isFinite(+m.lng) && (!mid || hav(mid, m) <= 60)); } catch (e) { return []; } };
   const add = (list, near) => list.filter(m => !PIER_NOT.test(String(m.kind || "")) && (!near || near.some(a => hav(a, m) <= 3))).forEach(m => { if (!f.results.some(y => hav(y, m) < 0.05)) f.results.push({ name: m.name, lat: +(+m.lat).toFixed(5), lng: +(+m.lng).toFixed(5), kind: String(m.kind || "").replace(/_/g, " "), addr: m.addr || "", km: mid ? hav(mid, m) : null }); });
-  const got = await ask(f.q); add(got);
+  const got = await ask(f.q);
+  // An airport or station: only places the map calls one (or named as one), within reach of the city.
+  if (kind !== "cruise") { const K = typeof SG_KIND !== "undefined" ? SG_KIND[kind] : null;
+    got.filter(m => !K || K.map.test(String(m.kind || "")) || K.re.test(String(m.name || ""))).filter(m => !mid || hav(mid, m) <= (kind === "airport" ? 60 : 30)).forEach(m => { if (!f.results.some(y => hav(y, m) < 0.05)) f.results.push({ name: m.name, lat: +(+m.lat).toFixed(5), lng: +(+m.lng).toFixed(5), kind: String(m.kind || "").replace(/_/g, " "), addr: m.addr || "", km: mid ? hav(mid, m) : null }); });
+    f.results = f.results.slice(0, 5); f.busy = false;
+    if (!f.results.length) f.msg = `I couldn't find "${f.q}" on the map near ${bareName(d.destination)}. Try ${W.tryw}.`;
+    render(); return; }
+  add(got);
   // A name the map knows only as a part of the city (a port's quarter is often named after it, Nov 21: Dubrovnik's
   // "Gruž"): the piers, terminals and harbours in that part are offered instead, never the area's middle as a pier.
   // They come from what the map has drawn there (ferry terminals, piers, port areas), not from guessing words to search
@@ -2018,12 +2041,12 @@ async function pierSearch() {
   render();
 }
 function pierFormHTML(d) {
-  const f = pierForm && pierForm.id === d.id ? pierForm : { q: "", results: [] };
-  return `<div class="card bookform" id="pierform"><h3>Where does your ship dock?</h3><p class="lede small">Type the pier, quay or terminal name from your cruise documents. I'll find it on the map and plan the day from there.</p>
-    <label>Pier or terminal<input id="pier-name" type="text" autocomplete="off" value="${esc(f.q || "")}" placeholder="e.g. Cruise Terminal 2"></label>
+  const f = pierForm && pierForm.id === d.id ? pierForm : { q: "", results: [] }, W = ASK_WORDS[askKind(d) || "cruise"];
+  return `<div class="card bookform" id="pierform"><h3>${W.h}</h3><p class="lede small">${W.lede}</p>
+    <label>${W.label}<input id="pier-name" type="text" autocomplete="off" value="${esc(f.q || "")}" placeholder="${esc(W.ph)}"></label>
     <div class="actions"><button class="btn" data-act="piersearch" ${f.busy ? "disabled" : ""}>${f.busy ? "Looking it up…" : "Find it"}</button></div>
     ${f.msg ? `<p class="banner warn" role="status">${esc(f.msg)}</p>` : ""}
-    ${f.results && f.results.length ? `<p class="lede small">Which one is it?</p><div class="bookres">${f.results.map((y, i) => `<button class="btn ghost" data-pierpick="${i}"><b>${esc(y.name)}</b><small>${[y.addr, y.kind, y.km != null ? distTxt(y.km) + " from the sights" : ""].filter(Boolean).map(esc).join(" · ")}</small></button>`).join("")}</div>` : ""}</div>`;
+    ${f.results && f.results.length ? `<p class="lede small">Which one is it?</p><div class="bookres">${f.results.map((y, i) => `<button class="btn ghost" data-pierpick="${i}"><b>${esc(y.name)}</b><small>${[y.addr, y.kind, y.km != null ? distTxt(y.km) + " from the " + (W === ASK_WORDS.cruise ? "sights" : "city") : ""].filter(Boolean).map(esc).join(" · ")}</small></button>`).join("")}</div>` : ""}</div>`;
 }
 function bookFormHTML(d) {
   const f = bookForm; if (!f) return "";
@@ -4436,8 +4459,9 @@ if (typeof window !== "undefined") window.__kairouteInputs = i => { const d = tr
     wx: wk ? JSON.stringify(wk).slice(0, 80) : "none", sites: (c.sites || []).length, farther: (c.farther || []).length, famed: (c.sites || []).filter(x => x.fame).length, must: (c.sites || []).filter(x => x.mustSee).map(x => x.name).join("; ").slice(0, 300),
     eats: (c.restaurants || []).length, rides: Object.keys(transitMem).length, online: navigator.onLine }; };
 if (typeof window !== "undefined") window.__kairouteState = () => ({ view, busy: busy ? busy.text || "busy" : "", err: aiError || "", ship: trip.ship || null, name: trip.name || "",
-  days: trip.days.map((d, i) => ({ i, date: d.date, type: d.type, dest: d.destination, arrive: d.portArrive || "", aboard: d.allAboard || "", estimated: !!d.estimated, wants: d.wants || [], picks: (d.selected || []).length, stayAboard: !!d.aboard, guide: !!cityFor(d) })) });
+  days: trip.days.map((d, i) => ({ i, date: d.date, type: d.type, mode: d.mode || "", dest: d.destination, arrive: d.portArrive || "", aboard: d.allAboard || "", estimated: !!d.estimated, wants: d.wants || [], picks: (d.selected || []).length, stayAboard: !!d.aboard, guide: !!cityFor(d) })) });
 if (typeof window !== "undefined") window.__kairouteAiReady = () => aiReady();
+if (typeof window !== "undefined") window.__kairouteForgetGate = i => { const d = trip.days[i]; if (d) { delete d.gate; save(); render(); } return true; };
 if (typeof window !== "undefined") window.__kairouteBuildTrip = async text => { await buildTripFromText(text); if (aiError) return { error: aiError }; await buildAllGuides(); return { error: aiError || "", ship: trip.ship || null, days: trip.days.map((d, i) => { const c = cityFor(d); return { i, date: d.date, type: d.type, dest: d.destination, arrive: d.portArrive, aboard: d.allAboard, estimated: !!d.estimated, wants: d.wants || [], guide: !!c }; }) }; };
 if (typeof window !== "undefined") window.__kairouteNewTrip = async (desc, answer) => { const keep = sample; sample = async () => ({ text: answer, truncated: false }); try { await buildTripFromText(desc, { noGuides: true }); } finally { sample = keep; } return trip.days.map(d => ({ date: d.date, type: d.type, dest: d.destination })); };
 if (typeof window !== "undefined") window.__kairouteMeter = (clearAll) => { bonusMemo = new Map(); mealMemo = new Map(); keptMemo = new Map(); eveMemo = new Map(); avoidMeals = new Set(); const saved = trip.days.map(d => d.selected), savedC = trip.days.map(d => d.cleared); if (clearAll) trip.days.forEach(d => { d.selected = []; d.cleared = true; }); try { return trip.days.map((d, i) => { let pl = null; try { pl = buildPlan(d); } catch (e) { return { i, err: e.message }; } const m = meterCalc(pl, d); return m ? { i, date: d.date, dest: d.destination, type: d.type, avail: m.avail, used: m.used, visits: m.visits, eat: m.eat, moving: m.moving, settle: m.settle, leave: m.leave, extra: m.extra, bonus: m.bonus, stops: pl.stops.length, booked: !!(d.booked && Object.keys(d.booked).length) } : { i, skip: true }; }); } finally { trip.days.forEach((d, k) => { d.selected = saved[k]; if (savedC[k]) d.cleared = true; else delete d.cleared; }); bonusMemo = new Map(); mealMemo = new Map(); keptMemo = new Map(); eveMemo = new Map(); } };
@@ -5930,7 +5954,7 @@ function renderTrip(d) {
         ${t === "arrival" || t === "departure" ? `<div class="field"><span class="lbl">${t === "arrival" ? "Arriving by" : "Leaving by"}</span>
           <div class="seg" role="group" aria-label="Travel mode">${Object.keys(MODES).filter(k => t === "arrival" || k !== "ship").map(k => `<button type="button" data-mode="${k}" aria-pressed="${d.mode === k}">${MODES[k].label}</button>`).join("")}</div></div>` : ""}
         ${t !== "land" ? `<div class="field"><label for="f-point">${pointWord}</label>
-          ${city ? (points.length ? `<select id="f-point"${pointAsk(d, points, listKey) ? ` data-ask="1"><option value="-1" selected>Which ${esc(MODES[d.mode] && t !== "port" && t !== "embark" ? MODES[d.mode].word : "place")}? Choose yours</option>${opts(points, -1)}` : `>${opts(points, d.pointIdx)}`}</select>${d.pier && listKey === "cruise" ? `<span class="hint">Your pier: ${esc(d.pier.name)}, found on the map from the name you gave. Choose one from the list to change it.</span>` : points[d.pointIdx] && points[d.pointIdx].note ? `<span class="hint">${esc(points[d.pointIdx].note)}</span>` : ""}` : `<span class="hint">No ${esc(listKey)} listed for this city.</span>`) : `<span class="hint">Appears once the guide for ${esc(d.destination || "this city")} is built.</span>`}
+          ${city ? (points.length ? `<select id="f-point"${pointAsk(d, points, listKey) ? ` data-ask="1"><option value="-1" selected>Which ${esc(MODES[d.mode] && t !== "port" && t !== "embark" ? MODES[d.mode].word : "place")}? Choose yours</option>${opts(points, -1)}` : `>${opts(points, d.pointIdx)}`}</select>${d.pier && listKey === "cruise" ? `<span class="hint">Your pier: ${esc(d.pier.name)}, found on the map from the name you gave. Choose one from the list to change it.</span>` : points[d.pointIdx] && points[d.pointIdx].note ? `<span class="hint">${esc(points[d.pointIdx].note)}</span>` : ""}` : (d.gate && d.gate.kind === listKey ? `<span class="hint">Your ${esc(listKey)}: ${esc(d.gate.name)}, found on the map from the name you gave.</span>` : `<span class="hint">No ${esc(listKey)} listed for this city yet. Open the day plan and type its name from your booking.</span>`)) : `<span class="hint">Appears once the guide for ${esc(d.destination || "this city")} is built.</span>`}
         </div>` : ""}
         ${t === "land" || t === "arrival" ? `<div class="field"><label for="f-hours">Hours to sightsee</label><input type="number" id="f-hours" min="1" max="14" step="0.5" value="${esc(String(d.hours))}"><div class="seg pace" role="group" aria-label="How long to sightsee">${DAY_LEN.map(([h, l]) => `<button type="button" data-hrs="${h}" aria-pressed="${+d.hours === h}">${l}</button>`).join("")}</div><span class="hint">Also on the Day plan: tap the day's hours to set a start and end time.</span></div>` : ""}
         <div class="row2">
@@ -6805,7 +6829,8 @@ function renderPlan(d) {
   if (!city) return `${dayHeading(d)}${busyBlock()}${errBlock()}${needsCity(d)}`;
   refillIfNeeded(d, city); if (!d.selected) seedPicks(d, city); crowdFor(city); fameFor(d, city); farEatsFor(city, d); upgradeThin(d, city);
   const plan = buildPlan(d); if (plan && !plan.error) { gCheck(plan, city); queueExtras(plan); writeSrcSights(plan, city); }
-  if (plan.error) return `${dayHeading(d)}<div class="card empty"><p>${esc(plan.error)}</p><button class="btn" data-goto="trip">Edit this day</button></div>${pierAsk(d, city) ? pierFormHTML(d) : ""}`;
+  // When the missing piece is a place the traveler can name here, the question is the one thing shown (say it once).
+  if (plan.error) return `${dayHeading(d)}${pierAsk(d, city) ? pierFormHTML(d) : `<div class="card empty"><p>${esc(plan.error)}</p><button class="btn" data-goto="trip">Edit this day</button></div>`}`;
   let n = 0;
   const canDrag = plan.stops.filter(x => !x.place.along && !x.place.bonus).length > 1; // two or more stops: drag them into any order
   const cat = s => esc(String(s.category || "").replace(/^\w/, c => c.toUpperCase()));
@@ -7400,7 +7425,7 @@ document.addEventListener("click", e => {
   if (t.dataset.act === "booksearch") { bookSearch(); return; }
   if (t.dataset.act === "piersearch") { pierSearch(); return; }
   if (t.dataset.pierpick != null && pierForm) { const y = (pierForm.results || [])[+t.dataset.pierpick], d = day();
-    if (y && d) { d.pier = { name: y.name, lat: y.lat, lng: y.lng }; pierForm = null; trip.tour = null; edited(); save(); render(); } return; }
+    if (y && d) { if (pierForm.kind === "airport" || pierForm.kind === "station") d.gate = { name: y.name, lat: y.lat, lng: y.lng, kind: pierForm.kind }; else d.pier = { name: y.name, lat: y.lat, lng: y.lng }; pierForm = null; trip.tour = null; edited(); save(); render(); } return; }
   if (t.dataset.act === "bookcancel") { bookForm = null; render(); return; }
   if (t.dataset.bookpick != null && bookForm) { const y = bookForm.results[+t.dataset.bookpick], d = day(), tm = ((document.getElementById("bk-time") || {}).value || bookForm.time);
     if (y) { d.booked = Object.assign({}, d.booked, { [bookForm.label]: { name: y.name, lat: y.lat, lng: y.lng, kind: y.kind || "", addr: y.addr || "", time: /^\d\d:\d\d$/.test(tm) ? tm : bookForm.time } }); bookForm = null; trip.tour = null; save(); render(); } return; }
