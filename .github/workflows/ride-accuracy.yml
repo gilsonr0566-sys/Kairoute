@@ -1,0 +1,30 @@
+name: Ride accuracy
+# How close the helper's ride estimates (map: speed, waiting, walks) are to the published timetables, per ride kind,
+# across the test trips (tools/ride-accuracy.mjs). Runs the live helper's code (main) and, when given, a candidate.
+on:
+  push:
+    branches: ["claude/project-thread-xrdp7v"]
+    paths: [".github/workflows/ride-accuracy.yml", "tools/ride-accuracy.mjs", "tools/ride-accuracy-run.txt"]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  measure:
+    runs-on: ubuntu-latest
+    timeout-minutes: 170
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: The live helper's ride code (main)
+        run: git fetch -q origin main && mkdir -p /tmp/live && git show origin/main:worker/transit.js > /tmp/live/transit.js
+      - name: Measure (live helper code)
+        run: node tools/ride-accuracy.mjs --transit /tmp/live/transit.js --out ride-accuracy-live.json | tee ride-accuracy-live.txt
+      - name: Measure (this branch's helper code, when it differs)
+        run: if ! cmp -s worker/transit.js /tmp/live/transit.js && [ -f tools/ride-accuracy-candidate ]; then node tools/ride-accuracy.mjs --transit worker/transit.js --out ride-accuracy-candidate.json | tee ride-accuracy-candidate.txt; fi
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: ride-accuracy
+          path: ride-accuracy-*
