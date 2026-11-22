@@ -568,7 +568,8 @@
    "note": "Small but interesting museum with artefacts and models from the indigenous people of Asia (mainly the Philippines, former colony of Spain), Africa and America. The exhibits are described in Spanish; however, on each floor, there is a leafle",
    "editions": 16,
    "unesco": false,
-   "web": "https://www.cultura.gob.es/mnantropologia/portada.html"
+   "web": "https://www.cultura.gob.es/mnantropologia/portada.html",
+   "posDoubt": true
   },
   {
    "name": "Parque del Retiro",
@@ -809,7 +810,8 @@
    "note": "The motorway that used to carve into the city and blight the banks of Río Manzanares, was banished into a tunnel, in a superlative urban landscaping project that cost some €4 billion. Nowadays, a unique 6-km-long landscape garden accompanie",
    "editions": 10,
    "unesco": false,
-   "web": "https://www.esmadrid.com/informacion-turistica/madrid-rio"
+   "web": "https://www.esmadrid.com/informacion-turistica/madrid-rio",
+   "posDoubt": true
   },
   {
    "name": "Planetario de Madrid",
@@ -985,7 +987,8 @@
    "note": "Small but interesting museum with artefacts and models from the indigenous people of Asia (mainly the Philippines, former colony of Spain), Africa and America. The exhibits are described in Spanish; however, on each floor, there is a leafle",
    "editions": 16,
    "unesco": false,
-   "web": "https://www.cultura.gob.es/mnantropologia/portada.html"
+   "web": "https://www.cultura.gob.es/mnantropologia/portada.html",
+   "posDoubt": true
   },
   {
    "name": "Parque del Retiro",

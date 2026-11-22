@@ -658,12 +658,13 @@
   },
   {
    "name": "Porta Grazia di Messina",
-   "lat": 38.203042,
-   "lng": 15.555815,
+   "lat": 38.188006,
+   "lng": 15.566853,
    "wikidata": "Q3930982",
    "note": "The former main gate of the Messina's citadel. These days it stays at the Piazza Casa Pia dei Poveri. A few other surviving parts of the citadel still can be seen at the original location of the citadel at the SE corner of the port albeit i",
    "editions": 3,
-   "unesco": false
+   "unesco": false,
+   "posFrom": "wikidata"
   },
   {
    "name": "Villa de Pasquale",
@@ -1660,6 +1661,116 @@
    },
    "min": 107,
    "km": 75.3
+  }
+ ],
+ "ferryLinks": [
+  {
+   "name": "Vulcano - Messina",
+   "a": {
+    "lat": 38.41521,
+    "lng": 14.96077
+   },
+   "b": {
+    "lat": 38.18841,
+    "lng": 15.56172
+   },
+   "osm": "way/1312804043"
+  },
+  {
+   "name": "Vulcano - Reggio Calabria",
+   "a": {
+    "lat": 38.12165,
+    "lng": 15.64884
+   },
+   "b": {
+    "lat": 38.41521,
+    "lng": 14.96077
+   },
+   "osm": "way/1312804044"
+  },
+  {
+   "name": "Tremestieri- Villa San Giovanni",
+   "a": {
+    "lat": 38.13129,
+    "lng": 15.52323
+   },
+   "b": {
+    "lat": 38.22276,
+    "lng": 15.63303
+   },
+   "osm": "way/190394346"
+  },
+  {
+   "name": "Messina - Reggio di Calabria",
+   "a": {
+    "lat": 38.18841,
+    "lng": 15.56172
+   },
+   "b": {
+    "lat": 38.12165,
+    "lng": 15.64884
+   },
+   "osm": "way/190568783"
+  },
+  {
+   "name": "Messina - Villa San Giovanni",
+   "a": {
+    "lat": 38.18836,
+    "lng": 15.56047
+   },
+   "b": {
+    "lat": 38.21697,
+    "lng": 15.6336
+   },
+   "osm": "way/190568784"
+  },
+  {
+   "name": "Tremestieri - Reggio di Calabria",
+   "a": {
+    "lat": 38.13196,
+    "lng": 15.52348
+   },
+   "b": {
+    "lat": 38.12321,
+    "lng": 15.65217
+   },
+   "osm": "way/239666042"
+  },
+  {
+   "name": "Messina - Villa San Giovanni",
+   "a": {
+    "lat": 38.21031,
+    "lng": 15.56166
+   },
+   "b": {
+    "lat": 38.22108,
+    "lng": 15.63297
+   },
+   "osm": "way/27733921"
+  },
+  {
+   "name": "Messina - Stromboli",
+   "a": {
+    "lat": 38.18841,
+    "lng": 15.56172
+   },
+   "b": {
+    "lat": 38.79752,
+    "lng": 15.23992
+   },
+   "osm": "way/358688572"
+  },
+  {
+   "name": "Messina - Villa San Giovanni",
+   "a": {
+    "lat": 38.21626,
+    "lng": 15.63331
+   },
+   "b": {
+    "lat": 38.18809,
+    "lng": 15.56312
+   },
+   "osm": "way/851258939"
   }
  ]
 }
