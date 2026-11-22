@@ -178,7 +178,7 @@ const pushLead = async p => { await p.evaluate(() => window.__kairouteGroup.push
     check(after.hours === L.hours && (!after.meet || after.meet.time === L.meet.time), 'the swapped-in day keeps the group\'s meeting time');
     await pushLead(lead); await pollMember(m2);
     const f2 = await planOf(m2, D);
-    check(f2.stops.join() === after.stops.join(), 'followers get the swapped-in day');
+    check(f2.stops.join() === after.stops.join(), 'followers get the swapped-in day', `${f2.stops} / ${after.stops}`);
     const o2 = await planOf(m1, D); check(o2.own, 'the member who offered it keeps their own day');
     await lead.click('[data-grp="undoday"]'); await lead.waitForTimeout(300);
     const und = await planOf(lead, D);

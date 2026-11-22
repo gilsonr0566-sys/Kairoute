@@ -49,7 +49,7 @@ async function grpLead() {
   if (grpBusy) return null; grpBusy = true; grpNote = ""; render();
   try {
     const { status, j } = await grpCall({ op: "new", trip: grpSnapshot(), name: trip.name || tripName(trip), live: grpLive() });
-    if (status === 200 && j && j.code) { trip.groupShared = j.code; save(); grp = { code: j.code, role: "lead", token: j.token, tripId: trip.id, at: Date.now(), tripName: trip.name || tripName(trip) }; grpSave(); grpLastLive = ""; grpLastTrip = JSON.stringify(trip.days); grpNote = ""; return { code: j.code }; }
+    if (status === 200 && j && j.code) { trip.groupShared = j.code; save(); grp = { code: j.code, role: "lead", token: j.token, tripId: trip.id, at: Date.now(), tripName: trip.name || tripName(trip) }; grpSave(); grpLastLive = ""; grpLastTrip = grpTripKey(); grpNote = ""; return { code: j.code }; }
     grpNote = "The group couldn't start just now. Try again in a minute.";
   } catch (e) { grpNote = "Starting a group needs the internet. Try again when you're online."; }
   finally { grpBusy = false; render(); }
@@ -129,12 +129,15 @@ function grpSchedule(ms) {
   clearTimeout(grpPollTimer); if (!grp || grp.role !== "follow") return;
   grpPollTimer = setTimeout(async () => { if (document.visibilityState !== "hidden") await grpPoll(); grpSchedule(Math.min(view === "tour" ? 20000 : 120000, (view === "tour" ? 3000 : 30000) * Math.pow(2, Math.min(grpFails, 3)))); if (view === "tour") { const el = document.getElementById("grpSignal"); if (el) el.innerHTML = grpSignalText(); } }, ms);
 }
+const grpTripKey = () => JSON.stringify(trip.days) + JSON.stringify(typeof window !== "undefined" && window.__kairoutePlanStops ? window.__kairoutePlanStops() : []);
 // Leader: send the current step (and the trip, when its plan changes) whenever it changes.
 async function grpPush() {
   if (!grp || grp.role !== "lead" || trip.id !== grp.tripId) return;
   const live = grpLive(), key = JSON.stringify(live);
   if (key !== grpLastLive) { grpLastLive = key; try { const r = await grpCall({ op: "live", code: grp.code, token: grp.token, live }); if (r.status === 404) { grp = null; grpSave(); grpNote = "This group code has expired."; render(); } } catch (e) { grpLastLive = ""; } }
-  const days = JSON.stringify(trip.days);
+  // The trip goes again when its days change or the owner's planned stops do (the plan settles as map answers arrive,
+  // and followers are planned in the owner's order).
+  const days = grpTripKey();
   if (days !== grpLastTrip && Date.now() - (grp.tripAt || 0) > 10000) { grp.tripAt = Date.now(); grpSave(); try { const r = await grpCall({ op: "trip", code: grp.code, token: grp.token, trip: grpSnapshot() }); if (r.status === 200) grpLastTrip = days; } catch (e) {} }
 }
 async function grpRegroup(where, note) {
