@@ -17,6 +17,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
+      - run: npm i --no-save playwright@1.65.1 && npx playwright install --with-deps chromium
       - name: The test trips (as the release gate makes them)
         run: mkdir -p tools/beta2/snapshots && cp tools/beta2/corpus/*.json tools/beta2/snapshots/ && node tools/beta2/snapshot.cjs && node tools/beta2/noai-trips.cjs
       - name: The live helper's ride code (main)
