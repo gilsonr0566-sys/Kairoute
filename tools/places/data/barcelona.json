@@ -8278,5 +8278,955 @@
    "min": 90,
    "km": 105.8
   }
+ ],
+ "guideSights": [
+  {
+   "name": "Palau de la Música Catalana",
+   "lat": 41.3875,
+   "lng": 2.175,
+   "wikidata": "",
+   "note": ""
+  },
+  {
+   "name": "Basilica of Santa Maria del Mar",
+   "lat": 41.383611,
+   "lng": 2.181944,
+   "wikidata": "Q908802",
+   "note": "One of the most representative examples of Catalan Gothic architecture, it features a sombre but beautiful interior. The upsweeping verticality and lightness of the interior are especially surprising considering the blocky exterior surfaces",
+   "editions": 30,
+   "unesco": false,
+   "web": "http://www.santamariadelmarbarcelona.org"
+  },
+  {
+   "name": "Carrer Montcada",
+   "lat": 41.38483,
+   "lng": 2.18131,
+   "wikidata": "Q8255466",
+   "note": "This street has the biggest collection of Gothic houses in Barcelona. In amongst these houses is the Picasso Museum, which is definitely worth a visit. There are also smaller museums along the street, and many tapas restaurants though they ",
+   "editions": 3,
+   "unesco": false
+  },
+  {
+   "name": "Passeig del Born",
+   "lat": 41.384232,
+   "lng": 2.182438,
+   "wikidata": "Q17315298",
+   "note": "This avenue goes from the Santa Maria del Mar church to the Born market and is where the legendary jousting matches of the Middle Ages took place, as well as numerous fairs and marches. This is also where men were knighted. It is a really o",
+   "editions": 3,
+   "unesco": false
+  },
+  {
+   "name": "Mercat del Born",
+   "lat": 41.385397,
+   "lng": 2.1841,
+   "wikidata": "Q921152",
+   "note": "This market was the central market for Barcelona until 1973 and its closing marked the beginning of the neighborhood's decline before its current resurgence. While undergoing renovations, whole streets and homes that had been demolished by ",
+   "editions": 6,
+   "unesco": false,
+   "closedForGood": true,
+   "web": "https://elbornculturaimemoria.barcelona.cat"
+  },
+  {
+   "name": "Picasso Museum",
+   "lat": 41.38504,
+   "lng": 2.18103,
+   "wikidata": "",
+   "note": ""
+  },
+  {
+   "name": "Palau Güell",
+   "lat": 41.378889,
+   "lng": 2.173861,
+   "wikidata": "",
+   "note": ""
+  },
+  {
+   "name": "Plaça Sant Jaume",
+   "lat": 41.3825,
+   "lng": 2.176944,
+   "wikidata": "Q2082605",
+   "note": "This square has been the political hub since the Roman era. It has been witness to some of the most important events in modern Catalan history, such as the proclamation of the Catalan State in 1931. At one end, there is the Palace of the Ge",
+   "editions": 15,
+   "unesco": false
+  },
+  {
+   "name": "Plaça Reial",
+   "lat": 41.38,
+   "lng": 2.175,
+   "wikidata": "Q1519964",
+   "note": "This square is famous for the nightlife and the uniform architecture, and features fountains and palm trees. It was built during the 19th century on the site of a monastery, after the ''Mendizábal law'' expelled the monks. After some years ",
+   "editions": 17,
+   "unesco": false
+  },
+  {
+   "name": "Plaça del Rei",
+   "lat": 41.38413,
+   "lng": 2.17744,
+   "wikidata": "Q2067174",
+   "note": "This square has two important buildings, the ''Santa Àgata'' church, where the kings from the ''Aragon crown'' had baptism. Is possible to visit it. The other building has the ''Saló del Tinell'', one of the best civil Gothic architecture e",
+   "editions": 16,
+   "unesco": false
+  },
+  {
+   "name": "Cathedral of Santa Eulàlia",
+   "lat": 41.383889,
+   "lng": 2.176389,
+   "wikidata": "Q17155",
+   "note": "The main Gothic church in Barcelona. The cloister is maybe the most interesting part.",
+   "editions": 44,
+   "unesco": false,
+   "web": "https://catedralbcn.org/"
+  },
+  {
+   "name": "Plaça Sant Felip Neri",
+   "lat": 41.383358,
+   "lng": 2.174939,
+   "wikidata": "Q9060949",
+   "note": "One of the most romantic squares in Barcelona, it hides a dark history in that it was built over the city's old cemetery. Barcelona's most famous architect, Antonio Gaudi, was on his way to visit the church there when he was run over and ki",
+   "editions": 10,
+   "unesco": false
+  },
+  {
+   "name": "Plaça del Pi",
+   "lat": 41.3824,
+   "lng": 2.17369,
+   "wikidata": "Q3392167",
+   "note": "This square next to ''La Rambla'' is one of the prettiest parts of the quarter. It has a pine tree in the middle (''Pi'' mines pine tree), the church of ''Santa Maria del Pi'', which is a very pretty Gothic church with a huge rose window. M",
+   "editions": 5,
+   "unesco": false
+  },
+  {
+   "name": "Carrer Petritxol",
+   "lat": 41.38279,
+   "lng": 2.17296,
+   "wikidata": "",
+   "note": "This narrow street, that starts in the ''Plaça del Pi'' has a very special atmosphere. It is famous because of its chocolate shops, where you can drink a hot chocolate since the 18th century. It has also very important art galleries (''Sala"
+  },
+  {
+   "name": "Ancient synagogue",
+   "lat": 41.38258,
+   "lng": 2.17577,
+   "wikidata": "Q2916029",
+   "note": "They open during the morning. It is the re-discovered synagogue from the Jewish quarter, called ''call''. This building, not very spectacular, is important since it has been here since the Roman era, and stayed as a synagogue until the Jewi",
+   "editions": 10,
+   "unesco": false
+  },
+  {
+   "name": "Museu d'Història de la Ciutat de Barcelona",
+   "lat": 41.383904,
+   "lng": 2.177691,
+   "wikidata": "",
+   "note": ""
+  },
+  {
+   "name": "Museu de l'Eròtica de Barcelona",
+   "lat": 41.38216,
+   "lng": 2.17264,
+   "wikidata": "Q3329871",
+   "note": "Museum dedicated to erotic and sensual works. A huge tourist trap. The tour is not worth it, unless you wish to see old paintings of the Kama Sutra. The only interest is the huge phallus in the hallway, which makes for funny pictures.",
+   "editions": 6,
+   "unesco": false,
+   "web": "http://www.erotica-museum.com"
+  },
+  {
+   "name": "Hash Marijuana & Hemp Museum Barcelona",
+   "lat": 41.380803,
+   "lng": 2.180134,
+   "wikidata": "",
+   "note": ""
+  },
+  {
+   "name": "La Rambla",
+   "lat": 41.381389,
+   "lng": 2.173056,
+   "wikidata": "Q850593",
+   "note": "Often the first landmark that people identify with the city. It is the central and most famous boulevard cutting through the heart of the city centre — a vibrant promenade filled with Barcelona life at its best. It stretches from the harbou",
+   "editions": 39,
+   "unesco": false
+  },
+  {
+   "name": "Maritime Museum",
+   "lat": 41.375028,
+   "lng": 2.176369,
+   "wikidata": "Q1286354",
+   "note": "Housed in Drassanes, the Gothic shipyard of the city. During the 14th century, the Arag&oacute; Crown was the most important power in the Mediterranean Sea, and this was the main place where the ships were built. Nowadays, it's the Maritime",
+   "editions": 16,
+   "unesco": false,
+   "web": "https://www.mmb.cat/"
+  },
+  {
+   "name": "Hospital de la Santa Creu",
+   "lat": 41.381111,
+   "lng": 2.17,
+   "wikidata": "Q683875",
+   "note": "This Gothic building was the old city hospital, before the modernist ''Hospital de Sant Pau'' was built in ''l'[[Barcelona/Eixample",
+   "editions": 10,
+   "unesco": false
+  },
+  {
+   "name": "Sant Pau del Camp",
+   "lat": 41.376111,
+   "lng": 2.169444,
+   "wikidata": "Q2101038",
+   "note": "A rare example of Romanesque architecture, the prettiest in Barcelona. Its name reflects the fact that the church was once surrounded by green fields outside the city walls.",
+   "editions": 10,
+   "unesco": false
+  },
+  {
+   "name": "Centre de Cultura Contemporània de Barcelona",
+   "lat": 41.383611,
+   "lng": 2.166667,
+   "wikidata": "Q2945260",
+   "note": "The arts centre’s core theme is the city and urban culture.",
+   "editions": 8,
+   "unesco": false,
+   "web": "http://www.cccb.org"
+  },
+  {
+   "name": "Centre d'Art Santa Mònica",
+   "lat": 41.377222,
+   "lng": 2.176111,
+   "wikidata": "",
+   "note": ""
+  },
+  {
+   "name": "Barcelona Museum of Contemporary Art",
+   "lat": 41.3832,
+   "lng": 2.167,
+   "wikidata": "",
+   "note": ""
+  },
+  {
+   "name": "Museu de les Il·lusions",
+   "lat": 41.38283,
+   "lng": 2.169795,
+   "wikidata": "Q140700589",
+   "note": "A museum of more than 30 room-sized, hand-painted 3D murals built on forced perspective: visitors stand on marked spots and appear to hang from a dragon's jaw or teeter over a painted canyon. Photography is the point of the visit.",
+   "editions": 0,
+   "unesco": false,
+   "web": "https://illusions-museum.com/"
+  },
+  {
+   "name": "Aquàrium de Barcelona",
+   "lat": 41.376667,
+   "lng": 2.184167,
+   "wikidata": "",
+   "note": ""
+  },
+  {
+   "name": "Parc Zoològic de Barcelona",
+   "lat": 41.387883,
+   "lng": 2.191194,
+   "wikidata": "",
+   "note": ""
+  },
+  {
+   "name": "Parc de la Ciutadella",
+   "lat": 41.388111,
+   "lng": 2.187517,
+   "wikidata": "Q301135",
+   "note": "Barcelona's most central park, and includes a zoo, a lake and several museums. In fact, the park is so large, 74 acres, that the Catalan Parliament can be found in the centre of the park. It is a great place to enjoy games, sports or to spe",
+   "editions": 25,
+   "unesco": false
+  },
+  {
+   "name": "Port Vell",
+   "lat": 41.37675,
+   "lng": 2.184639,
+   "wikidata": "Q1114612",
+   "note": "The harbor was closed to the public until the 80s and received a complete makeover before the Olympics in 1992. Some old buildings related to the harbor still exist, such as the ''Tinglado'' near the Barceloneta quarter that is now a histor",
+   "editions": 14,
+   "unesco": false,
+   "web": "https://portvellbcn.cat/ca/",
+   "posDoubt": true
+  },
+  {
+   "name": "Museum of the History of Catalonia",
+   "lat": 41.38069,
+   "lng": 2.18557,
+   "wikidata": "",
+   "note": ""
+  },
+  {
+   "name": "Sagrada Família",
+   "lat": 41.403608,
+   "lng": 2.174442,
+   "wikidata": "",
+   "note": ""
+  },
+  {
+   "name": "Casa Batlló",
+   "lat": 41.3916384,
+   "lng": 2.16476979,
+   "wikidata": "",
+   "note": ""
+  },
+  {
+   "name": "La Pedrera",
+   "lat": 41.395278,
+   "lng": 2.161667,
+   "wikidata": "",
+   "note": ""
+  },
+  {
+   "name": "Casa Amatller",
+   "lat": 41.391667,
+   "lng": 2.165,
+   "wikidata": "",
+   "note": ""
+  },
+  {
+   "name": "Casa Lleó-Morera",
+   "lat": 41.391244,
+   "lng": 2.165528,
+   "wikidata": "Q2330791",
+   "note": "By [[w:Casa Lleó Morera",
+   "editions": 17,
+   "unesco": false
+  },
+  {
+   "name": "Fundació Antoni Tàpies",
+   "lat": 41.39167,
+   "lng": 2.16361,
+   "wikidata": "",
+   "note": ""
+  },
+  {
+   "name": "Hotel Majestic",
+   "lat": 41.393406,
+   "lng": 2.163947,
+   "wikidata": "Q615575",
+   "note": "Passeig de Gràcia 68. Enjoy city views from the rooftop. Just enter the elevator right from the lobby, and head up to the top floor.",
+   "editions": 0,
+   "unesco": false,
+   "web": "https://majestichotelgroup.com/ca/barcelona/hotel-majestic"
+  },
+  {
+   "name": "Plaça de Catalunya",
+   "lat": 41.386667,
+   "lng": 2.17,
+   "wikidata": "",
+   "note": ""
+  },
+  {
+   "name": "Universitat",
+   "lat": 41.386667,
+   "lng": 2.163889,
+   "wikidata": "",
+   "note": ""
+  },
+  {
+   "name": "Park Güell",
+   "lat": 41.414242,
+   "lng": 2.152183,
+   "wikidata": "Q212867",
+   "note": "A large urban park heavily influenced by Antonio Gaudi. The area was originally meant to be a residential property development with Gaudi doing much of the planning and landscape design. Only two houses were built and the land was later sol",
+   "editions": 55,
+   "unesco": true,
+   "web": "https://parkguell.barcelona/ca",
+   "posDoubt": true
+  },
+  {
+   "name": "Park Güell, the main entrance",
+   "lat": 41.4135,
+   "lng": 2.1532,
+   "wikidata": "",
+   "note": "Two Gaudi-style pavilions mark the entrance to the park and lead to the steps up to the Hipostila Room. In the middle of the steps is the dragon (or salamander) fountain that has become almost as much a symbol of Barcelona as the Sagrada Fa"
+  },
+  {
+   "name": "Hipostila Room and Grand Plaza",
+   "lat": 41.4137,
+   "lng": 2.1528,
+   "wikidata": "",
+   "note": "At the top of the stairs from the main entrance is the Hipostila Room with its 86 white columns supporting the plaza above. The ceiling has a number of colourful mosaics. Above the Hipostila Room is the main terrace, which was meant to be t"
+  },
+  {
+   "name": "Gaudi House Museum",
+   "lat": 41.41355,
+   "lng": 2.152162,
+   "wikidata": "Q1968399",
+   "note": "Distinctive pink house that Gaudi lived in for nearly 20 years (although not designed by him). It features furniture designed by Gaudi and other objects relating to Gaudi's life. The gift shop has a large selection of Gaudi-themed souvenirs",
+   "editions": 15,
+   "unesco": false,
+   "web": "https://www.casamuseugaudi.org/"
+  },
+  {
+   "name": "Turo de les tres creus",
+   "lat": 41.4124,
+   "lng": 2.1512,
+   "wikidata": "",
+   "note": "This is the highest point of the park and where Gaudi wanted to build a chapel. After the development failed, Gaudi built a monolith with three crosses like Calvary instead. Be sure to take in the panoramic views of Barcelona."
+  },
+  {
+   "name": "Casa Vicens",
+   "lat": 41.403479,
+   "lng": 2.15063,
+   "wikidata": "",
+   "note": ""
+  },
+  {
+   "name": "Barcelona Pavilion",
+   "lat": 41.370556,
+   "lng": 2.15,
+   "wikidata": "",
+   "note": ""
+  },
+  {
+   "name": "Caixafòrum",
+   "lat": 41.371331,
+   "lng": 2.14975,
+   "wikidata": "",
+   "note": ""
+  },
+  {
+   "name": "Fundació Joan Miró",
+   "lat": 41.368611,
+   "lng": 2.16,
+   "wikidata": "",
+   "note": ""
+  },
+  {
+   "name": "National Art Museum of Catalonia",
+   "lat": 41.368333,
+   "lng": 2.153306,
+   "wikidata": "Q861252",
+   "note": "Has the single best collection of Romanesque art in the world, and a fine Gothic collection as well. Includes the ''Pantocrator'' from the Taüll Romanesque church. The building itself is also very beautiful.",
+   "editions": 31,
+   "unesco": false,
+   "web": "https://www.museunacional.cat/ca",
+   "posDoubt": true
+  },
+  {
+   "name": "Archaeology Museum of Catalonia",
+   "lat": 41.369722,
+   "lng": 2.157778,
+   "wikidata": "Q3366823",
+   "note": "Situated on the Montjuic, it exhibits archaeological findings from Catalunia from different periods. Under 16 and 65+ free. €3 for others. Special discounts for other groups.",
+   "editions": 7,
+   "unesco": false,
+   "web": "http://www.mac.cat/"
+  },
+  {
+   "name": "Catalan Ethnographical Museum",
+   "lat": 41.3689,
+   "lng": 2.15583,
+   "wikidata": "Q9046827",
+   "note": "This museum mainly exhibits exponents, which were imported by Catalan sailors as they explored the new world. Free on the first Sunday each month (11:00 to 15:00)",
+   "editions": 2,
+   "unesco": false,
+   "web": "http://www.barcelona.cat/museuetnologic/"
+  },
+  {
+   "name": "Olympic and Sports Museum Joan Antoni Samaranch",
+   "lat": 41.366331,
+   "lng": 2.157064,
+   "wikidata": "Q3820447",
+   "note": "The museum displays high-performance sport competitions, recreational sports, sports in general and sports for disabled people. It shows how sport can promote values, educate, innovate and renew. The museum has a sport idols space with outs",
+   "editions": 7,
+   "unesco": false,
+   "web": "http://www.museuolimpicbcn.cat",
+   "posDoubt": true
+  },
+  {
+   "name": "Plaça d'Espanya",
+   "lat": 41.375,
+   "lng": 2.149167,
+   "wikidata": "Q2013874",
+   "note": "Placa d'Espanya was created for the 1929 World Exhibition, on a site once used for public hangings. The fountain in the center of the square is a great attraction and plays music during the summer. Plaça Espanya is located at the base of Mo",
+   "editions": 23,
+   "unesco": false
+  },
+  {
+   "name": "El Poble Espanyol",
+   "lat": 41.369,
+   "lng": 2.147,
+   "wikidata": "Q1062480",
+   "note": "A fake village built in 1929, with replicas of characteristic buildings in Spain (like the Avila walls, the Vall-de-roures town hall, etc.). The village hosts the Fondation Fran Daurel, where you can enjoy an interesting Modern Art collecti",
+   "editions": 20,
+   "unesco": false,
+   "web": "https://www.poble-espanyol.com"
+  },
+  {
+   "name": "Botanical Garden",
+   "lat": 41.3618,
+   "lng": 2.1587,
+   "wikidata": "Q2605209",
+   "note": "Although a botanic garden had been established in Barcelona as early as 1888, the current gardens date from 1999.",
+   "editions": 11,
+   "unesco": false,
+   "web": "http://museuciencies.cat/es/",
+   "posDoubt": true
+  },
+  {
+   "name": "Miramar gardens",
+   "lat": 41.369911,
+   "lng": 2.172161,
+   "wikidata": "Q14886513",
+   "note": "This is where you arrive by a harbour cable car. Marvelous place in the spring, full of roses and fountains. Entrance to the cactus garden is nearby. The Mirador Miramar offers splendid views over the city.",
+   "editions": 3,
+   "unesco": false
+  },
+  {
+   "name": "The Montjuïc Castle",
+   "lat": 41.36342,
+   "lng": 2.16617,
+   "wikidata": "Q2500125",
+   "note": "Provides a beautiful panorama view over the rest of the city. The Montjuic Castle is in the Montjuic hill. From the ''Montjuïc Castle'', take [[#Harbour Cable Car",
+   "editions": 17,
+   "unesco": false,
+   "web": "http://www.bcn.cat/castelldemontjuic/"
+  },
+  {
+   "name": "Torre Glòries",
+   "lat": 41.403333,
+   "lng": 2.189444,
+   "wikidata": "Q336246",
+   "note": "Formerly known as Torre Agbar. Distinctively-shaped office tower which stands out in the Barcelona skyline. It stands out even more Friday, Saturday and Sunday nights when it is lighted in several colours. The viewing platform on the 30th f",
+   "editions": 40,
+   "unesco": false,
+   "web": "http://torregloriesbcn.com/"
+  },
+  {
+   "name": "DHub Disseny Hub Barcelona",
+   "lat": 41.40257,
+   "lng": 2.18802,
+   "wikidata": "",
+   "note": ""
+  },
+  {
+   "name": "Museu de Ciències Naturals de Barcelona",
+   "lat": 41.411039,
+   "lng": 2.22133,
+   "wikidata": "",
+   "note": ""
+  },
+  {
+   "name": "Centre Convencions internacional",
+   "lat": 41.410174,
+   "lng": 2.219473,
+   "wikidata": "Q11913491",
+   "note": "",
+   "editions": 5,
+   "unesco": false,
+   "web": "https://ccib.es/en/"
+  },
+  {
+   "name": "Olympic Port",
+   "lat": 41.386667,
+   "lng": 2.200278,
+   "wikidata": "Q171204",
+   "note": "It has a large number of restaurants, bars and other establishments. In this wide offer you can find also the Barcelona Casino.",
+   "editions": 12,
+   "unesco": false,
+   "web": "https://portolimpic.barcelona"
+  },
+  {
+   "name": "Vila Olimpica",
+   "lat": 41.3898,
+   "lng": 2.19659,
+   "wikidata": "Q1167101",
+   "note": "",
+   "editions": 10,
+   "unesco": false
+  },
+  {
+   "name": "Poblenou Cemetery",
+   "lat": 41.395,
+   "lng": 2.201111,
+   "wikidata": "Q5668717",
+   "note": "",
+   "editions": 8,
+   "unesco": false
+  },
+  {
+   "name": "Torre d'aigües de Macosa",
+   "lat": 41.4058,
+   "lng": 2.21229,
+   "wikidata": "Q18711243",
+   "note": "One of the most unusual landmarks in this otherwise ultra-modern area is this 19th-century (finished in 1882) brick water tower. Standing 62 metres tall, it is now overshadowed by neighbouring residential, office and hotel towers and easy t",
+   "editions": 3,
+   "unesco": false
+  },
+  {
+   "name": "Parc de Poblenou",
+   "lat": 41.407764,
+   "lng": 2.201428,
+   "wikidata": "Q9055592",
+   "note": "",
+   "editions": 4,
+   "unesco": false,
+   "posFrom": "wikidata"
+  },
+  {
+   "name": "Parc del Clot",
+   "lat": 41.40786,
+   "lng": 2.19046,
+   "wikidata": "Q11940184",
+   "note": "",
+   "editions": 5,
+   "unesco": false
+  },
+  {
+   "name": "Parc de les Glories",
+   "lat": 41.40335,
+   "lng": 2.18693,
+   "wikidata": "Q18338244",
+   "note": "",
+   "editions": 2,
+   "unesco": false
+  },
+  {
+   "name": "Parc Diagonal Mar",
+   "lat": 41.4072,
+   "lng": 2.21467,
+   "wikidata": "",
+   "note": ""
+  },
+  {
+   "name": "Hospital de la Santa Creu i Sant Pau",
+   "lat": 41.412778,
+   "lng": 2.174444,
+   "wikidata": "Q507282",
+   "note": "This former hospital is an architectural masterpiece that is now open for visitors. Inpatient wards (and most outpatient facilities) have been moved to a new building of Nou Hospital, but in terms of touring the area, that makes it all the ",
+   "editions": 37,
+   "unesco": true,
+   "web": "https://www.santpaubarcelona.org/",
+   "posDoubt": true
+  },
+  {
+   "name": "Monestir de Pedralbes",
+   "lat": 41.395556,
+   "lng": 2.112222,
+   "wikidata": "",
+   "note": ""
+  },
+  {
+   "name": "Pavellons de la Finca Güell",
+   "lat": 41.389322,
+   "lng": 2.119271,
+   "wikidata": "",
+   "note": ""
+  },
+  {
+   "name": "MMACA - Museu de Matemàtiques de Catalunya",
+   "lat": 41.357621,
+   "lng": 2.0850523,
+   "wikidata": "",
+   "note": ""
+  },
+  {
+   "name": "Camp Nou",
+   "lat": 41.380833,
+   "lng": 2.1225,
+   "wikidata": "Q159848",
+   "note": "If you're a football fanatic, then you can't miss a visit to this football temple, the home ground for Barcelona's biggest and most popular team and one of Europe's greatest footballing 'cathedrals'. During the Franco era, FCB was the only ",
+   "editions": 89,
+   "unesco": false,
+   "web": "https://www.fcbarcelona.com/en/club/facilities/camp-nou/",
+   "posDoubt": true
+  },
+  {
+   "name": "Futbol Club Barcelona Museum",
+   "lat": 41.38039,
+   "lng": 2.120636,
+   "wikidata": "Q616238",
+   "note": "Museum dedicated to the FC Barcelona. It occupies 3,500 m² and attracts 1.2 million visitors a year, ranking it second to the Museu Picasso, which attracts 1.3 million visitors, as the most visited museum in the city of Barcelona. All of th",
+   "editions": 27,
+   "unesco": false,
+   "web": "https://www.fcbarcelona.com/en/tickets/camp-nou-experience"
+  },
+  {
+   "name": "Palau de la Música Catalana",
+   "lat": 41.3875,
+   "lng": 2.175,
+   "wikidata": "",
+   "note": ""
+  },
+  {
+   "name": "Basilica of Santa Maria del Mar",
+   "lat": 41.383611,
+   "lng": 2.181944,
+   "wikidata": "Q908802",
+   "note": "One of the most representative examples of Catalan Gothic architecture, it features a sombre but beautiful interior. The upsweeping verticality and lightness of the interior are especially surprising considering the blocky exterior surfaces",
+   "editions": 30,
+   "unesco": false,
+   "web": "http://www.santamariadelmarbarcelona.org"
+  },
+  {
+   "name": "Carrer Montcada",
+   "lat": 41.38483,
+   "lng": 2.18131,
+   "wikidata": "Q8255466",
+   "note": "This street has the biggest collection of Gothic houses in Barcelona. In amongst these houses is the Picasso Museum, which is definitely worth a visit. There are also smaller museums along the street, and many tapas restaurants though they ",
+   "editions": 3,
+   "unesco": false
+  },
+  {
+   "name": "Passeig del Born",
+   "lat": 41.384232,
+   "lng": 2.182438,
+   "wikidata": "Q17315298",
+   "note": "This avenue goes from the Santa Maria del Mar church to the Born market and is where the legendary jousting matches of the Middle Ages took place, as well as numerous fairs and marches. This is also where men were knighted. It is a really o",
+   "editions": 3,
+   "unesco": false
+  },
+  {
+   "name": "Mercat del Born",
+   "lat": 41.385397,
+   "lng": 2.1841,
+   "wikidata": "Q921152",
+   "note": "This market was the central market for Barcelona until 1973 and its closing marked the beginning of the neighborhood's decline before its current resurgence. While undergoing renovations, whole streets and homes that had been demolished by ",
+   "editions": 6,
+   "unesco": false,
+   "closedForGood": true,
+   "web": "https://elbornculturaimemoria.barcelona.cat"
+  },
+  {
+   "name": "Picasso Museum",
+   "lat": 41.38504,
+   "lng": 2.18103,
+   "wikidata": "",
+   "note": ""
+  },
+  {
+   "name": "Palau Güell",
+   "lat": 41.378889,
+   "lng": 2.173861,
+   "wikidata": "",
+   "note": ""
+  },
+  {
+   "name": "Plaça Sant Jaume",
+   "lat": 41.3825,
+   "lng": 2.176944,
+   "wikidata": "Q2082605",
+   "note": "This square has been the political hub since the Roman era. It has been witness to some of the most important events in modern Catalan history, such as the proclamation of the Catalan State in 1931. At one end, there is the Palace of the Ge",
+   "editions": 15,
+   "unesco": false
+  },
+  {
+   "name": "Plaça Reial",
+   "lat": 41.38,
+   "lng": 2.175,
+   "wikidata": "Q1519964",
+   "note": "This square is famous for the nightlife and the uniform architecture, and features fountains and palm trees. It was built during the 19th century on the site of a monastery, after the ''Mendizábal law'' expelled the monks. After some years ",
+   "editions": 17,
+   "unesco": false
+  },
+  {
+   "name": "Plaça del Rei",
+   "lat": 41.38413,
+   "lng": 2.17744,
+   "wikidata": "Q2067174",
+   "note": "This square has two important buildings, the ''Santa Àgata'' church, where the kings from the ''Aragon crown'' had baptism. Is possible to visit it. The other building has the ''Saló del Tinell'', one of the best civil Gothic architecture e",
+   "editions": 16,
+   "unesco": false
+  },
+  {
+   "name": "Cathedral of Santa Eulàlia",
+   "lat": 41.383889,
+   "lng": 2.176389,
+   "wikidata": "Q17155",
+   "note": "The main Gothic church in Barcelona. The cloister is maybe the most interesting part.",
+   "editions": 44,
+   "unesco": false,
+   "web": "https://catedralbcn.org/"
+  },
+  {
+   "name": "Plaça Sant Felip Neri",
+   "lat": 41.383358,
+   "lng": 2.174939,
+   "wikidata": "Q9060949",
+   "note": "One of the most romantic squares in Barcelona, it hides a dark history in that it was built over the city's old cemetery. Barcelona's most famous architect, Antonio Gaudi, was on his way to visit the church there when he was run over and ki",
+   "editions": 10,
+   "unesco": false
+  },
+  {
+   "name": "Plaça del Pi",
+   "lat": 41.3824,
+   "lng": 2.17369,
+   "wikidata": "Q3392167",
+   "note": "This square next to ''La Rambla'' is one of the prettiest parts of the quarter. It has a pine tree in the middle (''Pi'' mines pine tree), the church of ''Santa Maria del Pi'', which is a very pretty Gothic church with a huge rose window. M",
+   "editions": 5,
+   "unesco": false
+  },
+  {
+   "name": "Carrer Petritxol",
+   "lat": 41.38279,
+   "lng": 2.17296,
+   "wikidata": "",
+   "note": "This narrow street, that starts in the ''Plaça del Pi'' has a very special atmosphere. It is famous because of its chocolate shops, where you can drink a hot chocolate since the 18th century. It has also very important art galleries (''Sala"
+  },
+  {
+   "name": "Ancient synagogue",
+   "lat": 41.38258,
+   "lng": 2.17577,
+   "wikidata": "Q2916029",
+   "note": "They open during the morning. It is the re-discovered synagogue from the Jewish quarter, called ''call''. This building, not very spectacular, is important since it has been here since the Roman era, and stayed as a synagogue until the Jewi",
+   "editions": 10,
+   "unesco": false
+  },
+  {
+   "name": "Museu d'Història de la Ciutat de Barcelona",
+   "lat": 41.383904,
+   "lng": 2.177691,
+   "wikidata": "",
+   "note": ""
+  },
+  {
+   "name": "Museu de l'Eròtica de Barcelona",
+   "lat": 41.38216,
+   "lng": 2.17264,
+   "wikidata": "Q3329871",
+   "note": "Museum dedicated to erotic and sensual works. A huge tourist trap. The tour is not worth it, unless you wish to see old paintings of the Kama Sutra. The only interest is the huge phallus in the hallway, which makes for funny pictures.",
+   "editions": 6,
+   "unesco": false,
+   "web": "http://www.erotica-museum.com"
+  },
+  {
+   "name": "Hash Marijuana & Hemp Museum Barcelona",
+   "lat": 41.380803,
+   "lng": 2.180134,
+   "wikidata": "",
+   "note": ""
+  },
+  {
+   "name": "La Rambla",
+   "lat": 41.381389,
+   "lng": 2.173056,
+   "wikidata": "Q850593",
+   "note": "Often the first landmark that people identify with the city. It is the central and most famous boulevard cutting through the heart of the city centre — a vibrant promenade filled with Barcelona life at its best. It stretches from the harbou",
+   "editions": 39,
+   "unesco": false
+  },
+  {
+   "name": "Maritime Museum",
+   "lat": 41.375028,
+   "lng": 2.176369,
+   "wikidata": "Q1286354",
+   "note": "Housed in Drassanes, the Gothic shipyard of the city. During the 14th century, the Arag&oacute; Crown was the most important power in the Mediterranean Sea, and this was the main place where the ships were built. Nowadays, it's the Maritime",
+   "editions": 16,
+   "unesco": false,
+   "web": "https://www.mmb.cat/"
+  },
+  {
+   "name": "Hospital de la Santa Creu",
+   "lat": 41.381111,
+   "lng": 2.17,
+   "wikidata": "Q683875",
+   "note": "This Gothic building was the old city hospital, before the modernist ''Hospital de Sant Pau'' was built in ''l'[[Barcelona/Eixample",
+   "editions": 10,
+   "unesco": false
+  },
+  {
+   "name": "Sant Pau del Camp",
+   "lat": 41.376111,
+   "lng": 2.169444,
+   "wikidata": "Q2101038",
+   "note": "A rare example of Romanesque architecture, the prettiest in Barcelona. Its name reflects the fact that the church was once surrounded by green fields outside the city walls.",
+   "editions": 10,
+   "unesco": false
+  },
+  {
+   "name": "Centre de Cultura Contemporània de Barcelona",
+   "lat": 41.383611,
+   "lng": 2.166667,
+   "wikidata": "Q2945260",
+   "note": "The arts centre’s core theme is the city and urban culture.",
+   "editions": 8,
+   "unesco": false,
+   "web": "http://www.cccb.org"
+  },
+  {
+   "name": "Centre d'Art Santa Mònica",
+   "lat": 41.377222,
+   "lng": 2.176111,
+   "wikidata": "",
+   "note": ""
+  },
+  {
+   "name": "Barcelona Museum of Contemporary Art",
+   "lat": 41.3832,
+   "lng": 2.167,
+   "wikidata": "",
+   "note": ""
+  },
+  {
+   "name": "Museu de les Il·lusions",
+   "lat": 41.38283,
+   "lng": 2.169795,
+   "wikidata": "Q140700589",
+   "note": "A museum of more than 30 room-sized, hand-painted 3D murals built on forced perspective: visitors stand on marked spots and appear to hang from a dragon's jaw or teeter over a painted canyon. Photography is the point of the visit.",
+   "editions": 0,
+   "unesco": false,
+   "web": "https://illusions-museum.com/"
+  },
+  {
+   "name": "Aquàrium de Barcelona",
+   "lat": 41.376667,
+   "lng": 2.184167,
+   "wikidata": "",
+   "note": ""
+  },
+  {
+   "name": "Parc Zoològic de Barcelona",
+   "lat": 41.387883,
+   "lng": 2.191194,
+   "wikidata": "",
+   "note": ""
+  },
+  {
+   "name": "Parc de la Ciutadella",
+   "lat": 41.388111,
+   "lng": 2.187517,
+   "wikidata": "Q301135",
+   "note": "Barcelona's most central park, and includes a zoo, a lake and several museums. In fact, the park is so large, 74 acres, that the Catalan Parliament can be found in the centre of the park. It is a great place to enjoy games, sports or to spe",
+   "editions": 25,
+   "unesco": false
+  },
+  {
+   "name": "Port Vell",
+   "lat": 41.37675,
+   "lng": 2.184639,
+   "wikidata": "Q1114612",
+   "note": "The harbor was closed to the public until the 80s and received a complete makeover before the Olympics in 1992. Some old buildings related to the harbor still exist, such as the ''Tinglado'' near the Barceloneta quarter that is now a histor",
+   "editions": 14,
+   "unesco": false,
+   "web": "https://portvellbcn.cat/ca/",
+   "posDoubt": true
+  },
+  {
+   "name": "Museum of the History of Catalonia",
+   "lat": 41.38069,
+   "lng": 2.18557,
+   "wikidata": "",
+   "note": ""
+  }
+ ],
+ "ferryLinks": [
+  {
+   "name": "Barcelona – Nador",
+   "a": {
+    "lat": 41.36957,
+    "lng": 2.17707
+   },
+   "b": {
+    "lat": 41.29173,
+    "lng": 2.17624
+   },
+   "osm": "way/1192631340"
+  },
+  {
+   "name": "Bus Nàutic",
+   "a": {
+    "lat": 41.37494,
+    "lng": 2.17863
+   },
+   "b": {
+    "lat": 41.36817,
+    "lng": 2.18695
+   },
+   "osm": "way/1299470037"
+  }
  ]
 }

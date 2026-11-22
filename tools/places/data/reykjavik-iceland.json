@@ -413,7 +413,8 @@
    "wikidata": "Q894659",
    "note": "The Reykjavík Botanical Gardens are not large, but they're nice for a short stroll and a good place to see some of the plants that grow in Iceland.",
    "editions": 13,
-   "unesco": false
+   "unesco": false,
+   "web": "http://www.grasagardur.is"
   },
   {
    "name": "Viðey",
@@ -422,7 +423,8 @@
    "wikidata": "Q116492",
    "note": "Viðey is a large island in Kollafjörður, the fjord to the north of Reykjavík. It used to be inhabited, and in the early 20th century it had a small fishing village. Nobody lives there anymore apart from the birds, but it's a popular way to ",
    "editions": 28,
-   "unesco": false
+   "unesco": false,
+   "web": "http://www.videy.com"
   },
   {
    "name": "Grótta",
@@ -444,12 +446,14 @@
   },
   {
    "name": "Reykjavík Cathedral",
-   "lat": 64.140556,
-   "lng": -21.935833,
+   "lat": 64.14666,
+   "lng": -21.93936,
    "wikidata": "Q1270853",
    "note": "The church beside the parliament is Reykjavík Cathedral, the mother church of the Church of Iceland, the country's national church and part of the Lutheran denomination. Similarly deceptive in size, it has been beautifully renovated both in",
    "editions": 18,
-   "unesco": false
+   "unesco": false,
+   "web": "http://domkirkjan.is/",
+   "posFrom": "wikidata"
   },
   {
    "name": "City Hall",
@@ -467,7 +471,8 @@
    "wikidata": "Q271466",
    "note": "This can't miss attraction towers over the city on top of a hill. In front is a statue of Leif Ericsson (Leifur Eiríksson in Icelandic), the Norse explorer who sailed to North America in the 10th century. The United States gave this statue ",
    "editions": 43,
-   "unesco": false
+   "unesco": false,
+   "web": "http://www.hallgrimskirkja.is/"
   },
   {
    "name": "Harpa",
@@ -475,8 +480,9 @@
    "lng": -21.9327,
    "wikidata": "Q1783706",
    "note": "Harpa is a new concert hall and conference centre at the heart of Reykjavík. It is the home of the Icelandic Symphony Orchestra and regularly host to other acts as well.",
-   "editions": 21,
-   "unesco": false
+   "editions": 22,
+   "unesco": false,
+   "web": "https://www.harpa.is/"
   },
   {
    "name": "Perlan",
@@ -485,7 +491,8 @@
    "wikidata": "Q1367886",
    "note": "An iconic building on top of a wooded hill called Öskjuhlíð, to the southeast of the city centre. Perlan is built on top of five hot water storage tanks and offers fantastic views of the entire city from a viewing platform open to the publi",
    "editions": 21,
-   "unesco": false
+   "unesco": false,
+   "web": "https://www.perlan.is/"
   },
   {
    "name": "Imagine Peace Tower",
@@ -494,7 +501,8 @@
    "wikidata": "Q116484",
    "note": "Yoko Ono's memorial to John Lennon, projecting a \"tower of light\" into the air that can be seen from around Reykjavík. The tower is turned on October 9-December 8, December 21–28, December 31 and March 21–28.",
    "editions": 23,
-   "unesco": false
+   "unesco": false,
+   "web": "http://imaginepeacetower.com"
   },
   {
    "name": "Christ the King Cathedral",
@@ -503,7 +511,8 @@
    "wikidata": "Q794242",
    "note": "The Catholic cathedral of Iceland.",
    "editions": 21,
-   "unesco": false
+   "unesco": false,
+   "web": "http://catholica.is/"
   },
   {
    "name": "National Gallery of Iceland",
@@ -512,7 +521,8 @@
    "wikidata": "Q3480309",
    "note": "The National Gallery of Iceland is a national museum and the main emphasis of the collection is on 20th and 21st century Icelandic art, but international art is featured as well. The museum owns the most valuable collection of works by Icel",
    "editions": 15,
-   "unesco": false
+   "unesco": false,
+   "web": "http://www.listasafn.is"
   },
   {
    "name": "Reykjavík Art Museum - Hafnarhús",
@@ -521,7 +531,8 @@
    "wikidata": "Q3358410",
    "note": "By the old harbour in Reykjavík, Hafnarhúsið hosts a rotating exhibitions of the work of Icelandic artist Erró and temporary exhibitions often showcase other local artists.",
    "editions": 15,
-   "unesco": false
+   "unesco": false,
+   "web": "http://www.artmuseum.is/"
   },
   {
    "name": "Reykjavík Art Museum - Kjarvalsstaðir",
@@ -537,7 +548,8 @@
    "wikidata": "Q16420866",
    "note": "A very small museum with a nice library and reading room where you can find some older (but good) books about photography and current and past issues of photography magazines. It also has a huge collection of Icelandic photographs.",
    "editions": 6,
-   "unesco": false
+   "unesco": false,
+   "web": "http://borgarsogusafn.is/is/ljosmyndasafn-reykjavikur/"
   },
   {
    "name": "National Museum of Iceland",
@@ -546,7 +558,8 @@
    "wikidata": "Q626963",
    "note": "This museum, by the University of Iceland campus, takes the visitor through the history of a nation from settlement to today. Includes a café and a museum shop.",
    "editions": 25,
-   "unesco": false
+   "unesco": false,
+   "web": "http://www.thjodminjasafn.is"
   },
   {
    "name": "Reykjavík City Museum",
@@ -555,7 +568,8 @@
    "wikidata": "Q3481984",
    "note": "In the suburb of Árbær, and frequently called Árbæjarsafn (Árbær museum), this open air museum contains both the old farm of Árbær and many buildings from central Reykjavík that were moved there to make way for construction. The result is a",
    "editions": 11,
-   "unesco": false
+   "unesco": false,
+   "web": "https://reykjavikcitymuseum.is/arbaer-open-air-museum"
   },
   {
    "name": "871±2",
@@ -564,7 +578,8 @@
    "wikidata": "Q7319496",
    "note": "Run by the Reykjavík City Museum, this exhibition in central Reykjavík was built around the oldest archaeological ruins in Iceland. As the name indicates, these ruins date to around the year 870. This interactive exhibitions brings you the ",
    "editions": 6,
-   "unesco": false
+   "unesco": false,
+   "web": "http://www.minjasafnreykjavikur.is/english/desktopdefault.aspx/tabid-4206/"
   },
   {
    "name": "The House of Collections",
@@ -580,7 +595,8 @@
    "wikidata": "Q123416199",
    "note": "A small museum devoted to the history of punk music in Iceland, located in a former underground public toilet facility. In the final room you can listen to Icelandic punk music through headphones, and there are guitars and leather jackets t",
    "editions": 1,
-   "unesco": false
+   "unesco": false,
+   "web": "http://thepunkmuseum.is/"
   }
  ],
  "cityEats": [
@@ -898,6 +914,64 @@
    "cuisine": "",
    "hours": "Mo-Su,PH 11:30-16:00",
    "osm": "node/3408671677"
+  }
+ ],
+ "piers": [
+  {
+   "name": "Viðey",
+   "lat": 64.16106,
+   "lng": -21.85537,
+   "osm": "node/4451609056"
+  },
+  {
+   "name": "Ferry pier",
+   "lat": 64.15277,
+   "lng": -21.94696,
+   "osm": "node/5151411228"
+  },
+  {
+   "name": "Reykjavík (Harpa)",
+   "lat": 64.1518,
+   "lng": -21.93408,
+   "osm": "node/5830610806"
+  },
+  {
+   "name": "Reykjavík Old Harbour",
+   "lat": 64.15167,
+   "lng": -21.9421,
+   "osm": "node/5830610821"
+  },
+  {
+   "name": "Reykjavík (Skarfabakki)",
+   "lat": 64.15643,
+   "lng": -21.86668,
+   "osm": "node/694173331"
+  }
+ ],
+ "ferryLinks": [
+  {
+   "name": "Viðeyjarferjan",
+   "a": {
+    "lat": 64.16106,
+    "lng": -21.85537
+   },
+   "b": {
+    "lat": 64.15643,
+    "lng": -21.86668
+   },
+   "osm": "way/28378938"
+  },
+  {
+   "name": "Reykjavík (Old Harbour) - Viðey",
+   "a": {
+    "lat": 64.16106,
+    "lng": -21.85537
+   },
+   "b": {
+    "lat": 64.15167,
+    "lng": -21.9421
+   },
+   "osm": "way/616765677"
   }
  ]
 }

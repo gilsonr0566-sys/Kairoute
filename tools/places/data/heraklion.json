@@ -260,7 +260,8 @@
    "note": "(Greek: Άγιος Τίτος) Known for housing the skull of St. Titus.",
    "editions": 13,
    "unesco": false,
-   "web": "http://agiostitos.gr}}"
+   "web": "http://agiostitos.gr}}",
+   "posDoubt": true
   },
   {
    "name": "St Catherine of the Sinaites Church",
@@ -811,6 +812,32 @@
    },
    "min": 34,
    "km": 26.6
+  }
+ ],
+ "ferryLinks": [
+  {
+   "name": "",
+   "a": {
+    "lat": 34.92828,
+    "lng": 24.80101
+   },
+   "b": {
+    "lat": 34.92832,
+    "lng": 24.80611
+   },
+   "osm": "way/438445084"
+  },
+  {
+   "name": "Rethymno - Heraklion",
+   "a": {
+    "lat": 35.37251,
+    "lng": 24.4852
+   },
+   "b": {
+    "lat": 35.342,
+    "lng": 25.14112
+   },
+   "osm": "way/692382996"
   }
  ]
 }

@@ -267,5 +267,105 @@
    "min": 52,
    "km": 46.2
   }
+ ],
+ "guideSights": [
+  {
+   "name": "Art Center of Corpus Christi",
+   "lat": 27.792056,
+   "lng": -97.392395,
+   "wikidata": "",
+   "note": "Has a collection of art from local and largely unknown artists. Water garden in front."
+  },
+  {
+   "name": "Artesian Park",
+   "lat": 27.7995,
+   "lng": -97.3944,
+   "wikidata": "",
+   "note": "Corpus Christi has many small parks, such as Artesian Park, scattered throughout the city. For those into the paranormal, Artesian Park is another reportedly haunted Corpus Christi locale."
+  },
+  {
+   "name": "Corpus Christi Cathedral",
+   "lat": 27.794455,
+   "lng": -97.396796,
+   "wikidata": "Q5172633",
+   "note": "Corpus Christi also has numerous churches, perhaps the best known of which is the Corpus Christi Cathedral on the bluff overlooking the downtown area. It was built in the 1940s, but the congregation has existed since soon after the founding",
+   "editions": 5,
+   "unesco": false,
+   "web": "http://www.cccathedral.com/"
+  },
+  {
+   "name": "K Space Contemporary Gallery",
+   "lat": 27.7977,
+   "lng": -97.3941,
+   "wikidata": "",
+   "note": "In the historic Kress Building. Non-profit art organization that showcases local, regional and national contemporary art."
+  },
+  {
+   "name": "Mirador de la Flor",
+   "lat": 27.796643,
+   "lng": -97.391006,
+   "wikidata": "Q3249435",
+   "note": "A memorial to [[:wikipedia:Selena",
+   "editions": 7,
+   "unesco": false
+  },
+  {
+   "name": "Art Museum of South Texas",
+   "lat": 27.810263,
+   "lng": -97.392919,
+   "wikidata": "Q104092305",
+   "note": "",
+   "editions": 2,
+   "unesco": false,
+   "web": "http://www.artmuseumofsouthtexas.org"
+  },
+  {
+   "name": "Corpus Christi Museum of Science and History",
+   "lat": 27.810281,
+   "lng": -97.395232,
+   "wikidata": "Q17511249",
+   "note": "",
+   "editions": 1,
+   "unesco": false,
+   "web": "http://www.ccmuseum.com/"
+  },
+  {
+   "name": "Texas State Aquarium",
+   "lat": 27.813716,
+   "lng": -97.392113,
+   "wikidata": "Q7708017",
+   "note": "See water-related exhibits and creatures. You can even work with a dolphin trainer if you contact them ahead of time (and spend a lot of money).",
+   "editions": 5,
+   "unesco": false,
+   "web": "http://www.texasstateaquarium.org"
+  },
+  {
+   "name": "USS Lexington Museum on the Bay",
+   "lat": 27.816356,
+   "lng": -97.390343,
+   "wikidata": "",
+   "note": "WWII aircraft carrier become museum. See naval life, the ship, and aircraft complement."
+  },
+  {
+   "name": "Texas State Museum of Asian Cultures and Education Center",
+   "lat": 27.808852,
+   "lng": -97.39644,
+   "wikidata": "",
+   "note": ""
+  }
+ ],
+ "ferryLinks": [
+  {
+   "name": "Aransas Pass - Port Aransas, Mustang Island",
+   "a": {
+    "lat": 27.84403,
+    "lng": -97.07043
+   },
+   "b": {
+    "lat": 27.83981,
+    "lng": -97.06914
+   },
+   "osm": "way/443693930"
+  }
  ]
 }

@@ -380,5 +380,199 @@
    "lng": 25.476,
    "osm": "node/8995873419"
   }
+ ],
+ "ferryLinks": [
+  {
+   "name": "Santorini (Athinios) - Anafi",
+   "a": {
+    "lat": 36.3866,
+    "lng": 25.42932
+   },
+   "b": {
+    "lat": 36.34375,
+    "lng": 25.76874
+   },
+   "osm": "way/118108544"
+  },
+  {
+   "name": "Ammoudi - Riva - Korfos",
+   "a": {
+    "lat": 36.43848,
+    "lng": 25.35122
+   },
+   "b": {
+    "lat": 36.46039,
+    "lng": 25.3698
+   },
+   "osm": "way/129559771"
+  },
+  {
+   "name": "Therasia - Oia",
+   "a": {
+    "lat": 36.43848,
+    "lng": 25.35122
+   },
+   "b": {
+    "lat": 36.46025,
+    "lng": 25.38085
+   },
+   "osm": "way/138123204"
+  },
+  {
+   "name": "Ammoudi - Riva - Korfos",
+   "a": {
+    "lat": 36.43848,
+    "lng": 25.35122
+   },
+   "b": {
+    "lat": 36.46039,
+    "lng": 25.3698
+   },
+   "osm": "way/226856547"
+  },
+  {
+   "name": "",
+   "a": {
+    "lat": 36.41097,
+    "lng": 25.40044
+   },
+   "b": {
+    "lat": 36.41831,
+    "lng": 25.42761
+   },
+   "osm": "way/26603140"
+  },
+  {
+   "name": "Nea Kameni - Palaia Kameni",
+   "a": {
+    "lat": 36.39947,
+    "lng": 25.38076
+   },
+   "b": {
+    "lat": 36.41045,
+    "lng": 25.40122
+   },
+   "osm": "way/26603282"
+  },
+  {
+   "name": "Palea Kameni - Therasia",
+   "a": {
+    "lat": 36.39947,
+    "lng": 25.38076
+   },
+   "b": {
+    "lat": 36.43848,
+    "lng": 25.35122
+   },
+   "osm": "way/26604005"
+  },
+  {
+   "name": "Oia - Old Port Fira",
+   "a": {
+    "lat": 36.46025,
+    "lng": 25.38085
+   },
+   "b": {
+    "lat": 36.41831,
+    "lng": 25.42761
+   },
+   "osm": "way/26604068"
+  },
+  {
+   "name": "Ios - Santorini (Athinios)",
+   "a": {
+    "lat": 36.71569,
+    "lng": 25.26275
+   },
+   "b": {
+    "lat": 36.3866,
+    "lng": 25.42932
+   },
+   "osm": "way/344919602"
+  },
+  {
+   "name": "Santorini New Port - Nea Kameni",
+   "a": {
+    "lat": 36.38681,
+    "lng": 25.43014
+   },
+   "b": {
+    "lat": 36.41045,
+    "lng": 25.40122
+   },
+   "osm": "way/52579310"
+  },
+  {
+   "name": "Old Port Fira - Santorini New Port",
+   "a": {
+    "lat": 36.41831,
+    "lng": 25.42761
+   },
+   "b": {
+    "lat": 36.38681,
+    "lng": 25.43014
+   },
+   "osm": "way/53188448"
+  },
+  {
+   "name": "Amorgos - Santorini (Athinios)",
+   "a": {
+    "lat": 36.82677,
+    "lng": 25.86381
+   },
+   "b": {
+    "lat": 36.3866,
+    "lng": 25.42932
+   },
+   "osm": "way/972358978"
+  },
+  {
+   "name": "Folegandros - Santorini (Athinios)",
+   "a": {
+    "lat": 36.61436,
+    "lng": 24.95033
+   },
+   "b": {
+    "lat": 36.3866,
+    "lng": 25.42932
+   },
+   "osm": "way/972938980"
+  },
+  {
+   "name": "Therasia - Santorini (Athinios)",
+   "a": {
+    "lat": 36.3866,
+    "lng": 25.42932
+   },
+   "b": {
+    "lat": 36.45399,
+    "lng": 25.34419
+   },
+   "osm": "way/974385622"
+  },
+  {
+   "name": "Santorini (Athinios) - Amorgos",
+   "a": {
+    "lat": 36.82677,
+    "lng": 25.86381
+   },
+   "b": {
+    "lat": 36.3866,
+    "lng": 25.42932
+   },
+   "osm": "way/975060446"
+  },
+  {
+   "name": "Santorini (Ammoudi) - Therasia",
+   "a": {
+    "lat": 36.46039,
+    "lng": 25.3698
+   },
+   "b": {
+    "lat": 36.45399,
+    "lng": 25.34419
+   },
+   "osm": "way/975082643"
+  }
  ]
 }

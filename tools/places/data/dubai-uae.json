@@ -120,8 +120,8 @@
   },
   {
    "name": "Deira Clocktower",
-   "lat": 25.2586592,
-   "lng": 55.3264429,
+   "lat": 25.258659,
+   "lng": 55.326443,
    "wikidata": "Q4346630",
    "note": "A landmark of Deira and important as a monument built before the independence of UAE.",
    "editions": 9,
@@ -182,8 +182,8 @@
   },
   {
    "name": "Dubai Dolphinarium",
-   "lat": 25.2346535,
-   "lng": 55.3267637,
+   "lat": 25.234654,
+   "lng": 55.326764,
    "wikidata": "Q2116901",
    "note": "The only indoor dolphinarium in the Middle East offers live shows of dolphins and seals. Swim with Dolphins is possible.",
    "editions": 5,
@@ -286,7 +286,8 @@
    "wikidata": "Q2384491",
    "note": "At 270m (900 ft) in length and sporting a jet that shoots water up to 150m (500 ft), it is the world's largest dancing fountain and one with a very enticing display - a definite must-see. It's most easily accessed via the Dubai Mall. There ",
    "editions": 26,
-   "unesco": false
+   "unesco": false,
+   "posDoubt": true
   },
   {
    "name": "Jumeirah Beach",
@@ -370,8 +371,8 @@
   },
   {
    "name": "Emirates Towers",
-   "lat": 25.2175748,
-   "lng": 55.2830568,
+   "lat": 25.217575,
+   "lng": 55.283057,
    "wikidata": "Q1332229",
    "note": "The Emirates Towers complex contains the Emirates Office Tower and Jumeirah Emirates Towers Hotel. The two towers, which rise to 355 m (1,165 ft) and 309 m (1,014 ft), respectively, stand as the 23rd and 47th tallest buildings in the world.",
    "editions": 21,
@@ -442,7 +443,7 @@
    "osm": "node/3556699356"
   },
   {
-   "name": "Bar Dubai - water bus terminal",
+   "name": "Dubai Old Souk - water bus terminal",
    "lat": 25.26479,
    "lng": 55.29334,
    "osm": "node/3556699360"
@@ -548,6 +549,212 @@
    "lat": 25.2717,
    "lng": 55.2795,
    "osm": "way/317658024"
+  }
+ ],
+ "ferryLinks": [
+  {
+   "name": "Al Sabkha - Al Fahidi Marine Transport Station",
+   "a": {
+    "lat": 25.26558,
+    "lng": 55.30077
+   },
+   "b": {
+    "lat": 25.26726,
+    "lng": 55.30316
+   },
+   "osm": "way/1042556503"
+  },
+  {
+   "name": "Dubai Old Souk - Al Sabkha (Abra)",
+   "a": {
+    "lat": 25.26499,
+    "lng": 55.29525
+   },
+   "b": {
+    "lat": 25.26726,
+    "lng": 55.30316
+   },
+   "osm": "way/28702639"
+  },
+  {
+   "name": "Bur Dubai - Deira Old Souk (Abra)",
+   "a": {
+    "lat": 25.26469,
+    "lng": 55.29304
+   },
+   "b": {
+    "lat": 25.26714,
+    "lng": 55.29799
+   },
+   "osm": "way/28702640"
+  },
+  {
+   "name": "Dubai Old Souk - Baniyas (Water Bus)",
+   "a": {
+    "lat": 25.26479,
+    "lng": 55.29334
+   },
+   "b": {
+    "lat": 25.26259,
+    "lng": 55.31141
+   },
+   "osm": "way/349885413"
+  },
+  {
+   "name": "Al Ghubaiba - Dubai Old Souk (Water Bus)",
+   "a": {
+    "lat": 25.26543,
+    "lng": 55.29122
+   },
+   "b": {
+    "lat": 25.26479,
+    "lng": 55.29334
+   },
+   "osm": "way/349885416"
+  },
+  {
+   "name": "Al Sabkha - Baniyas (Water Bus)",
+   "a": {
+    "lat": 25.26708,
+    "lng": 55.30354
+   },
+   "b": {
+    "lat": 25.26259,
+    "lng": 55.31141
+   },
+   "osm": "way/349886012"
+  },
+  {
+   "name": "Baniyas - Al Seef (Water Bus)",
+   "a": {
+    "lat": 25.26259,
+    "lng": 55.31141
+   },
+   "b": {
+    "lat": 25.26002,
+    "lng": 55.31021
+   },
+   "osm": "way/349888127"
+  },
+  {
+   "name": "Dubai Marina - Dubai Canal - Al Ghubaiba",
+   "a": {
+    "lat": 25.07569,
+    "lng": 55.13788
+   },
+   "b": {
+    "lat": 25.19795,
+    "lng": 55.23327
+   },
+   "osm": "way/459630529"
+  },
+  {
+   "name": "Al Jadaf - Dubai Festival City",
+   "a": {
+    "lat": 25.21595,
+    "lng": 55.34123
+   },
+   "b": {
+    "lat": 25.22207,
+    "lng": 55.349
+   },
+   "osm": "way/486292501"
+  },
+  {
+   "name": "Dubai Canal - Al Jadaf",
+   "a": {
+    "lat": 25.21595,
+    "lng": 55.34123
+   },
+   "b": {
+    "lat": 25.19144,
+    "lng": 55.29839
+   },
+   "osm": "way/490578462"
+  },
+  {
+   "name": "The Island Beach Club Shuttle",
+   "a": {
+    "lat": 25.21112,
+    "lng": 55.24394
+   },
+   "b": {
+    "lat": 25.22507,
+    "lng": 55.16926
+   },
+   "osm": "way/660889814"
+  },
+  {
+   "name": "Dubai Marina - Dubai Canal - Al Ghubaiba",
+   "a": {
+    "lat": 25.19795,
+    "lng": 55.23327
+   },
+   "b": {
+    "lat": 25.26543,
+    "lng": 55.29122
+   },
+   "osm": "way/819227215"
+  },
+  {
+   "name": "Dubai Canal - Al Jadaf",
+   "a": {
+    "lat": 25.18648,
+    "lng": 55.25218
+   },
+   "b": {
+    "lat": 25.19795,
+    "lng": 55.23327
+   },
+   "osm": "way/819229950"
+  },
+  {
+   "name": "Al Jadaf - Dubai Canal",
+   "a": {
+    "lat": 25.18253,
+    "lng": 55.27066
+   },
+   "b": {
+    "lat": 25.18648,
+    "lng": 55.25218
+   },
+   "osm": "way/819231092"
+  },
+  {
+   "name": "Al Jadaf - Dubai Canal",
+   "a": {
+    "lat": 25.188,
+    "lng": 55.28471
+   },
+   "b": {
+    "lat": 25.18253,
+    "lng": 55.27066
+   },
+   "osm": "way/819233631"
+  },
+  {
+   "name": "Dubai Canal - Al Jadaf",
+   "a": {
+    "lat": 25.19144,
+    "lng": 55.29839
+   },
+   "b": {
+    "lat": 25.188,
+    "lng": 55.28471
+   },
+   "osm": "way/819234386"
+  },
+  {
+   "name": "Deira Old Souk - Al Fahidi Marine Transport Station",
+   "a": {
+    "lat": 25.26558,
+    "lng": 55.30077
+   },
+   "b": {
+    "lat": 25.26714,
+    "lng": 55.29799
+   },
+   "osm": "way/990683133"
   }
  ]
 }

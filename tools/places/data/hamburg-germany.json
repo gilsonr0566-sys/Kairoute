@@ -3577,8 +3577,8 @@
   },
   {
    "name": "Hafenmuseum / Bremer Kai",
-   "lat": 53.52835,
-   "lng": 9.99985,
+   "lat": 53.52826,
+   "lng": 9.99989,
    "osm": "node/11144348934"
   },
   {
@@ -3670,6 +3670,12 @@
    "lat": 53.54484,
    "lng": 9.97107,
    "osm": "node/13686473778"
+  },
+  {
+   "name": "Falkendamm",
+   "lat": 53.87251,
+   "lng": 10.69858,
+   "osm": "node/14099526183"
   },
   {
    "name": "Moltkebrücke",
@@ -3936,7 +3942,7 @@
    "osm": "node/7503774439"
   },
   {
-   "name": "Musik und Kongesshalle (MUK) / Busparkplatz",
+   "name": "Musik und Kongresshalle (MUK) / Busparkplatz",
    "lat": 53.8702,
    "lng": 10.67906,
    "osm": "node/7636350131"
@@ -4296,6 +4302,1299 @@
    },
    "min": 89,
    "km": 90.4
+  }
+ ],
+ "guideSights": [
+  {
+   "name": "Hauptkirche St. Michaelis",
+   "lat": 53.548333,
+   "lng": 9.978889,
+   "wikidata": "Q674472",
+   "note": "The youngest and most famous of the five is also the only baroque church. This building is not the original St. Michaelis - that one (built 1647-1669) was destroyed by a lightning strike in 1750. It was not until 1786 that the present churc",
+   "editions": 27,
+   "unesco": false,
+   "web": "https://www.st-michaelis.de/"
+  },
+  {
+   "name": "Hauptkirche St. Jacobi",
+   "lat": 53.550278,
+   "lng": 10.000556,
+   "wikidata": "Q564532",
+   "note": "St. Jacobi has been a parish since the 12th century, when it was not even within Hamburg's then city walls. The present-day church is a reconstruction of the late medieval one from the 15th century, which was destroyed during the Second Wor",
+   "editions": 15,
+   "unesco": false,
+   "closedForGood": true,
+   "web": "http://www.jacobus.de/"
+  },
+  {
+   "name": "Hauptkirche St. Petri",
+   "lat": 53.550278,
+   "lng": 9.996389,
+   "wikidata": "Q535443",
+   "note": "St. Petri was a cathedral as early as the 12th century or possibly even earlier. As with other ''Hauptkirchen'', the present version is one of many successive, and was only completed in 1878 after the great fire in 1842 consumed its predece",
+   "editions": 18,
+   "unesco": false,
+   "web": "http://www.sankt-petri.de/"
+  },
+  {
+   "name": "Hauptkirche St. Nikolai",
+   "lat": 53.5475,
+   "lng": 9.990556,
+   "wikidata": "Q425622",
+   "note": "All five main churches of Hamburg were damaged in World War II. But in contrast to the other four, St. Nikolai has not been re-erected making it a memorial against war. It was designed by English architect George Gilbert Scott. The steeple ",
+   "editions": 31,
+   "unesco": false,
+   "closedForGood": true,
+   "web": "https://www.mahnmal-st-nikolai.de"
+  },
+  {
+   "name": "Hauptkirche St. Katharinen",
+   "lat": 53.546,
+   "lng": 9.994375,
+   "wikidata": "Q616790",
+   "note": "Situated on an island, it traditionally served as the church of the seamen. The base of its spire, dating from the 13th century, is the second oldest building preserved in the city. The church is also famous for its centuries-old organ, pla",
+   "editions": 19,
+   "unesco": false,
+   "web": "http://www.katharinen-hamburg.de/"
+  },
+  {
+   "name": "Hulbe-Haus",
+   "lat": 53.5505,
+   "lng": 9.99752,
+   "wikidata": "Q1586687",
+   "note": "Dating from the beginning of the 20th century as most buildings around, but looking much older.",
+   "editions": 2,
+   "unesco": false
+  },
+  {
+   "name": "Radio Hamburg",
+   "lat": 53.5522,
+   "lng": 10.0027,
+   "wikidata": "",
+   "note": "Under the building you can visit the remains of the bishops tower, from the 11th century. On the other side of the road, you can see excavations in progress, seeking the remains of the small fortress Hammaburg, which was erected in the 9th "
+  },
+  {
+   "name": "Rathaus",
+   "lat": 53.55049,
+   "lng": 9.99245,
+   "wikidata": "",
+   "note": "Hamburg's impressive city hall was built in 1897 out of sandstone in neo-Renaissance style, including a 112-m tower. The square in front of the city hall is the Rathausmarkt, hosting many events especially in summer. Inside there are severa"
+  },
+  {
+   "name": "Hamburger Börse",
+   "lat": 53.54996,
+   "lng": 9.99156,
+   "wikidata": "",
+   "note": "Between the buildings, there is a little courtyard called Rathaushof with its fountain, Hygieia-Brunnen."
+  },
+  {
+   "name": "Wall-Anlagen",
+   "lat": 53.5571,
+   "lng": 9.981,
+   "wikidata": "",
+   "note": "The western part of the former city wall is nowadays a park area surrounding the inner city as a semicircle, ranging from the Landungsbrücken (Helgoländer Allee) up to Binnenalster. In the Wallanlagen there's a big playground and in the win"
+  },
+  {
+   "name": "Patriotische Gesellschaft",
+   "lat": 53.54853,
+   "lng": 9.99229,
+   "wikidata": "",
+   "note": "The building of the Patriotic Society was erected following the great fire of 1842 on the former site of the old town hall of Hamburg. Built using the most modern technology at that time, including concrete substructure, and featuring moder"
+  },
+  {
+   "name": "Trostbrücke",
+   "lat": 53.54815,
+   "lng": 9.99225,
+   "wikidata": "",
+   "note": "It has statues of Graf Adolf III and Bishop Ansgar on both sides."
+  },
+  {
+   "name": "Zollenbrücke",
+   "lat": 53.54772,
+   "lng": 9.99362,
+   "wikidata": "",
+   "note": "Hamburg's oldest remaining bridge from the 17th century"
+  },
+  {
+   "name": "Chilehaus",
+   "lat": 53.5483,
+   "lng": 10.003,
+   "wikidata": "",
+   "note": ""
+  },
+  {
+   "name": "Hopfenmarkt",
+   "lat": 53.54763,
+   "lng": 9.98951,
+   "wikidata": "",
+   "note": "The hop market with its fountain Vierländerinbrunnen"
+  },
+  {
+   "name": "Alte Deichstraße",
+   "lat": 53.5457,
+   "lng": 9.9871,
+   "wikidata": "",
+   "note": "Ensemble of traditional half-timbered merchant houses."
+  },
+  {
+   "name": "Nicolai Fleet",
+   "lat": 53.54512,
+   "lng": 9.98758,
+   "wikidata": "",
+   "note": "This is the site where Hamburg's harbour was some centuries ago."
+  },
+  {
+   "name": "Kleiner Michel",
+   "lat": 53.548847,
+   "lng": 9.982296,
+   "wikidata": "",
+   "note": "Built after the reformation, it's functioned as a Catholic church since the 19th century."
+  },
+  {
+   "name": "The Hamburg Dungeon",
+   "lat": 53.543871,
+   "lng": 9.989404,
+   "wikidata": "",
+   "note": ""
+  },
+  {
+   "name": "The Miniatur Wunderland",
+   "lat": 53.543846,
+   "lng": 9.988999,
+   "wikidata": "",
+   "note": "The world's largest model railway layout. The panoramas include parts of Hamburg, the Alps, the American west, South America, and a Scandinavian exhibit which features automated ships on a body of water. It also has an airport exhibit with "
+  },
+  {
+   "name": "Viewpoint towards the water castle",
+   "lat": 53.5460808,
+   "lng": 10.0021302,
+   "wikidata": "",
+   "note": "One of the more famous photo spots in Hamburg on Poggenmühle bridge."
+  },
+  {
+   "name": "visitor's centre",
+   "lat": 53.54143,
+   "lng": 9.98586,
+   "wikidata": "Q673223",
+   "note": "New 'architectural lighthouse' of Hamburg. On the top of a huge old warehouse a 110 metres tall modern philharmonic hall with glass façade and wave-shaped roof. It also includes a fancy hotel, restaurant, as well as private apartments. Acce",
+   "editions": 41,
+   "unesco": false,
+   "web": "https://www.elbphilharmonie.de/"
+  },
+  {
+   "name": "HafenCity Kesselhaus InfoCenter",
+   "lat": 53.54315,
+   "lng": 9.9904,
+   "wikidata": "",
+   "note": "Here you can find information about the new buildings and the whole district. The InfoCenter also provides free guided tours."
+  },
+  {
+   "name": "HafenCity View Point",
+   "lat": 53.5386,
+   "lng": 10.0081,
+   "wikidata": "",
+   "note": "Look at the erecting process from an orange observation tower, which allows nice views on the HafenCity, the harbour, and the river."
+  },
+  {
+   "name": "Magellan-Terrasse",
+   "lat": 53.54246,
+   "lng": 9.99245,
+   "wikidata": "",
+   "note": ""
+  },
+  {
+   "name": "Hanseatic Trade Centre",
+   "lat": 53.5423,
+   "lng": 9.9835,
+   "wikidata": "",
+   "note": ""
+  },
+  {
+   "name": "City und Sportboothafen",
+   "lat": 53.5433,
+   "lng": 9.98024,
+   "wikidata": "",
+   "note": "Hamburg's city and yacht harbour."
+  },
+  {
+   "name": "Feuerschiff LV 13",
+   "lat": 53.54348,
+   "lng": 9.97877,
+   "wikidata": "",
+   "note": "The big red lighthouse ship hosts a restaurant today."
+  },
+  {
+   "name": "Überseebrücke",
+   "lat": 53.54377,
+   "lng": 9.97765,
+   "wikidata": "",
+   "note": "This is where big cruise liners used to dock when coming to Hamburg."
+  },
+  {
+   "name": "Krameramtswohnungen",
+   "lat": 53.54804,
+   "lng": 9.98039,
+   "wikidata": "",
+   "note": "The shopkeeper-office-flats are the last example of a typical 17th-century housing estate."
+  },
+  {
+   "name": "Flussschifferkirche",
+   "lat": 53.54462,
+   "lng": 9.98527,
+   "wikidata": "",
+   "note": "Germany's only floating church in Rothenburgsort."
+  },
+  {
+   "name": "Alter Botanischer Garten",
+   "lat": 53.5593,
+   "lng": 9.9861,
+   "wikidata": "",
+   "note": ""
+  },
+  {
+   "name": "Tropengewächshaus",
+   "lat": 53.56,
+   "lng": 9.9855,
+   "wikidata": "",
+   "note": ""
+  },
+  {
+   "name": "Portugiesenviertel",
+   "lat": 53.545889,
+   "lng": 9.975083,
+   "wikidata": "Q2105354",
+   "note": "Especially during the warmer months the area around Ditmar-Koel-Straße has a very special flair. Lots of restaurants and shops invite one to linger.",
+   "editions": 2,
+   "unesco": false
+  },
+  {
+   "name": "Kunsthalle",
+   "lat": 53.5552,
+   "lng": 10.0031,
+   "wikidata": "",
+   "note": "Glockengießerwall north of Hauptbahnhof. The museum houses an important collection of paintings from the 19th century with works from Max Liebermann, Lovis Corinth, Philipp Otto Runge, Caspar David Friedrich, Adolf Menzel, and modern arts. "
+  },
+  {
+   "name": "Deichtorhallen",
+   "lat": 53.54724,
+   "lng": 10.00674,
+   "wikidata": "",
+   "note": "The Deichtorhallen is one of the best known exhibition galleries worldwide. The historical buildings are divided into an exhibition hall for contemporary art and the \"House of Photography\". Together the two buildings organize a highly diver"
+  },
+  {
+   "name": "Hamburg Museum",
+   "lat": 53.55107,
+   "lng": 9.97325,
+   "wikidata": "",
+   "note": "Holstenwall, close to Underground station \"St. Pauli\". This is the museum of city history, bringing the past to life with a lot of models showing the development of the harbour and the city. The club \"MEHEV\" is showing a 40-year-old and one"
+  },
+  {
+   "name": "Internationales Maritimes Museum",
+   "lat": 53.54341,
+   "lng": 9.99993,
+   "wikidata": "",
+   "note": ""
+  },
+  {
+   "name": "Speicherstadtmuseum",
+   "lat": 53.54311,
+   "lng": 9.98758,
+   "wikidata": "",
+   "note": "Branch of Museum of Labour in docklands warehouse. History of the district and tea and coffee trade."
+  },
+  {
+   "name": "Traditionsschiffhafen",
+   "lat": 53.54239,
+   "lng": 9.99003,
+   "wikidata": "",
+   "note": ""
+  },
+  {
+   "name": "Cap San Diego",
+   "lat": 53.5432,
+   "lng": 9.9763,
+   "wikidata": "Q858079",
+   "note": "One of the last generation of pre-containerisation cargo ships (built in the 1960s), now semi-permanently moored halfway between Landungsbrücken and the Speicherstadt, and is the largest functional cargo museum ship in the world. The ship h",
+   "editions": 10,
+   "unesco": false,
+   "web": "http://www.capsandiego.de/"
+  },
+  {
+   "name": "Automuseum Prototyp",
+   "lat": 53.54325,
+   "lng": 10.00265,
+   "wikidata": "",
+   "note": "Museum of car prototypes, nice shop inside."
+  },
+  {
+   "name": "Deutsches Zollmuseum",
+   "lat": 53.5459,
+   "lng": 9.99752,
+   "wikidata": "",
+   "note": ""
+  },
+  {
+   "name": "Bucerius Kunst Forum",
+   "lat": 53.55112,
+   "lng": 9.99166,
+   "wikidata": "",
+   "note": ""
+  },
+  {
+   "name": "Spicey's Gewürzmuseum",
+   "lat": 53.5432,
+   "lng": 9.9883,
+   "wikidata": "",
+   "note": "Located in the Speicherstadt. They claim to be the world's only spice museum."
+  },
+  {
+   "name": "Chocoversum Hachez Schokoladen-Museum",
+   "lat": 53.5477,
+   "lng": 10.0022,
+   "wikidata": "",
+   "note": "The Chocoversum is a \"museum\" run by chocolate manufacturer Hachez from Hamburg's fellow ''Hansestadt'' Bremen. Rather than focus on exhibiting historic artifacts, it presents the process of making chocolate from the plantation up to the fi"
+  },
+  {
+   "name": "Rickmer Rickmers",
+   "lat": 53.54473,
+   "lng": 9.97247,
+   "wikidata": "",
+   "note": "A museum sailing ship (three-masted bark) from 1896, permanently moored off the Landungsbrücken. On board is a museum, a small restaurant, and an escape room."
+  },
+  {
+   "name": "Dialog im Dunkeln",
+   "lat": 53.546253,
+   "lng": 10.001425,
+   "wikidata": "",
+   "note": "Sighted people get to experience the everyday life of blind people. In completely dark rooms blind people guide the sighted through the exhibition."
+  },
+  {
+   "name": "Altonaer Museum",
+   "lat": 53.54902,
+   "lng": 9.9347,
+   "wikidata": "Q126971",
+   "note": "Dedicated to Altona's, Hamburg's and northern Germany's cultural history.",
+   "editions": 9,
+   "unesco": false,
+   "web": "https://shmh.de/de/altonaer-museum"
+  },
+  {
+   "name": "Altona City Hall",
+   "lat": 53.547,
+   "lng": 9.9354,
+   "wikidata": "Q444036",
+   "note": "Built in 1898, when Altona was still a separate city. It's an impressive building with influences of Italian Renaissance.",
+   "editions": 3,
+   "unesco": false,
+   "web": "http://www.hamburg.de/rathaus-altona/"
+  },
+  {
+   "name": "Dockland",
+   "lat": 53.5433,
+   "lng": 9.9341,
+   "wikidata": "",
+   "note": "Walk 136 steps to the roof of this building to get a wonderful view of the harbour. The six-storey glass and steel building has the shape of a parallelogram and is reminiscent of a ship bow."
+  },
+  {
+   "name": "Altonaer Volkspark",
+   "lat": 53.581,
+   "lng": 9.8972,
+   "wikidata": "Q444045",
+   "note": "This used to be the city park of the independent town of Altona. Unlike Hamburger Stadtpark, this park has been left in a more natural state. On the northern edge of the park is Volksparkstadion, the home stadium of the football team HSV, a",
+   "editions": 4,
+   "unesco": false,
+   "web": "http://www.hamburg.de/altona/parks-und-gaerten/2769476/altonaer-volkpark.html"
+  },
+  {
+   "name": "Landungsbrücken",
+   "lat": 53.546111,
+   "lng": 9.966667,
+   "wikidata": "Q458970",
+   "note": "The most touristy part of Hamburg's harbour, close to the metro station with the same name. Piers connected with several bridges swim on the water adapting to the tide. There tourist boats land and you will find souvenir shops, restaurants,",
+   "editions": 12,
+   "unesco": false
+  },
+  {
+   "name": "U-434",
+   "lat": 53.544941,
+   "lng": 9.955217,
+   "wikidata": "Q882620",
+   "note": "One of the biggest non-nuclear Soviet submarines, moored near to the Fischmarkt. Guided tours are possible.",
+   "editions": 10,
+   "unesco": false,
+   "web": "http://www.u-434.de/"
+  },
+  {
+   "name": "Alter Elbtunnel",
+   "lat": 53.544,
+   "lng": 9.9665,
+   "wikidata": "Q460264",
+   "note": "Completed in 1911, it links both sides of the river Elbe. A lift or stairs bring you the 24 m down into the tunnel. You then walk through one of its two 427-m-long pipes having 12 m of water over your head. At the other side, you again walk",
+   "editions": 12,
+   "unesco": false
+  },
+  {
+   "name": "Museumshafen Oevelgönne",
+   "lat": 53.543611,
+   "lng": 9.914167,
+   "wikidata": "Q1794664",
+   "note": "Historical boats.",
+   "editions": 5,
+   "unesco": false,
+   "web": "http://www.museumshafen-oevelgoenne.de/"
+  },
+  {
+   "name": "Hamburger Dom",
+   "lat": 53.553889,
+   "lng": 9.970833,
+   "wikidata": "Q896467",
+   "note": "A large fair held at Heiligengeistfeld fair ground. With three fairs (spring, summer and winter) per year it is the biggest and the longest fair throughout Germany and attracts every one approximately ten million visitors per year.",
+   "editions": 6,
+   "unesco": false
+  },
+  {
+   "name": "Reeperbahn",
+   "lat": 53.549444,
+   "lng": 9.962278,
+   "wikidata": "Q3976",
+   "note": "A street and entertainment district in Hamburg's St. Pauli district, one of the two centres of Hamburg's nightlife (with [[Hamburg/Altona-St._Pauli#Schanzenviertel",
+   "editions": 31,
+   "unesco": false
+  },
+  {
+   "name": "Panoptikum",
+   "lat": 53.5494,
+   "lng": 9.967,
+   "wikidata": "",
+   "note": "A wax cabinet with a history of over 125 years and as such the oldest in Germany, though it has been in its current location since the 1950s. Not as big and famous as Madame Tussauds in London, nevertheless the figures have been created wit"
+  },
+  {
+   "name": "Flakturm IV",
+   "lat": 53.55643,
+   "lng": 9.96984,
+   "wikidata": "Q81332733",
+   "note": "Right at the Heiligengeistfeld is a World War II bunker, visible from far away due to its size. Nowadays the building houses different media companies and agentures, and there's a dance club on the upper floor.",
+   "editions": 4,
+   "unesco": false,
+   "posDoubt": true
+  },
+  {
+   "name": "Sankt Pauli Museum",
+   "lat": 53.548678,
+   "lng": 9.962566,
+   "wikidata": "",
+   "note": ""
+  },
+  {
+   "name": "St. Pauli Archiv",
+   "lat": 53.5533,
+   "lng": 9.95753,
+   "wikidata": "",
+   "note": "Archive for the city district and history workshop. Arranges very interesting themed walks around St. Pauli."
+  },
+  {
+   "name": "Hafenstraße",
+   "lat": 53.546389,
+   "lng": 9.959444,
+   "wikidata": "Q328372",
+   "note": "The street was a place for squatters in the 1980s and was well known by the media when there were \"battles\" between the Autonomous movement and the police. Some squats still exist there, though the \"80s-Myth\" is dead. You can go to the Punk",
+   "editions": 6,
+   "unesco": false
+  },
+  {
+   "name": "Beatles-Platz",
+   "lat": 53.549838,
+   "lng": 9.957293,
+   "wikidata": "Q813228",
+   "note": "There is a sculpture honouring the Beatles. Also in the Reeperbahn area are clubs where the Beatles played at various times from 1960 to 1962, including the Indra club and Star Club.",
+   "editions": 10,
+   "unesco": false
+  },
+  {
+   "name": "Grosse Freiheit",
+   "lat": 53.550556,
+   "lng": 9.9575,
+   "wikidata": "Q895867",
+   "note": "In the pedestrian street there are a lot of bars and clubs - a great place to go in the evening, although it's very crowded and it may get a bit dangerous in the weekend. On weekdays, it is harmless here - a low-budget tip is, 99 Cent Bar, ",
+   "editions": 7,
+   "unesco": false
+  },
+  {
+   "name": "Hans-Albers-Platz",
+   "lat": 53.54867,
+   "lng": 9.96087,
+   "wikidata": "",
+   "note": "Between Reeperbahn and Herbertstraße there's a memorial for an actor who was advertising the Kiez (Reeperbahn). Especially the movie ''Große Freiheit Nummer 7'' helped making the Kiez famous."
+  },
+  {
+   "name": "Herbertstraße",
+   "lat": 53.54807,
+   "lng": 9.96162,
+   "wikidata": "",
+   "note": "The epicenter of the red-light district, this short street runs parallel to Reeperbahn is closed off by gates from both ends. Adults only and photography is strictly banned."
+  },
+  {
+   "name": "Spielbudenplatz",
+   "lat": 53.54956,
+   "lng": 9.9649,
+   "wikidata": "",
+   "note": "The place got its name from the entertainers putting up shows here for sailors from all over the world back in the day. For example Mr. Hagenback (who opened the zoo park in the city) showcased his sea lions here. Today it is surrounded by "
+  },
+  {
+   "name": "Rote Flora",
+   "lat": 53.56199,
+   "lng": 9.9615,
+   "wikidata": "Q684932",
+   "note": "This building used to be the last squatted house in Hamburg, it's now left to the squatters for free by the owner. During the week, it is turned into a café, concerts of various styles or other events may also take place. On some days there",
+   "editions": 16,
+   "unesco": false,
+   "web": "https://www.nadir.org/nadir/initiativ/roteflora/"
+  },
+  {
+   "name": "Christianskirche",
+   "lat": 53.546944,
+   "lng": 9.932778,
+   "wikidata": "Q1082972",
+   "note": "Baroque church in Ottensen.",
+   "editions": 2,
+   "unesco": false
+  },
+  {
+   "name": "Zeise Hallen",
+   "lat": 53.5543,
+   "lng": 9.9267,
+   "wikidata": "",
+   "note": "The halls were built in 1857 for the Zeise company manufacturing ship parts. The company went bust in 1979, and nowadays the cultural heritage building is used as a cultural center with a movie theater."
+  },
+  {
+   "name": "Planten un Blomen",
+   "lat": 53.561111,
+   "lng": 9.983333,
+   "wikidata": "Q494440",
+   "note": "This park is partially on the old city wall of Hamburg. Already in the 1930s the former zoological park was remodeled into a bird and entertainment park for the Lower German Garden Exhibition (Niederdeutsche Gartenschau). Afterwards it was ",
+   "editions": 18,
+   "unesco": false,
+   "web": "http://www.plantenunblomen.hamburg.de/"
+  },
+  {
+   "name": "Jenisch park",
+   "lat": 53.5525,
+   "lng": 9.865556,
+   "wikidata": "Q25089266",
+   "note": "The oldest landscaped park in Hamburg. Two museums, Jenisch House and Ernst Barlach House, are in the park. Flottbek River flows through the park and into the Elbe at Teufelsbrück.",
+   "editions": 5,
+   "unesco": false,
+   "web": "https://www.jenischparkverein.de/",
+   "posDoubt": true
+  },
+  {
+   "name": "Baurs Park",
+   "lat": 53.556389,
+   "lng": 9.814167,
+   "wikidata": "Q811839",
+   "note": "Nice park with views to the Elbe river.",
+   "editions": 2,
+   "unesco": false
+  },
+  {
+   "name": "Loki Schmidt Garten",
+   "lat": 53.562222,
+   "lng": 9.861111,
+   "wikidata": "Q613250",
+   "note": "For a century and a half, the botanical garden was situated in the current Planten un Blomen park, where the tropical greenhouses still remain. In 1979, the botanical garden was relocated to its current place in the Klein Flottbek district.",
+   "editions": 5,
+   "unesco": false,
+   "web": "https://www.biologie.uni-hamburg.de/loki-schmidt-garten.html"
+  },
+  {
+   "name": "Hamburg Stadtpark",
+   "lat": 53.595278,
+   "lng": 10.016389,
+   "wikidata": "Q2472",
+   "note": "150 ha of park with a pretty good Planetarium at an old water tower in its middle, multiple sporting areas and boat rental on the lake.",
+   "editions": 12,
+   "unesco": false,
+   "web": "https://www.hamburg.de/stadtpark"
+  },
+  {
+   "name": "Alsterpark",
+   "lat": 53.574444,
+   "lng": 10.000833,
+   "wikidata": "Q2651504",
+   "note": "Inaugurated in 1952. The part west of the Alster is called ''Alstervorland'', the one east ''Alterpark''.",
+   "editions": 1,
+   "unesco": false
+  },
+  {
+   "name": "Eimsbüttler Park",
+   "lat": 53.5778,
+   "lng": 9.96,
+   "wikidata": "",
+   "note": "This former forest and current park has survived both world wars and still offers green pastures around the Weiher lake together with a playground, swimming pool and a café."
+  },
+  {
+   "name": "Tierpark Hagenbeck",
+   "lat": 53.5949659,
+   "lng": 9.9416136,
+   "wikidata": "",
+   "note": ""
+  },
+  {
+   "name": "Friedhof Ohlsdorf",
+   "lat": 53.622297,
+   "lng": 10.058988,
+   "wikidata": "Q562211",
+   "note": "One of the world's biggest graveyards.",
+   "editions": 17,
+   "unesco": false,
+   "web": "https://www.friedhof-hamburg.de/die-friedhoefe/ohlsdorf/",
+   "posFrom": "map"
+  },
+  {
+   "name": "Imam-Ali-Mosque",
+   "lat": 53.574569,
+   "lng": 10.008417,
+   "wikidata": "Q668264",
+   "note": "Biggest of all mosques in Hamburg. Centre of the religious and cultural life of the huge Iranian community. The Imams of Hamburg happen to have played important roles in Iran's religious and political everyday life since their installation ",
+   "editions": 21,
+   "unesco": false,
+   "closedForGood": true,
+   "web": "http://www.izhamburg.com/en/"
+  },
+  {
+   "name": "Museum am Rothenbaum - Kulturen und Kunste der Welt",
+   "lat": 53.568333,
+   "lng": 9.989167,
+   "wikidata": "Q675774",
+   "note": "Formerly known as the Museum of Ethnology. The museum has ethnographic objects from around the world.",
+   "editions": 0,
+   "unesco": false,
+   "web": "https://markk-hamburg.de/"
+  },
+  {
+   "name": "Museum für Kunst und Gewerbe",
+   "lat": 53.551111,
+   "lng": 10.009444,
+   "wikidata": "Q896052",
+   "note": "The museum is a leading centre for art, applied art, and design. Its collections of work from Europe and the Middle and the Far East are of the finest-quality and span all epochs from the Ancient World to the present day. They also have man",
+   "editions": 16,
+   "unesco": false,
+   "web": "https://www.mkg-hamburg.de/"
+  },
+  {
+   "name": "Dreieinigkeitskirche St. Georg",
+   "lat": 53.556389,
+   "lng": 10.007778,
+   "wikidata": "Q1308438",
+   "note": "Baroque church in Sankt Georg.",
+   "editions": 2,
+   "unesco": false
+  },
+  {
+   "name": "St.-Marien-Dom St. Georg",
+   "lat": 53.557656,
+   "lng": 10.013669,
+   "wikidata": "Q573491",
+   "note": "Since 1995, this neo-romanesque church is the cathedral of the youngest Roman Catholic archbishop of Germany. Though the church has not the splendor one might expect, next to it you may find the first statue world wide of the late pope, Joh",
+   "editions": 16,
+   "unesco": false,
+   "web": "https://www.mariendomhamburg.de/"
+  },
+  {
+   "name": "Memorial to the X-ray martyrs of the world",
+   "lat": 53.55903,
+   "lng": 10.01975,
+   "wikidata": "Q1300206",
+   "note": "This monument is devoted to researchers, physicians, physicists, radiographers, laboratory technicians and nurses who died from injuries or illnesses caused by prolonged exposure to radiation used in medicine. On the list of about 360 names",
+   "editions": 8,
+   "unesco": false
+  },
+  {
+   "name": "St. Pankratius",
+   "lat": 53.47591,
+   "lng": 10.08511,
+   "wikidata": "Q1259001",
+   "note": "This 17th-century church features carvings depicting scenes from the Old and New Testaments, and an organ by the famous organ builder Arp Schnitger.",
+   "editions": 3,
+   "unesco": false,
+   "web": "http://www.kirche-ochsenwerder.de/kirche.html",
+   "posDoubt": true
+  },
+  {
+   "name": "Container port",
+   "lat": 53.5288,
+   "lng": 9.9121,
+   "wikidata": "Q3964",
+   "note": "Hamburg's massive container ports line the southern bank of the river Elbe. They are most spectacular at night, and the best place to view them from is by driving north along the A7 highway (heading into the Elbtunnel tunnel). They are not ",
+   "editions": 35,
+   "unesco": false,
+   "web": "https://www.hafen-hamburg.de/de",
+   "posDoubt": true
+  },
+  {
+   "name": "Aussichtspunkt Steinwerder",
+   "lat": 53.5423,
+   "lng": 9.96754,
+   "wikidata": "",
+   "note": "A viewing platform at the southern end of the Alter Elbtunnel, with great views on Landungsbrücken, the Elbphilharmonie, and Hamburg's harbourfront."
+  },
+  {
+   "name": "Pfarrkirche St. Pankratius in Neuenfelde",
+   "lat": 53.52075,
+   "lng": 9.81093,
+   "wikidata": "",
+   "note": "17th century church, famous for the biggest organ Arp Schnitger built."
+  },
+  {
+   "name": "BallinStadt Auswanderwelt Hamburg",
+   "lat": 53.52041,
+   "lng": 10.01694,
+   "wikidata": "",
+   "note": "It was built in 1892 under the guidance of Albert Ballin to provide medical care and accommodation to migrants, who were emigrating to the United States on HAPAG ships. The complex was converted into a museum, though its original design and"
+  },
+  {
+   "name": "Archaeological Museum Hamburg",
+   "lat": 53.45912,
+   "lng": 9.9773,
+   "wikidata": "",
+   "note": "Museum presenting prehistorical and early historical northern Germany as well as the history of the city of Harburg."
+  },
+  {
+   "name": "Sammlung Falckenberg",
+   "lat": 53.455,
+   "lng": 9.9876,
+   "wikidata": "",
+   "note": "The Falckenberg Collection of the Cultural Foundation Phönix Art is a notable collection of modern art. Public tours Saturday on afternoons, you can also visit other times by calling ahead."
+  }
+ ],
+ "ferryLinks": [
+  {
+   "name": "Musical Shuttle",
+   "a": {
+    "lat": 53.54484,
+    "lng": 9.97107
+   },
+   "b": {
+    "lat": 53.54075,
+    "lng": 9.97419
+   },
+   "osm": "way/1073689239"
+  },
+  {
+   "name": "62",
+   "a": {
+    "lat": 53.54395,
+    "lng": 9.96711
+   },
+   "b": {
+    "lat": 53.54346,
+    "lng": 9.95497
+   },
+   "osm": "way/1083465522"
+  },
+  {
+   "name": "61",
+   "a": {
+    "lat": 53.54342,
+    "lng": 9.95499
+   },
+   "b": {
+    "lat": 53.54497,
+    "lng": 9.97058
+   },
+   "osm": "way/111441468"
+  },
+  {
+   "name": "64",
+   "a": {
+    "lat": 53.5416,
+    "lng": 9.86336
+   },
+   "b": {
+    "lat": 53.54647,
+    "lng": 9.86265
+   },
+   "osm": "way/11164139"
+  },
+  {
+   "name": "62",
+   "a": {
+    "lat": 53.5435,
+    "lng": 9.91423
+   },
+   "b": {
+    "lat": 53.543,
+    "lng": 9.9355
+   },
+   "osm": "way/11164140"
+  },
+  {
+   "name": "65",
+   "a": {
+    "lat": 53.55593,
+    "lng": 9.80466
+   },
+   "b": {
+    "lat": 53.53684,
+    "lng": 9.8783
+   },
+   "osm": "way/1347779817"
+  },
+  {
+   "name": "Alsterkreuzfahrt",
+   "a": {
+    "lat": 53.57995,
+    "lng": 9.99959
+   },
+   "b": {
+    "lat": 53.57901,
+    "lng": 10.01328
+   },
+   "osm": "way/136967612"
+  },
+  {
+   "name": "62",
+   "a": {
+    "lat": 53.54508,
+    "lng": 9.96985
+   },
+   "b": {
+    "lat": 53.54395,
+    "lng": 9.96711
+   },
+   "osm": "way/1372494132"
+  },
+  {
+   "name": "62",
+   "a": {
+    "lat": 53.54395,
+    "lng": 9.96711
+   },
+   "b": {
+    "lat": 53.54471,
+    "lng": 9.97157
+   },
+   "osm": "way/1372494133"
+  },
+  {
+   "name": "61",
+   "a": {
+    "lat": 53.543,
+    "lng": 9.9355
+   },
+   "b": {
+    "lat": 53.54287,
+    "lng": 9.95155
+   },
+   "osm": "way/1372494142"
+  },
+  {
+   "name": "62",
+   "a": {
+    "lat": 53.5429,
+    "lng": 9.95153
+   },
+   "b": {
+    "lat": 53.543,
+    "lng": 9.9355
+   },
+   "osm": "way/1372494143"
+  },
+  {
+   "name": "61",
+   "a": {
+    "lat": 53.54086,
+    "lng": 9.93644
+   },
+   "b": {
+    "lat": 53.54055,
+    "lng": 9.93172
+   },
+   "osm": "way/1372682085"
+  },
+  {
+   "name": "61",
+   "a": {
+    "lat": 53.54055,
+    "lng": 9.93172
+   },
+   "b": {
+    "lat": 53.54227,
+    "lng": 9.93521
+   },
+   "osm": "way/1372682086"
+  },
+  {
+   "name": "62",
+   "a": {
+    "lat": 53.54482,
+    "lng": 9.85805
+   },
+   "b": {
+    "lat": 53.54647,
+    "lng": 9.86265
+   },
+   "osm": "way/1372685091"
+  },
+  {
+   "name": "62",
+   "a": {
+    "lat": 53.54647,
+    "lng": 9.86265
+   },
+   "b": {
+    "lat": 53.54012,
+    "lng": 9.88533
+   },
+   "osm": "way/1372685092"
+  },
+  {
+   "name": "62",
+   "a": {
+    "lat": 53.5416,
+    "lng": 9.86336
+   },
+   "b": {
+    "lat": 53.54482,
+    "lng": 9.85805
+   },
+   "osm": "way/1372685093"
+  },
+  {
+   "name": "62",
+   "a": {
+    "lat": 53.53801,
+    "lng": 9.87785
+   },
+   "b": {
+    "lat": 53.5416,
+    "lng": 9.86336
+   },
+   "osm": "way/1372685095"
+  },
+  {
+   "name": "Alsterkreuzfahrt",
+   "a": {
+    "lat": 53.57995,
+    "lng": 9.99959
+   },
+   "b": {
+    "lat": 53.58389,
+    "lng": 9.99516
+   },
+   "osm": "way/1418059501"
+  },
+  {
+   "name": "Alsterkreuzfahrt",
+   "a": {
+    "lat": 53.57901,
+    "lng": 10.01328
+   },
+   "b": {
+    "lat": 53.57367,
+    "lng": 10.00278
+   },
+   "osm": "way/1418059502"
+  },
+  {
+   "name": "Alsterkreuzfahrt",
+   "a": {
+    "lat": 53.57367,
+    "lng": 10.00278
+   },
+   "b": {
+    "lat": 53.57324,
+    "lng": 10.0075
+   },
+   "osm": "way/1418059503"
+  },
+  {
+   "name": "Alsterkreuzfahrt",
+   "a": {
+    "lat": 53.57324,
+    "lng": 10.0075
+   },
+   "b": {
+    "lat": 53.5673,
+    "lng": 10.0023
+   },
+   "osm": "way/1418059504"
+  },
+  {
+   "name": "Alsterkreuzfahrt",
+   "a": {
+    "lat": 53.5673,
+    "lng": 10.0023
+   },
+   "b": {
+    "lat": 53.5581,
+    "lng": 10.00378
+   },
+   "osm": "way/1418059505"
+  },
+  {
+   "name": "Alsterkreuzfahrt",
+   "a": {
+    "lat": 53.5581,
+    "lng": 10.00378
+   },
+   "b": {
+    "lat": 53.55338,
+    "lng": 9.99349
+   },
+   "osm": "way/1418059506"
+  },
+  {
+   "name": "64",
+   "a": {
+    "lat": 53.5416,
+    "lng": 9.86336
+   },
+   "b": {
+    "lat": 53.53684,
+    "lng": 9.8783
+   },
+   "osm": "way/147563272"
+  },
+  {
+   "name": "68",
+   "a": {
+    "lat": 53.54647,
+    "lng": 9.86265
+   },
+   "b": {
+    "lat": 53.5448,
+    "lng": 9.84096
+   },
+   "osm": "way/16519345"
+  },
+  {
+   "name": "72",
+   "a": {
+    "lat": 53.54471,
+    "lng": 9.97157
+   },
+   "b": {
+    "lat": 53.53705,
+    "lng": 9.98575
+   },
+   "osm": "way/189731841"
+  },
+  {
+   "name": "73",
+   "a": {
+    "lat": 53.52412,
+    "lng": 9.98193
+   },
+   "b": {
+    "lat": 53.52816,
+    "lng": 9.976
+   },
+   "osm": "way/195300927"
+  },
+  {
+   "name": "61",
+   "a": {
+    "lat": 53.52563,
+    "lng": 9.93724
+   },
+   "b": {
+    "lat": 53.54055,
+    "lng": 9.93172
+   },
+   "osm": "way/23329893"
+  },
+  {
+   "name": "73",
+   "a": {
+    "lat": 53.54166,
+    "lng": 9.97356
+   },
+   "b": {
+    "lat": 53.54471,
+    "lng": 9.97157
+   },
+   "osm": "way/25445781"
+  },
+  {
+   "name": "73",
+   "a": {
+    "lat": 53.52816,
+    "lng": 9.976
+   },
+   "b": {
+    "lat": 53.54054,
+    "lng": 9.97661
+   },
+   "osm": "way/25445792"
+  },
+  {
+   "name": "75",
+   "a": {
+    "lat": 53.54006,
+    "lng": 9.96649
+   },
+   "b": {
+    "lat": 53.54497,
+    "lng": 9.97058
+   },
+   "osm": "way/25454844"
+  },
+  {
+   "name": "61",
+   "a": {
+    "lat": 53.52563,
+    "lng": 9.93724
+   },
+   "b": {
+    "lat": 53.52416,
+    "lng": 9.94071
+   },
+   "osm": "way/25463482"
+  },
+  {
+   "name": "helgoline",
+   "a": {
+    "lat": 53.88735,
+    "lng": 9.09172
+   },
+   "b": {
+    "lat": 53.5451,
+    "lng": 9.96931
+   },
+   "osm": "way/25890023"
+  },
+  {
+   "name": "72",
+   "a": {
+    "lat": 53.53705,
+    "lng": 9.98575
+   },
+   "b": {
+    "lat": 53.54028,
+    "lng": 9.98647
+   },
+   "osm": "way/311180251"
+  },
+  {
+   "name": "Martinianleger - Pier 2",
+   "a": {
+    "lat": 53.0741,
+    "lng": 8.80412
+   },
+   "b": {
+    "lat": 53.10787,
+    "lng": 8.75002
+   },
+   "osm": "way/354632185"
+  },
+  {
+   "name": "72",
+   "a": {
+    "lat": 53.54028,
+    "lng": 9.98647
+   },
+   "b": {
+    "lat": 53.54471,
+    "lng": 9.97157
+   },
+   "osm": "way/358624680"
+  },
+  {
+   "name": "62",
+   "a": {
+    "lat": 53.53801,
+    "lng": 9.87785
+   },
+   "b": {
+    "lat": 53.54012,
+    "lng": 9.88533
+   },
+   "osm": "way/40196640"
+  },
+  {
+   "name": "62",
+   "a": {
+    "lat": 53.5435,
+    "lng": 9.91423
+   },
+   "b": {
+    "lat": 53.54012,
+    "lng": 9.88533
+   },
+   "osm": "way/40196642"
+  },
+  {
+   "name": "Weserfähre",
+   "a": {
+    "lat": 53.10451,
+    "lng": 8.75027
+   },
+   "b": {
+    "lat": 53.10944,
+    "lng": 8.74058
+   },
+   "osm": "way/605314004"
+  },
+  {
+   "name": "Weserfähre",
+   "a": {
+    "lat": 53.10787,
+    "lng": 8.75002
+   },
+   "b": {
+    "lat": 53.10451,
+    "lng": 8.75027
+   },
+   "osm": "way/605314005"
+  },
+  {
+   "name": "Hansefahrt",
+   "a": {
+    "lat": 53.87389,
+    "lng": 10.68698
+   },
+   "b": {
+    "lat": 53.95855,
+    "lng": 10.87437
+   },
+   "osm": "way/642233522"
+  },
+  {
+   "name": "Alsterkreuzfahrt",
+   "a": {
+    "lat": 53.57946,
+    "lng": 9.99997
+   },
+   "b": {
+    "lat": 53.55338,
+    "lng": 9.99349
+   },
+   "osm": "way/750679745"
+  },
+  {
+   "name": "Alsterkreuzfahrt",
+   "a": {
+    "lat": 53.58389,
+    "lng": 9.99516
+   },
+   "b": {
+    "lat": 53.59282,
+    "lng": 9.99446
+   },
+   "osm": "way/750679746"
+  },
+  {
+   "name": "Alsterkreuzfahrt",
+   "a": {
+    "lat": 53.59282,
+    "lng": 9.99446
+   },
+   "b": {
+    "lat": 53.58044,
+    "lng": 9.99836
+   },
+   "osm": "way/750679747"
   }
  ]
 }
