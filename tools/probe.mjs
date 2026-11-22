@@ -13,10 +13,8 @@ for (const [label, P, center] of ports) {
 }
 const hm = t => String(Math.floor(t / 60)).padStart(2, "0") + ":" + String(t % 60).padStart(2, "0");
 // The ways back the outside check saw as taxis: from the city's sights to the port, and the way out.
-const pairs = [["Rome Navona to Civitavecchia", [41.8992, 12.4731], [42.0934, 11.7926]], ["Rome Vatican to Civitavecchia", [41.9022, 12.4539], [42.0934, 11.7926]],
-  ["Civitavecchia to Rome Termini", [42.0934, 11.7926], [41.9010, 12.5018]], ["Bruges Markt to Zeebrugge", [51.2089, 3.2242], [51.3337, 3.2063]], ["Zeebrugge to Bruges", [51.3337, 3.2063], [51.2089, 3.2242]],
-  ["Warnemuende to Berlin Mitte", [54.1797, 12.0856], [52.5200, 13.4050]], ["Berlin Brandenburg Gate to Warnemuende", [52.5163, 13.3777], [54.1797, 12.0856]]];
-for (const date of ["2026-12-09", null]) for (const [name, a, b] of pairs) {
+const pairs = [["Rome Colosseum to Civitavecchia port", [41.8902, 12.4922], [42.095, 11.79]], ["Rome Navona to Civitavecchia port", [41.899, 12.477], [42.095, 11.79]]];
+for (const date of [null, "2027-09-08"]) for (const [name, a, b] of pairs) {
   for (let round = 0; round < 2; round++) {
     const t0 = Date.now(), r = await fetch(U + "/transit", { method: "POST", headers: H, body: JSON.stringify({ pairs: [Object.assign({ a, b, dow: 3 }, date ? { date } : {})] }) });
     const j = await r.json().catch(() => ({})); const x = (j.results || [])[0] || {};
