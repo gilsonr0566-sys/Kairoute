@@ -1,5 +1,5 @@
 {
- "run": "round3f-2026-11-22",
+ "run": "round3g-2026-11-22",
  "dayWait": 90000,
  "trips": [
   {
@@ -57,6 +57,10 @@
      "js": "__T.pier(3,'Gruž')"
     },
     {
+     "name": "dbv-1b-ticks-after-pier",
+     "js": "(async()=>{const a=await __T.ticks(3);await __T.sleep(12000);const b=[...document.querySelectorAll('input[data-site]')].map(c=>({n:(c.getAttribute('aria-label')||'').replace(/^Pick /,''),on:c.checked}));const page=__T.planText(1500);window.__kairouteAt(3,'plan');await __T.sleep(8000);const plan=__T.planText(4000);return {t:new Date().toISOString(),onAt3s:a.filter(x=>x.on).map(x=>x.n),onAt15s:b.filter(x=>x.on).map(x=>x.n),total:b.length,page,planSights:(plan.match(/\\n(\\d+)\\nsights?\\n/)||[])[1]||null}})()"
+    },
+    {
      "name": "dbv-2-lokrum",
      "js": "(async()=>{const t=await __T.ticks(3);const was=t.filter(x=>x.on).map(x=>x.n);const has=t.find(x=>/Lokrum/i.test(x.n));if(!has)return {inList:false,was,fit:await __T.fitName(3,'Lokrum')};if(has.on)return {inList:true,alreadyOn:true,was};const c=[...document.querySelectorAll('input[data-site]')].find(x=>/Lokrum/i.test(x.getAttribute('aria-label')||''));c.click();await __T.sleep(3000);const box=(document.querySelector('.fitbox')||{}).innerText||null;const t2=await __T.ticks(3);return {inList:true,alreadyOn:false,was,box,on:t2.filter(x=>x.on).map(x=>x.n)}})()"
     },
@@ -106,12 +110,20 @@
    ],
    "steps": [
     {
-     "name": "rome-plan-late",
-     "js": "(async()=>{window.__kairouteAt(4,'plan');await __T.sleep(60000);return __T.planText(12000)})()"
+     "name": "rome-1",
+     "js": "(async()=>{await __T.sleep(1000);window.__kairouteAt(4,'plan');await __T.sleep(5000);return {t:new Date().toISOString(),plan:__T.planText(12000)}})()"
     },
     {
-     "name": "rome-plan-3min",
-     "js": "(async()=>{await __T.sleep(120000);window.__kairouteAt(4,'plan');await __T.sleep(5000);return __T.planText(12000)})()"
+     "name": "rome-2",
+     "js": "(async()=>{await __T.sleep(115000);window.__kairouteAt(4,'plan');await __T.sleep(5000);return {t:new Date().toISOString(),plan:__T.planText(12000)}})()"
+    },
+    {
+     "name": "rome-3",
+     "js": "(async()=>{await __T.sleep(115000);window.__kairouteAt(4,'plan');await __T.sleep(5000);return {t:new Date().toISOString(),plan:__T.planText(12000)}})()"
+    },
+    {
+     "name": "rome-4",
+     "js": "(async()=>{await __T.sleep(115000);window.__kairouteAt(4,'plan');await __T.sleep(5000);return {t:new Date().toISOString(),plan:__T.planText(12000)}})()"
     },
     {
      "name": "basis-day3",
@@ -186,6 +198,10 @@
      "js": "__T.pier(3,'Gruž')"
     },
     {
+     "name": "dbv-1b-ticks-after-pier",
+     "js": "(async()=>{const a=await __T.ticks(3);await __T.sleep(12000);const b=[...document.querySelectorAll('input[data-site]')].map(c=>({n:(c.getAttribute('aria-label')||'').replace(/^Pick /,''),on:c.checked}));const page=__T.planText(1500);window.__kairouteAt(3,'plan');await __T.sleep(8000);const plan=__T.planText(4000);return {t:new Date().toISOString(),onAt3s:a.filter(x=>x.on).map(x=>x.n),onAt15s:b.filter(x=>x.on).map(x=>x.n),total:b.length,page,planSights:(plan.match(/\\n(\\d+)\\nsights?\\n/)||[])[1]||null}})()"
+    },
+    {
      "name": "dbv-2-lokrum",
      "js": "(async()=>{const t=await __T.ticks(3);const was=t.filter(x=>x.on).map(x=>x.n);const has=t.find(x=>/Lokrum/i.test(x.n));if(!has)return {inList:false,was,fit:await __T.fitName(3,'Lokrum')};if(has.on)return {inList:true,alreadyOn:true,was};const c=[...document.querySelectorAll('input[data-site]')].find(x=>/Lokrum/i.test(x.getAttribute('aria-label')||''));c.click();await __T.sleep(3000);const box=(document.querySelector('.fitbox')||{}).innerText||null;const t2=await __T.ticks(3);return {inList:true,alreadyOn:false,was,box,on:t2.filter(x=>x.on).map(x=>x.n)}})()"
     },
@@ -236,12 +252,20 @@
    ],
    "steps": [
     {
-     "name": "rome-plan-late",
-     "js": "(async()=>{window.__kairouteAt(4,'plan');await __T.sleep(60000);return __T.planText(12000)})()"
+     "name": "rome-1",
+     "js": "(async()=>{await __T.sleep(1000);window.__kairouteAt(4,'plan');await __T.sleep(5000);return {t:new Date().toISOString(),plan:__T.planText(12000)}})()"
     },
     {
-     "name": "rome-plan-3min",
-     "js": "(async()=>{await __T.sleep(120000);window.__kairouteAt(4,'plan');await __T.sleep(5000);return __T.planText(12000)})()"
+     "name": "rome-2",
+     "js": "(async()=>{await __T.sleep(115000);window.__kairouteAt(4,'plan');await __T.sleep(5000);return {t:new Date().toISOString(),plan:__T.planText(12000)}})()"
+    },
+    {
+     "name": "rome-3",
+     "js": "(async()=>{await __T.sleep(115000);window.__kairouteAt(4,'plan');await __T.sleep(5000);return {t:new Date().toISOString(),plan:__T.planText(12000)}})()"
+    },
+    {
+     "name": "rome-4",
+     "js": "(async()=>{await __T.sleep(115000);window.__kairouteAt(4,'plan');await __T.sleep(5000);return {t:new Date().toISOString(),plan:__T.planText(12000)}})()"
     },
     {
      "name": "basis-day3",
