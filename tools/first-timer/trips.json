@@ -1,0 +1,16 @@
+{
+ "run": "ft1",
+ "trips": [
+  { "name": "city", "label": "Lisbon city stay",
+    "legs": [ { "k": "stay", "place": "Lisbon", "date": "2027-05-09", "nights": 3, "inBy": "flight", "inAt": "13:00", "homeBy": "flight", "homeAt": "11:30" } ] },
+  { "name": "multi", "label": "Vienna then Prague",
+    "legs": [ { "k": "stay", "place": "Vienna", "date": "2027-06-07", "nights": 2, "inBy": "flight", "inAt": "14:00" },
+              { "k": "stay", "place": "Prague", "date": "2027-06-09", "nights": 2, "inBy": "train", "leaveAt": "09:00", "inAt": "13:00", "homeBy": "flight", "homeAt": "16:00" } ] },
+  { "name": "cruise", "label": "Barcelona cruise",
+    "legs": [ { "k": "cruise", "board": "Barcelona", "ship": "", "date": "2027-05-15", "aboard": "17:00", "inBy": "flight", "inAt": "09:00",
+                "ports": [ { "date": "2027-05-16", "place": "Marseille", "arrive": "08:00", "aboard": "17:30" },
+                           { "date": "2027-05-18", "place": "Naples", "arrive": "07:00", "aboard": "18:30" },
+                           { "date": "2027-05-19", "place": "Civitavecchia", "arrive": "07:00", "aboard": "19:00" } ],
+                "end": "Barcelona", "endDate": "2027-05-21", "off": "08:00", "homeBy": "flight", "homeAt": "14:00" } ] }
+ ]
+}
