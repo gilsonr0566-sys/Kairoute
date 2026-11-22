@@ -106,6 +106,10 @@ const pushLead = async p => { await p.evaluate(() => window.__kairouteGroup.push
   console.log('Make my own day');
   await m1.click('[data-grp="ownday"]'); await m1.waitForTimeout(500);
   check(await m1.evaluate(() => window.__kairouteGrpT.view === 'sites' && !!window.__kairouteGrpT.day().grpOwn), 'Make my own day opens Choose sights for that day');
+  // Before any tick, the own day is the group's plan as it was, kept as the member's own list (Nov 22 gate: still marked
+  // as the app's seeding, its sights were swapped by the planner when the owner's day changed).
+  { const a = await planOf(lead, D), c = await planOf(m1, D);
+    check(c.stops.join() === a.stops.join() && await m1.evaluate(() => !!window.__kairouteGrpT.day().ownList), 'Make my own day starts from the group\'s sights, kept as the member\'s own list', `${a.stops} / ${c.stops}`); }
   const box = await m1.$('input[data-site]:not(:checked)');
   if (box) { await box.click().catch(() => {}); await m1.waitForTimeout(400); }
   const own1 = await planOf(m1, D);

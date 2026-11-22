@@ -226,7 +226,9 @@ function grpMenuHTML(d) {
   return `<button class="menuitem" role="menuitem" data-grp="tourday">🎟 ${d.grpTour ? "Not a booked tour: plan this day" : "Booked tour with the group this day"}</button>`;
 }
 // A member makes a day their own: it starts as a copy of the group's plan, and they change the sights from there.
-function grpMakeOwn(d) { d.grpOwn = true; save(); grpHello(); }
+// The copied sights are the member's own list from then on (Nov 22 gate: an own day still marked as the app's seeding
+// had its sights swapped by the planner for others when the owner's day got shorter, before the member ticked anything).
+function grpMakeOwn(d) { d.grpOwn = true; if (Array.isArray(d.selected)) d.ownList = true; save(); grpHello(); }
 function grpFollow(d) {
   const ld = grpLeadDay(d.id); const i = trip.days.indexOf(d); if (i < 0) return;
   if (ld) trip.days[i] = JSON.parse(JSON.stringify(ld)); else { delete d.grpOwn; }
