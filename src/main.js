@@ -657,7 +657,7 @@ try { ["kairoute.transit", "kairoute.transit2"].forEach(k => localStorage.remove
 // 9: answers kept from before the helper counted the hours its timetable search missed: an answer that knew 3 of the
 //    day's 15 hours was kept as complete and never asked again, so a phone that planned the trip earlier kept the
 //    taxi back to the ship while a fresh one found the train (Nov 21 live re-check, Rome).
-const TRANSIT_V = 9;
+const TRANSIT_V = 10; // 10: passenger ferries at fast-boat speed (helper, Nov 22)
 const transitMem = (() => { try { return JSON.parse(localStorage.getItem(TRANSIT_KEY) || "{}"); } catch (e) { return {}; } })();
 let transitSeen = null, transitRetry = 0;
 // How many rides one request to the helper asks for: 12 normally, halved after a request the helper couldn't finish (a big
