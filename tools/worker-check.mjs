@@ -74,5 +74,11 @@ for (const [o, ua] of [['http://localhost:8765', ''], ['http://127.0.0.1:8080', 
   try { r = await worker.fetch(new Request('https://helper.test/sample', { method: 'POST', headers: { 'content-type': 'application/json', Origin: o, 'user-agent': ua }, body: JSON.stringify({ prompt: 'hello', purpose: 'trip' }) }), env, ctx); } catch (e) { r = { status: 'crash' }; }
   await Promise.all(pend); ok(r.status === 429 && env.ai === 0, `minimal: a test browser (${o} ${ua}) reached the AI (${r.status})`); }
 { const env = mn(); cur = env; pend = []; const r = await worker.fetch(new Request('https://helper.test/sample', { method: 'POST', headers: { 'content-type': 'application/json', Origin: 'capacitor://localhost', 'user-agent': 'Mozilla/5.0 (Linux; Android 15) Chrome/140.0 Mobile' }, body: JSON.stringify({ prompt: 'hello', purpose: 'trip' }) }), env, ctx); await Promise.all(pend); ok(r.status === 200 && env.ai === 1, `minimal: the phone app must still build a trip (${r.status})`); }
+// Ferry speed from the map (Nov 22, Richard: Naples-Sorrento shown at about an hour, every operator says 35-45 min): a boat
+// for people only is estimated as a fast boat, a car ferry as a slow one.
+{ const { ferryKmh } = await import('../worker/transit.js');
+  ok(ferryKmh({}) === 38 && ferryKmh({ motor_vehicle: 'no' }) === 38, 'a passenger-only ferry is estimated at fast-boat speed');
+  ok(ferryKmh({ motor_vehicle: 'yes' }) === 28 && ferryKmh({ hgv: 'yes' }) === 28, 'a car ferry is estimated at car-ferry speed');
+  ok(Math.round(27 / ferryKmh({}) * 60) <= 45, 'a 27 km passenger crossing is estimated within the 35-45 min the timetables give'); }
 console.log(fails ? `Helper security check: ${fails} of ${checks} failed` : `Helper security check passed (${checks} checks)`);
 process.exit(fails ? 1 : 0);
