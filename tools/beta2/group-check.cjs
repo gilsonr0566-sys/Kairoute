@@ -140,6 +140,14 @@ const pushLead = async p => { await p.evaluate(() => window.__kairouteGroup.push
   }
   check(!meetBad, `own days meet the group at the same place, never late (${meetN} day plans)`);
 
+  console.log("The owner's ride answers reach followers");
+  { const k = await lead.evaluate(i => { const d = window.__kairouteGrpT.trip.days[i], c = window.__kairouteGrpT.cityFor(d), s = (c.sites || []).find(x => isFinite(x.lat)), t = (c.sites || []).filter(x => isFinite(x.lat))[1] || s;
+      const key = (+s.lat).toFixed(3) + ',' + (+s.lng).toFixed(3) + ',' + (+t.lat).toFixed(3) + ',' + (+t.lng).toFixed(3) + '|wk';
+      window.__kairouteGrpRide(key, { t: Date.now(), v: 1, opts: [{ mode: 'bus', label: 'Test bus 7', min: 17, path: [[1, 2]] }] }); return key; }, D);
+    await pushLead(lead); await pollMember(m2);
+    const got = await m2.evaluate(k => window.__kairouteGrpRide(k), k);
+    check(!!(got && got.opts && got.opts[0].label === 'Test bus 7' && !got.opts[0].path), "a member's phone plans with the owner's ride answers (sent with the trip, without the map paths)", JSON.stringify(got)); }
+
   console.log('The owner changes the plan');
   await settle(m1); const before1 = await planOf(m1, D);
   await openDay(lead, D);

@@ -30,11 +30,23 @@ async function grpCall(body, query) {
   const r = await fetch(freeAI.url + "/x/group" + (query || ""), body ? { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify(body) } : { cache: "no-store" });
   const j = await r.json().catch(() => null); return { status: r.status, j };
 }
-// What followers receive: this trip's days and the city guides it uses. No journal, notes or photos.
+// The owner's ride answers (timetables, ride times) for the places of this trip, without the lines' map paths: a member's
+// phone plans with the same rides as the owner's, so the same sights fit in the same order from the first minute (outside
+// test, Nov 22: a member's order differed until their own phone had asked for the rides).
+function grpRides() {
+  const pts = []; trip.days.forEach(d => { const c = cityFor(d), s = c && (c.sites || []).find(x => isFinite(x.lat)); if (s) pts.push(s); });
+  const out = {}; if (typeof transitMem !== "object" || !pts.length) return out;
+  for (const k in transitMem) { const n = k.split("|")[0].split(",").map(Number), m = transitMem[k]; if (n.length < 4 || !m || !(m.opts || []).length || m.partial) continue;
+    if (!pts.some(p => hav(p, { lat: n[0], lng: n[1] }) <= 80)) continue;
+    out[k] = { t: m.t, v: m.v, opts: m.opts.map(x => { const y = Object.assign({}, x); delete y.path; return y; }) }; }
+  return out;
+}
+const grpRidesSig = () => { try { return Object.keys(grpRides()).length; } catch (e) { return 0; } };
+// What followers receive: this trip's days, the city guides it uses and the owner's ride answers. No journal, notes or photos.
 function grpSnapshot() {
   const t = JSON.parse(JSON.stringify(trip)); delete t.journal; delete t.tour; delete t.badges;
   const cs = {}; trip.days.forEach(d => { const k = cityKeyFor(d); if (k && cities[k] && k !== "barcelona") cs[k] = cities[k]; });
-  return { trip: t, cities: cs };
+  return { trip: t, cities: cs, rides: grpRides() };
 }
 function grpLive() {
   const T = trip.tour, d = day();
@@ -44,7 +56,7 @@ async function grpLead() {
   if (grpBusy) return null; grpBusy = true; grpNote = ""; render();
   try {
     const { status, j } = await grpCall({ op: "new", trip: grpSnapshot(), name: trip.name || tripName(trip), live: grpLive() });
-    if (status === 200 && j && j.code) { trip.groupShared = j.code; save(); grp = { code: j.code, role: "lead", token: j.token, tripId: trip.id, at: Date.now(), tripName: trip.name || tripName(trip) }; grpSave(); grpLastLive = ""; grpLastTrip = JSON.stringify(trip.days); grpNote = ""; return { code: j.code }; }
+    if (status === 200 && j && j.code) { trip.groupShared = j.code; save(); grp = { code: j.code, role: "lead", token: j.token, tripId: trip.id, at: Date.now(), tripName: trip.name || tripName(trip) }; grpSave(); grpLastLive = ""; grpLastTrip = JSON.stringify(trip.days) + "|" + grpRidesSig(); grpNote = ""; return { code: j.code }; }
     grpNote = "The group couldn't start just now. Try again in a minute.";
   } catch (e) { grpNote = "Starting a group needs the internet. Try again when you're online."; }
   finally { grpBusy = false; render(); }
@@ -52,6 +64,8 @@ async function grpLead() {
 }
 function grpInstall(j, code, open) {
   for (const k in j.trip.cities || {}) if (!cities[k] && j.trip.cities[k] && Array.isArray(j.trip.cities[k].sites)) cities[k] = j.trip.cities[k];
+  // The owner's ride answers come first: the member plans with the same rides (grpRides).
+  if (j.trip.rides && typeof transitMem === "object") { let n = 0; for (const k in j.trip.rides) { const v = j.trip.rides[k]; if (v && Array.isArray(v.opts) && v.opts.length) { transitMem[k] = v; n++; } } if (n) { nearGen++; try { transitKeepSoon(); } catch (e) {} } }
   const id = "grp-" + code, lead = j.trip.trip, entry = library.find(x => x.id === id);
   const cur = trip && trip.id === id ? trip : entry ? entry.trip : null;
   // The member's own days stay theirs: they take the group day's facts (so they end where and when the group does)
@@ -129,7 +143,7 @@ async function grpPush() {
   if (!grp || grp.role !== "lead" || trip.id !== grp.tripId) return;
   const live = grpLive(), key = JSON.stringify(live);
   if (key !== grpLastLive) { grpLastLive = key; try { const r = await grpCall({ op: "live", code: grp.code, token: grp.token, live }); if (r.status === 404) { grp = null; grpSave(); grpNote = "This group code has expired."; render(); } } catch (e) { grpLastLive = ""; } }
-  const days = JSON.stringify(trip.days);
+  const days = JSON.stringify(trip.days) + "|" + grpRidesSig(); // new ride answers on the owner's phone are sent too
   if (days !== grpLastTrip && Date.now() - (grp.tripAt || 0) > 10000) { grp.tripAt = Date.now(); grpSave(); try { const r = await grpCall({ op: "trip", code: grp.code, token: grp.token, trip: grpSnapshot() }); if (r.status === 200) grpLastTrip = days; } catch (e) {} }
 }
 async function grpRegroup(where, note) {
@@ -321,6 +335,7 @@ if (typeof document !== "undefined") {
 }
 // Test hooks for the safety net (tools/extras-check.cjs).
 if (typeof window !== "undefined") {
+  window.__kairouteGrpRide = (k, v) => { if (v) transitMem[k] = v; return transitMem[k] || null; }; // group-check: a ride answer on this phone
   window.__kairouteGroup = { lead: grpLead, join: grpJoin, push: () => { grpLastLive = ""; if (grp) grp.tripAt = 0; return grpPush(); }, poll: grpPoll, regroup: grpRegroup, offlineNote: ms => grpSignalText(ms),
     state: () => grp, meet: i => grpMeet(buildPlan(trip.days[i])), hello: () => grpHello() };
   // For tools/beta2/group-check.cjs: the app's state lives in one closure.
