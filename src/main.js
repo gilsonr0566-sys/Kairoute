@@ -1900,13 +1900,19 @@ async function pierSearch() {
   const f = pierForm = Object.assign(pierForm || {}, { id: d.id }); f.q = ((document.getElementById("pier-name") || {}).value || "").trim();
   if (f.q.length < 2) { f.msg = "Type the pier or terminal name from your cruise documents."; render(); return; }
   if (typeof navigator !== "undefined" && navigator.onLine === false) { f.msg = "There's no internet right now, and I need it to find the pier on the map. Try again when you're online."; render(); return; }
-  f.busy = true; f.msg = ""; f.results = []; render();
+  f.busy = true; f.msg = ""; f.results = []; f.area = ""; render();
   const ss = allSites(city).filter(x => isFinite(+x.lat)), mid = ss.length ? { lat: ss.map(x => +x.lat).sort((a, b) => a - b)[ss.length >> 1], lng: ss.map(x => +x.lng).sort((a, b) => a - b)[ss.length >> 1] } : null;
-  try { const r = freeAI ? await fetch(freeAI.url + "/findplace?city=" + encodeURIComponent(bareName(d.destination)) + "&q=" + encodeURIComponent(f.q)) : null, j = r && r.ok ? await r.json() : null;
-    ((j && j.places) || []).filter(m => isFinite(+m.lat) && isFinite(+m.lng) && (!mid || hav(mid, m) <= 60) && !PIER_NOT.test(String(m.kind || ""))).forEach(m => { if (!f.results.some(y => hav(y, m) < 0.05)) f.results.push({ name: m.name, lat: +(+m.lat).toFixed(5), lng: +(+m.lng).toFixed(5), kind: String(m.kind || "").replace(/_/g, " "), addr: m.addr || "", km: mid ? hav(mid, m) : null }); });
-  } catch (e) {}
+  const ask = async q => { try { const r = freeAI ? await fetch(freeAI.url + "/findplace?city=" + encodeURIComponent(bareName(d.destination)) + "&q=" + encodeURIComponent(q)) : null, j = r && r.ok ? await r.json() : null;
+    return ((j && j.places) || []).filter(m => isFinite(+m.lat) && isFinite(+m.lng) && (!mid || hav(mid, m) <= 60)); } catch (e) { return []; } };
+  const add = (list, near) => list.filter(m => !PIER_NOT.test(String(m.kind || "")) && (!near || near.some(a => hav(a, m) <= 3))).forEach(m => { if (!f.results.some(y => hav(y, m) < 0.05)) f.results.push({ name: m.name, lat: +(+m.lat).toFixed(5), lng: +(+m.lng).toFixed(5), kind: String(m.kind || "").replace(/_/g, " "), addr: m.addr || "", km: mid ? hav(mid, m) : null }); });
+  const got = await ask(f.q); add(got);
+  // A name the map knows only as a part of the city (a port's quarter is often named after it, Nov 21: Dubrovnik's
+  // "Gruž"): the piers, terminals and harbours in that part are looked for instead, never the area's middle as a pier.
+  const areas = got.filter(m => PIER_NOT.test(String(m.kind || "")));
+  if (!f.results.length && areas.length) { for (const more of await Promise.all([f.q + " port", f.q + " harbour", f.q + " ferry terminal", "cruise terminal"].map(ask))) add(more, areas); if (f.results.length) f.area = areas[0].name; }
   f.results = f.results.slice(0, 5); f.busy = false;
-  if (!f.results.length) f.msg = `I couldn't find "${f.q}" on the map near ${bareName(d.destination)}. Try the name your cruise line uses for the terminal or quay, or the port's own word for it.`;
+  if (!f.results.length) f.msg = areas.length ? `The map knows "${f.q}" as a part of ${bareName(d.destination)}, but no pier or terminal in it. Try the name your cruise line uses for the terminal or quay.` : `I couldn't find "${f.q}" on the map near ${bareName(d.destination)}. Try the name your cruise line uses for the terminal or quay, or the port's own word for it.`;
+  else if (areas.length && f.area) f.msg = `The map knows "${f.q}" as a part of ${bareName(d.destination)}. These are the piers and terminals there:`;
   render();
 }
 function pierFormHTML(d) {

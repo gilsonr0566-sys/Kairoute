@@ -562,7 +562,15 @@ async function tapTimes(p) { const out = []; const n = await p.evaluate(() => wi
   // A port whose pier the map search couldn't find (Nov 21 outside check: Dubrovnik and Reykjavik days blank with nothing
   // to do): the day says so and asks for the pier's name; the traveler's pick from the map plans the day from there.
   { const i = await dayIdx(p, /Naples/); let why = '';
-    await p.route(u => /\/findplace\?/.test(String(u)), r => r.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify({ places: [{ name: 'Molo Angioino Cruise Terminal', lat: 40.8385, lng: 14.2545, kind: 'ferry_terminal' }, { name: 'Far Away Pier', lat: 41.9, lng: 12.5, kind: 'pier' }] }) }));
+    // A name the map knows only as a quarter of the city (Nov 21 live check: the port's quarter, offered as a pier, then
+    // nothing at all once areas were refused): the piers and terminals inside it are offered, never the area itself.
+    await p.route(u => /\/findplace\?/.test(String(u)), r => { const q = new URL(r.request().url()).searchParams.get('q') || '';
+      const places = /^Quarterville$/.test(q) ? [{ name: 'Quarterville', lat: 40.86, lng: 14.27, kind: 'administrative' }]
+        : /^Quarterville port$/.test(q) ? [{ name: 'Quarterville Ferry Terminal', lat: 40.865, lng: 14.272, kind: 'ferry_terminal' }]
+        : /^cruise terminal$/.test(q) ? [{ name: 'Some Other Cruise Terminal', lat: 40.70, lng: 14.40, kind: 'ferry_terminal' }]
+        : /Quarterville/.test(q) ? []
+        : [{ name: 'Molo Angioino Cruise Terminal', lat: 40.8385, lng: 14.2545, kind: 'ferry_terminal' }, { name: 'Far Away Pier', lat: 41.9, lng: 12.5, kind: 'pier' }];
+      r.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify({ places }) }); });
     await p.evaluate(() => window.__kairouteMockHelper('http://helper.test', null, true));
     await p.evaluate(i => { window.__kairouteGo('day', i); window.__kairouteLosePier(i); window.__kairouteGo('plan'); }, i);
     const asked = await p.waitForSelector('#pierform #pier-name', { timeout: 8000 }).catch(() => null);
@@ -572,7 +580,10 @@ async function tapTimes(p) { const out = []; const n = await p.evaluate(() => wi
       if (/Still fits today|Each one fits as your day stands/.test(t)) why = 'the blank day\'s sight list says sights fit it';
       await p.evaluate(() => window.__kairouteGo('plan')); await p.waitForSelector('#pierform #pier-name', { timeout: 8000 }).catch(() => null); }
     if (why) {} else if (!asked) why = 'no pier form on the blank day: ' + (await p.evaluate(() => (document.querySelector('.card.empty') || {}).innerText || '')).slice(0, 160);
-    else { await p.fill('#pier-name', 'Molo Angioino'); await tapSel(p, '[data-act="piersearch"]'); await p.waitForTimeout(800);
+    else { await p.fill('#pier-name', 'Quarterville'); await tapSel(p, '[data-act="piersearch"]'); await p.waitForTimeout(1200);
+      const qp = await p.$$eval('[data-pierpick]', xs => xs.map(x => x.innerText.replace(/\s+/g, ' ')));
+      check('A name the map knows only as a part of the city offers the terminals in it, not the area or one far away', qp.length === 1 && /Quarterville Ferry Terminal/.test(qp[0]), JSON.stringify(qp)); }
+    if (!why && asked) { await p.fill('#pier-name', 'Molo Angioino'); await tapSel(p, '[data-act="piersearch"]'); await p.waitForTimeout(800);
       const picks = await p.$$eval('[data-pierpick]', xs => xs.map(x => x.innerText.replace(/\s+/g, ' ')));
       if (picks.length !== 1) why = 'the map answers offered: ' + JSON.stringify(picks) + ' (the one 200 km away must not be)';
       else { await tapSel(p, '[data-pierpick="0"]'); await p.waitForTimeout(1200);

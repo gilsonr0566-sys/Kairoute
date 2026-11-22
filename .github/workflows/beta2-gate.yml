@@ -43,6 +43,9 @@ jobs:
       - name: Phone flow on the Beta 2 build
         if: always()
         run: node tools/beta2/flow-check.cjs beta2-site/index.html
+      - name: Ship days keep their sights while the water check waits on its slow part
+        if: always()
+        run: node tools/beta2/water-wait-check.cjs beta2-site/index.html
       - name: Group trips (share one trip, follow or own day, meeting point, offers, booked tours)
         if: always()
         run: node tools/beta2/group-check.cjs beta2-site/index.html

@@ -311,6 +311,13 @@ if (fs.existsSync(dir)) { let rides = 0, placed = 0;
     const p = E.planTrip(b)[i], its = p.items || [], si = its.findIndex(x => x.t === 'stop' && String(x.id) === String(isle.id)), mi = its.findIndex(x => x.t === 'meal');
     const back = its.findIndex((x, k) => k > si && x.t === 'ride' && x.kind === 'ferry');
     ok(si >= 0 && mi > si && back > mi && !p.noLunch, `lunch inside the traveler's own island visit, before the boat back (${its.map(x => x.t === 'ride' ? x.kind : x.t).join(' ')}, noLunch ${p.noLunch})`); }
+  // The same with a place to eat on the island 1.2 km from the visit's own point (Nov 21 live check: lunch there, then
+  // "Taxi or car, 24 mi" back to the ship): after the island, the way off it is the boat, and no taxi on the way back.
+  if (isle) { const b2 = JSON.parse(JSON.stringify(b)), far = { id: 'eat-isle-far', name: 'Island Trattoria', lat: isle.lat + 0.011, lng: isle.lng, kind: 'restaurant', amenity: 'restaurant', cuisine: 'italian' };
+    b2.cities[ck].restaurants = [far].concat(b2.cities[ck].restaurants || []);
+    const p2 = E.planTrip(b2)[i], it2 = p2.items || [], s2 = it2.findIndex(x => x.t === 'stop' && String(x.id) === String(isle.id));
+    const after = it2.slice(s2 + 1), firstAway = after.findIndex(x => x.t === 'ride' && x.kind !== 'walk');
+    ok(s2 >= 0 && firstAway >= 0 && after[firstAway].kind === 'ferry' && !after.some(x => x.t === 'ride' && x.kind === 'taxi'), `from lunch on the island, the way off it is the boat, never a taxi (${it2.map(x => x.t === 'ride' ? x.kind : x.t + (x.name ? ':' + x.name : '')).join(' ')})`); }
   else ok(false, 'the sample ship day has a place reached by boat'); }
 { const s0 = JSON.parse(fs.readFileSync(path.join(dir, 'sample-cruise.json'))), i = s0.days.findIndex(d => /napl/i.test(d.city));
   const cleared = JSON.parse(JSON.stringify(s0)); Object.assign(cleared.days[i], { own: true, cleared: true, selected: [], mine: [] });

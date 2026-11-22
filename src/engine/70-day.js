@@ -102,8 +102,16 @@
     const plain = walk(order, win, ctx), my = E.mealPlan(ctx, "Lunch"), L = my.meal;
     if (my.skip || !lunchWanted(win) || (!ctx.eats.length && !my.pick)) return { seq: order, r: plain };
     const pts = [win.head[win.head.length - 1]].concat(order), lens = [L.len, L.quick, E.TO_GO];
+    // A place to eat on an island the day visits is on that island: nearer that island stop than to anything else on the
+    // day's land (the start, the end, the other stops), it takes the island's facts, so the way on from it is the boat,
+    // never a taxi over the sea (Nov 21 live check: lunch at an island's far end, then "Taxi or car, 24 mi" to the ship).
+    const wet = p => !!p && (E.byBoat(p.travelNote) || E.waterOnly(p) || !!p.acrossWater);
+    const isles = order.filter(s => wet(s) && !s.mealOf && isFinite(s.lat)), land = win.head.concat(win.tail, order.filter(s => !wet(s) && !s.mealOf)).filter(p => p && isFinite(p.lat));
+    const isleOf = r => { if (!isles.length || !isFinite(r.lat)) return null; let best = null, bd = Infinity; for (const s of isles) { const d = E.hav(s, r); if (d < bd) { bd = d; best = s; } }
+      return land.every(p => E.hav(p, r) > bd) ? best : null; };
+    const isleFacts = r => { const s = isleOf(r); return !s ? {} : Object.assign({ travelNote: r.travelNote || s.travelNote || "", onIsle: s.id }, s.wish ? { insideWish: true } : {}, s.acrossWater ? { acrossWater: s.acrossWater } : {}, E.waterOnly(s) ? { access: s.access } : {}); };
     const mealAt = (e, len, extra) => Object.assign({ id: "eat:" + e.k, eatKey: e.k, name: e.r.name, lat: e.r.lat, lng: e.r.lng, mealOf: L, len, quick: len < L.len, toGo: len === E.TO_GO, chosen: !!my.pick, fromMap: !!e.r.fromMap, packed: !!e.r.packed, travelNote: e.r.travelNote || "",
-      oh: len === E.TO_GO ? null : ((ctx.eatFacts || {})[e.k] || {}).oh || null }, extra || {});
+      oh: len === E.TO_GO ? null : ((ctx.eatFacts || {})[e.k] || {}).oh || null }, isleFacts(e.r), extra || {});
     const ok = c => c.r.lateMeal <= E.MEAL_LATE && !c.r.items.some(x => x.shut) && c.r.late <= plain.late && c.r.over <= plain.over
       && (c.k === order.length || c.r.waits - plain.waits <= 45)
       && !(win.hard && !c.r.over && c.r.end > plain.end && win.endBy - c.r.end < E.FILL_MARGIN);
@@ -138,6 +146,9 @@
     }
     // Inside a long visit over lunchtime: the visit gives up the lunch and the walk there and back. A visit keeps at least
     // 45 minutes of its own.
+    // A lunch inside a visit across the water is on that island however far from the visit's own point it is: the way on
+    // from it is the boat, never a taxi over the sea (Nov 21 live check: lunch at the far end of an island, then "Taxi or
+    // car, 24 mi" back to the ship).
     // Last of all, only when no place to eat fits anywhere on the day: inside a long visit with no place to eat known
     // within reach (a beach park, a ranch), lunch is still a timed stop, one the traveler brings, said plainly (Nov 20,
     // the lunch goal: every day out over lunchtime has a timed lunch).
@@ -150,7 +161,8 @@
         if (over < len) continue;
         for (const e of cands) {
           const build = cut => order.slice(0, k).concat([Object.assign({}, s, { minutes: s.minutes - cut, lunchIn: len, lunchCut: cut }),
-            mealAt(e, len, { inside: s.id, insideWish: !!s.wish, travelNote: e.r.travelNote || (E.byBoat(s.travelNote) && E.hav(s, e.r) <= 3 ? s.travelNote : "") })], order.slice(k + 1));
+            mealAt(e, len, Object.assign({ inside: s.id, insideWish: !!s.wish, travelNote: e.r.travelNote || (E.byBoat(s.travelNote) || E.waterOnly(s) || s.acrossWater ? s.travelNote || "" : "") },
+            s.acrossWater ? { acrossWater: s.acrossWater } : {}, E.waterOnly(s) && !E.byBoat(s.travelNote) ? { access: s.access } : {}))], order.slice(k + 1));
           if ((s.minutes || 0) - len < 45) continue;
           // First try: the visit loses the lunch itself; the walk shows as how much later the day ends. Then it loses that too.
           const r0 = walk(build(len), win, ctx, { r: plain, k }), cut = len + Math.max(0, Math.ceil(r0.end - plain.end));
