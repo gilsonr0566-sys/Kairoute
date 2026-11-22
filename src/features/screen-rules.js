@@ -82,6 +82,11 @@ function rules(text, info = {}) {
   lunch.forEach(s => { const t = s.name + ' ' + s.meta; if (/Lunch near |Your pick|^(Quick )?lunch:?$|on your own|find a place/i.test(t) && !/bring|pack|picnic|no restaurant/i.test(t)) add('S2', 'lunch has a real place', `"${s.name}${s.meta ? ' · ' + s.meta : ''}" names no place to eat and does not say to bring food`); });
   const firstT = (P.rows[0] || {}).leave, lastT = end ? end.arrive : (P.rows[P.rows.length - 1] || {}).leave;
   if (stops.length >= 2 && firstT != null && lastT != null && firstT <= 12 * 60 && lastT >= 14 * 60 + 30 && !lunch.length && !P.lunchSaid) add('S2', 'lunch on a day out', `out ${clock(firstT)} to ${clock(lastT)} with no lunch and nothing said about it`);
+  /* Bags: stored and collected with nothing between is storage for nothing; time out after collecting means carrying the bags. */
+  const drop = P.rows.findIndex(r => r.key === 'H' && /leave your bags|luggage storage/i.test(r.name)), pick = P.rows.findIndex(r => r.key === 'H' && /collect your bags/i.test(r.name));
+  if (drop >= 0 && pick > drop) { const mid = P.rows.slice(drop + 1, pick).filter(r => /^\d+$|^L$|^\+$/.test(r.key));
+    if (!mid.length) add('S2', 'bags stored for something', `bags are left in storage and collected again with nothing in between (${clock(P.rows[drop].arrive)} to ${clock(P.rows[pick].leave)})`);
+    P.rows.slice(pick).filter((r, i) => r.until != null || (i && /^\d+$|^L$/.test(r.key))).forEach(r => add('S2', 'bags stored for something', r.until != null ? `free time until ${clock(r.until)} comes after ${r.name}, so the traveler carries the bags` : `${r.name} comes after Collect your bags, so the traveler carries the bags there`)); }
   const names = stops.filter(s => s.key !== 'L').map(s => s.name.toLowerCase()); names.forEach((n, i) => { if (names.indexOf(n) !== i) add('S2', 'sight once', `${n} is on the plan twice`); });
   if (/\bNaN\b|undefined|\bnull\b|Invalid Date|\[object /.test(raw)) add('S2', 'no broken values', (raw.match(/.{0,40}(\bNaN\b|undefined|\bnull\b|Invalid Date|\[object ).{0,20}/) || [''])[0]);
   if (info.date) { const d = new Date(info.date + 'T12:00:00Z'), wd = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'][d.getUTCDay()], mo = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'][d.getUTCMonth()];
