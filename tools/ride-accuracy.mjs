@@ -9,6 +9,7 @@ const require = createRequire(import.meta.url), arg = k => { const i = process.a
 // One or more helper versions (comma-separated): the timetable is asked once, each version's map estimate is compared.
 const SRCS = (arg("--transit") || new URL("../worker/transit.js", import.meta.url).pathname).split(","), NAMES = (arg("--names") || SRCS.map((x, i) => i ? "v" + i : "live").join(",")).split(",");
 const MODS = []; for (const f of SRCS) MODS.push(await import(path.resolve(f))); const T = MODS[0];
+for (const M of MODS) if (M.setMapWait) M.setMapWait(45000); // a runner gets a long wait on each map server
 const BUDGET = +(arg("--minutes") || 150) * 60000, T0 = Date.now(); // stop asking in time to write the summary
 const MAX = +(arg("--max") || 4), OUT = arg("--out"), ONLY = process.env.ONLY ? new RegExp(process.env.ONLY, "i") : null;
 const hav = (a, b) => { const R = 6371, r = x => x * Math.PI / 180, dl = r(b.lat - a.lat), dg = r(b.lng - a.lng); const h = Math.sin(dl / 2) ** 2 + Math.cos(r(a.lat)) * Math.cos(r(b.lat)) * Math.sin(dg / 2) ** 2; return 2 * R * Math.asin(Math.sqrt(h)); };
@@ -48,7 +49,11 @@ async function one(p) {
   try { tt = await T.timetableOptions(p.a, p.b, p.dow); } catch (e) { why.push("timetable: " + e.message); }
   for (const [v, M] of MODS.entries()) {
     let map = [];
-    try { const m = await M.transitOptions(p.a, p.b); map = Array.isArray(m) ? m : []; if (m && m.why) why.push(NAMES[v] + " map: " + m.why.join("; ")); } catch (e) { why.push(NAMES[v] + " map: " + e.message); }
+    // The free map servers turn busy runners away: one try, then one more after a pause, each with a long wait.
+    for (let t = 0; t < 2; t++) {
+      try { const m = await M.transitOptions(p.a, p.b); map = Array.isArray(m) ? m : []; if (m && m.why) why.push(NAMES[v] + " map: " + m.why.join("; ")); break; }
+      catch (e) { if (t) why.push(NAMES[v] + " map: " + e.message + (e.why ? " (" + e.why.join("; ") + ")" : "")); else await sleep(20000); }
+    }
     const rows = byVer[v];
     for (const k of new Set(map.map(kindOf))) {
       const est = best(map, k), real = best(tt, k, true) || best(tt, k);
@@ -69,7 +74,7 @@ async function lane() {
   }
 }
 const outOf = v => MODS.length === 1 ? OUT : OUT.replace(/(\.json)?$/, "-" + NAMES[v] + ".json");
-await Promise.all([lane(), lane()]);
+await Promise.all(Array.from({ length: +(arg("--lanes") || 1) }, lane)); // one at a time by default: the map servers allow few at once
 console.log(stopped ? `\nStopped at the time limit after ${done} of ${pairs.length} rides.` : "");
 function pick(o) { return { label: o.label, min: o.min, ride: o.ride, wait: o.wait, every: o.every, everySrc: o.everySrc, access: o.access && o.access.min, egress: o.egress && o.egress.min, km: o.km, src: o.src }; }
 

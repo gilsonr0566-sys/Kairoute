@@ -30,7 +30,7 @@ jobs:
           if [ "${{ github.event_name }}" = schedule ]; then
             node tools/ride-accuracy.mjs --transit /tmp/live/transit.js --max 1 --minutes 40 --out ride-accuracy-hourly.json | tee ride-accuracy-hourly.txt
           elif ! cmp -s worker/transit.js /tmp/live/transit.js && [ -f tools/ride-accuracy-candidate ]; then
-            node tools/ride-accuracy.mjs --transit /tmp/live/transit.js,worker/transit.js --names live,candidate --minutes 150 --out ride-accuracy.json | tee ride-accuracy.txt
+            node tools/ride-accuracy.mjs --transit /tmp/live/transit.js,worker/transit.js --names live,candidate --max 2 --minutes 150 --out ride-accuracy.json | tee ride-accuracy.txt
           else
             node tools/ride-accuracy.mjs --transit /tmp/live/transit.js --minutes 150 --out ride-accuracy-live.json | tee ride-accuracy-live.txt
           fi
