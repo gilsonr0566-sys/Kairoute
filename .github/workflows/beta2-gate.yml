@@ -43,11 +43,12 @@ jobs:
         run: |
           mkdir -p part && touch "$RUNNER_TEMP/out.log"
           grep -E "^(FAIL|MISSED|NOT TESTED)|FAIL[ :]|[0-9]+ failed|Error:|✗|not ok|exceeded" "$RUNNER_TEMP/out.log" | grep -v "^ok " | head -60 > part/fails.txt || true
+          cp "$RUNNER_TEMP/out.log" part/log.txt
       - uses: actions/upload-artifact@v4
         if: always()
         with:
           name: part-code
-          path: part/fails.txt
+          path: part
           if-no-files-found: ignore
 
   safety:
@@ -73,11 +74,12 @@ jobs:
         run: |
           mkdir -p part && touch "$RUNNER_TEMP/out.log"
           grep -E "^(FAIL|MISSED|NOT TESTED)|FAIL[ :]|[0-9]+ failed|Error:|✗|not ok|exceeded" "$RUNNER_TEMP/out.log" | grep -v "^ok " | head -60 > part/fails.txt || true
+          cp "$RUNNER_TEMP/out.log" part/log.txt
       - uses: actions/upload-artifact@v4
         if: always()
         with:
           name: part-safety
-          path: part/fails.txt
+          path: part
           if-no-files-found: ignore
 
   engine:
@@ -104,11 +106,12 @@ jobs:
         run: |
           mkdir -p part && touch "$RUNNER_TEMP/out.log"
           grep -E "^(FAIL|MISSED|NOT TESTED)|FAIL[ :]|[0-9]+ failed|Error:|✗|not ok|exceeded" "$RUNNER_TEMP/out.log" | grep -v "^ok " | head -60 > part/fails.txt || true
+          cp "$RUNNER_TEMP/out.log" part/log.txt
       - uses: actions/upload-artifact@v4
         if: always()
         with:
           name: part-engine
-          path: part/fails.txt
+          path: part
           if-no-files-found: ignore
 
   leaks:
@@ -131,11 +134,12 @@ jobs:
         run: |
           mkdir -p part && touch "$RUNNER_TEMP/out.log"
           grep -E "^(FAIL|MISSED|NOT TESTED)|FAIL[ :]|[0-9]+ failed|Error:|✗|not ok|exceeded" "$RUNNER_TEMP/out.log" | grep -v "^ok " | head -60 > part/fails.txt || true
+          cp "$RUNNER_TEMP/out.log" part/log.txt
       - uses: actions/upload-artifact@v4
         if: always()
         with:
           name: part-leaks
-          path: part/fails.txt
+          path: part
           if-no-files-found: ignore
 
   phone:
@@ -154,11 +158,12 @@ jobs:
         run: |
           mkdir -p part && touch "$RUNNER_TEMP/out.log"
           grep -E "^(FAIL|MISSED|NOT TESTED)|FAIL[ :]|[0-9]+ failed|Error:|✗|not ok|exceeded" "$RUNNER_TEMP/out.log" | grep -v "^ok " | head -60 > part/fails.txt || true
+          cp "$RUNNER_TEMP/out.log" part/log.txt
       - uses: actions/upload-artifact@v4
         if: always()
         with:
           name: part-phone
-          path: part/fails.txt
+          path: part
           if-no-files-found: ignore
 
   screen:
@@ -184,11 +189,12 @@ jobs:
         run: |
           mkdir -p part && touch "$RUNNER_TEMP/out.log"
           grep -E "^(FAIL|MISSED|NOT TESTED)|FAIL[ :]|[0-9]+ failed|Error:|✗|not ok|exceeded" "$RUNNER_TEMP/out.log" | grep -v "^ok " | head -60 > part/fails.txt || true
+          cp "$RUNNER_TEMP/out.log" part/log.txt
       - uses: actions/upload-artifact@v4
         if: always()
         with:
           name: part-screen
-          path: part/fails.txt
+          path: part
           if-no-files-found: ignore
 
   odd-screen:
@@ -211,11 +217,12 @@ jobs:
         run: |
           mkdir -p part && touch "$RUNNER_TEMP/out.log"
           grep -E "^(FAIL|MISSED|NOT TESTED)|FAIL[ :]|[0-9]+ failed|Error:|✗|not ok|exceeded" "$RUNNER_TEMP/out.log" | grep -v "^ok " | head -60 > part/fails.txt || true
+          cp "$RUNNER_TEMP/out.log" part/log.txt
       - uses: actions/upload-artifact@v4
         if: always()
         with:
           name: part-odd-screen
-          path: part/fails.txt
+          path: part
           if-no-files-found: ignore
 
   words:
@@ -248,11 +255,12 @@ jobs:
         run: |
           mkdir -p part && touch "$RUNNER_TEMP/out.log"
           grep -E "^(FAIL|MISSED|NOT TESTED)|FAIL[ :]|[0-9]+ failed|Error:|✗|not ok|exceeded" "$RUNNER_TEMP/out.log" | grep -v "^ok " | head -60 > part/fails.txt || true
+          cp "$RUNNER_TEMP/out.log" part/log.txt
       - uses: actions/upload-artifact@v4
         if: always()
         with:
           name: part-words
-          path: part/fails.txt
+          path: part
           if-no-files-found: ignore
 
   report:
@@ -261,19 +269,24 @@ jobs:
     if: always()
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 0 }
+      - uses: actions/setup-node@v4
+        with: { node-version: 22 }
       - uses: actions/download-artifact@v4
         with:
           pattern: part-*
           path: parts
-      - name: Write the release report (PASS / FAIL / NOT TESTED for every part, with each failing part's lines)
+      - name: Write the release report (Richard's 14 items and 3 release targets; NOT TESTED is never a pass)
         env:
           R: ${{ toJSON(needs) }}
         run: |
-          node -e '
-            const fs = require("fs"), r = JSON.parse(process.env.R), word = s => s === "success" ? "PASS" : s === "failure" ? "FAIL" : "NOT TESTED (" + s + ")";
-            const lines = k => { try { return fs.readFileSync("parts/part-" + k + "/fails.txt", "utf8").trim(); } catch (e) { return ""; } };
-            const ok = Object.values(r).every(v => v.result === "success");
-            let md = `## Beta 2 release report\n\nCommit ${process.env.GITHUB_SHA.slice(0, 8)}, run ${process.env.GITHUB_RUN_NUMBER}. **${ok ? "RELEASE OK" : "DO NOT RELEASE"}**: ${ok ? "every part ran and passed." : "a part failed or was not tested (not tested is never a pass)."}\n\n| Part | Result |\n|---|---|\n`;
-            md += Object.entries(r).map(([k, v]) => `| ${k} | ${word(v.result)} |`).join("\n") + "\n";
-            for (const [k, v] of Object.entries(r)) if (v.result !== "success") { const t = lines(k); md += `\n### ${k}: ${word(v.result)}\n\n` + (t ? "```\n" + t + "\n```\n" : "(no failing lines kept: the part stopped before its checks, or the check printed none; open the job log)\n"); }
-            fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY, md); console.log(md); process.exitCode = ok ? 0 : 1;'
+          # The published build, to list the corrections and the tests added since (its commit message names the build).
+          LIVE=$(git ls-remote https://github.com/gilsonr0566-sys/Kairoute-Beta2 HEAD >/dev/null 2>&1 && git clone -q --depth 1 https://github.com/gilsonr0566-sys/Kairoute-Beta2 /tmp/pub && git -C /tmp/pub log -1 --format=%s | grep -oE "[0-9a-f]{7,}" | head -1 || true)
+          export LIVE
+          node tools/truth/release-report.cjs parts > release-report.md || true
+          cat release-report.md >> "$GITHUB_STEP_SUMMARY"; cat release-report.md
+          grep -q "RELEASE OK" release-report.md
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with: { name: release-report, path: release-report.md }

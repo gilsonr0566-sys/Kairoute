@@ -28,6 +28,8 @@ const MUTANTS = [
     was: 'Back at the ship after all aboard (the ship-day rule Richard calls Rule #2)' },
   { id: 'ashore-before-docking', file: '30-window.js', from: 'w.start = d.portArrive + (d.tender ? E.TENDER_ASHORE : 30);', to: 'w.start = d.portArrive - 90;',
     was: 'Stops before passengers are ashore (failure map, section 1)' },
+  { id: 'return-shown-confirmed', file: '95-plan.js', from: 'const basis = onWheels.length ? ["timetable", "roads", "estimate"]', to: 'const basis = onWheels.length ? ["timetable", "timetable", "timetable"]',
+    was: 'A way back with no timetable behind it shown as resting on timetables (Richard, Nov 23 release target: unverified return connections shown as confirmed = 0)' },
   { id: 'off-before-arrival', file: '30-window.js', from: 'w.start = E.toMin(d.thru.time) + am.clear;', to: 'w.start = E.toMin(d.thru.time) - 150;',
     was: '"Off the ship 5:30 am" when the ship arrives at 7:00 am (weekly ladder, Nov 22)' },
 ];

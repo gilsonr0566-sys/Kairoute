@@ -24,6 +24,9 @@
 //                ship docks (+15, +30 at a tender port), or before the day's own start time
 //   S1 night     a departure typed in the small hours (before 5:00) on a day the plan fills with sights: the plan takes it
 //                as the NEXT night, a ticket dated that day means THIS morning. Never assumed: it must be asked.
+//   S1 unverified the way back to the flight, train or ship rests on a ride with no timetable behind it, and the plan marks
+//                it as resting on timetables, or a train, bus or boat on it says nothing of the missing timetable
+//   S2 about     the same for a city metro, tram or bus on the way back (it runs often; its time must still read "about")
 //   S2 physics   a ride faster than its kind can move in a straight line (walk 6.5 km/h, taxi, bus 90, metro 90, train
 //                300, ferry 80), or no time at all between two places apart
 //   S2 clock     the clock runs backwards, or a time that is not a number
@@ -101,6 +104,21 @@ function checkDay(d, p, ctx) {
     const road = km * 1.4 / 25 * 60 + 10; // a slow city taxi
     if (km > 1 && min > 3 * road && min - road > 45 && !kinds.some(q => /ferry|boat/.test(q))) add('slowride', 'S2', `${what} ${min} min for ${km.toFixed(1)} km (${a.name} to ${z.name}); a taxi needs about ${Math.round(road)}`);
   }
+  // ---- unverified: the way back to the gate (every ride after the last stop or meal) rests on a timetable, or it is never
+  // shown as sure (Richard, Nov 23 release target: "unverified return connections presented as confirmed: 0").
+  const D0 = deadline(d);
+  if (D0) {
+    const lastVisit = its.reduce((a, x, j) => (x.t === 'stop' || (x.t === 'meal' && !x.onBoard)) ? j : a, -1);
+    const back = its.slice(lastVisit + 1).filter(x => x.t === 'ride' && x.mode !== 'lift' && x.mode !== 'walk' && !/walk|lift/.test(kindOf(x)) && (x.min || 0) > 0);
+    const unsure = back.filter(x => x.source !== 'timetable');
+    const said = x => /no timetable|not confirmed|estimate|about|check the timetable|no sailing times|not known/i.test([x.note, x.how, ...(x.steps || [])].join(' '));
+    if (unsure.length && p.leaveAt && p.leaveAt.basis === 'timetable') add('unverified', 'S1', `the way back is marked as resting on timetables, but ${unsure.map(x => kindOf(x) + ' (' + (x.source || 'no source') + ')').join(', ')} has none`);
+    // A boat or train that must be caught: S1. A city metro, tram or bus (runs every few minutes): S2, its time still says "about".
+    unsure.filter(x => /ferry|boat|train|rail/.test(kindOf(x)) && !said(x)).forEach(x => add('unverified', 'S1', `the ${kindOf(x)} back (${x.min} min, source ${x.source || 'none'}) has no timetable behind it and nothing on it says so`));
+    // (A ride with ride choices shows "about N min" on its chip when no timetable confirms it, zz-engine2 est: only a ride
+    // with a single way has no such chip.)
+    unsure.filter(x => /bus|metro|tram|transit/.test(kindOf(x)) && !said(x) && !((x.options || []).length > 1)).forEach(x => add('about', 'S2', `the ${kindOf(x)} back (${x.min} min, from the ${x.source || 'no source'}) has no timetable behind it and nothing on it says it is an estimate`));
+  }
   // ---- before: nothing before the traveler can be there
   const e0 = earliest(d), st = toMin(d.startTime);
   visits.forEach(x => {
@@ -173,7 +191,7 @@ if (require.main === module) {
       for (const f of checkDay(d, p)) { const k = f.rule; found[k] = (found[k] || 0) + 1; (ex[k] = ex[k] || []).push(`${f.sev} ${name} day ${i + 1} ${d.type}${d.mode && /arrival|departure/.test(d.type) ? '/' + d.mode : ''} ${d.city || ''}: ${f.msg}`); } });
   }
   console.log(`Independent safety check: ${trips.length} trips, ${days} days, ${planned} planned`);
-  const order = ['error', 'gone', 'reach', 'leaveby', 'before', 'night', 'physics', 'clock', 'drift', 'slowride'];
+  const order = ['error', 'gone', 'reach', 'leaveby', 'before', 'night', 'unverified', 'about', 'physics', 'clock', 'drift', 'slowride'];
   for (const k of order) { const n = found[k] || 0; console.log(`${n ? (WARN.includes(k) ? 'WARN' : 'FAIL') : 'ok  '} ${k.padEnd(9)} ${n}`); (ex[k] || []).slice(0, SHOW).forEach(e => console.log('       ' + e)); }
   if (process.env.ALL) fs.writeFileSync(process.env.ALL, JSON.stringify(ex, null, 1));
   process.exitCode = order.some(k => found[k] && !WARN.includes(k)) ? 1 : 0;
