@@ -54,6 +54,16 @@
 - FAME must-see "Galata Tower" is offered (Galata Tower) but not marked must-see
 - INFO 44 sights, 0 day trips/towns; must-see: Hagia Sophia, Sultan Ahmed Mosque, Süleymaniye Mosque, Topkapı Palace; top by fame: Sultan Ahmed Mosque 89, Topkapı Palace 79, Süleymaniye Mosque 69, Galata Tower 58, Dolmabahçe Palace 54, Taksim Square 50, Sublime Porte 50, Grand Bazaar 46
 
+## Juneau, Alaska (Juneau, Alaska, guide from sources)
+- POS Goldbelt Tram: app is 0.82 km from Wikidata's point (not on the map by id)
+- NOT Sealaska Heritage Institute: Wikidata says it is an organization (nonprofit organization in Juneau, United States)
+- NOID Juneau Arts & Humanities Council: no Wikidata id and nothing of the name on the map nearby (from Wikivoyage (English))
+- NOID Alaskan Brewing Company Brewery Tour: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- NOID Upside-Down Forest: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- FAME must-see "Mendenhall Glacier" is not offered
+- FAME must-see "Mount Roberts Tramway" is not offered
+- INFO 8 sights, 0 day trips/towns; must-see: St. Nicholas Russian Orthodox Church, Alaska State Centennial Museum, Goldbelt Tram; top by fame: St. Nicholas Russian Orthodox Church 5, Alaska State Centennial Museum 3, Goldbelt Tram 3, Wickersham House 2, Juneau Arts & Humanities Council 0, Alaskan Brewing Company Brewery Tour 0, Sealaska Heritage Institute 0, Upside-Down Forest 0
+
 ## Kotor, Montenegro (Kotor, Montenegro, guide from sources)
 - POS Lovćen National Park: app is 5.82 km from Wikidata's point (not on the map by id)
 - NOID Castle of San Giovanni: built-in sight with no Wikidata id and nothing of the name on the map nearby
