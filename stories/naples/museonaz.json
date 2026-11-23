@@ -1,0 +1,534 @@
+{
+ "id": "museonaz",
+ "v": 1,
+ "city": "naples",
+ "title": "National Archaeological Museum of Naples",
+ "match": {
+  "ids": [
+   "museonaz"
+  ],
+  "names": [
+   "museo archeologico nazionale",
+   "national archaeological museum of naples",
+   "national archaeological museum, naples",
+   "farnese bull",
+   "alexander mosaic"
+  ],
+  "wikidata": [
+   "Q637248"
+  ]
+ },
+ "checked": "2026-11-23",
+ "claims": {
+  "intro": {
+   "label": "supported",
+   "says": "The museum holds Greek, Roman and Renaissance works, especially Roman finds from Pompeii, Stabiae and Herculaneum.",
+   "src": [
+    "wp-mann"
+   ],
+   "quote": [
+    "is an Italian archaeological museum with a collection that includes works from Greek, Roman and Renaissance times, and especially Roman artifacts from the nearby Pompeii, Stabiae and Herculaneum sites."
+   ]
+  },
+  "pompeii-here": {
+   "label": "supported",
+   "says": "Most of the best-preserved mosaics and finds from Pompeii are kept in the museum in Naples.",
+   "src": [
+    "wv-pompeii"
+   ],
+   "quote": [
+    "Also visit the National Museum in Naples, where most of the best preserved mosaics and found items from Pompeii are kept."
+   ]
+  },
+  "building": {
+   "label": "supported",
+   "says": "The building dates to 1585 and began as cavalry barracks; it housed the University of Naples from 1616 to 1777, and as a museum was called the Royal Bourbon Museum from 1816 to 1861.",
+   "src": [
+    "wp-mann"
+   ],
+   "quote": [
+    "The building, dating to 1585, was originally a  cavalry barracks.  From 1616 to 1777, it was the seat of the University of Naples.",
+    "From 1816 to 1861, it was known as the Royal Bourbon Museum"
+   ]
+  },
+  "digs": {
+   "label": "supported",
+   "says": "Herculaneum was rediscovered in 1738 by workers building a summer palace for Charles of Bourbon; digging at Pompeii began in 1748 before the city was identified; an inscription found in 1763 identified it; displaying antiquities boosted Naples' prestige.",
+   "src": [
+    "wp-pompeii"
+   ],
+   "quote": [
+    "Herculaneum was rediscovered in 1738 by workers digging for the foundations of a summer palace for the King of Naples, Charles of Bourbon.",
+    "made excavations to find further remains at the site of Pompeii in 1748, even if the city was not identified.",
+    "because the display of antiquities reinforced Naples' political and cultural prestige. On 20 August 1763, an inscription [...] Rei Publicae Pompeianorum [...] was found and the city was identified as Pompeii."
+   ]
+  },
+  "moved": {
+   "label": "supported",
+   "says": "In recent years some large Farnese sculptures, sometimes including the Bull, have been shown at the Museo di Capodimonte, and the Alexander Mosaic has been under restoration with a facsimile in its place.",
+   "src": [
+    "wp-mann",
+    "wp-farnese-bull",
+    "wp-alexander-mosaic"
+   ],
+   "quote": [
+    "Many of these works, especially the larger ones, have been moved to the Museo di Capodimonte for display in recent years.",
+    "although in recent years sometimes it is displayed at the Museo di Capodimonte across the city",
+    "although currently its site is covered with a facsimile banner as the mosaic is being restored in an adjacent room"
+   ]
+  },
+  "farnese": {
+   "label": "supported",
+   "says": "Most of the classical sculpture comes from the Farnese Marbles, Roman copies that are often the only record of lost Greek originals.",
+   "src": [
+    "wp-mann"
+   ],
+   "quote": [
+    "The greater part of the museum's classical sculpture collection largely comes from the Farnese Marbles, important since they include Roman copies of classical Greek sculpture, which are in many cases the only surviving indications of what the lost works by ancient Greek sculptors such as Calamis, Kritios and Nesiotes looked like."
+   ]
+  },
+  "bull-size": {
+   "label": "supported",
+   "says": "The Farnese Bull is the largest single sculpture yet recovered from antiquity, more than 4 m high and weighing 21.8 tonnes.",
+   "src": [
+    "wp-farnese-bull"
+   ],
+   "quote": [
+    "It is the largest single sculpture yet recovered from antiquity.",
+    "more than 4 m (13 ft 1 in) high. As it is today, the sculpture weighs 21.8 tonnes"
+   ]
+  },
+  "bull-myth": {
+   "label": "legend",
+   "says": "The myth: Dirce, wife of King Lykos of Thebes, was tied to a wild bull by Amphion and Zethus to punish her cruelty to their mother Antiope.",
+   "src": [
+    "wp-farnese-bull"
+   ],
+   "quote": [
+    "The subject is the death of Dirce, first wife of Lykos, King of Thebes. She was tied to a wild bull by Amphion and Zethus, the sons of Antiope, who wanted to punish Dirce for the ill-treatment inflicted on their mother."
+   ]
+  },
+  "bull-history": {
+   "label": "supported",
+   "says": "A Roman copy of a Hellenistic work, dated AD 222-235, it was found in 1546 in the Baths of Caracalla in digs ordered by Pope Paul III to adorn the Palazzo Farnese; Michelangelo planned to make it a fountain.",
+   "src": [
+    "wp-farnese-bull"
+   ],
+   "quote": [
+    "is a massive and elaborated Roman copy of a Hellenistic sculpture.",
+    "This sculpture is dated to the Severan period (A.D. 222–235).",
+    "The sculpture was unearthed in 1546 during excavations at gymnasium of the Roman Baths of Caracalla, commissioned by Pope Paul III in the hope of finding ancient sculptures to adorn the Palazzo Farnese",
+    "when Michelangelo planned to use it for a fountain"
+   ]
+  },
+  "bull-pliny": {
+   "label": "disputed",
+   "says": "Scholars disagree whether this is the version by the Rhodian brothers that Pliny the Elder described or a later Roman version made for the Baths of Caracalla.",
+   "src": [
+    "wp-farnese-bull"
+   ],
+   "quote": [
+    "Pliny the Elder mentions what was presumably the prime version of the sculpture as the work of the Rhodian artists Apollonius of Tralles and his brother Tauriscus",
+    "It has been argued that the Farnese Bull could not be the sculpture noted by Pliny in his Natural History, but rather that it is a third-century AD Roman version made specifically for Caracalla's Baths. Other scholars dispute this"
+   ]
+  },
+  "bull-restored": {
+   "label": "disputed",
+   "says": "It is much restored; the child, dog and other animals round the base perhaps were not in the original.",
+   "src": [
+    "wp-farnese-bull"
+   ],
+   "quote": [
+    "This sculpture is much restored and includes around the base a child, a dog, and other animals that perhaps were not in the original composition"
+   ]
+  },
+  "hercules": {
+   "label": "supported",
+   "says": "The Farnese Hercules, from the same excavation, fixed the image of Hercules in the European imagination.",
+   "src": [
+    "wp-mann",
+    "wp-farnese-bull"
+   ],
+   "quote": [
+    "The Farnese Hercules, which fixed the image of Hercules in the European imagination.",
+    "Other discoveries from this excavation were documented as to their location as individual depictions, such as the Farnese Hercules"
+   ]
+  },
+  "atlas": {
+   "label": "disputed",
+   "says": "The Farnese Atlas is the oldest surviving depiction of Atlas and the oldest view of the Western constellations, possibly based on Hipparchus's star catalog.",
+   "src": [
+    "wp-mann"
+   ],
+   "quote": [
+    "The Farnese Atlas is the oldest extant depiction of Atlas from Greek mythology, and the oldest view of the Western constellations, possibly based upon the star catalog of Hipparchus"
+   ]
+  },
+  "mosaic": {
+   "label": "supported",
+   "says": "The Alexander Mosaic, a floor mosaic from the House of the Faun in Pompeii, usually dated about 120-100 BC, shows Alexander the Great fighting Darius III of Persia.",
+   "src": [
+    "wp-alexander-mosaic",
+    "wp-mann"
+   ],
+   "quote": [
+    "is a Roman floor mosaic originally from the House of the Faun in Pompeii, Italy.",
+    "It is typically dated between c. 120 and 100 BC and depicts a battle between the armies of Alexander the Great and Darius III of Persia."
+   ]
+  },
+  "issus": {
+   "label": "tradition",
+   "says": "It is traditionally believed to show the Battle of Issus.",
+   "src": [
+    "wp-alexander-mosaic"
+   ],
+   "quote": [
+    "The work is traditionally believed to show the Battle of Issus."
+   ]
+  },
+  "alexander": {
+   "label": "supported",
+   "says": "On the left, Alexander without a helmet, lance in his right arm, on Bucephalus, his gaze on Darius.",
+   "src": [
+    "wp-alexander-mosaic"
+   ],
+   "quote": [
+    "On the left side of the mosaic, Alexander of Macedonia is seen without a helmet",
+    "He is posed in action with his lance in his right arm.",
+    "he rides his horse Bucephalus",
+    "Alexander's gaze is trained on Darius."
+   ]
+  },
+  "darius": {
+   "label": "supported",
+   "says": "On the right, Darius in his chariot reaches toward a dying soldier while his charioteer whips the horses to flee; fear shows in his face.",
+   "src": [
+    "wp-alexander-mosaic"
+   ],
+   "quote": [
+    "Darius III is reaching out to the dying soldier",
+    "Darius and his charioteer take up a large portion of the right half of the mosaic.",
+    "In the background Darius' charioteer whips the horses to flee from the battle scene. There is visible fear and anxiety in the Persian king's face"
+   ]
+  },
+  "details": {
+   "label": "supported",
+   "says": "More than 50 men; a Persian soldier in the foreground sees his death throes reflected in a shield; the central horse is seen from behind.",
+   "src": [
+    "wp-alexander-mosaic"
+   ],
+   "quote": [
+    "The battle scene depicts more than 50 men.",
+    "the Persian soldier in the foreground who watches his own death throes reflected in a shield",
+    "Radical foreshortening—as in the central horse, seen from behind"
+   ]
+  },
+  "tesserae": {
+   "label": "disputed",
+   "says": "Estimates of the tile count vary: about one and a half million, or more than four million; each about 2.0 mm wide.",
+   "src": [
+    "wp-alexander-mosaic"
+   ],
+   "quote": [
+    "The mosaic is made of approximately one and a half million tiny colored tiles called tesserae",
+    "These tesserae are approximately 0.08 inches (2.0 mm) wide, and it is estimated that more than four million pieces were used in the mosaic."
+   ]
+  },
+  "original": {
+   "label": "disputed",
+   "says": "It is believed to copy a late fourth-century or early third-century BC Greek painting, perhaps by Philoxenus of Eretria or Apelles.",
+   "src": [
+    "wp-alexander-mosaic"
+   ],
+   "quote": [
+    "The mosaic is believed to be a copy of a late fourth-century BC or early third-century BC Hellenistic painting, perhaps by Philoxenus of Eretria or Apelles."
+   ]
+  },
+  "found": {
+   "label": "supported",
+   "says": "It was rediscovered in 1831 and brought to Naples in September 1843; a copy was installed in the House of the Faun in 2005.",
+   "src": [
+    "wp-alexander-mosaic"
+   ],
+   "quote": [
+    "The mosaic was rediscovered in 1831 in Pompeii, Italy, and was later transported to Naples in September 1843.",
+    "The copy was installed in the House of the Faun in 2005."
+   ]
+  },
+  "floor": {
+   "label": "supported",
+   "says": "Laid on the floor where the owner received guests, it was the first thing a visitor saw on entering the room.",
+   "src": [
+    "wp-alexander-mosaic"
+   ],
+   "quote": [
+    "Since the mosaic was arranged on the floor where the patron could receive guests, it was the first decorative object a visitor would see upon entering that room."
+   ]
+  },
+  "frescoes": {
+   "label": "supported",
+   "says": "The museum has a large collection of frescoes from Pompeii and Herculaneum, towns buried in ash and pumice by Vesuvius in 79 AD.",
+   "src": [
+    "wp-mann",
+    "wp-pompeii"
+   ],
+   "quote": [
+    "The museum houses a large collection of frescoes from Pompeii and Herculaneum.",
+    "Along with Herculaneum, Stabiae, and many surrounding villas, it was buried under 4 to 6 m (13 to 20 ft) of volcanic ash and pumice in the eruption of Mount Vesuvius in 79 AD."
+   ]
+  },
+  "papyri": {
+   "label": "supported",
+   "says": "From the Villa of the Papyri come bronzes, including the Seated Hermes, a Drunken Satyr and a pair of lively runners, and the carbonized Herculaneum papyri, found after 1752.",
+   "src": [
+    "wp-mann"
+   ],
+   "quote": [
+    "A major collection of ancient Roman bronzes from the Villa of the Papyri is housed at the museum. These include the Seated Hermes, a sprawling Drunken Satyr, a bust of Thespis, another variously identified as Seneca or Hesiod, and a pair of exceptionally lively runners.",
+    "the Herculaneum papyri, carbonized by the eruption of Mount Vesuvius, found after 1752 in Villa of the Papyri"
+   ]
+  },
+  "egypt": {
+   "label": "supported",
+   "says": "Its Egyptian collection of 2,500 objects is among the largest in Italy, after Turin, Florence and Bologna.",
+   "src": [
+    "wp-mann"
+   ],
+   "quote": [
+    "With 2,500 objects, the museum has one of the largest collection of Egyptian artifacts in Italy, smaller only than those in Turin, Florence and Bologna."
+   ]
+  },
+  "secret": {
+   "label": "supported",
+   "says": "The Secret Cabinet held the Bourbons' erotic finds, mostly from Pompeii and Herculaneum; access was limited to people of mature age and known morals.",
+   "src": [
+    "wp-mann"
+   ],
+   "quote": [
+    "The Secret Cabinet (Gabinetto Segreto) (Gabbinete) or Secret Room is the name the Bourbon Monarchy gave the private rooms in which they held their fairly extensive collection of erotic or sexual items, mostly deriving from excavations of Pompeii and Herculaneum. Access was limited to only persons of mature age and known morals."
+   ]
+  },
+  "secret-1819": {
+   "label": "supported",
+   "says": "By one account, in 1819 Francis, visiting with his wife and daughter, was so embarrassed that he had the erotic art locked away.",
+   "src": [
+    "wp-pompeii"
+   ],
+   "quote": [
+    "In 1819, when King Francis visited the Pompeii exhibition there with his wife and daughter, he was so embarrassed by the erotic artwork that he had it locked away"
+   ]
+  },
+  "secret-later": {
+   "label": "supported",
+   "says": "In 1851 even nude Venus statues were locked in and the entrance walled up; in 1860 Garibaldi ordered it opened and, the butler with the key being gone, they broke in; it finally opened to the public in April 2000.",
+   "src": [
+    "wp-mann"
+   ],
+   "quote": [
+    "The highlight of the censorship occurred in 1851 when even nude Venus statues were locked up, and the entrance walled up in the hope that the collection would vanish from memory.",
+    "In September 1860, when the forces of Garibaldi occupied Naples, he ordered that the collection be made available for the general public to view. Since the Royal Butler was no longer available, they broke into the collection.",
+    "the collection was finally opened to the public in April 2000."
+   ]
+  }
+ },
+ "parts": [
+  {
+   "name": "Arrival",
+   "stand": "Outside the main entrance, looking up at the long front of the building.",
+   "paras": [
+    {
+     "t": "Welcome to the National Archaeological Museum of Naples. Greek, Roman and Renaissance works fill it, and above all, finds from Pompeii, Herculaneum and Stabiae. If you're going to Pompeii, this is the other half of the story: most of the best-preserved mosaics and finds from Pompeii are kept here, not at the site.",
+     "c": [
+      "intro",
+      "pompeii-here"
+     ],
+     "level": 1
+    },
+    {
+     "t": "The building has had several lives. It dates from 1585, and began as cavalry barracks. From 1616 to 1777 it was the University of Naples. Then it became a museum, known from 1816 to 1861 as the Royal Bourbon Museum.",
+     "c": [
+      "building"
+     ],
+     "level": 2
+    },
+    {
+     "t": "Why is it all here? In 1738, workers digging foundations for a summer palace for the King of Naples, Charles of Bourbon, rediscovered buried Herculaneum. Digging at Pompeii began in 1748, before anyone knew which city it was. An inscription found in 1763 settled it: Pompeii. And Charles cared, because displaying antiquities boosted the prestige of Naples.",
+     "c": [
+      "digs"
+     ],
+     "level": 3
+    },
+    {
+     "t": "One honest note before we go in. Collections move. In recent years some of the biggest Farnese sculptures, sometimes even the Farnese Bull, have been shown at the Capodimonte museum across the city, and the Alexander Mosaic has been under restoration, with a full-size facsimile in its place. If something isn't where you expect it, ask a guard.",
+     "c": [
+      "moved"
+     ],
+     "level": 2
+    },
+    {
+     "t": "It's a big building. Pace yourself, and sit down whenever you find a bench.",
+     "c": [],
+     "level": 2,
+     "cue": true
+    }
+   ]
+  },
+  {
+   "name": "The Farnese sculptures",
+   "stand": "In the hall of the great Farnese sculptures, in front of the huge marble group with the bull.",
+   "paras": [
+    {
+     "t": "This is the Farnese Bull, the largest single sculpture yet recovered from the ancient world. It stands more than 4 meters high and weighs 21.8 tonnes.",
+     "c": [
+      "bull-size"
+     ],
+     "level": 1
+    },
+    {
+     "t": "It tells a brutal myth. Dirce, wife of King Lykos of Thebes, had mistreated a woman named Antiope. Antiope's sons, Amphion and Zethus, punished her by tying her to a wild bull.",
+     "c": [
+      "bull-myth"
+     ],
+     "level": 2
+    },
+    {
+     "t": "It's a Roman copy of a Greek work, dated between 222 and 235 AD. It was dug up in 1546 in the Baths of Caracalla in Rome, in excavations Pope Paul the Third ordered to decorate the Farnese family palace. Michelangelo even planned to turn it into a fountain.",
+     "c": [
+      "bull-history"
+     ],
+     "level": 2
+    },
+    {
+     "t": "Is this the very sculpture the Roman writer Pliny the Elder described, by two brothers from Rhodes? Scholars disagree. Some say it's a later Roman version made just for the baths; others dispute that. It's also much restored: the child, the dog and the other animals around the base perhaps weren't in the original at all.",
+     "c": [
+      "bull-pliny",
+      "bull-restored"
+     ],
+     "level": 3
+    },
+    {
+     "t": "Most of the classical sculpture here comes from the same Farnese collection: Roman copies that are often the only record of lost Greek masterpieces. Look for the Farnese Hercules, found in the same excavation. It fixed the image of Hercules in the European imagination.",
+     "c": [
+      "farnese",
+      "hercules"
+     ],
+     "level": 2
+    },
+    {
+     "t": "And find the Farnese Atlas, the oldest surviving figure of Atlas, and it carries the oldest view of the Western constellations, perhaps based on the star catalog of the astronomer Hipparchus.",
+     "c": [
+      "atlas"
+     ],
+     "level": 3
+    }
+   ]
+  },
+  {
+   "name": "The Alexander Mosaic",
+   "stand": "In the mosaic rooms, in front of the great battle scene, or its full-size facsimile during restoration.",
+   "paras": [
+    {
+     "t": "This is the Alexander Mosaic, from the floor of the House of the Faun in Pompeii, usually dated to around 120 to 100 BC. It shows Alexander the Great charging the Persian king, Darius the Third. It's traditionally believed to be the Battle of Issus.",
+     "c": [
+      "mosaic",
+      "issus"
+     ],
+     "level": 1
+    },
+    {
+     "t": "Find Alexander on the left: no helmet, lance in his right arm, riding his horse Bucephalus, his eyes fixed on Darius. Then look right. Darius, in his chariot, reaches toward a dying soldier, while his driver whips the horses to flee. Look at the fear in his face.",
+     "c": [
+      "alexander",
+      "darius"
+     ],
+     "level": 1
+    },
+    {
+     "t": "Now look closer. More than 50 men are packed in. In the foreground, a Persian soldier sees his own death throes reflected in a shield. And in the middle, there's a horse seen from behind, a daring bit of foreshortening.",
+     "c": [
+      "details"
+     ],
+     "level": 2
+    },
+    {
+     "t": "How many tiny stones went into it? Nobody knows exactly. Estimates run from about one and a half million to more than four million, each around 2 millimeters wide.",
+     "c": [
+      "tesserae"
+     ],
+     "level": 2
+    },
+    {
+     "t": "It's probably a copy of a lost Greek painting from the late 300s or early 200s BC, perhaps by Philoxenus of Eretria, or Apelles. It was rediscovered in 1831 and brought to Naples in September 1843. Since 2005, a modern copy has lain in the House of the Faun.",
+     "c": [
+      "original",
+      "found"
+     ],
+     "level": 3
+    }
+   ]
+  },
+  {
+   "name": "Pompeii and Herculaneum",
+   "stand": "In the fresco galleries.",
+   "paras": [
+    {
+     "t": "These rooms hold a large collection of wall paintings from Pompeii and Herculaneum, towns buried in ash and pumice when Vesuvius erupted in 79 AD.",
+     "c": [
+      "frescoes"
+     ],
+     "level": 1
+    },
+    {
+     "t": "From one great villa at Herculaneum, the Villa of the Papyri, come bronzes: a seated Hermes, a sprawling drunken satyr, and a pair of wonderfully lively runners. And the Herculaneum papyri themselves, scrolls carbonized by the eruption and found after 1752.",
+     "c": [
+      "papyri"
+     ],
+     "level": 2
+    },
+    {
+     "t": "If you have time, find the Egyptian collection: 2,500 objects, one of the largest in Italy, behind only Turin, Florence and Bologna.",
+     "c": [
+      "egypt"
+     ],
+     "level": 3
+    }
+   ]
+  },
+  {
+   "name": "The Secret Cabinet",
+   "stand": "At the entrance to the Secret Cabinet.",
+   "paras": [
+    {
+     "t": "This is the Secret Cabinet. The Bourbon kings gave that name to the rooms where they kept erotic art, mostly from the digs at Pompeii and Herculaneum. Only people of mature age and known morals were let in.",
+     "c": [
+      "secret"
+     ],
+     "level": 1
+    },
+    {
+     "t": "One account says that in 1819, a royal visitor, Francis, came with his wife and daughter and was so embarrassed he had it all locked away. By 1851 even nude statues of Venus were shut in, and the entrance walled up, in the hope the collection would be forgotten. When Garibaldi's forces took Naples in 1860, he ordered it opened. The royal butler with the key was gone, so they broke in. It only opened fully to the public in April 2000.",
+     "c": [
+      "secret-1819",
+      "secret-later"
+     ],
+     "level": 2
+    }
+   ]
+  },
+  {
+   "name": "Closing",
+   "stand": "Wherever you'd like to end, ideally back near the mosaics.",
+   "paras": [
+    {
+     "t": "Remember, the Alexander Mosaic lay on a floor where its owner received guests; it was the first thing a visitor saw. That's the thing about this museum. So much here was once part of someone's home, until one day in 79 AD, life stopped. Carry that with you to Pompeii.",
+     "c": [
+      "floor",
+      "frescoes"
+     ],
+     "level": 1
+    }
+   ]
+  }
+ ],
+ "practical": []
+}

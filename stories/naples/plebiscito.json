@@ -1,0 +1,413 @@
+{
+ "id": "plebiscito",
+ "v": 1,
+ "city": "naples",
+ "title": "Piazza del Plebiscito and the Royal Palace",
+ "match": {
+  "ids": [
+   "plebiscito"
+  ],
+  "names": [
+   "plebiscito",
+   "palazzo reale di napoli",
+   "royal palace of naples",
+   "san francesco di paola",
+   "teatro san carlo"
+  ],
+  "wikidata": [
+   "Q1047594",
+   "Q426339"
+  ]
+ },
+ "checked": "2026-11-23",
+ "claims": {
+  "bounds": {
+   "label": "supported",
+   "says": "The main square of Naples is bounded by the Royal Palace on the east and the church of San Francesco di Paola, with twin colonnades, on the west.",
+   "src": [
+    "wp-plebiscito",
+    "wp-naples"
+   ],
+   "quote": [
+    "bounded by the Royal Palace (east) and the church of San Francesco di Paola (west) with its hallmark twin colonnades extending to each side",
+    "The main city square or piazza of the city is the Piazza del Plebiscito."
+   ]
+  },
+  "name": {
+   "label": "supported",
+   "says": "The square is named after the plebiscite of October 21, 1860, that brought Naples into the unified Kingdom of Italy.",
+   "src": [
+    "wp-plebiscito"
+   ],
+   "quote": [
+    "Named after the plebiscite taken on October 21, 1860, that brought Naples into the unified Kingdom of Italy under the House of Savoy"
+   ]
+  },
+  "murat": {
+   "label": "supported",
+   "says": "In the first years of the 19th century Murat, King of Naples and Napoleon's brother-in-law, planned square and building as a tribute to Napoleon; after Napoleon's fall the restored Bourbon Ferdinand finished it as a church.",
+   "src": [
+    "wp-plebiscito",
+    "wv-naples"
+   ],
+   "quote": [
+    "In the first years of the 19th century, the King of Naples, Murat (Napoleon's brother-in-law), planned the square and building as a tribute to the emperor. Soon after Napoleon was finally dispatched to St Helena, the Bourbons were restored to the throne, and Ferdinand I continued the construction but converted the finished product into the church one sees today."
+   ]
+  },
+  "paola-site": {
+   "label": "supported",
+   "says": "It is dedicated to Saint Francis of Paola, who stayed in a monastery on this site in the 15th century.",
+   "src": [
+    "wp-plebiscito"
+   ],
+   "quote": [
+    "He dedicated it to Saint Francis of Paola, who had stayed in a monastery on this site in the 15th century."
+   ]
+  },
+  "pantheon": {
+   "label": "supported",
+   "says": "The church recalls the Pantheon in Rome: a portico on six columns and two Ionic pillars, a circular interior, and a dome 53 metres high.",
+   "src": [
+    "wp-plebiscito",
+    "wv-naples"
+   ],
+   "quote": [
+    "The church is reminiscent of the Pantheon in Rome. The façade is fronted by a portico resting on six columns and two Ionic pillars. Inside, the church is circular with two side chapels. The dome is 53 metres high."
+   ]
+  },
+  "francis": {
+   "label": "supported",
+   "says": "Francis of Paola (1416-1507) was a friar who founded the Order of Minims.",
+   "src": [
+    "wp-paola"
+   ],
+   "quote": [
+    "Francis of Paola (1416–1507), Italian mendicant friar, founder of the Roman Catholic Order of Minims"
+   ]
+  },
+  "parking": {
+   "label": "supported",
+   "says": "From 1963 the square was a parking lot, until it was renovated for the G7 summit in 1994 and fully pedestrianized.",
+   "src": [
+    "wp-plebiscito"
+   ],
+   "quote": [
+    "In 1963, a municipal ordinance transformed the square into a public parking lot",
+    "until in 1994, on the occasion of the G7 summit, the square was renovated",
+    "and then pedestrianizing it in its entirety"
+   ]
+  },
+  "concerts": {
+   "label": "supported",
+   "says": "The square hosts open-air concerts, from Pino Daniele to Bruce Springsteen in 2013.",
+   "src": [
+    "wp-plebiscito"
+   ],
+   "quote": [
+    "Occasionally, the square is used for open-air concerts.",
+    "Pino Daniele",
+    "In May 2013, Bruce Springsteen & The E-Street Band gave a concert at the venue."
+   ]
+  },
+  "palace": {
+   "label": "verified",
+   "says": "The palace was built from 1600 by Domenico Fontana for the Spanish viceroys; from 1734 Charles of Bourbon made it the main Bourbon residence for more than a hundred years.",
+   "src": [
+    "wp-royal-palace-na",
+    "unesco-naples"
+   ],
+   "quote": [
+    "The palace was built from 1600 onwards by the architect Domenico Fontana as the residence of the Spanish viceroys",
+    "Charles of Bourbon made it, from 1734, the main residence of the Bourbons of Naples for more than a hundred years",
+    "the Royal Palace built in 1600 along one side of the imposing Piazza del Plebiscito"
+   ]
+  },
+  "philip": {
+   "label": "disputed",
+   "says": "Officially the palace was to host Philip III of Spain, who never came; modern analysis suggests the viceroy knew this and built it for his own wishes.",
+   "src": [
+    "wp-royal-palace-na",
+    "wv-naples"
+   ],
+   "quote": [
+    "The official argument to justify its construction was to honor Philip III of Spain by hosting him solemnly in view of an imminent visit by the monarch that, in the end, never took place. However, contemporary analysis indicates that the viceroy knew that Philip III had never intended to move his court to Naples and that the palace was actually built to satisfy the viceroy's own wishes."
+   ]
+  },
+  "philip5": {
+   "label": "supported",
+   "says": "Philip V, in 1702, was the only Spanish sovereign ever to stay in the palace.",
+   "src": [
+    "wp-royal-palace-na"
+   ],
+   "quote": [
+    "From 18 April to 2 June 1702, Philip V visited Naples, being therefore the first and only Spanish sovereign to stay in a palace originally intended to receive Philip III."
+   ]
+  },
+  "kings": {
+   "label": "supported",
+   "says": "In 1888 statues of eight kings were placed in the facade niches, left to right Roger II, Frederick II, Charles of Anjou, Alfonso V, Charles V, Charles of Bourbon, Joachim Murat and Victor Emmanuel II, to show the Savoys as heirs of earlier dynasties.",
+   "src": [
+    "wp-royal-palace-na"
+   ],
+   "quote": [
+    "it was not until 1888 that statues of the main kings of Naples were placed in them, with the intention of showing a certain continuity between the House of Savoy and the previous dynasties of Neapolitan history. From left to right, we can recognize Roger II of Sicily, a work by Emilio Franceschi; Frederick II of Swabia, by Emanuele Caggiano; Charles of Anjou, by Tommaso Solares; Alfonso V of Aragon, by Aquiles De Osas; Charles V of Habsburg, by Vincenzo Gemito; Charles of Bourbon, by Raffaele Belliazzi; Joachim Murat, by Giovanni Battista Amendola and Victor Emmanuel II of Savoy, by Francesco Jerace."
+   ]
+  },
+  "ve2": {
+   "label": "supported",
+   "says": "Victor Emmanuel II was included though he never held the title of king of Naples.",
+   "src": [
+    "wp-royal-palace-na"
+   ],
+   "quote": [
+    "including Victor Emmanuel II, despite the fact that he never held that title"
+   ]
+  },
+  "arches": {
+   "label": "supported",
+   "says": "Fontana's open portico let people walk under cover; after the Masaniello revolt and because the pillars were being crushed, the arches were walled up in 1753 to a design by Luigi Vanvitelli.",
+   "src": [
+    "wp-royal-palace-na"
+   ],
+   "quote": [
+    "Originally, the lower part had porticos along its entire length, a very innovative decision for the time, designed by Fontana so that the people could walk around even in bad weather. However, after the Masaniello revolt and because of the structural problems of the pillars, which were being crushed, in 1753 the arches were walled up according to the project of Luigi Vanvitelli."
+   ]
+  },
+  "facade": {
+   "label": "supported",
+   "says": "The main facade is one hundred and sixty-nine metres long, grey stone picking out the architecture against reddish brick, a two-tone style that became very popular in Naples.",
+   "src": [
+    "wp-royal-palace-na"
+   ],
+   "quote": [
+    "It is one hundred and sixty-nine metres long",
+    "the two-tone use of materials stands out to highlight the architectural elements (in grey stone) on the walls (in reddish brick), a technique that would be very successful in Naples."
+   ]
+  },
+  "fire": {
+   "label": "supported",
+   "says": "A fire in 1837 destroyed much of the eastern half; Gaetano Genovese rebuilt the palace and gave the whole complex a unified look.",
+   "src": [
+    "wp-royal-palace-na"
+   ],
+   "quote": [
+    "On 6 February 1837, at 5 am, a fire broke out in the Queen mother's chambers in the eastern wing, destroying much of the eastern half of the palace.",
+    "after the fire of 1837, the palace had to be almost completely rebuilt by Gaetano Genovese, who finished the unfinished wings and gave a homogeneous appearance to the entire complex."
+   ]
+  },
+  "ve3": {
+   "label": "supported",
+   "says": "Victor Emmanuel III was born here in 1869 and gave the palace to the state in 1919; since 1924 the eastern half holds the National Library.",
+   "src": [
+    "wp-royal-palace-na"
+   ],
+   "quote": [
+    "It was in this palace that the future king Victor Emmanuel III was born on 11 November 1869.",
+    "The greatest change in the history of the Royal Palace of Naples took place in 1919, when King Victor Emmanuel III transferred the palace, along with many other royal residences, to the state.",
+    "and in 1924 its eastern half became the home of the National Library, uses that continue today."
+   ]
+  },
+  "stairs": {
+   "label": "supported",
+   "says": "Montesquieu called the grand staircase the most beautiful in Europe in 1729; it was rebuilt in rich marbles after the 1837 fire.",
+   "src": [
+    "wp-royal-palace-na"
+   ],
+   "quote": [
+    "Montesquieu described it in 1729 as the most beautiful in Europe, however it had to be rebuilt after the fire in February 1837.",
+    "the decoration characterized by sumptuous marbles"
+   ]
+  },
+  "sancarlo": {
+   "label": "supported",
+   "says": "The Teatro San Carlo belongs to the palace complex, opened on 4 November 1737 for the king's name day, and connects to the palace through two vestibules, one private.",
+   "src": [
+    "wp-royal-palace-na"
+   ],
+   "quote": [
+    "The San Carlos Theatre also belongs to the Royal Palace complex.",
+    "it was inaugurated on 4 November 1737, on the occasion of the name day of the king.",
+    "The theatre is directly connected to the royal palace by two vestibules, one on the ground floor, the other, private, on the piano nobile"
+   ]
+  },
+  "sancarlo-old": {
+   "label": "supported",
+   "says": "The San Carlo, beside the palace, founded in 1737, is the oldest continuously active opera house in Europe; Rossini and Donizetti were its artistic directors, and Donizetti's Lucia di Lammermoor premiered there.",
+   "src": [
+    "wv-naples"
+   ],
+   "quote": [
+    "(Municipio  1 ; beside the Royal Palace.)",
+    "Founded in 1737, is the oldest continuously active opera house in Europe.",
+    "Two main Italian opera composers, Gioacchino Rossini and Gaetano Donizetti, were artistic directors of the San Carlo for many years.",
+    "the famous Lucia di Lammermoor by Donizetti"
+   ]
+  },
+  "galleria": {
+   "label": "supported",
+   "says": "Directly across from the San Carlo is the Galleria Umberto I, a shopping gallery by Emanuele Rocco mixing shops and cafes with apartments.",
+   "src": [
+    "wv-naples"
+   ],
+   "quote": [
+    "A public shopping gallery that is directly across from the San Carlo opera house. It was designed by Emanuele Rocco",
+    "The Galleria was meant to combine businesses, shops, cafes and social life — public space — with private space in the apartments on the third floor."
+   ]
+  }
+ },
+ "parts": [
+  {
+   "name": "The square",
+   "stand": "In the middle of the square, facing the domed church with the curving colonnades.",
+   "paras": [
+    {
+     "t": "This is Piazza del Plebiscito, the main square of Naples. In front of you is the church of San Francesco di Paola, with its colonnades reaching out on both sides. Behind you is the Royal Palace.",
+     "c": [
+      "bounds"
+     ],
+     "level": 1
+    },
+    {
+     "t": "The name means the Square of the Plebiscite. It remembers the vote of October 21, 1860, that brought Naples into the new, united Kingdom of Italy.",
+     "c": [
+      "name"
+     ],
+     "level": 1
+    },
+    {
+     "t": "But the square was planned for an emperor. In the first years of the 1800s, Joachim Murat, King of Naples and Napoleon's brother-in-law, laid it out as a tribute to Napoleon. Then Napoleon fell, the Bourbons came back, and King Ferdinand finished the building, but as a church.",
+     "c": [
+      "murat"
+     ],
+     "level": 2
+    },
+    {
+     "t": "He dedicated it to Saint Francis of Paola, who had stayed in a monastery on this very spot in the 1400s. Does the church remind you of the Pantheon in Rome? Look at the portico on six columns and two Ionic pillars. Inside it's round, under a dome 53 meters high.",
+     "c": [
+      "paola-site",
+      "pantheon"
+     ],
+     "level": 2
+    },
+    {
+     "t": "Francis of Paola himself was a friar who lived from 1416 to 1507 and founded the Order of Minims.",
+     "c": [
+      "francis"
+     ],
+     "level": 3
+    },
+    {
+     "t": "It hasn't always looked this grand. From 1963 the square was a parking lot. Only in 1994, when it was renovated for the G7 summit, was it closed to traffic entirely. Now it hosts open-air concerts, from Pino Daniele to Bruce Springsteen in 2013.",
+     "c": [
+      "parking",
+      "concerts"
+     ],
+     "level": 3
+    },
+    {
+     "t": "If the sun is strong, step into the shade of the colonnade while you listen.",
+     "c": [],
+     "level": 2,
+     "cue": true
+    }
+   ]
+  },
+  {
+   "name": "The Royal Palace",
+   "stand": "Turn around and face the long front of the Royal Palace.",
+   "paras": [
+    {
+     "t": "This is the Royal Palace. It was begun in 1600, designed by Domenico Fontana, for the Spanish viceroys who governed Naples. From 1734, Charles of Bourbon made it the main home of the Bourbon kings for more than a hundred years.",
+     "c": [
+      "palace"
+     ],
+     "level": 1
+    },
+    {
+     "t": "Officially it was built to welcome King Philip the Third of Spain on a royal visit. He never came. Historians today think the viceroy knew that perfectly well, and built it to please himself. In fact the only Spanish king who ever stayed here was Philip the Fifth, in 1702.",
+     "c": [
+      "philip",
+      "philip5"
+     ],
+     "level": 2
+    },
+    {
+     "t": "Now look at the niches along the front. In 1888 eight statues of kings were set into them. From left to right: Roger the Second, Frederick the Second, Charles of Anjou, Alfonso the Fifth of Aragon, Charles the Fifth, Charles of Bourbon, Joachim Murat, and Victor Emmanuel the Second. The idea was to show the new royal house, the Savoys, as heirs to every dynasty before them. Never mind that Victor Emmanuel the Second never held the title of king of Naples.",
+     "c": [
+      "kings",
+      "ve2"
+     ],
+     "level": 2
+    },
+    {
+     "t": "Those niches were once open arches. Fontana gave the palace a portico along its whole length, so people could walk under cover in bad weather. But after the Masaniello revolt, and because the pillars were being crushed, the arches were walled up in 1753, to a design by Luigi Vanvitelli.",
+     "c": [
+      "arches"
+     ],
+     "level": 3
+    },
+    {
+     "t": "The front is nearly a hundred and seventy meters long: grey stone picking out the architecture against reddish brick, a two-tone style that caught on all over Naples. In 1837 a fire destroyed much of the eastern half, and the architect Gaetano Genovese rebuilt the palace and tied it all together.",
+     "c": [
+      "facade",
+      "fire"
+     ],
+     "level": 3
+    },
+    {
+     "t": "The future king Victor Emmanuel the Third was born here in 1869, and in 1919 he gave the palace to the state. Since 1924 the eastern half has held the National Library. If you go in, the grand staircase is the showpiece. Montesquieu called the earlier one the most beautiful in Europe, in 1729. What you climb today was rebuilt after the fire, in rich marbles.",
+     "c": [
+      "ve3",
+      "stairs"
+     ],
+     "level": 3
+    }
+   ]
+  },
+  {
+   "name": "The opera house and the Galleria",
+   "stand": "Walk to the Teatro San Carlo, beside the palace.",
+   "paras": [
+    {
+     "t": "This is the Teatro San Carlo, part of the royal palace complex. It opened on November 4, 1737, for the king's name day. It's the oldest continuously active opera house in Europe.",
+     "c": [
+      "sancarlo",
+      "sancarlo-old"
+     ],
+     "level": 1
+    },
+    {
+     "t": "Rossini and Donizetti both ran it for years, and Donizetti's Lucia di Lammermoor had its first production here. The theater even connects straight into the palace, through two vestibules, one of them private.",
+     "c": [
+      "sancarlo-old",
+      "sancarlo"
+     ],
+     "level": 2
+    },
+    {
+     "t": "Directly across from the opera house is the Galleria Umberto the First, designed by Emanuele Rocco. It was meant to mix shops, cafes and street life with apartments upstairs.",
+     "c": [
+      "galleria"
+     ],
+     "level": 2
+    }
+   ]
+  },
+  {
+   "name": "Closing",
+   "stand": "Come back to the middle of the square.",
+   "paras": [
+    {
+     "t": "Think about this square for a moment. It was planned to glorify an emperor, finished as a church, spent years as a parking lot, and it's named after a vote. Today it belongs to the people walking across it, you included.",
+     "c": [
+      "murat",
+      "parking",
+      "name"
+     ],
+     "level": 1
+    }
+   ]
+  }
+ ],
+ "practical": []
+}

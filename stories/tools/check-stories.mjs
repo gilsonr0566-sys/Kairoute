@@ -25,7 +25,7 @@ const LABELS = ["verified", "supported", "disputed", "legend", "tradition", "est
 const MARK = { legend: /\b(legend|myth|story goes|the story|were said|was said|is said|according to)\b/i, tradition: /\b(tradition|traditionally|is said|was said|believed)\b/i, disputed: /\b(historians|scholars|debate|disagree|differ|disputed|not sure|nobody's sure|no one's sure|another account|accounts differ|nobody knows|no one knows|not known|isn't settled|not settled|still argue|criticise|criticize|critics|uncertain|unclear|may have|might have|probably|perhaps)\b/i, estimate: /\b(about|around|roughly|nearly|almost|some|more than|over|close to)\b/i };
 const BANNED = /\b(guarantee[ds]?|definitely|certainly|always open|never closed|100 ?%)\b/i;
 let fail = 0, warn = 0; const err = (id, m) => { fail++; console.log(`FAIL ${id}: ${m}`); }, wrn = (id, m) => { warn++; console.log(`warn ${id}: ${m}`); };
-const files = fs.readdirSync(dir).filter(f => /^[a-z0-9-]+\.json$/.test(f) && !["sources.json", "check-report.json", "say-add.json", "plan.json"].includes(f));
+const files = fs.readdirSync(dir).filter(f => /^[a-z0-9-]+\.json$/.test(f) && !["sources.json", "check-report.json", "say-add.json", "plan.json", "factcheck.json"].includes(f));
 const report = [];
 for (const f of files) {
   const st = JSON.parse(fs.readFileSync(`${dir}/${f}`, "utf8")), id = st.id;

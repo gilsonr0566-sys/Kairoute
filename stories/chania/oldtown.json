@@ -308,7 +308,7 @@
    "stand": "In Eleftherios Venizelos Square, the main square of the old town.",
    "paras": [
     {
-     "t": "This is the main square of the old town, Eleftherios Venizelos Square. Locals also call it Syntrivani, from the Turkish word for a fountain. It's the heart of the town's tourist life.",
+     "t": "This is the main square of the old town, Eleftherios Venizelos Square. It's also known as Syntrivani, from the Turkish word for a fountain. It's the heart of the town's tourist life.",
      "c": [
       "square"
      ],
@@ -332,11 +332,17 @@
      "level": 2
     },
     {
-     "t": "Good news for walkers: in much of the old town, no cars are allowed at all. But the lanes are narrow and the paving is old stone, so watch your step.",
+     "t": "Good news for walkers: in much of the old town, no cars are allowed at all.",
      "c": [
       "no-cars"
      ],
      "level": 2
+    },
+    {
+     "t": "The lanes are narrow, so watch your step on the paving.",
+     "c": [],
+     "level": 2,
+     "cue": true
     }
    ]
   },
@@ -352,7 +358,7 @@
      "level": 1
     },
     {
-     "t": "Look around at the narrow alleys and old buildings. Many have been given new lives as hotels, restaurants, shops and bars. That's why it's so busy from April to October, and still lively at night in winter.",
+     "t": "Look around at the narrow alleys and old buildings. Some have been given new lives as hotels, restaurants, shops and bars. That's why it's so busy from April to October, and still lively at night in winter.",
      "c": [
       "topanas-now"
      ],
@@ -366,9 +372,10 @@
      "level": 3
     },
     {
-     "t": "In the northwest corner of the old town, behind the harbor and inside Topanas, was the Jewish quarter, called Evraiki or Ovraiki. Its story leads to our next stop.",
+     "t": "In the northwest corner of the old town, behind the harbor and inside Topanas, was the Jewish quarter, called Evraiki or Ovraiki. Our next stop is a synagogue. To get there, walk up Kondylaki Street from the harbor and take the second turn on the right.",
      "c": [
-      "jewish-q"
+      "jewish-q",
+      "eh-way"
      ],
      "level": 2
     }
@@ -379,16 +386,17 @@
    "stand": "At the end of the short lane off Kondylaki Street, facing the synagogue's stone wall and courtyard entrance.",
    "paras": [
     {
-     "t": "Walk up Kondylaki Street from the harbor and take the second turn on the right, and straight ahead is the Etz Hayyim Synagogue, the last remnant of Crete's Romaniote Jewish community. In July 1944, under the Nazis, Chania's Jews were deported and drowned, and the synagogue fell into ruin.",
+     "t": "Straight ahead is the Etz Hayyim Synagogue, the last remnant of Crete's Romaniote Jewish community. In 1944, under the Nazi occupation, the Jewish community was deported, and most were drowned when their ship was sunk. The synagogue fell into ruin.",
      "c": [
       "eh-way",
       "eh-church",
-      "eh-1944"
+      "eh-1944",
+      "tanais"
      ],
      "level": 1
     },
     {
-     "t": "The building began as a church, and became a synagogue in the 1600s. As for 1944: most of Chania's Jews were shipped off the island on the Tanais, and a British torpedo sank her.",
+     "t": "The building began as a church, and became a synagogue in the 1600s. The ship was the Tanais, and it was a British torpedo that sank her.",
      "c": [
       "eh-church",
       "tanais"
@@ -417,7 +425,7 @@
      "level": 2
     },
     {
-     "t": "Today it's seen locally as a symbol of coexistence. Almost all of its congregants aren't Jewish, and Christians and Muslims are welcome to visit.",
+     "t": "Today it's seen locally as a symbol of coexistence. Almost none of its congregants are Jewish, and Christians and Muslims are welcome to visit.",
      "c": [
       "eh-coexist"
      ],
@@ -458,7 +466,7 @@
      "level": 2
     },
     {
-     "t": "Keep an eye out for old walls. The base of a Hellenistic wall can be seen below the Byzantine wall of Kastelli hill, and the Byzantines built theirs partly with stones from the ancient city. More of the Byzantine wall survives in Sifaka Street.",
+     "t": "If you come across old walls, look closely. The base of a Hellenistic wall can be seen below the Byzantine wall of Kastelli hill, and the Byzantines built theirs partly with stones from the ancient city. More of the Byzantine wall survives in Sifaka Street.",
      "c": [
       "hell-wall",
       "sifaka"
@@ -473,7 +481,7 @@
      "level": 3
     },
     {
-     "t": "Legend gives the city a founder: a king named Cydon, son of Hermes or Apollo, and of Akakallis, the daughter of King Minos.",
+     "t": "One legend gives the city a founder: a king named Cydon, son of Hermes or Apollo, and of Akakallis, the daughter of King Minos.",
      "c": [
       "cydon"
      ],
@@ -487,7 +495,7 @@
      "level": 3
     },
     {
-     "t": "Under the Ottomans, this hill and Splantzia, next to it on the east, were mainly Muslim quarters. Splantzia is still largely untouched.",
+     "t": "Under the Ottomans, Muslims lived mainly here on Kastelli and in Splantzia, next door to the east. Splantzia is still largely untouched.",
      "c": [
       "ott-quarters",
       "splantzia"

@@ -291,6 +291,16 @@
    "quote": [
     "They also built new mosques such as the Küçük Hasan Pasha Mosque or Yali Mosque on the harbour."
    ]
+  },
+  "unesco-six": {
+   "label": "supported",
+   "says": "Kydonia at Chania is one of six Minoan palatial centres listed as a World Heritage Site.",
+   "src": [
+    "wv-chania"
+   ],
+   "quote": [
+    "This is one of six Minoan Palatial Centres to be listed as a world heritage site."
+   ]
   }
  },
  "parts": [
@@ -320,7 +330,7 @@
      "level": 2
     },
     {
-     "t": "The quays have their own names: Akti Tompazi, Akti Kountouriotou, and Akti Enoseos, which is the marina. All of them keep historical buildings, and in the evening, all of them fill up.",
+     "t": "The quays have their own names: Akti Tompazi, Akti Kountouriotou, and Akti Enoseos, which is the marina. All of them have historical buildings, and all of them have nightlife.",
      "c": [
       "seafront"
      ],
@@ -333,7 +343,7 @@
    "stand": "Keep facing the lighthouse at the harbor entrance.",
    "paras": [
     {
-     "t": "The lighthouse you're looking at was built in 1864, on the site of an older Venetian one. Only the base of that first lighthouse is left. It's a stone tower, rising 26 meters, about 85 feet, above the bay.",
+     "t": "The lighthouse you're looking at was rebuilt in the nineteenth century, on the base of an older Venetian one. That base is all that's left of the first lighthouse. It's a stone tower, rising 26 meters, about 85 feet, above the bay.",
      "c": [
       "lh-built",
       "lh-egypt",
@@ -342,7 +352,7 @@
      "level": 1
     },
     {
-     "t": "So who built it? Not the Venetians. Under Venice, this spot was a naval post, there to protect the city from oncoming Turks or pirates. In 1645 the Turks took the city, and the old lighthouse was left to fall into ruin. Then, in 1864, Egyptian troops, who were helping the Ottoman Empire hold Crete, rebuilt it.",
+     "t": "So who built the tower you see? Not the Venetians. Under Venice, this spot was a naval post, there to protect the city from oncoming Turks or pirates. In 1645 the Turks took the city, and the old lighthouse was left to fall into ruin. The rebuilding, in the nineteenth century, is credited to Egyptian troops who were helping the Ottoman Empire hold Crete.",
      "c": [
       "lh-venetian",
       "lh-ruin",
@@ -375,15 +385,32 @@
      "level": 1
     },
     {
-     "t": "In the late Minoan age, the town here, ancient Kydonia, was a large commercial and maritime center. Its ships carried pottery, oil, perfume and wine all over the Aegean. In 2025, UNESCO added ancient Kydonia to the World Heritage list.",
+     "t": "In the late Minoan age, the town here, ancient Kydonia, was a large commercial and maritime center. It exported pottery, oil, perfume and wine across the Aegean. In 2025, UNESCO listed ancient Kydonia as a World Heritage Site, one of six Minoan palatial centers on that list.",
      "c": [
       "trade",
-      "unesco"
+      "unesco",
+      "unesco-six"
      ],
      "level": 2
     },
     {
-     "t": "Then came Venice. In 1252, Venetian settlers founded Canea, today's Chania, on the site of long-abandoned Kydonia. They strengthened its defenses and gave the town the shape it still has. Over on the west side of the harbor is the Firkas Fortress, built in 1620 to protect it.",
+     "t": "The Odyssey even mentions a people called the Cydonians. Their city was important enough for that.",
+     "c": [
+      "homer"
+     ],
+     "level": 3
+    },
+    {
+     "t": "How did Venice get Crete at all? After the Fourth Crusade in 1204, the island went to Bonifacio, Marquess of Montferrat, and he sold it to the Venetians for 1000 silver marks. Historians estimate that about 10,000 Venetians moved to Crete in the first century, at a time when Venice itself had around 60,000 people. The cultures mixed closely, but the Cretans kept their Greek Orthodox faith.",
+     "c": [
+      "crusade",
+      "settlers",
+      "orthodox"
+     ],
+     "level": 3
+    },
+    {
+     "t": "Then came Venice. In 1252, Venetian settlers founded Canea, today's Chania, on the site of long-abandoned Kydonia. They strengthened its defenses and gave the town the shape it still has. Over on the west side of the harbor is the Firkas Fortress, built early in the seventeenth century to protect it.",
      "c": [
       "canea",
       "venice-form",
@@ -400,23 +427,7 @@
      "level": 3
     },
     {
-     "t": "Homer knew this place, too. The Cydonians, the people of Kydonia, were important enough to be mentioned in the Odyssey.",
-     "c": [
-      "homer"
-     ],
-     "level": 3
-    },
-    {
-     "t": "How did Venice get Crete at all? After the Fourth Crusade in 1204, the island went to Bonifacio, Marquess of Montferrat, and he sold it to the Venetians for 1000 silver marks. Historians estimate that about 10,000 Venetians moved here in the first century, at a time when Venice itself had around 60,000 people. The cultures mixed closely, but the Cretans kept their Greek Orthodox faith.",
-     "c": [
-      "crusade",
-      "settlers",
-      "orthodox"
-     ],
-     "level": 3
-    },
-    {
-     "t": "Under the Ottomans, this was the seat of power: the pasha of Crete lived here, in Hanya, as they called it.",
+     "t": "In Ottoman times, the pasha of Crete resided here, in Hanya, as they called the town.",
      "c": [
       "pasha"
      ],
@@ -439,7 +450,7 @@
      "level": 1
     },
     {
-     "t": "Since the 1970s, the people arriving have mostly been visitors like you. Look around at the faces on the quay.",
+     "t": "In the 1970s, Crete became a major destination for travelers. You're part of that story now.",
      "c": [
       "tourism"
      ],

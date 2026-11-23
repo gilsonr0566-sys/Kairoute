@@ -1,0 +1,225 @@
+{
+ "id": "lions",
+ "v": 1,
+ "city": "heraklion",
+ "title": "Lions Square and 25th August Street",
+ "match": {
+  "ids": [
+   "lions"
+  ],
+  "names": [
+   "lions square",
+   "morosini fountain",
+   "eleftheriou venizelou"
+  ],
+  "wikidata": [
+   "Q6555912"
+  ]
+ },
+ "checked": "2026-11-22",
+ "claims": {
+  "square": {
+   "label": "supported",
+   "says": "Eleftheriou Venizelou Square, named after statesman Eleftherios Venizelos, dates to the Venetian era and is commonly called Lions Square after the Morosini Fountain, whose four lions support the main basin.",
+   "src": [
+    "wp-morosini"
+   ],
+   "quote": [
+    "Eleftheriou Venizelou Square (Greek: Πλατεία Ελευθερίου Βενιζέλου) is a square in the city of Heraklion in Crete, named after the Cretan statesman Eleftherios Venizelos. It dates back to the Venetian era and is more commonly known as Lions Square",
+    "after the Venetian-era Morosini Fountain (popularly called \"τα Λιοντάρια\", \"The Lions\") in its midst, which features four lions supporting the main basin"
+   ]
+  },
+  "fountain": {
+   "label": "supported",
+   "says": "Many Venetian fountains survive, among them the Morosini fountain in Lions Square (1628).",
+   "src": [
+    "wp-heraklion"
+   ],
+   "quote": [
+    "Many fountains of the Venetian era are preserved, such as the Bembo fountain, the Priuli fountain, Palmeti fountain, Sagredo fountain and Morosini fountain in Lions Square (1628)."
+   ]
+  },
+  "candia": {
+   "label": "supported",
+   "says": "Under Venice the city was Candia, seat of the Duke of Candia; from 1212 Venice settled families on Crete; the mix of cultures produced the Cretan Renaissance.",
+   "src": [
+    "wp-heraklion"
+   ],
+   "quote": [
+    "Chandax was renamed Candia and became the seat of the Duke of Candia",
+    "To secure their rule, the Venetians began in 1212 to settle families from Venice on Crete. The coexistence of two different cultures and the stimulus of the Italian Renaissance led to a flourishing of letters and the arts in Candia and Crete in general, that is today known as the Cretan Renaissance."
+   ]
+  },
+  "faces": {
+   "label": "supported",
+   "says": "In 1669 Evliya Celebi wrote that the basilica's facade faced the fountain square; the portico is on the western facade.",
+   "src": [
+    "wp-st-mark-her"
+   ],
+   "quote": [
+    "The Ottoman traveller Evliya Çelebi visited Crete in 1669",
+    "with its façade facing the fountain square (the Fountain of Morosini)",
+    "It has a portico on the western façade entrance."
+   ]
+  },
+  "mark": {
+   "label": "supported",
+   "says": "The Basilica of Saint Mark was built in 1239 in Gothic style, used by the Duke of Candia and high officials.",
+   "src": [
+    "wp-st-mark-her"
+   ],
+   "quote": [
+    "the structure was built in 1239, during the Venetian rule of the island, and was primarily used by the local lords and officials of the island",
+    "It was built in Gothic style",
+    "was used by the duke and high-ranking officials of the local commune for their needs"
+   ]
+  },
+  "bells": {
+   "label": "supported",
+   "says": "During the Cretan War its bell tower was an observatory, its bells ringing whenever bombardment started.",
+   "src": [
+    "wp-st-mark-her"
+   ],
+   "quote": [
+    "During the Cretan War (1645–1669), the bell tower of the basilica was used as an observatory, with its bells ringing every time the bombardment started."
+   ]
+  },
+  "mosque": {
+   "label": "supported",
+   "says": "After 1669 it became the Defterdar Ahmet Pasha Mosque until 1915; later a cinema; restored from 1956, an art gallery since 1960.",
+   "src": [
+    "wp-st-mark-her"
+   ],
+   "quote": [
+    "After the Ottoman conquest of Crete in 1669, it was converted into a mosque, named as the Defterdar Ahmet Pasha Mosque",
+    "The building was used as a mosque until 1915.",
+    "was used at first as a cinema",
+    "in 1956 restoration works of the basilica began",
+    "Ever since the completion of the restoration works in 1960, the former church has been used as a municipal art gallery."
+   ]
+  },
+  "columns": {
+   "label": "disputed",
+   "says": "Its green granite columns differ in height; nobody knows exactly why; theories: reused from older buildings, or the result of repeated repairs.",
+   "src": [
+    "wp-st-mark-her"
+   ],
+   "quote": [
+    "two rows of columns consisting each of five columns made of green granite",
+    "The columns are each a different height.",
+    "It is not entirely known why the columns are not all the same size. A theory holds that each column originates from different, older buildings",
+    "Kostas Lassithiotakis suggests that it is most plausible that the different columns is the result of all the different restoration works"
+   ]
+  },
+  "grain": {
+   "label": "supported",
+   "says": "The porch (Saint Mark's Loggia) was used by merchants selling grain.",
+   "src": [
+    "wp-st-mark-her"
+   ],
+   "quote": [
+    "The loggia was used by merchants who sold grain on counters."
+   ]
+  },
+  "loggia": {
+   "label": "supported",
+   "says": "The Renaissance loggia next to Lions Square (1626-28), on 25 August Street, an elegant city meeting place built in 1628.",
+   "src": [
+    "wp-heraklion",
+    "wv-heraklion"
+   ],
+   "quote": [
+    "the Renaissance loggia next to Lions Square (1626–28)",
+    "Loggia (Greek: Λότζια), 25 August Str. An elegant city meeting place, built in 1628."
+   ]
+  }
+ },
+ "parts": [
+  {
+   "name": "Lions Square",
+   "stand": "Beside the fountain in the middle of the square, where you can see the lions.",
+   "paras": [
+    {
+     "t": "This is Lions Square. Its official name is Eleftheriou Venizelou Square, after the Cretan statesman Eleftherios Venizelos. But everyone calls it after the fountain in the middle, the Morosini Fountain, where four lions hold up the main basin.",
+     "c": [
+      "square"
+     ],
+     "level": 1
+    },
+    {
+     "t": "The square goes back to Venetian times, and the fountain dates from 1628. It's one of several Venetian fountains still standing around the city.",
+     "c": [
+      "square",
+      "fountain"
+     ],
+     "level": 2
+    },
+    {
+     "t": "Back then this city was Candia, seat of the Venetian Duke of Candia. From 1212 Venice settled its own families on Crete. Two cultures side by side, plus the spark of the Italian Renaissance, gave rise to a flowering of writing and art now called the Cretan Renaissance.",
+     "c": [
+      "candia"
+     ],
+     "level": 3
+    }
+   ]
+  },
+  {
+   "name": "Saint Mark's Basilica",
+   "stand": "Face the church with the columned porch across the square from the fountain.",
+   "paras": [
+    {
+     "t": "That church with the porch of columns is the Basilica of Saint Mark. The Venetians built it in 1239, in Gothic style, for the Duke and his officials.",
+     "c": [
+      "faces",
+      "mark"
+     ],
+     "level": 1
+    },
+    {
+     "t": "During the long Ottoman siege, its bell tower served as an observation post, and its bells rang every time the bombardment began.",
+     "c": [
+      "bells"
+     ],
+     "level": 2
+    },
+    {
+     "t": "After the city fell in 1669, it became a mosque, named for its founder, Defterdar Ahmet Pasha, and it stayed a mosque until 1915. Later it was used as a cinema. Restoration began in 1956, and since 1960 it has been the city's art gallery.",
+     "c": [
+      "mosque"
+     ],
+     "level": 2
+    },
+    {
+     "t": "If it's open, step inside and look at the green granite columns. Each one is a different height, and nobody knows exactly why. One theory says they came from older buildings. One scholar thinks they reflect centuries of repairs. And the porch out front? Merchants once sold grain there.",
+     "c": [
+      "columns",
+      "grain"
+     ],
+     "level": 3
+    }
+   ]
+  },
+  {
+   "name": "The Loggia",
+   "stand": "Walk the short way from the square to the Venetian Loggia.",
+   "paras": [
+    {
+     "t": "This elegant building is the Venetian Loggia, on 25th August Street, right next to Lions Square. It's a Renaissance building from 1626 to 1628, made as a meeting place for the city.",
+     "c": [
+      "loggia"
+     ],
+     "level": 1
+    },
+    {
+     "t": "Stand here for a minute and watch the people pass. Venetians, Ottomans and modern Cretans have all gathered around those same lions. Cities change hands. Meeting places stay.",
+     "c": [
+      "square",
+      "mosque"
+     ],
+     "level": 1
+    }
+   ]
+  }
+ ],
+ "practical": []
+}

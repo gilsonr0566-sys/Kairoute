@@ -47,6 +47,20 @@
    }
   },
   {
+   "id": "prehistmus",
+   "title": "Museum of Prehistoric Thera",
+   "claims": 24,
+   "minutes": {
+    "1": 1,
+    "2": 2.6,
+    "3": 3.2
+   },
+   "labels": {
+    "supported": 23,
+    "disputed": 1
+   }
+  },
+  {
    "id": "pyrgos",
    "title": "Pyrgos Village",
    "claims": 19,

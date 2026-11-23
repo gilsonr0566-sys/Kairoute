@@ -89,13 +89,15 @@
   },
   "sanmicheli": {
    "label": "supported",
-   "says": "Facing the Ottoman threat in the early 16th century, Venice began new walls in 1536 to a design by Michele Sanmicheli, finished in 1568; with a fortress on Thodorou they cost 87,000 ducats.",
+   "says": "Facing the Ottoman threat in the early 16th century, Venice began new walls in 1536 to a design by Michele Sanmicheli, finished in 1568; with a fortress on Thodorou they cost 87,000 ducats. (wp-chania gives 1538 for the start of the Venetian fortifications.)",
    "src": [
-    "wp-firkas"
+    "wp-firkas",
+    "wp-chania"
    ],
    "quote": [
     "By the early 16th century, the expanding Ottoman Empire became a major threat for the Venetians",
-    "Work on the new fortifications began in 1536, to a design of Michele Sanmicheli. They were completed in 1568. Construction of the fortifications of Chania as well as a fortress on Thodorou cost a total of 87,000 ducats."
+    "Work on the new fortifications began in 1536, to a design of Michele Sanmicheli. They were completed in 1568. Construction of the fortifications of Chania as well as a fortress on Thodorou cost a total of 87,000 ducats.",
+    "It used to be surrounded by the old Venetian fortifications that started to be built in 1538."
    ]
   },
   "arms": {
@@ -268,14 +270,13 @@
   },
   "battle": {
    "label": "supported",
-   "says": "On 20 May 1941 German paratroopers landed near Maleme Airfield and Chania; Greek forces near Chania engaged many; Greek police, cadets and armed civilians took part.",
+   "says": "On 20 May 1941 German paratroopers landed near Maleme Airfield and Chania; most were engaged by New Zealanders defending the airfield and by Greek forces near Chania.",
    "src": [
     "wp-battle-crete"
    ],
    "quote": [
     "At 08:00 on 20 May 1941, German paratroopers, jumping out of dozens of Junkers Ju 52 aircraft, landed near Maleme Airfield and the town of Chania.",
-    "Most of the parachutists were engaged by New Zealanders defending the airfield and by Greek forces near Chania.",
-    "Greek police and cadets took part, with the 1st Greek Regiment (Provisional) combining with armed civilians"
+    "Most of the parachutists were engaged by New Zealanders defending the airfield and by Greek forces near Chania."
    ]
   },
   "moro": {
@@ -305,7 +306,7 @@
    "stand": "At the fortress, on the west side of the harbor, looking out over the water.",
    "paras": [
     {
-     "t": "This is the Firkas Fortress, on the west side of Chania's harbor. It was built in 1620 to protect the harbor, close to the San Salvatore Bastion, the northwest corner of the old city walls.",
+     "t": "This is the Firkas Fortress, on the west side of Chania's harbor. It was built early in the seventeenth century to protect the harbor, close to the San Salvatore Bastion, the northwest corner of the old city walls.",
      "c": [
       "where",
       "bastion"
@@ -347,14 +348,14 @@
      "level": 3
     },
     {
-     "t": "Then, in the early 1500s, the Ottoman Empire became the big threat. So in 1536, work began on new walls, designed by Michele Sanmicheli. They were finished in 1568. Together with a fortress on Thodorou, they cost 87,000 ducats.",
+     "t": "Then, in the early 1500s, the Ottoman Empire became the big threat. So in the fifteen-thirties, work began on new walls, designed by Michele Sanmicheli. They were finished in 1568. Together with a fortress at a place called Thodorou, they cost 87,000 ducats.",
      "c": [
       "sanmicheli"
      ],
      "level": 2
     },
     {
-     "t": "Picture the scale. The walls stood up to 20 meters high, about 66 feet, with a ditch in front 60 meters wide and 15 deep. By 1630 the city had 319 cannons and 30,695 cannonballs.",
+     "t": "Picture the scale. The walls stood up to 20 meters high, about 66 feet, with a ditch in front 60 meters wide and 15 deep. In 1630 the city had 319 cannons and 30,695 cannonballs.",
      "c": [
       "dims",
       "arms"
@@ -368,7 +369,7 @@
    "stand": "Look out to sea, past the harbor entrance.",
    "paras": [
     {
-     "t": "All that stone didn't save the city. In June 1645 the Ottoman fleet arrived. After a siege of 56 days, the city fell on 22 August, when the walls on the southwest side were breached.",
+     "t": "All that stone didn't save the city. In June 1645 the Ottoman fleet arrived. After a siege of 56 days, the city fell on 22 August, when the walls on the town's southwest side, away from the sea, were breached.",
      "c": [
       "siege"
      ],
@@ -389,7 +390,7 @@
      "level": 3
     },
     {
-     "t": "The Ottomans repaired these walls and later modernized them, and Chania stayed under Ottoman rule until November 1898. Then, early in the twentieth century, parts of the south walls were torn down, because they were holding the growing city back.",
+     "t": "The Ottomans repaired the breached walls and later modernized them, and Chania stayed under Ottoman rule until November 1898. Then, early in the twentieth century, parts of the south walls were torn down, because they were holding the growing city back.",
      "c": [
       "ottoman",
       "demolish"
@@ -403,7 +404,7 @@
    "stand": "Stay up on the fortress, facing the harbor.",
    "paras": [
     {
-     "t": "This fortress is best remembered for one day. On 1 December 1913, at the ceremony of Crete's union with Greece, the Greek flag was raised here, with Eleftherios Venizelos and King Constantine the First looking on.",
+     "t": "This fortress is remembered above all for one day. On 1 December 1913, at the ceremony of Crete's union with Greece, the Greek flag was raised here, with Eleftherios Venizelos and King Constantine the First looking on.",
      "c": [
       "union"
      ],
@@ -419,14 +420,14 @@
      "level": 2
     },
     {
-     "t": "And earlier in 1913, in February, the Great Powers lowered their own flags at the Souda fortress, their quiet way of accepting what had happened.",
+     "t": "And earlier in 1913, in February, the Great Powers lowered their own flags at the Souda fortress, their quiet way of accepting the union in practice.",
      "c": [
       "souda"
      ],
      "level": 3
     },
     {
-     "t": "Flags meant a lot to Venizelos. In February 1897, during a revolt, a Greek flag was raised at the rebel camp at Akrotiri, and the warships of the Great Powers shelled the rebel positions. A shell knocked the flag down. It went straight back up.",
+     "t": "As the story is told, early in 1897, during a revolt, a Greek flag was raised at the rebel camp at Akrotiri, and the warships of the Great Powers shelled the rebel positions. A shell knocked the flag down, and it went straight back up.",
      "c": [
       "akrotiri"
      ],
@@ -453,21 +454,21 @@
      "level": 1
     },
     {
-     "t": "On the first floor, look for models of ancient ships, and a model of the walled town and port under Venice. It's the easiest way to picture the walls we've been talking about. There's a model of a shipyard with a rowing ship inside, and a whole room of sea life: shells, sponges, corals and fossils.",
+     "t": "On the museum's first exhibition floor, look for models of ancient ships, and a model of the walled town and port under Venice. It's the easiest way to picture the walls we've been talking about. There's a model of a shipyard with a rowing ship inside, and a whole room of sea life: shells, sponges, corals and fossils.",
      "c": [
       "floor1"
      ],
      "level": 2
     },
     {
-     "t": "On the second floor it's the modern Hellenic Navy: destroyers, a missile boat, a landing ship, even the full bridge of a destroyer, and two torpedo propulsion units. One section is given over to the German invasion of Crete.",
+     "t": "On the floor above, it's the modern Hellenic Navy: destroyers, a missile boat, a landing ship, even the full bridge of a destroyer, and two torpedo propulsion units. One section is given over to the German invasion of Crete.",
      "c": [
       "floor2"
      ],
      "level": 2
     },
     {
-     "t": "That invasion began on the morning of 20 May 1941, when German paratroopers landed near Maleme Airfield and near the town of Chania. Greek forces near Chania took on many of them, and Greek police, cadets and armed civilians joined the fight.",
+     "t": "That invasion began on the morning of 20 May 1941, when German paratroopers landed near Maleme Airfield and near the town of Chania. Most were met by New Zealanders defending the airfield and by Greek forces near Chania.",
      "c": [
       "battle"
      ],
@@ -477,7 +478,7 @@
   },
   {
    "name": "The Minoan ship",
-   "stand": "If you have time, walk along the harbor to its eastern end, to the Moro Shipyard.",
+   "stand": "If you have time, walk along the harbor to the Moro Shipyard at its eastern end, and see if it's open.",
    "paras": [
     {
      "t": "Here at the Moro Shipyard, at the harbor's eastern end, the museum keeps a 17-meter replica of a Minoan ship, built as an experiment between 2001 and 2004, and later sailed and rowed all the way to Piraeus.",

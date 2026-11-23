@@ -1,0 +1,351 @@
+{
+ "id": "phaistos",
+ "v": 1,
+ "city": "heraklion",
+ "title": "Phaistos",
+ "match": {
+  "ids": [],
+  "names": [
+   "phaistos"
+  ],
+  "wikidata": [
+   "Q249707"
+  ]
+ },
+ "checked": "2026-11-22",
+ "claims": {
+  "what": {
+   "label": "supported",
+   "says": "Phaistos is a Bronze Age site in south central Crete with a Minoan palace and town, 62 km south of Heraklion.",
+   "src": [
+    "wp-phaistos"
+   ],
+   "quote": [
+    "is a Bronze Age archaeological site at modern Faistos, a municipality in south central Crete. It is notable for the remains of a Minoan palace and the surrounding town.",
+    "62 km (39 mi) south of Heraklion"
+   ]
+  },
+  "big3": {
+   "label": "supported",
+   "says": "One of the 3 largest cities of Minoan Crete, with Knossos and Malia.",
+   "src": [
+    "wp-phaistos"
+   ],
+   "quote": [
+    "Phaistos was one of the 3 largest cities of Minoan Crete along with Knossos and Malia."
+   ]
+  },
+  "palaceword": {
+   "label": "supported",
+   "says": "Minoan 'palaces' served more purposes than real palaces; Phaistos had religious and political uses, storage, housing and a theater.",
+   "src": [
+    "wp-phaistos"
+   ],
+   "quote": [
+    "The structure of Minoan palaces differs from actual palaces and have been proven to serve more purposes, but the name has stuck.",
+    "The palace at Phaistos seemed to have religious and political purposes as well as sections for storage, housing, and a theater."
+   ]
+  },
+  "unesco": {
+   "label": "supported",
+   "says": "In 2025 Phaistos became a UNESCO World Heritage Site.",
+   "src": [
+    "wp-phaistos"
+   ],
+   "quote": [
+    "In 2025, the site was designated as a World Heritage Site by UNESCO."
+   ]
+  },
+  "authentic": {
+   "label": "verified",
+   "says": "UNESCO: most component sites keep their original forms thanks to minimal intervention; Knossos faces challenges from early 20th-century reconstructions.",
+   "src": [
+    "unesco-minoan"
+   ],
+   "quote": [
+    "Most of the component parts of the property retain their original forms, designs, and materials, on account of the minimal intervention approach applied in their conservation",
+    "Knossos, though it faces challenges due to the extensive reconstructions carried out in the early 20th century"
+   ]
+  },
+  "early": {
+   "label": "supported",
+   "says": "First inhabited around 3600 BCE; first palace around 2000 BCE.",
+   "src": [
+    "wp-phaistos"
+   ],
+   "quote": [
+    "Phaistos was first inhabited around 3600 BCE",
+    "The first palace was built in the Middle Minoan IB period, around 2000 BCE."
+   ]
+  },
+  "rebuilt": {
+   "label": "disputed",
+   "says": "Destroyed and rebuilt three times in about three centuries, shifting slightly east; destroyed around 1400 BCE and not rebuilt, possibly by a large earthquake.",
+   "src": [
+    "wp-phaistos"
+   ],
+   "quote": [
+    "The initial palace was destroyed and rebuilt three times in a period of about three centuries.",
+    "The new reconstructions of the palace shifted around slightly eastward of the original palace.",
+    "The palace was destroyed around 1400 BCE and not rebuilt. This destruction may have been caused by a large earthquake."
+   ]
+  },
+  "clean": {
+   "label": "supported",
+   "says": "The Minoans thoroughly cleaned the old ruins before rebuilding, leaving few remains.",
+   "src": [
+    "wp-phaistos"
+   ],
+   "quote": [
+    "the Minoans thoroughly cleaned the original palace ruins before beginning the later iterations. This left few archaeological remains to be found in the palace."
+   ]
+  },
+  "gortyn": {
+   "label": "supported",
+   "says": "Phaistos had its own coin and was destroyed by the Gortynians around the end of the 3rd century BCE.",
+   "src": [
+    "wp-phaistos"
+   ],
+   "quote": [
+    "Phaistos had its own currency, the stater.",
+    "Around the end of the 3rd century BCE, Phaistos was destroyed by the Gortynians"
+   ]
+  },
+  "size": {
+   "label": "supported",
+   "says": "The palace was around 2/3 as large as Knossos.",
+   "src": [
+    "wp-phaistos"
+   ],
+   "quote": [
+    "The palace was around 2/3 as large as the palace at Knossos."
+   ]
+  },
+  "theater": {
+   "label": "supported",
+   "says": "The theater was larger than Knossos's; with two staircases it gave access through large doors to the main hall of the propylaea.",
+   "src": [
+    "wp-phaistos"
+   ],
+   "quote": [
+    "The theater was larger than the one at Knossos.",
+    "The levels of the theater area, in conjunction with two staircases, gave access to the main hall of the propylaea through large doors."
+   ]
+  },
+  "levels": {
+   "label": "supported",
+   "says": "Levels: theater and shrines; servant and guest rooms; royal apartments; and the Hall of the State with balconies.",
+   "src": [
+    "wp-phaistos"
+   ],
+   "quote": [
+    "The first level contained the theater area and some shrines.",
+    "The second level consisted of servant and guest rooms as well as the commissariat quarter. Above this was the primary royal apartments. The fourth and final level was made up of the Hall of the State and balconies that overlooked the palace and its exterior."
+   ]
+  },
+  "north": {
+   "label": "supported",
+   "says": "From the central courtyard an entrance led to the royal apartments in the north, with a view of Psiloritis (Mount Ida).",
+   "src": [
+    "wp-phaistos"
+   ],
+   "quote": [
+    "The entrance from the central courtyard led to the royal apartments in the northern section of the palace, with a view of the tops of Psiloritis (Mount Ida)."
+   ]
+  },
+  "rhea": {
+   "label": "supported",
+   "says": "A temple to Rhea, built after the Geometric age, is in the southern section.",
+   "src": [
+    "wp-phaistos"
+   ],
+   "quote": [
+    "A temple to Rhea was found in the palace. The temple is located in the Southern section of the palace.",
+    "The temple was built after the Geometric age."
+   ]
+  },
+  "disc": {
+   "label": "supported",
+   "says": "In 1908 the Phaistos Disc was found in a basement room with a Linear A tablet, on the northern side of the palace; it is now in the Heraklion museum.",
+   "src": [
+    "wp-phaistos",
+    "wp-phaistos-disc"
+   ],
+   "quote": [
+    "In 1908, the Phaistos Disc was found in a basement room (Room 101), along with a Linear A tablet, on the northern side of the palace",
+    "It is now on display at the archaeological museum of Heraklion."
+   ]
+  },
+  "dig": {
+   "label": "supported",
+   "says": "Located in 1853 by ship captain Thomas Spratt; excavated 1900-1904 by Federico Halbherr and Luigi Pernier, who also dug Hagia Triada about 3 km away; later Italian teams returned.",
+   "src": [
+    "wp-phaistos"
+   ],
+   "quote": [
+    "Phaistos was located in 1853 by Thomas Abel Brimage Spratt, a ship captain",
+    "From 1900 to 1904 Federico Halbherr and his student Luigi Pernier excavated at Phaistos.",
+    "Halbherr and Pernier excavated at the Minoan site of Hagia Triada, located about 3 kilometers away",
+    "Between 1950 and 1966 an Italian School of Archaeology at Athens team led by Doro Levi worked at Phaistos."
+   ]
+  },
+  "myth": {
+   "label": "legend",
+   "says": "Diodorus says Minos founded Phaistos, Knossos and Kydonia; Pausanias and Stephanus name Phaestos, son of Hercules; Homer calls it well populated.",
+   "src": [
+    "wp-phaistos"
+   ],
+   "quote": [
+    "The historian Diodorus Siculus indicates that Phaistos, as well as Knossos and Kydonia, are the three towns founded by King Minos on Crete. However, Pausanias and Stephanus of Byzantium indicate that the founder of the city was Phaestos, son of Hercules or Ropalus.",
+    "Phaistos is referenced by Homer, in the Iliad, as \"well populated\""
+   ]
+  },
+  "lina": {
+   "label": "supported",
+   "says": "Linear A remains undeciphered.",
+   "src": [
+    "wp-knossos"
+   ],
+   "quote": [
+    "Linear A, which remains undeciphered"
+   ]
+  }
+ },
+ "parts": [
+  {
+   "name": "Arrival",
+   "stand": "At the top of the site, where you can look down over the palace ruins.",
+   "paras": [
+    {
+     "t": "This is Phaistos, a Minoan palace and town on a hill in south central Crete, about 62 kilometers south of Heraklion. It was one of the 3 largest cities of Minoan Crete, along with Knossos and Malia.",
+     "c": [
+      "what",
+      "big3"
+     ],
+     "level": 1
+    },
+    {
+     "t": "On a hot day, take it slowly, drink water, and watch your step on the old stones and stairs.",
+     "c": [],
+     "level": 1,
+     "cue": true
+    },
+    {
+     "t": "We call it a palace, but it was much more than a royal home. Like other Minoan palaces, it had many uses: religion and politics, storage, housing, even a theater.",
+     "c": [
+      "palaceword"
+     ],
+     "level": 2
+    },
+    {
+     "t": "Since 2025 it has been a UNESCO World Heritage Site, together with Knossos. And here's the difference you'll notice. UNESCO says most of these sites kept their original forms, thanks to a light touch in conservation, while Knossos was heavily rebuilt in the early 20th century.",
+     "c": [
+      "unesco",
+      "authentic"
+     ],
+     "level": 2
+    }
+   ]
+  },
+  {
+   "name": "A palace rebuilt",
+   "stand": "Stay at the top, looking over the layers of walls.",
+   "paras": [
+    {
+     "t": "People settled here around 3600 BC, and the first palace went up around 2000 BC.",
+     "c": [
+      "early"
+     ],
+     "level": 1
+    },
+    {
+     "t": "It was destroyed and rebuilt three times in about three centuries, each new palace shifting slightly east of the first. Then, around 1400 BC, it was destroyed for good. A large earthquake may have been the cause.",
+     "c": [
+      "rebuilt"
+     ],
+     "level": 2
+    },
+    {
+     "t": "That's partly why finds are scarce here: the Minoans thoroughly cleared away the old ruins before they rebuilt. The town lived on into Greek times, with its own coins, until the Gortynians destroyed it around the end of the 3rd century BC.",
+     "c": [
+      "clean",
+      "gortyn"
+     ],
+     "level": 3
+    }
+   ]
+  },
+  {
+   "name": "The theater area",
+   "stand": "Go down to the theater area, by the staircases that lead up into the palace.",
+   "paras": [
+    {
+     "t": "This was the theater area, and it was larger than the one at Knossos, even though the palace as a whole was only about two thirds the size.",
+     "c": [
+      "theater",
+      "size"
+     ],
+     "level": 1
+    },
+    {
+     "t": "From here, two staircases led up through large doors into the main entrance hall. The palace rose in levels: the theater and shrines at the bottom, then rooms for servants and guests, then the royal apartments, and at the top the Hall of the State, with balconies looking out over it all.",
+     "c": [
+      "theater",
+      "levels"
+     ],
+     "level": 2
+    }
+   ]
+  },
+  {
+   "name": "The central court",
+   "stand": "In the central court, facing north toward the mountains.",
+   "paras": [
+    {
+     "t": "From this central court, a way led north to the royal apartments, and from there you could see the tops of Psiloritis, Mount Ida.",
+     "c": [
+      "north"
+     ],
+     "level": 1
+    },
+    {
+     "t": "On the northern side of the palace, in a basement room, the Phaistos Disc was found in 1908, together with a Linear A tablet. It's now in the archaeological museum in Heraklion. And in the southern part of the palace, excavators found a temple to the goddess Rhea, built later, after the Geometric age.",
+     "c": [
+      "disc",
+      "rhea"
+     ],
+     "level": 2
+    },
+    {
+     "t": "Phaistos was first located in 1853 by a ship's captain, Thomas Spratt. Then came the excavators: Federico Halbherr and his student Luigi Pernier dug here from 1900 to 1904, and also at Hagia Triada, a smaller palace about 3 kilometers away. Italian teams have come back many times since.",
+     "c": [
+      "dig"
+     ],
+     "level": 3
+    }
+   ]
+  },
+  {
+   "name": "Closing",
+   "stand": "Find a quiet spot at the edge of the hill, looking out.",
+   "paras": [
+    {
+     "t": "The Greeks told stories about this place. According to the historian Diodorus, King Minos founded Phaistos, along with Knossos and Kydonia. Others said the founder was Phaestos, a son of Hercules. And Homer, in the Iliad, calls it well populated.",
+     "c": [
+      "myth"
+     ],
+     "level": 2
+    },
+    {
+     "t": "Look out from here for a moment. The people who lived in these rooms looked at the same mountains. We can't read their writing, and we don't know their names. But we know they chose a beautiful place to live.",
+     "c": [
+      "north",
+      "lina"
+     ],
+     "level": 1
+    }
+   ]
+  }
+ ],
+ "practical": []
+}

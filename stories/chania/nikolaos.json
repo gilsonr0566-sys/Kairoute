@@ -10,8 +10,6 @@
   "names": [
    "saint nicholas, splantzia",
    "st. nicholas, chania",
-   "splantzia",
-   "splanzia",
    "hunkar mosque"
   ],
   "wikidata": [
@@ -223,7 +221,7 @@
    "stand": "Stay facing the church.",
    "paras": [
     {
-     "t": "It began as a Roman Catholic church. Dominican friars from Candia built it around 1320, as a cathedral. In form it's a basilica.",
+     "t": "It began as a Roman Catholic church. Dominican friars built it around 1320. In form it's a basilica.",
      "c": [
       "built",
       "basilica"
@@ -231,14 +229,14 @@
      "level": 1
     },
     {
-     "t": "The original bell tower stood at the northeast corner of the church. It didn't survive, and it had to be rebuilt.",
+     "t": "The original bell tower stood on the northeast side of the church. It didn't survive, and it had to be rebuilt.",
      "c": [
       "belltower"
      ],
      "level": 3
     },
     {
-     "t": "To the west of the church is its enclosed courtyard. Under both the Venetians and the Turks, nobles were buried there.",
+     "t": "On the west side was the church's enclosed courtyard. Under both the Venetians and the Turks, nobles were buried there.",
      "c": [
       "courtyard"
      ],
@@ -251,17 +249,16 @@
    "stand": "Move round to where you can see the minaret, on the south side of the church.",
    "paras": [
     {
-     "t": "In 1645, under the Ottomans, the church became a mosque: the Hünkar Mosque, the Emperor's Mosque, named in honor of the Sultan. That's when this minaret was added, against the south side of the building, toward its west end. It's about 36 meters tall, around 118 feet: a round tower in the classical Ottoman style.",
+     "t": "In 1645, under the Ottomans, the church became a mosque: the Hünkar Mosque, the Emperor's Mosque, named in honor of the Sultan. That's when this minaret was added, against the south side of the building, toward its west end. It's a round tower in the classical Ottoman style.",
      "c": [
       "additions",
       "mosque",
-      "minaret-pos",
-      "height"
+      "minaret-pos"
      ],
      "level": 1
     },
     {
-     "t": "A mihrab and a minbar went in at the same time. It became the most important mosque in Chania, and Splantzia became the Muslim quarter of the town. The minaret stood out for its two balconies. With its conical roof, which is now gone, it would have topped 40 meters, over 130 feet.",
+     "t": "A mihrab and a minbar went in at the same time. It became the most important mosque in Chania, and Splantzia became the Muslim quarter of the town. The minaret stood out for its two balconies. Today it's about 36 meters tall, around 118 feet. With its conical roof, which is now gone, it would have topped 40 meters, over 130 feet.",
      "c": [
       "additions",
       "important",
@@ -271,14 +268,14 @@
      "level": 2
     },
     {
-     "t": "There's a story told about this place. The story goes that a Dervish was the first to enter the city, climbed the bell tower, and, sword in hand, turned to the four points of the horizon, calling the faithful to prayer. His sword was kept here as a sacred relic.",
+     "t": "There's a story told about this place. The story goes that a Dervish was the first to enter the city, climbed the bell tower, and, sword in hand, turned to the four points of the horizon, calling the faithful to prayer. His sword, they say, was kept here as a sacred relic.",
      "c": [
       "sword"
      ],
      "level": 2
     },
     {
-     "t": "The sword stayed until 1923, when the exchange of populations between Turkey and Greece meant the Muslims of Crete had to leave. They took it with them.",
+     "t": "The story goes that the sword stayed until 1923, when the exchange of populations between Turkey and Greece meant the Muslims of Crete had to leave. They took it with them.",
      "c": [
       "sword-left"
      ],
@@ -306,7 +303,7 @@
      "cue": true
     },
     {
-     "t": "Catholic, Muslim, Orthodox: three faiths have prayed under this one roof. Whatever you believe, it's worth standing here a quiet moment.",
+     "t": "Catholic, Muslim, Orthodox: three communities have prayed under this one roof. Whatever you believe, it's worth standing here a quiet moment.",
      "c": [
       "origin"
      ],

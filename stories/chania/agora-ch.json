@@ -115,7 +115,7 @@
    "stand": "Outside the market building, at the edge of the old town.",
    "paras": [
     {
-     "t": "This is Chania's Municipal Market, the Agora. It's an indoor market from 1913, right on the edge of the old town, and locals use it as much as visitors do. It was renovated in 2026, this very year.",
+     "t": "This is Chania's Municipal Market, the Agora. It's an indoor market from 1913, right on the edge of the old town, and it's popular with locals and visitors alike. It was renovated in 2026.",
      "c": [
       "market",
       "renov"
@@ -132,7 +132,7 @@
      "level": 2
     },
     {
-     "t": "The square out here, the Market Square, is one of the largest central squares in town. And there's history underneath: mosaics from Late Roman houses, signs of a prosperous city, were found near Agora Square.",
+     "t": "The square around the market, the Market Square, is one of the largest central squares in town. And mosaics from Late Roman houses, signs of a prosperous city, were found near this square.",
      "c": [
       "squares",
       "mosaics"
@@ -143,10 +143,10 @@
   },
   {
    "name": "Inside",
-   "stand": "Step inside, out of the sun.",
+   "stand": "If the market is open, step inside.",
    "paras": [
     {
-     "t": "I'll be honest with you: my sources don't describe the stalls or the building in any detail, so let your eyes, and your nose, lead you. What I can tell you is what this region grows: olives and olive oil, citrus, wine, avocados, dairy, and honey. See how many you can find.",
+     "t": "I'll be honest with you: my sources don't describe the stalls or the building in any detail, so let your eyes, and your nose, lead you. What I can tell you is what this region produces: olives and olive oil, citrus, wine, avocados, dairy, and honey. See how many you can find.",
      "c": [
       "produce",
       "wv-buy"
@@ -163,7 +163,7 @@
   },
   {
    "name": "Before you go",
-   "stand": "Wherever you like inside the market.",
+   "stand": "Wherever you like, inside or out.",
    "paras": [
     {
      "t": "A market is where a town shows you what it eats and how it talks. Buy something small, take your time, and listen for a minute before you move on.",

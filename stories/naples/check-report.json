@@ -19,6 +19,54 @@
    }
   },
   {
+   "id": "duomo-na",
+   "title": "Naples Cathedral and the Chapel of San Gennaro",
+   "claims": 29,
+   "minutes": {
+    "1": 1.7,
+    "2": 3.5,
+    "3": 5.9
+   },
+   "labels": {
+    "supported": 20,
+    "verified": 1,
+    "legend": 4,
+    "tradition": 3,
+    "disputed": 1
+   }
+  },
+  {
+   "id": "museonaz",
+   "title": "National Archaeological Museum of Naples",
+   "claims": 28,
+   "minutes": {
+    "1": 1.9,
+    "2": 4.8,
+    "3": 6.2
+   },
+   "labels": {
+    "supported": 21,
+    "legend": 1,
+    "disputed": 5,
+    "tradition": 1
+   }
+  },
+  {
+   "id": "plebiscito",
+   "title": "Piazza del Plebiscito and the Royal Palace",
+   "claims": 21,
+   "minutes": {
+    "1": 1.2,
+    "2": 3.2,
+    "3": 4.8
+   },
+   "labels": {
+    "supported": 19,
+    "verified": 1,
+    "disputed": 1
+   }
+  },
+  {
    "id": "pompeii",
    "title": "Pompeii",
    "claims": 42,
@@ -89,7 +137,7 @@
    "minutes": {
     "1": 1.8,
     "2": 3.8,
-    "3": 6.4
+    "3": 6.5
    },
    "labels": {
     "verified": 5,

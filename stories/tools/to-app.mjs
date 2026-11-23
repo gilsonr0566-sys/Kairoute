@@ -16,9 +16,12 @@ for (const c of fs.readdirSync("stories")) { const f = `stories/${c}/say-add.jso
 for (const city of cities) {
   const rep = JSON.parse(fs.readFileSync(`stories/${city}/check-report.json`, "utf8"));
   if ((rep.fail || []).length) { console.error(`${city}: the story checks don't pass, so its stories stay out of the app`); continue; }
+  const fcf = `stories/${city}/factcheck.json`, fc = fs.existsSync(fcf) ? JSON.parse(fs.readFileSync(fcf, "utf8")) : {};
   const idx = Object.fromEntries(JSON.parse(fs.readFileSync(`stories/${city}/snapshots/index.json`, "utf8")).map(x => [x.key, x]));
-  const all = fs.readdirSync(`stories/${city}`).filter(f => /^[a-z].*\.json$/.test(f) && !/^(sources|check-report|say-add|plan)\.json$/.test(f))
-    .map(f => JSON.parse(fs.readFileSync(`stories/${city}/${f}`, "utf8"))).filter(s => s.parts);
+  const all = fs.readdirSync(`stories/${city}`).filter(f => /^[a-z].*\.json$/.test(f) && !/^(sources|check-report|say-add|plan|factcheck)\.json$/.test(f))
+    .map(f => JSON.parse(fs.readFileSync(`stories/${city}/${f}`, "utf8"))).filter(s => s.parts)
+    // Only stories that passed the independent fact-check (stories/<city>/factcheck.json lists them) go into the app.
+    .filter(s => (fc.stories || []).includes(s.id));
   // A longer name of another story (for example "acropolis museum") is never taken by a shorter one ("acropolis").
   const names = s => s.match.names.map(n => n.toLowerCase());
   for (const st of all) {

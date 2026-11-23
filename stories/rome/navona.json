@@ -1,0 +1,389 @@
+{
+ "id": "navona",
+ "v": 1,
+ "city": "rome",
+ "title": "Piazza Navona",
+ "match": {
+  "ids": [
+   "navona"
+  ],
+  "names": [
+   "navona"
+  ],
+  "wikidata": [
+   "Q463400",
+   "Q655470",
+   "Q1192577",
+   "Q963671"
+  ]
+ },
+ "checked": "2026-11-22",
+ "claims": {
+  "stadium": {
+   "label": "supported",
+   "says": "Piazza Navona is built on the Stadium of Domitian, begun in AD 80, and keeps its long oval shape.",
+   "src": [
+    "wp-navona"
+   ],
+   "quote": [
+    "It is built on the site of the 1st century AD Stadium of Domitian and follows the form of the open space of the stadium in an elongated oval.",
+    "built by Emperor Titus Flavius Domitianus starting in 80 AD"
+   ]
+  },
+  "stadium-use": {
+   "label": "estimate",
+   "says": "The stadium, dedicated in AD 86, was Rome's first permanent venue for athletics and seated approximately 30,000.",
+   "src": [
+    "wp-domitian-stadium"
+   ],
+   "quote": [
+    "The Stadium of Domitian was dedicated in AD 86",
+    "It was Rome's first permanent venue for competitive athletics",
+    "It was patterned after Greek stadia and seated approximately 30,000."
+   ]
+  },
+  "arcades": {
+   "label": "supported",
+   "says": "The buildings around the square incorporate the stadium's original lower arcades.",
+   "src": [
+    "wp-domitian-stadium"
+   ],
+   "quote": [
+    "The sweep of buildings that embrace the Piazza incorporates the Stadium's original lower arcades."
+   ]
+  },
+  "name": {
+   "label": "supported",
+   "says": "The stadium was called in agones, the place of the competitions, and popular speech turned in agone into Navona.",
+   "src": [
+    "wp-agnese"
+   ],
+   "quote": [
+    "in agone was the ancient name of Piazza Navona (piazza in agone), and meant instead, from the Greek, ‘in the site of the competitions’",
+    "From ‘in agone’, the popular use and pronunciation changed the name into ‘Navona’"
+   ]
+  },
+  "innocent": {
+   "label": "supported",
+   "says": "Pope Innocent X, who reigned from 1644 to 1655 and whose family palace, the Palazzo Pamphili, faced the square, made it a showcase of Baroque art.",
+   "src": [
+    "wp-navona"
+   ],
+   "quote": [
+    "Piazza Navona was transformed into a highly significant example of Baroque Roman architecture and art during the pontificate of Innocent X, who reigned from 1644 until 1655, and whose family palace, the Palazzo Pamphili, faced the piazza."
+   ]
+  },
+  "rivers": {
+   "label": "supported",
+   "says": "Bernini's Fountain of the Four Rivers, of 1651, has four river gods for four continents: the Nile, the Danube, the Ganges and the Río de la Plata, beneath an obelisk topped by the Pamphili dove with an olive twig.",
+   "src": [
+    "wp-four-rivers"
+   ],
+   "quote": [
+    "It was designed in 1651 by Gian Lorenzo Bernini for Pope Innocent X",
+    "a Roman copy of an Egyptian obelisk surmounted with the Pamphili family emblem of a dove with an olive twig. Collectively, they represent four major rivers of the four continents through which papal authority had spread: the Nile representing Africa, the Danube representing Europe, the Ganges representing Asia, and the Río de la Plata representing the Americas."
+   ]
+  },
+  "details": {
+   "label": "supported",
+   "says": "The Nile's head is draped because no one then knew its source; the Río de la Plata sits on coins; the Ganges holds a long oar; the Danube touches the pope's coat of arms.",
+   "src": [
+    "wp-four-rivers"
+   ],
+   "quote": [
+    "The Ganges carries a long oar, representing the river's navigability. The Nile's head is draped with a loose piece of cloth, meaning that no one at that time knew exactly where the Nile's source was. The Danube touches the Pope's personal coat of arms, since it is the large river closest to Rome. And the Río de la Plata is sitting on a pile of coins"
+   ]
+  },
+  "trick": {
+   "label": "supported",
+   "says": "According to Bernini's biographer Baldinucci, Bernini was left out of the competition, so a model was secretly placed where the pope would pass; the pope said that anyone who does not want to use Bernini's designs must take care not to see them.",
+   "src": [
+    "wp-four-rivers"
+   ],
+   "quote": [
+    "the Pope had designs made by the leading architects of Rome without an order for one to Bernini",
+    "Prince Niccolò Ludovisi, whose wife was niece to the pope, persuaded Bernini to prepare a model, and arrange for it to be secretly installed in a room in the Palazzo Pamphili that the Pope had to pass",
+    "he stopped almost in ecstasy",
+    "for he who desires not to use Bernini’s designs, must take care not to see them."
+   ]
+  },
+  "famine": {
+   "label": "supported",
+   "says": "It was built at public expense during the famine of 1646–48, and protest notes demanded bread, not obelisks and fountains.",
+   "src": [
+    "wp-four-rivers"
+   ],
+   "quote": [
+    "Innocent X had the fountain built at public expense during the intense famine of 1646–48.",
+    "These pasquinades read, \"We do not want Obelisks and Fountains, it is bread that we want. Bread, Bread, Bread!\""
+   ]
+  },
+  "agnes": {
+   "label": "tradition",
+   "says": "In Christian tradition Saint Agnes was martyred in the stadium, under the emperor Diocletian, in or near one of its arcades.",
+   "src": [
+    "wp-domitian-stadium"
+   ],
+   "quote": [
+    "In Christian tradition, Agnes of Rome was martyred there.",
+    "In Christian martyr-legend, St Agnes was put to death there during the reign of the emperor Diocletian, in or near one of its arcades."
+   ]
+  },
+  "church": {
+   "label": "supported",
+   "says": "Sant'Agnese in Agone, facing the fountain, was begun in 1652 by the Rainaldis; Borromini took over in 1653 and resigned in 1657.",
+   "src": [
+    "wp-agnese",
+    "wp-navona"
+   ],
+   "quote": [
+    "Construction began in 1652 under the architects Girolamo Rainaldi and his son Carlo Rainaldi.",
+    "In 1653, the Rainaldis were replaced by Borromini.",
+    "eventually leading to his resignation in 1657",
+    "The Fontana dei Quattro Fiumi stands in front of the Church of Sant'Agnese in Agone."
+   ]
+  },
+  "facade": {
+   "label": "supported",
+   "says": "The church has a concave façade with a central dome framed by twin towers.",
+   "src": [
+    "wp-agnese"
+   ],
+   "quote": [
+    "Rainaldi's design of a concave façade and a central dome framed by twin towers was influential"
+   ]
+  },
+  "skull": {
+   "label": "supported",
+   "says": "Inside is a shrine of Saint Agnes said to contain her skull.",
+   "src": [
+    "wp-agnese"
+   ],
+   "quote": [
+    "Inside the church is also a shrine for Saint Agnes, containing her skull"
+   ]
+  },
+  "nile-legend": {
+   "label": "legend",
+   "says": "A guides' legend says the Nile covers his eyes so as not to see Borromini's façade, but the fountain was finished years before Borromini began the church.",
+   "src": [
+    "wp-four-rivers",
+    "wp-agnese"
+   ],
+   "quote": [
+    "A legend, common with tour-guides, is that Bernini covered the head of the Nile as if the sculpture couldn't bear to look at the facade of the church of Sant'Agnese by his rival Borromini; in reality, the fountain was completed several years before Borromini began work on the church."
+   ]
+  },
+  "rivalry": {
+   "label": "supported",
+   "says": "The real rivalry was sharp: Borromini was among the harsh critics of Bernini's bell towers at St Peter's, which were torn down.",
+   "src": [
+    "wp-agnese"
+   ],
+   "quote": [
+    "Borromini and Bernini became rivals, and more, for architectural commissions.",
+    "Borromini was one of many harsh critics that assailed the project's engineering. Ultimately, in a severe blow to Bernini's prestige as an architect, the façade bell-towers were torn down, and never rebuilt."
+   ]
+  },
+  "ends": {
+   "label": "supported",
+   "says": "At the southern end is the Fontana del Moro, with Bernini's Moor wrestling a dolphin; at the northern end, the Fountain of Neptune, whose Neptune was added in 1878.",
+   "src": [
+    "wp-navona"
+   ],
+   "quote": [
+    "At the southern end is the Fontana del Moro with a basin and four Tritons sculpted by Giacomo della Porta (1575) to which, in 1673, Bernini added a statue of a Moor, wrestling with a dolphin. At the northern end is the Fountain of Neptune (1574) also created by Giacomo della Porta; the statue of Neptune, by Antonio Della Bitta, was added in 1878"
+   ]
+  },
+  "flood": {
+   "label": "supported",
+   "says": "From 1652 to 1866 the square was flooded every weekend in August for Pamphili festivities.",
+   "src": [
+    "wp-navona"
+   ],
+   "quote": [
+    "From 1652 until 1866, when the festival was suppressed, it was flooded on every Saturday and Sunday in August in elaborate celebrations of the Pamphili family."
+   ]
+  },
+  "market": {
+   "label": "supported",
+   "says": "The city market moved here at the end of the 1400s and moved on to Campo de' Fiori in 1869; a Christmas market is held here each year.",
+   "src": [
+    "wp-navona"
+   ],
+   "quote": [
+    "Defined as a public space in the last years of the 15th century, when the city market was transferred there from the Campidoglio",
+    "in 1869 the market was moved to the nearby Campo de' Fiori. A Christmas market is held in the piazza square each year"
+   ]
+  },
+  "bracelets": {
+   "label": "supported",
+   "says": "Around Piazza Navona men may try to tie bracelets on visitors' wrists and then demand money.",
+   "src": [
+    "wv-rome"
+   ],
+   "quote": [
+    "Another scam involves men working near the Spanish Steps, around Piazza Navona, and outside of the Colosseum. They approach you, asking where you are from, and begin to tie bracelets around your wrists."
+   ]
+  }
+ },
+ "parts": [
+  {
+   "name": "The stadium",
+   "stand": "Stand in the middle of the square and look along its length.",
+   "paras": [
+    {
+     "t": "Notice the shape of this square: long, with rounded ends. That's because you're standing in a Roman stadium. Piazza Navona sits on the Stadium of Domitian, begun in AD 80, and the square still follows its oval.",
+     "c": [
+      "stadium"
+     ],
+     "level": 1
+    },
+    {
+     "t": "It was Rome's first permanent stadium for athletics, and it seated approximately 30,000 people. Look at the houses around you: their lower walls take in the stadium's original arcades.",
+     "c": [
+      "stadium-use",
+      "arcades"
+     ],
+     "level": 2
+    },
+    {
+     "t": "Even the name is a leftover. The Romans called the place in agone, the site of the games, and over time in agone became Navona.",
+     "c": [
+      "name"
+     ],
+     "level": 2
+    },
+    {
+     "t": "One word of caution: if someone starts tying a bracelet on your wrist, pull your hand back. It's a known trick to ask for money.",
+     "c": [
+      "bracelets"
+     ],
+     "level": 2
+    }
+   ]
+  },
+  {
+   "name": "The Fountain of the Four Rivers",
+   "stand": "Walk to the great fountain in the center with the obelisk on top.",
+   "paras": [
+    {
+     "t": "This is Bernini's Fountain of the Four Rivers, from 1651. Four giant river gods stand for four continents.",
+     "c": [
+      "rivers"
+     ],
+     "level": 1
+    },
+    {
+     "t": "They are the Nile for Africa, the Danube for Europe, the Ganges for Asia, and the Río de la Plata for the Americas. On top of the obelisk sits a dove with an olive twig, the emblem of the pope's family, the Pamphili. Their palace faces the square, and it was Pope Innocent X who made this square a Baroque showpiece.",
+     "c": [
+      "rivers",
+      "innocent"
+     ],
+     "level": 2
+    },
+    {
+     "t": "Walk around and find them. The Nile has his head covered, because back then nobody knew where the Nile began. The Río de la Plata sits on a pile of coins. The Ganges holds a long oar. And the Danube reaches up to touch the pope's coat of arms.",
+     "c": [
+      "details"
+     ],
+     "level": 2
+    },
+    {
+     "t": "Bernini almost didn't get the job. According to his biographer Baldinucci, he was left out of the competition, so a prince married to the pope's niece persuaded him to make a model, and had it placed secretly in a room the pope had to walk through. The pope stopped, almost in ecstasy, and said that whoever doesn't want to use Bernini's designs had better not look at them.",
+     "c": [
+      "trick"
+     ],
+     "level": 3
+    },
+    {
+     "t": "Not everyone loved it. It was built at public expense during a terrible famine, and protesters pinned notes on the stones: we don't want obelisks and fountains, we want bread.",
+     "c": [
+      "famine"
+     ],
+     "level": 3
+    }
+   ]
+  },
+  {
+   "name": "Sant'Agnese in Agone",
+   "stand": "Turn to face the church with the curved front and the dome, right behind the fountain.",
+   "paras": [
+    {
+     "t": "Behind the fountain is the church of Sant'Agnese in Agone. Christian tradition says the martyr Agnes died here in the stadium.",
+     "c": [
+      "church",
+      "agnes"
+     ],
+     "level": 1
+    },
+    {
+     "t": "Building began in 1652. The architect Borromini took over in 1653, but he resigned in 1657. Look at the curved front, with the dome framed between twin towers. Inside is a shrine of Saint Agnes said to hold her skull.",
+     "c": [
+      "church",
+      "facade",
+      "skull"
+     ],
+     "level": 2
+    },
+    {
+     "t": "Now a famous story you'll hear from guides. Bernini and Borromini were bitter rivals, and the legend goes that the Nile on the fountain covers his eyes so he won't have to look at Borromini's church. It's a good story, but it's only a legend: the fountain was finished years before Borromini started on the church.",
+     "c": [
+      "nile-legend"
+     ],
+     "level": 1
+    },
+    {
+     "t": "The real rivalry was sharp enough. When Bernini's bell towers at Saint Peter's ran into trouble, Borromini was one of the harsh critics, and the towers were torn down.",
+     "c": [
+      "rivalry"
+     ],
+     "level": 3
+    }
+   ]
+  },
+  {
+   "name": "The two end fountains",
+   "stand": "Look toward each end of the square in turn.",
+   "paras": [
+    {
+     "t": "At the southern end is the Fountain of the Moor, and at the northern end the Fountain of Neptune.",
+     "c": [
+      "ends"
+     ],
+     "level": 1
+    },
+    {
+     "t": "On the Moor fountain, Bernini added the figure of a Moor wrestling a dolphin. Neptune, at the other end, only arrived in 1878.",
+     "c": [
+      "ends"
+     ],
+     "level": 2
+    },
+    {
+     "t": "This square has always been a stage. The city market moved here at the end of the 1400s and stayed until 1869. And from 1652 until 1866, the square was flooded every weekend in August for the pope's family festivities. Today there's still a Christmas market here each year.",
+     "c": [
+      "market",
+      "flood"
+     ],
+     "level": 3
+    }
+   ]
+  },
+  {
+   "name": "Closing",
+   "stand": "Find a bench or a spot by the fountain and just watch the square for a moment.",
+   "paras": [
+    {
+     "t": "Long ago, athletes competed here in front of a packed stadium. Today they stroll, eat ice cream, and argue about Bernini. The stadium is gone, but the crowd never really left.",
+     "c": [
+      "stadium",
+      "stadium-use"
+     ],
+     "level": 1
+    }
+   ]
+  }
+ ],
+ "practical": []
+}
