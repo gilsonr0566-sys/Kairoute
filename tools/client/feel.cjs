@@ -77,7 +77,7 @@ async function runSize(browser, size, base) {
   p.on('pageerror', e => R.errors.push(String(e.message).slice(0, 300)));
   p.on('dialog', d => { R.notes.push('a browser pop-up appeared: ' + d.message().slice(0, 80)); d.dismiss().catch(() => {}); });
   let shotN = 0, where = 'start';
-  const fail = (kind, what, extra) => { const f = { size, where, kind, what, ...(extra || {}) }; R.fails.push(f); console.log('  FAIL ' + kind + ' [' + where + '] ' + what); };
+  const fail = (kind, what, extra) => { const f = { size, where, kind, what, ...(extra || {}) }; R.fails.push(f); console.log('  found ' + kind + ' [' + where + '] ' + what); };
   const shot = async name => { const f = String(shotN++).padStart(2, '0') + '-' + name.replace(/[^A-Za-z0-9]+/g, '-').slice(0, 40) + '.jpg'; await p.screenshot({ path: path.join(dir, f), type: 'jpeg', quality: 62 }).catch(() => {}); R.screens++; return f; };
   const now = () => p.evaluate(() => performance.now());
   const feelSince = t0 => p.evaluate(t0 => { const F = window.__feel; return { shifts: F.shifts.filter(s => s.t >= t0), scrolls: F.scrolls.filter(s => s.t >= t0), events: F.events.filter(e => e.t >= t0 - 5), y: F.y(), muts: F.muts, lastMut: F.lastMut }; }, t0);
@@ -110,11 +110,16 @@ async function runSize(browser, size, base) {
     if (g.spin) fail('STUCK', `${g.spin} spinner(s) still showing after the screen settled`);
     const pic = await shot(name); R.steps.push({ step: 'screen', name, pic, cls: +cls.toFixed(3), y: g.y, h: g.h, head: g.head }); console.log('SCREEN ' + name + ' cls ' + cls.toFixed(3) + ' y ' + g.y + '/' + g.h); return g; };
   // Find an element on screen again after a tap: by its data-site / data-day / data-act+text key.
-  const keyOf = el => el.evaluate(e => { const t = (e.innerText || e.getAttribute('aria-label') || '').trim().replace(/\s+/g, ' ').slice(0, 60); return { site: e.dataset.site || (e.closest('[data-site]') || {}).dataset?.site || '', day: e.dataset.day || '', act: e.dataset.act || '', text: t, tag: e.tagName }; });
+  // The tapped element is marked, so it is found again after the tap even when its words change ("▶ Play" becomes
+  // "■ Stop audio"); if the app drew it afresh, it is found by its data-site / data-play / data-day / data-act, then words.
+  const keyOf = el => el.evaluate(e => { document.querySelectorAll('[data-feeltap]').forEach(x => x.removeAttribute('data-feeltap')); e.setAttribute('data-feeltap', '1');
+    const t = (e.innerText || e.getAttribute('aria-label') || '').trim().replace(/\s+/g, ' ').slice(0, 60); const d = e.dataset;
+    return { site: d.site || (e.closest('[data-site]') || {}).dataset?.site || '', other: ['play', 'sp', 'open', 'sec'].filter(k => d[k]).map(k => `[data-${k}="${d[k]}"]`)[0] || '', day: d.day || '', act: d.act || '', text: t, tag: e.tagName }; });
   const rectOfKey = k => p.evaluate(k => { const vis = e => { const r = e.getBoundingClientRect(); return r.width && r.height; };
-    let c = []; if (k.site) c = [...document.querySelectorAll(`[data-site="${CSS.escape(k.site)}"]`)];
-    else if (k.act || k.day) c = [...document.querySelectorAll(k.tag)].filter(e => (e.dataset.act || '') === k.act && (e.dataset.day || '') === k.day);
-    else c = [...document.querySelectorAll(k.tag)].filter(e => (e.innerText || e.getAttribute('aria-label') || '').trim().replace(/\s+/g, ' ').slice(0, 60) === k.text);
+    let c = [...document.querySelectorAll('[data-feeltap]')]; if (c.length) {} else if (k.site) c = [...document.querySelectorAll(`[data-site="${CSS.escape(k.site)}"]`)];
+    else if (k.other) c = [...document.querySelectorAll(k.tag + k.other)];
+    if (!c.length && !k.site && !k.other && (k.act || k.day)) c = [...document.querySelectorAll(k.tag)].filter(e => (e.dataset.act || '') === k.act && (e.dataset.day || '') === k.day);
+    if (!c.length && !k.site && !k.other && !k.act && !k.day) c = [...document.querySelectorAll(k.tag)].filter(e => (e.innerText || e.getAttribute('aria-label') || '').trim().replace(/\s+/g, ' ').slice(0, 60) === k.text);
     c = c.filter(vis); if (!c.length) return null; const r = c[0].getBoundingClientRect(); return { top: Math.round(r.top), left: Math.round(r.left), n: c.length }; }, k);
   // A finger tap. stay=true: the tapped thing should stay under the finger and the page should not scroll by itself.
   const tap = async (loc, label, { stay = false, nav = false, quiet = false } = {}) => {
@@ -146,7 +151,7 @@ async function runSize(browser, size, base) {
       if (Math.abs(selfDy) > LIM.selfScroll) fail('SELF-SCROLL', `tapped "${label}" and the page scrolled itself ${selfDy > 0 ? 'down' : 'up'} ${Math.abs(selfDy)}px`, { scrolls: self.slice(0, 4) });
     }
     if (nav && g1.head !== g0.head || nav && g1.hash !== g0.hash) { if (g1.y > LIM.landing) fail('LANDING', `"${label}" opened the next screen ${g1.y}px down instead of at its top`); }
-    screenT0 = nav ? t0 : screenT0; return row; };
+    screenT0 = nav ? t0 + 600 : screenT0; /* a new screen replacing the old one in its first 600 ms is the change the traveler asked for, not a jump (Chrome's own rule: 500 ms) */ return row; };
   // Scroll the whole screen with the finger, down to the end and back to the top.
   const scrollThrough = async name => { where = name; let g = await geom(); const top0 = g.y; let stuck = 0, guard = 0;
     while (guard++ < 40) { const y0 = g.y; await swipe(D.viewport.height * 0.6); g = await geom(); if (g.y + g.ph >= g.h - 8) break; if (g.y === y0) { if (++stuck >= 2) { fail('SCROLL', `the page stopped scrolling at ${g.y}px of ${g.h}px`); break; } } else stuck = 0; }
@@ -248,16 +253,29 @@ async function runSize(browser, size, base) {
   const browser = await chromium.launch(); const all = [];
   for (const size of (process.env.SIZES || 'phone,tablet,upright').split(',')) { console.log('\n===== ' + size + ' ' + SIZES[size].label); try { all.push(await runSize(browser, size, base)); } catch (e) { console.log('RUN ERROR', e); all.push({ size, device: SIZES[size].label, fails: [{ size, where: 'harness', kind: 'NOT TESTED', what: 'the walk stopped: ' + String(e.message).slice(0, 200) }], steps: [], notes: [] }); } }
   await browser.close(); srv && srv.close();
-  const fails = all.flatMap(r => r.fails), taps = all.flatMap(r => r.steps.filter(s => s.step === 'tap'));
+  // Known P2 findings may be listed in docs/qa/warns.json (tool "feel", rule = kind, optional "where" pattern) with an
+  // owner and an end date at most 7 days ahead: they print WARN and don't fail. P1 kinds can never be warned.
+  const P1 = new Set(['BACK', 'DEAD', 'STUCK', 'ERROR', 'NOT TESTED', 'SCROLL', 'OFFLINE']);
+  const today = new Date().toISOString().slice(0, 10), week = new Date(Date.now() + 7 * 864e5).toISOString().slice(0, 10);
+  let W = []; try { W = (JSON.parse(fs.readFileSync(path.join(ROOT, 'docs', 'qa', 'warns.json'), 'utf8')).warns || []).filter(w => w.tool === 'feel'); } catch (e) {}
+  const warnFor = f => P1.has(f.kind) ? null : W.find(w => w.rule === f.kind && w.owner && w.until && w.until >= today && w.until <= week && (!w.where || new RegExp(w.where).test(f.where)));
+  for (const w of W) if (P1.has(w.rule)) console.log(`FAIL warns.json: ${w.rule} is a P1 kind and can never be a warning`); else if (!w.owner || !w.until || w.until < today || w.until > week) console.log(`FAIL warns.json: the ${w.rule} warning needs an owner and an end date from ${today} to ${week} (has ${w.owner || 'no owner'}, ${w.until || 'no date'})`);
+  const badW = W.filter(w => P1.has(w.rule) || !w.owner || !w.until || w.until < today || w.until > week).length;
+  const allF = all.flatMap(r => r.fails); for (const f of allF) { const w = warnFor(f); if (w) f.warn = w.owner + ' until ' + w.until; }
+  const fails = allF.filter(f => !f.warn), warns = allF.filter(f => f.warn), taps = all.flatMap(r => r.steps.filter(s => s.step === 'tap'));
+  // One line per kind, as the release report reads them ("FAIL <kind> <n>", "WARN <kind> <n>"), then each finding.
+  for (const [lst, word] of [[fails, 'FAIL'], [warns, 'WARN']]) { const ks = [...new Set(lst.map(f => f.kind))];
+    for (const k of ks) { const fs_ = lst.filter(f => f.kind === k); console.log(`${word} ${k} ${fs_.length}${word === 'WARN' ? ' (known: ' + fs_[0].warn + ')' : ''}`); for (const f of fs_) console.log(`    ${f.size} [${f.where}] ${f.what}`); } }
   const slow = taps.filter(t => t.firstMs != null).sort((a, b) => (b.eventMs || b.firstMs) - (a.eventMs || a.firstMs)).slice(0, 5);
   const byKind = {}; for (const f of fails) byKind[f.kind] = (byKind[f.kind] || 0) + 1;
   const md = [`# Client feel test: ${new Date().toISOString().slice(0, 16).replace('T', ' ')} UTC`, '', `App: ${base} (build ${(all[0] && all[0].version || '?').trim()})`, '',
     `Tested (real touch taps and swipes): ${all.map(r => r.device).join('; ')}. ${taps.length} taps, ${all.reduce((a, r) => a + (r.steps || []).filter(s => s.step === 'scroll').length, 0)} full-page swipe scrolls, ${all.reduce((a, r) => a + (r.screens || 0), 0)} screens.`, '',
-    `Result: ${fails.length ? 'FAIL, ' + fails.length + ' problem(s): ' + Object.entries(byKind).map(([k, v]) => v + ' ' + k).join(', ') : 'PASS (0 problems)'}`, '',
+    `Result: ${fails.length ? 'FAIL, ' + fails.length + ' problem(s): ' + Object.entries(byKind).map(([k, v]) => v + ' ' + k).join(', ') : 'PASS (0 problems)'}${warns.length ? '; ' + warns.length + ' known warning(s) with an owner and an end date' : ''}`, '',
+    ...(warns.length ? ['## Known warnings (owner, end date)', '', ...warns.map(f => `- WARN ${f.kind} (${f.size}, ${f.where}): ${f.what} (${f.warn})`), ''] : []),
     '## Problems', '', ...(fails.length ? fails.map(f => `- ${f.kind} (${f.size}, ${f.where}): ${f.what}${f.src && f.src.length ? ' [moved: ' + f.src.join('; ') + ']' : ''}`) : ['None.']), '',
     '## Slowest taps', '', ...slow.map(t => `- ${t.size || ''} ${t.where}: "${t.label}" ${t.eventMs || t.firstMs} ms`), '',
     '## Not tested / notes', '', ...all.flatMap(r => (r.notes || []).map(n => `- ${r.size}: ${n}`)), '- Real phone hardware and real Safari are not tested here (Chromium with touch emulation).', ''];
   for (const r of all) for (const t of taps) if (!t.size) t.size = r.size;
-  fs.writeFileSync(path.join(OUT, 'summary.md'), md.join('\n')); fs.writeFileSync(path.join(OUT, 'summary.json'), JSON.stringify({ base, fails, byKind, taps: taps.length }, null, 1));
-  console.log('\n' + md.join('\n')); process.exit(fails.length ? 1 : 0);
+  fs.writeFileSync(path.join(OUT, 'summary.md'), md.join('\n')); fs.writeFileSync(path.join(OUT, 'summary.json'), JSON.stringify({ base, fails, warns, byKind, taps: taps.length }, null, 1));
+  console.log('\n' + md.join('\n')); process.exit(fails.length || badW ? 1 : 0);
 })().catch(e => { console.log('HARNESS ERROR', e); process.exit(2); });
