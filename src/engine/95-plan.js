@@ -72,7 +72,10 @@
       if (x.packed) it.packed = true; if (x.during != null) it.during = x.during; if (src && src.lunchCut) it.lunchCut = src.lunchCut; // lunch is inside this visit: the visit gave it these minutes
       // What is known about a place to eat travels with it to the screen: found only on the map (no guide or review behind
       // it), and whether its hours that day are known (Nov 22: never say more than the data says).
-      if (x.t === "meal" || x.t === "evening") { if (x.fromMap) it.fromMap = true; const fx = (fit.eatFacts || {})[E.eatKey(x.name || "")]; if (fx && (fx.closed || (fx.oh && fx.oh.spans && fx.oh.spans.length))) it.hoursKnown = true; }
+      if (x.t === "meal" || x.t === "evening") { if (x.fromMap) it.fromMap = true; const fx = (fit.eatFacts || {})[E.eatKey(x.name || "")]; if (fx && (fx.closed || (fx.oh && fx.oh.spans && fx.oh.spans.length))) it.hoursKnown = true;
+        // ...and its opening hours that day, shown on its card so the time beside them can be checked on the screen (class rule
+        // "no meal while the place is shut", Nov 23).
+        if (fx && fx.oh && fx.oh.spans && fx.oh.spans.length && !fx.closed) it.openSpans = fx.oh.spans.map(s => s.slice(0, 2)); }
       Object.assign(it, point(whereIs(x)));
       items.push(it);
     }
