@@ -37,7 +37,10 @@ function score(facts, plans) {
     r.end = p.end; r.endBy = p.endBy;
     // Minutes to spare before the ship, train or plane's "be there by". The extra time the way back now carries (Nov 20,
     // review finding 2) is spare time too: it is counted in, so a safer way back never reads as less to spare.
-    if (HARD.has(d.type)) r.margin = p.endBy - p.end + (p.items || []).reduce((a, x) => a + (x.wayBack || 0), 0);
+    // The rides home after the last stop or meal carry their own spare time (slack: 30% of a long ride, the hour at an
+    // island pier is not in it) and it is counted too (Nov 23: a ferry back with 40 min spare read as 11 min to spare).
+    if (HARD.has(d.type)) { const its = p.items || [], k = its.map(x => x.t !== 'ride' && x.t !== 'end').lastIndexOf(true);
+      r.margin = p.endBy - p.end + its.slice(k + 1).reduce((a, x) => a + (x.t === 'ride' ? Math.max(x.slack || 0, x.wayBack || 0) : 0), 0) + its.slice(0, k + 1).reduce((a, x) => a + (x.wayBack || 0), 0); }
     r.over = Math.max(0, p.end - p.endBy - (HARD.has(d.type) ? 0 : 5));
     const label = `${d.date} ${d.city} (${i})`;
     if (r.closed.length) fails.push(label + ': closed stop ' + r.closed.join(', '));
