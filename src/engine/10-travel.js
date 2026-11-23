@@ -159,7 +159,7 @@
       // the sample; together the kind's answers say when a train runs at all): its departure less the walk to the stop.
       // The helper sends every departure of the kind with each answer (kindDeps); older answers have their own only.
       const leaveOf = k => [...new Set(got.filter(o => E.lineKind(String(o.mode || o.kind || "train")) === k).flatMap(o => Array.isArray(o.kindDeps) && o.kindDeps.length ? o.kindDeps.map(q => q && isFinite(q.t) ? q.t - (+q.a || 0) : null) : (Array.isArray(o.deps) ? o.deps : []).map(q => q && isFinite(q.t) ? q.t - ((o.access && o.access.min) || 0) : null)).filter(x => x != null))].sort((x, y) => x - y);
-      return [...by.entries()].map(([kind, o]) => ({ id: kind, kind, how: E.latin(o.label), min: Math.round(o.min), ans: o, leaveTimes: leaveOf(kind), steps: Array.isArray(o.steps) ? o.steps.map(E.latin) : [] }));
+      return [...by.entries()].map(([kind, o]) => ({ id: kind, kind, how: E.say(o.label, kind[0].toUpperCase() + kind.slice(1)), min: Math.round(o.min), ans: o, leaveTimes: leaveOf(kind), steps: Array.isArray(o.steps) ? o.steps.map(x => E.say(x)) : [] }));
     }
     // A boat leaves from a pier and lands at one (Nov 18, Richard's map: the ferry to an island left from a cathedral and
     // ran across the streets). The boat runs from the mapped pier nearest the land end (or the pier the guide's note

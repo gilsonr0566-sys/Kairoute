@@ -8,7 +8,7 @@
   const LABEL = { subway: "Metro", light_rail: "Light rail", monorail: "Monorail", tram: "Tram", train: "Train" };
   const ACCESS_KM = 0.8, CHANGE_MIN = 6, SAME_STOP_KM = 0.25;
   const norm = s => String(s || "").toLowerCase().normalize("NFKD").replace(/[̀-ͯ]/g, "").replace(/[^a-z0-9]+/g, " ").trim();
-  E.transitLabel = l => (LABEL[l.mode] || "Train") + (l.ref ? " " + (/^\d+$/.test(l.ref) ? "Line " + l.ref : E.latin(l.ref)) : "");
+  E.transitLabel = l => (LABEL[l.mode] || "Train") + (l.ref ? (/^\d+$/.test(l.ref) ? " Line " + l.ref : E.say(l.ref, "") ? " " + E.say(l.ref, "") : "") : "");
   // Minutes riding a line from stop index i to j (along the line's own stop order).
   // Worked out once per line and kept with it: the distance along the line to each stop, and the stops where it meets
   // each other line (same name, or within a short walk). A long train or a city of many lines stays quick to plan.
@@ -73,7 +73,7 @@
     // Beyond a walk only a train station counts (a taxi to a metro stop across town is just a longer taxi).
     const ok = x => x.d <= ACCESS_KM || lines[x.li].mode === "train";
     const from = near(a, reach).filter(ok), to = near(b, reach).filter(ok); if (!from.length || !to.length) return null;
-    const nm = st => E.latin(st.name || "the stop"), wait = m => far && m === "train" ? 30 : WAIT[m] || 6;
+    const nm = st => E.say(st.name || "the stop", "the stop"), wait = m => far && m === "train" ? 30 : WAIT[m] || 6;
     const endMin = d => d <= ACCESS_KM ? walkMin(d) : far.taxiMin(d), taxiKm = (f, t) => (f.d > ACCESS_KM ? f.d : 0) + (t.d > ACCESS_KM ? t.d : 0);
     const goStep = (d, st) => (d <= ACCESS_KM ? "Walk " + walkMin(d) + " min to " : "Taxi " + far.taxiMin(d) + " min to ") + nm(st) + (d > ACCESS_KM ? " station" : "");
     const endStep = (d, st) => d <= ACCESS_KM ? "Walk " + walkMin(d) + " min" : "Taxi " + far.taxiMin(d) + " min from " + nm(st) + " station";
