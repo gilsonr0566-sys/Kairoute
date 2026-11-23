@@ -16,6 +16,19 @@
 - INFO 25 sights, 6 day trips/towns; must-see: Sagrada Família, Park Güell, Casa Batlló, Gothic Quarter & Cathedral; top by fame: Sagrada Família 0, Park Güell 0, Casa Batlló 0, Casa Milà (La Pedrera) 0, Gothic Quarter & Cathedral 0, La Rambla & La Boqueria market 0, Museu Picasso 0, Santa Maria del Mar 0
 - INFO day trips: Montserrat monastery, Sitges, Girona old town, Tibidabo, Maricel Museum, Contemporary Art Gallery
 
+## Chania (Chania, built-in guide)
+- POS Souda Bay War Cemetery [day trip] {Q22919952 by name}: app is 1.52 km from Wikidata's point (not on the map by id)
+- NOID Venetian harbor and lighthouse: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- NOID Old town lanes and Topanas: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- NOID Municipal Market (Agora): built-in sight with no Wikidata id and nothing of the name on the map nearby
+- NOID Church of Saint Nicholas, Splantzia: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- NOID Firkas fortress and Maritime Museum: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- LEN Souda Bay War Cemetery [day trip] {Q22919952 by name}: 30 min, but a archaeological site or ancient city usually takes 40-240 min
+- FAME #1 best known nearby, "Battle of Crete" (45 Wikipedia languages, Q153316), is not offered
+- FAME must-see "Venetian Harbour|Old Venetian Harbour|Venetian port" is not offered
+- INFO 6 sights, 2 day trips/towns; must-see: Venetian harbor and lighthouse, Old town lanes and Topanas; top by fame: Venetian harbor and lighthouse 0, Old town lanes and Topanas 0, Municipal Market (Agora) 0, Church of Saint Nicholas, Splantzia 0, Firkas fortress and Maritime Museum 0, Etz Hayyim Synagogue 0
+- INFO day trips: Balos lagoon, Souda Bay War Cemetery
+
 ## Dubai, UAE (Dubai, UAE, guide from sources)
 - FAME #1 best known nearby, "Dubai Metro" (50 Wikipedia languages, Q83787), is not offered
 - FAME #2 best known nearby, "Emirates Office Tower" (35 Wikipedia languages, Q845182), is not offered
