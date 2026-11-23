@@ -68,7 +68,7 @@ jobs:
           node tools/truth/oracle.cjs --trips odd-trips.json --show 10 --warn night 2>&1 | tee -a "$RUNNER_TEMP/out.log"
       - name: Planted defects (each a known way the planner has gone wrong; the checks must catch every one)
         if: always()
-        run: node tools/truth/mutants.cjs 2>&1 | tee -a "$RUNNER_TEMP/out.log"
+        run: node tools/truth/mutants.cjs --n 100 2>&1 | tee -a "$RUNNER_TEMP/out.log"
       - name: Keep this part's failing lines for the release report
         if: always()
         run: |

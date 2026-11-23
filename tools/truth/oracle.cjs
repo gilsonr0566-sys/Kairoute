@@ -101,8 +101,9 @@ function checkDay(d, p, ctx) {
     else if (km > 0.3 && min > 0 && km / (min / 60) > vmax * 1.05) add('physics', 'S2', `${what} ${min} min for ${km.toFixed(1)} km straight-line between ${a.name} and ${z.name} (${Math.round(km / (min / 60))} km/h, more than ${vmax})`);
     if (pos(x.from) && hav(x.from, a) > 0.3) add('drift', 'S2', `ride after ${a.name} starts ${hav(x.from, a).toFixed(1)} km from it`);
     if (pos(y.to) && hav(y.to, z) > 0.3) add('drift', 'S2', `ride to ${z.name} ends ${hav(y.to, z).toFixed(1)} km from it`);
-    const road = km * 1.4 / 25 * 60 + 10; // a slow city taxi
-    if (km > 1 && min > 3 * road && min - road > 45 && !kinds.some(q => /ferry|boat/.test(q))) add('slowride', 'S2', `${what} ${min} min for ${km.toFixed(1)} km (${a.name} to ${z.name}); a taxi needs about ${Math.round(road)}`);
+    // Spare time the plan holds on the way back (x.slack, said on the card as "includes N min spare") is not ride time.
+    const road = km * 1.4 / 25 * 60 + 10, rideOnly = min - legs.reduce((s2, q) => s2 + (q.slack || 0), 0); // a slow city taxi
+    if (km > 1 && rideOnly > 3 * road && rideOnly - road > 45 && min - road > 45 && !kinds.some(q => /ferry|boat/.test(q))) add('slowride', 'S2', `${what} ${rideOnly} min (spare left out) for ${km.toFixed(1)} km (${a.name} to ${z.name}); a taxi needs about ${Math.round(road)}`);
   }
   // ---- unverified: the way back to the gate (every ride after the last stop or meal) rests on a timetable, or it is never
   // shown as sure (Richard, Nov 23 release target: "unverified return connections presented as confirmed: 0").
