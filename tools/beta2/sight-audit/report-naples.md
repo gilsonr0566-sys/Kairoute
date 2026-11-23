@@ -1,13 +1,13 @@
 ## Naples (Naples, built-in guide)
 - POS Spaccanapoli and the historic center {Q718973 by name}: app is 1.79 km from Wikidata's point (not on the map by id)
-- POS Pompeii [day trip] {Q43332 by name}: app is 0.45 km from Wikidata's point (not on the map by id)
-- POS Capri [day trip] {Q173292 by name}: app is 1.01 km from Wikidata's point (not on the map by id)
 - NOID Sansevero Chapel (Veiled Christ): built-in sight with no Wikidata id and nothing of the name on the map nearby
 - NOID Certosa e Museo di San Martino: built-in sight with no Wikidata id and nothing of the name on the map nearby
 - NOID Royal Palace and National Museum of Capodimonte: built-in sight with no Wikidata id and nothing of the name on the map nearby
 - NOID National railway Museum of Pietrarsa: built-in sight with no Wikidata id and nothing of the name on the map nearby
 - NOID Museum of Contemporary Art Donnaregina: built-in sight with no Wikidata id and nothing of the name on the map nearby
 - NOID Neapolis Sotterrata: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- NOID Pompeii [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- NOID Capri [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
 - NOID Amphitheatre [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
 - NOID Great Palaestra [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
 - NOID Small Port [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
