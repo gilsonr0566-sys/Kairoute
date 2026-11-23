@@ -39,14 +39,18 @@ const stops = [
   stop('Testshire', ['feature'], 60, -2.6, -1.1, { heritage: false, area: true }),
   stop('Santa Testa Lift', [], 26, 0.9, 0.9),
   stop('Musei Testolini', ['art-museum', 'building', 'museum', 'structure'], 46, -0.3, -0.6),
+  stop('Regional Museum of Testopolis', ['building', 'museum', 'structure'], 12, 1.8, -1.6),
 ];
 const guideSite = Object.assign({ id: 'wv~Q131', name: 'Musei Testolini', minutes: 30, category: 'Sight', fromGuide: true, tags: ['from-guide'] }, at(-0.3, -0.6));
+// The guide's own museum, and the travel guide's listing of it under its Italian name 400 m off (Messina, Nov 23).
+const builtMuseum = Object.assign({ id: 'museo-t', name: 'Regional Museum of Testopolis', minutes: 75, category: 'Museum', builtin: true }, at(1.5, -1.6));
+const twinListing = Object.assign({ id: 'wv~Q132', name: 'Museo regionale di Testopolis', minutes: 60, category: 'Sight', fromGuide: true, tags: ['from-guide'] }, at(1.8, -1.6));
 const fails = []; let n = 0;
 const ok = (what, cond, got) => { n++; if (!cond) fails.push(what + (got !== undefined ? ' (got ' + JSON.stringify(got) + ')' : '')); };
 (async () => {
   const b = await chromium.launch(), pg = await b.newPage(); await pg.goto('file://' + file); await pg.waitForTimeout(1200);
-  const sites = await pg.evaluate(a => { const c = { city: 'Testopolis', country: 'Testland', sites: [JSON.parse(JSON.stringify(a.g))], farther: [], starts: {}, restaurants: [] }; window.__kairouteSourceSights(c, a.src);
-    return c.sites.map(s => ({ name: s.name, cat: s.category, min: s.minutes, quick: !!s.quick })); }, { src: { area: 'Testopolis', center: C, stops }, g: guideSite });
+  const sites = await pg.evaluate(a => { const c = { city: 'Testopolis', country: 'Testland', sites: JSON.parse(JSON.stringify(a.g)), farther: [], starts: {}, restaurants: [] }; window.__kairouteSourceSights(c, a.src);
+    return c.sites.map(s => ({ name: s.name, cat: s.category, min: s.minutes, quick: !!s.quick })); }, { src: { area: 'Testopolis', center: C, stops }, g: [guideSite, builtMuseum, twinListing] });
   const get = nm => sites.find(s => s.name === nm);
   ok('a mosque is called a mosque', (get('Great Mosque') || {}).cat === 'Mosque', get('Great Mosque'));
   ok('a synagogue is called a synagogue', (get('Old Synagogue') || {}).cat === 'Synagogue', get('Old Synagogue'));
@@ -76,6 +80,9 @@ const ok = (what, cond, got) => { n++; if (!cond) fails.push(what + (got !== und
   ok('an old town that is also a region stays (the Old City of Jerusalem)', !!get('Old City of Testopolis'));
   ok('a holy place with thin data (Bethany) stays', !!get('Bethtest'));
   ok('a saint\'s name on a lift is no church ("Santa Justa Lift")', !!get('Santa Testa Lift') && get('Santa Testa Lift').cat !== 'Church', get('Santa Testa Lift'));
+  ok('a travel-guide listing of a sight the guide already has, under its local name, is no second stop (Museo regionale / Regional Museum)', !get('Museo regionale di Testopolis') && sites.filter(s => /Regional Museum of Testopolis/i.test(s.name)).length === 1, sites.filter(s => /Testopolis/.test(s.name)));
+  const rel = await pg.evaluate(() => window.__kairoutePlaceRel({ name: 'Holstentor', lat: 53.8662, lng: 10.6797 }, { name: 'Holstentor', lat: 53.55, lng: 9.99 })[0]);
+  ok('the same name 59 km apart is two places (Holstentor in Lubeck is not one near Hamburg)', rel !== 'same', rel);
   ok('no source sight is called "Church" unless it is one', !sites.some(s => s.cat === 'Church' && /mosque|synagogue|shrine|-ji|-taisha/i.test(s.name)));
   await b.close();
   console.log(fails.length ? 'FAILED:\n- ' + fails.join('\n- ') : '');

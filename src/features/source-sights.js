@@ -229,6 +229,15 @@ function sourceSights(city, src) {
     const x = src.stops.find(y => y.wd === m[1]); if (!x || !srcKnown(x) || srcNotPlace(x)) continue;
     const [, cat, m0] = srcKindOf(x); if (cat === "Sight") continue;
     if (!s.wd) s.wd = m[1]; s.category = cat; if (s.minutes === 30 || s.minutes === 60) s.minutes = srcMinutes(cat, m0, x.sl); }
+  // A travel-guide listing that is a sight the guide already has under its English name leaves the list (Nov 23 sight
+  // check: "Museo regionale di Messina" beside the "Regional Museum of Messina", "San Paolo fuori le Mura" beside the
+  // "Basilica of Saint Paul Outside the Walls"): the same id, or the encyclopedia's English name is the guide's own, within 2 km.
+  { const mine = new Set(((typeof trip !== "undefined" && trip && trip.days) || []).flatMap(d => (d.mine || []).map(String)));
+    const twin = s => { const m = /^wv~(Q\d+)$/.exec(String(s.id)); if (!m || !s.fromGuide || mine.has(String(s.id))) return false;
+      const x = src.stops.find(y => y.wd === m[1]), en = keyOf((x && x.name) || "");
+      return allSites(city).some(t => t !== s && !/^wv~/.test(String(t.id)) && (!isFinite(t.lat) || !isFinite(s.lat) || hav(t, s) <= 2) &&
+        (t.wd === m[1] || (en && en.split(" ").length >= 2 && (keyOf(t.name) === en || keyOf(t.srcName || "") === en)))); };
+    for (const k of ["sites", "farther"]) if (Array.isArray(city[k])) city[k] = city[k].filter(s => !twin(s)); }
   // A sight a saved guide got from the sources that the facts now show is no place to visit (an organisation, an event, a
   // region, a village) leaves the list, unless the traveler chose it themselves.
   { const mine = new Set(((typeof trip !== "undefined" && trip && trip.days) || []).flatMap(d => (d.mine || []).map(String)));
