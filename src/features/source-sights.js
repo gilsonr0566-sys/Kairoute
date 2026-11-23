@@ -199,9 +199,14 @@ const srcPartOf = (x, s, src) => {
 const SRC_WHOLE_ANY = /^(museum|art-museum|castle|fortification|archaeological|ancient-city)$/, SRC_WHOLE_LESSER = /^(palace|church|cathedral|chapel|monastery|mosque|temple|synagogue)$/;
 function srcMarkGroups(src) {
   const stops = (src && src.stops) || [];
-  for (const w of stops) { if (!w.wd || w.lat == null) continue;
+  for (const w of stops) { if (!w.wd) continue;
     const parts = stops.filter(p => p !== w && Array.isArray(p.partOf) && p.partOf.includes(w.wd) && p.lat != null);
-    if (parts.length >= 2 && parts.some(p => hav(p, w) > 2)) w.isGroup = true; }
+    if (w.lat != null && parts.length >= 2 && parts.some(p => hav(p, w) > 2)) w.isGroup = true;
+    // A listing that is no place of its own kind (the encyclopedia calls it only a "feature": a heritage listing of many
+    // works) with three or more listed places as its parts is a group too, however close they stand (sight audit on an
+    // untested city, Nov 23: "Paleochristian and Byzantine monuments of Thessaloniki" offered as a must-see stop beside
+    // its own fifteen churches). An old town or a fortress stays: it is a place of its own kind.
+    if (srcKnown(w) && w.kinds.every(k => k === "feature") && parts.length >= 3) w.isGroup = true; }
 }
 // A museum's own travel-guide description that names a sight as one of the things seen inside it ("most famous for its
 // spiral staircase, the Raphael Rooms and the exquisitely decorated Sistine Chapel"): that sight is seen in the museum's

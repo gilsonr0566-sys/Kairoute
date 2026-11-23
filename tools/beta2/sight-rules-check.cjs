@@ -56,6 +56,11 @@ const stops = [
   stop('Testkale Müzesi', ['building', 'museum', 'structure'], 9, -2.8, -0.6, { localName: true, wd: 'Q935' }),
   stop('Plajı Testo', ['beach', 'feature'], 8, 3.2, 1.6, { localName: true }),
   stop('Kadı Testesi', [], 6, 3.4, -1.4, { localName: true }),
+  // A heritage listing of many works close together is no stop of its own (Thessaloniki, Nov 23 untested-city audit).
+  stop('Byzantine monuments of Testonica', ['feature'], 30, 0.9, -2.6, { wd: 'Q940', unesco: true }),
+  stop('Church of Saint Testos', ['building', 'church', 'structure'], 20, 0.95, -2.5, { partOf: ['Q940'] }),
+  stop('Testonica Rotunda', ['building', 'church', 'structure'], 25, 1.1, -2.7, { partOf: ['Q940'] }),
+  stop('Testonica Walls', ['fortification', 'structure'], 22, 0.7, -2.9, { partOf: ['Q940'] }),
   stop('テスト寺', [], 6, -3.4, 1.4, { localName: true }),
 ];
 const guideSite = Object.assign({ id: 'wv~Q131', name: 'Musei Testolini', minutes: 30, category: 'Sight', fromGuide: true, tags: ['from-guide'] }, at(-0.3, -0.6));
@@ -115,6 +120,7 @@ const ok = (what, cond, got) => { n++; if (!cond) fails.push(what + (got !== und
   ok('the museum itself stays', !!get('Testican Museums'));
   ok('a church the museum\'s listing names as "opposite" stays its own stop', !!get('Church of San Testo'));
   ok('a place a museum\'s listing names only inside a longer name (a stadium tour package) stays its own stop', !!get('Camp Testou'));
+  ok('a heritage listing of three or more listed works close together is no stop of its own; its works stay (Thessaloniki)', !get('Byzantine monuments of Testonica') && !!get('Testonica Rotunda'), sites.filter(s => /Testonica/.test(s.name)).map(s => s.name));
   const rel = await pg.evaluate(() => window.__kairoutePlaceRel({ name: 'Holstentor', lat: 53.8662, lng: 10.6797 }, { name: 'Holstentor', lat: 53.55, lng: 9.99 })[0]);
   ok('the same name 59 km apart is two places (Holstentor in Lubeck is not one near Hamburg)', rel !== 'same', rel);
   ok('no source sight is called "Church" unless it is one', !sites.some(s => s.cat === 'Church' && /mosque|synagogue|shrine|-ji|-taisha/i.test(s.name)));
