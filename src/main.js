@@ -5881,7 +5881,7 @@ function itineraryText() {
       const F = plan && !plan.error ? dayFacts(d, plan) : null, freeOn = F && F.left >= 30 && !(plan.dropped || []).length && !(plan.w && plan.w.straight);
       let freeDone = false;
       if (plan && !plan.error) plan.items.forEach((it, k) => {
-        if (freeOn && !freeDone && k === (() => { let j = -1; plan.items.forEach((x, q) => { if (x.type === "stop" || (x.type === "meal" && !(x.place && x.place.onBoard))) j = q; }); return j + 1; })()) { freeDone = true; out.push(`   ${fmt(F.leaveBy - F.left)}  Free time until ${fmt(F.leaveBy)}`); }
+        if (freeOn && !freeDone && k === lastAshoreIdx(plan) + 1) { freeDone = true; out.push(`   ${fmt(F.leaveBy - F.left)}  Free time until ${fmt(F.leaveBy)}`); }
         if (it.type === "travel") return;
         const nm = it.type === "meal" ? it.meal.label + ": " + it.place.name : it.type === "start" || it.type === "end" ? it.label : (it.place.along ? "On the way: " : it.place.bonus ? "Optional: " : "") + it.place.name;
         out.push(`   ${it.type === "end" && freeOn ? "by " + fmt(F.endBy) : fmt(it.time)}  ${nm}`);
@@ -6881,7 +6881,9 @@ if (typeof window !== "undefined") window.__kairouteThin = () => { ensureBuiltin
 // The schedule says plainly when you get to each place and when you leave it.
 function tcell(it) {
   const len = it.type === "meal" || it.type === "evening" ? (it.meal && it.meal.len) || 0 : it.type === "stop" || it.type === "fixed" ? (it.place && it.place.minutes) || 0 : 0;
-  const arr = it.type === "start" ? null : it.time, lv = it.type === "end" || it.type === "evening" ? null : it.type === "start" ? it.time : it.time + len;
+  // Lunch back on board is on the ship: its time, never a time to leave (the leave-by rows are the ones ashore).
+  const ship = it.type === "meal" && it.place && it.place.onBoard;
+  const arr = it.type === "start" ? null : it.time, lv = it.type === "end" || it.type === "evening" || ship ? null : it.type === "start" ? it.time : it.time + len;
   // A dinner suggested after the day's plan is the traveler's evening, not a timed step: "Around", never "Arrive" (Nov 22
   // live walk: "ARRIVE 8:58 pm" under "Back at the hotel by 6:00 pm", with no ride to it).
   return `<div class="time">${arr != null ? `<span class="ta">${it.type === "evening" && !it.booked ? "Around" : "Arrive"}</span><span class="tt ar">${fmt(arr)}</span>` : ""}${lv != null && (arr == null || len >= 5) ? `<span class="ta">Leave</span><span class="tt lv">${fmt(lv)}</span>` : ""}</div>`;
@@ -6908,7 +6910,7 @@ function renderPlan(d) {
   let freeShown = false;
   // Free time sits where it is spent: right after the last stop or meal, before the way back with its fixed steps
   // (collecting bags, a cable car's queue down) (screen check, Nov 22: free time printed after bags were collected).
-  const freeAt = (() => { let j = -1; plan.items.forEach((x, k) => { if (x.type === "stop" || (x.type === "meal" && !(x.place && x.place.onBoard))) j = k; }); return j + 1; })();
+  const freeAt = lastAshoreIdx(plan) + 1;
   // After the free time the way back follows on the clock: its rides and fixed steps start when the free time ends.
   const freeShift = freeOn && plan.items[freeAt] && isFinite(plan.items[freeAt].time) && F.leaveBy > plan.items[freeAt].time ? F.leaveBy - plan.items[freeAt].time : 0;
   const rows = plan.items.map((it0, idx) => {

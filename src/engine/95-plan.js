@@ -63,6 +63,9 @@
       // ticked). Nothing is optional (Nov 18, Richard).
       const it = { t: x.t, id: x.t === "meal" ? null : x.id, name: x.name, at: x.at, min: x.min, bonus: false, along: false, meal: x.meal || null, late: x.late || 0 };
       if (x.wait) it.wait = x.wait; if (x.freeBefore) it.freeBefore = x.freeBefore; if (x.chosen) it.chosen = true; if (x.pinned) it.pinned = true; if (x.booked) it.booked = true;
+      // A fixed step of the day's start that takes the traveler somewhere (the cable car up from a tender landing): with no
+      // stop after it, the free time is spent there and the way back starts there.
+      if (x.t === "fixed" && !/bags/i.test(x.name || "") && win.head.some(p => p.fixed && p.id === x.id)) it.up = true;
       if (x.packed) it.packed = true; if (src && src.lunchCut) it.lunchCut = src.lunchCut; // lunch is inside this visit: the visit gave it these minutes
       Object.assign(it, point(whereIs(x)));
       items.push(it);
@@ -306,7 +309,7 @@
           const s = pool.find(x => String(x.id) === String(id)) || ranked.find(x => String(x.id) === String(id)); if (!s) continue;
           const on = ledger.sightDay(s.id);
           if (on != null && on !== i) { explain.push(s.name + " is planned on another day."); continue; }
-          if (!E.allowed(s, prefs, siteDay(s.id), win)) { explain.push(s.name + " is closed or can't be visited this day."); continue; }
+          if (!E.allowed(s, prefs, siteDay(s.id), win)) { explain.push(s.name + " " + (E.notAllowedWhy(s, prefs, siteDay(s.id), win) || "can't be visited this day") + "."); continue; }
           // A list that is only the guide's suggestions (the traveler ticked nothing: wantsOnly) is planned first all the
           // same, but its sights are never the traveler's choice: an unconfirmed boat to one is not "planned because you
           // chose it" (first-timer walk, Nov 22: a Château d'If boat nobody picked).
@@ -344,14 +347,21 @@
       // and never touches the time to be back: it comes after the return.
       { const L = E.MEALS[0], ship = win.tail.length && win.tail[win.tail.length - 1].backToShip;
         if (fit.noLunch === "time" && ship && fit.kept.length && fit.r.end <= L.to - E.TO_GO) {
-          fit.onBoard = { at: Math.max(fit.r.end, L.from), min: E.TO_GO + 10 }; fit.noLunch = null;
-          explain.push("Your picks fill the time ashore, so lunch is back on board at " + E.clock(fit.onBoard.at) + "."); } }
+          // Time left ashore after the last stop is the traveler's until the time to be back, so lunch on board is then, and the
+          // note says the real reason (Nov 22 odd-trips run: back at 9:47 with 2 h 28 min free, the plan said "your picks fill
+          // the time ashore" and put lunch on board at 11:45, before its own "leave for the ship by 11:58").
+          const free = win.endBy - fit.r.end >= 20, at = Math.max(free ? win.endBy : fit.r.end, L.from);
+          if (at <= L.to - E.TO_GO) { fit.onBoard = { at, min: E.TO_GO + 10 }; fit.noLunch = null;
+            explain.push(free ? "Lunchtime is too close to the time to be back at the ship (" + E.clock(win.endBy) + ") to sit down ashore, so lunch is back on board at " + E.clock(at) + "."
+              : "Your picks fill the time ashore, so lunch is back on board at " + E.clock(at) + "."); } } }
       { const pk = (fit.r.items || []).find(x => x.packed), at = pk && fit.r.items.filter(x => x.t === "stop" && x.at <= pk.at).pop();
         if (pk) explain.push("Bring lunch for " + E.clock(pk.at) + (at ? " at " + at.name : "") + ": places to eat there aren't in the guide yet."); }
       // A wanted stop the day had to give up (a pick, a finished guide, a must-see) comes with the ways to fit it back in.
       const ways = {};
+      // Ways to fit one back in are worked out for the first 5 (each is the day planned again many times over); the rest say why.
+      let waysN = 0;
       if (!again) fit.dropped.forEach(x => { if (!x.wish && !x.wanted) return;
-        const w = x.why === "didn't fit in the time" ? E.waysToFit(win, fit.kept, x.stop, ctx) : [];
+        const w = x.why === "didn't fit in the time" && waysN++ < 5 ? E.waysToFit(win, fit.kept, x.stop, ctx) : [];
         if (w.length) ways[x.id] = w;
         explain.push((d.wantsOnly ? "Not planned today: " : "") + x.name + " " + (x.needs && x.why === "didn't fit in the time" ? x.needs : x.why) + (w.length ? ". To fit it in: " + E.listWords(w.map(o => o.say), "or") : "") + "."); });
       fit.kept.forEach(s => { if (s.trimmed && !(again && again.kept.some(k => k.trimmed && String(k.id) === String(s.id)))) explain.push("A shorter visit to " + s.name + " (" + dur(s.minutes) + " instead of " + dur(s.trimmed) + ") so the rest of the day fits."); });
@@ -392,7 +402,11 @@
         const its = plan.items.slice(0, endI + 1), endAt = its[endI].at; let k = endI, t = endAt;
         // The way back is every ride and fixed step after the last stop or meal (a cable car's queue down is part of it,
         // Nov 20 sweep: a tender day's leave-by left out the 50-minute queue); bags kept somewhere are counted apart.
-        while (k > 0 && (its[k - 1].t === "ride" || (its[k - 1].t === "fixed" && !/bags/i.test(its[k - 1].name || "")))) { k--; t -= (its[k].min || 0) + (its[k].wait || 0); }
+        // A fixed step of the day's start (the cable car UP from a tender landing) is not on the way back: with no stop after it,
+        // the free time is at the top and the leave-by is the time to start down (Nov 22 odd-trips screen check, a 7:00-11:00
+        // tender call: "leave for the ship by 8:35", counted from the landing with the ride up, and the free time shown after the ride down).
+        const upStep = x => x.t === "fixed" && !!x.up;
+        while (k > 0 && (its[k - 1].t === "ride" || (its[k - 1].t === "fixed" && !/bags/i.test(its[k - 1].name || "") && !upStep(its[k - 1])))) { k--; t -= (its[k].min || 0) + (its[k].wait || 0); }
         const ridesBack = endAt - t;
         // The latest safe time to leave: the time to be back less the rides there. Time left before it is free time, so the
         // badge, the free time row and the notes all say this one time (Round 1).
@@ -402,7 +416,7 @@
         // Never later than the back-by time less the rides back, whatever the plan's own end row says (a boat's wait at
         // the pier counted in its row): one leave-by for the badge, the countdown and the notes.
         if (isFinite(win.endBy)) t = Math.min(t, win.endBy - ridesBack);
-        const bagsK = its.findIndex(x => x.t === "fixed" && /bags/i.test(x.name || "")), lastK = its.map(x => x.t).reduce((a, x, j) => x === "stop" || x === "meal" || x === "start" ? j : a, -1);
+        const bagsK = its.findIndex(x => x.t === "fixed" && /bags/i.test(x.name || "")), lastK = its.reduce((a, x, j) => x.t === "stop" || x.t === "meal" || x.t === "start" || upStep(x) ? j : a, -1);
         // How sure the way back is (Nov 21 outside review): a plan whose way back rests on a guessed ride time never reads
         // as sure as one a timetable or the road map confirms. "timetable": every ride on it has its timetable; "roads": the
         // road map's time (no live traffic); "estimate": at least one ride is timed from the distance or the guide's words; "walk": on foot.
@@ -414,7 +428,10 @@
         const span = (a, b) => its.slice(a, b + 1).reduce((m, x) => m + (x.min || 0) + (x.wait || 0), 0);
         plan.leaveAt = { out: t, bags: bagsK >= 0 ? t - (its[bagsK].min || 0) : null, last: bagsK < 0 ? t : lastK >= 0 && lastK < bagsK ? t - span(lastK + 1, bagsK) : null, basis };
         const word = d.type === "embark" ? "the cruise terminal" : d.type === "port" ? "the ship" : "the " + ((E.MODES[d.mode] || E.MODES.flight).word);
-        const atHotel = bagsK >= 0 && plan.leaveAt.last != null && Math.abs(plan.leaveAt.bags - plan.leaveAt.last) <= 2;
+        // The short form only when the day's last place is the hotel itself: from a stop or a lunch 2 min away, the leave-by on the
+        // banner is when to leave THAT place, so the note names it too (Nov 22 odd-trips screen check: banner 4:19 from a tavern,
+        // note "leave for the cruise terminal by 4:36").
+        const atHotel = bagsK >= 0 && plan.leaveAt.last != null && (lastK < 0 || its[lastK].t === "start") && Math.abs(plan.leaveAt.bags - plan.leaveAt.last) <= 2;
         explain.push(plan.leaveAt.bags != null && !atHotel && plan.leaveAt.last != null
           ? "Leave " + String(its[lastK].name || "your last stop").split(",")[0] + " by " + E.clock(plan.leaveAt.last) + ", collect your bags at " + E.clock(plan.leaveAt.bags) + ", and leave for " + word + " by " + E.clock(t) + "."
           : (plan.leaveAt.bags != null ? "Collect your bags at " + E.clock(plan.leaveAt.bags) + " and leave" : "Leave") + " for " + word + " by " + E.clock(t) + "."); }

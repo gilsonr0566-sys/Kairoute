@@ -22,18 +22,23 @@
     while (last >= 0) { seq.push(stops[last]); const p = prev[m * n + last]; m &= ~(1 << last); last = p; }
     return seq.reverse();
   }
+  // Every ride cost is worked out once into a table, then the same nearest-neighbour and 2-opt steps run on the table
+  // (Nov 22 odd-trips run: a day with every one of 39 sights ticked took a minute, each 2-opt try re-measuring every ride).
   function heuristic(stops, from, to, cost) {
-    const left = stops.slice().sort(E.byId), seq = []; let p = from;
-    while (left.length) { let bi = 0, bc = Infinity; left.forEach((s, i) => { const c = cost(p, s); if (c < bc - 1e-9) { bc = c; bi = i; } }); p = left[bi]; seq.push(p); left.splice(bi, 1); }
+    const n = stops.length, F = n, T = n + 1, pt = k => k === F ? from : k === T ? to : stops[k];
+    const C = []; for (let a = 0; a <= T; a++) { C.push(new Float64Array(T + 1)); for (let b = 0; b < n; b++) if (a !== b && a !== T) C[a][b] = cost(pt(a), stops[b]); if (to && a < n) C[a][T] = cost(stops[a], to); }
+    const pc = seq => { let c = 0, p = F; for (const s of seq) { c += C[p][s]; p = s; } if (to) c += C[p][T]; return c; };
+    const left = stops.map((s, i) => i).sort((a, b) => E.byId(stops[a], stops[b])), seq = []; let p = F;
+    while (left.length) { let bi = 0, bc = Infinity; left.forEach((s, i) => { const c = C[p][s]; if (c < bc - 1e-9) { bc = c; bi = i; } }); p = left[bi]; seq.push(p); left.splice(bi, 1); }
     let improved = true, guard = 0;
     while (improved && guard++ < 200) {
       improved = false;
       for (let i = 0; i < seq.length - 1; i++) for (let j = i + 1; j < seq.length; j++) {
         const cand = seq.slice(0, i).concat(seq.slice(i, j + 1).reverse(), seq.slice(j + 1));
-        if (pathCost(cand, from, to, cost) < pathCost(seq, from, to, cost) - 1e-9) { seq.splice(0, seq.length, ...cand); improved = true; }
+        if (pc(cand) < pc(seq) - 1e-9) { seq.splice(0, seq.length, ...cand); improved = true; }
       }
     }
-    return seq;
+    return seq.map(k => stops[k]);
   }
   // Remembered per cost function: the same stops between the same ends always give the same order, so it is worked
   // out once (a day is re-checked many times while it is fitted and filled).

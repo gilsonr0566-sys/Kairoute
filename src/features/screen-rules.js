@@ -11,7 +11,7 @@ const inTxt = s => { const m = /(\d{1,2}):(\d\d)\s*([ap])m/i.exec(s || ''); retu
 const dur = s => { const m = /^(?:(\d+) h)?\s*(?:(\d+) min)?(?:\s*·|$)/.exec(String(s || '').trim()); if (!m || (!m[1] && !m[2])) return null; return (+m[1] || 0) * 60 + (+m[2] || 0); };
 const RIDE = /^((?:Walk|Taxi|Car|Train|Metro|Bus|Boat|Ferry|Tram|Cable|Funicular|Sea bus|Shuttle|Tender|Water|Monorail|Light rail|Coach|Subway|Underground|Rail|Hydrofoil|Catamaran|Gondola|Vaporetto|Lift|Elevator|Bike|Transit|Rideshare|Uber|Tuk)[^·]*?) · (?:(\d+) h ?)?(?:(\d+) min)?(?: · ([\d.]+) (mi|km|ft|m))?$/;
 const KEY = /^(S|E|L|H|\d{1,2})$/;
-const clock = m => m == null ? '?' : `${Math.floor(m / 60)}:${String(Math.round(m) % 60).padStart(2, '0')}`;
+const clock = m => m == null ? '?' : `${Math.floor(m / 60) % 24}:${String(Math.round(m) % 60).padStart(2, '0')}`;
 const SCRIPT = /[Ͱ-Ͽἀ-῿Ѐ-ӿ֐-׿؀-ۿ฀-๿぀-ヿ㐀-鿿가-힯]/;
 
 function parse(text) {
@@ -47,6 +47,12 @@ function parse(text) {
   }
   // A ride belongs between its stop and the next row.
   P.rides.forEach(r => { const i = P.rows.indexOf(r.from); r.to = P.rows[i + 1] || null; });
+  // A day that runs past midnight (all aboard 1:30 am, a 0:20 flight): a time more than 3 hours before the day's first time
+  // is the next morning's, so 11:58 pm then 12:15 am reads as 17 min later, never 23 h earlier (Nov 22 odd-trips screen
+  // check: the app's own guard warned "these times don't all agree" on every day with all aboard after midnight).
+  const first = P.ashore != null ? P.ashore : (P.rows.map(r => r.arrive != null ? r.arrive : r.leave != null ? r.leave : r.by).find(t => t != null));
+  if (first != null) { const nx = t => t != null && t < first - 180 ? t + 1440 : t;
+    ['leaveBy', 'backBy', 'allAboard'].forEach(k => { P[k] = nx(P[k]); }); P.rows.forEach(r => { ['arrive', 'leave', 'until', 'by'].forEach(k => { r[k] = nx(r[k]); }); }); }
   return P;
 }
 
