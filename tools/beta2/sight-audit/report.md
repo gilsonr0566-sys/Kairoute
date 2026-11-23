@@ -98,6 +98,13 @@
 - NOID Castle of San Giovanni: built-in sight with no Wikidata id and nothing of the name on the map nearby
 - INFO 5 sights, 0 day trips/towns; must-see: Kotor Cathedral, Fortifications of Kotor; top by fame: Kotor Cathedral 23, Fortifications of Kotor 21, Lovćen National Park 17, Aquarium Boka 0, Castle of San Giovanni 0
 
+## Kusadasi (Kusadasi, built-in guide)
+- NOID Ancient Ephesus: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- NOID Basilica of Saint John: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- NOID Pigeon Island castle: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- FAME must-see "House of the Virgin Mary" is offered (House of the Virgin Mary) but not marked must-see
+- INFO 5 sights, 0 day trips/towns; must-see: Ancient Ephesus, Basilica of Saint John; top by fame: Ancient Ephesus 0, Basilica of Saint John 0, House of the Virgin Mary 0, Temple of Artemis 0, Pigeon Island castle 0
+
 ## Kyoto, Japan (Kyoto, Japan, guide from sources)
 - DUP Ujigami Shrine ~ Uji Shrine (132 m apart, same words)
 - FOLD Yasaka Shrine is part of Gion (Wikidata) but is a separate stop
