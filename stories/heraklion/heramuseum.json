@@ -1,0 +1,514 @@
+{
+ "id": "heramuseum",
+ "v": 1,
+ "city": "heraklion",
+ "title": "Heraklion Archaeological Museum",
+ "match": {
+  "ids": [
+   "heramuseum"
+  ],
+  "names": [
+   "heraklion archaeological museum",
+   "archaeological museum of heraklion"
+  ],
+  "wikidata": [
+   "Q636972"
+  ]
+ },
+ "checked": "2026-11-22",
+ "claims": {
+  "what": {
+   "label": "supported",
+   "says": "One of the largest museums in Greece and the best in the world for Minoan art.",
+   "src": [
+    "wp-heramuseum"
+   ],
+   "quote": [
+    "It is one of the largest museums in Greece, and the best in the world for Minoan art"
+   ]
+  },
+  "knfinds": {
+   "label": "supported",
+   "says": "It holds the great majority of finds from Knossos and other Minoan sites in Crete.",
+   "src": [
+    "wp-heramuseum"
+   ],
+   "quote": [
+    "The museum holds the great majority of the finds from the Minoan palace at Knossos and other Minoan sites in Crete."
+   ]
+  },
+  "span": {
+   "label": "supported",
+   "says": "The collection spans 5,500 years of Cretan history, from the Neolithic to Roman times.",
+   "src": [
+    "wp-heramuseum"
+   ],
+   "quote": [
+    "The museum holds artifacts from 5,500 years of Cretan history, spanning from the Neolithic period to Roman times."
+   ]
+  },
+  "began": {
+   "label": "supported",
+   "says": "The museum began in 1883 as a simple collection; Crete was then virtually autonomous, which helped keep finds on the island.",
+   "src": [
+    "wp-heramuseum"
+   ],
+   "quote": [
+    "The museum began in 1883 as a simple collection of antiquities; it was about the time when the Minoan civilization was beginning to be rediscovered",
+    "Crete was a virtually autonomous part of the Ottoman Empire",
+    "The political situation helped to keep Cretan finds on the island during a crucial period of discoveries."
+   ]
+  },
+  "building": {
+   "label": "supported",
+   "says": "Architect Patroklos Karantinos, engaged in 1935, built a sturdy modernist structure that withstood the bombing of the 1941 German invasion.",
+   "src": [
+    "wp-heramuseum"
+   ],
+   "quote": [
+    "In 1935, Marinatos succeeded in engaging architect Patroklos Karantinos to build a sturdy structure that has withstood both natural disasters and the bombing that accompanied the German invasion in 1941.",
+    "The museum is an example of modernist architecture"
+   ]
+  },
+  "marble": {
+   "label": "supported",
+   "says": "The building uses multicolored veined marble reminiscent of the painted imitation marble walls of Minoan palaces.",
+   "src": [
+    "wp-heramuseum"
+   ],
+   "quote": [
+    "The building incorporates colors and construction materials, such as multicolored veined marble, that are reminiscent of the painted imitation marble walls of Minoan palaces."
+   ]
+  },
+  "disc": {
+   "label": "supported",
+   "says": "The Phaistos Disc is a fired clay disc about 16 cm across, with a spiral text on each side in an unknown script and language.",
+   "src": [
+    "wp-phaistos-disc"
+   ],
+   "quote": [
+    "bearing a text in an unknown script and language",
+    "The disc is about 16 cm (6.3 in) in diameter and is covered on each side with a spiral text"
+   ]
+  },
+  "discfound": {
+   "label": "supported",
+   "says": "It was found in 1908 by Luigi Pernier in the palace of Phaistos on Crete's south coast.",
+   "src": [
+    "wp-phaistos-disc"
+   ],
+   "quote": [
+    "The disc was discovered in 1908 by the Italian archaeologist Luigi Pernier during the excavation of the Minoan palace of Phaistos.",
+    "on the south coast of Crete"
+   ]
+  },
+  "discsigns": {
+   "label": "supported",
+   "says": "242 occurrences of 45 distinct signs, each pressed in with a separate stamp; it can be seen as an early example of movable-type printing.",
+   "src": [
+    "wp-phaistos-disc"
+   ],
+   "quote": [
+    "consisting of a total of 242 occurrences of 45 distinct signs, which were created by pressing individual sign stamps onto the soft clay before firing",
+    "Thus the disc can be seen as an early example of movable-type printing."
+   ]
+  },
+  "discread": {
+   "label": "disputed",
+   "says": "Scholarly decipherment is thought unlikely unless more examples of the signs turn up.",
+   "src": [
+    "wp-phaistos-disc"
+   ],
+   "quote": [
+    "scholarly attempts at decipherment are thought to be unlikely to succeed unless more examples of the signs turn up elsewhere"
+   ]
+  },
+  "discreal": {
+   "label": "supported",
+   "says": "Some scholars once suspected a forgery; archaeologists now generally accept it as authentic.",
+   "src": [
+    "wp-phaistos-disc"
+   ],
+   "quote": [
+    "While its unique features initially led some scholars to suspect a forgery or hoax, the disc is now generally accepted by archaeologists as authentic."
+   ]
+  },
+  "discdate": {
+   "label": "disputed",
+   "says": "Its date is disputed: one scholar gives 1850-1600 BC, another after 1400.",
+   "src": [
+    "wp-phaistos-disc"
+   ],
+   "quote": [
+    "Yves Duhoux (1977) dates the disc to between 1850 BC and 1600 BC",
+    "Jeppesen (1963) dates it to after 1400"
+   ]
+  },
+  "sg": {
+   "label": "supported",
+   "says": "Two snake goddess figurines were excavated at Knossos in 1903; they date to around 1600 BCE and are in the museum.",
+   "src": [
+    "wp-snake-goddess"
+   ],
+   "quote": [
+    "Two Minoan snake goddess figurines were excavated in 1903 in the Minoan palace at Knossos",
+    "date to near the end of the neo-palatial period of Minoan civilization, around 1600 BCE",
+    "The figures are now on display at the Heraklion Archaeological Museum (AMH)."
+   ]
+  },
+  "sgnames": {
+   "label": "disputed",
+   "says": "Evans called the larger a Snake Goddess and the smaller a Snake Priestess; whether he was right is debated.",
+   "src": [
+    "wp-snake-goddess"
+   ],
+   "quote": [
+    "It was Evans who called the larger of his pair of figurines a \"Snake Goddess\", the smaller a \"Snake Priestess\"; since then, it has been debated whether Evans was right, or whether both figurines depict priestesses, or both depict the same deity or distinct deities."
+   ]
+  },
+  "faience": {
+   "label": "supported",
+   "says": "They are made of faience, a crushed quartz paste that fires to a glassy, bright finish.",
+   "src": [
+    "wp-snake-goddess"
+   ],
+   "quote": [
+    "The figurines are made of faience, a crushed quartz-paste material which after firing gives a true vitreous finish with bright colors and a lustrous sheen."
+   ]
+  },
+  "restored": {
+   "label": "supported",
+   "says": "The larger lacked the body below the waist; the smaller lacked a head, which Evans and a restorer recreated.",
+   "src": [
+    "wp-snake-goddess"
+   ],
+   "quote": [
+    "The figure lacked the body below the waist, one arm, and part of the crown.",
+    "When excavated, the figurine lacked a head",
+    "The head was recreated by Evans and one of his restorers."
+   ]
+  },
+  "snakes": {
+   "label": "disputed",
+   "says": "Several scholars argue the figures are not really holding snakes, or not as many as Evans thought.",
+   "src": [
+    "wp-snake-goddess"
+   ],
+   "quote": [
+    "Several scholars have also argued that these figurines are not really holding snakes in their hands, or as many snakes as Evans thought, but some other items."
+   ]
+  },
+  "fakes": {
+   "label": "supported",
+   "says": "Fakes followed: a figure bought by the Boston Museum of Fine Arts in 1914 and one in the Walters Art Museum are now regarded as fakes.",
+   "src": [
+    "wp-snake-goddess"
+   ],
+   "quote": [
+    "A figure in the Boston Museum of Fine Arts with an ivory body and gold snakes twined around the arms is now generally regarded as a fake. It was bought by the museum in 1914.",
+    "Another figure, in the Walters Art Museum in Baltimore",
+    "This is also now regarded as a fake."
+   ]
+  },
+  "bullhere": {
+   "label": "supported",
+   "says": "Museum highlights include the Bull-Leaping Fresco.",
+   "src": [
+    "wv-heraklion"
+   ],
+   "quote": [
+    "Highlights include statues of the Snake Goddess, the Bull-Leaping Fresco, the Phaistos Disk, and Minoan seals and jewellery."
+   ]
+  },
+  "frescohall": {
+   "label": "supported",
+   "says": "The museum has a Hall of the Frescoes with frescoes from Knossos and Hagia Triada, and more frescoes including La Parisienne.",
+   "src": [
+    "wp-heramuseum"
+   ],
+   "quote": [
+    "Hall of the Frescoes",
+    "Frescoes from Knossos and Hagia Triada",
+    "More frescoes, including the famous \"La Parisienne\""
+   ]
+  },
+  "bullscene": {
+   "label": "supported",
+   "says": "Three figures and a bull shown at full gallop; one figure is upside down over the bull's back.",
+   "src": [
+    "wp-bull-leaping"
+   ],
+   "quote": [
+    "Depicted are three individuals",
+    "which means he is intended to be at full gallop",
+    "one upside-down over the bull's back"
+   ]
+  },
+  "bullwho": {
+   "label": "supported",
+   "says": "By Minoan convention women are pale and men dark: two women at the ends, a young man on the bull; the front woman holds the horns.",
+   "src": [
+    "wp-bull-leaping"
+   ],
+   "quote": [
+    "two women (one at the front, one at the back), and a male youth shown balancing on the bull",
+    "the accepted Minoan art convention of painting women with pale skin and men with dark skin",
+    "His horns, however, are being firmly held by the woman in front"
+   ]
+  },
+  "bullpieces": {
+   "label": "supported",
+   "says": "It is the most completely restored of several panels; there are more fragments than in the famous reconstruction.",
+   "src": [
+    "wp-bull-leaping"
+   ],
+   "quote": [
+    "The Bull-Leaping Fresco is the most completely restored of several stucco panels",
+    "There are more fragments than are included in the famous reconstruction"
+   ]
+  },
+  "bullwhy": {
+   "label": "disputed",
+   "says": "The technique and the reasons for bull-leaping remain obscure a century after discovery.",
+   "src": [
+    "wp-bull-leaping"
+   ],
+   "quote": [
+    "the technique and the reasons for doing that remain obscure, a century after the discovery of the frescos"
+   ]
+  },
+  "parisienne": {
+   "label": "supported",
+   "says": "La Parisienne got its name because a French art historian thought it resembled Parisian women of the day.",
+   "src": [
+    "wp-minoan"
+   ],
+   "quote": [
+    "This got its name because when it was found in the early 20th century, a French art historian thought it resembled Parisian women of the day."
+   ]
+  },
+  "roman": {
+   "label": "supported",
+   "says": "There are sculptures from the Classical Greek and Greco-Roman periods.",
+   "src": [
+    "wp-heramuseum"
+   ],
+   "quote": [
+    "Sculptures from Classical Greek and Greco-Roman periods"
+   ]
+  },
+  "acts7": {
+   "label": "scripture",
+   "says": "Acts 27:7: the ship 'sailed under Crete, over against Salmone'.",
+   "src": [
+    "kjv-acts27"
+   ],
+   "quote": [
+    "\"chapter\":27,\"verse\":7,\"text\":\"And when we had sailed slowly many days",
+    "we sailed under Crete, over against Salmone;"
+   ]
+  },
+  "acts8": {
+   "label": "scripture",
+   "says": "Acts 27:8: they came to 'a place which is called The fair havens'.",
+   "src": [
+    "kjv-acts27"
+   ],
+   "quote": [
+    "\"chapter\":27,\"verse\":8,\"text\":\"And, hardly passing it, came unto a place which is called The fair havens;"
+   ]
+  },
+  "acts9": {
+   "label": "scripture",
+   "says": "Acts 27:9: Paul admonished them, since sailing was now dangerous.",
+   "src": [
+    "kjv-acts27"
+   ],
+   "quote": [
+    "\"chapter\":27,\"verse\":9,\"text\":\"Now when much time was spent, and when sailing was now dangerous, because the fast was now already past, Paul admonished"
+   ]
+  },
+  "lina": {
+   "label": "supported",
+   "says": "Linear A remains undeciphered.",
+   "src": [
+    "wp-knossos"
+   ],
+   "quote": [
+    "Linear A, which remains undeciphered"
+   ]
+  }
+ },
+ "parts": [
+  {
+   "name": "Arrival",
+   "stand": "Outside the museum entrance, where you can see the front of the building.",
+   "paras": [
+    {
+     "t": "This is the Heraklion Archaeological Museum, one of the largest museums in Greece, and the best in the world for Minoan art. It holds the great majority of the finds from the palace at Knossos and other Minoan sites on Crete.",
+     "c": [
+      "what",
+      "knfinds"
+     ],
+     "level": 1
+    },
+    {
+     "t": "The collection covers 5,500 years of Cretan history, from the Neolithic to Roman times. It began in 1883 as a simple collection of antiquities, just as the Minoans were being rediscovered. Crete was then largely self-governing, and that helped keep its finds here, on the island.",
+     "c": [
+      "span",
+      "began"
+     ],
+     "level": 2
+    },
+    {
+     "t": "If your time is short, look for three things first: the Phaistos Disc, the snake goddesses, and the bull-leaping fresco.",
+     "c": [],
+     "level": 2,
+     "cue": true
+    },
+    {
+     "t": "The building is worth a glance too. It's a modernist design by the architect Patroklos Karantinos, hired in 1935, and it came through the bombing of the German invasion in 1941. Inside, look for the multicolored veined marble. It echoes the painted imitation marble on Minoan palace walls.",
+     "c": [
+      "building",
+      "marble"
+     ],
+     "level": 3
+    }
+   ]
+  },
+  {
+   "name": "The Phaistos Disc",
+   "stand": "In front of the glass case with the round clay disc.",
+   "paras": [
+    {
+     "t": "This small clay disc is the Phaistos Disc. It's about 16 centimeters across, with a spiral of signs on each side, in a script and a language nobody knows.",
+     "c": [
+      "disc"
+     ],
+     "level": 1
+    },
+    {
+     "t": "The Italian archaeologist Luigi Pernier found it in 1908, in the palace of Phaistos near the south coast. Look closely. There are 242 signs in all, of 45 different kinds, and each one was pressed into the soft clay with its own stamp before firing. That's why it's sometimes called an early example of printing with movable type.",
+     "c": [
+      "discfound",
+      "discsigns"
+     ],
+     "level": 2
+    },
+    {
+     "t": "Can anyone read it? Many have tried. Scholars think a real decipherment is unlikely unless more examples of these signs turn up somewhere else.",
+     "c": [
+      "discread"
+     ],
+     "level": 2
+    },
+    {
+     "t": "Because it's so unusual, some scholars once suspected a forgery. Archaeologists now generally accept it as genuine. Even its date is uncertain: one scholar puts it between 1850 and 1600 BC, another after 1400.",
+     "c": [
+      "discreal",
+      "discdate"
+     ],
+     "level": 3
+    }
+   ]
+  },
+  {
+   "name": "The snake goddesses",
+   "stand": "At the case with the small faience figures holding up snakes.",
+   "paras": [
+    {
+     "t": "These figures came from the palace at Knossos, found in 1903, and they date to around 1600 BC. Arthur Evans called the larger one a Snake Goddess and the smaller one a Snake Priestess. Was he right? Scholars still argue.",
+     "c": [
+      "sg",
+      "sgnames"
+     ],
+     "level": 1
+    },
+    {
+     "t": "They're made of faience, a crushed quartz paste that fires to a bright, glassy finish. Now look carefully, because a lot of what you see was restored. The larger figure was missing everything below the waist. The smaller one had no head; Evans and one of his restorers made the head you see today.",
+     "c": [
+      "faience",
+      "restored"
+     ],
+     "level": 2
+    },
+    {
+     "t": "Some scholars go further and argue they aren't really holding snakes at all, or at least not as many as Evans thought.",
+     "c": [
+      "snakes"
+     ],
+     "level": 3
+    },
+    {
+     "t": "They caused such a stir that forgers got busy. A figure the Boston Museum of Fine Arts bought in 1914, and another in the Walters Art Museum in Baltimore, are now regarded as fakes.",
+     "c": [
+      "fakes"
+     ],
+     "level": 3
+    }
+   ]
+  },
+  {
+   "name": "The frescoes",
+   "stand": "In the Hall of the Frescoes, in front of the panel of the leaping bull.",
+   "paras": [
+    {
+     "t": "Here is the Bull-Leaping Fresco from Knossos, one of the museum's highlights. Three figures, and a bull at full gallop. One figure is upside down over the bull's back.",
+     "c": [
+      "bullhere",
+      "bullscene"
+     ],
+     "level": 1
+    },
+    {
+     "t": "Minoan artists painted women pale and men dark. So here you have two women, one at each end, and a young man on the bull. The woman in front holds the horns. And remember, this is the most completely restored of several panels. There are more fragments than made it into this famous reconstruction.",
+     "c": [
+      "bullwho",
+      "bullpieces"
+     ],
+     "level": 2
+    },
+    {
+     "t": "What exactly were they doing, and why? Nobody knows for sure. A century after the discovery, the technique and the reasons remain obscure.",
+     "c": [
+      "bullwhy"
+     ],
+     "level": 2
+    },
+    {
+     "t": "While you're among the frescoes from Knossos and Hagia Triada, look for the one nicknamed La Parisienne. A French art historian thought she looked like the Parisian women of the day, and the name stuck.",
+     "c": [
+      "frescohall",
+      "parisienne"
+     ],
+     "level": 3
+    }
+   ]
+  },
+  {
+   "name": "Closing",
+   "stand": "On your way out, wherever you can pause for a moment.",
+   "paras": [
+    {
+     "t": "The museum's story runs on into Greek and Roman sculpture. And Crete appears in the Bible too. In the book of Acts, the ship carrying the apostle Paul sailed under Crete, over against Salmone, and came unto a place which is called The fair havens. There, Acts says, with sailing now dangerous, Paul admonished them.",
+     "c": [
+      "roman",
+      "acts7",
+      "acts8",
+      "acts9"
+     ],
+     "level": 3
+    },
+    {
+     "t": "Think about what you've seen. Many of these people wrote in a script we still can't read. What they left us is bulls, goddesses and one clay disc. And somehow, standing here, they don't feel like strangers.",
+     "c": [
+      "lina",
+      "disc"
+     ],
+     "level": 1
+    }
+   ]
+  }
+ ],
+ "practical": []
+}

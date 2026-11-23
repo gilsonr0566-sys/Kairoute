@@ -135,7 +135,7 @@
     "wp-santorini"
    ],
    "quote": [
-    "The houses contain huge ceramic storage jars (pithoi), mills, and pottery."
+    "The houses contain huge ceramic storage jars (pithoi), mills, and pottery"
    ]
   },
   "water": {
@@ -328,7 +328,7 @@
   },
   "theory": {
    "label": "supported",
-   "says": "Marinatos had argued in 1939 that Thera's eruption destroyed Neopalatial Crete, and decided to dig on Thera to test it.",
+   "says": "Marinatos had argued that Thera's eruption destroyed Neopalatial Crete, and decided to dig on Thera to test it.",
    "src": [
     "wp-marinatos"
    ],
@@ -629,7 +629,7 @@
      "level": 1
     },
     {
-     "t": "He wasn't the first to dig on the island. The French geologist Fouque excavated here in 1867, after local people found old objects in a quarry.",
+     "t": "He wasn't the first to dig on the island. The French geologist Fouque dug on Santorini in 1867, after local people found old objects in a quarry.",
      "c": [
       "fouque"
      ],
@@ -695,7 +695,7 @@
    "stand": "Take one last look down over the streets before you leave.",
    "paras": [
     {
-     "t": "Picture the last morning here. People closing their doors, choosing what to carry, leaving the rest behind. Walking these streets, it feels as if they only stepped out for a moment.",
+     "t": "Picture the last morning here. People closing their doors, choosing what to carry, leaving the rest behind. Walking these streets, it feels as if they just stepped out for a moment.",
      "c": [],
      "level": 1,
      "cue": true

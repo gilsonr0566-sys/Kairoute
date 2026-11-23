@@ -1,0 +1,371 @@
+{
+ "id": "marydouse",
+ "v": 1,
+ "city": "kusadasi",
+ "title": "House of the Virgin Mary",
+ "match": {
+  "ids": [
+   "marydouse"
+  ],
+  "names": [
+   "virgin mary",
+   "meryem ana",
+   "meryemana",
+   "mary's house"
+  ],
+  "wikidata": [
+   "Q135779"
+  ]
+ },
+ "checked": "2026-11-22",
+ "claims": {
+  "where": {
+   "label": "supported",
+   "says": "A Catholic shrine on Mt. Koressos (Bülbüldağı, Mount Nightingale), 7 km from Selçuk.",
+   "src": [
+    "wp-mary-house"
+   ],
+   "quote": [
+    "is a Catholic shrine located on Mt. Koressos (Turkish: Bülbüldağı, \"Mount Nightingale\") in the vicinity of Ephesus, 7 kilometres (4.3 mi) from Selçuk in Turkey."
+   ]
+  },
+  "belief": {
+   "label": "tradition",
+   "says": "Christian and Muslim pilgrims come believing Mary was brought here by Saint John and lived here.",
+   "src": [
+    "wp-mary-house"
+   ],
+   "quote": [
+    "Christian and Muslim pilgrims visit the house based on the belief that Mary, the mother of Jesus, was taken to this stone house by Saint John and lived there for the remainder of her earthly life."
+   ]
+  },
+  "j19": {
+   "label": "scripture",
+   "says": "John 19:26-27: Behold thy son... Behold thy mother; the disciple took her to his own home.",
+   "src": [
+    "kjv-john19"
+   ],
+   "quote": [
+    "\"chapter\":19,\"verse\":26,\"text\":\"When Jesus therefore saw his mother, and the disciple standing by, whom he loved, he saith unto his mother,",
+    "Woman, behold thy son!",
+    "\"chapter\":19,\"verse\":27,\"text\":\"Then saith he to the disciple,",
+    "Behold thy mother! And from that hour that disciple took her unto his own"
+   ]
+  },
+  "epiphanius": {
+   "label": "supported",
+   "says": "Epiphanius noted the Bible says John went to Asia but not that Mary went with him; he later said she was buried in Jerusalem.",
+   "src": [
+    "wp-ephesus"
+   ],
+   "quote": [
+    "Epiphanius, however, claimed that while the Bible says John was leaving for Asia, it does not say specifically that Mary went with him. He later stated that she was buried in Jerusalem."
+   ]
+  },
+  "two-traditions": {
+   "label": "disputed",
+   "says": "The Ephesus tradition dates from the 12th century and competes with the older Jerusalem tradition; the evidence for Ephesus is not strong.",
+   "src": [
+    "wp-mary-house"
+   ],
+   "quote": [
+    "a Christian tradition dating from the 12th century, 'the tradition of Ephesus', which has competed with the older 'Jerusalem tradition' about the place of the Dormition of the Mother of God",
+    "However, the evidence that St. Mary actually stayed there is not very strong, and there are much better indications that her permanent house was in Jerusalem."
+   ]
+  },
+  "emmerich": {
+   "label": "supported",
+   "says": "Anne Catherine Emmerich (1774-1824), a bedridden Augustinian nun in Germany, reported visions including the house John built for Mary near Ephesus.",
+   "src": [
+    "wp-mary-house"
+   ],
+   "quote": [
+    "Anne Catherine Emmerich, a bedridden Augustinian nun in Germany, reported a series of visions",
+    "One of Emmerich's accounts was a description of the house the Apostle John had built in Ephesus for Mary, the mother of Jesus",
+    "Blessed Anne Catherine Emmerich (1774–1824)"
+   ]
+  },
+  "brentano": {
+   "label": "supported",
+   "says": "Clemens Brentano wrote the visions down and published the book in 1852; neither he nor Emmerich had been to Ephesus.",
+   "src": [
+    "wp-mary-house",
+    "wp-emmerich"
+   ],
+   "quote": [
+    "After Emmerich's death, Brentano published a book based on his transcriptions of her reported visions in 1852 in Munich, Germany.",
+    "Neither Brentano nor Emmerich had ever been to Ephesus"
+   ]
+  },
+  "brentano-doubt": {
+   "label": "disputed",
+   "says": "Brentano's papers held maps and travel guides that could have embellished the visions; a Vatican official called the writings Brentano's artistic fantasy, playing no role in her beatification.",
+   "src": [
+    "wp-emmerich"
+   ],
+   "quote": [
+    "The analysis revealed various apocryphal biblical sources, maps, and travel guides among his papers. These could have been used to exaggerate or embellish some of Emmerich's narrations.",
+    "declared the writings attributed to her the \"artistic fantasy of Brentano\" and stated that they played no role in her beatification"
+   ]
+  },
+  "beatified": {
+   "label": "supported",
+   "says": "Pope John Paul II beatified Emmerich on 3 October 2004.",
+   "src": [
+    "wp-emmerich"
+   ],
+   "quote": [
+    "Pope John Paul II beatified Emmerich  on 3 October 2004"
+   ]
+  },
+  "gouyet": {
+   "label": "supported",
+   "says": "On 18 October 1881 the French priest Julien Gouyet found a small stone building here using the book.",
+   "src": [
+    "wp-mary-house"
+   ],
+   "quote": [
+    "On October 18, 1881, relying on the descriptions in the book by Brentano based on his conversations with Emmerich, a French priest, the Abbé Julien Gouyet discovered a small stone building on a mountain overlooking the Aegean Sea and the ruins of ancient Ephesus in Turkey."
+   ]
+  },
+  "1891": {
+   "label": "supported",
+   "says": "On 29 July 1891 two Lazarist missionaries rediscovered it, urged by Sister Marie de Mandat-Grancey.",
+   "src": [
+    "wp-mary-house"
+   ],
+   "quote": [
+    "Abbé Gouyet's discovery was not taken seriously by most people, but ten years later, urged by Sister Marie de Mandat-Grancey, DC, two Lazarist missionaries, Father Poulin and Father Jung, from Smyrna rediscovered the building on July 29, 1891"
+   ]
+  },
+  "sirince": {
+   "label": "supported",
+   "says": "Villagers of Şirince had long venerated the ruin, calling it Panaya Kapulu, and made a pilgrimage every August 15.",
+   "src": [
+    "wp-mary-house"
+   ],
+   "quote": [
+    "They learned that the four-walled, roofless ruin had been venerated for a long time by members of the mountain village of Şirince",
+    "The house is called Panaya Kapulu (\"Doorway to the Virgin\"). Every year pilgrims made a pilgrimage to the site on August 15"
+   ]
+  },
+  "pool": {
+   "label": "disputed",
+   "says": "On the way is a keyhole-shaped baptismal pool; early Christians may have been baptized here.",
+   "src": [
+    "wp-mary-house"
+   ],
+   "quote": [
+    "On the way to the shrine, visitors pass a key hole-shaped baptismal pool",
+    "It is thought that an early community of Christians may have lived or were baptized here in seclusion"
+   ]
+  },
+  "inside": {
+   "label": "tradition",
+   "says": "Inside: one large room with an altar and a statue of Mary; on the right a smaller room traditionally where Mary slept.",
+   "src": [
+    "wp-mary-house"
+   ],
+   "quote": [
+    "Upon entrance to the chapel, a pilgrim is met by one single large room where an altar along with a large statue of the Blessed Virgin Mary is prominently displayed in the center.",
+    "On the right side, a smaller room lies – traditionally associated with the actual room where the Virgin Mary is believed to have slept."
+   ]
+  },
+  "redline": {
+   "label": "supported",
+   "says": "A red painted line separates the restored part from the original remains.",
+   "src": [
+    "wp-mary-house"
+   ],
+   "quote": [
+    "The restored portion of the structure has been distinguished from the original remains of the structure by a line painted in red."
+   ]
+  },
+  "wall": {
+   "label": "supported",
+   "says": "Outside is a wishing wall of prayers on paper or cloth, and a fountain some believe heals.",
+   "src": [
+    "wp-mary-house"
+   ],
+   "quote": [
+    "Outside the shrine is a particular \"wishing wall\" which pilgrims have used by tying their personal intentions on paper or fabric.",
+    "A water fountain or well is also located nearby, believed by some pilgrims to have miraculous powers of healing or fertility."
+   ]
+  },
+  "church": {
+   "label": "supported",
+   "says": "The Catholic Church has never pronounced on the house's authenticity, but Pius XII made it a Holy Place in 1951.",
+   "src": [
+    "wp-mary-house"
+   ],
+   "quote": [
+    "The Roman Catholic Church has never pronounced on the authenticity of the house, for lack of scientifically acceptable evidence.",
+    "Pope Pius XII, in 1951, following the definition of the dogma of the Assumption in 1950, elevated the house to the status of a Holy Place"
+   ]
+  },
+  "popes": {
+   "label": "supported",
+   "says": "Paul VI visited in 1967, John Paul II in 1979, Benedict XVI in 2006.",
+   "src": [
+    "wp-mary-house"
+   ],
+   "quote": [
+    "Pope Paul VI visited the shrine on July 26, 1967, and Pope John Paul II on November 30, 1979. Pope Benedict XVI visited this shrine on November 29, 2006"
+   ]
+  },
+  "aug15": {
+   "label": "supported",
+   "says": "A liturgy is held every August 15 for the Assumption; Muslims also visit and venerate the site.",
+   "src": [
+    "wp-mary-house"
+   ],
+   "quote": [
+    "The site is visited and venerated by Muslims as well as Christians. A liturgical ceremony is held here every year on August 15 to commemorate the Assumption of Mary."
+   ]
+  }
+ },
+ "parts": [
+  {
+   "name": "Arrival",
+   "stand": "On the path just below the little stone house, where you can see its front.",
+   "paras": [
+    {
+     "t": "This small stone chapel on Mount Koressos, the Mount of the Nightingale, is the House of the Virgin Mary. Christian and Muslim pilgrims come here because of a tradition that Saint John brought Mary to this house, and that she lived here for the rest of her life.",
+     "c": [
+      "where",
+      "belief"
+     ],
+     "level": 1
+    },
+    {
+     "t": "Before you go on, notice the keyhole-shaped baptismal pool you pass on the way up. Some think early Christians may have been baptized here in secret.",
+     "c": [
+      "pool"
+     ],
+     "level": 3
+    },
+    {
+     "t": "The paths here slope a little. Take your time, and keep your voice low near the chapel; people come here to pray.",
+     "c": [],
+     "level": 2,
+     "cue": true
+    }
+   ]
+  },
+  {
+   "name": "Scripture and tradition",
+   "stand": "Stay outside the door for a moment, before you go in.",
+   "paras": [
+    {
+     "t": "Let's keep two things apart: what the Bible says, and what tradition says. The Bible, in the Gospel of John, says that from the cross Jesus told his mother, Woman, behold thy son! and told the disciple, Behold thy mother! And from that hour that disciple took her unto his own home. That is all Scripture tells us. It never says where that home was.",
+     "c": [
+      "j19"
+     ],
+     "level": 1
+    },
+    {
+     "t": "Even in ancient times people noticed the gap. The church writer Epiphanius pointed out that the Bible says John went to Asia, but not that Mary went with him, and he later said she was buried in Jerusalem.",
+     "c": [
+      "epiphanius"
+     ],
+     "level": 2
+    },
+    {
+     "t": "So two traditions grew up. The older one places the end of Mary's life in Jerusalem. The Ephesus tradition dates from the 12th century. Scholars note that the evidence for Ephesus is not strong, and the indications for Jerusalem are better.",
+     "c": [
+      "two-traditions"
+     ],
+     "level": 2
+    }
+   ]
+  },
+  {
+   "name": "The visions and the discovery",
+   "stand": "Stand to one side of the path with a view of the whole house.",
+   "paras": [
+    {
+     "t": "How was this house found? Through the visions of a German nun, Anne Catherine Emmerich, who lived from 1774 to 1824. Bedridden in Germany, she described the house John had built for Mary near Ephesus.",
+     "c": [
+      "emmerich"
+     ],
+     "level": 1
+    },
+    {
+     "t": "She never wrote them down herself. The poet Clemens Brentano did, and his book came out in 1852. Neither of them had ever been to Ephesus. Later scholars found maps and travel guides among Brentano's papers that could have been used to embellish her accounts, and a Vatican official called the writings Brentano's artistic fantasy, which played no part in her beatification. Pope John Paul II beatified her in 2004.",
+     "c": [
+      "brentano",
+      "brentano-doubt",
+      "beatified"
+     ],
+     "level": 2
+    },
+    {
+     "t": "Then came the search. On October 18, 1881, a French priest, Julien Gouyet, followed the book and found a small stone building on this mountain. Few took him seriously. Ten years later, on July 29, 1891, two missionary priests, urged on by Sister Marie de Mandat-Grancey, found it again.",
+     "c": [
+      "gouyet",
+      "1891"
+     ],
+     "level": 2
+    },
+    {
+     "t": "And here's the part that moves me. They learned that villagers from Şirince had honored this roofless ruin for a long time. They called it Panaya Kapulu, the Doorway to the Virgin, and every year on August 15 they came here on pilgrimage.",
+     "c": [
+      "sirince"
+     ],
+     "level": 3
+    }
+   ]
+  },
+  {
+   "name": "Inside the chapel",
+   "stand": "Go in through the door, quietly, and stop just inside.",
+   "paras": [
+    {
+     "t": "Inside there's one large room, with an altar and a statue of Mary in the center. The smaller room on the right is the one tradition says was Mary's bedroom.",
+     "c": [
+      "inside"
+     ],
+     "level": 1
+    },
+    {
+     "t": "Once you're back outside, look along the walls for a line painted in red. It separates the restored part of the building from the original remains.",
+     "c": [
+      "redline"
+     ],
+     "level": 2
+    }
+   ]
+  },
+  {
+   "name": "The wishing wall",
+   "stand": "Follow the path down to the long wall covered in paper and cloth.",
+   "paras": [
+    {
+     "t": "This is the wishing wall. Pilgrims tie their prayers to it on paper and cloth. Nearby is the fountain; some pilgrims believe its water heals.",
+     "c": [
+      "wall"
+     ],
+     "level": 1
+    },
+    {
+     "t": "What does the Church say? The Catholic Church has never ruled on whether this is really Mary's house, because there's no scientific evidence either way. But in 1951 Pope Pius XII declared it a Holy Place, and three popes have come here: Paul VI in 1967, John Paul II in 1979, and Benedict XVI in 2006. Every August 15 a liturgy is held here for the Assumption, and Muslims come to honor Mary as well.",
+     "c": [
+      "church",
+      "popes",
+      "aug15"
+     ],
+     "level": 2
+    },
+    {
+     "t": "So nobody knows for certain that Mary lived here. But look at this wall. Strangers from everywhere, of different faiths, have left a prayer for someone they love. Behold thy mother, Jesus said. People still come here to be looked after.",
+     "c": [
+      "two-traditions",
+      "j19"
+     ],
+     "level": 1
+    }
+   ]
+  }
+ ],
+ "practical": []
+}

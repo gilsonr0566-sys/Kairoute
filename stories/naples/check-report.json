@@ -33,6 +33,70 @@
     "estimate": 3,
     "disputed": 4
    }
+  },
+  {
+   "id": "pozzuoli",
+   "title": "Pozzuoli",
+   "claims": 27,
+   "minutes": {
+    "1": 2,
+    "2": 4.1,
+    "3": 5.7
+   },
+   "labels": {
+    "supported": 18,
+    "disputed": 4,
+    "scripture": 4,
+    "tradition": 1
+   }
+  },
+  {
+   "id": "sansevero",
+   "title": "Sansevero Chapel and the Veiled Christ",
+   "claims": 34,
+   "minutes": {
+    "1": 1.6,
+    "2": 3.8,
+    "3": 5.7
+   },
+   "labels": {
+    "supported": 26,
+    "estimate": 1,
+    "legend": 3,
+    "tradition": 2,
+    "disputed": 2
+   }
+  },
+  {
+   "id": "sorrento",
+   "title": "Sorrento",
+   "claims": 18,
+   "minutes": {
+    "1": 1.1,
+    "2": 2,
+    "3": 2.7
+   },
+   "labels": {
+    "supported": 15,
+    "estimate": 1,
+    "legend": 2
+   }
+  },
+  {
+   "id": "spaccanapoli",
+   "title": "Spaccanapoli and the Historic Center",
+   "claims": 32,
+   "minutes": {
+    "1": 1.8,
+    "2": 3.8,
+    "3": 6.4
+   },
+   "labels": {
+    "verified": 5,
+    "supported": 24,
+    "tradition": 1,
+    "disputed": 2
+   }
   }
  ]
 }

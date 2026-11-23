@@ -1,0 +1,546 @@
+{
+ "id": "stjohn",
+ "v": 1,
+ "city": "kusadasi",
+ "title": "Basilica of Saint John",
+ "match": {
+  "ids": [
+   "stjohn"
+  ],
+  "names": [
+   "saint john",
+   "st john",
+   "st. john",
+   "ayasuluk",
+   "isa bey",
+   "selcuk castle"
+  ],
+  "wikidata": [
+   "Q930613",
+   "Q6101813",
+   "Q1673689"
+  ]
+ },
+ "checked": "2026-11-22",
+ "claims": {
+  "where": {
+   "label": "supported",
+   "says": "The ruins lie on the slopes of Ayasuluk Hill, next to the İsa Bey Mosque, just below the fortress, in Selçuk.",
+   "src": [
+    "wp-st-john"
+   ],
+   "quote": [
+    "The ruins of the basilica are on the slopes of Ayasuluk Hill, right next to the İsa Bey Mosque, just below the fortress near the centre of Selçuk"
+   ]
+  },
+  "hill": {
+   "label": "supported",
+   "says": "Ayasuluk Hill is part of the Ephesus World Heritage Site, with a Byzantine fortress and the basilica ruins.",
+   "src": [
+    "wp-ayasuluk"
+   ],
+   "quote": [
+    "It forms part of the Ephesus UNESCO World Heritage Site, and is home to a Byzantine fortress and the ruins of the Basilica of St John."
+   ]
+  },
+  "apasa": {
+   "label": "disputed",
+   "says": "The Bronze Age settlement on the hill is believed to be Apasa, capital of Arzawa.",
+   "src": [
+    "wp-ayasuluk"
+   ],
+   "quote": [
+    "This settlement is believed to be Apasa, the capital of the Kingdom of Arzawa."
+   ]
+  },
+  "name": {
+   "label": "supported",
+   "says": "The medieval Greek name Theologos, 'Holy Theologian', after St John the Theologian, became Ayasuluk.",
+   "src": [
+    "wp-ayasuluk",
+    "wp-selcuk"
+   ],
+   "quote": [
+    "'Holy Theologian', after the Apostle's title of 'St John the Theologian'",
+    "Ayasoluk is a corrupted form of the original name."
+   ]
+  },
+  "j19": {
+   "label": "scripture",
+   "says": "John 19:25-27: at the cross Jesus entrusts his mother to the disciple whom he loved, who took her to his own home.",
+   "src": [
+    "kjv-john19"
+   ],
+   "quote": [
+    "\"chapter\":19,\"verse\":25,\"text\":\"Now there stood by the cross of Jesus his mother",
+    "\"chapter\":19,\"verse\":26,\"text\":\"When Jesus therefore saw his mother, and the disciple standing by, whom he loved, he saith unto his mother,",
+    "Woman, behold thy son!",
+    "\"chapter\":19,\"verse\":27,\"text\":\"Then saith he to the disciple,",
+    "Behold thy mother! And from that hour that disciple took her unto his own"
+   ]
+  },
+  "beloved": {
+   "label": "disputed",
+   "says": "Tradition identifies the beloved disciple as John, but this is debated.",
+   "src": [
+    "wp-john"
+   ],
+   "quote": [
+    "Many traditions identify the Apostle John as the \"disciple whom Jesus loved\" in the Gospel of John, but this identification is debated."
+   ]
+  },
+  "john-ephesus": {
+   "label": "tradition",
+   "says": "Irenaeus wrote of John staying with the church of Ephesus until Trajan's time; John is said to have died at Ephesus after AD 98, the only apostle not martyred.",
+   "src": [
+    "wp-john",
+    "wp-ephesus"
+   ],
+   "quote": [
+    "Irenaeus writes of \"the church of Ephesus, founded by Paul, with John continuing with them until the times of Trajan.\"",
+    "John is said to have died of natural causes at Ephesus sometime after AD 98, during the reign of Trajan, thus becoming the only apostle who did not die as a martyr."
+   ]
+  },
+  "john-doubt": {
+   "label": "disputed",
+   "says": "Modern scholars are divided on these traditional claims about John.",
+   "src": [
+    "wp-john"
+   ],
+   "quote": [
+    "modern scholars are divided on the veracity of these claims"
+   ]
+  },
+  "tomb": {
+   "label": "tradition",
+   "says": "Justinian built the basilica in the 6th century where John was said to have been buried.",
+   "src": [
+    "wp-st-john"
+   ],
+   "quote": [
+    "It was constructed by Justinian the Great in the 6th century, at a site where John the Apostle was said to have been buried."
+   ]
+  },
+  "crypt": {
+   "label": "supported",
+   "says": "Beneath the altar lay a crypt with the tomb of St John.",
+   "src": [
+    "wp-st-john"
+   ],
+   "quote": [
+    "Directly beneath the altar lay a crypt with several rooms and of those, the tomb of St. John itself."
+   ]
+  },
+  "psalm": {
+   "label": "supported",
+   "says": "The altar bears Psalm 132:14: This is my resting place forever, here will I dwell.",
+   "src": [
+    "wp-st-john"
+   ],
+   "quote": [
+    "On the altar itself, the inscription of the 14th verse of the 132nd Psalm can be read",
+    "This is my resting place forever, here will I dwell."
+   ]
+  },
+  "earlier": {
+   "label": "disputed",
+   "says": "A mausoleum-church stood first; one account dates the next basilica to the 4th century under Theodosius I, another to the 5th century.",
+   "src": [
+    "wp-st-john",
+    "wp-ayasuluk"
+   ],
+   "quote": [
+    "The first building to be built on Saint John's tomb was a mausoleum, which also served as a church. In the 4th century, a basilica was built over it during the reign of Theodosius I.",
+    "A mausoleum for St John was replaced by a basilica church on the site in the 5th century AD"
+   ]
+  },
+  "justinian": {
+   "label": "supported",
+   "says": "Justinian's church was finished by 565 and modeled on the Church of the Holy Apostles in Constantinople.",
+   "src": [
+    "wp-st-john",
+    "wv-selcuk"
+   ],
+   "quote": [
+    "Construction of the church began by 548 and was completed by 565.",
+    "It was modeled after the Church of the Holy Apostles in Constantinople.",
+    "completed in 565 AD"
+   ]
+  },
+  "size": {
+   "label": "supported",
+   "says": "It measured 428 by 213 feet, a cross plan with five domes.",
+   "src": [
+    "wp-st-john"
+   ],
+   "quote": [
+    "Justinian's Basilica measured at 428 x 213 feet",
+    "Five domes rested on solid piers in the corners of the cross"
+   ]
+  },
+  "holy": {
+   "label": "supported",
+   "says": "Procopius called it the most holy sanctuary there, held in very high honour.",
+   "src": [
+    "wp-st-john"
+   ],
+   "quote": [
+    "to the sanctuary of the Apostle John, which was the most holy one there and held in very high honour"
+   ]
+  },
+  "baptistery": {
+   "label": "supported",
+   "says": "The north side had a large octagonal baptistery.",
+   "src": [
+    "wp-st-john"
+   ],
+   "quote": [
+    "The north side of the church also had a large octagonal baptistery"
+   ]
+  },
+  "gate": {
+   "label": "supported",
+   "says": "The main entrance gate was called the Gate of Persecution.",
+   "src": [
+    "wp-st-john"
+   ],
+   "quote": [
+    "The main entrance gate to the basilica was called the “Gate of Persecution”"
+   ]
+  },
+  "manna": {
+   "label": "legend",
+   "says": "It was said John slept beneath his tomb and his breath stirred a healing dust, manna, every year on 8 May.",
+   "src": [
+    "wp-st-john"
+   ],
+   "quote": [
+    "It was also said that John is not dead in, but sleeping beneath his tomb, and each time he breathed, he would cause the dust around his altar to stir",
+    "the dust, called \"manna\", was said to be able to cure the sick.",
+    "The tomb itself acted upon its miracle every year on 8 May"
+   ]
+  },
+  "flasks": {
+   "label": "supported",
+   "says": "Pilgrims took the dust home in flasks with the saint's image.",
+   "src": [
+    "wp-st-john"
+   ],
+   "quote": [
+    "Flasks were produced at John's tomb for the pilgrims. These flasks usually had the Saint's image designed on to it as well."
+   ]
+  },
+  "empty": {
+   "label": "disputed",
+   "says": "One account says the tomb was found empty under Constantine; another that relics were moved to Constantinople in the 6th century, and a later excavation found it empty.",
+   "src": [
+    "wp-john",
+    "wp-ayasuluk"
+   ],
+   "quote": [
+    "the opening of his tomb during Constantine the Great's reign yielded no bones",
+    "Sotiou found it empty, as the relics had been removed to the Church of the Holy Apostles in Constantinople in the 6th century."
+   ]
+  },
+  "fortress": {
+   "label": "supported",
+   "says": "The fortress was built after the 7th-century Arab invasions to protect the basilica and later restored by Seljuk and Ottoman rulers.",
+   "src": [
+    "wp-ayasuluk"
+   ],
+   "quote": [
+    "Following the Arab invasions of the 7th century, a fortress was built to protect the basilica.",
+    "The Byzantine fortress was later restored by both Seljuk and Ottoman rulers of the area."
+   ]
+  },
+  "mosque-1402": {
+   "label": "supported",
+   "says": "In 1304 the basilica was made a mosque; in 1402 Timur's invasion destroyed it.",
+   "src": [
+    "wp-ayasuluk"
+   ],
+   "quote": [
+    "In 1304 the Seljuq dynasty captured the area and transformed the basilica into a mosque. In 1402 the basilica was destroyed by an invasion under the command of Timur."
+   ]
+  },
+  "rebuilt": {
+   "label": "supported",
+   "says": "After 1923 parts of the basilica were rebuilt with support from US religious foundations.",
+   "src": [
+    "wp-ayasuluk"
+   ],
+   "quote": [
+    "After the formation of the Turkish Republic in 1923, parts of the basilica were rebuilt with financial support from religious foundations in the United States."
+   ]
+  },
+  "paul6": {
+   "label": "supported",
+   "says": "Pope Paul VI visited and prayed here.",
+   "src": [
+    "wp-selcuk"
+   ],
+   "quote": [
+    "Pope Paul VI paid it a visit and prayed there."
+   ]
+  },
+  "artemis": {
+   "label": "verified",
+   "says": "Christian pilgrimage to the Church of Mary and this basilica eclipsed the Temple of Artemis in the 5th century.",
+   "src": [
+    "unesco-ephesus"
+   ],
+   "quote": [
+    "Little remains of the famous Temple of Artemis, one of the ‘seven wonders of the world’ which drew pilgrims from all around the Mediterranean until it was eclipsed by Christian pilgrimage to the Church of Mary and the Basilica of St. John in the 5th century CE."
+   ]
+  },
+  "isabey": {
+   "label": "supported",
+   "says": "The İsa Bey Mosque was built in 1374-75 by the Syrian architect Ali ibn Mushaimish al-Dimashqi for the Aydinid Isa Bey, on the plan of the Great Mosque of Damascus; other lines give 1374 or 1375.",
+   "src": [
+    "wp-isa-bey",
+    "wp-selcuk"
+   ],
+   "quote": [
+    "The İsa Bey Mosque (Turkish: İsa Bey Camii), constructed in 1374–75",
+    "It was built by the Syrian architect, 'Ali b. Mushaimish al-Dimashqi, in honor of the Aydinid Isa Bey. The plans for the mosque are based on the Great Mosque of Damascus.",
+    "the İsa Bey Mosque built by the Aydinids in 1375"
+   ]
+  },
+  "isabey-look": {
+   "label": "supported",
+   "says": "The western wall is marble with engraved inscriptions and geometric shapes; the dome rims have İznik tiles; the brick minaret's top is ruined.",
+   "src": [
+    "wp-isa-bey"
+   ],
+   "quote": [
+    "The western wall has inscriptions and geometric shapes engraved. These walls are covered with marble",
+    "are decorated with İznik (Nicaea) tiles",
+    "Its brick minaret is built on an octagonal base, and the upper part from the balcony is ruined."
+   ]
+  },
+  "isabey-ruin": {
+   "label": "supported",
+   "says": "By 1829 it was in ruins, the minaret fell by 1842, and it served as a caravanserai; it was rebuilt in 1975.",
+   "src": [
+    "wp-isa-bey",
+    "wv-selcuk"
+   ],
+   "quote": [
+    "By 1829, the mosque was in ruins and by 1842 the minaret had fallen down. In the 19th century, it was also used as a caravanserai.",
+    "rebuilt in 1975"
+   ]
+  },
+  "turks": {
+   "label": "verified",
+   "says": "UNESCO: the İsa Bey Mosque and the medieval settlement on the hill mark the arrival of the Seljuk and Ottoman Turks.",
+   "src": [
+    "unesco-ephesus"
+   ],
+   "quote": [
+    "The Mosque of Isa Bey and the medieval settlement on Ayasuluk Hill mark the advent of the Selçuk and Ottoman Turks."
+   ]
+  }
+ },
+ "parts": [
+  {
+   "name": "Arrival on the hill",
+   "stand": "Just inside the entrance, where you can look along the ruins of the basilica.",
+   "paras": [
+    {
+     "t": "You're standing on Ayasuluk Hill, among the ruins of the Basilica of Saint John, just below the old fortress. This was the church built over the place where, by tradition, the apostle John was buried.",
+     "c": [
+      "where",
+      "tomb"
+     ],
+     "level": 1
+    },
+    {
+     "t": "This hill is much older than the church. People lived up here in the Bronze Age, and archaeologists think it may have been Apasa, the capital of a kingdom called Arzawa. Today it's part of the Ephesus World Heritage Site.",
+     "c": [
+      "apasa",
+      "hill"
+     ],
+     "level": 3
+    },
+    {
+     "t": "Even the name tells the story. Medieval Greeks called the hill Theologos, after Saint John the Theologian, and over the centuries that wore down to Ayasuluk.",
+     "c": [
+      "name"
+     ],
+     "level": 2
+    },
+    {
+     "t": "The ground here is uneven and there's little shade. Watch your step among the fallen stones.",
+     "c": [],
+     "level": 2,
+     "cue": true
+    }
+   ]
+  },
+  {
+   "name": "John and Mary",
+   "stand": "Walk along the nave toward the far end, to the marked tomb where the altar once stood.",
+   "paras": [
+    {
+     "t": "Here is the tomb. First, what the Bible says. The Gospel of John tells how there stood by the cross of Jesus his mother, and the disciple standing by, whom he loved. Jesus saith unto his mother, Woman, behold thy son! Then saith he to the disciple, Behold thy mother! And from that hour that disciple took her unto his own home.",
+     "c": [
+      "j19"
+     ],
+     "level": 1
+    },
+    {
+     "t": "Notice what the Bible does not say. It doesn't name that disciple, and it doesn't mention Ephesus. Many traditions identify him as John, but scholars debate it.",
+     "c": [
+      "beloved"
+     ],
+     "level": 2
+    },
+    {
+     "t": "Now tradition. The early church writer Irenaeus said John stayed with the church of Ephesus until the times of the emperor Trajan. John is said to have died here of natural causes, sometime after AD 98, the only apostle who wasn't martyred. Modern scholars are divided on how much of that to accept.",
+     "c": [
+      "john-ephesus",
+      "john-doubt"
+     ],
+     "level": 2
+    },
+    {
+     "t": "In the great church, the tomb lay in a crypt directly beneath the altar. Words from Psalm 132 were inscribed on the altar: This is my resting place forever, here will I dwell.",
+     "c": [
+      "crypt",
+      "psalm"
+     ],
+     "level": 3
+    }
+   ]
+  },
+  {
+   "name": "Justinian's church",
+   "stand": "Turn back to face down the length of the church, toward the way you came in.",
+   "paras": [
+    {
+     "t": "Picture this whole space roofed over. Over the grave that tradition gives to John, the emperor Justinian built this church in the 6th century, finished by 565, modeled on the Church of the Holy Apostles in Constantinople. It was 428 feet long and 213 wide, laid out as a cross, with five domes.",
+     "c": [
+      "tomb",
+      "justinian",
+      "size"
+     ],
+     "level": 1
+    },
+    {
+     "t": "He wasn't the first to build here. A small mausoleum that served as a church came first, then a bigger basilica. When that one was built, the sources differ: one account says the 4th century, another the 5th.",
+     "c": [
+      "earlier"
+     ],
+     "level": 3
+    },
+    {
+     "t": "The historian Procopius called it the most holy sanctuary there, held in very high honour. And the main entrance had a striking name: the Gate of Persecution.",
+     "c": [
+      "holy",
+      "gate"
+     ],
+     "level": 2
+    },
+    {
+     "t": "Look for the baptistery on the north side of the church. It's octagonal, and large.",
+     "c": [
+      "baptistery"
+     ],
+     "level": 2
+    }
+   ]
+  },
+  {
+   "name": "Legends of the tomb",
+   "stand": "Stay near the tomb.",
+   "paras": [
+    {
+     "t": "The tomb gathered legends. It was said that John was not dead but sleeping beneath it, and that each time he breathed, the dust around the altar stirred. That dust, called manna, was said to cure the sick, and the miracle came every year on 8 May.",
+     "c": [
+      "manna"
+     ],
+     "level": 1
+    },
+    {
+     "t": "Pilgrims carried the dust home in little flasks stamped with the saint's image.",
+     "c": [
+      "flasks"
+     ],
+     "level": 3
+    },
+    {
+     "t": "What's really in the tomb? Nobody knows for sure. One account says that when it was opened in Constantine the Great's time it held no bones. Another says the relics were moved to Constantinople in the 6th century, and a Greek archaeologist who dug here last century found the grave empty.",
+     "c": [
+      "empty"
+     ],
+     "level": 2
+    }
+   ]
+  },
+  {
+   "name": "The fortress and the later centuries",
+   "stand": "Climb to the higher ground near the fortress walls, if it's open, and look back down over the church.",
+   "paras": [
+    {
+     "t": "Above us is the fortress. It was built after the Arab invasions of the 7th century to protect the basilica, and later Seljuk and Ottoman rulers restored it.",
+     "c": [
+      "fortress"
+     ],
+     "level": 1
+    },
+    {
+     "t": "In 1304 the Seljuks took the area and turned the church into a mosque. In 1402 an invasion led by Timur destroyed it. Parts of the church were rebuilt after 1923, with money from religious foundations in the United States. Pope Paul VI came here, and prayed.",
+     "c": [
+      "mosque-1402",
+      "rebuilt",
+      "paul6"
+     ],
+     "level": 2
+    },
+    {
+     "t": "From up here, think about the plain below. UNESCO notes that the great Temple of Artemis drew pilgrims from all over the Mediterranean, until in the 5th century Christian pilgrimage to the Church of Mary and this basilica eclipsed it.",
+     "c": [
+      "artemis"
+     ],
+     "level": 3
+    }
+   ]
+  },
+  {
+   "name": "The İsa Bey Mosque",
+   "stand": "Walk down past the basilica to the mosque next door, and stand facing its western wall.",
+   "paras": [
+    {
+     "t": "Right next to the basilica is the İsa Bey Mosque, built in 1374 and 1375 for Isa Bey, a ruler of the Aydinid family. Its plan is based on the Great Mosque of Damascus.",
+     "c": [
+      "isabey"
+     ],
+     "level": 1
+    },
+    {
+     "t": "Look at this western wall, faced in marble and engraved with inscriptions and geometric shapes. If you go inside, look up at the rims of the domes, decorated with İznik tiles. The brick minaret has lost its top, above the balcony.",
+     "c": [
+      "isabey-look"
+     ],
+     "level": 2
+    },
+    {
+     "t": "The mosque was in ruins by 1829, and its minaret fell by 1842. For a time it was even used as a caravanserai, an inn for travelers. It was rebuilt in 1975. UNESCO sees the mosque and the medieval town on this hill as marking the arrival of the Seljuk and Ottoman Turks.",
+     "c": [
+      "isabey-ruin",
+      "turks"
+     ],
+     "level": 3
+    },
+    {
+     "t": "So many centuries on one small hill. Before you go, take a moment with the words from the cross: Behold thy mother. Whatever else happened here, it began with someone being asked to take care of someone else.",
+     "c": [
+      "j19"
+     ],
+     "level": 1
+    }
+   ]
+  }
+ ],
+ "practical": []
+}

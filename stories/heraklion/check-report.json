@@ -3,6 +3,21 @@
  "warn": 0,
  "report": [
   {
+   "id": "heramuseum",
+   "title": "Heraklion Archaeological Museum",
+   "claims": 30,
+   "minutes": {
+    "1": 1.2,
+    "2": 3,
+    "3": 4.6
+   },
+   "labels": {
+    "supported": 22,
+    "disputed": 5,
+    "scripture": 3
+   }
+  },
+  {
    "id": "knossos",
    "title": "The Palace of Knossos",
    "claims": 43,

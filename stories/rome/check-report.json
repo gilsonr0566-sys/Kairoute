@@ -3,6 +3,39 @@
  "warn": 0,
  "report": [
   {
+   "id": "colosseum",
+   "title": "Colosseum and Roman Forum",
+   "claims": 46,
+   "minutes": {
+    "1": 1.8,
+    "2": 4.7,
+    "3": 8
+   },
+   "labels": {
+    "supported": 38,
+    "estimate": 1,
+    "disputed": 3,
+    "legend": 1,
+    "tradition": 2,
+    "scripture": 1
+   }
+  },
+  {
+   "id": "pantheon",
+   "title": "The Pantheon",
+   "claims": 19,
+   "minutes": {
+    "1": 1.1,
+    "2": 2.7,
+    "3": 4
+   },
+   "labels": {
+    "supported": 16,
+    "disputed": 2,
+    "legend": 1
+   }
+  },
+  {
    "id": "vatican",
    "title": "Saint Peter's Basilica and Square",
    "claims": 45,

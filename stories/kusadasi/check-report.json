@@ -19,6 +19,40 @@
     "estimate": 2,
     "scripture": 10
    }
+  },
+  {
+   "id": "marydouse",
+   "title": "House of the Virgin Mary",
+   "claims": 19,
+   "minutes": {
+    "1": 1.6,
+    "2": 3.8,
+    "3": 4.2
+   },
+   "labels": {
+    "supported": 13,
+    "tradition": 2,
+    "scripture": 1,
+    "disputed": 3
+   }
+  },
+  {
+   "id": "stjohn",
+   "title": "Basilica of Saint John",
+   "claims": 29,
+   "minutes": {
+    "1": 2,
+    "2": 4,
+    "3": 5.4
+   },
+   "labels": {
+    "supported": 18,
+    "disputed": 5,
+    "scripture": 1,
+    "tradition": 2,
+    "legend": 1,
+    "verified": 2
+   }
   }
  ]
 }

@@ -19,12 +19,28 @@
    }
   },
   {
+   "id": "delos",
+   "title": "Delos",
+   "claims": 49,
+   "minutes": {
+    "1": 1.7,
+    "2": 3.9,
+    "3": 8
+   },
+   "labels": {
+    "supported": 27,
+    "verified": 13,
+    "disputed": 3,
+    "legend": 6
+   }
+  },
+  {
    "id": "littlevenice",
    "title": "Little Venice",
    "claims": 13,
    "minutes": {
     "1": 0.9,
-    "2": 1.5,
+    "2": 1.9,
     "3": 2.3
    },
    "labels": {

@@ -1,5 +1,5 @@
 {
- "fail": 3,
+ "fail": 0,
  "warn": 0,
  "report": [
   {
@@ -44,6 +44,19 @@
     "estimate": 1,
     "supported": 31,
     "disputed": 1
+   }
+  },
+  {
+   "id": "pyrgos",
+   "title": "Pyrgos Village",
+   "claims": 19,
+   "minutes": {
+    "1": 1.1,
+    "2": 2.3,
+    "3": 3.3
+   },
+   "labels": {
+    "supported": 19
    }
   }
  ]
