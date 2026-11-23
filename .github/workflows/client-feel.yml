@@ -30,7 +30,7 @@ jobs:
     timeout-minutes: 40
     steps:
       - uses: actions/checkout@v4
-        with: { ref: "${{ github.event_name == 'schedule' && 'claude/project-thread-pe7pi0' || github.ref }}" }
+        with: { ref: "${{ github.event_name == 'schedule' && 'claude/project-thread-xrdp7v' || github.ref }}" }
       - uses: actions/setup-node@v4
         with: { node-version: 22 }
       - run: npm i --no-save playwright@1.65.1 && npx playwright install --with-deps chromium
