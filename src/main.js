@@ -2848,6 +2848,8 @@ async function addPlaces(d, ask) {
   const known = ask && findKnown(city, ask);
   if (known) { useKnown(d, known); return; }
   if (!aiReady() && !freeAI) return;
+  // With no signal nothing can be looked up: say so, never "couldn't find" a place that was never searched for.
+  if (!offOnline()) { addNote = ""; render(); return; } // the card then says so (addPlaceCard)
   addBusy = ask ? "Finding " + ask + "…" : "Looking farther afield…"; aiError = ""; addNote = ""; render();
   // 1. The real place first, from the map and the encyclopedia (Richard, Nov 14: typing a real place found nothing
   // while the AI allowance was used up). This needs no AI, and the place's position comes from the map, never the AI.
@@ -2880,6 +2882,7 @@ Return ONLY JSON: {"places":[{"id","name","lat","lng","minutes","kind":"touristy
   }
   if (!found.length) {
     addBusy = null;
+    if (!offOnline()) { render(); return; } // the signal dropped while looking: the card says so (addPlaceCard)
     aiError = ask ? (/allowance|limit|too many/i.test(aiErr) ? `The map couldn't find "${ask}", and the AI guide's allowance for today is used up. Try the full name, like "Ancient Corinth".` : `I couldn't find "${ask}". Try the full name, like "Ancient Corinth".`)
       : (/allowance|limit|too many/i.test(aiErr) ? "The AI guide's allowance for today is used up. Try again after it resets." : "No more day trips came back. Try again in a moment.");
     render(); return;
@@ -2925,7 +2928,9 @@ function useKnown(d, s) {
   const el = document.getElementById("s-" + s.id) || document.querySelector(`[data-card="${s.id}"]`);
   if (el) (el.closest("label") || el).scrollIntoView({ block: "center" });
 }
+const ADD_OFFLINE = "No internet right now, so new places can't be looked up. Every place already in your guide can still be picked; try adding again when you're back online.";
 function addPlaceCard(d) {
+  if (!offOnline() && !addBusy) return `<div class="card addplace"><h3>Don't see a place you want?</h3><p class="lede">${esc(ADD_OFFLINE)}</p></div>`;
   if (!aiReady()) return `<div class="card addplace"><h3>Don't see a place you want?</h3><p class="lede">${esc(aiOffWhy("Adding a place the app doesn't list yet"))} Every place already in your guide is in the lists above.</p></div>`;
   return `<div class="card addplace"><div><h3>Don't see a place you want?</h3><p class="lede">Name it and your guide adds it to today, with the travel time and its story.</p></div>
     ${addNote ? `<p class="banner ok" role="status">${esc(addNote)}</p>` : ""}<div class="addrow"><input id="addPlace" type="text" placeholder="e.g. Ancient Corinth" enterkeyhint="go" ${addBusy ? "disabled" : ""}><button class="btn" data-act="addplace" ${addBusy ? "disabled" : ""}>Add it</button></div>
