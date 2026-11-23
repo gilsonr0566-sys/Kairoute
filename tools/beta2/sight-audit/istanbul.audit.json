@@ -2,10 +2,31 @@
  "name": "istanbul",
  "label": "Istanbul, Turkey",
  "centre": {
-  "lat": 41.0197,
-  "lng": 28.97111
+  "lat": 41.0193,
+  "lng": 28.9719
  },
  "findings": [
+  {
+   "k": "POS",
+   "t": "Fatih Istanbul Mosque: app 41.01970,28.94970 is 8.31 km from the map's Fatih Mescidi (node/976474174, 41.00449,28.85270); Wikidata 8.32 km from the map",
+   "x": {
+    "d": 8.312979325503116,
+    "id": "src-q756189",
+    "wd": "Q756189",
+    "app": [
+     41.0197,
+     28.9497
+    ],
+    "map": [
+     41.0044905,
+     28.8526953
+    ],
+    "wdpt": [
+     41.019722,
+     28.949722
+    ]
+   }
+  },
   {
    "k": "FAME",
    "t": "#1 best known nearby, \"Fall of Constantinople\" (80 Wikipedia languages, Q160077), is not offered",
@@ -16,7 +37,15 @@
   },
   {
    "k": "FAME",
-   "t": "#2 best known nearby, \"Istanbul Metro\" (55 Wikipedia languages, Q498172), is not offered",
+   "t": "#2 best known nearby, \"Bosphorus Bridge\" (58 Wikipedia languages, Q4484), is not offered",
+   "x": {
+    "wd": "Q4484",
+    "sl": 58
+   }
+  },
+  {
+   "k": "FAME",
+   "t": "#3 best known nearby, \"Istanbul Metro\" (55 Wikipedia languages, Q498172), is not offered",
    "x": {
     "wd": "Q498172",
     "sl": 55
@@ -24,7 +53,7 @@
   },
   {
    "k": "FAME",
-   "t": "#3 best known nearby, \"Convention on preventing and combating violence against women and domestic violence\" (54 Wikipedia languages, Q1697391), is not offered",
+   "t": "#4 best known nearby, \"Convention on preventing and combating violence against women and domestic violence\" (54 Wikipedia languages, Q1697391), is not offered",
    "x": {
     "wd": "Q1697391",
     "sl": 54
@@ -32,7 +61,7 @@
   },
   {
    "k": "FAME",
-   "t": "#5 best known nearby, \"Siege of Constantinople\" (47 Wikipedia languages, Q27900), is not offered",
+   "t": "#6 best known nearby, \"Siege of Constantinople\" (47 Wikipedia languages, Q27900), is not offered",
    "x": {
     "wd": "Q27900",
     "sl": 47
@@ -40,7 +69,7 @@
   },
   {
    "k": "FAME",
-   "t": "#7 best known nearby, \"Galata Bridge\" (39 Wikipedia languages, Q81523), is not offered",
+   "t": "#8 best known nearby, \"Galata Bridge\" (39 Wikipedia languages, Q81523), is not offered",
    "x": {
     "wd": "Q81523",
     "sl": 39
@@ -48,7 +77,7 @@
   },
   {
    "k": "FAME",
-   "t": "#8 best known nearby, \"Siege of Constantinople\" (38 Wikipedia languages, Q1750892), is not offered",
+   "t": "#9 best known nearby, \"Siege of Constantinople\" (38 Wikipedia languages, Q1750892), is not offered",
    "x": {
     "wd": "Q1750892",
     "sl": 38
@@ -56,7 +85,7 @@
   },
   {
    "k": "FAME",
-   "t": "#9 best known nearby, \"Siege of Constantinople\" (37 Wikipedia languages, Q399482), is not offered",
+   "t": "#10 best known nearby, \"Siege of Constantinople\" (37 Wikipedia languages, Q399482), is not offered",
    "x": {
     "wd": "Q399482",
     "sl": 37
@@ -64,7 +93,7 @@
   },
   {
    "k": "FAME",
-   "t": "#10 best known nearby, \"2022 Istanbul bombing\" (36 Wikipedia languages, Q115193912), is not offered",
+   "t": "#11 best known nearby, \"2022 Istanbul bombing\" (36 Wikipedia languages, Q115193912), is not offered",
    "x": {
     "wd": "Q115193912",
     "sl": 36
@@ -72,7 +101,7 @@
   },
   {
    "k": "FAME",
-   "t": "#11 best known nearby, \"Spice Bazaar\" (34 Wikipedia languages, Q668641), is not offered",
+   "t": "#12 best known nearby, \"Spice Bazaar\" (34 Wikipedia languages, Q668641), is not offered",
    "x": {
     "wd": "Q668641",
     "sl": 34
@@ -80,7 +109,7 @@
   },
   {
    "k": "FAME",
-   "t": "#12 best known nearby, \"2016 Istanbul bombing\" (33 Wikipedia languages, Q22039066), is not offered",
+   "t": "#13 best known nearby, \"2016 Istanbul bombing\" (33 Wikipedia languages, Q22039066), is not offered",
    "x": {
     "wd": "Q22039066",
     "sl": 33
@@ -88,7 +117,7 @@
   },
   {
    "k": "FAME",
-   "t": "#13 best known nearby, \"Siege of Constantinople\" (32 Wikipedia languages, Q312268), is not offered",
+   "t": "#14 best known nearby, \"Siege of Constantinople\" (32 Wikipedia languages, Q312268), is not offered",
    "x": {
     "wd": "Q312268",
     "sl": 32
@@ -96,18 +125,10 @@
   },
   {
    "k": "FAME",
-   "t": "#14 best known nearby, \"Eurasia Tunnel\" (32 Wikipedia languages, Q5411040), is not offered",
+   "t": "#15 best known nearby, \"Eurasia Tunnel\" (32 Wikipedia languages, Q5411040), is not offered",
    "x": {
     "wd": "Q5411040",
     "sl": 32
-   }
-  },
-  {
-   "k": "FAME",
-   "t": "#15 best known nearby, \"Obelisk of Theodosius\" (31 Wikipedia languages, Q763854), is not offered",
-   "x": {
-    "wd": "Q763854",
-    "sl": 31
    }
   },
   {
@@ -387,37 +408,6 @@
    "summary": "Sokollu Mehmet Pasha was the grand vizier and de facto ruler of the Ottoman Empire during its 16th century golden age. He commissioned this mosque, one of three"
   },
   {
-   "id": "src-q1420984",
-   "name": "Pammakaristos Church",
-   "local": "Fethiye Camii",
-   "lat": 41.0292,
-   "lng": 28.9464,
-   "minutes": 30,
-   "category": "Mosque",
-   "kind": "touristy",
-   "quick": false,
-   "mustSee": false,
-   "fame": 31,
-   "unesco": false,
-   "heritage": true,
-   "wd": "Q1420984",
-   "src": [
-    "Wikidata (Wikipedia in many languages)",
-    "national heritage register",
-    "Wikivoyage (English)",
-    "Wikipedia in Turkish"
-   ],
-   "srcOnly": true,
-   "builtin": false,
-   "famousFix": false,
-   "far": false,
-   "travel": "",
-   "parts": [],
-   "merged": [],
-   "posDoubt": false,
-   "summary": "The Church of Theotokos Pammakaristos (\"All-Blessed Mother of God\") was built between the 11th and 12th centuries. The parekklesion or side-chapel was added may"
-  },
-  {
    "id": "src-q197094",
    "name": "Zeyrek Mosque",
    "local": "Zeyrek Camii",
@@ -447,6 +437,37 @@
    "merged": [],
    "posDoubt": true,
    "summary": "This is a triple structure: the church of the Monastery of Pantokrator built 1118, then a public church circa 1136 plus a chapel that served as a royal mausoleu"
+  },
+  {
+   "id": "src-q1420984",
+   "name": "Pammakaristos Church",
+   "local": "Fethiye Camii",
+   "lat": 41.0292,
+   "lng": 28.9464,
+   "minutes": 30,
+   "category": "Mosque",
+   "kind": "touristy",
+   "quick": false,
+   "mustSee": false,
+   "fame": 31,
+   "unesco": false,
+   "heritage": true,
+   "wd": "Q1420984",
+   "src": [
+    "Wikidata (Wikipedia in many languages)",
+    "national heritage register",
+    "Wikivoyage (English)",
+    "Wikipedia in Turkish"
+   ],
+   "srcOnly": true,
+   "builtin": false,
+   "famousFix": false,
+   "far": false,
+   "travel": "",
+   "parts": [],
+   "merged": [],
+   "posDoubt": false,
+   "summary": "The Church of Theotokos Pammakaristos (\"All-Blessed Mother of God\") was built between the 11th and 12th centuries. The parekklesion or side-chapel was added may"
   },
   {
    "id": "src-q1430090",
@@ -748,36 +769,6 @@
    "summary": "A sight in Istanbul, Turkey, named by 2 independent sources."
   },
   {
-   "id": "src-q956677",
-   "name": "Eyüp Sultan Mosque",
-   "local": "Eyüp Sultan Camii",
-   "lat": 41.04795,
-   "lng": 28.93379,
-   "minutes": 30,
-   "category": "Mosque",
-   "kind": "touristy",
-   "quick": false,
-   "mustSee": false,
-   "fame": 29,
-   "unesco": false,
-   "heritage": false,
-   "wd": "Q956677",
-   "src": [
-    "Wikidata (Wikipedia in many languages)",
-    "Wikivoyage (English)",
-    "Wikipedia in Turkish"
-   ],
-   "srcOnly": true,
-   "builtin": false,
-   "famousFix": false,
-   "far": false,
-   "travel": "",
-   "parts": [],
-   "merged": [],
-   "posDoubt": false,
-   "summary": "This is the main attraction around this part of the city."
-  },
-  {
    "id": "src-q1758501",
    "name": "Kalenderhane Mosque",
    "local": "Kalenderhane Camii",
@@ -969,6 +960,35 @@
    "unesco": false,
    "heritage": false,
    "wd": "Q644677",
+   "src": [
+    "Wikidata (Wikipedia in many languages)",
+    "Wikipedia in Turkish"
+   ],
+   "srcOnly": true,
+   "builtin": false,
+   "famousFix": false,
+   "far": false,
+   "travel": "",
+   "parts": [],
+   "merged": [],
+   "posDoubt": false,
+   "summary": "A mosque in Istanbul, Turkey, named by 2 independent sources."
+  },
+  {
+   "id": "src-q911720",
+   "name": "New Mosque",
+   "local": "Yeni Cami",
+   "lat": 41.01687,
+   "lng": 28.97214,
+   "minutes": 30,
+   "category": "Mosque",
+   "kind": "touristy",
+   "quick": false,
+   "mustSee": false,
+   "fame": 41,
+   "unesco": false,
+   "heritage": false,
+   "wd": "Q911720",
    "src": [
     "Wikidata (Wikipedia in many languages)",
     "Wikipedia in Turkish"
