@@ -74,6 +74,19 @@
 - INFO 18 sights, 4 day trips/towns; must-see: Dome of the Rock, Al-Aqsa Mosque, Western Wall, Israel Museum, Church of the Holy Sepulchre, The Temple Institute, Holy Land, Calvary; top by fame: Al-Aqsa Mosque 103, Holy Land 91, Israel Museum 90, Dome of the Rock 87, Western Wall 84, Calvary 81, Church of the Holy Sepulchre 76, The Temple Institute 76
 - INFO day trips: Abu Ghosh, Tel Aviv, Church of Our Lady of the Covenant, The Benedictine monastery in Abu Ghosh
 
+## Heraklion (Heraklion, built-in guide)
+- POS Kali Limenes (Fair Havens) [day trip] {Q11818846 by name}: app is 1.39 km from Wikidata's point (not on the map by id)
+- NOT Palace of Knossos {Q9054457 by name}: Wikidata has an end date (closed, dissolved or demolished)
+- NOID Venetian harbor and Koules fortress: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- NOID Church of Saint Titus: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- NOID 1866 Street market: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- NOID Dominican Church of St Peter: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- NOID Phaistos palace [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- LEN Lions Square and 25th August Street {Q6555912 by name}: 40 min, but a square usually takes 5-30 min
+- LEN Fortifications of Heraklion {Q20127741 by name}: 30 min, but a castle or fortress usually takes 45-180 min
+- INFO 11 sights, 2 day trips/towns; must-see: Palace of Knossos, Heraklion Archaeological Museum, Church of Saint Titus; top by fame: Palace of Knossos 0, Heraklion Archaeological Museum 0, Venetian harbor and Koules fortress 0, Lions Square and 25th August Street 0, Church of Saint Titus 0, Agios Minas Cathedral 0, 1866 Street market 0, Historical Museum of Crete 0
+- INFO day trips: Phaistos palace, Kali Limenes (Fair Havens)
+
 ## Istanbul, Turkey (Istanbul, Turkey, guide from sources)
 - POS Fatih Istanbul Mosque: app 41.01970,28.94970 is 8.31 km from the map's Fatih Mescidi (node/976474174, 41.00449,28.85270); Wikidata 8.32 km from the map
 - FAME #1 best known nearby, "Fall of Constantinople" (80 Wikipedia languages, Q160077), is not offered
