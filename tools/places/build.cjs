@@ -203,6 +203,20 @@ async function cityEats(sites) {
   }
   return [...out.values()];
 }
+// Opening hours of every named place to eat or drink on the map near the place's sights (within 500 m of any), kept
+// short as [name, lat, lng, hours, kind]: a place the guide names is matched to it by name and position, so the planner
+// knows when it opens (Nov 23 real-map check: lunches planned at places shut at that hour, whose hours only the map had).
+async function eatHours(sites) {
+  const pts = sites.filter(s => isFinite(s.lat) && isFinite(s.lng)), out = new Map();
+  for (let i = 0; i < pts.length; i += 15) {
+    const part = pts.slice(i, i + 15);
+    const els = await overpass(`[out:json][timeout:120];(${part.map(s => `nwr(around:500,${s.lat},${s.lng})["amenity"~"^(restaurant|cafe|fast_food|pub|bar|food_court|biergarten)$"]["name"]["opening_hours"];`).join('')});out tags center;`);
+    for (const el of els) { const q = pos(el), tg = el.tags || {}; if (!q || !tg.name || !tg.opening_hours) continue;
+      out.set(el.type + '/' + el.id, [tg['name:en'] || tg.name, +q.lat.toFixed(5), +q.lng.toFixed(5), tg.opening_hours, tg.amenity]); }
+    await sleep(1500);
+  }
+  return [...out.values()];
+}
 async function guideSights(title, centre) {
   const page = title ? await wvText(title) : null; if (!page) return [];
   // A big city's guide lists its sights on its district pages ("Dubai/Deira"): with fewer than 8 sights on the main page,
@@ -356,6 +370,7 @@ async function buildPlace(t) {
   // 3b. The guide's own sights for the place itself.
   if (host) out.guideSights = await guideSights(host.title, centre);
   out.cityEats = await cityEats(t.sites); console.log(`   ${out.cityEats.length} restaurants on the map beside the sights`);
+  out.eatHours = await eatHours(t.sites.concat((t.farther || []).filter(x => !x.town))); console.log(`   opening hours for ${out.eatHours.length} places to eat`);
   // 4a. Cable cars and funiculars (a landing below the town).
   out.lifts = await liftsNear(centre, 15);
   // 4b. Public transport lines within reach of the sights.
@@ -427,6 +442,7 @@ async function buildPlace(t) {
         for (const [id, x] of Object.entries(saved)) { const w = officialWeb(es[x.wikidata]); if (w) { fresh.sites[id] = fresh.sites[id] || Object.assign({}, x); fresh.sites[id].web = w; } }
         console.log(`   hours for ${Object.values(fresh.sites).filter(x => x.hours).length} of ${Object.keys(saved).length} sights`);
       }
+      if (refresh.includes('eathours') && t.sites.length) { fresh.eatHours = await eatHours(t.sites.concat((t.farther || []).filter(x => !x.town))); console.log(`   opening hours for ${fresh.eatHours.length} places to eat`); }
       if (refresh.includes('eats') && t.sites.length) { fresh.cityEats = await cityEats(t.sites); console.log(`   ${fresh.cityEats.length} restaurants on the map beside the sights`); }
       if (refresh.includes('piers')) {
         const pts = [{ lat: centre.lat, lng: centre.lng, km: 8 }];
