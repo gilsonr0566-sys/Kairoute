@@ -2,19 +2,10 @@
  "name": "hamburg",
  "label": "Hamburg, Germany",
  "centre": {
-  "lat": 53.55028,
-  "lng": 9.99001
+  "lat": 53.5505,
+  "lng": 9.99075
  },
  "findings": [
-  {
-   "k": "LEN",
-   "t": "Hamburger Kunsthalle: 40 min, but a art museum or gallery usually takes 45-240 min",
-   "x": {
-    "id": "src-q169542",
-    "min": 40,
-    "kind": "art museum or gallery"
-   }
-  },
   {
    "k": "POS",
    "t": "Port of Hamburg: app is 1.38 km from Wikidata's point (not on the map by id)",
@@ -33,20 +24,6 @@
    }
   },
   {
-   "k": "NOT",
-   "t": "St. James' Church: Wikidata has an end date (closed, dissolved or demolished)",
-   "x": {
-    "id": "src-q564532"
-   }
-  },
-  {
-   "k": "NOT",
-   "t": "St. Nicholas Church, Hamburg: Wikidata has an end date (closed, dissolved or demolished)",
-   "x": {
-    "id": "src-q425622"
-   }
-  },
-  {
    "k": "POS",
    "t": "Außenalster: app is 1.05 km from Wikidata's point (not on the map by id)",
    "x": {
@@ -61,31 +38,6 @@
      53.565,
      10.01
     ]
-   }
-  },
-  {
-   "k": "LEN",
-   "t": "Deichtorhallen: 40 min, but a art museum or gallery usually takes 45-240 min",
-   "x": {
-    "id": "src-q1183156",
-    "min": 40,
-    "kind": "art museum or gallery"
-   }
-  },
-  {
-   "k": "LEN",
-   "t": "Kaiser-Wilhelm-Denkmal, Hamburg: 40 min, but a fountain, statue or monument usually takes 5-30 min",
-   "x": {
-    "id": "src-q1721556",
-    "min": 40,
-    "kind": "fountain, statue or monument"
-   }
-  },
-  {
-   "k": "NOT",
-   "t": "St. Ansgar: Wikidata has an end date (closed, dissolved or demolished)",
-   "x": {
-    "id": "src-q1746647"
    }
   },
   {
@@ -173,15 +125,6 @@
    }
   },
   {
-   "k": "LEN",
-   "t": "Germanengrab [day trip] {Q1514083 by name}: 30 min, but a archaeological site or ancient city usually takes 40-240 min",
-   "x": {
-    "id": "itzehoe-far~Q1514083",
-    "min": 30,
-    "kind": "archaeological site or ancient city"
-   }
-  },
-  {
    "k": "NOID",
    "t": "St. Marien [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby",
    "x": {
@@ -204,33 +147,18 @@
   },
   {
    "k": "NOID",
-   "t": "St. Aegidien [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby",
-   "x": {
-    "id": "lubeck-far~Q316973"
-   }
-  },
-  {
-   "k": "NOID",
    "t": "St. Katharinen [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby",
    "x": {
     "id": "lubeck-far~Q317388"
    }
   },
   {
-   "k": "POS",
-   "t": "Holstentor [day trip]: app is 59.08 km from Wikidata's point (not on the map by id)",
+   "k": "LEN",
+   "t": "Holstentor [day trip] {Q321229 by name}: 30 min, but a castle or fortress usually takes 45-180 min",
    "x": {
-    "d": 59.078661127007784,
     "id": "lubeck-far~Q321229",
-    "wd": "Q1625144",
-    "app": [
-     53.8662,
-     10.6797
-    ],
-    "wdpt": [
-     53.55333333,
-     9.95416667
-    ]
+    "min": 30,
+    "kind": "castle or fortress"
    }
   },
   {
@@ -259,59 +187,18 @@
    }
   },
   {
+   "k": "NOID",
+   "t": "Rathaus [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby",
+   "x": {
+    "id": "lubeck-far~Q538453"
+   }
+  },
+  {
    "k": "DUP",
    "t": "Buxtehude ~ Buxtehude Museum für Regionalgeschichte und Kunst (43 m apart, same words)",
    "x": {
     "a": "buxtehude-far",
     "b": "buxtehude-far~Q1954671"
-   }
-  },
-  {
-   "k": "DUP",
-   "t": "Itzehoe ~ Kloster Itzehoe (224 m apart, same words)",
-   "x": {
-    "a": "itzehoe-far",
-    "b": "itzehoe-far~Q1775395"
-   }
-  },
-  {
-   "k": "FOLD",
-   "t": "Speicherstadt is part of HafenCity (Wikidata) but is a separate stop",
-   "x": {
-    "id": "src-q661881",
-    "of": "src-q1561"
-   }
-  },
-  {
-   "k": "FOLD",
-   "t": "Elbphilharmonie is part of HafenCity (Wikidata) but is a separate stop",
-   "x": {
-    "id": "src-q673223",
-    "of": "src-q1561"
-   }
-  },
-  {
-   "k": "FOLD",
-   "t": "International Maritime Museum Hamburg is part of HafenCity (Wikidata) but is a separate stop",
-   "x": {
-    "id": "src-q937608",
-    "of": "src-q1561"
-   }
-  },
-  {
-   "k": "FOLD",
-   "t": "Prototype Museum is part of HafenCity (Wikidata) but is a separate stop",
-   "x": {
-    "id": "src-q16886704",
-    "of": "src-q1561"
-   }
-  },
-  {
-   "k": "FOLD",
-   "t": "Kesselhaus is part of HafenCity (Wikidata) but is a separate stop",
-   "x": {
-    "id": "src-q19287874",
-    "of": "src-q1561"
    }
   },
   {
@@ -340,6 +227,20 @@
   },
   {
    "k": "FAME",
+   "t": "must-see \"Elbphilharmonie\" is not offered",
+   "x": {
+    "want": "Elbphilharmonie"
+   }
+  },
+  {
+   "k": "FAME",
+   "t": "must-see \"Speicherstadt\" is not offered",
+   "x": {
+    "want": "Speicherstadt"
+   }
+  },
+  {
+   "k": "FAME",
    "t": "must-see \"Miniatur Wunderland\" is offered (Miniatur Wunderland) but not marked must-see",
    "x": {
     "want": "Miniatur Wunderland",
@@ -355,56 +256,24 @@
   },
   {
    "k": "INFO",
-   "t": "47 sights, 44 day trips/towns; must-see: Speicherstadt, Hamburger Kunsthalle, Elbphilharmonie, Chilehaus, Volksparkstadion, Port of Hamburg, St. Pauli; top by fame: International Maritime Museum Hamburg 60, Speicherstadt 41, Elbphilharmonie 41, Chilehaus 35, Port of Hamburg 35, HafenCity 35, Hamburger Kunsthalle 34, Reeperbahn 31",
+   "t": "48 sights, 39 day trips/towns; must-see: Hamburger Kunsthalle, Chilehaus, Volksparkstadion, Port of Hamburg; top by fame: International Maritime Museum Hamburg 60, St.-Pauli-Kirche 37, Chilehaus 35, Port of Hamburg 35, Hafenmuseum 35, Hamburger Kunsthalle 34, Reeperbahn 31, Miniatur Wunderland 30",
    "x": {}
   },
   {
    "k": "INFO",
-   "t": "day trips: Bremen, Buxtehude, Itzehoe, Lübeck, Rathaus, Roland, Dom St. Petri, Böttcherstraße, Wallanlagen, Schnoor, Überseemuseum, Wuseum, Kunsthalle, Gerhard-Marcks-Haus, Wilhelm-Wagenfeld-Haus, Weserburg, St. Petri church, City hall, Buxtehude Museum für Regionalgeschichte und Kunst, Germanengrab, Nagelsche Fachwerkhäuser, Stadtkirche St. Laurentii, St.-Jürgen-Kapelle, St. Marien, The Dom, St. Petri, St. Jakobi, St. Aegidien, St. Katharinen, Holstentor, Burgtor, Heiligen-Geist-Hospital, Behnhaus/Drägerhaus, Willy Brandt House, Haus der Kaufmannschaft, Museumsquartier St. Annen, Buddenbrookhaus, Günter-Grass-Haus, Museumshafen, European Hansemuseum, Museum für Natur und Umwelt Lübeck, Kloster Itzehoe, Rathaus, Theaterfigurenmuseum Lübeck",
+   "t": "day trips: Bremen, Buxtehude, Lübeck, Lüneburg, Rathaus, Roland, Dom St. Petri, Böttcherstraße, Wallanlagen, Schnoor, Überseemuseum, Wuseum, Kunsthalle, Gerhard-Marcks-Haus, Wilhelm-Wagenfeld-Haus, Weserburg, St. Petri church, City hall, Buxtehude Museum für Regionalgeschichte und Kunst, St. Marien, The Dom, St. Petri, St. Jakobi, St. Aegidien, St. Katharinen, Holstentor, Burgtor, Heiligen-Geist-Hospital, Behnhaus/Drägerhaus, Rathaus, Willy Brandt House, Haus der Kaufmannschaft, Museumsquartier St. Annen, Buddenbrookhaus, Günter-Grass-Haus, Museumshafen, European Hansemuseum, Museum für Natur und Umwelt Lübeck, Theaterfigurenmuseum Lübeck",
    "x": {}
   }
  ],
  "sights": [
-  {
-   "id": "src-q661881",
-   "name": "Speicherstadt",
-   "local": "",
-   "lat": 53.54356,
-   "lng": 9.99001,
-   "minutes": 40,
-   "category": "Sight",
-   "kind": "touristy",
-   "quick": false,
-   "mustSee": true,
-   "fame": 41,
-   "unesco": false,
-   "heritage": true,
-   "wd": "Q661881",
-   "src": [
-    "Wikidata (Wikipedia in many languages)",
-    "national heritage register",
-    "Wikivoyage (English)",
-    "Wikivoyage (German)",
-    "Wikipedia in German"
-   ],
-   "srcOnly": true,
-   "builtin": false,
-   "famousFix": false,
-   "far": false,
-   "travel": "",
-   "parts": [],
-   "merged": [],
-   "posDoubt": false,
-   "summary": "Branch of Museum of Labour in docklands warehouse. History of the district and tea and coffee trade."
-  },
   {
    "id": "src-q169542",
    "name": "Hamburger Kunsthalle",
    "local": "",
    "lat": 53.5552,
    "lng": 10.0031,
-   "minutes": 40,
-   "category": "Sight",
+   "minutes": 90,
+   "category": "Museum",
    "kind": "touristy",
    "quick": false,
    "mustSee": true,
@@ -430,44 +299,13 @@
    "summary": "Glockengießerwall north of Hauptbahnhof."
   },
   {
-   "id": "src-q673223",
-   "name": "Elbphilharmonie",
-   "local": "",
-   "lat": 53.54137,
-   "lng": 9.9849,
-   "minutes": 40,
-   "category": "Sight",
-   "kind": "touristy",
-   "quick": false,
-   "mustSee": true,
-   "fame": 41,
-   "unesco": false,
-   "heritage": false,
-   "wd": "Q673223",
-   "src": [
-    "Wikidata (Wikipedia in many languages)",
-    "Wikivoyage (English)",
-    "Wikivoyage (German)",
-    "Wikipedia in German"
-   ],
-   "srcOnly": true,
-   "builtin": false,
-   "famousFix": false,
-   "far": false,
-   "travel": "",
-   "parts": [],
-   "merged": [],
-   "posDoubt": false,
-   "summary": "New 'architectural lighthouse' of Hamburg. On the top of a huge old warehouse a 110 metres tall modern philharmonic hall with glass façade and wave-shaped roof."
-  },
-  {
    "id": "src-q502326",
    "name": "Tierpark Hagenbeck",
    "local": "Hagenbecks Tierpark",
    "lat": 53.59497,
    "lng": 9.94161,
-   "minutes": 40,
-   "category": "Park or garden",
+   "minutes": 150,
+   "category": "Zoo or park",
    "kind": "touristy",
    "quick": false,
    "mustSee": false,
@@ -561,8 +399,8 @@
    "local": "",
    "lat": 53.58694,
    "lng": 9.89861,
-   "minutes": 40,
-   "category": "Park or garden",
+   "minutes": 45,
+   "category": "Stadium",
    "kind": "touristy",
    "quick": false,
    "mustSee": true,
@@ -584,7 +422,7 @@
    "parts": [],
    "merged": [],
    "posDoubt": true,
-   "summary": "A park or garden in Hamburg, Germany, named by 2 independent sources.",
+   "summary": "A stadium in Hamburg, Germany, named by 2 independent sources.",
    "wdByName": true
   },
   {
@@ -687,8 +525,8 @@
    "local": "Miniatur-Wunderland",
    "lat": 53.54385,
    "lng": 9.989,
-   "minutes": 40,
-   "category": "Sight",
+   "minutes": 90,
+   "category": "Museum",
    "kind": "touristy",
    "quick": false,
    "mustSee": false,
@@ -745,44 +583,13 @@
    "summary": "The museum is a leading centre for art, applied art, and design. Its collections of work from Europe and the Middle and the Far East are of the finest-quality a"
   },
   {
-   "id": "src-q1556",
-   "name": "St. Pauli",
-   "local": "Landungsbrücken",
-   "lat": 53.54611,
-   "lng": 9.96667,
-   "minutes": 90,
-   "category": "Museum",
-   "kind": "touristy",
-   "quick": false,
-   "mustSee": true,
-   "fame": 12,
-   "unesco": false,
-   "heritage": true,
-   "wd": "Q458970",
-   "src": [
-    "Wikivoyage (English)",
-    "Wikivoyage (German)",
-    "national heritage register",
-    "Wikipedia in German"
-   ],
-   "srcOnly": true,
-   "builtin": false,
-   "famousFix": false,
-   "far": false,
-   "travel": "",
-   "parts": [],
-   "merged": [],
-   "posDoubt": false,
-   "summary": "A museum in Hamburg, Germany, named by 3 independent sources."
-  },
-  {
    "id": "src-q668264",
    "name": "Islamic Centre Hamburg",
    "local": "Islamisches Zentrum Hamburg",
    "lat": 53.57457,
    "lng": 10.00842,
-   "minutes": 40,
-   "category": "Sight",
+   "minutes": 30,
+   "category": "Mosque",
    "kind": "local",
    "quick": false,
    "mustSee": false,
@@ -874,8 +681,8 @@
    "local": "St. Marien-Dom (Hamburg)",
    "lat": 53.55766,
    "lng": 10.01367,
-   "minutes": 40,
-   "category": "Sight",
+   "minutes": 30,
+   "category": "Church",
    "kind": "local",
    "quick": false,
    "mustSee": false,
@@ -900,44 +707,13 @@
    "summary": "Since 1995, this neo-romanesque church is the cathedral of the youngest Roman Catholic archbishop of Germany."
   },
   {
-   "id": "src-q564532",
-   "name": "St. James' Church",
-   "local": "Hauptbahnhof",
-   "lat": 53.55028,
-   "lng": 10.00056,
-   "minutes": 30,
-   "category": "Church",
-   "kind": "local",
-   "quick": false,
-   "mustSee": false,
-   "fame": 15,
-   "unesco": false,
-   "heritage": true,
-   "wd": "Q564532",
-   "src": [
-    "Wikivoyage (English)",
-    "Wikivoyage (German)",
-    "national heritage register",
-    "Wikipedia in German"
-   ],
-   "srcOnly": true,
-   "builtin": false,
-   "famousFix": false,
-   "far": false,
-   "travel": "",
-   "parts": [],
-   "merged": [],
-   "posDoubt": false,
-   "summary": "St. Jacobi has been a parish since the 12th century, when it was not even within Hamburg's then city walls."
-  },
-  {
    "id": "src-q494440",
    "name": "Planten un Blomen",
    "local": "",
    "lat": 53.56111,
    "lng": 9.98333,
    "minutes": 40,
-   "category": "Sight",
+   "category": "Park or garden",
    "kind": "local",
    "quick": false,
    "mustSee": false,
@@ -960,38 +736,6 @@
    "merged": [],
    "posDoubt": false,
    "summary": "This park is partially on the old city wall of Hamburg. Already in the 1930s the former zoological park was remodeled into a bird and entertainment park for the"
-  },
-  {
-   "id": "src-q1561",
-   "name": "HafenCity",
-   "local": "",
-   "lat": 53.54167,
-   "lng": 9.99333,
-   "minutes": 40,
-   "category": "Sight",
-   "kind": "touristy",
-   "quick": false,
-   "mustSee": false,
-   "fame": 35,
-   "unesco": false,
-   "heritage": false,
-   "wd": "Q1561",
-   "src": [
-    "Wikidata (Wikipedia in many languages)",
-    "Wikivoyage (English)",
-    "Wikivoyage (German)",
-    "Wikipedia in German"
-   ],
-   "srcOnly": true,
-   "builtin": false,
-   "famousFix": false,
-   "far": false,
-   "travel": "",
-   "parts": [],
-   "merged": [],
-   "posDoubt": false,
-   "summary": "A sight in Hamburg, Germany, named by 3 independent sources.",
-   "wdByName": true
   },
   {
    "id": "src-q3238460",
@@ -1023,6 +767,37 @@
    "merged": [],
    "posDoubt": false,
    "summary": "A sight in Hamburg, Germany, named by 4 independent sources."
+  },
+  {
+   "id": "src-q458970",
+   "name": "St. Pauli Landing Stages",
+   "local": "Landungsbrücken",
+   "lat": 53.54611,
+   "lng": 9.96667,
+   "minutes": 40,
+   "category": "Sight",
+   "kind": "local",
+   "quick": false,
+   "mustSee": false,
+   "fame": 12,
+   "unesco": false,
+   "heritage": true,
+   "wd": "Q458970",
+   "src": [
+    "Wikivoyage (English)",
+    "Wikivoyage (German)",
+    "national heritage register",
+    "Wikipedia in German"
+   ],
+   "srcOnly": true,
+   "builtin": false,
+   "famousFix": false,
+   "far": false,
+   "travel": "",
+   "parts": [],
+   "merged": [],
+   "posDoubt": false,
+   "summary": "The most touristy part of Hamburg's harbour, close to the metro station with the same name. Piers connected with several bridges swim on the water adapting to t"
   },
   {
    "id": "src-q460264",
@@ -1085,35 +860,6 @@
    "merged": [],
    "posDoubt": false,
    "summary": "One of the last generation of pre-containerisation cargo ships (built in the 1960s), now semi-permanently moored halfway between Landungsbrücken and the Speiche"
-  },
-  {
-   "id": "src-q425622",
-   "name": "St. Nicholas Church, Hamburg",
-   "local": "Ehemalige Hauptkirche St. Nikolai (Hamburg)",
-   "lat": 53.5475,
-   "lng": 9.99056,
-   "minutes": 30,
-   "category": "Church",
-   "kind": "touristy",
-   "quick": false,
-   "mustSee": false,
-   "fame": 31,
-   "unesco": false,
-   "heritage": false,
-   "wd": "Q425622",
-   "src": [
-    "Wikivoyage (English)",
-    "Wikipedia in German"
-   ],
-   "srcOnly": true,
-   "builtin": false,
-   "famousFix": false,
-   "far": false,
-   "travel": "",
-   "parts": [],
-   "merged": [],
-   "posDoubt": false,
-   "summary": "All five main churches of Hamburg were damaged in World War II. But in contrast to the other four, St. Nikolai has not been re-erected making it a memorial agai"
   },
   {
    "id": "src-q3392985",
@@ -1214,8 +960,8 @@
    "local": "",
    "lat": 53.56199,
    "lng": 9.9615,
-   "minutes": 40,
-   "category": "Sight",
+   "minutes": 30,
+   "category": "Theatre",
    "kind": "local",
    "quick": false,
    "mustSee": false,
@@ -1245,7 +991,7 @@
    "lat": 53.56306,
    "lng": 9.97583,
    "minutes": 40,
-   "category": "Sight",
+   "category": "Tower",
    "kind": "local",
    "quick": false,
    "mustSee": false,
@@ -1266,7 +1012,7 @@
    "parts": [],
    "merged": [],
    "posDoubt": false,
-   "summary": "A listed historic sight in Hamburg, Germany, named by 3 independent sources."
+   "summary": "A listed historic tower in Hamburg, Germany, named by 3 independent sources."
   },
   {
    "id": "src-q1082972",
@@ -1274,8 +1020,8 @@
    "local": "",
    "lat": 53.54694,
    "lng": 9.93278,
-   "minutes": 40,
-   "category": "Sight",
+   "minutes": 30,
+   "category": "Church",
    "kind": "local",
    "quick": false,
    "mustSee": false,
@@ -1300,43 +1046,13 @@
    "summary": "Baroque church in Ottensen."
   },
   {
-   "id": "src-q1153",
-   "name": "Eppendorf",
-   "local": "Hamburg-Eppendorf",
-   "lat": 53.5924,
-   "lng": 9.9885,
-   "minutes": 40,
-   "category": "Sight",
-   "kind": "local",
-   "quick": false,
-   "mustSee": false,
-   "fame": 15,
-   "unesco": false,
-   "heritage": false,
-   "wd": "Q1153",
-   "src": [
-    "Wikidata (Wikipedia in many languages)",
-    "Wikivoyage (English)",
-    "Wikipedia in German"
-   ],
-   "srcOnly": true,
-   "builtin": false,
-   "famousFix": false,
-   "far": false,
-   "travel": "",
-   "parts": [],
-   "merged": [],
-   "posDoubt": false,
-   "summary": "A sight in Hamburg, Germany, named by 3 independent sources."
-  },
-  {
    "id": "src-q1183156",
    "name": "Deichtorhallen",
    "local": "",
    "lat": 53.547,
    "lng": 10.00652,
-   "minutes": 40,
-   "category": "Sight",
+   "minutes": 90,
+   "category": "Museum",
    "kind": "local",
    "quick": false,
    "mustSee": false,
@@ -1357,7 +1073,7 @@
    "parts": [],
    "merged": [],
    "posDoubt": false,
-   "summary": "A listed historic sight in Hamburg, Germany, named by 3 independent sources."
+   "summary": "A listed historic museum in Hamburg, Germany, named by 3 independent sources."
   },
   {
    "id": "src-q450777",
@@ -1365,8 +1081,8 @@
    "local": "",
    "lat": 53.55442,
    "lng": 10.00877,
-   "minutes": 40,
-   "category": "Sight",
+   "minutes": 30,
+   "category": "Theatre",
    "kind": "local",
    "quick": false,
    "mustSee": false,
@@ -1387,7 +1103,7 @@
    "parts": [],
    "merged": [],
    "posDoubt": false,
-   "summary": "A listed historic sight in Hamburg, Germany, named by 3 independent sources."
+   "summary": "A listed historic theatre in Hamburg, Germany, named by 3 independent sources."
   },
   {
    "id": "src-q1300206",
@@ -1486,8 +1202,8 @@
    "local": "U 434",
    "lat": 53.54494,
    "lng": 9.95522,
-   "minutes": 40,
-   "category": "Sight",
+   "minutes": 90,
+   "category": "Museum",
    "kind": "local",
    "quick": false,
    "mustSee": false,
@@ -1547,7 +1263,7 @@
    "lat": 53.54482,
    "lng": 9.95178,
    "minutes": 40,
-   "category": "Sight",
+   "category": "Market",
    "kind": "local",
    "quick": false,
    "mustSee": false,
@@ -1568,7 +1284,39 @@
    "parts": [],
    "merged": [],
    "posDoubt": false,
-   "summary": "A listed historic sight in Hamburg, Germany, named by 3 independent sources."
+   "summary": "A listed historic market in Hamburg, Germany, named by 3 independent sources."
+  },
+  {
+   "id": "src-q1408998",
+   "name": "Hafenmuseum",
+   "local": "",
+   "lat": 53.52508,
+   "lng": 9.99907,
+   "minutes": 90,
+   "category": "Museum",
+   "kind": "touristy",
+   "quick": false,
+   "mustSee": false,
+   "fame": 35,
+   "unesco": false,
+   "heritage": false,
+   "wd": "Q1408998",
+   "src": [
+    "Wikidata (Wikipedia in many languages)",
+    "Wikivoyage (English)",
+    "Wikivoyage (German)",
+    "Wikipedia in German"
+   ],
+   "srcOnly": true,
+   "builtin": false,
+   "famousFix": false,
+   "far": false,
+   "travel": "",
+   "parts": [],
+   "merged": [],
+   "posDoubt": false,
+   "summary": "A listed historic museum in Hamburg, Germany, named by 3 independent sources.",
+   "wdByName": true
   },
   {
    "id": "src-q16886704",
@@ -1606,10 +1354,10 @@
    "local": "Denkmal für Kaiser Wilhelm I.",
    "lat": 53.55539,
    "lng": 9.97806,
-   "minutes": 40,
-   "category": "Sight",
+   "minutes": 10,
+   "category": "Landmark",
    "kind": "local",
-   "quick": false,
+   "quick": true,
    "mustSee": false,
    "fame": 4,
    "unesco": false,
@@ -1628,26 +1376,26 @@
    "parts": [],
    "merged": [],
    "posDoubt": false,
-   "summary": "A listed historic sight in Hamburg, Germany, named by 3 independent sources."
+   "summary": "A listed historic landmark in Hamburg, Germany, named by 3 independent sources."
   },
   {
-   "id": "src-q1746647",
-   "name": "St. Ansgar",
-   "local": "Kleiner Michel",
-   "lat": 53.54885,
-   "lng": 9.9823,
+   "id": "src-q2316651",
+   "name": "St.-Pauli-Kirche",
+   "local": "",
+   "lat": 53.54686,
+   "lng": 9.9565,
    "minutes": 30,
    "category": "Church",
-   "kind": "local",
+   "kind": "touristy",
    "quick": false,
    "mustSee": false,
-   "fame": 3,
+   "fame": 37,
    "unesco": false,
-   "heritage": true,
-   "wd": "Q1746647",
+   "heritage": false,
+   "wd": "Q2316651",
    "src": [
+    "Wikidata (Wikipedia in many languages)",
     "Wikivoyage (German)",
-    "national heritage register",
     "Wikipedia in German"
    ],
    "srcOnly": true,
@@ -1658,7 +1406,8 @@
    "parts": [],
    "merged": [],
    "posDoubt": false,
-   "summary": "A listed historic church in Hamburg, Germany, named by 3 independent sources."
+   "summary": "A listed historic church in Hamburg, Germany, named by 3 independent sources.",
+   "wdByName": true
   },
   {
    "id": "src-q2323379",
@@ -1811,6 +1560,185 @@
    "summary": "A listed historic sight in Hamburg, Germany, named by 3 independent sources."
   },
   {
+   "id": "src-q26219754",
+   "name": "Fleetschlösschen",
+   "local": "",
+   "lat": 53.54449,
+   "lng": 9.99792,
+   "minutes": 40,
+   "category": "Sight",
+   "kind": "local",
+   "quick": false,
+   "mustSee": false,
+   "fame": 2,
+   "unesco": false,
+   "heritage": true,
+   "wd": "Q26219754",
+   "src": [
+    "Wikivoyage (German)",
+    "national heritage register",
+    "Wikipedia in German"
+   ],
+   "srcOnly": true,
+   "builtin": false,
+   "famousFix": false,
+   "far": false,
+   "travel": "",
+   "parts": [],
+   "merged": [],
+   "posDoubt": false,
+   "summary": "A listed historic sight in Hamburg, Germany, named by 3 independent sources."
+  },
+  {
+   "id": "src-q1425902",
+   "name": "St. Erich",
+   "local": "Kirche St. Erich",
+   "lat": 53.53611,
+   "lng": 10.03806,
+   "minutes": 30,
+   "category": "Church",
+   "kind": "local",
+   "quick": false,
+   "mustSee": false,
+   "fame": 2,
+   "unesco": false,
+   "heritage": true,
+   "wd": "Q1425902",
+   "src": [
+    "Wikivoyage (German)",
+    "national heritage register",
+    "Wikipedia in German"
+   ],
+   "srcOnly": true,
+   "builtin": false,
+   "famousFix": false,
+   "far": false,
+   "travel": "",
+   "parts": [],
+   "merged": [],
+   "posDoubt": false,
+   "summary": "A listed historic church in Hamburg, Germany, named by 3 independent sources."
+  },
+  {
+   "id": "src-q2035246",
+   "name": "Osterkirche",
+   "local": "",
+   "lat": 53.60972,
+   "lng": 10.07389,
+   "minutes": 30,
+   "category": "Church",
+   "kind": "local",
+   "quick": false,
+   "mustSee": false,
+   "fame": 2,
+   "unesco": false,
+   "heritage": true,
+   "wd": "Q1382708",
+   "src": [
+    "Wikivoyage (German)",
+    "national heritage register",
+    "Wikipedia in German"
+   ],
+   "srcOnly": true,
+   "builtin": false,
+   "famousFix": false,
+   "far": false,
+   "travel": "",
+   "parts": [],
+   "merged": [],
+   "posDoubt": false,
+   "summary": "A listed historic church in Hamburg, Germany, named by 3 independent sources."
+  },
+  {
+   "id": "src-q882600",
+   "name": "Hamburg Dungeon",
+   "local": "",
+   "lat": 53.54387,
+   "lng": 9.9894,
+   "minutes": 90,
+   "category": "Museum",
+   "kind": "local",
+   "quick": false,
+   "mustSee": false,
+   "fame": 6,
+   "unesco": false,
+   "heritage": false,
+   "wd": "Q882600",
+   "src": [
+    "Wikivoyage (English)",
+    "Wikivoyage (German)",
+    "Wikipedia in German"
+   ],
+   "srcOnly": true,
+   "builtin": false,
+   "famousFix": false,
+   "far": false,
+   "travel": "",
+   "parts": [],
+   "merged": [],
+   "posDoubt": false,
+   "summary": "A live-action presentation of the \"darker times\" of Hamburg. It is probably mostly suited for a younger, easily impressed audience. But it might not be suitable"
+  },
+  {
+   "id": "src-q1794664",
+   "name": "Museumshafen Oevelgönne",
+   "local": "Museumshafen Övelgönne",
+   "lat": 53.54361,
+   "lng": 9.91417,
+   "minutes": 90,
+   "category": "Museum",
+   "kind": "local",
+   "quick": false,
+   "mustSee": false,
+   "fame": 5,
+   "unesco": false,
+   "heritage": false,
+   "wd": "Q1794664",
+   "src": [
+    "Wikivoyage (English)",
+    "Wikivoyage (German)",
+    "Wikipedia in German"
+   ],
+   "srcOnly": true,
+   "builtin": false,
+   "famousFix": false,
+   "far": false,
+   "travel": "",
+   "parts": [],
+   "merged": [],
+   "posDoubt": false,
+   "summary": "A museum in Hamburg, Germany, named by 3 independent sources."
+  },
+  {
+   "id": "src-q265107",
+   "name": "Barclays Arena",
+   "local": "",
+   "lat": 53.58917,
+   "lng": 9.89917,
+   "minutes": 45,
+   "category": "Stadium",
+   "kind": "local",
+   "quick": false,
+   "mustSee": false,
+   "fame": 21,
+   "unesco": false,
+   "heritage": false,
+   "wd": "Q265107",
+   "src": [
+    "Wikivoyage (German)",
+    "Wikipedia in German"
+   ],
+   "srcOnly": true,
+   "builtin": false,
+   "famousFix": false,
+   "far": false,
+   "travel": "",
+   "parts": [],
+   "merged": [],
+   "posDoubt": true,
+   "summary": "A stadium in Hamburg, Germany, named by 2 independent sources."
+  },
+  {
    "id": "bremen-far",
    "name": "Bremen",
    "local": "",
@@ -1832,7 +1760,7 @@
    "builtin": false,
    "famousFix": true,
    "far": true,
-   "travel": "Train from Landungsbrücken, about 110 min one way",
+   "travel": "Train from St.Pauli, about 110 min one way",
    "parts": [],
    "merged": [],
    "posDoubt": false,
@@ -1867,36 +1795,6 @@
    "summary": "A day out that travelers suggest from Hamburg, Germany."
   },
   {
-   "id": "itzehoe-far",
-   "name": "Itzehoe",
-   "local": "",
-   "lat": 53.925,
-   "lng": 9.51639,
-   "minutes": 180,
-   "category": "Day trip",
-   "kind": "touristy",
-   "quick": false,
-   "mustSee": false,
-   "fame": 57,
-   "unesco": false,
-   "heritage": false,
-   "wd": "Q16073",
-   "src": [
-    "Wikidata (Wikipedia in many languages)"
-   ],
-   "srcOnly": false,
-   "builtin": false,
-   "famousFix": true,
-   "far": true,
-   "travel": "Train from Landungsbrücken, about 90 min one way",
-   "parts": [],
-   "merged": [
-    "Kloster Itzehoe"
-   ],
-   "posDoubt": false,
-   "summary": "A day out that travelers suggest from Hamburg, Germany."
-  },
-  {
    "id": "lubeck-far",
    "name": "Lübeck",
    "local": "",
@@ -1927,6 +1825,34 @@
    "summary": "The city is connected to the Baltic Sea by the Trave river. The old city (Altstadt) survived from medieval times and is part of the UNESCO World Heritage List. "
   },
   {
+   "id": "luneburg-far",
+   "name": "Lüneburg",
+   "local": "",
+   "lat": 53.2525,
+   "lng": 10.41444,
+   "minutes": 180,
+   "category": "Day trip",
+   "kind": "touristy",
+   "quick": false,
+   "mustSee": false,
+   "fame": 86,
+   "unesco": false,
+   "heritage": false,
+   "wd": "Q3920",
+   "src": [
+    "Wikidata (Wikipedia in many languages)"
+   ],
+   "srcOnly": false,
+   "builtin": false,
+   "famousFix": true,
+   "far": true,
+   "travel": "Train from St.Pauli, about 75 min one way",
+   "parts": [],
+   "merged": [],
+   "posDoubt": false,
+   "summary": "A city in Lower Saxony, about 50&nbsp;km southeast of Hamburg. Like Lübeck, Lüneburg's old town has kept a medieval look with old buildings and narrow streets. "
+  },
+  {
    "id": "bremen-far~Q19479",
    "name": "Rathaus",
    "local": "",
@@ -1951,11 +1877,9 @@
    "builtin": true,
    "famousFix": false,
    "far": true,
-   "travel": "Train from Landungsbrücken, about 110 min one way",
+   "travel": "Train from St.Pauli, about 110 min one way",
    "parts": [],
-   "merged": [
-    "Rathaus"
-   ],
+   "merged": [],
    "posDoubt": false,
    "summary": ""
   },
@@ -1979,7 +1903,7 @@
    "builtin": true,
    "famousFix": false,
    "far": true,
-   "travel": "Train from Landungsbrücken, about 110 min one way",
+   "travel": "Train from St.Pauli, about 110 min one way",
    "parts": [],
    "merged": [],
    "posDoubt": false,
@@ -2005,7 +1929,7 @@
    "builtin": true,
    "famousFix": false,
    "far": true,
-   "travel": "Train from Landungsbrücken, about 110 min one way",
+   "travel": "Train from St.Pauli, about 110 min one way",
    "parts": [],
    "merged": [],
    "posDoubt": false,
@@ -2031,7 +1955,7 @@
    "builtin": true,
    "famousFix": false,
    "far": true,
-   "travel": "Train from Landungsbrücken, about 110 min one way",
+   "travel": "Train from St.Pauli, about 110 min one way",
    "parts": [],
    "merged": [],
    "posDoubt": false,
@@ -2058,7 +1982,7 @@
    "builtin": true,
    "famousFix": false,
    "far": true,
-   "travel": "Train from Landungsbrücken, about 110 min one way",
+   "travel": "Train from St.Pauli, about 110 min one way",
    "parts": [],
    "merged": [],
    "posDoubt": false,
@@ -2085,7 +2009,7 @@
    "builtin": true,
    "famousFix": false,
    "far": true,
-   "travel": "Train from Landungsbrücken, about 110 min one way",
+   "travel": "Train from St.Pauli, about 110 min one way",
    "parts": [],
    "merged": [],
    "posDoubt": false,
@@ -2114,7 +2038,7 @@
    "builtin": true,
    "famousFix": false,
    "far": true,
-   "travel": "Train from Landungsbrücken, about 110 min one way",
+   "travel": "Train from St.Pauli, about 110 min one way",
    "parts": [],
    "merged": [],
    "posDoubt": false,
@@ -2140,7 +2064,7 @@
    "builtin": true,
    "famousFix": false,
    "far": true,
-   "travel": "Train from Landungsbrücken, about 110 min one way",
+   "travel": "Train from St.Pauli, about 110 min one way",
    "parts": [],
    "merged": [],
    "posDoubt": false,
@@ -2173,7 +2097,7 @@
    "builtin": true,
    "famousFix": false,
    "far": true,
-   "travel": "Train from Landungsbrücken, about 110 min one way",
+   "travel": "Train from St.Pauli, about 110 min one way",
    "parts": [],
    "merged": [],
    "posDoubt": false,
@@ -2199,7 +2123,7 @@
    "builtin": true,
    "famousFix": false,
    "far": true,
-   "travel": "Train from Landungsbrücken, about 110 min one way",
+   "travel": "Train from St.Pauli, about 110 min one way",
    "parts": [],
    "merged": [],
    "posDoubt": false,
@@ -2226,7 +2150,7 @@
    "builtin": true,
    "famousFix": false,
    "far": true,
-   "travel": "Train from Landungsbrücken, about 110 min one way",
+   "travel": "Train from St.Pauli, about 110 min one way",
    "parts": [],
    "merged": [],
    "posDoubt": false,
@@ -2253,7 +2177,7 @@
    "builtin": true,
    "famousFix": false,
    "far": true,
-   "travel": "Train from Landungsbrücken, about 110 min one way",
+   "travel": "Train from St.Pauli, about 110 min one way",
    "parts": [],
    "merged": [],
    "posDoubt": false,
@@ -2348,118 +2272,6 @@
    "merged": [],
    "posDoubt": false,
    "summary": ""
-  },
-  {
-   "id": "itzehoe-far~Q1514083",
-   "name": "Germanengrab",
-   "local": "",
-   "lat": 53.93,
-   "lng": 9.51608,
-   "minutes": 30,
-   "category": "Sight",
-   "kind": "touristy",
-   "quick": false,
-   "mustSee": false,
-   "fame": 0,
-   "unesco": false,
-   "heritage": false,
-   "wd": "Q1514083",
-   "src": [],
-   "srcOnly": false,
-   "builtin": true,
-   "famousFix": false,
-   "far": true,
-   "travel": "Train from Landungsbrücken, about 90 min one way",
-   "parts": [],
-   "merged": [],
-   "posDoubt": false,
-   "summary": "",
-   "wdByName": true
-  },
-  {
-   "id": "itzehoe-far~Q19324436",
-   "name": "Nagelsche Fachwerkhäuser",
-   "local": "",
-   "lat": 53.924515,
-   "lng": 9.521954,
-   "minutes": 30,
-   "category": "Sight",
-   "kind": "touristy",
-   "quick": false,
-   "mustSee": false,
-   "fame": 0,
-   "unesco": false,
-   "heritage": false,
-   "wd": "Q19324436",
-   "src": [],
-   "srcOnly": false,
-   "builtin": true,
-   "famousFix": false,
-   "far": true,
-   "travel": "Train from Landungsbrücken, about 90 min one way",
-   "parts": [],
-   "merged": [],
-   "posDoubt": false,
-   "summary": "",
-   "wdByName": true
-  },
-  {
-   "id": "itzehoe-far~Q2327446",
-   "name": "Stadtkirche St. Laurentii",
-   "local": "",
-   "lat": 53.9235,
-   "lng": 9.51822,
-   "minutes": 30,
-   "category": "Sight",
-   "kind": "local",
-   "quick": false,
-   "mustSee": false,
-   "fame": 12,
-   "unesco": false,
-   "heritage": false,
-   "wd": "Q2327446",
-   "src": [
-    "Wikivoyage (English)",
-    "Wikivoyage (German)",
-    "Wikipedia in German"
-   ],
-   "srcOnly": false,
-   "builtin": true,
-   "famousFix": false,
-   "far": true,
-   "travel": "Train from Landungsbrücken, about 90 min one way",
-   "parts": [],
-   "merged": [],
-   "posDoubt": false,
-   "summary": "",
-   "wdByName": true
-  },
-  {
-   "id": "itzehoe-far~Q2316309",
-   "name": "St.-Jürgen-Kapelle",
-   "local": "",
-   "lat": 53.925,
-   "lng": 9.5241,
-   "minutes": 30,
-   "category": "Sight",
-   "kind": "touristy",
-   "quick": false,
-   "mustSee": false,
-   "fame": 0,
-   "unesco": false,
-   "heritage": false,
-   "wd": "Q2316309",
-   "src": [],
-   "srcOnly": false,
-   "builtin": true,
-   "famousFix": false,
-   "far": true,
-   "travel": "Train from Landungsbrücken, about 90 min one way",
-   "parts": [],
-   "merged": [],
-   "posDoubt": false,
-   "summary": "",
-   "wdByName": true
   },
   {
    "id": "lubeck-far~Q695065",
@@ -2595,7 +2407,7 @@
    "fame": 0,
    "unesco": false,
    "heritage": false,
-   "wd": "",
+   "wd": "Q316973",
    "src": [],
    "srcOnly": false,
    "builtin": true,
@@ -2605,7 +2417,8 @@
    "parts": [],
    "merged": [],
    "posDoubt": false,
-   "summary": ""
+   "summary": "",
+   "wdByName": true
   },
   {
    "id": "lubeck-far~Q317388",
@@ -2653,7 +2466,7 @@
    "fame": 2,
    "unesco": false,
    "heritage": false,
-   "wd": "Q1625144",
+   "wd": "Q321229",
    "src": [
     "Wikivoyage (German)",
     "Wikipedia in German"
@@ -2666,7 +2479,8 @@
    "parts": [],
    "merged": [],
    "posDoubt": false,
-   "summary": ""
+   "summary": "",
+   "wdByName": true
   },
   {
    "id": "lubeck-far~Q538276",
@@ -2738,6 +2552,37 @@
    "heritage": false,
    "wd": "",
    "src": [],
+   "srcOnly": false,
+   "builtin": true,
+   "famousFix": false,
+   "far": true,
+   "travel": "Train from St.Pauli, about 105 min one way",
+   "parts": [],
+   "merged": [],
+   "posDoubt": false,
+   "summary": ""
+  },
+  {
+   "id": "lubeck-far~Q538453",
+   "name": "Rathaus",
+   "local": "",
+   "lat": 53.867,
+   "lng": 10.6855,
+   "minutes": 30,
+   "category": "Sight",
+   "kind": "local",
+   "quick": false,
+   "mustSee": false,
+   "fame": 24,
+   "unesco": false,
+   "heritage": true,
+   "wd": "",
+   "src": [
+    "Wikidata (Wikipedia in many languages)",
+    "national heritage register",
+    "Wikivoyage (German)",
+    "Wikipedia in German"
+   ],
    "srcOnly": false,
    "builtin": true,
    "famousFix": false,
@@ -2971,49 +2816,31 @@
    "wdByName": true
   },
   {
-   "id": "itzehoe-far~Q1775395",
-   "name": "Kloster Itzehoe",
-   "lat": 53.923839,
-   "lng": 9.51919,
-   "minutes": 30,
-   "category": "Sight",
-   "far": true,
-   "fromPlaces": true,
-   "wd": "Q1775395",
-   "fame": 1,
-   "mustSee": false,
-   "posDoubt": false,
-   "town": ""
-  },
-  {
-   "id": "lubeck-far~Q538453",
-   "name": "Rathaus",
-   "lat": 53.867,
-   "lng": 10.6855,
-   "minutes": 30,
-   "category": "Sight",
-   "far": true,
-   "fromPlaces": true,
-   "wd": "Q538453",
-   "fame": 1.8,
-   "mustSee": false,
-   "posDoubt": false,
-   "town": ""
-  },
-  {
    "id": "lubeck-far~Q463403",
    "name": "Theaterfigurenmuseum Lübeck",
+   "local": "",
    "lat": 53.865764,
    "lng": 10.682247,
    "minutes": 60,
    "category": "Sight",
-   "far": true,
-   "fromPlaces": true,
-   "wd": "Q463403",
-   "fame": 1,
+   "kind": "",
+   "quick": false,
    "mustSee": false,
+   "fame": 0,
+   "unesco": false,
+   "heritage": false,
+   "wd": "Q463403",
+   "src": [],
+   "srcOnly": false,
+   "builtin": true,
+   "famousFix": false,
+   "far": true,
+   "travel": "Train from St.Pauli, about 105 min one way",
+   "parts": [],
+   "merged": [],
    "posDoubt": false,
-   "town": ""
+   "summary": "",
+   "wdByName": true
   }
  ]
 }
