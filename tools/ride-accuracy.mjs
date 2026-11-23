@@ -58,6 +58,9 @@ if (process.argv.includes("--legs")) {
   }
   pairs.sort((x, y) => (y.gate ? 1 : 0) - (x.gate ? 1 : 0));
 }
+// --shard k/N: only every N-th ride from k (Nov 23: one runner got map answers for 47 of 171 rides in its time; several
+// runners at once, each with its own share, measure them all).
+{ const sh = arg("--shard"); if (sh) { const [k, n] = sh.split("/").map(Number); const keep = pairs.filter((_, i) => i % n === k); pairs.length = 0; pairs.push(...keep); } }
 console.log(`Ride accuracy: ${pairs.length} rides from ${new Set(pairs.map(p => p.trip)).size} test trips${process.argv.includes("--legs") ? " (the rides the plans hold, " + pairs.filter(p => p.gate).length + " to or from an airport, station, pier or the day's start)" : ""}`);
 
 // ---- Ask both sources for each ride ----
