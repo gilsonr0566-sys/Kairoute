@@ -3118,11 +3118,12 @@ const sourcesCache = {};
 // Places whose travel guides and maps could not be reached at all (no signal, or the helper was down), as against
 // places that were reached and are not known. A traveler is never told to check the spelling of a place the app
 // simply could not ask about (first-time traveler walk, Nov 22).
-const srcUnreached = {};
+const srcUnreached = {}, srcMissing = {};   // srcMissing: asked, and the guides and maps list nothing for it
 // The words of the Trip page's own button, so the message names a button the traveler can see.
 const buildAgain = n => `Tap Build the guide${n === 1 ? "" : "s"} on the Trip page`;
 function notFoundMsg(labels, again) {
   const off = labels.filter(l => srcUnreached[keyOf(l)]), miss = labels.filter(l => !srcUnreached[keyOf(l)]), out = [];
+  miss.forEach(l => { srcMissing[keyOf(l)] = true; });
   if (off.length) out.push(`I couldn't reach the travel guides and maps for ${off.join(" and ")}${typeof navigator !== "undefined" && navigator.onLine === false ? " because there's no internet right now" : ""}. Your trip is saved. ${again} when you're online.`);
   if (miss.length) out.push(`I couldn't find ${miss.join(" and ")} in the travel guides and maps. Check the spelling (for example "Kotor, Montenegro"), then ${again.replace(/^./, c => c.toLowerCase())}.`);
   return out.join(" ");
@@ -5107,7 +5108,8 @@ function renderView() {
 }
 function updateBusy() { const el = document.getElementById("busyText"); if (el && busy) el.textContent = busy.text; }
 const busyBlock = () => busy ? `<div class="banner" role="status"><span class="spinner"></span><span id="busyText">${esc(busy.text)}</span></div>` : "";
-const errBlock = () => aiError ? `<div class="banner warn" role="alert">${esc(aiError)}</div>` : "";
+// On a day with no guide, a message about that place alone is said by the day's own card (say it once).
+const errBlock = d => aiError && !(d && d.destination && aiError.startsWith(`I couldn't find ${d.destination} in`)) ? `<div class="banner warn" role="alert">${esc(aiError)}</div>` : "";
 // Each day has a name: the traveler's own, or one suggested from the day's main sight ("Ancient Corinth day").
 // The day's main destination, plainly: the city or port the guide is for ("Rome", "Naples"), never side places
 // in brackets ("Naples (Capri, Sorrento)", "Rome (from Civitavecchia)"). A client who reads Capri in a title
@@ -5167,6 +5169,13 @@ const dayPin = d => `<div class="daypin" aria-hidden="true">${esc(dayPinText(d))
 // (code health review, Nov 18: a port day with no guide had no way forward while the AI was off).
 function needsCity(d) {
   const ready = aiReady() || !!freeAI;
+  // Already asked and nothing is known: the card says so, instead of promising again what the last try couldn't do
+  // (first-time traveler walk, Nov 22: Half Moon Cay said "couldn't find" above a card promising its sights).
+  if (ready && !aiReady() && d.destination && srcMissing[keyOf(d.destination)] && !srcUnreached[keyOf(d.destination)]) return `<div class="card empty">
+    <h3>No guide for ${esc(d.destination)}</h3>
+    <p>The travel guides and maps I use don't list sights for ${esc(d.destination)}, so I can't plan this day. If your booking spells the place differently, change the name and try again.${d.type === "port" ? ` The ship's times still stand: all aboard ${esc(d.allAboard || "")}.` : ""}</p>
+    <div class="actions"><button class="btn" data-goto="trip">Change the name</button><button class="btn ghost" data-act="gen" ${busy ? "disabled" : ""}>Try again</button></div>
+  </div>`;
   if (ready) return `<div class="card empty">
     <h3>No guide for ${esc(d.destination || "this day")} yet</h3>
     <p>${aiReady() ? `Your guide will research sights, places to eat, the cruise port, stations and day trips for ${esc(d.destination)}.` : `Kairoute will build the guide for ${esc(d.destination)} from travel guides and maps: real sights, places to eat, the cruise port and stations.`}</p>
@@ -6279,7 +6288,7 @@ const kidsOf = (x, city) => city ? nestNow(city).kids.get(x.id) || [] : [];
 if (typeof window !== "undefined") window.__kairoutePickerNest = i => { const c = cityFor(trip.days[i]); if (!c) return null; const m = nestMap(c); const all = allSites(c); return { withWd: all.filter(x => x.wd).length, n: all.length, partKnown: all.filter(x => x.wd && x.wd in partMem).length, nest: [...m.kids].map(([id, ks]) => ({ parent: (all.find(x => x.id === id) || {}).name, kids: ks.map(k => k.name) })) }; };
 function renderSites(d) {
   const city = cityFor(d);
-  if (!city) return `${dayHeading(d)}${busyBlock()}${errBlock()}${needsCity(d)}`;
+  if (!city) return `${dayHeading(d)}${busyBlock()}${errBlock(d)}${needsCity(d)}`;
   refillIfNeeded(d, city); if (!d.selected) seedPicks(d, city); fameFor(d, city);
   const plan = buildPlan(d); queueExtras(plan);
   const f = siteFilter;
@@ -6826,7 +6835,7 @@ function tcell(it) {
 }
 function renderPlan(d) {
   const city = cityFor(d); rideSaid = new Set();
-  if (!city) return `${dayHeading(d)}${busyBlock()}${errBlock()}${needsCity(d)}`;
+  if (!city) return `${dayHeading(d)}${busyBlock()}${errBlock(d)}${needsCity(d)}`;
   refillIfNeeded(d, city); if (!d.selected) seedPicks(d, city); crowdFor(city); fameFor(d, city); farEatsFor(city, d); upgradeThin(d, city);
   const plan = buildPlan(d); if (plan && !plan.error) { gCheck(plan, city); queueExtras(plan); writeSrcSights(plan, city); }
   // When the missing piece is a place the traveler can name here, the question is the one thing shown (say it once).
@@ -7041,7 +7050,7 @@ ${quietOn(s) ? `<p class="banner quiet" role="note">🤫 <span><b>Quiet place.</
 }
 function renderGuide(d) {
   const city = cityFor(d);
-  if (!city) return `${dayHeading(d)}${busyBlock()}${errBlock()}${needsCity(d)}`;
+  if (!city) return `${dayHeading(d)}${busyBlock()}${errBlock(d)}${needsCity(d)}`;
   refillIfNeeded(d, city); if (!d.selected) seedPicks(d, city); fameFor(d, city);
   const plan = buildPlan(d); queueExtras(plan);
   if (!plan || plan.error) return `${dayHeading(d)}<div class="card empty"><p>${esc(plan ? plan.error : "Set up your day first.")}</p><button class="btn" data-goto="trip">Edit this day</button></div>`;
@@ -7127,7 +7136,7 @@ function tourMap(plan, d, prev, st) {
 }
 function renderTour(d) {
   const city = cityFor(d);
-  if (!city) return `${dayHeading(d)}${busyBlock()}${errBlock()}${needsCity(d)}`;
+  if (!city) return `${dayHeading(d)}${busyBlock()}${errBlock(d)}${needsCity(d)}`;
   refillIfNeeded(d, city); if (!d.selected) seedPicks(d, city); fameFor(d, city);
   const plan = buildPlan(d); queueExtras(plan);
   if (!plan || plan.error) return `${dayHeading(d)}<div class="card empty"><p>${esc(plan ? plan.error : "Set up your day first.")}</p><button class="btn" data-goto="trip">Edit this day</button></div>`;

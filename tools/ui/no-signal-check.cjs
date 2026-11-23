@@ -24,6 +24,11 @@ async function run(b, url, mode) { serve.addr = mode !== 'noaddr';
   const text = await p.evaluate(() => document.body.innerText);
   if (mode !== 'unknown') { if (/spelling/i.test(msg + text)) fails.push('helper down: the traveler is told to check the spelling: ' + msg); if (!/couldn't reach/i.test(msg)) fails.push(mode + ': no "couldn\'t reach" message: ' + msg); }
   else if (!/spelling/i.test(msg)) fails.push('place not known: the "check the spelling" message is gone: ' + msg);
+  if (mode === 'unknown') { await p.evaluate(() => window.__kairouteAt(1, 'plan')); await p.waitForTimeout(1500); const day = await p.evaluate(() => document.querySelector('main').innerText);
+    if (/will build the guide/i.test(day)) fails.push('place not known: the day still promises to build its guide after the try found nothing');
+    if ((day.match(/couldn't find|don't list sights/gi) || []).length !== 1) fails.push('place not known: the day should say once that nothing is listed: ' + day.slice(0, 400).replace(/\n/g, ' / '));
+    if (process.env.SHOT) await p.screenshot({ path: process.env.SHOT + '-unknown-day.png' });
+    await p.evaluate(() => window.__kairouteGo('trip')); await p.waitForTimeout(800); }
   const btn = await p.locator('[data-act="genall"]').first().isVisible().catch(() => false); if (!btn) fails.push(mode + ': no Build the guide button to try again');
   if (errs.length) fails.push(mode + ': page errors ' + errs.join(' | ').slice(0, 300));
   if (process.env.SHOT) await p.screenshot({ path: process.env.SHOT + '-' + mode + '.png' }); console.log(mode + ': ' + msg); await ctx.close();
