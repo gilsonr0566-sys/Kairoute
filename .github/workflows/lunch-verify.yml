@@ -10,9 +10,18 @@ jobs:
   run:
     runs-on: ubuntu-latest
     timeout-minutes: 75
+    # The cities in four parts side by side, each printing its rows as it goes (Nov 23: one run of every city reached the
+    # time limit when the map servers were slow, and printed nothing).
+    strategy:
+      fail-fast: false
+      matrix:
+        chunk: [0, 1, 2, 3]
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: 22
       - run: node tools/beta2/lunch-verify.cjs
+        env:
+          CHUNK: ${{ matrix.chunk }}
+          CHUNKS: 4
