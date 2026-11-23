@@ -18,7 +18,7 @@
     NAMES.sort((a, b) => b.n.length - a.n.length); return NAMES;
   };
   // texts: the country field, the typed destination, the guide's city name. The first text naming a country decides it;
-  // a region name anywhere in the same texts sets the region ("Edinburgh, Scotland", "Juneau, Alaska", "Hamburg").
+  // a region name anywhere in the same texts sets the region ("a city, its region", or a city that is itself a region).
   E.countryOf = texts => {
     const all = (Array.isArray(texts) ? texts : [texts]).filter(Boolean).map(fold), hit = (t, n) => new RegExp("(^|[^a-z])" + n.replace(/[.*+?^${}()|[\]\\]/g, "\\$&") + "($|[^a-z])").test(t);
     let cc = null, rc = null;

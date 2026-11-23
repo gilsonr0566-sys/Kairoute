@@ -1,7 +1,7 @@
 name: Offline test
 on:
   push:
-    paths: ["src/**", "!src/engine/**", "sw.js", "build.sh", "tools/offline-e2e.cjs"]
+    paths: ["src/**", "!src/engine/**", "!src/engine-data/**", "sw.js", "build.sh", "tools/offline-e2e.cjs"]
   workflow_dispatch:
 permissions:
   contents: read

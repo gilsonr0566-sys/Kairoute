@@ -293,8 +293,8 @@
   E.isOsmHours = h => /^\s*(24\/7|((\d{4}|Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec|Mo|Tu|We|Th|Fr|Sa|Su|PH|SH|week|easter)\b[^;]*?\s)?\(?(\d\d:\d\d|sunrise|sunset|dawn|dusk|off|closed)\b)/.test(String(h || "")) && !/\b(am|pm|daily|closed (?:on )?(?:mon|tue|wed|thu|fri|sat|sun)|to|until|and)\b|[–—]/i.test(String(h || ""));
   // ---------- hours checked against the place's own website (part 1c's list) ----------
   // The checked entry for a place: the same name (or one of its other names) in the same town, or the same spot on the
-  // map with nearly the same name. A sight next door with a name that only starts the same ("Acropolis Museum" beside
-  // the Acropolis) never takes the other's hours.
+  // map with nearly the same name. A sight next door with a name that only starts the same ("Old Fort Museum" beside
+  // the Old Fort) never takes the other's hours.
   const fold = x => String(x || "").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[’'`]/g, "").replace(/&/g, " and ").replace(/[^a-z0-9]+/g, " ").replace(/^the /, "").trim();
   const STOP = new Set(["the", "of", "and", "de", "di", "del", "la", "le", "st", "saint", "san", "santa"]);
   const toks = x => new Set(fold(x).split(" ").filter(w => w && !STOP.has(w)));

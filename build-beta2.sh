@@ -47,7 +47,7 @@ var ENGINE2 = true;
 })();
 EOF
   # (the hours reader, its holidays and calendar rules load with the app's own code in every build: build.sh)
-  for f in src/engine/*.js; do case "$f" in */18-hourschecked.js|*/19-holidays.js|*/22-ohours.js|*/23-dayrules.js) ;; *) cat "$f" ;; esac; done
+  for f in src/engine/*.js; do case "$f" in */22-ohours.js|*/23-dayrules.js) ;; *) cat "$f" ;; esac; done
   printf '\nvar PLACES2 = {};\n'
   for f in tools/places/data/*.json; do node -e 'const p=JSON.parse(require("fs").readFileSync(process.argv[1]));process.stdout.write("PLACES2["+JSON.stringify(p.key)+"]="+JSON.stringify(p)+";\n")' "$f"; done
 } > "$PRE"
