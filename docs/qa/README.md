@@ -51,6 +51,8 @@ run when asked; `tools/truth/no-warn-check.cjs` runs in the gate's code part and
 rule or either tool stops refusing; the release report counts every safety finding, printed FAIL or WARN, as a fourth
 release target that must be 0. Only an S2 finding may be listed as WARN, and only with an owner in `escapes.md`.
 
+The rules themselves, each with its test and status: `SPEC-v2.md` (QA specification v2, Nov 23).
+
 ## Files
 
 - `tools/truth/oracle.cjs`: the independent safety check. Run it with `node tools/truth/oracle.cjs --corpus`, or
