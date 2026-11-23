@@ -24,7 +24,18 @@ async function enNames(ids) {
       if (pick && (!had || (had.from !== 'label' && pick.from === 'label'))) out.set(id, pick); }
     await sleep(1200); }
   out.asked = list; return out; }
-module.exports = { enNames };
+// The names a place has in other languages, in Latin letters (other scripts fail the gate on their own): what a shown
+// name must not be when the place has an English one. id -> [names]
+async function otherNames(ids) {
+  const out = new Map(), list = [...new Set(ids.filter(x => /^Q\d+$/.test(x)))];
+  for (let k = 0; k < list.length; k += 100) { const part = list.slice(k, k + 100);
+    const j = await sparql(`SELECT ?item ?l WHERE { VALUES ?item { ${part.map(x => 'wd:' + x).join(' ')} } ?item rdfs:label ?l FILTER(!LANGMATCHES(LANG(?l), "en") && LANG(?l) != "mul") }`);
+    if (!j) throw new Error('Wikidata did not answer: other-language names unknown, nothing written');
+    for (const b of j.results.bindings) { const id = b.item.value.split('/').pop(), v = b.l.value; if (/[^\u0000-\u024f\u1e00-\u1eff\u2000-\u206f]/.test(v)) continue;
+      if (!out.has(id)) out.set(id, new Set()); out.get(id).add(v); }
+    await sleep(1200); }
+  return out; }
+module.exports = { enNames, otherNames };
 if (require.main === module) (async () => {
   const dir = path.join(__dirname, 'data'), files = fs.readdirSync(dir).filter(f => f.endsWith('.json')), docs = files.map(f => [f, JSON.parse(fs.readFileSync(path.join(dir, f)))]);
   const lists = d => [d.guideSights || [], ...Object.values(d.towns || {}).map(t => t.sights || [])];
@@ -39,6 +50,10 @@ if (require.main === module) (async () => {
       if (e) { if (e.en !== x.name) x.en = e.en; named++; } else { x.noEn = true; none++; } }
     fs.writeFileSync(path.join(dir, f), JSON.stringify(d, null, 1) + '\n'); }
   const book = {}; for (const id of en.asked.sort()) { const e = en.get(id); book[id] = e ? e.en : null; }
-  fs.writeFileSync(path.join(__dirname, '..', 'beta2', 'en-names.json'), JSON.stringify({ note: 'English names by Wikidata id (English label, else English Wikipedia title, else the name for every language); null: no English name. Written by tools/places/en-names.cjs. Test data for the names gate; the app reads the places files.', at: new Date().toISOString().slice(0, 10), names: book }, null, 1) + '\n');
+  // Other-language names, only where they differ from the English one (by letters alone).
+  const key = n => String(n || '').toLowerCase().normalize('NFKD').replace(/[\u0300-\u036f]/g, '').replace(/^the\s+/, '').replace(/[^a-z0-9]+/g, ' ').trim();
+  const oth = await otherNames(en.asked), other = {};
+  for (const id of en.asked) { const e = book[id], o = [...(oth.get(id) || [])].filter(n => key(n) !== key(e)); const ks = [...new Set(o.map(key))].filter(Boolean).sort(); if (ks.length) other[id] = ks; }
+  fs.writeFileSync(path.join(__dirname, '..', 'beta2', 'en-names.json'), JSON.stringify({ note: 'English names by Wikidata id (English label, else English Wikipedia title, else the name for every language); null: no English name. other: the names in other languages (Latin letters, as match keys) that differ from the English one. Written by tools/places/en-names.cjs. Test data for the names gate; the app reads the places files.', at: new Date().toISOString().slice(0, 10), names: book, other }, null, 1) + '\n');
   console.log(`English names: ${named} listed sights named, ${none} with no English name, ${Object.keys(book).length} ids in en-names.json`);
 })().catch(e => { console.error(e.message); process.exit(1); });
