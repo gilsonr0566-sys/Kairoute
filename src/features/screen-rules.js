@@ -79,6 +79,12 @@ function rules(text, info = {}) {
   // Casa Batlló: taxi or car 26 min, so leave by 11:27 am", 26 min too late, because the bags left at 8:00 were read as the pick-up).
   { const m = /\bby (\d{1,2}:\d\d\s*[ap]m): \d[^.]* there, then the trip on takes the rest\. From ([^:]+): .*?(?:(\d+) h )?(\d+) min, so leave by (\d{1,2}:\d\d\s*[ap]m)/i.exec(raw);
     if (m) { const via = T(m[1]), lv = T(m[5]), ride = (+m[3] || 0) * 60 + +m[4]; if (via != null && lv != null && lv + ride > via + 1 && !(lv + ride > via + 720)) add('S1', 'leave-by reaches the bags', `"leave ${m[2]} by ${clock(lv)}" + ${ride} min reaches the stop on the way at ${clock(lv + ride)}, after its time ${clock(via)}`); } }
+  // A flight or train typed in the small hours (before 5:00 am) is asked about, "this morning or tonight?", and nothing but
+  // the way there is planned until the traveler answers; answered "this morning", no sights either (Nov 23 oracle: 00:20
+  // and 3:10 departures filled the day with sights).
+  { const t = T(info.time), small = info.type === 'departure' && info.mode !== 'ship' && t != null && t < 5 * 60;
+    if (small && !info.nightDep && !/early this morning, or late tonight/i.test(raw)) add('S1', 'small-hours departure asked', `a ${info.time} departure is planned without asking whether it is this morning or tonight`);
+    if (small && info.nightDep !== 'night' && stops.length) add('S1', 'small-hours departure asked', `a ${info.time} departure ${info.nightDep ? 'this morning' : 'not yet placed'} has ${stops.length} sight(s) planned`); }
   // ---- S2: what the screen says must add up
   // Free time comes after the day's own first steps (bags left in storage, the hotel check-in), never before them at the
   // airport or the pier (Nov 23: "Free time 1 h 16 min" at the airport, then the ride to the hotel).

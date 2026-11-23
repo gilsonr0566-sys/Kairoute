@@ -16,8 +16,10 @@ const ROOT = path.join(__dirname, '..', '..'), N = +arg('n', 150), ONLY = (arg('
 
 // Each: the file, the exact text, what it becomes, and the real bug it stands for.
 const MUTANTS = [
-  { id: 'train-as-tomorrow', file: '30-window.js', from: 'E.NIGHT_DEP = 5 * 60;', to: 'E.NIGHT_DEP = 12 * 60;',
+  { id: 'train-as-tomorrow', file: '30-window.js', from: 'if (small && (ship || d.nightDep === "night")) {', to: 'if (isFinite(depAt) && depAt < 12 * 60 && w.endBy < w.start) {',
     was: 'A 9:00 am train or a 5:45 am flight read as the next day\'s: a full day of sights after it (first-timer walk and outside test, Nov 22-23)' },
+  { id: 'small-hours-guessed', file: '30-window.js', from: 'if (small && !ship && d.nightDep !== "night" && d.nightDep !== "morning") {', to: 'if (small && !ship && (d.nightDep = d.nightDep || "night") && false) {',
+    was: 'A 0:20 or 3:10 departure taken as tonight\'s without asking, and the day filled with sights (independent check, escapes E9, Nov 23)' },
   { id: 'bags-left-as-collected', file: '95-plan.js', from: '/bags/i.test(x.name || "") && !x.head)', to: '/bags/i.test(x.name || ""))',
     was: 'Bags left in storage at the start read as the bags collected: "leave Casa Batlló by" 41 min too late (leaving-days thread, Nov 23)' },
   { id: 'leaveby-late', file: '95-plan.js', from: 'plan.leaveAt = { out: t,', to: 'plan.leaveAt = { out: t + 41,',

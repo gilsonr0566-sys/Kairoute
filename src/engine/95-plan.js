@@ -275,7 +275,7 @@
       const d = days[i];
       if (d.noShore || d.type === "sea") return { plan: { i, error: "At sea or staying aboard: no time ashore." } };
       const win = wins[i];
-      if (win.error) return { plan: { i, error: win.error } };
+      if (win.error) return { plan: Object.assign({ i, error: win.error }, win.askNight ? { askNight: true, depAt: win.depAt } : {}) };
       const city = guides[d.city];
       if (!city) return { plan: { i, error: "no guide" } };
       const listed = (city.sites || []).map((s, k) => Object.assign({}, s, { rank: k })).concat((city.farther || []).map(s => Object.assign({}, s, { far: true })));
@@ -336,7 +336,9 @@
         (bucket.placeNotes || []).filter(n => n.day === (d.i != null ? d.i : i)).forEach(n => explain.push(n.note));
         if (win.borderNeed) explain.push("Your train crosses a border: be at the station " + win.borderNeed + " min before it leaves" + (win.borderNeed >= E.BORDER_NEED.passport ? ", for passport and security checks." : ", for ID checks.") + " The plan ends in time for that.");
         if (win.borderUnknown) explain.push("This plan has you at the station " + E.BORDER_NEED.open + " min before your train, enough for ID checks at a border. Where passports and bags are checked (to or from Britain, for one), be there " + E.BORDER_NEED.passport + " min before: leave the last stop earlier.");
-        if (win.leaveEarly) explain.push("The day starts at " + E.clock(win.start) + ", " + win.leaveEarly + " min before your planned start of " + E.clock(win.plannedStart) + ", to be " + (d.type === "embark" ? "at the cruise terminal" : "there") + " by " + E.clock(win.endBy) + ".");
+        // Before midnight: the evening before, said so (a flight early this morning, Nov 23).
+        if (win.leaveEarly && win.start < 0) explain.push("Your " + (E.MODES[d.mode] || E.MODES.flight).label.toLowerCase() + " leaves early this morning, so you set out the evening before, at " + E.clock(win.start) + ", to be there by " + E.clock(win.endBy) + ". Plan the evening before to end in time.");
+        else if (win.leaveEarly) explain.push("The day starts at " + E.clock(win.start) + ", " + win.leaveEarly + " min before your planned start of " + E.clock(win.plannedStart) + ", to be " + (d.type === "embark" ? "at the cruise terminal" : "there") + " by " + E.clock(win.endBy) + ".");
         for (const [id, m] of movedTo) if (m.from === i) explain.push(m.inside ? m.name + " is inside " + m.inside + ", so it's planned with it on " + dayWord(m.to) + "." : m.name + " is closed on " + dayWord(i) + ", so it's planned on " + dayWord(m.to) + ".");
         for (const id of sel[i]) {
           const s = pool.find(x => String(x.id) === String(id)) || ranked.find(x => String(x.id) === String(id)); if (!s) continue;

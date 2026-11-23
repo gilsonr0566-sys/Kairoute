@@ -136,7 +136,7 @@ if (typeof window !== "undefined" && window.ENGINE2 && window.KEngine) (function
   function toApp(d, city, ep) {
     const w = dayWindow(d, city); if (w.error) return w;
     if (!ep) return { error: "The new engine has no plan for this day." };
-    if (ep.error) return { error: ep.error };
+    if (ep.error) return Object.assign({ error: ep.error }, ep.askNight ? { askNight: true } : {});
     const sites = (city.sites || []).concat(city.farther || []), byId = new Map(sites.map(s => [String(s.id), s]));
     const items = [], stops = [], meals = [], evening = [];
     const at = (x, name, extra) => Object.assign({ name: name || x.name || "", lat: x.lat, lng: x.lng }, extra || {});

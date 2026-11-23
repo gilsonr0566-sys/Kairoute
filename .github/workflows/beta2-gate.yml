@@ -60,12 +60,12 @@ jobs:
       - uses: actions/setup-node@v4
         with: { node-version: 22 }
       - name: Saved test trips
-        run: node tools/truth/oracle.cjs --corpus --show 10 --warn night 2>&1 | tee -a "$RUNNER_TEMP/out.log"
+        run: node tools/truth/oracle.cjs --corpus --show 10 2>&1 | tee -a "$RUNNER_TEMP/out.log"
       - name: Odd trips (hundreds of unusual cruises, multi-city trips, midnight flights and bag days, every day checked), then the independent check on the same trips
         if: always()
         run: |
           NOZIG=1 SLOW_MS=5000 node tools/beta2/odd-trips.cjs --n 300 --seed 1 --warn walk --out odd-trips.json 2>&1 | tee -a "$RUNNER_TEMP/out.log"
-          node tools/truth/oracle.cjs --trips odd-trips.json --show 10 --warn night 2>&1 | tee -a "$RUNNER_TEMP/out.log"
+          node tools/truth/oracle.cjs --trips odd-trips.json --show 10 2>&1 | tee -a "$RUNNER_TEMP/out.log"
       - name: Planted defects (each a known way the planner has gone wrong; the checks must catch every one)
         if: always()
         run: node tools/truth/mutants.cjs --n 100 2>&1 | tee -a "$RUNNER_TEMP/out.log"
