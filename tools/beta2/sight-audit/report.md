@@ -254,3 +254,26 @@
 - FAME must-see "Akrotiri" is offered (Akrotiri prehistoric town) but not marked must-see
 - INFO 5 sights, 0 day trips/towns; must-see: Fira caldera path, Oia village; top by fame: Fira caldera path 0, Oia village 0, Akrotiri prehistoric town 0, Pyrgos village 0, Museum of Prehistoric Thera 0
 
+## Venice, Italy (Venice, Italy, guide from sources)
+- POS Padua [day trip] {Q617 by name}: app is 1.12 km from Wikidata's point (not on the map by id)
+- DUP Palazzo della Ragione ~ Palazzo del Bo' (182 m apart, same words)
+- NOID Santi Giovanni e Paolo Church: no Wikidata id and nothing of the name on the map nearby (from Wikidata (Wikipedia in many languages), national heritage register, Wikivoyage (English), Wikipedia in Italian)
+- NOID Cathedral of Mestre [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- NOID Bissuola Park [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- NOID Archaeological Museum [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- NOID Saint Anthony's cathedral [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- NOID Astronomic Observatory [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- NOID Botanic Garden [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- NOID Eremitani Civic Museum [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- NAME Piazza Ferretto [day trip] {Q3902198 by name}: local name; Wikidata's English name is "Piazza Erminio Ferretto"
+- NAME Palazzo del Bo' [day trip] {Q3360829 by name}: local name; Wikidata's English name is "Bo Palace"
+- LEN Scrovegni Chapel [day trip] {Q963954 by name}: 30 min, but a art museum or gallery usually takes 45-240 min
+- FAME #3 best known nearby, "St Mark's Campanile" (36 Wikipedia languages, Q754194), is not offered
+- FAME #4 best known nearby, "Horses of Saint Mark" (33 Wikipedia languages, Q1994701), is not offered
+- FAME #5 best known nearby, "Ponte dell'Accademia" (28 Wikipedia languages, Q52509), is not offered
+- FAME #6 best known nearby, "Ponte della Libertà" (26 Wikipedia languages, Q1134699), is not offered
+- FAME #7 best known nearby, "Portrait of the Four Tetrarchs" (26 Wikipedia languages, Q2570221), is not offered
+- FAME #8 best known nearby, "MOSE" (25 Wikipedia languages, Q770350), is not offered
+- INFO 31 sights, 15 day trips/towns; must-see: St Mark's Basilica, Doge's Palace, Santa Maria della Salute, Piazza San Marco, Bridge of Sighs, Rialto Bridge, Grand Canal, Murano; top by fame: St Mark's Basilica 65, Doge's Palace 60, Piazza San Marco 54, Grand Canal 54, Rialto Bridge 52, Murano 52, Bridge of Sighs 51, Santa Maria della Salute 46
+- INFO day trips: Mestre, Venice/Torcello, Padua, Cathedral of Mestre, Piazza Ferretto, Bissuola Park, Archaeological Museum, Church of Santa Fosca, Saint Anthony's cathedral, Scrovegni Chapel, Astronomic Observatory, Palazzo della Ragione, Palazzo del Bo', Botanic Garden, Eremitani Civic Museum
+

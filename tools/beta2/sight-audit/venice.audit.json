@@ -2,7 +2,7 @@
  "name": "venice",
  "label": "Venice, Italy",
  "centre": {
-  "lat": 45.4346,
+  "lat": 45.43453,
   "lng": 12.3361
  },
  "findings": [
@@ -11,13 +11,6 @@
    "t": "Santi Giovanni e Paolo Church: no Wikidata id and nothing of the name on the map nearby (from Wikidata (Wikipedia in many languages), national heritage register, Wikivoyage (English), Wikipedia in Italian)",
    "x": {
     "id": "src-q155225"
-   }
-  },
-  {
-   "k": "NOID",
-   "t": "Internazionale Gallery of Modern Art: no Wikidata id and nothing of the name on the map nearby (from Wikivoyage (English), national heritage register, Wikipedia in Italian)",
-   "x": {
-    "id": "src-q3940563"
    }
   },
   {
@@ -35,13 +28,6 @@
      45.40777777777778,
      11.873333333333333
     ]
-   }
-  },
-  {
-   "k": "NOID",
-   "t": "Lace Museum [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby",
-   "x": {
-    "id": "venice-burano-far~0"
    }
   },
   {
@@ -64,6 +50,13 @@
    "t": "Bissuola Park [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby",
    "x": {
     "id": "mestre-far~2"
+   }
+  },
+  {
+   "k": "NOID",
+   "t": "Archaeological Museum [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby",
+   "x": {
+    "id": "venice-torcello-far~Q17199095"
    }
   },
   {
@@ -169,12 +162,12 @@
   },
   {
    "k": "INFO",
-   "t": "32 sights, 14 day trips/towns; must-see: St Mark's Basilica, Doge's Palace, Santa Maria della Salute, Piazza San Marco, Bridge of Sighs, Rialto Bridge, Grand Canal, Murano; top by fame: St Mark's Basilica 65, Doge's Palace 60, Piazza San Marco 54, Grand Canal 54, Rialto Bridge 52, Murano 52, Bridge of Sighs 51, Santa Maria della Salute 46",
+   "t": "31 sights, 15 day trips/towns; must-see: St Mark's Basilica, Doge's Palace, Santa Maria della Salute, Piazza San Marco, Bridge of Sighs, Rialto Bridge, Grand Canal, Murano; top by fame: St Mark's Basilica 65, Doge's Palace 60, Piazza San Marco 54, Grand Canal 54, Rialto Bridge 52, Murano 52, Bridge of Sighs 51, Santa Maria della Salute 46",
    "x": {}
   },
   {
    "k": "INFO",
-   "t": "day trips: Venice/Burano, Mestre, Padua, Lace Museum, Cathedral of Mestre, Piazza Ferretto, Bissuola Park, Saint Anthony's cathedral, Scrovegni Chapel, Astronomic Observatory, Palazzo della Ragione, Palazzo del Bo', Botanic Garden, Eremitani Civic Museum",
+   "t": "day trips: Mestre, Venice/Torcello, Padua, Cathedral of Mestre, Piazza Ferretto, Bissuola Park, Archaeological Museum, Church of Santa Fosca, Saint Anthony's cathedral, Scrovegni Chapel, Astronomic Observatory, Palazzo della Ragione, Palazzo del Bo', Botanic Garden, Eremitani Civic Museum",
    "x": {}
   }
  ],
@@ -1110,64 +1103,6 @@
    "summary": "Former customs house, centre for contemporary art, permanent exhibition of works from the François Pinault Collection. Renovation by world renowned architect Ta"
   },
   {
-   "id": "src-q3940563",
-   "name": "Internazionale Gallery of Modern Art",
-   "local": "",
-   "lat": 45.4409,
-   "lng": 12.3316,
-   "minutes": 90,
-   "category": "Museum",
-   "kind": "local",
-   "quick": false,
-   "mustSee": false,
-   "fame": 4,
-   "unesco": false,
-   "heritage": true,
-   "wd": "",
-   "src": [
-    "Wikivoyage (English)",
-    "national heritage register",
-    "Wikipedia in Italian"
-   ],
-   "srcOnly": true,
-   "builtin": false,
-   "famousFix": false,
-   "far": false,
-   "travel": "",
-   "parts": [],
-   "merged": [],
-   "posDoubt": false,
-   "summary": "Modern art collection, paintings of the 19th and 20th century. A MUVE museum."
-  },
-  {
-   "id": "venice-burano-far",
-   "name": "Venice/Burano",
-   "local": "",
-   "lat": 45.4833,
-   "lng": 12.4167,
-   "minutes": 180,
-   "category": "Day trip",
-   "kind": "touristy",
-   "quick": false,
-   "mustSee": false,
-   "fame": 0,
-   "unesco": false,
-   "heritage": false,
-   "wd": "Q52439",
-   "src": [
-    "Wikivoyage (English)"
-   ],
-   "srcOnly": false,
-   "builtin": false,
-   "famousFix": true,
-   "far": true,
-   "travel": "Ferry from Ferrovia \"D\", about 100 min one way",
-   "parts": [],
-   "merged": [],
-   "posDoubt": false,
-   "summary": "Burano — Island famous for lace, textiles and colorfully painted houses."
-  },
-  {
    "id": "mestre-far",
    "name": "Mestre",
    "local": "",
@@ -1196,6 +1131,34 @@
    "summary": "Town in the mainland, but still a part of Venice."
   },
   {
+   "id": "venice-torcello-far",
+   "name": "Venice/Torcello",
+   "local": "",
+   "lat": 45.497,
+   "lng": 12.416,
+   "minutes": 180,
+   "category": "Day trip",
+   "kind": "touristy",
+   "quick": false,
+   "mustSee": false,
+   "fame": 0,
+   "unesco": false,
+   "heritage": false,
+   "wd": "Q52441",
+   "src": [
+    "Wikivoyage (English)"
+   ],
+   "srcOnly": false,
+   "builtin": false,
+   "famousFix": true,
+   "far": true,
+   "travel": "Ferry from Ferrovia \"D\", about 110 min one way",
+   "parts": [],
+   "merged": [],
+   "posDoubt": false,
+   "summary": "Torcello — Nearby island with a 7th-century basilica church and an archeological museum."
+  },
+  {
    "id": "padua-far",
    "name": "Padua",
    "local": "",
@@ -1217,40 +1180,12 @@
    "builtin": false,
    "famousFix": true,
    "far": true,
-   "travel": "Train from VENEZIA, about 55 min one way",
+   "travel": "Train from VENEZIA, about 60 min one way",
    "parts": [],
    "merged": [],
    "posDoubt": false,
    "summary": "(It. Padova) — 40&nbsp;km west of Venice, home to the Basilica of St. Anthony, the Scrovegni Chapel, and the oldest Botanical Gardens in the world, among others",
    "wdByName": true
-  },
-  {
-   "id": "venice-burano-far~0",
-   "name": "Lace Museum",
-   "local": "",
-   "lat": 45.4847,
-   "lng": 12.4187,
-   "minutes": 60,
-   "category": "Sight",
-   "kind": "touristy",
-   "quick": false,
-   "mustSee": false,
-   "fame": 0,
-   "unesco": false,
-   "heritage": false,
-   "wd": "",
-   "src": [
-    "Wikivoyage (English)"
-   ],
-   "srcOnly": false,
-   "builtin": true,
-   "famousFix": false,
-   "far": true,
-   "travel": "Ferry from Ferrovia \"D\", about 100 min one way",
-   "parts": [],
-   "merged": [],
-   "posDoubt": false,
-   "summary": ""
   },
   {
    "id": "mestre-far~Q3716364",
@@ -1332,6 +1267,63 @@
    "summary": ""
   },
   {
+   "id": "venice-torcello-far~Q17199095",
+   "name": "Archaeological Museum",
+   "local": "",
+   "lat": 45.49851,
+   "lng": 12.41826,
+   "minutes": 60,
+   "category": "Sight",
+   "kind": "touristy",
+   "quick": false,
+   "mustSee": false,
+   "fame": 0,
+   "unesco": false,
+   "heritage": false,
+   "wd": "",
+   "src": [
+    "Wikivoyage (English)"
+   ],
+   "srcOnly": false,
+   "builtin": true,
+   "famousFix": false,
+   "far": true,
+   "travel": "Ferry from Ferrovia \"D\", about 110 min one way",
+   "parts": [],
+   "merged": [],
+   "posDoubt": false,
+   "summary": ""
+  },
+  {
+   "id": "venice-torcello-far~Q3585411",
+   "name": "Church of Santa Fosca",
+   "local": "Chiesa di Santa Fosca (Venezia, Torcello)",
+   "lat": 45.49815,
+   "lng": 12.41875,
+   "minutes": 30,
+   "category": "Sight",
+   "kind": "local",
+   "quick": false,
+   "mustSee": false,
+   "fame": 5,
+   "unesco": false,
+   "heritage": false,
+   "wd": "Q3585411",
+   "src": [
+    "Wikivoyage (English)",
+    "Wikipedia in Italian"
+   ],
+   "srcOnly": false,
+   "builtin": true,
+   "famousFix": false,
+   "far": true,
+   "travel": "Ferry from Ferrovia \"D\", about 110 min one way",
+   "parts": [],
+   "merged": [],
+   "posDoubt": false,
+   "summary": ""
+  },
+  {
    "id": "padua-far~Q810139",
    "name": "Saint Anthony's cathedral",
    "local": "",
@@ -1351,7 +1343,7 @@
    "builtin": true,
    "famousFix": false,
    "far": true,
-   "travel": "Train from VENEZIA, about 55 min one way",
+   "travel": "Train from VENEZIA, about 60 min one way",
    "parts": [],
    "merged": [],
    "posDoubt": false,
@@ -1377,7 +1369,7 @@
    "builtin": true,
    "famousFix": false,
    "far": true,
-   "travel": "Train from VENEZIA, about 55 min one way",
+   "travel": "Train from VENEZIA, about 60 min one way",
    "parts": [],
    "merged": [],
    "posDoubt": false,
@@ -1404,7 +1396,7 @@
    "builtin": true,
    "famousFix": false,
    "far": true,
-   "travel": "Train from VENEZIA, about 55 min one way",
+   "travel": "Train from VENEZIA, about 60 min one way",
    "parts": [],
    "merged": [],
    "posDoubt": false,
@@ -1430,7 +1422,7 @@
    "builtin": true,
    "famousFix": false,
    "far": true,
-   "travel": "Train from VENEZIA, about 55 min one way",
+   "travel": "Train from VENEZIA, about 60 min one way",
    "parts": [],
    "merged": [],
    "posDoubt": false,
@@ -1457,7 +1449,7 @@
    "builtin": true,
    "famousFix": false,
    "far": true,
-   "travel": "Train from VENEZIA, about 55 min one way",
+   "travel": "Train from VENEZIA, about 60 min one way",
    "parts": [],
    "merged": [],
    "posDoubt": false,
@@ -1484,7 +1476,7 @@
    "builtin": true,
    "famousFix": false,
    "far": true,
-   "travel": "Train from VENEZIA, about 55 min one way",
+   "travel": "Train from VENEZIA, about 60 min one way",
    "parts": [],
    "merged": [],
    "posDoubt": false,
@@ -1510,7 +1502,7 @@
    "builtin": true,
    "famousFix": false,
    "far": true,
-   "travel": "Train from VENEZIA, about 55 min one way",
+   "travel": "Train from VENEZIA, about 60 min one way",
    "parts": [],
    "merged": [],
    "posDoubt": false,
