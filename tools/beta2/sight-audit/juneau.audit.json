@@ -1,0 +1,302 @@
+{
+ "name": "juneau",
+ "label": "Juneau, Alaska",
+ "centre": {
+  "lat": 58.300341,
+  "lng": -134.40898
+ },
+ "findings": [
+  {
+   "k": "POS",
+   "t": "Goldbelt Tram: app is 0.82 km from Wikidata's point (not on the map by id)",
+   "x": {
+    "d": 0.8183954412374181,
+    "id": "src-q1263944",
+    "wd": "Q1263944",
+    "app": [
+     58.2968,
+     -134.401
+    ],
+    "wdpt": [
+     58.2966,
+     -134.387
+    ]
+   }
+  },
+  {
+   "k": "NOID",
+   "t": "Juneau Arts & Humanities Council: no Wikidata id and nothing of the name on the map nearby (from Wikivoyage (English))",
+   "x": {
+    "id": "src-juneau-arts-humanities-council"
+   }
+  },
+  {
+   "k": "NOID",
+   "t": "Alaskan Brewing Company Brewery Tour: built-in sight with no Wikidata id and nothing of the name on the map nearby",
+   "x": {
+    "id": "wv~alaskan-brewing-company-brewery-tour"
+   }
+  },
+  {
+   "k": "NOT",
+   "t": "Sealaska Heritage Institute: Wikidata says it is an organization (nonprofit organization in Juneau, United States)",
+   "x": {
+    "id": "wv~Q30291923"
+   }
+  },
+  {
+   "k": "NOID",
+   "t": "Upside-Down Forest: built-in sight with no Wikidata id and nothing of the name on the map nearby",
+   "x": {
+    "id": "wv~upside-down-forest"
+   }
+  },
+  {
+   "k": "FAME",
+   "t": "must-see \"Mendenhall Glacier\" is not offered",
+   "x": {
+    "want": "Mendenhall Glacier"
+   }
+  },
+  {
+   "k": "FAME",
+   "t": "must-see \"Mount Roberts Tramway\" is not offered",
+   "x": {
+    "want": "Mount Roberts Tramway"
+   }
+  },
+  {
+   "k": "INFO",
+   "t": "8 sights, 0 day trips/towns; must-see: St. Nicholas Russian Orthodox Church, Alaska State Centennial Museum, Goldbelt Tram; top by fame: St. Nicholas Russian Orthodox Church 5, Alaska State Centennial Museum 3, Goldbelt Tram 3, Wickersham House 2, Juneau Arts & Humanities Council 0, Alaskan Brewing Company Brewery Tour 0, Sealaska Heritage Institute 0, Upside-Down Forest 0",
+   "x": {}
+  }
+ ],
+ "sights": [
+  {
+   "id": "src-q421512",
+   "name": "St. Nicholas Russian Orthodox Church",
+   "local": "",
+   "lat": 58.30322,
+   "lng": -134.40898,
+   "minutes": 30,
+   "category": "Church",
+   "kind": "touristy",
+   "quick": false,
+   "mustSee": true,
+   "fame": 5,
+   "unesco": false,
+   "heritage": true,
+   "wd": "Q421512",
+   "src": [
+    "Wikivoyage (English)",
+    "national heritage register"
+   ],
+   "srcOnly": true,
+   "builtin": false,
+   "famousFix": false,
+   "far": false,
+   "travel": "",
+   "parts": [],
+   "merged": [],
+   "posDoubt": false,
+   "summary": "Tiny ornate octagonal structure that was built by the Tlingits in 1893. When the Russians were still in Sitka 50 years earlier, Father Ivan Veniaminov of the Ru"
+  },
+  {
+   "id": "src-q20679861",
+   "name": "Wickersham House",
+   "local": "",
+   "lat": 58.30361,
+   "lng": -134.41139,
+   "minutes": 40,
+   "category": "Sight",
+   "kind": "local",
+   "quick": false,
+   "mustSee": false,
+   "fame": 2,
+   "unesco": false,
+   "heritage": true,
+   "wd": "Q20679861",
+   "src": [
+    "Wikivoyage (English)",
+    "national heritage register"
+   ],
+   "srcOnly": true,
+   "builtin": false,
+   "famousFix": false,
+   "far": false,
+   "travel": "",
+   "parts": [],
+   "merged": [],
+   "posDoubt": false,
+   "summary": "A listed historic sight in Juneau, Alaska, named by 2 independent sources."
+  },
+  {
+   "id": "src-q1426502",
+   "name": "Alaska State Centennial Museum",
+   "local": "",
+   "lat": 58.30025,
+   "lng": -134.41528,
+   "minutes": 90,
+   "category": "Museum",
+   "kind": "touristy",
+   "quick": false,
+   "mustSee": true,
+   "fame": 3,
+   "unesco": false,
+   "heritage": false,
+   "wd": "Q1426502",
+   "src": [
+    "Wikivoyage (English)"
+   ],
+   "srcOnly": true,
+   "builtin": false,
+   "famousFix": false,
+   "far": false,
+   "travel": "",
+   "parts": [],
+   "merged": [],
+   "posDoubt": false,
+   "summary": "One of Alaska's best exhibits covering the breadth of the state's history, native cultures, wildlife, industry, and art. Approximately a ten-minute walk from th"
+  },
+  {
+   "id": "src-q1263944",
+   "name": "Goldbelt Tram",
+   "local": "",
+   "lat": 58.2968,
+   "lng": -134.401,
+   "minutes": 40,
+   "category": "Sight",
+   "kind": "touristy",
+   "quick": false,
+   "mustSee": true,
+   "fame": 3,
+   "unesco": false,
+   "heritage": false,
+   "wd": "Q1263944",
+   "src": [
+    "Wikivoyage (English)"
+   ],
+   "srcOnly": true,
+   "builtin": false,
+   "famousFix": false,
+   "far": false,
+   "travel": "",
+   "parts": [],
+   "merged": [],
+   "posDoubt": true,
+   "summary": "There is a tram that runs from the docks in downtown Juneau up Mount Roberts, one of the peaks overlooking the city."
+  },
+  {
+   "id": "src-juneau-arts-humanities-council",
+   "name": "Juneau Arts & Humanities Council",
+   "local": "",
+   "lat": 58.29983,
+   "lng": -134.41356,
+   "minutes": 40,
+   "category": "Sight",
+   "kind": "touristy",
+   "quick": false,
+   "mustSee": false,
+   "fame": 0,
+   "unesco": false,
+   "heritage": false,
+   "wd": "",
+   "src": [
+    "Wikivoyage (English)"
+   ],
+   "srcOnly": true,
+   "builtin": false,
+   "famousFix": false,
+   "far": false,
+   "travel": "",
+   "parts": [],
+   "merged": [],
+   "posDoubt": false,
+   "summary": "Built in 1959 as the National Guard Armory, this building was retired in 2004, and lay empty for several years, until the City and Borough of Juneau Assembly, u"
+  },
+  {
+   "id": "wv~alaskan-brewing-company-brewery-tour",
+   "name": "Alaskan Brewing Company Brewery Tour",
+   "local": "",
+   "lat": 58.299751,
+   "lng": -134.4043,
+   "minutes": 30,
+   "category": "Sight",
+   "kind": "touristy",
+   "quick": false,
+   "mustSee": false,
+   "fame": 0,
+   "unesco": false,
+   "heritage": false,
+   "wd": "",
+   "src": [
+    "Wikivoyage (English)"
+   ],
+   "srcOnly": false,
+   "builtin": true,
+   "famousFix": false,
+   "far": false,
+   "travel": "",
+   "parts": [],
+   "merged": [],
+   "posDoubt": false,
+   "summary": "If you head down to the Alaskan Brewing Company headquarters in Lemon Creek, they will give you a tasting of their great beer. A good way to end a day of hiking"
+  },
+  {
+   "id": "wv~Q30291923",
+   "name": "Sealaska Heritage Institute",
+   "local": "",
+   "lat": 58.300341,
+   "lng": -134.406325,
+   "minutes": 30,
+   "category": "Sight",
+   "kind": "touristy",
+   "quick": false,
+   "mustSee": false,
+   "fame": 0,
+   "unesco": false,
+   "heritage": false,
+   "wd": "Q30291923",
+   "src": [
+    "Wikivoyage (English)"
+   ],
+   "srcOnly": false,
+   "builtin": true,
+   "famousFix": false,
+   "far": false,
+   "travel": "",
+   "parts": [],
+   "merged": [],
+   "posDoubt": false,
+   "summary": ""
+  },
+  {
+   "id": "wv~upside-down-forest",
+   "name": "Upside-Down Forest",
+   "local": "",
+   "lat": 58.359959,
+   "lng": -134.548316,
+   "minutes": 30,
+   "category": "Sight",
+   "kind": "touristy",
+   "quick": false,
+   "mustSee": false,
+   "fame": 0,
+   "unesco": false,
+   "heritage": false,
+   "wd": "",
+   "src": [
+    "Wikivoyage (English)"
+   ],
+   "srcOnly": false,
+   "builtin": true,
+   "famousFix": false,
+   "far": false,
+   "travel": "",
+   "parts": [],
+   "merged": [],
+   "posDoubt": false,
+   "summary": "A \"forest\" of tree stumps, turned upside-down, planted in the ground, and seeded with lots of colorful flowers."
+  }
+ ]
+}

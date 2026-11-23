@@ -1,0 +1,285 @@
+{
+ "name": "kotor",
+ "label": "Kotor, Montenegro",
+ "centre": {
+  "lat": 42.42489,
+  "lng": 18.7719
+ },
+ "findings": [
+  {
+   "k": "POS",
+   "t": "Lovćen National Park: app is 5.82 km from Wikidata's point (not on the map by id)",
+   "x": {
+    "d": 5.824022823344562,
+    "id": "src-q1288177",
+    "wd": "Q1288177",
+    "app": [
+     42.405,
+     18.81833
+    ],
+    "wdpt": [
+     42.3667,
+     18.8667
+    ]
+   }
+  },
+  {
+   "k": "POS",
+   "t": "Church of Our Lady of Remedy: app is 0.69 km from Wikidata's point (not on the map by id)",
+   "x": {
+    "d": 0.6871028393177022,
+    "id": "src-q4981066",
+    "wd": "Q4981066",
+    "app": [
+     42.42429,
+     18.7732
+    ],
+    "wdpt": [
+     42.43,
+     18.77
+    ]
+   }
+  },
+  {
+   "k": "NOID",
+   "t": "Castle of San Giovanni: no Wikidata id and nothing of the name on the map nearby (from Wikivoyage (English))",
+   "x": {
+    "id": "src-castle-of-san-giovanni"
+   }
+  },
+  {
+   "k": "INFO",
+   "t": "8 sights, 0 day trips/towns; must-see: Kotor Cathedral, Fortifications of Kotor; top by fame: Kotor Cathedral 23, Fortifications of Kotor 21, Lovćen National Park 17, Church of Our Lady of Remedy 7, Serbian Orthodox church of St Nicolas in Kotor 6, Maritime Museum of Montenegro in Kotor 4, Castle of San Giovanni 0, Aquarium Boka 0",
+   "x": {}
+  }
+ ],
+ "sights": [
+  {
+   "id": "src-q966429",
+   "name": "Kotor Cathedral",
+   "local": "",
+   "lat": 42.4241,
+   "lng": 18.7719,
+   "minutes": 30,
+   "category": "Church",
+   "kind": "touristy",
+   "quick": false,
+   "mustSee": true,
+   "fame": 23,
+   "unesco": false,
+   "heritage": false,
+   "wd": "Q966429",
+   "src": [
+    "Wikidata (Wikipedia in many languages)",
+    "Wikivoyage (English)"
+   ],
+   "srcOnly": true,
+   "builtin": false,
+   "famousFix": false,
+   "far": false,
+   "travel": "",
+   "parts": [],
+   "merged": [],
+   "posDoubt": false,
+   "summary": "It was built in the 11th century, and reconstructed after earthquakes. Romanesque-Gothic architecture. Chapel holds the remains of St. Tryphon, the patron saint"
+  },
+  {
+   "id": "src-q12907852",
+   "name": "Fortifications of Kotor",
+   "local": "",
+   "lat": 42.42489,
+   "lng": 18.77104,
+   "minutes": 50,
+   "category": "Palace",
+   "kind": "touristy",
+   "quick": false,
+   "mustSee": true,
+   "fame": 21,
+   "unesco": false,
+   "heritage": true,
+   "wd": "Q12907852",
+   "src": [
+    "Wikidata (Wikipedia in many languages)",
+    "national heritage register"
+   ],
+   "srcOnly": true,
+   "builtin": false,
+   "famousFix": false,
+   "far": false,
+   "travel": "",
+   "parts": [],
+   "merged": [],
+   "posDoubt": false,
+   "summary": "A listed historic palace in Kotor, Montenegro, named by 2 independent sources."
+  },
+  {
+   "id": "src-q1288177",
+   "name": "Lovćen National Park",
+   "local": "",
+   "lat": 42.405,
+   "lng": 18.81833,
+   "minutes": 40,
+   "category": "Park or garden",
+   "kind": "touristy",
+   "quick": false,
+   "mustSee": false,
+   "fame": 17,
+   "unesco": false,
+   "heritage": false,
+   "wd": "Q1288177",
+   "src": [
+    "Wikidata (Wikipedia in many languages)"
+   ],
+   "srcOnly": true,
+   "builtin": false,
+   "famousFix": false,
+   "far": false,
+   "travel": "",
+   "parts": [],
+   "merged": [],
+   "posDoubt": false,
+   "summary": "A park or garden in Kotor, Montenegro, named by 1 independent sources."
+  },
+  {
+   "id": "src-q4981066",
+   "name": "Church of Our Lady of Remedy",
+   "local": "",
+   "lat": 42.42429,
+   "lng": 18.7732,
+   "minutes": 30,
+   "category": "Church",
+   "kind": "touristy",
+   "quick": false,
+   "mustSee": false,
+   "fame": 7,
+   "unesco": false,
+   "heritage": false,
+   "wd": "Q4981066",
+   "src": [
+    "Wikivoyage (English)"
+   ],
+   "srcOnly": true,
+   "builtin": false,
+   "famousFix": false,
+   "far": false,
+   "travel": "",
+   "parts": [],
+   "merged": [],
+   "posDoubt": false,
+   "summary": "Church on the slopes of the mountain overlooking Kotor. Built in the 16th century by plague survivors to honor the Holy Mother. Accessed by climbing the trail u"
+  },
+  {
+   "id": "src-q26696607",
+   "name": "Serbian Orthodox church of St Nicolas in Kotor",
+   "local": "",
+   "lat": 42.42575,
+   "lng": 18.77089,
+   "minutes": 30,
+   "category": "Church",
+   "kind": "touristy",
+   "quick": false,
+   "mustSee": false,
+   "fame": 6,
+   "unesco": false,
+   "heritage": false,
+   "wd": "Q26696607",
+   "src": [
+    "Wikivoyage (English)"
+   ],
+   "srcOnly": true,
+   "builtin": false,
+   "famousFix": false,
+   "far": false,
+   "travel": "",
+   "parts": [],
+   "merged": [],
+   "posDoubt": false,
+   "summary": "The biggest Orthodox church in the Old Town."
+  },
+  {
+   "id": "src-q16677924",
+   "name": "Maritime Museum of Montenegro in Kotor",
+   "local": "",
+   "lat": 42.4252,
+   "lng": 18.77136,
+   "minutes": 90,
+   "category": "Museum",
+   "kind": "touristy",
+   "quick": false,
+   "mustSee": false,
+   "fame": 4,
+   "unesco": false,
+   "heritage": false,
+   "wd": "Q16677924",
+   "src": [
+    "Wikivoyage (English)"
+   ],
+   "srcOnly": true,
+   "builtin": false,
+   "famousFix": false,
+   "far": false,
+   "travel": "",
+   "parts": [],
+   "merged": [],
+   "posDoubt": false,
+   "summary": "3 floors of photographs, uniforms, weapons, paintings, and model ships."
+  },
+  {
+   "id": "src-castle-of-san-giovanni",
+   "name": "Castle of San Giovanni",
+   "local": "",
+   "lat": 42.42212,
+   "lng": 18.77482,
+   "minutes": 50,
+   "category": "Palace",
+   "kind": "touristy",
+   "quick": false,
+   "mustSee": false,
+   "fame": 0,
+   "unesco": false,
+   "heritage": false,
+   "wd": "",
+   "src": [
+    "Wikivoyage (English)"
+   ],
+   "srcOnly": true,
+   "builtin": false,
+   "famousFix": false,
+   "far": false,
+   "travel": "",
+   "parts": [],
+   "merged": [],
+   "posDoubt": false,
+   "summary": "Ruins of a castle at the top of the trail running along the fortifications of the town. Offers panoramic views of the walled town with the Bay of Kotor in the b"
+  },
+  {
+   "id": "src-aquarium-boka",
+   "name": "Aquarium Boka",
+   "local": "",
+   "lat": 42.43616,
+   "lng": 18.76429,
+   "minutes": 40,
+   "category": "Sight",
+   "kind": "touristy",
+   "quick": false,
+   "mustSee": false,
+   "fame": 0,
+   "unesco": false,
+   "heritage": false,
+   "wd": "Q126391371",
+   "src": [
+    "Wikivoyage (English)"
+   ],
+   "srcOnly": true,
+   "builtin": false,
+   "famousFix": false,
+   "far": false,
+   "travel": "",
+   "parts": [],
+   "merged": [],
+   "posDoubt": false,
+   "summary": "Small aquarium featuring entirely local marine species. Panel descriptions are in both Montenegrin and English.",
+   "wdByName": true
+  }
+ ]
+}
