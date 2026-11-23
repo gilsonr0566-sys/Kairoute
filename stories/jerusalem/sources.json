@@ -1,0 +1,275 @@
+{
+ "retrieve": [
+  {
+   "key": "wp-temple-mount",
+   "wiki": "Temple Mount"
+  },
+  {
+   "key": "wp-dome-rock",
+   "wiki": "Dome of the Rock"
+  },
+  {
+   "key": "wp-al-aqsa-mosque",
+   "wiki": "Al-Aqsa Mosque"
+  },
+  {
+   "key": "wp-abd-al-malik-ibn-marwan",
+   "wiki": "Abd al-Malik ibn Marwan"
+  },
+  {
+   "key": "unesco-jerusalem",
+   "url": "https://whc.unesco.org/en/list/148/",
+   "publisher": "UNESCO World Heritage Centre"
+  },
+  {
+   "key": "kjv-2chronicles3",
+   "url": "https://bible-api.com/2%20chronicles%203%3A1-2?translation=kjv",
+   "publisher": "King James Version (public domain), via bible-api.com"
+  },
+  {
+   "key": "kjv-genesis22",
+   "url": "https://bible-api.com/genesis%2022%3A1-14?translation=kjv",
+   "publisher": "King James Version (public domain), via bible-api.com"
+  },
+  {
+   "key": "wv-jerusalem",
+   "wiki": "Jerusalem",
+   "site": "en.wikivoyage.org"
+  },
+  {
+   "key": "wp-knesset",
+   "wiki": "Knesset"
+  },
+  {
+   "key": "wp-knesset-menorah",
+   "wiki": "Knesset Menorah"
+  },
+  {
+   "key": "wp-givat-ram",
+   "wiki": "Givat Ram"
+  },
+  {
+   "key": "wp-israel-museum",
+   "wiki": "Israel Museum"
+  },
+  {
+   "key": "wp-shrine-book",
+   "wiki": "Shrine of the Book"
+  },
+  {
+   "key": "wp-dead-sea-scrolls",
+   "wiki": "Dead Sea Scrolls"
+  },
+  {
+   "key": "wp-bible-lands-museum",
+   "wiki": "Bible Lands Museum"
+  },
+  {
+   "key": "kjv-isaiah40",
+   "url": "https://bible-api.com/isaiah%2040%3A1-8?translation=kjv",
+   "publisher": "King James Version (public domain), via bible-api.com"
+  },
+  {
+   "key": "wp-western-wall",
+   "wiki": "Western Wall"
+  },
+  {
+   "key": "wp-second-temple",
+   "wiki": "Second Temple"
+  },
+  {
+   "key": "wp-herod-great",
+   "wiki": "Herod the Great"
+  },
+  {
+   "key": "wp-western-wall-tunnel",
+   "wiki": "Western Wall Tunnel"
+  },
+  {
+   "key": "kjv-1kings8",
+   "url": "https://bible-api.com/1%20kings%208%3A22-30?translation=kjv",
+   "publisher": "King James Version (public domain), via bible-api.com"
+  },
+  {
+   "key": "wp-church-holy-sepulchre",
+   "wiki": "Church of the Holy Sepulchre"
+  },
+  {
+   "key": "wp-calvary",
+   "wiki": "Calvary"
+  },
+  {
+   "key": "wp-constantine-great",
+   "wiki": "Constantine the Great"
+  },
+  {
+   "key": "wp-status-quo",
+   "wiki": "Status Quo (Jerusalem and Bethlehem)"
+  },
+  {
+   "key": "kjv-john19",
+   "url": "https://bible-api.com/john%2019%3A16-42?translation=kjv",
+   "publisher": "King James Version (public domain), via bible-api.com"
+  },
+  {
+   "key": "kjv-john20",
+   "url": "https://bible-api.com/john%2020%3A1-18?translation=kjv",
+   "publisher": "King James Version (public domain), via bible-api.com"
+  },
+  {
+   "key": "wp-yad-vashem",
+   "wiki": "Yad Vashem"
+  },
+  {
+   "key": "wp-holocaust",
+   "wiki": "The Holocaust"
+  },
+  {
+   "key": "wp-righteous-among-nations",
+   "wiki": "Righteous Among the Nations"
+  },
+  {
+   "key": "wp-mount-herzl",
+   "wiki": "Mount Herzl"
+  },
+  {
+   "key": "wp-theodor-herzl",
+   "wiki": "Theodor Herzl"
+  },
+  {
+   "key": "wp-yitzhak-rabin",
+   "wiki": "Yitzhak Rabin"
+  },
+  {
+   "key": "wp-golda-meir",
+   "wiki": "Golda Meir"
+  },
+  {
+   "key": "wp-gehenna",
+   "wiki": "Gehenna"
+  },
+  {
+   "key": "wp-ketef-hinnom-scrolls",
+   "wiki": "Ketef Hinnom scrolls"
+  },
+  {
+   "key": "kjv-jeremiah7",
+   "url": "https://bible-api.com/jeremiah%207%3A30-34?translation=kjv",
+   "publisher": "King James Version (public domain), via bible-api.com"
+  },
+  {
+   "key": "kjv-2kings23",
+   "url": "https://bible-api.com/2%20kings%2023%3A10?translation=kjv",
+   "publisher": "King James Version (public domain), via bible-api.com"
+  },
+  {
+   "key": "wp-tower-david",
+   "wiki": "Tower of David"
+  },
+  {
+   "key": "wp-jaffa-gate",
+   "wiki": "Jaffa Gate"
+  },
+  {
+   "key": "kjv-2samuel5",
+   "url": "https://bible-api.com/2%20samuel%205%3A6-9?translation=kjv",
+   "publisher": "King James Version (public domain), via bible-api.com"
+  },
+  {
+   "key": "wp-mount-olives",
+   "wiki": "Mount of Olives"
+  },
+  {
+   "key": "wp-church-mary-magdalene",
+   "wiki": "Church of Mary Magdalene"
+  },
+  {
+   "key": "wp-dominus-flevit-church",
+   "wiki": "Dominus Flevit Church"
+  },
+  {
+   "key": "wp-elizabeth-feodorovna",
+   "wiki": "Elizabeth Feodorovna"
+  },
+  {
+   "key": "kjv-luke19",
+   "url": "https://bible-api.com/luke%2019%3A37-44?translation=kjv",
+   "publisher": "King James Version (public domain), via bible-api.com"
+  },
+  {
+   "key": "kjv-acts1",
+   "url": "https://bible-api.com/acts%201%3A9-12?translation=kjv",
+   "publisher": "King James Version (public domain), via bible-api.com"
+  },
+  {
+   "key": "wp-rockefeller-archaeological-m",
+   "wiki": "Rockefeller Archaeological Museum"
+  },
+  {
+   "key": "wp-austen-st-barbe-harrison",
+   "wiki": "Austen St. Barbe Harrison"
+  },
+  {
+   "key": "wp-john-d-rockefeller-jr",
+   "wiki": "John D. Rockefeller Jr."
+  },
+  {
+   "key": "wp-mount-zion",
+   "wiki": "Mount Zion"
+  },
+  {
+   "key": "wp-dormition-abbey",
+   "wiki": "Dormition Abbey"
+  },
+  {
+   "key": "wp-cenacle",
+   "wiki": "Cenacle"
+  },
+  {
+   "key": "wp-david-s-tomb",
+   "wiki": "David's Tomb"
+  },
+  {
+   "key": "kjv-mark14",
+   "url": "https://bible-api.com/mark%2014%3A12-26?translation=kjv",
+   "publisher": "King James Version (public domain), via bible-api.com"
+  },
+  {
+   "key": "kjv-acts2",
+   "url": "https://bible-api.com/acts%202%3A1-4?translation=kjv",
+   "publisher": "King James Version (public domain), via bible-api.com"
+  },
+  {
+   "key": "wp-tel-aviv",
+   "wiki": "Tel Aviv"
+  },
+  {
+   "key": "wp-white-city",
+   "wiki": "White City (Tel Aviv)"
+  },
+  {
+   "key": "wp-jaffa",
+   "wiki": "Jaffa"
+  },
+  {
+   "key": "unesco-tel-aviv",
+   "url": "https://whc.unesco.org/en/list/1096/",
+   "publisher": "UNESCO World Heritage Centre"
+  },
+  {
+   "key": "kjv-jonah1",
+   "url": "https://bible-api.com/jonah%201%3A1-3?translation=kjv",
+   "publisher": "King James Version (public domain), via bible-api.com"
+  },
+  {
+   "key": "kjv-acts9",
+   "url": "https://bible-api.com/acts%209%3A36-43?translation=kjv",
+   "publisher": "King James Version (public domain), via bible-api.com"
+  },
+  {
+   "key": "wv-tel-aviv",
+   "wiki": "Tel Aviv",
+   "site": "en.wikivoyage.org"
+  }
+ ]
+}

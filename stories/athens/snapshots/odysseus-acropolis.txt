@@ -1,5 +1,5 @@
 SOURCE: http://odysseus.culture.gr/h/3/eh351.jsp?obj_id=2384
-RETRIEVED: 2026-11-21T21:28:50.317Z
+RETRIEVED: 2026-11-23T06:11:20.796Z
 STATUS: 200
 TITLE: Ministry of Culture and Sports | Acropolis of Athens
 

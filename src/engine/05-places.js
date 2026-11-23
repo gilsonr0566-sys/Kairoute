@@ -21,6 +21,7 @@
   // A place to eat that isn't open to the public: a staff or officers' canteen, a members' club (Nov 20 tester: a city hall's
   // staff cafeteria planned as dinner).
   E.notPublicEat = x => /\b(cafeteria|canteen|mensa|staff|employees?|officers'?|members'?|private)\b/i.test(String((x && x.name) || (typeof x === "string" ? x : ""))) || /^(private|no|members)$/i.test(String((x && x.access) || ""));
+  const eatPos = x => x && isFinite(x[1]) && isFinite(x[2]) ? { lat: x[1], lng: x[2] } : null; // a map place to eat: [name, lat, lng, hours, kind]
   E.applyPlaces = (bucket, places) => {
     const b = copy(bucket), notes = b.placeNotes = [];
     const guides = b.cities || {};
@@ -49,9 +50,19 @@
         // The official website, where the sight's own tickets are sold (the Book tickets link starts from it).
         if (f.web && !s.web) s.web = f.web;
       }
-      // Every listed sight shows its English name (tools/places/en-names.cjs: Wikidata English label, else the English
-      // Wikipedia title); one with no English name in any source is a
-      // "Local sight" with its own name beneath as the name on signs (rule R-11, any language).
+      // A sight of the place across the water from it, from the map (asked when the place file was built): reached by boat,
+      // whether or not the traveler's phone can reach the map's server for its own water check (Nov 23: an island off the
+      // old town planned as a taxi ride). The on-device check can still add more; it never removes what the file says.
+      for (const s of city.sites || []) { const isl = P.islands && P.islands.sites && P.islands.sites[s.id]; if (isl && isl.across && !s.acrossWater) s.acrossWater = (isl.island && isl.island.name) || true; }
+      // The class rule (R-06): ANY stop that stands on a mapped island the place's centre isn't on, and that the map's
+      // paths don't reach on foot from the centre, is across the water: a sight of the guide, one the travel guide or
+      // the helper brings in, a stop the traveler adds, a town a day away and its own sights. From the island outlines in
+      // the place file, so it holds offline (Nov 23: Lokrum wasn't one of the file's sights and was planned as a taxi).
+      const across = s => { if (!s || s.acrossWater || !P.islands || !Array.isArray(P.islands.shapes)) return;
+        const sh = E.islandAt(P.islands.shapes, s); if (sh && sh.id !== P.islands.centreShape && sh.walk === false) s.acrossWater = sh.name || true; };
+      // Every listed sight shows its English name (tools/places/en-names.cjs: the English Wikipedia title, else the
+      // Wikidata English label); one with no English name in any source is a "Local sight" with its own name beneath
+      // as the name on signs (rule R-11, any language).
       // A thin guide (under 8 sights): the travel guide's own best-known sights for the place join it, unless already there (same
       // name, or within 150 m) or closed for good.
       if ((city.sites || []).length < 8 && (P.guideSights || []).length) {
@@ -70,8 +81,25 @@
       // Restaurants and cafés on the map beside the place's sights: lunch where the traveler is, never a detour back to the
       // few the guide names (Nov 18, a small coastal city). Kept apart as from the map (no review behind them).
       if ((P.cityEats || []).length) { const have = new Set((city.restaurants || []).map(r => E.eatKey(r.name)));
-        city.restaurants = (city.restaurants || []).concat(P.cityEats.filter(x => x.name && !E.notPublicEat(x) && E.readable(E.latin(x.name)) && isFinite(x.lat) && isFinite(x.lng) && !have.has(E.eatKey(x.name)))
-          .map(x => ({ id: "map~" + E.eatKey(x.name).replace(/ /g, "-"), name: E.say(x.name), lat: x.lat, lng: x.lng,  kind: x.amenity || "restaurant", amenity: x.amenity || "restaurant", cuisine: x.cuisine || "", fromMap: true }))); }
+        // A place the guide names that is also on the map keeps the map's opening hours (Nov 23 real-map check: Sala Thai
+        // planned for 11:45, before it opens at noon, because the guide's copy had no hours and the map's copy was dropped).
+        for (const r of city.restaurants || []) { if (r.hours || !r.name) continue; const k = E.eatKey(r.name);
+          const m = P.cityEats.find(x => x.hours && x.name && E.eatKey(E.latin(x.name) || x.name) === k && (!isFinite(r.lat) || !isFinite(x.lat) || E.hav(r, x) <= 0.3)); if (m) r.hours = m.hours; }
+        city.restaurants = (city.restaurants || []).concat(P.cityEats.filter(x => x.name && !E.notPublicEat(x) && E.readable(E.latin(x.name) || x.name) && isFinite(x.lat) && isFinite(x.lng) && !have.has(E.eatKey(x.name)))
+          .map(x => Object.assign({ id: "map~" + E.eatKey(x.name).replace(/ /g, "-"), name: E.say(x.name), lat: x.lat, lng: x.lng,  kind: x.amenity || "restaurant", amenity: x.amenity || "restaurant", cuisine: x.cuisine || "", fromMap: true }, x.hours ? { hours: x.hours } : {}))); }
+      // Opening hours of the places to eat on the map near the sights ([name, lat, lng, hours, kind]): a place the guide
+      // names, with no hours of its own, takes the hours of the place on the map with its name within 200 m ("Sorbillo" is
+      // the map's "Antonio Sorbillo"). Nov 23 real-map check: lunches planned before the place opens.
+      // The same for a nearby town's places to eat (Nov 23 release gate: Sitges's "Komokieras" planned for lunch at 11:45
+      // with no hours, while the map says it opens at 13:15).
+      const mapHours = r => {
+        if (r.hours || !r.name || !isFinite(r.lat) || !isFinite(r.lng)) return; const k = E.eatKey(r.name); if (k.length < 4) return;
+        const hit = E.nearby(P.eatHours, eatPos, r, 0.2).filter(x => x && x[0] && x[3]).map(x => ({ x, mk: E.eatKey(E.latin(x[0]) || x[0]) }))
+          .filter(o => o.mk && (o.mk === k || (o.mk.length >= 4 && (o.mk.includes(k) || k.includes(o.mk)))))
+          .sort((a, b) => (b.mk === k) - (a.mk === k) || E.hav(r, { lat: a.x[1], lng: a.x[2] }) - E.hav(r, { lat: b.x[1], lng: b.x[2] }))[0];
+        if (hit) { r.hours = hit.x[3]; if (hit.x[4]) r.mapKind = hit.x[4]; }
+      };
+      if ((P.eatHours || []).length) for (const r of city.restaurants || []) mapHours(r);
       // One sight, one id: a town's sights the app already lists (it shows the places files' sights in its own list, and
       // sends them back) are never added again (Nov 19 sweep: Toledo's sights twice over made a day of 23 stops, an 8-second tick).
       const added = [], haveFar = new Set((city.farther || []).map(x => String(x.id)));
@@ -94,19 +122,25 @@
         if (own.length >= 2) s.townWalk = Math.min(s.minutes || 60, 60);
         s.foodDrink = (t.foodDrink || []).filter(x => x.name && E.readable(E.latin(x.name))).map(x => ({ name: E.say(x.name), lat: isFinite(x.lat) ? x.lat : null, lng: isFinite(x.lng) ? x.lng : null, kind: x.kind, note: x.content || "", special: E.foodSpecial(x) }));
         // No place to eat in its travel guide: the restaurants and cafés on the map beside it (named as from the map).
-        if (!s.foodDrink.some(x => x.kind === "eat") && (t.mapEats || []).length) s.foodDrink = s.foodDrink.concat(t.mapEats.filter(x => x.name && !E.notPublicEat(x) && E.readable(E.latin(x.name))).map(x => ({ name: E.say(x.name), lat: x.lat, lng: x.lng, kind: "eat", note: x.cuisine || "", special: false, fromMap: true })));
+        if (!s.foodDrink.some(x => x.kind === "eat") && (t.mapEats || []).length) s.foodDrink = s.foodDrink.concat(t.mapEats.filter(x => x.name && !E.notPublicEat(x) && E.readable(E.latin(x.name) || x.name)).map(x => ({ name: E.say(x.name), lat: x.lat, lng: x.lng, kind: "eat", note: x.cuisine || "", special: false, fromMap: true })));
+        if ((P.eatHours || []).length) for (const x of s.foodDrink) if (x.kind === "eat") mapHours(x);
       }
       if (added.length) city.farther = (city.farther || []).concat(added);
+      for (const s of (city.sites || []).concat(city.farther || [])) across(s);
       // Hours per day: a mapped opening time read for that day's date, where the day has no hours for the sight yet.
       for (const d of b.days || []) {
         if (d.city !== key || !d.date) continue;
         d.sites = d.sites || {};
         for (const s of city.sites || []) {
-          if (!s.hours) continue;
+          if (!s.hours && !E.checkedHoursFor(s, city.name)) continue;
           const have = d.sites[s.id]; if (have && (have.closed || (have.oh && have.oh.spans && have.oh.spans.length))) continue;
-          const oh = E.ohSpans(s.hours, d.date);
-          if (!oh) { if (/^(24\/7|(Mo-Su\s*)?00:00-(00|24):00)$/.test(String(s.hours).trim())) d.sites[s.id] = Object.assign({}, have || {}, { allDay: true, hoursFrom: "OpenStreetMap" }); continue; }
-          d.sites[s.id] = Object.assign({}, have || {}, { closed: !oh.spans.length, oh: oh.spans.length ? oh : null, hoursFrom: "OpenStreetMap" });
+          // The one hours reader (part 2b) and the calendar rules (part 2c), with the day's holiday as the bucket gives it.
+          const ctx = { holiday: d.holiday === undefined ? undefined : !!(d.holiday && d.holiday.name), lat: +s.lat, lng: +s.lng, city: city.name };
+          const r = E.applyDayRules(s, E.readPlaceHours(s, d.date, ctx), d.date, Object.assign({}, ctx, { holiday: d.holiday || null, country: d.cc || null }));
+          const h = Object.assign({}, (have || {}).hours || {}, { src: r.src || "OpenStreetMap", why: r.why || "" }); ["notes", "holidayUnsure", "restUnsure", "sundayAfternoon", "seasonChange"].forEach(k => { if (r[k]) h[k] = r[k]; });
+          if (!r.known) continue;
+          if (r.allDay) { d.sites[s.id] = Object.assign({}, have || {}, { allDay: true, hoursFrom: h.src, hours: h }); continue; }
+          d.sites[s.id] = Object.assign({}, have || {}, { closed: !!r.closed, oh: r.closed ? null : { spans: r.spans, last: r.last != null ? r.last : null }, hoursFrom: h.src, hours: h });
         }
         // A landing with a cable car or funicular starting beside it: the town is at the other end.
         if (d.type === "port" && d.point && isFinite(d.point.lat) && !d.point.lift) for (const l of P.lifts || []) {

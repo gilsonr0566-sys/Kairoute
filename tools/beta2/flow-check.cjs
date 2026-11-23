@@ -93,6 +93,8 @@ async function tapTimes(p) { const out = []; const n = await p.evaluate(() => wi
   // 2. Untick everything on a port day, then pick a day trip and a sight in town (Richard, Nov 18: Naples).
   const ni = await dayIdx(p, /Naples/);
   await p.evaluate(i => { window.__kairouteGo('day', i); window.__kairouteGo('sites'); }, ni); await p.waitForTimeout(800);
+  // The list shows once it is sorted (Nov 23 steady list): read it when the traveler can see it.
+  await p.waitForFunction(() => !window.__kairouteFitPending || window.__kairouteFitPending() === 0, null, { timeout: 20000, polling: 100 }).catch(() => {}); await p.waitForTimeout(300);
   const yp = p.locator('[data-act="picksfold"][aria-expanded="false"]').first(); if (await yp.isVisible().catch(() => false)) { await yp.tap(); await p.waitForTimeout(500); }
   // Nov 21 live re-check: with the day's sights on, the box for a place reached only by boat said "Even with nothing else
   // picked, it can't fit this day" on a day it fits alone, and offered no way. It offers the sights to swap for it.
@@ -433,7 +435,8 @@ async function tapTimes(p) { const out = []; const n = await p.evaluate(() => wi
 
   // 3d. The sight list organizes itself (Richard, Nov 19): Your picks, Still fits, Also see (farther out), Already picked
   // on other days, Doesn't fit, in that order. Every card under "Still fits" has a tick; every card under "Doesn't fit"
-  // has none and opens the box that says why and how to make it fit; a sight ticked goes up to Your picks.
+  // has none and opens the box that says why and how to make it fit; a sight ticked stays put and is under Your picks
+  // on the next visit (Nov 23: the list never re-sorts in front of the traveler).
   { const bad = []; const days = await p.evaluate(() => window.__kairouteDays());
     const ORDER = ['Your picks', 'Still fits today', 'Also see, farther out', 'Already picked on other days', "Doesn't fit today"];
     for (const i of days.map((d, i) => i).filter(i => /Athens|Naples|Chania/.test(days[i].dest)).slice(0, 4)) {
@@ -447,8 +450,14 @@ async function tapTimes(p) { const out = []; const n = await p.evaluate(() => wi
       if (seen.join('|') !== want.join('|')) bad.push(`day ${i + 1}: sections out of order: ${seen.join(', ')}`);
       if (r.fitsNoTick.length) bad.push(`day ${i + 1}: under "Still fits" without a tick: ${r.fitsNoTick.join(', ')}`);
       if (r.wontTick.length) bad.push(`day ${i + 1}: under "Doesn't fit" with a tick or no way to ask why: ${r.wontTick.join(', ')}`);
-      if (r.first) { await tapBox(p, r.first); const up = await p.evaluate(id => { const f = document.querySelector('.sitesmain .picksfold'); return !!(f && f.querySelector(`[data-card="${id}"]`)); }, r.first);
-        if (!up) bad.push(`day ${i + 1}: ${r.first} ticked but not under Your picks`); else await tapBox(p, r.first); } }
+      // Nov 23 (Richard: "unusable. It's jumping around"): a tick no longer moves the card; the list sorts it into Your
+      // picks on the next visit. Both halves are checked: it stays put now, and it is under Your picks after reopening.
+      if (r.first) { await tapBox(p, r.first); const inFold = id => p.evaluate(id => { const f = document.querySelector('.sitesmain .picksfold'); return !!(f && f.querySelector(`[data-card="${id}"]`)); }, id);
+        const ticked = await p.evaluate(id => { const x = document.querySelector(`input[data-site="${id}"]`); return !!(x && x.checked); }, r.first);
+        if (ticked && await inFold(r.first)) bad.push(`day ${i + 1}: ${r.first} jumped up to Your picks the moment it was ticked`);
+        await p.evaluate(() => window.__kairouteGo('plan')); await p.waitForTimeout(300); await p.evaluate(() => window.__kairouteGo('sites'));
+        await p.waitForFunction(() => !window.__kairouteFitPending || window.__kairouteFitPending() === 0, null, { timeout: 20000, polling: 200 }).catch(() => {}); await p.waitForTimeout(400);
+        if (ticked && !(await inFold(r.first))) bad.push(`day ${i + 1}: ${r.first} ticked but not under Your picks on the next visit`); if (ticked) await tapBox(p, r.first); } }
     check('The sight list sorts itself: Your picks, Still fits, Also see, Already picked, Doesn\'t fit (ticks only where it fits)', !bad.length, bad.slice(0, 3).join(' | ')); }
 
   // 3e. The scorecard's goals, on screen (Nov 19, Richard: "And the phone test"): every day's plan, as the traveler sees it.
@@ -559,11 +568,11 @@ async function tapTimes(p) { const out = []; const n = await p.evaluate(() => wi
     check('A city with several stations or airports asks which, gives no time on a guess, and plans the day once chosen', ok7, why); }
   // Not a sight, in any city (competitor review, Nov 20): a stock exchange, an office building, an event such as a crash. Listed
   // monuments and memorials stay. And no staff canteen as a place to eat.
-  { const r = await p.evaluate(() => { const no = ['Tokyo Stock Exchange', 'NTT Docomo Yoyogi Building', 'Bijlmer disaster', 'Shell Headquarters'].filter(n => !window.__kairouteNotSpot({ name: n }));
-      const yes = ['Senso-ji', 'Empire State Building|h', 'National Monument', 'Bijlmer disaster memorial'].map(n => n.split('|')).filter(([n, h]) => window.__kairouteNotSpot({ name: n, heritage: !!h })).map(x => x[0]);
+  { const r = await p.evaluate(() => { const no = ['Tokyo Stock Exchange', 'NTT Docomo Yoyogi Building', 'Bijlmer disaster', 'Shell Headquarters', 'Ernst-Happel-Stadion', 'Stade de France', 'Estádio da Luz'].filter(n => !window.__kairouteNotSpot({ name: n }));
+      const yes = ['Senso-ji', 'Empire State Building|h', 'National Monument', 'Bijlmer disaster memorial', 'Panathenaic Stadium|h', 'Verona Arena'].map(n => n.split('|')).filter(([n, h]) => window.__kairouteNotSpot({ name: n, heritage: !!h })).map(x => x[0]);
       const eat = ["Metropolitan Officers' Cafeteria", 'Staff canteen'].filter(n => !KEngine.notPublicEat({ name: n }));
       return { no, yes, eat }; });
-    check('A business, an office building or an event is never a sight; a monument or memorial is; a staff canteen is never a place to eat', !r.no.length && !r.yes.length && !r.eat.length,
+    check('A business, an office building, a sports ground or an event is never a sight; a monument or memorial is; a staff canteen is never a place to eat', !r.no.length && !r.yes.length && !r.eat.length,
       `taken as sights: ${r.no.join(', ') || 'none'}; refused: ${r.yes.join(', ') || 'none'}; canteens kept: ${r.eat.join(', ') || 'none'}`); }
   // The leave-by time on every fixed day leaves room for the ride back: leave-by plus the ride is never past the time to be
   // back (Round 1, Nov 20: Ketchikan's badge said leave by 12:15, the time to be back, with a 38 min ride after it).

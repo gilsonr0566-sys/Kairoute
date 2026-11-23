@@ -25,7 +25,7 @@ const pick = c => { c = (c || '').toLowerCase(); const k = Object.keys(fx).find(
   const p = await ctx.newPage(); p.on('pageerror', e => console.log('ERR', e.message));
   await p.goto(base + 'index.html'); await p.evaluate(() => localStorage.setItem('kairoute.intro1', '1'));
   await p.evaluate(() => navigator.serviceWorker.ready); await p.reload(); await p.waitForTimeout(800);
-  await p.getByText('Continue trip').click(); await p.waitForTimeout(400);
+  await p.locator('[data-act=continue]').click(); await p.waitForTimeout(400);
   const N = +(process.env.DAYS || 23);
   for (let i = 0; i < N; i++) { await p.evaluate(i => window.__kairouteGo('sites', i), i).catch(() => {}); await p.waitForTimeout(+(process.env.W || 1500)); }
   await p.waitForTimeout(3000);

@@ -1,7 +1,7 @@
 name: Planner quality test
 on:
   push:
-    paths: ["src/**", "!src/engine/**", "tools/plan-test.cjs", "tools/fixtures/**"]
+    paths: ["src/**", "!src/engine/**", "!src/engine-data/**", "tools/plan-test.cjs", "tools/fixtures/**"]
   workflow_dispatch:
 permissions:
   contents: read

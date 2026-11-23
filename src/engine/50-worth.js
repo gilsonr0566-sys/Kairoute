@@ -31,6 +31,18 @@
     if (siteDay && E.closedForDay(siteDay, win, s.minutes)) return false;
     return true;
   };
+  // The one reason a sight can't be visited on a day, as E.allowed decides it (screen rule "one real reason", Nov 22 odd-trips
+  // screen check: "is closed or can't be visited this day" was said whatever the reason was).
+  E.notAllowedWhy = (s, prefs, siteDay, win) => {
+    if (!s || !isFinite(s.lat) || !isFinite(s.lng)) return "isn't on the map, so it can't be planned";
+    if (prefs && prefs.religious === "skip" && has(s, "religious") && !s.religiousOk) return "is a place of worship, and your settings skip those";
+    if (prefs && (prefs.access === "wheelchair" || prefs.access === "limited") && s.effort === "steep") return "is a steep climb, and your settings ask for easy access";
+    if (s.closedForGood) return "has closed for good";
+    if (s.visitable === false) return "can't be visited inside";
+    if (siteDay && siteDay.closed) return "is closed on this date";
+    if (siteDay && siteDay.oh && siteDay.oh.spans && siteDay.oh.spans.length && win) return "is open " + siteDay.oh.spans.map(([a, b]) => E.clock(a) + " to " + E.clock(b)).join(" and ") + " that day, not long enough inside today's time (" + E.clock(win.start) + " to " + E.clock(win.endBy) + ") for a visit";
+    return null;
+  };
   // A worth-ordered list with a fixed tie-break (by id), so the answer never depends on input order.
   E.rank = (sites, prefs, style) => sites.map(s => ({ s, w: E.worth(s, prefs, style) }))
     .sort((a, b) => b.w - a.w || E.byId(a.s, b.s)).map(x => Object.assign({}, x.s, { worth: x.w }));

@@ -8,12 +8,13 @@
     if (!oh || !oh.spans || !oh.spans.length) return { wait: 0, late: 0 };
     // The whole visit fits before closing (Nov 19 review: a 2-hour museum could be entered 45 minutes before it closed),
     // and entry is by the last entry when one is listed.
-    const deadOf = (b) => Math.min(oh.last != null && oh.last <= b ? oh.last : Infinity, b - Math.max(15, len || 0));
-    for (const [a, b] of oh.spans) {
-      const dead = deadOf(b);
+    // (worked out in line, the same sums: planning time, Nov 23)
+    const last = oh.last, need = Math.max(15, len || 0), spans = oh.spans;
+    for (let i = 0; i < spans.length; i++) { const a = spans[i][0], b = spans[i][1];
+      const dead = Math.min(last != null && last <= b ? last : Infinity, b - need);
       if (t <= dead) { const wait = Math.max(0, a - t); return t + wait <= dead ? { wait, late: 0, open: a, close: b } : { wait: 0, late: t + wait - dead, open: a, close: b }; }
     }
-    const [a, b] = oh.spans[oh.spans.length - 1]; return { wait: 0, late: t - deadOf(b), open: a, close: b };
+    const a = spans[spans.length - 1][0], b = spans[spans.length - 1][1]; return { wait: 0, late: t - Math.min(last != null && last <= b ? last : Infinity, b - need), open: a, close: b };
   };
   // Can't be visited on this day at all: closed that date, or open only outside the day's window (under 30 minutes of overlap).
   E.closedForDay = (siteDay, win, minutes) => {

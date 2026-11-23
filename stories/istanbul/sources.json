@@ -1,0 +1,162 @@
+{
+ "retrieve": [
+  {
+   "key": "wp-hagia-sophia",
+   "wiki": "Hagia Sophia"
+  },
+  {
+   "key": "wp-justinian-i",
+   "wiki": "Justinian I"
+  },
+  {
+   "key": "wp-fall-constantinople",
+   "wiki": "Fall of Constantinople"
+  },
+  {
+   "key": "wp-mehmed-ii",
+   "wiki": "Mehmed II"
+  },
+  {
+   "key": "unesco-istanbul",
+   "url": "https://whc.unesco.org/en/list/356/",
+   "publisher": "UNESCO World Heritage Centre"
+  },
+  {
+   "key": "wv-istanbul",
+   "wiki": "Istanbul",
+   "site": "en.wikivoyage.org"
+  },
+  {
+   "key": "wp-sultan-ahmed-mosque",
+   "wiki": "Sultan Ahmed Mosque"
+  },
+  {
+   "key": "wp-ahmed-i",
+   "wiki": "Ahmed I"
+  },
+  {
+   "key": "wp-sedefkar-mehmed-agha",
+   "wiki": "Sedefkar Mehmed Agha"
+  },
+  {
+   "key": "wp-hippodrome-constantinople",
+   "wiki": "Hippodrome of Constantinople"
+  },
+  {
+   "key": "wp-topkap-palace",
+   "wiki": "Topkapı Palace"
+  },
+  {
+   "key": "wp-imperial-harem",
+   "wiki": "Imperial Harem"
+  },
+  {
+   "key": "wp-suleiman-magnificent",
+   "wiki": "Suleiman the Magnificent"
+  },
+  {
+   "key": "wp-st-george-s-cathedral-istanb",
+   "wiki": "St. George's Cathedral, Istanbul"
+  },
+  {
+   "key": "wp-ecumenical-patriarchate-cons",
+   "wiki": "Ecumenical Patriarchate of Constantinople"
+  },
+  {
+   "key": "wp-fener",
+   "wiki": "Fener"
+  },
+  {
+   "key": "wp-suleymaniye-mosque",
+   "wiki": "Süleymaniye Mosque"
+  },
+  {
+   "key": "wp-mimar-sinan",
+   "wiki": "Mimar Sinan"
+  },
+  {
+   "key": "wp-galata-tower",
+   "wiki": "Galata Tower"
+  },
+  {
+   "key": "wp-galata",
+   "wiki": "Galata"
+  },
+  {
+   "key": "wp-hezarfen-ahmed-celebi",
+   "wiki": "Hezârfen Ahmed Çelebi"
+  },
+  {
+   "key": "wp-republic-genoa",
+   "wiki": "Republic of Genoa"
+  },
+  {
+   "key": "wp-dolmabahce-palace",
+   "wiki": "Dolmabahçe Palace"
+  },
+  {
+   "key": "wp-abdulmejid-i",
+   "wiki": "Abdulmejid I"
+  },
+  {
+   "key": "wp-mustafa-kemal-ataturk",
+   "wiki": "Mustafa Kemal Atatürk"
+  },
+  {
+   "key": "wp-chora-church",
+   "wiki": "Chora Church"
+  },
+  {
+   "key": "wp-theodore-metochites",
+   "wiki": "Theodore Metochites"
+  },
+  {
+   "key": "wp-byzantine-art",
+   "wiki": "Byzantine art"
+  },
+  {
+   "key": "wp-maiden-s-tower",
+   "wiki": "Maiden's Tower"
+  },
+  {
+   "key": "wp-uskudar",
+   "wiki": "Üsküdar"
+  },
+  {
+   "key": "wp-bosphorus",
+   "wiki": "Bosphorus"
+  },
+  {
+   "key": "wp-basilica-cistern",
+   "wiki": "Basilica Cistern"
+  },
+  {
+   "key": "wp-medusa",
+   "wiki": "Medusa"
+  },
+  {
+   "key": "wp-fatih-mosque-istanbul",
+   "wiki": "Fatih Mosque, Istanbul"
+  },
+  {
+   "key": "wp-church-holy-apostles",
+   "wiki": "Church of the Holy Apostles"
+  },
+  {
+   "key": "wp-istanbul-archaeology-museums",
+   "wiki": "Istanbul Archaeology Museums"
+  },
+  {
+   "key": "wp-alexander-sarcophagus",
+   "wiki": "Alexander Sarcophagus"
+  },
+  {
+   "key": "wp-osman-hamdi-bey",
+   "wiki": "Osman Hamdi Bey"
+  },
+  {
+   "key": "wp-treaty-kadesh",
+   "wiki": "Treaty of Kadesh"
+  }
+ ]
+}

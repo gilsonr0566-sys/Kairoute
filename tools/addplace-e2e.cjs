@@ -16,7 +16,7 @@ const GROUND = {
       if (u.startsWith('https://mock.test/ground')) { const names = JSON.parse(r.request().postData() || '{}').names || []; return r.fulfill({ contentType: 'application/json', body: JSON.stringify({ results: names.map(n => GROUND[n] || { wiki: [], map: [], answered: true }), center: { lat: 37.9755, lng: 23.7348 } }) }); }
       return /^file:/.test(u) ? r.continue() : r.abort(); });
     await p.goto('file://' + FILE); await p.evaluate(() => localStorage.setItem('kairoute.intro1', '1')); await p.reload(); await p.waitForTimeout(500);
-    await p.getByText('Continue trip').click(); await p.waitForTimeout(300);
+    await p.locator('[data-act=continue]').click(); await p.waitForTimeout(300);
     await p.evaluate(() => window.__kairouteMockHelper('https://mock.test'));
     await p.evaluate(() => window.__kairouteAt(2, 'sites')); await p.waitForTimeout(400);
     const type = async name => { await p.fill('#addPlace', name); await p.evaluate(() => [...document.querySelectorAll('[data-act="addplace"]')].find(e => !e.disabled).click());

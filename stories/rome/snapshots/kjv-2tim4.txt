@@ -1,0 +1,6 @@
+SOURCE: https://bible-api.com/2%20timothy%204%3A6-8?translation=kjv
+RETRIEVED: 2026-11-22T20:32:14.723Z
+STATUS: 200
+TITLE: 
+
+{"reference":"2 Timothy 4:6-8","verses":[{"book_id":"2TI","book_name":"2 Timothy","chapter":4,"verse":6,"text":"For I am now ready to be offered, and the time of my departure is at hand."},{"book_id":"2TI","book_name":"2 Timothy","chapter":4,"verse":7,"text":"I have fought a good fight, I have finished\nmy course, I have kept the faith:"},{"book_id":"2TI","book_name":"2 Timothy","chapter":4,"verse":8,"text":"Henceforth there is laid up for me a crown of righteousness, which the Lord, the righteous judge, shall give me at that day: and not to me only, but unto all them also that love his appearing."}],"text":"For I am now ready to be offered, and the time of my departure is at hand. I have fought a good fight, I have finished\nmy course, I have kept the faith: Henceforth there is laid up for me a crown of righteousness, which the Lord, the righteous judge, shall give me at that day: and not to me only, but unto all them also that love his appearing.","translation_id":"kjv","translation_name":"King James Version","translation_note":"Public Domain"}

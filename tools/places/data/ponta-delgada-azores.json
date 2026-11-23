@@ -347,5 +347,406 @@
    "lng": -25.66299,
    "osm": "node/1427596745"
   }
+ ],
+ "eatHours": [
+  [
+   "C C Lounge & Bar",
+   37.74386,
+   -25.66732,
+   "Mo-Sa 07:00-24:00; Su 07:00-22:00",
+   "bar"
+  ],
+  [
+   "Varandas Avenida",
+   37.73858,
+   -25.66989,
+   "Mo-Fr 07:00-19:00; Sa 07:00-15:00",
+   "cafe"
+  ],
+  [
+   "O Roberto",
+   37.73878,
+   -25.66884,
+   "Mo, Tu, Th, Fr, Su 12:00-15:00, 18:30-22:00; We 18:30-22:00",
+   "restaurant"
+  ],
+  [
+   "Baía dos Anjos",
+   37.73964,
+   -25.66331,
+   "Mo-Su 09:00-04:00",
+   "cafe"
+  ],
+  [
+   "Stage Restaurant",
+   37.73966,
+   -25.6635,
+   "Mo-Su 12:00-24:00",
+   "restaurant"
+  ],
+  [
+   "Boca de Cena",
+   37.7417,
+   -25.66527,
+   "Mo-Sa 12:00-15:00, 19:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Super Prato",
+   37.74341,
+   -25.66704,
+   "\"Mittagspausen\"",
+   "restaurant"
+  ],
+  [
+   "Cantinho dos Anjos",
+   37.74132,
+   -25.66887,
+   "Tu-Th 12:00-15:00, 19:00-22:00; Fr 12:00-15:00, 18:30-22:00; Sa 13:00-16:00, 18:30-22:00",
+   "bar"
+  ],
+  [
+   "Lanchonete da Cidade",
+   37.7405,
+   -25.67127,
+   "Mo-Fr 08:30-21:00; Sa 12:30-21:00",
+   "cafe"
+  ],
+  [
+   "Donatello",
+   37.74678,
+   -25.67513,
+   "Mo-Su,PH 10:00-22:00",
+   "restaurant"
+  ],
+  [
+   "Restaurante Nacional",
+   37.73904,
+   -25.66978,
+   "Mo-Fr 11:45-15:00,18:30-22:30, Sa 18:30-22:30, Su off",
+   "restaurant"
+  ],
+  [
+   "Rotas da ilha verde",
+   37.74242,
+   -25.66918,
+   "Tu-Th 12:00-15:00,19:00-23:00; Fr 12:00-15:00,18:00-24:00; Sa 18:00-24:00; Mo,Su,PH off",
+   "restaurant"
+  ],
+  [
+   "o giro",
+   37.73908,
+   -25.67276,
+   "Mo-Fr 08:00-22:30; Sa 12:00-22:30",
+   "restaurant"
+  ],
+  [
+   "Isekai",
+   37.74085,
+   -25.66706,
+   "Mo 18:30-23:00; Tu-Su 00:00-24:00",
+   "restaurant"
+  ],
+  [
+   "Nonnas teeth & tomatoes",
+   37.74202,
+   -25.66948,
+   "Su-Th,PH 12:00-15:00,18:00-23:00; Fr,Sa 12:00-15:00,18:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Haibu",
+   37.74211,
+   -25.66983,
+   "Mo-Su 19:30-23:00",
+   "restaurant"
+  ],
+  [
+   "A Tasca",
+   37.741,
+   -25.66742,
+   "Mo-Sa 11:30-23:59",
+   "restaurant"
+  ],
+  [
+   "Café Central",
+   37.74,
+   -25.6687,
+   "Mo-Th, Su 08:00-23:59; Fr, Sa 08:00-02:00",
+   "cafe"
+  ],
+  [
+   "Louvre Michaelense",
+   37.7405,
+   -25.66872,
+   "Tu-Su 11:00-00:00",
+   "cafe"
+  ],
+  [
+   "Cantinho Da Mãe",
+   37.74664,
+   -25.66847,
+   "Mo-Th,Su 08:00-20:00; Fr 08:00-14:00",
+   "restaurant"
+  ],
+  [
+   "Pitéu dos Açores",
+   37.74021,
+   -25.66711,
+   "Th-Tu 12:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Supléxio",
+   37.74263,
+   -25.6691,
+   "Mo-Th 12:00-22:30; Fr-Sa 12:00-00:30",
+   "restaurant"
+  ],
+  [
+   "Pizzaria O Canadiano",
+   37.74384,
+   -25.6818,
+   "Mo-Fr 11:00-22:00; Sa 11:00-23:00; PH,Su 17:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Bagga",
+   37.74068,
+   -25.6656,
+   "Mo-Su 08:00-21:00",
+   "fast_food"
+  ],
+  [
+   "Pizza Hut",
+   37.74637,
+   -25.67497,
+   "09:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Cais da Sardinha",
+   37.73746,
+   -25.66993,
+   "Tu-Su 12:00-22:00",
+   "restaurant"
+  ],
+  [
+   "Floresta Lisbonense",
+   37.73787,
+   -25.67141,
+   "Mo-Fr 10:00-22:00; Sa-Su off",
+   "restaurant"
+  ],
+  [
+   "Terras",
+   37.74085,
+   -25.66862,
+   "Tu-Su 11:00-20:00",
+   "restaurant"
+  ],
+  [
+   "Lan's Pizzaria, Exotic Food & Vegetariano",
+   37.74035,
+   -25.66969,
+   "Mo-Sa 18:00-23:00; Mo-Sa 12:00-15:00",
+   "restaurant"
+  ],
+  [
+   "Ta Gente",
+   37.7409,
+   -25.66785,
+   "Su-Th 18:30-00:00; Fr-Sa 18:30-02:00",
+   "restaurant"
+  ],
+  [
+   "A Grega",
+   37.74177,
+   -25.66804,
+   "Tu-Th 12:00-21:00; Fr,Sa 12:00-22:00",
+   "restaurant"
+  ],
+  [
+   "Intz48",
+   37.74102,
+   -25.66852,
+   "We-Sa 09:00-15:00",
+   "cafe"
+  ],
+  [
+   "Jonny's Smokehouse",
+   37.74045,
+   -25.66762,
+   "Mo-Su 11:00-22:00",
+   "restaurant"
+  ],
+  [
+   "Cervejaria portas da cidade",
+   37.73986,
+   -25.66787,
+   "06:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Adega do Mestre André",
+   37.74035,
+   -25.66949,
+   "Mo-Th 12:00-14:00,18:30-22:30; Fr 12:00-15:00,18:30-23:00; Sa 18:30-23:00; Su off",
+   "restaurant"
+  ],
+  [
+   "Õtaka",
+   37.74045,
+   -25.66844,
+   "Tu-Sa 18:30-22:00",
+   "restaurant"
+  ],
+  [
+   "Armazéns Cogumbreiro",
+   37.74161,
+   -25.66816,
+   "Mo-Su 09:00-20:00",
+   "cafe"
+  ],
+  [
+   "Casa Nostra Restaurante",
+   37.74068,
+   -25.66837,
+   "Mo-Su 12:00-14:30, 18:30-22:30",
+   "restaurant"
+  ],
+  [
+   "Restaurante O Baco",
+   37.73806,
+   -25.67566,
+   "Mo-Su 19:00-22:30",
+   "restaurant"
+  ],
+  [
+   "Focaccia",
+   37.73937,
+   -25.67322,
+   "Mo-Su 12:00-15:00, 19:00-22:00",
+   "restaurant"
+  ],
+  [
+   "Dondué",
+   37.73985,
+   -25.66896,
+   "Mo-Fr 08:00-19:00; Sa-Su 09:00-19:00",
+   "cafe"
+  ],
+  [
+   "Tasquinha Vieira",
+   37.7411,
+   -25.66689,
+   "Mo-Sa 18:30-01:00; Su off",
+   "restaurant"
+  ],
+  [
+   "Esplanada Campo",
+   37.7376,
+   -25.67263,
+   "Mo-Su 08:00-18:00",
+   "cafe"
+  ],
+  [
+   "Jardim Natural Food & Coffee",
+   37.74297,
+   -25.67612,
+   "Tu-Su 10:00-17:30",
+   "cafe"
+  ],
+  [
+   "Indian Kebab House",
+   37.74736,
+   -25.67521,
+   "Mo-Su,PH 10:00-22:00",
+   "fast_food"
+  ],
+  [
+   "KFC",
+   37.74715,
+   -25.67512,
+   "Mo-Su,PH 10:00-22:00",
+   "fast_food"
+  ],
+  [
+   "McDonald's",
+   37.7464,
+   -25.67482,
+   "Mo-Su,PH 10:00-22:00",
+   "fast_food"
+  ],
+  [
+   "Pans & Company",
+   37.74606,
+   -25.67485,
+   "Mo-Su,PH 10:00-22:00",
+   "fast_food"
+  ],
+  [
+   "Sabores & Sopas",
+   37.7469,
+   -25.67517,
+   "Mo-Su,PH 10:00-22:00",
+   "restaurant"
+  ],
+  [
+   "Kebab’s",
+   37.7397,
+   -25.66594,
+   "Mo,We-Sa 12:00-14:00,18:00-24:00; Su 15:00-24:00; Tu closed",
+   "fast_food"
+  ],
+  [
+   "Colmeia – Hamburgueria Açoriana",
+   37.74013,
+   -25.6648,
+   "Mo-Su 08:00-21:00",
+   "restaurant"
+  ],
+  [
+   "Street Food.PDL",
+   37.73965,
+   -25.66592,
+   "Mo-Tu,Th-Su 20:00-24:00; We closed",
+   "fast_food"
+  ],
+  [
+   "Jewel of India",
+   37.73959,
+   -25.67335,
+   "Tu-Su 12:00-15:00,18:00-22:00",
+   "restaurant"
+  ],
+  [
+   "Subway",
+   37.74062,
+   -25.66612,
+   "Mo-Su 10:00-21:00",
+   "fast_food"
+  ],
+  [
+   "Terra Verde Tea House",
+   37.74148,
+   -25.66539,
+   "Mo-Fr 09:00-16:00; Sa 09:30-13:30",
+   "cafe"
+  ],
+  [
+   "Cascara",
+   37.73931,
+   -25.67281,
+   "We-Su 09:00-16:00",
+   "cafe"
+  ],
+  [
+   "Mãe D’alma",
+   37.74227,
+   -25.67388,
+   "Mo-Fr 07:00-19:00",
+   "cafe"
+  ]
  ]
 }

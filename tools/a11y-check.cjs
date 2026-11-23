@@ -19,7 +19,7 @@ const CONTRAST = !!process.env.CONTRAST;
       if (!head.lang) note('lang', 'the page has no language set');
       if (/user-scalable\s*=\s*no|maximum-scale\s*=\s*1(\.0)?\b/.test(head.vp)) note('zoom', 'the page stops people zooming in');
     }
-    await p.getByText('Continue trip').click(); await p.waitForTimeout(400);
+    await p.locator('[data-act=continue]').click(); await p.waitForTimeout(400);
     const days = await p.evaluate(() => window.__kairouteDays());
     for (const d of days) for (const v of ['plan', 'sites', 'guide', 'tour', 'trip', 'journal']) {
       if ((v === 'trip' || v === 'journal') && d.i) continue; // trip-wide pages: once

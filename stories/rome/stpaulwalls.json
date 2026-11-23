@@ -1,0 +1,510 @@
+{
+ "id": "stpaulwalls",
+ "v": 1,
+ "city": "rome",
+ "title": "Basilica of Saint Paul Outside the Walls",
+ "match": {
+  "ids": [
+   "stpaulwalls"
+  ],
+  "names": [
+   "saint paul outside",
+   "st paul outside",
+   "san paolo fuori"
+  ],
+  "wikidata": [
+   "Q231699"
+  ]
+ },
+ "checked": "2026-11-22",
+ "claims": {
+  "what": {
+   "label": "supported",
+   "says": "Saint Paul Outside the Walls is one of Rome's four major papal basilicas, built outside the Aurelian Walls at what tradition holds to be Paul's burial site.",
+   "src": [
+    "wp-st-paul-walls"
+   ],
+   "quote": [
+    "is one of Rome's four major papal basilicas",
+    "it was constructed outside the city's Aurelian Walls at what tradition holds to be the burial site of Saint Paul."
+   ]
+  },
+  "unesco": {
+   "label": "verified",
+   "says": "UNESCO's World Heritage listing for Rome includes the Basilica of St Paul's Outside the Walls.",
+   "src": [
+    "unesco-rome"
+   ],
+   "quote": [
+    "as well as the Basilica of St. Paul’s Outside the Walls"
+   ]
+  },
+  "acts-15": {
+   "label": "scripture",
+   "says": "Acts 28:15: believers came out to meet Paul at Appii Forum and The Three Taverns; when Paul saw them, he thanked God and took courage.",
+   "src": [
+    "kjv-acts28c"
+   ],
+   "quote": [
+    "\"chapter\":28,\"verse\":15,\"text\":\"And from thence, when the brethren heard of us, they came to meet us as far as Appii Forum, and The three taverns: whom when Paul saw, he thanked God, and took courage."
+   ]
+  },
+  "acts-16": {
+   "label": "scripture",
+   "says": "Acts 28:16: in Rome Paul was allowed to live by himself with a soldier guarding him.",
+   "src": [
+    "kjv-acts28c"
+   ],
+   "quote": [
+    "\"chapter\":28,\"verse\":16,\"text\":\"And when we came to Rome, the centurion delivered the prisoners to the captain of the guard: but Paul was suffered to dwell by himself with a soldier that kept him."
+   ]
+  },
+  "acts-20": {
+   "label": "scripture",
+   "says": "In Acts, Paul calls together the chief of the Jews in Rome and tells them: for the hope of Israel I am bound with this chain.",
+   "src": [
+    "kjv-acts28c"
+   ],
+   "quote": [
+    "after three days Paul called the chief of the Jews together",
+    "because that for the hope of Israel I am bound with this chain."
+   ]
+  },
+  "acts-30": {
+   "label": "scripture",
+   "says": "Acts 28:30-31: Paul dwelt two whole years in his own hired house, preaching the kingdom of God with all confidence, no man forbidding him.",
+   "src": [
+    "kjv-acts28c"
+   ],
+   "quote": [
+    "\"chapter\":28,\"verse\":30,\"text\":\"And Paul dwelt two whole years in his own hired house, and received all that came in unto him,",
+    "\"chapter\":28,\"verse\":31,\"text\":\"Preaching the kingdom of God, and teaching those things which concern the Lord Jesus Christ, with all confidence, no man forbidding him."
+   ]
+  },
+  "acts-silent": {
+   "label": "supported",
+   "says": "Acts ends with Paul living and preaching in Rome, and does not mention his death.",
+   "src": [
+    "wp-paul"
+   ],
+   "quote": [
+    "Acts 28 concludes with Paul's living and preaching in Rome but does not mention his death."
+   ]
+  },
+  "death": {
+   "label": "tradition",
+   "says": "Early writers say Paul was killed under Nero, and Jerome says he was beheaded in Rome and buried on the Ostian Way; his death is believed to fall between the fire of AD 64 and 68.",
+   "src": [
+    "wp-paul"
+   ],
+   "quote": [
+    "Paul's death is believed to have occurred after the Great Fire of Rome in July 64 AD, but before the last year of Nero's reign, in 68 AD.",
+    "Eusebius states that Paul was killed during the Neronian Persecution",
+    "was beheaded at Rome for Christ's sake and was buried in the Via Ostiensis"
+   ]
+  },
+  "tre-fontane": {
+   "label": "legend",
+   "says": "A later legend says Paul was beheaded at the Aquae Salviae, where his head bounced three times and three springs rose: San Paolo alle Tre Fontane.",
+   "src": [
+    "wp-paul"
+   ],
+   "quote": [
+    "A legend later developed that his martyrdom occurred at the Aquae Salviae, on the Via Laurentina. According to this legend, after Paul was decapitated, his severed head bounced three times, giving rise to a source of water each time that it touched the ground"
+   ]
+  },
+  "timothy": {
+   "label": "scripture",
+   "says": "2 Timothy 4:6-7: I am now ready to be offered, and the time of my departure is at hand. I have fought a good fight, I have finished my course, I have kept the faith.",
+   "src": [
+    "kjv-2tim4"
+   ],
+   "quote": [
+    "\"book_name\":\"2 Timothy\",\"chapter\":4,\"verse\":6,\"text\":\"For I am now ready to be offered, and the time of my departure is at hand.",
+    "\"chapter\":4,\"verse\":7,\"text\":\"I have fought a good fight, I have finished",
+    "my course, I have kept the faith:"
+   ]
+  },
+  "timothy-author": {
+   "label": "disputed",
+   "says": "Many scholars think the letters to Timothy were written in Paul's name by later followers.",
+   "src": [
+    "wp-paul"
+   ],
+   "quote": [
+    "Four of the letters (Ephesians, 1 and 2 Timothy and Titus) are widely considered pseudepigraphical"
+   ]
+  },
+  "burial": {
+   "label": "tradition",
+   "says": "According to tradition Paul was buried in a cemetery on the Ostian Way owned by a Christian woman named Lucina; a memorial, a tropaeum, was put up and quickly became a place of veneration.",
+   "src": [
+    "wp-st-paul-walls"
+   ],
+   "quote": [
+    "According to tradition, Saint Paul's body was buried two miles away from the location of his martyrdom, in the sepulchral area along the Ostiense Way, which was owned by a Christian woman named Lucina. A tropaeum was erected on it and quickly became a place of veneration."
+   ]
+  },
+  "caius": {
+   "label": "supported",
+   "says": "Around the year 200 the Roman Christian Caius wrote that he could point out the trophies of the apostles at the Vatican and on the Ostian Way.",
+   "src": [
+    "wp-paul",
+    "wp-peters-tomb"
+   ],
+   "quote": [
+    "There is evidence of the existence of the tomb (trophoea, i.e., trophies, as signs or memorials of victory) at the beginning of the 3rd century",
+    "Caius in his Disputation Against Proclus (198 AD) mentions this of the places in which the remains of the apostles Peter and Paul were deposited: \"I can point out the trophies of the apostles. For if you are willing to go to the Vatican or to the Ostian Way, you will find the trophies of those who founded this Church\"."
+   ]
+  },
+  "constantine": {
+   "label": "supported",
+   "says": "Constantine founded the first basilica over the grave, consecrated by Pope Sylvester in 324; from 386 Theodosius I built a far larger one, which in the 400s was bigger than Old St Peter's.",
+   "src": [
+    "wp-st-paul-walls"
+   ],
+   "quote": [
+    "the basilica was founded by the Roman emperor Constantine the Great over the burial place of Paul of Tarsus",
+    "This first basilica was consecrated by Pope Sylvester in 324.",
+    "In 386, Emperor Theodosius I began erecting a much larger and more beautiful basilica",
+    "In the 5th century, it was larger than the Old Saint Peter's Basilica."
+   ]
+  },
+  "fire": {
+   "label": "supported",
+   "says": "On July 15, 1823, a workman repairing the roof gutters started a fire that almost totally destroyed the basilica.",
+   "src": [
+    "wp-st-paul-walls"
+   ],
+   "quote": [
+    "On 15 July 1823, a workman repairing the copper gutters of the roof started a fire that led to the near-total destruction of this basilica"
+   ]
+  },
+  "rebuilt": {
+   "label": "supported",
+   "says": "It was rebuilt with help from many countries; the Viceroy of Egypt gave alabaster columns and the Emperor of Russia malachite and lapis lazuli. It was reconsecrated in 1854 and is only generally like the original.",
+   "src": [
+    "wp-st-paul-walls"
+   ],
+   "quote": [
+    "Many foreign rulers also made contributions. Muhammad Ali Pasha, Viceroy of Egypt gave columns of alabaster, while the Emperor of Russia donated precious malachite and lapis lazuli",
+    "The entire building was reconsecrated in 1854",
+    "The result is a reconstructed basilica that bears only a general resemblance to the original"
+   ]
+  },
+  "size": {
+   "label": "supported",
+   "says": "It has one nave and four side aisles, is 131.66 metres (432.0 ft) long, and is the second largest church in Rome; the nave's 80 columns are from the 19th century.",
+   "src": [
+    "wp-st-paul-walls"
+   ],
+   "quote": [
+    "The new basilica has maintained the original structure with one nave and four side aisles. It is 131.66 metres (432.0 ft) long",
+    "the second largest in Rome.",
+    "The nave's 80 columns and its wood and stucco-decorated ceiling are from the 19th century."
+   ]
+  },
+  "windows": {
+   "label": "supported",
+   "says": "The windows look like stained glass but are translucent alabaster.",
+   "src": [
+    "wp-st-paul-walls"
+   ],
+   "quote": [
+    "From the inside, the windows may appear to be stained glass, but they are actually translucent alabaster."
+   ]
+  },
+  "popes": {
+   "label": "supported",
+   "says": "A frieze of portraits of every pope runs above the columns; today's is a 19th-century mosaic version.",
+   "src": [
+    "wp-st-paul-walls"
+   ],
+   "quote": [
+    "In the old basilica each pope had his portrait in a painted frieze extending above the columns separating the aisles from the nave. A 19th-century mosaic version can be seen now."
+   ]
+  },
+  "arch": {
+   "label": "supported",
+   "says": "The 5th-century mosaics of the triumphal arch survive, heavily reworked; Peter and Paul are on either side, and Paul points downward, probably to his tomb.",
+   "src": [
+    "wp-st-paul-walls"
+   ],
+   "quote": [
+    "The 5th-century mosaics of the triumphal arch are original (but also heavily reworked)",
+    "All that remains of the ancient basilica are the interior portion of the apse with the triumphal arch.",
+    "Saint Peter and Saint Paul are portrayed at the right and left of the arch, the latter pointing downwards (probably to his tomb)."
+   ]
+  },
+  "ciborium": {
+   "label": "supported",
+   "says": "The canopy over the altar is by Arnolfo di Cambio, from 1285.",
+   "src": [
+    "wp-st-paul-walls"
+   ],
+   "quote": [
+    "The ciborium of the confession of Arnolfo di Cambio (1285) belongs to the 13th century."
+   ]
+  },
+  "tomb": {
+   "label": "supported",
+   "says": "Under the altar is a marble tombstone inscribed PAULO APOSTOLO MART, to Paul, apostle and martyr; one round hole connects to the tomb, perhaps for pouring perfumes or libations.",
+   "src": [
+    "wp-st-paul-walls"
+   ],
+   "quote": [
+    "The tombstone bears the Latin inscription PAULO APOSTOLO MART (\"to Paul the apostle and martyr\").",
+    "The circular hole is connected to the tomb by a pipeline, reflecting the Roman custom of pouring perfumes inside the sarcophagus, or to the practice of providing the bones of the dead with libations."
+   ]
+  },
+  "sarcophagus": {
+   "label": "supported",
+   "says": "In 2006 Vatican archaeologists confirmed a white marble sarcophagus beneath the altar, perhaps containing the apostle's remains; a window was made so visitors can see it.",
+   "src": [
+    "wp-st-paul-walls",
+    "wp-paul"
+   ],
+   "quote": [
+    "On December 6, 2006, it was announced that Vatican archaeologists had confirmed the presence of a white marble sarcophagus beneath the altar, perhaps containing the remains of the Apostle.",
+    "The sarcophagus was not removed, but a window was created to allow visitors to view it."
+   ]
+  },
+  "carbon": {
+   "label": "disputed",
+   "says": "In 2009 Pope Benedict XVI said radiocarbon dating put bone fragments in the sarcophagus in the 1st or 2nd century; the head of the Vatican Museums' laboratory cautioned that this neither confirms nor rules out that they are Paul's.",
+   "src": [
+    "wp-st-paul-walls"
+   ],
+   "quote": [
+    "In 2009, Pope Benedict XVI announced that radiocarbon dating of bone fragments found in the sarcophagus indicated they were from the 1st or 2nd century",
+    "Ulderico Santamaria, the head of the Vatican Museums' diagnostics laboratory, urged caution, noting that the dating neither confirms nor invalidates the relics' traditional assignment to St. Paul."
+   ]
+  },
+  "head": {
+   "label": "tradition",
+   "says": "Church tradition says Paul's head is kept at the Lateran.",
+   "src": [
+    "wp-st-paul-walls"
+   ],
+   "quote": [
+    "(According to church tradition the head rests at the Lateran.)"
+   ]
+  },
+  "cloister": {
+   "label": "supported",
+   "says": "South of the transept is the cloister, built 1205 to 1241 and called one of the most beautiful of the Middle Ages, with twisted and mosaic-inlaid columns.",
+   "src": [
+    "wp-st-paul-walls"
+   ],
+   "quote": [
+    "South of the transept is the cloister, considered \"one of the most beautiful of the Middle Ages\". Built by Vassalletto in 1205–1241, it has double columns of different shapes. Some columns have inlays with golden and colored-glass mosaics"
+   ]
+  }
+ },
+ "parts": [
+  {
+   "name": "Arriving",
+   "stand": "Stand in the great courtyard in front of the basilica, facing its façade.",
+   "paras": [
+    {
+     "t": "This is the Basilica of Saint Paul Outside the Walls, one of the four great papal basilicas of Rome. It stands outside the old city walls on the spot that tradition holds to be the grave of the apostle Paul.",
+     "c": [
+      "what"
+     ],
+     "level": 1
+    },
+    {
+     "t": "UNESCO lists it with the historic center of Rome as a World Heritage site.",
+     "c": [
+      "unesco"
+     ],
+     "level": 3
+    },
+    {
+     "t": "How did Paul come to Rome? As a prisoner. The book of Acts, in its very last chapter, tells how believers came out to meet him. And when Paul saw them, Acts says, he thanked God, and took courage.",
+     "c": [
+      "acts-15"
+     ],
+     "level": 2
+    },
+    {
+     "t": "In Rome, Acts says, Paul was suffered to dwell by himself with a soldier that kept him. He called the chief of the Jews together and told them: for the hope of Israel I am bound with this chain.",
+     "c": [
+      "acts-16",
+      "acts-20"
+     ],
+     "level": 3
+    },
+    {
+     "t": "And then the book closes with these words: And Paul dwelt two whole years in his own hired house, and received all that came in unto him, preaching the kingdom of God, and teaching those things which concern the Lord Jesus Christ, with all confidence, no man forbidding him.",
+     "c": [
+      "acts-30"
+     ],
+     "level": 2
+    }
+   ]
+  },
+  {
+   "name": "Scripture and tradition",
+   "stand": "Stay in the courtyard, or step under the porch, and take a moment here.",
+   "paras": [
+    {
+     "t": "Here's the important part. Acts ends with Paul alive and preaching. It does not tell us how he died. Everything after that comes from tradition.",
+     "c": [
+      "acts-silent"
+     ],
+     "level": 1
+    },
+    {
+     "t": "Writers like Eusebius say he was killed under the emperor Nero, and Jerome says he was beheaded in Rome and buried on the Ostian Way, the road this church stands on. It's believed to have happened sometime between the Great Fire of AD 64 and 68.",
+     "c": [
+      "death",
+      "burial"
+     ],
+     "level": 2
+    },
+    {
+     "t": "There's also a later legend that when Paul was beheaded his head bounced three times, and a spring rose at each spot. That's how the place got its name, Saint Paul at the Three Fountains.",
+     "c": [
+      "tre-fontane"
+     ],
+     "level": 3
+    },
+    {
+     "t": "There is a letter that speaks as if from Paul's last days, the second letter to Timothy. Many scholars think it was written in Paul's name by someone else. But listen to its words: I am now ready to be offered, and the time of my departure is at hand. I have fought a good fight, I have finished my course, I have kept the faith.",
+     "c": [
+      "timothy-author",
+      "timothy"
+     ],
+     "level": 2
+    }
+   ]
+  },
+  {
+   "name": "The nave",
+   "stand": "Go inside and stand at the back of the central aisle, looking down the rows of columns toward the altar.",
+   "paras": [
+    {
+     "t": "Constantine built the first church over Paul's grave, consecrated in 324. Then from 386 the emperor Theodosius built a far bigger one. For a time it was larger even than the old Saint Peter's.",
+     "c": [
+      "constantine"
+     ],
+     "level": 1
+    },
+    {
+     "t": "What you see, though, is mostly new. On July 15, 1823, a workman repairing the roof gutters started a fire that nearly destroyed the whole basilica. It was rebuilt with gifts from all over: the Viceroy of Egypt sent alabaster columns, the Emperor of Russia malachite and lapis lazuli. It was reconsecrated in 1854, and it's only broadly like the original.",
+     "c": [
+      "fire",
+      "rebuilt"
+     ],
+     "level": 2
+    },
+    {
+     "t": "It's about 432 feet long, the second largest church in Rome, with 80 columns in the nave.",
+     "c": [
+      "size"
+     ],
+     "level": 3
+    },
+    {
+     "t": "Look at the windows. They look like stained glass, but they're thin translucent alabaster.",
+     "c": [
+      "windows"
+     ],
+     "level": 3
+    },
+    {
+     "t": "And look above the columns: a long row of portraits, one for every pope. These are 19th-century mosaic versions of an old painted series.",
+     "c": [
+      "popes"
+     ],
+     "level": 3
+    }
+   ]
+  },
+  {
+   "name": "The arch and the altar",
+   "stand": "Walk down the nave to the great arch in front of the altar and look up at its mosaics.",
+   "paras": [
+    {
+     "t": "The mosaics on this great arch are from the 400s, one of the few things the fire spared, though heavily reworked. Find Peter on the right and Paul on the left. Paul is pointing downward, probably to his tomb.",
+     "c": [
+      "arch"
+     ],
+     "level": 2
+    },
+    {
+     "t": "The canopy over the altar is by Arnolfo di Cambio, from 1285.",
+     "c": [
+      "ciborium"
+     ],
+     "level": 3
+    },
+    {
+     "t": "Below the altar lies the tomb. On a marble slab are the Latin words Paulo Apostolo Mart: to Paul, apostle and martyr. One round hole in the stone leads down to the tomb, perhaps for pouring perfume or offerings, as Romans did.",
+     "c": [
+      "tomb"
+     ],
+     "level": 1
+    }
+   ]
+  },
+  {
+   "name": "What the archaeologists found",
+   "stand": "Go down to the level beneath the altar, if it is open, where the side of the sarcophagus can be seen through a window.",
+   "paras": [
+    {
+     "t": "In 2006, Vatican archaeologists confirmed a white marble sarcophagus beneath the altar, which may hold the apostle's remains. A window was cut so pilgrims can see it.",
+     "c": [
+      "sarcophagus"
+     ],
+     "level": 1
+    },
+    {
+     "t": "In 2009 Pope Benedict XVI announced that bone fragments inside had been carbon dated to the first or second century. But the head of the Vatican Museums' laboratory urged caution: the dating, he said, neither confirms nor rules out that they are Paul's. So nobody knows for sure.",
+     "c": [
+      "carbon"
+     ],
+     "level": 2
+    },
+    {
+     "t": "Church tradition adds that Paul's head is kept separately, at the Lateran.",
+     "c": [
+      "head"
+     ],
+     "level": 3
+    },
+    {
+     "t": "The memory of this grave is very old. Around the year 200, a Roman Christian named Caius wrote that he could point out the trophies of the apostles, at the Vatican and on the Ostian Way. Tradition says the burial ground belonged to a Christian woman named Lucina, and that a memorial, a trophy, stood here and quickly became a place of veneration.",
+     "c": [
+      "caius",
+      "burial"
+     ],
+     "level": 3
+    }
+   ]
+  },
+  {
+   "name": "The cloister and closing",
+   "stand": "If you have time, follow the signs to the cloister and stand among its columns.",
+   "paras": [
+    {
+     "t": "The cloister, built between 1205 and 1241, is often called one of the most beautiful of the Middle Ages. Look at the columns: paired, in different shapes, some inlaid with gold and colored glass.",
+     "c": [
+      "cloister"
+     ],
+     "level": 2
+    },
+    {
+     "t": "A prisoner came to Rome in chains, and Acts leaves him in a rented house, welcoming everyone, no man forbidding him. Whatever the bones may be, that is how the Bible chose to leave him: still talking, still open-handed.",
+     "c": [
+      "acts-30",
+      "acts-20"
+     ],
+     "level": 1
+    }
+   ]
+  }
+ ],
+ "practical": []
+}

@@ -1,0 +1,78 @@
+{
+ "fail": 0,
+ "warn": 0,
+ "report": [
+  {
+   "id": "akrotiri",
+   "title": "Akrotiri Prehistoric Town",
+   "claims": 43,
+   "minutes": {
+    "1": 1.5,
+    "2": 3.2,
+    "3": 6.3
+   },
+   "labels": {
+    "supported": 35,
+    "estimate": 1,
+    "disputed": 7
+   }
+  },
+  {
+   "id": "fira",
+   "title": "Fira and the Caldera Path",
+   "claims": 40,
+   "minutes": {
+    "1": 1.3,
+    "2": 3.3,
+    "3": 6.4
+   },
+   "labels": {
+    "supported": 32,
+    "estimate": 1,
+    "disputed": 7
+   }
+  },
+  {
+   "id": "oia",
+   "title": "Oia",
+   "claims": 33,
+   "minutes": {
+    "1": 1.2,
+    "2": 3.2,
+    "3": 4.7
+   },
+   "labels": {
+    "estimate": 1,
+    "supported": 31,
+    "disputed": 1
+   }
+  },
+  {
+   "id": "prehistmus",
+   "title": "Museum of Prehistoric Thera",
+   "claims": 24,
+   "minutes": {
+    "1": 1,
+    "2": 2.5,
+    "3": 3.3
+   },
+   "labels": {
+    "supported": 23,
+    "disputed": 1
+   }
+  },
+  {
+   "id": "pyrgos",
+   "title": "Pyrgos Village",
+   "claims": 19,
+   "minutes": {
+    "1": 1,
+    "2": 2.3,
+    "3": 3.4
+   },
+   "labels": {
+    "supported": 19
+   }
+  }
+ ]
+}

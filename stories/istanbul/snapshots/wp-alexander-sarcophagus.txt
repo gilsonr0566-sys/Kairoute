@@ -1,0 +1,66 @@
+SOURCE: https://en.wikipedia.org/wiki/Alexander_Sarcophagus
+RETRIEVED: 2026-11-22T20:56:13.512Z
+STATUS: 200
+TITLE: Alexander Sarcophagus
+
+The Alexander Sarcophagus is a late 4th century BC Hellenistic stone sarcophagus from the Royal necropolis of Ayaa near Sidon, Lebanon. It is adorned with high relief carvings of Alexander the Great and scrolling historical and mythological narratives. The work is considered to be remarkably well preserved, both structurally and in its surviving traces of polychromy, a practice of painting statues and architecture in bright colours that was common in the ancient world. It is currently in the holdings of the Istanbul Archaeology Museum.
+
+
+== History ==
+According to many scholars, both the provenance and date of the Alexander Sarcophagus remain uncontested, landing it firmly in the city of Sidon and having been most likely commissioned after 332 BC. The pertinent and continuous depiction of Abdalonymus, the King of Sidon, helps narrow down the time period in which this sarcophagus was most likely created. We know that Abdalonymus was appointed to this position by Alexander the Great in 333 to 332 BC, and is said to have died in roughly 311 BC (although the exact date is unknown). It was demonstrated by archaeologist and scholar Karl Schefold to have been made before Abdalonymus's death, due to its still-classical manner being purportedly uninfluenced by the style of Lysippos. Schefold argues that the sarcophagus retains a more conservative approach to its composition and iconography, contrasting against the stylistic progression marked by the work of Lysippos. He also asserts that his tomb would have been prepared before his death, although the vague timeline of Abdalonymus's life leaves this open-ended.
+
+
+=== Discovery ===
+The Alexander Sarcophagus was found in the Royal necropolis of Ayaa, a subterranean necropolis that was divided into two hypogea, an underground temple or tomb that consists of a series of rooms. It likely functioned as a royal necropolis, which also assists in supporting the scholarly debate regarding the possible patron of this sarcophagus.
+This sarcophagus in particular is one of four massive carved sarcophagi that formed two pairs. These pairs were discovered during the 1887 excavations conducted by Osman Hamdi Bey and Yervant Voskan at the necropolis near Sidon, Lebanon.
+
+
+=== Scholarly debate ===
+
+
+==== Patron ====
+Although it has been widely accepted that this was not the actual sarcophagus of Alexander the Great himself from early on in its analysis, there has been great scholarly debate surrounding who the patron of the sarcophagus was. It was originally thought to have been the sarcophagus of Abdalonymus (died 311 BC), the king of Sidon appointed by Alexander immediately following the Battle of Issus (333 BC). Scholar Andrew Stewart asserts that the Alexander Sarcophagus was patronized by Abdalonymus for a number of reasons: mainly, for the reason that Near Eastern kings regularly commissioned their tombs ante-mortem in consideration of their "posthumous reputations." This is a commonly supported claim that has been continuously upheld by many scholars, but it has also been equally contested. For example, Waldemar Heckel argues that the sarcophagus was made for Mazaeus, a Persian noble and governor of Babylon. In order to support this assertion, Heckel questions why a sarcophagus for Abdalonymus, a king from Sidon, would feature so many Persian figures and iconographies, arguing that the dress, facial features, and activities of the central figure is more historically aligned with Persian rather than Phoenician nobility. The answer to this, according to Heckel, is that the relevance of these figures and iconographies would be more fitting for the Persian nobleman instead. In support, he theorizes that one of the side friezes depicts the Battle of Gaugamela in 331 BC, showing the strength of Mazaeus' military leadership in directing the Persian army.
+
+
+==== Attribution ====
+One aspect of the sarcophagus's history that remains widely debated concerns which ancient Mediterranean culture may have created it. According to Schefold, six Ionian sculptors' hands have been distinguished, working in an Attic idiom. Stewart concurs with Schefold, claiming that the unification of the varying stylistic elements is associated with Attic sculpture. However, according to archaeologist Margaret C. Miller, the sarcophagus was produced probably by a Rhodian workshop, in this case working at Sidon. It is helpful to note here, that Sidon was a Phoenician city-state, which has led other scholars like Caroline Houser to argue its stylistic origins being rooted in Phoenicia. It has been argued that the majority of the sculptural detailing can be attributed to ancient Greek styles, drawing back to the capture of this Near Eastern city by the ancient Greeks. Due to the cross-cultural influences in Greek art at the time, however, there are conflicting attributes within the sarcophagus itself. For example, the lions found on the corners of the roof have specifically Asian attributes. There are also several mythologized creatures, such as "three ram horns growing on feline heads" that would have been entirely foreign to the fauna of the ancient Hellenistic world.
+
+
+== Interpretation ==
+
+The roof ridge of the Alexander Sarcophagus, made of two "massive blocks" of marble, is lined with statuettes of women's heads, possibly the goddess Atargatis. Different narratives decorate the friezes on each side and pediment of the sarcophagus, each lending to different interpretations of the overall theme of the sarcophagus itself. These different interpretations have varied due to the complex styles and subject matters. Some scholars have interpreted these narratives as biographically relating to the life of Abdalonymos, with the series beginning in 333/332 BC with the Battle of Issus and ending in 306/305 BC. Andrew Stewart argues that the sarcophagus offers no unified program or obviously coherent message at all, as the scenes in each relief contradict the other, with iconography mixing both Western and Eastern standards. The themes of battle and hunt are consistent throughout the friezes: one long side and one short side depicts each of these scenes.
+The relief carvings on one long side of the piece depict Alexander fighting the Persians at the Battle of Issus. Volkmar von Graeve has compared the motif to the famous Alexander Mosaic at Naples; he concludes that the iconography of both derives from a common original, a lost painting by Philoxenus of Eretria. The comparison between the mosaic and sarcophagus has gained traction in the scholarly field, supported by other scholars such as Andrew Stewart. Alexander is shown mounted, wearing a lion skin on his head, and preparing to throw a spear at the Persian cavalry. There remains debate surrounding the importance of the historicity of the figures seen in the hunting and battle scenes. While historians such as von Graeve interpret them as accurate portrayals of historic figures, other historians like Schefold focus on them as mythic subjects of the battles and royal hunt. Some scholars, as well, believe that a second mounted Macedonian figure near the center represents Hephaestion, Alexander's older close friend. A third mounted Macedonian figure is often identified as Perdiccas, one of the generals in Alexander's army.
+The opposite long side shows Alexander, recognized as the "horseman at the center left," and the Macedonians hunting lions together with Abdalonymus and the Persians. Stewart has also presented that this may be an example of Alexander hunting in the Sidonian game park in 332 BC. This is a unique depiction of the Macedonians and Persians collaborating in the hunt, as it contrasts the depiction of the Battle of Issus (which is the most popular interpretation) on the relief on the opposing side — a catastrophic defeat of the Persians by the Macedonians.
+On the frieze at one end of the sarcophagus, the eyes are lead towards a mythic lion hunt, where a scene in which Abdalonymus hunts a panther is portrayed. Above the relief, on the pediment, Abdalonymus is shown engaged in an unidentified battle. The relief at the other end of the sarcophagus depicts a battle, possibly the Battle of Gaza in 312 BC, in which case the pediment above likely shows the murder of Perdiccas in 320 BC. It has been conjectured that Abdalonymus ultimately died in the Battle of Gaza, although this is unsubstantiated. If this is the case, however, then this pediment would be the depiction of his last moments in battle.
+
+
+=== Polychromy ===
+The Alexander Sarcophagus is constructed of Pentelic marble retaining traces of its polychromy, in the form of a Greek temple. Evidence of polychromy, referring to the colorful paintwork found on statuary (especially ancient statuary), has been found on the sarcophagus, and would have actually been seen during the unearthing of the sarcophagus during its excavation in 1887. The Macedonian Greek warriors depicted on the sarcophagus are shown fighting in the nude, as was typical of Greek iconography. They were, however, painted, showing the colorful details of their skin tones, hair colors, helmets, and shields. The Persians these warriors fought against, on the other hand, were painted with bright, vibrant armor. The polychromy depicts the detailed patterns of their trousers and skirts, as well as the intricate paint work done on their shields.
+
+
+== See also ==
+Tabnit sarcophagus – 5th-century BC Phoenician sarcophagus
+Lycian sarcophagus of Sidon – 5th-century BC Phoenician royal coffin
+Sarcophagus of Eshmunazar II – 6th-century BC Phoenician royal coffin
+Royal necropolis of Ayaa – Phoenician necropolis in Lebanon
+Royal necropolis of Byblos – Phoenician necropolis in Lebanon
+
+
+== Notes ==
+
+
+== References ==
+
+Gods in Color - Golden Edition
+Heckel, Waldemar. "Mazaeus, Callisthenes and the Alexander Sarcophagus." Historia: Zeitschrift fur Alte Geschichte 55, 2006.
+Miller, Margaret C. Athens and Persia in the Fifth Century BC: A Study in Cultural Receptivity. Cambridge University Press, 2004.
+Palagia, Olga. Regional Schools in Hellenistic Sculpture. Oxbow Books, Limited, 1998.
+Sismondo Ridgway, Brunilde. "Review: Der Alexander-Sarkophag by Karl Schefold." American Journal of Archaeology 73, 1969.
+Stewart, Andrew. Faces of Power: Alexander's Image and Hellenistic Politics. Oxford, England: University of California Press, 1993.
+von Graeve, Volkmar. Der Alexandersarkophag und seine Werkstatt. Berlin, 1970.
+
+
+== External links ==
+
+Hamdi Bey, Osman; Reinach, Théodore (1892), Une nécropole royale à Sidon, doi:10.11588/DIGLIT.5197 (editio princeps)
+Hamdi Bey, Osman; Reinach, Théodore (1892), Une nécropole royale à Sidon: fouilles: Planches, doi:10.11588/DIGLIT.5198 (Plates)

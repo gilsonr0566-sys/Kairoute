@@ -1787,5 +1787,196 @@
    },
    "osm": "way/851258939"
   }
+ ],
+ "eatHours": [
+  [
+   "La Cisterna del Moro",
+   37.85114,
+   15.28471,
+   "12:00-21:30",
+   "restaurant"
+  ],
+  [
+   "Porta Messina",
+   37.85459,
+   15.28863,
+   "12:00-24:00",
+   "restaurant"
+  ],
+  [
+   "Trattoria Don Camillo",
+   37.8519,
+   15.28101,
+   "We-Mo 19:00-22:30",
+   "restaurant"
+  ],
+  [
+   "Indian Food",
+   38.1914,
+   15.55535,
+   "Mo-Su 10:00-04:00",
+   "fast_food"
+  ],
+  [
+   "Bam Bar",
+   37.85313,
+   15.28885,
+   "Mo-Su 07:00-23:00",
+   "bar"
+  ],
+  [
+   "Antica Rosticceria da Cristina",
+   37.85065,
+   15.28275,
+   "Th-Tu 10:30-23:00",
+   "restaurant"
+  ],
+  [
+   "AndReas",
+   37.85131,
+   15.29004,
+   "Tu-Su 12:00-14:00, We-Su 19:00-22:30",
+   "restaurant"
+  ],
+  [
+   "StritFUD",
+   37.85347,
+   15.28887,
+   "Mo-Su 10:00-21:00",
+   "restaurant"
+  ],
+  [
+   "Ritrovo dello Stretto",
+   38.21343,
+   15.5621,
+   "Mo-Sa 06:30-20:00; Su 06:30-13:00",
+   "bar"
+  ],
+  [
+   "Famulari",
+   38.18867,
+   15.55402,
+   "Mo-Sa 08:30-23:00; Su 09:00-23:00; ",
+   "fast_food"
+  ],
+  [
+   "Osteria Sànicolò Pizzeria",
+   37.85079,
+   15.28271,
+   "Mo-Su 12:00-00:00",
+   "restaurant"
+  ],
+  [
+   "Don Diego",
+   37.85448,
+   15.28904,
+   "Mo-Su 08:00-23:30",
+   "cafe"
+  ],
+  [
+   "Drogheria Culinaria",
+   38.11054,
+   15.6458,
+   "Tu-Sa 18:00-03:00, Su 17:00-01:00",
+   "restaurant"
+  ],
+  [
+   "Zio Fedele Bistrot",
+   38.11062,
+   15.64594,
+   "Tu-Sa 18:00-03:00, Su 17:00-01:00",
+   "restaurant"
+  ],
+  [
+   "Al Saraceno",
+   37.85429,
+   15.2839,
+   "Mo-Su 12:00-14:30,19:00-23:30",
+   "restaurant"
+  ],
+  [
+   "Museo della pasta",
+   37.8534,
+   15.28802,
+   "Mo 11:30-24:00; Tu-Sa 11:00-24:00; Su 11:30-24:00",
+   "restaurant"
+  ],
+  [
+   "Ritrovo Epoca",
+   38.19173,
+   15.5551,
+   "Mo-Su 08:00-18:00+",
+   "cafe"
+  ],
+  [
+   "Beer Bang",
+   38.19049,
+   15.55473,
+   "Mo-Su 18:30-01:00",
+   "pub"
+  ],
+  [
+   "Battisti",
+   38.18852,
+   15.5539,
+   "Mo-Fr 05:00-20:30; Sa 05:00-16:00; Su,PH off",
+   "cafe"
+  ],
+  [
+   "La matta",
+   38.19137,
+   15.55481,
+   "Mo-Su 10:30-14:30, 18:30-23:30; ",
+   "fast_food"
+  ],
+  [
+   "Ristorante La Scala",
+   37.85161,
+   15.28504,
+   "Mo-Su 11:00-02:00",
+   "restaurant"
+  ],
+  [
+   "Piccolino Pasta Bar",
+   38.1926,
+   15.55618,
+   "Su-Th 12:00-15:00; Fr,Sa 12:00-15:00,19:30-22:00",
+   "restaurant"
+  ],
+  [
+   "Incanto",
+   37.85439,
+   15.28255,
+   "Mo-Su 12:00-14:30, 19:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Ristorante Rosmarino",
+   37.85127,
+   15.29015,
+   "Mo-Su 12:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Galloway",
+   38.18947,
+   15.55718,
+   "Mo-Su 19:30-01:00",
+   "restaurant"
+  ],
+  [
+   "Première Bar",
+   38.18841,
+   15.55383,
+   "Mo-Fr 06:30-19:30; Sa 06:30-13:30; Su off",
+   "cafe"
+  ],
+  [
+   "Focacceria Oliva",
+   38.18824,
+   15.55383,
+   "Mo-Tu,Th-Sa,PH 07:00-24:00; We 07:00-15:00; Su 14:00-24:00; Dec 25 off",
+   "restaurant"
+  ]
  ]
 }

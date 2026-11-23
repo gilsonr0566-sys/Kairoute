@@ -1,0 +1,742 @@
+{
+ "id": "delos",
+ "v": 1,
+ "city": "mykonos",
+ "title": "Delos",
+ "match": {
+  "ids": [
+   "delos"
+  ],
+  "names": [
+   "delos"
+  ],
+  "wikidata": [
+   "Q173148"
+  ]
+ },
+ "checked": "2026-11-22",
+ "claims": {
+  "small": {
+   "label": "supported",
+   "says": "Delos is a small island near Mykonos, close to the center of the Cyclades, and one of the most important mythological, historical and archaeological sites in Greece.",
+   "src": [
+    "wp-delos"
+   ],
+   "quote": [
+    "is a small Greek island near Mykonos, close to the centre of the Cyclades archipelago.",
+    "it is one of the most important mythological, historical, and archaeological sites in Greece."
+   ]
+  },
+  "unesco": {
+   "label": "verified",
+   "says": "UNESCO inscribed Delos on the World Heritage List in 1990.",
+   "src": [
+    "unesco-delos",
+    "wp-delos"
+   ],
+   "quote": [
+    "Date of Inscription: 1990",
+    "In 1990, UNESCO added Delos to the World Heritage List"
+   ]
+  },
+  "whole-site": {
+   "label": "verified",
+   "says": "The entire island is an archaeological site.",
+   "src": [
+    "unesco-delos"
+   ],
+   "quote": [
+    "Nowadays, the entire island is designated as an archaeological site."
+   ]
+  },
+  "nobody": {
+   "label": "supported",
+   "says": "Overnight stays are forbidden; the only inhabitants are security staff and archaeologists.",
+   "src": [
+    "wv-delos"
+   ],
+   "quote": [
+    "Overnight stay on Delos is forbidden. The only \"inhabitants\" of the island are security personnel and archaeologists."
+   ]
+  },
+  "sun": {
+   "label": "supported",
+   "says": "There is no protection from the sun on the island; bring plenty of water.",
+   "src": [
+    "wv-delos"
+   ],
+   "quote": [
+    "Be aware there is no protection from the sun on the island so take the usual precautions.",
+    "Bring plenty of water."
+   ]
+  },
+  "sanctuary": {
+   "label": "verified",
+   "says": "Apollo's sanctuary existed at least from the 9th century BC and peaked in the Archaic and Classical periods, when it became Pan-Hellenic.",
+   "src": [
+    "unesco-delos"
+   ],
+   "quote": [
+    "The Apollonian sanctuary, established at least since the 9th century BC, reached the peak of its glory during the Archaic and Classical period, when it acquired its Pan-Hellenic character."
+   ]
+  },
+  "pilgrims": {
+   "label": "verified",
+   "says": "Apollo's sanctuary drew pilgrims from all over Greece, and Delos was a prosperous trading port.",
+   "src": [
+    "unesco-delos"
+   ],
+   "quote": [
+    "Apollo's sanctuary attracted pilgrims from all over Greece and Delos was a prosperous trading port."
+   ]
+  },
+  "kouros": {
+   "label": "supported",
+   "says": "Beside the Temple of the Delians stood a colossal kouros of Apollo from the 6th century BC; parts of the torso and pelvis remain in place, a hand is in the local museum and a foot in the British Museum.",
+   "src": [
+    "wp-delos"
+   ],
+   "quote": [
+    "The Temple of the Delians, dedicated to Apollo, is a classic example of the Doric order. Beside the temple, once stood a colossal kouros of Apollo, only parts of which remain. Dating to the sixth century BC, parts of the upper torso and pelvis remain in situ, a hand is kept at the local museum, and a foot is in the British Museum."
+   ]
+  },
+  "league-what": {
+   "label": "supported",
+   "says": "The Delian League was an alliance of between 150 and 330 Greek city-states, founded in 478 BC under Athenian leadership, to keep fighting Persia.",
+   "src": [
+    "wp-delian-league"
+   ],
+   "quote": [
+    "The Delian League was a confederacy of Greek city-states, numbering between 150 and 330, founded in 478 BC under the hegemony of Athens, whose purpose was to continue fighting the Persian Empire"
+   ]
+  },
+  "league-here": {
+   "label": "supported",
+   "says": "Its congresses were held here in the temple, and its common treasury was kept here until 454 BC, when Pericles moved it to Athens.",
+   "src": [
+    "wp-delos"
+   ],
+   "quote": [
+    "the congresses being held in the temple",
+    "The league's common treasury was kept here as well until 454 BC, when Pericles removed it to Athens."
+   ]
+  },
+  "league-temple": {
+   "label": "supported",
+   "says": "The league's congresses were held within the sanctuary of the Temple of Apollo on Delos.",
+   "src": [
+    "wp-delian-league"
+   ],
+   "quote": [
+    "where congresses were held within the sanctuary of the Temple of Apollo"
+   ]
+  },
+  "league-iron": {
+   "label": "supported",
+   "says": "Members swore to have the same friends and enemies, and dropped iron ingots into the sea to show the alliance was permanent.",
+   "src": [
+    "wp-delian-league"
+   ],
+   "quote": [
+    "League members swore to have the same friends and enemies, and dropped ingots of iron into the sea to symbolize the permanence of their alliance."
+   ]
+  },
+  "league-money": {
+   "label": "supported",
+   "says": "Athens used the funds for its navy and to embellish the city with art and architecture; the league became known as the Athenian Empire.",
+   "src": [
+    "wp-delian-league"
+   ],
+   "quote": [
+    "Athens used the money to reinforce its own naval supremacy and used the remaining funds to embellish the city with art and architecture.",
+    "conventionally called the Athenian Empire"
+   ]
+  },
+  "purify": {
+   "label": "supported",
+   "says": "In the 6th century BC Pisistratus had graves in sight of the temple dug up and moved; in the fifth century BC the whole island was cleared of the dead, and a decree barred anyone from being buried or giving birth here.",
+   "src": [
+    "wp-delos"
+   ],
+   "quote": [
+    "A number of \"purifications\" were performed by the city-state of Athens",
+    "These first took place in the 6th century BC, directed by the tyrant Pisistratus, who ordered that all graves within sight of the temple be dug up and the bodies moved to another nearby island.",
+    "In the fifth century BC, during the sixth year of the Peloponnesian War and under instruction from the Delphic Oracle, the entire island was purged of all dead bodies.",
+    "so that no one should be allowed to be buried or give birth on the island due to its sacred importance"
+   ]
+  },
+  "lions": {
+   "label": "supported",
+   "says": "The people of Naxos dedicated the Terrace of the Lions to Apollo shortly before 600 BC; it once had 9 to 12 crouching, snarling marble lions along the Sacred Way.",
+   "src": [
+    "wp-delos"
+   ],
+   "quote": [
+    "The Terrace of the Lions, also was dedicated to Apollo by the people of Naxos shortly before 600 BC. It originally had 9–12 squatting, snarling marble guardian lions along the Sacred Way"
+   ]
+  },
+  "lions-seven": {
+   "label": "supported",
+   "says": "Today only seven of the original lions remain.",
+   "src": [
+    "wp-delos"
+   ],
+   "quote": [
+    "Today, only seven of the original lions remain."
+   ]
+  },
+  "lions-arsenal": {
+   "label": "supported",
+   "says": "One lion was taken away and now stands over the main gate of the Venetian Arsenal.",
+   "src": [
+    "wp-delos"
+   ],
+   "quote": [
+    "one was removed and is presently situated over the main gate of the Venetian Arsenal."
+   ]
+  },
+  "lions-sphinx": {
+   "label": "supported",
+   "says": "The lions form a monumental avenue like the Egyptian avenues of sphinxes.",
+   "src": [
+    "wp-delos"
+   ],
+   "quote": [
+    "The lions create a monumental avenue comparable to Egyptian avenues of sphinxes."
+   ]
+  },
+  "lions-replicas": {
+   "label": "verified",
+   "says": "Because the north wind could damage them, the marble Naxian Lions were moved into the museum and replaced outside with exact replicas.",
+   "src": [
+    "unesco-delos",
+    "wp-delos-museum"
+   ],
+   "quote": [
+    "Because of potential damage by the north wind, fragile marble sculptures, such as the Naxian Lions, were transported to the Museum and have been replaced with exact replicas.",
+    "There is a set of large lion statues which are originals; of those reproduced outside on the Delos site."
+   ]
+  },
+  "myth-leto": {
+   "label": "legend",
+   "says": "In myth, Leto, pregnant by Zeus and fleeing Hera's vengeance, gave birth to Apollo and Artemis here after a difficult labor.",
+   "src": [
+    "unesco-delos"
+   ],
+   "quote": [
+    "It was on this arid islet that Leto, made pregnant by Zeus and fleeing the vengeance of Hera, gave birth to Apollo and Artemis after a difficult labour."
+   ]
+  },
+  "myth-shun": {
+   "label": "legend",
+   "says": "In the myth, jealous Hera ordered all lands to refuse Leto shelter; Delos, not joined to the mainland or the sea floor, did not count as land.",
+   "src": [
+    "wp-leto"
+   ],
+   "quote": [
+    "Hera, the wife of Zeus, in her jealousy, ordered all lands to shun her and deny her shelter.",
+    "Leto eventually found an island, Delos, that was not joined to the mainland or attached to the ocean floor, therefore it was not considered land or island and she could give birth."
+   ]
+  },
+  "myth-lake": {
+   "label": "legend",
+   "says": "In the myth, Leto suffered labor pains for nine days and nights close to the wheel-shaped lake.",
+   "src": [
+    "unesco-delos"
+   ],
+   "quote": [
+    "the wheel-shaped lake, close to which the pregnant Leto suffered labor pains for nine days and nights"
+   ]
+  },
+  "myth-eileithyia": {
+   "label": "legend",
+   "says": "In the Homeric Hymn, Eileithyia, goddess of childbirth, was kept away with Hera on Olympus; on the ninth day Iris won her over with a necklace and brought her to Delos.",
+   "src": [
+    "wp-leto"
+   ],
+   "quote": [
+    "Only Eileithyia, the goddess of childbirth, was not present; she, unaware of the situation, was with jealous Hera on Olympus.",
+    "Then, on the ninth day, Eileithyia was sent for by the messenger goddess Iris, who persuaded her with a necklace and brought her to Delos."
+   ]
+  },
+  "myth-anchor": {
+   "label": "legend",
+   "says": "A Homeric hymn says the island, floating until then, became anchored to the ocean floor; the newborn Apollo threw off his swaddling clothes, bathed the universe in light and began walking with his lyre and bow.",
+   "src": [
+    "unesco-delos"
+   ],
+   "quote": [
+    "According to a Homeric hymn, the island, which until then had been floating, became anchored to the floor of the ocean.",
+    "The newborn Phoebus- Apollo threw off his swaddling clothes bathed the universe in light and began walking with his cither and his bow."
+   ]
+  },
+  "myth-versions": {
+   "label": "legend",
+   "says": "Versions differ: some say Artemis was born on Ortygia before Apollo was born on Delos, and a local tradition put Apollo's birth at Tegyra in Boeotia.",
+   "src": [
+    "wp-leto"
+   ],
+   "quote": [
+    "Artemis was born on the island of Ortygia before Apollo was on Delos.",
+    "According to a local tradition, Apollo was not born on Delos at all, but in Tegyra, a town in Boeotia"
+   ]
+  },
+  "lake-dry": {
+   "label": "supported",
+   "says": "The small sacred lake in its round bowl is now deliberately kept dry by the caretakers to stop malaria mosquitoes.",
+   "src": [
+    "wp-delos"
+   ],
+   "quote": [
+    "The small sacred lake in its circular bowl, now intentionally left dry by the island's caretakers to suppress the spread of malaria-bearing mosquitoes"
+   ]
+  },
+  "free-port": {
+   "label": "verified",
+   "says": "After 167 BC Delos was declared a free port, and the trade of the eastern Mediterranean concentrated here; rich merchants, bankers and ship-owners settled and built luxurious houses with frescoes and mosaic floors.",
+   "src": [
+    "unesco-delos"
+   ],
+   "quote": [
+    "After 167 BC, as a result of the declaration of Delos as a free port, all the commercial activity of the eastern Mediterranean was concentrated on the isle.",
+    "Rich merchants, bankers and ship-owners from all over the world settled there, attracting many builders, artists and craftsmen, who built for them luxurious houses, richly decorated with frescoes and mosaic floors."
+   ]
+  },
+  "greatest": {
+   "label": "verified",
+   "says": "The ancient writer Festus called it the greatest commercial center of the whole world.",
+   "src": [
+    "unesco-delos"
+   ],
+   "quote": [
+    "the greatest commercial centre of the whole world"
+   ]
+  },
+  "slaves": {
+   "label": "supported",
+   "says": "Roman traders bought tens of thousands of slaves here; Delos became the center of the slave trade, with the largest slave market in the wider region.",
+   "src": [
+    "wp-delos"
+   ],
+   "quote": [
+    "Roman traders came to purchase tens of thousands of slaves",
+    "It became the centre of the slave trade, with the largest slave market in the larger region being maintained here."
+   ]
+  },
+  "dionysus-house": {
+   "label": "supported",
+   "says": "The House of Dionysus is a luxurious private house named for its floor mosaic of Dionysus riding a panther; the House of the Dolphins is named for its mosaic of erotes riding dolphins.",
+   "src": [
+    "wp-delos"
+   ],
+   "quote": [
+    "The House of Dionysus is a luxurious second-century private house named for the floor mosaic of Dionysus riding a panther.",
+    "The House of the Dolphins is similarly named from its atrium mosaic, where erotes ride dolphins"
+   ]
+  },
+  "foreign-gods": {
+   "label": "verified",
+   "says": "There were many sanctuaries of foreign religions: temples of Sarapis, Isis and Anubis, of Syrian gods, and even a synagogue in the stadium district.",
+   "src": [
+    "unesco-delos"
+   ],
+   "quote": [
+    "there were an unprecedented number of sanctuaries dedicated to foreign religions: temples of Sarapis, Isis and Anubis, temples to the Syrian gods Haadad and Atargatis, and even a synagogue in the stadium district."
+   ]
+  },
+  "synagogue": {
+   "label": "disputed",
+   "says": "The so-called Delos Synagogue was once believed to be an ancient Samaritan synagogue.",
+   "src": [
+    "wp-delos"
+   ],
+   "quote": [
+    "The \"Delos Synagogue\", the ruins of what was once believed to be an ancient Samaritan synagogue."
+   ]
+  },
+  "samaritans": {
+   "label": "supported",
+   "says": "Inscriptions record a community calling itself 'Israelites on Delos' who made offerings to Mount Gerizim.",
+   "src": [
+    "wp-delos"
+   ],
+   "quote": [
+    "the community identified itself as \"Israelites on Delos who make offerings to hallowed Argarizein,\" a clear reference to Mount Gerizim"
+   ]
+  },
+  "herod": {
+   "label": "supported",
+   "says": "Delos is where an inscription honoring Herod the Great, King of Judaea, was found, and another honoring his son Herod Antipas.",
+   "src": [
+    "wp-delos"
+   ],
+   "quote": [
+    "Delos is also the findspot of an inscription honoring Herod the Great, King of Judaea, as well as another honoring his son, the tetrarch Herod Antipas"
+   ]
+  },
+  "museum": {
+   "label": "supported",
+   "says": "The museum holds many statues from the site, though a large quantity of finds are in the National Archaeological Museum in Athens.",
+   "src": [
+    "wp-delos-museum"
+   ],
+   "quote": [
+    "It is noted for its extensive collection of statues unearthed in the surrounding area of the ancient site",
+    "a large quantity are on display in Athens at the National Archaeological Museum."
+   ]
+  },
+  "sack": {
+   "label": "verified",
+   "says": "Its prosperity and friendship with Rome led to its destruction: Delos was attacked and looted twice, in 88 BC by Mithridates and in 69 BC by the pirates of Athenodorus; then it declined and was gradually abandoned.",
+   "src": [
+    "unesco-delos"
+   ],
+   "quote": [
+    "The prosperity of the island and the friendly relations with the Romans were the main cause of its destruction.",
+    "Delos was attacked and looted twice: in 88 BC by Mithridates, the King of Pontus, an enemy of the Romans, and later, in 69 BC, by the pirates of Athenodorus, an ally of Mithridates. Since then, the island fell rapidly into decline and was gradually abandoned."
+   ]
+  },
+  "quarry": {
+   "label": "verified",
+   "says": "Later it became a quarry: temple columns were burnt for lime and the houses left in ruins.",
+   "src": [
+    "unesco-delos"
+   ],
+   "quote": [
+    "Delos was turned into a quarry site with its temple columns burnt for lime, and its houses left in ruins."
+   ]
+  },
+  "abandoned": {
+   "label": "disputed",
+   "says": "Sources differ on when it was finally abandoned: UNESCO says uninhabited since the 7th century AD; Wikipedia says around the 8th century AD.",
+   "src": [
+    "unesco-delos",
+    "wp-delos"
+   ],
+   "quote": [
+    "it remained uninhabited since the 7th century AD",
+    "Delos was eventually abandoned around the eighth century AD."
+   ]
+  },
+  "excavations": {
+   "label": "verified",
+   "says": "Excavations began in 1872 and are still going on.",
+   "src": [
+    "unesco-delos",
+    "wp-delos-museum"
+   ],
+   "quote": [
+    "The excavations that started in 1872 and are still in progress",
+    "In 1872, the French School at Athens began excavating on Delos"
+   ]
+  },
+  "kynthos": {
+   "label": "supported",
+   "says": "Mount Kynthos, which keeps its pre-Greek name, is crowned with a sanctuary of Zeus.",
+   "src": [
+    "wp-delos"
+   ],
+   "quote": [
+    "Another site, retaining its Pre-Greek name Mount Cynthus, is crowned with a sanctuary of Zeus."
+   ]
+  },
+  "kynthos-view": {
+   "label": "supported",
+   "says": "From the top of Mount Kynthos there is a panoramic view of the surrounding islands.",
+   "src": [
+    "wv-delos"
+   ],
+   "quote": [
+    "climb Mount Kynthos. From the top of the mountain you will have a panoramic view of the many surrounding islands."
+   ]
+  },
+  "cyclades": {
+   "label": "supported",
+   "says": "The Cyclades got their name in antiquity because they form a rough circle around Delos.",
+   "src": [
+    "wv-delos"
+   ],
+   "quote": [
+    "The Cyclades received their name in antiquity because they form a rough circle (κύκλος/kyklos in Greek) round the sacred island of Delos."
+   ]
+  },
+  "proverb": {
+   "label": "supported",
+   "says": "The Greeks had a proverb, 'you sing as if sailing into Delos', for someone happy and light-hearted.",
+   "src": [
+    "wp-delos"
+   ],
+   "quote": [
+    "meaning you sing as if sailing into Delos in reference to someone who is happy, light-hearted, and enjoying himself."
+   ]
+  }
+ },
+ "parts": [
+  {
+   "name": "The Sacred Harbor",
+   "stand": "On the quay where the boat lands, facing inland toward the ruins.",
+   "paras": [
+    {
+     "t": "Welcome to Delos. It's a small island, but it's one of the most important places in all of Greek myth and history. Today the entire island is an archaeological site.",
+     "c": [
+      "small",
+      "whole-site"
+     ],
+     "level": 1
+    },
+    {
+     "t": "Before we walk: there's no protection from the sun out here, and the ground is rough, ancient stone. Wear a hat, watch your feet, and drink plenty of water as you go.",
+     "c": [
+      "sun"
+     ],
+     "level": 1
+    },
+    {
+     "t": "Nobody lives here now. Overnight stays are forbidden, and the only residents are security staff and archaeologists. UNESCO added Delos to the World Heritage List in 1990. Digging began in 1872, and it's still going on.",
+     "c": [
+      "nobody",
+      "unesco",
+      "excavations"
+     ],
+     "level": 3
+    }
+   ]
+  },
+  {
+   "name": "The Sanctuary of Apollo",
+   "stand": "Walk inland from the harbor into the Sanctuary of Apollo, among the temple foundations.",
+   "paras": [
+    {
+     "t": "This was Apollo's sanctuary. It drew pilgrims from all over Greece, and around it Delos grew into a prosperous trading port.",
+     "c": [
+      "pilgrims"
+     ],
+     "level": 1
+    },
+    {
+     "t": "The sanctuary was here at least from the 9th century BC, and it was at its height in the Archaic and Classical periods.",
+     "c": [
+      "sanctuary"
+     ],
+     "level": 3
+    },
+    {
+     "t": "Look beside the Temple of the Delians. A colossal statue of Apollo once stood there, from the 6th century BC. Parts of the upper body and hips still lie on the spot. One hand is in the island's museum. A foot is in the British Museum.",
+     "c": [
+      "kouros"
+     ],
+     "level": 2
+    },
+    {
+     "t": "This is also where the Delian League began, in 478 BC: an alliance of Greek cities, led by Athens, to keep fighting Persia. Its congresses met in the sanctuary of Apollo's temple. Members dropped lumps of iron into the sea, a sign that the alliance was meant to be permanent.",
+     "c": [
+      "league-what",
+      "league-temple",
+      "league-iron"
+     ],
+     "level": 2
+    },
+    {
+     "t": "The league's treasury was kept here until 454 BC, when Pericles moved it to Athens. Athens spent the money on its navy, and on art and buildings for the city.",
+     "c": [
+      "league-here",
+      "league-money"
+     ],
+     "level": 3
+    },
+    {
+     "t": "Delos was also made ritually pure. In the fifth century BC the whole island was cleared of the dead, and a decree said no one could be buried here, or give birth here.",
+     "c": [
+      "purify"
+     ],
+     "level": 3
+    }
+   ]
+  },
+  {
+   "name": "The Terrace of the Lions",
+   "stand": "At the Terrace of the Lions, facing the row of marble lions.",
+   "paras": [
+    {
+     "t": "Here are the famous lions of Delos, given to Apollo by the people of Naxos shortly before 600 BC. What stands here now are exact copies; the originals are in the museum.",
+     "c": [
+      "lions",
+      "lions-replicas"
+     ],
+     "level": 1
+    },
+    {
+     "t": "There were once nine to twelve of these crouching, snarling marble guardians along the Sacred Way. To protect the marble from the north wind, the originals were moved indoors. Only seven of the original lions survive.",
+     "c": [
+      "lions",
+      "lions-replicas",
+      "lions-seven"
+     ],
+     "level": 2
+    },
+    {
+     "t": "Picture the whole row, like an Egyptian avenue of sphinxes. One of the missing lions was carried off, and today it stands over the main gate of the Venetian Arsenal, in Venice.",
+     "c": [
+      "lions-sphinx",
+      "lions-arsenal"
+     ],
+     "level": 3
+    }
+   ]
+  },
+  {
+   "name": "The Sacred Lake",
+   "stand": "Beside the round, dry hollow of the Sacred Lake.",
+   "paras": [
+    {
+     "t": "This round hollow was the Sacred Lake. Near this lake, myth says, Leto labored before giving birth to the twins Apollo and Artemis.",
+     "c": [
+      "myth-lake",
+      "myth-leto"
+     ],
+     "level": 1
+    },
+    {
+     "t": "The myth goes like this. Leto was pregnant by Zeus, and Zeus's wife Hera was jealous. Hera ordered every land on earth to turn Leto away. But Delos, the story goes, wasn't joined to the mainland or fixed to the sea floor. It didn't count as land. So it could take her in.",
+     "c": [
+      "myth-leto",
+      "myth-shun"
+     ],
+     "level": 2
+    },
+    {
+     "t": "For nine days and nine nights, the myth says, she suffered near this lake. The goddess of childbirth, Eileithyia, was not there. Unaware, she was up on Olympus with Hera. On the ninth day the messenger goddess Iris won her over with a necklace and brought her here.",
+     "c": [
+      "myth-lake",
+      "myth-eileithyia"
+     ],
+     "level": 2
+    },
+    {
+     "t": "According to a Homeric hymn, the island had been floating until then, and now it was anchored to the ocean floor. The newborn Apollo threw off his swaddling clothes, bathed the universe in light, and began walking with his lyre and his bow.",
+     "c": [
+      "myth-anchor"
+     ],
+     "level": 3
+    },
+    {
+     "t": "Like most myths, this one comes in versions. In some, Artemis was born first, on another island called Ortygia. One local legend even put Apollo's birth in Boeotia, on the mainland.",
+     "c": [
+      "myth-versions"
+     ],
+     "level": 3
+    },
+    {
+     "t": "Why is it dry? The caretakers keep it that way on purpose, to stop malaria mosquitoes from breeding.",
+     "c": [
+      "lake-dry"
+     ],
+     "level": 3
+    }
+   ]
+  },
+  {
+   "name": "The museum",
+   "stand": "Inside the site museum, if it's open, in front of the original lions.",
+   "paras": [
+    {
+     "t": "Here, out of the wind, are the original Naxian lions.",
+     "c": [
+      "lions-replicas"
+     ],
+     "level": 1
+    },
+    {
+     "t": "Not everything found on Delos is here, though. A large share of the finds is in the National Archaeological Museum in Athens.",
+     "c": [
+      "museum"
+     ],
+     "level": 3
+    }
+   ]
+  },
+  {
+   "name": "The merchant town",
+   "stand": "Among the walls of the ancient houses.",
+   "paras": [
+    {
+     "t": "Now the other Delos: a boom town. After 167 BC Delos became a free port, and the trade of the eastern Mediterranean poured in. An ancient writer called it the greatest commercial center of the whole world.",
+     "c": [
+      "free-port",
+      "greatest"
+     ],
+     "level": 1
+    },
+    {
+     "t": "Rich merchants, bankers and ship-owners settled here and built luxurious houses, decorated with frescoes and mosaic floors. Look for the House of Dionysus, named for its mosaic of the god riding a panther, and the House of the Dolphins, with its mosaic of erotes riding dolphins.",
+     "c": [
+      "free-port",
+      "dionysus-house"
+     ],
+     "level": 2
+    },
+    {
+     "t": "There is a darker side, and we should say it plainly. Roman traders came here to buy tens of thousands of slaves. Delos became the center of the slave trade, with the largest slave market in the region.",
+     "c": [
+      "slaves"
+     ],
+     "level": 2
+    },
+    {
+     "t": "People came from everywhere, and they brought their gods: temples to Sarapis, Isis and Anubis, to Syrian gods, and even a synagogue near the stadium. Nobody's sure about that building; its ruins were once believed to be a Samaritan synagogue. Separately, inscriptions record a community calling itself the Israelites on Delos. And an inscription honoring Herod the Great, King of Judaea, was found here.",
+     "c": [
+      "foreign-gods",
+      "synagogue",
+      "samaritans",
+      "herod"
+     ],
+     "level": 3
+    }
+   ]
+  },
+  {
+   "name": "The end of Delos, and the view",
+   "stand": "Wherever you can look back over the ruins to the sea, or on Mount Kynthos if you climb it.",
+   "paras": [
+    {
+     "t": "Its wealth, and its friendship with Rome, made Delos a target. It was attacked and looted twice: in 88 BC by Mithridates, King of Pontus, and in 69 BC by pirates allied with him. After that it declined, and was slowly abandoned.",
+     "c": [
+      "sack"
+     ],
+     "level": 1
+    },
+    {
+     "t": "Later the island became a quarry, its temple columns burnt for lime. The last people left somewhere around the 7th or 8th century AD; the sources differ.",
+     "c": [
+      "quarry",
+      "abandoned"
+     ],
+     "level": 3
+    },
+    {
+     "t": "If you have the time and the legs for it, climb Mount Kynthos. It's crowned with a sanctuary of Zeus, and from the top you get a panoramic view of the islands around you. The Cyclades took their name from the rough circle they form around Delos.",
+     "c": [
+      "kynthos",
+      "kynthos-view",
+      "cyclades"
+     ],
+     "level": 3
+    },
+    {
+     "t": "The path up can be rough, and there's no shade. Go slowly, and watch your footing on the way down.",
+     "c": [],
+     "level": 3,
+     "cue": true
+    },
+    {
+     "t": "The ancient Greeks had a saying for someone happy and light-hearted: you sing as if sailing into Delos. People still make this crossing today. I hope you sail home singing.",
+     "c": [
+      "proverb"
+     ],
+     "level": 1
+    }
+   ]
+  }
+ ],
+ "practical": []
+}

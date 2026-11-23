@@ -68,7 +68,7 @@ ok(E.latin('Ζευγολατιό') === 'Zevgolatio' && E.latin('Ευαγγελι
 // Round 1 (Nov 20): an arrival time nobody gave is asked, never planned on; and a straight-to-the-ship day plans no sights.
 // Off a ship and flying out the same day (outside test, Nov 22: bags left at 8:30, collected at 8:45, nothing between):
 // bags are stored only with an hour or more free; under that the day goes straight on with them.
-{ const tight = E.dayWindow(day({ type: 'departure', mode: 'flight', time: '11:00', thru: { mode: 'ship', time: '07:30', point: port }, point: air }), tr);
+{ const tight = E.dayWindow(day({ type: 'departure', mode: 'flight', time: '13:00', thru: { mode: 'ship', time: '07:30', point: port }, point: air }), tr);
   const roomy = E.dayWindow(day({ type: 'departure', mode: 'flight', time: '18:00', thru: { mode: 'ship', time: '07:30', point: port }, point: air }), tr);
   const has = w => [].concat(w.head || [], w.tail || []).some(x => /bags/i.test(x.name || ''));
   ok(!tight.error && !has(tight) && tight.bagsStraight, `under an hour free: no luggage storage, straight on with the bags (head ${JSON.stringify((tight.head || []).map(x => x.name))})`);
@@ -370,7 +370,9 @@ if (fs.existsSync(dir)) { let rides = 0, placed = 0;
       if (!sd || !(sd.closed || (sd.oh && sd.oh.spans && !sd.oh.spans.length)) || d.locked) return; // only picks the map says are shut that day
       const j = ps.findIndex((p, k) => k !== i && p && p.items && p.items.some(x => x.t === 'stop' && String(x.id) === String(id)));
       const name = ((s.cities[d.city].sites || []).find(x => String(x.id) === String(id)) || {}).name;
-      ok(j >= 0 && (ps[i].explain || []).some(e => e.startsWith(name + ' is closed on')), `${name}, shut on its day, is planned on another day of the stay and the plan says so`); })); } }
+      // (Nov 22: or, when that day is already full, the plan says it didn't fit there either; never "planned on" a day without it.)
+      const said = (ps[i].explain || []).find(e => e.startsWith(name + ' is closed on')) || '';
+      ok(j >= 0 ? /so it's planned on/.test(said) : /didn't fit on/.test(said), `${name}, shut on its day, is planned on another day of the stay (or said not to fit there), and the plan says so truly (${said})`); })); } }
 
 // ---- Across water: a place reached by boat is reached by boat, its crossing the guide's own time plus the pier, never a taxi.
 { const tb = E.makeTravel({ walk: 'medium' }, {}), port = { lat: 37.46, lng: 25.326 }, isle = { lat: 37.396, lng: 25.268, travelNote: 'About 30 to 40 minutes each way by boat from the old harbor.' };
@@ -388,7 +390,13 @@ if (fs.existsSync(dir)) { let rides = 0, placed = 0;
   ok(go.first && go.first.at === 540, 'the boat out carries the first sailing the guide gives');
   const win = { start: 480, endBy: 1000, hard: true, head: [dock], tail: [dock] }, w = E.walkDay([Object.assign({ id: 'isle', name: 'Isle', minutes: 60 }, isle)], win, (a, b) => tb.estimate(a, b), null);
   const st = w.items.find(x => x.t === 'stop'), ri = w.items.filter(x => x.t === 'ride' && x.mode === 'boat')[0];
-  ok(st.at >= 540 + 40 && ri.wait > 0 && ri.firstBoat === 540, `nobody lands on the island before the first boat out could (landed ${E.clock(st.at)}, wait ${ri.wait})`); }
+  ok(st.at >= 540 + 40 && ri.wait > 0 && ri.firstBoat === 540, `nobody lands on the island before the first boat out could (landed ${E.clock(st.at)}, wait ${ri.wait})`);
+  // First-timer walk, Nov 22: an island only the guide suggested (the traveler ticked nothing) is never "planned because
+  // you chose it" on a boat no timetable confirms; the traveler's own pick is.
+  const walkAs = q => E.walkDay([Object.assign({ id: 'isle', name: 'Isle', minutes: 60 }, isle, q)], win, (a, b) => tb.estimate(a, b), null).items.filter(x => x.t === 'ride' && /boat|ferry/.test(x.mode + x.kind));
+  const mine = walkAs({ wish: true }), guide = walkAs({ wish: true, guideWish: true });
+  ok(!guide.some(b => /because you chose it/.test(b.note || '') || b.ownBoat), `a guide suggestion's boat is never said to be the traveler's choice (${JSON.stringify(guide.map(b => b.note || ''))})`);
+  ok(mine.length === 0 || mine.some(b => b.ownBoat) || mine.every(b => !b.note || !/isn't planned on its own/.test(b.note)), "the traveler's own island pick still keeps its boat"); }
 { let boats = 0; for (const f of fs.readdirSync(dir).filter(f => f.endsWith('.json'))) { const s = JSON.parse(fs.readFileSync(path.join(dir, f))), ps = E.planTrip(s);
     ps.forEach((p, i) => p && p.items && p.items.forEach((x, k) => { if (x.t !== 'ride') return; const a = p.items[k - 1], b = p.items[k + 1], c = s.cities[s.days[i].city] || {};
       const site = it => it && it.id != null && [...(c.sites || []), ...(c.farther || [])].find(y => String(y.id) === String(it.id));
@@ -445,11 +453,15 @@ if (fs.existsSync(dir)) { let rides = 0, placed = 0;
   // Lunch on every day over lunchtime (Nov 18, Richard: "No lunch in Naples trip"): a day with stops whose time ashore
   // or in town spans lunch has a lunch stop, at a real place, unless the traveler skipped it; a long visit over midday
   // has it inside. Every trip, and the Naples picks that had none (Capri and Pompeii, Capri alone, the cathedral too).
-  { let days = 0, said = 0; const noLunch = [];
+  { let days = 0, said = 0; const noLunch = [], shutAt = [];
     const lunchCheck = (f, s, plans) => plans.forEach((p, i) => { if (!p || !p.items || p.error || p.safe) return; const d = s.days[i]; if (((d.mealPrefs || {}).Lunch || {}).skip) return;
       const w = E.dayWindow(d, E.makeTravel(s.prefs, s.legModes)); if (!w || w.error || !E.lunchWanted(w) || !p.items.some(x => x.t === 'stop')) return;
       const c = s.cities[d.city] || {}; if (!(c.restaurants || []).length && !(c.farther || []).some(t => (t.foodDrink || []).length)) return; // no place to eat known at all
       days++; const m = p.items.find(x => x.t === 'meal' && x.meal === 'Lunch');
+      // ...and open then: the day's facts, else the place's own map hours for that date (Nov 23 real-map check: Sorbillo at
+      // 11:45 when it opens at noon, Han Gang at 12:03 when it opens at 1 pm).
+      if (m && !m.packed && !m.onBoard && !m.booked && !m.chosen) { const fx = E.eatFactsFor(d, (c.restaurants || []).concat((c.farther || []).flatMap(t => (t.foodDrink || []).filter(x => x.kind === 'eat'))))[E.eatKey(m.name)];
+        if (fx && E.closedForDay(fx, { start: m.at, endBy: m.at + m.min }, m.min)) shutAt.push(`${f} day ${i + 1}: ${m.name} at ${E.clock(m.at)} (${fx.mapHours || 'day facts'})`); }
       // None only when the plan says why, plainly (no time left before the ship; no place to eat known out there).
       if (!m && !(p.explain || []).some(t => /no room for lunch|no time for a sit-down lunch|no place to eat|places to eat aren't in the guide/i.test(t))) noLunch.push(`${f} day ${i + 1}`); else if (!m) said++; else if (/^Lunch in /.test(m.name) && (c.farther || []).some(t => ('Lunch in ' + t.name) === m.name && (t.foodDrink || []).some(x => x.kind === 'eat' && isFinite(x.lat) && E.hav(x, t) <= 3))) noLunch.push(`${f} day ${i + 1}: "${m.name}" names no place`); });
     for (const f of fs.readdirSync(dir).filter(f => f.endsWith('.json'))) { const s = E.applyPlaces(JSON.parse(fs.readFileSync(path.join(dir, f))), places); lunchCheck(f, s, E.planTrip(s)); }
@@ -458,6 +470,24 @@ if (fs.existsSync(dir)) { let rides = 0, placed = 0;
       s.days[ni].selected = picks; s.days[ni].own = true; const ps = E.planTrip(s); lunchCheck('Naples ' + picks.join('+'), s, ps.map((p, k) => k === ni ? p : null));
       check('Naples ' + picks.join('+'), s, ps.map((p, k) => k === ni ? p : null)); }
     for (const x of noLunch.slice(0, 8)) ok(false, `no lunch on a day over lunchtime: ${x}`);
+    for (const x of shutAt.slice(0, 8)) ok(false, `lunch at a place shut at that hour: ${x}`);
+    ok(!shutAt.length, `every planned lunch is at a place not known to be shut then (map hours read for the date)`);
+    { const b = E.applyPlaces({ cities: { X: { restaurants: [{ name: 'Sorbillo', lat: 40.85, lng: 14.255 }, { name: 'Far Away Grill', lat: 40.86, lng: 14.255 }, { name: 'Bar', lat: 40.85, lng: 14.255 }] } }, days: [] },
+        { X: { key: 'X', eatHours: [['Antonio Sorbillo', 40.8503, 14.255, 'Mo-Sa 12:00-15:30', 'restaurant'], ['Far Away Grill', 40.85, 14.255, 'Mo-Su 10:00-22:00', 'restaurant'], ['Barolo Wine', 40.85, 14.255, 'Mo-Su 18:00-23:00', 'bar']] } });
+      const rs = b.cities.X.restaurants;
+      ok(rs[0].hours === 'Mo-Sa 12:00-15:30' && !rs[1].hours && !rs[2].hours, 'a guide place to eat takes the map hours of the place with its name within 200 m (never a far one, never on a short name)'); }
+    // A nearby town's places to eat take their map hours too (Nov 23 release gate: Komokieras in Sitges at 11:45, opens 13:15).
+    { const b = E.applyPlaces({ cities: { X: { restaurants: [], farther: [{ id: 'tn', name: 'Townie', lat: 41.2372, lng: 1.8067 }] } }, days: [] },
+        { X: { key: 'X', towns: { tn: { foodDrink: [{ kind: 'eat', name: 'Komokieras', lat: 41.2372466, lng: 1.8067256 }] } }, eatHours: [['Komokieras', 41.23719, 1.80675, 'Th-Mo 13:15-15:30, 20:30-23:00; Tu off, We off', 'restaurant']] } });
+      const t = (b.cities.X.farther || []).find(x => x.id === 'tn'), r = t && (t.foodDrink || []).find(x => x.name === 'Komokieras');
+      const fx = r && E.eatFactsFor({ date: '2027-07-03' }, [r])[E.eatKey('Komokieras')];
+      ok(!!(r && r.hours && fx && fx.oh && JSON.stringify(fx.oh.spans[0]) === '[795,930]' && E.closedForDay(fx, { start: 705, endBy: 765 }, 60)),
+        "a nearby town's place to eat takes its map hours, so lunch there waits for it to open (Komokieras opens 13:15)"); }
+    { const fx = E.eatFactsFor({ date: '2026-11-23', eats: {} }, [{ name: 'Noon Place', hours: 'Mo-Sa 12:00-15:30; Su off' }, { name: 'Sunday Shut', hours: 'Mo-Sa 12:00-15:00' }, { name: 'Odd', hours: 'Jun-Sep 12:00-15:00' }, { name: 'Junk', hours: 'ask the owner' }]);
+      const sun = E.eatFactsFor({ date: '2026-11-22' }, [{ name: 'Noon Place', hours: 'Mo-Sa 12:00-15:30; Su off' }]);
+      ok(fx[E.eatKey('Noon Place')] && JSON.stringify(fx[E.eatKey('Noon Place')].oh.spans) === '[[720,930]]' && sun[E.eatKey('Noon Place')].closed && fx[E.eatKey('Odd')] && fx[E.eatKey('Odd')].closed && !fx[E.eatKey('Junk')]
+        && E.eatShut(sun[E.eatKey('Noon Place')], 'Lunch') && !E.eatShut(fx[E.eatKey('Noon Place')], 'Lunch'),
+        'a place to eat with map hours: open spans read for the date, shut on its day off and out of its season (one hours reader), unreadable hours left unknown'); }
     if (!noLunch.length) oks++; console.log(`ok   lunch on ${days - said - noLunch.length} of ${days} days over lunchtime (${said} say plainly why not)${noLunch.length ? ', missing silently on ' + noLunch.length : ''}`); }
   console.log(`ok   every ride the kind it is drawn as: ${boats} boat rides, ${piered} rides to or from a pier`); }
 
@@ -635,10 +665,101 @@ if (fs.existsSync(dir)) for (const f of fs.readdirSync(dir).filter(f => f.endsWi
 // Nov 20 review (finding 5): a road time estimated from the distance never drops as the distance grows.
 { const tb = E.makeTravel({}, {}); let down = 0, prev = 0; for (let km = 1; km <= 300; km += 0.1) { const m = tb.road(km).min; if (m < prev) down++; prev = m; }
   ok(!down, `the road estimate never gets shorter for a longer ride (${down} drops from 1 to 300 km)`); }
+// Weekly ladder, Nov 22: off the ship at 7:00 am with a 10:00 am flight can't work (getting off, the ride, the airport's
+// time); the day says so and plans nothing, never "off the ship" before the ship is in.
+{ const tb = E.makeTravel({ walk: 'medium' }, {}), w = E.dayWindow(day({ type: 'departure', mode: 'flight', time: '10:00', point: air, thru: { mode: 'ship', time: '07:00', point: { lat: air.lat + 0.1, lng: air.lng + 0.1, name: 'Port' } } }), tb);
+  ok(w.error && /won't work/.test(w.error) && w.tooTight > 0, `a 10:00 am flight after a 7:00 am ship: said it can't work (${w.error || 'planned from ' + E.clock(w.start)})`);
+  const ok2 = E.dayWindow(day({ type: 'departure', mode: 'flight', time: '15:00', point: air, thru: { mode: 'ship', time: '07:00', point: { lat: air.lat + 0.1, lng: air.lng + 0.1, name: 'Port' } } }), tb);
+  ok(!ok2.error && ok2.start >= 7 * 60, `a 3:00 pm flight after a 7:00 am ship is planned, starting once off the ship (${ok2.error || E.clock(ok2.start)})`); }
+// Nov 23 (leaving-day thread): off the ship and flying out the same day, the bags LEFT in storage at the start are never
+// read as the bags COLLECTED on the way back. With a sight planned, the time to leave it reaches the bags by their time
+// (the countdown said "leave Casa Batlló by 11:27", the time to leave for the airport, 41 min too late); with none, the
+// traveler is at the luggage storage when the free time begins, and the day's first steps are marked as such.
+{ const s0 = fs.readdirSync(dir).filter(f => f.endsWith('.json')).map(f => JSON.parse(fs.readFileSync(path.join(dir, f)))).find(s => (s.days || []).some(d => d.type === 'departure' && d.mode === 'flight' && d.lodging));
+  if (s0) { const li = s0.days.findIndex(d => d.type === 'departure' && d.mode === 'flight' && d.lodging);
+    for (const empty of [false, true]) for (const fl of ['14:30', '15:30', '18:00']) {
+      const s = JSON.parse(JSON.stringify(s0)), d = s.days[li]; Object.assign(d, { time: fl, thru: { mode: 'ship', time: '07:00', point: Object.assign({}, d.lodging, { name: 'Cruise port', lat: d.lodging.lat + 0.01 }) } });
+      if (empty) { d.selected = []; d.cleared = true; }
+      const p = E.planTrip(s)[li], its = p.items || [], la = p.leaveAt || {}, tag = `off a 7:00 am ship, ${fl} flight${empty ? ', no sights' : ''}`;
+      const drop = its.findIndex(x => x.t === 'fixed' && /leave your bags/i.test(x.name || '')), pick = its.findIndex(x => x.t === 'fixed' && /collect/i.test(x.name || ''));
+      if (drop < 0 || pick < 0) { ok(p.error || p.straight || (p.items || []).length, `${tag}: planned (${p.error || 'no bag steps'})`); continue; }
+      ok(its[drop].head && !its[pick].head, `${tag}: the bags left are a step of the day's start, the bags collected are not`);
+      const lastK = its.reduce((a, x, j) => j < pick && (x.t === 'stop' || x.t === 'meal' || (x.t === 'fixed' && x.head)) ? j : a, -1);
+      const toBags = its.slice(lastK + 1, pick).reduce((m, x) => m + (x.min || 0) + (x.wait || 0), 0);
+      ok(Number.isFinite(la.last) && Number.isFinite(la.bags) && la.last + toBags <= la.bags + 1 && la.bags + (its[pick].min || 0) <= la.out + 1, `${tag}: leaving ${its[lastK] && its[lastK].name} by ${E.clock(la.last)} reaches the bags by ${E.clock(la.bags)}, then the airport ride at ${E.clock(la.out)}`);
+      ok(!(p.explain || []).some(t => /^Leave .* by /.test(t)) || (p.explain || []).some(t => t.includes(E.clock(la.last))), `${tag}: the note names the same time to leave the last place`); } } }
+// Nov 23 (testing thread's oracle): a flight or train typed in the small hours (before E.NIGHT_DEP) may be this very
+// morning or late tonight. Asked once, never guessed; answered "night", the day runs to it after midnight; answered
+// "morning", the day is only the way there, setting out the evening before. Ships keep their all-aboard rule.
+{ const tb = E.makeTravel({ walk: 'medium' }, {});
+  for (const [mode, t] of [['flight', '00:20'], ['flight', '03:10'], ['train', '04:45']]) {
+    const ask = E.dayWindow(day({ type: 'departure', mode, time: t, point: air }), tb);
+    ok(ask.error && ask.askNight && /early this morning, or late tonight/.test(ask.error), `a ${t} ${mode}, not yet answered: asked this morning or tonight (${ask.error || 'planned'})`);
+    const night = E.dayWindow(day({ type: 'departure', mode, time: t, point: air, nightDep: 'night' }), tb);
+    ok(!night.error && night.endBy > 24 * 60 - 200 && night.endBy > night.start, `a ${t} ${mode} tonight: be there by ${E.clock(night.endBy)} after midnight`);
+    const morn = E.dayWindow(day({ type: 'departure', mode, time: t, point: air, nightDep: 'morning' }), tb), r = !morn.error && E.walkDay([], morn, tb.estimate, null);
+    ok(!morn.error && morn.endBy < E.toMin(t) && r && r.end <= morn.endBy + 1 && morn.start < morn.endBy, `a ${t} ${mode} this morning: set out ${morn.error || E.clock(morn.start)}, there by ${E.clock(morn.endBy)}`); }
+  const late = E.dayWindow(day({ type: 'departure', mode: 'flight', time: '06:30', point: air }), tb);
+  ok(!late.error || !late.askNight, 'a 6:30 am flight is this morning\'s, never asked');
+  const ship = E.dayWindow(day({ type: 'embark', allAboard: 30, boardAt: null }), tb);
+  ok(!ship.askNight, 'all aboard at 0:30 is the ship\'s own night, never asked');
+  // On a whole trip: the question stops the day (no sights); answered "morning", still no sights; "night", a day is planned.
+  const s0 = fs.readdirSync(dir).filter(f => f.endsWith('.json')).map(f => JSON.parse(fs.readFileSync(path.join(dir, f)))).find(s => (s.days || []).some(d => d.type === 'departure' && d.lodging));
+  if (s0) { const li = s0.days.findIndex(d => d.type === 'departure' && d.lodging);
+    for (const nd of ['', 'morning', 'night']) { const s = JSON.parse(JSON.stringify(s0)); Object.assign(s.days[li], { mode: 'flight', time: '03:10', startTime: '09:00', nightDep: nd });
+      const p = E.planTrip(s)[li], stops = (p.items || []).filter(x => x.t === 'stop');
+      ok(nd === '' ? p.error && p.askNight : nd === 'morning' ? !p.error && !stops.length && p.end <= p.endBy : !p.error && p.endBy > 24 * 60, `a 3:10 am flight on a trip, ${nd || 'unanswered'}: ${p.error ? 'asked' : stops.length + ' sights, there by ' + E.clock(p.endBy)}`); } } }
+// Nov 23 (tester round 7a, evening calls h33, w20): a day whose picks are ALL shut in its time says so, each with its
+// reason, never "Pick the sights you want" as if nothing was picked; the app adds no sight of its own.
+{ const s0 = fs.readdirSync(dir).filter(f => f.endsWith('.json')).map(f => JSON.parse(fs.readFileSync(path.join(dir, f)))).find(s => (s.days || []).some(d => d.type === 'port' && (s.cities[d.city] || {}).sites && s.cities[d.city].sites.length >= 4));
+  if (s0) { const pi = s0.days.findIndex(d => d.type === 'port' && (s0.cities[d.city] || {}).sites && s0.cities[d.city].sites.length >= 4), s = JSON.parse(JSON.stringify(s0)), d = s.days[pi], c = s.cities[d.city];
+    const shut = c.sites.slice(0, 2).map(x => x.id); c.sites.forEach(x => { if (shut.includes(x.id)) x.visitable = false; });
+    Object.assign(d, { selected: shut, own: true, mine: shut });
+    const p = E.planTrip(s)[pi], stops = (p.items || []).filter(x => x.t === 'stop'), ex = (p.explain || []).join(' ');
+    ok(!stops.length || stops.every(x => shut.includes(x.id)), `every pick shut: no sight of the app's own is added (${stops.map(x => x.name).join(', ')})`);
+    if (!stops.length) ok(/None of your picks can be visited/.test(ex) && !/Pick the sights you want/.test(ex), `every pick shut: the day says none of the picks can be visited (${ex.slice(0, 160)})`); } }
+// Nov 23 (tester round 7a, finding 109): a field its article calls general aviation, closed or military is never offered,
+// also when the map finds it again under its own name or a few hundred metres off with nothing said; a second airport the
+// map alone knows stays offered. Terminals of one airport are asked as the terminal, never as "which airport".
+{ const L = [{ name: 'Big City Airport', lat: 45.505, lng: 12.352, wiki: true, about: 'Big City Airport (IATA: BCX, ICAO: XXXX) is the international airport of Big City.' },
+    { name: 'Island Airfield Airport', lat: 45.428, lng: 12.388, wiki: true, about: 'Island Airfield Airport (ICAO: XXXY) is a general aviation airport on the island.' },
+    { name: 'Aeroporto Nicolo', lat: 45.4285, lng: 12.3875, kind: 'aerodrome' }, { name: 'Island Airfield Airport', lat: 45.44, lng: 12.40, kind: 'aerodrome' },
+    { name: 'Second Town Airport', lat: 45.65, lng: 12.19, kind: 'aerodrome' }];
+  const got = E.gateChoices(L, 'airport').map(x => x.name);
+  ok(got.length === 2 && got.includes('Big City Airport') && got.includes('Second Town Airport'), `a general-aviation field is never offered, found by its article or on the map; a real second airport stays (${got.join(', ')})`);
+  const tb = E.makeTravel({ walk: 'medium' }, {});
+  const t = E.dayWindow(day({ type: 'departure', mode: 'flight', time: '15:00', point: Object.assign({}, air, { name: 'Big City Airport, Terminal 1', ask: ['Big City Airport, Terminal 1', 'Big City Airport, Terminal 2'] }) }), tb);
+  ok(t.error && /^Which terminal of Big City Airport do you leave from\?/.test(t.error) && !/more than one here/.test(t.error), `terminals of one airport: asked which terminal (${t.error})`);
+  const a = E.dayWindow(day({ type: 'departure', mode: 'flight', time: '15:00', point: Object.assign({}, air, { name: 'Big City Airport', ask: ['Big City Airport', 'Second Town Airport'] }) }), tb);
+  ok(a.error && /^Which airport do you leave from\?/.test(a.error), 'two airports: asked which airport'); }
+// Nov 23: a late arrival's day ends no sooner than the traveler reaches the hotel (a 9:30 pm flight gave a day of 10:45 to
+// 11:00 pm and a plan reaching the hotel at 12:14 am, past its own end).
+{ const tb = E.makeTravel({ walk: 'medium' }, {});
+  for (const t of ['19:00', '21:30', '23:10']) { const w = E.dayWindow(day({ type: 'arrival', mode: 'flight', time: t, point: air, hours: 4 }), tb), r = E.walkDay([], w, tb.estimate, null);
+    ok(!w.error && w.endBy >= w.sightFrom && r.end <= w.endBy + 1, `a ${t} flight in: the day ends at ${E.clock(w.endBy)}, at the hotel by ${E.clock(r.end)}`); } }
+// First-timer walk, Nov 22: a 9:00 am train on a day set to start at 9:00 is this morning's: the day starts earlier to
+// reach it, with no time for sights (it was taken as the next morning's: sights all day, "free time 16 h 10 min").
+{ const tb = E.makeTravel({ walk: 'medium' }, {}), w = E.dayWindow(day({ type: 'departure', mode: 'train', time: '09:00', startTime: '09:00', point: air }), tb);
+  ok(!w.error && w.endBy < 9 * 60 && w.start < w.endBy && w.leaveEarly > 0, `a 9:00 am train: be at the station by ${E.clock(w.endBy)}, the day starts ${E.clock(w.start)} (${w.leaveEarly} min early)`);
+  ok(w.sightTo <= (w.sightFrom != null ? w.sightFrom : w.start) + 1 || w.sightTo - w.start < 30, `no sightseeing before a 9:00 am train (sights until ${E.clock(w.sightTo)})`);
+  // Outside test round 5 (Nov 22): a 6:30 am or 8:00 am flight and a 9:10 am train planned a full day of sights after
+  // the departure. On a whole leaving day: no sights, the day never starts after the time to leave, and no free time.
+  const s0 = fs.existsSync(dir) && fs.readdirSync(dir).filter(f => f.endsWith('.json')).map(f => JSON.parse(fs.readFileSync(path.join(dir, f)))).find(s => (s.days || []).some(d => d.type === 'departure'));
+  if (s0) { const li = s0.days.findIndex(d => d.type === 'departure');
+    for (const [mode, t] of [['flight', '05:00'], ['flight', '05:45'], ['flight', '06:30'], ['flight', '08:00'], ['train', '09:10']]) { const s = JSON.parse(JSON.stringify(s0)); Object.assign(s.days[li], { mode, time: t, startTime: '09:00' });
+      const p = E.planTrip(s)[li], stops = (p.items || []).filter(x => x.t === 'stop');
+      ok(!stops.length && p.end <= p.endBy && p.end <= E.toMin(t) && !(p.explain || []).some(x => /^Free time/.test(x)), `a ${t} ${mode} on the leaving day: no sights, straight there (${stops.length} sights, ends ${E.clock(p.end)}, be there by ${E.clock(p.endBy)})`); } } }
+// Outside test round 5 (Nov 22): a late arrival never gets a dinner the app picked at 11:30 pm or after midnight.
+{ const s0 = fs.existsSync(dir) && fs.readdirSync(dir).filter(f => f.endsWith('.json')).map(f => JSON.parse(fs.readFileSync(path.join(dir, f)))).find(s => (s.days || []).some(d => d.type === 'arrival'));
+  if (s0) { const ai = s0.days.findIndex(d => d.type === 'arrival');
+    for (const t of ['21:30', '22:00']) { const s = JSON.parse(JSON.stringify(s0)); Object.assign(s.days[ai], { mode: 'flight', time: t }); delete (s.days[ai].mealPrefs || {}).Dinner;
+      const ev = (E.planTrip(s)[ai].items || []).find(x => x.t === 'evening');
+      ok(!ev || ev.at <= E.DINNER_LAST, `arriving at ${t}: no dinner picked for ${ev ? E.clock(ev.at) : '-'}`); } } }
 // Nov 20 review (finding 8): a flight or all aboard after midnight is the next morning's; the day stays readable and no
 // clock prints a minus sign.
 { const tb = E.makeTravel({ walk: 'medium' }, {});
-  for (const t of ['00:40', '05:30']) { const w = E.dayWindow(day({ type: 'departure', mode: 'flight', time: t, point: air }), tb);
+  // (Nov 23: a small-hours departure is asked first; answered "tonight" it is the next morning's.)
+  for (const t of ['00:40', '05:30']) { const w = E.dayWindow(day({ type: 'departure', mode: 'flight', time: t, point: air, nightDep: 'night' }), tb);
     ok(!w.error && w.endBy > w.start && !/-/.test(E.clock(w.endBy)), `a flight at ${t}: the day runs to ${E.clock(w.endBy)} (start ${E.clock(w.start)})`); }
   const wp = E.dayWindow(day({ type: 'port', portArrive: 480, allAboard: 60 }), tb);
   ok(!wp.error && wp.endBy > wp.start && wp.endBy === 60 + 1440 - wp.buffer, `all aboard at 1:00 am: ashore until ${E.clock(wp.endBy)}`);
@@ -700,9 +821,9 @@ if (fs.existsSync(dir)) for (const f of fs.readdirSync(dir).filter(f => f.endsWi
 { let marked = 0, silent = 0, dawn = 0; for (const f of fs.readdirSync(dir).filter(f => f.endsWith('.json'))) { const s = JSON.parse(fs.readFileSync(path.join(dir, f)));
     E.planTrip(s).forEach((p, i) => { if (!p || !p.items || p.safe) return; const d = s.days[i], c = s.cities[d.city] || {};
       for (const x of p.items.filter(x => x.t === 'stop')) { const sx = (c.sites || []).find(y => String(y.id) === String(x.id)); if (!sx) continue; const sd = (d.sites || {})[x.id];
-        if (E.needsHours(sx) && !(sd && (sd.closed || sd.allDay || (sd.oh && sd.oh.spans && sd.oh.spans.length)))) { if (x.hoursUnknown && (p.explain || []).some(t => /Opening hours aren't known/.test(t))) marked++; else silent++;
+        if (E.needsHours(sx) && !(sd && (sd.closed || sd.allDay || (sd.oh && sd.oh.spans && sd.oh.spans.length)))) { if (x.hoursUnknown && x.hours && x.hours.unknown && (p.explain || []).some(t => /(Opening|Sunday) hours not confirmed/.test(t))) marked++; else silent++;
           // Nov 20 review (finding 7): and never planned at dawn or late on a guess (9 to 5), unless the traveler set the order.
-          if (!d.order && (x.at < E.ASSUME_OPEN || x.at + x.min > E.ASSUME_CLOSE)) { dawn++; if (dawn <= 3) ok(false, `${f} day ${i}: ${x.name}, hours unknown, planned at ${E.clock(x.at)}`); } } } }); }
+          const pw = (x.hours && x.hours.planned) || [E.ASSUME_OPEN, E.ASSUME_CLOSE]; if (!d.order && (x.at < pw[0] || x.at + x.min > pw[1])) { dawn++; if (dawn <= 3) ok(false, `${f} day ${i}: ${x.name}, hours unknown, planned at ${E.clock(x.at)}`); } } } }); }
   ok(marked > 0 && !silent && !dawn, `unknown opening hours are said, never read as open, and kept to 9 to 5 (${marked} stops marked, ${silent} silent, ${dawn} outside)`);
   ok(E.needsHours({ tags: ['indoor'] }) && E.needsHours({ tags: ['inside-or-out'] }) && !E.needsHours({ tags: ['open-air'] }) && !E.needsHours({ far: true, tags: ['indoor'] }), 'one rule from the tags decides which sights need hours'); }
 ok(E.readable('Café Ñandú') && E.readable("Joe's Bar & Grill") && !E.readable('נתי- מזנון המשק') && !E.readable('東京'), 'a place to eat named only in another script is not readable');
@@ -717,7 +838,9 @@ ok(E.readable('Café Ñandú') && E.readable("Joe's Bar & Grill") && !E.readable
   const old = ['Dome of the Rock', 'Al-Aqsa Mosque', 'Western Wall'].map(n => ids.indexOf(n)), museum = Math.min(...['Israel Museum', 'Bible Lands Museum'].map(n => ids.indexOf(n)).filter(k => k >= 0));
   // (Nov 20: with unknown hours kept to 9 to 5 the museums may come first; what counts is that each side of town is visited once.)
   const mus = ['Israel Museum', 'Bible Lands Museum'].map(n => ids.indexOf(n)).filter(k => k >= 0), museumLast = Math.max(...mus);
-  ok(old.every(k => k >= 0) && (old.every(k => k < museum) || old.every(k => k > museumLast)), `the Old City sights together, never split by the museums across town (got ${ids.join(' > ')})`); } }
+  // (Nov 23: on a Saturday the Temple Mount is shut by its official hours, so only the Old City sights planned count.)
+  const oldIn = old.filter(k => k >= 0);
+  ok(oldIn.length >= 1 && (oldIn.every(k => k < museum) || oldIn.every(k => k > museumLast)), `the Old City sights together, never split by the museums across town (got ${ids.join(' > ')})`); } }
 // Road times from the map: two trips out across a gulf are timed by the road, not the straight line.
 { const PD = path.join(__dirname, '..', 'places', 'data'), places = {}; if (fs.existsSync(PD)) for (const g of fs.readdirSync(PD).filter(g => g.endsWith('.json'))) { const q = JSON.parse(fs.readFileSync(path.join(PD, g))); places[q.key] = q; }
   const s = E.applyPlaces(JSON.parse(fs.readFileSync(path.join(dir, 'athens-booked.json'))), places), far = id => s.cities.athens.farther.find(x => x.id === id);
@@ -831,7 +954,14 @@ ok(E.readable('Café Ñandú') && E.readable("Joe's Bar & Grill") && !E.readable
       const lim = { low: 0.8, medium: 1.7, high: 3.2 }[(sn.prefs || {}).walk || 'medium'] || 1.7;
       pl.forEach((p, i) => (p && p.items || []).forEach(x => { if (x.t !== 'ride' || !x.options) return; const w = x.options.find(o => o.kind === 'walk'); if (!w || x.km / 1.3 > 2 * lim) return; rides++;
         x.options.filter(o => o.kind !== 'walk' && o.kind !== 'taxi' && o.min > w.min + E.SLOWER_THAN_WALK).forEach(o => slow.push(`${f} day ${i + 1}: ${o.how} ${o.min} min beside a ${w.min}-min walk`)); })); }
-    ok(!slow.length, `no way offered beside a walk of up to twice the walking limit is more than ${E.SLOWER_THAN_WALK} min slower than walking (${rides} rides with a walk; ${slow.slice(0, 3).join('; ')})`); }
+    ok(!slow.length, `no way offered beside a walk of up to twice the walking limit is more than ${E.SLOWER_THAN_WALK} min slower than walking (${rides} rides with a walk; ${slow.slice(0, 3).join('; ')})`);
+    // The way taken is never a bus or metro slower than the walk, for a traveler who walks little too (odd-trips stress test,
+    // Nov 22: Barcelona, 28 min by bus for 0.9 km beside a 16-20 min walk): it stays a choice.
+    const picked = []; let n2 = 0;
+    for (const f of fs.readdirSync(dir).filter(f => f.endsWith('.json'))) { let pl; try { const sn = JSON.parse(fs.readFileSync(path.join(dir, f))); sn.prefs = Object.assign({}, sn.prefs, { walk: 'low' }); pl = E.planTrip(E.applyPlaces(sn, places)); } catch (e) { continue; }
+      pl.forEach((p, i) => (p && p.items || []).forEach(x => { if (x.t !== 'ride' || !x.options || x.chosen || x.mine) return; const w = x.options.find(o => o.kind === 'walk'), pk = x.options.find(o => o.id === x.choice) || null;
+        if (!w) return; n2++; if (x.mode !== 'walk' && x.kind !== 'taxi' && x.kind !== 'walk' && (x.min || 0) > w.min && !x.options.some(o => o.kind === 'taxi' && o.min < x.min)) picked.push(`${f} day ${i + 1}: ${x.how || x.kind} ${x.min} min beside a ${w.min}-min walk`); })); }
+    ok(n2 > 50 && !picked.length, `walking little, no ride taken is a bus or metro slower than walking (${n2} rides; ${picked.slice(0, 3).join('; ')})`); }
   // ONE hours rule for places to eat and sights (Nov 19 fold): shut for a meal exactly when E.closedForDay says so over
   // the meal's hours, and a place that opens later is waited for by E.hoursFit, as a sight is.
   { const dinnerOnly = { closed: false, oh: { spans: [[18 * 60, 23 * 60]], last: null } }, late = { closed: false, oh: { spans: [[13 * 60, 23 * 60]], last: null } };
@@ -1164,4 +1294,67 @@ ok(E.readable('Café Ñandú') && E.readable("Joe's Bar & Grill") && !E.readable
   const tr = E.makeTravel({ walk: 'medium' }, null, null, null, () => [{ id: 'rail|1', min: 40, label: 'רכבת ישראל', mode: 'rail', steps: ['Train רכבת from חיפה to תל אביב'] }], null).estimate({ lat: 32.8, lng: 35.0 }, { lat: 32.08, lng: 34.78 });
   const shown = [tr.how].concat((tr.options || []).flatMap(o => [o.how].concat(o.steps || []))).filter(Boolean);
   ok(shown.every(x => LAT.test(x)), `a ride's label and steps from the helper keep no other script (${shown.join(' | ')})`); }
+// Nov 23 ride check against real timetables: trains with no timetable (only how often they run) were planned with a
+// full gap of waiting, about 28 min longer than the real ride. Going out: half the gap plus boarding, the full gap kept
+// as "up to". On the way back to the ship (or a train or plane): the full gap, unchanged. With real departures: as sent.
+{ const ans = deps => [{ id: 'rail|N', min: 13 + 40 + 63, ride: 40, wait: 63, every: 60, everySrc: 'usual', label: 'Train N', mode: 'train', kind: 'Train', steps: ['N'], noTimetable: !deps, deps, access: { how: 'walk', min: 5, km: 0.4 }, egress: { how: 'walk', min: 8, km: 0.6 } }];
+  const A = { lat: 41.9, lng: 12.5 }, B = { lat: 42.09, lng: 11.79 }, train = e => (e.options || [e]).find(x => x.kind === 'train') || {};
+  const out = train(E.makeTravel({ walk: 'medium' }, null, null, null, () => ans(), null).estimate(A, B));
+  const back = train(E.makeTravel({ walk: 'medium' }, null, null, null, () => ans(), null).estimate(A, Object.assign({ backToShip: true }, B)));
+  const dl = train(E.makeTravel({ walk: 'medium' }, null, null, null, () => ans(), null).estimate(A, Object.assign({ deadline: 1000 }, B)));
+  const tt = E.expectWait(ans([{ t: 600 }])[0], false);
+  // Testing thread review (Nov 23): the ride from the last stop to the day's own fixed steps (collect the bags, the cable
+  // car down) is part of the way back: the full gap, also when the same travel already answered the plain point.
+  const trS = E.makeTravel({ walk: 'medium' }, null, null, null, () => ans(), null), plainB = train(trS.estimate(A, B)), fxB = train(trS.estimate(A, Object.assign({}, B, { fixed: true, name: 'Collect bags' })));
+  ok(plainB.ans && plainB.ans.wait === 33 && fxB.ans && fxB.ans.wait === 63, `the ride to a fixed step (collect the bags, the cable car down) keeps the full gap, even after the same place was answered plain (${plainB.ans && plainB.ans.wait} / ${fxB.ans && fxB.ans.wait})`);
+  ok(out.ans && out.ans.wait === 33 && out.ans.waitMax === 63 && out.ans.min === 86 && out.ans.minMax === 116, `a ride out on a line with no timetable plans half the gap plus boarding, keeps the full gap as "up to" (${out.ans && out.ans.wait}/${out.ans && out.ans.waitMax}, ${out.ans && out.ans.min})`);
+  ok(back.ans && back.ans.wait === 63 && back.ans.waitMax == null && dl.ans && dl.ans.wait === 63, `the ride back to the ship, a train or a plane keeps the full gap (${back.ans && back.ans.wait} / ${dl.ans && dl.ans.wait})`);
+  ok(back.min >= out.min + 30, `the way back to the ship is planned at least the half gap longer than the same ride out (${back.min} vs ${out.min})`);
+  ok(tt.wait === 63 && tt.waitMax == null, 'an answer with real departures keeps its own wait (the timeline waits for the real next one)');
+  ok(E.expectWait(Object.assign(ans()[0], { wait: 20 }), false).wait === 20, 'never a longer wait than the helper sent'); }
+// Nov 23 live recheck (outside tester, f01): an island sight off the old town planned as "Taxi or car 16 min" whenever the
+// phone's own water check couldn't reach the busy map server. The place file now says which sights are across the water.
+{ const b0 = { cities: { 'Test Harbour': { city: 'Test Harbour', sites: [{ id: 'isle1', name: 'Isle Garden', lat: 42.62, lng: 18.12 }, { id: 'town1', name: 'Town Gate', lat: 42.64, lng: 18.11 }], farther: [] } }, days: [] };
+  const P = { 'Test Harbour': { islands: { centre: null, towns: {}, sites: { isle1: { island: { id: '1', name: 'Isle' }, across: true }, town1: { island: null, across: false } } } } };
+  const out = E.applyPlaces(b0, P), ss = out.cities['Test Harbour'].sites;
+  ok(ss[0].acrossWater === 'Isle' && !ss[1].acrossWater && !b0.cities['Test Harbour'].sites[0].acrossWater, `a sight the place file puts across the water is reached by boat, offline (${ss[0].acrossWater} / ${ss[1].acrossWater})`); }
+// R-06 as a class rule (Nov 23): ANY stop on a mapped island the centre isn't on and no path reaches on foot is across the
+// water, from the island outlines in the place file: a stop the file never heard of (one the traveler adds, one the guide
+// or the helper brings in, a town's own sights), offline. Never one on the centre's island, one a footbridge reaches, or
+// one whose walk answer is unknown.
+{ const sq = (s, w, n, e) => [s, w, s, e, n, e, n, w, s, w];
+  const shapes = [{ id: 'w1', name: 'Mainland Town', walk: true, rings: [sq(42.63, 18.08, 42.66, 18.13)] },
+    { id: 'w2', name: 'Lokrum', walk: false, rings: [sq(42.615, 18.115, 42.63, 18.135)] },
+    { id: 'w3', name: 'Bridge Isle', walk: true, rings: [sq(42.60, 18.05, 42.61, 18.07)] },
+    { id: 'w4', name: 'Unknown Rock', walk: null, rings: [sq(42.59, 18.14, 42.595, 18.15)] },
+    { id: 'w5', name: 'Lake Islet', walk: false, rings: [sq(42.645, 18.10, 42.647, 18.102)] }];
+  const b0 = { cities: { 'Test Harbour': { city: 'Test Harbour', sites: [{ id: 'own1', name: 'Garden on the island', lat: 42.622, lng: 18.124 }, { id: 'g', name: 'Old Gate', lat: 42.64, lng: 18.11 },
+    { id: 'br', name: 'Bridge Chapel', lat: 42.605, lng: 18.06 }, { id: 'rk', name: 'Rock', lat: 42.592, lng: 18.145 }, { id: 'lk', name: 'Islet Church', lat: 42.646, lng: 18.101 }, { id: 'sea', name: 'Mainland Hill', lat: 42.70, lng: 18.20 }],
+    farther: [{ id: 'ft', name: 'Island Town', lat: 42.618, lng: 18.12, minutes: 90 }] } }, days: [] };
+  const P = { 'Test Harbour': { islands: { centre: { id: '1', name: 'Mainland Town' }, centreShape: 'w1', towns: {}, sites: {}, shapes } } };
+  const out = E.applyPlaces(b0, P), c = out.cities['Test Harbour'], by = id => c.sites.concat(c.farther).find(x => x.id === id);
+  ok(by('own1').acrossWater === 'Lokrum' && by('ft').acrossWater === 'Lokrum', `a stop the place file never named, on an island no path reaches, is across the water (${by('own1').acrossWater} / ${by('ft').acrossWater})`);
+  ok(!by('g').acrossWater && !by('br').acrossWater && !by('rk').acrossWater && !by('sea').acrossWater, 'never across: the centre\'s own island, a footbridge, an island with no walk answer, the mainland');
+  ok(by('lk').acrossWater === 'Lake Islet', 'an islet inside a bigger island\'s outline counts as the islet');
+  ok(!b0.cities['Test Harbour'].sites[0].acrossWater, 'the place outlines never change the bucket they were given');
+  const st = Date.now(); for (let i = 0; i < 200; i++) E.islandAt(shapes, { lat: 42.6 + i * 0.0003, lng: 18.1 }); ok(Date.now() - st < 200, 'island lookups are quick'); }
+// The build's ring joining and simplifying (tools/places/island-shapes.cjs): a relation's outer ways in any direction join
+// into one closed ring; a ring's inside stays inside after simplifying; a tiny islet keeps an inside.
+{ const IS = require('../places/island-shapes.cjs'), g = a => a.map(([lat, lon]) => ({ lat, lon }));
+  const rel = { type: 'relation', members: [{ type: 'way', role: 'outer', geometry: g([[0, 0], [0, 1], [1, 1]]) }, { type: 'way', role: 'outer', geometry: g([[0, 0], [1, 0], [1, 1]]) }, { type: 'way', role: 'inner', geometry: g([[0.4, 0.4], [0.5, 0.5]]) }] };
+  const r = IS.rings(rel); ok(r.length === 1 && r[0].length === 5 && IS.inRing(IS.flat(r[0]), 0.5, 0.5) && !IS.inRing(IS.flat(r[0]), 1.5, 0.5), `a relation's outer ways join into one ring (${r.length} rings, ${r[0] && r[0].length} points)`);
+  const wig = []; for (let i = 0; i <= 64; i++) { const a = i / 64 * 2 * Math.PI, rr = 0.01 * (1 + 0.002 * Math.sin(a * 40)); wig.push([42 + rr * Math.sin(a), 18 + rr * Math.cos(a)]); }
+  const sm = IS.simplify(wig, 0.0003); ok(sm.length < wig.length && IS.inRing(IS.flat(sm), 42, 18) && E.inRing(IS.flat(sm), 42, 18), `simplifying keeps the island's inside (${wig.length} -> ${sm.length} points)`);
+  const tiny = IS.simplify([[42, 18], [42.00001, 18.00001], [42.00002, 18.00001], [42.00001, 18.00002], [42, 18.00002], [42, 18]], 0.0003); ok(tiny.length === 5, 'a tiny islet keeps a box, so it still has an inside');
+  const ip = IS.insidePoint(IS.flat(sm)); ok(IS.inRing(IS.flat(sm), ip.lat, ip.lng), 'the point the walking router aims at is inside the island'); }
+// Nov 23 phone feel test: the "Needs" box took 2.5 s, most of it scanning every mapped place to eat for each restaurant.
+// One rule for lookups by position (E.nearby, a grid built once per list): its answer is exactly a full scan's, checked
+// on every places file at points across the place and at its edges, for short and long distances.
+{ const PD = path.join(__dirname, '..', 'places', 'data'); let n = 0, bad = 0;
+  const pos = x => x && isFinite(x[1]) && isFinite(x[2]) ? { lat: x[1], lng: x[2] } : null;
+  if (fs.existsSync(PD)) for (const f of fs.readdirSync(PD).filter(f => f.endsWith('.json'))) { const P = JSON.parse(fs.readFileSync(path.join(PD, f))), L = P.eatHours || []; if (!L.length) continue;
+    for (let i = 0; i < L.length; i += Math.max(1, Math.floor(L.length / 25))) for (const km of [0.05, 0.2, 1, 3]) { const p0 = pos(L[i]); if (!p0) continue;
+      const pt = { lat: p0.lat + (i % 3 - 1) * 0.0013, lng: p0.lng + (i % 5 - 2) * 0.0011 }, want = L.filter(x => pos(x) && E.hav(pt, pos(x)) <= km), got = E.nearby(L, pos, pt, km); n++;
+      if (want.length !== got.length || want.some((x, k) => x !== got[k])) bad++; } }
+  ok(n > 100 && bad === 0, `lookups by position give exactly a full scan's answer (${n} lookups on every places file, ${bad} different)`); }
 console.log(`\n${oks} checks passed, ${fails} failed`); process.exit(fails ? 1 : 0);

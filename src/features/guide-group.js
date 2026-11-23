@@ -42,9 +42,36 @@ function grpRides() {
   return out;
 }
 const grpRidesSig = () => { try { return Object.keys(grpRides()).length; } catch (e) { return 0; } };
+// The owner's stops on each day, in the order the owner's phone plans them (Beta 2), and the sights seen inside them
+// (folded into a visit, which gives that visit its length). Each phone plans from what it knows (ride timetables, places
+// nearby, which arrive at different times on each phone), so a member's phone planning by itself could put the same
+// sights in another order, or pick more or fewer (outside test, Nov 23: a follower saw the owner's stops in reverse order,
+// and "own day, then back to the group" in a third). They go with the trip, and a member's phone plans the group's days
+// from them (grpStopsFor): everyone on a shared day sees the same stops in the same order as the owner.
+function grpOrders() {
+  const out = {}; if (typeof window === "undefined" || !window.ENGINE2) return out;
+  trip.days.forEach(d => { try { if (!d || !d.id || noShore(d) || !cityFor(d)) return; const pl = buildPlan(d); if (!pl || pl.error) return;
+    const ids = (pl.stops || []).map(s => s.place && s.place.id).filter(x => x != null).map(String);
+    if (ids.length) out[d.id] = { stops: ids, fold: (pl.folded || []).filter(x => x != null).map(String) }; } catch (e) {} });
+  return out;
+}
+const grpOrdersSig = () => { try { return JSON.stringify(grpOrders()); } catch (e) { return ""; } };
+// A day's picks, as a set: an own day keeps the group's stops only while its picks are the ones it was copied with.
+const grpSelSig = d => Array.isArray(d && d.selected) ? d.selected.map(String).sort().join("|") : "";
+// The sights a member's phone plans a group day with: the owner's, on a day the member follows; on a day made their own,
+// only until they change its sights (then their phone plans the day from their own list). Never on the owner's phone.
+// The engine plans that list only (bucket "only"), its stops in the owner's order (bucket "order"; an order the member
+// dragged themselves comes first).
+function grpStopsFor(d) {
+  if (!d || !trip || !trip.group || !Array.isArray(d.grpOrder) || !d.grpOrder.length) return null;
+  if (d.grpOwn && d.grpOrderSel !== grpSelSig(d)) return null;
+  return d.grpOrder.map(String).concat(Array.isArray(d.grpFold) ? d.grpFold.map(String) : []);
+}
+const grpOrderFor = d => grpStopsFor(d) && d.grpOrder.length > 1 ? d.grpOrder.map(String) : null;
 // What followers receive: this trip's days, the city guides it uses and the owner's ride answers. No journal, notes or photos.
 function grpSnapshot() {
   const t = JSON.parse(JSON.stringify(trip)); delete t.journal; delete t.tour; delete t.badges;
+  const ord = grpOrders(); t.days.forEach(d => { delete d.grpOrderSel; delete d.grpOrder; delete d.grpFold; const o = ord[d.id]; if (o) { d.grpOrder = o.stops; if (o.fold.length) d.grpFold = o.fold; } });
   const cs = {}; trip.days.forEach(d => { const k = cityKeyFor(d); if (k && cities[k] && k !== "barcelona") cs[k] = cities[k]; });
   return { trip: t, cities: cs, rides: grpRides() };
 }
@@ -56,7 +83,7 @@ async function grpLead() {
   if (grpBusy) return null; grpBusy = true; grpNote = ""; render();
   try {
     const { status, j } = await grpCall({ op: "new", trip: grpSnapshot(), name: trip.name || tripName(trip), live: grpLive() });
-    if (status === 200 && j && j.code) { trip.groupShared = j.code; save(); grp = { code: j.code, role: "lead", token: j.token, tripId: trip.id, at: Date.now(), tripName: trip.name || tripName(trip) }; grpSave(); grpLastLive = ""; grpLastTrip = JSON.stringify(trip.days) + "|" + grpRidesSig(); grpNote = ""; return { code: j.code }; }
+    if (status === 200 && j && j.code) { trip.groupShared = j.code; save(); grp = { code: j.code, role: "lead", token: j.token, tripId: trip.id, at: Date.now(), tripName: trip.name || tripName(trip) }; grpSave(); grpLastLive = ""; grpLastTrip = JSON.stringify(trip.days) + "|" + grpRidesSig() + "|" + grpOrdersSig(); grpNote = ""; return { code: j.code }; }
     grpNote = "The group couldn't start just now. Try again in a minute.";
   } catch (e) { grpNote = "Starting a group needs the internet. Try again when you're online."; }
   finally { grpBusy = false; render(); }
@@ -143,7 +170,7 @@ async function grpPush() {
   if (!grp || grp.role !== "lead" || trip.id !== grp.tripId) return;
   const live = grpLive(), key = JSON.stringify(live);
   if (key !== grpLastLive) { grpLastLive = key; try { const r = await grpCall({ op: "live", code: grp.code, token: grp.token, live }); if (r.status === 404) { grp = null; grpSave(); grpNote = "This group code has expired."; render(); } } catch (e) { grpLastLive = ""; } }
-  const days = JSON.stringify(trip.days) + "|" + grpRidesSig(); // new ride answers on the owner's phone are sent too
+  const days = JSON.stringify(trip.days) + "|" + grpRidesSig() + "|" + grpOrdersSig(); // new ride answers, or a new order of the stops, on the owner's phone are sent too
   if (days !== grpLastTrip && Date.now() - (grp.tripAt || 0) > 10000) { grp.tripAt = Date.now(); grpSave(); try { const r = await grpCall({ op: "trip", code: grp.code, token: grp.token, trip: grpSnapshot() }); if (r.status === 200) grpLastTrip = days; } catch (e) {} }
 }
 async function grpRegroup(where, note) {
@@ -188,7 +215,7 @@ const grpTripsToShare = () => library.filter(x => x.trip && x.trip.days && x.tri
 // Settings > Group trip.
 function groupCard() {
   const H = `<h3>Group trip</h3>`;
-  if (!freeAI) return `<div class="card">${H}<p class="lede">Group trips need Kairoute's helper, which isn't available in this view.</p></div>`;
+  if (!freeAI) return `<div class="card">${H}<p class="lede">${cl && cl.use ? "Group trips need Kairoute's helper, which isn't available in this view." : "Group trips need the internet, and Kairoute couldn't reach it when it started. Connect to Wi-Fi or mobile data, then open Kairoute again."}</p></div>`;
   const note = grpNote ? `<p class="banner" role="status">${esc(grpNote)}</p>` : "";
   if (grp && grp.role === "lead") return `<div class="card grpcard">${H}<p class="lede">You're sharing <b>${esc(grp.tripName || "this trip")}</b> with your group. Only this trip is shared: your other trips stay private.</p>
     <p class="lede small">Send this code or link. Anyone who opens it gets the trip on their own phone:</p><p class="synccode">${esc(grpFmt(grp.code))}</p>
@@ -199,7 +226,7 @@ function groupCard() {
     <div class="actions"><button class="btn" data-grp="opentrip">Open the trip</button><button class="btn ghost" data-grp="opentour">Tour together</button><button class="btn ghost" data-grp="leave">Leave the group</button></div>${note}</div>`;
   const list = grpTripsToShare();
   return `<div class="card grpcard">${H}<p class="lede">Traveling with family, friends or a tour group? Pick the trip to share. Each person gets it on their own phone and, day by day, follows the group's plan or makes their own day. Only the trip you pick is shared.</p>
-    ${list.length ? `<div class="grptrips">${list.map(x => `<div class="grptrip"><span><b>${esc(x.trip.name || x.name || tripName(x.trip))}</b><span class="small">${esc(fmtDate(x.trip.days[0].date) || "")}${x.trip.days.length > 1 ? " – " + esc(fmtDate(x.trip.days[x.trip.days.length - 1].date) || "") : ""} · ${x.trip.days.length} days</span></span><button class="btn small" data-grp="lead" data-trip="${esc(x.id)}" ${grpBusy ? "disabled" : ""}>Share this trip</button></div>`).join("")}</div>` : `<p class="lede small">Add a trip first, then share it here.</p>`}
+    ${list.length ? `<div class="grptrips">${list.map(x => `<div class="grptrip"><span><b>${esc(x.trip.name || x.name || tripName(x.trip))}</b><span class="small">${esc(tripSpan(x.trip))}${tripSpan(x.trip) ? " · " : ""}${tripDaysText(x.trip)}</span></span><button class="btn small" data-grp="lead" data-trip="${esc(x.id)}" ${grpBusy ? "disabled" : ""}>Share this trip</button></div>`).join("")}</div>` : `<p class="lede small">Add a trip first, then share it here.</p>`}
     <div class="field"><label for="grp-code">Got a code from your group? Type it here</label><div class="ask"><input id="grp-code" type="text" autocapitalize="characters" autocomplete="off" maxlength="7" placeholder="e.g. K7M-4RX"><button class="btn" data-grp="join" ${grpBusy ? "disabled" : ""}>${grpBusy ? "Joining…" : "Join"}</button></div></div>
     ${note}</div>`;
 }
@@ -242,7 +269,8 @@ function grpMenuHTML(d) {
 // A member makes a day their own: it starts as a copy of the group's plan, and they change the sights from there.
 // The copied sights are the member's own list from then on (Nov 22 gate: an own day still marked as the app's seeding
 // had its sights swapped by the planner for others when the owner's day got shorter, before the member ticked anything).
-function grpMakeOwn(d) { d.grpOwn = true; if (Array.isArray(d.selected)) d.ownList = true; save(); grpHello(); }
+// It keeps the group's stops and their order too, until the member changes the sights (grpStopsFor).
+function grpMakeOwn(d) { d.grpOwn = true; if (Array.isArray(d.selected)) d.ownList = true; if (Array.isArray(d.grpOrder)) d.grpOrderSel = grpSelSig(d); save(); grpHello(); }
 function grpFollow(d) {
   const ld = grpLeadDay(d.id); const i = trip.days.indexOf(d); if (i < 0) return;
   if (ld) trip.days[i] = JSON.parse(JSON.stringify(ld)); else { delete d.grpOwn; }
@@ -250,9 +278,11 @@ function grpFollow(d) {
   const offered = (((grp.offers || {})[d.id]) || []).some(o => o.who === grpWho);
   if (offered) grpCall({ op: "offer", code: grp.code, who: grpWho, dayId: d.id, day: {}, withdraw: true }).catch(() => {});
 }
+// An offered day is the member's sights, order and meals: never the order their phone was given by the group.
+const grpOffered = d => { const o = grpPlanPart(d); delete o.grpOrder; delete o.grpFold; delete o.grpOrderSel; return o; };
 async function grpOffer(d) {
   const me = ((document.getElementById("grp-me") || {}).value || "").trim(); if (me) { grp.me = me.slice(0, 40); grpSave(); }
-  try { const r = await grpCall({ op: "offer", code: grp.code, who: grpWho, name: grp.me || "", dayId: d.id, day: grpPlanPart(d) });
+  try { const r = await grpCall({ op: "offer", code: grp.code, who: grpWho, name: grp.me || "", dayId: d.id, day: grpOffered(d) });
     grpNote = r.status === 200 ? "Your day was offered to the group. The trip's owner can use it for everyone." : "Couldn't offer your day just now. Try again in a minute.";
     if (r.status === 200) { grp.offers = grp.offers || {}; grp.offers[d.id] = (grp.offers[d.id] || []).filter(o => o.who !== grpWho).concat([{ who: grpWho }]); grpSave(); }
   } catch (e) { grpNote = "Offering your day needs the internet. Try again when you're online."; }
@@ -263,7 +293,7 @@ async function grpOffer(d) {
 function grpUseOffer(d, who) {
   const o = (((grp.offers || {})[d.id]) || []).find(x => x.who === who); if (!o) return;
   const i = trip.days.indexOf(d), before = JSON.parse(JSON.stringify(d));
-  const next = grpWithPlan(d, o.day); delete next.grpUndo; next.grpUndo = grpPlanPart(before); delete next.grpUndo.grpUndo;
+  const next = grpWithPlan(d, grpOffered(o.day)); delete next.grpUndo; next.grpUndo = grpPlanPart(before); delete next.grpUndo.grpUndo;
   trip.days[i] = next; let ok = true;
   try { const pl = buildPlan(next), m = grpMeet(pl); ok = !!pl && !pl.error && (!m || !m.known || pl.end <= m.time); } catch (e) { ok = false; }
   if (!ok) { trip.days[i] = before; grpNote = "That plan doesn't end at the meeting point in time, so the group's plan stays as it was."; render(); return; }
@@ -335,7 +365,8 @@ if (typeof document !== "undefined") {
 }
 // Test hooks for the safety net (tools/extras-check.cjs).
 if (typeof window !== "undefined") {
-  window.__kairouteGrpRide = (k, v) => { if (v) transitMem[k] = v; return transitMem[k] || null; }; // group-check: a ride answer on this phone
+  window.__kairouteGrpRide = (k, v) => { if (v) { transitMem[k] = v; nearGen++; } else if (v === null && k in transitMem) { delete transitMem[k]; nearGen++; } return transitMem[k] || null; }; // group-check: a ride answer on this phone (plans again with it; null forgets it)
+  window.__kairouteGrpPairKey = (a, b) => pairKey(a, b);
   window.__kairouteGroup = { lead: grpLead, join: grpJoin, push: () => { grpLastLive = ""; if (grp) grp.tripAt = 0; return grpPush(); }, poll: grpPoll, regroup: grpRegroup, offlineNote: ms => grpSignalText(ms),
     state: () => grp, meet: i => grpMeet(buildPlan(trip.days[i])), hello: () => grpHello() };
   // For tools/beta2/group-check.cjs: the app's state lives in one closure.

@@ -1,0 +1,306 @@
+{
+ "retrieve": [
+  {
+   "key": "wp-eiffel-tower",
+   "wiki": "Eiffel Tower"
+  },
+  {
+   "key": "wp-gustave-eiffel",
+   "wiki": "Gustave Eiffel"
+  },
+  {
+   "key": "wp-exposition-universelle",
+   "wiki": "Exposition Universelle (1889)"
+  },
+  {
+   "key": "wp-champ-mars",
+   "wiki": "Champ de Mars"
+  },
+  {
+   "key": "unesco-paris-seine",
+   "url": "https://whc.unesco.org/en/list/600/",
+   "publisher": "UNESCO World Heritage Centre"
+  },
+  {
+   "key": "wv-paris",
+   "wiki": "Paris",
+   "site": "en.wikivoyage.org"
+  },
+  {
+   "key": "wp-louvre",
+   "wiki": "Louvre"
+  },
+  {
+   "key": "wp-mona-lisa",
+   "wiki": "Mona Lisa"
+  },
+  {
+   "key": "wp-louvre-pyramid",
+   "wiki": "Louvre Pyramid"
+  },
+  {
+   "key": "wp-tuileries-garden",
+   "wiki": "Tuileries Garden"
+  },
+  {
+   "key": "wp-notre-dame-paris",
+   "wiki": "Notre-Dame de Paris"
+  },
+  {
+   "key": "wp-notre-dame-paris-fire",
+   "wiki": "Notre-Dame de Paris fire"
+  },
+  {
+   "key": "wp-hunchback-notre-dame",
+   "wiki": "The Hunchback of Notre-Dame"
+  },
+  {
+   "key": "wp-maurice-sully",
+   "wiki": "Maurice de Sully"
+  },
+  {
+   "key": "wp-musee-d-orsay",
+   "wiki": "Musée d'Orsay"
+  },
+  {
+   "key": "wp-gare-d-orsay",
+   "wiki": "Gare d'Orsay"
+  },
+  {
+   "key": "wp-impressionism",
+   "wiki": "Impressionism"
+  },
+  {
+   "key": "wp-arc-triomphe",
+   "wiki": "Arc de Triomphe"
+  },
+  {
+   "key": "wp-champs-elysees",
+   "wiki": "Champs-Élysées"
+  },
+  {
+   "key": "wp-tomb-unknown-soldier",
+   "wiki": "Tomb of the Unknown Soldier (France)"
+  },
+  {
+   "key": "wp-napoleon",
+   "wiki": "Napoleon"
+  },
+  {
+   "key": "wp-place-la-bastille",
+   "wiki": "Place de la Bastille"
+  },
+  {
+   "key": "wp-storming-bastille",
+   "wiki": "Storming of the Bastille"
+  },
+  {
+   "key": "wp-bastille",
+   "wiki": "Bastille"
+  },
+  {
+   "key": "wp-july-column",
+   "wiki": "July Column"
+  },
+  {
+   "key": "wp-pere-lachaise-cemetery",
+   "wiki": "Père Lachaise Cemetery"
+  },
+  {
+   "key": "wp-frederic-chopin",
+   "wiki": "Frédéric Chopin"
+  },
+  {
+   "key": "wp-jim-morrison",
+   "wiki": "Jim Morrison"
+  },
+  {
+   "key": "wp-oscar-wilde",
+   "wiki": "Oscar Wilde"
+  },
+  {
+   "key": "wp-palais-garnier",
+   "wiki": "Palais Garnier"
+  },
+  {
+   "key": "wp-charles-garnier",
+   "wiki": "Charles Garnier (architect)"
+  },
+  {
+   "key": "wp-phantom-opera",
+   "wiki": "The Phantom of the Opera"
+  },
+  {
+   "key": "wp-marc-chagall",
+   "wiki": "Marc Chagall"
+  },
+  {
+   "key": "wp-centre-pompidou",
+   "wiki": "Centre Pompidou"
+  },
+  {
+   "key": "wp-renzo-piano",
+   "wiki": "Renzo Piano"
+  },
+  {
+   "key": "wp-richard-rogers",
+   "wiki": "Richard Rogers"
+  },
+  {
+   "key": "wp-stravinsky-fountain",
+   "wiki": "Stravinsky Fountain"
+  },
+  {
+   "key": "wp-place-la-concorde",
+   "wiki": "Place de la Concorde"
+  },
+  {
+   "key": "wp-luxor-obelisk",
+   "wiki": "Luxor Obelisk"
+  },
+  {
+   "key": "wp-execution-louis-xvi",
+   "wiki": "Execution of Louis XVI"
+  },
+  {
+   "key": "wp-marie-antoinette",
+   "wiki": "Marie Antoinette"
+  },
+  {
+   "key": "wp-sacre-cur-paris",
+   "wiki": "Sacré-Cœur, Paris"
+  },
+  {
+   "key": "wp-montmartre",
+   "wiki": "Montmartre"
+  },
+  {
+   "key": "wp-paul-abadie",
+   "wiki": "Paul Abadie"
+  },
+  {
+   "key": "wp-paris-commune",
+   "wiki": "Paris Commune"
+  },
+  {
+   "key": "wp-pantheon",
+   "wiki": "Panthéon"
+  },
+  {
+   "key": "wp-foucault-pendulum",
+   "wiki": "Foucault pendulum"
+  },
+  {
+   "key": "wp-victor-hugo",
+   "wiki": "Victor Hugo"
+  },
+  {
+   "key": "wp-marie-curie",
+   "wiki": "Marie Curie"
+  },
+  {
+   "key": "wp-le-havre",
+   "wiki": "Le Havre"
+  },
+  {
+   "key": "wp-auguste-perret",
+   "wiki": "Auguste Perret"
+  },
+  {
+   "key": "wp-st-joseph-s-church-le-havre",
+   "wiki": "St. Joseph's Church, Le Havre"
+  },
+  {
+   "key": "wp-impression-sunrise",
+   "wiki": "Impression, Sunrise"
+  },
+  {
+   "key": "unesco-le-havre",
+   "url": "https://whc.unesco.org/en/list/1181/",
+   "publisher": "UNESCO World Heritage Centre"
+  },
+  {
+   "key": "wv-le-havre",
+   "wiki": "Le Havre",
+   "site": "en.wikivoyage.org"
+  },
+  {
+   "key": "wp-chartres-cathedral",
+   "wiki": "Chartres Cathedral"
+  },
+  {
+   "key": "wp-chartres",
+   "wiki": "Chartres"
+  },
+  {
+   "key": "wp-gothic-architecture",
+   "wiki": "Gothic architecture"
+  },
+  {
+   "key": "unesco-chartres",
+   "url": "https://whc.unesco.org/en/list/81/",
+   "publisher": "UNESCO World Heritage Centre"
+  },
+  {
+   "key": "wv-chartres",
+   "wiki": "Chartres",
+   "site": "en.wikivoyage.org"
+  },
+  {
+   "key": "wp-palace-fontainebleau",
+   "wiki": "Palace of Fontainebleau"
+  },
+  {
+   "key": "wp-francis-i-france",
+   "wiki": "Francis I of France"
+  },
+  {
+   "key": "wp-chateau-vaux-le-vicomte",
+   "wiki": "Château de Vaux-le-Vicomte"
+  },
+  {
+   "key": "wp-nicolas-fouquet",
+   "wiki": "Nicolas Fouquet"
+  },
+  {
+   "key": "unesco-fontainebleau",
+   "url": "https://whc.unesco.org/en/list/160/",
+   "publisher": "UNESCO World Heritage Centre"
+  },
+  {
+   "key": "wv-fontainebleau",
+   "wiki": "Fontainebleau",
+   "site": "en.wikivoyage.org"
+  },
+  {
+   "key": "wp-chateau-chantilly",
+   "wiki": "Château de Chantilly"
+  },
+  {
+   "key": "wp-musee-conde",
+   "wiki": "Musée Condé"
+  },
+  {
+   "key": "wp-henri-d-orleans-duke-aumale",
+   "wiki": "Henri d'Orléans, Duke of Aumale"
+  },
+  {
+   "key": "wv-chantilly",
+   "wiki": "Chantilly",
+   "site": "en.wikivoyage.org"
+  },
+  {
+   "key": "wp-disneyland-paris",
+   "wiki": "Disneyland Paris"
+  },
+  {
+   "key": "wp-disneyland-park",
+   "wiki": "Disneyland Park (Paris)"
+  },
+  {
+   "key": "wv-disneyland-paris",
+   "wiki": "Disneyland Paris",
+   "site": "en.wikivoyage.org"
+  }
+ ]
+}

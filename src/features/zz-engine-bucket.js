@@ -42,12 +42,14 @@ function mealPrefsFor(d) {
 }
 function engineBucket(withOld) {
   const n = v => (isFinite(+v) ? +v : null);
-  const pt = p => p ? { id: p.id || null, name: p.name || "", lat: n(p.lat), lng: n(p.lng), unknown: !!p.unknown || (typeof unsurePoint === "function" && unsurePoint(p)), ask: Array.isArray(p.ask) && p.ask.length > 1 ? p.ask.map(String) : null } : null;
+  const pt = p => p ? { id: p.id || null, name: p.name || "", lat: n(p.lat), lng: n(p.lng), unknown: !!p.unknown || (typeof unsurePoint === "function" && unsurePoint(p)), notGate: !!p.notGate, ask: Array.isArray(p.ask) && p.ask.length > 1 ? p.ask.map(String) : null } : null;
   const ints = (() => { try { return interestWords(); } catch (e) { console.warn("engineBucket: interests", e); return []; } })();
   const cityOut = {}, dayOut = [], waterHomes = {};
   const siteFacts = (city, s) => ({
     id: s.id, name: s.name, lat: n(s.lat), lng: n(s.lng), minutes: n(s.minutes) || 30, floor: stopFloor(s) || 0,
-    mustSee: !!s.mustSee, quick: !!s.quick, far: !!s.far || (city.farther || []).includes(s), indoor: !!s.indoor,
+    // A guide built before a rule learned a kind of place is not a sight (a stadium named in another language) keeps it,
+    // but never as a must-see the day plans on its own; the traveler can still pick it.
+    mustSee: !!s.mustSee && !(s.srcOnly && typeof srcNotSpot === "function" && srcNotSpot(s)), quick: !!s.quick, far: !!s.far || (city.farther || []).includes(s), indoor: !!s.indoor,
     kind: s.kind || "", category: s.category || "", fame: fameW(s), unesco: !!s.unesco,
     religiousOk: religiousOk(s), srcOnly: !!s.srcOnly, hasGuide: !!s.guide, recommended: !!(s.unesco || (s.src || []).some(t => /Wikivoyage/.test(t))),
     likes: ints.reduce((a, w) => a + (((s.category || "") + " " + (s.summary || "")).toLowerCase().includes(w) ? 1 : 0), 0),
@@ -80,6 +82,7 @@ function engineBucket(withOld) {
       startTime: d.startTime || "", hours: n(d.hours), time: d.time || "", tender: !!d.tender, noBags: !!d.noBags, returnToStart: d.returnToStart !== false,
       meet: !!(trip && (trip.group || trip.groupShared)), // a group trip: every plan ends by the group's meeting time
       portArrive: sh(d.portArrive), allAboard: sh(d.allAboard), boardAt: typeof boardAt === "function" ? boardAt(d) : null,
+      nightDep: d.nightDep === "night" || d.nightDep === "morning" ? d.nightDep : "", // a small-hours departure: this morning or tonight, as the traveler said
       thru: thru ? { mode: thru.mode, time: thru.time || "", point: pt(A), guess: !!thru.estimated || !thru.time } : null,
       // An arrival time the traveler never gave (the trip builder fills one in): asked, never planned on (Round 1: "Flight in at 10:30 am" invented).
       timeGuess: d.type === "arrival" && (!!d.estimated || !d.time),
@@ -96,7 +99,9 @@ function engineBucket(withOld) {
       // No picks of the traveler's own: the day's list is the guide's wants, and one that doesn't fit is never called "your pick".
       wantsOnly: !Array.isArray(d.selected) || (!d.ownList && appSeeded(d) && !(d.mine || []).length),
       selected: Array.isArray(d.selected) ? (!d.ownList && appSeeded(d) ? (d.mine || []).slice() : d.selected.slice()) : wishIds(d, city),
-      mine: Array.isArray(d.selected) ? (d.mine || []).slice() : [...new Set((d.mine || []).concat(wishIds(d, city)))], order: Array.isArray(d.order) ? d.order.slice() : null, mealAt: d.mealAt && Object.keys(d.mealAt).length ? Object.assign({}, d.mealAt) : null,
+      mine: Array.isArray(d.selected) ? (d.mine || []).slice() : [...new Set((d.mine || []).concat(wishIds(d, city)))], order: Array.isArray(d.order) ? d.order.slice() : (typeof grpOrderFor === "function" ? grpOrderFor(d) : null), // a group day: the owner's order (guide-group.js)
+      only: typeof grpStopsFor === "function" ? grpStopsFor(d) : null, // a group day: the owner's stops, and no others
+      mealAt: d.mealAt && Object.keys(d.mealAt).length ? Object.assign({}, d.mealAt) : null,
       // The traveler's own list: they ticked or unticked something here (the app's seeding no longer stands).
       own: listIsOwn(d),
       cleared: clearedByYou(d), rain: !!d.rain, alongWay: d.alongWay !== false, fillTime: d.fillTime !== false, skipBonus: (d.skipBonus || []).slice(),
@@ -109,14 +114,22 @@ function engineBucket(withOld) {
     if (city && d.date) {
       let on = cm.dates.get(d.date);
       if (!on) { on = { sites: {}, eats: {} };
-        allSites(city).forEach(s => { const oh = siteWindow(s, d.date), cw = crowdWindows(Object.assign({ _city: ck }, s), d.date);
-          on.sites[s.id] = { closed: siteClosed(s, d.date), oh: oh ? { spans: oh.spans, last: oh.last != null ? oh.last : null } : null, busy: cw ? cw.busy : null }; });
+        // The ONE reading of hours (dayHours, live.js: the engine's reader with the place's holidays and calendar rules),
+        // and what the plan must say about it: where the hours come from, why they're unknown, what the calendar does.
+        allSites(city).forEach(s => { const r = dayHours(s, d.date, city), oh = siteWindow(s, d.date, city), cw = crowdWindows(Object.assign({ _city: ck }, s), d.date);
+          const h = { src: r.src || "", why: r.why || "" }; ["notes", "holidayUnsure", "restUnsure", "sundayAfternoon", "seasonChange"].forEach(k => { if (r[k]) h[k] = r[k]; });
+          on.sites[s.id] = { closed: siteClosed(s, d.date, city), oh: oh && oh.spans.length ? { spans: oh.spans, last: oh.last != null ? oh.last : null } : null, busy: cw ? cw.busy : null, hours: h };
+          if (r.known && r.allDay && !isOpenAir(s)) on.sites[s.id].allDay = true; });
         // Each place to eat, the same facts as a sight for that date (Nov 19 fold: one hours rule): closed that day, and its
         // open spans when its hours are known. A table the traveler booked has no hours limit.
-        (city.restaurants || []).forEach(r0 => { const r = Object.assign({}, r0, { hours: hoursOf(r0) }), w = r.booked ? null : siteWindow(r, d.date);
-          on.eats[keyOf(r.name)] = { closed: !r.booked && siteClosed(r, d.date), oh: w ? { spans: w.spans, last: null } : null }; });
+        (city.restaurants || []).forEach(r0 => { const r = Object.assign({}, r0, { hours: hoursOf(r0) }), w = r.booked ? null : siteWindow(r, d.date, city);
+          on.eats[keyOf(r.name)] = { closed: !r.booked && siteClosed(r, d.date, city), oh: w && w.spans.length ? { spans: w.spans, last: null } : null }; });
         cm.dates.set(d.date, on); }
       facts.sites = on.sites; facts.eats = on.eats;
+      // The date's calendar in this place: its country, and the public holiday (or the eve of one), from the app's own
+      // holiday data (engine part 1b). Unknown (outside the data's years, or a country not known) is left out, never "none".
+      const hc = hoursCtx(city, d.date); if (hc.place) facts.cc = hc.place.cc;
+      if (hc.hol) facts.holiday = Object.assign({ country: hc.place.name }, hc.hol); else if (hc.hol === null) facts.holiday = null;
     }
     // What's still missing from the bucket for this day. Planning a day waits until its bucket is complete (or says
     // plainly what it planned without), so a plan is never made from half the pieces and then changed as the rest arrive.

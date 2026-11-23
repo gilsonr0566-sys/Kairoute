@@ -6,7 +6,7 @@
 //   B. the plan is the same when the phone is set to another time zone (Chicago, Tokyo, the trip's own)
 //   C. with no signal: a trip opened before still opens and every day plans the same
 //   D. a trip saved by an older published build opens in this one: no errors, the traveler's own changes kept,
-//      every day passes the screen rules
+//      every day passes the screen rules; and a trip planned in the main app on the same address comes over to Beta 2
 //   E. every screen size: no page wider than the screen (phone, phone sideways, tablet both ways)
 //   F. every recorded guide story has its recording in every guide voice (else the device voice reads it)
 //   G. the app's own screen guard: quiet on a good day, warns on a day whose times disagree
@@ -26,7 +26,7 @@ const results = []; const check = (sev, name, ok, why) => results.push({ sev, na
 // and go with the signal ("No internet", the boarding-pass reader) or the phone's own clock ("7 h ahead") are not the plan.
 const norm = t => { const P = R.parse(t); return [`LEAVE BY ${P.leaveBy}`, `back ${P.backBy}`].concat(P.rows.map(r => [r.key, r.arrive, r.leave, r.until, r.by, r.name].join(' ')), P.rides.map(r => r.head)).join('\n'); };
 
-function serve() { const files = { '/index.html': B2 }; OLDS.forEach((f, i) => { files['/old' + i + '.html'] = f; });
+function serve() { const files = { '/index.html': B2, '/demo-app.html': path.join(ROOT, 'index.html') }; OLDS.forEach((f, i) => { files['/old' + i + '.html'] = f; });
   return new Promise(res => { const s = http.createServer((q, r) => { const u = decodeURIComponent(q.url.split('?')[0]);
     let f = files[u] || (u === '/' ? B2 : null); if (!f) { for (const base of [path.dirname(B2), ROOT]) { const g = path.join(base, u); if (g.startsWith(base) && fs.existsSync(g) && !fs.statSync(g).isDirectory()) { f = g; break; } } }
     if (!f) { r.writeHead(404); return r.end(); }
@@ -150,6 +150,21 @@ async function steadyTexts(p) { const a = await dayTexts(p); await p.waitForTime
     check('S2', `A trip saved by an older build (${name}): the traveler's own untick is kept`, kept !== false, own ? `${own.id} on day ${own.i + 1} came back ticked` : '');
     check('S1', `A trip saved by an older build (${name}): every day passes the screen rules`, !f.length, f.slice(0, 3).join('; '));
     check('S2', `A trip saved by an older build (${name}): no errors`, !D.errs.length, D.errs.slice(0, 2).join(' | '));
+    await D.ctx.close(); }
+  // ---- D2. a trip planned in the main (demo) app on the same web address comes over on Beta 2's first start, with the
+  // traveler's own name and picks (Nov 22: the main app keeps trips under "wayside.", and only "kairoute." keys came over).
+  const DEMO = path.join(ROOT, 'index.html');
+  if (on('D') && fs.existsSync(DEMO) && !/kairoute-placeholder/.test(fs.readFileSync(DEMO, 'utf8').slice(0, 4000))) {
+    const D = await phone(browser); await D.p.goto(srv.base + '/demo-app.html'); await D.p.waitForTimeout(2500);
+    const b = D.p.locator('[data-act="loadsample"]').first(); if (await b.isVisible().catch(() => false)) await b.click(); await D.p.waitForTimeout(4000);
+    const mine = await D.p.evaluate(async () => { const W = ms => new Promise(r => setTimeout(r, ms)); window.__kairouteGo('trip', 0); await W(600);
+      const rn = document.querySelector('[data-act="rename"]'); if (!rn) return null; rn.click(); await W(300); document.getElementById('renameInput').value = 'Our own trip'; document.querySelector('[data-act="renamesave"]').click(); await W(600);
+      const t = JSON.parse(localStorage.getItem('wayside.trip2') || 'null'); return t && { name: t.name, n: t.days.length, sel: t.days.map(d => (d.selected || []).join(',')) }; });
+    D.errs.length = 0; await openApp(D.p, URL, false);
+    const got = await D.p.evaluate(() => { const t = JSON.parse(localStorage.getItem('wayside.trip2') || 'null'); return t && { name: t.name, n: t.days.length, sel: t.days.map(d => (d.selected || []).join(',')), home: document.body.innerText.includes('Our own trip') }; });
+    check('S2', 'A trip planned in the main app on the same address comes over on Beta 2\'s first start (name, days, picks)', mine && got && got.name === mine.name && got.n === mine.n && got.home && got.sel.filter((s, i) => s && s === mine.sel[i]).length >= mine.sel.filter(Boolean).length / 2,
+      !mine ? 'could not rename the trip in the main app' : `main app: "${mine.name}", ${mine.n} days; Beta 2 opened "${got && got.name}", ${got && got.n} days${got && !got.home ? ', not on the home screen' : ''}`);
+    check('S2', 'A trip from the main app opens in Beta 2 with no errors', !D.errs.length, D.errs.slice(0, 2).join(' | '));
     await D.ctx.close(); }
   // ---- E. screen sizes
   if (on('E')) { const sizes = [[360, 780, true], [412, 915, true], [915, 412, true], [800, 1280, false], [1280, 800, false]], bad = [];

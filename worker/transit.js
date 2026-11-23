@@ -13,9 +13,14 @@ const R_STOP = 2500, R_FERRY = 1500; // how far from each end a station or pier 
 // takes a taxi to and from them, and that taxi is counted in the time. So for rides of 20 km and more, train stations
 // are looked for up to 12% of the distance away (at most 10 km), and the taxis at both ends together may be at most a
 // third of the way. Only trains: a metro or tram line is a city ride, and a city ride is never stretched like this.
+// A long-distance, high-speed or night service (few a day; a seat usually booked ahead), from the map's own tags.
+const longHaul = t => /^(long_distance|high_speed|night|international|national)$/i.test(String((t && (t.service || t.passenger)) || ""));
 export const trainReach = (a, b) => { const km = hav(a, b); return km >= 20 ? Math.min(10000, Math.max(R_STOP, Math.round(km * 120))) : R_STOP; };
 // Cautious running speeds (km/h) and the time lost at each stop between, by kind of line.
-const SPEED = { train: [55, 0.8], light_rail: [45, 0.7], subway: [33, 0.5], monorail: [30, 0.5], tram: [17, 0.4], bus: [24, 0.5], trolleybus: [20, 0.4], ferry: [28, 0] };
+// Cruising speed (km/h) and the minutes each stop on the way adds (slowing, dwell, pulling away). Nov 23 ride check
+// against the published timetables: metros and trains on long, widely spaced runs (an airport branch, a 60 km regional
+// line) came out a third slower than timetabled, because a low average speed was charged on top of the stops.
+const SPEED = { train: [70, 1.2], light_rail: [45, 0.7], subway: [42, 0.7], monorail: [30, 0.5], tram: [17, 0.4], bus: [24, 0.5], trolleybus: [20, 0.4], ferry: [28, 0] };
 // A ferry the map says carries cars (motor_vehicle/motorcar/hgv yes) is a slow car ferry (28 km/h); one that carries only
 // people is a fast boat, a hydrofoil or catamaran (38 km/h, still under their usual 45-55): Naples-Sorrento was given
 // about an hour where every operator's timetable says 35-45 min (Nov 22, Richard's check). A duration on the map wins.
@@ -91,8 +96,10 @@ function onDate(iso, lng, hh) { const d = new Date(iso + "T00:00:00Z"); if (!isF
 export async function timetableOptions(a, b, dow, date) {
   // The trip's own date first: a summer ferry doesn't show on a November date. When the operators haven't
   // published that far ahead yet (nothing at all comes back), the next date of the same kind is used.
-  if (date && /^\d{4}-\d{2}-\d{2}$/.test(date) && Date.parse(date) > Date.now() - 86400e3) {
-    try { const r = await timetableAt(a, b, hh => onDate(date, a.lng, hh)); if (r.length) return r.map(o => Object.assign(o, { forDate: date })); } catch (e) {}
+  // Operators publish a few weeks to a few months ahead: a date further out is not asked (it finds nothing, and doubles
+  // the searches); the same kind of day is used instead.
+  if (date && /^\d{4}-\d{2}-\d{2}$/.test(date) && Date.parse(date) > Date.now() - 86400e3 && Date.parse(date) < Date.now() + 120 * 86400e3) {
+    try { const r = await timetableAt(a, b, hh => onDate(date, a.lng, hh)); if (r.length) return Object.assign(r.map(o => Object.assign(o, { forDate: date })), { missed: r.missed }); } catch (e) {}
   }
   return timetableAt(a, b, hh => dayFor(dow, a.lng, hh));
 }
@@ -102,11 +109,25 @@ export function headways(deps) {
   const out = []; for (const ts of by.values()) { ts.sort((x, y) => x - y); for (let i = 1; i < ts.length; i++) { const m = (ts[i] - ts[i - 1]) / 60000; if (m >= 3) out.push(m); } }
   return out.sort((x, y) => x - y);
 }
+export const TT_HOURS = [6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20];
 async function timetableAt(a, b, when) {
-  // Morning, midday and late afternoon, so the plan knows the departures through the day (the last ones back included).
+  // Every hour from early morning to evening, so the plan knows the departures through the whole day: a ship day
+  // leaves at 7:30 and comes back in the late afternoon. Searches three hours apart (6, 9, 12, 15, 18), six trips each,
+  // still left hours unknown, so a train back that runs every half hour fell to a taxi (Nov 21 outside check: Rome at
+  // 4:10 pm showed "the next known is about 6:07 pm"). The answer is kept and shared, so each pair is looked up this
+  // way once per kind of day.
   const ask = hh => fetch(`https://api.transitous.org/api/v1/plan?fromPlace=${a.lat},${a.lng}&toPlace=${b.lat},${b.lng}&time=${when(hh)}&numItineraries=6`, { headers: UA, signal: AbortSignal.timeout(20000) }).then(r => r.ok ? r.json() : Promise.reject(new Error("timetable " + r.status)));
-  const all = await Promise.allSettled([ask(8), ask(12), ask(16)]);
+  // Three at a time: the free timetable service turns away a burst (every search for each of several rides at once).
+  const all = new Array(TT_HOURS.length), N = 3, t0 = Date.now();
+  for (let k = 0; k < TT_HOURS.length; k += N) { const part = await Promise.allSettled(TT_HOURS.slice(k, k + N).map(ask)); part.forEach((x, i) => { all[k + i] = x; }); }
+  // An hour the service turned away is asked again once, one at a time after a short pause (Nov 21 live check: a ride
+  // kept with only the 1 to 3 pm searches answered knew no train after 4 pm, and the way back to the ship became a taxi).
+  // Within a time budget, so the page's answer never waits much longer for it.
+  const again = all.map((x, k) => x.status !== "fulfilled" ? k : -1).filter(k => k >= 0);
+  for (let j = 0; j < again.length && Date.now() - t0 < 30000; j += N) { await new Promise(r => setTimeout(r, 1500));
+    const part = await Promise.allSettled(again.slice(j, j + N).map(k => ask(TT_HOURS[k]))); part.forEach((x, i) => { all[again[j + i]] = x; }); }
   if (!all.some(x => x.status === "fulfilled")) throw new Error("timetable busy");
+  const missed = all.filter(x => x.status !== "fulfilled").length;
   // Each itinerary remembers which of the three searches found it (w): how often a line runs is measured only between
   // departures found by the same search. Two searches are hours apart, so the gap from the last morning departure to the
   // first midday one is not the line's frequency (the Athens airport metro showed "every 4 h 12 min", Nov 16).
@@ -134,10 +155,16 @@ async function timetableAt(a, b, when) {
     const km = path.length > 1 ? lineLen(path) : hav(a, b) * 1.3;
     out.push({ mode: kind.toLowerCase(), kind, label: nm(m) + (x.ride.length > 1 ? ` + ${x.ride.length - 1} change${x.ride.length > 2 ? "s" : ""}` : ""), operator: "", from: (x.ride[0].from || {}).name || "", to: (x.ride[x.ride.length - 1].to || {}).name || "",
       ride: Math.round(typ - walkA - walkB), wait, every: ev, everySrc: every && gaps.length >= 2 ? "timetable" : "none", everyN: gaps.length, access: { how: "walk", min: walkA, km: +(walkA * 4.5 / 60).toFixed(2) }, egress: { how: "walk", min: walkB, km: +(walkB * 4.5 / 60).toFixed(2) },
-      min: Math.round(typ + wait), km: +km.toFixed(1), stops: x.ride.reduce((n, l) => n + ((l.intermediateStops || []).length), 0), hours: "", fare: "", steps, deps: deps.slice(0, 30), checked: new Date().toISOString().slice(0, 10),
+      min: Math.round(typ + wait), km: +km.toFixed(1), stops: x.ride.reduce((n, l) => n + ((l.intermediateStops || []).length), 0), hours: "", fare: "", steps, deps: deps.slice(0, 90), checked: new Date().toISOString().slice(0, 10),
       path: thin(path.length > 1 ? path : [a, b], 160).map(p => [+p.lng.toFixed(5), +p.lat.toFixed(5)]), fromPt: [+a.lng, +a.lat], toPt: [+b.lng, +b.lat], src: "Transitous timetables (" + (m.agencyName || "operator") + ")" });
   }
-  return topRides(out, 4);
+  // Every departure of the kind (all trains between the two places, whatever their numbers), on each answer kept: only
+  // the best few answers are kept, and a train known by its own number leaves once a day, so its own list alone left
+  // whole hours unknown (Nov 21 outside test: Civitavecchia to Rome showed four trains a day). a: the walk to its stop.
+  const kd = new Map(); for (const o of out) { const l = kd.get(o.kind) || kd.set(o.kind, []).get(o.kind); for (const d of o.deps || []) l.push({ t: d.t, lead: d.lead, dur: d.dur, a: (o.access && o.access.min) || 0 }); }
+  for (const o of out) { const seen = new Set(); o.kindDeps = (kd.get(o.kind) || []).sort((x, y) => x.t - y.t).filter(d => { const k = d.t + "|" + d.dur; if (seen.has(k)) return false; seen.add(k); return true; }).slice(0, 120); }
+  // How many hours of the day stayed unanswered: such an answer is incomplete, kept only briefly and asked again.
+  return Object.assign(topRides(out, 4), { missed });
 }
 // Both sources: real timetables first; the map adds what timetables lack (ferries mostly). A map rail line is kept
 // only when the timetables had no rail answer at all. The free map servers can take a minute when busy, so the answer
@@ -168,13 +195,14 @@ export async function allOptions(a, b, dow, mapWait = 12000, store, date) {
   const merge = mergeRides;
   const TIMEOUT = Symbol("slow"), t0 = Date.now(), tt = await ttP;
   const map = await Promise.race([mapP, new Promise(r => setTimeout(() => r(TIMEOUT), Math.max(1000, mapWait - (Date.now() - t0))))]);
+  const ttMissed = tt ? tt.missed || 0 : null; // hours of the day the timetable search couldn't answer (null: none answered)
   if (map === TIMEOUT) {
-    const late = mapP.then(m => m ? { opts: merge(tt, m), partial: !tt || !!m.partial } : null);
+    const late = mapP.then(m => m ? { opts: merge(tt, m), partial: !tt || !!m.partial || ttMissed > 0, ttMissed } : null);
     if (!tt) { const m = await late; if (!m) throw new Error("map busy"); return m; } // no timetable at all: the map is all there is, so wait for it
-    return { opts: merge(tt, null), partial: true, late };
+    return { opts: merge(tt, null), partial: true, late, ttMissed };
   }
   if (!tt && !map) throw new Error("map busy");
-  return { opts: merge(tt, map), partial: !tt || !map || !!map.partial };
+  return { opts: merge(tt, map), partial: !tt || !map || !!map.partial || ttMissed > 0, ttMissed };
 }
 // Ferries near one point: the mapped ferry courses within reach of it (single ways, and the routes they belong to
 // with their whole course) and the ferry terminals' names. Ferry courses rarely change, so each answer is kept 60 days
@@ -218,10 +246,13 @@ export async function transitOptions(a, b, store) {
   const RW = trainReach(a, b), TR = `[type=route][route=train]`;
   const wide = (P, set) => RW > R_STOP ? `(node(around:${RW},${P})[railway~"^(station|halt|stop)$"][station!=subway][station!=light_rail];node(around:${RW},${P})[public_transport=stop_position][train=yes];)->.${set};` : "";
   const rels = (n, w, out) => RW > R_STOP ? `(rel(bn.${n})${RT};rel(bn.${w})${TR};)->.${out};` : `rel(bn.${n})${RT}->.${out};`;
-  const q1 = `[out:json][timeout:25];${stops(A, "sa")}${stops(B, "sb")}${wide(A, "wa")}${wide(B, "wb")}${rels("sa", "wa", "ra")}${rels("sb", "wb", "rb")}rel.ra.rb;out ids;
+  const q1 = `[out:json][timeout:25];${stops(A, "sa")}${stops(B, "sb")}${wide(A, "wa")}${wide(B, "wb")}${rels("sa", "wa", "ra")}${rels("sb", "wb", "rb")}rel.ra.rb;out tags;
 .sa out tags;.sb out tags;${RW > R_STOP ? ".wa out tags;.wb out tags;" : ""}`;
   const railP = (async () => { const d1 = await overpass(q1);
-    const ids = [...new Set((d1.elements || []).filter(e => e.type === "relation").map(e => e.id))].slice(0, 8);
+    // The lines a traveler would take first: local and regional services ahead of long-distance, high-speed and night
+    // trains (Nov 23: a 60 km port-to-city ride was named after an intercity train when regionals run every half hour).
+    const rs = [...new Map((d1.elements || []).filter(e => e.type === "relation").map(e => [e.id, e])).values()];
+    const ids = rs.sort((x, y) => (longHaul(x.tags) ? 1 : 0) - (longHaul(y.tags) ? 1 : 0)).map(e => e.id).slice(0, 8);
     const d2 = ids.length ? await overpass(`[out:json][timeout:25];rel(id:${ids.join(",")});out geom;`) : { elements: [] };
     return (d1.elements || []).filter(e => e.type !== "relation").concat(d2.elements || []); })();
   const [rail, fer] = await Promise.allSettled([railP, ferP]);
@@ -274,7 +305,7 @@ async function buildOpts(el, fWays, a, b) {
     const [v0, perStop] = SPEED[mode], v = mode === "ferry" ? ferryKmh(t) : v0, total = line.length >= 2 ? lineLen(line) : 0, dur = mins(t.duration);
     let ride = dur && total > 0 ? dur * Math.min(1, km / total) : km / v * 60 + between * perStop;
     ride = Math.max(ride, km / (v * 1.6) * 60); // never quicker than the line could run
-    const every = mins(t.interval), nmA = (stopTag.get(sa.s.id) || {}).name, nmB = (stopTag.get(sb.s.id) || {}).name;
+    const every = mins(t.interval) || (longHaul(t) ? 120 : null), nmA = (stopTag.get(sa.s.id) || {}).name, nmB = (stopTag.get(sb.s.id) || {}).name;
     opts.push(mk({ mode, ref: t.ref || "", name: t["name:en"] || t.name || "", operator: t.operator || t.network || "", from: nmA || t.from || "", to: nmB || t.to || "", fromPt: sa.s, toPt: sb.s, km, ride, every, hours: t.opening_hours || "", seasonal: t.seasonal || "", fare: t.charge || t.fee || "", stops: between, path, a, b, osm: "r" + r.id }));
   }
   // Ferries are often mapped as one way from pier to pier rather than as a route relation.
@@ -306,7 +337,7 @@ export function ferryByCourse(t, line, a, b, stopTag, osm) {
   const named = p => pierName(stopTag, p);
   const total = lineLen(line), dur = mins(t.duration);
   return mk({ mode: "ferry", ref: t.ref || "", name: t.name || "", operator: t.operator || t.network || "", from: named(path[0]) || (ia < ib ? t.from : t.to) || "", to: named(path[path.length - 1]) || (ia < ib ? t.to : t.from) || "",
-    fromPt: path[0], toPt: path[path.length - 1], km, ride: dur && total > 0 ? Math.max(dur * Math.min(1, km / total), km / SPEED.ferry[0] * 60 * 0.8) : km / SPEED.ferry[0] * 60 * 1.15, every: mins(t.interval),
+    fromPt: path[0], toPt: path[path.length - 1], km, ride: dur && total > 0 ? Math.max(dur * Math.min(1, km / total), km / ferryKmh(t) * 60 * 0.8) : km / ferryKmh(t) * 60 * 1.15, every: mins(t.interval),
     hours: t.opening_hours || "", seasonal: t.seasonal || "", fare: t.charge || t.fee || "", stops: 0, path, a, b, osm });
 }
 // Ferries with one change: a ferry from the pier by the start whose far end is a pier another ferry sails from to the

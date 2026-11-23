@@ -11,7 +11,7 @@ const P = n => `<img src=x id=kinj${n} onerror="window.__inj=(window.__inj||0)+1
     const p = await b.newPage({ viewport: vp }); const errs = []; p.on('pageerror', e => errs.push(e.message)); p.on('dialog', d => { fails++; console.log('FAIL a dialog opened: ' + d.message()); d.dismiss(); });
     await p.route('**/*', r => /^file:/.test(r.request().url()) ? r.continue() : r.abort());
     await p.goto('file://' + FILE); await p.evaluate(() => localStorage.setItem('kairoute.intro1', '1')); await p.reload(); await p.waitForTimeout(800);
-    await p.getByText('Continue trip').click(); await p.waitForTimeout(400);
+    await p.locator('[data-act=continue]').click(); await p.waitForTimeout(400);
     const days = await p.evaluate(() => window.__kairouteDays());
     for (const d of days) {
       await p.evaluate(([i, t]) => window.__kairouteEdit(i, { title: t, titleTyped: true }), [d.i, P('t' + d.i)]);

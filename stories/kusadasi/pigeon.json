@@ -1,0 +1,180 @@
+{
+ "id": "pigeon",
+ "v": 1,
+ "city": "kusadasi",
+ "title": "Pigeon Island Castle",
+ "match": {
+  "ids": [
+   "pigeon"
+  ],
+  "names": [
+   "pigeon island",
+   "guvercinada",
+   "guvercin adasi"
+  ],
+  "wikidata": []
+ },
+ "checked": "2026-11-22",
+ "claims": {
+  "causeway": {
+   "label": "supported",
+   "says": "Pigeon Island (Güvercinada) is joined to the mainland by a causeway, about 200 m long.",
+   "src": [
+    "wp-kusadasi",
+    "wv-kusadasi"
+   ],
+   "quote": [
+    "The island of Güvercinada (in English: Pigeon Island) is connected to mainland Kuşadası by a causeway",
+    "Pigeon Island (Güvercinada) is reached from town by a 200 m causeway."
+   ]
+  },
+  "name": {
+   "label": "supported",
+   "says": "Kuşadası means bird island; the island looks like a bird's head seen from the sea.",
+   "src": [
+    "wp-kusadasi"
+   ],
+   "quote": [
+    "The name Kuşadası comes from Turkish kuş 'bird' + ada 'island', as Güvercinada island, just offshore, has the shape of a bird's head when seen from the sea."
+   ]
+  },
+  "ephesus": {
+   "label": "supported",
+   "says": "In antiquity the town was a minor port overshadowed by Ephesus until Ephesus' harbour silted up.",
+   "src": [
+    "wp-kusadasi"
+   ],
+   "quote": [
+    "Kuşadası was a minor port frequented by vessels trading along the Aegean coast. In antiquity it was overshadowed by Ephesus, until Ephesus' harbor silted up."
+   ]
+  },
+  "scala": {
+   "label": "supported",
+   "says": "Byzantine, Venetian and Genoese traders re-founded the port as Scala Nova (New Port) and placed a garrison on the island.",
+   "src": [
+    "wp-kusadasi"
+   ],
+   "quote": [
+    "As Byzantine, Venetian and Genoese shippers began to trade along the coast, the port was re-founded (by the name of Scala Nova or Scala Nuova, meaning \"New Port\"), a garrison was placed on the island, and the town centre shifted from the hillside to the coast."
+   ]
+  },
+  "1834": {
+   "label": "supported",
+   "says": "In 1834 the island's castle and garrison were rebuilt and expanded and became the focus of the town, which people then called Kuşadası.",
+   "src": [
+    "wp-kusadasi"
+   ],
+   "quote": [
+    "Long afterwards, in 1834, the castle and garrison on the island were rebuilt and expanded, becoming the focus of the town. This was to such an extent that people began to refer to the whole town as Kuşadası (bird island)."
+   ]
+  },
+  "museum": {
+   "label": "supported",
+   "says": "The castle has been restored as a museum.",
+   "src": [
+    "wv-kusadasi"
+   ],
+   "quote": [
+    "The castle has been restored as a museum"
+   ]
+  },
+  "samos": {
+   "label": "supported",
+   "says": "The Greek island of Samos lies about 16 km offshore.",
+   "src": [
+    "wp-kusadasi"
+   ],
+   "quote": [
+    "The Greek island of Samos lies about 16 km offshore."
+   ]
+  },
+  "caravanserai": {
+   "label": "supported",
+   "says": "The Öküz Mehmed Pasha Caravanserai near the docks was built in 1618 as a strong-room for seamen's goods.",
+   "src": [
+    "wp-kusadasi"
+   ],
+   "quote": [
+    "The Öküz Mehmed Pasha Caravanserai is near the docks. It was built in 1618 as a strong-room for the goods of seamen."
+   ]
+  }
+ },
+ "parts": [
+  {
+   "name": "The causeway",
+   "stand": "At the town end of the causeway, looking out toward the island and its walls.",
+   "paras": [
+    {
+     "t": "Ahead of you is Pigeon Island, Güvercinada in Turkish, joined to the town by a causeway about 200 meters long. This little island gave the whole town its name. Kuşadası means bird island, because from the sea the island has the shape of a bird's head.",
+     "c": [
+      "causeway",
+      "name"
+     ],
+     "level": 1
+    },
+    {
+     "t": "In ancient times this was a minor port, overshadowed by Ephesus, until Ephesus lost its harbor to silt.",
+     "c": [
+      "ephesus"
+     ],
+     "level": 2
+    },
+    {
+     "t": "The causeway is open to the sea and the wind. Hold on to hats and little hands.",
+     "c": [],
+     "level": 2,
+     "cue": true
+    }
+   ]
+  },
+  {
+   "name": "The castle",
+   "stand": "On the island, in front of the castle walls.",
+   "paras": [
+    {
+     "t": "When Byzantine, Venetian and Genoese traders worked this coast, they re-founded the port as Scala Nova, the New Port, and put a garrison here on the island. In 1834 the castle and garrison were rebuilt and expanded, and the island became the focus of the town, so much so that in time people started calling the whole place Kuşadası.",
+     "c": [
+      "scala",
+      "1834"
+     ],
+     "level": 1
+    },
+    {
+     "t": "Today the castle has been restored as a museum. Who first built walls here, and when, we don't know.",
+     "c": [
+      "museum"
+     ],
+     "level": 2
+    }
+   ]
+  },
+  {
+   "name": "The view back",
+   "stand": "Find a safe spot on the island where you can look back across the bay toward the harbor, well away from the rocks at the water's edge.",
+   "paras": [
+    {
+     "t": "Offshore, about 16 kilometers from this coast, lies the Greek island of Samos.",
+     "c": [
+      "samos"
+     ],
+     "level": 2
+    },
+    {
+     "t": "Back near the docks is another old strongbox of a building, the Öküz Mehmed Pasha Caravanserai, built in 1618 to keep sailors' goods safe.",
+     "c": [
+      "caravanserai"
+     ],
+     "level": 3
+    },
+    {
+     "t": "Stand here a minute with the town in front of you. A whole town took its name from this small island. Sometimes the little place at the edge is the one people remember.",
+     "c": [
+      "name"
+     ],
+     "level": 1
+    }
+   ]
+  }
+ ],
+ "practical": []
+}

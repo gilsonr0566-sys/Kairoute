@@ -14,9 +14,15 @@ const voices = (process.argv[2] || "af_heart af_bella bf_emma am_michael bm_geor
 const only = process.argv[3] || "";
 const tts = await KokoroTTS.from_pretrained("onnx-community/Kokoro-82M-v1.0-ONNX", { dtype: "q8", device: "cpu" });
 const h = t => crypto.createHash("sha1").update(t).digest("hex").slice(0, 10);
-let made = 0, kept = 0;
-for (const sc of STOP_SCRIPTS) {
+let made = 0, kept = 0, left = 0;
+// A long library is split across jobs (SHARD="2/3": every third script, starting at the third) and each job stops
+// starting new scripts after REC_MINUTES, so what it made is saved; the workflow then runs again for the rest.
+const [shard, shards] = (process.env.SHARD || "0/1").split("/").map(Number);
+const stopAt = Date.now() + (+process.env.REC_MINUTES || 1e6) * 60000;
+for (const [n, sc] of STOP_SCRIPTS.entries()) {
   if (only && sc.id !== only) continue;
+  if (!only && n % shards !== shard) continue;
+  if (Date.now() > stopAt) { left++; continue; }
   for (const voice of voices) {
     const dir = `audio/${sc.id}/${voice}`; fs.mkdirSync(dir, { recursive: true });
     const saidFile = `${dir}/said.json`, said = fs.existsSync(saidFile) ? JSON.parse(fs.readFileSync(saidFile, "utf8")) : {};
@@ -32,4 +38,5 @@ for (const sc of STOP_SCRIPTS) {
     fs.writeFileSync(saidFile, JSON.stringify(want, null, 1));
   }
 }
-console.log(`made ${made}, kept ${kept}`);
+console.log(`made ${made}, kept ${kept}, scripts left for the next run ${left}`);
+if (left) fs.writeFileSync("/tmp/more-to-record", String(left));

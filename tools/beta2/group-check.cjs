@@ -4,6 +4,9 @@
 //  - share: only the trip the owner picks is sent; their other trips never leave the phone;
 //  - join: the code or the link opens the group trip on the member's phone;
 //  - follow: a member following the group plan gets the same plan as the owner, and owner changes reach them;
+//  - same stops, same order: on every group day, a member whose phone knows other rides than the owner's (timetables
+//    arrive at different times on each phone) still sees the owner's stops in the owner's order, and "Make my own day"
+//    then "Back to the group's plan" gives the owner's order again;
 //  - own day: a member who makes a day their own keeps their own sights when the owner's plan changes;
 //  - meeting point: on every day of the trip, an own day (emptied, over-filled, or a copy) ends at the same place as
 //    the group's plan, never after the group's meeting time; a change to the day's times reaches own days too;
@@ -93,6 +96,42 @@ const pushLead = async p => { await p.evaluate(() => window.__kairouteGroup.push
   const days = await lead.evaluate(() => { const T = window.__kairouteGrpT; return T.trip.days.map((d, i) => ({ i, ok: !T.noShore(d) && !!T.cityFor(d) && /^(land|port)$/.test(d.type) })).filter(x => x.ok).map(x => x.i); });
   check(days.length >= 3, 'the trip has days to plan (' + days.length + ')');
   const D = days[0], D2 = days[1];
+
+  // Each phone plans from what it knows, and that differs: ride timetables arrive at different times on each phone (outside
+  // test, Nov 23: a follower saw the owner's stops in reverse order). The members' phones here know rides the owner's
+  // doesn't: a quick bus from each day's start to its last stop and from its first stop to its end, which would make the
+  // reverse order the better one on a phone planning by itself. The group's order must hold anyway, on every day.
+  console.log('Phones that know different rides');
+  const leadOrder = {}; for (const i of days) leadOrder[i] = (await planOf(lead, i)).stops;
+  for (const p of [m1, m2]) await p.evaluate(days => { const T = window.__kairouteGrpT;
+    for (const i of days) { const pl = T.buildPlan(T.trip.days[i]); if (!pl || pl.error || (pl.stops || []).length < 2) continue;
+      const it = pl.items || [], st = (it.find(x => x.type === 'start') || {}).place, en = (it.find(x => x.type === 'end') || {}).place, s = pl.stops;
+      for (const [a, b] of [[st, s[s.length - 1].place], [s[0].place, en]]) { if (!a || !b || !isFinite(a.lat) || !isFinite(b.lat)) continue; const k = window.__kairouteGrpPairKey(a, b);
+        const km = Math.round(Math.hypot((a.lat - b.lat) * 111, (a.lng - b.lng) * 111 * Math.cos(a.lat * Math.PI / 180)) * 10) / 10;
+        const opt = { mode: 'bus', kind: 'Bus', label: 'Bus T1 (test)', from: 'Stop A', to: 'Stop B', ride: 4, wait: 2, every: 10, access: { how: 'walk', min: 1, km: 0.05 }, egress: { how: 'walk', min: 1, km: 0.05 }, min: 8, km, steps: ['Bus T1 (test): Stop A to Stop B, 4 min'] };
+        for (const w of ['wk', 'sa', 'su']) { window.__kairouteGrpRide(k + '|' + w, { t: Date.now(), v: 9, opts: [opt] }); (window.__testRides = window.__testRides || []).push(k + '|' + w); } } } }, days);
+  for (const p of [m1, m2]) await settle(p);
+  // The order each member's phone would plan by itself now (without the group's order): it must differ on some day, or
+  // this check proves nothing.
+  const alone = await m2.evaluate(days => { const T = window.__kairouteGrpT, o = {};
+    for (const i of days) { const d = T.trip.days[i], keep = d.grpOrder; delete d.grpOrder; try { const pl = T.buildPlan(d); o[i] = (pl.stops || []).map(s => String(s.place.id)); } finally { if (keep) d.grpOrder = keep; } } return o; }, days);
+  const differs = days.filter(i => alone[i] && alone[i].join() !== leadOrder[i].join() && alone[i].slice().sort().join() === leadOrder[i].slice().sort().join());
+  check(differs.length > 0, `the members' phones would plan another order by themselves on ${differs.length} day(s)`, 'the test rides changed no order');
+  { let n = 0; for (const i of days) { const c = (await planOf(m2, i)).stops; if (c.join() !== leadOrder[i].join()) { n++; bad(`day ${i}: a follower's stops are in another order than the owner's (${c.join()} vs ${leadOrder[i].join()})`); } }
+    check(!n, `on every group day a follower sees the owner's stops in the owner's order (${days.length} days)`); }
+  { let n = 0; for (const i of days) {
+      // The buttons on the day's card, pressed as the traveler does (the page may redraw meanwhile, so found afresh).
+      const press = sel => m2.evaluate(sel => { const b = document.querySelector(sel); if (b) b.click(); return !!b; }, sel);
+      await openDay(m2, i); if (!await press('[data-grp="ownday"]')) { n++; bad(`day ${i}: no "Make my own day"`); continue; }
+      await m2.waitForTimeout(200); const c1 = (await planOf(m2, i)).stops;
+      await openDay(m2, i); if (!await press('[data-grp="follow"]')) { n++; bad(`day ${i}: no "Back to the group's plan"`); continue; }
+      await m2.waitForTimeout(200); const c2 = await planOf(m2, i);
+      if (c1.join() !== leadOrder[i].join()) { n++; bad(`day ${i}: "Make my own day" starts in another order (${c1.join()} vs ${leadOrder[i].join()})`); }
+      if (c2.own || c2.stops.join() !== leadOrder[i].join()) { n++; bad(`day ${i}: own day, then back to the group, gives another order (${c2.stops.join()} vs ${leadOrder[i].join()})`); } }
+    check(!n, `own day, then back to the group: the owner's order again, on every day (${days.length} days)`); }
+  // The test rides are forgotten again, so the checks below compare phones that know the same rides (times included).
+  for (const p of [m1, m2]) { await p.evaluate(() => { (window.__testRides || []).forEach(k => window.__kairouteGrpRide(k, null)); window.__testRides = []; }); await settle(p); }
+  await m2.evaluate(() => window.__kairouteGroup.hello());
 
   console.log('Follow the group plan');
   for (const i of days) {

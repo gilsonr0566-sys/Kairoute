@@ -192,8 +192,7 @@
    "wikidata": "Q3509061",
    "note": "A convenient starting place for a stroll through the Old Town.",
    "editions": 10,
-   "unesco": false,
-   "en": "Pile Gate, Dubrovnik"
+   "unesco": false
   },
   {
    "name": "Big Onofrio's Fountain",
@@ -202,8 +201,7 @@
    "wikidata": "Q2624621",
    "note": "In the western (Pile) entrance of the old town, The fountain stairs are nowadays a favourite meeting place for local youth and where both the tourists and pigeons take rest and refresh themselves with cool water.",
    "editions": 15,
-   "unesco": false,
-   "en": "Onofrio fountain"
+   "unesco": false
   },
   {
    "name": "Roland's Column",
@@ -212,8 +210,7 @@
    "wikidata": "Q3442751",
    "note": "A slender stone flag staff of the legendary knight. Also known as Orlando's Column. Ever since its foundation in 1950, the Dubrovnik Summer Festival is opened by raising a flag carrying the city's motto ''Libertus'' on Orlando's staff.",
    "editions": 10,
-   "unesco": false,
-   "en": "Orlando's Column"
+   "unesco": false
   },
   {
    "name": "Bell Tower",
@@ -222,8 +219,7 @@
    "wikidata": "Q3509014",
    "note": "On top of the tower are the famous 'Zelenci' (The Green Ones), bronze statues which strike the gigantic bell every hour. They have been replaced with copies and the originals are in the atrium of the Sponza Palace.",
    "editions": 12,
-   "unesco": false,
-   "en": "Clock tower"
+   "unesco": false
   },
   {
    "name": "Sponza Palace",
@@ -241,8 +237,7 @@
    "wikidata": "Q2497590",
    "note": "The former palace of the Major Council houses a museum dedicated to the city's history.",
    "editions": 27,
-   "unesco": false,
-   "en": "Rector's Palace, Dubrovnik"
+   "unesco": false
   },
   {
    "name": "Fort Lovrijenac",
@@ -251,8 +246,7 @@
    "wikidata": "Q3396134",
    "note": "The monumental fort rises above 37 m high rock. It was an essential fortification for defence of the city from both ground and sea attacks. In order to prevent mutiny by the commander of the fortress, the walls facing the city are only 60&n",
    "editions": 20,
-   "unesco": false,
-   "en": "Lovrijenac"
+   "unesco": false
   },
   {
    "name": "Franciscan Monastery",
@@ -261,8 +255,7 @@
    "wikidata": "Q3509032",
    "note": "This beautiful monastery with Baroque Church, houses a Romanesque cloister and the third oldest pharmacy in the world.",
    "editions": 21,
-   "unesco": false,
-   "en": "Franciscan Church and Monastery"
+   "unesco": false
   },
   {
    "name": "Cathedral of the Assumption of the Virgin Mary",
@@ -271,8 +264,7 @@
    "wikidata": "Q584428",
    "note": "This impressive building is in the Poljana Marin Držić. Supposedly, the original church was built with money donated by Richard the Lionhearted who survived shipwreck on his way home from the Third Crusade. The current Roman Baroque cathedr",
    "editions": 26,
-   "unesco": true,
-   "en": "Dubrovnik Cathedral"
+   "unesco": true
   },
   {
    "name": "Church of Saint Blaise",
@@ -281,8 +273,7 @@
    "wikidata": "Q2986286",
    "note": "Baroque Church dedicated to the city's patron saint.",
    "editions": 17,
-   "unesco": false,
-   "en": "St Blaise's Church"
+   "unesco": false
   },
   {
    "name": "Church of St. Ignatius and the Jesuit College",
@@ -291,8 +282,7 @@
    "wikidata": "Q682758",
    "note": "Ornate Jesuit church, approached via a romantic baroque staircase modelled on the Spanish Steps in Rome (1738). Built between 1667 and 1725 by architect Ignazzio Pozzo, and like most Jesuit churches of the period was modelled on the Gesù in",
    "editions": 10,
-   "unesco": false,
-   "en": "Saint Ignatius Church"
+   "unesco": false
   },
   {
    "name": "Dominican Monastery",
@@ -301,8 +291,7 @@
    "wikidata": "Q3509039",
    "note": "This is an exceptionally valuable historic complex, which, besides its religious purpose, also represents the important artistic treasury of ancient Dubrovnik.",
    "editions": 8,
-   "unesco": false,
-   "en": "Dominican Church and Monastery in Dubrovnik"
+   "unesco": false
   },
   {
    "name": "Synagogue and Jewish Museum",
@@ -312,8 +301,7 @@
    "note": "This synagogue built by Sephardic Jews is supposed to be the second-oldest still in use synagogue in Europe today. A permanent Jewish community here was founded at the end of the 15th century following the expulsions from Portugal and Spain",
    "editions": 18,
    "unesco": true,
-   "posDoubt": true,
-   "en": "Dubrovnik Synagogue"
+   "posDoubt": true
   },
   {
    "name": "Maritime Museum",
@@ -1048,5 +1036,403 @@
    },
    "osm": "way/75253349"
   }
- ]
+ ],
+ "eatHours": [
+  [
+   "Sesame",
+   42.64258,
+   18.10302,
+   "Mo-Su 09:00-00:00",
+   "restaurant"
+  ],
+  [
+   "Poklisar",
+   42.64114,
+   18.11103,
+   "Mo-Su 10:00-22:00",
+   "restaurant"
+  ],
+  [
+   "Marangun",
+   42.64683,
+   18.09027,
+   "Mo-Su 11:00-24:00",
+   "restaurant"
+  ],
+  [
+   "Nishta",
+   42.6418,
+   18.10859,
+   "Mo-Sa 11:30-23:30",
+   "restaurant"
+  ],
+  [
+   "Dubravka 1836 Restaurant & Cafe",
+   42.64162,
+   18.10622,
+   "Mo-Su 08:00-23:45",
+   "restaurant"
+  ],
+  [
+   "Orhan",
+   42.64154,
+   18.1047,
+   "Mo-Su 09:00-24:00",
+   "restaurant"
+  ],
+  [
+   "Dukah",
+   42.64303,
+   18.10279,
+   "PH,Mo-Su 10:00-02:00",
+   "bar"
+  ],
+  [
+   "Tabasco",
+   42.64274,
+   18.11151,
+   "Mo-Su 10:00-23:00; Jun-Oct Tu-Su 10:00-24:00",
+   "restaurant"
+  ],
+  [
+   "Pjatanca",
+   42.642,
+   18.11559,
+   "Mo-Su 10:00-00:00",
+   "restaurant"
+  ],
+  [
+   "Kopun",
+   42.63943,
+   18.10971,
+   "Mo-Sa 10:00-23:30; Su 10:00-23:00",
+   "restaurant"
+  ],
+  [
+   "360°",
+   42.64153,
+   18.11149,
+   "Tu-Su 18:00-24:30",
+   "restaurant"
+  ],
+  [
+   "Banjebeach",
+   42.64174,
+   18.11589,
+   "PH,Mo-Su 10:00-02:00",
+   "bar"
+  ],
+  [
+   "Tuttobene",
+   42.64062,
+   18.10913,
+   "10:00-24:00",
+   "fast_food"
+  ],
+  [
+   "Yummi",
+   42.64329,
+   18.11201,
+   "Mo-Su 17:00-01:00",
+   "fast_food"
+  ],
+  [
+   "Libertina",
+   42.64137,
+   18.1105,
+   "Mo-Su 10:00-14:00",
+   "cafe"
+  ],
+  [
+   "Marco Polo",
+   42.64076,
+   18.10992,
+   "Mo-Su 10:00-00:00",
+   "restaurant"
+  ],
+  [
+   "Konoba Tabak",
+   42.6522,
+   18.09222,
+   "Mo-Su 07:00-20:00",
+   "restaurant"
+  ],
+  [
+   "Cogito Coffee",
+   42.6423,
+   18.11324,
+   "Mo-Fr 08:00-15:00; Sa 09:00-15:00",
+   "cafe"
+  ],
+  [
+   "Azur Dubrovnik",
+   42.63915,
+   18.11057,
+   "13:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Preša",
+   42.64139,
+   18.10818,
+   "PH,Mo-Su 10:00-23:30",
+   "fast_food"
+  ],
+  [
+   "Wanda",
+   42.64161,
+   18.1099,
+   "Mo,Tu 11:30-23:30; We-Su 11:30-24:00",
+   "restaurant"
+  ],
+  [
+   "Vita Bella Pizzeria",
+   42.64936,
+   18.09204,
+   "Mo-Sa 10:00-00:00; Su 16:00-00:00",
+   "restaurant"
+  ],
+  [
+   "Mamma Mia",
+   42.64699,
+   18.09163,
+   "Mo-Su 09:00-00:00",
+   "fast_food"
+  ],
+  [
+   "Pizzeria Tomato",
+   42.64235,
+   18.10577,
+   "Mo-Sa 11:00-22:30; Su off",
+   "restaurant"
+  ],
+  [
+   "Cafe Bar The Kop",
+   42.64159,
+   18.10446,
+   "Mo-Su 08:00-02:00",
+   "bar"
+  ],
+  [
+   "VegeDub",
+   42.64138,
+   18.10937,
+   "Mo-Su 10:00-00:00",
+   "restaurant"
+  ],
+  [
+   "Lady Pi-Pi",
+   42.64247,
+   18.10898,
+   "Fr-We 09:00-24:00",
+   "restaurant"
+  ],
+  [
+   "Forteca",
+   42.64243,
+   18.10652,
+   "Mo-Su 10:00-24:00",
+   "restaurant"
+  ],
+  [
+   "Posat",
+   42.64235,
+   18.1067,
+   "Mo-Su 11:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Paparazzo",
+   42.63967,
+   18.1106,
+   "12:00-24:00",
+   "restaurant"
+  ],
+  [
+   "Dalmatino",
+   42.58119,
+   18.21904,
+   "Mo-Su 09:30-00:00",
+   "restaurant"
+  ],
+  [
+   "Portun",
+   42.6416,
+   18.1083,
+   "Mo-Su 09:00-24:00",
+   "restaurant"
+  ],
+  [
+   "La Dolce Vita",
+   42.64163,
+   18.10881,
+   "Mo-Su 09:00-23:00",
+   "cafe"
+  ],
+  [
+   "Pizzeria Kabalero",
+   42.58168,
+   18.22218,
+   "Mo-Su 07:00-01:00",
+   "restaurant"
+  ],
+  [
+   "Kiosk Dubrovnik",
+   42.6527,
+   18.08891,
+   "Mo-Su 11:00-23:00",
+   "fast_food"
+  ],
+  [
+   "Stara Loza",
+   42.64183,
+   18.10883,
+   "Mo-Su 08:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Glam Beer Therapy",
+   42.64164,
+   18.10843,
+   "Mo-Su 09:00-00:00",
+   "pub"
+  ],
+  [
+   "Cogito Coffee",
+   42.63989,
+   18.11192,
+   "Tu-Su 09:00-16:00",
+   "cafe"
+  ],
+  [
+   "Silk",
+   42.64237,
+   18.10526,
+   "Mo-Su 12:00-22:00",
+   "restaurant"
+  ],
+  [
+   "Piano bar",
+   42.64836,
+   18.08844,
+   "07:00-24:00",
+   "bar"
+  ],
+  [
+   "Bona Fide",
+   42.64089,
+   18.1076,
+   "Mo-Su 11:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Heritage of Dubrovnik",
+   42.64194,
+   18.10824,
+   "Mo-Su 12:00-22:00",
+   "restaurant"
+  ],
+  [
+   "Republic",
+   42.64121,
+   18.10822,
+   "12:00-22:00",
+   "fast_food"
+  ],
+  [
+   "Rudjer",
+   42.63933,
+   18.10976,
+   "Mo-Su 08:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Otto street food",
+   42.64677,
+   18.09378,
+   "Mo-Sa 11:00-00:00; Su 16:00-00:00",
+   "fast_food"
+  ],
+  [
+   "Glam",
+   42.64175,
+   18.10851,
+   "Mo-Sa 10:00-00:00; Su 12:00-00:00",
+   "bar"
+  ],
+  [
+   "Kiba",
+   42.64218,
+   18.11319,
+   "11:00-23:00",
+   "fast_food"
+  ],
+  [
+   "Chinese Restaurant Kun Lun",
+   42.65145,
+   18.08886,
+   "Mo-Su 11:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Fresh Corner",
+   42.64887,
+   18.09518,
+   "24/7",
+   "cafe"
+  ],
+  [
+   "Pile Sandwich Bar",
+   42.64239,
+   18.10454,
+   "Mo-Su 09:00-23:00",
+   "fast_food"
+  ],
+  [
+   "Jack's Food&Beer",
+   42.64731,
+   18.08963,
+   "Tu-Fr 10:00-01:00; Mo 17:00-01:00; Sa 11:00-01:00; Su 16:00-01:00",
+   "fast_food"
+  ]
+ ],
+ "islands": {
+  "centre": null,
+  "towns": {
+   "cavtat-far": {
+    "island": null,
+    "across": false
+   }
+  },
+  "sites": {
+   "src-q2497590": {
+    "island": null,
+    "across": false
+   },
+   "src-q2986276": {
+    "island": null,
+    "across": false
+   },
+   "src-q3396134": {
+    "island": null,
+    "across": false
+   },
+   "src-q2986286": {
+    "island": null,
+    "across": false
+   },
+   "src-q584428": {
+    "island": null,
+    "across": false
+   },
+   "src-q3509032": {
+    "island": null,
+    "across": false
+   },
+   "src-q2750095": {
+    "island": null,
+    "across": false
+   }
+  }
+ }
 }

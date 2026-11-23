@@ -1,0 +1,178 @@
+{
+ "id": "agora-ch",
+ "v": 1,
+ "city": "chania",
+ "title": "Chania Municipal Market",
+ "match": {
+  "ids": [
+   "agora-ch"
+  ],
+  "names": [
+   "chania market",
+   "chania agora",
+   "municipal market of chania",
+   "central market of chania"
+  ],
+  "wikidata": []
+ },
+ "checked": "2026-11-22",
+ "claims": {
+  "market": {
+   "label": "supported",
+   "says": "The 1913 indoor market (Agora) is on the edge of the old town and popular with tourists and locals.",
+   "src": [
+    "wp-chania"
+   ],
+   "quote": [
+    "The 1913 indoor market (\"Agora\"), is on the edge of the old town and is popular with tourists and locals alike."
+   ]
+  },
+  "renov": {
+   "label": "supported",
+   "says": "The old Central Markets were built in 1913 and renovated in 2026.",
+   "src": [
+    "wp-chania"
+   ],
+   "quote": [
+    "the old Central Markets (built in 1913, renovated in 2026)"
+   ]
+  },
+  "capital": {
+   "label": "supported",
+   "says": "From 1898 Chania was the capital of the semi-autonomous Cretan State; many important buildings were built in that era.",
+   "src": [
+    "wp-chania"
+   ],
+   "quote": [
+    "In 1898, during the final moves towards independence and enosis—union with Greece—the Great Powers made Chania the capital of the semi-autonomous Cretan State",
+    "Many important buildings were built during this era"
+   ]
+  },
+  "cs-years": {
+   "label": "supported",
+   "says": "The Cretan State governed Crete from 1898 to 1913.",
+   "src": [
+    "wp-cretan-state"
+   ],
+   "quote": [
+    "was an autonomous state governing the island of Crete from 1898 to 1913"
+   ]
+  },
+  "union": {
+   "label": "supported",
+   "says": "Crete's union with Greece came on 1 December 1913.",
+   "src": [
+    "wp-chania"
+   ],
+   "quote": [
+    "eventually led to Crete's union with Greece on 1 December 1913"
+   ]
+  },
+  "squares": {
+   "label": "supported",
+   "says": "The Market Square (Agora) is one of the largest central squares in Chania.",
+   "src": [
+    "wp-chania"
+   ],
+   "quote": [
+    "The central largest squares in Chania are the Market Square (\"Agora\")"
+   ]
+  },
+  "mosaics": {
+   "label": "supported",
+   "says": "Late Roman house mosaics, showing the city's prosperity, were found near Agora Square.",
+   "src": [
+    "wp-kydonia"
+   ],
+   "quote": [
+    "The prosperity of the city during Late Roman times is illustrated by the mosaics of houses found near Agora Square."
+   ]
+  },
+  "produce": {
+   "label": "supported",
+   "says": "Around Chania the most common crops are olives and citrus; other products include wine, avocados, dairy and honey.",
+   "src": [
+    "wp-chania"
+   ],
+   "quote": [
+    "the most common ones being olive trees and citrus. Other important products include wine, avocados, dairy, honey etc."
+   ]
+  },
+  "wv-buy": {
+   "label": "supported",
+   "says": "Wikivoyage: olives, olive oil and honey are among Chania's excellent products.",
+   "src": [
+    "wv-chania"
+   ],
+   "quote": [
+    "Olives, olive oil and honey are some of the many products of excellent quality in Chania."
+   ]
+  }
+ },
+ "parts": [
+  {
+   "name": "Arrival",
+   "stand": "Outside the market building, at the edge of the old town.",
+   "paras": [
+    {
+     "t": "This is Chania's Municipal Market, the Agora. It's an indoor market from 1913, right on the edge of the old town, and it's popular with locals and visitors alike. It was renovated in 2026.",
+     "c": [
+      "market",
+      "renov"
+     ],
+     "level": 1
+    },
+    {
+     "t": "1913 is a telling date. From 1898 to 1913, Chania was the capital of the Cretan State, a semi-autonomous Crete, and many important buildings went up in those years. Then, on 1 December 1913, Crete was united with Greece. So this market belongs to the very end of that era.",
+     "c": [
+      "capital",
+      "cs-years",
+      "union"
+     ],
+     "level": 2
+    },
+    {
+     "t": "The square around the market, the Market Square, is one of the largest central squares in town. And mosaics from Late Roman houses, signs of a prosperous city, were found near this square.",
+     "c": [
+      "squares",
+      "mosaics"
+     ],
+     "level": 2
+    }
+   ]
+  },
+  {
+   "name": "Inside",
+   "stand": "If the market is open, step inside.",
+   "paras": [
+    {
+     "t": "I'll be honest with you: my sources don't describe the stalls or the building in any detail, so let your eyes, and your nose, lead you. What I can tell you is what this region produces: olives and olive oil, citrus, wine, avocados, dairy, and honey. See how many you can find.",
+     "c": [
+      "produce",
+      "wv-buy"
+     ],
+     "level": 1
+    },
+    {
+     "t": "Ask before you photograph a stallholder, and keep an eye on your bag when it gets crowded.",
+     "c": [],
+     "level": 2,
+     "cue": true
+    }
+   ]
+  },
+  {
+   "name": "Before you go",
+   "stand": "Wherever you like, inside or out.",
+   "paras": [
+    {
+     "t": "A market is where a town shows you what it eats and how it talks. Buy something small, take your time, and listen for a minute before you move on.",
+     "c": [],
+     "level": 1,
+     "cue": true
+    }
+   ]
+  }
+ ],
+ "practical": []
+}

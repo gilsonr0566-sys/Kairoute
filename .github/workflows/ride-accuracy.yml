@@ -6,10 +6,13 @@ on:
     branches: ["claude/project-thread-xrdp7v"]
     paths: [".github/workflows/ride-accuracy.yml", "tools/ride-accuracy.mjs", "tools/ride-accuracy-run.txt"]
   workflow_dispatch:
+  schedule:
+    - cron: "5 * * * *"
 permissions:
   contents: read
 jobs:
   measure:
+    if: github.event_name != 'workflow_dispatch'
     runs-on: ubuntu-latest
     timeout-minutes: 170
     steps:
@@ -17,16 +20,56 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-      - name: The test trips (as the release gate makes them)
-        run: mkdir -p tools/beta2/snapshots && cp tools/beta2/corpus/*.json tools/beta2/snapshots/ && node tools/beta2/snapshot.cjs && node tools/beta2/noai-trips.cjs
+      - name: The saved test trips (the 20-city list and live trips)
+        # The hourly run starts from main, which doesn't hold the test trips: they come from the Beta 2 work branch.
+        run: |
+          [ -d tools/beta2/corpus ] || { git fetch -q origin claude/project-thread-xrdp7v && git checkout FETCH_HEAD -- tools/beta2/corpus; }
+          mkdir -p tools/beta2/snapshots && cp tools/beta2/corpus/*.json tools/beta2/snapshots/
       - name: The live helper's ride code (main)
         run: git fetch -q origin main && mkdir -p /tmp/live && git show origin/main:worker/transit.js > /tmp/live/transit.js
-      - name: Measure (live helper code)
-        run: node tools/ride-accuracy.mjs --transit /tmp/live/transit.js --out ride-accuracy-live.json | tee ride-accuracy-live.txt
-      - name: Measure (this branch's helper code, when it differs)
-        run: if ! cmp -s worker/transit.js /tmp/live/transit.js && [ -f tools/ride-accuracy-candidate ]; then node tools/ride-accuracy.mjs --transit worker/transit.js --out ride-accuracy-candidate.json | tee ride-accuracy-candidate.txt; fi
+      # The full check (on a push or by hand) compares the live code and, when it differs, this branch's candidate in one
+      # pass (the timetable is asked once). The hourly check is a quick sample of the live helper: one sight per day.
+      - name: Measure
+        run: |
+          if [ "${{ github.event_name }}" = schedule ]; then
+            node tools/ride-accuracy.mjs --transit /tmp/live/transit.js --max 1 --minutes 40 --out ride-accuracy-hourly.json | tee ride-accuracy-hourly.txt
+          elif ! cmp -s worker/transit.js /tmp/live/transit.js && [ -f tools/ride-accuracy-candidate ]; then
+            node tools/ride-accuracy.mjs --transit /tmp/live/transit.js,worker/transit.js --names live,candidate --max 2 --minutes 150 --out ride-accuracy.json | tee ride-accuracy.txt
+          else
+            node tools/ride-accuracy.mjs --transit /tmp/live/transit.js --minutes 150 --out ride-accuracy-live.json | tee ride-accuracy-live.txt
+          fi
       - uses: actions/upload-artifact@v4
         if: always()
         with:
           name: ride-accuracy
           path: ride-accuracy-*
+
+  # By hand: every ride, split across 8 runners at once (each with its own share and its own address, so the map
+  # servers answer more of them). Nov 23: one runner measured 47 of 171 rides in its time.
+  measure-all:
+    if: github.event_name == 'workflow_dispatch'
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [0, 1, 2, 3, 4, 5, 6, 7]
+    runs-on: ubuntu-latest
+    timeout-minutes: 170
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: The saved test trips (the 20-city list and live trips)
+        run: |
+          [ -d tools/beta2/corpus ] || { git fetch -q origin claude/project-thread-xrdp7v && git checkout FETCH_HEAD -- tools/beta2/corpus; }
+          [ -f tools/ride-accuracy.mjs ] && grep -q -- "--shard" tools/ride-accuracy.mjs || { git fetch -q origin claude/project-thread-xrdp7v && git checkout FETCH_HEAD -- tools/ride-accuracy.mjs; }
+          mkdir -p tools/beta2/snapshots && cp tools/beta2/corpus/*.json tools/beta2/snapshots/
+      - name: The live helper's ride code (main)
+        run: git fetch -q origin main && mkdir -p /tmp/live && git show origin/main:worker/transit.js > /tmp/live/transit.js
+      - name: Measure this share of the rides
+        run: node tools/ride-accuracy.mjs --transit /tmp/live/transit.js --shard ${{ matrix.shard }}/8 --minutes 150 --out ride-accuracy-shard-${{ matrix.shard }}.json | tee ride-accuracy-shard-${{ matrix.shard }}.txt
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: ride-accuracy-shard-${{ matrix.shard }}
+          path: ride-accuracy-shard-*

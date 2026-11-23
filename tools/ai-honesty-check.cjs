@@ -32,7 +32,7 @@ let fails = 0, checks = 0; const ok = (c, m) => { checks++; if (!c) { fails++; c
       return r.abort(); });
     const p = await ctx.newPage(); const errs = []; p.on('pageerror', e => errs.push(e.message));
     await p.goto(base); await p.evaluate(() => localStorage.setItem('kairoute.intro1', '1')); await p.reload(); await p.waitForTimeout(1500);
-    const cont = p.getByText('Continue trip'); if (await cont.count()) { await cont.first().click(); await p.waitForTimeout(500); }
+    const cont = p.locator('[data-act=continue]'); if (await cont.count()) { await cont.first().click(); await p.waitForTimeout(500); }
     // Settings: the AI guide and the voice, word for word.
     await p.evaluate(() => document.querySelector('[data-act="settings"]') && document.querySelector('[data-act="settings"]').click()); await p.waitForTimeout(300);
     const sec = async k => { await p.evaluate(k => { const x = document.querySelector(`[data-setsec="${k}"]`); if (x) x.click(); }, k); await p.waitForTimeout(200); return p.evaluate(() => document.body.innerText); };

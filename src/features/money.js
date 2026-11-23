@@ -198,7 +198,7 @@ function tripBudget(full) {
     if (!plan || plan.error) return;
     rows.push(Object.assign({ d, i, city }, dayMoney(plan, d)));
   });
-  if (todo && !budgetTimer && budgetSteps < 3 * trip.days.length) budgetTimer = setTimeout(budgetStep, 300); // capped, in case answers keep arriving
+  if (todo && !budgetTimer && budgetSteps < 3 * trip.days.length) budgetTimer = setTimeout(budgetStep, 120); // capped, in case answers keep arriving
   return { rows, missing, todo, days: rows.filter(r => !r.todo).length };
 }
 function budgetHtml() {
@@ -212,7 +212,7 @@ function budgetHtml() {
   const row = r => r.todo ? `<div class="sprow todo"><span class="spday">${esc(r.d.date ? fmtDate(r.d.date) : "Day " + (r.i + 1))} · ${esc(r.city.city || r.d.destination || "")}</span><span class="spamt">adding up…</span><span></span><span></span></div>`
     : `<div class="sprow${r.actual ? " spent" : ""}"><span class="spday">${esc(r.d.date ? fmtDate(r.d.date) : "Day " + (r.i + 1))} · ${esc(r.city.city || r.d.destination || "")}</span><span class="spamt">${esc(r.sym + spendNum(r.total))}</span><small class="sptag">${r.actual === 3 ? "spent" : r.actual ? "spent + est." : "est."}</small>${fxSpan(r.total, r.cur) || "<span></span>"}</div>`;
   const curs = [...new Set(done.map(r => r.cur).filter(c => c && c !== home))];
-  return `<details class="card more tripbudget"><summary>${spentDays ? "Trip spending" : "Estimated cost"}: ${head} <span class="lede" style="font-weight:400">· ${P().party} ${P().party === 1 ? "person" : "people"}</span></summary>
+  return `<details class="card more tripbudget"><summary>${spentDays ? "Trip spending" : "Estimated cost"}: ${head} <span class="lede" style="font-weight:400">· for ${P().party} ${P().party === 1 ? "person" : "people"}</span></summary>
     <div class="sptable">${tb.rows.map(row).join("")}</div>
     <div class="actions spacts"><button type="button" class="btn ghost small" data-spendact="print">🖨 Print or save my spending as PDF</button></div>
     <p class="footnote">Tickets, food and getting around for each day ashore: what you spent where you've added it on the Day plan${spentDays ? ` (${spentDays} day${spentDays === 1 ? "" : "s"} so far)` : ""}, the estimate everywhere else. ${tb.missing ? `${tb.missing} day${tb.missing === 1 ? "" : "s"} still need a guide. ` : ""}Flights, the cruise and hotels aren't included. ${curs.map(fxNote).join(" ")}</p></details>`;
@@ -221,9 +221,18 @@ function budgetStep() {
   budgetTimer = 0; const box = document.querySelector("#view .tripbudget"); if (!box || view !== "journal") { budgetSteps = 0; return; }
   budgetSteps++;
   if (Date.now() - lastTouch < 600) { budgetTimer = setTimeout(budgetStep, 400); return; }
-  const d = trip.days.find(x => !noShore(x) && cityFor(x) && !(x.selected && planPeek(x)));
-  if (d) { const city = cityFor(d); try { refillIfNeeded(d, city); if (!d.selected) { seedPicks(d, city); save(); } buildPlan(d); } catch (e) {} }
-  const open = box.open; box.outerHTML = budgetHtml(); const nb = document.querySelector("#view .tripbudget"); if (nb) nb.open = open;
+  // As many days as fit in 30 ms, then the card is drawn once: a day takes about 5 ms, so the card used to change
+  // every 300 ms for 6 s on a 21-day trip, one day at a time (client feel test, Journal on tablets). Now it is
+  // usually one change, a fraction of a second after the Journal opens; a long trip still yields between batches.
+  const t0 = performance.now(); let seeded = false;
+  while (performance.now() - t0 < 30) {
+    const d = trip.days.find(x => !noShore(x) && cityFor(x) && !(x.selected && planPeek(x)) && !x._budgetTried); if (!d) break;
+    const city = cityFor(d); try { refillIfNeeded(d, city); if (!d.selected) { seedPicks(d, city); seeded = true; } buildPlan(d); } catch (e) {}
+    if (!(d.selected && planPeek(d))) Object.defineProperty(d, "_budgetTried", { value: true, configurable: true, enumerable: false }); // never loop on a day that can't be planned
+  }
+  if (seeded) save();
+  const open = box.open, html = budgetHtml(); if (box.outerHTML === html) return;
+  box.outerHTML = html; const nb = document.querySelector("#view .tripbudget"); if (nb) nb.open = open;
 }
 // ---- The spending report: where the money went, day by day and by kind, in both currencies ----
 // Same look and same print route as the printable plan (print-plan.js): the device's print dialog, where "Save as

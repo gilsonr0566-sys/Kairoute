@@ -46,13 +46,30 @@ if (typeof document !== "undefined" && typeof MutationObserver !== "undefined") 
 //   left           time left to fill: what Choose sights' bar, the free time row and the notes all say.
 //   leaveBy        when to leave the last stop (or the free time) to be back by endBy: the countdown's own time.
 //   allAboard      the ship's all-aboard time on the port's clock (port and boarding days).
+// Where the traveler is when the way back begins: the plan's last stop or meal ashore (lunch back on board comes after the
+// ride back); with none, the top of the cable car (or funicular) ridden up at the start; else the start itself. One answer
+// for the free time row, the leave-by and the countdown (Nov 22 odd-trips screen check, a 7:00-11:00 tender call with no
+// stops: the free time sat after the cable car down, and the start was moved to the leave-by time).
+function lastAshoreIdx(plan) {
+  const its = (plan && plan.items) || []; let j = -1; its.forEach((it, k) => { if (it.type === "stop" || (it.type === "meal" && !(it.place && it.place.onBoard))) j = k; });
+  if (j >= 0) return j;
+  // With no stop: the last step of the day's start (the bags left in storage, the hotel check-in, the cable car up), else
+  // the start itself (Nov 23: free time was shown at the airport before the ride to the hotel, and before the bags were left).
+  its.forEach((it, k) => { if (it.type === "start" || (it.type === "fixed" && (it.up || it.head))) j = k; });
+  return j;
+}
+// Free time from where the day starts, with nothing planned away from it and no ride back (an evening port call whose
+// picks are all shut, Nov 23 recheck): "leave here by 10:45 pm to be back by 10:45 pm" says nothing true; the screens say
+// to be back by the time instead, leaving in time from wherever the traveler goes.
+function freeAtStart(plan, F) { const its = (plan && plan.items) || [], j = lastAshoreIdx(plan); return !!(F && F.back === 0 && j >= 0 && its[j] && its[j].type === "start"); }
+const backWhere = (d, plan) => d.type === "port" ? "the ship" : d.type === "embark" ? "the cruise terminal" : (fixedPointName(d, plan) || "your " + ((typeof MODES !== "undefined" && MODES[d.mode] || {}).label || "ride").toLowerCase());
 function dayFacts(d, plan) {
   if (!d || !plan || plan.error) return null;
   const fixed = typeof fixedTitle === "function" && !!fixedTitle(d) && plan.w && plan.w.tail && plan.w.tail.length;
   const tl = typeof timeLeft === "function" ? timeLeft(plan, d) : null;
   const left = tl ? Math.max(0, Math.round(tl.left)) : Math.max(0, plan.endBy - plan.end);
   // The ride back from the plan's last stop or meal: the same rides the timeline lists after it.
-  const its = plan.items || []; let j = -1; its.forEach((it, k) => { if (it.type === "stop" || (it.type === "meal" && !(it.place && it.place.onBoard))) j = k; }); // lunch back on board comes after the ride back (Round 1: Ketchikan)
+  const its = plan.items || [], j = lastAshoreIdx(plan); // lunch back on board comes after the ride back (Round 1: Ketchikan)
   // Everything after the last stop is the way back: its rides and its fixed steps (a cable car's queue down, collecting
   // bags on the way): the latest time to leave the last stop leaves room for all of them (screen check, Nov 22: "leave
   // here by 2:59" printed after bags collected at 3:19, when the real latest was about 4:36).
@@ -88,3 +105,12 @@ const tripDaysText = t => { const n = tripFacts(t).days; return n + (n === 1 ? "
 function dayNo(d, t) { t = t || trip; const ds = tripFacts(t).dates, k = ds.indexOf(d && d.date); return k >= 0 ? Math.round((new Date(d.date + "T12:00:00Z") - new Date(ds[0] + "T12:00:00Z")) / 864e5) + 1 : (t.days || []).indexOf(d) + 1; }
 
 if (typeof window !== "undefined") window.__kairouteFacts = { day: i => { const d = trip.days[i == null ? trip.active : i], p = d && cityFor(d) && !noShore(d) ? buildPlan(d) : null; return dayFacts(d, p); }, trip: () => tripFacts() };
+
+// The one "back by" time every screen says for a day: with free time on, the time the day is planned back by (the free
+// time runs up to the leave-by); else when the plan's last step ends (first-timer walk, Nov 22: the sea day's preview
+// said "back by 3:49 pm" for a port day whose own page said 5:45 pm).
+function backByOf(d, plan) {
+  if (!plan || plan.error) return null;
+  const F = dayFacts(d, plan), freeOn = F && F.left >= 30 && !(plan.dropped || []).length && !(plan.w && plan.w.straight);
+  return freeOn ? F.endBy : Math.min(plan.end, plan.endBy);
+}

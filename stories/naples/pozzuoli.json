@@ -1,0 +1,502 @@
+{
+ "id": "pozzuoli",
+ "v": 1,
+ "city": "naples",
+ "title": "Pozzuoli",
+ "match": {
+  "ids": [
+   "pozzuoli"
+  ],
+  "names": [
+   "pozzuoli",
+   "puteoli"
+  ],
+  "wikidata": [
+   "Q72425",
+   "Q954158",
+   "Q662766"
+  ]
+ },
+ "checked": "2026-11-23",
+ "claims": {
+  "founding": {
+   "label": "supported",
+   "says": "Pozzuoli, ancient Puteoli, began in 531 BC as the Greek colony of Dicaearchia, founded by refugees from the tyranny of Polycrates on Samos.",
+   "src": [
+    "wp-pozzuoli"
+   ],
+   "quote": [
+    "Pozzuoli, known in antiquity as Puteoli, was established in 531 BC as the Greek colony of Dicaearchia by refugees fleeing the tyranny of Polycrates on Samos."
+   ]
+  },
+  "port": {
+   "label": "supported",
+   "says": "At its peak Puteoli was the main commercial port of Rome, though 150 miles from the capital, and the great market for the grain ships from Alexandria.",
+   "src": [
+    "wp-pozzuoli"
+   ],
+   "quote": [
+    "At its peak during the late Republic and early Empire, Puteoli was the primary commercial port of Rome, despite being located 150 mi (241.40 km) from the capital.",
+    "Puteoli became the great emporium for the Alexandrian grain ships and other ships from all over the Roman world."
+   ]
+  },
+  "people": {
+   "label": "supported",
+   "says": "Its mixed population included Greeks, Jews, Nabataeans, Phoenician merchants and early Christians.",
+   "src": [
+    "wp-pozzuoli"
+   ],
+   "quote": [
+    "became home to a mixed population that included Greeks, Jews, Nabataeans, Phoenician merchants, and early Christians"
+   ]
+  },
+  "name": {
+   "label": "disputed",
+   "says": "The name Puteoli may come from Latin puteus, a well, or from puteo, to stink, after the sulfur fumes of the area.",
+   "src": [
+    "wp-pozzuoli"
+   ],
+   "quote": [
+    "It took the name Puteoli whose roots are in the Latin puteus (well or cistern). An alternative etymology of Puteoli derives from the Latin puteo (to stink), referring to the sulfuric fumes in the area, most notably from Solfatara."
+   ]
+  },
+  "pozzolana": {
+   "label": "supported",
+   "says": "The local volcanic sand, pozzolana, 'dust of Puteoli', was the basis of Roman concrete, which made the Pantheon's dome possible.",
+   "src": [
+    "wp-pozzuoli"
+   ],
+   "quote": [
+    "The local volcanic sand, pozzolana (Latin: pulvis puteolanus, \"dust of Puteoli\") was the basis for Roman concrete",
+    "This made it possible to construct the cupola of the Pantheon, which is still the world's largest unreinforced concrete dome."
+   ]
+  },
+  "acts-11": {
+   "label": "scripture",
+   "says": "Acts 28:11: after three months they left in a ship of Alexandria whose sign was Castor and Pollux.",
+   "src": [
+    "kjv-acts28b"
+   ],
+   "quote": [
+    "\"chapter\":28,\"verse\":11,\"text\":\"And after three months we departed in a ship of Alexandria, which had wintered in the isle, whose sign was Castor and Pollux."
+   ]
+  },
+  "acts-13": {
+   "label": "scripture",
+   "says": "Acts 28:13: from Rhegium, after one day the south wind blew, and the next day they came to Puteoli.",
+   "src": [
+    "kjv-acts28b"
+   ],
+   "quote": [
+    "\"chapter\":28,\"verse\":13,\"text\":\"And from thence we fetched a compass, and came to Rhegium: and after one day the south wind blew, and we came the next day to Puteoli:"
+   ]
+  },
+  "acts-14": {
+   "label": "scripture",
+   "says": "Acts 28:14: there they found brethren and were asked to stay seven days, and so went toward Rome.",
+   "src": [
+    "kjv-acts28b"
+   ],
+   "quote": [
+    "\"chapter\":28,\"verse\":14,\"text\":\"Where we found brethren, and were desired to tarry with them seven days: and so we went toward Rome."
+   ]
+  },
+  "acts-15": {
+   "label": "scripture",
+   "says": "Acts 28:15: brethren came to meet them as far as Appii Forum and The three taverns, and Paul thanked God and took courage.",
+   "src": [
+    "kjv-acts28b"
+   ],
+   "quote": [
+    "\"chapter\":28,\"verse\":15,\"text\":\"And from thence, when the brethren heard of us, they came to meet us as far as Appii Forum, and The three taverns: whom when Paul saw, he thanked God, and took courage."
+   ]
+  },
+  "appian": {
+   "label": "supported",
+   "says": "After his seven days here, Paul and his companions set out for Rome by the Appian Way.",
+   "src": [
+    "wp-pozzuoli"
+   ],
+   "quote": [
+    "stayed for seven days (Acts 28:13, 14), and then began with his companions his journey by the Appian Way to Rome."
+   ]
+  },
+  "caligula": {
+   "label": "supported",
+   "says": "Caligula had a floating bridge of trading ships built over two miles from Puteoli to Baiae and rode his horse across it.",
+   "src": [
+    "wp-pozzuoli"
+   ],
+   "quote": [
+    "In 37 AD, Puteoli was the location for a political stunt by Emperor Gaius Caligula, who, on becoming Emperor, ordered a temporary floating bridge to be built using trading vessels, stretching for over two miles (3.2 km) from the town to the famous neighboring resort of Baiae, across which he proceeded to ride his horse"
+   ]
+  },
+  "decline": {
+   "label": "supported",
+   "says": "The city began to decline in the mid-1st century AD as emperors expanded the port of Ostia, closer to Rome.",
+   "src": [
+    "wp-pozzuoli"
+   ],
+   "quote": [
+    "The city began to decline in the mid-1st century AD as the emperors Claudius and Trajan expanded the port of Ostia in Latium to provide a direct gateway to the Tiber."
+   ]
+  },
+  "macellum": {
+   "label": "supported",
+   "says": "The so-called Temple of Serapis was really the macellum, the food market, of Roman Puteoli, built between the late first and early second century AD; a statue of Serapis found in the first 18th-century dig caused the mistake.",
+   "src": [
+    "wp-macellum"
+   ],
+   "quote": [
+    "was the macellum or market building of the Roman colony of Puteoli",
+    "When first excavated in the 18th century, the discovery of a statue of Serapis led to the building being misidentified as the city's serapeum or Temple of Serapis.",
+    "The macellum or food market was built between the late first and early second century AD"
+   ]
+  },
+  "symbol": {
+   "label": "supported",
+   "says": "The Macellum is considered the city's symbol.",
+   "src": [
+    "wp-pozzuoli"
+   ],
+   "quote": [
+    "The Macellum of Pozzuoli, also known as the Temple of Serapis or serapeum, is considered the city's symbol."
+   ]
+  },
+  "layout": {
+   "label": "supported",
+   "says": "Shops lined a colonnade of 34 granite columns around the square; in the centre stood a round tholos on a podium with sixteen African marble columns; the shrine opposite the main entrance had a porch of four large cipollino marble columns.",
+   "src": [
+    "wp-macellum"
+   ],
+   "quote": [
+    "Shops lined the marble floored colonnade forming an arcade with 34 grey granite columns.",
+    "The tholos in the centre of the square was a circular building standing on a podium reached by four symmetrically placed access stairways, with sixteen African marble columns supporting a domed vault.",
+    "The main entrance and vestibule were positioned on a  main axis, which lined up across a tholos in the centre of the square to the exedra for worship which had a portico formed by four large cipollino marble columns."
+   ]
+  },
+  "borings": {
+   "label": "supported",
+   "says": "Bands of holes bored by marine molluscs on the three standing marble columns show the columns stayed upright while the site sank below sea level and rose again.",
+   "src": [
+    "wp-macellum"
+   ],
+   "quote": [
+    "A band of borings or Gastrochaenolites left by marine Lithophaga bivalve molluscs on three standing marble columns indicated that these columns had remained upright over centuries while the site sank below sea level, then re-emerged."
+   ]
+  },
+  "borings-height": {
+   "label": "disputed",
+   "says": "The holes reach up to 19 feet (5.8 m) from the floor by one account, up to 7 metres by another.",
+   "src": [
+    "wp-macellum",
+    "wp-bradyseism"
+   ],
+   "quote": [
+    "the Lithophaga started drilling holes in the masonry up to 19 feet (5.8 m) from floor level",
+    "These occur up to 7 metres up the columns"
+   ]
+  },
+  "bradyseism": {
+   "label": "supported",
+   "says": "Bradyseism is the slow rise or fall of the ground as a magma chamber or hydrothermal system fills or empties; the word comes from Greek for slow movement.",
+   "src": [
+    "wp-bradyseism"
+   ],
+   "quote": [
+    "Bradyseism is the gradual uplift (positive bradyseism) or descent (negative bradyseism) of part of the Earth's surface caused by the filling or emptying of an underground magma chamber or hydrothermal activity",
+    "meaning \"slow\"",
+    "meaning \"movement\""
+   ]
+  },
+  "caldera": {
+   "label": "supported",
+   "says": "The site lies near the centre of the Campi Flegrei caldera.",
+   "src": [
+    "wp-macellum"
+   ],
+   "quote": [
+    "the site is near the centre of the Campi Flegrei (Phlegraean Fields) caldera"
+   ]
+  },
+  "lyell": {
+   "label": "supported",
+   "says": "The columns puzzled early geologists; Charles Lyell put a picture of them at the front of his Principles of Geology in 1830, and they led to the identification of bradyseism.",
+   "src": [
+    "wp-macellum"
+   ],
+   "quote": [
+    "This puzzling feature was the subject of debate in early geology, and eventually led to the identification of bradyseism in the area",
+    "Charles Lyell's Principles of Geology of 1830 featured as its frontispiece a replication of di Jorio's illustration of the columns"
+   ]
+  },
+  "uplift-80s": {
+   "label": "disputed",
+   "says": "Between 1982 and 1984 the ground rose by almost 2 metres; accounts give 30,000 evacuated or 36,000 displaced.",
+   "src": [
+    "wp-pozzuoli",
+    "wp-bradyseism"
+   ],
+   "quote": [
+    "From August 1982 to December 1984, the city experienced hundreds of tremors and bradyseismic activity",
+    "displacing 36,000 people, many permanently",
+    "The events raised the sea bottom by almost 2 m",
+    "which led to the evacuation of 30,000 people due to the perceived risk of imminent eruption"
+   ]
+  },
+  "recent": {
+   "label": "supported",
+   "says": "There was similar seismic activity in 2023 and late 2026.",
+   "src": [
+    "wp-pozzuoli"
+   ],
+   "quote": [
+    "There was similar seismic activity in 2023 and late 2026."
+   ]
+  },
+  "amph-size": {
+   "label": "supported",
+   "says": "The Flavian Amphitheater is the third-largest Roman amphitheater in Italy, after the Colosseum and Capua; it could hold up to 50,000 spectators.",
+   "src": [
+    "wp-flavian-pozz"
+   ],
+   "quote": [
+    "is the third-largest Roman amphitheater in Italy. Only the Roman Colosseum and the Amphitheatre of Capua are larger.",
+    "The arena can hold up to 50,000 spectators."
+   ]
+  },
+  "amph-built": {
+   "label": "disputed",
+   "says": "It was begun under Vespasian and probably finished under Titus, likely by the same architects as the Colosseum.",
+   "src": [
+    "wp-flavian-pozz"
+   ],
+   "quote": [
+    "It was begun under the reign of the emperor Vespasian and probably finished under the reign of his son Titus.",
+    "It was likely built by the same architects who previously constructed the Roman Colosseum."
+   ]
+  },
+  "amph-under": {
+   "label": "supported",
+   "says": "The interior is mostly intact; you can still see parts of the gear used to lift cages to the arena floor, and the underground chambers are among the best preserved of any Roman amphitheater.",
+   "src": [
+    "wp-flavian-pozz",
+    "wv-pozzuoli"
+   ],
+   "quote": [
+    "The interior is mostly intact and one can still see parts of gears, which were used to lift cages up to the arena floor.",
+    "Its underground chambers, cages, and passageways are among the best preserved of any Roman amphitheatre."
+   ]
+  },
+  "amph-saints": {
+   "label": "tradition",
+   "says": "In 305 Saint Proculus and Saint Januarius were persecuted in the arena, survived the wild beasts, and were beheaded at the nearby Solfatara.",
+   "src": [
+    "wp-flavian-pozz"
+   ],
+   "quote": [
+    "In 305, the arena was the setting for the persecutions of the patron saint of Pozzuoli, Saint Proculus, and the patron saint of Naples, Saint Januarius. After surviving being thrown to the wild beasts in the arena, the two were beheaded at the nearby Solfatara."
+   ]
+  },
+  "amph-buried": {
+   "label": "supported",
+   "says": "It was abandoned when eruptions of the Solfatara partly buried it; its outer marble was stripped in the Middle Ages.",
+   "src": [
+    "wp-flavian-pozz"
+   ],
+   "quote": [
+    "It was abandoned when it was partially buried by eruptions from the Solfatara volcano. During the Middle Ages, the marble used on the exterior was stripped"
+   ]
+  }
+ },
+ "parts": [
+  {
+   "name": "The harbor",
+   "stand": "Down by the waterfront, looking out over the bay.",
+   "paras": [
+    {
+     "t": "This is Pozzuoli, the Roman Puteoli. At its peak it was Rome's main commercial port, even though Rome was 150 miles away, and the grain ships from Alexandria came in here.",
+     "c": [
+      "port"
+     ],
+     "level": 1
+    },
+    {
+     "t": "And one ship of Alexandria brought the apostle Paul. Here's how the book of Acts, chapter 28, tells it, in the King James Version: \"after one day the south wind blew, and we came the next day to Puteoli: Where we found brethren, and were desired to tarry with them seven days: and so we went toward Rome.\"",
+     "c": [
+      "acts-11",
+      "acts-13",
+      "acts-14"
+     ],
+     "level": 1
+    },
+    {
+     "t": "Think about that word, brethren. Paul is on his way to Rome, and there are already brethren, fellow believers, here to take him in. This was a city of many peoples: Greeks, Jews, Nabataeans, Phoenician merchants, and early Christians.",
+     "c": [
+      "acts-14",
+      "people"
+     ],
+     "level": 2
+    },
+    {
+     "t": "Acts keeps a few small details. The ship had wintered on an island, and its sign was Castor and Pollux. And after his week here, when the brethren heard he was coming, they came out to meet him as far as Appii Forum and The three taverns. Acts says that when Paul saw them, he thanked God, and took courage.",
+     "c": [
+      "acts-11",
+      "acts-15"
+     ],
+     "level": 2
+    },
+    {
+     "t": "The road he took north is usually given as the Appian Way, the great Roman highway to the capital. Acts itself just says, \"so we went toward Rome.\"",
+     "c": [
+      "appian",
+      "acts-14"
+     ],
+     "level": 3
+    },
+    {
+     "t": "The town is much older than Paul. It began in 531 BC as a Greek colony called Dicaearchia, founded by refugees from the island of Samos. The Roman name may come from the Latin for a well, or, some say, from the word for stink, because of the sulfur fumes around here. Nobody knows which.",
+     "c": [
+      "founding",
+      "name"
+     ],
+     "level": 3
+    },
+    {
+     "t": "Two more things this bay gave the world. The local volcanic sand, pozzolana, the dust of Puteoli, was the secret of Roman concrete, the stuff of the Pantheon's dome in Rome. And the ancient writers say the emperor Caligula once strung together a floating bridge of trading ships, over two miles long, from here across to Baiae, and rode his horse over it.",
+     "c": [
+      "pozzolana",
+      "caligula"
+     ],
+     "level": 3
+    }
+   ]
+  },
+  {
+   "name": "The Macellum",
+   "stand": "Where you can look over the Macellum, the Roman market square with three tall marble columns.",
+   "paras": [
+    {
+     "t": "In front of you is the city's symbol. People call it the Temple of Serapis, but it was really the Roman food market, the macellum. A statue of the god Serapis found there gave it the wrong name.",
+     "c": [
+      "symbol",
+      "macellum"
+     ],
+     "level": 1
+    },
+    {
+     "t": "Picture shops all around a colonnade of 34 granite columns. In the center of the square stood a round building on a raised platform, ringed by sixteen marble columns under a dome. Across from the main entrance was a shrine with a porch of four big marble columns.",
+     "c": [
+      "layout"
+     ],
+     "level": 2
+    },
+    {
+     "t": "Now look at those three tall columns, partway up. See the band of little holes? Those were bored by sea creatures, shellfish that live in salt water. So this market sank below the sea, stayed there a long time, and then rose back up, with the columns still standing.",
+     "c": [
+      "borings"
+     ],
+     "level": 1
+    },
+    {
+     "t": "How high do the holes go? Accounts differ: up to about 6 meters from the floor by one measurement, 7 by another.",
+     "c": [
+      "borings-height"
+     ],
+     "level": 3
+    }
+   ]
+  },
+  {
+   "name": "The ground that breathes",
+   "stand": "Stay where you can see the three columns.",
+   "paras": [
+    {
+     "t": "The name for this is bradyseism, from the Greek for slow movement: the ground slowly rises and falls as the magma and hot water below fill up or drain away.",
+     "c": [
+      "bradyseism"
+     ],
+     "level": 1
+    },
+    {
+     "t": "You are near the center of a volcanic crater here, the Campi Flegrei. These columns puzzled the early geologists for years, and in the end they helped prove that the ground can rise and sink without being shaken to pieces. Charles Lyell put a picture of them at the front of his Principles of Geology in 1830.",
+     "c": [
+      "caldera",
+      "lyell"
+     ],
+     "level": 2
+    },
+    {
+     "t": "It isn't only ancient history. From 1982 to 1984 the seabed in the bay rose by almost 2 meters. Tens of thousands of people had to leave their homes; accounts differ between 30,000 and 36,000. And the ground here is still restless today; the earthquakes came back in 2023 and since.",
+     "c": [
+      "uplift-80s",
+      "recent"
+     ],
+     "level": 2
+    }
+   ]
+  },
+  {
+   "name": "The Flavian Amphitheater",
+   "stand": "Inside the Flavian Amphitheater, on the edge of the arena floor.",
+   "paras": [
+    {
+     "t": "This is the Flavian Amphitheater, the third-largest Roman amphitheater in Italy. Only the Colosseum in Rome and the one at Capua are bigger. By one count it could hold up to 50,000 people.",
+     "c": [
+      "amph-size"
+     ],
+     "level": 1
+    },
+    {
+     "t": "Watch your footing here, on the worn stone and anywhere you go down into the passages below.",
+     "c": [],
+     "level": 1,
+     "cue": true
+    },
+    {
+     "t": "It was begun under the emperor Vespasian and probably finished under his son Titus. Historians think the same architects may have built the Colosseum.",
+     "c": [
+      "amph-built"
+     ],
+     "level": 2
+    },
+    {
+     "t": "The underground here is the real treasure. Its chambers, cages and passageways are among the best preserved of any Roman amphitheater. You can still see parts of the gear that lifted the animal cages up to the arena floor.",
+     "c": [
+      "amph-under"
+     ],
+     "level": 2
+    },
+    {
+     "t": "Local tradition holds that in 305 two Christians were thrown to the wild beasts in this arena: Proculus, now patron saint of Pozzuoli, and Januarius, San Gennaro, patron saint of Naples. The tradition says they survived the beasts, and were beheaded nearby, at the Solfatara crater.",
+     "c": [
+      "amph-saints"
+     ],
+     "level": 3
+    },
+    {
+     "t": "Later the Solfatara's eruptions partly buried the arena, and it was abandoned. In the Middle Ages its outer marble was stripped away, but the inside was left as you see it.",
+     "c": [
+      "amph-buried"
+     ],
+     "level": 3
+    }
+   ]
+  },
+  {
+   "name": "Closing",
+   "stand": "On your way out, look back toward the bay.",
+   "paras": [
+    {
+     "t": "In time, the emperors enlarged the port of Ostia, closer to Rome, and Puteoli began to fade. But for a week, this busy harbor was where a man named Paul came ashore and found friends. Sometimes that is all a place needs to be remembered for.",
+     "c": [
+      "decline",
+      "acts-14"
+     ],
+     "level": 1
+    }
+   ]
+  }
+ ],
+ "practical": []
+}

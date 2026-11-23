@@ -5667,5 +5667,672 @@
    },
    "osm": "way/770345071"
   }
+ ],
+ "eatHours": [
+  [
+   "Capri Blu",
+   40.62488,
+   14.37853,
+   "Mo-Su 12:00-14:30,17:30-23:00; Tu off",
+   "restaurant"
+  ],
+  [
+   "Gran Caffè Gambrinus",
+   40.83672,
+   14.24851,
+   "Mo-Su 08:00-23:00; PH closed",
+   "cafe"
+  ],
+  [
+   "Volta",
+   40.85162,
+   14.25044,
+   "Mo-Su 08:00-02:00; PH closed",
+   "cafe"
+  ],
+  [
+   "Antica Trattoria da Carmine",
+   40.85084,
+   14.25702,
+   "We-Sa 12:30-16:00,19:00-23:30; Tu,Su 12:30-16:30; Mo off",
+   "restaurant"
+  ],
+  [
+   "Pizzeria Trianon",
+   40.85012,
+   14.2637,
+   "Mo-Su 11:00-15:00, 19:00-23:55",
+   "restaurant"
+  ],
+  [
+   "Gino Sorbillo",
+   40.85039,
+   14.25534,
+   "Mo-Sa 12:00-15:30,19:00-24:00",
+   "restaurant"
+  ],
+  [
+   "Antica Pizzeria Di Matteo",
+   40.85129,
+   14.25802,
+   "Mo-Sa 10:00-23:00",
+   "restaurant"
+  ],
+  [
+   "L'Antica Pizzeria da Michele",
+   40.84975,
+   14.26335,
+   "Mo-Su 11:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Dal Presidente",
+   40.85164,
+   14.25908,
+   "Mo-Su 11:00-24:00+",
+   "restaurant"
+  ],
+  [
+   "L.u.i.s.e.",
+   40.83901,
+   14.24828,
+   "Mo-Su 07:00-21:30",
+   "restaurant"
+  ],
+  [
+   "La Cucina degli Amici",
+   40.82157,
+   14.12659,
+   "Mo-Fr 09:00-00:00; Sa 09:00-02:00; Su 09:00-01:00",
+   "restaurant"
+  ],
+  [
+   "Antica Capri",
+   40.83889,
+   14.24739,
+   "Mo-We, Fr-Sa 12:00-16:00, 18:30-23:30; Su 18:30-23:30",
+   "restaurant"
+  ],
+  [
+   "Il Gobbetto",
+   40.83799,
+   14.24812,
+   "Tu-Sa 12:30-15:30, 19:00-00:00; Sa 12:30-15:30",
+   "restaurant"
+  ],
+  [
+   "Osteria della Mattonella",
+   40.83661,
+   14.24408,
+   "Mo-Sa 12:45-15:30, 19:30-23:30; Su 13:00-15:30",
+   "restaurant"
+  ],
+  [
+   "Pizzeria Starita",
+   40.85592,
+   14.24638,
+   "Mo-Sa 12:00-15:30,19:00-24:00; Su 19:00-24:00",
+   "restaurant"
+  ],
+  [
+   "Tandem Ragù",
+   40.84824,
+   14.25633,
+   "Mo-Su 11:00-00:00",
+   "restaurant"
+  ],
+  [
+   "Tandem d'asporto",
+   40.8465,
+   14.25601,
+   "Su-Th 00:00-00:30,12:30-16:00,19:00-24:00; Fr-Sa 00:00-03:00,12:30-16:00,18:30-24:00; PH off",
+   "fast_food"
+  ],
+  [
+   "Kebab Orientale Chez Karim",
+   40.82148,
+   14.12246,
+   "Mo-Th 19:00-03:00; Fr 19:00-04:00; Sa 19:00-05:00; Su 19:00-04:00",
+   "fast_food"
+  ],
+  [
+   "Capatoast",
+   40.82254,
+   14.12036,
+   "Mo-Th 11:00-01:00; Fr-Su 11:30-03:00",
+   "fast_food"
+  ],
+  [
+   "A'Lucianella",
+   40.85123,
+   14.25747,
+   "Mo-Su 19:00-00:00",
+   "restaurant"
+  ],
+  [
+   "Pizzeria 'Ntretella",
+   40.8381,
+   14.24686,
+   "Mo-Su 12:00-00:00",
+   "restaurant"
+  ],
+  [
+   "La cantina di via Sapienza",
+   40.85169,
+   14.2538,
+   "Mo-Sa 12:30-15:00",
+   "restaurant"
+  ],
+  [
+   "Rossopomodoro",
+   40.83746,
+   14.24887,
+   "Mo-Su 12:00-24:00",
+   "restaurant"
+  ],
+  [
+   "Trattoria e Pizzeria 'O Vesuvio",
+   40.83938,
+   14.24748,
+   "Th-Tu 12:00-15:30, 19:00-00:00",
+   "restaurant"
+  ],
+  [
+   "Pizzeria Filumena Chicchinese",
+   40.856,
+   14.25485,
+   "Mo-Fr 08:00-23:00; Sa 08:00-24:00; Su 08:00-17:00",
+   "restaurant"
+  ],
+  [
+   "McDonald's",
+   40.83837,
+   14.24876,
+   "Su-Fr 07:00-00:00, Sa 07:00-01:00",
+   "fast_food"
+  ],
+  [
+   "Pizzeria Lombardi",
+   40.8554,
+   14.25654,
+   "Tu-Su 12:30-15:30,19:00-01:00",
+   "restaurant"
+  ],
+  [
+   "Caffè Ciorfito",
+   40.84963,
+   14.25916,
+   "Mo-Sa 06:30-20:00",
+   "cafe"
+  ],
+  [
+   "Caffe Spaccanapoli",
+   40.8539,
+   14.25841,
+   "Mo-Su 06:00-21:00",
+   "bar"
+  ],
+  [
+   "Dal Soldino",
+   40.83774,
+   14.24796,
+   "Mo-Su 12:00-16:00, 19:00-00:00",
+   "restaurant"
+  ],
+  [
+   "Bar Veneruso",
+   40.62483,
+   14.37062,
+   "Mo-Su 07:00-23:59",
+   "restaurant"
+  ],
+  [
+   "Caffè del Professore",
+   40.83762,
+   14.24852,
+   "24/7",
+   "cafe"
+  ],
+  [
+   "Monidee Cafè",
+   40.83749,
+   14.24878,
+   "Mo-Fr 06:30-02:00; Sa,Su 06:30-03:00",
+   "cafe"
+  ],
+  [
+   "Ciao Pizza",
+   40.83754,
+   14.24893,
+   "Mo-Su 10:00-01:00",
+   "fast_food"
+  ],
+  [
+   "Kestè",
+   40.84586,
+   14.25583,
+   "Mo-Th 14:30-02:00; Fr, Sa 14:30-03:00; Su 15:30-02:00",
+   "bar"
+  ],
+  [
+   "marSuì cafè",
+   40.83922,
+   14.24966,
+   "Mo-Sa 10:00-13:00, 17:00-20:00",
+   "cafe"
+  ],
+  [
+   "Gran Caffè Al Centro - Gran Caffè - Bistrot - Pizzeria",
+   40.83889,
+   14.25023,
+   "Mo-Fr 07:00-22:00; Sa-Su 07:00-00:00",
+   "cafe"
+  ],
+  [
+   "Caffetteria Cuore",
+   40.83889,
+   14.2511,
+   "Mo-Fr 06:30-20:00; Sa-Su 07:00-19:00",
+   "cafe"
+  ],
+  [
+   "Trattoria Pizzeria i DDuje Scugnizzi",
+   40.8389,
+   14.25099,
+   "Mo-Su 10:30-00:30",
+   "restaurant"
+  ],
+  [
+   "Trattoria del Golfo",
+   40.83894,
+   14.25052,
+   "We-Mo 11:30-00:30",
+   "restaurant"
+  ],
+  [
+   "Dambo Beef And Grill",
+   40.83955,
+   14.25157,
+   "Mo-Su 12:00-24:00",
+   "restaurant"
+  ],
+  [
+   "Nu murzill' sapurito",
+   40.838,
+   14.2477,
+   "We-Mo 12:00-16:00, 19:00-00:00",
+   "restaurant"
+  ],
+  [
+   "Aumm Aumm",
+   40.55243,
+   14.21753,
+   "12:00-15:30,18:30-23:00",
+   "restaurant"
+  ],
+  [
+   "Antica Pizzeria Port'Alba",
+   40.84937,
+   14.25171,
+   "We-Mo 12:00-24:00",
+   "restaurant"
+  ],
+  [
+   "Trattoria Don Vincenzo",
+   40.84992,
+   14.2597,
+   "Tu-Su 11:30-23:00",
+   "fast_food"
+  ],
+  [
+   "Cuccuma Caffè",
+   40.84778,
+   14.25402,
+   "Mo-Sa 09:00-22:00; Su 12:00-22:00",
+   "cafe"
+  ],
+  [
+   "Officina Vegana",
+   40.84511,
+   14.25667,
+   "Mo-Th 11:00-15:00; Fr-Sa 11:00-15:00, 19:00-23:00",
+   "fast_food"
+  ],
+  [
+   "Caffè Diaz Napoli",
+   40.85021,
+   14.25486,
+   "Mo-Sa 07:00-19:00",
+   "cafe"
+  ],
+  [
+   "'O Grin",
+   40.84669,
+   14.25596,
+   "Mo-Fr 10:00-16:00; Sa 09:00-17:00",
+   "restaurant"
+  ],
+  [
+   "Insolito La Pizzeria Gourmet",
+   40.85377,
+   14.25979,
+   "We-Mo 12:00-15:30, 19:00-23:00",
+   "fast_food"
+  ],
+  [
+   "II Groto Pub E Grill",
+   40.85557,
+   14.2483,
+   "Su 19:00-03:00",
+   "cafe"
+  ],
+  [
+   "Antonio Sorbillo",
+   40.85048,
+   14.2556,
+   "Mo-Sa 12:00-15:30,19:00-23:30",
+   "restaurant"
+  ],
+  [
+   "Da Maria",
+   40.83706,
+   14.24452,
+   "Mo-Sa 08:30-00:00; Su 08:30-18:00",
+   "restaurant"
+  ],
+  [
+   "Pizzeria Donna Sofia",
+   40.85122,
+   14.25779,
+   "Mo-Su 12:00-24:00",
+   "restaurant"
+  ],
+  [
+   "Rraù Strit",
+   40.84703,
+   14.25105,
+   "24/7",
+   "restaurant"
+  ],
+  [
+   "Ippolito Caffè",
+   40.85085,
+   14.25707,
+   "Mo-Su 07:30-20:00",
+   "cafe"
+  ],
+  [
+   "Vitto Pitagorico",
+   40.85276,
+   14.25011,
+   "Mo-Su 12:00-15:30, 19:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Puok Burger Store",
+   40.84863,
+   14.25584,
+   "Mo-We 12:00-15:00, 19:00-23:00; Th-Sa 12:00-15:00, 19:00-00:00; Su 19:00-00:00",
+   "fast_food"
+  ],
+  [
+   "Dolce Vita",
+   40.84542,
+   14.25852,
+   "24/7",
+   "restaurant"
+  ],
+  [
+   "Tappò",
+   40.84568,
+   14.25657,
+   "Mo-Th 12:00-01:00; Fr-Su 12:00-02:00",
+   "bar"
+  ],
+  [
+   "La Locanda Gesu Vecchio",
+   40.8472,
+   14.25714,
+   "Tu-Sa 12:00-15:30,19:00-23:30; Su 12:00-16:00,19:00-24:00",
+   "restaurant"
+  ],
+  [
+   "Upnea",
+   40.84706,
+   14.25444,
+   "Mo-Tu,Th-Su 12:15-16:15,19:15-23:45; We 19:15-23:45",
+   "restaurant"
+  ],
+  [
+   "Nardones",
+   40.83722,
+   14.24767,
+   "Mo-Sa",
+   "restaurant"
+  ],
+  [
+   "Taralleria Napoletana",
+   40.84883,
+   14.25638,
+   "Mo-Th 09:00-21:00; Fr 09:00-00:00; Sa 09:00-01:00; Su 09:00-23:00",
+   "cafe"
+  ],
+  [
+   "Bar dell'Università di Vittorio Luciano",
+   40.84645,
+   14.25591,
+   "24/7",
+   "bar"
+  ],
+  [
+   "Osteria Ippolito",
+   40.85087,
+   14.25713,
+   "Tu,We 12:00-14:30; Th,Fr 12:00-14:30,19:00-22:30; Sa 12:00-14:30,19:00-23:30; Su 12:00-16:00; Mo off",
+   "restaurant"
+  ],
+  [
+   "Perditempo",
+   40.84966,
+   14.2526,
+   "Mo 20:00-02:00; Su, Tu-Th 19:00-02:00; Fr-Sa 19:00-03:00",
+   "bar"
+  ],
+  [
+   "Sfogliate e Sfogliatelle",
+   40.84992,
+   14.25811,
+   "Mo-Su 08:00-19:00",
+   "cafe"
+  ],
+  [
+   "O Rre",
+   40.85076,
+   14.25737,
+   "Mo-Su 11:00-24:00",
+   "fast_food"
+  ],
+  [
+   "Vida",
+   40.84623,
+   14.25502,
+   "Tu-Th 22:00-02:00; Fr, Sa 19:00-03:00; Su 19:00-02:00",
+   "bar"
+  ],
+  [
+   "La Figlia del Presidente",
+   40.84879,
+   14.25946,
+   "Tu-Fr 12:00-23:00; Sa 12:00-15:30, 19:00-00:00; Mo 12:00-15:30",
+   "restaurant"
+  ],
+  [
+   "Lombardi a Santa Chiara",
+   40.84767,
+   14.25327,
+   "12:00-15:30, 19:00-00:00",
+   "restaurant"
+  ],
+  [
+   "La Fesseria",
+   40.84779,
+   14.25673,
+   "Mo-We 18:30-26:00; Th-Sa 18:30-27:00; Su 18:30-26:00",
+   "pub"
+  ],
+  [
+   "Il Cuoppo",
+   40.85054,
+   14.25611,
+   "Mo-Su 12:00-20:00",
+   "fast_food"
+  ],
+  [
+   "R & M",
+   40.62715,
+   14.3798,
+   "Mo-Sa 12:00-02:30; Su 18:00-02:00",
+   "fast_food"
+  ],
+  [
+   "Anna Bellavita",
+   40.83838,
+   14.24865,
+   "Mo-Su 06:30-22:00",
+   "cafe"
+  ],
+  [
+   "Esterina sorbillo",
+   40.85044,
+   14.25553,
+   "Mo-Su 12:00-23:00",
+   "fast_food"
+  ],
+  [
+   "Bruno's café and drinks",
+   40.8518,
+   14.25989,
+   "Mo-Sa 07:00-22:00; Su 07:00-16:00",
+   "cafe"
+  ],
+  [
+   "Libreria Beriso",
+   40.84934,
+   14.25107,
+   "Mo-Su 10:00-13:30, 17:45-01:00",
+   "cafe"
+  ],
+  [
+   "Blanco pasticceria bar",
+   40.84833,
+   14.24948,
+   "Mo-Su 07:00-23:00",
+   "cafe"
+  ],
+  [
+   "Fedele",
+   40.84876,
+   14.26237,
+   "Mo-Su,PH 09:00-23:00",
+   "bar"
+  ],
+  [
+   "Fedele Pizzeria",
+   40.84874,
+   14.26228,
+   "Mo-Su,PH 09:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Canna Bistro",
+   40.85068,
+   14.25048,
+   "Mo-Su 18:00-01:00",
+   "bar"
+  ],
+  [
+   "Antichi Sapori",
+   40.83359,
+   14.24993,
+   "Mo-Su 12:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Goliu Duomo Napoli",
+   40.84856,
+   14.26105,
+   "Mo-Sa 12:00-20:00; Su 11:00-15:00",
+   "restaurant"
+  ],
+  [
+   "San Gennaro PizzaAPortafoglio",
+   40.84869,
+   14.25606,
+   "Mo-Su 11:00-21:00",
+   "fast_food"
+  ],
+  [
+   "MANNcaffè",
+   40.8538,
+   14.25004,
+   "We-Mo,PH 09:00-19:00",
+   "cafe"
+  ],
+  [
+   "Signora Bettola",
+   40.83234,
+   14.24981,
+   "Mo-Fr 12:30-16:00, 19:30-00:00; Sa, Su 12:30-16:30, 19:30-00:00",
+   "restaurant"
+  ],
+  [
+   "Ammaccàmm",
+   40.82339,
+   14.12252,
+   "Mo-Fr, Su 18:00-23:00; Sa 18:00-23:30",
+   "restaurant"
+  ],
+  [
+   "Zero - Healthy Bar Speciality Coffee",
+   40.83863,
+   14.25033,
+   "Su-Fr 08:00-22:30; Sa 08:00-23:30",
+   "cafe"
+  ],
+  [
+   "Sorbillo Zia Esterina",
+   40.85075,
+   14.25643,
+   "Mo-Su 11:00-21:30",
+   "fast_food"
+  ],
+  [
+   "Baylon",
+   40.8483,
+   14.25531,
+   "17:30-03:30",
+   "bar"
+  ],
+  [
+   "Vitami",
+   40.85037,
+   14.26001,
+   "Th-Mo 11:30-00:00; Tu-We 11:30-23:30",
+   "restaurant"
+  ],
+  [
+   "L'Albero Dei Visconti",
+   40.8477,
+   14.25408,
+   "Mo-Tu, Fr-Sa 12:00-15:30, 18:30-23:30; We 18:30-23:00; Th 12:00-15:30, 18:30-23:00; Su 12:30-23:30",
+   "restaurant"
+  ],
+  [
+   "Trattoria Pizzeria Bella Napoli Centro - Chef dal 1990",
+   40.85096,
+   14.26032,
+   "We-Mo 11:00-23:00",
+   "restaurant"
+  ]
  ]
 }

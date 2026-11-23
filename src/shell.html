@@ -117,13 +117,16 @@ main .wrap { padding-block: 20px 64px; display: grid; gap: 18px; }
 .offlog .offin { color: var(--muted); font-size: 0.85rem; white-space: nowrap; } .offlog .offclear { margin: 4px 0 12px; }
 .schedline { display: flex; align-items: center; gap: 12px; margin: 22px 0 6px; font-weight: 700; font-size: .85rem; letter-spacing: .04em; text-transform: uppercase; color: var(--muted); }
 .schedline::before, .schedline::after { content: ""; flex: 1; border-top: 2px solid var(--line, #ccc); }
-.site.nofitcard [data-act="fitask"] { margin-top: 8px; }
+.site.nofitcard .cdet [data-act="fitask"] { margin-top: 8px; } /* the "Ways to fit it in" button only, never the badge (it made a card grow 8 px when its check came back) */
 /* Sights list (Nov 16): three-line cards that open on tap, pinned time-left bar, folded picks */
 .site .nrow { display: flex; gap: 8px; align-items: baseline; justify-content: space-between; min-width: 0; }
 .site .nrow .name { min-width: 0; overflow-wrap: anywhere; }
 .site .fitbadge { flex: none; white-space: nowrap; }
 .site .fitbadge.pending { visibility: hidden; }
 .site .fitbadge { min-height: 32px; display: inline-flex; align-items: center; }
+/* One fixed slot for the badge (Nov 23, steady list): "+25 min" turning into "Needs 1 h 5 min" or "On your plan · 12:47 pm"
+   never changes how the sight's name wraps, so no card grows or shrinks and nothing below it moves. */
+.site .nrow > .fitbadge, .site .nrow > .fitbadge.tag { width: 10rem; flex: none; justify-content: center; text-align: center; white-space: normal; box-sizing: border-box; }
 button.tag.fitbadge { cursor: pointer; font: inherit; font-size: 0.74rem; font-weight: 700; }
 .site .l2 { color: var(--muted); font-size: 0.86rem; }
 .site .cdet { display: none; gap: 6px; margin-top: 4px; }
@@ -182,7 +185,7 @@ input[type=text], input[type=date], input[type=time], input[type=number], select
 .site { display: grid; grid-template-columns: auto 1fr; gap: 12px; padding: 14px; border: 1px solid var(--line); border-radius: 8px; background: var(--card); cursor: pointer; }
 .site.on { border-color: var(--route); background: color-mix(in srgb, var(--route-soft) 55%, var(--card)); }
 .site.nofitcard { cursor: default; opacity: .6; background: var(--paper); border-style: dashed; }
-.site.nofitcard .nobox { width: 22px; height: 22px; margin-top: 2px; }
+.site.nofitcard .nobox { width: 22px; height: 22px; margin: 2px 0 0; } /* same box as a tick box, so a card turning dim keeps its shape */
 .site.nofitcard .sum { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
 .site.anchor { border-width: 2px; border-color: var(--route); box-shadow: 0 0 0 3px color-mix(in srgb, var(--route) 18%, transparent); }
 .site.flash { animation: anchorflash 1.2s ease-out; }
@@ -197,7 +200,7 @@ input[type=text], input[type=date], input[type=time], input[type=number], select
 .site .incl b { font-weight: 700; }
 .tag.here, .tag.near { background: var(--ink); color: var(--paper); border-color: transparent; font-weight: 700; }
 .tag.near { background: var(--route-soft); color: var(--route); }
-.site input { width: 22px; height: 22px; accent-color: var(--route); margin-top: 2px; }
+.site input { width: 22px; height: 22px; accent-color: var(--route); margin: 2px 0 0; }
 .site .body { display: grid; gap: 4px; min-width: 0; align-content: start; }
 .site .name { font-weight: 700; font-family: var(--font-display); font-size: 1.05rem; }
 .site .sum { color: var(--muted); font-size: 0.92rem; }
@@ -628,6 +631,7 @@ main:has(#view.full) { padding: 0; }
 .resume .stamp { width: 64px; height: 64px; border-radius: 10px; background: var(--route-soft); color: var(--route); display: grid; place-items: center; font-family: var(--font-display); font-weight: 800; line-height: 1; text-align: center; font-size: .78rem; text-transform: uppercase; letter-spacing: .04em; }
 .resume .stamp b { display: block; font-size: 1.5rem; letter-spacing: -0.02em; }
 .resume h3 { font-size: 1.3rem; }
+.resume.fresh { grid-template-columns: 1fr auto; } /* a trip not opened yet has no day to pick up from */
 .resume .meta { color: var(--muted); font-size: .92rem; }
 @media (max-width: 520px) { #aiStatus { display: none; } }
 .tag.seen { background: var(--route-soft); color: var(--route); font-weight: 700; }
@@ -756,6 +760,7 @@ details.dayopts .field, details.dayopts .check { margin-top: 10px; }
 @media (max-width: 640px) {
   .resume { grid-template-columns: auto 1fr; }
   .resume .go { grid-column: 1 / -1; }
+  .resume.fresh { grid-template-columns: 1fr; }
   .resume .go .btn { width: 100%; }
   .pillars { grid-template-columns: 1fr; }
   .heroacts .btn { width: 100%; }
@@ -842,6 +847,8 @@ details.story:not([open]) > summary::before { content: "▸ "; }
 
 /* Panel wrappers: plain stacks everywhere except the tablet app layout below */
 .plantop, .guideside, .sitesside, .sitesmain, .guidemain { display: grid; gap: 16px; align-content: start; min-width: 0; }
+/* Choose sights: the sections wait, unseen, for the first fits check, then show once already sorted (no jumping). */
+.sorthold { visibility: hidden; display: grid; gap: inherit; align-content: start; min-width: 0; grid-template-columns: minmax(0, 1fr); }
 .guidegrid, .sitesgrid { display: grid; gap: 18px; min-width: 0; }
 .stopbody > .scmain, .stopbody > .scside { display: grid; gap: 14px; align-content: start; min-width: 0; }
 @media (min-width: 800px) { .plangrid .plantop { grid-column: 1 / -1; } }
@@ -1545,7 +1552,7 @@ html.clock12 .tl { grid-template-columns: 70px 30px 1fr; }
 .engine2why > summary .cnt { color: var(--muted); font-weight: 500; margin-left: 6px; }
 </style>
 
-<header class="top">
+<header class="top" hidden><!-- shown by the first render when the screen needs it: opening on Home it stayed on screen for the 1-2 s the app takes to start, then vanished and Home jumped up 178px (client feel test, Nov 23 2026) -->
   <div class="wrap">
     <div class="brand">
       <h1 class="logo"><button class="homebtn" data-act="lobby" aria-label="Kairoute home"><svg viewBox="0 0 92 104" aria-hidden="true" width="30" height="34"><rect x="14" y="8" width="16" height="84" rx="8" fill="var(--ink)"/><path d="M36,50 L74,16" fill="none" stroke="var(--meal)" stroke-width="7" stroke-linecap="round" stroke-dasharray="0.1 13"/><circle cx="78" cy="14" r="10" fill="none" stroke="var(--meal)" stroke-width="5"/><path d="M36,50 L78,88" fill="none" stroke="var(--ink)" stroke-width="16" stroke-linecap="round"/></svg>kairoute</button></h1>

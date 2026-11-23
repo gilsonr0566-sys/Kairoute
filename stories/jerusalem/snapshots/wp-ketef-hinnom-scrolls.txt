@@ -1,0 +1,99 @@
+SOURCE: https://en.wikipedia.org/wiki/Ketef_Hinnom_scrolls
+RETRIEVED: 2026-11-22T20:59:05.309Z
+STATUS: 200
+TITLE: Ketef Hinnom scrolls
+
+The Ketef Hinnom scrolls, also described as Ketef Hinnom amulets, are the oldest surviving texts currently known from the Hebrew Bible, dated to c. 600 BCE. The text, written in the Paleo-Hebrew script, has fragmentary phrases and words paralleling the Book of Numbers in the Hebrew Bible, and has been described as "one of the most significant discoveries ever made" for biblical studies.
+The two silver scrolls were uncovered in 1979 at Ketef Hinnom, an archaeological site southwest of the Old City of Jerusalem, and were found to contain a variation of the Priestly Blessing, found in Numbers 6:24–26 (see also Mechon-Mamre). The scrolls were dated paleographically to the late 7th or early 6th century BCE, placing them in the First Temple period.
+
+
+== Discovery ==
+The scrolls were found in 1979 in Chamber 25 of Cave 24 at Ketef Hinnom, during excavations conducted by a team under the supervision of Gabriel Barkay, who was then professor of archaeology at Tel Aviv University. The site appeared to be archaeologically sterile (the tomb had last been used for storing rifles during the Ottoman period), but a chance discovery by a 13-year-old volunteer revealed that a partial collapse of the ceiling long ago had preserved the contents of Chamber 25.
+A reconstruction indicates that there were five chambers and a central 'hall' in cave 24. The cave could hold about 22+ bodies on benches, each with a headrest of stone. Under three of the chambers in the cave there were repositories. The repositories were used for secondary burial, which means that the bones and other remains of the long deceased body were removed and put into the repository, thus making space for another body on that particular bench. The chambers were neatly cut with smoothed surfaces using the royal cubit as measure. The repositories, such as that under chamber 25, had rough surfaces and a sack-like form, thus it was not intended to be seen. Ketef Hinnom cave 24 has a similar outline and capacity as the Mamilla cave complex 1 and 2, however, these cave complexes have more rooms than cave 24 at Ketef Hinnom. To accommodate more people Ketef Hinnom cave 24 has used the large chamber to the right to accommodate about 10 people, whereas this room in the Mamilla cave complexes did not have benches, thus probably they were used for chemical treatment of the bodies.
+The repository under chamber 25 contained approximately 60 cm of material with over a thousand objects: many small pottery vessels, artifacts of iron and bronze (including arrowheads), needles and pins, bone and ivory objects, glass bottles, and jewelry including earrings of gold and silver. In addition, the excavators found two tiny silver scrolls, referred to below as KH1 and KH2. The tomb had evidently been in use for several generations from about 650 BCE, that is towards the end of the First Temple period, and it continued to be used after the destruction of Jerusalem in 587/6 BCE.
+KH1 was found in Square D, the middle of the repository, 7 cm above the floor, while KH2 was found while sifting dirt from the lower half of the deposits in Square A, the innermost portion of the repository. Both amulets were separated from Hellenistic artifacts by 3 meters of length and 25 cm of depth, and embedded in pottery and other material from the 7th/6th centuries BCE.
+Barkay initially dated the inscriptions to the late-7th/early-6th centuries BCE, but later revised this date downward to the early 6th century on paleographic grounds (the forms of the delicately incised paleo-Hebrew lettering) and on the evidence of the pottery found in the immediate vicinity. This dating was subsequently questioned by Johannes Renz and Wolfgang Rollig, who argued that the script was in too poor a condition to be dated with certainty and that a 3rd/2nd century BCE provenance could not be excluded, especially as the repository, which had been used as a kind of "rubbish bin" for the burial chamber over many centuries, also contained material from the fourth century BCE.
+A major re-examination of the scrolls was therefore undertaken by the University of Southern California's West Semitic Research Project, using advanced photographic and computer enhancement techniques which enabled the script to be read more easily and the paleography to be dated more confidently. The results confirmed a date immediately prior to the destruction of Jerusalem by the Babylonians in 586/7 BCE. Kyle McCarter of Johns Hopkins University, a specialist in ancient Semitic scripts, has said the study should "settle any controversy over [the date of] these inscriptions".
+
+
+== Significance ==
+
+The 2004 team described the scrolls as "one of most significant discoveries ever made" for biblical studies. Apart from their significance for modern knowledge of the development of the Hebrew alphabet, the scrolls "preserve the earliest known citations of texts also found in the Hebrew Bible and ... the earliest examples of confessional statements concerning Yahweh." The reference to Yahweh as "Rebuker of Evil," found in later incantations and amulets associated with Israel, is evidence that these artifacts were also amulets.
+Dr. Wayne Pitard has stated that although evidence for the antiquity of the Priestly Blessing is now compelling, this does not necessarily mean that the Book of Numbers already existed at that time. Dr. James R. Davila has similarly pointed out that while the scrolls show that "some of the material found in the Five Books of Moses existed in the First Temple period", the suggestion that they are "proof that the Five Books of Moses were in existence during the First Temple period" (as described in an article in the Israeli newspaper Haaretz) is "an overinterpretation of the evidence."
+According to the team which led the most conclusive reexamination of the scrolls:
+
+Based on our new analysis and reading of these texts, we can reaffirm with confidence that the late preexilic period is the proper chronological context for the artifacts. We can further reassert the conclusion reached by most scholars: that the inscriptions found on these plaques preserve the earliest known citations of texts also found in the Hebrew Bible and that they provide us with the earliest examples of confessional statements concerning Yahweh.
+
+
+== Description ==
+
+The scrolls are known as KH1 and KH2. They are written in Paleo-Hebrew characters (see Paleo-Hebrew alphabet), not the Babylonian Hebrew square letters of the modern Hebrew alphabet. Text below in square brackets represents informed deduction.
+
+
+=== KH1 ===
+The scroll KH1 measures 27 by 97 millimetres (1.06 in × 3.82 in).
+
+[Top line(s) broken]
+...] YHWH ...
+[...]
+the grea[t ... who keeps]
+the covenant and
+[G]raciousness towards those who love [him] and (alt: [hi]m;)
+those who keep [his commandments ...
+...].
+the Eternal? [...].
+[the?] blessing more than any
+[sna]re and more than Evil.
+For redemption is in him.
+For YHWH
+is our restorer [and]
+rock. May YHWH bles[s]
+you and
+[may he] keep you.
+[May] YHWH make
+[his face] shine ...
+[Bottom line(s) broken.]
+
+
+==== Biblical parallels ====
+Compare lines 3–6 to:
+
+Exodus 20:6 – "showing mercy to thousands of them that love Me and keep My commandments"
+Deuteronomy 5:10 – "showing mercy to thousands of them that love Me and keep My commandments"
+Deuteronomy 7:9 – "keeping covenant and mercy with them that love Him and keep His commandments to a thousand generations"
+Daniel 9:4 – "keeping covenant and mercy to them that love Him, and to them that keep His commandments"
+Nehemiah 1:5 – "keeping covenant and mercy for them that love Him and observe His commandments"
+The omission of "thousands" may have originally appeared on line 7 as in Deuteronomy 7:9.
+
+
+=== KH2 ===
+
+The scroll KH2 measures 11 by 39 millimetres (0.43 in × 1.54 in).
+
+
+==== Biblical parallels ====
+Compare lines 5–12 to Numbers 6:24–26:
+
+(Note that only the bold italicized portion is present on this scroll; also note that all of Numbers 6:25–26 may have appeared on KH1 after line 18 where the scroll has disintegrated).
+
+
+== Apotropaic nature of amulets ==
+Jeremy Smoak has argued that the combination of the terms "guard" and "protect" is typical of apotropaic amulets and find parallels among Phoenician and Punic amulets from the Iron Age. He theorizes that the custom of making such apotropaic amulets is reflected in Psalm 12:6–9:
+
+The utterance of YHWH are pure utterances, silver refined in a furnace in the earth, purified seven times. You O YHWH, will guard them; you will protect him from this generation forever. On every side the wicked prowl, a vileness is exalted among humankind.
+
+
+== See also ==
+Biblical archaeology
+Archaeology in Israel
+List of artifacts significant to the Bible
+Epigraphy
+Paleography
+Priestly Blessing
+Ancient literature
+
+
+== References ==
+
+
+== Further reading ==

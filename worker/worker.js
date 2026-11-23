@@ -580,6 +580,9 @@ const HANDLER = {
       const ok = v => Array.isArray(v) && v.length === 2 && v.every(n => typeof n === "number" && isFinite(n)) && Math.abs(v[0]) <= 90 && Math.abs(v[1]) <= 180;
       // Pairs are looked up side by side, so a page asking for several still gets its answer in well under a minute.
       const pairs = (Array.isArray(b.pairs) ? b.pairs : []).slice(0, 12);
+      // At most 8 pairs a request are looked up afresh (each is five timetable searches and the map): the rest answer
+      // "busy" and the page asks again shortly, so one request stays within the helper's limit on outside calls.
+      let fresh = 0;
       const out = await Promise.all(pairs.map(async pr => {
         if (!pr || !ok(pr.a) || !ok(pr.b)) return { error: "bad" };
         const dow = Number.isInteger(pr.dow) && pr.dow >= 0 && pr.dow <= 6 ? pr.dow : 3, kind = dow === 0 ? "su" : dow === 6 ? "sa" : "wk";
@@ -588,9 +591,13 @@ const HANDLER = {
         const date = typeof pr.date === "string" && /^\d{4}-\d{2}-\d{2}$/.test(pr.date) ? pr.date : null;
         const key = (await codeKey("tr", HCODE())) + kind + ":" + [...pr.a, ...pr.b].map(n => n.toFixed(3)).join(",") + (date ? ":m" + +date.slice(5, 7) : "");
         // A full answer is kept 14 days (timetables change); one where a source was busy only 1 day. When the map answered
-        // after the reply went out, its full answer replaces the partial one. A partial answer met again after 10 minutes
-        // is looked up afresh in the background (once per 10 minutes), so a busy map server never hides a ferry for a day.
-        const keep = x => env.USAGE.put(key, JSON.stringify({ opts: x.opts, partial: !!x.partial, t: Date.now() }), { expirationTtl: (x.partial ? 1 : x.opts.length ? 14 : 7) * 86400 });
+        // after the reply went out, its full answer replaces the partial one. A partial answer met again after 2 minutes
+        // is looked up afresh in the background (once per 2 minutes), so a busy map server never hides a ferry for a day.
+        const keep = x => env.USAGE.put(key, JSON.stringify({ opts: x.opts, partial: !!x.partial, ttMissed: x.ttMissed == null ? null : x.ttMissed, t: Date.now() }), { expirationTtl: (x.partial ? 1 : x.opts.length ? 14 : 7) * 86400 });
+        // A fresh look replaces a kept partial answer when it knows more of the day: more hours of the timetable answered,
+        // or more departures (Nov 21: an answer kept with 3 of 15 hours was never replaced, as both looked "partial").
+        const deps = x => Math.max(0, ...((x && x.opts) || []).map(o => (o.kindDeps || o.deps || []).length));
+        const better = (r, was) => !r.partial || r.opts.length > (was.opts || []).length || deps(r) > deps(was) || (r.ttMissed != null && (was.ttMissed == null || r.ttMissed < was.ttMissed));
         const store = { get: k => env.USAGE.get(k, "json"), put: (k, v, ttl) => env.USAGE.put(k, JSON.stringify(v), { expirationTtl: ttl }) };
         const look = () => allOptions({ lat: pr.a[0], lng: pr.a[1] }, { lat: pr.b[0], lng: pr.b[1] }, dow, 12000, store, date);
         // A saved answer with no ferry gets the ferries kept for both ends (filled in later by the schedule when the
@@ -605,16 +612,19 @@ const HANDLER = {
         // fresh: the page re-checks a ride the day before and the morning of the day it is taken (timetables change).
         // A kept answer over 6 hours old is looked up again now (one live look per ride per 6 hours, shared by every
         // traveler); a busy source keeps the kept answer.
-        if (hit && pr.fresh && Date.now() - (hit.t || 0) > 6 * 3600e3 && !(await env.USAGE.get("lf:" + key))) {
+        if (hit && pr.fresh && Date.now() - (hit.t || 0) > 6 * 3600e3 && fresh < 8 && !(await env.USAGE.get("lf:" + key))) { fresh++;
           await env.USAGE.put("lf:" + key, "1", { expirationTtl: 6 * 3600 }).catch(() => {});
           try { const r = await look(); if (!r.partial && r.opts.length) { ctx.waitUntil(keep(r).catch(() => {})); return withFerries({ opts: r.opts, partial: false }); } } catch (e) {}
         }
         if (hit) {
-          if (hit.partial && Date.now() - (hit.t || 0) > 600000 && !(await env.USAGE.get("lk:" + key))) {
-            ctx.waitUntil(env.USAGE.put("lk:" + key, "1", { expirationTtl: 600 }).then(look).then(r => (!r.partial || r.opts.length > (hit.opts || []).length) ? keep(r).then(() => r.late ? r.late.then(f => f && keep(f)) : null) : (r.late ? r.late.then(f => f && keep(f)) : null)).catch(() => {}));
+          // Every 2 minutes, not 10 (Nov 22 live probe: a way back to the ship known only until 9:53 am stayed a taxi
+          // while the page waited; the page now asks again after 2 minutes, so the fresh look must be there by then).
+          if (hit.partial && Date.now() - (hit.t || 0) > 120000 && !(await env.USAGE.get("lk:" + key))) {
+            ctx.waitUntil(env.USAGE.put("lk:" + key, "1", { expirationTtl: 120 }).then(look).then(r => better(r, hit) ? keep(r).then(() => r.late ? r.late.then(f => f && keep(f)) : null) : (r.late ? r.late.then(f => f && keep(f)) : null)).catch(() => {}));
           }
           return withFerries({ opts: hit.opts, partial: !!hit.partial });
         }
+        if (++fresh > 8) return { opts: [], partial: true };
         try { const r = await look(), res = await withFerries({ opts: r.opts, partial: !!r.partial });
           ctx.waitUntil(keep(r).then(() => r.late ? r.late.then(f => f && keep(f)) : null).catch(() => {}));
           return res;

@@ -1,0 +1,255 @@
+{
+ "id": "littlevenice",
+ "v": 1,
+ "city": "mykonos",
+ "title": "Little Venice",
+ "match": {
+  "ids": [
+   "littlevenice"
+  ],
+  "names": [
+   "little venice",
+   "alefkandra"
+  ],
+  "wikidata": []
+ },
+ "checked": "2026-11-22",
+ "claims": {
+  "what": {
+   "label": "supported",
+   "says": "Rows of houses line the waterfront with balconies hanging over the sea.",
+   "src": [
+    "wp-mykonos"
+   ],
+   "quote": [
+    "rows of fishing houses line the waterfront with their balconies hanging over the sea."
+   ]
+  },
+  "alefkandra": {
+   "label": "supported",
+   "says": "Little Venice, also called Alefkandra, is the most western part of Mykonos Town.",
+   "src": [
+    "wv-mykonos"
+   ],
+   "quote": [
+    "Little Venice (Alefkandra), Mykonos Town (most western part of town)."
+   ]
+  },
+  "wall": {
+   "label": "supported",
+   "says": "Its two and three story houses stand like a wall above the sea, with colorful wooden balconies.",
+   "src": [
+    "wv-mykonos"
+   ],
+   "quote": [
+    "two and three storey houses, which stand like a wall above the sea, and their colourful wooden balconies."
+   ]
+  },
+  "date": {
+   "label": "supported",
+   "says": "Accounts differ on age: Wikipedia says the first of these houses was built in the mid-18th century; Wikivoyage calls them medieval.",
+   "src": [
+    "wp-mykonos",
+    "wv-mykonos"
+   ],
+   "quote": [
+    "The first of these was constructed in the mid-18th century.",
+    "famous for its picturesque medieval two and three storey houses"
+   ]
+  },
+  "owners": {
+   "label": "supported",
+   "says": "The houses originally belonged to rich merchants or captains.",
+   "src": [
+    "wp-mykonos"
+   ],
+   "quote": [
+    "They originally belonged to rich merchants or captains"
+   ]
+  },
+  "doors": {
+   "label": "supported",
+   "says": "Little basement doors gave direct access to the sea and to underground storage.",
+   "src": [
+    "wp-mykonos"
+   ],
+   "quote": [
+    "the little basement doors that provided direct access to the sea and underground storage areas"
+   ]
+  },
+  "pirates": {
+   "label": "legend",
+   "says": "Those doors led people to believe the owners were secretly pirates.",
+   "src": [
+    "wp-mykonos"
+   ],
+   "quote": [
+    "the little basement doors that provided direct access to the sea and underground storage areas led people to believe that the owners were secretly pirates."
+   ]
+  },
+  "trading": {
+   "label": "supported",
+   "says": "Until the end of the 18th century Mykonos prospered as a trading center, with regular pirate raids.",
+   "src": [
+    "wp-mykonos"
+   ],
+   "quote": [
+    "Up until the end of the 18th century, Mykonos prospered as a trading center, attracting many immigrants from nearby islands, in addition to regular pirate raids."
+   ]
+  },
+  "now": {
+   "label": "supported",
+   "says": "Some houses are now bars, cafes, little shops and galleries.",
+   "src": [
+    "wp-mykonos"
+   ],
+   "quote": [
+    "Some of the houses have now been converted into bars and cafes and little shops and galleries."
+   ]
+  },
+  "romantic": {
+   "label": "supported",
+   "says": "It is considered one of the most romantic spots on the island; people gather to watch the sunset, and artists come to paint the coast.",
+   "src": [
+    "wp-mykonos"
+   ],
+   "quote": [
+    "Little Venice is considered one of the most romantic spots on the island and many people gather there to watch the sunset. The area attracts many artists who come to paint the picturesque coastline."
+   ]
+  },
+  "jetset": {
+   "label": "supported",
+   "says": "Mykonos became popular with international jet-set tourists in the 1960s, and by the 2000s was one of Greece's most expensive islands.",
+   "src": [
+    "wp-mykonos"
+   ],
+   "quote": [
+    "Mykonos became popular with international \"jet set\" tourists in the 1960s.",
+    "By the 2000s, Mykonos had become one of Greece's most expensive islands."
+   ]
+  },
+  "decline": {
+   "label": "supported",
+   "says": "Trade picked up again but declined in the late 19th century, especially after the Corinth Canal opened in 1904; many Mykonians left to find work, especially in the United States.",
+   "src": [
+    "wp-mykonos"
+   ],
+   "quote": [
+    "declined again during the late 19th century and especially after the opening of the Corinth Canal in 1904",
+    "Many Mykonians left the island to find work in mainland Greece and many foreign countries, especially the United States."
+   ]
+  },
+  "windmills": {
+   "label": "supported",
+   "says": "The windmills stand on a hill overlooking the harbor of Alefkandra.",
+   "src": [
+    "wp-windmills-myk"
+   ],
+   "quote": [
+    "The windmills are the first thing seen when coming into the harbour of Alefkandra, as they stand on a hill overlooking the area."
+   ]
+  }
+ },
+ "parts": [
+  {
+   "name": "On the waterfront",
+   "stand": "At the water's edge in Little Venice, looking along the row of houses.",
+   "paras": [
+    {
+     "t": "This is Little Venice, also called Alefkandra, at the far western edge of town. Look at the houses: rows of them right on the waterfront, with their balconies hanging over the sea.",
+     "c": [
+      "alefkandra",
+      "what"
+     ],
+     "level": 1
+    },
+    {
+     "t": "Mind your step along the edge. When the wind is up, waves can splash over, and wet stone gets slippery.",
+     "c": [],
+     "level": 1,
+     "cue": true
+    },
+    {
+     "t": "They're two and three stories high and stand like a wall above the sea. Pick out the colorful wooden balconies.",
+     "c": [
+      "wall"
+     ],
+     "level": 2
+    },
+    {
+     "t": "How old are they? The first went up in the mid-18th century, though you'll see them loosely called medieval.",
+     "c": [
+      "date"
+     ],
+     "level": 2
+    }
+   ]
+  },
+  {
+   "name": "Captains and pirates",
+   "stand": "Stay where you can see the foot of the houses, where the walls meet the water.",
+   "paras": [
+    {
+     "t": "These houses first belonged to rich merchants and sea captains. Down at the bottom, little doors opened straight onto the sea and into storage below.",
+     "c": [
+      "owners",
+      "doors"
+     ],
+     "level": 1
+    },
+    {
+     "t": "And that started a story. With doors like that, the story goes, people believed the owners were secretly pirates. It's a rumor, not a record, but you can see how it began.",
+     "c": [
+      "pirates"
+     ],
+     "level": 2
+    },
+    {
+     "t": "It wasn't a wild idea for its time. Up to the end of the 18th century, Mykonos was a thriving trading town, and pirates raided it again and again.",
+     "c": [
+      "trading"
+     ],
+     "level": 2
+    }
+   ]
+  },
+  {
+   "name": "Sunset row",
+   "stand": "Turn and look back up the hill toward the windmills.",
+   "paras": [
+    {
+     "t": "Up on the hill above the harbor stand the windmills. Today some of these old houses are bars, cafes, little shops and galleries.",
+     "c": [
+      "windmills",
+      "now"
+     ],
+     "level": 1
+    },
+    {
+     "t": "This is said to be one of the most romantic spots on the island. In the evening, people gather here to watch the sunset, and artists come to paint this coastline.",
+     "c": [
+      "romantic"
+     ],
+     "level": 2
+    },
+    {
+     "t": "The waterfront wasn't always this lively. The island's economy faded in the late 19th century, especially after the Corinth Canal opened, and many Mykonians left to find work, many of them in the United States. Then the visitors came. In the 1960s, the international jet set discovered Mykonos, and by the 2000s it was one of the most expensive islands in Greece.",
+     "c": [
+      "decline",
+      "jetset"
+     ],
+     "level": 3
+    },
+    {
+     "t": "Picture a captain's family at one of these windows, watching the sea for a sail coming home. People still stand here looking out at the same water. Only now, most of us are waiting for the sun.",
+     "c": [
+      "owners",
+      "romantic"
+     ],
+     "level": 1
+    }
+   ]
+  }
+ ],
+ "practical": []
+}

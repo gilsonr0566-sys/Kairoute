@@ -1,66 +1,349 @@
 name: Beta 2 release gate
-# Nov 21 review: the Kairoute-Beta2 site publishes whatever is pushed to it, with no checks of its own; the checks ran
-# only in whichever working copy built it. This gate runs the same offline checks on GitHub for every push to the
-# Beta 2 branch, on a clean copy, so "this build passed" is a record anyone can open. Publish a Beta 2 build only from
-# a commit whose gate is green. No network beyond installing tools, no AI, no secrets; never publishes anything.
+# Nov 23 2026 (thread "Rebuild the testing and review process"): the gate ran every check one after another in one job,
+# 50 to 70 minutes, and each new push cancelled the run before it. Of 69 runs, 14 went green and only 1 of the last 18,
+# so fixes waited a day to go live, and a check that failed in its first second was reported 50 minutes later.
+# The same checks now run side by side in separate jobs (about 15 minutes, the longest job), each job says on its own
+# whether it passed, and the last job writes the release report: every part PASS, FAIL or NOT TESTED (cancelled or
+# never run). NOT TESTED is never a pass: a Beta 2 build is published only from a commit whose report says RELEASE OK.
+# No network beyond installing tools and the public Beta 2 repository, no AI, no secrets; never publishes anything.
+#
+# Earlier notes: Nov 21 review: the Kairoute-Beta2 site publishes whatever is pushed to it, with no checks of its own;
+# this gate runs the offline checks on GitHub for every push to the Beta 2 branch, on a clean copy, so "this build
+# passed" is a record anyone can open.
 on:
   workflow_dispatch:
   push:
-    branches: ["claude/project-thread-xrdp7v", "claude/project-thread-8wi5ra"]
+    branches: ["claude/project-thread-xrdp7v", "claude/project-thread-8wi5ra"]  # other branches: run it by hand (workflow_dispatch), so one commit is not tested twice at once
 permissions:
   contents: read
+  actions: read # the release report reads the latest nightly run (a nightly safety finding holds the release)
+defaults:
+  run:
+    shell: bash  # with pipefail: a check piped into the log still fails its step
+# One run at a time per branch, and a run once started always finishes: a newer push waits, and replaces any run still
+# waiting (GitHub keeps one waiting). With cancel-in-progress, pushes every 10-20 min cancelled every run before it ended
+# (Nov 23: runs 72-75 all cancelled), so no commit ever got a report. Now the newest commit is tested at most one run later.
 concurrency:
   group: beta2-gate-${{ github.ref }}
-  cancel-in-progress: true
+  cancel-in-progress: false
 jobs:
-  gate:
+  code:
+    name: "1 Code: secrets, syntax, the engine's own rules, the helper's AI switch"
     runs-on: ubuntu-latest
-    timeout-minutes: 60
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 0, filter: 'blob:none' }
+      - uses: actions/setup-node@v4
+        with: { node-version: 22 }
+      - run: npm i --no-save playwright@1.65.1 && npx playwright install --with-deps chromium
+      - run: sh build-beta2.sh
+      - name: Code checks (secrets, syntax) and the engine's own rules
+        run: (node tools/static-check.cjs && node tools/sw-check.cjs && node tools/beta2/engine-static.cjs && node tools/places/where-check.cjs && node tools/beta2/sight-rules-check.cjs beta2-site/index.html && node tools/beta2/lunch-during-screen.cjs beta2-site/index.html && node tools/truth/sight-mutants.cjs beta2-site/index.html && node tools/truth/no-warn-check.cjs && node tools/truth/spec-check.cjs && node tools/truth/report-check.cjs && node tools/truth/screen-rule-proof.cjs && node tools/truth/rules-check.cjs) 2>&1 | tee -a "$RUNNER_TEMP/out.log"
+      - name: Helper (AI switch, one AI gate, spend caps, other websites)
+        if: always()
+        run: (node tools/worker-check.mjs && node tools/worker-ai-gate.mjs && node tools/worker-cache-check.mjs) 2>&1 | tee -a "$RUNNER_TEMP/out.log"
+      - name: Keep this part's failing lines for the release report
+        if: always()
+        run: |
+          mkdir -p part && touch "$RUNNER_TEMP/out.log"
+          grep -E "^(FAIL|MISSED|NOT TESTED)|FAIL[ :]|[0-9]+ failed|Error:|✗|not ok|exceeded" "$RUNNER_TEMP/out.log" | grep -v "^ok " | head -60 > part/fails.txt || true
+          cp "$RUNNER_TEMP/out.log" part/log.txt
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: part-code
+          path: part
+          if-no-files-found: ignore
+
+  safety:
+    name: "2 Safety: the independent check (traveler's own times, never the planner's numbers) on saved and odd trips"
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
-        with:
-          node-version: 22
-      - run: npm i --no-save playwright@1.65.1 && npx playwright install --with-deps chromium
-      - name: Build both copies (the demo build is index.html, Beta 2 is beta2-site/index.html)
-        run: sh build-beta2.sh
-      - name: Code checks (secrets, syntax) and the engine's own rules
-        run: node tools/static-check.cjs && node tools/sw-check.cjs && node tools/beta2/engine-static.cjs && node tools/places/where-check.cjs && node tools/beta2/sight-rules-check.cjs beta2-site/index.html && node tools/truth/sight-mutants.cjs beta2-site/index.html
-      - name: Helper (AI switch, one AI gate, spend caps, other websites)
-        if: always()
-        run: node tools/worker-check.mjs && node tools/worker-ai-gate.mjs && node tools/worker-cache-check.mjs
-      - name: Saved test trips (snapshots), then the engine, leak and stress suites
+        with: { node-version: 22 }
+      # The independent lunch rule reads map hours with the opening_hours library, never the planner's reader.
+      - run: npm i --no-save opening_hours@3.16.0
+      - name: Saved test trips
+        run: (node tools/truth/oracle.cjs --corpus --show 10 && node tools/truth/oracle.cjs --corpus --no-timetable --show 10) 2>&1 | tee -a "$RUNNER_TEMP/out.log"
+      - name: Odd trips (hundreds of unusual cruises, multi-city trips, midnight flights and bag days, every day checked), then the independent check on the same trips
         if: always()
         run: |
-          # The saved test trips (tools/beta2/corpus: the 20-city list, live trips, no traveler data), then the ones this
-          # build makes fresh on top (the sample trip and its variants, the no-AI trips).
-          mkdir -p tools/beta2/snapshots && cp tools/beta2/corpus/*.json tools/beta2/snapshots/
-          node tools/beta2/snapshot.cjs
-          node tools/beta2/noai-trips.cjs
-          node tools/beta2/engine-test.cjs
-          node tools/beta2/leaks.cjs
-          node tools/beta2/stress.cjs
-          node tools/beta2/names-check.cjs
-      - name: Phone flow on the Beta 2 build
+          NOZIG=1 SLOW_MS=5000 node tools/beta2/odd-trips.cjs --n 300 --seed 1 --warn walk --out odd-trips.json 2>&1 | tee -a "$RUNNER_TEMP/out.log"
+          node tools/truth/oracle.cjs --trips odd-trips.json --show 10 2>&1 | tee -a "$RUNNER_TEMP/out.log"
+      - name: Planted defects (each a known way the planner has gone wrong; the checks must catch every one)
         if: always()
-        run: node tools/beta2/flow-check.cjs beta2-site/index.html
-      - name: What the traveler sees (screen rules on every day, other time zones, no signal, trips saved by the last two published builds, screen sizes, voices, the app's own guard)
+        run: node tools/truth/mutants.cjs --n 100 2>&1 | tee -a "$RUNNER_TEMP/out.log"
+      - name: Keep this part's failing lines for the release report
         if: always()
+        run: |
+          mkdir -p part && touch "$RUNNER_TEMP/out.log"
+          grep -E "^(FAIL|MISSED|NOT TESTED)|FAIL[ :]|[0-9]+ failed|Error:|✗|not ok|exceeded" "$RUNNER_TEMP/out.log" | grep -v "^ok " | head -60 > part/fails.txt || true
+          cp "$RUNNER_TEMP/out.log" part/log.txt
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: part-safety
+          path: part
+          if-no-files-found: ignore
+
+  engine:
+    name: "3 Engine: engine rules, opening hours, reasons, lunch"
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22 }
+      - run: npm i --no-save playwright@1.65.1 && npx playwright install --with-deps chromium
+      - run: sh build-beta2.sh
+      - name: Saved test trips (snapshots; the saved ones, then the sample trip and no-AI trips made fresh in the built app)
+        run: mkdir -p tools/beta2/snapshots && cp tools/beta2/corpus/*.json tools/beta2/snapshots/ && node tools/beta2/snapshot.cjs && node tools/beta2/noai-trips.cjs
+      - run: node tools/beta2/engine-test.cjs 2>&1 | tee -a "$RUNNER_TEMP/out.log"
+      - if: always()
+        run: node tools/beta2/hours-test.cjs 2>&1 | tee -a "$RUNNER_TEMP/out.log"
+      - if: always()
+        run: node tools/beta2/reason-numbers-check.cjs 2>&1 | tee -a "$RUNNER_TEMP/out.log"
+      - if: always()
+        run: PLACES_DIR=tools/places/data node tools/beta2/lunch-during-check.cjs 2>&1 | tee -a "$RUNNER_TEMP/out.log"
+      - name: Everything on screen in the traveler's language, from every source (rules registry R-11)
+        if: always()
+        run: PLACES_DIR=tools/places/data node tools/truth/language-check.cjs 2>&1 | tee -a "$RUNNER_TEMP/out.log"
+      - name: Every sight shown under its English name, never one of its other-language names, and planted names in six scripts all caught (R-11)
+        if: always()
+        run: node tools/beta2/names-check.cjs 2>&1 | tee -a "$RUNNER_TEMP/out.log"
+      - name: Keep this part's failing lines for the release report
+        if: always()
+        run: |
+          mkdir -p part && touch "$RUNNER_TEMP/out.log"
+          grep -E "^(FAIL|MISSED|NOT TESTED)|FAIL[ :]|[0-9]+ failed|Error:|✗|not ok|exceeded" "$RUNNER_TEMP/out.log" | grep -v "^ok " | head -60 > part/fails.txt || true
+          cp "$RUNNER_TEMP/out.log" part/log.txt
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: part-engine
+          path: part
+          if-no-files-found: ignore
+
+  leaks:
+    name: "4 Leaks and stress"
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22 }
+      - run: npm i --no-save playwright@1.65.1 && npx playwright install --with-deps chromium
+      - run: sh build-beta2.sh
+      - name: Saved test trips (snapshots; the saved ones, then the sample trip and no-AI trips made fresh in the built app)
+        run: mkdir -p tools/beta2/snapshots && cp tools/beta2/corpus/*.json tools/beta2/snapshots/ && node tools/beta2/snapshot.cjs && node tools/beta2/noai-trips.cjs
+      - run: node tools/beta2/leaks.cjs 2>&1 | tee -a "$RUNNER_TEMP/out.log"
+      - if: always()
+        run: node tools/beta2/stress.cjs 2>&1 | tee -a "$RUNNER_TEMP/out.log"
+      - name: Keep this part's failing lines for the release report
+        if: always()
+        run: |
+          mkdir -p part && touch "$RUNNER_TEMP/out.log"
+          grep -E "^(FAIL|MISSED|NOT TESTED)|FAIL[ :]|[0-9]+ failed|Error:|✗|not ok|exceeded" "$RUNNER_TEMP/out.log" | grep -v "^ok " | head -60 > part/fails.txt || true
+          cp "$RUNNER_TEMP/out.log" part/log.txt
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: part-leaks
+          path: part
+          if-no-files-found: ignore
+
+  phone:
+    name: "5 Phone flow on the Beta 2 build"
+    runs-on: ubuntu-latest
+    timeout-minutes: 45  # + the steady sights check at 3 screen sizes (Nov 23)
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22 }
+      - run: npm i --no-save playwright@1.65.1 && npx playwright install --with-deps chromium
+      - run: sh build-beta2.sh
+      - run: VERBOSE=1 node tools/beta2/flow-check.cjs beta2-site/index.html 2>&1 | tee -a "$RUNNER_TEMP/out.log"
+      - if: always()
+        run: node tools/ui/steady-sights-check.cjs beta2-site/index.html 2>&1 | tee -a "$RUNNER_TEMP/out.log"
+      - name: Keep this part's failing lines for the release report
+        if: always()
+        run: |
+          mkdir -p part && touch "$RUNNER_TEMP/out.log"
+          grep -E "^(FAIL|MISSED|NOT TESTED)|FAIL[ :]|[0-9]+ failed|Error:|✗|not ok|exceeded" "$RUNNER_TEMP/out.log" | grep -v "^ok " | head -60 > part/fails.txt || true
+          cp "$RUNNER_TEMP/out.log" part/log.txt
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: part-phone
+          path: part
+          if-no-files-found: ignore
+
+  screen:
+    name: "6 What the traveler sees: screen rules, time zones, no signal, older saved trips, sizes, voices, the guard"
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22 }
+      - run: npm i --no-save playwright@1.65.1 && npx playwright install --with-deps chromium
+      - run: sh build-beta2.sh
+      - name: Screen gate (with the two newest published builds' saved trips)
         run: |
           # The two newest published Beta 2 builds (public repo) are opened first and their saved trip is then opened
-          # by this build, as a traveler's phone does after an update.
-          git clone -q --depth 6 https://github.com/gilsonr0566-sys/Kairoute-Beta2 /tmp/b2pub
-          OLD=""; for c in $(git -C /tmp/b2pub log --format=%h -n 6 -- index.html | sed -n '1p;3p'); do git -C /tmp/b2pub show $c:index.html > /tmp/old-$c.html; OLD="$OLD /tmp/old-$c.html"; done
-          node tools/beta2/screen-gate.cjs beta2-site/index.html $OLD
-      - name: Ship days keep their sights while the water check waits on its slow part
+          # by this build, as a traveler's phone does after an update. One file per published build (a build fixed by a
+          # second commit minutes later counts once, by its newest commit).
+          git clone -q --depth 12 https://github.com/gilsonr0566-sys/Kairoute-Beta2 /tmp/b2pub
+          OLD=""; for c in $(git -C /tmp/b2pub log --format='%h %s' -n 12 -- index.html | awk '{ id=$5; if (!(id in seen)) { seen[id]=1; print $1 } }' | sed -n '1p;2p'); do git -C /tmp/b2pub show $c:index.html > /tmp/old-$c.html; OLD="$OLD /tmp/old-$c.html"; done
+          node tools/beta2/screen-gate.cjs beta2-site/index.html $OLD 2>&1 | tee -a "$RUNNER_TEMP/out.log"
+      - name: Keep this part's failing lines for the release report
         if: always()
-        run: node tools/beta2/water-wait-check.cjs beta2-site/index.html
-      - name: Group trips (share one trip, follow or own day, meeting point, offers, booked tours)
+        run: |
+          mkdir -p part && touch "$RUNNER_TEMP/out.log"
+          grep -E "^(FAIL|MISSED|NOT TESTED)|FAIL[ :]|[0-9]+ failed|Error:|✗|not ok|exceeded" "$RUNNER_TEMP/out.log" | grep -v "^ok " | head -60 > part/fails.txt || true
+          cp "$RUNNER_TEMP/out.log" part/log.txt
+      - uses: actions/upload-artifact@v4
         if: always()
-        run: node tools/beta2/group-check.cjs beta2-site/index.html
-      - name: Outside text never runs as code (Beta 2 build)
+        with:
+          name: part-screen
+          path: part
+          if-no-files-found: ignore
+
+  odd-screen:
+    name: "7 Odd days on the phone screen, ship days while the water check waits, group trips"
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22 }
+      - run: npm i --no-save playwright@1.65.1 && npx playwright install --with-deps chromium
+      - run: sh build-beta2.sh
+      - run: VARIANTS=8 node tools/beta2/odd-screen.cjs beta2-site/index.html 2>&1 | tee -a "$RUNNER_TEMP/out.log"
+      - if: always()
+        run: node tools/beta2/water-wait-check.cjs beta2-site/index.html 2>&1 | tee -a "$RUNNER_TEMP/out.log"
+      - if: always()
+        run: node tools/beta2/group-check.cjs beta2-site/index.html 2>&1 | tee -a "$RUNNER_TEMP/out.log"
+      - name: Keep this part's failing lines for the release report
         if: always()
-        run: node tools/inject-check.cjs beta2-site/index.html
-      - name: The app says only what the AI can really do
+        run: |
+          mkdir -p part && touch "$RUNNER_TEMP/out.log"
+          grep -E "^(FAIL|MISSED|NOT TESTED)|FAIL[ :]|[0-9]+ failed|Error:|✗|not ok|exceeded" "$RUNNER_TEMP/out.log" | grep -v "^ok " | head -60 > part/fails.txt || true
+          cp "$RUNNER_TEMP/out.log" part/log.txt
+      - uses: actions/upload-artifact@v4
         if: always()
-        run: node tools/ai-honesty-check.cjs
+        with:
+          name: part-odd-screen
+          path: part
+          if-no-files-found: ignore
+
+  words:
+    name: "8 The app says only what is true: first run, day plan, places it can't reach, no paid AI, trip copy, outside text"
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22 }
+      - run: npm i --no-save playwright@1.65.1 && npx playwright install --with-deps chromium
+      - run: sh build-beta2.sh
+      - run: node tools/inject-check.cjs beta2-site/index.html 2>&1 | tee -a "$RUNNER_TEMP/out.log"
+      - if: always()
+        run: node tools/ui/no-signal-check.cjs beta2-site/index.html 2>&1 | tee -a "$RUNNER_TEMP/out.log"
+      - if: always()
+        run: node tools/ui/gate-ask-check.cjs beta2-site/index.html 2>&1 | tee -a "$RUNNER_TEMP/out.log"
+      - if: always()
+        run: node tools/ui/first-run-check.cjs beta2-site/index.html 2>&1 | tee -a "$RUNNER_TEMP/out.log"
+      - if: always()
+        run: node tools/ui/dayplan-check.cjs beta2-site/index.html 2>&1 | tee -a "$RUNNER_TEMP/out.log"
+      - if: always()
+        run: node tools/ui/no-paid-ai-check.cjs beta2-site/index.html 2>&1 | tee -a "$RUNNER_TEMP/out.log"
+      - if: always()
+        run: node tools/ui/trip-copy-check.cjs beta2-site/index.html 2>&1 | tee -a "$RUNNER_TEMP/out.log"
+      - if: always()
+        run: node tools/ai-honesty-check.cjs 2>&1 | tee -a "$RUNNER_TEMP/out.log"
+      - name: Keep this part's failing lines for the release report
+        if: always()
+        run: |
+          mkdir -p part && touch "$RUNNER_TEMP/out.log"
+          grep -E "^(FAIL|MISSED|NOT TESTED)|FAIL[ :]|[0-9]+ failed|Error:|✗|not ok|exceeded" "$RUNNER_TEMP/out.log" | grep -v "^ok " | head -60 > part/fails.txt || true
+          cp "$RUNNER_TEMP/out.log" part/log.txt
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: part-words
+          path: part
+          if-no-files-found: ignore
+
+  feel:
+    name: "9 What the traveler feels: real finger taps and swipes on phone and tablets (jumps, self-scroll, layout shift, slow and dead taps, Back button)"
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22 }
+      - run: npm i --no-save playwright@1.65.1 && npx playwright install --with-deps chromium
+      - run: sh build-beta2.sh
+      - run: node tools/ui/back-check.cjs beta2-site/index.html 2>&1 | tee -a "$RUNNER_TEMP/out.log"
+      - if: always()
+        run: OUT=client-out node tools/client/feel.cjs beta2-site/index.html 2>&1 | tee -a "$RUNNER_TEMP/out.log"
+      - name: Keep this part's failing lines for the release report
+        if: always()
+        run: |
+          mkdir -p part && touch "$RUNNER_TEMP/out.log"
+          grep -E "^(FAIL|MISSED|NOT TESTED)|FAIL[ :]|[0-9]+ failed|Error:|✗|not ok|exceeded" "$RUNNER_TEMP/out.log" | grep -v "^ok " | head -60 > part/fails.txt || true
+          cp "$RUNNER_TEMP/out.log" part/log.txt
+          cp -r client-out part/ 2>/dev/null || true
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: part-feel
+          path: part
+          if-no-files-found: ignore
+
+  report:
+    name: "Release report"
+    needs: [code, safety, engine, leaks, phone, screen, odd-screen, words, feel]
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 0 }
+      - uses: actions/setup-node@v4
+        with: { node-version: 22 }
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: part-*
+          path: parts
+      - name: Write the release report (Richard's 14 items and 3 release targets; NOT TESTED is never a pass)
+        env:
+          R: ${{ toJSON(needs) }}
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          # The published build, to list the corrections and the tests added since: the Kairoute commit at the start of the
+          # published version.txt (the same file the publish step checks, spec v2 T4). A commit message is not read: a
+          # workflow-only commit on Kairoute-Beta2 names no build (Nov 23: the report said "published build not known").
+          LIVE=$(git clone -q --depth 1 https://github.com/gilsonr0566-sys/Kairoute-Beta2 /tmp/pub 2>/dev/null && tr -d '\n' < /tmp/pub/version.txt | cut -d- -f1 | grep -xE "[0-9a-f]{7,40}" || true)
+          export LIVE
+          # The latest finished nightly run: a safety finding there holds this release (spec v2, T2).
+          NIGHTLY=$(gh api "repos/$GITHUB_REPOSITORY/actions/workflows/truth-nightly.yml/runs?status=completed&per_page=1" --jq '.workflow_runs[0] | "\(.id) \(.html_url) \(.created_at)"' 2>/dev/null || true)
+          if [ -n "$NIGHTLY" ]; then NID=${NIGHTLY%% *}; NIGHTLY_JOBS=$(gh api "repos/$GITHUB_REPOSITORY/actions/runs/$NID/jobs" --jq '[.jobs[] | {name, conclusion}]' 2>/dev/null || echo '[]'); else NIGHTLY_JOBS='[]'; fi
+          export NIGHTLY NIGHTLY_JOBS
+          # Gate health (spec v2, T6): the last 10 finished gate runs, and this run's part times.
+          GATE_RUNS=$(gh api "repos/$GITHUB_REPOSITORY/actions/workflows/beta2-gate.yml/runs?status=completed&per_page=10" --jq '[.workflow_runs[] | {conclusion, s: .run_started_at, e: .updated_at}]' 2>/dev/null || echo '[]')
+          THIS_JOBS=$(gh api "repos/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID/jobs" --jq '[.jobs[] | {name, s: .started_at, e: .completed_at}]' 2>/dev/null || echo '[]')
+          export GATE_RUNS THIS_JOBS
+          rc=0; node tools/truth/release-report.cjs parts > release-report.md || rc=$?
+          cat release-report.md >> "$GITHUB_STEP_SUMMARY"; cat release-report.md
+          # Green only when the report itself says RELEASE OK as its recommendation AND exits 0. A plain search for the
+          # words passed every run: the "DO NOT RELEASE" report also says "publish only from a commit whose report says
+          # RELEASE OK" (Nov 23, run 45240727888 was green on DO NOT RELEASE). The publish step trusts this job.
+          [ "$rc" -eq 0 ] || { echo "Release report: DO NOT RELEASE (exit $rc)"; exit 1; }
+          grep -qx '## Release recommendation: \*\*RELEASE OK\*\*' release-report.md || { echo "Release report has no RELEASE OK recommendation line"; exit 1; }
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with: { name: release-report, path: release-report.md }

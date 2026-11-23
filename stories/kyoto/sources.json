@@ -1,0 +1,236 @@
+{
+ "retrieve": [
+  {
+   "key": "wp-kiyomizu-dera",
+   "wiki": "Kiyomizu-dera"
+  },
+  {
+   "key": "wp-sakanoue-no-tamuramaro",
+   "wiki": "Sakanoue no Tamuramaro"
+  },
+  {
+   "key": "wp-historic-monuments-ancient-k",
+   "wiki": "Historic Monuments of Ancient Kyoto (Kyoto, Uji and Otsu Cities)"
+  },
+  {
+   "key": "unesco-kyoto",
+   "url": "https://whc.unesco.org/en/list/688/",
+   "publisher": "UNESCO World Heritage Centre"
+  },
+  {
+   "key": "wv-kyoto",
+   "wiki": "Kyoto",
+   "site": "en.wikivoyage.org"
+  },
+  {
+   "key": "wp-kinkaku-ji",
+   "wiki": "Kinkaku-ji"
+  },
+  {
+   "key": "wp-ashikaga-yoshimitsu",
+   "wiki": "Ashikaga Yoshimitsu"
+  },
+  {
+   "key": "wp-temple-golden-pavilion",
+   "wiki": "The Temple of the Golden Pavilion"
+  },
+  {
+   "key": "wp-fushimi-inari-taisha",
+   "wiki": "Fushimi Inari-taisha"
+  },
+  {
+   "key": "wp-inari-okami",
+   "wiki": "Inari Ōkami"
+  },
+  {
+   "key": "wp-torii",
+   "wiki": "Torii"
+  },
+  {
+   "key": "wp-kitsune",
+   "wiki": "Kitsune"
+  },
+  {
+   "key": "wp-ginkaku-ji",
+   "wiki": "Ginkaku-ji"
+  },
+  {
+   "key": "wp-ashikaga-yoshimasa",
+   "wiki": "Ashikaga Yoshimasa"
+  },
+  {
+   "key": "wp-philosopher-s-walk",
+   "wiki": "Philosopher's Walk"
+  },
+  {
+   "key": "wp-kyoto-imperial-palace",
+   "wiki": "Kyoto Imperial Palace"
+  },
+  {
+   "key": "wp-kyoto-gyoen",
+   "wiki": "Kyoto Gyoen"
+  },
+  {
+   "key": "wp-emperor-meiji",
+   "wiki": "Emperor Meiji"
+  },
+  {
+   "key": "wp-heian-kyo",
+   "wiki": "Heian-kyō"
+  },
+  {
+   "key": "wp-ryoan-ji",
+   "wiki": "Ryōan-ji"
+  },
+  {
+   "key": "wp-japanese-rock-garden",
+   "wiki": "Japanese rock garden"
+  },
+  {
+   "key": "wp-hosokawa-katsumoto",
+   "wiki": "Hosokawa Katsumoto"
+  },
+  {
+   "key": "wp-to-ji",
+   "wiki": "Tō-ji"
+  },
+  {
+   "key": "wp-kukai",
+   "wiki": "Kūkai"
+  },
+  {
+   "key": "wp-emperor-saga",
+   "wiki": "Emperor Saga"
+  },
+  {
+   "key": "wp-nijo-castle",
+   "wiki": "Nijō Castle"
+  },
+  {
+   "key": "wp-tokugawa-ieyasu",
+   "wiki": "Tokugawa Ieyasu"
+  },
+  {
+   "key": "wp-tokugawa-yoshinobu",
+   "wiki": "Tokugawa Yoshinobu"
+  },
+  {
+   "key": "wp-nightingale-floor",
+   "wiki": "Nightingale floor"
+  },
+  {
+   "key": "wp-heian-shrine",
+   "wiki": "Heian Shrine"
+  },
+  {
+   "key": "wp-emperor-kanmu",
+   "wiki": "Emperor Kanmu"
+  },
+  {
+   "key": "wp-emperor-komei",
+   "wiki": "Emperor Kōmei"
+  },
+  {
+   "key": "wp-jidai-matsuri",
+   "wiki": "Jidai Matsuri"
+  },
+  {
+   "key": "wp-kyoto-national-museum",
+   "wiki": "Kyoto National Museum"
+  },
+  {
+   "key": "wp-sanjusangen-do",
+   "wiki": "Sanjūsangen-dō"
+  },
+  {
+   "key": "wp-katayama-tokuma",
+   "wiki": "Katayama Tōkuma"
+  },
+  {
+   "key": "wp-taira-no-kiyomori",
+   "wiki": "Taira no Kiyomori"
+  },
+  {
+   "key": "wp-ninna-ji",
+   "wiki": "Ninna-ji"
+  },
+  {
+   "key": "wp-emperor-uda",
+   "wiki": "Emperor Uda"
+  },
+  {
+   "key": "wp-emperor-koko",
+   "wiki": "Emperor Kōkō"
+  },
+  {
+   "key": "wp-yasaka-shrine",
+   "wiki": "Yasaka Shrine"
+  },
+  {
+   "key": "wp-gion-matsuri",
+   "wiki": "Gion Matsuri"
+  },
+  {
+   "key": "wp-gion",
+   "wiki": "Gion"
+  },
+  {
+   "key": "wp-geisha",
+   "wiki": "Geisha"
+  },
+  {
+   "key": "wp-osaka",
+   "wiki": "Osaka"
+  },
+  {
+   "key": "wp-osaka-castle",
+   "wiki": "Osaka Castle"
+  },
+  {
+   "key": "wp-toyotomi-hideyoshi",
+   "wiki": "Toyotomi Hideyoshi"
+  },
+  {
+   "key": "wv-osaka",
+   "wiki": "Osaka",
+   "site": "en.wikivoyage.org"
+  },
+  {
+   "key": "wp-uji-kyoto",
+   "wiki": "Uji, Kyoto"
+  },
+  {
+   "key": "wp-byodo-in",
+   "wiki": "Byōdō-in"
+  },
+  {
+   "key": "wp-tale-genji",
+   "wiki": "The Tale of Genji"
+  },
+  {
+   "key": "wp-uji-tea",
+   "wiki": "Uji tea"
+  },
+  {
+   "key": "wv-uji",
+   "wiki": "Uji",
+   "site": "en.wikivoyage.org"
+  },
+  {
+   "key": "wp-koka-shiga",
+   "wiki": "Kōka, Shiga"
+  },
+  {
+   "key": "wp-koga-ryu",
+   "wiki": "Kōga-ryū"
+  },
+  {
+   "key": "wp-ninja",
+   "wiki": "Ninja"
+  },
+  {
+   "key": "wp-shigaraki-ware",
+   "wiki": "Shigaraki ware"
+  }
+ ]
+}

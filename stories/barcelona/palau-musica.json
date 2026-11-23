@@ -1,0 +1,378 @@
+{
+ "id": "palau-musica",
+ "v": 1,
+ "city": "barcelona",
+ "title": "Palau de la Música Catalana",
+ "match": {
+  "ids": [
+   "palau"
+  ],
+  "names": [
+   "palau de la musica",
+   "palau de la música",
+   "palau de la musica catalana",
+   "palau de la música catalana",
+   "palace of catalan music"
+  ],
+  "wikidata": [
+   "Q327940"
+  ]
+ },
+ "checked": "2026-11-23",
+ "claims": {
+  "what": {
+   "label": "supported",
+   "says": "The Palau de la Música Catalana, Palace of Catalan Music, is a concert hall designed by Lluís Domènech i Montaner, built 1905-1908 for the Orfeó Català choral society, and inaugurated on 9 February 1908.",
+   "src": [
+    "wp-palau-la-musica-catalana"
+   ],
+   "quote": [
+    "English: Palace of Catalan Music) is a concert hall in Barcelona, Catalonia, Spain. Designed in the Catalan modernista style by the architect Lluís Domènech i Montaner, it was built between 1905 and 1908 for Orfeó Català",
+    "It was inaugurated on 9 February 1908."
+   ]
+  },
+  "orfeo": {
+   "label": "supported",
+   "says": "The Orfeó Català, founded in 1891 by Lluís Millet and Amadeu Vives, was a leading force in the Renaixença, the Catalan Rebirth.",
+   "src": [
+    "wp-orfeo-catala",
+    "wp-palau-la-musica-catalana"
+   ],
+   "quote": [
+    "which was founded in 1891 by Lluís Millet and Amadeu Vives",
+    "a choral society founded in 1891 that was a leading force in the Catalan cultural movement that came to be known as the Renaixença (Catalan Rebirth)"
+   ]
+  },
+  "funding": {
+   "label": "supported",
+   "says": "It was mainly paid for by the Orfeó Català, with important help from the city's wealthy industrialists.",
+   "src": [
+    "wp-palau-la-musica-catalana"
+   ],
+   "quote": [
+    "The construction project was mainly financed by Orfeó Català, but important financial contributions also came from Barcelona's wealthy industrialists and bourgeoisie."
+   ]
+  },
+  "street": {
+   "label": "supported",
+   "says": "It stands on a cramped street corner in the old town, while most of Gaudí's buildings are in the Eixample.",
+   "src": [
+    "wp-palau-la-musica-catalana"
+   ],
+   "quote": [
+    "The palace is located in the corner of a cramped street, Carrer Palau de la Música, and Carrer de Sant Pere Mes Alt, in the section of old Barcelona known as Casc Antic. Most of the other prominent modernista buildings, those designed by Antoni Gaudí, for example, are located in the chic 19th-century extension of the city known as the Eixample."
+   ]
+  },
+  "corner-sculpture": {
+   "label": "supported",
+   "says": "On the corner is Miguel Blay's massive sculpture group symbolizing Catalan music.",
+   "src": [
+    "wp-palau-la-musica-catalana"
+   ],
+   "quote": [
+    "Even Miguel Blay's massive sculptural group symbolizing Catalan music on the corner of the building"
+   ]
+  },
+  "columns": {
+   "label": "supported",
+   "says": "On the main façade's upper balcony, each column is covered differently in colored glazed tile, mostly floral; above are busts of Palestrina, Bach and Beethoven, with Wagner on the side.",
+   "src": [
+    "wp-palau-la-musica-catalana"
+   ],
+   "quote": [
+    "Two colonnades enjoy a commanding position on the second-level balcony of the main façade. Each column is covered uniquely with multicolored glazed tile pieces in mostly floral designs",
+    "Above the columns are large busts of Giovanni Pierluigi da Palestrina, Johann Sebastian Bach, and Ludwig van Beethoven on the main façade and Richard Wagner on the side."
+   ]
+  },
+  "top-mosaic": {
+   "label": "supported",
+   "says": "At the top of the façade a large mosaic by Lluís Bru shows the members of the Orfeó Català, but it is impossible to see clearly from the narrow street.",
+   "src": [
+    "wp-palau-la-musica-catalana"
+   ],
+   "quote": [
+    "The top of the main façade is graced by a large allegoric mosaic by Lluís Bru that represents the members of the Orfeó Català, but it is impossible to see it clearly from the narrow street below."
+   ]
+  },
+  "artisans": {
+   "label": "supported",
+   "says": "Patrons wanted Catalan materials and techniques, so the architect gave local craftsmen creative freedom over the ornament.",
+   "src": [
+    "wp-palau-la-musica-catalana"
+   ],
+   "quote": [
+    "local patrons who were increasingly influenced by the Renaixença movement requested that the architect utilize materials and techniques reflecting Catalan identity. In response, the architect commissioned various local artisans and craftsmen, granting them creative autonomy"
+   ]
+  },
+  "steel": {
+   "label": "verified",
+   "says": "UNESCO calls it an exuberant steel-framed structure full of light and space; the steel frame allowed a glass skin instead of structural walls.",
+   "src": [
+    "unesco-palau-sant-pau"
+   ],
+   "quote": [
+    "The Palau de la Música Catalana is an exuberant steel-framed structure full of light and space",
+    "The reticular steel frame, which made possible extensive open floor spaces with an absence of structural facades, replaced by a glass skin, was an innovative architectural concept of great importance."
+   ]
+  },
+  "benton": {
+   "label": "supported",
+   "says": "Historian Tim Benton noted that to unaccustomed eyes it seems a riot of ornament without logic, yet the structure in brick and iron is clearly expressed.",
+   "src": [
+    "wp-palau-la-musica-catalana"
+   ],
+   "quote": [
+    "\"To eyes unaccustomed to the architecture of Barcelona, the impression of a riot of ornament lacking any logic or control seems overwhelming.  And yet the building follows exactly the exhortations of the [architectural] rationalists.  The structure, in brick and iron, is clearly expressed.\""
+   ]
+  },
+  "stairs": {
+   "label": "supported",
+   "says": "Marble staircases rise from the vestibule, with balustrades on transparent yellow glass balusters; the vestibule ceiling has ceramic mouldings in the shape of stars.",
+   "src": [
+    "wp-palau-la-musica-catalana"
+   ],
+   "quote": [
+    "The ceiling of the vestibule is decorated with glazed ceramic moldings that are arranged in the shape of stars.  From the vestibule, on the left and right, grand marble staircases ascend",
+    "The balustrades of the staircases, also marble, are supported by unusual transparent yellow glass balusters."
+   ]
+  },
+  "hall-light": {
+   "label": "supported",
+   "says": "The concert hall seats about 2,200 and is the only auditorium in Europe lit entirely by natural light during the day.",
+   "src": [
+    "wp-palau-la-musica-catalana"
+   ],
+   "quote": [
+    "The concert hall of the palace, which seats about 2,200 people, is the only auditorium in Europe illuminated entirely by natural light during the day."
+   ]
+  },
+  "skylight": {
+   "label": "supported",
+   "says": "Overhead, Antoni Rigalt's stained-glass skylight has an inverted dome of gold surrounded by blue, the sun and the sky, ringed by a choir of young women.",
+   "src": [
+    "wp-palau-la-musica-catalana"
+   ],
+   "quote": [
+    "an overhead stained glass skylight, designed by Antoni Rigalt, whose centerpiece is an inverted dome in shades of gold surrounded by blue, representing the sun and the sky",
+    "A choir of young women surrounds the \"sun\" in the stained-glass skylight"
+   ]
+  },
+  "arch": {
+   "label": "supported",
+   "says": "The stage arch shows folk music on the left, with a bust of choir director Anselm Clavé under a stone tree and girls singing The Flowers of May, and classical music on the right, with Wagner's Ride of the Valkyries above a bust of Beethoven; both meet at the top.",
+   "src": [
+    "wp-palau-la-musica-catalana"
+   ],
+   "quote": [
+    "a bust of Anselm Clavé, a famous choir director who was instrumental in reviving Catalan folk songs, is situated on the left side of the stage, under a stone tree.  Seated beneath this statue are sculpted girls singing the Catalan song Les Flors de Maig (The Flowers of May).",
+    "On the right side is depicted the 'Ride of the Valkyries' from Wagner's opera Die Walküre.  Under the Valkyries and among two Doric columns is a bust of Beethoven.  The arch thus represents folk music on the left and classical music on the right, both united at the top of the arch."
+   ]
+  },
+  "muses": {
+   "label": "supported",
+   "says": "Around the back of the stage are 18 young women known as the muses: upper bodies sculpted by Eusebi Arnau, lower bodies in mosaic by Lluís Bru, each playing a different instrument.",
+   "src": [
+    "wp-palau-la-musica-catalana"
+   ],
+   "quote": [
+    "In a semicircle on the sides of the back of the stage are the figures of 18 young women popularly known as the 'muses'. The upper bodies were sculpted by Eusebi Arnau and the mosaic work of their lower bodies was created by Lluís Bru.",
+    "Each of the women is playing a different musical instrument"
+   ]
+  },
+  "pegasus": {
+   "label": "supported",
+   "says": "Winged horses in the upper balcony honour Pegasus, symbol of high-flying imagination.",
+   "src": [
+    "wp-palau-la-musica-catalana"
+   ],
+   "quote": [
+    "The sculptures of winged horses that enjoy a commanding position in the upper balcony are in honour of Pegasus, the horse of Greek mythology and the symbol of high-flying imagination."
+   ]
+  },
+  "acoustics": {
+   "label": "supported",
+   "says": "The writer Robert Hughes said the glass walls carry music like drum skins, so the acoustics have always been awful.",
+   "src": [
+    "wp-palau-la-musica-catalana"
+   ],
+   "quote": [
+    "\"...there was never a shortage of complaint about its acoustic conditions - which, since its glass walls carry music like drum skins, have always been awful.\""
+   ]
+  },
+  "unesco": {
+   "label": "verified",
+   "says": "UNESCO lists the Palau with the Hospital de Sant Pau as World Heritage, and it keeps its original use as a concert hall.",
+   "src": [
+    "unesco-palau-sant-pau"
+   ],
+   "quote": [
+    "It retains its original use as a concert hall."
+   ]
+  },
+  "audience": {
+   "label": "estimate",
+   "says": "More than half a million people a year attend performances, from symphonic and chamber music to jazz and Catalan song.",
+   "src": [
+    "wp-palau-la-musica-catalana"
+   ],
+   "quote": [
+    "Today, more than half a million people a year attend musical performances in the Palau that range from symphonic and chamber music to jazz and Cançó (Catalan song)."
+   ]
+  },
+  "soundproof": {
+   "label": "verified",
+   "says": "Modern equipment such as air conditioning and soundproofing has since been installed with ingenious methods.",
+   "src": [
+    "unesco-palau-sant-pau"
+   ],
+   "quote": [
+    "In the Palau de la Música Catalana, ingenious methods have been used to install modern technical equipment such as air conditioning, soundproofing, etc."
+   ]
+  }
+ },
+ "parts": [
+  {
+   "name": "The corner",
+   "stand": "Stand at the street corner where the big carved stone group juts out from the building, keeping clear of passing cars.",
+   "paras": [
+    {
+     "t": "Squeezed into these narrow old-town streets is the Palau de la Música Catalana, the Palace of Catalan Music. UNESCO calls it a steel-framed building full of light and space. It was designed by Lluís Domènech i Montaner and opened on February 9, 1908.",
+     "c": [
+      "what",
+      "street",
+      "steel"
+     ],
+     "level": 1
+    },
+    {
+     "t": "It was built for a choir. The Orfeó Català was founded in 1891 by Lluís Millet and Amadeu Vives, and it was a leading force in the Renaixença, the rebirth of Catalan culture. The choir paid for most of this building itself, with help from the city's wealthy industrialists.",
+     "c": [
+      "orfeo",
+      "funding"
+     ],
+     "level": 2
+    },
+    {
+     "t": "That great stone group on the corner, by the sculptor Miguel Blay, stands for Catalan music.",
+     "c": [
+      "corner-sculpture"
+     ],
+     "level": 1
+    }
+   ]
+  },
+  {
+   "name": "The façade",
+   "stand": "Walk along to the main façade and look up at the balcony with the tiled columns.",
+   "paras": [
+    {
+     "t": "Look up at the balcony columns. Each one is covered in a different pattern of colored tile, mostly flowers. And above them, the composers: Palestrina, Bach and Beethoven, with Wagner around the side.",
+     "c": [
+      "columns"
+     ],
+     "level": 1
+    },
+    {
+     "t": "Right at the top there's a big mosaic of the choir's members. Honestly, you can't see it clearly from down here. The street's too narrow.",
+     "c": [
+      "top-mosaic"
+     ],
+     "level": 3
+    },
+    {
+     "t": "The patrons wanted it to feel Catalan, through and through. So the architect handed the decoration to local craftsmen and gave them a free hand.",
+     "c": [
+      "artisans"
+     ],
+     "level": 2
+    },
+    {
+     "t": "It looks like pure ornament. But as Tim Benton put it, to unaccustomed eyes it seems a riot of decoration without logic, and yet the structure, in brick and iron, is clearly expressed. Underneath it all is a steel frame. That's what let the walls become glass.",
+     "c": [
+      "benton",
+      "steel"
+     ],
+     "level": 2
+    }
+   ]
+  },
+  {
+   "name": "The staircase",
+   "stand": "Inside, stop at the foot of the marble staircase.",
+   "paras": [
+    {
+     "t": "Look up at the ceiling: ceramic stars. And look at the staircase rail. It's marble, but held up on little posts of transparent yellow glass.",
+     "c": [
+      "stairs"
+     ],
+     "level": 1
+    },
+    {
+     "t": "Take the stairs slowly. Marble can be slippery, and it's easy to look up instead of down in here.",
+     "c": [],
+     "level": 2,
+     "cue": true
+    }
+   ]
+  },
+  {
+   "name": "The concert hall",
+   "stand": "In the hall, find a seat or a quiet spot along the side, and look up at the ceiling first.",
+   "paras": [
+    {
+     "t": "Now look up. That's a stained-glass skylight by Antoni Rigalt: a golden sun in the middle, a blue sky around it, and a ring of women singing. This hall seats about 2,200, and in the daytime it's lit entirely by natural light, the only auditorium in Europe like that.",
+     "c": [
+      "skylight",
+      "hall-light"
+     ],
+     "level": 1
+    },
+    {
+     "t": "Now the stage. Look to its left: a bust of the choir director Anselm Clavé under a stone tree, with girls singing The Flowers of May, a Catalan song. That's folk music. On the right, the Valkyries ride out of Wagner's opera, above a bust of Beethoven. That's classical music. And they meet at the top of the arch.",
+     "c": [
+      "arch"
+     ],
+     "level": 2
+    },
+    {
+     "t": "Behind the stage, in a half circle, are the muses, 18 young women. Their upper bodies are sculpted, coming right out of the wall, and their skirts are mosaic. Each one plays a different instrument.",
+     "c": [
+      "muses"
+     ],
+     "level": 2
+    },
+    {
+     "t": "And up in the top balcony, winged horses, for Pegasus, the symbol of imagination taking flight.",
+     "c": [
+      "pegasus"
+     ],
+     "level": 3
+    },
+    {
+     "t": "Was it all good for the music? The writer Robert Hughes thought not. He said the glass walls carry sound like drum skins, and that the acoustics had always been awful. Since then, modern equipment has been carefully fitted, soundproofing included.",
+     "c": [
+      "acoustics",
+      "soundproof"
+     ],
+     "level": 3
+    }
+   ]
+  },
+  {
+   "name": "Closing",
+   "stand": "Stay in your seat a moment longer.",
+   "paras": [
+    {
+     "t": "UNESCO lists this hall as World Heritage, and it's still doing what it was built for. More than half a million people a year come to hear music here. It started with a choir that wanted a home for its songs. If you can, come back one evening and hear a choir sing here.",
+     "c": [
+      "unesco",
+      "audience",
+      "orfeo"
+     ],
+     "level": 1
+    }
+   ]
+  }
+ ],
+ "practical": []
+}

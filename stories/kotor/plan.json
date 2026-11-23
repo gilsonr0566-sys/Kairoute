@@ -1,0 +1,152 @@
+{
+ "sights": [
+  {
+   "id": "old-town-walls",
+   "title": "Kotor Old Town and its walls",
+   "appIds": [
+    "src-q12907852",
+    "src-q4981066"
+   ],
+   "wikidata": [
+    "Q12907852",
+    "Q4981066"
+   ],
+   "editions": 21,
+   "folds": [
+    "Castle of San Giovanni",
+    "Church of Our Lady of Remedy"
+   ],
+   "sources": [
+    "wp-kotor",
+    "wp-natural-culturo-historical-r",
+    "wp-venetian-albania",
+    "unesco-kotor",
+    "unesco-venetian-defence",
+    "wv-kotor"
+   ]
+  },
+  {
+   "id": "st-tryphon",
+   "title": "St Tryphon's Cathedral",
+   "appIds": [
+    "src-q966429"
+   ],
+   "wikidata": [
+    "Q966429"
+   ],
+   "editions": 23,
+   "folds": [],
+   "sources": [
+    "wp-cathedral-saint-tryphon",
+    "wp-saint-tryphon",
+    "wp-roman-catholic-diocese-kotor"
+   ]
+  },
+  {
+   "id": "perast",
+   "title": "Perast and Our Lady of the Rocks",
+   "appIds": [],
+   "wikidata": [],
+   "editions": null,
+   "folds": [
+    "Our Lady of the Rocks",
+    "St George island"
+   ],
+   "sources": [
+    "wp-perast",
+    "wp-our-lady-rocks",
+    "wp-bay-kotor",
+    "wv-perast"
+   ]
+  },
+  {
+   "id": "lovcen",
+   "title": "Lovćen, Njeguši and the Njegoš Mausoleum",
+   "appIds": [
+    "src-q1288177",
+    "src-q2548973"
+   ],
+   "wikidata": [
+    "Q1288177",
+    "Q2548973"
+   ],
+   "editions": 22,
+   "folds": [
+    "Njeguši",
+    "Njegoš's Mausoleum"
+   ],
+   "sources": [
+    "wp-lovcen",
+    "wp-petar-ii-petrovic-njegos",
+    "wp-njegusi",
+    "wp-njeguski-prsut"
+   ]
+  },
+  {
+   "id": "dobrota",
+   "title": "Dobrota",
+   "appIds": [
+    "src-q1008132"
+   ],
+   "wikidata": [
+    "Q1008132"
+   ],
+   "editions": 26,
+   "folds": [],
+   "sources": [
+    "wp-dobrota",
+    "wp-bay-kotor"
+   ]
+  },
+  {
+   "id": "prcanj",
+   "title": "Prčanj",
+   "appIds": [
+    "src-q2158623"
+   ],
+   "wikidata": [
+    "Q2158623"
+   ],
+   "editions": 22,
+   "folds": [],
+   "sources": [
+    "wp-prcanj",
+    "wp-bay-kotor"
+   ]
+  },
+  {
+   "id": "st-nicholas",
+   "title": "St Nicholas Church",
+   "appIds": [
+    "src-q26696607"
+   ],
+   "wikidata": [
+    "Q26696607"
+   ],
+   "editions": 6,
+   "folds": [],
+   "sources": [
+    "wp-kotor",
+    "wp-serbian-orthodox-church",
+    "wv-kotor"
+   ]
+  },
+  {
+   "id": "maritime-museum",
+   "title": "Maritime Museum of Montenegro",
+   "appIds": [
+    "src-q16677924"
+   ],
+   "wikidata": [
+    "Q16677924"
+   ],
+   "editions": 4,
+   "folds": [],
+   "sources": [
+    "wp-kotor",
+    "wp-bokelj-navy",
+    "wv-kotor"
+   ]
+  }
+ ]
+}

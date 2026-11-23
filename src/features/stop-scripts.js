@@ -210,11 +210,23 @@ function scriptSources(s) {
 <ul class="tips">${sc.sources.map(x => `<li><span>${esc(x.pub)}: <a href="${esc(x.url)}" target="_blank" rel="noopener">${esc(x.title)}</a></span></li>`).join("")}</ul></details>`;
 }
 // The script that belongs to a stop, if any.
-const scriptFor = (s, city) => s && city && STOP_SCRIPTS.find(sc => sc.city.test(city.city || "") && sc.site.test(s.name + " " + (s.local || "")));
+// Each city and stop name is matched against the scripts once (cityFor calls this on every screen draw, and with the story
+// library a tick on a big city's list read every script's patterns for every sight: tap speed, Nov 23). The answer is kept
+// by the names it reads, and worked out again when a script is added.
+var scriptMemo = { n: -1, city: new Map(), site: new Map() }; // var, like STOP_SCRIPTS
+function scriptMemoFresh() { if (scriptMemo.n !== STOP_SCRIPTS.length) { scriptMemo.n = STOP_SCRIPTS.length; scriptMemo.city.clear(); scriptMemo.site.clear(); } }
+var scriptSeen = new WeakMap(); // site -> the names it was matched by, and the answer
+const scriptFor = (s, city) => { if (!(s && city)) return s && city; scriptMemoFresh();
+  const seen = typeof s === "object" ? scriptSeen.get(s) : null; if (seen && seen.n === scriptMemo.n && seen.c === city.city && seen.name === s.name && seen.local === s.local) return seen.v;
+  const v0 = scriptForKey(s, city); if (typeof s === "object") scriptSeen.set(s, { n: scriptMemo.n, c: city.city, name: s.name, local: s.local, v: v0 }); return v0; };
+const scriptForKey = (s, city) => { const k = (city.city || "") + "\u0000" + s.name + " " + (s.local || "");
+  if (scriptMemo.site.has(k)) return scriptMemo.site.get(k);
+  const v = STOP_SCRIPTS.find(sc => sc.city.test(city.city || "") && sc.site.test(s.name + " " + (s.local || ""))); scriptMemo.site.set(k, v); return v; };
 // Puts the script on the stop as its parts (the same parts the voice tour and the day plan already show). The AI
 // walk-through never rewrites a stop with a script. Cheap and safe to call often.
 function scriptStops(city) {
-  if (!city || !STOP_SCRIPTS || !STOP_SCRIPTS.some(sc => sc.city.test(city.city || ""))) return;
+  if (!city || !STOP_SCRIPTS || !scriptMemo) return; scriptMemoFresh();
+  const ck = city.city || ""; let any = scriptMemo.city.get(ck); if (any === undefined) scriptMemo.city.set(ck, any = STOP_SCRIPTS.some(sc => sc.city.test(ck))); if (!any) return;
   for (const s of city.sites || []) {
     const sc = scriptFor(s, city); if (!sc || s.scriptV === sc.id + sc.v) continue;
     s.parts = sc.parts.map(p => ({ name: p.name, spot: true, local: "", lat: s.lat, lng: s.lng, minutes: p.minutes, stand: p.stand, next: "", guide: p.paras.join("\n\n"), lookFor: "" }));
