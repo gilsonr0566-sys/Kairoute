@@ -1134,6 +1134,12 @@ function bumpWhy(d, b) {
 // The "Didn't fit today" banner names each pick with the one reason the planner knows and its numbers (what it needs,
 // what is left, how far past the day's end it would run), never a bare "doesn't fit" (Nov 23, odd-screen: "reason has its
 // numbers"; Richard, Nov 22: every reason on screen traces to real data).
+// A lunch brought along and eaten during a long visit (the planner times it inside the visit, around midday).
+function lunchInLine(s) {
+  const L = s && s.lunchIn; if (!L || !isFinite(L.at)) return "";
+  const buy = L.packed && typeof packedWords === "function" ? packedWords(L) : "";
+  return `<div class="sub lunchin">Lunch during this visit: bring your own, eat about ${fmt(L.at)} (${dur(L.min || 0)})${buy ? ". " + esc(buy) : ""}.</div>`;
+}
 function dropLine(d, plan, list, plain) {
   const why = x => { let w = ""; try { w = shutOn(d, x) ? "closed on " + fmtDow(d.date) + " " + fmtDate(d.date) : (plan.dropWhy && plan.dropWhy[x.id]) || ""; } catch (e) { w = (plan.dropWhy && plan.dropWhy[x.id]) || ""; }
     return /^is closed on /.test(w) ? w.slice(3) : w; };
@@ -6966,7 +6972,7 @@ function renderPlan(d) {
         <div class="optacts"><button class="btn small" data-act="bonusadd" data-id="${esc(s.id)}">Add to my sights</button><button class="btn ghost small" data-act="bonusskip" data-id="${esc(s.id)}">Skip it</button></div></div></div>`;
       n++;
       return `<div class="${cls}" data-stop="${esc(s.id)}">${tcell(it)}<div class="rail"><div class="dot">${n}</div></div><div class="what">${canDrag ? dragHandle(s) : ""}
-        ${it.area ? `<div class="areahd">${esc(areaHead(it))}</div>` : ""}<button class="nm namebtn" data-open="${esc(s.id)}">${esc(s.areaRest ? "The rest of " + s.name : s.name)}</button><div class="sub">${dur(s.minutes)} · ${cat(s)}${s.mustSee ? " · Must-see" : ""}${s.unesco ? " · UNESCO" : ""}</div>${inclLine(s)}
+        ${it.area ? `<div class="areahd">${esc(areaHead(it))}</div>` : ""}<button class="nm namebtn" data-open="${esc(s.id)}">${esc(s.areaRest ? "The rest of " + s.name : s.name)}</button><div class="sub">${dur(s.minutes)} · ${cat(s)}${s.mustSee ? " · Must-see" : ""}${s.unesco ? " · UNESCO" : ""}</div>${inclLine(s)}${lunchInLine(s)}
 ${partsList(s, it.time)}${stopLiveNotes(it, d)}</div></div>`;
     }
     if (it.type === "evening") {

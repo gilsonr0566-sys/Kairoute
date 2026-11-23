@@ -197,9 +197,11 @@
         for (const e of cands) {
           // The lunch goes after the visit, or first thing on arriving when the visit starts near lunchtime (Nov 22 lunch
           // audit: a visit starting at 1 pm had its lunch put after it, at 3:13 pm).
-          const build = (cut, first) => { const v = Object.assign({}, s, { minutes: s.minutes - cut, lunchIn: len, lunchCut: cut }),
-            m = mealAt(e, len, Object.assign({ inside: s.id, insideWish: !!(s.wish && !s.guideWish), travelNote: e.r.travelNote || (E.byBoat(s.travelNote) || E.waterOnly(s) || s.acrossWater ? s.travelNote || "" : "") },
+          const build = (cut, first, part1) => { const v = Object.assign({}, s, { minutes: s.minutes - cut, lunchIn: len, lunchCut: cut }),
+            m = mealAt(e, len, Object.assign({ inside: s.id, ...(part1 != null ? { during: s.id } : {}), insideWish: !!(s.wish && !s.guideWish), travelNote: e.r.travelNote || (E.byBoat(s.travelNote) || E.waterOnly(s) || s.acrossWater ? s.travelNote || "" : "") },
             s.acrossWater ? { acrossWater: s.acrossWater } : {}, E.waterOnly(s) && !E.byBoat(s.travelNote) ? { access: s.access } : {}));
+            // In the middle of the visit: its first part, lunch, then the rest of it (one visit on the screens, see shortForm).
+            if (part1 != null) return order.slice(0, k).concat([Object.assign({}, v, { minutes: part1, part: 1 }), m, Object.assign({}, v, { minutes: v.minutes - part1, part: 2 })], order.slice(k + 1));
             return order.slice(0, k).concat(first ? [m, v] : [v, m], order.slice(k + 1)); };
           if ((s.minutes || 0) - len < 45) continue;
           for (const first of st.at >= L.from - 30 ? [false, true] : [false]) {
@@ -208,6 +210,11 @@
             if ((s.minutes || 0) - cut < 45) continue;
             offer(build(cut, first), first ? k : k + 1, len, E.hav(s, e.r), e.r.fromMap, cut);
           }
+          // A lunch brought along is eaten in the visit around midday, when the visit runs on past lunchtime (Nov 23 lunch
+          // audit: a 5 h ranch visit from 10:30 am had its brought lunch after it, at 3:30 pm). The visit is timed in two
+          // parts around it, at least 30 min each, and lunch starts by the kitchen-hours end every other lunch keeps to.
+          if (e.r.packed) { const t = Math.max(st.at + 45, L.from + 30), a = Math.round((t - st.at) / 5) * 5;
+            if (a >= 30 && (s.minutes || 0) - len - a >= 30 && st.at + a + len <= L.to && st.at + (s.minutes || 0) - len > L.to) offer(build(len, false, a), k + 1, len, 0, false, len); }
         }
       }
     });

@@ -129,7 +129,7 @@ if (typeof window !== "undefined" && window.ENGINE2 && window.KEngine) (function
     if (!prev || !prev.place) return out;
     const P = prev.place, eat = ((city || {}).restaurants || []).filter(r => r && !r.generic && !r.crowdDrop && isFinite(+r.lat) && E.mealPlace(r) && hav(P, r) <= 0.6 && (!visit || hav(visit, r) > 0.6))
       .sort((a, b) => hav(P, a) - hav(P, b) || String(a.name).localeCompare(String(b.name)))[0];
-    out.buyNear = prev.type === "start" ? (prev.label || "your start") : P.name || "";
+    out.buyNear = prev.type === "start" ? (P.name || String(prev.label || "").replace(/^Leave\s+/i, "") || "your start") : P.name || ""; // the place, never the step's label ("Leave Hotel in Plaka")
     if (eat) out.buy = { name: eat.name, lat: +eat.lat, lng: +eat.lng };
     return out;
   }
@@ -166,11 +166,15 @@ if (typeof window !== "undefined" && window.ENGINE2 && window.KEngine) (function
         const s = byId.get(String(x.id)); const p = Object.assign({}, s || at(x), { minutes: x.min });
         p.bonus = !!x.bonus; // the engine's own word: a stop it planned is part of the day, whatever the guide's listing says
         if (x.lunchCut) p.lunchCut = x.lunchCut; // lunch is inside this visit
+        if (x.lunchIn) p.lunchIn = Object.assign({}, x.lunchIn); // a brought lunch eaten during this visit, at this time
         if (x.within) p.within = x.within; if (x.includes) p.includes = x.includes;
         const it = Object.assign({ type: "stop", place: p, time: x.at }, x.wait ? { wait: x.wait } : {}, x.late ? { ohLate: x.late } : {}, x.hours ? { hours: x.hours } : {});
         items.push(it); stops.push(it); return;
       }
       if (x.t === "meal" || x.t === "evening") {
+        // A lunch brought along and eaten during the visit just before it: a line on that visit, not a row of its own (its
+        // time is inside the visit's).
+        if (x.during != null) { const st = stops[stops.length - 1]; if (st && String(st.place.id) === String(x.during)) { st.place.lunchIn = Object.assign({ at: x.at, min: x.min }, st.place.lunchIn || {}, { packed: !!x.packed }, x.packed ? packedBuy(items, city) : {}); return; } }
         const label = x.meal || "Lunch", m = MEALS.find(z => z.label === label) || MEALS[0];
         const r = x.onBoard ? { name: "Back on board", onBoard: true, generic: true, lat: x.lat, lng: x.lng, alts: [] } : x.packed ? Object.assign({ name: "Bring your own", packed: true, generic: true, lat: x.lat, lng: x.lng, alts: [] }, packedBuy(items, city)) : Object.assign({}, byName(city.restaurants, x.name) || at(x), { alts: [] });
         if (x.booked) Object.assign(r, { booked: true, why: "Your reservation at " + fmt(x.at) + "." }); // a table the traveler booked shows as theirs

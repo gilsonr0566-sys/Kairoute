@@ -66,13 +66,21 @@
       // A fixed step of the day's start that takes the traveler somewhere (the cable car up from a tender landing): with no
       // stop after it, the free time is spent there and the way back starts there.
       if (x.t === "fixed" && !/bags/i.test(x.name || "") && win.head.some(p => p.fixed && p.id === x.id)) it.up = true;
-      if (x.packed) it.packed = true; if (src && src.lunchCut) it.lunchCut = src.lunchCut; // lunch is inside this visit: the visit gave it these minutes
+      if (x.packed) it.packed = true; if (x.during != null) it.during = x.during; if (src && src.lunchCut) it.lunchCut = src.lunchCut; // lunch is inside this visit: the visit gave it these minutes
       // What is known about a place to eat travels with it to the screen: found only on the map (no guide or review behind
       // it), and whether its hours that day are known (Nov 22: never say more than the data says).
       if (x.t === "meal" || x.t === "evening") { if (x.fromMap) it.fromMap = true; const fx = (fit.eatFacts || {})[E.eatKey(x.name || "")]; if (fx && (fx.closed || (fx.oh && fx.oh.spans && fx.oh.spans.length))) it.hoursKnown = true; }
       Object.assign(it, point(whereIs(x)));
       items.push(it);
     }
+    // A lunch brought along in the middle of a long visit (lunchFor times the visit in two parts around it): one visit on the
+    // plan, lunch inside it (lunchIn: when and how long), and the lunch kept right after it, marked as eaten during it.
+    for (let k = 0; k < items.length; k++) { const m = items[k]; if (m.t !== "meal" || m.during == null) continue;
+      let a = k - 1; while (a >= 0 && items[a].t === "ride") a--; let b = k + 1; while (b < items.length && items[b].t === "ride") b++;
+      const A = items[a], B = items[b];
+      if (!A || !B || A.t !== "stop" || B.t !== "stop" || String(A.id) !== String(m.during) || String(B.id) !== String(m.during)) { delete m.during; continue; }
+      A.min = B.at + (B.min || 0) - A.at; A.lunchIn = { at: m.at, min: m.min }; if (B.late) A.late = Math.max(A.late || 0, B.late);
+      m.during = A.id; items.splice(a + 1, b - a, m); k = a + 1; }
     if (fit.onBoard) { const sp = win.tail[win.tail.length - 1]; items.push({ t: "meal", id: null, name: "Back on board", at: fit.onBoard.at, min: fit.onBoard.min, bonus: false, along: false, meal: "Lunch", late: 0, onBoard: true, lat: sp.lat, lng: sp.lng }); }
     if (dinner) items.push({ t: "evening", id: null, name: dinner.name, at: dinner.at, min: dinner.min, lat: dinner.lat, lng: dinner.lng, bonus: false, along: false, meal: "Dinner", late: 0, booked: !!dinner.booked, chosen: !!dinner.chosen });
     return { i, start: win.start, endBy: win.endBy, end: fit.r.end, over: fit.r.over > 0, straight: !!win.straight,
