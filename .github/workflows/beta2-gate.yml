@@ -13,7 +13,7 @@ name: Beta 2 release gate
 on:
   workflow_dispatch:
   push:
-    branches: ["claude/project-thread-xrdp7v", "claude/project-thread-8wi5ra", "claude/project-thread-bw3ktc"]
+    branches: ["claude/project-thread-xrdp7v", "claude/project-thread-8wi5ra"]  # other branches: run it by hand (workflow_dispatch), so one commit is not tested twice at once
 permissions:
   contents: read
 defaults:
