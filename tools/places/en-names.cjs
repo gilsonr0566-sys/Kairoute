@@ -1,0 +1,44 @@
+// English names for places (Nov 23 class rule, Richard: "the app is presented in the language that is selected to view
+// it in"). For every Wikidata id: the English label, else the English Wikipedia title (without its bracketed part),
+// else the one name Wikidata gives for every language ("mul"). An id with none of these has no English name: a place
+// the app knows only by a local-language name, whatever the language, which it never shows as a sight's name.
+// enNames(ids) -> Map id -> { en, from }  (from: "label" | "enwiki" | "mul"; no entry: no English name)
+// CLI: node tools/places/en-names.cjs  -> writes en/noEn on the places files' listed sights and tools/beta2/en-names.json
+'use strict';
+const fs = require('fs'), path = require('path');
+const UA = 'KairouteBeta/0.1 (trip planner test build; English names)';
+const sleep = ms => new Promise(r => setTimeout(r, ms));
+async function sparql(q) {
+  for (let i = 0; i < 4; i++) { try { const r = await fetch('https://query.wikidata.org/sparql?format=json&query=' + encodeURIComponent(q), { headers: { 'User-Agent': UA, Accept: 'application/sparql-results+json' } });
+    if (r.ok) return await r.json(); if (r.status === 429 || r.status >= 500) { await sleep(4000 * (i + 1)); continue; } return null; } catch (e) { await sleep(3000 * (i + 1)); } }
+  return null; }
+async function enNames(ids) {
+  const out = new Map(), list = [...new Set(ids.filter(x => /^Q\d+$/.test(x)))];
+  for (let k = 0; k < list.length; k += 150) { const part = list.slice(k, k + 150);
+    const j = await sparql(`SELECT ?item ?en ?mul ?wt WHERE { VALUES ?item { ${part.map(x => 'wd:' + x).join(' ')} }
+      OPTIONAL { ?item rdfs:label ?en FILTER(LANG(?en) = "en") } OPTIONAL { ?item rdfs:label ?mul FILTER(LANG(?mul) = "mul") }
+      OPTIONAL { ?a schema:about ?item ; schema:isPartOf <https://en.wikipedia.org/> ; schema:name ?wt } }`);
+    if (!j) throw new Error('Wikidata did not answer: English names unknown, nothing written');
+    for (const b of j.results.bindings) { const id = b.item.value.split('/').pop(), had = out.get(id);
+      const pick = b.en ? { en: b.en.value, from: 'label' } : b.wt ? { en: b.wt.value.replace(/\s*\([^)]*\)\s*$/, ''), from: 'enwiki' } : b.mul ? { en: b.mul.value, from: 'mul' } : null;
+      if (pick && (!had || (had.from !== 'label' && pick.from === 'label'))) out.set(id, pick); }
+    await sleep(1200); }
+  out.asked = list; return out; }
+module.exports = { enNames };
+if (require.main === module) (async () => {
+  const dir = path.join(__dirname, 'data'), files = fs.readdirSync(dir).filter(f => f.endsWith('.json')), docs = files.map(f => [f, JSON.parse(fs.readFileSync(path.join(dir, f)))]);
+  const lists = d => [d.guideSights || [], ...Object.values(d.towns || {}).map(t => t.sights || [])];
+  const ids = docs.flatMap(([, d]) => lists(d).flat().map(x => x.wikidata).filter(Boolean));
+  // The test trips' own sight ids too (src-q…, wv~Q…, town~Q…), for the names gate.
+  const snap = path.join(__dirname, '..', 'beta2', 'snapshots');
+  if (fs.existsSync(snap)) for (const f of fs.readdirSync(snap).filter(f => f.endsWith('.json'))) { const s = JSON.parse(fs.readFileSync(path.join(snap, f)));
+    for (const c of Object.values(s.cities || {})) for (const x of [...(c.sites || []), ...(c.farther || [])]) { const m = /(?:^src-q|~Q|^wv~Q)(\d+)$/i.exec(String(x.id)); if (m) ids.push('Q' + m[1]); } }
+  const idf = path.join(__dirname, '..', 'beta2', 'en-names-ids.json'); if (fs.existsSync(idf)) ids.push(...JSON.parse(fs.readFileSync(idf)).ids);
+  const en = await enNames(ids); let named = 0, none = 0;
+  for (const [f, d] of docs) { for (const x of lists(d).flat()) { if (!x.wikidata) continue; const e = en.get(x.wikidata); delete x.en; delete x.noEn;
+      if (e) { if (e.en !== x.name) x.en = e.en; named++; } else { x.noEn = true; none++; } }
+    fs.writeFileSync(path.join(dir, f), JSON.stringify(d, null, 1) + '\n'); }
+  const book = {}; for (const id of en.asked.sort()) { const e = en.get(id); book[id] = e ? e.en : null; }
+  fs.writeFileSync(path.join(__dirname, '..', 'beta2', 'en-names.json'), JSON.stringify({ note: 'English names by Wikidata id (English label, else English Wikipedia title, else the name for every language); null: no English name. Written by tools/places/en-names.cjs. Test data for the names gate; the app reads the places files.', at: new Date().toISOString().slice(0, 10), names: book }, null, 1) + '\n');
+  console.log(`English names: ${named} listed sights named, ${none} with no English name, ${Object.keys(book).length} ids in en-names.json`);
+})().catch(e => { console.error(e.message); process.exit(1); });
