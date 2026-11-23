@@ -103,6 +103,14 @@ async function tapOne(p, t) {
       const r = { size, page: 'Choose sights (no signal)', tap: 'Add a place the guide lacks', act: 'addplace', errs: [...new Set(errs)], dead: false, spin: [], wide: '', untrue: lie || (/internet/i.test(said.card) ? '' : 'the add-a-place card does not say it needs the internet: ' + said.card.replace(/\s+/g, ' ').slice(0, 120)) };
       if (r.untrue || r.errs.length) out.push(r);
     }
+    // With no signal, Settings > AI guide never says the AI is simply "On": it needs the internet.
+    if (OFFLINE && (!process.env.PAGES || /settings|aiguide/.test(process.env.PAGES))) { // PAGES=aiguide runs this alone
+      await reopen('settings', 0); const b = p.locator('#view button', { hasText: 'AI guide' }).first();
+      if (await b.count()) { await b.click(); await p.waitForTimeout(800);
+        const t = await p.evaluate(() => (document.querySelector('#view') || document.body).innerText);
+        const on = (t.match(/(^|\n)On\.[^\n]*/) || [''])[0].trim();
+        if (on && !/internet|signal/i.test(on)) out.push({ size, page: 'Settings (no signal)', tap: 'AI guide', act: '', errs: [], dead: false, spin: [], wide: '', untrue: 'says the AI is on with no signal: ' + on.slice(0, 140) }); }
+    }
     await ctx.close();
   }
   await browser.close(); srv.close();

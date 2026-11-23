@@ -2626,7 +2626,9 @@ function aiStatusText() {
   const left = sample === freeSample && freeAI && freeAI.budget && on.length ? ` About ${Math.round(100 * (freeAI.left || 0) / freeAI.budget)}% of today's allowance is left; it resets every evening at 6 pm Central (7 pm in summer).` : "";
   if (!on.length) return "Off for now. You can still build any trip step by step, and every city gets a guide and day plans from travel guides, encyclopedias and maps.";
   const who = sample === freeSample ? "Kairoute's AI" : "Claude";
-  return `On. ${who} ${listWords(on, "and")}.${off.length ? ` Not in this version yet: it ${listWords(off, "or")}.` : ""}${left}`;
+  // The AI works over the internet: with no signal, "On" alone would promise what can't happen right now.
+  const net = typeof offOnline === "function" && !offOnline() ? " It needs the internet, so with no signal right now none of this works until you're back online." : "";
+  return `On. ${who} ${listWords(on, "and")}.${off.length ? ` Not in this version yet: it ${listWords(off, "or")}.` : ""}${net}${net ? "" : left}`;
 }
 function voiceStatusText() {
   return "Stops with a recorded Kairoute story play it in the guide voice you pick here, with no signal too once the trip is downloaded. So far only a few stops have one. Every other story is read by your device's own voice.";
