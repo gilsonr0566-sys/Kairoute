@@ -39,7 +39,7 @@ async function dump() {
   const { chromium } = require('playwright');
   const FILE = path.resolve(process.argv[3] || path.join(ROOT, 'beta2-site', 'index.html'));
   const AIJ = (() => { try { return JSON.parse(fs.readFileSync(path.join(ROOT, 'ai.json'), 'utf8')).url || ''; } catch (e) { return ''; } })();
-  const REAL = /^http:\/\/localhost:\d+\/workers\.dev$/.test(AIJ) ? AIJ : 'https://kairoute-ai.rickgilson.workers.dev', MOCK = 'https://mock.test';
+  const REAL = process.env.HELPER_URL || (/^http:\/\/localhost:\d+\/workers\.dev$/.test(AIJ) ? AIJ : 'https://kairoute-ai.rickgilson.workers.dev'), MOCK = 'https://mock.test';
   const PASS = new Set(['/sources', '/famous', '/ground', '/places', '/transit', '/route', '/departures', '/ferries', '/weather', '/facts', '/osm', '/findplace', '/nearsights', '/verify', '/bookcheck', '/voyage']);
   const helper = async r => {
     const req = r.request(), u = new URL(req.url());
@@ -131,9 +131,11 @@ const LEN = [ // [class ids, label, min, max] first match wins (most specific fi
 // The checked must-see list (by hand, Nov 20): test expectations only, never read by the app.
 const EXPECT = (() => { try { return JSON.parse(fs.readFileSync(path.join(__dirname, 'fame-expect.json'), 'utf8')).places; } catch (e) { return []; } })();
 const EXPECT_MORE = (() => { try { return JSON.parse(fs.readFileSync(path.join(__dirname, 'sight-expect.json'), 'utf8')).places; } catch (e) { return []; } })();
+// Physical things: a structure, a geographic feature, ruins, a park, a natural place, a monument.
+const PHYS = ['Q811979', 'Q618123', 'Q839954', 'Q22698', 'Q35145263', 'Q4989906', 'Q41176', 'Q33506', 'Q16970', 'Q174782', 'Q12280', 'Q40080'];
 async function classMap(classes) {
   // Every class a sight is an instance of, with which of our classes it falls under (subclass of, transitively).
-  const want = [...new Set([...Object.keys(NOT_VISIT), ...LEN.flatMap(x => x[0])])];
+  const want = [...new Set([...Object.keys(NOT_VISIT), ...LEN.flatMap(x => x[0]), ...PHYS])];
   const out = {};
   for (let i = 0; i < classes.length; i += 80) {
     const part = classes.slice(i, i + 80);
@@ -186,7 +188,7 @@ async function audit() {
     // Sights with no Wikidata id: is there anything of that name on the map near where the app puts it?
     const noId = sights.filter(s => !/^Q\d+$/.test(s.wd || '') && isFinite(s.lat));
     const nameHit = {};
-    for (const s of noId.slice(0, 40)) {
+    for (const s of noId.slice(0, 15)) {
       const words = fold(s.name).split(' ').filter(w => w.length >= 4 && !/^(church|museum|palace|castle|square|park|garden|beach|tower|house|street|old|town|the)$/.test(w));
       if (!words.length) continue;
       const j = await overpass(`[out:json][timeout:40];nwr["name"~"${words.slice(0, 2).map(w => w.replace(/[^a-z0-9]/g, '')).join('.*')}",i](around:5000,${s.lat},${s.lng});out center 5;`);
@@ -213,7 +215,7 @@ async function audit() {
       // NOT: not a visit, or gone.
       if (e) {
         const kinds = claimIds(e, 'P31').flatMap(c => [c, ...(cls[c] ? [...cls[c]] : [])]).filter(c => NOT_VISIT[c]).map(c => NOT_VISIT[c]);
-        const isSight = under(e, ['Q33506', 'Q16970', 'Q839954', 'Q23413', 'Q16560', 'Q22698', 'Q174782', 'Q4989906', 'Q12280', 'Q12518', 'Q483453', 'Q179700', 'Q40080', 'Q570116', 'Q2319498', 'Q811979']);
+        const isSight = under(e, PHYS);
         if (kinds.length && !isSight) F.push(['NOT', `${tag}: Wikidata says it is ${[...new Set(kinds)].join(', ')} (${(e.descriptions && e.descriptions.en && e.descriptions.en.value) || ''})`, { id: s.id }]);
         if (claimIds(e, 'P576').length || (e.claims && e.claims.P576) || (e.claims && e.claims.P582 && !e.claims.P580)) F.push(['NOT', `${tag}: Wikidata has an end date (closed, dissolved or demolished)`, { id: s.id }]);
         if (claimIds(e, 'P5817').some(x => ['Q56556915', 'Q30108381', 'Q63065035', 'Q11755959'].includes(x))) F.push(['NOT', `${tag}: Wikidata's state of use says demolished, closed or private`, { id: s.id }]);

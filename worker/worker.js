@@ -1029,6 +1029,15 @@ async function mapSights(c, UA) {
   }
   return out.slice(0, 30);
 }
+// The kinds of place the app reads (see the kinds lookup in sourcesData): Wikidata class -> one plain word. A place is
+// told by what it is, never by the words in its name.
+const SIGHT_KINDS = { Q811979: "structure", Q618123: "feature", Q41176: "building", Q839954: "archaeological", Q15661340: "ancient-city", Q54831: "amphitheatre", Q162875: "mausoleum",
+  Q22698: "park", Q1107656: "garden", Q35145263: "natural", Q40080: "beach", Q8502: "mountain", Q23442: "island", Q34038: "waterfall", Q39614: "cemetery", Q6017969: "viewpoint",
+  Q33506: "museum", Q207694: "art-museum", Q16970: "church", Q2977: "cathedral", Q32815: "mosque", Q34627: "synagogue", Q44539: "temple", Q108325: "chapel", Q44613: "monastery",
+  Q23413: "castle", Q57821: "fortification", Q16560: "palace", Q174782: "square", Q12280: "bridge", Q4989906: "monument", Q179700: "statue", Q483453: "fountain", Q12518: "tower", Q11303: "skyscraper", Q2105463: "observation-deck",
+  Q24354: "theatre", Q153562: "opera-house", Q1060829: "concert-hall", Q483110: "stadium", Q641226: "arena", Q1076486: "sports-venue", Q37654: "market", Q43501: "zoo", Q2281788: "aquarium", Q194195: "amusement-park",
+  Q43229: "organization", Q1656682: "event", Q1190554: "occurrence", Q34770: "language", Q17537576: "creative-work", Q82794: "region", Q5107: "continent", Q56061: "admin-area", Q486972: "settlement",
+  Q3918: "university", Q3914: "school", Q16917: "hospital", Q55488: "station", Q1248784: "airport", Q27686: "hotel", Q79007: "street", Q34442: "road", Q1021645: "office-building", Q4830453: "business" };
 // Where a sight is when its sources disagree: the SAME rule as tools/places/where.cjs (where-check.cjs runs both copies
 // through the same cases). listing = the travel guide's point (or the encyclopedia's when no guide lists it), wd = the
 // encyclopedia's, map = OpenStreetMap's element for the same item, wholes = the bigger places it is part of.
@@ -1098,6 +1107,30 @@ async function sourcesData(label, env, ctx) {
     return Promise.all([getJ(url(`SELECT ?item ?h ?w ?loc ?lab ?sl ?wloc WHERE { ${V} OPTIONAL { ?item wdt:P1435 ?h } OPTIONAL { ?item wdt:P856 ?w } OPTIONAL { ?item wdt:P625 ?loc } OPTIONAL { ?item rdfs:label ?lab FILTER(LANG(?lab) = "en") } OPTIONAL { ?item wikibase:sitelinks ?sl } OPTIONAL { ?item wdt:P361|wdt:P276 ?whole . ?whole wdt:P625 ?wloc } }`), 25000, H2),
       lang ? getJ(url(`SELECT ?item ?local WHERE { ${V} ?a schema:about ?item ; schema:isPartOf <https://${lang}.wikipedia.org/> ; schema:name ?local }`), 25000, H2) : null]).then(([a, b]) => ({ results: { bindings: [...((a && a.results.bindings) || []), ...((b && b.results.bindings) || [])] } })); }));
   lap("details");
+  // What each place IS, from the encyclopedia's own facts (P31 "instance of", followed up its "subclass of" tree), so the
+  // app tells a building, a ruin or a park from an organisation, an event, a language or a region (Nov 22 audit: UNESCO, a
+  // broadcaster, a football club and "continental Europe" had passed as sights; Hagia Sophia got a 40-minute visit). Two
+  // small asks: each item's direct kinds, then which of SIGHT_KINDS each of those kinds falls under. A failed ask leaves
+  // kinds unknown, never empty: the app then keeps its name rules.
+  try { const direct = new Map(), uq = q => "https://query.wikidata.org/sparql?format=json&query=" + encodeURIComponent(q), H3 = { headers: { ...UA, accept: "application/sparql-results+json" } };
+    // Gone too: a building or fortress demolished or destroyed (P5817 state of use), or one with an end date (P576) that
+    // is not an organisation (an abbey's community dissolved in 1790 leaves its church standing).
+    const got = await Promise.all(chunks.map(part => getJ(uq(`SELECT ?item ?t ?end ?use WHERE { VALUES ?item { ${part.map(x => "wd:" + x).join(" ")} } ?item wdt:P31 ?t . OPTIONAL { ?item wdt:P576 ?end } OPTIONAL { ?item wdt:P5817 ?use } }`), 20000, H3)));
+    const ended = new Set(), razed = new Set();
+    if (got.every(Boolean)) {
+      for (const j of got) for (const b of j.results.bindings) { const k = b.item.value.split("/").pop(); (direct.get(k) || direct.set(k, new Set()).get(k)).add(b.t.value.split("/").pop());
+        if (b.end) ended.add(k); if (b.use && /\/(Q56556915|Q30108381)$/.test(b.use.value)) razed.add(k); }
+      const classes = [...new Set([...direct.values()].flatMap(v => [...v]))], up = new Map();
+      const cc = []; for (let k = 0; k < classes.length; k += 120) cc.push(classes.slice(k, k + 120));
+      const res = await Promise.all(cc.map(part => getJ(uq(`SELECT ?c ?w WHERE { VALUES ?c { ${part.map(x => "wd:" + x).join(" ")} } VALUES ?w { ${Object.keys(SIGHT_KINDS).map(x => "wd:" + x).join(" ")} } ?c wdt:P279* ?w }`), 25000, H3)));
+      if (res.every(Boolean)) {
+        for (const j of res) for (const b of j.results.bindings) { const c = b.c.value.split("/").pop(); (up.get(c) || up.set(c, new Set()).get(c)).add(SIGHT_KINDS[b.w.value.split("/").pop()]); }
+        for (const id of ids) { const x = byId.get(id); if (!x) continue; const ks = new Set(); for (const c of direct.get(id) || []) for (const k of up.get(c) || []) ks.add(k); x.kinds = [...ks].sort();
+          if (razed.has(id) || (ended.has(id) && !ks.has("organization") && !ks.has("event") && !ks.has("occurrence"))) x.gone = true; }
+      }
+    }
+  } catch (e) {}
+  lap("kinds");
   for (const j of answers) {
     for (const b of (j && j.results && j.results.bindings) || []) {
       const x = byId.get(b.item.value.split("/").pop()); if (!x) continue;
@@ -1126,7 +1159,7 @@ async function sourcesData(label, env, ctx) {
     x.lat = at.lat; x.lng = at.lng; if (at.posDoubt) x.posDoubt = true; if (at.from !== "listing") x.posFrom = at.from; }
   const near = x => x.lat == null || kmOf(x, center) <= 12;
   const stops = [...byId.values(), ...noId].filter(x => x.name && !/^Q\d+$/.test(x.name) && near(x) && fold(x.name) !== fold(area))
-    .map(x => ({ name: x.name, local: x.local && x.local !== x.name ? x.local : undefined, wd: x.wd || undefined, lat: x.lat != null ? +(+x.lat).toFixed(5) : undefined, lng: x.lng != null ? +(+x.lng).toFixed(5) : undefined, sl: x.sl || 0, unesco: !!x.unesco, heritage: !!x.heritage, web: x.web, src: [...x.src], en: x.en || undefined, lc: x.lc || undefined, posDoubt: x.posDoubt || undefined, posFrom: x.posFrom || undefined }))
+    .map(x => ({ name: x.name, local: x.local && x.local !== x.name ? x.local : undefined, wd: x.wd || undefined, lat: x.lat != null ? +(+x.lat).toFixed(5) : undefined, lng: x.lng != null ? +(+x.lng).toFixed(5) : undefined, sl: x.sl || 0, unesco: !!x.unesco, heritage: !!x.heritage, web: x.web, src: [...x.src], en: x.en || undefined, lc: x.lc || undefined, posDoubt: x.posDoubt || undefined, posFrom: x.posFrom || undefined, kinds: x.kinds, gone: x.gone || undefined }))
     .sort((a, b) => b.src.length - a.src.length || b.sl - a.sl).slice(0, 160);
   // A small place the guidebooks and the encyclopedia barely cover (a small island, a cruise line's private island,
   // a resort port): add the named tourist places the map knows nearby (beaches, attractions, water parks,

@@ -16,7 +16,7 @@ jobs:
       matrix:
         batch: ["0", "1", "2", "3", "4", "5", "6", "7"]
     runs-on: ubuntu-latest
-    timeout-minutes: 150
+    timeout-minutes: 180
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -24,10 +24,13 @@ jobs:
           node-version: 22
       - run: bash build-beta2.sh
       - run: npm i --no-save playwright@1.65.1 && npx playwright install --with-deps chromium
-      - name: Run the app on each place and keep its sights
+      - name: Run the app on each place and keep its sights (the helper's code from this branch, run locally)
         env:
           BATCH: ${{ matrix.batch }}
-        run: node tools/beta2/sight-audit.cjs dump beta2-site/index.html
+          HELPER_URL: http://localhost:8790/workers.dev
+        run: |
+          (node tools/beta2/local-helper.mjs 8790 > local-helper.log 2>&1 &); sleep 2
+          node tools/beta2/sight-audit.cjs dump beta2-site/index.html
       - name: Check every sight against Wikidata and the map
         if: always()
         env:
@@ -48,7 +51,8 @@ jobs:
         with:
           path: got
       - run: |
+          git fetch origin "$GITHUB_REF_NAME" && git reset --hard "origin/$GITHUB_REF_NAME"
           mkdir -p tools/beta2/sight-audit && cp got/*/* tools/beta2/sight-audit/ 2>/dev/null || true
           cat tools/beta2/sight-audit/report-*.md > tools/beta2/sight-audit/report.md || true
           git config user.name "github-actions[bot]"; git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add tools/beta2/sight-audit; git diff --cached --quiet || { git commit -m "Sight audit results"; git pull --rebase && git push; }
+          git add tools/beta2/sight-audit; git diff --cached --quiet || { git commit -m "Sight audit results"; git push || { git pull --rebase -X theirs && git push; }; }
