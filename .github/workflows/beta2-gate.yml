@@ -13,15 +13,18 @@ name: Beta 2 release gate
 on:
   workflow_dispatch:
   push:
-    branches: ["claude/project-thread-xrdp7v", "claude/project-thread-8wi5ra", "claude/project-thread-bw3ktc"]
+    branches: ["claude/project-thread-xrdp7v", "claude/project-thread-8wi5ra"]  # other branches: run it by hand (workflow_dispatch), so one commit is not tested twice at once
 permissions:
   contents: read
 defaults:
   run:
     shell: bash  # with pipefail: a check piped into the log still fails its step
+# One run at a time per branch, and a run once started always finishes: a newer push waits, and replaces any run still
+# waiting (GitHub keeps one waiting). With cancel-in-progress, pushes every 10-20 min cancelled every run before it ended
+# (Nov 23: runs 72-75 all cancelled), so no commit ever got a report. Now the newest commit is tested at most one run later.
 concurrency:
   group: beta2-gate-${{ github.ref }}
-  cancel-in-progress: true
+  cancel-in-progress: false
 jobs:
   code:
     name: "1 Code: secrets, syntax, the engine's own rules, the helper's AI switch"
@@ -34,7 +37,7 @@ jobs:
       - run: npm i --no-save playwright@1.65.1 && npx playwright install --with-deps chromium
       - run: sh build-beta2.sh
       - name: Code checks (secrets, syntax) and the engine's own rules
-        run: (node tools/static-check.cjs && node tools/sw-check.cjs && node tools/beta2/engine-static.cjs && node tools/places/where-check.cjs && node tools/beta2/sight-rules-check.cjs beta2-site/index.html && node tools/beta2/lunch-during-screen.cjs beta2-site/index.html && node tools/truth/sight-mutants.cjs beta2-site/index.html) 2>&1 | tee -a "$RUNNER_TEMP/out.log"
+        run: (node tools/static-check.cjs && node tools/sw-check.cjs && node tools/beta2/engine-static.cjs && node tools/places/where-check.cjs && node tools/beta2/sight-rules-check.cjs beta2-site/index.html && node tools/beta2/lunch-during-screen.cjs beta2-site/index.html && node tools/truth/sight-mutants.cjs beta2-site/index.html && node tools/truth/no-warn-check.cjs) 2>&1 | tee -a "$RUNNER_TEMP/out.log"
       - name: Helper (AI switch, one AI gate, spend caps, other websites)
         if: always()
         run: (node tools/worker-check.mjs && node tools/worker-ai-gate.mjs) 2>&1 | tee -a "$RUNNER_TEMP/out.log"
@@ -62,12 +65,12 @@ jobs:
       # The independent lunch rule reads map hours with the opening_hours library, never the planner's reader.
       - run: npm i --no-save opening_hours@3.16.0
       - name: Saved test trips
-        run: node tools/truth/oracle.cjs --corpus --show 10 --warn night 2>&1 | tee -a "$RUNNER_TEMP/out.log"
+        run: node tools/truth/oracle.cjs --corpus --show 10 2>&1 | tee -a "$RUNNER_TEMP/out.log"
       - name: Odd trips (hundreds of unusual cruises, multi-city trips, midnight flights and bag days, every day checked), then the independent check on the same trips
         if: always()
         run: |
           NOZIG=1 SLOW_MS=5000 node tools/beta2/odd-trips.cjs --n 300 --seed 1 --warn walk --out odd-trips.json 2>&1 | tee -a "$RUNNER_TEMP/out.log"
-          node tools/truth/oracle.cjs --trips odd-trips.json --show 10 --warn night 2>&1 | tee -a "$RUNNER_TEMP/out.log"
+          node tools/truth/oracle.cjs --trips odd-trips.json --show 10 2>&1 | tee -a "$RUNNER_TEMP/out.log"
       - name: Planted defects (each a known way the planner has gone wrong; the checks must catch every one)
         if: always()
         run: node tools/truth/mutants.cjs --n 100 2>&1 | tee -a "$RUNNER_TEMP/out.log"

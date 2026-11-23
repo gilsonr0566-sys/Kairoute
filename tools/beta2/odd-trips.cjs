@@ -210,6 +210,10 @@ console.log(`Odd trips: ${tripsN} trips, ${daysN} days, ${plannedN} days planned
 const order = ['slow', 'error', 'nan', 'back', 'leaveby', 'order', 'start', 'lunch', 'lunchtime', 'shut', 'walk', 'zero', 'twice', 'pick', 'untrue', 'zigzag'];
 for (const k of order) { const n = out[k] || 0; console.log(`${n ? 'FAIL' : 'ok  '} ${k.padEnd(9)} ${n}`); (examples[k] || []).slice(0, SHOW).forEach(e => console.log('       ' + e)); }
 if (process.env.ALL) fs.writeFileSync(process.env.ALL, JSON.stringify(examples, null, 1));
-// --warn rule,rule: listed, not failed (a finding handed to the thread that owns it).
-const WARN = (arg('warn', '') || '').split(',').filter(Boolean);
-process.exitCode = order.some(k => out[k] && !WARN.includes(k)) ? 1 : 0;
+// --warn rule,rule: listed, not failed (a finding handed to the thread that owns it). Never for a safety rule: an error, a
+// broken time, a stop after the back-by, a wrong leave-by, stops out of order or before the day starts always fail
+// (Richard, Nov 23: no warn-only path for a safety finding). Asking to warn one is refused, and the run fails.
+const SAFETY = ['error', 'nan', 'back', 'leaveby', 'order', 'start'];
+const asked = (arg('warn', '') || '').split(',').filter(Boolean), refused = asked.filter(k => SAFETY.includes(k)), WARN = asked.filter(k => !SAFETY.includes(k));
+if (refused.length) console.log(`REFUSED --warn ${refused.join(',')}: safety rules always fail the run; no warn-only path`);
+process.exitCode = order.some(k => out[k] && !WARN.includes(k)) || refused.length ? 1 : 0;
