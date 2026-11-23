@@ -342,14 +342,19 @@
       // and never touches the time to be back: it comes after the return.
       { const L = E.MEALS[0], ship = win.tail.length && win.tail[win.tail.length - 1].backToShip;
         if (fit.noLunch === "time" && ship && fit.kept.length && fit.r.end <= L.to - E.TO_GO) {
-          fit.onBoard = { at: Math.max(fit.r.end, L.from), min: E.TO_GO + 10 }; fit.noLunch = null;
-          explain.push("Your picks fill the time ashore, so lunch is back on board at " + E.clock(fit.onBoard.at) + "."); } }
+          // Time left ashore after the last stop is the traveler's until the time to be back, so lunch on board is then, and the
+          // note says the real reason (Nov 22 odd-trips run: back at 9:47 with 2 h 28 min free, the plan said "your picks fill
+          // the time ashore" and put lunch on board at 11:45, before its own "leave for the ship by 11:58").
+          const free = win.endBy - fit.r.end >= 20, at = Math.max(free ? win.endBy : fit.r.end, L.from);
+          if (at <= L.to - E.TO_GO) { fit.onBoard = { at, min: E.TO_GO + 10 }; fit.noLunch = null;
+            explain.push(free ? "Lunchtime is too close to the time to be back at the ship (" + E.clock(win.endBy) + ") to sit down ashore, so lunch is back on board at " + E.clock(at) + "."
+              : "Your picks fill the time ashore, so lunch is back on board at " + E.clock(at) + "."); } } }
       { const pk = (fit.r.items || []).find(x => x.packed), at = pk && fit.r.items.filter(x => x.t === "stop" && x.at <= pk.at).pop();
         if (pk) explain.push("Bring lunch for " + E.clock(pk.at) + (at ? " at " + at.name : "") + ": places to eat there aren't in the guide yet."); }
       // A wanted stop the day had to give up (a pick, a finished guide, a must-see) comes with the ways to fit it back in.
       const ways = {};
       if (!again) fit.dropped.forEach(x => { if (!x.wish && !x.wanted) return;
-        const w = x.why === "didn't fit in the time" ? E.waysToFit(win, fit.kept, x.stop, ctx) : [];
+        const w = x.why === "didn't fit in the time" && !x.pre ? E.waysToFit(win, fit.kept, x.stop, ctx) : [];
         if (w.length) ways[x.id] = w;
         explain.push((d.wantsOnly ? "Not planned today: " : "") + x.name + " " + (x.needs && x.why === "didn't fit in the time" ? x.needs : x.why) + (w.length ? ". To fit it in: " + E.listWords(w.map(o => o.say), "or") : "") + "."); });
       fit.kept.forEach(s => { if (s.trimmed && !(again && again.kept.some(k => k.trimmed && String(k.id) === String(s.id)))) explain.push("A shorter visit to " + s.name + " (" + dur(s.minutes) + " instead of " + dur(s.trimmed) + ") so the rest of the day fits."); });
