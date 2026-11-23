@@ -29,7 +29,7 @@ async function page(b, size, scale, perms) {
     await p.route('http://localhost:9/**', r => /\/route$/.test(r.request().url()) ? r.fallback() : r.fulfill({ status: 404, body: '' }));
   }
   await p.goto(base + 'index.html'); await p.evaluate(() => localStorage.setItem('kairoute.intro1', '1')); await p.reload(); await p.waitForTimeout(800);
-  await p.getByText('Continue trip').click(); await p.waitForTimeout(400);
+  await p.locator('[data-act=continue]').click(); await p.waitForTimeout(400);
   return { ctx, p, errs };
 }
 // The first sightseeing day with a map, and a spot on the walk between its first two stops.

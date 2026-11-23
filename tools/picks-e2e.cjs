@@ -13,7 +13,7 @@ const mins = t => { let m = 0; const h = /(\d+)\s*h/.exec(t), n = /(\d+)\s*min/.
   const errs = []; p.on('pageerror', e => errs.push(e.message));
   await p.route('**/*', r => /^file:/.test(r.request().url()) ? r.continue() : r.abort());
   await p.goto('file://' + FILE); await p.evaluate(() => localStorage.setItem('kairoute.intro1', '1')); await p.reload(); await p.waitForTimeout(500);
-  await p.getByText('Continue trip').click(); await p.waitForTimeout(400);
+  await p.locator('[data-act=continue]').click(); await p.waitForTimeout(400);
   const n = await p.evaluate(() => document.querySelectorAll('.daychip').length);
   let fails = 0, tested = 0;
   const shot = async (i, what) => { if (SHOTS && i < 3) await p.screenshot({ path: path.join(SHOTS, String(++shotN).padStart(2, '0') + '-day-' + (i + 1) + '-' + what + '.jpg'), type: 'jpeg', quality: 55 }); };
@@ -44,7 +44,7 @@ const mins = t => { let m = 0; const h = /(\d+)\s*h/.exec(t), n = /(\d+)\s*min/.
     if (had && pv0.stops.length || !had && pv0.stops.some(x => !x.bonus)) bad(i, 'plan still shows stops after unticking everything: ' + pv0.stops.map(x => x.name).join(', '));
     // 2. Reload: still nothing picked
     await p.reload(); await p.waitForTimeout(500);
-    if (await p.getByText('Continue trip').isVisible().catch(() => false)) await p.getByText('Continue trip').click();
+    if (await p.locator('[data-act=continue]').isVisible().catch(() => false)) await p.locator('[data-act=continue]').click();
     await toDay(i); await toSites();
     if ((await checked()).length) bad(i, 'picks came back after reload: ' + (await checked()).join(', '));
     // 3. Tick two sights

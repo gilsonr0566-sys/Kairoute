@@ -74,6 +74,9 @@ function bookTimes(leg) {
       .catch(() => depFail.set(k, Date.now()))
       .finally(() => { depBusy.delete(k); bookRepaint(); });
   }
+  // No timetable service in this copy of the app (it runs without one): nothing is being looked up, so the card never
+  // says it is (Nov 22 first-timer check: "Looking up the trains that day…" stayed on screen for good).
+  if (!got && !(typeof freeAI !== "undefined" && freeAI)) return { noService: true };
   if (!got) return depBusy.has(k) || !online ? null : depFail.has(k) ? { failed: true } : null;
   return { list: got.deps.slice(), forDate: got.forDate, none: got.deps.length < 3, thin: got.deps.length > 0 && got.deps.length < 3 };
 }
@@ -93,6 +96,7 @@ function bookRideCard(d) {
   const tt = bookTimes(leg), site = bookSite(leg);
   let times = "";
   if (!tt) times = `<div class="sub brnote">${navigator.onLine === false ? `${Wc} times show once you're online.` : `Looking up the ${W}s that day…`}</div>`;
+  else if (tt.noService) times = `<div class="sub brnote">Kairoute doesn't show ${W} times. The booking page lists every ${W}.</div>`;
   else if (tt.failed) times = `<div class="sub brnote">${Wc} times couldn't be loaded just now. The booking page lists every ${W}.</div>`;
   else if (tt.none) times = `<div class="sub brnote">${tt.thin ? `Only part of this day's timetable is published so far.` : `No published timetable for this route yet.`} The booking page lists every ${W}.</div>`;
   else {

@@ -6,7 +6,7 @@ const { chromium } = require('playwright'); const path = require('path');
   const ok = (c, m) => { console.log((c ? 'ok   ' : 'FAIL ') + m); if (!c) fails++; }; p.on('pageerror', e => errs.push(e.message));
   await p.route('**/*', r => /^file:/.test(r.request().url()) ? r.continue() : r.abort());
   await p.goto('file://' + path.resolve(process.argv[2] || path.join(__dirname, '..', 'index.html'))); await p.evaluate(() => localStorage.setItem('kairoute.intro1', '1')); await p.reload(); await p.waitForTimeout(500);
-  await p.getByText('Continue trip').click(); await p.waitForTimeout(400);
+  await p.locator('[data-act=continue]').click(); await p.waitForTimeout(400);
   const R = await p.evaluate(() => window.__kairouteDays().find(d => /rome/i.test(d.dest) && d.type === 'port').i);
   // The live Rome guide's sights, as Richard's printout had them, and the map's answer (OpenStreetMap: Vatican City, Q237).
   const VAT = [{ n: 'Civitas Vaticana - Città del Vaticano', en: 'Vatican City', wd: 'Q237' }];

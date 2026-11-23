@@ -48,8 +48,11 @@ function voyChecks(o, plan) {
   if (o.estimated) out.push("These port times are estimated. Check them against your cruise documents.");
   return out;
 }
+// The back-by time is the day's own (dayFacts), the one its Day plan, countdown and timeline say: never the time the
+// last stop's ride gets in (Nov 22 first-timer check: the sea day said "back by 3:28 pm" of a day whose plan said 4:45 pm).
+const voyBack = (o, plan) => { const F = plan && dayFacts(o, plan); return F ? F.endBy : null; };
 function voyTimes(o, plan) {
-  if (o.type === "port") return `Ship docks ${o.portArrive}${o.tender ? " (tender port)" : ""} · all aboard ${o.allAboard}${plan && backByOf(o, plan) != null ? ` · your plan has you back by ${fmt(backByOf(o, plan))}` : ""}`;
+  if (o.type === "port") return `Ship docks ${o.portArrive}${o.tender ? " (tender port)" : ""} · all aboard ${o.allAboard}${voyBack(o, plan) != null ? ` · back at the ship by ${fmt(voyBack(o, plan))}` : ""}`;
   if (o.type === "arrival") return `${MODES[o.mode] ? MODES[o.mode].label : "Arrival"} arrives ${o.time}${plan ? ` · sightseeing ${fmt(plan.start)}–${fmt(plan.endBy)}` : ""}`;
   if (o.type === "departure" || o.type === "embark") return plan ? `Sightseeing ${fmt(plan.start)}–${fmt(plan.end)} · be at ${plan.w.deadlineWord || "the terminal"} by ${fmt(plan.endBy)}` : "";
   return plan ? `${fmt(plan.start)}–${fmt(plan.end)}` : "";
@@ -60,7 +63,7 @@ function voyBriefText(o) {
   const city = cityFor(o), plan = voyPlan(o), name = voyWho(o), b = (city && city.basics) || {};
   const day = new Date(o.date + "T12:00:00Z").toLocaleDateString("en-US", { weekday: "long", month: "long", day: "numeric", timeZone: "UTC" });
   const out = [`Your briefing for ${day}: ${name}.`];
-  if (o.type === "port") out.push(`The ship docks at ${o.portArrive}${o.tender ? ", and it's a tender port, so allow time for the boat to shore" : ""}. All aboard is at ${o.allAboard}${plan ? `, and your plan has you back at the ship by ${fmt(Math.min(plan.end, plan.endBy))}` : ""}. Being aboard on time is your responsibility, so check the all-aboard time on the ship that morning.`);
+  if (o.type === "port") out.push(`The ship docks at ${o.portArrive}${o.tender ? ", and it's a tender port, so allow time for the boat to shore" : ""}. All aboard is at ${o.allAboard}${voyBack(o, plan) != null ? `, and your plan has you back at the ship by ${fmt(voyBack(o, plan))}` : ""}. Being aboard on time is your responsibility, so check the all-aboard time on the ship that morning.`);
   else if (plan) out.push(voyTimes(o, plan).replace(/ · /g, ". ") + ".");
   if (city && city.primer && city.primer.text) out.push(city.primer.text);
   const st = voyStops(plan);
@@ -81,6 +84,12 @@ function voyBriefText(o) {
   return out.join("\n\n");
 }
 
+// A day with nothing planned says why, as its own Day plan does: a question to answer first, or no sights chosen yet.
+function voyEmpty(o, i) {
+  let p = null; try { p = buildPlan(o); } catch (e) {}
+  if (p && p.error) return `<p class="lede small">Not planned yet: ${esc(String(p.error).split(/(?<=[.?])\s/)[0])} <button class="linkbtn" data-voyopen="${i}:plan">Open the day plan</button></p>`;
+  return `<p class="lede small">No sights chosen yet. <button class="linkbtn" data-voyopen="${i}:sites">Choose sights</button></p>`;
+}
 function voyPortPanel(o) {
   const i = trip.days.indexOf(o), city = cityFor(o), plan = voyPlan(o), b = (city && city.basics) || {};
   const checks = voyChecks(o, plan), deep = voyDeep(plan), st = voyStops(plan);
@@ -93,7 +102,7 @@ function voyPortPanel(o) {
   return `<div class="card voyday"><div class="voytop"><div><span class="eyebrow">${esc(voyWhen(o))} · ${esc(typeInfo(o.type).short)}</span><h3>${esc(dayName(o))}</h3><p class="lede small">${esc(voyTimes(o, plan))}</p></div>
       <div class="voyacts"><button class="btn small" data-voyopen="${i}:plan">Open the day plan</button><button class="btn ghost small" data-voyopen="${i}:sites">Choose sights</button></div></div>
     ${checks.length ? `<div class="banner warn">${checks.map(esc).join(" ")}</div>` : ""}
-    ${rows ? `<ol class="voyplan">${rows}</ol>` : `<p class="lede small">No stops planned yet. <button class="linkbtn" data-voyopen="${i}:sites">Choose stops</button></p>`}</div>
+    ${rows ? `<ol class="voyplan">${rows}</ol>` : voyEmpty(o, i)}</div>
     ${fold("story", "The story of " + esc(voyWho(o)), pr ? `<div class="guidetext">${paras(pr)}</div><p class="ai-note">Told from Kairoute's checked guide and Wikivoyage.</p>` : "", true)}
     ${fold("deep", deep.byInterest ? "Go deeper: " + esc(voyIntLabel()) : "Go deeper: the big stories", deep.list.map(s => `<div class="voydeep"><div><b>${esc(s.name)}</b><span class="lede small">${esc(unitText(s.summary || ""))}</span></div><button class="btn ghost small" data-play="voystop:${i}:${esc(s.id)}" data-label="▶ Listen">${speakingId === "voystop:" + i + ":" + s.id ? "■ Stop audio" : "▶ Listen"}</button></div>`).join(""))}
     ${fold("look", "What to look for", st.map(x => x.place).filter(s => (s.lookFor || []).length).slice(0, 5).map(s => `<p><b>${esc(s.name)}:</b> ${esc(s.lookFor[0])}</p>`).join(""))}

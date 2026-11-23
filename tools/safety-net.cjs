@@ -408,7 +408,7 @@ const log = (suite, trip, ok, what) => { results.push({ suite, trip, ok, what })
     // plan, and the Jul 18 dinner was Jul 20's sight). Every day is shown once (so its plan is remembered), then in each
     // city no sight is a stop on two days, no place to eat is used twice, and no sight of one day is another day's meal.
     { const bq = await chromium.launch(), pq = await (await bq.newContext()).newPage(); await pq.route('**/*', r => /^file:/.test(r.request().url()) ? r.continue() : r.abort()); await pq.goto('file://' + FILE); await pq.evaluate(() => localStorage.setItem('kairoute.intro1', '1')); await pq.reload(); await pq.waitForTimeout(800);
-      await pq.getByText('Continue trip').click(); await pq.waitForTimeout(1500);
+      await pq.locator('[data-act=continue]').click(); await pq.waitForTimeout(1500);
       const dup = await pq.evaluate(() => { const seen = {}, out = []; const days = window.__kairouteDays();
         days.forEach(d => window.__kairouteAt(d.i, 'plan'));
         for (const d of days) { if (!d.city) continue; for (const x of (window.__kairouteRoute(d.i) || [])) {
@@ -424,7 +424,7 @@ const log = (suite, trip, ok, what) => { results.push({ suite, trip, ok, what })
     // forecast may choose between orders that ride about the same, never one that rides more than 15 min (or a fifth)
     // longer than the best order by route alone (30 min or a third for a forecast).
     { const bq = await chromium.launch(), pq = await (await bq.newContext()).newPage(); await pq.route('**/*', r => /^file:/.test(r.request().url()) ? r.continue() : r.abort()); await pq.goto('file://' + FILE); await pq.evaluate(() => localStorage.setItem('kairoute.intro1', '1')); await pq.reload(); await pq.waitForTimeout(800);
-      await pq.getByText('Continue trip').click(); await pq.waitForTimeout(1500);
+      await pq.locator('[data-act=continue]').click(); await pq.waitForTimeout(1500);
       const rx = await pq.evaluate(() => window.__kairouteRouteX()); await bq.close();
       const days = rx.filter(x => x.best != null), bad = days.filter(x => x.ride - x.best > x.cap), kept = days.filter(x => x.kept), cities = [...new Set(days.map(x => x.city))];
       log('Planner', 'planner', days.length >= 10 && !bad.length, 'No going across town and back: every day rides at most a little more than its best route (' + days.length + ' days in ' + cities.length + ' places: ' + cities.join(', ') + '): ' + (bad.length ? bad.map(x => `${x.date} ${x.city} rides ${x.ride} min, best ${x.best}`).join('; ') : 'yes' + (kept.length ? '; route order kept over crowds or heat on ' + kept.map(x => `${x.date} ${x.city} (${x.was} -> ${x.ride} min)`).join(', ') : ''))); }
@@ -551,7 +551,7 @@ const log = (suite, trip, ok, what) => { results.push({ suite, trip, ok, what })
     fr.forEach(r => log('Famous sights', 'famous', r.pass, `${r.name}: ${r.what}`));
     // A big stop on the real screens and in the voice tour: listed part by part, each part tickable, and the tour
     // plays one part at a time with Next part between them.
-    await p.getByText('Continue trip').click().catch(() => {}); await p.waitForTimeout(300);
+    await p.locator('[data-act=continue]').click().catch(() => {}); await p.waitForTimeout(300);
     const days = await p.evaluate(() => window.__kairouteDays()); const D = days.find(x => x.type === 'land' && x.city) || days.find(x => x.type !== 'sea' && x.city);
     const bad = []; await p.evaluate(i => window.__kairouteTruth(i), D.i); const sp = await p.evaluate(i => window.__kairouteSplitStop(i, 3), D.i);
     if (!sp) bad.push('no stop to split'); else {
@@ -635,7 +635,7 @@ const log = (suite, trip, ok, what) => { results.push({ suite, trip, ok, what })
     const rome = files.find(f => /rome/.test(f));
     if (rome) {
       const fix = JSON.parse(fs.readFileSync(path.join(__dirname, 'fixtures', rome), 'utf8'));
-      await p.getByText('Continue trip').click().catch(() => {}); await p.waitForTimeout(300);
+      await p.locator('[data-act=continue]').click().catch(() => {}); await p.waitForTimeout(300);
       const days = await p.evaluate(() => window.__kairouteDays()); const D = days.find(x => /civitavecchia|rome/i.test(x.dest || ''));
       if (!D) log('Sights coverage', 'rome-port', false, 'the example trip has no Rome port day');
       else {

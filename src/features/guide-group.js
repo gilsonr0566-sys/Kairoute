@@ -188,7 +188,7 @@ const grpTripsToShare = () => library.filter(x => x.trip && x.trip.days && x.tri
 // Settings > Group trip.
 function groupCard() {
   const H = `<h3>Group trip</h3>`;
-  if (!freeAI) return `<div class="card">${H}<p class="lede">Group trips need Kairoute's helper, which isn't available in this view.</p></div>`;
+  if (!freeAI) return `<div class="card">${H}<p class="lede">${cl && cl.use ? "Group trips need Kairoute's helper, which isn't available in this view." : "Group trips need the internet, and Kairoute couldn't reach it when it started. Connect to Wi-Fi or mobile data, then open Kairoute again."}</p></div>`;
   const note = grpNote ? `<p class="banner" role="status">${esc(grpNote)}</p>` : "";
   if (grp && grp.role === "lead") return `<div class="card grpcard">${H}<p class="lede">You're sharing <b>${esc(grp.tripName || "this trip")}</b> with your group. Only this trip is shared: your other trips stay private.</p>
     <p class="lede small">Send this code or link. Anyone who opens it gets the trip on their own phone:</p><p class="synccode">${esc(grpFmt(grp.code))}</p>
@@ -199,7 +199,7 @@ function groupCard() {
     <div class="actions"><button class="btn" data-grp="opentrip">Open the trip</button><button class="btn ghost" data-grp="opentour">Tour together</button><button class="btn ghost" data-grp="leave">Leave the group</button></div>${note}</div>`;
   const list = grpTripsToShare();
   return `<div class="card grpcard">${H}<p class="lede">Traveling with family, friends or a tour group? Pick the trip to share. Each person gets it on their own phone and, day by day, follows the group's plan or makes their own day. Only the trip you pick is shared.</p>
-    ${list.length ? `<div class="grptrips">${list.map(x => `<div class="grptrip"><span><b>${esc(x.trip.name || x.name || tripName(x.trip))}</b><span class="small">${esc(fmtDate(x.trip.days[0].date) || "")}${x.trip.days.length > 1 ? " – " + esc(fmtDate(x.trip.days[x.trip.days.length - 1].date) || "") : ""} · ${x.trip.days.length} days</span></span><button class="btn small" data-grp="lead" data-trip="${esc(x.id)}" ${grpBusy ? "disabled" : ""}>Share this trip</button></div>`).join("")}</div>` : `<p class="lede small">Add a trip first, then share it here.</p>`}
+    ${list.length ? `<div class="grptrips">${list.map(x => `<div class="grptrip"><span><b>${esc(x.trip.name || x.name || tripName(x.trip))}</b><span class="small">${esc(tripSpan(x.trip))}${tripSpan(x.trip) ? " · " : ""}${tripDaysText(x.trip)}</span></span><button class="btn small" data-grp="lead" data-trip="${esc(x.id)}" ${grpBusy ? "disabled" : ""}>Share this trip</button></div>`).join("")}</div>` : `<p class="lede small">Add a trip first, then share it here.</p>`}
     <div class="field"><label for="grp-code">Got a code from your group? Type it here</label><div class="ask"><input id="grp-code" type="text" autocapitalize="characters" autocomplete="off" maxlength="7" placeholder="e.g. K7M-4RX"><button class="btn" data-grp="join" ${grpBusy ? "disabled" : ""}>${grpBusy ? "Joining…" : "Join"}</button></div></div>
     ${note}</div>`;
 }

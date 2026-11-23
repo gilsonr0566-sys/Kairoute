@@ -332,7 +332,7 @@ let offSpaceText = "";
 function offSpace() {
   try { if (!navigator.storage || !navigator.storage.estimate) return;
     Promise.all([navigator.storage.estimate(), navigator.storage.persisted ? navigator.storage.persisted() : Promise.resolve(false)]).then(([e, keep]) => {
-      const mb = Math.round((e.usage || 0) / 1048576), t = `Kairoute uses about ${mb < 1 ? "under 1" : mb} MB on this ${offDevice()}.${keep ? " Your browser has agreed to keep it." : ""}`;
+      const mb = Math.round((e.usage || 0) / 1048576), t = `Kairoute uses ${mb < 1 ? "under 1" : "about " + mb} MB on this ${offDevice()}.${keep ? " Your browser has agreed to keep it." : ""}`;
       if (t !== offSpaceText) { offSpaceText = t; const el = document.getElementById("offSpace"); if (el) el.textContent = t; } }).catch(() => {});
   } catch (e) {}
 }

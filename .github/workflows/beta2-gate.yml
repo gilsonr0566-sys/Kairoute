@@ -62,6 +62,18 @@ jobs:
       - name: Outside text never runs as code (Beta 2 build)
         if: always()
         run: node tools/inject-check.cjs beta2-site/index.html
+      - name: A place the app could not reach is never called misspelled
+        if: always()
+        run: node tools/ui/no-signal-check.cjs beta2-site/index.html
+      - name: An airport or station the guide doesn't know can be named, never a dead end
+        if: always()
+        run: node tools/ui/gate-ask-check.cjs beta2-site/index.html
+      - name: A first-time traveler is told only what is true (home, walkthrough, settings, journal)
+        if: always()
+        run: node tools/ui/first-run-check.cjs beta2-site/index.html
+      - name: Day plan, Choose sights, Guide, voices and Tour say only what is true
+        if: always()
+        run: node tools/ui/dayplan-check.cjs beta2-site/index.html
       - name: The app says only what the AI can really do
         if: always()
         run: node tools/ai-honesty-check.cjs

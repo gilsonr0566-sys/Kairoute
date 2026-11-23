@@ -26,7 +26,7 @@ const SIZES = [['tablet', { width: 1280, height: 800 }, 1], ['phone', { width: 3
       await p.route('http://localhost:9/**', r => /\/route$/.test(r.request().url()) ? r.fallback() : r.fulfill({ status: 404, body: '' }));
     }
     await p.goto(base + 'index.html'); await p.evaluate(() => localStorage.setItem('kairoute.intro1', '1')); await p.reload(); await p.waitForTimeout(800);
-    await p.getByText('Continue trip').click(); await p.waitForTimeout(400);
+    await p.locator('[data-act=continue]').click(); await p.waitForTimeout(400);
     // The side-by-side rule itself: an out-and-back on one road is two lines; two rides on different roads are not.
     if (name === 'tablet') {
       const r = await p.evaluate(() => { const road = [[25.143, 35.344], [25.150, 35.330], [25.158, 35.310], [25.1631, 35.2979]];
@@ -66,7 +66,7 @@ const SIZES = [['tablet', { width: 1280, height: 800 }, 1], ['phone', { width: 3
     const ctx = await b.newContext({ viewport: { width: 1280, height: 800 }, colorScheme: scheme, serviceWorkers: 'block' });
     const p = await ctx.newPage();
     await p.goto(base + 'index.html'); await p.evaluate(() => localStorage.setItem('kairoute.intro1', '1')); await p.reload(); await p.waitForTimeout(800);
-    await p.getByText('Continue trip').click(); await p.waitForTimeout(400);
+    await p.locator('[data-act=continue]').click(); await p.waitForTimeout(400);
     const i = await p.evaluate(() => [...document.querySelectorAll('.daychip')].findIndex(e => /Heraklion/.test(e.textContent)));
     if (i < 0 || MOCK) { await ctx.close(); continue; }
     await p.evaluate(i => document.querySelector(`.daychip[data-day="${i}"]`).click(), i); await p.waitForTimeout(300);

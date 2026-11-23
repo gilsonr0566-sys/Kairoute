@@ -38,7 +38,7 @@ async function run({ chromium, FILE, log, OUT, shots }) {
   // clock; here it would cover the buttons this check taps, so it is answered "Later" whenever it appears.
   await ctx.addInitScript(() => { new MutationObserver(() => { const b = document.querySelector('.shipsheet [data-act="shiplater"]'); if (b) b.click(); }).observe(document, { childList: true, subtree: true }); });
   await p.goto('file://' + FILE); await p.evaluate(() => localStorage.setItem('kairoute.intro1', '1')); await p.reload(); await p.waitForTimeout(500);
-  await p.getByText('Continue trip').click().catch(() => {}); await p.waitForTimeout(300);
+  await p.locator('[data-act=continue]').click().catch(() => {}); await p.waitForTimeout(300);
   const days = await p.evaluate(() => window.__kairouteDays());
   const L = (fn, arg) => p.evaluate(fn, arg);
   // Plan times are the port's own clock (the app counts in the destination's time zone, whatever the device says),
