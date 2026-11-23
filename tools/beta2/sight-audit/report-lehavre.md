@@ -1,9 +1,8 @@
 ## Le Havre (Paris), France (Paris (from Le Havre, France), guide from sources)
 - POS Chantilly [day trip]: app is 1.51 km from Wikidata's point (not on the map by id)
 - POS Chartres [day trip]: app is 1.06 km from Wikidata's point (not on the map by id)
-- POS Château de Fontainebleau [day trip] {Q201428 by name}: app is 0.84 km from Wikidata's point (not on the map by id)
+- POS Castle of Fontainebleau [day trip] {Q201428 by name}: app is 0.84 km from Wikidata's point (not on the map by id)
 - POS Forêt de Fontainebleau [day trip] {Q1293678 by name}: app is 1.66 km from Wikidata's point (not on the map by id)
-- NOID Saint-Denis Gate: no Wikidata id and nothing of the name on the map nearby (from Wikidata (Wikipedia in many languages))
 - NOID Ch&acirc;teau de Chantilly [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
 - NOID Musée du Vitrail [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
 - NOID Musée d'art figuratif contemporain [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
@@ -26,6 +25,6 @@
 - FAME #13 best known nearby, "Montparnasse Tower" (48 Wikipedia languages, Q323767), is not offered
 - FAME #14 best known nearby, "Liberation of Paris" (48 Wikipedia languages, Q696835), is not offered
 - FAME #15 best known nearby, "Pont Neuf" (45 Wikipedia languages, Q335277), is not offered
-- INFO 46 sights, 12 day trips/towns; must-see: Eiffel Tower, Louvre Museum, Notre-Dame de Paris, Musée d'Orsay, Arc de Triomphe, avenue des Champs-Élysées, Bastille; top by fame: Eiffel Tower 191, Louvre Museum 170, Notre-Dame de Paris 125, Musée d'Orsay 122, avenue des Champs-Élysées 95, Saint-Denis Gate 95, Arc de Triomphe 86, Venus de Milo 73
-- INFO day trips: Chantilly, Chartres, Disneyland Paris, Fontainebleau, Ch&acirc;teau de Chantilly, Chartres Cathedral, Maison Picassiette, Musée du Vitrail, Château de Fontainebleau, Forêt de Fontainebleau, Musée d'art figuratif contemporain, Musée des pompiers
+- INFO 46 sights, 12 day trips/towns; must-see: Eiffel Tower, Louvre Museum, Notre-Dame de Paris, Musée d'Orsay, Arc de Triomphe, avenue des Champs-Élysées; top by fame: Eiffel Tower 191, Louvre Museum 170, Notre-Dame de Paris 125, Musée d'Orsay 122, avenue des Champs-Élysées 95, Arc de Triomphe 86, Venus de Milo 73, Père Lachaise Cemetery 71
+- INFO day trips: Chantilly, Chartres, Disneyland Paris, Fontainebleau, Ch&acirc;teau de Chantilly, Chartres Cathedral, Maison Picassiette, Musée du Vitrail, Castle of Fontainebleau, Forêt de Fontainebleau, Musée d'art figuratif contemporain, Musée des pompiers
 
