@@ -25,14 +25,18 @@
   },
   {
    "k": "POS",
-   "t": "Águas Livres Aqueduct: app is 0.82 km from Wikidata's point (not on the map by id)",
+   "t": "Águas Livres Aqueduct: app 38.72230,-9.15910 is 0.78 km from the map's Aqueduto das Águas Livres (node/13950436040, 38.72657,-9.16630); Wikidata 0.03 km from the map (app says not sure)",
    "x": {
-    "d": 0.8164768390817123,
+    "d": 0.7844634895237397,
     "id": "src-q623228",
     "wd": "Q623228",
     "app": [
      38.7223,
      -9.1591
+    ],
+    "map": [
+     38.7265653,
+     -9.1663029
     ],
     "wdpt": [
      38.72666667,
@@ -47,77 +51,6 @@
     "id": "src-q943407",
     "min": 40,
     "kind": "art museum or gallery"
-   }
-  },
-  {
-   "k": "POS",
-   "t": "Mafra [day trip]: app 38.93333,-9.33333 is 0.60 km from the map's Mafra (node/25611738, 38.93698,-9.32824); Wikidata 0.60 km from the map",
-   "x": {
-    "d": 0.5988175108976869,
-    "id": "mafra-far",
-    "wd": "Q986419",
-    "app": [
-     38.93333,
-     -9.33333
-    ],
-    "map": [
-     38.9369782,
-     -9.3282374
-    ],
-    "wdpt": [
-     38.933333333333,
-     -9.3333333333333
-    ]
-   }
-  },
-  {
-   "k": "POS",
-   "t": "Ericeira [day trip]: app 38.96670,-9.41670 is 0.39 km from the map's Ericeira (node/130035599, 38.96324,-9.41708); Wikidata 0.16 km from the map",
-   "x": {
-    "d": 0.38601425195817923,
-    "id": "ericeira-far",
-    "wd": "Q1351868",
-    "app": [
-     38.9667,
-     -9.4167
-    ],
-    "map": [
-     38.9632411,
-     -9.4170802
-    ],
-    "wdpt": [
-     38.962777777778,
-     -9.4152777777778
-    ]
-   }
-  },
-  {
-   "k": "NOID",
-   "t": "Basilica of Our Lady and St. Anthony [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby",
-   "x": {
-    "id": "mafra-far~Q16268486"
-   }
-  },
-  {
-   "k": "NOID",
-   "t": "Moorish Castle [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby",
-   "x": {
-    "id": "sintra-far~Q1049008"
-   }
-  },
-  {
-   "k": "NOID",
-   "t": "Quintinha de Monserrate [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby",
-   "x": {
-    "id": "sintra-far~Q3175595"
-   }
-  },
-  {
-   "k": "DUP",
-   "t": "Sintra ~ Sintra National Palace (40 m apart, same words)",
-   "x": {
-    "a": "sintra-far",
-    "b": "sintra-far~Q532399"
    }
   },
   {
@@ -146,12 +79,7 @@
   },
   {
    "k": "INFO",
-   "t": "29 sights, 11 day trips/towns; must-see: Jerónimos Monastery, Belém Tower; top by fame: Belém Tower 57, Jerónimos Monastery 53, 25 de Abril Bridge 34, Lisbon Cathedral 32, Praça do Comércio 32, Padrão dos Descobrimentos 32, Castle of Saint George 31, Santa Justa Lift 26",
-   "x": {}
-  },
-  {
-   "k": "INFO",
-   "t": "day trips: Mafra, Ericeira, Sintra, Convento de Mafra, Basilica of Our Lady and St. Anthony, Parque de Santa Marta, Pena National Palace, Moorish Castle, Sintra National Palace, Quintinha de Monserrate, Quinta da Regaleira",
+   "t": "29 sights, 0 day trips/towns; must-see: Jerónimos Monastery, Belém Tower; top by fame: Belém Tower 57, Jerónimos Monastery 53, 25 de Abril Bridge 34, Lisbon Cathedral 32, Praça do Comércio 32, Padrão dos Descobrimentos 32, Castle of Saint George 31, Santa Justa Lift 26",
    "x": {}
   }
  ],
@@ -169,7 +97,7 @@
    "mustSee": true,
    "fame": 53,
    "unesco": true,
-   "heritage": false,
+   "heritage": true,
    "wd": "Q272781",
    "src": [
     "Wikivoyage (English)",
@@ -557,37 +485,6 @@
    "summary": "Started in 1582, this Mannerist monastery wasn't completed until 1629, following the reconstruction of a 1147 church under royal decree."
   },
   {
-   "id": "src-q1470414",
-   "name": "Carmo Convent",
-   "local": "Convento do Carmo (Lisboa)",
-   "lat": 38.712,
-   "lng": -9.14057,
-   "minutes": 30,
-   "category": "Church",
-   "kind": "local",
-   "quick": false,
-   "mustSee": false,
-   "fame": 18,
-   "unesco": false,
-   "heritage": true,
-   "wd": "Q1470414",
-   "src": [
-    "Wikidata (Wikipedia in many languages)",
-    "national heritage register",
-    "Wikivoyage (English)",
-    "Wikipedia in Portuguese"
-   ],
-   "srcOnly": true,
-   "builtin": false,
-   "famousFix": false,
-   "far": false,
-   "travel": "",
-   "parts": [],
-   "merged": [],
-   "posDoubt": false,
-   "summary": "The hilltop church of the former convent of Carmo is a towering memorial of the 1755 earthquake, which made the roof of the church collapse, but the Gothic arch"
-  },
-  {
    "id": "src-q2657972",
    "name": "Estrela Basilica",
    "local": "Basílica da Estrela",
@@ -617,6 +514,37 @@
    "merged": [],
    "posDoubt": false,
    "summary": "This Neoclassical and Baroque basilica, dedicated to the Sacred Heart of Jesus, was built in the late 1700s by Queen Maria I in fulfilment of a vow. The Queen i"
+  },
+  {
+   "id": "src-q1470414",
+   "name": "Carmo Convent",
+   "local": "Convento do Carmo (Lisboa)",
+   "lat": 38.712,
+   "lng": -9.14057,
+   "minutes": 30,
+   "category": "Church",
+   "kind": "local",
+   "quick": false,
+   "mustSee": false,
+   "fame": 18,
+   "unesco": false,
+   "heritage": true,
+   "wd": "Q1470414",
+   "src": [
+    "Wikidata (Wikipedia in many languages)",
+    "national heritage register",
+    "Wikivoyage (English)",
+    "Wikipedia in Portuguese"
+   ],
+   "srcOnly": true,
+   "builtin": false,
+   "famousFix": false,
+   "far": false,
+   "travel": "",
+   "parts": [],
+   "merged": [],
+   "posDoubt": false,
+   "summary": "The hilltop church of the former convent of Carmo is a towering memorial of the 1755 earthquake, which made the roof of the church collapse, but the Gothic arch"
   },
   {
    "id": "src-q211262",
@@ -1035,310 +963,6 @@
    "merged": [],
    "posDoubt": false,
    "summary": "Formal park with expansive views down toward the city and water from Miradouro Parque Eduardo VII. Home to the wonderful Estufa Fria greenhouse gardens."
-  },
-  {
-   "id": "mafra-far",
-   "name": "Mafra",
-   "local": "",
-   "lat": 38.93333,
-   "lng": -9.33333,
-   "minutes": 180,
-   "category": "Day trip",
-   "kind": "touristy",
-   "quick": false,
-   "mustSee": false,
-   "fame": 50,
-   "unesco": false,
-   "heritage": false,
-   "wd": "Q986419",
-   "src": [
-    "Wikidata (Wikipedia in many languages)"
-   ],
-   "srcOnly": false,
-   "builtin": false,
-   "famousFix": true,
-   "far": true,
-   "travel": "Bus from Terreiro do Paço, about 70 min one way",
-   "parts": [],
-   "merged": [],
-   "posDoubt": false,
-   "summary": "A charming town with a monastery."
-  },
-  {
-   "id": "ericeira-far",
-   "name": "Ericeira",
-   "local": "",
-   "lat": 38.9667,
-   "lng": -9.4167,
-   "minutes": 180,
-   "category": "Day trip",
-   "kind": "touristy",
-   "quick": false,
-   "mustSee": false,
-   "fame": 0,
-   "unesco": false,
-   "heritage": false,
-   "wd": "Q1351868",
-   "src": [
-    "Wikivoyage (English)"
-   ],
-   "srcOnly": false,
-   "builtin": false,
-   "famousFix": true,
-   "far": true,
-   "travel": "Bus from Terreiro do Paço, about 95 min one way",
-   "parts": [],
-   "merged": [],
-   "posDoubt": false,
-   "summary": "A gorgeous seaside resort near Mafra, well known to surfers worldwide."
-  },
-  {
-   "id": "sintra-far",
-   "name": "Sintra",
-   "local": "",
-   "lat": 38.79736,
-   "lng": -9.39042,
-   "minutes": 180,
-   "category": "Day trip",
-   "kind": "touristy",
-   "quick": false,
-   "mustSee": false,
-   "fame": 0,
-   "unesco": false,
-   "heritage": false,
-   "wd": "Q190187",
-   "src": [
-    "Wikivoyage (English)"
-   ],
-   "srcOnly": false,
-   "builtin": false,
-   "famousFix": true,
-   "far": true,
-   "travel": "Metro from Pç. Comércio, about 80 min one way",
-   "parts": [],
-   "merged": [
-    "Sintra"
-   ],
-   "posDoubt": false,
-   "summary": "A beautiful UNESCO World Heritage site town 40 minutes by car/train from Lisbon."
-  },
-  {
-   "id": "mafra-far~Q599223",
-   "name": "Convento de Mafra",
-   "local": "",
-   "lat": 38.93667,
-   "lng": -9.32639,
-   "minutes": 30,
-   "category": "Sight",
-   "kind": "touristy",
-   "quick": false,
-   "mustSee": false,
-   "fame": 50,
-   "unesco": false,
-   "heritage": false,
-   "wd": "Q599223",
-   "src": [
-    "Wikidata (Wikipedia in many languages)"
-   ],
-   "srcOnly": false,
-   "builtin": true,
-   "famousFix": false,
-   "far": true,
-   "travel": "Bus from Terreiro do Paço, about 70 min one way",
-   "parts": [],
-   "merged": [],
-   "posDoubt": false,
-   "summary": "",
-   "wdByName": true
-  },
-  {
-   "id": "mafra-far~Q16268486",
-   "name": "Basilica of Our Lady and St. Anthony",
-   "local": "",
-   "lat": 38.9372,
-   "lng": -9.328,
-   "minutes": 30,
-   "category": "Sight",
-   "kind": "touristy",
-   "quick": false,
-   "mustSee": false,
-   "fame": 0,
-   "unesco": false,
-   "heritage": false,
-   "wd": "",
-   "src": [],
-   "srcOnly": false,
-   "builtin": true,
-   "famousFix": false,
-   "far": true,
-   "travel": "Bus from Terreiro do Paço, about 70 min one way",
-   "parts": [],
-   "merged": [],
-   "posDoubt": false,
-   "summary": ""
-  },
-  {
-   "id": "ericeira-far~0",
-   "name": "Parque de Santa Marta",
-   "local": "",
-   "lat": 38.9616,
-   "lng": -9.4189,
-   "minutes": 30,
-   "category": "Sight",
-   "kind": "touristy",
-   "quick": false,
-   "mustSee": false,
-   "fame": 65,
-   "unesco": false,
-   "heritage": false,
-   "wd": "Q136333486",
-   "src": [
-    "Wikidata (Wikipedia in many languages)"
-   ],
-   "srcOnly": false,
-   "builtin": true,
-   "famousFix": false,
-   "far": true,
-   "travel": "Bus from Terreiro do Paço, about 95 min one way",
-   "parts": [],
-   "merged": [],
-   "posDoubt": false,
-   "summary": "",
-   "wdByName": true
-  },
-  {
-   "id": "sintra-far~Q69513",
-   "name": "Pena National Palace",
-   "local": "",
-   "lat": 38.7878,
-   "lng": -9.39055,
-   "minutes": 30,
-   "category": "Sight",
-   "kind": "touristy",
-   "quick": false,
-   "mustSee": false,
-   "fame": 41,
-   "unesco": false,
-   "heritage": true,
-   "wd": "Q69513",
-   "src": [
-    "Wikidata (Wikipedia in many languages)"
-   ],
-   "srcOnly": false,
-   "builtin": true,
-   "famousFix": false,
-   "far": true,
-   "travel": "Metro from Pç. Comércio, about 80 min one way",
-   "parts": [],
-   "merged": [],
-   "posDoubt": false,
-   "summary": ""
-  },
-  {
-   "id": "sintra-far~Q1049008",
-   "name": "Moorish Castle",
-   "local": "",
-   "lat": 38.79258,
-   "lng": -9.38934,
-   "minutes": 30,
-   "category": "Sight",
-   "kind": "touristy",
-   "quick": false,
-   "mustSee": false,
-   "fame": 0,
-   "unesco": true,
-   "heritage": false,
-   "wd": "",
-   "src": [],
-   "srcOnly": false,
-   "builtin": true,
-   "famousFix": false,
-   "far": true,
-   "travel": "Metro from Pç. Comércio, about 80 min one way",
-   "parts": [],
-   "merged": [],
-   "posDoubt": false,
-   "summary": ""
-  },
-  {
-   "id": "sintra-far~Q532399",
-   "name": "Sintra National Palace",
-   "local": "",
-   "lat": 38.797667,
-   "lng": -9.390667,
-   "minutes": 30,
-   "category": "Sight",
-   "kind": "touristy",
-   "quick": false,
-   "mustSee": false,
-   "fame": 0,
-   "unesco": true,
-   "heritage": false,
-   "wd": "Q532399",
-   "src": [],
-   "srcOnly": false,
-   "builtin": true,
-   "famousFix": false,
-   "far": true,
-   "travel": "Metro from Pç. Comércio, about 80 min one way",
-   "parts": [],
-   "merged": [],
-   "posDoubt": false,
-   "summary": "",
-   "wdByName": true
-  },
-  {
-   "id": "sintra-far~Q3175595",
-   "name": "Quintinha de Monserrate",
-   "local": "",
-   "lat": 38.794206,
-   "lng": -9.420628,
-   "minutes": 30,
-   "category": "Sight",
-   "kind": "touristy",
-   "quick": false,
-   "mustSee": false,
-   "fame": 0,
-   "unesco": true,
-   "heritage": false,
-   "wd": "",
-   "src": [],
-   "srcOnly": false,
-   "builtin": true,
-   "famousFix": false,
-   "far": true,
-   "travel": "Metro from Pç. Comércio, about 80 min one way",
-   "parts": [],
-   "merged": [],
-   "posDoubt": false,
-   "summary": ""
-  },
-  {
-   "id": "sintra-far~Q2630165",
-   "name": "Quinta da Regaleira",
-   "local": "",
-   "lat": 38.7964,
-   "lng": -9.396,
-   "minutes": 30,
-   "category": "Sight",
-   "kind": "touristy",
-   "quick": false,
-   "mustSee": false,
-   "fame": 0,
-   "unesco": true,
-   "heritage": false,
-   "wd": "Q2630165",
-   "src": [],
-   "srcOnly": false,
-   "builtin": true,
-   "famousFix": false,
-   "far": true,
-   "travel": "Metro from Pç. Comércio, about 80 min one way",
-   "parts": [],
-   "merged": [],
-   "posDoubt": false,
-   "summary": "",
-   "wdByName": true
   }
  ]
 }
