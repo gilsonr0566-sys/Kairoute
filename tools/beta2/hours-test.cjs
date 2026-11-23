@@ -96,6 +96,8 @@ ok((E.countryOf(['Edinburgh, Scotland']) || {}).region === 'SCT' && !(E.holidayO
 { const p = E.prayerTimes(41.0054, 28.9768, '2027-07-09', 180); ok(p && Math.abs(p.dhuhr - (13 * 60 + 13)) < 10, `Istanbul midday prayer from the sun (${p && C(p.dhuhr)})`);
   const r = E.applyDayRules({ name: 'Blue Mosque', category: 'mosque', lat: 41.0054, lng: 28.9768 }, { known: true, spans: [[8 * 60 + 30, 19 * 60]] }, '2027-07-09', { offset: 180 });
   ok(r.spans.length >= 3 && !r.spans.some(([a, b]) => a < p.dhuhr && b > p.dhuhr), 'a mosque is closed to visitors through Friday prayers'); }
+ok(!E.isMosque({ name: 'Mosque of Cristo de la Luz', content: 'built as a small mosque, but 200 years later was converted to a church' }) && !E.isMosque({ name: 'Mezquita', content: 'the mosque became a cathedral' }) && E.isMosque({ name: 'Sultan Ahmed Mosque' }),
+  'a mosque now a church or museum is not planned around prayer times (Toledo, Nov 23)');
 { const r = E.applyDayRules({ name: 'St. Mary\'s Church', category: 'church' }, { known: false }, '2027-07-11', {}); ok(r.sundayAfternoon && /Sunday services/.test(r.notes.join(' ')), 'a church with no Sunday hours is planned for the afternoon, and says so'); }
 { const r = E.applyDayRules({ name: 'Museum', category: 'museum' }, { known: true, spans: [[600, 1080]] }, '2027-12-25', { holiday: { name: 'Christmas Day' } }); ok(r.holidayUnsure && /not confirmed/.test(r.notes.join(' ')), 'on Christmas Day a museum\'s usual hours are not confirmed, and the plan says so'); }
 { const r = E.applyDayRules({ name: 'Museum', category: 'museum' }, { known: true, spans: [[600, 1080]], phSaid: true }, '2027-12-25', { holiday: { name: 'Christmas Day' } }); ok(!r.holidayUnsure, 'hours that say what happens on holidays decide the holiday'); }

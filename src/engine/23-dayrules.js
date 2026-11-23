@@ -48,7 +48,11 @@
 
   // ---------- days of rest and prayer ----------
   const word = s => " " + String((s && (s.category + " " + s.name + " " + (s.kind || ""))) || "").toLowerCase() + " ";
-  E.isMosque = s => /\b(mosque|camii?|cami|masjid|mezquita|moschee|jami|jamia)\b/.test(word(s)) && !/\b(former|museum|ruins?)\b/.test(word(s));
+  // A mosque that holds prayers today: not one now a church or museum (Toledo's "Mosque of Cristo de la Luz", converted
+  // to a church 800 years ago, was planned around prayer times: Nov 23 screen gate). The name and the guide's text decide.
+  const about = s => String((s && (s.content || s.description || s.desc || s.about || s.blurb)) || "").toLowerCase();
+  E.isMosque = s => /\b(mosque|camii?|cami|masjid|mezquita|moschee|jami|jamia)\b/.test(word(s)) && !/\b(former|museum|ruins?|cristo|christ|church|cathedral|catedral)\b/.test(word(s))
+    && !/\b(converted (in)?to a (church|cathedral|museum)|(was|became) a (church|cathedral|museum)|former mosque|no longer (a|an active) mosque)\b/.test(about(s));
   E.isJewishSite = s => /\b(synagogue|jewish museum|old jewish|jewish quarter museum|shul)\b/.test(word(s));
   E.isChurch = s => /\b(church|cathedral|basilica|chapel|duomo|kirche|dom|iglesia|igreja|eglise|église|chiesa|abbey|monastery|monastir)\b/.test(word(s)) && !/\b(former|ruins?|museum)\b/.test(word(s));
   // The five daily prayers' times for a date and place (minutes on the local clock): from the sun (Muslim World League
