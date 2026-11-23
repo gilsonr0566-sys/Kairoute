@@ -1,0 +1,237 @@
+{
+ "name": "n16-key-west",
+ "label": "Key West, 2 nights",
+ "legs": [
+  {
+   "k": "stay",
+   "place": "Key West, Florida",
+   "nights": 2,
+   "date": "2027-06-16",
+   "inAt": "07:00",
+   "homeAt": "13:15"
+  }
+ ],
+ "started": "2026-11-23T12:16:45.716Z",
+ "passed": {
+  "/sources": 12,
+  "/transit": 5,
+  "/guide": 1
+ },
+ "refused": {},
+ "errors": [],
+ "days": [
+  {
+   "i": 0,
+   "date": "2027-06-16",
+   "type": "arrival",
+   "text": "WED JUN 16 · KEY WEST, FLORIDA · ARRIVING\nKey West, Florida ✎ Rename\nLock this day\nI couldn't find Key West, Florida in the travel guides and maps. Check the spelling on the day (for example \"Kotor, Montenegro\"), then tap Build again.\nNo guide for Key West, Florida yet\n\nKairoute will build the guide for Key West, Florida from travel guides and maps: real sights, places to eat, the cruise port and stations.\n\nBuild the Key West, Florida guide"
+  },
+  {
+   "i": 1,
+   "date": "2027-06-17",
+   "type": "land",
+   "text": "THU JUN 17 · KEY WEST, FLORIDA · LAND DAY\nKey West, Florida ✎ Rename\nLock this day\nI couldn't find Key West, Florida in the travel guides and maps. Check the spelling on the day (for example \"Kotor, Montenegro\"), then tap Build again.\nNo guide for Key West, Florida yet\n\nKairoute will build the guide for Key West, Florida from travel guides and maps: real sights, places to eat, the cruise port and stations.\n\nBuild the Key West, Florida guide"
+  },
+  {
+   "i": 2,
+   "date": "2027-06-18",
+   "type": "departure",
+   "text": "FRI JUN 18 · KEY WEST, FLORIDA · LEAVING\nKey West, Florida ✎ Rename\nLock this day\nI couldn't find Key West, Florida in the travel guides and maps. Check the spelling on the day (for example \"Kotor, Montenegro\"), then tap Build again.\nNo guide for Key West, Florida yet\n\nKairoute will build the guide for Key West, Florida from travel guides and maps: real sights, places to eat, the cruise port and stations.\n\nBuild the Key West, Florida guide"
+  }
+ ],
+ "guides": {},
+ "steps": [
+  {
+   "name": "1-untick-one",
+   "r": {
+    "tapped": [],
+    "onBefore": [],
+    "onAfter": [],
+    "offCount": 0,
+    "pickerPage": "THU JUN 17 · KEY WEST, FLORIDA · LAND DAY\nKey West, Florida ✎ Rename\nLock this day\nI couldn't find Key West, Florida in the travel guides and maps. Check the spelling on the day (for example \"Kotor, Montenegro\"), then tap Build again.\nNo guide for Key West, Florida yet\n\nKairoute will build the guide for Key West, Florida from travel guides and maps: real sights, places to eat, the cruise port and stations.\n\nBuild the Key West, Florida guide",
+    "dialog": []
+   },
+   "text": "THU JUN 17 · KEY WEST, FLORIDA · LAND DAY\nKey West, Florida ✎ Rename\nLock this day\nI couldn't find Key West, Florida in the travel guides and maps. Check the spelling on the day (for example \"Kotor, Montenegro\"), then tap Build again.\nNo guide for Key West, Florida yet\n\nKairoute will build the guide for Key West, Florida from travel guides and maps: real sights, places to eat, the cruise port and stations.\n\nBuild the Key West, Florida guide"
+  },
+  {
+   "name": "2-tick-six-more",
+   "r": {
+    "tapped": [],
+    "onBefore": [],
+    "onAfter": [],
+    "offCount": 0,
+    "pickerPage": "THU JUN 17 · KEY WEST, FLORIDA · LAND DAY\nKey West, Florida ✎ Rename\nLock this day\nI couldn't find Key West, Florida in the travel guides and maps. Check the spelling on the day (for example \"Kotor, Montenegro\"), then tap Build again.\nNo guide for Key West, Florida yet\n\nKairoute will build the guide for Key West, Florida from travel guides and maps: real sights, places to eat, the cruise port and stations.\n\nBuild the Key West, Florida guide",
+    "dialog": []
+   },
+   "text": "THU JUN 17 · KEY WEST, FLORIDA · LAND DAY\nKey West, Florida ✎ Rename\nLock this day\nI couldn't find Key West, Florida in the travel guides and maps. Check the spelling on the day (for example \"Kotor, Montenegro\"), then tap Build again.\nNo guide for Key West, Florida yet\n\nKairoute will build the guide for Key West, Florida from travel guides and maps: real sights, places to eat, the cruise port and stations.\n\nBuild the Key West, Florida guide"
+  },
+  {
+   "name": "3-fit-in-one",
+   "r": {
+    "asked": null,
+    "wont": []
+   },
+   "text": "THU JUN 17 · KEY WEST, FLORIDA · LAND DAY\nKey West, Florida ✎ Rename\nLock this day\nI couldn't find Key West, Florida in the travel guides and maps. Check the spelling on the day (for example \"Kotor, Montenegro\"), then tap Build again.\nNo guide for Key West, Florida yet\n\nKairoute will build the guide for Key West, Florida from travel guides and maps: real sights, places to eat, the cruise port and stations.\n\nBuild the Key West, Florida guide"
+  },
+  {
+   "name": "4-switch-a-ride",
+   "r": {
+    "pressed": null,
+    "candidates": 0
+   },
+   "text": "THU JUN 17 · KEY WEST, FLORIDA · LAND DAY\nKey West, Florida ✎ Rename\nLock this day\nI couldn't find Key West, Florida in the travel guides and maps. Check the spelling on the day (for example \"Kotor, Montenegro\"), then tap Build again.\nNo guide for Key West, Florida yet\n\nKairoute will build the guide for Key West, Florida from travel guides and maps: real sights, places to eat, the cruise port and stations.\n\nBuild the Key West, Florida guide"
+  },
+  {
+   "name": "5-change-lunch",
+   "r": {
+    "pressed": null,
+    "candidates": 0
+   },
+   "text": "THU JUN 17 · KEY WEST, FLORIDA · LAND DAY\nKey West, Florida ✎ Rename\nLock this day\nI couldn't find Key West, Florida in the travel guides and maps. Check the spelling on the day (for example \"Kotor, Montenegro\"), then tap Build again.\nNo guide for Key West, Florida yet\n\nKairoute will build the guide for Key West, Florida from travel guides and maps: real sights, places to eat, the cruise port and stations.\n\nBuild the Key West, Florida guide"
+  },
+  {
+   "name": "6-half-day",
+   "r": {
+    "field": true,
+    "label": "Hours to sightsee",
+    "btns": [
+     "Light day=2.5",
+     "Half day=4",
+     "Full day=8*"
+    ],
+    "was": "8",
+    "did": "pressed Half day",
+    "now": "4",
+    "stops": 0,
+    "last": "",
+    "plan": "THU JUN 17 · KEY WEST, FLORIDA · LAND DAY\nKey West, Florida ✎ Rename\nLock this day\nI couldn't find Key West, Florida in the travel guides and maps. Check the spelling on the day (for example \"Kotor, Montenegro\"), then tap Build again.\nNo guide for Key West, Florida yet\n\nKairoute will build the guide for Key West, Florida from travel guides and maps: real sights, places to eat, the cruise port and stations.\n\nBuild the Key West, Florida guide"
+   },
+   "text": "THU JUN 17 · KEY WEST, FLORIDA · LAND DAY\nKey West, Florida ✎ Rename\nLock this day\nI couldn't find Key West, Florida in the travel guides and maps. Check the spelling on the day (for example \"Kotor, Montenegro\"), then tap Build again.\nNo guide for Key West, Florida yet\n\nKairoute will build the guide for Key West, Florida from travel guides and maps: real sights, places to eat, the cruise port and stations.\n\nBuild the Key West, Florida guide"
+  },
+  {
+   "name": "7-full-day",
+   "r": {
+    "field": true,
+    "label": "Hours to sightsee",
+    "btns": [
+     "Light day=2.5",
+     "Half day=4*",
+     "Full day=8"
+    ],
+    "was": "4",
+    "did": "pressed Full day",
+    "now": "8",
+    "stops": 0,
+    "last": "",
+    "plan": "THU JUN 17 · KEY WEST, FLORIDA · LAND DAY\nKey West, Florida ✎ Rename\nLock this day\nI couldn't find Key West, Florida in the travel guides and maps. Check the spelling on the day (for example \"Kotor, Montenegro\"), then tap Build again.\nNo guide for Key West, Florida yet\n\nKairoute will build the guide for Key West, Florida from travel guides and maps: real sights, places to eat, the cruise port and stations.\n\nBuild the Key West, Florida guide"
+   },
+   "text": "THU JUN 17 · KEY WEST, FLORIDA · LAND DAY\nKey West, Florida ✎ Rename\nLock this day\nI couldn't find Key West, Florida in the travel guides and maps. Check the spelling on the day (for example \"Kotor, Montenegro\"), then tap Build again.\nNo guide for Key West, Florida yet\n\nKairoute will build the guide for Key West, Florida from travel guides and maps: real sights, places to eat, the cruise port and stations.\n\nBuild the Key West, Florida guide"
+  },
+  {
+   "name": "8-reload",
+   "r": "THU JUN 17 · KEY WEST, FLORIDA · LAND DAY\nKey West, Florida ✎ Rename\nLock this day\nNo guide for Key West, Florida yet\n\nKairoute will build the guide for Key West, Florida from travel guides and maps: real sights, places to eat, the cruise port and stations.\n\nBuild the Key West, Florida guide",
+   "text": "THU JUN 17 · KEY WEST, FLORIDA · LAND DAY\nKey West, Florida ✎ Rename\nLock this day\nNo guide for Key West, Florida yet\n\nKairoute will build the guide for Key West, Florida from travel guides and maps: real sights, places to eat, the cruise port and stations.\n\nBuild the Key West, Florida guide"
+  },
+  {
+   "name": "9-phone",
+   "r": "phone",
+   "text": "THU JUN 17 · KEY WEST, FLORIDA · LAND DAY\nKey West, Florida ✎ Rename\nLock this day\nNo guide for Key West, Florida yet\n\nKairoute will build the guide for Key West, Florida from travel guides and maps: real sights, places to eat, the cruise port and stations.\n\nBuild the Key West, Florida guide"
+  }
+ ],
+ "screen": [],
+ "screenRead": 0,
+ "rules": [],
+ "hosts": {
+  "fonts.googleapis.com": {
+   "ok": 2,
+   "bad": 0,
+   "fail": 0
+  },
+  "cdnjs.cloudflare.com": {
+   "ok": 2,
+   "bad": 0,
+   "fail": 0
+  },
+  "fonts.gstatic.com": {
+   "ok": 6,
+   "bad": 0,
+   "fail": 0
+  },
+  "kairoute-ai.rickgilson.workers.dev": {
+   "ok": 19,
+   "bad": 1,
+   "fail": 0
+  },
+  "router.project-osrm.org": {
+   "ok": 31,
+   "bad": 0,
+   "fail": 0
+  },
+  "overpass-api.de": {
+   "ok": 0,
+   "bad": 19,
+   "fail": 23
+  },
+  "routing.openstreetmap.de": {
+   "ok": 12,
+   "bad": 0,
+   "fail": 0
+  },
+  "tiles.openfreemap.org": {
+   "ok": 6,
+   "bad": 0,
+   "fail": 0
+  },
+  "overpass.private.coffee": {
+   "ok": 0,
+   "bad": 0,
+   "fail": 42
+  },
+  "overpass.kumi.systems": {
+   "ok": 0,
+   "bad": 0,
+   "fail": 11
+  }
+ },
+ "version": "6dad9af-1795372685\n",
+ "aiReady": false,
+ "wizard": {
+  "miss": [],
+  "prev": "Your days: 3 days",
+  "form": "Add each place in order, the way it's booked. Each new stop starts where the last one ends.\n\nSTOP 1 · CITY STAY\nCity\nArrive on\nNights\nHotel (optional)\nGetting there\nFlight\nTrain\nFerry\nCar or bus\nArrive in Key West, Florida at\nLeave empty if you don't know yet.\n+ Add a city stay\n+ Add a cruise\nGoing home from Key West, Florida\nFlight\nTrain\nFerry\nCar or bus\nFlight at\nYour days: 3 days\nAdd more details (optional)\nName this trip\n\nKairoute picks good defaults for pace, walking and voice, and you can change any of them later.\n\nCancel\nPersonalize first\nBuild my trip"
+ },
+ "buildSec": 102,
+ "state": {
+  "busy": "",
+  "err": "I couldn't find Key West, Florida in the travel guides and maps. Check the spelling on the day (for example \"Kotor, Montenegro\"), then tap Build again.",
+  "days": [
+   {
+    "date": "2027-06-16",
+    "type": "arrival"
+   },
+   {
+    "date": "2027-06-17",
+    "type": "land"
+   },
+   {
+    "date": "2027-06-18",
+    "type": "departure"
+   }
+  ]
+ },
+ "phoneText": "THU JUN 17 · KEY WEST, FLORIDA · LAND DAY\nKey West, Florida ✎ Rename\nLock this day\nI couldn't find Key West, Florida in the travel guides and maps. Check the spelling on the day (for example \"Kotor, Montenegro\"), then tap Build again.\nNo guide for Key West, Florida yet\n\nKairoute will build the guide for Key West, Florida from travel guides and maps: real sights, places to eat, the cruise port and stations.\n\nBuild the Key West, Florida guide",
+ "stepDay": 1,
+ "bucket": {
+  "kairoute.intro1": "1",
+  "kairoute.transit3": "{\"35.489,24.075,35.515,24.023|wk\":{\"t\":1795436213730,\"v\":9,\"partial\":true,\"opts\":[]},\"35.518,24.018,35.489,24.075|wk\":{\"t\":1795436213730,\"v\":9,\"partial\":true,\"opts\":[]},\"40.843,14.241,40.847,14.268|wk\":{\"t\":1795436212054,\"v\":9,\"partial\":true,\"opts\":[{\"mode\":\"metro\",\"kind\":\"Metro\",\"label\":\"Metro L1 (Azienda Napoletana Mobilità) + 1 change\",\"operator\":\"\",\"from\":\"SAN MARTINO-CERTOSA\",\"to\":\"DUOMO\",\"ride\":28,\"wait\":12,\"every\":18,\"everySrc\":\"timetable\",\"everyN\":2,\"access\":{\"how\":\"walk\",\"min\":3,\"km\":0.23},\"egress\":{\"how\":\"walk\",\"min\":10,\"km\":0.75},\"min\":53,\"km\":9.6,\"stops\":13,\"hours\":\"\",\"fare\":\"\",\"steps\":[\"Bus C37 (Azienda Napoletana Mobilità): SAN MARTINO-CERTOSA to BERNINI - SOLIMENA, 6 min\",\"Metro L1 (Azienda Napoletana Mobilità): VANVITELLI to DUOMO, 17 min\"],\"deps\":[{\"t\":450,\"lead\":3,\"dur\":44},{\"t\":490,\"lead\":3,\"dur\":40},{\"t\":550,\"lead\":3,\"dur\":43},{\"t\":670,\"lead\":3,\"dur\":40},{\"t\":730,\"lead\":3,\"dur\":43},{\"t\":850,\"lead\":3,\"dur\":40},{\"t\":910,\"lead\":3,\"dur\":43},{\"t\":930,\"lead\":3,\"dur\":41},{\"t\":1030,\"lead\":3,\"dur\":40},{\"t\":1050,\"lead\":3,\"dur\":38},{\"t\":1090,\"lead\":3,\"dur\":43}],\"checked\":\"2026-11-23\",\"path\":[[14.24111,40.84382],[14.24048,40.84402],[14.24038,40.84409],[14.24044,40.84414],[14.24023,40.84438],[14.23881,40.84506],[14.23587,40.84377],[14.2353,40.84342],[14.23479,40.84465],[14.23447,40.84487],[14.23387,40.84463],[14.23214,40.84396],[14.23176,40.84454],[14.23179,40.84422],[14.23165,40.84421],[14.23163,40.84421],[14.23131,40.84396],[14.23146,40.84386],[14.23164,40.84383],[14.23184,40.84269],[14.23073,40.84177],[14.22781,40.84116],[14.22603,40.84193],[14.2249,40.84382],[14.22524,40.84645],[14.22609,40.84774],[14.22891,40.84919],[14.233,40.85007],[14.23434,40.85105],[14.23939,40.85327],[14.24448,40.85623],[14.24633,40.85817],[14.24771,40.85839],[14.2506,40.85702],[14.25168,40.85441],[14.25115,40.85158],[14.24999,40.84438],[14.25089,40.8406],[14.25208,40.83958],[14.25394,40.8394],[14.25445,40.84026],[14.25563,40.84335],[14.26174,40.84761],[14.26184,40.8477],[14.26226,40.84805],[14.26232,40.84809],[14.26244,40.848],[14.26319,40.84781],[14.26347,40.84786],[14.26414,40.84761],[14.26448,40.8475],[14.26499,40.84759],[14.26533,40.84777],[14.26558,40.84757],[14.26611,40.84759],[14.26626,40.84753],[14.26683,40.84724],[14.26691,40.84706],[14.26698,40.847],[14.26739,40.84679]],\"fromPt\":[14.24124,40.843333],\"toPt\":[14.2676,40.8468],\"src\":\"Transitous timetables (Azienda Napoletana Mobilità)\",\"kindDeps\":[{\"t\":376,\"lead\":15,\"dur\":49,\"a\":15},{\"t\":379,\"lead\":14,\"dur\":43,\"a\":14},{\"t\":391,\"lead\":14,\"dur\":38,\"a\":14},{\"t\":400,\"lead\":14,\"dur\":36,\"a\":14},{\"t\":404,\"lead\":14,\"dur\":40,\"a\":14},{\"t\":407,\"lead\":15,\"dur\":45,\"a\":15},{\"t\":432,\"lead\":12,\"dur\":46,\"a\":12},{\"t\":442,\"lead\":15,\"dur\":46,\"a\":15},{\"t\":450,\"lead\":3,\"dur\":44,\"a\":3},{\"t\":451,\"lead\":15,\"dur\":46,\"a\":15},{\"t\":456,\"lead\":14,\"dur\":40,\"a\":14},{\"t\":490,\"lead\":3,\"dur\":40,\"a\":3},{\"t\":497,\"lead\":14,\"dur\":43,\"a\":14},{\"t\":505,\"lead\":15,\"dur\":46,\"a\":15},{\"t\":507,\"lead\":14,\"dur\":39,\"a\":14},{\"t\":508,\"lead\":12,\"dur\":44,\"a\":12},{\"t\":550,\"lead\":3,\"dur\":43,\"a\":3},{\"t\":556,\"lead\":14,\"dur\":42,\"a\":14},{\"t\":562,\"lead\":14,\"dur\":44,\"a\":14},{\"t\":570,\"lead\":15,\"dur\":44,\"a\":15},{\"t\":570,\"lead\":15,\"dur\":42,\"a\":15},{\"t\":616,\"lead\":14,\"dur\":38,\"a\":14},{\"t\":617,\"lead\":14,\"dur\":45,\"a\":14},{\"t\":618,\"lead\":12,\"dur\":44,\"a\":12},{\"t\":622,\"lead\":15,\"dur\":46,\"a\":15},{\"t\":631,\"lead\":14,\"dur\":41,\"a\":14},{\"t\":631,\"lead\":15,\"dur\":46,\"a\":15},{\"t\":670,\"lead\":3,\"dur\":40,\"a\":3},{\"t\":685,\"lead\":15,\"dur\":46,\"a\":15},{\"t\":686,\"lead\":14,\"dur\":40,\"a\":14},{\"t\":687,\"lead\":12,\"dur\":41,\"a\":12},{\"t\":694,\"lead\":14,\"dur\":42,\"a\":14},{\"t\":730,\"lead\":3,\"dur\":43,\"a\":3},{\"t\":730,\"lead\":3,\"dur\":42,\"a\":3},{\"t\":743,\"lead\":14,\"dur\":43,\"a\":14},{\"t\":744,\"lead\":12,\"dur\":42,\"a\":12},{\"t\":748,\"lead\":15,\"dur\":46,\"a\":15},{\"t\":802,\"lead\":15,\"dur\":46,\"a\":15},{\"t\":804,\"lead\":14,\"dur\":42,\"a\":14},{\"t\":811,\"lead\":15,\"dur\":46,\"a\":15},{\"t\":819,\"lead\":14,\"dur\":43,\"a\":14},{\"t\":850,\"lead\":3,\"dur\":40,\"a\":3},{\"t\":854,\"lead\":14,\"dur\":44,\"a\":14},{\"t\":863,\"lead\":14,\"dur\":43,\"a\":14},{\"t\":865,\"lead\":15,\"dur\":46,\"a\":15},{\"t\":874,\"lead\":14,\"dur\":42,\"a\":14},{\"t\":910,\"lead\":3,\"dur\":43,\"a\":3},{\"t\":918,\"lead\":14,\"dur\":42,\"a\":14},{\"t\":930,\"lead\":3,\"dur\":41,\"a\":3},{\"t\":930,\"lead\":15,\"dur\":44,\"a\":15},{\"t\":934,\"lead\":14,\"dur\":38,\"a\":14},{\"t\":973,\"lead\":12,\"dur\":47,\"a\":12},{\"t\":982,\"lead\":15,\"dur\":46,\"a\":15},{\"t\":988,\"lead\":14,\"dur\":38,\"a\":14},{\"t\":991,\"lead\":15,\"dur\":46,\"a\":15},{\"t\":995,\"lead\":14,\"dur\":41,\"a\":14},{\"t\":1030,\"lead\":3,\"dur\":40,\"a\":3},{\"t\":1044,\"lead\":14,\"dur\":42,\"a\":14},{\"t\":1045,\"lead\":15,\"dur\":46,\"a\":15},{\"t\":1047,\"lead\":14,\"dur\":47,\"a\":14},{\"t\":1050,\"lead\":3,\"dur\":38,\"a\":3},{\"t\":1090,\"lead\":3,\"dur\":43,\"a\":3},{\"t\":1093,\"lead\":12,\"dur\":45,\"a\":12},{\"t\":1107,\"lead\":14,\"dur\":39,\"a\":14},{\"t\":1108,\"lead\":15,\"dur\":46,\"a\":15},{\"t\":1109,\"lead\":14,\"dur\":39,\"a\":12},{\"t\":1154,\"lead\":14,\"dur\":48,\"a\":14},{\"t\":1162,\"lead\":15,\"dur\":46,\"a\":15},{\"t\":1171,\"lead\":15,\"dur\":46,\"a\":15},{\"t\":1176,\"lead\":14,\"dur\":40,\"a\":14},{\"t\":1177,\"lead\":14,\"dur\":46,\"a\":14},{\"t\":1180,\"lead\":15,\"dur\":46,\"a\":15},{\"t\":1180,\"lead\":15,\"dur\":45,\"a\":15},{\"t\":1216,\"lead\":15,\"dur\":46,\"a\":15},{\"t\":1225,\"lead\":15,\"dur\":46,\"a\":15},{\"t\":1227,\"lead\":14,\"dur\":39,\"a\":14},{\"t\":1229,\"lead\":14,\"dur\":47,\"a\":14},{\"t\":1234,\"lead\":15,\"dur\":46,\"a\":15}],\"at\":1795436212054},{\"mode\":\"metro\",\"kind\":\"Metro\",\"label\":\"Metro L1 (Azienda Napoletana Mobilità) + 1 change\",\"operator\":\"\",\"from\":\"VANVITELLI\",\"to\":\"DUOMO\",\"ride\":21,\"wait\":8,\"every\":9,\"everySrc\":\"timetable\",\"everyN\":8,\"access\":{\"how\":\"walk\",\"min\":15,\"km\":1.13},\"egress\":{\"how\":\"walk\",\"min\":10,\"km\":0.75},\"min\":54,\"km\":10.6,\"stops\":9,\"hours\":\"\",\"fare\":\"\",\"steps\":[\"Metro L1 (Azienda Napoletana Mobilità): VANVITELLI to MEDAGLIE D'ORO, 1 min\",\"Metro L1 (Azienda Napoletana Mobilità): MEDAGLIE D'ORO to DUOMO, 18 min\"],\"deps\":[{\"t\":442,\"lead\":15,\"dur\":46},{\"t\":451,\"lead\":15,\"dur\":46},{\"t\":505,\"lead\":15,\"dur\":46},{\"t\":622,\"lead\":15,\"dur\":46},{\"t\":631,\"lead\":15,\"dur\":46},{\"t\":685,\"lead\":15,\"dur\":46},{\"t\":748,\"lead\":15,\"dur\":46},{\"t\":802,\"lead\":15,\"dur\":46},{\"t\":811,\"lead\":15,\"dur\":46},{\"t\":865,\"lead\":15,\"dur\":46},{\"t\":982,\"lead\":15,\"dur\":46},{\"t\":991,\"lead\":15,\"dur\":46},{\"t\":1045,\"lead\":15,\"dur\":46},{\"t\":1108,\"lead\":15,\"dur\":46},{\"t\":1162,\"lead\":15,\"dur\":46},{\"t\":1171,\"lead\":15,\"dur\":46},{\"t\":1180,\"lead\":15,\"dur\":46},{\"t\":1216,\"lead\":15,\"dur\":46},{\"t\":1225,\"lead\":15,\"dur\":46},{\"t\":1234,\"lead\":15,\"dur\":46}],\"checked\":\"2026-11-23\",\"path\":[[14.24111,40.84382],[14.24043,40.84405],[14.24038,40.84409],[14.24017,40.84431],[14.23893,40.84499],[14.23834,40.84519],[14.23733,40.84432],[14.23622,40.84474],[14.23579,40.84416],[14.23567,40.84421],[14.23491,40.84411],[14.23482,40.8441],[14.23474,40.8441],[14.23429,40.84405],[14.23387,40.844],[14.23381,40.844],[14.23284,40.84391],[14.23273,40.84389],[14.23234,40.84389],[14.2322,40.84388],[14.23198,40.84384],[14.23089,40.85065],[14.23091,40.85065],[14.23068,40.85046],[14.23185,40.84291],[14.23164,40.8423],[14.22907,40.84125],[14.22566,40.84233],[14.2249,40.84382],[14.22524,40.84645],[14.22756,40.8488],[14.23242,40.84963],[14.23342,40.85051],[14.23939,40.85327],[14.24505,40.8566],[14.24604,40.858],[14.24939,40.85778],[14.25158,40.85556],[14.2516,40.85348],[14.25001,40.84842],[14.25089,40.8406],[14.25232,40.83946],[14.25405,40.83946],[14.25552,40.84316],[14.26174,40.84761],[14.2618,40.84765],[14.26198,40.84787],[14.2624,40.84804],[14.26244,40.848],[14.26319,40.84781],[14.26394,40.84765],[14.26443,40.84752],[14.26499,40.84759],[14.26537,40.84772],[14.26571,40.84756],[14.26611,40.84759],[14.26635,40.84722],[14.26689,40.84711],[14.26698,40.847],[14.26739,40.84679]],\"fromPt\":[14.24124,40.843333],\"toPt\":[14.2676,40.8468],\"src\":\"Transitous timetables (Azienda Napoletana Mobilità)\",\"kindDeps\":[{\"t\":376,\"lead\":15,\"dur\":49,\"a\":15},{\"t\":379,\"lead\":14,\"dur\":43,\"a\":14},{\"t\":391,\"lead\":14,\"dur\":38,\"a\":14},{\"t\":400,\"lead\":14,\"dur\":36,\"a\":14},{\"t\":404,\"lead\":14,\"dur\":40,\"a\":14},{\"t\":407,\"lead\":15,\"dur\":45,\"a\":15},{\"t\":432,\"lead\":12,\"dur\":46,\"a\":12},{\"t\":442,\"lead\":15,\"dur\":46,\"a\":15},{\"t\":450,\"lead\":3,\"dur\":44,\"a\":3},{\"t\":451,\"lead\":15,\"dur\":46,\"a\":15},{\"t\":456,\"lead\":14,\"dur\":40,\"a\":14},{\"t\":490,\"lead\":3,\"dur\":40,\"a\":3},{\"t\":497,\"lead\":14,\"dur\":43,\"a\":14},{\"t\":505,\"lead\":15,\"dur\":46,\"a\":15},{\"t\":507,\"lead\":14,\"dur\":39,\"a\":14},{\"t\":508,\"lead\":12,\"dur\":44,\"a\":12},{\"t\":550,\"lead\":3,\"dur\":43,\"a\":3},{\"t\":556,\"lead\":14,\"dur\":42,\"a\":14},{\"t\":562,\"lead\":14,\"dur\":44,\"a\":14},{\"t\":570,\"lead\":15,\"dur\":44,\"a\":15},{\"t\":570,\"lead\":15,\"dur\":42,\"a\":15},{\"t\":616,\"lead\":14,\"dur\":38,\"a\":14},{\"t\":617,\"lead\":14,\"dur\":45,\"a\":14},{\"t\":618,\"lead\":12,\"dur\":44,\"a\":12},{\"t\":622,\"lead\":15,\"dur\":46,\"a\":15},{\"t\":631,\"lead\":14,\"dur\":41,\"a\":14},{\"t\":631,\"lead\":15,\"dur\":46,\"a\":15},{\"t\":670,\"lead\":3,\"dur\":40,\"a\":3},{\"t\":685,\"lead\":15,\"dur\":46,\"a\":15},{\"t\":686,\"lead\":14,\"dur\":40,\"a\":14},{\"t\":687,\"lead\":12,\"dur\":41,\"a\":12},{\"t\":694,\"lead\":14,\"dur\":42,\"a\":14},{\"t\":730,\"lead\":3,\"dur\":43,\"a\":3},{\"t\":730,\"lead\":3,\"dur\":42,\"a\":3},{\"t\":743,\"lead\":14,\"dur\":43,\"a\":14},{\"t\":744,\"lead\":12,\"dur\":42,\"a\":12},{\"t\":748,\"lead\":15,\"dur\":46,\"a\":15},{\"t\":802,\"lead\":15,\"dur\":46,\"a\":15},{\"t\":804,\"lead\":14,\"dur\":42,\"a\":14},{\"t\":811,\"lead\":15,\"dur\":46,\"a\":15},{\"t\":819,\"lead\":14,\"dur\":43,\"a\":14},{\"t\":850,\"lead\":3,\"dur\":40,\"a\":3},{\"t\":854,\"lead\":14,\"dur\":44,\"a\":14},{\"t\":863,\"lead\":14,\"dur\":43,\"a\":14},{\"t\":865,\"lead\":15,\"dur\":46,\"a\":15},{\"t\":874,\"lead\":14,\"dur\":42,\"a\":14},{\"t\":910,\"lead\":3,\"dur\":43,\"a\":3},{\"t\":918,\"lead\":14,\"dur\":42,\"a\":14},{\"t\":930,\"lead\":3,\"dur\":41,\"a\":3},{\"t\":930,\"lead\":15,\"dur\":44,\"a\":15},{\"t\":934,\"lead\":14,\"dur\":38,\"a\":14},{\"t\":973,\"lead\":12,\"dur\":47,\"a\":12},{\"t\":982,\"lead\":15,\"dur\":46,\"a\":15},{\"t\":988,\"lead\":14,\"dur\":38,\"a\":14},{\"t\":991,\"lead\":15,\"dur\":46,\"a\":15},{\"t\":995,\"lead\":14,\"dur\":41,\"a\":14},{\"t\":1030,\"lead\":3,\"dur\":40,\"a\":3},{\"t\":1044,\"lead\":14,\"dur\":42,\"a\":14},{\"t\":1045,\"lead\":15,\"dur\":46,\"a\":15},{\"t\":1047,\"lead\":14,\"dur\":47,\"a\":14},{\"t\":1050,\"lead\":3,\"dur\":38,\"a\":3},{\"t\":1090,\"lead\":3,\"dur\":43,\"a\":3},{\"t\":1093,\"lead\":12,\"dur\":45,\"a\":12},{\"t\":1107,\"lead\":14,\"dur\":39,\"a\":14},{\"t\":1108,\"lead\":15,\"dur\":46,\"a\":15},{\"t\":1109,\"lead\":14,\"dur\":39,\"a\":12},{\"t\":1154,\"lead\":14,\"dur\":48,\"a\":14},{\"t\":1162,\"lead\":15,\"dur\":46,\"a\":15},{\"t\":1171,\"lead\":15,\"dur\":46,\"a\":15},{\"t\":1176,\"lead\":14,\"dur\":40,\"a\":14},{\"t\":1177,\"lead\":14,\"dur\":46,\"a\":14},{\"t\":1180,\"lead\":15,\"dur\":46,\"a\":15},{\"t\":1180,\"lead\":15,\"dur\":45,\"a\":15},{\"t\":1216,\"lead\":15,\"dur\":46,\"a\":15},{\"t\":1225,\"lead\":15,\"dur\":46,\"a\":15},{\"t\":1227,\"lead\":14,\"dur\":39,\"a\":14},{\"t\":1229,\"lead\":14,\"dur\":47,\"a\":14},{\"t\":1234,\"lead\":15,\"dur\":46,\"a\":15}],\"at\":1795436212054},{\"mode\":\"metro\",\"kind\":\"Metro\",\"label\":\"Metro L2 (Trenitalia) + 2 changes\",\"operator\":\"\",\"from\":\"VITTORIO EMANUELE II -  FUNICOLARE MONTESANTO\",\"to\":\"MARINA - MERCATO\",\"ride\":22,\"wait\":18,\"every\":30,\"everySrc\":\"none\",\"everyN\":0,\"access\":{\"how\":\"walk\",\"min\":14,\"km\":1.05},\"egress\":{\"how\":\"walk\",\"min\":2,\"km\":0.15},\"min\":56,\"km\":6.2,\"stops\":2,\"hours\":\"\",\"fare\":\"\",\"steps\":[\"Bus C16 (Azienda Napoletana Mobilità): VITTORIO EMANUELE II -  FUNICOLARE MONTESANTO to VITTORIO EMANUELE II, 1 min\",\"Metro L2 (Trenitalia): MONTESANTO to PIAZZA GARIBALDI, 7 min\",\"Bus 302 (Azienda Napoletana Mobilità): GARIBALDI - UMBERTO I to MARINA - MERCATO, 3 min\"],\"deps\":[{\"t\":391,\"lead\":14,\"dur\":38}],\"checked\":\"2026-11-23\",\"path\":[[14.24111,40.84382],[14.2405,40.8443],[14.24127,40.84404],[14.24206,40.84469],[14.2423,40.84511],[14.24243,40.84521],[14.24233,40.84541],[14.24254,40.84542],[14.24268,40.84567],[14.24282,40.84555],[14.24307,40.84584],[14.24344,40.8457],[14.24357,40.84559],[14.24316,40.84596],[14.24237,40.84617],[14.24224,40.84626],[14.242,40.84655],[14.24203,40.84663],[14.24198,40.84679],[14.24114,40.84806],[14.2416,40.84969],[14.24167,40.84961],[14.24158,40.84937],[14.24168,40.84929],[14.24186,40.84915],[14.2421,40.84906],[14.24208,40.84873],[14.24168,40.84884],[14.24174,40.84878],[14.24226,40.84851],[14.24266,40.84842],[14.24307,40.84824],[14.24342,40.84817],[14.24396,40.84793],[14.24429,40.84785],[14.24432,40.84771],[14.24493,40.84947],[14.24948,40.853],[14.25504,40.85558],[14.26241,40.85503],[14.27254,40.85243],[14.27261,40.85282],[14.27213,40.85276],[14.27183,40.85255],[14.2716,40.85251],[14.27151,40.85253],[14.27114,40.85254],[14.27011,40.85248],[14.27004,40.85248],[14.27,40.85251],[14.26995,40.85253],[14.26988,40.85253],[14.26818,40.85237],[14.26813,40.85237],[14.26808,40.85246],[14.26902,40.84724],[14.26772,40.84624],[14.26774,40.84634],[14.26747,40.84632],[14.26739,40.84679]],\"fromPt\":[14.24124,40.843333],\"toPt\":[14.2676,40.8468],\"src\":\"Transitous timetables (Trenitalia)\",\"kindDeps\":[{\"t\":376,\"lead\":15,\"dur\":49,\"a\":15},{\"t\":379,\"lead\":14,\"dur\":43,\"a\":14},{\"t\":391,\"lead\":14,\"dur\":38,\"a\":14},{\"t\":400,\"lead\":14,\"dur\":36,\"a\":14},{\"t\":404,\"lead\":14,\"dur\":40,\"a\":14},{\"t\":407,\"lead\":15,\"dur\":45,\"a\":15},{\"t\":432,\"lead\":12,\"dur\":46,\"a\":12},{\"t\":442,\"lead\":15,\"dur\":46,\"a\":15},{\"t\":450,\"lead\":3,\"dur\":44,\"a\":3},{\"t\":451,\"lead\":15,\"dur\":46,\"a\":15},{\"t\":456,\"lead\":14,\"dur\":40,\"a\":14},{\"t\":490,\"lead\":3,\"dur\":40,\"a\":3},{\"t\":497,\"lead\":14,\"dur\":43,\"a\":14},{\"t\":505,\"lead\":15,\"dur\":46,\"a\":15},{\"t\":507,\"lead\":14,\"dur\":39,\"a\":14},{\"t\":508,\"lead\":12,\"dur\":44,\"a\":12},{\"t\":550,\"lead\":3,\"dur\":43,\"a\":3},{\"t\":556,\"lead\":14,\"dur\":42,\"a\":14},{\"t\":562,\"lead\":14,\"dur\":44,\"a\":14},{\"t\":570,\"lead\":15,\"dur\":44,\"a\":15},{\"t\":570,\"lead\":15,\"dur\":42,\"a\":15},{\"t\":616,\"lead\":14,\"dur\":38,\"a\":14},{\"t\":617,\"lead\":14,\"dur\":45,\"a\":14},{\"t\":618,\"lead\":12,\"dur\":44,\"a\":12},{\"t\":622,\"lead\":15,\"dur\":46,\"a\":15},{\"t\":631,\"lead\":14,\"dur\":41,\"a\":14},{\"t\":631,\"lead\":15,\"dur\":46,\"a\":15},{\"t\":670,\"lead\":3,\"dur\":40,\"a\":3},{\"t\":685,\"lead\":15,\"dur\":46,\"a\":15},{\"t\":686,\"lead\":14,\"dur\":40,\"a\":14},{\"t\":687,\"lead\":12,\"dur\":41,\"a\":12},{\"t\":694,\"lead\":14,\"dur\":42,\"a\":14},{\"t\":730,\"lead\":3,\"dur\":43,\"a\":3},{\"t\":730,\"lead\":3,\"dur\":42,\"a\":3},{\"t\":743,\"lead\":14,\"dur\":43,\"a\":14},{\"t\":744,\"lead\":12,\"dur\":42,\"a\":12},{\"t\":748,\"lead\":15,\"dur\":46,\"a\":15},{\"t\":802,\"lead\":15,\"dur\":46,\"a\":15},{\"t\":804,\"lead\":14,\"dur\":42,\"a\":14},{\"t\":811,\"lead\":15,\"dur\":46,\"a\":15},{\"t\":819,\"lead\":14,\"dur\":43,\"a\":14},{\"t\":850,\"lead\":3,\"dur\":40,\"a\":3},{\"t\":854,\"lead\":14,\"dur\":44,\"a\":14},{\"t\":863,\"lead\":14,\"dur\":43,\"a\":14},{\"t\":865,\"lead\":15,\"dur\":46,\"a\":15},{\"t\":874,\"lead\":14,\"dur\":42,\"a\":14},{\"t\":910,\"lead\":3,\"dur\":43,\"a\":3},{\"t\":918,\"lead\":14,\"dur\":42,\"a\":14},{\"t\":930,\"lead\":3,\"dur\":41,\"a\":3},{\"t\":930,\"lead\":15,\"dur\":44,\"a\":15},{\"t\":934,\"lead\":14,\"dur\":38,\"a\":14},{\"t\":973,\"lead\":12,\"dur\":47,\"a\":12},{\"t\":982,\"lead\":15,\"dur\":46,\"a\":15},{\"t\":988,\"lead\":14,\"dur\":38,\"a\":14},{\"t\":991,\"lead\":15,\"dur\":46,\"a\":15},{\"t\":995,\"lead\":14,\"dur\":41,\"a\":14},{\"t\":1030,\"lead\":3,\"dur\":40,\"a\":3},{\"t\":1044,\"lead\":14,\"dur\":42,\"a\":14},{\"t\":1045,\"lead\":15,\"dur\":46,\"a\":15},{\"t\":1047,\"lead\":14,\"dur\":47,\"a\":14},{\"t\":1050,\"lead\":3,\"dur\":38,\"a\":3},{\"t\":1090,\"lead\":3,\"dur\":43,\"a\":3},{\"t\":1093,\"lead\":12,\"dur\":45,\"a\":12},{\"t\":1107,\"lead\":14,\"dur\":39,\"a\":14},{\"t\":1108,\"lead\":15,\"dur\":46,\"a\":15},{\"t\":1109,\"lead\":14,\"dur\":39,\"a\":12},{\"t\":1154,\"lead\":14,\"dur\":48,\"a\":14},{\"t\":1162,\"lead\":15,\"dur\":46,\"a\":15},{\"t\":1171,\"lead\":15,\"dur\":46,\"a\":15},{\"t\":1176,\"lead\":14,\"dur\":40,\"a\":14},{\"t\":1177,\"lead\":14,\"dur\":46,\"a\":14},{\"t\":1180,\"lead\":15,\"dur\":46,\"a\":15},{\"t\":1180,\"lead\":15,\"dur\":45,\"a\":15},{\"t\":1216,\"lead\":15,\"dur\":46,\"a\":15},{\"t\":1225,\"lead\":15,\"dur\":46,\"a\":15},{\"t\":1227,\"lead\":14,\"dur\":39,\"a\":14},{\"t\":1229,\"lead\":14,\"dur\":47,\"a\":14},{\"t\":1234,\"lead\":15,\"dur\":46,\"a\":15}],\"at\":1795436212054},{\"mode\":\"bus\",\"kind\":\"Bus\",\"label\":\"Bus C56 (Azienda Napoletana Mobilità) + 2 changes\",\"operator\":\"\",\"from\":\"VITTORIO EMANUELE II\",\"to\":\"POERIO\",\"ride\":23,\"wait\":18,\"every\":30,\"everySrc\":\"none\",\"everyN\":0,\"access\":{\"how\":\"walk\",\"min\":12,\"km\":0.9},\"egress\":{\"how\":\"walk\",\"min\":11,\"km\":0.82},\"min\":64,\"km\":5.8,\"stops\":4,\"hours\":\"\",\"fare\":\"\",\"steps\":[\"Bus C16 (Azienda Napoletana Mobilità): VITTORIO EMANUELE II to VITTORIO EMANUELE II, 2 min\",\"Metro MET 21035 (TRENITALIA): NAPOLI MONTESANTO to PIAZZA CAVOUR, 3 min\",\"Bus C56 (Azienda Napoletana Mobilità): FORIA - M2 to POERIO, 6 min\"],\"deps\":[{\"t\":733,\"lead\":12,\"dur\":46}],\"checked\":\"2026-11-23\",\"path\":[[14.24111,40.84382],[14.24066,40.84424],[14.24118,40.84411],[14.2423,40.84478],[14.24228,40.84519],[14.24243,40.84525],[14.2424,40.84548],[14.24247,40.84563],[14.24281,40.84589],[14.24307,40.84584],[14.24347,40.84565],[14.2437,40.84538],[14.24374,40.8453],[14.24397,40.84434],[14.24417,40.84226],[14.2439,40.84154],[14.244,40.84179],[14.24443,40.84273],[14.24473,40.84337],[14.24485,40.84383],[14.24406,40.84423],[14.24412,40.84479],[14.24389,40.84526],[14.24381,40.8454],[14.24319,40.84605],[14.24229,40.84638],[14.24224,40.84648],[14.24235,40.84638],[14.24237,40.84652],[14.24251,40.84656],[14.24264,40.84659],[14.24285,40.84665],[14.24298,40.84668],[14.24316,40.84673],[14.24336,40.84678],[14.24349,40.84682],[14.24373,40.84688],[14.24388,40.84692],[14.24482,40.85007],[14.25519,40.85455],[14.25592,40.85497],[14.25611,40.85513],[14.25622,40.85539],[14.25878,40.85602],[14.26714,40.85282],[14.26721,40.85279],[14.26748,40.85218],[14.26751,40.85205],[14.26756,40.85173],[14.26732,40.85141],[14.26744,40.85124],[14.26707,40.85101],[14.26637,40.85058],[14.26648,40.85033],[14.26683,40.84949],[14.26718,40.84877],[14.26733,40.84841],[14.26743,40.84771],[14.26749,40.84727],[14.26739,40.84679]],\"fromPt\":[14.24124,40.843333],\"toPt\":[14.2676,40.8468],\"src\":\"Transitous timetables (Azienda Napoletana Mobilità)\",\"kindDeps\":[{\"t\":407,\"lead\":15,\"dur\":68,\"a\":15},{\"t\":449,\"lead\":15,\"dur\":86,\"a\":15},{\"t\":514,\"lead\":15,\"dur\":81,\"a\":15},{\"t\":574,\"lead\":15,\"dur\":81,\"a\":15},{\"t\":694,\"lead\":15,\"dur\":81,\"a\":15},{\"t\":733,\"lead\":12,\"dur\":46,\"a\":12},{\"t\":754,\"lead\":15,\"dur\":81,\"a\":15},{\"t\":804,\"lead\":12,\"dur\":48,\"a\":12},{\"t\":814,\"lead\":15,\"dur\":81,\"a\":15},{\"t\":874,\"lead\":15,\"dur\":81,\"a\":15},{\"t\":934,\"lead\":15,\"dur\":81,\"a\":15},{\"t\":994,\"lead\":15,\"dur\":81,\"a\":15},{\"t\":1054,\"lead\":15,\"dur\":101,\"a\":15},{\"t\":1112,\"lead\":14,\"dur\":49,\"a\":14},{\"t\":1234,\"lead\":15,\"dur\":81,\"a\":15}],\"at\":1795436212054}]},\"40.854,14.251,40.838,14.255|wk\":{\"t\":1795436212054,\"v\":9,\"partial\":true,\"opts\":[]},\"41.353,2.170,41.387,2.170|wk\":{\"t\":1795436210659,\"v\":9,\"partial\":true,\"opts\":[]}}",
+  "kairoute.lobbySeen": "1",
+  "kairoute.bible1": "1",
+  "wayside.library": "[{\"id\":\"t1795436215375\",\"name\":\"Key West, 2 nights\",\"updated\":1795436492796,\"trip\":{\"id\":\"t1795436215375\",\"name\":\"Key West, 2 nights\",\"active\":1,\"sourceText\":\"\",\"portCheck\":null,\"style\":\"mix\",\"prefs\":{\"pace\":\"moderate\",\"walk\":\"medium\",\"interests\":[],\"travelers\":\"\",\"access\":\"none\",\"party\":2,\"lang\":\"English\",\"voice\":\"buttery\"},\"lodging\":{\"key west florida\":{\"idx\":\"custom\",\"name\":\"\",\"ll\":null}},\"days\":[{\"id\":\"d54\",\"date\":\"2027-06-16\",\"destination\":\"Key West, Florida\",\"type\":\"arrival\",\"mode\":\"flight\",\"time\":\"07:00\",\"pointIdx\":0,\"portArrive\":\"08:00\",\"allAboard\":\"17:00\",\"tender\":false,\"startTime\":\"09:00\",\"hours\":6,\"alongWay\":true,\"returnToStart\":true,\"event\":\"\",\"selected\":null,\"cityKey\":null,\"estimated\":false},{\"id\":\"d55\",\"date\":\"2027-06-17\",\"destination\":\"Key West, Florida\",\"type\":\"land\",\"mode\":\"flight\",\"time\":\"\",\"pointIdx\":0,\"portArrive\":\"08:00\",\"allAboard\":\"17:00\",\"tender\":false,\"startTime\":\"09:00\",\"hours\":8,\"alongWay\":true,\"returnToStart\":true,\"event\":\"\",\"selected\":null,\"cityKey\":null,\"fillTime\":true},{\"id\":\"d56\",\"date\":\"2027-06-18\",\"destination\":\"Key West, Florida\",\"type\":\"departure\",\"mode\":\"flight\",\"time\":\"13:15\",\"pointIdx\":0,\"portArrive\":\"08:00\",\"allAboard\":\"17:00\",\"tender\":false,\"startTime\":\"09:00\",\"hours\":8,\"alongWay\":true,\"returnToStart\":true,\"event\":\"\",\"selected\":null,\"cityKey\":null,\"estimated\":false}],\"sample\":false,\"madeBy\":\"steps\",\"prefsSeen\":\"|0|\"}},{\"id\":\"sample-sunprincess-2027\",\"name\":\"Athens, Sun Princess cruise, Barcelona & Madrid\",\"updated\":1795436214192,\"trip\":{\"id\":\"sample-sunprincess-2027\",\"name\":\"Athens, Sun Princess cruise, Barcelona & Madrid\",\"active\":15,\"style\":\"mix\",\"prefs\":{\"pace\":\"moderate\",\"walk\":\"medium\",\"interests\":[\"bible\",\"churches\"],\"travelers\":\"\",\"access\":\"none\",\"party\":2,\"lang\":\"English\",\"voice\":\"buttery\"},\"lodging\":{\"barcelona\":{\"idx\":0}},\"days\":[{\"id\":\"d23\",\"date\":\"2027-06-30\",\"destination\":\"Athens\",\"type\":\"arrival\",\"mode\":\"flight\",\"time\":\"10:30\",\"pointIdx\":0,\"portArrive\":\"08:00\",\"allAboard\":\"17:00\",\"tender\":false,\"startTime\":\"09:00\",\"hours\":6,\"alongWay\":true,\"returnToStart\":true,\"event\":\"\",\"selected\":[\"metropolis\",\"kapnikarea\",\"monastiraki\",\"plaka\",\"agia-ekaterini\"],\"cityKey\":null,\"seedSig\":\"agia-ekaterini|kapnikarea|metropolis|monastiraki|plaka\",\"autoEmpty\":false},{\"id\":\"d24\",\"date\":\"2027-07-01\",\"destination\":\"Athens\",\"type\":\"land\",\"mode\":\"flight\",\"time\":\"\",\"pointIdx\":0,\"portArrive\":\"08:00\",\"allAboard\":\"17:00\",\"tender\":false,\"startTime\":\"09:00\",\"hours\":8,\"alongWay\":true,\"returnToStart\":true,\"event\":\"\",\"selected\":[\"src-q242741\",\"acropolis\",\"src-q384813\",\"agora\"],\"cityKey\":null,\"seedSig\":\"acropolis|agora|src-q242741|src-q384813\",\"autoEmpty\":false},{\"id\":\"d25\",\"date\":\"2027-07-02\",\"destination\":\"Athens\",\"type\":\"land\",\"mode\":\"flight\",\"time\":\"\",\"pointIdx\":0,\"portArrive\":\"08:00\",\"allAboard\":\"17:00\",\"tender\":false,\"startTime\":\"09:00\",\"hours\":8,\"alongWay\":true,\"returnToStart\":true,\"event\":\"\",\"selected\":[\"src-q1168003\"],\"cityKey\":null,\"seedSig\":\"src-q1168003\",\"autoEmpty\":false},{\"id\":\"d26\",\"date\":\"2027-07-03\",\"destination\":\"Athens\",\"type\":\"land\",\"mode\":\"flight\",\"time\":\"\",\"pointIdx\":0,\"portArrive\":\"08:00\",\"allAboard\":\"17:00\",\"tender\":false,\"startTime\":\"09:00\",\"hours\":8,\"alongWay\":true,\"returnToStart\":true,\"event\":\"\",\"selected\":[\"theatre-dionysus\",\"src-q208811\",\"src-q1160664\",\"byzantine-museum\",\"lycabettus\",\"syntagma\"],\"cityKey\":null,\"seedSig\":\"byzantine-museum|lycabettus|src-q1160664|src-q208811|syntagma|theatre-dionysus\",\"autoEmpty\":false},{\"id\":\"d27\",\"date\":\"2027-07-04\",\"destination\":\"Athens\",\"type\":\"embark\",\"mode\":\"flight\",\"time\":\"\",\"pointIdx\":0,\"portArrive\":\"08:00\",\"allAboard\":\"18:30\",\"tender\":false,\"startTime\":\"09:00\",\"hours\":8,\"alongWay\":true,\"returnToStart\":true,\"event\":\"\",\"selected\":[\"roman-agora\",\"src-q844930\",\"promenade\",\"acromuseum\",\"olympieion\",\"national-garden\"],\"cityKey\":\"athens piraeus\",\"destOrig\":\"Athens (Piraeus)\",\"seedSig\":\"acromuseum|national-garden|olympieion|promenade|roman-agora|src-q844930\",\"autoEmpty\":false},{\"id\":\"d28\",\"date\":\"2027-07-05\",\"destination\":\"Heraklion\",\"type\":\"port\",\"mode\":\"flight\",\"time\":\"\",\"pointIdx\":0,\"portArrive\":\"07:00\",\"allAboard\":\"16:30\",\"tender\":false,\"startTime\":\"09:00\",\"hours\":8,\"alongWay\":true,\"returnToStart\":true,\"event\":\"\",\"selected\":[\"knossos\",\"minas\",\"market\",\"lions\",\"titus\",\"heramuseum\",\"koules\"],\"cityKey\":\"heraklion crete\",\"destOrig\":\"Heraklion, Crete\",\"seedSig\":\"heramuseum|knossos|koules|lions|market|minas|titus\",\"autoEmpty\":false},{\"id\":\"d29\",\"date\":\"2027-07-06\",\"destination\":\"Kusadasi\",\"type\":\"port\",\"mode\":\"flight\",\"time\":\"\",\"pointIdx\":0,\"portArrive\":\"09:00\",\"allAboard\":\"18:30\",\"tender\":false,\"startTime\":\"09:00\",\"hours\":8,\"alongWay\":true,\"returnToStart\":true,\"event\":\"\",\"selected\":[\"stjohn\",\"artemis\",\"ephesus\",\"marydouse\",\"pigeon\"],\"cityKey\":\"kusadasi ephesus\",\"destOrig\":\"Kusadasi (Ephesus)\",\"seedSig\":\"artemis|ephesus|marydouse|pigeon|stjohn\",\"autoEmpty\":false},{\"id\":\"d30\",\"date\":\"2027-07-07\",\"destination\":\"Santorini\",\"type\":\"port\",\"mode\":\"flight\",\"time\":\"\",\"pointIdx\":0,\"portArrive\":\"07:00\",\"allAboard\":\"20:30\",\"tender\":true,\"startTime\":\"09:00\",\"hours\":8,\"alongWay\":true,\"returnToStart\":true,\"event\":\"\",\"selected\":[\"fira\",\"prehistmus\",\"oia\",\"akrotiri\",\"pyrgos\"],\"cityKey\":null,\"seedSig\":\"akrotiri|fira|oia|prehistmus|pyrgos\",\"autoEmpty\":false},{\"id\":\"d31\",\"date\":\"2027-07-08\",\"destination\":\"Mykonos\",\"type\":\"port\",\"mode\":\"flight\",\"time\":\"\",\"pointIdx\":0,\"portArrive\":\"08:00\",\"allAboard\":\"20:30\",\"tender\":false,\"startTime\":\"09:00\",\"hours\":8,\"alongWay\":true,\"returnToStart\":true,\"event\":\"\",\"selected\":[\"wv~Q4785417\",\"wv~Q108611526\",\"chora\",\"paraportiani\",\"windmills\"],\"cityKey\":null,\"seedSig\":\"chora|paraportiani|windmills|wv~Q108611526|wv~Q4785417\",\"autoEmpty\":false},{\"id\":\"d32\",\"date\":\"2027-07-09\",\"destination\":\"Chania\",\"type\":\"port\",\"mode\":\"flight\",\"time\":\"\",\"pointIdx\":0,\"portArrive\":\"08:00\",\"allAboard\":\"17:30\",\"tender\":false,\"startTime\":\"09:00\",\"hours\":8,\"alongWay\":true,\"returnToStart\":true,\"event\":\"\",\"selected\":[\"nikolaos\",\"agora-ch\",\"oldtown\",\"firkas\",\"harbor\",\"wv~etz-hayyim-synagogue\"],\"cityKey\":\"chania crete\",\"destOrig\":\"Chania, Crete\",\"seedSig\":\"agora-ch|firkas|harbor|nikolaos|oldtown|wv~etz-hayyim-synagogue\",\"pickNames\":{\"wv~etz-hayyim-synagogue\":\"Etz Hayyim Synagogue\"}},{\"id\":\"d33\",\"date\":\"2027-07-10\",\"destination\":\"At sea\",\"type\":\"sea\",\"mode\":\"flight\",\"time\":\"\",\"pointIdx\":0,\"portArrive\":\"08:00\",\"allAboard\":\"17:00\",\"tender\":false,\"startTime\":\"09:00\",\"hours\":8,\"alongWay\":true,\"returnToStart\":true,\"event\":\"\",\"selected\":null,\"cityKey\":null},{\"id\":\"d34\",\"date\":\"2027-07-11\",\"destination\":\"Messina\",\"type\":\"port\",\"mode\":\"flight\",\"time\":\"\",\"pointIdx\":0,\"portArrive\":\"08:00\",\"allAboard\":\"17:30\",\"tender\":false,\"startTime\":\"09:00\",\"hours\":8,\"alongWay\":true,\"returnToStart\":true,\"event\":\"\",\"selected\":[\"wv~Q28669610\",\"wv~Q3949829\",\"duomo-me\",\"annunziata\",\"wv~Q3673236\",\"museo-me\"],\"cityKey\":\"messina sicily\",\"destOrig\":\"Messina, Sicily\",\"seedSig\":\"annunziata|duomo-me|museo-me|wv~Q28669610|wv~Q3673236|wv~Q3949829\",\"autoEmpty\":false},{\"id\":\"d35\",\"date\":\"2027-07-12\",\"destination\":\"Naples\",\"type\":\"port\",\"mode\":\"flight\",\"time\":\"\",\"pointIdx\":0,\"portArrive\":\"07:00\",\"allAboard\":\"18:30\",\"tender\":false,\"startTime\":\"09:00\",\"hours\":8,\"alongWay\":true,\"returnToStart\":true,\"event\":\"\",\"selected\":[\"wv~castel-nuovo\",\"plebiscito\",\"src-q832957\",\"duomo-na\",\"spaccanapoli\",\"sansevero\",\"museonaz\"],\"cityKey\":null,\"seedSig\":\"duomo-na|museonaz|plebiscito|sansevero|spaccanapoli|src-q832957|wv~castel-nuovo\",\"pickNames\":{\"wv~castel-nuovo\":\"Castel Nuovo\"},\"autoEmpty\":false},{\"id\":\"d36\",\"date\":\"2027-07-13\",\"destination\":\"Rome\",\"type\":\"port\",\"mode\":\"flight\",\"time\":\"\",\"pointIdx\":0,\"portArrive\":\"07:00\",\"allAboard\":\"20:30\",\"tender\":false,\"startTime\":\"09:00\",\"hours\":8,\"alongWay\":true,\"returnToStart\":true,\"event\":\"\",\"selected\":[\"colosseum\",\"trevi\",\"wv~Q83425\",\"vatican\",\"src-q2943\",\"wv~Q182955\",\"navona\",\"pantheon\"],\"cityKey\":\"civitavecchia rome\",\"destOrig\":\"Civitavecchia (Rome)\",\"seedSig\":\"colosseum|navona|pantheon|src-q2943|trevi|vatican|wv~Q182955|wv~Q83425\",\"autoEmpty\":false},{\"id\":\"d37\",\"date\":\"2027-07-14\",\"destination\":\"At sea\",\"type\":\"sea\",\"mode\":\"flight\",\"time\":\"\",\"pointIdx\":0,\"portArrive\":\"08:00\",\"allAboard\":\"17:00\",\"tender\":false,\"startTime\":\"09:00\",\"hours\":8,\"alongWay\":true,\"returnToStart\":true,\"event\":\"\",\"selected\":null,\"cityKey\":null},{\"id\":\"d38\",\"date\":\"2027-07-15\",\"destination\":\"Barcelona\",\"type\":\"arrival\",\"mode\":\"ship\",\"time\":\"07:00\",\"pointIdx\":0,\"portArrive\":\"08:00\",\"allAboard\":\"17:00\",\"tender\":false,\"startTime\":\"09:00\",\"hours\":9,\"alongWay\":true,\"returnToStart\":true,\"event\":\"\",\"selected\":[\"gothic\",\"rambla\",\"smdm\",\"picasso\",\"born\"],\"cityKey\":\"barcelona\"},{\"id\":\"d39\",\"date\":\"2027-07-16\",\"destination\":\"Barcelona\",\"type\":\"land\",\"mode\":\"flight\",\"time\":\"\",\"pointIdx\":0,\"portArrive\":\"08:00\",\"allAboard\":\"17:00\",\"tender\":false,\"startTime\":\"09:00\",\"hours\":8,\"alongWay\":true,\"returnToStart\":true,\"event\":\"\",\"selected\":[\"sagrada\",\"santpau\",\"batllo\",\"pedrera\",\"gracia\"],\"cityKey\":\"barcelona\"},{\"id\":\"d40\",\"date\":\"2027-07-17\",\"destination\":\"Barcelona\",\"type\":\"land\",\"mode\":\"flight\",\"time\":\"\",\"pointIdx\":0,\"portArrive\":\"08:00\",\"allAboard\":\"17:00\",\"tender\":false,\"startTime\":\"09:30\",\"hours\":7,\"alongWay\":true,\"returnToStart\":true,\"event\":\"\",\"selected\":[\"montserrat\"],\"cityKey\":\"barcelona\"},{\"id\":\"d41\",\"date\":\"2027-07-18\",\"destination\":\"Barcelona\",\"type\":\"departure\",\"mode\":\"train\",\"time\":\"13:00\",\"pointIdx\":0,\"portArrive\":\"08:00\",\"allAboard\":\"17:00\",\"tender\":false,\"startTime\":\"09:00\",\"hours\":8,\"alongWay\":true,\"returnToStart\":true,\"event\":\"\",\"selected\":[\"parkguell\"],\"cityKey\":\"barcelona\",\"pointPicked\":true},{\"id\":\"d42\",\"date\":\"2027-07-18\",\"destination\":\"Madrid\",\"type\":\"arrival\",\"mode\":\"train\",\"time\":\"15:45\",\"pointIdx\":0,\"portArrive\":\"08:00\",\"allAboard\":\"17:00\",\"tender\":false,\"startTime\":\"09:00\",\"hours\":5,\"alongWay\":true,\"returnToStart\":true,\"event\":\"\",\"selected\":[\"src-q1326261\",\"palacio\",\"almudena\",\"mayor\"],\"cityKey\":null,\"pointPicked\":true,\"seedSig\":\"almudena|mayor|palacio|src-q1326261\",\"autoEmpty\":false},{\"id\":\"d43\",\"date\":\"2027-07-19\",\"destination\":\"Madrid\",\"type\":\"land\",\"mode\":\"flight\",\"time\":\"\",\"pointIdx\":0,\"portArrive\":\"08:00\",\"allAboard\":\"17:00\",\"tender\":false,\"startTime\":\"09:00\",\"hours\":8,\"alongWay\":true,\"returnToStart\":true,\"event\":\"\",\"selected\":[\"toledo-far\",\"toledo-far~Q1324080\",\"toledo-far~Q1123180\",\"toledo-far~Q1289106\",\"toledo-far~Q1568115\",\"toledo-far~Q1811506\"],\"cityKey\":null,\"seedSig\":\"toledo-far|toledo-far~Q1123180|toledo-far~Q1289106|toledo-far~Q1324080|toledo-far~Q1568115|toledo-far~Q1811506\",\"autoEmpty\":false},{\"id\":\"d44\",\"date\":\"2027-07-20\",\"destination\":\"Madrid\",\"type\":\"departure\",\"mode\":\"flight\",\"time\":\"16:00\",\"pointIdx\":0,\"portArrive\":\"08:00\",\"allAboard\":\"17:00\",\"tender\":false,\"startTime\":\"09:00\",\"hours\":8,\"alongWay\":true,\"returnToStart\":true,\"event\":\"\",\"selected\":[\"src-q1537446\"],\"cityKey\":null,\"pointPicked\":true,\"seedSig\":\"src-q1537446\",\"autoEmpty\":false}],\"sample\":true,\"datesChecked\":1,\"prefsSeen\":\"bible,churches|0|\"}}]",
+  "kairoute.sunprincess1": "1",
+  "kairoute.spread1": "1",
+  "wayside.trip2": "{\"id\":\"t1795436215375\",\"name\":\"Key West, 2 nights\",\"active\":1,\"sourceText\":\"\",\"portCheck\":null,\"style\":\"mix\",\"prefs\":{\"pace\":\"moderate\",\"walk\":\"medium\",\"interests\":[],\"travelers\":\"\",\"access\":\"none\",\"party\":2,\"lang\":\"English\",\"voice\":\"buttery\"},\"lodging\":{\"key west florida\":{\"idx\":\"custom\",\"name\":\"\",\"ll\":null}},\"days\":[{\"id\":\"d54\",\"date\":\"2027-06-16\",\"destination\":\"Key West, Florida\",\"type\":\"arrival\",\"mode\":\"flight\",\"time\":\"07:00\",\"pointIdx\":0,\"portArrive\":\"08:00\",\"allAboard\":\"17:00\",\"tender\":false,\"startTime\":\"09:00\",\"hours\":6,\"alongWay\":true,\"returnToStart\":true,\"event\":\"\",\"selected\":null,\"cityKey\":null,\"estimated\":false},{\"id\":\"d55\",\"date\":\"2027-06-17\",\"destination\":\"Key West, Florida\",\"type\":\"land\",\"mode\":\"flight\",\"time\":\"\",\"pointIdx\":0,\"portArrive\":\"08:00\",\"allAboard\":\"17:00\",\"tender\":false,\"startTime\":\"09:00\",\"hours\":8,\"alongWay\":true,\"returnToStart\":true,\"event\":\"\",\"selected\":null,\"cityKey\":null,\"fillTime\":true},{\"id\":\"d56\",\"date\":\"2027-06-18\",\"destination\":\"Key West, Florida\",\"type\":\"departure\",\"mode\":\"flight\",\"time\":\"13:15\",\"pointIdx\":0,\"portArrive\":\"08:00\",\"allAboard\":\"17:00\",\"tender\":false,\"startTime\":\"09:00\",\"hours\":8,\"alongWay\":true,\"returnToStart\":true,\"event\":\"\",\"selected\":null,\"cityKey\":null,\"estimated\":false}],\"sample\":false,\"madeBy\":\"steps\",\"prefsSeen\":\"|0|\"}",
+  "kairoute.devid2": "0w119bn5",
+  "wayside.cities": "{}"
+ },
+ "finished": "2026-11-23T12:22:14.000Z"
+}
