@@ -122,7 +122,9 @@
       return land.every(p => E.hav(p, r) > bd) ? best : null; };
     const isleFacts = r => { const s = isleOf(r); return !s ? {} : Object.assign({ travelNote: r.travelNote || s.travelNote || "", onIsle: s.id }, s.wish && !s.guideWish ? { insideWish: true } : {}, s.acrossWater ? { acrossWater: s.acrossWater } : {}, E.waterOnly(s) ? { access: s.access } : {}); };
     const mealAt = (e, len, extra) => Object.assign({ id: "eat:" + e.k, eatKey: e.k, name: e.r.name, lat: e.r.lat, lng: e.r.lng, mealOf: L, len, quick: len < L.len, toGo: len === E.TO_GO, chosen: !!my.pick, fromMap: !!e.r.fromMap, packed: !!e.r.packed, travelNote: e.r.travelNote || "",
-      oh: len === E.TO_GO ? null : ((ctx.eatFacts || {})[e.k] || {}).oh || null }, isleFacts(e.r), extra || {});
+      // A lunch to go is still bought at that place, so it waits for it to open too (Nov 23 audit: a lunch to go at 11:56
+      // at a place that opens at noon).
+      oh: ((ctx.eatFacts || {})[e.k] || {}).oh || null }, isleFacts(e.r), extra || {});
     // On time first (Nov 22 lunch audit: lunch at 2:40 to 3:30 pm back in town after a day out, while the town out there had
     // places to eat, or a lunch brought along would have been at 1 pm): a lunch that starts by the kitchen's last orders, at a
     // place to eat or one the traveler brings, beats any later one. Only when none is on time does a late lunch (up to an hour

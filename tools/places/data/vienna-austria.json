@@ -4755,5 +4755,11669 @@
    },
    "osm": "way/717930734"
   }
+ ],
+ "eatHours": [
+  [
+   "Pizza Bizi",
+   48.20965,
+   16.37368,
+   "Mo-Su,PH 11:00-24:00",
+   "restaurant"
+  ],
+  [
+   "Korb",
+   48.21005,
+   16.37072,
+   "Mo-Sa 08:00-24:00; PH 10:00-23:00; Su off",
+   "cafe"
+  ],
+  [
+   "MQ-Kantine",
+   48.20396,
+   16.35843,
+   "Su-Tu 09:00-24:00; Fr-Sa 09:00-02:00",
+   "restaurant"
+  ],
+  [
+   "Café Eiles",
+   48.2093,
+   16.35486,
+   "Mo-Fr 07:00-24:00; Sa,Su,PH 08:00-24:00",
+   "cafe"
+  ],
+  [
+   "Käuzchen",
+   48.20527,
+   16.35502,
+   "Mo-Sa 16:00-02:00, Su, PH 16:00-24:00",
+   "restaurant"
+  ],
+  [
+   "Cafe U1",
+   48.19472,
+   16.37026,
+   "Tu-Fr 17:30-24:00",
+   "cafe"
+  ],
+  [
+   "Wiener Wiaz'haus",
+   48.19665,
+   16.36941,
+   "Mo-Fr 17:00-22:00; Sa,Su off \"Variable Öffnungszeiten an Feiertagen\"",
+   "restaurant"
+  ],
+  [
+   "TU Wien Mensa Freihaus",
+   48.19894,
+   16.36748,
+   "Mo-Fr 08:00-14:00",
+   "restaurant"
+  ],
+  [
+   "McDonald's",
+   48.21335,
+   16.36203,
+   "Mo-Th 06:00-01:30; Fr 06:00-05:00; Sa 07:00-05:00; Su,PH 07:00-01:30",
+   "fast_food"
+  ],
+  [
+   "Sing Your Song Karaoke",
+   48.20258,
+   16.36382,
+   "Mo-Th 20:00-02:00; Fr-Sa 20:00-04:00",
+   "pub"
+  ],
+  [
+   "Restaurant SURA",
+   48.20704,
+   16.37439,
+   "Mo-Su 11:30-23:00",
+   "restaurant"
+  ],
+  [
+   "Cheng Chinese Cuisine",
+   48.20719,
+   16.37416,
+   "Mo-Fr 11:30-21:00",
+   "restaurant"
+  ],
+  [
+   "McDonald's",
+   48.20772,
+   16.37212,
+   "Su-Th,PH 07:00-02:00, Fr,Sa 07:00-04:00",
+   "fast_food"
+  ],
+  [
+   "Akakiko",
+   48.20767,
+   16.37234,
+   "Mo-Su 11:00-22:30",
+   "fast_food"
+  ],
+  [
+   "Aida",
+   48.20801,
+   16.37202,
+   "Mo-Su 08:00-23:00",
+   "cafe"
+  ],
+  [
+   "Cafè Schrödinger",
+   48.1985,
+   16.36736,
+   "Mo-Fr 09:00-16:00; PH off",
+   "restaurant"
+  ],
+  [
+   "Pelmen Cafe",
+   48.18988,
+   16.32075,
+   "Mo-Sa 10:00-20:00; Su 12:00-20:00",
+   "cafe"
+  ],
+  [
+   "Carl Ludwig Cafe",
+   48.19548,
+   16.36938,
+   "Mo-Fr 07:30-19:00; Sa 10:00-17:00; Su,PH off",
+   "cafe"
+  ],
+  [
+   "Gösser Bierklinik",
+   48.21052,
+   16.3696,
+   "Mo-Su 12:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Pointers",
+   48.1989,
+   16.36866,
+   "Mo-Fr 12:00-01:00, Sa 15:00-01:00; Su,PH off",
+   "restaurant"
+  ],
+  [
+   "Centimeter I",
+   48.21053,
+   16.35396,
+   "Mo-Su 10:00-24:00",
+   "restaurant"
+  ],
+  [
+   "Schikaneder",
+   48.19661,
+   16.36513,
+   "Mo-We 17:00-01:00, Fr,Sa 17:00-04:00, Th 17:00-02:00, Su 17:00-24:00",
+   "bar"
+  ],
+  [
+   "Four Bells",
+   48.19658,
+   16.36681,
+   "Mo-Su 16:00-24:00",
+   "pub"
+  ],
+  [
+   "Gasthaus Hansy",
+   48.218,
+   16.39008,
+   "11:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Café Sperl",
+   48.19984,
+   16.36117,
+   "Mo-Sa 07:00-22:00; Su 10:00-20:00",
+   "cafe"
+  ],
+  [
+   "Café Bendl",
+   48.20968,
+   16.35549,
+   "Mo-Tu 19:00-02:00,Fr-Sa 19:00-04:00,Su off",
+   "cafe"
+  ],
+  [
+   "Café Central",
+   48.21037,
+   16.36539,
+   "Mo-Sa 08:00-21:00; PH,Su 10:00-21:00",
+   "cafe"
+  ],
+  [
+   "Billardcafe Köö",
+   48.21263,
+   16.37374,
+   "Mo-Th 10:00-02:00; Fr-Sa 10:00-04:00; Su,PH 12:00-02:00",
+   "cafe"
+  ],
+  [
+   "Meierei im Stadtpark",
+   48.20446,
+   16.38128,
+   "Mo-Fr 08:00-23:00; Sa 09:00-19:00; PH,Su off",
+   "restaurant"
+  ],
+  [
+   "Toni's Café-Restaurant",
+   48.21309,
+   16.37262,
+   "Mo-Su 08:00-24:00",
+   "restaurant"
+  ],
+  [
+   "Fladerei Salzgries",
+   48.21323,
+   16.37114,
+   "Mo-Th 11:00-23:30; Fr 11:00-01:00; Sa 16:00-01:00; Su 16:00-21:00",
+   "restaurant"
+  ],
+  [
+   "Pickwicks",
+   48.2123,
+   16.37381,
+   "Mo-Th 11:00-24:00; Fr-Sa 11:00-02:00; Su 12:00-24:00",
+   "pub"
+  ],
+  [
+   "Subway",
+   48.20235,
+   16.36819,
+   "Mo-Fr 08:45-23:00; Sa 09:30-23:00; Su,PH 09:45-23:00",
+   "fast_food"
+  ],
+  [
+   "Pezis Cafe-Eck",
+   48.24809,
+   16.36208,
+   "Mo-Fr 09:00-22:00; Sa,Su,PH 09:00-22:00",
+   "cafe"
+  ],
+  [
+   "Opern Schnitzel",
+   48.19943,
+   16.36648,
+   "Mo-Fr 09:00-22:00; Sa,Su 09:00-21:00",
+   "fast_food"
+  ],
+  [
+   "Café Landtmann",
+   48.21156,
+   16.36145,
+   "Mo-Sa 07:30-20:00; Su 07:30-22:00",
+   "cafe"
+  ],
+  [
+   "Quick Yammy",
+   48.19898,
+   16.36807,
+   "Su-Fr 11:00-20:30, Sa off",
+   "restaurant"
+  ],
+  [
+   "Zur Gruab'n",
+   48.20773,
+   16.38794,
+   "Mo-Fr 10:00-23:30",
+   "restaurant"
+  ],
+  [
+   "Stadtwirt",
+   48.2072,
+   16.38766,
+   "Mo-Fr 11:00-24:00",
+   "restaurant"
+  ],
+  [
+   "Marco Polo",
+   48.20566,
+   16.38446,
+   "11:00-22:30",
+   "restaurant"
+  ],
+  [
+   "Cafe & Restaurant Ascot",
+   48.20614,
+   16.38598,
+   "Mo-Su 08:00-24:00",
+   "cafe"
+  ],
+  [
+   "Starbucks",
+   48.20588,
+   16.38582,
+   "Mo-Fr 06:00-21:00; Sa,Su 07:00-21:00",
+   "cafe"
+  ],
+  [
+   "Ma Creperie",
+   48.20731,
+   16.37508,
+   "Mo-Fr 17:00-23:30; Sa-Su 11:00-23:30",
+   "restaurant"
+  ],
+  [
+   "Kurkonditorei Oberlaa",
+   48.20673,
+   16.38325,
+   "Mo-Su,PH 08:00-19:00",
+   "cafe"
+  ],
+  [
+   "'s Stammbeisl",
+   48.20602,
+   16.38652,
+   "Mo-Fr 09:00-24:00",
+   "pub"
+  ],
+  [
+   "Eduscho / Tchibo",
+   48.20581,
+   16.386,
+   "Mo-Fr 08:30-18:30; Sa 09:00-17:00",
+   "cafe"
+  ],
+  [
+   "Duran",
+   48.20553,
+   16.38685,
+   "Mo-Fr 08:00-16:00; Sa,Su,PH off",
+   "restaurant"
+  ],
+  [
+   "Koffie",
+   48.20511,
+   16.38712,
+   "Mo-Fr 08:00-19:00; Sa 10:00-19:00",
+   "cafe"
+  ],
+  [
+   "Conditorei Sluka",
+   48.20945,
+   16.35769,
+   "Mo-Fr 08:00-19:00;Sa 08:00-17:30;Su 10:00-17:30",
+   "cafe"
+  ],
+  [
+   "phil",
+   48.20025,
+   16.36112,
+   "Mo 15:00-23:00; Tu-Th 09:00-23:00; Fr-Sa 09:00-00:00; Su 09:00-23:00",
+   "cafe"
+  ],
+  [
+   "Dick Mack's",
+   48.21242,
+   16.37345,
+   "Mo-Su 20:00-04:00",
+   "pub"
+  ],
+  [
+   "Vapiano",
+   48.20047,
+   16.35845,
+   "Mo-Sa 11:00-22:30; Su 12:00-22:30",
+   "restaurant"
+  ],
+  [
+   "Pizzeria Ischia",
+   48.1953,
+   16.36854,
+   "Mo-Sa 11:30-14:00,17:30-23:00",
+   "restaurant"
+  ],
+  [
+   "Bok",
+   48.19547,
+   16.36892,
+   "Mo 11:30-15:00; Tu-Fr 11:30-15:00,18:00-22:00",
+   "restaurant"
+  ],
+  [
+   "Artner",
+   48.19472,
+   16.36843,
+   "\"Derzeit sind sie noch immer auf Sommerpause, laut Beschilderung.\"",
+   "restaurant"
+  ],
+  [
+   "Buxbaum Restaurant",
+   48.20989,
+   16.37643,
+   "Mo-Sa 10:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Aida",
+   48.21744,
+   16.3902,
+   "Mo-Sa 08:00-19:00; Su,PH 09:00-18:00",
+   "cafe"
+  ],
+  [
+   "Johnny's Pub",
+   48.19701,
+   16.36539,
+   "Su,Mo 17:00-02:00, Tu-Sa 17:00-04:00",
+   "pub"
+  ],
+  [
+   "Molly Darcy's",
+   48.21178,
+   16.3633,
+   "Mo-Th 11:00-02:00; Fr-Sa 11:00-03:00; PH Su 14:00-01:00",
+   "pub"
+  ],
+  [
+   "Cafe Drechsler",
+   48.19847,
+   16.36242,
+   "Mo-Fr 08:00-16:00; Sa,Su 09:00-17:00",
+   "cafe"
+  ],
+  [
+   "Brandauers Schlossbräu",
+   48.18581,
+   16.30075,
+   "Mo-Su 10:00-00:00",
+   "restaurant"
+  ],
+  [
+   "Downstairs",
+   48.20009,
+   16.35906,
+   "Mo-Th 16:00-01:00, Fr,Sa 16:00-02:00, Su,PH 16:00-24:00",
+   "pub"
+  ],
+  [
+   "Cafe Mozart",
+   48.20424,
+   16.36941,
+   "Mo-Su 08:00-00:00",
+   "cafe"
+  ],
+  [
+   "Caffè Delia's",
+   48.21009,
+   16.37041,
+   "Mo-Sa 08:00-24:00, Su 10:00-24:00",
+   "cafe"
+  ],
+  [
+   "Kurkonditorei Oberlaa",
+   48.20672,
+   16.3707,
+   "Mo-Su 08:00-20:00",
+   "cafe"
+  ],
+  [
+   "Le Bol",
+   48.2065,
+   16.37062,
+   "Mo-Sa 08:00-18:00+; PH,Su 09:00-18:00+",
+   "restaurant"
+  ],
+  [
+   "Bếp Việt",
+   48.19623,
+   16.36773,
+   "Mo-Fr,Su,PH 10:30-22:30",
+   "restaurant"
+  ],
+  [
+   "Mani im Vierten",
+   48.19676,
+   16.36569,
+   "Mo-We 08:00-24:00, Th,Fr 08:00-02:00, Sa 09:00-02:00, Su 09:00-24:00",
+   "cafe"
+  ],
+  [
+   "Starbucks",
+   48.20079,
+   16.35854,
+   "Mo-Sa 07:30-22:00, Su 08:00-22:00",
+   "cafe"
+  ],
+  [
+   "Monami",
+   48.20034,
+   16.36014,
+   "Mo-Su 18:00-02:00",
+   "bar"
+  ],
+  [
+   "Ra'Mien",
+   48.20019,
+   16.3615,
+   "Tu-Su 11:00-24:00",
+   "restaurant"
+  ],
+  [
+   "Weimarck",
+   48.19844,
+   16.36397,
+   "Mo-Sa 11:30-24:00",
+   "cafe"
+  ],
+  [
+   "Café Anzengruber",
+   48.19778,
+   16.3645,
+   "Tu-Sa 16:00-01:00",
+   "restaurant"
+  ],
+  [
+   "Beim Czaak",
+   48.20983,
+   16.37876,
+   "Mo-Sa 17:00-22:00",
+   "restaurant"
+  ],
+  [
+   "Ostmeer",
+   48.19679,
+   16.37224,
+   "Tu-Fr 11:30-14:30, Sa,Su 12:00-22:00, Tu-Fr 17:00-22:00; Mo off",
+   "restaurant"
+  ],
+  [
+   "Schwarzberg",
+   48.19773,
+   16.37495,
+   "Mo-Sa 16:00-02:00; Su 16:00-00:00",
+   "bar"
+  ],
+  [
+   "Jonathan und Sieglinde",
+   48.20658,
+   16.376,
+   "Mo,Tu 09:00-15:00; We-Fr 09:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Ribelli",
+   48.20655,
+   16.35463,
+   "Mo-Su 12:00-24:00",
+   "restaurant"
+  ],
+  [
+   "Mei Wei",
+   48.20117,
+   16.36935,
+   "Su-Th 11:30-22:30; Fr-Sa 11:30-23:00",
+   "restaurant"
+  ],
+  [
+   "Kostas",
+   48.20134,
+   16.36783,
+   "Tu-Sa 11:30-22:30",
+   "restaurant"
+  ],
+  [
+   "Griechenbeisl",
+   48.21075,
+   16.37726,
+   "Mo-Su 12:00-23:00",
+   "restaurant"
+  ],
+  [
+   "McDonald's",
+   48.20118,
+   16.37405,
+   "Mo-Th 07:00-01:00, Fr,Sa 07:00-05:00, Su,PH 08:00-01:00",
+   "fast_food"
+  ],
+  [
+   "Falco's Vienna",
+   48.20056,
+   16.37546,
+   "Mo-Th 08:30-24:00; Fr-Sa 08:30-01:00; Su 08:30-24:00",
+   "restaurant"
+  ],
+  [
+   "Kaffee Alt Wien",
+   48.20917,
+   16.37612,
+   "Mo-Su, PH 09:00-02:00, Dec 24 off",
+   "cafe"
+  ],
+  [
+   "Zweitbester",
+   48.19534,
+   16.36308,
+   "Mo-Fr 11:00-24:00, Sa 10:00-24:00, Su 10:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Gugg",
+   48.19623,
+   16.36179,
+   "Tu,We,Fr 19:00-24:00, Th 17:30-22:00",
+   "cafe"
+  ],
+  [
+   "Schlawiener",
+   48.19649,
+   16.36212,
+   "Tu-Sa 17:00-23:00+",
+   "restaurant"
+  ],
+  [
+   "Crêpe & Waffles paradise",
+   48.20337,
+   16.3632,
+   "Mo-Su 12:00-19:00",
+   "cafe"
+  ],
+  [
+   "GO!Wien",
+   48.21139,
+   16.37457,
+   "Mo-Su 11:30-23:15",
+   "restaurant"
+  ],
+  [
+   "En Wok",
+   48.21036,
+   16.37768,
+   "Mo-Sa 11:00-21:00",
+   "restaurant"
+  ],
+  [
+   "Cafe Diglas im Schottenstift",
+   48.2127,
+   16.3639,
+   "Mo-Fr 08:30-22:00; Sa-Su 09:30-22:00",
+   "cafe"
+  ],
+  [
+   "McDonald's",
+   48.20086,
+   16.35747,
+   "Mo-Th 07:00-01:00, Fr,Sa 07:00-03:00, Su,PH 08:00-01:00",
+   "fast_food"
+  ],
+  [
+   "KIBŌ Ramen & Izakaya",
+   48.20445,
+   16.35584,
+   "Mo-Th 11:30-22:00; Fr-Sa 11:30-24:00",
+   "restaurant"
+  ],
+  [
+   "Zattl",
+   48.21233,
+   16.36414,
+   "11:00+",
+   "restaurant"
+  ],
+  [
+   "Fat Monk",
+   48.21288,
+   16.36316,
+   "Mo-Fr 11:00-20:00; Sa 11:00-18:00",
+   "restaurant"
+  ],
+  [
+   "Badeschiff Wien",
+   48.21178,
+   16.38161,
+   "Mo-Su 08:00-1:00",
+   "pub"
+  ],
+  [
+   "SMartCafé",
+   48.19856,
+   16.35888,
+   "Tu-Th 18:00-02:00; Fr, Sa 18:00-04:00",
+   "cafe"
+  ],
+  [
+   "Akakiko",
+   48.18562,
+   16.30142,
+   "Mo-Su,PH 10:30-23:30",
+   "restaurant"
+  ],
+  [
+   "Da Capo",
+   48.20783,
+   16.37634,
+   "Mo-Su 11:30-21:30",
+   "restaurant"
+  ],
+  [
+   "Pfudl",
+   48.20824,
+   16.37828,
+   "10:00-24:00",
+   "restaurant"
+  ],
+  [
+   "Café Engländer",
+   48.20804,
+   16.37864,
+   "Mo-Sa 08:00-01:00; Su,PH 10:00-01:00",
+   "cafe"
+  ],
+  [
+   "Curry Insel",
+   48.20966,
+   16.35465,
+   "Tu-Fr 17:00-24:00; Sa, Su 11:00-24:00",
+   "restaurant"
+  ],
+  [
+   "Dschungel Café",
+   48.20205,
+   16.36026,
+   "Tu-Sa 09:00-21:00, Su,Mo 09:00-20:00, Fr,Sa 09:00-22:00",
+   "cafe"
+  ],
+  [
+   "Frauenhuber",
+   48.20573,
+   16.37229,
+   "Mo-Sa 08:00-21:00; Su,PH 10:00-19:00",
+   "cafe"
+  ],
+  [
+   "Miznon",
+   48.20835,
+   16.37475,
+   "Tu-Sa 12:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Dogenhof",
+   48.21695,
+   16.38923,
+   "Mo-Sa 12:00-23:00",
+   "cafe"
+  ],
+  [
+   "Indien Village",
+   48.21352,
+   16.36588,
+   "Mo-Sa 11:30-14:30, 18:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Retsina",
+   48.21318,
+   16.37341,
+   "10:30-23:30",
+   "restaurant"
+  ],
+  [
+   "Saigon",
+   48.20068,
+   16.36458,
+   "Mo-Su 11:30-23:00",
+   "restaurant"
+  ],
+  [
+   "Schwarzenberg",
+   48.20185,
+   16.37392,
+   "Mo-Fr 07:30-24:00; Sa,Su 08:30-24:00",
+   "cafe"
+  ],
+  [
+   "In-Dish",
+   48.20235,
+   16.37364,
+   "Mo-Fr 11:00-14:30,17:00-22:00; Sa,Su 17:00-22:00",
+   "restaurant"
+  ],
+  [
+   "Kleines Cafe",
+   48.20658,
+   16.37436,
+   "Mo-Su 10:00-02:00",
+   "cafe"
+  ],
+  [
+   "Vapiano",
+   48.20949,
+   16.36636,
+   "Mo-We 11:00-22:30; Th-Sa 11:00-23:00; Su,PH 12:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Sang Sang",
+   48.18634,
+   16.30207,
+   "Tu-Sa 12:00-22:00; Su,PH 12:00-21:00",
+   "restaurant"
+  ],
+  [
+   "Aida",
+   48.20993,
+   16.36843,
+   "Mo-Su 08:00-20:00",
+   "cafe"
+  ],
+  [
+   "Zum Schwarzen Kameel",
+   48.20999,
+   16.36832,
+   "Tu-Sa 12:00-14:30,17:30-24:00",
+   "restaurant"
+  ],
+  [
+   "Suk Sushi",
+   48.19839,
+   16.36226,
+   "Mo-Sa 11:30-15:00,17:30-21:30",
+   "restaurant"
+  ],
+  [
+   "Ouzeri",
+   48.20014,
+   16.35967,
+   "Tu-Fr 16:00-23:00; Sa 12:00-23:00; PH off",
+   "restaurant"
+  ],
+  [
+   "Vienna Schick Bar",
+   48.1969,
+   16.3642,
+   "Tu-Sa 19:30-02:00",
+   "pub"
+  ],
+  [
+   "Beograd",
+   48.19713,
+   16.36383,
+   "Tu-Sa 10:00-24:00, Su 11:00-18:00",
+   "restaurant"
+  ],
+  [
+   "Lisboa Lounge",
+   48.19762,
+   16.3642,
+   "Mo-Sa 12:00-15:00,17:00-23:00; Su off",
+   "restaurant"
+  ],
+  [
+   "Nineofive",
+   48.19757,
+   16.36412,
+   "Mo,Th 17:00-23:00; Fr-Su 12:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Akakiko",
+   48.21105,
+   16.36656,
+   "Mo-Su,PH 10:30-23:00",
+   "restaurant"
+  ],
+  [
+   "Stadtcafé",
+   48.21119,
+   16.36583,
+   "Mo-Sa 08:00-24:00, Su,PH 09:00-22:00",
+   "cafe"
+  ],
+  [
+   "Wrenkh",
+   48.20985,
+   16.37262,
+   "Mo-Fr 11:00-23:00; Sa 12:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Funky Monkey",
+   48.21202,
+   16.37231,
+   "Th 20:00-02:00;Fr-Sa 20:00-04:00",
+   "bar"
+  ],
+  [
+   "Pho Ben Thanh",
+   48.20895,
+   16.35709,
+   "Tu-Fr 11:30-14:30,17:30-22:00; Sa,Su 12:00-22:00",
+   "restaurant"
+  ],
+  [
+   "Reinthaler's Beisl",
+   48.20803,
+   16.36998,
+   "Mo-Su 11:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Crossfield's",
+   48.20427,
+   16.36953,
+   "Mo-Th 10:00-01:00; Fr-Sa 10:00-02:00; Su 10:00-24:00",
+   "pub"
+  ],
+  [
+   "Café Bräunerhof",
+   48.2072,
+   16.36865,
+   "Mo-Fr 08:00-19:00; Sa 08:00-18:00; Su,PH 10:00-18:00",
+   "cafe"
+  ],
+  [
+   "St. Ribbs",
+   48.21149,
+   16.36878,
+   "closed",
+   "restaurant"
+  ],
+  [
+   "Neue Hoheit Brasserie",
+   48.20982,
+   16.3694,
+   "Mo-Su 07:00-11:00,12:00-22:30",
+   "restaurant"
+  ],
+  [
+   "Kolar",
+   48.21061,
+   16.36995,
+   "Mo-Th 11:00-24:00, Fr,Sa 11:00-01:00, Su,PH 13:00-24:00",
+   "restaurant"
+  ],
+  [
+   "Schachtelwirt",
+   48.21146,
+   16.37357,
+   "Mo-Sa 11:30-21:00; Su off",
+   "fast_food"
+  ],
+  [
+   "Salzbar",
+   48.21199,
+   16.37388,
+   "Th 18:00-01:00; Fr, Sa 21:00-04:00",
+   "pub"
+  ],
+  [
+   "Salzamt",
+   48.21208,
+   16.37406,
+   "Mo-Su 17:00-01:00",
+   "restaurant"
+  ],
+  [
+   "Chamäleon",
+   48.20776,
+   16.37436,
+   "Tu-Sa 11:00-22:00; Su 11:00-18:00",
+   "restaurant"
+  ],
+  [
+   "Heindls Schmarren & Palatschinkenkuchl",
+   48.21027,
+   16.376,
+   "10:00-24:00",
+   "restaurant"
+  ],
+  [
+   "Zapfmeisterei Bermuda Bräu",
+   48.21162,
+   16.37541,
+   "Mo-Th 15:00-24:00; Fr,Sa 15:00-01:00; Su,PH off",
+   "restaurant"
+  ],
+  [
+   "Krah, Krah",
+   48.21175,
+   16.37542,
+   "Mo-Su 11:00-02:00",
+   "restaurant"
+  ],
+  [
+   "Nordsee",
+   48.20979,
+   16.37389,
+   "Mo-Su,PH 09:00-23:00",
+   "fast_food"
+  ],
+  [
+   "Starbucks",
+   48.2114,
+   16.37603,
+   "Su-We 07:00-21:30; Th 07:00-22:30; Fr 08:30-22:30; Sa 08:30-21:30",
+   "cafe"
+  ],
+  [
+   "Café am Platz",
+   48.18598,
+   16.30107,
+   "Mo-Su,PH 08:00-19:00",
+   "cafe"
+  ],
+  [
+   "Aida",
+   48.18544,
+   16.30104,
+   "Mo-Fr 08:00-18:30, Sa 08:30-19:00, Su,PH 09:00-18:00",
+   "cafe"
+  ],
+  [
+   "Salon Wichtig",
+   48.19674,
+   16.36948,
+   "Mo-Fr 11:30-15:00",
+   "fast_food"
+  ],
+  [
+   "Alt-Wiener Gasthaus Buchecker und Sohn",
+   48.197,
+   16.37118,
+   "Mo-Sa 12:00-22:30",
+   "restaurant"
+  ],
+  [
+   "Grillhaus Hong Kong",
+   48.19891,
+   16.3589,
+   "Mo-We,Fr-Su 12:00-15:00,18:00-22:00; Th off",
+   "restaurant"
+  ],
+  [
+   "Kojiro 2",
+   48.19773,
+   16.36513,
+   "Mo-Sa 11:30-21:00",
+   "restaurant"
+  ],
+  [
+   "Kojiro 1",
+   48.19891,
+   16.36492,
+   "Mo-Fr 11:00-18:30; Sa 10:00-14:00",
+   "restaurant"
+  ],
+  [
+   "Chili Melody",
+   48.19724,
+   16.36554,
+   "Mo-Tu,Th-Fr 11:30-15:00,17:30-22:30; We off; Sa-Su,PH 11:30-22:30",
+   "restaurant"
+  ],
+  [
+   "Tofu und Chili",
+   48.19877,
+   16.36307,
+   "Mo-Sa 11:30-22:00",
+   "restaurant"
+  ],
+  [
+   "Café Savoy",
+   48.19762,
+   16.36011,
+   "Mo-Th 10:00-01:00, Fr 10:00-02:00, Sa 09:00-02:00, Su 10:00-01:00",
+   "cafe"
+  ],
+  [
+   "Zhong Xin",
+   48.19734,
+   16.35869,
+   "Fr-We 11:00-22:00",
+   "restaurant"
+  ],
+  [
+   "Anker",
+   48.21125,
+   16.37815,
+   "Mo-Fr 05:00-19:00; PH,Sa,Su 05:00-19:00",
+   "cafe"
+  ],
+  [
+   "Aida",
+   48.20248,
+   16.36768,
+   "Mo-Fr 07:00-21:00; Sa 08:00-21:00; Su,PH 08:00-21:00",
+   "cafe"
+  ],
+  [
+   "Bodega Marques",
+   48.21118,
+   16.36913,
+   "Mo-Sa 17:00-01:00; Su 17:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Riva Officina",
+   48.19599,
+   16.36798,
+   "Mo-Fr 12:00-14:30, 18:00-22:00; Sa 18:00-22:00, Su,PH off",
+   "restaurant"
+  ],
+  [
+   "Vollpension",
+   48.19766,
+   16.36503,
+   "Mo-Su 08:00-22:00",
+   "cafe"
+  ],
+  [
+   "Z'som",
+   48.19754,
+   16.37199,
+   "We-Su 18:00-23:00",
+   "restaurant"
+  ],
+  [
+   "La Mia",
+   48.20641,
+   16.35311,
+   "Mo-Su 11:00-24:00",
+   "restaurant"
+  ],
+  [
+   "Cafe Volkstheater",
+   48.20549,
+   16.35432,
+   "Mo-Th 09:00-20:00; Fr 09:00-15:00",
+   "cafe"
+  ],
+  [
+   "Genki Sushi",
+   48.24908,
+   16.36511,
+   "Mo-Su 11:00-22:00",
+   "fast_food"
+  ],
+  [
+   "Futterboden",
+   48.19369,
+   16.3132,
+   "Mo-Su 11:00-20:00",
+   "restaurant"
+  ],
+  [
+   "Neni",
+   48.1979,
+   16.36213,
+   "Mo-Sa 08:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Orang.erie",
+   48.18357,
+   16.30038,
+   "PH,Mo-Su 09:00-16:30",
+   "restaurant"
+  ],
+  [
+   "La Scala",
+   48.20272,
+   16.3639,
+   "Mo-Sa 11:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Cafe Diglas Wollzeile",
+   48.20865,
+   16.37527,
+   "Mo-Fr 08:00-22:30; Sa 09:00-22:30; PH off",
+   "cafe"
+  ],
+  [
+   "Batoni",
+   48.20537,
+   16.35609,
+   "Su-Th 12:00-23:00; Fr,Sa 12:00-24:00",
+   "restaurant"
+  ],
+  [
+   "Blue Orange",
+   48.197,
+   16.36577,
+   "Mo-Fr 07:30-18:00; Sa 08:00-18:00; Su,PH 09:00-18:00",
+   "cafe"
+  ],
+  [
+   "Rohrböck Gastwirtschaft",
+   48.19781,
+   16.36706,
+   "Mo-Th 16:15-23:00",
+   "restaurant"
+  ],
+  [
+   "Fledermaus",
+   48.20786,
+   16.37032,
+   "Tu off",
+   "bar"
+  ],
+  [
+   "KSV Wiengas",
+   48.18321,
+   16.42045,
+   "Mo-Sa 08:00-23:30; Su 09:00-17:00",
+   "restaurant"
+  ],
+  [
+   "Joyce",
+   48.21206,
+   16.36986,
+   "Mo-Fr 11:30-22:00; Sa,Su 12:00-22:00",
+   "restaurant"
+  ],
+  [
+   "Conditorei Sluka",
+   48.20678,
+   16.37174,
+   "Mo-Th 08:00-20:00; Fr 08:00-21:00; Sa 09:00-21:00; PH,Su 10:00-17:00",
+   "cafe"
+  ],
+  [
+   "Nordsee",
+   48.20601,
+   16.37157,
+   "Mo-Su 08:30-23:30",
+   "fast_food"
+  ],
+  [
+   "Gasthaus Pöschl",
+   48.20666,
+   16.37386,
+   "Mo-Sa 12:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Fresh Bowl",
+   48.20544,
+   16.38547,
+   "Mo-Fr 11:00-21:30, Sa-Su 12:00-21:30, PH unknown",
+   "fast_food"
+  ],
+  [
+   "Cafe Caramel",
+   48.20531,
+   16.3854,
+   "Mo-Fr 09:00-23:00; Su,PH off",
+   "cafe"
+  ],
+  [
+   "Uno-Duo-Tre",
+   48.20316,
+   16.38202,
+   "Mo-Th 08:00-22:00, Fr-Su 08:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Natürlich Wrenkh",
+   48.20598,
+   16.37231,
+   "Mo-Fr 11:00-17:00",
+   "restaurant"
+  ],
+  [
+   "Stadtheuriger Gigerl",
+   48.20644,
+   16.37313,
+   "Mo-Th 15:30-24:00; Fr-Sa 15:30-01:00; Su off",
+   "restaurant"
+  ],
+  [
+   "All Reis",
+   48.20621,
+   16.37324,
+   "Mo-Su 11:00-22:00",
+   "restaurant"
+  ],
+  [
+   "L. Heiner Hofzuckerbäcker",
+   48.20897,
+   16.37506,
+   "Mo-Sa 09:00-19:00; PH,Su 10:00-19:00",
+   "cafe"
+  ],
+  [
+   "Plachutta",
+   48.20755,
+   16.37876,
+   "Mo-Su 11:30-23:30",
+   "restaurant"
+  ],
+  [
+   "Lord of S",
+   48.20588,
+   16.37831,
+   "Mo-Su 11:00-02:00",
+   "restaurant"
+  ],
+  [
+   "Ristorante Al Borgo",
+   48.20671,
+   16.37742,
+   "Mo-Fr 11:30-15:00,18:00-24:00; Sa 18:00-24:00",
+   "restaurant"
+  ],
+  [
+   "Il Bosso",
+   48.20809,
+   16.37761,
+   "Mo-Sa 12:00-22:00; Su 12:00-18:00",
+   "cafe"
+  ],
+  [
+   "Cantinetta La Norma",
+   48.20681,
+   16.37459,
+   "Mo-Su 11:00-00:00",
+   "restaurant"
+  ],
+  [
+   "Pürstner",
+   48.20705,
+   16.37646,
+   "Mo-Su 10:00-24:00",
+   "restaurant"
+  ],
+  [
+   "XO Grill",
+   48.20774,
+   16.37736,
+   "Mo-Su,PH 12:00-22:00",
+   "fast_food"
+  ],
+  [
+   "Restaurant zu den 3 Hacken",
+   48.20624,
+   16.37586,
+   "Mo-Sa 11:30-23:00",
+   "restaurant"
+  ],
+  [
+   "Hillinger Wineshop & Bar",
+   48.20822,
+   16.37713,
+   "Tu-Sa 15:00-23:00",
+   "bar"
+  ],
+  [
+   "Aida",
+   48.20789,
+   16.37755,
+   "Mo-Fr 07:30-20:00; Sa 09:00-20:00; Su,PH 08:00-18:00",
+   "cafe"
+  ],
+  [
+   "Ristorante Firenze Enoteca",
+   48.20787,
+   16.37239,
+   "Mo-Su 12:00-22:00",
+   "restaurant"
+  ],
+  [
+   "Weibels Wirtshaus",
+   48.20768,
+   16.37597,
+   "Mo-Su 11:30-00:00",
+   "restaurant"
+  ],
+  [
+   "McDonald's",
+   48.20524,
+   16.37165,
+   "Mo-Th,Su 07:00-01:00; Fr-Sa 07:00-02:00",
+   "fast_food"
+  ],
+  [
+   "City Kebab",
+   48.20527,
+   16.37155,
+   "Mo-Th 09:00-24:00, Fr,Sa 09:00-06:00, Su 09:00-24:00",
+   "fast_food"
+  ],
+  [
+   "Cafe Porta",
+   48.20832,
+   16.37493,
+   "Mo-Sa 18:00-24:00",
+   "cafe"
+  ],
+  [
+   "Danieli",
+   48.20593,
+   16.37194,
+   "Mo-Su 11:00-24:00",
+   "restaurant"
+  ],
+  [
+   "Demel",
+   48.20861,
+   16.36721,
+   "Mo-Su 10:00-19:00",
+   "cafe"
+  ],
+  [
+   "Inigo",
+   48.20857,
+   16.37713,
+   "Mo-Fr 10:30-23:00",
+   "restaurant"
+  ],
+  [
+   "Failys",
+   48.21818,
+   16.40095,
+   "Mo-Sa 12:00-23:00, Su 14:00-23:00",
+   "bar"
+  ],
+  [
+   "Grill-Park",
+   48.21842,
+   16.40126,
+   "Tu-Su 11:00-22:00; Mo off",
+   "restaurant"
+  ],
+  [
+   "Gasthaus Möslinger",
+   48.21868,
+   16.39933,
+   "Mo-Tu off; Mi-Sa 12:00-23:00; Su,SH 12:00-22:00",
+   "restaurant"
+  ],
+  [
+   "Fein Essen",
+   48.19661,
+   16.36757,
+   "Mo-Fr 11:30-16:00; PH off",
+   "restaurant"
+  ],
+  [
+   "Cafe Tirolerhof",
+   48.20503,
+   16.36945,
+   "Mo-Fr 08:00-21:00; Su 09:30-20:00",
+   "cafe"
+  ],
+  [
+   "Da Contessa",
+   48.25173,
+   16.36419,
+   "Mo-Su 11:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Café Ministerium",
+   48.21015,
+   16.38196,
+   "Mo-Fr 07:00-20:00; PH off",
+   "cafe"
+  ],
+  [
+   "Subway",
+   48.21057,
+   16.37452,
+   "Su-Th 10:30-22:30; Fr,Sa 10:30-24:00",
+   "fast_food"
+  ],
+  [
+   "Alef-Alef",
+   48.2117,
+   16.37413,
+   "Mo-Th 17:00-22:00",
+   "restaurant"
+  ],
+  [
+   "Gutenberg",
+   48.20976,
+   16.37457,
+   "Mo-Su 11:00-01:00",
+   "restaurant"
+  ],
+  [
+   "Lindenkeller",
+   48.21035,
+   16.37466,
+   "Mo-Su 11:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Hinterholz",
+   48.21043,
+   16.37478,
+   "We-Sa 16:30-23:00",
+   "restaurant"
+  ],
+  [
+   "Fabios",
+   48.20997,
+   16.36981,
+   "Mo-Th 09:00-24:00; Fr,Sa 09:00-01:00; Su off",
+   "restaurant"
+  ],
+  [
+   "Kiss, the Cook tower",
+   48.2363,
+   16.41314,
+   "Mo-Th 07:30-16:00; Fr 07:30-14:15",
+   "restaurant"
+  ],
+  [
+   "Restaurant Bukowina",
+   48.20618,
+   16.37335,
+   "Tu-Su 12:00-22:00",
+   "restaurant"
+  ],
+  [
+   "flinte",
+   48.20719,
+   16.35269,
+   "Th-Fr 19:00-24:00",
+   "bar"
+  ],
+  [
+   "Gorilla Kitchen",
+   48.19728,
+   16.37201,
+   "Mo-Fr 07:00-24:00; Sa 09:00-24:00; Su 09:00-22:00",
+   "fast_food"
+  ],
+  [
+   "Kaffeefabrik",
+   48.19595,
+   16.36846,
+   "Mo-Fr 08:00-18:00; Sa 11:00-17:00",
+   "cafe"
+  ],
+  [
+   "Kaffeerösterei Alt Wien",
+   48.19817,
+   16.36404,
+   "Mo-Fr 10:00-18:00; Sa 10:00-16:00",
+   "cafe"
+  ],
+  [
+   "BioFrische",
+   48.1885,
+   16.38669,
+   "11:00-22:00",
+   "restaurant"
+  ],
+  [
+   "Výtopna",
+   48.19804,
+   16.36325,
+   "Mo-Tu off; We-Th 17:00-22:00; Fr 13:00-22:00; Sa-Su 11:00-22:00",
+   "pub"
+  ],
+  [
+   "Civediamo",
+   48.20807,
+   16.37889,
+   "Mo-Sa 16:00-23:00",
+   "bar"
+  ],
+  [
+   "Hidden Kitchen",
+   48.21228,
+   16.3689,
+   "Mo-Fr 11:00-15:00",
+   "restaurant"
+  ],
+  [
+   "Ella's",
+   48.21178,
+   16.36969,
+   "Mo-Sa 11:00-24:00",
+   "restaurant"
+  ],
+  [
+   "Duchardt",
+   48.20923,
+   16.37686,
+   "Mo-Fr 18:00-24:00, Tu-Fr 12:00-15:00",
+   "restaurant"
+  ],
+  [
+   "Stuwer Schottentor",
+   48.21358,
+   16.36548,
+   "Mo-Sa 17:30-23:00",
+   "restaurant"
+  ],
+  [
+   "Wein & Co",
+   48.2131,
+   16.36188,
+   "Mo-We 10:00-24:00; Th-Sa 10:00-01:00, Su 11:00-24:00; PH 11:00-24:00",
+   "bar"
+  ],
+  [
+   "Wein & Co",
+   48.20906,
+   16.37169,
+   "Mo-We 10:00-22:00, Th-Sa 10:00-24:00, Su,PH 11:00-20:00",
+   "restaurant"
+  ],
+  [
+   "Perrella",
+   48.20734,
+   16.37938,
+   "Mo-Su,PH 09:30-20:00",
+   "cafe"
+  ],
+  [
+   "Xpedit",
+   48.21061,
+   16.38137,
+   "Mo-Fr 11:30-24:00",
+   "restaurant"
+  ],
+  [
+   "Patara",
+   48.20912,
+   16.37015,
+   "Mo-Sa 12:00-15:00,17:30-23:00; Su,PH 17:30-22:00",
+   "restaurant"
+  ],
+  [
+   "Papas",
+   48.19774,
+   16.36203,
+   "Mo-Sa 07:00-23:00; Su,PH 10:00-21:00",
+   "pub"
+  ],
+  [
+   "Einstein",
+   48.21226,
+   16.35848,
+   "Mo-Su 08:00-24:00; Sa,Su 00:00-02:00",
+   "restaurant"
+  ],
+  [
+   "Falkensteiner Stüberl",
+   48.18916,
+   16.38877,
+   "Mo-Su,PH 10:00-22:00",
+   "restaurant"
+  ],
+  [
+   "Stadtbeis'l",
+   48.18945,
+   16.38919,
+   "Mo-Fr 09:00-23:00; Su 10:00-20:00",
+   "restaurant"
+  ],
+  [
+   "Achterl",
+   48.21287,
+   16.35869,
+   "Mo-Fr 11:30-24:00, Sa 18:00-24:00",
+   "restaurant"
+  ],
+  [
+   "Köstlich",
+   48.21215,
+   16.36886,
+   "Mo-Th 11:30-16:00;Fr 11:30-15:00",
+   "restaurant"
+  ],
+  [
+   "KYMA",
+   48.2122,
+   16.35659,
+   "closed",
+   "restaurant"
+  ],
+  [
+   "Gastwirtschaft Blauensteiner",
+   48.20932,
+   16.35452,
+   "Mo-Su 11:00-22:30",
+   "restaurant"
+  ],
+  [
+   "Figlmüller",
+   48.20942,
+   16.37484,
+   "Mo-Su 11:00-22:30",
+   "restaurant"
+  ],
+  [
+   "Brezel Gwölb",
+   48.21182,
+   16.36869,
+   "11:30-24:00",
+   "restaurant"
+  ],
+  [
+   "Nordsee",
+   48.20918,
+   16.36795,
+   "Mo-Su,PH 10:00-21:00",
+   "fast_food"
+  ],
+  [
+   "Wang Nudelshop",
+   48.19645,
+   16.35945,
+   "Mo-Sa 11:00-18:00",
+   "restaurant"
+  ],
+  [
+   "El Greco",
+   48.18495,
+   16.41857,
+   "Mo-Sa 09:00-22:00",
+   "restaurant"
+  ],
+  [
+   "Gimlet",
+   48.18591,
+   16.42118,
+   "Mo-Th 16:00-00:30, Fr,Sa 16:00-02:00, Su 16:00-24:00",
+   "bar"
+  ],
+  [
+   "Mizu Ramen",
+   48.18551,
+   16.41815,
+   "Mo-Sa 11:00-21:00",
+   "restaurant"
+  ],
+  [
+   "Koh-i-noor",
+   48.21217,
+   16.37345,
+   "11:30-14:30; 18:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Aux Gazelles",
+   48.20162,
+   16.36107,
+   "We,Th,Su 11:30-24:00, Fr,Sa 11:30-04:00; Mo,Tu off",
+   "restaurant"
+  ],
+  [
+   "Melker Stiftskeller",
+   48.21227,
+   16.36361,
+   "Tu-Sa 17:00-23:30",
+   "restaurant"
+  ],
+  [
+   "Babette's",
+   48.19762,
+   16.36469,
+   "Mo-Fr 10:00-19:00; Sa 10:30-17:00",
+   "restaurant"
+  ],
+  [
+   "L'asino che ride",
+   48.20589,
+   16.36798,
+   "Mo-Su,PH 11:00-24:00",
+   "restaurant"
+  ],
+  [
+   "Addicted to Rock",
+   48.20173,
+   16.3626,
+   "Mo-Sa 11:30-18:00+; Su 16:00-18:00+",
+   "bar"
+  ],
+  [
+   "Felixx",
+   48.20068,
+   16.36199,
+   "Mo-Su 18:00-02:00",
+   "restaurant"
+  ],
+  [
+   "zinas eatery",
+   48.19876,
+   16.35762,
+   "We-Sa 09:00-16:00; Su,PH 09:00-15:00; Mo,Tu off",
+   "restaurant"
+  ],
+  [
+   "Sang Sang",
+   48.19993,
+   16.36078,
+   "Mo-Th 17:30-23:00; Fr,Sa 17:30-23:30",
+   "restaurant"
+  ],
+  [
+   "ShanghaiTan",
+   48.20013,
+   16.36143,
+   "Mo-Th 11:30-14:30, 17:00-00:00; Fr 11:30-14:30, 17:00-01:00; Sa 11:30-14:30, 17:00-01:00",
+   "restaurant"
+  ],
+  [
+   "Village",
+   48.1979,
+   16.3581,
+   "Mo-Su,PH 20:00-03:00",
+   "bar"
+  ],
+  [
+   "Cenaro",
+   48.18586,
+   16.41858,
+   "Mo-Fr 08:00-24:00",
+   "restaurant"
+  ],
+  [
+   "McDonald's",
+   48.18503,
+   16.41813,
+   "Mo-Sa 07:00-24:00; Su 08:00-24:00",
+   "fast_food"
+  ],
+  [
+   "Wunderbar",
+   48.20947,
+   16.37755,
+   "Mo-Su 17:00-02:00",
+   "pub"
+  ],
+  [
+   "I Ragazzi",
+   48.20437,
+   16.35558,
+   "Mo-Sa 16:30-23:30",
+   "restaurant"
+  ],
+  [
+   "Nautilus",
+   48.19851,
+   16.36307,
+   "Mo-Sa 11:00-23:00; PH,Su 11:00-21:00",
+   "restaurant"
+  ],
+  [
+   "Zur Eisernen Zeit",
+   48.19887,
+   16.36379,
+   "Mo-Th,Sa 11:00-23:00; Fr,Su 11:00-17:00",
+   "restaurant"
+  ],
+  [
+   "Ofenloch",
+   48.2109,
+   16.36978,
+   "Mo-Sa 11:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Gasobar",
+   48.18518,
+   16.41938,
+   "Tu 20:00-02:00, We 20:00-02:00; Fr 20:00-04:00, Sa 20:00-04:00",
+   "bar"
+  ],
+  [
+   "Breakfast Club",
+   48.19747,
+   16.36523,
+   "We-Fr 08:00-14:00; Sa,Su 08:00-15:00",
+   "cafe"
+  ],
+  [
+   "Zum alten Hofkeller",
+   48.20816,
+   16.36505,
+   "Mo-Fr 11:00-14:00",
+   "restaurant"
+  ],
+  [
+   "Vinothek Eulennest",
+   48.1979,
+   16.36584,
+   "Tu-Sa 16:00-22:00",
+   "restaurant"
+  ],
+  [
+   "Sekt Comptoir",
+   48.19784,
+   16.36443,
+   "We,Th 17:00-23:00; Fr 15:00-23:00; Sa 12:00-23:00",
+   "bar"
+  ],
+  [
+   "Xeno",
+   48.19803,
+   16.36418,
+   "Fr 18:00-02:00, Sa 18:00-04:00",
+   "bar"
+  ],
+  [
+   "Nagoya Susji",
+   48.19688,
+   16.36594,
+   "Mo-Fr 11:30-22:30, Su 11:30-21:30",
+   "restaurant"
+  ],
+  [
+   "Otto e Mezzo",
+   48.1982,
+   16.36431,
+   "Tu-Sa 18:00-21:30",
+   "restaurant"
+  ],
+  [
+   "Hanil Sushi",
+   48.19909,
+   16.36525,
+   "Mo-Tu off; We-Su,PH 11:30-22:00",
+   "restaurant"
+  ],
+  [
+   "Uni Café",
+   48.19756,
+   16.37006,
+   "Mo-Th 11:30-23:00; Fr 13:00-24:00; Sa,Su off",
+   "cafe"
+  ],
+  [
+   "Manzana Restaurante",
+   48.19785,
+   16.36961,
+   "Mo-Sa 17:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Wunderladen",
+   48.19755,
+   16.37185,
+   "We,Th 13:00-19:00; Fr 13:00-18:00; Sa 11:00-17:00",
+   "cafe"
+  ],
+  [
+   "Gorilla Bar",
+   48.19719,
+   16.37207,
+   "Mo-Fr 07:00-24:00; Sa 09:00-24:00; Su 09:00-18:00",
+   "fast_food"
+  ],
+  [
+   "Classico",
+   48.19631,
+   16.367,
+   "Mo-Fr 09:00-20:00; Su,PH 11:00-19:00; Sa 11:00-18:00",
+   "cafe"
+  ],
+  [
+   "Chill out",
+   48.2118,
+   16.37218,
+   "17:00-02:00",
+   "bar"
+  ],
+  [
+   "Top Kino Bar",
+   48.20131,
+   16.36171,
+   "Mo-We 11:00-00:00; Th-Sa 11:00-01:00; Su 10:30-00:00",
+   "bar"
+  ],
+  [
+   "ebi mini",
+   48.20086,
+   16.36213,
+   "Mo-Fr 11:30-15:30,17:30-22:30; Sa,Su,PH 12:30-22:30",
+   "restaurant"
+  ],
+  [
+   "Nam Nam Dabba",
+   48.19844,
+   16.36596,
+   "Mo-Fr 11:30-14:30",
+   "restaurant"
+  ],
+  [
+   "Tasty Kebap & Pizza",
+   48.19965,
+   16.36628,
+   "Mo-Su 10:00-21:00",
+   "fast_food"
+  ],
+  [
+   "Yong Street Food",
+   48.19879,
+   16.36467,
+   "Mo-Fr 11:30-19:30; Sa 11:30-15:30; Su,PH off",
+   "fast_food"
+  ],
+  [
+   "Bánh Mì Hội An",
+   48.19491,
+   16.36729,
+   "Mo-Fr 11:00-21:00; Sa 12:00-21:00",
+   "restaurant"
+  ],
+  [
+   "ef16",
+   48.21043,
+   16.3767,
+   "Mo-Su 17:30-23:30",
+   "restaurant"
+  ],
+  [
+   "Süd Länder Cafe Bistro",
+   48.1979,
+   16.36722,
+   "Tu-Fr 11:30-14:30,17:00-22:00; Sa,Su,PH 17:00-22:00",
+   "restaurant"
+  ],
+  [
+   "Maschu Maschu",
+   48.21186,
+   16.3754,
+   "closed",
+   "fast_food"
+  ],
+  [
+   "Hab's Burger",
+   48.21196,
+   16.37541,
+   "Mo-Th 12:00-23:00, Fr,Sa 12:00-24:00, Su 12:00-23:00",
+   "fast_food"
+  ],
+  [
+   "Vietthao",
+   48.20127,
+   16.36853,
+   "Tu-Sa 16:00-22:00",
+   "restaurant"
+  ],
+  [
+   "Berfin",
+   48.19598,
+   16.36693,
+   "Mo-Fr 09:00-21:00; Sa,Su,PH off",
+   "fast_food"
+  ],
+  [
+   "Mozaik",
+   48.21868,
+   16.40057,
+   "Mo-Fr 17:00-23:00; Sa-Su 12:00-23:00",
+   "restaurant"
+  ],
+  [
+   "U Box",
+   48.21144,
+   16.37822,
+   "Mo-Su 11:50-23:00",
+   "fast_food"
+  ],
+  [
+   "Altes Rathaus",
+   48.21167,
+   16.37142,
+   "Mo-Fr 11:00-22:00; Sa 12:00-22:00; PH off",
+   "cafe"
+  ],
+  [
+   "Juice factory",
+   48.21321,
+   16.36354,
+   "Mo-Fr 07:30-18:00; Sa,Su 08:00-17:00",
+   "cafe"
+  ],
+  [
+   "Zwölf Apostelkeller",
+   48.20982,
+   16.37573,
+   "11:00-24:00",
+   "restaurant"
+  ],
+  [
+   "Honu Tiki Bowls",
+   48.20081,
+   16.35867,
+   "Mo-Fr 11:00-21:00; Sa,Su,PH 11:30-21:30",
+   "fast_food"
+  ],
+  [
+   "Fine Fine",
+   48.19624,
+   16.3726,
+   "Mo-Sa 11:00-23:00; Su,PH 11:00-23:00",
+   "restaurant"
+  ],
+  [
+   "trude und töchter: und töchter",
+   48.19933,
+   16.37294,
+   "Tu-We,Fr 09:00-18:00; Th 09:00-21:00; Sa-Su 10:00-18:00",
+   "cafe"
+  ],
+  [
+   "Wohlleben",
+   48.19664,
+   16.37399,
+   "Tu-Sa 12:00-22:30",
+   "restaurant"
+  ],
+  [
+   "La Taverna del Duca",
+   48.2062,
+   16.36781,
+   "We-Su 12:00-22:00",
+   "restaurant"
+  ],
+  [
+   "Starbucks",
+   48.20764,
+   16.36711,
+   "Mo-Fr 08:00-20:00; Sa 08:00-21:00",
+   "cafe"
+  ],
+  [
+   "Arkade Restaurant",
+   48.21065,
+   16.38589,
+   "Mo-Fr 07:30-17:00",
+   "restaurant"
+  ],
+  [
+   "la Sienta",
+   48.20979,
+   16.38625,
+   "Mo-Fr 08:00-15:00",
+   "restaurant"
+  ],
+  [
+   "Schaukuchl",
+   48.20999,
+   16.38627,
+   "Mo-Fr 07:00-14:00",
+   "restaurant"
+  ],
+  [
+   "Dino's Apothecary Bar",
+   48.2133,
+   16.37084,
+   "Mo-Th 18:00-03:00, Fr 18:00-04:00, Sa 19:00-04:00, Su 19:00-02:00",
+   "bar"
+  ],
+  [
+   "Café Prückel",
+   48.20761,
+   16.38042,
+   "Mo-Su 08:30-22:00",
+   "cafe"
+  ],
+  [
+   "Anker",
+   48.21057,
+   16.38223,
+   "Mo-Fr 06:30-18:00",
+   "cafe"
+  ],
+  [
+   "Sapori d' Italia",
+   48.21081,
+   16.38021,
+   "Mo-Fr 10:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Cha No Ma",
+   48.19888,
+   16.36513,
+   "Mo-Sa 11:00-18:00; Su off",
+   "cafe"
+  ],
+  [
+   "Giorgina",
+   48.21067,
+   16.36401,
+   "Mo-Fr 09:00-23:00; PH off",
+   "restaurant"
+  ],
+  [
+   "Marienhof",
+   48.20918,
+   16.3534,
+   "Mo-Fr 11:00-23:00; Sa,Su,PH 17:30-23:00",
+   "restaurant"
+  ],
+  [
+   "Goldene Zeiten",
+   48.20793,
+   16.37963,
+   "Mo-Su 11:30-15:00,18:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Wiener Rathauskeller",
+   48.21136,
+   16.35829,
+   "Mo-Sa 11:30-15:00,18:00-23:30; PH off",
+   "restaurant"
+  ],
+  [
+   "Joma",
+   48.21094,
+   16.37335,
+   "Mo-Su 08:00 - 02:00",
+   "restaurant"
+  ],
+  [
+   "DO&CO am Stephansplatz",
+   48.20833,
+   16.37167,
+   "Mo-Su 12:00-15:00,18:00-24:00",
+   "restaurant"
+  ],
+  [
+   "DO&CO Albertina",
+   48.20475,
+   16.36814,
+   "Su,Mo 09:00-18:00; Tu-Sa 09:00-24:00",
+   "restaurant"
+  ],
+  [
+   "Cafe Rathaus",
+   48.20982,
+   16.35499,
+   "Mo-Fr 08:00-23:00; Sa,Su 08:00-22:00",
+   "cafe"
+  ],
+  [
+   "Bitzinger Augustinerkeller",
+   48.20458,
+   16.36857,
+   "Mo-Tu off",
+   "restaurant"
+  ],
+  [
+   "Bastei Beisl",
+   48.20658,
+   16.37785,
+   "Mo-Fr 09:00-24:00; Sa 10:00-15:00,18:00-24:00; PH off",
+   "restaurant"
+  ],
+  [
+   "Tokki",
+   48.19902,
+   16.36408,
+   "Mo-Fr 12:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Mikata",
+   48.21292,
+   16.36704,
+   "Mo-Fr 11:30-15:00, 17:30-22:00; Sa, PH 12:00-22:00",
+   "restaurant"
+  ],
+  [
+   "Cantinetta Antinori",
+   48.20898,
+   16.37187,
+   "Mo-Su 11:30-23:30",
+   "restaurant"
+  ],
+  [
+   "Café Kafka",
+   48.20021,
+   16.35745,
+   "Mo-Th 08:00-00:00; Fr-Sa 08:00-02:00; Su 10:00-00:00",
+   "cafe"
+  ],
+  [
+   "Mel's Craft Beers & Diner",
+   48.21203,
+   16.36994,
+   "Mo-Su 11:00-02:00",
+   "pub"
+  ],
+  [
+   "Schnitzelhaus",
+   48.19384,
+   16.31572,
+   "Mo-Su,PH 11:00-23:00",
+   "fast_food"
+  ],
+  [
+   "Gegenbauer Cafe & Rösterei",
+   48.1993,
+   16.36492,
+   "Mo-Fr 10:00-18:00; Sa 09:00-17:00",
+   "cafe"
+  ],
+  [
+   "Philosoph",
+   48.21193,
+   16.37397,
+   "Su-Th 17:00-02:00; Fr, Sa 17:00-04:00",
+   "pub"
+  ],
+  [
+   "Rokos Bar",
+   48.21232,
+   16.35662,
+   "closed",
+   "bar"
+  ],
+  [
+   "Michl's",
+   48.21263,
+   16.35861,
+   "Mo-Fr 09:00-16:00",
+   "restaurant"
+  ],
+  [
+   "L'Ombra",
+   48.20985,
+   16.37452,
+   "Mo-Sa 09:30-23:00; Su,PH 11:00-19:00",
+   "restaurant"
+  ],
+  [
+   "Ohh! Sushi & Wok",
+   48.21231,
+   16.35606,
+   "Mo-Sa 11:30-15:00, 17:30-21:00",
+   "restaurant"
+  ],
+  [
+   "Market",
+   48.19771,
+   16.36065,
+   "Mo-Th 11:00-24:00; Fr 11:00-01:00; Sa 09:00-01:00; Su 09:00-24:00",
+   "restaurant"
+  ],
+  [
+   "Das Alt - Irish Pub Hietzing",
+   48.18552,
+   16.29887,
+   "Mo-Su 16:00-02:00",
+   "pub"
+  ],
+  [
+   "Honu",
+   48.18565,
+   16.30123,
+   "Mo-Fr 11:00-21:00; Sa-Su 11:30-21:30",
+   "restaurant"
+  ],
+  [
+   "Restaurant Sport-Union",
+   48.18529,
+   16.30033,
+   "Mo-Fr 09:00-22:00; PH,Sa,Su 09:00-15:00",
+   "restaurant"
+  ],
+  [
+   "Schaumweinhäuschen",
+   48.18523,
+   16.29966,
+   "Mo-Su,PH 19:00+",
+   "bar"
+  ],
+  [
+   "Schlosscafé",
+   48.18648,
+   16.30215,
+   "08:00-22:30",
+   "cafe"
+  ],
+  [
+   "Shiyu",
+   48.21818,
+   16.40046,
+   "We-Fr 11:30-15:00,17:30-22:00; Sa 17:30-22:00; Su,PH 13:00-22:00",
+   "restaurant"
+  ],
+  [
+   "Starbucks",
+   48.21319,
+   16.36284,
+   "Mo-Fr 06:30-21:00; Sa 08:00-19:00; Su 09:00-19:00",
+   "cafe"
+  ],
+  [
+   "Stella Marina",
+   48.19969,
+   16.35744,
+   "Mo-Sa 12:00-14:30,18:00-23:00; Aug off",
+   "restaurant"
+  ],
+  [
+   "Comida",
+   48.20823,
+   16.38103,
+   "Mo-Fr 11:00-01:00; Sa, Su, PH 18:00-01:00",
+   "restaurant"
+  ],
+  [
+   "Reinthaler",
+   48.21892,
+   16.39788,
+   "Mo-Su 10:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Santos Wieden",
+   48.19577,
+   16.36861,
+   "Su-Th 11:00-24:00, Fr,Sa 11:00-01:00",
+   "restaurant"
+  ],
+  [
+   "Zur Herknerin",
+   48.19506,
+   16.36679,
+   "\"Donnerstag und Freitag (ev. Mittwoch)\"",
+   "restaurant"
+  ],
+  [
+   "Konstantin Filippou",
+   48.21076,
+   16.37978,
+   "Th-Sa 18:00-24:00",
+   "restaurant"
+  ],
+  [
+   "NeKo Sushi Bar",
+   48.20259,
+   16.37255,
+   "Mo-Fr 11:00-23:00; Sa,Su 12:00-23:00; PH 12:00-23:00",
+   "fast_food"
+  ],
+  [
+   "NGÔ's kitchen",
+   48.20531,
+   16.35429,
+   "Mo-Fr 11:30-23:00, Sa 18:00-23:00",
+   "restaurant"
+  ],
+  [
+   "loca",
+   48.20646,
+   16.37771,
+   "We-Su 17:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Japanika",
+   48.20968,
+   16.37333,
+   "Mo-Su 11:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Akakiko",
+   48.20985,
+   16.37398,
+   "Mo-Su 10:30-23:00",
+   "restaurant"
+  ],
+  [
+   "Dim-Sum Restaurant",
+   48.19718,
+   16.36162,
+   "Mo-Tu,Th-Su 11:00-22:00",
+   "restaurant"
+  ],
+  [
+   "Joseph Brot",
+   48.20552,
+   16.38598,
+   "Mo-Fr 07:30-19:00; Su 08:00-16:00; Sa 08:00-18:00",
+   "cafe"
+  ],
+  [
+   "Esterházykeller",
+   48.21008,
+   16.3674,
+   "Tu-Su 16:00-23:00; Mo off",
+   "restaurant"
+  ],
+  [
+   "Cafe Neko",
+   48.20627,
+   16.37335,
+   "Mo-Su 10:00-20:00",
+   "cafe"
+  ],
+  [
+   "Maxing Stüberl",
+   48.18458,
+   16.30064,
+   "Mo-We 17:00-22:00; Th-Sa 12:00-22:00; Su 12:00-21:00",
+   "restaurant"
+  ],
+  [
+   "Trześniewski",
+   48.20803,
+   16.37019,
+   "Mo-Fr 08:30-19:30; Sa 09:00-18:00; Su,PH 10:00-17:00",
+   "restaurant"
+  ],
+  [
+   "Lukas",
+   48.2094,
+   16.37703,
+   "17:00-04:00",
+   "cafe"
+  ],
+  [
+   "Café de l'Europe",
+   48.20827,
+   16.37113,
+   "Mo-Fr 07:00-24:00; Sa 07:30-24:00; PH,Su 08:00-24:00",
+   "cafe"
+  ],
+  [
+   "Wiener Cucina",
+   48.18519,
+   16.38764,
+   "Mo-Fr 10:00-15:30, Fr 18:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Cafe Tennis Arsenal",
+   48.18294,
+   16.38624,
+   "Mo-Fr 11:00-21:00; Sa-Su 09:00-18:00; PH 09:00-18:00",
+   "cafe"
+  ],
+  [
+   "Stehbeisl",
+   48.20032,
+   16.35788,
+   "Mo-Sa 17:00-04:00, PH,Su 18:00-02:00",
+   "bar"
+  ],
+  [
+   "Pho Lala",
+   48.21113,
+   16.37828,
+   "11:30-20:30",
+   "restaurant"
+  ],
+  [
+   "Le Viet",
+   48.20627,
+   16.3775,
+   "Mo-Fr 11:00-15:00, 17:30-23:30; Sa 17:30-23:30",
+   "restaurant"
+  ],
+  [
+   "Alaverdi",
+   48.20708,
+   16.38809,
+   "Tu-Su 12:00-23:00; Mo 17:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Joe's",
+   48.21176,
+   16.37386,
+   "Su, We-Th 18:00-01:00; Fr-Sa 18:00-03:00",
+   "pub"
+  ],
+  [
+   "SameSame",
+   48.20991,
+   16.37227,
+   "We,Th 19:00-02:00, Fr,Sa 19:00-04:00",
+   "bar"
+  ],
+  [
+   "Hard Rock Cafe",
+   48.21137,
+   16.3756,
+   "Mo-Th 09:30-01:00, Fr,Sa 09:30-02:00",
+   "restaurant"
+  ],
+  [
+   "Silver Bar",
+   48.19744,
+   16.36733,
+   "Tu-Sa 19:00-03:00",
+   "bar"
+  ],
+  [
+   "L'Osteria",
+   48.2071,
+   16.3684,
+   "Su-We 11:00-23:00, Th-Sa 11:00-24:00",
+   "restaurant"
+  ],
+  [
+   "Sparky's unlimited",
+   48.2089,
+   16.37107,
+   "Su-Th 10:00-24:00, Fr,Sa 10:00-02:00",
+   "restaurant"
+  ],
+  [
+   "burg.ring1",
+   48.20332,
+   16.36397,
+   "Mo-We 11:00-22:00; Th-Sa 11:00-24:00; Su off; PH unknown",
+   "cafe"
+  ],
+  [
+   "Lebenbauer",
+   48.21172,
+   16.36366,
+   "Mo-Fr 11:00-15:00, 17:30-22:30",
+   "restaurant"
+  ],
+  [
+   "Cafeteria der Akademie der bildenden Künste Wien",
+   48.20159,
+   16.36545,
+   "Mo-Fr 08:30-16:00",
+   "cafe"
+  ],
+  [
+   "Sky Bar",
+   48.20644,
+   16.37227,
+   "Mo-Sa 10:00-24:00, Su,PH 12:00-24:00",
+   "bar"
+  ],
+  [
+   "Puff",
+   48.19957,
+   16.36161,
+   "Tu-Th 19:00-02:00; Fr-Sa 19:00-04:00",
+   "bar"
+  ],
+  [
+   "Loosbar",
+   48.20716,
+   16.3712,
+   "Mo-We 12:00-04:00; Th-Sa 12:00-05:00; Su 12:00-04:00",
+   "bar"
+  ],
+  [
+   "Casablanca",
+   48.21191,
+   16.37539,
+   "Mo-Sa 12:00-04:00; Su 17:00-04:00",
+   "bar"
+  ],
+  [
+   "First Floor Bar",
+   48.21175,
+   16.37506,
+   "Fr-Sa 18:00-04:00; Su-Th 18:00-02:00",
+   "bar"
+  ],
+  [
+   "Kaktus",
+   48.21175,
+   16.37472,
+   "Mo-Su 19:00-04:00",
+   "bar"
+  ],
+  [
+   "Non+Ultra",
+   48.21184,
+   16.37428,
+   "Mo-Th 19:00-02:00; Fr, Sa 19:00-04:00",
+   "bar"
+  ],
+  [
+   "Ron Con Soda",
+   48.21177,
+   16.37516,
+   "19:00-04:00",
+   "bar"
+  ],
+  [
+   "Roter Engel",
+   48.21186,
+   16.37517,
+   "Mo-Su 17:00-04:00",
+   "bar"
+  ],
+  [
+   "Slammerbar",
+   48.21175,
+   16.37483,
+   "Mo-Sa 19:00-04:00",
+   "bar"
+  ],
+  [
+   "Trilogie",
+   48.20854,
+   16.35233,
+   "Mo-Sa 11:30-23:30",
+   "restaurant"
+  ],
+  [
+   "if dogs run free",
+   48.20057,
+   16.36146,
+   "Mo-Th 17:00-01:00; Fr-Sa 17:00-03:00",
+   "bar"
+  ],
+  [
+   "Kome",
+   48.20129,
+   16.36839,
+   "Mo-Sa 11:00-23:00; Su 11:00-20:00",
+   "restaurant"
+  ],
+  [
+   "Café Ouzeri Bistro Ellas",
+   48.20837,
+   16.37667,
+   "Mo-Su 09:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Arena Beisl",
+   48.18775,
+   16.41303,
+   "Mo-Su,PH 17:00-24:00+",
+   "pub"
+  ],
+  [
+   "Cafe - Restaurant im Otto Wagner Pavillon",
+   48.20016,
+   16.37081,
+   "Mo-Su 09:00-04:00",
+   "restaurant"
+  ],
+  [
+   "Marea Alta",
+   48.19908,
+   16.35852,
+   "Mo-Th 18:00-02:00, Fr-Sa 19:00-04:00",
+   "bar"
+  ],
+  [
+   "Babida",
+   48.21219,
+   16.37484,
+   "Mo-Sa 11:30-14:30,17:30-22:00",
+   "restaurant"
+  ],
+  [
+   "ARPI street",
+   48.20798,
+   16.35275,
+   "We-Fr 16:00-22:30, Sa 13:00-23:00, Th 12:30-19:00; Mo,Tu off",
+   "restaurant"
+  ],
+  [
+   "Zushimarket Plus",
+   48.21326,
+   16.36274,
+   "11:00-21:00",
+   "fast_food"
+  ],
+  [
+   "K. u. K. Hoflieferanten - Gerstner & Schlumberger",
+   48.2032,
+   16.37031,
+   "Mo-Su 10:00-23:00",
+   "cafe"
+  ],
+  [
+   "Billabong",
+   48.2068,
+   16.37957,
+   "Mo-Sa 11:30-02:00; Su 11:30-00:00",
+   "pub"
+  ],
+  [
+   "Das Kai",
+   48.2003,
+   16.35735,
+   "Mo-Sa 11:30-22:30; Su,PH 12:00-22:00",
+   "restaurant"
+  ],
+  [
+   "Hase und Igel",
+   48.20032,
+   16.35964,
+   "Mo-Sa 09:00-18:00",
+   "restaurant"
+  ],
+  [
+   "Restaurant Momoya",
+   48.21351,
+   16.36899,
+   "Mo-Fr 11:30-15:00,17:30-22:30; Sa,Su,PH 12:00-22:30",
+   "restaurant"
+  ],
+  [
+   "Radio Cafe",
+   48.19476,
+   16.37316,
+   "Mo-Fr 10:00-22:00",
+   "cafe"
+  ],
+  [
+   "Grüner Kakadu",
+   48.21227,
+   16.37369,
+   "Mo-Sa 17:00-02:00",
+   "bar"
+  ],
+  [
+   "Kornat",
+   48.21222,
+   16.37353,
+   "Mo-Su 11:30-24:00",
+   "restaurant"
+  ],
+  [
+   "Guzzi",
+   48.19542,
+   16.36219,
+   "Mo-Fr 12:00-15:00,17:00-22:00; Sa,Su off",
+   "restaurant"
+  ],
+  [
+   "Parmanos",
+   48.21131,
+   16.3778,
+   "Mo-Sa 10:00-21:00; Su 10:00-18:00",
+   "fast_food"
+  ],
+  [
+   "XCelsior Caffè-Bar",
+   48.20903,
+   16.37326,
+   "Su-Th 08:30-20:00; Fr,Sa 08:30-21:00",
+   "cafe"
+  ],
+  [
+   "Ganesha",
+   48.2031,
+   16.36378,
+   "Mo-Sa 11:00-14:00, 17:00-22:00",
+   "restaurant"
+  ],
+  [
+   "Pho Cho Lon",
+   48.20302,
+   16.36269,
+   "Tu-Su 11:00-21:00",
+   "restaurant"
+  ],
+  [
+   "Pane è Cafe",
+   48.20315,
+   16.36338,
+   "Mo-Fr 07:00-16:30; Sa 08:00-16:00",
+   "cafe"
+  ],
+  [
+   "café camus",
+   48.20274,
+   16.36349,
+   "Mo-Sa 10:00-02:00; Su 10:00-24:00",
+   "cafe"
+  ],
+  [
+   "Chasen Brew",
+   48.19794,
+   16.36779,
+   "Mo-Fr 08:00-17:00; Sa,Su 09:00-17:00",
+   "cafe"
+  ],
+  [
+   "Kaan",
+   48.20424,
+   16.35778,
+   "Mo-Sa 10:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Cafe Bistro 59",
+   48.20179,
+   16.36964,
+   "Mo-Fr 07:00-24:00; Sa,Su,PH 11:00-24:00",
+   "cafe"
+  ],
+  [
+   "Philly",
+   48.2008,
+   16.37028,
+   "Su-Th 11:00-23:00; Fr-Sa 11:00-02:00",
+   "fast_food"
+  ],
+  [
+   "Würstelstand beim Parlament",
+   48.20685,
+   16.35965,
+   "Mo-Su 06:00-03:00",
+   "fast_food"
+  ],
+  [
+   "Porterhouse",
+   48.20791,
+   16.37676,
+   "Mo-Su,PH 11:45-23:30",
+   "restaurant"
+  ],
+  [
+   "Diglas",
+   48.21058,
+   16.37693,
+   "Tu-Fr 08:30-17:30; Sa,Su 09:30-17:30; Mo off",
+   "cafe"
+  ],
+  [
+   "Bert",
+   48.21041,
+   16.37754,
+   "Mo-Fr 08:30-18:00; Sa, Su 09:30-18:00",
+   "cafe"
+  ],
+  [
+   "Rainers Bar",
+   48.20958,
+   16.37852,
+   "Tu-Fr 17:00+",
+   "bar"
+  ],
+  [
+   "Top-Lokal",
+   48.21051,
+   16.37728,
+   "Mo-We 11:00-22:00; Th,Fr 08:00-22:00",
+   "restaurant"
+  ],
+  [
+   "Vienne",
+   48.21044,
+   16.37745,
+   "10:30-23:00",
+   "restaurant"
+  ],
+  [
+   "Vinogin",
+   48.20995,
+   16.37881,
+   "Mo-Fr 17:00-24:00; Sa 06:00-12:00",
+   "bar"
+  ],
+  [
+   "Blütezeit",
+   48.21056,
+   16.37788,
+   "Mo,Tu 08:30-16:00; We-Fr 08:30-20:00; Sa 08:30-15:00",
+   "cafe"
+  ],
+  [
+   "Mito",
+   48.21008,
+   16.37846,
+   "Su-Fr 11:00-21:00; Sa,PH off",
+   "fast_food"
+  ],
+  [
+   "Waffle Time",
+   48.21089,
+   16.37487,
+   "Mo-Su 11:00-24:00",
+   "fast_food"
+  ],
+  [
+   "Caffè a Casa",
+   48.21115,
+   16.37285,
+   "Mo-Fr 07:30-18:30; Sa 09:00-18:00; Su 10:00-18:00",
+   "cafe"
+  ],
+  [
+   "Hefi - Der Wiener Baumkuchen",
+   48.21112,
+   16.37541,
+   "PH,Mo-Su 12:00-21:00",
+   "fast_food"
+  ],
+  [
+   "Shiso Burger",
+   48.21081,
+   16.37254,
+   "Su-Th 12:00-22:00; Fr-Sa 12:00-22:30",
+   "fast_food"
+  ],
+  [
+   "Elissar Deli",
+   48.20996,
+   16.37412,
+   "Mo-Th 08:00-24:00, Fr,Sa 08:00-04:00, Su 08:00-24:00",
+   "fast_food"
+  ],
+  [
+   "Radatz",
+   48.21141,
+   16.37146,
+   "Mo-Fr 09:00-18:00",
+   "fast_food"
+  ],
+  [
+   "o m k",
+   48.21064,
+   16.37289,
+   "Mo-Sa 11:00-21:30",
+   "fast_food"
+  ],
+  [
+   "Café Bellaria",
+   48.20604,
+   16.35913,
+   "Mo-Sa 09:00-19:00; Su 09:00-17:00",
+   "cafe"
+  ],
+  [
+   "Vi&Vie",
+   48.20514,
+   16.38703,
+   "Mo-Fr 08:00-19:00; Sa 08:00-17:00",
+   "cafe"
+  ],
+  [
+   "Apapika",
+   48.20554,
+   16.38556,
+   "Mo-Su 11:00-21:00",
+   "fast_food"
+  ],
+  [
+   "Figlmüller",
+   48.20929,
+   16.37553,
+   "Mo-Su 11:00-22:30",
+   "restaurant"
+  ],
+  [
+   "Julius Meinl",
+   48.20945,
+   16.36836,
+   "Mo-Fr 08:00-19:30; Sa 09:00-18:00",
+   "cafe"
+  ],
+  [
+   "Leberkas-Pepi",
+   48.20226,
+   16.36759,
+   "Mo-We 10:00-24:00; Th-Sa 10:00-02:00",
+   "fast_food"
+  ],
+  [
+   "Velobis",
+   48.19259,
+   16.31621,
+   "Tu-Fr 09:00-22:00; Sa-Su 09:30-16:00",
+   "restaurant"
+  ],
+  [
+   "Trattoria Martinelli",
+   48.21127,
+   16.36494,
+   "Mo-Su 11:30-23:30",
+   "restaurant"
+  ],
+  [
+   "Cafe Planta",
+   48.19753,
+   16.36606,
+   "Mo-Fr 08:00-18:30; Sa, Su 09:30-18:30",
+   "cafe"
+  ],
+  [
+   "Lugeck",
+   48.2097,
+   16.37515,
+   "Mo-Su 11:30-24:00",
+   "restaurant"
+  ],
+  [
+   "donaubräu",
+   48.24053,
+   16.41002,
+   "Fr-Su 11:30-22:00",
+   "restaurant"
+  ],
+  [
+   "Café Votiv",
+   48.21394,
+   16.35896,
+   "Mo-Sa 09:00-00:00; Su 09:00-23:00",
+   "cafe"
+  ],
+  [
+   "The Look Bar",
+   48.21328,
+   16.37097,
+   "18:00-04:00",
+   "bar"
+  ],
+  [
+   "Mama Liu & Sons",
+   48.19901,
+   16.35889,
+   "Tu-Fr 17:00-23:00; Sa,Su 12:00-23:00; Mo off",
+   "restaurant"
+  ],
+  [
+   "Taste Of India",
+   48.19596,
+   16.36418,
+   "Mo-Fr 11:00-14:30, 17:30-23:00; Sa-Su,PH 12:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Shanghai",
+   48.20926,
+   16.37174,
+   "Mo-Sa 11:30-14:30, 17:30-22:30",
+   "restaurant"
+  ],
+  [
+   "Caspar",
+   48.21265,
+   16.35828,
+   "Tu-Su 10:30-23:00",
+   "restaurant"
+  ],
+  [
+   "Taim Café Dorotheergasse",
+   48.20719,
+   16.36936,
+   "Mo-Fr, Su 10:00-18:00",
+   "cafe"
+  ],
+  [
+   "Larenta",
+   48.18592,
+   16.42149,
+   "Mo-Fr 11:00-22:00; Sa,Su,PH 14:30-22:00",
+   "restaurant"
+  ],
+  [
+   "Sichuan Ravioli",
+   48.19731,
+   16.36236,
+   "Mo-Sa 11:30-21:30",
+   "restaurant"
+  ],
+  [
+   "Sajado",
+   48.20446,
+   16.38482,
+   "Mo-Su,PH 11:00-22:00",
+   "restaurant"
+  ],
+  [
+   "El Burro",
+   48.19714,
+   16.36596,
+   "Mo-Su,PH 11:00-22:00",
+   "restaurant"
+  ],
+  [
+   "Matcha Komatchi",
+   48.1977,
+   16.36614,
+   "Mo-Su 11:00-22:00",
+   "restaurant"
+  ],
+  [
+   "Riva Favorita",
+   48.19602,
+   16.36824,
+   "Mo-Sa 11:30-23:30; Su 17:30-22:30",
+   "restaurant"
+  ],
+  [
+   "plava laguna",
+   48.21964,
+   16.39888,
+   "Mo-Fr 08:00-19:00; Sa,Su 09:00-19:00",
+   "bar"
+  ],
+  [
+   "Zur Legende",
+   48.2194,
+   16.399,
+   "Tu,We 17:00-24:00, Th-Sa 17:00-02:00",
+   "bar"
+  ],
+  [
+   "Donburi Asia Cuisine",
+   48.22096,
+   16.39655,
+   "Mo-Fr 11:00-15:00,17:30-22:00; Su 12:00-22:00",
+   "restaurant"
+  ],
+  [
+   "Prater Lounge",
+   48.21892,
+   16.39895,
+   "Su-Th 16:00-00:00; Fr-Sa 16:00-02:00",
+   "bar"
+  ],
+  [
+   "Yumi Teppanyaki Dim Sum",
+   48.19966,
+   16.36521,
+   "Mo-Sa 11:00-22:30; PH,Su off",
+   "restaurant"
+  ],
+  [
+   "Li's cooking",
+   48.19958,
+   16.36504,
+   "Mo-Sa 11:30-23:00; Su 11:30-18:00",
+   "restaurant"
+  ],
+  [
+   "Prime",
+   48.19928,
+   16.36448,
+   "Mo-Sa 11:00-22:00",
+   "restaurant"
+  ],
+  [
+   "Tewa",
+   48.19846,
+   16.36294,
+   "Mo-Sa 07:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Sky Cafe, Restaurant, Bar",
+   48.20642,
+   16.37177,
+   "Mo-Sa 10:00-24:00, Su,PH 12:00-24:00",
+   "restaurant"
+  ],
+  [
+   "Honu",
+   48.21118,
+   16.37157,
+   "Mo-Fr 11:00-20:00; Sa 11:30-20:30",
+   "restaurant"
+  ],
+  [
+   "Delyrium café",
+   48.21122,
+   16.37003,
+   "Mo-Sa 11:00-23:00; Su 10:00-23:00",
+   "cafe"
+  ],
+  [
+   "Café Sacher Wien",
+   48.20394,
+   16.36966,
+   "Mo-Su,PH 08:00-22:00",
+   "cafe"
+  ],
+  [
+   "Coffee & Friends",
+   48.20918,
+   16.35356,
+   "Mo-Fr 07:30-18:00; Sa,Su,PH 08:30-17:00",
+   "cafe"
+  ],
+  [
+   "Schönscharf",
+   48.21067,
+   16.37798,
+   "Mo-Fr 11:30-14:30",
+   "restaurant"
+  ],
+  [
+   "Cafe Milan",
+   48.20779,
+   16.38057,
+   "Mo-Fr 08:00-01:00; Sa, Su 10:00-01:00",
+   "cafe"
+  ],
+  [
+   "Marco Simonis",
+   48.20916,
+   16.38012,
+   "We-Fr 10:00-22:00+; Mo,Tu 10:00-19:00",
+   "restaurant"
+  ],
+  [
+   "wienerin Restaurant & Bar",
+   48.20906,
+   16.37007,
+   "Mo-Sa 09:00-24:00; Su 11:00-00:00",
+   "restaurant"
+  ],
+  [
+   "Cafe Girardi",
+   48.19939,
+   16.36151,
+   "Mo-Fr 07:00-23:59, 09:00-18:00; Sa, Su 09:00-23:00",
+   "cafe"
+  ],
+  [
+   "Figoletta",
+   48.20989,
+   16.37337,
+   "Mo-Su 11:30-23:00",
+   "restaurant"
+  ],
+  [
+   "Bánh Mì Vienna",
+   48.19846,
+   16.36588,
+   "Mo-Fr 11:15-19:45",
+   "fast_food"
+  ],
+  [
+   "Veggiezz",
+   48.21294,
+   16.37228,
+   "Sa, Su 12:00-22:00; Mo-Fr 11:00-22:00",
+   "restaurant"
+  ],
+  [
+   "Bella Santi",
+   48.2039,
+   16.38519,
+   "Mo-Fr 11:00-14:30,17:00-22:00; Sa 17:00-22:00; Su 12:00-22:00",
+   "restaurant"
+  ],
+  [
+   "Prater Alm",
+   48.21512,
+   16.40191,
+   "Mo off; Tu-Th 15:00-23:00; Fr-Sa 11:00-00:00; Su,SH 11:00-20:00",
+   "restaurant"
+  ],
+  [
+   "Hungry Guy",
+   48.21126,
+   16.37502,
+   "Mo-Su 11:30-23:00",
+   "restaurant"
+  ],
+  [
+   "King's",
+   48.21189,
+   16.3741,
+   "We,Th 18:00-02:00, Fr,Sa 18:00-04:00; Su-Tu off",
+   "bar"
+  ],
+  [
+   "Meinz",
+   48.21175,
+   16.37462,
+   "Tu-Th 18:00-01:00, Fr,Sa 18:00-02:00",
+   "bar"
+  ],
+  [
+   "Morgans",
+   48.21198,
+   16.37399,
+   "Mo-Su 18:00-03:00",
+   "bar"
+  ],
+  [
+   "Cafe Raimund",
+   48.20565,
+   16.35769,
+   "Mo-Fr 08:00-20:00; Sa, Su 09:00-18:00",
+   "cafe"
+  ],
+  [
+   "Die Feinkosterei Schwarz-Hirsch",
+   48.20608,
+   16.37028,
+   "Mo-Th 11:00-24:00, Fr,Sa 11:00-01:00, Su 11:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Trattoria Santo Stefano",
+   48.20788,
+   16.37004,
+   "Mo-Su 11:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Makro 1",
+   48.21022,
+   16.37654,
+   "Mo-Fr 09:00-16:00",
+   "restaurant"
+  ],
+  [
+   "China kitchen no.27",
+   48.19863,
+   16.36278,
+   "Mo-Sa 11:30-23:00; Su,PH 12:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Zum Holunderstrauch",
+   48.21213,
+   16.36211,
+   "Mo-Fr 11:00-24:00",
+   "restaurant"
+  ],
+  [
+   "Café Prinz",
+   48.1973,
+   16.37525,
+   "Mo-Sa 09:00-02:00",
+   "cafe"
+  ],
+  [
+   "DAS BEISL im Prater",
+   48.21377,
+   16.40078,
+   "Mar-Nov: 10:00-22:00",
+   "restaurant"
+  ],
+  [
+   "Türkis",
+   48.20867,
+   16.37156,
+   "Mo-Su 09:00-24:00",
+   "fast_food"
+  ],
+  [
+   "Regina-Margherita",
+   48.20967,
+   16.36736,
+   "Mo-Su 11:30-23:30",
+   "restaurant"
+  ],
+  [
+   "Hiroko-san",
+   48.19742,
+   16.35919,
+   "Mo-Fr 12:00-15:30,17:00-21:00; Sa 12:00-20:30",
+   "restaurant"
+  ],
+  [
+   "Die Cafetière",
+   48.21286,
+   16.36806,
+   "Mo-Fr 08:00-19:00; Sa 09:00-16:00",
+   "cafe"
+  ],
+  [
+   "Bier & Bierli",
+   48.20212,
+   16.36751,
+   "Mo-Su 11:30-23:30",
+   "pub"
+  ],
+  [
+   "Ramen Makotoya",
+   48.21278,
+   16.35865,
+   "Mo-Fr 11:30-22:00; Sa, Su 12:00-22:00",
+   "restaurant"
+  ],
+  [
+   "Il Melograno",
+   48.2064,
+   16.37332,
+   "Mo-Sa 12:00-15:00,18:00-24:00; Dec 24 off; Dec 25 off; PH 12:00-15:00,18:30-24:00",
+   "restaurant"
+  ],
+  [
+   "Rollercoaster",
+   48.21731,
+   16.39677,
+   "Mo-Th 16:00-22:00; Fr-Su 11:30-22:00",
+   "restaurant"
+  ],
+  [
+   "Ali's Grill",
+   48.20195,
+   16.36741,
+   "Mo-Su 11:30-23:00",
+   "restaurant"
+  ],
+  [
+   "Sofie's Bar",
+   48.20892,
+   16.38076,
+   "Tu-Th 17:00 - 01:00; Fr-Sa 20:00 - 04:00",
+   "bar"
+  ],
+  [
+   "Der Dachboden im 25hours Hotel beim MuseumsQuartier",
+   48.20637,
+   16.35468,
+   "Mo-Su 15:00-01:00",
+   "bar"
+  ],
+  [
+   "Achilleus",
+   48.21029,
+   16.37561,
+   "Mo-Sa 11:00-24:00, Su 11:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Akrap",
+   48.20051,
+   16.36006,
+   "Mo-Fr 09:00-17:30; Sa 11:00-18:00; Su,PH off",
+   "cafe"
+  ],
+  [
+   "Soya",
+   48.21107,
+   16.37486,
+   "Mo-Sa 11:00-22:00",
+   "restaurant"
+  ],
+  [
+   "Weinorgel",
+   48.20953,
+   16.37504,
+   "Mo-Th 16:00-02:00, Fr-Sa 16:00-03:00, Su 16:00-24:00",
+   "bar"
+  ],
+  [
+   "YGF Malatang",
+   48.209,
+   16.37625,
+   "Tu-Su 11:00-23:00,17:00-23:00",
+   "fast_food"
+  ],
+  [
+   "Zum Kaiser",
+   48.21759,
+   16.39594,
+   "Mo-Su 11:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Nirvana",
+   48.21063,
+   16.37553,
+   "Mo-Fr 09:00-22:00; Sa-Su 12:00-22:00",
+   "restaurant"
+  ],
+  [
+   "Rinderwahn",
+   48.2071,
+   16.37252,
+   "Mo-Su 12:00-22:30",
+   "restaurant"
+  ],
+  [
+   "Louisiana Blues Pub",
+   48.19723,
+   16.37528,
+   "We-Sa 17:00-02:00",
+   "cafe"
+  ],
+  [
+   "Shoyu",
+   48.20581,
+   16.37574,
+   "Tu-Sa 11:30-22:00",
+   "restaurant"
+  ],
+  [
+   "Noodlez",
+   48.20239,
+   16.37068,
+   "Mo-Fr 11:00-21:30; Sa 11:30-20:30; PH,Su off",
+   "fast_food"
+  ],
+  [
+   "Cantina Osteria Friulana",
+   48.20798,
+   16.35628,
+   "Mo-Fr 11:30-21:30",
+   "restaurant"
+  ],
+  [
+   "Iko kitchen & bar",
+   48.21163,
+   16.37153,
+   "Mo-Fr 11:00-22:00; Sa 12:00-22:00",
+   "restaurant"
+  ],
+  [
+   "Azul Bar",
+   48.20822,
+   16.3789,
+   "18:00-04:00",
+   "bar"
+  ],
+  [
+   "George Deli & Café",
+   48.18665,
+   16.38126,
+   "Mo-Th 07:30-16:30; Fr 07:30-15:00",
+   "cafe"
+  ],
+  [
+   "BLOCK HOUSE",
+   48.19961,
+   16.36464,
+   "Mo-Th,Su 11:30-22:00; Fr-Sa 11:30-23:00",
+   "restaurant"
+  ],
+  [
+   "neuDeli",
+   48.21272,
+   16.36895,
+   "Mo-Fr 11:00-14:30",
+   "fast_food"
+  ],
+  [
+   "Stresssbar",
+   48.2134,
+   16.36713,
+   "Mo-Sa 12:00-00:00",
+   "bar"
+  ],
+  [
+   "Yori Korean Dining",
+   48.21072,
+   16.3817,
+   "Mo-Su 11:00-15:00, 18:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Restaurant zur WILDen Schimanszky",
+   48.20791,
+   16.38032,
+   "Mo-Fr 12:00-14:00,18:00-21:00",
+   "restaurant"
+  ],
+  [
+   "Labstelle",
+   48.20966,
+   16.37465,
+   "Mo-Fr 12:00-14:30, 18:00-22:00, Sa 10:00-14:00, 18:00-02:00",
+   "restaurant"
+  ],
+  [
+   "Pizzamann",
+   48.21487,
+   16.39159,
+   "11:00-03:00",
+   "fast_food"
+  ],
+  [
+   "Kashtan Patisserie",
+   48.20863,
+   16.37122,
+   "Mo-Su 09:00-21:00",
+   "cafe"
+  ],
+  [
+   "Haas & Haas",
+   48.20795,
+   16.37395,
+   "Mo-Sa 08:00-20:00; Su,PH 09:00-18:00",
+   "restaurant"
+  ],
+  [
+   "YOU in the Le Mérdien",
+   48.20275,
+   16.36651,
+   "Mo-Su 16:00-01:00",
+   "restaurant"
+  ],
+  [
+   "Veggiezz",
+   48.2031,
+   16.36754,
+   "Mo-Fr 11:00-22:00; Sa, Su 12:00-22:00",
+   "restaurant"
+  ],
+  [
+   "Dom Schnitzel",
+   48.20882,
+   16.37125,
+   "Mo-Su 10:00-24:00",
+   "restaurant"
+  ],
+  [
+   "Monte Ofelio Bar",
+   48.21335,
+   16.36355,
+   "Mo-Fr 07:30-22:00; Sa 10:00-22:00",
+   "bar"
+  ],
+  [
+   "Fenstercafé",
+   48.21098,
+   16.37709,
+   "Mo-Su 08:00-20:00",
+   "cafe"
+  ],
+  [
+   "Max & Benito",
+   48.21278,
+   16.36825,
+   "Mo-Fr 11:30-20:00; PH off",
+   "restaurant"
+  ],
+  [
+   "Topf & Deckel",
+   48.21242,
+   16.36379,
+   "Mo-Fr 11:00-16:00",
+   "restaurant"
+  ],
+  [
+   "Radatz",
+   48.21265,
+   16.36359,
+   "Mo-Fr 07:30-18:30; Sa 09:00-14:00",
+   "fast_food"
+  ],
+  [
+   "Appiano",
+   48.21345,
+   16.36384,
+   "Mo-Fr 11:15-15:00",
+   "restaurant"
+  ],
+  [
+   "Hopferl Wien Beisl",
+   48.21029,
+   16.36735,
+   "Mo-Sa 11:00-21:00",
+   "pub"
+  ],
+  [
+   "Alois Bakery",
+   48.18886,
+   16.38378,
+   "Mo-Sa 06:30-01:00",
+   "cafe"
+  ],
+  [
+   "Kitcha",
+   48.21243,
+   16.37297,
+   "Mo-Fr 11:00-22:00; Sa 12:00-22:00",
+   "restaurant"
+  ],
+  [
+   "Le's",
+   48.19957,
+   16.37405,
+   "Mo-Fr 11:00-19:00; Sa off",
+   "restaurant"
+  ],
+  [
+   "Four Beans",
+   48.22031,
+   16.39854,
+   "Mo-Fr 09:00-18:00; Sa-Su 09:00-20:00",
+   "cafe"
+  ],
+  [
+   "City Studio",
+   48.21276,
+   16.3696,
+   "Mo-Fr 10:00-22:00; Sa,Su,PH 12:00-20:00",
+   "bar"
+  ],
+  [
+   "the guest house",
+   48.20514,
+   16.36908,
+   "Mo-Su 06:30-24:00; PH open \"365 Tage im Jahr offen \"",
+   "restaurant"
+  ],
+  [
+   "Schweden Espresso",
+   48.21108,
+   16.37826,
+   "Mo-Fr 07:00-02:00; Sa-Su 06:00-02:00",
+   "cafe"
+  ],
+  [
+   "Drakon",
+   48.20995,
+   16.37784,
+   "We-Sa 18:00-02:00; Su 18:00-23:45",
+   "bar"
+  ],
+  [
+   "Ebi",
+   48.21127,
+   16.36254,
+   "Mo-Su 12:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Laurel Leaf",
+   48.20015,
+   16.35903,
+   "Su-Mo 16:00-23:00; Tu-Th 16:00-02:00; Fr-Sa 16:00-03:00",
+   "pub"
+  ],
+  [
+   "Kuchl",
+   48.18465,
+   16.41178,
+   "Mo-Do 11:30-13:30; Fr 11:30-13:00; PH off",
+   "restaurant"
+  ],
+  [
+   "Magazin Restaurant und Weinhaus",
+   48.20671,
+   16.37624,
+   "Mo-Sa 11:30-23:00; Su 11:30-22:00",
+   "restaurant"
+  ],
+  [
+   "Vienna Sausage",
+   48.21439,
+   16.36274,
+   "Mo-Fr 11:15-15:00; Sa-Su 12:00-16:00",
+   "restaurant"
+  ],
+  [
+   "Waldemar Tagesbar",
+   48.18532,
+   16.30007,
+   "Mo-Fr 08:00-20:00; Fr-Su 09:00-15:00",
+   "cafe"
+  ],
+  [
+   "vis a vis",
+   48.18644,
+   16.30124,
+   "Mo-Fr 15:00-22:00",
+   "restaurant"
+  ],
+  [
+   "Ha Ha Sushi",
+   48.20549,
+   16.35786,
+   "Su-Th 11:00-22:00; Fr-Sa 12:00-22:00",
+   "restaurant"
+  ],
+  [
+   "Pinsatore",
+   48.19796,
+   16.36429,
+   "Mo-Sa 12:00-22:00; PH,Su off",
+   "cafe"
+  ],
+  [
+   "nook [nuk]",
+   48.1854,
+   16.2994,
+   "Mo-Su 09:00-18:00",
+   "cafe"
+  ],
+  [
+   "Metcha Matcha",
+   48.20538,
+   16.35536,
+   "PH,Tu-Su 12:00-22:00",
+   "restaurant"
+  ],
+  [
+   "KLYO",
+   48.21168,
+   16.38402,
+   "Mo-Su 09:00-00:00",
+   "restaurant"
+  ],
+  [
+   "La Sosta",
+   48.20839,
+   16.36544,
+   "Tu-Sa 11:30-23:00",
+   "restaurant"
+  ],
+  [
+   "Brandauers Bierstube",
+   48.18589,
+   16.30103,
+   "17:00-02:00",
+   "pub"
+  ],
+  [
+   "Smashbox",
+   48.19671,
+   16.36559,
+   "Mo-Su 11:30-22:30",
+   "fast_food"
+  ],
+  [
+   "Kvetch Smashed Burgers",
+   48.20618,
+   16.35473,
+   "Th-Su 12:00-15:30, 16:30-21:00",
+   "fast_food"
+  ],
+  [
+   "Philigrano",
+   48.20689,
+   16.37634,
+   "PH,Su off; Tu-Sa 17:30-23:00",
+   "restaurant"
+  ],
+  [
+   "Kupferdachl",
+   48.21292,
+   16.36286,
+   "We-Sa 11:00-14:30, 17:30-23:00; Su, PH 11:00-16:00",
+   "restaurant"
+  ],
+  [
+   "SHU",
+   48.19801,
+   16.36589,
+   "Mo-Sa 11:30-15:00,17:30-22:00",
+   "restaurant"
+  ],
+  [
+   "Cafe Restaurant Leto",
+   48.21262,
+   16.36953,
+   "Mo-Sa 11:30-23:00",
+   "restaurant"
+  ],
+  [
+   "La Piazetta",
+   48.19896,
+   16.36415,
+   "Mo-Sa 11:00-23:00",
+   "restaurant"
+  ],
+  [
+   "First American Bar",
+   48.20797,
+   16.37616,
+   "Mo 17:00-24:00; Tu-Fr 00:00-02:00,17:00-24:00; Sa 00:00-03:00,18:00-24:00; Su 00:00-03:00",
+   "bar"
+  ],
+  [
+   "Noodle King",
+   48.24855,
+   16.36728,
+   "Mo-Su 11:00-22:00",
+   "fast_food"
+  ],
+  [
+   "Gösser Eck",
+   48.21612,
+   16.40132,
+   "Mo-Su 10:00-00:00",
+   "restaurant"
+  ],
+  [
+   "Minoritenstüberl",
+   48.20995,
+   16.36353,
+   "Mo-Fr 11:30-01:30",
+   "restaurant"
+  ],
+  [
+   "Beaulieu",
+   48.2109,
+   16.36522,
+   "Mo-Sa 10:00-18:00",
+   "restaurant"
+  ],
+  [
+   "Matiki",
+   48.20451,
+   16.35501,
+   "Mo-Th 18:00-02:00, Fr-Sa 18:00-03:00",
+   "bar"
+  ],
+  [
+   "Needle Vinyl Bar",
+   48.21219,
+   16.36896,
+   "Mo-Su 17:00-02:00",
+   "bar"
+  ],
+  [
+   "Bacco",
+   48.19584,
+   16.36458,
+   "Mo-Fr 12:00-22:00; Sa,Su off",
+   "restaurant"
+  ],
+  [
+   "Makka",
+   48.21169,
+   16.36907,
+   "Mo-Fr 11:00-22:00; PH,Sa 12:00-22:00",
+   "restaurant"
+  ],
+  [
+   "Vulcano Thek",
+   48.21114,
+   16.36558,
+   "Tu 12:00-22:00; We-Sa 13:30-22:00",
+   "restaurant"
+  ],
+  [
+   "Zum Basilisk",
+   48.20949,
+   16.37706,
+   "12:00-18:00",
+   "restaurant"
+  ],
+  [
+   "Ristorante Cavaliere",
+   48.2102,
+   16.37569,
+   "11:00-23:30",
+   "restaurant"
+  ],
+  [
+   "Honu Tiki Bowls",
+   48.21188,
+   16.36355,
+   "Mo-Fr 11:00-21:00; Sa 11:30-21:30",
+   "restaurant"
+  ],
+  [
+   "Everybody’s Darling",
+   48.21098,
+   16.37183,
+   "Mo-Sa 15:00-02:00",
+   "bar"
+  ],
+  [
+   "Kern Beisl",
+   48.21061,
+   16.37045,
+   "Mo-Sa 09:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Haas & Haas",
+   48.208,
+   16.37401,
+   "Mo-Sa 08:00-20:00; Su 09:00-18:00",
+   "cafe"
+  ],
+  [
+   "Hamama",
+   48.20689,
+   16.37434,
+   "12:00-22:00",
+   "restaurant"
+  ],
+  [
+   "Paul & Vitos",
+   48.20928,
+   16.37039,
+   "Mo-Sa 11:00-02:00",
+   "restaurant"
+  ],
+  [
+   "Miss Saigon",
+   48.20887,
+   16.36638,
+   "Mo-Th 11:30-23:00; Fr-Sa 11:30-23:30",
+   "restaurant"
+  ],
+  [
+   "Kenny's",
+   48.19791,
+   16.3691,
+   "Mo-Fr 09:00-21:00; Sa 10:00-21:00",
+   "fast_food"
+  ],
+  [
+   "Kanzleramt",
+   48.20841,
+   16.3651,
+   "Mo-Sa 11:00-22:00; Su 11:00-18:00",
+   "restaurant"
+  ],
+  [
+   "Porto",
+   48.19761,
+   16.36721,
+   "Mo-Su 11:00-02:00",
+   "bar"
+  ],
+  [
+   "Würstelstand",
+   48.19106,
+   16.31994,
+   "Mo-Fr 10:00-18:30",
+   "fast_food"
+  ],
+  [
+   "Sacher Eck",
+   48.20384,
+   16.37017,
+   "Mo-Su,PH 08:00-22:00",
+   "cafe"
+  ],
+  [
+   "Sacher Salon",
+   48.20401,
+   16.36934,
+   "10:00-22:00",
+   "cafe"
+  ],
+  [
+   "Napo Lindo",
+   48.20424,
+   16.36792,
+   "Mo-Sa 11:00-23:00; Su 11:00-22:00; PH 11:00-22:00",
+   "bar"
+  ],
+  [
+   "Salims",
+   48.20225,
+   16.37324,
+   "Su-Th 18:00-04:00, Fr,Sa 18:00-06:00",
+   "bar"
+  ],
+  [
+   "Unkai",
+   48.20218,
+   16.37178,
+   "Mo-Su 11:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Unger und Klein",
+   48.20943,
+   16.36609,
+   "Mo-Fr 08:00-23:00; Sa 10:00-23:00; Su,PH 10:00-18:00",
+   "cafe"
+  ],
+  [
+   "laolao",
+   48.20901,
+   16.36634,
+   "Mo-Sa 11:00-20:00",
+   "restaurant"
+  ],
+  [
+   "Oswald & Kalb Essen 1",
+   48.20886,
+   16.37652,
+   "Tu-Sa 17:30-23:00",
+   "restaurant"
+  ],
+  [
+   "Kussmaul",
+   48.20938,
+   16.37571,
+   "Su-Th 12:00-23:30; Fr,Sa 12:00-24:00",
+   "restaurant"
+  ],
+  [
+   "Mocarello",
+   48.20946,
+   16.37408,
+   "Mo-Sa 10:00-18:00; PH off",
+   "cafe"
+  ],
+  [
+   "Ludwig und Adele",
+   48.20091,
+   16.3713,
+   "Mo-Fr 17:00-24:00, Sa 12:00-24:00, Su,PH 12:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Max & Benito",
+   48.21149,
+   16.3757,
+   "Mo-Fr 11:30-20:30; Sa,Su 12:00-20:30",
+   "fast_food"
+  ],
+  [
+   "Mae Aurel",
+   48.21274,
+   16.37294,
+   "Mo-Fr 08:00-22:00; Sa, Su, PH 09:00-22:00",
+   "restaurant"
+  ],
+  [
+   "Kikko Bā",
+   48.19686,
+   16.366,
+   "Tu-Sa 17:00-22:00",
+   "restaurant"
+  ],
+  [
+   "Swing Kitchen",
+   48.21121,
+   16.37866,
+   "Mo-Th,Su 11:00-22:00; Fr,Sa 11:00-23:00",
+   "fast_food"
+  ],
+  [
+   "Aloha bowl",
+   48.20919,
+   16.35323,
+   "Mo-Th 11:00-19:00; Fr 11:00-15:00",
+   "restaurant"
+  ],
+  [
+   "Wiki Wiki Poke",
+   48.21253,
+   16.36883,
+   "Mo-Fr 11:00-21:00; Sa,Su,PH 12:00-21:00",
+   "restaurant"
+  ],
+  [
+   "Le Burger Rotenturmstraße",
+   48.21027,
+   16.37409,
+   "Mo-Th 10:00-00:00; Fr, Sa 10:00-01:00; Su 11:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Vis-a-Vis Weinbar",
+   48.20932,
+   16.37461,
+   "Tu-Fr 16:00-22:30; Sa 15:00-22:30",
+   "bar"
+  ],
+  [
+   "Jinco",
+   48.19677,
+   16.36022,
+   "Tu-Su 11:30-22:00",
+   "restaurant"
+  ],
+  [
+   "Starbucks",
+   48.20855,
+   16.36944,
+   "Mo-Th 07:30-21:30; Fr 07:30-21:30; Sa 08:00-21:30; Su,PH 09:00-21:00",
+   "cafe"
+  ],
+  [
+   "Lanz Lamian",
+   48.21111,
+   16.37298,
+   "Mo-Fr 11:00-16:00",
+   "restaurant"
+  ],
+  [
+   "Marie",
+   48.20921,
+   16.37076,
+   "Mo-Sa 11:00-19:00; Su,PH off",
+   "bar"
+  ],
+  [
+   "Wiki Wiki Poke",
+   48.19644,
+   16.36492,
+   "Mo-Fr 11:00-21:00; Sa-Su 12:00-21:00",
+   "restaurant"
+  ],
+  [
+   "Soulkitchen Vienna",
+   48.21002,
+   16.38595,
+   "Mo-Fr 10:30-14:00",
+   "restaurant"
+  ],
+  [
+   "Café Gutruf",
+   48.20985,
+   16.36995,
+   "Mo-Sa 12:00-22:00",
+   "cafe"
+  ],
+  [
+   "Vitavien Stephansplatz",
+   48.20882,
+   16.37221,
+   "Mo-Su 09:00-22:00",
+   "cafe"
+  ],
+  [
+   "Daily Spice",
+   48.19266,
+   16.31473,
+   "Mo-Su 11:00-22:00",
+   "restaurant"
+  ],
+  [
+   "Golser Bier & Wein Bar",
+   48.20745,
+   16.37681,
+   "Mo-Fr 16:00-24:00",
+   "bar"
+  ],
+  [
+   "Golser Bier & Wein Bar",
+   48.20248,
+   16.3731,
+   "Mo-Fr 16:00-24:00; PH,Sa,Su off",
+   "bar"
+  ],
+  [
+   "Castello",
+   48.18474,
+   16.42043,
+   "Mo-Fr 10:00-18:00",
+   "cafe"
+  ],
+  [
+   "Steak Döner",
+   48.21734,
+   16.39009,
+   "Mo-Fr 09:30-22:00; Sa-Su 10:00-22:00",
+   "fast_food"
+  ],
+  [
+   "Max & Benito",
+   48.20155,
+   16.35997,
+   "Mo-We 11:30-21:30; Su 12:00-21:30; Th-Sa 11:30-22:00",
+   "fast_food"
+  ],
+  [
+   "Blended",
+   48.21039,
+   16.38221,
+   "Mo-Th 14:00-24:00; Fr,Sa 14:00-24:00; Su 14:00-24:00",
+   "bar"
+  ],
+  [
+   "Caffè Couture",
+   48.21105,
+   16.36551,
+   "Mo-Fr 08:00-17:00; Sa 10:00-17:00",
+   "cafe"
+  ],
+  [
+   "illy Caffè",
+   48.20767,
+   16.36747,
+   "Mo-Su 09:00-19:00",
+   "cafe"
+  ],
+  [
+   "NOAN",
+   48.21891,
+   16.3993,
+   "Mo-Tu 11:30-15:00,17:00-22:00; Th-Fr 11:30-15:00,17:00-22:00; Sa-Su 12:00-22:00; PH 12:00-22:00",
+   "restaurant"
+  ],
+  [
+   "Five Guys",
+   48.20843,
+   16.3709,
+   "Mo-Su 11:00-23:00",
+   "fast_food"
+  ],
+  [
+   "Mörwald Kochamt",
+   48.21088,
+   16.36527,
+   "Mo-Sa 10:00-19:00",
+   "restaurant"
+  ],
+  [
+   "Buddha Bowls by elena´s",
+   48.20828,
+   16.37694,
+   "Mo-Sa 11:00-19:30",
+   "restaurant"
+  ],
+  [
+   "Das Mezzanin",
+   48.21358,
+   16.36321,
+   "Mo-Sa 07:30-20:00",
+   "restaurant"
+  ],
+  [
+   "Bar Campari",
+   48.21055,
+   16.36915,
+   "Mo-Sa 11:00-24:00",
+   "bar"
+  ],
+  [
+   "Aurora Rooftop Bar",
+   48.18519,
+   16.38335,
+   "Mo-Fr 17:00-24:00; Sa,Su 16:00-24:00",
+   "bar"
+  ],
+  [
+   "Eugen21",
+   48.18517,
+   16.38339,
+   "Mo-Fr 06:30-10:30,12:00-14:00,18:00-22:00; Sa,PH 06:30-12:00,18:00-22:00; Su 06:30-12:00",
+   "restaurant"
+  ],
+  [
+   "Cafe Disko",
+   48.18145,
+   16.38433,
+   "Mo-Fr 17:00-22:00; Sa 10:00-22:00; PH,Su 10:00-17:00",
+   "cafe"
+  ],
+  [
+   "Badeschiff Bar & Restaurant",
+   48.21179,
+   16.38122,
+   "Mo-Fr 16:00-01:00; Sa-Su 12:00-01:00",
+   "restaurant"
+  ],
+  [
+   "Teeamo",
+   48.20912,
+   16.3703,
+   "Mo-Su 11:30-19:00",
+   "cafe"
+  ],
+  [
+   "Mahlzeit",
+   48.21556,
+   16.39085,
+   "Tu-Su 11:00-22:00",
+   "restaurant"
+  ],
+  [
+   "Henry",
+   48.2083,
+   16.36612,
+   "Mo-Fr 07:40-20:00; Sa 07:40-18:00",
+   "cafe"
+  ],
+  [
+   "Michele",
+   48.20089,
+   16.35904,
+   "Mo-Sa 08:00-20:00",
+   "bar"
+  ],
+  [
+   "Shinoi",
+   48.21349,
+   16.36759,
+   "Mo-Fr 11:00-22:00,Sa,PH 12:00-22:00, Su off",
+   "restaurant"
+  ],
+  [
+   "Reiskorn",
+   48.20799,
+   16.37796,
+   "Mo-Su 11:30-22:00",
+   "restaurant"
+  ],
+  [
+   "Le Pic",
+   48.20741,
+   16.37918,
+   "Su-Th 09:30-24:00, Fr,Sa 09:30-02:00",
+   "restaurant"
+  ],
+  [
+   "Ichiban Tea",
+   48.20853,
+   16.36852,
+   "Mo-Su,PH 12:00-20:00",
+   "cafe"
+  ],
+  [
+   "Rooftopbar Lamee",
+   48.21024,
+   16.37412,
+   "Mo-We,Su 14:00-22:00; Th-Sa 14:00-23:00",
+   "bar"
+  ],
+  [
+   "Youmi",
+   48.18676,
+   16.42006,
+   "Mo-Fr 11:00-21:00; Su 12:30-21:00; Sa off",
+   "restaurant"
+  ],
+  [
+   "Dr Falafel",
+   48.19767,
+   16.36161,
+   "Mo-Sa 08:00-18:00",
+   "restaurant"
+  ],
+  [
+   "Trinity",
+   48.19765,
+   16.36775,
+   "Mo-Th 11:30-23:00; Fr-Sa 11:30-01:00; Su,PH 11:30-22:00",
+   "pub"
+  ],
+  [
+   "Apapika",
+   48.20207,
+   16.36196,
+   "Mo-Su,PH 11:00-21:00",
+   "fast_food"
+  ],
+  [
+   "Karma Food",
+   48.2108,
+   16.37811,
+   "Mo-Fr 11:00-14:00",
+   "cafe"
+  ],
+  [
+   "Shakes",
+   48.25154,
+   16.36986,
+   "Mo-Fr 08:00-23:00",
+   "pub"
+  ],
+  [
+   "Knödel Manufaktur Takeaway",
+   48.21004,
+   16.37869,
+   "Mo-Fr 11:30-18:00",
+   "restaurant"
+  ],
+  [
+   "Starbucks",
+   48.20289,
+   16.37019,
+   "Mo-Th 07:00-22:00; Fr 07:00-23:00; Sa 07:30-23:00; Su 08:00-22:00",
+   "cafe"
+  ],
+  [
+   "Orpheas",
+   48.20696,
+   16.36975,
+   "Mo-Sa 11:30-23:00",
+   "restaurant"
+  ],
+  [
+   "Reserva Ibérica by PACO",
+   48.2096,
+   16.36668,
+   "Mo-Sa 11:30-22:00; Su 13:00-20:00",
+   "restaurant"
+  ],
+  [
+   "Café im Kunsthistorischen Museum",
+   48.20388,
+   16.3616,
+   "Fr-We,PH 10:00-18:00; Th 08:00-21:00",
+   "cafe"
+  ],
+  [
+   "Truth and Dare",
+   48.20945,
+   16.37711,
+   "Tu-Sa 18:00-02:00; Su 18:00-01:00",
+   "bar"
+  ],
+  [
+   "Kurkonditorei Oberlaa",
+   48.20152,
+   16.36046,
+   "Mo-Su 09:00-20:00",
+   "cafe"
+  ],
+  [
+   "Al Basha",
+   48.21706,
+   16.39052,
+   "We-Mo 11:00-22:00",
+   "cafe"
+  ],
+  [
+   "Gozo",
+   48.20858,
+   16.35258,
+   "Mo-Sa 11:30-24:00",
+   "restaurant"
+  ],
+  [
+   "Cro",
+   48.20991,
+   16.37518,
+   "Mo-Su 09:30-20:00",
+   "cafe"
+  ],
+  [
+   "Nr. 13",
+   48.19485,
+   16.37063,
+   "Mo-Fr 11:00-14:30",
+   "restaurant"
+  ],
+  [
+   "Daniel's",
+   48.20009,
+   16.35758,
+   "Mo-Th 10:00-23:00; Fr,Sa 10:30-24:00",
+   "cafe"
+  ],
+  [
+   "Ginza Delicious",
+   48.18537,
+   16.41848,
+   "Mo-Fr 11:00-19:00",
+   "fast_food"
+  ],
+  [
+   "CasolaroBros",
+   48.19618,
+   16.37339,
+   "Tu-Fr 12:00-22:00; Sa 10:00-22:00; Su,Mo off",
+   "restaurant"
+  ],
+  [
+   "Blue Marlin",
+   48.18634,
+   16.30189,
+   "Mo-Su,PH 11:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Erzhetzogtum",
+   48.19943,
+   16.36478,
+   "Mo-Fr 11:00-23:00; Sa 08:00-23:00; Su 11:00-21:00",
+   "restaurant"
+  ],
+  [
+   "Matcha Komatchi",
+   48.21133,
+   16.37244,
+   "11:00-22:00",
+   "restaurant"
+  ],
+  [
+   "Ramen Makotoya",
+   48.20564,
+   16.38657,
+   "Mo-Fr 11:30-22:00; Sa,Su 12:00-22:00",
+   "restaurant"
+  ],
+  [
+   "Space Bowls",
+   48.20061,
+   16.3594,
+   "Mo-Sa 12:00-22:00",
+   "restaurant"
+  ],
+  [
+   "Juli",
+   48.20114,
+   16.36693,
+   "Tu-Su 11:00-21:30",
+   "restaurant"
+  ],
+  [
+   "Pláka",
+   48.20796,
+   16.3688,
+   "Mo-Su 11:00-22:00",
+   "restaurant"
+  ],
+  [
+   "Bastis Sandwich Bar",
+   48.19778,
+   16.36698,
+   "Mo-We 11:00-20:00; Th,Fr 11:00-22:00",
+   "fast_food"
+  ],
+  [
+   "Bieradies",
+   48.2114,
+   16.37021,
+   "Mo-Fr 09:00-01:00; Sa 10:00-02:00; Su 10:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Bierhalle am Naschmarkt",
+   48.19731,
+   16.36032,
+   "Tu-Fr 11:30-20:00; Sa 08:00-20:00",
+   "biergarten"
+  ],
+  [
+   "Süßwasser",
+   48.20037,
+   16.35976,
+   "Mo-Fr 09:00-20:00; Sa 11:00-20:00; Su off",
+   "restaurant"
+  ],
+  [
+   "No Panic Coffee",
+   48.19814,
+   16.36879,
+   "Mo-Fr 08:00-18:00; Sa,Su 09:30-18:00",
+   "cafe"
+  ],
+  [
+   "Kaffein",
+   48.21241,
+   16.37075,
+   "Mo-Fr 08:00-18:00; Sa-Su 10:00-18:00",
+   "cafe"
+  ],
+  [
+   "Berliner Babo",
+   48.20056,
+   16.35752,
+   "Mo-Th 11:00-22:00; Fr,Sa 10:00-23:00; Su,PH 10:00-22:00",
+   "restaurant"
+  ],
+  [
+   "Kelsen",
+   48.20797,
+   16.3588,
+   "Mo-Fr 11:45-23:30; Sa 10:00-23:30",
+   "restaurant"
+  ],
+  [
+   "Boxwood",
+   48.21035,
+   16.37615,
+   "Tu-Fr 17:00-24:00; Sa-Su 11:00-24:00",
+   "restaurant"
+  ],
+  [
+   "Lara",
+   48.2128,
+   16.37004,
+   "Mo 17:30-23:00; Tu-Sa 09:00-23:00; Su,PH off",
+   "restaurant"
+  ],
+  [
+   "Apapika",
+   48.2024,
+   16.37062,
+   "Mo-Su 11:00-21:00",
+   "restaurant"
+  ],
+  [
+   "Honu Tiki Bowls",
+   48.20252,
+   16.36751,
+   "Mo-Fr 11:00-20:00; Sa 11:30-20:30",
+   "restaurant"
+  ],
+  [
+   "Wyld Takeout",
+   48.21716,
+   16.39577,
+   "Mo-Su,PH 11:00-23:00",
+   "fast_food"
+  ],
+  [
+   "Zum Riesenrad",
+   48.21687,
+   16.39613,
+   "Mo-Su 09:00-23:45",
+   "cafe"
+  ],
+  [
+   "Da Gennaro",
+   48.20818,
+   16.36905,
+   "Mo-Sa 10:00-24:00; Su 12:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Dr. Döner",
+   48.20625,
+   16.38372,
+   "Mo-Th,Su 10:00-04:00; Fr-Sa 10:00-06:00",
+   "fast_food"
+  ],
+  [
+   "Kaiser's",
+   48.2113,
+   16.37788,
+   "Su-We 12:00-22:00; Th 12:00-22:00; Fr-Sa 14:00-23:30",
+   "fast_food"
+  ],
+  [
+   "Ragazzi, Pinsa!",
+   48.19907,
+   16.35906,
+   "We-Su 12:00-22:00; Mo,Tu off",
+   "restaurant"
+  ],
+  [
+   "Kiosk \"Zur Libelle\"",
+   48.20257,
+   16.35933,
+   "We-Mo,PH 10:00-22:00",
+   "cafe"
+  ],
+  [
+   "Hitomi",
+   48.18501,
+   16.41254,
+   "Su-Fr 10:00-22:00",
+   "restaurant"
+  ],
+  [
+   "Bonbonnière Tagesbar",
+   48.20671,
+   16.36987,
+   "Mo-Fr 17:00-02:00",
+   "bar"
+  ],
+  [
+   "Hawelka",
+   48.20763,
+   16.36968,
+   "Mo-Th 09:00-24:00; Fr,Sa 09:00-01:00; Su 10:00-20:00",
+   "cafe"
+  ],
+  [
+   "Fräuleins fabelhafter Sommergarten",
+   48.21158,
+   16.382,
+   "Mo-Su 16:00-24:00",
+   "bar"
+  ],
+  [
+   "meierei",
+   48.21369,
+   16.39968,
+   "May-Aug Mo-Su 11:00-22:00; Sep-Apr Mo-Su 11:00-21:00",
+   "restaurant"
+  ],
+  [
+   "SiL",
+   48.20317,
+   16.36287,
+   "Tu-Su 09:00-22:00",
+   "restaurant"
+  ],
+  [
+   "Restaurant Hofmeister",
+   48.20758,
+   16.36875,
+   "Mo-Su 12:00-21:00",
+   "restaurant"
+  ],
+  [
+   "hâo",
+   48.20306,
+   16.36509,
+   "We-Mo 11:30-23:00",
+   "restaurant"
+  ],
+  [
+   "Meister Langos & Lemon",
+   48.21672,
+   16.39902,
+   "Mo-Su 13:00-21:00",
+   "fast_food"
+  ],
+  [
+   "Latidos",
+   48.20431,
+   16.38455,
+   "Mo-Th 18:00-02:00; Fr-Sa 18:00-04:00",
+   "bar"
+  ],
+  [
+   "café exchange",
+   48.21012,
+   16.38081,
+   "Mo-Fr 09:00-17:30; Sa 10:30-17:00",
+   "cafe"
+  ],
+  [
+   "Bao Bar",
+   48.19795,
+   16.36586,
+   "Mo-Sa 11:30-20:00",
+   "restaurant"
+  ],
+  [
+   "Kaiser's",
+   48.20219,
+   16.36888,
+   "Mo-Th 12:00-21:00; Fr-Su 11:00-22:00",
+   "fast_food"
+  ],
+  [
+   "Oji Izakaya",
+   48.24906,
+   16.36785,
+   "Mo-Sa 11:30-15:00, 17:30-22:00; Su 11:30-15:00, 17:00-20:00",
+   "restaurant"
+  ],
+  [
+   "Made in Sud",
+   48.19588,
+   16.36403,
+   "Mo-Sa 11:30-22:00",
+   "restaurant"
+  ],
+  [
+   "Café Elias",
+   48.2045,
+   16.37721,
+   "Mo-Fr 08:00-17:00; Sa-Su 09:00-18:00",
+   "cafe"
+  ],
+  [
+   "404 at the Leo Grand",
+   48.20939,
+   16.37097,
+   "Mo-Su 09:00-24:00",
+   "restaurant"
+  ],
+  [
+   "Walter CEWAPI",
+   48.20641,
+   16.38433,
+   "Mo-Su 11:00-22:00",
+   "restaurant"
+  ],
+  [
+   "Fisch Viertel At 1060",
+   48.19912,
+   16.3645,
+   "Mo-Sa 08:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Noodle King",
+   48.18498,
+   16.4137,
+   "Mo-Su,PH 11:00-22:00",
+   "fast_food"
+  ],
+  [
+   "Yalla Falafel - Lebanese Street Food",
+   48.19766,
+   16.36611,
+   "Mo-Su,PH 11:00-20:00",
+   "restaurant"
+  ],
+  [
+   "Berber Am Naschmarkt",
+   48.19839,
+   16.36326,
+   "Mo-Sa 08:00-20:00",
+   "fast_food"
+  ],
+  [
+   "La Bottega Del Gusto",
+   48.1975,
+   16.36121,
+   "Mo-Sa 07:30-18:00",
+   "restaurant"
+  ],
+  [
+   "Oneyda",
+   48.19757,
+   16.36136,
+   "Mo-Sa 07:30-19:00",
+   "fast_food"
+  ],
+  [
+   "Weltraum",
+   48.1964,
+   16.36158,
+   "Mi-Sa 18:00-02:00",
+   "bar"
+  ],
+  [
+   "Schön & Gut",
+   48.19662,
+   16.36239,
+   "Mo-Fr 09:00-18:00; Sa 09:00-13:00",
+   "cafe"
+  ],
+  [
+   "Cyclist",
+   48.1849,
+   16.38275,
+   "Mo-Su 08:00-17:00",
+   "cafe"
+  ],
+  [
+   "4OH!4",
+   48.18521,
+   16.38174,
+   "Mo-Fr 07:30-15:30",
+   "food_court"
+  ],
+  [
+   "Lucy Bar",
+   48.18571,
+   16.3837,
+   "Tu,We,Fr-Su 11:00-18:00; Th 11:00-21:00",
+   "bar"
+  ],
+  [
+   "Yu Noodle & Hotpot",
+   48.19604,
+   16.36626,
+   "Mo-Th 11:30-15:00,17:00-22:00; Fr 11:30-15:00,17:00-23:00; Sa,Su,PH 11:30-23:00",
+   "restaurant"
+  ],
+  [
+   "Sbagliata Affairs X Mamas Bar",
+   48.21131,
+   16.36264,
+   "Tu-Th 17:00-01:00; Fr-Sa 17:00-02:00",
+   "bar"
+  ],
+  [
+   "Glasswing",
+   48.20169,
+   16.37113,
+   "Mo-Su,PH 07:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Bowl Market",
+   48.24875,
+   16.36737,
+   "Mo-Su 11:00-20:00",
+   "restaurant"
+  ],
+  [
+   "Café-Meierei Volksgarten",
+   48.20793,
+   16.36254,
+   "Mo-Su 10:00-17:00",
+   "cafe"
+  ],
+  [
+   "JOLA",
+   48.21319,
+   16.37131,
+   "We-Su 18:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Biergarten",
+   48.18301,
+   16.30409,
+   "Mo-Su 11:00-17:30",
+   "restaurant"
+  ],
+  [
+   "Donatella",
+   48.19547,
+   16.36348,
+   "Tu-Fr 11:00-20:00; Sa 10:00-18:00; Su,Mo off",
+   "restaurant"
+  ],
+  [
+   "Ichi Go Ichi E",
+   48.21028,
+   16.38219,
+   "Tu-Su 11:00-15:00,17:00-22:00",
+   "restaurant"
+  ],
+  [
+   "WOA",
+   48.20841,
+   16.37062,
+   "Mo-Su 11:30-22:00",
+   "restaurant"
+  ],
+  [
+   "Kias Kitchen",
+   48.19867,
+   16.35795,
+   "Tu-Sa 17:30-22:00",
+   "restaurant"
+  ],
+  [
+   "Chop Chop Guys",
+   48.21589,
+   16.4013,
+   "Mo-Th 14:00-21:00; Fr-Su 13:00-22:00",
+   "fast_food"
+  ],
+  [
+   "Sky Garden",
+   48.2115,
+   16.37186,
+   "Mo-Sa 17:00-24:00",
+   "bar"
+  ],
+  [
+   "bela béla",
+   48.20969,
+   16.36621,
+   "We-Sa 18:00-23:00",
+   "restaurant"
+  ],
+  [
+   "daylounge café.bistro.bar",
+   48.20587,
+   16.38471,
+   "Mo-Fr 08:00-22:00; Sa-Su 09:00-21:00",
+   "restaurant"
+  ],
+  [
+   "Heines",
+   48.21814,
+   16.38974,
+   "Tu-Fr 14:00-22:00; Su 10:00-15:00",
+   "cafe"
+  ],
+  [
+   "Chattanooga",
+   48.20843,
+   16.37052,
+   "Sa-Su 16:00-22:00",
+   "cafe"
+  ],
+  [
+   "trude und töchter: trude",
+   48.19903,
+   16.37291,
+   "Tu-Su 09:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Tomochan Ramen",
+   48.19741,
+   16.37518,
+   "Mo-Th 11:30-22:00; Fr-Su 12:30-22:00",
+   "restaurant"
+  ],
+  [
+   "Oishi Sushi",
+   48.19873,
+   16.35755,
+   "Su-Fr 11:00-21:30; Sa off",
+   "restaurant"
+  ],
+  [
+   "An's kitchen Karlsplatz",
+   48.19821,
+   16.36828,
+   "Mo-Fr 11:30-15:00,18:00-21:00; Su 12:30-21:00",
+   "restaurant"
+  ],
+  [
+   "Chuan Fu",
+   48.19654,
+   16.37212,
+   "Mo-Sa 11:30-14:30,17:30-22:00",
+   "restaurant"
+  ],
+  [
+   "Baburder's",
+   48.21249,
+   16.36843,
+   "We-Th 18:00-24:00; Fr-Sa 18:00-02:00",
+   "bar"
+  ],
+  [
+   "City Bar",
+   48.2125,
+   16.36808,
+   "Fr-Sa 20:00-02:00",
+   "bar"
+  ],
+  [
+   "Dorotheum Cafe",
+   48.20618,
+   16.36892,
+   "Mo-Fr 09:00-18:00; Sa 10:00-18:00",
+   "cafe"
+  ],
+  [
+   "Eiskarussell",
+   48.19745,
+   16.35941,
+   "Mo-Su,PH 13:00-19:00",
+   "restaurant"
+  ],
+  [
+   "Asia Pavillon",
+   48.19632,
+   16.36828,
+   "Mo-Sa 11:30-22:30",
+   "restaurant"
+  ],
+  [
+   "Maria und Josef",
+   48.20142,
+   16.36151,
+   "Mo-Sa 17:00-24:00",
+   "bar"
+  ],
+  [
+   "Kaffee Kunze",
+   48.20898,
+   16.35463,
+   "Tu,We 10:00-01:00, Th-Sa 10:00-02:00, Su 10:00-22:00; Mo off",
+   "cafe"
+  ],
+  [
+   "Drogerie Bar/Café",
+   48.20042,
+   16.35909,
+   "Mo, Tu 17:00-00:00; We 17:00-01:00; Th-Sa 17:00-02:00",
+   "bar"
+  ],
+  [
+   "Zum Schwarzen Kameel (Biergarten Naglergasse)",
+   48.20994,
+   16.36813,
+   "Mo-Sa 12:00-22:30; Su off",
+   "restaurant"
+  ],
+  [
+   "Nabiels",
+   48.19746,
+   16.36623,
+   "Tu-Sa 12:00-15:00; Su,Mo,PH off",
+   "restaurant"
+  ],
+  [
+   "Ganko",
+   48.20635,
+   16.37698,
+   "Tu-Su 11:00-15:00,17:00-22:00; Mo off",
+   "restaurant"
+  ],
+  [
+   "Wein & Kunst",
+   48.19637,
+   16.37223,
+   "Mo-Fr 17:00-23:00",
+   "bar"
+  ],
+  [
+   "kuka",
+   48.18197,
+   16.38314,
+   "Mo-Fr 07:30-18:00; Sa,Su 09:00-18:00",
+   "cafe"
+  ],
+  [
+   "MiloSun Asian Kitchen",
+   48.20308,
+   16.36276,
+   "Tu-Su,PH 11:00-21:30; Mo off",
+   "restaurant"
+  ],
+  [
+   "Ceylon Delights (Sri Lanka)",
+   48.20852,
+   16.35256,
+   "Mo-Sa 08:00-20:00",
+   "restaurant"
+  ],
+  [
+   "Pizza Napoles Vienna",
+   48.20537,
+   16.35524,
+   "Mo-Sa 11:30-22:00",
+   "restaurant"
+  ],
+  [
+   "Five Guys",
+   48.20832,
+   16.37088,
+   "Sa-Su 11:00-23:00",
+   "fast_food"
+  ],
+  [
+   "GRND",
+   48.20146,
+   16.36946,
+   "Mo-Su 11:30-23:00",
+   "restaurant"
+  ],
+  [
+   "Nano's Am Ring",
+   48.21208,
+   16.36159,
+   "Mo-Su 11:00-00:00",
+   "restaurant"
+  ],
+  [
+   "The Miners Coffee",
+   48.20023,
+   16.36517,
+   "Mo-Su,PH 08:00-18:00",
+   "cafe"
+  ],
+  [
+   "Hitomi",
+   48.19954,
+   16.36607,
+   "Mo-Su 11:00-22:00",
+   "restaurant"
+  ],
+  [
+   "SALT&honey",
+   48.20215,
+   16.36247,
+   "Mo-We 08:00-16:00; Th-Su 08:00-22:00",
+   "restaurant"
+  ],
+  [
+   "Sluka",
+   48.207,
+   16.37227,
+   "Mo-Sa 09:00-18:00; Su 10:00-17:00",
+   "cafe"
+  ],
+  [
+   "Square To Eat",
+   48.24813,
+   16.36724,
+   "Mo-Fr 07:00-15:00",
+   "restaurant"
+  ],
+  [
+   "AUX Bar",
+   48.19449,
+   16.37306,
+   "Tu-Sa 18:00-00:00",
+   "bar"
+  ],
+  [
+   "Liebling im Volkstheater",
+   48.20498,
+   16.35708,
+   "Mo-Th 16:00-21:00; Fr-Sa 16:00-02:00",
+   "restaurant"
+  ],
+  [
+   "Gold Papa – Coffee & Beans",
+   48.2189,
+   16.40061,
+   "Th-Su 08:00-16:00; PH off",
+   "cafe"
+  ],
+  [
+   "Brutal am Markt",
+   48.19716,
+   16.36009,
+   "Mo-Sa 09:00-19:00",
+   "fast_food"
+  ],
+  [
+   "Kao Soi Thaï bistro",
+   48.20635,
+   16.37759,
+   "Tu-Su 11:00-18:00",
+   "restaurant"
+  ],
+  [
+   "Hemma",
+   48.21243,
+   16.35607,
+   "Tu-Sa 17:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Hemma",
+   48.21243,
+   16.35607,
+   "Tu-Sa 17:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Nihonbashi",
+   48.20151,
+   16.36887,
+   "We-Mo 12:00-14:30,18:00-22:00",
+   "restaurant"
+  ],
+  [
+   "Maison Le Ciel",
+   48.19752,
+   16.36642,
+   "Tu-Sa 10:00-18:00",
+   "cafe"
+  ],
+  [
+   "Cà Phê Lalot",
+   48.21289,
+   16.36802,
+   "Tu-Fr 09:00-15:00; Sa 10:00-16:00",
+   "cafe"
+  ],
+  [
+   "Bistro Fantasy",
+   48.1994,
+   16.35945,
+   "Tu-Sa 09:00-00:00; Su 09:00-16:00",
+   "cafe"
+  ],
+  [
+   "Café Museum",
+   48.20144,
+   16.36767,
+   "Mo-Su 08:00-21:00",
+   "restaurant"
+  ],
+  [
+   "Potions Vienna",
+   48.20088,
+   16.37001,
+   "Th-Sa 18:00-02:00; Su-We 18:00-00:00",
+   "bar"
+  ],
+  [
+   "Garten Cafe",
+   48.20521,
+   16.37646,
+   "Mo-Su 08:30-00:00",
+   "cafe"
+  ],
+  [
+   "Atelier 7 The Café",
+   48.20734,
+   16.37709,
+   "Mo-Su 08:00-18:00",
+   "cafe"
+  ],
+  [
+   "HINZ & KUNZ",
+   48.20098,
+   16.36968,
+   "Tu-Fr 17:30-00:00; Sa 18:00-01:00",
+   "bar"
+  ],
+  [
+   "The District Coffee",
+   48.20228,
+   16.36221,
+   "Mo-Fr 07:30-18:00; Sa-Su 09:00-17:00",
+   "cafe"
+  ],
+  [
+   "Veranda",
+   48.20461,
+   16.35656,
+   "Mo-Fr 07:00-11:00, Sa,Su,PH 11:00-14:00, Mo-Su,PH 17:00-24:00",
+   "bar"
+  ],
+  [
+   "Lieben Wir",
+   48.21351,
+   16.37283,
+   "Mo-Fr 09:00-18:00; Sa 10:00-18:00",
+   "cafe"
+  ],
+  [
+   "Café Engländer Praterstern",
+   48.21843,
+   16.39101,
+   "Mo-Sa 09:30-21:30; Su,PH 10:00-21:30",
+   "restaurant"
+  ],
+  [
+   "Do-An",
+   48.19825,
+   16.36278,
+   "Mo-Sa 07:00-24:00; Su, PH 10:00-21:00",
+   "bar"
+  ],
+  [
+   "Segafredo",
+   48.19861,
+   16.36331,
+   "Mo-Sa 08:00-23:00",
+   "cafe"
+  ],
+  [
+   "Deli",
+   48.19832,
+   16.36269,
+   "Mo-Sa 07:00-23:00; PH,Su 10:00-21:00",
+   "bar"
+  ],
+  [
+   "Nordsee",
+   48.19976,
+   16.36568,
+   "Mo-Th 09:00-19:00; Fr 08:00-19:00; Sa 08:00-18:00; Su,PH off",
+   "fast_food"
+  ],
+  [
+   "Rinderwahn am Markt",
+   48.19967,
+   16.36579,
+   "Mo-Fr 11:30-21:00, Sa 08:00-21:00",
+   "fast_food"
+  ],
+  [
+   "Orient Occident",
+   48.19814,
+   16.36232,
+   "Mo-Fr 07:00-23:00; Sa 09:00-21:00",
+   "restaurant"
+  ],
+  [
+   "PIZZA SENZA DANZA",
+   48.20693,
+   16.36092,
+   "Tu-Sa 17:00-02:00",
+   "restaurant"
+  ],
+  [
+   "Volksgarten Pavillon",
+   48.20697,
+   16.36159,
+   "Apr 01-Oct 15 Mo-Su 10:00-02:00 \"only open on sunny days\"",
+   "cafe"
+  ],
+  [
+   "Prater Dome",
+   48.21741,
+   16.3974,
+   "Fr-Sa 22:00-06:00",
+   "bar"
+  ],
+  [
+   "Mat's Würstelstand",
+   48.21727,
+   16.39084,
+   "Mo-Fr 10:00-04:00, Sa,Su,PH 17:00-04:00",
+   "fast_food"
+  ],
+  [
+   "Schweizerhaus",
+   48.21392,
+   16.40162,
+   "Mar 15-Oct 31 Mo-Su,PH 11:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Knockbox",
+   48.1998,
+   16.36817,
+   "Mo-Fr 07:00-18:00; Sa-Su 09:30-18:00",
+   "cafe"
+  ],
+  [
+   "Bitzinger",
+   48.20408,
+   16.36847,
+   "Mo-Su 08:00-03:00",
+   "fast_food"
+  ],
+  [
+   "drunter & drüber",
+   48.243,
+   16.41365,
+   "Mo-Su 10:00-19:00",
+   "restaurant"
+  ],
+  [
+   "Ponykarussell",
+   48.21446,
+   16.40184,
+   "Mo-Su,PH 09:00-18:00",
+   "cafe"
+  ],
+  [
+   "Würstelstand Zum Hohen Markt",
+   48.21121,
+   16.37232,
+   "09:00-04:00",
+   "fast_food"
+  ],
+  [
+   "Bitzinger",
+   48.2177,
+   16.39415,
+   "Mo-Su 12:00-22:00",
+   "fast_food"
+  ],
+  [
+   "Imbiss Santo",
+   48.20688,
+   16.38062,
+   "PH,Mo-Su 09:00-23:00",
+   "fast_food"
+  ],
+  [
+   "Badeschiff",
+   48.2118,
+   16.38159,
+   "Mo-Su 10:00-01:00",
+   "restaurant"
+  ],
+  [
+   "Brioche und Brösel",
+   48.21089,
+   16.37516,
+   "PH,Mo-Su 11:30-22:00",
+   "fast_food"
+  ],
+  [
+   "Ginza",
+   48.21849,
+   16.39305,
+   "Tu-Su 11:00-22:00; PH Mo 11:00-22:00; May-Aug,Dec Mo 11:00-22:00",
+   "restaurant"
+  ],
+  [
+   "McDonald's",
+   48.21805,
+   16.39202,
+   "24/7 closed",
+   "fast_food"
+  ],
+  [
+   "Wolke",
+   48.21383,
+   16.36253,
+   "Mo-Fr 11:00-20:00",
+   "fast_food"
+  ],
+  [
+   "Kashtan",
+   48.2138,
+   16.3619,
+   "Mo-Fr 07:00-20:00; Sa-Su 09:00-20:00",
+   "cafe"
+  ],
+  [
+   "Mr. Box Tea",
+   48.21384,
+   16.36197,
+   "Mo-Sa 11:00-20:00",
+   "cafe"
+  ],
+  [
+   "Kaffeküche",
+   48.21386,
+   16.36205,
+   "Mo-Fr 07:00-19:00; Sa-Su,PH off; Jan 01-06,Dec 24-31 off",
+   "cafe"
+  ],
+  [
+   "Taïm",
+   48.21441,
+   16.36203,
+   "Mo-Sa 11:00-20:00; Su,PH off",
+   "fast_food"
+  ],
+  [
+   "Asia Meister",
+   48.21448,
+   16.362,
+   "Mo-Fr 10:00-23:00; Sa,Su,PH 15:00-23:00",
+   "fast_food"
+  ],
+  [
+   "Lucky Noodles",
+   48.21384,
+   16.36213,
+   "Mo-Su 10:00-20:00",
+   "fast_food"
+  ],
+  [
+   "Döner Point",
+   48.20259,
+   16.36156,
+   "Mo-Fr 10:00-22:00, Fr,Sa 10:00-24:00",
+   "fast_food"
+  ],
+  [
+   "Döner Point",
+   48.20249,
+   16.36143,
+   "Mo-Th 10:00-22:00; Fr,Sa 10:00-24:00; Su,PH 10:00-22:00",
+   "fast_food"
+  ],
+  [
+   "Salonplafond",
+   48.20788,
+   16.38192,
+   "Mo-Su 10:00-00:00",
+   "restaurant"
+  ],
+  [
+   "McDonald's",
+   48.20097,
+   16.36869,
+   "PH,Su-Th 06:00-24:00, Fr,Sa 06:00-04:00",
+   "fast_food"
+  ],
+  [
+   "Starbucks",
+   48.20113,
+   16.36894,
+   "Mo-Fr 06:30-20:00; PH,Sa,Su 08:00-20:00",
+   "cafe"
+  ],
+  [
+   "Well Being",
+   48.20244,
+   16.36931,
+   "Mo-Sa 11:00-22:00; Su,PH 12:00-21:00",
+   "restaurant"
+  ],
+  [
+   "Ginza Point",
+   48.20804,
+   16.37152,
+   "Mo-Sa 11:00-21:30",
+   "fast_food"
+  ],
+  [
+   "Interspar Market Kitchen",
+   48.20615,
+   16.38517,
+   "Mo-Sa 06:30-20:30; Su,PH 06:30-18:00",
+   "restaurant"
+  ],
+  [
+   "Max & Benito",
+   48.20647,
+   16.38419,
+   "Mo-Fr 11:30-21:30; Sa 12:00-21:30; Su 12:00-20:30",
+   "restaurant"
+  ],
+  [
+   "Fat Monk",
+   48.20642,
+   16.38439,
+   "Mo-Su 11:00-20:00",
+   "fast_food"
+  ],
+  [
+   "Vapiano",
+   48.20622,
+   16.38552,
+   "Mo-Sa 11:00-22:00; Su 12:00-22:00",
+   "restaurant"
+  ],
+  [
+   "McCafé",
+   48.18516,
+   16.4184,
+   "Mo-Fr 07:00-19:00; Sa,Su 09:00-19:00",
+   "cafe"
+  ],
+  [
+   "Asian Noodles",
+   48.24854,
+   16.36448,
+   "Mo-Fr 10:30-22:30; Sa 11:00-22:00; Su 10:30-22:30",
+   "fast_food"
+  ],
+  [
+   "Chi Chi",
+   48.20693,
+   16.38507,
+   "Mo-Sa 10:30-21:00; Su 10:00-21:00",
+   "cafe"
+  ],
+  [
+   "Costa",
+   48.20746,
+   16.38553,
+   "Mo-Fr 07:00-20:00; Sa 08:00-19:00; Su 08:00-18:00",
+   "cafe"
+  ],
+  [
+   "Teeamo",
+   48.20731,
+   16.38562,
+   "Mo-Fr 09:00-20:00; Sa 09:00-18:00; Su 12:00-18:00",
+   "cafe"
+  ],
+  [
+   "Vapiano",
+   48.2062,
+   16.38547,
+   "Mo-Sa 11:00-22:00; Su 12:00-22:00",
+   "restaurant"
+  ],
+  [
+   "KFC",
+   48.20621,
+   16.38502,
+   "Mo-Fr 11:00-00:00; Sa,Su,PH 08:00-00:00",
+   "fast_food"
+  ],
+  [
+   "ra'mien go",
+   48.20628,
+   16.38516,
+   "PH,Mo-Su 11:00-21:30",
+   "restaurant"
+  ],
+  [
+   "ra'mien go",
+   48.20641,
+   16.38525,
+   "Mo-Su,PH 11:00-21:30",
+   "fast_food"
+  ],
+  [
+   "Sternzeichen",
+   48.20651,
+   16.38436,
+   "Mo-Su,PH 11:00-22:00",
+   "fast_food"
+  ],
+  [
+   "McDonald's",
+   48.20669,
+   16.38451,
+   "Mo-Su,PH 06:00-24:00, Sa,Su 00:00-00:30",
+   "fast_food"
+  ],
+  [
+   "Sushi Cross",
+   48.20645,
+   16.38499,
+   "Mo-Fr 11:00-21:00",
+   "restaurant"
+  ],
+  [
+   "SUESS'KIND",
+   48.20671,
+   16.38377,
+   "Mo-Fr 11:00-15:00",
+   "restaurant"
+  ],
+  [
+   "Wiener Würstelstand",
+   48.20695,
+   16.38088,
+   "24/7",
+   "fast_food"
+  ],
+  [
+   "Gastgarten Pfudl",
+   48.20843,
+   16.37837,
+   "Tu 18:00-23:00; We 12:00-23:00; Th 18:00-23:00; Fr 12:00-23:00; Sa 12:00-23:00; Su,Mo off",
+   "biergarten"
+  ],
+  [
+   "Burger King",
+   48.21449,
+   16.40019,
+   "Fr 13:00-23:00; Mo-Th 14:00-22:00; Sa 12:00-23:00; Su 11:00-22:00",
+   "fast_food"
+  ],
+  [
+   "klein Steiermark",
+   48.1862,
+   16.38615,
+   "Mo-Su,PH 11:30-23:00",
+   "restaurant"
+  ],
+  [
+   "Türkis",
+   48.21767,
+   16.39239,
+   "Mo-Su 09:00-24:00",
+   "fast_food"
+  ],
+  [
+   "QuickWu",
+   48.21771,
+   16.39232,
+   "Mo-Fr 11:00-22:00; Su 12:00-22:00",
+   "restaurant"
+  ],
+  [
+   "Café Bar Bier & Zeit",
+   48.21735,
+   16.39225,
+   "10:00-04:00",
+   "pub"
+  ],
+  [
+   "Kate's Cafe Bar",
+   48.21741,
+   16.39226,
+   "Mo-Su 08:00-01:00",
+   "cafe"
+  ],
+  [
+   "Hendricks Sportsbar",
+   48.21818,
+   16.39255,
+   "Mo-Fr 08:00-02:00; Sa-Su 10:00-02:00",
+   "bar"
+  ],
+  [
+   "oses",
+   48.21832,
+   16.39254,
+   "Su-Th 11:30-01:00, Fr 10:30-05:00, Sa 14:00-05:00",
+   "fast_food"
+  ],
+  [
+   "Café-Restaurant Resselpark",
+   48.19954,
+   16.36919,
+   "Mo-Sa 09:00-23:00; Su 09:00-22:00",
+   "restaurant"
+  ],
+  [
+   "McCafé",
+   48.20652,
+   16.38475,
+   "Mo-Su 06:00-22:00",
+   "cafe"
+  ],
+  [
+   "Daylounge Cafe",
+   48.20586,
+   16.3844,
+   "Mo-Sa 08:00-23:00; PH Su 09:00-23:00",
+   "cafe"
+  ],
+  [
+   "Phönixhof",
+   48.20526,
+   16.34981,
+   "Mo-Sa 18:00-24:00",
+   "restaurant"
+  ],
+  [
+   "Salm Bräu",
+   48.19659,
+   16.3809,
+   "Mo-Su 11:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Kaffee-Konditorei Mayerhofer",
+   48.22719,
+   16.3599,
+   "Mo-Th 08:00-20:00; Fr-Su,PH off",
+   "cafe"
+  ],
+  [
+   "Nguyens Phở House",
+   48.20662,
+   16.34867,
+   "Mo 11:30-22:00; We-Su 11:30-22:00",
+   "restaurant"
+  ],
+  [
+   "Café Anno",
+   48.20802,
+   16.3418,
+   "Sep-Jun: Su-Th 18:00-02:00; Fr 18:00-04:00; Sa 19:00-04:00; Jul-Aug: Su-Th 20:00-02:00; Fr-Sa 20:00-04:00",
+   "pub"
+  ],
+  [
+   "Café Leopold",
+   48.20262,
+   16.35876,
+   "Mo-We,Su 10:00-04:00; Th-Sa 10:00-04:00",
+   "cafe"
+  ],
+  [
+   "Amerlingbeisl",
+   48.20311,
+   16.35439,
+   "Mo-Su 12:00-02:00",
+   "restaurant"
+  ],
+  [
+   "Centimeter II",
+   48.20252,
+   16.35467,
+   "Mo-Su 10:00-24:00",
+   "restaurant"
+  ],
+  [
+   "Uni-Eck",
+   48.21719,
+   16.35952,
+   "Mo-Fr 08:00-19:00",
+   "fast_food"
+  ],
+  [
+   "Café Erdgeschoss",
+   48.2068,
+   16.3431,
+   "Mo-Sa 17:00-24:00; Su,PH 10:30-17:00",
+   "cafe"
+  ],
+  [
+   "Plutzer Bräu",
+   48.20289,
+   16.35467,
+   "Mo-Sa 11:00-23:00; PH,Su 11:00-21:00",
+   "restaurant"
+  ],
+  [
+   "Shebeen",
+   48.20637,
+   16.34895,
+   "Mo-Fr 15:00-00:00, Sa-Su 12:00-00:00, Su,PH 17:00-01:00",
+   "pub"
+  ],
+  [
+   "Il Sestante",
+   48.21051,
+   16.35049,
+   "Mo-Su 11:30-23:00",
+   "restaurant"
+  ],
+  [
+   "Treu am Platzl",
+   48.21067,
+   16.35042,
+   "Mo-Fr 08:00-24:00; Sa-Su 09:00-24:00",
+   "restaurant"
+  ],
+  [
+   "Afiy'et",
+   48.22214,
+   16.3538,
+   "Mo-Su 10:00-22:00",
+   "fast_food"
+  ],
+  [
+   "Freiherz",
+   48.21645,
+   16.3522,
+   "Mo-Th 11:30-23:00, Fr-Sa 11:30-24:00, Su 11:30-22:00",
+   "restaurant"
+  ],
+  [
+   "Statt-Beisl",
+   48.22317,
+   16.35153,
+   "Mo-Fr 11:30-02:00, Sa 17:00-02:00, Su 17:00-24:00",
+   "restaurant"
+  ],
+  [
+   "Papaya Restaurant",
+   48.20546,
+   16.35,
+   "Sa, Su, PH 12:30-22:30; Mo off; Tu-Fr 11:30-15:00; Tu-Fr 17:00-22:30",
+   "restaurant"
+  ],
+  [
+   "Rado´s Gastwirtschaft",
+   48.2253,
+   16.35534,
+   "Mo-Sa 11:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Lana",
+   48.20654,
+   16.34518,
+   "Mo-Fr 11:00-22:00; Sa 16:00-22:00; Su,PH off",
+   "restaurant"
+  ],
+  [
+   "Strozzi",
+   48.20803,
+   16.34913,
+   "Mo 08:30-22:00; Tu-Fr 08:30-23:00; Sa 09:00-15:00",
+   "cafe"
+  ],
+  [
+   "Ulrich",
+   48.20441,
+   16.35293,
+   "Mo-Fr 07:30-25:00; Sa-Su, PH 09:00-25:00",
+   "restaurant"
+  ],
+  [
+   "Cafeteria Maximilian",
+   48.2146,
+   16.35809,
+   "Mo-Su 09:00-23:30",
+   "cafe"
+  ],
+  [
+   "Durchhaus",
+   48.20546,
+   16.35324,
+   "Tu-Sa 17:00-24:00",
+   "restaurant"
+  ],
+  [
+   "Cafe Spitt",
+   48.22461,
+   16.35378,
+   "Mo-Fr 18:00-24:00",
+   "cafe"
+  ],
+  [
+   "The Golden Harp",
+   48.22658,
+   16.36345,
+   "Mo-Fr 11:00-24:00, Sa,Su 12:00-24:00",
+   "pub"
+  ],
+  [
+   "Beaver Brewing Company",
+   48.22458,
+   16.35698,
+   "Mo-Th 16:30-02:00, Fr,Sa 12:00-24:00, Su 12:00-22:00",
+   "restaurant"
+  ],
+  [
+   "Fromme Helene",
+   48.20917,
+   16.35213,
+   "Mo-Su 11:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Namaste Nepal",
+   48.22733,
+   16.35915,
+   "Mo 11:30-14:00; Tu-Su 11:00-21:40",
+   "restaurant"
+  ],
+  [
+   "Cafe Delphin",
+   48.23649,
+   16.38435,
+   "Mo-Fr 07:30-20:00; Sa 07:30-18:00",
+   "cafe"
+  ],
+  [
+   "Bombay",
+   48.20535,
+   16.34897,
+   "Tu-Su 11:00-15:00, Mo-Su 18:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Charlie P's Irish Pub",
+   48.21661,
+   16.35961,
+   "Mo 16:00-01:00, Tu-Th 16:00-02:00, Fr 16:00-03:00, Sa 15:00-03:00, Su 15:00-01:00",
+   "pub"
+  ],
+  [
+   "Dal Maestro",
+   48.2376,
+   16.38744,
+   "Mo-Th 11:00-23:00; Fr 11:00-16:30",
+   "restaurant"
+  ],
+  [
+   "Am Nordpol",
+   48.22668,
+   16.38191,
+   "Mo-Fr 17:00-23:30; Sa,Su,PH 12:00-23:30",
+   "restaurant"
+  ],
+  [
+   "Fliegender Holländer",
+   48.21523,
+   16.37664,
+   "Mo-Fr 12:00-24:00",
+   "restaurant"
+  ],
+  [
+   "Rosnovsky&Co",
+   48.21072,
+   16.35341,
+   "Mo-Sa 17:00-22:00",
+   "restaurant"
+  ],
+  [
+   "Aida",
+   48.22511,
+   16.3619,
+   "Mo-Su 09:00-17:00",
+   "cafe"
+  ],
+  [
+   "Kathmandu Kitchen",
+   48.22509,
+   16.36332,
+   "Th-Tu 11:30-14:30, 17:30-22:30",
+   "restaurant"
+  ],
+  [
+   "Castelletto",
+   48.21169,
+   16.3763,
+   "Mo-Sa 07:00-24:00; Su 08:00-24:00; PH 08:00-24:00",
+   "cafe"
+  ],
+  [
+   "Ruffino",
+   48.21005,
+   16.34715,
+   "Mo-Su,PH 11:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Akakiko",
+   48.22614,
+   16.36235,
+   "Mo-Fr 11:00-23:00",
+   "restaurant"
+  ],
+  [
+   "die freunderlwirtschaft",
+   48.22092,
+   16.36462,
+   "Tu-Sa 16:00-24:00",
+   "restaurant"
+  ],
+  [
+   "Aera",
+   48.21501,
+   16.37055,
+   "Mo-Sa 10:00-01:00; Su, PH 10:00-24:00",
+   "restaurant"
+  ],
+  [
+   "Le Wei",
+   48.2149,
+   16.37211,
+   "Mo-Fr 11:30-14:30, 18:00-22:00; Sa 18:00-22:00; Su, PH 12:00-14:00, 18:00-22:00",
+   "restaurant"
+  ],
+  [
+   "Frühstücksraum von Hotel Post",
+   48.21015,
+   16.3781,
+   "Mo-Su 06:30-11:30",
+   "cafe"
+  ],
+  [
+   "Luxor",
+   48.22095,
+   16.36413,
+   "Mo-Th 09:00-01:00; Fr 09:00-02:00; Sa 09:00-02:00; Su 09:00-01:00",
+   "pub"
+  ],
+  [
+   "Sipsong Bar",
+   48.21183,
+   16.35217,
+   "We,Th 17:30-23:30; Fr,Sa 17:30-24:00; Su 17:30-22:30; Tu off; Mo off",
+   "bar"
+  ],
+  [
+   "fivebar",
+   48.20843,
+   16.34754,
+   "Tu-Th 18:00-01:00; Fr, Sa 18:00-03:00",
+   "pub"
+  ],
+  [
+   "Bogside Inn",
+   48.21343,
+   16.35634,
+   "Mo-Th 17:00-02:00; Fr 17:00-04:00; Sa 18:00-04:00",
+   "pub"
+  ],
+  [
+   "Gasthaus Stopfer",
+   48.21456,
+   16.3723,
+   "Mo-Fr 11:00-23:00; PH off",
+   "restaurant"
+  ],
+  [
+   "Fräuleins",
+   48.20696,
+   16.34608,
+   "Tu-Sa 16:00-02:00",
+   "bar"
+  ],
+  [
+   "Kreuzberg",
+   48.2056,
+   16.345,
+   "Mo-Fr 09:00-22:00; Sa 15:00-22:00; PH,Su 17:00-22:00",
+   "cafe"
+  ],
+  [
+   "Burger King",
+   48.24008,
+   16.38536,
+   "Fr-Sa 10:00-24:00; Mo-Th,Su 10:00-23:00",
+   "fast_food"
+  ],
+  [
+   "Panibär",
+   48.24043,
+   16.38567,
+   "Mo-Su 10:00-22:00",
+   "fast_food"
+  ],
+  [
+   "Weltcafé",
+   48.21664,
+   16.35713,
+   "Mo-Fr 08:00-22:00; Sa,Su 09:00-22:00",
+   "cafe"
+  ],
+  [
+   "Fish & Chips Bistro",
+   48.21703,
+   16.35895,
+   "Mo-Fr 11:00-19:30; Sa-Su,PH off",
+   "fast_food"
+  ],
+  [
+   "7Sternbräu",
+   48.2022,
+   16.35352,
+   "PH,Su-Tu 11:00-22:00; We-Sa 11:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Da Michele",
+   48.20388,
+   16.35126,
+   "Mo-Sa 12:00-15:00,18:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Pizzeria Da Giovanni",
+   48.20376,
+   16.35346,
+   "Mo-Th 17:00-23:00; Fr,Sa 12:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Beisl",
+   48.20354,
+   16.35352,
+   "Mo-Fr 10:30+",
+   "restaurant"
+  ],
+  [
+   "Cafe - Konditorei A. Blocher",
+   48.20155,
+   16.3549,
+   "Mo-We 07:00-19:00; Th 07:00-18:00",
+   "cafe"
+  ],
+  [
+   "Kriterium",
+   48.20138,
+   16.35506,
+   "Mo-Sa 09:00-22:00",
+   "restaurant"
+  ],
+  [
+   "Café im Raimundhof",
+   48.19965,
+   16.3557,
+   "Mo-Su,PH 10:00-22:00",
+   "cafe"
+  ],
+  [
+   "Zu ebener Erde und erster Stock",
+   48.20413,
+   16.35541,
+   "Tu-Sa 12:00-22:00; PH off",
+   "restaurant"
+  ],
+  [
+   "Lolo & Lola",
+   48.20403,
+   16.35495,
+   "Mo-Sa 11:30-22:00",
+   "restaurant"
+  ],
+  [
+   "The Short Hall",
+   48.20407,
+   16.35513,
+   "Mo-Fr 17:00-02:00; Sa, Su 15:00-02:00",
+   "pub"
+  ],
+  [
+   "Zum Moghulhof",
+   48.20427,
+   16.35478,
+   "Mo-Su 11:30-14:30,17:30-22:00",
+   "restaurant"
+  ],
+  [
+   "Witwe Bolte",
+   48.20326,
+   16.35562,
+   "Mo-Fr 17:30-23:00; Sa-Su 12:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Mama & der Bulle",
+   48.20268,
+   16.35557,
+   "Su-Th 12:00-23:00; Fr-Sa 12:00-00:00",
+   "restaurant"
+  ],
+  [
+   "Gasthaus am Spittelberg",
+   48.20315,
+   16.35516,
+   "Th-Mo 18:00-23:00; PH 12:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Konoba Dalmatia",
+   48.20698,
+   16.34676,
+   "Mo-Su 10:00-23:00",
+   "restaurant"
+  ],
+  [
+   "My Secret Garden",
+   48.1994,
+   16.35587,
+   "Mo-Sa 11:00-19:00; Su off",
+   "restaurant"
+  ],
+  [
+   "Felzl",
+   48.20743,
+   16.34355,
+   "Mo-Fr 06:30-18:30; Sa 07:00-16:00; Su 07:00-13:00",
+   "cafe"
+  ],
+  [
+   "Cafe Latte-Art",
+   48.21465,
+   16.35767,
+   "Mo-Fr 08:00-18:00; Sa 10:00-18:00; Su 10:00-15:00",
+   "cafe"
+  ],
+  [
+   "Koinonia Plus",
+   48.21212,
+   16.34384,
+   "Mo-Su 11:30-23:30",
+   "restaurant"
+  ],
+  [
+   "Noodle World",
+   48.20797,
+   16.34194,
+   "Mo-Fr 11:30-22:00; Sa off; PH,Su 13:30-22:00",
+   "fast_food"
+  ],
+  [
+   "The Sly & Arny Restaurant Bar",
+   48.21857,
+   16.35698,
+   "Mo-Su 18:00-02:00",
+   "restaurant"
+  ],
+  [
+   "Pizzeria Il Delfino",
+   48.23954,
+   16.38527,
+   "Mo-Su 11:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Roth",
+   48.21643,
+   16.35977,
+   "Mo-Su 11:00-23:00",
+   "cafe"
+  ],
+  [
+   "La Grece",
+   48.20643,
+   16.35107,
+   "Mo-Fr 10:00-18:00",
+   "restaurant"
+  ],
+  [
+   "albertgasse39",
+   48.21224,
+   16.34388,
+   "Mo-Sa 09:00-02:00, Su 09:00-24:00",
+   "bar"
+  ],
+  [
+   "Radatz",
+   48.21023,
+   16.34521,
+   "Mo-Fr 07:30-18:30; Sa 07:30-13:00",
+   "fast_food"
+  ],
+  [
+   "Kreisky",
+   48.20266,
+   16.35657,
+   "Mo-Su 18:00-04:00",
+   "pub"
+  ],
+  [
+   "Blue Orange",
+   48.22535,
+   16.35512,
+   "Mo-Fr 07:00-21:00; Sa 08:00-21:00; Su 09:00-21:00",
+   "cafe"
+  ],
+  [
+   "Schutzhaus Lilli",
+   48.17899,
+   16.39741,
+   "Mo-Sa 10:00-20:00; PH off",
+   "restaurant"
+  ],
+  [
+   "Imbiss Mina",
+   48.20747,
+   16.34437,
+   "Mo-Su 12:00-23:00",
+   "fast_food"
+  ],
+  [
+   "La Tavolozza",
+   48.21184,
+   16.3485,
+   "Mo-Fr 17:00-00:30, Sa,Su,PH 12:00-00:30",
+   "restaurant"
+  ],
+  [
+   "tagsüber",
+   48.21047,
+   16.34603,
+   "Mo off; Tu-Su,PH 09:00-18:00",
+   "cafe"
+  ],
+  [
+   "ditta",
+   48.20746,
+   16.34444,
+   "Mo-Fr 09:00-15:30",
+   "fast_food"
+  ],
+  [
+   "Salim's",
+   48.21227,
+   16.34697,
+   "Mo-Su 16:00-02:00",
+   "bar"
+  ],
+  [
+   "Erich",
+   48.20514,
+   16.35265,
+   "Mo-Su 09:00-02:00",
+   "bar"
+  ],
+  [
+   "Pinocchio",
+   48.20526,
+   16.35291,
+   "Mo-Fr 11:00-14:00,17:00-20:00; Su 12:00-22:00",
+   "restaurant"
+  ],
+  [
+   "Morgenstern",
+   48.20504,
+   16.3527,
+   "Mo 16:00-02:00; Tu-Sa 13:00-02:00; Su 16:00-23:00",
+   "pub"
+  ],
+  [
+   "McDonald's",
+   48.24187,
+   16.3842,
+   "Mo-Th 06:00-01:00, Fr,Sa 06:00-02:00, Su,PH 06:00-01:00; 2026 Aug off",
+   "fast_food"
+  ],
+  [
+   "Fischrestaurant Ragusa",
+   48.21834,
+   16.36215,
+   "Mo-Fr 11:30-14:30; Sa 18:00-22:30,18:00-22:30",
+   "restaurant"
+  ],
+  [
+   "Herlitschka",
+   48.20005,
+   16.38068,
+   "Su-Th 12:00-23:00; Fr 12:00-24:00; Sa 17:00-24:00",
+   "restaurant"
+  ],
+  [
+   "Gmoakeller",
+   48.20046,
+   16.37868,
+   "Mo-Sa 11:00-00:00",
+   "restaurant"
+  ],
+  [
+   "Die Burgermacher",
+   48.20425,
+   16.35455,
+   "Tu-Sa 12:00-22:30; Su 12:00-19:00",
+   "fast_food"
+  ],
+  [
+   "die drahtwarenhandlung",
+   48.20527,
+   16.3496,
+   "\"nach Vereinbarung\"",
+   "restaurant"
+  ],
+  [
+   "Santa Lucia",
+   48.19893,
+   16.3809,
+   "Mo-Fr 10:30-14:30,17:30-22:00; PH,Su 12:00-14:30,17:30-22:00",
+   "restaurant"
+  ],
+  [
+   "Arco",
+   48.19967,
+   16.37962,
+   "Mo-Fr 11:30-15:30",
+   "restaurant"
+  ],
+  [
+   "Hühnermann",
+   48.1989,
+   16.37991,
+   "Mo-Fr 08:00-17:00",
+   "fast_food"
+  ],
+  [
+   "Café am Heumarkt",
+   48.20152,
+   16.38027,
+   "Mo-Fr 10:00-23:00; PH,Sa,Su off",
+   "cafe"
+  ],
+  [
+   "Restaurant 1070",
+   48.20404,
+   16.3556,
+   "Tu-Su 17:00-02:00",
+   "restaurant"
+  ],
+  [
+   "Clash",
+   48.22449,
+   16.35304,
+   "Mo-Su 18:00-01:30",
+   "pub"
+  ],
+  [
+   "Vegirant",
+   48.22293,
+   16.35181,
+   "Mo-Fr 11:30-18:00",
+   "restaurant"
+  ],
+  [
+   "Asia Bistro",
+   48.20021,
+   16.38111,
+   "Mo-Fr 11:00-14:30",
+   "restaurant"
+  ],
+  [
+   "Tonis Kulinarium 7",
+   48.20237,
+   16.35361,
+   "Tu-Sa 17:00-23:00, Su 11:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Das Lange",
+   48.20878,
+   16.35229,
+   "Mo-Sa 08:00-02:00, Su,PH 18:00-24:00",
+   "pub"
+  ],
+  [
+   "FreyBier",
+   48.2121,
+   16.36432,
+   "Mo-Sa 11:30-23:00; Su,PH 12:00-20:00",
+   "bar"
+  ],
+  [
+   "bestens. die bar",
+   48.204,
+   16.3544,
+   "Tu-Th 18:00-01:00; Fr-Sa 18:00-02:00; Su 18:00-01:00",
+   "pub"
+  ],
+  [
+   "Schlipf&Co",
+   48.20764,
+   16.34363,
+   "Mo-Fr 10:00-19:00; Sa 10:00-16:00",
+   "restaurant"
+  ],
+  [
+   "Ramen Nippon",
+   48.21336,
+   16.34936,
+   "Tu-Su 11:30-23:00",
+   "restaurant"
+  ],
+  [
+   "Zimmerservice",
+   48.2081,
+   16.34878,
+   "Tu-Sa 09:00-23:00; Su,PH 09:00-15:00; Mo off",
+   "restaurant"
+  ],
+  [
+   "T-Marx",
+   48.18633,
+   16.40366,
+   "Mo-Fr 11:00-14:00",
+   "fast_food"
+  ],
+  [
+   "Food Garden",
+   48.18637,
+   16.4036,
+   "Mo-Fr 07:30-17:30",
+   "fast_food"
+  ],
+  [
+   "Brot und Spiele",
+   48.21341,
+   16.3498,
+   "Mo-Su 18:00-02:00; Jul-Aug: Mo-Su 19:00-02:00",
+   "pub"
+  ],
+  [
+   "Pizzeria Dalia",
+   48.23773,
+   16.38446,
+   "Mo-Su 11:00-22:00",
+   "restaurant"
+  ],
+  [
+   "Hühnermeister",
+   48.23778,
+   16.38686,
+   "Mo-Fr 09:00-20:00",
+   "pub"
+  ],
+  [
+   "Hühnerparadies",
+   48.23774,
+   16.38677,
+   "Mo-Fr 08:00-20:00; Sa,Su,PH 10:00-20:00",
+   "fast_food"
+  ],
+  [
+   "Kamala",
+   48.21567,
+   16.37658,
+   "Mo-Fr 11:00-15:00,18:00-21:00; PH off",
+   "restaurant"
+  ],
+  [
+   "Yan Asia Imbiss",
+   48.23608,
+   16.38901,
+   "Mo-Fr 10:30-21:30; Su 12:00-21:30",
+   "restaurant"
+  ],
+  [
+   "Petit Maroc",
+   48.20575,
+   16.34932,
+   "Mo-Fr 12:00-15:00,18:00-24:00; Sa 17:00-24:00; Su off",
+   "restaurant"
+  ],
+  [
+   "Kiang Wine & Dine",
+   48.22103,
+   16.36363,
+   "Tu-Fr 17:00-24:00",
+   "restaurant"
+  ],
+  [
+   "Frau Mayer",
+   48.21391,
+   16.37117,
+   "Tu, Th 16:30-00:00; We 15:00-00:00; Fr-Sa 16:30-01:00",
+   "bar"
+  ],
+  [
+   "Chaihona",
+   48.21293,
+   16.3618,
+   "Mo-We 12:00-23:00, Th-Sa 12:00-02:00, Su 12:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Goldener Drache",
+   48.22147,
+   16.36057,
+   "Tu-Sa 17:30-22:00; Su 11:30-15:00,17:30-22:00",
+   "restaurant"
+  ],
+  [
+   "Pizzeria Mar",
+   48.22017,
+   16.36283,
+   "Tu-Sa 11:30-14:30,17:30-23:00; Su 11:30-14:30",
+   "restaurant"
+  ],
+  [
+   "Restaurant D'Landsknecht",
+   48.21966,
+   16.36178,
+   "Mo-Su 10:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Tian Bistro",
+   48.20296,
+   16.35485,
+   "Mo 17:30-22:00; Tu-Fr 12:00-22:00; Sa-Su 10:00-22:00",
+   "restaurant"
+  ],
+  [
+   "Tante Liesl",
+   48.2202,
+   16.36417,
+   "Mo-Su 12:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Cafe Nuss",
+   48.22336,
+   16.35351,
+   "Mo-Fr 07:00-00:00; Sa-Su 08:00-00:00",
+   "cafe"
+  ],
+  [
+   "Sichuan Restaurant",
+   48.21754,
+   16.35916,
+   "Mo-Su 11:30-22:00",
+   "restaurant"
+  ],
+  [
+   "Aida",
+   48.22226,
+   16.35307,
+   "Mo-Sa 08:00-19:00; Su,PH 09:00-18:00",
+   "cafe"
+  ],
+  [
+   "Wiener Genuss Knödel",
+   48.22191,
+   16.35292,
+   "Tu-Th 11:30-20:30, Fr-Su 11:30-21:30",
+   "cafe"
+  ],
+  [
+   "Café Weimar",
+   48.22341,
+   16.35176,
+   "Su 09:00-23:30; Mo-Sa 08:00-23:30",
+   "cafe"
+  ],
+  [
+   "Cafe der Provinz",
+   48.2105,
+   16.35116,
+   "Mo-Su 08:00-23:00",
+   "cafe"
+  ],
+  [
+   "Fladerei Berggasse",
+   48.21785,
+   16.36153,
+   "Mo-Fr 11:00-24:00, Sa 17:00-24:00, Su 17:00-22:00",
+   "restaurant"
+  ],
+  [
+   "I Vecchi Amici",
+   48.2192,
+   16.3613,
+   "Mo-Su 11:30-23:30",
+   "restaurant"
+  ],
+  [
+   "Rembetiko",
+   48.2225,
+   16.36135,
+   "Mo-Su 11:30-15:00, 17:30-00:00",
+   "restaurant"
+  ],
+  [
+   "Cafe Saadi",
+   48.22557,
+   16.36218,
+   "Mo-Su 08:00-24:00",
+   "cafe"
+  ],
+  [
+   "Billini",
+   48.22523,
+   16.36191,
+   "Mo-Su 11:00-23:00; PH 11:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Feuervogel",
+   48.22507,
+   16.35845,
+   "Mo-Fr 17:30-24:00; Sa 17:30-01:00",
+   "restaurant"
+  ],
+  [
+   "Cafe Mary",
+   48.22485,
+   16.36185,
+   "Mo-Fr 11:00-22:00; Sa-Su 14:00-22:00; PH 14:00-22:00",
+   "pub"
+  ],
+  [
+   "Studio 15",
+   48.22396,
+   16.36177,
+   "Mo-Fr 08:00-23:00; Sa 17:00-23:00; Su off; PH off",
+   "restaurant"
+  ],
+  [
+   "Kenny's",
+   48.22438,
+   16.36182,
+   "Mo-Fr 11:00-15:00",
+   "fast_food"
+  ],
+  [
+   "Cafe Manhattan",
+   48.22919,
+   16.37381,
+   "\"invited guests only\"",
+   "cafe"
+  ],
+  [
+   "Cafe Denise",
+   48.2302,
+   16.37726,
+   "Mo-Sa 08:00-22:00; Su 10:00-22:00",
+   "cafe"
+  ],
+  [
+   "Grande Cocktailbar",
+   48.21036,
+   16.34564,
+   "Mo-Th 17:00-01:00, Fr,Sa 17:00-03:00",
+   "bar"
+  ],
+  [
+   "Damenspitz",
+   48.21053,
+   16.34228,
+   "Mo-Th 18:00-01:00; Fr-Sa 18:00-02:00; PH,Su closed",
+   "bar"
+  ],
+  [
+   "Meeru",
+   48.20224,
+   16.35398,
+   "We-Sa 18:00-02:00",
+   "bar"
+  ],
+  [
+   "Kurkonditorei Oberlaa",
+   48.20946,
+   16.34945,
+   "Mo-Su 09:00-20:00",
+   "cafe"
+  ],
+  [
+   "Glacis Beisl",
+   48.20336,
+   16.35722,
+   "Mo-Su 12:00-00:00",
+   "restaurant"
+  ],
+  [
+   "Hao Han",
+   48.19843,
+   16.35725,
+   "Mo,We-Th 11:30-22:00; Fr-Su 11:30-22:30; Tu off",
+   "restaurant"
+  ],
+  [
+   "Pizza Bussi Ciao",
+   48.20762,
+   16.3509,
+   "Tu-We 17:00-22:00; Th-Fr 17:00-23:00; Sa 12:30-23:00; Su 12:30-22:00",
+   "restaurant"
+  ],
+  [
+   "Adlerhof",
+   48.20406,
+   16.35072,
+   "Mo-Su 08:00-00:00",
+   "restaurant"
+  ],
+  [
+   "Coffee Pirates 2",
+   48.21707,
+   16.35111,
+   "Mo-Sa 09:00-16:00",
+   "cafe"
+  ],
+  [
+   "McDonald's",
+   48.2261,
+   16.36106,
+   "PH,Mo-Su 07:00-01:00",
+   "fast_food"
+  ],
+  [
+   "Cafe Zeit",
+   48.21311,
+   16.34864,
+   "Mo-Su 09:00-24:00",
+   "cafe"
+  ],
+  [
+   "bistro narrisch",
+   48.21711,
+   16.35659,
+   "Tu-Fr 09:00-16:00",
+   "cafe"
+  ],
+  [
+   "Augenweide",
+   48.21295,
+   16.37806,
+   "Mo-Sa 11:30-23:00",
+   "restaurant"
+  ],
+  [
+   "Verde 1080",
+   48.20941,
+   16.35009,
+   "Mo-We 12:00-18:00; Th 12:00-19:00; Fr 12:00-19:30",
+   "restaurant"
+  ],
+  [
+   "Das Biero",
+   48.21253,
+   16.34564,
+   "Mo-Th 16:00-01:00, Fr,Sa 16:00-02:00",
+   "pub"
+  ],
+  [
+   "Caffè a Casa",
+   48.21961,
+   16.3644,
+   "Mo-Fr 07:30-18:30; Sa,Su 08:30-18:30",
+   "cafe"
+  ],
+  [
+   "La Pasteria",
+   48.22025,
+   16.36441,
+   "Tu-Fr 11:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Ristorante Scala",
+   48.21943,
+   16.3644,
+   "Mo-Su,PH 11:00-24:00",
+   "restaurant"
+  ],
+  [
+   "Suppenwirtschaft",
+   48.21995,
+   16.3644,
+   "Mo-Fr 11:30-15:00",
+   "restaurant"
+  ],
+  [
+   "Dazwischen",
+   48.22209,
+   16.36508,
+   "Tu-Sa 11:30-21:00; Su 12:00-21:00",
+   "restaurant"
+  ],
+  [
+   "Wirtshaus Roßau",
+   48.2206,
+   16.36551,
+   "Mo-Fr 11:00-22:00; Sa-Su,PH off",
+   "restaurant"
+  ],
+  [
+   "Tao Tao",
+   48.22218,
+   16.36644,
+   "Tu-Sa 15:00-18:00",
+   "restaurant"
+  ],
+  [
+   "Stromwärts",
+   48.22341,
+   16.36592,
+   "Mo-Fr 17:00-23:30",
+   "restaurant"
+  ],
+  [
+   "Ali's Gemüsekebap",
+   48.21706,
+   16.35918,
+   "Su-We 11:00-21:00; Fr,Sa 11:00-23:30; Th 11:00-23:00",
+   "fast_food"
+  ],
+  [
+   "Eiscafé la Fonte",
+   48.23598,
+   16.38808,
+   "Mo-Fr 11:00-21:00; Sa,Su 11:00-21:00",
+   "cafe"
+  ],
+  [
+   "Herzmanufaktur",
+   48.22418,
+   16.36458,
+   "Mo-Tu 09:00-20:00, We 09:00-14:00, Th-Fr 09:00-20:00, Sa 10:00-14:00",
+   "restaurant"
+  ],
+  [
+   "Casa Caribeña",
+   48.22482,
+   16.36398,
+   "Tu-Sa 17:00-24:00",
+   "restaurant"
+  ],
+  [
+   "Sasso d'Oro",
+   48.22565,
+   16.3625,
+   "Mo-Fr 11:30-23:00; Sa 17:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Bar Pani",
+   48.22588,
+   16.36585,
+   "We,Th 17:00-23:00; Fr,Sa 18:00-02:00",
+   "bar"
+  ],
+  [
+   "Klub Gru",
+   48.22593,
+   16.36405,
+   "Mo-Th 18:00-01:00, Fr,Sa 20:00-02:00",
+   "pub"
+  ],
+  [
+   "O. S. K. Premium Kebap House",
+   48.22676,
+   16.36386,
+   "Mo-Su 10:00-22:00",
+   "restaurant"
+  ],
+  [
+   "Amananths Place",
+   48.21759,
+   16.36193,
+   "Fr-Sa 19:00-04:00",
+   "pub"
+  ],
+  [
+   "Kafe‘de.",
+   48.21769,
+   16.36185,
+   "Mo-Fr 10:00-21:00",
+   "cafe"
+  ],
+  [
+   "Mr. Noodle",
+   48.21792,
+   16.36201,
+   "PH,Mo-Su 10:00-22:00",
+   "fast_food"
+  ],
+  [
+   "Pizzeria La Corta",
+   48.21992,
+   16.36076,
+   "Mo-Su 10:00-23:45",
+   "restaurant"
+  ],
+  [
+   "Cocore",
+   48.218,
+   16.36195,
+   "Mo-Su 11:00-22:00",
+   "restaurant"
+  ],
+  [
+   "Marks",
+   48.20581,
+   16.3447,
+   "Tu-Sa 10:00-24:00; Su 09:30-23:00",
+   "restaurant"
+  ],
+  [
+   "Unikat Saftbar - Fresh Juices",
+   48.20978,
+   16.34839,
+   "Mo-Fr 10:00-18:30; Sa 10:00-14:00",
+   "fast_food"
+  ],
+  [
+   "Restaurant Panigl",
+   48.21074,
+   16.34208,
+   "Mo-Fr 11:30-23:00",
+   "restaurant"
+  ],
+  [
+   "Bayram",
+   48.2396,
+   16.38579,
+   "Mo-Fr 10:00-20:00; Sa 11:00-20:00",
+   "fast_food"
+  ],
+  [
+   "Sperling im Augarten",
+   48.22391,
+   16.37805,
+   "Mo-Sa 09:00-22:00; Su 09:00-18:00",
+   "restaurant"
+  ],
+  [
+   "Hanoi Food",
+   48.20425,
+   16.35356,
+   "\"wegen Renovierung geschlossen\"",
+   "restaurant"
+  ],
+  [
+   "Pizzeria Scarabocchio",
+   48.21221,
+   16.35466,
+   "Mo-Fr 11:00-23:00; Sa-Su 12:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Lezzet",
+   48.23859,
+   16.38329,
+   "Mo-Sa 09:00-20:00",
+   "fast_food"
+  ],
+  [
+   "HALLE Café Restaurant",
+   48.20347,
+   16.3579,
+   "Tu-Fr  11:00-24:00, Sa 10:00-24:00, Su 10:00-18:00",
+   "cafe"
+  ],
+  [
+   "Blue Bar",
+   48.20921,
+   16.37698,
+   "Su-Th 19:00-01:00; Fr,Sa 19:00-03:00",
+   "bar"
+  ],
+  [
+   "Club Berlin",
+   48.21502,
+   16.37091,
+   "Su-Th 18:00-02:00;Fr-Sa 18:00-04:00",
+   "bar"
+  ],
+  [
+   "McDonald's",
+   48.21178,
+   16.37596,
+   "PH Su-Th 07:00-02:00; Fr-Sa 07:00-05:00",
+   "fast_food"
+  ],
+  [
+   "GUSTOLAB",
+   48.20917,
+   16.3538,
+   "Mo-Su 10:00-22:00",
+   "fast_food"
+  ],
+  [
+   "Cuba Libre",
+   48.22074,
+   16.36451,
+   "Mo-Sa 16:00-02:00",
+   "bar"
+  ],
+  [
+   "das café",
+   48.20426,
+   16.35503,
+   "Mo-We 09:00-24:00, Th-Fr 09:00-01:00, Sa 10:00-01:00, Su 10:00-23:00",
+   "cafe"
+  ],
+  [
+   "Valentino",
+   48.21745,
+   16.36028,
+   "11:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Ethiopian Restaurant",
+   48.2183,
+   16.35798,
+   "Tu-Sa 13:00-23:00; Su 16:00-21:00",
+   "restaurant"
+  ],
+  [
+   "Café Negroni",
+   48.21803,
+   16.356,
+   "Mo-Fr 16:30+; Sa 18:00+",
+   "restaurant"
+  ],
+  [
+   "krypt.",
+   48.21784,
+   16.36024,
+   "We-Th 19:00-01:00; Fr-Sa 19:00-02:30",
+   "bar"
+  ],
+  [
+   "Zur Goldenen Kugel",
+   48.21861,
+   16.35095,
+   "Mo-Fr 10:00-23:00; PH,Sa-Su off",
+   "restaurant"
+  ],
+  [
+   "Coffee Pirates",
+   48.21729,
+   16.35115,
+   "Mo-Fr 08:00-18:00; Sa-Su 09:00-17:00",
+   "cafe"
+  ],
+  [
+   "Buffet Colosseum",
+   48.22285,
+   16.35377,
+   "Mo-Fr 08:00-19:00; Sa 08:00-15:00",
+   "restaurant"
+  ],
+  [
+   "Das1090",
+   48.22097,
+   16.36053,
+   "Mo-Fr 08:00-24:00; Sa 10:00-24:00; Su 10:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Orlik",
+   48.22703,
+   16.36198,
+   "Mo-Sa 11:00-22:30; Su off",
+   "restaurant"
+  ],
+  [
+   "Atlas Bar and Gallery",
+   48.20527,
+   16.35026,
+   "Mo-Th 16:00-01:00; Fr-Sa 16:00-02:00; Su, PH off",
+   "bar"
+  ],
+  [
+   "el café",
+   48.22524,
+   16.35567,
+   "Mo-Fr 09:00-18:00; Sa 09:00-14:00",
+   "cafe"
+  ],
+  [
+   "Jazzland",
+   48.21209,
+   16.37475,
+   "Mo-Sa 19:00+",
+   "pub"
+  ],
+  [
+   "Ristorante Francesco",
+   48.22324,
+   16.35198,
+   "Tu-Su 11:30-23:30",
+   "restaurant"
+  ],
+  [
+   "Das Loft",
+   48.21272,
+   16.37979,
+   "Mo-Th 06:30-10:30, 16:00-01:00; Fr 06:30-10:30, 16:00-02:00; Sa 07:00-12:00, 16:00-02:00; Su 07:00-12:00, 17:00-01:00",
+   "restaurant"
+  ],
+  [
+   "Cafe Merkur",
+   48.21207,
+   16.35199,
+   "Mo-Su 09:00-24:00",
+   "cafe"
+  ],
+  [
+   "Cafe Hummel",
+   48.21074,
+   16.34378,
+   "Mo-Sa 07:00-24:00; Su 08:00-24:00; PH 08:00-24:00",
+   "cafe"
+  ],
+  [
+   "Döwiener",
+   48.2103,
+   16.34495,
+   "Mo-Fr 08:30-21:00; Sa,Su 11:00-21:00",
+   "fast_food"
+  ],
+  [
+   "Gorilla Kitchen",
+   48.21043,
+   16.34431,
+   "Mo-Su 08:30-22:00",
+   "fast_food"
+  ],
+  [
+   "Zur Press",
+   48.18232,
+   16.40711,
+   "Mo-Su 09:00-21:00",
+   "cafe"
+  ],
+  [
+   "Puerta del Sol",
+   48.21155,
+   16.35165,
+   "Mo-Sa 18:00-24:00; PH off",
+   "restaurant"
+  ],
+  [
+   "Palais Freiluft",
+   48.20769,
+   16.35459,
+   "Tu-Th 15:00-22:00 open \"nur bei Schönwetter\"; Fr-Su 12:00-22:00 open \"nur bei Schönwetter\"",
+   "food_court"
+  ],
+  [
+   "808 - Eight o' Eight",
+   48.21326,
+   16.34715,
+   "Tu-Th 17:00-24:00, Fr,Sa 17:00-01:00; Su,Mo off",
+   "restaurant"
+  ],
+  [
+   "Fuchs & Schaden",
+   48.21365,
+   16.37873,
+   "Tu-Fr 11:00-22:00",
+   "restaurant"
+  ],
+  [
+   "Zu den 3 goldenen Kugeln",
+   48.24017,
+   16.38731,
+   "Mo-Sa 10:00-21:00",
+   "restaurant"
+  ],
+  [
+   "Wein & Co",
+   48.2001,
+   16.3543,
+   "Mo-Sa 10:00-02:00; Su 15:00-24:00; PH 15:00-24:00",
+   "bar"
+  ],
+  [
+   "Osteria del Salento",
+   48.21204,
+   16.34968,
+   "Tu-Sa 18:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Caffè Milano",
+   48.22172,
+   16.35439,
+   "Mo-Fr 08:00-20:00; Sa 09:00-18:00",
+   "cafe"
+  ],
+  [
+   "VinziRast-mittendrin",
+   48.21864,
+   16.35765,
+   "Mo-Fr 11:00-15:00",
+   "restaurant"
+  ],
+  [
+   "Chili & Pfeffer",
+   48.20626,
+   16.34328,
+   "Tu-Fr 11:30-14:30, 17:00-23:00; Sa 12:00-23:00; Su 12:00-22:00",
+   "restaurant"
+  ],
+  [
+   "Kantine",
+   48.21994,
+   16.36139,
+   "Mo-Sa 17:00-01:00",
+   "restaurant"
+  ],
+  [
+   "Paco Restaurant",
+   48.22337,
+   16.35318,
+   "Tu-Fr 11:30-01:00; Sa 11:30-00:00",
+   "restaurant"
+  ],
+  [
+   "Epos",
+   48.20225,
+   16.3542,
+   "Mo-Su,PH 10:00-24:00",
+   "restaurant"
+  ],
+  [
+   "Polkadot",
+   48.20859,
+   16.34386,
+   "Mo-Th 19:00-01:00; Fr,Sa 19:00-03:00",
+   "pub"
+  ],
+  [
+   "Restaurant Diana",
+   48.21616,
+   16.35608,
+   "Mo-Sa 11:00-22:30",
+   "restaurant"
+  ],
+  [
+   "Sakai",
+   48.21205,
+   16.3485,
+   "Tu-Sa 12:00-14:30,18:00-22:00; Su 11:30-14:30 open \"Sushi Brunch only\"",
+   "restaurant"
+  ],
+  [
+   "Sri-Nataraja",
+   48.20556,
+   16.34859,
+   "Tu-Th 11:30-15:30,17:30-22:00; Fr-Su 12:00-22:30; Mo off",
+   "restaurant"
+  ],
+  [
+   "The Long Hall",
+   48.21244,
+   16.35527,
+   "Mo-Th 09:00-01:00; Fr-Sa 09:00-02:00; Su 09:00-01:00",
+   "restaurant"
+  ],
+  [
+   "Guru",
+   48.21218,
+   16.35447,
+   "Mo-Fr 11:00-14:30, Mo-Sa 18:00-22:30; PH off",
+   "restaurant"
+  ],
+  [
+   "Pizzeria Giuliano",
+   48.22105,
+   16.35198,
+   "Mo-Fr 11:30-14:30,17:30-23:00; Sa, Su off",
+   "restaurant"
+  ],
+  [
+   "KÖÖ 7",
+   48.20455,
+   16.35139,
+   "Mo-Su 10:00-02:00",
+   "pub"
+  ],
+  [
+   "KFC",
+   48.24034,
+   16.38529,
+   "Mo-Th,Su 10:00-23:00; Fr-Sa 10:00-24:00; 2026 Aug off",
+   "fast_food"
+  ],
+  [
+   "Le Burger Pop Up",
+   48.24007,
+   16.38562,
+   "Mo-Su,PH 11:00-23:00",
+   "fast_food"
+  ],
+  [
+   "Subway",
+   48.24025,
+   16.38558,
+   "Mo-Th,Su 10:00-22:00; Fr-Sa 10:00-23:00",
+   "fast_food"
+  ],
+  [
+   "CupCakes Wien",
+   48.20974,
+   16.34381,
+   "Mo-Fr 07:30-11:00, Fr 15:00-18:00, Sa,Su,PH 15:00-18:00",
+   "cafe"
+  ],
+  [
+   "Quicky's Burger",
+   48.22061,
+   16.35227,
+   "Mo-Fr 11:00-22:00; Sa-Su 12:00-22:00",
+   "fast_food"
+  ],
+  [
+   "Das Torberg",
+   48.20939,
+   16.34864,
+   "Tu-Sa 17:00-24:00",
+   "bar"
+  ],
+  [
+   "Salonga",
+   48.21182,
+   16.35176,
+   "Mo-Su 18:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Piaristenkeller",
+   48.21093,
+   16.35011,
+   "Mar-Sep: Mo-Sa 17:30-22:00",
+   "restaurant"
+  ],
+  [
+   "avalon.kultur",
+   48.20893,
+   16.3437,
+   "Sa 18:00-02:00, Mo-Fr 17:00-02:00",
+   "restaurant"
+  ],
+  [
+   "Donasia",
+   48.21497,
+   16.37572,
+   "Su-Fr 10:30-22:00",
+   "restaurant"
+  ],
+  [
+   "Westpol",
+   48.20696,
+   16.34574,
+   "Mo-Fr 11:00-23:00, Sa 09:00-23:00, Su,PH 09:00-22:00",
+   "restaurant"
+  ],
+  [
+   "Dong Nai",
+   48.21337,
+   16.37431,
+   "Mo-Fr 11:00-15:00, 17:00-22:00; Sa-Su 13:00-22:00",
+   "restaurant"
+  ],
+  [
+   "Motto am Fluss",
+   48.21208,
+   16.37784,
+   "Mo-Su 08:00-00:00",
+   "cafe"
+  ],
+  [
+   "Kübey",
+   48.21481,
+   16.37197,
+   "Tu-Su 17:00-01:00",
+   "restaurant"
+  ],
+  [
+   "Michael's Bier-& Weinbar",
+   48.21506,
+   16.37188,
+   "Mo-Fr 16:00-24:00; PH off",
+   "bar"
+  ],
+  [
+   "Pizza Angolo No 22",
+   48.21807,
+   16.35867,
+   "Tu-Sa 12:00-15:00,17:30-22:00; Su 17:00-22:00; Mo off",
+   "restaurant"
+  ],
+  [
+   "Minante",
+   48.20268,
+   16.3567,
+   "Mo-Su 17:00-23:00; PH off",
+   "restaurant"
+  ],
+  [
+   "El Fuego",
+   48.22674,
+   16.36227,
+   "Tu-Th 16:00-22:00; Su, Mo, PH closed",
+   "bar"
+  ],
+  [
+   "Bao MeBu",
+   48.21371,
+   16.3796,
+   "Mo-Sa 11:00-22:00, Su 12:00-19:00",
+   "restaurant"
+  ],
+  [
+   "Bukowski the Pub",
+   48.20285,
+   16.35629,
+   "Mo-Su 16:00-06:00",
+   "bar"
+  ],
+  [
+   "Kaffätscherl",
+   48.20214,
+   16.35279,
+   "Tu-Fr 08:00-17:00; Sa,Su 09:00-16:00; Mo,PH off",
+   "cafe"
+  ],
+  [
+   "Lili Box Asian",
+   48.22193,
+   16.35335,
+   "Mo-Su 11:00-22:00",
+   "fast_food"
+  ],
+  [
+   "El Gaucho",
+   48.21289,
+   16.37996,
+   "Mo-Fr 11:30-24:00, Sa 13:00-24:00",
+   "restaurant"
+  ],
+  [
+   "Döneria",
+   48.21707,
+   16.35907,
+   "Mo-Fr 10:00-20:00",
+   "fast_food"
+  ],
+  [
+   "Hashi Asian Kitchen",
+   48.21343,
+   16.37984,
+   "Mo-Fr 11:00-22:00; Su,PH 12:00-22:00",
+   "restaurant"
+  ],
+  [
+   "Marcodi",
+   48.21243,
+   16.34484,
+   "Mo-Sa 18:00-24:00",
+   "restaurant"
+  ],
+  [
+   "India Gate",
+   48.21553,
+   16.37196,
+   "Mo-Fr 11:30-14:00,18:00-22:00; Sa 11:30-22:00",
+   "restaurant"
+  ],
+  [
+   "Mykai",
+   48.21487,
+   16.37269,
+   "Mo-Fr 11:30-15:00,18:00-23:00; PH off",
+   "restaurant"
+  ],
+  [
+   "Trattoria Antica",
+   48.22744,
+   16.35988,
+   "We-Mo 11:00-23:00; Tu off",
+   "restaurant"
+  ],
+  [
+   "Cafe Comet",
+   48.20443,
+   16.35162,
+   "Tu-Fr 08:00-18:00; Sa,Su 09:00-18:00",
+   "cafe"
+  ],
+  [
+   "Oreno Ramen",
+   48.20705,
+   16.3464,
+   "Tu-Fr 11:00-15:00, 17:00-21:30; Sa-Su 12:00-21:30",
+   "restaurant"
+  ],
+  [
+   "Gulasch & Soehne",
+   48.20242,
+   16.37508,
+   "Mo-Su,PH 08:00-24:00",
+   "restaurant"
+  ],
+  [
+   "Rice & Noodles",
+   48.21697,
+   16.35876,
+   "Mo-Th 11:00-15:30; Fr 11:00-14:30",
+   "fast_food"
+  ],
+  [
+   "Naschsalon",
+   48.22052,
+   16.36047,
+   "Mo-Fr 07:30-18:00; Sa 09:00-14:00; PH off; Su 09:00-17:00",
+   "cafe"
+  ],
+  [
+   "Sägewerk Wien",
+   48.21881,
+   16.3575,
+   "Mo-We 11:00-23:00, Th 11:00-24:00, Fr,Sa 11:00-01:00, Su 12:00-22:00, PH 11:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Gasthaus Lechner",
+   48.22413,
+   16.35246,
+   "Tu-Sa 10:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Mili",
+   48.22674,
+   16.36378,
+   "Mo-Fr 11:00-22:00; Su,PH 11:30-22:00",
+   "restaurant"
+  ],
+  [
+   "Veggico",
+   48.20997,
+   16.34644,
+   "Mo, We-Su 11:30-21:00",
+   "restaurant"
+  ],
+  [
+   "Lin",
+   48.21117,
+   16.34413,
+   "Mo-Fr 11:00-22:00; Su 12:00-22:00",
+   "restaurant"
+  ],
+  [
+   "Cafe  Stark",
+   48.20429,
+   16.35071,
+   "Tu-Sa 10:00-24:00, Su 10:00-18:00",
+   "cafe"
+  ],
+  [
+   "Cafe Komet",
+   48.20432,
+   16.35165,
+   "Tu-Fr 08:00-18:00; Sa,Su 09:00-18:00",
+   "cafe"
+  ],
+  [
+   "The Lizard - Pub & Billards",
+   48.20431,
+   16.35136,
+   "Su-We 17:00-01:00, Th-Sa 17:00-02:00",
+   "bar"
+  ],
+  [
+   "Momo Pizza Gourmet",
+   48.20362,
+   16.35134,
+   "Su-We 17:00-23:00; Th-Sa 12:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Pizzi*s & Cream",
+   48.20403,
+   16.35374,
+   "Su-Th 11:30-22:00, Fr,Sa 11:30-23:30",
+   "restaurant"
+  ],
+  [
+   "Teehaus Arteee",
+   48.20287,
+   16.35659,
+   "Tu-Fr 13:30-19:00; Sa,Su off",
+   "cafe"
+  ],
+  [
+   "Boheme",
+   48.20393,
+   16.35497,
+   "Mo-Fr 16:00-24:00, Sa-Su 11:00-24:00",
+   "restaurant"
+  ],
+  [
+   "Maison Naya Vienna",
+   48.20233,
+   16.35306,
+   "Mo-Sa 08:00-17:00; Su,PH off",
+   "cafe"
+  ],
+  [
+   "Palm Beach Bar",
+   48.21949,
+   16.36145,
+   "We-Sa 20:00-01:00+",
+   "bar"
+  ],
+  [
+   "Porzellan",
+   48.2193,
+   16.36441,
+   "Mo-Fr 09:00-24:00",
+   "restaurant"
+  ],
+  [
+   "Smashly Burger",
+   48.21705,
+   16.35902,
+   "off",
+   "fast_food"
+  ],
+  [
+   "el chipirón",
+   48.21136,
+   16.34454,
+   "Mo,Su off; Tu-Sa 17:00-02:00",
+   "restaurant"
+  ],
+  [
+   "JP Pancakes",
+   48.2115,
+   16.36894,
+   "Mo-Su 09:30-21:00",
+   "restaurant"
+  ],
+  [
+   "Türkis",
+   48.20082,
+   16.35726,
+   "Mo-Th, Su 08:00-00:00; Fr, Sa 08:00-06:00",
+   "fast_food"
+  ],
+  [
+   "Kaffeemodul",
+   48.20961,
+   16.34842,
+   "Mo-Fr 07:30-17:30; Sa 10:00-14:00",
+   "cafe"
+  ],
+  [
+   "Dstrikt Steakhouse",
+   48.20222,
+   16.37598,
+   "Mo-Fr 12:00-14:30, 18:00-22:30; Sa-Su 18:00-22:30",
+   "restaurant"
+  ],
+  [
+   "AAI-Mensa",
+   48.21697,
+   16.36022,
+   "off",
+   "fast_food"
+  ],
+  [
+   "Café Afro",
+   48.2168,
+   16.36037,
+   "off",
+   "cafe"
+  ],
+  [
+   "Burggasse 24",
+   48.20438,
+   16.35222,
+   "Mo-Su 10:00-22:00",
+   "cafe"
+  ],
+  [
+   "Oberwasser Fischbar",
+   48.20651,
+   16.35215,
+   "Tu-We 10:00-18:00; Th 10:00-21:00; Fr 10:00-16:00; Sa 09:00-16:00",
+   "restaurant"
+  ],
+  [
+   "Sosaku",
+   48.2054,
+   16.35227,
+   "Mo-Sa, PH 18:00-23:00; Su off",
+   "restaurant"
+  ],
+  [
+   "Shouko",
+   48.22135,
+   16.3526,
+   "Mo-Fr 11:00-22:00; Sa 12:00-22:00",
+   "restaurant"
+  ],
+  [
+   "Il Toro",
+   48.21473,
+   16.37136,
+   "Mo-We 11:00-24:00; Th-Fr 11:00+; Sa 18:00+ || Sa-Su \"Auf Anfrage\"",
+   "bar"
+  ],
+  [
+   "J. Hornig Kaffeebar",
+   48.20205,
+   16.35196,
+   "Mo-Fr 08:00-19:00; Sa 09:00-19:00; Su 10:00-18:00",
+   "cafe"
+  ],
+  [
+   "Cafe Augenblick",
+   48.20689,
+   16.3434,
+   "Mo-Sa 15:00-01:00, PH 15:00-01:00",
+   "cafe"
+  ],
+  [
+   "D'Lounge",
+   48.24027,
+   16.3859,
+   "Mo-Su 00:00-02:00,11:00-24:00",
+   "restaurant"
+  ],
+  [
+   "Starbucks",
+   48.24049,
+   16.38626,
+   "Mo-Th 07:00-21:00; Fr 07:00-22:00; Sa 08:00-22:00; Su,PH 08:00-21:30",
+   "cafe"
+  ],
+  [
+   "Weinstüberl Horváth",
+   48.20309,
+   16.35523,
+   "Mo-Sa 16:00-01:00, Su 16:00-24:00",
+   "restaurant"
+  ],
+  [
+   "Feuerdorf",
+   48.21534,
+   16.37377,
+   "Mo-Su 11:30-00:00",
+   "restaurant"
+  ],
+  [
+   "Swing Kitchen",
+   48.21049,
+   16.34411,
+   "Mo-Su 11:00-21:30",
+   "fast_food"
+  ],
+  [
+   "Nobel Kebap",
+   48.21703,
+   16.3592,
+   "Mo-Su 10:00-24:00",
+   "fast_food"
+  ],
+  [
+   "Som Kitchen",
+   48.21698,
+   16.35923,
+   "Mo-Fr 11:00-23:00; Sa,Su 13:00-22:00",
+   "fast_food"
+  ],
+  [
+   "Hayaci Sushi Bar",
+   48.21691,
+   16.35978,
+   "Su-Fr,PH 11:00-21:00",
+   "fast_food"
+  ],
+  [
+   "Noodle King",
+   48.217,
+   16.35969,
+   "Mo-Su 11:00-22:00",
+   "fast_food"
+  ],
+  [
+   "Cafe Leopolder",
+   48.2171,
+   16.35961,
+   "Mo-Fr 07:30-18:00; Sa 07:30-13:00",
+   "cafe"
+  ],
+  [
+   "ikigai",
+   48.21676,
+   16.35992,
+   "Mo-Fr 09:30-17:30; Sa-Su 10:30-18:30",
+   "cafe"
+  ],
+  [
+   "Lola Spanisches Tapas Restaurant",
+   48.21553,
+   16.3704,
+   "Tu-Sa 17:30-23:00; Su,Mo off",
+   "restaurant"
+  ],
+  [
+   "Meissl & Schadn",
+   48.20226,
+   16.37494,
+   "Mo-Su 12:00-23:30",
+   "restaurant"
+  ],
+  [
+   "Lauserpause",
+   48.22628,
+   16.38221,
+   "Mo-Su 10:00-18:00",
+   "cafe"
+  ],
+  [
+   "Schnattl",
+   48.21053,
+   16.35199,
+   "Mo-Th 11:30-17:00; Fr 11:30-24:00",
+   "restaurant"
+  ],
+  [
+   "Anna’s Schnitzel Stube",
+   48.21314,
+   16.34873,
+   "Su-Fr 10:00-22:00",
+   "fast_food"
+  ],
+  [
+   "Feuerdorf Salettl",
+   48.21547,
+   16.37364,
+   "Mo-Su 11:30-00:00",
+   "bar"
+  ],
+  [
+   "Basz Bar",
+   48.21556,
+   16.37645,
+   "Mo-Sa 17:00-01:00",
+   "bar"
+  ],
+  [
+   "Bundry Burger",
+   48.21069,
+   16.34238,
+   "Mo-Sa 11:00-22:00; Su,PH 12:00-22:00",
+   "fast_food"
+  ],
+  [
+   "Forno",
+   48.20549,
+   16.34731,
+   "Tu-Fr 10:30-19:30; Sa 10:00-21:00; Su,Mo off",
+   "cafe"
+  ],
+  [
+   "Pho 84",
+   48.20567,
+   16.34931,
+   "Th-Tu,PH 11:30-22:00; We 12:30-22:00",
+   "restaurant"
+  ],
+  [
+   "Hatam Restaurant",
+   48.22307,
+   16.35223,
+   "Mo-Su 11:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Cafe-Konditorei Bredendick",
+   48.22526,
+   16.35391,
+   "Mo-Th 07:30-18:00; Sa 07:30-14:00; Fr 07:30-17:00",
+   "cafe"
+  ],
+  [
+   "tulsi Indian Cuisine",
+   48.2236,
+   16.35317,
+   "Tu-Su 11:30-14:00, 18:00-22:00",
+   "restaurant"
+  ],
+  [
+   "Schwemme",
+   48.19995,
+   16.37925,
+   "Mo-Fr 11:00-00:00; Sa 17:00-00:00",
+   "restaurant"
+  ],
+  [
+   "SALZI",
+   48.2155,
+   16.37688,
+   "Mo-Fr 07:30-20:00; Sa 09:00-20:00",
+   "cafe"
+  ],
+  [
+   "Schatz Imhof",
+   48.2143,
+   16.35661,
+   "We-Th 17:00-00:00; Fr 17:00-01:00; Sa 14:00-01:00",
+   "restaurant"
+  ],
+  [
+   "Coffee and Beard",
+   48.22318,
+   16.3521,
+   "Mo-Fr 08:00-17:00; Sa,Su,PH 09:00-16:00",
+   "cafe"
+  ],
+  [
+   "UuDam",
+   48.21687,
+   16.35108,
+   "Mo-Fr 10:00-18:00",
+   "restaurant"
+  ],
+  [
+   "Steirasia",
+   48.21966,
+   16.36412,
+   "Mo-Fr 12:00-15:00,17:30-22:00; Sa 17:30-22:00",
+   "restaurant"
+  ],
+  [
+   "Blumenwiese",
+   48.21262,
+   16.3781,
+   "Th-Sa 12:00-02:00; Su-We 12:00-24:00",
+   "restaurant"
+  ],
+  [
+   "Pramerl & the Wolf",
+   48.22207,
+   16.36485,
+   "We-Sa 18:00-22:00",
+   "restaurant"
+  ],
+  [
+   "Matcha Komachi",
+   48.21055,
+   16.3447,
+   "Mo-Sa 11:00-21:30; Su 11:30-21:00",
+   "restaurant"
+  ],
+  [
+   "Mamamon",
+   48.20946,
+   16.34376,
+   "Mo-Sa 11:30-21:30",
+   "restaurant"
+  ],
+  [
+   "jia",
+   48.20554,
+   16.35161,
+   "Tu-Fr 11:30-15:00,18:00-23:00; Sa,Su 13:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Mast Weinbistro",
+   48.22506,
+   16.36155,
+   "We-Fr 12:00-14:00,18:00-22:00; Sa,Su 18:00-22:00; Mo,Tu off",
+   "restaurant"
+  ],
+  [
+   "Café Camelle'",
+   48.19813,
+   16.3814,
+   "Mo-Sa 08:30-17:30",
+   "cafe"
+  ],
+  [
+   "Kommod",
+   48.2091,
+   16.34889,
+   "Tu-Fr 18:00-24:00; Sa 10:00-14:00; PH,Su,Mo off",
+   "restaurant"
+  ],
+  [
+   "Beef & Glory",
+   48.21183,
+   16.34879,
+   "Mo-Sa 17:00-24:00, Su 11:00-24:00",
+   "restaurant"
+  ],
+  [
+   "Pizzeria La Spiga",
+   48.20677,
+   16.34675,
+   "Mo-Fr 11:30-14:30, 17:30-22:30; Sa-Su 12:00-22:30",
+   "restaurant"
+  ],
+  [
+   "Saint George Cocktail Bar",
+   48.20581,
+   16.34433,
+   "Tu-Th 18:00-01:00; Fr, Sa 18:00-01:30",
+   "bar"
+  ],
+  [
+   "Café Isabelle",
+   48.22652,
+   16.36217,
+   "Mo-Sa 16:00+; Su 20:00+",
+   "cafe"
+  ],
+  [
+   "Sojago",
+   48.21012,
+   16.34579,
+   "Mo-Fr 11:30-21:30; Su,PH 12:00-21:00",
+   "restaurant"
+  ],
+  [
+   "Signore Milchmann",
+   48.20984,
+   16.34806,
+   "Tu-Sa 14:30-22:00",
+   "cafe"
+  ],
+  [
+   "Café Namenlos",
+   48.209,
+   16.3522,
+   "Mo-Fr 08:00-20:00; Sa 09:00-19:00",
+   "cafe"
+  ],
+  [
+   "Melangerie",
+   48.20748,
+   16.34428,
+   "Mo-Sa 08:00-18:00; Su 09:00-18:00",
+   "cafe"
+  ],
+  [
+   "Apapika",
+   48.22201,
+   16.35402,
+   "Mo-Su,PH 11:00-21:00",
+   "fast_food"
+  ],
+  [
+   "MÔC Vietnamese Eatery",
+   48.22645,
+   16.36406,
+   "Mo-Fr 11:30-15:00,17:00-22:00; Sa 17:00-22:00; Su 12:00-22:00; PH 12:00-22:00",
+   "restaurant"
+  ],
+  [
+   "olive",
+   48.21228,
+   16.34548,
+   "Mo-Fr 08:00-18:00; Sa,Su 09:00-17:00",
+   "cafe"
+  ],
+  [
+   "Coffee & Friends",
+   48.19746,
+   16.37957,
+   "Mo-Su 08:30-18:00",
+   "cafe"
+  ],
+  [
+   "Bruder",
+   48.19913,
+   16.35642,
+   "We-Sa 17:00-01:00",
+   "restaurant"
+  ],
+  [
+   "Thai Imbiss",
+   48.20505,
+   16.34918,
+   "Mo-Sa 11:00-22:00",
+   "restaurant"
+  ],
+  [
+   "La Strada 27/29",
+   48.22555,
+   16.36451,
+   "We-Su 11:00-22:00",
+   "restaurant"
+  ],
+  [
+   "lil",
+   48.19854,
+   16.35695,
+   "We-Mo 11:00-20:00",
+   "fast_food"
+  ],
+  [
+   "Spelunke",
+   48.21274,
+   16.37901,
+   "Mo-Th 17:00-24:00, Fr,Sa 17:00-01:00",
+   "restaurant"
+  ],
+  [
+   "Café Hoog - Freegan Café",
+   48.22191,
+   16.37615,
+   "24/7",
+   "cafe"
+  ],
+  [
+   "Weinstube Josefstadt",
+   48.20858,
+   16.35042,
+   "Apr-Oct: Mo-Su 15:00-23:30",
+   "restaurant"
+  ],
+  [
+   "Nino",
+   48.21466,
+   16.3576,
+   "Mo-Su 09:00-22:00",
+   "fast_food"
+  ],
+  [
+   "Collina am Berg",
+   48.20315,
+   16.35542,
+   "Tu-Sa 17:00-24:00",
+   "restaurant"
+  ],
+  [
+   "sous-bois café",
+   48.20522,
+   16.35203,
+   "Tu-Th 09:00-19:00; Fr 09:00-20:00; Sa 09:00-22:00; Su 10:00-18:00",
+   "cafe"
+  ],
+  [
+   "Kekko",
+   48.20943,
+   16.34976,
+   "Tu-Su 11:30-15:00,17:30-22:30",
+   "restaurant"
+  ],
+  [
+   "Hu",
+   48.19762,
+   16.38102,
+   "Mo-Fr 11:00-15:00, Mo,Tu,Th,Fr 17:00-21:00, Su 12:00-21:00",
+   "restaurant"
+  ],
+  [
+   "Prinz Ferdinand",
+   48.21158,
+   16.34242,
+   "11:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Coffee Atelier",
+   48.21561,
+   16.37166,
+   "Mo-Fr 09:00-18:00; Sa-Su,PH off",
+   "cafe"
+  ],
+  [
+   "Nana7",
+   48.20621,
+   16.35125,
+   "Mo-Fr 11:00-14:30,17:30-23:00",
+   "restaurant"
+  ],
+  [
+   "Jazzcafe Sofa",
+   48.20125,
+   16.35461,
+   "Mo-Sa 17:00-02:00",
+   "bar"
+  ],
+  [
+   "Natu",
+   48.20126,
+   16.35465,
+   "Mo-Fr 11:30-22:00; Sa 12:30-23:00; Su,PH 12:30-22:00",
+   "restaurant"
+  ],
+  [
+   "the LaLa",
+   48.20527,
+   16.35304,
+   "Mo-Su 09:00-20:00",
+   "restaurant"
+  ],
+  [
+   "Café Satchmo",
+   48.19846,
+   16.38112,
+   "Mo-Sa 17:00-02:00",
+   "cafe"
+  ],
+  [
+   "Hildebrandt Café",
+   48.21309,
+   16.35072,
+   "2024 Oct 01-2027 Sep 01 off",
+   "cafe"
+  ],
+  [
+   "Aqra",
+   48.23768,
+   16.3845,
+   "Tu-Su 09:00-22:00",
+   "restaurant"
+  ],
+  [
+   "Pizzeria Pozzuoli 2.0",
+   48.22543,
+   16.36035,
+   "Tu-Fr 11:30-14:30,17:30-22:30; Sa-Su 12:00-22:00",
+   "restaurant"
+  ],
+  [
+   "Ährlich",
+   48.21918,
+   16.35936,
+   "We-Fr 08:00-16:30; Sa-Su 08:30-15:30",
+   "cafe"
+  ],
+  [
+   "Arikei",
+   48.21496,
+   16.37032,
+   "Mo-Fr 11:30-14:00",
+   "restaurant"
+  ],
+  [
+   "La Delizia",
+   48.21174,
+   16.35111,
+   "Mo-Sa 11:30-15:00,18:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Bröselei",
+   48.22171,
+   16.35487,
+   "Mo-Fr 11:30-15:00",
+   "restaurant"
+  ],
+  [
+   "SoFare",
+   48.21566,
+   16.37698,
+   "Fr-Mo 11:30-22:00; Tu-Th 11:30-22:15",
+   "restaurant"
+  ],
+  [
+   "Hold",
+   48.21014,
+   16.34658,
+   "Mo-Fr 07:00-02:00",
+   "restaurant"
+  ],
+  [
+   "Goppion Caffè",
+   48.22159,
+   16.35991,
+   "Mo-Fr 08:00-17:00; Sa,Su 09:00-17:00",
+   "cafe"
+  ],
+  [
+   "Sajado Shop & Eat",
+   48.24056,
+   16.38678,
+   "Mo-Sa 09:00-21:00",
+   "fast_food"
+  ],
+  [
+   "Göttlichund & Freud",
+   48.2185,
+   16.36276,
+   "Mo-Fr 10:00-20:00, Sa 12:00-18:00",
+   "cafe"
+  ],
+  [
+   "Ichiban Tea",
+   48.20022,
+   16.3571,
+   "12:00-20:00",
+   "cafe"
+  ],
+  [
+   "miles smiles Jazz Café",
+   48.21118,
+   16.35152,
+   "Mo-Th 19:00-02:00, Sa 20:00-04:00",
+   "bar"
+  ],
+  [
+   "Café Domino",
+   48.20649,
+   16.34805,
+   "Mo-Sa 16:00-24:00",
+   "restaurant"
+  ],
+  [
+   "Puro",
+   48.20406,
+   16.35126,
+   "Su-Th 10:00-18:00; Fr-Sa 10:00-20:00",
+   "cafe"
+  ],
+  [
+   "Pacassi",
+   48.19783,
+   16.37863,
+   "Th-Sa 10:00-18:00; Su,PH 10:30-17:00",
+   "cafe"
+  ],
+  [
+   "Tin To",
+   48.2222,
+   16.35227,
+   "Mo,Th 14:30-22:00; Fr-Sa 14:30-01:00; Su 12:00-22:00",
+   "cafe"
+  ],
+  [
+   "&flora",
+   48.20357,
+   16.3566,
+   "Mo 07:00-16:00; Tu-Sa 07:00-24:00; Su,PH 07:30-16:00",
+   "restaurant"
+  ],
+  [
+   "Superfood Deli",
+   48.19969,
+   16.35543,
+   "Mo-Fr 07:00-20:00; Sa-Su 09:00-19:00; PH 09:00-15:00",
+   "fast_food"
+  ],
+  [
+   "Juicedeli",
+   48.19976,
+   16.35535,
+   "Mo-Tu,Th-Fr 09:30-15:00; We,Sa-Su,PH off",
+   "fast_food"
+  ],
+  [
+   "Huber's",
+   48.19734,
+   16.38,
+   "Mo-Fr 10:30-16:00,17:30-22:00",
+   "restaurant"
+  ],
+  [
+   "Coffee & friends",
+   48.22527,
+   16.36084,
+   "Mo-Fr 08:00-18:00; Sa 09:00-16:00",
+   "cafe"
+  ],
+  [
+   "Matsu",
+   48.20754,
+   16.34403,
+   "Mo,Su,PH off; Tu-Sa 11:00-21:00",
+   "fast_food"
+  ],
+  [
+   "Hermann's Würstelstand",
+   48.20092,
+   16.35526,
+   "Mo-Fr 08:00-04:00; Sa 12:00-04:00",
+   "fast_food"
+  ],
+  [
+   "Döwiener",
+   48.2103,
+   16.34496,
+   "Mo-Fr 08:30-21:00; Sa,Su 11:00-21:00",
+   "fast_food"
+  ],
+  [
+   "kumpato",
+   48.2104,
+   16.34452,
+   "Mo-Fr 11:00-22:00; Sa,Su,PH 11:00-21:00",
+   "fast_food"
+  ],
+  [
+   "Wiener Würstelstand",
+   48.20791,
+   16.34876,
+   "Mo-Su 12:00-24:00",
+   "fast_food"
+  ],
+  [
+   "Kleines Wiener Café",
+   48.21307,
+   16.34962,
+   "Tu-Fr 08:00-21:00; Sa 10:00-21:00; Su,Mo,PH off",
+   "cafe"
+  ],
+  [
+   "Ooné",
+   48.22516,
+   16.35354,
+   "Mo-Fr 08:00-17:00; Sa 09:00-17:00; Su 09:00-16:00",
+   "cafe"
+  ],
+  [
+   "Lenz",
+   48.20422,
+   16.35372,
+   "We,Th 18:00-24:00; Fr,Sa 18:00-02:00; Su-Tu,PH off",
+   "bar"
+  ],
+  [
+   "Chutney",
+   48.24024,
+   16.38527,
+   "Mo-Th,Su 11:00-22:00; Fr-Sa 11:00-23:00",
+   "fast_food"
+  ],
+  [
+   "dean&david",
+   48.24001,
+   16.38541,
+   "Mo-Th,Su 11:00-22:00; Fr-Sa 11:00-23:00",
+   "fast_food"
+  ],
+  [
+   "Fratelli",
+   48.24051,
+   16.38555,
+   "Mo-Sa 08:00-22:00+; Su,PH 09:00-22:00+",
+   "cafe"
+  ],
+  [
+   "Kioyo",
+   48.24017,
+   16.3853,
+   "Mo-Th,Su 11:00-22:00; Fr-Sa 11:00-23:00",
+   "fast_food"
+  ],
+  [
+   "Mi fa Cori",
+   48.20986,
+   16.34693,
+   "Mo-Fr 09:00-17:30; Sa 10:00-13:30",
+   "restaurant"
+  ],
+  [
+   "Soul Pizza",
+   48.19862,
+   16.35724,
+   "Mo-Sa 12:00-22:00; Su,PH off",
+   "restaurant"
+  ],
+  [
+   "gap",
+   48.24035,
+   16.38576,
+   "Mo-Th,Su 11:00-22:00; Fr-Sa 11:00-23:00",
+   "fast_food"
+  ],
+  [
+   "Zushimarket Running Zushi",
+   48.24027,
+   16.38593,
+   "Mo-Su 11:00-22:00",
+   "fast_food"
+  ],
+  [
+   "Zushimarket Buffet Restaurant",
+   48.24027,
+   16.38532,
+   "Mo-Su 11:00-22:00",
+   "restaurant"
+  ],
+  [
+   "Pandos Tex-Mex",
+   48.24014,
+   16.38577,
+   "Mo-Th,Su 11:00-22:00; Fr-Sa 11:00-23:00",
+   "fast_food"
+  ],
+  [
+   "Alias",
+   48.24007,
+   16.38672,
+   "Mo-Su 08:00-23:00",
+   "cafe"
+  ],
+  [
+   "Five Guys",
+   48.24043,
+   16.38562,
+   "Mo-Su 10:00-22:00",
+   "fast_food"
+  ],
+  [
+   "Mr. Zeng",
+   48.2371,
+   16.38549,
+   "Mo-Su 10:30-15:00,17:30-22:00",
+   "restaurant"
+  ],
+  [
+   "Karma Food",
+   48.20521,
+   16.35091,
+   "Mo-Fr 11:00-14:30",
+   "restaurant"
+  ],
+  [
+   "Shodai",
+   48.1997,
+   16.35439,
+   "Su-Th 12:00-21:00; Fr,Sa 12:00-21:30",
+   "cafe"
+  ],
+  [
+   "Yido",
+   48.22617,
+   16.36256,
+   "Tu-Fr 11:30-15:00, Tu-Fr 17:00-22:00, Sa,Su 17:00-22:00",
+   "restaurant"
+  ],
+  [
+   "Bome Café",
+   48.20118,
+   16.3544,
+   "Mo-Su 09:30-18:00",
+   "cafe"
+  ],
+  [
+   "Wolke",
+   48.2263,
+   16.36288,
+   "Mo-Su 14:00-22:00",
+   "restaurant"
+  ],
+  [
+   "Taj",
+   48.2127,
+   16.34941,
+   "Mo-Su 17:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Couch Potato",
+   48.24033,
+   16.38522,
+   "Mo off; Tu-Su 17:00-22:00",
+   "bar"
+  ],
+  [
+   "Dr. Smusy",
+   48.20039,
+   16.35676,
+   "Mo-Sa 10:00-19:00; Su 12:00-18:00",
+   "fast_food"
+  ],
+  [
+   "Bernard Stüberl",
+   48.20661,
+   16.34356,
+   "Mo-Fr 10:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Canteen",
+   48.24222,
+   16.38492,
+   "Mo-Fr 11:30-13:30",
+   "restaurant"
+  ],
+  [
+   "Kolibri",
+   48.20721,
+   16.34463,
+   "Mo-Sa 17:00-02:00",
+   "bar"
+  ],
+  [
+   "Jonas Reindl",
+   48.21028,
+   16.3449,
+   "Mo-Su 09:30-17:30",
+   "cafe"
+  ],
+  [
+   "Cafe Berg",
+   48.21757,
+   16.36073,
+   "Fr-Su 09:00-17:30; Mo-Th 09:00-16:30",
+   "cafe"
+  ],
+  [
+   "L'Attimo Kaffee Bistrot",
+   48.19654,
+   16.38174,
+   "Mo-Fr 09:00-19:00; Sa 09:00-18:30",
+   "cafe"
+  ],
+  [
+   "Parkcafé at the Lower Belvedere Vienna",
+   48.19666,
+   16.37925,
+   "Mo-Su 10:00-18:00",
+   "cafe"
+  ],
+  [
+   "Toast.ed",
+   48.19867,
+   16.35713,
+   "Tu-Su 09:00-17:00",
+   "fast_food"
+  ],
+  [
+   "Edo",
+   48.20943,
+   16.34961,
+   "Mo-Su 11:00-22:00",
+   "fast_food"
+  ],
+  [
+   "Dorato",
+   48.21588,
+   16.35658,
+   "Mo-Fr 16:00-00:00",
+   "bar"
+  ],
+  [
+   "InterContinental",
+   48.20197,
+   16.37896,
+   "Mo-Su 18:00-01:00",
+   "bar"
+  ],
+  [
+   "Extra Würstel",
+   48.19983,
+   16.35481,
+   "Mo-Su 11:00-22:00",
+   "fast_food"
+  ],
+  [
+   "MQ daily",
+   48.20337,
+   16.35902,
+   "Tu, Fr, Sa 09:00-00:00; Mo-We, Su, PH 09:00-24:00",
+   "restaurant"
+  ],
+  [
+   "Markterei",
+   48.22232,
+   16.3516,
+   "Fr 14:00-21:00",
+   "restaurant"
+  ],
+  [
+   "Matteo",
+   48.20358,
+   16.35134,
+   "Tu-Th 18:00-23:00; Fr, Su 12:00-15:00, 18:00-23:00; Sa 12:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Kafe",
+   48.21907,
+   16.35733,
+   "\"Every first Thursday of the month from 15:00 to 19:00.\"",
+   "cafe"
+  ],
+  [
+   "Top 02",
+   48.21462,
+   16.35791,
+   "Mo-Su 12:00-18:00",
+   "cafe"
+  ],
+  [
+   "Pigalle",
+   48.21288,
+   16.38055,
+   "Tu-Th 18:00-01:30; Fr-Sa 18:00-03:00",
+   "bar"
+  ],
+  [
+   "Café Essenz",
+   48.20447,
+   16.3504,
+   "Tu-Th 09:00-15:00; Fr-Sa 09:00-18:00",
+   "cafe"
+  ],
+  [
+   "Maíz No. 2",
+   48.20876,
+   16.34391,
+   "We-Fr 11:30-15:00, We-Fr 17:00-22:00, Sa 12:00-22:00",
+   "restaurant"
+  ],
+  [
+   "Oshikuru",
+   48.18641,
+   16.40167,
+   "Mo-Th 10:30-18:00",
+   "fast_food"
+  ],
+  [
+   "Hofkellerei Liechtenstein",
+   48.22245,
+   16.36035,
+   "Mo,Su off; Tu-Sa 12:00-22:00",
+   "restaurant"
+  ],
+  [
+   "Wiener Würstelstand",
+   48.21474,
+   16.27765,
+   "Sa,Su,PH 12:00-21:00",
+   "fast_food"
+  ],
+  [
+   "Powergranate",
+   48.22506,
+   16.35804,
+   "Mo-Sa 09:00-17:00; Su 10:00-14:00",
+   "fast_food"
+  ],
+  [
+   "common café",
+   48.2121,
+   16.34418,
+   "Mo-Sa 09:00-18:00; Su 09:00-17:00",
+   "cafe"
+  ],
+  [
+   "RueViet",
+   48.21145,
+   16.34879,
+   "Mo-Th 11:30-14:30, 17:00-22:00; Fr-Sa 17:00-22:00",
+   "restaurant"
+  ],
+  [
+   "Jarita’s Indian Kitchen",
+   48.19395,
+   16.37742,
+   "Tu-Su 11:30-22:30",
+   "restaurant"
+  ],
+  [
+   "sai yu",
+   48.20639,
+   16.34876,
+   "Mo-Sa 11:00-19:00",
+   "fast_food"
+  ],
+  [
+   "Taberna de la mancha",
+   48.20685,
+   16.34742,
+   "Tu-Sa 17:00-23:00",
+   "restaurant"
+  ],
+  [
+   "kneckbox",
+   48.21048,
+   16.34505,
+   "Mo-Fr 07:00-18:00;Sa 08:00-16:00;Su,PH off",
+   "cafe"
+  ],
+  [
+   "Café Diem",
+   48.21214,
+   16.35285,
+   "Mo-Fr 08:00-20:00; Sa, Su 09:00-20:00",
+   "cafe"
+  ],
+  [
+   "Epos Café",
+   48.20215,
+   16.35455,
+   "Mo-Th 07:00-18:00; Fr-Su 07:00-19:00",
+   "cafe"
+  ],
+  [
+   "Tomochan",
+   48.19881,
+   16.35691,
+   "Mo-Th 11:30-22:00; Fr 12:00-22:00; Sa-Su 12:30-22:00",
+   "restaurant"
+  ],
+  [
+   "toast. ed",
+   48.19864,
+   16.35717,
+   "Tu-Su 09:00-17:00",
+   "restaurant"
+  ],
+  [
+   "K. u. K. Bierkanzlei",
+   48.19903,
+   16.35631,
+   "Mo-Th 12:00-21:00; Fr-Su,PH off",
+   "pub"
+  ],
+  [
+   "Kimizu",
+   48.20722,
+   16.34554,
+   "Tu-Su 11:00-22:00",
+   "restaurant"
+  ],
+  [
+   "L'Autentico",
+   48.22083,
+   16.36774,
+   "Mo-Su 17:00-22:30",
+   "restaurant"
+  ],
+  [
+   "Casa Caribeña",
+   48.22062,
+   16.36777,
+   "Mo-Su 17:00-01:00",
+   "restaurant"
+  ],
+  [
+   "Otto & Camillo",
+   48.20727,
+   16.27984,
+   "We-Su 09:00-18:00",
+   "cafe"
+  ],
+  [
+   "Do&Mi",
+   48.2056,
+   16.34523,
+   "Mo-Fr 10:30-22:00; Su 12:00-22:00",
+   "fast_food"
+  ],
+  [
+   "Soula",
+   48.20348,
+   16.35469,
+   "We-Th 11:00-22:00; Fr-Su 11:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Café Konditorei Ingrid Bürger",
+   48.22066,
+   16.36442,
+   "Mo-Fr 07:00-18:30; Sa 07:00-13:00",
+   "cafe"
+  ],
+  [
+   "Tepe",
+   48.22348,
+   16.35344,
+   "Mo-Sa 10:30-20:00",
+   "restaurant"
+  ],
+  [
+   "Kenny's",
+   48.20229,
+   16.35196,
+   "Mo-Fr 11:00-19:00; Sa-Su,PH 11:00-18:00",
+   "fast_food"
+  ],
+  [
+   "Café Decentral",
+   48.21134,
+   16.36544,
+   "Mo-Su 07:30-22:00",
+   "cafe"
+  ],
+  [
+   "Roast.ed",
+   48.1987,
+   16.35747,
+   "Mo off; Tu-Fr 08:00-18:00; Sa-Su 09:00-18:00",
+   "cafe"
+  ],
+  [
+   "Ciao Lara",
+   48.21302,
+   16.37916,
+   "Mo-Fr 09:00-17:00; Sa 10:30-16:00",
+   "restaurant"
+  ],
+  [
+   "zur lustigen louise",
+   48.20889,
+   16.2815,
+   "Fr-Su,PH 11:30-21:30",
+   "biergarten"
+  ],
+  [
+   "Natur Döner",
+   48.23765,
+   16.38658,
+   "Mo-Su 08:00-21:00",
+   "fast_food"
+  ],
+  [
+   "YiDo Poke",
+   48.22619,
+   16.36224,
+   "Mo-Fr 11:30-20:00, Su 12:00-19:00",
+   "restaurant"
+  ],
+  [
+   "Marcos Fresh Greek",
+   48.21075,
+   16.3436,
+   "Mo-Su 11:00-22:00",
+   "fast_food"
+  ],
+  [
+   "Dunkin'",
+   48.21317,
+   16.36354,
+   "Mo-Th 07:00-21:00; Fr 07:00-21:30; Sa 07:30-21:30; Su 08:00-21:00",
+   "fast_food"
+  ],
+  [
+   "Shiso Burger",
+   48.20038,
+   16.35862,
+   "Mo-Th,Su,PH 12:00-22:00; Fr-Sa 12:00-22:30",
+   "restaurant"
+  ],
+  [
+   "Alte Bäckerei",
+   48.20408,
+   16.35318,
+   "Mo-Th 10:00-00:00; Fr-Sa 10:00-01:00; Su 10:00-23:00",
+   "cafe"
+  ],
+  [
+   "Brioche und Brösel",
+   48.20972,
+   16.37338,
+   "Mo-Su 11:00-22:00",
+   "fast_food"
+  ],
+  [
+   "Goldener Papagei x Paparogi",
+   48.19791,
+   16.37135,
+   "Mo-Fr 08:00-20:00;Sa-Su 09:00-20:00",
+   "cafe"
+  ],
+  [
+   "Piadina & Vino da Salvo",
+   48.20551,
+   16.35174,
+   "Tu-Su 11:30-14:00, 17:30-21:30",
+   "restaurant"
+  ],
+  [
+   "pasta guys",
+   48.2107,
+   16.34241,
+   "Mo-Sa 11:00-21:00",
+   "fast_food"
+  ],
+  [
+   "Cafe Snail",
+   48.20731,
+   16.34514,
+   "Mo-Fr 08:00-20:30, Sa-Su 09:00-19:00",
+   "cafe"
+  ],
+  [
+   "Cafe Ziege",
+   48.2076,
+   16.34377,
+   "Mo-Su 08:00-20:00",
+   "cafe"
+  ],
+  [
+   "Vero Bio Pizzeria",
+   48.20944,
+   16.35253,
+   "Mo-Su 11:30-22:00",
+   "restaurant"
+  ],
+  [
+   "Kleinlaut",
+   48.20406,
+   16.35557,
+   "Tu-Sa 18:00-02:00",
+   "bar"
+  ],
+  [
+   "Dorfstube",
+   48.20976,
+   16.35588,
+   "Mo-Th 11:00-15:00",
+   "restaurant"
+  ],
+  [
+   "PIZZA SENZA DANZA",
+   48.20698,
+   16.36096,
+   "Tu-Sa 17:00-02:00",
+   "restaurant"
+  ],
+  [
+   "CHICKZ",
+   48.19925,
+   16.35903,
+   "Mo-We 11:30-22:30,Th-Su 11:30-23:00",
+   "fast_food"
+  ],
+  [
+   "Das Drittl",
+   48.21213,
+   16.34672,
+   "Mo-Fr 17:00-24:00; Sa 09:00-15:00,17:00-24:00; Su 09:00-15:00",
+   "restaurant"
+  ],
+  [
+   "DashXDrop",
+   48.21499,
+   16.37035,
+   "So - Do 16:00 - 01:00 Fr - Sa 16:00 - 2:00",
+   "bar"
+  ],
+  [
+   "L'Osteria",
+   48.21219,
+   16.34503,
+   "Su-We 11:00-23:00; Th-Sa 11:00-24:00",
+   "restaurant"
+  ],
+  [
+   "Tunnel Vienna Live",
+   48.21188,
+   16.34825,
+   "09:00-02:00",
+   "cafe"
+  ],
+  [
+   "Summerstage",
+   48.22113,
+   16.36768,
+   "Mo-Su 17:00-01:00",
+   "food_court"
+  ],
+  [
+   "Summer Stage",
+   48.22077,
+   16.36806,
+   "Su 17:00-22:30",
+   "restaurant"
+  ],
+  [
+   "Die Schankwirtschaft",
+   48.22433,
+   16.37405,
+   "Mo-Su 10:00-22:00",
+   "restaurant"
+  ],
+  [
+   "Tao Garten",
+   48.20614,
+   16.27782,
+   "Tu-Su 11:00-22:00",
+   "restaurant"
+  ],
+  [
+   "Leneks Wiener Würstelstand",
+   48.22191,
+   16.35355,
+   "Mo-Fr 09:00-04:00; Sa,Su 15:00-04:00",
+   "fast_food"
+  ],
+  [
+   "Würstelstand",
+   48.21069,
+   16.34423,
+   "Mo-We 17:00-02:00, Th 17:00-03:00, Fr-Sa 17:00-04:00, Su 13:00-02:00",
+   "fast_food"
+  ],
+  [
+   "Würstelstand beim Parlament",
+   48.20685,
+   16.35963,
+   "Mo-Su 06:00-03:00",
+   "fast_food"
+  ],
+  [
+   "Nordsee",
+   48.20024,
+   16.35444,
+   "Mo-We 10:00-20:00; Th-Fr 10:00-21:00; Sa 10:00-19:30",
+   "fast_food"
+  ],
+  [
+   "Nordsee",
+   48.20007,
+   16.35455,
+   "Mo-Fr 10:00-20:00; Sa 10:00-19:00",
+   "fast_food"
+  ],
+  [
+   "Wiener Würstelstand",
+   48.20791,
+   16.34877,
+   "12:00-24:00",
+   "fast_food"
+  ],
+  [
+   "Klasse Haße",
+   48.20749,
+   16.34332,
+   "Mo-We 17:00-02:00; Th, Fr 17:00-04:00; Sa 18:00-04:00; Su, PH 15:00-02:00",
+   "fast_food"
+  ],
+  [
+   "Kebapci",
+   48.18645,
+   16.40092,
+   "09:00-20:00",
+   "fast_food"
+  ],
+  [
+   "La gondola",
+   48.20408,
+   16.35537,
+   "11:30-23:00",
+   "restaurant"
+  ],
+  [
+   "McDonald's",
+   48.14511,
+   17.11242,
+   "Mo-Th 07:00-24:00; Fr,Sa 07:00-01:00, Su 09:00-24:00",
+   "fast_food"
+  ],
+  [
+   "McDonald's",
+   48.14248,
+   17.10935,
+   "Mo-Th 07:00-24:00; Fr 07:00-01:00, Sa 08:00-01:00, Su 09:00-24:00",
+   "fast_food"
+  ],
+  [
+   "Burger King",
+   48.14297,
+   17.10896,
+   "Su-Th 09:00-21:00; Fr,Sa 09:00-24:00",
+   "fast_food"
+  ],
+  [
+   "Bernard pri Lýceu",
+   48.14756,
+   17.10634,
+   "Mo-Su 08:00-23:59",
+   "pub"
+  ],
+  [
+   "Apoteka",
+   48.1425,
+   17.10798,
+   "09:00-19:00; Th-Sa 09:00-21:00",
+   "cafe"
+  ],
+  [
+   "Jedáleň Teta",
+   48.14433,
+   17.11406,
+   "Mo-Fr 07:00-15:00",
+   "fast_food"
+  ],
+  [
+   "Lab",
+   48.14462,
+   17.11155,
+   "Mo-Su 08:00-22:00",
+   "cafe"
+  ],
+  [
+   "Café Kút",
+   48.14533,
+   17.10764,
+   "Mo-Fr 10:00-23:00; Sa-Su 16:00-23:00",
+   "cafe"
+  ],
+  [
+   "Prašná Bašta",
+   48.14544,
+   17.10777,
+   "Mo-Su 11:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Verne",
+   48.14183,
+   17.10761,
+   "Mo-Th 08:30-24:00; Fr 08:30-01:00, Sa 10:00-01:00, Su 11:00-24:00",
+   "restaurant"
+  ],
+  [
+   "L'Aura",
+   48.14152,
+   17.10521,
+   "Mo-Fr 10:00-24:00; Sa 00:00-01:00,10:00-24:00; Su 00:00-01:00,12:00-24:00",
+   "cafe"
+  ],
+  [
+   "San Marten",
+   48.14149,
+   17.10571,
+   "Mo-Th 11:30-24:00; Fr-Sa 11:30-03:00, Su 11:30-24:00",
+   "restaurant"
+  ],
+  [
+   "Pivnice u Kozla",
+   48.1418,
+   17.10655,
+   "Mo-Su 11:00-24:00",
+   "restaurant"
+  ],
+  [
+   "Ventúrska klubovňa",
+   48.142,
+   17.10628,
+   "Mo-Th,Su 11:00-24:00; Fr,Sa 11:00-01:00",
+   "restaurant"
+  ],
+  [
+   "Regal Underground",
+   48.14138,
+   17.11023,
+   "Mo-Sa 11:00-21:00",
+   "fast_food"
+  ],
+  [
+   "Pro.laika gallery restaurant",
+   48.14152,
+   17.11122,
+   "Mo-Th 10:00-20:00; Fr 10:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Avaani Indian Restaurant",
+   48.14201,
+   17.11196,
+   "Mo-Fr 11:00-21:30; Su 12:00-21:30; Sa off",
+   "restaurant"
+  ],
+  [
+   "KGB",
+   48.14804,
+   17.11168,
+   "Mo-Th 14:00-24:00, Fr 14:00-02:00, Sa 16:00-02:00",
+   "pub"
+  ],
+  [
+   "Quinsboro",
+   48.14786,
+   17.11129,
+   "Tu-Fr 11:00-21:00; Sa,Su 12:00-21:00",
+   "fast_food"
+  ],
+  [
+   "Chococafe Maximilian Delikateso",
+   48.14327,
+   17.10786,
+   "Mo-Su 09:00-21:00",
+   "cafe"
+  ],
+  [
+   "Kaffee Mayer",
+   48.14315,
+   17.10846,
+   "Mo-Th 10:00-19:00; Fr 10:00-20:00; Sa 09:00-20:00; Su 09:00-19:00",
+   "cafe"
+  ],
+  [
+   "Drink in Gallery Andy",
+   48.14219,
+   17.10368,
+   "Mo-Th 17:00-24:00; Fr-Sa 17:00-02:00, Su 17:00-24:00",
+   "pub"
+  ],
+  [
+   "U Dobrého pastiera",
+   48.14229,
+   17.10402,
+   "Mo-Su 10:00-24:00",
+   "cafe"
+  ],
+  [
+   "MOYO bistro",
+   48.14332,
+   17.11158,
+   "Mo-Sa 08:00-22:00; Su 08:00-21:00",
+   "restaurant"
+  ],
+  [
+   "Jimmy's",
+   48.14233,
+   17.1066,
+   "Mo-Th,Su 09:00-24:00, Fr,Sa 10:00-25:00",
+   "restaurant"
+  ],
+  [
+   "U Dežmára",
+   48.14377,
+   17.10587,
+   "Mo-Fr 18:00-04:00",
+   "pub"
+  ],
+  [
+   "Da Vinci",
+   48.14419,
+   17.10568,
+   "Mo-Fr 10:30-24:00; Sa 00:00-02:00,12:00-24:00; Su 00:00-02:00,15:00-24:00",
+   "restaurant"
+  ],
+  [
+   "Pulitzer",
+   48.14524,
+   17.1059,
+   "Mo-Fr 10:00-22:00; Sa,Su 11:00-22:00",
+   "restaurant"
+  ],
+  [
+   "Quo Vadis",
+   48.14622,
+   17.10682,
+   "Mo-Th 15:00-21:00; Fr 15:00-22:00; Su 17:30-21:30",
+   "cafe"
+  ],
+  [
+   "Beigli Bar & Garden",
+   48.14495,
+   17.10609,
+   "Mo-Su 08:00-22:00",
+   "cafe"
+  ],
+  [
+   "JazzTikot",
+   48.14426,
+   17.10756,
+   "Tu-Sa 10:00-24:00",
+   "cafe"
+  ],
+  [
+   "Café Malewill",
+   48.14403,
+   17.11025,
+   "Mo-Fr 10:00-24:00; Sa 15:00-24:00; Su 15:00-22:00; PH 15:00-24:00",
+   "cafe"
+  ],
+  [
+   "UFO-Food",
+   48.1446,
+   17.11236,
+   "Mo-Sa 11:00-20:00; Fr 15:00-22:00",
+   "fast_food"
+  ],
+  [
+   "Kuskus Bistro",
+   48.14451,
+   17.11248,
+   "Mo-Fr 09:00-24:00; Sa,Su 00:00-02:00,10:00-24:00",
+   "fast_food"
+  ],
+  [
+   "17's Bar",
+   48.14147,
+   17.1067,
+   "11:00-24:00",
+   "bar"
+  ],
+  [
+   "Rio Restaurant & Bar",
+   48.14131,
+   17.10629,
+   "Mo-Fr 11:00-24:00; Sa,Su 00:00-01:00,11:00-24:00",
+   "restaurant"
+  ],
+  [
+   "Iasai",
+   48.14116,
+   17.10594,
+   "Mo-We 11:00-22:00, Th-Sa 11:00-23:00, Su 11:00-21:00",
+   "restaurant"
+  ],
+  [
+   "Moja srdcovka",
+   48.14112,
+   17.10584,
+   "Mo-Su 08:00-21:00; Fr,Sa 08:00-22:00",
+   "cafe"
+  ],
+  [
+   "Lviv Croissants",
+   48.14102,
+   17.10563,
+   "Mo-Fr 09:00-21:00; Sa,Su 09:00-22:00",
+   "fast_food"
+  ],
+  [
+   "Neolit",
+   48.1477,
+   17.10996,
+   "Mo-Sa 11:00-22:00; Su 12:00-21:00",
+   "restaurant"
+  ],
+  [
+   "Backhaus Annamühle",
+   48.00708,
+   16.23145,
+   "Mo-Fr 06:00-18:00; Sa 06:00-12:00",
+   "cafe"
+  ],
+  [
+   "Josef's Almkuchl",
+   48.00668,
+   16.23276,
+   "We-Sa 09:00-22:00",
+   "restaurant"
+  ],
+  [
+   "Diva Club",
+   48.00352,
+   16.23593,
+   "Fr-Su,PH 02:00-10:00",
+   "bar"
+  ],
+  [
+   "Goldener Löwe",
+   48.0056,
+   16.2321,
+   "Mo,Tu,Th-Su 11:30-21:30",
+   "restaurant"
+  ],
+  [
+   "Badener Eck",
+   48.00725,
+   16.23139,
+   "Mo-Su 10:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Schnitzelpalast",
+   48.40983,
+   15.60439,
+   "Mo-Fr 11:00-14:00,17:00-21:00",
+   "fast_food"
+  ],
+  [
+   "Café Konditorei Raimitz",
+   48.40946,
+   15.60398,
+   "Mo-Sa 07:30-18:30; Su,PH 08:30-18:30",
+   "cafe"
+  ],
+  [
+   "Richman",
+   48.14215,
+   17.11519,
+   "Mo-Fr 08:00-24:00; Sa 00:00-03:00,14:00-24:00; Su 00:00-03:00,14:00-22:00",
+   "fast_food"
+  ],
+  [
+   "HANOI garden",
+   48.14171,
+   17.11534,
+   "Mo-Fr 10:00-19:30; Sa 11:00-18:15",
+   "fast_food"
+  ],
+  [
+   "VÄN NO2",
+   48.4124,
+   15.6049,
+   "Mo-Sa 11:00-22:00",
+   "restaurant"
+  ],
+  [
+   "Donaulife Coffeeshop",
+   48.4123,
+   15.60496,
+   "Mo-Su 10:00-22:00",
+   "cafe"
+  ],
+  [
+   "Bratislavský meštiansky pivovar",
+   48.14699,
+   17.10806,
+   "Mo 11:00-22:00; Tu-Sa 11:00-23:00; Su 11:00-22:00",
+   "restaurant"
+  ],
+  [
+   "Underground Tea Room",
+   48.14316,
+   17.10632,
+   "Mo-Su 14:00-22:00",
+   "cafe"
+  ],
+  [
+   "Čajovňa Shangrila",
+   48.14453,
+   17.10658,
+   "Mo-Su 16:00-22:00",
+   "cafe"
+  ],
+  [
+   "Caffe 4U",
+   48.14751,
+   17.11109,
+   "Mo-Sa 08:00-20:00; Su 09:00-10:00,14:00-20:00",
+   "cafe"
+  ],
+  [
+   "Mille Baci",
+   48.14588,
+   17.10868,
+   "Oct-Apr Mo-Fr 10:00-15:00,18:30-22:00+; Oct-Apr Sa 12:00-22:00+",
+   "restaurant"
+  ],
+  [
+   "Arabeska",
+   48.14276,
+   17.11383,
+   "We-Fr 11:00-21:00; Sa,Su 12:00-21:00",
+   "restaurant"
+  ],
+  [
+   "Ponorka",
+   48.14145,
+   17.11501,
+   "Mo-Th 10:00-23:00; Fr 10:00-24:00; Sa 13:00-24:00",
+   "pub"
+  ],
+  [
+   "Za rohom by Bombovar",
+   48.1416,
+   17.11312,
+   "Mo-Fr 14:00-24:00; Sa,Su 00:00-02:00,14:00-24:00",
+   "pub"
+  ],
+  [
+   "Mr. Dou",
+   48.14252,
+   17.10965,
+   "Mo-Sa 11:00-22:00; Su 11:00-21:30",
+   "restaurant"
+  ],
+  [
+   "SRRRK",
+   48.14365,
+   17.10999,
+   "Mo-Tu, Th-Fr 08:30-16:00; Sa-Su 10:00-18:00",
+   "cafe"
+  ],
+  [
+   "Prazdroj",
+   48.14066,
+   17.1095,
+   "Mo,Tu 11:00-24:00, We,Th,Sa 11:00-01:00, Fr 11:00-02:00, Su 11:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Čajovňa Pohoda",
+   48.14342,
+   17.10941,
+   "Tu-Fr 10:00-23:00; Sa-Su 13:00-23:00",
+   "cafe"
+  ],
+  [
+   "Bratislava flagship restaurant",
+   48.14607,
+   17.11023,
+   "Mo-We 11:00-22:00; Th,Fr 11:00-23:00; Sa,Su 12:00-22:00",
+   "restaurant"
+  ],
+  [
+   "The Farmhouse",
+   48.14404,
+   17.10674,
+   "Mo-Su 11:00-20:00",
+   "restaurant"
+  ],
+  [
+   "ROLAND Slovak Restaurant",
+   48.14317,
+   17.10809,
+   "Mo-Su 11:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Muggi's Steira Eck",
+   48.00681,
+   16.23416,
+   "16:00+",
+   "bar"
+  ],
+  [
+   "Káva.bar",
+   48.14444,
+   17.10313,
+   "Mo-Fr 07:30-20:00; Sa-Su 09:00-20:00",
+   "cafe"
+  ],
+  [
+   "Café Židovská",
+   48.14443,
+   17.10324,
+   "Mo-Su 08:00-20:00; Th-Sa 08:00-22:00",
+   "cafe"
+  ],
+  [
+   "Storm game bar",
+   48.1462,
+   17.1114,
+   "Mo-Th 00:00-01:00,10:00-24:00; Fr 00:00-02:00,10:00-24:00; Sa,Su 00:00-03:00,10:00-24:00",
+   "bar"
+  ],
+  [
+   "Góvinda",
+   48.14728,
+   17.11027,
+   "Mo-Fr 11:00-15:00",
+   "restaurant"
+  ],
+  [
+   "Vietnamské bistro Hoang NAM",
+   48.14762,
+   17.11036,
+   "Mo-Fr 09:30-20:00; Sa 09:00-16:00",
+   "fast_food"
+  ],
+  [
+   "Čínska reštaurácia Jasmín 1",
+   48.14277,
+   17.10384,
+   "11:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Beastro",
+   48.14368,
+   17.10354,
+   "Mo-Fr 08:00-22:00; Sa,Su 10:00-22:00",
+   "cafe"
+  ],
+  [
+   "Radnička",
+   48.14383,
+   17.10866,
+   "Tu-Su 10:00-19:00; Mo off",
+   "cafe"
+  ],
+  [
+   "Vega nana",
+   48.14417,
+   17.10686,
+   "Tu-Su 10:00-19:00",
+   "cafe"
+  ],
+  [
+   "Urban Bistro",
+   48.14447,
+   17.10658,
+   "Mo-We,Su 09:00-22:00; Th-Sa 09:00-24:00",
+   "restaurant"
+  ],
+  [
+   "Uisce Beatha",
+   48.14427,
+   17.10482,
+   "Mo-Su 14:00-23:00",
+   "bar"
+  ],
+  [
+   "KeP's",
+   48.14257,
+   17.1066,
+   "Mo-Su 08:00-20:00",
+   "cafe"
+  ],
+  [
+   "antinori",
+   48.14302,
+   17.10659,
+   "Mo-Su 16:30-26:00",
+   "bar"
+  ],
+  [
+   "Masquerade",
+   48.14317,
+   17.1066,
+   "Mo-Th 00:00-01:00,11:00-24:00; Fr-Su 00:00-05:00,11:00-24:00",
+   "bar"
+  ],
+  [
+   "Pizza pasta kebab",
+   48.14561,
+   17.10773,
+   "Mo-Su 00:00-03:00,08:00-24:00; Fr,Sa 00:00-06:15,08:00-24:00",
+   "fast_food"
+  ],
+  [
+   "GOOD LIFE",
+   48.14581,
+   17.1084,
+   "Tu-Th 20:00-03:00, Fr,Sa 20:00-05:00",
+   "bar"
+  ],
+  [
+   "Mezcalli",
+   48.14592,
+   17.10802,
+   "Tu-Th 11:30-22:00; Fr,Sa 11:30-23:00; Su 11:30-16:00",
+   "restaurant"
+  ],
+  [
+   "Pizza Solo",
+   48.14203,
+   17.10667,
+   "Su-We 10:00-12:00, Th 10:00-01:00, Fr,Sa 10:00-03:00",
+   "fast_food"
+  ],
+  [
+   "Carnevalle",
+   48.142,
+   17.10808,
+   "Mo-Fr 11:00-23:00; Sa,Su 11:00-22:00",
+   "restaurant"
+  ],
+  [
+   "La Pala",
+   48.14217,
+   17.10865,
+   "Su-Tu 11:00-23:00; Th-Sa 11:00-12:00",
+   "restaurant"
+  ],
+  [
+   "Five points",
+   48.14209,
+   17.10681,
+   "Su-Th 09:00-21:00; Fr,Sa 09:00-23:00",
+   "cafe"
+  ],
+  [
+   "Gatto Matto",
+   48.14219,
+   17.10761,
+   "Mo-Sa 11:00-22:00; Su off",
+   "restaurant"
+  ],
+  [
+   "Tesla",
+   48.1424,
+   17.10722,
+   "Mo 16:00-24:00; Tu-Th 00:00-01:00,16:00-24:00; Fr 00:00-01:00,12:00-24:00; Sa 00:00-02:00,12:00-24:00; Su 00:00-02:00,12:00-23:00",
+   "cafe"
+  ],
+  [
+   "Habibi Cafe - Shisha Bar",
+   48.14262,
+   17.10826,
+   "Su-Th 13:00-24:00, Fr,Sa 13:00-01:00",
+   "cafe"
+  ],
+  [
+   "Wild Thing Karaoke Coctail Bar",
+   48.14302,
+   17.10703,
+   "Mo-Th 20:00-24:00; Fr-Sa 20:00-03:00",
+   "bar"
+  ],
+  [
+   "I Love Pizza",
+   48.143,
+   17.1088,
+   "Mo-Fr 10:00-24:00; Sa 00:00-01:00,10:00-24:00; Su 00:00-01:00,10:00-22:00",
+   "fast_food"
+  ],
+  [
+   "Old Vibe Winery",
+   48.14329,
+   17.10858,
+   "Mo-Su 10:00-23:00",
+   "bar"
+  ],
+  [
+   "Lochness Scottish pub",
+   48.14368,
+   17.10689,
+   "Mo-Fr 08:00-01:00, Sa 08:00-03:00, Su 11:00-01:00",
+   "restaurant"
+  ],
+  [
+   "Mayor Café & Coctail Bar",
+   48.14353,
+   17.11427,
+   "Mo-Fr 07:30-22:00",
+   "cafe"
+  ],
+  [
+   "Vegan kiosk",
+   48.1439,
+   17.11453,
+   "Mo-Th 11:00-20:00; Sa 11:00-21:00; Su 11:00-17:00; Fr 11:00-21:00",
+   "restaurant"
+  ],
+  [
+   "SOHO",
+   48.14471,
+   17.11614,
+   "Mo-Su 10:00-22:00",
+   "restaurant"
+  ],
+  [
+   "CAFFÉ TRIESTE",
+   48.14476,
+   17.11633,
+   "Mo-Th 07:30-19:00; Fr 07:30-20:00; Sa 08:30-20:00; Su 08:30-19:00",
+   "cafe"
+  ],
+  [
+   "Karmína",
+   48.14244,
+   17.11427,
+   "Mo-Fr 10:00-15:00",
+   "fast_food"
+  ],
+  [
+   "Casa del Havana",
+   48.14527,
+   17.10678,
+   "Mo-Fr 11:00-02:00, Sa 11:00-03:00, Su 11:00-24:00",
+   "restaurant"
+  ],
+  [
+   "Café Paris",
+   48.14687,
+   17.10828,
+   "Mo-Fr 13:00-01:00, Su 15:30-24:00, Sa 15:30-02:00",
+   "cafe"
+  ],
+  [
+   "Kogo",
+   48.14207,
+   17.10833,
+   "Mo-Su 11:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Sugarcane",
+   48.14258,
+   17.11409,
+   "Mo-Th 08:00-23:00; Fr 08:00-24:00; Sa 00:00-01:00,15:00-24:00; Su 00:00-01:00",
+   "restaurant"
+  ],
+  [
+   "Štartér",
+   48.14727,
+   17.11076,
+   "Mo-Fr 13:00-24:00; Sa 00:00-02:00,15:00-24:00; Su 00:00-02:00",
+   "pub"
+  ],
+  [
+   "Rožok",
+   48.14532,
+   17.10424,
+   "Mo-Fr 07:00-13:00",
+   "fast_food"
+  ],
+  [
+   "Reštaurácia L´olive",
+   48.14506,
+   17.10816,
+   "Mo-Fr 06:30-10:30,12:00-15:00,18:00-22:30; Sa-Su 07:00-11:00",
+   "restaurant"
+  ],
+  [
+   "Zbrojnoš",
+   48.1451,
+   17.1069,
+   "Mo-We 13:00-01:00, Th-Fr 13:00-04:00, Sa 15:00-04:00, Su 15:00-01:00",
+   "pub"
+  ],
+  [
+   "FACTORY",
+   48.14423,
+   17.10732,
+   "Mo-Fr 11:00-22:00; Sa 15:00-22:00",
+   "pub"
+  ],
+  [
+   "Los Mexikas",
+   48.14433,
+   17.10779,
+   "Mo-Sa 11:00-14:00, 17:00-22:00",
+   "restaurant"
+  ],
+  [
+   "BARROCK",
+   48.14378,
+   17.10693,
+   "We 18:00-01:00; Th-Sa 18:00-04:00",
+   "pub"
+  ],
+  [
+   "Green Buddha",
+   48.14319,
+   17.1074,
+   "Mo-Th 11:30-23:00; Fr-Su 11:30-24:00",
+   "restaurant"
+  ],
+  [
+   "Juicy",
+   48.14245,
+   17.10736,
+   "Mo-Th 15:30-01:00; Fr-Sa 15:30-03:00",
+   "bar"
+  ],
+  [
+   "Beer Palace",
+   48.14281,
+   17.11039,
+   "Mo-Th 11:00-23:00; Fr,Sa 11:00-01:00",
+   "restaurant"
+  ],
+  [
+   "La vita e bella",
+   48.14257,
+   17.10977,
+   "Mo-Su 10:00-22:00",
+   "bar"
+  ],
+  [
+   "Buba Restaurant&Bar",
+   48.14226,
+   17.10901,
+   "Mo-Su 12:00-24:00",
+   "restaurant"
+  ],
+  [
+   "Hasushi",
+   48.143,
+   17.10958,
+   "Mo-Fr 11:00-22:00; Sa-Su 12:00-22:00",
+   "restaurant"
+  ],
+  [
+   "Mondieu",
+   48.14318,
+   17.10961,
+   "Mo-We 08:00-21:00; Th-Sa 08:00-22:00; Su 08:30-21:00",
+   "restaurant"
+  ],
+  [
+   "NARCOS",
+   48.1431,
+   17.1098,
+   "Mo-Su 11:00-21:00",
+   "fast_food"
+  ],
+  [
+   "Zylinder Cafe Restaurant",
+   48.14189,
+   17.10777,
+   "Mo-Sa 09:00-22:00; Su 09:00-21:00",
+   "restaurant"
+  ],
+  [
+   "The organic",
+   48.14758,
+   17.11355,
+   "Mo-Fr 06:30-15:00",
+   "cafe"
+  ],
+  [
+   "Bella Napoli",
+   48.14683,
+   17.10881,
+   "Mo-Su 10:00-23:00",
+   "fast_food"
+  ],
+  [
+   "Studňa",
+   48.14326,
+   17.106,
+   "Mo-Th 12:00-24:00; Fr-Sa 12:00-25:00; Su 12:00-22:00",
+   "pub"
+  ],
+  [
+   "Ashoka",
+   48.14716,
+   17.10863,
+   "Mo-Sa 11:00-22:00; Su 12:00-22:00",
+   "restaurant"
+  ],
+  [
+   "Funki Punki",
+   48.14432,
+   17.10549,
+   "Mo-We 11:00-21:00; Th-Sa 11:00-22:00; Su 12:00-21:00",
+   "cafe"
+  ],
+  [
+   "Kafíčko",
+   48.14764,
+   17.10955,
+   "Mo-Fr 07:00-22:00; Sa 08:00-22:00; Su 12:00-22:00",
+   "cafe"
+  ],
+  [
+   "Foxford",
+   48.14722,
+   17.11,
+   "Mo-Fr 08:30-21:00; Sa-Su 10:00-21:00",
+   "cafe"
+  ],
+  [
+   "KAFEHAUS Palackého",
+   48.1414,
+   17.11034,
+   "Mo-Fr 08:00-20:00; Sa 10:00-18:00",
+   "cafe"
+  ],
+  [
+   "MÄSOTÉRIA",
+   48.14198,
+   17.11195,
+   "Mo-Fr 11:00-22:00",
+   "fast_food"
+  ],
+  [
+   "Francúzska reštaurácia",
+   48.14007,
+   17.10737,
+   "Mo-Fr 17:00-24:00; Sa 00:00-02:00,17:00-24:00; Su 00:00-02:00",
+   "restaurant"
+  ],
+  [
+   "LemonTree",
+   48.14105,
+   17.10724,
+   "Mo-Th 11:00-01:00, Fr-Sa 11:00-02:00, Su 12:00-24:00",
+   "restaurant"
+  ],
+  [
+   "Huy Vege",
+   48.14577,
+   17.11229,
+   "Mo-Fr 10:00-19:00; Sa 11:00-15:00",
+   "fast_food"
+  ],
+  [
+   "La Putika",
+   48.14449,
+   17.11075,
+   "Mo-Fr 09:00-24:00; Sa,Su 00:00-02:00,13:00-24:00",
+   "cafe"
+  ],
+  [
+   "Sushi house",
+   48.14169,
+   17.11153,
+   "Mo-Fr 10:30-21:00; Sa 12:00-21:00",
+   "restaurant"
+  ],
+  [
+   "spaghetti leviathan",
+   48.14227,
+   17.11288,
+   "Mo-Fr 10:00-19:00",
+   "restaurant"
+  ],
+  [
+   "Side kebab",
+   48.14777,
+   17.11069,
+   "Mo-Fr 08:00-02:00; Sa-Su 09:00-02:00",
+   "fast_food"
+  ],
+  [
+   "Kantína INAK",
+   48.14208,
+   17.11197,
+   "Mo-Fr 11:00-14:00",
+   "fast_food"
+  ],
+  [
+   "Advokát",
+   48.14557,
+   17.11265,
+   "Mo-Fr 08:00-16:30",
+   "cafe"
+  ],
+  [
+   "Bistro Vanesa",
+   48.14442,
+   17.1108,
+   "Mo-Th 00:00-01:00,08:00-24:00; Fr 00:00-04:00,08:00-24:00; Sa,Su 00:00-04:00,10:00-24:00",
+   "pub"
+  ],
+  [
+   "Snack bar MECHECHE",
+   48.14409,
+   17.11104,
+   "Tu-Fr 17:00-24:00; Sa 00:00-01:00,17:00-24:00; Su 00:00-01:00",
+   "restaurant"
+  ],
+  [
+   "ICEBAR",
+   48.14243,
+   17.1072,
+   "Mo 16:00-24:00; Tu-Th 00:00-01:00,16:00-24:00; Fr 00:00-01:00,12:00-24:00; Sa 00:00-02:00,12:00-24:00; Su 00:00-02:00,12:00-23:00",
+   "bar"
+  ],
+  [
+   "u Zlatého Bažanta",
+   48.14435,
+   17.11418,
+   "Mo,Tu 10:00-23:00; We-Fr 10:00-24:00; Sa 00:00-02:00,11:00-24:00; Su 00:00-02:00,11:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Houdini",
+   48.14135,
+   17.11344,
+   "Mo-Sa 12:00-22:30; Su 12:00-15:00,18:00-22:30",
+   "restaurant"
+  ],
+  [
+   "Foodstock Bratislava",
+   48.14463,
+   17.11094,
+   "Su-We 11:00-22:00, Th-Sa 11:00-24:00",
+   "fast_food"
+  ],
+  [
+   "Piazetta",
+   48.14072,
+   17.10746,
+   "Mo-Th 10:30-08:00, Fr 10:30-23:00",
+   "cafe"
+  ],
+  [
+   "Urban House",
+   48.14361,
+   17.11114,
+   "Mo-Fr 09:00-24:00; Sa 00:00-02:00,09:00-24:00; Su 00:00-02:00,09:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Korzo",
+   48.14158,
+   17.10924,
+   "Mo-Fr 10:00-24:00; Sa 00:00-01:00,11:00-24:00; Su 00:00-01:00,11:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Hancook",
+   48.1481,
+   17.11185,
+   "Mo-Su 11:30-22:00",
+   "fast_food"
+  ],
+  [
+   "Bella Napoli",
+   48.14672,
+   17.10845,
+   "Mo-Th 09:00-23:00; Fr 09:00-24:00; Sa 10:00-24:00; Su 10:00-23:00",
+   "restaurant"
+  ],
+  [
+   "F.X.Messerschmidt",
+   48.14626,
+   17.11004,
+   "Mo-Su 09:00-22:00",
+   "cafe"
+  ],
+  [
+   "Kaliforňan",
+   48.14145,
+   17.11454,
+   "Mo-Fr 10:00-15:00",
+   "restaurant"
+  ],
+  [
+   "Channels",
+   48.14571,
+   17.1065,
+   "Su-Th 20:00-04:00, Fr,Sa 20:00-06:00",
+   "bar"
+  ],
+  [
+   "Avenue10",
+   48.14575,
+   17.10678,
+   "Mo-We 11:00-01:00, Th-Sa 11:00-04:00",
+   "bar"
+  ],
+  [
+   "Orient street food",
+   48.14756,
+   17.11025,
+   "Mo-Th 11:00-24:00; Fr-Sa 12:00-03:00; Su 12:00-24:00",
+   "fast_food"
+  ],
+  [
+   "Doris Cookies",
+   48.1457,
+   17.10644,
+   "Mo-Fr 08:00-19:00; Sa,Su 11:00-19:00",
+   "cafe"
+  ],
+  [
+   "Čerstvé bagetky",
+   48.14573,
+   17.10656,
+   "Mo-Th 10:00-04:00, Fr 10:00-06:00, Sa 19:00-24:00",
+   "fast_food"
+  ],
+  [
+   "SX DG",
+   48.14665,
+   17.10717,
+   "Mo-Fr 09:00-15:00",
+   "restaurant"
+  ],
+  [
+   "Arya",
+   48.14735,
+   17.10986,
+   "Tu-Fr 10:00-00:00, 00:00-02:00; Sa, Su 00:00-02:00, 11:00-00:00; Mo 00:00-02:00, 10:00-00:00",
+   "fast_food"
+  ],
+  [
+   "The Red Lion",
+   48.14437,
+   17.10636,
+   "Mo-Th 16:00-24:00; Fr 16:00-26:00, Sa 13:00-26:00, Su 13:00-24:00",
+   "pub"
+  ],
+  [
+   "100 pív",
+   48.14235,
+   17.11263,
+   "Mo-Fr 12:00-22:00; Sa-Su 15:00-22:00",
+   "pub"
+  ],
+  [
+   "Mondieu",
+   48.14194,
+   17.10649,
+   "Mo-Th 08:00-21:00; Fr-Sa 08:00-22:00; Su 08:30-21:00",
+   "cafe"
+  ],
+  [
+   "Fresh bar Liga pasáž",
+   48.14444,
+   17.11604,
+   "Mo-Fr 07:00-17:00",
+   "fast_food"
+  ],
+  [
+   "Šiškáreň",
+   48.14457,
+   17.11598,
+   "Mo-Fr 10:00-16:00",
+   "fast_food"
+  ],
+  [
+   "Cafeteria Granada",
+   47.84735,
+   16.51295,
+   "Mo-Fr 08:30-19:00; Sa,Su,PH 10:00-19:00",
+   "fast_food"
+  ],
+  [
+   "Art Cafe",
+   48.14522,
+   17.11217,
+   "Mo-Fr 08:00-22:00; Sa 09:00-22:00; Su 10:00-22:00",
+   "cafe"
+  ],
+  [
+   "Irin.",
+   48.14215,
+   17.10569,
+   "Tu-Fr 18:00-22:00",
+   "restaurant"
+  ],
+  [
+   "Bufet Koláčik",
+   48.14592,
+   17.11127,
+   "Mo-Th 07:30-15:00; Fr 07:30-14:00",
+   "fast_food"
+  ],
+  [
+   "Nocco Fresh Pasta",
+   48.14807,
+   17.11132,
+   "Su-Th 11:00-21:00; Fr-Sa 11:00-24:00",
+   "fast_food"
+  ],
+  [
+   "ORBIS Street Food",
+   48.14361,
+   17.11051,
+   "Su-Th 12:00-22:00; Fr,Sa 12:00-23:00",
+   "fast_food"
+  ],
+  [
+   "Cierny Pes",
+   48.1442,
+   17.10446,
+   "Mo 12:00-23:00; Tu-Th 12:00-23:30; Fr 12:00-00:30, Sa 14:00-24:00",
+   "bar"
+  ],
+  [
+   "Shawerma house",
+   48.14577,
+   17.11349,
+   "Mo-Su 09:00-22:00; Fr,Sa 11:00-24:00",
+   "fast_food"
+  ],
+  [
+   "MOW BAR",
+   48.14057,
+   17.10618,
+   "Mo 00:00-01:00,16:00-24:00; Tu-Th 00:00-02:00,16:00-24:00; Fr-Su 00:00-04:00,16:00-24:00",
+   "bar"
+  ],
+  [
+   "Gastro u Jakuba",
+   48.14452,
+   17.11186,
+   "Mo-Fr 07:00-15:00",
+   "fast_food"
+  ],
+  [
+   "Mondieu",
+   48.14356,
+   17.11054,
+   "Mo-Th 08:00-21:00; Fr-Sa 08:00-22:00; Su 08:30-21:00",
+   "cafe"
+  ],
+  [
+   "Portus restaurant",
+   48.14082,
+   17.10724,
+   "Mo-Fr 08:00-18:00",
+   "restaurant"
+  ],
+  [
+   "Savoy",
+   48.14135,
+   17.10857,
+   "Mo-Fr 06:30-10:30; Sa,Su 06:30-11:00",
+   "restaurant"
+  ],
+  [
+   "Krčma na Zelenej",
+   48.14303,
+   17.10736,
+   "Mo-Th 12:00-23:00; Fr,Sa 12:00-01:00, Su 12:00-23:00; PH off",
+   "restaurant"
+  ],
+  [
+   "U Kata",
+   48.14508,
+   17.10659,
+   "Mo-Th 12:00-02:00, Fr-Sa 12:00-04:00, Su 12:00-02:00",
+   "bar"
+  ],
+  [
+   "TIGERNUT PLANET",
+   48.14394,
+   17.11317,
+   "Mo-Fr 07:00-17:00; Sa 08:00-18:00; Su 09:00-17:00",
+   "cafe"
+  ],
+  [
+   "Pizza & Burger Treff",
+   48.40931,
+   15.60408,
+   "Mo-Su 10:00-21:00",
+   "fast_food"
+  ],
+  [
+   "moozi",
+   48.14482,
+   17.1157,
+   "Tu-Fr 11:00-15:00,17:30-22:00; Sa 12:00-21:00",
+   "restaurant"
+  ],
+  [
+   "Papa Cafe",
+   48.1446,
+   17.11384,
+   "Mo-Th 08:00-23:00; Fr 08:00-24:00; Sa 00:00-01:00,09:00-24:00; Su 00:00-01:00,10:00-21:00",
+   "cafe"
+  ],
+  [
+   "Royal Travel Café",
+   48.14444,
+   17.11462,
+   "Mo-Fr 10:00-13:00,13:30-16:30",
+   "cafe"
+  ],
+  [
+   "Smokin’ Bob Barbecue",
+   48.14351,
+   17.11332,
+   "Tu-Su 11:00-21:00",
+   "fast_food"
+  ],
+  [
+   "Steinplatz",
+   48.14434,
+   17.11317,
+   "Mo-We 16:00-03:00; Th-Sa 16:00-04:00; Su 17:00-03:00",
+   "pub"
+  ],
+  [
+   "ZICHY grill restaurant",
+   48.1432,
+   17.10634,
+   "Mo-Su 11:00-22:00",
+   "restaurant"
+  ],
+  [
+   "SKY Bar & Restaurant",
+   48.14102,
+   17.10715,
+   "Mo-Fr 12:00-24:00; Sa,Su 00:00-01:00,12:00-24:00",
+   "restaurant"
+  ],
+  [
+   "Gatto Matto Ristorante",
+   48.14292,
+   17.10658,
+   "Mo-Su 11:00-22:00; Fr,Sa 11:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Restaurant Avance",
+   48.14087,
+   17.11093,
+   "Mo-Su 11:00-22:00",
+   "restaurant"
+  ],
+  [
+   "Milenium cafe",
+   48.14603,
+   17.10904,
+   "Mo-Fr 08:00-22:00; Sa 09:00-22:00; Su 10:00-22:00",
+   "restaurant"
+  ],
+  [
+   "Pán Cakes",
+   48.14682,
+   17.10678,
+   "Mo-Su 09:30-21:30",
+   "cafe"
+  ],
+  [
+   "Grand Cru Wine Gallery",
+   48.14508,
+   17.10761,
+   "Mo-Sa 17:00-22:00",
+   "bar"
+  ],
+  [
+   "Doppio Café",
+   48.1443,
+   17.11595,
+   "Mo-Fr 07:30-18:00",
+   "cafe"
+  ],
+  [
+   "GREAT",
+   48.14722,
+   17.10677,
+   "Mo 11:00-24:00; Tu-Fr 00:00-02:00,11:00-24:00; Sa 00:00-02:00,10:00-24:00; Su 00:00-02:00",
+   "restaurant"
+  ],
+  [
+   "Žil Verne",
+   48.14246,
+   17.10784,
+   "Mo 15:00-23:00, Tu-Th 15:00-24:00, Fr,Sa 15:00-02:00, Su 15:00-23:00",
+   "pub"
+  ],
+  [
+   "Koliba Kamzík",
+   48.14295,
+   17.10719,
+   "Mo-Su 11:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Depresso",
+   48.14243,
+   17.10659,
+   "Mo-Th 11:00-00:30, Fr,Sa 11:00-03:00, Su 13:00-00:30",
+   "cafe"
+  ],
+  [
+   "La Piazza",
+   48.14124,
+   17.10612,
+   "Mo-Th 11:00-22:00; Fr,Sa 11:00-23:00; Su 11:00-21:00",
+   "restaurant"
+  ],
+  [
+   "Big11",
+   48.00513,
+   16.23151,
+   "Mo-Th, Su 11:30-22:00; Fr, Sa 11:30-23:00",
+   "restaurant"
+  ],
+  [
+   "The Cuba Libre Rum & Cigar House",
+   48.14382,
+   17.11101,
+   "Mo 16:00-24:00; Tu-Fr 00:00-01:00,16:00-24:00; Sa,Su 00:00-02:00,16:00-24:00",
+   "bar"
+  ],
+  [
+   "Luculus",
+   48.1422,
+   17.1088,
+   "Mo-Su 12:00-21:00",
+   "cafe"
+  ],
+  [
+   "Kapucino",
+   48.14475,
+   17.10478,
+   "Mo-Th 08:30-19:00; Fr 08:30-21:00; Sa 10:00-21:00; Su 10:00-19:00",
+   "cafe"
+  ],
+  [
+   "Dolnozemská krčma",
+   48.14267,
+   17.10844,
+   "Su-Th 10:00-22:00; Fr-Sa 10:00-00:00",
+   "restaurant"
+  ],
+  [
+   "Pasteleria",
+   48.1424,
+   17.1081,
+   "10:00-19:00",
+   "cafe"
+  ],
+  [
+   "vinco",
+   48.14252,
+   17.10392,
+   "Tu-Th 15:30-22:30; Fr 15:30-23:30; Sa 13:00-23:30",
+   "restaurant"
+  ],
+  [
+   "Cafe Bazaar",
+   48.14379,
+   17.10362,
+   "09:00-21:00",
+   "cafe"
+  ],
+  [
+   "Pizzeria Hollywood",
+   48.41281,
+   15.60643,
+   "Mo-Su,PH 11:00-22:00",
+   "fast_food"
+  ],
+  [
+   "U Marcelky",
+   48.14603,
+   17.10912,
+   "Mo-Sa 08:00-22:00; Su 09:00-19:00",
+   "cafe"
+  ],
+  [
+   "Tomate",
+   48.00522,
+   16.23127,
+   "Tu-Th 19:00-02:30, Fr-Sa 19:00-04:00",
+   "bar"
+  ],
+  [
+   "Restaurant FACH",
+   48.14276,
+   17.10662,
+   "Su-We 09:00-18:00; Th-Sa 09:00-17:00,18:00-22:00",
+   "restaurant"
+  ],
+  [
+   "FACH - Bread & Coffee",
+   48.14282,
+   17.10667,
+   "Mo-Su 08:30-20:00, Mo-Fr 09:00-18:00",
+   "cafe"
+  ],
+  [
+   "FACH - Cocktail Bar",
+   48.14289,
+   17.1069,
+   "Mo-Sa 09:30-22:00, Su 09:30-20:00",
+   "bar"
+  ],
+  [
+   "Zwinger",
+   48.14516,
+   17.10667,
+   "Mo-Su 00:00-06:00,17:00-24:00; Tu-Fr 00:00-03:00,17:00-24:00",
+   "fast_food"
+  ],
+  [
+   "Il Cavallino",
+   48.00573,
+   16.2361,
+   "Mo-Sa 11:00-23:00; Su, PH 11:00-22:00",
+   "restaurant"
+  ],
+  [
+   "Torino",
+   48.00515,
+   16.237,
+   "Mo-Su 10:30-23:00",
+   "restaurant"
+  ],
+  [
+   "Viecha malých vinárov",
+   48.14452,
+   17.11097,
+   "Mo-Th 15:00-00:00; Fr 15:00-01:00; Sa 09:00-01:00; Su 15:00-24:00",
+   "pub"
+  ],
+  [
+   "Casa Mampf",
+   48.40911,
+   15.60877,
+   "Tu-Sa 11:00-14:30, 17:00-22:00; Su 11:00-22:00",
+   "restaurant"
+  ],
+  [
+   "Výčap u Ernöho",
+   48.14481,
+   17.11128,
+   "Mo 14:00-22:00, Tu-Th 11:00-24:00, Fr 11:00-01:00, Sa 10:00-01:00, Su 12:00-22:00",
+   "pub"
+  ],
+  [
+   "Bukowski Bar",
+   48.14447,
+   17.1121,
+   "Mo-Th 00:00-03:00,16:00-24:00; Fr,Sa 00:00-04:00,16:00-24:00; Su 00:00-04:00,17:00-24:00",
+   "bar"
+  ],
+  [
+   "Ramen Kazu",
+   48.14239,
+   17.10764,
+   "Tu-Sa 11:00-21:30; Su 11:00-20:30; Mo off",
+   "restaurant"
+  ],
+  [
+   "Výčap na Medenej",
+   48.14156,
+   17.11239,
+   "Mo-Su 14:00-00:00",
+   "pub"
+  ],
+  [
+   "Buchtáreň",
+   48.14503,
+   17.1066,
+   "Mo-Fr 09:00-21:00; Sa-Su 10:30-21:00",
+   "fast_food"
+  ],
+  [
+   "mini bar",
+   48.14234,
+   17.10749,
+   "Su-Th 09:00-01:00, Fr,Sa 09:00-04:00",
+   "bar"
+  ],
+  [
+   "Sushi Bar Tokyo",
+   48.14185,
+   17.1066,
+   "Mo-Su 11:00-24:00",
+   "restaurant"
+  ],
+  [
+   "Mirror Cocktail Bar",
+   48.14139,
+   17.10901,
+   "Mo-Fr 09:00-24:00; Sa 14:00-24:00; Su 14:00-22:00",
+   "bar"
+  ],
+  [
+   "Cat Cafe MON AMI",
+   48.13999,
+   17.10776,
+   "Th 11:00-18:00; Fr,Sa 11:00-19:00; Su 11:00-17:00",
+   "cafe"
+  ],
+  [
+   "Tony's To Go",
+   48.41222,
+   15.60875,
+   "Mo-Th 10:30-21:30; Fr-Sa 10:30-22:00",
+   "fast_food"
+  ],
+  [
+   "Le Papillon",
+   48.14306,
+   17.10835,
+   "Mo-Su 08:00-22:00",
+   "restaurant"
+  ],
+  [
+   "Cool me",
+   48.00663,
+   16.23286,
+   "Tu-Sa 20:00-02:00",
+   "bar"
+  ],
+  [
+   "Bing's",
+   48.00642,
+   16.23335,
+   "11:00-21:00",
+   "fast_food"
+  ],
+  [
+   "Basilicò",
+   48.14507,
+   17.10558,
+   "Mo-Sa 11:00-22:00",
+   "restaurant"
+  ],
+  [
+   "Der Mann",
+   48.00731,
+   16.23228,
+   "Mo-Fr 07:00-18:30; Sa 07:00-18:00; Su, PH 07:00-17:00",
+   "cafe"
+  ],
+  [
+   "VESPAIO",
+   48.14544,
+   17.11393,
+   "Mo-Th 07:00-18:00; Fr 07:00-17:00; Sa,Su 08:00-17:00",
+   "cafe"
+  ],
+  [
+   "WAFFLE Bratislava",
+   48.14294,
+   17.11185,
+   "Mo-Th 14:00-22:00; Fr-Su 14:00-24:00",
+   "fast_food"
+  ],
+  [
+   "Sweet Beans",
+   48.14795,
+   17.11103,
+   "Mo-Fr 08:00-18:30; Sa 10:00-15:00",
+   "cafe"
+  ],
+  [
+   "Monastic brewery",
+   48.14611,
+   17.11019,
+   "Tu-Sa 12:00-23:00",
+   "pub"
+  ],
+  [
+   "Michalska Cocktail Room",
+   48.14445,
+   17.10655,
+   "We,Th 18:00-00:00; Fr,Sa 18:00-02:00",
+   "bar"
+  ],
+  [
+   "Su Fusion",
+   48.002,
+   16.23112,
+   "Tu-Su 11:30-15:00,17:30-22:00",
+   "restaurant"
+  ],
+  [
+   "COM VIET",
+   48.14457,
+   17.11228,
+   "Mo-Th 11:00-22:00; Fr-Sa 11:00-23:00; Su 11:00-22:00",
+   "restaurant"
+  ],
+  [
+   "Black",
+   48.14346,
+   17.11191,
+   "Mo-Su 09:00-17:00; Fr,Sa 09:00-19:00",
+   "cafe"
+  ],
+  [
+   "MAMULI",
+   48.14073,
+   17.10993,
+   "Mo-Su 12:00-24:00",
+   "restaurant"
+  ],
+  [
+   "Schöndorf",
+   48.1478,
+   17.11158,
+   "Mo 09:00-17:00; Tu-Sa 09:00-18:00; Su 09:00-16:00",
+   "cafe"
+  ],
+  [
+   "Fugu sushi",
+   48.14573,
+   17.10677,
+   "Mo-Su 11:00-22:00",
+   "restaurant"
+  ],
+  [
+   "Starbucks",
+   48.14338,
+   17.10763,
+   "Mo-Fr 07:30-20:30; Sa,Su 08:00-20:00",
+   "cafe"
+  ],
+  [
+   "Pollito",
+   48.14405,
+   17.11227,
+   "Mo-Fr 09:00-21:00; Sa,Su 10:30-21:00",
+   "cafe"
+  ],
+  [
+   "Koliba Kamzík",
+   48.14596,
+   17.10886,
+   "Mo-Su 11:00-22:00; Fr,Sa 11:00-23:00",
+   "restaurant"
+  ],
+  [
+   "10 prstov",
+   48.14328,
+   17.11084,
+   "Mo-Su 09:30-23:00",
+   "bar"
+  ],
+  [
+   "Manderla coffee",
+   48.14346,
+   17.10969,
+   "Mo-Fr 07:30-22:00; Sa,Su 08:30-22:00",
+   "cafe"
+  ],
+  [
+   "Gourmet bistro",
+   48.14773,
+   17.10833,
+   "Mo-Fr 08:00-19:00; Sa,Su 09:00-17:00",
+   "restaurant"
+  ],
+  [
+   "Brixton House",
+   48.1442,
+   17.10834,
+   "Mo-Su 10:30-22:00",
+   "restaurant"
+  ],
+  [
+   "La Ventura -Tapas & Wine Bar",
+   48.14224,
+   17.10588,
+   "Tu-Sa 18:00-22:00",
+   "bar"
+  ],
+  [
+   "KAKAW CO+ KAKAOTÉRIA",
+   48.14309,
+   17.11219,
+   "Mo-Su 10:00-20:00",
+   "cafe"
+  ],
+  [
+   "Prosecco point",
+   48.1434,
+   17.11177,
+   "Mo-Th 14:00-23:00; Fr,Sa 14:00-24:00",
+   "cafe"
+  ],
+  [
+   "Levant",
+   48.14291,
+   17.11066,
+   "Mo-Th 11:00-22:30; Fr-Sa 11:00-23:00; Su 11:30-22:00",
+   "restaurant"
+  ],
+  [
+   "Pane & Olio",
+   48.14311,
+   17.11154,
+   "Tu-Th 09:00-17:00; Sa 11:00-21:00; Mo 11:00-17:00; Fr 09:00-21:00",
+   "fast_food"
+  ],
+  [
+   "grão",
+   48.14269,
+   17.11225,
+   "Mo-Sa 10:00-20:00; Su 10:00-16:00",
+   "cafe"
+  ],
+  [
+   "KNEŠEL",
+   48.14172,
+   17.10411,
+   "Mo-Su 11:00-23:00",
+   "restaurant"
+  ],
+  [
+   "UMAMI",
+   48.14378,
+   17.11381,
+   "Mo-Fr 08:00-14:00",
+   "fast_food"
+  ],
+  [
+   "SantaFe",
+   48.14523,
+   17.11398,
+   "Mo-Su 10:00-20:00",
+   "fast_food"
+  ],
+  [
+   "Retro",
+   48.14521,
+   17.11403,
+   "Mo-Su 10:00-20:00",
+   "fast_food"
+  ],
+  [
+   "BurgerKuhnst",
+   48.41164,
+   15.60797,
+   "Mo-Su 11:00-22:00",
+   "fast_food"
+  ],
+  [
+   "Mondieu",
+   48.14085,
+   17.1052,
+   "Mo-Th 08:00-21:00; Fr-Sa 08:00-22:00; Su 08:30-21:00",
+   "restaurant"
+  ],
+  [
+   "Blue Mondays",
+   48.14456,
+   17.11552,
+   "Mo-Th 08:00-18:00; Fr 08:00-20:00; Sa,Su 09:00-20:00",
+   "cafe"
+  ],
+  [
+   "2 Zebras",
+   48.14101,
+   17.10947,
+   "Mo-Th 08:00-19:00; Fr 08:00-21:00; Sa 09:00-21:00; Su 09:00-18:00",
+   "cafe"
+  ],
+  [
+   "La Bella Carolina",
+   48.14051,
+   17.10949,
+   "Tu-Th 15:00-23:00; Fr,Sa 15:00-24:00",
+   "restaurant"
+  ],
+  [
+   "Bagetéria Liga pasáž",
+   48.1444,
+   17.11605,
+   "Mo-Fr 07:00-17:00",
+   "fast_food"
+  ],
+  [
+   "El Gaucho",
+   48.14219,
+   17.10631,
+   "Mo-Su 12:00-24:00",
+   "restaurant"
+  ],
+  [
+   "Picollo pub",
+   48.14746,
+   17.1106,
+   "Mo-Th 00:00-01:00,20:00-24:00; Fr-Su 00:00-04:00,20:00-24:00",
+   "pub"
+  ],
+  [
+   "Craft coffee",
+   48.14512,
+   17.1139,
+   "Mo-Fr 07:00-21:00; Sa,Su 08:00-20:00",
+   "cafe"
+  ],
+  [
+   "Talks",
+   48.14241,
+   17.11115,
+   "Mo-Fr 07:15-18:00; Sa-Su 09:00-18:00",
+   "cafe"
+  ],
+  [
+   "ost block",
+   48.14527,
+   17.11473,
+   "Mo-Fr 08:00-24:00; Sa 00:00-02:00,09:00-24:00; Su 00:00-02:00,10:00-22:00",
+   "cafe"
+  ],
+  [
+   "OPERA",
+   48.14202,
+   17.11019,
+   "Mo-Fr 07:30-23:00; Sa,Su 08:30-23:00",
+   "cafe"
+  ],
+  [
+   "Pizza Me",
+   48.14518,
+   17.11226,
+   "Mo-We,Su 17:00-24:00; Th 17:00-02:00, Fr-Sa 17:00-06:00",
+   "fast_food"
+  ],
+  [
+   "Nuda",
+   48.14236,
+   17.10399,
+   "Tu-Th 17:00-22:30; Fr,Sa 17:00-24:00",
+   "bar"
+  ],
+  [
+   "D.Steakhouse",
+   48.14206,
+   17.10822,
+   "Mo-Su 11:00-24:00",
+   "restaurant"
+  ],
+  [
+   "Manifest Bohéma",
+   48.14635,
+   17.10747,
+   "Mo 09:00-24:00; Tu-Th 09:00-02:00, Fr 09:00-03:00, Sa 11:00-03:00, Su 17:00-02:00",
+   "bar"
+  ],
+  [
+   "Šmak",
+   48.14437,
+   17.10541,
+   "Mo-Th 11:00-24:00; Fr 11:00-02:00, Sa 12:00-02:00; Su 12:00-24:00",
+   "restaurant"
+  ],
+  [
+   "Coco Bar",
+   48.14437,
+   17.11044,
+   "Mo-Th 07:00-24:00; Fr 07:00-02:00, Sa 09:00-02:00, Su 09:00-24:00",
+   "bar"
+  ],
+  [
+   "Koliba Kamzík",
+   48.1448,
+   17.10685,
+   "Mo-Su 11:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Pizza Me",
+   48.14479,
+   17.10663,
+   "Mo-Tu 17:00-24:00, We 17:00-01:00, Th 17:00-02:00, Fr-Sa 12:00-06:00, Su 12:00-24:00",
+   "fast_food"
+  ],
+  [
+   "Café Comeniana",
+   48.14294,
+   17.11403,
+   "Mo-Fr 08:00-20:00",
+   "cafe"
+  ],
+  [
+   "Bar Centrale",
+   48.4117,
+   15.60367,
+   "We 16:00-22:00; Th 09:00-22:00; Fr 09:00-23:00; Sa 09:00-23:00",
+   "bar"
+  ],
+  [
+   "Martineum café",
+   48.14173,
+   17.10496,
+   "Mo-Sa 10:00-20:00; Su 10:00-19:00",
+   "cafe"
+  ],
+  [
+   "Piana Vyshnia",
+   48.14343,
+   17.11027,
+   "Mo-Th 12:00-00:00; Fr 12:00-01:00; Sa 11:00-01:00; Su 11:00-00:00",
+   "bar"
+  ],
+  [
+   "Half Blind Pig",
+   48.14492,
+   17.10627,
+   "We-Fr 18:00-24:00; Sa 00:00-02:00,18:00-24:00; Su 00:00-02:00",
+   "bar"
+  ],
+  [
+   "Folklore Garden",
+   48.14494,
+   17.10686,
+   "We-Su 09:00-21:00",
+   "restaurant"
+  ],
+  [
+   "Vinička",
+   48.1446,
+   17.10707,
+   "Th 18:00-23:00; Fr 17:00-24:00; Sa 00:00-02:00,17:00-24:00; Su 00:00-02:00",
+   "pub"
+  ],
+  [
+   "Luana Lounge Bar",
+   48.14376,
+   17.1114,
+   "Mo-Th 10:00-00:00; Fr 10:00-02:00; Sa 11:00-02:00",
+   "bar"
+  ],
+  [
+   "B6bar",
+   48.14411,
+   17.10752,
+   "Mo-Su 16:00-22:00",
+   "cafe"
+  ],
+  [
+   "Vespaio",
+   48.14677,
+   17.10927,
+   "Mo-Fr 07:00-19:00; Sa,Su 08:00-19:00",
+   "cafe"
+  ],
+  [
+   "Banchan",
+   48.14636,
+   17.10869,
+   "Mo-Su 10:00-22:00",
+   "fast_food"
+  ],
+  [
+   "NARCOS",
+   48.14243,
+   17.10774,
+   "Su-Th 10:30-00:00; Fr-Sa 10:30-02:00",
+   "fast_food"
+  ],
+  [
+   "Bohéma Bar",
+   48.14503,
+   17.11443,
+   "Mo-Fr 16:00-24:00; Sa,Su 00:00-03:00,16:00-24:00",
+   "bar"
+  ],
+  [
+   "Pasteleria",
+   48.14328,
+   17.10995,
+   "Mo-Su 10:00-19:00",
+   "cafe"
+  ],
+  [
+   "MAKA MAKA",
+   48.14368,
+   17.11325,
+   "Mo-Su 11:00-21:00",
+   "fast_food"
+  ],
+  [
+   "BUKOWSKI late night bar 2.0",
+   48.14521,
+   17.11459,
+   "Mo-Th 00:00-01:00,17:00-24:00; Fr-Su 00:00-03:00,17:00-24:00",
+   "bar"
+  ],
+  [
+   "Pilsner Factory",
+   48.14721,
+   17.11053,
+   "Mo-Su 16:00-02:00",
+   "pub"
+  ],
+  [
+   "Red Chilli",
+   48.14647,
+   17.10852,
+   "Mo-Fr 11:00-22:00; Sa, Su 12:00-22:00",
+   "restaurant"
+  ],
+  [
+   "Emil",
+   48.14484,
+   17.1078,
+   "Tu-Sa 10:00-22:00; Su 10:00-20:00; Mo 10:00-18:00",
+   "cafe"
+  ],
+  [
+   "6:57 a.m.",
+   48.14134,
+   17.11209,
+   "Mo-Fr 06:57-17:00; Sa-Su 08:00-18:00",
+   "cafe"
+  ],
+  [
+   "Pizza Pronto",
+   48.4125,
+   15.60472,
+   "Mo-Su 11:00-22:30",
+   "fast_food"
+  ],
+  [
+   "TU-BA",
+   48.14312,
+   17.11316,
+   "Mo-Fr 08:00-18:00; Sa-Su 09:00-18:00",
+   "cafe"
+  ],
+  [
+   "2cee Bunšik",
+   48.14172,
+   17.11538,
+   "Mo-Fr 10:00-20:00; Sa,Su 11:00-19:00",
+   "fast_food"
+  ],
+  [
+   "Six Euro Pizza",
+   48.14578,
+   17.11447,
+   "Mo,Tu 11:00-22:00, We-Sa 11:00-02:00, Su,PH 11:00-21:00",
+   "fast_food"
+  ],
+  [
+   "Spusta Kaviareň & Pekáreň",
+   48.14344,
+   17.10748,
+   "Mo-Su 09:00-20:00",
+   "cafe"
+  ],
+  [
+   "Ribs pub",
+   48.14111,
+   17.10569,
+   "Mo-Th 12:00-23:00; Fr 12:00-01:00; Sa,Su 12:00-23:00",
+   "pub"
+  ],
+  [
+   "Propeller",
+   48.13967,
+   17.10948,
+   "Mo-Fr 11:00-18:00; Sa,Su 11:00-17:00",
+   "bar"
+  ],
+  [
+   "Schlosscafe",
+   47.84619,
+   16.51761,
+   "Mo-Th 09:00-22:00; Fr,Sa 09:00-24:00; Su off",
+   "cafe"
+  ],
+  [
+   "mySchnitzel",
+   47.84598,
+   16.5166,
+   "Mo-Fr 11:00-20:00; PH,Su 10:30-20:00",
+   "restaurant"
+  ],
+  [
+   "El Gaucho",
+   48.00638,
+   16.23288,
+   "Mo-Sa 11:00-24:00; PH,Su 12:00-22:00",
+   "restaurant"
+  ],
+  [
+   "Daj si!",
+   48.14523,
+   17.11361,
+   "Mo 11:00-23:00; Tu,We 11:00-24:00; Th,Fr 00:00-01:00,11:00-24:00; Sa 00:00-04:00,11:00-24:00; Su 00:00-04:00,11:00-22:00",
+   "fast_food"
+  ]
  ]
 }

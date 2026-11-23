@@ -19,7 +19,7 @@ function merge(older, newer) {
   }
   o.ports = pick(older.ports, newer.ports) || [];
   o.dayTrips = [...new Set([...(older.dayTrips || []), ...(newer.dayTrips || [])])];
-  for (const k of ['guideSights', 'mapPlaces', 'centre', 'wikivoyage', 'transit', 'lifts', 'cityEats', 'piers', 'ferryLinks', 'roads']) o[k] = pick(older[k], newer[k]);
+  for (const k of ['guideSights', 'mapPlaces', 'centre', 'wikivoyage', 'transit', 'lifts', 'cityEats', 'eatHours', 'piers', 'ferryLinks', 'roads']) o[k] = pick(older[k], newer[k]);
   o.missing = (newer.missing || older.missing || []).filter(m => !(m === 'a mapped cruise terminal or pier' && o.ports.some(p => p.cruise)) && !(m === 'travel guide page' && o.wikivoyage) && !(m === 'public transport lines on the map' && (o.transit || []).length));
   return o;
 }
