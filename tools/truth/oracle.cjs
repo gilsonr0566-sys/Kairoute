@@ -197,6 +197,12 @@ function checkDay(d, p, ctx) {
       if (lo != null) { const from = bagsAt && lo >= bagsAt.at ? bagsAt : (last && pos(last) ? last : null); if (from) { const need = lo + fastest(hav(from, G)); if (need > lastAt) add('leaveby', 'S1', `the screen says leave for the ${D.mode} by ${clk(lo)}; even the fastest ride gets there at ${clk(need)}, after ${clk(lastAt)}`); } }
     }
   }
+  // backwait: on a day with a time to be back, every ride after the last visit (to the bags, to the gate) on a line with
+  // no timetable carries at least the full gap between departures as its wait (Rides thread, Nov 23: a ride out may plan
+  // half the gap; the way back never). Read from the helper's own answer on the ride: how often it runs.
+  { const lastV = visits.slice().sort((a, b) => ends(b) - ends(a))[0], i0 = lastV ? its.indexOf(lastV) : -1;
+    its.slice(i0 + 1).forEach(x => { const a = x.t === 'ride' && x.ans; if (!a || !a.noTimetable || !(+a.every > 0) || (Array.isArray(a.deps) && a.deps.length)) return;
+      const gap = Math.min(+a.every, 60); if (!(+a.wait >= gap)) add('backwait', 'S1', `the ${x.kind || 'ride'} back (${a.label || ''}) has no timetable and runs about every ${a.every} min, but plans ${a.wait} min of waiting: the way back must allow the full gap`); }); }
   return out;
 }
 
@@ -221,18 +227,23 @@ if (require.main === module) {
   // --warn rule,rule lists a known finding without failing the run. It is allowed ONLY for S2 rules (wrong on screen).
   // An S1 rule (could miss a flight, train or ship) can never be warned: asking for it is refused and the rule still
   // fails (Richard, Nov 23: "the S1 warning exception is a serious design flaw"). A safety finding always blocks.
-  const S1 = ['error', 'gone', 'reach', 'leaveby', 'before', 'night', 'unverified'];
+  const S1 = ['error', 'gone', 'reach', 'leaveby', 'before', 'night', 'unverified', 'backwait'];
   const asked = String(arg('warn', '') || '').split(',').filter(Boolean), refused = asked.filter(k => S1.includes(k)), WARN = asked.filter(k => !S1.includes(k));
   if (refused.length) console.log(`REFUSED --warn ${refused.join(',')}: S1 safety rules always fail the run; no warn-only path`);
   const found = {}, ex = {}, SHOW = +arg('show', 6);
+  // --no-timetable: every ride of 1.5 km or more is also answered as a train with no published timetable, only how often
+  // it runs (every 60 min, the full gap plus boarding as the helper sends it), so the rules about such rides are tested
+  // offline (the saved trips hold few of them).
+  const NOTT = arg('no-timetable') ? (a, z) => { const km = hav(a, z); if (!(km >= 1.5)) return []; const ride = Math.round(km / 40 * 60) + 5, wait = 63;
+    return [{ id: 'rail|T', label: 'Train T', mode: 'train', kind: 'Train', steps: ['T'], ride, wait, every: 60, everySrc: 'usual', noTimetable: true, min: 5 + wait + ride + 8, access: { how: 'walk', min: 5, km: 0.4 }, egress: { how: 'walk', min: 8, km: 0.6 } }]; } : null;
   let days = 0, planned = 0;
   for (const { name, b } of trips) {
-    let plans; try { plans = E.planTrip(E.applyPlaces(b, places)); } catch (e) { (found.error = (found.error || 0) + 1); (ex.error = ex.error || []).push(name + ': ' + e.message); continue; }
+    let plans; try { const bb = E.applyPlaces(b, places); if (NOTT) bb.answers = NOTT; plans = E.planTrip(bb); } catch (e) { (found.error = (found.error || 0) + 1); (ex.error = ex.error || []).push(name + ': ' + e.message); continue; }
     b.days.forEach((d, i) => { days++; const p = plans[i]; if (p && p.items) planned++;
       for (const f of checkDay(d, p, { places: places[d.city] })) { const k = f.rule; found[k] = (found[k] || 0) + 1; (ex[k] = ex[k] || []).push(`${f.sev} ${name} day ${i + 1} ${d.type}${d.mode && /arrival|departure/.test(d.type) ? '/' + d.mode : ''} ${d.city || ''}: ${f.msg}`); } });
   }
   console.log(`Independent safety check: ${trips.length} trips, ${days} days, ${planned} planned`);
-  const order = ['error', 'gone', 'reach', 'leaveby', 'before', 'night', 'unverified', 'about', 'physics', 'clock', 'drift', 'slowride', 'lunchshut', 'lunchlate'];
+  const order = ['error', 'gone', 'reach', 'leaveby', 'before', 'night', 'unverified', 'backwait', 'about', 'physics', 'clock', 'drift', 'slowride', 'lunchshut', 'lunchlate'];
   for (const k of order) { const n = found[k] || 0; console.log(`${n ? (WARN.includes(k) ? 'WARN' : 'FAIL') : 'ok  '} ${k.padEnd(9)} ${n}`); (ex[k] || []).slice(0, SHOW).forEach(e => console.log('       ' + e)); }
   if (lunchUntested.n) { console.log(`NOT TESTED lunchshut: ${lunchUntested.n} lunches with map hours not judged (the opening_hours library is not installed: npm i --no-save opening_hours@3.16.0)`); }
   if (process.env.ALL) fs.writeFileSync(process.env.ALL, JSON.stringify(ex, null, 1));
