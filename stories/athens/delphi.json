@@ -181,7 +181,7 @@
   },
   "mythic-temples": {
    "label": "tradition",
-   "says": "Ancient tradition told of mythical temples: one of laurel branches, one of beeswax and wings built by bees, one built by Hephaestus and Athena.",
+   "says": "Ancient tradition told of mythical temples: one of branches from Tempe, one of beeswax and wings built by bees, one built by Hephaestus and Athena.",
    "src": [
     "wp-delphi"
    ],
@@ -289,7 +289,8 @@
    "quote": [
     "When the doctor Oreibasius visited the oracle of Delphi, in order to question the fate of paganism, he received a pessimistic answer:",
     "Tell the king that the flute has fallen to the ground. Phoebus does not have a home any more, neither an oracular laurel, nor a speaking fountain, because the talking water has dried out",
-    "It was shut down during the persecution of pagans in the late Roman Empire by Theodosius I"
+    "It was shut down during the persecution of pagans in the late Roman Empire by Theodosius I",
+    "The emperor Julian attempted to reverse this religious climate"
    ]
   },
   "theatre": {
@@ -305,18 +306,18 @@
   },
   "music": {
    "label": "supported",
-   "says": "The theatre hosted the singing and music contests of the Pythian Games; Delphi stood apart from other games for its musical competitions.",
+   "says": "In the late Hellenistic and Roman period the theatre hosted the singing and music contests of the Pythian Games; Delphi stood apart from other games for its musical competitions.",
    "src": [
     "wp-delphi"
    ],
    "quote": [
-    "the theatre was used for the vocal and musical contests that formed part of the programme of the Pythian Games",
+    "the theatre was used for the vocal and musical contests that formed part of the programme of the Pythian Games in the late Hellenistic and Roman period",
     "Delphi was set apart from the other games sites because it hosted the mousikos agon, musical competitions."
    ]
   },
   "stadium": {
    "label": "supported",
-   "says": "The stadium lies farther up, beyond the theatre; built in the fifth century BC, it seated 6500 with a 177 m track.",
+   "says": "The stadium lies farther up, beyond the theatre; built in the fifth century BC, it seated 6500 with a 177 m (581 ft) track.",
    "src": [
     "wp-delphi"
    ],
@@ -338,14 +339,15 @@
   },
   "museum": {
    "label": "supported",
-   "says": "The museum, founded in 1903, is one of the most visited in Greece and has fourteen rooms on two levels.",
+   "says": "The museum, founded in 1903, is one of the most visited in Greece and has fourteen rooms on two levels, arranged in time order.",
    "src": [
     "wp-delphi-museum"
    ],
    "quote": [
     "is one of the principal museums of Greece and one of the most visited.",
     "Founded in 1903",
-    "Organised in fourteen rooms on two levels"
+    "Organised in fourteen rooms on two levels",
+    "The collections of the Delphi Archaeological Museum are arranged chronologically in fourteen rooms."
    ]
   },
   "kleobis": {
@@ -412,7 +414,8 @@
    ],
    "quote": [
     "An inscription on the limestone base of the statue indicates that it was dedicated by Polyzalus, the tyrant of Gela, a Greek colony in Sicily, as a tribute to Apollo for helping him to win the chariot race.",
-    "\"Polyzalus dedicated me. ... Make him prosper, honoured Apollo.\""
+    "\"Polyzalus dedicated me. ... Make him prosper, honoured Apollo.\"",
+    "which is reconstructed to read"
    ]
   },
   "sculptor": {
@@ -465,6 +468,17 @@
     "Gallio, the brother of Seneca, was proconsul of Achaia",
     "In AD 51/52, Gallio presided over the trial of the Apostle Paul in Corinth."
    ]
+  },
+  "rooms": {
+   "label": "supported",
+   "says": "Cleobis and Biton are in Room 3 and the Sphinx of Naxos in Room 5.",
+   "src": [
+    "wp-delphi-museum"
+   ],
+   "quote": [
+    "Room 3 is dominated by the Kouroi of Delphi, archaic male statues known also as Cleobis and Biton",
+    "Room 5 === This room displays the Sphinx of Naxos"
+   ]
   }
  },
  "parts": [
@@ -495,7 +509,7 @@
      "level": 3
     },
     {
-     "t": "This paved square is the first thing you see as you come in: the Roman Agora. It was once lined with porches, and processions gathered here before festivals. There was probably a market too, where pilgrims bought little statuettes and tripods to leave for the gods.",
+     "t": "This paved square is the first thing you see as you come in: the Roman Agora. It was once lined with porches, and processions gathered here during festivals. There was probably a market too, where pilgrims bought little statuettes and tripods to leave for the gods.",
      "c": [
       "agora",
       "agora-market"
@@ -525,7 +539,7 @@
      "level": 2
     },
     {
-     "t": "The island of Siphnos also had a treasury here. The Siphnians gave a tenth of what their silver mines produced, until the day the sea flooded the mines.",
+     "t": "The city of Siphnos also had a treasury here. The Siphnians gave a tenth of what their silver mines produced, until the day the sea flooded the mines.",
      "c": [
       "siphnos"
      ],
@@ -542,7 +556,7 @@
   },
   {
    "name": "The wall of freedom",
-   "stand": "Continue a little way up to the long colonnade set against a wall of big, many-sided stones.",
+   "stand": "Continue a little way up to the row of columns set against a wall of big, many-sided stones.",
    "paras": [
     {
      "t": "This wall of many-sided stones is the polygonal wall, and it's covered in writing. From 200 BC on, contracts freeing slaves were carved into it, about a thousand of them.",
@@ -573,7 +587,7 @@
      "level": 1
     },
     {
-     "t": "The ruins you see date from the 300s BC; earlier temples on this spot burned down. The big altar in front was paid for by the people of the island of Chios, in the 5th century BC. And the Pythia herself was a local woman of blameless life, yet among the most powerful women of the ancient world.",
+     "t": "The ruins you see date from the 300s BC; earlier temples on this spot burned down. The big altar in front was paid for by the people of Chios, in the 5th century BC. And the Pythia herself was a local woman of blameless life, yet among the most powerful women of the ancient world.",
      "c": [
       "temple",
       "altar",
@@ -591,7 +605,7 @@
      "level": 2
     },
     {
-     "t": "What really happened? Honestly, nobody knows. The details are scarce, and the ancient writers who describe it in any detail came late, and contradict each other. Some scholars argue she spoke plainly in her own voice. A geologist found a fault line running under the temple, and some researchers suggest a gas, ethylene, seeping up from below. That theory is still debated.",
+     "t": "What really happened? Honestly, nobody knows. The details are scarce, and the ancient writers who describe it in any detail came late, and contradict each other. Some scholars argue she spoke plainly in her own voice. A geologist reported evidence of a fault line under the temple, and some researchers suggest a gas, ethylene, seeping up from below. That theory is still debated.",
      "c": [
       "scarce",
       "ethylene"
@@ -599,7 +613,7 @@
      "level": 2
     },
     {
-     "t": "Carved in the temple's forecourt, ancient writers say, were sayings such as \"Know thyself\" and \"Nothing to excess.\" Even in antiquity, scholars doubted those inscriptions; most likely they were popular proverbs.",
+     "t": "Carved in the temple's forecourt, ancient writers say, were sayings such as \"Know thyself\" and \"Nothing to excess.\" Who first said them? Scholars, ancient and modern, have had their doubts. They may simply have been popular proverbs.",
      "c": [
       "maxims",
       "maxims-doubt"
@@ -607,14 +621,14 @@
      "level": 3
     },
     {
-     "t": "There was an older tradition, too, of mythical temples here before any of these: one of laurel branches, one made of beeswax and wings by bees, and one built by the gods Hephaestus and Athena.",
+     "t": "There was an older tradition, too, of mythical temples here before any of these: one of branches brought from Tempe, one made of beeswax and wings by bees, and one built by the gods Hephaestus and Athena.",
      "c": [
       "mythic-temples"
      ],
      "level": 3
     },
     {
-     "t": "And the end? As the story is told, a doctor named Oreibasius came to ask the oracle about the future of the old religion. The answer: \"Tell the king that the flute has fallen to the ground. Phoebus does not have a home any more, neither an oracular laurel, nor a speaking fountain, because the talking water has dried out.\" Not long after, the emperor Theodosius shut the oracle down.",
+     "t": "And the end? As the story is told, in the time of the emperor Julian, who tried to bring the old gods back, a doctor named Oreibasius came to ask the oracle about the future of the old religion. The answer: \"Tell the king that the flute has fallen to the ground. Phoebus does not have a home any more, neither an oracular laurel, nor a speaking fountain, because the talking water has dried out.\" Later, the emperor Theodosius shut the oracle down.",
      "c": [
       "end"
      ],
@@ -624,7 +638,7 @@
   },
   {
    "name": "Theatre and stadium",
-   "stand": "Take the path farther up the hill to the theatre, climb to a row near the top, and turn around.",
+   "stand": "Follow the path up past the theatre, stop where it rises above the seats, and turn around.",
    "paras": [
     {
      "t": "From up here, spectators could see the whole sanctuary and the valley below. This theatre dates from the 300s BC and held about 4,500 people.",
@@ -640,7 +654,7 @@
      "cue": true
     },
     {
-     "t": "Delphi's games were different. Every four years, from 586 BC, athletes came for the Pythian Games, but there were singing and music contests too, held right here in this theatre. Winners got a crown of laurel, cut by a boy who acted out Apollo's slaying of the Python.",
+     "t": "Delphi's games were different. Every four years, from 586 BC, athletes came for the Pythian Games, but there were singing and music contests too, and in later centuries they were held right here in this theatre. Winners got a crown of laurel, cut by a boy who acted out Apollo's slaying of the Python.",
      "c": [
       "games",
       "music"
@@ -648,7 +662,7 @@
      "level": 2
     },
     {
-     "t": "Higher still, beyond the theatre, is the stadium. Its track is 177 metres long and it could seat 6500 spectators.",
+     "t": "Higher still, beyond the theatre, is the stadium. Its track is 177 meters, or 581 feet, long and it could seat 6500 spectators.",
      "c": [
       "stadium"
      ],
@@ -657,11 +671,33 @@
    ]
   },
   {
-   "name": "The museum and the Charioteer",
-   "stand": "In the museum, in the room of the Charioteer, standing in front of him.",
+   "name": "The museum",
+   "stand": "Inside the museum, at the start of the first rooms.",
    "paras": [
     {
-     "t": "And here he is: the Charioteer of Delphi. He's bronze, about 470 BC, and life-size at 1.8 metres. He once stood in a chariot with horses, celebrating a win at the Pythian Games.",
+     "t": "Now the museum. It holds what the excavations found, in fourteen rooms on two levels, arranged in time order, so the Charioteer comes near the end.",
+     "c": [
+      "museum"
+     ],
+     "level": 1
+    },
+    {
+     "t": "Room 3 has two early statues of young men. They're believed to be Kleobis and Biton, and the story goes that the brothers pulled their mother's cart all the way to Hera's sanctuary, then fell asleep in the temple and never woke. Room 5 has the Sphinx of Naxos, which once crowned a column; together they stood 12 meters high.",
+     "c": [
+      "kleobis",
+      "sphinx",
+      "rooms"
+     ],
+     "level": 3
+    }
+   ]
+  },
+  {
+   "name": "The Charioteer",
+   "stand": "In the room of the Charioteer, near the end of the museum, standing in front of him.",
+   "paras": [
+    {
+     "t": "And here he is: the Charioteer of Delphi. He's bronze, about 470 BC, and life-size at 1.8 meters. He once stood in a chariot with horses, celebrating a win at the Pythian Games.",
      "c": [
       "charioteer"
      ],
@@ -675,7 +711,7 @@
      "level": 2
     },
     {
-     "t": "He survived because an earthquake buried him in 373 BC, and he was found in 1896. The base tells us who paid for him: \"Polyzalus dedicated me. ... Make him prosper, honoured Apollo.\" Polyzalus was the ruler of Gela in Sicily. Who made the statue, nobody knows.",
+     "t": "He survived because an earthquake buried him in 373 BC, and he was found in 1896. The damaged inscription on the base is read as: \"Polyzalus dedicated me.\" And then: \"Make him prosper, honoured Apollo.\" Polyzalus was the ruler of Gela in Sicily. Who made the statue, nobody knows.",
      "c": [
       "charioteer-survival",
       "polyzalus",
@@ -684,18 +720,9 @@
      "level": 3
     },
     {
-     "t": "During the Second World War, he was sent to Athens and hidden in the vaults of the Bank of Greece.",
+     "t": "During the Second World War, he was sent to Athens and stored in the vaults of the Bank of Greece.",
      "c": [
       "war"
-     ],
-     "level": 3
-    },
-    {
-     "t": "On your way back through the museum's fourteen rooms, on two levels, look for two early statues of young men. They're believed to be Kleobis and Biton, and the story goes that the brothers pulled their mother's cart all the way to Hera's sanctuary, then fell asleep in the temple and never woke. And look for the Sphinx of Naxos, which once crowned a column 12 metres high.",
-     "c": [
-      "museum",
-      "kleobis",
-      "sphinx"
      ],
      "level": 3
     },
@@ -709,7 +736,7 @@
      "level": 2
     },
     {
-     "t": "Before you leave, look at his face once more. Calm, a little shy, the race already won. All those cities came here to ask about the future. He just holds the reins, and waits.",
+     "t": "Before you leave, look at his face once more. Calm, a little inward, the race already won. All those cities came here to ask about the future. He just holds the reins, and waits.",
      "c": [
       "charioteer-pose"
      ],

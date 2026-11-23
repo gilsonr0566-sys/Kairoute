@@ -10,8 +10,7 @@
   "names": [
    "dionysiou areopagitou",
    "areopagitou",
-   "acropolis promenade",
-   "apostolou pavlou"
+   "acropolis promenade"
   ],
   "wikidata": [
    "Q15214100"
@@ -37,17 +36,6 @@
    ],
    "quote": [
     "It is named after Dionysius the Areopagite, the first Athenian convert to Christianity after Apostle Paul's sermon, according to the Acts of the Apostles, and patron saint of the city of Athens."
-   ]
-  },
-  "pr-acts": {
-   "label": "scripture",
-   "says": "Acts 17:34: certain men clave unto him and believed, among them Dionysius the Areopagite and a woman named Damaris.",
-   "src": [
-    "kjv-acts17"
-   ],
-   "quote": [
-    "\"chapter\":17,\"verse\":34,\"text\":\"Howbeit certain men clave unto him, and believed: among the which",
-    "was Dionysius the Areopagite, and a woman named Damaris, and others with them."
    ]
   },
   "pr-route": {
@@ -150,6 +138,17 @@
    "quote": [
     "A mostly car-free archaeological walk starts at Vasilisis Amalias Street, passes in front of the Acropolis Museum, Acropolis, Herodion Theatre, Thiseio (Apostolou Pavlou Str), Ermou Street and ends at the popular area of Kerameikos"
    ]
+  },
+  "pr-acts-say": {
+   "label": "scripture",
+   "says": "Acts 17:34: certain men clave unto him and believed, among them Dionysius the Areopagite and a woman named Damaris.",
+   "src": [
+    "kjv-acts17"
+   ],
+   "quote": [
+    "\"chapter\":17,\"verse\":34,\"text\":\"Howbeit certain men clave unto him, and believed: among the which",
+    "was Dionysius the Areopagite, and a woman named Damaris, and others with them."
+   ]
   }
  },
  "parts": [
@@ -158,7 +157,7 @@
    "stand": "At the eastern end of the street, near Amalias Avenue and the Arch of Hadrian, facing west along the car-free street.",
    "paras": [
     {
-     "t": "This is Dionysiou Areopagitou Street, the walking street that runs along the south slope of the Acropolis. From here it heads west, all the way to Philopappos Hill, and the whole way you get views of the Parthenon.",
+     "t": "This is Dionysiou Areopagitou Street, the walking street that runs along the south slope of the Acropolis. From here it heads west, all the way to Philopappos Hill, and along the way you get views up to the Acropolis and the Parthenon.",
      "c": [
       "pr-what",
       "pr-route",
@@ -174,9 +173,15 @@
      "level": 1
     },
     {
-     "t": "The street got its present shape in 1955, from the architect Dimitris Pikionis. He also designed the paved paths up on the archaeological site. Cars were finally taken off it in 2003. For the 2004 Olympics, Athens joined up its ancient sites with a network of walking streets. Today a mostly car-free walk runs from here, past the Acropolis Museum and the Odeon, all the way to Kerameikos.",
+     "t": "The street got its present shape in 1955, from the architect Dimitris Pikionis. He also designed the paved paths up on the archaeological site. Cars were finally taken off it in 2003.",
      "c": [
-      "pr-pikionis",
+      "pr-pikionis"
+     ],
+     "level": 2
+    },
+    {
+     "t": "For the 2004 Olympics, Athens joined up its ancient sites with a network of walking streets. Today a mostly car-free walk runs from here, past the Acropolis Museum and the Odeon, all the way to Kerameikos.",
+     "c": [
       "pr-olympics",
       "pr-walk"
      ],
@@ -189,16 +194,17 @@
    "stand": "Keep walking west, and pause anywhere you can see the Acropolis rock on your right.",
    "paras": [
     {
-     "t": "The street's name takes you back to the Bible. The street is named after Dionysius the Areopagite. The book of Acts tells how the apostle Paul spoke to the Athenians, and Dionysius was among the first to believe.",
+     "t": "The street's name takes you back to the Bible. The street is named after Dionysius the Areopagite. The book of Acts tells how the apostle Paul spoke to the Athenians, and Dionysius was among those who believed.",
      "c": [
-      "pr-name"
+      "pr-name",
+      "pr-acts-say"
      ],
      "level": 1
     },
     {
      "t": "Here are the words, from Acts chapter seventeen, in the King James Version: Howbeit certain men clave unto him, and believed: among the which was Dionysius the Areopagite, and a woman named Damaris, and others with them.",
      "c": [
-      "pr-acts"
+      "pr-acts-say"
      ],
      "level": 2
     },
@@ -224,9 +230,8 @@
      "level": 1
     },
     {
-     "t": "A few small discoveries along the way. In the middle of the street, the foundations of the house of Proclus were found. And near the Acropolis Museum, the composer Vangelis owned a neoclassical mansion.",
+     "t": "A small detail along the way: near the Acropolis Museum, the composer Vangelis owned a neoclassical mansion.",
      "c": [
-      "pr-south",
       "pr-vangelis"
      ],
      "level": 3
@@ -256,7 +261,7 @@
      "t": "So the man this street is named after was one listener who said yes. Of all the people who heard Paul in Athens, his is the name you've been walking on. One person who listened, remembered by a whole city.",
      "c": [
       "pr-name",
-      "pr-acts"
+      "pr-acts-say"
      ],
      "level": 1
     }

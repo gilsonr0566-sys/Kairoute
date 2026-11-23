@@ -40,19 +40,19 @@
   },
   "size": {
    "label": "supported",
-   "says": "It is 6.4 km long and 24.6 m wide at the surface; the walls rise 90 m (300 ft) above sea level at a near-vertical 80 degrees.",
+   "says": "It is 6.4 km (4 miles) long and 24.6 m (81 ft) wide at the surface; the walls are near-vertical at 80 degrees.",
    "src": [
     "wp-corinth-canal"
    ],
    "quote": [
     "It is 6.4 kilometres (4 miles) in length",
     "24.6 metres (81 ft) in breadth at the surface",
-    "The rock walls, which rise 90 metres (300 ft) above sea level, are at a near-vertical 80° angle."
+    "are at a near-vertical 80° angle."
    ]
   },
   "bridges": {
    "label": "estimate",
-   "says": "A railway, a road and a motorway cross at a height of about 45 m.",
+   "says": "A railway, a road and a motorway cross at a height of about 45 m (148 ft).",
    "src": [
     "wp-corinth-canal"
    ],
@@ -146,13 +146,14 @@
   },
   "closures": {
    "label": "supported",
-   "says": "It closed at the start of 2021 after a landslide and reopened on 1 June 2023.",
+   "says": "It closed at the start of 2021 after a landslide, reopened from June to October 2022, and after more safety work reopened on June 1, 2023.",
    "src": [
     "wp-corinth-canal"
    ],
    "quote": [
     "The canal closed at the beginning of 2021 after a landslide.",
-    "the canal reopened on June 1, 2023."
+    "It re-opened in June 2022 until October 2022.",
+    "After further safety measures, the canal reopened on June 1, 2023."
    ]
   },
   "ww2": {
@@ -168,7 +169,7 @@
   },
   "today": {
    "label": "estimate",
-   "says": "It saves a 700 km trip around the Peloponnese, is mostly used by tourist ships, around 15,000 a year, and is of little economic importance.",
+   "says": "It saves a 700 km (430 mi) trip around the Peloponnese, is mostly used by tourist ships, around 15,000 a year, and is of little economic importance.",
    "src": [
     "wp-corinth-canal"
    ],
@@ -212,7 +213,7 @@
   },
   "grooves": {
    "label": "supported",
-   "says": "It was paved with hard limestone with parallel grooves about 1.60 m apart.",
+   "says": "It was paved with hard limestone with parallel grooves about 1.60 m (63 in) apart.",
    "src": [
     "wp-diolkos"
    ],
@@ -229,7 +230,8 @@
    "quote": [
     "Ship and cargo were presumably pulled by men and animals with ropes, tackles and possibly also capstans.",
     "must have numbered between 112 and 142 people",
-    "The tracks indicate that transport on the Diolkos was done with some sort of wheeled vehicle."
+    "The tracks indicate that transport on the Diolkos was done with some sort of wheeled vehicle.",
+    "Either vessel and cargo were hauled across on separate vehicles, or only the cargo was taken across"
    ]
   },
   "remains": {
@@ -244,15 +246,26 @@
     "Today, erosion caused by ship movements on the nearby Canal has left considerable portions of the Diolkos in a poor state, particularly at its excavated western end.",
     "This surround and walkway is on both sides of the road at the western end of the canal, east of the lowering-bridge."
    ]
+  },
+  "diolkos-date": {
+   "label": "supported",
+   "says": "Ancient writers don't date the Diolkos; finds point to the end of the 7th or start of the 6th century BC, around Periander's time.",
+   "src": [
+    "wp-diolkos"
+   ],
+   "quote": [
+    "Ancient literature is silent on the date of the construction of the Diolkos.",
+    "indicate a construction date at the end of the 7th or beginning of the 6th century BC, that is around the time when Periander was tyrant of Corinth."
+   ]
   }
  },
  "parts": [
   {
    "name": "On the bridge",
-   "stand": "On the walkway of a bridge over the canal, partway across, looking down into the cutting.",
+   "stand": "Where you can look safely down into the canal from behind a railing.",
    "paras": [
     {
-     "t": "First, hold on to the railing and keep a firm grip on your phone and anything you're carrying. It's a long way down.",
+     "t": "First, hold on to the railing, keep a firm grip on your phone and anything you're carrying, and mind the traffic behind you. It's a long way down.",
      "c": [],
      "level": 1,
      "cue": true
@@ -266,7 +279,7 @@
      "level": 1
     },
     {
-     "t": "Look at those walls. They rise 90 metres, about 300 feet, above the sea, at a near-vertical angle of 80 degrees. The bridges cross at a height of about 45 metres. And yet the canal is only 24.6 metres wide at the surface, and 6.4 kilometres long. It was dug at sea level, so there are no locks at all.",
+     "t": "Look at those walls, cut at a near-vertical angle of 80 degrees. The bridges here cross at a height of about 148 feet. And yet the canal is only about 81 feet wide at the surface, and 4 miles long. It was dug at sea level, so there are no locks at all.",
      "c": [
       "size",
       "bridges",
@@ -281,9 +294,10 @@
    "stand": "Stay at the railing and look along the canal toward the far end.",
    "paras": [
     {
-     "t": "People dreamed of this cut for some two and a half thousand years. The first was Periander, ruler of Corinth in the 7th century BC. He gave up, and built a stone ship road across the land instead, the Diolkos.",
+     "t": "People dreamed of this cut for some two and a half thousand years. The first was Periander, ruler of Corinth in the 7th century BC. He gave up. Instead, he's credited with a stone ship road across the land, the Diolkos, which dates from about his time.",
      "c": [
-      "periander"
+      "periander",
+      "diolkos-date"
      ],
      "level": 1
     },
@@ -295,7 +309,7 @@
      "level": 3
     },
     {
-     "t": "The idea seemed cursed. The story goes that the philosopher Apollonius of Tyana warned that anyone who proposed a canal would fall ill. Plutarch and Suetonius both wrote that Julius Caesar considered one, but was assassinated before he could begin.",
+     "t": "The idea seemed cursed. Plutarch and Suetonius both wrote that Julius Caesar considered a canal, but was assassinated before he could begin. Later, the story went that the philosopher Apollonius of Tyana warned that anyone who proposed one would fall ill.",
      "c": [
       "curse"
      ],
@@ -310,7 +324,7 @@
      "level": 2
     },
     {
-     "t": "His workers left a relief of Hercules carved into the rock. It's on the north side of the cutting, at the Gulf of Corinth end, below an old bridge foundation.",
+     "t": "His workers left a relief of Hercules carved into the rock. It's on the north side of the cutting, at the Gulf of Corinth end, below an old bridge foundation. You can't see it from up here.",
      "c": [
       "nero-course"
      ],
@@ -323,14 +337,14 @@
    "stand": "Look down at the walls, at the lines and scars in the rock.",
    "paras": [
     {
-     "t": "Work started again in 1881, and it was a struggle. Rock and money troubles bankrupted the original builders. The canal was finally completed on 25 July 1893.",
+     "t": "Work started again in 1881, and it was a struggle. Rock and money troubles bankrupted the original builders. The canal was finally completed on July 25, 1893.",
      "c": [
       "modern"
      ],
      "level": 1
     },
     {
-     "t": "Those walls have never been stable. In 1923 alone, 41,000 cubic metres of rock fell into the water. More recently, a landslide closed the canal at the start of 2021, and it only reopened on 1 June 2023.",
+     "t": "Those walls have never been stable. In 1923 alone, 41,000 cubic meters of material fell into the water. More recently, a landslide closed the canal at the start of 2021. It reopened for a few months in 2022, and then, after more safety work, on June 1, 2023.",
      "c": [
       "unstable",
       "closures"
@@ -345,7 +359,7 @@
      "level": 3
     },
     {
-     "t": "Today it's mostly a sight in itself. It saves ships a 700 kilometre trip around the Peloponnese, but it's too narrow for many modern ships. Around 15,000 ships a year still squeeze through, mostly tourist boats. At each end there's a bridge that sinks under the water to let them pass.",
+     "t": "Today it's mostly a sight in itself. It saves ships a 430 mile trip around the Peloponnese, but it's too narrow for many modern ships. In a normal year, around 15,000 ships still squeeze through, mostly tourist boats. At each end there's a bridge that sinks under the water to let them pass.",
      "c": [
       "today",
       "sinking"
@@ -359,7 +373,7 @@
    "stand": "If you go on to the western end of the canal, by the sinking bridge, look for the old stone roadway beside the water.",
    "paras": [
     {
-     "t": "Before the canal, there was the Diolkos: a paved road for dragging boats across the Isthmus. It ran from about 600 BC to the middle of the first century AD. Pieces of it survive next to the canal, mostly at this western end.",
+     "t": "Before the canal, there was the Diolkos: a paved road for dragging boats across the Isthmus. It ran from about 600 BC to the middle of the first century AD. Pieces of it survive next to the canal, mostly at the western end.",
      "c": [
       "diolkos",
       "remains"
@@ -367,7 +381,7 @@
      "level": 1
     },
     {
-     "t": "Look for the grooves in the hard limestone, about 1.6 metres apart. Ships were presumably hauled on some sort of wheeled vehicle, pulled by men and animals with ropes. One estimate says a warship needed a team of some 112 to 142 people. It worked well enough that the playwright Aristophanes joked about something being \"as fast as a Corinthian.\"",
+     "t": "Look for the grooves in the hard limestone, about 63 inches apart. Boats, or perhaps only their cargo, were presumably hauled on some sort of wheeled vehicle, pulled by men and animals with ropes. One estimate says a warship needed a team of some 112 to 142 people. It worked well enough that the playwright Aristophanes used the phrase \"as fast as a Corinthian.\"",
      "c": [
       "grooves",
       "hauling",
@@ -383,7 +397,7 @@
      "level": 3
     },
     {
-     "t": "Stand between the two for a moment: the ancient stone road and the modern cut beside it. Two and a half thousand years of people looking at the same narrow strip of land, and refusing to sail the long way round.",
+     "t": "From the walkway, look from one to the other: the ancient stone road and the modern cut beside it. Two and a half thousand years of people looking at the same narrow strip of land, and refusing to sail the long way round.",
      "c": [
       "periander",
       "diolkos"

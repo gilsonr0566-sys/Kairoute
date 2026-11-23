@@ -11,8 +11,6 @@
    "philopappos",
    "philopappou",
    "filopappou",
-   "pnyx",
-   "pnyka",
    "muses hill",
    "mouseion"
   ],
@@ -45,13 +43,12 @@
   },
   "ph-safety": {
    "label": "supported",
-   "says": "Wear shoes with good traction; marble underfoot is slippery; the Philopappou Hill area should be avoided at night.",
+   "says": "Wear shoes with good traction; the Philopappou Hill area should be avoided at night.",
    "src": [
     "wv-athens"
    ],
    "quote": [
     "Wear comfortable shoes with good traction",
-    "the soft, slippery marble that you're walking on",
     "The Philopappou Hill area should be avoided at night."
    ]
   },
@@ -131,13 +128,13 @@
   },
   "ph-ruin": {
    "label": "supported",
-   "says": "Only two-thirds of the front survives; it was still intact in 1436; parts were used to build the Ottoman minaret in the Parthenon.",
+   "says": "Only two-thirds of the front survives; a traveler who visited in 1436 wrote that it was still intact; parts were used to build the Ottoman minaret in the Parthenon.",
    "src": [
     "wp-philopappos-monument"
    ],
    "quote": [
     "Only two-thirds of the façade remains.",
-    "The Philopappos Monument was apparently still intact in 1436",
+    "The Philopappos Monument was apparently still intact in 1436, when the traveller Ciriaco de' Pizzicolli visited the monument and wrote in his memoirs that the monument was still intact.",
     "architectural parts of Philopappos' Monument were used for construction of the minaret in the Parthenon under the Ottomans"
    ]
   },
@@ -238,6 +235,16 @@
     "the eponymous 19-year Metonic cycle",
     "a calendar that appears in the Antikythera Mechanism"
    ]
+  },
+  "px-agora-first": {
+   "label": "disputed",
+   "says": "After the reforms of 508 BC the assembly first met in the Agora; sometime in the early 5th century it moved to this hill.",
+   "src": [
+    "wp-pnyx"
+   ],
+   "quote": [
+    "after the reforms of Kleisthenes in 508 B.C., the ekklesia met in the Agora. Sometime in the early 5th century, the meeting place was moved to a hill south and west of the Acropolis."
+   ]
   }
  },
  "parts": [
@@ -246,7 +253,7 @@
    "stand": "On the path up the hill, at a spot under the trees where you can look back at the Acropolis.",
    "paras": [
     {
-     "t": "This is Philopappos Hill. In ancient times it was the Hill of the Muses. Today it takes its name from the marble tomb up ahead. It's planted with pines and other trees, more like a small forest than a city park.",
+     "t": "This is Philopappos Hill. It's also called the Hill of the Muses. Today it takes its name from the marble tomb up ahead. It's planted with pines and other trees, more like a small forest than a city park.",
      "c": [
       "ph-hill",
       "ph-trees"
@@ -254,7 +261,7 @@
      "level": 1
     },
     {
-     "t": "A word about your feet. Wear shoes with good grip, because the marble underfoot can be slippery. And this is a walk for daylight: the hill is best avoided at night.",
+     "t": "A word about your feet. Wear shoes with good grip. And this is a walk for daylight: the hill is best avoided at night.",
      "c": [
       "ph-safety"
      ],
@@ -290,7 +297,7 @@
      "level": 2
     },
     {
-     "t": "Tradition held that this spot was already a grave: the poet and seer Musaeus, from the 6th century BC, was believed to be buried here. And the ancient travel writer Pausanias summed the tomb up as a monument built for a Syrian man.",
+     "t": "Tradition held that this spot was already a grave: the poet and seer Musaeus, said to be from the 6th century BC, was believed to be buried here. And the ancient travel writer Pausanias summed the tomb up as a monument built for a Syrian man.",
      "c": [
       "ph-musaeus",
       "ph-syrian"
@@ -298,7 +305,7 @@
      "level": 3
     },
     {
-     "t": "Only two-thirds of the front survives. It was still intact in 1436. Later some of its stones were carried off and used to build the Ottoman minaret in the Parthenon, right across the way.",
+     "t": "Only two-thirds of the front survives. A traveler who visited in 1436 wrote that it was still intact. Later some of its stones were carried off and used to build the Ottoman minaret in the Parthenon, right across the way.",
      "c": [
       "ph-ruin"
      ],
@@ -308,18 +315,19 @@
   },
   {
    "name": "The Pnyx",
-   "stand": "Walk down to the Pnyx and stand on the open ground in front of the big flat stone platform cut into the hillside.",
+   "stand": "Make your way to the Pnyx, following the signs, and stand on the open ground in front of the big flat stone platform cut into the hillside.",
    "paras": [
     {
-     "t": "This hillside is the Pnyx. From as early as 507 BC, this is where the Athenian assembly met. It's one of the earliest and most important places in the story of democracy. That stone platform in front of you was the bema, the speakers' platform.",
+     "t": "This hillside is the Pnyx. From perhaps as early as 507 BC, this is where the Athenian assembly met. It's one of the earliest and most important places in the story of democracy. That stone platform in front of you was the bema, the speakers' platform.",
      "c": [
       "px-what",
-      "px-bema"
+      "px-bema",
+      "px-agora-first"
      ],
      "level": 1
     },
     {
-     "t": "Pericles spoke here, and Aristides, and Alcibiades, all within sight of the Parthenon. Demosthenes stood here to attack Philip of Macedon. And from up here, the Pnyx looks down on the old Agora, the city's marketplace.",
+     "t": "Pericles spoke on this hill, and Aristides, and Alcibiades, all within sight of the Parthenon. Demosthenes stood here to attack Philip of Macedon. And from up here, the Pnyx looks down on the old Agora, the city's marketplace.",
      "c": [
       "px-speakers",
       "px-agora"
@@ -342,7 +350,7 @@
      "level": 3
     },
     {
-     "t": "By the 1st century BC the assembly had moved to the Theatre of Dionysus. One more thing up here: the foundations of the oldest known observatory, Meton's. His 19-year calendar cycle turns up on the Antikythera mechanism, in the National Archaeological Museum.",
+     "t": "By the 1st century BC the assembly had moved to the Theatre of Dionysus. One more thing up here: the foundations of the oldest known observatory, Meton's. His 19-year calendar cycle turns up on the Antikythera mechanism.",
      "c": [
       "px-moved",
       "px-meton"

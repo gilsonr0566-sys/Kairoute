@@ -4,125 +4,242 @@
  "city": "athens",
  "title": "Roman Agora and Tower of the Winds",
  "match": {
-  "ids": ["roman-agora"],
-  "names": ["roman agora", "tower of the winds", "aerides", "archegetis", "horologion"],
-  "wikidata": ["Q1435551", "Q372717"]
+  "ids": [
+   "roman-agora"
+  ],
+  "names": [
+   "roman agora",
+   "tower of the winds",
+   "aerides",
+   "archegetis",
+   "horologion"
+  ],
+  "wikidata": [
+   "Q1435551",
+   "Q372717"
+  ]
  },
  "checked": "2026-11-23",
  "claims": {
   "ra-what": {
    "label": "supported",
    "says": "The Roman Agora is a ruined marketplace built in the Roman era, east of the Ancient Agora and north of the Acropolis.",
-   "src": ["wp-roman-agora"],
-   "quote": ["is a ruined agora in Athens built in the Roman era to the east of the Ancient Agora and the north of the Acropolis"]
+   "src": [
+    "wp-roman-agora"
+   ],
+   "quote": [
+    "is a ruined agora in Athens built in the Roman era to the east of the Ancient Agora and the north of the Acropolis"
+   ]
   },
   "ra-built": {
    "label": "disputed",
    "says": "Built about 100 metres east of the original agora by Eucles of Marathon between 27 and 17 BC, or possibly in 10 BC, with money from Augustus, fulfilling a promise Julius Caesar made in 51 BC.",
-   "src": ["wp-roman-agora"],
-   "quote": ["The Roman Agora was built around 100 metres east of the original agora by Eucles of Marathon between 27 BC and 17 BC (or possibly in 10 BC), using funds donated by Augustus, in fulfilment of a promise originally made by Julius Caesar in 51 BC."]
+   "src": [
+    "wp-roman-agora"
+   ],
+   "quote": [
+    "The Roman Agora was built around 100 metres east of the original agora by Eucles of Marathon between 27 BC and 17 BC (or possibly in 10 BC), using funds donated by Augustus, in fulfilment of a promise originally made by Julius Caesar in 51 BC."
+   ]
   },
   "ra-plan": {
    "label": "supported",
    "says": "It is not fully excavated, but was an open space surrounded by a colonnade; to the west were shops and the Doric gate of Athena Archegetis; to the east an Ionic gate next to the Tower of the Winds.",
-   "src": ["wp-roman-agora"],
-   "quote": ["The Roman Agora has not today been fully excavated, but is known to have been an open space surrounded by a peristyle.", "To its west, behind a marble colonnade, were shops and a Doric propylon (entrance), the Gate of Athena Archegetis. To its east was an Ionic gate, the East Propylon, next to the Tower of the Winds"]
+   "src": [
+    "wp-roman-agora"
+   ],
+   "quote": [
+    "The Roman Agora has not today been fully excavated, but is known to have been an open space surrounded by a peristyle.",
+    "To its west, behind a marble colonnade, were shops and a Doric propylon (entrance), the Gate of Athena Archegetis. To its east was an Ionic gate, the East Propylon, next to the Tower of the Winds"
+   ]
   },
   "ra-fountain": {
    "label": "supported",
    "says": "To the south was a fountain; there were also public toilets by the east gate.",
-   "src": ["wp-roman-agora"],
-   "quote": ["To its south was a fountain.", "next to the Tower of the Winds and a set of \"vespasianae\" (public toilets)"]
+   "src": [
+    "wp-roman-agora"
+   ],
+   "quote": [
+    "To its south was a fountain.",
+    "next to the Tower of the Winds and a set of \"vespasianae\" (public toilets)"
+   ]
   },
   "ra-oil": {
    "label": "supported",
    "says": "An inscription on the gate of Athena Archegetis records a decree from Hadrian's reign on the taxes of oil merchants; another records a market officials' office.",
-   "src": ["wp-roman-agora"],
-   "quote": ["An inscription records the existence of an Agoranomion (an office for market officials), while another, set on the propylon of Athena Archegetis records a decree from Hadrian's reign regarding the tax obligations of oil merchants."]
+   "src": [
+    "wp-roman-agora"
+   ],
+   "quote": [
+    "An inscription records the existence of an Agoranomion (an office for market officials), while another, set on the propylon of Athena Archegetis records a decree from Hadrian's reign regarding the tax obligations of oil merchants."
+   ]
   },
   "tw-what": {
    "label": "supported",
    "says": "The Tower of the Winds is an eight-sided marble tower in the Roman Agora, named for the eight large reliefs of wind gods around its top.",
-   "src": ["wp-tower-winds"],
-   "quote": ["is an octagonal Pentelic marble tower in the Roman Agora in Athens, named after the eight large reliefs of wind gods (in the form of young winged men and old men) around its top"]
+   "src": [
+    "wp-tower-winds"
+   ],
+   "quote": [
+    "is an octagonal Pentelic marble tower in the Roman Agora in Athens, named after the eight large reliefs of wind gods (in the form of young winged men and old men) around its top"
+   ]
   },
   "tw-intact": {
    "label": "supported",
    "says": "It is one of very few buildings from classical antiquity still standing virtually intact, and the only surviving ancient clock tower.",
-   "src": ["wp-tower-winds"],
-   "quote": ["one of the very small number of buildings from classical antiquity that still stands virtually intact", "it is the only surviving horologium or clock tower from classical antiquity"]
+   "src": [
+    "wp-tower-winds"
+   ],
+   "quote": [
+    "one of the very small number of buildings from classical antiquity that still stands virtually intact",
+    "it is the only surviving horologium or clock tower from classical antiquity"
+   ]
   },
   "tw-date": {
    "label": "disputed",
    "says": "Its date is uncertain, but it was finished by about 50 BC at the latest, since Varro mentions it around 37 BC.",
-   "src": ["wp-tower-winds"],
-   "quote": ["Its date is uncertain, but was completed by about 50 BC, at the latest, as it was mentioned by Varro in his De re Rustica of about 37 BC."]
+   "src": [
+    "wp-tower-winds"
+   ],
+   "quote": [
+    "Its date is uncertain, but was completed by about 50 BC, at the latest, as it was mentioned by Varro in his De re Rustica of about 37 BC."
+   ]
   },
   "tw-clock": {
    "label": "supported",
    "says": "It housed a large water clock and had sundials on its outside faces, and was topped by a wind vane.",
-   "src": ["wp-tower-winds"],
-   "quote": ["Formerly topped by a wind vane", "It also housed a large water clock and incorporated sundials placed prominently on its exterior faces"]
+   "src": [
+    "wp-tower-winds"
+   ],
+   "quote": [
+    "Formerly topped by a wind vane",
+    "It also housed a large water clock and incorporated sundials placed prominently on its exterior faces"
+   ]
   },
   "tw-citizens": {
    "label": "supported",
    "says": "A scholar wrote that citizens could use it to orient themselves in space and time.",
-   "src": ["wp-tower-winds"],
-   "quote": ["citizens were thus able by using this building to orient themselves in space and time"]
+   "src": [
+    "wp-tower-winds"
+   ],
+   "quote": [
+    "citizens were thus able by using this building to orient themselves in space and time"
+   ]
   },
   "tw-size": {
    "label": "supported",
-   "says": "It is 12 metres tall, about 8 metres across.",
-   "src": ["wp-tower-winds"],
-   "quote": ["the Tower of the Winds is 12 metres (39 ft) tall and has a diameter of about 8 metres"]
+   "says": "It is 12 meters (39 feet) tall, about 8 meters across.",
+   "src": [
+    "wp-tower-winds"
+   ],
+   "quote": [
+    "the Tower of the Winds is 12 metres (39 ft) tall and has a diameter of about 8 metres"
+   ]
   },
   "tw-triton": {
    "label": "supported",
    "says": "Vitruvius says a bronze Triton on top held a rod that showed the wind direction; it has completely disappeared.",
-   "src": ["wp-tower-winds"],
-   "quote": ["In antiquity, Vitruvius tells us it was topped by a bronze statue of a Triton, holding a rod that acted as a weather vane indicating the wind direction; this has completely disappeared."]
+   "src": [
+    "wp-tower-winds"
+   ],
+   "quote": [
+    "In antiquity, Vitruvius tells us it was topped by a bronze statue of a Triton, holding a rod that acted as a weather vane indicating the wind direction; this has completely disappeared."
+   ]
   },
   "tw-winds": {
    "label": "supported",
    "says": "The winged wind figures are all male, of different ages, shown with what they carry and how warmly they are dressed; their names are carved above them.",
-   "src": ["wp-tower-winds"],
-   "quote": ["The large reliefs characterize each wind in terms of the things they carry, and often spill out from containers, the warmth of their clothing, and to some extent their physiques and expressions. All have large wings and are male, but of differing ages.", "Their names are carved above them; these are now hard to read from the ground"]
+   "src": [
+    "wp-tower-winds"
+   ],
+   "quote": [
+    "The large reliefs characterize each wind in terms of the things they carry, and often spill out from containers, the warmth of their clothing, and to some extent their physiques and expressions. All have large wings and are male, but of differing ages.",
+    "Their names are carved above them; these are now hard to read from the ground"
+   ]
   },
   "tw-boreas": {
    "label": "supported",
    "says": "The eight winds include Boreas, the north wind, and Zephyrus, the west wind.",
-   "src": ["wp-tower-winds"],
-   "quote": ["Boreas (N)", "Zephyrus (W)"]
+   "src": [
+    "wp-tower-winds"
+   ],
+   "quote": [
+    "Boreas (N)",
+    "Zephyrus (W)"
+   ]
   },
   "tw-sundial": {
    "label": "supported",
    "says": "The lines engraved on the faces marked the hours; the bronze shadow rods were lost and modern replacements fitted.",
-   "src": ["wp-tower-winds"],
-   "quote": ["The bronze gnomons (shadow-creating rods) had disappeared, but the holes for them remained, and modern replacements have been fitted. The straight lines engraved in the stone, from which the hours were taken, were originally painted"]
+   "src": [
+    "wp-tower-winds"
+   ],
+   "quote": [
+    "The bronze gnomons (shadow-creating rods) had disappeared, but the holes for them remained, and modern replacements have been fitted. The straight lines engraved in the stone, from which the hours were taken, were originally painted"
+   ]
   },
   "tw-water": {
    "label": "disputed",
    "says": "The water clock was fed from a spring on the Acropolis; how it worked remains uncertain; it may have been an astronomical clock like the Antikythera mechanism.",
-   "src": ["wp-tower-winds"],
-   "quote": ["The turret at the back was a water tank, fed from the Clepsydra spring on the Athens acropolis above.", "There have been various attempts to reconstruct on paper how the clock worked, but this remains uncertain.", "It may have been an astronomical clock, showing a calendar, and the movements of the major star groups. The Antikythera mechanism, the only ancient Greek clock mechanism to partially survive, found in a shipwreck, is of this type."]
+   "src": [
+    "wp-tower-winds"
+   ],
+   "quote": [
+    "The turret at the back was a water tank, fed from the Clepsydra spring on the Athens acropolis above.",
+    "There have been various attempts to reconstruct on paper how the clock worked, but this remains uncertain.",
+    "It may have been an astronomical clock, showing a calendar, and the movements of the major star groups. The Antikythera mechanism, the only ancient Greek clock mechanism to partially survive, found in a shipwreck, is of this type."
+   ]
   },
   "tw-andronicus": {
    "label": "supported",
    "says": "Vitruvius and Varro say the astronomer Andronicus of Cyrrhus designed it, but very little is known about him.",
-   "src": ["wp-tower-winds"],
-   "quote": ["According to Vitruvius and Varro, the astronomer Andronicus of Cyrrhus designed the Tower of the Winds. But very little is known about his life"]
+   "src": [
+    "wp-tower-winds"
+   ],
+   "quote": [
+    "According to Vitruvius and Varro, the astronomer Andronicus of Cyrrhus designed the Tower of the Winds. But very little is known about his life"
+   ]
   },
   "tw-church": {
    "label": "disputed",
    "says": "In late antiquity it was probably used as a church or baptistery.",
-   "src": ["wp-tower-winds"],
-   "quote": ["the building was probably used as a martyrium for an apostle, church or baptistry in late antiquity"]
+   "src": [
+    "wp-tower-winds"
+   ],
+   "quote": [
+    "the building was probably used as a martyrium for an apostle, church or baptistry in late antiquity"
+   ]
   },
   "tw-dervish": {
    "label": "supported",
    "says": "Under the Ottomans it was buried to half its height; Qadiri dervishes used it for their rituals from 1751 to 1821.",
-   "src": ["wp-tower-winds"],
-   "quote": ["By the time of Ottoman rule it was buried up to half its height", "was used by Qadirî dervishes to perform their religious rituals for 70 years between 1751 and 1821"]
+   "src": [
+    "wp-tower-winds"
+   ],
+   "quote": [
+    "By the time of Ottoman rule it was buried up to half its height",
+    "was used by Qadirî dervishes to perform their religious rituals for 70 years between 1751 and 1821"
+   ]
+  },
+  "tw-nam": {
+   "label": "supported",
+   "says": "The fragments of the Antikythera mechanism are kept at the National Archaeological Museum.",
+   "src": [
+    "wp-antikythera"
+   ],
+   "quote": [
+    "All these fragments of the mechanism are kept at the National Archaeological Museum"
+   ]
+  },
+  "tw-attalus": {
+   "label": "disputed",
+   "says": "It is usually dated around 50 BC; an alternative is that it was a gift of Attalus III of Pergamon (died 131 BC), which would make it earlier.",
+   "src": [
+    "wp-tower-winds"
+   ],
+   "quote": [
+    "From the style of the sculptures the tower is usually dated around 50 BC",
+    "An alternative possibility is that it was part of the generosity of Attalus III of Pergamon (d. 131 BC)"
+   ]
   }
  },
  "parts": [
@@ -132,17 +249,24 @@
    "paras": [
     {
      "t": "This is the Roman Agora, a marketplace from Roman times, just north of the Acropolis. The gate in front of you is the Gate of Athena Archegetis, the old western entrance. Behind the colonnade on this side there used to be shops.",
-     "c": ["ra-what", "ra-plan"],
+     "c": [
+      "ra-what",
+      "ra-plan"
+     ],
      "level": 1
     },
     {
-     "t": "Historians aren't sure of the exact date: it was built between 27 and 17 BC, or possibly in 10 BC, by a man called Eucles of Marathon. The money came from the emperor Augustus, to keep a promise Julius Caesar had made back in 51 BC. Athens already had a marketplace, about 100 metres west of here. This was the new one.",
-     "c": ["ra-built"],
+     "t": "Historians aren't sure of the exact date: it was built between 27 and 17 BC, or possibly in 10 BC, by a man called Eucles of Marathon. The money came from the emperor Augustus, to keep a promise Julius Caesar had made back in 51 BC. Athens already had a marketplace, about 100 meters west of here. This was the new one.",
+     "c": [
+      "ra-built"
+     ],
      "level": 2
     },
     {
      "t": "This gate carries a very Roman detail. An inscription on it records a decree from the reign of the emperor Hadrian, about the taxes owed by oil merchants. Even Athena's gateway had a tax notice on it.",
-     "c": ["ra-oil"],
+     "c": [
+      "ra-oil"
+     ],
      "level": 3
     }
    ]
@@ -153,7 +277,9 @@
    "paras": [
     {
      "t": "This was a big open square, surrounded by a colonnade. Not all of it has been dug up, even today. Picture stalls, traders, and arguments over prices.",
-     "c": ["ra-plan"],
+     "c": [
+      "ra-plan"
+     ],
      "level": 1
     },
     {
@@ -164,7 +290,10 @@
     },
     {
      "t": "There was a fountain on the south side. Another inscription mentions an office for the market officials, the people who looked after the market. And next to the east gate, a very practical thing: public toilets.",
-     "c": ["ra-fountain", "ra-oil"],
+     "c": [
+      "ra-fountain",
+      "ra-oil"
+     ],
      "level": 3
     }
    ]
@@ -175,27 +304,45 @@
    "paras": [
     {
      "t": "This is the Tower of the Winds. It's made of marble, with eight sides, and it's named after the eight wind gods carved around the top. It's one of very few buildings from classical antiquity still standing almost whole, and the only clock tower that survives from the ancient world.",
-     "c": ["tw-what", "tw-intact"],
+     "c": [
+      "tw-what",
+      "tw-intact"
+     ],
      "level": 1
     },
     {
      "t": "Look up at the winds. They all have big wings, and they're all men, some young, some old. You can tell them apart by what they carry and how warmly they're dressed. Boreas, the north wind, and Zephyrus, the west wind, are among them. Their names are carved above them, but they're hard to read from down here.",
-     "c": ["tw-winds", "tw-boreas"],
+     "c": [
+      "tw-winds",
+      "tw-boreas"
+     ],
      "level": 2
     },
     {
-     "t": "Now look below the figures, at the straight lines cut into the walls. Those are sundials. The lines marked the hours, and the little rods that cast the shadows are modern replacements. Inside there was once a big water clock. And on the very top, a bronze Triton turned with the wind to show which way it blew. That has completely disappeared.",
-     "c": ["tw-sundial", "tw-clock", "tw-triton"],
+     "t": "Now look at the straight lines cut into the walls. Those are sundials. The lines marked the hours, and the little rods that cast the shadows are modern replacements. Inside there was once a big water clock. And on the very top, the Roman writer Vitruvius tells us, stood a bronze Triton holding a rod that showed which way the wind blew. That has completely disappeared.",
+     "c": [
+      "tw-sundial",
+      "tw-clock",
+      "tw-triton"
+     ],
      "level": 2
     },
     {
-     "t": "It's 12 metres tall and about 8 across. Nobody knows exactly when it was built, but it was finished by about 50 BC at the latest. The ancient writers Vitruvius and Varro say it was designed by an astronomer, Andronicus of Cyrrhus. Beyond that, very little is known about him.",
-     "c": ["tw-size", "tw-date", "tw-andronicus"],
+     "t": "It's 12 meters tall, about 39 feet, and about 8 meters across. Nobody knows exactly when it was built: probably around 50 BC, though some put it earlier. The ancient writers Vitruvius and Varro say it was designed by an astronomer, Andronicus of Cyrrhus. Beyond that, very little is known about him.",
+     "c": [
+      "tw-size",
+      "tw-date",
+      "tw-andronicus",
+      "tw-attalus"
+     ],
      "level": 3
     },
     {
      "t": "The water for the clock came down from a spring on the Acropolis. How the clock worked, nobody's sure. It may have been an astronomical clock, showing a calendar and the stars, like the Antikythera mechanism you can see in the National Archaeological Museum.",
-     "c": ["tw-water"],
+     "c": [
+      "tw-water",
+      "tw-nam"
+     ],
      "level": 3
     }
    ]
@@ -206,12 +353,17 @@
    "paras": [
     {
      "t": "This tower has kept busy. In late antiquity it was probably used as a church or a baptistery. Under the Ottomans it was half buried. From 1751 to 1821 dervishes of the Qadiri order used it for their religious rituals.",
-     "c": ["tw-church", "tw-dervish"],
+     "c": [
+      "tw-church",
+      "tw-dervish"
+     ],
      "level": 2
     },
     {
-     "t": "One scholar said that with this building, citizens could orient themselves in space and time. That's what it was for. Someone hurrying through this market could glance up, see the hour and the wind, and know where they were in their day. Not so different from us, checking the time as we walk.",
-     "c": ["tw-citizens"],
+     "t": "One writer put it this way: with this building, citizens could orient themselves in space and time. That's what it was for. Someone hurrying through this market could glance up, see the hour and the wind, and know where they were in their day. Not so different from us, checking the time as we walk.",
+     "c": [
+      "tw-citizens"
+     ],
      "level": 1
     }
    ]

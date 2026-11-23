@@ -63,7 +63,7 @@
   },
   "columns": {
    "label": "supported",
-   "says": "There were 34 Doric columns originally; 15 still stand, of local white marble, 6.10 m tall.",
+   "says": "There were 34 Doric columns originally; 15 still stand, of local white marble, 6.10 m (20 ft) tall.",
    "src": [
     "wp-sounion"
    ],
@@ -73,7 +73,7 @@
   },
   "statue": {
    "label": "supported",
-   "says": "The windowless inner hall would have held a colossal bronze statue of Poseidon, 6 m tall, reaching the ceiling.",
+   "says": "The windowless inner hall would have held a colossal bronze statue of Poseidon, 6 m (20 ft) tall, reaching the ceiling.",
    "src": [
     "wp-sounion"
    ],
@@ -229,7 +229,7 @@
    "stand": "On the path up to the temple, where you first see the columns against the sky.",
    "paras": [
     {
-     "t": "This is Cape Sounion, the southernmost tip of Attica, and that's the Temple of Poseidon on the headland, with the Aegean on three sides. It was built from 444 to 440 BC, in the time of Pericles, the same man behind the Parthenon.",
+     "t": "This is Cape Sounion, the southernmost tip of Attica, and that's the Temple of Poseidon on the headland, with the Aegean on three sides. It was built around 444 to 440 BC, in the time of Pericles, the same man behind the Parthenon.",
      "c": [
       "cape",
       "dates"
@@ -256,14 +256,14 @@
    "stand": "Walk up close to the temple and face its columns.",
    "paras": [
     {
-     "t": "Originally there were 34 columns. Fifteen still stand. They're Doric, of local white marble, and each was 6.10 metres tall.",
+     "t": "Originally there were 34 columns. Fifteen are counted standing today. They're Doric, of local white marble, and each was 20 feet tall.",
      "c": [
       "columns"
      ],
      "level": 1
     },
     {
-     "t": "In the middle was a windowless hall, and it would have held a colossal bronze Poseidon, 6 metres tall, right up to the ceiling. If you've seen the Temple of Hephaestus in Athens, picture this one looking much like it. They may even have had the same architect, though nobody knows for sure.",
+     "t": "In the middle was a windowless hall, and it would have held a colossal bronze Poseidon, 20 feet tall, right up to the ceiling. If you've seen the Temple of Hephaestus in Athens, picture this one looking much like it. They may even have had the same architect, though nobody knows for sure.",
      "c": [
       "statue",
       "hephaestus"
@@ -285,7 +285,7 @@
    "stand": "Go to the seaward side of the temple, staying well back from the edge, and look out over the water.",
    "paras": [
     {
-     "t": "You're standing almost 60 metres above the sea. From here you could see ships sailing to and from Piraeus, first as they came in and last as they went out. That view is a big reason the temple is here.",
+     "t": "You're standing almost 200 feet above the sea. From here you could see ships sailing to and from Piraeus, first as they came in and last as they went out. Some scholars think that view is a big reason the temple is here.",
      "c": [
       "height",
       "lookout"
@@ -293,21 +293,21 @@
      "level": 1
     },
     {
-     "t": "Sounion is old in story, too. The earliest mention is in Homer's Odyssey. Sailing home from Troy, King Menelaus lost his helmsman as they rounded \"Holy Sounion, Cape of Athens,\" and he landed here to give him a proper funeral.",
+     "t": "Sounion is old in story, too. The earliest mention is in Homer's Odyssey. In the poem, sailing home from Troy, King Menelaus loses his helmsman as they round \"Holy Sounion, Cape of Athens,\" and he lands here to give him a proper funeral.",
      "c": [
       "homer"
      ],
      "level": 2
     },
     {
-     "t": "Look northeast for a low hill about 300 metres away. That's where the temple of Athena stood, next to a shrine identified as the tomb of that same helmsman, Phrontis.",
+     "t": "Northeast of the temple, about 300 meters away, is a low hill. That's where the temple of Athena stood, next to a shrine identified as the tomb of that same helmsman, Phrontis.",
      "c": [
       "athena"
      ],
      "level": 3
     },
     {
-     "t": "Athens took this place seriously. Herodotus says that in the 6th century BC, Athenians held a festival here every four years, and their leaders sailed down to the cape in a sacred boat. Later, in 413 BC, during the war with Sparta, they walled the whole headland to protect the grain ships. And then, in a twist, rebel slaves from the nearby silver mines of Laurium seized the fortress.",
+     "t": "Athens took this place seriously. Herodotus says that in the 6th century BC, Athenians held a festival here every four years, and their leaders sailed down to the cape in a sacred boat. Later, in 413 BC, during the war with Sparta, they fortified this place with a wall and towers to protect the grain ships. And then, in a twist, rebel slaves from the nearby silver mines of Laurium seized the fortress.",
      "c": [
       "festival",
       "fortress"
@@ -328,7 +328,7 @@
      "level": 2
     },
     {
-     "t": "On the base of one of these columns is the name of Lord Byron, carved into the stone. Did he carve it himself? There's no direct evidence, so nobody knows.",
+     "t": "On the base of one of these columns is the name of Lord Byron, carved into the stone. You may not be able to get close enough to pick it out. Did he carve it himself? There's no direct evidence, so nobody knows.",
      "c": [
       "byron"
      ],

@@ -1,246 +1,65 @@
 [
- [
-  "Antikythera",
-  "Anti-kih-theera"
- ],
- [
-  "Artemision",
-  "Arteh-mee-see-on"
- ],
- [
-  "Schliemann",
-  "Shlee-mahn"
- ],
- [
-  "Mycenae",
-  "My-see-nee"
- ],
- [
-  "Mycenaean",
-  "My-seh-nee-an"
- ],
- [
-  "Kapodistrias",
-  "Kapo-distree-as"
- ],
- [
-  "Euboea",
-  "Yoo-bee-a"
- ],
- [
-  "Aigina",
-  "Eh-yee-na"
- ],
- [
-  "Symi",
-  "See-mee"
- ],
- [
-  "Stais",
-  "Stah-is"
- ],
- [
-  "Hipparchus",
-  "Hip-ar-kus"
- ],
- [
-  "Lycurgus",
-  "Lie-kur-gus"
- ],
- [
-  "Herodes",
-  "Heh-ro-deez"
- ],
- [
-  "Heruli",
-  "Heh-roo-lee"
- ],
- [
-  "Archegetis",
-  "Ar-keh-geh-tis"
- ],
- [
-  "Andronicus",
-  "Andro-nye-kus"
- ],
- [
-  "Cyrrhus",
-  "Sir-us"
- ],
- [
-  "Philopappos",
-  "Fillo-pappos"
- ],
- [
-  "Commagene",
-  "Komma-jee-nee"
- ],
- [
-  "Musaeus",
-  "Myoo-zee-us"
- ],
- [
-  "Pnyx",
-  "P-nix"
- ],
- [
-  "isegoria",
-  "ee-seh-go-ree-a"
- ],
- [
-  "Dionysiou",
-  "Thee-onee-see-oo"
- ],
- [
-  "Areopagitou",
-  "Areo-pa-yee-too"
- ],
- [
-  "Pikionis",
-  "Pee-kee-oh-nis"
- ],
- [
-  "Makrygianni",
-  "Makri-yanni"
- ],
- [
-  "Zappeion",
-  "Za-pee-on"
- ],
- [
-  "Kapnikarea",
-  "Kap-nee-ka-reh-a"
- ],
- [
-  "Panagia",
-  "Pana-yee-a"
- ],
- [
-  "Ilissia",
-  "Ee-lee-see-a"
- ],
- [
-  "Kleanthis",
-  "Kleh-an-this"
- ],
- [
-  "Acrocorinth",
-  "Ak-ro-korinth"
- ],
- [
-  "Cenchrea",
-  "Ken-kree-a"
- ],
- [
-  "Cenchreae",
-  "Ken-kree-ee"
- ],
- [
-  "Gallio",
-  "Gal-ee-oh"
- ],
- [
-  "Achaia",
-  "A-kay-a"
- ],
- [
-  "Achaea",
-  "A-kee-a"
- ],
- [
-  "Aquila",
-  "Ak-will-a"
- ],
- [
-  "Sosthenes",
-  "Soss-thuh-neez"
- ],
- [
-  "Timotheus",
-  "Tim-oh-thee-us"
- ],
- [
-  "Sgouros",
-  "Sgoo-ros"
- ],
- [
-  "Briareus",
-  "Bry-air-ee-us"
- ],
- [
-  "Peirene",
-  "Pye-ree-nee"
- ],
- [
-  "Bellerophon",
-  "Buh-lair-uh-fon"
- ],
- [
-  "Glauke",
-  "Glow-kee"
- ],
- [
-  "Diolkos",
-  "Dee-ol-kos"
- ],
- [
-  "Periander",
-  "Perry-ander"
- ],
- [
-  "Apollonius",
-  "Apo-lo-nee-us"
- ],
- [
-  "Pythia",
-  "Pith-ee-a"
- ],
- [
-  "omphalos",
-  "om-fa-los"
- ],
- [
-  "Parnassus",
-  "Par-nass-us"
- ],
- [
-  "Siphnos",
-  "Sif-nos"
- ],
- [
-  "Siphnians",
-  "Sif-nee-ans"
- ],
- [
-  "Kleobis",
-  "Klee-oh-bis"
- ],
- [
-  "Biton",
-  "Bee-ton"
- ],
- [
-  "Oreibasius",
-  "Or-eye-bay-see-us"
- ],
- [
-  "Polyzalus",
-  "Po-lee-za-lus"
- ],
- [
-  "Sounion",
-  "Soo-nee-on"
- ],
- [
-  "Phrontis",
-  "Fron-tis"
- ],
- [
-  "Laurium",
-  "Lor-ee-um"
- ],
- [
-  "Menelaus",
-  "Meh-neh-lay-us"
- ]
+  ["Antikythera", "Anti-kih-theera"],
+  ["Artemision", "Arteh-mee-see-on"],
+  ["Schliemann", "Shlee-mahn"],
+  ["Mycenae", "My-see-nee"],
+  ["Mycenaean", "My-seh-nee-an"],
+  ["Kapodistrias", "Kapo-distree-as"],
+  ["Euboea", "Yoo-bee-a"],
+  ["Aigina", "Eh-yee-na"],
+  ["Symi", "See-mee"],
+  ["Stais", "Stah-is"],
+  ["Hipparchus", "Hip-ar-kus"],
+  ["Lycurgus", "Lie-kur-gus"],
+  ["Herodes", "Heh-ro-deez"],
+  ["Heruli", "Heh-roo-lee"],
+  ["Archegetis", "Ar-keh-geh-tis"],
+  ["Andronicus", "Andro-nye-kus"],
+  ["Cyrrhus", "Sir-us"],
+  ["Philopappos", "Fillo-pappos"],
+  ["Commagene", "Komma-jee-nee"],
+  ["Musaeus", "Myoo-zee-us"],
+  ["Pnyx", "P-nix"],
+  ["isegoria", "ee-seh-go-ree-a"],
+  ["Dionysiou", "Thee-onee-see-oo"],
+  ["Areopagitou", "Areo-pa-yee-too"],
+  ["Pikionis", "Pee-kee-oh-nis"],
+  ["Makrygianni", "Makri-yanni"],
+  ["Zappeion", "Za-pee-on"],
+  ["Kapnikarea", "Kap-nee-ka-reh-a"],
+  ["Panagia", "Pana-yee-a"],
+  ["Ilissia", "Ee-lee-see-a"],
+  ["Kleanthis", "Kleh-an-this"],
+  ["Acrocorinth", "Ak-ro-korinth"],
+  ["Cenchrea", "Ken-kree-a"],
+  ["Cenchreae", "Ken-kree-ee"],
+  ["Gallio", "Gal-ee-oh"],
+  ["Achaia", "A-kay-a"],
+  ["Achaea", "A-kee-a"],
+  ["Aquila", "Ak-will-a"],
+  ["Sosthenes", "Soss-thuh-neez"],
+  ["Timotheus", "Tim-oh-thee-us"],
+  ["Sgouros", "Sgoo-ros"],
+  ["Briareus", "Bry-air-ee-us"],
+  ["Peirene", "Pye-ree-nee"],
+  ["Bellerophon", "Buh-lair-uh-fon"],
+  ["Glauke", "Glow-kee"],
+  ["Diolkos", "Dee-ol-kos"],
+  ["Periander", "Perry-ander"],
+  ["Apollonius", "Apo-lo-nee-us"],
+  ["Pythia", "Pith-ee-a"],
+  ["omphalos", "om-fa-los"],
+  ["Parnassus", "Par-nass-us"],
+  ["Siphnos", "Sif-nos"],
+  ["Siphnians", "Sif-nee-ans"],
+  ["Kleobis", "Klee-oh-bis"],
+  ["Biton", "Bee-ton"],
+  ["Oreibasius", "Or-eye-bay-see-us"],
+  ["Polyzalus", "Po-lee-za-lus"],
+  ["Sounion", "Soo-nee-on"],
+  ["Phrontis", "Fron-tis"],
+  ["Laurium", "Lor-ee-um"],
+  ["Menelaus", "Meh-neh-lay-us"],
+  ["Duchesse", "Doo-shess"],
+  ["Plaisance", "Play-zahnss"]
 ]
