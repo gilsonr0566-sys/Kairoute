@@ -26,6 +26,11 @@
 - FAME must-see "Galata Tower" is offered (Galata Tower) but not marked must-see
 - INFO 44 sights, 0 day trips/towns; must-see: Hagia Sophia, Sultan Ahmed Mosque, Süleymaniye Mosque, Topkapı Palace; top by fame: Sultan Ahmed Mosque 89, Topkapı Palace 79, Süleymaniye Mosque 69, Galata Tower 58, Dolmabahçe Palace 54, Taksim Square 50, Sublime Porte 50, Grand Bazaar 46
 
+## Kotor, Montenegro (Kotor, Montenegro, guide from sources)
+- POS Lovćen National Park: app is 5.82 km from Wikidata's point (not on the map by id)
+- NOID Castle of San Giovanni: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- INFO 5 sights, 0 day trips/towns; must-see: Kotor Cathedral, Fortifications of Kotor; top by fame: Kotor Cathedral 23, Fortifications of Kotor 21, Lovćen National Park 17, Aquarium Boka 0, Castle of San Giovanni 0
+
 ## Kyoto, Japan (Kyoto, Japan, guide from sources)
 - DUP Ujigami Shrine ~ Uji Shrine (132 m apart, same words)
 - FOLD Yasaka Shrine is part of Gion (Wikidata) but is a separate stop
