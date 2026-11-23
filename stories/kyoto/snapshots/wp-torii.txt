@@ -1,0 +1,152 @@
+SOURCE: https://en.wikipedia.org/wiki/Torii
+RETRIEVED: 2026-11-22T21:07:13.866Z
+STATUS: 200
+TITLE: Torii
+
+A torii (Japanese: 鳥居; [to.ɾi.i]) is a traditional Japanese gate most commonly found at the entrance of, or within, a Shinto shrine, where it symbolically marks the transition from the mundane to the sacred, and a spot where kami are welcomed and thought to travel through.
+The presence of a torii at the entrance is usually the simplest way to identify a Shinto shrine, and a small torii-shaped icon is used to represent shrines on Japanese maps.
+The first appearance of torii gates in Japan can be reliably pinpointed to at least the mid-Heian period; they are mentioned in a text written in 922. The oldest extant stone torii was built in the 12th century and belongs to a Hachiman shrine in Yamagata Prefecture. The oldest extant wooden torii is a ryōbu torii at Kubō Hachiman Shrine in Yamanashi Prefecture built in 1535.
+Torii gates were traditionally made from wood or stone, but today they can be also made of reinforced concrete, stainless steel and other materials. They are usually either unpainted or painted vermilion with a black upper lintel. Shrines of Inari, the kami of fertility and industry, typically have many torii because those who have been successful in business often donate torii in gratitude. Fushimi Inari-taisha in Kyoto has thousands of such torii, each bearing the donor's name.
+
+
+== Uses ==
+The function of a torii is to mark the entrance to a sacred space. For this reason, the road leading to a Shinto shrine (sandō) is almost always straddled by one or more torii, which is one aspect that could help distinguish a Shinto shrine from a Buddhist temple. If the sandō passes under multiple torii, the outer of them is called ichi no torii (一の鳥居; first torii). The following ones, closer to the shrine, are usually called, in order, ni no torii (二の鳥居; second torii) and san no torii (三の鳥居; third torii). Other torii can be found farther into the shrine to represent increasing levels of holiness as one nears the inner sanctuary (honden), core of the shrine. Also, because of the strong relationship between Shinto shrines and the Japanese Imperial family, a torii stands also in front of the tomb of each Emperor.
+
+Torii were historically used within Buddhist contexts as well. Torii was adopted by Shingon Buddhism founder Kūkai, who used it to demarcate the sacred space used for the homa ceremony. Osaka's Shitennō-ji, founded in 593 by Shōtoku Taishi and the oldest state-built Buddhist temple in the country (and world), has a torii straddling one of its entrances. (The original wooden torii burned in 1294 and was then replaced by one in stone.) Many Buddhist temples include one or more Shinto shrines dedicated to their tutelary kami  ("Chinjusha"), and in that case a torii marks the shrine's entrance. Benzaiten is a syncretic goddess derived from the Indian divinity Sarasvati, who unites elements of both Shinto and Buddhism. For this reason halls dedicated to her can be found at both temples and shrines, and in either case in front of the hall stands a torii. The goddess herself is sometimes portrayed with a torii on her head.
+Finally, until the Meiji period (1868–1912) torii were routinely adorned with plaques carrying Buddhist sutras.
+Yamabushi, Japanese mountain ascetic hermits with a long tradition as mighty warriors endowed with supernatural powers, sometimes use as their symbol a torii.
+The torii is also sometimes used as a symbol of Japan in non-religious contexts. For example, it is the symbol of the Marine Corps Security Force Regiment and the 187th Infantry Regiment, 101st Airborne Division and of other occupying forces in Japan. It is also used as a fixture at the entrance of some Japantown communities, such as Liberdade in São Paulo.
+
+
+== Origins ==
+
+Scholars believe that the stylistic origins of the Japanese torii derived from the Indian torana. According to several scholars, the vast evidence shows how the torii, both etymologically and architecturally, were originally derived from the torana, a free-standing sacred ceremonial gateway which marks the entrance of a sacred enclosure, an element prominent in Indian Buddhist architecture. The hypothesis arose in the 19th and 20th centuries due to similarities in structure and name between the two gates. Linguistic and historical theories have now emerged, but no conclusion has yet been reached. Various tentative etymologies of the word torii exist. According to one of them, the name derives from the term tōri-iru (通り入る; pass through and enter).
+Other theories claim torii may be related to the pailou of China. These structures however can assume a great variety of forms, only some of which actually somewhat resemble a torii. The same goes for Korea's hongsalmun. Unlike its Chinese counterpart, the hongsal-mun does not vary greatly in design and is always painted red, with "arrowsticks" located on the top of the structure (hence the name). Another hypothesis takes the name literally: the gate would originally have been some kind of bird perch. This is based on the religious use of bird perches in Asia, such as the Korean sotdae (솟대), which are poles with one or more wooden birds resting on their top. Commonly found in groups at the entrance of villages together with totem poles called jangseung, they are talismans which ward off evil spirits and bring the villagers good luck. "Bird perches" similar in form and function to the sotdae exist also in other shamanistic cultures in China, Mongolia and Siberia. Although they do not look like torii and serve a different function, these "bird perches" show how birds in several Asian cultures are believed to have magic or spiritual properties, and may therefore help explain the enigmatic literal meaning of the torii's name ("bird perch").
+In Japan, birds have also long had a connection with the dead, suggesting the torii originated in connection with some prehistorical funerary rite. Ancient Japanese texts like the Kojiki and the Nihon Shoki, for example, mention how Yamato Takeru after his death became a white bird and in that form chose a place for his own burial. For this reason, his mausoleum was then called shiratori misasagi (白鳥陵; white bird grave). Many later texts also show some relationship between dead souls and white birds, a link common also in other shamanic cultures. Bird motifs from the Yayoi and Kofun periods associating birds with the dead have also been found in several archeological sites. This relationship between birds and death would also explain why, in spite of their name, no visible trace of birds remains in today's torii: birds were symbols of death, which in Shinto brings defilement (kegare). Poles believed to have supported wooden bird figures very similar to the sotdae have been found together with wooden birds, and are believed by some historians to have somehow evolved into today's torii. Intriguingly, in both Korea and Japan single poles represent deities (kami in the case of Japan), while hashira (柱; pole) is the counter for kami.
+Finally, the possibility that torii are a Japanese invention cannot be discounted. The first torii could have evolved already with their present function through the following sequence of events:
+
+Four posts were placed at the corners of a sacred area and connected with a rope, thus dividing sacred and mundane.
+Two taller posts were then placed at the center of the most auspicious direction, to let the priest in.
+A rope was tied from one post to the other to mark the border between the outside and the inside, the sacred and the mundane. This hypothetical stage corresponds to a type of torii  in actual use, the so-called shime-torii (注連鳥居), an example of which can be seen in front of Ōmiwa Shrine's haiden in Nara (see also the photo in the gallery).
+The rope was replaced by a lintel.
+Because the gate was structurally weak, it was reinforced with a tie-beam, and what is today called shinmei torii (神明鳥居) or futabashira torii (二柱鳥居; two pillar torii) (see illustration at right) was born. This theory however does nothing to explain how the gates got their name.
+The shinmei torii, whose structure agrees with the historians' reconstruction, consists of just four unbarked and unpainted logs: two vertical pillars (hashira (柱)) topped by a horizontal lintel (kasagi (笠木)) and kept together by a tie-beam (nuki (貫)). The pillars may have a slight inward inclination called uchikorobi (内転び) or just korobi (転び). Its parts are always straight.
+
+
+== Parts and ornamentations ==
+
+Torii may be unpainted or painted vermilion and black. The color black is limited to the kasagi and the nemaki (根巻; see illustration). Very rarely torii can be found also in other colors. Kamakura's Kamakura-gū for example has a white and red one.
+The kasagi may be reinforced underneath by a second horizontal lintel called shimaki or shimagi (島木).
+The kasagi and the shimaki may have an upward curve called sorimashi (反り増し).
+The nuki is often held in place by wedges (kusabi (楔)). The kusabi in many cases are purely ornamental.
+At the center of the nuki there may be a supporting strut called gakuzuka (額束), sometimes covered by a tablet carrying the name of the shrine (see photo in the gallery).
+The pillars often rest on a white stone ring called kamebara (亀腹; turtle belly) or daiishi (台石; base stone). The stone is sometimes replaced by a decorative black sleeve called nemaki (根巻; root sleeve).
+At the top of the pillars there may be a decorative ring called daiwa (台輪; architrave).
+The gate has a purely symbolic function and therefore there usually are no doors or board fences, but exceptions exist, as for example in the case of Ōmiwa Shrine's triple-arched torii (miwa torii, see below).
+
+
+== Styles ==
+Structurally, the simplest is the shime torii or chūren torii (注連鳥居) (see illustration below). Probably one of the oldest types of torii, it consists of two posts with a sacred rope called shimenawa tied between them.
+All other torii can be divided in two families, the shinmei family (神明系) and the myōjin family (明神系). Torii of the first have only straight parts, the second have both straight and curved parts.
+
+
+=== Shinmei family ===
+The shinmei torii and its variants are characterized by straight upper lintels.
+
+
+==== Photo gallery ====
+
+
+==== Shinmei torii ====
+The shinmei torii (神明鳥居), which gives the name to the family, is constituted solely by a lintel (kasagi) and two pillars (hashira) united by a tie beam (nuki). In its simplest form, all four elements are rounded and the pillars have no inclination. When the nuki is rectangular in section, it is called Yasukuni torii, from Tokyo's Yasukuni Jinja. It is believed to be the oldest torii style.
+
+
+==== Ise torii ====
+伊勢鳥居 (Ise torii) (see illustration above) are gates found only at the Inner Shrine and Outer Shrine at Ise Shrine in Mie Prefecture. For this reason, they are also called Jingū torii, from Jingū, Ise Grand Shrine's official Japanese name.
+There are two variants. The most common is extremely similar to a shinmei torii, its pillars however have a slight inward inclination and its nuki is kept in place by wedges (kusabi). The kasagi is pentagonal in section (see illustration in the gallery below). The ends of the kasagi are slightly thicker, giving the impression of an upward slant. All these torii were built after the 14th century.
+The second type is similar to the first, but has also a secondary, rectangular lintel (shimaki) under the pentagonal kasagi.
+This and the shinmei torii style started becoming more popular during the early 20th century at the time of State Shinto because they were considered the oldest and most prestigious.
+
+
+==== Kasuga torii ====
+The Kasuga torii (春日鳥居) is a myōjin torii (see illustration above) with straight top lintels. The style takes its name from Kasuga-taisha's ichi-no-torii (一の鳥居), or main torii.
+The pillars have an inclination and are slightly tapered. The nuki protrudes and is held in place by kusabi driven in on both sides.
+This torii was the first to be painted vermilion and to adopt a shimaki at Kasuga Taisha, the shrine from which it takes its name.
+
+
+==== Hachiman torii ====
+Almost identical to a kasuga torii (see illustration above), but with the two upper lintels at a slant, the Hachiman torii (八幡鳥居) first appeared during the Heian period. The name comes from the fact that this type of torii is often used at Hachiman shrines.
+
+
+==== Kashima torii ====
+The kashima torii (鹿島鳥居) (see illustration above) is a shinmei torii without korobi, with kusabi and a protruding nuki. It takes its name from Kashima Shrine in Ibaraki Prefecture.
+
+
+==== Kuroki torii ====
+The kuroki torii (黒木鳥居) is a shinmei torii built with unbarked wood. Because this type of torii requires replacement at three years intervals, it is becoming rare. The most notorious example is Nonomiya Shrine in Kyoto. The shrine now however uses a torii made of synthetic material which simulates the look of wood.
+
+
+==== Shiromaruta torii ====
+The shiromaruta torii (白丸太鳥居) or shiroki torii (白木鳥居) is a shinmei torii made with logs from which bark has been removed. This type of torii is present at the tombs of all Emperors of Japan.
+
+
+==== Mihashira torii ====
+The mihashira torii or Mitsubashira Torii (三柱鳥居, Three-pillar Torii; also 三角鳥居 sankaku torii) (see illustration above) is a type of torii which appears to be formed from three individual torii (see gallery). It is thought by some to have been built by early Japanese Christians to represent the Holy Trinity.
+
+
+=== Myōjin family ===
+The Myōjin torii and its variants are characterized by curved lintels.
+
+
+==== Photo gallery ====
+
+
+==== Myōjin torii ====
+The myōjin torii (明神鳥居), by far the most common torii style, are characterized by curved upper lintels (kasagi and shimaki). Both curve slightly upwards. Kusabi are present. A myōjin torii can be made of wood, stone, concrete or other materials and be vermilion or unpainted.
+
+
+==== Nakayama torii ====
+The Nakayama torii (中山鳥居) style, which takes its name from Nakayama Jinja in Okayama Prefecture, is basically a myōjin torii, but the nuki does not protrude from the pillars and the curve made by the two top lintels is more accentuated than usual. The torii at Nakayama Shrine that gives the style its name is 9 m tall and was erected in 1791.
+
+
+==== Daiwa/Inari torii ====
+The daiwa or Inari torii (大輪鳥居・稲荷鳥居) (see illustration above) is a myōjin torii with two rings called daiwa at the top of the two pillars. The name "Inari torii"  comes from the fact that vermilion daiwa torii tend to be common at Inari shrines, but even at the famous Fushimi Inari Shrine not all torii are in this style. This style first appeared during the late Heian period.
+
+
+==== Sannō torii ====
+The sannō torii (山王鳥居) (see photo below) is myōjin torii with a gable over the two top lintels. The best example of this style is found at Hiyoshi Shrine near Lake Biwa.
+
+
+==== Miwa torii ====
+Also called sankō torii (三光鳥居, three light torii), mitsutorii (三鳥居, triple torii) or komochi torii (子持ち鳥居, torii with children) (see illustration above), the miwa torii (三輪鳥居) is composed of three myōjin torii without inclination of the pillars. It can be found with or without doors. The most famous one is at Ōmiwa Shrine, in Nara, from which it takes its name.
+
+
+==== Ryōbu torii ====
+Also called yotsuashi torii (四脚鳥居, four-legged torii), gongen torii (権現鳥居) or chigobashira torii (稚児柱鳥居), the ryōbu torii (両部鳥居) is a daiwa torii whose pillars are reinforced on both sides by square posts (see illustration above). The name derives from its long association with Ryōbu Shintō, a current of thought within Shingon Buddhism. The famous torii rising from the water at Itsukushima is a ryōbu torii, and the shrine used to be also a Shingon Buddhist temple, so much so that it still has a pagoda.
+
+
+==== Hizen torii ====
+The hizen torii (肥前鳥居) is an unusual type of torii with a rounded kasagi and pillars that flare downwards. They are found only in Saga prefecture and the neighboring areas.
+
+
+== Gallery ==
+
+
+== See also ==
+Dvarapala is a door or gate guardian often portrayed as a warrior or fearsome giant, usually armed with a weapon.
+Hongsalmun, in Korean architecture with both religious and other usage
+Iljumun, portal in Korean temple architecture
+Mon, generic Japanese term for gate
+Paifang, in Chinese temple architecture
+Tam quan, in Vietnamese temple architecture
+Torana, a Hindu-Buddhist ceremonial arched gateway
+
+
+== Explanatory notes ==
+
+
+== References ==
+
+
+== External links ==
+ Media related to Torii at Wikimedia Commons
