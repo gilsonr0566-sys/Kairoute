@@ -8,7 +8,7 @@
 // Wikipedia facts), and kept on the device.
 // The same rule runs for every city and every port, including gateway ports ("Civitavecchia (Rome)"): the sources
 // are asked for the city the day is really spent in.
-const SRC_KIND_CAP = { Church: 12, Mosque: 12, Temple: 12, Shrine: 8, Museum: 12, Palace: 8 };
+const SRC_KIND_CAP = { Church: 12, Mosque: 12, Temple: 12, Shrine: 8, Museum: 12, Palace: 8, "Castle or fort": 8 };
 const SRC_MAX_MAIN = 45, SRC_MAX_QUICK = 12, SRC_R = 8;
 // A big city's landmarks spread wider than its centre (a tower 11 km out): one famous the world over counts within this.
 const SRC_R_FAMED = 15;
@@ -79,7 +79,9 @@ const SRC_KINDS = [
   // nothing (Nov 22: San Carlo was shown as an ancient site); its kinds decide (srcKindOf), else it is a theatre.
   [/forum|foro|baths|terme|thermae|circus|circo|mausoleum|mausoleo|tomb|tomba|amphitheat|theatre of|ancient|archaeolog|acropolis|agora|ruins|domus|villa of|stadium of/i, "Ancient site", 60],
   [/\b(shrine|jinja|jing[uū])\b|-taisha\b|-jing[uū]\b|-g[uū]\b/i, "Shrine", 45], [/\b(temple|tempio)\b|-ji\b|-dera\b|-d[oō]\b/i, "Temple", 45],
-  [/palace|palazzo|palacio|palau|castle|castel|castillo|fortress|fort |citadel|villa/i, "Palace", 50],
+  // A fort is called a castle or fort, never a palace (Nov 23 card review: a fort and a belfry were "Palace").
+  [/castle|castel|castillo|fortress|\bfort\b|\bforte?\b|citadel|kastro|bastion|fortifications?/i, "Castle or fort", 50],
+  [/palace|palazzo|palacio|palau|villa/i, "Palace", 50],
   [/\b(teatro|theat(re|er)|opera house|staatsoper|concert hall)\b/i, "Theatre", 30],
   [/park|garden|giardino|jard[ií]n|parque|parco|botanic/i, "Park or garden", 40],
   [/square|piazza|plaza|pla[çc]a|platz|place /i, "Square", 15],
@@ -94,15 +96,19 @@ const srcQuick = (name, local) => srcKind(name, local)[1] === "Landmark";
 const SRC_KIND_FACTS = [
   // A church that was a Roman temple (the Pantheon) is visited as a church; a ruined temple (Olympian Zeus) as a ruin.
   [/^art-museum$/, "Museum", 90], [/^mosque$/, "Mosque", 30], [/^synagogue$/, "Synagogue", 30], [/^(cathedral|church|chapel|monastery)$/, "Church", 30], [/^(archaeological|ancient-city|amphitheatre|mausoleum)$/, "Ancient site", 60], [/^temple$/, "Temple", 45],
-  [/^(castle|fortification|palace)$/, "Palace", 50], [/^(skyscraper|observation-deck|tower)$/, "Tower", 40], [/^museum$/, "Museum", 90], [/^(theatre|opera-house|concert-hall)$/, "Theatre", 30],
+  [/^(castle|fortification)$/, "Castle or fort", 50], [/^palace$/, "Palace", 50], [/^(skyscraper|observation-deck|tower)$/, "Tower", 40], [/^museum$/, "Museum", 90], [/^(theatre|opera-house|concert-hall)$/, "Theatre", 30],
   [/^(zoo|aquarium|amusement-park)$/, "Zoo or park", 150], [/^(park|garden)$/, "Park or garden", 40], [/^market$/, "Market", 40], [/^beach$/, "Beach", 90], [/^square$/, "Square", 15],
   [/^(stadium|arena|sports-venue)$/, "Stadium", 45], [/^(bridge|statue|fountain|monument)$/, "Landmark", 10]];
 // A Shinto shrine is a temple to the encyclopedia's class tree but a shrine to everyone visiting: its name says which.
-const srcKindOf = x => { const k = srcKnown(x) && SRC_KIND_FACTS.find(([re]) => x.kinds.some(t => re.test(t))); if (!k) return srcKind(x.name, x.local); const n = srcKind(x.name, x.local); return k[1] === "Temple" && n[1] === "Shrine" ? [null, "Shrine", k[2]] : [null, k[1], k[2]]; };
+// When the facts are known but name no kind of ours, a name word is trusted only where it can't contradict them: "Basilica
+// Cistern" is no church, a "Park" stadium no garden (Nov 23 card review). Otherwise it is a plain "Sight", which is always true.
+const SRC_NAME_SAFE = /^(Landmark|Square|Market|Catacombs)$/;
+const srcKindOf = x => { const k = srcKnown(x) && SRC_KIND_FACTS.find(([re]) => x.kinds.some(t => re.test(t)));
+  if (!k) { const n = srcKind(x.name, x.local); return !srcKnown(x) || SRC_NAME_SAFE.test(n[1]) ? n : [null, "Sight", 40]; } const n = srcKind(x.name, x.local); return k[1] === "Temple" && n[1] === "Shrine" ? [null, "Shrine", k[2]] : [null, k[1], k[2]]; };
 // How long a visit takes grows with how much there is to see and how many people come to see it: a place written about
 // in 80+ languages (the Colosseum, Topkapı, the Louvre) has more rooms, more grounds and longer queues than the
 // same kind of place known in 20 (Nov 22 audit: Hagia Sophia, the Colosseum and the Tower of London were 40-minute visits).
-const SRC_FAME_LEN = { Landmark: [[40, 20]], Museum: [[120, 180], [80, 150], [50, 120]], Church: [[120, 75], [80, 60], [50, 45]], Mosque: [[120, 75], [80, 60], [50, 45]], Synagogue: [[80, 60], [50, 45]], Temple: [[120, 90], [80, 75], [50, 60]], Shrine: [[80, 75], [40, 60]], "Ancient site": [[80, 120], [60, 90]], Palace: [[80, 120], [50, 90]],
+const SRC_FAME_LEN = { Landmark: [[40, 20]], Museum: [[120, 180], [80, 150], [50, 120]], Church: [[120, 75], [80, 60], [50, 45]], Mosque: [[120, 75], [80, 60], [50, 45]], Synagogue: [[80, 60], [50, 45]], Temple: [[120, 90], [80, 75], [50, 60]], Shrine: [[80, 75], [40, 60]], "Ancient site": [[80, 120], [60, 90]], Palace: [[80, 120], [50, 90]], "Castle or fort": [[80, 120], [50, 90]], Sight: [[100, 90], [60, 60]],
   Tower: [[100, 75], [50, 60]], Theatre: [[80, 45]], Market: [[40, 60]], Catacombs: [[50, 75]] };
 const srcMinutes = (cat, base, sl) => { const b = (SRC_FAME_LEN[cat] || []).find(([at]) => (sl || 0) >= at); return b ? Math.max(base, b[1]) : base; };
 // The guide's own centre: the middle of its written sights (a gateway port's guide is about the city it serves).
@@ -163,7 +169,7 @@ const srcPartOf = (x, s, src) => {
   const r = srcReach(s); if (!r || x.lat == null || !isFinite(s.lat) || hav(x, s) > r || (x.sl || 0) >= srcFame(s, src)) return false;
   // A museum, church or palace across from a park or on a square is its own visit; inside a castle's or an
   // ancient site's grounds it is part of that visit.
-  return !/^(Museum|Church|Mosque|Synagogue|Temple|Shrine|Palace|Catacombs)$/.test(srcKind(x.name, x.local)[1]) || SRC_GROUNDS.test((s.category || "") + " " + s.name);
+  return !/^(Museum|Church|Mosque|Synagogue|Temple|Shrine|Palace|Castle or fort|Catacombs)$/.test(srcKind(x.name, x.local)[1]) || SRC_GROUNDS.test((s.category || "") + " " + s.name);
 };
 // The whole a sight is part of, by the encyclopedia's own "part of" / "located in" (sent by the helper), when that whole
 // is a place on the list within a kilometre and one visited as a whole: a museum, a castle or fortress, an ancient site
@@ -210,6 +216,13 @@ function sourceSights(city, src) {
     // the traveler or a big stop's parts changed).
     if (srcKnown(x) && !s.parts && s.baseMin == null) { const [, oc, om] = srcKind(s.srcName || s.name, s.local), [, cat, m0] = srcKindOf(x), m = srcMinutes(cat, m0, x.sl);
       if (s.minutes === (s.quick ? 10 : om) && s.category === oc && (cat !== oc || m !== s.minutes)) { s.category = cat; if (!s.quick || cat !== "Landmark") { s.quick = false; s.minutes = m; } } } }
+  // A sight the travel guide's page listed (id "wv~Q…", all "Sight", 30 minutes by its name alone) takes its kind and
+  // visit length from the same facts (Nov 23 sight check, Rome: the Capitoline Museums and the Baths of Caracalla were
+  // 30-minute "Sights"). Never a length the traveler or a big stop's parts changed.
+  for (const s of allSites(city)) { const m = /^wv~(Q\d+)$/.exec(String(s.id)); if (!m || !s.fromGuide || s.parts || s.baseMin != null || s.category !== "Sight") continue;
+    const x = src.stops.find(y => y.wd === m[1]); if (!x || !srcKnown(x) || srcNotPlace(x)) continue;
+    const [, cat, m0] = srcKindOf(x); if (cat === "Sight") continue;
+    if (!s.wd) s.wd = m[1]; s.category = cat; if (s.minutes === 30 || s.minutes === 60) s.minutes = srcMinutes(cat, m0, x.sl); }
   // A sight a saved guide got from the sources that the facts now show is no place to visit (an organisation, an event, a
   // region, a village) leaves the list, unless the traveler chose it themselves.
   { const mine = new Set(((typeof trip !== "undefined" && trip && trip.days) || []).flatMap(d => (d.mine || []).map(String)));

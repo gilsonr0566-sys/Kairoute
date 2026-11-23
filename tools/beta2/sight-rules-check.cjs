@@ -29,13 +29,17 @@ const stops = [
   stop('South Temple', ['building', 'structure', 'temple'], 33, 0.5, -3.5, { partOf: ['Q117'] }),
   stop('Saint Mark Basilica', ['building', 'church', 'structure'], 65, 3, -2),
   stop('Bell Campanile', ['structure', 'tower'], 36, 3.05, -2.03, { partOf: ['Q120'] }),
+  stop('Basilica Cistern', ['structure'], 34, 1, -0.3),
+  stop('Fort Testa', ['fortification', 'structure'], 30, -0.8, 1.6),
+  stop('Musei Testolini', ['art-museum', 'building', 'museum', 'structure'], 46, -0.3, -0.6),
 ];
+const guideSite = Object.assign({ id: 'wv~Q124', name: 'Musei Testolini', minutes: 30, category: 'Sight', fromGuide: true, tags: ['from-guide'] }, at(-0.3, -0.6));
 const fails = []; let n = 0;
 const ok = (what, cond, got) => { n++; if (!cond) fails.push(what + (got !== undefined ? ' (got ' + JSON.stringify(got) + ')' : '')); };
 (async () => {
   const b = await chromium.launch(), pg = await b.newPage(); await pg.goto('file://' + file); await pg.waitForTimeout(1200);
-  const sites = await pg.evaluate(src => { const c = { city: 'Testopolis', country: 'Testland', sites: [], farther: [], starts: {}, restaurants: [] }; window.__kairouteSourceSights(c, src);
-    return c.sites.map(s => ({ name: s.name, cat: s.category, min: s.minutes, quick: !!s.quick })); }, { area: 'Testopolis', center: C, stops });
+  const sites = await pg.evaluate(a => { const c = { city: 'Testopolis', country: 'Testland', sites: [JSON.parse(JSON.stringify(a.g))], farther: [], starts: {}, restaurants: [] }; window.__kairouteSourceSights(c, a.src);
+    return c.sites.map(s => ({ name: s.name, cat: s.category, min: s.minutes, quick: !!s.quick })); }, { src: { area: 'Testopolis', center: C, stops }, g: guideSite });
   const get = nm => sites.find(s => s.name === nm);
   ok('a mosque is called a mosque', (get('Great Mosque') || {}).cat === 'Mosque', get('Great Mosque'));
   ok('a synagogue is called a synagogue', (get('Old Synagogue') || {}).cat === 'Synagogue', get('Old Synagogue'));
@@ -56,6 +60,9 @@ const ok = (what, cond, got) => { n++; if (!cond) fails.push(what + (got !== und
   ok('a world heritage listing of places kilometres apart is no stop of its own', !get('Historic Monuments of Testopolis'));
   ok('the places in that listing stay stops', !!get('North Temple') && !!get('South Temple'));
   ok('a bell tower beside its church is climbed on its own, not folded into the church', !!get('Bell Campanile'));
+  ok("a travel-guide listing's museum takes its kind and a museum's visit length from the facts", (get('Musei Testolini') || {}).cat === 'Museum' && (get('Musei Testolini') || {}).min >= 90, get('Musei Testolini'));
+  ok('a cistern named "Basilica" is no church: facts known but no kind of ours makes it a plain Sight', (get('Basilica Cistern') || {}).cat === 'Sight', get('Basilica Cistern'));
+  ok('a fort is called a castle or fort, never a palace', (get('Fort Testa') || {}).cat === 'Castle or fort', get('Fort Testa'));
   ok('no source sight is called "Church" unless it is one', !sites.some(s => s.cat === 'Church' && /mosque|synagogue|shrine|-ji|-taisha/i.test(s.name)));
   await b.close();
   console.log(fails.length ? 'FAILED:\n- ' + fails.join('\n- ') : '');
