@@ -72,6 +72,9 @@ jobs:
       - name: Day plan, Choose sights, Guide, voices and Tour say only what is true
         if: always()
         run: node tools/ui/dayplan-check.cjs beta2-site/index.html
+      - name: No paid AI is offered in Settings
+        if: always()
+        run: node tools/ui/no-paid-ai-check.cjs beta2-site/index.html
       - name: The app says only what the AI can really do
         if: always()
         run: node tools/ai-honesty-check.cjs
