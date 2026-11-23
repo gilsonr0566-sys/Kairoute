@@ -53,7 +53,7 @@ jobs:
           node tools/beta2/screen-gate.cjs beta2-site/index.html $OLD
       - name: Odd trips (hundreds of unusual cruises, multi-city trips, midnight flights and bag days, every day checked)
         if: always()
-        run: NOZIG=1 node tools/beta2/odd-trips.cjs --n 300 --seed 1 --warn walk
+        run: NOZIG=1 SLOW_MS=5000 node tools/beta2/odd-trips.cjs --n 300 --seed 1 --warn walk
       - name: Odd day changes on the phone screen (short, late and after-midnight port calls, midnight flights, Light/Half/Full, every sight ticked)
         if: always()
         run: VARIANTS=8 node tools/beta2/odd-screen.cjs beta2-site/index.html
