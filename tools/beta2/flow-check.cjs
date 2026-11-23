@@ -93,6 +93,8 @@ async function tapTimes(p) { const out = []; const n = await p.evaluate(() => wi
   // 2. Untick everything on a port day, then pick a day trip and a sight in town (Richard, Nov 18: Naples).
   const ni = await dayIdx(p, /Naples/);
   await p.evaluate(i => { window.__kairouteGo('day', i); window.__kairouteGo('sites'); }, ni); await p.waitForTimeout(800);
+  // The list shows once it is sorted (Nov 23 steady list): read it when the traveler can see it.
+  await p.waitForFunction(() => !window.__kairouteFitPending || window.__kairouteFitPending() === 0, null, { timeout: 20000, polling: 100 }).catch(() => {}); await p.waitForTimeout(300);
   const yp = p.locator('[data-act="picksfold"][aria-expanded="false"]').first(); if (await yp.isVisible().catch(() => false)) { await yp.tap(); await p.waitForTimeout(500); }
   // Nov 21 live re-check: with the day's sights on, the box for a place reached only by boat said "Even with nothing else
   // picked, it can't fit this day" on a day it fits alone, and offered no way. It offers the sights to swap for it.
