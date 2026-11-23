@@ -266,12 +266,15 @@
         for (let i = 0; i < order.length; i++) for (let j = 0; j < order.length; j++) {
           if (i === j || j === i - 1 || Math.abs(i - j) > reach) continue; // moving to just before the previous is the same as moving that one after
           const o = order.slice(); const [x] = o.splice(i, 1); o.splice(j, 0, x); cands.push(o); }
+        const nMoves = cands.length;
         for (let i = 0; i < order.length - 2; i++) for (let j = i + 2; j < order.length && j - i <= reach; j++) cands.push(order.slice(0, i).concat(order.slice(i, j + 1).reverse(), order.slice(j + 1)));
-        for (const o of cands) {
+        for (const [ci, o] of cands.entries()) {
           if (far.length && near.length && !blockAtEnd(o)) continue;
           // Lunch only adds time, so an order already later or later at a last entry without lunch can't win.
           const bare = walk(o, win, ctx); if (bare.over > cur.r.over || bare.late > cur.r.late) continue;
           const c = withLunch(o, win, ctx), p = cost(c);
+          // A reversed run is taken only when it rides no more than the order it replaces (it is there to undo a zig-zag).
+          if (ci >= nMoves && c.r.rideMin > cur.r.rideMin + 1) continue;
           if (p < pen - 1e-6 && (!best || p < best.p - 1e-6)) best = { o, c, p };
         }
         if (!best) break;

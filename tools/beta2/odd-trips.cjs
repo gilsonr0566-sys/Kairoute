@@ -123,7 +123,8 @@ const bucketOf = (shape, days) => { const cs = {}, used = days.filter(d => d.cit
 
 // ---- Checks
 const out = {}, examples = {}, add = (k, trip, m) => { if (ONLY.length && !ONLY.includes(k)) return; out[k] = (out[k] || 0) + 1; (examples[k] = examples[k] || []).length < 400 && examples[k].push(trip + ': ' + m); };
-const walkMin = km => km * 1.3 / 4.5 * 60;
+// At the traveler's own pace (walks little: 3.6 km/h, as the engine and leaks.cjs walk it).
+const walkMin = (km, prefs) => km * 1.3 / ((prefs || {}).walk === 'low' ? 3.6 : 4.5) * 60;
 const said = p => (p.explain || []).join(' ');
 let tripsN = 0, daysN = 0, plannedN = 0;
 const checkTrip = (name, b, edits) => {
@@ -155,7 +156,7 @@ const checkTrip = (name, b, edits) => {
     // rides
     its.forEach((x, k) => { if (x.t !== 'ride') return; const a = its.slice(0, k).reverse().find(y => y.t !== 'ride' && E.hasPos(y)), z = its.slice(k + 1).find(y => y.t !== 'ride' && E.hasPos(y));
       const km = a && z ? E.hav(a, z) : x.km; if (x.mode !== 'lift' && a && z && km > 0.05 && !(x.min > 0)) add('zero', tag, `${a.name} > ${z.name} ${km.toFixed(2)} km`);
-      if (x.mode && x.mode !== 'walk' && x.mode !== 'lift' && x.mode !== 'boat' && km > 0 && km < 3 && x.min > walkMin(km) + 5 && !x.bags && !(z && (z.t === 'end' || /bags/i.test(z.name || ''))) && !(a && /bags/i.test(a.name || ''))) add('walk', tag, `${x.mode} ${x.min} min for ${km.toFixed(2)} km (walk ~${Math.round(walkMin(km))}) ${a && a.name} > ${z && z.name}`); });
+      if (x.mode && x.mode !== 'walk' && x.mode !== 'lift' && x.mode !== 'boat' && km > 0 && km < 3 && x.min > walkMin(km, b.prefs) + 5 && !x.bags && !(z && (z.t === 'end' || /bags/i.test(z.name || ''))) && !(a && /bags/i.test(a.name || ''))) add('walk', tag, `${x.mode} ${x.min} min for ${km.toFixed(2)} km (walk ~${Math.round(walkMin(km, b.prefs))}) ${a && a.name} > ${z && z.name}`); });
     // shut / late
     its.forEach(x => { if (x.t === 'stop' && x.late) add('shut', tag, `${x.name} reached after last entry`); if (x.t === 'meal' && x.shut) add('shut', tag, `${x.meal} at ${x.name} when shut`); });
     // lunch

@@ -472,11 +472,11 @@ if (fs.existsSync(dir)) { let rides = 0, placed = 0;
     for (const x of noLunch.slice(0, 8)) ok(false, `no lunch on a day over lunchtime: ${x}`);
     for (const x of shutAt.slice(0, 8)) ok(false, `lunch at a place shut at that hour: ${x}`);
     ok(!shutAt.length, `every planned lunch is at a place not known to be shut then (map hours read for the date)`);
-    { const fx = E.eatFactsFor({ date: '2026-11-23', eats: {} }, [{ name: 'Noon Place', hours: 'Mo-Sa 12:00-15:30; Su off' }, { name: 'Sunday Shut', hours: 'Mo-Sa 12:00-15:00' }, { name: 'Odd', hours: 'Jun-Sep 12:00-15:00' }]);
+    { const fx = E.eatFactsFor({ date: '2026-11-23', eats: {} }, [{ name: 'Noon Place', hours: 'Mo-Sa 12:00-15:30; Su off' }, { name: 'Sunday Shut', hours: 'Mo-Sa 12:00-15:00' }, { name: 'Odd', hours: 'Jun-Sep 12:00-15:00' }, { name: 'Junk', hours: 'ask the owner' }]);
       const sun = E.eatFactsFor({ date: '2026-11-22' }, [{ name: 'Noon Place', hours: 'Mo-Sa 12:00-15:30; Su off' }]);
-      ok(fx[E.eatKey('Noon Place')] && JSON.stringify(fx[E.eatKey('Noon Place')].oh.spans) === '[[720,930]]' && sun[E.eatKey('Noon Place')].closed && !fx[E.eatKey('Odd')]
+      ok(fx[E.eatKey('Noon Place')] && JSON.stringify(fx[E.eatKey('Noon Place')].oh.spans) === '[[720,930]]' && sun[E.eatKey('Noon Place')].closed && fx[E.eatKey('Odd')] && fx[E.eatKey('Odd')].closed && !fx[E.eatKey('Junk')]
         && E.eatShut(sun[E.eatKey('Noon Place')], 'Lunch') && !E.eatShut(fx[E.eatKey('Noon Place')], 'Lunch'),
-        'a place to eat with map hours: open spans read for the date, shut on its day off, unreadable hours left unknown'); }
+        'a place to eat with map hours: open spans read for the date, shut on its day off and out of its season (one hours reader), unreadable hours left unknown'); }
     if (!noLunch.length) oks++; console.log(`ok   lunch on ${days - said - noLunch.length} of ${days} days over lunchtime (${said} say plainly why not)${noLunch.length ? ', missing silently on ' + noLunch.length : ''}`); }
   console.log(`ok   every ride the kind it is drawn as: ${boats} boat rides, ${piered} rides to or from a pier`); }
 
