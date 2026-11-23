@@ -7,6 +7,20 @@
  },
  "findings": [
   {
+   "k": "NOID",
+   "t": "Church of Our Lady of the Covenant [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby",
+   "x": {
+    "id": "abu-ghosh-far~0"
+   }
+  },
+  {
+   "k": "NOID",
+   "t": "The Benedictine monastery in Abu Ghosh [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby",
+   "x": {
+    "id": "abu-ghosh-far~1"
+   }
+  },
+  {
    "k": "FOLD",
    "t": "Yad Vashem is part of Mount Herzl (Wikidata) but is a separate stop",
    "x": {
@@ -136,7 +150,12 @@
   },
   {
    "k": "INFO",
-   "t": "18 sights, 0 day trips/towns; must-see: Dome of the Rock, Al-Aqsa Mosque, Western Wall, Israel Museum, Church of the Holy Sepulchre, The Temple Institute, Holy Land, Calvary; top by fame: Al-Aqsa Mosque 103, Holy Land 91, Israel Museum 90, Dome of the Rock 87, Western Wall 84, Calvary 81, Church of the Holy Sepulchre 76, The Temple Institute 76",
+   "t": "18 sights, 4 day trips/towns; must-see: Dome of the Rock, Al-Aqsa Mosque, Western Wall, Israel Museum, Church of the Holy Sepulchre, The Temple Institute, Holy Land, Calvary; top by fame: Al-Aqsa Mosque 103, Holy Land 91, Israel Museum 90, Dome of the Rock 87, Western Wall 84, Calvary 81, Church of the Holy Sepulchre 76, The Temple Institute 76",
+   "x": {}
+  },
+  {
+   "k": "INFO",
+   "t": "day trips: Abu Ghosh, Tel Aviv, Church of Our Lady of the Covenant, The Benedictine monastery in Abu Ghosh",
    "x": {}
   }
  ],
@@ -664,6 +683,114 @@
    "merged": [],
    "posDoubt": false,
    "summary": "A listed historic church in Jerusalem, named by 2 independent sources."
+  },
+  {
+   "id": "abu-ghosh-far",
+   "name": "Abu Ghosh",
+   "local": "",
+   "lat": 31.8048,
+   "lng": 35.1124,
+   "minutes": 180,
+   "category": "Day trip",
+   "kind": "touristy",
+   "quick": false,
+   "mustSee": false,
+   "fame": 0,
+   "unesco": false,
+   "heritage": false,
+   "wd": "Q335023",
+   "src": [
+    "Wikivoyage (English)"
+   ],
+   "srcOnly": false,
+   "builtin": false,
+   "famousFix": true,
+   "far": true,
+   "travel": "Bus from ככר הדוידקה/הנביאים, about 55 min one way",
+   "parts": [],
+   "merged": [],
+   "posDoubt": false,
+   "summary": "A day out that travelers suggest from Jerusalem (from Haifa, Israel)."
+  },
+  {
+   "id": "tel-aviv-far",
+   "name": "Tel Aviv",
+   "local": "",
+   "lat": 32.08032,
+   "lng": 34.78061,
+   "minutes": 180,
+   "category": "Day trip",
+   "kind": "touristy",
+   "quick": false,
+   "mustSee": false,
+   "fame": 0,
+   "unesco": false,
+   "heritage": false,
+   "wd": "Q33935",
+   "src": [
+    "Wikivoyage (English)"
+   ],
+   "srcOnly": false,
+   "builtin": false,
+   "famousFix": true,
+   "far": true,
+   "travel": "Train from הדווידקה, about 85 min one way",
+   "parts": [],
+   "merged": [],
+   "posDoubt": false,
+   "summary": "&ndash; A big and the most cosmopolitan city in Israel, well known for its club culture."
+  },
+  {
+   "id": "abu-ghosh-far~0",
+   "name": "Church of Our Lady of the Covenant",
+   "local": "",
+   "lat": 31.80735,
+   "lng": 35.10247,
+   "minutes": 30,
+   "category": "Sight",
+   "kind": "touristy",
+   "quick": false,
+   "mustSee": false,
+   "fame": 0,
+   "unesco": false,
+   "heritage": false,
+   "wd": "",
+   "src": [],
+   "srcOnly": false,
+   "builtin": true,
+   "famousFix": false,
+   "far": true,
+   "travel": "Bus from ככר הדוידקה/הנביאים, about 55 min one way",
+   "parts": [],
+   "merged": [],
+   "posDoubt": false,
+   "summary": ""
+  },
+  {
+   "id": "abu-ghosh-far~1",
+   "name": "The Benedictine monastery in Abu Ghosh",
+   "local": "",
+   "lat": 31.807428,
+   "lng": 35.107386,
+   "minutes": 30,
+   "category": "Sight",
+   "kind": "touristy",
+   "quick": false,
+   "mustSee": false,
+   "fame": 0,
+   "unesco": false,
+   "heritage": false,
+   "wd": "",
+   "src": [],
+   "srcOnly": false,
+   "builtin": true,
+   "famousFix": false,
+   "far": true,
+   "travel": "Bus from ככר הדוידקה/הנביאים, about 55 min one way",
+   "parts": [],
+   "merged": [],
+   "posDoubt": false,
+   "summary": ""
   }
  ]
 }
