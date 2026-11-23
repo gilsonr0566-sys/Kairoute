@@ -45,7 +45,7 @@ for (const f of fs.readdirSync(dir).filter(f => f.endsWith('.json')).sort()) {
         if (first <= 12 * 60 && last >= 14 * 60 + 30 && !/lunch/i.test(said)) add('out', `${tag}: out ${E.clock(first)} to ${E.clock(last)}, no lunch and nothing said`); }
       for (const m of meals) {
         const k = E.eatKey(m.name), r = (city.restaurants || []).find(y => E.eatKey(y.name) === k) || {};
-        const facts = E.eatFactsFor(d, city.restaurants), fact = facts[k] || facts[String(m.name).toLowerCase()]; // the day's facts, else the place's own map hours
+        const facts = E.eatFactsFor(d, (city.restaurants || []).concat((city.farther || []).flatMap(t => (t.foodDrink || []).filter(x => x.kind === 'eat')))), fact = facts[k] || facts[String(m.name).toLowerCase()]; // the day's facts, else the place's own map hours
         const known = !!(fact && (fact.closed || (fact.oh && fact.oh.spans && fact.oh.spans.length)));
         const pts = p.items.filter(y => isFinite(y.lat) && y.t !== 'ride'), j = pts.indexOf(m), before = pts[j - 1], after = pts[j + 1];
         const ix = p.items.indexOf(m), rideIn = p.items[ix - 1] && p.items[ix - 1].t === 'ride' ? p.items[ix - 1] : null, rideOut = p.items[ix + 1] && p.items[ix + 1].t === 'ride' ? p.items[ix + 1] : null;

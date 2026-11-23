@@ -76,13 +76,16 @@
       // Opening hours of the places to eat on the map near the sights ([name, lat, lng, hours, kind]): a place the guide
       // names, with no hours of its own, takes the hours of the place on the map with its name within 200 m ("Sorbillo" is
       // the map's "Antonio Sorbillo"). Nov 23 real-map check: lunches planned before the place opens.
-      if ((P.eatHours || []).length) for (const r of city.restaurants || []) {
-        if (r.hours || !r.name || !isFinite(r.lat) || !isFinite(r.lng)) continue; const k = E.eatKey(r.name); if (k.length < 4) continue;
+      // The same for a nearby town's places to eat (Nov 23 release gate: Sitges's "Komokieras" planned for lunch at 11:45
+      // with no hours, while the map says it opens at 13:15).
+      const mapHours = r => {
+        if (r.hours || !r.name || !isFinite(r.lat) || !isFinite(r.lng)) return; const k = E.eatKey(r.name); if (k.length < 4) return;
         const hit = P.eatHours.filter(x => x && x[0] && x[3] && E.hav(r, { lat: x[1], lng: x[2] }) <= 0.2).map(x => ({ x, mk: E.eatKey(E.latin(x[0]) || x[0]) }))
           .filter(o => o.mk && (o.mk === k || (o.mk.length >= 4 && (o.mk.includes(k) || k.includes(o.mk)))))
           .sort((a, b) => (b.mk === k) - (a.mk === k) || E.hav(r, { lat: a.x[1], lng: a.x[2] }) - E.hav(r, { lat: b.x[1], lng: b.x[2] }))[0];
         if (hit) { r.hours = hit.x[3]; if (hit.x[4]) r.mapKind = hit.x[4]; }
-      }
+      };
+      if ((P.eatHours || []).length) for (const r of city.restaurants || []) mapHours(r);
       // One sight, one id: a town's sights the app already lists (it shows the places files' sights in its own list, and
       // sends them back) are never added again (Nov 19 sweep: Toledo's sights twice over made a day of 23 stops, an 8-second tick).
       const added = [], haveFar = new Set((city.farther || []).map(x => String(x.id)));
@@ -106,6 +109,7 @@
         s.foodDrink = (t.foodDrink || []).map(x => ({ name: E.latin(x.name) || x.name, lat: isFinite(x.lat) ? x.lat : null, lng: isFinite(x.lng) ? x.lng : null, kind: x.kind, note: x.content || "", special: E.foodSpecial(x) }));
         // No place to eat in its travel guide: the restaurants and cafés on the map beside it (named as from the map).
         if (!s.foodDrink.some(x => x.kind === "eat") && (t.mapEats || []).length) s.foodDrink = s.foodDrink.concat(t.mapEats.filter(x => x.name && !E.notPublicEat(x) && E.readable(E.latin(x.name) || x.name)).map(x => ({ name: E.latin(x.name) || x.name, lat: x.lat, lng: x.lng, kind: "eat", note: x.cuisine || "", special: false, fromMap: true })));
+        if ((P.eatHours || []).length) for (const x of s.foodDrink) if (x.kind === "eat") mapHours(x);
       }
       if (added.length) city.farther = (city.farther || []).concat(added);
       // Hours per day: a mapped opening time read for that day's date, where the day has no hours for the sight yet.
