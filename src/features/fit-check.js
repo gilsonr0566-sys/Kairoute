@@ -296,7 +296,13 @@ document.addEventListener("click", e => {
   // "Make it fit" on a day with a pick that didn't fit opens the box for that sight, so the box finishes the banner's
   // sentence ("To fit the Vatican Museum, leave out one of these", move it to another day, or leave it out).
   if (t0 && t0.dataset.act === "fitfix") { const d = day(), p = buildPlan(d), out = p && !p.error ? (p.dropped || []).find(x => (d.selected || []).includes(x.id)) : null; if (fitOpen(d, out ? out.id : null)) render(); return; }
-  if (t0 && t0.dataset.act === "fitask") { const d = day(); if (addPick(d, t0.dataset.id, true)) { save(); render(); } return; }
+  // The badge answers the tap at once ("Checking…"), then the day is planned with and without the sight (up to ~1 s on
+  // a phone), so the traveler never taps a button that seems to do nothing (client feel test, Nov 23 2026: 0.55-0.8 s
+  // before anything showed). A second tap while it is checking is ignored.
+  if (t0 && t0.dataset.act === "fitask") { const d = day(), id = t0.dataset.id; if (t0.dataset.checking) return;
+    const was = t0.textContent; t0.dataset.checking = "1"; t0.textContent = "Checking…";
+    requestAnimationFrame(() => setTimeout(() => { try { if (day() === d && addPick(d, id, true)) { save(); render(); } }
+      finally { if (t0.isConnected) { delete t0.dataset.checking; t0.textContent = was; } } }, 0)); return; }
   if (t0 && t0.dataset.act === "bumpok") { const d = day(); d.bumped = []; save(); render(); return; }
   if (closedState) { if (t0 && t0.dataset.act === "closedday") { closedGo("day", +t0.dataset.to); return; } if (t0 && t0.dataset.act === "closedalt") { closedGo("alt"); return; }
     if ((t0 && t0.dataset.act === "fitcancel") || (e.target.classList && e.target.classList.contains("fitbox"))) { closedState = null; const old = document.querySelector(".fitbox"); if (old) old.remove(); return; } }

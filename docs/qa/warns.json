@@ -31,14 +31,6 @@
       "owner": "Stop the select sites page jumping",
       "until": "2026-11-30",
       "why": "header shrinking on scroll start and the Choose sights re-sort; fix written, waiting for release"
-    },
-    {
-      "rule": "SLOW",
-      "tool": "feel",
-      "where": "choose-sights|fit-box",
-      "owner": "Use the live app like a real client",
-      "until": "2026-11-30",
-      "why": "the \"Needs ...\" badge on Choose sights plans the day twice (about 1.7 s of work on a fast computer) before its box shows; the box should show at once and fill in"
     }
   ]
 }

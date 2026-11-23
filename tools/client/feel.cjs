@@ -82,12 +82,12 @@ async function runSize(browser, size, base) {
   let shotN = 0, where = 'start';
   const fail = (kind, what, extra) => { const f = { size, where, kind, what, ...(extra || {}) }; R.fails.push(f); console.log('  found ' + kind + ' [' + where + '] ' + what); };
   const shot = async name => { const f = String(shotN++).padStart(2, '0') + '-' + name.replace(/[^A-Za-z0-9]+/g, '-').slice(0, 40) + '.jpg'; await p.screenshot({ path: path.join(dir, f), type: 'jpeg', quality: 62 }).catch(() => {}); R.screens++; return f; };
-  const now = () => p.evaluate(() => performance.now());
-  const feelSince = t0 => p.evaluate(t0 => { const F = window.__feel; return { shifts: F.shifts.filter(s => s.t >= t0), scrolls: F.scrolls.filter(s => s.t >= t0), events: F.events.filter(e => e.t >= t0 - 5), y: F.y(), muts: F.muts, lastMut: F.lastMut }; }, t0);
-  const geom = () => p.evaluate(() => ({ y: window.__feel.y(), vh: innerHeight, wide: document.documentElement.scrollWidth - innerWidth, h: (() => { const z = [...document.querySelectorAll('.pane, main, #view')].filter(x => x.scrollHeight > x.clientHeight + 4 && /(auto|scroll)/.test(getComputedStyle(x).overflowY)).sort((a, b) => b.clientHeight * b.clientWidth - a.clientHeight * a.clientWidth)[0]; return z ? z.scrollHeight : document.documentElement.scrollHeight; })(), ph: (() => { const z = [...document.querySelectorAll('.pane, main, #view')].filter(x => x.scrollHeight > x.clientHeight + 4 && /(auto|scroll)/.test(getComputedStyle(x).overflowY)).sort((a, b) => b.clientHeight * b.clientWidth - a.clientHeight * a.clientWidth)[0]; return z ? z.clientHeight : innerHeight; })(), spin: [...document.querySelectorAll('.spinner, .spin, [aria-busy="true"]')].filter(x => x.offsetParent).map(x => x.tagName.toLowerCase() + '.' + String(x.className).trim().split(/\s+/).slice(0, 2).join('.') + ' "' + ((x.closest('section, li, .card, details, div') || x).innerText || '').trim().replace(/\s+/g, ' ').slice(0, 50) + '"'), head: ((document.querySelector('main h1, main h2, .dayhead, header h1') || {}).innerText || '').trim().slice(0, 60), hash: location.hash }));
+  const now = () => p.evaluate(() => performance.now()).catch(() => 0);
+  const feelSince = t0 => p.evaluate(t0 => { const F = window.__feel; return { shifts: F.shifts.filter(s => s.t >= t0), scrolls: F.scrolls.filter(s => s.t >= t0), events: F.events.filter(e => e.t >= t0 - 5), y: F.y(), muts: F.muts, lastMut: F.lastMut }; }, t0).catch(() => { R.notes.push(`[${where}] the page reloaded itself during a measurement`); return { shifts: [], scrolls: [], events: [], y: 0, muts: 0, lastMut: 0 }; });
+  const geom = () => p.evaluate(() => ({ y: window.__feel.y(), vh: innerHeight, wide: document.documentElement.scrollWidth - innerWidth, h: (() => { const z = [...document.querySelectorAll('.pane, main, #view')].filter(x => x.scrollHeight > x.clientHeight + 4 && /(auto|scroll)/.test(getComputedStyle(x).overflowY)).sort((a, b) => b.clientHeight * b.clientWidth - a.clientHeight * a.clientWidth)[0]; return z ? z.scrollHeight : document.documentElement.scrollHeight; })(), ph: (() => { const z = [...document.querySelectorAll('.pane, main, #view')].filter(x => x.scrollHeight > x.clientHeight + 4 && /(auto|scroll)/.test(getComputedStyle(x).overflowY)).sort((a, b) => b.clientHeight * b.clientWidth - a.clientHeight * a.clientWidth)[0]; return z ? z.clientHeight : innerHeight; })(), spin: [...document.querySelectorAll('.spinner, .spin, [aria-busy="true"]')].filter(x => x.offsetParent).map(x => x.tagName.toLowerCase() + '.' + String(x.className).trim().split(/\s+/).slice(0, 2).join('.') + ' "' + ((x.closest('section, li, .card, details, div') || x).innerText || '').trim().replace(/\s+/g, ' ').slice(0, 50) + '"'), head: ((document.querySelector('main h1, main h2, .dayhead, header h1') || {}).innerText || '').trim().slice(0, 60), hash: location.hash })).catch(() => ({ y: 0, vh: D.viewport.height, ph: D.viewport.height, wide: 0, h: 0, spin: [], head: '', hash: '' }));
   // Wait until the screen has stopped changing (no DOM change for 600 ms), at most `max` ms. Returns when it first changed.
   const settle = async (t0, max = 6000) => { const end = Date.now() + max; let first = null;
-    while (Date.now() < end) { const s = await p.evaluate(t0 => ({ now: performance.now(), last: window.__feel.lastMut }), t0); if (s.last > t0 && first === null) first = s.last - t0;
+    while (Date.now() < end) { const s = await p.evaluate(t0 => ({ now: performance.now(), last: window.__feel.lastMut }), t0).catch(() => null); if (!s) { await sleep(500); continue; } if (s.last > t0 && first === null) first = s.last - t0;
       if (s.now - Math.max(s.last, t0) > 600 && (first !== null || s.now - t0 > 1500)) return { first, settled: Math.max(s.last, t0) - t0 }; await sleep(100); }
     return { first, settled: max, timeout: true }; };
   // A finger drag (touch start, 12 moves, touch end), as a thumb does it; the browser's own touch scrolling, with fling.
@@ -118,25 +118,25 @@ async function runSize(browser, size, base) {
   const keyOf = el => el.evaluate(e => { document.querySelectorAll('[data-feeltap]').forEach(x => x.removeAttribute('data-feeltap')); e.setAttribute('data-feeltap', '1');
     const t = (e.innerText || e.getAttribute('aria-label') || '').trim().replace(/\s+/g, ' ').slice(0, 60); const d = e.dataset;
     return { site: d.site || (e.closest('[data-site]') || {}).dataset?.site || '', other: ['play', 'sp', 'open', 'sec'].filter(k => d[k]).map(k => `[data-${k}="${d[k]}"]`)[0] || '', day: d.day || '', act: d.act || '', text: t, tag: e.tagName }; });
-  const rectOfKey = k => p.evaluate(k => { const vis = e => { const r = e.getBoundingClientRect(); return r.width && r.height; };
+  const rectOfKey = k => !k || !k.tag ? Promise.resolve(null) : p.evaluate(k => { const vis = e => { const r = e.getBoundingClientRect(); return r.width && r.height; };
     let c = [...document.querySelectorAll('[data-feeltap]')]; if (c.length) {} else if (k.site) c = [...document.querySelectorAll(`[data-site="${CSS.escape(k.site)}"]`)];
     else if (k.other) c = [...document.querySelectorAll(k.tag + k.other)];
     if (!c.length && !k.site && !k.other && (k.act || k.day)) c = [...document.querySelectorAll(k.tag)].filter(e => (e.dataset.act || '') === k.act && (e.dataset.day || '') === k.day);
     if (!c.length && !k.site && !k.other && !k.act && !k.day) c = [...document.querySelectorAll(k.tag)].filter(e => (e.innerText || e.getAttribute('aria-label') || '').trim().replace(/\s+/g, ' ').slice(0, 60) === k.text);
-    c = c.filter(vis); if (!c.length) return null; const r = c[0].getBoundingClientRect(); return { top: Math.round(r.top), left: Math.round(r.left), n: c.length }; }, k);
+    c = c.filter(vis); if (!c.length) return null; const r = c[0].getBoundingClientRect(); return { top: Math.round(r.top), left: Math.round(r.left), n: c.length }; }, k).catch(() => null);
   // A finger tap. stay=true: the tapped thing should stay under the finger and the page should not scroll by itself.
   const tap = async (loc, label, { stay = false, nav = false, quiet = false } = {}) => {
     const el = loc.first(); if (!(await el.count()) || !(await el.isVisible().catch(() => false))) { R.notes.push(`[${where}] not on screen to tap: ${label}`); console.log('  (not on screen) ' + label); return null; }
     // Bring it into view with a finger swipe, as a person would.
     const vw = D.viewport.width, vh = D.viewport.height;
     // Off to the side in a sideways list (the day chips): swipe that list sideways, inside the list itself.
-    for (let k = 0; k < 10; k++) { const b = await el.boundingBox(); if (!b) break;
+    for (let k = 0; k < 10; k++) { const b = await el.boundingBox({ timeout: 3000 }).catch(() => null); if (!b) break;
       const row = await el.evaluate(e => { let a = e.parentElement; while (a && a !== document.body) { const o = getComputedStyle(a).overflowX; if (/(auto|scroll)/.test(o) && a.scrollWidth > a.clientWidth) { const r = a.getBoundingClientRect(); return { l: Math.max(0, r.left), r: Math.min(innerWidth, r.right) }; } a = a.parentElement; } return { l: 0, r: innerWidth }; });
       if (b.x >= row.l && b.x + b.width <= row.r) break; const w = row.r - row.l;
       await drag(Math.round(b.x < row.l ? row.l + w * 0.15 : row.r - w * 0.15), Math.round(b.y + b.height / 2), b.x < row.l ? Math.round(w * 0.6) : -Math.round(w * 0.6), 0); }
-    for (let k = 0; k < 10; k++) { const b = await el.boundingBox(); if (!b) break; if (b.y > 60 && b.y + b.height < vh - 80) break; await swipe(b.y - vh * 0.45); }
-    const b = await el.boundingBox(); if (!b) { R.notes.push(`[${where}] could not reach: ${label}`); return null; }
-    const key = await keyOf(el); const g0 = await geom(); const before = await rectOfKey(key);
+    for (let k = 0; k < 10; k++) { const b = await el.boundingBox({ timeout: 3000 }).catch(() => null); if (!b) break; if (b.y > 60 && b.y + b.height < vh - 80) break; await swipe(b.y - vh * 0.45); }
+    const b = await el.boundingBox({ timeout: 3000 }).catch(() => null); if (!b) { R.notes.push(`[${where}] could not reach: ${label}`); return null; }
+    const key = await keyOf(el).catch(() => ({})); const g0 = await geom(); const before = await rectOfKey(key);
     const x = b.x + Math.min(b.width / 2, 24), y = b.y + b.height / 2;
     const t0 = await now(); await p.touchscreen.tap(x, y); const s = await settle(t0, 8000); await sleep(stay ? 1200 : 300);
     const f = await feelSince(t0); const after = await rectOfKey(key); const g1 = await geom();
