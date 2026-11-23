@@ -1,5 +1,4 @@
 ## Athens (Athens, built-in guide)
-- POS Lycabettus Hill {Q1357713 by name}: app is 0.36 km from Wikidata's point (not on the map by id)
 - POS Corinth Canal [day trip] {Q182873 by name}: app is 1.10 km from Wikidata's point (not on the map by id)
 - NOT Ancient Corinth [day trip] {Q1363688 by name}: Wikidata has an end date (closed, dissolved or demolished)
 - NOID Athens Cathedral and the Little Metropolis: built-in sight with no Wikidata id and nothing of the name on the map nearby
