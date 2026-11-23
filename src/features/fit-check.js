@@ -379,11 +379,12 @@ function fitRefine() {
     if (el && s && !d.selected.includes(id)) el.outerHTML = siteCard(s, d, ctx.plan, ctx.near);
   } } finally { back(); }
   if (fitQueue.length) { fitTimer = setTimeout(fitRefine, 16); return; }
-  // All checked: a sight found not to fit goes to "Doesn't fit today" (Richard, Nov 19: the list organizes itself),
-  // with the screen kept where the traveler is.
-  const secs = ctx.secs; if (secs && [...fitMemo.res].some(([id, ok]) => ok === false && ["main", "must", "more", "far"].includes(secs.get(id)))) { const keep = viewSpot(); renderKeep(); keep(); }
+  // All checked. The first time on this visit, the list is sorted into its sections and shown (Richard, Nov 19: "it
+  // automatically organizes it"). After that a sight found not to fit only dims where it is: the list never moves
+  // under the traveler (Richard, Nov 23: "unusable. It's jumping around"); "Sort again" or the next visit re-sorts.
+  if (pickFrozen && !pickFrozen.settled) { const y = window.scrollY; renderKeep(); window.scrollTo(0, y); }
 }
-if (typeof window !== "undefined") window.__kairouteFitPending = () => fitQueue.length;
+if (typeof window !== "undefined") window.__kairouteFitPending = () => fitQueue.length + (view === "sites" && pickFrozen && !pickFrozen.settled ? 1 : 0); // the list not yet sorted counts as pending
 if (typeof window !== "undefined") window.__kairouteFitExact = id => { const d = day(); return fitsAll(fitTrial(d, [...d.selected, id], null, true)); };
 if (typeof window !== "undefined") window.__kairouteTimesFixed = () => timesFixed(day());
 if (typeof window !== "undefined") window.__kairouteTryAdd = id => addPick(day(), id, true);

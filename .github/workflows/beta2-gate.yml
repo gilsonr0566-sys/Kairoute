@@ -151,7 +151,7 @@ jobs:
   phone:
     name: "5 Phone flow on the Beta 2 build"
     runs-on: ubuntu-latest
-    timeout-minutes: 25
+    timeout-minutes: 45  # + the steady sights check at 3 screen sizes (Nov 23)
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -159,6 +159,8 @@ jobs:
       - run: npm i --no-save playwright@1.65.1 && npx playwright install --with-deps chromium
       - run: sh build-beta2.sh
       - run: VERBOSE=1 node tools/beta2/flow-check.cjs beta2-site/index.html 2>&1 | tee -a "$RUNNER_TEMP/out.log"
+      - if: always()
+        run: node tools/ui/steady-sights-check.cjs beta2-site/index.html 2>&1 | tee -a "$RUNNER_TEMP/out.log"
       - name: Keep this part's failing lines for the release report
         if: always()
         run: |

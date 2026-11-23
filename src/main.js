@@ -4995,7 +4995,10 @@ function pinRow() {
   let on = false;
   if (!row.hidden && can) on = was ? sp.getBoundingClientRect().top < 0 : row.getBoundingClientRect().top < 0;
   if (on !== was) {
-    if (on) { sp.style.height = row.offsetHeight + "px"; row.classList.add("pinned"); }
+    // The spacer also takes the gap the row leaves in its header (Nov 23 feel check: the header shrank 6 px, a jolt as
+    // scrolling starts). Measured before pinning, so the page is laid out once.
+    if (on) { const cs = row.parentElement ? getComputedStyle(row.parentElement) : null, gap = cs && /flex|grid/.test(cs.display) ? parseFloat(cs.rowGap) || 0 : 0;
+      sp.style.height = row.offsetHeight + gap + "px"; row.classList.add("pinned"); }
     else { row.classList.remove("pinned"); sp.style.height = ""; }
   }
   root.classList.toggle("rowpinned", on);
@@ -5084,12 +5087,17 @@ function render() {
   bonusMemo = new Map(); mealMemo = new Map(); keptMemo = new Map(); eveMemo = new Map(); avoidMeals = new Set();
   if (["sites", "plan", "trip", "guide"].includes(view)) settlePicks(day());
   const pkey = view + "|" + trip.active, pos = {}, winY = window.scrollY;
+  // Choose sights: the side panel (filters, time left, notes such as "Moved from Sun") never shrinks while the traveler
+  // is on the page, so a note going away can't pull the list up where the page can't scroll to make up for it (Nov 23:
+  // unticking near the top on an upright tablet moved the cards 85 px). Grows are made up for by keeping the card in place.
+  const sideMin = view === "sites" && paneMemo.key === pkey ? (document.querySelector("#view .sitesside") || {}).offsetHeight || 0 : 0;
   panes().forEach(el => { pos[el.dataset.pane || "view"] = el.scrollTop; });
   // A menu or the countdown's details that the traveler has open stays open through a background re-render
   // (data arriving, live updates); only a tap outside or picking an item closes it.
   const menuKey = el => el.id || ((el.querySelector("summary") || {}).getAttribute && el.querySelector("summary").getAttribute("aria-label")) || "";
   const openMenus = [...document.querySelectorAll("#view details.moremenu[open]")].map(menuKey).filter(Boolean);
   renderView();
+  if (sideMin) { const sd = document.querySelector("#view .sitesside"); if (sd) sd.style.minHeight = sideMin + "px"; }
   { const v = document.getElementById("view"), app = !FULL_VIEWS[view] || /^(settings|privacy|terms)$/.test(view);
     document.documentElement.classList.toggle("appview", app);
     // Tablets and computers: the screens live in a slim rail on the left (see "Navigation rail" in shell.html)
@@ -6221,9 +6229,10 @@ function siteCard(s, d, plan, nr) {
 }
 // Tapping a card (anywhere but its tick box or a button) opens it and closes the one open before.
 function toggleCard(el) {
-  const id = el.dataset.card, was = el.classList.contains("open");
+  const id = el.dataset.card, was = el.classList.contains("open"), keep = cardSpotOf(id, true); // the tapped card stays under the finger
   document.querySelectorAll("#view .site.open").forEach(x => x.classList.remove("open"));
   if (!was) el.classList.add("open"); openCard = was ? null : id;
+  keep(); // a card above it closing would otherwise pull it up (Nov 23 feel check: 270 px)
 }
 // Keeps what's on screen in place across a redraw: the first card in view stays where it was.
 const cardShown = x => !!(x && x.offsetParent && !x.closest("details:not([open]), .picksfold:not(.open) .anchorlist")); // closed folds still lay out in Chrome
@@ -6235,7 +6244,7 @@ function viewSpot() {
   return c ? cardSpotOf(c.dataset.card, true) : () => {};
 }
 // Ticking keeps your place in the list: the card that followed the ticked one stays where it was on screen.
-function cardSpot(id) { return cardSpotOf(id, false); }
+function cardSpot(id) { spotRef = id; return cardSpotOf(id, true); } // the ticked card stays in its place (Nov 23), so it stays under the finger
 function cardSpotOf(id, self) {
   const el = [...document.querySelectorAll(`#view [data-card="${CSS.escape(id)}"]`)].find(cardShown); if (!el) return () => {};
   const cards = [...document.querySelectorAll("#view .sitesmain [data-card]")].filter(cardShown), k = cards.indexOf(el);
@@ -6302,6 +6311,7 @@ const d0 = plan => `${fmt(plan.start)} to ${fmt(plan.endBy)}`;
 // The day a sight is planned on, by its date (the section's own line says what picking it does; outside review, Nov 20).
 function schedWhen(o) { const d = day(); return `${fmtDow(o.date)} ${fmtDate(o.date)}${d && dayName(o) !== dayName(d) ? " · " + dayName(o) : ""}`; }
 // ---------- The sights list's steady order (Richard, Nov 17) ----------
+const SORT_HOLD_MS = 2500; // longest the sights list waits for the fits check before it shows (then updates cards in place)
 let pickFrozen = null; // the list as set when the page opened: section and place of every sight
 const frozenKey = (d, city) => trip.days.indexOf(d) + "|" + keyOf(city.city) + "|" + siteFilter + "|" + prefsSig();
 // Where the day starts (hotel, port, station), for "nearest first".
@@ -6397,7 +6407,7 @@ function renderSites(d) {
   const laterIds = new Set(cityBooked(city) ? laterList(city).map(x => x.id) : []); // shown once, in "If you come back"
   const nearbyOnly = x => x.quick || (my.size > 0 && !famousTrue(x, city) && !siteInts(x).some(k => my.has(k)));
   partScan(city);
-  if (!pickFrozen || pickFrozen.key !== frozenKey(d, city)) pickFrozen = { key: frozenKey(d, city), sec: new Map(), ord: new Map(), n: 0, city, nest: nestMap(city), fresh: true };
+  if (!pickFrozen || pickFrozen.key !== frozenKey(d, city)) pickFrozen = { key: frozenKey(d, city), sec: new Map(), ord: new Map(), n: 0, city, nest: nestMap(city), fresh: true, secs: new Map(), settled: false, t0: Date.now() };
   const kept = pickFrozen.fresh ? null : pickFrozen.sec; pickFrozen.fresh = false; // a sight already in the list stays in its place (one that stops fitting this visit too)
   const all = allSites(city).filter(x => (!laterIds.has(x.id) || (kept && kept.has(x.id))) && !parentOf(x, city) && (pass(x) || on(x)));
   const st = startOf(d, city), dist = x => st && isFinite(x.lat) && isFinite(x.lng) ? hav(st, x) : 1e9;
@@ -6412,7 +6422,23 @@ function renderSites(d) {
   // Sights planned on other days go by day, in date order (then nearest first), fixed like the rest.
   const place = x => { pickFrozen.sec.set(x.id, 1); pickFrozen.ord.set(x.id, pickFrozen.n++); };
   for (const x of all.slice().sort((x, y) => dist(x) - dist(y) || String(showName(x)).localeCompare(String(showName(y))) || String(x.id).localeCompare(String(y.id)))) if (!pickFrozen.sec.has(x.id)) place(x); // a sight that arrives later joins the end of its section
-  const secNow = new Map(all.map(x => [x.id, secOf(x)]));
+  // ONE STEADY LIST (Richard, Nov 23: "The select site page is unusable. It's jumping around"). The sections are
+  // decided ONCE per visit to the page: when it opens (or on "Sort again"), after the fits check has answered for every
+  // sight, and never again while the traveler is on it. Before, a sight moved to its section "as soon as the check says,
+  // and after every tick": a ticked sight jumped up into the open "Your sights" list, sights that stopped fitting
+  // dropped to "Doesn't fit today", and the page was scrolled to make up for it, seconds after the tap. Now a tick, an
+  // untick or a change in what fits only changes that card where it is (its tick, its badge, dimmed when it no longer
+  // fits); the next visit or "Sort again" sorts it. While the first check runs (about a second, never more than
+  // SORT_HOLD_MS) the sections are drawn but not shown, so nothing is seen moving into place.
+  const secLive = new Map(all.map(x => [x.id, secOf(x)]));
+  if (!pickFrozen.settled) {
+    const waiting = plan && !plan.error && all.some(x => ["main", "must", "more", "far"].includes(secLive.get(x.id)) && fsMap.get(x.id) === undefined);
+    if (!waiting || Date.now() - pickFrozen.t0 >= SORT_HOLD_MS) { pickFrozen.settled = true; secLive.forEach((k, id) => pickFrozen.secs.set(id, k)); }
+    else if (!pickFrozen.timer) { const pf = pickFrozen; pf.timer = setTimeout(() => { if (pickFrozen === pf && !pf.settled && view === "sites") { const y = window.scrollY; renderKeep(); window.scrollTo(0, y); } }, SORT_HOLD_MS + 20); }
+  }
+  // A sight that arrives later (a fuller guide) takes its section when it first shows, then keeps it like the rest.
+  const secNow = new Map(all.map(x => { let k = pickFrozen.settled ? pickFrozen.secs.get(x.id) : secLive.get(x.id); if (pickFrozen.settled && !k) { k = secLive.get(x.id); pickFrozen.secs.set(x.id, k); } return [x.id, k]; }));
+  const holding = !pickFrozen.settled;
   const inSec = k => all.filter(x => secNow.get(x.id) === k).sort((x, y) => (k === "sched" ? trip.days.indexOf(elsew[x.id]) - trip.days.indexOf(elsew[y.id]) : 0) || pickFrozen.ord.get(x.id) - pickFrozen.ord.get(y.id));
   const picked = inSec("picks"), mustL = inSec("must"), fitL = inSec("main"), wontL = inSec("wont"), moreL = inSec("more"), farL = inSec("far");
   const schedL = inSec("sched");
@@ -6440,6 +6466,7 @@ function renderSites(d) {
   ${bumpedNote(d)}${pickbar}
   ${picked.length ? `<div class="picksfold${picksOpen ? " open" : ""}"><button type="button" class="foldrow" data-act="picksfold" aria-expanded="${picksOpen}"><span>Your sights (${picked.filter(on).length})</span><span class="foldhint">${picksOpen ? "Hide" : "Show"}</span></button>
   <div class="sitelist anchorlist">${picked.map(s => siteCard(s, d, plan, near)).join("")}</div></div>` : ""}
+  ${holding ? `<p class="lede small sortwait" role="status">Checking which sights fit your day…</p><div class="sorthold" aria-hidden="true">` : ""}
   ${plan && plan.error ? `<p class="listlbl secttl">Sights (${mustL.length + fitL.length})</p><p class="lede small">Today isn't planned yet, so I can't say what fits: ${esc(plan.error.replace(/^We couldn't/, "I couldn't").split(/(?<=\.)\s/)[0])} Your picks are kept for when it is.</p>` : `<p class="listlbl secttl">Still fits today (${mustL.length + fitL.length})${picked.length ? "" : leftTxt}</p>`}
   ${plan && plan.error ? "" : mustL.length || fitL.length ? `<p class="lede small">${st ? `Nearest ${esc(st.name)} first. ` : ""}Each one fits as your day stands; the time is how much later you'd finish.</p>` : `<p class="lede small">${farL.length ? `No other sight in town fits as your day stands, but ${farL.length === 1 ? "the trip out of town below does" : `the ${farL.length} trips out of town below do`}.` : noneLeft(F, wontL, moreL, schedL, city)}</p>`}
   ${mustL.length ? `<div class="sitelist mustlist">${mustL.map(s => siteCard(s, d, plan, near)).join("")}</div>` : ""}
@@ -6450,6 +6477,7 @@ function renderSites(d) {
   ${schedL.length ? `<p class="listlbl secttl">Already picked on other days (${schedL.length})</p>
   <p class="lede small">Picking one moves it to today; it comes off its other day.</p><div class="sitelist sched">${schedL.map(s => siteCard(s, d, plan, near)).join("")}</div>` : ""}
   ${wontL.length ? `<p class="listlbl secttl">Doesn't fit today (${wontL.length})</p><p class="lede small">Tap one to see why, and what would make it fit.</p><div class="sitelist wontlist">${wontL.map(s => siteCard(s, d, plan, near)).join("")}</div>` : ""}
+  ${holding ? `</div>` : ""}
   ${errBlock()}
   ${addPlaceCard(d)}
   ${laterBlock(city, d, plan, near, new Set(all.map(x => x.id)))}
