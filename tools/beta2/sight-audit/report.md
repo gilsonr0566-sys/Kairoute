@@ -26,6 +26,14 @@
 - INFO 15 sights, 5 day trips/towns; must-see: Edinburgh Castle, Holyrood Palace, Scottish National Gallery; top by fame: Edinburgh Castle 58, Holyrood Palace 44, Scottish National Gallery 39, National Museum of Scotland 33, St Giles' Cathedral 30, Arthur's Seat 30, Calton Hill 24, HMY Britannia 23
 - INFO day trips: Falkirk, Gullane, North Berwick, Dunbar, Callendar House
 
+## Grand Turk, Turks and Caicos (Grand Turk, Turks and Caicos, guide from sources)
+- NOID Her Majesty's Prison: no Wikidata id and nothing of the name on the map nearby (from OpenStreetMap)
+- NOID Turks and Caicos National Museum: no Wikidata id and nothing of the name on the map nearby (from OpenStreetMap)
+- NOID Palm Grove Sunset Cabana beach: no Wikidata id and nothing of the name on the map nearby (from OpenStreetMap)
+- FAME must-see "Grand Turk Lighthouse" is offered (Grand Turk) but not marked must-see
+- FAME must-see "Cockburn Town" is not offered
+- INFO 4 sights, 0 day trips/towns; must-see: none; top by fame: Grand Turk 26, Her Majesty's Prison 0, Turks and Caicos National Museum 0, Palm Grove Sunset Cabana beach 0
+
 ## Istanbul, Turkey (Istanbul, Turkey, guide from sources)
 - POS Fatih Istanbul Mosque: app 41.01970,28.94970 is 8.31 km from the map's Fatih Mescidi (node/976474174, 41.00449,28.85270); Wikidata 8.32 km from the map
 - FAME #1 best known nearby, "Fall of Constantinople" (80 Wikipedia languages, Q160077), is not offered
