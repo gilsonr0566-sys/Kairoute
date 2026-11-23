@@ -16,6 +16,8 @@ const ROOT = path.join(__dirname, '..', '..'), N = +arg('n', 150), ONLY = (arg('
 
 // Each: the file, the exact text, what it becomes, and the real bug it stands for.
 const MUTANTS = [
+  { id: 'lunch-ignores-hours', file: '70-day.js', from: '      oh: ((ctx.eatFacts || {})[e.k] || {}).oh || null }', to: '      oh: null }',
+    was: 'Lunch planned before the place opens (Sorbillo at 11:45, opening at noon; Han Gang at 12:03, opening at 1 pm): the map hours never reached lunch (real-map check, Nov 23)' },
   { id: 'train-as-tomorrow', file: '30-window.js', from: 'E.NIGHT_DEP = 5 * 60;', to: 'E.NIGHT_DEP = 12 * 60;',
     was: 'A 9:00 am train or a 5:45 am flight read as the next day\'s: a full day of sights after it (first-timer walk and outside test, Nov 22-23)' },
   { id: 'bags-left-as-collected', file: '95-plan.js', from: '/bags/i.test(x.name || "") && !x.head)', to: '/bags/i.test(x.name || ""))',

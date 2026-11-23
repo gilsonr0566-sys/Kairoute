@@ -19,9 +19,12 @@ permissions:
 defaults:
   run:
     shell: bash  # with pipefail: a check piped into the log still fails its step
+# One run at a time per branch, and a run once started always finishes: a newer push waits, and replaces any run still
+# waiting (GitHub keeps one waiting). With cancel-in-progress, pushes every 10-20 min cancelled every run before it ended
+# (Nov 23: runs 72-75 all cancelled), so no commit ever got a report. Now the newest commit is tested at most one run later.
 concurrency:
   group: beta2-gate-${{ github.ref }}
-  cancel-in-progress: true
+  cancel-in-progress: false
 jobs:
   code:
     name: "1 Code: secrets, syntax, the engine's own rules, the helper's AI switch"
@@ -59,6 +62,8 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with: { node-version: 22 }
+      # The independent lunch rule reads map hours with the opening_hours library, never the planner's reader.
+      - run: npm i --no-save opening_hours@3.16.0
       - name: Saved test trips
         run: node tools/truth/oracle.cjs --corpus --show 10 --warn night 2>&1 | tee -a "$RUNNER_TEMP/out.log"
       - name: Odd trips (hundreds of unusual cruises, multi-city trips, midnight flights and bag days, every day checked), then the independent check on the same trips

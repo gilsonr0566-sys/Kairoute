@@ -208,9 +208,13 @@ async function cityEats(sites) {
 // knows when it opens (Nov 23 real-map check: lunches planned at places shut at that hour, whose hours only the map had).
 async function eatHours(sites) {
   const pts = sites.filter(s => isFinite(s.lat) && isFinite(s.lng)), out = new Map();
-  for (let i = 0; i < pts.length; i += 15) {
-    const part = pts.slice(i, i + 15);
-    const els = await overpass(`[out:json][timeout:120];(${part.map(s => `nwr(around:500,${s.lat},${s.lng})["amenity"~"^(restaurant|cafe|fast_food|pub|bar|food_court|biergarten)$"]["name"]["opening_hours"];`).join('')});out tags center;`);
+  // Asked 5 sights at a time, and a batch the map server can't answer is asked again one sight at a time (Nov 23: Venice,
+  // its old town packed with places to eat, got nothing at 15 a time).
+  const ask = part => overpass(`[out:json][timeout:120];(${part.map(s => `nwr(around:500,${s.lat},${s.lng})["amenity"~"^(restaurant|cafe|fast_food|pub|bar|food_court|biergarten)$"]["name"]["opening_hours"];`).join('')});out tags center;`);
+  for (let i = 0; i < pts.length; i += 5) {
+    const part = pts.slice(i, i + 5);
+    let els = await ask(part);
+    if (!els.length && part.length > 1) { els = []; for (const one of part) { els = els.concat(await ask([one])); await sleep(1500); } }
     for (const el of els) { const q = pos(el), tg = el.tags || {}; if (!q || !tg.name || !tg.opening_hours) continue;
       out.set(el.type + '/' + el.id, [tg['name:en'] || tg.name, +q.lat.toFixed(5), +q.lng.toFixed(5), tg.opening_hours, tg.amenity]); }
     await sleep(1500);
