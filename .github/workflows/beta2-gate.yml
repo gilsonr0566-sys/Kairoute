@@ -69,6 +69,9 @@ jobs:
       - name: A first-time traveler is told only what is true (home, walkthrough, settings, journal)
         if: always()
         run: node tools/ui/first-run-check.cjs beta2-site/index.html
+      - name: Day plan, Choose sights, Guide, voices and Tour say only what is true
+        if: always()
+        run: node tools/ui/dayplan-check.cjs beta2-site/index.html
       - name: The app says only what the AI can really do
         if: always()
         run: node tools/ai-honesty-check.cjs
