@@ -1,20 +1,514 @@
 {
- "run": "round6b-2026-11-23",
+ "run": "round7a-2026-11-23",
  "dayWait": 20000,
  "stopShots": false,
  "tickCheck": true,
  "answerGates": true,
  "trips": [
   {
-   "name": "n01-budapest",
-   "label": "Budapest, 2 nights",
+   "name": "w01-lisbon-flight-0545",
+   "label": "Lisbon, flight home 05:45",
    "legs": [
     {
      "k": "stay",
-     "place": "Budapest, Hungary",
+     "place": "Lisbon, Portugal",
      "nights": 2,
-     "date": "2027-03-10",
-     "inAt": "10:00",
+     "date": "2027-05-11",
+     "inAt": "13:00",
+     "homeAt": "05:45"
+    }
+   ],
+   "steps": [
+    {
+     "name": "1-untick-one",
+     "js": "__T.tap($D,false,1)"
+    },
+    {
+     "name": "2-tick-six-more",
+     "js": "__T.tap($D,true,6)"
+    },
+    {
+     "name": "3-fit-in-one",
+     "js": "__T.fit($D)"
+    },
+    {
+     "name": "4-switch-a-ride",
+     "js": "__T.press($D,/^(Taxi or car|Walk|Metro|Train|Bus|Tram|Port shuttle|Ferry|Boat).* · /)"
+    },
+    {
+     "name": "5-change-lunch",
+     "js": "__T.press($D,/^Change lunch$/)"
+    },
+    {
+     "name": "6-half-day",
+     "js": "__T.hours($D,'Half day')"
+    },
+    {
+     "name": "7-full-day",
+     "js": "__T.hours($D,'Full day')"
+    },
+    {
+     "name": "8-reload",
+     "reload": true,
+     "js": "(async()=>{window.__kairouteAt($D,'plan');await __T.sleep(8000);return __T.planText(9000)})()"
+    },
+    {
+     "name": "9-phone",
+     "phone": true,
+     "js": "(async()=>{window.__kairouteAt($D,'plan');await __T.sleep(3000);return 'phone'})()"
+    }
+   ]
+  },
+  {
+   "name": "w02-lisbon-flight-0730",
+   "label": "Lisbon, flight home 07:30",
+   "legs": [
+    {
+     "k": "stay",
+     "place": "Lisbon, Portugal",
+     "nights": 2,
+     "date": "2027-05-11",
+     "inAt": "13:00",
+     "homeAt": "07:30"
+    }
+   ],
+   "steps": [
+    {
+     "name": "1-untick-one",
+     "js": "__T.tap($D,false,1)"
+    },
+    {
+     "name": "2-tick-six-more",
+     "js": "__T.tap($D,true,6)"
+    },
+    {
+     "name": "3-fit-in-one",
+     "js": "__T.fit($D)"
+    },
+    {
+     "name": "4-switch-a-ride",
+     "js": "__T.press($D,/^(Taxi or car|Walk|Metro|Train|Bus|Tram|Port shuttle|Ferry|Boat).* · /)"
+    },
+    {
+     "name": "5-change-lunch",
+     "js": "__T.press($D,/^Change lunch$/)"
+    },
+    {
+     "name": "6-half-day",
+     "js": "__T.hours($D,'Half day')"
+    },
+    {
+     "name": "7-full-day",
+     "js": "__T.hours($D,'Full day')"
+    },
+    {
+     "name": "8-reload",
+     "reload": true,
+     "js": "(async()=>{window.__kairouteAt($D,'plan');await __T.sleep(8000);return __T.planText(9000)})()"
+    },
+    {
+     "name": "9-phone",
+     "phone": true,
+     "js": "(async()=>{window.__kairouteAt($D,'plan');await __T.sleep(3000);return 'phone'})()"
+    }
+   ]
+  },
+  {
+   "name": "w03-lisbon-flight-0900",
+   "label": "Lisbon, flight home 09:00",
+   "legs": [
+    {
+     "k": "stay",
+     "place": "Lisbon, Portugal",
+     "nights": 2,
+     "date": "2027-05-11",
+     "inAt": "13:00",
+     "homeAt": "09:00"
+    }
+   ],
+   "steps": [
+    {
+     "name": "1-untick-one",
+     "js": "__T.tap($D,false,1)"
+    },
+    {
+     "name": "2-tick-six-more",
+     "js": "__T.tap($D,true,6)"
+    },
+    {
+     "name": "3-fit-in-one",
+     "js": "__T.fit($D)"
+    },
+    {
+     "name": "4-switch-a-ride",
+     "js": "__T.press($D,/^(Taxi or car|Walk|Metro|Train|Bus|Tram|Port shuttle|Ferry|Boat).* · /)"
+    },
+    {
+     "name": "5-change-lunch",
+     "js": "__T.press($D,/^Change lunch$/)"
+    },
+    {
+     "name": "6-half-day",
+     "js": "__T.hours($D,'Half day')"
+    },
+    {
+     "name": "7-full-day",
+     "js": "__T.hours($D,'Full day')"
+    },
+    {
+     "name": "8-reload",
+     "reload": true,
+     "js": "(async()=>{window.__kairouteAt($D,'plan');await __T.sleep(8000);return __T.planText(9000)})()"
+    },
+    {
+     "name": "9-phone",
+     "phone": true,
+     "js": "(async()=>{window.__kairouteAt($D,'plan');await __T.sleep(3000);return 'phone'})()"
+    }
+   ]
+  },
+  {
+   "name": "w04-lisbon-flight-1030",
+   "label": "Lisbon, flight home 10:30",
+   "legs": [
+    {
+     "k": "stay",
+     "place": "Lisbon, Portugal",
+     "nights": 2,
+     "date": "2027-05-11",
+     "inAt": "13:00",
+     "homeAt": "10:30"
+    }
+   ],
+   "steps": [
+    {
+     "name": "1-untick-one",
+     "js": "__T.tap($D,false,1)"
+    },
+    {
+     "name": "2-tick-six-more",
+     "js": "__T.tap($D,true,6)"
+    },
+    {
+     "name": "3-fit-in-one",
+     "js": "__T.fit($D)"
+    },
+    {
+     "name": "4-switch-a-ride",
+     "js": "__T.press($D,/^(Taxi or car|Walk|Metro|Train|Bus|Tram|Port shuttle|Ferry|Boat).* · /)"
+    },
+    {
+     "name": "5-change-lunch",
+     "js": "__T.press($D,/^Change lunch$/)"
+    },
+    {
+     "name": "6-half-day",
+     "js": "__T.hours($D,'Half day')"
+    },
+    {
+     "name": "7-full-day",
+     "js": "__T.hours($D,'Full day')"
+    },
+    {
+     "name": "8-reload",
+     "reload": true,
+     "js": "(async()=>{window.__kairouteAt($D,'plan');await __T.sleep(8000);return __T.planText(9000)})()"
+    },
+    {
+     "name": "9-phone",
+     "phone": true,
+     "js": "(async()=>{window.__kairouteAt($D,'plan');await __T.sleep(3000);return 'phone'})()"
+    }
+   ]
+  },
+  {
+   "name": "w05-lisbon-flight-1200",
+   "label": "Lisbon, flight home 12:00",
+   "legs": [
+    {
+     "k": "stay",
+     "place": "Lisbon, Portugal",
+     "nights": 2,
+     "date": "2027-05-11",
+     "inAt": "13:00",
+     "homeAt": "12:00"
+    }
+   ],
+   "steps": [
+    {
+     "name": "1-untick-one",
+     "js": "__T.tap($D,false,1)"
+    },
+    {
+     "name": "2-tick-six-more",
+     "js": "__T.tap($D,true,6)"
+    },
+    {
+     "name": "3-fit-in-one",
+     "js": "__T.fit($D)"
+    },
+    {
+     "name": "4-switch-a-ride",
+     "js": "__T.press($D,/^(Taxi or car|Walk|Metro|Train|Bus|Tram|Port shuttle|Ferry|Boat).* · /)"
+    },
+    {
+     "name": "5-change-lunch",
+     "js": "__T.press($D,/^Change lunch$/)"
+    },
+    {
+     "name": "6-half-day",
+     "js": "__T.hours($D,'Half day')"
+    },
+    {
+     "name": "7-full-day",
+     "js": "__T.hours($D,'Full day')"
+    },
+    {
+     "name": "8-reload",
+     "reload": true,
+     "js": "(async()=>{window.__kairouteAt($D,'plan');await __T.sleep(8000);return __T.planText(9000)})()"
+    },
+    {
+     "name": "9-phone",
+     "phone": true,
+     "js": "(async()=>{window.__kairouteAt($D,'plan');await __T.sleep(3000);return 'phone'})()"
+    }
+   ]
+  },
+  {
+   "name": "w06-lisbon-flight-1400",
+   "label": "Lisbon, flight home 14:00",
+   "legs": [
+    {
+     "k": "stay",
+     "place": "Lisbon, Portugal",
+     "nights": 2,
+     "date": "2027-05-11",
+     "inAt": "13:00",
+     "homeAt": "14:00"
+    }
+   ],
+   "steps": [
+    {
+     "name": "1-untick-one",
+     "js": "__T.tap($D,false,1)"
+    },
+    {
+     "name": "2-tick-six-more",
+     "js": "__T.tap($D,true,6)"
+    },
+    {
+     "name": "3-fit-in-one",
+     "js": "__T.fit($D)"
+    },
+    {
+     "name": "4-switch-a-ride",
+     "js": "__T.press($D,/^(Taxi or car|Walk|Metro|Train|Bus|Tram|Port shuttle|Ferry|Boat).* · /)"
+    },
+    {
+     "name": "5-change-lunch",
+     "js": "__T.press($D,/^Change lunch$/)"
+    },
+    {
+     "name": "6-half-day",
+     "js": "__T.hours($D,'Half day')"
+    },
+    {
+     "name": "7-full-day",
+     "js": "__T.hours($D,'Full day')"
+    },
+    {
+     "name": "8-reload",
+     "reload": true,
+     "js": "(async()=>{window.__kairouteAt($D,'plan');await __T.sleep(8000);return __T.planText(9000)})()"
+    },
+    {
+     "name": "9-phone",
+     "phone": true,
+     "js": "(async()=>{window.__kairouteAt($D,'plan');await __T.sleep(3000);return 'phone'})()"
+    }
+   ]
+  },
+  {
+   "name": "w07-vienna-train-0610",
+   "label": "Vienna, train home 06:10",
+   "legs": [
+    {
+     "k": "stay",
+     "place": "Vienna, Austria",
+     "nights": 2,
+     "date": "2027-09-07",
+     "inBy": "train",
+     "inAt": "12:00",
+     "homeBy": "train",
+     "homeAt": "06:10"
+    }
+   ],
+   "steps": [
+    {
+     "name": "1-untick-one",
+     "js": "__T.tap($D,false,1)"
+    },
+    {
+     "name": "2-tick-six-more",
+     "js": "__T.tap($D,true,6)"
+    },
+    {
+     "name": "3-fit-in-one",
+     "js": "__T.fit($D)"
+    },
+    {
+     "name": "4-switch-a-ride",
+     "js": "__T.press($D,/^(Taxi or car|Walk|Metro|Train|Bus|Tram|Port shuttle|Ferry|Boat).* · /)"
+    },
+    {
+     "name": "5-change-lunch",
+     "js": "__T.press($D,/^Change lunch$/)"
+    },
+    {
+     "name": "6-half-day",
+     "js": "__T.hours($D,'Half day')"
+    },
+    {
+     "name": "7-full-day",
+     "js": "__T.hours($D,'Full day')"
+    },
+    {
+     "name": "8-reload",
+     "reload": true,
+     "js": "(async()=>{window.__kairouteAt($D,'plan');await __T.sleep(8000);return __T.planText(9000)})()"
+    },
+    {
+     "name": "9-phone",
+     "phone": true,
+     "js": "(async()=>{window.__kairouteAt($D,'plan');await __T.sleep(3000);return 'phone'})()"
+    }
+   ]
+  },
+  {
+   "name": "w08-vienna-train-0800",
+   "label": "Vienna, train home 08:00",
+   "legs": [
+    {
+     "k": "stay",
+     "place": "Vienna, Austria",
+     "nights": 2,
+     "date": "2027-09-07",
+     "inBy": "train",
+     "inAt": "12:00",
+     "homeBy": "train",
+     "homeAt": "08:00"
+    }
+   ],
+   "steps": [
+    {
+     "name": "1-untick-one",
+     "js": "__T.tap($D,false,1)"
+    },
+    {
+     "name": "2-tick-six-more",
+     "js": "__T.tap($D,true,6)"
+    },
+    {
+     "name": "3-fit-in-one",
+     "js": "__T.fit($D)"
+    },
+    {
+     "name": "4-switch-a-ride",
+     "js": "__T.press($D,/^(Taxi or car|Walk|Metro|Train|Bus|Tram|Port shuttle|Ferry|Boat).* · /)"
+    },
+    {
+     "name": "5-change-lunch",
+     "js": "__T.press($D,/^Change lunch$/)"
+    },
+    {
+     "name": "6-half-day",
+     "js": "__T.hours($D,'Half day')"
+    },
+    {
+     "name": "7-full-day",
+     "js": "__T.hours($D,'Full day')"
+    },
+    {
+     "name": "8-reload",
+     "reload": true,
+     "js": "(async()=>{window.__kairouteAt($D,'plan');await __T.sleep(8000);return __T.planText(9000)})()"
+    },
+    {
+     "name": "9-phone",
+     "phone": true,
+     "js": "(async()=>{window.__kairouteAt($D,'plan');await __T.sleep(3000);return 'phone'})()"
+    }
+   ]
+  },
+  {
+   "name": "w09-vienna-train-0930",
+   "label": "Vienna, train home 09:30",
+   "legs": [
+    {
+     "k": "stay",
+     "place": "Vienna, Austria",
+     "nights": 2,
+     "date": "2027-09-07",
+     "inBy": "train",
+     "inAt": "12:00",
+     "homeBy": "train",
+     "homeAt": "09:30"
+    }
+   ],
+   "steps": [
+    {
+     "name": "1-untick-one",
+     "js": "__T.tap($D,false,1)"
+    },
+    {
+     "name": "2-tick-six-more",
+     "js": "__T.tap($D,true,6)"
+    },
+    {
+     "name": "3-fit-in-one",
+     "js": "__T.fit($D)"
+    },
+    {
+     "name": "4-switch-a-ride",
+     "js": "__T.press($D,/^(Taxi or car|Walk|Metro|Train|Bus|Tram|Port shuttle|Ferry|Boat).* · /)"
+    },
+    {
+     "name": "5-change-lunch",
+     "js": "__T.press($D,/^Change lunch$/)"
+    },
+    {
+     "name": "6-half-day",
+     "js": "__T.hours($D,'Half day')"
+    },
+    {
+     "name": "7-full-day",
+     "js": "__T.hours($D,'Full day')"
+    },
+    {
+     "name": "8-reload",
+     "reload": true,
+     "js": "(async()=>{window.__kairouteAt($D,'plan');await __T.sleep(8000);return __T.planText(9000)})()"
+    },
+    {
+     "name": "9-phone",
+     "phone": true,
+     "js": "(async()=>{window.__kairouteAt($D,'plan');await __T.sleep(3000);return 'phone'})()"
+    }
+   ]
+  },
+  {
+   "name": "w10-vienna-train-1100",
+   "label": "Vienna, train home 11:00",
+   "legs": [
+    {
+     "k": "stay",
+     "place": "Vienna, Austria",
+     "nights": 2,
+     "date": "2027-09-07",
+     "inBy": "train",
+     "inAt": "12:00",
+     "homeBy": "train",
      "homeAt": "11:00"
     }
    ],
@@ -60,16 +554,16 @@
    ]
   },
   {
-   "name": "n02-stockholm",
-   "label": "Stockholm, 2 nights",
+   "name": "w11-barcelona-arrive-1900",
+   "label": "Barcelona, arriving 19:00",
    "legs": [
     {
      "k": "stay",
-     "place": "Stockholm, Sweden",
+     "place": "Barcelona, Spain",
      "nights": 2,
-     "date": "2027-04-11",
-     "inAt": "15:30",
-     "homeAt": "16:00"
+     "date": "2027-10-05",
+     "inAt": "19:00",
+     "homeAt": "17:00"
     }
    ],
    "steps": [
@@ -114,16 +608,889 @@
    ]
   },
   {
-   "name": "n03-athens",
-   "label": "Athens, 2 nights",
+   "name": "w12-barcelona-arrive-2100",
+   "label": "Barcelona, arriving 21:00",
+   "legs": [
+    {
+     "k": "stay",
+     "place": "Barcelona, Spain",
+     "nights": 2,
+     "date": "2027-10-05",
+     "inAt": "21:00",
+     "homeAt": "17:00"
+    }
+   ],
+   "steps": [
+    {
+     "name": "1-untick-one",
+     "js": "__T.tap($D,false,1)"
+    },
+    {
+     "name": "2-tick-six-more",
+     "js": "__T.tap($D,true,6)"
+    },
+    {
+     "name": "3-fit-in-one",
+     "js": "__T.fit($D)"
+    },
+    {
+     "name": "4-switch-a-ride",
+     "js": "__T.press($D,/^(Taxi or car|Walk|Metro|Train|Bus|Tram|Port shuttle|Ferry|Boat).* · /)"
+    },
+    {
+     "name": "5-change-lunch",
+     "js": "__T.press($D,/^Change lunch$/)"
+    },
+    {
+     "name": "6-half-day",
+     "js": "__T.hours($D,'Half day')"
+    },
+    {
+     "name": "7-full-day",
+     "js": "__T.hours($D,'Full day')"
+    },
+    {
+     "name": "8-reload",
+     "reload": true,
+     "js": "(async()=>{window.__kairouteAt($D,'plan');await __T.sleep(8000);return __T.planText(9000)})()"
+    },
+    {
+     "name": "9-phone",
+     "phone": true,
+     "js": "(async()=>{window.__kairouteAt($D,'plan');await __T.sleep(3000);return 'phone'})()"
+    }
+   ]
+  },
+  {
+   "name": "w13-barcelona-arrive-2245",
+   "label": "Barcelona, arriving 22:45",
+   "legs": [
+    {
+     "k": "stay",
+     "place": "Barcelona, Spain",
+     "nights": 2,
+     "date": "2027-10-05",
+     "inAt": "22:45",
+     "homeAt": "17:00"
+    }
+   ],
+   "steps": [
+    {
+     "name": "1-untick-one",
+     "js": "__T.tap($D,false,1)"
+    },
+    {
+     "name": "2-tick-six-more",
+     "js": "__T.tap($D,true,6)"
+    },
+    {
+     "name": "3-fit-in-one",
+     "js": "__T.fit($D)"
+    },
+    {
+     "name": "4-switch-a-ride",
+     "js": "__T.press($D,/^(Taxi or car|Walk|Metro|Train|Bus|Tram|Port shuttle|Ferry|Boat).* · /)"
+    },
+    {
+     "name": "5-change-lunch",
+     "js": "__T.press($D,/^Change lunch$/)"
+    },
+    {
+     "name": "6-half-day",
+     "js": "__T.hours($D,'Half day')"
+    },
+    {
+     "name": "7-full-day",
+     "js": "__T.hours($D,'Full day')"
+    },
+    {
+     "name": "8-reload",
+     "reload": true,
+     "js": "(async()=>{window.__kairouteAt($D,'plan');await __T.sleep(8000);return __T.planText(9000)})()"
+    },
+    {
+     "name": "9-phone",
+     "phone": true,
+     "js": "(async()=>{window.__kairouteAt($D,'plan');await __T.sleep(3000);return 'phone'})()"
+    }
+   ]
+  },
+  {
+   "name": "w14-barcelona-arrive-2350",
+   "label": "Barcelona, arriving 23:50",
+   "legs": [
+    {
+     "k": "stay",
+     "place": "Barcelona, Spain",
+     "nights": 2,
+     "date": "2027-10-05",
+     "inAt": "23:50",
+     "homeAt": "17:00"
+    }
+   ],
+   "steps": [
+    {
+     "name": "1-untick-one",
+     "js": "__T.tap($D,false,1)"
+    },
+    {
+     "name": "2-tick-six-more",
+     "js": "__T.tap($D,true,6)"
+    },
+    {
+     "name": "3-fit-in-one",
+     "js": "__T.fit($D)"
+    },
+    {
+     "name": "4-switch-a-ride",
+     "js": "__T.press($D,/^(Taxi or car|Walk|Metro|Train|Bus|Tram|Port shuttle|Ferry|Boat).* · /)"
+    },
+    {
+     "name": "5-change-lunch",
+     "js": "__T.press($D,/^Change lunch$/)"
+    },
+    {
+     "name": "6-half-day",
+     "js": "__T.hours($D,'Half day')"
+    },
+    {
+     "name": "7-full-day",
+     "js": "__T.hours($D,'Full day')"
+    },
+    {
+     "name": "8-reload",
+     "reload": true,
+     "js": "(async()=>{window.__kairouteAt($D,'plan');await __T.sleep(8000);return __T.planText(9000)})()"
+    },
+    {
+     "name": "9-phone",
+     "phone": true,
+     "js": "(async()=>{window.__kairouteAt($D,'plan');await __T.sleep(3000);return 'phone'})()"
+    }
+   ]
+  },
+  {
+   "name": "w15-barcelona-arrive-0040",
+   "label": "Barcelona, arriving 00:40",
+   "legs": [
+    {
+     "k": "stay",
+     "place": "Barcelona, Spain",
+     "nights": 2,
+     "date": "2027-10-05",
+     "inAt": "00:40",
+     "homeAt": "17:00"
+    }
+   ],
+   "steps": [
+    {
+     "name": "1-untick-one",
+     "js": "__T.tap($D,false,1)"
+    },
+    {
+     "name": "2-tick-six-more",
+     "js": "__T.tap($D,true,6)"
+    },
+    {
+     "name": "3-fit-in-one",
+     "js": "__T.fit($D)"
+    },
+    {
+     "name": "4-switch-a-ride",
+     "js": "__T.press($D,/^(Taxi or car|Walk|Metro|Train|Bus|Tram|Port shuttle|Ferry|Boat).* · /)"
+    },
+    {
+     "name": "5-change-lunch",
+     "js": "__T.press($D,/^Change lunch$/)"
+    },
+    {
+     "name": "6-half-day",
+     "js": "__T.hours($D,'Half day')"
+    },
+    {
+     "name": "7-full-day",
+     "js": "__T.hours($D,'Full day')"
+    },
+    {
+     "name": "8-reload",
+     "reload": true,
+     "js": "(async()=>{window.__kairouteAt($D,'plan');await __T.sleep(8000);return __T.planText(9000)})()"
+    },
+    {
+     "name": "9-phone",
+     "phone": true,
+     "js": "(async()=>{window.__kairouteAt($D,'plan');await __T.sleep(3000);return 'phone'})()"
+    }
+   ]
+  },
+  {
+   "name": "w16-barcelona-arrive-0530",
+   "label": "Barcelona, arriving 05:30",
+   "legs": [
+    {
+     "k": "stay",
+     "place": "Barcelona, Spain",
+     "nights": 2,
+     "date": "2027-10-05",
+     "inAt": "05:30",
+     "homeAt": "17:00"
+    }
+   ],
+   "steps": [
+    {
+     "name": "1-untick-one",
+     "js": "__T.tap($D,false,1)"
+    },
+    {
+     "name": "2-tick-six-more",
+     "js": "__T.tap($D,true,6)"
+    },
+    {
+     "name": "3-fit-in-one",
+     "js": "__T.fit($D)"
+    },
+    {
+     "name": "4-switch-a-ride",
+     "js": "__T.press($D,/^(Taxi or car|Walk|Metro|Train|Bus|Tram|Port shuttle|Ferry|Boat).* · /)"
+    },
+    {
+     "name": "5-change-lunch",
+     "js": "__T.press($D,/^Change lunch$/)"
+    },
+    {
+     "name": "6-half-day",
+     "js": "__T.hours($D,'Half day')"
+    },
+    {
+     "name": "7-full-day",
+     "js": "__T.hours($D,'Full day')"
+    },
+    {
+     "name": "8-reload",
+     "reload": true,
+     "js": "(async()=>{window.__kairouteAt($D,'plan');await __T.sleep(8000);return __T.planText(9000)})()"
+    },
+    {
+     "name": "9-phone",
+     "phone": true,
+     "js": "(async()=>{window.__kairouteAt($D,'plan');await __T.sleep(3000);return 'phone'})()"
+    }
+   ]
+  },
+  {
+   "name": "w17-two-city-train-0630",
+   "label": "Florence to Venice, train 06:30",
+   "legs": [
+    {
+     "k": "stay",
+     "place": "Florence, Italy",
+     "nights": 2,
+     "date": "2027-04-13",
+     "inBy": "train",
+     "inAt": "12:00"
+    },
+    {
+     "k": "stay",
+     "place": "Venice, Italy",
+     "nights": 2,
+     "inBy": "train",
+     "leaveAt": "06:30",
+     "inAt": "08:30",
+     "homeAt": "18:00"
+    }
+   ],
+   "steps": [
+    {
+     "name": "1-untick-one",
+     "js": "__T.tap($D,false,1)"
+    },
+    {
+     "name": "2-tick-six-more",
+     "js": "__T.tap($D,true,6)"
+    },
+    {
+     "name": "3-fit-in-one",
+     "js": "__T.fit($D)"
+    },
+    {
+     "name": "4-switch-a-ride",
+     "js": "__T.press($D,/^(Taxi or car|Walk|Metro|Train|Bus|Tram|Port shuttle|Ferry|Boat).* · /)"
+    },
+    {
+     "name": "5-change-lunch",
+     "js": "__T.press($D,/^Change lunch$/)"
+    },
+    {
+     "name": "6-half-day",
+     "js": "__T.hours($D,'Half day')"
+    },
+    {
+     "name": "7-full-day",
+     "js": "__T.hours($D,'Full day')"
+    },
+    {
+     "name": "8-reload",
+     "reload": true,
+     "js": "(async()=>{window.__kairouteAt($D,'plan');await __T.sleep(8000);return __T.planText(9000)})()"
+    },
+    {
+     "name": "9-phone",
+     "phone": true,
+     "js": "(async()=>{window.__kairouteAt($D,'plan');await __T.sleep(3000);return 'phone'})()"
+    }
+   ]
+  },
+  {
+   "name": "w18-two-city-train-0800",
+   "label": "Florence to Venice, train 08:00",
+   "legs": [
+    {
+     "k": "stay",
+     "place": "Florence, Italy",
+     "nights": 2,
+     "date": "2027-04-13",
+     "inBy": "train",
+     "inAt": "12:00"
+    },
+    {
+     "k": "stay",
+     "place": "Venice, Italy",
+     "nights": 2,
+     "inBy": "train",
+     "leaveAt": "08:00",
+     "inAt": "10:00",
+     "homeAt": "18:00"
+    }
+   ],
+   "steps": [
+    {
+     "name": "1-untick-one",
+     "js": "__T.tap($D,false,1)"
+    },
+    {
+     "name": "2-tick-six-more",
+     "js": "__T.tap($D,true,6)"
+    },
+    {
+     "name": "3-fit-in-one",
+     "js": "__T.fit($D)"
+    },
+    {
+     "name": "4-switch-a-ride",
+     "js": "__T.press($D,/^(Taxi or car|Walk|Metro|Train|Bus|Tram|Port shuttle|Ferry|Boat).* · /)"
+    },
+    {
+     "name": "5-change-lunch",
+     "js": "__T.press($D,/^Change lunch$/)"
+    },
+    {
+     "name": "6-half-day",
+     "js": "__T.hours($D,'Half day')"
+    },
+    {
+     "name": "7-full-day",
+     "js": "__T.hours($D,'Full day')"
+    },
+    {
+     "name": "8-reload",
+     "reload": true,
+     "js": "(async()=>{window.__kairouteAt($D,'plan');await __T.sleep(8000);return __T.planText(9000)})()"
+    },
+    {
+     "name": "9-phone",
+     "phone": true,
+     "js": "(async()=>{window.__kairouteAt($D,'plan');await __T.sleep(3000);return 'phone'})()"
+    }
+   ]
+  },
+  {
+   "name": "w19-two-city-train-1000",
+   "label": "Florence to Venice, train 10:00",
+   "legs": [
+    {
+     "k": "stay",
+     "place": "Florence, Italy",
+     "nights": 2,
+     "date": "2027-04-13",
+     "inBy": "train",
+     "inAt": "12:00"
+    },
+    {
+     "k": "stay",
+     "place": "Venice, Italy",
+     "nights": 2,
+     "inBy": "train",
+     "leaveAt": "10:00",
+     "inAt": "12:00",
+     "homeAt": "18:00"
+    }
+   ],
+   "steps": [
+    {
+     "name": "1-untick-one",
+     "js": "__T.tap($D,false,1)"
+    },
+    {
+     "name": "2-tick-six-more",
+     "js": "__T.tap($D,true,6)"
+    },
+    {
+     "name": "3-fit-in-one",
+     "js": "__T.fit($D)"
+    },
+    {
+     "name": "4-switch-a-ride",
+     "js": "__T.press($D,/^(Taxi or car|Walk|Metro|Train|Bus|Tram|Port shuttle|Ferry|Boat).* · /)"
+    },
+    {
+     "name": "5-change-lunch",
+     "js": "__T.press($D,/^Change lunch$/)"
+    },
+    {
+     "name": "6-half-day",
+     "js": "__T.hours($D,'Half day')"
+    },
+    {
+     "name": "7-full-day",
+     "js": "__T.hours($D,'Full day')"
+    },
+    {
+     "name": "8-reload",
+     "reload": true,
+     "js": "(async()=>{window.__kairouteAt($D,'plan');await __T.sleep(8000);return __T.planText(9000)})()"
+    },
+    {
+     "name": "9-phone",
+     "phone": true,
+     "js": "(async()=>{window.__kairouteAt($D,'plan');await __T.sleep(3000);return 'phone'})()"
+    }
+   ]
+  },
+  {
+   "name": "w20-alaska-evening",
+   "label": "Alaska, evening calls",
+   "legs": [
+    {
+     "k": "cruise",
+     "board": "Vancouver, Canada",
+     "date": "2027-07-10",
+     "aboard": "16:00",
+     "ports": [
+      {
+       "date": "2027-07-12",
+       "place": "Ketchikan, Alaska",
+       "arrive": "17:00",
+       "aboard": "22:00"
+      },
+      {
+       "date": "2027-07-13",
+       "place": "Juneau, Alaska",
+       "arrive": "18:30",
+       "aboard": "23:00"
+      },
+      {
+       "date": "2027-07-16",
+       "place": "Victoria, British Columbia",
+       "arrive": "19:00",
+       "aboard": "23:59"
+      }
+     ],
+     "end": "Vancouver, Canada",
+     "endDate": "2027-07-17",
+     "off": "07:00",
+     "homeAt": "10:00"
+    }
+   ],
+   "steps": [
+    {
+     "name": "1-untick-one",
+     "js": "__T.tap($D,false,1)"
+    },
+    {
+     "name": "2-tick-six-more",
+     "js": "__T.tap($D,true,6)"
+    },
+    {
+     "name": "3-fit-in-one",
+     "js": "__T.fit($D)"
+    },
+    {
+     "name": "4-switch-a-ride",
+     "js": "__T.press($D,/^(Taxi or car|Walk|Metro|Train|Bus|Tram|Port shuttle|Ferry|Boat).* · /)"
+    },
+    {
+     "name": "5-change-lunch",
+     "js": "__T.press($D,/^Change lunch$/)"
+    },
+    {
+     "name": "6-half-day",
+     "js": "__T.hours($D,'Half day')"
+    },
+    {
+     "name": "7-full-day",
+     "js": "__T.hours($D,'Full day')"
+    },
+    {
+     "name": "8-reload",
+     "reload": true,
+     "js": "(async()=>{window.__kairouteAt($D,'plan');await __T.sleep(8000);return __T.planText(9000)})()"
+    },
+    {
+     "name": "9-phone",
+     "phone": true,
+     "js": "(async()=>{window.__kairouteAt($D,'plan');await __T.sleep(3000);return 'phone'})()"
+    }
+   ]
+  },
+  {
+   "name": "w21-alaska-dawn",
+   "label": "Alaska, dawn calls",
+   "legs": [
+    {
+     "k": "cruise",
+     "board": "Vancouver, Canada",
+     "date": "2027-07-10",
+     "aboard": "16:00",
+     "ports": [
+      {
+       "date": "2027-07-12",
+       "place": "Ketchikan, Alaska",
+       "arrive": "05:00",
+       "aboard": "10:00"
+      },
+      {
+       "date": "2027-07-13",
+       "place": "Juneau, Alaska",
+       "arrive": "06:00",
+       "aboard": "11:00"
+      },
+      {
+       "date": "2027-07-16",
+       "place": "Victoria, British Columbia",
+       "arrive": "05:30",
+       "aboard": "09:00"
+      }
+     ],
+     "end": "Vancouver, Canada",
+     "endDate": "2027-07-17",
+     "off": "07:00",
+     "homeAt": "10:00"
+    }
+   ],
+   "steps": [
+    {
+     "name": "1-untick-one",
+     "js": "__T.tap($D,false,1)"
+    },
+    {
+     "name": "2-tick-six-more",
+     "js": "__T.tap($D,true,6)"
+    },
+    {
+     "name": "3-fit-in-one",
+     "js": "__T.fit($D)"
+    },
+    {
+     "name": "4-switch-a-ride",
+     "js": "__T.press($D,/^(Taxi or car|Walk|Metro|Train|Bus|Tram|Port shuttle|Ferry|Boat).* · /)"
+    },
+    {
+     "name": "5-change-lunch",
+     "js": "__T.press($D,/^Change lunch$/)"
+    },
+    {
+     "name": "6-half-day",
+     "js": "__T.hours($D,'Half day')"
+    },
+    {
+     "name": "7-full-day",
+     "js": "__T.hours($D,'Full day')"
+    },
+    {
+     "name": "8-reload",
+     "reload": true,
+     "js": "(async()=>{window.__kairouteAt($D,'plan');await __T.sleep(8000);return __T.planText(9000)})()"
+    },
+    {
+     "name": "9-phone",
+     "phone": true,
+     "js": "(async()=>{window.__kairouteAt($D,'plan');await __T.sleep(3000);return 'phone'})()"
+    }
+   ]
+  },
+  {
+   "name": "w22-alaska-short",
+   "label": "Alaska, two-hour calls",
+   "legs": [
+    {
+     "k": "cruise",
+     "board": "Vancouver, Canada",
+     "date": "2027-07-10",
+     "aboard": "16:00",
+     "ports": [
+      {
+       "date": "2027-07-12",
+       "place": "Ketchikan, Alaska",
+       "arrive": "12:00",
+       "aboard": "14:00"
+      },
+      {
+       "date": "2027-07-13",
+       "place": "Juneau, Alaska",
+       "arrive": "13:00",
+       "aboard": "15:00"
+      },
+      {
+       "date": "2027-07-16",
+       "place": "Victoria, British Columbia",
+       "arrive": "14:00",
+       "aboard": "16:00"
+      }
+     ],
+     "end": "Vancouver, Canada",
+     "endDate": "2027-07-17",
+     "off": "07:00",
+     "homeAt": "10:00"
+    }
+   ],
+   "steps": [
+    {
+     "name": "1-untick-one",
+     "js": "__T.tap($D,false,1)"
+    },
+    {
+     "name": "2-tick-six-more",
+     "js": "__T.tap($D,true,6)"
+    },
+    {
+     "name": "3-fit-in-one",
+     "js": "__T.fit($D)"
+    },
+    {
+     "name": "4-switch-a-ride",
+     "js": "__T.press($D,/^(Taxi or car|Walk|Metro|Train|Bus|Tram|Port shuttle|Ferry|Boat).* · /)"
+    },
+    {
+     "name": "5-change-lunch",
+     "js": "__T.press($D,/^Change lunch$/)"
+    },
+    {
+     "name": "6-half-day",
+     "js": "__T.hours($D,'Half day')"
+    },
+    {
+     "name": "7-full-day",
+     "js": "__T.hours($D,'Full day')"
+    },
+    {
+     "name": "8-reload",
+     "reload": true,
+     "js": "(async()=>{window.__kairouteAt($D,'plan');await __T.sleep(8000);return __T.planText(9000)})()"
+    },
+    {
+     "name": "9-phone",
+     "phone": true,
+     "js": "(async()=>{window.__kairouteAt($D,'plan');await __T.sleep(3000);return 'phone'})()"
+    }
+   ]
+  },
+  {
+   "name": "w23-alaska-late-night",
+   "label": "Alaska, calls past midnight",
+   "legs": [
+    {
+     "k": "cruise",
+     "board": "Vancouver, Canada",
+     "date": "2027-07-10",
+     "aboard": "16:00",
+     "ports": [
+      {
+       "date": "2027-07-12",
+       "place": "Ketchikan, Alaska",
+       "arrive": "14:00",
+       "aboard": "23:30"
+      },
+      {
+       "date": "2027-07-13",
+       "place": "Juneau, Alaska",
+       "arrive": "15:00",
+       "aboard": "23:45"
+      },
+      {
+       "date": "2027-07-16",
+       "place": "Victoria, British Columbia",
+       "arrive": "16:00",
+       "aboard": "23:55"
+      }
+     ],
+     "end": "Vancouver, Canada",
+     "endDate": "2027-07-17",
+     "off": "07:00",
+     "homeAt": "10:00"
+    }
+   ],
+   "steps": [
+    {
+     "name": "1-untick-one",
+     "js": "__T.tap($D,false,1)"
+    },
+    {
+     "name": "2-tick-six-more",
+     "js": "__T.tap($D,true,6)"
+    },
+    {
+     "name": "3-fit-in-one",
+     "js": "__T.fit($D)"
+    },
+    {
+     "name": "4-switch-a-ride",
+     "js": "__T.press($D,/^(Taxi or car|Walk|Metro|Train|Bus|Tram|Port shuttle|Ferry|Boat).* · /)"
+    },
+    {
+     "name": "5-change-lunch",
+     "js": "__T.press($D,/^Change lunch$/)"
+    },
+    {
+     "name": "6-half-day",
+     "js": "__T.hours($D,'Half day')"
+    },
+    {
+     "name": "7-full-day",
+     "js": "__T.hours($D,'Full day')"
+    },
+    {
+     "name": "8-reload",
+     "reload": true,
+     "js": "(async()=>{window.__kairouteAt($D,'plan');await __T.sleep(8000);return __T.planText(9000)})()"
+    },
+    {
+     "name": "9-phone",
+     "phone": true,
+     "js": "(async()=>{window.__kairouteAt($D,'plan');await __T.sleep(3000);return 'phone'})()"
+    }
+   ]
+  },
+  {
+   "name": "h01-prague-late-early",
+   "label": "Prague, late arrival and early flight home",
+   "legs": [
+    {
+     "k": "stay",
+     "place": "Prague, Czechia",
+     "nights": 3,
+     "date": "2027-04-22",
+     "inBy": "train",
+     "inAt": "21:30",
+     "homeAt": "06:30"
+    }
+   ],
+   "steps": [
+    {
+     "name": "1-untick-one",
+     "js": "__T.tap($D,false,1)"
+    },
+    {
+     "name": "2-tick-six-more",
+     "js": "__T.tap($D,true,6)"
+    },
+    {
+     "name": "3-fit-in-one",
+     "js": "__T.fit($D)"
+    },
+    {
+     "name": "4-switch-a-ride",
+     "js": "__T.press($D,/^(Taxi or car|Walk|Metro|Train|Bus|Tram|Port shuttle|Ferry|Boat).* · /)"
+    },
+    {
+     "name": "5-change-lunch",
+     "js": "__T.press($D,/^Change lunch$/)"
+    },
+    {
+     "name": "6-half-day",
+     "js": "__T.hours($D,'Half day')"
+    },
+    {
+     "name": "7-full-day",
+     "js": "__T.hours($D,'Full day')"
+    },
+    {
+     "name": "8-reload",
+     "reload": true,
+     "js": "(async()=>{window.__kairouteAt($D,'plan');await __T.sleep(8000);return __T.planText(9000)})()"
+    },
+    {
+     "name": "9-phone",
+     "phone": true,
+     "js": "(async()=>{window.__kairouteAt($D,'plan');await __T.sleep(3000);return 'phone'})()"
+    }
+   ]
+  },
+  {
+   "name": "h02-athens-midnight",
+   "label": "Athens, flight lands near midnight",
    "legs": [
     {
      "k": "stay",
      "place": "Athens, Greece",
      "nights": 2,
-     "date": "2027-05-12",
-     "inAt": "20:15",
-     "homeAt": "19:30"
+     "date": "2027-09-14",
+     "inAt": "23:10",
+     "homeAt": "07:00"
+    }
+   ],
+   "steps": [
+    {
+     "name": "1-untick-one",
+     "js": "__T.tap($D,false,1)"
+    },
+    {
+     "name": "2-tick-six-more",
+     "js": "__T.tap($D,true,6)"
+    },
+    {
+     "name": "3-fit-in-one",
+     "js": "__T.fit($D)"
+    },
+    {
+     "name": "4-switch-a-ride",
+     "js": "__T.press($D,/^(Taxi or car|Walk|Metro|Train|Bus|Tram|Port shuttle|Ferry|Boat).* · /)"
+    },
+    {
+     "name": "5-change-lunch",
+     "js": "__T.press($D,/^Change lunch$/)"
+    },
+    {
+     "name": "6-half-day",
+     "js": "__T.hours($D,'Half day')"
+    },
+    {
+     "name": "7-full-day",
+     "js": "__T.hours($D,'Full day')"
+    },
+    {
+     "name": "8-reload",
+     "reload": true,
+     "js": "(async()=>{window.__kairouteAt($D,'plan');await __T.sleep(8000);return __T.planText(9000)})()"
+    },
+    {
+     "name": "9-phone",
+     "phone": true,
+     "js": "(async()=>{window.__kairouteAt($D,'plan');await __T.sleep(3000);return 'phone'})()"
+    }
+   ],
+   "tz": "Europe/Athens"
+  },
+  {
+   "name": "h08-dublin-one-night",
+   "label": "Dublin, one short night",
+   "legs": [
+    {
+     "k": "stay",
+     "place": "Dublin, Ireland",
+     "nights": 1,
+     "date": "2027-06-02",
+     "inAt": "16:00",
+     "homeAt": "09:00"
     }
    ],
    "steps": [
@@ -168,123 +1535,32 @@
    ]
   },
   {
-   "name": "n04-seoul",
-   "label": "Seoul, 2 nights",
+   "name": "h17-salzburg-hallstatt-vienna",
+   "label": "Salzburg, Hallstatt, Vienna",
    "legs": [
     {
      "k": "stay",
-     "place": "Seoul, South Korea",
+     "place": "Salzburg, Austria",
      "nights": 2,
-     "date": "2027-06-13",
-     "inAt": "07:00",
-     "homeAt": "13:15"
-    }
-   ],
-   "steps": [
-    {
-     "name": "1-untick-one",
-     "js": "__T.tap($D,false,1)"
+     "date": "2027-06-14",
+     "inBy": "train",
+     "inAt": "11:00"
     },
-    {
-     "name": "2-tick-six-more",
-     "js": "__T.tap($D,true,6)"
-    },
-    {
-     "name": "3-fit-in-one",
-     "js": "__T.fit($D)"
-    },
-    {
-     "name": "4-switch-a-ride",
-     "js": "__T.press($D,/^(Taxi or car|Walk|Metro|Train|Bus|Tram|Port shuttle|Ferry|Boat).* · /)"
-    },
-    {
-     "name": "5-change-lunch",
-     "js": "__T.press($D,/^Change lunch$/)"
-    },
-    {
-     "name": "6-half-day",
-     "js": "__T.hours($D,'Half day')"
-    },
-    {
-     "name": "7-full-day",
-     "js": "__T.hours($D,'Full day')"
-    },
-    {
-     "name": "8-reload",
-     "reload": true,
-     "js": "(async()=>{window.__kairouteAt($D,'plan');await __T.sleep(8000);return __T.planText(9000)})()"
-    },
-    {
-     "name": "9-phone",
-     "phone": true,
-     "js": "(async()=>{window.__kairouteAt($D,'plan');await __T.sleep(3000);return 'phone'})()"
-    }
-   ]
-  },
-  {
-   "name": "n05-rio",
-   "label": "Rio de Janeiro, 2 nights",
-   "legs": [
     {
      "k": "stay",
-     "place": "Rio de Janeiro, Brazil",
-     "nights": 2,
-     "date": "2027-07-14",
-     "inAt": "10:00",
-     "homeAt": "11:00"
-    }
-   ],
-   "steps": [
-    {
-     "name": "1-untick-one",
-     "js": "__T.tap($D,false,1)"
+     "place": "Hallstatt, Austria",
+     "nights": 1,
+     "inBy": "train",
+     "leaveAt": "09:10",
+     "inAt": "11:40"
     },
-    {
-     "name": "2-tick-six-more",
-     "js": "__T.tap($D,true,6)"
-    },
-    {
-     "name": "3-fit-in-one",
-     "js": "__T.fit($D)"
-    },
-    {
-     "name": "4-switch-a-ride",
-     "js": "__T.press($D,/^(Taxi or car|Walk|Metro|Train|Bus|Tram|Port shuttle|Ferry|Boat).* · /)"
-    },
-    {
-     "name": "5-change-lunch",
-     "js": "__T.press($D,/^Change lunch$/)"
-    },
-    {
-     "name": "6-half-day",
-     "js": "__T.hours($D,'Half day')"
-    },
-    {
-     "name": "7-full-day",
-     "js": "__T.hours($D,'Full day')"
-    },
-    {
-     "name": "8-reload",
-     "reload": true,
-     "js": "(async()=>{window.__kairouteAt($D,'plan');await __T.sleep(8000);return __T.planText(9000)})()"
-    },
-    {
-     "name": "9-phone",
-     "phone": true,
-     "js": "(async()=>{window.__kairouteAt($D,'plan');await __T.sleep(3000);return 'phone'})()"
-    }
-   ]
-  },
-  {
-   "name": "n06-havana",
-   "label": "Havana, 2 nights",
-   "legs": [
     {
      "k": "stay",
-     "place": "Havana, Cuba",
+     "place": "Vienna, Austria",
      "nights": 2,
-     "date": "2027-08-15",
-     "inAt": "15:30",
+     "inBy": "train",
+     "leaveAt": "08:30",
+     "inAt": "12:30",
      "homeAt": "16:00"
     }
    ],
@@ -330,16 +1606,16 @@
    ]
   },
   {
-   "name": "n07-hanoi",
-   "label": "Hanoi, 2 nights",
+   "name": "h18-krakow",
+   "label": "Krakow",
    "legs": [
     {
      "k": "stay",
-     "place": "Hanoi, Vietnam",
-     "nights": 2,
-     "date": "2027-03-16",
-     "inAt": "20:15",
-     "homeAt": "19:30"
+     "place": "Krakow, Poland",
+     "nights": 3,
+     "date": "2027-05-24",
+     "inAt": "12:00",
+     "homeAt": "14:00"
     }
    ],
    "steps": [
@@ -384,16 +1660,255 @@
    ]
   },
   {
-   "name": "n08-delhi",
-   "label": "New Delhi, 2 nights",
+   "name": "h24-zurich-no-day",
+   "label": "Zurich, in at 20:00 and out at 08:00",
    "legs": [
     {
      "k": "stay",
-     "place": "New Delhi, India",
-     "nights": 2,
+     "place": "Zurich, Switzerland",
+     "nights": 1,
+     "date": "2027-03-03",
+     "inAt": "20:00",
+     "homeAt": "08:00"
+    }
+   ],
+   "steps": [
+    {
+     "name": "1-untick-one",
+     "js": "__T.tap($D,false,1)"
+    },
+    {
+     "name": "2-tick-six-more",
+     "js": "__T.tap($D,true,6)"
+    },
+    {
+     "name": "3-fit-in-one",
+     "js": "__T.fit($D)"
+    },
+    {
+     "name": "4-switch-a-ride",
+     "js": "__T.press($D,/^(Taxi or car|Walk|Metro|Train|Bus|Tram|Port shuttle|Ferry|Boat).* · /)"
+    },
+    {
+     "name": "5-change-lunch",
+     "js": "__T.press($D,/^Change lunch$/)"
+    },
+    {
+     "name": "6-half-day",
+     "js": "__T.hours($D,'Half day')"
+    },
+    {
+     "name": "7-full-day",
+     "js": "__T.hours($D,'Full day')"
+    },
+    {
+     "name": "8-reload",
+     "reload": true,
+     "js": "(async()=>{window.__kairouteAt($D,'plan');await __T.sleep(8000);return __T.planText(9000)})()"
+    },
+    {
+     "name": "9-phone",
+     "phone": true,
+     "js": "(async()=>{window.__kairouteAt($D,'plan');await __T.sleep(3000);return 'phone'})()"
+    }
+   ]
+  },
+  {
+   "name": "h30-west-med-half-day",
+   "label": "West Mediterranean with a half-day call",
+   "legs": [
+    {
+     "k": "cruise",
+     "board": "Barcelona, Spain",
+     "date": "2027-05-08",
+     "aboard": "17:00",
+     "ports": [
+      {
+       "date": "2027-05-09",
+       "place": "Palma de Mallorca, Spain",
+       "arrive": "08:00",
+       "aboard": "17:00"
+      },
+      {
+       "date": "2027-05-10",
+       "place": "Marseille, France",
+       "arrive": "08:00",
+       "aboard": "18:00"
+      },
+      {
+       "date": "2027-05-11",
+       "place": "Genoa, Italy",
+       "arrive": "08:00",
+       "aboard": "18:00"
+      },
+      {
+       "date": "2027-05-12",
+       "place": "Civitavecchia (Rome), Italy",
+       "arrive": "07:00",
+       "aboard": "13:00"
+      }
+     ],
+     "end": "Barcelona, Spain",
+     "endDate": "2027-05-14",
+     "off": "07:00",
+     "inAt": "11:00",
+     "homeAt": "12:30"
+    }
+   ],
+   "steps": [
+    {
+     "name": "1-untick-one",
+     "js": "__T.tap($D,false,1)"
+    },
+    {
+     "name": "2-tick-six-more",
+     "js": "__T.tap($D,true,6)"
+    },
+    {
+     "name": "3-fit-in-one",
+     "js": "__T.fit($D)"
+    },
+    {
+     "name": "4-switch-a-ride",
+     "js": "__T.press($D,/^(Taxi or car|Walk|Metro|Train|Bus|Tram|Port shuttle|Ferry|Boat).* · /)"
+    },
+    {
+     "name": "5-change-lunch",
+     "js": "__T.press($D,/^Change lunch$/)"
+    },
+    {
+     "name": "6-half-day",
+     "js": "__T.hours($D,'Half day')"
+    },
+    {
+     "name": "7-full-day",
+     "js": "__T.hours($D,'Full day')"
+    },
+    {
+     "name": "8-reload",
+     "reload": true,
+     "js": "(async()=>{window.__kairouteAt($D,'plan');await __T.sleep(8000);return __T.planText(9000)})()"
+    },
+    {
+     "name": "9-phone",
+     "phone": true,
+     "js": "(async()=>{window.__kairouteAt($D,'plan');await __T.sleep(3000);return 'phone'})()"
+    }
+   ]
+  },
+  {
+   "name": "h33-alaska-evening-victoria",
+   "label": "Alaska with an evening call at Victoria",
+   "legs": [
+    {
+     "k": "cruise",
+     "board": "Seattle, Washington",
+     "date": "2027-07-17",
+     "aboard": "16:00",
+     "ports": [
+      {
+       "date": "2027-07-19",
+       "place": "Skagway, Alaska",
+       "arrive": "07:00",
+       "aboard": "20:00"
+      },
+      {
+       "date": "2027-07-20",
+       "place": "Sitka, Alaska",
+       "arrive": "08:00",
+       "aboard": "16:00",
+       "tender": true
+      },
+      {
+       "date": "2027-07-23",
+       "place": "Victoria, British Columbia",
+       "arrive": "19:00",
+       "aboard": "23:30"
+      }
+     ],
+     "end": "Seattle, Washington",
+     "endDate": "2027-07-24",
+     "off": "07:00",
+     "inAt": "11:00",
+     "homeAt": "13:00"
+    }
+   ],
+   "steps": [
+    {
+     "name": "1-untick-one",
+     "js": "__T.tap($D,false,1)"
+    },
+    {
+     "name": "2-tick-six-more",
+     "js": "__T.tap($D,true,6)"
+    },
+    {
+     "name": "3-fit-in-one",
+     "js": "__T.fit($D)"
+    },
+    {
+     "name": "4-switch-a-ride",
+     "js": "__T.press($D,/^(Taxi or car|Walk|Metro|Train|Bus|Tram|Port shuttle|Ferry|Boat).* · /)"
+    },
+    {
+     "name": "5-change-lunch",
+     "js": "__T.press($D,/^Change lunch$/)"
+    },
+    {
+     "name": "6-half-day",
+     "js": "__T.hours($D,'Half day')"
+    },
+    {
+     "name": "7-full-day",
+     "js": "__T.hours($D,'Full day')"
+    },
+    {
+     "name": "8-reload",
+     "reload": true,
+     "js": "(async()=>{window.__kairouteAt($D,'plan');await __T.sleep(8000);return __T.planText(9000)})()"
+    },
+    {
+     "name": "9-phone",
+     "phone": true,
+     "js": "(async()=>{window.__kairouteAt($D,'plan');await __T.sleep(3000);return 'phone'})()"
+    }
+   ],
+   "tz": "America/Los_Angeles"
+  },
+  {
+   "name": "h39-japan-korea",
+   "label": "Japan and Korea",
+   "legs": [
+    {
+     "k": "cruise",
+     "board": "Yokohama, Japan",
      "date": "2027-04-17",
-     "inAt": "07:00",
-     "homeAt": "13:15"
+     "aboard": "17:00",
+     "ports": [
+      {
+       "date": "2027-04-18",
+       "place": "Shimizu, Japan",
+       "arrive": "08:00",
+       "aboard": "16:00"
+      },
+      {
+       "date": "2027-04-19",
+       "place": "Kobe, Japan",
+       "arrive": "08:00",
+       "aboard": "18:00"
+      },
+      {
+       "date": "2027-04-21",
+       "place": "Busan, South Korea",
+       "arrive": "08:00",
+       "aboard": "17:00"
+      }
+     ],
+     "end": "Yokohama, Japan",
+     "endDate": "2027-04-23",
+     "off": "07:00",
+     "inBy": "train",
+     "inAt": "12:00"
     }
    ],
    "steps": [
@@ -435,439 +1950,655 @@
      "phone": true,
      "js": "(async()=>{window.__kairouteAt($D,'plan');await __T.sleep(3000);return 'phone'})()"
     }
-   ]
+   ],
+   "tz": "Asia/Tokyo"
   },
   {
-   "name": "n09-chicago",
-   "label": "Chicago, 2 nights",
+   "name": "h44-tight-flight-home",
+   "label": "Off the ship at 7, flight at 9:30",
+   "legs": [
+    {
+     "k": "cruise",
+     "board": "Fort Lauderdale, Florida",
+     "date": "2027-03-06",
+     "aboard": "16:00",
+     "ports": [
+      {
+       "date": "2027-03-08",
+       "place": "Cozumel, Mexico",
+       "arrive": "10:00",
+       "aboard": "19:00"
+      },
+      {
+       "date": "2027-03-09",
+       "place": "George Town, Grand Cayman",
+       "arrive": "07:00",
+       "aboard": "15:00",
+       "tender": true
+      }
+     ],
+     "end": "Fort Lauderdale, Florida",
+     "endDate": "2027-03-11",
+     "off": "07:00",
+     "inAt": "10:00",
+     "homeAt": "09:30"
+    }
+   ],
+   "steps": [
+    {
+     "name": "1-untick-one",
+     "js": "__T.tap($D,false,1)"
+    },
+    {
+     "name": "2-tick-six-more",
+     "js": "__T.tap($D,true,6)"
+    },
+    {
+     "name": "3-fit-in-one",
+     "js": "__T.fit($D)"
+    },
+    {
+     "name": "4-switch-a-ride",
+     "js": "__T.press($D,/^(Taxi or car|Walk|Metro|Train|Bus|Tram|Port shuttle|Ferry|Boat).* · /)"
+    },
+    {
+     "name": "5-change-lunch",
+     "js": "__T.press($D,/^Change lunch$/)"
+    },
+    {
+     "name": "6-half-day",
+     "js": "__T.hours($D,'Half day')"
+    },
+    {
+     "name": "7-full-day",
+     "js": "__T.hours($D,'Full day')"
+    },
+    {
+     "name": "8-reload",
+     "reload": true,
+     "js": "(async()=>{window.__kairouteAt($D,'plan');await __T.sleep(8000);return __T.planText(9000)})()"
+    },
+    {
+     "name": "9-phone",
+     "phone": true,
+     "js": "(async()=>{window.__kairouteAt($D,'plan');await __T.sleep(3000);return 'phone'})()"
+    }
+   ],
+   "tz": "America/New_York"
+  },
+  {
+   "name": "a01-istanbul",
+   "label": "Istanbul Thu+Fri stay",
    "legs": [
     {
      "k": "stay",
-     "place": "Chicago, USA",
+     "place": "Istanbul, Turkey",
+     "date": "2027-05-12",
+     "nights": 3,
+     "inAt": "15:00",
+     "homeAt": "13:00"
+    }
+   ]
+  },
+  {
+   "name": "a03-lisbon",
+   "label": "Lisbon Mon+Tue stay",
+   "legs": [
+    {
+     "k": "stay",
+     "place": "Lisbon, Portugal",
+     "date": "2027-05-09",
+     "nights": 3,
+     "inAt": "13:00",
+     "homeAt": "11:30"
+    }
+   ]
+  },
+  {
+   "name": "a09-kotor-dubrovnik",
+   "label": "Kotor tender call and Dubrovnik call",
+   "legs": [
+    {
+     "k": "cruise",
+     "board": "Venice, Italy",
+     "date": "2027-07-06",
+     "aboard": "16:00",
+     "inAt": "10:30",
+     "ports": [
+      {
+       "date": "2027-07-08",
+       "place": "Kotor, Montenegro",
+       "arrive": "08:00",
+       "aboard": "17:00",
+       "tender": true
+      },
+      {
+       "date": "2027-07-09",
+       "place": "Dubrovnik, Croatia",
+       "arrive": "08:00",
+       "aboard": "18:00"
+      }
+     ],
+     "end": "Venice, Italy",
+     "endDate": "2027-07-11",
+     "off": "07:00"
+    }
+   ]
+  },
+  {
+   "name": "a14-mykonos-santorini",
+   "label": "Mykonos evening tender call and Santorini tender call",
+   "legs": [
+    {
+     "k": "cruise",
+     "board": "Piraeus (Athens), Greece",
+     "date": "2027-07-01",
+     "aboard": "17:00",
+     "ports": [
+      {
+       "date": "2027-07-02",
+       "place": "Mykonos, Greece",
+       "arrive": "10:00",
+       "aboard": "23:00",
+       "tender": true
+      },
+      {
+       "date": "2027-07-03",
+       "place": "Santorini, Greece",
+       "arrive": "07:00",
+       "aboard": "18:00",
+       "tender": true
+      }
+     ],
+     "end": "Piraeus (Athens), Greece",
+     "endDate": "2027-07-04",
+     "off": "07:00"
+    }
+   ]
+  },
+  {
+   "name": "a17-haifa",
+   "label": "Jerusalem from Haifa, Saturday call",
+   "legs": [
+    {
+     "k": "cruise",
+     "board": "Limassol, Cyprus",
+     "date": "2027-05-14",
+     "aboard": "18:00",
+     "ports": [
+      {
+       "date": "2027-05-15",
+       "place": "Haifa (Jerusalem), Israel",
+       "arrive": "06:00",
+       "aboard": "20:00"
+      }
+     ],
+     "end": "Limassol, Cyprus",
+     "endDate": "2027-05-16",
+     "off": "07:00"
+    }
+   ]
+  },
+  {
+   "name": "c01-bahamas",
+   "label": "Bahamas cruise field-test trip",
+   "legs": [
+    {
+     "k": "cruise",
+     "board": "Miami, Florida",
+     "date": "2027-01-11",
+     "aboard": "15:30",
+     "inAt": "11:25",
+     "ship": "Wonder of the Seas",
+     "ports": [
+      {
+       "date": "2027-01-13",
+       "place": "Nassau, Bahamas",
+       "arrive": "08:30",
+       "aboard": "16:30"
+      },
+      {
+       "date": "2027-01-14",
+       "place": "Perfect Day at CocoCay, Bahamas",
+       "arrive": "07:30",
+       "aboard": "16:30"
+      }
+     ],
+     "end": "Miami, Florida",
+     "endDate": "2027-01-15",
+     "off": "06:00"
+    }
+   ]
+  },
+  {
+   "name": "d03-rome-florence-venice",
+   "label": "Rome, Florence, Venice by train",
+   "legs": [
+    {
+     "k": "stay",
+     "place": "Rome, Italy",
+     "date": "2027-09-20",
+     "nights": 3,
+     "inAt": "09:00"
+    },
+    {
+     "k": "stay",
+     "place": "Florence, Italy",
      "nights": 2,
-     "date": "2027-05-18",
-     "inAt": "10:00",
+     "inBy": "train",
+     "leaveAt": "09:10",
+     "inAt": "10:46"
+    },
+    {
+     "k": "stay",
+     "place": "Venice, Italy",
+     "nights": 2,
+     "inBy": "train",
+     "leaveAt": "10:20",
+     "inAt": "12:34",
+     "homeAt": "13:00"
+    }
+   ]
+  },
+  {
+   "name": "d11-nashville",
+   "label": "Nashville by car",
+   "legs": [
+    {
+     "k": "stay",
+     "place": "Nashville, Tennessee",
+     "date": "2027-04-23",
+     "nights": 2,
+     "inBy": "car",
+     "inAt": "15:00",
+     "homeBy": "car",
      "homeAt": "11:00"
     }
-   ],
-   "steps": [
+   ]
+  },
+  {
+   "name": "d13-cozumel-cartagena",
+   "label": "Cozumel and Cartagena calls",
+   "legs": [
     {
-     "name": "1-untick-one",
-     "js": "__T.tap($D,false,1)"
-    },
-    {
-     "name": "2-tick-six-more",
-     "js": "__T.tap($D,true,6)"
-    },
-    {
-     "name": "3-fit-in-one",
-     "js": "__T.fit($D)"
-    },
-    {
-     "name": "4-switch-a-ride",
-     "js": "__T.press($D,/^(Taxi or car|Walk|Metro|Train|Bus|Tram|Port shuttle|Ferry|Boat).* · /)"
-    },
-    {
-     "name": "5-change-lunch",
-     "js": "__T.press($D,/^Change lunch$/)"
-    },
-    {
-     "name": "6-half-day",
-     "js": "__T.hours($D,'Half day')"
-    },
-    {
-     "name": "7-full-day",
-     "js": "__T.hours($D,'Full day')"
-    },
-    {
-     "name": "8-reload",
-     "reload": true,
-     "js": "(async()=>{window.__kairouteAt($D,'plan');await __T.sleep(8000);return __T.planText(9000)})()"
-    },
-    {
-     "name": "9-phone",
-     "phone": true,
-     "js": "(async()=>{window.__kairouteAt($D,'plan');await __T.sleep(3000);return 'phone'})()"
+     "k": "cruise",
+     "board": "Miami, Florida",
+     "date": "2027-03-01",
+     "aboard": "15:30",
+     "ports": [
+      {
+       "date": "2027-03-03",
+       "place": "Cozumel, Mexico",
+       "arrive": "07:00",
+       "aboard": "16:00"
+      },
+      {
+       "date": "2027-03-05",
+       "place": "Cartagena, Colombia",
+       "arrive": "08:00",
+       "aboard": "15:00"
+      }
+     ],
+     "end": "Miami, Florida",
+     "endDate": "2027-03-08",
+     "off": "07:00",
+     "homeAt": "13:30"
     }
    ]
   },
   {
-   "name": "n10-vancouver",
-   "label": "Vancouver, 2 nights",
+   "name": "d15-livorno-rome-naples",
+   "label": "Livorno for Florence, Civitavecchia for Rome, Naples",
+   "legs": [
+    {
+     "k": "cruise",
+     "board": "Barcelona, Spain",
+     "date": "2027-09-05",
+     "aboard": "17:00",
+     "ports": [
+      {
+       "date": "2027-09-07",
+       "place": "Livorno (Florence), Italy",
+       "arrive": "07:00",
+       "aboard": "19:00"
+      },
+      {
+       "date": "2027-09-08",
+       "place": "Civitavecchia (Rome), Italy",
+       "arrive": "07:00",
+       "aboard": "19:00"
+      },
+      {
+       "date": "2027-09-09",
+       "place": "Naples, Italy",
+       "arrive": "07:00",
+       "aboard": "17:30"
+      }
+     ],
+     "end": "Barcelona, Spain",
+     "endDate": "2027-09-11",
+     "off": "07:00"
+    }
+   ]
+  },
+  {
+   "name": "d17-laemchabang",
+   "label": "Laem Chabang for Bangkok",
+   "legs": [
+    {
+     "k": "cruise",
+     "board": "Singapore",
+     "date": "2027-11-10",
+     "aboard": "16:00",
+     "ports": [
+      {
+       "date": "2027-11-12",
+       "place": "Laem Chabang (Bangkok), Thailand",
+       "arrive": "07:00",
+       "aboard": "19:00"
+      }
+     ],
+     "end": "Singapore",
+     "endDate": "2027-11-15",
+     "off": "07:00"
+    }
+   ]
+  },
+  {
+   "name": "b01-greece",
    "legs": [
     {
      "k": "stay",
-     "place": "Vancouver, Canada",
+     "place": "Athens, Greece",
+     "date": "2027-06-30",
+     "nights": 4,
+     "inAt": "10:30"
+    },
+    {
+     "k": "cruise",
+     "board": "Piraeus (Athens), Greece",
+     "ship": "Sun Princess",
+     "date": "2027-07-04",
+     "aboard": "18:30",
+     "ports": [
+      {
+       "date": "2027-07-05",
+       "place": "Heraklion, Crete",
+       "arrive": "07:00",
+       "aboard": "16:30"
+      },
+      {
+       "date": "2027-07-06",
+       "place": "Kusadasi (Ephesus), Turkey",
+       "arrive": "09:00",
+       "aboard": "18:30"
+      },
+      {
+       "date": "2027-07-07",
+       "place": "Santorini, Greece",
+       "arrive": "07:00",
+       "aboard": "20:30",
+       "tender": true
+      },
+      {
+       "date": "2027-07-08",
+       "place": "Mykonos, Greece",
+       "arrive": "08:00",
+       "aboard": "20:30"
+      },
+      {
+       "date": "2027-07-09",
+       "place": "Chania, Crete",
+       "arrive": "08:00",
+       "aboard": "17:30"
+      },
+      {
+       "date": "2027-07-11",
+       "place": "Messina, Sicily",
+       "arrive": "08:00",
+       "aboard": "17:30"
+      },
+      {
+       "date": "2027-07-12",
+       "place": "Naples, Italy",
+       "arrive": "07:00",
+       "aboard": "18:30"
+      },
+      {
+       "date": "2027-07-13",
+       "place": "Civitavecchia (Rome), Italy",
+       "arrive": "07:00",
+       "aboard": "20:30"
+      }
+     ],
+     "end": "Barcelona, Spain",
+     "endDate": "2027-07-15",
+     "off": "07:00"
+    },
+    {
+     "k": "stay",
+     "place": "Barcelona, Spain",
+     "nights": 3
+    },
+    {
+     "k": "stay",
+     "place": "Madrid, Spain",
      "nights": 2,
-     "date": "2027-06-10",
-     "inAt": "15:30",
+     "inBy": "train",
+     "leaveAt": "13:00",
+     "inAt": "15:45",
      "homeAt": "16:00"
     }
-   ],
-   "steps": [
+   ]
+  },
+  {
+   "name": "b04-notfound-cities",
+   "legs": [
     {
-     "name": "1-untick-one",
-     "js": "__T.tap($D,false,1)"
+     "k": "stay",
+     "place": "Paris",
+     "date": "2027-05-20",
+     "nights": 1,
+     "inBy": "train",
+     "inAt": "12:47"
     },
     {
-     "name": "2-tick-six-more",
-     "js": "__T.tap($D,true,6)"
+     "k": "stay",
+     "place": "Florence",
+     "nights": 1,
+     "inBy": "train",
+     "leaveAt": "09:00",
+     "inAt": "16:00"
     },
     {
-     "name": "3-fit-in-one",
-     "js": "__T.fit($D)"
-    },
-    {
-     "name": "4-switch-a-ride",
-     "js": "__T.press($D,/^(Taxi or car|Walk|Metro|Train|Bus|Tram|Port shuttle|Ferry|Boat).* · /)"
-    },
-    {
-     "name": "5-change-lunch",
-     "js": "__T.press($D,/^Change lunch$/)"
-    },
-    {
-     "name": "6-half-day",
-     "js": "__T.hours($D,'Half day')"
-    },
-    {
-     "name": "7-full-day",
-     "js": "__T.hours($D,'Full day')"
-    },
-    {
-     "name": "8-reload",
-     "reload": true,
-     "js": "(async()=>{window.__kairouteAt($D,'plan');await __T.sleep(8000);return __T.planText(9000)})()"
-    },
-    {
-     "name": "9-phone",
-     "phone": true,
-     "js": "(async()=>{window.__kairouteAt($D,'plan');await __T.sleep(3000);return 'phone'})()"
+     "k": "stay",
+     "place": "Buenos Aires",
+     "nights": 1,
+     "inAt": "09:00",
+     "leaveAt": "20:00",
+     "homeAt": "22:00"
     }
    ]
   },
   {
-   "name": "n11-auckland",
-   "label": "Auckland, 2 nights",
+   "name": "e02-barcelona-port-actions",
    "legs": [
     {
-     "k": "stay",
-     "place": "Auckland, New Zealand",
-     "nights": 2,
-     "date": "2027-07-11",
-     "inAt": "20:15",
-     "homeAt": "19:30"
-    }
-   ],
-   "steps": [
-    {
-     "name": "1-untick-one",
-     "js": "__T.tap($D,false,1)"
-    },
-    {
-     "name": "2-tick-six-more",
-     "js": "__T.tap($D,true,6)"
-    },
-    {
-     "name": "3-fit-in-one",
-     "js": "__T.fit($D)"
-    },
-    {
-     "name": "4-switch-a-ride",
-     "js": "__T.press($D,/^(Taxi or car|Walk|Metro|Train|Bus|Tram|Port shuttle|Ferry|Boat).* · /)"
-    },
-    {
-     "name": "5-change-lunch",
-     "js": "__T.press($D,/^Change lunch$/)"
-    },
-    {
-     "name": "6-half-day",
-     "js": "__T.hours($D,'Half day')"
-    },
-    {
-     "name": "7-full-day",
-     "js": "__T.hours($D,'Full day')"
-    },
-    {
-     "name": "8-reload",
-     "reload": true,
-     "js": "(async()=>{window.__kairouteAt($D,'plan');await __T.sleep(8000);return __T.planText(9000)})()"
-    },
-    {
-     "name": "9-phone",
-     "phone": true,
-     "js": "(async()=>{window.__kairouteAt($D,'plan');await __T.sleep(3000);return 'phone'})()"
-    }
-   ]
-  },
-  {
-   "name": "n12-tallinn",
-   "label": "Tallinn, 2 nights",
-   "legs": [
-    {
-     "k": "stay",
-     "place": "Tallinn, Estonia",
-     "nights": 2,
-     "date": "2027-08-12",
-     "inAt": "07:00",
-     "homeAt": "13:15"
-    }
-   ],
-   "steps": [
-    {
-     "name": "1-untick-one",
-     "js": "__T.tap($D,false,1)"
-    },
-    {
-     "name": "2-tick-six-more",
-     "js": "__T.tap($D,true,6)"
-    },
-    {
-     "name": "3-fit-in-one",
-     "js": "__T.fit($D)"
-    },
-    {
-     "name": "4-switch-a-ride",
-     "js": "__T.press($D,/^(Taxi or car|Walk|Metro|Train|Bus|Tram|Port shuttle|Ferry|Boat).* · /)"
-    },
-    {
-     "name": "5-change-lunch",
-     "js": "__T.press($D,/^Change lunch$/)"
-    },
-    {
-     "name": "6-half-day",
-     "js": "__T.hours($D,'Half day')"
-    },
-    {
-     "name": "7-full-day",
-     "js": "__T.hours($D,'Full day')"
-    },
-    {
-     "name": "8-reload",
-     "reload": true,
-     "js": "(async()=>{window.__kairouteAt($D,'plan');await __T.sleep(8000);return __T.planText(9000)})()"
-    },
-    {
-     "name": "9-phone",
-     "phone": true,
-     "js": "(async()=>{window.__kairouteAt($D,'plan');await __T.sleep(3000);return 'phone'})()"
-    }
-   ]
-  },
-  {
-   "name": "n13-valletta",
-   "label": "Valletta, 2 nights",
-   "legs": [
-    {
-     "k": "stay",
-     "place": "Valletta, Malta",
-     "nights": 2,
-     "date": "2027-03-13",
-     "inAt": "10:00",
-     "homeAt": "11:00"
-    }
-   ],
-   "steps": [
-    {
-     "name": "1-untick-one",
-     "js": "__T.tap($D,false,1)"
-    },
-    {
-     "name": "2-tick-six-more",
-     "js": "__T.tap($D,true,6)"
-    },
-    {
-     "name": "3-fit-in-one",
-     "js": "__T.fit($D)"
-    },
-    {
-     "name": "4-switch-a-ride",
-     "js": "__T.press($D,/^(Taxi or car|Walk|Metro|Train|Bus|Tram|Port shuttle|Ferry|Boat).* · /)"
-    },
-    {
-     "name": "5-change-lunch",
-     "js": "__T.press($D,/^Change lunch$/)"
-    },
-    {
-     "name": "6-half-day",
-     "js": "__T.hours($D,'Half day')"
-    },
-    {
-     "name": "7-full-day",
-     "js": "__T.hours($D,'Full day')"
-    },
-    {
-     "name": "8-reload",
-     "reload": true,
-     "js": "(async()=>{window.__kairouteAt($D,'plan');await __T.sleep(8000);return __T.planText(9000)})()"
-    },
-    {
-     "name": "9-phone",
-     "phone": true,
-     "js": "(async()=>{window.__kairouteAt($D,'plan');await __T.sleep(3000);return 'phone'})()"
-    }
-   ]
-  },
-  {
-   "name": "n14-luxor",
-   "label": "Luxor, 2 nights",
-   "legs": [
-    {
-     "k": "stay",
-     "place": "Luxor, Egypt",
-     "nights": 2,
-     "date": "2027-04-14",
-     "inAt": "15:30",
-     "homeAt": "16:00"
-    }
-   ],
-   "steps": [
-    {
-     "name": "1-untick-one",
-     "js": "__T.tap($D,false,1)"
-    },
-    {
-     "name": "2-tick-six-more",
-     "js": "__T.tap($D,true,6)"
-    },
-    {
-     "name": "3-fit-in-one",
-     "js": "__T.fit($D)"
-    },
-    {
-     "name": "4-switch-a-ride",
-     "js": "__T.press($D,/^(Taxi or car|Walk|Metro|Train|Bus|Tram|Port shuttle|Ferry|Boat).* · /)"
-    },
-    {
-     "name": "5-change-lunch",
-     "js": "__T.press($D,/^Change lunch$/)"
-    },
-    {
-     "name": "6-half-day",
-     "js": "__T.hours($D,'Half day')"
-    },
-    {
-     "name": "7-full-day",
-     "js": "__T.hours($D,'Full day')"
-    },
-    {
-     "name": "8-reload",
-     "reload": true,
-     "js": "(async()=>{window.__kairouteAt($D,'plan');await __T.sleep(8000);return __T.planText(9000)})()"
-    },
-    {
-     "name": "9-phone",
-     "phone": true,
-     "js": "(async()=>{window.__kairouteAt($D,'plan');await __T.sleep(3000);return 'phone'})()"
-    }
-   ]
-  },
-  {
-   "name": "n15-zermatt",
-   "label": "Zermatt, 2 nights",
-   "legs": [
-    {
-     "k": "stay",
-     "place": "Zermatt, Switzerland",
-     "nights": 2,
+     "k": "cruise",
+     "board": "Marseille, France",
      "date": "2027-05-15",
-     "inAt": "20:15",
-     "homeAt": "19:30"
+     "aboard": "17:00",
+     "inAt": "09:00",
+     "ports": [
+      {
+       "date": "2027-05-16",
+       "place": "Barcelona, Spain",
+       "arrive": "08:00",
+       "aboard": "18:00"
+      }
+     ],
+     "end": "Marseille, France",
+     "endDate": "2027-05-17",
+     "off": "07:00"
     }
    ],
    "steps": [
     {
-     "name": "1-untick-one",
-     "js": "__T.tap($D,false,1)"
+     "name": "1-ticks-vs-plan",
+     "js": "(async()=>{const t=await __T.ticks(2);window.__kairouteAt(2,'plan');await __T.sleep(5000);return {on:t.filter(x=>x.on).map(x=>x.n),total:t.length}})()"
     },
     {
-     "name": "2-tick-six-more",
-     "js": "__T.tap($D,true,6)"
+     "name": "2-untick-one",
+     "js": "__T.tap(2,false,1)"
     },
     {
-     "name": "3-fit-in-one",
-     "js": "__T.fit($D)"
+     "name": "3-tick-one-more",
+     "js": "__T.tap(2,true,1)"
     },
     {
-     "name": "4-switch-a-ride",
-     "js": "__T.press($D,/^(Taxi or car|Walk|Metro|Train|Bus|Tram|Port shuttle|Ferry|Boat).* · /)"
+     "name": "4-tick-six-more",
+     "js": "__T.tap(2,true,6)"
     },
     {
-     "name": "5-change-lunch",
-     "js": "__T.press($D,/^Change lunch$/)"
+     "name": "5-fit-in-one",
+     "js": "__T.fit(2)"
     },
     {
-     "name": "6-half-day",
-     "js": "__T.hours($D,'Half day')"
+     "name": "6-switch-a-ride",
+     "js": "__T.press(2,/^(Taxi or car|Walk|Metro|Train|Bus|Tram|Port shuttle).* · /)"
     },
     {
-     "name": "7-full-day",
-     "js": "__T.hours($D,'Full day')"
+     "name": "7-change-lunch",
+     "js": "__T.press(2,/^Change lunch$/)"
     },
     {
-     "name": "8-reload",
+     "name": "8-shorter-day",
+     "js": "(async()=>{window.__kairouteAt(2,'plan');await __T.sleep(2000);window.__kairouteSetHours(4);await __T.sleep(6000);return 'hours 4'})()"
+    },
+    {
+     "name": "8b-shorten-anyway",
+     "js": "__T.act(2,'cutok')"
+    },
+    {
+     "name": "9-reload",
      "reload": true,
-     "js": "(async()=>{window.__kairouteAt($D,'plan');await __T.sleep(8000);return __T.planText(9000)})()"
+     "js": "(async()=>{window.__kairouteAt(2,'plan');await __T.sleep(6000);return 'reloaded'})()"
     },
     {
-     "name": "9-phone",
+     "name": "10-phone",
      "phone": true,
-     "js": "(async()=>{window.__kairouteAt($D,'plan');await __T.sleep(3000);return 'phone'})()"
+     "js": "(async()=>{window.__kairouteAt(2,'plan');await __T.sleep(3000);return 'phone'})()"
     }
    ]
   },
   {
-   "name": "n16-key-west",
-   "label": "Key West, 2 nights",
+   "name": "f01-dubrovnik-naples",
+   "label": "Dubrovnik (Lokrum) and Naples (Capri) ship days",
    "legs": [
     {
-     "k": "stay",
-     "place": "Key West, Florida",
-     "nights": 2,
-     "date": "2027-06-16",
-     "inAt": "07:00",
-     "homeAt": "13:15"
+     "k": "cruise",
+     "board": "Venice, Italy",
+     "date": "2027-07-06",
+     "aboard": "16:00",
+     "inAt": "10:30",
+     "ports": [
+      {
+       "date": "2027-07-08",
+       "place": "Dubrovnik, Croatia",
+       "arrive": "08:00",
+       "aboard": "18:00"
+      },
+      {
+       "date": "2027-07-10",
+       "place": "Naples, Italy",
+       "arrive": "07:00",
+       "aboard": "18:00"
+      }
+     ],
+     "end": "Venice, Italy",
+     "endDate": "2027-07-12",
+     "off": "07:00"
     }
    ],
    "steps": [
     {
-     "name": "1-untick-one",
-     "js": "__T.tap($D,false,1)"
+     "name": "nap-1-fit-capri-as-is",
+     "js": "__T.fitName(5,'Capri')"
     },
     {
-     "name": "2-tick-six-more",
-     "js": "__T.tap($D,true,6)"
+     "name": "nap-2-untick-all",
+     "js": "__T.tap(5,false,25)"
     },
     {
-     "name": "3-fit-in-one",
-     "js": "__T.fit($D)"
+     "name": "nap-3-fit-capri-alone",
+     "js": "(async()=>{window.__kairouteAt(5,'sites');await __T.sleep(12000);let r=await __T.fitName(5,'Capri');if(!r.found){await __T.sleep(20000);r=await __T.fitName(5,'Capri')}return r})()"
     },
     {
-     "name": "4-switch-a-ride",
-     "js": "__T.press($D,/^(Taxi or car|Walk|Metro|Train|Bus|Tram|Port shuttle|Ferry|Boat).* · /)"
+     "name": "nap-4-basis",
+     "js": "__T.basis(5)"
     },
     {
-     "name": "5-change-lunch",
-     "js": "__T.press($D,/^Change lunch$/)"
+     "name": "nap-5-plan",
+     "js": "(async()=>{window.__kairouteAt(5,'plan');await __T.sleep(15000);return __T.planText(12000)})()"
     },
     {
-     "name": "6-half-day",
-     "js": "__T.hours($D,'Half day')"
+     "name": "dbv-1-pier-gruz",
+     "js": "__T.pier(3,'Gruž')"
     },
     {
-     "name": "7-full-day",
-     "js": "__T.hours($D,'Full day')"
+     "name": "dbv-1b-ticks-after-pier",
+     "js": "(async()=>{const a=await __T.ticks(3);await __T.sleep(12000);const b=[...document.querySelectorAll('input[data-site]')].map(c=>({n:(c.getAttribute('aria-label')||'').replace(/^Pick /,''),on:c.checked}));const page=__T.planText(1500);window.__kairouteAt(3,'plan');await __T.sleep(8000);const plan=__T.planText(4000);return {t:new Date().toISOString(),onAt3s:a.filter(x=>x.on).map(x=>x.n),onAt15s:b.filter(x=>x.on).map(x=>x.n),total:b.length,page,planSights:(plan.match(/\\n(\\d+)\\nsights?\\n/)||[])[1]||null}})()"
     },
     {
-     "name": "8-reload",
-     "reload": true,
-     "js": "(async()=>{window.__kairouteAt($D,'plan');await __T.sleep(8000);return __T.planText(9000)})()"
+     "name": "dbv-2-lokrum",
+     "js": "(async()=>{const t=await __T.ticks(3);const was=t.filter(x=>x.on).map(x=>x.n);const has=t.find(x=>/Lokrum/i.test(x.n));if(!has)return {inList:false,was,fit:await __T.fitName(3,'Lokrum')};if(has.on)return {inList:true,alreadyOn:true,was};const c=[...document.querySelectorAll('input[data-site]')].find(x=>/Lokrum/i.test(x.getAttribute('aria-label')||''));c.click();await __T.sleep(3000);const box=(document.querySelector('.fitbox')||{}).innerText||null;const t2=await __T.ticks(3);return {inList:true,alreadyOn:false,was,box,on:t2.filter(x=>x.on).map(x=>x.n)}})()"
     },
     {
-     "name": "9-phone",
-     "phone": true,
-     "js": "(async()=>{window.__kairouteAt($D,'plan');await __T.sleep(3000);return 'phone'})()"
+     "name": "dbv-3-plan",
+     "js": "(async()=>{window.__kairouteAt(3,'plan');await __T.sleep(15000);return __T.planText(12000)})()"
+    },
+    {
+     "name": "dbv-4-basis",
+     "js": "__T.basis(3)"
     }
    ]
+  },
+  {
+   "name": "g01-group-naples",
+   "label": "Group trip, Naples ship day",
+   "legs": [
+    {
+     "k": "cruise",
+     "board": "Venice, Italy",
+     "date": "2027-07-06",
+     "aboard": "16:00",
+     "inAt": "10:30",
+     "ports": [
+      {
+       "date": "2027-07-08",
+       "place": "Dubrovnik, Croatia",
+       "arrive": "08:00",
+       "aboard": "18:00"
+      },
+      {
+       "date": "2027-07-10",
+       "place": "Naples, Italy",
+       "arrive": "07:00",
+       "aboard": "18:00"
+      }
+     ],
+     "end": "Venice, Italy",
+     "endDate": "2027-07-12",
+     "off": "07:00"
+    }
+   ],
+   "onlyDays": [
+    5
+   ],
+   "steps": [],
+   "group": {
+    "day": 5
+   }
   },
   {
    "name": "n20-cruise-end-flight-0900",
@@ -1126,240 +2857,6 @@
    ]
   },
   {
-   "name": "n30-east-med",
-   "label": "Kusadasi, Rhodes, Heraklion, Valletta",
-   "legs": [
-    {
-     "k": "cruise",
-     "board": "Piraeus (Athens), Greece",
-     "date": "2027-09-04",
-     "aboard": "16:00",
-     "ports": [
-      {
-       "date": "2027-09-05",
-       "place": "Kusadasi, Turkey",
-       "arrive": "07:00",
-       "aboard": "15:30"
-      },
-      {
-       "date": "2027-09-06",
-       "place": "Rhodes, Greece",
-       "arrive": "08:00",
-       "aboard": "17:30"
-      },
-      {
-       "date": "2027-09-07",
-       "place": "Heraklion, Crete",
-       "arrive": "07:00",
-       "aboard": "14:00"
-      },
-      {
-       "date": "2027-09-09",
-       "place": "Valletta, Malta",
-       "arrive": "08:00",
-       "aboard": "18:00"
-      }
-     ],
-     "end": "Civitavecchia (Rome), Italy",
-     "endDate": "2027-09-11",
-     "off": "07:00",
-     "homeAt": "14:00"
-    }
-   ],
-   "steps": [
-    {
-     "name": "1-untick-one",
-     "js": "__T.tap($D,false,1)"
-    },
-    {
-     "name": "2-tick-six-more",
-     "js": "__T.tap($D,true,6)"
-    },
-    {
-     "name": "3-fit-in-one",
-     "js": "__T.fit($D)"
-    },
-    {
-     "name": "4-switch-a-ride",
-     "js": "__T.press($D,/^(Taxi or car|Walk|Metro|Train|Bus|Tram|Port shuttle|Ferry|Boat).* · /)"
-    },
-    {
-     "name": "5-change-lunch",
-     "js": "__T.press($D,/^Change lunch$/)"
-    },
-    {
-     "name": "6-half-day",
-     "js": "__T.hours($D,'Half day')"
-    },
-    {
-     "name": "7-full-day",
-     "js": "__T.hours($D,'Full day')"
-    },
-    {
-     "name": "8-reload",
-     "reload": true,
-     "js": "(async()=>{window.__kairouteAt($D,'plan');await __T.sleep(8000);return __T.planText(9000)})()"
-    },
-    {
-     "name": "9-phone",
-     "phone": true,
-     "js": "(async()=>{window.__kairouteAt($D,'plan');await __T.sleep(3000);return 'phone'})()"
-    }
-   ]
-  },
-  {
-   "name": "n31-south-pacific",
-   "label": "Noumea, Lifou, Port Vila",
-   "legs": [
-    {
-     "k": "cruise",
-     "board": "Sydney, Australia",
-     "date": "2027-10-02",
-     "aboard": "16:00",
-     "ports": [
-      {
-       "date": "2027-10-05",
-       "place": "Noumea, New Caledonia",
-       "arrive": "08:00",
-       "aboard": "17:00"
-      },
-      {
-       "date": "2027-10-06",
-       "place": "Lifou, New Caledonia",
-       "arrive": "08:00",
-       "aboard": "16:00"
-      },
-      {
-       "date": "2027-10-07",
-       "place": "Port Vila, Vanuatu",
-       "arrive": "08:00",
-       "aboard": "17:30"
-      }
-     ],
-     "end": "Sydney, Australia",
-     "endDate": "2027-10-11",
-     "off": "07:00",
-     "homeAt": "12:00"
-    }
-   ],
-   "steps": [
-    {
-     "name": "1-untick-one",
-     "js": "__T.tap($D,false,1)"
-    },
-    {
-     "name": "2-tick-six-more",
-     "js": "__T.tap($D,true,6)"
-    },
-    {
-     "name": "3-fit-in-one",
-     "js": "__T.fit($D)"
-    },
-    {
-     "name": "4-switch-a-ride",
-     "js": "__T.press($D,/^(Taxi or car|Walk|Metro|Train|Bus|Tram|Port shuttle|Ferry|Boat).* · /)"
-    },
-    {
-     "name": "5-change-lunch",
-     "js": "__T.press($D,/^Change lunch$/)"
-    },
-    {
-     "name": "6-half-day",
-     "js": "__T.hours($D,'Half day')"
-    },
-    {
-     "name": "7-full-day",
-     "js": "__T.hours($D,'Full day')"
-    },
-    {
-     "name": "8-reload",
-     "reload": true,
-     "js": "(async()=>{window.__kairouteAt($D,'plan');await __T.sleep(8000);return __T.planText(9000)})()"
-    },
-    {
-     "name": "9-phone",
-     "phone": true,
-     "js": "(async()=>{window.__kairouteAt($D,'plan');await __T.sleep(3000);return 'phone'})()"
-    }
-   ]
-  },
-  {
-   "name": "n32-south-america",
-   "label": "Montevideo, Punta del Este, Ushuaia",
-   "legs": [
-    {
-     "k": "cruise",
-     "board": "Buenos Aires, Argentina",
-     "date": "2027-01-09",
-     "aboard": "16:00",
-     "ports": [
-      {
-       "date": "2027-01-10",
-       "place": "Montevideo, Uruguay",
-       "arrive": "08:00",
-       "aboard": "17:00"
-      },
-      {
-       "date": "2027-01-11",
-       "place": "Punta del Este, Uruguay",
-       "arrive": "08:00",
-       "aboard": "16:00"
-      },
-      {
-       "date": "2027-01-15",
-       "place": "Ushuaia, Argentina",
-       "arrive": "07:00",
-       "aboard": "15:00"
-      }
-     ],
-     "end": "Buenos Aires, Argentina",
-     "endDate": "2027-01-19",
-     "off": "07:00",
-     "homeAt": "13:00"
-    }
-   ],
-   "steps": [
-    {
-     "name": "1-untick-one",
-     "js": "__T.tap($D,false,1)"
-    },
-    {
-     "name": "2-tick-six-more",
-     "js": "__T.tap($D,true,6)"
-    },
-    {
-     "name": "3-fit-in-one",
-     "js": "__T.fit($D)"
-    },
-    {
-     "name": "4-switch-a-ride",
-     "js": "__T.press($D,/^(Taxi or car|Walk|Metro|Train|Bus|Tram|Port shuttle|Ferry|Boat).* · /)"
-    },
-    {
-     "name": "5-change-lunch",
-     "js": "__T.press($D,/^Change lunch$/)"
-    },
-    {
-     "name": "6-half-day",
-     "js": "__T.hours($D,'Half day')"
-    },
-    {
-     "name": "7-full-day",
-     "js": "__T.hours($D,'Full day')"
-    },
-    {
-     "name": "8-reload",
-     "reload": true,
-     "js": "(async()=>{window.__kairouteAt($D,'plan');await __T.sleep(8000);return __T.planText(9000)})()"
-    },
-    {
-     "name": "9-phone",
-     "phone": true,
-     "js": "(async()=>{window.__kairouteAt($D,'plan');await __T.sleep(3000);return 'phone'})()"
-    }
-   ]
-  },
-  {
    "name": "n33-hawaii",
    "label": "Hilo, Kona, Nawiliwili",
    "legs": [
@@ -1434,125 +2931,6 @@
      "js": "(async()=>{window.__kairouteAt($D,'plan');await __T.sleep(3000);return 'phone'})()"
     }
    ]
-  },
-  {
-   "name": "n34-adriatic",
-   "label": "Split, Zadar, Corfu, Bari",
-   "legs": [
-    {
-     "k": "cruise",
-     "board": "Venice, Italy",
-     "date": "2027-06-05",
-     "aboard": "16:00",
-     "ports": [
-      {
-       "date": "2027-06-06",
-       "place": "Split, Croatia",
-       "arrive": "08:00",
-       "aboard": "17:00"
-      },
-      {
-       "date": "2027-06-07",
-       "place": "Zadar, Croatia",
-       "arrive": "07:00",
-       "aboard": "13:00"
-      },
-      {
-       "date": "2027-06-08",
-       "place": "Corfu, Greece",
-       "arrive": "09:00",
-       "aboard": "18:00"
-      },
-      {
-       "date": "2027-06-09",
-       "place": "Bari, Italy",
-       "arrive": "08:00",
-       "aboard": "17:00"
-      }
-     ],
-     "end": "Venice, Italy",
-     "endDate": "2027-06-12",
-     "off": "07:00",
-     "homeAt": "11:30"
-    }
-   ],
-   "steps": [
-    {
-     "name": "1-untick-one",
-     "js": "__T.tap($D,false,1)"
-    },
-    {
-     "name": "2-tick-six-more",
-     "js": "__T.tap($D,true,6)"
-    },
-    {
-     "name": "3-fit-in-one",
-     "js": "__T.fit($D)"
-    },
-    {
-     "name": "4-switch-a-ride",
-     "js": "__T.press($D,/^(Taxi or car|Walk|Metro|Train|Bus|Tram|Port shuttle|Ferry|Boat).* · /)"
-    },
-    {
-     "name": "5-change-lunch",
-     "js": "__T.press($D,/^Change lunch$/)"
-    },
-    {
-     "name": "6-half-day",
-     "js": "__T.hours($D,'Half day')"
-    },
-    {
-     "name": "7-full-day",
-     "js": "__T.hours($D,'Full day')"
-    },
-    {
-     "name": "8-reload",
-     "reload": true,
-     "js": "(async()=>{window.__kairouteAt($D,'plan');await __T.sleep(8000);return __T.planText(9000)})()"
-    },
-    {
-     "name": "9-phone",
-     "phone": true,
-     "js": "(async()=>{window.__kairouteAt($D,'plan');await __T.sleep(3000);return 'phone'})()"
-    }
-   ]
-  },
-  {
-   "name": "g01-group-naples",
-   "label": "Group trip, Naples ship day",
-   "legs": [
-    {
-     "k": "cruise",
-     "board": "Venice, Italy",
-     "date": "2027-07-06",
-     "aboard": "16:00",
-     "inAt": "10:30",
-     "ports": [
-      {
-       "date": "2027-07-08",
-       "place": "Dubrovnik, Croatia",
-       "arrive": "08:00",
-       "aboard": "18:00"
-      },
-      {
-       "date": "2027-07-10",
-       "place": "Naples, Italy",
-       "arrive": "07:00",
-       "aboard": "18:00"
-      }
-     ],
-     "end": "Venice, Italy",
-     "endDate": "2027-07-12",
-     "off": "07:00"
-    }
-   ],
-   "onlyDays": [
-    5
-   ],
-   "steps": [],
-   "group": {
-    "day": 5
-   }
   },
   {
    "name": "g02-group-lisbon",
