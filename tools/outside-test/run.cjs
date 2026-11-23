@@ -45,7 +45,8 @@ const screen = (res, where, text) => { const c = SC.check(text); if (!c) return;
     const d = st.days[i]; if (t.onlyDays && !t.onlyDays.includes(i)) continue; if (d.type === 'sea') { res.days.push({ i, date: d.date, type: 'sea' }); continue; }
     await p.evaluate(i => window.__kairouteAt(i, 'plan'), i); await sleep(6000);
     let textEarly; if (Q.dayWait) { textEarly = await p.evaluate(() => document.querySelector('main').innerText); await sleep(Q.dayWait); }
-    const text = await p.evaluate(() => document.querySelector('main').innerText);
+    let text = await p.evaluate(() => document.querySelector('main').innerText); let gate;
+    if (Q.answerGates && /There is more than one here/.test(text)) { try { gate = await p.evaluate(a => window.__T.gate(a[0], a[1]), [i, t.gatePick || Q.gatePick || 0]); gate.asked = text.slice(0, 500); await p.evaluate(i => window.__kairouteAt(i, 'plan'), i); await sleep(6000 + (Q.dayWait || 0)); text = await p.evaluate(() => document.querySelector('main').innerText); textEarly = undefined; } catch (e) { gate = { error: String(e).slice(0, 200) }; } }
     await p.screenshot({ path: path.join(out, 'day-' + String(i).padStart(2, '0') + '.jpg'), type: 'jpeg', quality: 55, fullPage: true });
     let tk; if (Q.tickCheck && /\nLEAVE\n/.test(text)) { try { const on = await p.evaluate(i => window.__T.ticks(i).then(a => a.filter(x => x.on).map(x => x.n)), i); await p.evaluate(i => window.__kairouteAt(i, 'plan'), i); await sleep(2500);
       const norm = x => String(x).toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim(); const plan = [...text.matchAll(/\n(?:LEAVE|ARRIVE)\n[^\n]+\n\d+\n([^\n]+)/g)].map(m => m[1]); const P = new Set(plan.map(norm)), O = new Set(on.map(norm));
@@ -57,7 +58,7 @@ const screen = (res, where, text) => { const c = SC.check(text); if (!c) return;
     } catch (e) { res.errors.push('stops day ' + i + ': ' + String(e.message).slice(0, 200)); } await p.setViewportSize({ width: 1100, height: 2800 }); await p.evaluate(i => window.__kairouteAt(i, 'plan'), i); await sleep(1500); }
     const g = await p.evaluate(i => window.__T.guide(i), i); if (g && !res.guides[g.city]) res.guides[g.city] = g;
     screen(res, 'day ' + i, text); if (textEarly) screen(res, 'day ' + i + ' early', textEarly);
-    res.days.push({ i, date: d.date, type: d.type, destination: d.destination, cards, ticks: tk, text, textEarly: textEarly && textEarly !== text ? textEarly : undefined });
+    res.days.push({ i, date: d.date, type: d.type, destination: d.destination, cards, ticks: tk, gate, text, textEarly: textEarly && textEarly !== text ? textEarly : undefined });
     console.log('\n===== day ' + i + ' ' + d.date + ' ' + d.type + ' ' + (d.destination || '') + '\n' + text);
   }
   // The first sightseeing day again at phone size.
