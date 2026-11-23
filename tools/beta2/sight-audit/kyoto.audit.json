@@ -7,6 +7,13 @@
  },
  "findings": [
   {
+   "k": "NAME",
+   "t": "Koka [day trip]: shown under its local name; English name \"Kōka-shi\"",
+   "x": {
+    "id": "koka-far"
+   }
+  },
+  {
    "k": "LEN",
    "t": "Minakuchi Castle [day trip] {Q2969895 by name}: 30 min, but a castle or fortress usually takes 45-180 min",
    "x": {

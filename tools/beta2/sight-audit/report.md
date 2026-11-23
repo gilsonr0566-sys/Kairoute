@@ -1,3 +1,8 @@
+## Antalya, Turkey (Antalya, Turkey, guide from sources)
+- POS Kemer [day trip]: app is 1.25 km from Wikidata's point (not on the map by id)
+- INFO 6 sights, 1 day trips/towns; must-see: Antalya Mosque, Hadrian's Gate, Antalya Museum; top by fame: Antalya Mosque 22, Hadrian's Gate 20, Antalya Museum 15, Hidirlik Tower 13, Atatürk's House Museum 10, Kesik Minare 9
+- INFO day trips: Kemer
+
 ## Athens (Athens, built-in guide)
 - POS Corinth Canal [day trip] {Q182873 by name}: app is 1.10 km from Wikidata's point (not on the map by id)
 - NOT Ancient Corinth [day trip] {Q1363688 by name}: Wikidata has an end date (closed, dissolved or demolished)
@@ -179,18 +184,18 @@
 
 ## Istanbul, Turkey (Istanbul, Turkey, guide from sources)
 - FAME #1 best known nearby, "Fall of Constantinople" (80 Wikipedia languages, Q160077), is not offered
-- FAME #2 best known nearby, "Bosphorus Bridge" (58 Wikipedia languages, Q4484), is not offered
-- FAME #3 best known nearby, "Istanbul Metro" (55 Wikipedia languages, Q498172), is not offered
-- FAME #4 best known nearby, "Convention on preventing and combating violence against women and domestic violence" (54 Wikipedia languages, Q1697391), is not offered
-- FAME #6 best known nearby, "Siege of Constantinople" (47 Wikipedia languages, Q27900), is not offered
-- FAME #8 best known nearby, "Galata Bridge" (39 Wikipedia languages, Q81523), is not offered
-- FAME #9 best known nearby, "Siege of Constantinople" (38 Wikipedia languages, Q1750892), is not offered
-- FAME #10 best known nearby, "Siege of Constantinople" (37 Wikipedia languages, Q399482), is not offered
-- FAME #11 best known nearby, "2022 Istanbul bombing" (36 Wikipedia languages, Q115193912), is not offered
-- FAME #12 best known nearby, "Spice Bazaar" (34 Wikipedia languages, Q668641), is not offered
-- FAME #13 best known nearby, "2016 Istanbul bombing" (33 Wikipedia languages, Q22039066), is not offered
-- FAME #14 best known nearby, "Siege of Constantinople" (32 Wikipedia languages, Q312268), is not offered
-- FAME #15 best known nearby, "Eurasia Tunnel" (32 Wikipedia languages, Q5411040), is not offered
+- FAME #2 best known nearby, "Istanbul Metro" (55 Wikipedia languages, Q498172), is not offered
+- FAME #3 best known nearby, "Convention on preventing and combating violence against women and domestic violence" (54 Wikipedia languages, Q1697391), is not offered
+- FAME #5 best known nearby, "Siege of Constantinople" (47 Wikipedia languages, Q27900), is not offered
+- FAME #7 best known nearby, "Galata Bridge" (39 Wikipedia languages, Q81523), is not offered
+- FAME #8 best known nearby, "Siege of Constantinople" (38 Wikipedia languages, Q1750892), is not offered
+- FAME #9 best known nearby, "Siege of Constantinople" (37 Wikipedia languages, Q399482), is not offered
+- FAME #10 best known nearby, "2022 Istanbul bombing" (36 Wikipedia languages, Q115193912), is not offered
+- FAME #11 best known nearby, "Spice Bazaar" (34 Wikipedia languages, Q668641), is not offered
+- FAME #12 best known nearby, "2016 Istanbul bombing" (33 Wikipedia languages, Q22039066), is not offered
+- FAME #13 best known nearby, "Siege of Constantinople" (32 Wikipedia languages, Q312268), is not offered
+- FAME #14 best known nearby, "Eurasia Tunnel" (32 Wikipedia languages, Q5411040), is not offered
+- FAME #15 best known nearby, "Obelisk of Theodosius" (31 Wikipedia languages, Q763854), is not offered
 - FAME must-see "Grand Bazaar" is offered (Grand Bazaar) but not marked must-see
 - FAME must-see "Basilica Cistern" is offered (Basilica Cistern) but not marked must-see
 - FAME must-see "Galata Tower" is offered (Galata Tower) but not marked must-see
@@ -233,6 +238,7 @@
 
 ## Kyoto, Japan (Kyoto, Japan, guide from sources)
 - DUP Ujigami Shrine ~ Uji Shrine (132 m apart, same words)
+- NAME Koka [day trip]: shown under its local name; English name "Kōka-shi"
 - LEN Minakuchi Castle [day trip] {Q2969895 by name}: 30 min, but a castle or fortress usually takes 45-180 min
 - FAME #1 best known nearby, "Historic Monuments of Ancient Kyoto" (41 Wikipedia languages, Q874027), is not offered
 - FAME #2 best known nearby, "Kyoto Municipal Subway" (36 Wikipedia languages, Q728081), is not offered
@@ -276,19 +282,12 @@
 
 ## Lisbon, Portugal (Lisbon, Portugal, guide from sources)
 - POS 25 de Abril Bridge: app is 0.50 km from Wikidata's point (not on the map by id)
-- POS Águas Livres Aqueduct: app is 0.82 km from Wikidata's point (not on the map by id)
-- POS Mafra [day trip]: app 38.93333,-9.33333 is 0.60 km from the map's Mafra (node/25611738, 38.93698,-9.32824); Wikidata 0.60 km from the map
-- POS Ericeira [day trip]: app 38.96670,-9.41670 is 0.39 km from the map's Ericeira (node/130035599, 38.96324,-9.41708); Wikidata 0.16 km from the map
-- DUP Sintra ~ Sintra National Palace (40 m apart, same words)
-- NOID Basilica of Our Lady and St. Anthony [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
-- NOID Moorish Castle [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
-- NOID Quintinha de Monserrate [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- POS Águas Livres Aqueduct: app 38.72230,-9.15910 is 0.78 km from the map's Aqueduto das Águas Livres (node/13950436040, 38.72657,-9.16630); Wikidata 0.03 km from the map (app says not sure)
 - LEN Botânico Garden of Lisboa: 40 min, but a art museum or gallery usually takes 45-240 min
 - FAME #1 best known nearby, "Lisbon Metro" (44 Wikipedia languages, Q746032), is not offered
 - FAME #4 best known nearby, "Siege of Lisbon" (31 Wikipedia languages, Q815177), is not offered
 - FAME must-see "Castle of Saint George|São Jorge Castle" is offered (Castle of Saint George) but not marked must-see
-- INFO 29 sights, 11 day trips/towns; must-see: Jerónimos Monastery, Belém Tower; top by fame: Belém Tower 57, Jerónimos Monastery 53, 25 de Abril Bridge 34, Lisbon Cathedral 32, Praça do Comércio 32, Padrão dos Descobrimentos 32, Castle of Saint George 31, Santa Justa Lift 26
-- INFO day trips: Mafra, Ericeira, Sintra, Convento de Mafra, Basilica of Our Lady and St. Anthony, Parque de Santa Marta, Pena National Palace, Moorish Castle, Sintra National Palace, Quintinha de Monserrate, Quinta da Regaleira
+- INFO 29 sights, 0 day trips/towns; must-see: Jerónimos Monastery, Belém Tower; top by fame: Belém Tower 57, Jerónimos Monastery 53, 25 de Abril Bridge 34, Lisbon Cathedral 32, Praça do Comércio 32, Padrão dos Descobrimentos 32, Castle of Saint George 31, Santa Justa Lift 26
 
 ## Madrid (Madrid, built-in guide)
 - POS Nuevos Ministerios {Q2705508 by name}: app 40.44396,-3.69346 is 0.26 km from the map's Nuevos Ministerios (node/4998670036, 40.44584,-3.69170); Wikidata 0.05 km from the map

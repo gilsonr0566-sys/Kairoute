@@ -1,5 +1,6 @@
 ## Kyoto, Japan (Kyoto, Japan, guide from sources)
 - DUP Ujigami Shrine ~ Uji Shrine (132 m apart, same words)
+- NAME Koka [day trip]: shown under its local name; English name "Kōka-shi"
 - LEN Minakuchi Castle [day trip] {Q2969895 by name}: 30 min, but a castle or fortress usually takes 45-180 min
 - FAME #1 best known nearby, "Historic Monuments of Ancient Kyoto" (41 Wikipedia languages, Q874027), is not offered
 - FAME #2 best known nearby, "Kyoto Municipal Subway" (36 Wikipedia languages, Q728081), is not offered
