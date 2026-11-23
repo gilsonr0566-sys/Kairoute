@@ -163,7 +163,7 @@ if (typeof window !== "undefined" && window.ENGINE2 && window.KEngine) (function
         p.bonus = !!x.bonus; // the engine's own word: a stop it planned is part of the day, whatever the guide's listing says
         if (x.lunchCut) p.lunchCut = x.lunchCut; // lunch is inside this visit
         if (x.within) p.within = x.within; if (x.includes) p.includes = x.includes;
-        const it = Object.assign({ type: "stop", place: p, time: x.at }, x.wait ? { wait: x.wait } : {}, x.late ? { ohLate: x.late } : {});
+        const it = Object.assign({ type: "stop", place: p, time: x.at }, x.wait ? { wait: x.wait } : {}, x.late ? { ohLate: x.late } : {}, x.hours ? { hours: x.hours } : {});
         items.push(it); stops.push(it); return;
       }
       if (x.t === "meal" || x.t === "evening") {

@@ -15,67 +15,48 @@
 // ---------- 1. Opening hours ----------
 const OPEN_AIR_RE = /square|plaza|piazza|park|garden|hill|neighbo|street|promenade|old town|quarter|district|beach|viewpoint|harbou?r|waterfront|bridge|canal|walk|market street|boulevard|avenue|fountain|monument|statue/i;
 const isOpenAir = s => !!s && OPEN_AIR_RE.test((s.category || "") + " " + (s.name || "")) && !/museum|gallery|palace|castle|castel|chateau|fort|church|cathedral|basilica|chapel|mosque|synagogue|temple|monaster|abbey|library|tower|house|hall|theat|tomb/i.test((s.category || "") + " " + (s.name || ""));
-const DAY_STEMS = ["sun", "mon", "tue", "wed", "thu", "fri", "sat"];
-const isOsmHours = h => /\b(Mo|Tu|We|Th|Fr|Sa|Su|PH|off)\b|^\d\d:\d\d-\d\d:\d\d(,\d\d:\d\d-\d\d:\d\d)*$|^24\/7$/.test(h);
-// "Closed Mondays", "closed Mon and Tue", "Closed Monday–Wednesday", in the closed field or the hours text.
-function closedByText(t, iso) {
-  t = String(t || "").toLowerCase(); if (!t || !iso || !/closed|shut/.test(t)) return false;
-  const dow = new Date(iso + "T12:00:00Z").getUTCDay();
-  const seg = t.slice(t.search(/closed|shut/)).split(/[.;(]/)[0];
-  if (/except|only|between|holiday|winter|summer|season|jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec/.test(seg) && !/\b(sun|mon|tue|wed|thu|fri|sat)[a-z]*\b/.test(seg)) return false;
-  const rng = /\b(sun|mon|tue|wed|thu|fri|sat)[a-z]*\s*(?:-|–|—|to|through)\s*(sun|mon|tue|wed|thu|fri|sat)[a-z]*/.exec(seg);
-  if (rng) { const a = DAY_STEMS.indexOf(rng[1]), b = DAY_STEMS.indexOf(rng[2]); if (a <= b ? dow >= a && dow <= b : dow >= a || dow <= b) return true; }
-  return new RegExp("\\b" + DAY_STEMS[dow] + "[a-z]*\\b").test(seg);
+// ONE reading of hours (Nov 22 2026, "make opening hours and closed days reliable"): the engine's reader (part 2b:
+// the map's hours, written hours, closed-days notes, seasons, sunset) and its calendar rules (part 2c: public
+// holidays, the Sabbath, prayer times, Sunday services), with the place's own country, holidays and clock. The list,
+// the pop-up, the old planner and the new one all read this; nothing here reads hours on its own any more.
+const DAY_STEMS = ["sun", "mon", "tue", "wed", "thu", "fri", "sat"]; // crowd tips that name a day
+const hoursMemo = new Map(), siteCityMemo = new WeakMap();
+function siteCity(s) {
+  if (!s || typeof s !== "object") return null; if (siteCityMemo.has(s)) return siteCityMemo.get(s);
+  let c = null; try { for (const d of (trip && trip.days) || []) { const x = cityFor(d); if (x && (allSites(x).includes(s) || (x.restaurants || []).includes(s))) { c = x; break; } } } catch (e) {}
+  siteCityMemo.set(s, c); return c;
 }
-// Open and closing times for one date, from OpenStreetMap opening_hours (exact) or the guide's hours text
-// ("9:00–18:00", "9am to 5pm"). Returns null when there's nothing clear to go on (and for open-air places),
-// so the plan never pretends to know.
-function siteWindow(s, iso) {
+// The calendar facts of one place on one date: its country (and region), the holiday, the clock's offset from UTC.
+function hoursCtx(city, iso) {
+  const k = (city ? keyOf(city.city) : "") + "|" + iso; let c = hoursMemo.get("ctx:" + k); if (c) return c;
+  const d = city && trip ? trip.days.find(x => cityFor(x) === city) : null;
+  const place = city ? KEngine.countryOf([city.country, d && d.destination, city.city]) : null;
+  const hol = place ? KEngine.holidayOn(place, iso) : undefined, prev = place ? KEngine.holidayOn(place, KEngine.isoAdd(iso, -1)) : undefined;
+  let offset; try { const z = d ? dayZone(d) : null; if (z && z.known) offset = zoneOffset(z.tz, iso); } catch (e) {}
+  c = { place, country: place ? place.cc : null, hol: hol, holiday: hol === undefined ? undefined : !!(hol && hol.name), prevHoliday: prev === undefined ? undefined : !!(prev && prev.name), offset };
+  hoursMemo.set("ctx:" + k, c); return c;
+}
+// A place's hours for one date: { known, closed, spans, last, src, why, notes, holidayUnsure, ... } (engine part 2b+2c).
+function dayHours(s, iso, city) {
+  if (!s || !iso) return { known: false }; city = city || siteCity(s);
+  const k = (city ? keyOf(city.city) : "") + "|" + iso + "|" + (s.id || keyOf(s.name || "")) + "|" + (s.hours || "") + "|" + (s.closed || ""); let r = hoursMemo.get(k); if (r) return r;
+  if (hoursMemo.size > 20000) hoursMemo.clear();
+  const c = hoursCtx(city, iso), ctx = { holiday: c.holiday, prevHoliday: c.prevHoliday, offset: c.offset, openAir: isOpenAir(s), lat: +s.lat, lng: +s.lng, city: city ? city.city : "" };
+  r = KEngine.readPlaceHours(s, iso, ctx);
+  r = KEngine.applyDayRules(s, r, iso, Object.assign({}, ctx, { holiday: c.hol || null, country: c.country }));
+  if (r.known && !r.allDay && r.src) r.text = String(s.hours || s.closed || "");
+  hoursMemo.set(k, r); return r;
+}
+// Open and closing times for one date ({ spans, src, text, last }, spans empty when closed), or null when there's
+// nothing clear to go on, for open-air places and for places open round the clock: the plan never pretends to know.
+function siteWindow(s, iso, city) {
   if (!s || !iso || isOpenAir(s)) return null;
-  const h = String(s.hours || "").trim(); if (!h) return null;
-  // "00:00-00:00", "00:00-24:00" or "24/7" on the map is often a placeholder (an open ground like the Circus Maximus,
-  // or a mapper's guess) rather than real hours: treated as unknown, never shown as "Open 00:00–00:00".
-  if (/^(24\/7|(Mo-Su\s*)?00:00-(00|24):00)$/.test(h.replace(/\s+(?=\d)/g, " ").trim())) return null;
-  if (isOsmHours(h)) {
-    const spans = []; let cur = null;
-    for (let m = 0; m <= 1440; m += 15) {
-      const st = m < 1440 ? ohState(h, iso, m) : "closed"; if (st == null) return null;
-      if (st === "open" && cur == null) cur = m; if (st !== "open" && cur != null) { spans.push([cur, m]); cur = null; }
-    }
-    if (spans.length === 1 && spans[0][0] === 0 && spans[0][1] >= 1440) return null; // open round the clock: nothing to plan around
-    return { spans, src: "OpenStreetMap", text: h };
-  }
-  if (/24 ?hours|always open|open all day|open 24/i.test(h)) return null;
-  const tm = "(\\d{1,2})(?:[:.](\\d{2}))?\\s*(am|pm|a\\.m\\.|p\\.m\\.)?";
-  const re = new RegExp(tm + "\\s*(?:–|-|—|to|until)\\s*" + tm, "i");
-  // "Tue–Sat 10:00–18:00, Sun 10:00–15:00": use the part for the plan's weekday; if parts name days and none is
-  // this weekday, the hours for today aren't known (the closed-day check covers listed closed days).
-  const segs = h.split(/[;,]|\band\b/), dayRe = /^\s*(?:daily\s*)?(sun|mon|tue|wed|thu|fri|sat)[a-z]*\.?(?:\s*(?:-|–|—|to|through)\s*(sun|mon|tue|wed|thu|fri|sat)[a-z]*\.?)?/i;
-  const dow = new Date(iso + "T12:00:00Z").getUTCDay(), named = segs.filter(x => dayRe.test(x) && re.test(x));
-  let src = h;
-  if (named.length) { const hit = named.find(x => { const dm = dayRe.exec(x), a0 = DAY_STEMS.indexOf(dm[1].toLowerCase()), b0 = dm[2] ? DAY_STEMS.indexOf(dm[2].toLowerCase()) : a0; return a0 <= b0 ? dow >= a0 && dow <= b0 : dow >= a0 || dow <= b0; });
-    if (!hit) return null; src = hit; }
-  const m = re.exec(src); if (!m) return null;
-  if (!(m[2] || m[3]) || !(m[5] || m[6])) return null; // "2024-2025" or "Apr–Sep" aren't times
-  const toM = (H, M, ap) => { let x = +H % 24; ap = (ap || "").toLowerCase(); if (ap.startsWith("p") && x < 12) x += 12; if (ap.startsWith("a") && x === 12) x = 0; return x * 60 + (+M || 0); };
-  let a = toM(m[1], m[2], m[3] || (m[6] && +m[1] > +m[4] ? "am" : "")), b = toM(m[4], m[5], m[6]);
-  if (!m[6] && b <= a && b < 12 * 60) b += 12 * 60; // "9–5"
-  if (!(b > a) || a < 4 * 60) return null;
-  const w = { spans: [[a, b]], src: "guide", text: h };
-  const le = /last (?:entry|admission|entrance)[^0-9]{0,14}(\d{1,2})[:.](\d{2})/i.exec(h + " " + (s.tickets || ""));
-  const lb = /last (?:entry|admission|entrance)[^.]{0,30}?(\d+)\s*(min|minutes|hour|hours|h)\b[^.]{0,12}before/i.exec(h + " " + (s.tickets || ""));
-  if (le) w.last = +le[1] * 60 + +le[2]; else if (lb) w.last = b - +lb[1] * (/^h/i.test(lb[2]) ? 60 : 1);
-  return w;
+  const r = dayHours(s, iso, city); if (!r.known || r.allDay) return null;
+  return { spans: r.closed ? [] : r.spans, src: r.src === "guide" || r.src === "rule" ? r.src : r.src || "OpenStreetMap", text: r.text || "", last: r.last != null ? r.last : null };
 }
 if (typeof window !== "undefined") window.__kairouteHours = (h, iso) => siteWindow({ name: "Test ruins", category: "Ruins", hours: h }, iso || "2027-07-13");
-// Closed on the plan's date: OpenStreetMap hours with no opening that day, or else the guide's closed days.
-function siteClosed(s, iso) {
-  if (!s || !iso) return false;
-  // OpenStreetMap's opening_hours, when it reads cleanly, is the most exact source and decides; otherwise the
-  // closed days written in the guide.
-  const w = siteWindow(s, iso); if (w && w.src === "OpenStreetMap") return !w.spans.length;
-  return closedOn(s, iso) || closedByText(s.closed, iso) || closedByText(s.hours, iso);
-}
+// Closed on the plan's date (its hours, its closed days, a holiday it closes on, the Sabbath for a Jewish site).
+function siteClosed(s, iso, city) { if (!s || !iso) return false; const r = dayHours(s, iso, city); return !!(r.known && r.closed); }
 // Closed for a day's visit: closed that date, or open only at hours outside the day's time here (a port day's time
 // ashore, a hotel day's sightseeing hours), with less than half an hour of overlap. Every way a sight gets onto a
 // day checks this, so the app never plans or picks a sight for a day it can't be visited.
@@ -83,7 +64,7 @@ function siteClosed(s, iso) {
 // date; the open spans), so the list, the pop-up and the plan never disagree on whether a sight can be visited.
 function closedForDay(s, d, w) {
   if (!s || !d || !d.date) return false;
-  const f = { closed: siteClosed(s, d.date), oh: siteWindow(s, d.date) }, win = w && !w.error ? w : null;
+  const c = cityFor(d), f = { closed: siteClosed(s, d.date, c), oh: siteWindow(s, d.date, c) }, win = w && !w.error ? w : null;
   if (typeof KEngine !== "undefined" && KEngine.closedForDay) return KEngine.closedForDay(f, win, s.minutes);
   if (f.closed) return true;
   const sw = f.oh; if (!sw || !sw.spans || !sw.spans.length || !win || !(win.endBy > win.start)) return false;
@@ -91,10 +72,10 @@ function closedForDay(s, d, w) {
   return !sw.spans.some(([a, b]) => Math.min(b, win.endBy) - Math.max(a, win.start) >= need);
 }
 function closedForDayWhy(s, d, w) {
-  if (siteClosed(s, d.date)) return closedWhy(s, d.date);
-  const sw = siteWindow(s, d.date); return sw && sw.spans.length ? `open only ${sw.spans.map(([a, b]) => fmt(a) + "–" + fmt(b)).join(", ")}, outside your time here` : "";
+  if (siteClosed(s, d.date, cityFor(d))) return closedWhy(s, d.date);
+  const sw = siteWindow(s, d.date, cityFor(d)); return sw && sw.spans.length ? `open only ${sw.spans.map(([a, b]) => fmt(a) + "–" + fmt(b)).join(", ")}, outside your time here` : "";
 }
-const closedWhy = (s, iso) => { const c = String(s.closed || "").trim(); return c && closedByText(c, iso) || closedOn(s, iso) ? c : `Closed on ${fmtDow(iso)}s (${siteWindow(s, iso) ? "OpenStreetMap hours" : "listed hours"})`; };
+const closedWhy = (s, iso) => { const r = dayHours(s, iso); if (r.why && r.src === "rule") return r.why; const c = String(s.closed || "").trim(); return c && r.why === c ? c : `Closed on ${fmtDow(iso)}s (${r.src === "OpenStreetMap" ? "OpenStreetMap hours" : "listed hours"})`; };
 // How a visit fits the hours: minutes to wait for opening, and minutes past the latest sensible arrival
 // (the listed last entry, or 45 minutes before closing, less for a short visit).
 function ohFit(w, t, len) {
@@ -203,10 +184,25 @@ function moveClosed(id, to) {
 
 // Under each stop on the Day plan: one compact line with today's hours, the rush hours and the
 // traveler rating, then the ticket row for a book-ahead stop. A stop you'd reach too late gets its own warning line.
+// Beta 2: the stop's hours as the plan used them (it.hours, from the engine): the open hours and their source, or
+// "not confirmed" with the hours the plan assumed, and what a holiday, the Sabbath or prayer times do to them.
+const HOURS_SRC = { OpenStreetMap: "OpenStreetMap", guide: "travel guide", rule: "calendar rule", official: "official website" };
+function stopHoursLine(it) {
+  const h = it.hours; if (!h || (!h.need && !h.spans && !h.notes && !h.holiday)) return "";
+  const bits = [];
+  if (h.spans && h.spans.length) bits.push(`Open ${esc(spanTxt(h.spans))}${h.last != null ? `, last entry ${fmt(h.last)}` : ""}${it.wait ? " (you start at opening)" : ""}${h.seasonChange ? " (the shorter of its seasonal hours)" : ""} <small>${esc(HOURS_SRC[h.src] || h.src || "listed hours")}</small>`);
+  else if (h.unknown) bits.push(`<span class="hoursunk">Hours not confirmed</span>: planned ${fmt(h.planned[0])}–${fmt(h.planned[1])}. Check before you go`);
+  else if (h.allDay) bits.push("Open all day");
+  if (h.holiday) bits.push(`${esc(h.holiday)} (public holiday): hours not confirmed`);
+  (h.notes || []).filter(n => !/public holiday/.test(n)).forEach(n => bits.push(esc(n[0].toUpperCase() + n.slice(1))));
+  return bits.length ? `<div class="sub liveinfo hoursline">${bits.join(" · ")}</div>` : "";
+}
 function stopLiveNotes(it, d) {
   const s = it.place, out = [], bits = [];
-  if (it.ohLate) out.push(`<div class="sub livewarn">⚠ Closes at ${fmt(it.closes)}${s.oh && s.oh.last != null ? ` (last entry ${fmt(s.oh.last)})` : ""}: you'd get there too late to see it properly. Move it earlier with Choose sights, or start the day earlier.</div>`);
-  else if (s.oh && s.oh.spans.length) bits.push(`Open ${esc(spanTxt(s.oh.spans))}${s.oh.last != null ? `, last entry ${fmt(s.oh.last)}` : ""}${it.wait ? ` (you start at opening)` : ""} <small>${esc(s.oh.src === "OpenStreetMap" ? "OpenStreetMap" : "guide")}</small>`);
+  const closes = it.closes != null ? it.closes : it.hours && it.hours.spans ? (it.hours.spans.find(([a, b]) => it.time < b) || it.hours.spans[it.hours.spans.length - 1])[1] : null;
+  if (it.ohLate) out.push(`<div class="sub livewarn">⚠ ${closes != null ? `Closes at ${fmt(closes)}` : "Closes soon after you'd arrive"}${it.hours && it.hours.last != null ? ` (last entry ${fmt(it.hours.last)})` : s.oh && s.oh.last != null ? ` (last entry ${fmt(s.oh.last)})` : ""}: you'd get there too late to see it properly. Move it earlier with Choose sights, or start the day earlier.</div>`);
+  if (it.hours) out.push(stopHoursLine(it));
+  else if (!it.ohLate && s.oh && s.oh.spans.length) bits.push(`Open ${esc(spanTxt(s.oh.spans))}${s.oh.last != null ? `, last entry ${fmt(s.oh.last)}` : ""}${it.wait ? ` (you start at opening)` : ""} <small>${esc(s.oh.src === "OpenStreetMap" ? "OpenStreetMap" : "guide")}</small>`);
   if (s.cw && s.cw.busy.length) {
     const end = it.time + (s.minutes || 0), hit = s.cw.busy.filter(([a, b]) => overlap(it.time, end, a, b) > 10);
     bits.push(hit.length ? `<span class="livebusy">Usually busy ${esc(spanTxt(hit))}, expect a line</span>` : `Busiest ${esc(spanTxt(s.cw.busy))}, you miss the rush`);
@@ -219,8 +215,8 @@ function stopLiveNotes(it, d) {
 }
 function liveChecks(d, plan, add) {
   const st = plan.items.filter(i => i.type === "stop" && !i.place.along);
-  const known = st.filter(i => i.place.oh && i.place.oh.spans.length), late = st.filter(i => i.ohLate);
-  if (late.length) add("warn", `Would arrive after the last entry: ${esc(late.map(i => i.place.name + " (closes " + fmt(i.closes) + ")").join(", "))}.`);
+  const known = st.filter(i => i.hours ? i.hours.spans && i.hours.spans.length : i.place.oh && i.place.oh.spans.length), late = st.filter(i => i.ohLate);
+  if (late.length) add("warn", `Would arrive after the last entry: ${esc(late.map(i => i.place.name + (i.closes != null ? " (closes " + fmt(i.closes) + ")" : "")).join(", "))}.`);
   else if (known.length) add("ok", `Open when you get there: ${known.length} of ${st.length} stops checked against today's opening hours.`);
   tixCheck(d, st, add);
   const cw = st.filter(i => i.place.cw && i.place.cw.busy.length);
@@ -283,7 +279,7 @@ function liveAct(act, t) {
   if (act === "wxundo") { d.rain = false; d.wxKeep = true; save(); render(); return true; }
   return false;
 }
-if (typeof window !== "undefined") window.__kairouteLive = { siteWindow, siteClosed, closedByText, crowdWindows, bookAhead, ohFit, isOpenAir,
+if (typeof window !== "undefined") window.__kairouteLive = { siteWindow, siteClosed, dayHours, crowdWindows, bookAhead, ohFit, isOpenAir,
   allSites: () => { ensureBuiltins(); const out = []; Object.values(cities).forEach(c => allSites(c).forEach(s => out.push({ city: c.city, name: s.name, hours: s.hours || "", closed: s.closed || "", crowds: s.crowds || "", tickets: s.tickets || "", category: s.category || "", indoor: !!s.indoor }))); return out; } };
 
 // ---------- Weather on the Day plan ----------

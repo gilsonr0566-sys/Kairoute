@@ -97,11 +97,15 @@
         if (d.city !== key || !d.date) continue;
         d.sites = d.sites || {};
         for (const s of city.sites || []) {
-          if (!s.hours) continue;
+          if (!s.hours && !E.checkedHoursFor(s, city.name)) continue;
           const have = d.sites[s.id]; if (have && (have.closed || (have.oh && have.oh.spans && have.oh.spans.length))) continue;
-          const oh = E.ohSpans(s.hours, d.date);
-          if (!oh) { if (/^(24\/7|(Mo-Su\s*)?00:00-(00|24):00)$/.test(String(s.hours).trim())) d.sites[s.id] = Object.assign({}, have || {}, { allDay: true, hoursFrom: "OpenStreetMap" }); continue; }
-          d.sites[s.id] = Object.assign({}, have || {}, { closed: !oh.spans.length, oh: oh.spans.length ? oh : null, hoursFrom: "OpenStreetMap" });
+          // The one hours reader (part 2b) and the calendar rules (part 2c), with the day's holiday as the bucket gives it.
+          const ctx = { holiday: d.holiday === undefined ? undefined : !!(d.holiday && d.holiday.name), lat: +s.lat, lng: +s.lng, city: city.name };
+          const r = E.applyDayRules(s, E.readPlaceHours(s, d.date, ctx), d.date, Object.assign({}, ctx, { holiday: d.holiday || null, country: d.cc || null }));
+          const h = Object.assign({}, (have || {}).hours || {}, { src: r.src || "OpenStreetMap", why: r.why || "" }); ["notes", "holidayUnsure", "restUnsure", "sundayAfternoon", "seasonChange"].forEach(k => { if (r[k]) h[k] = r[k]; });
+          if (!r.known) continue;
+          if (r.allDay) { d.sites[s.id] = Object.assign({}, have || {}, { allDay: true, hoursFrom: h.src, hours: h }); continue; }
+          d.sites[s.id] = Object.assign({}, have || {}, { closed: !!r.closed, oh: r.closed ? null : { spans: r.spans, last: r.last != null ? r.last : null }, hoursFrom: h.src, hours: h });
         }
         // A landing with a cable car or funicular starting beside it: the town is at the other end.
         if (d.type === "port" && d.point && isFinite(d.point.lat) && !d.point.lift) for (const l of P.lifts || []) {

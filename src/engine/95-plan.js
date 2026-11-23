@@ -253,7 +253,9 @@
       const ownDay = id => (d.sites || {})[id] || null, gated = sd => !!(sd && (sd.closed || (sd.oh && sd.oh.spans && sd.oh.spans.length)));
       const rawDay = id => { const sd = ownDay(id), t = townOf.get(String(id)); return !gated(sd) && t && gated(ownDay(t)) ? Object.assign({}, sd, ownDay(t), { fromTown: true }) : sd; }, needById = new Map(listed.map(s => [String(s.id), E.needsHours(s)]));
       const hoursKnown = id => { const sd = rawDay(id); return !!(sd && (sd.closed || sd.allDay || (sd.oh && sd.oh.spans && sd.oh.spans.length))); };
-      const siteDay = id => { const sd = rawDay(id); return needById.get(String(id)) && !hoursKnown(id) ? Object.assign({}, sd, { oh: { spans: [[E.ASSUME_OPEN, E.ASSUME_CLOSE]], last: null }, assumed: true }) : sd; };
+      // (A church on a Sunday with no hours of its own is planned for the afternoon, after the morning services.)
+      const assumeFor = sd => [[sd && sd.hours && sd.hours.sundayAfternoon ? 13 * 60 : E.ASSUME_OPEN, E.ASSUME_CLOSE]];
+      const siteDay = id => { const sd = rawDay(id); return needById.get(String(id)) && !hoursKnown(id) ? Object.assign({}, sd, { oh: { spans: assumeFor(sd), last: null }, assumed: true }) : sd; };
       const ranked = E.rank(listed, prefs, style);
       // A town a day away whose travel guide names places to eat gets a lunch stop in its centre (the plan names the
       // guide's suggestions); it is never a dinner idea.
@@ -447,7 +449,19 @@
       // and has none known for the date is marked, and the plan says to check.
       const noHours = plan.items.filter(x => x.t === "stop" && needById.get(String(x.id)) && !hoursKnown(x.id));
       noHours.forEach(x => { x.hoursUnknown = true; });
-      if (noHours.length) explain.push("Opening hours aren't known for " + E.listWords(noHours.slice(0, 3).map(x => String(x.name).split(",")[0]), "and") + (noHours.length > 3 ? " and " + (noHours.length - 3) + " more" : "") + " on this date: planned between " + E.clock(E.ASSUME_OPEN) + " and " + E.clock(E.ASSUME_CLOSE) + ", check before you go.");
+      // Every stop carries its hours for the date as the plan used them, so the screen shows them (or "not confirmed")
+      // beside the stop: the open spans and where they come from, the last entry, and what the calendar does to them.
+      plan.items.forEach(x => { if (x.t !== "stop") return; const sd = rawDay(x.id) || {}, h = sd.hours || {};
+        const own = !x.hoursUnknown && sd.oh && sd.oh.spans && sd.oh.spans.length ? { spans: sd.oh.spans, last: sd.oh.last != null ? sd.oh.last : null, src: h.src || sd.hoursFrom || "" } : null;
+        x.hours = Object.assign({ need: !!needById.get(String(x.id)) }, own || {}, x.hoursUnknown ? { unknown: true, planned: assumeFor(sd)[0], why: h.why || "" } : {}, sd.allDay ? { allDay: true } : {},
+          h.notes && h.notes.length ? { notes: h.notes.slice() } : {}, h.holidayUnsure ? { holiday: h.holidayUnsure } : {}, h.restUnsure ? { rest: true } : {}, h.seasonChange ? { seasonChange: true } : {}, sd.fromTown ? { fromTown: true } : {}); });
+      if (noHours.length) { const sun = noHours.filter(x => x.hours.planned[0] !== E.ASSUME_OPEN), rest = noHours.filter(x => !sun.includes(x)), nm = l => E.listWords(l.slice(0, 3).map(x => String(x.name).split(",")[0]), "and") + (l.length > 3 ? " and " + (l.length - 3) + " more" : "");
+        if (rest.length) explain.push("Opening hours not confirmed for " + nm(rest) + " on this date: planned between " + E.clock(E.ASSUME_OPEN) + " and " + E.clock(E.ASSUME_CLOSE) + ". Check before you go.");
+        if (sun.length) explain.push("Sunday hours not confirmed for " + nm(sun) + ": churches hold services in the morning, so planned between " + E.clock(13 * 60) + " and " + E.clock(E.ASSUME_CLOSE) + ". Check before you go."); }
+      // The calendar: a public holiday, or the eve of one, said once for the day, with the stops whose hours don't say.
+      if (d.holiday && d.holiday.name) { const unsure = plan.items.filter(x => x.t === "stop" && x.hours && x.hours.holiday);
+        explain.push(d.holiday.name + " is a public holiday" + (d.holiday.moon ? " (expected: the date can move by a day with the moon)" : "") + ". " + (E.BIG_CLOSURE.test(d.holiday.name) ? "Most museums and sights close or keep short hours today" : "Some sights and shops keep holiday hours") + (unsure.length ? ": hours not confirmed for " + E.listWords(unsure.slice(0, 3).map(x => String(x.name).split(",")[0]), "and") + (unsure.length > 3 ? " and " + (unsure.length - 3) + " more" : "") + ". Check before you go." : ".")); }
+      else if (d.holiday && d.holiday.eveOf) explain.push("The eve of " + d.holiday.eveOf + (d.holiday.from != null ? ": from about " + E.clock(d.holiday.from) + " some sights and shops close" : ": some sights and shops close early") + ". Hours not confirmed. Check before you go.");
       // Only the traveler's own picks are "didn't fit" (Nov 20 tester: a leaving day with no picks said "Didn't fit today:
       // an abbey. Your picks are over today's time.").
       plan.folded = [].concat(...fit.kept.map(s => (s.folded || []).map(x => x.id)));
@@ -549,6 +563,12 @@
         : ` ${far.s.name} (about ${hm(far.need)} there and back with the visit) is a trip of its own: pick it for a day to plan it.`;
       if (fars[1] && !d.own) why += ` Also a trip of its own: ${fars[1].s.name}, about ${hm(fars[1].need)}.`;
       p.explain = (p.explain || []).concat([`Free time: about ${hm(free)} left after the last stop, before ${win.hard ? "the time to be back" : "the day ends"} (${E.clock(p.endBy)}). Linger where you like.${why}`]); });
+    // A pick moved to another day says so only when that day really has it (Nov 22: "closed on Tuesday, so it's planned
+    // on Monday" while Monday had no room for it): otherwise the day it was picked for says it didn't fit there either.
+    for (const [id, m] of movedTo) { const p = out[m.from], q = out[m.to]; if (!p || !p.explain) continue;
+      const has = q && q.items && (q.items.some(x => x.t === "stop" && (String(x.id) === id || (x.includesIds || []).map(String).includes(id))) || (q.folded || []).map(String).includes(id));
+      if (has) continue; const k = p.explain.findIndex(t => t.startsWith(m.name + (m.inside ? " is inside " : " is closed on ")));
+      if (k >= 0) p.explain[k] = m.inside ? m.name + " is inside " + m.inside + ", planned on " + dayWord(m.to) + ", but it didn't fit that day." : m.name + " is closed on " + dayWord(m.from) + ", and it didn't fit on " + dayWord(m.to) + ", the day it's open."; }
     // A sight offered for free time is never one planned on any day.
     out.forEach(p => { if (p && p.suggest) p.suggest = p.suggest.filter(x => !plannedIds.has(String(x.id))); });
     // Each thing said once.

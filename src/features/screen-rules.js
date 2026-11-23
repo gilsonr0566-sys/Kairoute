@@ -123,6 +123,21 @@ function rules(text, info = {}) {
   // ---- S3: readable
   const RL = raw.split('\n'), foreign = RL.filter((l, k) => SCRIPT.test(l) && !/^[A-Za-z]+(-[A-Za-z]+)+\b/.test((RL[k + 1] || '').trim()) && !/USEFUL WORDS/i.test(RL.slice(Math.max(0, k - 30), k).join(' '))); /* a phrase card shows the local words with how to say them */ if (foreign.length) add('S3', 'English letters', `"${foreign[0].trim().slice(0, 70)}"`);
   P.rides.forEach(r => r.choices.forEach(c => { if (c.min > Math.max(3 * r.min, r.min + 90)) add('S3', 'no absurd ride choice', `"${c.txt}" offered beside ${r.head}`); }));
+  // ---- Opening hours (Nov 22, "make opening hours and closed days reliable"): what a stop's own hours line says agrees
+  // with the times beside it. A visit starts after it opens and ends by its closing (a last entry is kept); a stop whose
+  // hours aren't known says "not confirmed" with the hours it was planned in, and its visit sits inside them; a stop is
+  // never planned on a day its line says it's closed.
+  for (const r of stops) { if (r.key === 'L') continue; const line = (r.notes || []).find(n => /^Open \d|Hours not confirmed|^Closed/.test(n)) || '';
+    const times = [...line.matchAll(/(\d{1,2}:\d\d\s*[ap]m)\s*[–-]\s*(\d{1,2}:\d\d\s*[ap]m)/gi)].map(m => [T(m[1]), T(m[2])]).filter(x => x[0] != null && x[1] != null).map(([a, b]) => [a, b <= a ? b + 1440 : b]);
+    const lastM = /last entry (\d{1,2}:\d\d\s*[ap]m)/i.exec(line), last = lastM ? T(lastM[1]) : null, until = r.leave != null ? r.leave : r.until;
+    if (/^Closed/.test(line)) { add('S2', 'never planned while closed', `${r.name}: planned at ${clock(r.arrive)} but its hours line says "${line.slice(0, 60)}"`); continue; }
+    if (/Hours not confirmed/.test(line) && !times.length) add('S2', 'unknown hours said with the planned window', `${r.name}: "Hours not confirmed" without the hours it was planned in`);
+    if (!times.length || r.arrive == null) continue;
+    const span = times.find(([a, b]) => r.arrive >= a - 1 && r.arrive < b) || null;
+    if (!span) { add('S2', 'never planned while closed', `${r.name}: arrives ${clock(r.arrive)}, its hours are ${line.slice(0, 70)}`); continue; }
+    if (until != null && until > span[1] + 1) add('S2', 'visit ends by closing', `${r.name}: stays until ${clock(until)}, closes ${clock(span[1])}`);
+    if (last != null && r.arrive > last + 1) add('S2', 'arrive by last entry', `${r.name}: arrives ${clock(r.arrive)}, last entry ${clock(last)}`);
+  }
   return out;
 }
 

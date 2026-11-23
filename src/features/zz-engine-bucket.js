@@ -108,14 +108,22 @@ function engineBucket(withOld) {
     if (city && d.date) {
       let on = cm.dates.get(d.date);
       if (!on) { on = { sites: {}, eats: {} };
-        allSites(city).forEach(s => { const oh = siteWindow(s, d.date), cw = crowdWindows(Object.assign({ _city: ck }, s), d.date);
-          on.sites[s.id] = { closed: siteClosed(s, d.date), oh: oh ? { spans: oh.spans, last: oh.last != null ? oh.last : null } : null, busy: cw ? cw.busy : null }; });
+        // The ONE reading of hours (dayHours, live.js: the engine's reader with the place's holidays and calendar rules),
+        // and what the plan must say about it: where the hours come from, why they're unknown, what the calendar does.
+        allSites(city).forEach(s => { const r = dayHours(s, d.date, city), oh = siteWindow(s, d.date, city), cw = crowdWindows(Object.assign({ _city: ck }, s), d.date);
+          const h = { src: r.src || "", why: r.why || "" }; ["notes", "holidayUnsure", "restUnsure", "sundayAfternoon", "seasonChange"].forEach(k => { if (r[k]) h[k] = r[k]; });
+          on.sites[s.id] = { closed: siteClosed(s, d.date, city), oh: oh && oh.spans.length ? { spans: oh.spans, last: oh.last != null ? oh.last : null } : null, busy: cw ? cw.busy : null, hours: h };
+          if (r.known && r.allDay && !isOpenAir(s)) on.sites[s.id].allDay = true; });
         // Each place to eat, the same facts as a sight for that date (Nov 19 fold: one hours rule): closed that day, and its
         // open spans when its hours are known. A table the traveler booked has no hours limit.
-        (city.restaurants || []).forEach(r0 => { const r = Object.assign({}, r0, { hours: hoursOf(r0) }), w = r.booked ? null : siteWindow(r, d.date);
-          on.eats[keyOf(r.name)] = { closed: !r.booked && siteClosed(r, d.date), oh: w ? { spans: w.spans, last: null } : null }; });
+        (city.restaurants || []).forEach(r0 => { const r = Object.assign({}, r0, { hours: hoursOf(r0) }), w = r.booked ? null : siteWindow(r, d.date, city);
+          on.eats[keyOf(r.name)] = { closed: !r.booked && siteClosed(r, d.date, city), oh: w && w.spans.length ? { spans: w.spans, last: null } : null }; });
         cm.dates.set(d.date, on); }
       facts.sites = on.sites; facts.eats = on.eats;
+      // The date's calendar in this place: its country, and the public holiday (or the eve of one), from the app's own
+      // holiday data (engine part 1b). Unknown (outside the data's years, or a country not known) is left out, never "none".
+      const hc = hoursCtx(city, d.date); if (hc.place) facts.cc = hc.place.cc;
+      if (hc.hol) facts.holiday = Object.assign({ country: hc.place.name }, hc.hol); else if (hc.hol === null) facts.holiday = null;
     }
     // What's still missing from the bucket for this day. Planning a day waits until its bucket is complete (or says
     // plainly what it planned without), so a plan is never made from half the pieces and then changed as the rest arrive.
