@@ -39,7 +39,21 @@ const notRun = parts.filter(k => !ran(k)).length + (all.match(/^NOT TESTED/mg) |
 const SAFETY_RULES = /^(FAIL|WARN)\s+(gone|reach|leaveby|before|night|unverified|backwait|back|start|order|nan)\s+(\d+)\s*$/;
 const s1Count = parts.some(ran) ? all.split('\n').reduce((a, l) => { const m = SAFETY_RULES.exec(l); return a + (m ? +m[3] : 0); }, 0) + (all.match(/^REFUSED --warn/mg) || []).length : null;
 const T = (n, what) => `| ${what} | ${n == null ? 'NOT TESTED' : n} | ${n === 0 ? 'met' : n == null ? 'NOT MET (not tested)' : 'NOT MET'} |`;
-const targetsMet = unverified === 0 && crit === 0 && notRun === 0 && s1Count === 0;
+const escapes = read(path.join(ROOT, 'docs', 'qa', 'escapes.md')).split('\n').filter(l => /^\| E\d+/.test(l));
+// Spec v2 T2: the latest nightly run. Its new-trips job turns red on a safety finding, which holds this release until a
+// later nightly is clean or docs/qa/nightly-cleared.txt names that run as a proven false alarm.
+const nightly = (process.env.NIGHTLY || '').split(' '), nJobs = (() => { try { return JSON.parse(process.env.NIGHTLY_JOBS || '[]'); } catch (e) { return []; } })();
+const cleared = read(path.join(ROOT, 'docs', 'qa', 'nightly-cleared.txt'));
+const nRed = nJobs.find(j => /^New unusual trips/.test(j.name || '') && j.conclusion === 'failure');
+const nightlyHold = nightly[0] && nRed && !cleared.includes(nightly[0]) ? 1 : 0;
+const nightlyLine = !nightly[0] ? 'No finished nightly run found (not blocking: the nightly attacks beyond the gate).' : nRed ? (nightlyHold ? `HOLD: the nightly run ${nightly[1]} (${nightly[2]}) found a safety problem.` : `The nightly run ${nightly[1]} found a problem, cleared as a false alarm in docs/qa/nightly-cleared.txt.`) : `The nightly run ${nightly[1]} (${nightly[2]}) found no safety problem.`;
+// Spec v2 T5: a WARN only for a rule in docs/qa/warns.json, with an owner and a date not passed.
+const today = new Date().toISOString().slice(0, 10);
+const allowed = (() => { try { return JSON.parse(read(path.join(ROOT, 'docs', 'qa', 'warns.json'))).warns || []; } catch (e) { return []; } })();
+const badWarns = all.split('\n').map(l => /^WARN\s+([\w-]+)\s+(\d+)/.exec(l)).filter(Boolean).filter(m => { const a = allowed.find(w => w.rule === m[1]); return !a || !a.owner || !(a.until >= today); }).map(m => m[1]);
+// Spec v2 T8: an open S1 or P1 row in the escaped-bug ledger.
+const openSevere = escapes.filter(l => { const c = l.split('|').map(x => x.trim()); return /^(S1|P0|P1)\b/.test(c[5] || '') && /^\*\*Open/.test(c[8] || ''); }).map(l => l.split('|')[1].trim());
+const targetsMet = unverified === 0 && crit === 0 && notRun === 0 && s1Count === 0 && !nightlyHold && !badWarns.length && !openSevere.length;
 const allPass = parts.every(k => needs[k] && needs[k].result === 'success');
 const ok = allPass && targetsMet;
 
@@ -48,7 +62,6 @@ const live = process.env.LIVE || '';
 const range = live && sh(`git cat-file -t ${live}`) === 'commit' ? `${live}..HEAD` : '';
 const corrections = range ? sh(`git log --no-merges --format='- %h %s' ${range}`).split('\n').filter(Boolean) : [];
 const testsAdded = range ? sh(`git diff --name-status ${range} -- tools docs/qa .github/workflows`).split('\n').filter(l => /^[AM]\s/.test(l) && /check|test|rules|oracle|mutants|gate|odd|flow|audit|truth|scenario|leaks|stress/i.test(l)) : [];
-const escapes = read(path.join(ROOT, 'docs', 'qa', 'escapes.md')).split('\n').filter(l => /^\| E\d+/.test(l));
 const openEsc = escapes.filter(l => /\*\*Open\*\*|Partly|partly covered|\bGap\b/i.test(l)).map(l => { const c = l.split('|').map(x => x.trim()); return `- ${c[1]} ${c[4]} (${c[5]}): ${c[8].replace(/\*\*/g, '')}`; });
 const gaps = read(path.join(ROOT, 'docs', 'qa', 'test-map.md')).split('\n').filter(l => /NOT TESTED/.test(l) && /^\|/.test(l)).map(l => { const c = l.split('|').map(x => x.trim()); return `- ${c[1]}: ${c.slice(2).filter(Boolean).join('; ').replace(/\*\*/g, '')}`; });
 const s1 = all.split('\n').filter(l => /^\s+S1 /.test(l));
@@ -58,7 +71,11 @@ const out = [];
 out.push(`# Beta 2 release report`, ``, `Commit ${(process.env.GITHUB_SHA || sh('git rev-parse HEAD')).slice(0, 8)}${process.env.GITHUB_RUN_NUMBER ? ', gate run ' + process.env.GITHUB_RUN_NUMBER : ''}, ${new Date().toISOString().replace('T', ' ').slice(0, 16)} UTC.${live ? ' Compared with the published build ' + live + '.' : ''}`, ``);
 out.push(`## Release recommendation: **${ok ? 'RELEASE OK' : 'DO NOT RELEASE'}**`, ``);
 out.push(ok ? 'Every part ran and passed, and every release target is 0. This is a gate, not a claim that every failure is gone.' : `${!allPass ? 'A part failed or was not tested (not tested is never a pass). ' : ''}${!targetsMet ? 'A release target is not met.' : ''}`, ``);
-out.push(`## Release targets (each must be 0)`, ``, `| Target | Count | |`, `|---|---|---|`, T(unverified, 'Unverified return connections presented as confirmed'), T(crit, 'Unhandled critical workflow failures'), T(notRun, 'Mandatory tests not executed'), T(s1Count, 'Safety findings (S1), including any known or warned'), ``, `A safety finding is never a warning: it blocks the release until fixed.`, ``);
+out.push(`## Release targets (each must be 0)`, ``, `| Target | Count | |`, `|---|---|---|`, T(unverified, 'Unverified return connections presented as confirmed'), T(crit, 'Unhandled critical workflow failures'), T(notRun, 'Mandatory tests not executed'), T(s1Count, 'Safety findings (S1), including any known or warned'), ``, `A safety finding is never a warning: it blocks the release until fixed.`, ``,
+  `| Also required (QA spec v2) | Count | |`, `|---|---|---|`,
+  `| Nightly safety finding not yet fixed or cleared | ${nightlyHold} | ${nightlyHold ? 'NOT MET' : 'met'} |`,
+  `| Warnings without an owner or past their date (docs/qa/warns.json) | ${badWarns.length} | ${badWarns.length ? 'NOT MET: ' + [...new Set(badWarns)].join(', ') : 'met'} |`,
+  `| Open S1 or P1 rows in the escaped-bug ledger | ${openSevere.length} | ${openSevere.length ? 'NOT MET: ' + openSevere.join(', ') : 'met'} |`, ``, nightlyLine, ``);
 out.push(`## 1. What was tested`, ``, `| Part | Result |`, `|---|---|`, ...parts.map(k => `| ${NAMES[k] || k} | ${word(needs[k] && needs[k].result)} |`), ``);
 out.push(`## 2. What was not tested`, ``, ...(parts.filter(k => !ran(k)).map(k => `- ${NAMES[k] || k}: ${word(needs[k] && needs[k].result)}`)), `- Known gaps, never tested by the gate (docs/qa/test-map.md):`, ...gaps.map(g => '  ' + g), `- AI answers at runtime: AI is off by Richard's rule, so they are not tested here. The recorded stories are checked at build time (factcheck.json), not in this gate.`, ``);
 out.push(`## 3-5. Counts`, ``, `- Gate parts: ${parts.filter(k => needs[k] && needs[k].result === 'success').length} passed, ${parts.filter(k => needs[k] && needs[k].result === 'failure').length} failed, ${parts.filter(k => !ran(k)).length} not tested (blocked, skipped or cancelled).`,

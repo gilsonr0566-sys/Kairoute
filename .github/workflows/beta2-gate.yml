@@ -16,6 +16,7 @@ on:
     branches: ["claude/project-thread-xrdp7v", "claude/project-thread-8wi5ra"]  # other branches: run it by hand (workflow_dispatch), so one commit is not tested twice at once
 permissions:
   contents: read
+  actions: read # the release report reads the latest nightly run (a nightly safety finding holds the release)
 defaults:
   run:
     shell: bash  # with pipefail: a check piped into the log still fails its step
@@ -285,10 +286,15 @@ jobs:
       - name: Write the release report (Richard's 14 items and 3 release targets; NOT TESTED is never a pass)
         env:
           R: ${{ toJSON(needs) }}
+          GH_TOKEN: ${{ github.token }}
         run: |
           # The published build, to list the corrections and the tests added since (its commit message names the build).
           LIVE=$(git ls-remote https://github.com/gilsonr0566-sys/Kairoute-Beta2 HEAD >/dev/null 2>&1 && git clone -q --depth 1 https://github.com/gilsonr0566-sys/Kairoute-Beta2 /tmp/pub && git -C /tmp/pub log -1 --format=%s | grep -oE "[0-9a-f]{7,}" | head -1 || true)
           export LIVE
+          # The latest finished nightly run: a safety finding there holds this release (spec v2, T2).
+          NIGHTLY=$(gh api "repos/$GITHUB_REPOSITORY/actions/workflows/truth-nightly.yml/runs?status=completed&per_page=1" --jq '.workflow_runs[0] | "\(.id) \(.html_url) \(.created_at)"' 2>/dev/null || true)
+          if [ -n "$NIGHTLY" ]; then NID=${NIGHTLY%% *}; NIGHTLY_JOBS=$(gh api "repos/$GITHUB_REPOSITORY/actions/runs/$NID/jobs" --jq '[.jobs[] | {name, conclusion}]' 2>/dev/null || echo '[]'); else NIGHTLY_JOBS='[]'; fi
+          export NIGHTLY NIGHTLY_JOBS
           node tools/truth/release-report.cjs parts > release-report.md || true
           cat release-report.md >> "$GITHUB_STEP_SUMMARY"; cat release-report.md
           grep -q "RELEASE OK" release-report.md

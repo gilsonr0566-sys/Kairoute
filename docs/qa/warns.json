@@ -1,0 +1,6 @@
+{
+  "_": "Known S2 findings the gate may list as WARN instead of failing (spec v2, T5). Never a safety rule (tools refuse those). Each entry needs an owner and an end date at most 7 days ahead; after it, the warning fails the release. Renewing one is a ledger row.",
+  "warns": [
+    { "rule": "walk", "tool": "odd-trips", "owner": "Rewrite Beta 2 rides as one clean layer", "until": "2026-11-30", "why": "a ride a little slower than walking on short hops, being reworked with the ride-time accuracy change (E17)" }
+  ]
+}
