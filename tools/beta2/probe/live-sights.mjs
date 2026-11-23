@@ -9,11 +9,11 @@ for (const [k, v] of Object.entries(marks)) console.log(`${html && html.includes
 const ai = await get(SITE + 'ai.json', true), H = ai && ai.url && ai.url.replace(/\/$/, '');
 console.log('helper', H ? 'found' : 'NOT FOUND');
 if (H) {
-  const want = { 'Paris, France': ['Bastille'], 'Jerusalem, Israel': ['Holy Land', 'Old City', 'Via Dolorosa'], 'Lisbon, Portugal': ['Santa Justa', 'Belém Tower'], 'Kyoto, Japan': ['Historic Monuments of Ancient Kyoto'] };
+  const want = { 'Kusadasi, Turkey': [''], 'Kuşadası, Turkey': [''], 'Selcuk, Turkey': [''] };
   for (const [city, names] of Object.entries(want)) {
     const j = await get(H + '/sources?city=' + encodeURIComponent(city), true);
     console.log(`SOURCES ${city}: ${j && j.stops ? j.stops.length + ' stops' : 'no answer'}`);
-    for (const n of names) for (const x of ((j && j.stops) || []).filter(x => x.name.includes(n)).slice(0, 3))
-      console.log(`  ${x.name} ${x.wd} sl${x.sl} kinds=${(x.kinds || []).join(',')} gone=${!!x.gone} area=${x.area || ''} partOf=${(x.partOf || []).join(',')}`);
+    for (const n of names) for (const x of ((j && j.stops) || []).filter(x => x.name.includes(n)).slice(0, 60))
+      console.log(`  ${x.name} | local=${x.local || ''} | en=${x.en || ''} | src=${(x.src || []).length} ${x.wd} sl${x.sl} kinds=${(x.kinds || []).join(',')} gone=${!!x.gone} area=${x.area || ''} partOf=${(x.partOf || []).join(',')}`);
   }
 }
