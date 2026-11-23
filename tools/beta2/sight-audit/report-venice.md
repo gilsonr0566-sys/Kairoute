@@ -2,6 +2,7 @@
 - POS Padua [day trip] {Q617 by name}: app is 1.12 km from Wikidata's point (not on the map by id)
 - DUP Palazzo della Ragione ~ Palazzo del Bo' (182 m apart, same words)
 - NOID Santi Giovanni e Paolo Church: no Wikidata id and nothing of the name on the map nearby (from Wikidata (Wikipedia in many languages), national heritage register, Wikivoyage (English), Wikipedia in Italian)
+- NOID Lace Museum [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
 - NOID Cathedral of Mestre [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
 - NOID Bissuola Park [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
 - NOID Archaeological Museum [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
@@ -18,6 +19,6 @@
 - FAME #6 best known nearby, "Ponte della Libertà" (26 Wikipedia languages, Q1134699), is not offered
 - FAME #7 best known nearby, "Portrait of the Four Tetrarchs" (26 Wikipedia languages, Q2570221), is not offered
 - FAME #8 best known nearby, "MOSE" (25 Wikipedia languages, Q770350), is not offered
-- INFO 31 sights, 15 day trips/towns; must-see: St Mark's Basilica, Doge's Palace, Santa Maria della Salute, Piazza San Marco, Bridge of Sighs, Rialto Bridge, Grand Canal, Murano; top by fame: St Mark's Basilica 65, Doge's Palace 60, Piazza San Marco 54, Grand Canal 54, Rialto Bridge 52, Murano 52, Bridge of Sighs 51, Santa Maria della Salute 46
-- INFO day trips: Mestre, Venice/Torcello, Padua, Cathedral of Mestre, Piazza Ferretto, Bissuola Park, Archaeological Museum, Church of Santa Fosca, Saint Anthony's cathedral, Scrovegni Chapel, Astronomic Observatory, Palazzo della Ragione, Palazzo del Bo', Botanic Garden, Eremitani Civic Museum
+- INFO 31 sights, 17 day trips/towns; must-see: St Mark's Basilica, Doge's Palace, Santa Maria della Salute, Piazza San Marco, Bridge of Sighs, Rialto Bridge, Grand Canal, Murano; top by fame: St Mark's Basilica 65, Doge's Palace 60, Piazza San Marco 54, Grand Canal 54, Rialto Bridge 52, Murano 52, Bridge of Sighs 51, Santa Maria della Salute 46
+- INFO day trips: Venice/Burano, Mestre, Venice/Torcello, Padua, Lace Museum, Cathedral of Mestre, Piazza Ferretto, Bissuola Park, Archaeological Museum, Church of Santa Fosca, Saint Anthony's cathedral, Scrovegni Chapel, Astronomic Observatory, Palazzo della Ragione, Palazzo del Bo', Botanic Garden, Eremitani Civic Museum
 
