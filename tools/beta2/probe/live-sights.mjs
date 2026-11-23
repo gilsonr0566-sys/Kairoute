@@ -1,4 +1,4 @@
-// Live check (Nov 23): is the published Beta 2 app carrying the sight rules, and does the live helper send the facts
+// Live check (Nov 23; rerun after the sr11 helper): is the published Beta 2 app carrying the sight rules, and does the live helper send the facts
 // they read? Reads the live page for the rules' code, then asks the live helper's /sources for four places.
 const SITE = 'https://gilsonr0566-sys.github.io/Kairoute-Beta2/';
 const get = async (u, j) => { for (let t = 0; t < 3; t++) { try { const r = await fetch(u, { cache: 'no-store' }); if (r.ok) return j ? await r.json() : await r.text(); console.log('HTTP', r.status, u); } catch (e) { console.log('ERR', e.message, u); } await new Promise(x => setTimeout(x, 5000)); } return null; };
