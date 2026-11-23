@@ -40,6 +40,15 @@ const stops = [
   stop('Santa Testa Lift', [], 26, 0.9, 0.9),
   stop('Musei Testolini', ['art-museum', 'building', 'museum', 'structure'], 46, -0.3, -0.6),
   stop('Regional Museum of Testopolis', ['building', 'museum', 'structure'], 12, 1.8, -1.6),
+  // Nov 23 fold rule: a chapel the encyclopedia files under a palace, seen inside the museum whose travel-guide listing
+  // names it (the Sistine Chapel and the Vatican Museums); a fresco inside that chapel goes with it.
+  stop('Papal Testpalace', ['building', 'palace', 'structure'], 60, -0.4, -1.7),
+  stop('Testine Chapel', ['building', 'chapel', 'church', 'structure'], 90, -0.3, -1.8, { partOf: ['Q133'], src: SRC.slice(1) }),
+  stop('Testican Museums', ['art-museum', 'building', 'museum', 'structure'], 65, -0.5, -1.55, { en: 'One of the greatest art galleries in the world, the museum is most famous for its spiral staircase, the Testello Rooms and the exquisitely decorated Testine Chapel. It stands opposite the Church of San Testo.' }),
+  stop('The Creation of Testam', ['feature'], 45, -0.31, -1.81, { partOf: ['Q134'] }),
+  stop('Church of San Testo', ['building', 'church', 'structure'], 40, -0.7, -1.4),
+  stop('Camp Testou', ['building', 'structure'], 80, 2.4, 2.4),
+  stop('Testa Club Museum', ['building', 'museum', 'structure'], 40, 2.45, 2.45, { en: 'Trophies of the club. The museum can be visited by booking the Camp Testou Experience package.' }),
 ];
 const guideSite = Object.assign({ id: 'wv~Q131', name: 'Musei Testolini', minutes: 30, category: 'Sight', fromGuide: true, tags: ['from-guide'] }, at(-0.3, -0.6));
 // The guide's own museum, and the travel guide's listing of it under its Italian name 400 m off (Messina, Nov 23).
@@ -81,6 +90,11 @@ const ok = (what, cond, got) => { n++; if (!cond) fails.push(what + (got !== und
   ok('a holy place with thin data (Bethany) stays', !!get('Bethtest'));
   ok('a saint\'s name on a lift is no church ("Santa Justa Lift")', !!get('Santa Testa Lift') && get('Santa Testa Lift').cat !== 'Church', get('Santa Testa Lift'));
   ok('a travel-guide listing of a sight the guide already has, under its local name, is no second stop (Museo regionale / Regional Museum)', !get('Museo regionale di Testopolis') && sites.filter(s => /Regional Museum of Testopolis/i.test(s.name)).length === 1, sites.filter(s => /Testopolis/.test(s.name)));
+  ok('a chapel a museum\'s listing names as seen inside it is part of that museum visit, not its own stop (Sistine Chapel)', !get('Testine Chapel'), sites.map(s => s.name));
+  ok('a fresco inside that chapel is no stop of its own either', !get('The Creation of Testam'));
+  ok('the museum itself stays', !!get('Testican Museums'));
+  ok('a church the museum\'s listing names as "opposite" stays its own stop', !!get('Church of San Testo'));
+  ok('a place a museum\'s listing names only inside a longer name (a stadium tour package) stays its own stop', !!get('Camp Testou'));
   const rel = await pg.evaluate(() => window.__kairoutePlaceRel({ name: 'Holstentor', lat: 53.8662, lng: 10.6797 }, { name: 'Holstentor', lat: 53.55, lng: 9.99 })[0]);
   ok('the same name 59 km apart is two places (Holstentor in Lubeck is not one near Hamburg)', rel !== 'same', rel);
   ok('no source sight is called "Church" unless it is one', !sites.some(s => s.cat === 'Church' && /mosque|synagogue|shrine|-ji|-taisha/i.test(s.name)));
