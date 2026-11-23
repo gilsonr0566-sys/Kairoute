@@ -49,7 +49,11 @@ const PROBE = () => {
   const nm = n => { if (!n || !n.tagName) return '?'; const t = (n.innerText || '').trim().replace(/\s+/g, ' ').slice(0, 40); return n.tagName.toLowerCase() + (n.id ? '#' + n.id : '') + (n.className && typeof n.className === 'string' ? '.' + n.className.trim().split(/\s+/).slice(0, 2).join('.') : '') + (t ? ' "' + t + '"' : ''); };
   try { new PerformanceObserver(l => { for (const e of l.getEntries()) F.shifts.push({ t: e.startTime, v: e.value, input: e.hadRecentInput, src: (e.sources || []).slice(0, 3).map(s => nm(s.node) + ' ' + Math.round(s.previousRect.top) + '->' + Math.round(s.currentRect.top)) }); }).observe({ type: 'layout-shift', buffered: true }); } catch (e) {}
   try { new PerformanceObserver(l => { for (const e of l.getEntries()) if (/pointer|touch|click|key/.test(e.name)) F.events.push({ t: e.startTime, name: e.name, dur: e.duration, wait: e.processingStart - e.startTime, run: e.processingEnd - e.processingStart }); }).observe({ type: 'event', durationThreshold: 16, buffered: true }); } catch (e) {}
-  const sc = () => { const pane = [...document.querySelectorAll('.pane, main')].find(x => x.scrollHeight > x.clientHeight + 4 && /(auto|scroll)/.test(getComputedStyle(x).overflowY)); return pane ? pane.scrollTop : (document.scrollingElement || document.documentElement).scrollTop; };
+  // The part of the screen the traveler scrolls: on tablets the list pane (the map pane beside it pans the map), on a
+  // phone the page itself. The biggest scrollable pane on screen.
+  const scroller = () => { const ps = [...document.querySelectorAll('.pane, main, #view')].filter(x => x.scrollHeight > x.clientHeight + 4 && /(auto|scroll)/.test(getComputedStyle(x).overflowY) && !x.closest('.maplibregl-map, .leaflet-container')).sort((a, b) => b.clientHeight * b.clientWidth - a.clientHeight * a.clientWidth); return ps[0] || null; };
+  const sc = () => { const pane = scroller(); return pane ? pane.scrollTop : (document.scrollingElement || document.documentElement).scrollTop; };
+  F.zone = () => { const pane = scroller(); if (!pane) return null; const r = pane.getBoundingClientRect(); return { l: Math.max(0, r.left), r: Math.min(innerWidth, r.right), t: Math.max(0, r.top), b: Math.min(innerHeight, r.bottom) }; };
   let last = null; const tick = () => { const y = Math.round(sc()); if (last !== null && y !== last) F.scrolls.push({ t: performance.now(), from: last, to: y, touch: performance.now() < F.touchUntil }); last = y; requestAnimationFrame(tick); }; requestAnimationFrame(tick);
   F.y = () => Math.round(sc());
   const start = () => new MutationObserver(m => { F.muts += m.length; F.lastMut = performance.now(); }).observe(document.documentElement, { subtree: true, childList: true, attributes: true, characterData: true });
@@ -77,7 +81,7 @@ async function runSize(browser, size, base) {
   const shot = async name => { const f = String(shotN++).padStart(2, '0') + '-' + name.replace(/[^A-Za-z0-9]+/g, '-').slice(0, 40) + '.jpg'; await p.screenshot({ path: path.join(dir, f), type: 'jpeg', quality: 62 }).catch(() => {}); R.screens++; return f; };
   const now = () => p.evaluate(() => performance.now());
   const feelSince = t0 => p.evaluate(t0 => { const F = window.__feel; return { shifts: F.shifts.filter(s => s.t >= t0), scrolls: F.scrolls.filter(s => s.t >= t0), events: F.events.filter(e => e.t >= t0 - 5), y: F.y(), muts: F.muts, lastMut: F.lastMut }; }, t0);
-  const geom = () => p.evaluate(() => ({ y: window.__feel.y(), vh: innerHeight, wide: document.documentElement.scrollWidth - innerWidth, h: Math.max(document.documentElement.scrollHeight, ...[...document.querySelectorAll('.pane, main')].map(x => x.scrollHeight)), spin: [...document.querySelectorAll('.spinner, .spin, [aria-busy="true"]')].filter(x => x.offsetParent).length, head: ((document.querySelector('main h1, main h2, .dayhead, header h1') || {}).innerText || '').trim().slice(0, 60), hash: location.hash }));
+  const geom = () => p.evaluate(() => ({ y: window.__feel.y(), vh: innerHeight, wide: document.documentElement.scrollWidth - innerWidth, h: (() => { const z = [...document.querySelectorAll('.pane, main, #view')].filter(x => x.scrollHeight > x.clientHeight + 4 && /(auto|scroll)/.test(getComputedStyle(x).overflowY)).sort((a, b) => b.clientHeight * b.clientWidth - a.clientHeight * a.clientWidth)[0]; return z ? z.scrollHeight : document.documentElement.scrollHeight; })(), ph: (() => { const z = [...document.querySelectorAll('.pane, main, #view')].filter(x => x.scrollHeight > x.clientHeight + 4 && /(auto|scroll)/.test(getComputedStyle(x).overflowY)).sort((a, b) => b.clientHeight * b.clientWidth - a.clientHeight * a.clientWidth)[0]; return z ? z.clientHeight : innerHeight; })(), spin: [...document.querySelectorAll('.spinner, .spin, [aria-busy="true"]')].filter(x => x.offsetParent).length, head: ((document.querySelector('main h1, main h2, .dayhead, header h1') || {}).innerText || '').trim().slice(0, 60), hash: location.hash }));
   // Wait until the screen has stopped changing (no DOM change for 600 ms), at most `max` ms. Returns when it first changed.
   const settle = async (t0, max = 6000) => { const end = Date.now() + max; let first = null;
     while (Date.now() < end) { const s = await p.evaluate(t0 => ({ now: performance.now(), last: window.__feel.lastMut }), t0); if (s.last > t0 && first === null) first = s.last - t0;
@@ -89,7 +93,11 @@ async function runSize(browser, size, base) {
     for (let i = 1; i <= n; i++) { await cdp.send('Input.dispatchTouchEvent', { type: 'touchMove', touchPoints: [{ x: x + dx * i / n, y: y + dy * i / n }] }); await sleep(16); }
     await cdp.send('Input.dispatchTouchEvent', { type: 'touchEnd', touchPoints: [] }); await sleep(900); };
   // A swipe up the screen by about dy pixels (positive = page moves down to show more), from a quiet spot mid-screen.
-  const swipe = async dy => { const h = D.viewport.height, d = Math.max(-h * 0.6, Math.min(h * 0.6, dy * 0.7)); const y0 = d > 0 ? h * 0.75 : h * 0.25; await drag(Math.round(D.viewport.width * 0.85), Math.round(y0), 0, -Math.round(d)); };
+  // Thumb on the scrolling part (on a tablet the list pane, not the map), towards its right edge where there are fewest buttons.
+  const swipe = async dy => { const z = (await p.evaluate(() => window.__feel.zone()).catch(() => null)) || { l: 0, r: D.viewport.width, t: 0, b: D.viewport.height };
+    const top = Math.max(z.t, 120), bot = Math.min(z.b, D.viewport.height - 90), h = bot - top; if (h < 100) return;
+    const d = Math.max(-h * 0.7, Math.min(h * 0.7, dy * 0.7)); const y0 = d > 0 ? bot - h * 0.1 : top + h * 0.1;
+    await drag(Math.round(z.l + (z.r - z.l) * 0.88), Math.round(y0), 0, -Math.round(d)); };
   // Watch the screen with no finger on it: anything that moves is drift.
   const still = async (ms = 3000) => { const t0 = await now(); await sleep(ms); const f = await feelSince(t0); const sh = f.shifts.reduce((a, s) => a + s.v, 0), sc = f.scrolls.filter(s => !s.touch);
     if (sh > 0.01 || sc.some(s => Math.abs(s.to - s.from) > 4)) fail('DRIFT', `the screen moved with no finger on it (shift ${sh.toFixed(3)}, ${sc.length} scroll changes${sc.length ? ' e.g. ' + sc[0].from + '->' + sc[0].to : ''})`, { src: f.shifts.flatMap(s => s.src).slice(0, 4) }); };
@@ -141,9 +149,9 @@ async function runSize(browser, size, base) {
     screenT0 = nav ? t0 : screenT0; return row; };
   // Scroll the whole screen with the finger, down to the end and back to the top.
   const scrollThrough = async name => { where = name; let g = await geom(); const top0 = g.y; let stuck = 0, guard = 0;
-    while (guard++ < 40) { const y0 = g.y; await swipe(D.viewport.height * 0.6); g = await geom(); if (g.y + g.vh >= g.h - 8) break; if (g.y === y0) { if (++stuck >= 2) { fail('SCROLL', `the page stopped scrolling at ${g.y}px of ${g.h}px`); break; } } else stuck = 0; }
+    while (guard++ < 40) { const y0 = g.y; await swipe(D.viewport.height * 0.6); g = await geom(); if (g.y + g.ph >= g.h - 8) break; if (g.y === y0) { if (++stuck >= 2) { fail('SCROLL', `the page stopped scrolling at ${g.y}px of ${g.h}px`); break; } } else stuck = 0; }
     const bottom = g.y; guard = 0; while (guard++ < 40 && g.y > 0) { const y0 = g.y; await swipe(-D.viewport.height * 0.6); g = await geom(); if (g.y === y0) break; }
-    if (bottom - top0 < 10 && g.h > g.vh + 50) fail('SCROLL', `a swipe did not move the page (height ${g.h}px)`);
+    if (bottom - top0 < 10 && g.h > g.ph + 50) fail('SCROLL', `a swipe did not move the page (height ${g.h}px)`);
     if (g.y > 4) fail('SCROLL', `could not get back to the top (stuck at ${g.y}px)`);
     R.steps.push({ step: 'scroll', where: name, height: g.h, reached: bottom }); console.log(`  scrolled ${name}: 0 -> ${bottom} -> ${g.y} of ${g.h}`); };
   // Go to a day as a traveler does: the day chips at the top of a day screen, or from the Day plan tab.
