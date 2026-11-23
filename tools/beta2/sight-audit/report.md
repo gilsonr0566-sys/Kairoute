@@ -126,3 +126,8 @@
 - INFO 32 sights, 3 day trips/towns; must-see: Jerónimos Monastery, Belém Tower; top by fame: Belém Tower 57, Jerónimos Monastery 53, 25 de Abril Bridge 34, Alfama 34, Lisbon Cathedral 32, Praça do Comércio 32, Padrão dos Descobrimentos 32, Castle of Saint George 31
 - INFO day trips: Mafra, Convento de Mafra, Basilica of Our Lady and St. Anthony
 
+## Nassau, Bahamas (Nassau, Bahamas, guide from sources)
+- FAME must-see "Queen's Staircase" is not offered
+- FAME must-see "Fort Charlotte" is not offered
+- INFO 6 sights, 0 day trips/towns; must-see: Ardastra Gardens, Zoo and Conservation Centre, National Art Gallery of The Bahamas, Cable Beach, Fort Fincastle; top by fame: Paradise Island 20, Ardastra Gardens, Zoo and Conservation Centre 5, National Art Gallery of The Bahamas 5, Cable Beach 5, Fort Fincastle 4, Pirates of Nassau 1
+
