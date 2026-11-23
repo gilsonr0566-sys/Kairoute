@@ -329,7 +329,7 @@ export function ferryByCourse(t, line, a, b, stopTag, osm) {
   const named = p => pierName(stopTag, p);
   const total = lineLen(line), dur = mins(t.duration);
   return mk({ mode: "ferry", ref: t.ref || "", name: t.name || "", operator: t.operator || t.network || "", from: named(path[0]) || (ia < ib ? t.from : t.to) || "", to: named(path[path.length - 1]) || (ia < ib ? t.to : t.from) || "",
-    fromPt: path[0], toPt: path[path.length - 1], km, ride: dur && total > 0 ? Math.max(dur * Math.min(1, km / total), km / SPEED.ferry[0] * 60 * 0.8) : km / SPEED.ferry[0] * 60 * 1.15, every: mins(t.interval),
+    fromPt: path[0], toPt: path[path.length - 1], km, ride: dur && total > 0 ? Math.max(dur * Math.min(1, km / total), km / ferryKmh(t) * 60 * 0.8) : km / ferryKmh(t) * 60 * 1.15, every: mins(t.interval),
     hours: t.opening_hours || "", seasonal: t.seasonal || "", fare: t.charge || t.fee || "", stops: 0, path, a, b, osm });
 }
 // Ferries with one change: a ferry from the pier by the start whose far end is a pier another ferry sails from to the
