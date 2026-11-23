@@ -26,3 +26,16 @@
 - FAME must-see "Galata Tower" is offered (Galata Tower) but not marked must-see
 - INFO 44 sights, 0 day trips/towns; must-see: Hagia Sophia, Sultan Ahmed Mosque, Süleymaniye Mosque, Topkapı Palace; top by fame: Sultan Ahmed Mosque 89, Topkapı Palace 79, Süleymaniye Mosque 69, Galata Tower 58, Dolmabahçe Palace 54, Taksim Square 50, Sublime Porte 50, Grand Bazaar 46
 
+## Kyoto, Japan (Kyoto, Japan, guide from sources)
+- DUP Ujigami Shrine ~ Uji Shrine (132 m apart, same words)
+- FOLD Yasaka Shrine is part of Gion (Wikidata) but is a separate stop
+- LEN Minakuchi Castle [day trip] {Q2969895 by name}: 30 min, but a castle or fortress usually takes 45-180 min
+- FAME #1 best known nearby, "Historic Monuments of Ancient Kyoto" (41 Wikipedia languages, Q874027), is not offered
+- FAME #2 best known nearby, "Kyoto Municipal Subway" (36 Wikipedia languages, Q728081), is not offered
+- FAME #3 best known nearby, "Hōgen rebellion" (26 Wikipedia languages, Q842357), is not offered
+- FAME #4 best known nearby, "Honnō-ji Incident" (25 Wikipedia languages, Q169598), is not offered
+- FAME #5 best known nearby, "Battle of Toba-Fushimi" (25 Wikipedia languages, Q1193959), is not offered
+- FAME must-see "Fushimi Inari" is offered (Fushimi Inari-taisha) but not marked must-see
+- INFO 30 sights, 11 day trips/towns; must-see: Kiyomizu-dera, Kinkaku-ji Temple; top by fame: Kiyomizu-dera 77, Kinkaku-ji Temple 58, Fushimi Inari-taisha 41, Ginkaku-ji Temple 33, Kyoto Imperial Palace 33, Ryōan-ji Temple 32, Gion 32, Tō-ji Temple 30
+- INFO day trips: Uji, Koka, Osaka, Byōdō-in Temple, Ujigami Shrine, Uji Shrine, Kōshō-ji Temple, Mimuroto-ji Temple, Nintendo Museum, Amagase Dam, Minakuchi Castle
+
