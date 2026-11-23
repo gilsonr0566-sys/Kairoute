@@ -176,6 +176,13 @@ const prefsSig = () => { const p = P(); return [(p.interests || []).slice().sort
 const isQuietPlace = x => !!x && (isReligious(x) || /museum|gallery|library|crypt|catacomb|tomb|memorial|cemetery/i.test((x.category || "") + " " + (x.name || "")));
 const quietOn = x => appSet.quiet === "always" || (appSet.quiet !== "off" && isQuietPlace(x));
 let earbudsOkUntil = 0;
+// A quiet place whose earbuds haven't been confirmed yet: nothing plays there on its own (arriving on the tour, the next
+// part, a spoken nudge), and every Play button asks first, a part's Play as much as the whole stop's.
+const quietHold = x => !!x && quietOn(x) && Date.now() > earbudsOkUntil;
+// The site a Play button is for: "part:<site>:<k>" is a part of that site.
+const playSite = id => { const m = /^part:(.+):\d+$/.exec(String(id)), c = cityFor(day()); return c ? allSites(c).find(x => x.id === (m ? m[1] : id)) : null; };
+// The quiet-place line: where the words are to read, as the card shows them.
+const quietLine = s => `<p class="banner quiet" role="note">🤫 <span><b>Quiet place.</b> The words are here to read. Audio plays only after you confirm your earbuds are in.</span></p>`;
 const DAY_LEN = [[2.5, "Light day", "2½ h"], [4, "Half day", "4 h"], [8, "Full day", "8 h"]];
 const QUICK_MEAL = { Lunch: 35, Dinner: 45 };
 const MEALS = [
@@ -251,7 +258,7 @@ function sampleTrip() {
     newDay({ date: "2027-07-12", destination: "Naples", type: "port", portArrive: "07:00", allAboard: "18:30" }),
     newDay({ date: "2027-07-13", destination: "Civitavecchia (Rome)", type: "port", portArrive: "07:00", allAboard: "20:30" }),
     newDay({ date: "2027-07-14", destination: "At sea", type: "sea" }),
-    newDay({ date: "2027-07-15", destination: "Barcelona", type: "arrival", mode: "ship", time: "07:00", hours: 9, pointIdx: 0, cityKey: "barcelona", selected: ["gothic", "rambla", "smdm", "picasso", "born"] }),
+    newDay({ date: "2027-07-15", destination: "Barcelona", type: "arrival", mode: "ship", time: "07:00", hours: 9, pointIdx: 0, pointPicked: true, cityKey: "barcelona", selected: ["gothic", "rambla", "smdm", "picasso", "born"] }),
     newDay({ date: "2027-07-16", destination: "Barcelona", type: "land", cityKey: "barcelona", selected: ["sagrada", "santpau", "batllo", "pedrera", "gracia"] }),
     newDay({ date: "2027-07-17", destination: "Barcelona", type: "land", cityKey: "barcelona", startTime: "09:30", hours: 7, selected: ["montserrat"] }),
     newDay({ date: "2027-07-18", destination: "Barcelona", type: "departure", mode: "train", time: "13:00", startTime: "09:00", cityKey: "barcelona", pointPicked: true, selected: ["parkguell"] }),
@@ -1111,7 +1118,7 @@ function bumpWhy(d, b) {
   try { const city = cityFor(d), s = city && allSites(city).find(x => x.id === b.id); if (!s) return "";
     if (shutOn(d, s)) return "is closed on " + fmtDow(d.date) + " " + fmtDate(d.date);
     const plan = buildPlan(d), need = plan && !plan.error ? fitCostOf(plan, s) : null, t = plan && !plan.error ? timeLeft(plan, d) : null;
-    if (need && t && need.min > t.left) { const up = Math.ceil(need.min / 5) * 5, dn = Math.floor(t.left / 5) * 5, near = up - dn < 5; return "needs about " + dur(near ? need.min : up) + " (the visit and the rides to it and on), and with today's other stops only " + dur(near ? t.left : dn) + " is left before " + fmt(plan.endBy); }
+    if (need && t && need.min > t.left) { const up = Math.ceil(need.min / 5) * 5, dn = Math.floor(t.left / 5) * 5, near = up - dn < 5; return "needs about " + dur(near ? need.min : up) + " (the visit and the rides to it and on), and " + ((near ? t.left : dn) > 0 ? "with today's other stops only " + dur(near ? t.left : dn) + " is left" : "today's other stops leave no time") + " before " + fmt(plan.endBy); }
   } catch (e) {}
   return "";
 }
@@ -1314,6 +1321,19 @@ function dayPoint(d, city) {
   // More than one real station or airport and the traveler hasn't said which: asked, never guessed (Nov 20 tester).
   const ask = pointAsk(d, list, listKey);
   return p && ask ? Object.assign({}, p, { ask }) : p;
+}
+// A day that asks which station, airport or cruise terminal: the choices as one tap each, on the page that asks
+// (Nov 22 first-timer check: the sample trip's Barcelona day said "Choose it in the day's settings", three taps and a
+// drop-down away).
+function pointChoices(d, city) {
+  if (!d || !city || d.type === "land" || d.type === "sea") return [];
+  const listKey = d.type === "port" || d.type === "embark" ? "cruise" : (MODES[d.mode] || {}).list, list = pointList(city, listKey), ask = pointAsk(d, list, listKey) || [];
+  return ask.map(n => ({ name: n, idx: list.findIndex(x => x.name === n) })).filter(x => x.idx >= 0);
+}
+function planErrCard(d, plan) {
+  const err = plan ? plan.error : "Set up your day first.", ch = plan ? pointChoices(d, cityFor(d)) : [];
+  if (!ch.length) return `<div class="card empty"><p>${esc(err)}</p><button class="btn" data-goto="trip">Edit this day</button></div>`;
+  return `<div class="card empty pointask"><p>${esc(String(err).replace(/ Choose it in the day's settings[^:]*:/, " Choose yours:"))}</p><div class="actions">${ch.map(c => `<button class="btn ghost" data-act="pointpick" data-idx="${c.idx}">${esc(c.name)}</button>`).join("")}</div></div>`;
 }
 function pointAsk(d, list, listKey) {
   if (d.pointPicked || d.pointIdx > 0 || (listKey !== "station" && listKey !== "airport" && listKey !== "cruise") || (list || []).length < 2 || typeof KEngine === "undefined" || !KEngine.gateChoices) return null;
@@ -1769,9 +1789,22 @@ function planAdded(plan, d) {
 const inclNames = s => (Array.isArray(s && s.includes) ? s.includes : []).map(x => typeof x === "string" ? x : x && x.name).filter(Boolean);
 const inclLine = s => { const n = inclNames(s); return n.length ? `<div class="sub incl">Includes ${esc(E2words(n))}</div>` : ""; };
 const E2words = xs => xs.length < 2 ? xs.join("") : xs.slice(0, -1).join(", ") + " and " + xs[xs.length - 1];
+// "X needs about 1 h 30 min (...), and with today's other stops only 0 min is left before 4:00 pm.", one per sight the
+// day had no room for: said once, as one line naming them all (Nov 22 live walk: a boarding day showed 21 such notes).
+const NOROOM = /^(?:Not planned today: )?(.+?) needs about (.+?) \(the visit and the rides to it and on\), and with today's other stops only (.+?) is left before (.+?)\.$/;
+function noRoomGroup(say) {
+  const hits = say.map(x => [x, NOROOM.exec(x.t)]).filter(([x, m]) => m && x.k !== "act");
+  const zero = m => /^0 min$/.test(m[3]);
+  const fix = (x, m) => zero(m) ? Object.assign({}, x, { t: `Not planned today: ${m[1]} needs about ${m[2]}, and today's other stops leave no time before ${m[4]}.` }) : x;
+  if (hits.length < 2) return say.map(x => { const m = NOROOM.exec(x.t); return m && x.k !== "act" ? fix(x, m) : x; });
+  const ends = [...new Set(hits.map(([, m]) => m[4]))], at = say.indexOf(hits[0][0]), drop = new Set(hits.map(([x]) => x));
+  const line = { k: "info", t: `Not planned today, no room left before ${ends.join(" or ")}: ${E2words(hits.map(([, m]) => `${m[1]} (about ${m[2]})`))}. Choose sights shows what would make room.` };
+  return say.filter((x, k) => !drop.has(x) || k === at).map(x => drop.has(x) ? line : x);
+}
+if (typeof window !== "undefined") window.__kairouteNoteGroup = ts => noRoomGroup(ts.map(t => ({ t, k: "info" }))).map(x => x.t); // checks: the notes as the card says them
 function engine2Card(plan) {
   const e = plan && plan.engine2, all = (e && e.explain) || [], kind = (e && e.explainKind) || [];
-  const say = all.map((t, k) => ({ t, k: kind[k] || "info" })).filter(x => x.t && x.k !== "free")
+  const say = noRoomGroup(all.map((t, k) => ({ t, k: kind[k] || "info" })).filter(x => x.t && x.k !== "free"))
     // The leave-by on a ship, train or flight day is the countdown's, at the top of the page: said once (Nov 20).
     .filter(x => !(plan.w && plan.w.tail && plan.w.tail.length && /^Leave for .+ by \d/.test(x.t)));
   if (!say.length) return "";
@@ -2864,7 +2897,7 @@ function useKnown(d, s) {
   if (el) (el.closest("label") || el).scrollIntoView({ block: "center" });
 }
 function addPlaceCard(d) {
-  if (!aiReady()) return `<div class="card addplace"><h3>Don't see a place you want?</h3><p class="lede">${esc(aiOffWhy("Adding a place the app doesn't list yet"))} Every place already in your guide can be picked under Change stops.</p></div>`;
+  if (!aiReady()) return `<div class="card addplace"><h3>Don't see a place you want?</h3><p class="lede">${esc(aiOffWhy("Adding a place the app doesn't list yet"))} Every place already in your guide is in the lists above.</p></div>`;
   return `<div class="card addplace"><div><h3>Don't see a place you want?</h3><p class="lede">Name it and your guide adds it to today, with the travel time and its story.</p></div>
     ${addNote ? `<p class="banner ok" role="status">${esc(addNote)}</p>` : ""}<div class="addrow"><input id="addPlace" type="text" placeholder="e.g. Ancient Corinth" enterkeyhint="go" ${addBusy ? "disabled" : ""}><button class="btn" data-act="addplace" ${addBusy ? "disabled" : ""}>Add it</button></div>
     <div class="actions"><button class="btn ghost" data-act="moretrips" ${addBusy ? "disabled" : ""}>Show more day trips farther out</button>${addBusy ? `<span class="lede"><span class="spinner"></span> ${esc(addBusy)}</span>` : ""}</div></div>`;
@@ -4138,7 +4171,7 @@ function stopAudio() {
   if (window.speechSynthesis && (speechSynthesis.speaking || speechSynthesis.pending)) try { speechSynthesis.cancel(); } catch (e) {}
   if (nativeTTS) { nativeRun++; try { nativeTTS.stop(); } catch (e) {} }
   if (natAudio) { try { natAudio.onended = null; natAudio.onerror = null; natAudio.pause(); } catch (e) {} }
-  speakingId = null; ttsState = "idle"; updateAudioUI();
+  speakingId = null; ttsState = "idle"; audioMsg = ""; updateAudioUI(); // a message about the last play never sits under the next step
 }
 function speakSite(site) {
   if (speakingId === site.id) { stopAudio(); return; }
@@ -6306,7 +6339,7 @@ function renderSites(d) {
   ${picked.length ? `<div class="picksfold${picksOpen ? " open" : ""}"><button type="button" class="foldrow" data-act="picksfold" aria-expanded="${picksOpen}"><span>Your sights (${picked.filter(on).length})</span><span class="foldhint">${picksOpen ? "Hide" : "Show"}</span></button>
   <div class="sitelist anchorlist">${picked.map(s => siteCard(s, d, plan, near)).join("")}</div></div>` : ""}
   ${plan && plan.error ? `<p class="listlbl secttl">Sights (${mustL.length + fitL.length})</p><p class="lede small">Today isn't planned yet, so I can't say what fits: ${esc(plan.error.replace(/^We couldn't/, "I couldn't").split(/(?<=\.)\s/)[0])} Your picks are kept for when it is.</p>` : `<p class="listlbl secttl">Still fits today (${mustL.length + fitL.length})${picked.length ? "" : leftTxt}</p>`}
-  ${plan && plan.error ? "" : mustL.length || fitL.length ? `<p class="lede small">${st ? `Nearest ${esc(st.name)} first. ` : ""}Each one fits as your day stands; the time is how much later you'd finish.</p>` : `<p class="lede small">${farL.length ? `No other sight in town fits as your day stands, but ${farL.length === 1 ? "the trip out of town below does" : `the ${farL.length} trips out of town below do`}.` : F && F.left >= 30 ? `${dur(F.left)} is left, but every sight still to see needs more time than that, with its ride. See "Doesn't fit today" for what would make room.` : `Your day is full. See "Doesn't fit today" for what would make room.`}</p>`}
+  ${plan && plan.error ? "" : mustL.length || fitL.length ? `<p class="lede small">${st ? `Nearest ${esc(st.name)} first. ` : ""}Each one fits as your day stands; the time is how much later you'd finish.</p>` : `<p class="lede small">${farL.length ? `No other sight in town fits as your day stands, but ${farL.length === 1 ? "the trip out of town below does" : `the ${farL.length} trips out of town below do`}.` : noneLeft(F, wontL, moreL, schedL, city)}</p>`}
   ${mustL.length ? `<div class="sitelist mustlist">${mustL.map(s => siteCard(s, d, plan, near)).join("")}</div>` : ""}
   ${fitL.length ? `<div class="sitelist fitlist">${fitL.map(s => siteCard(s, d, plan, near)).join("")}</div>` : ""}
   ${moreL.length ? `<details class="more nearby"><summary>More nearby (${moreL.length})</summary><p class="lede small" style="margin:8px 0">${my.size ? "Sights outside your interests, and" : "Quick stops:"} small stops your route adds when it passes them. Tick one to plan it.</p>
@@ -6321,6 +6354,14 @@ function renderSites(d) {
   </div></div>`;
 }
 
+// Choose sights with nothing left that fits: says only what is true of the lists below it (Nov 22 first-timer check: it
+// said every sight needed more time than the 2 h 16 min left, beside one needing 35 min, and pointed to a "Doesn't fit
+// today" list that wasn't there).
+function noneLeft(F, wontL, moreL, schedL, city) {
+  const why = wontL.length ? ` See "Doesn't fit today" for what would make room.` : "";
+  if (!wontL.length && !moreL.length && !schedL.length) return `Every sight in your guide for ${esc(city.city)} is on today's plan.`;
+  return (F && F.left >= 30 ? `${dur(F.left)} is left, but no other sight fits as your day stands.` : `Your day is full.`) + why;
+}
 function mapSVG(plan) {
   const ll = plan.items.filter(it => it.place).map(it => it.place);
   const minLa = Math.min(...ll.map(p => p.lat)), maxLa = Math.max(...ll.map(p => p.lat));
@@ -6705,6 +6746,10 @@ function farEatsFor(city, d) {
 function travelCheck(plan) {
   const ride = plan.items.filter(i => i.type === "travel").reduce((a, i) => a + i.leg.min, 0);
   const see = plan.items.filter(i => i.type === "stop").reduce((a, i) => a + (i.place.minutes || 0), 0);
+  // A day out of town (Montserrat, Delphi) is travel by its nature: one trip, nothing to make "fewer", so no warning
+  // (Nov 22 first-timer check: a red "consider fewer far-apart stops" on a day with one day trip).
+  const stops = plan.items.filter(i => i.type === "stop" && !i.place.along);
+  if (stops.length <= 1 || stops.every(i => i.place.far)) return null;
   return ride > 150 && ride > see ? { ride, see } : null;
 }
 // An earlier start: when a day can't fit everything (or a long drive pushes it late), try leaving earlier with
@@ -6782,14 +6827,16 @@ if (typeof window !== "undefined") window.__kairouteThin = () => { ensureBuiltin
 function tcell(it) {
   const len = it.type === "meal" || it.type === "evening" ? (it.meal && it.meal.len) || 0 : it.type === "stop" || it.type === "fixed" ? (it.place && it.place.minutes) || 0 : 0;
   const arr = it.type === "start" ? null : it.time, lv = it.type === "end" || it.type === "evening" ? null : it.type === "start" ? it.time : it.time + len;
-  return `<div class="time">${arr != null ? `<span class="ta">Arrive</span><span class="tt ar">${fmt(arr)}</span>` : ""}${lv != null && (arr == null || len >= 5) ? `<span class="ta">Leave</span><span class="tt lv">${fmt(lv)}</span>` : ""}</div>`;
+  // A dinner suggested after the day's plan is the traveler's evening, not a timed step: "Around", never "Arrive" (Nov 22
+  // live walk: "ARRIVE 8:58 pm" under "Back at the hotel by 6:00 pm", with no ride to it).
+  return `<div class="time">${arr != null ? `<span class="ta">${it.type === "evening" && !it.booked ? "Around" : "Arrive"}</span><span class="tt ar">${fmt(arr)}</span>` : ""}${lv != null && (arr == null || len >= 5) ? `<span class="ta">Leave</span><span class="tt lv">${fmt(lv)}</span>` : ""}</div>`;
 }
 function renderPlan(d) {
   const city = cityFor(d); rideSaid = new Set();
   if (!city) return `${dayHeading(d)}${busyBlock()}${errBlock()}${needsCity(d)}`;
   refillIfNeeded(d, city); if (!d.selected) seedPicks(d, city); crowdFor(city); fameFor(d, city); farEatsFor(city, d); upgradeThin(d, city);
   const plan = buildPlan(d); if (plan && !plan.error) { gCheck(plan, city); queueExtras(plan); writeSrcSights(plan, city); }
-  if (plan.error) return `${dayHeading(d)}<div class="card empty"><p>${esc(plan.error)}</p><button class="btn" data-goto="trip">Edit this day</button></div>${pierAsk(d, city) ? pierFormHTML(d) : ""}`;
+  if (plan.error) return `${dayHeading(d)}${planErrCard(d, plan)}${pierAsk(d, city) ? pierFormHTML(d) : ""}`;
   let n = 0;
   const canDrag = plan.stops.filter(x => !x.place.along && !x.place.bonus).length > 1; // two or more stops: drag them into any order
   const cat = s => esc(String(s.category || "").replace(/^\w/, c => c.toUpperCase()));
@@ -6842,7 +6889,7 @@ ${partsList(s, it.time)}${stopLiveNotes(it, d)}</div></div>`;
       const r = it.place, lbl = it.meal.label;
       return `<div class="tl evening">${tcell(it)}<div class="rail"><div class="dot meal">${lbl[0]}</div></div><div class="what">
         <div class="nm">${it.booked || it.mine ? lbl + ": " + esc(r.name) : "Suggested dinner: " + esc(r.name)}</div>
-        <div class="sub">${[it.booked ? "Your reservation" : "", r.cuisine, r.price, it.leg ? (it.leg.km < 0.1 ? "next door" : dur(it.leg.min) + " " + (it.leg.mode === "walk" ? "walk" : "ride") + " from " + (it.near || "where you finish")) : ""].filter(Boolean).map(esc).join(" · ")}</div>
+        <div class="sub">${[it.booked ? "Your reservation" : "This evening, if you like", r.cuisine, r.price, it.leg ? (it.leg.km < 0.1 ? "next door" : dur(it.leg.min) + " " + (it.leg.mode === "walk" ? "walk" : "ride") + " from " + (it.near || "where you finish")) : ""].filter(Boolean).map(esc).join(" · ")}</div>
         ${it.late ? `<div class="banner warn">You'll reach it about ${dur(it.time - it.meal.from)} after your reservation. Remove a stop, or ask the restaurant for a later table.</div>` : ""}
         ${it.booked ? bookedLinks(lbl) : mealFacts(r) + mealChangeLink(lbl, r) + mealMore(r, city, lbl)}</div></div>`;
     }
@@ -6969,7 +7016,7 @@ function stopCard(s, num, city, at) {
       <div class="head stophead"><span class="stopnum">${s.along ? "•" : num || (s.bonus ? "+" : "•")}</span><div><h3>${esc(s.name)}</h3><p class="stopmeta">${[s.category ? String(s.category).replace(/^\w/, c => c.toUpperCase()) : (s.along ? "On the way" : ""), s.minutes ? dur(s.minutes) : "", s.mustSee ? "Must-see" : "", s.unesco ? "UNESCO World Heritage" : ""].filter(Boolean).map(esc).join(" · ")}</p>${localLine(s)}</div></div>
       <p class="lede">${esc(unitText(s.summary))}</p>
       ${s.parts && s.parts.length >= 2 ? `<div class="field partsbox"><span class="eyebrow">What's here, in walking order</span>${partsList(s, at, true)}</div>` : partsList(s, at)}
-${quietOn(s) ? `<p class="banner quiet" role="note">🤫 <span><b>Quiet place.</b> Read the story below. Audio plays only after you confirm your earbuds are in.</span></p>` : ""}<div class="audio"><button class="btn" data-play="${esc(s.id)}" data-label="${quietOn(s) ? "🎧 Play with earbuds" : "▶ Play audio guide"}">${quietOn(s) ? "🎧 Play with earbuds" : "▶ Play audio guide"}</button><span class="state" aria-live="polite"></span></div>
+${quietOn(s) ? quietLine(s) : ""}<div class="audio"><button class="btn" data-play="${esc(s.id)}" data-label="${quietOn(s) ? "🎧 Play with earbuds" : "▶ Play audio guide"}">${quietOn(s) ? "🎧 Play with earbuds" : "▶ Play audio guide"}</button><span class="state" aria-live="polite"></span></div>
       ${voicePick(s)}${scriptSources(s)}
       ${s.scriptV && s.parts && s.parts.length ? "" : `<details class="story" id="story-${esc(s.id)}" open><summary>The story</summary><div class="guidetext">${paras(unitText(s.guide))}</div></details>`}
       </div><div class="scside">
@@ -7003,7 +7050,7 @@ function renderGuide(d) {
   if (!city) return `${dayHeading(d)}${busyBlock()}${errBlock()}${needsCity(d)}`;
   refillIfNeeded(d, city); if (!d.selected) seedPicks(d, city); fameFor(d, city);
   const plan = buildPlan(d); queueExtras(plan);
-  if (!plan || plan.error) return `${dayHeading(d)}<div class="card empty"><p>${esc(plan ? plan.error : "Set up your day first.")}</p><button class="btn" data-goto="trip">Edit this day</button></div>`;
+  if (!plan || plan.error) return `${dayHeading(d)}${planErrCard(d, plan)}`;
   // One stop at a time: pick it from the stop list; Previous / Next walk the route.
   let n = 0;
   const stops = plan.items.filter(i => i.type === "stop").map(i => ({ s: i.place, t: i.time, num: i.place.along || i.place.bonus ? 0 : ++n })); // optional stops aren't numbered, same as the Day plan
@@ -7021,11 +7068,11 @@ function renderGuide(d) {
 // "No stops planned for today" (Richard, Nov 18: "Embarkation day still has a blank screen"). The day still has
 // its own steps, so the Guide walks through them: leave the hotel, collect the bags, the ride, and what to expect
 // at the terminal, station or airport, with the same times and notes as the Day plan. On a day that ends at a
-// ship, train or flight, "Choose stops" isn't offered as the main action: there may be no time for one.
+// ship, train or flight, "Choose sights" isn't offered as the main action: there may be no time for one.
 function guideNoStops(d, plan) {
   const steps = plan.items.filter(it => it.type === "start" || it.type === "fixed" || (it.type === "end" && it.place));
   const leaving = steps.some(it => it.type === "end") && (plan.w.notesEnd || []).length;
-  if (!leaving) return `<div class="card empty"><p>No stops planned for today.</p><button class="btn" data-goto="sites">Choose stops</button></div>`;
+  if (!leaving) return `<div class="card empty"><p>No stops planned for today.</p><button class="btn" data-goto="sites">Choose sights</button></div>`;
   const legBefore = it => { const k = plan.items.indexOf(it), pv = plan.items[k - 1]; return pv && pv.type === "travel" && pv.leg.km >= 0.1 ? pv.leg : null; };
   const row = it => {
     const leg = legBefore(it), nm = it.type === "fixed" && it.free ? `Free time until ${fmt(it.time + it.free)}` : it.type === "start" || it.type === "end" ? it.label : it.place.name;
@@ -7036,7 +7083,7 @@ function guideNoStops(d, plan) {
       ${notes.filter(Boolean).map(t => `<p class="sub">${esc(t)}</p>`).join("")}</div>`;
   };
   return `<div class="stoplist"><div class="card"><p>No sights fit in today before you go, so here is how the day runs.</p>
-    <div class="actions"><button class="btn ghost small" data-goto="plan">Open the day plan</button><button class="btn ghost small" data-goto="sites">Choose stops</button></div></div>
+    <div class="actions"><button class="btn ghost small" data-goto="plan">Open the day plan</button><button class="btn ghost small" data-goto="sites">Choose sights</button></div></div>
     ${steps.map(row).join("")}</div>`;
 }
 // ---------- Tour mode ----------
@@ -7089,7 +7136,7 @@ function renderTour(d) {
   if (!city) return `${dayHeading(d)}${busyBlock()}${errBlock()}${needsCity(d)}`;
   refillIfNeeded(d, city); if (!d.selected) seedPicks(d, city); fameFor(d, city);
   const plan = buildPlan(d); queueExtras(plan);
-  if (!plan || plan.error) return `${dayHeading(d)}<div class="card empty"><p>${esc(plan ? plan.error : "Set up your day first.")}</p><button class="btn" data-goto="trip">Edit this day</button></div>`;
+  if (!plan || plan.error) return `${dayHeading(d)}${planErrCard(d, plan)}`;
   const steps = tourSteps(plan), T = curTour(d);
   T.i = Math.min(T.i, steps.length - 1);
   const st = steps[T.i], prev = steps[T.i - 1], nxt = steps[T.i + 1];
@@ -7118,7 +7165,7 @@ function renderTour(d) {
       </div></div>`;
   } else if (st.type === "start") {
     body = `<div class="tourcard"><div class="eyebrow">Good morning</div><h2 class="tourtitle">${esc(st.label)}</h2>
-      <p class="lede">${!stopsOnly.length && (plan.w.notesEnd || []).length ? "No sights fit in today before you go: I'll take you through each step and keep you on time." : `Today: ${stopsOnly.length} stop${stopsOnly.length === 1 ? "" : "s"}${plan.meals.length ? ", " + plan.meals.map(m => esc(m.name)).join(" and ") + " to eat" : ""}, about ${distTxt(plan.walkKm)} on foot. ${d.type === "port" ? "I'll keep an eye on the time so you're back aboard early." : "I'll keep you on time."}`}</p>
+      <p class="lede">${!stopsOnly.length && (plan.w.notesEnd || []).length ? ("No sights fit in today before you go, so here is each step of the way." + (dayFacts(d, plan) && dayFacts(d, plan).fixed ? " The countdown above says when to leave." : "")): `Today: ${stopsOnly.length} stop${stopsOnly.length === 1 ? "" : "s"}${plan.meals.length ? ", " + plan.meals.map(m => esc(m.name)).join(" and ") + " to eat" : ""}, about ${distTxt(plan.walkKm)} on foot.${dayFacts(d, plan) && dayFacts(d, plan).fixed ? " The countdown above says when to leave." : ""}`}</p>
       ${tourMap(plan, d, null, null)}
       <ol class="tourlist">${stopsOnly.map(x => `<li>${fmt(x.time)} · ${esc(x.place.name)}</li>`).join("")}</ol>
       <div class="audio"><button class="btn ghost" data-play="intro:${d.id}" data-label="▶ Hear today's plan">▶ Hear today's plan</button><span class="state" aria-live="polite"></span></div>
@@ -7151,7 +7198,7 @@ function renderTour(d) {
       ${!pk && s.intro ? `<p class="lede">${esc(unitText(s.intro))}</p>` : ""}
       ${cp.p.stand ? `<p class="stand"><b>Stand here:</b> ${esc(cp.p.stand)}</p>` : ""}
       ${cp.wait ? `<p class="banner">⏱ ${esc(s.show.what)} at ${fmt(cp.time)}. Be in front of ${esc(cp.p.name)} by then.</p>` : ""}
-      <div class="audio"><button class="btn bigplay" data-play="part:${esc(s.id)}:${cp.k}" data-label="▶ Play this part">▶ Play this part</button><span class="state" aria-live="polite"></span></div>
+      ${quietOn(s) ? quietLine(s) : ""}<div class="audio"><button class="btn bigplay" data-play="part:${esc(s.id)}:${cp.k}" data-label="${quietOn(s) ? "🎧 Play with earbuds" : "▶ Play this part"}">${quietOn(s) ? "🎧 Play with earbuds" : "▶ Play this part"}</button><span class="state" aria-live="polite"></span></div>
       ${voicePick(s)}
       <p class="guidetext">${esc(unitText(cp.p.guide))}</p>
       ${scriptSources(s)}
@@ -7166,7 +7213,7 @@ function renderTour(d) {
       <div class="tcmain"><div class="stophead"><span class="stopnum big">${s.along ? "•" : stopNo}</span><div><h2 class="tourtitle">${esc(s.name)}</h2><p class="stopmeta">${esc(String(s.category || "").replace(/^\w/, c => c.toUpperCase()))}</p>${localLine(s)}</div></div>
       ${walkWorthy(s, city) && !(s.extrasV >= EXTRAS_V) && extrasAsked[keyOf(city.city) + "|" + s.id] ? `<p class="ai-note"><span class="spinner"></span> Your guide is planning the walk-through, point by point. The story below plays meanwhile.</p>` : ""}
       <p class="timeleft" id="tourLeft"></p>
-${quietOn(s) ? `<p class="banner quiet" role="note">🤫 <span><b>Quiet place.</b> The story is below to read. Audio plays only after you confirm your earbuds are in.</span></p>` : ""}
+${quietOn(s) ? quietLine(s) : ""}
       <div class="audio"><button class="btn bigplay" data-play="${esc(s.id)}" data-label="${quietOn(s) ? "🎧 Play with earbuds" : "▶ Play the story"}">${quietOn(s) ? "🎧 Play with earbuds" : "▶ Play the story"}</button><span class="state" aria-live="polite"></span></div>
       ${s.lookFor && s.lookFor.length ? `<div class="field"><span class="eyebrow">Can you find these?</span>
         <div class="finds">${s.lookFor.map((x, k) => `<button class="find ${found.includes(k) ? "on" : ""}" data-find="${k}"><span class="fk">${found.includes(k) ? "✓" : k + 1}</span><span>${esc(x)}</span></button>`).join("")}</div></div>` : ""}</div>
@@ -7186,7 +7233,7 @@ function introText(d, plan) {
   const steps = tourSteps(plan).filter(x => x.type === "stop" && !x.place.along);
   return `Welcome to ${plan.city.city}. Here's the plan for today. ` + steps.map((x, k) => (k === steps.length - 1 && k ? "and finally, " : "") + x.place.name).join(", ") + "." +
     (plan.meals.length ? ` We'll stop for ${plan.meals.map(m => m.name).join(" and ")} along the way.` : "") +
-    (d.type === "port" ? ` All aboard is at ${d.allAboard}, and I'll have you back at the ship by ${fmt(plan.endBy)}.` : ` We should be done around ${fmt(plan.end)}.`) + " Whenever you're ready, let's go.";
+    (F => d.type === "port" && F ? ` All aboard is at ${fmt(F.allAboard != null ? F.allAboard : toMin(d.allAboard))}. Your plan has you back at the ship by ${fmt(F.endBy)}; the ship's time is the one that counts.` : ` We should be done around ${fmt(plan.end)}.`)(dayFacts(d, plan)) + " Whenever you're ready, let's go.";
 }
 function tickTour() {
   const d = day(); if (view !== "tour" || !trip.tour) return;
@@ -7197,10 +7244,10 @@ function tickTour() {
     const planned = st.type === "meal" ? st.meal.len : st.place.minutes;
     const left = planned - (Date.now() - T.arrivedAt) / 60000;
     const nxt = steps[T.i + 1];
-    el.textContent = left > 0 ? `About ${Math.ceil(left)} min left here${nxt ? ", then " + stepName(nxt) : ""}.` : `Time to move on${nxt ? " to " + stepName(nxt) : ""}.`;
+    el.textContent = left > 0 ? `About ${dur(Math.ceil(left))} left here${nxt ? ", then " + stepName(nxt) : ""}.` : `Time to move on${nxt ? " to " + stepName(nxt) : ""}.`;
     el.className = "timeleft" + (left <= 10 ? " soon" : "");
-    if (left <= 10 && left > 0 && T.nudged < 1 && planned > 15) { T.nudged = 1; save(); if (!speakingId) speakText("nudge", `About ten more minutes here${nxt ? ", then " + stepName(nxt) : ""}.`); }
-    if (left <= 0 && T.nudged < 2) { T.nudged = 2; save(); if (!speakingId) speakText("nudge", `Time to move on${nxt ? ". Next up, " + stepName(nxt) : ""}.`); }
+    if (left <= 10 && left > 0 && T.nudged < 1 && planned > 15) { T.nudged = 1; save(); if (!speakingId && !quietHold(st.place)) speakText("nudge", `About ten more minutes here${nxt ? ", then " + stepName(nxt) : ""}.`); }
+    if (left <= 0 && T.nudged < 2) { T.nudged = 2; save(); if (!speakingId && !quietHold(st.place)) speakText("nudge", `Time to move on${nxt ? ". Next up, " + stepName(nxt) : ""}.`); }
   }
 
 }
@@ -7211,7 +7258,7 @@ function arriveHere(auto) {
   stopAudio(); const T = trip.tour; if (!T) return;
   T.phase = "at"; T.arrivedAt = Date.now(); T.nudged = 0; T.auto = !!auto; T.part = 0; save(); render(); toTop();
   const st = tourSteps(buildPlan(day()))[T.i];
-  if (st && st.type === "stop") { const pp = st.place.parts && partsOn(st.place).length >= 2 ? partPlan(st.place, st.time).list : null; if (pp) speakText("part:" + st.place.id + ":" + pp[0].k, partSpeech(st.place, pp[0].k, true)); else speakSite(st.place); }
+  if (st && st.type === "stop" && !quietHold(st.place)) { const pp = st.place.parts && partsOn(st.place).length >= 2 ? partPlan(st.place, st.time).list : null; if (pp) speakText("part:" + st.place.id + ":" + pp[0].k, partSpeech(st.place, pp[0].k, true)); else speakSite(st.place); }
 }
 function toggleFollow() {
   if (geoWatch != null) { if (keepAwake) keepAwake.allowSleep().catch(() => {}); try { navigator.geolocation.clearWatch(geoWatch); } catch (e) {} geoWatch = null; clearInterval(geoPoll); geoPoll = null; geoState = "off"; geoMsg = ""; renderGuideOnly(); return; }
@@ -7250,7 +7297,7 @@ function tourPart(auto) {
   const T = trip.tour; if (!T) return; const st = tourSteps(buildPlan(day()))[T.i]; if (!st || !st.place || !st.place.parts) return;
   const pp = partPlan(st.place, st.time).list; if ((T.part || 0) + 1 >= pp.length) return;
   stopAudio(); T.part = (T.part || 0) + 1; save(); render(); if (!auto) toTop();
-  const x = pp[T.part]; speakText("part:" + st.place.id + ":" + x.k, partSpeech(st.place, x.k, false));
+  const x = pp[T.part]; if (quietHold(st.place)) return; speakText("part:" + st.place.id + ":" + x.k, partSpeech(st.place, x.k, false));
 }
 function followBar() {
   const on = geoState === "on" || geoState === "asking";
@@ -7330,9 +7377,9 @@ document.addEventListener("click", e => {
   if (t.dataset.play) {
     if (voyPlay(t.dataset.play)) return; // the sea-day briefings and stories
     const id = t.dataset.play, plan = buildPlan(day());
-    const qs = allSites(cityFor(day())).find(x => x.id === id);
-    if (qs && quietOn(qs) && speakingId !== id && Date.now() > earbudsOkUntil) {
-      if (!window.confirm("Quiet place: earbuds in?\n\nTap OK to play through your earbuds, or Cancel to read the story instead.")) { const st = document.getElementById("story-" + id); if (st) { st.open = true; st.scrollIntoView({ block: "start", behavior: "smooth" }); } return; }
+    const qs = playSite(id);
+    if (qs && quietHold(qs) && speakingId !== id) {
+      if (!window.confirm("Quiet place: earbuds in?\n\nTap OK to play through your earbuds, or Cancel to read the story instead.")) { const st = document.getElementById("story-" + qs.id); if (st) { st.open = true; st.scrollIntoView({ block: "start", behavior: "smooth" }); } return; }
       earbudsOkUntil = Date.now() + 45 * 60000; // asked once, then trusted for the next 45 minutes
     }
     if (id.startsWith("walk:")) { const steps = tourSteps(plan), i = +id.slice(5); speakText(id, walkText(steps[i], steps[i + 1])); return; }
@@ -7502,6 +7549,7 @@ document.addEventListener("click", e => {
   if (act === "tourstart") { const d = day(); if (!trip.tour || trip.tour.dayId !== d.id) trip.tour = null; curTour(d); view = "tour"; save(); render(); toTop(); return; }
   if (act === "tourexit") { stopAudio(); view = "plan"; render(); toTop(); return; }
   if (act === "tourpart") { tourPart(); return; }
+  if (act === "pointpick") { const d = day(), k = +t.dataset.idx; if (d && k >= 0) { d.pointIdx = k; d.pointPicked = true; delete d.pier; edited(); save(); render(); } return; }
   if (act === "tournext") {
     stopAudio(); const T = trip.tour; T.i++; T.phase = "walk"; T.found = []; T.nudged = 0; T.part = 0; save(); render(); toTop();
     const plan = buildPlan(day()); const steps = tourSteps(plan); const st = steps[T.i];
