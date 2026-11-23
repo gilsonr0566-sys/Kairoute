@@ -136,17 +136,17 @@ heraklion | NOID | Venetian harbor and Koules fortress
 heraklion | NOT | Palace of Knossos
 heraklion | POS | Kali Limenes
 istanbul | FAME | #1 best known nearby, "Fall of Constantinople"
-istanbul | FAME | #10 best known nearby, "Siege of Constantinople"
-istanbul | FAME | #11 best known nearby, "2022 Istanbul bombing"
-istanbul | FAME | #12 best known nearby, "Spice Bazaar"
-istanbul | FAME | #13 best known nearby, "2016 Istanbul bombing"
-istanbul | FAME | #14 best known nearby, "Siege of Constantinople"
-istanbul | FAME | #15 best known nearby, "Eurasia Tunnel"
-istanbul | FAME | #2 best known nearby, "Bosphorus Bridge"
-istanbul | FAME | #3 best known nearby, "Istanbul Metro"
-istanbul | FAME | #4 best known nearby, "Convention on preventing and combating violence against women and domestic violence"
-istanbul | FAME | #6 best known nearby, "Siege of Constantinople"
-istanbul | FAME | #8 best known nearby, "Galata Bridge"
+istanbul | FAME | #10 best known nearby, "2022 Istanbul bombing"
+istanbul | FAME | #11 best known nearby, "Spice Bazaar"
+istanbul | FAME | #12 best known nearby, "2016 Istanbul bombing"
+istanbul | FAME | #13 best known nearby, "Siege of Constantinople"
+istanbul | FAME | #14 best known nearby, "Eurasia Tunnel"
+istanbul | FAME | #15 best known nearby, "Obelisk of Theodosius"
+istanbul | FAME | #2 best known nearby, "Istanbul Metro"
+istanbul | FAME | #3 best known nearby, "Convention on preventing and combating violence against women and domestic violence"
+istanbul | FAME | #5 best known nearby, "Siege of Constantinople"
+istanbul | FAME | #7 best known nearby, "Galata Bridge"
+istanbul | FAME | #8 best known nearby, "Siege of Constantinople"
 istanbul | FAME | #9 best known nearby, "Siege of Constantinople"
 istanbul | FAME | must-see "Basilica Cistern"
 istanbul | FAME | must-see "Galata Tower"
@@ -176,6 +176,7 @@ kyoto | FAME | #4 best known nearby, "Honnō-ji Incident"
 kyoto | FAME | #5 best known nearby, "Battle of Toba-Fushimi"
 kyoto | FAME | must-see "Fushimi Inari"
 kyoto | LEN | Minakuchi Castle [day trip]
+kyoto | NAME | Koka [day trip]
 lehavre | FAME | #1 best known nearby, "French"
 lehavre | FAME | #10 best known nearby, "Storming of the Bastille"
 lehavre | FAME | #11 best known nearby, "Winged Victory of Samothrace"
@@ -203,17 +204,11 @@ lehavre | POS | Chantilly [day trip]
 lehavre | POS | Chartres [day trip]
 lehavre | POS | Château de Fontainebleau [day trip]
 lehavre | POS | Forêt de Fontainebleau [day trip]
-lisbon | DUP | Sintra
 lisbon | FAME | #1 best known nearby, "Lisbon Metro"
 lisbon | FAME | #4 best known nearby, "Siege of Lisbon"
 lisbon | FAME | must-see "Castle of Saint George|São Jorge Castle"
 lisbon | LEN | Botânico Garden of Lisboa
-lisbon | NOID | Basilica of Our Lady and St. Anthony [day trip]
-lisbon | NOID | Moorish Castle [day trip]
-lisbon | NOID | Quintinha de Monserrate [day trip]
 lisbon | POS | 25 de Abril Bridge
-lisbon | POS | Ericeira [day trip]
-lisbon | POS | Mafra [day trip]
 lisbon | POS | Águas Livres Aqueduct
 madrid | FAME | #1 best known nearby, "Spanish"
 madrid | FAME | #10 best known nearby, "Torre PwC"
