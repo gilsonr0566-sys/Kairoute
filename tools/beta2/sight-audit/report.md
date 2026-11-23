@@ -471,6 +471,9 @@
 - FAME must-see "Akrotiri" is offered (Akrotiri prehistoric town) but not marked must-see
 - INFO 5 sights, 0 day trips/towns; must-see: Fira caldera path, Oia village; top by fame: Fira caldera path 0, Oia village 0, Akrotiri prehistoric town 0, Pyrgos village 0, Museum of Prehistoric Thera 0
 
+## Split, Croatia (Split, Croatia, guide from sources)
+- INFO 3 sights, 0 day trips/towns; must-see: Diocletian's Palace, Stadion Poljud; top by fame: Diocletian's Palace 52, Stadion Poljud 40, Archaeological Museum Split 8
+
 ## Venice, Italy (Venice, Italy, guide from sources)
 - POS Padua [day trip] {Q617 by name}: app is 1.12 km from Wikidata's point (not on the map by id)
 - DUP Palazzo della Ragione ~ Palazzo del Bo' (182 m apart, same words)
