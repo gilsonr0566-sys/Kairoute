@@ -5226,7 +5226,12 @@ function renderLobby() {
   const cur = trip && trip.days && trip.days.length && !trip.archived && !trip.placeholder ? trip : null;
   const d = cur ? cur.days[cur.active] || cur.days[0] : null;
   const hasSample = list.some(x => x.id === SAMPLE_ID);
-  const others = list.filter(x => (!cur || x.id !== cur.id) && !x.trip.archived);
+  // The example trip, while the traveler hasn't opened it, is offered as the example, not counted as one of their trips.
+  const exWait = list.find(x => x.trip.example && x.trip.unopened && !x.trip.archived && (!cur || x.id !== cur.id));
+  const others = list.filter(x => (!cur || x.id !== cur.id) && !x.trip.archived && x !== exWait);
+  // A day number and "Next:" only while the trip is on (today between its first and last day): before it starts
+  // there is no day to pick up, and after it there is no next place.
+  const onNow = cur && (() => { const ds = cur.days.filter(x => x.date); return ds.some(x => x.date <= todayISO(x)) && ds.some(x => x.date >= todayISO(x)); })();
   const archived = list.filter(x => x.trip.archived);
   const moreMenu = (id, inner) => `<details class="moremenu" ${delAsk === id || renameId === id ? "open" : ""}><summary>More</summary><div class="mm">${inner}</div></details>`;
   const delBtn = id => delAsk === id ? `<button class="btn small" style="background:var(--warn)" data-act="deltrip" data-id="${esc(id)}">Yes, delete</button><button class="btn ghost small" data-act="delno">Keep</button>` : `<button class="btn ghost small" data-act="delask" data-id="${esc(id)}">Delete</button>`;
@@ -5243,20 +5248,20 @@ function renderLobby() {
     </div>
   </section>
   <div class="lobbybody">
-    ${cur ? `<div class="resume${cur.unopened ? " fresh" : ""}">
-      ${cur.unopened ? "" : `<div class="stamp"><span>Day<b>${dayNo(cur.days[cur.active], cur)}</b></span></div>`}
+    ${cur ? `<div class="resume${cur.unopened || !onNow ? " fresh" : ""}">
+      ${cur.unopened || !onNow ? "" : `<div class="stamp"><span>Day<b>${dayNo(cur.days[cur.active], cur)}</b></span></div>`}
       <div><div class="eyebrow">${cur.unopened ? (cur.example ? "Example trip" : "Your trip") : "Pick up where you left off"}</div>${renameId === cur.id ? renameBox(cur.id, cur.name || tripName(cur)) : `<h3>${esc(cur.name || tripName(cur))}</h3>`}
-        <div class="meta">${esc(tripSpan(cur))} · ${tripDaysText(cur)}${cur.unopened ? "" : " · " + (() => { const td = cur.days.find(x => isToday(x)); const dd = td || d; return (td ? "Today: " : "Next: ") + esc(placeLabel(dd) || "New day"); })()}</div></div>
+        <div class="meta">${esc(tripSpan(cur))} · ${tripDaysText(cur)}${cur.unopened || !onNow ? "" : " · " + (() => { const td = cur.days.find(x => isToday(x)); const dd = td || d; return (td ? "Today: " : "Next: ") + esc(placeLabel(dd) || "New day"); })()}</div></div>
       <div class="go"><button class="btn" data-act="continue">${cur.unopened ? (cur.example ? "Open the example trip" : "Open trip") : "Continue trip"}</button></div>
       <div class="resacts"><span class="lede">${syncSt() ? "Synced across your devices" + (syncSt().at ? " · last synced " + esc(new Date(syncSt().at).toLocaleTimeString([], { hour: "numeric", minute: "2-digit" })) : "") : `Saved on this device · <button class="linkbtn" data-act="syncfromlobby">Sync with another device</button>`}</span><button class="btn ghost small" data-goto="trip" data-act2="edit">Edit itinerary</button>${moreMenu(cur.id, `<button class="btn ghost small" data-grp="sharegrp">Share with my group</button><button class="btn ghost small" data-act="rename" data-id="${esc(cur.id)}">Rename</button><button class="btn ghost small" data-act="archive" data-id="${esc(cur.id)}">Archive</button>${delBtn(cur.id)}`)}</div>
     </div>` : ""}
-    ${others.length || !hasSample ? `    <div class="sechead"><h2>Planned trips</h2><span class="lede">${list.length - archived.length} ${syncSt() ? "synced across your devices" + (syncSt().at ? " · last synced " + esc(new Date(syncSt().at).toLocaleTimeString([], { hour: "numeric", minute: "2-digit" })) : "") : `saved on this device · <button class="linkbtn" data-act="syncfromlobby">Sync with another device</button>`}</span></div>
+    ${others.length || !hasSample || exWait ? `    <div class="sechead"><h2>Planned trips</h2><span class="lede">${(n => cur ? n + (n === 1 ? " trip" : " trips") /* the card above already says where they're saved */ : n + " " + (syncSt() ? "synced across your devices" + (syncSt().at ? " · last synced " + esc(new Date(syncSt().at).toLocaleTimeString([], { hour: "numeric", minute: "2-digit" })) : "") : `saved on this device · <button class="linkbtn" data-act="syncfromlobby">Sync with another device</button>`))(list.length - archived.length - (exWait ? 1 : 0))}</span></div>
     <div class="tripcards">
       ${others.map(x => `<div class="tripcard"><div class="band">${bandArt(x.id)}</div><div class="in">
         <div><div class="eyebrow">${esc(tripSpan(x.trip))}${tripSpan(x.trip) ? " · " : ""}${tripDaysText(x.trip)}</div>${renameId === x.id ? renameBox(x.id, x.name) : `<h3>${esc(x.name)}</h3>`}</div>
         <div class="acts"><button class="btn small" data-act="opentrip" data-id="${esc(x.id)}">Open</button>${moreMenu(x.id, `<button class="btn ghost small" data-act="rename" data-id="${esc(x.id)}">Rename</button><button class="btn ghost small" data-act="archive" data-id="${esc(x.id)}">Archive</button>${delBtn(x.id)}`)}</div>
       </div></div>`).join("")}
-      ${hasSample ? "" : `<button class="newcard" data-act="loadsample"><span class="plus" style="background:var(--meal)">★</span>Open the example trip<span class="lede" style="font-weight:400">Athens, the Sun Princess cruise of July 4, 2027, Barcelona and Madrid</span></button>`}
+      ${hasSample && !exWait ? "" : `<button class="newcard" data-act="loadsample"><span class="plus" style="background:var(--meal)">★</span>Open the example trip<span class="lede" style="font-weight:400">Athens, the Sun Princess cruise of July 4, 2027, Barcelona and Madrid</span></button>`}
     </div>` : ""}
     ${archived.length ? `<details class="card more archive"><summary>Archived trips (${archived.length})</summary>
       <div class="sitelist">${archived.map(x => `<div class="daycard"><div><b>${esc(x.name)}</b><div class="meta">${esc(tripSpan(x.trip))}${tripSpan(x.trip) ? " · " : ""}${tripDaysText(x.trip)}</div></div>
@@ -5293,7 +5298,7 @@ function renderSettings(sec) {
     <div class="field"><span class="lbl">Text size</span>${seg("text", [["standard", "Standard"], ["large", "Large"]])}</div>
     <div class="field"><span class="lbl">New to Kairoute?</span><div><button class="btn ghost small" data-act="coachreplay">How Kairoute works</button></div></div>
     <div class="field"><span class="lbl">Quiet places</span>${seg("quiet", [["auto", "Automatic"], ["always", "Always quiet"], ["off", "Off"]]).replace('data-v="auto" aria-pressed="false"', appSet.quiet && appSet.quiet !== "auto" ? 'data-v="auto" aria-pressed="false"' : 'data-v="auto" aria-pressed="true"')}<span class="hint">In churches, monasteries and museums the guide shows text first and only plays audio once you confirm your earbuds are in.</span></div>
-    <div class="field"><span class="lbl">Partner offers (demo)</span>${seg("partners", [["on", "Show"], ["off", "Hide"]]).replace('data-v="on" aria-pressed="false"', appSet.partners === "off" ? 'data-v="on" aria-pressed="false"' : 'data-v="on" aria-pressed="true"')}<span class="hint">A sample of how partner offers like mobile data for your trip will look. Nothing is sold.</span></div>
+    <div class="field"><span class="lbl">Partner offers (demo)</span>${seg("partners", [["on", "Show"], ["off", "Hide"]]).replace('data-v="off" aria-pressed="false"', appSet.partners === "on" ? 'data-v="off" aria-pressed="false"' : 'data-v="off" aria-pressed="true"')}<span class="hint">A sample of how partner offers like mobile data for your trip will look. Nothing is sold.</span></div>
     <div class="field" data-noclock><span class="lbl">Clock</span>${seg("clock", [["auto", "Match my device"], ["24", "24-hour (18:30)"], ["12", "12-hour (6:30 pm)"]]).replace('data-v="auto" aria-pressed="false"', appSet.clock && appSet.clock !== "auto" ? 'data-v="auto" aria-pressed="false"' : 'data-v="auto" aria-pressed="true"')}<span class="hint">Every time in the app, the plans and the tour use this.</span></div>
     <div class="field"><span class="lbl">Distances</span>${seg("units", [["mi", "Miles"], ["km", "Kilometers"]]).replace(/aria-pressed="(true|false)"/g, "").replace(/data-v="(mi|km)"/g, (m, k) => m + ' aria-pressed="' + ((k === "mi") === useMiles()) + '"')}</div>
     ${homeCurField()}

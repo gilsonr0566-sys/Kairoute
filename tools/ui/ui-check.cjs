@@ -13,7 +13,7 @@ function serve(file) { const dir = path.dirname(file), name = path.basename(file
     s.listen(0, () => res({ url: 'http://localhost:' + s.address().port + '/' + name, close: () => s.close() })); }); }
 async function open(browser, url, size, clock, fresh) {
   const ctx = await browser.newContext(Object.assign({ deviceScaleFactor: 1, timezoneId: 'America/Chicago', locale: 'en-US' }, SIZES[size], { viewport: { width: SIZES[size].width, height: SIZES[size].height } }));
-  await ctx.addInitScript(c => { try { const k = 'b2:kairoute.app', v = JSON.parse(localStorage.getItem(k) || '{}'); v.clock = c.clock; if (!c.fresh && !v.backAck) v.backAck = '2026-11-20'; localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} }, { clock, fresh: !!fresh });
+  await ctx.addInitScript(c => { try { const k = 'b2:kairoute.app', v = JSON.parse(localStorage.getItem(k) || '{}'); v.clock = c.clock; if (!v.partners) v.partners = 'on'; /* the partner demo is off by default; its place on the Trip page is still checked */ if (!c.fresh && !v.backAck) v.backAck = '2026-11-20'; localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} }, { clock, fresh: !!fresh });
   const p = await ctx.newPage(); const errs = []; p.on('pageerror', e => errs.push(String(e).slice(0, 200)));
   await p.route(u => !/^http:\/\/localhost/.test(String(u)), r => r.fulfill({ status: 503, body: '' }));
   await p.goto(url); await p.waitForTimeout(2500);

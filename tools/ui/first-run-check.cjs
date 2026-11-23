@@ -5,7 +5,12 @@
 //    once they have opened it.
 //  - The first-run walkthrough promises only what the app offers right now: a photo of the itinerary only when the
 //    New trip page offers one, "Ask your guide" only when the guide has the box.
-//  - The example trip never says it came from the traveler's own booking.
+//  - The example trip never says it came from the traveler's own booking. The Journal's cost estimate says how many
+//    people it is for (a default the traveler may never have set).
+//  - A first trip of their own, months ahead: Home shows no day number or "Next:" before it starts, and counts and
+//    lists only the trips the traveler made (the example they never opened is offered as the example), saying
+//    each thing once. The Trip page
+//    shows no demo partner offer unless the traveler turned it on.
 //  - Settings, every section opened by tapping it: nothing runs off the side, no page error, no tap target under
 //    36 px, the trip length said the same way as on Home, and none of these known untrue or broken sentences:
 //    "does not use your location" (the tour and the countdown use it), "about under", "in this view" (outside the
@@ -79,6 +84,9 @@ const UNTRUE = [[/does not use your location/i, 'says the app does not use your 
       await p.locator('.tabs button:has-text("Guide"):visible, [data-goto=guide]:visible').first().click(); await p.waitForTimeout(1200);
       const ask = await p.locator('#view .askbox, #view .askfold').count();
       ok(`the walkthrough promises "Ask your guide" only when the guide has it (${tag})`, ask || !/Ask your guide/.test(coach), 'the walkthrough says "Ask your guide" but the Guide has no question box');
+      await p.locator('.tabs button:has-text("Journal"):visible, [data-goto=journal]:visible').first().click(); await p.waitForTimeout(3000);
+      const jt = await p.evaluate(() => (document.querySelector('#view .tripbudget summary') || {}).innerText || '');
+      if (/people|person/.test(jt)) ok(`the Journal's cost says how many people it is for (${tag})`, /for \d+ (people|person)/.test(jt), `Journal says "${jt}"`);
       // 5. Back Home, the opened trip is now the one to pick up.
       await p.locator('[data-act=lobby]:visible').first().click(); await p.waitForTimeout(800);
       const resume2 = await p.locator('.resume').innerText().catch(() => '');
@@ -97,6 +105,30 @@ const UNTRUE = [[/does not use your location/i, 'says the app does not use your 
       }
       ok(`no page errors (${tag})`, !errs.length, errs.slice(0, 2).join(' | '));
       await ctx.close();
+      // 7. A first trip of their own, months ahead, one city, built step by step: Home has no day number or "Next:"
+      //    before it starts, doesn't count the example they never opened, the Trip page shows no demo offer unless
+      //    turned on, and the Journal's cost says how many people it is for.
+      { const ctx2 = await browser.newContext(Object.assign({ deviceScaleFactor: 1, timezoneId: 'America/Chicago', locale: 'en-US' }, SIZES[size], { viewport: { width: SIZES[size].width, height: SIZES[size].height } }));
+        const q = await ctx2.newPage(); const errs2 = []; q.on('pageerror', e => errs2.push(String(e).slice(0, 200)));
+        await q.route(u => !/^http:\/\/localhost/.test(String(u)), r => r.fulfill({ status: 503, body: '' }));
+        await q.goto(srv.url); await q.waitForTimeout(2000);
+        if (await q.locator('.coach [data-act=coachskip]').isVisible().catch(() => false)) await q.locator('.coach [data-act=coachskip]').click();
+        const start = new Date(Date.now() + 160 * 86400000).toISOString().slice(0, 10);
+        await q.locator('[data-act=newtrip]:visible').first().click(); await q.waitForTimeout(500);
+        await q.getByLabel('City').first().fill('Lisbon'); await q.getByLabel('Arrive on').first().fill(start);
+        await q.getByRole('button', { name: 'Build my trip' }).click(); await q.waitForTimeout(2500);
+        const tt = await q.evaluate(() => document.querySelector('#view').innerText);
+        ok(`no demo partner offer unless turned on (${tag})`, !/\bDEMO\b/.test(tt), 'the Trip page shows a DEMO partner offer by default');
+        await q.locator('[data-act=lobby]:visible').first().click(); await q.waitForTimeout(800);
+        const home = await q.evaluate(() => ({ card: (document.querySelector('.resume') || {}).innerText || '', stamp: !!document.querySelector('.resume .stamp'), sec: (document.querySelector('.sechead .lede') || {}).innerText || '', cards: document.querySelectorAll('.tripcards .tripcard').length }));
+        ok(`Home has no day number or "Next:" before the trip starts (${tag})`, !home.stamp && !/\bNext:/.test(home.card), `Home card says: ${home.card.replace(/\n/g, ' | ').slice(0, 160)}`);
+        const n = +((home.sec.match(/^(\d+)/) || [])[1] || 0);
+        ok(`Home counts and lists only the trips the traveler made (${tag})`, (!home.sec || n === 1) && home.cards === 0, `"${home.sec}" with ${home.cards} other trip card(s); the traveler made one trip`);
+        { const parts = (await q.evaluate(() => document.querySelector('.lobbybody').innerText)).split(/\n| · /).map(x => x.trim().toLowerCase()).filter(x => x.length >= 15), seen = new Set(), twice = [];
+          parts.forEach(x => { if (seen.has(x)) twice.push(x); seen.add(x); });
+          ok(`Home says each thing once (${tag})`, !twice.length, `said twice: ${[...new Set(twice)].slice(0, 3).join('; ')}`); }
+        ok(`no page errors on a first trip (${tag})`, !errs2.length, errs2.slice(0, 2).join(' | '));
+        await ctx2.close(); }
     }
     srv.close(); }
   await browser.close();
