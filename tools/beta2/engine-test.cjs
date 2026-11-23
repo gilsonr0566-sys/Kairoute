@@ -709,6 +709,29 @@ if (fs.existsSync(dir)) for (const f of fs.readdirSync(dir).filter(f => f.endsWi
     for (const nd of ['', 'morning', 'night']) { const s = JSON.parse(JSON.stringify(s0)); Object.assign(s.days[li], { mode: 'flight', time: '03:10', startTime: '09:00', nightDep: nd });
       const p = E.planTrip(s)[li], stops = (p.items || []).filter(x => x.t === 'stop');
       ok(nd === '' ? p.error && p.askNight : nd === 'morning' ? !p.error && !stops.length && p.end <= p.endBy : !p.error && p.endBy > 24 * 60, `a 3:10 am flight on a trip, ${nd || 'unanswered'}: ${p.error ? 'asked' : stops.length + ' sights, there by ' + E.clock(p.endBy)}`); } } }
+// Nov 23 (tester round 7a, evening calls h33, w20): a day whose picks are ALL shut in its time says so, each with its
+// reason, never "Pick the sights you want" as if nothing was picked; the app adds no sight of its own.
+{ const s0 = fs.readdirSync(dir).filter(f => f.endsWith('.json')).map(f => JSON.parse(fs.readFileSync(path.join(dir, f)))).find(s => (s.days || []).some(d => d.type === 'port' && (s.cities[d.city] || {}).sites && s.cities[d.city].sites.length >= 4));
+  if (s0) { const pi = s0.days.findIndex(d => d.type === 'port' && (s0.cities[d.city] || {}).sites && s0.cities[d.city].sites.length >= 4), s = JSON.parse(JSON.stringify(s0)), d = s.days[pi], c = s.cities[d.city];
+    const shut = c.sites.slice(0, 2).map(x => x.id); c.sites.forEach(x => { if (shut.includes(x.id)) x.visitable = false; });
+    Object.assign(d, { selected: shut, own: true, mine: shut });
+    const p = E.planTrip(s)[pi], stops = (p.items || []).filter(x => x.t === 'stop'), ex = (p.explain || []).join(' ');
+    ok(!stops.length || stops.every(x => shut.includes(x.id)), `every pick shut: no sight of the app's own is added (${stops.map(x => x.name).join(', ')})`);
+    if (!stops.length) ok(/None of your picks can be visited/.test(ex) && !/Pick the sights you want/.test(ex), `every pick shut: the day says none of the picks can be visited (${ex.slice(0, 160)})`); } }
+// Nov 23 (tester round 7a, finding 109): a field its article calls general aviation, closed or military is never offered,
+// also when the map finds it again under its own name or a few hundred metres off with nothing said; a second airport the
+// map alone knows stays offered. Terminals of one airport are asked as the terminal, never as "which airport".
+{ const L = [{ name: 'Big City Airport', lat: 45.505, lng: 12.352, wiki: true, about: 'Big City Airport (IATA: BCX, ICAO: XXXX) is the international airport of Big City.' },
+    { name: 'Island Airfield Airport', lat: 45.428, lng: 12.388, wiki: true, about: 'Island Airfield Airport (ICAO: XXXY) is a general aviation airport on the island.' },
+    { name: 'Aeroporto Nicolo', lat: 45.4285, lng: 12.3875, kind: 'aerodrome' }, { name: 'Island Airfield Airport', lat: 45.44, lng: 12.40, kind: 'aerodrome' },
+    { name: 'Second Town Airport', lat: 45.65, lng: 12.19, kind: 'aerodrome' }];
+  const got = E.gateChoices(L, 'airport').map(x => x.name);
+  ok(got.length === 2 && got.includes('Big City Airport') && got.includes('Second Town Airport'), `a general-aviation field is never offered, found by its article or on the map; a real second airport stays (${got.join(', ')})`);
+  const tb = E.makeTravel({ walk: 'medium' }, {});
+  const t = E.dayWindow(day({ type: 'departure', mode: 'flight', time: '15:00', point: Object.assign({}, air, { name: 'Big City Airport, Terminal 1', ask: ['Big City Airport, Terminal 1', 'Big City Airport, Terminal 2'] }) }), tb);
+  ok(t.error && /^Which terminal of Big City Airport do you leave from\?/.test(t.error) && !/more than one here/.test(t.error), `terminals of one airport: asked which terminal (${t.error})`);
+  const a = E.dayWindow(day({ type: 'departure', mode: 'flight', time: '15:00', point: Object.assign({}, air, { name: 'Big City Airport', ask: ['Big City Airport', 'Second Town Airport'] }) }), tb);
+  ok(a.error && /^Which airport do you leave from\?/.test(a.error), 'two airports: asked which airport'); }
 // Nov 23: a late arrival's day ends no sooner than the traveler reaches the hotel (a 9:30 pm flight gave a day of 10:45 to
 // 11:00 pm and a plan reaching the hotel at 12:14 am, past its own end).
 { const tb = E.makeTravel({ walk: 'medium' }, {});

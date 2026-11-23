@@ -88,6 +88,15 @@ function rules(text, info = {}) {
   { const t = T(info.time), small = info.type === 'departure' && info.mode !== 'ship' && t != null && t < 5 * 60;
     if (small && !info.nightDep && !/early this morning, or late tonight/i.test(raw)) add('S1', 'small-hours departure asked', `a ${info.time} departure is planned without asking whether it is this morning or tonight`);
     if (small && info.nightDep !== 'night' && stops.length) add('S1', 'small-hours departure asked', `a ${info.time} departure ${info.nightDep ? 'this morning' : 'not yet placed'} has ${stops.length} sight(s) planned`); }
+  // A time to leave that is the time to be back, from a walk of no time (Nov 23 recheck, evening port call with nothing
+  // planned ashore: "Leave here by 10:45 pm to be back by 10:45 pm", "From the cruise port: walk 0 min, so leave by").
+  { const m = /Leave here by (\d{1,2}:\d\d\s*[ap]m) to be back by (\d{1,2}:\d\d\s*[ap]m)/i.exec(raw);
+    if (m && T(m[1]) != null && T(m[1]) === T(m[2])) add('S2', 'leave-by is not the back-by', `"Leave here by ${m[1]} to be back by ${m[2]}": the same time, so the words say nothing true`);
+    if (/: walk 0 min, so leave by/.test(raw)) add('S2', 'leave-by is not the back-by', 'a leave-by from a walk of 0 min'); }
+  // "Which airport" with only terminals of one airport to choose from is a terminal question (tester round 7a).
+  { const m = /Which airport [^?]*\? There is more than one here \(([^)]*)\)/.exec(raw);
+    if (m) { const ns = m[1].split(/,? or |, (?!(?:terminals?|T)\s*[0-9A-Z]{1,3}\b)/i).map(s => s.trim()).filter(Boolean), base = n => n.replace(/\s*,?\s*(terminals?|T)\s*[0-9A-Z]{1,3}$/i, '').trim();
+      if (ns.length > 1 && new Set(ns.map(base)).size === 1 && ns.some(n => base(n) !== n)) add('S2', 'terminals asked as terminals', `"Which airport" asked with only terminals of one airport: ${m[1]}`); } }
   // ---- S2: what the screen says must add up
   // Free time comes after the day's own first steps (bags left in storage, the hotel check-in), never before them at the
   // airport or the pier (Nov 23: "Free time 1 h 16 min" at the airport, then the ride to the hotel).
