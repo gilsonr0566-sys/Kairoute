@@ -199,7 +199,8 @@
    "note": "It was built in the 11th century, and reconstructed after earthquakes. Romanesque-Gothic architecture. Chapel holds the remains of St. Tryphon, the patron saint of Kotor.",
    "editions": 23,
    "unesco": false,
-   "web": "https://www.kotorskabiskupija.me"
+   "web": "https://www.kotorskabiskupija.me",
+   "en": "Kotor Cathedral"
   },
   {
    "name": "St Nicolas Church",
@@ -208,7 +209,8 @@
    "wikidata": "Q26696607",
    "note": "The biggest Orthodox church in the Old Town.",
    "editions": 6,
-   "unesco": false
+   "unesco": false,
+   "en": "Serbian Orthodox church of St Nicolas in Kotor"
   },
   {
    "name": "Maritime Museum",
@@ -218,7 +220,8 @@
    "note": "3 floors of photographs, uniforms, weapons, paintings, and model ships.",
    "editions": 4,
    "unesco": false,
-   "web": "http://www.museummaritimum.com"
+   "web": "http://www.museummaritimum.com",
+   "en": "Maritime Museum of Montenegro in Kotor"
   },
   {
    "name": "Castle of San Giovanni",

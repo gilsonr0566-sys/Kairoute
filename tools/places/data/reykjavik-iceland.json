@@ -414,7 +414,8 @@
    "note": "The Reykjavík Botanical Gardens are not large, but they're nice for a short stroll and a good place to see some of the plants that grow in Iceland.",
    "editions": 13,
    "unesco": false,
-   "web": "http://www.grasagardur.is"
+   "web": "http://www.grasagardur.is",
+   "en": "Reykjavík Botanic Garden"
   },
   {
    "name": "Viðey",
@@ -442,7 +443,8 @@
    "wikidata": "Q451045",
    "note": "On the southern edge of Austurvöllur is a small building of hewn stone, but don't let its size fool you. This is the building of the Icelandic parliament, known as Alþingi. The institution has in fact long since outgrown the building which ",
    "editions": 22,
-   "unesco": false
+   "unesco": false,
+   "en": "Alþingishúsið"
   },
   {
    "name": "Reykjavík Cathedral",
@@ -462,7 +464,8 @@
    "wikidata": "Q196471",
    "note": "One of the best examples of late 20th-century architecture in Iceland, built into Tjörnin (The Pond). On the ground floor, which is open to the public, there is a large relief map of the whole country as well as a café and an exhibition hal",
    "editions": 13,
-   "unesco": false
+   "unesco": false,
+   "en": "Ráðhús Reykjavíkur"
   },
   {
    "name": "Hallgrímskirkja",
@@ -512,7 +515,8 @@
    "note": "The Catholic cathedral of Iceland.",
    "editions": 21,
    "unesco": false,
-   "web": "http://catholica.is/"
+   "web": "http://catholica.is/",
+   "en": "Landakotskirkja"
   },
   {
    "name": "National Gallery of Iceland",
@@ -532,7 +536,8 @@
    "note": "By the old harbour in Reykjavík, Hafnarhúsið hosts a rotating exhibitions of the work of Icelandic artist Erró and temporary exhibitions often showcase other local artists.",
    "editions": 15,
    "unesco": false,
-   "web": "http://www.artmuseum.is/"
+   "web": "http://www.artmuseum.is/",
+   "en": "Reykjavik Art Museum"
   },
   {
    "name": "Reykjavík Art Museum - Kjarvalsstaðir",
@@ -549,7 +554,8 @@
    "note": "A very small museum with a nice library and reading room where you can find some older (but good) books about photography and current and past issues of photography magazines. It also has a huge collection of Icelandic photographs.",
    "editions": 6,
    "unesco": false,
-   "web": "http://borgarsogusafn.is/is/ljosmyndasafn-reykjavikur/"
+   "web": "http://borgarsogusafn.is/is/ljosmyndasafn-reykjavikur/",
+   "en": "Reykjavík Museum of Photography"
   },
   {
    "name": "National Museum of Iceland",
@@ -569,7 +575,8 @@
    "note": "In the suburb of Árbær, and frequently called Árbæjarsafn (Árbær museum), this open air museum contains both the old farm of Árbær and many buildings from central Reykjavík that were moved there to make way for construction. The result is a",
    "editions": 11,
    "unesco": false,
-   "web": "https://reykjavikcitymuseum.is/arbaer-open-air-museum"
+   "web": "https://reykjavikcitymuseum.is/arbaer-open-air-museum",
+   "en": "Árbæjarsafn"
   },
   {
    "name": "871±2",
@@ -579,7 +586,8 @@
    "note": "Run by the Reykjavík City Museum, this exhibition in central Reykjavík was built around the oldest archaeological ruins in Iceland. As the name indicates, these ruins date to around the year 870. This interactive exhibitions brings you the ",
    "editions": 6,
    "unesco": false,
-   "web": "http://www.minjasafnreykjavikur.is/english/desktopdefault.aspx/tabid-4206/"
+   "web": "http://www.minjasafnreykjavikur.is/english/desktopdefault.aspx/tabid-4206/",
+   "en": "the Settlement Exhibition"
   },
   {
    "name": "The House of Collections",

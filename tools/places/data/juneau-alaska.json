@@ -225,7 +225,8 @@
    "note": "One of Alaska's best exhibits covering the breadth of the state's history, native cultures, wildlife, industry, and art. Approximately a ten-minute walk from the cruise ship terminal.",
    "editions": 3,
    "unesco": false,
-   "web": "http://www.museums.state.ak.us/asm/asmhome.html"
+   "web": "http://www.museums.state.ak.us/asm/asmhome.html",
+   "en": "Alaska State Centennial Museum"
   },
   {
    "name": "Saint Nicholas Russian Orthodox Church",
@@ -235,7 +236,8 @@
    "note": "Tiny ornate octagonal structure that was built by the Tlingits in 1893. When the Russians were still in Sitka 50 years earlier, Father Ivan Veniaminov of the Russian Orthodox Church translated the Bible into Tlingit. Thus this building beca",
    "editions": 5,
    "unesco": false,
-   "web": "http://stnicholasjuneau.org/"
+   "web": "http://stnicholasjuneau.org/",
+   "en": "St. Nicholas Russian Orthodox Church"
   },
   {
    "name": "Alaska State Capitol",
@@ -261,7 +263,8 @@
    "note": "There is a tram that runs from the docks in downtown Juneau up Mount Roberts, one of the peaks overlooking the city. At the top is the Mount Roberts Nature Center which features a captive eagle (not as impressive as seeing them from a dista",
    "editions": 3,
    "unesco": false,
-   "posDoubt": true
+   "posDoubt": true,
+   "en": "Goldbelt Tram"
   },
   {
    "name": "Alaskan Brewing Company Brewery Tour",
@@ -304,7 +307,8 @@
    "wikidata": "Q20679861",
    "note": "",
    "editions": 2,
-   "unesco": false
+   "unesco": false,
+   "en": "Wickersham House"
   }
  ],
  "cityEats": [

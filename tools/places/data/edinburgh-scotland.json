@@ -227,7 +227,8 @@
      "wikidata": "Q5566778",
      "content": "The City Council headquarters were built in 1888 in Italian Renaissance style. Tours take in the marble staircases, lobbies, debating chamber and banqueting hall. Public tours are conducted M-F at 10:30AM and 2:30PM. Tickets for the tour ca",
      "editions": 11,
-     "unesco": false
+     "unesco": false,
+     "en": "Glasgow City Chambers"
     },
     {
      "kind": "see",
@@ -271,7 +272,8 @@
      "wikidata": "Q7489914",
      "content": "\"Sharmanka\" is Russian for \"barrel-organ\" and it's a kinetic gallery. It has dingbat machines created by Eduard Bersudsky, described somewhere between Heath Robinson and Jean Tinguely.",
      "editions": 1,
-     "unesco": false
+     "unesco": false,
+     "en": "Sharmanka Kinetic Gallery"
     },
     {
      "kind": "see",
@@ -283,7 +285,8 @@
      "wikidata": "Q1917240",
      "content": "A Victorian Saint Pancras Station-style anomaly in an otherwise grey square. It's the nearest Subway to Central, though you'd only use it for outlying parts. The interior is modern.",
      "editions": 12,
-     "unesco": false
+     "unesco": false,
+     "en": "St Enoch subway station"
     },
     {
      "kind": "see",
@@ -329,7 +332,8 @@
      "wikidata": "Q1537781",
      "content": "The temperance activist Kate Cranston established a chain of artistic tea rooms, where citizens (especially women) could enjoy non-alcoholic refreshments in genteel surroundings. Her designer was Charles Rennie Mackintosh, and this Sauchieh",
      "editions": 8,
-     "unesco": false
+     "unesco": false,
+     "en": "Willow Tearooms"
     },
     {
      "kind": "see",
@@ -365,7 +369,8 @@
      "wikidata": "Q6974920",
      "content": "The home of the bagpipes is in the former Cowcaddens Free Church. The museum shows 300 years of piping history, mainly showing Scottish bagpipes, but also showing Northumbrian pipes and some from Poland, Hungary, Italy and Spain. The piping",
      "editions": 3,
-     "unesco": false
+     "unesco": false,
+     "en": "National Piping Centre"
     },
     {
      "kind": "see",
@@ -389,7 +394,8 @@
      "wikidata": "Q4631316",
      "content": "built around 1860, is the centrepiece of the well-heeled Park District. If they were aiming to recreate Bath, what they got was Edinburgh Scotland Street, with legal brassplates set around a leafy oval - the Montessori School seems inevitab",
      "editions": 2,
-     "unesco": false
+     "unesco": false,
+     "en": "22 Park Circus, Glasgow"
     },
     {
      "kind": "see",
@@ -435,7 +441,8 @@
      "wikidata": "Q192775",
      "content": "main Gilmorehill campus is a district of half a square mile, bounded to the east by the River Kelvin, to the north by Great Western Road, south by Dumbarton Road, and west by Byres Rd - by Subway use Hillhead. It was founded in 1451, the fo",
      "editions": 72,
-     "unesco": false
+     "unesco": false,
+     "en": "University of Glasgow"
     },
     {
      "kind": "see",
@@ -447,7 +454,8 @@
      "wikidata": "Q1465387",
      "content": "It holds a huge collection of work by Whistler, Rennie Mackintosh, the Scottish Colourists and the Glasgow Boys. The Mackintosh House is a reconstruction of the interior of CRM's nearby home, which was lost to university expansion in the 19",
      "editions": 11,
-     "unesco": false
+     "unesco": false,
+     "en": "Hunterian Museum and Art Gallery"
     },
     {
      "kind": "see",
@@ -469,7 +477,8 @@
      "wikidata": "Q894634",
      "content": "Extensive gardens established in 1842 besides the River Kelvin, with tropical and temperate plants. Its distinctive landmark is the Kibble Palace, a 19th-century wrought-iron temperate glasshouse, rebuilt 2004-06.",
      "editions": 13,
-     "unesco": false
+     "unesco": false,
+     "en": "Glasgow Botanic Gardens"
     },
     {
      "kind": "see",
@@ -505,7 +514,8 @@
      "wikidata": "Q7435656",
      "content": "This school, opened in 1906, was Charles Rennie Mackintosh's last major building. It was a wonderful Art Nouveau design (so naturally it was way over budget) and closed in 1979 when the Gorbals slums were demolished and school enrolment fel",
      "editions": 6,
-     "unesco": false
+     "unesco": false,
+     "en": "Scotland Street School Museum"
     },
     {
      "kind": "see",
@@ -625,7 +635,8 @@
      "wikidata": "Q7809742",
      "content": "This stonking great cantilever crane stands 49 m tall. It was built in 1907 to instal massive items such as boilers, engines and gun turrets during ship construction, enabling John Brown & Co to build bigger ships than their competitors. it",
      "editions": 7,
-     "unesco": false
+     "unesco": false,
+     "en": "Titan Clydebank"
     },
     {
      "kind": "see",
@@ -2142,7 +2153,8 @@
    "note": "It's often called a Cathedral, but the Church of Scotland brooks no such episcopal entity, and Charles I dubbing it \"cathedral\" in 1633 was one reason his head was chopped off. Safer to call it \"High Kirk\", though they're nowadays lenient w",
    "editions": 30,
    "unesco": false,
-   "web": "https://www.stgilescathedral.org.uk/"
+   "web": "https://www.stgilescathedral.org.uk/",
+   "en": "St Giles' Cathedral"
   },
   {
    "name": "Mary King's Close",
@@ -2162,7 +2174,8 @@
    "note": "This is housed in Canongate Tolbooth, the medieval centre for governance and justice (preferably gruesome) as Canongate was a separate jurisdiction until 1856. The museum covers the story of working class life, and of organised labour, from",
    "editions": 4,
    "unesco": false,
-   "web": "https://www.edinburghmuseums.org.uk/venue/peoples-story-museum"
+   "web": "https://www.edinburghmuseums.org.uk/venue/peoples-story-museum",
+   "en": "People's Story Museum"
   },
   {
    "name": "Canongate Kirk",
@@ -2172,7 +2185,8 @@
    "note": "In 1687 James VII (II of England) chucked the Protestants out of Holyrood to convert it to a royal Roman Catholic chapel, the sort of behaviour that got him ousted from the monarchy the following year. The congregation moved to Infirmary St",
    "editions": 4,
    "unesco": false,
-   "web": "https://www.canongatekirk.org.uk"
+   "web": "https://www.canongatekirk.org.uk",
+   "en": "Kirk of the Canongate"
   },
   {
    "name": "Museum of Edinburgh",
@@ -2191,7 +2205,8 @@
    "wikidata": "Q13889055",
    "note": "This close was re-modelled in the 1970s to recreate a 17th-century physic and knot garden, a hidden quiet place in the busy city.",
    "editions": 2,
-   "unesco": false
+   "unesco": false,
+   "en": "Dunbar’s Close Garden"
   },
   {
    "name": "Scottish Parliament",
@@ -2201,7 +2216,8 @@
    "note": "A unique building, designed by Spanish Catalan architect Enric Miralles, completed in 2004. It's either a daring showpiece of postmodern architecture or a national embarrassment or a bit of both, time will tell. Parliament meets Tu-Th and y",
    "editions": 18,
    "unesco": false,
-   "web": "https://www.parliament.scot/visitandlearn/9983.aspx"
+   "web": "https://www.parliament.scot/visitandlearn/9983.aspx",
+   "en": "Scottish Parliament Building"
   },
   {
    "name": "Dynamic Earth",
@@ -2242,7 +2258,8 @@
    "note": "See Edinburgh#Connect for how to access. The internet stations are in the Learning Centre, and the building houses Central Lending Library, Central Reference Library, Central Children's Library, Edinburgh and Scottish Collections, Art & Des",
    "editions": 7,
    "unesco": false,
-   "web": "https://www.edinburgh.gov.uk/directory-record/1229174/central-library"
+   "web": "https://www.edinburgh.gov.uk/directory-record/1229174/central-library",
+   "en": "Edinburgh Central Library"
   },
   {
    "name": "National Museum of Scotland",
@@ -2326,7 +2343,8 @@
    "note": "Gallery of contemporary art, refurbished in 2018. From 1936 to the 1970s this was where soft fruit and veg were traded, handy for the trains and delivery vans.",
    "editions": 4,
    "unesco": false,
-   "web": "https://www.fruitmarket.co.uk"
+   "web": "https://www.fruitmarket.co.uk",
+   "en": "Fruitmarket Gallery"
   },
   {
    "name": "Stills",
@@ -2352,7 +2370,8 @@
    "wikidata": "Q7083575",
    "note": "Atmospheric Georgian graves, memorials, and funerary ornaments. Memorials include those to the philosopher David Hume (1711-1776), to the Scots who died in the American Civil War, and to the Martyrs of Reform imprisoned or transported for s",
    "editions": 4,
-   "unesco": false
+   "unesco": false,
+   "en": "Old Calton Burial Ground"
   },
   {
    "name": "Scott Monument",
@@ -2372,7 +2391,8 @@
    "note": "This holds much of Scotland's fine artwork from Renaissance to 20th century, with changing exhibitions. These rotate seasonally, so an exhibition put on for the Festival typically stays to the end of the year, allowing quieter times to view",
    "editions": 39,
    "unesco": false,
-   "web": "https://www.nationalgalleries.org/visit/scottish-national-gallery"
+   "web": "https://www.nationalgalleries.org/visit/scottish-national-gallery",
+   "en": "Scottish National Gallery"
   },
   {
    "name": "National Galleries of Scotland: Portrait",
@@ -2382,7 +2402,8 @@
    "note": "Completed in 1890, this is a striking red sandstone neo-Gothic building. It holds portraits of Scots from down the ages, with new faces being added all the time: Billy Connolly and Tilda Swinton mingle with Mary Queen of Scots. The entrance",
    "editions": 19,
    "unesco": false,
-   "web": "https://www.nationalgalleries.org/visit/scottish-national-portrait-gallery"
+   "web": "https://www.nationalgalleries.org/visit/scottish-national-portrait-gallery",
+   "en": "Scottish National Portrait Gallery"
   },
   {
    "name": "Palestine Museum",
@@ -2442,7 +2463,8 @@
    "note": "The original modern art gallery, established in 1960, was in the Botanic Gardens. In 1895 it moved into this neoclassical building, originally a refuge for fatherless children, and in 1999 it expanded across the road into the neoclassical o",
    "editions": 16,
    "unesco": false,
-   "web": "https://www.nationalgalleries.org/visit/scottish-national-gallery-modern-art"
+   "web": "https://www.nationalgalleries.org/visit/scottish-national-gallery-modern-art",
+   "en": "Scottish National Gallery of Modern Art"
   },
   {
    "name": "Modern Two",
@@ -2464,7 +2486,8 @@
    "editions": 14,
    "unesco": false,
    "web": "http://www.cathedral.net",
-   "posDoubt": true
+   "posDoubt": true,
+   "en": "St Mary's Cathedral"
   },
   {
    "name": "St Mary's Metropolitan Cathedral",
@@ -2474,7 +2497,8 @@
    "note": "The Roman Catholic Cathedral was established as a chapel in 1814 and became a cathedral in 1886 for the archdiocese of Edinburgh and St Andrews. It was designed by James Gillespie Graham in neo-perpendicular style and has undergone several ",
    "editions": 14,
    "unesco": false,
-   "web": "http://www.stmaryscathedral.co.uk/"
+   "web": "http://www.stmaryscathedral.co.uk/",
+   "en": "St Mary's Cathedral"
   },
   {
    "name": "Sherlock Holmes",
@@ -2492,7 +2516,8 @@
    "editions": 20,
    "unesco": false,
    "web": "https://www.rbge.org.uk",
-   "posDoubt": true
+   "posDoubt": true,
+   "en": "Royal Botanic Garden Edinburgh"
   },
   {
    "name": "Patriothall Gallery",
@@ -2528,7 +2553,8 @@
    "editions": 23,
    "unesco": false,
    "web": "https://www.royalyachtbritannia.co.uk/",
-   "posDoubt": true
+   "posDoubt": true,
+   "en": "HMY Britannia"
   },
   {
    "name": "Trinity House",
@@ -2595,7 +2621,8 @@
    "editions": 2,
    "unesco": false,
    "web": "http://www.corstorphineoldparish.org.uk",
-   "posDoubt": true
+   "posDoubt": true,
+   "en": "Corstorphine Collegiate Church"
   },
   {
    "name": "Lauriston Castle",
@@ -2646,7 +2673,8 @@
    "note": "It's often called a Cathedral, but the Church of Scotland brooks no such episcopal entity, and Charles I dubbing it \"cathedral\" in 1633 was one reason his head was chopped off. Safer to call it \"High Kirk\", though they're nowadays lenient w",
    "editions": 30,
    "unesco": false,
-   "web": "https://www.stgilescathedral.org.uk/"
+   "web": "https://www.stgilescathedral.org.uk/",
+   "en": "St Giles' Cathedral"
   },
   {
    "name": "Mary King's Close",
@@ -2666,7 +2694,8 @@
    "note": "This is housed in Canongate Tolbooth, the medieval centre for governance and justice (preferably gruesome) as Canongate was a separate jurisdiction until 1856. The museum covers the story of working class life, and of organised labour, from",
    "editions": 4,
    "unesco": false,
-   "web": "https://www.edinburghmuseums.org.uk/venue/peoples-story-museum"
+   "web": "https://www.edinburghmuseums.org.uk/venue/peoples-story-museum",
+   "en": "People's Story Museum"
   },
   {
    "name": "Canongate Kirk",
@@ -2676,7 +2705,8 @@
    "note": "In 1687 James VII (II of England) chucked the Protestants out of Holyrood to convert it to a royal Roman Catholic chapel, the sort of behaviour that got him ousted from the monarchy the following year. The congregation moved to Infirmary St",
    "editions": 4,
    "unesco": false,
-   "web": "https://www.canongatekirk.org.uk"
+   "web": "https://www.canongatekirk.org.uk",
+   "en": "Kirk of the Canongate"
   },
   {
    "name": "Museum of Edinburgh",
@@ -2695,7 +2725,8 @@
    "wikidata": "Q13889055",
    "note": "This close was re-modelled in the 1970s to recreate a 17th-century physic and knot garden, a hidden quiet place in the busy city.",
    "editions": 2,
-   "unesco": false
+   "unesco": false,
+   "en": "Dunbar’s Close Garden"
   },
   {
    "name": "Scottish Parliament",
@@ -2705,7 +2736,8 @@
    "note": "A unique building, designed by Spanish Catalan architect Enric Miralles, completed in 2004. It's either a daring showpiece of postmodern architecture or a national embarrassment or a bit of both, time will tell. Parliament meets Tu-Th and y",
    "editions": 18,
    "unesco": false,
-   "web": "https://www.parliament.scot/visitandlearn/9983.aspx"
+   "web": "https://www.parliament.scot/visitandlearn/9983.aspx",
+   "en": "Scottish Parliament Building"
   },
   {
    "name": "Dynamic Earth",
@@ -2746,7 +2778,8 @@
    "note": "See Edinburgh#Connect for how to access. The internet stations are in the Learning Centre, and the building houses Central Lending Library, Central Reference Library, Central Children's Library, Edinburgh and Scottish Collections, Art & Des",
    "editions": 7,
    "unesco": false,
-   "web": "https://www.edinburgh.gov.uk/directory-record/1229174/central-library"
+   "web": "https://www.edinburgh.gov.uk/directory-record/1229174/central-library",
+   "en": "Edinburgh Central Library"
   },
   {
    "name": "National Museum of Scotland",
@@ -2830,7 +2863,8 @@
    "note": "Gallery of contemporary art, refurbished in 2018. From 1936 to the 1970s this was where soft fruit and veg were traded, handy for the trains and delivery vans.",
    "editions": 4,
    "unesco": false,
-   "web": "https://www.fruitmarket.co.uk"
+   "web": "https://www.fruitmarket.co.uk",
+   "en": "Fruitmarket Gallery"
   },
   {
    "name": "Stills",

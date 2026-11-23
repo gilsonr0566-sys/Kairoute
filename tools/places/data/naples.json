@@ -86,7 +86,8 @@
      "wikidata": "Q2015116",
      "content": "This is in the most easterly corner of the excavated area, near the Sarno Gate entrance. It was completed in 80 BC, measures 135 x 104 metres and could hold about 20,000 people. It is the earliest surviving permanent amphitheatre in Italy a",
      "editions": 18,
-     "unesco": false
+     "unesco": false,
+     "en": "Amphitheatre of Pompeii"
     },
     {
      "kind": "see",
@@ -98,7 +99,8 @@
      "wikidata": "Q3891745",
      "content": "This occupies a large area opposite the Amphitheatre. The central area was used for sporting activities and there was a pool in the middle. On three sides are lengthy internal porticos or colonnades.",
      "editions": 3,
-     "unesco": false
+     "unesco": false,
+     "en": "Samnite Palaestra"
     },
     {
      "kind": "see",
@@ -178,7 +180,8 @@
      "wikidata": "Q1241298",
      "content": "One of the \"suburban houses\", with curious frescoes, perhaps of women being initiated into the Cult of Dionysus. Contains one of the finest fresco cycles in Italy, as well as humorous ancient graffiti.",
      "editions": 29,
-     "unesco": true
+     "unesco": true,
+     "en": "Villa of the Mysteries"
     },
     {
      "kind": "see",
@@ -382,7 +385,8 @@
      "wikidata": "Q722460",
      "content": "The natural reserve.",
      "editions": 9,
-     "unesco": false
+     "unesco": false,
+     "en": "Punta Campanella Marine Reserve"
     },
     {
      "kind": "see",
@@ -414,7 +418,8 @@
      "wikidata": "Q16336782",
      "content": "",
      "editions": 2,
-     "unesco": false
+     "unesco": false,
+     "en": "Territorial Archaeological Museum of Penisola Sorrentina \"Georges Vallet\""
     },
     {
      "kind": "see",
@@ -436,7 +441,8 @@
      "wikidata": "Q2068666",
      "content": "",
      "editions": 10,
-     "unesco": false
+     "unesco": false,
+     "en": "Sorrento Cathedral"
     },
     {
      "kind": "see",
@@ -448,7 +454,8 @@
      "wikidata": "Q111550322",
      "content": "Its cloister dates from 1300. It is one of the most picturesque spots in town.",
      "editions": 1,
-     "unesco": false
+     "unesco": false,
+     "en": "Chiesa di San Francesco"
     },
     {
      "kind": "see",
@@ -460,7 +467,8 @@
      "wikidata": "Q17622423",
      "content": "",
      "editions": 4,
-     "unesco": false
+     "unesco": false,
+     "en": "basilica di Sant'Antonino"
     },
     {
      "kind": "see",
@@ -472,7 +480,8 @@
      "wikidata": "Q2332531",
      "content": "Sorrento's main piazza, connected to Piazza Lauro by Corso Italia. Walk a few meters up Viale Enrico Caruso to enjoy the view over the railing down to:",
      "editions": 6,
-     "unesco": false
+     "unesco": false,
+     "en": "Piazza Tasso"
     },
     {
      "kind": "see",
@@ -942,7 +951,8 @@
    "wikidata": "Q897603",
    "note": "One of the most prominent churches of Naples. This Gothic church (est. 1283) incorporates a smaller, original church built on this site in the 10th century, San Michele Arcangelo a Morfisa. The monastery annexed to the church has been the h",
    "editions": 17,
-   "unesco": false
+   "unesco": false,
+   "en": "Basilica of St. Dominic"
   },
   {
    "name": "Santa Chiara",
@@ -975,7 +985,8 @@
    "note": "One of Naples' main churches, related to important historical events of the city and its kingdom, such as Masaniello revolt and the executions happened during the five months existence of Parthenopean Republic (1799). The interior is a true",
    "editions": 14,
    "unesco": false,
-   "web": "http://www.santuariocarminemaggiore.it"
+   "web": "http://www.santuariocarminemaggiore.it",
+   "en": "Santa Maria del Carmine"
   },
   {
    "name": "Castel dell'Ovo",
@@ -1017,7 +1028,8 @@
    "note": "A former monastery complex, now a museum. It is the most visible landmark of the city, perched atop the Vomero hill that commands the gulf. A Carthusian monastery, it was finished and inaugurated under the rule of Queen Joan I in 1368. In 1",
    "editions": 24,
    "unesco": false,
-   "web": "http://museosanmartino.campaniabeniculturali.it/"
+   "web": "http://museosanmartino.campaniabeniculturali.it/",
+   "en": "Certosa di San Martino"
   },
   {
    "name": "Villa Floridiana and Museo Nazionale della ceramica Duca di Martina",
@@ -1027,7 +1039,8 @@
    "note": "A large, quiet park with beautiful panoramic views, surrounds a neoclassical villa which hosts a large ceramic collection from different parts of the world.",
    "editions": 6,
    "unesco": false,
-   "web": "https://www.beniculturali.it/luogo/museo-della-ceramica-duca-di-martina-in-villa-floridiana"
+   "web": "https://www.beniculturali.it/luogo/museo-della-ceramica-duca-di-martina-in-villa-floridiana",
+   "en": "Museo Nazionale della Ceramica Duca di Martina"
   },
   {
    "name": "Villa Pignatelli",
@@ -1079,7 +1092,8 @@
    "note": "A tour of an old tunnel that connects the palace to military barracks, used as a bomb shelter in World War II.",
    "editions": 7,
    "unesco": false,
-   "posDoubt": true
+   "posDoubt": true,
+   "en": "Bourbon Tunnel"
   },
   {
    "name": "Catacombe di San Gennaro",
@@ -1089,7 +1103,8 @@
    "note": "An extensive, two floor catacombs area restored and maintained by a few dozen local-patriots. Misc. tombs, frescoes, mosaics, etc., are shown.",
    "editions": 11,
    "unesco": false,
-   "web": "https://www.catacombedinapoli.it/it"
+   "web": "https://www.catacombedinapoli.it/it",
+   "en": "Catacombs of San Gennaro"
   },
   {
    "name": "Catacombe di San Gaudioso",
@@ -1099,7 +1114,8 @@
    "note": "A catacombe area where macabre ritual of \"draining\" was performed. A few remains of skulls in the walls, parts of skeletons and wall paintings are shown. Also the history of the \"upstairs\" church is shortly showcased.",
    "editions": 7,
    "unesco": false,
-   "web": "https://www.catacombedinapoli.it/it"
+   "web": "https://www.catacombedinapoli.it/it",
+   "en": "Catacombs of Saint Gaudiosus"
   },
   {
    "name": "Tomb of Virgil",
@@ -1148,7 +1164,8 @@
    "note": "Hosts paintings from the 13th to 18th centuries, including major works by Simone Martini, Raphael, Titian, Caravaggio, Masaccio, Sandro Botticelli, Lorenzo Lotto, Giovanni Bellini, Giorgio Vasari, El Greco, Jacob Philipp Hackert. It also ho",
    "editions": 18,
    "unesco": false,
-   "web": "http://www.museocapodimonte.beniculturali.it/"
+   "web": "http://www.museocapodimonte.beniculturali.it/",
+   "en": "Palace of Capodimonte"
   },
   {
    "name": "Museum of Contemporary Art Donnaregina",
@@ -1165,7 +1182,8 @@
    "note": "Large collection of artworks, coins, and books donated to the city by Prince Gaetano Filangieri.",
    "editions": 4,
    "unesco": false,
-   "web": "https://filangierimuseo.it/"
+   "web": "https://filangierimuseo.it/",
+   "en": "Filangieri Civic Museum"
   },
   {
    "name": "Complesso monumentale dei Girolamini",
@@ -1175,7 +1193,8 @@
    "note": "Ecclesiastic complex comprising a gallery of paintings, a cloister, a library of thousands of ancient manuscripts, and a baroque church.",
    "editions": 13,
    "unesco": false,
-   "web": "http://www.polomusealenapoli.beniculturali.it/museo_gi/museo_gi.html"
+   "web": "http://www.polomusealenapoli.beniculturali.it/museo_gi/museo_gi.html",
+   "en": "Girolamini"
   },
   {
    "name": "Palazzo delle Arti",
@@ -1192,7 +1211,8 @@
    "note": "A museum housed in the ancient 19th century's Bourbon Factories, along the route of the first railway in Italy: the Napoli-Portici line. Here is possible to admire a large variety of rolling stock like steam locomotives and different period",
    "editions": 6,
    "unesco": false,
-   "web": "https://www.fondazionefs.it/content/fondazionefs/it/esplora-il-museo/visita-pietrarsa.html"
+   "web": "https://www.fondazionefs.it/content/fondazionefs/it/esplora-il-museo/visita-pietrarsa.html",
+   "en": "Pietrarsa railway museum"
   },
   {
    "name": "Museo Universitario delle Scienze e delle Arti",
@@ -1215,7 +1235,8 @@
    "wikidata": "Q221640",
    "note": "A former public hospital/almshouse. It was designed by the architect Ferdinando Fuga, and construction was started in 1751. It is five storeys tall and about 300 m long. It was popularly known as \"Palazzo Fuga\". King Charles III of the Hous",
    "editions": 13,
-   "unesco": false
+   "unesco": false,
+   "en": "Ospedale L'Albergo Reale dei Poveri"
   },
   {
    "name": "Palazzo dello Spagnolo",
@@ -1238,7 +1259,8 @@
    "wikidata": "Q608398",
    "note": "3-stores palace built during the second half of 18th century by the architect Mario Gioffredo. The internal courtyard was designed by Luigi Vanvitelli and features a four-arch portico and Doric order lesenes.",
    "editions": 9,
-   "unesco": false
+   "unesco": false,
+   "en": "Palazzo di Sangro di Casacalenda, Naples"
   },
   {
    "name": "Palazzo Mannajuolo",

@@ -97,7 +97,8 @@
      "wikidata": "Q1123180",
      "content": "It is the centrepiece of Toledo. It sits on top of the hill and is deceptively large. When you enter you will be confronted by sparkling gold reliefs, huge oil paintings and portraits of all of the Toledo Cardinals going back at least 500 y",
      "editions": 44,
-     "unesco": false
+     "unesco": false,
+     "en": "Toledo Cathedral"
     },
     {
      "kind": "see",
@@ -109,7 +110,8 @@
      "wikidata": "Q19360888",
      "content": "It offers ''great views'' of Toledo and the surrounding region from its twin spires. It is set in the highest location in the city. (Oct-Mar 10:00-17:45, Apr-Sep 10:00-18:45)",
      "editions": 6,
-     "unesco": false
+     "unesco": false,
+     "en": "Church of San Ildefonso, Toledo"
     },
     {
      "kind": "see",
@@ -133,7 +135,8 @@
      "wikidata": "Q5116861",
      "content": "It was like the Mezquita Cristo de la Luz converted from a mosque into a church, though in this case the architecture of the building is more varied, combining Mudejar, Visigoth, and Roman-style architecture. (mid Oct-Feb 10:00-17:45, Mar-m",
      "editions": 6,
-     "unesco": false
+     "unesco": false,
+     "en": "Church of El Salvador"
     },
     {
      "kind": "see",
@@ -169,7 +172,8 @@
      "wikidata": "Q1289106",
      "content": "It's a beautiful 16th century church in the Jewish quarter that was built by Ferdinand and Isabella to house their tombs. Upon the conquest of Granada, they decided to be buried there instead, but it is still easily worth the visit. (mid Oc",
      "editions": 12,
-     "unesco": false
+     "unesco": false,
+     "en": "Monasterio de San Juan de los Reyes"
     },
     {
      "kind": "see",
@@ -181,7 +185,8 @@
      "wikidata": "Q1811506",
      "content": "The second of Toledo's remaining pre-16th century synagogues, it hosts the Sefardi Museum.",
      "editions": 20,
-     "unesco": true
+     "unesco": true,
+     "en": "Synagogue of El Transito"
     },
     {
      "kind": "see",
@@ -193,7 +198,8 @@
      "wikidata": "Q1326589",
      "content": "A large square building on the outskirts of the old city. It looks across the river at Franco's old military barracks. The origin of the building dates back to the presence of a Roman camp in the 3rd century. The Muslims built there a keep ",
      "editions": 29,
-     "unesco": false
+     "unesco": false,
+     "en": "Alcázar of Toledo"
     },
     {
      "kind": "see",
@@ -215,7 +221,8 @@
      "wikidata": "Q6034428",
      "content": "The Museum of the Army is housed in the imposing Alcázar of Toledo, a historic fortress overlooking the city. It presents the history of the Spanish Army from its early origins to the modern era, with exhibits ranging from medieval weapons ",
      "editions": 9,
-     "unesco": false
+     "unesco": false,
+     "en": "Army Museum"
     }
    ],
    "foodDrink": [
@@ -569,7 +576,8 @@
    "editions": 16,
    "unesco": false,
    "web": "https://www.cultura.gob.es/mnantropologia/portada.html",
-   "posDoubt": true
+   "posDoubt": true,
+   "en": "National Museum of Anthropology"
   },
   {
    "name": "Parque del Retiro",
@@ -647,7 +655,8 @@
    "wikidata": "Q11682612",
    "note": "Former hospital complex, built in 1916 in an eclecticist style (similar to Palacio de Cibeles, that was designed by the same architects). It includes a church, Santa María del Silencio. The hospital was intended to serve the poorer classes,",
    "editions": 3,
-   "unesco": false
+   "unesco": false,
+   "en": "Maudes Hospital"
   },
   {
    "name": "Constitutional Tribunal",
@@ -663,7 +672,8 @@
    "wikidata": "Q786291",
    "note": "On the north side of the city and bisected by Paseo de la Castellana, this plaza is in the center of Madrid's skyscraper district. A tall obelisk sits in the center of the plaza while the '''Gate of Europe''' (''Puerta de Europa'') towers, ",
    "editions": 11,
-   "unesco": false
+   "unesco": false,
+   "en": "plaza de Castilla"
   },
   {
    "name": "Cuatro Torres",
@@ -672,7 +682,8 @@
    "wikidata": "Q503109",
    "note": "Four sleek skyscrapers, constructed between 2004 and 2009. Standing 224 to 249 metres tall, they are the highest in Spain. From south to north, they are named Torre Cepsa, Torre PwC, Torre de Cristal, and Torre Espacio. In the latter, the e",
    "editions": 31,
-   "unesco": false
+   "unesco": false,
+   "en": "Cuatro Torres Business Area"
   },
   {
    "name": "Basílica La Milagrosa",
@@ -681,7 +692,8 @@
    "wikidata": "Q16746780",
    "note": "Church from the 1900s in Neo-Mudéjar and Gothic revival style, dedicated to Our Lady of Miracles.",
    "editions": 7,
-   "unesco": false
+   "unesco": false,
+   "en": "Basilica of St. Vincent de Paul"
   },
   {
    "name": "Museo Sorolla",
@@ -772,7 +784,8 @@
    "note": "This small church is famous for its murals, painted by Goya. It's also the mausoleum of the painter.",
    "editions": 13,
    "unesco": false,
-   "web": "https://www.madrid.es/portales/munimadrid/es/Inicio/ermita/?vgnextoid=797368822e3ab010VgnVCM100000d90ca8c0RCRD&vgnextchannel=0c369e242ab26010VgnVCM100000dc0ca8c0RCRD"
+   "web": "https://www.madrid.es/portales/munimadrid/es/Inicio/ermita/?vgnextoid=797368822e3ab010VgnVCM100000d90ca8c0RCRD&vgnextchannel=0c369e242ab26010VgnVCM100000dc0ca8c0RCRD",
+   "en": "Royal Chapel of St. Anthony of La Florida"
   },
   {
    "name": "Templo de Debod",
@@ -811,7 +824,8 @@
    "editions": 10,
    "unesco": false,
    "web": "https://www.esmadrid.com/informacion-turistica/madrid-rio",
-   "posDoubt": true
+   "posDoubt": true,
+   "en": "Madrid Río"
   },
   {
    "name": "Planetario de Madrid",
@@ -844,7 +858,8 @@
    "note": "Contains a large collection of fossils and minerals, plus educational exhibits (some are described in English but many are in Spanish only). Has two parts open to visitors with separate entrances. The ticket is purchased at the main entranc",
    "editions": 15,
    "unesco": false,
-   "web": "http://www.mncn.csic.es/"
+   "web": "http://www.mncn.csic.es/",
+   "en": "National Museum of Natural Sciences"
   },
   {
    "name": "Plaza de Castilla",
@@ -988,7 +1003,8 @@
    "editions": 16,
    "unesco": false,
    "web": "https://www.cultura.gob.es/mnantropologia/portada.html",
-   "posDoubt": true
+   "posDoubt": true,
+   "en": "National Museum of Anthropology"
   },
   {
    "name": "Parque del Retiro",

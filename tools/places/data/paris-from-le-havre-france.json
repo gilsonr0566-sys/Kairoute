@@ -202,7 +202,8 @@
      "wikidata": "Q766938",
      "content": "Not only are the château and its gardens beautiful, but the château is also an important museum of art. The combination of excellent paintings displayed in beautiful surroundings would be a sufficient reason to visit, but make sure to walk ",
      "editions": 30,
-     "unesco": false
+     "unesco": false,
+     "en": "Château de Chantilly"
     }
    ],
    "foodDrink": []
@@ -224,7 +225,8 @@
      "wikidata": "Q180274",
      "content": "A UNESCO World Heritage site.",
      "editions": 73,
-     "unesco": true
+     "unesco": true,
+     "en": "Notre-Dame de Chartres"
     },
     {
      "kind": "see",
@@ -278,7 +280,8 @@
      "wikidata": "Q201428",
      "content": "This is one of the most beautiful chateaux in France. Its interior decorations are especially interesting as a fine example of the French Renaissance style. At the same time, its historical significance is hard to overestimate, since it was",
      "editions": 56,
-     "unesco": true
+     "unesco": true,
+     "en": "Palace of Fontainebleau"
     },
     {
      "kind": "see",
@@ -320,7 +323,8 @@
      "wikidata": "Q739976",
      "content": "Baroque French château, the prototype for the Château de Versailles.",
      "editions": 41,
-     "unesco": false
+     "unesco": false,
+     "en": "Vaux-le-Vicomte"
     }
    ],
    "foodDrink": [],
@@ -381,7 +385,8 @@
    "note": "No other monument better symbolizes Paris.<!-- keep this concise: put details in the real listing in the 7th -->",
    "editions": 191,
    "unesco": true,
-   "web": "https://www.toureiffel.paris"
+   "web": "https://www.toureiffel.paris",
+   "en": "Eiffel Tower"
   },
   {
    "name": "Paris/8th arrondissement#Q64436",

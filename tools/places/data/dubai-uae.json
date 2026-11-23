@@ -169,7 +169,8 @@
    "wikidata": "Q2094764",
    "note": "One of the last remaining pockets of Old Dubai, home to many reconstructed buildings in the traditional style. While information on the structures is slim here (see the museum in preference), the atmosphere is very evocative and there are p",
    "editions": 12,
-   "unesco": false
+   "unesco": false,
+   "en": "Al Bastakiya"
   },
   {
    "name": "Creek Park",
@@ -178,7 +179,8 @@
    "wikidata": "Q21639483",
    "note": "A great place to hang out in the evening when the park is visited by people of different nationalities, all looking for calm place to enjoy the time. It has all the facilities of a modern park and is one of the best parks in Dubai. The cabl",
    "editions": 1,
-   "unesco": false
+   "unesco": false,
+   "noEn": true
   },
   {
    "name": "Dubai Dolphinarium",
@@ -213,7 +215,8 @@
    "wikidata": "Q20987838",
    "note": "A very colourful and attractive tiled mosque; quite a contrast to the other much more plainly decorated mosques. Can be viewed from a carparking area off the north (creek) side of the street.",
    "editions": 9,
-   "unesco": false
+   "unesco": false,
+   "en": "Iranian Mosque, Bur Dubai"
   },
   {
    "name": "Sheikh Obaid bin Thani House",
@@ -287,7 +290,8 @@
    "note": "At 270m (900 ft) in length and sporting a jet that shoots water up to 150m (500 ft), it is the world's largest dancing fountain and one with a very enticing display - a definite must-see. It's most easily accessed via the Dubai Mall. There ",
    "editions": 26,
    "unesco": false,
-   "posDoubt": true
+   "posDoubt": true,
+   "en": "The Dubai Fountain"
   },
   {
    "name": "Jumeirah Beach",
@@ -324,7 +328,8 @@
    "wikidata": "Q2522355",
    "note": "A beautiful planned park and one of the oldest parks in Dubai. It is a favourite for sports enthusiasts, and many visitors enjoy playing tennis, volleyball, and soccer. Children love playing games in the video arcade, or riding the Ferris w",
    "editions": 8,
-   "unesco": false
+   "unesco": false,
+   "en": "Safa Park"
   },
   {
    "name": "Etihad Museum",

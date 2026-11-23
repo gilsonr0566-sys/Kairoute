@@ -698,7 +698,8 @@
      "price": "",
      "wikidata": "Q576318",
      "content": "This is the head temple of the Japanese Ōbaku Zen sect, which is considered to be more Chinese than the other two sects (Rinzai and Soto). You can see the Chinese influences in the architecture, as the roofs were built in the Ming Dynasty s",
-     "editions": 14
+     "editions": 14,
+     "en": "Manpuku-ji Temple"
     },
     {
      "kind": "see",
@@ -752,7 +753,8 @@
      "price": "¥1000 adults, ¥800 children ages 13-18, ¥700 ages 6-12, ¥500 ages 3-6",
      "wikidata": "Q11577976",
      "content": "Similar to the once hidden ninja villages that existed in the area, the Koka Ninja Village exhibits a number of transplanted ninja estates. With a plethora of contraptions and a throwing star training room, this is the place to go for a han",
-     "editions": 3
+     "editions": 3,
+     "en": "Kōka Ninja Village"
     },
     {
      "kind": "see",
@@ -2517,7 +2519,8 @@
    "note": "The museum features many ancient artifacts relating to Kyoto life and history. It has an expansive ancient ceramics collection.",
    "editions": 8,
    "unesco": false,
-   "web": "https://www.bunpaku.or.jp/en/"
+   "web": "https://www.bunpaku.or.jp/en/",
+   "en": "Museum of Kyoto"
   },
   {
    "name": "Kyoto International Manga Museum",
@@ -2535,7 +2538,8 @@
    "editions": 17,
    "unesco": true,
    "web": "https://www.hongwanji.kyoto/",
-   "posDoubt": true
+   "posDoubt": true,
+   "en": "Nishi Hongan-ji Temple"
   },
   {
    "name": "Higashi Honganji",
@@ -2545,7 +2549,8 @@
    "note": "Higashi Honganji was established in 1602 by the Shogun Tokugawa Ieyasu when he split the Shin sect in two (Nishi Honganji being the other) in order to diminish its power. Today it is the headquarters of the Ōtani branch of Jōdo Shin-shū. Th",
    "editions": 13,
    "unesco": false,
-   "web": "https://www.higashihonganji.or.jp/"
+   "web": "https://www.higashihonganji.or.jp/",
+   "en": "Higashi Hongan-ji Temple"
   },
   {
    "name": "Shōseien Garden",
@@ -2563,7 +2568,8 @@
    "editions": 30,
    "unesco": true,
    "web": "https://toji.or.jp/",
-   "posDoubt": true
+   "posDoubt": true,
+   "en": "Tō-ji Temple"
   },
   {
    "name": "Kyoto Tower",
@@ -2589,7 +2595,8 @@
    "wikidata": "Q801046",
    "note": "Even if you are not travelling by train, it is worth spending an hour or so wandering around the station, which is an outstanding example of modern architecture. The station, with its futurist architecture designed by Hiroshi Hara, opened i",
    "editions": 34,
-   "unesco": false
+   "unesco": false,
+   "en": "Kyōto Station"
   },
   {
    "name": "Kyoto Railway Museum",
@@ -2759,7 +2766,8 @@
    "note": "One of the five head Shingon temples in Kyoto. The Boddhisatva Akasagarbha is enshrined in this temple. The complex offers a nice view of Kyoto City. The lights here are quite beautiful during the autumn Kyoto Light-Up.",
    "editions": 6,
    "unesco": false,
-   "web": "https://www.kokuzohourinji.com/"
+   "web": "https://www.kokuzohourinji.com/",
+   "en": "Hōrin-ji Temple"
   },
   {
    "name": "Senkō-ji",
@@ -2826,7 +2834,8 @@
    "editions": 77,
    "unesco": true,
    "web": "https://www.kiyomizudera.or.jp/",
-   "posDoubt": true
+   "posDoubt": true,
+   "en": "Kiyomizu-dera"
   },
   {
    "name": "Rokuharamitsu-ji",
@@ -2836,7 +2845,8 @@
    "note": "While the temple may not seem so special, the trip is made worthwhile by the amazing Kamakura Period artwork housed in its museum. In particular, the statue of Kuya is quite a unique piece of artwork depicting Kuya Shonin reciting the nenbu",
    "editions": 10,
    "unesco": false,
-   "web": "https://www.rokuhara.or.jp/"
+   "web": "https://www.rokuhara.or.jp/",
+   "en": "Rokuharamitsu-ji Temple"
   },
   {
    "name": "Sanjusangen-do",
@@ -2846,7 +2856,8 @@
    "note": "Definitely worth a visit. It was founded in 1164 and became famous for its 1001 beautiful wooden and gold-leaf covered statues of Kannon, goddess of mercy, housed in thirty-three bays (sanjusan = thirty-three, gendo = bays) in the main hall",
    "editions": 22,
    "unesco": false,
-   "web": "https://www.sanjusangendo.jp/"
+   "web": "https://www.sanjusangendo.jp/",
+   "en": "Sanjūsangen-dō Temple"
   },
   {
    "name": "Kyoto National Museum",
@@ -2867,7 +2878,8 @@
    "note": "The original temple was built by one of Hideyoshi Toyotomi's concubines in honor of her father, but the temple was destroyed by a fire. When rebuilding the temple, the floorboards of Fushimi Castle in [[Kyoto/South",
    "editions": 3,
    "unesco": false,
-   "web": "https://yougenin.jp/"
+   "web": "https://yougenin.jp/",
+   "en": "Yōgen-in Temple"
   },
   {
    "name": "Chishaku-in Temple",
@@ -2884,7 +2896,8 @@
    "note": "Built in 1895 in commemoration of the 1100th anniversary of Kyoto, the shrine was designed as a scaled-down replica of the original Imperial Palace. The Shin'en Garden encircling the backside of the shrine is one of the city's most beautifu",
    "editions": 28,
    "unesco": false,
-   "web": "http://www.heianjingu.or.jp/"
+   "web": "http://www.heianjingu.or.jp/",
+   "en": "Heian Jingū"
   },
   {
    "name": "Kyoto Municipal Museum of Art",
@@ -2904,7 +2917,8 @@
    "note": "An interesting museum featuring works from famous, as well as up-and-coming modern artists. Exhibits change frequently, so it's best to call or visit the website to see exactly what will featured during your visit. You may also want to make",
    "editions": 17,
    "unesco": false,
-   "web": "https://www.momak.go.jp/"
+   "web": "https://www.momak.go.jp/",
+   "en": "National Museum of Modern Art, Kyoto"
   },
   {
    "name": "Yoshida Shrine",
@@ -2934,7 +2948,8 @@
    "note": "A museum that showcases Japanese religious art from all periods of history. Exhibits change each season but typically feature famous artwork from local temples and shrines.",
    "editions": 5,
    "unesco": false,
-   "web": "http://www.emuseum.or.jp/eng/index.html"
+   "web": "http://www.emuseum.or.jp/eng/index.html",
+   "en": "Hosomi Museum"
   },
   {
    "name": "Okazaki Shrine",
@@ -2974,7 +2989,8 @@
    "note": "The head temple of the Jodo sect of Buddhism. The Sanmon gate at the entrance to the temple is the largest of such gates in the nation. Visitors can walk freely around the complex and inside the buildings, except for those that house the te",
    "editions": 20,
    "unesco": false,
-   "web": "https://www.chion-in.or.jp/"
+   "web": "https://www.chion-in.or.jp/",
+   "en": "Chion-in Temple"
   },
   {
    "name": "Shōren-in",
@@ -2984,7 +3000,8 @@
    "note": "Once associated with the head Tendai Buddhist sect temple, Enryaku-ji on Mount Hiei, Shōren-in is considered to be one of the top five Tendai sect temples. During the Tokugawa period, it served as temporary lodging for a retired emperor aft",
    "editions": 9,
    "unesco": false,
-   "web": "https://www.shorenin.com/english/"
+   "web": "https://www.shorenin.com/english/",
+   "en": "Shōren-in Temple"
   },
   {
    "name": "Higashi Ōtani Mausoleum",
@@ -3001,7 +3018,8 @@
    "note": "A memorial to the unknown Japanese soldiers who died in World War II, with a 24-meter-tall statue of Kannon.",
    "editions": 6,
    "unesco": false,
-   "web": "http://www.ryozen-kwannon.jp/"
+   "web": "http://www.ryozen-kwannon.jp/",
+   "en": "Ryōzen Kannon"
   },
   {
    "name": "Ryozen History Museum",
@@ -3011,7 +3029,8 @@
    "note": "A museum dedicated to displaying artifacts and information about the Meiji Period.",
    "editions": 5,
    "unesco": false,
-   "web": "http://www.ryozen-museum.or.jp/"
+   "web": "http://www.ryozen-museum.or.jp/",
+   "en": "Ryozen Museum of History"
   },
   {
    "name": "Ryozen Gokoku Shrine",
@@ -3037,7 +3056,8 @@
    "wikidata": "Q11555353",
    "note": "The five-storey Yasaka Pagoda is traditionally said to have been founded in 589 by Prince Shōtoku, although the present pagoda dates from the 15th century. Standing approximately 46 metres tall, it is one of Kyoto’s most recognisable struct",
    "editions": 10,
-   "unesco": false
+   "unesco": false,
+   "en": "Hōkan-ji Temple"
   },
   {
    "name": "Kenninji Temple",
@@ -3047,7 +3067,8 @@
    "note": "Japan's oldest Zen temple, has handsome halls and sand and moss gardens, and is of particular interest to art lovers. Sōtatsu's famed Edo-period screens of the Wind and Thunder Gods are on display. And on the high ceiling of the Hatto Dharm",
    "editions": 13,
    "unesco": false,
-   "web": "https://www.kenninji.jp/english/"
+   "web": "https://www.kenninji.jp/english/",
+   "en": "Kennin-ji Temple"
   },
   {
    "name": "Ginkakuji",
@@ -3058,7 +3079,8 @@
    "editions": 33,
    "unesco": true,
    "web": "https://www.shokoku-ji.jp/ginkakuji/",
-   "posDoubt": true
+   "posDoubt": true,
+   "en": "Ginkaku-ji Temple"
   },
   {
    "name": "Hōnen-in",
@@ -3068,7 +3090,8 @@
    "note": "A quiet temple with some interesting raised sand designs. It was built in honor of Hōnen, the founder of the Jōdo sect.",
    "editions": 7,
    "unesco": false,
-   "web": "http://www.honen-in.jp/"
+   "web": "http://www.honen-in.jp/",
+   "en": "Hōnen-in Temple"
   },
   {
    "name": "Anraku-ji",
@@ -3106,7 +3129,8 @@
    "note": "with its distinctive two-story entrance gate (''sanmon'') and aqueduct, is another popular temple in Kyoto, but its larger size means that it doesn't seem as crowded as many of the others. ''Nearest bus stop: Nanzenji, Eikando-michi. Neares",
    "editions": 22,
    "unesco": false,
-   "web": "https://nanzenji.or.jp/"
+   "web": "https://nanzenji.or.jp/",
+   "en": "Nanzen-ji Temple"
   },
   {
    "name": "Kinkaku-ji Temple",
@@ -3127,7 +3151,8 @@
    "editions": 32,
    "unesco": true,
    "web": "http://www.ryoanji.jp/",
-   "posDoubt": true
+   "posDoubt": true,
+   "en": "Ryōan-ji Temple"
   },
   {
    "name": "Ninnaji Temple",
@@ -3138,7 +3163,8 @@
    "editions": 25,
    "unesco": true,
    "web": "https://ninnaji.jp/",
-   "posDoubt": true
+   "posDoubt": true,
+   "en": "Ninna-ji Temple"
   },
   {
    "name": "Daitokuji Temple",
@@ -3147,7 +3173,8 @@
    "wikidata": "Q901256",
    "note": "A large temple complex, boasting many smaller sub-temples within its grounds. Daitokuji is the quietest of the temples in north-western Kyoto, and if you visit it at the start of the day, you could virtually have it to yourself. 8 of the 24",
    "editions": 20,
-   "unesco": false
+   "unesco": false,
+   "en": "Daitoku-ji Temple"
   },
   {
    "name": "Imamiya Shrine",
@@ -3167,7 +3194,8 @@
    "note": "A former sub-temple of Jingoji. While it is not worth making a special trip to see this temple, those touring the Takao area might as well visit, as it is located on the path connecting Jingo-ji to Kōzan-ji. The bridge leading to the temple",
    "editions": 3,
    "unesco": false,
-   "web": "https://www.saimyoji.or.jp/"
+   "web": "https://www.saimyoji.or.jp/",
+   "en": "Saimyō-ji Temple"
   },
   {
    "name": "Kōzan-ji",
@@ -3178,7 +3206,8 @@
    "editions": 20,
    "unesco": true,
    "web": "https://kosanji.com/",
-   "posDoubt": true
+   "posDoubt": true,
+   "en": "Kōzan-ji Temple"
   },
   {
    "name": "Shimogamo Shrine",
@@ -3220,7 +3249,8 @@
    "note": "A temple famous for its gardens. A particularly unique feature of this garden is incorporation of Mount Hiei, of which there is a great view from the temple, into the layout of the garden.",
    "editions": 3,
    "unesco": false,
-   "web": "https://www.kyoto-entsuji-teien.com/"
+   "web": "https://www.kyoto-entsuji-teien.com/",
+   "en": "Entsu-ji Temple"
   },
   {
    "name": "Myoman-ji",
@@ -3231,7 +3261,8 @@
    "editions": 4,
    "unesco": false,
    "web": "https://myomanji.jp/",
-   "posDoubt": true
+   "posDoubt": true,
+   "en": "Myōman-ji Temple"
   },
   {
    "name": "Shisen-dō",
@@ -3241,7 +3272,8 @@
    "note": "Built in 1641, this temple once housed the poet Jōzan Ishikawa. Inside the temple there are portraits of 36 influential Chinese poets. Outside there is a garden filled with many azaleas.",
    "editions": 8,
    "unesco": false,
-   "web": "https://kyoto-shisendo.net/"
+   "web": "https://kyoto-shisendo.net/",
+   "en": "Shisen-dō Temple"
   },
   {
    "name": "Fushimi Inari Taisha",
@@ -3251,7 +3283,8 @@
    "note": "Another of Kyoto's jewels, located just south of Higashiyama in the Fushimi area. Dedicated to Inari, the Japanese fox goddess, Fushimi-Inari-taisha is the head shrine (''taisha'') for 40,000 Inari shrines across Japan. Stretching 230 meter",
    "editions": 41,
    "unesco": false,
-   "web": "https://inari.jp/"
+   "web": "https://inari.jp/",
+   "en": "Fushimi Inari-taisha"
   },
   {
    "name": "Fushimi Momoyama Castle",
@@ -3260,7 +3293,8 @@
    "wikidata": "Q1196273",
    "note": "This castle was once a favorite of Toyotomi Hideyoshi. The original was dismantled in 1623, but a 1964 reconstruction went up in its memory with a small museum and gold-lined tea room.",
    "editions": 26,
-   "unesco": false
+   "unesco": false,
+   "en": "Fushimi Castle"
   },
   {
    "name": "Teradaya",
@@ -3277,7 +3311,8 @@
    "note": "A large temple complex with many small and beautiful gardens nearby. Hordes of Japanese tourists visit during the fall months, when the leaves show a dazzling array of colors, but it's not as well known to foreigners. A pleasant side path t",
    "editions": 23,
    "unesco": false,
-   "web": "https://tofukuji.jp/"
+   "web": "https://tofukuji.jp/",
+   "en": "Tōfuku-ji Temple"
   },
   {
    "name": "Jōnan-gū Shrine",
@@ -3287,7 +3322,8 @@
    "note": "Although Jōnan-gū Shrine is rarely visited by foreign tourists, it is a beautiful shrine with extensive history. It was established by Emperor Kammu when Kyoto became the nation's capital. At the end of the Heian period, it became home to r",
    "editions": 2,
    "unesco": false,
-   "web": "https://www.jonangu.com/"
+   "web": "https://www.jonangu.com/",
+   "en": "Jōnan-gū"
   },
   {
    "name": "Daigo-ji",
@@ -3298,7 +3334,8 @@
    "editions": 23,
    "unesco": true,
    "web": "https://www.daigoji.or.jp/",
-   "posDoubt": true
+   "posDoubt": true,
+   "en": "Daigo-ji Temple"
   },
   {
    "name": "Zuishin-in",
@@ -3308,7 +3345,8 @@
    "note": "According to legend, this is where Ono no Komachi, one of Japan's famous femme fatales, resided. She made Prince Fukakusa agree to court her for 100 days before she would agree to marry him, but on the 99th day, he died, leaving her single ",
    "editions": 4,
    "unesco": false,
-   "web": "https://www.zuishinin.or.jp/"
+   "web": "https://www.zuishinin.or.jp/",
+   "en": "Zuishin-in Temple"
   },
   {
    "name": "Kajū-ji",
@@ -3317,7 +3355,8 @@
    "wikidata": "Q772598",
    "note": "A temple with a peaceful lily pond and a variety of cherry trees.",
    "editions": 10,
-   "unesco": false
+   "unesco": false,
+   "en": "Kajū-ji Temple"
   },
   {
    "name": "Sennyū-ji Temple",
@@ -3337,7 +3376,8 @@
    "note": "The shrine is believed to have been moved to Nagaokakyo at the bidding of Empress Kammu, who made it the shrine of the Fujiwara family's guardian god. The Imperial Court made annual offerings at this shrine. The pond within the shrine preci",
    "editions": 8,
    "unesco": false,
-   "web": "https://oharano-jinja.jp/"
+   "web": "https://oharano-jinja.jp/",
+   "en": "Ōharano Shrine"
   },
   {
    "name": "Shōbō-ji",
@@ -3347,7 +3387,8 @@
    "note": "A Shingon sect temple featuring an impressive statue of the 3-faced thousand armed Kannon and a beautiful, well-kept Zen rock garden. Many of the rocks within the garden were chosen to resemble animals, like a rabbit and frog.",
    "editions": 3,
    "unesco": false,
-   "web": "https://www.kyoto-shoboji.com/"
+   "web": "https://www.kyoto-shoboji.com/",
+   "en": "Shōbō-ji Temple"
   },
   {
    "name": "Shōji-ji",
@@ -3357,7 +3398,8 @@
    "note": "Nicknamed Cherry Blossom Temple (''hana no tera''), it hosts a beautiful display of blossoms in the spring.",
    "editions": 2,
    "unesco": false,
-   "web": "http://www.shoujiji.jp/"
+   "web": "http://www.shoujiji.jp/",
+   "en": "Shōji-ji Temple"
   }
  ]
 }
