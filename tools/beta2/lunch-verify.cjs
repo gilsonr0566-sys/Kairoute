@@ -12,18 +12,26 @@ const like = (a, b) => { a = norm(a); b = norm(b); if (!a || !b) return false; i
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 async function ask(q) {
   for (let t = 0; t < 6; t++) { const url = EPS[t % EPS.length];
-    try { const r = await fetch(url, { method: 'POST', body: 'data=' + encodeURIComponent(q), headers: { 'content-type': 'application/x-www-form-urlencoded', 'user-agent': 'kairoute-lunch-check/1.0' } });
+    try { const r = await fetch(url, { signal: AbortSignal.timeout(60000), method: 'POST', body: 'data=' + encodeURIComponent(q), headers: { 'content-type': 'application/x-www-form-urlencoded', 'user-agent': 'kairoute-lunch-check/1.0' } });
       if (r.ok) return await r.json(); } catch (e) {}
     await sleep(3000 * (t + 1)); }
   return null;
 }
 (async () => {
   const rows = []; let found = 0, gone = 0, shut = 0, unknown = 0, notFound = 0, kindOff = 0;
+  // One question per city (every lunch place there at once), so the whole list takes minutes, not hours.
+  const byCity = new Map(); list.forEach(p => { if (!byCity.has(p.city)) byCity.set(p.city, []); byCity.get(p.city).push(p); });
+  const got = new Map();
+  for (const [city, ps] of byCity) {
+    const q = `[out:json][timeout:60];(${ps.map(p => `nwr(around:150,${p.lat},${p.lng})[name];`).join('')});out tags center;`;
+    const j = await ask(q); await sleep(1500); console.error(city, ps.length, j ? (j.elements || []).length + ' map places' : 'NO ANSWER');
+    ps.forEach(p => got.set(p, j));
+  }
   for (const p of list) {
-    const q = `[out:json][timeout:25];nwr(around:150,${p.lat},${p.lng})[name];out tags center 60;`;
-    const j = await ask(q); await sleep(1100);
+    const j = got.get(p);
     if (!j) { rows.push(Object.assign({}, p, { state: 'no answer' })); continue; }
-    const els = (j.elements || []).filter(e => e.tags && [e.tags.name, e.tags['name:en'], e.tags['name:latin'], e.tags['int_name'], e.tags['old_name']].some(n => like(n, p.name)));
+    const near = e => { const la = e.lat != null ? e.lat : e.center && e.center.lat, ln = e.lon != null ? e.lon : e.center && e.center.lon; return E.hav(p, { lat: la, lng: ln }) <= 0.15; };
+    const els = (j.elements || []).filter(e => e.tags && near(e) && [e.tags.name, e.tags['name:en'], e.tags['name:latin'], e.tags['int_name'], e.tags['old_name']].some(n => like(n, p.name)));
     const lat = e => e.lat != null ? e.lat : e.center && e.center.lat, lng = e => e.lon != null ? e.lon : e.center && e.center.lon;
     els.sort((a, b) => E.hav(p, { lat: lat(a), lng: lng(a) }) - E.hav(p, { lat: lat(b), lng: lng(b) }));
     const e = els[0];
