@@ -1,0 +1,1322 @@
+{
+ "size": "tablet",
+ "device": "Lenovo Idea Tab Plus 12.1\" sideways (1280 x 800)",
+ "url": "https://gilsonr0566-sys.github.io/Kairoute-Beta2/",
+ "started": "2026-11-23T20:10:13.252Z",
+ "steps": [
+  {
+   "step": "screen",
+   "name": "open",
+   "pic": "00-open.jpg",
+   "cls": 0.141,
+   "y": 0,
+   "h": 800,
+   "head": "kairouteBeta 2"
+  },
+  {
+   "step": "tap",
+   "size": "tablet",
+   "where": "open",
+   "label": "coach Next",
+   "firstMs": 918,
+   "settleMs": 918,
+   "eventMs": 944,
+   "moved": 13,
+   "selfScroll": 0,
+   "cls": 0
+  },
+  {
+   "step": "tap",
+   "size": "tablet",
+   "where": "open",
+   "label": "coach Next",
+   "firstMs": 18,
+   "settleMs": 18,
+   "eventMs": 48,
+   "moved": 0,
+   "selfScroll": 0,
+   "cls": 0
+  },
+  {
+   "step": "tap",
+   "size": "tablet",
+   "where": "open",
+   "label": "coach Next",
+   "firstMs": 19,
+   "settleMs": 19,
+   "eventMs": 48,
+   "moved": 0,
+   "selfScroll": 0,
+   "cls": 0
+  },
+  {
+   "step": "tap",
+   "size": "tablet",
+   "where": "open",
+   "label": "coach Next",
+   "firstMs": 7,
+   "settleMs": 7,
+   "eventMs": 32,
+   "moved": null,
+   "selfScroll": 0,
+   "cls": 0
+  },
+  {
+   "step": "screen",
+   "name": "home",
+   "pic": "01-home.jpg",
+   "cls": 0.141,
+   "y": 0,
+   "h": 800,
+   "head": "kairouteBeta 2"
+  },
+  {
+   "step": "scroll",
+   "where": "home",
+   "height": 800,
+   "reached": 0
+  },
+  {
+   "step": "tap",
+   "size": "tablet",
+   "where": "home",
+   "label": "Open the example trip",
+   "firstMs": 73,
+   "settleMs": 2522,
+   "eventMs": 112,
+   "moved": null,
+   "selfScroll": 0,
+   "cls": 0
+  },
+  {
+   "step": "screen",
+   "name": "trip",
+   "pic": "02-trip.jpg",
+   "cls": 0,
+   "y": 0,
+   "h": 2408,
+   "head": "kairouteBeta 2"
+  },
+  {
+   "step": "scroll",
+   "where": "trip",
+   "height": 2408,
+   "reached": 1762
+  },
+  {
+   "step": "tap",
+   "size": "tablet",
+   "where": "trip",
+   "label": "day 0 (arrival Athens)",
+   "firstMs": 104,
+   "settleMs": 1843,
+   "eventMs": 184,
+   "moved": 0,
+   "selfScroll": 0,
+   "cls": 0.065
+  },
+  {
+   "step": "screen",
+   "name": "day0-arrival",
+   "pic": "03-day0-arrival.jpg",
+   "cls": 0,
+   "y": 0,
+   "h": 1785,
+   "head": "kairouteBeta 2"
+  },
+  {
+   "step": "scroll",
+   "where": "day0-arrival",
+   "height": 1785,
+   "reached": 1139
+  },
+  {
+   "step": "tap",
+   "size": "tablet",
+   "where": "day0-arrival",
+   "label": "day 1 (land Athens)",
+   "firstMs": 113,
+   "settleMs": 629,
+   "eventMs": 208,
+   "moved": 0,
+   "selfScroll": 0,
+   "cls": 0.065
+  },
+  {
+   "step": "screen",
+   "name": "day1-land",
+   "pic": "04-day1-land.jpg",
+   "cls": 0,
+   "y": 0,
+   "h": 1831,
+   "head": "kairouteBeta 2"
+  },
+  {
+   "step": "scroll",
+   "where": "day1-land",
+   "height": 1831,
+   "reached": 1185
+  },
+  {
+   "step": "tap",
+   "size": "tablet",
+   "where": "day1-land",
+   "label": "day 4 (embark Athens)",
+   "firstMs": 73,
+   "settleMs": 2413,
+   "eventMs": 192,
+   "moved": 0,
+   "selfScroll": 0,
+   "cls": 0.065
+  },
+  {
+   "step": "screen",
+   "name": "day4-embark",
+   "pic": "05-day4-embark.jpg",
+   "cls": 0,
+   "y": 0,
+   "h": 1563,
+   "head": "kairouteBeta 2"
+  },
+  {
+   "step": "scroll",
+   "where": "day4-embark",
+   "height": 1563,
+   "reached": 917
+  },
+  {
+   "step": "tap",
+   "size": "tablet",
+   "where": "day4-embark",
+   "label": "day 5 (port Heraklion)",
+   "firstMs": 66,
+   "settleMs": 2558,
+   "eventMs": 136,
+   "moved": 0,
+   "selfScroll": 0,
+   "cls": 0.065
+  },
+  {
+   "step": "screen",
+   "name": "day5-port",
+   "pic": "06-day5-port.jpg",
+   "cls": 0,
+   "y": 0,
+   "h": 2323,
+   "head": "kairouteBeta 2"
+  },
+  {
+   "step": "scroll",
+   "where": "day5-port",
+   "height": 2323,
+   "reached": 1677
+  },
+  {
+   "step": "tap",
+   "size": "tablet",
+   "where": "day5-port",
+   "label": "day 10 (sea At sea)",
+   "firstMs": 28,
+   "settleMs": 28,
+   "eventMs": 80,
+   "moved": 0,
+   "selfScroll": 0,
+   "cls": 0.065
+  },
+  {
+   "step": "screen",
+   "name": "day10-sea",
+   "pic": "07-day10-sea.jpg",
+   "cls": 0,
+   "y": 0,
+   "h": 687,
+   "head": "kairouteBeta 2"
+  },
+  {
+   "step": "scroll",
+   "where": "day10-sea",
+   "height": 687,
+   "reached": 41
+  },
+  {
+   "step": "tap",
+   "size": "tablet",
+   "where": "day10-sea",
+   "label": "day 18 (departure Barcelona)",
+   "firstMs": 72,
+   "settleMs": 1655,
+   "eventMs": 152,
+   "moved": 0,
+   "selfScroll": 0,
+   "cls": 0.065
+  },
+  {
+   "step": "screen",
+   "name": "day18-departure",
+   "pic": "08-day18-departure.jpg",
+   "cls": 0,
+   "y": 0,
+   "h": 1834,
+   "head": "kairouteBeta 2"
+  },
+  {
+   "step": "scroll",
+   "where": "day18-departure",
+   "height": 1834,
+   "reached": 1188
+  },
+  {
+   "step": "tap",
+   "size": "tablet",
+   "where": "day18-departure",
+   "label": "day 1",
+   "firstMs": 75,
+   "settleMs": 75,
+   "eventMs": 216,
+   "moved": 0,
+   "selfScroll": 0,
+   "cls": 0.065
+  },
+  {
+   "step": "screen",
+   "name": "day1-before-choose",
+   "pic": "09-day1-before-choose.jpg",
+   "cls": 0,
+   "y": 0,
+   "h": 1831,
+   "head": "kairouteBeta 2"
+  },
+  {
+   "step": "tap",
+   "size": "tablet",
+   "where": "day1-before-choose",
+   "label": "Choose sights",
+   "firstMs": 69,
+   "settleMs": 4285,
+   "eventMs": 96,
+   "moved": null,
+   "selfScroll": 0,
+   "cls": 1.495
+  },
+  {
+   "step": "screen",
+   "name": "choose-sights-day1",
+   "pic": "10-choose-sights-day1.jpg",
+   "cls": 1.43,
+   "y": 0,
+   "h": 2847,
+   "head": "kairouteBeta 2"
+  },
+  {
+   "step": "scroll",
+   "where": "choose-sights-day1",
+   "height": 2847,
+   "reached": 2191
+  },
+  {
+   "step": "tap",
+   "size": "tablet",
+   "where": "choose-sights-day1",
+   "label": "filter Must-sees",
+   "firstMs": 32,
+   "settleMs": 32,
+   "eventMs": 48,
+   "moved": 0,
+   "selfScroll": 0,
+   "cls": 0.065
+  },
+  {
+   "step": "tap",
+   "size": "tablet",
+   "where": "choose-sights-day1",
+   "label": "filter Famous",
+   "firstMs": 36,
+   "settleMs": 36,
+   "eventMs": 56,
+   "moved": 0,
+   "selfScroll": 0,
+   "cls": 0.065
+  },
+  {
+   "step": "tap",
+   "size": "tablet",
+   "where": "choose-sights-day1",
+   "label": "filter Local favorites",
+   "firstMs": 22,
+   "settleMs": 22,
+   "eventMs": 40,
+   "moved": 0,
+   "selfScroll": 0,
+   "cls": 0.065
+  },
+  {
+   "step": "tap",
+   "size": "tablet",
+   "where": "choose-sights-day1",
+   "label": "filter All",
+   "firstMs": 26,
+   "settleMs": 26,
+   "eventMs": 48,
+   "moved": 0,
+   "selfScroll": 0,
+   "cls": 0.065
+  },
+  {
+   "step": "tap",
+   "size": "tablet",
+   "where": "choose-sights-day1",
+   "label": "untick plaka (Your sights (5))",
+   "firstMs": 10,
+   "settleMs": 10,
+   "eventMs": 40,
+   "moved": 0,
+   "selfScroll": 0,
+   "cls": 0.051
+  },
+  {
+   "step": "tap",
+   "size": "tablet",
+   "where": "choose-sights-day1",
+   "label": "tick back plaka",
+   "firstMs": 3,
+   "settleMs": 3,
+   "eventMs": 32,
+   "moved": 0,
+   "selfScroll": 0,
+   "cls": 0.051
+  },
+  {
+   "step": "tap",
+   "size": "tablet",
+   "where": "choose-sights-day1",
+   "label": "tick roman-agora ()",
+   "firstMs": 18,
+   "settleMs": 18,
+   "eventMs": 48,
+   "moved": 0,
+   "selfScroll": 0,
+   "cls": 0.053
+  },
+  {
+   "step": "tap",
+   "size": "tablet",
+   "where": "choose-sights-day1",
+   "label": "untick roman-agora",
+   "firstMs": 4,
+   "settleMs": 4,
+   "eventMs": 32,
+   "moved": 0,
+   "selfScroll": 0,
+   "cls": 0.011
+  },
+  {
+   "step": "tap",
+   "size": "tablet",
+   "where": "choose-sights-day1",
+   "label": "Your sights Hide",
+   "firstMs": 19,
+   "settleMs": 19,
+   "eventMs": 48,
+   "moved": 0,
+   "selfScroll": 0,
+   "cls": 0.153
+  },
+  {
+   "step": "tap",
+   "size": "tablet",
+   "where": "choose-sights-day1",
+   "label": "Your sights Show",
+   "firstMs": 13,
+   "settleMs": 13,
+   "eventMs": 40,
+   "moved": 0,
+   "selfScroll": 0,
+   "cls": 0.153
+  },
+  {
+   "step": "screen",
+   "name": "choose-sights-day1-after",
+   "pic": "11-choose-sights-day1-after.jpg",
+   "cls": 2.297,
+   "y": 0,
+   "h": 3234,
+   "head": "kairouteBeta 2"
+  },
+  {
+   "step": "tap",
+   "size": "tablet",
+   "where": "choose-sights-day1-after",
+   "label": "\"Needs ...\" (ways to fit it in)",
+   "firstMs": 592,
+   "settleMs": 5069,
+   "eventMs": 616,
+   "moved": null,
+   "selfScroll": 50,
+   "cls": 0.39
+  },
+  {
+   "step": "screen",
+   "name": "fit-box-day1",
+   "pic": "12-fit-box-day1.jpg",
+   "cls": 0.715,
+   "y": 2434,
+   "h": 3326,
+   "head": "kairouteBeta 2"
+  },
+  {
+   "step": "screen",
+   "name": "after-close-fit-box-day1",
+   "pic": "13-after-close-fit-box-day1.jpg",
+   "cls": 0.715,
+   "y": 2434,
+   "h": 3326,
+   "head": "kairouteBeta 2"
+  },
+  {
+   "step": "tap",
+   "size": "tablet",
+   "where": "after-close-fit-box-day1",
+   "label": "Back to my day plan",
+   "firstMs": 13,
+   "settleMs": 13,
+   "eventMs": 48,
+   "moved": 0,
+   "selfScroll": 0,
+   "cls": 0
+  },
+  {
+   "step": "screen",
+   "name": "day1-after-choose",
+   "pic": "14-day1-after-choose.jpg",
+   "cls": 0,
+   "y": 2434,
+   "h": 3326,
+   "head": "kairouteBeta 2"
+  },
+  {
+   "step": "tap",
+   "size": "tablet",
+   "where": "day1-after-choose",
+   "label": "open stop Must-sees",
+   "firstMs": 35,
+   "settleMs": 2908,
+   "eventMs": 56,
+   "moved": 0,
+   "selfScroll": -2136,
+   "cls": 1.105
+  },
+  {
+   "step": "screen",
+   "name": "stop-open-day1",
+   "pic": "15-stop-open-day1.jpg",
+   "cls": 1.105,
+   "y": 298,
+   "h": 1004,
+   "head": "kairouteBeta 2"
+  },
+  {
+   "step": "tap",
+   "size": "tablet",
+   "where": "stop-open-day1",
+   "label": "day 5",
+   "firstMs": 38,
+   "settleMs": 246,
+   "eventMs": 56,
+   "moved": 0,
+   "selfScroll": 0,
+   "cls": 0.13
+  },
+  {
+   "step": "screen",
+   "name": "day5-before-choose",
+   "pic": "16-day5-before-choose.jpg",
+   "cls": 0,
+   "y": 0,
+   "h": 876,
+   "head": "kairouteBeta 2"
+  },
+  {
+   "step": "screen",
+   "name": "choose-sights-day5",
+   "pic": "17-choose-sights-day5.jpg",
+   "cls": 0,
+   "y": 0,
+   "h": 876,
+   "head": "kairouteBeta 2"
+  },
+  {
+   "step": "scroll",
+   "where": "choose-sights-day5",
+   "height": 876,
+   "reached": 224
+  },
+  {
+   "step": "tap",
+   "size": "tablet",
+   "where": "choose-sights-day5",
+   "label": "filter Must-sees",
+   "firstMs": 20,
+   "settleMs": 20,
+   "eventMs": 40,
+   "moved": 0,
+   "selfScroll": 0,
+   "cls": 0.065
+  },
+  {
+   "step": "tap",
+   "size": "tablet",
+   "where": "choose-sights-day5",
+   "label": "filter Famous",
+   "firstMs": 22,
+   "settleMs": 22,
+   "eventMs": 40,
+   "moved": 0,
+   "selfScroll": 0,
+   "cls": 0.065
+  },
+  {
+   "step": "tap",
+   "size": "tablet",
+   "where": "choose-sights-day5",
+   "label": "filter Local favorites",
+   "firstMs": 25,
+   "settleMs": 141,
+   "eventMs": 48,
+   "moved": 0,
+   "selfScroll": 0,
+   "cls": 0.13
+  },
+  {
+   "step": "tap",
+   "size": "tablet",
+   "where": "choose-sights-day5",
+   "label": "filter All",
+   "firstMs": 26,
+   "settleMs": 26,
+   "eventMs": 48,
+   "moved": 0,
+   "selfScroll": 0,
+   "cls": 0.065
+  },
+  {
+   "step": "tap",
+   "size": "tablet",
+   "where": "choose-sights-day5",
+   "label": "untick koules (Your sights (7))",
+   "firstMs": 7,
+   "settleMs": 7,
+   "eventMs": 40,
+   "moved": 0,
+   "selfScroll": 0,
+   "cls": 0.054
+  },
+  {
+   "step": "tap",
+   "size": "tablet",
+   "where": "choose-sights-day5",
+   "label": "tick back koules",
+   "firstMs": 5,
+   "settleMs": 5,
+   "eventMs": 40,
+   "moved": 0,
+   "selfScroll": 0,
+   "cls": 0.054
+  },
+  {
+   "step": "tap",
+   "size": "tablet",
+   "where": "choose-sights-day5",
+   "label": "Your sights Hide",
+   "firstMs": 11,
+   "settleMs": 11,
+   "eventMs": 48,
+   "moved": 0,
+   "selfScroll": 0,
+   "cls": 0.173
+  },
+  {
+   "step": "tap",
+   "size": "tablet",
+   "where": "choose-sights-day5",
+   "label": "Your sights Show",
+   "firstMs": 16,
+   "settleMs": 16,
+   "eventMs": 48,
+   "moved": 0,
+   "selfScroll": 0,
+   "cls": 0.173
+  },
+  {
+   "step": "screen",
+   "name": "choose-sights-day5-after",
+   "pic": "18-choose-sights-day5-after.jpg",
+   "cls": 0.844,
+   "y": 0,
+   "h": 1511,
+   "head": "kairouteBeta 2"
+  },
+  {
+   "step": "tap",
+   "size": "tablet",
+   "where": "choose-sights-day5-after",
+   "label": "\"Needs ...\" (ways to fit it in)",
+   "firstMs": 754,
+   "settleMs": 2618,
+   "eventMs": 776,
+   "moved": 162,
+   "selfScroll": 18,
+   "cls": 0.065
+  },
+  {
+   "step": "screen",
+   "name": "fit-box-day5",
+   "pic": "19-fit-box-day5.jpg",
+   "cls": 0.065,
+   "y": 653,
+   "h": 1540,
+   "head": "kairouteBeta 2"
+  },
+  {
+   "step": "screen",
+   "name": "after-close-fit-box-day5",
+   "pic": "20-after-close-fit-box-day5.jpg",
+   "cls": 0.065,
+   "y": 653,
+   "h": 1540,
+   "head": "kairouteBeta 2"
+  },
+  {
+   "step": "tap",
+   "size": "tablet",
+   "where": "after-close-fit-box-day5",
+   "label": "Back to my day plan",
+   "firstMs": 8,
+   "settleMs": 8,
+   "eventMs": 40,
+   "moved": 0,
+   "selfScroll": 0,
+   "cls": 0
+  },
+  {
+   "step": "screen",
+   "name": "day5-after-choose",
+   "pic": "21-day5-after-choose.jpg",
+   "cls": 0,
+   "y": 653,
+   "h": 1540,
+   "head": "kairouteBeta 2"
+  },
+  {
+   "step": "tap",
+   "size": "tablet",
+   "where": "day5-after-choose",
+   "label": "open stop Must-sees",
+   "firstMs": 23,
+   "settleMs": 23,
+   "eventMs": 40,
+   "moved": 0,
+   "selfScroll": -448,
+   "cls": 0.065
+  },
+  {
+   "step": "screen",
+   "name": "stop-open-day5",
+   "pic": "22-stop-open-day5.jpg",
+   "cls": 0.065,
+   "y": 205,
+   "h": 876,
+   "head": "kairouteBeta 2"
+  },
+  {
+   "step": "tap",
+   "size": "tablet",
+   "where": "stop-open-day5",
+   "label": "Guide tab",
+   "firstMs": 39,
+   "settleMs": 39,
+   "eventMs": 64,
+   "moved": 0,
+   "selfScroll": -205,
+   "cls": 0
+  },
+  {
+   "step": "screen",
+   "name": "guide",
+   "pic": "23-guide.jpg",
+   "cls": 0,
+   "y": 0,
+   "h": 3743,
+   "head": "kairouteBeta 2"
+  },
+  {
+   "step": "scroll",
+   "where": "guide",
+   "height": 3743,
+   "reached": 3097
+  },
+  {
+   "step": "tap",
+   "size": "tablet",
+   "where": "guide",
+   "label": "play a story",
+   "firstMs": 475,
+   "settleMs": 625,
+   "eventMs": 496,
+   "moved": 0,
+   "selfScroll": 0,
+   "cls": 0
+  },
+  {
+   "step": "screen",
+   "name": "guide-playing",
+   "pic": "24-guide-playing.jpg",
+   "cls": 0,
+   "y": 0,
+   "h": 3743,
+   "head": "kairouteBeta 2"
+  },
+  {
+   "step": "tap",
+   "size": "tablet",
+   "where": "guide-playing",
+   "label": "Start the tour",
+   "firstMs": 89,
+   "settleMs": 89,
+   "eventMs": 240,
+   "moved": null,
+   "selfScroll": 0,
+   "cls": 0.066
+  },
+  {
+   "step": "screen",
+   "name": "tour-1",
+   "pic": "25-tour-1.jpg",
+   "cls": 0,
+   "y": 0,
+   "h": 800,
+   "head": "kairoute\nBeta 2"
+  },
+  {
+   "step": "tap",
+   "size": "tablet",
+   "where": "tour-1",
+   "label": "tour step 1",
+   "firstMs": 138,
+   "settleMs": 138,
+   "eventMs": 160,
+   "moved": null,
+   "selfScroll": 0,
+   "cls": 0.003
+  },
+  {
+   "step": "screen",
+   "name": "tour-2",
+   "pic": "26-tour-2.jpg",
+   "cls": 0.003,
+   "y": 0,
+   "h": 800,
+   "head": "kairoute\nBeta 2"
+  },
+  {
+   "step": "tap",
+   "size": "tablet",
+   "where": "tour-2",
+   "label": "tour step 2",
+   "firstMs": 28,
+   "settleMs": 62,
+   "eventMs": 56,
+   "moved": null,
+   "selfScroll": 0,
+   "cls": 0
+  },
+  {
+   "step": "screen",
+   "name": "tour-3",
+   "pic": "27-tour-3.jpg",
+   "cls": 0.003,
+   "y": 0,
+   "h": 800,
+   "head": "kairoute\nBeta 2"
+  },
+  {
+   "step": "tap",
+   "size": "tablet",
+   "where": "tour-3",
+   "label": "tour step 3",
+   "firstMs": 28,
+   "settleMs": 1082,
+   "eventMs": 48,
+   "moved": 0,
+   "selfScroll": 0,
+   "cls": 0
+  },
+  {
+   "step": "screen",
+   "name": "tour-4",
+   "pic": "28-tour-4.jpg",
+   "cls": 0.003,
+   "y": 0,
+   "h": 800,
+   "head": "kairoute\nBeta 2"
+  },
+  {
+   "step": "tap",
+   "size": "tablet",
+   "where": "tour-4",
+   "label": "Exit tour",
+   "firstMs": 70,
+   "settleMs": 70,
+   "eventMs": 392,
+   "moved": null,
+   "selfScroll": 0,
+   "cls": 0.066
+  },
+  {
+   "step": "screen",
+   "name": "tour-exit",
+   "pic": "29-tour-exit.jpg",
+   "cls": 0,
+   "y": 0,
+   "h": 2323,
+   "head": "kairouteBeta 2"
+  },
+  {
+   "step": "tap",
+   "size": "tablet",
+   "where": "tour-exit",
+   "label": "Journal tab",
+   "firstMs": 11,
+   "settleMs": 11,
+   "eventMs": 40,
+   "moved": 0,
+   "selfScroll": 0,
+   "cls": 0.03
+  },
+  {
+   "step": "screen",
+   "name": "journal",
+   "pic": "30-journal.jpg",
+   "cls": 0,
+   "y": 0,
+   "h": 800,
+   "head": "kairouteBeta 2"
+  },
+  {
+   "step": "scroll",
+   "where": "journal",
+   "height": 800,
+   "reached": 0
+  },
+  {
+   "step": "tap",
+   "size": "tablet",
+   "where": "journal",
+   "label": "Settings tab",
+   "firstMs": 12,
+   "settleMs": 12,
+   "eventMs": 40,
+   "moved": 0,
+   "selfScroll": 0,
+   "cls": 0
+  },
+  {
+   "step": "screen",
+   "name": "settings",
+   "pic": "31-settings.jpg",
+   "cls": 0,
+   "y": 0,
+   "h": 828,
+   "head": "kairouteBeta 2"
+  },
+  {
+   "step": "scroll",
+   "where": "settings",
+   "height": 828,
+   "reached": 143
+  },
+  {
+   "step": "tap",
+   "size": "tablet",
+   "where": "settings",
+   "label": "Trip tab",
+   "firstMs": 21,
+   "settleMs": 21,
+   "eventMs": 48,
+   "moved": 0,
+   "selfScroll": 0,
+   "cls": 0.065
+  },
+  {
+   "step": "screen",
+   "name": "trip-again",
+   "pic": "32-trip-again.jpg",
+   "cls": 0,
+   "y": 0,
+   "h": 2286,
+   "head": "kairouteBeta 2"
+  },
+  {
+   "step": "tap",
+   "size": "tablet",
+   "where": "trip-again",
+   "label": "Day plan tab",
+   "firstMs": 82,
+   "settleMs": 82,
+   "eventMs": 248,
+   "moved": 0,
+   "selfScroll": 0,
+   "cls": 0.03
+  },
+  {
+   "step": "tap",
+   "size": "tablet",
+   "where": "trip-again",
+   "label": "day 5",
+   "firstMs": 295,
+   "settleMs": 731,
+   "eventMs": 288,
+   "moved": 0,
+   "selfScroll": 0,
+   "cls": 0
+  },
+  {
+   "step": "screen",
+   "name": "before-back",
+   "pic": "33-before-back.jpg",
+   "cls": 0,
+   "y": 0,
+   "h": 2323,
+   "head": "kairouteBeta 2"
+  },
+  {
+   "step": "screen",
+   "name": "after-phone-back",
+   "pic": "34-after-phone-back.jpg",
+   "cls": 0,
+   "y": 0,
+   "h": 800,
+   "head": "kairouteBeta 2"
+  },
+  {
+   "step": "screen",
+   "name": "reopened",
+   "pic": "35-reopened.jpg",
+   "cls": 0.141,
+   "y": 0,
+   "h": 800,
+   "head": "kairouteBeta 2"
+  },
+  {
+   "step": "screen",
+   "name": "offline-open",
+   "pic": "36-offline-open.jpg",
+   "cls": 0.141,
+   "y": 0,
+   "h": 800,
+   "head": "kairouteBeta 2"
+  },
+  {
+   "step": "tap",
+   "size": "tablet",
+   "where": "offline-open",
+   "label": "Continue trip",
+   "firstMs": 22,
+   "settleMs": 22,
+   "eventMs": 48,
+   "moved": null,
+   "selfScroll": 0,
+   "cls": 0
+  },
+  {
+   "step": "screen",
+   "name": "offline-day",
+   "pic": "37-offline-day.jpg",
+   "cls": 0,
+   "y": 0,
+   "h": 800,
+   "head": "kairoute\nBeta 2"
+  },
+  {
+   "step": "scroll",
+   "where": "offline-day",
+   "height": 800,
+   "reached": 0
+  },
+  {
+   "step": "screen",
+   "name": "offline-choose",
+   "pic": "38-offline-choose.jpg",
+   "cls": 0,
+   "y": 0,
+   "h": 800,
+   "head": "kairoute\nBeta 2"
+  },
+  {
+   "step": "screen",
+   "name": "offline-guide",
+   "pic": "39-offline-guide.jpg",
+   "cls": 0,
+   "y": 0,
+   "h": 800,
+   "head": "kairoute\nBeta 2"
+  }
+ ],
+ "fails": [
+  {
+   "size": "tablet",
+   "where": "open",
+   "kind": "SHIFT",
+   "what": "layout shift 0.14 while this screen opened and was used (limit 0.1)",
+   "src": [
+    "main \"PREVIEW 0.9 Settings kairoute Be your ow\" 179->0"
+   ]
+  },
+  {
+   "size": "tablet",
+   "where": "open",
+   "kind": "SLOW",
+   "what": "tapped \"coach Next\": 944 ms before anything showed (limit 500)"
+  },
+  {
+   "size": "tablet",
+   "where": "home",
+   "kind": "SHIFT",
+   "what": "layout shift 0.14 while this screen opened and was used (limit 0.1)",
+   "src": [
+    "main \"PREVIEW 0.9 Settings kairoute Be your ow\" 179->0"
+   ]
+  },
+  {
+   "size": "tablet",
+   "where": "home",
+   "kind": "SLOW",
+   "what": "tapped \"Open the example trip\": the screen kept changing for 2522 ms (limit 2500)"
+  },
+  {
+   "size": "tablet",
+   "where": "trip",
+   "kind": "STUCK",
+   "what": "1 spinner(s) still showing after the screen settled: span.spinner \"\""
+  },
+  {
+   "size": "tablet",
+   "where": "day0-arrival",
+   "kind": "STUCK",
+   "what": "1 spinner(s) still showing after the screen settled: span.spinner \"\""
+  },
+  {
+   "size": "tablet",
+   "where": "day1-land",
+   "kind": "STUCK",
+   "what": "1 spinner(s) still showing after the screen settled: span.spinner \"\""
+  },
+  {
+   "size": "tablet",
+   "where": "day4-embark",
+   "kind": "STUCK",
+   "what": "1 spinner(s) still showing after the screen settled: span.spinner \"\""
+  },
+  {
+   "size": "tablet",
+   "where": "day4-embark",
+   "kind": "SLOW",
+   "what": "tapped \"day 5 (port Heraklion)\": the screen kept changing for 2558 ms (limit 2500)"
+  },
+  {
+   "size": "tablet",
+   "where": "day5-port",
+   "kind": "STUCK",
+   "what": "1 spinner(s) still showing after the screen settled: span.spinner \"\""
+  },
+  {
+   "size": "tablet",
+   "where": "day18-departure",
+   "kind": "STUCK",
+   "what": "1 spinner(s) still showing after the screen settled: span.spinner \"\""
+  },
+  {
+   "size": "tablet",
+   "where": "day1-before-choose",
+   "kind": "STUCK",
+   "what": "1 spinner(s) still showing after the screen settled: span.spinner \"\""
+  },
+  {
+   "size": "tablet",
+   "where": "day1-before-choose",
+   "kind": "SLOW",
+   "what": "tapped \"Choose sights\": the screen kept changing for 4285 ms (limit 2500)"
+  },
+  {
+   "size": "tablet",
+   "where": "choose-sights-day1",
+   "kind": "SHIFT",
+   "what": "layout shift 1.43 while this screen opened and was used (limit 0.1)",
+   "src": [
+    "div#view.wrap.panes \"THU JUL 1 · ATHENS · LAND DAY Choose sig\" 0->58",
+    "div#view.wrap.panes \"THU JUL 1 · ATHENS · LAND DAY Choose sig\" 0->58",
+    "div#view.wrap.panes \"THU JUL 1 · ATHENS · LAND DAY Choose sig\" 0->58",
+    "div#view.wrap.panes \"THU JUL 1 · ATHENS · LAND DAY Choose sig\" 0->58",
+    "div#view.wrap.panes \"THU JUL 1 · ATHENS · LAND DAY Choose sig\" 0->58"
+   ]
+  },
+  {
+   "size": "tablet",
+   "where": "choose-sights-day1-after",
+   "kind": "SHIFT",
+   "what": "layout shift 2.30 while this screen opened and was used (limit 0.1)",
+   "src": [
+    "div#view.wrap.panes \"THU JUL 1 · ATHENS · LAND DAY Choose sig\" 0->58",
+    "div#view.wrap.panes \"THU JUL 1 · ATHENS · LAND DAY Choose sig\" 0->58",
+    "div#view.wrap.panes \"THU JUL 1 · ATHENS · LAND DAY Choose sig\" 0->58",
+    "div#view.wrap.panes \"THU JUL 1 · ATHENS · LAND DAY Choose sig\" 0->58",
+    "div#view.wrap.panes \"THU JUL 1 · ATHENS · LAND DAY Choose sig\" 0->58"
+   ]
+  },
+  {
+   "size": "tablet",
+   "where": "choose-sights-day1-after",
+   "kind": "SLOW",
+   "what": "tapped \"\"Needs ...\" (ways to fit it in)\": 616 ms before anything showed (limit 500)"
+  },
+  {
+   "size": "tablet",
+   "where": "choose-sights-day1-after",
+   "kind": "SLOW",
+   "what": "tapped \"\"Needs ...\" (ways to fit it in)\": the screen kept changing for 5069 ms (limit 2500)"
+  },
+  {
+   "size": "tablet",
+   "where": "fit-box-day1",
+   "kind": "SHIFT",
+   "what": "layout shift 0.72 while this screen opened and was used (limit 0.1)",
+   "src": [
+    "div#view.wrap.panes \"THU JUL 1 · ATHENS · LAND DAY Choose sig\" 0->58",
+    "div#view.wrap.panes \"THU JUL 1 · ATHENS · LAND DAY Choose sig\" 0->58",
+    "div#view.wrap.panes \"THU JUL 1 · ATHENS · LAND DAY Choose sig\" 0->58",
+    "div#view.wrap.panes \"THU JUL 1 · ATHENS · LAND DAY Choose sig\" 0->58",
+    "div#view.wrap.panes \"THU JUL 1 · ATHENS · LAND DAY Choose sig\" 0->58"
+   ]
+  },
+  {
+   "size": "tablet",
+   "where": "after-close-fit-box-day1",
+   "kind": "SHIFT",
+   "what": "layout shift 0.72 while this screen opened and was used (limit 0.1)",
+   "src": [
+    "div#view.wrap.panes \"THU JUL 1 · ATHENS · LAND DAY Choose sig\" 0->58",
+    "div#view.wrap.panes \"THU JUL 1 · ATHENS · LAND DAY Choose sig\" 0->58",
+    "div#view.wrap.panes \"THU JUL 1 · ATHENS · LAND DAY Choose sig\" 0->58",
+    "div#view.wrap.panes \"THU JUL 1 · ATHENS · LAND DAY Choose sig\" 0->58",
+    "div#view.wrap.panes \"THU JUL 1 · ATHENS · LAND DAY Choose sig\" 0->58"
+   ]
+  },
+  {
+   "size": "tablet",
+   "where": "day1-after-choose",
+   "kind": "SLOW",
+   "what": "tapped \"open stop Must-sees\": the screen kept changing for 2908 ms (limit 2500)"
+  },
+  {
+   "size": "tablet",
+   "where": "stop-open-day1",
+   "kind": "SHIFT",
+   "what": "layout shift 1.11 while this screen opened and was used (limit 0.1)",
+   "src": [
+    "div#view.wrap.panes \"THU JUL 1 · ATHENS · LAND DAY Choose sig\" 0->58",
+    "div#view.wrap.panes \"THU JUL 1 · ATHENS · LAND DAY Choose sig\" 0->58",
+    "div#view.wrap.panes \"THU JUL 1 · ATHENS · LAND DAY Choose sig\" 0->58",
+    "div#view.wrap.panes \"THU JUL 1 · ATHENS · LAND DAY Choose sig\" 0->58",
+    "div#view.wrap.panes \"THU JUL 1 · ATHENS · LAND DAY Choose sig\" 0->58"
+   ]
+  },
+  {
+   "size": "tablet",
+   "where": "choose-sights-day5-after",
+   "kind": "SHIFT",
+   "what": "layout shift 0.84 while this screen opened and was used (limit 0.1)",
+   "src": [
+    "div#view.wrap.panes \"MON JUL 5 · HERAKLION · IN PORT Choose s\" 0->58",
+    "div#view.wrap.panes \"MON JUL 5 · HERAKLION · IN PORT Choose s\" 0->58",
+    "div#view.wrap.panes \"MON JUL 5 · HERAKLION · IN PORT Choose s\" 0->58",
+    "div#view.wrap.panes \"MON JUL 5 · HERAKLION · IN PORT Choose s\" 0->58",
+    "div#view.wrap.panes \"MON JUL 5 · HERAKLION · IN PORT Choose s\" 0->58"
+   ]
+  },
+  {
+   "size": "tablet",
+   "where": "choose-sights-day5-after",
+   "kind": "SLOW",
+   "what": "tapped \"\"Needs ...\" (ways to fit it in)\": 776 ms before anything showed (limit 500)"
+  },
+  {
+   "size": "tablet",
+   "where": "choose-sights-day5-after",
+   "kind": "SLOW",
+   "what": "tapped \"\"Needs ...\" (ways to fit it in)\": the screen kept changing for 2618 ms (limit 2500)"
+  },
+  {
+   "size": "tablet",
+   "where": "tour-exit",
+   "kind": "STUCK",
+   "what": "1 spinner(s) still showing after the screen settled: span.spinner \"\""
+  },
+  {
+   "size": "tablet",
+   "where": "phone back",
+   "kind": "BACK",
+   "what": "the phone Back button (from a day plan, opened from the trip page) left the app instead of going back a screen"
+  },
+  {
+   "size": "tablet",
+   "where": "reopened",
+   "kind": "SHIFT",
+   "what": "layout shift 0.14 while this screen opened and was used (limit 0.1)",
+   "src": [
+    "main \"PREVIEW 0.9 Settings kairoute Be your ow\" 179->0"
+   ]
+  },
+  {
+   "size": "tablet",
+   "where": "offline-open",
+   "kind": "SHIFT",
+   "what": "layout shift 0.14 while this screen opened and was used (limit 0.1)",
+   "src": [
+    "main \"PREVIEW 0.9 Settings kairoute Be your ow\" 179->0"
+   ]
+  }
+ ],
+ "notes": [
+  "[choose-sights-day1] 27 sights listed, 5 ticked",
+  "[choose-sights-day1] not on screen to tap: tick national-garden (More nearby (4))",
+  "[choose-sights-day1] not on screen to tap: untick national-garden",
+  "[day5-before-choose] not on screen to tap: Choose sights",
+  "[choose-sights-day5] 7 sights listed, 7 ticked",
+  "[guide] a story was tapped but no sound file was playing 2.5 s later (speech voice may be used instead)",
+  "[offline-open] not on screen to tap: offline day 5",
+  "[offline-day] not on screen to tap: offline Choose sights",
+  "[offline-choose] not on screen to tap: offline Guide"
+ ],
+ "errors": [],
+ "refused": {
+  "/ratings": 3,
+  "/grating": 7,
+  "/events": 6
+ },
+ "passed": {
+  "/sources": 44,
+  "/transit": 84,
+  "/route": 128,
+  "/places": 5,
+  "/voyage": 14,
+  "/x/near": 18,
+  "/departures": 1,
+  "/bookcheck": 1,
+  "/facts": 2
+ },
+ "screens": 40,
+ "version": "01305861-1795461761",
+ "days": 22,
+ "audio": [],
+ "finished": "2026-11-23T20:19:54.328Z",
+ "video": "tablet-walk.webm"
+}
