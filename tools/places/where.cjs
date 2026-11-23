@@ -20,6 +20,9 @@ function placeOf(listing, wd, map, wholes) {
   const out = (from, p, doubt) => Object.assign({ lat: +(+p.lat).toFixed(6), lng: +(+p.lng).toFixed(6), from }, doubt ? { posDoubt: true } : {}, from !== 'listing' && hav(p, listing) > 0.05 ? { moved: +hav(p, listing).toFixed(2) } : {});
   const D = ok(wd) ? wd : null, M = ok(map) ? map : null;
   if (!fits(listing)) { if (M && fits(M)) return out('map', M); if (D && fits(D)) return out('wikidata', D); return out('listing', listing, true); }
+  // One written point only, and the map's element for the same item well away from it: one source against another, so
+  // the point is kept but marked not sure (never told as sure when it isn't).
+  if (!D && M && hav(M, listing) > WHOLE_KM) return out('listing', listing, true);
   if (!D || hav(listing, D) <= AGREE_KM || !fits(D)) return out('listing', listing);
   if (M && hav(M, listing) <= AGREE_KM) return out('listing', listing);
   if (M && hav(M, D) <= AGREE_KM) return out('wikidata', D);

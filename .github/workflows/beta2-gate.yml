@@ -25,7 +25,7 @@ jobs:
       - name: Build both copies (the demo build is index.html, Beta 2 is beta2-site/index.html)
         run: sh build-beta2.sh
       - name: Code checks (secrets, syntax) and the engine's own rules
-        run: node tools/static-check.cjs && node tools/sw-check.cjs && node tools/beta2/engine-static.cjs && node tools/places/where-check.cjs
+        run: node tools/static-check.cjs && node tools/sw-check.cjs && node tools/beta2/engine-static.cjs && node tools/places/where-check.cjs && node tools/beta2/sight-rules-check.cjs beta2-site/index.html
       - name: Helper (AI switch, one AI gate, spend caps, other websites)
         if: always()
         run: node tools/worker-check.mjs && node tools/worker-ai-gate.mjs

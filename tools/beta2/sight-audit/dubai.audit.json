@@ -1,0 +1,357 @@
+{
+ "name": "dubai",
+ "label": "Dubai, UAE",
+ "centre": {
+  "lat": 25.23553,
+  "lng": 55.2946
+ },
+ "findings": [
+  {
+   "k": "FAME",
+   "t": "#1 best known nearby, \"Dubai Metro\" (50 Wikipedia languages, Q83787), is not offered",
+   "x": {
+    "wd": "Q83787",
+    "sl": 50
+   }
+  },
+  {
+   "k": "FAME",
+   "t": "#2 best known nearby, \"Emirates Office Tower\" (35 Wikipedia languages, Q845182), is not offered",
+   "x": {
+    "wd": "Q845182",
+    "sl": 35
+   }
+  },
+  {
+   "k": "FAME",
+   "t": "#3 best known nearby, \"Jumeirah Emirates Towers Hotel\" (33 Wikipedia languages, Q1049027), is not offered",
+   "x": {
+    "wd": "Q1049027",
+    "sl": 33
+   }
+  },
+  {
+   "k": "FAME",
+   "t": "#4 best known nearby, \"Queen Elizabeth 2\" (31 Wikipedia languages, Q1244204), is not offered",
+   "x": {
+    "wd": "Q1244204",
+    "sl": 31
+   }
+  },
+  {
+   "k": "FAME",
+   "t": "#5 best known nearby, \"Address Downtown\" (27 Wikipedia languages, Q677823), is not offered",
+   "x": {
+    "wd": "Q677823",
+    "sl": 27
+   }
+  },
+  {
+   "k": "FAME",
+   "t": "#6 best known nearby, \"HHHR Tower\" (27 Wikipedia languages, Q1470076), is not offered",
+   "x": {
+    "wd": "Q1470076",
+    "sl": 27
+   }
+  },
+  {
+   "k": "FAME",
+   "t": "#7 best known nearby, \"Al Yaqoub Tower\" (26 Wikipedia languages, Q1808295), is not offered",
+   "x": {
+    "wd": "Q1808295",
+    "sl": 26
+   }
+  },
+  {
+   "k": "FAME",
+   "t": "#8 best known nearby, \"The Dubai Fountain\" (26 Wikipedia languages, Q2384491), is not offered",
+   "x": {
+    "wd": "Q2384491",
+    "sl": 26
+   }
+  },
+  {
+   "k": "FAME",
+   "t": "must-see \"Dubai Creek\" is not offered",
+   "x": {
+    "want": "Dubai Creek"
+   }
+  },
+  {
+   "k": "INFO",
+   "t": "9 sights, 0 day trips/towns; must-see: Burj Khalifa; top by fame: Burj Khalifa 140, Dubai Museum 26, Dubai Frame 22, Museum of the Future 22, Emirates Towers 21, Jumeirah Mosque 16, Grand Mosque 16, Al Bastakiya 12",
+   "x": {}
+  }
+ ],
+ "sights": [
+  {
+   "id": "src-q12495",
+   "name": "Burj Khalifa",
+   "local": "برج خليفة",
+   "lat": 25.19722,
+   "lng": 55.27417,
+   "minutes": 75,
+   "category": "Tower",
+   "kind": "touristy",
+   "quick": false,
+   "mustSee": true,
+   "fame": 140,
+   "unesco": false,
+   "heritage": false,
+   "wd": "Q12495",
+   "src": [
+    "Wikivoyage (English)",
+    "Wikipedia in Arabic"
+   ],
+   "srcOnly": true,
+   "builtin": false,
+   "famousFix": false,
+   "far": false,
+   "travel": "",
+   "parts": [],
+   "merged": [],
+   "posDoubt": false,
+   "summary": "At 828 m and 160 floors this is the world's tallest structure by a long shot, over 300 m taller than the previous contender in Taipei."
+  },
+  {
+   "id": "src-q2125281",
+   "name": "Dubai Museum",
+   "local": "متحف دبي",
+   "lat": 25.2633,
+   "lng": 55.2974,
+   "minutes": 90,
+   "category": "Museum",
+   "kind": "touristy",
+   "quick": false,
+   "mustSee": false,
+   "fame": 26,
+   "unesco": false,
+   "heritage": false,
+   "wd": "Q2125281",
+   "src": [
+    "Wikidata (Wikipedia in many languages)",
+    "Wikivoyage (English)",
+    "Wikipedia in Arabic"
+   ],
+   "srcOnly": true,
+   "builtin": false,
+   "famousFix": false,
+   "far": false,
+   "travel": "",
+   "parts": [],
+   "merged": [],
+   "posDoubt": false,
+   "summary": "A must-see for anyone interested in the social history of the Emirate (and indeed the country). Located in and under al-Fahidi fort."
+  },
+  {
+   "id": "src-q20386392",
+   "name": "Dubai Frame",
+   "local": "برواز دبي",
+   "lat": 25.23553,
+   "lng": 55.30032,
+   "minutes": 40,
+   "category": "Sight",
+   "kind": "local",
+   "quick": false,
+   "mustSee": false,
+   "fame": 22,
+   "unesco": false,
+   "heritage": false,
+   "wd": "Q20386392",
+   "src": [
+    "Wikidata (Wikipedia in many languages)",
+    "Wikivoyage (English)",
+    "Wikipedia in Arabic"
+   ],
+   "srcOnly": true,
+   "builtin": false,
+   "famousFix": false,
+   "far": false,
+   "travel": "",
+   "parts": [],
+   "merged": [],
+   "posDoubt": false,
+   "summary": "Two towers of 150 m height connected by a 100-m² bridge, the Dubai Frame has a museum and gallery where you can see the growth of Dubai from a simple fishing vi"
+  },
+  {
+   "id": "src-q22948398",
+   "name": "Museum of the Future",
+   "local": "متحف المستقبل",
+   "lat": 25.21912,
+   "lng": 55.2821,
+   "minutes": 90,
+   "category": "Museum",
+   "kind": "local",
+   "quick": false,
+   "mustSee": false,
+   "fame": 22,
+   "unesco": false,
+   "heritage": false,
+   "wd": "Q22948398",
+   "src": [
+    "Wikidata (Wikipedia in many languages)",
+    "Wikivoyage (English)",
+    "Wikipedia in Arabic"
+   ],
+   "srcOnly": true,
+   "builtin": false,
+   "famousFix": false,
+   "far": false,
+   "travel": "",
+   "parts": [],
+   "merged": [],
+   "posDoubt": false,
+   "summary": "Branded as a \"technology museum\" many visitors consider it more of an expensive art exhibition. The building is outstanding though and looks particularly impres"
+  },
+  {
+   "id": "src-q1332229",
+   "name": "Emirates Towers",
+   "local": "أبراج الإمارات",
+   "lat": 25.21758,
+   "lng": 55.28306,
+   "minutes": 40,
+   "category": "Sight",
+   "kind": "local",
+   "quick": false,
+   "mustSee": false,
+   "fame": 21,
+   "unesco": false,
+   "heritage": false,
+   "wd": "Q1332229",
+   "src": [
+    "Wikidata (Wikipedia in many languages)",
+    "Wikivoyage (English)",
+    "Wikipedia in Arabic"
+   ],
+   "srcOnly": true,
+   "builtin": false,
+   "famousFix": false,
+   "far": false,
+   "travel": "",
+   "parts": [],
+   "merged": [],
+   "posDoubt": false,
+   "summary": "The Emirates Towers complex contains the Emirates Office Tower and Jumeirah Emirates Towers Hotel."
+  },
+  {
+   "id": "src-q2298717",
+   "name": "Jumeirah Mosque",
+   "local": "مسجد جميرا",
+   "lat": 25.23397,
+   "lng": 55.2655,
+   "minutes": 30,
+   "category": "Church",
+   "kind": "local",
+   "quick": false,
+   "mustSee": false,
+   "fame": 16,
+   "unesco": false,
+   "heritage": false,
+   "wd": "Q2298717",
+   "src": [
+    "Wikidata (Wikipedia in many languages)",
+    "Wikivoyage (English)",
+    "Wikipedia in Arabic"
+   ],
+   "srcOnly": true,
+   "builtin": false,
+   "famousFix": false,
+   "far": false,
+   "travel": "",
+   "parts": [],
+   "merged": [],
+   "posDoubt": false,
+   "summary": "The largest mosque in the city, and a wonderful example of Islamic architecture. It was built in the medieval Fatimid tradition with the interior decorated with"
+  },
+  {
+   "id": "src-q5594813",
+   "name": "Grand Mosque",
+   "local": "مسجد دبي الكبير",
+   "lat": 25.26439,
+   "lng": 55.29694,
+   "minutes": 30,
+   "category": "Church",
+   "kind": "local",
+   "quick": false,
+   "mustSee": false,
+   "fame": 16,
+   "unesco": false,
+   "heritage": false,
+   "wd": "Q5594813",
+   "src": [
+    "Wikidata (Wikipedia in many languages)",
+    "Wikivoyage (English)",
+    "Wikipedia in Arabic"
+   ],
+   "srcOnly": true,
+   "builtin": false,
+   "famousFix": false,
+   "far": false,
+   "travel": "",
+   "parts": [],
+   "merged": [],
+   "posDoubt": false,
+   "summary": "Its large minaret is the imposing feature of this large mosque. It is popular for being quite close to a Hindu temple and one can see followers of both Islam an"
+  },
+  {
+   "id": "src-q2094764",
+   "name": "Al Bastakiya",
+   "local": "البستكية",
+   "lat": 25.264,
+   "lng": 55.3,
+   "minutes": 90,
+   "category": "Museum",
+   "kind": "local",
+   "quick": false,
+   "mustSee": false,
+   "fame": 12,
+   "unesco": false,
+   "heritage": false,
+   "wd": "Q2094764",
+   "src": [
+    "Wikidata (Wikipedia in many languages)",
+    "Wikivoyage (English)",
+    "Wikipedia in Arabic"
+   ],
+   "srcOnly": true,
+   "builtin": false,
+   "famousFix": false,
+   "far": false,
+   "travel": "",
+   "parts": [],
+   "merged": [],
+   "posDoubt": false,
+   "summary": "One of the last remaining pockets of Old Dubai, home to many reconstructed buildings in the traditional style."
+  },
+  {
+   "id": "src-q20987838",
+   "name": "Iranian Mosque, Bur Dubai",
+   "local": "مأتم الكراشية (دبي)",
+   "lat": 25.264,
+   "lng": 55.2946,
+   "minutes": 30,
+   "category": "Church",
+   "kind": "local",
+   "quick": false,
+   "mustSee": false,
+   "fame": 9,
+   "unesco": false,
+   "heritage": false,
+   "wd": "Q20987838",
+   "src": [
+    "Wikidata (Wikipedia in many languages)",
+    "Wikivoyage (English)",
+    "Wikipedia in Arabic"
+   ],
+   "srcOnly": true,
+   "builtin": false,
+   "famousFix": false,
+   "far": false,
+   "travel": "",
+   "parts": [],
+   "merged": [],
+   "posDoubt": false,
+   "summary": "A very colourful and attractive tiled mosque; quite a contrast to the other much more plainly decorated mosques. Can be viewed from a carparking area off the no"
+  }
+ ]
+}

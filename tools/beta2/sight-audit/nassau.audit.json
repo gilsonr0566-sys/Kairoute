@@ -1,0 +1,199 @@
+{
+ "name": "nassau",
+ "label": "Nassau, Bahamas",
+ "centre": {
+  "lat": 25.0759,
+  "lng": -77.34458
+ },
+ "findings": [
+  {
+   "k": "FAME",
+   "t": "must-see \"Queen's Staircase\" is not offered",
+   "x": {
+    "want": "Queen's Staircase"
+   }
+  },
+  {
+   "k": "FAME",
+   "t": "must-see \"Fort Charlotte\" is not offered",
+   "x": {
+    "want": "Fort Charlotte"
+   }
+  },
+  {
+   "k": "INFO",
+   "t": "6 sights, 0 day trips/towns; must-see: Ardastra Gardens, Zoo and Conservation Centre, National Art Gallery of The Bahamas, Cable Beach, Fort Fincastle; top by fame: Paradise Island 20, Ardastra Gardens, Zoo and Conservation Centre 5, National Art Gallery of The Bahamas 5, Cable Beach 5, Fort Fincastle 4, Pirates of Nassau 1",
+   "x": {}
+  }
+ ],
+ "sights": [
+  {
+   "id": "src-q3181503",
+   "name": "Paradise Island",
+   "local": "",
+   "lat": 25.08333,
+   "lng": -77.33333,
+   "minutes": 40,
+   "category": "Sight",
+   "kind": "touristy",
+   "quick": false,
+   "mustSee": false,
+   "fame": 20,
+   "unesco": false,
+   "heritage": false,
+   "wd": "Q3181503",
+   "src": [
+    "Wikidata (Wikipedia in many languages)"
+   ],
+   "srcOnly": true,
+   "builtin": false,
+   "famousFix": false,
+   "far": false,
+   "travel": "",
+   "parts": [],
+   "merged": [],
+   "posDoubt": true,
+   "summary": "A sight in Nassau, Bahamas, named by 1 independent sources."
+  },
+  {
+   "id": "src-q4025978",
+   "name": "Ardastra Gardens, Zoo and Conservation Centre",
+   "local": "",
+   "lat": 25.0759,
+   "lng": -77.3617,
+   "minutes": 150,
+   "category": "Zoo or park",
+   "kind": "touristy",
+   "quick": false,
+   "mustSee": true,
+   "fame": 5,
+   "unesco": false,
+   "heritage": false,
+   "wd": "Q4025978",
+   "src": [
+    "Wikivoyage (English)"
+   ],
+   "srcOnly": true,
+   "builtin": false,
+   "famousFix": false,
+   "far": false,
+   "travel": "",
+   "parts": [],
+   "merged": [],
+   "posDoubt": false,
+   "summary": "Visit the Bahamas' only zoo. See the marching flamingo shows. Let the parakeets land on you as you feed them."
+  },
+  {
+   "id": "src-q2912593",
+   "name": "National Art Gallery of The Bahamas",
+   "local": "",
+   "lat": 25.0754,
+   "lng": -77.3473,
+   "minutes": 90,
+   "category": "Museum",
+   "kind": "touristy",
+   "quick": false,
+   "mustSee": true,
+   "fame": 5,
+   "unesco": false,
+   "heritage": false,
+   "wd": "Q2912593",
+   "src": [
+    "Wikivoyage (English)"
+   ],
+   "srcOnly": true,
+   "builtin": false,
+   "famousFix": false,
+   "far": false,
+   "travel": "",
+   "parts": [],
+   "merged": [],
+   "posDoubt": false,
+   "summary": "Opened in 2003, this showcases Bahamian art from the precolonial era to the present."
+  },
+  {
+   "id": "src-q21713748",
+   "name": "Cable Beach",
+   "local": "",
+   "lat": 25.07361,
+   "lng": -77.40667,
+   "minutes": 90,
+   "category": "Beach",
+   "kind": "touristy",
+   "quick": false,
+   "mustSee": true,
+   "fame": 5,
+   "unesco": false,
+   "heritage": false,
+   "wd": "Q21713748",
+   "src": [
+    "Wikivoyage (English)"
+   ],
+   "srcOnly": true,
+   "builtin": false,
+   "famousFix": false,
+   "far": false,
+   "travel": "",
+   "parts": [],
+   "merged": [],
+   "posDoubt": true,
+   "summary": "A beach in Nassau, Bahamas, named by 1 independent sources."
+  },
+  {
+   "id": "src-q5471144",
+   "name": "Fort Fincastle",
+   "local": "",
+   "lat": 25.07361,
+   "lng": -77.33861,
+   "minutes": 50,
+   "category": "Palace",
+   "kind": "touristy",
+   "quick": false,
+   "mustSee": true,
+   "fame": 4,
+   "unesco": false,
+   "heritage": false,
+   "wd": "Q5471144",
+   "src": [
+    "Wikivoyage (English)"
+   ],
+   "srcOnly": true,
+   "builtin": false,
+   "famousFix": false,
+   "far": false,
+   "travel": "",
+   "parts": [],
+   "merged": [],
+   "posDoubt": false,
+   "summary": "A small fort built in 1793 which overlooks the city of Nassau from a small hill south of town. Several cannons are on display. Tours are conducted daily 8AM-3PM"
+  },
+  {
+   "id": "src-q67142794",
+   "name": "Pirates of Nassau",
+   "local": "",
+   "lat": 25.07739,
+   "lng": -77.34458,
+   "minutes": 90,
+   "category": "Museum",
+   "kind": "touristy",
+   "quick": false,
+   "mustSee": false,
+   "fame": 1,
+   "unesco": false,
+   "heritage": false,
+   "wd": "Q67142794",
+   "src": [
+    "Wikivoyage (English)"
+   ],
+   "srcOnly": true,
+   "builtin": false,
+   "famousFix": false,
+   "far": false,
+   "travel": "",
+   "parts": [],
+   "merged": [],
+   "posDoubt": false,
+   "summary": "Recreations of a pirate town, a pirate ship and a pirate battle, with a few real artifacts mixed in. Cheesy, but fun. Try to catch a guided tour."
+  }
+ ]
+}

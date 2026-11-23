@@ -1,0 +1,1756 @@
+{
+ "name": "lehavre",
+ "label": "Le Havre (Paris), France",
+ "centre": {
+  "lat": 48.8583,
+  "lng": 2.339
+ },
+ "findings": [
+  {
+   "k": "NOT",
+   "t": "UNESCO {Q7809 by name}: Wikidata says it is an organization (specialised agency of the United Nations for education, sciences, and culture)",
+   "x": {
+    "id": "src-q7809"
+   }
+  },
+  {
+   "k": "NOT",
+   "t": "avenue des Champs-Élysées: Wikidata says it is a road, a street (avenue in Paris, France)",
+   "x": {
+    "id": "src-q550"
+   }
+  },
+  {
+   "k": "NOT",
+   "t": "Bibliothèque nationale de France: Wikidata says it is a government agency, an organization, a company, a business (national library of France in Paris)",
+   "x": {
+    "id": "src-q193563"
+   }
+  },
+  {
+   "k": "LEN",
+   "t": "Bibliothèque nationale de France: 40 min, but a art museum or gallery usually takes 45-240 min",
+   "x": {
+    "id": "src-q193563",
+    "min": 40,
+    "kind": "art museum or gallery"
+   }
+  },
+  {
+   "k": "NOT",
+   "t": "Bastille: Wikidata says it is an event (opera house)",
+   "x": {
+    "id": "src-q1865480"
+   }
+  },
+  {
+   "k": "NOT",
+   "t": "Centre Georges Pompidou: Wikidata says it is an organization, a company, a business (national cultural center of contemporary art in Paris, France)",
+   "x": {
+    "id": "src-q178065"
+   }
+  },
+  {
+   "k": "NOT",
+   "t": "Palais Garnier: Wikidata says it is an event (opera house in Paris, France)",
+   "x": {
+    "id": "src-q187840"
+   }
+  },
+  {
+   "k": "NOT",
+   "t": "Grand Palais: Wikidata says it is an event (museum in Paris, France)",
+   "x": {
+    "id": "src-q457318"
+   }
+  },
+  {
+   "k": "NOT",
+   "t": "Institut Polytechnique des Sciences Avancées: Wikidata says it is an organization, a company, a business, a school (French engineering college in aerospace)",
+   "x": {
+    "id": "src-q183213"
+   }
+  },
+  {
+   "k": "NOT",
+   "t": "National Assembly: Wikidata says it is an organization, a government agency (lower house of the French Parliament under the Fifth Republic)",
+   "x": {
+    "id": "src-q193582"
+   }
+  },
+  {
+   "k": "LEN",
+   "t": "Venus de Milo: 40 min, but a fountain, statue or monument usually takes 5-30 min",
+   "x": {
+    "id": "src-q151952",
+    "min": 40,
+    "kind": "fountain, statue or monument"
+   }
+  },
+  {
+   "k": "NOT",
+   "t": "Sorbonne: Wikidata says it is an organization, a company, a business (historical university and building in Paris, France)",
+   "x": {
+    "id": "src-q214654"
+   }
+  },
+  {
+   "k": "LEN",
+   "t": "Petit Palais: 40 min, but a art museum or gallery usually takes 45-240 min",
+   "x": {
+    "id": "src-q820892",
+    "min": 40,
+    "kind": "art museum or gallery"
+   }
+  },
+  {
+   "k": "NOT",
+   "t": "École Normale Supérieure: Wikidata says it is a school, an organization, a company, a business (French \"grande école\" (ENS Paris))",
+   "x": {
+    "id": "src-q83259"
+   }
+  },
+  {
+   "k": "NOT",
+   "t": "Collège de France: Wikidata says it is an organization, a company, a business (French higher education and research establishment in Paris)",
+   "x": {
+    "id": "src-q202660"
+   }
+  },
+  {
+   "k": "NOT",
+   "t": "Grand Mosque of Paris: Wikidata says it is an organization (mosque in Paris, France)",
+   "x": {
+    "id": "src-q392564"
+   }
+  },
+  {
+   "k": "NOT",
+   "t": "Paris Institute of Political Studies: Wikidata says it is a university, an organization, a company, a business, a school (higher-education institution in Paris, France)",
+   "x": {
+    "id": "src-q859363"
+   }
+  },
+  {
+   "k": "NOT",
+   "t": "Conciergerie: Wikidata says it is an organization, a government agency (Medieval building in Paris, France)",
+   "x": {
+    "id": "src-q138101"
+   }
+  },
+  {
+   "k": "POS",
+   "t": "1st arrondissement of Paris: app 48.85995,2.34206 is 0.76 km from the map's 1st Arrondissement (node/253456008, 48.86461,2.33440); Wikidata 0.76 km from the map",
+   "x": {
+    "d": 0.7637531959899262,
+    "id": "src-q161741",
+    "wd": "Q161741",
+    "app": [
+     48.85995,
+     2.34206
+    ],
+    "map": [
+     48.8646144,
+     2.334396
+    ],
+    "wdpt": [
+     48.859947,
+     2.342059
+    ]
+   }
+  },
+  {
+   "k": "NOT",
+   "t": "1st arrondissement of Paris: Wikidata says it is a neighbourhood, a settlement, a company, an organization (one of the 20 arrondissements (administrative districts) of Paris)",
+   "x": {
+    "id": "src-q161741"
+   }
+  },
+  {
+   "k": "NOT",
+   "t": "Montmartre {Q186115 by name}: Wikidata says it is a neighbourhood, a settlement (large hill in Paris's northern 18th arrondissement)",
+   "x": {
+    "id": "src-q186115"
+   }
+  },
+  {
+   "k": "LEN",
+   "t": "Château de Vincennes: 40 min, but a castle or fortress usually takes 45-180 min",
+   "x": {
+    "id": "src-q663673",
+    "min": 40,
+    "kind": "castle or fortress"
+   }
+  },
+  {
+   "k": "LEN",
+   "t": "place des Vosges: 15 min, but a park or garden usually takes 20-180 min",
+   "x": {
+    "id": "src-q898629",
+    "min": 15,
+    "kind": "park or garden"
+   }
+  },
+  {
+   "k": "NOT",
+   "t": "Hôtel de Ville, Paris: Wikidata says it is an office building (town hall of Paris, France)",
+   "x": {
+    "id": "src-q640968"
+   }
+  },
+  {
+   "k": "NOT",
+   "t": "Royal abbey of Saint-Germain-des-Prés: Wikidata says it is an organization (abbey located in Paris, in France)",
+   "x": {
+    "id": "src-q334186"
+   }
+  },
+  {
+   "k": "LEN",
+   "t": "Jardin des plantes: 40 min, but a art museum or gallery usually takes 45-240 min",
+   "x": {
+    "id": "src-q730948",
+    "min": 40,
+    "kind": "art museum or gallery"
+   }
+  },
+  {
+   "k": "NOT",
+   "t": "Mines ParisTech: Wikidata says it is an organization, a company, a business, a school (French engineering grande école (selective higher education institution))",
+   "x": {
+    "id": "src-q1189954"
+   }
+  },
+  {
+   "k": "NOT",
+   "t": "Rambouillet [day trip]: Wikidata says it is an organization, a company (commune in Yvelines, France)",
+   "x": {
+    "id": "rambouillet-far"
+   }
+  },
+  {
+   "k": "POS",
+   "t": "Versailles [day trip]: app 48.80440,2.12316 is 0.28 km from the map's Versailles (node/26692491, 48.80354,2.12669); Wikidata 0.63 km from the map",
+   "x": {
+    "d": 0.2755385725880266,
+    "id": "versailles-far",
+    "wd": "Q621",
+    "app": [
+     48.8044,
+     2.12316
+    ],
+    "map": [
+     48.8035403,
+     2.1266886
+    ],
+    "wdpt": [
+     48.805,
+     2.135
+    ]
+   }
+  },
+  {
+   "k": "NOT",
+   "t": "Versailles [day trip]: Wikidata says it is an organization, a company (French city and commune in Yvelines, in Île-de-France)",
+   "x": {
+    "id": "versailles-far"
+   }
+  },
+  {
+   "k": "FOLD",
+   "t": "Eiffel Tower is part of Champ de Mars (Wikidata) but is a separate stop",
+   "x": {
+    "id": "src-q243",
+    "of": "src-q217925"
+   }
+  },
+  {
+   "k": "FOLD",
+   "t": "Notre-Dame de Paris is part of île de la Cité (Wikidata) but is a separate stop",
+   "x": {
+    "id": "src-q2981",
+    "of": "src-q190063"
+   }
+  },
+  {
+   "k": "FAME",
+   "t": "must-see \"Notre-Dame\" is offered (Notre-Dame de Paris) but not marked must-see",
+   "x": {
+    "want": "Notre-Dame",
+    "id": "src-q2981"
+   }
+  },
+  {
+   "k": "FAME",
+   "t": "must-see \"Arc de Triomphe\" is offered (Arc de Triomphe) but not marked must-see",
+   "x": {
+    "want": "Arc de Triomphe",
+    "id": "src-q64436"
+   }
+  },
+  {
+   "k": "FAME",
+   "t": "must-see \"Sacré-Cœur\" is offered (Sacré-Cœur) but not marked must-see",
+   "x": {
+    "want": "Sacré-Cœur",
+    "id": "src-q28785"
+   }
+  },
+  {
+   "k": "INFO",
+   "t": "46 sights, 2 day trips/towns; must-see: UNESCO, Eiffel Tower, Louvre Museum; top by fame: Eiffel Tower 191, Louvre Museum 170, Notre-Dame de Paris 125, Musée d'Orsay 122, avenue des Champs-Élysées 95, Bibliothèque nationale de France 92, Arc de Triomphe 86, Institut Polytechnique des Sciences Avancées 81",
+   "x": {}
+  },
+  {
+   "k": "INFO",
+   "t": "day trips: Rambouillet, Versailles",
+   "x": {}
+  }
+ ],
+ "sights": [
+  {
+   "id": "src-q7809",
+   "name": "UNESCO",
+   "local": "",
+   "lat": 48.84972,
+   "lng": 2.30611,
+   "minutes": 40,
+   "category": "Sight",
+   "kind": "touristy",
+   "quick": false,
+   "mustSee": true,
+   "fame": 20,
+   "unesco": false,
+   "heritage": true,
+   "wd": "Q7809",
+   "src": [
+    "Wikivoyage (English)",
+    "national heritage register",
+    "Wikipedia in French"
+   ],
+   "srcOnly": true,
+   "builtin": false,
+   "famousFix": false,
+   "far": false,
+   "travel": "",
+   "parts": [],
+   "merged": [],
+   "posDoubt": false,
+   "summary": "A sight in Paris, named by 2 independent sources.",
+   "wdByName": true
+  },
+  {
+   "id": "src-q243",
+   "name": "Eiffel Tower",
+   "local": "Tour Eiffel",
+   "lat": 48.8583,
+   "lng": 2.29448,
+   "minutes": 40,
+   "category": "Sight",
+   "kind": "touristy",
+   "quick": false,
+   "mustSee": true,
+   "fame": 191,
+   "unesco": false,
+   "heritage": true,
+   "wd": "Q243",
+   "src": [
+    "Wikidata (Wikipedia in many languages)",
+    "national heritage register",
+    "Wikivoyage (English)",
+    "Wikipedia in French"
+   ],
+   "srcOnly": true,
+   "builtin": false,
+   "famousFix": false,
+   "far": false,
+   "travel": "",
+   "parts": [],
+   "merged": [],
+   "posDoubt": false,
+   "summary": "A symbol of Paris and one of the most famous landmarks in the world. Built by Gustave Eiffel in 1887-1889, the tower was almost torn down in 1909 and only saved"
+  },
+  {
+   "id": "src-q19675",
+   "name": "Louvre Museum",
+   "local": "Musée du Louvre",
+   "lat": 48.86111,
+   "lng": 2.33583,
+   "minutes": 90,
+   "category": "Museum",
+   "kind": "touristy",
+   "quick": false,
+   "mustSee": true,
+   "fame": 170,
+   "unesco": false,
+   "heritage": false,
+   "wd": "Q19675",
+   "src": [
+    "Wikidata (Wikipedia in many languages)",
+    "Wikivoyage (English)",
+    "Wikipedia in French"
+   ],
+   "srcOnly": true,
+   "builtin": false,
+   "famousFix": false,
+   "far": false,
+   "travel": "",
+   "parts": [],
+   "merged": [],
+   "posDoubt": false,
+   "summary": "Its exhibits come from such diverse origins as ancient Egypt, classical Greece and the Roman Empire, medieval Europe, and Napoleonic France, but controversially"
+  },
+  {
+   "id": "src-q2981",
+   "name": "Notre-Dame de Paris",
+   "local": "Cathédrale Notre-Dame de Paris",
+   "lat": 48.853,
+   "lng": 2.3498,
+   "minutes": 40,
+   "category": "Sight",
+   "kind": "touristy",
+   "quick": false,
+   "mustSee": false,
+   "fame": 125,
+   "unesco": false,
+   "heritage": true,
+   "wd": "Q2981",
+   "src": [
+    "Wikidata (Wikipedia in many languages)",
+    "national heritage register",
+    "Wikivoyage (English)",
+    "Wikipedia in French"
+   ],
+   "srcOnly": true,
+   "builtin": false,
+   "famousFix": false,
+   "far": false,
+   "travel": "",
+   "parts": [],
+   "merged": [],
+   "posDoubt": false,
+   "summary": "The early Gothic Cathédrale de Notre Dame (Our Lady) has a 12th century design but wasn't completed until the 14th."
+  },
+  {
+   "id": "src-q23402",
+   "name": "Musée d'Orsay",
+   "local": "",
+   "lat": 48.85997,
+   "lng": 2.32653,
+   "minutes": 90,
+   "category": "Museum",
+   "kind": "touristy",
+   "quick": false,
+   "mustSee": false,
+   "fame": 122,
+   "unesco": false,
+   "heritage": false,
+   "wd": "Q23402",
+   "src": [
+    "Wikidata (Wikipedia in many languages)",
+    "Wikivoyage (English)",
+    "Wikipedia in French"
+   ],
+   "srcOnly": true,
+   "builtin": false,
+   "famousFix": false,
+   "far": false,
+   "travel": "",
+   "parts": [],
+   "merged": [],
+   "posDoubt": false,
+   "summary": "Housed in a former Beaux-Arts railway station (completed in 1900 for the Exposition Universelle, later saved from demolition and converted to its present use), "
+  },
+  {
+   "id": "src-q64436",
+   "name": "Arc de Triomphe",
+   "local": "Arc de triomphe de l'Étoile",
+   "lat": 48.87378,
+   "lng": 2.29504,
+   "minutes": 40,
+   "category": "Sight",
+   "kind": "touristy",
+   "quick": false,
+   "mustSee": false,
+   "fame": 86,
+   "unesco": false,
+   "heritage": true,
+   "wd": "Q64436",
+   "src": [
+    "Wikidata (Wikipedia in many languages)",
+    "national heritage register",
+    "Wikivoyage (English)",
+    "Wikipedia in French"
+   ],
+   "srcOnly": true,
+   "builtin": false,
+   "famousFix": false,
+   "far": false,
+   "travel": "",
+   "parts": [],
+   "merged": [],
+   "posDoubt": false,
+   "summary": "This iconic triumphal arch forms the focus of the main east-west road axis of Paris, running between the Louvre and the Grande Arche de la Défense in the west."
+  },
+  {
+   "id": "src-q550",
+   "name": "avenue des Champs-Élysées",
+   "local": "Avenue des Champs-Élysées",
+   "lat": 48.86967,
+   "lng": 2.30786,
+   "minutes": 40,
+   "category": "Sight",
+   "kind": "touristy",
+   "quick": false,
+   "mustSee": false,
+   "fame": 95,
+   "unesco": false,
+   "heritage": false,
+   "wd": "Q550",
+   "src": [
+    "Wikidata (Wikipedia in many languages)",
+    "Wikivoyage (English)",
+    "Wikipedia in French"
+   ],
+   "srcOnly": true,
+   "builtin": false,
+   "famousFix": false,
+   "far": false,
+   "travel": "",
+   "parts": [],
+   "merged": [],
+   "posDoubt": false,
+   "summary": "For many visitors one of the must-see places in Paris is the Avenue des Champs-Elysées which was first created in 1667 by Louis XIV's gardener, Andre Le Nôtre, "
+  },
+  {
+   "id": "src-q193563",
+   "name": "Bibliothèque nationale de France",
+   "local": "",
+   "lat": 48.83361,
+   "lng": 2.37583,
+   "minutes": 40,
+   "category": "Sight",
+   "kind": "touristy",
+   "quick": false,
+   "mustSee": false,
+   "fame": 92,
+   "unesco": false,
+   "heritage": false,
+   "wd": "Q193563",
+   "src": [
+    "Wikidata (Wikipedia in many languages)",
+    "Wikivoyage (English)",
+    "Wikipedia in French"
+   ],
+   "srcOnly": true,
+   "builtin": false,
+   "famousFix": false,
+   "far": false,
+   "travel": "",
+   "parts": [],
+   "merged": [],
+   "posDoubt": false,
+   "summary": "The national library preserves collections of historic documents of both French and international origin. It holds 5,000 Greek manuscripts. You can get a day pa"
+  },
+  {
+   "id": "src-q311",
+   "name": "Père Lachaise Cemetery",
+   "local": "Cimetière du Père-Lachaise",
+   "lat": 48.86111,
+   "lng": 2.39417,
+   "minutes": 40,
+   "category": "Sight",
+   "kind": "touristy",
+   "quick": false,
+   "mustSee": false,
+   "fame": 71,
+   "unesco": false,
+   "heritage": true,
+   "wd": "Q311",
+   "src": [
+    "Wikidata (Wikipedia in many languages)",
+    "national heritage register",
+    "Wikivoyage (English)",
+    "Wikipedia in French"
+   ],
+   "srcOnly": true,
+   "builtin": false,
+   "famousFix": false,
+   "far": false,
+   "travel": "",
+   "parts": [],
+   "merged": [],
+   "posDoubt": false,
+   "summary": "Unlike any cemetery in the world. Ornate grave stones, monuments set among tree lined lanes. See the graves of Jim Morrison, Oscar Wilde, and Frédéric Chopin, a"
+  },
+  {
+   "id": "src-q1865480",
+   "name": "Bastille",
+   "local": "",
+   "lat": 48.85333,
+   "lng": 2.36917,
+   "minutes": 40,
+   "category": "Sight",
+   "kind": "touristy",
+   "quick": false,
+   "mustSee": false,
+   "fame": 41,
+   "unesco": false,
+   "heritage": true,
+   "wd": "Q638423",
+   "src": [
+    "Wikivoyage (English)",
+    "national heritage register",
+    "Wikipedia in French"
+   ],
+   "srcOnly": true,
+   "builtin": false,
+   "famousFix": false,
+   "far": false,
+   "travel": "",
+   "parts": [],
+   "merged": [],
+   "posDoubt": false,
+   "summary": "Enter Bastille station through any entrance or on any train and then make your way to the Bobigny/Pablo Picasso-bound platform."
+  },
+  {
+   "id": "src-q178065",
+   "name": "Centre Georges Pompidou",
+   "local": "Centre national d'art et de culture Georges-Pompidou",
+   "lat": 48.86064,
+   "lng": 2.35224,
+   "minutes": 40,
+   "category": "Sight",
+   "kind": "touristy",
+   "quick": false,
+   "mustSee": false,
+   "fame": 63,
+   "unesco": false,
+   "heritage": true,
+   "wd": "Q178065",
+   "src": [
+    "Wikidata (Wikipedia in many languages)",
+    "national heritage register",
+    "Wikivoyage (English)",
+    "Wikipedia in French"
+   ],
+   "srcOnly": true,
+   "builtin": false,
+   "famousFix": false,
+   "far": false,
+   "travel": "",
+   "parts": [],
+   "merged": [],
+   "posDoubt": false,
+   "summary": "Centre Georges Pompidou closed its doors in 2025, for a major renovation project, which is expected to be completed in 2030."
+  },
+  {
+   "id": "src-q187840",
+   "name": "Palais Garnier",
+   "local": "Opéra Garnier",
+   "lat": 48.87194,
+   "lng": 2.33167,
+   "minutes": 40,
+   "category": "Sight",
+   "kind": "touristy",
+   "quick": false,
+   "mustSee": false,
+   "fame": 63,
+   "unesco": false,
+   "heritage": true,
+   "wd": "Q187840",
+   "src": [
+    "Wikidata (Wikipedia in many languages)",
+    "national heritage register",
+    "Wikivoyage (English)",
+    "Wikipedia in French"
+   ],
+   "srcOnly": true,
+   "builtin": false,
+   "famousFix": false,
+   "far": false,
+   "travel": "",
+   "parts": [],
+   "merged": [],
+   "posDoubt": false,
+   "summary": "The magnificent setting of The Phantom of the Opera, the inside is as opulent as the outside."
+  },
+  {
+   "id": "src-q189503",
+   "name": "place de la Concorde",
+   "local": "Place de la Concorde",
+   "lat": 48.86563,
+   "lng": 2.32124,
+   "minutes": 15,
+   "category": "Square",
+   "kind": "touristy",
+   "quick": false,
+   "mustSee": false,
+   "fame": 62,
+   "unesco": false,
+   "heritage": true,
+   "wd": "Q189503",
+   "src": [
+    "Wikidata (Wikipedia in many languages)",
+    "national heritage register",
+    "Wikivoyage (English)",
+    "Wikipedia in French"
+   ],
+   "srcOnly": true,
+   "builtin": false,
+   "famousFix": false,
+   "far": false,
+   "travel": "",
+   "parts": [],
+   "merged": [],
+   "posDoubt": false,
+   "summary": "The largest square in Paris with fantastic vistas in every direction."
+  },
+  {
+   "id": "src-q188856",
+   "name": "Panthéon",
+   "local": "Panthéon (Paris)",
+   "lat": 48.8462,
+   "lng": 2.34611,
+   "minutes": 40,
+   "category": "Sight",
+   "kind": "touristy",
+   "quick": false,
+   "mustSee": false,
+   "fame": 61,
+   "unesco": false,
+   "heritage": true,
+   "wd": "Q188856",
+   "src": [
+    "Wikidata (Wikipedia in many languages)",
+    "national heritage register",
+    "Wikivoyage (English)",
+    "Wikipedia in French"
+   ],
+   "srcOnly": true,
+   "builtin": false,
+   "famousFix": false,
+   "far": false,
+   "travel": "",
+   "parts": [],
+   "merged": [],
+   "posDoubt": false,
+   "summary": "It was conceived by Louis XV as a grand neo-classical church honouring St. Geneviève, the patron saint of Paris."
+  },
+  {
+   "id": "src-q193193",
+   "name": "Sainte Chapelle",
+   "local": "Sainte-Chapelle",
+   "lat": 48.85537,
+   "lng": 2.34503,
+   "minutes": 30,
+   "category": "Church",
+   "kind": "touristy",
+   "quick": false,
+   "mustSee": false,
+   "fame": 58,
+   "unesco": false,
+   "heritage": true,
+   "wd": "Q193193",
+   "src": [
+    "Wikidata (Wikipedia in many languages)",
+    "national heritage register",
+    "Wikivoyage (English)",
+    "Wikipedia in French"
+   ],
+   "srcOnly": true,
+   "builtin": false,
+   "famousFix": false,
+   "far": false,
+   "travel": "",
+   "parts": [],
+   "merged": [],
+   "posDoubt": false,
+   "summary": "Soaring stained glass windows beaming ample light onto the rich primary colours of the tile mosaics on the floor, this photogenic church was built by the French"
+  },
+  {
+   "id": "src-q188977",
+   "name": "Les Invalides",
+   "local": "Hôtel des Invalides",
+   "lat": 48.855,
+   "lng": 2.3125,
+   "minutes": 40,
+   "category": "Sight",
+   "kind": "touristy",
+   "quick": false,
+   "mustSee": false,
+   "fame": 57,
+   "unesco": false,
+   "heritage": true,
+   "wd": "Q188977",
+   "src": [
+    "Wikidata (Wikipedia in many languages)",
+    "national heritage register",
+    "Wikivoyage (English)",
+    "Wikipedia in French"
+   ],
+   "srcOnly": true,
+   "builtin": false,
+   "famousFix": false,
+   "far": false,
+   "travel": "",
+   "parts": [],
+   "merged": [],
+   "posDoubt": false,
+   "summary": "Founded in 1671 by Louis XIV as a hospital for 6,000 wounded soldiers—this function explaining the name of the building—the golden-domed Hôtel des Invalides sti"
+  },
+  {
+   "id": "src-q329852",
+   "name": "Luxembourg Palace",
+   "local": "Palais du Luxembourg",
+   "lat": 48.84833,
+   "lng": 2.3375,
+   "minutes": 50,
+   "category": "Palace",
+   "kind": "touristy",
+   "quick": false,
+   "mustSee": false,
+   "fame": 53,
+   "unesco": false,
+   "heritage": true,
+   "wd": "Q329852",
+   "src": [
+    "Wikidata (Wikipedia in many languages)",
+    "national heritage register",
+    "Wikivoyage (English)",
+    "Wikipedia in French"
+   ],
+   "srcOnly": true,
+   "builtin": false,
+   "famousFix": false,
+   "far": false,
+   "travel": "",
+   "parts": [],
+   "merged": [],
+   "posDoubt": false,
+   "summary": "Visitable only by reservation and then only one Saturday every month. A richly decorated palace built for Marie de Medici in the early 17th century, which is no"
+  },
+  {
+   "id": "src-q329948",
+   "name": "Palais-Royal",
+   "local": "",
+   "lat": 48.86333,
+   "lng": 2.33694,
+   "minutes": 40,
+   "category": "Sight",
+   "kind": "touristy",
+   "quick": false,
+   "mustSee": false,
+   "fame": 51,
+   "unesco": false,
+   "heritage": true,
+   "wd": "Q329948",
+   "src": [
+    "Wikidata (Wikipedia in many languages)",
+    "national heritage register",
+    "Wikivoyage (English)",
+    "Wikipedia in French"
+   ],
+   "srcOnly": true,
+   "builtin": false,
+   "famousFix": false,
+   "far": false,
+   "travel": "",
+   "parts": [],
+   "merged": [],
+   "posDoubt": false,
+   "summary": "Ordered by Cardinal de Richelieu (1585-1642), King Louis XIII's prime Minister in 1629 (completed in 1636); originally called Palais Cardinal; it became Le Pala"
+  },
+  {
+   "id": "src-q457318",
+   "name": "Grand Palais",
+   "local": "Grand Palais (Paris)",
+   "lat": 48.86611,
+   "lng": 2.3125,
+   "minutes": 40,
+   "category": "Sight",
+   "kind": "touristy",
+   "quick": false,
+   "mustSee": false,
+   "fame": 51,
+   "unesco": false,
+   "heritage": true,
+   "wd": "Q457318",
+   "src": [
+    "Wikidata (Wikipedia in many languages)",
+    "national heritage register",
+    "Wikivoyage (English)",
+    "Wikipedia in French"
+   ],
+   "srcOnly": true,
+   "builtin": false,
+   "famousFix": false,
+   "far": false,
+   "travel": "",
+   "parts": [],
+   "merged": [],
+   "posDoubt": false,
+   "summary": "Built in 1900 for the universal exposition, the Grand Palais was an engineering feat and a milestone of design, marking the transition between historicism and m"
+  },
+  {
+   "id": "src-q183213",
+   "name": "Institut Polytechnique des Sciences Avancées",
+   "local": "Institut polytechnique des sciences avancées",
+   "lat": 48.81456,
+   "lng": 2.39681,
+   "minutes": 40,
+   "category": "Sight",
+   "kind": "touristy",
+   "quick": false,
+   "mustSee": false,
+   "fame": 81,
+   "unesco": false,
+   "heritage": false,
+   "wd": "Q183213",
+   "src": [
+    "Wikidata (Wikipedia in many languages)",
+    "Wikipedia in French"
+   ],
+   "srcOnly": true,
+   "builtin": false,
+   "famousFix": false,
+   "far": false,
+   "travel": "",
+   "parts": [],
+   "merged": [],
+   "posDoubt": false,
+   "summary": "A sight in Paris, named by 2 independent sources."
+  },
+  {
+   "id": "src-q818517",
+   "name": "Tuileries Garden",
+   "local": "Jardin des Tuileries",
+   "lat": 48.86389,
+   "lng": 2.32611,
+   "minutes": 40,
+   "category": "Park or garden",
+   "kind": "touristy",
+   "quick": false,
+   "mustSee": false,
+   "fame": 48,
+   "unesco": false,
+   "heritage": true,
+   "wd": "Q818517",
+   "src": [
+    "Wikidata (Wikipedia in many languages)",
+    "national heritage register",
+    "Wikivoyage (English)",
+    "Wikipedia in French"
+   ],
+   "srcOnly": true,
+   "builtin": false,
+   "famousFix": false,
+   "far": false,
+   "travel": "",
+   "parts": [],
+   "merged": [],
+   "posDoubt": false,
+   "summary": "Built adjoining the now-lost royal palace of the Tuileries, these gardens lying immediately west of the Louvre offer a central open space for Parisians and visi"
+  },
+  {
+   "id": "src-q193582",
+   "name": "National Assembly",
+   "local": "Assemblée nationale (France)",
+   "lat": 48.86194,
+   "lng": 2.31861,
+   "minutes": 40,
+   "category": "Sight",
+   "kind": "touristy",
+   "quick": false,
+   "mustSee": false,
+   "fame": 61,
+   "unesco": false,
+   "heritage": false,
+   "wd": "Q193582",
+   "src": [
+    "Wikidata (Wikipedia in many languages)",
+    "Wikivoyage (English)",
+    "Wikipedia in French"
+   ],
+   "srcOnly": true,
+   "builtin": false,
+   "famousFix": false,
+   "far": false,
+   "travel": "",
+   "parts": [],
+   "merged": [],
+   "posDoubt": false,
+   "summary": "Guided tours conducted all day, ID required. Formerly the Palais Bourbon, this building has housed the National Assembly, the French parliament's lower house, s"
+  },
+  {
+   "id": "src-q28785",
+   "name": "Sacré-Cœur",
+   "local": "Basilique du Sacré-Cœur de Montmartre",
+   "lat": 48.88665,
+   "lng": 2.34295,
+   "minutes": 40,
+   "category": "Sight",
+   "kind": "touristy",
+   "quick": false,
+   "mustSee": false,
+   "fame": 60,
+   "unesco": false,
+   "heritage": true,
+   "wd": "Q28785",
+   "src": [
+    "Wikidata (Wikipedia in many languages)",
+    "national heritage register",
+    "Wikipedia in French"
+   ],
+   "srcOnly": true,
+   "builtin": false,
+   "famousFix": false,
+   "far": false,
+   "travel": "",
+   "parts": [],
+   "merged": [],
+   "posDoubt": false,
+   "summary": "A listed historic sight in Paris, named by 3 independent sources."
+  },
+  {
+   "id": "src-q151952",
+   "name": "Venus de Milo",
+   "local": "Vénus de Milo",
+   "lat": 48.85994,
+   "lng": 2.33729,
+   "minutes": 40,
+   "category": "Sight",
+   "kind": "touristy",
+   "quick": false,
+   "mustSee": false,
+   "fame": 73,
+   "unesco": false,
+   "heritage": false,
+   "wd": "Q151952",
+   "src": [
+    "Wikidata (Wikipedia in many languages)",
+    "Wikipedia in French"
+   ],
+   "srcOnly": true,
+   "builtin": false,
+   "famousFix": false,
+   "far": false,
+   "travel": "",
+   "parts": [],
+   "merged": [],
+   "posDoubt": false,
+   "summary": "A sight in Paris, named by 2 independent sources."
+  },
+  {
+   "id": "src-q214654",
+   "name": "Sorbonne",
+   "local": "",
+   "lat": 48.84864,
+   "lng": 2.34356,
+   "minutes": 40,
+   "category": "Sight",
+   "kind": "touristy",
+   "quick": false,
+   "mustSee": false,
+   "fame": 59,
+   "unesco": false,
+   "heritage": true,
+   "wd": "Q214654",
+   "src": [
+    "Wikidata (Wikipedia in many languages)",
+    "national heritage register",
+    "Wikipedia in French"
+   ],
+   "srcOnly": true,
+   "builtin": false,
+   "famousFix": false,
+   "far": false,
+   "travel": "",
+   "parts": [],
+   "merged": [],
+   "posDoubt": false,
+   "summary": "A listed historic sight in Paris, named by 3 independent sources."
+  },
+  {
+   "id": "src-q1538826",
+   "name": "Musée des Arts et Métiers",
+   "local": "",
+   "lat": 48.86611,
+   "lng": 2.35528,
+   "minutes": 90,
+   "category": "Museum",
+   "kind": "touristy",
+   "quick": false,
+   "mustSee": false,
+   "fame": 53,
+   "unesco": false,
+   "heritage": false,
+   "wd": "Q1538826",
+   "src": [
+    "Wikidata (Wikipedia in many languages)",
+    "Wikivoyage (English)",
+    "Wikipedia in French"
+   ],
+   "srcOnly": true,
+   "builtin": false,
+   "famousFix": false,
+   "far": false,
+   "travel": "",
+   "parts": [],
+   "merged": [],
+   "posDoubt": false,
+   "summary": "An industrial design museum in Paris that houses the collection of the Conservatoire National des Arts et Métiers (National Conservatory of Arts and Industry), "
+  },
+  {
+   "id": "src-q820892",
+   "name": "Petit Palais",
+   "local": "",
+   "lat": 48.86603,
+   "lng": 2.31455,
+   "minutes": 40,
+   "category": "Sight",
+   "kind": "touristy",
+   "quick": false,
+   "mustSee": false,
+   "fame": 48,
+   "unesco": false,
+   "heritage": true,
+   "wd": "Q820892",
+   "src": [
+    "Wikivoyage (English)",
+    "national heritage register",
+    "Wikipedia in French"
+   ],
+   "srcOnly": true,
+   "builtin": false,
+   "famousFix": false,
+   "far": false,
+   "travel": "",
+   "parts": [],
+   "merged": [],
+   "posDoubt": false,
+   "summary": "The Petit Palais was built as a complement to the Grand Palais for the 1900 universal exhibition, and afterwards became the prime exhibition venue for the City "
+  },
+  {
+   "id": "src-q83259",
+   "name": "École Normale Supérieure",
+   "local": "École normale supérieure (Paris)",
+   "lat": 48.84194,
+   "lng": 2.34472,
+   "minutes": 40,
+   "category": "Sight",
+   "kind": "touristy",
+   "quick": false,
+   "mustSee": false,
+   "fame": 71,
+   "unesco": false,
+   "heritage": false,
+   "wd": "Q83259",
+   "src": [
+    "Wikidata (Wikipedia in many languages)",
+    "Wikipedia in French"
+   ],
+   "srcOnly": true,
+   "builtin": false,
+   "famousFix": false,
+   "far": false,
+   "travel": "",
+   "parts": [],
+   "merged": [],
+   "posDoubt": false,
+   "summary": "A sight in Paris, named by 2 independent sources."
+  },
+  {
+   "id": "src-q202660",
+   "name": "Collège de France",
+   "local": "",
+   "lat": 48.84917,
+   "lng": 2.34556,
+   "minutes": 40,
+   "category": "Sight",
+   "kind": "touristy",
+   "quick": false,
+   "mustSee": false,
+   "fame": 71,
+   "unesco": false,
+   "heritage": false,
+   "wd": "Q202660",
+   "src": [
+    "Wikidata (Wikipedia in many languages)",
+    "Wikipedia in French"
+   ],
+   "srcOnly": true,
+   "builtin": false,
+   "famousFix": false,
+   "far": false,
+   "travel": "",
+   "parts": [],
+   "merged": [],
+   "posDoubt": false,
+   "summary": "A sight in Paris, named by 2 independent sources."
+  },
+  {
+   "id": "src-q217925",
+   "name": "Champ de Mars",
+   "local": "Champ-de-Mars (Paris)",
+   "lat": 48.85613,
+   "lng": 2.29803,
+   "minutes": 40,
+   "category": "Sight",
+   "kind": "touristy",
+   "quick": false,
+   "mustSee": false,
+   "fame": 57,
+   "unesco": false,
+   "heritage": true,
+   "wd": "Q217925",
+   "src": [
+    "Wikidata (Wikipedia in many languages)",
+    "national heritage register",
+    "Wikipedia in French"
+   ],
+   "srcOnly": true,
+   "builtin": false,
+   "famousFix": false,
+   "far": false,
+   "travel": "",
+   "parts": [],
+   "merged": [],
+   "posDoubt": false,
+   "summary": "A listed historic sight in Paris, named by 3 independent sources."
+  },
+  {
+   "id": "src-q392564",
+   "name": "Grand Mosque of Paris",
+   "local": "Grande mosquée de Paris",
+   "lat": 48.84194,
+   "lng": 2.355,
+   "minutes": 30,
+   "category": "Church",
+   "kind": "touristy",
+   "quick": false,
+   "mustSee": false,
+   "fame": 47,
+   "unesco": false,
+   "heritage": true,
+   "wd": "Q392564",
+   "src": [
+    "Wikivoyage (English)",
+    "national heritage register",
+    "Wikipedia in French"
+   ],
+   "srcOnly": true,
+   "builtin": false,
+   "famousFix": false,
+   "far": false,
+   "travel": "",
+   "parts": [],
+   "merged": [],
+   "posDoubt": false,
+   "summary": "Established in 1926, it was meant to show appreciation for Muslim help in fighting the Germans. The café serves excellent mint tea and North African food."
+  },
+  {
+   "id": "src-q330564",
+   "name": "La Madeleine",
+   "local": "Église de la Madeleine",
+   "lat": 48.87,
+   "lng": 2.32417,
+   "minutes": 40,
+   "category": "Sight",
+   "kind": "touristy",
+   "quick": false,
+   "mustSee": false,
+   "fame": 47,
+   "unesco": false,
+   "heritage": true,
+   "wd": "Q330564",
+   "src": [
+    "Wikivoyage (English)",
+    "national heritage register",
+    "Wikipedia in French"
+   ],
+   "srcOnly": true,
+   "builtin": false,
+   "famousFix": false,
+   "far": false,
+   "travel": "",
+   "parts": [],
+   "merged": [],
+   "posDoubt": false,
+   "summary": "One of the best-known and most beautiful churches in Paris, in the guise of a Corinthian order classical temple. Construction started in 1764, although the chur"
+  },
+  {
+   "id": "src-q390418",
+   "name": "Pont Alexandre III",
+   "local": "Pont Alexandre-III",
+   "lat": 48.86361,
+   "lng": 2.31361,
+   "minutes": 10,
+   "category": "Landmark",
+   "kind": "touristy",
+   "quick": true,
+   "mustSee": false,
+   "fame": 45,
+   "unesco": false,
+   "heritage": true,
+   "wd": "Q390418",
+   "src": [
+    "Wikivoyage (English)",
+    "national heritage register",
+    "Wikipedia in French"
+   ],
+   "srcOnly": true,
+   "builtin": false,
+   "famousFix": false,
+   "far": false,
+   "travel": "",
+   "parts": [],
+   "merged": [],
+   "posDoubt": false,
+   "summary": "The bridge is widely regarded as the most ornate, extravagant bridge in the city. It is classified as a French Monument historique."
+  },
+  {
+   "id": "src-q859363",
+   "name": "Paris Institute of Political Studies",
+   "local": "Institut d'études politiques de Paris",
+   "lat": 48.85417,
+   "lng": 2.32861,
+   "minutes": 40,
+   "category": "Sight",
+   "kind": "touristy",
+   "quick": false,
+   "mustSee": false,
+   "fame": 68,
+   "unesco": false,
+   "heritage": false,
+   "wd": "Q859363",
+   "src": [
+    "Wikidata (Wikipedia in many languages)",
+    "Wikipedia in French"
+   ],
+   "srcOnly": true,
+   "builtin": false,
+   "famousFix": false,
+   "far": false,
+   "travel": "",
+   "parts": [],
+   "merged": [],
+   "posDoubt": false,
+   "summary": "A sight in Paris, named by 2 independent sources."
+  },
+  {
+   "id": "src-q138101",
+   "name": "Conciergerie",
+   "local": "Conciergerie de Paris",
+   "lat": 48.85639,
+   "lng": 2.34556,
+   "minutes": 40,
+   "category": "Sight",
+   "kind": "touristy",
+   "quick": false,
+   "mustSee": false,
+   "fame": 44,
+   "unesco": false,
+   "heritage": true,
+   "wd": "Q138101",
+   "src": [
+    "Wikivoyage (English)",
+    "national heritage register",
+    "Wikipedia in French"
+   ],
+   "srcOnly": true,
+   "builtin": false,
+   "famousFix": false,
+   "far": false,
+   "travel": "",
+   "parts": [],
+   "merged": [],
+   "posDoubt": false,
+   "summary": "The ancient medieval fortress and prison of the city's island, site of some remarkable medieval royal architecture and the scene of Marie Antoinette's imprisonm"
+  },
+  {
+   "id": "src-q161741",
+   "name": "1st arrondissement of Paris",
+   "local": "1er arrondissement de Paris",
+   "lat": 48.85995,
+   "lng": 2.34206,
+   "minutes": 40,
+   "category": "Sight",
+   "kind": "touristy",
+   "quick": false,
+   "mustSee": false,
+   "fame": 65,
+   "unesco": false,
+   "heritage": false,
+   "wd": "Q161741",
+   "src": [
+    "Wikidata (Wikipedia in many languages)",
+    "Wikipedia in French"
+   ],
+   "srcOnly": true,
+   "builtin": false,
+   "famousFix": false,
+   "far": false,
+   "travel": "",
+   "parts": [],
+   "merged": [],
+   "posDoubt": false,
+   "summary": "A sight in Paris, named by 2 independent sources."
+  },
+  {
+   "id": "src-q186115",
+   "name": "Montmartre",
+   "local": "",
+   "lat": 48.88694,
+   "lng": 2.34111,
+   "minutes": 40,
+   "category": "Sight",
+   "kind": "touristy",
+   "quick": false,
+   "mustSee": false,
+   "fame": 60,
+   "unesco": false,
+   "heritage": true,
+   "wd": "Q186115",
+   "src": [
+    "Wikidata (Wikipedia in many languages)",
+    "national heritage register",
+    "Wikipedia in French"
+   ],
+   "srcOnly": true,
+   "builtin": false,
+   "famousFix": false,
+   "far": false,
+   "travel": "",
+   "parts": [],
+   "merged": [],
+   "posDoubt": false,
+   "summary": "A sight in Paris, named by 2 independent sources.",
+   "wdByName": true
+  },
+  {
+   "id": "src-q663673",
+   "name": "Château de Vincennes",
+   "local": "",
+   "lat": 48.84278,
+   "lng": 2.43583,
+   "minutes": 40,
+   "category": "Sight",
+   "kind": "touristy",
+   "quick": false,
+   "mustSee": false,
+   "fame": 41,
+   "unesco": false,
+   "heritage": true,
+   "wd": "Q663673",
+   "src": [
+    "Wikivoyage (English)",
+    "national heritage register",
+    "Wikipedia in French"
+   ],
+   "srcOnly": true,
+   "builtin": false,
+   "famousFix": false,
+   "far": false,
+   "travel": "",
+   "parts": [],
+   "merged": [],
+   "posDoubt": false,
+   "summary": "A former fortress and royal residence at the edge of the city, alongside the Bois de Vincennes."
+  },
+  {
+   "id": "src-q898629",
+   "name": "place des Vosges",
+   "local": "Place des Vosges",
+   "lat": 48.85556,
+   "lng": 2.36556,
+   "minutes": 15,
+   "category": "Square",
+   "kind": "touristy",
+   "quick": false,
+   "mustSee": false,
+   "fame": 40,
+   "unesco": false,
+   "heritage": true,
+   "wd": "Q898629",
+   "src": [
+    "Wikivoyage (English)",
+    "national heritage register",
+    "Wikipedia in French"
+   ],
+   "srcOnly": true,
+   "builtin": false,
+   "famousFix": false,
+   "far": false,
+   "travel": "",
+   "parts": [],
+   "merged": [],
+   "posDoubt": false,
+   "summary": "The oldest planned square in Paris, and what many tourists as well as locals consider the heart of the Marais area."
+  },
+  {
+   "id": "src-q640968",
+   "name": "Hôtel de Ville, Paris",
+   "local": "Hôtel de ville de Paris",
+   "lat": 48.85639,
+   "lng": 2.35222,
+   "minutes": 40,
+   "category": "Sight",
+   "kind": "touristy",
+   "quick": false,
+   "mustSee": false,
+   "fame": 38,
+   "unesco": false,
+   "heritage": true,
+   "wd": "Q640968",
+   "src": [
+    "Wikivoyage (English)",
+    "national heritage register",
+    "Wikipedia in French"
+   ],
+   "srcOnly": true,
+   "builtin": false,
+   "famousFix": false,
+   "far": false,
+   "travel": "",
+   "parts": [],
+   "merged": [],
+   "posDoubt": false,
+   "summary": "Many feel that this, Paris' town hall, is one of the loveliest buildings in the city."
+  },
+  {
+   "id": "src-q334186",
+   "name": "Royal abbey of Saint-Germain-des-Prés",
+   "local": "Abbaye de Saint-Germain-des-Prés",
+   "lat": 48.85389,
+   "lng": 2.33444,
+   "minutes": 30,
+   "category": "Church",
+   "kind": "touristy",
+   "quick": false,
+   "mustSee": false,
+   "fame": 38,
+   "unesco": false,
+   "heritage": true,
+   "wd": "Q334186",
+   "src": [
+    "Wikivoyage (English)",
+    "national heritage register",
+    "Wikipedia in French"
+   ],
+   "srcOnly": true,
+   "builtin": false,
+   "famousFix": false,
+   "far": false,
+   "travel": "",
+   "parts": [],
+   "merged": [],
+   "posDoubt": false,
+   "summary": "The oldest church in Paris, founded in the year 542 by King Childebert. The church as it exists today dates mainly from the 11th century, the period in which it"
+  },
+  {
+   "id": "src-q1414059",
+   "name": "parc Monceau",
+   "local": "Parc Monceau",
+   "lat": 48.8794,
+   "lng": 2.30923,
+   "minutes": 40,
+   "category": "Sight",
+   "kind": "touristy",
+   "quick": false,
+   "mustSee": false,
+   "fame": 38,
+   "unesco": false,
+   "heritage": true,
+   "wd": "Q1414059",
+   "src": [
+    "Wikivoyage (English)",
+    "national heritage register",
+    "Wikipedia in French"
+   ],
+   "srcOnly": true,
+   "builtin": false,
+   "famousFix": false,
+   "far": false,
+   "travel": "",
+   "parts": [],
+   "merged": [],
+   "posDoubt": false,
+   "summary": "One of Paris's best kept secrets, painted by Monet numerous times. It is a very elegant centre of green in the middle of cosmopolitan Paris. Make sure you check"
+  },
+  {
+   "id": "src-q190063",
+   "name": "île de la Cité",
+   "local": "Île de la Cité",
+   "lat": 48.85472,
+   "lng": 2.3475,
+   "minutes": 40,
+   "category": "Sight",
+   "kind": "touristy",
+   "quick": false,
+   "mustSee": false,
+   "fame": 60,
+   "unesco": false,
+   "heritage": false,
+   "wd": "Q190063",
+   "src": [
+    "Wikidata (Wikipedia in many languages)",
+    "Wikipedia in French"
+   ],
+   "srcOnly": true,
+   "builtin": false,
+   "famousFix": false,
+   "far": false,
+   "travel": "",
+   "parts": [],
+   "merged": [],
+   "posDoubt": false,
+   "summary": "A sight in Paris, named by 2 independent sources."
+  },
+  {
+   "id": "src-q167863",
+   "name": "Musée du quai Branly",
+   "local": "Musée du Quai Branly - Jacques-Chirac",
+   "lat": 48.86098,
+   "lng": 2.29787,
+   "minutes": 90,
+   "category": "Museum",
+   "kind": "touristy",
+   "quick": false,
+   "mustSee": false,
+   "fame": 36,
+   "unesco": false,
+   "heritage": true,
+   "wd": "Q167863",
+   "src": [
+    "Wikivoyage (English)",
+    "national heritage register",
+    "Wikipedia in French"
+   ],
+   "srcOnly": true,
+   "builtin": false,
+   "famousFix": false,
+   "far": false,
+   "travel": "",
+   "parts": [],
+   "merged": [],
+   "posDoubt": false,
+   "summary": "Opened in 2006, this is the newest and the most modern of Paris' great museums, housing an outstanding collection of tribal art, with a particular emphasis on F"
+  },
+  {
+   "id": "src-q730948",
+   "name": "Jardin des plantes",
+   "local": "Jardin des plantes de Paris",
+   "lat": 48.84389,
+   "lng": 2.35972,
+   "minutes": 40,
+   "category": "Park or garden",
+   "kind": "touristy",
+   "quick": false,
+   "mustSee": false,
+   "fame": 35,
+   "unesco": false,
+   "heritage": true,
+   "wd": "Q730948",
+   "src": [
+    "Wikivoyage (English)",
+    "national heritage register",
+    "Wikipedia in French"
+   ],
+   "srcOnly": true,
+   "builtin": false,
+   "famousFix": false,
+   "far": false,
+   "travel": "",
+   "parts": [],
+   "merged": [],
+   "posDoubt": false,
+   "summary": "The Paris Botanical Garden, founded as the royal medicinal garden in 1626 by King Louis XIII's doctor, contains over 10,000 species."
+  },
+  {
+   "id": "src-q1189954",
+   "name": "Mines ParisTech",
+   "local": "École nationale supérieure des mines de Paris",
+   "lat": 48.845,
+   "lng": 2.339,
+   "minutes": 40,
+   "category": "Sight",
+   "kind": "touristy",
+   "quick": false,
+   "mustSee": false,
+   "fame": 58,
+   "unesco": false,
+   "heritage": false,
+   "wd": "Q1189954",
+   "src": [
+    "Wikidata (Wikipedia in many languages)",
+    "Wikipedia in French"
+   ],
+   "srcOnly": true,
+   "builtin": false,
+   "famousFix": false,
+   "far": false,
+   "travel": "",
+   "parts": [],
+   "merged": [],
+   "posDoubt": false,
+   "summary": "A sight in Paris, named by 2 independent sources."
+  },
+  {
+   "id": "rambouillet-far",
+   "name": "Rambouillet",
+   "local": "",
+   "lat": 48.64513,
+   "lng": 1.81954,
+   "minutes": 180,
+   "category": "Day trip",
+   "kind": "touristy",
+   "quick": false,
+   "mustSee": false,
+   "fame": 0,
+   "unesco": false,
+   "heritage": false,
+   "wd": "Q191119",
+   "src": [
+    "Wikivoyage (English)"
+   ],
+   "srcOnly": false,
+   "builtin": false,
+   "famousFix": true,
+   "far": true,
+   "travel": "Train from Cité, about 90 min one way",
+   "parts": [],
+   "merged": [],
+   "posDoubt": false,
+   "summary": "A royal palace surrounded by forest and historic town."
+  },
+  {
+   "id": "versailles-far",
+   "name": "Versailles",
+   "local": "",
+   "lat": 48.8044,
+   "lng": 2.12316,
+   "minutes": 180,
+   "category": "Day trip",
+   "kind": "touristy",
+   "quick": false,
+   "mustSee": false,
+   "fame": 126,
+   "unesco": false,
+   "heritage": false,
+   "wd": "Q621",
+   "src": [
+    "Wikidata (Wikipedia in many languages)"
+   ],
+   "srcOnly": false,
+   "builtin": false,
+   "famousFix": true,
+   "far": true,
+   "travel": "Train from Saint-Michel Notre-Dame, about 70 min one way",
+   "parts": [],
+   "merged": [],
+   "posDoubt": false,
+   "summary": "On the southwestern edge of Paris, the site of the Sun King Louis XIV's magnificent palace. 20-40 min train ride by RER (line C) from central Paris."
+  }
+ ]
+}

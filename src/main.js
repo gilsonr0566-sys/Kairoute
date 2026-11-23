@@ -3124,7 +3124,10 @@ function addRealDetails(x, g, vg, osm) {
 // or broken is asked for again, up to 3 tries.
 // How famous a sight must be to count as a must-see, from outside evidence: among the city's visitable places
 // (a travel guide or heritage register lists them), the 6 best known, if at least 60% as known as the top one.
-function famousMustBar(top) { const sl = top.map(x => x.sl || 0).sort((a, b) => b - a); return sl.length ? Math.max(sl[Math.min(5, sl.length - 1)], 0.6 * sl[0]) : Infinity; }
+// The must-sees: the best known few (up to 8). Where the very top is known the world over (100+ languages: Hagia Sophia,
+// the Eiffel Tower), the others are measured against 40% of it, not 60%: one giant must not hide the Blue Mosque, Topkapi
+// or the Arc de Triomphe (Nov 22 audit: Istanbul had one must-see, Jerusalem none of the Western Wall or the Holy Sepulchre).
+function famousMustBar(top) { const sl = top.map(x => x.sl || 0).sort((a, b) => b - a); return sl.length ? Math.max(sl[Math.min(7, sl.length - 1)], (sl[0] >= 100 ? 0.4 : 0.6) * sl[0]) : Infinity; }
 let cityArea = null;
 const famousCache = {};
 // A city's fame list and sources are kept on the device too (built-in cities aren't saved with the trip), so the
@@ -3188,6 +3191,9 @@ function fameMark(city, src) {
     // A lesser sight the guide named in the local language ("Chiesa di Montevergine", "Fontana Senatoria") is shown in
     // English, its local name beneath. Famous ones (by the sources) keep the name English speakers know.
     if (!s.srcName && (s.fame || 0) < EN_FAME) { const en = enNameOf(s.name, s.category, s.local); if (en) { s.srcName = s.name; s.local = s.local || s.name; s.name = en; } }
+    // A name the rules can't put into English ("Museo Nazionale della Magna Grecia": "Magna Grecia" is no common word)
+    // takes the encyclopedia's own English name for the same place, when the sources surely matched it.
+    if (!s.srcName && hit && s.wd && hit.wd === s.wd && EN_FOREIGN.test(s.name) && hit.name && !EN_FOREIGN.test(hit.name) && keyOf(hit.name) !== keyOf(s.name)) { s.srcName = s.name; s.local = s.local || s.name; s.name = hit.name; }
   }
   famousRepair(city, src);
   sourceSights(city, src);
@@ -3224,6 +3230,9 @@ function famousRepair(city, src) {
   const g = famousGaps(city, src);
   g.hidden.forEach(s => { s.quick = false; if (s.minutes < 20) s.minutes = 30; });
   for (const s of city.sites || []) { const x = g.top.find(y => sameSight(y, s)); if (x && (x.sl || 0) >= g.bar && !s.mustSee) { s.mustSee = true; tickOnOneDay(city, s); } }
+  // A must-see the sources gave earlier that the evidence no longer puts in the top few (a non-place that had topped the
+  // list, gone now) is an ordinary sight again. A written guide's own must-sees stay.
+  for (const s of city.sites || []) if (s.mustSee && (s.srcOnly || s.famousFix)) { const x = g.top.find(y => sameSight(y, s)); if (!x || (x.sl || 0) < g.bar) s.mustSee = false; }
   city.famousMissing = g.missing.map(x => x.name);
   if (g.missing.length && !famousFilling[keyOf(city.city)] && aiReady()) fillFamous(city, g.missing.slice(0, 4), g.bar);
   else fillFarther(city, src);
