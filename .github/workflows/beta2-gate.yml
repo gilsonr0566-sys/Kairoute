@@ -1,95 +1,179 @@
 name: Beta 2 release gate
-# Nov 23: the gate grew past an hour (first-timer and screen checks added); 100 minutes so a green run is never cut off.
-# Nov 21 review: the Kairoute-Beta2 site publishes whatever is pushed to it, with no checks of its own; the checks ran
-# only in whichever working copy built it. This gate runs the same offline checks on GitHub for every push to the
-# Beta 2 branch, on a clean copy, so "this build passed" is a record anyone can open. Publish a Beta 2 build only from
-# a commit whose gate is green. No network beyond installing tools, no AI, no secrets; never publishes anything.
+# Nov 23 2026 (thread "Rebuild the testing and review process"): the gate ran every check one after another in one job,
+# 50 to 70 minutes, and each new push cancelled the run before it. Of 69 runs, 14 went green and only 1 of the last 18,
+# so fixes waited a day to go live, and a check that failed in its first second was reported 50 minutes later.
+# The same checks now run side by side in separate jobs (about 15 minutes, the longest job), each job says on its own
+# whether it passed, and the last job writes the release report: every part PASS, FAIL or NOT TESTED (cancelled or
+# never run). NOT TESTED is never a pass: a Beta 2 build is published only from a commit whose report says RELEASE OK.
+# No network beyond installing tools and the public Beta 2 repository, no AI, no secrets; never publishes anything.
+#
+# Earlier notes: Nov 21 review: the Kairoute-Beta2 site publishes whatever is pushed to it, with no checks of its own;
+# this gate runs the offline checks on GitHub for every push to the Beta 2 branch, on a clean copy, so "this build
+# passed" is a record anyone can open.
 on:
   workflow_dispatch:
   push:
-    branches: ["claude/project-thread-xrdp7v", "claude/project-thread-8wi5ra"]
+    branches: ["claude/project-thread-xrdp7v", "claude/project-thread-8wi5ra", "claude/project-thread-bw3ktc"]
 permissions:
   contents: read
 concurrency:
   group: beta2-gate-${{ github.ref }}
   cancel-in-progress: true
 jobs:
-  gate:
+  code:
+    name: "1 Code: secrets, syntax, the engine's own rules, the helper's AI switch"
     runs-on: ubuntu-latest
-    timeout-minutes: 100
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
-        with:
-          node-version: 22
+        with: { node-version: 22 }
       - run: npm i --no-save playwright@1.65.1 && npx playwright install --with-deps chromium
-      - name: Build both copies (the demo build is index.html, Beta 2 is beta2-site/index.html)
-        run: sh build-beta2.sh
+      - run: sh build-beta2.sh
       - name: Code checks (secrets, syntax) and the engine's own rules
         run: node tools/static-check.cjs && node tools/sw-check.cjs && node tools/beta2/engine-static.cjs && node tools/places/where-check.cjs && node tools/beta2/sight-rules-check.cjs beta2-site/index.html && node tools/beta2/lunch-during-screen.cjs beta2-site/index.html
       - name: Helper (AI switch, one AI gate, spend caps, other websites)
         if: always()
         run: node tools/worker-check.mjs && node tools/worker-ai-gate.mjs
-      - name: Saved test trips (snapshots), then the engine, leak and stress suites
+
+  safety:
+    name: "2 Safety: the independent check (traveler's own times, never the planner's numbers) on saved and odd trips"
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22 }
+      - name: Saved test trips
+        run: node tools/truth/oracle.cjs --corpus --show 10 --warn night
+      - name: Odd trips (hundreds of unusual cruises, multi-city trips, midnight flights and bag days, every day checked), then the independent check on the same trips
         if: always()
         run: |
-          # The saved test trips (tools/beta2/corpus: the 20-city list, live trips, no traveler data), then the ones this
-          # build makes fresh on top (the sample trip and its variants, the no-AI trips).
-          mkdir -p tools/beta2/snapshots && cp tools/beta2/corpus/*.json tools/beta2/snapshots/
-          node tools/beta2/snapshot.cjs
-          node tools/beta2/noai-trips.cjs
-          node tools/beta2/engine-test.cjs
-          node tools/beta2/hours-test.cjs
-          node tools/beta2/leaks.cjs
-          node tools/beta2/stress.cjs
-          node tools/beta2/reason-numbers-check.cjs
-          PLACES_DIR=tools/places/data node tools/beta2/lunch-during-check.cjs
-      - name: Phone flow on the Beta 2 build
+          NOZIG=1 SLOW_MS=5000 node tools/beta2/odd-trips.cjs --n 300 --seed 1 --warn walk --out odd-trips.json
+          node tools/truth/oracle.cjs --trips odd-trips.json --show 10 --warn night
+      - name: Planted defects (each a known way the planner has gone wrong; the checks must catch every one)
         if: always()
-        run: VERBOSE=1 node tools/beta2/flow-check.cjs beta2-site/index.html
-      - name: What the traveler sees (screen rules on every day, other time zones, no signal, trips saved by the last two published builds, screen sizes, voices, the app's own guard)
-        if: always()
+        run: node tools/truth/mutants.cjs
+
+  engine:
+    name: "3 Engine: engine rules, opening hours, reasons, lunch"
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22 }
+      - name: Saved test trips (snapshots)
+        run: mkdir -p tools/beta2/snapshots && cp tools/beta2/corpus/*.json tools/beta2/snapshots/ && node tools/beta2/snapshot.cjs && node tools/beta2/noai-trips.cjs
+      - run: node tools/beta2/engine-test.cjs
+      - if: always()
+        run: node tools/beta2/hours-test.cjs
+      - if: always()
+        run: node tools/beta2/reason-numbers-check.cjs
+      - if: always()
+        run: PLACES_DIR=tools/places/data node tools/beta2/lunch-during-check.cjs
+
+  leaks:
+    name: "4 Leaks and stress"
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22 }
+      - name: Saved test trips (snapshots)
+        run: mkdir -p tools/beta2/snapshots && cp tools/beta2/corpus/*.json tools/beta2/snapshots/ && node tools/beta2/snapshot.cjs && node tools/beta2/noai-trips.cjs
+      - run: node tools/beta2/leaks.cjs
+      - if: always()
+        run: node tools/beta2/stress.cjs
+
+  phone:
+    name: "5 Phone flow on the Beta 2 build"
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22 }
+      - run: npm i --no-save playwright@1.65.1 && npx playwright install --with-deps chromium
+      - run: sh build-beta2.sh
+      - run: VERBOSE=1 node tools/beta2/flow-check.cjs beta2-site/index.html
+
+  screen:
+    name: "6 What the traveler sees: screen rules, time zones, no signal, older saved trips, sizes, voices, the guard"
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22 }
+      - run: npm i --no-save playwright@1.65.1 && npx playwright install --with-deps chromium
+      - run: sh build-beta2.sh
+      - name: Screen gate (with the two newest published builds' saved trips)
         run: |
           # The two newest published Beta 2 builds (public repo) are opened first and their saved trip is then opened
-          # by this build, as a traveler's phone does after an update.
+          # by this build, as a traveler's phone does after an update. One file per published build (a build fixed by a
+          # second commit minutes later counts once, by its newest commit).
           git clone -q --depth 12 https://github.com/gilsonr0566-sys/Kairoute-Beta2 /tmp/b2pub
-          # One file per published build: a build fixed by a second commit minutes later (its wrong app file was never what
-          # travelers ran) counts once, by its newest commit. The newest build and the one before it.
           OLD=""; for c in $(git -C /tmp/b2pub log --format='%h %s' -n 12 -- index.html | awk '{ id=$5; if (!(id in seen)) { seen[id]=1; print $1 } }' | sed -n '1p;2p'); do git -C /tmp/b2pub show $c:index.html > /tmp/old-$c.html; OLD="$OLD /tmp/old-$c.html"; done
           node tools/beta2/screen-gate.cjs beta2-site/index.html $OLD
-      - name: Odd trips (hundreds of unusual cruises, multi-city trips, midnight flights and bag days, every day checked)
-        if: always()
-        run: NOZIG=1 SLOW_MS=5000 node tools/beta2/odd-trips.cjs --n 300 --seed 1 --warn walk
-      - name: Odd day changes on the phone screen (short, late and after-midnight port calls, midnight flights, Light/Half/Full, every sight ticked)
-        if: always()
-        run: VARIANTS=8 node tools/beta2/odd-screen.cjs beta2-site/index.html
-      - name: Ship days keep their sights while the water check waits on its slow part
-        if: always()
+
+  odd-screen:
+    name: "7 Odd days on the phone screen, ship days while the water check waits, group trips"
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22 }
+      - run: npm i --no-save playwright@1.65.1 && npx playwright install --with-deps chromium
+      - run: sh build-beta2.sh
+      - run: VARIANTS=8 node tools/beta2/odd-screen.cjs beta2-site/index.html
+      - if: always()
         run: node tools/beta2/water-wait-check.cjs beta2-site/index.html
-      - name: Group trips (share one trip, follow or own day, meeting point, offers, booked tours)
-        if: always()
+      - if: always()
         run: node tools/beta2/group-check.cjs beta2-site/index.html
-      - name: Outside text never runs as code (Beta 2 build)
-        if: always()
-        run: node tools/inject-check.cjs beta2-site/index.html
-      - name: A place the app could not reach is never called misspelled
-        if: always()
+
+  words:
+    name: "8 The app says only what is true: first run, day plan, places it can't reach, no paid AI, trip copy, outside text"
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22 }
+      - run: npm i --no-save playwright@1.65.1 && npx playwright install --with-deps chromium
+      - run: sh build-beta2.sh
+      - run: node tools/inject-check.cjs beta2-site/index.html
+      - if: always()
         run: node tools/ui/no-signal-check.cjs beta2-site/index.html
-      - name: An airport or station the guide doesn't know can be named, never a dead end
-        if: always()
+      - if: always()
         run: node tools/ui/gate-ask-check.cjs beta2-site/index.html
-      - name: A first-time traveler is told only what is true (home, walkthrough, settings, journal)
-        if: always()
+      - if: always()
         run: node tools/ui/first-run-check.cjs beta2-site/index.html
-      - name: Day plan, Choose sights, Guide, voices and Tour say only what is true
-        if: always()
+      - if: always()
         run: node tools/ui/dayplan-check.cjs beta2-site/index.html
-      - name: No paid AI is offered in Settings
-        if: always()
+      - if: always()
         run: node tools/ui/no-paid-ai-check.cjs beta2-site/index.html
-      - name: Trips planned in the first app come over to Beta 2, added and never over a Beta 2 trip
-        if: always()
+      - if: always()
         run: node tools/ui/trip-copy-check.cjs beta2-site/index.html
-      - name: The app says only what the AI can really do
-        if: always()
+      - if: always()
         run: node tools/ai-honesty-check.cjs
+
+  report:
+    name: "Release report"
+    needs: [code, safety, engine, leaks, phone, screen, odd-screen, words]
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - name: Write the release report (PASS / FAIL / NOT TESTED for every part)
+        env:
+          R: ${{ toJSON(needs) }}
+        run: |
+          node -e '
+            const r = JSON.parse(process.env.R), word = s => s === "success" ? "PASS" : s === "failure" ? "FAIL" : "NOT TESTED (" + s + ")";
+            const rows = Object.entries(r).map(([k, v]) => `| ${k} | ${word(v.result)} |`);
+            const ok = Object.values(r).every(v => v.result === "success");
+            const head = `## Beta 2 release report\n\nCommit ${process.env.GITHUB_SHA.slice(0, 8)}, run ${process.env.GITHUB_RUN_NUMBER}. **${ok ? "RELEASE OK" : "DO NOT RELEASE"}**: ${ok ? "every part ran and passed." : "a part failed or was not tested (not tested is never a pass)."}\n\n| Part | Result |\n|---|---|\n`;
+            require("fs").appendFileSync(process.env.GITHUB_STEP_SUMMARY, head + rows.join("\n") + "\n");
+            console.log(head + rows.join("\n")); process.exitCode = ok ? 0 : 1;'

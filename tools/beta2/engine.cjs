@@ -1,10 +1,11 @@
 // Loads the Beta 2 engine files (src/engine/*.js, in name order) into Node, exactly as the app gets them.
 const fs = require('fs'), path = require('path'), vm = require('vm');
-const dir = path.join(__dirname, '..', '..', 'src', 'engine');
+// ENGINE_SRC=<a copy of src/>: load another engine (tools/truth/mutants.cjs plants known defects in a copy).
+const SRC = process.env.ENGINE_SRC || path.join(__dirname, '..', '..', 'src'), dir = path.join(SRC, 'engine');
 const ctx = vm.createContext({ console, Date, Math, JSON, Object, Array, Map, Set, Number, String, isFinite, isNaN, NaN, Infinity });
 for (const f of fs.readdirSync(dir).filter(f => f.endsWith('.js')).sort()) vm.runInContext(fs.readFileSync(path.join(dir, f), 'utf8'), ctx, { filename: f });
 // The engine's data (public holidays, hours checked on official websites): plain data, kept apart from the rules.
-const ddir = path.join(__dirname, '..', '..', 'src', 'engine-data');
+const ddir = path.join(SRC, 'engine-data');
 if (fs.existsSync(ddir)) for (const f of fs.readdirSync(ddir).filter(f => f.endsWith('.js')).sort()) vm.runInContext(fs.readFileSync(path.join(ddir, f), 'utf8'), ctx, { filename: f });
 const E = vm.runInContext('KEngine', ctx);
 // Saved test trips from before the one hours rule (Nov 19) list a place to eat as shut for lunch or dinner; read as the
