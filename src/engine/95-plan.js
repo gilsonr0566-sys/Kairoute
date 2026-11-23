@@ -304,8 +304,10 @@
         // places to eat no note, or a ride to one from a far sight would read the near town's "5 minutes by taxi" and lose
         // the far sight's own time (Nov 19: back from a lagoon 1 h 30 min away, timed as a 55 min taxi to lunch by the port).
         const o = win.head[win.head.length - 1], tn = o && isFinite(o.lat) && E.hav(o, t) <= 5 ? "" : t.travelNote || "";
-        return real.map(x => ({ name: x.name, lat: x.lat, lng: x.lng, kind: "restaurant", amenity: "restaurant", cuisine: x.note || "", fromMap: !!x.fromMap, inTown: t.id, travelNote: tn })); });
-      const ctx = { single: (byCity.get(d.city) || [i]).length === 1, tr, ledger, dayIdx: i, siteDay, eats: (city.restaurants || []).concat(townLunch).filter(r => !E.genericEat(r.name)).sort((a, b) => E.eatKey(a.name).localeCompare(E.eatKey(b.name))), eatFacts: E.eatFactsFor(d, city.restaurants), mealPrefs: E.mealInput(d) };
+        return real.map(x => ({ name: x.name, lat: x.lat, lng: x.lng, kind: "restaurant", amenity: "restaurant", cuisine: x.note || "", fromMap: !!x.fromMap, inTown: t.id, travelNote: tn, ...(x.hours ? { hours: x.hours } : {}) })); });
+      // Opening hours of every place lunch can go to, a nearby town's too (Nov 23 gate: Komokieras in Sitges).
+      const dayEats = (city.restaurants || []).concat(townLunch).filter(r => !E.genericEat(r.name)).sort((a, b) => E.eatKey(a.name).localeCompare(E.eatKey(b.name)));
+      const ctx = { single: (byCity.get(d.city) || [i]).length === 1, tr, ledger, dayIdx: i, siteDay, eats: dayEats, eatFacts: E.eatFactsFor(d, dayEats), mealPrefs: E.mealInput(d) };
       // May this day add a sight on its own? Not one used on another day, picked for another day, or in another
       // day's area, unless that day is already planned and left it over.
       const doneDay = j => j == null || j === i || out[j] != null;

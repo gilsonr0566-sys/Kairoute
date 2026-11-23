@@ -26,6 +26,11 @@ const osm = [
   ['Mo-Fr 10:00-17:00 "by appointment"', '2027-07-07', 'unknown'],
   ['unknown "hours vary with the ship schedule"', '2027-07-07', 'unknown'],
   ['24/7', '2027-07-07', '12:00 am-12:00 am'],
+  // Nov 23 release gate: two spans or two rules written with only a space between them.
+  ['Mo-Su 12:30-15:00 19:00-22:00', '2027-06-30', '12:30 pm-3:00 pm,7:00 pm-10:00 pm'],
+  ['Tu-Sa 12:00-15:00 Tu-Sa 18:00-22:00', '2027-06-30', '12:00 pm-3:00 pm,6:00 pm-10:00 pm'],
+  ['Th-Mo 13:15-15:30, 20:30-23:00; Tu off, We off', '2027-07-03', '1:15 pm-3:30 pm,8:30 pm-11:00 pm'],
+  ['Th-Mo 13:15-15:30, 20:30-23:00; Tu off, We off', '2027-06-30', 'closed'],
 ];
 for (const [h, iso, want] of osm) { const got = sp(E.readOsm(h, iso, { holiday: false })); ok(got === want, `map hours "${h}" on ${iso}: ${want} (got ${got})`); }
 // A public holiday the date's status isn't known for: read both ways, unknown when they differ.
